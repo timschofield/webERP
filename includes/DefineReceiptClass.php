@@ -28,7 +28,7 @@ Class Receipt_Batch {
 	}
 
 	function add_to_batch($Amount, $Customer, $Discount, $Narrative, $GLCode, $PayeeBankDetail, $CustomerName, $tag){
-		if ((isset($Customer)||isset($GLCode)) && ($Amount + $Discount) !=0){
+		if ((isset($Customer) OR isset($GLCode)) AND ($Amount + $Discount) !=0){
 			$this->Items[$this->ItemCounter] = new Receipt($Amount, $Customer, $Discount, $Narrative, $this->ItemCounter, $GLCode, $PayeeBankDetail, $CustomerName, $tag);
 			$this->ItemCounter++;
 			$this->total = $this->total + ($Amount + $Discount) / $this->ExRate;

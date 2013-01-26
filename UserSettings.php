@@ -149,10 +149,10 @@ echo '<tr>
 	<td>' . _('Theme') . ':</td>
 	<td><select name="Theme">';
 
-$ThemeDirectory = dir('css/');
+$ThemeDirectories = scandir('css/');
 
 
-while (false != ($ThemeName = $ThemeDirectory->read())){
+foreach ($ThemeDirectories as $ThemeName) {
 
 	if (is_dir('css/' . $ThemeName) AND $ThemeName != '.' AND $ThemeName != '..' AND $ThemeName != '.svn'){
 

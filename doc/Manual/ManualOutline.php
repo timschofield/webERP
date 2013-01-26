@@ -75,6 +75,7 @@ $TOC_Array = array (
                                  'Type of resource',
                                  'Inventory location maintenance',
                                  'Inventory adjustments',
+                                 'Internal inventory requests',
                                  'Inventory location transfers',
                                  'Inventory reports and inquiries',
                                  'Inventory status inquiries',

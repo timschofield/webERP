@@ -19,8 +19,7 @@ $ModuleList = array(_('Orders'),
 					_('Asset Manager'),
 					_('Petty Cash'),
 					_('Setup'),
-					_('Utilities')
-					);
+					_('Utilities'));
 
 $PDFLanguages = array(_('Latin Western Languages'),
 						_('Eastern European Russian Japanese Korean Vietnamese Hebrew Arabic Thai'),
@@ -29,8 +28,8 @@ $PDFLanguages = array(_('Latin Western Languages'),
 
 $Title = _('User Maintenance');
 /* webERP manual links before header.inc */
-$ViewTopic= "GettingStarted";
-$BookMark = "UserMaintenance";
+$ViewTopic= 'GettingStarted';
+$BookMark = 'UserMaintenance';
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
@@ -616,10 +615,10 @@ echo '<tr>
 		<td>' . _('Theme') . ':</td>
 		<td><select name="Theme">';
 
-$ThemeDirectory = dir('css/');
+$ThemeDirectories = scandir('css/');
 
 
-while (false != ($ThemeName = $ThemeDirectory->read())){
+foreach ($ThemeDirectories as $ThemeName) {
 
 	if (is_dir('css/' . $ThemeName) AND $ThemeName != '.' AND $ThemeName != '..' AND $ThemeName != '.svn'){
 
@@ -628,7 +627,7 @@ while (false != ($ThemeName = $ThemeDirectory->read())){
 		} else if (!isset($_POST['Theme']) AND ($_SESSION['DefaultTheme']==$ThemeName)) {
 			echo '<option selected="selected" value="' . $ThemeName . '">' . $ThemeName .'</option>';
 		} else {
-			echo '<option value="' . $ThemeName . '">' . $ThemeName .'</option>';
+			echo '<option value="' . $ThemeName . '">' . $ThemeName . '</option>';
 		}
 	}
 }

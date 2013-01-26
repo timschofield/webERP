@@ -330,14 +330,14 @@ if(isset($_POST['ProcessTransfer'])){
 				$Result = DB_query($sql, $db, $ErrMsg, $DbgMsg, true);
 				// send an email to the inventory manager about this cancellation (as can lead to employee fraud)
 				if ($_SESSION['InventoryManagerEmail']!=''){
-					$ConfirmationText = _('Cancelled balance at transfer'). ': ' . $_SESSION['Transfer']->TrfID . 
+					$ConfirmationText = _('Cancelled balance of transfer'). ': ' . $_SESSION['Transfer']->TrfID . 
 										"\r\n" . _('From Location') . ': ' . $_SESSION['Transfer']->StockLocationFrom .
 										"\r\n" . _('To Location') . ': ' . $_SESSION['Transfer']->StockLocationTo .
 										"\r\n" . _('Stock code') . ': ' . $TrfLine->StockID . 
 										"\r\n" . _('Qty received') . ': ' . round($TrfLine->Quantity, $TrfLine->DecimalPlaces) . 
 										"\r\n" . _('By user') . ': ' . $_SESSION['UserID'] . 
 										"\r\n" . _('At') . ': ' . Date('Y-m-d H:i:s');
-					$EmailSubject = _('Cancelled balance at transfer'). ' ' . $_SESSION['Transfer']->TrfID;
+					$EmailSubject = _('Cancelled balance of transfer'). ' ' . $_SESSION['Transfer']->TrfID;
 					mail($_SESSION['InventoryManagerEmail'],$EmailSubject,$ConfirmationText);
 				}
 			}

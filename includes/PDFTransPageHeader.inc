@@ -92,15 +92,15 @@ $pdf->addText($XPos, $YPos, $FontSize, _('Sold To') . ':');
 $XPos +=80;
 
 if ($myrow['invaddrbranch']==0){
-	$pdf->addText($XPos, $YPos, $FontSize, $myrow['name']);
-	$pdf->addText($XPos, $YPos-14, $FontSize, $myrow['address1']);
-	$pdf->addText($XPos, $YPos-28, $FontSize, $myrow['address2']);
-	$pdf->addText($XPos, $YPos-42, $FontSize, $myrow['address3'] . ' ' . $myrow['address4']);
+	$pdf->addText($XPos, $YPos, $FontSize, html_entity_decode(myrow['name']));
+	$pdf->addText($XPos, $YPos-14, $FontSize, html_entity_decode($myrow['address1']));
+	$pdf->addText($XPos, $YPos-28, $FontSize, html_entity_decode($myrow['address2']));
+	$pdf->addText($XPos, $YPos-42, $FontSize, html_entity_decode($myrow['address3']) . ' ' . html_entity_decode($myrow['address4']));
 } else {
-	$pdf->addText($XPos, $YPos, $FontSize, $myrow['name']);
-	$pdf->addText($XPos, $YPos-14, $FontSize, $myrow['brpostaddr1']);
-	$pdf->addText($XPos, $YPos-28, $FontSize, $myrow['brpostaddr2']);
-	$pdf->addText($XPos, $YPos-42, $FontSize, $myrow['brpostaddr3'] . ' ' . $myrow['brpostaddr4'] . ' ' . $myrow['brpostaddr5'] . ' ' . $myrow['brpostaddr6']);
+	$pdf->addText($XPos, $YPos, $FontSize, html_entity_decode($myrow['name']));
+	$pdf->addText($XPos, $YPos-14, $FontSize, html_entity_decode($myrow['brpostaddr1']));
+	$pdf->addText($XPos, $YPos-28, $FontSize, html_entity_decode($myrow['brpostaddr2']));
+	$pdf->addText($XPos, $YPos-42, $FontSize, html_entity_decode($myrow['brpostaddr3']) . ' ' . html_entity_decode($myrow['brpostaddr4']) . ' ' . html_entity_decode($myrow['brpostaddr5']) . ' ' . html_entity_decode($myrow['brpostaddr6']));
 }
 
 
@@ -126,10 +126,10 @@ if (!function_exists('htmlspecialchars_decode')) {
                 return $str;
         }
 }
-	$pdf->addText($XPos, $YPos, $FontSize, $myrow['deliverto']);
-	$pdf->addText($XPos, $YPos-14, $FontSize, $myrow['deladd1']);
-	$pdf->addText($XPos, $YPos-28, $FontSize, $myrow['deladd2']);
-	$pdf->addText($XPos, $YPos-42, $FontSize, $myrow['deladd3'] . ' ' . $myrow['deladd4'] . ' ' . $myrow['deladd5']);
+	$pdf->addText($XPos, $YPos, $FontSize, html_entity_decode($myrow['deliverto']));
+	$pdf->addText($XPos, $YPos-14, $FontSize, html_entity_decode($myrow['deladd1']));
+	$pdf->addText($XPos, $YPos-28, $FontSize, html_entity_decode($myrow['deladd2']));
+	$pdf->addText($XPos, $YPos-42, $FontSize, html_entity_decode($myrow['deladd3']) . ' ' . html_entity_decode($myrow['deladd4']) . ' ' . html_entity_decode($myrow['deladd5']));
 	$XPos -=80;
 }
 if ($InvOrCredit=='Credit'){
@@ -137,10 +137,10 @@ if ($InvOrCredit=='Credit'){
 
 	$pdf->addText($XPos, $YPos, $FontSize, _('Charge Branch') . ':');
 	$XPos +=80;
-	$pdf->addText($XPos, $YPos, $FontSize, $myrow['brname']);
-	$pdf->addText($XPos, $YPos-14, $FontSize, $myrow['braddress1']);
-	$pdf->addText($XPos, $YPos-28, $FontSize, $myrow['braddress2']);
-	$pdf->addText($XPos, $YPos-42, $FontSize, $myrow['braddress3'] . ' ' . $myrow['braddress4'] . ' ' . $myrow['braddress5'] . ' ' . $myrow['braddress6']);
+	$pdf->addText($XPos, $YPos, $FontSize, html_entity_decode($myrow['brname']));
+	$pdf->addText($XPos, $YPos-14, $FontSize, html_entity_decode($myrow['braddress1']));
+	$pdf->addText($XPos, $YPos-28, $FontSize, html_entity_decode($myrow['braddress2']));
+	$pdf->addText($XPos, $YPos-42, $FontSize, html_entity_decode($myrow['braddress3']) . ' ' . html_entity_decode($myrow['braddress4']) . ' ' . html_entity_decode($myrow['braddress5']) . ' ' . html_entity_decode($myrow['braddress6']));
 	$XPos -=80;
 }
 

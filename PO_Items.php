@@ -20,7 +20,7 @@ $identifier=$_GET['identifier'];
 if (!isset($_SESSION['PO'.$identifier])){
 	header('Location:' . $RootPath . '/PO_Header.php');
 	exit;
-} //end if (!isset($_SESSION['PO'.$identifier]))
+}
 
 /* webERP manual links before header.inc */
 $ViewTopic= 'PurchaseOrdering';
@@ -43,12 +43,12 @@ if (isset($_POST['UpdateLines']) OR isset($_POST['Commit'])) {
 			if (!is_numeric(filter_number_format($_POST['SuppQty'.$POLine->LineNo]))){
 				prnMsg(_('The quantity in the supplier units is expected to be numeric. Please re-enter as a number'),'error');
 			} else { //ok to update the PO object variables
-				$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->Quantity=filter_number_format(round(filter_number_format($_POST['SuppQty'.$POLine->LineNo])*filter_number_format($_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->ConversionFactor),$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->DecimalPlaces));
+				$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->Quantity = filter_number_format(round(filter_number_format($_POST['SuppQty'.$POLine->LineNo])*filter_number_format($_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->ConversionFactor),$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->DecimalPlaces));
 			}
 			if (!is_numeric(filter_number_format($_POST['SuppPrice'.$POLine->LineNo]))){
 				prnMsg(_('The supplier price is expected to be numeric. Please re-enter as a number'),'error');
 			} else { //ok to update the PO object variables
-				$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->Price=filter_number_format($_POST['SuppPrice'.$POLine->LineNo])/$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->ConversionFactor;
+				$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->Price = filter_number_format($_POST['SuppPrice'.$POLine->LineNo])/$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->ConversionFactor;
 			}
 			$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->ReqDelDate=$_POST['ReqDelDate'.$POLine->LineNo];
             $_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->ItemDescription =$_POST['ItemDescription'.$POLine->LineNo];
@@ -521,7 +521,9 @@ if (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 //Add variables $_SESSION['PO_ItemsResubmitForm' . $identifier] and $_POST['PO_ItemsResubmitFormValue'] to prevent from page refreshing effect
 
 $_SESSION['PO_ItemsResubmitForm' . $identifier] = (empty($_SESSION['PO_ItemsResubmitForm' . $identifier]))? '1' : $_SESSION['PO_ItemsResubmitForm' . $identifier];
-if (isset($_POST['NewItem']) and !empty($_POST['PO_ItemsResubmitFormValue']) and $_SESSION['PO_ItemsResubmitForm' . $identifier] == $_POST['PO_ItemsResubmitFormValue']){ //only submit values can be processed
+if (isset($_POST['NewItem'])
+	AND !empty($_POST['PO_ItemsResubmitFormValue'])
+	AND $_SESSION['PO_ItemsResubmitForm' . $identifier] == $_POST['PO_ItemsResubmitFormValue']){ //only submit values can be processed
 
 	/* NewItem is set from the part selection list as the part code selected
 	* take the form entries and enter the data from the form into the PurchOrder class variable
@@ -595,7 +597,32 @@ if (isset($_POST['NewItem']) and !empty($_POST['PO_ItemsResubmitFormValue']) and
 					$PurchDataResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 					if (DB_num_rows($PurchDataResult)>0){ //the purchasing data is set up
 						$PurchRow = DB_fetch_array($PurchDataResult);
-						$PurchPrice = $PurchRow['price']/$PurchRow['conversionfactor'];
+
+						/* Now to get the applicable discounts */
+						$sql = "SELECT discountpercent,
+										discountamount
+								FROM supplierdiscounts
+								WHERE supplierno= '" . $_SESSION['PO'.$identifier]->SupplierID . "'
+								AND effectivefrom <='" . Date('Y-m-d') . "'
+								AND effectiveto >='" . Date('Y-m-d') . "'
+								AND stockid = '". $ItemCode . "'";
+
+						$ItemDiscountPercent = 0;
+						$ItemDiscountAmount = 0;
+						$ErrMsg = _('Could not retrieve the supplier discounts applicable to the item');
+						$DbgMsg = _('The SQL used to retrive the supplier discounts that failed was');
+						$DiscountResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+						while ($DiscountRow = DB_fetch_array($DiscountResult)) {
+							$ItemDiscountPercent += $DiscountRow['discountpercent'];
+							$ItemDiscountAmount += $DiscountRow['discountamount'];
+						}
+						if ($ItemDiscountPercent != 0) {
+							prnMsg(_('Taken accumulated supplier percentage discounts of') .  ' ' . locale_number_format($ItemDiscountPercent*100,2) . '%','info');
+						}
+						if ($ItemDiscountAmount != 0 ){
+							prnMsg(_('Taken accumulated round sum supplier discount of') .  ' ' . $_SESSION['PO'.$identifier]->CurrCode . ' ' . locale_number_format($ItemDiscountAmount,$_SESSION['PO'.$identifier]->CurrDecimalPlaces) . ' (' . _('per supplier unit') . ')','info');
+						}
+						$PurchPrice = ($PurchRow['price']*(1-$ItemDiscountPercent) - $ItemDiscountAmount)/$PurchRow['conversionfactor'];
 						$ConversionFactor = $PurchRow['conversionfactor'];
 						$SupplierDescription = $PurchRow['suppliers_partno'] .' - ';
 						if (mb_strlen($PurchRow['supplierdescription'])>2){
@@ -680,7 +707,7 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 			<th>' . _('Description') . '</th>
 			<th>' . _('Quantity Our Units') . '</th>
 			<th>' . _('Our Unit') .'</th>
-			<th>' . _('Price Our Units') .' ('.$_SESSION['PO'.$identifier]->CurrCode.  ')</th>
+			<th>' . _('Price Our Units') .' (' . $_SESSION['PO'.$identifier]->CurrCode .  ')</th>
 			<th>' . _('Unit Conversion Factor') . '</th>
 			<th>' . _('Order Quantity') . '<br />' . _('Supplier Units') . '</th>
 			<th>' .  _('Supplier Unit') . '</th>
@@ -718,7 +745,7 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 				<td class="number">' . locale_number_format($POLine->Quantity,$POLine->DecimalPlaces) . '</td>
 				<td>' . $POLine->Units . '</td>
 				<td class="number">' . $DisplayPrice . '</td>
-				<td><input type="text" class="number" name="ConversionFactor' . $POLine->LineNo .'" size="8" value="' . $POLine->ConversionFactor . '" /></td>
+				<td><input type="text" class="number" name="ConversionFactor' . $POLine->LineNo .'" size="8" value="' . locale_number_format($POLine->ConversionFactor,'Variable') . '" /></td>
 				<td><input type="text" class="number" name="SuppQty' . $POLine->LineNo .'" size="10" value="' . locale_number_format(round($POLine->Quantity/$POLine->ConversionFactor,$POLine->DecimalPlaces),$POLine->DecimalPlaces) . '" /></td>
 				<td>' . $POLine->SuppliersUnit . '</td>
 				<td><input type="text" class="number" name="SuppPrice' . $POLine->LineNo . '" size="10" value="' . locale_number_format(round(($POLine->Price *$POLine->ConversionFactor),$_SESSION['PO'.$identifier]->CurrDecimalPlaces),$_SESSION['PO'.$identifier]->CurrDecimalPlaces) .'" /></td>
@@ -824,6 +851,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 						ON stockmaster.stockid=purchdata.stockid
 						WHERE stockmaster.mbflag<>'D'
 						AND stockmaster.mbflag<>'K'
+						AND stockmaster.mbflag<>'A'
 						AND stockmaster.mbflag<>'G'
 						AND stockmaster.discontinued<>1
 						AND purchdata.supplierno='" . $_SESSION['PO'.$identifier]->SupplierID . "'
@@ -839,6 +867,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 					ON stockmaster.categoryid=stockcategory.categoryid
 					WHERE stockmaster.mbflag<>'D'
 					AND stockmaster.mbflag<>'K'
+					AND stockmaster.mbflag<>'A'
 					AND stockmaster.mbflag<>'G'
 					AND stockmaster.discontinued<>1
 					AND stockmaster.description " . LIKE . " '" . $SearchString ."'
@@ -855,6 +884,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 						INNER JOIN purchdata
 						ON stockmaster.stockid=purchdata.stockid
 						WHERE stockmaster.mbflag<>'D'
+						AND stockmaster.mbflag<>'A'
 						AND stockmaster.mbflag<>'K'
 						AND stockmaster.mbflag<>'G'
 						AND purchdata.supplierno='" . $_SESSION['PO'.$identifier]->SupplierID . "'
@@ -870,6 +900,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 						FROM stockmaster INNER JOIN stockcategory
 						ON stockmaster.categoryid=stockcategory.categoryid
 						WHERE stockmaster.mbflag<>'D'
+						AND stockmaster.mbflag<>'A'
 						AND stockmaster.mbflag<>'K'
 						AND stockmaster.mbflag<>'G'
 						AND stockmaster.discontinued<>1
@@ -895,6 +926,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 						ON stockmaster.stockid=purchdata.stockid
 						WHERE stockmaster.mbflag<>'D'
 						AND stockmaster.mbflag<>'K'
+						AND stockmaster.mbflag<>'A'
 						AND stockmaster.mbflag<>'G'
 						AND purchdata.supplierno='" . $_SESSION['PO'.$identifier]->SupplierID . "'
 						AND stockmaster.discontinued<>1
@@ -908,6 +940,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 					FROM stockmaster INNER JOIN stockcategory
 					ON stockmaster.categoryid=stockcategory.categoryid
 					WHERE stockmaster.mbflag<>'D'
+					AND stockmaster.mbflag<>'A'
 					AND stockmaster.mbflag<>'K'
 					AND stockmaster.mbflag<>'G'
 					AND stockmaster.discontinued<>1
@@ -925,6 +958,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 						INNER JOIN purchdata
 						ON stockmaster.stockid=purchdata.stockid
 						WHERE stockmaster.mbflag<>'D'
+						AND stockmaster.mbflag<>'A'
 						AND stockmaster.mbflag<>'K'
 						AND stockmaster.mbflag<>'G'
 						AND purchdata.supplierno='" . $_SESSION['PO'.$identifier]->SupplierID . "'
@@ -940,6 +974,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 					FROM stockmaster INNER JOIN stockcategory
 					ON stockmaster.categoryid=stockcategory.categoryid
 					WHERE stockmaster.mbflag<>'D'
+					AND stockmaster.mbflag<>'A'
 					AND stockmaster.mbflag<>'K'
 					AND stockmaster.mbflag<>'G'
 					and stockmaster.discontinued<>1
@@ -961,6 +996,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 						INNER JOIN purchdata
 						ON stockmaster.stockid=purchdata.stockid
 						WHERE stockmaster.mbflag<>'D'
+						AND stockmaster.mbflag<>'A'
 						AND stockmaster.mbflag<>'K'
 						AND stockmaster.mbflag<>'G'
 						AND purchdata.supplierno='" . $_SESSION['PO'.$identifier]->SupplierID . "'
@@ -974,6 +1010,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 					FROM stockmaster INNER JOIN stockcategory
 					ON stockmaster.categoryid=stockcategory.categoryid
 					WHERE stockmaster.mbflag<>'D'
+					AND stockmaster.mbflag<>'A'
 					AND stockmaster.mbflag<>'K'
 					AND stockmaster.mbflag<>'G'
 					AND stockmaster.discontinued<>1
@@ -990,6 +1027,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 						INNER JOIN purchdata
 						ON stockmaster.stockid=purchdata.stockid
 						WHERE stockmaster.mbflag<>'D'
+						AND stockmaster.mbflag<>'A'
 						AND stockmaster.mbflag<>'K'
 						AND stockmaster.mbflag<>'G'
 						AND purchdata.supplierno='" . $_SESSION['PO'.$identifier]->SupplierID . "'
@@ -1004,6 +1042,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 					FROM stockmaster INNER JOIN stockcategory
 					ON stockmaster.categoryid=stockcategory.categoryid
 					WHERE stockmaster.mbflag<>'D'
+					AND stockmaster.mbflag<>'A'
 					AND stockmaster.mbflag<>'K'
 					AND stockmaster.mbflag<>'G'
 					AND stockmaster.discontinued<>1

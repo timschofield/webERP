@@ -15,6 +15,12 @@ if (!file_exists($PathPrefix . 'config.php')){
 }
 include($PathPrefix . 'config.php');
 
+if (isset($dbuser)) {
+	$DBUser=$dbuser;
+	$DBPassword=$dbpassword;
+	$DBType=$dbType;
+}
+
 if (isset($SessionSavePath)){
 	session_save_path($SessionSavePath);
 }

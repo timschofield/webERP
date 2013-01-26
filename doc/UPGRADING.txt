@@ -8,21 +8,7 @@ Normally all that is required is to:
 1. Copy (backup) the existing scripts to a new directory under your web-server.
 2. Extract the new scripts from the webERP archive over the existing scripts - to overwrite the old scripts with the new scripts.
 3. Take a backup of your mysql webERP databases
-4. If you are upgrading to 4.10 you need to hand edit config.php as described below
-5. Log into each company in webERP and the automatic database upgrade script will run (assuming upgrade to a version post 4.01) on that company database. All companies in the installation need to be upgraded.
-
-
-
-The config.php file has remained the same for a long time, but from 4.10 the config.php variable nameing was changed to be consistent with the rest of the system:
-
-$dbType changed to $DBType
-$dbuser changed to $DBUser
-$dbpassword changed to $DBPassword
-$allow_demo_mode changed to $AllowDemoMode
-$rootpath changed to $RootPath
-
-Your existing config.php file will need to be hand edited to change these variable names. This should be done prior to running the system - or it will fail!
-
+4. Log into each company in webERP and the automatic database upgrade script will run (assuming upgrade to a version post 4.01) on that company database. All companies in the installation need to be upgraded.
 
 AUTOMATIC DATABASE UPGRADE FROM VERSION 4.01
 
@@ -62,6 +48,19 @@ where:
 - YY.YY is the new version number
 
 The new php scripts should be copied into the webERP directory under the web-server root directory.
+
+
+NOTE ON UPGRADING TO VERSIONS POST 4.10
+
+From 4.10 the config.php variable nameing was changed to be consistent with the rest of the system:
+
+$dbType changed to $DBType
+$dbuser changed to $DBUser
+$dbpassword changed to $DBPassword
+$allow_demo_mode changed to $AllowDemoMode
+$rootpath changed to $RootPath
+
+The upgrade script should modify your existing config.php file automatically to change these variable names.
 
 NOTES ON UPGRADING TO VERSIONS POST 4.09
 

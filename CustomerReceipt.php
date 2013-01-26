@@ -832,7 +832,7 @@ if ($_SESSION['ReceiptBatch']->AccountCurrency!=$_SESSION['ReceiptBatch']->Curre
 	}
 	if ($_SESSION['ReceiptBatch']->ExRate==1 AND isset($SuggestedExRate)){
 		$_SESSION['ReceiptBatch']->ExRate = $SuggestedExRate;
-	}elseif($_POST['Currency'] != $_POST['PreviousCurrency'] and isset($SuggestedExRate)){//the user has changed the currency, then we should revise suggested rate
+	}elseif($_POST['Currency'] != $_POST['PreviousCurrency'] AND isset($SuggestedExRate)){//the user has changed the currency, then we should revise suggested rate
 		$_SESSION['ReceiptBatch']->ExRate = $SuggestedExRate;
 	}
 	echo '<tr>

@@ -64,7 +64,7 @@ if (isset($_POST['submit'])) {
 
 	$sql="SELECT count(groupname)
 			FROM accountgroups
-			WHERE groupname='".$_POST['GroupName']."'";
+			WHERE groupname='" . $_POST['GroupName'] . "'";
 
 	$DbgMsg = _('The SQL that was used to retrieve the information was');
 	$ErrMsg = _('Could not check whether the group exists because');
@@ -72,7 +72,7 @@ if (isset($_POST['submit'])) {
 	$result=DB_query($sql, $db,$ErrMsg,$DbgMsg);
 	$myrow=DB_fetch_row($result);
 
-	if ($myrow[0]!=0 AND $_POST['SelectedAccountGroup']=='') {
+	if ($myrow[0] != 0 AND $_POST['SelectedAccountGroup'] == '') {
 		$InputError = 1;
 		prnMsg( _('The account group name already exists in the database'),'error');
 		$Errors[$i] = 'GroupName';
@@ -138,6 +138,26 @@ if (isset($_POST['submit'])) {
 	if ($_POST['SelectedAccountGroup']!='' AND $InputError !=1) {
 
 		/*SelectedAccountGroup could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
+		if ($_POST['SelectedAccountGroup']!==$_POST['GroupName']) {
+
+			DB_IgnoreForeignKeys($db);
+
+			$sql = "UPDATE chartmaster
+					SET group_='" . $_POST['GroupName'] . "'
+					WHERE group_='" . $_POST['SelectedAccountGroup'] . "'";
+			$ErrMsg = _('An error occurred in renaming the account group');
+			$DbgMsg = _('The SQL that was used to rename the account group was');
+
+			$result = DB_query($sql, $db, $ErrMsg, $DbgMsg);
+
+			$sql = "UPDATE accountgroups
+					SET parentgroupname='" . $_POST['GroupName'] . "'
+					WHERE parentgroupname='" . $_POST['SelectedAccountGroup'] . "'";
+
+			$result = DB_query($sql, $db, $ErrMsg, $DbgMsg);
+
+			DB_ReinstateForeignKeys($db);
+		}
 
 		$sql = "UPDATE accountgroups SET groupname='" . $_POST['GroupName'] . "',
 										sectioninaccounts='" . $_POST['SectionInAccounts'] . "',
@@ -347,15 +367,7 @@ if (!isset($_GET['delete'])) {
 		echo '<tr>
 				<th colspan="2">' . _('Edit Account Group Details') . '</th>
 			</tr>';
-        echo '<tr>
-		         <td><input type="hidden" name="SelectedAccountGroup" value="' . $_GET['SelectedAccountGroup'] . '" /></td>
-		         <td><input type="hidden" name="GroupName" value="' . $_POST['GroupName'] . '" /></td>
-             </tr>';
-
-		echo '<tr>
-				<td>' . _('Account Group') . ':' . '</td>
-				<td>' . $_POST['GroupName'] . '</td>
-			</tr>';
+        echo '<input type="hidden" name="SelectedAccountGroup" value="' . $_GET['SelectedAccountGroup'] . '" />';
 
 	} elseif (!isset($_POST['MoveGroup'])) { //end of if $_POST['SelectedAccountGroup'] only do the else when a new record is being entered
 
@@ -382,12 +394,12 @@ if (!isset($_GET['delete'])) {
         echo '<tr>
                  <td><input  type="hidden" name="SelectedAccountGroup" value="' . $_POST['SelectedAccountGroup'] . '" /></td>
             </tr>';
-		echo '<tr>
-				<td>' . _('Account Group Name') . ':' . '</td>
-				<td><input tabindex="1" ' . (in_array('GroupName',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="GroupName" size="50" maxlength="50" value="' . $_POST['GroupName'] . '" /></td>
-			</tr>';
 	}
 	echo '<tr>
+			<td>' . _('Account Group Name') . ':' . '</td>
+			<td><input tabindex="1" ' . (in_array('GroupName',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="GroupName" size="50" maxlength="50" value="' . $_POST['GroupName'] . '" /></td>
+		</tr>
+		<tr>
 			<td>' . _('Parent Group') . ':' . '</td>
 			<td><select tabindex="2" ' . (in_array('ParentGroupName',$Errors) ?  'class="selecterror"' : '' ) . '  name="ParentGroupName">';
 
@@ -407,10 +419,9 @@ if (!isset($_GET['delete'])) {
 			echo '<option value="'.htmlspecialchars($grouprow['groupname'], ENT_QUOTES,'UTF-8').'">' .htmlspecialchars($grouprow['groupname'], ENT_QUOTES,'UTF-8').'</option>';
 		}
 	}
-	echo '</select>';
-	echo '</td></tr>';
-
-	echo '<tr>
+	echo '</select></td>
+		</tr>
+		<tr>
 			<td>' . _('Section In Accounts') . ':' . '</td>
 			<td><select tabindex="3" ' . (in_array('SectionInAccounts',$Errors) ?  'class="selecterror"' : '' ) . ' name="SectionInAccounts">';
 
@@ -423,10 +434,9 @@ if (!isset($_GET['delete'])) {
 			echo '<option value="'.$secrow['sectionid'].'">'.$secrow['sectionname'].' ('.$secrow['sectionid'].')</option>';
 		}
 	}
-	echo '</select>';
-	echo '</td></tr>';
-
-	echo '<tr>
+	echo '</select></td>
+		</tr>
+		<tr>
 			<td>' . _('Profit and Loss') . ':' . '</td>
 			<td><select tabindex="4" name="PandL">';
 
@@ -441,22 +451,21 @@ if (!isset($_GET['delete'])) {
 		echo '<option value="0">' . _('No').'</option>';
 	}
 
-	echo '</select></td></tr>';
-
-	echo '<tr>
+	echo '</select></td>
+		</tr>
+		<tr>
 			<td>' . _('Sequence In TB') . ':' . '</td>
 			<td><input tabindex="5" type="text" maxlength="4" name="SequenceInTB" class="number" value="' . $_POST['SequenceInTB'] . '" /></td>
-		</tr>';
-
-	echo '<tr>
+		</tr>
+		<tr>
 			<td colspan="2"><div class="centre"><input tabindex="6" type="submit" name="submit" value="' . _('Enter Information') . '" /></div></td>
-		</tr>';
-
-	echo '</table><br />';
+		</tr>
+		</table>
+		<br />';
 
 	echo '<script  type="text/javascript">defaultControl(document.forms[0].GroupName);</script>';
-    echo '</div>';
-	echo '</form>';
+    echo '</div>
+		</form>';
 
 } //end if record deleted no point displaying form to add record
 include('includes/footer.inc');

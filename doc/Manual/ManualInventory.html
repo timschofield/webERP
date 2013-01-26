@@ -51,6 +51,8 @@
         <li>Integration with purchasing, accounts payable, accounts receivable and general ledger.</li>
 
         <li>Any number of custom fields can be added specific to each inventory category</li>
+        
+        <li>Internal stock requests with departmental authorisation</li>
     </ul><!-- Help Begin: Stocks -->
 
     <div class="floatright">
@@ -453,7 +455,6 @@
     <p>Note: Location codes cannot be modified retrospectively. Neither can they be deleted if there are stock movements, users (default location) or customer branch records set up to receive stock from the location. <!-- Help End: Locations --></p><!-- Help Begin: StockAdjustments -->
 
     <h2><a id="InventoryAdjustments">Inventory Adjustments</a></h2>
-
     <p>Inventory can be written on or off for individual stock items using this option. Corrections to physical stocks and deliveries of stock can be entered using this option. Adjustments can be entered by selecting the link on the SelectProduct.php page or directly from the menu under transactions. Using the second link, the item code must be known, there is no facility to select an item code from this page.</p>
 
     <p>If Stock GL integration is enabled from the company preferences page (under the setup tab), then the system creates the necessary journals in the general ledger to update the stock account and the profit and loss account stock adjustment account specified in the stock category record. (see Inventory Categories above and also see General Ledger Integration later)</p>
@@ -461,6 +462,38 @@
     <p>Note: Inventory Adjustments are not possible with kit set, assembly or dummy stock items since no stock record is maintained for these items.</p>
 
     <p>Inventory adjustments for controlled items must select the batches/serial numbers being adjusted. <!-- Help End: StockAdjustments --></p><!-- Help Begin: StockTransfers -->
+
+    <p>Bulk inventory transfers consisting of many parts can be set up. These allow a docket to be produced to be sent with the dispatch of the goods. The transfer is not actually effected until the transfer is received in by the receiving stock location. <!-- Help End: StockTransfers --></p>
+    <div class="floatright">
+        <a class="minitext" href="#top">? Top</a>
+    </div>
+
+    <h2><a id="InventoryRequests">Internal Stock Requests</a></h2>
+
+    <p>Internal departments of an organisation to make requests for consumable items from a particular stock location.</p>
+    <p>Departments are created via the Inventory section of the setup module. The name of the department must be entered, and the userid of the person who will be responsible for authorising the requests from that department must be selected here.</p>
+  <p>Each user can be given permission to create internal stock requests for a particular department, or they can have permission to create requests for all departments.</p>
+  <p>Individual stock locations have a flag that can be set to allow or disallow internal stock requests to be fulfilled from that location.</p>
+  <p>Also each user role, can have specific stock categories assigned to it for which intyernal stock requests can be created. These are created in the Maintain Internal Stock Categories to User Roles section of the setup module.</p>
+
+  <ul>
+    <li>
+      <h3>Create a New Internal Stock Request</h3>
+      <p>An internal stock request is created in two parts. Firstly the header, which contains the Department that requires the items, the location that you wish the request to be fulfilled from, the date by which you require the items, and any narrative you wish to add to the request.</p>
+      <p>Secondly the items required are selected and the quantities required are entered.</p>
+      <p>Once you are happy that you have all the items and quantities enetered, submit the request for authorisation.</p>
+    </li>
+    <li>
+      <h3>Authorise Internal Stock Requests</h3>
+
+      <p>When a user chooses this option they will see all unauthorised stock requests that they are allowed to authorise. No other requests will appear. By ticking the authorise checkbox, and clicking on the update button they will authorise this request to be fulfilled.</p>
+    </li>
+    <li>
+      <h3>Fulfil Internal Stock Requests</h3>
+      <p>When the warehouse open this option for their own warehouse, they will see any internal stock requests that are awaiting fulfillment. They can either fulfil all or part of a request. If not all of the request is fulfilled, but the rest will not be, the request can be marked as completed. Also a GL tag can be chosen to tag that entry against.</p>
+    </li>
+  </ul>
+
 
     <div class="floatright">
         <a class="minitext" href="#top">⬆ Top</a>

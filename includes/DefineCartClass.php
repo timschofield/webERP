@@ -55,7 +55,6 @@ Class Cart {
 	Var $CreditAvailable; //in customer currency
 	Var $TaxGroup;
 	Var $DispatchTaxProvince;
-	var $vtigerProductID;
 	Var $DefaultPOLine;
 	Var $DeliveryDays;
 	var $TaxTotals;
@@ -303,28 +302,27 @@ Class Cart {
 		and the taxprovince of the dispatch location */
 
 		$sql = "SELECT stockmovestaxes.taxauthid,
-				taxauthorities.description,
-				taxauthorities.taxglcode,
-				stockmovestaxes.taxcalculationorder,
-				stockmovestaxes.taxontax,
-				stockmovestaxes.taxrate
-			FROM stockmovestaxes INNER JOIN taxauthorities
-				ON stockmovestaxes.taxauthid = taxauthorities.taxid
-			WHERE stkmoveno = '" . $stkmoveno . "'
-			ORDER BY taxcalculationorder";
+					taxauthorities.description,
+					taxauthorities.taxglcode,
+					stockmovestaxes.taxcalculationorder,
+					stockmovestaxes.taxontax,
+					stockmovestaxes.taxrate
+				FROM stockmovestaxes INNER JOIN taxauthorities
+					ON stockmovestaxes.taxauthid = taxauthorities.taxid
+				WHERE stkmoveno = '" . $stkmoveno . "'
+				ORDER BY taxcalculationorder";
 
 		$ErrMsg = _('The taxes and rates for this item could not be retrieved because');
 		$GetTaxRatesResult = DB_query($sql,$db,$ErrMsg);
 
 		while ($myrow = DB_fetch_array($GetTaxRatesResult)){
 
-			$this->LineItems[$LineNumber]->Taxes[$myrow['taxcalculationorder']] =
-								  new Tax($myrow['taxcalculationorder'],
-										$myrow['taxauthid'],
-										$myrow['description'],
-										$myrow['taxrate'],
-										$myrow['taxontax'],
-										$myrow['taxglcode']);
+			$this->LineItems[$LineNumber]->Taxes[$myrow['taxcalculationorder']] =   new Tax($myrow['taxcalculationorder'],
+																							$myrow['taxauthid'],
+																							$myrow['description'],
+																							$myrow['taxrate'],
+																							$myrow['taxontax'],
+																							$myrow['taxglcode']);
 		}
 	} //end method GetExistingTaxes
 
@@ -360,11 +358,11 @@ Class Cart {
 			while ($myrow = DB_fetch_array($GetTaxRatesResult)){
 
 				$this->LineItems[$LineNumber]->Taxes[$myrow['calculationorder']] = new Tax($myrow['calculationorder'],
-														$myrow['taxauthid'],
-														$myrow['description'],
-														$myrow['taxrate'],
-														$myrow['taxontax'],
-														$myrow['taxglcode']);
+																							$myrow['taxauthid'],
+																							$myrow['description'],
+																							$myrow['taxrate'],
+																							$myrow['taxontax'],
+																							$myrow['taxglcode']);
 			} //end loop around different taxes
 		} //end if there are some taxes defined
 	} //end method GetTaxes
@@ -407,11 +405,11 @@ Class Cart {
 		while ($myrow = DB_fetch_array($GetTaxRatesResult)){
 
 			$this->FreightTaxes[$myrow['calculationorder']] = new Tax($myrow['calculationorder'],
-											$myrow['taxauthid'],
-											$myrow['description'],
-											$myrow['taxrate'],
-											$myrow['taxontax'],
-											$myrow['taxglcode']);
+																		$myrow['taxauthid'],
+																		$myrow['description'],
+																		$myrow['taxrate'],
+																		$myrow['taxontax'],
+																		$myrow['taxglcode']);
 		}
 	} //end method GetFreightTaxes()
 

@@ -159,11 +159,13 @@ echo '</select></td>
 echo '</table>
 	<br />
 	<div class="centre">
-		<input tabindex="6" type="submit" name="ShowTransactions" value="' . _('Show selected') . ' ' . $TypeName . '" />
-		<p>
-		<a href="' . $RootPath . '/BankReconciliation.php?Account=' . $_POST['BankAccount'] . '">' . _('Show reconciliation') . '</a>
-		</p>
-	</div>';
+		<input tabindex="6" type="submit" name="ShowTransactions" value="' . _('Show selected') . ' ' . $TypeName . '" />';
+
+if (isset($_POST['BankAccount'])) {
+   echo '<p><a href="' . $RootPath . '/BankReconciliation.php?Account=' . $_POST['BankAccount'] . '">' . _('Show reconciliation') . '</a></p>';
+}
+
+echo '</div>';
 
 $InputError=0;
 if (!Is_Date($_POST['BeforeDate'])){

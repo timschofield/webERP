@@ -47,7 +47,7 @@ if (isset($_POST['submit'])) {
 	$result=DB_query($sql, $db);
 	$myrow=DB_fetch_row($result);
 
-	if ($myrow[0]!=0 and !isset($SelectedCurrency)) {
+	if ($myrow[0]!=0 AND !isset($SelectedCurrency)) {
 		$InputError = 1;
 		prnMsg( _('The currency already exists in the database'),'error');
 		$Errors[$i] = 'Abbreviation';
@@ -61,7 +61,7 @@ if (isset($_POST['submit'])) {
 	}
 	if (!is_numeric(filter_number_format($_POST['ExchangeRate']))){
 		$InputError = 1;
-	   prnMsg(_('The exchange rate must be numeric'),'error');
+		prnMsg(_('The exchange rate must be numeric'),'error');
 		$Errors[$i] = 'ExchangeRate';
 		$i++;
 	}
@@ -300,7 +300,8 @@ or deletion of the records*/
 		}
 
 	} //END WHILE LIST LOOP
-	echo '</table><br />';
+	echo '</table>
+			<br />';
 } //end of ifs and buts!
 
 
@@ -373,7 +374,7 @@ if (!isset($_GET['delete'])) {
 	if (!isset($_POST['Country'])) {
 		$_POST['Country']='';
 	}
-	echo '<input ' . (in_array('Country',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="Country" size="30" maxlength="50" value="' . $_POST['Country'] . '" /></td>
+	echo '<input ' . (in_array('Country',$Errors) ?  'class="inputerror"' : '' ) . ' type="text" name="Country" size="30" maxlength="50" value="' . $_POST['Country'] . '" /></td>
 		</tr>
 		<tr>
 			<td>'._('Hundredths Name').':</td>
@@ -381,7 +382,7 @@ if (!isset($_GET['delete'])) {
 	if (!isset($_POST['HundredsName'])) {
 		$_POST['HundredsName']='';
 	}
-	echo '<input ' . (in_array('HundredsName',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="HundredsName" size="10" maxlength="15" value="'. $_POST['HundredsName'].'" /></td>
+	echo '<input ' . (in_array('HundredsName',$Errors) ?  'class="inputerror"' : '' ) . ' type="text" name="HundredsName" size="10" maxlength="15" value="'. $_POST['HundredsName'].'" /></td>
 		</tr>
 		<tr>
 			<td>'._('Decimal Places to Display').':</td>
@@ -389,7 +390,7 @@ if (!isset($_GET['delete'])) {
 	if (!isset($_POST['DecimalPlaces'])) {
 		$_POST['DecimalPlaces']='';
 	}
-	echo '<input ' . (in_array('DecimalPlaces',$Errors) ?  'class="inputerror"' : 'class="number"' ) .' type="text" name="DecimalPlaces" size="2" maxlength="2" value="'. $_POST['DecimalPlaces'].'" /></td>
+	echo '<input ' . (in_array('DecimalPlaces',$Errors) ?  'class="inputerror"' : 'class="number"' ) . ' type="text" name="DecimalPlaces" size="2" maxlength="2" value="' . $_POST['DecimalPlaces'].'" /></td>
 		</tr>
 		<tr>
 			<td>'._('Exchange Rate').':</td>
@@ -397,13 +398,13 @@ if (!isset($_GET['delete'])) {
 	if (!isset($_POST['ExchangeRate'])) {
 		$_POST['ExchangeRate']='';
 	}
-	echo '<input ' . (in_array('ExchangeRate',$Errors) ?  'class="inputerror"' : '' ) .' type="text" class="number" name="ExchangeRate" size="10" maxlength="10" value="'. $_POST['ExchangeRate'].'" /></td>
+	echo '<input ' . (in_array('ExchangeRate',$Errors) ?  'class="inputerror"' : '' ) .' type="text" class="number" name="ExchangeRate" size="10" maxlength="10" value="' . $_POST['ExchangeRate'] . '" /></td>
 		</tr>
 		</table>';
 
 	echo '<br />
 		<div class="centre">
-			<input type="submit" name="submit" value="'._('Enter Information').'" />
+			<input type="submit" name="submit" value="' . _('Enter Information') . '" />
 		</div>
         </div>
 		</form>';

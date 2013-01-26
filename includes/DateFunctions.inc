@@ -47,6 +47,7 @@ function Is_date($DateEntry) {
 
 
 	if (is_long((int)$Date_Array[0]) AND is_long((int)$Date_Array[1]) AND is_long((int)$Date_Array[2])) {
+
 		if (($_SESSION['DefaultDateFormat']=='d/m/Y') OR ($_SESSION['DefaultDateFormat']=='d.m.Y')){
 
 			if (checkdate((int)$Date_Array[1],(int)$Date_Array[0],(int)$Date_Array[2])){
@@ -68,13 +69,16 @@ function Is_date($DateEntry) {
 			} else {
 				return 0;
 			}
+		} elseif ($_SESSION['DefaultDateFormat']=='Y-m-d'){
+			if (checkdate((int)$Date_Array[1],(int)$Date_Array[2],(int)$Date_Array[0])){
+				return 1;
+			} else {
+				return 0;
+			}
 		} else { /*Can't be in an appropriate DefaultDateFormat */
 			return 0;
 		}
-	}else { // end if all numeric inputs
-		return 0;
 	}
-
 } //end of Is_Date function
 
 
@@ -248,6 +252,9 @@ function ConvertSQLDate($DateEntry) {
 			case 'Y/m/d':
 				return '0000/0/0';
 				break;
+			case 'Y-m-d':
+				return '0000-0-0';
+				break;
 		}
 	}
 
@@ -263,8 +270,9 @@ function ConvertSQLDate($DateEntry) {
 		return $Date_Array[1].'/'.$Date_Array[2].'/'.$Date_Array[0];
 	} elseif ($_SESSION['DefaultDateFormat']=='Y/m/d'){
 		return $Date_Array[0].'/'.$Date_Array[1].'/'.$Date_Array[2];
+	} elseif ($_SESSION['DefaultDateFormat']=='Y-m-d'){
+		return $Date_Array[0].'-'.$Date_Array[1].'-'.$Date_Array[2];
 	}
-
 } // end function ConvertSQLDate
 
 function ConvertSQLDateTime($DateEntry) {
@@ -494,6 +502,10 @@ function Format_Date($DateEntry) {
 			if (checkdate((int)$Date_Array[2],(int)$Date_Array[0],(int)$Date_Array[1])){
 				return $Date_Array[0].'/'.$Date_Array[1].'/'.$Date_Array[2];
 			}
+		} elseif ($_SESSION['DefaultDateFormat']='Y-m-d'){
+			if (checkdate((int)$Date_Array[2],(int)$Date_Array[0],(int)$Date_Array[1])){
+				return $Date_Array[0].'-'.$Date_Array[1].'-'.$Date_Array[2];
+			}
 		} // end if check date
 	} else { // end if all numeric inputs
 		return 0;
@@ -523,7 +535,7 @@ and converts to a yyyy/mm/dd format */
 		$Date_Array[2]= mb_substr($DateEntry,6,2);
 	}
 
-	if ($_SESSION['DefaultDateFormat']=='Y/m/d') {
+	if ($_SESSION['DefaultDateFormat']=='Y/m/d' OR $_SESSION['DefaultDateFormat']=='Y-m-d') {
 		if (mb_strlen($Date_Array[0])==2) {
 			if ((int)$Date_Array[0] <=60) {
 				$Date_Array[0] = '20'.$Date_Array[2];
@@ -591,7 +603,7 @@ function LastDayOfMonth ( $DateEntry) {
 		$Date_Array[2]= mb_substr($DateEntry,6,2);
 	}
 
-	if ($_SESSION['DefaultDateFormat']=='Y/m/d') {
+	if ($_SESSION['DefaultDateFormat']=='Y/m/d' OR $_SESSION['DefaultDateFormat']=='Y-m-d') {
 		if (mb_strlen($Date_Array[0])==2) {
 			if ((int)$Date_Array[0] <=60) {
 				$Date_Array[0] = '20'.$Date_Array[2];
@@ -646,9 +658,12 @@ function Date1GreaterThanDate2 ($Date1, $Date2) {
 	} elseif ($_SESSION['DefaultDateFormat'] =='m/d/Y'){
 		list($Month1,$Day1,$Year1) = explode('/', $Date1);
 		list($Month2,$Day2,$Year2) = explode('/', $Date2);
-	} elseif ($_SESSION['DefaultDateFormat'] =='Y/m/d'){
+	} elseif ($_SESSION['DefaultDateFormat'] =='Y/m/d' ){
 		list($Year1,$Month1,$Day1) = explode('/', $Date1);
 		list($Year2,$Month2,$Day2) = explode('/', $Date2);
+	} elseif ($_SESSION['DefaultDateFormat'] =='Y-m-d' ){
+		list($Year1,$Month1,$Day1) = explode('-', $Date1);
+		list($Year2,$Month2,$Day2) = explode('-', $Date2);
 	}
 
 	/*Try to make the year of each date comparable - if one date is specified as just
@@ -743,7 +758,7 @@ function CalcDueDate($TranDate, $DayInFollowingMonth, $DaysBeforeDue){
 			$MonthDue = $Date_Array[0]+1;
 			$YearDue = $Date_Array[2];
 		}
-	} elseif ($_SESSION['DefaultDateFormat']=='Y/m/d'){
+	} elseif ($_SESSION['DefaultDateFormat']=='Y/m/d' OR $_SESSION['DefaultDateFormat']=='Y-m-d'){
 		if ($DayInFollowingMonth==0){ /*then it must be set up for DaysBeforeDue type */
 			$DayDue = $Date_Array[2]+$DaysBeforeDue;
 			$MonthDue = $Date_Array[1];
@@ -819,7 +834,7 @@ function DateAdd ($DateToAddTo,$PeriodString,$NumberPeriods){
 		default:
 			return 0;
 		}
-	} elseif ($_SESSION['DefaultDateFormat']=='Y/m/d'){
+	} elseif ($_SESSION['DefaultDateFormat']=='Y/m/d' OR $_SESSION['DefaultDateFormat']=='Y-m-d'){
 
 		switch ($PeriodString) {
 		case 'd':
@@ -871,7 +886,7 @@ provided that both dates are after 1970. Also only works for dates up to the yea
 	} elseif ($_SESSION['DefaultDateFormat']=='m/d/Y'){
 		$Date1_Stamp = mktime(0,0,0, (int)$Date1_array[0],(int)$Date1_array[1],(int)$Date1_array[2]);
 		$Date2_Stamp = mktime(0,0,0, (int)$Date2_array[0],(int)$Date2_array[1],(int)$Date2_array[2]);
-	} elseif ($_SESSION['DefaultDateFormat']=='Y/m/d'){
+	} elseif ($_SESSION['DefaultDateFormat']=='Y/m/d' OR $_SESSION['DefaultDateFormat']=='Y-m-d'){
 		$Date1_Stamp = mktime(0,0,0, (int)$Date1_array[1],(int)$Date1_array[2],(int)$Date1_array[0]);//Changeorder of entries to match Y/M/D format
 		$Date2_Stamp = mktime(0,0,0, (int)$Date2_array[1],(int)$Date2_array[2],(int)$Date2_array[0]); //Changeorder of entries to match Y/M/D format
 	}
@@ -976,7 +991,7 @@ function GetPeriod ($TransDate, &$db, $UseProhibit=true) {
 		$TransDate = mktime(0,0,0,$Date_Array[1],$Date_Array[0],$Date_Array[2]);
 	} elseif ($_SESSION['DefaultDateFormat']=='m/d/Y'){
 		$TransDate = mktime(0,0,0,$Date_Array[0],$Date_Array[1],$Date_Array[2]);
-	} elseif ($_SESSION['DefaultDateFormat']=='Y/m/d'){
+	} elseif ($_SESSION['DefaultDateFormat']=='Y/m/d' OR $_SESSION['DefaultDateFormat']=='Y-m-d'){
 		$TransDate = mktime(0,0,0,$Date_Array[1],$Date_Array[2],$Date_Array[0]);
 	}
 
@@ -1068,6 +1083,4 @@ function GetPeriod ($TransDate, &$db, $UseProhibit=true) {
 
 	return $myrow[0];
 }
-
-
 ?>

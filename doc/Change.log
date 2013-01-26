@@ -1,5 +1,11 @@
 webERP Change Log
 
+27/1/13 Phil: Sell Through Support scripts - allows setting up rebate for a customer/supplier/item combinations for a date range with a discount to apply. A claim report allows a listing of invoices/credits where these items have been sold accumulating the claim from the supplier. Claim report needs work.
+27/1/13 Phil: Supplier discounts/promotions can now be configured against supplier purchasing data with an effective date range. Purchase orders automatically accumulate and apply the discounts on placing orders.
+27/1/13 Tim/Fahad Hatib: Various minor improvements from their fork Kwamoja
+10/1/13 Martha Madjack: Use scandir to get an array of files/directories for neater code
+6/1/13 Phil: Prevent selection of assembly items to create purchase orders for... these are just selling devices like kits
+4/1/13 Bob Thomas: Fix wiki link for media wiki had extra /
 2/1/13 Thomas Lie: corrections to various strings where English was suspect!!
 29/12/12 Phil: on log out destroy session and show the login form - avoiding nasty errors
 29/12/12 Phil: Proper casing of $Title $RootPath $Theme $DBType $DBUser $DBPassword $AllowDemoMode variables - may make upgrade tricky!!

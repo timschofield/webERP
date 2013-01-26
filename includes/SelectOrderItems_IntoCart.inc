@@ -32,21 +32,21 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0
 if ($AlreadyOnThisOrder!=1){
 
     $sql = "SELECT stockmaster.description,
-				stockmaster.longdescription,
-				stockmaster.stockid,
-				stockmaster.units,
-				stockmaster.volume,
-				stockmaster.kgs,
-				(materialcost+labourcost+overheadcost) AS standardcost,
-				locstock.quantity,
-				stockmaster.mbflag,
-				stockmaster.discountcategory,
-				stockmaster.decimalplaces,
-				stockmaster.discontinued,
-				stockmaster.serialised,
-				stockmaster.eoq,
-				stockmaster.nextserialno,
-				stockmaster.taxcatid
+					stockmaster.longdescription,
+					stockmaster.stockid,
+					stockmaster.units,
+					stockmaster.volume,
+					stockmaster.kgs,
+					(materialcost+labourcost+overheadcost) AS standardcost,
+					locstock.quantity,
+					stockmaster.mbflag,
+					stockmaster.discountcategory,
+					stockmaster.decimalplaces,
+					stockmaster.discontinued,
+					stockmaster.serialised,
+					stockmaster.eoq,
+					stockmaster.nextserialno,
+					stockmaster.taxcatid
 			FROM stockmaster INNER JOIN locstock
 			ON stockmaster.stockid=locstock.stockid
 			WHERE locstock.loccode='" . $_SESSION['Items'.$identifier]->Location . "'
@@ -65,14 +65,14 @@ if ($AlreadyOnThisOrder!=1){
 			prnMsg(_('The item') . ' ' . $NewItem . ' ' . _('could not be added to the order because it has been flagged as obsolete'),'error',_('Obsolete Item'));
 
 		} elseif (($_SESSION['AllowSalesOfZeroCostItems'] == false
-			AND $myItemRow['standardcost']>0
-			AND ($myItemRow['mbflag']=='B'
-			OR $myItemRow['mbflag']=='M'))
-		OR ($_SESSION['AllowSalesOfZeroCostItems'] == false
-			AND ($myItemRow['mbflag']=='A'
-			OR $myItemRow['mbflag']=='D'
-			OR $myItemRow['mbflag']=='K'))
-		OR $_SESSION['AllowSalesOfZeroCostItems']==true) {
+						AND $myItemRow['standardcost']>0
+						AND ($myItemRow['mbflag']=='B'
+						OR $myItemRow['mbflag']=='M'))
+					OR ($_SESSION['AllowSalesOfZeroCostItems'] == false
+						AND ($myItemRow['mbflag']=='A'
+						OR $myItemRow['mbflag']=='D'
+						OR $myItemRow['mbflag']=='K'))
+					OR $_SESSION['AllowSalesOfZeroCostItems']==true) {
 
 		/*these checks above ensure that the item has a cost if the
 		config.php variable AllowSalesOfZeroCostItems is set to false */
@@ -91,7 +91,7 @@ if ($AlreadyOnThisOrder!=1){
 				$NewLineNo = -1; /* this is ok b/c CartClass will change to the correct line no */
 			}
 
-			if (isset($StockItem) and $myItemRow['discountcategory'] != '' ){
+			if (isset($StockItem) AND $myItemRow['discountcategory'] != '' ){
 				$DiscCatsDone[$Counter]=$StockItem->DiscCat;
 				$QuantityOfDiscCat =0;
 				$result = DB_query("SELECT MAX(discountrate) AS discount
@@ -111,6 +111,74 @@ if ($AlreadyOnThisOrder!=1){
 
 			$Price = GetPrice($NewItem, $_SESSION['Items'.$identifier]->DebtorNo,$_SESSION['Items'.$identifier]->Branch, $db);
 
+			/* Need to check for sell through support deals */
+			
+			$sql = "SELECT rebateamount/rate AS rebateinfunctionalcurrency,
+							rebatepercent
+					FROM sellthroughsupport INNER JOIN suppliers
+						ON suppliers.supplierid=sellthroughsupport.supplierno
+					INNER JOIN currencies
+						ON currencies.currabrev=suppliers.currcode
+					WHERE stockid='" . $NewItem . "'
+					AND (debtorno='" . $_SESSION['Items'.$identifier]->DebtorNo . "'
+						OR debtorno='')
+					AND effectivefrom <='" . Date('Y-m-d') . "'
+					AND effectiveto >='" . Date('Y-m-d') . "'";
+			$SellSuppResult = DB_query($sql,$db);
+			$SellSupportDiscount = 0;
+			$SellSupportPercent = 0;
+			/*Only the highest discount is taken - it is not accumulated ? */
+			if (DB_num_rows($SellSuppResult) > 0){
+				while ($SellSupportRow = DB_fetch_array($SellSuppResult)){
+					if ($SellSupportRow['rebatepercent'] > $SellSupportPercent){
+						$SellSupportPercent = $SellSupportRow['rebatepercent'];
+					}
+					if ($SellSupportRow['rebateinfunctionalcurrency'] > $SellSupportAmount){
+						$SellSupportDiscount = $SellSupportRow['rebateinfunctionalcurrency'];
+					}
+				}
+			}
+			
+			/* Sell support can also be specified by stock category */
+
+			$sql = "SELECT rebateamount/rate AS rebateinfunctionalcurrency,
+							rebatepercent
+					FROM sellthroughsupport INNER JOIN stockmaster
+					ON sellthroughsupport.categoryid=stockmaster.categoryid
+					INNER JOIN suppliers
+					ON suppliers.supplierid=sellthroughsupport.supplierno
+					INNER JOIN currencies
+					ON currencies.currabrev=suppliers.currcode
+					WHERE stockmaster.stockid='" . $NewItem . "'
+					AND (debtorno='" . $_SESSION['Items'.$identifier]->DebtorNo . "'
+						OR debtorno='')
+					AND effectivefrom <='" . Date('Y-m-d') . "'
+					AND effectiveto >='" . Date('Y-m-d') . "'";
+			$SellSuppResult = DB_query($sql,$db);
+			/*Only the highest discount is taken - it is not accumulated ? */
+			if (DB_num_rows($SellSuppResult) > 0){
+				while ($SellSupportRow = DB_fetch_array($SellSuppResult)){
+					if ($SellSupportRow['rebatepercent'] > $SellSupportPercent){
+						$SellSupportPercent = $SellSupportRow['rebatepercent'];
+					}
+					if ($SellSupportRow['rebateinfunctionalcurrency'] > $SellSupportAmount){
+						$SellSupportDiscount = $SellSupportRow['rebateinfunctionalcurrency'];
+					}
+				}
+			}
+			if ($_SESSION['Items'.$identifier]->DefaultCurrency != $_SESSION['CompanyRecord']['currencydefault'] AND $SellSupportDiscount != 0) {
+				/* Customer currency is not the same as the functional/home currency so need to convert the rebate amount */
+				/* Would be better to have the currency rate held in the cart object so only have to run this query once - this is a hack for this purpose! */
+				$CurrResult = DB_query("SELECT rate FROM currencies WHERE currabrev='" . $_SESSION['Items'.$identifier]->DefaultCurrency . "'",$db);
+				$CurrRow = DB_fetch_array($CurrResult);
+				$SellSupportDiscount *= $CurrRow['rate'];
+			}
+			/*Convert the Sell through support discount to a percentage and add it to the $SellSupportPercent */
+			$SellSupportPercent += ($SellSupportDiscount/$Price);
+			
+			$Discount += $SellSupportPercent; //combine any discount matrix discount with the sell through support.
+			prnMsg(_('Sell through support available and applied of') . ' ' . locale_number_format($SellSupportPercent*100,2), 'info');
+			
 			$WithinCreditLimit = true;
 
 			if ($_SESSION['Items'.$identifier]->SpecialInstructions) {
@@ -129,6 +197,7 @@ if ($AlreadyOnThisOrder!=1){
 					$AlreadyWarnedAboutCredit = true;
 				}
 			}
+
 
 			if ($WithinCreditLimit == true){
 				$_SESSION['Items'.$identifier]->add_to_cart ($NewItem,
