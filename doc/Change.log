@@ -4,6 +4,7 @@ webERP Change Log
 27/1/13 Phil: Supplier discounts/promotions can now be configured against supplier purchasing data with an effective date range. Purchase orders automatically accumulate and apply the discounts on placing orders.
 27/1/13 Tim/Fahad Hatib: Various minor improvements from their fork Kwamoja
 27/1/13 Tim: Provide facility for editing account group name in AccountGroups.php
+27/1/13 Tim: Automatically adjust config.php for variable name changes 
 10/1/13 Martha Madjack: Use scandir to get an array of files/directories for neater code
 6/1/13 Phil: Prevent selection of assembly items to create purchase orders for... these are just selling devices like kits
 4/1/13 Bob Thomas: Fix wiki link for media wiki had extra /
