@@ -3,6 +3,7 @@ webERP Change Log
 27/1/13 Phil: Sell Through Support scripts - allows setting up rebate for a customer/supplier/item combinations for a date range with a discount to apply. A claim report allows a listing of invoices/credits where these items have been sold accumulating the claim from the supplier. Claim report needs work.
 27/1/13 Phil: Supplier discounts/promotions can now be configured against supplier purchasing data with an effective date range. Purchase orders automatically accumulate and apply the discounts on placing orders.
 27/1/13 Tim/Fahad Hatib: Various minor improvements from their fork Kwamoja
+27/1/13 Tim: Changes to date functions to allow for Y-m-d date formats
 27/1/13 Tim: Provide facility for editing account group name in AccountGroups.php
 27/1/13 Tim: Automatically adjust config.php for variable name changes 
 27/1/13 Fahad Hatib: Manual updates for internal inventory transfer system
