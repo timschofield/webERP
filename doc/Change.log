@@ -1,5 +1,7 @@
 webERP Change Log
 
+29/1/13 Tim: Fix sql injection security hole in session.inc.
+
 27/1/13 Version 4.10.0 Released
 
 27/1/13 Phil: Sell Through Support scripts - allows setting up rebate for a customer/supplier/item combinations for a date range with a discount to apply. A claim report allows a listing of invoices/credits where these items have been sold accumulating the claim from the supplier. Claim report needs work.
