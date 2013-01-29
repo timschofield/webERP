@@ -69,7 +69,7 @@ if (isset($_SESSION['DatabaseName'])){
 	to limit possibility for SQL injection attacks and cross scripting attacks
 	*/
 	foreach ($_GET as $GetKey => $GetValue) {
-		if (gettype($value) != 'array') {
+		if (gettype($GetValue) != 'array') {
 			$_GET[$GetKey] = DB_escape_string($GetValue);
 		}
 	}
@@ -127,7 +127,7 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
  elseif(basename($_SERVER['SCRIPT_NAME'])=='Logout.php'){
 	header('Location: index.php');
 }
-	
+
 
 /*User is logged in so get configuration parameters  - save in session*/
 include($PathPrefix . 'includes/GetConfig.php');
