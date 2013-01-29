@@ -1,5 +1,7 @@
 webERP Change Log
 
+27/1/13 Version 4.10.0 Released
+
 27/1/13 Phil: Sell Through Support scripts - allows setting up rebate for a customer/supplier/item combinations for a date range with a discount to apply. A claim report allows a listing of invoices/credits where these items have been sold accumulating the claim from the supplier. Claim report needs work.
 27/1/13 Phil: Supplier discounts/promotions can now be configured against supplier purchasing data with an effective date range. Purchase orders automatically accumulate and apply the discounts on placing orders.
 27/1/13 Tim/Fahad Hatib: Various minor improvements from their fork Kwamoja
