@@ -57,6 +57,7 @@ $sql="SELECT fixedassets.assetid,
 		INNER JOIN fixedassettrans
 			ON fixedassets.assetid=fixedassettrans.assetid
 		WHERE fixedassettrans.transdate<='" . FormatDateForSQL($_POST['ProcessDate']) . "'
+			AND fixedassets.datepurchased<='" . FormatDateForSQL($_POST['ProcessDate']) . "'
 		GROUP BY fixedassets.assetid,
 			fixedassets.description,
 			fixedassets.depntype,
