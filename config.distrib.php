@@ -11,10 +11,6 @@ $DefaultLanguage ='en_GB.utf8';
 // Whether to display the demo login and password or not on the login screen
 $AllowDemoMode = True;
 
-// webERP version
-
-// $Version = '3.13-rc0 UTF-8 capable';
-
 // The timezone of the business - this allows the possibility of having
 // the web-server on a overseas machine but record local time
 // this is not necessary if you have your own server locally
@@ -58,9 +54,9 @@ $MaximumExecutionTime =120;
 //$SessionSavePath = '/tmp';
 
 // which encryption function should be used
-//$CryptFunction = "md5"; // MD5 Hash
-$CryptFunction = "sha1"; // SHA1 Hash
-//$CryptFunction = ""; // Plain Text
+//$CryptFunction = 'md5'; // MD5 Hash
+$CryptFunction = 'sha1'; // SHA1 Hash
+//$CryptFunction = ''; // Plain Text
 
 //Setting to 12 or 24 determines the format of the clock display at the end of all screens
 $DefaultClock = 12;

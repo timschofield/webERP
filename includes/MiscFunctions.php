@@ -248,16 +248,14 @@ function wikiLink($WikiType, $WikiPageID) {
 		$WikiPath='../' . $_SESSION['WikiPath'] . '/';
 	}
 	if ($_SESSION['WikiApp']==_('WackoWiki')){
-		echo ' ' . _('Wiki ' . $WikiType . ' Knowlege Base') . ' <' . $WikiPath .
-$WikiType .  $WikiPageID . '>  <br />';
+		echo '<a href="' . $WikiPath . $WikiType .  $WikiPageID . '" target="_blank">' . _('Wiki ' . $WikiType . ' Knowlege Base') . ' </a>  <br />';
 	} elseif ($_SESSION['WikiApp']==_('MediaWiki')){
-		echo ' ' . _('Wiki ' . $WikiType . ' Knowlege Base') . ' <' . $WikiPath .
-'index.php/' . $WikiType . '/' .  $WikiPageID . '>  <br />';
+		echo '<a href="' . $WikiPath . 'index.php?title=' .  $WikiPageID . '" target="_blank">' . _('Wiki ' . $WikiType . ' Knowlege Base') . '</a><br />';
 	} elseif ($_SESSION['WikiApp']==_('DokuWiki')){
-		echo $WikiPath . '/doku.php?id=' . $WikiType . ':' . $WikiPageID . ' ' . _('Wiki ' .
-$WikiType . ' Knowlege Base') . ' <br />';
+		echo '<a href="' . $WikiPath . '/doku.php?id=' . $WikiType . ':' . $WikiPageID . '" target="_blank">' . _('Wiki ' .$WikiType . ' Knowlege Base') . '</a><br />';
 	}
 }
+
 //  Lindsay debug stuff
 function LogBackTrace( $dest = 0 ) {
     error_log( "***BEGIN STACK BACKTRACE***", $dest );
