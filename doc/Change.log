@@ -1,6 +1,6 @@
 webERP Change Log
 
-31/1/13 Phil: includes/MiscFunctions.php fix wiki links
+31/1/13 Tim: includes/MiscFunctions.php fix wiki links
 29/1/13 Tim: Fix sql injection security hole in session.inc.
 
 27/1/13 Version 4.10.0 Released
