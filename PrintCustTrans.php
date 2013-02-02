@@ -464,13 +464,13 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 		include('includes/header.inc');
 
 		include ('includes/htmlMimeMail.php');
-		$FileName = $_SESSION['reports_dir'] . '/' . $_SESSION['DatabaseName'] . '_' . $InvOrCredit . '_' . $_GET['FromTransNo'] . '.pdf';
+		$FileName = $_SESSION['reports_dir'] . '/' . $_SESSION['DatabaseName'] . '_' . $InvOrCredit . '_' . $FromTransNo . '.pdf';
 		$pdf->Output($FileName,'F');
 		$mail = new htmlMimeMail();
 
 		$Attachment = $mail->getFile($FileName);
-		$mail->setText(_('Please find attached') . ' ' . $InvOrCredit . ' ' . $_GET['FromTransNo'] );
-		$mail->SetSubject($InvOrCredit . ' ' . $_GET['FromTransNo']);
+		$mail->setText(_('Please find attached') . ' ' . $InvOrCredit . ' ' . $FromTransNo );
+		$mail->SetSubject($InvOrCredit . ' ' . $FromTransNo);
 		$mail->addAttachment($Attachment, $FileName, 'application/pdf');
 		$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . ' <' . $_SESSION['CompanyRecord']['email'] . '>');
 		$result = $mail->send(array($_GET['Email']));

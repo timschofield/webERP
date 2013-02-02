@@ -1,0 +1,46 @@
+<a id="SupplierTenders"><h1>Supplier Tendering System</h1></a>
+<h2>Overview</h2>
+<p>The tendering system enables a company to create tenders for suppliers of one or more items, to send those tenders to one or many suppliers, to enable those suppliers to login to webERP in order to submit their tenders, and enables the company to turn a tender into an order.</p>
+<p>It also allows selected suppliers to login to webERP, to create "offers", whereby the supplier offers a certain quantity of one or many items at a given price. The company can elect to turn that offer into a purchase order, or to decline the offer</p>
+<p>The system works by emails being automatically sent between suppliers and the company and so depends upon the supplier email address being filled out.</p>
+
+<h2>Creating a Tender</h2>
+<p>In order to create a tender, a user must be given permissions to create them. This is done within the user settings screen, and defaults to not allowing the user to create tenders.</p>
+<p>The create a new tender screen is accessed via the Purchases module. There are three sections to creating a tender, the header details, selecting suppliers to send the tender to, and selecting the items that we wish tenders to be submitted for.</p>
+
+<ul>
+	<li><h3>Tender Header Details</h3>
+		<p>The tender header has fields for the date when the delivery must be made, the warehouse that delivery will be needed to, and the contact details for the person dealing with the tender.</p>
+	</li>
+	<li><h3>Suppliers to be invited to tender.</h3>
+		<p>Clicking on the "Select Suppliers" button brings up a screen to search for suppliers. Only suppliers with email addresses input will show in the supplier search screen. This is because the tendering system works by sending emails to everyone involved. You can choose as many suppliers as you want to send the tender request to.</p>
+	</li>
+	<li><h3>Items to be included in the tender</h3>
+		<p>Clicking on the "Select Item Details" button brings up an item search screen. You can search for any item currently set up on KwaMoja and select any quantity to be put for tender. You can select multiple items from one screen. Any number of otems can be on the tender.</p>
+	</li>
+</ul>
+
+<h2>Editing a Tender</h2>
+<p>Once a tender has been created it can be edited in the "Edit Existing Tenders" screen accessible from the purchasing module.</p>
+<p>When you enter this screen a list of all outstanding tenders is shown and you can select which tender to edit.</p>
+
+<h2>Suppliers making an offer</h2>
+<p>When a supplier receives the email notifying them os the tender they can login using the supplier login previously created for them. This will give them an option to "View any open tenders without an offer". Choosing this option allows the supplier to see any tenders open for them to submit, and enables them to give a price, and adjust the quantities and dates if necessary. Processing the tender will then send this information by email back to the company, and updae the database with the tender submitted by the supplier.</p>
+
+<h2>Supplier Offers</h2>
+<p>Sometimes it can occur that a supplier wishes to offer a one off deal of a c ertain quantity of a product or products at a special price. The supplier can use their supplier login to webERP to send you this offer.</p>
+<p>From the supplier login screen the supplier should choose the "Create a new offer" option. This will present them with a stock item selection screen. They can select any number of items here and enter the quantity they wish to offer and the price at which they wish to offer them.</p>
+<p>This offer can have as many items on it as the supplier wishes. Once completed an email is sent to the company</p>
+<p>Existing offers can be edited by selecting the "View or Amend outstanding offers" from the menu.</p>
+
+<h2>Actioning an offer</h2>
+<p>When the company has received offers from suppliers, either as a result of a tender, or directly from the supplier, these can be actioned by selecting the "Process Tenders and Offers" option from the purchases module menu screen. This supplies a drop down list of all suppliers who have made an offer, and the offer is still outstanding. You can view a particular suppliers offer by selecting that supplier.</p>
+<p>Each line of an offer will have three possible actions against it
+<ul>
+	<li>Accept</li>
+	<li>Reject</li>
+	<li>Defer</li>
+</ul>
+If the accept option is chosen, then it gets converted into a purchase order (providing the user has the authority to create orders in that currency).</p>
+<p>Choosing the reject option will remove this offer from the system, and notify the supplier cthat the offer has been rejected.</p>
+<p>Choosing the defer option will leave that offer on the system and it will appear again the next time this option is chosen</p>

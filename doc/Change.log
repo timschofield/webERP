@@ -1,5 +1,6 @@
 webERP Change Log
 
+2/1/13 Phil: Fix PDFTransPageHeader.inc landscape invoice printing 
 31/1/13 Tim: includes/MiscFunctions.php fix wiki links
 29/1/13 Tim: Fix sql injection security hole in session.inc.
 

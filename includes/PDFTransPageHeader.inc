@@ -92,7 +92,7 @@ $pdf->addText($XPos, $YPos, $FontSize, _('Sold To') . ':');
 $XPos +=80;
 
 if ($myrow['invaddrbranch']==0){
-	$pdf->addText($XPos, $YPos, $FontSize, html_entity_decode(myrow['name']));
+	$pdf->addText($XPos, $YPos, $FontSize, html_entity_decode($myrow['name']));
 	$pdf->addText($XPos, $YPos-14, $FontSize, html_entity_decode($myrow['address1']));
 	$pdf->addText($XPos, $YPos-28, $FontSize, html_entity_decode($myrow['address2']));
 	$pdf->addText($XPos, $YPos-42, $FontSize, html_entity_decode($myrow['address3']) . ' ' . html_entity_decode($myrow['address4']));
