@@ -21,7 +21,7 @@ if (isset($_POST['SelectedType'])){
 
 if (!isset($_GET['delete']) AND (ContainsIllegalCharacters($SelectedType) OR mb_strpos($SelectedType,' ')>0)){
 	$InputError = 1;
-	prnMsg(_('The  contain any of the following characters') . ' " \' - &amp; ' . _('or a space'),'error');
+	prnMsg(_('The Selected type cannot contain any of the following characters') . ' " \' - &amp; ' . _('or a space'),'error');
 }
 if (isset($_POST['SelectedRole'])){
 	$SelectedRole = mb_strtoupper($_POST['SelectedRole']);
