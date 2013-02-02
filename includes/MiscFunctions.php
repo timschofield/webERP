@@ -248,11 +248,11 @@ function wikiLink($WikiType, $WikiPageID) {
 		$WikiPath='../' . $_SESSION['WikiPath'] . '/';
 	}
 	if ($_SESSION['WikiApp']==_('WackoWiki')){
-		echo '<a target="_blank" href="' . $WikiPath . $WikiType .  $WikiPageID . '" target="_blank">' . _('Wiki ' . $WikiType . ' Knowledge Base') . ' </a>  <br />';
+		echo '<a target="_blank" href="' . $WikiPath . $WikiType .  $WikiPageID . '">' . _('Wiki ' . $WikiType . ' Knowledge Base') . ' </a>  <br />';
 	} elseif ($_SESSION['WikiApp']==_('MediaWiki')){
 		echo '<a target="_blank" href="' . $WikiPath . 'index.php/' . $WikiType . '/' . $WikiPageID . '">' . _('Wiki ' . $WikiType . ' Knowledge Base') . '</a><br />';
 	} elseif ($_SESSION['WikiApp']==_('DokuWiki')){
-		echo '<a target="_blank" href="' . $WikiPath . '/doku.php?id=' . $WikiType . ':' . $WikiPageID . '" target="_blank">' . _('Wiki ' . $WikiType . ' Knowledge Base') . '</a><br />';
+		echo '<a target="_blank" href="' . $WikiPath . '/doku.php?id=' . $WikiType . ':' . $WikiPageID . '">' . _('Wiki ' . $WikiType . ' Knowledge Base') . '</a><br />';
 	}
 }
 
