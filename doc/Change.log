@@ -1,5 +1,6 @@
 webERP Change Log
 
+2/2/13 Tim: Fixed up syntax error in InternalStockCategoriesByRole.php
 1/2/13 Fahad Hatib: NewManual page for Supplier Tendering brought in from KwaMoja
 2/1/13 Phil: Fix PDFTransPageHeader.inc landscape invoice printing 
 31/1/13 Tim: includes/MiscFunctions.php fix wiki links
