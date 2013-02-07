@@ -91,8 +91,9 @@ $header_line_height = $line_height+25;
 $LeftOvers = $pdf->addTextWrap($XPos,$YPos,127,$FontSize, _('Item Code'),'left');
 $LeftOvers = $pdf->addTextWrap(147,$YPos,255,$FontSize, _('Item Description'),'left');
 $LeftOvers = $pdf->addTextWrap(400,$YPos,85,$FontSize, _('Quantity'),'right');
-$LeftOvers = $pdf->addTextWrap(503,$YPos,85,$FontSize,_('This Del'),'right');
-$LeftOvers = $pdf->addTextWrap(602,$YPos,85,$FontSize, _('Prev Dels'),'right');
+$LeftOvers = $pdf->addTextWrap(487,$YPos,70,$FontSize, _('Bin Locn'),'center');
+$LeftOvers = $pdf->addTextWrap(573,$YPos,85,$FontSize,_('This Del'),'center');
+$LeftOvers = $pdf->addTextWrap(672,$YPos,85,$FontSize, _('Prev Dels'),'center');
 
 $YPos -= $line_height;
 

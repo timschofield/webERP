@@ -16,9 +16,14 @@ if (isset($_GET['StockID'])){
 	$StockID = '';
 }
 
-// This is already linked from this page
-//echo "<a href='" . $RootPath . '/SelectProduct.php?' . SID . "'>" . _('Back to Items') . '</a><br />';
-
+if (isset($_POST['UpdateBinLocations'])){
+	foreach ($_POST as $PostVariableName => $Bin) {
+		if (mb_substr($PostVariableName,0,11) == 'BinLocation') {
+			$sql = "UPDATE locstock SET bin='" . $Bin . "' WHERE loccode='" . mb_substr($PostVariableName,11) . "' AND stockid='" . $StockID . "'";
+			$result = DB_query($sql, $db);
+		}   
+	}
+}
 $result = DB_query("SELECT description,
 						   units,
 						   mbflag,
@@ -62,6 +67,7 @@ $sql = "SELECT locstock.loccode,
 				locations.locationname,
 				locstock.quantity,
 				locstock.reorderlevel,
+				locstock.bin,
 				locations.managed
 		FROM locstock INNER JOIN locations
 		ON locstock.loccode=locations.loccode
@@ -76,13 +82,14 @@ echo '<br />
 		<table class="selection">';
 
 if ($Its_A_KitSet_Assembly_Or_Dummy == True){
-	$tableheader = '<tr>
+	$TableHeader = '<tr>
 						<th>' . _('Location') . '</th>
 						<th>' . _('Demand') . '</th>
 					</tr>';
 } else {
-	$tableheader = '<tr>
+	$TableHeader = '<tr>
 						<th>' . _('Location') . '</th>
+						<th>' . _('Bin Location') . '</th>
 						<th>' . _('Quantity On Hand') . '</th>
 						<th>' . _('Re-Order Level') . '</th>
 						<th>' . _('Demand') . '</th>
@@ -91,7 +98,7 @@ if ($Its_A_KitSet_Assembly_Or_Dummy == True){
 						<th>' . _('On Order') . '</th>
 					</tr>';
 }
-echo $tableheader;
+echo $TableHeader;
 $j = 1;
 $k=0; //row colour counter
 
@@ -234,7 +241,8 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 			$Available = $myrow['quantity'] - $DemandQty;
 		}
 
-		echo '<td>' . $myrow['locationname'] . '</td>';
+		echo '<td>' . $myrow['locationname'] . '</td>
+			  <td><input type="text" name="BinLocation' . $myrow['loccode'] . '" value="' . $myrow['bin'] . '" maxlength="10" size="11" onchange="ReloadForm(UpdateBinLocations)"/></td>';
 
 		printf('<td class="number">%s</td>
 				<td class="number">%s</td>
@@ -269,7 +277,11 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 //end of page full new headings if
 }
 //end of while loop
-echo '</table>';
+echo '<tr>
+		<td></td>
+		<td><input type="submit" name="UpdateBinLocations" value="' . _('Update Bins') . '" /></td>
+	</tr>
+	</table>';
 
 if (isset($_GET['DebtorNo'])){
 	$DebtorNo = trim(mb_strtoupper($_GET['DebtorNo']));
@@ -334,11 +346,11 @@ if ($DebtorNo) { /* display recent pricing history for this debtor and this stoc
 	}
 	if (isset($PriceHistory)) {
 	  echo '<br />
-			<table class="selection">';
-      echo '<tr>
+			<table class="selection">
+			<tr>
 				<th colspan="4"><font color="navy" size="2">' . _('Pricing history for sales of') . ' ' . $StockID . ' ' . _('to') . ' ' . $DebtorNo . '</font></th>
 			</tr>';
-	  $tableheader = '<tr>
+	  $TableHeader = '<tr>
 						<th>' . _('Date Range') . '</th>
 						<th>' . _('Quantity') . '</th>
 						<th>' . _('Price') . '</th>
@@ -352,7 +364,7 @@ if ($DebtorNo) { /* display recent pricing history for this debtor and this stoc
 		$j--;
 		if ($j < 0 ){
 			$j = 11;
-			echo $tableheader;
+			echo $TableHeader;
 		}
 
 		if ($k==1){
@@ -381,10 +393,10 @@ if ($DebtorNo) { /* display recent pricing history for this debtor and this stoc
 	}
 }//end of displaying price history for a debtor
 
-echo '<br /><a href="' . $RootPath . '/StockMovements.php?StockID=' . $StockID . '">' . _('Show Movements') . '</a>';
-echo '<br /><a href="' . $RootPath . '/StockUsage.php?StockID=' . $StockID . '">' . _('Show Usage') . '</a>';
-echo '<br /><a href="' . $RootPath . '/SelectSalesOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Outstanding Sales Orders') . '</a>';
-echo '<br /><a href="' . $RootPath . '/SelectCompletedOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Completed Sales Orders') . '</a>';
+echo '<br /><a href="' . $RootPath . '/StockMovements.php?StockID=' . $StockID . '">' . _('Show Movements') . '</a>
+	<br /><a href="' . $RootPath . '/StockUsage.php?StockID=' . $StockID . '">' . _('Show Usage') . '</a>
+	<br /><a href="' . $RootPath . '/SelectSalesOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Outstanding Sales Orders') . '</a>
+	<br /><a href="' . $RootPath . '/SelectCompletedOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Completed Sales Orders') . '</a>';
 if ($Its_A_KitSet_Assembly_Or_Dummy ==False){
 	echo '<br /><a href="' . $RootPath . '/PO_SelectOSPurchOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Outstanding Purchase Orders') . '</a>';
 }

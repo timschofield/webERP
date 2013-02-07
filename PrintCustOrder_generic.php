@@ -59,15 +59,15 @@ $sql = "SELECT salesorders.debtorno,
 			shippers.shippername,
 			salesorders.printedpackingslip,
 			salesorders.datepackingslipprinted,
-			locations.locationname
-		FROM salesorders,
-			debtorsmaster,
-			shippers,
-			locations
-		WHERE salesorders.debtorno=debtorsmaster.debtorno
-		AND salesorders.shipvia=shippers.shipper_id
-		AND salesorders.fromstkloc=locations.loccode
-		AND salesorders.orderno='" . $_GET['TransNo'] . "'";
+			locations.locationname,
+			salesorders.fromstkloc
+		FROM salesorders INNER JOIN debtorsmaster
+		ON salesorders.debtorno=debtorsmaster.debtorno
+		INNER JOIN shippers
+		ON salesorders.shipvia=shippers.shipper_id
+		INNER JOIN locations
+		ON salesorders.fromstkloc=locations.loccode
+		WHERE salesorders.orderno='" . $_GET['TransNo'] . "'";
 
 $result=DB_query($sql,$db, $ErrMsg);
 
@@ -155,8 +155,7 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 		$pdf->newPage();
 	}
 	/* Now ... Has the order got any line items still outstanding to be invoiced */
-	$ErrMsg = _('There was a problem retrieving the order details for Order Number') . ' ' .
-		$_GET['TransNo'] . ' ' . _('from the database');
+	$ErrMsg = _('There was a problem retrieving the order details for Order Number') . ' ' . $_GET['TransNo'] . ' ' . _('from the database');
 
 	$sql = "SELECT salesorderdetails.stkcode,
 					stockmaster.description,
@@ -165,10 +164,14 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 					salesorderdetails.unitprice,
 					salesorderdetails.narrative,
 					stockmaster.mbflag,
-					stockmaster.decimalplaces
+					stockmaster.decimalplaces,
+					locstock.bin
 				FROM salesorderdetails INNER JOIN stockmaster
-					ON salesorderdetails.stkcode=stockmaster.stockid
-				WHERE salesorderdetails.orderno='" . $_GET['TransNo'] . "'";
+				ON salesorderdetails.stkcode=stockmaster.stockid
+				INNER JOIN locstock
+				ON stockmaster.stockid = locstock.stockid
+				WHERE locstock.loccode = '" . $myrow['fromstkloc'] . "'
+				AND salesorderdetails.orderno='" . $_GET['TransNo'] . "'";
 	$result=DB_query($sql,$db, $ErrMsg);
 
 	if (DB_num_rows($result)>0){
@@ -186,8 +189,9 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 			$LeftOvers = $pdf->addTextWrap($XPos,$YPos,127,$FontSize,$myrow2['stkcode']);
 			$LeftOvers = $pdf->addTextWrap(147,$YPos,255,$FontSize,$myrow2['description']);
 			$LeftOvers = $pdf->addTextWrap(400,$YPos,85,$FontSize,$DisplayQty,'right');
-			$LeftOvers = $pdf->addTextWrap(503,$YPos,85,$FontSize,$DisplayQtySupplied,'right');
-			$LeftOvers = $pdf->addTextWrap(602,$YPos,85,$FontSize,$DisplayPrevDel,'right');
+			$LeftOvers = $pdf->addTextWrap(487,$YPos,70,$FontSize,$myrow2['bin'],'left');
+			$LeftOvers = $pdf->addTextWrap(573,$YPos,85,$FontSize,$DisplayQtySupplied,'right');
+			$LeftOvers = $pdf->addTextWrap(672,$YPos,85,$FontSize,$DisplayPrevDel,'right');
 
 			if ($YPos-$line_height <= 50){
 			/* We reached the end of the page so finsih off the page and start a newy */
