@@ -19,6 +19,99 @@ $PaperSize['Letter']['PageWidth'] = 215.9;
 $PaperSize['Legal']['PageHeight'] = 355.6;
 $PaperSize['Legal']['PageWidth'] = 215.9;
 
+
+
+$LabelPaper['DPS01 *']['PageWidth'] = 210;
+$LabelPaper['DPS01 *']['PageHeight']= 297;
+$LabelPaper['DPS01 *']['Height'] 	= 297;
+$LabelPaper['DPS01 *']['TopMargin'] = 0;
+$LabelPaper['DPS01 *']['Width'] 	= 210;
+$LabelPaper['DPS01 *']['LeftMargin']= 0;
+$LabelPaper['DPS01 *']['RowHeight'] = 297;
+$LabelPaper['DPS01 *']['ColumnWidth']= 210;
+$LabelPaper['DPS01 *']['PageWidth'] = 210;
+$LabelPaper['DPS01 *']['PageHeight']= 297;
+
+/*
+
+'DPS01 *',210,297,210,297,0,0,0,0);
+'DPS02 *',210,297,210,149,0,0,0,0);
+'DPS08 *',210,297,105,71,7,7,0,0);
+'DPS10 *',210,297,105,59.6,0,0,0,0);
+'DPS16 *',210,297,105,37,0,0,0,0);
+'DPS24 *',210,297,70,36,0,0,0,0);
+'DPS30 *',210,297,70,30,0,0,0,0);
+'DPS04 *',210,297,105,149,0,0,0,0);
+'J5101 *',210,297,38,69,0,0,0,0);
+'J5102 *',210,297,63.5,38,0,0,0,0);
+'J5103 *',210,297,38,135,0,0,0,0);
+'L4730 *',210,297,17.8,10,0,0,0,0);
+'L4743 *',210,297,99.1,42.3,0,0,0,0);
+'L6008 *',210,297,25.4,10,0,0,0,0);
+'L6009 *',210,297,45.7,21.2,0,0,0,0);
+'L6011 *',210,297,63.5,29.6,0,0,0,0);
+'L6012 *',210,297,96,50.8,0,0,0,0);
+'L7102 *',210,297,192,39,0,0,0,0);
+'L7159 *',210,297,63.5,33.9,0,0,0,0);
+'L7160 *',210,297,63.5,38.1,0,0,0,0);
+'L7161 *',210,297,63.5,46.6,0,0,0,0);
+'L7162 *',210,297,99.1,34,0,0,0,0);
+'L7163 *',210,297,99.1,38.1,0,0,0,0);
+'L7164',210,297,63.5,72,0,0,0,0);
+'L7165 *',210,297,99.1,67.7,0,0,0,0);
+'L7166',210,297,99.1,93.1,0,0,0,0);
+'L7167 *',210,297,199.6,289.1,0,0,0,0);
+'L7168 *',210,297,199.6,143.5,0,0,0,0);
+'L7169 *',210,297,99.1,139,0,0,0,0);
+'L7170 *',210,297,134,11,0,0,0,0);
+'L7171 *',210,297,200,60,0,0,0,0);
+'L7172 *',210,297,100,30,0,0,0,0);
+'L7173 *',210,297,99.1,57,0,0,0,0);
+'L7409 *',210,297,57,15,0,0,0,0);
+'L7644 *',210,297,133,29.6,0,0,0,0);
+'L7651 *',210,297,38.1,21.2,0,0,0,0);
+'L7654 *',210,297,45.7,25.4,0,0,0,0);
+'L7664 *',210,297,71,70,0,0,0,0);
+'L7665 *',210,297,72,21.15,0,0,0,0);
+'L7666 *',210,297,70,52,0,0,0,0);
+'L7668 *',210,297,59,51,0,0,0,0);
+'L7670 *',210,297,65,65,0,0,0,0);
+'L7671 *',210,297,76.2,46.4,0,0,0,0);
+'L7674 *',210,297,145,17,0,0,0,0);
+'L7701 *',210,297,192,62,0,0,0,0);
+'EL1S',210,297,210,287,0,0,0,0);
+'VSL3B',210,297,191,99.48,0,0,0,0);
+'EL3 LL03NSE',210,297,210,99.48,0,0,0,0);
+'SLSQ95',210,297,95,95,0,0,0,0);
+'EL6 LL06NSE',210,297,105,99.48,0,0,0,0);
+'VSL6',210,297,70,149,0,0,0,0);
+'EL8 LL08NSE',210,297,105,74.2,0,0,0,0);
+'EL8SB',210,297,72,99,0,0,0,0);
+'EL10S',210,297,105,57,0,0,0,0);
+'EL12S',210,297,105,48,0,0,0,0);
+'EL14 LL14NSE',210,297,105,42.5,0,0,0,0);
+'EL15S',210,297,70,50,0,0,0,0);
+'SLSQ51',210,297,51,51,0,0,0,0);
+'EL15',210,297,70,59.6,0,0,0,0);
+'EL16S LL16SE',210,297,105,35,0,0,0,0);
+'EL21S LL21SE',210,297,70,38,0,0,0,0);
+'EL21',210,297,70,42.5,0,0,0,0);
+'EL24LS',210,297,70,34,0,0,0,0);
+'EL24S LL24SE',210,297,70,35,0,0,0,0);
+'EL24 LL24NSE',210,297,70,37,0,0,0,0);
+'EL27S',210,297,70,32,0,0,0,0);
+'VSL33D',210,297,53,21,0,0,0,0);
+'EL33S',210,297,70,25.4,0,0,0,0);
+'SLSQ37',210,297,37,37,0,0,0,0);
+'VSL36SB',210,297,90,12,0,0,0,0);
+'LL36',210,297,48.9,29.6,0,0,0,0);
+'VSL56SB',210,297,89,10,0,0,0,0);
+'EL56',210,297,52.5,21.3,0,0,0,0);
+'SLSQ25',210,297,25,25,0,0,0,0);
+
+*/
+
+
 echo '<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Label Template Maintenance')
 	. '" alt="" />' . $Title. '
@@ -46,8 +139,12 @@ if (isset($_POST['SelectedLabelID'])){
 			}
 		}
 	}
-	if (ctype_digit($_POST['VPos']) AND ctype_digit($_POST['HPos']) AND ctype_digit($_POST['FontSize'])){
+	if (ctype_digit($_POST['VPos'])
+		AND ctype_digit($_POST['HPos'])
+		AND ctype_digit($_POST['FontSize'])){
+
 		//insert the new label field entered
+
 		$result = DB_query("INSERT INTO labelfields (labelid,
 													fieldvalue,
 													vpos,
@@ -80,9 +177,12 @@ if (isset($_POST['submit'])) {
 	$Message = '';
 
 	if (isset($_POST['PaperSize']) AND $_POST['PaperSize']!='custom'){
+
 		$_POST['PageWidth'] = $PaperSize[$_POST['PaperSize']]['PageWidth'];
 		$_POST['PageHeight'] = $PaperSize[$_POST['PaperSize']]['PageHeight'];
+
 	} elseif ($_POST['PaperSize']=='custom' AND !isset($_POST['PageWidth'])){
+
 		$_POST['PageWidth'] = 0;
 		$_POST['PageHeight'] = 0;
 	}
@@ -136,7 +236,7 @@ if (isset($_POST['submit'])) {
 		$result = DB_query($sql,$db,$ErrMsg);
 		$Message = _('The new label template has been added to the database');
 	}
-	//run the SQL from either of the above possibilites
+	
 	if (isset($InputError) AND $InputError !=1) {
 		unset( $_POST['PaperSize']);
 		unset( $_POST['Description']);
@@ -155,7 +255,7 @@ if (isset($_POST['submit'])) {
 } elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
 
-	/*Cascade deletes in TaxAuthLevels */
+	/*Cascade deletes in labelfields */
 	$result = DB_query("DELETE FROM labelfields WHERE labelid= '" . $SelectedLabelID . "'",$db);
 	$result = DB_query("DELETE FROM labels WHERE labelid= '" . $SelectedLabelID . "'",$db);
 	prnMsg(_('The selected label template has been deleted'),'success');

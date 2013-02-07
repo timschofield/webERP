@@ -680,7 +680,7 @@ if (isset($_POST['SearchCustomers'])){
 	}
 } /*one of keywords or custcode was more than a zero length string */
 
-if (isset($_POST['SelectedCustomer1'])) {
+if (isset($_POST['SelectedCustomer'])) {
 
 /* will only be true if page called from customer selection form
  * or set because only one customer record returned from a search
