@@ -34,7 +34,7 @@ $MenuItems['orders']['Transactions']['Caption'] = array( _('Enter An Order or Qu
 														_('Special Order'),
 														_('Recurring Order Template'),
 														_('Process Recurring Orders'));
-														
+
 $MenuItems['orders']['Transactions']['URL'] = array( '/SelectOrderItems.php?NewOrder=Yes',
 													'/CounterSales.php',
 													'/CounterReturns.php',
@@ -195,7 +195,7 @@ $MenuItems['stock']['Transactions']['Caption'] = array (_('Receive Purchase Orde
 														_('Create a New Internal Stock Request'),
 														_('Authorise Internal Stock Requests'),
 														_('Fulfill Internal Stock Requests') );
-														
+
 $MenuItems['stock']['Transactions']['URL'] = array ('/PO_SelectOSPurchOrder.php',
 													'/StockLocTransfer.php',
 													'/StockLocTransferReceive.php',
@@ -256,18 +256,20 @@ $MenuItems['stock']['Maintenance']['Caption'] = array (_('Add A New Item'),
 														_('Sales Category Maintenance'),
 														_('Add or Update Prices Based On Costs'),
 														_('View or Update Prices Based On Costs'),
+														_('Upload new prices from csv file'),
 														_('Reorder Level By Category/Location') );
-														
+
 $MenuItems['stock']['Maintenance']['URL'] = array ('/Stocks.php',
 													'/SelectProduct.php',
 													'/SalesCategories.php',
 													'/PricesBasedOnMarkUp.php',
 													'/PricesByCost.php',
+													'/UploadPriceList.php',
 													'/ReorderLevelLocation.php' );
 
 $MenuItems['manuf']['Transactions']['Caption'] = array (_('Work Order Entry'),
 														_('Select A Work Order') );
-														
+
 $MenuItems['manuf']['Transactions']['URL'] = array ('/WorkOrderEntry.php',
 													'/SelectWorkOrder.php' );
 
