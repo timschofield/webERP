@@ -1,5 +1,7 @@
 webERP Change Log
 
+15/2/13 Tim Schofield: New script for uploading a sales price list frrom a csv file.
+
 2/2/13 Version 4.10.1 Released
 
 2/2/13 Phil: Refix wiki links
@@ -19,7 +21,7 @@ webERP Change Log
 27/1/13 Tim: Provide facility for editing account group name in AccountGroups.php
 27/1/13 Tim: Automatically adjust config.php for variable name changes 
 27/1/13 Fahad Hatib: Manual updates for internal inventory transfer system
-10/1/13 Martha Madjack: Use scandir to get an array of files/directories for neater code
+10/1/13 Martha Njeri: Use scandir to get an array of files/directories for neater code
 6/1/13 Phil: Prevent selection of assembly items to create purchase orders for... these are just selling devices like kits
 4/1/13 Bob Thomas: Fix wiki link for media wiki had extra /
 2/1/13 Thomas Lie: corrections to various strings where English was suspect!!
