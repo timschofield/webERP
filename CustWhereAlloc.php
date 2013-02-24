@@ -23,17 +23,17 @@ echo '<p class="page_title_text">
 		<td><select tabindex="1" name="TransType"> ';
 
 
-	if (!isset($_POST['TransType'])){
-		$_POST['TransType']='10';
-	}
-	if ($_POST['TransType']==10){
-		 echo '<option selected="selected" value="10">' . _('Invoices') . '</option>
-				<option value="12">' . _('Receipts') . '</option>';
-	} else {
-		 echo '<option selected="selected" value="12">' . _('Receipts') . '</option>
-				<option selected="selected" value="10">' . _('Invoices') . '</option>';
-	}
+if (!isset($_POST['TransType'])){
+	$_POST['TransType']='10';
 }
+if ($_POST['TransType']==10){
+	 echo '<option selected="selected" value="10">' . _('Invoices') . '</option>
+			<option value="12">' . _('Receipts') . '</option>';
+} else {
+	 echo '<option selected="selected" value="12">' . _('Receipts') . '</option>
+			<option selected="selected" value="10">' . _('Invoices') . '</option>';
+}
+
 echo '</select></td>';
 
 if (!isset($_POST['TransNo'])) {$_POST['TransNo']='';}
