@@ -1,5 +1,8 @@
 webERP Change Log
 
+24/2/13 Tim Schofield: SalesGraph.php Fix syntax error, missing ; at end of line
+24/2/13 Tim Schofield: CustWhereAlloc.php Fix syntax error, bad indenting, and an extra } entered because of it
+
 23/2/13 Version 4.10.1 Released
 
 23/2/13 Phil: Tidy up PDFSellThroughSupportClaim.php report
@@ -12,10 +15,10 @@ webERP Change Log
 11/2/13 Fahad Hatib: Committed by Phil - added Manual links for AR, Fixed Assets and AP manual sections
 10/3/13 Phil: Added bin to locstock so the standard bin location for stock can be specified, can update from LocReorderlevel.php script of StockStatus.php - this prints on packing slips so dispatch people can see where the stock should be to pick it. Could also add to picking report and GRN receipt report.
 2/2/13 Phil: Refix wiki links
-2/2/13 Phil: Fix PDFTransPageHeader.inc landscape invoice printing 
+2/2/13 Phil: Fix PDFTransPageHeader.inc landscape invoice printing
 2/2/13 Tim: Fixed up syntax error in InternalStockCategoriesByRole.php
 1/2/13 Fahad Hatib: New Manual page for Supplier Tendering brought in from KwaMoja
-2/1/13 Phil: Fix PDFTransPageHeader.inc landscape invoice printing 
+2/1/13 Phil: Fix PDFTransPageHeader.inc landscape invoice printing
 31/1/13 Tim: includes/MiscFunctions.php fix wiki links
 29/1/13 Tim: Fix sql injection security hole in session.inc.
 
@@ -26,7 +29,7 @@ webERP Change Log
 27/1/13 Tim/Fahad Hatib: Various minor improvements from their fork Kwamoja
 27/1/13 Tim: Phil brought in changes to date functions to allow for Y-m-d date formats and finished
 27/1/13 Tim: Provide facility for editing account group name in AccountGroups.php
-27/1/13 Tim: Automatically adjust config.php for variable name changes 
+27/1/13 Tim: Automatically adjust config.php for variable name changes
 27/1/13 Fahad Hatib: Manual updates for internal inventory transfer system
 10/1/13 Martha Njeri: Use scandir to get an array of files/directories for neater code
 6/1/13 Phil: Prevent selection of assembly items to create purchase orders for... these are just selling devices like kits
@@ -45,7 +48,7 @@ webERP Change Log
 7/12/12 Phil: SupplierInvoice.php add link to pay invoice after invoice input
 5/12/12 Phil: Allow auto receiving of purchase orders and populating of purchase invoice when purchase order is authorised.
 5/12/12 Tim: PO_PDFPurchOrder.php fix printing of initiator to show the full name also style changes
-4/12/12 Tim: PO_Header.php style mods also initiator reinstated as the userid not the user's realname - realname displayed but not stored in db. 
+4/12/12 Tim: PO_Header.php style mods also initiator reinstated as the userid not the user's realname - realname displayed but not stored in db.
 1/12/12 Phil: Remove input fields in Customers.php email, phone fax which are not used - these fields do not exist in debtorsmaster to update  these fields are only held by branch.
 1/12/12 Phil: SupplierInvoice.php and link from PO_Items.php to auto receive all items on an authorised purchase order and auto populate the invoice with the received items
 29/11/12 Jeff Trickett: Start of a conversion to remove dependencies between company name, database table name, and the company file system. Particularly on shared virtual server environments, these can be unpredictable and out of the user's control. This should reduce the difficulties often reported by users with installation.
@@ -53,11 +56,11 @@ webERP Change Log
 17/11/12 Phil: SelectCreditItems.php allow selection of sales person and record credit against this salesperson in sales analysis
 17/11/12 Phil: Allow user to specify sales person to credit so that sales analysis reflects sales by sales person without recourse back to the default sales person for the customer branch
 11/11/12 Phil: Fixed Credit_Invoice.php to now use identifier to uniquely identify a credit note session
-11/11/12 Phil: Fixed links to send session identifier and whether from CreditInvoice or SelectCreditItems.php InputSerialItemsKeyed.php and CreditItemsControlled. Creating credit notes manually for serial numbered items was failing as reported by Bob Thomas 
+11/11/12 Phil: Fixed links to send session identifier and whether from CreditInvoice or SelectCreditItems.php InputSerialItemsKeyed.php and CreditItemsControlled. Creating credit notes manually for serial numbered items was failing as reported by Bob Thomas
 8/11/12 Craig Craven: Updated Japanese translation
 3/11/12 Phil: Fixed BAD bug wtth CounterSales.php it was possible to make sales where the invoice didn't agree with the sum of the lines sold!!
 3/11/12 Phil: Added CounterReturns.php script to handle cash returns
-3/11/12 Jesus Aguirre: Added tag selection to purchase invoice gl analysis 
+3/11/12 Jesus Aguirre: Added tag selection to purchase invoice gl analysis
 3/11/12 David Short: improve GLPostings.inc just update all gltrans posted once the postings are done rather than a whole load of updates for each gltrans posted
 25/10/12 Phil: Added telephone and email to supplier search - SelectSupplier.php
 25/10/12 Phil: Rounding error prevented CounterSales.php from posting a sale where currency was rounding to 0 decimal places - reported by Arwan
@@ -73,9 +76,9 @@ webERP Change Log
 12/10/12 Phil: Fix pagination/selection of order items in SelectOrderItems.php and CounterSales.php
 12/10/12 Phil: SelectAsset.php now goes to FixedAssetItems.php when an item is selected to display the asset for editing
 12/10/12 Rafael Chacón: Updated CRC - Costa Rica flag image
-10/10/12 Harald Ringehahn: Updated German translation 
+10/10/12 Harald Ringehahn: Updated German translation
 9/10/2012 Exson: fixed typo in CounterSales.php reported by thumb.
-9/10/12 Exson: installation would not allow demo to be installed - install/index.php 
+9/10/12 Exson: installation would not allow demo to be installed - install/index.php
 7/10/12 Phil: Fix WorkOrderIssue.php required by date
 
 6/10/2012 Release 4.09
