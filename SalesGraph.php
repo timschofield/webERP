@@ -2,18 +2,18 @@
 
 /* $Id$*/
 
- include('includes/session.inc');
- include('includes/phplot/phplot.php');
- $Title=_('Sales Report Graph');
+include('includes/session.inc');
+include('includes/phplot/phplot.php');
+$Title=_('Sales Report Graph');
 
- $ViewTopic = 'ARInquiries';
- $BookMark = 'SalesGraph'
- 
- include('includes/header.inc');
+$ViewTopic = 'ARInquiries';
+$BookMark = 'SalesGraph';
 
- $SelectADifferentPeriod ='';
+include('includes/header.inc');
 
- if (isset($_POST['FromPeriod']) AND isset($_POST['ToPeriod'])){
+$SelectADifferentPeriod ='';
+
+if (isset($_POST['FromPeriod']) AND isset($_POST['ToPeriod'])){
 
 	if ($_POST['FromPeriod'] > $_POST['ToPeriod']){
 		prnMsg(_('The selected period from is actually after the period to! Please re-select the reporting period'),'error');
@@ -27,9 +27,9 @@
 		prnMsg(_('For graphs including either a customer or item range - the range must be specified. Please enter the value from and the value to for the range'),'error');
 		$SelectADifferentPeriod= _('Select A Different Period');
 	}
- }
+}
 
- if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
+if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 	OR $SelectADifferentPeriod==_('Select A Different Period')){
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
