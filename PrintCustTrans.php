@@ -4,6 +4,9 @@
 
 include('includes/session.inc');
 
+$ViewTopic = 'ARReports';
+$BookMark = 'PrintInvoicesCredits';
+
 if (isset($_GET['FromTransNo'])) {
 	$FromTransNo = trim($_GET['FromTransNo']);
 } elseif (isset($_POST['FromTransNo'])) {
@@ -87,6 +90,7 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 							debtortrans.ovgst,
 							debtortrans.rate,
 							debtortrans.invtext,
+							debtortrans.packages,
 							debtortrans.consignment,
 							debtorsmaster.name,
 							debtorsmaster.address1,

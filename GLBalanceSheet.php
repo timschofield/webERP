@@ -10,6 +10,10 @@ $Title = _('Balance Sheet');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/AccountSectionsDef.inc'); // This loads the $Sections variable
 
+
+$ViewTopic= 'GeneralLedger';
+$BookMark = 'BalanceSheet';
+
 if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'])){
 
 	/*Show a form to allow input of criteria for TB to show */

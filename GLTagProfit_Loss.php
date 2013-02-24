@@ -7,6 +7,8 @@ $Title = _('Income and Expenditure by Tag');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/AccountSectionsDef.inc'); // This loads the $Sections variable
 
+$ViewTopic= 'GeneralLedger';
+$BookMark = 'TagReports';
 
 if (isset($_POST['FromPeriod']) AND ($_POST['FromPeriod'] > $_POST['ToPeriod'])){
 	prnMsg(_('The selected period from is actually after the period to') . '! ' . _('Please reselect the reporting period'),'error');

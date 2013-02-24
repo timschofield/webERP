@@ -10,7 +10,7 @@ if (file_exists('../config.php')) {
 
 // Start a session
 if(!defined('SESSION_STARTED')) {
-        session_name('ba_session_id');
+	session_name('ba_session_id');
 	session_start();
 	define('SESSION_STARTED', true);
 }
@@ -43,7 +43,7 @@ $CompanyPath = $PathToRoot. '/companies';
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <title>WebERP Installation Wizard</title>
-<link href="../css/jelly/default.css" rel="stylesheet" type="text/css" />
+<link href="../css/professional/default.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript">
 
 function change_os(type) {
@@ -74,14 +74,13 @@ function change_data(type) {
 <body>
 
 <form id="weberp_installation_wizard" action="save.php" method="post" enctype="multipart/form-data">
-<div>
 <input type="hidden" name="FormID" value="<?php echo $_SESSION['FormID']; ?>" />
 <input type="hidden" name="url" value="" />
 <input type="hidden" name="password_fieldname" value="admin_password" />
 <input type="hidden" name="remember" id="remember" value="true" />
 <input type="hidden" name="path_to_root" value="<?php echo $PathToRoot; ?>" />
 
-<table cellpadding="0" cellspacing="0" border="0" width="750" style="margin-top: 10px;">
+<table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-top: 10px;">
 <tr>
 	<td class="content">
         <div class="centre">
@@ -92,7 +91,7 @@ function change_data(type) {
 
 		<?php
 		if(isset($_SESSION['message']) AND $_SESSION['message'] != '') {
-			?><div style="width: 700px; padding: 10px; margin-bottom: 5px; border: 1px solid #FF0000; background-color: #FFDBDB;"><b>Error:</b> <?php echo $_SESSION['message']; ?></div><?php
+			?><div style="padding: 10px; margin-bottom: 5px; border: 1px solid #FF0000; background-color: #FFDBDB;"><b>Error:</b> <?php echo $_SESSION['message']; ?></div><?php
 		}
 		?>
 		<table cellpadding="3" cellspacing="0" width="100%">
@@ -225,9 +224,9 @@ function change_data(type) {
 			<td colspan="5">Please enter your MySQL database server details below...</td>
 		</tr>
 		<tr>
-			<td style="color: #666666;">Host Name:</td>
+			<td environments add a prefix >Host Name:</td>
 			<td>
-				<input type="text" tabindex="43" name="database_host" style="width: 98%;" value="<?php if(isset($_SESSION['database_host'])) {
+				<input type="text" tabindex="43" name="database_host" value="<?php if(isset($_SESSION['database_host'])) {
 																										 echo $_SESSION['database_host'];
 																									  } else {
 																										 echo 'localhost';
@@ -368,7 +367,7 @@ function change_data(type) {
 					<td>Please note: &nbsp;</td>
 					<td>
 						WebERP is released under the
-						<a href="http://www.gnu.org/licenses/gpl.html" target="_blank" tabindex="64">GNU General Public License</a>
+						<a href="http://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" tabindex="64">GNU General Public License version 2</a>
 						<br />
 						By clicking install, you are accepting the license.
 					</td>
@@ -393,18 +392,5 @@ function change_data(type) {
 </table>
 </div>
 </form>
-
-<table cellpadding="0" cellspacing="0" border="0" width="100%" style="padding: 10px 0px 10px 0px;">
-<tr>
-	<td align="center" style="font-size: 10px;">
-		<!-- Please note: the below reference to the GNU GPL should not be removed, as it provides a link for users to read about warranty, etc. -->
-		<a href="http://www.weberp.org/" style="color: #000000;" target="_blank">WebERP</a>
-		is	released under the
-		<a href="http://www.gnu.org/licenses/gpl.html" style="color: #000000;" target="_blank">GNU General Public License</a>
-		<!-- Please note: the above reference to the GNU GPL should not be removed, as it provides a link for users to read about warranty, etc. -->
-	</td>
-</tr>
-</table>
-
 </body>
 </html>

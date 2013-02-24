@@ -7,6 +7,9 @@ include('includes/DefineJournalClass.php');
 include('includes/session.inc');
 $Title = _('Journal Entry');
 
+$ViewTopic = 'GeneralLedger';
+$BookMark = 'GLJournals';
+
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 

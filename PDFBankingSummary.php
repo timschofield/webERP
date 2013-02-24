@@ -11,6 +11,10 @@ if (isset($_GET['BatchNo'])){
 
 if (!isset($_POST['BatchNo'])){
 	$Title = _('Create PDF Print Out For A Batch Of Receipts');
+
+	$ViewTopic = 'ARReports';
+	$BookMark = 'BankingSummary';
+
 	include ('includes/header.inc');
 
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' .

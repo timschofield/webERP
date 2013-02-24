@@ -8,24 +8,28 @@
 <p>However, there are also facilities to:</p>
 
 <ul>
-    <li>Enter general ledger receipts against a pre-defined bank accounts.</li>
+	<li>Enter general ledger receipts against a pre-defined bank accounts.</li>
 
-    <li>Enter general ledger payments against pre-defined bank accounts.</li>
+	<li>Enter general ledger payments against pre-defined bank accounts.</li>
 
-    <li>Enter general ledger journals between any general ledger accounts - except bank accounts. These can also be made to reverse automatically in the following period. Further journals can be posted to any period future or previously - the period is determined by reference to the date entered.</li>
+	<li>Enter general ledger journals between any general ledger accounts - except bank accounts. These can also be made to reverse automatically in the following period. Further journals can be posted to any period future or previously - the period is determined by reference to the date entered.</li>
 
-    <li>Inquire on general ledger account activity and from any entry in this inquiry drill down to the journals created to produce the entry.</li>
+	<li>Inquire on general ledger account activity and from any entry in this inquiry drill down to the journals created to produce the entry.</li>
 
-    <li>Inquire on the general ledger trial balance for any period end in history or currently.</li>
+	<li>Inquire on the general ledger trial balance for any period end in history or currently.</li>
 </ul>
 
 <div class="floatright">
-    <a class="minitext" href="#top">⬆ Top</a>
+	<a class="minitext" href="#top">⬆ Top</a>
 </div><!-- Help Begin: AccountGroups -->
+
+<h2><a id="AccountSections">Account Sections</a></h2>
+
+<p>The account section is the top level object for the General Ledger. It is the container for everything within the GL. They are created or amended from the Maintenance menu in the General Ledger module. There are two sections that cannot be removed or renamed, these are the Income and the Cost of Sales sections</p>
 
 <h2><a id="AccountGroups">Account Groups</a></h2>
 
-<p>The account group is the parent object of a general ledger account for someone who understands OO programming. Child accounts created inherit the properties of the account group - ie the account will be a profit and loss account if it belongs to an account group that is a profit and loss account, the child accounts will display in the trial balance (TB) together in the sequence determined by the account groups sequence in the trial balance (TB).</p>
+<p>The account group is the parent object of a general ledger account. Child accounts created inherit the properties of the account group - ie the account will be a profit and loss account if it belongs to an account group that is a profit and loss account, the child accounts will display in the trial balance (TB) together in the sequence determined by the account groups sequence in the trial balance (TB).</p>
 
 <p>Using a numbering system inhibits the ability to manipulate the format of the trial balance ie you have to be able to change the account code to change where an account appears ie</p>
 
@@ -41,7 +45,7 @@
 
 <p>A balance sheet account is one where only the balance at the end of the period concerned is of interest. A profit and loss is one where we are interested in the movement over the period. eg. Motor expenses we are not concerned with the balance at the end of the month so much as how much was spent over the period of the profit and loss. However, for a bank account we wish to know what we have now as a balance not the movements in the account. As noted accounts created as a member of an account group will inherit the properties of the account group ie if the account group is a balance sheet group then the accounts will be interpreted as balance sheet accounts.</p>
 
-<p>Say we wish to report on &quot;The Hague&quot;, &quot;Compenhagen&quot; and &quot;Amsterdam&quot; we can set up an account group for each, with a series of sub-account groups under each of these account groups. 
+<p>Say we wish to report on &quot;The Hague&quot;, &quot;Compenhagen&quot; and &quot;Amsterdam&quot; we can set up an account group for each, with a series of sub-account groups under each of these account groups.
 <ul>
 <li>The Hauge -> Sales</li>
 <li>The Hague -> Cost of Sales</li>
@@ -51,19 +55,28 @@
 	<li>The Hague -> Overheads -> Postage Stationery</li>
 	<li>The Hague -> Overheads -> Repairs Maintenance</li>
 </blockquote>
-</ul>	
+</ul>
 <!-- Help End: AccountGroups -->
 <!-- Help Begin: GLAccounts -->
 
 <h2><a id="GLAccounts">General Ledger Accounts</a></h2>
 
-<p>Any number of general ledger accounts can be defined, the structure of the accounts is goverened by the <a href="#AccountGroups">Account Group</a> - which defined whether an account is a balance sheet or profit and loss account and where abouts it should appear in the trial balance. All accounts are displayed under the heading of the account group so the numbering of general ledger accounts has no bearing on the display of the trial balance or accounts (in contrast to legacy systems).</p>
-<p>General ledger accounts are the cost holders for all accounting in webERP. Whilst it is possible to run webERP to keep track of just stock or debtors/accounts receivable or accounts payable, it is only when these functions are all integrated with the accounting hub that the real value of webERP's integrated design is fully realised. With all costs recorded in accounts payable, bank accounts, accounts receivable, stock, shipment costing, contract costing etc and with the correct configuration, the accounts almost drop out with minimal additional manual inputs required. Useful management information is therefore available in real time as the transactions are made.</p>
+<p>Any number of general ledger accounts can be defined, the structure of the accounts is goverened by the <a href="#AccountGroups">Account Group</a> - which defines whether an account is a balance sheet or profit and loss account and whereabouts it should appear in the trial balance. All accounts are displayed under the heading of the account group so the numbering of general ledger accounts has no bearing on the display of the trial balance or accounts (in contrast to legacy systems).</p>
+<p>General ledger accounts are the cost holders for all accounting in webERP. Whilst it is possible to run webERP to keep track of just stock or debtors/accounts receivable or accounts payable, it is only when these functions are all integrated with the accounting hub that the real value of webERP's integrated design is fully realised. With all costs recorded in accounts payable, bank accounts, accounts receivable, stock, shipment costing, contract costing etc and with the correct configuration, the accounts almost drop out with minimal additional manual inputs required. Useful management information is therefore available in real time as the transactions are made. Next day reporting with accurate stock cut off and accruals all automatically made by the purchasing system is possible.</p>
 <p>To create a general ledger account, click on:</p>
 <p><blockquote>Main Menu->Maintenance: GL Account</blockquote></p>
-<p>The list of existing general ledger accounts will display - together with the whether the account group of the account is a P &amp; L. To   
+<p>The list of existing general ledger accounts will display - together with the whether the account group of the account is a P &amp; L. To
  enter a new account all that is required is to give it a number and a description and select an existing account group.</p>
 <!-- Help End: GLAccounts -->
+
+<h2><a id="GLTags">General Ledger Tags</a></h2>
+<p>General Ledger tags provide an alternative way of viewing General Ledger transactions. Each income or expenditure transaction can be given its own tag, and then reports acan be run based on tags.</p>
+<p>As an example cosider an organisation with several vehicles and the organisation wishes to report on how much each vehicle costs to run. A tag can be setup for each vehicle, and then when there is any expense, such as fuel, maintenance, licensing, insurance etc then each transaction can be tagged to individual vehicles, and then a report be produced for the cost of each tag corresponding to each vehicle.</p>
+
+<h2><a id="GLBudgets">General Ledger Budgets</a></h2>
+<p>Each Profit and Loss General Ledger code can have a monthly budget set against it. To enter these budgets select GL Budgets from the maintenance menu in the General Ledger Module. From this first screen you can then select the GL account that you wish to enter the budget for.</p>
+<p>The user is then presented with a screen split into 3 sections. The first section is for the previous financial years figures, and shows the actual figures, compared to the budget. The budget figures cannot be changed.</p>
+<p>The next two sections are for this financial year, and next financial year respectively. For these two years you can amend the monthly budget for each year. If the amount is split evenly over the year, you can input a total budget figure and then click on the aportion budget button, which will distribute the budget evenly.</p>
 
 <!-- Help Begin: BankAccounts -->
 
@@ -77,7 +90,7 @@
 <!-- Help Begin: Payments -->
 
 <div class="floatright">
-    <a class="minitext" href="#top">⬆ Top</a>
+	<a class="minitext" href="#top">⬆ Top</a>
 </div>
 
 <h2><a id="BankAccountPayments">Bank Account Payments</a></h2>
@@ -89,26 +102,47 @@
 <p></p>
 
 <ul>
-    <li>The bank account from which the payment has been (or is to be) made. A select box allows this to be selected from the list of defined bank accounts.</li>
+	<li>The bank account from which the payment has been (or is to be) made. A select box allows this to be selected from the list of defined bank accounts.</li>
 
-    <li>The date on which it was paid. This is important since the accounting period in which the payment is entered is determined from the date. The system will default to today's date - this must be changed where bank payments are being entered retrospectively.</li>
+	<li>The date on which it was paid. This is important since the accounting period in which the payment is entered is determined from the date. The system will default to today's date - this must be changed where bank payments are being entered retrospectively.</li>
 
-    <li>The currency which is being paid. Payment to suppliers may be made in foreign currency being purchased in the currency of the bank account at the exchange rate entered - see below.</li>
+	<li>The currency which is being paid. Payment to suppliers may be made in foreign currency being purchased in the currency of the bank account at the exchange rate entered - see below.</li>
 
-    <li>The exchange rate - this is the exchange rate between the currency being paid and the currency of the bank account. If the currency being paid is the same as the currency of the bank account then this rate should be 1. If another currency is being purchased with the payment then the rate at which it is being purchased should be entered.</li>
+	<li>The exchange rate - this is the exchange rate between the currency being paid and the currency of the bank account. If the currency being paid is the same as the currency of the bank account then this rate should be 1. If another currency is being purchased with the payment then the rate at which it is being purchased should be entered.</li>
 
-    <li>The functional exchange rate - this the exchange rate between the currency of the bank account and the functional currency of the business as defined in the company preferences (ie the reporting currency of the business). Where the bank account is in the same currency as the functional (reporting) currency of the business then this value should be 1. The functional currency entry will only be required when the bank account currency is different to the the functional currency and will default to 1 automatically if they are the same.</li>
+	<li>The functional exchange rate - this the exchange rate between the currency of the bank account and the functional currency of the business as defined in the company preferences (ie the reporting currency of the business). Where the bank account is in the same currency as the functional (reporting) currency of the business then this value should be 1. The functional currency entry will only be required when the bank account currency is different to the the functional currency and will default to 1 automatically if they are the same.</li>
 
-    <li>Narrative - applicable to the whole payment. Narrative applicable to individual general ledger entries can be entered separately.</li>
+	<li>Narrative - applicable to the whole payment. Narrative applicable to individual general ledger entries can be entered separately.</li>
 </ul>
 
 <p>Payments can take two forms - either it is a general ledger payment or it is a payment to a supplier. General ledger payments require an analysis of how the payment should be posted to the general ledger. General ledger accounts can be specified either as the account code directly (if the account code is known) or by selecting from the select box. Any narrative applicable to the general ledger amount can be entered too - and the amount to be posted to the selected/entered account. The total payment is taken as being the sum of all the entries made. If the total of all entries made is negative then this is entered as a negative payment - these are accepted to allow for correction of data entry errors. Payments are always entered in the curreny of the payment - the conversions are handled by the system for general ledger postings etc.</p><!-- Help End: Payments -->
+
+<h2><a id="GLReceipts">General Ledger Receipts</a></h2>
+
+<p>The system allows for the receipt of money into any of the bank accounts that have been set up and for the income to be credited to any GL account. Receipts can be entered in any currency, and webERP will track the exchange rates correctly</p>
+
+<p>To initiate a receipt choose the 'Bank Account Receipts Entry' item from the Transactions menu within the General Ledger module.</p>
+
+<p>Firstly, the receipt header information is required, the bank account - one of the previously defined bank accounts (see setup), the date the batch of receipts are banked, the currency and exchange rate of the banking and the type of receipt together with any narrative. The currency can be selected from the defined currencies (see setup). The receipt types can also be selected - they are defined in config.php. Once this information is entered it must be accepted before the receipts in the batch can be entered.</p>
+
+<p>Secondly the details of each receipt line must be entered. This consists of the GL tag (if any is to be assigned to this line), the GL account code to post this line to, the amount of the receipt, in the currency selected in the header, details of the payees bank, and any narrative you wish to be entered against this receipt in the general ledger.</p>
+
+<p>Once all the lines have been entered you you can click on the button to accept and process the batch. Once this has been done, the batch cannot be amended.</p>
+
+<h2><a id="BankMatching">Matching of Bank Statements to webERP</a></h2>
+
+<p>When a bank statement arrives, the transactions that have cleared through the bank, must now be matched off against the transactions in webERP. THis can be done by selecting "Bank Account Receipts Matching" or "Bank Account Payments Matching" from the Transactions menu in the General Ledger module.</p>
+<p>Next select the bank account that the statement is for, and use the different options available to filter how the transactions are shown. Then it is just a matter of ticking off the transaction on webERP and on the bank statement.</p>
+
+<h2><a id="GLJournals">General Ledger Journals</a></h2>
+
+<p>Enter general ledger journals between any general ledger accounts - except bank accounts. These can also be made to reverse automatically in the following period. Further journals can be posted to any period future or previously - the period is determined by reference to the date entered.</p>
 
 <h2>General Ledger Integration Setup</h2>
 
 <p>Bank Accounts are automatically integrated with the general ledger and cannot exist separately without the GL being used. Every transaction is recorded in two places (double entry) eg. A bank account payment reflects in the bank account and also in the expense account that is was paid for - eg. stationery, fuel, entertaining, advertising or whatever. One entry goes as a debit on the left and the other as a credit on the right - when you look at the trial balance the debits should tie up with the credits ie the trial balance - a list of the general ledger balances should have balancing debit total and credit totals.</p>
 
-<p>With respect to the sales (AR) and purchase (AP) ledgers, general ledger postings can be turned off in the company preferences screen by setting each of the flags to No.</p>
+<p>With respect to the sales (AR) and purchase (AP) ledgers, the integrated general ledger postings that are created automatically for transactions in these modules can be turned off in the company preferences screen by setting each of the integration flags to No.</p>
 
 <p>Integrated general ledger postings do provide a good way of building up the business's accounts from activity in these sub ledgers.</p>
 
@@ -152,9 +186,9 @@
 <p>The two levels of general ledger integration are:</p>
 
 <ul>
-    <li>Sales journals that post a credit to a sales general ledger account, a debit to a discount account, a credit to a tax account, a credit to a freight recovery account and a debit to a debtor account. This level of integration also reverses the posting described here for sales credit notes. This level also triggers the general ledger journals for banking of cash against debtor accounts. Debiting a bank account and crediting the debtors account.</li>
+	<li>Sales journals that post a credit to a sales general ledger account, a debit to a discount account, a credit to a tax account, a credit to a freight recovery account and a debit to a debtor account. This level of integration also reverses the posting described here for sales credit notes. This level also triggers the general ledger journals for banking of cash against debtor accounts. Debiting a bank account and crediting the debtors account.</li>
 
-    <li>Stock journals that post a debit to a cost of sales account and a credit to a stock account - and the reverse entries for sales credit notes.</li>
+	<li>Stock journals that post a debit to a cost of sales account and a credit to a stock account - and the reverse entries for sales credit notes.</li>
 </ul>
 
 <p>The level of general ledger integration is determined by reference to the flags in the company preferences page.</p>
@@ -162,7 +196,7 @@
 <p><!-- Help Begin: SalesGLPostings --></p>
 
 <div class="floatright">
-    <a class="minitext" href="#top">⬆ Top</a>
+	<a class="minitext" href="#top">⬆ Top</a>
 </div>
 
 <h2>Sales Journals</h2>
@@ -170,25 +204,25 @@
 <p>The general ledger accounts that are used in this level of integration are determined from several inputs.</p>
 
 <ul>
-    <li>Sales Area of the customer being invoiced/credited</li>
+	<li>Sales Area of the customer being invoiced/credited</li>
 
-    <li>Sales Type (or price list) of the customer being invoiced/credited.</li>
+	<li>Sales Type (or price list) of the customer being invoiced/credited.</li>
 
-    <li>Stock Category of the item being invoiced/credited.</li>
+	<li>Stock Category of the item being invoiced/credited.</li>
 </ul>
 
 <p>A table of sales general ledger accounts is maintained and can be modified from the setup tab. When an invoice is created from the ConfirmDispatch_Invoice.php script the system uses a function defined in GetSalesTransGLCode.inc to look up the general ledger codes that are appropriate. By default this function uses the following logic:</p>
 
 <ul>
-    <li>If there is a record in the SalesGLPostings table that has a matching Area, SalesType and Stock Category then the function returns the sales account and the discount account applicable.</li>
+	<li>If there is a record in the SalesGLPostings table that has a matching Area, SalesType and Stock Category then the function returns the sales account and the discount account applicable.</li>
 
-    <li>If there is a match for the Area and SalesType using the default Stock Category (ANY) then the codes applicable to this record are returned.</li>
+	<li>If there is a match for the Area and SalesType using the default Stock Category (ANY) then the codes applicable to this record are returned.</li>
 
-    <li>Then if there is a matching Sales type, stock category with default (AN) area this is used.</li>
+	<li>Then if there is a matching Sales type, stock category with default (AN) area this is used.</li>
 
-    <li>Then if there is a matching stock category record using the default area (AN) and the default salestype (AN) this is used - finally</li>
+	<li>Then if there is a matching stock category record using the default area (AN) and the default salestype (AN) this is used - finally</li>
 
-    <li>If there is no record is found after trying the above combinations then the GL Code for the default area, sales type and default stock category is used - this is GL code 1. If GL Code 1 is not defined, then it will be created.</li>
+	<li>If there is no record is found after trying the above combinations then the GL Code for the default area, sales type and default stock category is used - this is GL code 1. If GL Code 1 is not defined, then it will be created.</li>
 </ul>
 
 <p>Since the logic of how the general ledger account is determined is defined in this function it is relatively simple to change this to what is most appropriate for the business.</p>
@@ -199,7 +233,7 @@
  <!-- Help Begin: COGSGLPostings --></p>
 
 <div class="floatright">
-    <a class="minitext" href="#top">⬆ Top</a>
+	<a class="minitext" href="#top">⬆ Top</a>
 </div>
 
 <h2>Stock Journals</h2>
@@ -213,218 +247,81 @@
 <p>The profit and loss account used for posting the variance between standard cost of a purchased item and its actual cost as invoiced is also determined from the stock category record.</p><!-- Help End: COGSGLPostings -->
 
 <div class="floatright">
-    <a class="minitext" href="#top">⬆ Top</a>
+	<a class="minitext" href="#top">⬆ Top</a>
 </div>
 
-<h2>EDI</h2>
-
-<p>EDI stands for electronic data interchange - the electronic transmission of transaction information between trading partners. There are numerous standards for the encoding of such transactions the most widely used being UN/EDIFACT and its derivative EANCOM implementation. In fact many industry groups use the standard formats in slightly different ways and some businesses within the industry use the industry standard slightly differently again. So ultimately, the standards are really only a framework for what the actual messages look like. In implementing EDI in webERP, some flexibility in the format of messages to be sent and received is available. EDI messages are created in flat files in the directory specified in config.php for EDI outgoing messages and a log of the EDI messages sent is retained also. The messages can be sent either as an email attachment to the customer supplied email address or via ftp to a customer supplied ftp server address - using the ftp username and password provided by the customer.</p><!-- Help Begin: CustEDISetup -->
-
-<h3>EDI Setup</h3>
-
-<p>To enable EDI transactions for a customer, first select the customer from the Select Customer link on any page, then click the link - Customer EDI Configuration. This page allows selection of the type of transactions that are to transmitted electronically currently only invoices/credit notes and orders are available. Each must be specifically enabled to activate them. Each customer must have their:</p>
-<p>
-
+<h2>General Ledger Reports</h2>
+<p>The webERP General Ledger module has the following reports:</p>
 <ul>
-    <li>EDI reference that they are identified by</li>
-
-    <li>Transport mechanism and address to which the invoice/credit note messages are to be sent - either email as a file attachment or via ftp (file transfer protocol)</li>
+	<li><h3><a id="TrialBalance">Trial Balance</a></h3>
+		<p>The Trial Balance is run from the Reports/Inquiries menu in the General Ledger module. It can be run for any range of periods, including running it over a financial year end. So for instance if the financial year end is 31st December, it is still possible to run it for a 6 month period from October to March. It can also be run for a range of months greater than 1 year. This provides great flexibility in the reporting system.</p>
+		<p>It can be run as a PDF which can be printed, emailed, saved to an archive etc, or can be viewed on screen.</p>
+		<p>Whilst viewing the on screen version, clicking on the account code takes you to the GL Account Inquiry screen for that account, and for the period range selected for the Trial Balance.</p>
+	</li>
+	<li>
+		<h3><a id="GLAccountInquiry">General Ledger Account Inquiry</a></h3>
+		<p>You can view the transactions for individual accounts, for a selected range of periods. To view an inquiry from the main menu, select "Account Inquiry" from the Reports/Inquiries menu in the General Ledger module.</p>
+		<p>You are then taken to an account selection screen, where you can search for an account either by it's code, or by it's description. From the list of possible accounts that you are shown, simply click on the button for the account code that you are interested in.</p>
+		<p>Now you will see a screen with a drop down list of GL codes, with the one you chose as the selected one. You can now choose to filter the inquiry by tag, or to show all transactions. Finally a select box with all defined periods will be shown, and the current month will be highlighted. You can drag across multiple periods to highlight whatever periods you require.</p>
+		<p>Once this is done clicking on Show account transactions will list all the transactions for the chosen account, and will be listed and totalled by period.</p>
+		<p>You can also enter the account inquiry via any of the top level reports, simply by clicking on the account code in those reports.</p>
+		<p>To print the inquiry, simply click the printer icon in the top right of the table, and the inquiry will be printed.</p>
+	</li>
+	<li>
+		<h3><a id="GLAccountReport">General Ledger Account Listing Report</a></h3>
+		<p>Using this option you can produce a pdf report of all transactions for selected accounts, over a selected period. To produce this report, use the "Account Listing" option from the Inquiries/Reports menu on the General Ledger module.</p>
+		<p>You can select a range of accounts, by clicking and dragging within the Accounts select box, and likewise you can select a range of periods by clicking and selecting a range within the periods selection box.</p>
+		<p>The report can also be filtered by individual tag, or all tags can be shown</p>
+	</li>
+	<li>
+		<h3><a id="GLAccountCSV">General Ledger Output to CSV file</a></h3>
+		<p>Using this option you can create a csv file of all transactions for selected accounts, over a selected period. This file can be opened by any spreadsheet package for you to use the data to produce any reports you may want. To produce this report, use the "Account Listing to CSV File" option from the Inquiries/Reports menu on the General Ledger module.</p>
+		<p>You can select a range of accounts, by clicking and dragging within the Accounts select box, and likewise you can select a range of periods by clicking and selecting a range within the periods selection box.</p>
+		<p>The report can also be filtered by individual tag, or all tags can be shown</p>
+	</li>
+	<li>
+		<h3><a id="GLJournalInquiry">General Ledger Journal Inquiry</a></h3>
+		<p>You can produce a list of all general ledgedrs that have been produced within a given date range, and/or a range of journal numbers. To do this, select thje "General Ledger Journal Inquiry" from the Reports/Inquiries menu in the General Ledger module.</p>
+		<p>webERP will tell you the possible journal number range by giving the highest and lowest numbers that it currently has in the system. You can choose any numbers within that range to show in the inquiry.</p>
+		<p>This will produce a table of all journals, with their individual journal lines for the criteria specified. To print this table, just click on the printer icon in the top right hand corner.</p>
+		<p>You can produce a pdf of individual journals, by clicking on the "print" link at the end of the first line of the required journal.</p>
+	</li>
+	<li>
+		<h3><a id="ChequePaymentListing">Cheque Payment Listing</a></h3>
+		<p>The cheque payments listing function allows you to create a PDF summary of all payments made from the bank account you specify, within a date range that you specify.</p>
+		<p>To access this functionality, choose "Cheque Payments Listing" from the Reports/Inquiries menu of the General Ledger Module</p>
+	</li>
+	<li>
+		<h3><a id="DailyBankTransactions">Bank Transactions Inquiry</a></h3>
+		<p>This inquiry allows you to view all bank transactions for a selected date range, and the inquiry can be filtered by matched or unmatched transactions, or all transactions can be chosen.</p>
+		<p>To prnt this inquiry just click on the printer con in the top right hand corner of the table.</p>
+		<p>The inquiry can be selected by choosing "Bank Transactions Inquiry" from the Inquiries/Reports menu in the General Ledger module.</p>
+	</li>
+	<li>
+		<h3><a id="ProfitAndLoss">Profit and Loss Account</a></h3>
+		<p>Profit and Loss statement (P&amp;L), also called an Income Statement, or Statement of Operations can be accessed by choosing the "Profit and Loss Statement" option from the Reports/Inquiries menu in the General Ledger module. This is the statement that indicates how the revenue (money received from the sale of products and services before expenses are taken out, also known as the "top line") is transformed into the net income (the result after all revenues and expenses have been accounted for, also known as the "bottom line").</p>
+		<p>The purpose of the income statement is to show whether the company made or lost money during the period being reported. The P&amp;L is reported for a user selectable range of periods.</p>
+		<p>The Profit and Loss report can be run as a pdf file for later printing, emailing, or archiving, or it can be shown on screen. It can be run in summary mode - just showing the totals for each account group, or in detailed mode listing each general ledger account balance for all profit and loss accounts grouped by account group.</p>
+	</li>
+	<li>
+		<h3><a id="BalanceSheet">Balance Sheet</a></h3>
+		<p>Balance Sheet (or Statement of Financial Position) is a summary of balances. Assets, liabilities and ownership equity is listed as at a period end. It be accessed by choosing the "Balance Sheet" option from the Reports/Inquiries menu in the General Ledger module.</p>
+		<p>The balance sheet has three parts: assets, liabilities and ownership equity. The main categories of assets are listed first and are followed by the liabilities. The difference between the assets and the liabilities is known as equity or the net assets or the net worth or capital of the company and according to the accounting equation, net worth must equal assets minus liabilities.</p>
+		<p>webERP is an "accrual" based system (not a "cash based" system). Accrual systems include items when they are invoiced to the customer, and when expenses are owed based on the supplier invoice date.</p>
+		<p>The report can be run as a pdf file for later printing, emailing, or archiving, or it can be shown on screen. It can be run in summary mode - just showing the totals for each account group, or in detailed mode listing each general ledger account balance for all balance sheet accounts grouped by account group.</p>
+	</li>
+	<li>
+		<h3><a id="TagReports">Tag Reports</a></h3>
+		<p>An Income an Expenditure report can be produced, filtered by individual tags. So for instance following the example above, if you wished to view the costs associated with a particular vehicle you can run this report selecting the appropriate tag for the vehicle to report on to find the information.</p>
+		<p>As with the Profit And Loss report, this can be produced as an on screen report, or as a pdf.</p>
+		<p>The report can be run by selecting "Tag Reports" from the Reports/Inquiries menu in the General Ledger module.</p>
+	</li>
+	<li>
+		<h3><a id="TaxReports">Tax return reports</a></h3>
+		<p>To print the reports for your VAT/Sales tax/Purchase tax returns, choose the &quot;Tax reports&quot; option from the Reports/Inquiries menu in the General Ledger module.</p>
+		<p>You can choose a report for any of the tax authorities within which you operate and webERP will only print those transactions needed for your report.</p>
+		<p>The report can be run for one month, two months, a quarter, or for six months depending on the requirements for this particular tax authority.</p>
+		<p>You can run a summary report to get just the relevant totals, or a detailed report to list all the transactions within that total.</p>
+		<p>The report will be run as a pdf file for printing, emailing, archiving etc.</P>
+	</li>
 </ul>
-
-<p>If the transport mechanism is to be ftp - this must be compiled into PHP with the flag -enable-ftp, most windows PHP installtions have this by default now. Additional fields for the ftp server username and password will also be required.</p>
-
-<p>To activate EDI polling for invoices to send the script EDISendInvoices.php must be run as a scheduled job - using cron or some other scheduling system -see automating sales reports. It can also be run from the utilites menu Z_index.php with debugging output.</p>
-
-<p>To activate EDI polling for orders to be entered as received the script ???? must be run as a scheduled job using cron or some other scheduling system.</p>
-
-<h3>Sending EDI Invoices</h3>
-
-<p>EDI messages are made up of segments which must appear in a certain order. Since customers will require EDI invoices in slightly different formats, the exact format can be defined in the table EDIMessageFormat. This table has a record for each customer invoice line and the sequence when it must appear in the message. The field line text in this table can include any of the predefined EDI invoice variables surrounded by "[" and "]" to denote them as a variable to be replaced with the appropriate value as follows:</p>
-
-<table>
-    <tr>
-        <th colspan="2">EDI Invoice Detail Section</th>
-    </tr>
-
-    <tr>
-        <td>EDITransNo</td>
-
-        <td>The unique EDI transaction number</td>
-    </tr>
-
-    <tr>
-        <td>InvOrCrd</td>
-
-        <td>Whether the transaction is an invoice or a credit - the value of this variable is an EANCOM defined number, 388 for a tax invoice and 381 for a credit note</td>
-    </tr>
-
-    <tr>
-        <td>TransNo</td>
-
-        <td>The transaction number of invoice or credit</td>
-    </tr>
-
-    <tr>
-        <td>OrigOrDup</td>
-
-        <td>Whether the transaction is a duplicate or original sending the value of this variable is an EANCOM defined number 7 for a duplicate and 9 for an original</td>
-    </tr>
-
-    <tr>
-        <td>TranDate</td>
-
-        <td>The transaction date in the format CCYYMMDD</td>
-    </tr>
-
-    <tr>
-        <td>OrderNo</td>
-
-        <td>The original order number - only for invoices</td>
-    </tr>
-
-    <tr>
-        <td>CustBranchCode</td>
-
-        <td>The customer's internal code for the branch</td>
-    </tr>
-
-    <tr>
-        <td>CompanyEDIReference</td>
-
-        <td>The customer's EDI reference code</td>
-    </tr>
-
-    <tr>
-        <td>BranchName</td>
-
-        <td>The branch name</td>
-    </tr>
-
-    <tr>
-        <td>BranchStreet</td>
-
-        <td>&nbsp;</td>
-    </tr>
-
-    <tr>
-        <td>BranchCity</td>
-
-        <td>&nbsp;</td>
-    </tr>
-
-    <tr>
-        <td>BranchState</td>
-
-        <td>&nbsp;</td>
-    </tr>
-
-    <tr>
-        <td>TaxAuthorityRef</td>
-
-        <td>The businesses Tax Authority reference number</td>
-    </tr>
-
-    <tr>
-        <td>DatePaymentDue</td>
-
-        <td>The due date for this transaction</td>
-    </tr>
-
-    <tr>
-        <td>TaxTotal</td>
-
-        <td>The total amount of tax on the transaction</td>
-    </tr>
-</table>
-
-<table>
-    <tr>
-        <th>EDI Invoice Detail Section - for the lines on the transaction</th>
-    </tr>
-
-    <tr>
-        <td>LineNumber</td>
-
-        <td>&nbsp;</td>
-    </tr>
-
-    <tr>
-        <td>StockID</td>
-
-        <td>The webERP item code</td>
-    </tr>
-
-    <tr>
-        <td>CustStockID</td>
-
-        <td>The customer's internal code for the item</td>
-    </tr>
-
-    <tr>
-        <td>ItemDescription</td>
-
-        <td>&nbsp;</td>
-    </tr>
-
-    <tr>
-        <td>QtyInvoiced</td>
-
-        <td>Quantity invoiced or credited</td>
-    </tr>
-
-    <tr>
-        <td>LineTotalExclTax</td>
-
-        <td>The total for the line excluding tax</td>
-    </tr>
-
-    <tr>
-        <td>UnitPrice</td>
-
-        <td>Unit price for the item</td>
-    </tr>
-
-    <tr>
-        <td>LineTaxAmount</td>
-
-        <td>The tax applicable to the line</td>
-    </tr>
-</table>
-
-<table>
-    <tr>
-        <th>EDI Invoice Summary Section</th>
-    </tr>
-
-    <tr>
-        <td>NoLines</td>
-
-        <td>The total number of lines on the invoice/credit</td>
-    </tr>
-
-    <tr>
-        <td>TotalAmountExclTax</td>
-
-        <td>Total amount of the transaction excluding tax</td>
-    </tr>
-
-    <tr>
-        <td>TotalAmountInclTax</td>
-
-        <td>Total amount of the transaction including tax</td>
-    </tr>
-
-    <tr>
-        <td>NoSegments</td>
-
-        <td>The total number of segments in the transaction this is required as a control check in the summary</td>
-    </tr>
-</table>
-
-<p>There is therefore great flexibility in how the messages are defined. The variables for the summary and heading sections can be used in any section. The detail section variables can only be used in the detail section.</p>
-
-<p>Most customers will require that the branch to which the invoiced goods are delivered to, be identified using the customer's coding system. It is therefore important to ensure that the customer's branch code is actually entered against the webERP branch record. The variable CustBranchCode is retrieved from the branch record and if it is not entered then the EDI transaction will fail.</p>
-
-<p>Some customers may also require the item code to be their item code, not the webERP item code. The variable CustStockID is derived from the cross reference table EDIItemMapping which would need to contain a cross reference record for each item that they may buy.</p>
-
-<p>The script that creates the EDI invoices (EDISendInvoices.php) should be run automatically in the background as a scheduled task. It first gets a list of all customers who should receive EDI invoices (or credit notes) - as determined in the settings of their DebtorsMaster record. Then the script goes through each customer returned in turn to get any invoices or credits that have not already been sent. A flat file is created for all the customers invoices and credits and sent to the customer using the transport, address and other parameters defined in the customer edi setup page - recorded against their DebtorsMaster record. There is a link to enable the script to be run manually - the browser will also show the output of the EDI message.</p><!-- Help End: CustEDISetup -->

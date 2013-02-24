@@ -2,6 +2,10 @@
 
 include ('includes/session.inc');
 $Title = _('General Ledger Journal Inquiry');
+
+$ViewTopic= 'GeneralLedger';
+$BookMark = 'GLJournalInquiry';
+
 include('includes/header.inc');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p>';

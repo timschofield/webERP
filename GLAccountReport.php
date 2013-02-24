@@ -3,6 +3,9 @@
 
 include ('includes/session.inc');
 
+$ViewTopic= 'GeneralLedger';
+$BookMark = 'GLAccountReport';
+
 if (isset($_POST['Period'])){
 	$SelectedPeriod = $_POST['Period'];
 } elseif (isset($_GET['Period'])){

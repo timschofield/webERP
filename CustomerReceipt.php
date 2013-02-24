@@ -7,6 +7,15 @@ include('includes/session.inc');
 
 $Title = _('Receipt Entry');
 
+
+if ($_GET['Type']=='GL') {
+	$ViewTopic= 'GeneralLedger';
+	$BookMark = 'GLReceipts';
+} else {
+	$ViewTopic= 'ARTransactions';
+	$BookMark = 'CustomerReceipts';
+}
+
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 

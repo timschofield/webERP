@@ -4,6 +4,8 @@
 
 include('includes/SQL_CommonFunctions.inc');
 include ('includes/session.inc');
+$ViewTopic= 'GeneralLedger';
+$BookMark = 'ChequePaymentListing';
 
 $InputError=0;
 if (isset($_POST['FromDate']) AND !Is_Date($_POST['FromDate'])){
@@ -78,27 +80,27 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
 }
 
 $sql = "SELECT bankaccountname,
-               decimalplaces AS bankcurrdecimalplaces
-	FROM bankaccounts INNER JOIN currencies
-    ON bankaccounts.currcode=currencies.currabrev
-	WHERE accountcode = '" .$_POST['BankAccount'] . "'";
+				decimalplaces AS bankcurrdecimalplaces
+		FROM bankaccounts INNER JOIN currencies
+		ON bankaccounts.currcode=currencies.currabrev
+		WHERE accountcode = '" .$_POST['BankAccount'] . "'";
 $BankActResult = DB_query($sql,$db);
-$myrow = DB_fetch_row($BankActResult);
-$BankAccountName = $myrow[0];
-$BankCurrDecimalPlaces = $myrow[1];
+$myrow = DB_fetch_array($BankActResult);
+$BankAccountName = $myrow['bankaccountname'];
+$BankCurrDecimalPlaces = $myrow['bankcurrdecimalplaces'];
 
 $sql= "SELECT amount,
-		ref,
-		transdate,
-		banktranstype,
-		type,
-		transno
-	FROM banktrans
-	WHERE banktrans.bankact='" . $_POST['BankAccount'] . "'
-	AND (banktrans.type=1 or banktrans.type=22)
-	AND transdate >='" . FormatDateForSQL($_POST['FromDate']) . "'
-	AND transdate <='" . FormatDateForSQL($_POST['ToDate']) . "'";
-
+			ref,
+			transdate,
+			banktranstype,
+			type,
+			transno
+		FROM banktrans
+		WHERE banktrans.bankact='" . $_POST['BankAccount'] . "'
+		AND (banktrans.type=1 or banktrans.type=22)
+		AND transdate >='" . FormatDateForSQL($_POST['FromDate']) . "'
+		AND transdate <='" . FormatDateForSQL($_POST['ToDate']) . "'";
+	
 $Result=DB_query($sql,$db,'','',false,false);
 if (DB_error_no($db)!=0){
 	$Title = _('Payment Listing');
@@ -135,13 +137,12 @@ while ($myrow=DB_fetch_array($Result)){
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+65,$YPos,90,$FontSize,$myrow['ref'], 'left');
 
 	$sql = "SELECT accountname,
-			amount,
-			narrative
-		FROM gltrans,
-			chartmaster
-		WHERE chartmaster.accountcode=gltrans.account
-		AND gltrans.typeno ='" . $myrow['transno'] . "'
-		AND gltrans.type='" . $myrow['type'] . "'";
+					amount,
+					narrative
+			FROM gltrans INNER JOIN chartmaster
+			ON gltrans.account=chartmaster.accountcode
+			WHERE gltrans.typeno ='" . $myrow['transno'] . "'
+			AND gltrans.type='" . $myrow['type'] . "'";
 
 	$GLTransResult = DB_query($sql,$db,'','',false,false);
 	if (DB_error_no($db)!=0){

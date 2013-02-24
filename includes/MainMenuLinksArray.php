@@ -256,7 +256,6 @@ $MenuItems['stock']['Maintenance']['Caption'] = array (_('Add A New Item'),
 														_('Sales Category Maintenance'),
 														_('Add or Update Prices Based On Costs'),
 														_('View or Update Prices Based On Costs'),
-														_('Upload new prices from csv file'),
 														_('Reorder Level By Category/Location') );
 
 $MenuItems['stock']['Maintenance']['URL'] = array ('/Stocks.php',
@@ -264,7 +263,6 @@ $MenuItems['stock']['Maintenance']['URL'] = array ('/Stocks.php',
 													'/SalesCategories.php',
 													'/PricesBasedOnMarkUp.php',
 													'/PricesByCost.php',
-													'/UploadPriceList.php',
 													'/ReorderLevelLocation.php' );
 
 $MenuItems['manuf']['Transactions']['Caption'] = array (_('Work Order Entry'),
@@ -533,7 +531,8 @@ $MenuItems['Utilities']['Maintenance']['Caption'] = array (_('Maintain Language 
 															_('Create new company template SQL file and submit to webERP'),
 															_('Re-calculate brought forward amounts in GL'),
 															_('Re-Post all GL transactions from a specified period'),
-															_('Purge all old prices') );
+															_('Purge all old prices'),
+															_('Import Price List from CSV file'));
 
 $MenuItems['Utilities']['Maintenance']['URL'] = array ('/Z_poAdmin.php',
 														'/Z_MakeNewCompany.php',
@@ -543,5 +542,6 @@ $MenuItems['Utilities']['Maintenance']['URL'] = array ('/Z_poAdmin.php',
 														'/Z_CreateCompanyTemplateFile.php',
 														'/Z_UpdateChartDetailsBFwd.php',
 														'/Z_RePostGLFromPeriod.php',
-														'/Z_DeleteOldPrices.php' );
+														'/Z_DeleteOldPrices.php',
+														'/Z_ImportPriceList.php' );
 ?>

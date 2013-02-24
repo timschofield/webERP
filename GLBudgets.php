@@ -6,6 +6,9 @@ include('includes/SQL_CommonFunctions.inc');
 
 $Title = _('Create GL Budgets');
 
+$ViewTopic = 'GeneralLedger';
+$BookMark = 'GLBudgets';
+
 include('includes/header.inc');
 
 if (isset($_POST['SelectedAccount'])){

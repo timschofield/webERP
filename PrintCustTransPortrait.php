@@ -4,6 +4,10 @@
 
 include('includes/session.inc');
 
+$ViewTopic = 'ARReports';
+$BookMark = 'PrintInvoicesCredits';
+
+
 if (isset($_GET['FromTransNo'])) {
 	$FromTransNo = filter_number_format($_GET['FromTransNo']);
 } elseif (isset($_POST['FromTransNo'])){
@@ -107,6 +111,7 @@ If (isset($PrintPDF)
 							debtortrans.rate,
 							debtortrans.invtext,
 							debtortrans.consignment,
+							debtortrans.packages,
 							debtorsmaster.name,
 							debtorsmaster.address1,
 							debtorsmaster.address2,

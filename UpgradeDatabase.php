@@ -158,6 +158,7 @@ if (isset($_POST['DoUpgrade'])){
 					$SQLScripts[] = './sql/mysql/upgrade4.08-4.09.sql';
 				case '4.09':
 				case '4.09.1':
+				case '4.10.0':
 					if (!is_writable('config.php')) {
 						prnMsg( _('To perform this upgrade the web server must have write access to the config.php file. Currently the web-server is reporting that it does not have appropriate permission. Please ensure config.php is writable and run the upgrade again'), 'warning');
 						include('includes/footer.inc');
@@ -173,7 +174,7 @@ if (isset($_POST['DoUpgrade'])){
 						prnMsg( _('You should now make the config.php read only for the web server.'), 'warning');
 					}
 					$SQLScripts[] = './sql/mysql/upgrade4.09-4.10.sql';
-				case '4.10':
+				case '4.10.1':
 					break;
 			} //end switch
 		}

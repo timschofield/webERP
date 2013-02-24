@@ -43,13 +43,13 @@ $Parameters = array();
 
 /* The trap for me was that each parameter needs to be run through xmlrpcval() - to create the necessary xml required for the rpc call if one of the parameters required is an array then it needs to be processing into xml for the rpc call through php_xmlrpc_encode()*/
 
-$Parameters['StockID'] = xmlrpcval('DVD-TOPGUN'); //the stockid of the item we wish to know the balance for
+$Parameters['StockID'] = new xmlrpcval('DVD-TOPGUN'); //the stockid of the item we wish to know the balance for
 
 //assuming the demo username and password will work !
 
-$Parameters['Username'] = xmlrpcval('admin');
+$Parameters['Username'] = new xmlrpcval('admin');
 
-$Parameters['Password'] = xmlrpcval('weberp');
+$Parameters['Password'] = new xmlrpcval('weberp');
 
 $msg = new xmlrpcmsg("weberp.xmlrpc_GetStockBalance", $Parameters);
 

@@ -3,7 +3,7 @@
 The system is designed for flexibility and to provide the framework of core functionality required to administer a debtors ledger system. The basic accounts receivable reports are available as standard since they are used by all businesses. However, since the database is open it is envisaged that the business will make use of ODBC drivers for database used and use Crystal Reports or Microsoft Access or some other analysis software, where the user is on the same LAN as the server for specialised reports.</p>
 
 <!-- Help Begin: AgedDebtors -->
-<h2>Aged Customer Balance Listing</h2>
+<h2><a id="AgedDebtors">Aged Customer Balance Listing</a></h2>
 <p>
 From the main menu select Customers, Reports, "Aged Customer Balances/Overdues Report".</p>
 <p>
@@ -20,7 +20,7 @@ The report can be printed at two levels:</p>
 The Aged Customer Balances can also be restricted to show just the accounts where there is some balance overdue. The same detail and summary reports are available. The resultant reports create pdf files that can be either saved or printed. <!-- Help End: AgedDebtors -->
 
 <!-- Help Begin: PrintCustStatements -->
-<h2>Customer Statements</h2>
+<h2><a id="CustomerStatements">Customer Statements</a></h2>
 <p>
 The customer statement shows the outstanding transactions on the account. There is an option in config.php that allows transactions that have been settled at some time within the last month to be shown in a settled transactions section of the statement. The parameter, $Show_Settled_LastMonth should be set equal to 1 for this. If it is set to 0, then any settled transactions will not be shown on the statements. This saves printing zero balance statements and there is argument both ways as to which is best.</p>
 <p>
@@ -35,10 +35,11 @@ This is accessed from the main menu, accounts receivable tab under the link "Tra
 <p>
 This inquiry allows transactions to be listed based on the selection of criteria on screen. The page allows listing of receipts, invoices or credit notes within any specified date range.</p>
 <p>
-This listing is shown on the screen and can of course be printed from the browser if necessary. <!-- Help End: CustomerTransInquiry -->
+This listing is shown on the screen and can of course be printed from the browser if necessary.
+ <!-- Help End: CustomerTransInquiry -->
  <!-- Help Begin: PrintCustTrans -->
 
-<h2>Printing Invoices Or Credit Notes</h2>
+<h2><a id="PrintInvoicesCredits">Printing Invoices Or Credit Notes</a></h2>
 <p>
 From the Main Menu select the Accounts Receivable tab, under Inquiries and Reports, "Print Invoices or Credit Notes".</p>
 <p>
@@ -47,4 +48,16 @@ This page shows the last invoice and credit note created and some brief instruct
 <p>
 There is also an option to print EDI invoices/credit notes. By default these are not printed as they will normally be dispatched electronically to the customer. However, some businesses and tax authorities require hard copy invoices and credit notes to be produced in any event.</p>
 <p>
-Two options are available - Print, produces a html page of the invoice (or credit note), the resulting page can then be printed using the browser print functionality. The print PDF produces a PDF invoice (or credit note). <!-- Help End: PrintCustTrans -->
+Two options are available - Print, produces a html page of the invoice (or credit note), the resulting page can then be printed using the browser print functionality. The print PDF produces a PDF invoice (or credit note).
+<!-- Help End: PrintCustTrans -->
+<h2><a id="BankingSummary">Re-print a summary of a batch of receipts</a></h2>
+<p>This report which is available from the Reports/Inquiry menu on the Receivables module, will re-print a batch summary of any receipt batches that have previously been done. It is also available as a link directly after the creation of a batch of receipts, for printing a summary for preparation of a banking.</p>
+
+<h2><a id="PriorMonthDebtors">Debtor Balances At A Prior Month End</a></h2>
+<p>This report produces a back dated aged debtor reports for any previous month end. This is available from the Inquiries/Reports menu on the receivables module. Just select the month end that you require, and the debtor range, and the report will be produced.</p>
+
+<h2><a id="CustomerListing">Customer Details Listing</a></h2>
+<p>This report which is located in the Inquiries/Reports menu on the receivables module, produces a list of customers, complete with contact details, address, phone numbers, etc. The report can be filtered by sales area, sales person, and by sales activity.</p>
+
+<h2><a id="DailyTransactions">List Daily Transactions</a></h2>
+<p>The daily transactions report lists all account receivables for a particular day, and cam be filtered by invoices, credit notes, or by receipts. It is located in the Inquiries/Reports menu on the receivables module</p>

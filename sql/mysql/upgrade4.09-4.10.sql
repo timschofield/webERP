@@ -55,6 +55,9 @@ ALTER TABLE cogsglpostings MODIFY `area` char(3) NOT NULL DEFAULT '';
 INSERT INTO scripts VALUES ('MaterialsNotUsed.php',  '4',  'Lists the items from Raw Material Categories not used in any BOM (thus, not used at all)');
 INSERT INTO scripts VALUES ('SellThroughSupport.php',  '9',  'Defines the items, period and quantum of support for which supplier has agreed to provide.');
 INSERT INTO scripts VALUES ('PDFSellThroughSupportClaim.php',  '9',  'Reports the sell through support claims to be made against all suppliers for a given date range.');
-ALTER TABLE `locstock` ADD `bin` VARCHAR( 10 ) NOT NULL , ADD INDEX ( `bin` ); 
+ALTER TABLE `locstock` ADD `bin` VARCHAR( 10 ) NOT NULL , ADD INDEX ( `bin` );
+INSERT INTO scripts VALUES ('Z_ImportPriceList.php',  '15',  'Loads a new price list from a csv file');
 
-UPDATE config SET confvalue='4.10.0' WHERE confname='VersionNumber';
+ALTER TABLE `debtortrans` ADD `packages` INT NOT NULL DEFAULT '1' COMMENT 'number of cartons';
+
+UPDATE config SET confvalue='4.10.1' WHERE confname='VersionNumber';

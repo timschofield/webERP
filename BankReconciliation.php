@@ -6,6 +6,9 @@ include ('includes/session.inc');
 
 $Title = _('Bank Reconciliation');
 
+$ViewTopic= 'GeneralLedger';
+$BookMark = 'BankAccounts';
+
 include('includes/header.inc');
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';

@@ -4,6 +4,10 @@
 
 include('includes/session.inc');
 $Title = _('Fixed Assets');
+
+$ViewTopic = 'FixedAssets';
+$BookMark = 'AssetItems';
+
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 

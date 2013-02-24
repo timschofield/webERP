@@ -15,6 +15,10 @@ if (isset($_POST['Date']) AND !Is_Date($_POST['Date'])){
 if (!isset($_POST['Date'])){
 
 	 $Title = _('Customer Transaction Listing');
+
+	$ViewTopic = 'ARReports';
+	$BookMark = 'DailyTransactions';
+
 	 include ('includes/header.inc');
 
 	echo '<div class="centre">

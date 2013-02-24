@@ -3,7 +3,9 @@
 /* $Id$*/
 
 include('includes/session.inc');
-
+$ViewTopic = 'ARReports';
+$BookMark = 'CustomerListing';
+	
 if (isset($_POST['PrintPDF'])){
 
 	include('includes/PDFStarter.php');

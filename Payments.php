@@ -6,8 +6,15 @@ include('includes/DefinePaymentClass.php');
 include('includes/session.inc');
 
 $Title = _('Payment Entry');
-$ViewTopic= 'GeneralLedger';
-$BookMark = 'BankAccountPayments';
+
+if (isset($_GET['SupplierID'])) {
+	$ViewTopic = 'AccountsPayable';
+	$BookMark = 'SupplierPayments';
+} else {
+	$ViewTopic= 'GeneralLedger';
+	$BookMark = 'BankAccountPayments';
+}
+
 include('includes/header.inc');
 
 include('includes/SQL_CommonFunctions.inc');

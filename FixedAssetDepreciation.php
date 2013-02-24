@@ -4,6 +4,9 @@
 include('includes/session.inc');
 $Title = _('Depreciation Journal Entry');
 
+$ViewTopic = 'FixedAssets';
+$BookMark = 'AssetDepreciation';
+
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 

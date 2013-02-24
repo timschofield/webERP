@@ -78,11 +78,12 @@ if (isset($TransferItem)){
 } else {
 	$LineNo=0;
 }
-include ('includes/OutputSerialItems.php');
+
+include ('includes/InputSerialItems.php');
 
 /*TotalQuantity set inside this include file from the sum of the bundles
 of the item selected for adjusting */
-$LineItem->Quantity = $TransferQuantity;
+$LineItem->Quantity = $TotalQuantity;
 
 /*Also a multi select box for adding bundles to the Transfer without keying */
 

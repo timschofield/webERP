@@ -5,6 +5,9 @@
 include('includes/session.inc');
 $Title = _('Maintain General Ledger Tags');
 
+$ViewTopic = 'GeneralLedger';
+$BookMark = 'GLTags';
+
 include('includes/header.inc');
 
 if (isset($_GET['SelectedTag'])) {

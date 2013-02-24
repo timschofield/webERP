@@ -17,6 +17,10 @@ if (!isset($_SESSION['Contract'.$identifier])){
 	header('Location:' . $RootPath . '/Contracts.php');
 	exit;
 }
+
+$ViewTopic= 'Contracts';
+$BookMark = 'AddToContract';
+
 include('includes/header.inc');
 
 

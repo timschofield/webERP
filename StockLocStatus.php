@@ -29,7 +29,8 @@ echo '<p class="page_title_text">
       </p>';
 
 echo '<table class="selection">
-		<tr><td>' . _('From Stock Location') . ':</td>
+		<tr>
+			<td>' . _('From Stock Location') . ':</td>
 			<td><select name="StockLocation"> ';
 while ($myrow=DB_fetch_array($resultStkLocs)){
 	if (isset($_POST['StockLocation']) AND $_POST['StockLocation']!='All'){
@@ -45,7 +46,8 @@ while ($myrow=DB_fetch_array($resultStkLocs)){
 		 echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 	}
 }
-echo '</select></td></tr>';
+echo '</select></td>
+	</tr>';
 
 $SQL="SELECT categoryid,
 				categorydescription
@@ -121,6 +123,7 @@ if (isset($_POST['ShowStatus'])){
 		$sql = "SELECT locstock.stockid,
 						stockmaster.description,
 						locstock.loccode,
+						locstock.bin,
 						locations.locationname,
 						locstock.quantity,
 						locstock.reorderlevel,
@@ -139,6 +142,7 @@ if (isset($_POST['ShowStatus'])){
 		$sql = "SELECT locstock.stockid,
 						stockmaster.description,
 						locstock.loccode,
+						locstock.bin,
 						locations.locationname,
 						locstock.quantity,
 						locstock.reorderlevel,
@@ -163,16 +167,17 @@ if (isset($_POST['ShowStatus'])){
 	echo '<br />
          <table cellpadding="5" cellspacing="4" class="selection">';
 
-	$tableheader = '<tr>
+	$TableHeader = '<tr>
     					<th>' . _('StockID') . '</th>
     					<th>' . _('Description') . '</th>
     					<th>' . _('Quantity On Hand') . '</th>
+    					<th>' . _('Bin Loc') . '</th>
     					<th>' . _('Re-Order Level') . '</th>
     					<th>' . _('Demand') . '</th>
     					<th>' . _('Available') . '</th>
     					<th>' . _('On Order') . '</th>
 					</tr>';
-	echo $tableheader;
+	echo $TableHeader;
 	$j = 1;
 	$k=0; //row colour counter
 
@@ -241,10 +246,7 @@ if (isset($_POST['ShowStatus'])){
 					ON purchorderdetails.orderno=purchorders.orderno
 				WHERE purchorders.intostocklocation='" . $myrow['loccode'] . "'
 				AND purchorderdetails.itemcode='" . $StockID . "'
-					AND purchorders.status <> 'Cancelled'
-					AND purchorders.status <> 'Rejected'
-					AND purchorders.status <> 'Pending'
-					AND purchorders.status <> 'Completed'";
+				AND purchorders.status = 'Authorised'";
 
 		$ErrMsg = _('The quantity on order for this product to be received into') . ' ' . $myrow['loccode'] . ' ' . _('cannot be retrieved because');
 		$QOOResult = DB_query($sql,$db,$ErrMsg);
@@ -272,6 +274,7 @@ if (isset($_POST['ShowStatus'])){
 				printf('<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?StockID=%s">%s</a></td>
     					<td>%s</td>
     					<td class="number">%s</td>
+    					<td>%s</td>
     					<td class="number">%s</td>
     					<td class="number">%s</td>
     					<td class="number"><a target="_blank" href="' . $RootPath . '/SelectProduct.php?StockID=%s">%s</a></td>
@@ -281,6 +284,7 @@ if (isset($_POST['ShowStatus'])){
     					mb_strtoupper($myrow['stockid']),
     					$myrow['description'],
     					locale_number_format($myrow['quantity'],$myrow['decimalplaces']),
+						$myrow['bin'],
     					locale_number_format($myrow['reorderlevel'],$myrow['decimalplaces']),
     					locale_number_format($DemandQty,$myrow['decimalplaces']),
     					mb_strtoupper($myrow['stockid']),
@@ -304,6 +308,7 @@ if (isset($_POST['ShowStatus'])){
 				printf('<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?StockID=%s">%s</a></td>
     					<td>%s</td>
     					<td class="number">%s</td>
+    					<td>%s</td>
     					<td class="number">%s</td>
     					<td class="number">%s</td>
     					<td class="number"><a target="_blank" href="' . $RootPath . '/SelectProduct.php?StockID=%s">%s</a></td>
@@ -312,6 +317,7 @@ if (isset($_POST['ShowStatus'])){
     					mb_strtoupper($myrow['stockid']),
     					$myrow['description'],
     					locale_number_format($myrow['quantity'],$myrow['decimalplaces']),
+    					$myrow['bin'],
     					locale_number_format($myrow['reorderlevel'],$myrow['decimalplaces']),
     					locale_number_format($DemandQty,$myrow['decimalplaces']),
     					mb_strtoupper($myrow['stockid']),

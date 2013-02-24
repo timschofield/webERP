@@ -5,6 +5,10 @@
  include('includes/session.inc');
  include('includes/phplot/phplot.php');
  $Title=_('Sales Report Graph');
+
+ $ViewTopic = 'ARInquiries';
+ $BookMark = 'SalesGraph'
+ 
  include('includes/header.inc');
 
  $SelectADifferentPeriod ='';

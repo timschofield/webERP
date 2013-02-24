@@ -1,10 +1,12 @@
 <?php
 /* $Id: SelectAsset.php 4443 2010-12-23 15:30:30Z tim_schofield $*/
 
-$PricesSecurity = 9;
-
 include ('includes/session.inc');
 $Title = _('Select an Asset');
+
+$ViewTopic = 'FixedAssets';
+$BookMark = 'AssetSelection';
+
 include ('includes/header.inc');
 
 if (isset($_GET['AssetID'])) {

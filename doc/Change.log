@@ -1,13 +1,20 @@
 webERP Change Log
 
-15/2/13 Tim Schofield: New script for uploading a sales price list frrom a csv file.
+23/2/13 Version 4.10.1 Released
 
-2/2/13 Version 4.10.1 Released
-
+23/2/13 Phil: Tidy up PDFSellThroughSupportClaim.php report
+18/2/13 Fahad Hatib: Committed by Phil - added BookMarks and ViewTopic links in the General Ledger scripts and modifications to the general ledger manual to add these bookmarks.
+18/2/13 Tim Schofield: Z_ImportPriceList.php to import a price list from a csv file
+15/2/13 Gilberto Dos Santos Alves: Updated Brazilian Portuguese (pt_BR.utf8) translation
+15/2/13 Rafael Chacón: Corrected CRC flag
+13/2/13 Phil: Fix bugs in labelling of fields in view customer details in Customers.php
+12/2/13 Paul Harness: Fix of serialized transfer quantities/includes, StockTransferControlled.php
+11/2/13 Fahad Hatib: Committed by Phil - added Manual links for AR, Fixed Assets and AP manual sections
+10/3/13 Phil: Added bin to locstock so the standard bin location for stock can be specified, can update from LocReorderlevel.php script of StockStatus.php - this prints on packing slips so dispatch people can see where the stock should be to pick it. Could also add to picking report and GRN receipt report.
 2/2/13 Phil: Refix wiki links
 2/2/13 Phil: Fix PDFTransPageHeader.inc landscape invoice printing 
 2/2/13 Tim: Fixed up syntax error in InternalStockCategoriesByRole.php
-1/2/13 Fahad Hatib: NewManual page for Supplier Tendering brought in from KwaMoja
+1/2/13 Fahad Hatib: New Manual page for Supplier Tendering brought in from KwaMoja
 2/1/13 Phil: Fix PDFTransPageHeader.inc landscape invoice printing 
 31/1/13 Tim: includes/MiscFunctions.php fix wiki links
 29/1/13 Tim: Fix sql injection security hole in session.inc.
@@ -17,7 +24,7 @@ webERP Change Log
 27/1/13 Phil: Sell Through Support scripts - allows setting up rebate for a customer/supplier/item combinations for a date range with a discount to apply. A claim report allows a listing of invoices/credits where these items have been sold accumulating the claim from the supplier. Claim report needs work.
 27/1/13 Phil: Supplier discounts/promotions can now be configured against supplier purchasing data with an effective date range. Purchase orders automatically accumulate and apply the discounts on placing orders.
 27/1/13 Tim/Fahad Hatib: Various minor improvements from their fork Kwamoja
-27/1/13 Tim: Changes to date functions to allow for Y-m-d date formats
+27/1/13 Tim: Phil brought in changes to date functions to allow for Y-m-d date formats and finished
 27/1/13 Tim: Provide facility for editing account group name in AccountGroups.php
 27/1/13 Tim: Automatically adjust config.php for variable name changes 
 27/1/13 Fahad Hatib: Manual updates for internal inventory transfer system

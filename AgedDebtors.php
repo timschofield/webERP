@@ -439,6 +439,10 @@ if (isset($_POST['PrintPDF'])
 } else { /*The option to print PDF was not hit */
 
 	$Title=_('Aged Debtor Analysis');
+
+	$ViewTopic = 'ARReports';
+	$BookMark = 'AgedDebtors';
+
 	include('includes/header.inc');
 
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p><br />';

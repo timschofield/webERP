@@ -4,6 +4,10 @@
 
 include('includes/session.inc');
 $Title = _('Bank Account Matching');
+
+$ViewTopic = 'GeneralLedger';
+$BookMark = 'BankMatching';
+
 include('includes/header.inc');
 
 if ((isset($_GET['Type']) AND $_GET['Type']=='Receipts')

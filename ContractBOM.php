@@ -5,6 +5,7 @@
 include('includes/DefineContractClass.php');
 
 include('includes/session.inc');
+
 $Title = _('Contract Bill of Materials');
 
 $identifier=$_GET['identifier'];
@@ -17,6 +18,10 @@ if (!isset($_SESSION['Contract'.$identifier])){
 	header('Location:' . $RootPath . '/Contracts.php');
 	exit;
 }
+
+$ViewTopic= 'Contracts';
+$BookMark = 'AddToContract';
+
 include('includes/header.inc');
 
 if (isset($_POST['UpdateLines']) OR isset($_POST['BackToHeader'])) {

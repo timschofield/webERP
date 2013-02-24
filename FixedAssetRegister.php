@@ -245,6 +245,10 @@ if (isset($_POST['submit']) OR isset($_POST['pdf']) OR isset($_POST['csv'])) {
               </form>';
 	}
 } else {
+
+	$ViewTopic = 'FixedAssets';
+	$BookMark = 'AssetRegister';
+
 	include ('includes/header.inc');
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 

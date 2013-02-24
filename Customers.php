@@ -4,6 +4,14 @@
 
 include('includes/session.inc');
 
+if (isset($_POST['Edit']) or isset($_GET['Edit']) or isset($_GET['DebtorNo'])) {
+	$ViewTopic = 'AccountsReceivable';
+	$BookMark = 'AmendCustomer';
+} else {
+	$ViewTopic = 'AccountsReceivable';
+	$BookMark = 'NewCustomer';
+}
+
 $Title = _('Customer Maintenance');
 /* webERP manual links before header.inc */
 $ViewTopic= 'AccountsReceivable';
@@ -452,7 +460,7 @@ if (!isset($DebtorNo)) {
 			<td>' . _('Country') . ':</td>
 			<td><select name="Address6">';
 	foreach ($CountriesArray as $CountryEntry => $CountryName){
-		if (isset($_POST['Address6']) AND ($_POST['Address6'] == $CountryName)){
+		if (isset($_POST['Address6']) AND (strtoupper($_POST['Address6']) == strtoupper($CountryName))){
 			echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName .'</option>';
 		}elseif (!isset($_POST['Address6']) AND $CountryName == "") {
 			echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName .'</option>';
@@ -728,7 +736,7 @@ if (!isset($DebtorNo)) {
 				<td>' . _('Country') . ':</td>
 				<td><select name="Address6">';
 		foreach ($CountriesArray as $CountryEntry => $CountryName){
-			if (isset($_POST['Address6']) AND ($_POST['Address6'] == $CountryName)){
+			if (isset($_POST['Address6']) AND (strtoupper($_POST['Address6']) == strtoupper($CountryName))){
 				echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName .'</option>';
 			}elseif (!isset($_POST['Address6']) AND $CountryName == "") {
 				echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName .'</option>';
@@ -767,7 +775,7 @@ if (!isset($DebtorNo)) {
 				<td>' . _('Country') . ':</td>
 				<td><select name="Address6">';
 		foreach ($CountriesArray as $CountryEntry => $CountryName){
-			if (isset($_POST['Address6']) AND ($_POST['Address6'] == $CountryName)){
+			if (isset($_POST['Address6']) AND (strtoupper($_POST['Address6']) == strtoupper($CountryName))){
 				echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName .'</option>';
 			}elseif (!isset($_POST['Address6']) AND $CountryName == "") {
 				echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName .'</option>';
@@ -934,7 +942,7 @@ if (!isset($DebtorNo)) {
 		$result=DB_query("SELECT currency FROM currencies WHERE currabrev='".$_POST['CurrCode']."'",$db);
 		$myrow=DB_fetch_array($result);
 		echo '<tr>
-				<td>' . _('Credit Status') . ':</td>
+				<td>' . _('Customers Currency') . ':</td>
 				<td>' . $myrow['currency'] . '</td></tr>';
 	} else {
 		$result=DB_query("SELECT currency, currabrev FROM currencies",$db);
@@ -952,23 +960,16 @@ if (!isset($DebtorNo)) {
 		echo '</select></td>
 			</tr>';
 	}
-	/*added lines 8/23/2007 by Morris Kelly to get po line parameter Y/N*/
+	echo '<tr>
+			<td>' . _('Require Customer PO Line on SO') . ':</td>';
 	if (isset($_GET['Modify'])) {
 		if ($_POST['CustomerPOLine']==0){
-			echo '<tr>
-					<td>' . _('Credit Status') . ':</td>
-					<td>'._('No') . '</td>
-				</tr>';
+			echo '<td>'._('No') . '</td>';
 		} else {
-			echo '<tr>
-					<td>' . _('Credit Status') . ':</td>
-					<td>'._('Yes') . '</td>
-				</tr>';
+			echo '<td>'._('Yes') . '</td>';
 		}
 	} else {
-		echo '<tr>
-				<td>' . _('Require Customer PO Line on SO') . ':</td>
-				<td><select name="CustomerPOLine">';
+		echo '<td><select name="CustomerPOLine">';
 		if ($_POST['CustomerPOLine']==0){
 			echo '<option selected="selected" value="0">' . _('No') . '</option>';
 			echo '<option value="1">' . _('Yes') . '</option>';
@@ -976,12 +977,12 @@ if (!isset($DebtorNo)) {
 			echo '<option value="0">' . _('No') . '</option>';
 			echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
 		}
-		echo '</select></td>
-			</tr>';
+		echo '</select></td>';
 	}
+	echo '</tr>';
 
 	if (isset($_GET['Modify'])) {
-		if ($_POST['CustomerPOLine']==0){
+		if ($_POST['InvAddrBranch']==0){
 			echo '<tr>
 					<td>' . _('Invoice Addressing') . ':</td>
 					<td>'._('Address to HO').'</td>

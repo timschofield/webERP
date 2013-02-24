@@ -11,6 +11,8 @@ include('includes/DefineSerialItems.php');
 include('includes/session.inc');
 
 $Title = _('Create Credit Note');
+$ViewTopic= 'ARTransactions';
+$BookMark = 'CreateCreditNote';
 
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');

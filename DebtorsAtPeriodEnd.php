@@ -121,6 +121,10 @@ if (isset($_POST['PrintPDF'])
 } else { /*The option to print PDF was not hit */
 
 	$Title=_('Debtor Balances');
+
+	$ViewTopic = 'ARReports';
+	$BookMark = 'PriorMonthDebtors';
+	
 	include('includes/header.inc');
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/customer.png" title="' . _('Search') .
 	 '" alt="" />' . ' ' . $Title.'</p><br />';

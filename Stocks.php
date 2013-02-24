@@ -20,6 +20,18 @@ if (isset($_GET['StockID'])){
 	$StockID = '';
 }
 
+
+if (isset($_POST['NextItem'])){
+	$Result = DB_query("SELECT stockid FROM stockmaster WHERE stockid>'" . $StockID . "' ORDER BY stockid ASC LIMIT 1",$db);
+	$NextItemRow = DB_fetch_row($Result);
+	$StockID = $NextItemRow[0];
+}
+if (isset($_POST['PreviousItem'])){
+	$Result = DB_query("SELECT stockid FROM stockmaster WHERE stockid<'" . $StockID . "' ORDER BY stockid DESC LIMIT 1",$db);
+	$PreviousItemRow = DB_fetch_row($Result);
+	$StockID = $PreviousItemRow[0];
+}
+
 if (isset($StockID) and !isset($_POST['UpdateCategories'])) {
 	$sql = "SELECT COUNT(stockid)
 			FROM stockmaster
@@ -761,6 +773,14 @@ if (isset($_POST['submit'])) {
 
 echo '<form id="ItemForm" enctype="multipart/form-data" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 echo '<div>';
+if (isset($StockID)){
+	echo '<table width="100%">
+			<tr>
+				<td width="5%"><input style="background:url(css/previous.png);width:26px;height:43px;" type="submit" name="PreviousItem" value="" /></td>
+				<td width="90%"></td>
+				<td width="5%"><input style="background:url(css/next.png);width:26px;height:43px;" type="submit" name="NextItem" value="" /></td>
+			</tr>';
+}
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<input type="hidden" name="New" value="'.$New.'" />';

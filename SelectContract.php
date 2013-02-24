@@ -4,6 +4,10 @@
 
 include('includes/session.inc');
 $Title = _('Select Contract');
+
+$ViewTopic= 'Contracts';
+$BookMark = 'SelectContract';
+
 include('includes/header.inc');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/contract.png" title="' . _('Contracts') . '" alt="" />' . ' ' . _('Select A Contract') . '</p> ';

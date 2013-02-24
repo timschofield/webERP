@@ -4,6 +4,10 @@
 
 include ('includes/session.inc');
 $Title = _('Bank Transactions Inquiry');
+
+$ViewTopic= 'GeneralLedger';
+$BookMark = 'DailyBankTransactions';
+
 include('includes/header.inc');
 
 echo '<p class="page_title_text">

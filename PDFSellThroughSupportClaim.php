@@ -3,6 +3,7 @@
 /* $Id: PDFSellThroughSupportClaim.php 5788 2013-01-02 03:22:38Z daintree $*/
 
 include('includes/session.inc');
+$Title = _('Sell Through Support Claims Report');
 
 if (isset($_POST['PrintPDF'])) {
 
@@ -42,20 +43,22 @@ if (isset($_POST['PrintPDF'])) {
 					sellthroughsupport.rebateamount
 				FROM stockmaster INNER JOIN stockmoves
 					ON stockmaster.stockid=stockmoves.stockid
-				INNER JOIN sellthroughsupport
 				INNER JOIN systypes
 					ON stockmoves.type=systypes.typeid
 				INNER JOIN debtorsmaster
 					ON stockmoves.debtorno=debtorsmaster.debtorno
-				INNER JOIN suppliers
-					ON sellthroughsupport.supplierno=suppliers.supplierid
 				INNER JOIN purchdata
 					ON purchdata.stockid = stockmaster.stockid
-					AND purchdata.supplierno = sellthroughsupport.supplierno
+				INNER JOIN suppliers
+					ON suppliers.supplierid = purchdata.supplierno
+				INNER JOIN sellthroughsupport
+					ON sellthroughsupport.supplierno=suppliers.supplierid
 				INNER JOIN currencies
 					ON currencies.currabrev=suppliers.currcode
 				WHERE stockmoves.trandate >= '" . FormatDateForSQL($_POST['FromDate']) . "'
 				AND stockmoves.trandate <= '" . FormatDateForSQL($_POST['ToDate']) . "'
+				AND sellthroughsupport.effectivefrom <= stockmoves.trandate
+				AND sellthroughsupport.effectiveto >= stockmoves.trandate
 				AND (stockmoves.type=10 OR stockmoves.type=11)
 				AND (sellthroughsupport.stockid=stockmoves.stockid OR sellthroughsupport.categoryid=stockmaster.categoryid)
 				AND (sellthroughsupport.debtorno=stockmoves.debtorno OR sellthroughsupport.debtorno='')
@@ -76,7 +79,7 @@ if (isset($_POST['PrintPDF'])) {
 		exit;
 	}
 
-	if (DB_num_rows($LowGPSalesResult) == 0) {
+	if (DB_num_rows($ClaimsResult) == 0) {
 
 		include('includes/header.inc');
 		prnMsg(_('No sell through support items retrieved'), 'warn');
@@ -88,7 +91,7 @@ if (isset($_POST['PrintPDF'])) {
 		exit;
 	}
 
-	include ('includes/PDFSellThroughSuppPageHeader.inc');
+	include ('includes/PDFSellThroughSupportClaimPageHeader.inc');
 	$SupplierClaimTotal=0;
 	$Supplier = '';
 	$FontSize=8;
@@ -96,40 +99,57 @@ if (isset($_POST['PrintPDF'])) {
 
 		$YPos -=$line_height;
 		if ($SellThroRow['suppname']!=$Supplier){
-			$FontSize = 10;
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+2,$YPos,30,$FontSize,$SellThroRow['suppname']);
-			$YPos -=$line_height;
-			
 			if ($SupplierClaimTotal > 0) {
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+2,$YPos,30,$FontSize,$Supplier . ' ' . _('Total Claim:') . ' (' . $CurrCode . ')');
 				$LeftOvers = $pdf->addTextWrap(440,$YPos,60,$FontSize, locale_number_format($SupplierClaimTotal,$CurrDecimalPlaces), 'right');
-				include('includes/PDFLowGPPageHeader.inc');
+				include('includes/PDFSellThroughClaimPageHeader.inc');
 			}
+		}
+		if ($SellThroRow['suppname']!=$Supplier){
+			$pdf->SetFont('helvetica', $style='B', $size=11);
+			$FontSize = 10;
+			$YPos -=$line_height;
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+2,$YPos,250,$FontSize,$SellThroRow['suppname']);
 			$Supplier = $SellThroRow['suppname'];
-			$CurrDeciamlPlaces = $SellThroRow['currdecimalplaces'];
+			$CurrDecimalPlaces = $SellThroRow['currdecimalplaces'];
 			$CurrCode = $SellThroRow['currcode'];
 			$SupplierClaimTotal=0;
+			$pdf->SetFont('helvetica', $style='N', $size=8);
 			$FontSize =8;
+			$YPos -=$line_height;	
 		}
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+2,$YPos,30,$FontSize,$SellThroRow['typename']);
-		$LeftOvers = $pdf->addTextWrap(100,$YPos,30,$FontSize,$SellThroRow['transno']);
-		$LeftOvers = $pdf->addTextWrap(130,$YPos,50,$FontSize,$SellThroRow['stockid']);
-		$LeftOvers = $pdf->addTextWrap(220,$YPos,50,$FontSize,$SellThroRow['name']);
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+2,$YPos,60,$FontSize,$SellThroRow['typename'] . '-' . $SellThroRow['transno']);
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+63,$YPos,160,$FontSize,$SellThroRow['stockid']. '-' . $SellThroRow['description']);
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+223,$YPos,110,$FontSize,$SellThroRow['name']);
 		$DisplaySellingPrice = locale_number_format($SellThroRow['sellingprice'],$_SESSION['CompanyRecord']['decimalplaces']);
-		$LeftOvers = $pdf->addTextWrap(330,$YPos,60,$FontSize,$DisplaySellingPrice,'right');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+334,$YPos,60,$FontSize,$DisplaySellingPrice,'right');
 		$ClaimAmount = (($SellThroRow['fxcost']*$SellThroRow['rebatepercent']) + $SellThroRow['rebateamount']) * -$SellThroRow['qty'];
-		$SupplierClaimTotal += $ClaimTotal;
+		$SupplierClaimTotal += $ClaimAmount;
 		
 		
-		$LeftOvers = $pdf->addTextWrap(380,$YPos,60,$FontSize,locale_number_format(-$SellThroRow['qty']), 'right');
-		$LeftOvers = $pdf->addTextWrap(440,$YPos,60,$FontSize,locale_number_format($ClaimAmount,$CurrDecimalPlaces), 'right');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+395,$YPos,60,$FontSize,locale_number_format(-$SellThroRow['qty']), 'right');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+480,$YPos,60,$FontSize,locale_number_format($ClaimAmount,$CurrDecimalPlaces), 'right');
 
 		if ($YPos < $Bottom_Margin + $line_height){
-			include('includes/PDFLowGPPageHeader.inc');
+			include('includes/PDFSellThroughSupportClaimPageHeader.inc');
 		}
 
 	} /*end sell through support claims while loop */
 
+	if ($SupplierClaimTotal > 0) {
+		$YPos -=5;
+		$pdf->line($Left_Margin+480, $YPos,$Left_Margin+480+60, $YPos);
+		$YPos -=$line_height;
+		
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+2,$YPos,470,$FontSize,$Supplier . ' ' . _('Total Claim:'),'right');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+480,$YPos,60,$FontSize, locale_number_format($SupplierClaimTotal,$CurrDecimalPlaces), 'right');
+		$YPos -=5;
+		
+		$pdf->line($Left_Margin+480, $YPos,$Left_Margin+480+60, $YPos);
+		$YPos -=1;
+		$pdf->line($Left_Margin+480, $YPos,$Left_Margin+480+60, $YPos);
+		
+	}
 	$FontSize =10;
 
 	$YPos -= (2*$line_height);

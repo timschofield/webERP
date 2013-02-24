@@ -6,6 +6,9 @@ include('includes/session.inc');
 
 $Title = _('Change Asset Location');
 
+$ViewTopic = 'FixedAssets';
+$BookMark = 'AssetTransfer';
+
 include('includes/header.inc');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') .

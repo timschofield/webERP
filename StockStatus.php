@@ -19,7 +19,7 @@ if (isset($_GET['StockID'])){
 if (isset($_POST['UpdateBinLocations'])){
 	foreach ($_POST as $PostVariableName => $Bin) {
 		if (mb_substr($PostVariableName,0,11) == 'BinLocation') {
-			$sql = "UPDATE locstock SET bin='" . $Bin . "' WHERE loccode='" . mb_substr($PostVariableName,11) . "' AND stockid='" . $StockID . "'";
+			$sql = "UPDATE locstock SET bin='" . strtoupper($Bin) . "' WHERE loccode='" . mb_substr($PostVariableName,11) . "' AND stockid='" . $StockID . "'";
 			$result = DB_query($sql, $db);
 		}   
 	}

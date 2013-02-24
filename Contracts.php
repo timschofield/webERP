@@ -15,6 +15,9 @@ if (isset($_GET['CustomerID'])) {
 	$_POST['SelectedCustomer']=$_GET['CustomerID'];
 }
 
+$ViewTopic= 'Contracts';
+$BookMark = 'CreateContract';
+
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 

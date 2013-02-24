@@ -5,6 +5,9 @@
 include('includes/session.inc');
 include('includes/SQL_CommonFunctions.inc');
 
+$ViewTopic = 'ARReports';
+$BookMark = 'CustomerStatements';
+
 // If this file is called from another script, we set the required POST variables from the GET
 // We call this file from SelectCustomer.php when a customer is selected and we want a statement printed
 

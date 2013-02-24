@@ -174,8 +174,9 @@ div.info{
 div.page_help_text{ /* many */
 	background-color:#ccc;/* lightgray is not a w3c css valid color #ccc */
 	border:#a52a2a 1px solid;
-	padding-top:1px;/* 2px in merge */
-	padding-bottom:1px; /* 2px in merge */
+	border-radius: 5px;
+	padding-top:3px;/* 2px in merge */
+	padding-bottom:3px; /* 2px in merge */
 	padding-left:3px;   /* 10px in merge */
 	z-index:1;
 	width:50%; /* 80% in merge */

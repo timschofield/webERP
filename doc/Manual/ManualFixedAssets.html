@@ -7,7 +7,7 @@
 <ul>
     <li>Assets are assigned a unique id number</li>
 
-    <li>Any number of fixed asset categories can be defined eg. Plant, Equipment, Buildings etc.</li>
+    <li>Any number of fixed asset categories can be defined eg. Plant, Equipment, Buildings etc. </li>
 
     <li>Assets can be depreciated using either striaght line or diminishing value depreciation methods</li>
 
@@ -29,28 +29,31 @@
 <p>The sequence of events in creating a new fixed asset is as follows:</p>
 
 <ul>
-    <li>Any number of fixed asset categories are defined - from Fixed Asset Module -&gt; Fixed Asset Categories. These are the groupings of like assets e.g. Plant, IT equipment, Buildings, Land etc.</li>
+    <li><h3><a id="AssetCategories">Define Fixed Asset Categories</a></h3>Any number of fixed asset categories  are defined - from Fixed Asset Module -&gt; Fixed Asset Categories. These are the groupings of like assets e.g. Plant, IT equipment, Buildings, Land etc. The general ledger accounts for depreciation, fixed asset cost and accumulated depreciation are all defined for all assets of the same category at this level.</li>
 
-    <li>Fixed asset locations must be defined. These can be in a heirarchical manner e.g. "Head Office" may have a sub-location of "Server Room".</li>
+    <li><h3><a id="AssetLocations">Define Fixed Asset Locations</a></h3>Fixed asset locations must be defined. These can be in a heirarchical manner e.g. "Head Office" may have a sub-location of "Server Room".</li>
 
-    <li>A fixed asset is created from the Fixed Assets module -&gt; Add Fixed Asset. This process allows the description and a long description to be recorded, together with the asset's serial number or barcode, the category of fixed asset it belongs to and it's location in the business. The depreciation method and rate is also specified. At this point there is no cost (nor accumulated depreciation)associated with the asset</li>
+    <li><h3><a id="AssetItems">Add Fixed Asset Items</a></h3>A fixed asset is created from the Fixed Assets module -&gt; Add Fixed Asset. This process allows the description and a long description to be recorded, together with the asset's serial number or barcode, the category of fixed asset it belongs to and it's location in the business. The depreciation method and rate is also specified. At this point there is no cost (nor accumulated depreciation)associated with the asset</li>
 
-    <li>A purchase order is placed for the asset as a non-stock item. There is provision to enter the asset id of the asset into the purchase order. When the asset is received - the cost is posted to the general ledger account specified by the asset's category. It is also possible to add cost to existing assets in this way. Each cost added is recorded in the fixed asset transaction log so additions over a period can be identified easily.</li>
+    <li><h3>Purchase Orders For Fixed assets</h3>A purchase order is placed for the asset as a non-stock item. There is provision to enter the asset id of the asset into the purchase order. When the asset is received - the cost is posted to the general ledger account specified by the asset's category. It is also possible to add cost to existing assets in this way. Each cost added is recorded in the fixed asset transaction log so additions over a period can be identified easily.</li>
 
-    <li>Instead of entering a purchase order with the asset specified directly it is possible to enter a purchase invoice directly allocating the charges to any number of fixed assets. The supplier invoice form allows entry against fixed assets directly. All assets created - but with no cost will show in a select box - any of these can be selected or if the asset id is known it can be entered manually. In this way it is possible to add to existing assets. Depreciation will calculate on the new total cost of the asset (or book value if DV depreciation is being used).</li>
-
-    <li>If the asset is from capitalised stock, then it is possible to do a stock adjustment referencing an asset id - the cost of the stock from the current (standard or weighted average) cost is posted to the cost account of the fixed asset category of the asset selected. Stock general ledger accounts are also updated as usual. The asset addition is logged in much the same way as a purchase ordered fixed asset.</li>
+    <li><h3><a id="AssetInvoices">Purchase an Item Directly With Supplier Invoice</a></h3>Instead of entering a purchase order with the asset specified directly it is possible to enter a purchase invoice directly allocating the charges to any number of fixed assets. The supplier invoice form allows entry against fixed assets directly. All assets created - but with no cost will show in a select box - any of these can be selected or if the asset id is known it can be entered manually. In this way it is possible to add to existing assets. Depreciation will calculate on the new total cost of the asset (or book value if DV depreciation is being used).</li>
 </ul>
 
-<h2>Selecting A Fixed Asset</h2>
+<h2><a id="AssetSelection">Selecting A Fixed Asset</a></h2>
 
 <p>From the main menu -&gt; Fixed Assets Module tab -&gt; Select Asset. There are options to select the asset category and the asset location and just look at assets for the given category and location. Alternatively the asset id can be entered or any part of the description.</p>
 
 <p>Once and item is selected - the details of the asset shows including the cost and accumulated depreciation with all entered transactions reflected. The cost and accumulated depreciation cannot be entered or altered manually. The asset cost will always come from the accounts payable module and depreciation will always come from the automatic calculation of depreciation. However, all other details of the asset can be modified when an asset is selected. The description, serial number, barcode, category, location, depreciation type and rate etc can all be modified at will.</p>
 
-<h2>Fixed Asset Depreciation Run</h2>
+<h2><a id="AssetDepreciation">Fixed Asset Depreciation Run</a></h2>
 
 <p>The depreciation run must be run monthly to create the general ledger journals for depreciation at the rates and depreciation methods defined for the assets. In addition to the general ledger journals a log of the depreciation transactions is also created. The depreciation run checks the last month it was run and defaults to run for the following month ... in this way every time it is run it is self evident whether it has been run for the month under review. There is no functionality to reverse a depreciation run.</p>
+
+<h2><a id="AssetTransfer">Change Location of a Fixed Asset</a></h2>
+
+<p>Assets can be transferred to a different location. This enables the company to keep track of the location of their assets. To do this select 'Change Asset Location' from the Transactions menu of the Asset Manager module. Then just select the new location of the asset and all reports will be updated with this new location.</p>
+
 
 <h2>Fixed Asset Disposals</h2>
 
