@@ -56,9 +56,10 @@ Class Receipt {
 	Var $PayeeBankDetail;
 	Var $ID;
 	var $tag;
+	var $TagName;
 
-	function Receipt ($Amt, $Cust, $Disc, $Narr, $id, $GLCode, $PayeeBankDetail, $CustomerName, $tag){
-
+	function Receipt ($Amt, $Cust, $Disc, $Narr, $id, $GLCode, $PayeeBankDetail, $CustomerName, $Tag){
+		global $db;
 /* Constructor function to add a new Receipt object with passed params */
 		$this->Amount =$Amt;
 		$this->Customer = $Cust;
@@ -68,7 +69,12 @@ Class Receipt {
 		$this->GLCode = $GLCode;
 		$this->PayeeBankDetail=$PayeeBankDetail;
 		$this->ID = $id;
-		$this->tag = $tag;
+		$this->tag = $Tag;
+		$result = DB_query("SELECT tagdescription FROM tags WHERE tagref='" . $Tag . "'",$db);
+		if (DB_num_rows($result)==1){
+			$TagRow = DB_fetch_array($result);
+			$this->TagName = $TagRow['tagdescription'];
+		}
 	}
 }
 

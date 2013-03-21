@@ -917,6 +917,7 @@ if (isset($_SESSION['ReceiptBatch'])){
 			<th>' . _('Customer') . '</th>
 			<th>' . _('GL Code') . '</th>
 			<th>' . _('Narrative') . '</th>
+			<th>' . _('Tag') . '</th>
 		</tr>';
 
 	$BatchTotal = 0;
@@ -933,6 +934,7 @@ if (isset($_SESSION['ReceiptBatch'])){
 				<td>' . stripslashes($ReceiptItem->CustomerName) . '</td>
 				<td>'.$ReceiptItem->GLCode.' - '.$myrow['accountname'].'</td>
 				<td>'. stripslashes($ReceiptItem->Narrative) . '</td>
+				<td>'. $ReceiptItem->TagName . '</td>
 				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=' . $ReceiptItem->ID . '&Type=' . $_GET['Type']. '">' . _('Delete') . '</a></td>
 			</tr>';
 		$BatchTotal= $BatchTotal + $ReceiptItem->Amount;
@@ -1025,7 +1027,7 @@ if (isset($_POST['GLEntry']) AND isset($_SESSION['ReceiptBatch'])){
 	$result=DB_query($SQL,$db);
 	echo '<option value="0"></option>';
 	while ($myrow=DB_fetch_array($result)){
-		if (isset($_POST['tag']) and $_POST['tag']==$myrow['tagref']){
+		if (isset($_POST['tag']) AND$_POST['tag']==$myrow['tagref']){
 			echo '<option selected="selected" value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription'] . '</option>';
 		} else {
 			echo '<option value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription'] . '</option>';
@@ -1179,7 +1181,7 @@ if (((isset($_SESSION['CustomerRecord'])
 	}	//end if results to show
 
 }
-if (isset($_SESSION['ReceiptBatch']->Items) and count($_SESSION['ReceiptBatch']->Items) > 0){
+if (isset($_SESSION['ReceiptBatch']->Items) AND count($_SESSION['ReceiptBatch']->Items) > 0){
 	echo '<div class="centre">
 			<br/>
 			<input tabindex="13" type="submit" name="CommitBatch" value="' . _('Accept and Process Batch') . '" />
