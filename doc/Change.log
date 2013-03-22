@@ -1,5 +1,6 @@
 webERP Change Log
 
+22/3/13 Kalmer Piiskop: Updated Estonian translation 
 21/3/13 Arwan: CustomerReceipt.php Added GL tag name for GL analysis of receipts
 24/2/13 Tim Schofield: SalesGraph.php Fix syntax error, missing ; at end of line
 24/2/13 Tim Schofield: CustWhereAlloc.php Fix syntax error, bad indenting, and an extra } entered because of it

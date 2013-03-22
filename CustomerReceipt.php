@@ -1027,7 +1027,7 @@ if (isset($_POST['GLEntry']) AND isset($_SESSION['ReceiptBatch'])){
 	$result=DB_query($SQL,$db);
 	echo '<option value="0"></option>';
 	while ($myrow=DB_fetch_array($result)){
-		if (isset($_POST['tag']) AND$_POST['tag']==$myrow['tagref']){
+		if (isset($_POST['tag']) AND $_POST['tag']==$myrow['tagref']){
 			echo '<option selected="selected" value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription'] . '</option>';
 		} else {
 			echo '<option value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription'] . '</option>';
