@@ -1,5 +1,6 @@
 webERP Change Log
 
+1/4/13 Kalmer Piiskop: Correct includes/LanguagesArray.php to use correct decimal point and thousands separator
 27/3/13 Fahad Hatib: Updates to editing tenders and button to close a tender
 22/3/13 Kalmer Piiskop: Updated Estonian translation 
 21/3/13 Arwan: CustomerReceipt.php Added GL tag name for GL analysis of receipts
