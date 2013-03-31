@@ -43,8 +43,8 @@ $LanguagesArray['es_ES.utf8']['ThousandsSeparator'] = '.';
 
 $LanguagesArray['et_EE.utf8']['LanguageName'] = _('Estonian');
 $LanguagesArray['et_EE.utf8']['WindowsLocale'] = 'estonian';
-$LanguagesArray['et_EE.utf8']['DecimalPoint'] = ',';
-$LanguagesArray['et_EE.utf8']['ThousandsSeparator'] = '.';
+$LanguagesArray['et_EE.utf8']['DecimalPoint'] = '.';
+$LanguagesArray['et_EE.utf8']['ThousandsSeparator'] = ' ';
 
 $LanguagesArray['fa_IR.utf8']['LanguageName'] = _('Persian');
 $LanguagesArray['fa_IR.utf8']['WindowsLocale'] = 'persian';
