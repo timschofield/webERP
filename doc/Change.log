@@ -1,5 +1,6 @@
 webERP Change Log
 
+6/4/13 Rafael: PDFPriceList.php split long description to maximum of 132 characters long
 1/4/13 Kalmer Piiskop: Correct includes/LanguagesArray.php to use correct decimal point and thousands separator
 27/3/13 Fahad Hatib: Updates to editing tenders and button to close a tender
 22/3/13 Kalmer Piiskop: Updated Estonian translation 

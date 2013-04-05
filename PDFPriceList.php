@@ -211,7 +211,8 @@ If (isset($_POST['PrintPDF'])
 				}
 			}/*end checked file exist*/
 
-			$Split = explode("\r\n", $PriceList['longdescription']);
+			$Split = explode("\r\n", wordwrap($PriceList['longdescription'],130,"\r\n"));
+			
 			$FontSize2=6;
 			if ($YPos < ($Bottom_Margin + (count($Split)*$line_height))){
 		 	  PageHeader();
