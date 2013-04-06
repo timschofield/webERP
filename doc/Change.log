@@ -1,5 +1,6 @@
 webERP Change Log
 
+6/4/13 Tim Schofield: Fix up issues preventing ampersands and apostrophes in supplier codes
 6/4/13 Rafael: PDFPriceList.php split long description to maximum of 132 characters long
 1/4/13 Kalmer Piiskop: Correct includes/LanguagesArray.php to use correct decimal point and thousands separator
 27/3/13 Fahad Hatib: Updates to editing tenders and button to close a tender
@@ -7,7 +8,7 @@ webERP Change Log
 21/3/13 Arwan: CustomerReceipt.php Added GL tag name for GL analysis of receipts
 6/3/13 Tim Schofield: Only display those offers that have not gone past their expiry dates
 
-25/2/13 Re-released 4.10.1 without the duplicate records in reportlinks table
+25/2/13 Re-released 4.10.1 without the duplicate records in reportlinks table and other errors caused by svn not being updated till after release
 
 24/2/13 Tim Schofield: SalesGraph.php Fix syntax error, missing ; at end of line
 24/2/13 Tim Schofield: CustWhereAlloc.php Fix syntax error, bad indenting, and an extra } entered because of it
