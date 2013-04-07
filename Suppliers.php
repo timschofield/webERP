@@ -5,13 +5,14 @@
 include('includes/session.inc');
 
 $Title = _('Supplier Maintenance');
+/* webERP manual links before header.inc */
 $ViewTopic= 'AccountsPayable';
 $BookMark = 'NewSupplier';
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/CountriesArray.php');
 
-function Is_ValidAccount ($ActNo) {
+Function Is_ValidAccount ($ActNo) {
 
 	if (mb_strlen($ActNo) < 16) {
 		echo _('NZ account numbers must have 16 numeric characters in it');
@@ -42,7 +43,7 @@ function Is_ValidAccount ($ActNo) {
 		}
 		break;
 	case '02':
-		if (!(($BranchNumber >= 1 and $BranchNumber <= 999) or ($BranchNumber >= 1200 and $BranchNumber <= 1299))) {
+		If (!(($BranchNumber >= 1 and $BranchNumber <= 999) or ($BranchNumber >= 1200 and $BranchNumber <= 1299))) {
 		echo _('Bank Of New Zealand branches must be between 0001 and 0999 or between 1200 and 1299') . '. ' . _('The branch number used is invalid');
 		return False;
 		exit;
@@ -138,7 +139,7 @@ function Is_ValidAccount ($ActNo) {
 
 	default:
 	echo _('The prefix') . ' - ' . $BankPrefix . ' ' . _('is not a valid New Zealand Bank') . '.<br />' .
-			_('if you are using KwaMoja outside New Zealand error trapping relevant to your country should be used');
+			_('If you are using webERP outside New Zealand error trapping relevant to your country should be used');
 	return False;
 	exit;
 
@@ -215,7 +216,7 @@ function Is_ValidAccount ($ActNo) {
 		if ($BankPrefix == '08'){
 			$CheckSum = $CheckSum + $DigitVal * 4;
 		} elseif ($BankPrefix == '09') {
-			if (($DigitVal * 5) > 9) {
+			If (($DigitVal * 5) > 9) {
 				$CheckSum = $CheckSum + (int) mb_substr((string)($DigitVal * 5),0,1) + (int) mb_substr((string)($DigitVal * 5),mb_strlen((string)($DigitVal *5))-1, 1);
 			} else {
 				$CheckSum = $CheckSum + $DigitVal * 5;
@@ -259,7 +260,7 @@ function Is_ValidAccount ($ActNo) {
 
 	case 13:
 		if ($BankPrefix == '09') {
-			if (($DigitVal * 2) > 9) {
+			If (($DigitVal * 2) > 9) {
 				$CheckSum = $CheckSum + (int) mb_substr(($DigitVal * 2),0,1) + (int) mb_substr(($DigitVal * 2),mb_strlen($DigitVal * 2)-1, 1);
 			} else {
 				$CheckSum = $CheckSum + $DigitVal * 2;
@@ -290,7 +291,7 @@ function Is_ValidAccount ($ActNo) {
 		}
 	}
 
-} //End function
+} //End Function
 
 
 if (isset($_GET['SupplierID'])){
@@ -301,14 +302,14 @@ if (isset($_GET['SupplierID'])){
 	unset($SupplierID);
 }
 
-echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Suppliers') . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Suppliers') . '</p>';
 
 $InputError = 0;
 
 if (isset($Errors)) {
 	unset($Errors);
 }
-$Errors=array();
+$Errors=Array();
 if (isset($_POST['submit'])) {
 
 	//initialise no input errors assumed initially before we test
@@ -327,8 +328,8 @@ if (isset($_POST['submit'])) {
 		$i++;
 	}
 	if (mb_strlen($_POST['SuppName']) > 40
-		or mb_strlen($_POST['SuppName']) == 0
-		or $_POST['SuppName'] == '') {
+		OR mb_strlen($_POST['SuppName']) == 0
+		OR $_POST['SuppName'] == '') {
 
 		$InputError = 1;
 		prnMsg(_('The supplier name must be entered and be forty characters or less long'),'error');
@@ -341,12 +342,12 @@ if (isset($_POST['submit'])) {
 		$Errors[$i]='ID';
 		$i++;
 	}
-//	if (ContainsIllegalCharacters($SupplierID)) {
-//		$InputError = 1;
-//		prnMsg(_('The supplier code cannot contain any of the illegal characters') ,'error');
-//		$Errors[$i]='ID';
-//		$i++;
-//	}
+	if (ContainsIllegalCharacters($SupplierID)) {
+		$InputError = 1;
+		prnMsg(_('The supplier code cannot contain any of the illegal characters') ,'error');
+		$Errors[$i]='ID';
+		$i++;
+	}
 	if (mb_strlen($_POST['Phone']) >25) {
 		$InputError = 1;
 		prnMsg(_('The telephone number must be 25 characters or less long'),'error');
@@ -365,7 +366,7 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'Email';
 		$i++;
 	}
-	if (mb_strlen($_POST['Email'])>0 and !IsEmailAddress($_POST['Email'])) {
+	if (mb_strlen($_POST['Email'])>0 AND !IsEmailAddress($_POST['Email'])) {
 		$InputError = 1;
 		prnMsg(_('The email address is not correctly formed'),'error');
 		$Errors[$i] = 'Email';
@@ -410,7 +411,7 @@ if (isset($_POST['submit'])) {
 			define('KEY', $api_key);
 			// check that some sane values are setup already in geocode tables, if not skip the geocoding but add the record anyway.
 			if ($map_host=="") {
-				echo '<div class="warn">' . _('Warning - Geocode Integration is enabled, but no hosts are setup.  Go to Geocode Setup') . '</div>';
+			echo '<div class="warn">' . _('Warning - Geocode Integration is enabled, but no hosts are setup.  Go to Geocode Setup') . '</div>';
 			} else {
 			$address = $_POST['Address1'] . ', ' . $_POST['Address2'] . ', ' . $_POST['Address3'] . ', ' . $_POST['Address4'] . ', ' . $_POST['Address5']. ', ' . $_POST['Address6'];
 
@@ -607,7 +608,7 @@ if (isset($_POST['submit'])) {
 
 	}
 
-} elseif (isset($_POST['delete']) and $_POST['delete'] != '') {
+} elseif (isset($_POST['delete']) AND $_POST['delete'] != '') {
 
 //the link to delete a selected record was clicked instead of the submit button
 
@@ -656,10 +657,10 @@ if (isset($_POST['submit'])) {
 
 if (!isset($SupplierID)) {
 
-/*if the page was called without $SupplierID passed to page then assume a new supplier is to be entered show a form with a Supplier Code field other wise the form showing the fields with the existing entries against the supplier will show for editing with only a hidden SupplierID field*/
+/*If the page was called without $SupplierID passed to page then assume a new supplier is to be entered show a form with a Supplier Code field other wise the form showing the fields with the existing entries against the supplier will show for editing with only a hidden SupplierID field*/
 
-	echo '<form method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-	echo '<div>';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<input type="hidden" name="New" value="Yes" />';
@@ -691,9 +692,9 @@ if (!isset($SupplierID)) {
 			<td>' . _('Country') . ':</td>
 			<td><select name="Address6">';
 	foreach ($CountriesArray as $CountryEntry => $CountryName){
-		if (isset($_POST['Address6']) and ($_POST['Address6'] == $CountryName)){
+		if (isset($_POST['Address6']) AND ($_POST['Address6'] == $CountryName)){
 			echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName .'</option>';
-		}elseif (!isset($_POST['Address6']) and $CountryName == "") {
+		}elseif (!isset($_POST['Address6']) AND $CountryName == "") {
 			echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName .'</option>';
 		} else {
 			echo '<option value="' . $CountryName . '">' . $CountryName .'</option>';
@@ -741,7 +742,7 @@ if (!isset($SupplierID)) {
 		echo '<option value="'. $myrow['termsindicator'] . '">' . $myrow['terms'] .'</option>';
 	} //end while loop
 	DB_data_seek($result, 0);
-	echo '</select></td></tr>';
+    echo '</select></td></tr>';
 
 	$result=DB_query("SELECT id, coyname FROM factorcompanies", $db);
 
@@ -749,12 +750,13 @@ if (!isset($SupplierID)) {
 			<td><select name="FactorID">';
 	echo '<option value="0">' . _('None') . '</option>';
 	while ($myrow = DB_fetch_array($result)) {
-		if (isset($_POST['FactorID']) and $_POST['FactorID'] == $myrow['id']){
-			echo '<option selected="selected" value="' . $myrow['id'] . '">' . $myrow['coyname'] .'</option>';
+		if (isset($_POST['FactorID']) AND $_POST['FactorID'] == $myrow['id']){
+		echo '<option selected="selected" value="' . $myrow['id'] . '">' . $myrow['coyname'] .'</option>';
 		} else {
-			echo '<option value="' . $myrow['id'] . '">' . $myrow['coyname'] .'</option>';
+		echo '<option value="' . $myrow['id'] . '">' . $myrow['coyname'] .'</option>';
 		}
 	} //end while loop
+	DB_data_seek($result, 0);
 	echo '</select></td></tr>';
 	echo '<tr><td>' . _('Tax Reference') . ':</td>
 			<td><input type="text" name="TaxRef" size="21" maxlength="20" /></td></tr>';
@@ -804,16 +806,16 @@ if (!isset($SupplierID)) {
 	echo '</select></td></tr>
 		</table>
 		<br />
-		<div class="centre"><input type="submit" name="submit" value="' . _('Insert New Supplier') . '" /></div>';
+        <div class="centre"><input type="submit" name="submit" value="' . _('Insert New Supplier') . '" /></div>';
 	echo '</div>
-		  </form>';
+          </form>';
 
 } else {
 
 //SupplierID exists - either passed when calling the form or from the form itself
 
-	echo '<form method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-	echo '<div>';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">';
 
@@ -894,9 +896,9 @@ if (!isset($SupplierID)) {
 			<td>' . _('Country') . ':</td>
 			<td><select name="Address6">';
 	foreach ($CountriesArray as $CountryEntry => $CountryName){
-		if (isset($_POST['Address6']) and ($_POST['Address6'] == $CountryName)){
+		if (isset($_POST['Address6']) AND ($_POST['Address6'] == $CountryName)){
 			echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName .'</option>';
-		}elseif (!isset($_POST['Address6']) and $CountryName == "") {
+		}elseif (!isset($_POST['Address6']) AND $CountryName == "") {
 			echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName .'</option>';
 		} else {
 			echo '<option value="' . $CountryName . '">' . $CountryName .'</option>';
@@ -945,7 +947,7 @@ if (!isset($SupplierID)) {
 		}
 	} //end while loop
 	DB_data_seek($result, 0);
-	echo '</select></td></tr>';
+    echo '</select></td></tr>';
 
 	$result=DB_query("SELECT id, coyname FROM factorcompanies", $db);
 
@@ -959,7 +961,8 @@ if (!isset($SupplierID)) {
 		echo '<option value="' . $myrow['id'] . '">' . $myrow['coyname'] .'</option>';
 		}
 	} //end while loop
-	echo '</select></td></tr>';
+	DB_data_seek($result, 0);
+    echo '</select></td></tr>';
 	echo '<tr><td>' . _('Tax Reference') . ':</td>
 			<td><input type="text" name="TaxRef" size="21" maxlength="20" value="' . $_POST['TaxRef'] .'" /></td></tr>';
 
@@ -1012,9 +1015,9 @@ if (!isset($SupplierID)) {
 
 	if (isset($_POST['New'])) {
 		echo '<br />
-				<div class="centre">
-					 <input type="submit" name="submit" value="' . _('Add These New Supplier Details') . '" />
-				</div>';
+                <div class="centre">
+                     <input type="submit" name="submit" value="' . _('Add These New Supplier Details') . '" />
+                </div>';
 	} else {
 		echo '<br />
 				<div class="centre">
@@ -1027,11 +1030,11 @@ if (!isset($SupplierID)) {
 			<div class="centre">
 				<input type="submit" name="delete" value="' . _('Delete Supplier') . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this supplier?') . '\');" />';
 		echo '<br />
-			<a href="' . $RootPath . '/SupplierContacts.php?SupplierID=' . urlencode($SupplierID) . '">' . _('Review Contact Details') . '</a>
+			<a href="' . $RootPath . '/SupplierContacts.php?SupplierID=' . $SupplierID . '">' . _('Review Contact Details') . '</a>
 			</div>';
 	}
 	echo '</div>
-		  </form>';
+          </form>';
 } // end of main ifs
 
 include('includes/footer.inc');
