@@ -127,7 +127,7 @@ if (isset($_GET['Edit'])) {
 					telephone
 				FROM tenders
 				WHERE closed=0
-					AND requiredbydate > CURRENT_DATE";
+					AND requiredbydate > '" . Date('Y-m-d') . "'";
 	$result=DB_query($sql, $db);
 	echo '<table class="selection">';
 	echo '<tr>

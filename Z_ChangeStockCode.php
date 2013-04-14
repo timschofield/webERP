@@ -248,15 +248,12 @@ if (isset($_POST['ProcessStockChange'])){
 		echo ' ... ' . _('completed');
 
 		echo '<br />' . _('Changing any image files');
-		if (file_exists($_SESSION['part_pics_dir'] . '/' .$_POST['OldStockID'].'.jpg')) {
-			if (rename($_SESSION['part_pics_dir'] . '/' .$_POST['OldStockID'].'.jpg',
-				$_SESSION['part_pics_dir'] . '/' .$_POST['NewStockID'].'.jpg')) {
-					echo ' ... ' . _('completed');
-				} else {
-					echo ' ... ' . _('failed');
-				}
-		} else {
+
+		if (rename($_SESSION['part_pics_dir'] . '/' .$_POST['OldStockID'].'.jpg',
+			$_SESSION['part_pics_dir'] . '/' .$_POST['NewStockID'].'.jpg')) {
 			echo ' ... ' . _('completed');
+		} else {
+			echo ' ... ' . _('failed');
 		}
 
 		echo '<br />' . _('Changing the item properties table records') . ' - ' . _('parents');
@@ -303,8 +300,12 @@ if (isset($_POST['ProcessStockChange'])){
 		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 		echo ' ... ' . _('completed');
 
-
-
+		echo '<br />' . _('Changing offers table');
+		$sql = "UPDATE offers SET stockid='" . $_POST['NewStockID'] . "' WHERE stockid='" . $_POST['OldStockID'] . "'";
+		$ErrMsg = _('The SQL to update the offer records failed');
+		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
+		echo ' ... ' . _('completed');
+		
 		DB_ReinstateForeignKeys($db);
 
 		$result = DB_Txn_Commit($db);

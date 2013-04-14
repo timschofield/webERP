@@ -711,6 +711,15 @@ if (isset($_POST['submit'])) {
 							$CancelDelete = 1;
 							prnMsg( _('Cannot delete this item because there is currently some stock on hand'),'warn');
 							echo '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('on hand for this part');
+						} else {
+							$sql = "SELECT COUNT(*) FROM offers WHERE stockid='".$StockID."' GROUP BY stockid";
+							$result = DB_query($sql,$db);
+							$myrow = DB_fetch_row($result);
+							if ($myrow[0]!=0) {
+								$CancelDelete = 1;
+								prnMsg( _('Cannot delete this item because there are offers for this item'),'warn');
+								echo '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('offers from suppliers for this part');
+							}
 						}
 					}
 				}
