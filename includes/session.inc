@@ -146,18 +146,17 @@ if(isset($_SESSION['DB_Maintenance'])){
 
 			/*Do the DB maintenance routing for the DB_type selected */
 			DB_Maintenance($db);
-			//purge the audit trail if necessary
-			if (isset($_SESSION['MonthsAuditTrail'])){
-				 $sql = "DELETE FROM audittrail
-						WHERE  transactiondate <= '" . Date('Y-m-d', mktime(0,0,0, Date('m')-$_SESSION['MonthsAuditTrail'])) . "'";
-				$ErrMsg = _('There was a problem deleting expired audit-trail history');
-				$result = DB_query($sql,$db);
-			}
 			$_SESSION['DB_Maintenance_LastRun'] = Date('Y-m-d');
 		}
 	}
 }
-
+//purge the audit trail if necessary
+if (isset($_SESSION['MonthsAuditTrail'])){
+	 $sql = "DELETE FROM audittrail
+			WHERE  transactiondate <= '" . Date('Y-m-d', mktime(0,0,0, Date('m')-$_SESSION['MonthsAuditTrail'])) . "'";
+	$ErrMsg = _('There was a problem deleting expired audit-trail history');
+	$result = DB_query($sql,$db);
+}
 /*Check to see if currency rates need to be updated */
 if (isset($_SESSION['UpdateCurrencyRatesDaily'])){
 

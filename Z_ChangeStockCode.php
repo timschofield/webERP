@@ -248,12 +248,15 @@ if (isset($_POST['ProcessStockChange'])){
 		echo ' ... ' . _('completed');
 
 		echo '<br />' . _('Changing any image files');
-
-		if (rename($_SESSION['part_pics_dir'] . '/' .$_POST['OldStockID'].'.jpg',
-			$_SESSION['part_pics_dir'] . '/' .$_POST['NewStockID'].'.jpg')) {
-			echo ' ... ' . _('completed');
+		if (file_exists($_SESSION['part_pics_dir'] . '/' .$_POST['OldStockID'].'.jpg')){
+			if (rename($_SESSION['part_pics_dir'] . '/' .$_POST['OldStockID'].'.jpg',
+				$_SESSION['part_pics_dir'] . '/' .$_POST['NewStockID'].'.jpg')) {
+				echo ' ... ' . _('completed');
+			} else {
+				echo ' ... ' . _('failed');
+			}
 		} else {
-			echo ' ... ' . _('failed');
+			echo ' .... ' . _('no image to rename');
 		}
 
 		echo '<br />' . _('Changing the item properties table records') . ' - ' . _('parents');

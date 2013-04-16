@@ -1,4 +1,6 @@
 webERP Change Log
+
+16/4/13 Ricard: Audit trail was not being purged if DB Maintenance was turned off and it should be pruned daily.
 16/04/13 Thumb: Fixed the bug of Y-m-d date format error in MiscFunctions.js (this date type is missing) which will display wrong date in Work Order.
 6/4/13 Rafael: PDFPriceList.php split long description to maximum of 132 characters long
 1/4/13 Kalmer Piiskop: Correct includes/LanguagesArray.php to use correct decimal point and thousands separator
