@@ -707,8 +707,8 @@ function Date1GreaterThanDate2 ($Date1, $Date2) {
 		return 0;
 	}
 
-	/* The dates are equal, so return an error state */
-	return 1;
+	/* The dates are equal, so return false as date 1 is NOT greater than date 2 */
+	return 0;
 
 }
 
