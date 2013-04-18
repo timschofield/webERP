@@ -405,7 +405,7 @@ foreach ($_SESSION['CreditItems' . $identifier]->LineItems as $LnItm) {
 
 		echo '<td class="number">' . $DisplayTaxAmount . '</td>
 			<td class="number">' . $DisplayGrossLineTotal . '</td>
-			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=' . $LnItm->LineNumber . '"  onclick="return confirm(\'' . _('Are you sure you wish to delete this item from the credit?') . '\');">' . _('Delete') . '</a></td>
+			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier=' . $identifier . '&Delete=' . $LnItm->LineNumber . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this     item from the credit?') . '\');">' . _('Delete') . '</a></td>
 			</tr>';
 
 		echo '<tr ' . $RowStarter . '>
