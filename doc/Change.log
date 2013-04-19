@@ -1,5 +1,6 @@
 webERP Change Log
 
+19/4/13 Phil: Reported by Bob Thomas - BOMExtendedQty.php was missing purchase orders with status='Authorised' or Printed
 18/4/13 Tim: Credit_Invoice.php missing $identifier in link causing details of credit note to be lost
 16/4/13 Ricard: Audit trail was not being purged if DB Maintenance was turned off and it should be pruned daily.
 16/04/13 Thumb: Fixed the bug of Y-m-d date format error in MiscFunctions.js (this date type is missing) which will display wrong date in Work Order.

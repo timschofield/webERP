@@ -308,7 +308,14 @@ if (isset($_POST['ProcessStockChange'])){
 		$ErrMsg = _('The SQL to update the offer records failed');
 		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 		echo ' ... ' . _('completed');
-		
+
+
+		echo '<br />' . _('Changing tender items table');
+		$sql = "UPDATE tenderitems SET stockid='" . $_POST['NewStockID'] . "' WHERE stockid='" . $_POST['OldStockID'] . "'";
+		$ErrMsg = _('The SQL to update the tender records failed');
+		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
+		echo ' ... ' . _('completed');
+
 		DB_ReinstateForeignKeys($db);
 
 		$result = DB_Txn_Commit($db);

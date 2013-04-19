@@ -53,8 +53,8 @@ if (isset($_POST['PrintPDF'])) {
 					   CONCAT(bom.parent,bom.component) AS sortpart
 					  FROM bom
 			  WHERE bom.parent ='" . $_POST['Part'] . "'
-			  AND bom.effectiveto >= NOW()
-			  AND bom.effectiveafter <= NOW()";
+			  AND bom.effectiveto >= '" . date('Y-m-d') . "'
+			  AND bom.effectiveafter <= '" . date('Y-m-d') . "'";
 	$result = DB_query($sql,$db);
 
 	$LevelCounter = 2;
@@ -80,8 +80,8 @@ if (isset($_POST['PrintPDF'])) {
 					 (" . filter_number_format($_POST['Quantity']) . " * bom.quantity) as extendedqpa
 			FROM bom
 			WHERE bom.parent ='" . $_POST['Part'] . "'
-			AND bom.effectiveto >= NOW()
-			AND bom.effectiveafter <= NOW()";
+			AND bom.effectiveto >= '" . date('Y-m-d') . "'
+			AND bom.effectiveafter <= '" . date('Y-m-d') . "'";
 	$result = DB_query($sql,$db);
 	//echo "<br />sql is $sql<br />";
 	// This while routine finds the other levels as long as $ComponentCounter - the
@@ -112,8 +112,8 @@ if (isset($_POST['PrintPDF'])) {
 					 (bom.quantity * passbom.extendedqpa)
 			 FROM bom,passbom
 			 WHERE bom.parent = passbom.part
-			  AND bom.effectiveto >= NOW()
-			  AND bom.effectiveafter <= NOW()";
+			  AND bom.effectiveto >= '" . date('Y-m-d') . "'
+			  AND bom.effectiveafter <= '" . date('Y-m-d') . "'";
 		$result = DB_query($sql,$db);
 
 		$result = DB_query("DROP TABLE IF EXISTS passbom2",$db);
@@ -134,8 +134,8 @@ if (isset($_POST['PrintPDF'])) {
 									FROM bom
 									INNER JOIN passbom2
 									ON bom.parent = passbom2.part
-									WHERE bom.effectiveto >= NOW()
-										AND bom.effectiveafter <= NOW()";
+									WHERE bom.effectiveto >= '" . date('Y-m-d') . "'
+									AND bom.effectiveafter <= '" . date('Y-m-d') . "'";
 		$result = DB_query($sql,$db);
 
 		$sql = "SELECT COUNT(bom.parent) AS components
@@ -177,9 +177,11 @@ if (isset($_POST['PrintPDF'])) {
 					  GROUP BY locstock.stockid) AS qoh,
 				   (SELECT
 					  SUM(purchorderdetails.quantityord - purchorderdetails.quantityrecd) as netqty
-					  FROM purchorderdetails
+					  FROM purchorderdetails INNER JOIN purchorders
+					  ON purchorderdetails.orderno=purchorders.orderno
 					  WHERE purchorderdetails.itemcode = tempbom.component
-					  AND completed = 0
+					  AND purchorderdetails.completed = 0
+					  AND (purchorders.status = 'Authorised' OR purchorders.status='Printed')
 					  GROUP BY purchorderdetails.itemcode) AS poqty,
 				   (SELECT
 					  SUM(woitems.qtyreqd - woitems.qtyrecd) as netwoqty
