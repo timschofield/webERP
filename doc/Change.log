@@ -1,5 +1,6 @@
 webERP Change Log
 
+25/4/13 Phil: Rework includes/GLPostings.inc to avoid incorrect b/fwd balances on posting back to a period which did not previously exist.
 19/4/13 Phil: Reported by Bob Thomas - BOMExtendedQty.php was missing purchase orders with status='Authorised' or Printed
 18/4/13 Tim: Credit_Invoice.php missing $identifier in link causing details of credit note to be lost
 16/4/13 Ricard: Audit trail was not being purged if DB Maintenance was turned off and it should be pruned daily.
