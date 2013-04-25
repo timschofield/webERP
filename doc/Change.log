@@ -1,4 +1,4 @@
-webERP Change Log
+OwebERP Change Log
 
 25/4/13 Tim: Selecting customer in Contracts form was not working - fixed
 25/4/13 Bob Thomas: WorkOrderIssue.php was not showing the serialised items with a quantity that could be issued was showing them all in error
