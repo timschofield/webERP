@@ -307,7 +307,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 		} elseif ($InputError !=1 AND ! isset($SelectedComponent) AND isset($SelectedParent)) {
 
-		/*Selected component is null cos no item selected on first time round so must be				adding a record must be Submitting new entries in the new component form */
+		/*Selected component is null cos no item selected on first time round so must be adding a record must be Submitting new entries in the new component form */
 
 		//need to check not recursive BOM component of itself!
 
@@ -524,16 +524,17 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 	$DbgMsg = _('The SQL used to retrieve description of the parent part was');
 	$result=DB_query($sql,$db,$ErrMsg,$DbgMsg);
 	if( DB_num_rows($result) > 0 ) {
-		echo '<table class="selection">';
-        echo '<tr><td><div class="centre">'._('Phantom').' : ';
+		echo '<table class="selection">
+				<tr>
+					<td><div class="centre">'._('Phantom').' : ';
 	 	$ix = 0;
 	 	while ($myrow = DB_fetch_array($result)){
-	 	   echo (($ix)?', ':'').'<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Select='.$myrow['parent'].'">'.
-			$myrow['description'].'&nbsp;('.$myrow['parent'].')</a>';
+	 	   echo (($ix)?', ':'').'<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Select='.$myrow['parent'].'">'. $myrow['description'].'&nbsp;('.$myrow['parent'].')</a>';
 			$ix++;
 	 	} //end while loop
-	 	echo '</div></td></tr>';
-        echo '</table>';
+	 	echo '</div></td>
+				</tr>
+			</table>';
 	}
 	echo '<br />
 			<table class="selection">';
@@ -592,7 +593,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
         echo '<div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-		if (isset($_GET['SelectedComponent']) and $InputError !=1) {
+		if (isset($_GET['SelectedComponent']) AND $InputError !=1) {
 		//editing a selected component from the link to the line item
 
 			$sql = "SELECT loccode,
@@ -626,6 +627,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			echo '<tr>
 					<td>' . _('Component') . ':</td>
 					<td><b>' . $SelectedComponent . '</b></td>
+					 <input type="hidden" name="Component" value="' . $SelectedComponent . '" />
 				</tr>';
 
 		} else { //end of if $SelectedComponent
@@ -690,7 +692,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		$result = DB_query($sql,$db);
 
 		while ($myrow = DB_fetch_array($result)) {
-			if (isset($_POST['LocCode']) and $myrow['loccode']==$_POST['LocCode']) {
+			if (isset($_POST['LocCode']) AND $myrow['loccode']==$_POST['LocCode']) {
 				echo '<option selected="selected" value="';
 			} else {
 				echo '<option value="';
@@ -719,7 +721,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		echo '<select tabindex="3" name="WorkCentreAdded">';
 
 		while ($myrow = DB_fetch_array($result)) {
-			if (isset($_POST['WorkCentreAdded']) and $myrow['code']==$_POST['WorkCentreAdded']) {
+			if (isset($_POST['WorkCentreAdded']) AND $myrow['code']==$_POST['WorkCentreAdded']) {
 				echo '<option selected="selected" value="';
 			} else {
 				echo '<option value="';

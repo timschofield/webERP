@@ -792,7 +792,8 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 			$SerialNoResult = DB_query("SELECT serialno
 										FROM stockserialitems
 										WHERE stockid='" . $_POST['IssueItem'] . "'
-										AND loccode='" . $_POST['FromLocation'] . "'",
+										AND loccode='" . $_POST['FromLocation'] . "'
+										AND quantity > 0",
 						$db,_('Could not retrieve the serial numbers available at the location specified because'));
 			if (DB_num_rows($SerialNoResult)==0){
 				echo '<tr>
