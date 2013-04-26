@@ -1,5 +1,5 @@
 OwebERP Change Log
-
+26/04/2013: Exson Fix the image broken problem for Manual/ManualGettingStarted.html Chinese version
 25/4/13 Tim: Selecting customer in Contracts form was not working - fixed
 25/4/13 Bob Thomas: WorkOrderIssue.php was not showing the serialised items with a quantity that could be issued was showing them all in error
 25/4/13 Phil: BOMs.php fixed error that allowed auto issue to be flagged on serialised items
