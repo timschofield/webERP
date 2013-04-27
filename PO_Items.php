@@ -43,7 +43,7 @@ if (isset($_POST['UpdateLines']) OR isset($_POST['Commit'])) {
 			if (!is_numeric(filter_number_format($_POST['SuppQty'.$POLine->LineNo]))){
 				prnMsg(_('The quantity in the supplier units is expected to be numeric. Please re-enter as a number'),'error');
 			} else { //ok to update the PO object variables
-				$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->Quantity = filter_number_format(round(filter_number_format($_POST['SuppQty'.$POLine->LineNo])*filter_number_format($_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->ConversionFactor),$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->DecimalPlaces));
+				$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->Quantity = round(filter_number_format($_POST['SuppQty'.$POLine->LineNo])*$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->ConversionFactor,$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->DecimalPlaces);
 			}
 			if (!is_numeric(filter_number_format($_POST['SuppPrice'.$POLine->LineNo]))){
 				prnMsg(_('The supplier price is expected to be numeric. Please re-enter as a number'),'error');
@@ -399,8 +399,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 
 if(isset($_GET['Delete'])){
 	if($_SESSION['PO'.$identifier]->Some_Already_Received($_GET['Delete'])==0){
-		$_SESSION['PO'.$identifier]->LineItems[$_GET['Delete']]->Deleted=True;
-		$_SESSION['PO'.$identifier]->LinesOnOrder --;
+		$_SESSION['PO'.$identifier]->remove_from_order($_GET['Delete']);
 		include ('includes/PO_UnsetFormVbls.php');
 	} else {
 		prnMsg( _('This item cannot be deleted because some of it has already been received'),'warn');
@@ -1178,7 +1177,7 @@ if (isset($SearchResult)) {
 		if (DB_num_rows($PurchDataResult)>0) {
 			$PurchDataRow = DB_fetch_array($PurchDataResult);
 			$OrderUnits=$PurchDataRow['suppliersuom'];
-			$ConversionFactor =$PurchDataRow['conversionfactor'];
+			$ConversionFactor = locale_number_format($PurchDataRow['conversionfactor'],'Variable');
 		} else {
 			$OrderUnits=$myrow['units'];
 			$ConversionFactor =1;

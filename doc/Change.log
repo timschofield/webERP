@@ -1,5 +1,9 @@
 OwebERP Change Log
-26/04/2013: Exson Fix the image broken problem for Manual/ManualGettingStarted.html Chinese version
+
+27/4/13 Samudaya: Fixed a bug in PO_Items.php when a line of a purchase order is deleted (other than the last line) and then subsequently a new line is added - the last line of the order is over-written. 
+27/4/13 Samudaya: PO_Items.php When purchasing a non-stock item (asset), AssetID goes to wrong column in purchorderdetails table (Column name - suppliers_partno). Fixed the bug and now save the AssetID in the correct assetid column.
+27/4/13 Samudaya: Fixed the Page Navigation (Go, Previous, Next) problem. This problem occurs  there are many assets and display as several pages.
+26/04/2013 Exson: Fix the image broken problem for Manual/ManualGettingStarted.html Chinese version
 25/4/13 Tim: Selecting customer in Contracts form was not working - fixed
 25/4/13 Bob Thomas: WorkOrderIssue.php was not showing the serialised items with a quantity that could be issued was showing them all in error
 25/4/13 Phil: BOMs.php fixed error that allowed auto issue to be flagged on serialised items
