@@ -511,6 +511,7 @@ if (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 												2,
 												$_POST['SuppliersUnit'],
 												1,
+												1,
 												'',
 												$_POST['AssetID']);
 	   include ('includes/PO_UnsetFormVbls.php');
