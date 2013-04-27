@@ -2,7 +2,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$Title=_('Currency Debtor Balances');
+$Title=_('Currency Supplier Balances');
 include('includes/header.inc');
 
 echo '<div class="centre"><h3>' . _('Suppliers Balances By Currency Totals') . '</h3></div>';

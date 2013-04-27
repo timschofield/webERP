@@ -138,7 +138,6 @@ Class PurchOrder {
 
 	function remove_from_order(&$LineNo){
 		 $this->LineItems[$LineNo]->Deleted = True;
-		 $this->LinesOnOrder--;
 	}
 
 
