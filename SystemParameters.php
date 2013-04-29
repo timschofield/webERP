@@ -95,6 +95,9 @@ if (isset($_POST['submit'])) {
 	}elseif (mb_strlen($_POST['X_FrequentlyOrderedItems']) > 2 OR !is_numeric($_POST['X_FrequentlyOrderedItems'])) {
 		$InputError = 1;
 		prnMsg(_('The number of frequently ordered items to display must be numeric'),'error');
+	}elseif (strlen($_POST['X_SmtpSetting']) != 1 OR !is_numeric($_POST['X_SmtpSetting'])){
+		$InputError = 1;
+		prnMsg(_('The SMTP setting should be selected as Yes or No'),'error');
 	}
 
 	if ($InputError !=1){
@@ -311,6 +314,10 @@ if (isset($_POST['submit'])) {
 		}
 		if ($_SESSION['AutoAuthorisePO'] != $_POST['X_AutoAuthorisePO']){
 			$sql[] = "UPDATE config SET confvalue='" . $_POST['X_AutoAuthorisePO'] . "' WHERE confname='AutoAuthorisePO'";
+		}
+		if ($_SESSION['SmtpSetting'] != $_POST['X_SmtpSetting']){
+			$sql[] = "UPDATE config SET confvalue = '".$_POST['X_SmtpSetting'] ." ' WHERE confname='SmtpSetting'";
+
 		}
 		$ErrMsg =  _('The system configuration could not be updated because');
 		if (sizeof($sql) > 1 ) {
@@ -1074,6 +1081,15 @@ echo '<tr style="outline: 1px solid"><td>' . _('Purchasing Manager Email Address
 echo '<tr style="outline: 1px solid"><td>' . _('Inventory Manager Email Address') . ':</td>
 	<td><input type="text" name="X_InventoryManagerEmail" size="50" maxlength="50" value="' . $_SESSION['InventoryManagerEmail'] . '" /></td>
 	<td>' . _('The email address for the inventory manager, where notifications of all manual stock adjustments created are sent by the system. Leave blank if no emails should be sent to the factory manager for manual stock adjustments') .'</td></tr>';
+
+echo '<tr style="outline: 1px solid"><td>' . _('Using Smtp Mail'). '</td>
+	<td><select type="text" name="X_SmtpSetting" >
+		<option select="selected" value = "0">'._('No').'</otpion>
+		<option value = "1">'._('Yes').'</option>
+	    </td>
+	 <td>'. _('The default setting is using mail in default php.ini, if you choose Yes for this selection, you can use the SMTP set in the setup section.').'</td></tr>';
+
+
 
 
 echo '</table>
