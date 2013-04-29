@@ -322,10 +322,30 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 		$mail->setText(_('Please find herewith our purchase order number') . ' ' . $OrderNo);
 		$mail->setSubject(_('Purchase Order Number') . ' ' . $OrderNo);
 		$mail->addAttachment($attachment, $PdfFileName, 'application/pdf');
-		$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
-		$Success = $mail->send(array(
-			$_POST['EmailTo']
-		));
+		//since sometime the mail server required to verify the users, so must set this information.
+		if($_SESSION['SmtpSetting'] == 0){//use the mail service provice by the server. 
+			$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
+			$MailMethod = 'mail';
+		}else if($_SESSION['SmtpSetting'] == 1) {
+			if(strpos('@',$_SESSION['SMTPSettings']['username'])){//user has set the fully mail address as user name
+				$mail->setFrom($_SESSION['SMTPSettings']['username']);
+			}else{//user only set it's name instead of fully mail address
+				if(strpos('smtp',$_SESSION['SMTPSettings']['host'])){
+					$HostDomain = substr($_SESSION['SMTPSettings']['host'],4);
+				}
+				if(!strpos('@',$_SESSION['SMTPSettings']['username'])){
+					$SendFrom = $_SESSION['SMTPSettings']['username'].$HostDomain;
+				}
+			}
+			$mail->setFrom($SendFrom);
+			$MailMethod = 'smtp';
+		}else{
+			prnMsg(_('The SMTP settings are wrong, please ask administrator for help'),'error');
+			exit;
+			include('includes/footer.inc');
+		}
+		
+		$Success = $mail->send(array($_POST['EmailTo']),$MailMethod);
 		if ($Success == 1) {
 			$Title = _('Email a Purchase Order');
 			include('includes/header.inc');
