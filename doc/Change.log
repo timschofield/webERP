@@ -1,4 +1,5 @@
 OwebERP Change Log
+04/29/2013 Exson: Modify the PO_PDFPurchOrder.php to make it suitable for smtp setting. 
 29/04/2013 Exson Fixed the smtp does not work for langaguage is change in utf8 code in file of smtp.php and HTMLMimeMail.php.
 29/04/2013 Exson Fixed the db_free_result() error messages due to the query returned a boolean value in SMTPServer.php
 27/4/13 Samudaya: Fixed a bug in PO_Items.php when a line of a purchase order is deleted (other than the last line) and then subsequently a new line is added - the last line of the order is over-written. 
