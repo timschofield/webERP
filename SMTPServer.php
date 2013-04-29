@@ -24,7 +24,6 @@ if (isset($_POST['submit']) AND $_POST['MailServerSetting']==1) {//If there are 
 	unset($_POST['MailServerSetting']);
 	prnMsg(_('The settings for the SMTP server have been successfully updated'), 'success');
 	echo '<br />';
-	DB_free_result($result1);
 
 }elseif(isset($_POST['submit']) and $_POST['MailServerSetting']==0){//There is no data setup yet
 	$sql = "INSERT INTO emailsettings(host,
@@ -43,7 +42,6 @@ if (isset($_POST['submit']) AND $_POST['MailServerSetting']==1) {//If there are 
 	$ErrMsg = _('The email settings failed to be inserted');
 	$DbgMsg = _('The SQL failed to insert the email information is');
 	$result2 = DB_query($sql,$db);
-	DB_free_result($result2);
 	unset($_POST['MailServerSetting']);
 	prnMsg(_('The settings for the SMTP server have been sucessfully inserted'),'success');
 	echo '<br/>';
