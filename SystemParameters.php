@@ -1082,12 +1082,23 @@ echo '<tr style="outline: 1px solid"><td>' . _('Inventory Manager Email Address'
 	<td><input type="text" name="X_InventoryManagerEmail" size="50" maxlength="50" value="' . $_SESSION['InventoryManagerEmail'] . '" /></td>
 	<td>' . _('The email address for the inventory manager, where notifications of all manual stock adjustments created are sent by the system. Leave blank if no emails should be sent to the factory manager for manual stock adjustments') .'</td></tr>';
 
-echo '<tr style="outline: 1px solid"><td>' . _('Using Smtp Mail'). '</td>
-	<td><select type="text" name="X_SmtpSetting" >
-		<option select="selected" value = "0">'._('No').'</otpion>
-		<option value = "1">'._('Yes').'</option>
-	    </td>
-	 <td>'. _('The default setting is using mail in default php.ini, if you choose Yes for this selection, you can use the SMTP set in the setup section.').'</td></tr>';
+echo '<tr style="outline: 1px solid">
+	<td>' . _('Using Smtp Mail'). '</td>
+	<td>
+		<select type="text" name="X_SmtpSetting" >';
+		if($_SESSION['SmtpSetting'] == 0){
+			echo '<option select="selected" value="0">'._('No').'</option>';
+			echo '<option value="1">'._('Yes').'</option>';
+		}elseif($_SESSION['SmtpSetting'] == 1){
+			echo '<option select="selected" value="1">'._('Yes').'</option>';
+			echo '<option value="0">'._('No').'</option>';
+		}
+
+echo '		</select>
+         </td>
+	 <td>'. _('The default setting is using mail in default php.ini, if you choose Yes for this selection, you can use the SMTP set in the setup section.').'
+	 </td>
+     </tr>';
 
 
 
