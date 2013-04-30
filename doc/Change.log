@@ -1,4 +1,6 @@
 OwebERP Change Log
+
+04/30/2013 Exson Update the translation file for Chinese simplify locale
 04/30/2013 Exson: Fixed the bug in SystemParameters.php which missing a</select> tag and cannot display the config in $_SESSION correctly. Reported by Tim.
 04/30/3013 Exson: Create a new sql file 4.10-4.11.sql with the smtp setting statement.
 04/29/2013 Exson: Modify the PO_PDFPurchOrder.php to make it suitable for smtp setting. 
