@@ -60,7 +60,7 @@ INSERT INTO scripts VALUES ('Z_ImportPriceList.php',  '15',  'Loads a new price 
 
 ALTER TABLE `debtortrans` ADD `packages` INT NOT NULL DEFAULT '1' COMMENT 'number of cartons';
 
-INSERT INTO config VALUES('SmtpSetting',0);
+
 
 
 
