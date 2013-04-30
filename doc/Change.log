@@ -1,4 +1,6 @@
 OwebERP Change Log
+04/30/2013 Exson: Fixed the bug in SystemParameters.php which missing a</select> tag and cannot display the config in $_SESSION correctly. Reported by Tim.
+04/30/3013 Exson: Create a new sql file 4.10-4.11.sql with the smtp setting statement.
 04/29/2013 Exson: Modify the PO_PDFPurchOrder.php to make it suitable for smtp setting. 
 29/04/2013 Exson Fixed the smtp does not work for langaguage is change in utf8 code in file of smtp.php and HTMLMimeMail.php.
 29/04/2013 Exson Fixed the db_free_result() error messages due to the query returned a boolean value in SMTPServer.php
