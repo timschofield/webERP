@@ -28,10 +28,7 @@ if (isset($_POST['submit'])) {
 
 	//first off validate inputs sensible
 
-	if (!is_long((integer)$_POST['AccountCode'])) {
-		$InputError = 1;
-		prnMsg(_('The account code must be an integer'),'warn');
-	} elseif (mb_strlen($_POST['AccountName']) >50) {
+	if (mb_strlen($_POST['AccountName']) >50) {
 		$InputError = 1;
 		prnMsg( _('The account name must be fifty characters or less long'),'warn');
 	}
@@ -234,7 +231,7 @@ if (!isset($_GET['delete'])) {
 	} else {
 		echo '<table class="selection">';
 		echo '<tr><td>' . _('Account Code') . ':</td>
-					<td><input type="text" name="AccountCode" size="11" class="number" maxlength="20" /></td>
+					<td><input type="text" name="AccountCode" size="30" maxlength="30" /></td>
 				</tr>';
 	}
 

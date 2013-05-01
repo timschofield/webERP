@@ -1,11 +1,14 @@
 OwebERP Change Log
 
-04/30/2013 Exson Update the translation file for Chinese simplify locale
-04/30/2013 Exson: Fixed the bug in SystemParameters.php which missing a</select> tag and cannot display the config in $_SESSION correctly. Reported by Tim.
-04/30/3013 Exson: Create a new sql file 4.10-4.11.sql with the smtp setting statement.
-04/29/2013 Exson: Modify the PO_PDFPurchOrder.php to make it suitable for smtp setting. 
-29/04/2013 Exson Fixed the smtp does not work for langaguage is change in utf8 code in file of smtp.php and HTMLMimeMail.php.
-29/04/2013 Exson Fixed the db_free_result() error messages due to the query returned a boolean value in SMTPServer.php
+1/5/13 Ricard: GLAccounts.php change error trap that only allows numeric GL accounts as now the chart of accounts can contain text accounts
+1/5/13 Phil: Fix purchase order lead time calculation as reported by MacPhotoBiker on forum
+1/5/13 Phil: Add link to print purchase order after placement as suggested by MacPhotoBiker on forum
+30/4/13 Exson Update the translation file for Chinese simplify locale
+30/4/13 Exson: Fixed the bug in SystemParameters.php which missing a</select> tag and cannot display the config in $_SESSION correctly. Reported by Tim.
+30/4/13 Exson: Create a new sql file 4.10-4.11.sql with the smtp setting statement.
+29/4/13 Exson: Modify the PO_PDFPurchOrder.php to make it suitable for smtp setting. 
+29/04/13 Exson Fixed the smtp does not work for langaguage is change in utf8 code in file of smtp.php and HTMLMimeMail.php.
+29/04/13 Exson Fixed the db_free_result() error messages due to the query returned a boolean value in SMTPServer.php
 27/4/13 Samudaya: Fixed a bug in PO_Items.php when a line of a purchase order is deleted (other than the last line) and then subsequently a new line is added - the last line of the order is over-written. 
 27/4/13 Samudaya: PO_Items.php When purchasing a non-stock item (asset), AssetID goes to wrong column in purchorderdetails table (Column name - suppliers_partno). Fixed the bug and now save the AssetID in the correct assetid column.
 27/4/13 Samudaya: Fixed the Page Navigation (Go, Previous, Next) problem. This problem occurs  there are many assets and display as several pages.

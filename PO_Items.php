@@ -234,7 +234,12 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 			} /* end of the loop round the detail line items on the order */
 			echo '<p />';
 			prnMsg(_('Purchase Order') . ' ' . $_SESSION['PO'.$identifier]->OrderNo . ' ' . _('on') . ' ' . $_SESSION['PO'.$identifier]->SupplierName . ' ' . _('has been created'),'success');
+                        if ($_SESSION['PO'.$identifier]->AllowPrintPO==1
+				AND ($_SESSION['PO'.$identifier]->Status=='Authorised'
+				OR $_SESSION['PO'.$identifier]->Status=='Printed')){
 
+			      echo '<br /><div class="centre"><a target="_blank" href="'.$RootPath.'/PO_PDFPurchOrder.php?OrderNo=' . $_SESSION['PO'.$identifier]->OrderNo . '">' . _('Print Purchase Order') . '</a></div>';
+			}
 
 		} else { /*its an existing order need to update the old order info */
 			/*Check to see if there are any incomplete lines on the order */
@@ -384,8 +389,10 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 
 		$Result = DB_Txn_Commit($db);
 		/* Only show the link to auto receive the order if the user has permission to receive goods and permission to authorise and has authorised the order */
-		if ($_SESSION['PO'.$identifier]->Status == 'Authorised' AND in_array($_SESSION['PageSecurityArray']['GoodsReceived.php'], $_SESSION['AllowedPageSecurityTokens'])){
-			echo '<a href="SupplierInvoice.php?SupplierID=' . $_SESSION['PO'.$identifier]->SupplierID . '&amp;ReceivePO=' . $_SESSION['PO'.$identifier]->OrderNo . '&amp;DeliveryDate=' . $_SESSION['PO'.$identifier]->DeliveryDate . '">' . _('Receive and Enter Purchase Invoice') . '</a>';
+		if ($_SESSION['PO'.$identifier]->Status == 'Authorised' 
+                   AND in_array($_SESSION['PageSecurityArray']['GoodsReceived.php'], $_SESSION['AllowedPageSecurityTokens'])){
+		
+                	echo '<a href="SupplierInvoice.php?SupplierID=' . $_SESSION['PO'.$identifier]->SupplierID . '&amp;ReceivePO=' . $_SESSION['PO'.$identifier]->OrderNo . '&amp;DeliveryDate=' . $_SESSION['PO'.$identifier]->DeliveryDate . '">' . _('Receive and Enter Purchase Invoice') . '</a>';
 		}
 
 		unset($_SESSION['PO'.$identifier]); /*Clear the PO data to allow a newy to be input*/
@@ -634,10 +641,10 @@ if (isset($_POST['NewItem'])
 						$SuppliersPartNo = $PurchRow['suppliers_partno'];
 						$LeadTime = $PurchRow['leadtime'];
 						/* Work out the delivery date based on today + lead time
-						 * if > header DeliveryDate then set DeliveryDate to today + leadtime
-						 */
+					 * if > header DeliveryDate then set DeliveryDate to today + leadtime
+				        */
 						$DeliveryDate = DateAdd(Date($_SESSION['DefaultDateFormat']),'d',$LeadTime);
-						if (! Date1GreaterThanDate2($DeliveryDate,$_SESSION['PO'.$identifier]->DeliveryDate)){
+						if (Date1GreaterThanDate2($_SESSION['PO'.$identifier]->DeliveryDate,$DeliveryDate)){
 							$DeliveryDate = $_SESSION['PO'.$identifier]->DeliveryDate;
 						}
 					} else { // no purchasing data setup
@@ -646,10 +653,10 @@ if (isset($_POST['NewItem'])
 						$SupplierDescription = 	$ItemRow['description'];
 						$SuppliersUnitOfMeasure = $ItemRow['units'];
 						$SuppliersPartNo = '';
-						$LeadTime = 1;
+						$LeadTime=1;
 						$DeliveryDate = $_SESSION['PO'.$identifier]->DeliveryDate;
 					}
-
+					
 					$_SESSION['PO'.$identifier]->add_to_order ($_SESSION['PO'.$identifier]->LinesOnOrder+1,
 															$ItemCode,
 															0, /*Serialised */
