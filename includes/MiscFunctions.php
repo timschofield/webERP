@@ -11,6 +11,11 @@ function prnMsg($Msg,$Type='info', $Prefix=''){
 	echo getMsg($Msg, $Type, $Prefix);
 
 }//prnMsg
+function prnMsg1($Msg,$Type='info', $Prefix=''){
+
+	return getMsg($Msg, $Type, $Prefix);
+
+}//prnMsg
 
 function reverse_escape($str) {
   $search=array("\\\\","\\0","\\n","\\r","\Z","\'",'\"');
@@ -110,12 +115,11 @@ function IsEmailAddress($Email){
 function ContainsIllegalCharacters ($CheckVariable) {
 
 	if (mb_strstr($CheckVariable,"'")
-		OR mb_strstr($CheckVariable,'+')
+	//	OR mb_strstr($CheckVariable,'+')
 		OR mb_strstr($CheckVariable,'?')
-		OR mb_strstr($CheckVariable,'.')
 		OR mb_strstr($CheckVariable,"\"")
 		OR mb_strstr($CheckVariable,'&')
-		OR mb_strstr($CheckVariable,"\\")
+	//	OR mb_strstr($CheckVariable,"\\")
 		OR mb_strstr($CheckVariable,'"')
 		OR mb_strstr($CheckVariable,'>')
 		OR mb_strstr($CheckVariable,'<')){
@@ -133,6 +137,12 @@ function pre_var_dump(&$var){
 	echo '</pre></div>';
 }
 
+function json_result($result,$msg){
+
+	$MES[$result] = $msg;
+	echo json_encode($MES);
+	
+}
 
 
 class XmlElement {
@@ -401,5 +411,25 @@ function indian_number_format($Number,$DecimalPlaces){
 		return $IntegerNumber. $DecimalValue;
 	}
 }
+
+function SendMailBySmtp(&$mail,$To) {
+
+	if(strpos('@',$_SESSION['SMTPSettings']['username'])){//user has set the fully mail address as user name
+				$mail->setFrom($_SESSION['SMTPSettings']['username']);
+			}else{//user only set it's name instead of fully mail address
+				if(strpos('smtp',$_SESSION['SMTPSettings']['host'])){
+					$HostDomain = substr($_SESSION['SMTPSettings']['host'],4);
+				}
+				if(!strpos('@',$_SESSION['SMTPSettings']['username'])){
+					$SendFrom = $_SESSION['SMTPSettings']['username'].$HostDomain;
+				}
+			}
+			$mail->setFrom($SendFrom);
+			$result = $mail->send($To,'smtp');
+			return $result;
+}
+
+
+
 
 ?>
