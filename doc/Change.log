@@ -1,4 +1,5 @@
 OwebERP Change Log
+2/5/2013 Exson: Revise the account code to 20 reported by Tim in GLAccounts.php. 
 2/5/2013 Exson: Make correction for removing those functions not related with webERP committed last time in MiscFunctions.php. Thanks for Tim's review.
 2/5/2013 Exson: Make smtp available for PDFDeliveryDifferences.php. 
 2/5/2013 Exson: Make smtp mail available for PDFDIFOT.php and fixed the bug that the result should be data within acceptable days instead of out of the range.
