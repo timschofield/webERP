@@ -476,8 +476,12 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 		$mail->setText(_('Please find attached') . ' ' . $InvOrCredit . ' ' . $FromTransNo );
 		$mail->SetSubject($InvOrCredit . ' ' . $FromTransNo);
 		$mail->addAttachment($Attachment, $FileName, 'application/pdf');
-		$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . ' <' . $_SESSION['CompanyRecord']['email'] . '>');
-		$result = $mail->send(array($_GET['Email']));
+		if($_SESSION['SmtpSetting'] == 0){
+			$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . ' <' . $_SESSION['CompanyRecord']['email'] . '>');
+			$result = $mail->send(array($_GET['Email']));
+		}else{
+			$result = SendmailBySmtp($mail,array($_GET['Email']));
+		}
 
 		unlink($FileName); //delete the temporary file
 
