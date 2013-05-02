@@ -1,4 +1,5 @@
 OwebERP Change Log
+2/5/2013 Exson: Make smtp available for PDFDeliveryDifferences.php. 
 2/5/2013 Exson: Make smtp mail available for PDFDIFOT.php and fixed the bug that the result should be data within acceptable days instead of out of the range.
 02/05/2013 Exson: Make the smtp mail available for PrintCustTransPortrait.php
 02/05/2013 Exson: Add SendmailBySmtp function to MiscFunctions.php and make smtp mail workable for PrintCustTrans.php.
