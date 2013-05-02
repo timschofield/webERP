@@ -231,7 +231,7 @@ if (!isset($_GET['delete'])) {
 	} else {
 		echo '<table class="selection">';
 		echo '<tr><td>' . _('Account Code') . ':</td>
-					<td><input type="text" name="AccountCode" size="30" maxlength="30" /></td>
+					<td><input type="text" name="AccountCode" size="20" maxlength="20" /></td>
 				</tr>';
 	}
 
