@@ -206,7 +206,7 @@ if (!isset($_GET['InvoiceNumber']) AND !$_SESSION['ProcessingCredit']) {
 
 }
 
-if (isset($_POST['Location']) AND !isset($_POST['ProcessCredit'])){
+if (isset($_POST['Location'])){
 	$_SESSION['CreditItems' . $identifier]->Location = $_POST['Location'];
 
 	$NewDispatchTaxProvResult = DB_query("SELECT taxprovinceid FROM locations WHERE loccode='" . $_POST['Location'] . "'",$db);
@@ -486,7 +486,7 @@ $DefaultDispatchDate = Date($_SESSION['DefaultDateFormat']);
 
 $OKToProcess = true;
 
-if ((isset($_POST['CreditType']) and$_POST['CreditType']=='WriteOff') AND !isset($_POST['WriteOffGLCode'])){
+if ((isset($_POST['CreditType']) AND $_POST['CreditType']=='WriteOff') AND !isset($_POST['WriteOffGLCode'])){
 	prnMsg (_('The GL code to write off the credit value to must be specified. Please select the appropriate GL code for the selection box'),'info');
 	$OKToProcess = false;
 }
