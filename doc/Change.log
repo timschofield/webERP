@@ -1,5 +1,5 @@
 OwebERP Change Log
-
+02/05/2013 Exson: Add SendmailBySmtp function to MiscFunctions.php and make smtp mail workable for PrintCustTrans.php.
 1/5/13 Ricard: GLAccounts.php change error trap that only allows numeric GL accounts as now the chart of accounts can contain text accounts
 1/5/13 Phil: Fix purchase order lead time calculation as reported by MacPhotoBiker on forum
 1/5/13 Phil: Add link to print purchase order after placement as suggested by MacPhotoBiker on forum
