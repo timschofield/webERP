@@ -109,7 +109,7 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 			INNER JOIN salesorders ON salesorderdetails.orderno=salesorders.orderno
 			WHERE salesorders.deliverydate >='" . FormatDateForSQL($_POST['FromDate']) . "'
 			AND salesorders.deliverydate <='" . FormatDateForSQL($_POST['ToDate']) . "'
-			AND (TO_DAYS(salesorderdetails.actualdispatchdate) - TO_DAYS(salesorders.deliverydate)) >'" . filter_number_format($_POST['DaysAcceptable']) ."'";
+			AND (TO_DAYS(salesorderdetails.actualdispatchdate) - TO_DAYS(salesorders.deliverydate)) <'" . filter_number_format($_POST['DaysAcceptable']) ."'";
 
 } elseif ($_POST['CategoryID']!='All' AND $_POST['Location']=='All') {
 				$sql= "SELECT salesorders.orderno,
@@ -129,7 +129,7 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 						AND salesorders.deliverydate <='" . FormatDateForSQL($_POST['ToDate']) . "'
 						AND stockmaster.categoryid='" . $_POST['CategoryID'] ."'
 						AND (TO_DAYS(salesorderdetails.actualdispatchdate)
-							- TO_DAYS(salesorders.deliverydate)) >'" . filter_number_format($_POST['DaysAcceptable'])."'";
+							- TO_DAYS(salesorders.deliverydate)) <'" . filter_number_format($_POST['DaysAcceptable'])."'";
 
 } elseif ($_POST['CategoryID']=='All' AND $_POST['Location']!='All') {
 
@@ -150,7 +150,7 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 						AND salesorders.deliverydate <='" . FormatDateForSQL($_POST['ToDate']) . "'
 						AND salesorders.fromstkloc='" . $_POST['Location'] . "'
 						AND (TO_DAYS(salesorderdetails.actualdispatchdate)
-								- TO_DAYS(salesorders.deliverydate)) >'" . filter_number_format($_POST['DaysAcceptable']) . "'";
+								- TO_DAYS(salesorders.deliverydate)) <'" . filter_number_format($_POST['DaysAcceptable']) . "'";
 
 } elseif ($_POST['CategoryID']!='All' AND $_POST['Location']!='All'){
 
@@ -172,7 +172,7 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 						AND stockmaster.categoryid='" . $_POST['CategoryID'] ."'
 						AND salesorders.fromstkloc='" . $_POST['Location'] . "'
 						AND (TO_DAYS(salesorderdetails.actualdispatchdate)
-								- TO_DAYS(salesorders.deliverydate)) >'" . filter_number_format($_POST['DaysAcceptable']) . "'";
+								- TO_DAYS(salesorders.deliverydate)) >='" . filter_number_format($_POST['DaysAcceptable']) . "'";
 
 }
 
@@ -289,30 +289,23 @@ $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,_('Total number 
 
 $YPos-=$line_height;
 $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,_('DIFOT') . ' ' . locale_number_format((1-($TotalDiffs/$myrow[0])) * 100,2) . '%', 'left');
-
-
 $ReportFileName = $_SESSION['DatabaseName'] . '_DIFOT_' . date('Y-m-d').'.pdf';
 $pdf->OutputD($ReportFileName);
-$pdf->__destruct();
-
 if ($_POST['Email']=='Yes'){
-	if (file_exists($_SESSION['reports_dir'] . '/'.$ReportFileName)){
-		unlink($_SESSION['reports_dir'] . '/'.$ReportFileName);
-	}
-	$fp = fopen( $_SESSION['reports_dir'] . '/'.$ReportFileName,'wb');
-	fwrite ($fp, $pdfcode);
-	fclose ($fp);
-
+	$pdf->Output($_SESSION['reports_dir'].'/'.$ReportFileName,'F');
 	include('includes/htmlMimeMail.php');
-
 	$mail = new htmlMimeMail();
 	$attachment = $mail->getFile($_SESSION['reports_dir'] . '/'.$ReportFileName);
 	$mail->setText(_('Please find herewith DIFOT report from') . ' ' . $_POST['FromDate'] .  ' '. _('to') . ' ' . $_POST['ToDate']);
 	$mail->addAttachment($attachment, 'DIFOT.pdf', 'application/pdf');
 	$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] .'>');
 
-	/* $DelDiffsRecipients defined in config.php */
-	$result = $mail->send($DelDiffsRecipients);
+	if($_SESSION['SmtpSetting'] == 0){
+		$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . ' <' . $_SESSION['CompanyRecord']['email'] . '>');
+		$result = $mail->send(array($_SESSION['FactoryManagerEmail']));
+	}else{
+		$result = SendmailBySmtp($mail,array($_SESSION['FactoryManagerEmail']));
+	}
 }
-
+$pdf->__destruct();
 ?>
