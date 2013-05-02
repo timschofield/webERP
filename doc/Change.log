@@ -1,5 +1,5 @@
 OwebERP Change Log
-
+2/5/2013 Exson: Fixed strpos error and make the smtp server name more generic when user not use a email address in function of SendmailBySmtp in MiscFunctions.php.
 2/5/13 Phil: Credit_Invoice.php was not setting the selected location to credit into as reported by Ricard
 2/5/13 Exson: Revise the account code to 20 reported by Tim in GLAccounts.php. 
 2/5/13 Exson: Make correction for removing those functions not related with webERP committed last time in MiscFunctions.php. Thanks for Tim's review.
