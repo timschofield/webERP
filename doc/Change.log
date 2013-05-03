@@ -1,4 +1,6 @@
 OwebERP Change Log
+
+3/5/13 Ricard: new script to change GL account codes Z_ChangeGLAccountCode.php and SQL to upgrade to varchar account codes
 2/5/2013 Exson: Fixed strpos error and make the smtp server name more generic when user not use a email address in function of SendmailBySmtp in MiscFunctions.php.
 2/5/13 Phil: Credit_Invoice.php was not setting the selected location to credit into as reported by Ricard
 2/5/13 Exson: Revise the account code to 20 reported by Tim in GLAccounts.php. 
