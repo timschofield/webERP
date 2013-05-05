@@ -209,7 +209,7 @@ while ($AssetRow=DB_fetch_array($AssetsResult)) {
 								'" . FormatDateForSQL($_POST['ProcessDate']) . "',
 								'" . $PeriodNo . "',
 								'" . $AssetRow['accumdepnact'] . "',
-								'" . $AssetRow['assetid'] . "',
+								'" . _('Monthly depreciation for asset') . ' ' . $AssetRow['assetid'] . "',
 								'" . -$NewDepreciation ."')";
 		$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
