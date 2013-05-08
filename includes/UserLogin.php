@@ -17,7 +17,7 @@ define('UL_MAINTENANCE', 5);
  *	See define() statements above.
  */
 
-function userLogin($Name, $Password, $db) {
+function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
 
 	global $debug;
 
@@ -109,6 +109,12 @@ function userLogin($Name, $Password, $db) {
 							SET blocked=1
 							WHERE www_users.userid='" . $Name . "'";
 				$Auth_Result = DB_query($sql, $db);
+
+				if ($SysAdminEmail != ''){	
+					$EmailSubject = _('User access blocked'). ' ' . $Name ;
+					$EmailText =  _('User ID') . ' ' . $Name . ' - ' . $Password . ' - ' . _('has been blocked access at') . ' ' . Date('Y-m-d H:i:s') . ' ' . _('due to too many failed attempts.');
+					mail($SysAdminEmail,$EmailSubject,$EmailText);
+				}
 				return  UL_BLOCKED;
 			}
 			return  UL_NOTVALID;

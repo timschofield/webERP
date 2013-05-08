@@ -11,6 +11,9 @@ $DefaultLanguage ='en_GB.utf8';
 // Whether to display the demo login and password or not on the login screen
 $AllowDemoMode = True;
 
+// email address of the system administrator
+$SysAdminEmail = 'admin@mydomain.com';
+
 // The timezone of the business - this allows the possibility of having
 // the web-server on a overseas machine but record local time
 // this is not necessary if you have your own server locally

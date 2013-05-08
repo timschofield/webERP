@@ -25,6 +25,10 @@ if (isset($SessionSavePath)){
 	session_save_path($SessionSavePath);
 }
 
+if (!isset($SysAdminEmail)) {
+	$SysAdminEmail='';
+}
+
 ini_set('session.gc_maxlifetime',$SessionLifeTime);
 
 if( !ini_get('safe_mode') ){
@@ -85,7 +89,7 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 	include $PathPrefix . 'includes/UserLogin.php';	/* Login checking and setup */
 
 	if (isset($_POST['UserNameEntryField']) AND isset($_POST['Password'])) {
-		$rc = userLogin($_POST['UserNameEntryField'], $_POST['Password'], $db);
+		$rc = userLogin($_POST['UserNameEntryField'], $_POST['Password'], $SysAdminEmail, $db);
 	} elseif (empty($_SESSION['DatabaseName'])) {
 		$rc = UL_SHOWLOGIN;
 	} else {

@@ -25,7 +25,7 @@ function  LoginAPI($databasename, $user, $password) {
 		}
 		$_SESSION['db'] = $db;		// Set in above include
 	}
-	$rc = userLogin($user, $password, $_SESSION['db']);
+	$rc = userLogin($user, $password, $SysAdminEmail, $_SESSION['db']);
 	switch ($rc) {
 	case  UL_OK:
 		$RetCode[0] = 0;		// All is well
