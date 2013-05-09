@@ -342,7 +342,7 @@ if (isset($_POST['process']) OR isset($SelectedTabs)) {
 
 /* Ricard: needs revision of this date initialization */
 		if (!isset($_POST['Date'])) {
-			$_POST['Date']=Date('d/m/Y');
+			$_POST['Date']=Date($_SESSION['DefaultDateFormat']);
 		}
 
         echo '<br /><table class="selection">'; //Main table
