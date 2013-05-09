@@ -117,7 +117,8 @@ if (isset($_POST['submit'])) {
 										country='". $_POST['Country']. "',
 										hundredsname='" . $_POST['HundredsName'] . "',
 										decimalplaces='" . filter_number_format($_POST['DecimalPlaces']) . "',
-										rate='" .filter_number_format($_POST['ExchangeRate']) . "'
+										rate='" .filter_number_format($_POST['ExchangeRate']) . "',
+										webcart='" .$_POST['webcart'] . "'
 					WHERE currabrev = '" . $SelectedCurrency . "'";
 
 		$msg = _('The currency definition record has been updated');
@@ -129,13 +130,15 @@ if (isset($_POST['submit'])) {
 										country,
 										hundredsname,
 										decimalplaces,
-										rate)
+										rate,
+										webcart)
 								VALUES ('" . $_POST['CurrencyName'] . "',
 										'" . $_POST['Abbreviation'] . "',
 										'" . $_POST['Country'] . "',
 										'" . $_POST['HundredsName'] .  "',
 										'" . filter_number_format($_POST['DecimalPlaces']) . "',
-										'" . filter_number_format($_POST['ExchangeRate']) . "')";
+										'" . filter_number_format($_POST['ExchangeRate']) . "',
+										'" . $_POST['webcart'] . "')";
 
 		$msg = _('The currency definition record has been added');
 	}
@@ -151,6 +154,7 @@ if (isset($_POST['submit'])) {
 	unset($_POST['DecimalPlaces']);
 	unset($_POST['ExchangeRate']);
 	unset($_POST['Abbreviation']);
+	unset($_POST['webcart']);
 
 } elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
@@ -206,7 +210,8 @@ or deletion of the records*/
 					country,
 					hundredsname,
 					rate,
-					decimalplaces
+					decimalplaces,
+					webcart
 				FROM currencies";
 	$result = DB_query($sql, $db);
 
@@ -218,6 +223,7 @@ or deletion of the records*/
 			<th>' . _('Country') . '</th>
 			<th>' . _('Hundredths Name') . '</th>
 			<th>' . _('Decimal Places') . '</th>
+			<th>' . _('Use in webCART') .'</th>
 			<th>' . _('Exchange Rate') . '</th>
 			<th>' . _('1 / Ex Rate') . '</th>
 			<th>' . _('Ex Rate - ECB') .'</th>
@@ -247,6 +253,11 @@ or deletion of the records*/
 		if(!file_exists($ImageFile)){
 			$ImageFile =  'flags/blank.gif';
 		}
+		if ($myrow['webcart'] == 1) {
+			$ShowInWebText = _('Yes');
+		} else {
+			$ShowInWebText = _('No');
+		}
 
 		if ($myrow[1]!=$FunctionalCurrency){
 			printf('<td><img src="%s" alt="" /></td>
@@ -255,6 +266,7 @@ or deletion of the records*/
 					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
+					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -268,6 +280,7 @@ or deletion of the records*/
 					$myrow['country'],
 					$myrow['hundredsname'],
 					locale_number_format($myrow['decimalplaces'],0),
+					$ShowInWebText,
 					locale_number_format($myrow['rate'],8),
 					locale_number_format(1/$myrow['rate'],2),
 					locale_number_format(GetCurrencyRate($myrow['currabrev'],$CurrencyRatesArray),8),
@@ -286,7 +299,7 @@ or deletion of the records*/
 					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
-					<td class="number">%s</td>
+					<td>%s</td>
 					<td colspan="5">%s</td>
 					</tr>',
 					$ImageFile,
@@ -295,6 +308,7 @@ or deletion of the records*/
 					$myrow['country'],
 					$myrow['hundredsname'],
 					locale_number_format($myrow['decimalplaces'],0),
+					$ShowInWebText,
 					1,
 					_('Functional Currency'));
 		}
@@ -325,7 +339,8 @@ if (!isset($_GET['delete'])) {
 					country,
 					hundredsname,
 					decimalplaces,
-					rate
+					rate,
+					webcart
 				FROM currencies
 				WHERE currabrev='" . $SelectedCurrency . "'";
 
@@ -340,8 +355,7 @@ if (!isset($_GET['delete'])) {
 		$_POST['HundredsName']  = $myrow['hundredsname'];
 		$_POST['ExchangeRate']  = locale_number_format($myrow['rate'],8);
 		$_POST['DecimalPlaces']  = locale_number_format($myrow['decimalplaces'],0);
-
-
+		$_POST['webcart']  = $myrow['webcart'];
 
 		echo '<input type="hidden" name="SelectedCurrency" value="' . $SelectedCurrency . '" />';
 		echo '<input type="hidden" name="Abbreviation" value="' . $_POST['Abbreviation'] . '" />';
@@ -399,8 +413,29 @@ if (!isset($_GET['delete'])) {
 		$_POST['ExchangeRate']='';
 	}
 	echo '<input ' . (in_array('ExchangeRate',$Errors) ?  'class="inputerror"' : '' ) .' type="text" class="number" name="ExchangeRate" size="10" maxlength="10" value="' . $_POST['ExchangeRate'] . '" /></td>
-		</tr>
-		</table>';
+		</tr>';
+
+	if (!isset($_POST['webcart'])) {
+		$_POST['webcart']=1;
+	}
+
+	echo '<tr>
+			<td>' . _('Show in webERP Cart?') . ':</td>
+			<td><select name="webcart">';
+
+	if ($_POST['webcart']==1){
+		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
+	} else {
+		echo '<option value="1">' . _('Yes') . '</option>';
+	}
+	if ($_POST['webcart']==0){
+		echo '<option selected="selected" value="0">' . _('No') . '</option>';
+	} else {
+		echo '<option value="0">' . _('No') . '</option>';
+	}
+
+
+	echo '</table>';
 
 	echo '<br />
 		<div class="centre">
