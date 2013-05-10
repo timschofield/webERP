@@ -29,4 +29,6 @@ CREATE TABLE `mailgroupdetails` (groupname varchar(100) NOT NULL,
 
 INSERT INTO scripts VALUES('MailingGroupMaintenance.php', 15, 'Mainting mailing lists for items to mail');
 
+INSERT INTO mailgroups VALUES(1,'ChkListingRecipients');
+
 
