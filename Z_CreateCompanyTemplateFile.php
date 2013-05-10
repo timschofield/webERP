@@ -204,12 +204,17 @@ if (isset($_POST['CreateTemplate'])){
 		   include('includes/htmlMimeMail.php');
 		   $Recipients = array('"Submissions" <submissions@weberp.org>');
 		   $mail = new htmlMimeMail();
-		   $attachment = $mail->getFile( $RootPath . '/companies/' . $_SESSION['DatabaseName'] . '/reports/' . $_POST['TemplateName'] .'.sql');
+		   $Host = $_SERVER['HTTP_HOST'];
+		   $attachment = $mail->getFile( 'http://'.$Host.$RootPath . '/companies/' . $_SESSION['DatabaseName'] . '/reports/' . $_POST['TemplateName'] .'.sql');
 		   $mail->setText('Please find company template ' . $_POST['TemplateName']);
 		   $mail->addAttachment($attachment, 'CompanyTemplate.sql', 'application/txt');
 		   $mail->setSubject('Company Template Submission');
-		   $mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
-		   $result = $mail->send($Recipients);
+		   if($_SESSION['SmtpSetting']==0){
+		 	 $mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
+			 $result = $mail->send($Recipients);
+		   }else{
+			$result = SendmailBySmtp($mail,$Recipients);   
+		   }
           /*end of SQL Script creation */
       }/*end if Input error*/
 } /*end submit button hit */
