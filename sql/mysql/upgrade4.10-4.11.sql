@@ -18,5 +18,15 @@ VALUES ('Z_ChangeGLAccountCode.php',  '15',  'Script to change a GL account code
 ALTER TABLE  `currencies` ADD  `webcart` TINYINT( 1 ) NOT NULL DEFAULT  '1' COMMENT  'If 1 shown in weberp cart. if 0 no show';
 
 ALTER TABLE  `salescat` CHANGE  `salescatname`  `salescatname` VARCHAR( 50 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+CREATE TABLE `mailgroups` ( id int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	                      groupname varchar(100) NOT NULL,
+			      unique (groupname)) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+CREATE TABLE `mailgroupdetails` (groupname varchar(100) NOT NULL,
+	                   userid varchar(20) NOT NULL,
+			   CONSTRAINT FOREIGN KEY (`groupname`) REFERENCES `mailgroups` (`groupname`),
+			   CONSTRAINT FOREIGN KEY (`userid`) REFERENCES `www_users`(`userid`),
+			   INDEX(`groupname`)) Engine=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO scripts VALUES('MailingGroupMaintenance.php', 15, 'Mainting mailing lists for items to mail');
 
 
