@@ -423,7 +423,8 @@ $MenuItems['system']['Transactions']['Caption'] = array (_('Company Preferences'
 														_('Geocode Setup'),
 														_('Form Layout Editor'),
 														_('Label Templates Maintenance'),
-														_('SMTP Server Details') );
+														_('SMTP Server Details'),
+												       		_('Mailing Group Maintenance')	);
 
 $MenuItems['system']['Transactions']['URL'] = array ('/CompanyPreferences.php',
 													'/SystemParameters.php',
@@ -443,7 +444,8 @@ $MenuItems['system']['Transactions']['URL'] = array ('/CompanyPreferences.php',
 													'/GeocodeSetup.php',
 													'/FormDesigner.php',
 													'/Labels.php',
-													'/SMTPServer.php' );
+													'/SMTPServer.php',
+											       		'/MailingGroupMaintenance.php'	);
 
 $MenuItems['system']['Reports']['Caption'] = array (_('Sales Types'),
 													_('Customer Types'),
