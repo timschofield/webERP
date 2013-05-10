@@ -1,4 +1,5 @@
 OwebERP Change Log
+10/5/2013 Exson Fixed the mail function for PDFChequeListing.php
 10/5/2013 Exson: Add GetMailList function in MiscFunctions.php.
 10/5/2013 Exson: Fixed the unclosed a href tag in MailingGroupMaintenance.php. 
 10/5/2013 Exson: Add new feature to main mail list group for mail sending purpose.
