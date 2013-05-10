@@ -1,4 +1,5 @@
 OwebERP Change Log
+10/5/2013 Exson: Fixed the unclosed a href tag in MailingGroupMaintenance.php. 
 10/5/2013 Exson: Add new feature to main mail list group for mail sending purpose.
 9/5/13 Exson: Fixed the date hard coded problem in PcAssignCashToTab.php which lead to malfunction for some date format. Report by thumb.
 3/5/13 Ricard: new script to change GL account codes Z_ChangeGLAccountCode.php and SQL to upgrade to varchar account codes
