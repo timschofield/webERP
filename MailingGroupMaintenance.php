@@ -176,7 +176,7 @@ if(DB_num_rows($result) != 0){
 			<tr><td><?php echo $myrow['groupname']; ?></td>
 	
 				<td><?php echo '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?GroupId='.$myrow['id'].'&amp;Edit=1&amp;GroupName='.$myrow['groupname'].'" >'. _('Edit').'</a>'; ?></td>
-				<td><?php echo '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?Id='.$myrow['id'].'&amp;Delete=1" onclick="return confirm(\'' ._('Are you sure you wish to delete this group?').'\');"/>'._('Delete'); ?></td>
+				<td><?php echo '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?Id='.$myrow['id'].'&amp;Delete=1" onclick="return confirm(\'' ._('Are you sure you wish to delete this group?').'\');">'._('Delete'); ?></a></td>
 			</tr>
 
 <?php
