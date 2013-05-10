@@ -77,9 +77,9 @@ if (isset($_POST['submit'])  AND $EditName == 1 ) { // Creating or updating a ca
 
 	//first off validate inputs sensible
 
-	if (mb_strlen($_POST['SalesCatName']) >20 OR trim($_POST['SalesCatName'])=='') {
+	if (mb_strlen($_POST['SalesCatName']) >50 OR trim($_POST['SalesCatName'])=='') {
 		$InputError = 1;
-		prnMsg(_('The Sales category description must be twenty characters or less long'),'error');
+		prnMsg(_('The Sales category description must be fifty characters or less long'),'error');
 	}
 
 	if (isset($SelectedCategory) and $InputError !=1 ) {
@@ -318,7 +318,7 @@ echo '<input type="hidden" name="EditName" value="1" />';
 echo '<table class="selection">';
 echo '<tr><th colspan="2">' . $FormCaps . '</th></tr>';
 echo '<tr><td>' . _('Category Name') . ':</td>
-            <td><input type="text" name="SalesCatName" size="20" maxlength="20" value="' . $_POST['SalesCatName'] . '" /></td></tr>';
+            <td><input type="text" name="SalesCatName" size="50" maxlength="50" value="' . $_POST['SalesCatName'] . '" /></td></tr>';
 // Image upload only if we have a selected category
 if (isset($SelectedCategory)) {
 	echo '<tr><td>'. _('Image File (.jpg)') . ':</td>
