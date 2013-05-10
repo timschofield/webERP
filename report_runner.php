@@ -111,14 +111,20 @@ if ($Counter >0){ /* the number of lines of the sales report is more than 0  ie 
 	$mail->setText($mailtext."\nPlease find herewith ".$reportname."  report");
 	$mail->setSubject($reportname." Report");
 	$mail->addAttachment($attachment, $reportname, 'application/pdf');
-	$mail->setFrom("");
-	$result = $mail->send($Recipients);
+	if($_SESSION['SmtpSetting']==0){
+		$mail->setFrom("");
+		$result = $mail->send($Recipients);
+	}else{
+		$result = SendmailBySmtp($mail,$Recipients);
+	}
 
 } else {
 	$mail->setText("Error running automated sales report number $ReportID");
- 	$mail->setFrom("Do_not_reply_".$_SESSION['CompanyRecord']['coyname'] . "<" . $_SESSION['CompanyRecord']['email'] . ">");
-
-	$result = $mail->send($Recipients);
+	if($_SESSION['SmtpSetting']==0){
+		$mail->setFrom("Do_not_reply_".$_SESSION['CompanyRecord']['coyname'] . "<" . $_SESSION['CompanyRecord']['email'] . ">");
+		$result = $mail->send($Recipients);
+	}else{
+		$result = SendmailBySmtp($mail,$Recipients);
+	}
 }
-
 ?>
