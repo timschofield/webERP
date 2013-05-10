@@ -184,26 +184,35 @@ $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,locale_number_for
 $LeftOvers = $pdf->addTextWrap($Left_Margin+65,$YPos,300,$FontSize,_('TOTAL') . ' ' . $Currency . ' ' . _('CHEQUES'), 'left');
 
 $ReportFileName = $_SESSION['DatabaseName'] . '_ChequeListing_' . date('Y-m-d').'.pdf';
+$pdf->Output($_SESSION['reports_dir'].'/'.$ReportFileName,'F');
 $pdf->OutputD($ReportFileName);
 $pdf->__destruct();
 if ($_POST['Email']=='Yes'){
-	if (file_exists($_SESSION['reports_dir'] . '/'.$ReportFileName)){
-		unlink($_SESSION['reports_dir'] . '/'.$ReportFileName);
-	}
-		$fp = fopen( $_SESSION['reports_dir'] . '/'.$ReportFileName,'wb');
-	fwrite ($fp, $pdfcode);
-	fclose ($fp);
 
 	include('includes/htmlMimeMail.php');
-
 	$mail = new htmlMimeMail();
 	$attachment = $mail->getFile($_SESSION['reports_dir'] . '/'.$ReportFileName);
 	$mail->setText(_('Please find herewith payments listing from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate']);
 	$mail->addAttachment($attachment, 'PaymentListing.pdf', 'application/pdf');
-	$mail->setFrom(array('"' . $_SESSION['CompanyRecord']['coyname'] . '" <' . $_SESSION['CompanyRecord']['email'] . '>'));
-
-	/* $ChkListingRecipients defined in config.php */
-	$result = $mail->send($ChkListingRecipients);
+	$ChkListingRecipients = GetMailList('ChkListingRecipients');
+	if($ChkListingRecipients == ''){
+		prnMsg(_('The email address has not been set correctly, no mail will be sent. please ask administrator for help'),'error');
+		include('includes/footer.inc');
+		exit;
+	}
+	if($ChkListingRecipients == ''){
+		prnMsg(_('The mail address is not set correctly, no mail send'),'errort');
+		include('includes/footer.inc');
+		exit;
+	}
+	if($_SESSION['SmtpSetting']==0){
+		$mail->setFrom(array('"' . $_SESSION['CompanyRecord']['coyname'] . '" <' . $_SESSION['CompanyRecord']['email'] . '>'));
+		$result = $mail->send($ChkListingRecipients);
+	}else{
+		$result = SendmailBySmtp($mail,$ChkListingRecipients);
+	}
 }
+
+
 
 ?>
