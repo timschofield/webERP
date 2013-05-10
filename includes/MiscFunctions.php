@@ -420,5 +420,22 @@ function SendMailBySmtp(&$mail,$To) {
 	return $result;
 }
 
+function GetMailList($Recipients){
+	global $db;
+	$ToList = array();
+	$sql = "SELECT email,realname FROM mailgroupdetails INNER JOIN www_users ON www_users.userid=mailgroupdetails.userid WHERE mailgroupdetails.groupname='".$Recipients."'";
+	$ErrMsg = _('Failed to retrieve mail lists');
+	$result = DB_query($sql,$db,$ErrMsg);
+	if(DB_num_rows($result) != 0){
+		
+		//Create the string which meets the Recipients requirements
+		while($myrow = DB_fetch_array($result)){
+			$ToList[]= $myrow['realname'].'<'.$myrow['email'].'>';
+
+		}
+	
+	}
+	return $ToList;
+}
 
 ?>
