@@ -1,4 +1,5 @@
 OwebERP Change Log
+11/5/2013 Exson: Add OffersReceivedRecipients Group, added feature to use mail instead of smtp mail only, fixed the problem that item with single quotation mark cannot be stored and the same date comparison problem.
 11/5/2013 Exson: Add MailSalesReport_csv to scripts and add SalesAnalysisReportRecipients for mailing list in sql/mysql/upgrade4.10-4.11.sql
 11/5/2013 Exson: Make the report can be sent via smtp mail in MailSalesReport_csv.php.
 11/5/2013 Exson: Add Cc and Reply-To feature for mail sent by smtp in DefineTenderClass.php.
