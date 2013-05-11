@@ -53,13 +53,16 @@ Class Tender {
 			$mail = new htmlMimeMail();
 			$mail->setText($EmailText);
 			$mail->setSubject($Subject);
+			$mail->setFrom($_SESSION['PurchasingManagerEmail']);
+			$mail->setHeader('Reply-To',$_SESSION['PurchasingManagerEmail']);
+			$mail->setCc($_SESSION['PurchasingManagerEmail']); //Set this as a copy for filing purpose
 
 		}
 		foreach ($this->Suppliers as $Supplier) {
 		 if($_SESSION['SmtpSetting']==0){
 			 $result = mail($Supplier->EmailAddress, $Subject, $EmailText, $Headers);
 		 }else{
-			 $result = SendmailBySmtp($mail,array($Supplier->EmailAddress));	
+			 $result = SendmailBySmtp($mail,array($Supplier->EmailAddress,$_SESSION['PurchasingManagerEmail']));	
 		 }
 		}
 	}
