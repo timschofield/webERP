@@ -1,4 +1,5 @@
 OwebERP Change Log
+11/5/2013 Exson: Add Cc and Reply-To feature for mail sent by smtp in DefineTenderClass.php.
 11/5/2013 Exson: Make the offer can be mailed via smtp in DefineOfferClass.php.
 11/5/2013 Exson: Make the tender can be sent by SMTP mail in DefineTenderClass.php.
 10/5/2013 Exson Fixed the Z_CreateCompanyTemplateFile.php to make it workable in windows OS and make it workable via smtp mail.
