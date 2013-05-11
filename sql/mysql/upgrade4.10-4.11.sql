@@ -32,6 +32,7 @@ INSERT INTO scripts VALUES('MailingGroupMaintenance.php', 15, 'Mainting mailing 
 INSERT INTO mailgroups VALUES(1,'ChkListingRecipients');
 INSERT INTO mailgroups VALUES(2,'SalesAnalysisReportRecipients');
 INSERT INTO scripts VALUES('MailSalesReport_csv.php',15,'Mailing the sales report');
+INSERT INTO mailgroups VALUES(3,'OffersReceivedResultRecipients');
 
 
 
