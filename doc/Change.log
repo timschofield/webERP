@@ -1,4 +1,6 @@
 OwebERP Change Log
+12/5/2013 Tim: Add patch for the email groups are set situation in PDFChequeListing.php, MailSalesReport.php, MailSalesReport_csv.php, OffersReceived.php.
+12/5/2013 Tim: Add patch for GetMailList to show error when there is no email settings available.
 12/5/2013 Exson: Make smtp mail available for StockLocTransferReceive.php.
 12/5/2013 Exson: Make the smtp mail available for StockAdjustments.php.
 12/5/2013 Exson: Fixed the bug of not use strpos correctly in PO_PDFPurchOrder.php.
