@@ -543,9 +543,13 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $RootPath . '/' . $_SESSI
 			$Recipients = array($EDICustServPerson);
 		}
 
+		if($_SESSION['SmtpSetting']==0){
+			$MessageSent = $mail->send($Recipients);
+		}else{
+			$MessageSent = SendmailBySmtp($mail,$Recipients);
+		}
 
 
-		$result = $mail->send($Recipients);
 
 		echo $EmailText;
 	} /* nothing in the email text to send - the message file is a complete dud - maybe directory */

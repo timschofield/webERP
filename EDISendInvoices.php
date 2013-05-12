@@ -216,7 +216,12 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 				$mail->SetSubject('EDI Invoice/Credit Note ' . $EDITransNo);
 				$mail->addAttachment($attachment, 'EDI_INV_' . $EDITransNo, 'application/txt');
 				$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
-				$MessageSent = $mail->send(array($CustDetails['ediaddress']));
+				if($_SESSION['SmtpSetting']==0){
+					$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
+					$MessageSent = $mail->send(array($CustDetails['ediaddress']));
+				}else{
+					$MessageSent = SendmailBySmtp($mail,array($CustDetails['ediaddress']));
+				}
 
 				if ($MessageSent==True){
 					echo '<br /><br />';
