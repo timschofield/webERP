@@ -1,4 +1,5 @@
 OwebERP Change Log
+12/5/2013 Exson: Make the sales report can be mailed via SMTP in files MailSalesReport.php and MailSalesReport_csv.php
 11/5/2013 Exson: Make EDI modules can send mail via SMTP in files EDIProcessOrders.php, EDISendInvoices.php, EDISendInvoices_Reece.php
 11/5/2013 Exson: Make the inventory valuation report can be mailed.
 11/5/2013 Exson: Add Mail Validation Report to inventory module in MainMenuLinksArray.php.
