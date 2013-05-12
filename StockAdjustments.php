@@ -347,7 +347,16 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 		if ($_SESSION['InventoryManagerEmail']!=''){
 			$ConfirmationText = $ConfirmationText . ' ' . _('by user') . ' ' . $_SESSION['UserID'] . ' ' . _('at') . ' ' . Date('Y-m-d H:i:s');
 			$EmailSubject = _('Stock adjustment for'). ' ' . $_SESSION['Adjustment' . $identifier]->StockID;
-			mail($_SESSION['InventoryManagerEmail'],$EmailSubject,$ConfirmationText);
+			if($_SESSION['SmtpSetting']==0){
+			      mail($_SESSION['InventoryManagerEmail'],$EmailSubject,$ConfirmationText);
+			}else{
+				include('includes/htmlMimeMail.php');
+				$mail = new htmlMimeMail();
+				$mail->setSubject($EmailSubject);
+				$mail->setText($ConfirmationText);
+				$result = SendmailBySmtp($mail,array($_SESSION['InventoryManagerEmail']));
+			}
+			
 		}
 
 		unset ($_SESSION['Adjustment' . $identifier]);
