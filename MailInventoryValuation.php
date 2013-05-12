@@ -8,8 +8,6 @@ $FromCriteria ='1'; /*Category From */
 $ToCriteria ='zzzzzzzz'; /*Category To */
 $Location =  'All';  /* Location to report on */
 $DetailedReport = 'Yes';  /* Total by category or complete listing */
-$Recipients = array('"Postmaster" <postmaster@localhost>','"someone" <someone@localhost>');
-
 
 $_POST['DetailedReport'] = $DetailedReport; /* so PDFInventoryValnPageHeader.inc works too */
 $_POST['FromCriteria']=$FromCriteria; /* so PDFInventoryValnPageHeader.inc works too */
@@ -18,7 +16,7 @@ $_POST['Location'] = $Location; /* so PDFInventoryValnPageHeader.inc works too *
 
 include('includes/session.inc');
 include ('includes/class.pdf.php');
-
+$Recipients = GetMailList('InventoryValuationRecipients');
 /* A4_Portrait */
 
 $Page_Width=595;
@@ -224,7 +222,29 @@ if ($ListCount == 0) {
 	$mail->setText(_('Please find herewith the stock valuation report'));
 	$mail->setSubject(_('Inventory Valuation Report'));
 	$mail->addAttachment($attachment, 'InventoryReport.pdf', 'application/pdf');
-	$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
-	$result = $mail->send($Recipients);
+	if($_SESSION['SmtpSetting']==0){
+		$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
+		$result = $mail->send($Recipients);
+	}else{
+		$result = SendmailBySmtp($mail,$Recipients);
+	}
+	if($result){
+			$Title = _('Print Inventory Valuation');
+			include('includes/header.inc');
+			prnMsg(_('The Inventory valuation report has been mailed'),'success');
+			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
+			include('includes/footer.inc');
+			exit;
+	
+	}else{
+			$Title = _('Print Inventory Valuation Error');
+			include('includes/header.inc');
+			prnMsg(_('There are errors lead to mails not sent'),'error');
+			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
+			include('includes/footer.inc');
+			exit;
+	
+	}
+	
 }
 ?>
