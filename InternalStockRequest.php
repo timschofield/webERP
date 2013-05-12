@@ -112,7 +112,16 @@ if (isset($_POST['Submit'])) {
 		if ($myEmail=DB_fetch_array($EmailResult)){
 			$ConfirmationText = _('An internal stock request has been created and is waiting for your authoritation');
 			$EmailSubject = _('Internal Stock Request needs your authoritation');
-			mail($myEmail['email'],$EmailSubject,$ConfirmationText);
+			 if($_SESSION['SmtpSetting']==0){
+			       mail($myEmail['email'],$EmailSubject,$ConfirmationText);
+			}else{
+				include('includes/htmlMimeMail.php');
+				$mail = new htmlMimeMail();
+				$mail->setSubject($EmailSubject);
+				$mail->setText($ConfirmationText);
+				$result = SendmailBySmtp($mail,array($myEmail['email']));
+			}
+
 		}
 
 	}
