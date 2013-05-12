@@ -338,7 +338,15 @@ if(isset($_POST['ProcessTransfer'])){
 										"\r\n" . _('By user') . ': ' . $_SESSION['UserID'] . 
 										"\r\n" . _('At') . ': ' . Date('Y-m-d H:i:s');
 					$EmailSubject = _('Cancelled balance of transfer'). ' ' . $_SESSION['Transfer']->TrfID;
-					mail($_SESSION['InventoryManagerEmail'],$EmailSubject,$ConfirmationText);
+					if($_SESSION['SmtpSetting']==0){
+						      mail($_SESSION['InventoryManagerEmail'],$EmailSubject,$ConfirmationText);
+					}else{
+						include('includes/htmlMimeMail.php');
+						$mail = new htmlMimeMail();
+						$mail->setSubject($EmailSubject);
+						$mail->setText($ConfirmationText);
+						$result = SendmailBySmtp($mail,array($_SESSION['InventoryManagerEmail']));
+					}
 				}
 			}
 			$i++;
