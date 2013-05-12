@@ -113,8 +113,19 @@ function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
 				if ($SysAdminEmail != ''){	
 					$EmailSubject = _('User access blocked'). ' ' . $Name ;
 					$EmailText =  _('User ID') . ' ' . $Name . ' - ' . $Password . ' - ' . _('has been blocked access at') . ' ' . Date('Y-m-d H:i:s') . ' ' . _('due to too many failed attempts.');
-					mail($SysAdminEmail,$EmailSubject,$EmailText);
+					if($_SESSION['SmtpSetting']==0){
+							mail($SysAdminEmail,$EmailSubject,$EmailText);
+	
+					}else{
+							include('includes/htmlMimeMail.php');
+							$mail = new htmlMimeMail();
+							$mail->setSubject($EmailSubject);
+							$mail->setText($EmailText);
+							$result = SendmailBySmtp($mail,array($SysAdminEmail));
+					}
+
 				}
+
 				return  UL_BLOCKED;
 			}
 			return  UL_NOTVALID;
