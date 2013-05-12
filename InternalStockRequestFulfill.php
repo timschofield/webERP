@@ -172,7 +172,17 @@ if (isset($_POST['UpdateAll'])) {
 				if ($_SESSION['InventoryManagerEmail']!=''){
 					$ConfirmationText = $ConfirmationText . ' ' . _('by user') . ' ' . $_SESSION['UserID'] . ' ' . _('at') . ' ' . Date('Y-m-d H:i:s');
 					$EmailSubject = _('Internal Stock Request Fulfillment for'). ' ' . $StockID;
-					mail($_SESSION['InventoryManagerEmail'],$EmailSubject,$ConfirmationText);
+					if($_SESSION['SmtpSetting']==0){
+						      mail($_SESSION['InventoryManagerEmail'],$EmailSubject,$ConfirmationText);
+					}else{
+						include('includes/htmlMimeMail.php');
+						$mail = new htmlMimeMail();
+						$mail->setSubject($EmailSubject);
+						$mail->setText($ConfirmationText);
+						$result = SendmailBySmtp($mail,array($_SESSION['InventoryManagerEmail']));
+					}
+
+				
 				}
 			} else {
 				$ConfirmationText = _('An internal stock request for'). ' ' . $StockID . ' ' . _('has been fulfilled from location').' ' . $Location .' '. _('for a quantity of') . ' ' . locale_number_format($Quantity, $DecimalPlaces) . ' ' . _('cannot be created as there is insufficient stock and your system is configured to not allow negative stocks');
