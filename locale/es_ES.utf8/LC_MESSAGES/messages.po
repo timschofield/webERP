@@ -8,9 +8,8 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-02-24 14:29+1300\n"
-"PO-Revision-Date: 2012-12-11 15:23-0430\n"
-"Last-Translator: Daniel Rodriguez - TecnoSoluciones.com "
-"<webmaster@tecnosoluciones.com>\n"
+"PO-Revision-Date: 2013-05-11 14:28-0600\n"
+"Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -22,7 +21,7 @@ msgstr ""
 
 #: AccountGroups.php:7 includes/MainMenuLinksArray.php:356
 msgid "Account Groups"
-msgstr "Grupos de Cuentas"
+msgstr "Grupos contables"
 
 #: AccountGroups.php:19
 msgid ""
@@ -41,28 +40,24 @@ msgstr ""
 "que ha fallado en el proceso fue"
 
 #: AccountGroups.php:46
-#, fuzzy
 msgid "An error occurred in moving the account group"
-msgstr "Hubo un error al actualizar el grupo de cuentas"
+msgstr "Hubo un error al actualizar el grupo contable"
 
 #: AccountGroups.php:47
-#, fuzzy
 msgid "The SQL that was used to move the account group was"
-msgstr "El SQL usado para insertar el grupo de cuentas fue"
+msgstr "El SQL usado para mover el grupo contable fue"
 
 #: AccountGroups.php:49 AccountGroups.php:330
 msgid "Review Account Groups"
-msgstr "Revisar Subgrupos de Cuentas"
+msgstr "Revisar grupos contables"
 
 #: AccountGroups.php:50
-#, fuzzy
 msgid "All accounts in the account group:"
-msgstr "Hubo un error al actualizar el grupo de cuentas"
+msgstr "Todas las cuentas del grupo contable:"
 
 #: AccountGroups.php:50
-#, fuzzy
 msgid "have been changed to the account group:"
-msgstr "ha sido añadido a la transacción"
+msgstr "fueron cambiadas al grupo contable:"
 
 #: AccountGroups.php:69 AccountGroups.php:106 AccountGroups.php:207
 #: AccountGroups.php:242
@@ -75,11 +70,11 @@ msgstr "No se pudo comprobar si el grupo existe porque"
 
 #: AccountGroups.php:77
 msgid "The account group name already exists in the database"
-msgstr "El nombre del grupo de cuenta ya existe en la base de datos"
+msgstr "El nombre del grupo contable ya existe en la base de datos"
 
 #: AccountGroups.php:83
 msgid "The account group name cannot contain the character"
-msgstr "El nombre del grupo de cuenta no puede contener el caracter"
+msgstr "El nombre del grupo contable no puede contener el caracter"
 
 #: AccountGroups.php:83 Departments.php:30 TaxCategories.php:31
 msgid "or the character"
@@ -120,7 +115,7 @@ msgstr ""
 
 #: AccountGroups.php:120
 msgid "The section in accounts must be an integer"
-msgstr "La sección de cuentas debe ser un número"
+msgstr "La sección contable debe ser un número"
 
 #: AccountGroups.php:126
 msgid "The sequence in the trial balance must be an integer"
@@ -132,14 +127,12 @@ msgstr ""
 "La secuencia en el Balance de Comprobación debe ser numérica y menor que"
 
 #: AccountGroups.php:148
-#, fuzzy
 msgid "An error occurred in renaming the account group"
-msgstr "Hubo un error al actualizar el grupo de cuentas"
+msgstr "Hubo un error al renombrar el grupo contable"
 
 #: AccountGroups.php:149
-#, fuzzy
 msgid "The SQL that was used to rename the account group was"
-msgstr "El SQL usado para actualizar el grupo de cuentas fue"
+msgstr "El SQL usado para renombrar el grupo contable fue"
 
 #: AccountGroups.php:168
 msgid "An error occurred in updating the account group"
@@ -208,7 +201,7 @@ msgstr "cuentas contables que hacen referencia a este subgrupo"
 
 #: AccountGroups.php:219 AccountGroups.php:290 AccountGroups.php:403
 msgid "Parent Group"
-msgstr "Grupo principal"
+msgstr "Grupo ancestro"
 
 #: AccountGroups.php:235
 #, fuzzy
@@ -233,11 +226,11 @@ msgstr "subgrupos de cuentas contenidos en este este subgrupo"
 
 #: AccountGroups.php:251
 msgid "An error occurred in deleting the account group"
-msgstr "Hubo un error al eliminar el subgrupo de cuentas"
+msgstr "Hubo un error al eliminar el grupo contable"
 
 #: AccountGroups.php:252
 msgid "The SQL that was used to delete the account group was"
-msgstr "El SQL usado para eliminar el subgrupo de cuentas fue"
+msgstr "El SQL usado para eliminar el grupo contables fue"
 
 #: AccountGroups.php:254
 msgid "group has been deleted"
@@ -482,15 +475,15 @@ msgstr "El nombre de grupo de cuenta no existe en la base de datos"
 
 #: AccountGroups.php:368
 msgid "Edit Account Group Details"
-msgstr "Editar Detalles de Grupos de Cuentas"
+msgstr "Editar detalles de grupo contable"
 
 #: AccountGroups.php:392
 msgid "New Account Group Details"
-msgstr "Nuevos Detalles de Grupos de Cuentas"
+msgstr "Detalles de grupo contable nuevo"
 
 #: AccountGroups.php:399
 msgid "Account Group Name"
-msgstr "Nombre del Subgrupo de Cuentas"
+msgstr "Nombre de grupo contable"
 
 #: AccountGroups.php:409 AccountGroups.php:411
 msgid "Top Level Group"
@@ -498,7 +491,7 @@ msgstr "Grupo de Nivel Superior"
 
 #: AccountGroups.php:425
 msgid "Section In Accounts"
-msgstr "Sección de Cuentas"
+msgstr "Sección contable"
 
 #: AccountGroups.php:461 AccountSections.php:262 AddCustomerContacts.php:260
 #: AddCustomerNotes.php:242 AddCustomerTypeNotes.php:221 Areas.php:229
@@ -520,24 +513,24 @@ msgstr "Guardar la Información"
 
 #: AccountSections.php:7 includes/MainMenuLinksArray.php:357
 msgid "Account Sections"
-msgstr "Grupos Principales"
+msgstr "Secciones contables"
 
 #: AccountSections.php:64
 msgid "The account section already exists in the database"
-msgstr "El Grupo Principal ya existe en la Base de Datos"
+msgstr "La sección contable ya existe en la base de datos"
 
 #: AccountSections.php:71
 msgid "The account section name cannot contain any illegal characters"
 msgstr ""
-"El nombre de la sección de cuenta no puede contener caracteres prohibidos"
+"El nombre de la sección contable no puede contener caracteres prohibidos"
 
 #: AccountSections.php:77
 msgid "The account section name must contain at least one character"
-msgstr "El nombre del Grupo Principal debe tener al menos un carácter"
+msgstr "El nombre de la sección contable debe tener al menos un carácter"
 
 #: AccountSections.php:83 AccountSections.php:89
 msgid "The section number must be an integer"
-msgstr "El número del Grupo Principal debe ser un entero"
+msgstr "El número de la sección contable debe ser un entero"
 
 #: AccountSections.php:131
 msgid ""
@@ -561,11 +554,11 @@ msgstr "No se pudo obtener las secciones del subgrupo de cuentas porque"
 
 #: AccountSections.php:176 AccountSections.php:235 AccountSections.php:253
 msgid "Section Number"
-msgstr "Número de Sección"
+msgstr "Número de sección"
 
 #: AccountSections.php:177 AccountSections.php:257
 msgid "Section Description"
-msgstr "Descripción de la Sección"
+msgstr "Descripción de sección"
 
 #: AccountSections.php:194
 msgid "Restricted"
@@ -1479,7 +1472,7 @@ msgstr "El SQL usado para obtener los detalles de la cuenta bancaria fue"
 
 #: BankAccounts.php:191 GLJournal.php:295
 msgid "GL Account Code"
-msgstr "Código de la Cuenta Contable"
+msgstr "Código de cuenta contable"
 
 #: BankAccounts.php:192 BankAccounts.php:328
 msgid "Bank Account Name"
@@ -2578,11 +2571,11 @@ msgstr "Costo Unitario"
 #: ContractCosting.php:175 Contracts.php:993 Contracts.php:1028
 #: SpecialOrder.php:631 SpecialOrder.php:633
 msgid "Total Cost"
-msgstr "Costo Total"
+msgstr "Costo total"
 
 #: BOMInquiry.php:243
 msgid "Labour Cost"
-msgstr "Costo de Mano de Obra"
+msgstr "Costo de mano de obra"
 
 #: BOMInquiry.php:246
 msgid "Overhead Cost"
@@ -2919,7 +2912,7 @@ msgstr "Detalles de Nuevo Componente"
 
 #: BOMs.php:641
 msgid "Component code"
-msgstr "Componente código"
+msgstr "Código de componente"
 
 #: BOMs.php:671
 msgid "Could not retrieve the list of potential components because"
@@ -3019,7 +3012,7 @@ msgstr ""
 #: TaxAuthorities.php:148 TaxAuthorities.php:149
 #: includes/MainMenuLinksArray.php:354
 msgid "GL Account"
-msgstr "Cuentas Contables"
+msgstr "Cuenta contable"
 
 #: COGSGLPostings.php:226
 msgid "Show all cost of sales posting records"
@@ -3036,7 +3029,7 @@ msgstr "Otra"
 #: PricesByCost.php:265 SalesGLPostings.php:357 SelectOrderItems.php:750
 #: SuppPriceList.php:138 SuppPriceList.php:251
 msgid "Price List"
-msgstr "Lista de Precios"
+msgstr "Lista de precios"
 
 #: COGSGLPostings.php:324
 msgid "Post to GL account"
@@ -5905,14 +5898,12 @@ msgid "Narrative"
 msgstr "Observaciones"
 
 #: CounterReturns.php:762
-#, fuzzy
 msgid "Rounded Total"
-msgstr "Total"
+msgstr "Total redondeado"
 
 #: CounterReturns.php:770
-#, fuzzy
 msgid "Returned By"
-msgstr "Requerido por"
+msgstr "Devuelto por"
 
 #: CounterReturns.php:774 CounterSales.php:866 DeliveryDetails.php:1055
 #: RecurringSalesOrders.php:409
@@ -5926,14 +5917,12 @@ msgstr "Correo Electrónico del Contacto"
 
 #: CounterReturns.php:785 CounterSales.php:877 Credit_Invoice.php:1551
 #: DeliveryDetails.php:1078 SelectCreditItems.php:925
-#, fuzzy
 msgid "Sales person"
 msgstr "Vendedor"
 
 #: CounterReturns.php:802
-#, fuzzy
 msgid "Reason for Return"
-msgstr "No se Configuró la Razón para Retener"
+msgstr "Motivo de la devolución"
 
 #: CounterReturns.php:813 CounterSales.php:904 SuppPaymentRun.php:351
 msgid "Payment Type"
@@ -5949,9 +5938,8 @@ msgid "Re-Calculate"
 msgstr "Recalcular"
 
 #: CounterReturns.php:844
-#, fuzzy
 msgid "Process The Return"
-msgstr "Procesar la Venta"
+msgstr "Procesar la devolución"
 
 #: CounterReturns.php:859
 #, fuzzy
@@ -6105,9 +6093,8 @@ msgid "Prev"
 msgstr "Anterior"
 
 #: CounterReturns.php:1668
-#, fuzzy
 msgid "Return Item(s)"
-msgstr "Quitando Artículos"
+msgstr "Artículos devueltos"
 
 #: CounterReturns.php:1669 CounterReturns.php:1793 CounterSales.php:2262
 #: CounterSales.php:2389 InternalStockRequest.php:538
@@ -6180,14 +6167,12 @@ msgid "Search Parts"
 msgstr "Buscar Piezas"
 
 #: CounterReturns.php:1832
-#, fuzzy
 msgid "Cancel Return"
-msgstr "Cancelar la Oferta"
+msgstr "Cancelar devolución"
 
 #: CounterReturns.php:1832
-#, fuzzy
 msgid "Are you sure you wish to cancel this return?"
-msgstr "¿Seguro que desea cancelar de esta venta?"
+msgstr "¿Seguro que desea cancelar de esta devolución?"
 
 #: CounterSales.php:11 CounterSales.php:226
 msgid "Counter Sales"
@@ -7102,9 +7087,8 @@ msgid "Decimal Places"
 msgstr "Lugares Decimales"
 
 #: Currencies.php:222
-#, fuzzy
 msgid "1 / Ex Rate"
-msgstr "Tasa de Cambio"
+msgstr "1/ Tasa de Cambio"
 
 #: Currencies.php:223
 msgid "Ex Rate - ECB"
@@ -7771,7 +7755,7 @@ msgstr "Vendedor"
 
 #: CustomerBranches.php:375 SupplierContacts.php:154
 msgid "Phone No"
-msgstr "Numero del Telefono"
+msgstr "Numero de teléfono"
 
 #: CustomerBranches.php:376 SupplierContacts.php:155
 msgid "Fax No"
@@ -7890,7 +7874,7 @@ msgstr "Por favor, use el vínculo para definir al menos un vendedor"
 
 #: CustomerBranches.php:700
 msgid "Define Sales People"
-msgstr "Vendedores Definidos"
+msgstr "Definir vendedores"
 
 #: CustomerBranches.php:706 DailySalesInquiry.php:40 SalesPeople.php:170
 #: WWW_Users.php:292
@@ -7938,7 +7922,7 @@ msgstr ""
 
 #: CustomerBranches.php:758
 msgid "Define Stock Locations"
-msgstr "Definir Ubicaciones de los Almacenes"
+msgstr "Definir ubicaciones de almacenes"
 
 #: CustomerBranches.php:764
 msgid "Draw Stock From"
@@ -7947,11 +7931,11 @@ msgstr "Obtener Stock desde"
 #: CustomerBranches.php:780 Customers.php:1041 Customers.php:1049
 #: SelectCustomer.php:618
 msgid "Phone Number"
-msgstr "Nº Teléfono"
+msgstr "Número de teléfono"
 
 #: CustomerBranches.php:786 Factors.php:296
 msgid "Fax Number"
-msgstr "Numero Fax"
+msgstr "Número de fax"
 
 #: CustomerBranches.php:808
 msgid ""
@@ -8019,7 +8003,7 @@ msgstr "Código de Sucursal Interno de los Clientes (EDI)"
 
 #: CustomerBranches.php:921
 msgid "Enter Branch"
-msgstr "Introduzca Sucursal"
+msgstr "Introducir Sucursal"
 
 #: CustomerInquiry.php:8
 msgid "Customer Inquiry"
@@ -8035,7 +8019,7 @@ msgstr ""
 
 #: CustomerInquiry.php:19
 msgid "Select a Customer to Inquire On"
-msgstr "Seleccione un Cliente a consultar"
+msgstr "Seleccione un cliente a consultar"
 
 #: CustomerInquiry.php:33
 msgid "The config value NumberOfMonthMustBeShown cannot be retrieved"
@@ -8044,12 +8028,12 @@ msgstr "El valor de configuración NumberOfMonthMustBeShown no se puede obtener"
 #: CustomerInquiry.php:132 CustomerReceipt.php:971 SelectOrderItems.php:751
 #: SupplierCredit.php:264 SupplierInquiry.php:120 SupplierInvoice.php:607
 msgid "Terms"
-msgstr "Terminos"
+msgstr "Términos"
 
 #: CustomerInquiry.php:133 CustomerReceipt.php:971 Customers.php:526
 #: Customers.php:854 Customers.php:884
 msgid "Credit Limit"
-msgstr "Limite de Credito"
+msgstr "Límite de crédito"
 
 #: CustomerInquiry.php:133 CustomerReceipt.php:971 Customers.php:552
 #: Customers.php:921 Customers.php:927 includes/MainMenuLinksArray.php:451
@@ -8119,7 +8103,7 @@ msgstr "Crédito "
 
 #: CustomerInquiry.php:253
 msgid "Click to credit the invoice"
-msgstr "Clic para acreditar la Factura"
+msgstr "Clic para acreditar la factura"
 
 #: CustomerInquiry.php:255 CustomerInquiry.php:259
 msgid "HTML "
@@ -8128,7 +8112,7 @@ msgstr "HTML"
 #: CustomerInquiry.php:255 CustomerTransInquiry.php:146
 #, php-format
 msgid "Click to preview the invoice"
-msgstr "Clicc para ver la Factura"
+msgstr "Clic para ver la factura"
 
 #: CustomerInquiry.php:256 CustomerInquiry.php:260
 msgid "PDF "
@@ -8142,7 +8126,7 @@ msgstr "Clic para PDF"
 
 #: CustomerInquiry.php:257
 msgid "Email "
-msgstr "Email "
+msgstr "Correo-e"
 
 #: CustomerInquiry.php:257
 msgid "Click to email the invoice"
@@ -8213,9 +8197,8 @@ msgid "Stock ID"
 msgstr "ID de Existencia"
 
 #: CustomerPurchases.php:69
-#, fuzzy
 msgid "Transaction No."
-msgstr "Transacciones"
+msgstr "Transacción No."
 
 #: CustomerPurchases.php:70 SelectOrderItems.php:749
 #: StockLocTransferReceive.php:334
@@ -8223,9 +8206,8 @@ msgid "From Location"
 msgstr "Desde Ubicación"
 
 #: CustomerPurchases.php:74
-#, fuzzy
 msgid "Amount of Sale"
-msgstr "Importe del Pago"
+msgstr "Importe de venta"
 
 #: CustomerPurchases.php:100
 #, fuzzy
@@ -9743,9 +9725,8 @@ msgid "The department has been modified"
 msgstr "El departamento ha sido modificado"
 
 #: Departments.php:82
-#, fuzzy
 msgid "There is already a department with the specified name."
-msgstr "Ya existe un Departamento con el nombre especificado"
+msgstr "Ya existe un departamento con el nombre especificado"
 
 #: Departments.php:89
 msgid "The new department has been created"
@@ -11676,9 +11657,8 @@ msgid "Current Location"
 msgstr "Ubicación Actual"
 
 #: FixedAssetTransfer.php:165
-#, fuzzy
 msgid "Move To"
-msgstr "Mover A:"
+msgstr "Mover a:"
 
 #: FormDesigner.php:5
 msgid "Form Designer"
@@ -12742,7 +12722,7 @@ msgstr "Presupuesto actualizado exitosamente"
 
 #: GLBudgets.php:40 GLJournal.php:296 Payments.php:1014
 msgid "Select GL Account"
-msgstr "Seleccionar Cuenta Contable"
+msgstr "Seleccionar cuenta contable"
 
 #: GLBudgets.php:52
 msgid "budgets cannot be allocated until the GL accounts are set up"
@@ -12823,14 +12803,12 @@ msgid "Group"
 msgstr "Grupo"
 
 #: GLJournalInquiry.php:4 includes/MainMenuLinksArray.php:332
-#, fuzzy
 msgid "General Ledger Journal Inquiry"
-msgstr "Consultar Cuentas Contables"
+msgstr "Consultar Libro Diario"
 
 #: GLJournalInquiry.php:18
-#, fuzzy
 msgid "Selection Criteria"
-msgstr "Criterio de Búsqueda"
+msgstr "Criterio de búsqueda"
 
 #: GLJournalInquiry.php:26
 #, fuzzy
@@ -12839,7 +12817,7 @@ msgstr "Resumen Diario"
 
 #: GLJournalInquiry.php:43
 msgid "Journals Dated Between"
-msgstr ""
+msgstr "Diarios fechado entre"
 
 #: GLJournalInquiry.php:81
 #, fuzzy
@@ -13436,7 +13414,7 @@ msgstr "Introducir Lotes"
 
 #: GoodsReceived.php:202
 msgid "Total value of goods received"
-msgstr "Valor total de productos Receptados"
+msgstr "Valor total de los bienes recibidos"
 
 #: GoodsReceived.php:241
 msgid ""
@@ -13786,9 +13764,8 @@ msgid ""
 msgstr "No ha seleccionado un gasto a añadir a esta ficha"
 
 #: InternalStockCategoriesByRole.php:72
-#, fuzzy
 msgid "The Stock Category"
-msgstr "La Categoría de Existencia"
+msgstr "La categoría de inventario"
 
 #: InternalStockCategoriesByRole.php:72
 #, fuzzy
@@ -13796,9 +13773,8 @@ msgid "already allowed as internal for this security role"
 msgstr "Crear una Venta de Mostrador para este Cliente"
 
 #: InternalStockCategoriesByRole.php:80
-#, fuzzy
 msgid "Stock Category:"
-msgstr "Categoría de Existencia"
+msgstr "Categoría de inventario:"
 
 #: InternalStockCategoriesByRole.php:80
 #, fuzzy
@@ -13843,7 +13819,7 @@ msgstr "Administrar Categorías de Existencias"
 
 #: InternalStockCategoriesByRole.php:165
 msgid "Internal Stock Categories Allowed to user role"
-msgstr ""
+msgstr "Categorías de inventario internas permitidas al rol de usuario"
 
 #: InternalStockCategoriesByRole.php:184
 #, fuzzy, php-format
@@ -14675,7 +14651,6 @@ msgid "Position"
 msgstr "Posición"
 
 #: Labels.php:546
-#, fuzzy
 msgid "Horizontal"
 msgstr "Horizontal"
 
@@ -14986,7 +14961,7 @@ msgstr "Error al procesar el número de informe de ventas automatizado"
 
 #: MaterialsNotUsed.php:6
 msgid "Raw Materials Not Used Anywhere"
-msgstr ""
+msgstr "Materias primas no usadas en ningún lugar"
 
 #: MaterialsNotUsed.php:29
 msgid "Raw Materials Not Used in any BOM"
@@ -21402,36 +21377,50 @@ msgid ""
 "Supplier discount narrative cannot be empty. No changes will be made to this "
 "record"
 msgstr ""
+"El comentario sobre el descuento de proveedor no puede estar vacío. No se "
+"harán cambios de este registro"
 
 #: PurchData.php:139
 msgid ""
 "Supplier discount percent must be greater than zero but less than 100 "
 "percent. No changes will be made to this record"
 msgstr ""
+"Porcentaje de descuento de proveedor debe ser mayor que cero pero menor que "
+"100 por ciento. No se harán cambios de este registro"
 
 #: PurchData.php:142
 msgid ""
 "Both the supplier discount percent and discount amount are non-zero. Only "
 "one or the other can be used. No changes will be made to this record"
 msgstr ""
+"Tanto el porcentaje de descuento de proveedor y cantidad de descuento no son "
+"cero. Sólo uno o el otro puede ser usado. No se harán cambios de este "
+"registro"
 
 #: PurchData.php:145
 msgid ""
 "The effective to date is prior to the effective from date. No changes will "
 "be made to this record"
 msgstr ""
+"La fecha final efectiva es anterior a la fecha inicial efectiva. No se harán "
+"cambios de este registro"
 
 #: PurchData.php:163
 msgid ""
 "Supplier discount percent must be greater than zero but less than 100 "
 "percent. This discount record cannot be added."
 msgstr ""
+"Porcentaje de descuento de proveedor debe ser mayor que cero pero menor que "
+"100 por ciento. No se puede añadir este registro descuento."
 
 #: PurchData.php:165
 msgid ""
 "Both the supplier discount percent and discount amount are non-zero. Only "
 "one or the other can be used. This discount record cannot be added."
 msgstr ""
+"Tanto el porcentaje de descuento de proveedor y cantidad de descuento no son "
+"cero. Sólo uno o el otro puede ser usado. No se puede añadir este registro "
+"descuento."
 
 #: PurchData.php:167
 #, fuzzy
@@ -21448,6 +21437,10 @@ msgid ""
 "and the discount percent are zero. One of these must be none zero to create "
 "a valid supplier discount record. The supplier discount record was not added."
 msgstr ""
+"Algunos comentarios sobre el descuento de proveedor fueron introducidos pero "
+"tanto el importe del descuento y el porcentaje de descuento son cero. Una de "
+"ellas debe ser no cero para crear un registro de descuento de proveedor "
+"válido. No se agregó el registro de descuento de proveedor."
 
 #: PurchData.php:186
 #, fuzzy
@@ -21685,9 +21678,8 @@ msgid "The SQL to retrieve supplier discounts for this item that failed was"
 msgstr "El SQL que falló al obtener los detalles del proveedor fue"
 
 #: PurchData.php:694
-#, fuzzy
 msgid "Discount Name"
-msgstr "Taza de Descuento"
+msgstr "Nombre del descuento"
 
 #: PurchData.php:696 SellThroughSupport.php:264
 msgid "Percent"
@@ -24272,9 +24264,8 @@ msgid "Order Inquiries"
 msgstr "Consultar Pedidos"
 
 #: SelectCustomer.php:225
-#, fuzzy
 msgid "Show purchases from this customer"
-msgstr "No hay recibos de este cliente."
+msgstr "Mostrar compras de este cliente"
 
 #: SelectCustomer.php:228
 msgid "Modify Outstanding Sales Orders"
@@ -24413,9 +24404,8 @@ msgid "Add New Contact"
 msgstr "Añadir un Nuevo Contacto"
 
 #: SelectCustomer.php:668
-#, fuzzy
 msgid "Hyperlink"
-msgstr "hipervínculo"
+msgstr "Hipervínculo"
 
 #: SelectCustomer.php:672
 msgid "Add New Note"
@@ -24759,9 +24749,8 @@ msgid "Inventory Items"
 msgstr "Artículos de Inventario"
 
 #: SelectProduct.php:93
-#, fuzzy
 msgid "Category:"
-msgstr "Categoría"
+msgstr "Categoría:"
 
 #: SelectProduct.php:94
 msgid "Item Type:"
@@ -24918,7 +24907,7 @@ msgstr "Modificar los Detalles del Artículo"
 
 #: SelectProduct.php:483
 msgid "Maintain Reorder Levels"
-msgstr "Administrar Niveles Mínimos de Existencias"
+msgstr "Administrar niveles de recompra"
 
 #: SelectProduct.php:484 SelectProduct.php:488
 msgid "Maintain Standard Cost"
@@ -25308,12 +25297,16 @@ msgid ""
 "The rebate percent must be greater than zero but less than 100 percent. No "
 "changes will be made to this record"
 msgstr ""
+"El porcentaje de rebaja debe ser mayor que cero pero menor que 100 por "
+"ciento. No se harán cambios de este registro"
 
 #: SellThroughSupport.php:53
 msgid ""
 "Both the rebate percent and rebate amount are non-zero. Only one or the "
 "other can be used."
 msgstr ""
+"Tanto el porcentaje de rebaja y cantidad de rebaja no son cero. Sólo uno o "
+"el otro puede ser utilizado."
 
 #: SellThroughSupport.php:56
 #, fuzzy
@@ -25361,18 +25354,15 @@ msgid "There are no sell through support deals entered for this supplier"
 msgstr "No hay contactos definidos para este proveedor"
 
 #: SellThroughSupport.php:261
-#, fuzzy
 msgid "Item or Category"
-msgstr "Categoría de Artículo"
+msgstr "Artículo o categoría"
 
 #: SellThroughSupport.php:263 SellThroughSupport.php:264
-#, fuzzy
 msgid "Rebate"
-msgstr "Tasa"
+msgstr "Rebaja"
 
 #: SellThroughSupport.php:286 SellThroughSupport.php:384
 #: SellThroughSupport.php:386
-#, fuzzy
 msgid "All Customers"
 msgstr "Todos los clientes"
 
@@ -25399,7 +25389,7 @@ msgstr "Categoría de Existencia"
 
 #: SellThroughSupport.php:405 SellThroughSupport.php:407
 msgid "Specific Item Only"
-msgstr ""
+msgstr "Solo un artículo específico"
 
 #: SellThroughSupport.php:423
 #, fuzzy
@@ -25427,9 +25417,8 @@ msgid "Rebate value per unit"
 msgstr "Despachar Porcentaje"
 
 #: SellThroughSupport.php:461
-#, fuzzy
 msgid "Rebate Percent"
-msgstr "Despachar Porcentaje"
+msgstr "Porcentaje de rebaja"
 
 #: SellThroughSupport.php:465
 #, fuzzy
@@ -31086,23 +31075,23 @@ msgstr "Formato de Fecha"
 
 #: SystemParameters.php:354
 msgid "d/m/Y"
-msgstr ""
+msgstr "d/m/A"
 
 #: SystemParameters.php:355
 msgid "d.m.Y"
-msgstr ""
+msgstr "d.m.A"
 
 #: SystemParameters.php:356
 msgid "m/d/Y"
-msgstr ""
+msgstr "m/d/A"
 
 #: SystemParameters.php:357
 msgid "Y/m/d"
-msgstr ""
+msgstr "A/m/d"
 
 #: SystemParameters.php:358
 msgid "Y-m-d"
-msgstr ""
+msgstr "A-m-d"
 
 #: SystemParameters.php:360
 msgid "The default date format for entry of dates and display."
@@ -31262,7 +31251,7 @@ msgid ""
 "narrative will appear on invoices and packing slips. Useful mainly for "
 "service businesses."
 msgstr ""
-"Indique si permite Observaciones en las filas de los pedidos. La observación "
+"Indique si permite observaciones en las filas de los pedidos. La observación "
 "aparecerá en facturas y hojas de embalaje. Es útil principalmente para "
 "empresas de servicios."
 
@@ -31303,16 +31292,15 @@ msgstr "Tasa de Cambio del Ingreso"
 
 #: SystemParameters.php:463
 msgid "European Central Bank"
-msgstr ""
+msgstr "Banco Central Europeo"
 
 #: SystemParameters.php:464
-#, fuzzy
 msgid "Google"
-msgstr "Ir a la página"
+msgstr "Google"
 
 #: SystemParameters.php:466
 msgid "Specify the source to use for exchange rates"
-msgstr ""
+msgstr "Especifique la fuente para los tipos de cambio"
 
 #: SystemParameters.php:470
 msgid "Format of Packing Slips"
@@ -33139,9 +33127,8 @@ msgid "User Settings"
 msgstr "Configuración del Usuario"
 
 #: UserSettings.php:12
-#, fuzzy
 msgid "Latin Western Languages - Times"
-msgstr "Lenguas Latinas Occidentales"
+msgstr "Idiomas latinos occidentales - Times"
 
 #: UserSettings.php:13
 msgid "Eastern European Russian Japanese Korean Hebrew Arabic Thai"
@@ -33153,7 +33140,7 @@ msgstr "Chino"
 
 #: UserSettings.php:15 WWW_Users.php:27
 msgid "Free Serif"
-msgstr ""
+msgstr "Free Serif"
 
 #: UserSettings.php:28
 msgid "The Maximum Number of Records on Display entered must not be negative"
@@ -35372,19 +35359,16 @@ msgstr ""
 "PÁGINA DE SOPORTE Para Modificar el Còdigo de Cliente en Todas la Tablas"
 
 #: Z_ChangeSupplierCode.php:18
-#, fuzzy
 msgid "Existing Supplier Code"
-msgstr "Código de Deudor Existente"
+msgstr "Código de proveedor Existente"
 
 #: Z_ChangeSupplierCode.php:21
-#, fuzzy
 msgid "New Supplier Code"
-msgstr "Código del Proveedor"
+msgstr "Nuevo código de proveedor"
 
 #: Z_ChangeSupplierCode.php:47
-#, fuzzy
 msgid "The Supplier code"
-msgstr "El proveedor código"
+msgstr "Código de proveedor"
 
 #: Z_ChangeSupplierCode.php:48
 #, fuzzy
@@ -35397,19 +35381,18 @@ msgid "The replacement supplier code"
 msgstr "El código de cliente de reemplazo"
 
 #: Z_ChangeSupplierCode.php:56
-#, fuzzy
 msgid "already exists as a supplier code in the system"
-msgstr "ya existe como código de cliente en el sistema"
+msgstr "ya existe como un código de proveedor en el sistema"
 
 #: Z_ChangeSupplierCode.php:56
-#, fuzzy
 msgid "a unique supplier code must be entered for the new code"
-msgstr "debe introducir un código de cliente único"
+msgstr "un código de proveedor único se debe introducir para el código nuevo"
 
 #: Z_ChangeSupplierCode.php:65
-#, fuzzy
 msgid "Inserting the new supplier record"
-msgstr "Añadiendo el nuevo registro maestro de deudores"
+msgstr ""
+"Añadiendo el nuevo registro maestro de deudoresInsertando el nuevo registro "
+"de proveedor"
 
 #: Z_ChangeSupplierCode.php:83
 #, fuzzy
@@ -35418,17 +35401,15 @@ msgstr "Falló el SQL para agregar el nuevo registro maestro de deudores"
 
 #: Z_ChangeSupplierCode.php:87
 msgid "Changing"
-msgstr ""
+msgstr "Cambiando"
 
 #: Z_ChangeSupplierCode.php:87
-#, fuzzy
 msgid "records"
-msgstr "registro para"
+msgstr "registros"
 
 #: Z_ChangeSupplierCode.php:89
-#, fuzzy
 msgid "The SQL to update"
-msgstr "El SQL que falló al actualizar fue"
+msgstr "El SQL a actualizar"
 
 #: Z_ChangeSupplierCode.php:89
 #, fuzzy
@@ -35446,13 +35427,12 @@ msgid "The SQL to delete the old supplier record failed"
 msgstr "Falló el SQL para eliminar el antiguo registro del deudor"
 
 #: Z_ChangeSupplierCode.php:113
-#, fuzzy
 msgid "The New supplier code"
-msgstr "El proveedor código"
+msgstr "El nuevo código de proveedor"
 
 #: Z_ChangeSupplierCode.php:114
 msgid "must be not empty nor with spaces"
-msgstr ""
+msgstr "no debe estar vacío ni con espacios"
 
 #: Z_CheckAllocationsFrom.php:5
 msgid "Identify Allocation Stuff Ups"
@@ -35971,20 +35951,16 @@ msgstr ""
 "Los registros del diario GL asociados con la factura han sido eliminados"
 
 #: Z_DeleteOldPrices.php:5
-#, fuzzy
 msgid "UTILITY PAGE To Delete All Old Prices"
-msgstr ""
-"PÁGINA DE SOPORTE Para Modificar el Còdigo de Cliente en Todas la Tablas"
+msgstr "PÁGINA DE SERVICIO Para borrar todos los precios viejos"
 
 #: Z_DeleteOldPrices.php:10
-#, fuzzy
 msgid "All old prices have been deleted"
-msgstr "EL precio seleccionado ha sido eliminado"
+msgstr "Todos los precios viejos fueron borrados"
 
 #: Z_DeleteOldPrices.php:18
-#, fuzzy
 msgid "Purge Old Prices"
-msgstr "Purgar primero los usuarios antiguos"
+msgstr "Purgar precios viejos"
 
 #: Z_DeleteOldPrices.php:18
 #, fuzzy
@@ -36463,9 +36439,8 @@ msgstr ""
 "importar a WebERP. "
 
 #: Z_ImportPriceList.php:4
-#, fuzzy
 msgid "Import Sales Price List"
-msgstr "Para Ventas Lista Tipo/Precio"
+msgstr "Importar lista de precios de venta"
 
 #: Z_ImportPriceList.php:32
 #, fuzzy
@@ -36476,6 +36451,8 @@ msgstr "Estudio de una plantilla de descarga para ver el formato del archivo"
 msgid ""
 "The file to import the price list from contains incorrect column headings"
 msgstr ""
+"El archivo desde donde se importa la lista de precios contiene encabezados "
+"de columna incorrectos"
 
 #: Z_ImportPriceList.php:42
 #, fuzzy
@@ -36483,14 +36460,12 @@ msgid "The column headings must be"
 msgstr "El número de la columna debe ser numérico"
 
 #: Z_ImportPriceList.php:60
-#, fuzzy
 msgid "fields required"
-msgstr " campos requeridos, "
+msgstr "campos requeridos"
 
 #: Z_ImportPriceList.php:60
-#, fuzzy
 msgid "fields received"
-msgstr " campos recibidos"
+msgstr "campos recibidos"
 
 #: Z_ImportPriceList.php:79 Z_ImportPriceList.php:87 Z_ImportPriceList.php:96
 #, fuzzy
@@ -36516,23 +36491,31 @@ msgid ""
 "This function loads a new sales price list from a comma separated variable "
 "(csv) file."
 msgstr ""
+"Esta función carga una nueva lista de precios de venta a partir de un "
+"archivo de valores separados por comas (csv)."
 
 #: Z_ImportPriceList.php:152
 msgid ""
 "The file must contain four columns, and the first row should be the "
 "following headers:"
 msgstr ""
+"El archivo debe contener cuatro columnas, y la primera fila debe ser los "
+"encabezados siguientes:"
 
 #: Z_ImportPriceList.php:153
 msgid ""
 "followed by rows containing these four fields for each price to be uploaded."
 msgstr ""
+"seguido de filas que contengan estos cuatro campos para cada precio a ser "
+"cargado."
 
 #: Z_ImportPriceList.php:154
 msgid ""
 "The StockID, SalesType, and CurrencyCode fields must have a corresponding "
 "entry in the stockmaster, salestypes, and currencies tables."
 msgstr ""
+"Los campos StockID, SalesType y CurrencyCode debe tener una entrada "
+"correspondiente en las tablas stockmaster, salestypes y currencies."
 
 #: Z_ImportPriceList.php:157
 #, fuzzy
@@ -36600,11 +36583,11 @@ msgstr "ha sido añadido a la transacción"
 
 #: Z_ItemsWithoutPicture.php:6
 msgid "List of Items without picture"
-msgstr ""
+msgstr "Lista de artículos sin foto"
 
 #: Z_ItemsWithoutPicture.php:21
 msgid "Current Items without picture in webERP"
-msgstr ""
+msgstr "Artículos actuales sin foto en webERP"
 
 #: Z_MakeNewCompany.php:16
 msgid "Make New Company Database Utility"
@@ -36951,7 +36934,7 @@ msgstr ""
 
 #: Z_poEditLangModule.php:133 Z_poEditLangRemaining.php:110
 msgid "Language File for"
-msgstr "Fichero de Idioma de"
+msgstr "Archivo de Idioma para"
 
 #: Z_poEditLangModule.php:134
 msgid "Module"
@@ -37611,20 +37594,19 @@ msgstr ""
 
 #: includes/CountriesArray.php:5
 msgid "Andorra"
-msgstr ""
+msgstr "Andorra"
 
 #: includes/CountriesArray.php:6
 msgid "United Arab Emirates"
-msgstr ""
+msgstr "Emiratos Árabes Unidos"
 
 #: includes/CountriesArray.php:7
-#, fuzzy
 msgid "Afghanistan"
-msgstr "Albanés"
+msgstr "Afganistán"
 
 #: includes/CountriesArray.php:8
 msgid "Antigua and Barbuda"
-msgstr ""
+msgstr "Antigua y Barbuda"
 
 #: includes/CountriesArray.php:9
 #, fuzzy
@@ -37632,46 +37614,40 @@ msgid "Anguilla"
 msgstr "Anual"
 
 #: includes/CountriesArray.php:10
-#, fuzzy
 msgid "Albania"
-msgstr "Albanés"
+msgstr "Albania"
 
 #: includes/CountriesArray.php:11
-#, fuzzy
 msgid "Armenia"
-msgstr "Zona"
+msgstr "Armenia"
 
 #: includes/CountriesArray.php:12
 msgid "Antilles, Netherlands"
-msgstr ""
+msgstr "Antillas Holandesas"
 
 #: includes/CountriesArray.php:13
 msgid "Angola"
-msgstr ""
+msgstr "Angola"
 
 #: includes/CountriesArray.php:14
-#, fuzzy
 msgid "Argentina"
-msgstr "Zona"
+msgstr "Argentina"
 
 #: includes/CountriesArray.php:15
 msgid "American Samoa"
-msgstr ""
+msgstr "Samoa Americana"
 
 #: includes/CountriesArray.php:16
-#, fuzzy
 msgid "Austria"
-msgstr "Autorizar"
+msgstr "Austria"
 
 #: includes/CountriesArray.php:17
-#, fuzzy
 msgid "Australia"
-msgstr "Italiano"
+msgstr "Australia"
 
 #: includes/CountriesArray.php:18
-#, fuzzy
 msgid "Aruba"
-msgstr "Zona"
+msgstr "Aruba"
 
 #: includes/CountriesArray.php:19
 #, fuzzy
@@ -37680,64 +37656,59 @@ msgstr "Albanés"
 
 #: includes/CountriesArray.php:20
 msgid "Bosnia and Herzegovina"
-msgstr ""
+msgstr "Bosnia y Herzegovina"
 
 #: includes/CountriesArray.php:21
 msgid "Barbados"
-msgstr ""
+msgstr "Barbados"
 
 #: includes/CountriesArray.php:22
 msgid "Bangladesh"
-msgstr ""
+msgstr "Bangladesh"
 
 #: includes/CountriesArray.php:23
-#, fuzzy
 msgid "Belgium"
-msgstr "Inicio:"
+msgstr "Bélgica"
 
 #: includes/CountriesArray.php:24
 msgid "Burkina Faso"
-msgstr ""
+msgstr "Burkina Faso"
 
 #: includes/CountriesArray.php:25
-#, fuzzy
 msgid "Bulgaria"
-msgstr "Húngaro"
+msgstr "Bulgaria"
 
 #: includes/CountriesArray.php:26
-#, fuzzy
 msgid "Bahrain"
-msgstr "Sucursal"
+msgstr "Bahrain"
 
 #: includes/CountriesArray.php:27
 msgid "Burundi"
-msgstr ""
+msgstr "Burundi"
 
 #: includes/CountriesArray.php:28
-#, fuzzy
 msgid "Benin"
-msgstr "Inicio:"
+msgstr "Benin"
 
 #: includes/CountriesArray.php:29
-#, fuzzy
 msgid "Bermuda"
-msgstr "Alemán"
+msgstr "Bermuda"
 
 #: includes/CountriesArray.php:30
 msgid "Brunei Darussalam"
-msgstr ""
+msgstr "Brunéi"
 
 #: includes/CountriesArray.php:31
 msgid "Bolivia"
-msgstr ""
+msgstr "Bolivia"
 
 #: includes/CountriesArray.php:32
 msgid "Brazil"
-msgstr ""
+msgstr "Brasil"
 
 #: includes/CountriesArray.php:33
 msgid "Bahamas, The"
-msgstr ""
+msgstr "Bahamas"
 
 #: includes/CountriesArray.php:34
 #, fuzzy
@@ -37746,70 +37717,63 @@ msgstr "Banco"
 
 #: includes/CountriesArray.php:35
 msgid "Botswana"
-msgstr ""
+msgstr "Botswana"
 
 #: includes/CountriesArray.php:36
 msgid "Belarus"
-msgstr ""
+msgstr "Bielorrusia"
 
 #: includes/CountriesArray.php:37
-#, fuzzy
 msgid "Belize"
-msgstr "Tamaño"
+msgstr "Belice"
 
 #: includes/CountriesArray.php:38
-#, fuzzy
 msgid "Canada"
-msgstr "y"
+msgstr "Canadá"
 
 #: includes/CountriesArray.php:39 includes/CountriesArray.php:41
-#, fuzzy
 msgid "Congo"
-msgstr "larga"
+msgstr "Congo"
 
 #: includes/CountriesArray.php:40
 msgid "Central African Republic"
-msgstr ""
+msgstr "República Centroafricana"
 
 #: includes/CountriesArray.php:42
 msgid "Switzerland"
-msgstr ""
+msgstr "Suiza"
 
 #: includes/CountriesArray.php:43
-#, fuzzy
 msgid "Cote D Ivoire"
-msgstr "Fecha en Factura"
+msgstr "Costa de Marfil"
 
 #: includes/CountriesArray.php:44
 msgid "Cook Islands"
-msgstr ""
+msgstr "Islas Cook"
 
 #: includes/CountriesArray.php:45
-#, fuzzy
 msgid "Chile"
-msgstr "Chino"
+msgstr "Chile"
 
 #: includes/CountriesArray.php:46
 msgid "Cameroon"
-msgstr ""
+msgstr "Camerún"
 
 #: includes/CountriesArray.php:47
-#, fuzzy
 msgid "China"
-msgstr "Chino"
+msgstr "China"
 
 #: includes/CountriesArray.php:48
 msgid "Colombia"
-msgstr ""
+msgstr "Colombia"
 
 #: includes/CountriesArray.php:49
-#, fuzzy
 msgid "Costa Rica"
-msgstr "Costo Requerido"
+msgstr "Costa Rica"
 
 #: includes/CountriesArray.php:50
 msgid "Montenegro"
-msgstr ""
+msgstr "Montenegro"
 
 #: includes/CountriesArray.php:51
 #, fuzzy
@@ -37818,90 +37782,79 @@ msgstr "Italiano"
 
 #: includes/CountriesArray.php:52
 msgid "Cuba"
-msgstr ""
+msgstr "Cuba"
 
 #: includes/CountriesArray.php:53
-#, fuzzy
 msgid "Cape Verde"
-msgstr "Crear Pedido"
+msgstr "Cabo Verde"
 
 #: includes/CountriesArray.php:54
-#, fuzzy
 msgid "Cyprus"
-msgstr "Cliente"
+msgstr "Chipre"
 
 #: includes/CountriesArray.php:55
 msgid "Czech Republic"
-msgstr ""
+msgstr "República Checa"
 
 #: includes/CountriesArray.php:56
-#, fuzzy
 msgid "Germany"
-msgstr "Alemán"
+msgstr "Alemania"
 
 #: includes/CountriesArray.php:57
-#, fuzzy
 msgid "Djibouti"
-msgstr "Descuento"
+msgstr "Djibouti"
 
 #: includes/CountriesArray.php:58
-#, fuzzy
 msgid "Denmark"
-msgstr "Comentarios"
+msgstr "Dinamarca"
 
 #: includes/CountriesArray.php:59
-#, fuzzy
 msgid "Dominica"
-msgstr "Denominador"
+msgstr "Dominica"
 
 #: includes/CountriesArray.php:60
 msgid "Dominican Republic"
-msgstr ""
+msgstr "República Dominicana"
 
 #: includes/CountriesArray.php:61
 msgid "Algeria"
-msgstr ""
+msgstr "Algeria"
 
 #: includes/CountriesArray.php:62
 msgid "Ecuador"
-msgstr ""
+msgstr "Ecuador"
 
 #: includes/CountriesArray.php:63
-#, fuzzy
 msgid "Estonia"
 msgstr "Estonia"
 
 #: includes/CountriesArray.php:64
 msgid "Egypt"
-msgstr ""
+msgstr "Egipto"
 
 #: includes/CountriesArray.php:65
-#, fuzzy
 msgid "Eritrea"
-msgstr "Criterio"
+msgstr "Eritrea"
 
 #: includes/CountriesArray.php:66
-#, fuzzy
 msgid "Spain"
-msgstr "Principal"
+msgstr "España"
 
 #: includes/CountriesArray.php:67
-#, fuzzy
 msgid "Ethiopia"
-msgstr "Estonia"
+msgstr "Etiopía"
 
 #: includes/CountriesArray.php:68
 msgid "Euskadi"
-msgstr ""
+msgstr "País Vasco"
 
 #: includes/CountriesArray.php:69
-#, fuzzy
 msgid "Finland"
-msgstr "Campo"
+msgstr "Finlandia"
 
 #: includes/CountriesArray.php:70
 msgid "Fiji"
-msgstr ""
+msgstr "Fiji"
 
 #: includes/CountriesArray.php:71
 msgid "Falkland Islands"
@@ -37914,25 +37867,23 @@ msgstr "Indonesio"
 
 #: includes/CountriesArray.php:73
 msgid "Faroe Islands"
-msgstr ""
+msgstr "Islas Feroe"
 
 #: includes/CountriesArray.php:74
-#, fuzzy
 msgid "France"
-msgstr "Variación"
+msgstr "Francia"
 
 #: includes/CountriesArray.php:75
 msgid "Gabon"
-msgstr ""
+msgstr "Gabón"
 
 #: includes/CountriesArray.php:76
 msgid "Grenada"
-msgstr ""
+msgstr "Granada"
 
 #: includes/CountriesArray.php:77
-#, fuzzy
 msgid "Georgia"
-msgstr "Alemán"
+msgstr "Georgia"
 
 #: includes/CountriesArray.php:78
 #, fuzzy
@@ -37946,157 +37897,143 @@ msgstr "Francés"
 
 #: includes/CountriesArray.php:80
 msgid "Guernsey and Alderney"
-msgstr ""
+msgstr "Guernsey y Alderney"
 
 #: includes/CountriesArray.php:81
 msgid "Ghana"
-msgstr ""
+msgstr "Ghana"
 
 #: includes/CountriesArray.php:82
 msgid "Gibraltar"
-msgstr ""
+msgstr "Gibraltar"
 
 #: includes/CountriesArray.php:83
 msgid "Greenland"
-msgstr ""
+msgstr "Groenlandia"
 
 #: includes/CountriesArray.php:84
 msgid "Gambia, the"
-msgstr ""
+msgstr "Gambia"
 
 #: includes/CountriesArray.php:85
-#, fuzzy
 msgid "Guinea"
-msgstr "General"
+msgstr "Guinea"
 
 #: includes/CountriesArray.php:86
 msgid "Guadeloupe"
-msgstr ""
+msgstr "Guadalupe"
 
 #: includes/CountriesArray.php:87
 msgid "Guinea, Equatorial"
-msgstr ""
+msgstr "Guinea Ecuatorial"
 
 #: includes/CountriesArray.php:88
 msgid "Equatorial Guinea"
-msgstr ""
+msgstr "Guinea Ecuatorial"
 
 #: includes/CountriesArray.php:89
-#, fuzzy
 msgid "Greece"
-msgstr "Griego"
+msgstr "Grecia"
 
 #: includes/CountriesArray.php:90
 msgid "Guatemala"
-msgstr ""
+msgstr "Guatemala"
 
 #: includes/CountriesArray.php:91
 msgid "Guam"
-msgstr ""
+msgstr "Guam"
 
 #: includes/CountriesArray.php:92
 msgid "Guinea-Bissau"
-msgstr ""
+msgstr "Guinea-Bisáu"
 
 #: includes/CountriesArray.php:93
 msgid "Guyana"
-msgstr ""
+msgstr "Guyana"
 
 #: includes/CountriesArray.php:94
 msgid "Hong Kong, (China)"
 msgstr ""
 
 #: includes/CountriesArray.php:95
-#, fuzzy
 msgid "Honduras"
-msgstr "Hora"
+msgstr "Honduras"
 
 #: includes/CountriesArray.php:96
-#, fuzzy
 msgid "Croatia"
-msgstr "Criterio"
+msgstr "Croacia"
 
 #: includes/CountriesArray.php:97
-#, fuzzy
 msgid "Haiti"
-msgstr "Hindi"
+msgstr "Haití"
 
 #: includes/CountriesArray.php:98
-#, fuzzy
 msgid "Hungary"
-msgstr "Húngaro"
+msgstr "Hungría"
 
 #: includes/CountriesArray.php:99
-#, fuzzy
 msgid "Indonesia"
-msgstr "Indonesio"
+msgstr "Indonesia"
 
 #: includes/CountriesArray.php:100
-#, fuzzy
 msgid "Ireland"
-msgstr "Demanda"
+msgstr "Irlanda"
 
 #: includes/CountriesArray.php:101
 msgid "Israel"
-msgstr ""
+msgstr "Israel"
 
 #: includes/CountriesArray.php:102
-#, fuzzy
 msgid "India"
-msgstr "Indonesio"
+msgstr "India"
 
 #: includes/CountriesArray.php:103
 msgid "Iraq"
-msgstr ""
+msgstr "Irak"
 
 #: includes/CountriesArray.php:104
 msgid "Iran, Islamic Republic of"
-msgstr ""
+msgstr "Irán"
 
 #: includes/CountriesArray.php:105
-#, fuzzy
 msgid "Iceland"
-msgstr "Demanda"
+msgstr "Islandia"
 
 #: includes/CountriesArray.php:106
-#, fuzzy
 msgid "Italy"
-msgstr "Italiano"
+msgstr "Italia"
 
 #: includes/CountriesArray.php:107
-#, fuzzy
 msgid "Jersey"
-msgstr "Abonar"
+msgstr "Jersey"
 
 #: includes/CountriesArray.php:108
 msgid "Jamaica"
-msgstr ""
+msgstr "Jamaica"
 
 #: includes/CountriesArray.php:109
-#, fuzzy
 msgid "Jordan"
-msgstr "Diario"
+msgstr "Jordania"
 
 #: includes/CountriesArray.php:110
-#, fuzzy
 msgid "Japan"
-msgstr "Japones"
+msgstr "Japón"
 
 #: includes/CountriesArray.php:111
 msgid "Kenya"
-msgstr ""
+msgstr "Kenia"
 
 #: includes/CountriesArray.php:112
 msgid "Kyrgyzstan"
-msgstr ""
+msgstr "Kirguistán"
 
 #: includes/CountriesArray.php:113
 msgid "Cambodia"
-msgstr ""
+msgstr "Camboya"
 
 #: includes/CountriesArray.php:114
 msgid "Kiribati"
-msgstr ""
+msgstr "Kiribati"
 
 #: includes/CountriesArray.php:115
 #, fuzzy
@@ -38105,48 +38042,47 @@ msgstr "Clientes"
 
 #: includes/CountriesArray.php:116
 msgid "Saint Kitts and Nevis"
-msgstr ""
+msgstr "Saint Kitts y Nevis"
 
 #: includes/CountriesArray.php:117
 msgid "Korea, (South) Rep. of"
-msgstr ""
+msgstr "Corea del Sur"
 
 #: includes/CountriesArray.php:118
-#, fuzzy
 msgid "Kuwait"
-msgstr "Kit"
+msgstr "Kuwait"
 
 #: includes/CountriesArray.php:119
 msgid "Kosovo"
-msgstr ""
+msgstr "Kosovo"
 
 #: includes/CountriesArray.php:120
 msgid "Cayman Islands"
-msgstr ""
+msgstr "Islas Caimán"
 
 #: includes/CountriesArray.php:121
 msgid "Kazakhstan"
-msgstr ""
+msgstr "Kazajistán"
 
 #: includes/CountriesArray.php:122
 msgid "Lao People s Dem. Rep."
-msgstr ""
+msgstr "Laos"
 
 #: includes/CountriesArray.php:123
 msgid "Lebanon"
-msgstr ""
+msgstr "Líbano"
 
 #: includes/CountriesArray.php:124
 msgid "Saint Lucia"
-msgstr ""
+msgstr "Santa Lucía"
 
 #: includes/CountriesArray.php:125
 msgid "Liechtenstein"
-msgstr ""
+msgstr "Liechtenstein"
 
 #: includes/CountriesArray.php:126
 msgid "Sri Lanka (ex-Ceilan)"
-msgstr ""
+msgstr "Sri Lanka"
 
 #: includes/CountriesArray.php:127
 #, fuzzy
@@ -38155,47 +38091,43 @@ msgstr "Longitud"
 
 #: includes/CountriesArray.php:128
 msgid "Lithuania"
-msgstr ""
+msgstr "Lituania"
 
 #: includes/CountriesArray.php:129
-#, fuzzy
 msgid "Luxembourg"
-msgstr "Mano de Obra"
+msgstr "Luxemburgo"
 
 #: includes/CountriesArray.php:130
-#, fuzzy
 msgid "Latvia"
-msgstr "Latvio"
+msgstr "Letonia"
 
 #: includes/CountriesArray.php:131
 msgid "Libyan Arab Jamahiriya"
-msgstr ""
+msgstr "Libia"
 
 #: includes/CountriesArray.php:132
 msgid "Morocco"
-msgstr ""
+msgstr "Maruecos"
 
 #: includes/CountriesArray.php:133
-#, fuzzy
 msgid "Monaco"
-msgstr "Lunes"
+msgstr "Mónaco"
 
 #: includes/CountriesArray.php:134
 msgid "Moldova, Republic of"
-msgstr ""
+msgstr "Moldavia"
 
 #: includes/CountriesArray.php:135
 msgid "Madagascar"
-msgstr ""
+msgstr "Madagascar"
 
 #: includes/CountriesArray.php:136
 msgid "Macedonia, TFYR"
 msgstr ""
 
 #: includes/CountriesArray.php:137
-#, fuzzy
 msgid "Mali"
-msgstr "Principal"
+msgstr "Mali"
 
 #: includes/CountriesArray.php:138
 msgid "Myanmar (ex-Burma)"
@@ -38203,7 +38135,7 @@ msgstr ""
 
 #: includes/CountriesArray.php:139
 msgid "Mongolia"
-msgstr ""
+msgstr "Mongolia"
 
 #: includes/CountriesArray.php:140
 msgid "Macao, (China)"
@@ -38211,24 +38143,23 @@ msgstr ""
 
 #: includes/CountriesArray.php:141
 msgid "Northern Mariana Islands"
-msgstr ""
+msgstr "Islas Marianas del Norte"
 
 #: includes/CountriesArray.php:142
 msgid "Martinique"
-msgstr ""
+msgstr "Martinica"
 
 #: includes/CountriesArray.php:143
 msgid "Mauritania"
-msgstr ""
+msgstr "Mauritania"
 
 #: includes/CountriesArray.php:144
-#, fuzzy
 msgid "Malta"
-msgstr "Datos"
+msgstr "Malta"
 
 #: includes/CountriesArray.php:145
 msgid "Mauritius"
-msgstr ""
+msgstr "Mauricio"
 
 #: includes/CountriesArray.php:146
 #, fuzzy
@@ -38236,13 +38167,12 @@ msgid "Maldives"
 msgstr "Ventas"
 
 #: includes/CountriesArray.php:147
-#, fuzzy
 msgid "Malawi"
-msgstr "Principal"
+msgstr "Malawi"
 
 #: includes/CountriesArray.php:148
 msgid "Mexico"
-msgstr ""
+msgstr "México"
 
 #: includes/CountriesArray.php:149
 #, fuzzy
@@ -38251,11 +38181,11 @@ msgstr "Análisos de Ventas"
 
 #: includes/CountriesArray.php:150
 msgid "Mozambique"
-msgstr ""
+msgstr "Mozambique"
 
 #: includes/CountriesArray.php:151
 msgid "Namibia"
-msgstr ""
+msgstr "Namibia"
 
 #: includes/CountriesArray.php:152
 #, fuzzy
@@ -38268,69 +38198,60 @@ msgid "Niger"
 msgstr "Asignador"
 
 #: includes/CountriesArray.php:154
-#, fuzzy
 msgid "Nigeria"
-msgstr "Criterio"
+msgstr "Nigeria"
 
 #: includes/CountriesArray.php:155
 msgid "Nicaragua"
-msgstr ""
+msgstr "Nicaragua"
 
 #: includes/CountriesArray.php:156
 msgid "Netherlands"
-msgstr ""
+msgstr "Holanda"
 
 #: includes/CountriesArray.php:157
-#, fuzzy
 msgid "Norway"
-msgstr "Normal"
+msgstr "Noruega"
 
 #: includes/CountriesArray.php:158
-#, fuzzy
 msgid "Nepal"
-msgstr "Legal"
+msgstr "Nepal"
 
 #: includes/CountriesArray.php:159
-#, fuzzy
 msgid "New Zealand"
-msgstr "Nueva Depreciación"
+msgstr "Nueva Zelanda"
 
 #: includes/CountriesArray.php:160
-#, fuzzy
 msgid "Oman"
-msgstr "En Demanda"
+msgstr "Omán"
 
 #: includes/CountriesArray.php:161
-#, fuzzy
 msgid "Panama"
-msgstr "Fantasma"
+msgstr "Panamá"
 
 #: includes/CountriesArray.php:162
-#, fuzzy
 msgid "Peru"
-msgstr "Período"
+msgstr "Perú"
 
 #: includes/CountriesArray.php:163
 msgid "French Polynesia"
-msgstr ""
+msgstr "Polinesia Francesa"
 
 #: includes/CountriesArray.php:164
 msgid "Papua New Guinea"
-msgstr ""
+msgstr "Papúa Nueva Guinea"
 
 #: includes/CountriesArray.php:165
-#, fuzzy
 msgid "Philippines"
-msgstr "Transportistas"
+msgstr "Filipinas"
 
 #: includes/CountriesArray.php:166
 msgid "Pakistan"
-msgstr ""
+msgstr "Pakistán"
 
 #: includes/CountriesArray.php:167
-#, fuzzy
 msgid "Poland"
-msgstr "Planificado"
+msgstr "Polonia"
 
 #: includes/CountriesArray.php:168
 #, fuzzy
@@ -38338,244 +38259,216 @@ msgid "Palestinian Territory"
 msgstr "Territorio"
 
 #: includes/CountriesArray.php:169
-#, fuzzy
 msgid "Portugal"
-msgstr "Portugues"
+msgstr "Portugal"
 
 #: includes/CountriesArray.php:170
 msgid "Paraguay"
-msgstr ""
+msgstr "Paraguay"
 
 #: includes/CountriesArray.php:171
-#, fuzzy
 msgid "Qatar"
-msgstr "Cant"
+msgstr "Qatar"
 
 #: includes/CountriesArray.php:172
 msgid "Quebec"
-msgstr ""
+msgstr "Quebec"
 
 #: includes/CountriesArray.php:173
-#, fuzzy
 msgid "Reunion"
-msgstr "Region"
+msgstr "Reunión"
 
 #: includes/CountriesArray.php:174
-#, fuzzy
 msgid "Romania"
-msgstr "Rumano"
+msgstr "Rumanía"
 
 #: includes/CountriesArray.php:175
-#, fuzzy
 msgid "Serbia"
-msgstr "No. de Serie"
+msgstr "Serbia"
 
 #: includes/CountriesArray.php:176
 msgid "Russian Federation"
-msgstr ""
+msgstr "Federación Rusa"
 
 #: includes/CountriesArray.php:177
-#, fuzzy
 msgid "Rwanda"
-msgstr "y"
+msgstr "Ruanda"
 
 #: includes/CountriesArray.php:178
-#, fuzzy
 msgid "Saudi Arabia"
-msgstr "Auditoría"
+msgstr "Arabia Saudita"
 
 #: includes/CountriesArray.php:179
 msgid "Solomon Islands"
-msgstr ""
+msgstr "Islas Salomón"
 
 #: includes/CountriesArray.php:180
 msgid "Seychelles"
-msgstr ""
+msgstr "Seychelles"
 
 #: includes/CountriesArray.php:181
-#, fuzzy
 msgid "Sudan"
-msgstr "Domingo"
+msgstr "Sudán"
 
 #: includes/CountriesArray.php:182
-#, fuzzy
 msgid "Sweden"
-msgstr "Entre"
+msgstr "Suecia"
 
 #: includes/CountriesArray.php:183
-#, fuzzy
 msgid "Singapore"
-msgstr "Firma"
+msgstr "Singapur"
 
 #: includes/CountriesArray.php:184
 msgid "Slovenia"
-msgstr ""
+msgstr "Eslovenia"
 
 #: includes/CountriesArray.php:185
 msgid "Slovakia"
-msgstr ""
+msgstr "Eslovakia"
 
 #: includes/CountriesArray.php:186
-#, fuzzy
 msgid "San Marino"
-msgstr "Conciliación Bancaria"
+msgstr "San Marino"
 
 #: includes/CountriesArray.php:187
-#, fuzzy
 msgid "Senegal"
-msgstr "General"
+msgstr "Senegal"
 
 #: includes/CountriesArray.php:188
-#, fuzzy
 msgid "Somalia"
-msgstr "Rumano"
+msgstr "Somalia"
 
 #: includes/CountriesArray.php:189
-#, fuzzy
 msgid "Suriname"
-msgstr "nombre"
+msgstr "Surinam"
 
 #: includes/CountriesArray.php:190
-#, fuzzy
 msgid "Sao Tome and Principe"
-msgstr "Corregir el precio"
+msgstr "Santo Tomé y Príncipe"
 
 #: includes/CountriesArray.php:191
 msgid "El Salvador"
-msgstr ""
+msgstr "El Salvador"
 
 #: includes/CountriesArray.php:192
 msgid "Syrian Arab Republic"
-msgstr ""
+msgstr "Siria"
 
 #: includes/CountriesArray.php:193
 msgid "Swaziland"
-msgstr ""
+msgstr "Suazilandia"
 
 #: includes/CountriesArray.php:194
-#, fuzzy
 msgid "Chad"
-msgstr "Cargado"
+msgstr "Chad"
 
 #: includes/CountriesArray.php:195
-#, fuzzy
 msgid "Togo"
-msgstr "Para"
+msgstr "Togo"
 
 #: includes/CountriesArray.php:196
 msgid "Thailand"
-msgstr ""
+msgstr "Tailandia"
 
 #: includes/CountriesArray.php:197
 msgid "Tajikistan"
-msgstr ""
+msgstr "Tayikistán"
 
 #: includes/CountriesArray.php:198
-#, fuzzy
 msgid "Turkmenistan"
-msgstr "Turco"
+msgstr "Turkmenistán"
 
 #: includes/CountriesArray.php:199
 msgid "Tunisia"
-msgstr ""
+msgstr "Túnez"
 
 #: includes/CountriesArray.php:200
-#, fuzzy
 msgid "Tonga"
-msgstr "larga"
+msgstr "Tonga"
 
 #: includes/CountriesArray.php:201
 msgid "East Timor (Timor-Leste)"
 msgstr ""
 
 #: includes/CountriesArray.php:202
-#, fuzzy
 msgid "Turkey"
-msgstr "Martes"
+msgstr "Turquía"
 
 #: includes/CountriesArray.php:203
 msgid "Trinidad and Tobago"
-msgstr ""
+msgstr "Trinidad y Tobago"
 
 #: includes/CountriesArray.php:204
-#, fuzzy
 msgid "Taiwan"
-msgstr "Italiano"
+msgstr "Taiwán"
 
 #: includes/CountriesArray.php:205
 msgid "Tanzania, United Rep. of"
-msgstr ""
+msgstr "Tanzania"
 
 #: includes/CountriesArray.php:206
-#, fuzzy
 msgid "Ukraine"
-msgstr "prevalece"
+msgstr "Ucrania"
 
 #: includes/CountriesArray.php:207
-#, fuzzy
 msgid "Uganda"
-msgstr "y"
+msgstr "Uganda"
 
 #: includes/CountriesArray.php:208
 msgid "United Kingdom"
-msgstr ""
+msgstr "Reino Unido"
 
 #: includes/CountriesArray.php:209
-#, fuzzy
 msgid "United States"
-msgstr "Unidades Vendidas"
+msgstr "Estados Unidos"
 
 #: includes/CountriesArray.php:210
 msgid "Uruguay"
-msgstr ""
+msgstr "Uruguay"
 
 #: includes/CountriesArray.php:211
 msgid "Uzbekistan"
-msgstr ""
+msgstr "Uzbekistán"
 
 #: includes/CountriesArray.php:212
 msgid "St. Vincent and the Grenadines"
-msgstr ""
+msgstr "San Vicente y las Granadinas"
 
 #: includes/CountriesArray.php:213
 msgid "Venezuela"
-msgstr ""
+msgstr "Venezuela"
 
 #: includes/CountriesArray.php:214
 msgid "British Virgin Islands"
-msgstr ""
+msgstr "Islas Vírgenes Británicas"
 
 #: includes/CountriesArray.php:215
 msgid "Virgin Islands, U.S."
 msgstr ""
 
 #: includes/CountriesArray.php:216
-#, fuzzy
 msgid "Viet Nam"
-msgstr "Nombre del Campo"
+msgstr "Vietnam"
 
 #: includes/CountriesArray.php:217
-#, fuzzy
 msgid "Vanuatu"
-msgstr "Fabricado"
+msgstr "Vanuatu"
 
 #: includes/CountriesArray.php:218
-#, fuzzy
 msgid "Samoa"
-msgstr "Vendedor"
+msgstr "Samoa"
 
 #: includes/CountriesArray.php:219
-#, fuzzy
 msgid "Yemen"
-msgstr "Tema"
+msgstr "Yemén"
 
 #: includes/CountriesArray.php:220
 msgid "Zambia"
-msgstr ""
+msgstr "Zambia"
 
 #: includes/CountriesArray.php:221
 msgid "Zimbabwe"
-msgstr ""
+msgstr "Zimbabue"
 
 #: includes/DefineCartClass.php:173
 msgid "The order line for"
@@ -39327,9 +39220,8 @@ msgid "Add Customer"
 msgstr "Registrar un Nuevo Cliente"
 
 #: includes/MainMenuLinksArray.php:127
-#, fuzzy
 msgid "Select Customer"
-msgstr "Seleccionar un Cliente"
+msgstr "Seleccionar un cliente"
 
 #: includes/MainMenuLinksArray.php:136
 msgid "Aged Supplier Report"
@@ -39511,7 +39403,7 @@ msgstr "Listado de Componentes Requeridos"
 
 #: includes/MainMenuLinksArray.php:280
 msgid "List Materials Not Used Anywhere"
-msgstr ""
+msgstr "Lista de materiales no usados en ningún lugar"
 
 #: includes/MainMenuLinksArray.php:281
 msgid "Indented Where Used Listing"
@@ -39829,11 +39721,11 @@ msgstr "Mostrar Transacciones Generales que no Cuadran"
 
 #: includes/MainMenuLinksArray.php:519
 msgid "List of items without picture"
-msgstr ""
+msgstr "Lista de artículos sin foto"
 
 #: includes/MainMenuLinksArray.php:526
 msgid "Maintain Language Files"
-msgstr "Idiomas"
+msgstr "Mantener archivos de idioma"
 
 #: includes/MainMenuLinksArray.php:527
 msgid "Make New Company"
@@ -39864,14 +39756,12 @@ msgid "Re-Post all GL transactions from a specified period"
 msgstr "Volver a registrar transacciones de un período específico"
 
 #: includes/MainMenuLinksArray.php:534
-#, fuzzy
 msgid "Purge all old prices"
-msgstr "Purgar primero los usuarios antiguos"
+msgstr "Purgar todos los precios antiguos"
 
 #: includes/MainMenuLinksArray.php:535
-#, fuzzy
 msgid "Import Price List from CSV file"
-msgstr "Importación de Activos Fijos del archivo. csv"
+msgstr "Importar lista de precios de un archivo CSV"
 
 #: includes/MiscFunctions.php:29 includes/MiscFunctions.php:36
 msgid "Message Report"
@@ -39887,7 +39777,7 @@ msgstr "INFORMACIÓN"
 
 #: includes/MiscFunctions.php:50
 msgid "Message"
-msgstr " "
+msgstr "Mensaje"
 
 #: includes/MiscFunctions.php:251 includes/MiscFunctions.php:253
 #: includes/MiscFunctions.php:255
@@ -39989,11 +39879,8 @@ msgstr ""
 "administrador del sistema"
 
 #: includes/ConnectDB_mysqli.inc:30 includes/ConnectDB_mysql.inc:25
-#, fuzzy
 msgid "to try logging in again"
-msgstr ""
-"para tratar de iniciar sesión en \n"
-"otra vez"
+msgstr "para tratar de iniciar sesión otra vez"
 
 #: includes/ConnectDB_mysqli.inc:35 includes/ConnectDB_mysql.inc:22
 msgid ""
@@ -40669,9 +40556,8 @@ msgid "Sell Through Support Claims Between"
 msgstr "Hasta"
 
 #: includes/PDFSellThroughSupportClaimPageHeader.inc:23
-#, fuzzy
 msgid "Transaction"
-msgstr "Transacciones"
+msgstr "Transacción"
 
 #: includes/PDFSellThroughSupportClaimPageHeader.inc:28
 #, fuzzy
@@ -40739,19 +40625,16 @@ msgid "Supplier Balances For Suppliers between"
 msgstr "Saldos de Proveedor de los Proveedores entre"
 
 #: includes/PDFSuppTransListingPageHeader.inc:15
-#, fuzzy
 msgid "Supplier Invoices"
-msgstr "Factura de Proveedor"
+msgstr "Facturas del proveedor"
 
 #: includes/PDFSuppTransListingPageHeader.inc:18
-#, fuzzy
 msgid "Supplier Credit Notes"
-msgstr "Nota de Crédito (Abono) a Proveedor"
+msgstr "Notas de crédito del proveedor"
 
 #: includes/PDFSuppTransListingPageHeader.inc:21
-#, fuzzy
 msgid "Supplier Payments"
-msgstr "Pago del Proveedor"
+msgstr "Pagos del proveedor"
 
 #: includes/PDFTagProfitAndLossPageHeader.inc:22
 msgid "Transactions for tag"
