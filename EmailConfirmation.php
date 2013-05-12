@@ -266,10 +266,22 @@ if($_GET['POLine'] == 1){
 $MailMessage .= '</table>
 				</body>
 				</html>';
-// echo $MailMessage . "=mailMessage<br />";
-iF(mail( $MailTo, $MailSubject, $MailMessage, $headers )){
+	// echo $MailMessage . "=mailMessage<br />";
+	if($_SESSION['SmtpSetting']==0){
+		$result = mail( $MailTo, $MailSubject, $MailMessage, $headers );
+	
+	}else{
+		include('includes/htmlMimeMail.php');
+		$mail = new htmlMimeMail();
+		$mail->setSubject($mailSubject);
+		$mail->setHTML($MailMessage);
+		$result = SendmailBySmtp($mail,array($MailTo));
+	}
+					
+if($result){
 	echo ' ' ._('The following E-Mail was sent to') . ' ' . $MailTo . ' :';
 }
+
 
 echo '<html>
 	<head>
