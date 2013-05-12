@@ -13,15 +13,18 @@ and an array of the receipients and the company database to use*/
 /*The Sales report to send */
 $ReportID = 4;
 
-/*The company database to use */
-$DatabaseName = 'weberpdemo';
+
+
 
 
 /* ----------------------------------------------------------------------------------------------*/
 
 $AllowAnyone = true;
 include('includes/session.inc');
+/*The company database to use */
+$DatabaseName = $_SESSION['DatabaseName'];
 /*The people to receive the emailed report, This mail list now can be maintained in Mailing List Maintenance of Set Up */
+
 $Recipients = GetMailList('SalesAnalysisReportRecipients');
 include('includes/ConstructSQLForUserDefinedSalesReport.inc');
 include('includes/CSVSalesAnalysis.inc');
@@ -38,6 +41,6 @@ if($_SESSION['SmtpSetting']==0){
 	$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
 	$result = $mail->send($Recipients);
 }else{
-	$result = $mail->send($mail,$Recipients);
+	$result = SendmailBySmtp($mail,$Recipients);
 }
 ?>

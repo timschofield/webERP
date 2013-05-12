@@ -13,15 +13,13 @@ and an array of the receipients */
 /*The following three variables need to be modified for the report - the company database to use and the receipients */
 /*The Sales report to send */
 $_GET['ReportID'] = 2;
-/*The company database to use */
-$DatabaseName = 'weberpdemo';
-/*The people to receive the emailed report */
-$Recipients = array('"Root" <root@localhost>','"' . _('someone else') . '" <someoneelese@sowhere.com>');
-
-
-
 $AllowAnyone = true;
 include('includes/session.inc');
+/*The company database to use */
+$DatabaseName = $_SESSION['DatabaseName'];
+/*The people to receive the emailed report */
+$Recipients = GetMailList('SalesAnalysisReportRecipients');
+
 include ('includes/ConstructSQLForUserDefinedSalesReport.inc');
 include ('includes/PDFSalesAnalysis.inc');
 
@@ -38,13 +36,22 @@ if ($Counter >0){ /* the number of lines of the sales report is more than 0  ie 
 	$mail->setText(_('Please find herewith sales report'));
 	$mail->SetSubject(_('Sales Analysis Report'));
 	$mail->addAttachment($attachment, 'SalesReport.pdf', 'application/pdf');
-	$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
-	$result = $mail->send($Recipients);
+	if($_SESSION['SmtpSetting']==0){
+		$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
+		$result = $mail->send($Recipients);
+	}else{
+		$result = SendmailBySmtp($mail,$Recipients);
+	}
 
 } else {
 	$mail->setText(_('Error running automated sales report number') . ' ' . $ReportID);
-	$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
-	$result = $mail->send($Recipients);
+	if($_SESSION['SmtpSetting']==0){
+		$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
+		$result = $mail->send($Recipients);
+	}else{
+		$result = SendmailBySmtp($mail,$Recipients);
+	}
+	
 }
 
 ?>
