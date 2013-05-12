@@ -1,18 +1,21 @@
 OwebERP Change Log
-11/5/2013 Exson: Add OffersRecievedResultRecipients group to mailgroups in ugrade4.10-4.11.sql/mysql/upgrade4.10-4.11.sql
-11/5/2013 Exson: Add OffersReceivedRecipients Group, added feature to use mail instead of smtp mail only, fixed the problem that item with single quotation mark cannot be stored and the same date comparison problem.
-11/5/2013 Exson: Add MailSalesReport_csv to scripts and add SalesAnalysisReportRecipients for mailing list in sql/mysql/upgrade4.10-4.11.sql
-11/5/2013 Exson: Make the report can be sent via smtp mail in MailSalesReport_csv.php.
-11/5/2013 Exson: Add Cc and Reply-To feature for mail sent by smtp in DefineTenderClass.php.
-11/5/2013 Exson: Make the offer can be mailed via smtp in DefineOfferClass.php.
-11/5/2013 Exson: Make the tender can be sent by SMTP mail in DefineTenderClass.php.
-10/5/2013 Exson Fixed the Z_CreateCompanyTemplateFile.php to make it workable in windows OS and make it workable via smtp mail.
-10/5/2013 Exson: Fixed the report_runner.php to make it can be sent via smtp.
-10/5/2013 Exson: Modify RecurringSalesOrdersProcess.php to make it can send the order by smtp.
-10/5/2013 Exson Fixed the mail function for PDFChequeListing.php
-10/5/2013 Exson: Add GetMailList function in MiscFunctions.php.
-10/5/2013 Exson: Fixed the unclosed a href tag in MailingGroupMaintenance.php. 
-10/5/2013 Exson: Add new feature to main mail list group for mail sending purpose.
+
+
+12/5/13 Rafael Chacón: Spanish translation update
+11/5/13 Exson: Add OffersRecievedResultRecipients group to mailgroups in ugrade4.10-4.11.sql/mysql/upgrade4.10-4.11.sql
+11/5/13 Exson: Add OffersReceivedRecipients Group, added feature to use mail instead of smtp mail only, fixed the problem that item with single quotation mark cannot be stored and the same date comparison problem.
+11/5/13 Exson: Add MailSalesReport_csv to scripts and add SalesAnalysisReportRecipients for mailing list in sql/mysql/upgrade4.10-4.11.sql
+11/5/13 Exson: Make the report can be sent via smtp mail in MailSalesReport_csv.php.
+11/5/13 Exson: Add Cc and Reply-To feature for mail sent by smtp in DefineTenderClass.php.
+11/5/13 Exson: Make the offer can be mailed via smtp in DefineOfferClass.php.
+11/5/13 Exson: Make the tender can be sent by SMTP mail in DefineTenderClass.php.
+10/5/13 Exson Fixed the Z_CreateCompanyTemplateFile.php to make it workable in windows OS and make it workable via smtp mail.
+10/5/13 Exson: Fixed the report_runner.php to make it can be sent via smtp.
+10/5/13 Exson: Modify RecurringSalesOrdersProcess.php to make it can send the order by smtp.
+10/5/13 Exson Fixed the mail function for PDFChequeListing.php
+10/5/13 Exson: Add GetMailList function in MiscFunctions.php.
+10/5/13 Exson: Fixed the unclosed a href tag in MailingGroupMaintenance.php. 
+10/5/13 Exson: Add new feature to main mail list group for mail sending purpose.
 9/5/13 Exson: Fixed the date hard coded problem in PcAssignCashToTab.php which lead to malfunction for some date format. Report by thumb.
 3/5/13 Ricard: new script to change GL account codes Z_ChangeGLAccountCode.php and SQL to upgrade to varchar account codes
 2/5/2013 Exson: Fixed strpos error and make the smtp server name more generic when user not use a email address in function of SendmailBySmtp in MiscFunctions.php.
