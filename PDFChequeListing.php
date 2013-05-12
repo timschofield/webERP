@@ -192,19 +192,16 @@ if ($_POST['Email']=='Yes'){
 	include('includes/htmlMimeMail.php');
 	$mail = new htmlMimeMail();
 	$attachment = $mail->getFile($_SESSION['reports_dir'] . '/'.$ReportFileName);
+	$mail->setSubject(_('Payments check list'));
 	$mail->setText(_('Please find herewith payments listing from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate']);
 	$mail->addAttachment($attachment, 'PaymentListing.pdf', 'application/pdf');
 	$ChkListingRecipients = GetMailList('ChkListingRecipients');
-	if($ChkListingRecipients == ''){
-		prnMsg(_('The email address has not been set correctly, no mail will be sent. please ask administrator for help'),'error');
+	if(sizeOf($ChkListingRecipients) == 0){
+		prnMsg(_('There are no member in Check Listing Recipients email group,  no mail will be sent'),'error');
 		include('includes/footer.inc');
 		exit;
 	}
-	if($ChkListingRecipients == ''){
-		prnMsg(_('The mail address is not set correctly, no mail send'),'errort');
-		include('includes/footer.inc');
-		exit;
-	}
+
 	if($_SESSION['SmtpSetting']==0){
 		$mail->setFrom(array('"' . $_SESSION['CompanyRecord']['coyname'] . '" <' . $_SESSION['CompanyRecord']['email'] . '>'));
 		$result = $mail->send($ChkListingRecipients);

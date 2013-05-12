@@ -242,6 +242,11 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 		$mail->setSubject(_('Your offer to').' '.$_SESSION['CompanyRecord']['coyname'].' '._('has been accepted'));
 		$mail->setText($MailText);
 		$Recipients = GetMailList('OffersReceivedResultRecipients');
+		if (sizeOf($Recipients) == 0) {
+			prnMsg( _('There are no members of the Offers Received Result Recipients email group'), 'warn');
+			include('includes/footer.inc');
+			exit;
+		}
 		array_push($Recipients,$Email);
 		if($_SESSION['SmtpSetting']==0){
 			$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . ' <' . $_SESSION['CompanyRecord']['email'] . '>');
@@ -281,6 +286,11 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 		$mail->setText($MailText);
 		$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . ' <' . $_SESSION['CompanyRecord']['email'] . '>');
 		$Recipients = GetMailList('OffersReceivedResultRecipients');
+		if (sizeOf($Recipients) == 0) {
+			prnMsg( _('There are no members of the Offers Received Result Recipients email group'), 'warn');
+			include('includes/footer.inc');
+			exit;
+		}
 		array_push($Recipients,$Email);
 		if($_SESSION['SmtpSetting']==0){
 			$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . ' <' . $_SESSION['CompanyRecord']['email'] . '>');
