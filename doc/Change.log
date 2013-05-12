@@ -1,4 +1,5 @@
 OwebERP Change Log
+12/5/2013 Exson: Fixed the bug of not use strpos correctly in PO_PDFPurchOrder.php.
 12/5/2013 Exson Make smtp mail available for InternalStockRequestFulfill.php.
 12/5/2013 Exson: Fixed the stockrequestitems duplicated primary key bug by modify the primary definition.
 12/5/2013 Exson Make the smtp mail available in InternalStockRequest.php. 
