@@ -1,4 +1,6 @@
 OwebERP Change Log
+11/5/2013 Exson: Make the inventory valuation report can be mailed.
+11/5/2013 Exson: Add Mail Validation Report to inventory module in MainMenuLinksArray.php.
 11/5/2013 Exson: Revise the CURDATE() to CURRENT_DATE to make it a more general SQL compatible in OffersReceived.php. Recommend by Tim. 
 12/5/13 Rafael Chacón: Spanish translation update
 11/5/13 Exson: Add OffersRecievedResultRecipients group to mailgroups in ugrade4.10-4.11.sql/mysql/upgrade4.10-4.11.sql
