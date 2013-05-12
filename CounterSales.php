@@ -1275,7 +1275,16 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 
 					$EmailSubject = _('New Work Order Number') . ' ' . $WONo . ' ' . _('for') . ' ' . $StockItem->StockID . ' x ' . $WOQuantity;
 					//Send email to the Factory Manager
-					mail($_SESSION['FactoryManagerEmail'],$EmailSubject,$FactoryManagerEmail);
+					if($_SESSION['SmtpSetting']==0){
+							mail($_SESSION['FactoryManagerEmail'],$EmailSubject,$FactoryManagerEmail);
+	
+					}else{
+							include('includes/htmlMimeMail.php');
+							$mail = new htmlMimeMail();
+							$mail->setSubject($EmailSubject);
+							$result = SendmailBySmtp($mail,array($_SESSION['FactoryManagerEmail']));
+					}
+
 				} //end if with this sales order there is a shortfall of stock - need to create the WO
 			}//end if auto create WOs in on
 		} /* end inserted line items into sales order details */
