@@ -17,6 +17,14 @@ $_POST['Location'] = $Location; /* so PDFInventoryValnPageHeader.inc works too *
 include('includes/session.inc');
 include ('includes/class.pdf.php');
 $Recipients = GetMailList('InventoryValuationRecipients');
+if (sizeOf($Recipients) == 0) {
+	$Title = _('Inventory Valuation') . ' - ' . _('Problem Report');
+      	include('includes/header.inc');
+	prnMsg( _('There are no members of the Inventory Valuation
+	Recipients email group'), 'warn');
+	include('includes/footer.inc');
+	exit;
+}
 /* A4_Portrait */
 
 $Page_Width=595;
