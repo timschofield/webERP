@@ -3,11 +3,12 @@
 
 // Display demo user name and password within login form if $AllowDemoMode is true
 //include ('LanguageSetup.php');
-
-if ($AllowDemoMode == True and !isset($demo_text)) {
-	$demo_text = _('login as user') .': <i>' . _('admin') . '</i><br />' ._('with password') . ': <i>' . _('weberp') . '</i>';
-} elseif (!isset($demo_text)) {
-	$demo_text = _('Please login here');
+if (isset($AllowDemoMode)){
+	if ($AllowDemoMode == True and !isset($demo_text)) {
+		$demo_text = _('login as user') .': <i>' . _('admin') . '</i><br />' ._('with password') . ': <i>' . _('weberp') . '</i>';
+	} elseif (!isset($demo_text)) {
+		$demo_text = _('Please login here');
+	}
 }
 echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 			"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
@@ -63,7 +64,13 @@ if (get_magic_quotes_gpc()){
 	<input type="text" name="UserNameEntryField" maxlength="20" /><br />
 	<span><?php echo _('Password'); ?>:</span><br />
 	<input type="password" name="Password" /><br />
-	<div id="demo_text"><?php echo $demo_text;?></div>
+	<div id="demo_text">
+	<?php 
+	if (isset($demo_text)){
+		echo $demo_text;
+	}
+	?>
+	</div>
 	<input class="button" type="submit" value="<?php echo _('Login'); ?>" name="SubmitUser" />
 	    </div>
 	</form>
