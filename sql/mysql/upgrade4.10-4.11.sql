@@ -12,6 +12,27 @@ CHANGE  `freightact`  `freightact` VARCHAR( 20 ) NOT NULL DEFAULT  '0';
 ALTER TABLE  `lastcostrollup` CHANGE  `stockact`  `stockact` VARCHAR( 20 ) NOT NULL DEFAULT  '0',
 CHANGE  `adjglact`  `adjglact` VARCHAR( 20 ) NOT NULL DEFAULT  '0';
 
+ALTER TABLE  `salesglpostings` CHANGE  `discountglcode`  `discountglcode` VARCHAR( 20 ) NOT NULL DEFAULT  '0',
+CHANGE  `salesglcode`  `salesglcode` VARCHAR( 20 ) NOT NULL DEFAULT  '0';
+
+ALTER TABLE  `cogsglpostings` CHANGE  `glcode`  `glcode` VARCHAR( 20 ) NOT NULL DEFAULT  '0';
+
+ALTER TABLE  `fixedassetcategories` CHANGE  `costact`  `costact` VARCHAR( 20 ) NOT NULL DEFAULT  '0',
+CHANGE  `depnact`  `depnact` VARCHAR( 20 ) NOT NULL DEFAULT  '0',
+CHANGE  `disposalact`  `disposalact` VARCHAR( 20 ) NOT NULL DEFAULT  '80000',
+CHANGE  `accumdepnact`  `accumdepnact` VARCHAR( 20 ) NOT NULL DEFAULT  '0';
+
+ALTER TABLE  `purchorderdetails` CHANGE  `glcode`  `glcode` VARCHAR( 20 ) NOT NULL DEFAULT  '0';
+
+ALTER TABLE  `stockcategory` CHANGE  `stockact`  `stockact` VARCHAR( 20 ) NOT NULL DEFAULT  '0',
+CHANGE  `adjglact`  `adjglact` VARCHAR( 20 ) NOT NULL DEFAULT  '0',
+CHANGE  `issueglact`  `issueglact` VARCHAR( 20 ) NOT NULL DEFAULT  '0',
+CHANGE  `purchpricevaract`  `purchpricevaract` VARCHAR( 20 ) NOT NULL DEFAULT  '80000',
+CHANGE  `materialuseagevarac`  `materialuseagevarac` VARCHAR( 20 ) NOT NULL DEFAULT  '80000',
+CHANGE  `wipact`  `wipact` VARCHAR( 20 ) NOT NULL DEFAULT  '0';
+
+ALTER TABLE  `workcentres` CHANGE  `overheadrecoveryact`  `overheadrecoveryact` VARCHAR( 20 ) NOT NULL DEFAULT  '0';
+
 INSERT INTO  `scripts` (`script` , `pagesecurity` , `description`)
 VALUES ('Z_ChangeGLAccountCode.php',  '15',  'Script to change a GL account code accross all tables necessary');
 
