@@ -177,7 +177,9 @@ if ($AlreadyOnThisOrder!=1){
 			$SellSupportPercent += ($SellSupportDiscount/$Price);
 			
 			$Discount += $SellSupportPercent; //combine any discount matrix discount with the sell through support.
-			prnMsg(_('Sell through support available and applied of') . ' ' . locale_number_format($SellSupportPercent*100,2), 'info');
+			if ($SellSupportPercent != 0){
+				prnMsg(_('Sell through support available and applied of') . ' ' . locale_number_format($SellSupportPercent*100,2), 'info');
+			}
 			
 			$WithinCreditLimit = true;
 
