@@ -78,7 +78,10 @@ if (!isset($SelectedCOGSPostingID)) {
 				chartmaster.accountname
 			FROM cogsglpostings LEFT JOIN chartmaster
 			ON cogsglpostings.glcode = chartmaster.accountcode
-			WHERE chartmaster.accountcode IS NULL";
+			WHERE chartmaster.accountcode IS NULL
+			ORDER BY cogsglpostings.area,
+				cogsglpostings.stkcat,
+				cogsglpostings.salestype";
 
 	$result = DB_query($sql,$db);
 	if (DB_num_rows($result)>0){
@@ -124,7 +127,10 @@ if (!isset($SelectedCOGSPostingID)) {
 				cogsglpostings.area,
 				cogsglpostings.stkcat,
 				cogsglpostings.salestype
-			FROM cogsglpostings";
+			FROM cogsglpostings			
+			ORDER BY cogsglpostings.area,
+				cogsglpostings.stkcat,
+				cogsglpostings.salestype";
 
 	$result = DB_query($sql,$db);
 
@@ -179,7 +185,10 @@ if (!isset($SelectedCOGSPostingID)) {
 					chartmaster.accountname
 				FROM cogsglpostings,
 					chartmaster
-				WHERE cogsglpostings.glcode = chartmaster.accountcode";
+				WHERE cogsglpostings.glcode = chartmaster.accountcode
+				ORDER BY cogsglpostings.area,
+					cogsglpostings.stkcat,
+					cogsglpostings.salestype";
 
 		$result = DB_query($sql,$db);
 
