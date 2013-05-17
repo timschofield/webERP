@@ -3,12 +3,10 @@
 
 // Display demo user name and password within login form if $AllowDemoMode is true
 //include ('LanguageSetup.php');
-if (isset($AllowDemoMode)){
-	if ($AllowDemoMode == True and !isset($demo_text)) {
-		$demo_text = _('login as user') .': <i>' . _('admin') . '</i><br />' ._('with password') . ': <i>' . _('weberp') . '</i>';
-	} elseif (!isset($demo_text)) {
-		$demo_text = _('Please login here');
-	}
+if ((isset($AllowDemoMode)) AND ($AllowDemoMode == True) AND (!isset($demo_text))) {
+	$demo_text = _('login as user') .': <i>' . _('admin') . '</i><br />' ._('with password') . ': <i>' . _('weberp') . '</i>';
+} elseif (!isset($demo_text)) {
+	$demo_text = _('Please login here');
 }
 echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 			"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
