@@ -102,7 +102,10 @@ if (!isset($SelectedSalesPostingID)) {
 				salesglpostings.discountglcode
 				FROM salesglpostings LEFT JOIN chartmaster
 					ON salesglpostings.salesglcode = chartmaster.accountcode
-				WHERE chartmaster.accountcode IS NULL";
+				WHERE chartmaster.accountcode IS NULL
+				ORDER BY salesglpostings.area,
+					salesglpostings.stkcat,
+					salesglpostings.salestype";
 
 	$result = DB_query($SQL,$db);
 	if (DB_num_rows($result)>0){
@@ -215,7 +218,10 @@ if (!isset($SelectedSalesPostingID)) {
 				chartmaster as chart1,
 				chartmaster as chart2
 			WHERE salesglpostings.salesglcode = chart1.accountcode
-			AND salesglpostings.discountglcode = chart2.accountcode";
+			AND salesglpostings.discountglcode = chart2.accountcode
+			ORDER BY salesglpostings.area,
+					salesglpostings.stkcat,
+					salesglpostings.salestype";
 
 		$result = DB_query($SQL,$db);
 
