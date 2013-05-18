@@ -847,7 +847,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 		if ($_POST['BOPolicy']=='CAN'){
 
 			$SQL = "UPDATE salesorderdetails
-					SET quantity = quantity - " . ($OrderLine->Quantity - $OrderLine->QtyDispatched) . "
+					SET quantity = quantity - " . ($OrderLine->Quantity - $OrderLine->QtyDispatched - $OrderLine->QtyInv) . "
 					WHERE orderno = '" . $_SESSION['ProcessingOrder'] . " '
 						AND stkcode = '" . $OrderLine->StockID . "'";
 
@@ -869,7 +869,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 															'" . $_SESSION['ProcessingOrder'] . "',
 															'" . $InvoiceNo . "',
 															'" . $OrderLine->StockID . "',
-															'" . ($OrderLine->Quantity - $OrderLine->QtyDispatched) . "',
+															'" . ($OrderLine->Quantity - $OrderLine->QtyDispatched  - $OrderLine->QtyInv) . "',
 															'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
 															'" . $_SESSION['Items'.$identifier]->Branch . "',
 															'CAN')";
@@ -896,7 +896,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 													'" . $_SESSION['ProcessingOrder'] . "',
 													'" . $InvoiceNo . "',
 													'" . $OrderLine->StockID . "',
-													'" . ($OrderLine->Quantity - $OrderLine->QtyDispatched) . "',
+													'" . ($OrderLine->Quantity - $OrderLine->QtyDispatched  - $OrderLine->QtyInv) . "',
 													'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
 													'" . $_SESSION['Items'.$identifier]->Branch . "',
 													'BO'

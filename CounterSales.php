@@ -1055,6 +1055,8 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 		$result = DB_Txn_Begin($db);
 	/*First add the order to the database - it only exists in the session currently! */
 		$OrderNo = GetNextTransNo(30, $db);
+		$InvoiceNo = GetNextTransNo(10, $db);
+		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
 
 		$HeaderSQL = "INSERT INTO salesorders (	orderno,
 												debtorno,
@@ -1297,8 +1299,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 	/*Now Get the next invoice number - GetNextTransNo() function in SQL_CommonFunctions
 	 * GetPeriod() in includes/DateFunctions.inc */
 
-		$InvoiceNo = GetNextTransNo(10, $db);
-		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
+
 
 		$DefaultDispatchDate = Date('Y-m-d');
 

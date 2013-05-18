@@ -1,21 +1,23 @@
 OwebERP Change Log
-12/5/2013 Tim: Add patch for the email groups are set situation in PDFChequeListing.php, MailSalesReport.php, MailSalesReport_csv.php, OffersReceived.php.
-12/5/2013 Tim: Add patch for GetMailList to show error when there is no email settings available.
-12/5/2013 Exson: Make smtp mail available for StockLocTransferReceive.php.
-12/5/2013 Exson: Make the smtp mail available for StockAdjustments.php.
-12/5/2013 Exson: Fixed the bug of not use strpos correctly in PO_PDFPurchOrder.php.
-12/5/2013 Exson Make smtp mail available for InternalStockRequestFulfill.php.
-12/5/2013 Exson: Fixed the stockrequestitems duplicated primary key bug by modify the primary definition.
-12/5/2013 Exson Make the smtp mail available in InternalStockRequest.php. 
-12/5/2013 Exson Make the SMTP mail available for UserLogin.php.
-12/5/2013 Exson: Make SMTP mail available for EmailConfirmation.php. The scripts seem not ready.
-12/5/2013 Exson: Add smtp mail to DeliveryDetails.php. 
-12/5/2013 Exson Make the SMTP mail available for CounterSales.php to mail new WO.
-12/5/2013 Exson: Make the sales report can be mailed via SMTP in files MailSalesReport.php and MailSalesReport_csv.php
-11/5/2013 Exson: Make EDI modules can send mail via SMTP in files EDIProcessOrders.php, EDISendInvoices.php, EDISendInvoices_Reece.php
-11/5/2013 Exson: Make the inventory valuation report can be mailed.
-11/5/2013 Exson: Add Mail Validation Report to inventory module in MainMenuLinksArray.php.
-11/5/2013 Exson: Revise the CURDATE() to CURRENT_DATE to make it a more general SQL compatible in OffersReceived.php. Recommend by Tim. 
+
+17/5/13 Phil: ConfirmDispatch_Invoice.php -include qty already invoiced in order when cancelling any balance on subsequent deliveries.
+12/5/13 Tim: Add patch for the email groups are set situation in PDFChequeListing.php, MailSalesReport.php, MailSalesReport_csv.php, OffersReceived.php.
+12/5/13 Tim: Add patch for GetMailList to show error when there is no email settings available.
+12/5/13 Exson: Make smtp mail available for StockLocTransferReceive.php.
+12/5/13 Exson: Make the smtp mail available for StockAdjustments.php.
+12/5/13 Exson: Fixed the bug of not use strpos correctly in PO_PDFPurchOrder.php.
+12/5/13 Exson Make smtp mail available for InternalStockRequestFulfill.php.
+12/5/13 Exson: Fixed the stockrequestitems duplicated primary key bug by modify the primary definition.
+12/5/13 Exson Make the smtp mail available in InternalStockRequest.php. 
+12/5/13 Exson Make the SMTP mail available for UserLogin.php.
+12/5/13 Exson: Make SMTP mail available for EmailConfirmation.php. The scripts seem not ready.
+12/5/13 Exson: Add smtp mail to DeliveryDetails.php. 
+12/5/13 Exson Make the SMTP mail available for CounterSales.php to mail new WO.
+12/5/13 Exson: Make the sales report can be mailed via SMTP in files MailSalesReport.php and MailSalesReport_csv.php
+11/5/13 Exson: Make EDI modules can send mail via SMTP in files EDIProcessOrders.php, EDISendInvoices.php, EDISendInvoices_Reece.php
+11/5/13 Exson: Make the inventory valuation report can be mailed.
+11/5/13 Exson: Add Mail Validation Report to inventory module in MainMenuLinksArray.php.
+11/5/13 Exson: Revise the CURDATE() to CURRENT_DATE to make it a more general SQL compatible in OffersReceived.php. Recommend by Tim. 
 12/5/13 Rafael Chacón: Spanish translation update
 11/5/13 Exson: Add OffersRecievedResultRecipients group to mailgroups in ugrade4.10-4.11.sql/mysql/upgrade4.10-4.11.sql
 11/5/13 Exson: Add OffersReceivedRecipients Group, added feature to use mail instead of smtp mail only, fixed the problem that item with single quotation mark cannot be stored and the same date comparison problem.
@@ -33,7 +35,7 @@ OwebERP Change Log
 10/5/13 Exson: Add new feature to main mail list group for mail sending purpose.
 9/5/13 Exson: Fixed the date hard coded problem in PcAssignCashToTab.php which lead to malfunction for some date format. Report by thumb.
 3/5/13 Ricard: new script to change GL account codes Z_ChangeGLAccountCode.php and SQL to upgrade to varchar account codes
-2/5/2013 Exson: Fixed strpos error and make the smtp server name more generic when user not use a email address in function of SendmailBySmtp in MiscFunctions.php.
+2/5/13 Exson: Fixed strpos error and make the smtp server name more generic when user not use a email address in function of SendmailBySmtp in MiscFunctions.php.
 2/5/13 Phil: Credit_Invoice.php was not setting the selected location to credit into as reported by Ricard
 2/5/13 Exson: Revise the account code to 20 reported by Tim in GLAccounts.php. 
 2/5/13 Exson: Make correction for removing those functions not related with webERP committed last time in MiscFunctions.php. Thanks for Tim's review.
@@ -53,7 +55,7 @@ OwebERP Change Log
 27/4/13 Samudaya: Fixed a bug in PO_Items.php when a line of a purchase order is deleted (other than the last line) and then subsequently a new line is added - the last line of the order is over-written. 
 27/4/13 Samudaya: PO_Items.php When purchasing a non-stock item (asset), AssetID goes to wrong column in purchorderdetails table (Column name - suppliers_partno). Fixed the bug and now save the AssetID in the correct assetid column.
 27/4/13 Samudaya: Fixed the Page Navigation (Go, Previous, Next) problem. This problem occurs  there are many assets and display as several pages.
-26/04/2013 Exson: Fix the image broken problem for Manual/ManualGettingStarted.html Chinese version
+26/04/13 Exson: Fix the image broken problem for Manual/ManualGettingStarted.html Chinese version
 25/4/13 Tim: Selecting customer in Contracts form was not working - fixed
 25/4/13 Bob Thomas: WorkOrderIssue.php was not showing the serialised items with a quantity that could be issued was showing them all in error
 25/4/13 Phil: BOMs.php fixed error that allowed auto issue to be flagged on serialised items
