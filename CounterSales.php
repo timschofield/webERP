@@ -1092,8 +1092,9 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 												0,
 												'" . $_SESSION['Items'.$identifier]->SalesPerson . "')";
 
+		$DbgMsg = _('Trouble inserting the sales order header. The SQL that failed was');
 		$ErrMsg = _('The order cannot be added because');
-		$InsertQryResult = DB_query($HeaderSQL,$db,$ErrMsg);
+		$InsertQryResult = DB_query($HeaderSQL,$db,$ErrMsg,$DbgMsg,true);
 
 		$StartOf_LineItemsSQL = "INSERT INTO salesorderdetails (orderlineno,
 																orderno,
