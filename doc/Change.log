@@ -1,5 +1,5 @@
 OwebERP Change Log
-
+18/5/2013 Exson: Stop session.inc execution when there is no config.php found.
 17/5/13 Phil: ConfirmDispatch_Invoice.php -include qty already invoiced in order when cancelling any balance on subsequent deliveries.
 12/5/13 Tim: Add patch for the email groups are set situation in PDFChequeListing.php, MailSalesReport.php, MailSalesReport_csv.php, OffersReceived.php.
 12/5/13 Tim: Add patch for GetMailList to show error when there is no email settings available.
