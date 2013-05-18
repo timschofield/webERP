@@ -12,6 +12,7 @@ if (!file_exists($PathPrefix . 'config.php')){
 		$RootPath = '';
 	}
 	header('Location:' . $RootPath . '/install/index.php');
+	exit;
 }
 include($PathPrefix . 'config.php');
 
