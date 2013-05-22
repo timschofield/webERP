@@ -48,11 +48,9 @@ $pdf->addText($FormDesign->SupplierAddress->Line4->x,$Page_Height - $FormDesign-
 $pdf->addText($FormDesign->RequisitionNumber->x,$Page_Height - $FormDesign->RequisitionNumber->y, $FormDesign->RequisitionNumber->FontSize, _('Requisition Number') . ':' );
 $pdf->addText($FormDesign->RequisitionNumber->x+120,$Page_Height - $FormDesign->RequisitionNumber->y, $FormDesign->RequisitionNumber->FontSize, $POHeader['requisitionno']);
 /*Now the Order date */
-$pdf->addText($FormDesign->OrderDate->x,$Page_Height - $FormDesign->OrderDate->y, $FormDesign->OrderDate->FontSize, _('Order Date') . ':' );
-$pdf->addText($FormDesign->OrderDate->x+70,$Page_Height - $FormDesign->OrderDate->y, $FormDesign->OrderDate->FontSize, ConvertSQLDate($POHeader['orddate']));
+$pdf->addText($FormDesign->OrderDate->x,$Page_Height - $FormDesign->OrderDate->y, $FormDesign->OrderDate->FontSize, _('Order Date') . ': ' . ConvertSQLDate($POHeader['orddate']) );
 /*Now the Initiator */
-$pdf->addText($FormDesign->Initiator->x,$Page_Height - $FormDesign->Initiator->y, $FormDesign->Initiator->FontSize, _('Initiator').': ');
-$pdf->addText($FormDesign->Initiator->x+70,$Page_Height - $FormDesign->Initiator->y, $FormDesign->Initiator->FontSize, $POHeader['initiator']);
+$pdf->addText($FormDesign->Initiator->x,$Page_Height - $FormDesign->Initiator->y, $FormDesign->Initiator->FontSize, _('Initiator').': ' . $POHeader['initiator']);
 /*Find the description of the payment terms and display.
  * If it is a preview then just insert dummy data */
 if ($OrderNo != 'Preview') {
