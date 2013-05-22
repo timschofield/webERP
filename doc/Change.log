@@ -1,6 +1,7 @@
 OwebERP Change Log
 
 22/5/13 Rafael Chacón: include/PO_PDFOrderPageHeader.inc now allows different length labels for date and intiator without running into the field data - needed for translations of different lengths
+18/5/13 Exson: Stop session.inc execution when there is no config.php found.
 17/5/13 Phil: ConfirmDispatch_Invoice.php -include qty already invoiced in order when cancelling any balance on subsequent deliveries.
 12/5/13 Tim: Add patch for the email groups are set situation in PDFChequeListing.php, MailSalesReport.php, MailSalesReport_csv.php, OffersReceived.php.
 12/5/13 Tim: Add patch for GetMailList to show error when there is no email settings available.
