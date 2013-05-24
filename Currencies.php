@@ -7,6 +7,8 @@ $Title = _('Currencies Maintenance');
 $ViewTopic= 'Currencies';
 $BookMark = 'Currencies';
 include('includes/header.inc');
+include('includes/CurrenciesArray.php');
+
 include('includes/SQL_CommonFunctions.inc');
 
 if (isset($_GET['SelectedCurrency'])){
@@ -53,12 +55,7 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'Abbreviation';
 		$i++;
 	}
-	if (mb_strlen($_POST['Abbreviation']) > 3 OR mb_strlen($_POST['Abbreviation']) < 1) {
-		$InputError = 1;
-		prnMsg(_('The currency abbreviation must be 3 characters or less long and for automated currency updates to work correctly be one of the ISO4217 currency codes'),'error');
-		$Errors[$i] = 'Abbreviation';
-		$i++;
-	}
+	
 	if (!is_numeric(filter_number_format($_POST['ExchangeRate']))){
 		$InputError = 1;
 		prnMsg(_('The exchange rate must be numeric'),'error');
@@ -81,12 +78,7 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'DecimalPlaces';
 		$i++;
 	}
-	if (mb_strlen($_POST['CurrencyName']) > 20) {
-		$InputError = 1;
-		prnMsg(_('The currency name must be 20 characters or less long'),'error');
-		$Errors[$i] = 'CurrencyName';
-		$i++;
-	}
+	
 	if (mb_strlen($_POST['Country']) > 50) {
 		$InputError = 1;
 		prnMsg(_('The currency country must be 50 characters or less long'),'error');
@@ -103,18 +95,11 @@ if (isset($_POST['submit'])) {
 		$InputError = 1;
 		prnMsg(_('The functional currency cannot be modified or deleted'),'error');
 	}
-	if (ContainsIllegalCharacters($_POST['Abbreviation'])) {
-		$InputError = 1;
-		prnMsg( _('The currency code cannot contain any of the following characters') . " . - ' &amp; + \" " . _('or a space'),'error');
-		$Errors[$i] = 'Abbreviation';
-		$i++;
-	}
-
+	
 	if (isset($SelectedCurrency) AND $InputError !=1) {
 
 		/*SelectedCurrency could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
-		$sql = "UPDATE currencies SET currency='" . $_POST['CurrencyName'] . "',
-										country='". $_POST['Country']. "',
+		$sql = "UPDATE currencies SET	country='". $_POST['Country']. "',
 										hundredsname='" . $_POST['HundredsName'] . "',
 										decimalplaces='" . filter_number_format($_POST['DecimalPlaces']) . "',
 										rate='" .filter_number_format($_POST['ExchangeRate']) . "',
@@ -132,7 +117,7 @@ if (isset($_POST['submit'])) {
 										decimalplaces,
 										rate,
 										webcart)
-								VALUES ('" . $_POST['CurrencyName'] . "',
+								VALUES ('" . $CurrenciesArray[$_POST['Abbreviation']]['Currency'] . "',
 										'" . $_POST['Abbreviation'] . "',
 										'" . $_POST['Country'] . "',
 										'" . $_POST['HundredsName'] .  "',
@@ -148,7 +133,6 @@ if (isset($_POST['submit'])) {
 		prnMsg( $msg,'success');
 	}
 	unset($SelectedCurrency);
-	unset($_POST['CurrencyName']);
 	unset($_POST['Country']);
 	unset($_POST['HundredsName']);
 	unset($_POST['DecimalPlaces']);
@@ -276,7 +260,7 @@ or deletion of the records*/
 					</tr>',
 					$ImageFile,
 					$myrow['currabrev'],
-					$myrow['currency'],
+					_($myrow['currency']),
 					$myrow['country'],
 					$myrow['hundredsname'],
 					locale_number_format($myrow['decimalplaces'],0),
@@ -304,7 +288,7 @@ or deletion of the records*/
 					</tr>',
 					$ImageFile,
 					$myrow['currabrev'],
-					$myrow['currency'],
+					_($myrow['currency']),
 					$myrow['country'],
 					$myrow['hundredsname'],
 					locale_number_format($myrow['decimalplaces'],0),
@@ -350,7 +334,6 @@ if (!isset($_GET['delete'])) {
 		$myrow = DB_fetch_array($result);
 
 		$_POST['Abbreviation'] = $myrow['currabrev'];
-		$_POST['CurrencyName']  = $myrow['currency'];
 		$_POST['Country']  = $myrow['country'];
 		$_POST['HundredsName']  = $myrow['hundredsname'];
 		$_POST['ExchangeRate']  = locale_number_format($myrow['rate'],8);
@@ -369,20 +352,17 @@ if (!isset($_GET['delete'])) {
 		if (!isset($_POST['Abbreviation'])) {$_POST['Abbreviation']='';}
 		echo '<table class="selection">
 			<tr>
-				<td>' ._('Currency Abbreviation') . ':</td>
-				<td><input ' . (in_array('Abbreviation',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="Abbreviation" value="' . $_POST['Abbreviation'] . '" size="4" maxlength="3" /></td>
+				<td>' ._('Currency') . ':</td>
+				<td><select name="Abbreviation">';
+		foreach ($CurrenciesArray as $CurrencyAbbreviation => $CurrencyArray) {
+			echo '<option value="' . $CurrencyAbbreviation . '">' . $CurrencyAbbreviation . '-' . $CurrencyArray['Currency'] . '</option>';
+		}
+
+		echo '</select></td>
 			</tr>';
 	}
 
 	echo '<tr>
-			<td>'._('Currency Name').':</td>
-			<td>';
-	if (!isset($_POST['CurrencyName'])) {
-		$_POST['CurrencyName']='';
-	}
-	echo '<input ' . (in_array('CurrencyName',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="CurrencyName" size="20" maxlength="20" value="' . $_POST['CurrencyName'] . '" /></td>
-		</tr>
-		<tr>
 			<td>'._('Country').':</td>
 			<td>';
 	if (!isset($_POST['Country'])) {

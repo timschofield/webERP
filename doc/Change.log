@@ -1,5 +1,7 @@
 OwebERP Change Log
 
+25/5/13 Phil: Currencies.php now takes advantage of Rafael's new CurrenciesArray - to ensure correct ISO 3 letter abbreviation is selected - also allows for translation of currency names
+25/5/13 Rafael Chacón: New include/CurrenciesArray.php listing all ISO currencies and their code
 22/5/13 Rafael Chacón: include/PO_PDFOrderPageHeader.inc now allows different length labels for date and intiator without running into the field data - needed for translations of different lengths
 18/5/13 Exson: Stop session.inc execution when there is no config.php found.
 17/5/13 Phil: ConfirmDispatch_Invoice.php -include qty already invoiced in order when cancelling any balance on subsequent deliveries.
