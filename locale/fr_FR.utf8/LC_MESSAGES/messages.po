@@ -9,18 +9,16 @@ msgstr ""
 "Project-Id-Version: weberp 3.12\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-02-24 14:29+1300\n"
-"PO-Revision-Date: 2012-03-09 10:19+0100\n"
-"Last-Translator: James Dupin <james.dupin@gmail.com>\n"
+"PO-Revision-Date: 2013-05-26 21:19-0600\n"
+"Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: French <none>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2011-03-31 06:25+0000\n"
-"X-Generator: Lokalize 1.1\n"
-"Language: \n"
-"Plural-Forms: s\n"
-"X-Poedit-Language: French\n"
-"X-Poedit-Country: FRANCE\n"
+"X-Generator: Poedit 1.5.4\n"
+"Language: fr_FR\n"
+"Plural-Forms: s;\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
 #: AccountGroups.php:7 includes/MainMenuLinksArray.php:356
@@ -38426,27 +38424,24 @@ msgid "Cook Islands"
 msgstr ""
 
 #: includes/CountriesArray.php:45
-#, fuzzy
 msgid "Chile"
-msgstr "Chinois"
+msgstr "Chili"
 
 #: includes/CountriesArray.php:46
 msgid "Cameroon"
 msgstr ""
 
 #: includes/CountriesArray.php:47
-#, fuzzy
 msgid "China"
-msgstr "Chinois"
+msgstr "Chine"
 
 #: includes/CountriesArray.php:48
 msgid "Colombia"
 msgstr ""
 
 #: includes/CountriesArray.php:49
-#, fuzzy
 msgid "Costa Rica"
-msgstr "Coût requis"
+msgstr "Costa Rica"
 
 #: includes/CountriesArray.php:50
 msgid "Montenegro"
@@ -38559,9 +38554,8 @@ msgid "Faroe Islands"
 msgstr ""
 
 #: includes/CountriesArray.php:74
-#, fuzzy
 msgid "France"
-msgstr "Variance"
+msgstr "France"
 
 #: includes/CountriesArray.php:75
 msgid "Gabon"
@@ -39218,6 +39212,718 @@ msgstr ""
 #: includes/CountriesArray.php:221
 msgid "Zimbabwe"
 msgstr ""
+
+#: includes/CurrencyCodesArray.php:13
+msgid "United Arab Emirates dirham"
+msgstr "Dirham émirati"
+
+#: includes/CurrencyCodesArray.php:16
+msgid "Afghan afghani"
+msgstr "Afghani afghan"
+
+#: includes/CurrencyCodesArray.php:19
+msgid "Albanian lek"
+msgstr "Lek albanais"
+
+#: includes/CurrencyCodesArray.php:22
+msgid "Armenian dram"
+msgstr "Dram arménien"
+
+#: includes/CurrencyCodesArray.php:25
+msgid "Netherlands Antillean guilder"
+msgstr "Florin antillais"
+
+#: includes/CurrencyCodesArray.php:28
+msgid "Angolan kwanza"
+msgstr "Kwanza angolais"
+
+#: includes/CurrencyCodesArray.php:31
+msgid "Argentine peso"
+msgstr "Peso argentin"
+
+#: includes/CurrencyCodesArray.php:34
+msgid "Australian dollar"
+msgstr "Dollar australien"
+
+#: includes/CurrencyCodesArray.php:37
+msgid "Aruban florin"
+msgstr "Florin arubais"
+
+#: includes/CurrencyCodesArray.php:40
+msgid "Azerbaijani manat"
+msgstr "Manat azerbaïdjanais"
+
+#: includes/CurrencyCodesArray.php:43
+msgid "Bosnia and Herzegovina convertible mark"
+msgstr "Mark convertible bosnien"
+
+#: includes/CurrencyCodesArray.php:46
+msgid "Barbados dollar"
+msgstr "Dollar barbadien"
+
+#: includes/CurrencyCodesArray.php:49
+msgid "Bangladeshi taka"
+msgstr "Taka bangladais"
+
+#: includes/CurrencyCodesArray.php:52
+msgid "Bulgarian lev"
+msgstr "Lev bulgare"
+
+#: includes/CurrencyCodesArray.php:55
+msgid "Bahraini dinar"
+msgstr "Dinar bahreïni"
+
+#: includes/CurrencyCodesArray.php:58
+msgid "Burundian franc"
+msgstr "Franc burundais"
+
+#: includes/CurrencyCodesArray.php:61
+msgid "Bermudian dollar"
+msgstr "Dollar bermudien"
+
+#: includes/CurrencyCodesArray.php:64
+msgid "Brunei dollar"
+msgstr "Dollar de Brunei"
+
+#: includes/CurrencyCodesArray.php:67
+msgid "Bolivian Boliviano"
+msgstr "Boliviano bolivien"
+
+#: includes/CurrencyCodesArray.php:70
+msgid "Bolivian Mvdol (funds code)"
+msgstr "Mvdol bolivien (unité de compte)"
+
+#: includes/CurrencyCodesArray.php:73
+msgid "Brazilian real"
+msgstr "Réal brésilien"
+
+#: includes/CurrencyCodesArray.php:76
+msgid "Bahamian dollar"
+msgstr "Dollar bahaméen"
+
+#: includes/CurrencyCodesArray.php:79
+msgid "Bhutanese ngultrum"
+msgstr "Ngultrum bhoutanais"
+
+#: includes/CurrencyCodesArray.php:82
+msgid "Botswana pula"
+msgstr "Pula botswanais"
+
+#: includes/CurrencyCodesArray.php:85
+msgid "Belarusian ruble"
+msgstr "Rouble biélorusse"
+
+#: includes/CurrencyCodesArray.php:88
+msgid "Belize dollar"
+msgstr "Dollar bélizien"
+
+#: includes/CurrencyCodesArray.php:91
+msgid "Canadian dollar"
+msgstr "Dollar canadien"
+
+#: includes/CurrencyCodesArray.php:94
+msgid "Congolese franc"
+msgstr "Franc congolais"
+
+#: includes/CurrencyCodesArray.php:97
+msgid "Swiss WIR Euro (complementary currency)"
+msgstr "Euro WIR suisse (unité de compte privée)"
+
+#: includes/CurrencyCodesArray.php:100
+msgid "Swiss franc"
+msgstr "Franc suisse"
+
+#: includes/CurrencyCodesArray.php:103
+msgid "Swiss WIR Franc (complementary currency)"
+msgstr "Franc WIR suisse (unité de compte privée)"
+
+#: includes/CurrencyCodesArray.php:106
+msgid "Chilean Unidad de Fomento (funds code)"
+msgstr "Unité d’investissement chilienne (unité de compte)"
+
+#: includes/CurrencyCodesArray.php:109
+msgid "Chilean peso"
+msgstr "Peso chilien"
+
+#: includes/CurrencyCodesArray.php:112
+msgid "Chinese yuan"
+msgstr "Yuan chinois"
+
+#: includes/CurrencyCodesArray.php:115
+msgid "Colombian peso"
+msgstr "Peso colombien"
+
+#: includes/CurrencyCodesArray.php:118
+msgid "Colombian Unidad de Valor Real"
+msgstr "Unité de valeur réelle colombienne (unité de compte)"
+
+#: includes/CurrencyCodesArray.php:121
+msgid "Costa Rican colon"
+msgstr "Colon costaricien"
+
+#: includes/CurrencyCodesArray.php:124
+msgid "Cuban peso convertible"
+msgstr "Peso cubain convertible"
+
+#: includes/CurrencyCodesArray.php:127
+msgid "Cuban peso"
+msgstr "Peso cubain"
+
+#: includes/CurrencyCodesArray.php:130
+msgid "Cape Verde escudo"
+msgstr "Escudo cap-verdien"
+
+#: includes/CurrencyCodesArray.php:133
+msgid "Czech koruna"
+msgstr "Couronne tchèque"
+
+#: includes/CurrencyCodesArray.php:136
+msgid "Djiboutian franc"
+msgstr "Franc Djibouti"
+
+#: includes/CurrencyCodesArray.php:139
+msgid "Danish krone"
+msgstr "Couronne danoise"
+
+#: includes/CurrencyCodesArray.php:142
+msgid "Dominican peso"
+msgstr "Peso dominicain"
+
+#: includes/CurrencyCodesArray.php:145
+msgid "Algerian dinar"
+msgstr "Dinar algérien"
+
+#: includes/CurrencyCodesArray.php:148
+msgid "Egyptian pound"
+msgstr "Livre égyptienne"
+
+#: includes/CurrencyCodesArray.php:151
+msgid "Eritrean nakfa"
+msgstr "Nakfa érythréen"
+
+#: includes/CurrencyCodesArray.php:154
+msgid "Ethiopian birr"
+msgstr "Birr éthiopien"
+
+#: includes/CurrencyCodesArray.php:157
+msgid "European Union euro"
+msgstr "Euro européen"
+
+#: includes/CurrencyCodesArray.php:160
+msgid "Fiji dollar"
+msgstr "Dollar fidjien"
+
+#: includes/CurrencyCodesArray.php:163
+msgid "Falkland Islands pound"
+msgstr "Livre des Îles Malouines"
+
+#: includes/CurrencyCodesArray.php:166
+msgid "United Kingdom pound sterling"
+msgstr "Livre sterling britannique"
+
+#: includes/CurrencyCodesArray.php:169
+msgid "Georgian lari"
+msgstr "Lari géorgien"
+
+#: includes/CurrencyCodesArray.php:172
+msgid "Ghanaian cedi"
+msgstr "Cedi ghanéen"
+
+#: includes/CurrencyCodesArray.php:175
+msgid "Gibraltar pound"
+msgstr "Livre de Gibraltar"
+
+#: includes/CurrencyCodesArray.php:178
+msgid "Gambian dalasi"
+msgstr "Dalasi gambien"
+
+#: includes/CurrencyCodesArray.php:181
+msgid "Guinean franc"
+msgstr "Franc guinéen"
+
+#: includes/CurrencyCodesArray.php:184
+msgid "Guatemalan quetzal"
+msgstr "Quetzal guatémaltèque"
+
+#: includes/CurrencyCodesArray.php:187
+msgid "Guyanese dollar"
+msgstr "Dollar guyanien"
+
+#: includes/CurrencyCodesArray.php:190
+msgid "Hong Kong dollar"
+msgstr "Dollar de Hong Kong"
+
+#: includes/CurrencyCodesArray.php:193
+msgid "Honduran lempira"
+msgstr "Lempira hondurien "
+
+#: includes/CurrencyCodesArray.php:196
+msgid "Croatian kuna"
+msgstr "Kuna croate"
+
+#: includes/CurrencyCodesArray.php:199
+msgid "Haitian gourde"
+msgstr "Gourde haïtienne"
+
+#: includes/CurrencyCodesArray.php:202
+msgid "Hungarian forint"
+msgstr "Forint hongrois"
+
+#: includes/CurrencyCodesArray.php:205
+msgid "Indonesian rupiah"
+msgstr "Roupie indonésienne"
+
+#: includes/CurrencyCodesArray.php:208
+msgid "Israeli new shekel"
+msgstr "Nouveau shekel israélien"
+
+#: includes/CurrencyCodesArray.php:211
+msgid "Indian rupee"
+msgstr "Roupie indienne"
+
+#: includes/CurrencyCodesArray.php:214
+msgid "Iraqi dinar"
+msgstr "Dinar irakien"
+
+#: includes/CurrencyCodesArray.php:217
+msgid "Iranian rial"
+msgstr "Rial iranien"
+
+#: includes/CurrencyCodesArray.php:220
+msgid "Icelandic króna"
+msgstr "Couronne islandaise"
+
+#: includes/CurrencyCodesArray.php:223
+msgid "Jamaican dollar"
+msgstr "Dollar jamaïcain"
+
+#: includes/CurrencyCodesArray.php:226
+msgid "Jordanian dinar"
+msgstr "Dinar jordanien"
+
+#: includes/CurrencyCodesArray.php:229
+msgid "Japanese yen"
+msgstr "Yen japonais"
+
+#: includes/CurrencyCodesArray.php:232
+msgid "Kenyan shilling"
+msgstr "Shilling kényan"
+
+#: includes/CurrencyCodesArray.php:235
+msgid "Kyrgyzstani som"
+msgstr "Som kirghiz"
+
+#: includes/CurrencyCodesArray.php:238
+msgid "Cambodian riel"
+msgstr "Riel cambodgien"
+
+#: includes/CurrencyCodesArray.php:241
+msgid "Comoro franc"
+msgstr "Franc comorien"
+
+#: includes/CurrencyCodesArray.php:244
+msgid "North Korean won"
+msgstr "Won nord-coréen"
+
+#: includes/CurrencyCodesArray.php:247
+msgid "South Korean won"
+msgstr "Won sud-coréen"
+
+#: includes/CurrencyCodesArray.php:250
+msgid "Kuwaiti dinar"
+msgstr "Dinar koweïtien"
+
+#: includes/CurrencyCodesArray.php:253
+msgid "Cayman Islands dollar"
+msgstr "Dollar des îles Caïmans"
+
+#: includes/CurrencyCodesArray.php:256
+msgid "Kazakhstani tenge"
+msgstr "Tenge kazakh"
+
+#: includes/CurrencyCodesArray.php:259
+msgid "Lao kip"
+msgstr "Kip laotien"
+
+#: includes/CurrencyCodesArray.php:262
+msgid "Lebanese pound"
+msgstr "Livre libanaise"
+
+#: includes/CurrencyCodesArray.php:265
+msgid "Sri Lankan rupee"
+msgstr "Roupie srilankaise"
+
+#: includes/CurrencyCodesArray.php:268
+msgid "Liberian dollar"
+msgstr "Dollar libérien"
+
+#: includes/CurrencyCodesArray.php:271
+msgid "Lesotho loti"
+msgstr "Loti lesothan"
+
+#: includes/CurrencyCodesArray.php:274
+msgid "Lithuanian litas"
+msgstr "Litas lituanien"
+
+#: includes/CurrencyCodesArray.php:277
+msgid "Latvian lats"
+msgstr "Lats letton"
+
+#: includes/CurrencyCodesArray.php:280
+msgid "Libyan dinar"
+msgstr "Dinar libyen"
+
+#: includes/CurrencyCodesArray.php:283
+msgid "Moroccan dirham"
+msgstr "Dirham marocain"
+
+#: includes/CurrencyCodesArray.php:286
+msgid "Moldovan leu"
+msgstr "Leu moldave"
+
+#: includes/CurrencyCodesArray.php:289
+msgid "Malagasy ariary"
+msgstr "Ariary malgache"
+
+#: includes/CurrencyCodesArray.php:292
+msgid "Macedonian denar"
+msgstr "Dinar macédonien"
+
+#: includes/CurrencyCodesArray.php:295
+msgid "Myanma kyat"
+msgstr "Kyat birman"
+
+#: includes/CurrencyCodesArray.php:298
+msgid "Mongolian tugrik"
+msgstr "Tugrik mongol"
+
+#: includes/CurrencyCodesArray.php:301
+msgid "Macanese pataca"
+msgstr "Pataca macanais"
+
+#: includes/CurrencyCodesArray.php:304
+msgid "Mauritanian ouguiya"
+msgstr "Ouguiya mauritanien"
+
+#: includes/CurrencyCodesArray.php:307
+msgid "Mauritian rupee"
+msgstr "Roupie mauricienne"
+
+#: includes/CurrencyCodesArray.php:310
+msgid "Maldivian rufiyaa"
+msgstr "Rufiyaa maldivienne"
+
+#: includes/CurrencyCodesArray.php:313
+msgid "Malawian kwacha"
+msgstr "Kwacha malawien"
+
+#: includes/CurrencyCodesArray.php:316
+msgid "Mexican peso"
+msgstr "Peso mexicain"
+
+#: includes/CurrencyCodesArray.php:319
+msgid "Mexican Unidad de Inversion (funds code)"
+msgstr "Unidad de Inversion mexicaine (unité de compte)"
+
+#: includes/CurrencyCodesArray.php:322
+msgid "Malaysian ringgit"
+msgstr "Ringgit malaisien"
+
+#: includes/CurrencyCodesArray.php:325
+msgid "Mozambican metical"
+msgstr "Metical mozambicain"
+
+#: includes/CurrencyCodesArray.php:328
+msgid "Namibian dollar"
+msgstr "Dollar namibien"
+
+#: includes/CurrencyCodesArray.php:331
+msgid "Nigerian naira"
+msgstr "Naira nigérian"
+
+#: includes/CurrencyCodesArray.php:334
+msgid "Nicaraguan córdoba"
+msgstr "Cordoba d’or nicaraguayen"
+
+#: includes/CurrencyCodesArray.php:337
+msgid "Norwegian krone"
+msgstr "Couronne norvégienne"
+
+#: includes/CurrencyCodesArray.php:340
+msgid "Nepalese rupee"
+msgstr "Roupie népalaise"
+
+#: includes/CurrencyCodesArray.php:343
+msgid "New Zealand dollar"
+msgstr "Dollar néo-zélandais"
+
+#: includes/CurrencyCodesArray.php:346
+msgid "Omani rial"
+msgstr "Rial omanais"
+
+#: includes/CurrencyCodesArray.php:349
+msgid "Panamanian balboa"
+msgstr "Balboa panaméen"
+
+#: includes/CurrencyCodesArray.php:352
+msgid "Peruvian nuevo sol"
+msgstr "Nouveau sol péruvien"
+
+#: includes/CurrencyCodesArray.php:355
+msgid "Papua New Guinean kina"
+msgstr "Kina papouasien-néo-guinéen"
+
+#: includes/CurrencyCodesArray.php:358
+msgid "Philippine peso"
+msgstr "Peso philippin"
+
+#: includes/CurrencyCodesArray.php:361
+msgid "Pakistani rupee"
+msgstr "Roupie pakistanaise"
+
+#: includes/CurrencyCodesArray.php:364
+msgid "Polish złoty"
+msgstr "Złoty polonais"
+
+#: includes/CurrencyCodesArray.php:367
+msgid "Paraguayan guaraní"
+msgstr "Guaraní paraguayen"
+
+#: includes/CurrencyCodesArray.php:370
+msgid "Qatari riyal"
+msgstr "Riyal qatari"
+
+#: includes/CurrencyCodesArray.php:373
+msgid "Romanian new leu"
+msgstr "Nouveau leu roumain"
+
+#: includes/CurrencyCodesArray.php:376
+msgid "Serbian dinar"
+msgstr "Dinar serbe"
+
+#: includes/CurrencyCodesArray.php:379
+msgid "Russian rouble"
+msgstr "Rouble russe"
+
+#: includes/CurrencyCodesArray.php:382
+msgid "Rwandan franc"
+msgstr "Franc rwandais"
+
+#: includes/CurrencyCodesArray.php:385
+msgid "Saudi riyal"
+msgstr "Riyal saoudien"
+
+#: includes/CurrencyCodesArray.php:388
+msgid "Solomon Islands dollar"
+msgstr "Dollar salomonien"
+
+#: includes/CurrencyCodesArray.php:391
+msgid "Seychelles rupee"
+msgstr "Roupie seychelloise"
+
+#: includes/CurrencyCodesArray.php:394
+msgid "Sudanese pound"
+msgstr "Livre soudanaise"
+
+#: includes/CurrencyCodesArray.php:397
+msgid "Swedish krona"
+msgstr "Couronne suédoise"
+
+#: includes/CurrencyCodesArray.php:400
+msgid "Singapore dollar"
+msgstr "Dollar de Singapour"
+
+#: includes/CurrencyCodesArray.php:403
+msgid "Saint Helena pound"
+msgstr "Livre de Sainte-Hélène"
+
+#: includes/CurrencyCodesArray.php:406
+msgid "Sierra Leonean leone"
+msgstr "Leone sierra-léonais"
+
+#: includes/CurrencyCodesArray.php:409
+msgid "Somali shilling"
+msgstr "Shilling somalien"
+
+#: includes/CurrencyCodesArray.php:412
+msgid "Surinamese dollar"
+msgstr "Dollar surinamien"
+
+#: includes/CurrencyCodesArray.php:415
+msgid "South Sudanese pound"
+msgstr "Livre sud-soudanaise"
+
+#: includes/CurrencyCodesArray.php:418
+msgid "São Tomé and Príncipe dobra"
+msgstr "Dobra santoméen"
+
+#: includes/CurrencyCodesArray.php:421
+msgid "Syrian pound"
+msgstr "Livre syrienne"
+
+#: includes/CurrencyCodesArray.php:424
+msgid "Swazi lilangeni"
+msgstr "Lilangeni swazilandais"
+
+#: includes/CurrencyCodesArray.php:427
+msgid "Thai baht"
+msgstr "Baht thaïlandais"
+
+#: includes/CurrencyCodesArray.php:430
+msgid "Tajikistani somoni"
+msgstr "Somoni tadjik"
+
+#: includes/CurrencyCodesArray.php:433
+msgid "Turkmenistani manat"
+msgstr "Manat turkmène"
+
+#: includes/CurrencyCodesArray.php:436
+msgid "Tunisian dinar"
+msgstr "Dinar tunisien"
+
+#: includes/CurrencyCodesArray.php:439
+msgid "Tongan paʻanga"
+msgstr "Pa’anga tongien"
+
+#: includes/CurrencyCodesArray.php:442
+msgid "Turkish lira"
+msgstr "Livre turque"
+
+#: includes/CurrencyCodesArray.php:445
+msgid "Trinidad and Tobago dollar"
+msgstr "Dollar trinidadien"
+
+#: includes/CurrencyCodesArray.php:448
+msgid "Taiwan new dollar"
+msgstr "Nouveau dollar taïwanais"
+
+#: includes/CurrencyCodesArray.php:451
+msgid "Tanzanian shilling"
+msgstr "Shilling tanzanien"
+
+#: includes/CurrencyCodesArray.php:454
+msgid "Ukrainian hryvnia"
+msgstr "Hryvnia ukrainienne"
+
+#: includes/CurrencyCodesArray.php:457
+msgid "Ugandan shilling"
+msgstr "Shilling ougandais"
+
+#: includes/CurrencyCodesArray.php:460
+msgid "United States dollar"
+msgstr "Dollar américain"
+
+#: includes/CurrencyCodesArray.php:463
+msgid "United States dollar next day (funds code)"
+msgstr "Dollar américain lendemain (unité de compte)"
+
+#: includes/CurrencyCodesArray.php:466
+msgid "United States dollar same day (funds code)"
+msgstr "Dollar américain même jour (unité de compte)"
+
+#: includes/CurrencyCodesArray.php:469
+msgid "Uruguayan unidad indexada (funds code)"
+msgstr "Peso uruguayen (unité de comptes)"
+
+#: includes/CurrencyCodesArray.php:472
+msgid "Uruguayan peso"
+msgstr "Peso uruguayen"
+
+#: includes/CurrencyCodesArray.php:475
+msgid "Uzbekistan som"
+msgstr "Sum ouzbek"
+
+#: includes/CurrencyCodesArray.php:478
+msgid "Venezuelan bolívar fuerte"
+msgstr "Bolívar fuerte vénézuélien"
+
+#: includes/CurrencyCodesArray.php:481
+msgid "Vietnamese dong"
+msgstr "Dong vietnamien"
+
+#: includes/CurrencyCodesArray.php:484
+msgid "Vanuatu vatu"
+msgstr "Vatu vanuatais"
+
+#: includes/CurrencyCodesArray.php:487
+msgid "Samoan tala"
+msgstr "Tala samoan"
+
+#: includes/CurrencyCodesArray.php:490
+msgid "CFA franc BEAC"
+msgstr "Franc CFA (BEAC)"
+
+#: includes/CurrencyCodesArray.php:493
+msgid "Silver (one troy ounce)"
+msgstr "Argent (libellé en onces)"
+
+#: includes/CurrencyCodesArray.php:496
+msgid "Gold (one troy ounce)"
+msgstr "Or (libellé en onces)"
+
+#: includes/CurrencyCodesArray.php:499
+msgid "European Composite Unit"
+msgstr "Unité européenne composée (EURCO)"
+
+#: includes/CurrencyCodesArray.php:502
+msgid "European Monetary Unit"
+msgstr "Unité monétaire européenne (U.M.E.-6)"
+
+#: includes/CurrencyCodesArray.php:505
+msgid "European Unit of Account 9"
+msgstr "Unité de compte 9 (U.E.C.-9)"
+
+#: includes/CurrencyCodesArray.php:508
+msgid "European Unit of Account 17"
+msgstr "Unité de compte 17 (U.E.C.-17)"
+
+#: includes/CurrencyCodesArray.php:511
+msgid "East Caribbean dollar"
+msgstr "Dollar est-caribéen"
+
+#: includes/CurrencyCodesArray.php:514
+msgid "Special drawing rights"
+msgstr "Droits de tirage spéciaux "
+
+#: includes/CurrencyCodesArray.php:517
+msgid "UIC franc (special settlement currency)"
+msgstr "Franc UIC (monnaie de règlement spéciale)"
+
+#: includes/CurrencyCodesArray.php:520
+msgid "CFA franc BCEAO"
+msgstr "Franc CFA (BCEAO)"
+
+#: includes/CurrencyCodesArray.php:523
+msgid "Palladium (one troy ounce)"
+msgstr "Palladium (libellé en onces)"
+
+#: includes/CurrencyCodesArray.php:526
+msgid "CFP franc"
+msgstr "Franc CFP (franc Pacifique)"
+
+#: includes/CurrencyCodesArray.php:529
+msgid "Platinum (one troy ounce)"
+msgstr "Platine (libellé en onces)"
+
+#: includes/CurrencyCodesArray.php:532
+msgid "Code reserved for testing purposes"
+msgstr "Code réservé pour effectuer des essais"
+
+#: includes/CurrencyCodesArray.php:535
+msgid "No currency "
+msgstr "Sans devise associée"
+
+#: includes/CurrencyCodesArray.php:538
+msgid "Yemeni rial"
+msgstr "Rial yéménite"
+
+#: includes/CurrencyCodesArray.php:541
+msgid "South African rand"
+msgstr "Rand sud-africain"
+
+#: includes/CurrencyCodesArray.php:544
+msgid "Zambian kwacha"
+msgstr "Kwacha zambien"
 
 #: includes/DefineCartClass.php:173
 msgid "The order line for"
@@ -44511,280 +45217,3 @@ msgstr "Valeur de retour"
 
 #~ msgid "Are you sure you wish to delete this customer type note?"
 #~ msgstr "Voulez-vous supprimer ce type de note client?"
-
-# JDN
-#~ msgid "Are you sure you wish to delete this sales area?"
-#~ msgstr "Voulez-vous supprimer cette zone?"
-
-# JDN
-#~ msgid ""
-#~ "At least one Customer Branch Name keyword OR an extract of a Customer "
-#~ "Branch Code or Branch Phone Number must be entered for the search"
-#~ msgstr ""
-#~ "Vous devez saisir un critère de recherche dans l'une des boîtes ci-dessous"
-
-#~ msgid "Supplier Tenders"
-#~ msgstr "Les offres des fournisseurs"
-
-#~ msgid "Add or Update Prices Based On Costs Or Other Price List"
-#~ msgstr ""
-#~ "Ajouter ou mettre à jour des prix</br> basés sur des coûts ou sur une "
-#~ "autre tarification"
-
-#~ msgid "Receivables/Payables"
-#~ msgstr "Encaissements/Versements"
-
-# JDN
-#~ msgid "Role Permissions"
-#~ msgstr "Gestion des autorisation d'accès"
-
-#~ msgid "Define Security Tokens"
-#~ msgstr "Gestion des rôles de sécurité"
-
-#~ msgid "Periods are automatically maintained"
-#~ msgstr "Les périodes sont gérées automatiquement"
-
-#~ msgid "Label Templates Maintainance"
-#~ msgstr "Gestion des étiquettes"
-
-#~ msgid "Correct data"
-#~ msgstr "Modifier les données"
-
-#~ msgid "New ID"
-#~ msgstr "Nouvel ID"
-
-#~ msgid "Edit data new label"
-#~ msgstr "Modifier l'étiquette de nouvelles données"
-
-#~ msgid "Edit data label"
-#~ msgstr "Modifier l'étiquette"
-
-#~ msgid "New label"
-#~ msgstr "Nouvelle étiquette"
-
-#~ msgid "There is no labels, create a new one"
-#~ msgstr "Il n'y a pas d'étiquettes, créer une nouvelle étiquette"
-
-#~ msgid "Id required"
-#~ msgstr "Id nécessaire"
-
-#~ msgid "This id exists in previous list"
-#~ msgstr "Cet identifiant existe dans la liste précédente"
-
-#~ msgid "the description is required"
-#~ msgstr "la description est nécessaire"
-
-#~ msgid "The value of"
-#~ msgstr "La valeur de"
-
-# JDN
-#~ msgid "would be numeric"
-#~ msgstr "doit être numérique"
-
-#~ msgid "requires a positive value"
-#~ msgstr "requiert une valeur positive"
-
-#~ msgid "would be a positive integer"
-#~ msgstr "doit être un entier positif"
-
-#~ msgid "requires to be greater than the height of the labels"
-#~ msgstr "a besoin d'être supérieure à la hauteur des étiquettes"
-
-#~ msgid ""
-#~ "requires to be greater than the height of all the rows, including the top "
-#~ "margin"
-#~ msgstr ""
-#~ "a besoin d'être supérieure à la hauteur de toutes les lignes, y compris "
-#~ "la marge supérieure"
-
-#~ msgid "requires to be greater than the width of the labels"
-#~ msgstr "a besoin d'être supérieure à la largeur des étiquettes"
-
-# JDN
-#~ msgid ""
-#~ "requires to be greater than the width of all the cols, including the left "
-#~ "margin"
-#~ msgstr ""
-#~ "doit être supérieure à la largeur de toutes les colonnes, marge de gauche "
-#~ "comprise"
-
-#~ msgid "The value of the vert. pos. would be less than"
-#~ msgstr "La valeur du vert. pos. serait inférieur à"
-
-#~ msgid "in this position exceeds the label height"
-#~ msgstr "dans cette position supérieure à la hauteur de l'étiquette"
-
-#~ msgid ""
-#~ "The position and lenght of the string leads the text to get out of the "
-#~ "label"
-#~ msgstr ""
-#~ "La position et la longueur de la chaîne entraîne le texte pour sortir de "
-#~ "l'étiquette"
-
-#~ msgid "Save"
-#~ msgstr "Enregistrer"
-
-#~ msgid "Label array"
-#~ msgstr "Matrice"
-
-#~ msgid "New"
-#~ msgstr "Ajouter"
-
-#~ msgid "Do you really want to erase the label"
-#~ msgstr "Voulez-vous effacer l'étiquette?"
-
-#~ msgid "Could not rename the previous file."
-#~ msgstr "Impossible de renommer le fichier précédent."
-
-#~ msgid "Could not create the new XML file."
-#~ msgstr "Impossible de créer le nouveau fichier XML."
-
-#~ msgid "Details Of Petty Cash Tab "
-#~ msgstr "Détails de \"Petty Cash Tab\""
-
-#~ msgid "update"
-#~ msgstr "mise à jour"
-
-#~ msgid "There isn't any label template to select for printing. Click"
-#~ msgstr ""
-#~ "Il n'y a pas de modèle d'étiquette pour sélectionner pour l'impression. "
-#~ "Cliquez sur"
-
-#~ msgid "HERE"
-#~ msgstr "ICI"
-
-#~ msgid "to set up a new one"
-#~ msgstr "de mettre en place un nouveau"
-
-#~ msgid "You must specify the number of labels per item required"
-#~ msgstr "Vous devez spécifier le nombre d'étiquettes par élément requis"
-
-#~ msgid "You must select the items to be printed"
-#~ msgstr "Vous devez sélectionner les éléments à imprimer"
-
-# JDN
-#~ msgid "There was an error. Consult your IT staff"
-#~ msgstr "une erreur est survenue. Contactez votre administrateur"
-
-# JDN
-#~ msgid "Label Sticker Printing"
-#~ msgstr "Imprimer des étiquette de prix"
-
-#~ msgid "Select label type"
-#~ msgstr "Sélectionner le type d'étiquette"
-
-#~ msgid "Number of labels per item"
-#~ msgstr "Nombre d'étiquettes par article"
-
-# JD
-#~ msgid "Price list"
-#~ msgstr "Tarif"
-
-#~ msgid "Effective Date"
-#~ msgstr "Date d'effet"
-
-#~ msgid "Update values"
-#~ msgstr "Mise à jour des valeurs"
-
-#~ msgid "Print labels with borders"
-#~ msgstr "Imprimer des étiquettes avec des marges"
-
-#~ msgid "Select a Category"
-#~ msgstr "Sélectionner une catégorie"
-
-#~ msgid "This category has no items to show"
-#~ msgstr "Cette catégorie ne contient aucun élément à afficher"
-
-#~ msgid "Unit not defined in scale operation! Correct the template"
-#~ msgstr ""
-#~ "L'appareil n'est pas défini dans le fonctionnement échelle! Corriger le "
-#~ "modèle"
-
-#~ msgid "Couldnt get the currency data"
-#~ msgstr "Ne pourrais pas obtenir les données de devises"
-
-#~ msgid ""
-#~ "At least one Supplier Name keyword OR an extract of a Supplier Code must "
-#~ "be entered for the search"
-#~ msgstr "Vous devez saisir au moins un critère de recherche. "
-
-#~ msgid "Use this report to display price list with the cost."
-#~ msgstr "Utilisez ce rapport pour afficher la liste de prix avec les coûts."
-
-# JDN
-#~ msgid ""
-#~ "At least one Account Name keyword OR an extract of an Account Code must "
-#~ "be entered for the search"
-#~ msgstr "Vous devez saisir au moins un critère pour la recherche"
-
-# JDN
-#~ msgid "could not be create because"
-#~ msgstr "n'a pas pu être créé(e) car"
-
-#~ msgid "Reord"
-#~ msgstr "Ré-assort"
-
-#~ msgid "Unable to delete the work order because"
-#~ msgstr "Impossible de supprimer la demande de travail car"
-
-#~ msgid "The SQL that failed to delete the work order was"
-#~ msgstr "Échec de la commande SQL de suppression de la commande de travail:"
-
-#~ msgid "The work order has been deleted"
-#~ msgstr "L'ordre de travail a été supprimé"
-
-#~ msgid "Delete This Work Order"
-#~ msgstr "Supprimer cet ordre de travail"
-
-#~ msgid "options"
-#~ msgstr "options"
-
-#~ msgid "Special Fixes and Utilities"
-#~ msgstr "Difficultés particulières et utilitaires"
-
-#~ msgid "Only System Administrator"
-#~ msgstr "Administrateur système seulement"
-
-#~ msgid ""
-#~ "BE VERY CAREFUL DO NOT RUN THESE LINKS BELOW WITHOUT UNDERSTANDING "
-#~ "EXACTLY WHAT THEY DO AND THE IMPLICATIONS"
-#~ msgstr ""
-#~ "AVERTISSEMENT N'utilisez pas les liens ci-dessous si vous ne savez pas ce "
-#~ "que vous faites"
-
-#~ msgid "Send All Unsent EDI Invoices and Credits"
-#~ msgstr "Envoyer toutes les Factures/Avoirs EDI non émis"
-
-#~ msgid "Image Manipulation Utility"
-#~ msgstr "Utilitaire de manipulation d'images"
-
-#~ msgid "The stuff below is really quite dangerous!"
-#~ msgstr "Le truc est vraiment très dangereux ci-dessous!"
-
-#~ msgid "To delete a credit note call"
-#~ msgstr "Pour supprimer un appel note de crédit"
-
-#~ msgid "and the credit note number to delete"
-#~ msgstr "et le numéro de note de crédit à supprimer"
-
-#~ msgid "To delete an invoice call"
-#~ msgstr "Pour supprimer un appel facture"
-
-#~ msgid "and the invoice number to delete"
-#~ msgstr "et le numéro de facture à supprimer"
-
-#~ msgid "Upload a file to the server"
-#~ msgstr "Charger un fichier sur le serveur"
-
-#~ msgid ""
-#~ "Show Debtors Control (Need to edit Z_CheckDebtorsControl.php for the "
-#~ "period to show control totals for"
-#~ msgstr ""
-#~ "Débiteurs Show Control (Nécessité de modifier Z_CheckDebtorsControl.php "
-#~ "pour la période pour voir les totaux de contrôle pour"
-
-#~ msgid "Working with"
-#~ msgstr "Traitement de"
-
-#~ msgid "out of"
-#~ msgstr "sur"
