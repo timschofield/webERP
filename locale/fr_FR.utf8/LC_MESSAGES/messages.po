@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: weberp 3.12\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-02-24 14:29+1300\n"
-"PO-Revision-Date: 2013-05-26 21:19-0600\n"
+"PO-Revision-Date: 2013-05-28 08:11-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: French <none>\n"
 "MIME-Version: 1.0\n"
@@ -38249,35 +38249,31 @@ msgstr ""
 
 #: includes/CountriesArray.php:5
 msgid "Andorra"
-msgstr ""
+msgstr "Andorre"
 
 #: includes/CountriesArray.php:6
 msgid "United Arab Emirates"
-msgstr ""
+msgstr "Émirats Arabes Unis"
 
 #: includes/CountriesArray.php:7
-#, fuzzy
 msgid "Afghanistan"
-msgstr "Albanais"
+msgstr "Afghanistan"
 
 #: includes/CountriesArray.php:8
 msgid "Antigua and Barbuda"
-msgstr ""
+msgstr "Antigua-et-Barbuda"
 
 #: includes/CountriesArray.php:9
-#, fuzzy
 msgid "Anguilla"
-msgstr "Annuellement"
+msgstr "Anguilla"
 
 #: includes/CountriesArray.php:10
-#, fuzzy
 msgid "Albania"
-msgstr "Albanais"
+msgstr "Albanie"
 
 #: includes/CountriesArray.php:11
-#, fuzzy
 msgid "Armenia"
-msgstr "Zone"
+msgstr "Arménie"
 
 #: includes/CountriesArray.php:12
 msgid "Antilles, Netherlands"
@@ -38285,143 +38281,127 @@ msgstr ""
 
 #: includes/CountriesArray.php:13
 msgid "Angola"
-msgstr ""
+msgstr "Angola"
 
 #: includes/CountriesArray.php:14
-#, fuzzy
 msgid "Argentina"
-msgstr "Zone"
+msgstr "Argentine"
 
 #: includes/CountriesArray.php:15
 msgid "American Samoa"
-msgstr ""
+msgstr "Samoa Américaines"
 
 #: includes/CountriesArray.php:16
-#, fuzzy
 msgid "Austria"
-msgstr "Autorisée"
+msgstr "Autriche"
 
 #: includes/CountriesArray.php:17
-#, fuzzy
 msgid "Australia"
-msgstr "Italien"
+msgstr "Australie"
 
 #: includes/CountriesArray.php:18
-#, fuzzy
 msgid "Aruba"
-msgstr "Zone"
+msgstr "Aruba"
 
 #: includes/CountriesArray.php:19
-#, fuzzy
 msgid "Azerbaijan"
-msgstr "Albanais"
+msgstr "Azerbaïdjan"
 
 #: includes/CountriesArray.php:20
 msgid "Bosnia and Herzegovina"
-msgstr ""
+msgstr "Bosnie-Herzégovine"
 
 #: includes/CountriesArray.php:21
 msgid "Barbados"
-msgstr ""
+msgstr "Barbade"
 
 #: includes/CountriesArray.php:22
 msgid "Bangladesh"
-msgstr ""
+msgstr "Bangladesh"
 
 #: includes/CountriesArray.php:23
-#, fuzzy
 msgid "Belgium"
-msgstr "Pour commencer:"
+msgstr "Belgique"
 
 #: includes/CountriesArray.php:24
 msgid "Burkina Faso"
-msgstr ""
+msgstr "Burkina Faso"
 
 #: includes/CountriesArray.php:25
-#, fuzzy
 msgid "Bulgaria"
-msgstr "Hongrois"
+msgstr "Bulgarie"
 
 #: includes/CountriesArray.php:26
-#, fuzzy
 msgid "Bahrain"
-msgstr "Succursale"
+msgstr "Bahreïn"
 
 #: includes/CountriesArray.php:27
 msgid "Burundi"
-msgstr ""
+msgstr "Burundi"
 
 #: includes/CountriesArray.php:28
-#, fuzzy
 msgid "Benin"
-msgstr "Pour commencer:"
+msgstr "Bénin"
 
 #: includes/CountriesArray.php:29
-#, fuzzy
 msgid "Bermuda"
-msgstr "Allemand"
+msgstr "Bermudes"
 
 #: includes/CountriesArray.php:30
 msgid "Brunei Darussalam"
-msgstr ""
+msgstr "Brunei Darussalam"
 
 #: includes/CountriesArray.php:31
 msgid "Bolivia"
-msgstr ""
+msgstr "Bolivie"
 
 #: includes/CountriesArray.php:32
 msgid "Brazil"
-msgstr ""
+msgstr "Brésil"
 
 #: includes/CountriesArray.php:33
 msgid "Bahamas, The"
-msgstr ""
+msgstr "Bahamas"
 
 #: includes/CountriesArray.php:34
-#, fuzzy
 msgid "Bhutan"
-msgstr "Banque"
+msgstr "Bhoutan"
 
 #: includes/CountriesArray.php:35
 msgid "Botswana"
-msgstr ""
+msgstr "Botswana"
 
 #: includes/CountriesArray.php:36
 msgid "Belarus"
-msgstr ""
+msgstr "Bélarus"
 
 #: includes/CountriesArray.php:37
-#, fuzzy
 msgid "Belize"
-msgstr "Taille"
+msgstr "Belize"
 
 #: includes/CountriesArray.php:38
-#, fuzzy
 msgid "Canada"
-msgstr "et"
+msgstr "Canada"
 
 #: includes/CountriesArray.php:39 includes/CountriesArray.php:41
-#, fuzzy
 msgid "Congo"
-msgstr "longue"
+msgstr "Congo"
 
 #: includes/CountriesArray.php:40
 msgid "Central African Republic"
-msgstr ""
+msgstr "Centrafricaine, République"
 
 #: includes/CountriesArray.php:42
 msgid "Switzerland"
-msgstr ""
+msgstr "Suisse"
 
-# JDN
 #: includes/CountriesArray.php:43
-#, fuzzy
 msgid "Cote D Ivoire"
-msgstr "Date de facturation"
+msgstr "Côte D'ivoire"
 
 #: includes/CountriesArray.php:44
 msgid "Cook Islands"
-msgstr ""
+msgstr "Cook, Îles"
 
 #: includes/CountriesArray.php:45
 msgid "Chile"
@@ -38429,7 +38409,7 @@ msgstr "Chili"
 
 #: includes/CountriesArray.php:46
 msgid "Cameroon"
-msgstr ""
+msgstr "Cameroun"
 
 #: includes/CountriesArray.php:47
 msgid "China"
@@ -38437,15 +38417,16 @@ msgstr "Chine"
 
 #: includes/CountriesArray.php:48
 msgid "Colombia"
-msgstr ""
+msgstr "Colombie"
 
 #: includes/CountriesArray.php:49
 msgid "Costa Rica"
 msgstr "Costa Rica"
 
 #: includes/CountriesArray.php:50
+#, fuzzy
 msgid "Montenegro"
-msgstr ""
+msgstr "Montenegro"
 
 #: includes/CountriesArray.php:51
 #, fuzzy
@@ -38454,32 +38435,27 @@ msgstr "Italien"
 
 #: includes/CountriesArray.php:52
 msgid "Cuba"
-msgstr ""
+msgstr "Cuba"
 
-# JDN
 #: includes/CountriesArray.php:53
-#, fuzzy
 msgid "Cape Verde"
-msgstr "Passer une commande"
+msgstr "Cap-Vert"
 
 #: includes/CountriesArray.php:54
-#, fuzzy
 msgid "Cyprus"
-msgstr "Client"
+msgstr "Chypre"
 
 #: includes/CountriesArray.php:55
 msgid "Czech Republic"
-msgstr ""
+msgstr "Tchèque, République"
 
 #: includes/CountriesArray.php:56
-#, fuzzy
 msgid "Germany"
-msgstr "Allemand"
+msgstr "Allemagne"
 
 #: includes/CountriesArray.php:57
-#, fuzzy
 msgid "Djibouti"
-msgstr "Remise"
+msgstr "Djibouti"
 
 #: includes/CountriesArray.php:58
 #, fuzzy
