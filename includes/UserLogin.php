@@ -93,12 +93,28 @@ function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
 				return  UL_CONFIGERR;
 			} else {
 				$i=0;
+				$UserIsSysAdmin = FALSE;
 				while ($myrow = DB_fetch_row($Sec_Result)){
+					if ($myrow[0] == 15){
+						$UserIsSysAdmin = TRUE;
+					}
 					$_SESSION['AllowedPageSecurityTokens'][$i] = $myrow[0];
 					$i++;
 				}
 			}
-			//  Temporary shift - disable log messages - how temporary?
+			// check if only maintenance users can access webERP
+			$sql = "SELECT confvalue FROM config WHERE confname = 'DB_Maintenance'";
+			$Maintenance_Result = DB_query($sql, $db);
+			if (DB_num_rows($Maintenance_Result)==0){
+				return  UL_CONFIGERR;
+			} else {
+				$myMaintenanceRow = DB_fetch_row($Maintenance_Result);
+				if (($myMaintenanceRow[0] == -1) AND ($UserIsSysAdmin == FALSE)){
+					// the configuration setting has been set to -1 ==> Allow SysAdmin Access Only
+					// the user is NOT a SysAdmin 
+					return  UL_MAINTENANCE;
+				}
+			}
 		} else {     // Incorrect password
 			// 5 login attempts, show failed login screen
 			if (!isset($_SESSION['AttemptsCounter'])) {

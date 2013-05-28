@@ -144,7 +144,7 @@ if (strcmp($Version,$_SESSION['VersionNumber'])>0 AND (basename($_SERVER['SCRIPT
 }
 
 if(isset($_SESSION['DB_Maintenance'])){
-	if ($_SESSION['DB_Maintenance']!=0)  {
+	if ($_SESSION['DB_Maintenance']>0)  {
 		if (DateDiff(Date($_SESSION['DefaultDateFormat']),
 				ConvertSQLDate($_SESSION['DB_Maintenance_LastRun'])
 				,'d')	>= 	$_SESSION['DB_Maintenance']){
