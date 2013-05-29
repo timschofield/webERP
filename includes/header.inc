@@ -39,7 +39,7 @@
 	}
 	echo '<link href="' . $RootPath . '/css/'. $_SESSION['Theme'] .'/default.css" rel="stylesheet" type="text/css" />';
 	echo '<script type="text/javascript" src = "'.$RootPath.'/javascripts/MiscFunctions.js"></script>
-		<script type="text/javascript" src = "'.$RootPath.'/javascripts/MiscFunctions.js"></script>
+		<script type="text/javascript" src = "'.$RootPath.'/javascripts/jquery-1.9.1.min.js"></script>
 		<script type="text/javascript" src = "'.$RootPath.'/javascripts/jquery.validate.min.js"></script>';
 	echo '</head>';
 	echo '<body>';
