@@ -150,6 +150,11 @@ if ((isset($_POST['UpdateStatus']) AND $_POST['UpdateStatus'] != '')) {
 
 			$ErrMsg = _('The order status could not be updated because');
 			$UpdateResult = DB_query($SQL, $db, $ErrMsg);
+
+			if ($_POST['Status']=='Completed' OR $_POST['Status']=='Cancelled' OR $_POST['Status']=='Rejected') {
+				$SQL = "UPDATE purchorderdetails SET completed=1 WHERE orderno='" . $_SESSION['ExistingOrder'] . "'";
+				$UpdateResult =DB_query($SQL,$db,$ErrMsg);
+			}
 		} //$OKToUpdateStatus == 1
 	} //end if there is actually a status change the class Status != the POST['Status']
 } //End if user hit Update Status
