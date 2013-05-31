@@ -217,20 +217,14 @@ If (isset($_POST['PrintPDF'])
 			if ($YPos < ($Bottom_Margin + (count($Split)*$line_height))){
 		 	  PageHeader();
 			}
-			for ($i=0; $i<=count($Split); $i++)	{
-				if(count($Split)==1){
-					$YPos -=(1*$line_height);
-					$LeftOvers = $pdf->addTextWrap(300,$YPos,300,$FontSize2,$Split[$i]);
-					$YPos -=(1*$line_height);
-					$LeftOvers = $pdf->addTextWrap(300,$YPos,300,$FontSize2,'');
-				}elseif(count($Split)==2){
-					$YPos -=(1*$line_height);
-					$LeftOvers = $pdf->addTextWrap(300,$YPos,300,$FontSize2,$Split[$i]);
-				}elseif(count($Split)>=3){
-					$YPos -=(1*$line_height);
-					$LeftOvers = $pdf->addTextWrap(300,$YPos,300,$FontSize2,$Split[$i]);
-				}
-			}/*end for*/
+
+			foreach ($Split as $TextLine) {
+				$YPos -= $line_height;
+				$LeftOvers = $pdf->addTextWrap(300,$YPos,300,$FontSize2,$TextLine);
+			}
+			$YPos -= $line_height;
+			$LeftOvers = $pdf->addTextWrap(300,$YPos,300,$FontSize2,'');
+
 		}/*end if full descriptions*/
 
 		if ($YPos < $Bottom_Margin + $line_height){
