@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-05-25 11:02+1200\n"
-"PO-Revision-Date: 2013-05-27 06:53-0600\n"
+"PO-Revision-Date: 2013-05-31 16:42-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -609,7 +609,7 @@ msgstr "El nombre del Contacto no puede estar vacío"
 
 #: AddCustomerContacts.php:48
 msgid "The contact email address is not a valid email address"
-msgstr "La dirección de Correo Electrónico no parece ser válida"
+msgstr "La dirección de correo electrónico no parece ser válida"
 
 #: AddCustomerContacts.php:59 AddCustomerNotes.php:51
 #: AddCustomerTypeNotes.php:48 Areas.php:72 CustomerTypes.php:69
@@ -664,7 +664,7 @@ msgstr "Número de teléfono"
 #: includes/PDFTransPageHeaderPortrait.inc:109
 #: includes/PO_PDFOrderPageHeader.inc:29
 msgid "Email"
-msgstr "Email"
+msgstr "Correo-e"
 
 #: AddCustomerContacts.php:130 AddCustomerContacts.php:250 Customers.php:1043
 #: Customers.php:1051 PcAssignCashToTab.php:241 PcAssignCashToTab.php:372
@@ -5920,7 +5920,7 @@ msgstr "Número de Teléfono del Contacto"
 #: CounterReturns.php:778 CounterSales.php:870 DeliveryDetails.php:1068
 #: RecurringSalesOrders.php:412
 msgid "Contact Email"
-msgstr "Correo Electrónico del Contacto"
+msgstr "Correo electrónico del contacto"
 
 #: CounterReturns.php:785 CounterSales.php:877 Credit_Invoice.php:1551
 #: DeliveryDetails.php:1087 SelectCreditItems.php:925
@@ -7212,7 +7212,7 @@ msgstr "Método de Comunicación EDI"
 
 #: CustEDISetup.php:138 CustEDISetup.php:141
 msgid "Email Attachments"
-msgstr "Adjuntos al eMail"
+msgstr "Adjuntos del correo-e"
 
 #: CustEDISetup.php:139 CustEDISetup.php:142
 msgid "File Transfer Protocol (FTP)"
@@ -7220,7 +7220,7 @@ msgstr "Protocolo de Transferencia de Archivos (FTP)"
 
 #: CustEDISetup.php:147
 msgid "FTP Server or Email Address"
-msgstr "Servidor FTP ó Dirección de Correo"
+msgstr "Servidor FTP ó Dirección de correo-e"
 
 #: CustEDISetup.php:153
 msgid "FTP Server User Name"
@@ -26129,9 +26129,8 @@ msgid "SMTP Server Settings"
 msgstr "Opciones del Servidor SMTP (Simple Mail Transfer Protocol)"
 
 #: SMTPServer.php:21
-#, fuzzy
 msgid "The email setting information failed to update"
-msgstr "La información de configuración del email fallo al actualizarse"
+msgstr "La información de configuración del correo-e falló al actualizarse"
 
 #: SMTPServer.php:22
 msgid "The SQL failed to update is "
@@ -26142,9 +26141,8 @@ msgid "The settings for the SMTP server have been successfully updated"
 msgstr "Los ajustes para el servidor SMTP se han actualizado correctamente"
 
 #: SMTPServer.php:42
-#, fuzzy
 msgid "The email settings failed to be inserted"
-msgstr "Los parámetros del email fallaron al tratar de colocarse"
+msgstr "Los parámetros del correo-e fallaron al tratar de colocarse"
 
 #: SMTPServer.php:43
 msgid "The SQL failed to insert the email information is"
