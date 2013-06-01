@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.10.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-05-25 11:02+1200\n"
-"PO-Revision-Date: 2013-05-26 22:55-0600\n"
+"PO-Revision-Date: 2013-06-01 11:23-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: WebERP Translation Team <web-erp-translation@lists."
 "sourceforge.net>\n"
@@ -36636,715 +36636,715 @@ msgstr ""
 msgid "Zimbabwe"
 msgstr ""
 
-#: includes/CurrencyCodesArray.php:13
+#: includes/CurrenciesArray.php:13
 msgid "United Arab Emirates dirham"
 msgstr "United Arab Emirates dirham"
 
-#: includes/CurrencyCodesArray.php:16
+#: includes/CurrenciesArray.php:16
 msgid "Afghan afghani"
 msgstr "Afghan afghani"
 
-#: includes/CurrencyCodesArray.php:19
+#: includes/CurrenciesArray.php:19
 msgid "Albanian lek"
 msgstr "Albanian lek"
 
-#: includes/CurrencyCodesArray.php:22
+#: includes/CurrenciesArray.php:22
 msgid "Armenian dram"
 msgstr "Armenian dram"
 
-#: includes/CurrencyCodesArray.php:25
+#: includes/CurrenciesArray.php:25
 msgid "Netherlands Antillean guilder"
 msgstr "Netherlands Antillean guilder"
 
-#: includes/CurrencyCodesArray.php:28
+#: includes/CurrenciesArray.php:28
 msgid "Angolan kwanza"
 msgstr "Angolan kwanza"
 
-#: includes/CurrencyCodesArray.php:31
+#: includes/CurrenciesArray.php:31
 msgid "Argentine peso"
 msgstr "Argentine peso"
 
-#: includes/CurrencyCodesArray.php:34
+#: includes/CurrenciesArray.php:34
 msgid "Australian dollar"
 msgstr "Australian dollar"
 
-#: includes/CurrencyCodesArray.php:37
+#: includes/CurrenciesArray.php:37
 msgid "Aruban florin"
 msgstr "Aruban florin"
 
-#: includes/CurrencyCodesArray.php:40
+#: includes/CurrenciesArray.php:40
 msgid "Azerbaijani manat"
 msgstr "Azerbaijani manat"
 
-#: includes/CurrencyCodesArray.php:43
+#: includes/CurrenciesArray.php:43
 msgid "Bosnia and Herzegovina convertible mark"
 msgstr "Bosnia and Herzegovina convertible mark"
 
-#: includes/CurrencyCodesArray.php:46
+#: includes/CurrenciesArray.php:46
 msgid "Barbados dollar"
 msgstr "Barbados dollar"
 
-#: includes/CurrencyCodesArray.php:49
+#: includes/CurrenciesArray.php:49
 msgid "Bangladeshi taka"
 msgstr "Bangladeshi taka"
 
-#: includes/CurrencyCodesArray.php:52
+#: includes/CurrenciesArray.php:52
 msgid "Bulgarian lev"
 msgstr "Bulgarian lev"
 
-#: includes/CurrencyCodesArray.php:55
+#: includes/CurrenciesArray.php:55
 msgid "Bahraini dinar"
 msgstr "Bahraini dinar"
 
-#: includes/CurrencyCodesArray.php:58
+#: includes/CurrenciesArray.php:58
 msgid "Burundian franc"
 msgstr "Burundian franc"
 
-#: includes/CurrencyCodesArray.php:61
+#: includes/CurrenciesArray.php:61
 msgid "Bermudian dollar"
 msgstr "Bermudian dollar"
 
-#: includes/CurrencyCodesArray.php:64
+#: includes/CurrenciesArray.php:64
 msgid "Brunei dollar"
 msgstr "Brunei dollar"
 
-#: includes/CurrencyCodesArray.php:67
+#: includes/CurrenciesArray.php:67
 msgid "Bolivian Boliviano"
 msgstr "Bolivian Boliviano"
 
-#: includes/CurrencyCodesArray.php:70
+#: includes/CurrenciesArray.php:70
 msgid "Bolivian Mvdol (funds code)"
 msgstr "Bolivian Mvdol (funds code)"
 
-#: includes/CurrencyCodesArray.php:73
+#: includes/CurrenciesArray.php:73
 msgid "Brazilian real"
 msgstr "Brazilian real"
 
-#: includes/CurrencyCodesArray.php:76
+#: includes/CurrenciesArray.php:76
 msgid "Bahamian dollar"
 msgstr "Bahamian dollar"
 
-#: includes/CurrencyCodesArray.php:79
+#: includes/CurrenciesArray.php:79
 msgid "Bhutanese ngultrum"
 msgstr "Bhutanese ngultrum"
 
-#: includes/CurrencyCodesArray.php:82
+#: includes/CurrenciesArray.php:82
 msgid "Botswana pula"
 msgstr "Botswana pula"
 
-#: includes/CurrencyCodesArray.php:85
+#: includes/CurrenciesArray.php:85
 msgid "Belarusian ruble"
 msgstr "Belarusian ruble"
 
-#: includes/CurrencyCodesArray.php:88
+#: includes/CurrenciesArray.php:88
 msgid "Belize dollar"
 msgstr "Belize dollar"
 
-#: includes/CurrencyCodesArray.php:91
+#: includes/CurrenciesArray.php:91
 msgid "Canadian dollar"
 msgstr "Canadian dollar"
 
-#: includes/CurrencyCodesArray.php:94
+#: includes/CurrenciesArray.php:94
 msgid "Congolese franc"
 msgstr "Congolese franc"
 
-#: includes/CurrencyCodesArray.php:97
+#: includes/CurrenciesArray.php:97
 msgid "Swiss WIR Euro (complementary currency)"
 msgstr "Swiss WIR Euro (complementary currency)"
 
-#: includes/CurrencyCodesArray.php:100
+#: includes/CurrenciesArray.php:100
 msgid "Swiss franc"
 msgstr "Swiss franc"
 
-#: includes/CurrencyCodesArray.php:103
+#: includes/CurrenciesArray.php:103
 msgid "Swiss WIR Franc (complementary currency)"
 msgstr "Swiss WIR Franc (complementary currency)"
 
-#: includes/CurrencyCodesArray.php:106
+#: includes/CurrenciesArray.php:106
 msgid "Chilean Unidad de Fomento (funds code)"
 msgstr "Chilean Unidad de Fomento (funds code)"
 
-#: includes/CurrencyCodesArray.php:109
+#: includes/CurrenciesArray.php:109
 msgid "Chilean peso"
 msgstr "Chilean peso"
 
-#: includes/CurrencyCodesArray.php:112
+#: includes/CurrenciesArray.php:112
 msgid "Chinese yuan"
 msgstr "Chinese yuan"
 
-#: includes/CurrencyCodesArray.php:115
+#: includes/CurrenciesArray.php:115
 msgid "Colombian peso"
 msgstr "Colombian peso"
 
-#: includes/CurrencyCodesArray.php:118
+#: includes/CurrenciesArray.php:118
 msgid "Colombian Unidad de Valor Real"
 msgstr "Colombian Unidad de Valor Real"
 
-#: includes/CurrencyCodesArray.php:121
+#: includes/CurrenciesArray.php:121
 msgid "Costa Rican colon"
 msgstr "Costa Rican colon"
 
-#: includes/CurrencyCodesArray.php:124
+#: includes/CurrenciesArray.php:124
 msgid "Cuban peso convertible"
 msgstr "Cuban peso convertible"
 
-#: includes/CurrencyCodesArray.php:127
+#: includes/CurrenciesArray.php:127
 msgid "Cuban peso"
 msgstr "Cuban peso"
 
-#: includes/CurrencyCodesArray.php:130
+#: includes/CurrenciesArray.php:130
 msgid "Cape Verde escudo"
 msgstr "Cape Verde escudo"
 
-#: includes/CurrencyCodesArray.php:133
+#: includes/CurrenciesArray.php:133
 msgid "Czech koruna"
 msgstr "Czech koruna"
 
-#: includes/CurrencyCodesArray.php:136
+#: includes/CurrenciesArray.php:136
 msgid "Djiboutian franc"
 msgstr "Djiboutian franc"
 
-#: includes/CurrencyCodesArray.php:139
+#: includes/CurrenciesArray.php:139
 msgid "Danish krone"
 msgstr "Danish krone"
 
-#: includes/CurrencyCodesArray.php:142
+#: includes/CurrenciesArray.php:142
 msgid "Dominican peso"
 msgstr "Dominican peso"
 
-#: includes/CurrencyCodesArray.php:145
+#: includes/CurrenciesArray.php:145
 msgid "Algerian dinar"
 msgstr "Algerian dinar"
 
-#: includes/CurrencyCodesArray.php:148
+#: includes/CurrenciesArray.php:148
 msgid "Egyptian pound"
 msgstr "Egyptian pound"
 
-#: includes/CurrencyCodesArray.php:151
+#: includes/CurrenciesArray.php:151
 msgid "Eritrean nakfa"
 msgstr "Eritrean nakfa"
 
-#: includes/CurrencyCodesArray.php:154
+#: includes/CurrenciesArray.php:154
 msgid "Ethiopian birr"
 msgstr "Ethiopian birr"
 
-#: includes/CurrencyCodesArray.php:157
+#: includes/CurrenciesArray.php:157
 msgid "European Union euro"
 msgstr "European Union euro"
 
-#: includes/CurrencyCodesArray.php:160
+#: includes/CurrenciesArray.php:160
 msgid "Fiji dollar"
 msgstr "Fiji dollar"
 
-#: includes/CurrencyCodesArray.php:163
+#: includes/CurrenciesArray.php:163
 msgid "Falkland Islands pound"
 msgstr "Falkland Islands pound"
 
-#: includes/CurrencyCodesArray.php:166
+#: includes/CurrenciesArray.php:166
 msgid "United Kingdom pound sterling"
 msgstr "United Kingdom pound sterling"
 
-#: includes/CurrencyCodesArray.php:169
+#: includes/CurrenciesArray.php:169
 msgid "Georgian lari"
 msgstr "Georgian lari"
 
-#: includes/CurrencyCodesArray.php:172
+#: includes/CurrenciesArray.php:172
 msgid "Ghanaian cedi"
 msgstr "Ghanaian cedi"
 
-#: includes/CurrencyCodesArray.php:175
+#: includes/CurrenciesArray.php:175
 msgid "Gibraltar pound"
 msgstr "Gibraltar pound"
 
-#: includes/CurrencyCodesArray.php:178
+#: includes/CurrenciesArray.php:178
 msgid "Gambian dalasi"
 msgstr "Gambian dalasi"
 
-#: includes/CurrencyCodesArray.php:181
+#: includes/CurrenciesArray.php:181
 msgid "Guinean franc"
 msgstr "Guinean franc"
 
-#: includes/CurrencyCodesArray.php:184
+#: includes/CurrenciesArray.php:184
 msgid "Guatemalan quetzal"
 msgstr "Guatemalan quetzal"
 
-#: includes/CurrencyCodesArray.php:187
+#: includes/CurrenciesArray.php:187
 msgid "Guyanese dollar"
 msgstr "Guyanese dollar"
 
-#: includes/CurrencyCodesArray.php:190
+#: includes/CurrenciesArray.php:190
 msgid "Hong Kong dollar"
 msgstr "Hong Kong dollar"
 
-#: includes/CurrencyCodesArray.php:193
+#: includes/CurrenciesArray.php:193
 msgid "Honduran lempira"
 msgstr "Honduran lempira"
 
-#: includes/CurrencyCodesArray.php:196
+#: includes/CurrenciesArray.php:196
 msgid "Croatian kuna"
 msgstr "Croatian kuna"
 
-#: includes/CurrencyCodesArray.php:199
+#: includes/CurrenciesArray.php:199
 msgid "Haitian gourde"
 msgstr "Haitian gourde"
 
-#: includes/CurrencyCodesArray.php:202
+#: includes/CurrenciesArray.php:202
 msgid "Hungarian forint"
 msgstr "Hungarian forint"
 
-#: includes/CurrencyCodesArray.php:205
+#: includes/CurrenciesArray.php:205
 msgid "Indonesian rupiah"
 msgstr "Indonesian rupiah"
 
-#: includes/CurrencyCodesArray.php:208
+#: includes/CurrenciesArray.php:208
 msgid "Israeli new shekel"
 msgstr "Israeli new shekel"
 
-#: includes/CurrencyCodesArray.php:211
+#: includes/CurrenciesArray.php:211
 msgid "Indian rupee"
 msgstr "Indian rupee"
 
-#: includes/CurrencyCodesArray.php:214
+#: includes/CurrenciesArray.php:214
 msgid "Iraqi dinar"
 msgstr "Iraqi dinar"
 
-#: includes/CurrencyCodesArray.php:217
+#: includes/CurrenciesArray.php:217
 msgid "Iranian rial"
 msgstr "Iranian rial"
 
-#: includes/CurrencyCodesArray.php:220
+#: includes/CurrenciesArray.php:220
 msgid "Icelandic króna"
 msgstr "Icelandic króna"
 
-#: includes/CurrencyCodesArray.php:223
+#: includes/CurrenciesArray.php:223
 msgid "Jamaican dollar"
 msgstr "Jamaican dollar"
 
-#: includes/CurrencyCodesArray.php:226
+#: includes/CurrenciesArray.php:226
 msgid "Jordanian dinar"
 msgstr "Jordanian dinar"
 
-#: includes/CurrencyCodesArray.php:229
+#: includes/CurrenciesArray.php:229
 msgid "Japanese yen"
 msgstr "Japanese yen"
 
-#: includes/CurrencyCodesArray.php:232
+#: includes/CurrenciesArray.php:232
 msgid "Kenyan shilling"
 msgstr "Kenyan shilling"
 
-#: includes/CurrencyCodesArray.php:235
+#: includes/CurrenciesArray.php:235
 msgid "Kyrgyzstani som"
 msgstr "Kyrgyzstani som"
 
-#: includes/CurrencyCodesArray.php:238
+#: includes/CurrenciesArray.php:238
 msgid "Cambodian riel"
 msgstr "Cambodian riel"
 
-#: includes/CurrencyCodesArray.php:241
+#: includes/CurrenciesArray.php:241
 msgid "Comoro franc"
 msgstr "Comoro franc"
 
-#: includes/CurrencyCodesArray.php:244
+#: includes/CurrenciesArray.php:244
 msgid "North Korean won"
 msgstr "North Korean won"
 
-#: includes/CurrencyCodesArray.php:247
+#: includes/CurrenciesArray.php:247
 msgid "South Korean won"
 msgstr "South Korean won"
 
-#: includes/CurrencyCodesArray.php:250
+#: includes/CurrenciesArray.php:250
 msgid "Kuwaiti dinar"
 msgstr "Kuwaiti dinar"
 
-#: includes/CurrencyCodesArray.php:253
+#: includes/CurrenciesArray.php:253
 msgid "Cayman Islands dollar"
 msgstr "Cayman Islands dollar"
 
-#: includes/CurrencyCodesArray.php:256
+#: includes/CurrenciesArray.php:256
 msgid "Kazakhstani tenge"
 msgstr "Kazakhstani tenge"
 
-#: includes/CurrencyCodesArray.php:259
+#: includes/CurrenciesArray.php:259
 msgid "Lao kip"
 msgstr "Lao kip"
 
-#: includes/CurrencyCodesArray.php:262
+#: includes/CurrenciesArray.php:262
 msgid "Lebanese pound"
 msgstr "Lebanese pound"
 
-#: includes/CurrencyCodesArray.php:265
+#: includes/CurrenciesArray.php:265
 msgid "Sri Lankan rupee"
 msgstr "Sri Lankan rupee"
 
-#: includes/CurrencyCodesArray.php:268
+#: includes/CurrenciesArray.php:268
 msgid "Liberian dollar"
 msgstr "Liberian dollar"
 
-#: includes/CurrencyCodesArray.php:271
+#: includes/CurrenciesArray.php:271
 msgid "Lesotho loti"
 msgstr "Lesotho loti"
 
-#: includes/CurrencyCodesArray.php:274
+#: includes/CurrenciesArray.php:274
 msgid "Lithuanian litas"
 msgstr "Lithuanian litas"
 
-#: includes/CurrencyCodesArray.php:277
+#: includes/CurrenciesArray.php:277
 msgid "Latvian lats"
 msgstr "Latvian lats"
 
-#: includes/CurrencyCodesArray.php:280
+#: includes/CurrenciesArray.php:280
 msgid "Libyan dinar"
 msgstr "Libyan dinar"
 
-#: includes/CurrencyCodesArray.php:283
+#: includes/CurrenciesArray.php:283
 msgid "Moroccan dirham"
 msgstr "Moroccan dirham"
 
-#: includes/CurrencyCodesArray.php:286
+#: includes/CurrenciesArray.php:286
 msgid "Moldovan leu"
 msgstr "Moldovan leu"
 
-#: includes/CurrencyCodesArray.php:289
+#: includes/CurrenciesArray.php:289
 msgid "Malagasy ariary"
 msgstr "Malagasy ariary"
 
-#: includes/CurrencyCodesArray.php:292
+#: includes/CurrenciesArray.php:292
 msgid "Macedonian denar"
 msgstr "Macedonian denar"
 
-#: includes/CurrencyCodesArray.php:295
+#: includes/CurrenciesArray.php:295
 msgid "Myanma kyat"
 msgstr "Myanma kyat"
 
-#: includes/CurrencyCodesArray.php:298
+#: includes/CurrenciesArray.php:298
 msgid "Mongolian tugrik"
 msgstr "Mongolian tugrik"
 
-#: includes/CurrencyCodesArray.php:301
+#: includes/CurrenciesArray.php:301
 msgid "Macanese pataca"
 msgstr "Macanese pataca"
 
-#: includes/CurrencyCodesArray.php:304
+#: includes/CurrenciesArray.php:304
 msgid "Mauritanian ouguiya"
 msgstr "Mauritanian ouguiya"
 
-#: includes/CurrencyCodesArray.php:307
+#: includes/CurrenciesArray.php:307
 msgid "Mauritian rupee"
 msgstr "Mauritian rupee"
 
-#: includes/CurrencyCodesArray.php:310
+#: includes/CurrenciesArray.php:310
 msgid "Maldivian rufiyaa"
 msgstr "Maldivian rufiyaa"
 
-#: includes/CurrencyCodesArray.php:313
+#: includes/CurrenciesArray.php:313
 msgid "Malawian kwacha"
 msgstr "Malawian kwacha"
 
-#: includes/CurrencyCodesArray.php:316
+#: includes/CurrenciesArray.php:316
 msgid "Mexican peso"
 msgstr "Mexican peso"
 
-#: includes/CurrencyCodesArray.php:319
+#: includes/CurrenciesArray.php:319
 msgid "Mexican Unidad de Inversion (funds code)"
 msgstr "Mexican Unidad de Inversion (funds code)"
 
-#: includes/CurrencyCodesArray.php:322
+#: includes/CurrenciesArray.php:322
 msgid "Malaysian ringgit"
 msgstr "Malaysian ringgit"
 
-#: includes/CurrencyCodesArray.php:325
+#: includes/CurrenciesArray.php:325
 msgid "Mozambican metical"
 msgstr "Mozambican metical"
 
-#: includes/CurrencyCodesArray.php:328
+#: includes/CurrenciesArray.php:328
 msgid "Namibian dollar"
 msgstr "Namibian dollar"
 
-#: includes/CurrencyCodesArray.php:331
+#: includes/CurrenciesArray.php:331
 msgid "Nigerian naira"
 msgstr "Nigerian naira"
 
-#: includes/CurrencyCodesArray.php:334
+#: includes/CurrenciesArray.php:334
 msgid "Nicaraguan córdoba"
 msgstr "Nicaraguan córdoba"
 
-#: includes/CurrencyCodesArray.php:337
+#: includes/CurrenciesArray.php:337
 msgid "Norwegian krone"
 msgstr "Norwegian krone"
 
-#: includes/CurrencyCodesArray.php:340
+#: includes/CurrenciesArray.php:340
 msgid "Nepalese rupee"
 msgstr "Nepalese rupee"
 
-#: includes/CurrencyCodesArray.php:343
+#: includes/CurrenciesArray.php:343
 msgid "New Zealand dollar"
 msgstr "New Zealand dollar"
 
-#: includes/CurrencyCodesArray.php:346
+#: includes/CurrenciesArray.php:346
 msgid "Omani rial"
 msgstr "Omani rial"
 
-#: includes/CurrencyCodesArray.php:349
+#: includes/CurrenciesArray.php:349
 msgid "Panamanian balboa"
 msgstr "Panamanian balboa"
 
-#: includes/CurrencyCodesArray.php:352
+#: includes/CurrenciesArray.php:352
 msgid "Peruvian nuevo sol"
 msgstr "Peruvian nuevo sol"
 
-#: includes/CurrencyCodesArray.php:355
+#: includes/CurrenciesArray.php:355
 msgid "Papua New Guinean kina"
 msgstr "Papua New Guinean kina"
 
-#: includes/CurrencyCodesArray.php:358
+#: includes/CurrenciesArray.php:358
 msgid "Philippine peso"
 msgstr "Philippine peso"
 
-#: includes/CurrencyCodesArray.php:361
+#: includes/CurrenciesArray.php:361
 msgid "Pakistani rupee"
 msgstr "Pakistani rupee"
 
-#: includes/CurrencyCodesArray.php:364
+#: includes/CurrenciesArray.php:364
 msgid "Polish złoty"
 msgstr "Polish złoty"
 
-#: includes/CurrencyCodesArray.php:367
+#: includes/CurrenciesArray.php:367
 msgid "Paraguayan guaraní"
 msgstr "Paraguayan guaraní"
 
-#: includes/CurrencyCodesArray.php:370
+#: includes/CurrenciesArray.php:370
 msgid "Qatari riyal"
 msgstr "Qatari riyal"
 
-#: includes/CurrencyCodesArray.php:373
+#: includes/CurrenciesArray.php:373
 msgid "Romanian new leu"
 msgstr "Romanian new leu"
 
-#: includes/CurrencyCodesArray.php:376
+#: includes/CurrenciesArray.php:376
 msgid "Serbian dinar"
 msgstr "Serbian dinar"
 
-#: includes/CurrencyCodesArray.php:379
+#: includes/CurrenciesArray.php:379
 msgid "Russian rouble"
 msgstr "Russian rouble"
 
-#: includes/CurrencyCodesArray.php:382
+#: includes/CurrenciesArray.php:382
 msgid "Rwandan franc"
 msgstr "Rwandan franc"
 
-#: includes/CurrencyCodesArray.php:385
+#: includes/CurrenciesArray.php:385
 msgid "Saudi riyal"
 msgstr "Saudi riyal"
 
-#: includes/CurrencyCodesArray.php:388
+#: includes/CurrenciesArray.php:388
 msgid "Solomon Islands dollar"
 msgstr "Solomon Islands dollar"
 
-#: includes/CurrencyCodesArray.php:391
+#: includes/CurrenciesArray.php:391
 msgid "Seychelles rupee"
 msgstr "Seychelles rupee"
 
-#: includes/CurrencyCodesArray.php:394
+#: includes/CurrenciesArray.php:394
 msgid "Sudanese pound"
 msgstr "Sudanese pound"
 
-#: includes/CurrencyCodesArray.php:397
+#: includes/CurrenciesArray.php:397
 msgid "Swedish krona"
 msgstr "Swedish krona"
 
-#: includes/CurrencyCodesArray.php:400
+#: includes/CurrenciesArray.php:400
 msgid "Singapore dollar"
 msgstr "Singapore dollar"
 
-#: includes/CurrencyCodesArray.php:403
+#: includes/CurrenciesArray.php:403
 msgid "Saint Helena pound"
 msgstr "Saint Helena pound"
 
-#: includes/CurrencyCodesArray.php:406
+#: includes/CurrenciesArray.php:406
 msgid "Sierra Leonean leone"
 msgstr "Sierra Leonean leone"
 
-#: includes/CurrencyCodesArray.php:409
+#: includes/CurrenciesArray.php:409
 msgid "Somali shilling"
 msgstr "Somali shilling"
 
-#: includes/CurrencyCodesArray.php:412
+#: includes/CurrenciesArray.php:412
 msgid "Surinamese dollar"
 msgstr "Surinamese dollar"
 
-#: includes/CurrencyCodesArray.php:415
+#: includes/CurrenciesArray.php:415
 msgid "South Sudanese pound"
 msgstr "South Sudanese pound"
 
-#: includes/CurrencyCodesArray.php:418
+#: includes/CurrenciesArray.php:418
 msgid "São Tomé and Príncipe dobra"
 msgstr "São Tomé and Príncipe dobra"
 
-#: includes/CurrencyCodesArray.php:421
+#: includes/CurrenciesArray.php:421
 msgid "Syrian pound"
 msgstr "Syrian pound"
 
-#: includes/CurrencyCodesArray.php:424
+#: includes/CurrenciesArray.php:424
 msgid "Swazi lilangeni"
 msgstr "Swazi lilangeni"
 
-#: includes/CurrencyCodesArray.php:427
+#: includes/CurrenciesArray.php:427
 msgid "Thai baht"
 msgstr "Thai baht"
 
-#: includes/CurrencyCodesArray.php:430
+#: includes/CurrenciesArray.php:430
 msgid "Tajikistani somoni"
 msgstr "Tajikistani somoni"
 
-#: includes/CurrencyCodesArray.php:433
+#: includes/CurrenciesArray.php:433
 msgid "Turkmenistani manat"
 msgstr "Turkmenistani manat"
 
-#: includes/CurrencyCodesArray.php:436
+#: includes/CurrenciesArray.php:436
 msgid "Tunisian dinar"
 msgstr "Tunisian dinar"
 
-#: includes/CurrencyCodesArray.php:439
+#: includes/CurrenciesArray.php:439
 msgid "Tongan paʻanga"
 msgstr "Tongan paʻanga"
 
-#: includes/CurrencyCodesArray.php:442
+#: includes/CurrenciesArray.php:442
 msgid "Turkish lira"
 msgstr "Turkish lira"
 
-#: includes/CurrencyCodesArray.php:445
+#: includes/CurrenciesArray.php:445
 msgid "Trinidad and Tobago dollar"
 msgstr "Trinidad and Tobago dollar"
 
-#: includes/CurrencyCodesArray.php:448
+#: includes/CurrenciesArray.php:448
 msgid "Taiwan new dollar"
 msgstr "Taiwan new dollar"
 
-#: includes/CurrencyCodesArray.php:451
+#: includes/CurrenciesArray.php:451
 msgid "Tanzanian shilling"
 msgstr "Tanzanian shilling"
 
-#: includes/CurrencyCodesArray.php:454
+#: includes/CurrenciesArray.php:454
 msgid "Ukrainian hryvnia"
 msgstr "Ukrainian hryvnia"
 
-#: includes/CurrencyCodesArray.php:457
+#: includes/CurrenciesArray.php:457
 msgid "Ugandan shilling"
 msgstr "Ugandan shilling"
 
-#: includes/CurrencyCodesArray.php:460
+#: includes/CurrenciesArray.php:460
 msgid "United States dollar"
 msgstr "United States dollar"
 
-#: includes/CurrencyCodesArray.php:463
+#: includes/CurrenciesArray.php:463
 msgid "United States dollar next day (funds code)"
 msgstr "United States dollar next day (funds code)"
 
-#: includes/CurrencyCodesArray.php:466
+#: includes/CurrenciesArray.php:466
 msgid "United States dollar same day (funds code)"
 msgstr "United States dollar same day (funds code)"
 
-#: includes/CurrencyCodesArray.php:469
+#: includes/CurrenciesArray.php:469
 msgid "Uruguayan unidad indexada (funds code)"
 msgstr "Uruguayan unidad indexada (funds code)"
 
-#: includes/CurrencyCodesArray.php:472
+#: includes/CurrenciesArray.php:472
 msgid "Uruguayan peso"
 msgstr "Uruguayan peso"
 
-#: includes/CurrencyCodesArray.php:475
+#: includes/CurrenciesArray.php:475
 msgid "Uzbekistan som"
 msgstr "Uzbekistan som"
 
-#: includes/CurrencyCodesArray.php:478
+#: includes/CurrenciesArray.php:478
 msgid "Venezuelan bolívar fuerte"
 msgstr "Venezuelan bolívar fuerte"
 
-#: includes/CurrencyCodesArray.php:481
+#: includes/CurrenciesArray.php:481
 msgid "Vietnamese dong"
 msgstr "Vietnamese dong"
 
-#: includes/CurrencyCodesArray.php:484
+#: includes/CurrenciesArray.php:484
 msgid "Vanuatu vatu"
 msgstr "Vanuatu vatu"
 
-#: includes/CurrencyCodesArray.php:487
+#: includes/CurrenciesArray.php:487
 msgid "Samoan tala"
 msgstr "Samoan tala"
 
-#: includes/CurrencyCodesArray.php:490
+#: includes/CurrenciesArray.php:490
 msgid "CFA franc BEAC"
 msgstr "CFA franc BEAC"
 
-#: includes/CurrencyCodesArray.php:493
+#: includes/CurrenciesArray.php:493
 msgid "Silver (one troy ounce)"
 msgstr "Silver (one troy ounce)"
 
-#: includes/CurrencyCodesArray.php:496
+#: includes/CurrenciesArray.php:496
 msgid "Gold (one troy ounce)"
 msgstr "Gold (one troy ounce)"
 
-#: includes/CurrencyCodesArray.php:499
+#: includes/CurrenciesArray.php:499
 msgid "European Composite Unit"
 msgstr "European Composite Unit"
 
-#: includes/CurrencyCodesArray.php:502
+#: includes/CurrenciesArray.php:502
 msgid "European Monetary Unit"
 msgstr "European Monetary Unit"
 
-#: includes/CurrencyCodesArray.php:505
+#: includes/CurrenciesArray.php:505
 msgid "European Unit of Account 9"
 msgstr "European Unit of Account 9"
 
-#: includes/CurrencyCodesArray.php:508
+#: includes/CurrenciesArray.php:508
 msgid "European Unit of Account 17"
 msgstr "European Unit of Account 17"
 
-#: includes/CurrencyCodesArray.php:511
+#: includes/CurrenciesArray.php:511
 msgid "East Caribbean dollar"
 msgstr "East Caribbean dollar"
 
-#: includes/CurrencyCodesArray.php:514
+#: includes/CurrenciesArray.php:514
 msgid "Special drawing rights"
 msgstr "Special drawing rights"
 
-#: includes/CurrencyCodesArray.php:517
+#: includes/CurrenciesArray.php:517
 msgid "UIC franc (special settlement currency)"
 msgstr "UIC franc (special settlement currency)"
 
-#: includes/CurrencyCodesArray.php:520
+#: includes/CurrenciesArray.php:520
 msgid "CFA franc BCEAO"
 msgstr "CFA franc BCEAO"
 
-#: includes/CurrencyCodesArray.php:523
+#: includes/CurrenciesArray.php:523
 msgid "Palladium (one troy ounce)"
 msgstr "Palladium (one troy ounce)"
 
-#: includes/CurrencyCodesArray.php:526
+#: includes/CurrenciesArray.php:526
 msgid "CFP franc"
 msgstr "CFP franc"
 
-#: includes/CurrencyCodesArray.php:529
+#: includes/CurrenciesArray.php:529
 msgid "Platinum (one troy ounce)"
 msgstr "Platinum (one troy ounce)"
 
-#: includes/CurrencyCodesArray.php:532
+#: includes/CurrenciesArray.php:532
 msgid "Code reserved for testing purposes"
 msgstr "Code reserved for testing purposes"
 
-#: includes/CurrencyCodesArray.php:535
+#: includes/CurrenciesArray.php:535
 msgid "No currency "
 msgstr "No currency "
 
-#: includes/CurrencyCodesArray.php:538
+#: includes/CurrenciesArray.php:538
 msgid "Yemeni rial"
 msgstr "Yemeni rial"
 
-#: includes/CurrencyCodesArray.php:541
+#: includes/CurrenciesArray.php:541
 msgid "South African rand"
 msgstr "South African rand"
 
-#: includes/CurrencyCodesArray.php:544
+#: includes/CurrenciesArray.php:544
 msgid "Zambian kwacha"
 msgstr "Zambian kwacha"
 
