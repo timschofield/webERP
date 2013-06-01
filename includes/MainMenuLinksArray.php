@@ -353,11 +353,11 @@ $MenuItems['GL']['Reports']['URL'] = array ('/GLTrialBalance.php',
 											'/GLTagProfit_Loss.php',
 											'/Tax.php' );
 
-$MenuItems['GL']['Maintenance']['Caption'] = array (_('GL Account'),
-													_('GL Budgets'),
-													_('Account Groups'),
-													_('Account Sections'),
-													_('GL Tags') );
+$MenuItems['GL']['Maintenance']['Caption'] = array (	_('GL Accounts'),
+											_('GL Budgets'),
+											_('Account Groups'),
+											_('Account Sections'),
+											_('GL Tags') );
 
 $MenuItems['GL']['Maintenance']['URL'] = array ('/GLAccounts.php',
 												'/GLBudgets.php',
@@ -498,24 +498,26 @@ $MenuItems['system']['Maintenance']['URL'] = array ('/StockCategories.php',
 													'/InternalStockCategoriesByRole.php' );
 
 $MenuItems['Utilities']['Transactions']['Caption'] = array (_('Change A Customer Code'),
-																_('Change A Customer Branch Code'),
-																_('Change A Supplier Code'),
-																_('Change An Inventory Item Code'),
-																_('Change A Location Code'),
-																_('Update costs for all BOM items, from the bottom up'),
-																_('Re-apply costs to Sales Analysis'),
-																_('Delete sales transactions'),
-																_('Reverse all supplier payments on a specified date'));
+												_('Change A Customer Branch Code'),
+												_('Change A Supplier Code'),
+												_('Change An Inventory Item Code'),
+												_('Change A GL Account Code'),
+												_('Change A Location Code'),
+												_('Update costs for all BOM items, from the bottom up'),
+												_('Re-apply costs to Sales Analysis'),
+												_('Delete sales transactions'),
+												_('Reverse all supplier payments on a specified date'));
 
-$MenuItems['Utilities']['Transactions']['URL'] = array ('/Z_ChangeCustomerCode.php',
-													'/Z_ChangeBranchCode.php',
-													'/Z_ChangeSupplierCode.php',
-													'/Z_ChangeStockCode.php',
-													'/Z_ChangeLocationCode.php',
-													'/Z_BottomUpCosts.php',
-													'/Z_ReApplyCostToSA.php',
-													'/Z_DeleteSalesTransActions.php',
-													'/Z_ReverseSuppPaymentRun.php');
+$MenuItems['Utilities']['Transactions']['URL'] = array (	'/Z_ChangeCustomerCode.php',
+								'/Z_ChangeBranchCode.php',
+								'/Z_ChangeSupplierCode.php',
+								'/Z_ChangeStockCode.php',
+								'/Z_ChangeGLAccountCode.php',
+								'/Z_ChangeLocationCode.php',
+								'/Z_BottomUpCosts.php',
+								'/Z_ReApplyCostToSA.php',
+								'/Z_DeleteSalesTransActions.php',
+								'/Z_ReverseSuppPaymentRun.php');
 
 $MenuItems['Utilities']['Reports']['Caption'] = array (_('Show Local Currency Total Debtor Balances'),
 													_('Show Local Currency Total Suppliers Balances'),
