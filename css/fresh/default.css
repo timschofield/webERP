@@ -103,6 +103,13 @@ select {
 	font-family: Arial, Verdana, Helvetica, sans-serif;;
 	font-size:12px;
 }
+input.inputerror, input.error, select.error, select.selecterror, label.error {
+	color:red;
+	border: 2px solid red;
+}
+input.required, select.required{
+	background-color:lightyellow;
+}
 textarea{
 }
 textarea:hover{

@@ -226,15 +226,17 @@ margin:0 auto;
 	margin:0px;
 	padding:0px;
 }
-input.inputerror{
-	background-color:#fddbdb;
+input.inputerror, input.error, select.error, select.selecterror, label.error {
+	color:red;
+	border: 2px solid red;
+}
+input.required, select.required{
+	background-color:lightyellow;
 }
 textarea.texterror{
 	background-color:#fddbdb;
 }
-select.selecterror{
-	background-color:#fddbdb;
-}
+
 .OsRow{
 	background-color:#234567;
 	color:white;

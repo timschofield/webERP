@@ -11,6 +11,47 @@ $BookMark = 'AccountGroups';
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
+?>
+<script>
+	/* jQuery/javascript code */
+	jQuery(document).ready(function() {
+		jQuery('.noSpecialChars').bind('input', function() {
+			jQuery(this).val($(this).val().replace(/[^a-z0-9_\-]/gi, ''));
+		});
+		$('.number').bind('input', function() {
+			$(this).val($(this).val().replace(/[^0-9]/gi, ''));
+		});
+		jQuery('#AccountGroups').validate({
+			rules: {
+				GroupName: {
+					minlength: 3
+				},
+				SequenceInTB: {
+					digits: true
+				}				
+			}, //end rules
+			messages : {
+				GroupName: {
+					required: "<?php echo _('The new account group name must be entered') ?>",
+					minlength: "<?php echo _('The account group is expected to be 3 characters or more long') ?>"
+				},
+				SequenceInTB: {
+					required: "<?php echo _('The sequence in the trial balance that the accounts under this account group should display must be entered') ?>",
+					digits: "<?php echo _('The sequence number can only contain digits') ?>"
+				}
+			}, //end messages
+		
+			errorPlacement: function(error, element) {
+				error.insertAfter(element);
+				error.prepend('<br />');
+			} // end errorPlacement
+		}); //end validation
+		}
+	);
+</script>
+
+<?php
+
 function CheckForRecursiveGroup ($ParentGroupName, $GroupName, $db) {
 
 /* returns true ie 1 if the group contains the parent group as a child group
@@ -33,6 +74,9 @@ ie the parent group results in a recursive group structure otherwise false ie 0 
 	} while ($myrow[0]!='');
 	return false;
 } //end of function CheckForRecursiveGroupName
+
+
+
 
 // If $Errors is set, then unset it.
 if (isset($Errors)) {
@@ -397,7 +441,7 @@ if (!isset($_GET['delete'])) {
 	}
 	echo '<tr>
 			<td>' . _('Account Group Name') . ':' . '</td>
-			<td><input tabindex="1" ' . (in_array('GroupName',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="GroupName" size="50" maxlength="50" value="' . $_POST['GroupName'] . '" /></td>
+			<td><input tabindex="1" class="required noSpecialChars' . (in_array('GroupName',$Errors) ?  ' inputerror' : '' ) . '" type="text" name="GroupName" size="30" maxlength="30" value="' . $_POST['GroupName'] . '" title="' . _('A unique name for the account group must be entered - at least 3 characters long and less than 30 characters long') . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Parent Group') . ':' . '</td>
@@ -438,7 +482,7 @@ if (!isset($_GET['delete'])) {
 		</tr>
 		<tr>
 			<td>' . _('Profit and Loss') . ':' . '</td>
-			<td><select tabindex="4" name="PandL">';
+			<td><select tabindex="4" name="PandL" title="' . _('Select YES if this account group will contain accounts that will consist of only profit and loss accounts or NO if the group will contain balance sheet account') . '">';
 
 	if ($_POST['PandL']!=0 ) {
 		echo '<option selected="selected" value="1">' . _('Yes').'</option>';
@@ -455,7 +499,7 @@ if (!isset($_GET['delete'])) {
 		</tr>
 		<tr>
 			<td>' . _('Sequence In TB') . ':' . '</td>
-			<td><input tabindex="5" type="text" maxlength="4" name="SequenceInTB" class="number" value="' . $_POST['SequenceInTB'] . '" /></td>
+			<td><input tabindex="5" type="text" maxlength="4" name="SequenceInTB" class="number required" value="' . $_POST['SequenceInTB'] . '" title="' . _('Enter the sequence number that this account group and its child general ledger accounts should display in the trial balance') . '" /></td>
 		</tr>
 		<tr>
 			<td colspan="2"><div class="centre"><input tabindex="6" type="submit" name="submit" value="' . _('Enter Information') . '" /></div></td>

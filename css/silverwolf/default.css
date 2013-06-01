@@ -127,7 +127,13 @@ input.image{
 	border-width:0px;
 	background-color:transparent;
 }
-
+input.inputerror, input.error, select.error, select.selecterror, label.error {
+	color:red;
+	border: 2px solid red;
+}
+input.required, select.required{
+	background-color:lightyellow;
+}
 select{
 	font-family:Arial, Verdana, Helvetica, sans-serif;
 	font-size:100%;

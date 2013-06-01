@@ -153,10 +153,13 @@ input.big {
 input.small {
 	width: 50px;
 }
-input.inputerror {
-	background-color: #fddbdb;
+input.inputerror, input.error, select.error, select.selecterror, label.error {
+	color:red;
+	border: 2px solid red;
 }
-
+input.required, select.required{
+	background-color:lightyellow;
+}
 /* for buttons ***HJ***/
 button{
 	font-size:10px;

@@ -108,9 +108,15 @@ input.image {
 input:hover{
 	background:#9ffffb;
 }
-
 select {
 	font-family: Arial, Verdana, Helvetica, sans-serif;
+}
+input.inputerror, input.error, select.error, select.selecterror, label.error {
+	color:red;
+	border: 2px solid red;
+}
+input.required, select.required{
+	background-color:lightyellow;
 }
 select:hover { /* drop down */
 	background:#9ffffb;

@@ -122,7 +122,13 @@ select { /* drop down */
 select:hover { /* drop down */
 	background:#fff791;
 }
-
+input.inputerror, input.error, select.error, select.selecterror, label.error {
+	color:red;
+	border: 2px solid red;
+}
+input.required, select.required{
+	background-color:lightyellow;
+}
 textarea{
 	font-family: Arial, Verdana, Helvetica, sans-serif;
 	font-size: 100%;
