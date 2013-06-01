@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: weberp 3.12\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-05-25 11:02+1200\n"
-"PO-Revision-Date: 2013-06-01 11:27-0600\n"
+"PO-Revision-Date: 2013-06-01 16:49-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: French <none>\n"
 "Language: fr_FR\n"
@@ -38691,7 +38691,6 @@ msgid "Costa Rica"
 msgstr "Costa Rica"
 
 #: includes/CountriesArray.php:48
-#, fuzzy
 msgid "Montenegro"
 msgstr "Montenegro"
 
@@ -38725,72 +38724,64 @@ msgid "Djibouti"
 msgstr "Djibouti"
 
 #: includes/CountriesArray.php:56
-#, fuzzy
 msgid "Denmark"
-msgstr "Remarques"
+msgstr "Danemark"
 
 #: includes/CountriesArray.php:57
-#, fuzzy
 msgid "Dominica"
-msgstr "Dénominateur"
+msgstr "Dominique"
 
 #: includes/CountriesArray.php:58
 msgid "Dominican Republic"
-msgstr ""
+msgstr "Dominicaine, République"
 
 #: includes/CountriesArray.php:59
 msgid "Algeria"
-msgstr ""
+msgstr "Algérie"
 
 #: includes/CountriesArray.php:60
 msgid "Ecuador"
-msgstr ""
+msgstr "Équateur"
 
 #: includes/CountriesArray.php:61
-#, fuzzy
 msgid "Estonia"
-msgstr "Estonien"
+msgstr "Estonie"
 
 #: includes/CountriesArray.php:62
 msgid "Egypt"
-msgstr ""
+msgstr "Égypte"
 
 #: includes/CountriesArray.php:63
-#, fuzzy
 msgid "Eritrea"
-msgstr "Critères"
+msgstr "Érythrée"
 
 #: includes/CountriesArray.php:64
-#, fuzzy
 msgid "Spain"
-msgstr "Principal"
+msgstr "Espagne"
 
 #: includes/CountriesArray.php:65
-#, fuzzy
 msgid "Ethiopia"
-msgstr "Estonien"
+msgstr "Éthiopie"
 
 #: includes/CountriesArray.php:66
-#, fuzzy
 msgid "Finland"
-msgstr "échec"
+msgstr "Finlande"
 
 #: includes/CountriesArray.php:67
 msgid "Fiji"
-msgstr ""
+msgstr "Fidji"
 
 #: includes/CountriesArray.php:68
 msgid "Falkland Islands"
 msgstr ""
 
 #: includes/CountriesArray.php:69
-#, fuzzy
 msgid "Micronesia"
-msgstr "Indonésien"
+msgstr "Micronésie, États Fédérés De"
 
 #: includes/CountriesArray.php:70
 msgid "Faroe Islands"
-msgstr ""
+msgstr "Féroé, Îles"
 
 #: includes/CountriesArray.php:71
 msgid "France"
@@ -38798,21 +38789,19 @@ msgstr "France"
 
 #: includes/CountriesArray.php:72
 msgid "Gabon"
-msgstr ""
+msgstr "Gabon"
 
 #: includes/CountriesArray.php:73
 msgid "Grenada"
-msgstr ""
+msgstr "Grenade"
 
 #: includes/CountriesArray.php:74
-#, fuzzy
 msgid "Georgia"
-msgstr "Allemand"
+msgstr "Géorgie"
 
 #: includes/CountriesArray.php:75
-#, fuzzy
 msgid "French Guiana"
-msgstr "Français"
+msgstr "Guyane Française"
 
 #: includes/CountriesArray.php:76
 msgid "Guernsey and Alderney"
