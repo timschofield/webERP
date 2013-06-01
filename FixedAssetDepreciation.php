@@ -120,6 +120,7 @@ while ($AssetRow=DB_fetch_array($AssetsResult)) {
 					<th colspan="2"></th>
 					<th class="number">' . locale_number_format($TotalCategoryDepn,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
 					</tr>';
+			$RowCounter = 0;
 		}
 		echo '<tr>
 				<th colspan="9" align="left">' . $AssetRow['categorydescription']  . '</th>
