@@ -119,11 +119,12 @@ if (isset($_POST['MakeCSV'])){
 
 	foreach ($_POST['Account'] as $SelectedAccount){
 		/*Is the account a balance sheet or a profit and loss account */
-		$result = DB_query("SELECT chartmaster.accountname,
+		$SQL = "SELECT chartmaster.accountname,
 								accountgroups.pandl
 							    FROM accountgroups
 							    INNER JOIN chartmaster ON accountgroups.groupname=chartmaster.group_
-							    WHERE chartmaster.accountcode=$SelectedAccount",$db);
+							    WHERE chartmaster.accountcode='" . $SelectedAccount . "'";
+		$result = DB_query($SQL,$db);
 		$AccountDetailRow = DB_fetch_row($result);
 		$AccountName = $AccountDetailRow[1];
 		if ($AccountDetailRow[1]==1){
