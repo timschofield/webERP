@@ -97,6 +97,13 @@ if (isset($_POST['submit'])) {
 	}
 	
 	if (isset($SelectedCurrency) AND $InputError !=1) {
+		/*Get the previous exchange rate. We will need it later to adjust bank account balances */
+		$SQLOldRate = "SELECT rate
+				FROM currencies
+				WHERE currabrev = '" . $SelectedCurrency . "'";
+		$ResultOldRate = DB_query($SQLOldRate, $db);
+		$myrow = DB_fetch_row($ResultOldRate);
+		$OldRate = $myrow[0];
 
 		/*SelectedCurrency could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
 		$sql = "UPDATE currencies SET	country='". $_POST['Country']. "',
@@ -105,8 +112,9 @@ if (isset($_POST['submit'])) {
 										rate='" .filter_number_format($_POST['ExchangeRate']) . "',
 										webcart='" .$_POST['webcart'] . "'
 					WHERE currabrev = '" . $SelectedCurrency . "'";
-
 		$msg = _('The currency definition record has been updated');
+		$NewRate = $_POST['ExchangeRate'];
+		
 	} else if ($InputError !=1) {
 
 	/*Selected currencies is null cos no item selected on first time round so must be adding a record must be submitting new entries in the new payment terms form */
@@ -124,14 +132,97 @@ if (isset($_POST['submit'])) {
 										'" . filter_number_format($_POST['DecimalPlaces']) . "',
 										'" . filter_number_format($_POST['ExchangeRate']) . "',
 										'" . $_POST['webcart'] . "')";
-
 		$msg = _('The currency definition record has been added');
 	}
 	//run the SQL from either of the above possibilites
+	$ExDiffTransNo = GetNextTransNo(36,$db);
+	$resultTx = DB_Txn_Begin($db);
+
 	$result = DB_query($sql,$db);
 	if ($InputError!=1){
 		prnMsg( $msg,'success');
 	}
+	
+	/* Now we should update the functional currency value of the bank accounts of the $SelectedCurrency
+	Example: if functional currency = IDR and we have a bank account in USD. 
+	Before rate was 1 USD = 9.000 IDR so OldRate = 1 /9.000 = 0.000111
+	if the new exchange rate is 1 USD = 10.000 IDR NewRate will be 0.0001. 
+	If we had 5.000 USD on the bank account, we had 45.000.000 IDR on the balance sheet. 
+	After we update to the new rate, we still have 5.000 USD on the bank account 
+	but the balance value of the bank account is 50.000.000 IDR, so let's adjust the value */
+	
+	if (isset($SelectedCurrency) AND $InputError !=1) {
+		/*Get the current period */
+		$PostingDate = Date($_SESSION['DefaultDateFormat']);
+		$PeriodNo = GetPeriod($PostingDate,$db);
+
+		/* get all the bank accounts denominated on the selected currency */
+		$SQLBankAccounts = "SELECT 	bankaccountname, 
+									accountcode
+							FROM bankaccounts
+							WHERE currcode = '" . $SelectedCurrency . "'";
+		$resultBankAccounts = DB_query($SQLBankAccounts,$db);
+		while ($myrowBankAccount=DB_fetch_array($resultBankAccounts)){
+
+			/*Get the balance of the bank account concerned */
+			$SQL = "SELECT bfwd+actual AS balance
+					FROM chartdetails
+					WHERE period='" . $PeriodNo . "'
+					AND accountcode='" . $myrowBankAccount['accountcode'] . "'";
+
+			$ErrMsg = _('The bank account balance could not be returned by the SQL because');
+			$BalanceResult = DB_query($SQL,$db,$ErrMsg);
+			$myrow = DB_fetch_row($BalanceResult);
+			$OldBalanceInFunctionalCurrency = $myrow[0];
+			$BalanceInAccountCurrency = $OldBalanceInFunctionalCurrency * $OldRate;
+			
+			/* Now calculate the Balance in functional currency at the new rate */
+			$NewBalanceInFucntionalCurrency = $BalanceInAccountCurrency / $NewRate;
+			
+			/* If some adjustment has to be done, do it! */
+			$DifferenceToAdjust = $NewBalanceInFucntionalCurrency - $OldBalanceInFunctionalCurrency;
+			if(OldRate != NewRate){
+
+				$SQL = "INSERT INTO gltrans (type,
+											typeno,
+											trandate,
+											periodno,
+											account,
+											narrative,
+											amount)
+										  VALUES (36,
+											'" . $ExDiffTransNo . "',
+											'" . FormatDateForSQL($PostingDate) . "',
+											'" . $PeriodNo . "',
+											'" . $_SESSION['CompanyRecord']['exchangediffact'] . "',
+											'" . $myrowBankAccount['bankaccountname'] . ' ' . _('currency rate adjustment to') . ' ' . locale_number_format($NewRate,8) . ' ' . $SelectedCurrency . '/' . $_SESSION['CompanyRecord']['currencydefault']. "',
+											'" . (-$DifferenceToAdjust) . "')";
+
+				$ErrMsg = _('Cannot insert a GL entry for the exchange difference because');
+				$DbgMsg = _('The SQL that failed to insert the exchange difference GL entry was');
+				$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+				$SQL = "INSERT INTO gltrans (type,
+											typeno,
+											trandate,
+											periodno,
+											account,
+											narrative,
+											amount)
+										  VALUES (36,
+											'" . $ExDiffTransNo . "',
+											'" . FormatDateForSQL($PostingDate) . "',
+											'" . $PeriodNo . "',
+											'" . $myrowBankAccount['accountcode'] . "',
+											'" . $myrowBankAccount['bankaccountname'] . ' ' . _('currency rate adjustment to') . ' ' . locale_number_format($NewRate,8) . ' ' . $SelectedCurrency . '/' . $_SESSION['CompanyRecord']['currencydefault']. "',
+											'" . ($DifferenceToAdjust) . "')";
+
+				$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+				prnMsg(_('Bank Account') . ' ' . $myrowBankAccount['bankaccountname'] . ' ' . _('Currency Rate difference of') . ' ' . locale_number_format($DifferenceToAdjust,$_SESSION['CompanyRecord']['decimalplaces']) . ' ' . _('has been posted'),'success');
+			}
+		}
+	}
+	$resultTx = DB_Txn_Commit($db);
+	
 	unset($SelectedCurrency);
 	unset($_POST['Country']);
 	unset($_POST['HundredsName']);
@@ -316,7 +407,7 @@ if (!isset($_GET['delete'])) {
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedCurrency) AND $SelectedCurrency!='') {
-		//editing an existing payment terms
+		//editing an existing currency
 
 		$sql = "SELECT currency,
 					currabrev,
