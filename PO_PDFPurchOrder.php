@@ -213,7 +213,8 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 						suppliers_partno
 				FROM purchorderdetails LEFT JOIN stockmaster
 					ON purchorderdetails.itemcode=stockmaster.stockid
-				WHERE orderno ='" . $OrderNo . "'";
+				WHERE orderno ='" . $OrderNo . "'
+				ORDER BY itemcode";	/*- ADDED: Sort by our item code -*/
 		$result = DB_query($sql, $db);
 	}
 	if ($OrderNo == 'Preview' or DB_num_rows($result) > 0) {
@@ -253,7 +254,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 			} else {
 				$DisplayLineTotal = '----';
 			}
-			$Desc = $POLine['suppliers_partno'] . " " . $POLine['itemdescription'];
+			$Desc = /*- DELETED: $POLine['suppliers_partno'] . " " . -*/ $POLine['itemdescription'];	/*- suppliers_partno is duplicated inside itemdescription -*/
 
 			$OrderTotal += ($POLine['unitprice'] * $POLine['quantityord']);
 

@@ -135,7 +135,8 @@ $LineItemsSQL = "SELECT purchorderdetails.*,
 				FROM purchorderdetails
 				LEFT JOIN stockmaster
 				ON purchorderdetails.itemcode=stockmaster.stockid
-				WHERE purchorderdetails.orderno = '" . $_GET['OrderNo'] ."'";
+				WHERE purchorderdetails.orderno = '" . $_GET['OrderNo'] ."'
+				ORDER BY itemcode";	/*- ADDED: Sort by our item code -*/
 
 $LineItemsResult = DB_query($LineItemsSQL,$db, $ErrMsg);
 
