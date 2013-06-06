@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-05-25 11:02+1200\n"
-"PO-Revision-Date: 2013-06-01 17:03-0600\n"
+"PO-Revision-Date: 2013-06-06 08:52-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -8818,7 +8818,7 @@ msgstr ""
 #: Suppliers.php:738 Suppliers.php:939 includes/MainMenuLinksArray.php:456
 #: includes/PO_PDFOrderPageHeader.inc:60 includes/PO_PDFOrderPageHeader.inc:62
 msgid "Payment Terms"
-msgstr "Condiciones de Pago"
+msgstr "Condiciones de pago"
 
 #: Customers.php:559
 msgid ""
@@ -10255,7 +10255,7 @@ msgstr "Cancelar el pedido si no es despachado antes de"
 
 #: EDIProcessOrders.php:269
 msgid "Order date"
-msgstr "Fecha del Pedido"
+msgstr "Fecha de pedido"
 
 #: EDIProcessOrders.php:275 EDIProcessOrders.php:277
 #: SupplierAllocations.php:437
@@ -10655,7 +10655,7 @@ msgstr "Confirmación de Pedido de Ventas"
 
 #: EmailConfirmation.php:144
 msgid "Your PO"
-msgstr "Su Orden de Compra"
+msgstr "Su orden de compra"
 
 #: EmailConfirmation.php:149 EmailConfirmation.php:288
 msgid "Email Confirmation"
@@ -10675,7 +10675,7 @@ msgstr "Despachado A"
 #: SelectOrderItems.php:1374 SelectOrderItems.php:1860
 #: SelectOrderItems.php:1892
 msgid "PO Line"
-msgstr "Línea de Orden de Compra"
+msgstr "Línea de orden de compra"
 
 #: EmailConfirmation.php:219 EmailConfirmation.php:349
 #: PO_AuthoriseMyOrders.php:114 WorkOrderIssue.php:537
@@ -11939,7 +11939,7 @@ msgstr "Pedidos de Cliente"
 #: includes/PDFTransPageHeaderPortrait.inc:66
 #: includes/PO_PDFOrderPageHeader.inc:51
 msgid "Order Date"
-msgstr "Fecha del Pedido"
+msgstr "Fecha de pedido"
 
 #: FTP_RadioBeacon.php:55 SelectCompletedOrder.php:610
 #: SelectSalesOrder.php:866 SelectSalesOrder.php:883
@@ -11957,7 +11957,7 @@ msgstr "Enviar a"
 #: PO_SelectPurchOrder.php:438 SelectCompletedOrder.php:612
 #: SelectRecurringSalesOrder.php:97 SelectSalesOrder.php:868
 msgid "Order Total"
-msgstr "Total Pedido"
+msgstr "Total del pedido"
 
 #: FTP_RadioBeacon.php:58
 msgid "Last Send"
@@ -13292,7 +13292,7 @@ msgstr "Recibir Artículos Controlados"
 
 #: GoodsReceivedControlled.php:27 GoodsReceived.php:31
 msgid "Select a purchase order to receive"
-msgstr "Seleccione un Orden de Compra para Aceptar"
+msgstr "Seleccione una orden de compra para recibir"
 
 #: GoodsReceivedControlled.php:30
 msgid ""
@@ -13314,7 +13314,7 @@ msgstr ""
 
 #: GoodsReceivedControlled.php:54
 msgid "Back to the Purchase Order"
-msgstr "Volver a la Orden de Compra"
+msgstr "Volver a la orden de compra"
 
 #: GoodsReceivedControlled.php:56
 msgid ""
@@ -13325,7 +13325,7 @@ msgstr ""
 
 #: GoodsReceivedControlled.php:66
 msgid "Back To Purchase Order"
-msgstr "Volver a Orden de Compra"
+msgstr "Volver a la orden de compra"
 
 #: GoodsReceivedControlled.php:68
 msgid "Receive controlled item"
@@ -13372,7 +13372,7 @@ msgstr "Recibir"
 
 #: GoodsReceived.php:73
 msgid "Receive Purchase Order"
-msgstr "Recibir Orden de Compra"
+msgstr "Recibir orden de compra"
 
 #: GoodsReceived.php:86
 msgid "Date Goods/Service Received"
@@ -13851,7 +13851,7 @@ msgstr "Ubicación de la Existencia: "
 #: InternalStockRequestAuthorisation.php:55
 #: InternalStockRequestFulfill.php:284
 msgid "Requested Date"
-msgstr "Fecha del Pedido"
+msgstr "Fecha solicitada"
 
 #: InternalStockRequestAuthorisation.php:57
 msgid "Authorise"
@@ -16800,7 +16800,7 @@ msgstr "Importe del Pago"
 
 #: PaymentTerms.php:7
 msgid "Payment Terms Maintenance"
-msgstr "Administrar Condiciones de Pago"
+msgstr "Administrar condiciones de pago"
 
 #: PaymentTerms.php:40
 msgid "The payment terms name must exist"
@@ -16921,7 +16921,7 @@ msgstr "Mostrar todas las definiciones de Plazos de Pago"
 
 #: PaymentTerms.php:256
 msgid "Update Payment Terms."
-msgstr "Actualizar Condiciones de pago."
+msgstr "Actualizar condiciones de pago."
 
 #: PaymentTerms.php:276
 msgid "New Payment Terms."
@@ -19127,7 +19127,7 @@ msgstr "Orden establecida en el estado de pendiente por"
 
 #: PO_Header.php:134
 msgid "You do not have permission to change the status of this purchase order"
-msgstr "No tiene permiso para cambiar el estado de esta Orden de Compra"
+msgstr "No tiene permiso para cambiar el estado de esta orden de compra"
 
 #: PO_Header.php:151
 msgid "The order status could not be updated because"
@@ -19205,11 +19205,11 @@ msgstr "Usted puede configurar las autorizaciones"
 #: PO_PDFPurchOrder.php:197 PO_PDFPurchOrder.php:342 SelectSalesOrder.php:230
 #: SelectSalesOrder.php:391 SpecialOrder.php:480
 msgid "Purchase Order"
-msgstr "Orden de Compra"
+msgstr "Orden de compra"
 
 #: PO_Header.php:524
 msgid "Purchase Order: Select Supplier"
-msgstr "Orden de Compra: Seleccionar Proveedor"
+msgstr "Orden de compra: Seleccionar proveedor"
 
 #: PO_Header.php:535
 msgid "Enter text in the supplier name"
@@ -19232,7 +19232,7 @@ msgstr "Nombre del Proveedor"
 
 #: PO_Header.php:608
 msgid " Modify Purchase Order Number"
-msgstr " Modificar Número de Orden de Compra"
+msgstr " Modificar número de orden de compra"
 
 #: PO_Header.php:613
 msgid "Purchase Item(s) with this code"
@@ -19240,7 +19240,7 @@ msgstr "Comprar artículo(s) con este código"
 
 #: PO_Header.php:622
 msgid "Enter Line Item to this purchase order"
-msgstr "Introducir Artículo en esta Orden de Compra"
+msgstr "Introducir artículo a esta orden de compra"
 
 #: PO_Header.php:700
 msgid "Order Initiation Details"
@@ -19248,7 +19248,7 @@ msgstr "Detalles de Iniciación de Pedidos"
 
 #: PO_Header.php:707
 msgid "PO Date"
-msgstr "Fecha de la Orden de Compra"
+msgstr "Fecha de orden de compra"
 
 #: PO_Header.php:731
 msgid "Version"
@@ -19343,7 +19343,7 @@ msgstr "Introduzca Filas de Artículos"
 
 #: PO_Items.php:12
 msgid "Purchase Order Items"
-msgstr "Artículos de la Orden de Compra"
+msgstr "Artículos de la orden de compra"
 
 #: PO_Items.php:31
 msgid "Back To Purchase Order Header"
@@ -19458,7 +19458,7 @@ msgstr ""
 
 #: PO_Items.php:241 PO_Items.php:384 SpecialOrder.php:481
 msgid "Print Purchase Order"
-msgstr "Imprimir Orden de Compra"
+msgstr "Imprimir orden de compra"
 
 #: PO_Items.php:255
 msgid "Order completed by"
@@ -19774,11 +19774,11 @@ msgstr "No se pudo obtener la información de compra para el artículo"
 
 #: PO_OrderDetails.php:8
 msgid "Reviewing Purchase Order Number"
-msgstr "Revisando el Número de Orden de Compra"
+msgstr "Revisando número de orden de compra"
 
 #: PO_OrderDetails.php:11
 msgid "Reviewing A Purchase Order"
-msgstr "Revisar una Orden de Compra"
+msgstr "Revisar una orden de compra"
 
 #: PO_OrderDetails.php:22
 msgid "The search of the GRNs was unsuccessful"
@@ -19807,7 +19807,7 @@ msgstr "el SQL produjo el siguiente error"
 
 #: PO_OrderDetails.php:67
 msgid "Unable to locate this PO Number"
-msgstr "No se pudo localizar este Número de Orden de Compra"
+msgstr "No se pudo localizar este número de orden de compra"
 
 #: PO_OrderDetails.php:67
 msgid "Please look up another one"
@@ -19880,20 +19880,20 @@ msgstr "Fecha Solicitada"
 
 #: PO_OrderDetails.php:207
 msgid "Total Order Value Excluding Tax"
-msgstr "Valor Total Pedidos sin Impuestos"
+msgstr "Valor total del pedido sin impuestos"
 
 #: PO_OrderDetails.php:210
 msgid "Total Order Value Received Excluding Tax"
-msgstr "Valor Total Pedidos Recibida sin Impuestos"
+msgstr "Valor total de la orden recibida sin impuestos"
 
 #: PO_PDFPurchOrder.php:10
 msgid "Select a Purchase Order"
-msgstr "Seleccionar una Orden de Compra"
+msgstr "Seleccionar una orden de compra"
 
 #: PO_PDFPurchOrder.php:13
 msgid "Select a Purchase Order Number to Print before calling this page"
 msgstr ""
-"Seleccione un número de Orden de Compra a Imprimir antes de llamar esta "
+"Seleccione un número de orden de compra a imprimir antes de llamar esta "
 "página"
 
 #: PO_PDFPurchOrder.php:20 PO_PDFPurchOrder.php:123
@@ -19945,7 +19945,7 @@ msgstr "Esta orden se encuentra actualmente en un estado de"
 
 #: PO_PDFPurchOrder.php:144
 msgid "Purchase Order Already Printed"
-msgstr "Orden de Compra ya impresa"
+msgstr "Orden de compra ya impresa"
 
 #: PO_PDFPurchOrder.php:147 PO_PDFPurchOrder.php:198 PO_PDFPurchOrder.php:323
 #: includes/PO_PDFOrderPageHeader.inc:12
@@ -19978,7 +19978,7 @@ msgstr "Seleccionar otra pedido"
 
 #: PO_PDFPurchOrder.php:305
 msgid "Order Total - excl tax"
-msgstr "Total Pedido - ex. imp."
+msgstr "Total del pedido - sin imp."
 
 #: PO_PDFPurchOrder.php:322
 msgid "Please find herewith our purchase order number"
@@ -19993,7 +19993,7 @@ msgstr ""
 
 #: PO_PDFPurchOrder.php:339 PO_PDFPurchOrder.php:345
 msgid "Email a Purchase Order"
-msgstr "Enviar Orden de Compra por E-Mail"
+msgstr "Enviar orden de compra por correo-e"
 
 #: PO_PDFPurchOrder.php:342 PrintCustTrans.php:490
 #: PrintCustTransPortrait.php:520
@@ -20006,7 +20006,7 @@ msgstr "como se solicito"
 
 #: PO_PDFPurchOrder.php:348
 msgid "Emailing Purchase order"
-msgstr "Enviando Orden de Compra por E-Mail"
+msgstr "Enviando prden de compra por correo-e"
 
 #: PO_PDFPurchOrder.php:348 Z_ChangeStockCode.php:256
 msgid "failed"
@@ -20044,7 +20044,7 @@ msgstr ""
 
 #: POReport.php:11 POReport.php:512 POReport.php:1286
 msgid "Purchase Order Report"
-msgstr "Informe de Orden de Compra"
+msgstr "Informe de orden de compra"
 
 #: POReport.php:492 POReport.php:545 POReport.php:631 POReport.php:745
 #: POReport.php:764 POReport.php:1268 POReport.php:1311 POReport.php:1362
@@ -22268,7 +22268,7 @@ msgstr "Reimprimir una Recepción"
 
 #: ReprintGRN.php:19
 msgid "Select a purchase order"
-msgstr "Seleccione una Orden de Compra"
+msgstr "Seleccione una orden de compra"
 
 #: ReprintGRN.php:22
 msgid "Enter a Purchase Order Number"
@@ -41688,7 +41688,7 @@ msgstr "ESTO NO ES UNA ORDEN o PEDIDO"
 
 #: includes/PO_PDFOrderPageHeader.inc:48
 msgid "Requisition Number"
-msgstr "Número de Solicitud"
+msgstr "Número de solicitud"
 
 #: includes/PO_PDFOrderPageHeader.inc:78
 msgid "Date Reqd"
