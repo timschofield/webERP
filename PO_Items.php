@@ -274,7 +274,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 										deladd4='" . $_SESSION['PO'.$identifier]->DelAdd4 . "',
 										deladd5='" . $_SESSION['PO'.$identifier]->DelAdd5 . "',
 										deladd6='" . $_SESSION['PO'.$identifier]->DelAdd6 . "',
-										deladd6='" . $_SESSION['PO'.$identifier]->Tel . "',
+										tel='" . $_SESSION['PO'.$identifier]->Tel . "',
 										suppdeladdress1='" . $_SESSION['PO'.$identifier]->SuppDelAdd1 . "',
 										suppdeladdress2='" . $_SESSION['PO'.$identifier]->SuppDelAdd2 . "',
 										suppdeladdress3='" . $_SESSION['PO'.$identifier]->SuppDelAdd3 . "',
@@ -389,9 +389,9 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 
 		$Result = DB_Txn_Commit($db);
 		/* Only show the link to auto receive the order if the user has permission to receive goods and permission to authorise and has authorised the order */
-		if ($_SESSION['PO'.$identifier]->Status == 'Authorised' 
+		if ($_SESSION['PO'.$identifier]->Status == 'Authorised'
                    AND in_array($_SESSION['PageSecurityArray']['GoodsReceived.php'], $_SESSION['AllowedPageSecurityTokens'])){
-		
+
                 	echo '<a href="SupplierInvoice.php?SupplierID=' . $_SESSION['PO'.$identifier]->SupplierID . '&amp;ReceivePO=' . $_SESSION['PO'.$identifier]->OrderNo . '&amp;DeliveryDate=' . $_SESSION['PO'.$identifier]->DeliveryDate . '">' . _('Receive and Enter Purchase Invoice') . '</a>';
 		}
 
@@ -656,7 +656,7 @@ if (isset($_POST['NewItem'])
 						$LeadTime=1;
 						$DeliveryDate = $_SESSION['PO'.$identifier]->DeliveryDate;
 					}
-					
+
 					$_SESSION['PO'.$identifier]->add_to_order ($_SESSION['PO'.$identifier]->LinesOnOrder+1,
 															$ItemCode,
 															0, /*Serialised */
