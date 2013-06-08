@@ -292,7 +292,7 @@ $CurrenciesArray['MGA']['NumericCode'] = '969';
 $CurrenciesArray['MKD']['Currency'] = _('Macedonian denar');
 $CurrenciesArray['MKD']['NumericCode'] = '807';
 
-$CurrenciesArray['MMK']['Currency'] = _('Myanma kyat');
+$CurrenciesArray['MMK']['Currency'] = _('Myanmar kyat');
 $CurrenciesArray['MMK']['NumericCode'] = '104';
 
 $CurrenciesArray['MNT']['Currency'] = _('Mongolian tugrik');
