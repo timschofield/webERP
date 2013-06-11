@@ -145,6 +145,11 @@
 			<x>71</x>
 			<y>274</y>
 		</Line4>
+		<Line5 type="SimpleText" name="Line 5" id="SupplierAddress5">
+			<FontSize>12</FontSize>
+			<x>71</x>
+			<y>286</y>
+		</Line5>
 	</SupplierAddress>
 	<RequisitionNumber type="SimpleText" name="Requisition Number" id="RequisitionNumber">
 		<FontSize>12</FontSize>
