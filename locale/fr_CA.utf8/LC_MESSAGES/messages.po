@@ -39639,7 +39639,7 @@ msgid "Code reserved for testing purposes"
 msgstr "Code réservé pour effectuer des essais"
 
 #: includes/CurrenciesArray.php:535
-msgid "No currency "
+msgid "No currency"
 msgstr "Sans devise associée"
 
 #: includes/CurrenciesArray.php:538

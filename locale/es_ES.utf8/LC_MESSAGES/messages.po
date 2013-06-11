@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-05-25 11:02+1200\n"
-"PO-Revision-Date: 2013-06-06 11:16-0600\n"
+"PO-Revision-Date: 2013-06-11 10:49-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -7354,7 +7354,7 @@ msgstr "A3"
 #: SuppLoginSetup.php:248 WWW_Users.php:583 WWW_Users.php:585
 #: WWW_Users.php:595 WWW_Users.php:597 WWW_Users.php:606 WWW_Users.php:608
 msgid "landscape"
-msgstr "Vertical"
+msgstr "horizontal"
 
 #: CustLoginSetup.php:209 CustLoginSetup.php:211 CustLoginSetup.php:215
 #: CustLoginSetup.php:217 SuppLoginSetup.php:229 SuppLoginSetup.php:231
@@ -21272,7 +21272,7 @@ msgstr "Seleccione Facturas/Abonos para imprimir"
 
 #: PrintCustTrans.php:512
 msgid "Print Invoices or Credit Notes (Landscape Mode)"
-msgstr "Imprimir Facturas o Abonos (notas de crédito) (apaisado)"
+msgstr "Imprimir facturas o notas de crédito (modo horizontal)"
 
 #: PrintCustTrans.php:514 PrintCustTransPortrait.php:546
 #: includes/MainMenuLinksArray.php:97
@@ -39379,7 +39379,7 @@ msgid "Code reserved for testing purposes"
 msgstr "Reservado para pruebas"
 
 #: includes/CurrenciesArray.php:535
-msgid "No currency "
+msgid "No currency"
 msgstr "Sin divisa"
 
 #: includes/CurrenciesArray.php:538

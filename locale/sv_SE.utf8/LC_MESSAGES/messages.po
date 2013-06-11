@@ -38730,7 +38730,7 @@ msgstr ""
 
 #: includes/CurrenciesArray.php:535
 #, fuzzy
-msgid "No currency "
+msgid "No currency"
 msgstr "Valuta "
 
 #: includes/CurrenciesArray.php:538

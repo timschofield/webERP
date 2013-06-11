@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.10.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-05-25 11:02+1200\n"
-"PO-Revision-Date: 2013-06-01 11:23-0600\n"
+"PO-Revision-Date: 2013-06-11 10:48-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: WebERP Translation Team <web-erp-translation@lists."
 "sourceforge.net>\n"
@@ -37333,8 +37333,8 @@ msgid "Code reserved for testing purposes"
 msgstr "Code reserved for testing purposes"
 
 #: includes/CurrenciesArray.php:535
-msgid "No currency "
-msgstr "No currency "
+msgid "No currency"
+msgstr "No currency"
 
 #: includes/CurrenciesArray.php:538
 msgid "Yemeni rial"

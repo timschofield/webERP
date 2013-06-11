@@ -1067,11 +1067,11 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 		</tr>
 		<tr>
 			<td>' . _('Address') . ' 4 :</td>
-			<td><input type="text" name="SuppDelAdd5" size="21" maxlength="20" value="' . $_POST['SuppDelAdd5'] . '" /></td>
+			<td><input type="text" name="SuppDelAdd4" size="41" maxlength="40" value="' . $_POST['SuppDelAdd4'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Address') . ' 5 :</td>
-			<td><input type="text" name="SuppDelAdd4" size="41" maxlength="40" value="' . $_POST['SuppDelAdd4'] . '" /></td>
+			<td><input type="text" name="SuppDelAdd5" size="41" maxlength="40" value="' . $_POST['SuppDelAdd5'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Phone') . ':</td>
