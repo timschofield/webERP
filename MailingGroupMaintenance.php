@@ -212,7 +212,7 @@ function GetUsers ($GroupId,$GroupName) {
 	<div class="centre"><a href="<?php echo htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'); ?>" /><?php echo _('View All Groups'); ?></a>
 
 <table class="selection">
-		<th colspan="3"><div class="centre"><?php echo _('Assigend Users'); ?></div></th>
+		<th colspan="3"><div class="centre"><?php echo _('Assigned Users'); ?></div></th>
 		<th colspan="3"><div class="centre"><?php echo _('Available Users'); ?></div></th>
 <?php
 	$k = 0;

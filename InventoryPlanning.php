@@ -338,7 +338,7 @@ if (isset($_POST['PrintPDF'])
 
 		$SuggestedTopUpOrder = $IdealStockHolding - $InventoryPlan['qoh'] + $TotalDemand - $OnOrdRow['qtyonorder'];
 		if ($SuggestedTopUpOrder <=0){
-			$LeftOvers = $pdf->addTextWrap(720, $YPos, 40,$FontSize,_('   '),'right');
+			$LeftOvers = $pdf->addTextWrap(720, $YPos, 40,$FontSize,'   ','right');
 
 		} else {
 

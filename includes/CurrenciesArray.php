@@ -532,7 +532,7 @@ $CurrenciesArray['XPT']['NumericCode'] = '962';
 $CurrenciesArray['XTS']['Currency'] = _('Code reserved for testing purposes');
 $CurrenciesArray['XTS']['NumericCode'] = '963';
 
-$CurrenciesArray['XXX']['Currency'] = _('No currency ');
+$CurrenciesArray['XXX']['Currency'] = _('No currency');
 $CurrenciesArray['XXX']['NumericCode'] = '999';
 
 $CurrenciesArray['YER']['Currency'] = _('Yemeni rial');
