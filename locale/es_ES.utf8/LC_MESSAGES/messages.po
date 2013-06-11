@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-05-25 11:02+1200\n"
-"PO-Revision-Date: 2013-06-06 09:12-0600\n"
+"PO-Revision-Date: 2013-06-06 11:16-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -3455,7 +3455,7 @@ msgstr "Código de artículo"
 #: includes/PDFStockNegativesHeader.inc:32
 #: includes/PO_PDFOrderPageHeader.inc:75
 msgid "Item Description"
-msgstr "Descripción de artículo"
+msgstr "Descripción del artículo"
 
 #: ConfirmDispatch_Invoice.php:288 GoodsReceived.php:101 GoodsReceived.php:105
 #: PDFOrdersInvoiced.php:352 PDFOrderStatus.php:323 Shipments.php:401
@@ -26381,7 +26381,7 @@ msgstr "TOTAL sin Impuestos"
 
 #: SpecialOrder.php:692
 msgid "Ordered item Description"
-msgstr "Descripción del artículo solicitado"
+msgstr "Descripción del artículo pedido"
 
 #: SpecialOrder.php:743
 msgid "Required Delivery Date"
@@ -27898,7 +27898,7 @@ msgstr "se requiere una descripción"
 
 #: Stocks.php:116 Z_ImportStocks.php:108
 msgid "The stock item description cannot be a zero length string"
-msgstr "La descripción del artículo del inventario no puede estar vacía"
+msgstr "La descripción del artículo de inventario no puede estar vacía"
 
 #: Stocks.php:116 Z_ImportStocks.php:108
 msgid "a long description is required"
@@ -39666,9 +39666,8 @@ msgid " Unit "
 msgstr "Unidad"
 
 #: includes/DefineTenderClass.php:45
-#, fuzzy
 msgid " Item Description"
-msgstr "Descripción de artículo"
+msgstr "Descripción del artículo"
 
 #: includes/DefineTenderClass.php:49
 msgid "Tender received from"

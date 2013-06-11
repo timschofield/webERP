@@ -109,7 +109,7 @@
 		<Line6 type="SimpleText" name="Line 6" id="DeliveryAddress6">
 			<FontSize>12</FontSize>
 			<x>448</x>
-			<y>214</y>
+			<y>214</y>supplier
 		</Line6>
 	</DeliveryAddress>
 	<DeliveryAddressBox type="CurvedRectangle" name="Delivery address box" id="DeliveryAddressBox">
