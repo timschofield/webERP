@@ -143,7 +143,7 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 				while ( $DetailRow = DB_fetch_array($DetailResult) ) {
 					if ( $TransRow['amount'] > 0){
 						if ($TransRow['account'] == $_SESSION['CompanyRecord']['debtorsact']) {
-							$Debit = locale_number_format(($DetailRow['ovamount'] + $DetailRow['ovgst']+ $DetailRow['ovreight']) / $DetailRow['rate'],$_SESSION['CompanyRecord']['decimalplaces']);
+							$Debit = locale_number_format(($DetailRow['ovamount'] + $DetailRow['ovgst']+ $DetailRow['ovfreight']) / $DetailRow['rate'],$_SESSION['CompanyRecord']['decimalplaces']);
 							$Credit = '&nbsp;';
 						} else {
 							$Debit = locale_number_format((-$DetailRow['ovamount'] - $DetailRow['ovgst']) / $DetailRow['rate'],$_SESSION['CompanyRecord']['decimalplaces']);
