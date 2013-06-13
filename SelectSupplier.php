@@ -135,12 +135,16 @@ if (isset($_POST['Search'])
 		$myrow = DB_fetch_row($result);
 		$SingleSupplierReturned = $myrow[0];
 	}
+	if (isset($SingleSupplierReturned)) { /*there was only one supplier returned */
+ 	   $_SESSION['SupplierID'] = $SingleSupplierReturned;
+	   unset($_POST['Keywords']);
+	   unset($_POST['SupplierCode']);
+	   unset($_POST['Search']);
+        } else {
+               unset($_SESSION['SupplierID']);
+        }
 } //end of if search
-if (isset($SingleSupplierReturned)) { /*there was only one supplier returned */
-	$_SESSION['SupplierID'] = $SingleSupplierReturned;
-	unset($_POST['Keywords']);
-	unset($_POST['SupplierCode']);
-}
+
 if (isset($_SESSION['SupplierID'])) {
 	$SupplierName = '';
 	$SQL = "SELECT suppliers.suppname
