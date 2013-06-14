@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-05-25 11:02+1200\n"
-"PO-Revision-Date: 2013-06-11 10:49-0600\n"
+"PO-Revision-Date: 2013-06-14 09:28-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -5251,7 +5251,7 @@ msgstr ""
 
 #: Contracts.php:388
 msgid "Go to Quotation"
-msgstr "Ir al Presupuesto"
+msgstr "Ir a la cotización"
 
 #: Contracts.php:422
 msgid "The new contract could not be added because"
@@ -5646,11 +5646,11 @@ msgstr "Realizar los cambios"
 
 #: Contracts.php:1066
 msgid "Update Quotation"
-msgstr "Actualizar Cotización"
+msgstr "Actualizar cotización"
 
 #: Contracts.php:1069
 msgid "Create Quotation"
-msgstr "Crear Cotización"
+msgstr "Crear cotización"
 
 #: Contracts.php:1077
 msgid "Cancel and Delete Contract"
@@ -9383,7 +9383,7 @@ msgstr "El costo de transporte debe ser numérico"
 
 #: DeliveryDetails.php:73 RecurringSalesOrders.php:208
 msgid "A recurring order cannot be made from a quotation"
-msgstr "Un pedido frecuente no se puede hacer partiendo de una oferta"
+msgstr "Un pedido frecuente no se puede hacer partiendo de una cotización"
 
 #: DeliveryDetails.php:77
 msgid "You must select the type of packlist to print"
@@ -9481,7 +9481,7 @@ msgstr "SQL usado para encontrar los términos (condiciones) del cliente"
 
 #: DeliveryDetails.php:578 DeliveryDetails.php:790
 msgid "Quotation Number"
-msgstr "Número de Oferta"
+msgstr "Número de cotización"
 
 #: DeliveryDetails.php:591 DeliveryDetails.php:595 DeliveryDetails.php:817
 #: SpecialOrder.php:576 SpecialOrder.php:577
@@ -9502,11 +9502,11 @@ msgstr "Confirmar la Nota de Entrega y Generar Factura"
 
 #: DeliveryDetails.php:610 DeliveryDetails.php:796
 msgid "Print Quotation (Landscape)"
-msgstr "Imprimir Cotización (Horizontal)"
+msgstr "Imprimir cotización (horizontal)"
 
 #: DeliveryDetails.php:616 DeliveryDetails.php:802
 msgid "Print Quotation (Portrait)"
-msgstr "Imprimir Cotización (Vertical)"
+msgstr "Imprimir cotización (vertical)"
 
 #: DeliveryDetails.php:623
 msgid "Add Another Sales Order"
@@ -9566,7 +9566,7 @@ msgstr "Detalles de la Entrega"
 
 #: DeliveryDetails.php:854
 msgid "Quotation Summary"
-msgstr "Resumen de la Oferta"
+msgstr "Resumen de la cotización"
 
 #: DeliveryDetails.php:856 DeliveryDetails.php:927
 msgid "Order Summary"
@@ -9689,7 +9689,7 @@ msgstr "El SQL usado para obtener los detalles del transportista fue"
 
 #: DeliveryDetails.php:1165
 msgid "Quotation Only"
-msgstr "Sólo oferta"
+msgstr "Sólo cotización"
 
 #: DeliveryDetails.php:1182
 msgid "Place Order"
@@ -18470,11 +18470,11 @@ msgstr "Mostrar Etiquetas"
 
 #: PDFQuotation.php:10 PDFQuotationPortrait.php:10
 msgid "Select Quotation To Print"
-msgstr "Seleccionar Oferta a Imprimir"
+msgstr "Seleccionar cotización a Imprimir"
 
 #: PDFQuotation.php:16 PDFQuotationPortrait.php:16
 msgid "Select a Quotation to Print before calling this page"
-msgstr "Seleccione una Oferta a Imprimir antes de invocar esta página"
+msgstr "Seleccione una cotización a imprimir antes de invocar esta página"
 
 #: PDFQuotation.php:23 PDFQuotationPortrait.php:23
 msgid "Quotations"
@@ -18484,13 +18484,13 @@ msgstr "Cotizaciones"
 msgid ""
 "There was a problem retrieving the quotation header details for Order Number"
 msgstr ""
-"Hubo un problema al obtener los detalles de la cabecera de la Oferta para el "
-"Número de Pedido"
+"Hubo un problema al obtener los detalles de la cabecera de la cotización "
+"para el Número de Pedido"
 
 #: PDFQuotation.php:77 PDFQuotation.php:268 PDFQuotationPortrait.php:79
 #: PDFQuotationPortrait.php:264
 msgid "Print Quotation Error"
-msgstr "Error al Imprimir la Oferta"
+msgstr "Error al imprimir la cotización"
 
 #: PDFQuotation.php:83 PDFQuotationPortrait.php:85
 msgid "Unable to Locate Quotation Number"
@@ -18498,11 +18498,11 @@ msgstr "No se pudo Localizar el Número de Oferta"
 
 #: PDFQuotation.php:90 PDFQuotationPortrait.php:92
 msgid "Outstanding Quotations"
-msgstr "Ofertas Pendientes"
+msgstr "Cotizaciones pendientes"
 
 #: PDFQuotation.php:112 PDFQuotationPortrait.php:113
 msgid "Customer Quotation"
-msgstr "Oferta a Cliente"
+msgstr "Cotización a cliente"
 
 #: PDFQuotation.php:113 PDFQuotationPortrait.php:114 SalesInquiry.php:1058
 #: includes/PDFQuotationPageHeader.inc:15
@@ -18524,11 +18524,11 @@ msgstr "Total Impuestos"
 
 #: PDFQuotation.php:236 PDFQuotationPortrait.php:254
 msgid "Quotation Excluding Tax"
-msgstr "Oferta No Incluyendo Impuestos"
+msgstr "Cotización sin impuestos"
 
 #: PDFQuotation.php:239 PDFQuotationPortrait.php:257
 msgid "Quotation Including Tax"
-msgstr "Oferta Incluyendo Impuestos"
+msgstr "Cotización con impuestos"
 
 #: PDFQuotation.php:243 PDFQuotationPortrait.php:231
 msgid "Notes:"
@@ -18536,15 +18536,15 @@ msgstr "Notas:"
 
 #: PDFQuotation.php:270 PDFQuotationPortrait.php:266
 msgid "There were no items on the quotation"
-msgstr "No hubo artículos en la oferta"
+msgstr "No hubo artículos en la cotización"
 
 #: PDFQuotation.php:270 PDFQuotationPortrait.php:266
 msgid "The quotation cannot be printed"
-msgstr "No se puede imprimir la oferta"
+msgstr "No se puede imprimir la cotización"
 
 #: PDFQuotation.php:271 PDFQuotationPortrait.php:267
 msgid "Print Another Quotation"
-msgstr "Imprimir Otra Oferta"
+msgstr "Imprimir otra cotización"
 
 #: PDFReceipt.php:9
 msgid "Sales Receipt"
@@ -23532,7 +23532,7 @@ msgstr "Tipo de Orden - Pedidos de Venta"
 
 #: SalesInquiry.php:775
 msgid "Order Type - Quotations"
-msgstr "Tipo de Orden - Ofertas"
+msgstr "Tipo de Orden - cotizaciones"
 
 #: SalesInquiry.php:799 SalesInquiry.php:1073
 msgid "Invoice Type"
@@ -24718,7 +24718,7 @@ msgstr ""
 
 #: SelectOrderItems.php:610
 msgid "Enter an Order or Quotation"
-msgstr "Indique un Pedido u Oferta"
+msgstr "Indique un pedido o cotización"
 
 #: SelectOrderItems.php:610
 msgid "Search for the Customer Branch."
@@ -24729,8 +24729,8 @@ msgid ""
 "Orders/Quotations are placed against the Customer Branch. A Customer may "
 "have several Branches."
 msgstr ""
-"Los Pedidos/Ofertas se guardan por Sucursales de Clientes. Un Cliente puede "
-"tener varias Sucursales."
+"Los Pedidos/cotizaciones se guardan por Sucursales de Clientes. Un Cliente "
+"puede tener varias Sucursales."
 
 #: SelectOrderItems.php:704
 msgid ""
@@ -24764,7 +24764,7 @@ msgstr "Este pedido de venta ha sido cancelado como se requirió"
 
 #: SelectOrderItems.php:742
 msgid "Quotation for customer"
-msgstr "Oferta para el cliente"
+msgstr "Cotización para cliente"
 
 #: SelectOrderItems.php:744
 msgid "Order for customer"
@@ -25176,7 +25176,7 @@ msgstr "El Número de Orden debe ser un número"
 
 #: SelectSalesOrder.php:555 SelectSalesOrder.php:559
 msgid "Quotations Only"
-msgstr "Sólo Ofertas"
+msgstr "Sólo cotizaciones"
 
 #: SelectSalesOrder.php:556 SelectSalesOrder.php:558
 msgid "Orders Only"
@@ -25192,7 +25192,7 @@ msgstr "Introducir extractos de texto en la descripción"
 
 #: SelectSalesOrder.php:840
 msgid "No orders or quotations were returned by the SQL because"
-msgstr "El SQL no devolvió ningún pedido ni oferta porque"
+msgstr "El SQL no devolvió ningún pedido ni cotización porque"
 
 #: SelectSalesOrder.php:861
 msgid "Dispatch Note"
@@ -40029,7 +40029,7 @@ msgstr "Compras"
 
 #: includes/MainMenuLinksArray.php:29
 msgid "Enter An Order or Quotation"
-msgstr "Introducir un Pedido u Oferta"
+msgstr "Introducir un pedido o cotización"
 
 #: includes/MainMenuLinksArray.php:30
 msgid "Enter Counter Sales"
@@ -40041,7 +40041,7 @@ msgstr "Ingresar devolución por mostrador"
 
 #: includes/MainMenuLinksArray.php:33
 msgid "Outstanding Sales Orders/Quotations"
-msgstr "Pedidos/Ofertas de Venta Pendientes"
+msgstr "Pedidos de venta/cotizaciones pendientes"
 
 #: includes/MainMenuLinksArray.php:34
 msgid "Special Order"
@@ -42276,7 +42276,7 @@ msgstr "Fecha de Entrega Inválida"
 
 #: api/api_errorcodes.php:271
 msgid "Invalid Quotation Flag"
-msgstr "Refrencia de Oferta Inválida"
+msgstr "Referencia de cotización inválida"
 
 #: api/api_errorcodes.php:272
 msgid "Order header not setup"
