@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-05-25 11:02+1200\n"
-"PO-Revision-Date: 2013-06-14 09:28-0600\n"
+"PO-Revision-Date: 2013-06-14 09:47-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -17775,7 +17775,7 @@ msgstr "Volúmen de Ventas"
 #: includes/PDFQuotationPortraitPageHeader.inc:22
 #: includes/PDFSalesOrder_generic.inc:34
 msgid "Ph"
-msgstr "Tel."
+msgstr "Tel"
 
 #: PDFCustomerList.php:368
 msgid "Customer Details Listing"

@@ -230,11 +230,11 @@ if (DB_num_rows($result)>0){
 	} //end if need a new page headed up
 
 	$YPos -= ($line_height);
-	$LeftOvers = $pdf->addTextWrap(40,$YPos,655,$FontSize,_('Total Tax'),'right');
-	$LeftOvers = $pdf->addTextWrap(700,$YPos,90,$FontSize,locale_number_format($TaxTotal,$myrow['currdecimalplaces']),'right');
-	$YPos -= 12;
 	$LeftOvers = $pdf->addTextWrap(40,$YPos,655,$FontSize,_('Quotation Excluding Tax'),'right');
 	$LeftOvers = $pdf->addTextWrap(700,$YPos,90,$FontSize,locale_number_format($QuotationTotalEx,$myrow['currdecimalplaces']),'right');
+	$YPos -= 12;
+	$LeftOvers = $pdf->addTextWrap(40,$YPos,655,$FontSize,_('Total Tax'),'right');
+	$LeftOvers = $pdf->addTextWrap(700,$YPos,90,$FontSize,locale_number_format($TaxTotal,$myrow['currdecimalplaces']),'right');
 	$YPos -= 12;
 	$LeftOvers = $pdf->addTextWrap(40,$YPos,655,$FontSize,_('Quotation Including Tax'),'right');
 	$LeftOvers = $pdf->addTextWrap(700,$YPos,90,$FontSize,locale_number_format($QuotationTotal,$myrow['currdecimalplaces']),'right');
