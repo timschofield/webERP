@@ -69,6 +69,7 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 		$Posted = _('Yes');
 		$CreditTotal = 0;
 		$DebitTotal = 0;
+		$AnalysisCompleted = 'Not Yet';
 		$j=1;
 		while ( $TransRow = DB_fetch_array($TransResult) ) {
 			$TranDate = ConvertSQLDate($TransRow['trandate']);
@@ -86,7 +87,7 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 			if ( $TransRow['posted']==0 ){
 				$Posted = _('No');
 			}
-			if ( $TransRow['account'] == $_SESSION['CompanyRecord']['debtorsact'] )	{
+			if ( $TransRow['account'] == $_SESSION['CompanyRecord']['debtorsact'] AND $AnalysisCompleted == 'Not Yet')	{
 					$URL = $RootPath . '/CustomerInquiry.php?CustomerID=';
 					$date = '&amp;TransAfterDate=' . $TranDate;
 
@@ -101,7 +102,8 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 									WHERE debtortrans.type = '" . $TransRow['type'] . "'
 									AND debtortrans.transno = '" . $_GET['TransNo']. "'";
 					$DetailResult = DB_query($DetailSQL,$db);
-			} elseif ( $TransRow['account'] == $_SESSION['CompanyRecord']['creditorsact'] )	{
+					
+			} elseif ( $TransRow['account'] == $_SESSION['CompanyRecord']['creditorsact'] AND $AnalysisCompleted == 'Not Yet' )	{
 					$URL = $RootPath . '/SupplierInquiry.php?SupplierID=';
 					$date = '&amp;FromDate=' . $TranDate;
 
@@ -115,6 +117,7 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 									WHERE supptrans.type = '" . $TransRow['type'] . "'
 									AND supptrans.transno = '" . $_GET['TransNo'] . "'";
 					$DetailResult = DB_query($DetailSQL,$db);
+					
 			} else {
 					$URL = $RootPath . '/GLAccountInquiry.php?Account=' . $TransRow['account'];
 
@@ -139,14 +142,15 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 							</tr>';
 			}
 
-			if ($DetailResult) {
+			if ($DetailResult AND $AnalysisCompleted == 'Not Yet') {
+				
 				while ( $DetailRow = DB_fetch_array($DetailResult) ) {
 					if ( $TransRow['amount'] > 0){
 						if ($TransRow['account'] == $_SESSION['CompanyRecord']['debtorsact']) {
 							$Debit = locale_number_format(($DetailRow['ovamount'] + $DetailRow['ovgst']+ $DetailRow['ovfreight']) / $DetailRow['rate'],$_SESSION['CompanyRecord']['decimalplaces']);
 							$Credit = '&nbsp;';
 						} else {
-							$Debit = locale_number_format((-$DetailRow['ovamount'] - $DetailRow['ovgst']) / $DetailRow['rate'],$_SESSION['CompanyRecord']['decimalplaces']);
+							$Debit = locale_number_format(($DetailRow['ovamount'] + $DetailRow['ovgst']) / $DetailRow['rate'],$_SESSION['CompanyRecord']['decimalplaces']);
 							$Credit = '&nbsp;';
 						}
 					} else {
@@ -154,7 +158,7 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 							$Credit = locale_number_format(-($DetailRow['ovamount'] + $DetailRow['ovgst'] + $DetailRow['ovfreight']) / $DetailRow['rate'],$_SESSION['CompanyRecord']['decimalplaces']);
 							$Debit = '&nbsp;';
 						} else {
-							$Credit = locale_number_format(($DetailRow['ovamount'] + $DetailRow['ovgst']) / $DetailRow['rate'],$_SESSION['CompanyRecord']['decimalplaces']);
+							$Credit = locale_number_format(-($DetailRow['ovamount'] + $DetailRow['ovgst']) / $DetailRow['rate'],$_SESSION['CompanyRecord']['decimalplaces']);
 							$Debit = '&nbsp;';
 						}
 					}
@@ -176,6 +180,7 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 							</tr>';
 				}
 				DB_free_result($DetailResult);
+				$AnalysisCompleted = 'Done';
 			}
 		}
 		DB_free_result($TransResult);

@@ -887,6 +887,9 @@ echo '</select></td>
 if (!isset($_SESSION['ReceiptBatch']->Narrative)) {
 	$_SESSION['ReceiptBatch']->Narrative='';
 }
+if (!isset($_POST['Currency'])){
+	$_POST['Currency'] = $_SESSION['CompanyRecord']['currencydefault'];
+}
 echo '<tr>
 		<td>' . _('Narrative') . ':</td>
 		<td><input tabindex="7" type="text" name="BatchNarrative" maxlength="50" size="52" value="' . $_SESSION['ReceiptBatch']->Narrative . '" /></td>
