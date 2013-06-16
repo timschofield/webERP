@@ -244,7 +244,7 @@ if (DB_num_rows($result) > 0) {
 		if (in_array(5,$_SESSION['AllowedPageSecurityTokens'])) {
 			echo '<td>' . $myrow['currency'] . '</td>
 				<td>' .  $myrow['sales_type'] . '</td>
-				<td class="number">' .locale_number_forma($myrow['price'],4) . '</td>
+				<td class="number">' .locale_number_format($myrow['price'],$myrow['currdecimalplaces']+1) . '</td>
 				<td>' . ConvertSQLDate($myrow['startdate']) . '</td>
 				<td>' . $EndDateDisplay . '</td>
 				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Item=' . $myrow['stockid'] . '&amp;TypeAbbrev=' .$myrow['typeabbrev'] . '&amp;CurrAbrev=' . $myrow['currabrev'] . '&amp;Price=' . $myrow['price'] . '&amp;StartDate=' . $myrow['startdate'] . '&amp;EndDate=' . $myrow['enddate'] . '&amp;Edit=1">' . _('Edit') . '</a></td>
@@ -253,7 +253,7 @@ if (DB_num_rows($result) > 0) {
 		} else {
 			echo '<td>' . $myrow['currency'] . '</td>
 				<td>' .  $myrow['sales_type'] . '</td>
-				<td class="number">' . locale_number_forma($myrow['price'],4)  . '</td>
+				<td class="number">' . locale_number_format($myrow['price'],$myrow['currdecimalplaces']+1)  . '</td>
 				<td>' . ConvertSQLDate($myrow['startdate']) . '</td>
 				<td>' . $EndDateDisplay . '</td></tr>';
 		}
