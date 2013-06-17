@@ -363,8 +363,8 @@ if (isset($_POST['SearchSuppliers'])) {
 
 
 if ((!isset($_POST['SearchSuppliers']) or $_POST['SearchSuppliers'] == '') AND (isset($_SESSION['PO' . $identifier]->SupplierID) AND $_SESSION['PO' . $identifier]->SupplierID != '')) {
-	/*The session variables are set but the form variables could have been lost
-	 * need to restore the form variables from the session */
+	/*	The session variables are set but the form variables could have been lost
+		need to restore the form variables from the session */
 	$_POST['SupplierID'] = $_SESSION['PO' . $identifier]->SupplierID;
 	$_POST['SupplierName'] = $_SESSION['PO' . $identifier]->SupplierName;
 	$_POST['CurrCode'] = $_SESSION['PO' . $identifier]->CurrCode;
@@ -983,11 +983,11 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 		</tr>
 		<tr>
 			<td>' . _('Address') . ' 4 :</td>
-			<td><input type="text" name="DelAdd4" size="21" maxlength="20" value="' . $_POST['DelAdd4'] . '" /></td>
+			<td><input type="text" name="DelAdd4" size="41" maxlength="40" value="' . $_POST['DelAdd4'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Address') . ' 5 :</td>
-			<td><input type="text" name="DelAdd5" size="16" maxlength="15" value="' . $_POST['DelAdd5'] . '" /></td>
+			<td><input type="text" name="DelAdd5" size="21" maxlength="20" value="' . $_POST['DelAdd5'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Address') . ' 6 :</td>
@@ -1071,7 +1071,11 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 		</tr>
 		<tr>
 			<td>' . _('Address') . ' 5 :</td>
-			<td><input type="text" name="SuppDelAdd5" size="41" maxlength="40" value="' . $_POST['SuppDelAdd5'] . '" /></td>
+			<td><input type="text" name="SuppDelAdd5" size="41" maxlength="20" value="' . $_POST['SuppDelAdd5'] . '" /></td>
+		</tr>
+		<tr>
+			<td>' . _('Address') . ' 6 :</td>
+			<td><input type="text" name="SuppDelAdd5" size="16" maxlength="15" value="' . $_POST['SuppDelAdd6'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Phone') . ':</td>
