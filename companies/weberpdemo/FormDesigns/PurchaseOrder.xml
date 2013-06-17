@@ -3,10 +3,10 @@
 	<PaperSize name="Paper size">A4_Landscape</PaperSize>
 	<LineHeight name="Line height">16</LineHeight>
 	<logo type="image" name="Logo" id="Logo">
-		<x>0</x>
-		<y>62</y>
+		<x>-5</x>
+		<y>124</y>
 		<width>0</width>
-		<height>60</height>
+		<height>120</height>
 	</logo>
 	<OrderNumber type="SimpleText" name="Order Number" id="OrderNumber">
 		<FontSize>15</FontSize>
@@ -23,16 +23,16 @@
 		<x>762</x>
 		<y>30</y>
 	</PageNumber>
-	<TaxAuthority type="SimpleText" name="Tax Authority" id="TaxAuthority">
-		<FontSize>10</FontSize>
-		<x>40</x>
-		<y>106</y>
-	</TaxAuthority>
 	<CompanyName type="SimpleText" name="Company name" id="CompanyName">
 		<FontSize>10</FontSize>
 		<x>40</x>
-		<y>122</y>
+		<y>112</y>
 	</CompanyName>
+	<TaxAuthority type="SimpleText" name="Tax Authority" id="TaxAuthority">
+		<FontSize>10</FontSize>
+		<x>40</x>
+		<y>122</y>
+	</TaxAuthority>
 	<CompanyAddress type="ElementArray" name="Company address">
 		<Line1 type="SimpleText" name="Line 1" id="CompanyAddress1">
 			<FontSize>10</FontSize>
@@ -106,18 +106,13 @@
 			<x>448</x>
 			<y>202</y>
 		</Line5>
-		<Line6 type="SimpleText" name="Line 6" id="DeliveryAddress6">
-			<FontSize>12</FontSize>
-			<x>448</x>
-			<y>214</y>
-		</Line6>
 	</DeliveryAddress>
 	<DeliveryAddressBox type="CurvedRectangle" name="Delivery address box" id="DeliveryAddressBox">
-		<x>446</x>
-		<y>145</y>
+		<x>436</x>
+		<y>142</y>
 		<width>240</width>
-		<height>80</height>
-		<radius>10</radius>
+		<height>72</height>
+		<radius>12</radius>
 	</DeliveryAddressBox>
 	<SupplierName type="SimpleText" name="Supplier name" id="SupplierName">
 		<FontSize>12</FontSize>
@@ -246,7 +241,7 @@
 		<Column3 type="DataText" name="Column 3" id="Data3">
 			<FontSize>10</FontSize>
 			<x>441</x>
-			<Length>85</Length>
+			<Length>40</Length>
 		</Column3>
 		<Column4 type="DataText" name="Column 4" id="Data4">
 			<FontSize>10</FontSize>
@@ -277,7 +272,7 @@
 	<OrderTotal type="MultiLineText" name="Order total" id="OrderTotal">
 		<FontSize>14</FontSize>
 		<x>665</x>
-		<y>563</y>
+		<y>549</y>
 		<Length>125</Length>
 	</OrderTotal>
 </form>
