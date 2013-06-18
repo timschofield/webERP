@@ -543,7 +543,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 							if (trim($Item->BundleRef) != ''){
 								if ($AlreadyExistsRow[0]>0){
 									if ($OrderLine->Serialised == 1) {
-										$SQL = "UPDATE stockserialitems SET quantity = '" . $Item->BundleQty . " ";
+										$SQL = "UPDATE stockserialitems SET quantity = '" . $Item->BundleQty . "'";
 									} else {
 										$SQL = "UPDATE stockserialitems SET quantity = quantity + '" . $Item->BundleQty . "'";
 									}

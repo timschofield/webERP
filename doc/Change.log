@@ -1,5 +1,6 @@
 OwebERP Change Log
 
+17/6/13 Paul Harness: Fix sql query of goods received when a serial number is already present. GoodsReceived.php
 12/6/13 tomglare: SelectSupplier - improve handling if single supplier selected
 25/5/13 Phil: CountriesArray.php now uses the index as the ISO 2 character code for the country.
 25/5/13 Phil: Currencies.php now takes advantage of Rafael's new CurrenciesArray - to ensure correct ISO 3 letter abbreviation is selected - also allows for translation of currency names

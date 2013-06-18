@@ -89,14 +89,14 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 			}
 			if ( $TransRow['account'] == $_SESSION['CompanyRecord']['debtorsact'] AND $AnalysisCompleted == 'Not Yet')	{
 					$URL = $RootPath . '/CustomerInquiry.php?CustomerID=';
-					$date = '&amp;TransAfterDate=' . $TranDate;
+					$FromDate = '&amp;TransAfterDate=' . $TranDate;
 
-					$DetailSQL = "SELECT debtortrans.debtorno,
+					$DetailSQL = "SELECT debtortrans.debtorno AS otherpartycode,
 										debtortrans.ovamount,
 										debtortrans.ovgst,
 										debtortrans.ovfreight,
 										debtortrans.rate,
-										debtorsmaster.name
+										debtorsmaster.name AS otherparty
 									FROM debtortrans INNER JOIN debtorsmaster
 									ON debtortrans.debtorno = debtorsmaster.debtorno
 									WHERE debtortrans.type = '" . $TransRow['type'] . "'
@@ -105,13 +105,13 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 					
 			} elseif ( $TransRow['account'] == $_SESSION['CompanyRecord']['creditorsact'] AND $AnalysisCompleted == 'Not Yet' )	{
 					$URL = $RootPath . '/SupplierInquiry.php?SupplierID=';
-					$date = '&amp;FromDate=' . $TranDate;
+					$FromDate = '&amp;FromDate=' . $TranDate;
 
-					$DetailSQL = "SELECT supptrans.supplierno,
+					$DetailSQL = "SELECT supptrans.supplierno AS otherpartycode,
 										supptrans.ovamount,
 										supptrans.ovgst,
 										supptrans.rate,
-										suppliers.suppname
+										suppliers.suppname AS otherparty
 									FROM supptrans INNER JOIN suppliers
 									ON supptrans.supplierno = suppliers.supplierid
 									WHERE supptrans.type = '" . $TransRow['type'] . "'
@@ -150,7 +150,7 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 							$Debit = locale_number_format(($DetailRow['ovamount'] + $DetailRow['ovgst']+ $DetailRow['ovfreight']) / $DetailRow['rate'],$_SESSION['CompanyRecord']['decimalplaces']);
 							$Credit = '&nbsp;';
 						} else {
-							$Debit = locale_number_format(($DetailRow['ovamount'] + $DetailRow['ovgst']) / $DetailRow['rate'],$_SESSION['CompanyRecord']['decimalplaces']);
+							$Debit = locale_number_format(-($DetailRow['ovamount'] + $DetailRow['ovgst']) / $DetailRow['rate'],$_SESSION['CompanyRecord']['decimalplaces']);
 							$Credit = '&nbsp;';
 						}
 					} else {
@@ -158,7 +158,7 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 							$Credit = locale_number_format(-($DetailRow['ovamount'] + $DetailRow['ovgst'] + $DetailRow['ovfreight']) / $DetailRow['rate'],$_SESSION['CompanyRecord']['decimalplaces']);
 							$Debit = '&nbsp;';
 						} else {
-							$Credit = locale_number_format(-($DetailRow['ovamount'] + $DetailRow['ovgst']) / $DetailRow['rate'],$_SESSION['CompanyRecord']['decimalplaces']);
+							$Credit = locale_number_format(($DetailRow['ovamount'] + $DetailRow['ovgst']) / $DetailRow['rate'],$_SESSION['CompanyRecord']['decimalplaces']);
 							$Debit = '&nbsp;';
 						}
 					}
@@ -172,7 +172,7 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 					}
 					echo	'<td>' . $TranDate . '</td>
 								<td>' . MonthAndYearFromSQLDate($TransRow['lastdate_in_period']) . '</td>
-								<td><a href="' . $URL . $DetailRow[0] . $date . '">' . $TransRow['accountname']  . ' - ' . $DetailRow[5] . '</a></td>
+								<td><a href="' . $URL . $DetailRow['otherpartycode'] . $FromDate . '">' . $TransRow['accountname']  . ' - ' . $DetailRow['otherparty'] . '</a></td>
 								<td class="number">' . $Debit . '</td>
 								<td class="number">' . $Credit . '</td>
 								<td>' . $TransRow['narrative'] . '</td>
