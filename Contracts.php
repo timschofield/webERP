@@ -793,16 +793,16 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 				$k=1;
 			}
 			if ($LastCustomer != $myrow['name']) {
-				echo '<td>'.htmlentities($myrow['name'], ENT_QUOTES,'UTF-8').'</td>';
+				echo '<td>'. $myrow['name'] .'</td>';
 			} else {
 				echo '<td></td>';
 			}
-			echo '<td><input type="submit" name="Submit'.$j.'" value="'.htmlentities($myrow['brname'], ENT_QUOTES,'UTF-8').'" /></td>
-					<input type="hidden" name="SelectedCustomer'.$j.'" value="'.$myrow['debtorno'].'" />
-					<input type="hidden" name="SelectedBranch'.$j.'" value="'.$myrow['branchcode'].'" />
-					<td>'.htmlentities($myrow['contactname'], ENT_QUOTES,'UTF-8').'</td>
-					<td>'.$myrow['phoneno'].'</td>
-					<td>'.$myrow['faxno'].'</td>
+			echo '<td><input type="submit" name="Submit'.$j.'" value="' . $myrow['brname'] . '" /></td>
+					<input type="hidden" name="SelectedCustomer'.$j.'" value="'. $myrow['debtorno'] . '" />
+					<input type="hidden" name="SelectedBranch'.$j.'" value="' . $myrow['branchcode'] . '" />
+					<td>' . $myrow['contactname'] .'</td>
+					<td>' . $myrow['phoneno'] . '</td>
+					<td>' . $myrow['faxno'] . '</td>
 					</tr>';
 			$LastCustomer=$myrow['name'];
 			$j++;

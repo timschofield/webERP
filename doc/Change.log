@@ -1,5 +1,8 @@
 OwebERP Change Log
 
+21/6/13 Phil: ContractCosting.php fix references to contract issues object which should just have been an array.
+18/6/13 Phil: Reworked the display of stock category properties on the SelectProduct.php inquiry
+18/6/13 Tim: Z_ImportGLTransactions.php new script for importing GL payments, receipts or journals from a CSV file
 17/6/13 Paul Harness: Fix sql query of goods received when a serial number is already present. GoodsReceived.php
 12/6/13 tomglare: SelectSupplier - improve handling if single supplier selected
 25/5/13 Phil: CountriesArray.php now uses the index as the ISO 2 character code for the country.

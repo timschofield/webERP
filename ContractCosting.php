@@ -44,13 +44,13 @@ $ErrMsg = _('Could not get the inventory issues for this contract because');
 $InventoryIssuesResult = DB_query($sql,$db,$ErrMsg);
 $InventoryIssues = array();
 while ($InventoryIssuesRow = DB_fetch_array($InventoryIssuesResult)){
-	$InventoryIssues[$InventoryIssuesRow['stockid']]->StockID = $InventoryIssuesRow['stockid'];
-	$InventoryIssues[$InventoryIssuesRow['stockid']]->Description = $InventoryIssuesRow['description'];
-	$InventoryIssues[$InventoryIssuesRow['stockid']]->Quantity = $InventoryIssuesRow['quantity'];
-	$InventoryIssues[$InventoryIssuesRow['stockid']]->TotalCost = $InventoryIssuesRow['totalcost'];
-	$InventoryIssues[$InventoryIssuesRow['stockid']]->Units = $InventoryIssuesRow['units'];
-	$InventoryIssues[$InventoryIssuesRow['stockid']]->DecimalPlaces = $InventoryIssuesRow['decimalplaces'];
-	$InventoryIssues[$InventoryIssuesRow['stockid']]->Matched = 0;
+	$InventoryIssues[$InventoryIssuesRow['stockid']]['StockID'] = $InventoryIssuesRow['stockid'];
+	$InventoryIssues[$InventoryIssuesRow['stockid']]['Description'] = $InventoryIssuesRow['description'];
+	$InventoryIssues[$InventoryIssuesRow['stockid']]['Quantity'] = $InventoryIssuesRow['quantity'];
+	$InventoryIssues[$InventoryIssuesRow['stockid']]['TotalCost'] = $InventoryIssuesRow['totalcost'];
+	$InventoryIssues[$InventoryIssuesRow['stockid']]['Units'] = $InventoryIssuesRow['units'];
+	$InventoryIssues[$InventoryIssuesRow['stockid']]['DecimalPlaces'] = $InventoryIssuesRow['decimalplaces'];
+	$InventoryIssues[$InventoryIssuesRow['stockid']]['Matched'] = 0;
 
 }
 
@@ -104,12 +104,12 @@ foreach ($_SESSION['Contract'.$identifier]->ContractBOM as $Component) {
 	$ContractBOMBudget += ($Component->ItemCost *  $Component->Quantity);
 
 	if (isset($InventoryIssues[$Component->StockID])){
-		$InventoryIssues[$Component->StockID]->Matched=1;
+		$InventoryIssues[$Component->StockID]['Matched']=1;
 		echo '<td colspan="2" align="center">' . _('Actual usage') . '</td>
-			<td class="number">' . locale_number_format(-$InventoryIssues[$Component->StockID]->Quantity,$Component->DecimalPlaces) . '</td>
-			<td>' . $InventoryIssues[$Component->StockID]->Units . '</td>
-			<td class="number">' . locale_number_format($InventoryIssues[$Component->StockID]->TotalCost/$InventoryIssues[$Component->StockID]->Quantity,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-			<td>' . locale_number_format(-$InventoryIssues[$Component->StockID]->TotalCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+			<td class="number">' . locale_number_format(-$InventoryIssues[$Component->StockID]['Quantity'],$Component->DecimalPlaces) . '</td>
+			<td>' . $InventoryIssues[$Component->StockID]['Units'] . '</td>
+			<td class="number">' . locale_number_format($InventoryIssues[$Component->StockID]['TotalCost']/$InventoryIssues[$Component->StockID]['Quantity'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+			<td>' . locale_number_format(-$InventoryIssues[$Component->StockID]['TotalCost'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 			</tr>';
 	} else {
 		echo '<td colspan="6"></td>
@@ -118,18 +118,18 @@ foreach ($_SESSION['Contract'.$identifier]->ContractBOM as $Component) {
 }
 
 foreach ($InventoryIssues as $Component) { //actual inventory components used
-	$ContractBOMActual -=$Component->TotalCost;
-	if ($Component->Matched == 0) { //then its a component that wasn't budget for
+	$ContractBOMActual -=$Component['TotalCost'];
+	if ($Component['Matched'] == 0) { //then its a component that wasn't budget for
 		echo '<tr>
 				<td colspan="6"></td>
-				<td>' . $Component->StockID . '</td>
-				<td>' . $Component->Description . '</td>
-				<td class="number">' . locale_number_format(-$Component->Quantity,$Component->DecimalPlaces) . '</td>
-				<td>' . $Component->Units . '</td>
-				<td class="number">' . locale_number_format($Component->TotalCost/$Component->Quantity,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-				<td class="number">' . locale_number_format(-$Component->TotalCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td>' . $Component['StockID'] . '</td>
+				<td>' . $Component['Description'] . '</td>
+				<td class="number">' . locale_number_format(-$Component['Quantity'],$Component['DecimalPlaces']) . '</td>
+				<td>' . $Component['Units'] . '</td>
+				<td class="number">' . locale_number_format($Component['TotalCost']/$Component['Quantity'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class="number">' . locale_number_format(-$Component['TotalCost'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 			</tr>';
-	} //end if its a component not originally budget for
+	} //end if its a component not originally budgeted for
 }
 
 echo '<tr>
@@ -162,13 +162,17 @@ foreach ($_SESSION['Contract'.$identifier]->ContractReqts as $Requirement) {
 		</tr>';
 	$OtherReqtsBudget += ($Requirement->CostPerUnit * $Requirement->Quantity);
 }
-echo '<tr><th colspan="3" align="right"><b>' . _('Budgeted Other Costs') . '</b></th><th class="number"><b>' . locale_number_format($OtherReqtsBudget,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></th></tr>
+echo '<tr>
+		<th colspan="3" align="right"><b>' . _('Budgeted Other Costs') . '</b></th>
+		<th class="number"><b>' . locale_number_format($OtherReqtsBudget,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></th>
+	</tr>
 	</table></td>';
 
 //Now other requirements actual in a sub table
 echo '<td colspan="6">
 			<table class="selection">
-			<tr><th>' . _('Supplier') . '</th>
+			<tr>
+				<th>' . _('Supplier') . '</th>
 				<th>' . _('Reference') . '</th>
 				<th>' . _('Date') . '</th>
 				<th>' . _('Requirement') . '</th>
@@ -197,23 +201,29 @@ while ($OtherChargesRow=DB_fetch_array($OtherChargesResult)) {
 	} else {
 		$Anticipated = _('Yes');
 	}
-	echo '<tr><td>' . $OtherChargesRow['supplierno'] . '</td>
+	echo '<tr>
+			<td>' . $OtherChargesRow['supplierno'] . '</td>
 			<td>' . $OtherChargesRow['suppreference'] . '</td>
 			<td>' .ConvertSQLDate($OtherChargesRow['trandate']) . '</td>
 			<td>' . $OtherChargesRow['narrative'] . '</td>
 			<td class="number">' . locale_number_format($OtherChargesRow['amount'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 			<td>' . $Anticipated . '</td>
-			</tr>';
+		</tr>';
 	$OtherReqtsActual +=$OtherChargesRow['amount'];
 }
-echo '<tr><th colspan="4" align="right"><b>' . _('Actual Other Costs') . '</b></th><th class="number"><b>' . locale_number_format($OtherReqtsActual,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></th></tr>
-	</table></td></tr>';
-echo '<tr><td colspan="5"><b>' . _('Total Budget Contract Cost') . '</b></td>
-					<td class="number"><b>' . locale_number_format($OtherReqtsBudget+$ContractBOMBudget,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
-					<td colspan="5"><b>' . _('Total Actual Contract Cost') . '</b></td>
-					<td class="number"><b>' . locale_number_format($OtherReqtsActual+$ContractBOMActual,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td></tr>';
-
-echo '</table>';
+echo '<tr>
+		<th colspan="4" align="right"><b>' . _('Actual Other Costs') . '</b></th>
+		<th class="number"><b>' . locale_number_format($OtherReqtsActual,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></th>
+	</tr>
+	</table></td>
+	</tr>
+	<tr>
+		<td colspan="5"><b>' . _('Total Budget Contract Cost') . '</b></td>
+		<td class="number"><b>' . locale_number_format($OtherReqtsBudget+$ContractBOMBudget,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
+		<td colspan="5"><b>' . _('Total Actual Contract Cost') . '</b></td>
+		<td class="number"><b>' . locale_number_format($OtherReqtsActual+$ContractBOMActual,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
+	</tr>
+	</table>';
 
 
 //Do the processing here after the variances are all calculated above

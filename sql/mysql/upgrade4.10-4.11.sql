@@ -57,5 +57,6 @@ INSERT INTO mailgroups VALUES(3,'OffersReceivedResultRecipients');
 INSERT INTO mailgroups VALUES(4,'InventoryValuationRecipients');
 ALTER TABLE stockrequestitems DROP PRIMARY KEY;
 ALTER TABLE stockrequestitems ADD PRIMARY KEY (`dispatchitemsid`,`dispatchid`);
+INSERT INTO scripts VALUES('Z_ImportGLTransactions.php', 15, 'Import General Ledger Transactions');
 
 

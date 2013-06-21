@@ -16,7 +16,7 @@ include('includes/header.inc');
 
 $PathToDefault		= './locale/en_GB.utf8/LC_MESSAGES/messages.po';
 $FilesToInclude = '*.php includes/*.inc includes/*.php api/*.php reportwriter/languages/en_US/reports.php';
-$xgettextCmd		= 'xgettext --no-wrap -L php -o ' . $PathToDefault . ' ' . $FilesToInclude;
+$xgettextCmd		= 'xgettext --no-wrap --from-code=utf-8 -L php -o ' . $PathToDefault . ' ' . $FilesToInclude;
 
 echo "<br />&nbsp;<a href='" . $RootPath . "/Z_poAdmin.php'>" . _('Back to the translation menu') . "</a>";
 echo '<br /><br />&nbsp;' . _('Utility page to rebuild the system default language file');

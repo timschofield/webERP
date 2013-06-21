@@ -67,7 +67,8 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 								stockmaster.eoq,
 								stockmaster.volume,
 								stockmaster.kgs,
-								stockcategory.categorydescription
+								stockcategory.categorydescription,
+								stockmaster.categoryid
 						FROM stockmaster INNER JOIN stockcategory
 						ON stockmaster.categoryid=stockcategory.categoryid
 						WHERE stockid='" . $StockID . "'", $db);
@@ -173,22 +174,8 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 			} else {
 				$GP = _('N/A');
 			}
-			echo $GP . '%' . '</td></tr>';
-			while ($PriceRow = DB_fetch_row($PriceResult)) {
-				$Price = $PriceRow[1];
-				echo '<tr><td></td>
-						<th>' . $PriceRow[0] . '</th>
-						<td class="select">' . locale_number_format($Price, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-						<th class="number">' . _('Gross Profit') . '</th>
-						<td class="select">';
-				if ($Price > 0) {
-					$GP = locale_number_format(($Price - $Cost) * 100 / $Price, 1);
-				} else {
-					$GP = _('N/A');
-				}
-				echo $GP . '%' . '</td></tr>';
-				echo '</td></tr>';
-			}
+			echo $GP . '%' . '</td>
+				</tr>';
 		}
 		if ($myrow['mbflag'] == 'K' OR $myrow['mbflag'] == 'A') {
 			$CostResult = DB_query("SELECT SUM(bom.quantity * (stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost)) AS cost
@@ -203,23 +190,21 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 		} else {
 			$Cost = $myrow['cost'];
 		}
-		echo '<tr><th class="number">' . _('Cost') . '</th>
-			<td class="select">' . locale_number_format($Cost, $_SESSION['StandardCostDecimalPlaces']) . '</td></tr>';
+		echo '<tr>
+				<th class="number">' . _('Cost') . '</th>
+				<td class="select">' . locale_number_format($Cost, $_SESSION['StandardCostDecimalPlaces']) . '</td>
+			</tr>';
 	} //end of if PricesSecuirty allows viewing of prices
 	echo '</table>'; //end of first nested table
 	// Item Category Property mod: display the item properties
 	echo '<table>';
-	$CatValResult = DB_query("SELECT categoryid
-							FROM stockmaster
-							WHERE stockid='" . $StockID . "'", $db);
-	$CatValRow = DB_fetch_row($CatValResult);
-	$CatValue = $CatValRow[0];
+	
 	$sql = "SELECT stkcatpropid,
 					label,
 					controltype,
 					defaultvalue
 				FROM stockcatproperties
-				WHERE categoryid ='" . $CatValue . "'
+				WHERE categoryid ='" . $myrow['categoryid'] . "'
 				AND reqatsalesorder =0
 				ORDER BY stkcatpropid";
 	$PropertiesResult = DB_query($sql, $db);
@@ -231,34 +216,31 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 									WHERE stockid='" . $StockID . "'
 									AND stkcatpropid ='" . $PropertyRow['stkcatpropid']."'", $db);
 		$PropValRow = DB_fetch_row($PropValResult);
-		$PropertyValue = $PropValRow[0];
-		echo '<tr><th align="right">' . $PropertyRow['label'] . ':</th>';
-		switch ($PropertyRow['controltype']) {
-			case 0; //textbox
-			echo '<td class="select" style="width:60px"><input type="text" name="PropValue' . $PropertyCounter . '" value="' . $PropertyValue . '" />';
-		break;
-		case 1; //select box
-		$OptionValues = explode(',', $PropertyRow['defaultvalue']);
-		echo '<td align="left" style="width:60px"><select name="PropValue' . $PropertyCounter . '">';
-		foreach($OptionValues as $PropertyOptionValue) {
-			if ($PropertyOptionValue == $PropertyValue) {
-				echo '<option selected="selected" value="' . $PropertyOptionValue . '">' . $PropertyOptionValue . '</option>';
-			} else {
-				echo '<option value="' . $PropertyOptionValue . '">' . $PropertyOptionValue . '</option>';
-			}
+		if (DB_num_rows($PropValResult)==0){
+			$PropertyValue = _('Not Set');
+		} else {
+			$PropertyValue = $PropValRow[0];
 		}
-		echo '</select>';
-	break;
-	case 2; //checkbox
-	echo '<td align="left" style="width:60px"><input type="checkbox" name="PropValue' . $PropertyCounter . '"';
-	if ($PropertyValue == 1) {
-		echo ' checked';
-	}
-	echo ' />';
-break;
-} //end switch
-echo '</td></tr>';
-$PropertyCounter++;
+		echo '<tr>
+				<th align="right">' . $PropertyRow['label'] . ':</th>';
+		switch ($PropertyRow['controltype']) {
+			case 0:
+			case 1:
+				echo '<td class="select" style="width:60px">' . $PropertyValue;
+			break;
+			case 2; //checkbox
+				echo '<td class="select" style="width:60px">';
+				if ($PropertyValue == _('Not Set')){
+					echo _('Not Set');
+				} elseif ($PropertyValue == 1){
+					echo _('Yes');
+				} else {
+					echo _('No');
+				}
+			break;
+		} //end switch
+	echo '</td></tr>';
+	$PropertyCounter++;
 } //end loop round properties for the item category
 echo '</table></td>'; //end of Item Category Property mod
 echo '<td style="width:15%; vertical-align:top">
