@@ -873,10 +873,10 @@ if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 	foreach ($_SESSION['Items'.$identifier]->LineItems as $StockItem) {
 
 		$LineTotal = $StockItem->Quantity * $StockItem->Price * (1 - $StockItem->DiscountPercent);
-		$DisplayLineTotal = number_format($LineTotal,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
-		$DisplayPrice = number_format($StockItem->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
-		$DisplayQuantity = number_format($StockItem->Quantity,$StockItem->DecimalPlaces);
-		$DisplayDiscount = number_format(($StockItem->DiscountPercent * 100),2);
+		$DisplayLineTotal = locale_number_format($LineTotal,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
+		$DisplayPrice = locale_number_format($StockItem->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
+		$DisplayQuantity = locale_number_format($StockItem->Quantity,$StockItem->DecimalPlaces);
+		$DisplayDiscount = locale_number_format(($StockItem->DiscountPercent * 100),2);
 
 
 		if ($k==1){
@@ -908,8 +908,8 @@ if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 		</tr>
 		</table>';
 
-	$DisplayVolume = number_format($_SESSION['Items'.$identifier]->totalVolume,2);
-	$DisplayWeight = number_format($_SESSION['Items'.$identifier]->totalWeight,2);
+	$DisplayVolume = locale_number_format($_SESSION['Items'.$identifier]->totalVolume,2);
+	$DisplayWeight = locale_number_format($_SESSION['Items'.$identifier]->totalWeight,2);
 	echo '<br />
 		<table>
 		<tr class="EvenTableRows">
@@ -941,9 +941,9 @@ if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 	foreach ($_SESSION['Items'.$identifier]->LineItems as $StockItem) {
 
 		$LineTotal = $StockItem->Quantity * $StockItem->Price * (1 - $StockItem->DiscountPercent);
-		$DisplayLineTotal = number_format($LineTotal,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
-		$DisplayPrice = number_format($StockItem->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
-		$DisplayQuantity = number_format($StockItem->Quantity,$StockItem->DecimalPlaces);
+		$DisplayLineTotal = locale_number_format($LineTotal,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
+		$DisplayPrice = locale_number_format($StockItem->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
+		$DisplayQuantity = locale_number_format($StockItem->Quantity,$StockItem->DecimalPlaces);
 
 		if ($k==1){
 			echo '<tr class="OddTableRows">';
@@ -965,10 +965,10 @@ if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 
 	}
 
-	$DisplayTotal = number_format($_SESSION['Items'.$identifier]->total,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
+	$DisplayTotal = locale_number_format($_SESSION['Items'.$identifier]->total,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
 
-	$DisplayVolume = number_format($_SESSION['Items'.$identifier]->totalVolume,2);
-	$DisplayWeight = number_format($_SESSION['Items'.$identifier]->totalWeight,2);
+	$DisplayVolume = locale_number_format($_SESSION['Items'.$identifier]->totalVolume,2);
+	$DisplayWeight = locale_number_format($_SESSION['Items'.$identifier]->totalWeight,2);
 	echo '<table class="selection">
 			<tr>
 				<td>' . _('Total Weight') . ':</td>

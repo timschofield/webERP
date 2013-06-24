@@ -20,19 +20,26 @@ if (isset($_GET['StockID'])){
 	$StockID = '';
 }
 
+$ItemDescriptionLanguages = explode(',',$_SESSION['ItemDescriptionLanguages']);
 
 if (isset($_POST['NextItem'])){
 	$Result = DB_query("SELECT stockid FROM stockmaster WHERE stockid>'" . $StockID . "' ORDER BY stockid ASC LIMIT 1",$db);
 	$NextItemRow = DB_fetch_row($Result);
 	$StockID = $NextItemRow[0];
+	foreach ($ItemDescriptionLanguages as $DescriptionLanguage) {
+		unset($_POST['Description_' . str_replace('.','_',$DescriptionLanguage)]);
+	}
 }
 if (isset($_POST['PreviousItem'])){
 	$Result = DB_query("SELECT stockid FROM stockmaster WHERE stockid<'" . $StockID . "' ORDER BY stockid DESC LIMIT 1",$db);
 	$PreviousItemRow = DB_fetch_row($Result);
 	$StockID = $PreviousItemRow[0];
+	foreach ($ItemDescriptionLanguages as $DescriptionLanguage) {
+		unset($_POST['Description_' . str_replace('.','_',$DescriptionLanguage)]);
+	}
 }
 
-if (isset($StockID) and !isset($_POST['UpdateCategories'])) {
+if (isset($StockID) AND !isset($_POST['UpdateCategories'])) {
 	$sql = "SELECT COUNT(stockid)
 			FROM stockmaster
 			WHERE stockid='".$StockID."'
@@ -402,6 +409,17 @@ if (isset($_POST['submit'])) {
 				$DbgMsg = _('The SQL that was used to update the stock item and failed was');
 				$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 
+				$ErrMsg = _('Could not update the language description because');
+				$DbgMsg = _('The SQL that was used to update the language description and failed was');
+
+				if (count($ItemDescriptionLanguages)>0){
+					foreach ($ItemDescriptionLanguages as $DescriptionLanguage) {
+						if ($DescriptionLanguage!=''){
+							$result = DB_query("DELETE FROM stockdescriptiontranslations WHERE stockid='" . $StockID . "' AND language_id='" . $DescriptionLanguage . "'",$db,$ErrMsg,$DbgMsg,true);
+							$result = DB_query("INSERT INTO stockdescriptiontranslations VALUES('" . $StockID . "','" . $DescriptionLanguage . "', '" . $_POST['Description_' . str_replace('.','_',$DescriptionLanguage)] . "')",$db,$ErrMsg,$DbgMsg,true);
+						}
+					}
+				}
 				//delete any properties for the item no longer relevant with the change of category
 				$result = DB_query("DELETE FROM stockitemproperties
 									WHERE stockid ='" . $StockID . "'",
@@ -580,6 +598,16 @@ if (isset($_POST['submit'])) {
 				$DbgMsg = _('The SQL that was used to add the item failed was');
 				$result = DB_query($sql,$db, $ErrMsg, $DbgMsg);
 				if (DB_error_no($db) ==0) {
+					//now insert the language descriptions
+					$ErrMsg = _('Could not update the language description because');
+					$DbgMsg = _('The SQL that was used to update the language description and failed was');
+					if (count($ItemDescriptionLanguages)>0){
+						foreach ($ItemDescriptionLanguages as $DescriptionLanguage) {
+							if ($DescriptionLanguage!=''){
+								$result = DB_query("INSERT INTO stockdescriptiontranslations VALUES('" . $StockID . "','" . $DescriptionLanguage . "', '" . $_POST['Description_' . str_replace('.','_',$DescriptionLanguage)] . "')",$db,$ErrMsg,$DbgMsg,true);
+							}
+						}
+					}
 					//now insert any item properties
 					for ($i=0;$i<$_POST['PropertyCounter'];$i++){
 
@@ -644,6 +672,9 @@ if (isset($_POST['submit'])) {
 						unset($_POST['ShrinkFactor']);
 						unset($_POST['Pansize']);
 						unset($StockID);
+						foreach ($ItemDescriptionLanguages as $DescriptionLanguage) {
+							unset($_POST['Description_' . str_replace('.','_',$DescriptionLanguage)]);
+						}
 						$New=1;
 					}//ALL WORKED SO RESET THE FORM VARIABLES
 				}//THE INSERT OF THE NEW CODE WORKED SO BANG IN THE STOCK LOCATION RECORDS TOO
@@ -756,6 +787,10 @@ if (isset($_POST['submit'])) {
 			//and cascade delete the item properties
 			$sql="DELETE FROM stockitemproperties WHERE stockid='".$StockID."'";
 			$result=DB_query($sql,$db, _('Could not delete the item properties'),'',true);
+			//and cascade delete the item descriptions in other languages
+			$sql = "DELETE FROM stockdescriptiontranslations WHERE stockid='" . $StockID . "'";
+			$result=DB_query($sql,$db,_('Could not delete the item language descriptions'),'',true);
+			
 		$result = DB_Txn_Commit($db);
 
 		prnMsg(_('Deleted the stock master record for') . ' ' . $StockID . '....' .
@@ -782,6 +817,9 @@ if (isset($_POST['submit'])) {
 		unset($_POST['TaxCat']);
 		unset($_POST['DecimalPlaces']);
 		unset($_SESSION['SelectedStockItem']);
+		foreach ($ItemDescriptionLanguages as $DescriptionLanguage) {
+			unset($_POST['Description_' . str_replace('.','_',$DescriptionLanguage)]);
+		}
 		unset($StockID);
 
 		$New=1;
@@ -799,10 +837,9 @@ if (isset($StockID)){
 				<td width="5%"><input style="background:url(css/next.png);width:26px;height:43px;" type="submit" name="NextItem" value="" /></td>
 			</tr>';
 }
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-
-echo '<input type="hidden" name="New" value="'.$New.'" />';
-echo '<table class="selection">';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+	<input type="hidden" name="New" value="'.$New.'" />
+	<table class="selection">';
 
 if (!isset($StockID) OR $StockID=='' or isset($_POST['UpdateCategories'])) {
 
@@ -811,12 +848,15 @@ if (!isset($StockID) OR $StockID=='' or isset($_POST['UpdateCategories'])) {
 		$StockID='';
 	}
 	if ($New==1) {
-		echo '<tr><td>'. _('Item Code'). ':</td><td><input ' . (in_array('StockID',$Errors) ?  'class="inputerror"' : '' ) .'  type="text"
-			value="'.$StockID.'" name="StockID" size="21" maxlength="20" /></td></tr>';
+		echo '<tr>
+				<td>'. _('Item Code'). ':</td>
+				<td><input ' . (in_array('StockID',$Errors) ?  'class="inputerror"' : '' ) .'  type="text" value="'.$StockID.'" name="StockID" size="21" maxlength="20" /></td>
+			</tr>';
 	} else {
-		echo '<tr><td>'. _('Item Code'). ':</td>
-					<td>'.$StockID.'<input type="hidden" name ="StockID" value="'.$StockID.'" /></td>
-				</tr>';
+		echo '<tr>
+				<td>'. _('Item Code'). ':</td>
+				<td>' . $StockID . '<input type="hidden" name ="StockID" value="' . $StockID . '" /></td>
+			</tr>';
 	}
 
 } elseif (!isset($_POST['UpdateCategories']) AND $InputError!=1) { // Must be modifying an existing item and no changes made yet
@@ -868,6 +908,16 @@ if (!isset($StockID) OR $StockID=='' or isset($_POST['UpdateCategories'])) {
 	$_POST['ShrinkFactor'] = $myrow['shrinkfactor'];
 
 
+	$sql = "SELECT descriptiontranslation, language_id FROM stockdescriptiontranslations WHERE stockid='" . $StockID . "' AND (";
+	foreach ($ItemDescriptionLanguages as $DescriptionLanguage) {
+		$sql .= "language_id='" . $DescriptionLanguage ."' OR ";
+	}
+	$sql = mb_substr($sql,0,mb_strlen($sql)-3) . ')';
+	$result = DB_query($sql,$db);
+	while ($myrow = DB_fetch_array($result)){
+		$_POST['Description_' . str_replace('.','_',$myrow['language_id'])] = $myrow['descriptiontranslation'];
+	}
+	
 	echo '<tr><td>' . _('Item Code') . ':</td>
 			<td>'.$StockID.'<input type="hidden" name="StockID" value="' . $StockID . '" /></td>
 			</tr>';
@@ -889,6 +939,20 @@ echo '<tr>
 		<td><input ' . (in_array('Description',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="Description" size="52" maxlength="50" value="' . $Description . '" /></td>
 	</tr>';
 
+foreach ($ItemDescriptionLanguages as $DescriptionLanguage) {
+	if ($DescriptionLanguage!=''){
+		//unfortunately cannot have points in POST variables so have to mess with the language id
+		$PostVariableName = 'Description_' . str_replace('.','_',$DescriptionLanguage);
+		if (!isset($_POST[$PostVariableName])){
+			$_POST[$PostVariableName] ='';
+		}
+		echo '<tr>
+			<td>' . $LanguagesArray[$DescriptionLanguage]['LanguageName'] . ' ' . _('Description') . ':</td>
+			<td><input type="text" name="'. $PostVariableName . '" size="52" maxlength="50" value="' . $_POST[$PostVariableName] . '" /></td>
+		</tr>';
+	}
+}
+
 if (isset($_POST['LongDescription'])) {
 	$LongDescription = AddCarriageReturns($_POST['LongDescription']);
 } else {
@@ -906,12 +970,12 @@ echo '<tr>
 	$StockImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
 		'&amp;StockID='.urlencode($StockID).
 		'&amp;text='.
-		'&amp;width=64'.
-		'&amp;height=64'.
+		'&amp;width=100'.
+		'&amp;height=100'.
 		'" alt="" />';
 } else {
-	if( isset($StockID) and file_exists($_SESSION['part_pics_dir'] . '/' .$StockID.'.jpg') ) {
-		$StockImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC&amp;StockID=' . $StockID . '&amp;text=&amp;width=120&amp;height=120" alt="" />';
+	if( isset($StockID) AND file_exists($_SESSION['part_pics_dir'] . '/' .$StockID.'.jpg') ) {
+		$StockImgLink = '<img src="' . $_SESSION['part_pics_dir'] . '/' . $StockID . '.jpg" height="100" width="100" />';
 	} else {
 		$StockImgLink = _('No Image');
 	}
@@ -1004,7 +1068,7 @@ if (!isset($_POST['Units'])) {
 	$UOMrow['unitname']=_('each');
 }
 while( $UOMrow = DB_fetch_array($UOMResult) ) {
-	 if (isset($_POST['Units']) and $_POST['Units']==$UOMrow['unitname']){
+	 if (isset($_POST['Units']) AND $_POST['Units']==$UOMrow['unitname']){
 		echo '<option selected="selected" value="' . $UOMrow['unitname'] . '">' . $UOMrow['unitname'] . '</option>';
 	 } else {
 		echo '<option value="' . $UOMrow['unitname'] . '">' . $UOMrow['unitname']  . '</option>';
@@ -1043,7 +1107,7 @@ if (!isset($_POST['MBFlag']) OR  $_POST['MBFlag']=='B' OR !isset($_POST['MBFlag'
 	echo '<option value="B">' . _('Purchased') . '</option>';
 }
 
-if (isset($_POST['MBFlag']) and $_POST['MBFlag']=='D'){
+if (isset($_POST['MBFlag']) AND $_POST['MBFlag']=='D'){
 	echo '<option selected="selected" value="D">' . _('Service/Labour') . '</option>';
 } else {
 	echo '<option value="D">' . _('Service/Labour') . '</option>';
@@ -1117,7 +1181,7 @@ if (!isset($_POST['Perishable']) OR  $_POST['Perishable']==0){
 } else {
 		echo '<option value="0">' . _('No'). '</option>';
 }
-if (isset($_POST['Perishable']) and $_POST['Perishable']==1){
+if (isset($_POST['Perishable']) AND $_POST['Perishable']==1){
 		echo '<option selected="selected" value="1">' . _('Yes'). '</option>';
 } else {
 		echo '<option value="1">' . _('Yes'). '</option>';

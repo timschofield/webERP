@@ -83,14 +83,11 @@ if (isset($_POST['submit'])) {
 				AND (mb_strlen($_POST['BranchCode'])==0)) {
 		$InputError = 1;
 		prnMsg(_('If you enter a Customer Code you must also enter a Branch Code valid for this Customer'),'error');
-	}
-	//comment out except for demo!  Do not want anyone modifying demo user.
-	/*
-	  elseif ($_POST['UserID'] == 'admin') {
+	} elseif ($AllowDemoMode AND $_POST['UserID'] == 'admin') {
 		prnMsg(_('The demonstration user called demo cannot be modified.'),'error');
 		$InputError = 1;
 	}
-	*/
+	
 	if (!isset($SelectedUser)){
 		/* check to ensure the user id is not already entered */
 		$result = DB_query("SELECT userid FROM www_users WHERE userid='" . $_POST['UserID'] . "'",$db);
@@ -238,12 +235,10 @@ if (isset($_POST['submit'])) {
 } elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
 
-	// comment out except for demo!  Do not want anyopne deleting demo user.
-	/*
-	if ($SelectedUser == 'admin') {
+
+	if ($AllowDemoMode AND $SelectedUser == 'admin') {
 		prnMsg(_('The demonstration user called demo cannot be deleted'),'error');
 	} else {
-	*/
 		$sql="SELECT userid FROM audittrail where userid='" . $SelectedUser ."'";
 		$result=DB_query($sql, $db);
 		if (DB_num_rows($result)!=0) {
@@ -256,7 +251,7 @@ if (isset($_POST['submit'])) {
 			prnMsg(_('User Deleted'),'info');
 		}
 		unset($SelectedUser);
-	// }
+	}
 
 }
 

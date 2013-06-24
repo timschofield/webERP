@@ -1,5 +1,7 @@
-OwebERP Change Log
+webERP Change Log
 
+
+24/6/13 Phil: webSHOP ShopParameters.php script and new configuration variables to allow integrated shop
 21/6/13 Phil: ContractCosting.php fix references to contract issues object which should just have been an array.
 18/6/13 Phil: Reworked the display of stock category properties on the SelectProduct.php inquiry
 18/6/13 Tim: Z_ImportGLTransactions.php new script for importing GL payments, receipts or journals from a CSV file
@@ -66,6 +68,7 @@ OwebERP Change Log
 27/4/13 Samudaya: PO_Items.php When purchasing a non-stock item (asset), AssetID goes to wrong column in purchorderdetails table (Column name - suppliers_partno). Fixed the bug and now save the AssetID in the correct assetid column.
 27/4/13 Samudaya: Fixed the Page Navigation (Go, Previous, Next) problem. This problem occurs  there are many assets and display as several pages.
 26/04/13 Exson: Fix the image broken problem for Manual/ManualGettingStarted.html Chinese version
+19/7/13 Phil: StockLocStatus.php was not showing purchase orders with status of printed
 25/4/13 Tim: Selecting customer in Contracts form was not working - fixed
 25/4/13 Bob Thomas: WorkOrderIssue.php was not showing the serialised items with a quantity that could be issued was showing them all in error
 25/4/13 Phil: BOMs.php fixed error that allowed auto issue to be flagged on serialised items
@@ -79,6 +82,12 @@ OwebERP Change Log
 27/3/13 Fahad Hatib: Updates to editing tenders and button to close a tender
 22/3/13 Kalmer Piiskop: Updated Estonian translation 
 21/3/13 Arwan: CustomerReceipt.php Added GL tag name for GL analysis of receipts
+23/3/13 Phil: Karel Van Der Esch discovered issues in PO_Items.php and Prices.php in relation to thousands and decimal separators now resolved.
+23/3/13 Phil: Added salesperson to debtortrans and now credit notes can have salesman allocated - previously the salesperson was only used for sales analysis reporting - but for those that need sales person against all transactions and want to drill into the detail it is necessary to have the salesperson recorded on each debtortrans - changed CounterSales.php CounterReturns.php ConfirmDispatch_Invoice.php SelectCreditItems.php Credit_Invoice.php defaulted for api functions
+21/3/13 Phil: CounterSales.php cancel order during item search failed - now fixed
+21/3/13 Phil: MT940 Bank transactions importing - allows importation of bank statements from the bank (for those banks that offer MT940 format statment exports) - other bank transaction export formats are easily accomodated
+21/3/13 Phil: Fixed Asset Maintenance tasks, user schedule of tasks due and email reminders to the maintainer and their supervisor when the task is overdue
+21/3/13 Fahad Hatib: Committed by Phil - remove the need to be logged in to see the manual
 6/3/13 Tim Schofield: Only display those offers that have not gone past their expiry dates
 
 25/2/13 Re-released 4.10.1 without the duplicate records in reportlinks table

@@ -46,7 +46,7 @@ if (isset($_POST['submit'])) {
 	$sql="SELECT COUNT(debtorno) FROM debtorsmaster WHERE debtorno='".$_POST['DebtorNo']."'";
 	$result=DB_query($sql,$db);
 	$myrow=DB_fetch_row($result);
-	if ($myrow[0]>0 and isset($_POST['New'])) {
+	if ($myrow[0]>0 AND isset($_POST['New'])) {
 		$InputError = 1;
 		prnMsg( _('The customer number already exists in the database'),'error');
 		$Errors[$i] = 'DebtorNo';
@@ -141,58 +141,58 @@ if (isset($_POST['submit'])) {
 			$myrow = DB_fetch_array($result);
 
 			if ($myrow[0] == 0) {
-			  $sql = "UPDATE debtorsmaster SET
-					name='" . $_POST['CustName'] . "',
-					address1='" . $_POST['Address1'] . "',
-					address2='" . $_POST['Address2'] . "',
-					address3='" . $_POST['Address3'] ."',
-					address4='" . $_POST['Address4'] . "',
-					address5='" . $_POST['Address5'] . "',
-					address6='" . $_POST['Address6'] . "',
-					currcode='" . $_POST['CurrCode'] . "',
-					clientsince='" . $SQL_ClientSince. "',
-					holdreason='" . $_POST['HoldReason'] . "',
-					paymentterms='" . $_POST['PaymentTerms'] . "',
-					discount='" . filter_number_format($_POST['Discount'])/100 . "',
-					discountcode='" . $_POST['DiscountCode'] . "',
-					pymtdiscount='" . filter_number_format($_POST['PymtDiscount'])/100 . "',
-					creditlimit='" . filter_number_format($_POST['CreditLimit']) . "',
-					salestype = '" . $_POST['SalesType'] . "',
-					invaddrbranch='" . $_POST['AddrInvBranch'] . "',
-					taxref='" . $_POST['TaxRef'] . "',
-					customerpoline='" . $_POST['CustomerPOLine'] . "',
-					typeid='" . $_POST['typeid'] . "'
-				  WHERE debtorno = '" . $_POST['DebtorNo'] . "'";
+			  $sql = "UPDATE debtorsmaster SET	name='" . $_POST['CustName'] . "',
+												address1='" . $_POST['Address1'] . "',
+												address2='" . $_POST['Address2'] . "',
+												address3='" . $_POST['Address3'] ."',
+												address4='" . $_POST['Address4'] . "',
+												address5='" . $_POST['Address5'] . "',
+												address6='" . $_POST['Address6'] . "',
+												currcode='" . $_POST['CurrCode'] . "',
+												clientsince='" . $SQL_ClientSince. "',
+												holdreason='" . $_POST['HoldReason'] . "',
+												paymentterms='" . $_POST['PaymentTerms'] . "',
+												discount='" . filter_number_format($_POST['Discount'])/100 . "',
+												discountcode='" . $_POST['DiscountCode'] . "',
+												pymtdiscount='" . filter_number_format($_POST['PymtDiscount'])/100 . "',
+												creditlimit='" . filter_number_format($_POST['CreditLimit']) . "',
+												salestype = '" . $_POST['SalesType'] . "',
+												invaddrbranch='" . $_POST['AddrInvBranch'] . "',
+												taxref='" . $_POST['TaxRef'] . "',
+												customerpoline='" . $_POST['CustomerPOLine'] . "',
+												typeid='" . $_POST['typeid'] . "',
+												language_id='" . $_POST['LanguageID'] . "'
+					  WHERE debtorno = '" . $_POST['DebtorNo'] . "'";
 			} else {
 
-			  $currsql = "SELECT currcode
+			  $CurrSQL = "SELECT currcode
 					  		FROM debtorsmaster
 							where debtorno = '" . $_POST['DebtorNo'] . "'";
-			  $currresult = DB_query($currsql,$db);
-			  $currrow = DB_fetch_array($currresult);
-			  $OldCurrency = $currrow[0];
+			  $CurrResult = DB_query($CurrSQL,$db);
+			  $CurrRow = DB_fetch_array($CurrResult);
+			  $OldCurrency = $CurrRow[0];
 
-			  $sql = "UPDATE debtorsmaster SET
-					name='" . $_POST['CustName'] . "',
-					address1='" . $_POST['Address1'] . "',
-					address2='" . $_POST['Address2'] . "',
-					address3='" . $_POST['Address3'] ."',
-					address4='" . $_POST['Address4'] . "',
-					address5='" . $_POST['Address5'] . "',
-					address6='" . $_POST['Address6'] . "',
-					clientsince='" . $SQL_ClientSince . "',
-					holdreason='" . $_POST['HoldReason'] . "',
-					paymentterms='" . $_POST['PaymentTerms'] . "',
-					discount='" . filter_number_format($_POST['Discount'])/100 . "',
-					discountcode='" . $_POST['DiscountCode'] . "',
-					pymtdiscount='" . filter_number_format($_POST['PymtDiscount'])/100 . "',
-					creditlimit='" . filter_number_format($_POST['CreditLimit']) . "',
-					salestype = '" . $_POST['SalesType'] . "',
-					invaddrbranch='" . $_POST['AddrInvBranch'] . "',
-					taxref='" . $_POST['TaxRef'] . "',
-					customerpoline='" . $_POST['CustomerPOLine'] . "',
-					typeid='" . $_POST['typeid'] . "'
-				  WHERE debtorno = '" . $_POST['DebtorNo'] . "'";
+			  $sql = "UPDATE debtorsmaster SET	name='" . $_POST['CustName'] . "',
+												address1='" . $_POST['Address1'] . "',
+												address2='" . $_POST['Address2'] . "',
+												address3='" . $_POST['Address3'] ."',
+												address4='" . $_POST['Address4'] . "',
+												address5='" . $_POST['Address5'] . "',
+												address6='" . $_POST['Address6'] . "',
+												clientsince='" . $SQL_ClientSince . "',
+												holdreason='" . $_POST['HoldReason'] . "',
+												paymentterms='" . $_POST['PaymentTerms'] . "',
+												discount='" . filter_number_format($_POST['Discount'])/100 . "',
+												discountcode='" . $_POST['DiscountCode'] . "',
+												pymtdiscount='" . filter_number_format($_POST['PymtDiscount'])/100 . "',
+												creditlimit='" . filter_number_format($_POST['CreditLimit']) . "',
+												salestype = '" . $_POST['SalesType'] . "',
+												invaddrbranch='" . $_POST['AddrInvBranch'] . "',
+												taxref='" . $_POST['TaxRef'] . "',
+												customerpoline='" . $_POST['CustomerPOLine'] . "',
+												typeid='" . $_POST['typeid'] . "',
+												language_id='" . $_POST['LanguageID'] . "'
+						WHERE debtorno = '" . $_POST['DebtorNo'] . "'";
 
 			  if ($OldCurrency != $_POST['CurrCode']) {
 			  	prnMsg( _('The currency code cannot be updated as there are already transactions for this customer'),'info');
@@ -235,29 +235,30 @@ if (isset($_POST['submit'])) {
 							invaddrbranch,
 							taxref,
 							customerpoline,
-							typeid)
+							typeid,
+							language_id)
 				VALUES ('" . $_POST['DebtorNo'] ."',
-					'" . $_POST['CustName'] ."',
-					'" . $_POST['Address1'] ."',
-					'" . $_POST['Address2'] ."',
-					'" . $_POST['Address3'] . "',
-					'" . $_POST['Address4'] . "',
-					'" . $_POST['Address5'] . "',
-					'" . $_POST['Address6'] . "',
-					'" . $_POST['CurrCode'] . "',
-					'" . $SQL_ClientSince . "',
-					'" . $_POST['HoldReason'] . "',
-					'" . $_POST['PaymentTerms'] . "',
-					'" . filter_number_format($_POST['Discount'])/100 . "',
-					'" . $_POST['DiscountCode'] . "',
-					'" . filter_number_format($_POST['PymtDiscount'])/100 . "',
-					'" . filter_number_format($_POST['CreditLimit']) . "',
-					'" . $_POST['SalesType'] . "',
-					'" . $_POST['AddrInvBranch'] . "',
-					'" . $_POST['TaxRef'] . "',
-					'" . $_POST['CustomerPOLine'] . "',
-					'" . $_POST['typeid'] . "'
-					)";
+						'" . $_POST['CustName'] ."',
+						'" . $_POST['Address1'] ."',
+						'" . $_POST['Address2'] ."',
+						'" . $_POST['Address3'] . "',
+						'" . $_POST['Address4'] . "',
+						'" . $_POST['Address5'] . "',
+						'" . $_POST['Address6'] . "',
+						'" . $_POST['CurrCode'] . "',
+						'" . $SQL_ClientSince . "',
+						'" . $_POST['HoldReason'] . "',
+						'" . $_POST['PaymentTerms'] . "',
+						'" . filter_number_format($_POST['Discount'])/100 . "',
+						'" . $_POST['DiscountCode'] . "',
+						'" . filter_number_format($_POST['PymtDiscount'])/100 . "',
+						'" . filter_number_format($_POST['CreditLimit']) . "',
+						'" . $_POST['SalesType'] . "',
+						'" . $_POST['AddrInvBranch'] . "',
+						'" . $_POST['TaxRef'] . "',
+						'" . $_POST['CustomerPOLine'] . "',
+						'" . $_POST['typeid'] . "',
+						'" . $_POST['LanguageID'] . "')";
 
 			$ErrMsg = _('This customer could not be added because');
 			$result = DB_query($sql,$db,$ErrMsg);
@@ -354,6 +355,7 @@ if(isset($_POST['Reset'])){
 	unset($_POST['InvAddrBranch']);
 	unset($_POST['TaxRef']);
 	unset($_POST['CustomerPOLine']);
+	unset($_POST['LanguageID']);
 // Leave Type ID set so as to faciltate fast customer setup
 //	unset($_POST['typeid']);
 }
@@ -372,7 +374,7 @@ if (isset($_POST['ID'])){
 } else {
 	$ID='';
 }
-if (isset($_POST['ws'])){
+if (isset($_POST['ws'])){ //ws??? wtf???
 	$ws = $_POST['ws'];
 } elseif (isset($_GET['ws'])){
 	$ws = $_GET['ws'];
@@ -456,13 +458,15 @@ if (!isset($DebtorNo)) {
 	echo '<tr><td>' . _('Address Line 5 (Postal Code)') . ':</td>
 		<td><input tabindex="7" type="text" name="Address5" size="22" maxlength="20" /></td></tr>';
 
+
+	if (!isset($_POST['Address6']) AND $CountryName == '') {
+		 $_POST['Address6'] = $CountriesArray[$_SESSION['CountryOfOperation']];
+	}
 	echo '<tr>
 			<td>' . _('Country') . ':</td>
 			<td><select name="Address6">';
 	foreach ($CountriesArray as $CountryEntry => $CountryName){
 		if (isset($_POST['Address6']) AND (strtoupper($_POST['Address6']) == strtoupper($CountryName))){
-			echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName .'</option>';
-		}elseif (!isset($_POST['Address6']) AND $CountryName == "") {
 			echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName .'</option>';
 		} else {
 			echo '<option value="' . $CountryName . '">' . $CountryName .'</option>';
@@ -595,6 +599,24 @@ if (!isset($DebtorNo)) {
 	}
 
 	echo '<tr>
+			<td>' . _('Language') . ':</td>
+			<td><select name="LanguageID">';
+	
+	if (!isset($_POST['LanguageID']) OR $_POST['LanguageID']==''){
+		$_POST['LanguageID']=$_SESSION['Language'];
+	}
+	
+	foreach ($LanguagesArray as $LanguageCode => $LanguageName){
+		if ($_POST['LanguageID'] == $LanguageCode){
+			echo '<option selected="selected" value="' . $LanguageCode . '">' . $LanguageName['LanguageName'] .'</option>';
+		} else {
+			echo '<option value="' . $LanguageCode . '">' . $LanguageName['LanguageName'] .'</option>';
+		}
+	}
+	echo '</select></td>
+			</tr>';
+
+	echo '<tr>
 			<td>' . _('Customer PO Line on SO') . ':</td>
 			<td><select tabindex="18" name="CustomerPOLine">
 				<option selected="selected" value="0">' . _('No') . '</option>
@@ -634,7 +656,7 @@ if (!isset($DebtorNo)) {
 			<tr><td valign="top">';
 
 	if (!isset($_POST['New'])) {
-		$sql = "SELECT debtorsmaster.debtorno,
+		$sql = "SELECT debtorno,
 						name,
 						address1,
 						address2,
@@ -654,9 +676,10 @@ if (!isset($DebtorNo)) {
 						invaddrbranch,
 						taxref,
 						customerpoline,
-						typeid
+						typeid,
+						language_id
 				FROM debtorsmaster
-				WHERE debtorsmaster.debtorno = '" . $DebtorNo . "'";
+				WHERE debtorno = '" . $DebtorNo . "'";
 
 		$ErrMsg = _('The customer details could not be retrieved because');
 		$result = DB_query($sql,$db,$ErrMsg);
@@ -690,6 +713,7 @@ if (!isset($DebtorNo)) {
 		$_POST['TaxRef'] = $myrow['taxref'];
 		$_POST['CustomerPOLine'] = $myrow['customerpoline'];
 		$_POST['typeid'] = $myrow['typeid'];
+		$_POST['LanguageID'] = $myrow['language_id'];
 
 		echo '<input type="hidden" name="DebtorNo" value="' . $DebtorNo . '" />';
         echo '<table class="selection">';
@@ -961,6 +985,23 @@ if (!isset($DebtorNo)) {
 			</tr>';
 	}
 	echo '<tr>
+			<td>' . _('Language') . ':</td>
+			<td><select name="LanguageID">';
+	
+	if (!isset($_POST['LanguageID']) OR $_POST['LanguageID']==''){
+		$_POST['LanguageID']=$_SESSION['Language'];
+	}
+	
+	foreach ($LanguagesArray as $LanguageCode => $LanguageName){
+		if ($_POST['LanguageID'] == $LanguageCode){
+			echo '<option selected="selected" value="' . $LanguageCode . '">' . $LanguageName['LanguageName'] .'</option>';
+		} else {
+			echo '<option value="' . $LanguageCode . '">' . $LanguageName['LanguageName'] .'</option>';
+		}
+	}
+	echo '</select></td>
+			</tr>';
+	echo '<tr>
 			<td>' . _('Require Customer PO Line on SO') . ':</td>';
 	if (isset($_GET['Modify'])) {
 		if ($_POST['CustomerPOLine']==0){
@@ -1103,7 +1144,7 @@ if (!isset($DebtorNo)) {
 
 	echo'</td></tr></table>';
 
-	if (isset($_POST['New']) and $_POST['New']) {
+	if (isset($_POST['New']) AND $_POST['New']) {
 		echo '<div class="centre">
 				<input type="submit" name="submit" value="' . _('Add New Customer') . '" />&nbsp;
 				<input type="submit" name="Reset" value="' . _('Reset') . '" />

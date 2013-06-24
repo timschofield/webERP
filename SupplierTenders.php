@@ -41,7 +41,7 @@ if (isset($_GET['Delete'])) {
 $sql="SELECT suppname,
 			currcode
 		FROM suppliers
-		WHERE supplierid='".$_POST['SupplierID']."'";
+		WHERE supplierid='" . $_POST['SupplierID'] . "'";
 $result=DB_query($sql, $db);
 $myrow=DB_fetch_array($result);
 $Supplier=$myrow['suppname'];
@@ -300,20 +300,19 @@ if (isset($_POST['TenderType']) AND $_POST['TenderType']==1 AND !isset($_POST['R
 			INNER JOIN stockmaster
 				ON offers.stockid=stockmaster.stockid
 			WHERE offers.supplierid='" . $_POST['SupplierID'] . "'
-				AND offers.expirydate>=NOW()";
+			AND offers.expirydate>='" . date('Y-m-d') . "'";
 	$result=DB_query($sql, $db);
 	$_SESSION['offer'.$identifier]=new Offer($_POST['SupplierID']);
 	$_SESSION['offer'.$identifier]->CurrCode=$Currency;
 	while ($myrow=DB_fetch_array($result)) {
-		$_SESSION['offer'.$identifier]->add_to_offer(
-				$myrow['offerid'],
-				$myrow['stockid'],
-				$myrow['quantity'],
-				$myrow['description'],
-				$myrow['price'],
-				$myrow['uom'],
-				$myrow['decimalplaces'],
-				ConvertSQLDate($myrow['expirydate']));
+		$_SESSION['offer'.$identifier]->add_to_offer(	$myrow['offerid'],
+														$myrow['stockid'],
+														$myrow['quantity'],
+														$myrow['description'],
+														$myrow['price'],
+														$myrow['uom'],
+														$myrow['decimalplaces'],
+														ConvertSQLDate($myrow['expirydate']));
 	}
 }
 
@@ -322,15 +321,15 @@ if (isset($_POST['TenderType']) and $_POST['TenderType']!=3 and isset($_SESSION[
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Items to offer from').' '.$Supplier .'</p>';
 	echo '<table>
-		<tr>
-			<th>'._('Stock ID').'</th>
-			<th>'._('Description').'</th>
-			<th>'._('Quantity').'</th>
-			<th>'._('UOM').'</th>
-			<th>'._('Price').' ('.$Currency.')</th>
-			<th>'._('Line Total').' ('.$Currency.')</th>
-			<th>'._('Expiry Date').'</th>
-		</tr>';
+			<tr>
+				<th>'._('Stock ID').'</th>
+				<th>'._('Description').'</th>
+				<th>'._('Quantity').'</th>
+				<th>'._('UOM').'</th>
+				<th>'._('Price').' ('.$Currency.')</th>
+				<th>'._('Line Total').' ('.$Currency.')</th>
+				<th>'._('Expiry Date').'</th>
+			</tr>';
 	$k=0;
 	foreach ($_SESSION['offer'.$identifier]->LineItems as $LineItems) {
 		if ($LineItems->Deleted==False) {

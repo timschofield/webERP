@@ -58,5 +58,103 @@ INSERT INTO mailgroups VALUES(4,'InventoryValuationRecipients');
 ALTER TABLE stockrequestitems DROP PRIMARY KEY;
 ALTER TABLE stockrequestitems ADD PRIMARY KEY (`dispatchitemsid`,`dispatchid`);
 INSERT INTO scripts VALUES('Z_ImportGLTransactions.php', 15, 'Import General Ledger Transactions');
+CREATE TABLE IF NOT EXISTS `fixedassettasks` (
+  `taskid` int(11) NOT NULL AUTO_INCREMENT,
+  `assetid` int(11) NOT NULL,
+  `taskdescription` text NOT NULL,
+  `frequencydays` int(11) NOT NULL DEFAULT '365',
+  `lastcompleted` date NOT NULL,
+  `userresponsible` varchar(20) NOT NULL,
+  `manager` varchar(20) NOT NULL DEFAULT '',
+  PRIMARY KEY (`taskid`),
+  KEY `assetid` (`assetid`),
+  KEY `userresponsible` (`userresponsible`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('MaintenanceTasks.php', '1', 'Allows set up and edit of scheduled maintenance tasks');
+INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('MaintenanceUserSchedule.php', '1', 'List users or managers scheduled maintenance tasks and allow to be flagged as completed');
+INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('MaintenanceReminders.php', '1', 'Sends email reminders for scheduled asset maintenance tasks');
+INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('ImportBankTransAnalysis.php', '11', 'Allows analysis of bank transactions being imported');
+INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('ImportBankTrans.php', '11', 'Imports bank transactions');
+INSERT INTO scripts VALUES ('Manufacturers.php','15','Maintain brands of sales products');
+INSERT INTO scripts VALUES ('SalesCategoryDescriptions.php','15','Maintain translations for sales categories');
+INSERT INTO scripts VALUES ('ShopParameters.php','15','Maintain web-store configuration and set up');
+
+INSERT INTO config VALUES ('ShopName','');
+INSERT INTO config VALUES ('ShopPrivacyStatement','');
+INSERT INTO config VALUES ('ShopFreightPolicy','');
+INSERT INTO config VALUES ('ShopTermsConditions','');
+INSERT INTO config VALUES ('ShopDebtorNo','');
+INSERT INTO config VALUES ('ShopBranchCode','');
+INSERT INTO config VALUES ('ShopAboutUs','');
+
+INSERT INTO config VALUES ('ShopPayPalUser','');
+INSERT INTO config VALUES ('ShopPayPalPassword','');
+INSERT INTO config VALUES ('ShopPayPalSignature','');
+
+INSERT INTO config VALUES ('ShopPayPalProUser','');
+INSERT INTO config VALUES ('ShopPayPalProPassword','');
+INSERT INTO config VALUES ('ShopPayPalProSignature','');
+
+INSERT INTO config VALUES ('ShopCreditCardGateway', 'PayFlowPro');
+
+INSERT INTO config VALUES ('ShopPayFlowUser','');
+INSERT INTO config VALUES ('ShopPayFlowPassword','');
+INSERT INTO config VALUES ('ShopPayFlowVendor','');
+INSERT INTO config VALUES ('ShopPayFlowMerchant','');
+
+INSERT INTO config VALUES ('ShopAllowPayPal', '1');
+INSERT INTO config VALUES ('ShopAllowCreditCards', '1');
+INSERT INTO config VALUES ('ShopAllowBankTransfer', '1');
+INSERT INTO config VALUES ('ShopAllowSurcharges', '1');
+
+INSERT INTO config VALUES ('ShopPayPalSurcharge', '0.034');
+INSERT INTO config VALUES ('ShopBankTransferSurcharge', '0.0');
+INSERT INTO config VALUES ('ShopCreditCardSurcharge', '0.029');
+
+INSERT INTO config VALUES ('ShopPayPalBankAccount', '1030');
+INSERT INTO config VALUES ('ShopCreditCardBankAccount', '1030');
+
+INSERT INTO config VALUES ('ShopSwipeHQMerchantID', '');
+INSERT INTO config VALUES ('ShopSwipeHQAPIKey', '');
+
+INSERT INTO config VALUES ('ShopSurchargeStockID', '');
+
+INSERT INTO config VALUES ('ItemDescriptionLanguages','');
+INSERT INTO config VALUES('SmtpSetting',0);
+
+CREATE TABLE IF NOT EXISTS `stockdescriptiontranslations` (
+  `stockid` varchar(20) NOT NULL DEFAULT '',
+  `language_id` varchar(10) NOT NULL DEFAULT 'en_GB.utf8',
+  `descriptiontranslation` varchar(50) NOT NULL,
+  PRIMARY KEY (`stockid`,`language_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `debtorsmaster` ADD `language_id` VARCHAR( 10 ) NOT NULL DEFAULT 'en_GB.utf8';
+
+ALTER TABLE `debtortrans` ADD `salesperson` VARCHAR( 4 ) NOT NULL DEFAULT '' , ADD INDEX ( `salesperson` );
+UPDATE debtortrans INNER JOIN salesorders ON debtortrans.order_=salesorders.orderno SET debtortrans.salesperson=salesorders.salesperson;
+UPDATE debtortrans INNER JOIN custbranch ON debtortrans.debtorno=custbranch.debtorno AND debtortrans.branchcode=custbranch.branchcode SET debtortrans.salesperson=custbranch.salesman WHERE debtortrans.type=11;
+
+CREATE TABLE IF NOT EXISTS `manufacturers` (
+  `manufacturers_id` int(11) NOT NULL AUTO_INCREMENT,
+  `manufacturers_name` varchar(32) NOT NULL,
+  `manufacturers_url` varchar(50) NOT NULL DEFAULT '',
+  `manufacturers_image` varchar(64) DEFAULT NULL,
+  PRIMARY KEY (`manufacturers_id`),
+  KEY (`manufacturers_name`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `salescattranslations` (
+  `salescatid` tinyint(4) NOT NULL DEFAULT '0',
+  `language_id` varchar(10) NOT NULL DEFAULT 'en_GB.utf8',
+  `salescattranslation` varchar(40) NOT NULL,
+  PRIMARY KEY (`salescatid`,`language_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE salescatprod ADD COLUMN manufacturers_id int(11) NOT NULL;
+ALTER TABLE salescatprod ADD COLUMN featured int(11) DEFAULT '0' NOT NULL;
+ALTER TABLE `salescatprod` ADD INDEX ( `manufacturers_id` );
+
+UPDATE config SET confvalue='4.11.0' WHERE confname='Version';
 

@@ -314,7 +314,7 @@ if (isset($_POST['submit'])) {
 										 directdemand,
 										 whererequired)
 							   SELECT locstock.stockid,
-									  NOW(),
+									  '" . date('Y-m-d') . "',
 									  (locstock.reorderlevel - locstock.quantity) AS reordqty,
 									  'REORD',
 									  '1',
@@ -513,7 +513,7 @@ if (isset($_POST['submit'])) {
 									eoqflag,
 									usemrpdemands,
 									leeway)
-									VALUES (NOW(),
+									VALUES ('" . date('Y-m-d') . "',
 								'" . $locparm . "',
 								'" .  $_POST['pansizeflag']  . "',
 								'" .  $_POST['shrinkageflag']  . "',
@@ -865,8 +865,8 @@ function CreateLowerLevelRequirement(&$db,
 				 LEFT JOIN levels
 				   ON bom.component = levels.part
 			WHERE bom.parent = '".$TopPart."'
-		 AND effectiveafter <= now()
-		 AND effectiveto >= now()";
+		 AND effectiveafter <= '" . date('Y-m-d') . "'
+		 AND effectiveto >= '" . date('Y-m-d') . "'";
 	$ResultBOM = DB_query($sql,$db);
 	while ($myrow=DB_fetch_array($ResultBOM)) {
 		// Calculate required date by subtracting leadtime from top part's required date

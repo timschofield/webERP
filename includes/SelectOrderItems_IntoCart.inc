@@ -161,7 +161,7 @@ if ($AlreadyOnThisOrder!=1){
 					if ($SellSupportRow['rebatepercent'] > $SellSupportPercent){
 						$SellSupportPercent = $SellSupportRow['rebatepercent'];
 					}
-					if ($SellSupportRow['rebateinfunctionalcurrency'] > $SellSupportAmount){
+					if ($SellSupportRow['rebateinfunctionalcurrency'] > $SellSupportDiscount){
 						$SellSupportDiscount = $SellSupportRow['rebateinfunctionalcurrency'];
 					}
 				}
@@ -174,10 +174,11 @@ if ($AlreadyOnThisOrder!=1){
 				$SellSupportDiscount *= $CurrRow['rate'];
 			}
 			/*Convert the Sell through support discount to a percentage and add it to the $SellSupportPercent */
-			$SellSupportPercent += ($SellSupportDiscount/$Price);
-			
-			$Discount += $SellSupportPercent; //combine any discount matrix discount with the sell through support.
-			if ($SellSupportPercent != 0){
+			if ($Price > 0){
+				$SellSupportPercent += ($SellSupportDiscount/$Price);
+			}
+			if ($SellSupportPercent >0){
+				$Discount += $SellSupportPercent; //combine any discount matrix discount with the sell through support.
 				prnMsg(_('Sell through support available and applied of') . ' ' . locale_number_format($SellSupportPercent*100,2), 'info');
 			}
 			

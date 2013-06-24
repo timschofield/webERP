@@ -246,7 +246,7 @@ if (isset($_POST['ShowStatus'])){
 					ON purchorderdetails.orderno=purchorders.orderno
 				WHERE purchorders.intostocklocation='" . $myrow['loccode'] . "'
 				AND purchorderdetails.itemcode='" . $StockID . "'
-				AND purchorders.status = 'Authorised'";
+				AND (purchorders.status = 'Authorised' OR purchorders.status='Printed')";
 
 		$ErrMsg = _('The quantity on order for this product to be received into') . ' ' . $myrow['loccode'] . ' ' . _('cannot be retrieved because');
 		$QOOResult = DB_query($sql,$db,$ErrMsg);

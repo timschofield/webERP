@@ -85,7 +85,7 @@ echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'
 		<input type="hidden" name="EntryType" value="KEYED" />
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-if ($_GET['CreditInvoice']=='Yes' OR $_POST['CreditInvoice']=='Yes'){
+if (isset($_GET['CreditInvoice']) OR isset($_POST['CreditInvoice'])){
 	echo '<input type="hidden" name="CreditInvoice" value="Yes" />';
 }
 /*Start a new table for the Serial/Batch ref input  in one column (as a sub table

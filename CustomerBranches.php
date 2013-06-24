@@ -111,26 +111,26 @@ if (isset($_POST['submit'])) {
 			$base_url = 'http://' . MAPS_HOST . '/maps/geo?output=xml&amp;key=' . KEY;
 			$request_url = $base_url . '&amp;q=' . urlencode($address);
 			$xml = simplexml_load_string(utf8_encode(file_get_contents($request_url))) or die('url not loading');
-			$coordinates = $xml->Response->Placemark->Point->coordinates;
-			$coordinatesSplit = explode(",", $coordinates);
+			$Coordinates = $xml->Response->Placemark->Point->Coordinates;
+			$CoordinatesSplit = explode(",", $Coordinates);
 			// Format: Longitude, Latitude, Altitude
-			$Latitude = $coordinatesSplit[1];
-			$Longitude = $coordinatesSplit[0];
+			$Latitude = $CoordinatesSplit[1];
+			$Longitude = $CoordinatesSplit[0];
 
-			$status = $xml->Response->Status->code;
-			if (strcmp($status, '200') == 0) {
+			$Status = $xml->Response->Status->code;
+			if (strcmp($Status, '200') == 0) {
 				// Successful geocode
-					$geocode_pending = false;
-				$coordinates = $xml->Response->Placemark->Point->coordinates;
-				$coordinatesSplit = explode(",", $coordinates);
+				$Geocode_Pending = false;
+				$Coordinates = $xml->Response->Placemark->Point->Coordinates;
+				$CoordinatesSplit = explode(",", $Coordinates);
 				// Format: Longitude, Latitude, Altitude
-				$Latitude = $coordinatesSplit[1];
-				$Longitude = $coordinatesSplit[0];
+				$Latitude = $CoordinatesSplit[1];
+				$Longitude = $CoordinatesSplit[0];
 			} else {
 				// failure to geocode
-				$geocode_pending = false;
+				$Geocode_Pending = false;
 				echo '<div class="page_help_text"><b>' . _('Geocode Notice') . ':</b> ' . _('Address') . ': ' . $address . ' ' . _('failed to geocode');
-				echo _('Received status') . ' ' . $status . '</div>';
+				echo _('Received status') . ' ' . $Status . '</div>';
 			}
 		}
 	}
@@ -236,8 +236,7 @@ if (isset($_POST['submit'])) {
 					'" . $_POST['DisableTrans'] . "',
 					'" . $_POST['DefaultShipVia'] . "',
 					'" . $_POST['CustBranchCode'] ."',
-					'" . $_POST['DeliverBlind'] . "'
-					)";
+					'" . $_POST['DeliverBlind'] . "')";
 	}
 	echo '<br />';
 	$msg = _('Customer branch').'<b> ' . $_POST['BranchCode'] . ': ' . $_POST['BrName'] . ' </b>'._('has been added, add another branch, or return to the') . ' <a href="index.php">' . _('Main Menu') . '</a>';
@@ -249,7 +248,7 @@ if (isset($_POST['submit'])) {
 		$result = DB_query($sql,$db, $ErrMsg);
 	}
 
-	if (DB_error_no($db) ==0 and $InputError==0) {
+	if (DB_error_no($db) ==0 AND $InputError==0) {
 		prnMsg($msg,'success');
 		unset($_POST['BranchCode']);
 		unset($_POST['BrName']);
@@ -351,16 +350,15 @@ if (!isset($SelectedBranch)){
 					custbranch.email,
 					taxgroups.taxgroupdescription,
 					custbranch.disabletrans
-				FROM custbranch,
-					debtorsmaster,
-					areas,
-					salesman,
-					taxgroups
-				WHERE custbranch.debtorno=debtorsmaster.debtorno
-					AND custbranch.area=areas.areacode
-					AND custbranch.salesman=salesman.salesmancode
-					AND custbranch.taxgroupid=taxgroups.taxgroupid
-					AND custbranch.debtorno = '".$DebtorNo."'";
+				FROM custbranch INNER JOIN debtorsmaster
+				ON custbranch.debtorno=debtorsmaster.debtorno
+				INNER JOIN areas
+				ON custbranch.area=areas.areacode
+				INNER JOIN salesman
+				ON custbranch.salesman=salesman.salesmancode
+				INNER JOIN taxgroups
+				ON custbranch.taxgroupid=taxgroups.taxgroupid
+				WHERE custbranch.debtorno = '".$DebtorNo."'";
 
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_row($result);
@@ -713,7 +711,7 @@ if (!isset($_GET['delete'])) {
 			<td><select tabindex="13" name="Salesman">';
 
 	while ($myrow = DB_fetch_array($result)) {
-		if (isset($_POST['Salesman']) and $myrow['salesmancode']==$_POST['Salesman']) {
+		if (isset($_POST['Salesman']) AND $myrow['salesmancode']==$_POST['Salesman']) {
 			echo '<option selected="selected" value="';
 		} else {
 			echo '<option value="';
@@ -741,7 +739,7 @@ if (!isset($_GET['delete'])) {
 			<td>'._('Sales Area').':</td>
 			<td><select tabindex="14" name="Area">';
 	while ($myrow = DB_fetch_array($result)) {
-		if (isset($_POST['Area']) and $myrow['areacode']==$_POST['Area']) {
+		if (isset($_POST['Area']) AND $myrow['areacode']==$_POST['Area']) {
 			echo '<option selected="selected" value="';
 		} else {
 			echo '<option value="';
@@ -771,7 +769,7 @@ if (!isset($_GET['delete'])) {
 			<td><select tabindex="15" name="DefaultLocation">';
 
 	while ($myrow = DB_fetch_array($result)) {
-		if (isset($_POST['DefaultLocation']) and $myrow['loccode']==$_POST['DefaultLocation']) {
+		if (isset($_POST['DefaultLocation']) AND $myrow['loccode']==$_POST['DefaultLocation']) {
 			echo '<option selected="selected" value="';
 		} else {
 			echo '<option value="';
@@ -821,7 +819,7 @@ if (!isset($_GET['delete'])) {
 			<td><select tabindex="19" name="TaxGroup">';
 
 	while ($myrow = DB_fetch_array($TaxGroupResults)) {
-		if (isset($_POST['TaxGroup']) and $myrow['taxgroupid']==$_POST['TaxGroup']) {
+		if (isset($_POST['TaxGroup']) AND $myrow['taxgroupid']==$_POST['TaxGroup']) {
 			echo '<option selected="selected" value="';
 		} else {
 			echo '<option value="';
@@ -843,8 +841,10 @@ if (!isset($_GET['delete'])) {
 				<option value="0">' . _('Enabled') . '</option>';
 	}
 
-	echo '	</select></td></tr>';
-
+	echo '	</select></td>
+		</tr>';
+	
+	
 
 	$SQL = "SELECT shipper_id, shippername FROM shippers";
 	$ShipperResults = DB_query($SQL,$db);
@@ -935,7 +935,7 @@ if (!isset($_GET['delete'])) {
 		</table>
 		<br />
 		<div class="centre">
-			<input tabindex="29" type="submit" name="submit" value="' . _('Enter Branch') . '" />
+			<input tabindex="28" type="submit" name="submit" value="' . _('Enter Or Update Branch') . '" />
 		</div>
 		</div>
 		</form>';

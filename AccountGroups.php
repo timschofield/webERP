@@ -18,8 +18,8 @@ include('includes/SQL_CommonFunctions.inc');
 		jQuery('.noSpecialChars').bind('input', function() {
 			jQuery(this).val($(this).val().replace(/[^a-z0-9_\-]/gi, ''));
 		});
-		$('.number').bind('input', function() {
-			$(this).val($(this).val().replace(/[^0-9]/gi, ''));
+		jQuery('.number').bind('input', function() {
+			jQuery(this).val($(this).val().replace(/[^0-9]/gi, ''));
 		});
 		jQuery('#AccountGroups').validate({
 			rules: {

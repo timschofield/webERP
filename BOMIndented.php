@@ -49,8 +49,8 @@ if (isset($_POST['PrintPDF'])) {
 					  CONCAT(bom.parent,bom.component) AS sortpart
 			  FROM bom
 			  WHERE bom.parent ='" . $_POST['Part'] . "'
-			  AND bom.effectiveto >= NOW()
-			  AND bom.effectiveafter <= NOW()";
+			  AND bom.effectiveto >= '" . date('Y-m-d') . "'
+			  AND bom.effectiveafter <= '" . date('Y-m-d') . "'";
 	$result = DB_query($sql,$db);
 
 	$LevelCounter = 2;
@@ -76,8 +76,8 @@ if (isset($_POST['PrintPDF'])) {
 					 bom.quantity
 			  FROM bom
 			  WHERE bom.parent ='" . $_POST['Part'] . "'
-			  AND bom.effectiveto >= NOW()
-			  AND bom.effectiveafter <= NOW()";
+			  AND bom.effectiveto >= '" . date('Y-m-d') . "'
+			  AND bom.effectiveafter <= '" . date('Y-m-d') . "'";
 	$result = DB_query($sql,$db);
 	//echo "<br />sql is $sql<br />";
 	// This while routine finds the other levels as long as $ComponentCounter - the
@@ -109,7 +109,7 @@ if (isset($_POST['PrintPDF'])) {
 						 bom.quantity
 				 FROM bom, passbom
 				 WHERE bom.parent = passbom.part
-				  AND bom.effectiveto >= NOW() AND bom.effectiveafter <= NOW()";
+				  AND bom.effectiveto >= '" . date('Y-m-d') . "' AND bom.effectiveafter <= '" . date('Y-m-d') . "'";
 			$result = DB_query($sql,$db);
 
 			$sql = "DROP TABLE IF EXISTS passbom2";
@@ -132,8 +132,8 @@ if (isset($_POST['PrintPDF'])) {
 							  CONCAT(passbom2.sortpart,bom.component) AS sortpart
 					   FROM bom,passbom2
 					   WHERE bom.parent = passbom2.part
-						AND bom.effectiveto >= NOW()
-						AND bom.effectiveafter <= NOW()";
+						AND bom.effectiveto >= '" . date('Y-m-d') . "'
+						AND bom.effectiveafter <= '" . date('Y-m-d') . "'";
 			$result = DB_query($sql,$db);
 
 

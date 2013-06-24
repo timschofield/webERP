@@ -782,7 +782,8 @@ invoices can have a zero amount but there must be a quantity to invoice */
 									invtext,
 									shipvia,
 									consignment,
-									packages )
+									packages,
+									salesperson )
 								VALUES (
 									'". $InvoiceNo . "',
 									10,
@@ -801,7 +802,8 @@ invoices can have a zero amount but there must be a quantity to invoice */
 									'" . $_POST['InvoiceText'] . "',
 									'" . $_SESSION['Items'.$identifier]->ShipVia . "',
 									'" . $_POST['Consignment'] . "',
-									'" . $_POST['Packages'] . "')";
+									'" . $_POST['Packages'] . "',
+									'" . $_SESSION['Items'.$identifier]->SalesPerson . "' )";
 
 	$ErrMsg =_('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The debtor transaction record could not be inserted because');
 	$DbgMsg = _('The following SQL to insert the debtor transaction record was used');

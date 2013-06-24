@@ -55,7 +55,7 @@ if (isset($_GET['NewOrder'])){
 	$_SESSION['ExistingOrder' .$identifier]=0;
 	$_SESSION['Items'.$identifier] = new cart;
 
-	if ($CustomerLogin==1){ //its a customer logon
+	if (isset($CustomerLogin)){ //its a customer logon
 		$_SESSION['Items'.$identifier]->DebtorNo=$_SESSION['CustomerID'];
 		$_SESSION['Items'.$identifier]->BranchCode=$_SESSION['UserBranch'];
 		$SelectedCustomer = $_SESSION['CustomerID'];
@@ -1583,6 +1583,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				// Find the quantity on purchase orders
 				$sql = "SELECT SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS qoo
 						FROM purchorderdetails INNER JOIN purchorders
+						ON purchorderdetails.orderno=purchorders.orderno
 						WHERE purchorderdetails.completed=0
 						AND purchorders.status<> 'Completed'
 						AND purchorders.status<> 'Rejected'
@@ -1643,7 +1644,11 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 						locale_number_format($OnOrder, $QOHRow['decimalplaces']),
 						locale_number_format($Available, $QOHRow['decimalplaces']) );
 				if ($j==1) {
-					$jsCall = '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.itm'.$myrow['stockid'].');}</script>';
+					$jsCall = '<script  type="text/javascript">
+									if (document.getElementById("SelectParts")!=null {
+										defaultControl(document.SelectParts.itm'.$myrow['stockid'].');
+									}
+								</script>';
 				}
 				$i++;
 				$j++;
@@ -1708,7 +1713,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
         echo '</tr></table><br />';
         echo '</div>';
         if (!isset($_POST['PartSearch'])) {
-            echo '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.Keywords);}</script>';
+            echo '<script  type="text/javascript">
+					defaultControl(document.forms[0].Keywords);
+				</script>';
         }
 		if (isset($SearchResult)) {
 			echo '<br />';
@@ -1919,7 +1926,13 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 
 if (isset($_GET['NewOrder']) and $_GET['NewOrder']!='') {
-	echo '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectCustomer.CustKeywords);}</script>';
+	echo '<script  type="text/javascript">
+			if (document.getElementById("SelectParts")!=null) {
+				defaultControl(document.forms[0].StockCode);
+			} else {
+				defaultControl(document.forms[0].CustKeywords);
+			}
+		</script>';
 }
 include('includes/footer.inc');
 ?>

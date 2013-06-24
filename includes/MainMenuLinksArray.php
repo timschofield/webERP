@@ -256,6 +256,7 @@ $MenuItems['stock']['Reports']['URL'] = array ('/StockSerialItemResearch.php',
 $MenuItems['stock']['Maintenance']['Caption'] = array (_('Add A New Item'),
 														_('Select An Item'),
 														_('Sales Category Maintenance'),
+														_('Brands Maintenance'),
 														_('Add or Update Prices Based On Costs'),
 														_('View or Update Prices Based On Costs'),
 														_('Reorder Level By Category/Location') );
@@ -263,6 +264,7 @@ $MenuItems['stock']['Maintenance']['Caption'] = array (_('Add A New Item'),
 $MenuItems['stock']['Maintenance']['URL'] = array ('/Stocks.php',
 													'/SelectProduct.php',
 													'/SalesCategories.php',
+													'/Manufacturers.php',
 													'/PricesBasedOnMarkUp.php',
 													'/PricesByCost.php',
 													'/ReorderLevelLocation.php' );
@@ -317,15 +319,17 @@ $MenuItems['manuf']['Maintenance']['URL'] = array ('/WorkCentres.php',
 
 $MenuItems['GL']['Transactions']['Caption'] = array (_('Bank Account Payments Entry'),
 														_('Bank Account Receipts Entry'),
+														_('Import Bank Transactions'),
 														_('Journal Entry'),
 														_('Bank Account Payments Matching'),
 														_('Bank Account Receipts Matching') );
 
 $MenuItems['GL']['Transactions']['URL'] = array ('/Payments.php?NewPayment=Yes',
-													'/CustomerReceipt.php?NewReceipt=Yes&amp;Type=GL',
-													'/GLJournal.php?NewJournal=Yes',
-													'/BankMatching.php?Type=Payments',
-													'/BankMatching.php?Type=Receipts' );
+												'/CustomerReceipt.php?NewReceipt=Yes&amp;Type=GL',
+												'/ImportBankTrans.php',
+												'/GLJournal.php?NewJournal=Yes',
+												'/BankMatching.php?Type=Payments',
+												'/BankMatching.php?Type=Receipts' );
 
 $MenuItems['GL']['Reports']['Caption'] = array (_('Trial Balance'),
 												_('Account Inquiry'),
@@ -375,15 +379,21 @@ $MenuItems['FA']['Transactions']['URL'] = array ('/FixedAssetItems.php',
 												'/FixedAssetTransfer.php',
 												'/FixedAssetDepreciation.php' );
 
-$MenuItems['FA']['Reports']['Caption'] = array (_('Asset Register'), );
+$MenuItems['FA']['Reports']['Caption'] = array (_('Asset Register'),
+												_('My Maintenance Schedule'),
+												_('Maintenance Reminder Emails'));
 
-$MenuItems['FA']['Reports']['URL'] = array ('/FixedAssetRegister.php', );
+$MenuItems['FA']['Reports']['URL'] = array ('/FixedAssetRegister.php',
+											'/MaintenanceUserSchedule.php',
+											'/MaintenanceReminders.php');
 
 $MenuItems['FA']['Maintenance']['Caption'] = array (_('Asset Categories Maintenance'),
-													_('Add or Maintain Asset Locations') );
+													_('Add or Maintain Asset Locations'),
+													_('Maintenance Tasks') );
 
 $MenuItems['FA']['Maintenance']['URL'] = array ('/FixedAssetCategories.php',
-												'/FixedAssetLocations.php' );
+												'/FixedAssetLocations.php',
+												'/MaintenanceTasks.php' );
 
 $MenuItems['PC']['Transactions']['Caption'] = array (_('Assign Cash to PC Tab'),
 													_('Claim Expenses From PC Tab'),
@@ -424,7 +434,7 @@ $MenuItems['system']['Transactions']['Caption'] = array (_('Company Preferences'
 														_('View Audit Trail'),
 														_('Geocode Setup'),
 														_('Form Layout Editor'),
-														_('Label Templates Maintenance'),
+														_('Web-Store Configuration'),
 														_('SMTP Server Details'),
 												       		_('Mailing Group Maintenance')	);
 
@@ -445,7 +455,7 @@ $MenuItems['system']['Transactions']['URL'] = array ('/CompanyPreferences.php',
 													'/AuditTrail.php',
 													'/GeocodeSetup.php',
 													'/FormDesigner.php',
-													'/Labels.php',
+													'/ShopParameters.php',
 													'/SMTPServer.php',
 											       		'/MailingGroupMaintenance.php'	);
 
@@ -486,7 +496,8 @@ $MenuItems['system']['Maintenance']['Caption'] = array (_('Inventory Categories 
 														_('MRP Available Production Days'),
 														_('MRP Demand Types'),
 														_('Maintain Internal Departments'),
-														_('Maintain Internal Stock Categories to User Roles') );
+														_('Maintain Internal Stock Categories to User Roles'),
+														_('Label Templates Maintenance') );
 
 $MenuItems['system']['Maintenance']['URL'] = array ('/StockCategories.php',
 													'/Locations.php',
@@ -495,7 +506,8 @@ $MenuItems['system']['Maintenance']['URL'] = array ('/StockCategories.php',
 													'/MRPCalendar.php',
 													'/MRPDemandTypes.php',
 													'/Departments.php',
-													'/InternalStockCategoriesByRole.php' );
+													'/InternalStockCategoriesByRole.php',
+													'/Labels.php' );
 
 $MenuItems['Utilities']['Transactions']['Caption'] = array (_('Import GL Payments Receipts Or Journals From CSV'),
 															_('Change A Customer Code'),

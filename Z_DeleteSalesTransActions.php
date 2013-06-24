@@ -2,7 +2,6 @@
 /* $Id$*/
 /*Script to Delete all sales transactions*/
 
-//$PageSecurity=15;
 include ('includes/session.inc');
 $Title = _('Delete Sales Transactions');
 include('includes/header.inc');

@@ -3,26 +3,20 @@
 <h2>Prerequisites</h2>
 
 <ul>
-    <li>PHP greater than 4.2. The system is therefore operating system independent since PHP can be configured as a CGI module for use on MS IIS or as a module for Apache under either Windows (NT, 2000 or XP) or Unix/Linux. It has been tested under both Windows (NT and XP) and Linux.</li>
+    <li>PHP greater than 5.1. As PHP can be configured to run under most web-servers under all common operating systems, webERP is therefore operating system independent.</li>
 
     <li>MySQL greater than version 4 with Innodb transactional tables support. Foreign key constraints are also required. These were added to Innodb in 2003. Innodb was introduced in 2001 to MySQL and has Oracle like functionality - row level locking and database transactions with similar speed. (The system could be used with Oracle or other database systems, with minimal modification.) An example configuration file, my.cnf, normally under /usr/local/mysql/var is available in the MyySQL documentation to show typical settings for the Innodb configuration. The expected size of the data is useful although Innodb can create an auto-extending data file and does so by default as of MySQL 4. All tables are defined as Innodb tables as of version 2.8.</li>
 
-    <li>A web server. Apache - the software serving most web pages - is recommended but most web servers are supported by PHP in various forms. The most popular choice on Windows will likely be MS IIS.</li>
+    <li>A web server. Apache - the software serving most web pages - is recommended but most web servers are supported by PHP in various forms. The most popular choice on Windows will likely be MS IIS. Hiawatha or Nginx are also good choices.</li>
 
-    <li>If the web server is accessible over the Internet and not just over a LAN then encrypted communications are required. The openssl and mod-ssl modules for Apache can be easily used to ensure all data is transmitted in encrypted form.</li>
+    <li>If the web server is accessible over the Internet and not just over a LAN then encrypted communications are required. The openssl and mod-ssl modules for Apache can be easily used to ensure all data is transmitted in encrypted form. It is also wise to have the directories where webERP or your wiki installed as protected directories.</li>
 
     <li>For using utf-8 pdf reports in languages other than english the adobe acrobat reader with fonts installed for the necessary locales is required. PDF reports are created used the TCPDF class making use of Adobe CIF fonts - this has the advantage that the pdf reports do not need to bundle with them the large utf-8 character set fonts that would otherwise be required.</li>
 </ul>
 
-<p>Using Apache with mod_ssl and openssl secure sockets makes sense where there is any data transmitted over the Internet and not just over a LAN. Getting PHP and MySQL installed are well covered elsewhere - see the following links:</p>
+<p>Using Apache with mod_ssl and openssl secure sockets makes sense where there is any data transmitted over the Internet and not just over a LAN. Getting PHP and MySQL installed are well covered elsewhere.</p>
 
-<p><a href="http://logidac.com/apache/apache-install-rpm.phtml">http://logidac.com/apache/apache-install-rpm.phtml</a><br></p>
-
-<p><a href="http://www.linux-sottises.net/en_apache_install.php">http://www.linux-sottises.net/en_apache_install.php</a><br></p>
-
-<p>It is important to ensure that the php.ini setting for session.auto_start = 0. Some rpm distributions come with this set to 1 which makes it impossible to use classes within php code. Classes are used extensively in the system and the system starts sessions whenever it needs them. It is safe to set this to 0.<br></p>
-
-<p>The main issues with installation of PHP appear to be:</p>
+<p>There can be issues with installation of PHP appear to be:</p>
 
 <ol>
     <li>Some Windows installations come with a setting for session.save_path= /tmp this is an inappropriate directory for Windows and should be changed to session.save_path=C:\temp or something more appropriate.</li>
@@ -30,11 +24,12 @@
     <li>When the system is hosted on a multi-homed web server farm, the session needs a directory to be specified as a permanent directory otherwise alternative servers serving subsequent pages depending on the load at the time will not be able to find the session cookie. There is a config.php setting for $SessionSavePath which should be set appropriately for the web server host.</li>
 
     <li>For a reason unknown some servers are unable to obtain the correct directory automatically using the line: $RootPath = dirname(htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8')); This will be evidenced by the system's inability to find the page links for the various system options. If this happens the $RootPath variable can be set to the root path of the scripts directly.</li>
+
+    <li>The php.ini setting for session.auto_start should be set to 0. Some rpm distributions come with this set to 1 which makes it impossible to use classes within php code. Classes are used extensively in the system and the system starts sessions whenever it needs them. It is safe to set this to 0.</li>
+
 </ol>
 
-<p>The system could be used with many other database servers but it is tested and developed on MySQL. A Postgres ConnectDB.inc is provided and there is a $dbtype setting in config.php that allows the system administrator to use a Postgres database if preferred. Postgres database dumps are also available for building a postgres webERP installation. Independent benchmarks show that MySQL is one of the fastest databases for most common database tasks. It is especially fast at initiating a connection. Due to the stateless nature of the web, a new connection is required to be established on every page. This makes MySQL particularly suitable for web based applications.</p>
-
-<p>If integration with a company knowledge base is required then an installation of Wacko Wiki on the same web-server is required. This is entirely optional but is highly recommended as a way to share free form information across the business. <a href="http://wackowiki.com/WackoDownload/InEnglish?v=xlv">http://wackowiki.com/WackoDownload/InEnglish?v=xlv</a></p>
+<p>If integration with a company knowledge base is required then an installation of Wacko Wiki or Media Wiki is recommended. The wiki installation should be on the same web-server. This is entirely optional but is highly recommended as a way to share free form information across the business. <a href="hhttp://wackowiki.org/">Download Wacko Wiki</a></p>
 
 <p>The ftp library for PHP is only required for sending order files to a Radio Beacon ftp server for remote warehouse services.</p>
 
@@ -53,9 +48,9 @@
         <p align="center"><img src="images/Installer_1.jpg"></p>
     </li>
 
-    <li>The installer checks that all the pre-requistes are met for an installation. You will note from the screen shot above that this installation does not have sufficient privileges to install webERP because the web-server is unable to write to the webERP directory. It is first necessary to change the permissions on the directory where webERP is installed to ensure that the user that the web-server runs as is able to write a new configuration file to the web space. Cpanel and Plesk have facilities to enable this change to the permissions. Any messages on this screen displayed in red need to be resolved before the installation can proceed. Do not attempt to run the installer while red messages persist.</li>
+    <li>The installer checks that all the pre-requistes are met for an installation. You will note from the screen shot above that this installation does not have sufficient privileges to install webERP because the web-server is unable to write to the webERP directory. <b>It is first necessary to change the permissions on the directory where webERP is installed to ensure that the user that the web-server runs as is able to write a new configuration file to the web space.</b> Cpanel and Plesk have facilities to enable this change to the permissions. Any messages on this screen displayed in red need to be resolved before the installation can proceed. Do not attempt to run the installer while red messages persist.</li>
 
-    <li>Many of the fields required will be populated correctly based. However, it is important to check the entries are correct. The installer will not be able to determine the host (computer) where the mysql database server is installed and this must be entered.</li>
+    <li>Many of the fields required will be populated correctly by default - but all entries should be reviewed to ensure that they are correct. The installer will not be able to determine the host (computer) where the mysql database server is installed and this must be entered.</li>
 
     <li>The user name and the password to the mysql database server are also required.</li>
 
@@ -63,15 +58,15 @@
         <p align="center"><img src="images/Installer_2.jpg"></p>
     </li>
 
-    <li>The name of the company entered in the installer screen will become the name of the mysql database created. Perhaps an abbreviated name for the company without spaces is idea. The weberpdemo is the name of the weberpdemo database that is a good place to test webERP functionality, but you will wish to change this to the name of your company in a live enviroment.</li>
+    <li>The name of the company entered in the installer screen will become the name of the mysql database created. Perhaps an abbreviated name for the company without spaces is ideal. weberpdemo is the name of the weberpdemo database and that is a good place to test webERP functionality. You should change this to the name of your company in a live enviroment.</li>
 
-    <li>It is possible to elect to install the demo database rather than the new empty database to use for a new installation by clicking the check box.</li>
+    <li>It is possible to install the demo database rather than the new empty database to use for a new installation by clicking the check box.</li>
 
     <li>The time-zone is important if your installation is to display the correct time on the local browsers in the country where the business is domiciled. e.g. it is possible to use a US web-server, and operate the business from France. If no entry was entered for the time-zone then the browser would display the time where the web-server was (in the USA) but it is more appropriate to display the time where the business operates from. It is possible to select from any of the PHP defined time-zones.</li>
 
     <li>The logo for the business used on invoices and statments, orders etc. can be uploaded to the appropriate place on the web-server by selecting it on the installer screen. The logo should be a .jpg file and just a small image no more than 170 px accross and 80 pixels high.</li>
 
-    <li>Finally the user admin is created, and the password for this user needs to be defined from entries on the installer screen. It is also possible to specify your email address which is stored in the database.</li>
+    <li>Finally the webERP user &quot;admin&quot; is created, and the password for this user needs to be defined from entries on the installer screen. It is also possible to specify your email address which is stored in the database.</li>
 </ul>
 
 <p>Hitting the install webERP button will then create the database for the company with the user admin given the password details and provide a fresh webERP installation from which to start the configuration of the company, see below.</p>
@@ -174,15 +169,6 @@ mysql&gt; GRANT ALL PRIVILEGES ON *.* TO weberp@localhost IDENTIFIED BY 'some_pa
 
 <p>This ensures that the time-zone of the business is displayed on all browsers using the system irrespective of where the web-server is located (i.e. the timezone of the web-server)</p>
 <pre>
-        ============================================
-        beginning of config.php<br>        ============================================
-        &lt;?php
-
-        /* $Revision: 1.8 $
-        config.php
-        Web-ERP - http://web-erp.sourceforge.net
-        */
-
         // User configurable variables
         //---------------------------------------------------
 
@@ -207,7 +193,7 @@ mysql&gt; GRANT ALL PRIVILEGES ON *.* TO weberp@localhost IDENTIFIED BY 'some_pa
         // assuming that the web server is also the sql server
         $host = 'localhost';
 
-        //The type of db server being used - currently only postgres or mysql
+        //The type of db server being used - currently only mysqli or mysql
         $DBType = 'mysql';
         //$DBType = 'mysqli';
 
@@ -218,10 +204,16 @@ mysql&gt; GRANT ALL PRIVILEGES ON *.* TO weberp@localhost IDENTIFIED BY 'some_pa
         //It would probably be inappropriate to allow selection of the company in a hosted environment so this option can be turned off with this parameter
         $AllowCompanySelectionBox = true;
 
-        //If $AllowCompanySelectionBox = false above then the $DefaultCompany string is entered in the login screen as a default - otherwise the user is expected to know the name of the company to log into and a selection is required from the company selection box which is populated from the list of directories under the companies directory. These directories are created automatically each time a company is created from the Z_MakeNewCompany.php script - this script also creates the company databases.
-        $DefaultCompany = 'weberp';
+        //If $AllowCompanySelectionBox = false above then the $DefaultCompany string is entered in the login screen as a default
+        //otherwise the user is expected to know the name of the company to log into and a selection is required from the company selection box.
+        //The selection box is populated from the list of directories under the companies directory.
+        //These directories are created automatically each time a company is created from the Z_MakeNewCompany.php script
+        //This script also creates the company databases.
+        
+        $DefaultCompany = 'weberpdemo';
 
-        //The maximum time that a login session can be idle before automatic logout<br>        //time is in seconds 3600 seconds in an hour
+        //The maximum time that a login session can be idle before automatic logout<br>
+        //time is in seconds 3600 seconds in an hour
         $SessionLifeTime = 3600;
 
         //The maximum time that a script can execute for before the web-server should terminate it
@@ -236,24 +228,21 @@ mysql&gt; GRANT ALL PRIVILEGES ON *.* TO weberp@localhost IDENTIFIED BY 'some_pa
         $CryptFunction = "sha1"; // SHA1 Hash
         //$CryptFunction = ""; // Plain Text
 
-
-
         // END OF USER CONFIGURABLE VARIABLES
-
-
 
         /*The $RootPath is used in most scripts to tell the script the installation details of the files.
 
-        NOTE: In some windows installation this command doesn't work and the administrator must set this to the path of the installation manually: eg. if the files are under the web server root directory then rootpath =''; if they are under weberp then weberp is the rootpath - notice no additional slashes are necessary.
+        NOTE: In some windows installation this command doesn't work and the administrator must set this to the path of the installation manually:
+        eg. if the files are under the web server root directory then rootpath =''; if they are under weberp then weberp is the rootpath - notice no additional slashes are necessary.
         */
 
         $RootPath = dirname(htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'));
         if ($RootPath == "/" OR $RootPath == "\\") {
-        $RootPath = "";
+			$RootPath = "";
         }
-        //$RootPath = '/web-erp';
-
-        /* Report all errors except E_NOTICE This is the default value set in php.ini for most installations but just to be sure it is forced here turning on NOTICES destroys things */
+        
+        //Report all errors except E_NOTICE This is the default value set in php.ini for most installations
+        //but just to be sure it is forced here turning on NOTICES destroys things
 
         error_reporting (E_ALL & ~E_NOTICE);
 
@@ -292,7 +281,7 @@ enter password 'weberp'<br></p>
 
 <p>This script may not work because it requires that the web-server has write permission to the scripts directory, in which case you may need to fall back to the manual method described below.</p>
 
-<p>In the default install above you created a database called weberp and there is a directory under webERP/companies also called weberp. To make another company you need to copy this directory and all the sub-directories under it to a new directory under webERP/companies/. The name of this directory needs to be identical to the name of the new database created on the same mysql server.</p>
+<p>In the default install above you created a database called weberpdemo and there is a directory under webERP/companies also called weberpdemo. To make another company you need to copy this directory and all the sub-directories under it to a new directory under webERP/companies/. The name of this directory needs to be identical to the name of the new database created on the same mysql server. The utility script Z_MakeNewCompany.php automates the process.</p>
 
 <div class="floatright">
     <a class="minitext" href="#top">⬆ Top</a>
@@ -310,9 +299,9 @@ enter password 'weberp'<br></p>
 
 <p>Often what visually appeals to one does not appeal to another. Whilst accounting software is primarily about function - appearances do matter! Some flexibility is available with the colour scheme and font sizes of the GUI using cascading style sheets (css).</p>
 
-<p>The user interface can be modified by adopting one of the defined themes or making up a new theme. There are currently four themes defined in the distribution: 'silverwold', 'default', 'professional' and 'fresh'.</p>
+<p>The user interface can be modified by adopting one of the defined themes or making up a new theme. There are a number of choices for the theme to experiement with - these will only affect the display of the screens - colours/fonts etc.</p>
 
-<p>Each user can select their own preference from the user settings screen. This is revealed by clicking on their user name shown at the top left of the screen. For example: "webERP Demo: <i>administrator</i>".</p>
+<p>Each user can select their own preference from the user settings screen. This is revealed by clicking on their user name shown at the top left of the screen. For example: "webERP Demo: <i>Administrator</i>".</p>
 
 <p>To create a new theme copy the directory of one of the defined themes to a new name. The themes are held under the css directory of the distribution. There is a directory under the css directory for each theme. After copying the files to a new directory, say 'New_theme', they should be edited to reflect the look desired. New theme directories are revealed automatically on the user setting screen so users can select the customised theme.</p>
 
@@ -340,7 +329,7 @@ enter password 'weberp'<br></p>
 
 <p>webERP uses the gettext library of functions for using the data under the locale files to perform the translations. The gettext libraries need to be installed on the web-server together with the locales that you wish to translate into. In addition the web-server's PHP installation must have the gettext extension configured to use the gettext library functions. Pointing the browser at http://yourdomain/webERP/phpinfo.php will show the details of the PHP installation on your web-server and you should see the gettext extension available from this page.</p>
 
-<p>webERP distributes language packs for all the different languages from sourceforge - http://sourceforge.net/projects/web-erp/files/ Browse to the language your require and download the zip archive. Transfer the file or download it to your web-server under the webERP/locale directory - then extract it. Make sure the files are readable by the web-server (and the user that the web-server runs under) - it may be necessary to change the owner or permissions of the language files.</p>
+<p>webERP distributes translations for all of the available languages bundled in the archive - which is why it is now over 20 Meg compressed.</p>
 
 <p>To change the language displayed for a specific user - the user clicks on their name as shown on every screen at the top of the page. This brings up their user settings.</p>
 
@@ -349,4 +338,4 @@ enter password 'weberp'<br></p>
 
 <p>PDFs are produced in utf-8 character set which has 4 bytes for each character. Unfortunately, the CID fonts used in PDFs only have 2 bytes so there is required to be some mapping of CID characters to utf-8 fonts to make everything work. In practise all this means is that the correct language needs also to be selected for the PDF language.</p>
 
-<p>If you are interested in contributing a language pack to webERP - which is always very much appreciated! There are instructions for how to proceed at http://www.weberp.org/HowToTranslate</p><!-- Help End: WWW_Users -->
+<p>If you are interested in contributing a language pack to webERP - which is always very much appreciated! There are instructions for how to proceed at http://www.weberp.org/wiki/HowToTranslate</p><!-- Help End: WWW_Users -->

@@ -84,7 +84,6 @@ function Is_date($DateEntry) {
 
 function MonthAndYearFromSQLDate($DateEntry) {
 
-
 	if (mb_strpos($DateEntry,'/')) {
 		$Date_Array = explode('/',$DateEntry);
 	} elseif (mb_strpos ($DateEntry,'-')) {
@@ -706,10 +705,8 @@ function Date1GreaterThanDate2 ($Date1, $Date2) {
 	} elseif ($Day2>$Day1){
 		return 0;
 	}
-
 	/* The dates are equal, so return false as date 1 is NOT greater than date 2 */
 	return 0;
-
 }
 
 function CalcDueDate($TranDate, $DayInFollowingMonth, $DaysBeforeDue){
@@ -996,7 +993,7 @@ function GetPeriod ($TransDate, &$db, $UseProhibit=true) {
 	}
 
 	if (Is_Date(ConvertSQLDate($_SESSION['ProhibitPostingsBefore'])) AND $UseProhibit){ //then the ProhibitPostingsBefore configuration is set
-		$Date_Array = explode('-', $_SESSION['ProhibitPostingsBefore']);
+		$Date_Array = explode('-', $_SESSION['ProhibitPostingsBefore']); //its in ANSI SQL format
 		$ProhibitPostingsBefore = mktime(0,0,0,$Date_Array[1],$Date_Array[2],$Date_Array[0]);
 
 		/* If transaction date is in a closed period use the month end of that period */
@@ -1009,7 +1006,7 @@ function GetPeriod ($TransDate, &$db, $UseProhibit=true) {
 	$result = DB_query($sql, $db);
 	$myrow=DB_fetch_row($result);
 
-	if (is_null($myrow[0])){
+	if (is_null($myrow[0])){ //then no periods are currently defined - so set a couple up starting at 0
 		$InsertFirstPeriodResult = DB_query("INSERT INTO periods VALUES (0,'" . Date('Y-m-d',mktime(0,0,0,Date('m')+1,0,Date('Y'))) . "')",$db,_('Could not insert first period'));
 		$InsertFirstPeriodResult = DB_query("INSERT INTO periods VALUES (1,'" . Date('Y-m-d',mktime(0,0,0,Date('m')+2,0,Date('Y'))) . "')",$db,_('Could not insert second period'));
 		$LastPeriod=1;

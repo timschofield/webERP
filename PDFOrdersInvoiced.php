@@ -378,7 +378,7 @@ while ($myrow=DB_fetch_array($Result)){
 	$sql = "SELECT debtortrans.order_,
 					systypes.typename,
 					debtortrans.transno,
-			 		stockmoves.price,
+			 		stockmoves.price *(1-stockmoves.discountpercent) AS netprice,
 					-stockmoves.qty AS quantity
 				FROM debtortrans INNER JOIN stockmoves
 					ON debtortrans.type = stockmoves.type
@@ -398,11 +398,11 @@ while ($myrow=DB_fetch_array($Result)){
 
 	while ($InvRow=DB_fetch_array($InvoicesResult)){
 
-		$ValueInvoiced = $InvRow['price']*$InvRow['quantity'];
+		$ValueInvoiced = $InvRow['netprice']*$InvRow['quantity'];
 
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+150,$YPos,90,$FontSize,$InvRow['typename'] . ' ' . $InvRow['transno'], 'left');
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+240,$YPos,60,$FontSize,locale_number_format($InvRow['quantity'],$myrow['decimalplaces']), 'right');
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+300,$YPos,60,$FontSize,locale_number_format($InvRow['price'],$_SESSION['CompanyRecord']['decimalplaces']), 'right');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+300,$YPos,60,$FontSize,locale_number_format($InvRow['netprice'],$_SESSION['CompanyRecord']['decimalplaces']), 'right');
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+360,$YPos,80,$FontSize,locale_number_format($ValueInvoiced,$_SESSION['CompanyRecord']['decimalplaces']), 'right');
 
 		 $YPos -= ($line_height);

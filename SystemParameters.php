@@ -8,6 +8,7 @@ $Title = _('System Configuration');
 $ViewTopic= 'GettingStarted';
 $BookMark = 'SystemConfiguration';
 include('includes/header.inc');
+include('includes/CountriesArray.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Supplier Types')
 	. '" alt="" />' . $Title. '</p>';
@@ -315,8 +316,18 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['AutoAuthorisePO'] != $_POST['X_AutoAuthorisePO']){
 			$sql[] = "UPDATE config SET confvalue='" . $_POST['X_AutoAuthorisePO'] . "' WHERE confname='AutoAuthorisePO'";
 		}
+		if (isset($_POST['X_ItemDescriptionLanguages'])) {
+			$ItemDescriptionLanguages = '';
+			foreach ($_POST['X_ItemDescriptionLanguages'] as $ItemLanguage){
+				$ItemDescriptionLanguages .= $ItemLanguage .',';
+			}
+			
+			if ($_SESSION['ItemDescriptionLanguages'] != $ItemDescriptionLanguages){
+				$sql[] = "UPDATE config SET confvalue='" . $ItemDescriptionLanguages . "' WHERE confname='ItemDescriptionLanguages'";
+			}
+		}	
 		if ($_SESSION['SmtpSetting'] != $_POST['X_SmtpSetting']){
-			$sql[] = "UPDATE config SET confvalue = '".$_POST['X_SmtpSetting'] ." ' WHERE confname='SmtpSetting'";
+			$sql[] = "UPDATE config SET confvalue = '" . $_POST['X_SmtpSetting'] . "' WHERE confname='SmtpSetting'";
 
 		}
 		$ErrMsg =  _('The system configuration could not be updated because');
@@ -347,9 +358,9 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 echo '<table cellpadding="2" class="selection" width="98%">';
 
 $TableHeader = '<tr>
-				<th>' . _('System Variable Name') . '</th>
-				<th>' . _('Value') . '</th>
-				<th>' . _('Notes') . '</th>
+					<th>' . _('System Variable Name') . '</th>
+					<th>' . _('Value') . '</th>
+					<th>' . _('Notes') . '</th>
                 </tr>';
 
 echo '<tr><th colspan="3">' . _('General Settings') . '</th></tr>';
@@ -440,13 +451,34 @@ echo '<tr style="outline: 1px solid"><td>' . _('Sales Order Allows Same Item Mul
 	</select></td><td>&nbsp;</td></tr>';
 
 //'AllowOrderLineItemNarrative'
-echo '<tr style="outline: 1px solid"><td>' . _('Order Entry allows Line Item Narrative') . ':</td>
-	<td><select name="X_AllowOrderLineItemNarrative">
-	<option '.($_SESSION['AllowOrderLineItemNarrative']=='1'?'selected="selected" ':'').'value="1">'._('Allow Narrative Entry').'</option>
-	<option '.($_SESSION['AllowOrderLineItemNarrative']=='0'?'selected="selected" ':'').'value="0">'._('No Narrative Line').'</option>
-	</select></td>
-	<td>' . _('Select whether or not to allow entry of narrative on order line items. This narrative will appear on invoices and packing slips. Useful mainly for service businesses.') . '</td>
+echo '<tr style="outline: 1px solid">
+		<td>' . _('Order Entry allows Line Item Narrative') . ':</td>
+		<td><select name="X_AllowOrderLineItemNarrative">
+		<option '.($_SESSION['AllowOrderLineItemNarrative']=='1'?'selected="selected" ':'').'value="1">'._('Allow Narrative Entry').'</option>
+		<option '.($_SESSION['AllowOrderLineItemNarrative']=='0'?'selected="selected" ':'').'value="0">'._('No Narrative Line').'</option>
+		</select></td>
+		<td>' . _('Select whether or not to allow entry of narrative on order line items. This narrative will appear on invoices and packing slips. Useful mainly for service businesses.') . '</td>
 	</tr>';
+//ItemDescriptionLanguages
+if (!isset($_POST['X_ItemDescriptionLanguages'])){
+	$_POST['X_ItemDescriptionLanguages'] = explode(',',$_SESSION['ItemDescriptionLanguages']);
+}
+echo '<tr style="outline: 1px solid">
+		<td>' . _('Languages to Maintain Translations for Item Descriptions') . ':</td>
+		<td><select name="X_ItemDescriptionLanguages[]" size="5" multiple="multiple" >';
+		echo '<option value="">' . _('None') .'</option>';
+foreach ($LanguagesArray as $LanguageEntry => $LanguageName){
+	if (isset($_POST['X_ItemDescriptionLanguages']) AND in_array($LanguageEntry,$_POST['X_ItemDescriptionLanguages'])){
+		echo '<option selected="selected" value="' . $LanguageEntry . '">' . $LanguageName['LanguageName'] .'</option>';
+	} elseif ($LanguageEntry != $DefaultLanguage) {
+		echo '<option value="' . $LanguageEntry . '">' . $LanguageName['LanguageName'] .'</option>';
+	}
+}
+echo '</select></td>
+		<td>' . _('Select all the languages for which item description translations are to be maintained.') . '</td>
+	</tr>';
+
+
 
 //'RequirePickingNote'
 echo '<tr style="outline: 1px solid"><td>' . _('A picking note must be produced before an order can be delivered') . ':</td>
@@ -500,21 +532,21 @@ echo '<tr style="outline: 1px solid"><td>' . _('Show company details on packing 
 	<td>' . _('Customer branches can be set by default not to print packing slips with the company logo and address. This is useful for companies that ship to customers customers and to show the source of the shipment would be inappropriate. There is an option on the setup of customer branches to ship blind, this setting is the default applied to all new customer branches') . '</td>
 	</tr>';
 
-
-	// Working days on a week
-	echo '<tr style="outline: 1px solid">
-			<td>' . _('Working Days on a Week') . ':</td>
-			<td><select name="X_WorkingDaysWeek">
-				<option '.($_SESSION['WorkingDaysWeek']=='7'?'selected="selected" ':'').'value="7">7 '._('working days').'</option>
-				<option '.($_SESSION['WorkingDaysWeek']=='6'?'selected="selected" ':'').'value="6">6 '._('working days').'</option>
-				<option '.($_SESSION['WorkingDaysWeek']=='5'?'selected="selected" ':'').'value="5">5 '._('working days').'</option>
-				</select></td>
-			<td>' . _('Number of working days on a week') . '</td>
-		</tr>';
+// Working days on a week
+echo '<tr style="outline: 1px solid">
+		<td>' . _('Working Days on a Week') . ':</td>
+		<td><select name="X_WorkingDaysWeek">
+			<option '.($_SESSION['WorkingDaysWeek']=='7'?'selected="selected" ':'').'value="7">7 '._('working days').'</option>
+			<option '.($_SESSION['WorkingDaysWeek']=='6'?'selected="selected" ':'').'value="6">6 '._('working days').'</option>
+			<option '.($_SESSION['WorkingDaysWeek']=='5'?'selected="selected" ':'').'value="5">5 '._('working days').'</option>
+			</select></td>
+		<td>' . _('Number of working days on a week') . '</td>
+	</tr>';
 
 // DispatchCutOffTime
-echo '<tr style="outline: 1px solid"><td>' . _('Dispatch Cut-Off Time') . ':</td>
-	<td><select name="X_DispatchCutOffTime">';
+echo '<tr style="outline: 1px solid">
+		<td>' . _('Dispatch Cut-Off Time') . ':</td>
+		<td><select name="X_DispatchCutOffTime">';
 for ($i=0; $i < 24; $i++ )
 	echo '<option '.($_SESSION['DispatchCutOffTime'] == $i?'selected="selected" ':'').'value="'.$i.'">' . $i . '</option>';
 echo '</select></td>
@@ -619,18 +651,14 @@ echo '<tr style="outline: 1px solid"><td>' . _('Tax Authority Reference Name') .
 	<td>' . _('This parameter is what is displayed on tax invoices and credits for the tax authority of the company eg. in Australian this would by A.B.N.: - in NZ it would be GST No: in the UK it would be VAT Regn. No') .'</td></tr>';
 
 // CountryOfOperation
-$sql = "SELECT currabrev, country FROM currencies ORDER BY country";
-$ErrMsg = _('Could not load the countries from the currency table');
-$result = DB_query($sql,$db,$ErrMsg);
+
 echo '<tr style="outline: 1px solid"><td>' . _('Country Of Operation') . ':</td>';
 echo '<td><select name="X_CountryOfOperation">';
-if( DB_num_rows($result) == 0 ) {
-	echo '<option selected="selected" value="">'._('Unavailable') . '</option>';
-} else {
-	while( $row = DB_fetch_array($result) ) {
-		echo '<option '.($_SESSION['CountryOfOperation'] == $row['currabrev']?'selected="selected" ':'').'value="'.$row['currabrev'].'">'.$row['country'] . '</option>';
-	}
+echo '<option selected="selected" value="">'._('Unavailable') . '</option>';
+foreach ($CountriesArray as $CountryEntry => $CountryName){
+    echo '<option ' . ($_SESSION['CountryOfOperation'] == $CountryEntry?'selected="selected" ':'') . ' value="' . $CountryEntry . '">' . $CountryName .'</option>';
 }
+
 echo '</select></td>
 	<td>' . _('This parameter is only effective if Do Freight Calculation is set to Yes. Country names come from the currencies table.') .'</td></tr>';
 
@@ -937,8 +965,9 @@ if ($_SESSION['ProhibitJournalsToControlAccounts']=='1'){
 echo '</select></td><td>' . _('Setting this to prohibited prevents accidentally entering a journal to the automatically posted and reconciled control accounts for creditors (AP) and debtors (AR)') . '</td></tr>';
 
 
-echo '<tr style="outline: 1px solid"><td>' . _('Prohibit GL Journals to Periods Prior To') . ':</td>
-	<td><select name="X_ProhibitPostingsBefore">';
+echo '<tr style="outline: 1px solid">
+		<td>' . _('Prohibit GL Journals to Periods Prior To') . ':</td>
+		<td><select name="X_ProhibitPostingsBefore">';
 
 $sql = "SELECT lastdate_in_period FROM periods ORDER BY periodno DESC";
 $ErrMsg = _('Could not load periods table');
@@ -953,7 +982,9 @@ while ($PeriodRow = DB_fetch_row($result)){
 		echo  '<option value="' . $PeriodRow[0] . '">' . ConvertSQLDate($PeriodRow[0]) . '</option>';
 	}
 }
-echo '</select></td><td>' . _('This allows all periods before the selected date to be locked from postings. All postings for transactions dated prior to this date will be posted in the period following this date.') . '</td></tr>';
+echo '</select></td>
+	<td>' . _('This allows all periods before the selected date to be locked from postings. All postings for transactions dated prior to this date will be posted in the period following this date.') . '</td>
+	</tr>';
 
 echo '<tr style="outline: 1px solid"><td>' . _('Inventory Costing Method') . ':</td>
 	<td><select name="X_WeightedAverageCosting">';
@@ -1091,10 +1122,10 @@ echo '<tr style="outline: 1px solid">
 	<td>' . _('Using Smtp Mail'). '</td>
 	<td>
 		<select type="text" name="X_SmtpSetting" >';
-		if($_SESSION['SmtpSetting'] == 0){
+		if ($_SESSION['SmtpSetting'] == 0){
 			echo '<option select="selected" value="0">'._('No').'</option>';
 			echo '<option value="1">'._('Yes').'</option>';
-		}elseif($_SESSION['SmtpSetting'] == 1){
+		} elseif ($_SESSION['SmtpSetting'] == 1){
 			echo '<option select="selected" value="1">'._('Yes').'</option>';
 			echo '<option value="0">'._('No').'</option>';
 		}

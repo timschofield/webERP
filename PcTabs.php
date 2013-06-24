@@ -4,8 +4,8 @@
 include('includes/session.inc');
 $Title = _('Maintenance Of Petty Cash Tabs');
 /* webERP manual links before header.inc */
-$ViewTopic= "PettyCash";
-$BookMark = "PCTabSetup";
+$ViewTopic= 'PettyCash';
+$BookMark = 'PCTabSetup';
 include('includes/header.inc');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . _('Payment Entry') . '" alt="" />' . ' ' . $Title . '</p>';
@@ -139,7 +139,7 @@ if (isset($_POST['Submit'])) {
 									'" . $_POST['GLAccountCash'] . "',
 									'" . $_POST['GLAccountPcashTab'] . "')";
 
-			$msg = _('The Petty Cash Tab') . ' ' . $_POST['tabcode'] .  ' ' . _('has been created');
+			$msg = _('The Petty Cash Tab') . ' ' . $_POST['TabCode'] .  ' ' . _('has been created');
 
 		}
 	}

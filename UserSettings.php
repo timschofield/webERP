@@ -29,12 +29,11 @@ if (isset($_POST['Modify'])) {
 	}
 
 	//!!!for the demo only - enable this check so password is not changed
- /*
-	if ($_POST['pass'] != ''){
+	if ($AllowDemoMode AND $_POST['Password'] != ''){
 		$InputError = 1;
 		prnMsg(_('Cannot change password in the demo or others would be locked out!'),'warn');
 	}
- */
+
  	$UpdatePassword = 'N';
 
 	if ($_POST['PasswordCheck'] != ''){
@@ -58,12 +57,12 @@ if (isset($_POST['Modify'])) {
 		// no errors
 		if ($UpdatePassword != 'Y'){
 			$sql = "UPDATE www_users
-				SET displayrecordsmax='" . $_POST['DisplayRecordsMax'] . "',
-					theme='" . $_POST['Theme'] . "',
-					language='" . $_POST['Language'] . "',
-					email='". $_POST['email'] ."',
-					pdflanguage='" . $_POST['PDFLanguage'] . "'
-				WHERE userid = '" . $_SESSION['UserID'] . "'";
+					SET displayrecordsmax='" . $_POST['DisplayRecordsMax'] . "',
+						theme='" . $_POST['Theme'] . "',
+						language='" . $_POST['Language'] . "',
+						email='". $_POST['email'] ."',
+						pdflanguage='" . $_POST['PDFLanguage'] . "'
+					WHERE userid = '" . $_SESSION['UserID'] . "'";
 
 			$ErrMsg =  _('The user alterations could not be processed because');
 			$DbgMsg = _('The SQL that was used to update the user and failed was');

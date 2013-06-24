@@ -308,154 +308,154 @@ While ($myrow = DB_fetch_array($result)){
 
 if ($LastLine['col5']!='0' && $LastLine['col7']!='0'){
 /* if GrpBY3 and GrpBy4 are both set need to show totals for GrpBy3 */
-if ($Counter>0){ /*Dont want to print totals if this is the first record */
-	$TotalText = mb_substr(_('TOTAL') . ' ' . $LastLine['col5'] . ' - ' . $LastLine['col6'],0,33);
-	$LeftOvers = $pdf->addTextWrap(30,$Ypos,190,$FontSize,$TotalText);
-
-	DB_data_seek($ColsResult,0);
-	while ($Cols = DB_fetch_array($ColsResult)){
-		$Xpos = 160 + $Cols['colno']*60;
-		if ($Cols['calculation']==0){
-		$LeftOvers = $pdf->addTextWrap($Xpos,$Ypos,60,$FontSize, locale_number_format($AccumLvl3[$Cols['colno']],0),'right');
-
-		} else { /* its a calculation need to re-perform on the totals*/
-
-			switch ($Cols['calcoperator']) {
-				Case '/':
-					if ($AccumLvl3[$Cols['coldenominator']]==0){
-						$TotalCalculation = 0;
-					} else {
-						$TotalCalculation = $AccumLvl3[$Cols['colnumerator']] / $AccumLvl3[$Cols['coldenominator']];
-					}
-					break;
-				Case '+':
-					$TotalCalculation = $AccumLvl3[$Cols['colnumerator']] + $AccumLvl3[$Cols['coldenominator']];
-					break;
-				Case '-':
-					$TotalCalculation = $AccumLvl3[$Cols['colnumerator']] + $AccumLvl3[$Cols['coldenominator']];
-					break;
-				Case '*':
-					$TotalCalculation = $AccumLvl3[$Cols['colnumerator']] * $Cols['constant'];
-					break;
-				Case 'C':
-					if ($Cols['constant']==0){
-						$TotalCalculation = 0;
-					} else {
-						$TotalCalculation = $AccumLvl3[$Cols['colnumerator']] / $Cols['constant'];
-					}
-					break;
-			} /*end of switch stmt block*/
-			if ($Cols['valformat']=='P'){
-				$TotalCalculation = locale_number_format($TotalCalculation * 100,1) . '%';
-			} else {
-				$TotalCalculation = locale_number_format($TotalCalculation,0);
+	if ($Counter>0){ /*Dont want to print totals if this is the first record */
+		$TotalText = mb_substr(_('TOTAL') . ' ' . $LastLine['col5'] . ' - ' . $LastLine['col6'],0,33);
+		$LeftOvers = $pdf->addTextWrap(30,$Ypos,190,$FontSize,$TotalText);
+	
+		DB_data_seek($ColsResult,0);
+		while ($Cols = DB_fetch_array($ColsResult)){
+			$Xpos = 160 + $Cols['colno']*60;
+			if ($Cols['calculation']==0){
+			$LeftOvers = $pdf->addTextWrap($Xpos,$Ypos,60,$FontSize, locale_number_format($AccumLvl3[$Cols['colno']],0),'right');
+	
+			} else { /* its a calculation need to re-perform on the totals*/
+	
+				switch ($Cols['calcoperator']) {
+					Case '/':
+						if ($AccumLvl3[$Cols['coldenominator']]==0){
+							$TotalCalculation = 0;
+						} else {
+							$TotalCalculation = $AccumLvl3[$Cols['colnumerator']] / $AccumLvl3[$Cols['coldenominator']];
+						}
+						break;
+					Case '+':
+						$TotalCalculation = $AccumLvl3[$Cols['colnumerator']] + $AccumLvl3[$Cols['coldenominator']];
+						break;
+					Case '-':
+						$TotalCalculation = $AccumLvl3[$Cols['colnumerator']] + $AccumLvl3[$Cols['coldenominator']];
+						break;
+					Case '*':
+						$TotalCalculation = $AccumLvl3[$Cols['colnumerator']] * $Cols['constant'];
+						break;
+					Case 'C':
+						if ($Cols['constant']==0){
+							$TotalCalculation = 0;
+						} else {
+							$TotalCalculation = $AccumLvl3[$Cols['colnumerator']] / $Cols['constant'];
+						}
+						break;
+				} /*end of switch stmt block*/
+				if ($Cols['valformat']=='P'){
+					$TotalCalculation = locale_number_format($TotalCalculation * 100,1) . '%';
+				} else {
+					$TotalCalculation = locale_number_format($TotalCalculation,0);
+				}
+				$LeftOvers = $pdf->addTextWrap($Xpos,$Ypos,60,$FontSize, $TotalCalculation,'right');
 			}
-			$LeftOvers = $pdf->addTextWrap($Xpos,$Ypos,60,$FontSize, $TotalCalculation,'right');
+	
 		}
-
+		$Ypos -=$line_height;
 	}
-	$Ypos -=$line_height;
-}
 }
 
 if ($LastLine['col3']!='0' AND $LastLine['col5']!='0'){
 /* if GrpBY2 and GrpBy3 are both set need to show totals for GrpBy2 */
-if ($Counter>0){ /*Dont want to print totals if this is the first record */
-	$TotalText = mb_substr(_('TOTAL') . ' ' . $LastLine['col3'] . ' - ' . $LastLine['col4'],0,33);
-	$LeftOvers = $pdf->addTextWrap(30,$Ypos,190,$FontSize,$TotalText);
-	DB_data_seek($ColsResult,0);
-	while ($Cols = DB_fetch_array($ColsResult)){
-		$Xpos = 160 + $Cols['colno']*60;
-		if ($Cols['calculation']==0){
-		$LeftOvers = $pdf->addTextWrap($Xpos,$Ypos,60,$FontSize, locale_number_format($AccumLvl2[$Cols['colno']],0),'right');
-
-		} else { /* its a calculation need to re-perform on the totals*/
-
-			switch ($Cols['calcoperator']) {
+	if ($Counter>0){ /*Dont want to print totals if this is the first record */
+		$TotalText = mb_substr(_('TOTAL') . ' ' . $LastLine['col3'] . ' - ' . $LastLine['col4'],0,33);
+		$LeftOvers = $pdf->addTextWrap(30,$Ypos,190,$FontSize,$TotalText);
+		DB_data_seek($ColsResult,0);
+		while ($Cols = DB_fetch_array($ColsResult)){
+			$Xpos = 160 + $Cols['colno']*60;
+			if ($Cols['calculation']==0){
+			$LeftOvers = $pdf->addTextWrap($Xpos,$Ypos,60,$FontSize, locale_number_format($AccumLvl2[$Cols['colno']],0),'right');
+	
+			} else { /* its a calculation need to re-perform on the totals*/
+	
+				switch ($Cols['calcoperator']) {
+					Case '/':
+						if ($AccumLvl2[$Cols['coldenominator']]==0){
+							$TotalCalculation = 0;
+						} else {
+							$TotalCalculation = $AccumLvl2[$Cols['colnumerator']] / $AccumLvl2[$Cols['coldenominator']];
+						}
+						break;
+					Case '+':
+						$TotalCalculation = $AccumLvl2[$Cols['colnumerator']] + $AccumLvl2[$Cols['coldenominator']];
+						break;
+					Case '-':
+						$TotalCalculation = $AccumLvl2[$Cols['colnumerator']] + $AccumLvl2[$Cols['coldenominator']];
+						break;
+					Case '*':
+						$TotalCalculation = $AccumLvl2[$Cols['colnumerator']] * $Cols['constant'];
+						break;
+					Case 'C':
+						if ($Cols['constant']==0){
+							$TotalCalculation = 0;
+						} else {
+							$TotalCalculation = $AccumLvl2[$Cols['colnumerator']] / $Cols['constant'];
+						}
+						break;
+				} /*end of switch stmt block*/
+				if ($Cols['valformat']=='P'){
+					$TotalCalculation = locale_number_format($TotalCalculation * 100,1) . '%';
+				} else {
+					$TotalCalculation = locale_number_format($TotalCalculation,0);
+				}
+				$LeftOvers = $pdf->addTextWrap($Xpos,$Ypos,60,$FontSize, $TotalCalculation,'right');
+			}
+	
+		}
+		$Ypos -=$line_height;
+	}
+}
+if ($LastLine['col3']!='0'){
+/* GrpBY1 must always be set but if GrpBy2 is also set need to show totals for GrpBy2 */
+	if ($Counter>1){ /*Dont want to print totals if this is the first record */
+		$TotalText = mb_substr(_('TOTAL') .  ' ' . $LastLine['col1'] . ' - ' . $LastLine['col2'],0,30);
+		$LeftOvers = $pdf->addTextWrap(15,$Ypos,205,$FontSize,$TotalText);
+		DB_data_seek($ColsResult,0);
+		while ($Cols = DB_fetch_array($ColsResult)){
+			$Xpos =160 + $Cols['colno']*60;
+			if ($Cols['calculation']==0){
+			$LeftOvers = $pdf->addTextWrap($Xpos,$Ypos,60,$FontSize, locale_number_format($AccumLvl1[$Cols['colno']],0),'right');
+			} else { /* its a calculation need to re-perform on the totals*/
+	
+				switch ($Cols['calcoperator']) {
 				Case '/':
-					if ($AccumLvl2[$Cols['coldenominator']]==0){
+					if ($AccumLvl1[$Cols['coldenominator']]==0){
 						$TotalCalculation = 0;
 					} else {
-						$TotalCalculation = $AccumLvl2[$Cols['colnumerator']] / $AccumLvl2[$Cols['coldenominator']];
+						$TotalCalculation = $AccumLvl1[$Cols['colnumerator']] / $AccumLvl1[$Cols['coldenominator']];
 					}
 					break;
 				Case '+':
-					$TotalCalculation = $AccumLvl2[$Cols['colnumerator']] + $AccumLvl2[$Cols['coldenominator']];
+					$TotalCalculation = $AccumLvl1[$Cols['colnumerator']] + $AccumLvl1[$Cols['coldenominator']];
 					break;
 				Case '-':
-					$TotalCalculation = $AccumLvl2[$Cols['colnumerator']] + $AccumLvl2[$Cols['coldenominator']];
+					$TotalCalculation = $AccumLvl1[$Cols['colnumerator']] + $AccumLvl1[$Cols['coldenominator']];
 					break;
 				Case '*':
-					$TotalCalculation = $AccumLvl2[$Cols['colnumerator']] * $Cols['constant'];
+					$TotalCalculation = $AccumLvl1[$Cols['colnumerator']] * $Cols['constant'];
 					break;
 				Case 'C':
 					if ($Cols['constant']==0){
 						$TotalCalculation = 0;
 					} else {
-						$TotalCalculation = $AccumLvl2[$Cols['colnumerator']] / $Cols['constant'];
+						$TotalCalculation = $AccumLvl1[$Cols['colnumerator']] / $Cols['constant'];
 					}
 					break;
-			} /*end of switch stmt block*/
-			if ($Cols['valformat']=='P'){
-				$TotalCalculation = locale_number_format($TotalCalculation * 100,1) . '%';
-			} else {
-				$TotalCalculation = locale_number_format($TotalCalculation,0);
-			}
-			$LeftOvers = $pdf->addTextWrap($Xpos,$Ypos,60,$FontSize, $TotalCalculation,'right');
-		}
-
-	}
-	$Ypos -=$line_height;
-}
-}
-if ($LastLine['col3']!='0'){
-/* GrpBY1 must always be set but if GrpBy2 is also set need to show totals for GrpBy2 */
-if ($Counter>1){ /*Dont want to print totals if this is the first record */
-	$TotalText = mb_substr(_('TOTAL') .  ' ' . $LastLine['col1'] . ' - ' . $LastLine['col2'],0,30);
-	$LeftOvers = $pdf->addTextWrap(15,$Ypos,205,$FontSize,$TotalText);
-	DB_data_seek($ColsResult,0);
-	while ($Cols = DB_fetch_array($ColsResult)){
-		$Xpos =160 + $Cols['colno']*60;
-		if ($Cols['calculation']==0){
-		$LeftOvers = $pdf->addTextWrap($Xpos,$Ypos,60,$FontSize, locale_number_format($AccumLvl1[$Cols['colno']],0),'right');
-		} else { /* its a calculation need to re-perform on the totals*/
-
-			switch ($Cols['calcoperator']) {
-			Case '/':
-				if ($AccumLvl1[$Cols['coldenominator']]==0){
-					$TotalCalculation = 0;
+				} /*end of switch stmt block*/
+				if ($Cols['valformat']=='P'){
+					$TotalCalculation = locale_number_format($TotalCalculation * 100,1) . '%';
 				} else {
-					$TotalCalculation = $AccumLvl1[$Cols['colnumerator']] / $AccumLvl1[$Cols['coldenominator']];
+					$TotalCalculation = locale_number_format($TotalCalculation,0);
 				}
-				break;
-			Case '+':
-				$TotalCalculation = $AccumLvl1[$Cols['colnumerator']] + $AccumLvl1[$Cols['coldenominator']];
-				break;
-			Case '-':
-				$TotalCalculation = $AccumLvl1[$Cols['colnumerator']] + $AccumLvl1[$Cols['coldenominator']];
-				break;
-			Case '*':
-				$TotalCalculation = $AccumLvl1[$Cols['colnumerator']] * $Cols['constant'];
-				break;
-			Case 'C':
-				if ($Cols['constant']==0){
-					$TotalCalculation = 0;
-				} else {
-					$TotalCalculation = $AccumLvl1[$Cols['colnumerator']] / $Cols['constant'];
-				}
-				break;
-			} /*end of switch stmt block*/
-			if ($Cols['valformat']=='P'){
-				$TotalCalculation = locale_number_format($TotalCalculation * 100,1) . '%';
-			} else {
-				$TotalCalculation = locale_number_format($TotalCalculation,0);
+				$LeftOvers = $pdf->addTextWrap($Xpos,$Ypos,60,$FontSize, $TotalCalculation,'right');
 			}
-			$LeftOvers = $pdf->addTextWrap($Xpos,$Ypos,60,$FontSize, $TotalCalculation,'right');
+	
 		}
-
+		$Ypos -=(2*$line_height);
 	}
-	$Ypos -=(2*$line_height);
-}
 }
 if ($Counter>0){
 	$LeftOvers = $pdf->addTextWrap(15,$Ypos,205,$FontSize,_('GRAND TOTAL'));

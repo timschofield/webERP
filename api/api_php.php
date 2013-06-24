@@ -2,9 +2,8 @@
 
 /* Include session.inc, to allow database connection, and access to
    miscfunctions, and datefunctions.*/
-	// FOLLOWING ONLY REQUIRED TO SUPPORT PER FUNCTION AUTHENTICATION
+	// FOLLOWING IS ALWAYS REQUIRED
 	$api_DatabaseName='weberpdemo';
-	// END OF OLD STYLE AUTHENTICATION
 
 	$AllowAnyone = true;
 	$PathPrefix=dirname(__FILE__).'/../';

@@ -8,7 +8,7 @@ include('includes/header.inc');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/security.png" title="' . _('Page Security Levels') . '" alt="" />' . ' ' . $Title.'</p><br />';
 
-if (isset($_POST['Update'])) {
+if (isset($_POST['Update']) AND $AlloDemoMode!= true) {
 	foreach ($_POST as $ScriptName => $PageSecurityValue) {
 		if ($ScriptName!='Update' and $ScriptName!='FormID') {
 			$ScriptName = mb_substr($ScriptName, 0, mb_strlen($ScriptName)-4).'.php';
@@ -31,29 +31,33 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 
 echo '<table class="selection">';
 
-$TokenSql="SELECT tokenid, tokenname
+$TokenSql="SELECT tokenid,
+					tokenname
 			FROM securitytokens
 			ORDER BY tokenname";
 $TokenResult=DB_query($TokenSql, $db);
 
 while ($myrow=DB_fetch_array($result)) {
-	echo '<tr><td>'.$myrow['script'].'</td>';
-	echo '<td><select name="'.$myrow['script'].'">';
-	while ($mytokenrow=DB_fetch_array($TokenResult)) {
-		if ($mytokenrow['tokenid']==$myrow['pagesecurity']) {
-			echo '<option selected="selected" value="'.$mytokenrow['tokenid'].'">'.$mytokenrow['tokenname'].'</option>';
+	echo '<tr>
+			<td>' . $myrow['script'] . '</td>
+			<td><select name="' . $myrow['script'] . '">';
+			
+	while ($myTokenRow=DB_fetch_array($TokenResult)) {
+		if ($myTokenRow['tokenid']==$myrow['pagesecurity']) {
+			echo '<option selected="selected" value="' . $myTokenRow['tokenid'] . '">' . $myTokenRow['tokenname'] . '</option>';
 		} else {
-			echo '<option value="'.$mytokenrow['tokenid'].'">'.$mytokenrow['tokenname'].'</option>';
+			echo '<option value="'.$myTokenRow['tokenid'].'">' . $myTokenRow['tokenname'] . '</option>';
 		}
 	}
-	echo '</select></td></tr>';
+	echo '</select></td>
+		</tr>';
 	DB_data_seek($TokenResult, 0);
 }
 
 echo '</table><br />';
 
 echo '<div class="centre">
-			<input type="submit" name="Update" value="'._('Update Security Levels').'" />
+		<input type="submit" name="Update" value="'._('Update Security Levels').'" />
 	</div>
 	<br />
     </div>

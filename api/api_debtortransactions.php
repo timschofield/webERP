@@ -1068,7 +1068,8 @@ function ConvertToSQLDate($DateEntry) {
 										ovamount,
 										ovgst,
 										rate,
-										shipvia)
+										shipvia,
+										salesperson)
 									VALUES (
 										'". $CreditNoteNo . "',
 										11,
@@ -1082,7 +1083,8 @@ function ConvertToSQLDate($DateEntry) {
 										'" . $TotalFXNetCredit . "',
 										'" . $TotalFXTax . "',
 										'" . $CN_Header['rate'] . "',
-										'" . $Header['shipvia'] . "')";
+										'" . $Header['shipvia'] . "',
+										'" . $CN_Header['salesman'] . "')";
 
 		$Result = api_DB_query($SQL,$db,'','',true);
 

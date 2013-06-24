@@ -31,7 +31,7 @@ If (isset($_POST['PrintPDF'])
 			ON stockmaster.stockid=bom.component
 			WHERE bom.parent >= '" . $_POST['FromCriteria'] . "'
 			AND bom.parent <= '" . $_POST['ToCriteria'] . "'
-			AND bom.effectiveto >= NOW() AND bom.effectiveafter <= NOW()
+			AND bom.effectiveto >= '" . date('Y-m-d') . "' AND bom.effectiveafter <= '" . date('Y-m-d') . "'
 			ORDER BY bom.parent,
 					bom.component";
 

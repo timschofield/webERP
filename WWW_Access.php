@@ -20,7 +20,10 @@ if (isset($_POST['submit']) OR isset($_GET['remove']) OR isset($_GET['add']) ) {
 
 	//initialise no input errors assumed initially before we test
 	$InputError = 0;
-
+	if ($AllowDemoMode){
+		$InputError =1;
+		prnMsg('The demo functionality is crippled to prevent access problems. No changes will be made','warn');
+	}
 	/* actions to take once the user has clicked the submit button
 	ie the page has called itself with some user input */
 	//first off validate inputs sensible
