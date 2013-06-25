@@ -101,7 +101,6 @@ INSERT INTO config VALUES ('ShopCreditCardGateway', 'PayFlowPro');
 INSERT INTO config VALUES ('ShopPayFlowUser','');
 INSERT INTO config VALUES ('ShopPayFlowPassword','');
 INSERT INTO config VALUES ('ShopPayFlowVendor','');
-INSERT INTO config VALUES ('ShopPayFlowMerchant','');
 
 INSERT INTO config VALUES ('ShopAllowPayPal', '1');
 INSERT INTO config VALUES ('ShopAllowCreditCards', '1');
@@ -155,6 +154,9 @@ CREATE TABLE IF NOT EXISTS `salescattranslations` (
 ALTER TABLE salescatprod ADD COLUMN manufacturers_id int(11) NOT NULL;
 ALTER TABLE salescatprod ADD COLUMN featured int(11) DEFAULT '0' NOT NULL;
 ALTER TABLE `salescatprod` ADD INDEX ( `manufacturers_id` );
+
+INSERT INTO config VALUES ('ShopMode','test');
+
 
 UPDATE config SET confvalue='4.11.0' WHERE confname='Version';
 
