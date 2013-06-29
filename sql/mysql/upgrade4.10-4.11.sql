@@ -155,8 +155,9 @@ ALTER TABLE salescatprod ADD COLUMN manufacturers_id int(11) NOT NULL;
 ALTER TABLE salescatprod ADD COLUMN featured int(11) DEFAULT '0' NOT NULL;
 ALTER TABLE `salescatprod` ADD INDEX ( `manufacturers_id` );
 
+
 INSERT INTO config VALUES ('ShopMode','test');
 INSERT INTO config VALUES ('ShopContactUs','');
 
-UPDATE config SET confvalue='4.11.0' WHERE confname='Version';
+UPDATE config SET confvalue='4.11.0' WHERE confname='VersionNumber';
 

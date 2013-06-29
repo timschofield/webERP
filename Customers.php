@@ -374,11 +374,6 @@ if (isset($_POST['ID'])){
 } else {
 	$ID='';
 }
-if (isset($_POST['ws'])){ //ws??? wtf???
-	$ws = $_POST['ws'];
-} elseif (isset($_GET['ws'])){
-	$ws = $_GET['ws'];
-}
 if (isset($_POST['Edit'])){
 	$Edit = $_POST['Edit'];
 } elseif (isset($_GET['Edit'])){
