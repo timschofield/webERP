@@ -159,5 +159,8 @@ ALTER TABLE `salescatprod` ADD INDEX ( `manufacturers_id` );
 INSERT INTO config VALUES ('ShopMode','test');
 INSERT INTO config VALUES ('ShopContactUs','');
 
+INSERT INTO config VALUES ('ShopShowOnlyAvailableItems','0');
+INSERT INTO config VALUES ('ShopShowQOHColumn','1');
+
 UPDATE config SET confvalue='4.11.0' WHERE confname='VersionNumber';
 
