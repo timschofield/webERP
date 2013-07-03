@@ -161,6 +161,7 @@ INSERT INTO config VALUES ('ShopContactUs','');
 
 INSERT INTO config VALUES ('ShopShowOnlyAvailableItems','0');
 INSERT INTO config VALUES ('ShopShowQOHColumn','1');
+INSERT INTO config VALUES ('ShopAdditionalStockLocations','');
 
 UPDATE config SET confvalue='4.11.0' WHERE confname='VersionNumber';
 

@@ -72,6 +72,10 @@ if (isset($_POST['submit'])) {
 			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopShowQOHColumn']."' WHERE confname = 'ShopShowQOHColumn'";
 		}
 
+		if ($_SESSION['ShopAdditionalStockLocations'] != $_POST['X_ShopAdditionalStockLocations'] ) {
+			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopAdditionalStockLocations']."' WHERE confname = 'ShopAdditionalStockLocations'";
+		}
+
 		if ($_SESSION['ShopAllowSurcharges'] != $_POST['X_ShopAllowSurcharges'] ) {
 			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopAllowSurcharges']."' WHERE confname = 'ShopAllowSurcharges'";
 		}
@@ -189,10 +193,22 @@ $TableHeader = '<tr>
 					<th>' . _('Notes') . '</th>
                 </tr>';
 
-echo '<tr>
-		<th colspan="3">' . _('General Settings') . '</th></tr>';
+echo '<tr><th colspan="3">' . _('General Settings') . '</th></tr>';
 echo $TableHeader;
 
+echo '<tr>
+		<td>' . _('Test or Live Mode') . ':</td>
+		<td><select name="X_ShopMode">';
+		if ($_SESSION['ShopMode']== 'test' OR $AllowDemoMode){
+			echo '<option selected="selected" value="test">' . _('Test') . '</option>
+				<option value="live">' . _('Live') . '</option>';
+		} else {
+			echo '<option value="test">' . _('Test') . '</option>
+				<option selected="selected" value="live">' . _('Live') . '</option>';
+		}
+		echo '</select></td>
+		<td>' . _('Must change this to live mode when the shop is activie. No PayPal or credit card transactions will be processed in test mode') . '</td>
+	</tr>';	
 //Shop Name
 echo '<tr>
 		<td>' . _('Shop Name') . ':</td>
@@ -243,6 +259,10 @@ echo '<tr>
 		<td>' . _('This text will appear on the web-store page that spells out the freight policy of the web-shop') . '</td>
 	</tr>';
 
+
+echo '<tr><th colspan="3">' . _('Web-Store Behaviour Settings') . '</th></tr>';
+echo $TableHeader;
+
 echo '<tr>
 		<td>' . _('Show Only Items With Available Stock') . ':</td>
 		<td><select name="X_ShopShowOnlyAvailableItems">';
@@ -270,7 +290,13 @@ if ($_SESSION['ShopShowQOHColumn'] == '1') {
 echo '</select></td>
 		<td>' . _('Shows / Hides the QOH column Select Hide if you do not want customers to know how many stock do you currently hold.') . '</td>
 	</tr>';
-	
+
+echo '<tr>
+		<td>' . _('Additional Stock Locations') . ':</td>
+		<td><input type="text" size="80" maxlength="100" name="X_ShopAdditionalStockLocations" value="' . $_SESSION['ShopAdditionalStockLocations'] . '" /></td>
+		<td>' . _('List of additional stock location codes, sepparated by comma. Web-Stote will consider stock at the default customer location plus these ones. 
+		Leave empty if only will consider default customer location. Example: LOC01, LOC02, LOC03') . '</td>
+	</tr>';	
 	
 echo '<tr>
 		<td>' . _('Allow Payment Surcharges') . ':</td>
@@ -301,6 +327,11 @@ echo '</select></td>
 		<td>' . _('Select the webERP service item to use for payment surcharges to be processed as') . '</td>
 	</tr>';
 
+
+	
+echo '<tr><th colspan="3">' . _('Bank Transfer Settings') . '</th></tr>';
+echo $TableHeader;
+	
 echo '<tr>
 		<td>' . _('Allow Bank Transfer Payment') . ':</td>
 		<td><select name="X_ShopAllowBankTransfer">';
@@ -320,6 +351,9 @@ echo '<tr>
 		<td>' . _('The bank transfer surcharge') . '</td>
 	</tr>';
 
+echo '<tr><th colspan="3">' . _('Paypal Settings') . '</th></tr>';
+echo $TableHeader;
+	
 echo '<tr>
 		<td>' . _('Allow PayPal Payment') . ':</td>
 		<td><select name="X_ShopAllowPayPal">';
@@ -355,6 +389,32 @@ echo '<tr>
 		<td>' . _('The PayPal surcharge') . '</td>
 	</tr>';
 
+if ($AllowDemoMode){
+	echo '<tr>
+			<td>' . _('Paypal user account details') . '</td>
+			<td colspan="2">' . _('Cannot be set in the demo') . '</td>
+		</tr>';
+} else {
+	echo '<tr>
+			<td>' . _('PayPal User') . ':</td>
+			<td><input type="text" class="noSpecialChars" size="40" maxlength="40" name="X_ShopPayPalUser" value="' . $_SESSION['ShopPayPalUser'] . '" /></td>
+			<td>' . _('The PayPal Merchant User account for Pay Pal Express Checkout') . '</td>
+		</tr>';
+	echo '<tr>
+			<td>' . _('PayPal Password') . ':</td>
+			<td><input type="text" size="20" maxlength="20" name="X_ShopPayPalPassword" value="' . $_SESSION['ShopPayPalPassword'] . '" /></td>
+			<td>' . _('The PayPal Merchant account password for Pay Pal Express Checkout') . '</td>
+		</tr>';
+	echo '<tr>
+			<td>' . _('PayPal Signature') . ':</td>
+			<td><input type="text" size="80" maxlength="100" name="X_ShopPayPalSignature" value="' . $_SESSION['ShopPayPalSignature'] . '" /></td>
+			<td>' . _('The PayPal merchant account signature for Pay Pal Express Checkout') . '</td>
+		</tr>';
+}	
+	
+echo '<tr><th colspan="3">' . _('Credit Card Processing Settings') . '</th></tr>';
+echo $TableHeader;	
+	
 echo '<tr>
 		<td>' . _('Allow Credit Card Payments') . ':</td>
 		<td><select name="X_ShopAllowCreditCards">';
@@ -417,19 +477,7 @@ echo '</select></td>
 		<td>' . _('Select the webERP bank account to use for receipts processed by credit card') . '</td>
 	</tr>';
 
-echo '<tr>
-		<td>' . _('Test or Live Mode') . ':</td>
-		<td><select name="X_ShopMode">';
-		if ($_SESSION['ShopMode']== 'test' OR $AllowDemoMode){
-			echo '<option selected="selected" value="test">' . _('Test') . '</option>
-				<option value="live">' . _('Live') . '</option>';
-		} else {
-			echo '<option value="test">' . _('Test') . '</option>
-				<option selected="selected" value="live">' . _('Live') . '</option>';
-		}
-		echo '</select></td>
-		<td>' . _('Must change this to live mode when the shop is activie. No PayPal or credit card transactions will be processed in test mode') . '</td>
-	</tr>';
+
 
 if ($AllowDemoMode){
 	echo '<tr>
@@ -437,21 +485,6 @@ if ($AllowDemoMode){
 			<td colspan="2">' . _('Cannot be set in the demo') . '</td>
 		</tr>';
 } else {
-	echo '<tr>
-			<td>' . _('PayPal User') . ':</td>
-			<td><input type="text" class="noSpecialChars" size="40" maxlength="40" name="X_ShopPayPalUser" value="' . $_SESSION['ShopPayPalUser'] . '" /></td>
-			<td>' . _('The PayPal Merchant User account for Pay Pal Express Checkout') . '</td>
-		</tr>';
-	echo '<tr>
-			<td>' . _('PayPal Password') . ':</td>
-			<td><input type="text" size="20" maxlength="20" name="X_ShopPayPalPassword" value="' . $_SESSION['ShopPayPalPassword'] . '" /></td>
-			<td>' . _('The PayPal Merchant account password for Pay Pal Express Checkout') . '</td>
-		</tr>';
-	echo '<tr>
-			<td>' . _('PayPal Signature') . ':</td>
-			<td><input type="text" size="80" maxlength="100" name="X_ShopPayPalSignature" value="' . $_SESSION['ShopPayPalSignature'] . '" /></td>
-			<td>' . _('The PayPal merchant account signature for Pay Pal Express Checkout') . '</td>
-		</tr>';
 	echo '<tr>
 			<td>' . _('PayPal Pro User') . ':</td>
 			<td><input type="text" class="noSpecialChars"  size="40" maxlength="40" name="X_ShopPayPalProUser" value="' . $_SESSION['ShopPayPalProUser'] . '" /></td>
