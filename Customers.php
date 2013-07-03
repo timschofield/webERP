@@ -471,7 +471,7 @@ if (!isset($DebtorNo)) {
 		</tr>';
 
 // Show Sales Type drop down list
-	$result=DB_query("SELECT typeabbrev, sales_type FROM salestypes ",$db);
+	$result=DB_query("SELECT typeabbrev, sales_type FROM salestypes ORDER BY sales_type",$db);
 	if (DB_num_rows($result)==0){
 		$DataError =1;
 		echo '<tr><td colspan="2">' . prnMsg(_('No sales types/price lists defined'),'error') . '<br /><a href="SalesTypes.php?" target="_parent">' . _('Setup Types') . '</a></td></tr>';
@@ -487,7 +487,7 @@ if (!isset($DebtorNo)) {
 	}
 
 // Show Customer Type drop down list
-	$result=DB_query("SELECT typeid, typename FROM debtortype", $db);
+	$result=DB_query("SELECT typeid, typename FROM debtortype ORDER BY typename", $db);
 	if (DB_num_rows($result)==0){
 	   $DataError =1;
 	   echo '<a href="SalesTypes.php?" target="_parent">' . _('Setup Types') . '</a>';
