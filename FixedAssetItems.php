@@ -225,7 +225,7 @@ if (isset($_POST['submit'])) {
 									'" . $PeriodNo . "',
 									'" . $NewAccounts['accumdepnact'] . "',
 									'" . $AssetID . ' ' . _('change category') . ' ' . $OldDetails['assetcategoryid'] . ' - ' . $_POST['AssetCategoryID'] . "',
-									'" . $OldDetails['accumdepn']. "'
+									'" . -$OldDetails['accumdepn']. "'
 									)";
 					$ErrMsg = _('Cannot insert a GL entry for the change of asset category because');
 					$DbgMsg = _('The SQL that failed to insert the cost GL Trans record was');
