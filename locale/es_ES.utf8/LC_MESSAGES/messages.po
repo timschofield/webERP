@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-06-09 22:30+1200\n"
-"PO-Revision-Date: 2013-06-27 12:11-0600\n"
+"PO-Revision-Date: 2013-07-05 07:41-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "MIME-Version: 1.0\n"
@@ -42,7 +42,7 @@ msgstr ""
 
 #: AccountGroups.php:40
 msgid "The sequence number can only contain digits"
-msgstr ""
+msgstr "El número de secuencia sólo puede contener dígitos"
 
 #: AccountGroups.php:60
 msgid ""
@@ -3331,8 +3331,8 @@ msgid ""
 "This page can only be opened if a sales order and line item has been "
 "selected Please do that first"
 msgstr ""
-"Esta página sólo puede abrirse si un pedido de cliente y de partida ha sido "
-"seleccionado, Por favor haga eso primero"
+"Esta página sólo se puede abrir si una orden de venta y una línea de "
+"artículo han sido seleccionadas. Por favor haga eso primero"
 
 #: ConfirmDispatchControlled_Invoice.php:54
 msgid "Back to the Sales Order"
@@ -4573,7 +4573,7 @@ msgstr "Seleccione otro pedido para facturar"
 
 #: ConfirmDispatch_Invoice.php:1636
 msgid "Sales Order Entry"
-msgstr "Ingreso de Pedidos de Venta"
+msgstr "Ingreso de órdenes de venta"
 
 #: ConfirmDispatch_Invoice.php:1654
 msgid "Date On Invoice"
@@ -5679,7 +5679,7 @@ msgstr "Orden Colocada"
 
 #: Contracts.php:966
 msgid "Quotation Reference/Sales Order No"
-msgstr "Referencia de Cotización/Número Pedido de Ventas"
+msgstr "Referencia de cotización/Número de orden de ventas"
 
 #: Contracts.php:972
 msgid "Contract Work Order Ref"
@@ -6435,13 +6435,13 @@ msgstr ""
 
 #: CounterSales.php:1129 DeliveryDetails.php:412
 msgid "Unable to add the sales order line"
-msgstr "No es posible agregar la fila del pedido de venta"
+msgstr "No se puede agregar la línea de orden de venta"
 
 #: CounterSales.php:1204 DeliveryDetails.php:486 DeliveryDetails.php:678
 msgid "Unable to insert a new work order for the sales order item"
 msgstr ""
-"No se pude agregar una nueva orden de trabajo para el artículo del pedido de "
-"ventas"
+"No se puede agregar una nueva orden de trabajo para el artículo de la orden "
+"de ventas"
 
 #: CounterSales.php:1224 DeliveryDetails.php:506 DeliveryDetails.php:697
 msgid "In automatically creating a work order for"
@@ -7923,24 +7923,20 @@ msgid "Street Address 1 (Street)"
 msgstr "Dirección de la Calle, 1 (Calle)"
 
 #: CustomerBranches.php:619
-#, fuzzy
 msgid "Street Address 2 (Street)"
-msgstr "Dirección de la Calle, 1 (Calle)"
+msgstr "Dirección línea 2 (Calle)"
 
 #: CustomerBranches.php:626
-#, fuzzy
 msgid "Street Address 3 (Suburb/City)"
-msgstr "Dirección de la Calle, 2 (Ciudad)"
+msgstr "Dirección línea 3 (Ciudad)"
 
 #: CustomerBranches.php:633
-#, fuzzy
 msgid "Street Address 4 (State/Province)"
-msgstr "Dirección de la Calle, 3 (Provincia/Estado)"
+msgstr "Dirección línea 4 (Estado/Provincia)"
 
 #: CustomerBranches.php:640
-#, fuzzy
 msgid "Street Address 5 (Postal Code)"
-msgstr "Dirección de la Calle, 4 (Código Postal)"
+msgstr "Dirección línea 5 (Código postal)"
 
 #: CustomerBranches.php:665
 msgid "Special Instructions"
@@ -8846,24 +8842,20 @@ msgid "Address Line 1 (Street)"
 msgstr "Dirección, 1 (Calle)"
 
 #: Customers.php:452 Customers.php:783 Suppliers.php:678 Suppliers.php:886
-#, fuzzy
 msgid "Address Line 2 (Street)"
-msgstr "Dirección, 1 (Calle)"
+msgstr "Dirección línea 2 (Calle)"
 
 #: Customers.php:454 Customers.php:787 Suppliers.php:681 Suppliers.php:888
-#, fuzzy
 msgid "Address Line 3 (Suburb/City)"
-msgstr "Dirección, 2 (Ciudad)"
+msgstr "Dirección línea 3 (Ciudad)"
 
 #: Customers.php:456 Customers.php:791 Suppliers.php:684 Suppliers.php:890
-#, fuzzy
 msgid "Address Line 4 (State/Province)"
-msgstr "Dirección, 3 (Provincia/Estado)"
+msgstr "Dirección línea 4 (Estado/Provincia)"
 
 #: Customers.php:458 Customers.php:795 Suppliers.php:687 Suppliers.php:892
-#, fuzzy
 msgid "Address Line 5 (Postal Code)"
-msgstr "Dirección, 4 (Código Postal)"
+msgstr "Dirección línea 5 (Código postal)"
 
 #: Customers.php:482
 msgid "No sales types/price lists defined"
@@ -13852,9 +13844,8 @@ msgid "Imported Bank Receipt of"
 msgstr "por un importe de"
 
 #: ImportBankTransAnalysis.php:113 ImportBankTransAnalysis.php:116
-#, fuzzy
 msgid "dated:"
-msgstr "fechado"
+msgstr "fechado:"
 
 #: ImportBankTransAnalysis.php:116
 #, fuzzy
@@ -14107,9 +14098,8 @@ msgid "The SQL that failed to insert the payment GL entry was"
 msgstr "El SQL que falló al agregar la entrada contable del ingreso fue"
 
 #: ImportBankTrans.php:504
-#, fuzzy
 msgid "Imported"
-msgstr "Importar Artículos"
+msgstr "Importado"
 
 #: ImportBankTrans.php:509
 #, fuzzy
@@ -14143,7 +14133,7 @@ msgstr "Saldo a día"
 
 #: ImportBankTrans.php:597
 msgid "Exchange Rate to Use When Processing Transactions"
-msgstr ""
+msgstr "Tipo de cambio a usar para procesar las transacciones"
 
 #: ImportBankTrans.php:604
 #, fuzzy
@@ -18009,11 +17999,11 @@ msgstr "Código de Pestaña de Caja Chica"
 
 #: PcReportTab.php:61
 msgid "From Date :"
-msgstr "Fecha Inicial:"
+msgstr "Fecha inicial:"
 
 #: PcReportTab.php:64
 msgid "To Date:"
-msgstr "Fecha Final:"
+msgstr "Fecha final:"
 
 #: PcReportTab.php:67
 msgid "Show HTML"
@@ -26338,7 +26328,6 @@ msgid "Sell Through Support record has been updated"
 msgstr "Se actualizó el registro del transportista"
 
 #: SellThroughSupport.php:229
-#, fuzzy
 msgid "For Supplier"
 msgstr "Para proveedor"
 
@@ -27036,9 +27025,8 @@ msgid ""
 msgstr ""
 
 #: ShopParameters.php:203
-#, fuzzy
 msgid "Contact Us"
-msgstr "Contratos"
+msgstr "Contáctenos"
 
 #: ShopParameters.php:205
 msgid ""
@@ -27187,9 +27175,8 @@ msgid ""
 msgstr ""
 
 #: ShopParameters.php:353
-#, fuzzy
 msgid "PayPal User"
-msgstr "Pagos"
+msgstr "Usuario PayPal"
 
 #: ShopParameters.php:355
 #, fuzzy
@@ -39174,9 +39161,8 @@ msgid "Greenland"
 msgstr "Groenlandia"
 
 #: includes/CountriesArray.php:80
-#, fuzzy
 msgid "Gambia"
-msgstr "Zambia"
+msgstr "Gambia"
 
 #: includes/CountriesArray.php:81
 msgid "Guinea"
@@ -39207,7 +39193,6 @@ msgid "Guyana"
 msgstr "Guyana"
 
 #: includes/CountriesArray.php:88
-#, fuzzy
 msgid "Hong Kong)"
 msgstr "Hong Kong"
 
@@ -39332,9 +39317,8 @@ msgid "Liechtenstein"
 msgstr "Liechtenstein"
 
 #: includes/CountriesArray.php:119
-#, fuzzy
 msgid "Sri Lanka"
-msgstr "Rupia srilanquesa"
+msgstr "Sri Lanka"
 
 #: includes/CountriesArray.php:120
 msgid "Lesotho"
@@ -40688,7 +40672,6 @@ msgid " Quantity "
 msgstr "Cantidad"
 
 #: includes/DefineTenderClass.php:45
-#, fuzzy
 msgid " Unit "
 msgstr "Unidad"
 
@@ -41847,9 +41830,8 @@ msgid "has been blocked access at"
 msgstr "ha sido aceptada"
 
 #: includes/UserLogin.php:132
-#, fuzzy
 msgid "from IP"
-msgstr "Desde"
+msgstr "Desde el IP"
 
 #: includes/UserLogin.php:132
 msgid "due to too many failed attempts."
