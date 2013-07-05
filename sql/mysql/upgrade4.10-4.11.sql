@@ -159,6 +159,8 @@ ALTER TABLE `salescatprod` ADD INDEX ( `manufacturers_id` );
 INSERT INTO config VALUES ('ShopMode','test');
 INSERT INTO config VALUES ('ShopContactUs','');
 
+ALTER TABLE  `purchorderauth` CHANGE  `authlevel`  `authlevel` DOUBLE NOT NULL DEFAULT  '0';
+
 INSERT INTO config VALUES ('ShopShowOnlyAvailableItems','0');
 INSERT INTO config VALUES ('ShopShowQOHColumn','1');
 INSERT INTO config VALUES ('ShopAdditionalStockLocations','');

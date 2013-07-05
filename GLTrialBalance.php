@@ -25,6 +25,9 @@ if ((! isset($_POST['FromPeriod'])
 	AND ! isset($_POST['ToPeriod']))
 	OR isset($_POST['SelectADifferentPeriod'])){
 
+	$ViewTopic = 'GeneralLedger';
+	$BookMark = 'TrialBalance';
+
 	include  ('includes/header.inc');
 	echo '<p class="page_title_text">
 			<img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Trial Balance') . '" alt="" />' . ' ' . $Title . '
@@ -158,6 +161,8 @@ if ((! isset($_POST['FromPeriod'])
 	$AccountsResult = DB_query($SQL,$db);
 	if (DB_error_no($db) !=0) {
 		$Title = _('Trial Balance') . ' - ' . _('Problem Report') . '....';
+		$ViewTopic = 'GeneralLedger';
+		$BookMark = 'TrialBalance';
 		include('includes/header.inc');
 		prnMsg( _('No general ledger accounts were returned by the SQL because') . ' - ' . DB_error_msg($db) );
 		echo '<br /><a href="' .$RootPath .'/index.php">'. _('Back to the menu'). '</a>';
@@ -169,6 +174,8 @@ if ((! isset($_POST['FromPeriod'])
 	}
 	if (DB_num_rows($AccountsResult)==0){
 		$Title = _('Print Trial Balance Error');
+		$ViewTopic = 'GeneralLedger';
+		$BookMark = 'TrialBalance';
 		include('includes/header.inc');
 		echo '<p>';
 		prnMsg( _('There were no entries to print out for the selections specified') );
@@ -384,10 +391,10 @@ if ((! isset($_POST['FromPeriod'])
 } else {
 
 	include('includes/header.inc');
-	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<input type="hidden" name="FromPeriod" value="' . $_POST['FromPeriod'] . '" />
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
+		<div>
+			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+			<input type="hidden" name="FromPeriod" value="' . $_POST['FromPeriod'] . '" />
 			<input type="hidden" name="ToPeriod" value="' . $_POST['ToPeriod'] . '" />';
 
 	$NumberOfMonths = $_POST['ToPeriod'] - $_POST['FromPeriod'] + 1;
@@ -438,15 +445,16 @@ if ((! isset($_POST['FromPeriod'])
 	Account Code ,   Account Name , Month Actual, Month Budget, Period Actual, Period Budget */
 
 	echo '<table cellpadding="2" class="selection">';
-	echo '<tr><th colspan="6"><b>'. _('Trial Balance for the month of ') . $PeriodToDate .
-		_(' and for the ') . $NumberOfMonths . _(' months to ') . $PeriodToDate .'</b></th></tr>';
+	echo '<tr>
+			<th colspan="6"><b>'. _('Trial Balance for the month of ') . $PeriodToDate . _(' and for the ') . $NumberOfMonths . _(' months to ') . $PeriodToDate .'</b></th>
+		</tr>';
 	$TableHeader = '<tr>
-					<th>' . _('Account') . '</th>
-					<th>' . _('Account Name') . '</th>
-					<th>' . _('Month Actual') . '</th>
-					<th>' . _('Month Budget') . '</th>
-					<th>' . _('Period Actual') . '</th>
-					<th>' . _('Period Budget') .'</th>
+						<th>' . _('Account') . '</th>
+						<th>' . _('Account Name') . '</th>
+						<th>' . _('Month Actual') . '</th>
+						<th>' . _('Month Budget') . '</th>
+						<th>' . _('Period Actual') . '</th>
+						<th>' . _('Period Budget') .'</th>
 					</tr>';
 
 	$j = 1;
@@ -553,9 +561,9 @@ if ((! isset($_POST['FromPeriod'])
 			$ParentGroups[$Level]=$myrow['groupname'];
 			$ActGrp = $myrow['groupname'];
 			printf('<tr>
-					<td colspan="6"><h2>%s</h2></td>
-				</tr>',
-				$myrow['groupname']);
+						<td colspan="6"><h2>%s</h2></td>
+					</tr>',
+					$myrow['groupname']);
 			echo $TableHeader;
 			$j++;
 		}
@@ -613,7 +621,7 @@ if ((! isset($_POST['FromPeriod'])
 		$CheckPeriodActual += $AccountPeriodActual;
 		$CheckPeriodBudget += $AccountPeriodBudget;
 
-		$ActEnquiryURL = '<a href="'. $RootPath . '/GLAccountInquiry.php?Period=' . $_POST['ToPeriod'] . '&amp;Account=' . $myrow['accountcode'] . '&amp;Show=Yes">' . $myrow['accountcode'] . '</a>';
+		$ActEnquiryURL = '<a href="'. $RootPath . '/GLAccountInquiry.php?FromPeriod=' . $_POST['FromPeriod'] . '&amp;ToPeriod=' . $_POST['ToPeriod'] . '&amp;Account=' . $myrow['accountcode'] . '&amp;Show=Yes">' . $myrow['accountcode'] . '</a>';
 
 		printf('<td>%s</td>
 				<td>%s</td>
@@ -722,10 +730,12 @@ if ((! isset($_POST['FromPeriod'])
 			locale_number_format($CheckPeriodBudget,$_SESSION['CompanyRecord']['decimalplaces']));
 
 	echo '</table><br />';
-	echo '<div class="centre"><input type="submit" name="SelectADifferentPeriod" value="' . _('Select A Different Period') . '" /></div>';
+	echo '<div class="centre">
+			<input type="submit" name="SelectADifferentPeriod" value="' . _('Select A Different Period') . '" />
+		</div>';
 }
-echo '</div>';
-echo '</form>';
+echo '</div>
+	</form>';
 include('includes/footer.inc');
 
 ?>

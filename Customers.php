@@ -453,8 +453,7 @@ if (!isset($DebtorNo)) {
 	echo '<tr><td>' . _('Address Line 5 (Postal Code)') . ':</td>
 		<td><input tabindex="7" type="text" name="Address5" size="22" maxlength="20" /></td></tr>';
 
-
-	if (!isset($_POST['Address6']) AND $CountryName == '') {
+	if (!isset($_POST['Address6'])) {
 		 $_POST['Address6'] = $CountriesArray[$_SESSION['CountryOfOperation']];
 	}
 	echo '<tr>

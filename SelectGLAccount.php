@@ -4,31 +4,14 @@
 include('includes/session.inc');
 
 $Title = _('Search GL Accounts');
-
+$ViewTopic = 'GeneralLedger';
+$BookMark = 'GLAccountInquiry';
 include('includes/header.inc');
 
 $msg='';
 unset($result);
 
-if (isset($_POST['Select'])) {
-
-	$result = DB_query("SELECT accountname FROM chartmaster WHERE accountcode=" . $_POST['Select'],$db);
-	$myrow = DB_fetch_row($result);
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for General Ledger Accounts') . '</p>';
-
-	echo '<div class="page_help_text">' . _('Account Code') . ' <b>' . $_POST['Select'] . ' - ' . $myrow[0]  . ' </b>' . _('has been selected') . '. <br />' . _('Select one of the links below to operate using this Account') . '.</div>';
-	$AccountID = $_POST['Select'];
-	$_POST['Select'] = NULL;
-
-	echo '<br />
-		<div class="centre">
-			<a href="' . $RootPath . '/GLAccounts.php?SelectedAccount=' . $AccountID . '">' . _('Edit Account') . '</a>';
-	echo '<br />
-			<a href="' . $RootPath . '/GLAccountInquiry.php?Account=' . $AccountID . '">' . _('Account Inquiry') . '</a>';
-	echo '<br />
-		<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '">' . _('New Search') . '</a></div>';
-
-} elseif (isset($_POST['Search'])){
+if (isset($_POST['Search'])){
 
 	if (mb_strlen($_POST['Keywords']>0) AND mb_strlen($_POST['GLCode'])>0) {
 		$msg=_('Account name keywords have been used in preference to the account code extract entered');
@@ -84,12 +67,11 @@ if (isset($_POST['Select'])) {
 if (!isset($AccountID)) {
 
 
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') .
-		'" alt="" />' . ' ' . _('Search for General Ledger Accounts') . '</p>';
-	echo '<br />
-		<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method="post">';
-    echo '<div>';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for General Ledger Accounts') . '</p>
+		<br />
+		<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method="post">
+		<div>
+		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if(mb_strlen($msg)>1){
 		prnMsg($msg,'info');
@@ -120,6 +102,8 @@ if (!isset($AccountID)) {
 							<th>' . _('Account Name') . '</th>
 							<th>' . _('Group') . '</th>
 							<th>' . _('Account Type') . '</th>
+							<th>' . _('Inquiry') . '</th>
+							<th>' . _('Edit') . '</th>
 						</tr>';
 
 		echo $TableHeader;
@@ -129,15 +113,25 @@ if (!isset($AccountID)) {
 		while ($myrow=DB_fetch_array($result)) {
 
 			printf('<tr>
-					<td><input type="submit" name="Select" value="%s" /></td>
-	                <td>%s</td>
-	                <td>%s</td>
-	                <td>%s</td>
-	                </tr>',
-	                $myrow['accountcode'],
-	                htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false),
-	                $myrow['group_'],
-	                $myrow['pl']);
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td><a href="%s/GLAccountInquiry.php?Account=%s&amp;Show=Yes"><img src="%s/css/%s/images/magnifier.png" title="' . _('Inquiry') . '" alt="' . _('Inquiry') . '" /></td>
+					<td><a href="%s/GLAccounts.php?SelectedAccount=%s"><img src="%s/css/%s/images/maintenance.png" title="' . _('Edit') . '" alt="' . _('Edit') . '" /></a>
+					</tr>',
+					htmlspecialchars($myrow['accountcode'],ENT_QUOTES,'UTF-8',false),
+					htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false),
+					$myrow['group_'],
+					$myrow['pl'],
+					$RootPath,
+					$myrow['accountcode'],
+					$RootPath,
+					$Theme,
+					$RootPath,
+					$myrow['accountcode'],
+					$RootPath,
+					$Theme);
 
 			$j++;
 			if ($j == 12){
