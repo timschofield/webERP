@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-06-09 22:30+1200\n"
-"PO-Revision-Date: 2013-06-14 09:47-0600\n"
+"PO-Revision-Date: 2013-06-27 12:11-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "MIME-Version: 1.0\n"
@@ -3324,7 +3324,7 @@ msgstr "Por favor, primero haga esto"
 
 #: ConfirmDispatchControlled_Invoice.php:39 ConfirmDispatch_Invoice.php:30
 msgid "Select a sales order to invoice"
-msgstr "Seleccione un pedido de venta a facturar"
+msgstr "Seleccione una orden de venta a facturar"
 
 #: ConfirmDispatchControlled_Invoice.php:41
 msgid ""
@@ -3336,7 +3336,7 @@ msgstr ""
 
 #: ConfirmDispatchControlled_Invoice.php:54
 msgid "Back to the Sales Order"
-msgstr "Volver al Pedido de Venta"
+msgstr "Volver a la orden de venta"
 
 #: ConfirmDispatchControlled_Invoice.php:56
 msgid ""
@@ -3844,7 +3844,7 @@ msgstr ""
 
 #: ConfirmDispatch_Invoice.php:720
 msgid "Select a sales order for confirming deliveries and invoicing"
-msgstr "Seleccionar un pedido de venta para confirmar entregas y facturar"
+msgstr "Seleccionar una orden de venta para confirmar entregas y facturar"
 
 #: ConfirmDispatch_Invoice.php:750
 msgid "Could not update the default shipping carrier for this branch because"
@@ -4100,7 +4100,7 @@ msgstr "TOME NOTA DE ESTE ERROR Y SOLICITE AYUDA"
 #: RecurringSalesOrdersProcess.php:639
 msgid "The sales order header could not be updated with the invoice number"
 msgstr ""
-"No se pudo actualizar la cabecera del pedido de venta con el número de "
+"El encabezado de la orden de venta no se pudo actualizar con el número de "
 "factura"
 
 #: ConfirmDispatch_Invoice.php:763 CounterSales.php:1309
@@ -6418,10 +6418,10 @@ msgid ""
 msgstr "No se pudo cargar el área de donde es la venta de la tabla custbranch"
 
 #: CounterSales.php:1096
-#, fuzzy
 msgid "Trouble inserting the sales order header. The SQL that failed was"
 msgstr ""
-"Problemas para insertar una línea de un Pedido de venta. El SQL fallido fue"
+"Problemas al insertar el encabezado de la orden de venta. El SQL que falló "
+"fue"
 
 #: CounterSales.php:1097 DeliveryDetails.php:383
 #: RecurringSalesOrdersProcess.php:146
@@ -6431,7 +6431,7 @@ msgstr "No se puede agregar el pedido porque"
 #: CounterSales.php:1113
 msgid "Trouble inserting a line of a sales order. The SQL that failed was"
 msgstr ""
-"Problemas para insertar una línea de un Pedido de venta. El SQL fallido fue"
+"Problemas al insertar una línea de una orden de venta. El SQL que falló fue"
 
 #: CounterSales.php:1129 DeliveryDetails.php:412
 msgid "Unable to add the sales order line"
@@ -9611,7 +9611,7 @@ msgstr "Imprimir cotización (vertical)"
 
 #: DeliveryDetails.php:623
 msgid "Add Another Sales Order"
-msgstr "Agregar Otro Pedido de Ventas"
+msgstr "Añadir otra orden de venta"
 
 #: DeliveryDetails.php:628
 msgid "Thank you for your business"
@@ -15472,9 +15472,8 @@ msgid "The page must be called with a group id"
 msgstr "Esta página debe invocarse con un tipo de transacción bancaria"
 
 #: MailingGroupMaintenance.php:142 MailingGroupMaintenance.php:172
-#, fuzzy
 msgid "Mail Group"
-msgstr "Grupo de Impuestos"
+msgstr "Grupo de correo"
 
 #: MailingGroupMaintenance.php:167
 #, fuzzy
@@ -15637,9 +15636,8 @@ msgstr "Versión"
 
 #: MaintenanceTasks.php:94 MaintenanceTasks.php:207
 #: MaintenanceUserSchedule.php:48
-#, fuzzy
 msgid "Manager"
-msgstr "Administrado"
+msgstr "Administrador"
 
 #: MaintenanceTasks.php:104 MaintenanceUserSchedule.php:59
 #, fuzzy
@@ -15671,9 +15669,8 @@ msgid "Responsible"
 msgstr "Código de Respuesta"
 
 #: MaintenanceTasks.php:210 MaintenanceTasks.php:212
-#, fuzzy
 msgid "No Manager"
-msgstr "Administrado"
+msgstr "Sin administrador"
 
 #: MaintenanceTasks.php:230
 #, fuzzy
@@ -16894,7 +16891,7 @@ msgstr ""
 
 #: OrderDetails.php:11
 msgid "Reviewing Sales Order Number"
-msgstr "Revisando el Número de Pedido de Venta"
+msgstr "Revisando la orden de venta No."
 
 #: OrderDetails.php:15
 msgid "This page must be called with a sales order number to review"
@@ -16924,7 +16921,7 @@ msgstr ""
 
 #: OrderDetails.php:70
 msgid "Order Header Details For Order No"
-msgstr "Detalles del Encabezado para la Orden Nro"
+msgstr "Detalles del encabezado de la orden de venta No."
 
 #: OrderDetails.php:85 PO_OrderDetails.php:92
 msgid "Ordered On"
@@ -16952,7 +16949,7 @@ msgstr "El SQL utilizado para obtener los artículos de línea, que falló fue"
 
 #: OrderDetails.php:165
 msgid "Order Line Details For Order No"
-msgstr "Detalles de Línea para la Orden Nr."
+msgstr "Detalles de Línea para la Orden No."
 
 #: OrderDetails.php:175
 msgid "Qty Del"
@@ -22105,7 +22102,7 @@ msgstr "Referencia Pedidos Compra"
 
 #: PrintCustTrans.php:805 PrintCustTransPortrait.php:851
 msgid "Our Order No"
-msgstr "Nomero Pedidos Compra"
+msgstr "No. orden de venta nuestra"
 
 #: PrintCustTrans.php:807 PrintCustTransPortrait.php:853 SalesInquiry.php:1067
 #: SupplierInvoice.php:633
@@ -24402,7 +24399,7 @@ msgstr "Tipo de Orden"
 #: Z_SalesIntegrityCheck.php:126 includes/PDFSalesOrder_generic.inc:17
 #: includes/PDFSalesOrder_generic.inc:20
 msgid "Sales Order"
-msgstr "Pedido de Venta"
+msgstr "Orden de venta"
 
 #: SalesInquiry.php:1080
 msgid "Only Applies To Invoice Date Type"
@@ -25592,7 +25589,7 @@ msgstr "No se pudo eliminar la cabecera del pedido porque"
 
 #: SelectOrderItems.php:733
 msgid "This sales order has been cancelled as requested"
-msgstr "Este pedido de venta ha sido cancelado como se requirió"
+msgstr "Este pedido de venta ha sido cancelada como se pidió"
 
 #: SelectOrderItems.php:742
 msgid "Quotation for customer"
@@ -25699,7 +25696,7 @@ msgstr "Introduzca Detalles de Entrega y Confirmar Pedido"
 #: SelectOrderItems.php:1658 SelectOrderItems.php:1730
 #: SelectOrderItems.php:1852
 msgid "Add to Sales Order"
-msgstr "Agregar al Pedido de Venta"
+msgstr "Agregar a la orden de venta"
 
 #: SelectOrderItems.php:1663 SelectOrderItems.php:1664
 msgid "Search for Order Items"
@@ -26016,7 +26013,7 @@ msgstr "Sólo Pedidos"
 
 #: SelectSalesOrder.php:564
 msgid "Add Sales Order"
-msgstr "Añadir Pedido de Venta"
+msgstr "Añadir orden de venta"
 
 #: SelectSalesOrder.php:590 SelectWorkOrder.php:193
 msgid "Enter text extract(s) in the description"
@@ -27501,7 +27498,7 @@ msgstr "Hubo un problema agregando una fila en el pedido de venta porque"
 
 #: SpecialOrder.php:569
 msgid "Sales Order Number"
-msgstr "Numero de Pedido de Venta"
+msgstr "Número de orden de venta"
 
 #: SpecialOrder.php:570
 msgid ""
@@ -36226,14 +36223,12 @@ msgid "was successfully changed to"
 msgstr "fue cambiado con éxito a"
 
 #: Z_ChangeGLAccountCode.php:136
-#, fuzzy
 msgid "Existing GL Account Code"
-msgstr "Código de Localidad Existente"
+msgstr "Código de cuenta contable existente"
 
 #: Z_ChangeGLAccountCode.php:140
-#, fuzzy
 msgid "New GL Account Code"
-msgstr "Código de cuenta contable"
+msgstr "Código de cuenta contable nuevo"
 
 #: Z_ChangeLocationCode.php:6
 msgid "UTILITY PAGE Change A Location Code"
@@ -41468,9 +41463,8 @@ msgid "Tax Reports"
 msgstr "Informes de Impuestos"
 
 #: includes/MainMenuLinksArray.php:360
-#, fuzzy
 msgid "GL Accounts"
-msgstr "Cuenta contable"
+msgstr "Cuentas contables"
 
 #: includes/MainMenuLinksArray.php:361
 msgid "GL Budgets"
@@ -41680,9 +41674,8 @@ msgid "Change An Inventory Item Code"
 msgstr "Cambiar un Código de Artículo del Inventario"
 
 #: includes/MainMenuLinksArray.php:516
-#, fuzzy
 msgid "Change A GL Account Code"
-msgstr "Código de cuenta contable"
+msgstr "Cambiar un código de cuenta contable"
 
 #: includes/MainMenuLinksArray.php:517
 msgid "Change A Location Code"
