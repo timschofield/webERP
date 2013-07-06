@@ -329,8 +329,8 @@ if (isset($_POST['submit'])) {
 					$myrow = DB_fetch_row($result);
 	
 					if ($myrow[0]>0) {
-						prnMsg(_('Cannot delete this branch because users exist that refer to it') . '. ' . _('Purge old users first'),'warn');
-						echo '<br />'._('There are').' ' . $myrow[0] . ' '._('users referring to this Branch/customer');
+						prnMsg(_('Cannot delete this branch because contract have been created that refer to it') . '. ' . _('Purge old contracts first'),'warn');
+						echo '<br />'._('There are').' ' . $myrow[0] . ' '._('contracts referring to this branch/customer');
 					} else {
 						$sql="DELETE FROM custbranch WHERE branchcode='" . $SelectedBranch . "' AND debtorno='" . $DebtorNo . "'";
 						$ErrMsg = _('The branch record could not be deleted') . ' - ' . _('the SQL server returned the following message');
