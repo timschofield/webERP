@@ -76,6 +76,10 @@ if (isset($_POST['submit'])) {
 			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopAdditionalStockLocations']."' WHERE confname = 'ShopAdditionalStockLocations'";
 		}
 
+		if ($_SESSION['ShopShowLeftCategoryMenu'] != $_POST['X_ShopShowLeftCategoryMenu'] ) {
+			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopShowLeftCategoryMenu']."' WHERE confname = 'ShopShowLeftCategoryMenu'";
+		}
+
 		if ($_SESSION['ShopAllowSurcharges'] != $_POST['X_ShopAllowSurcharges'] ) {
 			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopAllowSurcharges']."' WHERE confname = 'ShopAllowSurcharges'";
 		}
@@ -291,6 +295,20 @@ echo '</select></td>
 		<td>' . _('Shows / Hides the QOH column Select Hide if you do not want customers to know how many stock do you currently hold.') . '</td>
 	</tr>';
 
+echo '<tr>
+		<td>' . _('Show/Hide Left Column Menu') . ':</td>
+		<td><select name="X_ShopShowLeftCategoryMenu">';
+if ($_SESSION['ShopShowLeftCategoryMenu'] == '1') {
+	echo '<option selected="selected" value="1">' . _('Show') . '</option>';
+	echo '<option value="0">' . _('Hide') . '</option>';
+} else {
+	echo '<option selected="selected" value="0">' . _('Hide') . '</option>';
+	echo '<option value="1">' . _('Show') . '</option>';
+}
+echo '</select></td>
+		<td>' . _('Shows / Hides the vertical sales categories menu on the left column.') . '</td>
+	</tr>';	
+	
 echo '<tr>
 		<td>' . _('Additional Stock Locations') . ':</td>
 		<td><input type="text" size="80" maxlength="100" name="X_ShopAdditionalStockLocations" value="' . $_SESSION['ShopAdditionalStockLocations'] . '" /></td>
