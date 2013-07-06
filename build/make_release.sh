@@ -7,7 +7,7 @@ MYSQL_PWD=woofwoof;
 
 cd $BASE_DIR;
 
-xgettext --no-wrap --from-code=utf-8 --language=PHP -o locale/en_GB.utf8/LC_MESSAGES/messages.pot *php includes/*.php includes/*.inc reportwriter/*.php reportwriter/*.inc reportwriter/forms/*.html reportwriter/admin/*.php reportwriter/admin/*.inc reportwriter/admin/forms/*.html api/*.php
+xgettext --no-wrap --from-code=utf-8 --language=PHP -o locale/en_GB.utf8/LC_MESSAGES/messages.pot *php includes/*.php includes/*.inc reportwriter/*.php reportwriter/*.inc reportwriter/forms/*.html reportwriter/admin/*.php reportwriter/admin/*.inc reportwriter/admin/forms/*.html api/*.php ../webshop/*.php ../webshop/includes/*.php
 
 msgmerge -U --backup=off locale/ar_EG.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
 msgmerge -U --backup=off locale/cs_CZ.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
@@ -133,4 +133,4 @@ rm $OUTPUT_DIR/webERP.zip
 
 cd ..
 
-zip -r $OUTPUT_DIR/webERP webERP -x \*.svn* \*/config.php 
+zip -r $OUTPUT_DIR/webERP webERP -x \*.svn* \*/config.php \*build*

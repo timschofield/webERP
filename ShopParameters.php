@@ -10,21 +10,7 @@ include('includes/header.inc');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Shop Configuration')
 	. '" alt="" />' . $Title. '</p>';
-?>
 
-<script>
-	/* jQuery/javascript code */
-	jQuery(document).ready(function() {
-		jQuery('.noSpecialChars').bind('input', function() {
-			jQuery(this).val($(this).val().replace(/[^a-z0-9@\._\-]/gi, ''));
-		});
-		jQuery('.number').bind('input', function() {
-			jQuery(this).val($(this).val().replace(/[^0-9.]/gi, ''));
-		});
-	});
-</script>
-
-<?php
 if (isset($_POST['submit'])) {
 
 	//initialise no input errors assumed initially before we test
@@ -72,9 +58,16 @@ if (isset($_POST['submit'])) {
 			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopShowQOHColumn']."' WHERE confname = 'ShopShowQOHColumn'";
 		}
 
-		if ($_SESSION['ShopAdditionalStockLocations'] != $_POST['X_ShopAdditionalStockLocations'] ) {
-			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopAdditionalStockLocations']."' WHERE confname = 'ShopAdditionalStockLocations'";
-		}
+		if (isset($_POST['X_ShopStockLocations'])) {
+			$ShopStockLocations = '';
+			foreach ($_POST['X_ShopStockLocations'] as $Location){
+				$ShopStockLocations .= $Location .',';
+			}
+			$ShopStockLocations = mb_substr($ShopStockLocations,0,mb_strlen($ShopStockLocations)-1);
+			if ($_SESSION['ShopStockLocations'] != $ShopStockLocations){
+				$SQL[] = "UPDATE config SET confvalue='" . $ShopStockLocations . "' WHERE confname='ShopStockLocations'";
+			}
+		}	
 
 		if ($_SESSION['ShopShowLeftCategoryMenu'] != $_POST['X_ShopShowLeftCategoryMenu'] ) {
 			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopShowLeftCategoryMenu']."' WHERE confname = 'ShopShowLeftCategoryMenu'";
@@ -216,20 +209,20 @@ echo '<tr>
 //Shop Name
 echo '<tr>
 		<td>' . _('Shop Name') . ':</td>
-		<td><input type="text" name="X_ShopName" size="40" maxlength="40" value="' . $_SESSION['ShopName'] . '" /></td>
+		<td><input type="text" name="X_ShopName" required size="40" maxlength="40" value="' . $_SESSION['ShopName'] . '" /></td>
 		<td>' . _('Enter the name of the shop that will be displayed on all the store pages') . '</td>
 	</tr>';
 
 // Shop Customer
 echo '<tr>
 		<td>' . _('Default Web Shop Customer Acount') . ':</td>
-	   <td><input type="text"size="12" maxlength="10" name="X_ShopDebtorNo" value="' . $_SESSION['ShopDebtorNo'] . '" /></td>
+	   <td><input type="text"size="12" maxlength="10" required name="X_ShopDebtorNo" value="' . $_SESSION['ShopDebtorNo'] . '" /></td>
 		<td>' . _('Select the customer account that is to be used for the web-store sales') . '</td>
 	</tr>';
 // Shop Customer Branch
 echo '<tr>
 		<td>'._('Default Web Shop Branch Code').':</td>
-		<td><input type="text" size="12" maxlength="10" name="X_ShopBranchCode" value="' . $_SESSION['ShopBranchCode'] . '" /></td>
+		<td><input type="text" required size="12" maxlength="10" name="X_ShopBranchCode" value="' . $_SESSION['ShopBranchCode'] . '" /></td>
 		<td>' . _('The customer branch code that is to be used - a branch of the above custoemr account - for web-store sales') . '</td>
 	</tr>';
 
@@ -308,12 +301,25 @@ if ($_SESSION['ShopShowLeftCategoryMenu'] == '1') {
 echo '</select></td>
 		<td>' . _('Shows / Hides the vertical sales categories menu on the left column.') . '</td>
 	</tr>';	
-	
+
+if (mb_strlen($_SESSION['ShopStockLocations'])>1){
+	$ShopStockLocations = explode(',',$_SESSION['ShopStockLocations']);
+} else {
+	$ShopStockLocations = array();
+}
 echo '<tr>
-		<td>' . _('Additional Stock Locations') . ':</td>
-		<td><input type="text" size="80" maxlength="100" name="X_ShopAdditionalStockLocations" value="' . $_SESSION['ShopAdditionalStockLocations'] . '" /></td>
-		<td>' . _('List of additional stock location codes, sepparated by comma. Web-Stote will consider stock at the default customer location plus these ones. 
-		Leave empty if only will consider default customer location. Example: LOC01, LOC02, LOC03') . '</td>
+		<td>' . _('Stock Locations') . ':</td>
+		<td><select name="X_ShopStockLocations[]" size="5" multiple="multiple" >';
+$LocResult = DB_query("SELECT loccode, locationname FROM locations",$db);
+while ($LocRow = DB_fetch_array($LocResult)){
+	if (in_array($LocRow['loccode'],$ShopStockLocations)){
+		echo '<option selected="selected" value="' . $LocRow['loccode'] . '">' . $LocRow['locationname'] .'</option>';
+	} else {
+		echo '<option value="' . $LocRow['loccode'] . '">' . $LocRow['locationname'] .'</option>';
+	}
+}
+echo '</select></td>
+		<td>' . _('Select one or more stock locations (warehouses) that webSHOP should consider stock for the purposes of displaying the on hand quantity for customer information') . '</td>
 	</tr>';	
 	
 echo '<tr>

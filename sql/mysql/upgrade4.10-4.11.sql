@@ -163,7 +163,7 @@ ALTER TABLE  `purchorderauth` CHANGE  `authlevel`  `authlevel` DOUBLE NOT NULL D
 
 INSERT INTO config VALUES ('ShopShowOnlyAvailableItems','0');
 INSERT INTO config VALUES ('ShopShowQOHColumn','1');
-INSERT INTO config VALUES ('ShopAdditionalStockLocations','');
+INSERT INTO config VALUES ('ShopStockLocations','');
 INSERT INTO config VALUES ('ShopShowLeftCategoryMenu','1');
 
 UPDATE config SET confvalue='4.11.0' WHERE confname='VersionNumber';

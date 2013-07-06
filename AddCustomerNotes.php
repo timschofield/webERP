@@ -230,10 +230,10 @@ if (!isset($_GET['delete'])) {
 	echo '<tr>
 			<td>'. _('Priority'). '</td>';
 	if (isset($_POST['Priority'])) {
-		echo '<td><input type="number" required min="1" name="Priority" value="' . $_POST['Priority']. '" size="1" maxlength="3" /></td>
+		echo '<td><input type="number" required min="1" name="Priority" class="number" value="' . $_POST['Priority']. '" size="1" maxlength="3" /></td>
 			</tr>';
 	} else {
-		echo '<td><input type="number" required min="1" name="Priority" size="1" maxlength="3" value="1"/></td>
+		echo '<td><input type=number required min="1" name="Priority" value="1"  size="1" maxlength="3"/></td>
 			</tr>';
 	}
 	echo '<tr>
