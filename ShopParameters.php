@@ -303,16 +303,16 @@ echo '</select></td>
 	</tr>';	
 
 if (mb_strlen($_SESSION['ShopStockLocations'])>1){
-	$ShopStockLocations = explode(',',$_SESSION['ShopStockLocations']);
+	$Locations = explode(',',$_SESSION['ShopStockLocations']);
 } else {
-	$ShopStockLocations = array();
+	$Locations = array();
 }
 echo '<tr>
 		<td>' . _('Stock Locations') . ':</td>
 		<td><select name="X_ShopStockLocations[]" size="5" multiple="multiple" >';
 $LocResult = DB_query("SELECT loccode, locationname FROM locations",$db);
 while ($LocRow = DB_fetch_array($LocResult)){
-	if (in_array($LocRow['loccode'],$ShopStockLocations)){
+	if (in_array($LocRow['loccode'],$Locations)){
 		echo '<option selected="selected" value="' . $LocRow['loccode'] . '">' . $LocRow['locationname'] .'</option>';
 	} else {
 		echo '<option value="' . $LocRow['loccode'] . '">' . $LocRow['locationname'] .'</option>';
