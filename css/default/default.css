@@ -84,6 +84,9 @@ input.image{
 	border-width:0px;
 	background-color:transparent;
 }
+input:required, select:required, textarea:required {
+	background-color:lightyellow;
+}
 input:hover{
 }
 select{
@@ -230,9 +233,7 @@ input.inputerror, input.error, select.error, select.selecterror, label.error {
 	color:red;
 	border: 2px solid red;
 }
-input.required, select.required{
-	background-color:lightyellow;
-}
+
 textarea.texterror{
 	background-color:#fddbdb;
 }

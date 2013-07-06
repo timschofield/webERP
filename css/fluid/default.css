@@ -89,7 +89,7 @@ input.inputerror, input.error, select.error, select.selecterror, label.error {
 	color:red;
 	border: 2px solid red;
 }
-input.required, select.required{
+input:required, select:required, textarea:required {
 	background-color:lightyellow;
 }
 select{

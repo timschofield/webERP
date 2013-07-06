@@ -251,11 +251,11 @@ if (! isset($_GET['delete'])) {
 		echo '<table class="selection">
 			<tr>
 				<td>' . _('Section Number') . ':' . '</td>
-				<td><input tabindex="1" ' . (in_array('SectionID',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="SectionID" class="number" size="4" maxlength="4" value="' . $_POST['SectionID'] . '" /></td>
+				<td><input tabindex="1" ' . (in_array('SectionID',$Errors) ?  'class="inputerror"' : '' ) .' type="number" autofocus required min="0" name="SectionID" class="number" size="4" maxlength="4" value="' . $_POST['SectionID'] . '" /></td>
 			</tr>';
 	}
 	echo '<tr><td>' . _('Section Description') . ':' . '</td>
-		<td><input tabindex="2" ' . (in_array('SectionName',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="SectionName" size="30" maxlength="30" value="' . $_POST['SectionName'] . '" /></td>
+		<td><input tabindex="2" ' . (in_array('SectionName',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="SectionName" required size="30" maxlength="30" value="' . $_POST['SectionName'] . '" /></td>
 		</tr>';
 
 	echo '<tr>

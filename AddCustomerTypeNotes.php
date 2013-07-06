@@ -26,23 +26,23 @@ if (isset($_POST['submit']) ) {
 	ie the page has called itself with some user input */
 
 	//first off validate inputs sensible
-	if (!is_long((integer)$_POST['priority'])) {
+	if (!is_long((integer)$_POST['Priority'])) {
 		$InputError = 1;
 		prnMsg( _('The Contact priority must be an integer.'), 'error');
-	} elseif (mb_strlen($_POST['note']) >200) {
+	} elseif (mb_strlen($_POST['Note']) >200) {
 		$InputError = 1;
 		prnMsg( _('The contacts notes must be two hundred characters or less long'), 'error');
-	} elseif( trim($_POST['note']) == '' ) {
+	} elseif( trim($_POST['Note']) == '' ) {
 		$InputError = 1;
 		prnMsg( _('The contacts notes may not be empty'), 'error');
 	}
 
 	if ($Id and $InputError !=1) {
 
-		$sql = "UPDATE debtortypenotes SET note='" . $_POST['note'] . "',
-											date='" . FormatDateForSQL($_POST['date']) . "',
-											href='" . $_POST['href'] . "',
-											priority='" . $_POST['priority'] . "'
+		$sql = "UPDATE debtortypenotes SET note='" . $_POST['Note'] . "',
+											date='" . FormatDateForSQL($_POST['NoteDate']) . "',
+											href='" . $_POST['Href'] . "',
+											priority='" . $_POST['Priority'] . "'
 										WHERE typeid ='".$DebtorType."'
 										AND noteid='".$Id."'";
 		$msg = _('Customer Group Notes') . ' ' . $DebtorType  . ' ' . _('has been updated');
@@ -54,10 +54,10 @@ if (isset($_POST['submit']) ) {
 											date,
 											priority)
 									VALUES ('" . $DebtorType. "',
-											'" . $_POST['href'] . "',
-											'" . $_POST['note'] . "',
-											'" . FormatDateForSQL($_POST['date']) . "',
-											'" . $_POST['priority'] . "')";
+											'" . $_POST['Href'] . "',
+											'" . $_POST['Note'] . "',
+											'" . FormatDateForSQL($_POST['NoteDate']) . "',
+											'" . $_POST['Priority'] . "')";
 		$msg = _('The contact group notes record has been added');
 	}
 
@@ -67,8 +67,8 @@ if (isset($_POST['submit']) ) {
 		echo '<br />';
 		prnMsg($msg, 'success');
 		unset($Id);
-		unset($_POST['note']);
-		unset($_POST['noteid']);
+		unset($_POST['Note']);
+		unset($_POST['NoteID']);
 	}
 } elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
@@ -175,45 +175,45 @@ if (!isset($_GET['delete'])) {
 
 		$myrow = DB_fetch_array($result);
 
-		$_POST['noteid'] = $myrow['noteid'];
-		$_POST['note']	= $myrow['note'];
-		$_POST['href']  = $myrow['href'];
-		$_POST['date']  = $myrow['date'];
-		$_POST['priority']  = $myrow['priority'];
+		$_POST['NoteID'] = $myrow['noteid'];
+		$_POST['Note']	= $myrow['note'];
+		$_POST['Href']  = $myrow['href'];
+		$_POST['NoteDate']  = $myrow['date'];
+		$_POST['Priority']  = $myrow['priority'];
 		$_POST['typeid']  = $myrow['typeid'];
 		echo '<input type="hidden" name="Id" value="'. $Id .'" />';
-		echo '<input type="hidden" name="Con_ID" value="' . $_POST['noteid'] . '" />';
+		echo '<input type="hidden" name="Con_ID" value="' . $_POST['NoteID'] . '" />';
 		echo '<input type="hidden" name="DebtorType" value="' . $_POST['typeid'] . '" />';
 		echo '<table class="selection">
 				<tr>
 					<td>'. _('Note ID').':</td>
-					<td>' . $_POST['noteid'] . '</td>
+					<td>' . $_POST['NoteID'] . '</td>
 				</tr>';
 	} else {
 		echo '<table class="selection">';
-		$_POST['noteid'] = '';
-		$_POST['note']  = '';
-		$_POST['href']  = '';
-		$_POST['date']  = '';
-		$_POST['priority']  = '';
+		$_POST['NoteID'] = '';
+		$_POST['Note']  = '';
+		$_POST['Href']  = '';
+		$_POST['NoteDate']  = Date($_SESSION['DefaultDateFormat']);
+		$_POST['Priority']  = '1';
 		$_POST['typeid']  = '';
 	}
 
 	echo '<tr>
 			<td>'._('Contact Group Note').':</td>
-			<td><textarea name="note" rows="3" cols="32">'. $_POST['note'].'</textarea></td>
+			<td><textarea name="Note" autofocus required rows="3" cols="32">'. $_POST['Note'].'</textarea></td>
 		</tr>
 		<tr>
 			<td>'. _('Web site').':</td>
-			<td><input type="text" name="href" value="'. $_POST['href'].'" size="35" maxlength="100" /></td>
+			<td><input type="url" name="Href" value="'. $_POST['Href'].'" size="35" maxlength="100" /></td>
 		</tr>
 		<tr>
 			<td>'. _('Date').':</td>
-			<td><input type="text" name="date" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" value="'. $_POST['date']. '" size="10" maxlength="10" /></td>
+			<td><input type="date" required name="NoteDate" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" value="'. $_POST['NoteDate']. '" size="10" maxlength="10" /></td>
 		</tr>
 		<tr>
 			<td>'. _('Priority').':</td>
-			<td><input type="text" name="priority" value="'. $_POST['priority'].'" size="1" maxlength="3" /></td>
+			<td><input type="number" required min="1" class="number" name="Priority" value="'. $_POST['Priority'] .'" size="1" maxlength="3" /></td>
 		</tr>
 		</table>
 		<br />
