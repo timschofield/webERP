@@ -166,5 +166,7 @@ INSERT INTO config VALUES ('ShopShowQOHColumn','1');
 INSERT INTO config VALUES ('ShopStockLocations','');
 INSERT INTO config VALUES ('ShopShowLeftCategoryMenu','1');
 
+ALTER TABLE  `freightcosts` ADD  `destinationcountry` VARCHAR( 40 ) NOT NULL AFTER  `locationfrom`;
+
 UPDATE config SET confvalue='4.11.0' WHERE confname='VersionNumber';
 
