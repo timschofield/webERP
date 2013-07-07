@@ -7,37 +7,41 @@ Freight cost is determined by looking for a match of destination city from the A
 Function CalcFreightCost ($TotalValue,
 				$BrAdd2,
 				$BrAdd3,
+				$BrAdd4,
+				$BrAdd5,
+				$BrAddCountry,
 				$TotalVolume,
 				$TotalWeight,
 				$FromLocation,
 				$db){
 
-	# make an array of all the words that could be the name of the destination city
-	$FindCity = explode(' ', $BrAdd2 . ' ' . $BrAdd3);
+	# make an array of all the words that could be the name of the destination zone (city, state or ZIP)
+	$FindCity = explode(' ', $BrAdd2 . ' ' . $BrAdd3 . ' ' . $BrAdd4 . ' ' . $BrAdd5);
 
-	$sql = 'Select shipperid,
-			kgrate *' . $TotalWeight . ' AS kgcost,
-			cubrate * ' . $TotalVolume . " AS cubcost,
-			fixedprice, minimumchg
-		FROM freightcosts
-		WHERE locationfrom = '$FromLocation'
-		AND maxkgs > " . $TotalWeight . '
-		AND maxcub >' . $TotalVolume . '
-		AND (';
-
-	foreach ($FindCity as $City) {
-
-		$sql = $sql . ' destination ' . LIKE . " '" . ucwords($City) . "%' OR";
-
-	}
-	$sql = mb_substr($sql, 0, strrpos($sql,' OR')) . ')';
-
+	$sql = "SELECT shipperid,
+				kgrate * " . $TotalWeight . " AS kgcost,
+				cubrate * " . $TotalVolume . " AS cubcost,
+				fixedprice, 
+				minimumchg
+			FROM freightcosts
+			WHERE locationfrom = " . $FromLocation . "
+			AND destinationcountry = " . $BrAddCountry . "
+			AND maxkgs > " . $TotalWeight . "
+			AND maxcub >" . $TotalVolume . " ";
+			if (($BrAdd2 != "") OR ($BrAdd3 != "") OR ($BrAdd4 != "") OR ($BrAdd5 != "")){
+				// if there is some details of the address besides the country
+				$sql .= " AND (";
+				foreach ($FindCity as $City) {
+					$sql = $sql . " destination LIKE '" . ucwords($City) . "%' OR";
+				}
+				$sql = mb_substr($sql, 0, strrpos($sql,' OR')) . ')';
+			}
 	$CalcFreightCostResult = DB_query($sql,$db);
 	if (DB_error_no($db) !=0) {
 		echo _('The freight calculation for the destination city cannot be performed because') . ' - ' . DB_error_msg($db);
 	} elseif (DB_num_rows($CalcFreightCostResult)>0) {
 
-		$CalcFreightCost =9999999;
+		$CalcFreightCost =9999999999;
 
 		while ($myrow = DB_fetch_array($CalcFreightCostResult)) {
 

@@ -117,7 +117,15 @@ if (isset($_POST['Update'])
 	if ($InputErrors==0){
 
 		if ($_SESSION['DoFreightCalc']==True){
-			list ($_POST['FreightCost'], $BestShipper) = CalcFreightCost($_SESSION['Items'.$identifier]->total, $_POST['BrAdd2'], $_POST['BrAdd3'], $_SESSION['Items'.$identifier]->totalVolume, $_SESSION['Items'.$identifier]->totalWeight, $_SESSION['Items'.$identifier]->Location, $db);
+			list ($_POST['FreightCost'], $BestShipper) = CalcFreightCost($_SESSION['Items'.$identifier]->total, 
+																		$_POST['BrAdd2'], 
+																		$_POST['BrAdd3'], 
+																		$_POST['BrAdd4'], 
+																		$_POST['BrAdd5'], 
+																		$_POST['BrAdd6'], 
+																		$_SESSION['Items'.$identifier]->totalVolume, 
+																		$_SESSION['Items'.$identifier]->totalWeight, 
+																		$_SESSION['Items'.$identifier]->Location, $db);
 			if ( !empty($BestShipper) ){
 				$_POST['FreightCost'] = round($_POST['FreightCost'],2);
 				$_POST['ShipVia'] = $BestShipper;
