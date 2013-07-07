@@ -595,11 +595,11 @@ if (!isset($DebtorNo)) {
 	echo '<tr>
 			<td>' . _('Language') . ':</td>
 			<td><select name="LanguageID">';
-	
+
 	if (!isset($_POST['LanguageID']) OR $_POST['LanguageID']==''){
 		$_POST['LanguageID']=$_SESSION['Language'];
 	}
-	
+
 	foreach ($LanguagesArray as $LanguageCode => $LanguageName){
 		if ($_POST['LanguageID'] == $LanguageCode){
 			echo '<option selected="selected" value="' . $LanguageCode . '">' . $LanguageName['LanguageName'] .'</option>';
@@ -735,19 +735,19 @@ if (!isset($DebtorNo)) {
 				<td>' . $_POST['Address1'] . '</td>
 			</tr>
 			<tr>
-				<td>' . _('Address Line 2 (Suburb/City)') . ':</td>
+				<td>' . _('Address Line 2 (Street)') . ':</td>
 				<td>' . $_POST['Address2'] . '</td>
 			</tr>
 			<tr>
-				<td>' . _('Address Line 3 (State/Province)') . ':</td>
+				<td>' . _('Address Line 3 (Suburb/City)') . ':</td>
 				<td>' . $_POST['Address3'] . '</td>
 			</tr>
 			<tr>
-				<td>' . _('Address Line 4 (Postal Code)') . ':</td>
+				<td>' . _('Address Line 4 (State/Province)') . ':</td>
 				<td>' . $_POST['Address4'] . '</td>
 			</tr>
 			<tr>
-				<td>' . _('Address Line 5') . ':</td>
+				<td>' . _('Address Line 5 (Postal Code)') . ':</td>
 				<td>' . $_POST['Address5'] . '</td>
 			</tr>';
 		echo '<tr>
@@ -981,11 +981,11 @@ if (!isset($DebtorNo)) {
 	echo '<tr>
 			<td>' . _('Language') . ':</td>
 			<td><select name="LanguageID">';
-	
+
 	if (!isset($_POST['LanguageID']) OR $_POST['LanguageID']==''){
 		$_POST['LanguageID']=$_SESSION['Language'];
 	}
-	
+
 	foreach ($LanguagesArray as $LanguageCode => $LanguageName){
 		if ($_POST['LanguageID'] == $LanguageCode){
 			echo '<option selected="selected" value="' . $LanguageCode . '">' . $LanguageName['LanguageName'] .'</option>';
