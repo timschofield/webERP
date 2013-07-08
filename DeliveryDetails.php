@@ -993,7 +993,7 @@ echo '<br />
 	<table class="selection">
 	<tr>
 		<td>'. _('Deliver To') .':</td>
-		<td><input type="text" size="42" maxlength="40" name="DeliverTo" value="' . $_SESSION['Items'.$identifier]->DeliverTo . '" /></td>
+		<td><input type="text" autofocus required size="42" maxlength="40" name="DeliverTo" value="' . $_SESSION['Items'.$identifier]->DeliverTo . '" /></td>
 	</tr>';
 
 echo '<tr>
@@ -1087,10 +1087,10 @@ echo'	<tr>
 */	
 echo'	<tr>
 		<td>'. _('Contact Phone Number') .':</td>
-		<td><input type="text" size="25" maxlength="25" name="PhoneNo" value="' . $_SESSION['Items'.$identifier]->PhoneNo . '" /></td>
+		<td><input type="text" size="25" maxlength="25" required name="PhoneNo" value="' . $_SESSION['Items'.$identifier]->PhoneNo . '" /></td>
 	</tr>
 	<tr>
-		<td>' . _('Contact Email') . ':</td><td><input type="text" size="40" maxlength="38" name="Email" value="' . $_SESSION['Items'.$identifier]->Email . '" /></td>
+		<td>' . _('Contact Email') . ':</td><td><input type="email" size="40" maxlength="38" name="Email" value="' . $_SESSION['Items'.$identifier]->Email . '" /></td>
 	</tr>
 	<tr>
 		<td>'. _('Customer Reference') .':</td>
