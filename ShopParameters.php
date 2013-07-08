@@ -28,6 +28,9 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['ShopName'] != $_POST['X_ShopName'] ) {
 			$SQL[] = "UPDATE config SET confvalue = '" . DB_escape_string($_POST['X_ShopName']) ."' WHERE confname = 'ShopName'";
 		}
+		if ($_SESSION['ShopTitle'] != $_POST['X_ShopTitle'] ) {
+			$SQL[] = "UPDATE config SET confvalue = '" . DB_escape_string($_POST['X_ShopTitle']) ."' WHERE confname = 'ShopTitle'";
+		}
 		if ($_SESSION['ShopPrivacyStatement'] != $_POST['X_ShopPrivacyStatement'] ) {
 			$SQL[] = "UPDATE config SET confvalue = '" . DB_escape_string($_POST['X_ShopPrivacyStatement']) ."' WHERE confname = 'ShopPrivacyStatement'";
 		}
@@ -71,6 +74,10 @@ if (isset($_POST['submit'])) {
 
 		if ($_SESSION['ShopShowLeftCategoryMenu'] != $_POST['X_ShopShowLeftCategoryMenu'] ) {
 			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopShowLeftCategoryMenu']."' WHERE confname = 'ShopShowLeftCategoryMenu'";
+		}
+
+		if ($_SESSION['ShopShowInfoLinks'] != $_POST['X_ShopShowInfoLinks'] ) {
+			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopShowInfoLinks']."' WHERE confname = 'ShopShowInfoLinks'";
 		}
 
 		if ($_SESSION['ShopAllowSurcharges'] != $_POST['X_ShopAllowSurcharges'] ) {
@@ -213,6 +220,13 @@ echo '<tr>
 		<td>' . _('Enter the name of the shop that will be displayed on all the store pages') . '</td>
 	</tr>';
 
+//Shop Title
+echo '<tr>
+		<td>' . _('Shop Title') . ':</td>
+		<td><input type="text" name="X_ShopTitle" required size="40" maxlength="40" value="' . $_SESSION['ShopTitle'] . '" /></td>
+		<td>' . _('Enter the title of the shop that will be displayed on the main webSHOP page. Useful for SEO purposes.') . '</td>
+	</tr>';
+	
 // Shop Customer
 echo '<tr>
 		<td>' . _('Default Web Shop Customer Acount') . ':</td>
@@ -302,6 +316,21 @@ echo '</select></td>
 		<td>' . _('Shows / Hides the vertical sales categories menu on the left column.') . '</td>
 	</tr>';	
 
+echo '<tr>
+		<td>' . _('Show/Hide InfoLinks Menu') . ':</td>
+		<td><select name="X_ShopShowInfoLinks">';
+if ($_SESSION['ShopShowInfoLinks'] == '1') {
+	echo '<option selected="selected" value="1">' . _('Show') . '</option>';
+	echo '<option value="0">' . _('Hide') . '</option>';
+} else {
+	echo '<option selected="selected" value="0">' . _('Hide') . '</option>';
+	echo '<option value="1">' . _('Show') . '</option>';
+}
+echo '</select></td>
+		<td>' . _('Shows / Hides the information links menu at the footer of all the shop webpages.') . '</td>
+	</tr>';	
+
+	
 if (mb_strlen($_SESSION['ShopStockLocations'])>1){
 	$Locations = explode(',',$_SESSION['ShopStockLocations']);
 } else {
