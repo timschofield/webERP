@@ -15,6 +15,7 @@ $Title = _('Order Delivery Details');
 include('includes/header.inc');
 include('includes/FreightCalculation.inc');
 include('includes/SQL_CommonFunctions.inc');
+include('includes/CountriesArray.php');
 
 if (isset($_GET['identifier'])) {
 	$identifier=$_GET['identifier'];
@@ -1045,30 +1046,46 @@ echo '<tr>
 		<td><input class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="text" size="15" maxlength="14" name="ConfirmedDate" value="' . $_SESSION['Items'.$identifier]->ConfirmedDate . '" /></td>
 	</tr>
 	<tr>
-		<td>'. _('Delivery Address 1') . ':</td>
+		<td>'. _('Delivery Address 1 (Street)') . ':</td>
 		<td><input type="text" size="42" maxlength="40" name="BrAdd1" value="' . $_SESSION['Items'.$identifier]->DelAdd1 . '" /></td>
 	</tr>
 	<tr>
-		<td>'. _('Delivery Address 2') . ':</td>
+		<td>'. _('Delivery Address 2 (Street)') . ':</td>
 		<td><input type="text" size="42" maxlength="40" name="BrAdd2" value="' . $_SESSION['Items'.$identifier]->DelAdd2 . '" /></td>
 	</tr>
 	<tr>
-		<td>'. _('Delivery Address 3') . ':</td>
+		<td>'. _('Delivery Address 3 (Suburb/City)') . ':</td>
 		<td><input type="text" size="42" maxlength="40" name="BrAdd3" value="' . $_SESSION['Items'.$identifier]->DelAdd3 . '" /></td>
 	</tr>
 	<tr>
-		<td>'. _('Delivery Address 4') . ':</td>
+		<td>'. _('Delivery Address 4 (State/Province)') . ':</td>
 		<td><input type="text" size="42" maxlength="40" name="BrAdd4" value="' . $_SESSION['Items'.$identifier]->DelAdd4 . '" /></td>
 	</tr>
 	<tr>
-		<td>'. _('Delivery Address 5') . ':</td>
+		<td>'. _('Delivery Address 5 (Postal Code)') . ':</td>
 		<td><input type="text" size="42" maxlength="40" name="BrAdd5" value="' . $_SESSION['Items'.$identifier]->DelAdd5 . '" /></td>
-	</tr>
-	<tr>
+	</tr>';
+echo '<tr>
+		<td>' . _('Country') . ':</td>
+		<td><select name="BrAdd6">';
+foreach ($CountriesArray as $CountryEntry => $CountryName){
+	if (isset($_POST['BrAdd6']) AND (strtoupper($_POST['BrAdd6']) == strtoupper($CountryName))){
+		echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName .'</option>';
+	}elseif (!isset($_POST['BrAdd6']) AND $CountryName == $_SESSION['Items'.$identifier]->DelAdd6) {
+		echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName .'</option>';
+	} else {
+		echo '<option value="' . $CountryName . '">' . $CountryName .'</option>';
+	}
+}
+echo '</select></td>
+	</tr>';
+/*	
+echo'	<tr>
 		<td>'. _('Delivery Address 6') . ':</td>
 		<td><input type="text" size="42" maxlength="40" name="BrAdd6" value="' . $_SESSION['Items'.$identifier]->DelAdd6 . '" /></td>
-	</tr>
-	<tr>
+	</tr>';
+*/	
+echo'	<tr>
 		<td>'. _('Contact Phone Number') .':</td>
 		<td><input type="text" size="25" maxlength="25" name="PhoneNo" value="' . $_SESSION['Items'.$identifier]->PhoneNo . '" /></td>
 	</tr>
