@@ -1432,8 +1432,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				/*OK to display with discount if it is an internal user with appropriate permissions */
 			if (in_array($_SESSION['PageSecurityArray']['OrderEntryDiscountPricing'], $_SESSION['AllowedPageSecurityTokens'])){
 				echo '<td><input class="number" type="number" step="' . pow(10,-$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '" min="0" required name="Price_' . $OrderLine->LineNumber . '" size="16" maxlength="16" value="' . locale_number_format($OrderLine->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces)  . '" /></td>
-					<td><input class="number" type="number" min="0" required max="100" name="Discount_' . $OrderLine->LineNumber . '" size="5" maxlength="4" value="' . locale_number_format(($OrderLine->DiscountPercent * 100),2) . '" /></td>
-					<td><input class="number" type="number" min="0" required max="99.9" name="GPPercent_' . $OrderLine->LineNumber . '" size="4" maxlength="40" value="' . locale_number_format($OrderLine->GPPercent,2) . '" /></td>';
+					<td><input class="number" type="number" step="0.01" min="0" required max="100" name="Discount_' . $OrderLine->LineNumber . '" size="5" maxlength="4" value="' . locale_number_format(($OrderLine->DiscountPercent * 100),2) . '" /></td>
+					<td><input class="number" type="number" min="0" step="0.01" required max="99.9" name="GPPercent_' . $OrderLine->LineNumber . '" size="4" maxlength="40" value="' . locale_number_format($OrderLine->GPPercent,2) . '" /></td>';
 			} else {
 				echo '<td class="number">' . locale_number_format($OrderLine->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
 				echo '<input class="number" type="hidden" name="GPPercent_' . $OrderLine->LineNumber . '" size="4" maxlength="40" value="' . locale_number_format($OrderLine->GPPercent,2) . '" />';
@@ -1633,8 +1633,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
-						<td><input class="number"  tabindex="'. strval($j+7).'" type="text" size="6" name="OrderQty' . $i . '" value="0" />
-						<input type="hidden" name="StockID' . $i . '" value="' . $myrow['stockid'] . '" />
+						<td><input class="number"  tabindex="%s" type="number" step="%s" size="6" name="OrderQty%s" value="0" />
+						<input type="hidden" name="StockID%s" value="%s" />
 						</td>
 						</tr>',
 						$myrow['stockid'],
@@ -1644,7 +1644,13 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 						locale_number_format($QOH, $QOHRow['decimalplaces']),
 						locale_number_format($DemandQty, $QOHRow['decimalplaces']),
 						locale_number_format($OnOrder, $QOHRow['decimalplaces']),
-						locale_number_format($Available, $QOHRow['decimalplaces']) );
+						locale_number_format($Available, $QOHRow['decimalplaces']),
+						strval($j+7),
+						pow(10,-$QOHRow['decimalplaces']),
+						$i,
+						$i,
+						$myrow['stockid']);
+						
 				if ($j==1) {
 					$jsCall = '<script  type="text/javascript">
 									if (document.getElementById("SelectParts")!=null {
@@ -1886,7 +1892,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					echo '<td><input type="text" name="poline_' . $i . '" size="21" maxlength="20" /></td>';
 				}
 				echo '<td><input type="text" name="part_' . $i . '" size="21" maxlength="20" /></td>
-						<td><input type="number" name="qty_' . $i . '" size="6" maxlength="6" /></td>
+						<td><input type="number" step="0.00001" name="qty_' . $i . '" size="6" maxlength="6" /></td>
 						<td><input type="text" class="date" name="itemdue_' . $i . '" size="25" maxlength="25"
                         alt="'.$_SESSION['DefaultDateFormat'].'" value="' . $DefaultDeliveryDate . '" /></td></tr>';
 	   		}
