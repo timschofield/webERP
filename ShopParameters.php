@@ -327,7 +327,7 @@ if ($_SESSION['ShopShowInfoLinks'] == '1') {
 	echo '<option value="1">' . _('Show') . '</option>';
 }
 echo '</select></td>
-		<td>' . _('Shows / Hides the information links menu at the footer of all the shop webpages.') . '</td>
+		<td>' . _('Shows / Hides the information links menu at the footer of all the shop webpages. Useful to use Hide if webSHOP is used as an iFrame in a CMS system, if the information displayed is already in the CMS system.') . '</td>
 	</tr>';	
 
 	
