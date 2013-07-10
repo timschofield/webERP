@@ -163,14 +163,14 @@ if (isset($_POST['submit'])) {
 	}
 	if (!is_numeric(filter_number_format($_POST['grossweight']))) {
 		$InputError = 1;
-		prnMsg(_('The weight of the packaged item in KGs must be numeric'),'error');
-		$Errors[$i] = 'KGS';
+		prnMsg(_('The weight of the packaged item in grossweight must be numeric'),'error');
+		$Errors[$i] = 'grossweight';
 		$i++;
 	}
 	if (filter_number_format($_POST['grossweight'])<0) {
 		$InputError = 1;
 		prnMsg(_('The weight of the packaged item must be a positive number'),'error');
-		$Errors[$i] = 'KGS';
+		$Errors[$i] = 'grossweight';
 		$i++;
 	}
 	if (!is_numeric(filter_number_format($_POST['EOQ']))) {
