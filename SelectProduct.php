@@ -66,7 +66,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 								stockmaster.discontinued,
 								stockmaster.eoq,
 								stockmaster.volume,
-								stockmaster.kgs,
+								stockmaster.grossweight,
 								stockcategory.categorydescription,
 								stockmaster.categoryid
 						FROM stockmaster INNER JOIN stockcategory
@@ -132,7 +132,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 	echo '<tr><th class="number">' . _('Volume') . ':</th>
 			<td class="select" colspan="2">' . locale_number_format($myrow['volume'], 3) . '</td>
 			<th class="number">' . _('Weight') . ':</th>
-			<td class="select">' . locale_number_format($myrow['kgs'], 3) . '</td>
+			<td class="select">' . locale_number_format($myrow['grossweight'], 3) . '</td>
 			<th class="number">' . _('EOQ') . ':</th>
 			<td class="select">' . locale_number_format($myrow['eoq'], $myrow['decimalplaces']) . '</td></tr>';
 	if (in_array($PricesSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($PricesSecurity)) {
