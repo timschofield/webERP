@@ -51,7 +51,7 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 						purchdata.conversionfactor,
 						purchdata.leadtime,
 						purchdata.suppliersuom,
-						stockmaster.kgs,
+						stockmaster.grossweight,
 						stockmaster.volume,
 						stockcategory.stockact,
 						SUM(salesorderdetails.quantity-salesorderdetails.qtyinvoiced) AS orderqty
@@ -72,7 +72,7 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 					purchdata.conversionfactor,
 					purchdata.leadtime,
 					purchdata.suppliersuom,
-					stockmaster.kgs,
+					stockmaster.grossweight,
 					stockmaster.volume,
 					stockcategory.stockact
 				ORDER BY purchdata.supplierno,
@@ -96,7 +96,7 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 						purchdata.conversionfactor,
 						purchdata.leadtime,
 						purchdata.suppliersuom,
-						stockmaster.kgs,
+						stockmaster.grossweight,
 						stockmaster.volume,
 						stockcategory.stockact,
 						SUM(bom.quantity *(salesorderdetails.quantity-salesorderdetails.qtyinvoiced)) AS orderqty
@@ -125,7 +125,7 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 					purchdata.conversionfactor,
 					purchdata.leadtime,
 					purchdata.suppliersuom,
-					stockmaster.kgs,
+					stockmaster.grossweight,
 					stockmaster.volume,
 					stockcategory.stockact
 				ORDER BY purchdata.supplierno,

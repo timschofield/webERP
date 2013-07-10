@@ -171,5 +171,7 @@ ALTER TABLE  `freightcosts` ADD  `destinationcountry` VARCHAR( 40 ) NOT NULL AFT
 INSERT INTO config VALUES ('ShopShowInfoLinks','1');
 INSERT INTO config VALUES ('ShopTitle','Shop Home');
 
+ALTER TABLE  `stockmaster` CHANGE  `kgs`  `grossweight` DECIMAL( 20, 4 ) NOT NULL DEFAULT  '0.0000'
+
 UPDATE config SET confvalue='4.11.0' WHERE confname='VersionNumber';
 

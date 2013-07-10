@@ -36,7 +36,7 @@ if ($AlreadyOnThisOrder!=1){
 					stockmaster.stockid,
 					stockmaster.units,
 					stockmaster.volume,
-					stockmaster.kgs,
+					stockmaster.grossweight,
 					(materialcost+labourcost+overheadcost) AS standardcost,
 					locstock.quantity,
 					stockmaster.mbflag,
@@ -211,7 +211,7 @@ if ($AlreadyOnThisOrder!=1){
 															$Discount,
 															$myItemRow['units'],
 															$myItemRow['volume'],
-															$myItemRow['kgs'],
+															$myItemRow['grossweight'],
 															$myItemRow['quantity'],
 															$myItemRow['mbflag'],
 															NULL, /*Actual Dispatch Date */

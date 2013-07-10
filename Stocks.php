@@ -161,13 +161,13 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'Volume';
 		$i++;
 	}
-	if (!is_numeric(filter_number_format($_POST['KGS']))) {
+	if (!is_numeric(filter_number_format($_POST['grossweight']))) {
 		$InputError = 1;
 		prnMsg(_('The weight of the packaged item in KGs must be numeric'),'error');
 		$Errors[$i] = 'KGS';
 		$i++;
 	}
-	if (filter_number_format($_POST['KGS'])<0) {
+	if (filter_number_format($_POST['grossweight'])<0) {
 		$InputError = 1;
 		prnMsg(_('The weight of the packaged item must be a positive number'),'error');
 		$Errors[$i] = 'KGS';
@@ -395,7 +395,7 @@ if (isset($_POST['submit'])) {
 							mbflag='" . $_POST['MBFlag'] . "',
 							eoq='" . filter_number_format($_POST['EOQ']) . "',
 							volume='" . filter_number_format($_POST['Volume']) . "',
-							kgs='" . filter_number_format($_POST['KGS']) . "',
+							grossweight='" . filter_number_format($_POST['grossweight']) . "',
 							barcode='" . $_POST['BarCode'] . "',
 							discountcategory='" . $_POST['DiscountCategory'] . "',
 							taxcatid='" . $_POST['TaxCat'] . "',
@@ -567,7 +567,7 @@ if (isset($_POST['submit'])) {
 												serialised,
 												perishable,
 												volume,
-												kgs,
+												grossweight,
 												barcode,
 												discountcategory,
 												taxcatid,
@@ -586,7 +586,7 @@ if (isset($_POST['submit'])) {
 								'" . $_POST['Serialised']. "',
 								'" . $_POST['Perishable']. "',
 								'" . filter_number_format($_POST['Volume']) . "',
-								'" . filter_number_format($_POST['KGS']) . "',
+								'" . filter_number_format($_POST['grossweight']) . "',
 								'" . $_POST['BarCode'] . "',
 								'" . $_POST['DiscountCategory'] . "',
 								'" . $_POST['TaxCat'] . "',
@@ -664,7 +664,7 @@ if (isset($_POST['submit'])) {
 						unset($_POST['Serialised']);
 						unset($_POST['Perishable']);
 						unset($_POST['Volume']);
-						unset($_POST['KGS']);
+						unset($_POST['grossweight']);
 						unset($_POST['BarCode']);
 						unset($_POST['ReorderLevel']);
 						unset($_POST['DiscountCategory']);
@@ -810,7 +810,7 @@ if (isset($_POST['submit'])) {
 		unset($_POST['Serialised']);
 		unset($_POST['Perishable']);
 		unset($_POST['Volume']);
-		unset($_POST['KGS']);
+		unset($_POST['grossweight']);
 		unset($_POST['BarCode']);
 		unset($_POST['ReorderLevel']);
 		unset($_POST['DiscountCategory']);
@@ -873,7 +873,7 @@ if (!isset($StockID) OR $StockID=='' or isset($_POST['UpdateCategories'])) {
 					perishable,
 					eoq,
 					volume,
-					kgs,
+					grossweight,
 					barcode,
 					discountcategory,
 					taxcatid,
@@ -898,7 +898,7 @@ if (!isset($StockID) OR $StockID=='' or isset($_POST['UpdateCategories'])) {
 	$_POST['Serialised']  = $myrow['serialised'];
 	$_POST['Perishable']  = $myrow['perishable'];
 	$_POST['Volume']  = $myrow['volume'];
-	$_POST['KGS']  = $myrow['kgs'];
+	$_POST['grossweight']  = $myrow['grossweight'];
 	$_POST['BarCode']  = $myrow['barcode'];
 	$_POST['DiscountCategory']  = $myrow['discountcategory'];
 	$_POST['TaxCat'] = $myrow['taxcatid'];
@@ -1018,8 +1018,8 @@ if (!isset($_POST['EOQ']) OR $_POST['EOQ']==''){
 if (!isset($_POST['Volume']) OR $_POST['Volume']==''){
 	$_POST['Volume']=0;
 }
-if (!isset($_POST['KGS']) OR $_POST['KGS']==''){
-	$_POST['KGS']=0;
+if (!isset($_POST['grossweight']) OR $_POST['grossweight']==''){
+	$_POST['grossweight']=0;
 }
 if (!isset($_POST['Controlled']) OR $_POST['Controlled']==''){
 	$_POST['Controlled']=0;
@@ -1054,7 +1054,7 @@ echo '<tr>
 	</tr>';
 
 echo '<tr>
-		<td>' . _('Packaged Weight (KGs)') . ':</td><td><input ' . (in_array('KGS',$Errors) ?  'class="inputerror"' : '' ) .'   type="text" class="number" name="KGS" size="12" maxlength="10" value="' . locale_number_format($_POST['KGS'],'Variable') . '" /></td>
+		<td>' . _('Packaged Weight (KGs)') . ':</td><td><input ' . (in_array('grossweight',$Errors) ?  'class="inputerror"' : '' ) .'   type="text" class="number" name="grossweight" size="12" maxlength="10" value="' . locale_number_format($_POST['grossweight'],'Variable') . '" /></td>
 	</tr>';
 
 echo '<tr>
