@@ -5,6 +5,12 @@
 include('includes/session.inc');
 
 $Title = _('My Maintenance Jobs');
+
+$Title = _('Fixed Assets Maintenance Schedule');
+
+$ViewTopic = 'FixedAssets';
+$BookMark = 'AssetMaintenance';
+
 include('includes/header.inc');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/group_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p><br />';
@@ -25,12 +31,12 @@ $sql="SELECT taskid,
 				userresponsible,
 				realname,
 				manager
-		FROM fixedassettasks 
-		INNER JOIN fixedassets 
+		FROM fixedassettasks
+		INNER JOIN fixedassets
 		ON fixedassettasks.assetid=fixedassets.assetid
-		INNER JOIN www_users 
+		INNER JOIN www_users
 		ON fixedassettasks.userresponsible=www_users.userid
-		WHERE userresponsible='" . $_SESSION['UserID'] . "' 
+		WHERE userresponsible='" . $_SESSION['UserID'] . "'
 		OR manager = '" . $_SESSION['UserID'] . "'
 		ORDER BY ADDDATE(lastcompleted,frequencydays) DESC";
 
@@ -50,7 +56,7 @@ echo '<table class="selection">
     </tr>';
 
 while ($myrow=DB_fetch_array($Result)) {
-	
+
 	if ($myrow['manager']!=''){
 		$ManagerResult = DB_query("SELECT realname FROM www_users WHERE userid='" . $myrow['manager'] . "'",$db);
 		$ManagerRow = DB_fetch_array($ManagerResult);
@@ -58,7 +64,7 @@ while ($myrow=DB_fetch_array($Result)) {
 	} else {
 		$ManagerName = _('No Manager Set');
 	}
-	
+
 	echo '<tr>
 			<td>' . $myrow['taskid'] . '</td>
 			<td>' . $myrow['description'] . '</td>

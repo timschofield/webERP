@@ -4,7 +4,11 @@
 
 include('includes/session.inc');
 
-$Title = _('Maintenance Tasks');
+$Title = _('Fixed Asset Maintenance Tasks');
+
+$ViewTopic = 'FixedAssets';
+$BookMark = 'AssetMaintenance';
+
 include('includes/header.inc');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/group_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p><br />';
@@ -47,7 +51,7 @@ if (isset($_POST['Update'])) {
 				userresponsible='" . $_POST['UserResponsible'] . "',
 				manager='" . $_POST['Manager'] . "'
 				WHERE taskid='".$_POST['TaskID']."'";
-	
+
 		$ErrMsg = _('The task details cannot be updated because');
 		$Result=DB_query($sql,$db,$ErrMsg);
 		unset($_POST['AssetID']);
@@ -75,10 +79,10 @@ $sql="SELECT taskid,
 				userresponsible,
 				realname,
 				manager
-		FROM fixedassettasks 
-		INNER JOIN fixedassets 
+		FROM fixedassettasks
+		INNER JOIN fixedassets
 		ON fixedassettasks.assetid=fixedassets.assetid
-		INNER JOIN www_users 
+		INNER JOIN www_users
 		ON fixedassettasks.userresponsible=www_users.userid";
 
 $ErrMsg = _('The maintenance task details cannot be retrieved because');
@@ -95,7 +99,7 @@ echo '<table class="selection">
     </tr>';
 
 while ($myrow=DB_fetch_array($Result)) {
-	
+
 	if ($myrow['manager']!=''){
 		$ManagerResult = DB_query("SELECT realname FROM www_users WHERE userid='" . $myrow['manager'] . "'",$db);
 		$ManagerRow = DB_fetch_array($ManagerResult);
@@ -103,7 +107,7 @@ while ($myrow=DB_fetch_array($Result)) {
 	} else {
 		$ManagerName = _('No Manager Set');
 	}
-	
+
 	echo '<tr>
 			<td>' . $myrow['taskid'] . '</td>
 			<td>' . $myrow['description'] . '</td>
@@ -182,7 +186,7 @@ echo '<tr>
 		<td>'._('Task Description').':</td>
 		<td><textarea name="TaskDescription" cols="40" rows="3">' . $_POST['TaskDescription'] . '</textarea></td>
 	</tr>';
-	
+
 echo '<tr>
 		<td>'._('Days Before Task Due').':</td>
 		<td><input type="text" class="number" name="FrequencyDays" size="5" maxlength="5" value="' . $_POST['FrequencyDays'] . '" /></td>

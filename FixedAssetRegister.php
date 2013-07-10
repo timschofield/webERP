@@ -2,6 +2,9 @@
 
 include ('includes/session.inc');
 $Title = _('Fixed Asset Register');
+
+$ViewTopic = 'FixedAssets';
+$BookMark = 'AssetRegister';
 $csv_output = '';
 // Reports being generated in HTML, PDF and CSV/EXCEL format
 if (isset($_POST['submit']) OR isset($_POST['pdf']) OR isset($_POST['csv'])) {
