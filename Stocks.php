@@ -161,16 +161,28 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'Volume';
 		$i++;
 	}
-	if (!is_numeric(filter_number_format($_POST['grossweight']))) {
+	if (!is_numeric(filter_number_format($_POST['GrossWeight']))) {
 		$InputError = 1;
-		prnMsg(_('The weight of the packaged item in grossweight must be numeric'),'error');
-		$Errors[$i] = 'grossweight';
+		prnMsg(_('The weight of the packaged item in Gross Weight must be numeric'),'error');
+		$Errors[$i] = 'GrossWeight';
 		$i++;
 	}
-	if (filter_number_format($_POST['grossweight'])<0) {
+	if (filter_number_format($_POST['GrossWeight'])<0) {
 		$InputError = 1;
 		prnMsg(_('The weight of the packaged item must be a positive number'),'error');
-		$Errors[$i] = 'grossweight';
+		$Errors[$i] = 'GrossWeight';
+		$i++;
+	}
+	if (!is_numeric(filter_number_format($_POST['NetWeight']))) {
+		$InputError = 1;
+		prnMsg(_('The net weight of the item in Net Weight must be numeric'),'error');
+		$Errors[$i] = 'NetWeight';
+		$i++;
+	}
+	if (filter_number_format($_POST['NetWeight'])<0) {
+		$InputError = 1;
+		prnMsg(_('The net weight of the item must be a positive number'),'error');
+		$Errors[$i] = 'NetWeight';
 		$i++;
 	}
 	if (!is_numeric(filter_number_format($_POST['EOQ']))) {
@@ -395,7 +407,8 @@ if (isset($_POST['submit'])) {
 							mbflag='" . $_POST['MBFlag'] . "',
 							eoq='" . filter_number_format($_POST['EOQ']) . "',
 							volume='" . filter_number_format($_POST['Volume']) . "',
-							grossweight='" . filter_number_format($_POST['grossweight']) . "',
+							grossweight='" . filter_number_format($_POST['GrossWeight']) . "',
+							netweight='" . filter_number_format($_POST['NetWeight']) . "',
 							barcode='" . $_POST['BarCode'] . "',
 							discountcategory='" . $_POST['DiscountCategory'] . "',
 							taxcatid='" . $_POST['TaxCat'] . "',
@@ -568,6 +581,7 @@ if (isset($_POST['submit'])) {
 												perishable,
 												volume,
 												grossweight,
+												netweight,
 												barcode,
 												discountcategory,
 												taxcatid,
@@ -586,7 +600,8 @@ if (isset($_POST['submit'])) {
 								'" . $_POST['Serialised']. "',
 								'" . $_POST['Perishable']. "',
 								'" . filter_number_format($_POST['Volume']) . "',
-								'" . filter_number_format($_POST['grossweight']) . "',
+								'" . filter_number_format($_POST['GrossWeight']) . "',
+								'" . filter_number_format($_POST['NetWeight']) . "',
 								'" . $_POST['BarCode'] . "',
 								'" . $_POST['DiscountCategory'] . "',
 								'" . $_POST['TaxCat'] . "',
@@ -664,7 +679,8 @@ if (isset($_POST['submit'])) {
 						unset($_POST['Serialised']);
 						unset($_POST['Perishable']);
 						unset($_POST['Volume']);
-						unset($_POST['grossweight']);
+						unset($_POST['GrossWeight']);
+						unset($_POST['NetWeight']);
 						unset($_POST['BarCode']);
 						unset($_POST['ReorderLevel']);
 						unset($_POST['DiscountCategory']);
@@ -810,7 +826,8 @@ if (isset($_POST['submit'])) {
 		unset($_POST['Serialised']);
 		unset($_POST['Perishable']);
 		unset($_POST['Volume']);
-		unset($_POST['grossweight']);
+		unset($_POST['GrossWeight']);
+		unset($_POST['NetWeight']);
 		unset($_POST['BarCode']);
 		unset($_POST['ReorderLevel']);
 		unset($_POST['DiscountCategory']);
@@ -874,6 +891,7 @@ if (!isset($StockID) OR $StockID=='' or isset($_POST['UpdateCategories'])) {
 					eoq,
 					volume,
 					grossweight,
+					netweight,
 					barcode,
 					discountcategory,
 					taxcatid,
@@ -898,7 +916,8 @@ if (!isset($StockID) OR $StockID=='' or isset($_POST['UpdateCategories'])) {
 	$_POST['Serialised']  = $myrow['serialised'];
 	$_POST['Perishable']  = $myrow['perishable'];
 	$_POST['Volume']  = $myrow['volume'];
-	$_POST['grossweight']  = $myrow['grossweight'];
+	$_POST['GrossWeight']  = $myrow['grossweight'];
+	$_POST['NetWeight']  = $myrow['NetWeight'];
 	$_POST['BarCode']  = $myrow['barcode'];
 	$_POST['DiscountCategory']  = $myrow['discountcategory'];
 	$_POST['TaxCat'] = $myrow['taxcatid'];
@@ -1018,8 +1037,11 @@ if (!isset($_POST['EOQ']) OR $_POST['EOQ']==''){
 if (!isset($_POST['Volume']) OR $_POST['Volume']==''){
 	$_POST['Volume']=0;
 }
-if (!isset($_POST['grossweight']) OR $_POST['grossweight']==''){
-	$_POST['grossweight']=0;
+if (!isset($_POST['GrossWeight']) OR $_POST['GrossWeight']==''){
+	$_POST['GrossWeight']=0;
+}
+if (!isset($_POST['NetWeight']) OR $_POST['NetWeight']==''){
+	$_POST['NetWeight']=0;
 }
 if (!isset($_POST['Controlled']) OR $_POST['Controlled']==''){
 	$_POST['Controlled']=0;
@@ -1054,10 +1076,14 @@ echo '<tr>
 	</tr>';
 
 echo '<tr>
-		<td>' . _('Packaged Weight (KGs)') . ':</td><td><input ' . (in_array('grossweight',$Errors) ?  'class="inputerror"' : '' ) .'   type="text" class="number" name="grossweight" size="12" maxlength="10" value="' . locale_number_format($_POST['grossweight'],'Variable') . '" /></td>
+		<td>' . _('Packaged Gross Weight (KGs)') . ':</td><td><input ' . (in_array('GrossWeight',$Errors) ?  'class="inputerror"' : '' ) .'   type="text" class="number" name="GrossWeight" size="12" maxlength="10" value="' . locale_number_format($_POST['GrossWeight'],'Variable') . '" /></td>
 	</tr>';
 
 echo '<tr>
+		<td>' . _('Net Weight (KGs)') . ':</td><td><input ' . (in_array('NetWeight',$Errors) ?  'class="inputerror"' : '' ) .'   type="text" class="number" name="NetWeight" size="12" maxlength="10" value="' . locale_number_format($_POST['NetWeight'],'Variable') . '" /></td>
+	</tr>';
+
+	echo '<tr>
 		<td>' . _('Units of Measure') . ':</td>
 		<td><select ' . (in_array('Description',$Errors) ?  'class="selecterror"' : '' ) .'  name="Units">';
 
