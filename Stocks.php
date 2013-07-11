@@ -917,7 +917,7 @@ if (!isset($StockID) OR $StockID=='' or isset($_POST['UpdateCategories'])) {
 	$_POST['Perishable']  = $myrow['perishable'];
 	$_POST['Volume']  = $myrow['volume'];
 	$_POST['GrossWeight']  = $myrow['grossweight'];
-	$_POST['NetWeight']  = $myrow['NetWeight'];
+	$_POST['NetWeight']  = $myrow['netweight'];
 	$_POST['BarCode']  = $myrow['barcode'];
 	$_POST['DiscountCategory']  = $myrow['discountcategory'];
 	$_POST['TaxCat'] = $myrow['taxcatid'];
