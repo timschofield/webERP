@@ -43,7 +43,7 @@ if (isset($_POST['Search'])){
 				ORDER BY accountgroups.sequenceintb,
 					chartmaster.accountcode";
 
-		} elseif (mb_strlen($_POST['GLCode'])>0 AND is_numeric($_POST['GLCode'])){
+		} elseif (mb_strlen($_POST['GLCode'])>0){
 
 			$SQL = "SELECT chartmaster.accountcode,
 					chartmaster.accountname,
@@ -54,18 +54,13 @@ if (isset($_POST['Search'])){
 					WHERE chartmaster.group_=accountgroups.groupname
 					AND chartmaster.accountcode >= '" . $_POST['GLCode'] . "'
 					ORDER BY chartmaster.accountcode";
-		} elseif(!is_numeric($_POST['GLCode'])){
-			prnMsg(_('The general ledger code specified must be numeric - all account numbers must be numeric'),'warn');
-			unset($SQL);
 		}
-
 		if (isset($SQL) and $SQL!=''){
 			$result = DB_query($SQL, $db);
 		}
 } //end of if search
 
 if (!isset($AccountID)) {
-
 
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for General Ledger Accounts') . '</p>
 		<br />
@@ -81,13 +76,29 @@ if (!isset($AccountID)) {
 		<tr>
 			<td>' . _('Enter extract of text in the Account name') .':</td>
 			<td><input type="text" name="Keywords" size="20" maxlength="25" /></td>
-			<td><b>' .  _('OR') . '</b></td>
-			<td>' . _('Enter Account No. to search from') . ':</td>
-			<td><input type="text" name="GLCode" size="15" maxlength="18" class="number" /></td>
-		</tr>
+			<td><b>' .  _('OR') . '</b></td>';
+
+	$SQLAccountSelect="SELECT accountcode,
+							accountname
+						FROM chartmaster
+						ORDER BY accountcode";
+
+	$ResultSelection=DB_query($SQLAccountSelect, $db);
+	echo '<td><select name="GLCode">';
+	echo '<option value="">' . _('Select an Account Code') . '</option>';
+	while ($MyRowSelection=DB_fetch_array($ResultSelection)){
+		if (isset($_POST['GLCode']) and $_POST['GLCode']==$MyRowSelection['accountcode']){
+			echo '<option selected="selected" value="' . $MyRowSelection['accountcode'] . '">' . $MyRowSelection['accountcode'].' - ' .htmlspecialchars($MyRowSelection['accountname'], ENT_QUOTES,'UTF-8', false) . '</option>';
+		} else {
+			echo '<option value="' . $MyRowSelection['accountcode'] . '">' . $MyRowSelection['accountcode'].' - ' .htmlspecialchars($MyRowSelection['accountname'], ENT_QUOTES,'UTF-8', false) .'</option>';
+		}
+	}
+	echo '</select></td>';
+
+	echo '	</tr>
 		</table>
 		<br />';
-
+		
 	echo '<div class="centre">
 			<input type="submit" name="Search" value="' . _('Search Now') . '" />
 			<input type="submit" name="reset" value="' . _('Reset') .'" />
