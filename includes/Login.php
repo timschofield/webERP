@@ -35,12 +35,18 @@ if (get_magic_quotes_gpc()){
 	<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');?>" method="post">
     <div>
 	<input type="hidden" name="FormID" value="<?php echo $_SESSION['FormID']; ?>" />
-	<span><?php echo _('Company'); ?>:</span>
-
+	<span>
 	<?php
-		if ($AllowCompanySelectionBox == true){
+		if ($AllowCompanySelectionBox == 'Hide'){
+			// do not show input or selection box
+			echo '<input type="hidden" name="CompanyNameField"  value="' . $DefaultCompany . '" />';
+		} else if ($AllowCompanySelectionBox == 'ShowInputBox'){
+			// show input box
+			echo _('Company') . '<input type="text" name="CompanyNameField"  value="' . $DefaultCompany . '" />';
+		}else{
+			// Show selection box ($AllowCompanySelectionBox == 'ShowSelectionBox')
+			echo _('Company');
 			echo '<select name="CompanyNameField">';
-
 			$Companies = scandir('companies/', 0);
 			foreach ($Companies as $CompanyEntry){
 				if (is_dir('companies/' . $CompanyEntry) AND $CompanyEntry != '..' AND $CompanyEntry != '' AND $CompanyEntry!='.svn' AND $CompanyEntry!='.'){
@@ -52,11 +58,9 @@ if (get_magic_quotes_gpc()){
 				}
 			}
 			echo '</select>';
-		} else {
-			echo '<input type="text" name="CompanyNameField"  value="' . $DefaultCompany . '" />';
-		}
+		}  
 	?>
-
+	</span>
 	<br />
 	<span><?php echo _('User name'); ?>:</span><br />
 	<input type="text" name="UserNameEntryField" maxlength="20" /><br />

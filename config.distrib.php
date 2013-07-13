@@ -41,12 +41,19 @@ $DBType = 'mysqli';
 $DBUser = 'weberp_db_user';
 $DBPassword = 'weberp_db_pwd';
 
-//It would probably be inappropraite to allow selection of the company in a hosted envionment so this option can be turned off with this parameter
-//webERP examines each of the directories under the companies directory to determine all the companies that can be logged into
-//a new company directory together with the necessary subdirectories is created each time a new company is created by Z_MakeNewCompany.php
-$AllowCompanySelectionBox = true;
+// It would probably be inappropraite to allow selection of the company in a hosted envionment so this option can be switched to 'ShowInputBox' or 'Hide'
+// depending if you allow the user to select the name of the company or must use the default one described at $DefaultCompany
+// If set to 'ShowSelectionBox' webERP examines each of the directories under the companies directory to determine all the companies that can be logged into
+// a new company directory together with the necessary subdirectories is created each time a new company is created by Z_MakeNewCompany.php
+// It would also be inappropiate in some environments to show the name of the company (database name) --> Choose 'Hide'. 
+// Options:
+// 	'ShowSelectionBox' (default)
+//	'ShowInputBox'
+//	'Hide'
 
-//If $AllowCompanySelectionBox = false above then the $DefaultCompany string is entered in the login screen as a default 
+$AllowCompanySelectionBox = 'ShowSelectionBox';
+
+//If $AllowCompanySelectionBox is not 'ShowSelectionBox' above then the $DefaultCompany string is entered in the login screen as a default 
 //otherwise the user is expected to know the name of the company to log into.
 $DefaultCompany = 'weberpdemo';
 
