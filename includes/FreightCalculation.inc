@@ -42,9 +42,6 @@ Function CalcFreightCost ($TotalValue,
 				$sql = mb_substr($sql, 0, strrpos($sql,' OR')) . ')';
 			}
 
-echo 'SQL=' . $sql . '</br>';
-echo 'FreightChargeAppliesIfLessThan=' . $_SESSION['FreightChargeAppliesIfLessThan'] . '</br>';
-
 	$CalcFreightCostResult = DB_query($sql,$db);
 	if (DB_error_no($db) !=0) {
 		echo _('The freight calculation for the destination city cannot be performed because') . ' - ' . DB_error_msg($db);
