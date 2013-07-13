@@ -42,6 +42,9 @@ Function CalcFreightCost ($TotalValue,
 				$sql = mb_substr($sql, 0, strrpos($sql,' OR')) . ')';
 			}
 
+echo 'SQL=' . $sql . '</br>';
+echo 'FreightChargeAppliesIfLessThan=' . $_SESSION['FreightChargeAppliesIfLessThan'] . '</br>';
+
 	$CalcFreightCostResult = DB_query($sql,$db);
 	if (DB_error_no($db) !=0) {
 		echo _('The freight calculation for the destination city cannot be performed because') . ' - ' . DB_error_msg($db);
@@ -78,7 +81,7 @@ Function CalcFreightCost ($TotalValue,
 			}
 		}
 	} else {
-		$CalcFreightCost = _('Unrecognised destination');
+		$CalcFreightCost = "NOT AVAILABLE";
 	}
 	if ($TotalValue >= $_SESSION['FreightChargeAppliesIfLessThan']){
 		/*Even though the order is over the freight free threshold - still need to calculate the best shipper to ensure get best deal*/
@@ -93,7 +96,9 @@ Function CalcFreightCost ($TotalValue,
 		} else {
 			$ExRate =1;
 		}
-		$CalcFreightCost = $CalcFreightCost * $ExRate;
+		if ($CalcFreightCost != "NOT AVAILABLE"){
+			$CalcFreightCost = $CalcFreightCost * $ExRate;
+		}
 	}
 	
 	return array ($CalcFreightCost, $CalcBestShipper);
