@@ -1,5 +1,5 @@
 webERP Change Log
-
+14/7/2013 Exson: Add new directory for new installer and add those default installation sql file. 
 14/7/2013 Exson: Rewrite the installer by removing the save.php file and revise the index.php file.
 24/6/13 Phil: webSHOP ShopParameters.php script and new configuration variables to allow integrated shop
 21/6/13 Phil: ContractCosting.php fix references to contract issues object which should just have been an array.
