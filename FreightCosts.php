@@ -23,10 +23,9 @@ if (isset($_GET['SelectedFreightCost'])){
 	$SelectedFreightCost = $_POST['SelectedFreightCost'];
 }
 
-echo '<div class="centre"><p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' .
-	_('Freight Costs') . '" alt="" />' . ' ' . $Title . '</p></div>';
-
 if (!isset($LocationFrom) OR !isset($ShipperID)) {
+	echo '<div class="centre"><p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' .
+		_('Freight Costs') . '" alt="" />' . ' ' . $Title . '</p></div>';
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
     echo '<div>';
@@ -72,6 +71,16 @@ if (!isset($LocationFrom) OR !isset($ShipperID)) {
 	$LocationResults = DB_query($sql,$db);
 	$myrow = DB_fetch_row($LocationResults);
 	$LocationName = $myrow[0];
+
+	if (isset($ShipperID)){
+		$Title .= ' ' . _('For') . ' ' . $ShipperName;
+	}
+	if (isset($LocationFrom)){
+		$Title .= ' ' . _('From') . ' ' . $LocationName;
+	}
+
+	echo '<div class="centre"><p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' .
+		_('Freight Costs') . '" alt="" />' . ' ' . $Title . '</p></div>';
 
 }
 
