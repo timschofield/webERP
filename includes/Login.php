@@ -37,10 +37,10 @@ if (get_magic_quotes_gpc()){
 	<input type="hidden" name="FormID" value="<?php echo $_SESSION['FormID']; ?>" />
 	<span>
 	<?php
-		if ($AllowCompanySelectionBox == 'Hide'){
+		if ($AllowCompanySelectionBox === 'Hide'){
 			// do not show input or selection box
 			echo '<input type="hidden" name="CompanyNameField"  value="' . $DefaultCompany . '" />';
-		} else if ($AllowCompanySelectionBox == 'ShowInputBox'){
+		} else if ($AllowCompanySelectionBox === 'ShowInputBox'){
 			// show input box
 			echo _('Company') . '<input type="text" name="CompanyNameField"  value="' . $DefaultCompany . '" />';
 		}else{
@@ -58,7 +58,7 @@ if (get_magic_quotes_gpc()){
 				}
 			}
 			echo '</select>';
-		}  
+		}
 	?>
 	</span>
 	<br />
@@ -67,7 +67,7 @@ if (get_magic_quotes_gpc()){
 	<span><?php echo _('Password'); ?>:</span><br />
 	<input type="password" name="Password" /><br />
 	<div id="demo_text">
-	<?php 
+	<?php
 	if (isset($demo_text)){
 		echo $demo_text;
 	}
