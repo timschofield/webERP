@@ -83,6 +83,11 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
 		unset($_POST['ConversionFactor']);
 		prnMsg(_('The conversion factor entered was not numeric') . ' (' . _('a number is expected') . '). ' . _('The conversion factor is the number which the price must be divided by to get the unit price in our unit of measure') . '. <br />' . _('E.g.') . ' ' . _('The supplier sells an item by the tonne and we hold stock by the kg') . '. ' . _('The suppliers price must be divided by 1000 to get to our cost per kg') . '. ' . _('The conversion factor to enter is 1000') . '. <br /><br />' . _('No changes will be made to the database'), 'error');
 	}
+    if (!Is_Date($_POST['EffectiveFrom'])){
+		$InputError =1;
+		unset($_POST['EffectiveFrom']);
+		prnMsg (_('The date this purchase price is to take effect from must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'],'error');
+	}
     if ($InputError == 0 AND isset($_POST['AddRecord'])) {
         $sql = "INSERT INTO purchdata (supplierno,
 										stockid,
