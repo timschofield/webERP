@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-07-06 15:49+1200\n"
-"PO-Revision-Date: 2013-07-05 07:41-0600\n"
+"PO-Revision-Date: 2013-07-15 09:49-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "MIME-Version: 1.0\n"
@@ -7489,7 +7489,7 @@ msgstr "Nº de Teléfono"
 #: CustomerPurchases.php:71 WWW_Users.php:285 WWW_Users.php:528
 #: includes/PDFCustomerListPageHeader.inc:84 api/api_xml-rpc.php:241
 msgid "Branch Code"
-msgstr "Código de la Sucursal"
+msgstr "Código de sucursal"
 
 #: CustLoginSetup.php:187 SuppLoginSetup.php:207 WWW_Users.php:562
 msgid "Reports Page Size"
@@ -7753,7 +7753,7 @@ msgstr "El código de Sucursal no puede tener los siguientes caracteres"
 
 #: CustomerBranches.php:61
 msgid "The Branch code must be at least one character long"
-msgstr "El Código de la Sucursal no puede estar vacío"
+msgstr "El código de sucursal debe tener al menos un carácter de longitud"
 
 #: CustomerBranches.php:67
 msgid ""
@@ -12284,7 +12284,7 @@ msgstr "Códigos Geocode de Clientes y Proveedores"
 
 #: geocode.php:83
 msgid "Customer Branch Code:"
-msgstr "Código de la Sucursal del Cliente:"
+msgstr "Código de sucursal del cliente:"
 
 #: geocode.php:83
 msgid "failed to geocode."
@@ -21655,7 +21655,7 @@ msgstr ""
 
 #: Prices_Customer.php:84
 msgid "The branch code entered is not currently defined"
-msgstr "El código de la Sucursal entrado no está definido actualmente"
+msgstr "El código de sucursal introducido no está definido actualmente"
 
 #: Prices_Customer.php:94 Prices.php:81
 msgid "The date this price is be in effect to must be entered in the format"
@@ -22348,7 +22348,7 @@ msgstr "Transportista"
 
 #: PrintCustTrans.php:810 PrintCustTransPortrait.php:856
 msgid "Consignment Ref"
-msgstr "Consignación de Referencia"
+msgstr "Referencia de envío"
 
 #: PrintCustTrans.php:964 PrintCustTrans.php:1013
 #: PrintCustTransPortrait.php:1019 PrintCustTransPortrait.php:1075
@@ -27093,7 +27093,7 @@ msgstr "ID del Transportista"
 
 #: Shippers.php:130 Shippers.php:193
 msgid "Shipper Name"
-msgstr "Nombre del Transportista"
+msgstr "Transportista"
 
 #: Shippers.php:145
 #, php-format
@@ -43395,17 +43395,17 @@ msgstr "NOTA DE CRÉDITO (ABONO)"
 #: includes/PDFTransPageHeader.inc:58
 #: includes/PDFTransPageHeaderPortrait.inc:69
 msgid "Dispatch Detail"
-msgstr "Detalle de la Nota de Entrega"
+msgstr "Datos de envío"
 
 #: includes/PDFTransPageHeader.inc:60
 #: includes/PDFTransPageHeaderPortrait.inc:72
 msgid "Dispatched From"
-msgstr "Despachado Desde"
+msgstr "Distribuido desde"
 
 #: includes/PDFTransPageHeader.inc:91
 #: includes/PDFTransPageHeaderPortrait.inc:122
 msgid "Sold To"
-msgstr "Vendido A"
+msgstr "Vendido a"
 
 #: includes/PDFTransPageHeader.inc:182
 msgid "Customer Tax Ref"
@@ -43417,19 +43417,19 @@ msgstr "Ref. del Pedido del Cliente"
 
 #: includes/PDFTransPageHeaderPortrait.inc:157
 msgid "Delivered To (check Dispatch Detail)"
-msgstr "Entregado a (Ver Detalle de Despacho)"
+msgstr "Entregado a (ver datos de envío)"
 
 #: includes/PDFTransPageHeaderPortrait.inc:238
 msgid "Cust. Tax Ref"
-msgstr "Referencia Fiscal"
+msgstr "Ref. fiscal cliente"
 
 #: includes/PDFTransPageHeaderPortrait.inc:241
 msgid "Cust. Reference No."
-msgstr "Nº de Referencia del Cliente"
+msgstr "Referencia del cliente"
 
 #: includes/PDFTransPageHeaderPortrait.inc:266
 msgid "Disc."
-msgstr "Descuento"
+msgstr "Desc."
 
 #: includes/PO_PDFOrderPageHeader.inc:14 includes/PO_PDFOrderPageHeader
 #: (puppypc32158's conflicted copy 2013-05-23).inc:14 2013-06-24).inc:14
