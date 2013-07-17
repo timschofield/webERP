@@ -1,6 +1,10 @@
 webERP Change Log
+17/7/2013 icedlava: stripslashes on Description for consistency with LongDescription but why- only until we fix source of this problem in the code
+17/7/2013 icedlava: add checkbox option in UI to clear item image
 17/7/2013 Exson: Add space bar as a accepted charcode for number input in MiscFunctions.js
-14/7/2013 Exson: Add new directory for new installer and add those default installation sql file. 
+16/7/2013 icedlava: Add date check on purchase price effective date.
+16/7/2013 icedlava: AllowCompanySelectionBox comparison fix to allow boolean value to evaluate correctly
+14/7/2013 Exson: Add new directory for new installer and add those default installation sql file.
 14/7/2013 Exson: Rewrite the installer by removing the save.php file and revise the index.php file.
 24/6/13 Phil: webSHOP ShopParameters.php script and new configuration variables to allow integrated shop
 21/6/13 Phil: ContractCosting.php fix references to contract issues object which should just have been an array.
@@ -21,16 +25,16 @@ webERP Change Log
 12/5/13 Exson: Fixed the bug of not use strpos correctly in PO_PDFPurchOrder.php.
 12/5/13 Exson Make smtp mail available for InternalStockRequestFulfill.php.
 12/5/13 Exson: Fixed the stockrequestitems duplicated primary key bug by modify the primary definition.
-12/5/13 Exson Make the smtp mail available in InternalStockRequest.php. 
+12/5/13 Exson Make the smtp mail available in InternalStockRequest.php.
 12/5/13 Exson Make the SMTP mail available for UserLogin.php.
 12/5/13 Exson: Make SMTP mail available for EmailConfirmation.php. The scripts seem not ready.
-12/5/13 Exson: Add smtp mail to DeliveryDetails.php. 
+12/5/13 Exson: Add smtp mail to DeliveryDetails.php.
 12/5/13 Exson Make the SMTP mail available for CounterSales.php to mail new WO.
 12/5/13 Exson: Make the sales report can be mailed via SMTP in files MailSalesReport.php and MailSalesReport_csv.php
 11/5/13 Exson: Make EDI modules can send mail via SMTP in files EDIProcessOrders.php, EDISendInvoices.php, EDISendInvoices_Reece.php
 11/5/13 Exson: Make the inventory valuation report can be mailed.
 11/5/13 Exson: Add Mail Validation Report to inventory module in MainMenuLinksArray.php.
-11/5/13 Exson: Revise the CURDATE() to CURRENT_DATE to make it a more general SQL compatible in OffersReceived.php. Recommend by Tim. 
+11/5/13 Exson: Revise the CURDATE() to CURRENT_DATE to make it a more general SQL compatible in OffersReceived.php. Recommend by Tim.
 12/5/13 Rafael Chacón: Spanish translation update
 11/5/13 Exson: Add OffersRecievedResultRecipients group to mailgroups in ugrade4.10-4.11.sql/mysql/upgrade4.10-4.11.sql
 11/5/13 Exson: Add OffersReceivedRecipients Group, added feature to use mail instead of smtp mail only, fixed the problem that item with single quotation mark cannot be stored and the same date comparison problem.
@@ -44,15 +48,15 @@ webERP Change Log
 10/5/13 Exson: Modify RecurringSalesOrdersProcess.php to make it can send the order by smtp.
 10/5/13 Exson Fixed the mail function for PDFChequeListing.php
 10/5/13 Exson: Add GetMailList function in MiscFunctions.php.
-10/5/13 Exson: Fixed the unclosed a href tag in MailingGroupMaintenance.php. 
+10/5/13 Exson: Fixed the unclosed a href tag in MailingGroupMaintenance.php.
 10/5/13 Exson: Add new feature to main mail list group for mail sending purpose.
 9/5/13 Exson: Fixed the date hard coded problem in PcAssignCashToTab.php which lead to malfunction for some date format. Report by thumb.
 3/5/13 Ricard: new script to change GL account codes Z_ChangeGLAccountCode.php and SQL to upgrade to varchar account codes
 2/5/13 Exson: Fixed strpos error and make the smtp server name more generic when user not use a email address in function of SendmailBySmtp in MiscFunctions.php.
 2/5/13 Phil: Credit_Invoice.php was not setting the selected location to credit into as reported by Ricard
-2/5/13 Exson: Revise the account code to 20 reported by Tim in GLAccounts.php. 
+2/5/13 Exson: Revise the account code to 20 reported by Tim in GLAccounts.php.
 2/5/13 Exson: Make correction for removing those functions not related with webERP committed last time in MiscFunctions.php. Thanks for Tim's review.
-2/5/13 Exson: Make smtp available for PDFDeliveryDifferences.php. 
+2/5/13 Exson: Make smtp available for PDFDeliveryDifferences.php.
 2/5/13 Exson: Make smtp mail available for PDFDIFOT.php and fixed the bug that the result should be data within acceptable days instead of out of the range.
 02/05/13 Exson: Make the smtp mail available for PrintCustTransPortrait.php
 02/05/13 Exson: Add SendmailBySmtp function to MiscFunctions.php and make smtp mail workable for PrintCustTrans.php.
@@ -62,10 +66,10 @@ webERP Change Log
 30/4/13 Exson Update the translation file for Chinese simplify locale
 30/4/13 Exson: Fixed the bug in SystemParameters.php which missing a</select> tag and cannot display the config in $_SESSION correctly. Reported by Tim.
 30/4/13 Exson: Create a new sql file 4.10-4.11.sql with the smtp setting statement.
-29/4/13 Exson: Modify the PO_PDFPurchOrder.php to make it suitable for smtp setting. 
+29/4/13 Exson: Modify the PO_PDFPurchOrder.php to make it suitable for smtp setting.
 29/04/13 Exson Fixed the smtp does not work for langaguage is change in utf8 code in file of smtp.php and HTMLMimeMail.php.
 29/04/13 Exson Fixed the db_free_result() error messages due to the query returned a boolean value in SMTPServer.php
-27/4/13 Samudaya: Fixed a bug in PO_Items.php when a line of a purchase order is deleted (other than the last line) and then subsequently a new line is added - the last line of the order is over-written. 
+27/4/13 Samudaya: Fixed a bug in PO_Items.php when a line of a purchase order is deleted (other than the last line) and then subsequently a new line is added - the last line of the order is over-written.
 27/4/13 Samudaya: PO_Items.php When purchasing a non-stock item (asset), AssetID goes to wrong column in purchorderdetails table (Column name - suppliers_partno). Fixed the bug and now save the AssetID in the correct assetid column.
 27/4/13 Samudaya: Fixed the Page Navigation (Go, Previous, Next) problem. This problem occurs  there are many assets and display as several pages.
 26/04/13 Exson: Fix the image broken problem for Manual/ManualGettingStarted.html Chinese version
@@ -81,7 +85,7 @@ webERP Change Log
 6/4/13 Rafael: PDFPriceList.php split long description to maximum of 132 characters long
 1/4/13 Kalmer Piiskop: Correct includes/LanguagesArray.php to use correct decimal point and thousands separator
 27/3/13 Fahad Hatib: Updates to editing tenders and button to close a tender
-22/3/13 Kalmer Piiskop: Updated Estonian translation 
+22/3/13 Kalmer Piiskop: Updated Estonian translation
 21/3/13 Arwan: CustomerReceipt.php Added GL tag name for GL analysis of receipts
 23/3/13 Phil: Karel Van Der Esch discovered issues in PO_Items.php and Prices.php in relation to thousands and decimal separators now resolved.
 23/3/13 Phil: Added salesperson to debtortrans and now credit notes can have salesman allocated - previously the salesperson was only used for sales analysis reporting - but for those that need sales person against all transactions and want to drill into the detail it is necessary to have the salesperson recorded on each debtortrans - changed CounterSales.php CounterReturns.php ConfirmDispatch_Invoice.php SelectCreditItems.php Credit_Invoice.php defaulted for api functions
