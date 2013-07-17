@@ -955,7 +955,7 @@ if (isset($_POST['Description'])) {
 }
 echo '<tr>
 		<td>' . _('Part Description') . ' (' . _('short') . '):</td>
-		<td><input ' . (in_array('Description',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="Description" size="52" maxlength="50" value="' . $Description . '" /></td>
+		<td><input ' . (in_array('Description',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="Description" size="52" maxlength="50" value="' . stripslashes($Description) . '" /></td>
 	</tr>';
 
 foreach ($ItemDescriptionLanguages as $DescriptionLanguage) {
