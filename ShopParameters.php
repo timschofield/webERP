@@ -72,6 +72,10 @@ if (isset($_POST['submit'])) {
 			}
 		}	
 
+		if ($_SESSION['ShopShowTopCategoryMenu'] != $_POST['X_ShopShowTopCategoryMenu'] ) {
+			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopShowTopCategoryMenu']."' WHERE confname = 'ShopShowTopCategoryMenu'";
+		}
+
 		if ($_SESSION['ShopShowLeftCategoryMenu'] != $_POST['X_ShopShowLeftCategoryMenu'] ) {
 			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopShowLeftCategoryMenu']."' WHERE confname = 'ShopShowLeftCategoryMenu'";
 		}
@@ -93,8 +97,6 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['ShopAllowBankTransfer'] != $_POST['X_ShopAllowBankTransfer'] ) {
 			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopAllowBankTransfer']."' WHERE confname = 'ShopAllowBankTransfer'";
 		}
-
-
 		
 		if ($_SESSION['ShopPayPalSurcharge'] != $_POST['X_ShopPayPalSurcharge'] ) {
 			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopPayPalSurcharge']."' WHERE confname = 'ShopPayPalSurcharge'";
@@ -303,7 +305,22 @@ echo '</select></td>
 	</tr>';
 
 echo '<tr>
-		<td>' . _('Show/Hide Left Column Menu') . ':</td>
+		<td>' . _('Show/Hide Top Sales Categories Menu') . ':</td>
+		<td><select name="X_ShopShowTopCategoryMenu">';
+if ($_SESSION['ShopShowTopCategoryMenu'] == '1') {
+	echo '<option selected="selected" value="1">' . _('Show') . '</option>';
+	echo '<option value="0">' . _('Hide') . '</option>';
+} else {
+	echo '<option selected="selected" value="0">' . _('Hide') . '</option>';
+	echo '<option value="1">' . _('Show') . '</option>';
+}
+
+echo '</select></td>
+		<td>' . _('Shows / Hides the horizontal sales categories menu below the webSHOP cart summary.') . '</td>
+	</tr>';	
+
+echo '<tr>
+		<td>' . _('Show/Hide Left Sales Categories Menu') . ':</td>
 		<td><select name="X_ShopShowLeftCategoryMenu">';
 if ($_SESSION['ShopShowLeftCategoryMenu'] == '1') {
 	echo '<option selected="selected" value="1">' . _('Show') . '</option>';
@@ -312,6 +329,7 @@ if ($_SESSION['ShopShowLeftCategoryMenu'] == '1') {
 	echo '<option selected="selected" value="0">' . _('Hide') . '</option>';
 	echo '<option value="1">' . _('Show') . '</option>';
 }
+
 echo '</select></td>
 		<td>' . _('Shows / Hides the vertical sales categories menu on the left column.') . '</td>
 	</tr>';	
