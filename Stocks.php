@@ -776,7 +776,7 @@ if (isset($_POST['submit'])) {
 									echo '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('tenders from suppliers for this part');
 								}
 							}
-						} 
+						}
 					}
 				}
 			}
@@ -806,7 +806,7 @@ if (isset($_POST['submit'])) {
 			//and cascade delete the item descriptions in other languages
 			$sql = "DELETE FROM stockdescriptiontranslations WHERE stockid='" . $StockID . "'";
 			$result=DB_query($sql,$db,_('Could not delete the item language descriptions'),'',true);
-			
+
 		$result = DB_Txn_Commit($db);
 
 		prnMsg(_('Deleted the stock master record for') . ' ' . $StockID . '....' .
@@ -936,7 +936,7 @@ if (!isset($StockID) OR $StockID=='' or isset($_POST['UpdateCategories'])) {
 	while ($myrow = DB_fetch_array($result)){
 		$_POST['Description_' . str_replace('.','_',$myrow['language_id'])] = $myrow['descriptiontranslation'];
 	}
-	
+
 	echo '<tr><td>' . _('Item Code') . ':</td>
 			<td>'.$StockID.'<input type="hidden" name="StockID" value="' . $StockID . '" /></td>
 			</tr>';
@@ -983,7 +983,9 @@ echo '<tr>
 	</tr>
 	<tr>
 		<td>'. _('Image File (.jpg)') . ':</td>
-		<td><input type="file" id="ItemPicture" name="ItemPicture" /></td>';
+		<td><input type="file" id="ItemPicture" name="ItemPicture" />
+		<br /><input type="checkbox" name="ClearImage" id="ClearImage" value="1" > '._('Clear Image').'
+		</td>';
 
  if (function_exists('imagecreatefromjpg')){
 	$StockImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
@@ -995,6 +997,15 @@ echo '<tr>
 } else {
 	if( isset($StockID) AND file_exists($_SESSION['part_pics_dir'] . '/' .$StockID.'.jpg') ) {
 		$StockImgLink = '<img src="' . $_SESSION['part_pics_dir'] . '/' . $StockID . '.jpg" height="100" width="100" />';
+		if (isset($_POST['ClearImage']) ) {
+		    //workaround for many variations of permission issues that could cause unlink fail
+		    @unlink($_SESSION['part_pics_dir'] . '/' .$StockID.'.jpg');
+		    if(is_file($_SESSION['part_pics_dir'] . '/' .$StockID.'.jpg')) {
+                 prnMsg(_('You do not have access to delete this item image file.'),'error');
+            } else {
+    		    $StockImgLink = _('No Image');
+    		}
+		}
 	} else {
 		$StockImgLink = _('No Image');
 	}
