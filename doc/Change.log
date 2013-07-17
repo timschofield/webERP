@@ -1,4 +1,5 @@
 webERP Change Log
+17/7/2013 Exson: Add space bar as a accepted charcode for number input in MiscFunctions.js
 14/7/2013 Exson: Add new directory for new installer and add those default installation sql file. 
 14/7/2013 Exson: Rewrite the installer by removing the save.php file and revise the index.php file.
 24/6/13 Phil: webSHOP ShopParameters.php script and new configuration variables to allow integrated shop
