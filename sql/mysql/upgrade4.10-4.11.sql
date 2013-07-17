@@ -178,6 +178,7 @@ ALTER TABLE  `custbranch` CHANGE  `brpostaddr3`  `brpostaddr3` VARCHAR( 40 ) CHA
  						  CHANGE  `brpostaddr6`  `brpostaddr6` VARCHAR( 40 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT  '';
 
 INSERT INTO config VALUES ('ShopShowTopCategoryMenu','1');
+INSERT INTO config VALUES ('ShopShowLogoAndShopName','1');
 
 UPDATE config SET confvalue='4.11.0' WHERE confname='VersionNumber';
 
