@@ -39,7 +39,6 @@ foreach ($Collect as $Key=>$Value){
 	}
 
 }
-echo '<input type="hidden" name="Lang" id="Lang" value="'.$Lang.'" />';
 
 /*Since LanguagesArray requires the function _() to translate the language names - we must provide a substitute if it doesn't exist aready before we include includes/LanguagesArray.php
  * */
