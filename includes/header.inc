@@ -41,7 +41,7 @@
 	echo '<script type="text/javascript" src = "'.$RootPath.'/javascripts/MiscFunctions.js"></script>';
 	echo '</head>';
 	echo '<body>';
-
+	echo '<input type="hidden" name="Lang" id="Lang" value="'.$Lang.'" />';
 
     echo '<div id="CanvasDiv">';
 	echo '<div id="HeaderDiv">';
