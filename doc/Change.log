@@ -1,4 +1,5 @@
 webERP Change Log
+07/18/2013 Exson: modify the MisFunctions.js to improve the locale number validation feature.
 17/7/2013 icedlava: stripslashes on Description for consistency with LongDescription but why- only until we fix source of this problem in the code
 17/7/2013 icedlava: add checkbox option in UI to clear item image
 17/7/2013 Exson: Add space bar as a accepted charcode for number input in MiscFunctions.js
