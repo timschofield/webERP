@@ -1,4 +1,6 @@
 webERP Change Log
+07/18/2013 Exson: fixed the LanguageSetup.php extra language mark introduced by handle locale number. Reported by Tim. 
+07/18/2013: Exson: Fixed the missing negative mark problem reported by Tim. 
 07/18/2013: Exson add a locale style check to pass the style to MisFunctions.js to do locale number format validation in LanguageSetup.php.
 07/18/2013 Exson: modify the MisFunctions.js to improve the locale number validation feature.
 17/7/2013 icedlava: stripslashes on Description for consistency with LongDescription but why- only until we fix source of this problem in the code
