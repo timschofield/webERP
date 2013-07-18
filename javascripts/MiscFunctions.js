@@ -5,14 +5,57 @@ c.focus();
 function ReloadForm(fB){
 fB.click();
 }
+var kPrev = 'a';
 function rTN(event){
 	if (window.event) k=window.event.keyCode;
 	else if (event) k=event.which;
 	else return true;
 	kC=String.fromCharCode(k);
-	if ((k==null) || (k==0) || (k==8) || (k==9) || (k==13) || (k==27) || (k==32)) return true;
-	else if ((("0123456789.,-").indexOf(kC)>-1)) return true;
-	else return false;
+	if ((k==null) || (k==0) || (k==8) || (k==9) || (k==13) || (k==27)){
+	       	return true;
+	}
+	else if ((("0123456789., ").indexOf(kC)>-1)){
+		if(("., ").indexOf(kC)>-1){
+			if(("., ").indexOf(kPrev)>-1){
+				return false;
+			}else{
+				kPrev = kC;
+	       	       		return true;
+			}
+		}else{
+			kPrev = kC;
+			return true;
+		}
+	}
+	else return false; 
+}
+function rLocaleNumber(){
+	switch(Lang){
+		case 'US':
+			var patt = /(?:^([1-9]{1,3}(?:,?\d{3})*(?:\.\d{1,})?)$)|(?:^(0\.\d{1,})$)/;
+			break;
+		case 'IN':
+			var patt = /(?:^([1-9]{1,2},)?(\d{2},)*(\d{3})(\.\d+)?$)|(?:^[1-9]{1,3}(\.\d+)?$)|(?:^(0\.\d{1,})$)/;
+			break;
+		case 'EE':
+			var patt = /(?:^[1-9]{1,3}(?:\s?\d{3})*(?:\.\d{1,})?$)|(?:^(0\.\d{1,})$)/;
+			break;
+		case 'FR':
+			var patt = /(?:^[1-9]{1,3}(?:\s?\d{3})*(?:,\d{1,})?$)|(?:^(0,\d{1,})$)/;
+			break;
+		case 'GM':
+			var patt = /(?:^[1-9]{1,3}(?:\.?\d{3})*(?:,\d{1,})?$)|(?:^(0,\d{1,})$)/;
+			break;
+
+	}
+	if(patt.test(this.value)){
+		this.setCustomValidity('');
+		return true;
+		
+	}else{
+		this.setCustomValidity('The number format is wrong');
+		return false;
+	};
 }
 function assignComboToInput(c,i){
 	i.value=c.value;
@@ -214,6 +257,7 @@ function initial(){
 			ds[i].onchange=changeDate;
 		}
 		if (ds[i].className=="number") ds[i].onkeypress=rTN;
+		if (ds[i].className=="number") ds[i].onchange=rLocaleNumber;
 	}
 }
 window.onload=initial;
