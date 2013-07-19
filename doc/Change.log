@@ -1,4 +1,5 @@
 webERP Change Log
+7/19/2013: Exson make the WWW_Access.php html5 compatible
 7/18/2013: Exson: Move the hidden input after the html document type definition. Reported by Tim.
 07/18/2013 Exson: fixed the LanguageSetup.php extra language mark introduced by handle locale number. Reported by Tim. 
 07/18/2013: Exson: Fixed the missing negative mark problem reported by Tim. 
