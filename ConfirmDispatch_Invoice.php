@@ -1677,7 +1677,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 	$j++;
 	echo '<tr>
 			<td>' ._('Invoice Text'). ':</td>
-			<td><textarea tabindex="'.$j.'" name="InvoiceText" cols="31" rows="5">' . reverse_escape($_POST['InvoiceText']) . '</textarea></td>
+			<td><textarea tabindex="'.$j.'" name="InvoiceText" pattern=".{0,20}" cols="31" rows="5">' . reverse_escape($_POST['InvoiceText']) . '</textarea></td>
 		</tr>';
 
 	$j++;

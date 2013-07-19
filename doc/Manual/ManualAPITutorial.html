@@ -15,18 +15,18 @@ The clever thing about XML-RPC is that it is the simplest protocol around for do
 In fact the XML-RPC "Server" in  is just the script http://www.yourdomain.com//api/api_xml-rpc.php</p>
 <p>There is no daemon background process running continuously to field calls to the "server" it is just a script that is http posted to by the XML-RPC call sending the XML encoded method to be run together with the necessary parameters to the  API - the server script runs the API php functions exposed by the xml-rpc methods and returns the XML-RPC response as an XML payload. The phpxmlrpc class does the packaging converting the PHP variables and arrays to the XML required for the XML-RPC call and also has the functions to convert the XML response into something useable in PHP without having to write the XML parsing routines.</p>
 <p>There is one hardcoded parameter that needs to be set in the api before you start to use it. The database name - the company database - to use with the api is defined in the file api/api_php.php - the variable
-<blockquote><i>$api_DatabaseName='demo';</i></blockquote>
+<blockquote><i>$api_DatabaseName=&quot;demo&quot;;</i></blockquote>
 <p>should be set before attempting to use the api.</p>
 <p>
 It is worthwhile reading a how-to on XML-RPC with PHP which explains in more detail what is going on as a primer for the concepts.</p>
 <p>
 The beauty of XML-RPC is that the client calling the  XML-RPC server and performing native  functions can be called from any language (with XML-RPC bindings). I have used Vala, Genie and Python. Python particularly has been very straight forward as it has an xmlrpclib bundled with it. Of course a PHP client is also possible and is demonstrated below.</p>
 <p>
-The API help is actually produced by an xml-rpc call to the API using the system.listMethods method (this is a phpxmlrpc method - not a  API method). Aother system xml-rpc method of phpxmlrpc class is used to return the details of each method's parameters required. So the help file not only documents each of the API methods it is itself and illustration of how the API can be used!!</p>
+The API help is actually produced by an xml-rpc call to the API using the system.listMethods method (this is a phpxmlrpc method - not a  API method). Aother system xml-rpc method of phpxmlrpc class is used to return the details of each method&quot;s parameters required. So the help file not only documents each of the API methods it is itself and illustration of how the API can be used!!</p>
 <p>In the narrative below, the word &quot;<i>Server</i>&quot; is used to refer to the host webERP installation - in fact the <i>&quot;server&quot;</i> this is the script webERP/xml-rpc/api_xmlrpc.php</p>
 <p>The API is configured by default to use the company database weberpdemo, and this is hard coded in the script api/api_php.php on line 6:
 <blockquote><i>
-$api_DatabaseName='weberpdemo';
+$api_DatabaseName=&quot;weberpdemo&quot;;
 </i></blockquote>
 <p>This database should be changed manually before the API can be used to the company database that you wish the API to access. Note that the API can only work on one company in a webERP installation. This is a limitation of the design.</p>
 <p>Below is a simple example of how to use the API.</p>
@@ -52,15 +52,15 @@ echo "Test  API";
 <br />
 <br />/* The trap for me was that each parameter needs to be run through xmlrpcval() - to create the necessary xml required for the rpc call if one of the parameters required is an array then it needs to be processing into xml for the rpc call through php_xmlrpc_encode()*/
 <br />
-<br />$Parameters['StockID'] = new xmlrpcval('DVD-TOPGUN'); //the stockid of the item we wish to know the balance for
+<br />$Parameters[&quot;StockID&quot;] = new xmlrpcval(&quot;DVD-TOPGUN&quot;); //the stockid of the item we wish to know the balance for
 <br />
 <br />//assuming the demo username and password will work !
 <br />
-<br />$Parameters['Username'] = new xmlrpcval('admin');
+<br />$Parameters[&quot;Username&quot;] = new xmlrpcval(&quot;admin&quot;);
 <br />
-<br />$Parameters['Password'] = new xmlrpcval('');
+<br />$Parameters[&quot;Password&quot;] = new xmlrpcval(&quot;&quot;);
 <br />
-<br />$Msg = new xmlrpcmsg('.xmlrpc_GetStockBalance', $Parameters);
+<br />$Msg = new xmlrpcmsg(&quot;.xmlrpc_GetStockBalance&quot;, $Parameters);
 <br />
 <br />$Client = new xmlrpc_client($ServerURL);
 <br />
@@ -80,7 +80,7 @@ echo "Test  API";
 <br />
 <br />for ($i=0; $i &lt; sizeof($Answer[1]);$i++) {
 <br />
-<br /><blockquote>echo '' . $Answer[1][$i]['loccode'] . ' has ' . $Answer[1][$i]['quantity'] . ' on hand';</blockquote>
+<br /><blockquote>echo &quot;&quot; . $Answer[1][$i][&quot;loccode&quot;] . &quot; has &quot; . $Answer[1][$i][&quot;quantity&quot;] . &quot; on hand&quot;;</blockquote>
 <br />
 <br />}
 <br /></blockquote>
@@ -97,209 +97,351 @@ To create a credit note just a sinlge API call is required:</p>
 CreateCreditNote - to create a credit note from some base header data and an array of line items (as an associative array. In the same way as the InvoiceSalesOrder function this does all the same processing as a standard credit note from the interface in .</p>
 <p>
 There are some example scripts on the wiki showing how a number of the API XML-RPC functions are called - these scripts should be put on a web-server outside a  installation - all you need to do is edit the config.inc file to give the system your  username and password and the URL of your  installation you wish to connect to. As always playing with the examples helps to figure out how it all works.</p>
-
-
-
-
-
-However we did not touch on what would happen if something goes wrong. Load up the application, and you should see a screen similar to this one:
-
-
-Now load index.php into our editor and change the password on line 38 from 'webERP' to 'wrong'. Now if we reload index.php we get this screen.
-
-As you can see it cannot fetch any locations as the authentication does not work on this webERP instance. However it provides us with no information about why this has happened. If you recall from the tutorials regarding the writing of the client, the XML-RPC call returns an array containing two elements, the first - $Response[0] in our client - contains an integer code, and the second the result of the inquiry, if one is expected. If the integer code is zero, this indicates success. Any other code indicates an error. These error code can be found listed here.  As you can see error code 1 indicates 'NoAuthorisation' which will be the error returned if the user name or password is incorrect.
-
-To catch the errors we create a session variable (not the best way I know, but convenient for this tutorial) to hold any error messages that happen, so that we can show the to the user. So the initialisation code at the top of index.php becomes:
-
-<?php
-    include 'xmlrpc/lib/xmlrpc.inc';
-    $xmlrpc_internalencoding='UTF-8';
-    include 'xmlrpc/lib/xmlrpcs.inc';
-    $_SESSION['Errors'] = array();
-?>
-
-and then at the bottom of the output we have a loop to output these errors:
-
-foreach ($_SESSION['Errors'] as $Error) {
-    echo $Error;
-}
-
-Now we just need to capture that error. We need to put this code at the bottom of the GetLocations() function so that it now reads:
-
-if ($ReturnValue[0] == 0) {
-    return $ReturnValue[1];
-} elseif ($ReturnValue[0] == 1) {
-    $_SESSION['Errors'][] = 'Incorrect login/password credentials used';
-}
-
-Now run the index.php script again in your browser and you should get out put similar to this:
-
-We just need to put this code at the bottom of our other functions, and then they will all be able to catch this error.
-
-Now if we put the proper password back in index.php should work as before.
-
-
-Now try entering a stock code that you know doesn't exist and see what happens. I entered a part code called 'wrong' and this is what I see.
-
-This is not very helpful output so we need catch this error. A quick look here shows that error code 1047 is 'StockCodeDoesntExist' and this should be returned if the code we entered is wrong. So we need to capture error 1047 in the GetStockQuantity() function. The code at the end of this function now becomes:
-
-} elseif ($ReturnValue[0] == 1) {
-    $_SESSION['Errors'][] = 'Incorrect login/password credentials used';
-} elseif ($ReturnValue[0] == 1047) {
-    $_SESSION['Errors'][] = 'The stock code you entered does not exist';
-}
-
-So now the function is checking that the user/password is correct and also checking that the stock code is correct and providing useful feedback in the case of any problems. We could go on and check for other errors but this should be enough for now.
-
-
-
-To do this we need a function much like the one we used to extract the array of location codes. Here is the full code:
-
-    function LocationName($LocationCode) {
-
-        //Encode the data items
-        $UserID = php_xmlrpc_encode("admin");
-        $Password = php_xmlrpc_encode("webERP");
-        $Code = php_xmlrpc_encode($LocationCode);
-
-        //Create a client object to use for xmlrpc call and set its debug level to zero
-        $Client = new xmlrpc_client("http://localhost/webERP/api/api_xml-rpc.php");
-        $Client->setDebug(0);
-
-        //Create a message object, containing the parameters and the function name
-        $Message = new xmlrpcmsg('webERP.xmlrpc_GetLocationDetails', array($Code, $UserID, $Password));
-
-        //Use the client object to send the message object to the server, returning the response
-        $Response = $Client->send($Message);
-
-        //Decode the response and return the array
-        $ReturnValue = php_xmlrpc_decode($Response->value());
-        if ($ReturnValue[0] == 0) {
-            return $ReturnValue[1]['locationname'];
-        }
-    }
-
-The first section encodes the parameters as XML. The first two parameters are always the userid/password combination, and for this function call we need a third parameter, which is the code of the location that we require the name of. The second section is identical to the previous function and creates an instance of the XML-RPC client class. The third section then creates an instance of the message class, with the first parameter being the full name of the API function being called, in this case webERP.xmlrpc_GetLocationDetails, and then the second parameter is an array of the encoded parameters, (location code, userid, password). This message is then sent to the server, and the response decoded into an array called $ReturnValue.
-
-As last time the first element of the array signifies whether the function was successful (a zero), or any other integer for an error code. The second element is an associative array of details for that location. The key of each element is the field name for that value. In our case we just want the location name, so we return the element ['locationname']. If it was the telephone number we were interested in we would just return the ['tel'] element.
-
-Changing the line in the HTML where we fill the drop down box to:
-
-echo '<option value="'.$LocationCode.'">'.LocationName($LocationCode).'</option>';
-
-we can see that the web page in our browser now looks a little better.
-
-The full name of the location appears in the drop down the list, but the value returned by the form is still just the code.
-
-All that is left to complete our client, is to type a stock code in the text box, submit the form and return the amount of stock for that code at the chosen location. First we need to insert some PHP code in the HTML to handle the form being sent:
-
-<?php
-        if (isset($_POST['submit'])) {
-            echo 'The quantity of '.$_POST['StockID'].' at '.$_POST['location'] . ' is : ''.GetStockQuantity($_POST['StockID'], $_POST['location']);
-        }
- ?>
-
-As you can see this calls another PHP function - GetStockQuantity() - that retrieves the stock quantity for the required item at the required location. Looking at the API function reference in the manual the API function we require is webERP.xmlrpc_GetStockBalance. However this time there is a small addition we require as this function returns an array containing the stock balances at all the locations for the given stock item.
-
-The full code for the PHP function is:
-
-
-    function GetStockQuantity($StockID, $LocationCode) {
-        //Encode the data items
-        $UserID = php_xmlrpc_encode("admin");
-        $Password = php_xmlrpc_encode("webERP");
-        $StockCode = php_xmlrpc_encode($StockID);
-
-        //Create a client object to use for xmlrpc call and set its debug level to zero
-        $Client = new xmlrpc_client("http://localhost/webERP/api/api_xml-rpc.php");
-        $Client->setDebug(0);
-        //Create a message object, containing the parameters and the function name
-        $Message = new xmlrpcmsg('webERP.xmlrpc_GetStockBalance', array($StockCode, $UserID, $Password));
-        //Use the client object to send the message object to the server, returning the response
-        $Response = $Client->send($Message);
-        //Decode the response and return the array
-        $ReturnValue = php_xmlrpc_decode($Response->value());
-        if ($ReturnValue[0] == 0) {
-            $Items = $ReturnValue[1];
-            for ($i=0; $i<sizeOf($Items); $i++) {
-                if ($Items[$i]['loccode']==$LocationCode) {
-                    return $Items[$i]['quantity'];
-                }
-            }
-        }
-    }
-
-I wont go through this in details as it is mostly the same as the previous functions. The key section is the last:
-
-        $ReturnValue = php_xmlrpc_decode($Response->value());
-        if ($ReturnValue[0] == 0) {
-            $Items = $ReturnValue[1];
-            for ($i=0; $i<sizeOf($Items); $i++) {
-                if ($Items[$i]['loccode']==$LocationCode) {
-                    return $Items[$i]['quantity'];
-                }
-            }
-        }
-
-Here the RPC returns an array of locations with the stock quantities for each location, and we filter out the location we need.
-
-
-Showing that we have returned the correct numbers.
-
-
-The Client:
-
-For this tutorial we will build a small PHP application that will first interrogate webERP for a full list of available stock locations, build them into an HTML drop down list and then allow a user to input a stock item code and return the quantity of stock of that item at the selected location. We will use PHP for simplicity but any language that has an xmlrpc library (just about every language) can be used to write a client. It is a lengthy post, so I am splitting it into two parts. This is part 1.
-
-Firstly we need the xmlrpc library, so we copy the xmlrpc sub-directory from webERP to this new project.
-
-The basic code will look like this, and be saved into a file called index.php:
-
-<html>
-    <head>
-        <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-            "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-    </head>
-    <body>
-        <form action="index.html" method="post">
-            Stock Code:<input type="text" name="StockID" /><br />
-            Location:<select name="location">
-            <?php // Here will go the available stock locations from webERP?>
-            </select><br />
-            <input type="submit" name="submit" value="Submit" />
-        </form>
-    </body>
-</html>
-
-
-As it’s name suggests, the xmlrpc function calls are made by sending an XML file with the function name and the parameters to the server, and receive an XML file back from the server.
-
-To assist with this, the phpxmlrpc library that webERP uses (and we will use as well for our client) contains methods to encode our function call as XML, and to decode the XML that we receive back.
-
-First off we need to include the xmlrpc library in our file, so immediately above the HTML, we need the following:
-
-<?php
-    include 'xmlrpc/lib/xmlrpc.inc';
-    $xmlrpc_internalencoding='UTF-8';
-    include 'xmlrpc/lib/xmlrpcs.inc';
-?>
-
-Running this page in our browser looks like this:
-Not very pretty but you can see the idea.
-
-Now the next thing we need is the code to populate the drop down box with the stock locations in it. Looking at the API function reference in the manual we see a function called webERP.xmlrpc_GetLocationList(). Obviously this is the function we require. Looking at the reference, the function takes two parameters, a valid userid for the webERP instance, and the password for that user. In my case that is admin/webERP as in the standard demo setup, you must change yours to be whatever the name of the database is on your target webERP installation.
-
-We require a PHP function to return a list of locations to populate the drop down list. The function will look like this, and be at the bottom of the file, within a PHP code section (ie <?php ?>).
-
-   function GetLocations() {
-
-        //Encode the user/password combination
-        $UserID = php_xmlrpc_encode("admin");
-        $Password = php_xmlrpc_encode("webERP");
-
-        //Create a client object to use for xmlrpc call
-        $Client = new xmlrpc_client("http://localhost/webERP/api/api_xml-rpc.php");
-
-        //Create a message object, containing the parameters and the function name
-        $Message = new xmlrpcmsg('webERP.xmlrpc_GetLocationList', array($UserID, $Password));
-
+<br />
+<h2>An Example Client</h2>
+<p>For this example we will build a small PHP application that will first interrogate webERP for a full list of available stock locations, build them into an HTML drop down list and then allow a user to input a stock item code and return the quantity of stock of that item at the selected location. We will use PHP for simplicity but any language that has an xmlrpc library (just about every language) can be used to write a client.</p>
+<p>Firstly we need the xmlrpc library, so we copy the xmlrpc sub-directory from webERP to this new project.</p>
+<p>The basic code will look like this, and be saved into a file called index.php:</p>
+<blockquote><i>
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Strict//EN&quot;
+            &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd&quot;&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;form action=&quot;index.html&quot; method=&quot;post&quot;&gt;
+            Stock Code:&lt;input type=&quot;text&quot; name=&quot;StockID&quot; /&gt;&lt;br /&gt;
+            Location:&lt;select name=&quot;location&quot;&gt;
+            &lt;?php // Here will go the available stock locations from webERP?&gt;
+            &lt;/select&gt;&lt;br /&gt;
+            &lt;input type=&quot;submit&quot; name=&quot;submit&quot; value=&quot;Submit&quot; /&gt;
+        &lt;/form&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</blockquote></i>
+<p>As its name suggests, the xmlrpc function calls are made by sending an XML file with the function name and the parameters to the server, and receive an XML file back from the server.</p>
+<p>To assist with this, the phpxmlrpc library that webERP uses (and we will use as well for our client) contains methods to encode our function call as XML, and to decode the XML that we receive back.</p>
+<p>First off we need to include the xmlrpc library in our file, so immediately above the HTML, we need the following:</p>
+<blockquote><i>
+&lt;?php
+    include &quot;xmlrpc/lib/xmlrpc.inc&quot;;
+    $xmlrpc_internalencoding=&quot;UTF-8&quot;;
+    include &quot;xmlrpc/lib/xmlrpcs.inc&quot;;
+?&gt;
+</blockquote></i>
+<p>To populate the drop down box with the stock locations in it the API  function called webERP.xmlrpc_GetLocationList() is used. This function takes two parameters, a valid userid for the webERP instance, and the password for that user. Using the demo credentials is admin/weberp. Also, the file api_php.php must have the $api_databasename set to whatever the name of the database is on your target webERP installation.</p>
+<p>The function to get the inventory locations will look like this, and be at the bottom of the file, within a PHP code section (ie &lt;?php ?&gt;).</p>
+<blockquote><i>
+<br />   function GetLocations() {
+<br />
+<br />        //Encode the user/password combination
+<br />        $UserID = php_xmlrpc_encode(&quot;admin&quot;);
+<br />        $Password = php_xmlrpc_encode(&quot;webERP&quot;);
+<br />
+<br />        //Create a client object to use for xmlrpc call
+<br />        $Client = new xmlrpc_client(&quot;http://localhost/webERP/api/api_xml-rpc.php&quot;);
+<br />
+<br />        //Create a message object, containing the parameters and the function name
+<br />        $Message = new xmlrpcmsg(&quot;webERP.xmlrpc_GetLocationList&quot;, array($UserID, $Password));
+</blockquote></i>
+<p>The most common error just return no authorisation with no information about why this has happened. Most webERP API/XML-RPC calls returns an array containing two elements, the first - $Response[0] containing an integer code, and the second the result of the call, if one is expected. If the integer code is zero, this indicates success. Any other code indicates an error. These are the errors and the codes that are returned to represent them:
+<blockquote><i>
+<br />NoAuthorisation - 1
+<br />IncorrectDebtorNumberLength - 1000
+<br />DebtorNoAlreadyExists - 1001
+<br />IncorrectDebtorNameLength - 1002
+<br />InvalidAddressLine - 1003
+<br />CurrencyCodeNotSetup - 1004
+<br />SalesTypeNotSetup - 1005
+<br />InvalidClientSinceDate - 1006
+<br />HoldReasonNotSetup - 1007
+<br />PaymentTermsNotSetup - 1008
+<br />InvalidDiscount - 1009
+<br />InvalidPaymentDiscount - 1010
+<br />InvalidLastPaid - 1011
+<br />InvalidLastPaidDate - 1012
+<br />InvalidCreditLimit - 1013
+<br />InvalidInvAddrBranch - 1014
+<br />InvalidDiscountCode - 1015
+<br />InvalidEDIInvoices - 1016
+<br />InvalidEDIOrders - 1017
+<br />InvalidEDIReference - 1018
+<br />InvalidEDITransport - 1019
+<br />InvalidEDIAddress - 1020
+<br />InvalidEDIServerUser - 1021
+<br />InvalidEDIServerPassword - 1022
+<br />InvalidTaxRef - 1023
+<br />InvalidCustomerPOLine - 1024
+<br />DatabaseUpdateFailed - 1025
+<br />NoDebtorNumber - 1026
+<br />DebtorDoesntExist - 1027
+<br />IncorrectBranchNumberLength - 1028
+<br />BranchNoAlreadyExists - 1029
+<br />IncorrectBranchNameLength - 1030
+<br />InvalidEstDeliveryDays - 1031
+<br />AreaCodeNotSetup - 1032
+<br />SalesmanCodeNotSetup - 1033
+<br />InvalidFwdDate - 1034
+<br />InvalidPhoneNumber - 1035
+<br />InvalidFaxNumber - 1036
+<br />InvalidContactName - 1037
+<br />InvalidEmailAddress - 1038
+<br />LocationCodeNotSetup - 1039
+<br />TaxGroupIdNotSetup - 1040
+<br />ShipperNotSetup - 1041
+<br />InvalidDeliverBlind - 1042
+<br />InvalidDisableTrans - 1043
+<br />InvalidSpecialInstructions - 1044
+<br />InvalidCustBranchCode - 1045
+<br />BranchNoDoesntExist - 1046
+<br />StockCodeDoesntExist - 1047
+<br />StockCategoryDoesntExist - 1048
+<br />IncorrectStockDescriptionLength - 1049
+<br />IncorrectUnitsLength - 1050
+<br />IncorrectMBFlag - 1051
+<br />InvalidCurCostDate - 1052
+<br />InvalidActualCost - 1053
+<br />InvalidLowestLevel - 1054
+<br />InvalidDiscontinued - 1055
+<br />InvalidEOQ - 1056
+<br />InvalidVolume - 1057
+<br />InvalidKgs - 1058
+<br />IncorrectBarCodeLength - 1059
+<br />IncorrectDiscountCategory - 1060
+<br />TaxCategoriesDoesntExist - 1061
+<br />InvalidSerialised - 1062
+<br />IncorrectAppendFile - 1063
+<br />InvalidPerishable - 1064
+<br />InvalidDecmalPlaces - 1065
+<br />IncorrectLongStockDescriptionLength - 1066
+<br />StockCodeAlreadyExists - 1067
+<br />TransactionNumberAlreadyExists - 1068
+<br />InvalidTranDate - 1069
+<br />InvalidSettled - 1070
+<br />IncorrectReference - 1071
+<br />IncorrectTpe - 1072
+<br />InvalidOrderNumbers - 1073
+<br />InvalidExchangeRate - 1074
+<br />InvalidOVAmount - 1075
+<br />InvalidOVGst - 1076
+<br />InvalidOVFreight - 1077
+<br />InvalidDiffOnExchange - 1078
+<br />InvalidAllocation - 1079
+<br />IncorrectInvoiceText - 1080
+<br />InvalidShipVia - 1081
+<br />InvalidEdiSent - 1082
+<br />InvalidConsignment - 1083
+<br />InvalidLastCost - 1084
+<br />InvalidMaterialCost - 1085
+<br />InvalidLabourCost - 1086
+<br />InvalidOverheadCost - 1087
+<br />InvalidCustomerRef - 1088
+<br />InvalidBuyerName - 1089
+<br />InvalidComments - 1090
+<br />InvalidOrderDate - 1091
+<br />InvalidDeliverTo - 1092
+<br />InvalidFreightCost - 1094
+<br />InvalidDeliveryDate - 1095
+<br />InvalidQuotationFlag - 1096
+<br />OrderHeaderNotSetup - 1097
+<br />InvalidUnitPrice - 1098
+<br />InvalidQuantity - 1099
+<br />InvalidDiscountPercent - 1100
+<br />InvalidNarrative - 1101
+<br />InvalidItemDueDate - 1102
+<br />InvalidPOLine - 1103
+<br />GLAccountCodeAlreadyExists - 1104
+<br />IncorrectAccountNameLength - 1105
+<br />AccountGroupDoesntExist - 1106
+<br />GLAccountSectionAlreadyExists - 1107
+<br />IncorrectSectionNameLength - 1108
+<br />GLAccountGroupAlreadyExists - 1109
+<br />GLAccountSectionDoesntExist - 1110
+<br />InvalidPandL - 1111
+<br />InvalidSequenceInTB - 1112
+<br />GLAccountGroupDoesntExist - 1113
+<br />InvalidLatitude - 1114
+<br />InvalidLongitude - 1115
+<br />CustomerTypeNotSetup - 1116
+<br />NoPricesSetup - 1117
+<br />InvalidInvoicedQuantity - 1118
+<br />InvalidActualDispatchDate - 1119
+<br />InvalidCompletedFlag - 1120
+<br />InvalidCategoryID - 1121
+<br />InvalidCategoryDescription - 1122
+<br />InvalidStockType - 1123
+<br />GLAccountCodeDoesntExists - 1124
+<br />StockCategoryAlreadyExists - 1125
+<br />SupplierNoAlreadyExists - 1126
+<br />IncorrectSupplierNameLength - 1127
+<br />InvalidSupplierSinceDate - 1128
+<br />InvalidBankAccount - 1129
+<br />InvalidBankReference - 1130
+<br />InvalidBankPartics - 1131
+<br />InvalidRemittanceFlag - 1132
+<br />FactorCompanyNotSetup - 1133
+<br />SupplierNoDoesntExists - 1134
+<br />InvalidSuppliersUOM - 1135
+<br />InvalidConversionFactor - 1136
+<br />InvalidSupplierDescription - 1137
+<br />InvalidLeadTime - 1138
+<br />InvalidPreferredFlag - 1139
+<br />StockSupplierLineDoesntExist - 1140
+<br />InvalidRequiredByDate - 1141
+<br />InvalidStartDate - 1142
+<br />InvalidCostIssued - 1143
+<br />InvalidQuantityRequired - 1144
+<br />InvalidQuantityReceived - 1145
+<br />InvalidStandardCost - 1146
+<br />IncorrectSerialNumber - 1147
+<br />WorkOrderDoesntExist - 1148
+<br />InvalidIssuedQuantity - 1149
+<br />InvalidTransactionDate - 1150
+<br />InvalidReceivedQuantity - 1151
+<br />ItemNotControlled - 1152
+<br />ItemSerialised - 1153
+<br />BatchNumberDoesntExist - 1154
+<br />BatchIsEmpty - 1155
+<br />NoSuchArea - 1156
+<br />NoSuchSalesMan - 1157
+<br />NoCompanyRecord - 1158
+<br />NoReadOrder - 1159
+<br />NoReadOrderLines - 1160
+<br />NoTaxProvince - 1161
+<br />TaxRatesFailed - 1162
+<br />NoReadCustomerBranch - 1163
+<br />NoReadItem - 1164
+<br />MustBeReceiptOrCreditNote - 1165
+<br />NoTransactionToAllocate - 1166
+</blockquote></i>
+
+<p>As you can see error code 1 indicates &quot;NoAuthorisation&quot; which will be the error returned if the user name or password is incorrect and also if the name of the database to be used in the api call is not specified correctly in the file webERP/api/api_php.php in the variable:</p>
+<blockquote><i>
+$api_DatabaseName=&quot;weberpdemo&quot;;
+</blockquote></i>
+<p>To catch the errors we create a session variable to hold any error messages that happen, so that we can show the to the user. So the initialisation code at the top of index.php becomes:</p>
+
+<blockquote><i>&lt;?php
+<br />include &quot;xmlrpc/lib/xmlrpc.inc&quot;;
+<br />$xmlrpc_internalencoding=&quot;UTF-8&quot;;
+<br />include &quot;xmlrpc/lib/xmlrpcs.inc&quot;;
+<br />$_SESSION[&quot;Errors&quot;] = array();
+?&gt;
+</i></blockquote>
+<p>and then at the bottom of the output we have a loop to output these errors:</p>
+<blockquote><i>
+<br />foreach ($_SESSION[&quot;Errors&quot;] as $Error) {
+<br />echo $Error;
+<br />}
+</i></blockquote>
+<br />Now we just need to capture that error. We need to put this code at the bottom of the GetLocations() function so that it now reads:
+<blockquote><i>
+<br />if ($ReturnValue[0] == 0) {
+<br />    return $ReturnValue[1];
+<br />} elseif ($ReturnValue[0] == 1) {
+<br />    $_SESSION[&quot;Errors&quot;][] = &quot;Incorrect login/password credentials used&quot;;
+<br />}
+</i></blockquote>
+<br />Now run the index.php script again in your browser and you should get output similar to this:
+<br />
+<br />We just need to put this code at the bottom of our other functions, and then they will all be able to catch this error.
+<br />
+<br />Now if we put the proper password back in index.php should work as before.
+<br />
+<br />Now try entering a stock code that you know doesn&quot;t exist and see what happens. I entered a part code called &quot;wrong&quot; and this is what I see.
+<br />
+<br />This is not very helpful output so we need catch this error. A quick look here shows that error code 1047 is &quot;StockCodeDoesntExist&quot; and this should be returned if the code we entered is wrong. So we need to capture error 1047 in the GetStockQuantity() function. The code at the end of this function now becomes:
+<blockquote><i>
+<br />} elseif ($ReturnValue[0] == 1) {
+<br />$_SESSION[&quot;Errors&quot;][] = &quot;Incorrect login/password credentials used&quot;;
+<br />} elseif ($ReturnValue[0] == 1047) {
+<br />$_SESSION[&quot;Errors&quot;][] = &quot;The stock code you entered does not exist&quot;;
+<br />}
+</blockquote></i>
+<br />So now the function is checking that the user/password is correct and also checking that the stock code is correct and providing useful feedback in the case of any problems. We could go on and check for other errors but this should be enough for now.
+<br />
+<br />To do this we need a function much like the one we used to extract the array of location codes. Here is the full code:
+<blockquote><i>
+<br />    function LocationName($LocationCode) {
+<br />
+<br />//Encode the data items
+<br />  $UserID = php_xmlrpc_encode("admin");
+<br />        $Password = php_xmlrpc_encode("webERP");
+<br />        $Code = php_xmlrpc_encode($LocationCode);
+<br />
+<br />        //Create a client object to use for xmlrpc call and set its debug level to zero
+<br />        $Client = new xmlrpc_client("http://localhost/webERP/api/api_xml-rpc.php");
+<br />        $Client->setDebug(0);
+<br />
+<br />        //Create a message object, containing the parameters and the function name
+<br />        $Message = new xmlrpcmsg(&quot;webERP.xmlrpc_GetLocationDetails&quot;, array($Code, $UserID, $Password));
+<br />
+<br />        //Use the client object to send the message object to the server, returning the response
+<br />        $Response = $Client->send($Message);
+<br />
+<br />        //Decode the response and return the array
+<br />        $ReturnValue = php_xmlrpc_decode($Response->value());
+<br />        if ($ReturnValue[0] == 0) {
+<br />            return $ReturnValue[1][&quot;locationname&quot;];
+<br />        }
+<br />    }
+</blockquote></i>
+<br />
+<p>The first section encodes the parameters as XML. The first two parameters are always the userid/password combination, and for this function call we need a third parameter, which is the code of the location that we require the name of. The second section is identical to the previous function and creates an instance of the XML-RPC client class. The third section then creates an instance of the message class, with the first parameter being the full name of the API function being called, in this case webERP.xmlrpc_GetLocationDetails, and then the second parameter is an array of the encoded parameters, (location code, userid, password). This message is then sent to the server, and the response decoded into an array called $ReturnValue.</p>
+<p>As last time the first element of the array signifies whether the function was successful (a zero), or any other integer for an error code. The second element is an associative array of details for that location. The key of each element is the field name for that value. In our case we just want the location name, so we return the element [&quot;locationname&quot;]. If it was the telephone number we were interested in we would just return the [&quot;tel&quot;] element.</p>
+<p>Changing the line in the HTML where we fill the drop down box to:</p>
+<blockquote><i>
+echo &lt;option value=&quot; . $LocationCode . &quot;&gt; . LocationName($LocationCode) . &quot;&lt;/option&gt;&quot;;
+</blockquote></i>
+<p>The full name of the location appears in the drop down the list, but the value returned by the form is still just the code.</p>
+<p>All that is left to complete our client, is to type a stock code in the text box, submit the form and return the amount of stock for that code at the chosen location. First we need to insert some PHP code in the HTML to handle the form being sent:</p>
+
+<blockquote><i>
+<br />        if (isset($_POST[&quot;submit&quot;])) {
+<br />            echo &quot;The quantity of &quot; . $_POST[&quot;StockID&quot;] . &quot; at &quot; . $_POST[&quot;location&quot;] . &quot; is : &quot; . GetStockQuantity($_POST[&quot;StockID&quot;], $_POST[&quot;location&quot;]);
+<br />        }
+</blockquote></i>
+<p>As you can see this calls another PHP function - GetStockQuantity() - that retrieves the stock quantity for the required item at the required location. Looking at the API function reference in the manual the API function we require is webERP.xmlrpc_GetStockBalance. However this time there is a small addition we require as this function returns an array containing the stock balances at all the locations for the given stock item.</p>
+<p>The full code for the PHP function is:</p>
+<blockquote><i>
+<br />function GetStockQuantity($StockID, $LocationCode) {
+<br />        //Encode the data items
+<br />        $UserID = php_xmlrpc_encode(&quot;admin&quot;);
+<br />        $Password = php_xmlrpc_encode(&quot;webERP&quot;);
+<br />        $StockCode = php_xmlrpc_encode($StockID);
+<br />
+<br />        //Create a client object to use for xmlrpc call and set its debug level to zero
+<br />        $Client = new xmlrpc_client("http://localhost/webERP/api/api_xml-rpc.php");
+<br />        $Client->setDebug(0);
+<br />        //Create a message object, containing the parameters and the function name
+<br />        $Message = new xmlrpcmsg(&quot;webERP.xmlrpc_GetStockBalance&quot;, array($StockCode, $UserID, $Password));
+<br />        //Use the client object to send the message object to the server, returning the response
+<br />        $Response = $Client->send($Message);
+<br />        //Decode the response and return the array
+<br />        $ReturnValue = php_xmlrpc_decode($Response->value());
+<br />        if ($ReturnValue[0] == 0) {
+<br />            $Items = $ReturnValue[1];
+<br />            for ($i=0; $i<sizeOf($Items); $i++) {
+<br />                if ($Items[$i][&quot;loccode&quot;]==$LocationCode) {
+<br />                    return $Items[$i][&quot;quantity&quot;];
+<br />                }
+<br />            }
+<br />        }
+<br />    }
+</blockquote></i>
+<br />
+<p>I wont go through this in details as it is mostly the same as the previous functions. The key section is the last:</p>
+<blockquote><i>
+<br />        $ReturnValue = php_xmlrpc_decode($Response->value());
+<br />        if ($ReturnValue[0] == 0) {
+<br />            $Items = $ReturnValue[1];
+<br />            for ($i=0; $i<sizeOf($Items); $i++) {
+<br />                if ($Items[$i][&quot;loccode&quot;]==$LocationCode) {
+<br />                    return $Items[$i][&quot;quantity&quot;];
+<br />                }
+<br />            }
+<br />        }
+</blockquote></i>
+<br />Here the RPC returns an array of locations with the stock quantities for each location, and we filter out the location we need.
+<br />
+<br />Showing that we have returned the correct numbers.
