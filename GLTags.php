@@ -65,7 +65,7 @@ echo '<br />
 		<td><input type="hidden" name="reference" value="'.$_GET['SelectedTag'].'" />';
 
 if (isset($_GET['Action']) AND $_GET['Action']=='edit') {
-	echo '<input type="submit" name="update" value="' . _('Update') . '" />';0
+	echo '<input type="submit" name="update" value="' . _('Update') . '" />';
 } else {
 	echo '<input type="submit" name="submit" value="' . _('Insert') . '" />';
 }

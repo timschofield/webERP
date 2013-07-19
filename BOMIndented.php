@@ -11,7 +11,7 @@ if (isset($_POST['PrintPDF'])) {
 	include('includes/PDFStarter.php');
 	$pdf->addInfo('Title',_('Indented BOM Listing'));
 	$pdf->addInfo('Subject',_('Indented BOM Listing'));
-    	$FontSize=9;put
+    $FontSize=9;
 	$PageNumber=1;
 	$line_height=12;
 
