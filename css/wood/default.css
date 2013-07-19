@@ -85,6 +85,9 @@ th.number {
 	background-color: #800000;
 	color: white;
 }
+th.SortableColumn {
+	cursor: s-resize;
+}
 td {
 	text-align: left;
 }

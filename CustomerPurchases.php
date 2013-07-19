@@ -11,7 +11,7 @@ else if (isset($_POST['DebtorNo'])) {
 	$DebtorNo = $_POST['DebtorNo'];
 } //isset($_POST['DebtorNo'])
 else {
-	prnMsg(_('This script must be called with a customer number.'), 'notice');
+	prnMsg(_('This script must be called with a customer code.'), 'info');
 	include('includes/footer.inc');
 	exit;
 }
@@ -97,7 +97,7 @@ else {
 	echo '</table>';
 }
 
-echo '<br /><div class="centre"><a href="SelectCustomer.php">' . _('Return to customer screen') . '</a></div><br />';
+echo '<br /><div class="centre"><a href="SelectCustomer.php">' . _('Return to customer selection screen') . '</a></div><br />';
 
 include('includes/footer.inc');
 ?>

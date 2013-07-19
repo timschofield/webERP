@@ -615,13 +615,13 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			 <table cellpadding="3" class="selection">
 				<tr>
 				<td>' . _('Part of the Customer Branch Name') . ':</td>
-				<td><input tabindex="1" type="text" name="CustKeywords" size="20" maxlength="25" /></td>
+				<td><input tabindex="1" type="text" autofocus="autofocus" name="CustKeywords" size="20" maxlength="25" title="' . _('Enter a text extract of the customer\'s name, then click Search Now to find customers matching the entered name') . '" /></td>
 				<td><b>' . _('OR') . '</b></td>
 				<td>' . _('Part of the Customer Branch Code') . ':</td>
-				<td><input tabindex="2" type="text" name="CustCode" size="15" maxlength="18" /></td>
+				<td><input tabindex="2" type="text" name="CustCode" size="15" maxlength="18" title="' . _('Enter a part of a customer code that you wish to search for then click the Search Now button to find matching customers') . '" /></td>
 				<td><b>' . _('OR') . '</b></td>
 				<td>' . _('Part of the Branch Phone Number') . ':</td>
-				<td><input tabindex="3" type="text" name="CustPhone" size="15" maxlength="18" /></td>
+				<td><input tabindex="3" type="text" name="CustPhone" size="15" maxlength="18" title="' . _('Enter a part of a customer\'s phone number that you wish to search for then click the Search Now button to find matching customers') . '"/></td>
 				</tr>
 			</table>
 			<br />
@@ -1413,7 +1413,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			echo $RowStarter;
             echo '<td>';
 			if($_SESSION['Items'.$identifier]->DefaultPOLine ==1){ //show the input field only if required
-				echo '<input tabindex="1" type="text" name="POLine_' . $OrderLine->LineNumber . '" size="20" maxlength="20" value="' . $OrderLine->POLine . '" /></td><td>';
+				echo '<input tabindex="1" type="text" name="POLine_' . $OrderLine->LineNumber . '" size="20" maxlength="20" value="' . $OrderLine->POLine . '" title="' . _('Enter the customer\'s purchase order reference if required by the customer') . '" /></td><td>';
 			} else {
 				echo '<input type="hidden" name="POLine_' .	 $OrderLine->LineNumber . '" value="" />';
 			}
@@ -1421,7 +1421,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			echo '<a target="_blank" href="' . $RootPath . '/StockStatus.php?identifier='.$identifier . '&amp;StockID=' . $OrderLine->StockID . '&amp;DebtorNo=' . $_SESSION['Items'.$identifier]->DebtorNo . '">' . $OrderLine->StockID . '</a></td>
 				<td title="' . $OrderLine->LongDescription . '">' . $OrderLine->ItemDescription . '</td>';
 
-			echo '<td><input class="number" tabindex="2" type="number" step="' . pow(10,-$OrderLine->DecimalPlaces) . '" min="0" required name="Quantity_' . $OrderLine->LineNumber . '" size="6" maxlength="6" value="' . locale_number_format($OrderLine->Quantity,$OrderLine->DecimalPlaces) . '" />';
+			echo '<td><input class="number" tabindex="2" type="text" required="required" name="Quantity_' . $OrderLine->LineNumber . '" size="6" maxlength="6" value="' . locale_number_format($OrderLine->Quantity,$OrderLine->DecimalPlaces) . '" title="' . _('Enter the quantity of this item ordered by the customer') . '" />';
 			if ($QtyRemain != $QtyOrdered){
 				echo '<br />'.locale_number_format($OrderLine->QtyInv,$OrderLine->DecimalPlaces) .' ' . _('of') . ' ' . locale_number_format($OrderLine->Quantity,$OrderLine->DecimalPlaces).' ' . _('invoiced');
 			}
@@ -1431,9 +1431,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 				/*OK to display with discount if it is an internal user with appropriate permissions */
 			if (in_array($_SESSION['PageSecurityArray']['OrderEntryDiscountPricing'], $_SESSION['AllowedPageSecurityTokens'])){
-				echo '<td><input class="number" type="number" step="' . pow(10,-$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '" min="0" required name="Price_' . $OrderLine->LineNumber . '" size="16" maxlength="16" value="' . locale_number_format($OrderLine->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces)  . '" /></td>
-					<td><input class="number" type="number" step="0.01" min="0" required max="100" name="Discount_' . $OrderLine->LineNumber . '" size="5" maxlength="4" value="' . locale_number_format(($OrderLine->DiscountPercent * 100),2) . '" /></td>
-					<td><input class="number" type="number" min="0" step="0.01" required max="99.9" name="GPPercent_' . $OrderLine->LineNumber . '" size="4" maxlength="40" value="' . locale_number_format($OrderLine->GPPercent,2) . '" /></td>';
+				echo '<td><input class="number" type="text" required="required" name="Price_' . $OrderLine->LineNumber . '" size="16" maxlength="16" value="' . locale_number_format($OrderLine->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces)  . '" title="' . _('Enter the price to charge the customer for this item') . '" /></td>
+					<td><input class="number" type="text" required="required" name="Discount_' . $OrderLine->LineNumber . '" size="5" maxlength="4" value="' . locale_number_format(($OrderLine->DiscountPercent * 100),2) . '" title="' . _('Enter the discount percentage to apply to the price for this item') . '" /></td>
+					<td><input class="number" type="text" required="required" name="GPPercent_' . $OrderLine->LineNumber . '" size="4" maxlength="40" value="' . locale_number_format($OrderLine->GPPercent,2) . '" title="' . _('Enter a gross profit percentage to use as the basis to calculate the price to charge the customer for this line item') . '" /></td>';
 			} else {
 				echo '<td class="number">' . locale_number_format($OrderLine->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
 				echo '<input class="number" type="hidden" name="GPPercent_' . $OrderLine->LineNumber . '" size="4" maxlength="40" value="' . locale_number_format($OrderLine->GPPercent,2) . '" />';
@@ -1451,13 +1451,13 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				$_SESSION['Items'.$identifier]->LineItems[$OrderLine->LineNumber]->ItemDue= $LineDueDate;
 			}
 
-			echo '<td><input type="text" min="' . Date('Y-m-d') . '" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="ItemDue_' . $OrderLine->LineNumber . '" size="10" maxlength="10" value="' . $LineDueDate . '" /></td>';
+			echo '<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ItemDue_' . $OrderLine->LineNumber . '" size="10" maxlength="10" value="' . $LineDueDate . '" /></td>';
 
 			echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier=' . $identifier . '&amp;Delete=' . $OrderLine->LineNumber . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');">' . $RemTxt . '</a></td></tr>';
 
 			if ($_SESSION['AllowOrderLineItemNarrative'] == 1){
 				echo $RowStarter;
-				echo '<td colspan="10">' . _('Narrative') . ':<textarea name="Narrative_' . $OrderLine->LineNumber . '" cols="100%" rows="1">' . stripslashes(AddCarriageReturns($OrderLine->Narrative)) . '</textarea><br /></td></tr>';
+				echo '<td colspan="10">' . _('Narrative') . ':<textarea name="Narrative_' . $OrderLine->LineNumber . '" cols="100%" rows="1" title="' . _('Enter any narrative to describe to the customer the nature of the charge for this line') . '" >' . stripslashes(AddCarriageReturns($OrderLine->Narrative)) . '</textarea><br /></td></tr>';
 			} else {
 				echo '<tr>
 						<td><input type="hidden" name="Narrative" value="" /></td>
@@ -1633,7 +1633,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
-						<td><input class="number"  tabindex="%s" type="number" step="%s" size="6" name="OrderQty%s" value="0" />
+						<td><input class="number"  tabindex="%s" type="text" required="required" size="6" name="OrderQty%s" value="0" />
 						<input type="hidden" name="StockID%s" value="%s" />
 						</td>
 						</tr>',
@@ -1703,7 +1703,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
         }
         echo '" /></td>';
 
-		echo '<td align="right"><b>' . _('OR') .  ' ' . _('Enter extract of the Stock Code') . ':</b><input tabindex="3" type="text" autofocus name="StockCode" size="15" maxlength="18" value="';
+		echo '<td align="right"><b>' . _('OR') .  ' ' . _('Enter extract of the Stock Code') . ':</b><input tabindex="3" type="text" autofocus="autofocus" name="StockCode" size="15" maxlength="18" value="';
         if (isset($_POST['StockCode'])) {
             echo  $_POST['StockCode'];
         }
@@ -1836,7 +1836,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
-						<td><input class="number"  tabindex="%s" type="number" step="%s" size="6" name="OrderQty%s" value="0" min="0"/>
+						<td><input class="number"  tabindex="%s" type="text" size="6" name="OrderQty%s" value="0" min="0"/>
 						<input type="hidden" name="StockID%s" value="%s" />
 						</td>
 						</tr>',
@@ -1849,7 +1849,6 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 						locale_number_format($OnOrder,$QOHRow['decimalplaces']),
 						locale_number_format($Available,$QOHRow['decimalplaces']),
 						strval($j+7),
-						pow(10,-$QOHRow['decimalplaces']),
 						$i,
 						$i,
 						$myrow['stockid'] );
@@ -1889,12 +1888,12 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		 		echo '<tr class="OddTableRow">';
 		 		/* Do not display colum unless customer requires po line number by sales order line*/
 		 		if($_SESSION['Items'.$identifier]->DefaultPOLine > 0){
-					echo '<td><input type="text" name="poline_' . $i . '" size="21" maxlength="20" /></td>';
+					echo '<td><input type="text" name="poline_' . $i . '" size="21" maxlength="20" title="' . _('Enter the customer purchase order reference') . '" /></td>';
 				}
-				echo '<td><input type="text" name="part_' . $i . '" size="21" maxlength="20" /></td>
-						<td><input type="number" step="0.00001" name="qty_' . $i . '" size="6" maxlength="6" /></td>
+				echo '<td><input type="text" name="part_' . $i . '" size="21" maxlength="20" title="' . _('Enter the item code ordered') . '" /></td>
+						<td><input class="number" type="text" name="qty_' . $i . '" size="6" maxlength="6" title="' . _('Enter the quantity of the item ordered by the customer') . '" /></td>
 						<td><input type="text" class="date" name="itemdue_' . $i . '" size="25" maxlength="25"
-                        alt="'.$_SESSION['DefaultDateFormat'].'" value="' . $DefaultDeliveryDate . '" /></td></tr>';
+                        alt="'.$_SESSION['DefaultDateFormat'].'" value="' . $DefaultDeliveryDate . '" title="' . _('Enter the date that the customer requires delivery by') . '" /></td></tr>';
 	   		}
 			echo '</table>
 					<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.part_1);}</script>';
@@ -1911,7 +1910,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			/*do not display colum unless customer requires po line number by sales order line*/
 		 	if($_SESSION['Items'.$identifier]->DefaultPOLine ==1){
 				echo	'<tr><td>' . _('PO Line') . '</td>
-							<td><input type="text" name="poline" size="21" maxlength="20" /></td></tr>';
+							<td><input type="text" name="poline" size="21" maxlength="20" title="' . _('Enter the customer\'s purchase order reference') . '" /></td></tr>';
 			}
 			echo '<tr><td>' . _('Asset to Dispose Of') . ':</td>
 						<td><select name="AssetToDisposeOf">';
@@ -1937,16 +1936,5 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		}
 	}#end of else not selecting a customer
 
-
-
-if (isset($_GET['NewOrder']) and $_GET['NewOrder']!='') {
-	echo '<script  type="text/javascript">
-			if (document.getElementById("SelectParts")!=null) {
-				defaultControl(document.forms[0].StockCode);
-			} else {
-				defaultControl(document.forms[0].CustKeywords);
-			}
-		</script>';
-}
 include('includes/footer.inc');
 ?>

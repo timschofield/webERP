@@ -32,14 +32,14 @@ if (isset($_POST['submit'])) {
 
 	//first off validate inputs sensible
 	$i=1;
-	if (mb_strlen($_POST['typename']) >100) {
+	if (mb_strlen($_POST['TypeName']) >100) {
 		$InputError = 1;
 		prnMsg(_('The customer type name description must be 100 characters or less long'),'error');
 		$Errors[$i] = 'CustomerType';
 		$i++;
 	}
 
-	if (mb_strlen($_POST['typename'])==0) {
+	if (mb_strlen($_POST['TypeName'])==0) {
 		$InputError = 1;
 		echo '<br />';
 		prnMsg(_('The customer type name description must contain at least one character'),'error');
@@ -49,13 +49,13 @@ if (isset($_POST['submit'])) {
 
 	$checksql = "SELECT count(*)
 		     FROM debtortype
-		     WHERE typename = '" . $_POST['typename'] . "'";
+		     WHERE typename = '" . $_POST['TypeName'] . "'";
 	$checkresult=DB_query($checksql, $db);
 	$checkrow=DB_fetch_row($checkresult);
 	if ($checkrow[0]>0 and !isset($SelectedType)) {
 		$InputError = 1;
 		echo '<br />';
-		prnMsg(_('You already have a customer type called').' '.$_POST['typename'],'error');
+		prnMsg(_('You already have a customer type called').' '.$_POST['TypeName'],'error');
 		$Errors[$i] = 'CustomerName';
 		$i++;
 	}
@@ -63,7 +63,7 @@ if (isset($_POST['submit'])) {
 	if (isset($SelectedType) AND $InputError !=1) {
 
 		$sql = "UPDATE debtortype
-			SET typename = '" . $_POST['typename'] . "'
+			SET typename = '" . $_POST['TypeName'] . "'
 			WHERE typeid = '" .$SelectedType."'";
 
 		$msg = _('The customer type') . ' ' . $SelectedType . ' ' .  _('has been updated');
@@ -73,7 +73,7 @@ if (isset($_POST['submit'])) {
 
 		$checkSql = "SELECT count(*)
 			     FROM debtortype
-			     WHERE typename = '" . $_POST['typename'] . "'";
+			     WHERE typename = '" . $_POST['TypeName'] . "'";
 
 		$checkresult = DB_query($checkSql,$db);
 		$checkrow = DB_fetch_row($checkresult);
@@ -87,7 +87,7 @@ if (isset($_POST['submit'])) {
 
 			$sql = "INSERT INTO debtortype
 						(typename)
-					VALUES ('" . $_POST['typename'] . "')";
+					VALUES ('" . $_POST['TypeName'] . "')";
 
 
 			$msg = _('Customer type') . ' ' . $_POST["typename"] .  ' ' . _('has been created');
@@ -127,7 +127,7 @@ if (isset($_POST['submit'])) {
 
 		unset($SelectedType);
 		unset($_POST['typeid']);
-		unset($_POST['typename']);
+		unset($_POST['TypeName']);
 	}
 
 } elseif ( isset($_GET['delete']) ) {
@@ -224,11 +224,10 @@ if (isset($SelectedType)) {
 }
 if (! isset($_GET['delete'])) {
 
-	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '">';
-    echo '<div>';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<br />';
-
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '">
+		<div>
+		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+		<br />';
 
 	// The user wish to EDIT an existing type
 	if ( isset($SelectedType) AND $SelectedType!='' ) {
@@ -242,32 +241,36 @@ if (! isset($_GET['delete'])) {
 		$myrow = DB_fetch_array($result);
 
 		$_POST['typeid'] = $myrow['typeid'];
-		$_POST['typename']  = $myrow['typename'];
+		$_POST['TypeName']  = $myrow['typename'];
 
-		echo '<input type="hidden" name="SelectedType" value="' . $SelectedType . '" />';
-		echo '<input type="hidden" name="typeid" value="' . $_POST['typeid'] . '" />';
-		echo '<table class="selection">';
+		echo '<input type="hidden" name="SelectedType" value="' . $SelectedType . '" />
+			<input type="hidden" name="typeid" value="' . $_POST['typeid'] . '" />
+			<table class="selection">';
 
 		// We dont allow the user to change an existing type code
 
-		echo '<tr><td>' . _('Type ID') . ': ' . $_POST['typeid'] . '</td></tr>';
-
+		echo '<tr>
+				<td>' . _('Type ID') . ': ' . $_POST['typeid'] . '</td>
+			</tr>';
 	} else 	{
 		// This is a new type so the user may volunteer a type code
 		echo '<table class="selection">';
 	}
 
-	if (!isset($_POST['typename'])) {
-		$_POST['typename']='';
+	if (!isset($_POST['TypeName'])) {
+		$_POST['TypeName']='';
 	}
-	echo '<tr><td>' . _('Type Name') . ':</td>
-		<td><input type="text" name="typename" value="' . $_POST['typename'] . '" /></td></tr>';
-
-   	echo '</table>'; // close main table
-
-	echo '<br /><div class="centre"><input type="submit" name="submit" value="' . _('Accept') . '" /></div>';
-    echo '</div>';
-	echo '</form>';
+	echo '<tr>
+			<td>' . _('Type Name') . ':</td>
+			<td><input type="text" name="typename"  required="required" title="' . _('The customer type name is required') . '" value="' . $_POST['TypeName'] . '" /></td>
+		</tr>
+		</table>
+		<br />
+		<div class="centre">
+			<input type="submit" name="submit" value="' . _('Accept') . '" />
+		</div>
+	</div>
+	</form>';
 
 } // end if user wish to delete
 

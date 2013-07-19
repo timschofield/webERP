@@ -215,12 +215,12 @@ if (!isset($_GET['delete'])) {
 		echo '<table class="selection">
 			<tr>
 				<td>' . _('Area Code') . ':</td>
-				<td><input tabindex="1" ' . (in_array('AreaCode',$Errors) ? 'class="inputerror"' : '' ) .' type="text" name="AreaCode" required autofocus value="' . $_POST['AreaCode'] . '" size="3" maxlength="3" title="' . _('Enter the sales area code - up to 3 characters are allowed') . '" /></td>
+				<td><input tabindex="1" ' . (in_array('AreaCode',$Errors) ? 'class="inputerror"' : '' ) .' type="text" name="AreaCode" required="required" autofocus="autofocus" value="' . $_POST['AreaCode'] . '" size="3" maxlength="3" title="' . _('Enter the sales area code - up to 3 characters are allowed') . '" /></td>
 			</tr>';
 	}
 
 	echo '<tr><td>' . _('Area Name') . ':</td>
-		<td><input tabindex="2" ' . (in_array('AreaDescription',$Errors) ?  'class="inputerror"' : '' ) .'  type="text" required name="AreaDescription" value="' . $_POST['AreaDescription'] .'" size="26" maxlength="25" title="' . _('Enter the description of the sales area') . '" /></td>
+		<td><input tabindex="2" ' . (in_array('AreaDescription',$Errors) ?  'class="inputerror"' : '' ) .'  type="text" required="required" name="AreaDescription" value="' . $_POST['AreaDescription'] .'" size="26" maxlength="25" title="' . _('Enter the description of the sales area') . '" /></td>
 		</tr>';
 
 	echo '<tr>

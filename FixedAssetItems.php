@@ -457,7 +457,7 @@ if (isset($_POST['Description'])) {
 
 echo '<tr>
 		<td>' . _('Asset Description') . ' (' . _('short') . '):</td>
-		<td><input ' . (in_array('Description',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="Description" size="52" maxlength="50" value="' . $Description . '" /></td>
+		<td><input ' . (in_array('Description',$Errors) ?  'class="inputerror"' : '' ) .' type="text" required="required" title="' . _('Enter the description of the item. Up to 50 characters can be used.') . '" name="Description" size="52" maxlength="50" value="' . $Description . '" /></td>
 	</tr>';
 
 if (isset($_POST['LongDescription'])) {
@@ -467,7 +467,7 @@ if (isset($_POST['LongDescription'])) {
 }
 echo '<tr>
 		<td>' . _('Asset Description') . ' (' . _('long') . '):</td>
-		<td><textarea ' . (in_array('LongDescription',$Errors) ?  'class="texterror"' : '' ) .'  name="LongDescription" cols="40" rows="4">' . stripslashes($LongDescription) . '</textarea></td>
+		<td><textarea ' . (in_array('LongDescription',$Errors) ?  'class="texterror"' : '' ) .'  name="LongDescription" required="required" title="' . _('Enter the lond description of the asset including specs etc. Up to 255 characters are allowed.') . '" cols="40" rows="4">' . stripslashes($LongDescription) . '</textarea></td>
 	</tr>';
 
 if (!isset($New) ) { //ie not new at all!
@@ -575,7 +575,7 @@ echo '</select></td>
 	</tr>
 	<tr>
 		<td>' . _('Depreciation Rate') . ':</td>
-		<td><input ' . (in_array('DepnRate',$Errors) ?  'class="inputerror"' : 'class="number"' ) .'  type="text" name="DepnRate" size="4" maxlength="4" value="' . $_POST['DepnRate'] . '" />%</td>
+		<td><input ' . (in_array('DepnRate',$Errors) ?  'class="inputerror number"' : 'class="number"' ) .'  type="text" name="DepnRate" size="4" maxlength="4" value="' . $_POST['DepnRate'] . '" />%</td>
 	</tr>
 	</table>';
 

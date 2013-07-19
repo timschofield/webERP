@@ -39,33 +39,39 @@ echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<table class="selection">';
 
-echo '<tr><td>'. _('From Date') . ' ' . $_SESSION['DefaultDateFormat'] .'</td>
-	<td><input tabindex="1" type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="FromDate" size="11" maxlength="10" value="' .$_POST['FromDate']. '" /></td></tr>';
-echo '<tr><td>'. _('To Date') . ' ' . $_SESSION['DefaultDateFormat'] .'</td>
-	<td><input tabindex="2" type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="ToDate" size="11" maxlength="10" value="' . $_POST['ToDate'] . '" /></td></tr>';
+echo '<tr>
+		<td>'. _('From Date') . ' ' . $_SESSION['DefaultDateFormat'] .'</td>
+		<td><input tabindex="1" type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="FromDate" size="11" maxlength="10" autofocus="autofocus" required="required" value="' .$_POST['FromDate']. '" onchange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')"/></td>
+	</tr>
+	<tr>
+		<td>'. _('To Date') . ' ' . $_SESSION['DefaultDateFormat'] .'</td>
+		<td><input tabindex="2" type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="ToDate" size="11" maxlength="10" required="required" value="' . $_POST['ToDate'] . '" onchange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')"/></td>
+	</tr>';
 
 // Show user selections
-echo '<tr><td>'. _('User ID'). '</td>
-		<td><select tabindex="3" name="SelectedUser">';
-echo '<option value="ALL">' . _('All') . '</option>';
-while ($users = DB_fetch_row($UserResult)) {
+echo '<tr>
+		<td>'. _('User ID'). '</td>
+		<td><select tabindex="3" name="SelectedUser">
+			<option value="ALL">' . _('All') . '</option>';
+while ($Users = DB_fetch_row($UserResult)) {
 	if (isset($_POST['SelectedUser']) and $users[0]==$_POST['SelectedUser']) {
-		echo '<option selected="selected" value="' . $users[0] . '">' . $users[0] . '</option>';
+		echo '<option selected="selected" value="' . $Users[0] . '">' . $Users[0] . '</option>';
 	} else {
-		echo '<option value="' . $users[0] . '">' . $users[0] . '</option>';
+		echo '<option value="' . $Users[0] . '">' . $Users[0] . '</option>';
 	}
 }
 echo '</select></td></tr>';
 
 // Show table selections
-echo '<tr><td>'. _('Table '). '</td>
-		<td><select tabindex="4" name="SelectedTable">';
-echo '<option value="ALL">' . _('All') . '</option>';
-while ($tables = DB_fetch_row($TableResult)) {
-	if (isset($_POST['SelectedTable']) and $tables[0]==$_POST['SelectedTable']) {
-		echo '<option selected="selected" value="' . $tables[0] . '">' . $tables[0] . '</option>';
+echo '<tr>
+		<td>'. _('Table '). '</td>
+		<td><select tabindex="4" name="SelectedTable">
+			<option value="ALL">' . _('All') . '</option>';
+while ($Tables = DB_fetch_row($TableResult)) {
+	if (isset($_POST['SelectedTable']) and $Tables[0]==$_POST['SelectedTable']) {
+		echo '<option selected="selected" value="' . $Tables[0] . '">' . $Tables[0] . '</option>';
 	} else {
-		echo '<option value="' . $tables[0] . '">' . $tables[0] . '</option>';
+		echo '<option value="' . $Tables[0] . '">' . $Tables[0] . '</option>';
 	}
 }
 echo '</select></td></tr>';
@@ -74,14 +80,17 @@ if(!isset($_POST['ContainingText'])){
 	$_POST['ContainingText']='';
 }
 // Show the text
-echo '<tr><td>' . _('Containing text') . ':</td>';
-echo '<td><input type="text" name="ContainingText" size="20" maxlength="20" value="'. $_POST['ContainingText'] . '" /></td></tr>';
-
-
-echo '</table><br />';
-echo '<div class="centre"><input tabindex="5" type="submit" name="View" value="' . _('View') . '" /></div>';
-echo '</div>';
-echo '</form>';
+echo '<tr>
+		<td>' . _('Containing text') . ':</td>
+		<td><input type="text" name="ContainingText" size="20" maxlength="20" value="'. $_POST['ContainingText'] . '" /></td>
+	</tr>
+	</table>
+	<br />
+	<div class="centre">
+		<input tabindex="5" type="submit" name="View" value="' . _('View') . '" />
+	</div>
+	</div>
+	</form>';
 
 // View the audit trail
 if (isset($_POST['View'])) {
@@ -161,13 +170,14 @@ if (isset($_POST['View'])) {
 	}
 	$result = DB_query($sql,$db);
 
-	echo '<table border="0" width="98%" class="selection">';
-	echo '<tr><th>' . _('Date/Time') . '</th>
-				<th>' . _('User') . '</th>
-				<th>' . _('Type') . '</th>
-				<th>' . _('Table') . '</th>
-				<th>' . _('Field Name') . '</th>
-				<th>' . _('Value') . '</th></tr>';
+	echo '<table border="0" width="98%" class="selection">
+		<tr>
+			<th>' . _('Date/Time') . '</th>
+			<th>' . _('User') . '</th>
+			<th>' . _('Type') . '</th>
+			<th>' . _('Table') . '</th>
+			<th>' . _('Field Name') . '</th>
+			<th>' . _('Value') . '</th></tr>';
 	while ($myrow = DB_fetch_row($result)) {
 		if (Query_Type($myrow[2]) == "INSERT") {
 			InsertQueryInfo(str_replace("INSERT INTO",'',$myrow[2]));

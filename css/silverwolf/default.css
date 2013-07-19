@@ -76,6 +76,9 @@ th.number{
 	text-align:right;
 	vertical-align:middle;
 }
+th.SortableColumn {
+	cursor: s-resize;
+}
 td{
 	font-family:Arial, Verdana, Helvetica, sans-serif;
 	font-size:100%;

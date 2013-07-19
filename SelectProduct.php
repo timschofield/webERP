@@ -542,21 +542,20 @@ while ($myrow1 = DB_fetch_array($result1)) {
 echo '</select></td>';
 echo '<td>' . _('Enter partial') . '<b> ' . _('Description') . '</b>:</td><td>';
 if (isset($_POST['Keywords'])) {
-	echo '<input type="text" name="Keywords" value="' . $_POST['Keywords'] . '" size="20" maxlength="25" />';
+	echo '<input type="text" autofocus="autofocus" name="Keywords" value="' . $_POST['Keywords'] . '" pattern="[a-zA-Z0-9_\-\ ]*" title="' . _('Enter text that you wish to search for in the item description') . '" size="20" maxlength="25" />';
 } else {
-	echo '<input type="text" name="Keywords" size="20" maxlength="25" />';
+	echo '<input type="text" autofocus="autofocus" name="Keywords" pattern="[a-zA-Z0-9_\-\ ]*" title="' . _('Enter text that you wish to search for in the item description') . '" size="20" maxlength="25" />';
 }
 echo '</td></tr><tr><td></td>';
 echo '<td><b>' . _('OR') . ' ' . '</b>' . _('Enter partial') . ' <b>' . _('Stock Code') . '</b>:</td>';
 echo '<td>';
 if (isset($_POST['StockCode'])) {
-	echo '<input type="text" name="StockCode" value="' . $_POST['StockCode'] . '" size="15" maxlength="18" />';
+	echo '<input type="text" name="StockCode" value="' . $_POST['StockCode'] . '" title="' . _('Enter text that you wish to search for in the item code') . '" size="15" maxlength="18" />';
 } else {
-	echo '<input type="text" name="StockCode" size="15" maxlength="18" />';
+	echo '<input type="text" name="StockCode" title="' . _('Enter text that you wish to search for in the item code') . '" size="15" maxlength="18" />';
 }
 echo '</td></tr></table><br />';
 echo '<div class="centre"><input type="submit" name="Search" value="' . _('Search Now') . '" /></div><br />';
-echo '<script  type="text/javascript">defaultControl(document.forms[0].StockCode);</script>';
 echo '</div>
       </form>';
 // query for list of record(s)
@@ -712,19 +711,19 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 	}
 	$ErrMsg = _('No stock items were returned by the SQL because');
 	$DbgMsg = _('The SQL that returned an error was');
-	$searchresult = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
-	if (DB_num_rows($searchresult) == 0) {
+	$SearchResult = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
+	if (DB_num_rows($SearchResult) == 0) {
 		prnMsg(_('No stock items were returned by this search please re-enter alternative criteria to try again'), 'info');
 	}
 	unset($_POST['Search']);
 }
 /* end query for list of records */
 /* display list if there is more than one record */
-if (isset($searchresult) AND !isset($_POST['Select'])) {
+if (isset($SearchResult) AND !isset($_POST['Select'])) {
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	$ListCount = DB_num_rows($searchresult);
+	$ListCount = DB_num_rows($SearchResult);
 	if ($ListCount > 0) {
 		// If the user hit the search button and there is more than one item to show
 		$ListPageMax = ceil($ListCount / $_SESSION['DisplayRecordsMax']);
@@ -756,18 +755,18 @@ if (isset($searchresult) AND !isset($_POST['Select'])) {
 			echo '</select>
 				<input type="submit" name="Go" value="' . _('Go') . '" />
 				<input type="submit" name="Previous" value="' . _('Previous') . '" />
-				<input type="submit" name="Next" value="' . _('Next') . '" />';
-			echo '<input type="hidden" name="Keywords" value="'.$_POST['Keywords'].'" />';
-			echo '<input type="hidden" name="StockCat" value="'.$_POST['StockCat'].'" />';
-			echo '<input type="hidden" name="StockCode" value="'.$_POST['StockCode'].'" />';
-//			echo '<input type="hidden" name=Search value="Search" />';
-			echo '<br /></div>';
+				<input type="submit" name="Next" value="' . _('Next') . '" />
+				<input type="hidden" name="Keywords" value="'.$_POST['Keywords'].'" />
+				<input type="hidden" name="StockCat" value="'.$_POST['StockCat'].'" />
+				<input type="hidden" name="StockCode" value="'.$_POST['StockCode'].'" />
+				<br />
+				</div>';
 		}
-		echo '<table class="selection">';
+		echo '<table id="ItemSearchTable" class="selection">';
 		$TableHeader = '<tr>
 							<th>' . _('Stock Status') . '</th>
-							<th>' . _('Code') . '</th>
-							<th>' . _('Description') . '</th>
+							<th class="sort-header" onclick="SortSelect(this)">' . _('Code') . '</th>
+							<th class="sort-header" onclick="SortSelect(this)">' . _('Description') . '</th>
 							<th>' . _('Total Qty On Hand') . '</th>
 							<th>' . _('Units') . '</th>
 						</tr>';
@@ -775,10 +774,10 @@ if (isset($searchresult) AND !isset($_POST['Select'])) {
 		$j = 1;
 		$k = 0; //row counter to determine background colour
 		$RowIndex = 0;
-		if (DB_num_rows($searchresult) <> 0) {
-			DB_data_seek($searchresult, ($_POST['PageOffset'] - 1) * $_SESSION['DisplayRecordsMax']);
+		if (DB_num_rows($SearchResult) <> 0) {
+			DB_data_seek($SearchResult, ($_POST['PageOffset'] - 1) * $_SESSION['DisplayRecordsMax']);
 		}
-		while (($myrow = DB_fetch_array($searchresult)) AND ($RowIndex <> $_SESSION['DisplayRecordsMax'])) {
+		while (($myrow = DB_fetch_array($SearchResult)) AND ($RowIndex <> $_SESSION['DisplayRecordsMax'])) {
 			if ($k == 1) {
 				echo '<tr class="EvenTableRows">';
 				$k = 0;
@@ -820,5 +819,6 @@ if (isset($searchresult) AND !isset($_POST['Select'])) {
 	}
 }
 /* end display list if there is more than one record */
+
 include ('includes/footer.inc');
 ?>

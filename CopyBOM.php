@@ -177,7 +177,7 @@ if(isset($_POST['Submit'])) {
 			</tr>';
 	echo '<tr>
 			<td><input type="radio" name="NewOrExisting" value="N" />' . _(' To New Stock ID') . '</td>';
-	echo '<td><input type="text" maxlength="20" name="ToStockID" /></td></tr>';
+	echo '<td><input type="text" maxlength="20" autofocus="autofocus" pattern="[a-zA-Z0-9_\-]*" name="ToStockID" title="' . _('Enter a new item code to copy the existing item and its bill of material to. Item codes can contain only alpha-numeric characters, underscore or hyphens.') . '" /></td></tr>';
 
 	$sql = "SELECT stockid,
 					description
@@ -188,7 +188,7 @@ if(isset($_POST['Submit'])) {
 
 	if (DB_num_rows($result) > 0) {
 		echo '<tr>
-				<td><input type="radio" name="NewOrExisting" value="E" />'._('To Existing Stock ID') . '</td><td>';
+				<td><input type="radio" name="NewOrExisting" checked="checked" value="E" />'._('To Existing Stock ID') . '</td><td>';
 		echo '<select name="ExStockID">';
 		while($myrow = DB_fetch_row($result)) {
 			echo '<option value="'.$myrow[0].'">'.$myrow[0].' -- '.$myrow[1].'</option>';

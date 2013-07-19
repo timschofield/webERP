@@ -130,7 +130,7 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 echo '<table class="selection">
 		<tr>
 			<td>' . _('User Login') . ':</td>
-			<td><input type="text" name="UserID" size="22" maxlength="20" /></td>
+			<td><input type="text" name="UserID" required="required" ' . (isset($_GET['SelectedUser']) ? '':'autofocus="autofocus"') . 'title="' . _('Enter a userid for this customer login') . '" size="22" maxlength="20" /></td>
 		</tr>';
 
 if (!isset($_POST['Password'])) {
@@ -148,19 +148,19 @@ if (!isset($_POST['Email'])) {
 
 echo '<tr>
 		<td>' . _('Password') . ':</td>
-		<td><input type="password" name="Password" size="22" maxlength="20" value="' . $_POST['Password'] . '" /></td>
+		<td><input type="password" name="Password" required="required" ' . (isset($_GET['SelectedUser']) ? 'autofocus="autofocus"':'') . ' title="' . _('Enter a password for this customer login') . '" size="22" maxlength="20" value="' . $_POST['Password'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Full Name') . ':</td>
-			<td><input type="text" name="RealName" value="' . $_POST['RealName'] . '" size="36" maxlength="35" /></td>
+			<td><input type="text" name="RealName" value="' . $_POST['RealName'] . '" required="required" title="' . _('Enter the user\'s real name') . '" size="36" maxlength="35" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Telephone No') . ':</td>
-			<td><input type="text" name="Phone" value="' . $_POST['Phone'] . '" size="32" maxlength="30" /></td>
+			<td><input type="tel" name="Phone" value="' . $_POST['Phone'] . '" size="32" maxlength="30" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Email Address') .':</td>
-			<td><input type="text" name="Email" value="' . $_POST['Email'] .'" size="32" maxlength="55" /></td>
+			<td><input type="email" name="Email" value="' . $_POST['Email'] .'" required="required" title="' . _('Enter the user\'s email address') . '" size="32" maxlength="55" /></td>
 		</tr>
         <tr>
 		<td><input type="hidden" name="Access" value="1" />
@@ -274,12 +274,6 @@ echo '</select></td>
 	</div>
     </div>
 	</form>';
-
-if (isset($_GET['SelectedUser'])) {
-	echo '<script  type="text/javascript">defaultControl(document.forms[0].Password);</script>';
-} else {
-	echo '<script  type="text/javascript">defaultControl(document.forms[0].UserID);</script>';
-}
 
 include('includes/footer.inc');
 ?>

@@ -76,7 +76,9 @@ th.number {
 	background-color: skyblue;
 	color: white;
 }
-
+th.SortableColumn {
+	cursor: s-resize;
+}
 td {
 	font-family: Arial, Verdana, Helvetica, sans-serif;
 	text-align: left;

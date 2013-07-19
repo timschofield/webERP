@@ -11,7 +11,7 @@ if (isset($_POST['PrintPDF'])) {
 	include('includes/PDFStarter.php');
 	$pdf->addInfo('Title',_('Indented BOM Listing'));
 	$pdf->addInfo('Subject',_('Indented BOM Listing'));
-    	$FontSize=9;
+    	$FontSize=9;put
 	$PageNumber=1;
 	$line_height=12;
 
@@ -251,7 +251,7 @@ if (isset($_POST['PrintPDF'])) {
 			<table class="selection">';
 	echo '<tr>
 			<td>' . _('Part') . ':</td>
-			<td><input type ="text" name="Part" size="20" /></td>
+			<td><input type="text" name="Part" autofocus="autofocus" required="required" pattern="[0-9a-zA-Z\-_]*" title="' . _('Enter the item code of parent item to list the bill of material for') .  '" size="20" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Levels') . ':</td>

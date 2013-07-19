@@ -205,7 +205,7 @@ if (isset($_POST['Amend']) or isset($_POST['Create'])) {
 		<table class="selection">
 		<tr>
 			<td>' . _('Factor company Name') . ':</td>
-			<td><input tabindex="1" type="text" name="FactorName" size="42" maxlength="40" value="' .$_POST['FactorName'].'" /></td>
+			<td><input tabindex="1" type="text" name="FactorName" required="required" size="42" maxlength="40" value="' .$_POST['FactorName'].'" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Address Line 1') . ':</td>
@@ -232,19 +232,19 @@ if (isset($_POST['Amend']) or isset($_POST['Create'])) {
 		</tr>
 		<tr>
 			<td>' . _('Contact Name') . ':</td>
-			<td><input tabindex="8" type="text" name="ContactName" size="20" maxlength="25" value="' . $_POST['ContactName'] .'" /></td>
+			<td><input tabindex="8" type="text" name="ContactName" required="required"  size="20" maxlength="25" value="' . $_POST['ContactName'] .'" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Telephone') . ':</td>
-			<td><input tabindex="9" type="text" name="Telephone" size="20" maxlength="25" value="' .$_POST['Telephone'].'" /></td>
+			<td><input tabindex="9" type="tel" name="Telephone" pattern="[0-9+()\ ]*" size="20" maxlength="25" value="' .$_POST['Telephone'].'" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Fax') . ':</td>
-			<td><input tabindex="10" type="text" name="Fax" size="20" maxlength="25" value="' . $_POST['Fax'] .'" /></td>
+			<td><input tabindex="10" type="tel" name="Fax" pattern="[0-9+()\ ]*" size="20" maxlength="25" value="' . $_POST['Fax'] .'" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Email') . ':</td>
-			<td><input tabindex="11" type="text" name="Email" size="55" maxlength="55" value="' . $_POST['Email'] . '" /></td>
+			<td><input tabindex="11" type="email" name="Email" size="55" maxlength="55" value="' . $_POST['Email'] . '" /></td>
 		</tr>
 		</table>';
 }

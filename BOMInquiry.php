@@ -24,7 +24,7 @@ if (!isset($_POST['StockID'])) {
 		<table class="selection">
 		<tr>
 			<td>' . _('Enter text extracts in the') . ' <b>' . _('description') . '</b>:</td>
-			<td><input tabindex="1" type="text" name="Keywords" size="20" maxlength="25" /></td>
+			<td><input tabindex="1" type="text" autofocus="autofocus" name="Keywords" size="20" maxlength="25" /></td>
 			<td><b>' . _('OR') . '</b></td>
 			<td>' . _('Enter extract of the') . ' <b>' . _('Stock Code') . '</b>:</td>
 			<td><input tabindex="2" type="text" name="StockCode" size="15" maxlength="20" /></td>
@@ -257,8 +257,5 @@ if (isset($StockID) and $StockID!=""){
 	prnMsg(_('Enter a stock item code above') . ', ' . _('to view the costed bill of material for'),'info');
 }
 
-if (!isset($_POST['StockID']) or $_POST['StockID']=='') {
-	echo '<script type="text/javascript">defaultControl(document.forms[0].StockCode);</script>';
-}
 include('includes/footer.inc');
 ?>

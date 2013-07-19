@@ -31,14 +31,14 @@ if (isset($_POST['update'])) {
 echo '<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'
 	</p>';
-echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" id="selectaccount">';
-echo '<div>';
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<br />';
-echo '<table>
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" id="selectaccount">
+	<div>
+		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+		<br />
+		<table>
 		<tr>
 			<td>'.  _('Select GL Account').  ':</td>
-			<td><select name="SelectedAccount" onchange="ReloadForm(selectaccount.Select)">';
+			<td><select name="SelectedAccount" required="required" onchange="ReloadForm(selectaccount.Select)">';
 
 $SQL = "SELECT accountcode,
 				accountname
@@ -227,7 +227,7 @@ if (isset($SelectedAccount) and $SelectedAccount != '') {
 			<td></td>
 			<td><input class="number" type="text" size="14" name="AnnualAmountTY" value="0.00" /></td>
 			<td></td>
-			<td><input onchange="numberFormat(this,2)" class="number" type="text" size="14" name="AnnualAmount" value="0.00" /></td>
+			<td><input onchange="numberFormat(this,' . $_SESSION['CompanyRecord']['decimalplaces'] . ')" class="number" type="text" size="14" name="AnnualAmount" value="0.00" /></td>
 			<td><input type="submit" name="Apportion" value="' . _('Apportion Budget') . '" /></td>
 		</tr>
 		</table>';

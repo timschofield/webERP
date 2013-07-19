@@ -995,7 +995,7 @@ echo '<br />
 	<table class="selection">
 	<tr>
 		<td>'. _('Deliver To') .':</td>
-		<td><input type="text" autofocus required size="42" maxlength="40" name="DeliverTo" value="' . $_SESSION['Items'.$identifier]->DeliverTo . '" /></td>
+		<td><input type="text" autofocus="autofocus" required="required" size="42" maxlength="40" name="DeliverTo" value="' . $_SESSION['Items'.$identifier]->DeliverTo . '" title="' . _('Enter the name of the customer to deliver this order to') . '" /></td>
 	</tr>';
 
 echo '<tr>
@@ -1035,7 +1035,7 @@ if (!isset($_SESSION['Items'.$identifier]->ConfirmedDate)) {
 // The estimated Dispatch date or Delivery date for this order
 echo '<tr>
 		<td>'. _('Estimated Delivery Date') .':</td>
-		<td><input class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="text" size="15" maxlength="14" name="DeliveryDate" value="' . $_SESSION['Items'.$identifier]->DeliveryDate . '" /></td>
+		<td><input class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="text" size="15" maxlength="14" name="DeliveryDate" value="' . $_SESSION['Items'.$identifier]->DeliveryDate . '" title="' . _('Enter the estimated delivery date requested by the customer') . '"/></td>
 	</tr>';
 // The date when a quote was issued to the customer
 echo '<tr>
@@ -1084,14 +1084,15 @@ echo '</select></td>
 	
 echo'	<tr>
 		<td>'. _('Contact Phone Number') .':</td>
-		<td><input type="text" size="25" maxlength="25" required name="PhoneNo" value="' . $_SESSION['Items'.$identifier]->PhoneNo . '" /></td>
+		<td><input type="tel" size="25" maxlength="25" required="required" name="PhoneNo" value="' . $_SESSION['Items'.$identifier]->PhoneNo . '" title="' . _('Enter the telephone number of the contact at the delivery address.') . '" /></td>
 	</tr>
 	<tr>
-		<td>' . _('Contact Email') . ':</td><td><input type="email" size="40" maxlength="38" name="Email" value="' . $_SESSION['Items'.$identifier]->Email . '" /></td>
+		<td>' . _('Contact Email') . ':</td>
+		<td><input type="email" size="40" maxlength="38" name="Email" value="' . $_SESSION['Items'.$identifier]->Email . '" title="' . _('Enter the email address of the contact at the delivery address') . '" /></td>
 	</tr>
 	<tr>
 		<td>'. _('Customer Reference') .':</td>
-		<td><input type="text" size="25" maxlength="25" name="CustRef" value="' . $_SESSION['Items'.$identifier]->CustRef . '" /></td>
+		<td><input type="text" size="25" maxlength="25" name="CustRef" value="' . $_SESSION['Items'.$identifier]->CustRef . '" title="' . _('Enter the customer\'s purchase order reference relevant to this order') . '" /></td>
 	</tr>
 	<tr>
 		<td>'. _('Comments') .':</td>

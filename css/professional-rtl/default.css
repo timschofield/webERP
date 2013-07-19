@@ -106,7 +106,9 @@ th.number {
 	color: #330000;
 	text-align: right;
 }
-
+th.SortableColumn {
+	cursor: s-resize;
+}
 div.error {
 	background-color:#fddbdb;
 	color: red;

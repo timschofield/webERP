@@ -118,11 +118,11 @@ If (isset($_POST['PrintPDF'])
 			  <table class="selection">';
 
 		echo '<tr><td>' . _('From Inventory Part Code') . ':' . '</td>
-				<td><input tabindex="1" type="text" name="FromCriteria" size="20" maxlength="20" value="1" /></td>
+				<td><input tabindex="1" type="text" autofocus="autofocus" required="required" pattern="[0-9a-zA-Z\-_]*" title="' . _('Enter the lowest alpha code of parent bom items to list the bill of material for') .  '" name="FromCriteria" size="20" maxlength="20" value="1" /></td>
 			</tr>';
 
 		echo '<tr><td>' . _('To Inventory Part Code') . ':' . '</td>
-				<td><input tabindex="2" type="text" name="ToCriteria" size="20" maxlength="20" value="zzzzzzz" /></td>
+				<td><input tabindex="2" type="text" required="required" pattern="[0-9a-zA-Z\-_]*" title="' . _('Enter the end alpha numeric code of any parent bom items to list the bill of material for') .  '" name="ToCriteria" size="20" maxlength="20" value="zzzzzzz" /></td>
 			</tr>';
 
 
@@ -130,7 +130,6 @@ If (isset($_POST['PrintPDF'])
 				<br /><div class="centre"><input tabindex="3" type="submit" name="PrintPDF" value="' . _('Print PDF') . '" /></div>
              </div>
              </form>';
-		echo '<script type="text/javascript">defaultControl(document.forms[0].FromCriteria);</script>';
 	}
 	include('includes/footer.inc');
 

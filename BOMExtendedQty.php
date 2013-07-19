@@ -257,11 +257,11 @@ if (isset($_POST['PrintPDF'])) {
 		<table class="selection">
 		<tr>
 			<td>' . _('Part') . ':</td>
-			<td><input type ="text" name="Part" size="20" /></td>
+			<td><input type="text" autofocus="autofocus" required="required" name="Part" size="20" title="' . _('Enter the item code that you wish to display the extended bill of material for') . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Quantity') . ':</td>
-			<td><input type="text" class="number" name="Quantity" size="4" /></td>
+			<td><input type="text" class="number" required="required" name="Quantity" size="4" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Selection Option') . ':</td>

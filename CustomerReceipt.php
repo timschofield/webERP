@@ -767,7 +767,7 @@ echo '<br />
 	<table class="selection">
 	<tr>
 		<td>' . _('Bank Account') . ':</td>
-		 <td><select tabindex="1" name="BankAccount" onchange="ReloadForm(form1.BatchInput)">';
+		 <td><select tabindex="1" autofocus="autofocus" name="BankAccount" onchange="ReloadForm(form1.BatchInput)">';
 
 if (DB_num_rows($AccountsResults)==0){
 	echo '</select></td>
@@ -797,7 +797,7 @@ if (!Is_Date($_SESSION['ReceiptBatch']->DateBanked)){
 
 echo '<tr>
 		<td>' . _('Date Banked') . ':</td>
-		<td><input tabindex="2" type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="DateBanked" maxlength="10" size="10" onchange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')" value="' . $_SESSION['ReceiptBatch']->DateBanked . '" /></td>
+		<td><input tabindex="2" type="text" required="required" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="DateBanked" maxlength="10" size="10" onchange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')" value="' . $_SESSION['ReceiptBatch']->DateBanked . '" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Currency') . ':</td>
@@ -846,7 +846,7 @@ if ($_SESSION['ReceiptBatch']->AccountCurrency!=$_SESSION['ReceiptBatch']->Curre
 	}
 	echo '<tr>
 			<td>' . _('Receipt Exchange Rate') . ':</td>
-			<td><input tabindex="4" type="text" name="ExRate" maxlength="10" size="12" class="number" value="' . locale_number_format($_SESSION['ReceiptBatch']->ExRate,6) . '" /></td>
+			<td><input tabindex="4" type="text" name="ExRate" required="required" maxlength="10" size="12" pattern="[0-9\.,]*" class="number" value="' . locale_number_format($_SESSION['ReceiptBatch']->ExRate,6) . '" /></td>
 			<td>' . $SuggestedExRateText . ' <i>' . _('The exchange rate between the currency of the bank account currency and the currency of the receipt') . '. 1 ' . $_SESSION['ReceiptBatch']->AccountCurrency . ' = ? ' . $_SESSION['ReceiptBatch']->Currency . '</i></td>
 		</tr>';
 }
@@ -863,7 +863,7 @@ if ($_SESSION['ReceiptBatch']->AccountCurrency!=$_SESSION['CompanyRecord']['curr
 	}
 	echo '<tr>
 			<td>' . _('Functional Exchange Rate') . ':</td>
-			<td><input tabindex="5" type="text" name="FunctionalExRate" class="number" maxlength="10" size="12" value="' . locale_number_format($_SESSION['ReceiptBatch']->FunctionalExRate,6) . '" /></td>
+			<td><input tabindex="5" type="text" name="FunctionalExRate" required="required" class="number" pattern="[0-9\.,]*" maxlength="10" size="12" value="' . locale_number_format($_SESSION['ReceiptBatch']->FunctionalExRate,6) . '" /></td>
 			<td>' . ' ' . $SuggestedFunctionalExRateText . ' <i>' . _('The exchange rate between the currency of the business (the functional currency) and the currency of the bank account') .  '. 1 ' . $_SESSION['CompanyRecord']['currencydefault'] . ' = ? ' . $_SESSION['ReceiptBatch']->AccountCurrency . '</i></td>
 		</tr>';
 }
@@ -1087,13 +1087,14 @@ if (((isset($_SESSION['CustomerRecord'])
 	}
 	echo '<tr>
 			<td>' . _('Amount of Receipt') . ':</td>
-			<td><input tabindex="9" type="text" name="Amount" maxlength="12" size="13" class="number" value="' . $_POST['Amount'] . '" /></td>
+			<td><input tabindex="9" type="text" name="Amount" required="required" maxlength="12" size="13" class="number" value="' . $_POST['Amount'] . '" /></td>
 		</tr>';
 
 	if (!isset($_POST['GLEntry'])){
 		echo '<tr>
 				<td>' . _('Amount of Discount') . ':</td>
-				<td><input tabindex="10" type="text" name="Discount" maxlength="12" size="13" class="number" value="' . $_POST['Discount'] . '" /> ' . _('agreed prompt payment discount is') . ' ' . $DisplayDiscountPercent . '</td></tr>';
+				<td><input tabindex="10" type="text" name="Discount" maxlength="12" size="13" class="number" value="' . $_POST['Discount'] . '" /> ' . _('agreed prompt payment discount is') . ' ' . $DisplayDiscountPercent . '</td>
+			</tr>';
 	} else {
 		echo '<input tabindex="11" type="hidden" name="Discount" value="0" />';
 	}
@@ -1101,10 +1102,9 @@ if (((isset($_SESSION['CustomerRecord'])
 	echo '<tr>
 			<td>' . _('Payee Bank Details') . ':</td>
 			<td><input tabindex="12" type="text" name="PayeeBankDetail" maxlength="22" size="20" value="' . $_POST['PayeeBankDetail'] . '" /></td>
-		</tr>';
-//	echo '<tr><td>' . _('Narrative') . ':</td>
-//		<td><input tabindex="13" type="text" name="Narrative" maxlength="30" size="32" value="' . $_POST['Narrative'] . '" /></td></tr>';
-	echo '<td>' . _('Narrative') . ':</td>
+		</tr>
+		<tr>
+			<td>' . _('Narrative') . ':</td>
 			<td><textarea name="Narrative"  cols="40" rows="1"></textarea></td>
 		</tr>
 		</table>
@@ -1128,10 +1128,10 @@ if (((isset($_SESSION['CustomerRecord'])
 			<td><input tabindex="9" type="text" name="Keywords" size="15" maxlength="25" /></td>
 			<td><b>' . _('OR') . '</b></td>
 			<td>' . _('Text extract in the Customer') . ' ' . '<b>' . _('code') . '</b>:</td>
-			<td><input tabindex="10" type="text" name="CustCode" size="10" maxlength="18" /></td>
+			<td><input tabindex="10" type="text" name="CustCode" pattern="[0-9a-zA-Z_]*" title="' . _('Enter an extract of the customer code to search for. Customer codes can contain any alpha-numeric character or underscore') . '" size="10" maxlength="18" /></td>
 			<td><b>' . _('OR') . '</b></td>
 			<td>' . _('Customer invoice number') . ':</td>
-			<td><input tabindex="11" type="text" name="CustInvNo" size="8" maxlength="8" /></td>
+			<td><input tabindex="11" type="text" name="CustInvNo" class="integer" size="8" maxlength="8" /></td>
 		</tr>
 		</table>
 		<div class="centre">

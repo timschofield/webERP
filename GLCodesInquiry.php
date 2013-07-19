@@ -8,12 +8,12 @@ $Title = _('GL Codes Inquiry');
 
 include('includes/header.inc');
 
-$SQL = 'SELECT group_,
+$SQL = "SELECT group_,
 		accountcode ,
 		accountname
 		FROM chartmaster INNER JOIN accountgroups ON chartmaster.group_ = accountgroups.groupname
 		ORDER BY sequenceintb,
-				accountcode';
+				accountcode";
 
 $ErrMsg = _('No general ledger accounts were returned by the SQL because');
 $AccountsResult = DB_query($SQL,$db,$ErrMsg);

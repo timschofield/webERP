@@ -123,13 +123,13 @@ if (isset($_GET['SelectedLocation'])) {
 	echo '<input type="hidden" name="LocationID" value="'.$LocationID.'" />';
 	echo '<td>'.$LocationID.'</td>';
 } else {
-	echo '<td><input type="text" name="LocationID" size="6" value="'.$LocationID.'" /></td>
+	echo '<td><input type="text" name="LocationID" required="required" title="' . _('Enter the location code of the fixed asset location. Up to six alpha-numeric characters') . '" pattern="[0-9a-zA-Z_]*" size="6" value="'.$LocationID.'" /></td>
 		</tr>';
 }
 
 echo '<tr>
 		<th style="text-align:left">'._('Location Description').'</th>
-		<td><input type="text" name="LocationDescription" size="20" value="'.$LocationDescription.'" /></td>
+		<td><input type="text" name="LocationDescription" required="required" title="' . _('Enter the fixed asset location description. Up to 20 characters') . '" size="20" value="'.$LocationDescription.'" /></td>
 	</tr>
 	<tr>
 		<th style="text-align:left">'._('Parent Location').'</th>

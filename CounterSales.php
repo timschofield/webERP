@@ -787,15 +787,15 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 ){ /*only show order line
 		echo '<a target="_blank" href="' . $RootPath . '/StockStatus.php?identifier='.$identifier . '&amp;StockID=' . $OrderLine->StockID . '&amp;DebtorNo=' . $_SESSION['Items'.$identifier]->DebtorNo . '">' . $OrderLine->StockID . '</a></td>
 			<td title="' . $OrderLine->LongDescription . '">' . $OrderLine->ItemDescription . '</td>';
 
-		echo '<td><input class="number" tabindex="2" type="text" name="Quantity_' . $OrderLine->LineNumber . '" size="6" maxlength="6" value="' . locale_number_format($OrderLine->Quantity,$OrderLine->DecimalPlaces) . '" />';
+		echo '<td><input class="number" tabindex="2" type="text" name="Quantity_' . $OrderLine->LineNumber . '" required="required" size="6" maxlength="6" value="' . locale_number_format($OrderLine->Quantity,$OrderLine->DecimalPlaces) . '" />';
 
 		echo '</td>
 			<td class="number">' . locale_number_format($OrderLine->QOHatLoc,$OrderLine->DecimalPlaces) . '</td>
 			<td>' . $OrderLine->Units . '</td>';
 		if (in_array($_SESSION['PageSecurityArray']['OrderEntryDiscountPricing'], $_SESSION['AllowedPageSecurityTokens'])){
-			echo '<td><input class="number" type="text" name="Price_' . $OrderLine->LineNumber . '" size="16" maxlength="16" value="' . locale_number_format($OrderLine->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '" /></td>
-				<td><input class="number" type="text" name="Discount_' . $OrderLine->LineNumber . '" size="5" maxlength="4" value="' . locale_number_format(($OrderLine->DiscountPercent * 100),2) . '" /></td>
-				<td><input class="number" type="text" name="GPPercent_' . $OrderLine->LineNumber . '" size="3" maxlength="40" value="' . locale_number_format($OrderLine->GPPercent,2) . '" /></td>';
+			echo '<td><input class="number" type="text" name="Price_' . $OrderLine->LineNumber . '" required="required" size="16" maxlength="16" value="' . locale_number_format($OrderLine->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '" /></td>
+				<td><input class="number" type="text" name="Discount_' . $OrderLine->LineNumber . '" required="required" size="5" maxlength="4" value="' . locale_number_format(($OrderLine->DiscountPercent * 100),2) . '" /></td>
+				<td><input class="number" type="text" name="GPPercent_' . $OrderLine->LineNumber . '" required="required" size="3" maxlength="40" value="' . locale_number_format($OrderLine->GPPercent,2) . '" /></td>';
 		} else {
 			echo '<td class="number">' . locale_number_format($OrderLine->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '<input type="hidden" name="Price_' . $OrderLine->LineNumber . '"  value="' . locale_number_format($OrderLine->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '" />
 				<input type="hidden" name="Discount_' . $OrderLine->LineNumber . '" value="' . locale_number_format(($OrderLine->DiscountPercent * 100),2) . '" />
@@ -864,18 +864,21 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 ){ /*only show order line
 	</tr>';
 	echo '<tr>
 		<td>'. _('Contact Phone Number') .':</td>
-		<td><input type="text" size="25" maxlength="25" name="PhoneNo" value="' . stripslashes($_SESSION['Items'.$identifier]->PhoneNo) . '" /></td>
-	</tr>';
-
-	echo '<tr><td>' . _('Contact Email') . ':</td><td><input type="text" size="25" maxlength="30" name="Email" value="' . stripslashes($_SESSION['Items'.$identifier]->Email) . '" /></td></tr>';
-
-	echo '<tr><td>'. _('Customer Reference') .':</td>
-		<td><input type="text" size="25" maxlength="25" name="CustRef" value="' . stripcslashes($_SESSION['Items'.$identifier]->CustRef) . '" /></td>
+		<td><input type="te1" size="25" maxlength="25" name="PhoneNo" value="' . stripslashes($_SESSION['Items'.$identifier]->PhoneNo) . '" /></td>
 	</tr>';
 
 	echo '<tr>
-	<td>' . _('Sales person'). ':</td>
-	<td><select name="SalesPerson">';
+			<td>' . _('Contact Email') . ':</td>
+			<td><input type="email" placeholder="contact@domain.com" size="25" maxlength="30" name="Email" value="' . stripslashes($_SESSION['Items'.$identifier]->Email) . '" /></td></tr>';
+
+	echo '<tr>
+			<td>'. _('Customer Reference') .':</td>
+			<td><input type="text" size="25" maxlength="25" name="CustRef" value="' . stripcslashes($_SESSION['Items'.$identifier]->CustRef) . '" /></td>
+		</tr>';
+
+	echo '<tr>
+			<td>' . _('Sales person'). ':</td>
+			<td><select name="SalesPerson">';
 	$SalesPeopleResult = DB_query("SELECT salesmancode, salesmanname FROM salesman WHERE current=1",$db);
 	if (!isset($_POST['SalesPerson']) AND $_SESSION['SalesmanLogin']!=NULL ){
 		$_SESSION['Items'.$identifier]->SalesPerson = $_SESSION['SalesmanLogin'];
@@ -901,7 +904,9 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 ){ /*only show order line
 	//now the payment stuff in this column
 	$PaymentMethodsResult = DB_query("SELECT paymentid, paymentname FROM paymentmethods",$db);
 
-	echo '<tr><td>' . _('Payment Type') . ':</td><td><select name="PaymentMethod">';
+	echo '<tr>
+			<td>' . _('Payment Type') . ':</td>
+			<td><select name="PaymentMethod">';
 	while ($PaymentMethodRow = DB_fetch_array($PaymentMethodsResult)){
 		if (isset($_POST['PaymentMethod']) AND $_POST['PaymentMethod'] == $PaymentMethodRow['paymentid']){
 			echo '<option selected="selected" value="' . $PaymentMethodRow['paymentid'] . '">' . $PaymentMethodRow['paymentname'] . '</option>';
@@ -909,7 +914,8 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 ){ /*only show order line
 			echo '<option value="' . $PaymentMethodRow['paymentid'] . '">' . $PaymentMethodRow['paymentname'] . '</option>';
 		}
 	}
-	echo '</select></td></tr>';
+	echo '</select></td>
+		</tr>';
 
 	$BankAccountsResult = DB_query("SELECT bankaccountname, accountcode FROM bankaccounts",$db);
 
@@ -931,7 +937,7 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 ){ /*only show order line
 	}
 	echo '<tr>
 			<td>' . _('Amount Paid') . ':</td>
-			<td><input type="text" class="number" name="AmountPaid" maxlength="12" size="12" value="' . $_POST['AmountPaid'] . '" /></td>
+			<td><input type="text" class="number" name="AmountPaid" required="required"  title="' . _('Enter the amount paid by the customer, this must equal the amount of the sale') . '" maxlength="12" size="12" value="' . $_POST['AmountPaid'] . '" /></td>
 		</tr>';
 
 	echo '</table>'; //end the sub table in the second column of master table
@@ -2181,7 +2187,7 @@ if (!isset($_POST['ProcessSale'])){
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
-						<td><input class="number" tabindex="'.strval($j+7).'" type="text" size="6" name="OrderQty%s" value="0" />
+						<td><input class="number" tabindex="'.strval($j+7).'" type="text" size="6" required="required" name="OrderQty%s" value="0" />
 							<input type="hidden" name="StockID%s" value="%s" />
 						</td>
 						</tr>',
@@ -2236,7 +2242,7 @@ if (!isset($_POST['ProcessSale'])){
 
 		echo '</select></td>
 		<td><b>' . _('Enter partial Description') . ':</b>
-		<input tabindex="2" type="text" name="Keywords" size="20" maxlength="25" value="';
+		<input tabindex="2" type="text" autofocus="autofocus" name="Keywords" size="20" maxlength="25" value="';
         if (isset($_POST['Keywords'])) echo $_POST['Keywords'];
         echo '" /></td>
 
@@ -2369,7 +2375,7 @@ if (!isset($_POST['ProcessSale'])){
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
-						<td><input class="number"  tabindex="'.strval($j+7).'" type="text" size="6" name="OrderQty%s" value="0" /><input type="hidden" name="StockID%s" value="%s" /></td>
+						<td><input class="number"  tabindex="'.strval($j+7).'" type="text" size="6" required="required" name="OrderQty%s" value="0" /><input type="hidden" name="StockID%s" value="%s" /></td>
 						</tr>',
 						$myrow['stockid'],
 						$myrow['description'],
@@ -2417,7 +2423,7 @@ if (!isset($_POST['ProcessSale'])){
         }
 		echo '<table border="1">
 				<tr>';
-			/*do not display colum unless customer requires po line number by sales order line*/
+			/*do not display column unless customer requires po line number by sales order line*/
 		echo '<th>' . _('Item Code') . '</th>
 				<th>' . _('Quantity') . '</th>
 				</tr>';
@@ -2426,16 +2432,17 @@ if (!isset($_POST['ProcessSale'])){
 
 	 		echo '<tr class="OddTableRow">';
 	 		/* Do not display colum unless customer requires po line number by sales order line*/
-	 		echo '<td><input type="text" name="part_' . $i . '" size="21" maxlength="20" /></td>
+	 		echo '<td><input type="text" name="part_' . $i . '"' . ($i==1 ? ' autofocus="autofocus"':'') . ' pattern="[a-zA-Z0-9_\-]*" title="' . _('Enter a part code to be sold. Part codes can contain any alpha-numeric characters underscore or hyphen.') . '"size="21" maxlength="20" /></td>
 					<td><input type="text" class="number" name="qty_' . $i . '" size="6" maxlength="6" />
 						<input type="hidden" class="date" name="ItemDue_' . $i . '" value="' . $DefaultDeliveryDate . '" /></td></tr>';
    		}
-	 	echo '</table><br /><div class="centre"><input type="submit" name="QuickEntry" value="' . _('Quick Entry') . '" />
-					 <input type="submit" name="PartSearch" value="' . _('Search Parts') . '" /></div>';
-
-        echo '</div>';
-
-        echo '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.part_1);}</script>';
+	 	echo '</table>
+				<br />
+				<div class="centre">
+					<input type="submit" name="QuickEntry" value="' . _('Quick Entry') . '" />
+					<input type="submit" name="PartSearch" value="' . _('Search Parts') . '" />
+				</div>
+			</div>';
 
   	}
 	if ($_SESSION['Items'.$identifier]->ItemsOrdered >=1){

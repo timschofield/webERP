@@ -288,7 +288,7 @@ if (isset($SelectedBankAccount) AND !isset($_GET['delete'])) {
 	echo '<table class="selection">
 			<tr>
 				<td>' . _('Bank Account GL Code') . ':</td>
-				<td><select tabindex="1" ' . (in_array('AccountCode',$Errors) ?  'class="selecterror"' : '' ) .' name="AccountCode">';
+				<td><select tabindex="1" ' . (in_array('AccountCode',$Errors) ?  'class="selecterror"' : '' ) .' name="AccountCode" autofocus="autofocus" >';
 
 	$sql = "SELECT accountcode,
 					accountname
@@ -326,7 +326,7 @@ if (!isset($_POST['BankAddress'])) {
 
 echo '<tr>
 		<td>' . _('Bank Account Name') . ': </td>
-		<td><input tabindex="2" ' . (in_array('AccountName',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="BankAccountName" value="' . $_POST['BankAccountName'] . '" size="40" maxlength="50" /></td>
+		<td><input tabindex="2" ' . (in_array('AccountName',$Errors) ?  'class="inputerror"' : '' ) .' type="text" required="required" name="BankAccountName" value="' . $_POST['BankAccountName'] . '" size="40" maxlength="50" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Bank Account Code') . ': </td>

@@ -704,13 +704,13 @@ if (count($_SESSION['Items' . $identifier]->LineItems)>0){ /*only show return li
 		echo '<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?identifier='.$identifier . '&StockID=' . $ReturnItemLine->StockID . '&DebtorNo=' . $_SESSION['Items' . $identifier]->DebtorNo . '">' . $ReturnItemLine->StockID . '</a></td>
 			<td title="' . $ReturnItemLine->LongDescription . '">' . $ReturnItemLine->ItemDescription . '</td>';
 
-		echo '<td><input class="number" tabindex="2" type="text" name="Quantity_' . $ReturnItemLine->LineNumber . '" size="6" maxlength="6" value="' . locale_number_format($ReturnItemLine->Quantity,$ReturnItemLine->DecimalPlaces) . '" />';
+		echo '<td><input class="number" tabindex="2" type="text" name="Quantity_' . $ReturnItemLine->LineNumber . '" required="required" size="6" maxlength="6" value="' . locale_number_format($ReturnItemLine->Quantity,$ReturnItemLine->DecimalPlaces) . '" />';
 
 		echo '</td>
 				<td>' . $ReturnItemLine->Units . '</td>
-				<td><input class="number" type="text" name="Price_' . $ReturnItemLine->LineNumber . '" size="16" maxlength="16" value="' . locale_number_format($ReturnItemLine->Price,$_SESSION['Items' . $identifier]->CurrDecimalPlaces) . '" /></td>
-				<td><input class="number" type="text" name="Discount_' . $ReturnItemLine->LineNumber . '" size="5" maxlength="4" value="' . locale_number_format(($ReturnItemLine->DiscountPercent * 100),2) . '" /></td>
-				<td><input class="number" type="text" name="GPPercent_' . $ReturnItemLine->LineNumber . '" size="3" maxlength="40" value="' . locale_number_format($ReturnItemLine->GPPercent,2) . '" /></td>
+				<td><input class="number" type="text" name="Price_' . $ReturnItemLine->LineNumber . '" required="required" size="16" maxlength="16" value="' . locale_number_format($ReturnItemLine->Price,$_SESSION['Items' . $identifier]->CurrDecimalPlaces) . '" /></td>
+				<td><input class="number" type="text" name="Discount_' . $ReturnItemLine->LineNumber . '" required="required" size="5" maxlength="4" value="' . locale_number_format(($ReturnItemLine->DiscountPercent * 100),2) . '" /></td>
+				<td><input class="number" type="text" name="GPPercent_' . $ReturnItemLine->LineNumber . '" required="required" size="3" maxlength="40" value="' . locale_number_format($ReturnItemLine->GPPercent,2) . '" /></td>
 				<td class="number">' . locale_number_format($SubTotal,$_SESSION['Items' . $identifier]->CurrDecimalPlaces) . '</td>';
 		$LineDueDate = $ReturnItemLine->ItemDue;
 		$_SESSION['Items' . $identifier]->LineItems[$ReturnItemLine->LineNumber]->ItemDue= $LineDueDate;
@@ -772,10 +772,12 @@ if (count($_SESSION['Items' . $identifier]->LineItems)>0){ /*only show return li
 	</tr>';
 	echo '<tr>
 		<td style="color:red">'. _('Contact Phone Number') .':</td>
-		<td><input type="text" size="25" maxlength="25" name="PhoneNo" value="' . stripslashes($_SESSION['Items' . $identifier]->PhoneNo) . '" /></td>
+		<td><input type="tel" size="25" maxlength="25" name="PhoneNo"  required="required" title="' . _('A phone number is required for counter returns') . '" value="' . stripslashes($_SESSION['Items' . $identifier]->PhoneNo) . '" /></td>
 	</tr>';
 
-	echo '<tr><td style="color:red">' . _('Contact Email') . ':</td><td><input type="text" size="25" maxlength="30" name="Email" value="' . stripslashes($_SESSION['Items' . $identifier]->Email) . '" /></td></tr>';
+	echo '<tr>
+			<td style="color:red">' . _('Contact Email') . ':</td>
+			<td><input type="email" size="25" maxlength="30" name="Email" value="' . stripslashes($_SESSION['Items' . $identifier]->Email) . '" /></td></tr>';
 
 	echo '<tr>
 			<td style="color:red">'. _('Customer Reference') .':</td>
@@ -821,18 +823,12 @@ if (count($_SESSION['Items' . $identifier]->LineItems)>0){ /*only show return li
 	}
 	echo '</select></td></tr>';
 
-	if ($_SESSION['UserStockLocation']=='KG'){
-		echo '<input type="hidden" name="BankAccount" value="8410" />';
-	} else { //its Shepperton Road
-		echo '<input type="hidden" name="BankAccount" value="8411" />';
-	}
-
 	if (!isset($_POST['AmountPaid'])){
 		$_POST['AmountPaid'] =0;
 	}
 	echo '<tr>
 			<td style="color:red">' . _('Paid to Customer') . ':</td>
-			<td><input type="text" class="number" name="AmountPaid" maxlength="12" size="12" value="' . $_POST['AmountPaid'] . '" /></td>
+			<td><input type="text" class="number" name="AmountPaid"  required="required" maxlength="12" size="12" value="' . $_POST['AmountPaid'] . '" /></td>
 		</tr>';
 
 	echo '</table>'; //end the sub table in the second column of master table
@@ -1637,7 +1633,7 @@ if (!isset($_POST['ProcessReturn'])){
 
 		</select></td>
 		<td><b><?php echo _('Enter partial Description'); ?>:</b>
-		<input tabindex="2" type="text" name="Keywords" size="20" maxlength="25" value="<?php if (isset($_POST['Keywords'])) echo $_POST['Keywords']; ?>" /></td>
+		<input tabindex="2" type="text" name="Keywords" autofocus="autofocus" size="20" maxlength="25" value="<?php if (isset($_POST['Keywords'])) echo $_POST['Keywords']; ?>" /></td>
 
 		<td align="right"><b><?php echo _('OR'); ?> </b><b><?php echo _('Enter extract of the Stock Code'); ?>:</b>
 		<input tabindex="3" type="text" name="StockCode" size="15" maxlength="18" value="<?php if (isset($_POST['StockCode'])) echo $_POST['StockCode']; ?>" /></td>
@@ -1647,9 +1643,6 @@ if (!isset($_POST['ProcessReturn'])){
 		<td style="text-align:center" colspan="1"><input tabindex="5" type="submit" name="QuickEntry" value="<?php echo _('Use Quick Entry'); ?>" /></td>
 
 		<?php
-		if (!isset($_POST['PartSearch'])) {
-			echo '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.Keywords);}</script>';
-		}
 
 		echo '</tr></table><br />';
 	// Add some useful help as the order progresses
@@ -1764,7 +1757,7 @@ if (!isset($_POST['ProcessReturn'])){
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
-						<td><input class="number"  tabindex="'.strval($j+7).'" type="text" size="6" name="ReturnQty%s" value="0" /></font><input type="hidden" name="StockID%s" value="%s" /></td>
+						<td><input class="number"  tabindex="'.strval($j+7).'" type="number"  required="required" size="6" name="ReturnQty%s" value="0" /></font><input type="hidden" name="StockID%s" value="%s" /></td>
 						</tr>',
 						$myrow['stockid'],
 						$myrow['longdescription'],
@@ -1820,19 +1813,24 @@ if (!isset($_POST['ProcessReturn'])){
 
 	 		echo '<tr class="OddTableRow">';
 	 		/* Do not display colum unless customer requires po line number by sales order line*/
-	 		echo '<td><input type="text" name="part_' . $i . '" size="21" maxlength="20" /></td>
+	 		echo '<td><input type="text" name="part_' . $i . '" ' . ($i==1 ? 'autofocus="autofocus" ': '') . 'size="21" pattern="[a-zA-Z0-9_\-]*" title="' . _('Enter a part code to be returned. Part codes can contain any alpha-numeric characters underscore or hyphen.') . '" maxlength="20" /></td>
 					<td><input type="text" class="number" name="qty_' . $i . '" size="6" maxlength="6" />
 						<input type="hidden" class="date" name="ItemDue_' . $i . '" value="' . $ReturnDate . '" /></td>
 				</tr>';
    		}
-		echo '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.part_1);}</script>';
-
-	 	echo '</table><br /><div class="centre"><input type="submit" name="QuickEntry" value="' . _('Quick Entry') . '" />
-					 <input type="submit" name="PartSearch" value="' . _('Search Parts') . '" /></div>';
+	 	echo '</table>
+				<br />
+				<div class="centre">
+					<input type="submit" name="QuickEntry" value="' . _('Quick Entry') . '" />
+					<input type="submit" name="PartSearch" value="' . _('Search Parts') . '" />
+				</div>';
 
   	}
 	if ($_SESSION['Items' . $identifier]->ItemsOrdered >=1){
-  		echo '<br /><div class="centre"><input type="submit" name="CancelReturn" value="' . _('Cancel Return') . '" onclick="return confirm(\'' . _('Are you sure you wish to cancel this return?') . '\');" /></div>';
+  		echo '<br />
+			<div class="centre">
+				<input type="submit" name="CancelReturn" value="' . _('Cancel Return') . '" onclick="return confirm(\'' . _('Are you sure you wish to cancel this return?') . '\');" />
+			</div>';
 	}
 }
 echo '</form>';

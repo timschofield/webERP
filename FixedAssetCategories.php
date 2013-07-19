@@ -252,7 +252,7 @@ if (isset($SelectedCategory) and !isset($_POST['submit'])) {
 	echo '<table class="selection">
 			<tr>
 				<td>' . _('Category Code') . ':</td>
-				<td><input type="text" name="CategoryID" size="7" maxlength="6" value="' . $_POST['CategoryID'] . '" /></td>
+				<td><input type="text" name="CategoryID" required="required" title="' . _('Enter the asset category code. Up to 6 alpha-numeric characters are allowed') . '" pattern="[0-9a-zA-Z_]*" size="7" maxlength="6" value="' . $_POST['CategoryID'] . '" /></td>
 			</tr>';
 }
 
@@ -281,11 +281,11 @@ if (!isset($_POST['CategoryDescription'])) {
 
 echo '<tr>
 		<td>' . _('Category Description') . ':</td>
-		<td><input type="text" name="CategoryDescription" size="22" maxlength="20" value="' . $_POST['CategoryDescription'] . '" /></td>
+		<td><input type="text" name="CategoryDescription" required="required" title="' . _('Enter the asset category description up to 20 characters') . '" size="22" maxlength="20" value="' . $_POST['CategoryDescription'] . '" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Fixed Asset Cost GL Code') . ':</td>
-		<td><select name="CostAct">';
+		<td><select name="CostAct" required="required" title="' . _('Select the general ledger account where the cost of assets of this category should be posted to. Only balance sheet accounts can be selected') . '" >';
 
 while ($myrow = DB_fetch_array($BSAccountsResult)){
 
@@ -299,7 +299,7 @@ echo '</select></td>
 	</tr>
 	<tr>
 		<td>' . _('Profit and Loss Depreciation GL Code') . ':</td>
-		<td><select name="DepnAct">';
+		<td><select name="DepnAct" required="required" title="' . _('Select the general ledger account where the depreciation of assets of this category should be posted to. Only profit and loss accounts can be selected') . '" >';
 
 while ($myrow = DB_fetch_array($PnLAccountsResult)) {
 	if (isset($_POST['DepnAct']) and $myrow['accountcode']==$_POST['DepnAct']) {
@@ -314,7 +314,7 @@ echo '</select></td>
 DB_data_seek($PnLAccountsResult,0);
 echo '<tr>
 		<td>' .  _('Profit or Loss on Disposal GL Code:') . '</td>
-		<td><select name="DisposalAct">';
+		<td><select name="DisposalAct" required="required" title="' . _('Select the general ledger account where the profit or loss on disposal on assets of this category should be posted to. Only profit and loss accounts can be selected') . '" >';
 while ($myrow = DB_fetch_array($PnLAccountsResult)) {
 	if (isset($_POST['DisposalAct']) and $myrow['accountcode']==$_POST['DisposalAct']) {
 		echo '<option selected="selected" value="'.$myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . ' ('.$myrow['accountcode'].')' . '</option>';
@@ -328,7 +328,7 @@ echo '</select></td>
 DB_data_seek($BSAccountsResult,0);
 echo '<tr>
 		<td>' . _('Balance Sheet Accumulated Depreciation GL Code') . ':</td>
-		<td><select name="AccumDepnAct">';
+		<td><select name="AccumDepnAct" required="required" title="' . _('Select the general ledger account where the accumulated depreciation on assets of this category should be posted to. Only balance sheet accounts can be selected') . '" >';
 
 while ($myrow = DB_fetch_array($BSAccountsResult)) {
 

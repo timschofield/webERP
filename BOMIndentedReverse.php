@@ -239,7 +239,7 @@ if (isset($_POST['PrintPDF'])) {
 		<table class="selection">
 		<tr>
 			<td>' . _('Part') . ':</td>
-			<td><input type ="text" name="Part" size="20" /></td>
+			<td><input type="text" autofocus-"autofocus" required="required" title="' ._('Enter the item code required to list the bill of material for') . '" name="Part" size="20" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Print Option') . ':</td>

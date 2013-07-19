@@ -473,17 +473,17 @@ if (!isset($_GET['delete'])) {
 			<td>'._('Decimal Places to Display').':</td>
 			<td>';
 	if (!isset($_POST['DecimalPlaces'])) {
-		$_POST['DecimalPlaces']='';
+		$_POST['DecimalPlaces']='0';
 	}
-	echo '<input ' . (in_array('DecimalPlaces',$Errors) ?  'class="inputerror"' : 'class="number"' ) . ' type="text" name="DecimalPlaces" size="2" maxlength="2" value="' . $_POST['DecimalPlaces'].'" /></td>
+	echo '<input ' . (in_array('DecimalPlaces',$Errors) ?  'class="integer inputerror"' : 'class="integer"' ) . ' type="number" required="required" name="DecimalPlaces" size="2" maxlength="2" value="' . $_POST['DecimalPlaces'].'" /></td>
 		</tr>
 		<tr>
 			<td>'._('Exchange Rate').':</td>
 			<td>';
 	if (!isset($_POST['ExchangeRate'])) {
-		$_POST['ExchangeRate']='';
+		$_POST['ExchangeRate']='1';
 	}
-	echo '<input ' . (in_array('ExchangeRate',$Errors) ?  'class="inputerror"' : '' ) .' type="text" class="number" name="ExchangeRate" size="10" maxlength="10" value="' . $_POST['ExchangeRate'] . '" /></td>
+	echo '<input ' . (in_array('ExchangeRate',$Errors) ?  'class="inputerror"' : '' ) .' type="text" class="number" name="ExchangeRate" required="required" size="10" maxlength="10" value="' . $_POST['ExchangeRate'] . '" /></td>
 		</tr>';
 
 	if (!isset($_POST['webcart'])) {

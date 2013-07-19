@@ -401,7 +401,7 @@ if (!isset($_GET['delete'])) {
 	}
 	echo '<tr>
 			<td>' . _('Account Group Name') . ':' . '</td>
-			<td><input tabindex="1" autofocus required placeholder="' . _('Enter the account group name') . '" ' . (in_array('GroupName',$Errors) ?  '"class=inputerror"' : '' ) . ' type="text" name="GroupName" size="30" maxlength="30" value="' . $_POST['GroupName'] . '" title="' . _('A unique name for the account group must be entered - at least 3 characters long and less than 30 characters long') . '" /></td>
+			<td><input tabindex="1" autofocus="autofocus" required="required" pattern="[a-zA-Z0-9_\-\ ]*" placeholder="' . _('Enter the account group name') . '" ' . (in_array('GroupName',$Errors) ?  '"class=inputerror"' : '' ) . ' type="text" name="GroupName" size="30" minlength="3" maxlength="30" value="' . $_POST['GroupName'] . '" title="' . _('A unique name for the account group must be entered - at least 3 characters long and less than 30 characters long. Only alpha numeric characters can be used.') . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Parent Group') . ':' . '</td>
@@ -459,17 +459,15 @@ if (!isset($_GET['delete'])) {
 		</tr>
 		<tr>
 			<td>' . _('Sequence In TB') . ':' . '</td>
-			<td><input tabindex="5" type="number" min="0" maxlength="4" name="SequenceInTB" required class="number" value="' . $_POST['SequenceInTB'] . '" title="' . _('Enter the sequence number that this account group and its child general ledger accounts should display in the trial balance') . '" /></td>
+			<td><input tabindex="5" type="text" maxlength="4" name="SequenceInTB" required="required" class="number" value="' . $_POST['SequenceInTB'] . '" title="' . _('Enter the sequence number that this account group and its child general ledger accounts should display in the trial balance') . '" /></td>
 		</tr>
 		<tr>
 			<td colspan="2"><div class="centre"><input tabindex="6" type="submit" name="submit" value="' . _('Enter Information') . '" /></div></td>
 		</tr>
 		</table>
-		<br />';
-
-	echo '<script  type="text/javascript">defaultControl(document.forms[0].GroupName);</script>';
-    echo '</div>
-		</form>';
+		<br />
+	</div>
+	</form>';
 
 } //end if record deleted no point displaying form to add record
 include('includes/footer.inc');

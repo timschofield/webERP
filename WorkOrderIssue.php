@@ -787,7 +787,9 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 	if ($IssueItemRow['controlled']==1){ //controlled
 
 		if ($IssueItemRow['serialised']==1){ //serialised
-			echo '<tr><th>' . _('Serial Numbers Issued') . '</th></tr>';
+			echo '<tr>
+					<th>' . _('Serial Numbers Issued') . '</th>
+				</tr>';
 
 			$SerialNoResult = DB_query("SELECT serialno
 										FROM stockserialitems
@@ -824,9 +826,8 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 				</tr>';
 			for ($i=0;$i<15;$i++){
 				echo '<tr>
-						<td><input type="text" name="BatchRef' . $i .'" ';
-				echo '/></td>
-					  <td><input type="text" name="Qty' . $i .'" /></td></tr>';
+						<td><input type="text" name="BatchRef' . $i .'" title="' . _('Enter a batch/roll reference being used with this work order') . '" /></td>
+					  <td><input type="number" title="' . _('Enter the quantity of this batch/roll to issue to the work order') . '" name="Qty' . $i .'" value="0" /></td></tr>';
 			}
 			echo '<input type="hidden" name="IssueItem" value="' . $_POST['IssueItem'] . '" />';
 			echo '<tr>
@@ -836,7 +837,7 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 	} else { //not controlled - an easy one!
 		echo '<input type="hidden" name="IssueItem" value="' . $_POST['IssueItem'] . '" />';
 		echo '<tr><td>' . _('Quantity Issued') . ':</td>
-			  <td><input class="number" type="text" name="Qty" /></tr>';
+			  <td><input class="number" type="text" size="10" maxlength="10" title="' . _('Enter the quantity of this item to issue to the work order') . '" name="Qty" required="required" value="0"/></tr>';
 		echo '<tr>
 				<td colspan="2"><input type="submit" name="Process" value="' . _('Process Items Issued') . '" /></div></td>
 			</tr>';

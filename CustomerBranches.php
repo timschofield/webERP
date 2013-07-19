@@ -605,7 +605,7 @@ if (!isset($_GET['delete'])) {
 		echo '<table class="selection">
 				<tr>
 					<td>'._('Branch Code'). ':</td>
-					<td><input ' .(in_array('BranchCode',$Errors) ?  'class="inputerror"' : '' ) . ' tabindex="1" type="text" name="BranchCode" size="12" maxlength="10" value="' . $_POST['BranchCode'] . '" /></td>
+					<td><input ' .(in_array('BranchCode',$Errors) ?  'class="inputerror"' : '' ) . ' tabindex="1" type="text" name="BranchCode" required="required" pattern="[a-zA-Z0-9_]*" title="' . _('The branch code can be up to 10 alpha-numeric characters or underscores') . '" size="12" maxlength="10" value="' . $_POST['BranchCode'] . '" /></td>
 				</tr>';
 		$_POST['DeliverBlind'] = $_SESSION['DefaultBlindPackNote'];
 	}
@@ -618,12 +618,12 @@ if (!isset($_GET['delete'])) {
 
 	echo _('Branch Name').':</td>';
 	if (!isset($_POST['BrName'])) {$_POST['BrName']='';}
-	echo '<td><input tabindex="2" type="text" name="BrName" size="41" maxlength="40" value="'. $_POST['BrName'].'" /></td>
+	echo '<td><input tabindex="2" type="text" autofocus="autofocus" required="required" name="BrName" title="' . _('The branch name should identify the particular delivery address of the customer and must be entered') . '" minlength="5" size="41" maxlength="40" value="'. $_POST['BrName'].'" /></td>
 		</tr>';
 	echo '<tr>
 			<td>'._('Branch Contact').':</td>';
 	if (!isset($_POST['ContactName'])) {$_POST['ContactName']='';}
-	echo '<td><input tabindex="3" type="text" name="ContactName" size="41" maxlength="40" value="'. $_POST['ContactName'].'" /></td>
+	echo '<td><input tabindex="3" type="text" name="ContactName" required="required" size="41" maxlength="40" value="'. $_POST['ContactName'].'" /></td>
 		</tr>';
 	echo '<tr><td>'._('Street Address 1 (Street)').':</td>';
 	if (!isset($_POST['BrAddress1'])) {
@@ -689,14 +689,14 @@ if (!isset($_GET['delete'])) {
 	if (!isset($_POST['EstDeliveryDays'])) {
 		$_POST['EstDeliveryDays']=0;
 	}
-	echo '<td><input ' .(in_array('EstDeliveryDays',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="11" type="text" class="number" name="EstDeliveryDays" size="4" maxlength="2" value="'. $_POST['EstDeliveryDays'].'" /></td>
+	echo '<td><input ' .(in_array('EstDeliveryDays',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="11" type="text" class="integer" name="EstDeliveryDays" size="4" maxlength="2" value="'. $_POST['EstDeliveryDays'].'" /></td>
 		</tr>
 		<tr>
 			<td>'._('Forward Date After (day in month)').':</td>';
 	if (!isset($_POST['FwdDate'])) {
 		$_POST['FwdDate']=0;
 	}
-	echo '<td><input ' .(in_array('FwdDate',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="12" type="text" class="number" name="FwdDate" size="4" maxlength="2" value="'. $_POST['FwdDate'].'" /></td>
+	echo '<td><input ' .(in_array('FwdDate',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="12" type="integer" class="number" name="FwdDate" size="4" maxlength="2" value="'. $_POST['FwdDate'].'" /></td>
 		</tr>';
 
 
@@ -793,7 +793,7 @@ if (!isset($_GET['delete'])) {
 		<tr>
 			<td>'._('Phone Number').':</td>';
 	if (!isset($_POST['PhoneNo'])) {$_POST['PhoneNo']='';}
-	echo '<td><input tabindex="16" type="text" name="PhoneNo" size="22" maxlength="20" value="'. $_POST['PhoneNo'].'" /></td>
+	echo '<td><input tabindex="16" type="tel" name="PhoneNo" size="22" maxlength="20" value="'. $_POST['PhoneNo'].'" /></td>
 		</tr>';
 
 	echo '<tr>
@@ -801,7 +801,7 @@ if (!isset($_GET['delete'])) {
 	if (!isset($_POST['FaxNo'])) {
 		$_POST['FaxNo']='';
 	}
-	echo '<td><input tabindex="17" type="text" name="FaxNo" size="22" maxlength="20" value="'. $_POST['FaxNo'].'" /></td>
+	echo '<td><input tabindex="17" type="tel" name="FaxNo" size="22" maxlength="20" value="'. $_POST['FaxNo'].'" /></td>
 		</tr>';
 
 	if (!isset($_POST['Email'])) {
@@ -810,7 +810,7 @@ if (!isset($_GET['delete'])) {
 	echo '<tr>
 			<td>'.(($_POST['Email']) ? '<a href="Mailto:'.$_POST['Email'].'">'._('Email').':</a>' : _('Email').':').'</td>';
 	  //only display email link if there is an email address
-	echo '<td><input tabindex="18" type="text" name="Email" size="56" maxlength="55" value="'. $_POST['Email'].'" /></td>
+	echo '<td><input tabindex="18" type="email" name="Email" placeholder="e.g. example@domain.com" size="56" maxlength="55" value="'. $_POST['Email'].'" /></td>
 		</tr>';
 
 	DB_data_seek($result,0);

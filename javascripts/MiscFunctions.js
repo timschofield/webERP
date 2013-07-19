@@ -29,6 +29,15 @@ function rTN(event){
 	}
 	else return false; 
 }
+function rTI(event){
+	if (window.event) k=window.event.keyCode;
+	else if (event) k=event.which;
+	else return true;
+	kC=String.fromCharCode(k);
+	if ((k==null) || (k==0) || (k==8) || (k==9) || (k==13) || (k==27)) return true;
+	else if ((("0123456789").indexOf(kC)>-1)) return true;
+	else return false;
+}
 function rLocaleNumber(){
 	var Lang = document.getElementById('Lang').value;
 	switch(Lang){
@@ -241,6 +250,71 @@ function clickDate(){
 function changeDate(){
 	isDate(this.value,this.alt);
 }
+function SortSelect(selElem) {
+	var tmpArray = new Array();
+	columnText=selElem.innerHTML;
+	parentElem=selElem.parentNode;
+	table=parentElem.parentNode;
+	row = table.rows[0];
+	for (var j = 0, col; col = row.cells[j]; j++) {
+		if (row.cells[j].innerHTML==columnText) {
+			columnNumber=j;
+			s=getComputedStyle(row.cells[j], null);
+			if (s.cursor=="s-resize") {
+				row.cells[j].style.cursor="n-resize";
+				direction="a";
+			} else {
+				row.cells[j].style.cursor="s-resize";
+				direction="d";
+			}
+		}
+	}
+	for (var i = 1, row; row = table.rows[i]; i++) {
+		var rowArray = new Array();
+		for (var j = 0, col; col = row.cells[j]; j++) {
+			if (row.cells[j].tagName == 'TD' ) {
+				rowArray[j]=row.cells[j].innerHTML;
+				columnClass=row.cells[columnNumber].className;
+			}
+		}
+		tmpArray[i]=rowArray;
+	}
+	tmpArray.sort(
+		function(a,b) {
+			if (direction=="a") {
+				if (columnClass=="number") {
+					return parseFloat(a[columnNumber])-parseFloat(b[columnNumber]);
+				} else if (columnClass=="date") {
+					da=new Date(a[columnNumber]);
+					db=new Date(b[columnNumber]);
+					return da>db;
+				} else {
+					return a[columnNumber].localeCompare(b[columnNumber])
+				}
+			} else {
+				if (columnClass=="number") {
+					return parseFloat(b[columnNumber])-parseFloat(a[columnNumber]);
+				} else if (columnClass=="date") {
+					da=new Date(a[columnNumber]);
+					db=new Date(b[columnNumber]);
+					return da<=db;
+				} else {
+					return b[columnNumber].localeCompare(a[columnNumber])
+				}
+			}
+		}
+	);
+	for (var i = 0, row; row = table.rows[i+1]; i++) {
+		var rowArray = new Array();
+		rowArray=tmpArray[i];
+		for (var j = 0, col; col = row.cells[j]; j++) {
+			if (row.cells[j].tagName == 'TD' ) {
+				row.cells[j].innerHTML=rowArray[j];
+			}
+		}
+	}
+	return;
+}
 function initial(){
 	if (document.getElementsByTagName){
 		var as=document.getElementsByTagName("a");
@@ -258,6 +332,7 @@ function initial(){
 			ds[i].onchange=changeDate;
 		}
 		if (ds[i].className=="number") ds[i].onkeypress=rTN;
+		if (ds[i].className=="integer") ds[i].onkeypress=rTI;
 		if (ds[i].className=="number") ds[i].onchange=rLocaleNumber;
 	}
 }

@@ -117,9 +117,9 @@ if (count($_SESSION['Contract'.$identifier]->ContractReqts)>0){
 			$k=1;
 		}
 
-		echo '<td><textarea name="Requirement' . $ContractReqtID . '" cols="30" rows="3">' . $ContractComponent->Requirement . '</textarea></td>
-			  <td><input type="text" class="number" name="Qty' . $ContractReqtID . '" size="11" value="' . locale_number_format($ContractComponent->Quantity,'Variable')  . '" /></td>
-			  <td><input type="text" class="number" name="CostPerUnit' . $ContractReqtID . '" size="11" value="' . locale_number_format($ContractComponent->CostPerUnit,$_SESSION['CompanyRecord']['decimalplaces']) . '" /></td>
+		echo '<td><textarea name="Requirement' . $ContractReqtID . '" cols="30" rows="3" required="required" title="' . _('Enter a description of this requirement for the contract') . '" >' . $ContractComponent->Requirement . '</textarea></td>
+			  <td><input type="text" class="number" required="required" title="' . _('Enter the quantity of this requirement for the contract') . '" name="Qty' . $ContractReqtID . '" size="11" value="' . locale_number_format($ContractComponent->Quantity,'Variable')  . '" /></td>
+			  <td><input type="text" class="number" name="CostPerUnit' . $ContractReqtID . '" size="11" required="required" value="' . locale_number_format($ContractComponent->CostPerUnit,$_SESSION['CompanyRecord']['decimalplaces']) . '" /></td>
 			  <td class="number">' . $DisplayLineTotal . '</td>
 			  <td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier. '&amp;Delete=' . $ContractReqtID . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this contract requirement?') . '\');">' . _('Delete') . '</a></td>
 			  </tr>';
@@ -153,15 +153,15 @@ echo '<table class="selection">
 		</tr>
 		<tr>
 			<td>' . _('Requirement Description') . '</td>
-			<td><textarea name="RequirementDescription" cols="30" rows="3">' . $_POST['RequirementDescription'] . '</textarea></td>
+			<td><textarea name="RequirementDescription" cols="30" rows="3" minlength="5" title="' . _('Enter a description of this requirement for the contract') . '" >' . $_POST['RequirementDescription'] . '</textarea></td>
 		</tr>
 		<tr>
 			<td>' . _('Quantity Required') . ':</td>
-			<td><input type="text" class="number" name="Quantity" size="10"	maxlength="10" value="' . $_POST['Quantity'] . '" /></td>
+			<td><input type="text" class="number" name="Quantity" required="required" title="' . _('Enter the quantity of this requirement for the contract') . '" size="10"	maxlength="10" value="' . $_POST['Quantity'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Cost Per Unit') . ':</td>
-			<td><input type="text" class="number" name="CostPerUnit" size="10"	maxlength="10" value="' . $_POST['CostPerUnit'] . '" /></td>
+			<td><input type="text" class="number" name="CostPerUnit" size="10" required="required" title="' . _('Enter the cost per unit of this requirement') . '" maxlength="10" value="' . $_POST['CostPerUnit'] . '" /></td>
 		</tr>
 
 		</table>

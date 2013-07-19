@@ -457,11 +457,11 @@ if (isset($_POST['PrintPDF'])
 			<table class="selection">
 			<tr>
 				<td>' . _('From Customer Code') . ':' . '</td>
-				<td><input tabindex="1" autofocus required type="text" maxlength="6" size="7" name="FromCriteria" value="0" /></td>
+				<td><input tabindex="1" autofocus="autofocus" required="required" type="text" maxlength="6" size="7" name="FromCriteria" value="0" title="' . _('Enter the first customer code alphabetically to include in the report') . '" /></td>
 			</tr>
 			<tr>
 				<td>' . _('To Customer Code') . ':' . '</td>
-				<td><input tabindex="2" type="text" required maxlength="6" size="7" name="ToCriteria" value="zzzzzz" /></td>
+				<td><input tabindex="2" type="text" required="required"  maxlength="6" size="7" name="ToCriteria" value="zzzzzz" title="' . _('Enter the last customer code alphabetically to include in the report') . '" /></td>
 			</tr>
 			<tr>
 				<td>' . _('All balances or overdues only') . ':' . '</td>

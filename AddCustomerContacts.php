@@ -213,10 +213,10 @@ if (!isset($_GET['delete'])) {
 	echo '<tr>
 			<td>'. _('Contact Name') . '</td>';
 	if (isset($_POST['ContactName'])) {
-		echo '<td><input type="text" autofocus required name="ContactName" value="' . $_POST['ContactName']. '" size="35" maxlength="40" /></td>
+		echo '<td><input type="text" autofocus="autofocus" required="required" name="ContactName" value="' . $_POST['ContactName']. '" size="35" maxlength="40" /></td>
 			</tr>';
 	} else {
-		echo '<td><input type="text" required name="ContactName" size="35" maxlength="40" /></td>
+		echo '<td><input type="text" required="required" name="ContactName" size="35" maxlength="40" /></td>
 			</tr>';
 	}
 	echo '<tr>

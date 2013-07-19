@@ -42,8 +42,8 @@ if (get_magic_quotes_gpc()){
 			echo '<input type="hidden" name="CompanyNameField"  value="' . $DefaultCompany . '" />';
 		} else if ($AllowCompanySelectionBox === 'ShowInputBox'){
 			// show input box
-			echo _('Company') . '<input type="text" name="CompanyNameField"  value="' . $DefaultCompany . '" />';
-		}else{
+			echo _('Company') . '<input type="text" name="CompanyNameField"  autofocus="autofocus" required="required" value="' . $DefaultCompany . '" />';
+		} else {
 			// Show selection box ($AllowCompanySelectionBox == 'ShowSelectionBox')
 			echo _('Company');
 			echo '<select name="CompanyNameField">';
@@ -63,9 +63,9 @@ if (get_magic_quotes_gpc()){
 	</span>
 	<br />
 	<span><?php echo _('User name'); ?>:</span><br />
-	<input type="text" name="UserNameEntryField" maxlength="20" /><br />
+	<input type="text" name="UserNameEntryField" required="required" autofocus="autofocus" maxlength="20" /><br />
 	<span><?php echo _('Password'); ?>:</span><br />
-	<input type="password" name="Password" /><br />
+	<input type="password" required="required" name="Password" /><br />
 	<div id="demo_text">
 	<?php
 	if (isset($demo_text)){
@@ -80,10 +80,5 @@ if (get_magic_quotes_gpc()){
 	<br />
 	<div style="text-align:center"><a href="https://sourceforge.net/projects/web-erp"><img src="https://sflogo.sourceforge.net/sflogo.php?group_id=70949&amp;type=8" width="80" height="15" alt="Get webERP Accounting &amp; Business Management at SourceForge.net. Fast, secure and Free Open Source software downloads" /></a></div>
 </div>
-	<script type="text/javascript">
-			<!--
-				  document.forms[0].UserNameEntryField.focus();
-			//-->
-	</script>
 </body>
 </html>

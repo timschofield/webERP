@@ -735,7 +735,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 				</tr>
 				<tr>
 					<td>' . _('Quantity') . ': </td>
-					<td><input ' . (in_array('Quantity',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="4" type="text" class="number" name="Quantity" size="10" maxlength="8" value="';
+					<td><input ' . (in_array('Quantity',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="4" type="text" class="number" required="required" name="Quantity" size="10" maxlength="8" title="' . _('Enter the quantity of this item required for the parent item') . '" value="';
 		if (isset($_POST['Quantity'])){
 			echo $_POST['Quantity'];
 		} else {
@@ -754,7 +754,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 		echo '<tr>
 				<td>' . _('Effective After') . ' (' . $_SESSION['DefaultDateFormat'] . '):</td>
-				<td><input ' . (in_array('EffectiveAfter',$Errors) ?  'class="inputerror"' : '' ) . ' tabindex="5" type="text" name="EffectiveAfter" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" size="11" maxlength="10" value="' . $_POST['EffectiveAfter'] .'" /></td>
+				<td><input ' . (in_array('EffectiveAfter',$Errors) ?  'class="inputerror"' : '' ) . ' tabindex="5" type="text" required="required" name="EffectiveAfter" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" size="11" maxlength="10" value="' . $_POST['EffectiveAfter'] .'" /></td>
 			</tr>
 			<tr>
 				<td>' . _('Effective To') . ' (' . $_SESSION['DefaultDateFormat'] . '):</td>
@@ -762,9 +762,10 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			</tr>';
 
 		if ($ParentMBflag=='M' OR $ParentMBflag=='G'){
-			echo '<tr><td>' . _('Auto Issue this Component to Work Orders') . ':</td>
-				<td>
-				<select tabindex="7" name="AutoIssue">';
+			echo '<tr>
+					<td>' . _('Auto Issue this Component to Work Orders') . ':</td>
+					<td>
+					<select tabindex="7" name="AutoIssue">';
 
 			if (!isset($_POST['AutoIssue'])){
 				$_POST['AutoIssue'] = $_SESSION['AutoIssue'];
@@ -778,13 +779,16 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			}
 
 
-			echo '</select></td></tr>';
+			echo '</select></td>
+				</tr>';
 		} else {
 			echo '<input type="hidden" name="AutoIssue" value="0" />';
 		}
 
 		echo '</table>
-			<br /><div class="centre"><input tabindex="8" type="submit" name="Submit" value="' . _('Enter Information') . '" />
+			<br />
+			<div class="centre">
+				<input tabindex="8" type="submit" name="Submit" value="' . _('Enter Information') . '" />
 			</div>
             </div>
 			</form>';

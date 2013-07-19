@@ -84,8 +84,8 @@ if (isset($_SESSION['Contract'.$identifier]) AND
 /*User hit the button to enter line items -
   then meta refresh to Contract_Items.php*/
 	$InputError = false;
-	if(mb_strlen($_SESSION['Contract'.$identifier]->ContractRef)<2){
-		prnMsg(_('The contract reference must be entered (and be longer than 2 characters) before the requirements of the contract can be setup'),'warn');
+	if(mb_strlen($_SESSION['Contract'.$identifier]->ContractRef)<5){
+		prnMsg(_('The contract reference must be entered (and be longer than 5 characters) before the requirements of the contract can be setup'),'warn');
 		$InputError = true;
 	}
 
@@ -755,17 +755,20 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 	echo '<table cellpadding="3" class="selection">
 			<tr>
 			<td><h5>' . _('Part of the Customer Branch Name') . ':</h5></td>
-			<td><input tabindex="1" type="text" name="CustKeywords" size="20" maxlength="25" /></td>
+			<td><input tabindex="1" type="text" name="CustKeywords" autofocus="autofocus" size="20" maxlength="25" /></td>
 			<td><h2><b>' . _('OR') . '</b></h2></td>
 			<td><h5>' .  _('Part of the Customer Branch Code'). ':</h5></td>
-			<td><input tabindex="2" type="text" name="CustCode" size="15" maxlength="18" /></td>
+			<td><input tabindex="2" type="text" name="CustCode" pattern="[a-zA-Z0-9_\-]*" title="' . _('Enter an extract of the customer code to search for. Customer codes can only contain alpha-numeric characters, underscore or hyphens') . '" size="15" maxlength="18" /></td>
 			<td><h2><b>' . _('OR') . '</b></h2></td>
 			<td><h5>' . _('Part of the Branch Phone Number') . ':</h5></td>
-			<td><input tabindex="3" type="text" name="CustPhone" size="15" maxlength="18" /></td>
+			<td><input tabindex="3" type="tel" name="CustPhone" size="15" maxlength="18" /></td>
 		</tr>
 		</table>
-		<br /><div class="centre"><input tabindex="4" type="submit" name="SearchCustomers" value="' . _('Search Now') . '" />
-		<input tabindex="5" type="submit" name="reset" value="' . _('Reset') .'" /></div>';
+		<br />
+		<div class="centre">
+			<input tabindex="4" type="submit" name="SearchCustomers" value="' . _('Search Now') . '" />
+			<input tabindex="5" type="submit" name="reset" value="' . _('Reset') .'" />
+		</div>';
 
 	if (isset($result_CustSelect)) {
 
@@ -838,13 +841,14 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 				<td>';
 	if ($_SESSION['Contract'.$identifier]->Status==0) {
 		/*Then the contract has not become an order yet and we can allow changes to the ContractRef */
-		echo '<input type="text" name="ContractRef" size="21" maxlength="20" value="' . $_SESSION['Contract'.$identifier]->ContractRef . '" />';
+		echo '<input type="text" name="ContractRef" autofocus="autofocus" required="required" size="21" title="' . _('Enter the contract reference. This reference will be used as the item code so no more than 20 alpha-numeric characters or underscore') . '" pattern="[a-zA-Z0-9_]*" maxlength="20" value="' . $_SESSION['Contract'.$identifier]->ContractRef . '" />';
 	} else {
 		/*Just show the contract Ref - dont allow modification */
-		echo '<input type="hidden" name="ContractRef" value="' . $_SESSION['Contract'.$identifier]->ContractRef . '" />' . $_SESSION['Contract'.$identifier]->ContractRef;
+		echo '<input type="hidden" name="ContractRef" title="' . _('Enter the contract reference. This reference will be used as the item code so no more than 20 alpha-numeric characters or underscore') . '" pattern="[a-zA-Z0-9_]*" value="' . $_SESSION['Contract'.$identifier]->ContractRef . '" />' . $_SESSION['Contract'.$identifier]->ContractRef;
 	}
-	echo '</td></tr>';
-	echo '<tr>
+	echo '</td>
+		</tr>
+		<tr>
 			<td>' . _('Category') . ':</td>
 			<td><select name="CategoryID" >';
 
@@ -907,7 +911,7 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 		</tr>
 		<tr>
 			<td>' . _('Contract Description') . ':</td>
-			<td><textarea name="ContractDescription" style="width:100%" rows="5" cols="40">' . $_SESSION['Contract'.$identifier]->ContractDescription . '</textarea></td>
+			<td><textarea name="ContractDescription" style="width:100%" required="required" title="' . _('A description of the contract is required') . '" minlength="5" rows="5" cols="40">' . $_SESSION['Contract'.$identifier]->ContractDescription . '</textarea></td>
 		</tr><tr>
 			<td>'. _('Drawing File') . ' .jpg' . ' ' . _('format only') .':</td>
 			<td><input type="file" id="Drawing" name="Drawing" /></td>
@@ -919,25 +923,25 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 
 	echo '<tr>
 			<td>' . _('Required Date') . ':</td>
-			<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] . '" name="RequiredDate" size="11" value="' . $_SESSION['Contract'.$identifier]->RequiredDate . '" /></td>
+			<td><input type="text" required="required" class="date" alt="' .$_SESSION['DefaultDateFormat'] . '" name="RequiredDate" size="11" value="' . $_SESSION['Contract'.$identifier]->RequiredDate . '" /></td>
 		</tr>';
 
 	echo '<tr>
 			<td>' . _('Customer Reference') . ':</td>
-			<td><input type="text" name="CustomerRef" size="21" maxlength="20" value="' . $_SESSION['Contract'.$identifier]->CustomerRef . '" /></td>
+			<td><input type="text" name="CustomerRef" required="required" title="' . _('Enter the reference that the customer uses for this contract') . '" size="21" maxlength="20" value="' . $_SESSION['Contract'.$identifier]->CustomerRef . '" /></td>
 		</tr>';
 	if (!isset($_SESSION['Contract'.$identifier]->Margin)){
 		$_SESSION['Contract'.$identifier]->Margin =50;
 	}
 	echo '<tr>
 			<td>' . _('Gross Profit') . ' %:</td>
-			<td><input class="number" type="text" name="Margin" size="6" maxlength="6" value="' . locale_number_format($_SESSION['Contract'.$identifier]->Margin, 2) . '" /></td>
+			<td><input class="number" type="text" name="Margin"  required="required" size="6" maxlength="6" value="' . locale_number_format($_SESSION['Contract'.$identifier]->Margin, 2) . '" /></td>
 		</tr>';
 
 	if ($_SESSION['CompanyRecord']['currencydefault'] != $_SESSION['Contract'.$identifier]->CurrCode){
 		echo '<tr>
 				<td>' . $_SESSION['Contract'.$identifier]->CurrCode . ' ' . _('Exchange Rate') . ':</td>
-				<td><input class="number" type="text" name="ExRate" size="10" maxlength="10" value="' . locale_number_format($_SESSION['Contract'.$identifier]->ExRate,'Variable') . '" /></td>
+				<td><input class="number" type="text" name="ExRate"  required="required" title="' . _('The exchange rate between the customer\'s currency and the functional currency of the business must be entered') . '" size="10" maxlength="10" value="' . locale_number_format($_SESSION['Contract'.$identifier]->ExRate,'Variable') . '" /></td>
 			</tr>';
 	} else {
 		echo '<input type="hidden" name="ExRate" value="' . locale_number_format($_SESSION['Contract'.$identifier]->ExRate,'Variable') . '" />';

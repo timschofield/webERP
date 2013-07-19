@@ -230,20 +230,25 @@ if (!isset($_GET['delete'])) {
 					<td>' . $_POST['AccountCode'] . '</td></tr>';
 	} else {
 		echo '<table class="selection">';
-		echo '<tr><td>' . _('Account Code') . ':</td>
-					<td><input type="text" name="AccountCode" size="20" maxlength="20" /></td>
-				</tr>';
+		echo '<tr>
+				<td>' . _('Account Code') . ':</td>
+				<td><input type="text" name="AccountCode" required="required" autofocus="autofocus" pattern="[0-9a-zA-Z_-]*" title="' . _('Enter up to 20 alpha-numeric characters for the general ledger account code') . '" size="20" maxlength="20" /></td>
+			</tr>';
 	}
 
-	if (!isset($_POST['AccountName'])) {$_POST['AccountName']='';}
-	echo '<tr><td>' . _('Account Name') . ':</td><td><input type="text" size="51" maxlength="50" name="AccountName" value="' . $_POST['AccountName'] . '" /></td></tr>';
+	if (!isset($_POST['AccountName'])) {
+		$_POST['AccountName']='';
+	}
+	echo '<tr>
+			<td>' . _('Account Name') . ':</td>
+			<td><input type="text" size="51" required="required" ' . (isset($_POST['AccountCode']) ? 'autofocus="autofocus"':'') . ' title="' . _('Enter up to 50 alpha-numeric characters for the general ledger account name') . '" maxlength="50" name="AccountName" value="' . $_POST['AccountName'] . '" /></td></tr>';
 
 	$sql = "SELECT groupname FROM accountgroups ORDER BY sequenceintb";
 	$result = DB_query($sql, $db);
 
 	echo '<tr>
 			<td>' . _('Account Group') . ':</td>
-			<td><select name="Group">';
+			<td><select required="required" name="Group">';
 
 	while ($myrow = DB_fetch_array($result)){
 		if (isset($_POST['Group']) and $myrow[0]==$_POST['Group']){
@@ -255,17 +260,13 @@ if (!isset($_GET['delete'])) {
 	}
     echo '</select></td>
 		</tr>
-		</table>';
-
-	if (!isset($_GET['SelectedAccount']) or $_GET['SelectedAccount']=='') {
-		echo '<script  type="text/javascript">defaultControl(document.GLAccounts.AccountCode);</script>';
-	} else {
-		echo '<script  type="text/javascript">defaultControl(document.GLAccounts.AccountName);</script>';
-	}
-
-	echo '<br /><div class="centre"><input type="submit" name="submit" value="'. _('Enter Information') . '" /></div>';
-    echo '</div>';
-	echo '</form>';
+		</table>
+		<br />
+		<div class="centre">
+			<input type="submit" name="submit" value="'. _('Enter Information') . '" />
+		</div>
+		</div>
+		</form>';
 
 } //end if record deleted no point displaying form to add record
 
@@ -291,11 +292,11 @@ or deletion of the records*/
 
 	echo '<br /><table class="selection">';
 	echo '<tr>
-		<th>' . _('Account Code') . '</th>
-		<th>' . _('Account Name') . '</th>
-		<th>' . _('Account Group') . '</th>
-		<th>' . _('P/L or B/S') . '</th>
-	</tr>';
+			<th>' . _('Account Code') . '</th>
+			<th>' . _('Account Name') . '</th>
+			<th>' . _('Account Group') . '</th>
+			<th>' . _('P/L or B/S') . '</th>
+		</tr>';
 
 	$k=0; //row colour counter
 

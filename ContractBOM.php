@@ -265,11 +265,11 @@ if (count($_SESSION['Contract'.$identifier]->ContractBOM)>0){
 
 		echo '<td>' . $ContractComponent->StockID . '</td>
 			  <td>' . $ContractComponent->ItemDescription . '</td>
-			  <td><input type="text" class="number" name="Qty' . $ContractComponent->ComponentID . '" size="11" value="' . locale_number_format($ContractComponent->Quantity,$ContractComponent->DecimalPlaces)  . '" /></td>
+			  <td><input type="text" class="number" required="required" title="' . _('Enter the quantity of this component required to complete the contract') . '" name="Qty' . $ContractComponent->ComponentID . '" size="11" value="' . locale_number_format($ContractComponent->Quantity,$ContractComponent->DecimalPlaces)  . '" /></td>
 			  <td>' . $ContractComponent->UOM . '</td>
 			  <td class="number">' . locale_number_format($ContractComponent->ItemCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 			  <td class="number">' . $DisplayLineTotal . '</td>
-			  <td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier. '&amp;Delete=' . $ContractComponent->ComponentID . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this item from the contract BOM?') . '\');">' . _('Delete') . '</a></td></tr>';
+			  <td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier. '&amp;Delete=' . $ContractComponent->ComponentID . '" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this item from the contract BOM?') . ',' . _('Confirm Deletion') . '\');">' . _('Delete') . '</a></td></tr>';
 		$TotalCost += $LineTotal;
 	}
 
@@ -300,7 +300,8 @@ if (!isset($_GET['Edit'])) {
 		'</p>';
 	echo '<table class="selection">
 			<tr></tr>
-			<tr><td><select name="StockCat">';
+			<tr>
+				<td><select name="StockCat">';
 
 	echo '<option selected="selected" value="All">' . _('All').'</option>';
 	while ($myrow1 = DB_fetch_array($result1)) {
@@ -324,12 +325,12 @@ if (!isset($_GET['Edit'])) {
 
 	echo '</select></td>
 			<td>' . _('Enter text extracts in the description') . ':</td>
-			<td><input type="text" name="Keywords" size="20" maxlength="25" value="' . $_POST['Keywords'] . '" /></td>
+			<td><input type="text" autofocus="autofocus" title="' . _('Enter any text that should appear in the item description as the basis of your search') . '" name="Keywords" size="20" maxlength="25" value="' . $_POST['Keywords'] . '" /></td>
 		</tr>
 		<tr>
 			<td></td>
 			<td><b>' . _('OR') . ' </b>' . _('Enter extract of the Stock Code') . ':</td>
-			<td><input type="text" name="StockCode" size="15" maxlength="18" value="' . $_POST['StockCode'] . '" /></td>
+			<td><input type="text" title="' . _('Enter any part of an item code to seach for all matching items containing that text in the code') . '" name="StockCode" size="15" maxlength="18" value="' . $_POST['StockCode'] . '" /></td>
 		</tr>
 		<tr>
 			<td></td>
@@ -375,12 +376,12 @@ if (isset($SearchResult)) {
 			$ImageSource = '<i>'._('No Image').'</i>';
 		}
 
-		echo '<td>'.$myrow['stockid'].'</td>
-				<td>'.$myrow['description'].'</td>
-				<td>'.$myrow['units'] . '</td>
-				<td>'.$ImageSource.'</td>
-				<td><input class="number" type="text" size="6" value="0" name="Qty'.$i.'" />
-				<input type="hidden" name="StockID'.$i.'" value="' . $myrow['stockid'] . '" />
+		echo '<td>' . $myrow['stockid'] . '</td>
+				<td>' . $myrow['description'] . '</td>
+				<td>' . $myrow['units'] . '</td>
+				<td>' . $ImageSource . '</td>
+				<td><input class="number" type="text" title="' . _('Enter the quantity required of this item to complete the contract') . '" required="required" size="6" value="0" name="Qty'.$i.'" />
+				<input type="hidden" name="StockID' . $i . '" value="' . $myrow['stockid'] . '" />
 				</td>
 			</tr>';
 		$i++;

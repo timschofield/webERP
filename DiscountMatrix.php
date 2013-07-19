@@ -130,11 +130,11 @@ if (DB_num_rows($result) > 0) {
 
 echo '<tr>
 		<td>' . _('Quantity Break') . '</td>
-		<td><input class="number" tabindex="3" ' . (in_array('QuantityBreak',$Errors) ? 'class="inputerror"' : '') .' type="text" name="QuantityBreak" size="10" maxlength="10" /></td>
+		<td><input class="integer' . (in_array('QuantityBreak',$Errors) ? ' inputerror' : '') . '" tabindex="3" required="required" type="number" name="QuantityBreak" size="10" maxlength="10" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Discount Rate') . ' (%):</td>
-		<td><input class="number" tabindex="4" ' . (in_array('DiscountRate',$Errors) ? 'class="inputerror"' : '') . 'type="text" name="DiscountRate" size="5" maxlength="5" /></td>
+		<td><input class="number' . (in_array('DiscountRate',$Errors) ? ' inputerror' : '') . '" tabindex="4" type="text" required="required" name="DiscountRate" title="' . _('The discount to apply to orders where the quantity exceeds the specified quantity') . '" size="5" maxlength="5" /></td>
 	</tr>
 	</table>
 	<br />

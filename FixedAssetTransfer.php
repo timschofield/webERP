@@ -61,15 +61,15 @@ if (isset($_GET['AssetID'])) {
 
 
 	if (isset($_POST['Keywords'])) {
-		echo '<input type="text" name="Keywords" value="' . trim($_POST['Keywords'],'%') . '" size="20" maxlength="25" />';
+		echo '<input type="text" name="Keywords" value="' . trim($_POST['Keywords'],'%') . '" title="' . _('Enter some text that should appear in the fixed asset\'s description to search for') . '" size="20" maxlength="25" />';
 	} else {
-		echo '<input type="text" name="Keywords" size="20" maxlength="25" />';
+		echo '<input type="text" name="Keywords" title="' . _('Enter some text that should appear in the fixed asset\'s description to search for') . '" size="20" maxlength="25" />';
 	}
 
-	echo '</td></tr><tr>
-
-
-	<td>' . _('Asset Location') . ':</td>
+	echo '</td>
+		</tr>
+		<tr>
+		<td>' . _('Asset Location') . ':</td>
 		<td><select name="AssetLocation">';
 			if (!isset($_POST['AssetLocation'])) {
 				$_POST['AssetLocation'] = 'ALL';
@@ -95,14 +95,16 @@ if (isset($_GET['AssetID'])) {
 	echo '<td>';
 
 	if (isset($_POST['AssetID'])) {
-		echo '<input type="text" name="AssetID" value="'. trim($_POST['AssetID'],'%') . '" size="15" maxlength="40" />';
+		echo '<input type="text" name="AssetID" value="'. trim($_POST['AssetID'],'%') . '" title="' . _('Enter some text that should appear in the fixed asset\'s item code to search for') . '" size="15" maxlength="20" />';
 	} else {
-		echo '<input type="text" name="AssetID" size="15" maxlength="40" />';
+		echo '<input type="text" name="AssetID" title="' . _('Enter some text that should appear in the fixed asset\'s item code to search for') . '" size="15" maxlength="20" />';
 	}
 
-	echo '</td></tr></table><br />';
-
-	echo '<div class="centre"><input type="submit" name="Search" value="'. _('Search Now') . '" /></div>
+	echo '</td>
+		</tr>
+		</table>
+		<br />
+		<div class="centre"><input type="submit" name="Search" value="'. _('Search Now') . '" /></div>
           </div>
           </form>
           <br />';

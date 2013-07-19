@@ -10,18 +10,16 @@ $BookMark = 'WhereAllocated';
 
 include('includes/header.inc');
 
-echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-echo '<div>';
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-
-echo '<p class="page_title_text">
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
+	<div>
+	<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+	<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' .	_('Customer Where Allocated'). '" alt="" />' . $Title . '
 	</p>
 	<table class="selection">
 	<tr>
 		<td>' . _('Type') . ':</td>
 		<td><select tabindex="1" name="TransType"> ';
-
 
 if (!isset($_POST['TransType'])){
 	$_POST['TransType']='10';
@@ -38,7 +36,7 @@ echo '</select></td>';
 
 if (!isset($_POST['TransNo'])) {$_POST['TransNo']='';}
 echo '<td>'._('Transaction Number').':</td>
-		<td><input tabindex="2" type="text" class="number" name="TransNo" maxlength="10" size="10" value="'. $_POST['TransNo'] . '" /></td>
+		<td><input tabindex="2" type="text" class="number" name="TransNo"  required="required" maxlength="10" size="10" value="'. $_POST['TransNo'] . '" /></td>
 	</tr>
 	</table>
 	<br />

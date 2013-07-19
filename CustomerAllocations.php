@@ -403,7 +403,7 @@ if (isset($_POST['AllocTrans'])) {
 					</tr>';
 		} else {
 				echo '<td class="number"><input type="hidden" name="YetToAlloc' . $Counter . '" value="' . round($YetToAlloc,$_SESSION['Alloc']->CurrDecimalPlaces) . '" />';
-				echo '<input tabindex="' . $j .'" type="checkbox" name="All' .  $Counter . '"';
+				echo '<input tabindex="' . $j .'" type="checkbox" title="' . _('Check this box to allocate the entire amouunt of this transaction. Just enter the amount without ticking this check box for a partial allocation') . '" name="All' .  $Counter . '"';
 
 				if (ABS($AllocnItem->AllocAmt-$YetToAlloc) < 0.01) {
 						echo ' checked="checked" />';
@@ -412,8 +412,8 @@ if (isset($_POST['AllocTrans'])) {
 				}
 				$balance += $YetToAlloc-$AllocnItem->AllocAmt;
 				$j++;
-				echo '<input tabindex="'.$j.'" type="text" class="number" name="Amt' . $Counter .'" maxlength="12" size="13" value="' . locale_number_format(round($AllocnItem->AllocAmt,$_SESSION['Alloc']->CurrDecimalPlaces),$_SESSION['Alloc']->CurrDecimalPlaces) . '" />
-					<input type="hidden" name="AllocID' . $Counter . '" value="' . $AllocnItem->ID . '" /></td>
+				echo '<input tabindex="' . $j . '" type="text" class="number" ' . ($j==1 ? 'autofocus="autofocus"' :'') . ' name="Amt' . $Counter .'" title="' . _('Enter the amount of this transaction to be allocated. Nothing should be entered here if the entire transaction is to be allocated, use the check box') . '" maxlength="12" size="13" value="' . locale_number_format(round($AllocnItem->AllocAmt,$_SESSION['Alloc']->CurrDecimalPlaces),$_SESSION['Alloc']->CurrDecimalPlaces) . '" />
+					<input type="hidden" name="AllocID' . $Counter . '" value="' . $AllocnItem->ID . '" ></td>
 					<td class="number">' . locale_number_format($balance,$_SESSION['Alloc']->CurrDecimalPlaces) . '</td>
 				</tr>';
 		}
