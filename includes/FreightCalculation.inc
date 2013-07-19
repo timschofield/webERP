@@ -15,7 +15,29 @@ Function CalcFreightCost ($TotalValue,
 				$FromLocation,
 				$Currency,
 				$db){
-
+	
+	$ParameterError = FALSE;
+	if ((!isset($BrAdd2)) AND (!isset($BrAdd3)) AND (!isset($BrAdd4)) AND (!isset($BrAdd5)) AND (!isset($BrAddCountry))){
+		// No address field to detect destination ==> ERROR
+		$ParameterError = TRUE;
+	}
+	if ((!isset($TotalVolume)) AND (!isset($TotalWeight))){
+		// No weight AND no volume ==> ERROR
+		$ParameterError = TRUE;
+	}
+	if (!isset($FromLocation)){
+		// No location FROM ==> ERROR
+		$ParameterError = TRUE;
+	}
+	if (!isset($Currency)){
+		// No Currency ==> ERROR
+		$ParameterError = TRUE;
+	}
+	if($ParameterError){
+		return array ("NOT AVAILABLE", "NOT AVAILABLE");	
+	}
+	// All parameters are OK, so we move ahead...
+	
 	// make an array of all the words that could be the name of the destination zone (city, state or ZIP)
 	$FindCity = explode(' ', $BrAdd2 . ' ' . $BrAdd3 . ' ' . $BrAdd4 . ' ' . $BrAdd5);
 
@@ -44,7 +66,7 @@ Function CalcFreightCost ($TotalValue,
 
 	$CalcFreightCostResult = DB_query($sql,$db);
 	if (DB_error_no($db) !=0) {
-		echo _('The freight calculation for the destination city cannot be performed because') . ' - ' . DB_error_msg($db);
+		echo _('The freight calculation for the destination city cannot be performed because') . ' - ' . DB_error_msg($db) . ' - ' . $sql;
 	} elseif (DB_num_rows($CalcFreightCostResult)>0) {
 
 		$CalcFreightCost =9999999999;
