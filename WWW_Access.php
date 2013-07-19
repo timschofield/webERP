@@ -171,7 +171,7 @@ if (!isset($_POST['SecRoleName'])) {
 }
 echo '<tr>
 		<td>' . _('Role') . ':</td>
-		<td><input type="text" name="SecRoleName" pattern=".{4,}" size="40" maxlength="40" value="' . $_POST['SecRoleName'] . '" title="'._("The role description entered must be at least 4 characters long").'" /></td>
+		<td><input type="text" name="SecRoleName" pattern=".{4,}" size="40" maxlength="40" value="' . $_POST['SecRoleName'] . '" required="true" title="'._("The role description entered must be at least 4 characters long").'" /></td>
 	</tr>';
 echo '</table>
 	<br />
