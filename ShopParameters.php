@@ -31,6 +31,9 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['ShopTitle'] != $_POST['X_ShopTitle'] ) {
 			$SQL[] = "UPDATE config SET confvalue = '" . DB_escape_string($_POST['X_ShopTitle']) ."' WHERE confname = 'ShopTitle'";
 		}
+		if ($_SESSION['ShopManagerEmail'] != $_POST['X_ShopManagerEmail'] ) {
+			$SQL[] = "UPDATE config SET confvalue = '" . DB_escape_string($_POST['X_ShopManagerEmail']) ."' WHERE confname = 'ShopManagerEmail'";
+		}
 		if ($_SESSION['ShopPrivacyStatement'] != $_POST['X_ShopPrivacyStatement'] ) {
 			$SQL[] = "UPDATE config SET confvalue = '" . DB_escape_string($_POST['X_ShopPrivacyStatement']) ."' WHERE confname = 'ShopPrivacyStatement'";
 		}
@@ -231,6 +234,13 @@ echo '<tr>
 		<td>' . _('Shop Title') . ':</td>
 		<td><input type="text" name="X_ShopTitle" required size="40" maxlength="40" value="' . $_SESSION['ShopTitle'] . '" /></td>
 		<td>' . _('Enter the title of the shop that will be displayed on the main webSHOP page. Useful for SEO purposes.') . '</td>
+	</tr>';
+
+//Shop Manager Email
+echo '<tr>
+		<td>' . _('Shop Manager Email') . ':</td>
+		<td><input type="text" name="X_ShopManagerEmail" required size="50" maxlength="50" value="' . $_SESSION['ShopManagerEmail'] . '" /></td>
+		<td>' . _('Enter the email address of the webSHOP manager.') . '</td>
 	</tr>';
 	
 // Shop Customer

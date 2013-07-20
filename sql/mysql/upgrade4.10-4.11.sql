@@ -182,5 +182,7 @@ INSERT INTO config VALUES ('ShopShowLogoAndShopName','1');
 
 ALTER TABLE  `salescat` ADD  `active` INT NOT NULL DEFAULT  '1' COMMENT  '1 if active 0 if inactive';
 
+INSERT INTO config VALUES ('ShopManagerEmail','');
+
 UPDATE config SET confvalue='4.11.0' WHERE confname='VersionNumber';
 
