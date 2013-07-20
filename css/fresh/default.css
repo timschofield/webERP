@@ -75,8 +75,13 @@ th.number {
 	background-color: #800000;
 	color: white;
 }
-th.SortableColumn {
-	cursor: s-resize;
+th.ascending {
+  cursor: s-resize;
+  background: url(images/ascending.png) center right no-repeat;
+}
+th.descending {
+  cursor: n-resize;
+  background: url(images/descending.png) centre right no-repeat;
 }
 td {
 	text-align: left;

@@ -765,8 +765,8 @@ if (isset($SearchResult) AND !isset($_POST['Select'])) {
 		echo '<table id="ItemSearchTable" class="selection">';
 		$TableHeader = '<tr>
 							<th>' . _('Stock Status') . '</th>
-							<th class="sort-header" onclick="SortSelect(this)">' . _('Code') . '</th>
-							<th class="sort-header" onclick="SortSelect(this)">' . _('Description') . '</th>
+							<th class="ascending" onclick="SortSelect(this)">' . _('Code') . '</th>
+							<th class="ascending" onclick="SortSelect(this)">' . _('Description') . '</th>
 							<th>' . _('Total Qty On Hand') . '</th>
 							<th>' . _('Units') . '</th>
 						</tr>';
@@ -803,11 +803,14 @@ if (isset($SearchResult) AND !isset($_POST['Select'])) {
 				<td>' . $myrow['units'] . '</td>
 				<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?StockID=' . $myrow['stockid'].'">' . _('View') . '</a></td>
 				</tr>';
+/*
 			$j++;
+
 			if ($j == 20 AND ($RowIndex + 1 != $_SESSION['DisplayRecordsMax'])) {
 				$j = 1;
 				echo $TableHeader;
 			}
+			*/
 			$RowIndex = $RowIndex + 1;
 			//end of page full new headings if
 		}

@@ -74,8 +74,16 @@ th.number {
 	background-color: #ccc;
 	color: #330000;
 }
-th.SortableColumn {
-	cursor: s-resize;
+th.ascending {
+  cursor: s-resize;
+  color:green;
+  background: url(images/ascending.png) center right no-repeat;
+}
+
+th.descending {
+  cursor: n-resize;
+  color:blue;
+  background: url(images/descending.png) centre right no-repeat;
 }
 td {
 	font-family: Arial, Verdana, Helvetica, sans-serif;

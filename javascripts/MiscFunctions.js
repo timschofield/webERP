@@ -259,13 +259,12 @@ function SortSelect(selElem) {
 	for (var j = 0, col; col = row.cells[j]; j++) {
 		if (row.cells[j].innerHTML==columnText) {
 			columnNumber=j;
-			s=getComputedStyle(row.cells[j], null);
-			if (s.cursor=="s-resize") {
-				row.cells[j].style.cursor="n-resize";
+			if (selElem.className=="ascending") {
+				selElem.className='descending';
 				direction="a";
 			} else {
-				row.cells[j].style.cursor="s-resize";
-				direction="d";
+				selElem.className='ascending';
+				direction="a";
 			}
 		}
 	}

@@ -94,14 +94,19 @@ th { /* table heading */
 	color: #330000;
 	text-align: center;
 }
+th.ascending {
+  cursor: s-resize;
+  background: url(images/ascending.png) center right no-repeat;
+}
+th.descending {
+  cursor: n-resize;
+  background: url(images/descending.png) centre right no-repeat;
+}
 th.number {
 	font-weight: normal;
 	background-color: #cccce5;
 	color: #330000;
 	text-align: right;
-}
-th.SortableColumn {
-	cursor: s-resize;
 }
 div.error {
 	background-color:#fddbdb;

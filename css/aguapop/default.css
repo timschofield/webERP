@@ -70,14 +70,23 @@ th {
 	font-weight:normal;
 	padding:3px;
 }
+
+th.ascending {
+  cursor: s-resize;
+  color:green;
+  background: url(images/ascending.png) center right no-repeat;
+}
+
+th.descending {
+  cursor: n-resize;
+  color:blue;
+  background: url(images/descending.png) centre right no-repeat;
+}
 th.number {
 	text-align: right;
 	font-weight: normal;
 	background-color: skyblue;
 	color: white;
-}
-th.SortableColumn {
-	cursor: s-resize;
 }
 td {
 	font-family: Arial, Verdana, Helvetica, sans-serif;

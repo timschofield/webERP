@@ -30,7 +30,7 @@ img{
 	padding:5px;
 	font-weight:bold;
 	color:black;
-	TEXT-ALIGN:center;
+	text-align:center;
 }
 p.good{
 	font-weight:bold;
@@ -54,35 +54,19 @@ th{
 	background-color:#B06161;
 	color:white;
 }
-th.sort-header {
+
+th.ascending {
   cursor: s-resize;
+  color:#B06161;
+  background: url(images/ascending.png) center right no-repeat;
 }
-th.sort-header::-moz-selection,
-th.sort-header::selection {
-  background:transparent;
-  }
-table th.sort-header:after {
-  content:'';
-  float:right;
-  margin-top:7px;
-  border-width:0 4px 4px;
-  border-style:solid;
-  border-color:#404040 transparent;
-  visibility:hidden;
-  }
-table th.sort-header:hover:after {
-  visibility:visible;
-  }
-table th.sort-up:after,
-table th.sort-down:after,
-table th.sort-down:hover:after {
-  visibility:visible;
-  opacity:0.4;
-  }
-table th.sort-up:after {
-  border-bottom:none;
-  border-width:4px 4px 0;
+
+th.descending {
+  cursor: n-resize;
+  color:#B06161;
+  background: url(images/descending.png) centre right no-repeat;
 }
+
 th.number{
 	text-align:right;
 	font-weight:normal;
@@ -133,9 +117,9 @@ textarea:hover{
 	background-color:#EEEEEE;
 }
 div.error{
-background-color:#fddbdb;
-color:red;
-border:1px solid red;
+	background-color:#fddbdb;
+	color:red;
+	border:1px solid red;
 }
 div.warn{
 background-color:#f5dbfd;

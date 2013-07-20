@@ -1,18 +1,21 @@
 webERP Change Log
-19/7/2013 Exson: add required to the input field of WWW_Access.php
-7/19/2013: Exson make the WWW_Access.php html5 compatible
-7/18/2013: Exson: Move the hidden input after the html document type definition. Reported by Tim.
-07/18/2013 Exson: fixed the LanguageSetup.php extra language mark introduced by handle locale number. Reported by Tim. 
-07/18/2013: Exson: Fixed the missing negative mark problem reported by Tim. 
-07/18/2013: Exson add a locale style check to pass the style to MisFunctions.js to do locale number format validation in LanguageSetup.php.
-07/18/2013 Exson: modify the MisFunctions.js to improve the locale number validation feature.
-17/7/2013 icedlava: stripslashes on Description for consistency with LongDescription but why- only until we fix source of this problem in the code
-17/7/2013 icedlava: add checkbox option in UI to clear item image
-17/7/2013 Exson: Add space bar as a accepted charcode for number input in MiscFunctions.js
-16/7/2013 icedlava: Add date check on purchase price effective date.
-16/7/2013 icedlava: AllowCompanySelectionBox comparison fix to allow boolean value to evaluate correctly
-14/7/2013 Exson: Add new directory for new installer and add those default installation sql file.
-14/7/2013 Exson: Rewrite the installer by removing the save.php file and revise the index.php file.
+
+20/7/13 Phil: Added Tim's javascript as modified a bit to use different styles to allow sorting of tables - images for styles to all themes and added th.ascending th.descending to theme/default.css scripts
+19/7/13 Phil: Swag of scripts updated for html5 <input type="tel" "email" pattern required="required" autofocus="autofocus" as per http://www.weberp.org/wiki/TransitionToHtml5 also added many title="" tooltips
+19/7/13 Exson: add required to the input field of WWW_Access.php
+19/7/13: Exson make the WWW_Access.php html5 compatible
+18/7/13: Exson: Move the hidden input after the html document type definition. Reported by Tim.
+18/7/13 Exson: fixed the LanguageSetup.php extra language mark introduced by handle locale number. Reported by Tim. 
+18/7/13: Exson: Fixed the missing negative mark problem reported by Tim. 
+18/7/13: Exson add a locale style check to pass the style to MisFunctions.js to do locale number format validation in LanguageSetup.php.
+18/7/13 Exson: modify the MisFunctions.js to improve the locale number validation feature.
+17/7/13 icedlava: stripslashes on Description for consistency with LongDescription but why- only until we fix source of this problem in the code
+17/7/13 icedlava: add checkbox option in UI to clear item image
+17/7/13 Exson: Add space bar as a accepted charcode for number input in MiscFunctions.js
+16/7/13 icedlava: Add date check on purchase price effective date.
+16/7/13 icedlava: AllowCompanySelectionBox comparison fix to allow boolean value to evaluate correctly
+14/7/13 Exson: Add new directory for new installer and add those default installation sql file.
+14/7/13 Exson: Rewrite the installer by removing the save.php file and revise the index.php file.
 24/6/13 Phil: webSHOP ShopParameters.php script and new configuration variables to allow integrated shop
 21/6/13 Phil: ContractCosting.php fix references to contract issues object which should just have been an array.
 18/6/13 Phil: Reworked the display of stock category properties on the SelectProduct.php inquiry
