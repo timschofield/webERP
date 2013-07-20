@@ -88,7 +88,8 @@ if (isset($_POST['submit'])  AND isset($EditName) ) { // Creating or updating a 
 		would not run in this case cos submit is false of course  see the
 		Delete code below*/
 
-		$sql = "UPDATE salescat SET salescatname = '" . $_POST['SalesCatName'] . "'
+		$sql = "UPDATE salescat SET salescatname = '" . $_POST['SalesCatName'] . "',
+									active  = '" . $_POST['Active'] . "'
 				WHERE salescatid = '" .$SelectedCategory . "'";
 		$msg = _('The Sales category record has been updated');
 	} elseif ($InputError !=1) {
@@ -96,9 +97,11 @@ if (isset($_POST['submit'])  AND isset($EditName) ) { // Creating or updating a 
 	/*Selected category is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new stock category form */
 
 		$sql = "INSERT INTO salescat (salescatname,
-									   parentcatid)
+									   parentcatid,
+									   active)
 						   VALUES (	'" . $_POST['SalesCatName'] . "',
-									'" . (isset($ParentCategory)?($ParentCategory):('NULL')) . "')";
+									'" . (isset($ParentCategory)?($ParentCategory):('NULL')) . "',
+									'" . $_POST['Active'] . "')";
 		$msg = _('A new Sales category record has been added');
 	}
 
@@ -110,6 +113,7 @@ if (isset($_POST['submit'])  AND isset($EditName) ) { // Creating or updating a 
 
 	unset ($SelectedCategory);
 	unset($_POST['SalesCatName']);
+	unset($_POST['Active']);
 	unset($EditName);
 
 } elseif (isset($_GET['Delete']) AND isset($EditName)) {
@@ -222,7 +226,8 @@ links to delete or edit each. These will call the same page again and allow upda
 or deletion of the records*/
 
 $sql = "SELECT salescatid,
-				salescatname
+				salescatname,
+				active
 			FROM salescat
 			WHERE parentcatid". (isset($ParentCategory)?('='.$ParentCategory):' =0') . "
 			ORDER BY salescatname";
@@ -234,7 +239,10 @@ if (DB_num_rows($result) == 0) {
 	prnMsg(_('There are no categories defined at this level.'));
 } else {
 	echo '<table class="selection">';
-	echo '<tr><th>' . _('Sub Category') . '</th></tr>';
+	echo '<tr>
+			<th>' . _('Sub Category') . '</th>
+			<th>' . _('Active?') . '</th>
+		</tr>';
 
 	$k=0; //row colour counter
 
@@ -252,15 +260,21 @@ if (DB_num_rows($result) == 0) {
 		} else {
 			$CatImgLink = _('No Image');
 		}
-		
+		if ($myrow['active'] == 1){
+			$Active = _('Yes');
+		}else{
+			$Active = _('No');
+		}
 
 		printf('<td>%s</td>
+				<td>%s</td>
 				<td><a href="%sParentCategory=%s">' . _('Select') . '</td>
 				<td><a href="%sSelectedCategory=%s&amp;ParentCategory=%s">' . _('Edit') . '</td>
 				<td><a href="%sSelectedCategory=%s&amp;Delete=yes&amp;EditName=1&amp;ParentCategory=%s" onclick="return confirm(\'' . _('Are you sure you wish to delete this sales category?') . '\');">' . _('Delete') .'</a></td>
 				<td>%s</td>
 				</tr>',
 				$myrow['salescatname'],
+				$Active,
 				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
 				$myrow['salescatid'],
 				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
@@ -293,7 +307,8 @@ if (isset($SelectedCategory)) {
 
 	$sql = "SELECT salescatid, 
 				parentcatid, 
-				salescatname 
+				salescatname,
+				active
 			FROM salescat
 			WHERE salescatid='". $SelectedCategory."'";
 
@@ -303,6 +318,7 @@ if (isset($SelectedCategory)) {
 	$_POST['SalesCatId'] = $myrow['salescatid'];
 	$_POST['ParentCategory']  = $myrow['parentcatid'];
 	$_POST['SalesCatName']  = $myrow['salescatname'];
+	$_POST['Active']  = $myrow['active'];
 
 	echo '<input type="hidden" name="SelectedCategory" value="' . $SelectedCategory . '" />';
 	echo '<input type="hidden" name="ParentCategory" value="' . (isset($_POST['ParentCatId'])?($_POST['ParentCategory']):('0')) . '" />';
@@ -327,6 +343,20 @@ echo '<table class="selection">
 			<td>' . _('Category Name') . ':</td>
 			<td><input type="text" name="SalesCatName" size="20" maxlength="20" value="' . $_POST['SalesCatName'] . '" /></td>
 		</tr>';
+
+echo '<tr>
+		<td>' . _('Display in webSHOP?') . ':</td>
+		<td><select name="Active">';
+if ($_POST['Active'] == '1') {
+	echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
+	echo '<option value="0">' . _('No') . '</option>';
+} else {
+	echo '<option selected="selected" value="0">' . _('No') . '</option>';
+	echo '<option value="1">' . _('Yes') . '</option>';
+}
+echo '</select></td>
+	</tr>';		
+	
 // Image upload only if we have a selected category
 if (isset($SelectedCategory)) {
 	echo '<tr>
