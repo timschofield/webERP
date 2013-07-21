@@ -239,7 +239,7 @@ echo '<tr>
 //Shop Manager Email
 echo '<tr>
 		<td>' . _('Shop Manager Email') . ':</td>
-		<td><input type="text" name="X_ShopManagerEmail" required size="50" maxlength="50" value="' . $_SESSION['ShopManagerEmail'] . '" /></td>
+		<td><input type="email" name="X_ShopManagerEmail" required size="50" maxlength="50" value="' . $_SESSION['ShopManagerEmail'] . '" /></td>
 		<td>' . _('Enter the email address of the webSHOP manager.') . '</td>
 	</tr>';
 	

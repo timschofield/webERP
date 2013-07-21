@@ -1107,15 +1107,15 @@ while ($LocationRow = DB_fetch_array($result)){
 echo '</select></td><td>' . _('This location is the location where work orders will be created from when the auto create work orders option is activated') . '</td></tr>';
 
 echo '<tr style="outline: 1px solid"><td>' . _('Factory Manager Email Address') . ':</td>
-	<td><input type="text" name="X_FactoryManagerEmail" size="50" maxlength="50" value="' . $_SESSION['FactoryManagerEmail'] . '" /></td>
+	<td><input type="email" name="X_FactoryManagerEmail" size="50" maxlength="50" value="' . $_SESSION['FactoryManagerEmail'] . '" /></td>
 	<td>' . _('Work orders automatically created when sales orders are entered will be emailed to this address') .'</td></tr>';
 
 echo '<tr style="outline: 1px solid"><td>' . _('Purchasing Manager Email Address') . ':</td>
-	<td><input type="text" name="X_PurchasingManagerEmail" size="50" maxlength="50" value="' . $_SESSION['PurchasingManagerEmail'] . '" /></td>
+	<td><input type="email" name="X_PurchasingManagerEmail" size="50" maxlength="50" value="' . $_SESSION['PurchasingManagerEmail'] . '" /></td>
 	<td>' . _('The email address for the purchasing manager, used to receive notifications by the tendering system') .'</td></tr>';
 
 echo '<tr style="outline: 1px solid"><td>' . _('Inventory Manager Email Address') . ':</td>
-	<td><input type="text" name="X_InventoryManagerEmail" size="50" maxlength="50" value="' . $_SESSION['InventoryManagerEmail'] . '" /></td>
+	<td><input type="email" name="X_InventoryManagerEmail" size="50" maxlength="50" value="' . $_SESSION['InventoryManagerEmail'] . '" /></td>
 	<td>' . _('The email address for the inventory manager, where notifications of all manual stock adjustments created are sent by the system. Leave blank if no emails should be sent to the factory manager for manual stock adjustments') .'</td></tr>';
 
 echo '<tr style="outline: 1px solid">
