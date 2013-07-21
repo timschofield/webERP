@@ -49,6 +49,7 @@ if (isset($_POST['ProcessStockChange'])) {
 					adjglact,
 					purchpricevaract,
 					materialuseagevarac,
+					defaulttaxcatid,
 					wipact)
 			SELECT '" . $_POST['NewStockCategory'] . "',
 				categorydescription,
@@ -57,6 +58,7 @@ if (isset($_POST['ProcessStockChange'])) {
 					adjglact,
 					purchpricevaract,
 					materialuseagevarac,
+					defaulttaxcatid,
 					wipact
 			FROM stockcategory
 			WHERE categoryid='" . $_POST['OldStockCategory'] . "'";
