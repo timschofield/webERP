@@ -5,29 +5,14 @@ c.focus();
 function ReloadForm(fB){
 fB.click();
 }
-var kPrev = 'a';
 function rTN(event){
 	if (window.event) k=window.event.keyCode;
 	else if (event) k=event.which;
 	else return true;
 	kC=String.fromCharCode(k);
-	if ((k==null) || (k==0) || (k==8) || (k==9) || (k==13) || (k==27)){
-	       	return true;
-	}
-	else if ((("0123456789.-, ").indexOf(kC)>-1)){
-		if((".-, ").indexOf(kC)>-1){
-			if((".-, ").indexOf(kPrev)>-1){
-				return false;
-			}else{
-				kPrev = kC;
-	       	       		return true;
-			}
-		}else{
-			kPrev = kC;
-			return true;
-		}
-	}
-	else return false; 
+	if ((k==null) || (k==0) || (k==8) || (k==9) || (k==13) || (k==27)) return true;
+	else if ((("0123456789.,- ").indexOf(kC)>-1)) return true;
+	else return false;
 }
 function rTI(event){
 	if (window.event) k=window.event.keyCode;
