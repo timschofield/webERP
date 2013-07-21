@@ -1,4 +1,5 @@
 webERP Change Log
+21/07/2013 Exson: allowed the input of numeric format like .5 in MiscFunctions.js rLocalNumber() function. Reported by Tim.
 7/21/2013 Exson: Fixed the keyChar control to avoid backspace mistake. 
 7/21/2013 Exson: Fixed the number class function in MiscFunctions.js prevent character 0 from input for integer. Reported by Icedlava 
 20/7/13 Phil: Added Tim's javascript as modified a bit to use different styles to allow sorting of tables - images for styles to all themes and added th.ascending th.descending to theme/default.css scripts
