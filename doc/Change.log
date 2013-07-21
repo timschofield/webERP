@@ -1,4 +1,5 @@
 webERP Change Log
+7/21/2013 Exson: Fixed the keyChar control to avoid backspace mistake. 
 7/21/2013 Exson: Fixed the number class function in MiscFunctions.js prevent character 0 from input for integer. Reported by Icedlava 
 20/7/13 Phil: Added Tim's javascript as modified a bit to use different styles to allow sorting of tables - images for styles to all themes and added th.ascending th.descending to theme/default.css scripts
 19/7/13 Phil: Swag of scripts updated for html5 <input type="tel" "email" pattern required="required" autofocus="autofocus" as per http://www.weberp.org/wiki/TransitionToHtml5 also added many title="" tooltips
