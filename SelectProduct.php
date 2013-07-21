@@ -182,9 +182,10 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 									FROM bom INNER JOIN
 										stockmaster
 									ON bom.component=stockmaster.stockid
-									WHERE bom.parent='" . $StockID . "'
-									AND bom.effectiveto > '" . Date('Y-m-d') . "'
-									AND bom.effectiveafter < '" . Date('Y-m-d') . "'", $db);
+									WHERE bom.parent = '" . $StockID . "'
+									AND bom.effectiveafter < '" . Date('Y-m-d') . "'
+									AND (bom.effectiveto > '" . Date('Y-m-d') . "' 
+									 OR bom.effectiveto='0000-00-00')";", $db);
 			$CostRow = DB_fetch_row($CostResult);
 			$Cost = $CostRow[0];
 		} else {

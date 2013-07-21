@@ -180,6 +180,7 @@ ALTER TABLE  `custbranch` CHANGE  `brpostaddr3`  `brpostaddr3` VARCHAR( 40 ) CHA
 INSERT INTO config VALUES ('ShopShowTopCategoryMenu','1');
 INSERT INTO config VALUES ('ShopShowLogoAndShopName','1');
 
+ALTER TABLE `stockcategory` ADD `defaulttaxcatid` TINYINT NOT NULL DEFAULT '1'
 ALTER TABLE  `salescat` ADD  `active` INT NOT NULL DEFAULT  '1' COMMENT  '1 if active 0 if inactive';
 
 INSERT INTO config VALUES ('ShopManagerEmail','');

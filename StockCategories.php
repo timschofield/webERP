@@ -72,6 +72,7 @@ if (isset($_POST['submit'])) {
 
 		$sql = "UPDATE stockcategory SET stocktype = '" . $_POST['StockType'] . "',
 									 categorydescription = '" . $_POST['CategoryDescription'] . "',
+									 defaulttaxcatid = '" . $_POST['DefaultTaxCatID'] . "',
 									 stockact = " . $_POST['StockAct'] . ",
 									 adjglact = " . $_POST['AdjGLAct'] . ",
 									 issueglact = " . $_POST['IssueGLAct'] . ",
@@ -142,6 +143,7 @@ if (isset($_POST['submit'])) {
 		$sql = "INSERT INTO stockcategory (categoryid,
 											stocktype,
 											categorydescription,
+											defaulttaxcatid,
 											stockact,
 											adjglact,
 											issueglact,
@@ -152,6 +154,7 @@ if (isset($_POST['submit'])) {
 											'" . $_POST['CategoryID'] . "',
 											'" . $_POST['StockType'] . "',
 											'" . $_POST['CategoryDescription'] . "',
+											'" . $_POST['DefaultTaxCatID'] . "',
 											'" . $_POST['StockAct'] . "',
 											'" . $_POST['AdjGLAct'] . "',
 											'" . $_POST['IssueGLAct'] . "',
@@ -307,7 +310,8 @@ if (isset($SelectedCategory)) {
 						issueglact,
 						purchpricevaract,
 						materialuseagevarac,
-						wipact
+						wipact,
+						defaulttaxcatid
 					FROM stockcategory
 					WHERE categoryid='" . $SelectedCategory . "'";
 
@@ -323,6 +327,7 @@ if (isset($SelectedCategory)) {
 		$_POST['PurchPriceVarAct']  = $myrow['purchpricevaract'];
 		$_POST['MaterialUseageVarAc']  = $myrow['materialuseagevarac'];
 		$_POST['WIPAct']  = $myrow['wipact'];
+		$_POST['DefaultTaxCatID']  = $myrow['defaulttaxcatid'];
 	}
 	echo '<input type="hidden" name="SelectedCategory" value="' . $SelectedCategory . '" />';
 	echo '<input type="hidden" name="CategoryID" value="' . $_POST['CategoryID'] . '" />';
@@ -339,7 +344,7 @@ if (isset($SelectedCategory)) {
 	echo '<table class="selection">
 			<tr>
 				<td>' . _('Category Code') . ':</td>
-				<td><input type="text" name="CategoryID" size="7" maxlength="6" value="' . $_POST['CategoryID'] . '" /></td>
+				<td><input type="text" name="CategoryID" required="required" autofocus="autofocus" pattern="[0-9a-zA-Z_]*{1,6}" title="' . _('Enter up to six alphanumeric characters or underscore as a code for this stock category') . '" size="7" maxlength="6" value="' . $_POST['CategoryID'] . '" /></td>
 			</tr>';
 }
 
@@ -370,7 +375,7 @@ if (!isset($_POST['CategoryDescription'])) {
 
 echo '<tr>
 		<td>' . _('Category Description') . ':</td>
-		<td><input type="text" name="CategoryDescription" size="22" maxlength="20" value="' . $_POST['CategoryDescription'] . '" /></td>
+		<td><input type="text" name="CategoryDescription" required="required" title="' . _('A description of the inventory category is required') . '" size="22" maxlength="20" value="' . $_POST['CategoryDescription'] . '" /></td>
 	</tr>';
 
 
@@ -400,6 +405,27 @@ if (isset($_POST['StockType']) and $_POST['StockType']=='L') {
 
 echo '</select></td>
 			</tr>';
+
+echo '<tr>
+		<td>' . _('Default Tax Category') . ':</td>
+		<td><select name="DefaultTaxCatID">';
+$sql = "SELECT taxcatid, taxcatname FROM taxcategories ORDER BY taxcatname";
+$result = DB_query($sql, $db);
+
+if (!isset($_POST['DefaultTaxCatID'])){
+	$_POST['DefaultTaxCatID'] = $_SESSION['DefaultTaxCategory'];
+}
+
+while ($myrow = DB_fetch_array($result)) {
+	if ($_POST['DefaultTaxCatID'] == $myrow['taxcatid']){
+		echo '<option selected="selected" value="' . $myrow['taxcatid'] . '">' . $myrow['taxcatname'] . '</option>';
+	} else {
+		echo '<option value="' . $myrow['taxcatid'] . '">' . $myrow['taxcatname'] . '</option>';
+	}
+} //end while loop
+
+echo '</select></td>
+	</tr>';
 
 echo '<tr><td><input type="submit" name="UpdateTypes" style="visibility:hidden;width:1px" value="Not Seen" />';
 if (isset($_POST['StockType']) and $_POST['StockType']=='L') {

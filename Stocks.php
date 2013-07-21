@@ -566,7 +566,9 @@ if (isset($_POST['submit'])) {
 								WHERE stockid='" . $StockID ."'",$db);
 			if (DB_num_rows($result)==1){
 				prnMsg(_('The stock code entered is actually already in the database - duplicate stock codes are prohibited by the system. Try choosing an alternative stock code'),'error');
-				exit;
+				InputError = 1;
+				$Errors[$i] = 'StockID';
+				$i++;
 			} else {
 				$sql = "INSERT INTO stockmaster (stockid,
 												description,
@@ -844,7 +846,7 @@ if (isset($_POST['submit'])) {
 }
 
 
-echo '<form id="ItemForm" enctype="multipart/form-data" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+echo '<form name="ItemForm" enctype="multipart/form-data" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 echo '<div>';
 if (isset($StockID)){
 	echo '<table width="100%">
@@ -867,7 +869,7 @@ if (!isset($StockID) OR $StockID=='' or isset($_POST['UpdateCategories'])) {
 	if ($New==1) {
 		echo '<tr>
 				<td>'. _('Item Code'). ':</td>
-				<td><input ' . (in_array('StockID',$Errors) ?  'class="inputerror"' : '' ) .'  type="text" value="'.$StockID.'" name="StockID" size="21" maxlength="20" /></td>
+				<td><input ' . (in_array('StockID',$Errors) ?  'class="inputerror"' : '' ) .'  autofocus="autofocus" required="required" pattern="[0-9a-zA-Z_]*{1,20}" type="text" value="'.$StockID.'" name="StockID" size="20" maxlength="20" /></td>
 			</tr>';
 	} else {
 		echo '<tr>
@@ -955,7 +957,7 @@ if (isset($_POST['Description'])) {
 }
 echo '<tr>
 		<td>' . _('Part Description') . ' (' . _('short') . '):</td>
-		<td><input ' . (in_array('Description',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="Description" size="52" maxlength="50" value="' . stripslashes($Description) . '" /></td>
+		<td><input ' . (in_array('Description',$Errors) ?  'class="inputerror"' : '' ) .' type="text" ' . ($New==0?'autofocus="autofocus"':'') . ' name="Description" required="required" size="52" maxlength="50" value="' . stripslashes($Description) . '" /></td>
 	</tr>';
 
 foreach ($ItemDescriptionLanguages as $DescriptionLanguage) {
