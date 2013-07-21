@@ -41,6 +41,9 @@ function rLocaleNumber(){
 		case 'GM':
 			var patt = /(?:^(-)?[1-9]{1}\d{0,2}(?:\.?\d{3})*(?:,\d{1,})?$)|(?:^(-)?(0?,\d{1,})$)/;
 			break;
+		default:
+			alert('something is wrong with your language setting');
+			
 
 	}
 	if(patt.test(this.value)){
@@ -317,7 +320,13 @@ function initial(){
 		}
 		if (ds[i].className=="number") ds[i].onkeypress=rTN;
 		if (ds[i].className=="integer") ds[i].onkeypress=rTI;
-		if (ds[i].className=="number") ds[i].onchange=rLocaleNumber;
+		if (ds[i].className=="number"){
+		
+				ds[i].origonchange=ds[i].onchange;
+				ds[i].newonchange=rLocaleNumber;
+				ds[i].onchange=function(){if(this.origonchange) this.origonchange();this.newonchange();};
+		
+		}
 	}
 }
 window.onload=initial;
