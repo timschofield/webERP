@@ -83,15 +83,19 @@ $pdf->partEllipse($XPos+200, $YPos,270,360,10,10);
 /*Finally join up to the top right corner where started */
 $pdf->line($XPos+210, $YPos,$XPos+210, $YPos+60);
 
+$pdf->addTextWrap($Page_Width-$Right_Margin-200, $Page_Height-$Top_Margin-$FontSize*1, 200, $FontSize, _('Number'). ': '.$_GET['QuotationNo'], 'right');
+$pdf->addTextWrap($Page_Width-$Right_Margin-200, $Page_Height-$Top_Margin-$FontSize*2, 200, $FontSize, _('Your Ref'). ': '.$myrow['customerref'], 'right');
+$pdf->addTextWrap($Page_Width-$Right_Margin-200, $Page_Height-$Top_Margin-$FontSize*3, 200, $FontSize, _('Date'). ': '.ConvertSQLDate($myrow['orddate']), 'right');
+$pdf->addTextWrap($Page_Width-$Right_Margin-200, $Page_Height-$Top_Margin-$FontSize*4, 200, $FontSize, _('Page').': '.$PageNumber, 'right');
 
-$pdf->addText(490, 790,$FontSize, _('Number'). ':');
+/*$pdf->addText(490, 790,$FontSize, _('Number'). ':');
 $pdf->addText(535, 790,$FontSize, $_GET['QuotationNo']);
 $pdf->addText(490, 790-15,$FontSize, _('Your Ref'). ':');
 $pdf->addText(520, 790-15,$FontSize, $myrow['customerref']);
 $pdf->addText(490, 790-30,$FontSize,  _('Date'). ':');
 $pdf->addText(520, 790-30,$FontSize,  ConvertSQLDate($myrow['orddate']));
 $pdf->addText(490, 790-45,$FontSize,  _('Page'). ':');
-$pdf->addText(520, 790-45,$FontSize,  $PageNumber);
+$pdf->addText(520, 790-45,$FontSize,  $PageNumber);*/
 
 $pdf->addText($Page_Width/2-10, $YPos+15, $FontSize, _('All amounts stated in') . ' - ' . $myrow['currcode']);
 
