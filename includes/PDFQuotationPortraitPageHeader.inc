@@ -106,7 +106,7 @@ $LeftOvers = $pdf->addTextWrap(230,$YPos,85,$FontSize,_('Price'),'right');
 $LeftOvers = $pdf->addTextWrap(280,$YPos,85,$FontSize, _('Discount'),'right');
 $LeftOvers = $pdf->addTextWrap(330,$YPos,85,$FontSize, _('Tax Class'),'right');
 $LeftOvers = $pdf->addTextWrap(400,$YPos,85,$FontSize, _('Tax Amount'),'right');
-$LeftOvers = $pdf->addTextWrap(450,$YPos,90,$FontSize, _('Total'),'right');
+$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-90, $YPos, 90, $FontSize, _('Total'),'right');
 
 
 /*draw a box with nice round corner for entering line items */
