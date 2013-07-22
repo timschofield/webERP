@@ -566,7 +566,7 @@ if (isset($_POST['submit'])) {
 								WHERE stockid='" . $StockID ."'",$db);
 			if (DB_num_rows($result)==1){
 				prnMsg(_('The stock code entered is actually already in the database - duplicate stock codes are prohibited by the system. Try choosing an alternative stock code'),'error');
-				InputError = 1;
+				$InputError = 1;
 				$Errors[$i] = 'StockID';
 				$i++;
 			} else {

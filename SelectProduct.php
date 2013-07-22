@@ -184,8 +184,9 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 									ON bom.component=stockmaster.stockid
 									WHERE bom.parent = '" . $StockID . "'
 									AND bom.effectiveafter < '" . Date('Y-m-d') . "'
-									AND (bom.effectiveto > '" . Date('Y-m-d') . "' 
-									 OR bom.effectiveto='0000-00-00')";", $db);
+									AND (bom.effectiveto > '" . Date('Y-m-d') . "'
+									OR bom.effectiveto='0000-00-00')",
+									 $db);
 			$CostRow = DB_fetch_row($CostResult);
 			$Cost = $CostRow[0];
 		} else {
@@ -199,7 +200,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 	echo '</table>'; //end of first nested table
 	// Item Category Property mod: display the item properties
 	echo '<table>';
-	
+
 	$sql = "SELECT stkcatpropid,
 					label,
 					controltype,
@@ -447,8 +448,8 @@ if ($Its_A_Kitset_Assembly_Or_Dummy == false) {
 	}
 
 	echo '<div class="centre">' . $StockImgLink . '</div>';
-	
-	
+
+
 	if (($myrow['mbflag'] == 'B')
 		AND (in_array($SuppliersSecurity, $_SESSION['AllowedPageSecurityTokens']))
 		AND $myrow['discontinued']==0){

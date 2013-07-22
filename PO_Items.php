@@ -498,8 +498,6 @@ if (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 	if ($AllowUpdate == true){
 	//adding the non-stock item
 
-	//adding the non-stock item
-
 		$_SESSION['PO'.$identifier]->add_to_order($_SESSION['PO'.$identifier]->LinesOnOrder+1,
 												'',
 												0, /*Serialised */
