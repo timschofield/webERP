@@ -895,7 +895,7 @@ if (!isset($_GET['delete'])) {
 	echo '</select></td>
 		</tr>';
 
-	if (!isset($_POST['BrPostAddr1'])) {	// Postal address, line 1. Database: brpostaddr1, varchar(40)
+	if (!isset($_POST['BrPostAddr1'])) {	// Postal address, line 1. Database: custbranch.brpostaddr1, varchar(40)
 		$_POST['BrPostAddr1']='';
 	}
 	echo '<tr>
@@ -903,7 +903,7 @@ if (!isset($_GET['delete'])) {
 		<td><input tabindex="23" type="text" name="BrPostAddr1" size="41" maxlength="40" value="'. $_POST['BrPostAddr1'].'" /></td>
 		</tr>';
 
-	if (!isset($_POST['BrPostAddr2'])) {	// Postal address, line 2. Database: brpostaddr2, varchar(40)
+	if (!isset($_POST['BrPostAddr2'])) {	// Postal address, line 2. Database: custbranch.brpostaddr2, varchar(40)
 		$_POST['BrPostAddr2']='';
 	}
 	echo '<tr>
@@ -911,23 +911,23 @@ if (!isset($_GET['delete'])) {
 		<td><input tabindex="24" type="text" name="BrPostAddr2" size="41" maxlength="40" value="'. $_POST['BrPostAddr2'].'" /></td>
 		</tr>';
 
-	if (!isset($_POST['BrPostAddr3'])) {	// Postal address, line 3. Database: brpostaddr3, varchar(30)
+	if (!isset($_POST['BrPostAddr3'])) {	// Postal address, line 3. Database: custbranch.brpostaddr3, varchar(40)
 		$_POST['BrPostAddr3']='';
 	}
 	echo '<tr>
 		<td>'._('Postal Address 3 (State)').':</td>
-		<td><input tabindex="25" type="text" name="BrPostAddr3" size="31" maxlength="30" value="'. $_POST['BrPostAddr3'].'" /></td>
+		<td><input tabindex="25" type="text" name="BrPostAddr3" size="41" maxlength="40" value="'. $_POST['BrPostAddr3'].'" /></td>
 		</tr>';
 
-	if (!isset($_POST['BrPostAddr4'])) {	// Postal address, line 4. Database: brpostaddr4, varchar(20)
+	if (!isset($_POST['BrPostAddr4'])) {	// Postal address, line 4. Database: custbranch.brpostaddr4, varchar(40)
 		$_POST['BrPostAddr4']='';
 	}
 	echo '<tr>
 		<td>'._('Postal Address 4 (Postal Code)').':</td>
-		<td><input tabindex="26" type="text" name="BrPostAddr4" size="21" maxlength="20" value="'. $_POST['BrPostAddr4'].'" /></td>
+		<td><input tabindex="26" type="text" name="BrPostAddr4" size="41" maxlength="40" value="'. $_POST['BrPostAddr4'].'" /></td>
 		</tr>';
 
-	if (!isset($_POST['BrPostAddr5'])) {	// Postal address, line 5. Database: brpostaddr5, varchar(20)
+	if (!isset($_POST['BrPostAddr5'])) {	// Postal address, line 5. Database: custbranch.brpostaddr5, varchar(20)
 		$_POST['BrPostAddr5']='';
 	}
 	echo '<tr>
