@@ -1,4 +1,5 @@
 webERP Change Log
+24/7/2013 Exson: Add the html5 mark for some input fields in WWW_Users.php.
 22/7/2013 Exson: Fixed the document.form not defined error in GLJournal.php.
 22/7/2013 Thumb: Fixed the onchange overwritten problem for number class in MiscFunctions.js. Reported by Tim for GLJournal.php lost Credit and Debit mutually exclusive feature.
 21/07/2013 Exson: allowed the input of numeric format like .5 in MiscFunctions.js rLocalNumber() function. Reported by Tim.
