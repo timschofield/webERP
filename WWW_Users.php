@@ -452,7 +452,7 @@ if (!isset($_POST['Email'])) {
 }
 echo '<tr>
 		<td>' . _('Password') . ':</td>
-		<td><input type="password" pattern=".{5,}" name="Password" required="true" size="22" maxlength="20" value="' . $_POST['Password'] . '" placeholder="'._('not less than 5 characters').'" title="'._('Please enter not less than 5 characters and cannot same as users id').'" /></td>
+		<td><input type="password" pattern=".{5,}" name="Password" size="22" maxlength="20" value="' . $_POST['Password'] . '" placeholder="'._('not less than 5 characters').'" title="'._('Please enter not less than 5 characters and cannot same as users id').'" /></td>
 	</tr>';
 echo '<tr>
 		<td>' . _('Full Name') . ':</td>
