@@ -420,7 +420,7 @@ if (isset($SelectedUser)) {
 	echo '<table class="selection">
 			<tr>
 				<td>' . _('User Login') . ':</td>
-				<td><input type="text" name="UserID" size="22" maxlength="20" /></td>
+				<td><input pattern="(?!^([aA]{1}[dD]{1}[mM]{1}[iI]{1}[nN]{1})$)[^?+.&\\>< ]{4,}" type="text" required="true" name="UserID" size="22" maxlength="20" placeholder="'._('Not less than 4 characters').'" title="'._('Please input not less than 4 characters and canot be admin or contains illegal characters').'"  /></td>
 			</tr>';
 
 	/*set the default modules to show to all
@@ -452,7 +452,7 @@ if (!isset($_POST['Email'])) {
 }
 echo '<tr>
 		<td>' . _('Password') . ':</td>
-		<td><input type="password" name="Password" size="22" maxlength="20" value="' . $_POST['Password'] . '" /></td>
+		<td><input type="password" pattern=".{5,}" name="Password" required="true" size="22" maxlength="20" value="' . $_POST['Password'] . '" placeholder="'._('not less than 5 characters').'" title="'._('Please enter not less than 5 characters and cannot same as users id').'" /></td>
 	</tr>';
 echo '<tr>
 		<td>' . _('Full Name') . ':</td>
@@ -460,11 +460,11 @@ echo '<tr>
 	</tr>';
 echo '<tr>
 		<td>' . _('Telephone No') . ':</td>
-		<td><input type="text" name="Phone" value="' . $_POST['Phone'] . '" size="32" maxlength="30" /></td>
+		<td><input name="Phone" value="' . $_POST['Phone'] . '"  size="32" maxlength="30" /></td>
 	</tr>';
 echo '<tr>
 		<td>' . _('Email Address') .':</td>
-		<td><input type="text" name="Email" value="' . $_POST['Email'] .'" size="32" maxlength="55" /></td>
+		<td><input type="email" name="Email" value="' . $_POST['Email'] .'" size="32" maxlength="55" title="'._('The input must be email').'" /></td>
 	</tr>';
 echo '<tr>
 		<td>' . _('Security Role') . ':</td>
@@ -479,6 +479,7 @@ foreach ($SecurityRoles as $SecKey => $SecVal) {
 }
 echo '</select>';
 echo '<input type="hidden" name="ID" value="'.$_SESSION['UserID'].'" /></td>
+
     </tr>';
 
 echo '<tr><td>' . _('User Can Create Tenders') . ':</td><td><select name="CanCreateTender">';
