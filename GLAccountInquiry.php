@@ -130,47 +130,30 @@ if (isset($_POST['Show'])){
 	$FirstPeriodSelected = min($SelectedPeriod);
 	$LastPeriodSelected = max($SelectedPeriod);
 
-	if ($_POST['tag']==0) {
- 		$sql= "SELECT type,
-					typename,
-					gltrans.typeno,
-					trandate,
-					narrative,
-					amount,
-					periodno,
-					gltrans.tag,
-					tagdescription
-				FROM gltrans INNER JOIN systypes
-				ON systypes.typeid=gltrans.type
-				LEFT JOIN tags
-				ON gltrans.tag = tags.tagref
-				WHERE gltrans.account = '" . $SelectedAccount . "'
-				AND posted=1
-				AND periodno>='" . $FirstPeriodSelected . "'
-				AND periodno<='" . $LastPeriodSelected . "'
-				ORDER BY periodno, gltrans.trandate, counterindex";
+	$sql= "SELECT counterindex,
+				type,
+				typename,
+				gltrans.typeno,
+				trandate,
+				narrative,
+				amount,
+				periodno,
+				gltrans.tag,
+				tagdescription
+			FROM gltrans INNER JOIN systypes
+			ON systypes.typeid=gltrans.type
+			LEFT JOIN tags
+			ON gltrans.tag = tags.tagref
+			WHERE gltrans.account = '" . $SelectedAccount . "'
+			AND posted=1
+			AND periodno>='" . $FirstPeriodSelected . "'
+			AND periodno<='" . $LastPeriodSelected . "'";
 
-	} else {
- 		$sql= "SELECT type,
-					typename,
-					gltrans.typeno,
-					trandate,
-					narrative,
-					amount,
-					periodno,
-					gltrans.tag,
-					tagdescription
-				FROM gltrans INNER JOIN systypes
-				ON systypes.typeid=gltrans.type
-				LEFT JOIN tags
-				ON gltrans.tag = tags.tagref
-				WHERE gltrans.account = '" . $SelectedAccount . "'
-				AND posted=1
-				AND periodno>= '" . $FirstPeriodSelected . "'
-				AND periodno<= '" . $LastPeriodSelected . "'
-				AND tag='" . $_POST['tag'] . "'
-				ORDER BY periodno, gltrans.trandate, counterindex";
+	if ($_POST['tag']!=0) {
+ 		$sql = $sql . " AND tag='" . $_POST['tag'] . "'";
 	}
+			
+	$sql = $sql . " ORDER BY periodno, gltrans.trandate, counterindex";
 
 	$namesql = "SELECT accountname FROM chartmaster WHERE accountcode='" . $SelectedAccount . "'";
 	$nameresult = DB_query($namesql, $db);
