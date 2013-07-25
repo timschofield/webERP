@@ -140,7 +140,7 @@ if(!isset($_GET['Edit'])){//display the input form
 	<form id="MailGroups" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'); ?>" method="post" />
 		<input type="hidden" name="FormID" value="<?php echo $_SESSION['FormID']; ?>" />
 		<label for="MailGroup"><?php echo _('Mail Group'); ?></label>
-			<input type="text" name="MailGroup" maxlength="100" size="20" />
+			<input type="text" required="required" autofocus="autofocus" name="MailGroup" maxlength="100" size="20" />
 			<input type="hidden" name="Clean" value="1" />
 			<input type="submit" name="Enter" value="<?php echo _('Submit'); ?>" />
 	</form>
@@ -233,7 +233,7 @@ function GetUsers ($GroupId,$GroupName) {
 ?>
 			<td><?php echo $myrow['userid']; ?></td>
 			<td><?php echo $myrow['realname']; ?></td>
-			<td><a href="<?php echo htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?UserId='.$myrow['userid'].'&amp;GroupName='.$GroupName.'&amp;Remove=1&amp;GroupId='.$GroupId; ?>" onclick="return confirm('Are you sure to remove this users?'); " /><?php echo _('Remove'); ?></a></td>
+			<td><a href="<?php echo htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?UserId='.$myrow['userid'].'&amp;GroupName='.$GroupName.'&amp;Remove=1&amp;GroupId='.$GroupId; ?>" onclick="return confirm('" . _('Are you sure you wish to remove this user from this mail group?'). "); " /><?php echo _('Remove'); ?></a></td>
 			<td>&nbsp;</td>
 			<td>&nbsp;</td>
 			<td>&nbsp;</td>
@@ -251,7 +251,7 @@ function GetUsers ($GroupId,$GroupName) {
 
 ?>
 		</tr>
-	
+
 
 <?php
 	}

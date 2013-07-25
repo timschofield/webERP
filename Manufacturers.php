@@ -290,7 +290,7 @@ if (!isset($_GET['delete'])) {
 	
 	echo '<tr>
 			<td>' .  _('Brand Name') . ':' . '</td>
-			<td><input type="text" name="ManufacturersName" value="'. $_POST['ManufacturersName'] . '" size="32" maxlength="32" /></td>
+			<td><input type="text" required="required" autofocus="autofocus" name="ManufacturersName" value="'. $_POST['ManufacturersName'] . '" size="32" maxlength="32" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Brand URL') . ':' . '</td>

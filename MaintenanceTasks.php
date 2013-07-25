@@ -130,7 +130,8 @@ echo '<table class="selection">';
 
 if (isset($_GET['Edit'])) {
 	echo '<tr>
-			<td>'._('Task ID').'</td><td>'.$_GET['TaskID'].'</td>
+			<td>'._('Task ID').'</td>
+                        <td>'.$_GET['TaskID'].'</td>
 		</tr>';
 	echo '<input type="hidden" name="TaskID" value="'.$_GET['TaskID'].'" />';
 	$sql="SELECT assetid,
@@ -169,7 +170,7 @@ if (!isset($_POST['AssetID'])){
 
 echo '<tr>
 		<td>'._('Asset to Maintain').':</td>
-		<td><select name="AssetID">';
+		<td><select required="required" name="AssetID">';
 $AssetSQL="SELECT assetid, description FROM fixedassets";
 $AssetResult=DB_query($AssetSQL,$db);
 while ($myrow=DB_fetch_array($AssetResult)) {
@@ -184,17 +185,17 @@ echo '</select></td>
 
 echo '<tr>
 		<td>'._('Task Description').':</td>
-		<td><textarea name="TaskDescription" cols="40" rows="3">' . $_POST['TaskDescription'] . '</textarea></td>
+		<td><textarea name="TaskDescription" required="required" cols="40" rows="3">' . $_POST['TaskDescription'] . '</textarea></td>
 	</tr>';
 
 echo '<tr>
 		<td>'._('Days Before Task Due').':</td>
-		<td><input type="text" class="number" name="FrequencyDays" size="5" maxlength="5" value="' . $_POST['FrequencyDays'] . '" /></td>
+		<td><input type="text" class="integer" required="required" name="FrequencyDays" size="5" maxlength="5" value="' . $_POST['FrequencyDays'] . '" /></td>
 	</tr>';
 
 echo '<tr>
 		<td>'._('Responsible').':</td>
-		<td><select name="UserResponsible">';
+		<td><select required="required" name="UserResponsible">';
 $UserSQL="SELECT userid FROM www_users";
 $UserResult=DB_query($UserSQL,$db);
 while ($myrow=DB_fetch_array($UserResult)) {
@@ -209,7 +210,7 @@ echo '</select></td>
 
 echo '<tr>
 		<td>'._('Manager').':</td>
-		<td><select name="Manager">';
+		<td><select required="required" name="Manager">';
 if ($_POST['Manager']==''){
 	echo '<option selected="selected" value="">' . _('No Manager') . '</option>';
 } else {

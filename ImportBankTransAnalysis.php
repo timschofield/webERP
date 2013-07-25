@@ -167,7 +167,7 @@ if ($_SESSION['Trans'][$TransID]->Amount<0){ //its a payment
 	$result = DB_query("SELECT debtorno, 
 								name 
 						FROM debtorsmaster 
-						WHERE currcode='" . $_SESSION['Statement']->CurrCode . "' 
+						WHERE currcode='" . $_SESSION['Statement']->CurrCode . "'
 						ORDER BY name",$db);
 	if ($_SESSION['Trans'][$TransID]->DebtorNo ==''){
 		echo '<option selected value="">' . _('GL Receipt') . '</option>';
@@ -261,7 +261,7 @@ if ($AllowGLAnalysis==false){
 	}
 	echo '<tr>
 			<td>' . _('Account Code') . ':</td>
-			<td><input type="text" name="GLCode" size=12 maxlength=11 value="' .  $_POST['GLCode'] . '"></td>
+			<td><input type="text" name="GLCode" size="12" required="required" maxlength="11" value="' .  $_POST['GLCode'] . '"></td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('Account Selection') . ':<br />(' . _('If you know the code enter it above') . '<br />' . _('otherwise select the account from the list') . ')</td>
@@ -286,7 +286,7 @@ if ($AllowGLAnalysis==false){
 	}
 	echo '<tr>
 			<td>' . _('Amount') . ':</td>
-			<td><input type="text" class="number" name="Amount" size="12" maxlength="11" value="' .  $_POST['Amount'] . '"></td>
+			<td><input type="text" class="number" name="Amount" required="required" size="12" maxlength="11" value="' .  locale_number_format($_POST['Amount'],$_SESSION['Statement']->CurrDecimalPlaces) . '"></td>
 		</tr>';
 	
 	if (!isset($_POST['Narrative'])) {

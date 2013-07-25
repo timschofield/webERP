@@ -497,7 +497,7 @@ if (!isset($_GET['delete'])) {
 				</tr>';
 		echo '<tr>
 				<td>' . _('Location Code') . ':</td>
-				<td><input type="text" name="LocCode" value="' . $_POST['LocCode'] . '" size="5" maxlength="5" /></td>
+				<td><input type="text" autofocus="autofocus" required="required" title="' . _('Enter up to five characters for the inventory location code') . '" pattern="[0-9a-zA-Z_]*" name="LocCode" value="' . $_POST['LocCode'] . '" size="5" maxlength="5" /></td>
 			</tr>';
 	}
 	if (!isset($_POST['LocationName'])) {
@@ -545,11 +545,11 @@ if (!isset($_GET['delete'])) {
 
 	echo '<tr>
 			<td>' .  _('Location Name') . ':' . '</td>
-			<td><input type="text" name="LocationName" value="'. $_POST['LocationName'] . '" size="51" maxlength="50" /></td>
+			<td><input type="text" name="LocationName" required="required" value="'. $_POST['LocationName'] . '" title="' . _('Enter the inventory location name this could be either a warehouse or a factory') . '" namesize="51" maxlength="50" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Contact for deliveries') . ':' . '</td>
-			<td><input type="text" name="Contact" value="' . $_POST['Contact'] . '" size="31" maxlength="30" /></td>
+			<td><input type="text" name="Contact" required="required" value="' . $_POST['Contact'] . '" title="' . _('Enter the name of the responsible person to contact for this inventory location') . '" size="31" maxlength="30" /></td>
 		</tr>
 		<tr>
 			<td>' .  _('Delivery Address 1') . ':' . '</td>
@@ -577,15 +577,15 @@ if (!isset($_GET['delete'])) {
 		</tr>
 		<tr>
 			<td>' .  _('Telephone No') . ':' . '</td>
-			<td><input type="text" name="Tel" value="' . $_POST['Tel'] . '" size="31" maxlength="30" /></td>
+			<td><input type="tel" name="Tel" pattern="[0-9\+\s]*]" value="' . $_POST['Tel'] . '" size="31" maxlength="30" /></td>
 		</tr>
 		<tr>
 			<td>' .  _('Facsimile No') . ':' . '</td>
-			<td><input type="text" name="Fax" value="' . $_POST['Fax'] . '" size="31" maxlength="30" /></td>
+			<td><input type="tel" name="Fax" pattern="[0-9\+\s]*]" value="' . $_POST['Fax'] . '" size="31" maxlength="30" /></td>
 		</tr>
 		<tr>
 			<td>' .  _('Email') . ':' . '</td>
-			<td><input type="text" name="Email" value="' . $_POST['Email'] . '" size="31" maxlength="55" /></td>
+			<td><input type="email" name="Email" value="' . $_POST['Email'] . '" size="31" maxlength="55" /></td>
 		</tr>
 		<tr>
 			<td>' .  _('Tax Province') . ':' . '</td>
@@ -604,11 +604,11 @@ if (!isset($_GET['delete'])) {
 		</tr>
 		<tr>
 			<td>' . _('Default Counter Sales Customer Code') . ':' . '</td>
-			<td><input type="text" name="CashSaleCustomer" value="' . $_POST['CashSaleCustomer'] . '" size="11" maxlength="10" /></td>
+			<td><input type="text" name="CashSaleCustomer" pattern="[0-9a-zA-Z_]*" title="' . _('If counter sales are being used for this location then an existing customer account code needs to be entered here. All sales created from the counter sales will be recorded against this customer account') . '" value="' . $_POST['CashSaleCustomer'] . '" size="11" maxlength="10" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Counter Sales Branch Code') . ':' . '</td>
-			<td><input type="text" name="CashSaleBranch" value="' . $_POST['CashSaleBranch'] . '" size="11" maxlength="10" /></td>
+			<td><input type="text" name="CashSaleBranch" pattern="[0-9a-zA-Z_]*" title="' . _('If counter sales are being used for this location then an existing customer branch code for the customer account code entered above needs to be entered here. All sales created from the counter sales will be recorded against this branch') . '" value="' . $_POST['CashSaleBranch'] . '" size="11" maxlength="10" /></td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('Allow internal requests?') . ':</td>

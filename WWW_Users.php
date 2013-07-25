@@ -420,7 +420,7 @@ if (isset($SelectedUser)) {
 	echo '<table class="selection">
 			<tr>
 				<td>' . _('User Login') . ':</td>
-				<td><input pattern="(?!^([aA]{1}[dD]{1}[mM]{1}[iI]{1}[nN]{1})$)[^?+.&\\>< ]{4,}" type="text" required="true" name="UserID" size="22" maxlength="20" placeholder="'._('Not less than 4 characters').'" title="'._('Please input not less than 4 characters and canot be admin or contains illegal characters').'"  /></td>
+				<td><input pattern="(?!^([aA]{1}[dD]{1}[mM]{1}[iI]{1}[nN]{1})$)[^?+.&\\>< ]{4,}" type="text" required="required" name="UserID" size="22" maxlength="20" placeholder="'._('Not less than 4 characters').'" title="'._('Please input not less than 4 characters and canot be admin or contains illegal characters').'"  /></td>
 			</tr>';
 
 	/*set the default modules to show to all
@@ -452,19 +452,19 @@ if (!isset($_POST['Email'])) {
 }
 echo '<tr>
 		<td>' . _('Password') . ':</td>
-		<td><input type="password" pattern=".{5,}" name="Password" size="22" maxlength="20" value="' . $_POST['Password'] . '" placeholder="'._('not less than 5 characters').'" title="'._('Please enter not less than 5 characters and cannot same as users id').'" /></td>
+		<td><input type="password" pattern=".{5,}" reuired="required" name="Password" size="22" maxlength="20" value="' . $_POST['Password'] . '" placeholder="'._('not less than 5 characters').'" title="'._('Please enter not less than 5 characters and cannot same as the users id').'" /></td>
 	</tr>';
 echo '<tr>
 		<td>' . _('Full Name') . ':</td>
-		<td><input type="text" name="RealName" value="' . $_POST['RealName'] . '" size="36" maxlength="35" /></td>
+		<td><input type="text" name="RealName" required="required" value="' . $_POST['RealName'] . '" size="36" maxlength="35" /></td>
 	</tr>';
 echo '<tr>
 		<td>' . _('Telephone No') . ':</td>
-		<td><input name="Phone" value="' . $_POST['Phone'] . '"  size="32" maxlength="30" /></td>
+		<td><input type="tel" name="Phone" pattern="[0-9+\s]*" value="' . $_POST['Phone'] . '"  size="32" maxlength="30" /></td>
 	</tr>';
 echo '<tr>
 		<td>' . _('Email Address') .':</td>
-		<td><input type="email" name="Email" value="' . $_POST['Email'] .'" size="32" maxlength="55" title="'._('The input must be email').'" /></td>
+		<td><input type="email" name="Email" required="required" value="' . $_POST['Email'] .'" size="32" maxlength="55" title="'._('A valid email address is required').'" /></td>
 	</tr>';
 echo '<tr>
 		<td>' . _('Security Role') . ':</td>
@@ -482,7 +482,9 @@ echo '<input type="hidden" name="ID" value="'.$_SESSION['UserID'].'" /></td>
 
     </tr>';
 
-echo '<tr><td>' . _('User Can Create Tenders') . ':</td><td><select name="CanCreateTender">';
+echo '<tr>
+		<td>' . _('User Can Create Tenders') . ':</td>
+		<td><select name="CanCreateTender">';
 
 if ($_POST['CanCreateTender']==0){
 	echo '<option selected="selected" value="0">' . _('No') . '</option>';
@@ -522,17 +524,17 @@ if (!isset($_POST['SupplierID'])) {
 }
 echo '<tr>
 		<td>' . _('Customer Code') . ':</td>
-		<td><input type="text" name="Cust" size="10" maxlength="10" value="' . $_POST['Cust'] . '" /></td>
+		<td><input type="text" name="Cust" pattern="[0-9a-zA-Z_]*" title="' . _('If this user login is to be associated with a customer account, enter the customer account code') . '" size="10" maxlength="10" value="' . $_POST['Cust'] . '" /></td>
 	</tr>';
 
 echo '<tr>
 		<td>' . _('Branch Code') . ':</td>
-		<td><input type="text" name="BranchCode" size="10" maxlength="10" value="' . $_POST['BranchCode'] .'" /></td>
+		<td><input type="text" name="BranchCode" pattern="[0-9a-zA-Z_]*" title="' . _('If this user login is to be associated with a customer account a valid branch for the customer account must be entered.') . '" size="10" maxlength="10" value="' . $_POST['BranchCode'] .'" /></td>
 	</tr>';
 
 echo '<tr>
 		<td>' . _('Supplier Code') . ':</td>
-		<td><input type="text" name="SupplierID" size="10" maxlength="10" value="' . $_POST['SupplierID'] .'" /></td>
+		<td><input type="text" name="SupplierID" pattern="[0-9a-zA-Z_]*" size="10" maxlength="10" value="' . $_POST['SupplierID'] .'" /></td>
 	</tr>';
 
 echo '<tr>
@@ -609,7 +611,7 @@ echo '</select></td>
 
 echo '<tr>
 		<td>' . _('Theme') . ':</td>
-		<td><select name="Theme">';
+		<td><select required="required" name="Theme">';
 
 $ThemeDirectories = scandir('css/');
 
@@ -634,7 +636,7 @@ echo '</select></td>
 
 echo '<tr>
 		<td>' . _('Language') . ':</td>
-		<td><select name="UserLanguage">';
+		<td><select required="required" name="UserLanguage">';
 
 foreach ($LanguagesArray as $LanguageEntry => $LanguageName){
 	if (isset($_POST['UserLanguage']) AND $_POST['UserLanguage'] == $LanguageEntry){
@@ -716,7 +718,7 @@ echo '</select></td>
 
 echo '<tr>
 		<td>' . _('Account Status') . ':</td>
-		<td><select name="Blocked">';
+		<td><select required="required" name="Blocked">';
 if ($_POST['Blocked']==0){
 	echo '<option selected="selected" value="0">' . _('Open') . '</option>';
 	echo '<option value="1">' . _('Blocked') . '</option>';

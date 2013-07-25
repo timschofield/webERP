@@ -268,18 +268,31 @@ if (isset($_POST['PrintPDF'])) {
           <div>';
     echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
     echo '<table class="selection">';
-	echo '<tr><td>' . _('Consolidation') . ':</td><td><select name="Consolidation">';
-	echo '<option selected="selected" value="None">' . _('None') . '</option>';
-	echo '<option value="Weekly">' . _('Weekly') . '</option>';
-	echo '<option value="Monthly">' . _('Monthly') . '</option>';
-	echo '</select></td></tr>';
-	echo '<tr><td>' . _('Print Option') . ':</td><td><select name="Fill">';
-	echo '<option selected="selected" value="yes">' . _('Print With Alternating Highlighted Lines') . '</option>';
-	echo '<option value="no">' . _('Plain Print') . '</option>';
-	echo '</select></td></tr>';
-	echo '<tr><td>' . _('Cut Off Date') . ':</td><td><input type ="text" class="date" alt="'.$_SESSION['DefaultDateFormat'] .
-			'" name="cutoffdate" size="10" value="'.date($_SESSION['DefaultDateFormat']).'" /></td></tr>';
-	echo '</table><br /><div class="centre"><input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" /></div>
+	echo '<tr>
+                  <td>' . _('Consolidation') . ':</td>
+                  <td><select required="required" name="Consolidation">
+                      <option selected="selected" value="None">' . _('None') . '</option>
+                      <option value="Weekly">' . _('Weekly') . '</option>
+                      <option value="Monthly">' . _('Monthly') . '</option>
+                  </select></td>
+              </tr>
+              <tr>
+                  <td>' . _('Print Option') . ':</td>
+                  <td><select name="Fill">
+                      <option selected="selected" value="yes">' . _('Print With Alternating Highlighted Lines') . '</option>
+                      <option value="no">' . _('Plain Print') . '</option>
+                      </select></td>
+              </tr>
+              <tr>
+                  <td>' . _('Cut Off Date') . ':</td>
+                  <td><input type ="text" required="required" class="date" alt="'.$_SESSION['DefaultDateFormat'] .
+			'" name="cutoffdate" size="10" value="'.date($_SESSION['DefaultDateFormat']).'" /></td>
+             </tr>
+             </table>
+             <br />
+             <div class="centre">
+                  <input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
+             </div>
           </div>
           </form>';
 

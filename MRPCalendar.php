@@ -25,10 +25,10 @@ if (isset($_POST['submit'])) {
 	submit($db,$ChangeDate);
 } elseif (isset($_POST['update'])) {
 	update($db,$ChangeDate);
-} elseif (isset($_POST['listall'])) {
-	listall($db);
+} elseif (isset($_POST['ListAll'])) {
+	ShowDays($db);
 } else {
-	display($db,$ChangeDate);
+	ShowInputForm($db,$ChangeDate);
 }
 
 function submit(&$db,&$ChangeDate)  //####SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
@@ -70,7 +70,7 @@ function submit(&$db,&$ChangeDate)  //####SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUB
 	}
 
 	 if ($InputError == 1) {
-		display($db,$ChangeDate);
+		ShowInputForm($db,$ChangeDate);
 		return;
 	 }
 
@@ -135,7 +135,7 @@ function submit(&$db,&$ChangeDate)  //####SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUB
 		   $resultupdate = DB_query($sql,$db,$ErrMsg);
 	}
 	prnMsg(_('The MRP Calendar has been created'),'success');
-	display($db,$ChangeDate);
+	ShowInputForm($db,$ChangeDate);
 
 } // End of function submit()
 
@@ -158,7 +158,7 @@ function update(&$db,&$ChangeDate)  //####UPDATE_UPDATE_UPDATE_UPDATE_UPDATE_UPD
 	}
 
 	 if ($InputError == 1) {
-		display($db,$ChangeDate);
+		ShowInputForm($db,$ChangeDate);
 		return;
 	 }
 
@@ -175,7 +175,7 @@ function update(&$db,&$ChangeDate)  //####UPDATE_UPDATE_UPDATE_UPDATE_UPDATE_UPD
 	$resultupdate = DB_query($sql,$db,$ErrMsg);
 	prnMsg(_('The MRP calendar record for') . ' ' . $ChangeDate  . ' ' . _('has been updated'),'success');
 	unset ($ChangeDate);
-	display($db,$ChangeDate);
+	ShowInputForm($db,$ChangeDate);
 
 	// Have to update daynumber any time change a date from or to a manufacturing date
 	// Update daynumber. Set it so non-manufacturing days will have the same daynumber as a valid
@@ -197,7 +197,7 @@ function update(&$db,&$ChangeDate)  //####UPDATE_UPDATE_UPDATE_UPDATE_UPDATE_UPD
 } // End of function update()
 
 
-function listall(&$db)  {//####LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_####
+function ShowDays(&$db)  {//####LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_####
 
 // List all records in date range
 	$FromDate = FormatDateForSQL($_POST['FromDate']);
@@ -238,12 +238,12 @@ function listall(&$db)  {//####LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_L
 	echo '</table>';
 	echo '<br /><br />';
 	unset ($ChangeDate);
-	display($db,$ChangeDate);
+	ShowInputForm($db,$ChangeDate);
 
-} // End of function listall()
+} // End of function ShowDays()
 
 
-function display(&$db,&$ChangeDate)  {//####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
+function ShowInputForm(&$db,&$ChangeDate)  {//####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 
 // Display form fields. This function is called the first time
 // the page is called, and is also invoked at the end of all of the other functions.
@@ -262,9 +262,9 @@ function display(&$db,&$ChangeDate)  {//####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISP
 
 	echo '<tr>
 			<td>' . _('From Date') . ':</td>
-			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] .'" name="FromDate" size="10" maxlength="10" value="' . $_POST['FromDate'] . '" /></td></tr>
+			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] .'" name="FromDate" required="required" autofocus="autofocus" size="10" maxlength="10" value="' . $_POST['FromDate'] . '" /></td></tr>
 			<tr><td>' . _('To Date') . ':</td>
-			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] .'" name="ToDate" size="10" maxlength="10" value="' . $_POST['ToDate'] . '" /></td>
+			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] .'" name="ToDate" required="required" size="10" maxlength="10" value="' . $_POST['ToDate'] . '" /></td>
 		</tr>
 		<tr><td></td></tr>
 		<tr><td></td></tr>
@@ -300,7 +300,7 @@ function display(&$db,&$ChangeDate)  {//####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISP
 		</table><br />
 		<div class="centre">
 			<input type="submit" name="submit" value="' . _('Create Calendar') . '" />
-			<input type="submit" name="listall" value="' . _('List Date Range') . '" />
+			<input type="submit" name="ListAll" value="' . _('List Date Range') . '" />
 		</div>';
 
 	if (!isset($_POST['ChangeDate'])) {
@@ -320,7 +320,7 @@ function display(&$db,&$ChangeDate)  {//####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISP
         </div>
 		</form>';
 
-} // End of function display()
+} // End of function ShowInputForm()
 
 include('includes/footer.inc');
 ?>

@@ -301,7 +301,7 @@ if (isset($_POST['submit'])) {
 								 FROM mrpdemands, stockmaster
 								 WHERE mrpdemands.stockid = stockmaster.stockid
 									AND stockmaster.discontinued = 0";
-	if ($_POST['usemrpdemands'] == 'y') {
+	if ($_POST['UserMRPDemands'] == 'y') {
 		$result = DB_query($sql,$db);
 		prnMsg(_('Loading requirements based on mrpdemands'),'info');
 		flush();
@@ -515,10 +515,10 @@ if (isset($_POST['submit'])) {
 									leeway)
 									VALUES ('" . date('Y-m-d') . "',
 								'" . $locparm . "',
-								'" .  $_POST['pansizeflag']  . "',
-								'" .  $_POST['shrinkageflag']  . "',
-								'" .  $_POST['eoqflag']  . "',
-								'" .  $_POST['usemrpdemands']  . "',
+								'" .  $_POST['PanSizeFlag']  . "',
+								'" .  $_POST['ShrinkageFlag']  . "',
+								'" .  $_POST['EOQFlag']  . "',
+								'" .  $_POST['UserMRPDemands']  . "',
 								'" . filter_number_format($_POST['Leeway']) . "')";
 	$result = DB_query($sql,$db);
 
@@ -534,10 +534,10 @@ if (isset($_POST['submit'])) {
 
 		$myrow = DB_fetch_array($result);
 
-		$leeway = $myrow['leeway'];
-		$usemrpdemands = _('No');
+		$Leeway = $myrow['leeway'];
+		$UserMRPDemands = _('No');
 		if ($myrow['usemrpdemands'] == 'y') {
-			 $usemrpdemands = _('Yes');
+			 $UserMRPDemands = _('Yes');
 		}
 		$useeoq = _('No');
 		if ($myrow['eoqflag'] == 'y') {
@@ -564,11 +564,11 @@ if (isset($_POST['submit'])) {
 				</tr>
 				<tr>
 					<td>' . _('Days Leeway') . ':</td>
-					<td>' . $leeway . '</td>
+					<td>' . $Leeway . '</td>
 				</tr>
 				<tr>
 					<td>' . _('Use MRP Demands') . ':</td>
-					<td>' . $usemrpdemands . '</td>
+					<td>' . $UserMRPDemands . '</td>
 				</tr>
 				<tr>
 					<td>' . _('Use EOQ') . ':</td>
@@ -593,40 +593,40 @@ if (isset($_POST['submit'])) {
 			</tr>
 			<tr>
 				<td>' . _('Location') . '</td>
-				<td><select name="location[]" multiple="multiple">
+				<td><select required="required" autofocus="autofocus" name="location[]" multiple="multiple">
 					<option value="All" selected="selected">' . _('All') . '</option>';
 	 $sql = "SELECT loccode,
 				locationname
 			   FROM locations";
-	$result = DB_query($sql,$db);
-	while ($myrow = DB_fetch_array($result)) {
+	$Result = DB_query($sql,$db);
+	while ($myrow = DB_fetch_array($Result)) {
 		echo '<option value="';
 		echo $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 	} //end while loop
 	echo '</select></td></tr>';
-	if (!isset($leeway)){
-		$leeway =0;
+	if (!isset($Leeway)){
+		$Leeway =0;
 	}
 
 	echo '<tr>
 			<td>' . _('Days Leeway') . ':</td>
-			<td><input type="text" name="Leeway" class="number" size="4" value="' . $leeway . '" /></td>
+			<td><input type="text" required="required" name="Leeway" class="integer" size="4" value="' . $Leeway . '" /></td>
 		</tr>
 		<tr>
 			<td>' ._('Use MRP Demands?') . ':</td>
-			<td><input type="checkbox" name="usemrpdemands" value="y" checked="checked" /></td>
+			<td><input type="checkbox" name="UserMRPDemands" value="y" checked="checked" /></td>
 		</tr>
 		<tr>
 			<td>' ._('Use EOQ?') . ':</td>
-			<td><input type="checkbox" name="eoqflag" value="y" checked="checked" /></td>
+			<td><input type="checkbox" name="EOQFlag" value="y" checked="checked" /></td>
 		</tr>
 		<tr>
 			<td>' ._('Use Pan Size?') . ':</td>
-			<td><input type="checkbox" name="pansizeflag" value="y" checked="checked" /></td>
+			<td><input type="checkbox" name="PanSizeFlag" value="y" checked="checked" /></td>
 		</tr>
 		<tr>
 			<td>' ._('Use Shrinkage?') . ':</td>
-			<td><input type="checkbox" name="shrinkageflag" value="y" checked="checked" /></td>
+			<td><input type="checkbox" name="ShrinkageFlag" value="y" checked="checked" /></td>
 		</tr>
 		</table>
 		<div class="centre">
@@ -753,7 +753,7 @@ function LevelNetting(&$db,$part,$eoq,$PanSize,$ShrinkFactor, $LeadTime) {
 	foreach($Requirements as $Requirement) {
 		// First, inflate requirement if there is a shrinkage factor
 		// Should the quantity be rounded?
-		if ($_POST['shrinkageflag'] == 'y' AND $ShrinkFactor > 0) {
+		if ($_POST['ShrinkageFlag'] == 'y' AND $ShrinkFactor > 0) {
 			$Requirement['quantity'] = ($Requirement['quantity'] * 100) / (100 - $ShrinkFactor);
 			$Requirement['quantity'] = round($Requirement['quantity'],$DecimalPlaces);
 		}
@@ -765,7 +765,7 @@ function LevelNetting(&$db,$part,$eoq,$PanSize,$ShrinkFactor, $LeadTime) {
 			$ExcessQty = 0;
 		}
 		if ($PlannedQty > 0) {
-			if ($_POST['eoqflag'] == 'y' AND $eoq > $PlannedQty) {
+			if ($_POST['EOQFlag'] == 'y' AND $eoq > $PlannedQty) {
 				$ExcessQty = $eoq - $PlannedQty;
 				$PlannedQty = $eoq;
 			}
@@ -775,7 +775,7 @@ function LevelNetting(&$db,$part,$eoq,$PanSize,$ShrinkFactor, $LeadTime) {
 			// multiplied by the pansize. For instance, with a planned qty of 17 with a pansize
 			// of 5, divide 17 by 5 to get 3 with a remainder of 2, which is rounded up to 4
 			// and then multiplied by 5 - the pansize - to get 20
-			if ($_POST['pansizeflag'] == 'y' AND $PanSize != 0 AND $PlannedQty != 0) {
+			if ($_POST['PanSizeFlag'] == 'y' AND $PanSize != 0 AND $PlannedQty != 0) {
 				$PlannedQty = ceil($PlannedQty / $PanSize) * $PanSize;
 			}
 
