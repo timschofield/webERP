@@ -1,11 +1,13 @@
 webERP Change Log
-24/7/2013 Exson: Fixed that empty password should be allowed. Reported by Tim. 
-24/7/2013 Exson: Add the html5 mark for some input fields in WWW_Users.php.
-22/7/2013 Exson: Fixed the document.form not defined error in GLJournal.php.
-22/7/2013 Thumb: Fixed the onchange overwritten problem for number class in MiscFunctions.js. Reported by Tim for GLJournal.php lost Credit and Debit mutually exclusive feature.
-21/07/2013 Exson: allowed the input of numeric format like .5 in MiscFunctions.js rLocalNumber() function. Reported by Tim.
-7/21/2013 Exson: Fixed the keyChar control to avoid backspace mistake. 
-7/21/2013 Exson: Fixed the number class function in MiscFunctions.js prevent character 0 from input for integer. Reported by Icedlava 
+
+25/7/13 Serge Gélinas: Balance sheet now has option to show all accounts and by default just shows those with a balance
+24/7/13 Exson: Fixed that empty password should be allowed. Reported by Tim. 
+24/7/13 Exson: Add the html5 mark for some input fields in WWW_Users.php.
+22/7/13 Exson: Fixed the document.form not defined error in GLJournal.php.
+22/7/13 Thumb: Fixed the onchange overwritten problem for number class in MiscFunctions.js. Reported by Tim for GLJournal.php lost Credit and Debit mutually exclusive feature.
+21/07/13 Exson: allowed the input of numeric format like .5 in MiscFunctions.js rLocalNumber() function. Reported by Tim.
+7/21/13 Exson: Fixed the keyChar control to avoid backspace mistake. 
+7/21/13 Exson: Fixed the number class function in MiscFunctions.js prevent character 0 from input for integer. Reported by Icedlava 
 20/7/13 Phil: Added Tim's javascript as modified a bit to use different styles to allow sorting of tables - images for styles to all themes and added th.ascending th.descending to theme/default.css scripts
 19/7/13 Phil: Swag of scripts updated for html5 <input type="tel" "email" pattern required="required" autofocus="autofocus" as per http://www.weberp.org/wiki/TransitionToHtml5 also added many title="" tooltips
 19/7/13 Exson: add required to the input field of WWW_Access.php
