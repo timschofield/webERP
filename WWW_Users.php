@@ -420,7 +420,7 @@ if (isset($SelectedUser)) {
 	echo '<table class="selection">
 			<tr>
 				<td>' . _('User Login') . ':</td>
-				<td><input pattern="(?!^([aA]{1}[dD]{1}[mM]{1}[iI]{1}[nN]{1})$)[^?+.&\\>< ]{4,}" type="text" required="required" name="UserID" size="22" maxlength="20" placeholder="'._('Not less than 4 characters').'" title="'._('Please input not less than 4 characters and canot be admin or contains illegal characters').'"  /></td>
+				<td><input pattern="(?!^([aA]{1}[dD]{1}[mM]{1}[iI]{1}[nN]{1})$)[^?+.&\\>< ]{4,}" type="text" required="required" name="UserID" size="22" maxlength="20" placeholder="'._('At least 4 characters').'" title="'._('Please input not less than 4 characters and canot be admin or contains illegal characters').'"  /></td>
 			</tr>';
 
 	/*set the default modules to show to all
@@ -452,19 +452,19 @@ if (!isset($_POST['Email'])) {
 }
 echo '<tr>
 		<td>' . _('Password') . ':</td>
-		<td><input type="password" pattern=".{5,}" reuired="required" name="Password" size="22" maxlength="20" value="' . $_POST['Password'] . '" placeholder="'._('not less than 5 characters').'" title="'._('Please enter not less than 5 characters and cannot same as the users id').'" /></td>
+		<td><input type="password" pattern=".{5,}" name="Password" ' . (!isset($SelectedUser) ? 'required="required"' : '') . ' size="22" maxlength="20" value="' . $_POST['Password'] . '" placeholder="'._('At least 5 characters').'" title="'._('Passwords must be 5 characters or more and cannot same as the users id. A mix of upper and lower case and some non-alphanumeric characters are recommended.').'" /></td>
 	</tr>';
 echo '<tr>
 		<td>' . _('Full Name') . ':</td>
-		<td><input type="text" name="RealName" required="required" value="' . $_POST['RealName'] . '" size="36" maxlength="35" /></td>
+		<td><input type="text" name="RealName" ' . (isset($SelectedUser) ? 'autofocus="autofocus"' : '') . ' required="required" value="' . $_POST['RealName'] . '" size="36" maxlength="35" /></td>
 	</tr>';
 echo '<tr>
 		<td>' . _('Telephone No') . ':</td>
-		<td><input type="tel" name="Phone" pattern="[0-9+\s]*" value="' . $_POST['Phone'] . '"  size="32" maxlength="30" /></td>
+		<td><input type="tel" name="Phone" pattern="[0-9+()\s]*" value="' . $_POST['Phone'] . '"  size="32" maxlength="30" /></td>
 	</tr>';
 echo '<tr>
 		<td>' . _('Email Address') .':</td>
-		<td><input type="email" name="Email" required="required" value="' . $_POST['Email'] .'" size="32" maxlength="55" title="'._('A valid email address is required').'" /></td>
+		<td><input type="email" name="Email" placeholder="' . _('e.g. user@domain.com') . '" required="required" value="' . $_POST['Email'] .'" size="32" maxlength="55" title="'._('A valid email address is required').'" /></td>
 	</tr>';
 echo '<tr>
 		<td>' . _('Security Role') . ':</td>
@@ -737,10 +737,5 @@ echo '</table>
     </div>
 	</form>';
 
-if (isset($_GET['SelectedUser'])) {
-	echo '<script  type="text/javascript">defaultControl(document.forms[0].Password);</script>';
-} else {
-	echo '<script  type="text/javascript">defaultControl(document.forms[0].UserID);</script>';
-}
 include('includes/footer.inc');
 ?>

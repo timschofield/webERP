@@ -166,7 +166,7 @@ Class Cart {
 														" . $Qty . ",
 														" . $Price . ",
 														" . $Disc . ",'
-														" . $ItemDue . "',
+														" . FormatDateForSQL($ItemDue) . "',
 														" . $POLine . ")";
 				$result = DB_query($sql,
 							$db ,

@@ -16,10 +16,10 @@ echo '<div class="centre"><p class="page_title_text"><img src="' . $RootPath . '
 
 	//select location
 	echo '<tr>
-		         <td>'._('Select Location') . '</td>
-				 <td>:</td>
-		         <td><select name="Location[]" multiple="multiple">
-				 <option value="All" selected="selected">' . _('All') . '</option>';;
+			 <td>'._('Select Location') . '</td>
+			 <td>:</td>
+			 <td><select name="Location[]" multiple="multiple">
+				<option value="All" selected="selected">' . _('All') . '</option>';;
 	$sql = "SELECT 	loccode,locationname
 			FROM 	locations ORDER BY locationname";
 	$locationresult = DB_query($sql, $db);
@@ -81,7 +81,7 @@ echo '<div class="centre"><p class="page_title_text"><img src="' . $RootPath . '
 	echo '<tr>
 			<td>' . _('Number Of Days') . ' </td>
 			<td>:</td>
-			<td><input class="number" tabindex="3" type="text" name="NumberOfDays" size="8"	maxlength="8" value="30" /></td>
+			<td><input class="integer" tabindex="3" type="text" required="required" title="' . _('Enter the number of days to examine the sales for') . '" name="NumberOfDays" size="8" maxlength="8" value="30" /></td>
 		 </tr>
 	</table>
 	<br />
