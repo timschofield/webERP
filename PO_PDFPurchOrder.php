@@ -226,7 +226,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 		include('includes/PO_PDFOrderPageHeader.inc');
 		$YPos = $Page_Height - $FormDesign->Data->y;
 		$OrderTotal = 0;
-		while ((isset($OrderNo) AND $OrderNo == 'Preview') OR (isset($result) AND $POLine = DB_fetch_array($result))) {
+		while ((isset($OrderNo) AND $OrderNo == 'Preview') OR (isset($result) AND !is_bool($result) AND $POLine = DB_fetch_array($result))) {
 			/* If we are previewing the order then fill the
 			 * order line with dummy data */
 			if ($OrderNo == 'Preview') {
@@ -328,18 +328,18 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 		$mail->setSubject(_('Purchase Order Number') . ' ' . $OrderNo);
 		$mail->addAttachment($attachment, $PdfFileName, 'application/pdf');
 		//since sometime the mail server required to verify the users, so must set this information.
-		if($_SESSION['SmtpSetting'] == 0){//use the mail service provice by the server. 
+		if($_SESSION['SmtpSetting'] == 0){//use the mail service provice by the server.
 			$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
 			$Success = $mail->send(array($_POST['EmailTo']));
 		}else if($_SESSION['SmtpSetting'] == 1) {
 			$Success = SendmailBySmtp($mail,array($_POST['EmailTo']));
-		
+
 		}else{
 			prnMsg(_('The SMTP settings are wrong, please ask administrator for help'),'error');
 			exit;
 			include('includes/footer.inc');
 		}
-		
+
 		if ($Success == 1) {
 			$Title = _('Email a Purchase Order');
 			include('includes/header.inc');
