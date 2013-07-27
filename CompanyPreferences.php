@@ -33,7 +33,7 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'CoyName';
 		$i++;
 	}
-	
+
 	if (mb_strlen($_POST['Email'])>0 and !IsEmailAddress($_POST['Email'])) {
 		$InputError = 1;
 		prnMsg(_('The email address is not correctly formed'),'error');
@@ -171,7 +171,7 @@ if ($InputError != 1) {
 
 echo '<tr>
 		<td>' . _('Name') . ' (' . _('to appear on reports') . '):</td>
-		<td><input '.(in_array('CoyName',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="1" type="text" autofocus="autofocus" required="required" name="CoyName" value="' . stripslashes($_POST['CoyName']) . '" minlength="5" pattern="[a-zA-Z0-9_\-\ ]*" title="' . _('Enter the name of the business, this will appear on all reports and at the top of each screen. Only alphanumeric characters space and dashes are allowed.') . '" size="52" maxlength="50" /></td>
+		<td><input '.(in_array('CoyName',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="1" type="text" autofocus="autofocus" required="required" name="CoyName" value="' . stripslashes($_POST['CoyName']) . '" minlength="5" pattern="[a-zA-Z0-9_\&\-\ ]*" title="' . _('Enter the name of the business, this will appear on all reports and at the top of each screen. Only alphanumeric characters space and dashes are allowed.') . '" size="52" maxlength="50" /></td>
 	</tr>';
 
 echo '<tr>
