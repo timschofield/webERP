@@ -4,7 +4,10 @@
 	session_name('weberp_installation');
 	session_start();
 
-    $DefaultLanguage = 'en_US.utf8'; // load a default language early until one is chosen
+    //we need a languate for the LanguageSetup.php functions - first load we have none
+    if (!isset($_POST['Language'])) { //check that we haven't selected a language already
+        $DefaultLanguage = 'en_US.utf8'; // load a default language early so we can use defines - this will be overridden by user one
+	}
 	$PathPrefix = '../';//To make the LanguageSetup.php script run properly
 	include('../includes/LanguageSetup.php'); // load LanguagesSetup early so we can use it earlier
 	include('../includes/MiscFunctions.php');

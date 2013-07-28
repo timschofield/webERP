@@ -149,7 +149,7 @@ form ul li {
 }
 form label {
 	float: left;
-	width: 12em;
+	width: 14.5em;
 }
 
 form input:not([type=radio]),form textarea {
