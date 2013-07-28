@@ -2459,7 +2459,7 @@ CREATE TABLE `stockmaster` (
   `controlled` tinyint(4) NOT NULL DEFAULT '0',
   `eoq` double NOT NULL DEFAULT '0',
   `volume` decimal(20,4) NOT NULL DEFAULT '0.0000',
-  `kgs` decimal(20,4) NOT NULL DEFAULT '0.0000',
+  `grossweight` decimal(20,4) NOT NULL DEFAULT '0.0000',
   `barcode` varchar(50) NOT NULL DEFAULT '',
   `discountcategory` char(2) NOT NULL DEFAULT '',
   `taxcatid` tinyint(4) NOT NULL DEFAULT '1',

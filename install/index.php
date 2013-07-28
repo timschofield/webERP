@@ -719,7 +719,7 @@ function Installation($DefaultLanguage)
             <ul>
                  <li>'._('During installation you may see different status messages.').'</li>
                 <li>'._('When there is an error message you must correct the error to continue.').'</li>
-                <li>'._('If you see a warning message you should take notice of before you proceed.').'</li>
+                <li>'._('If you see a warning message you should take notice before you proceed.').'</li>
                 <li>'._('If you are unsure of an option value, you may keep the default setting.').'</li>
             </ul>';
             ?>
