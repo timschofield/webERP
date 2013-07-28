@@ -20,9 +20,9 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . _('Payment Entry')
 	. '" alt="" />' . ' ' . $Title . '</p>';
 
-	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
+		<div>
+		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (!isset($_POST['FromDate'])){
 		$_POST['FromDate']=Date($_SESSION['DefaultDateFormat'], mktime(0,0,0,Date('m'),1,Date('Y')));
@@ -33,8 +33,10 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	}
 
 	/*Show a form to allow input of criteria for Tabs to show */
-	echo '<table class="selection">';
-	echo '<tr><td>' . _('Code Of Petty Cash Tab') . ':</td><td><select name="SelectedTabs">';
+	echo '<table class="selection">
+		<tr>
+			<td>' . _('Code Of Petty Cash Tab') . ':</td>
+			<td><select name="SelectedTabs">';
 
 	$SQL = "SELECT tabcode
 		FROM pctabs
@@ -57,17 +59,24 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	DB_free_result($result);
 
 
-	echo '</select></td></tr>';
-	echo'<tr><td>' . _('From Date :') . '</td><td>';
-	echo '<input tabindex="2" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="text" name="FromDate" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" />';
-	echo '</td></tr>';
-	echo '<tr><td>' . _('To Date:') .'</td><td>';
-	echo '<input tabindex="3" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="text" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" />';
-	echo '</td></tr></table><br />';
-	echo '<div class="centre"><input type="submit" name="ShowTB" value="' . _('Show HTML') .'" />';
-	echo '<input type="submit" name="PrintPDF" value="' . _('PrintPDF') . '" /></div>';
-    echo '</div>
-          </form>';
+	echo '</select></td>
+		</tr>
+		<tr>
+			<td>' . _('From Date :') . '</td>
+			<td><input tabindex="2" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="text" name="FromDate" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" /></td>
+		</tr>
+		<tr>
+			<td>' . _('To Date:') .'</td>
+			<td><input tabindex="3" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="text" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" /></td>
+		</tr>
+		</table>
+		<br />
+		<div class="centre">
+			<input type="submit" name="ShowTB" value="' . _('Show HTML') .'" />
+			<input type="submit" name="PrintPDF" value="' . _('PrintPDF') . '" />
+		</div>
+		</div>
+	</form>';
 
 } else if (isset($_POST['PrintPDF'])) {
 

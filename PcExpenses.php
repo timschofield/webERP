@@ -284,7 +284,7 @@ if (! isset($_GET['delete'])) {
 		echo '<table class="selection">
 				<tr>
 					<td>' . _('Code Of Expense') . ':</td>
-					<td><input type="text"' . (in_array('CodeExpense',$Errors) ? 'class="inputerror"' : '' ) .' name="CodeExpense" /></td>
+					<td><input type="text"' . (in_array('CodeExpense',$Errors) ? 'class="inputerror"' : '' ) .' name="CodeExpense" required="required" autofocus="autofocus" /></td>
 				</tr>';
 
 	}

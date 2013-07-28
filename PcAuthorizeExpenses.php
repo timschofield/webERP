@@ -4,8 +4,8 @@
 include('includes/session.inc');
 $Title = _('Authorisation of Petty Cash Expenses');
 /* webERP manual links before header.inc */
-$ViewTopic= "PettyCash";
-$BookMark = "AuthorizeExpense";
+$ViewTopic= 'PettyCash';
+$BookMark = 'AuthorizeExpense';
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
@@ -57,11 +57,13 @@ if (isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 	if(!isset ($Days)){
 		$Days=30;
 	}
-	echo '<input type="hidden" name="SelectedTabs" value="' . $SelectedTabs . '" />';
-	echo '<br /><table class="selection">';
-	echo '<tr><th colspan="7">' . _('Detail Of Movement For Last ') .': ';
-	echo '<input type="text" class="number" name="Days" value="' . $Days . '" maxlength="3" size="4" />' . _('Days');
-	echo '<input type="submit" name="Go" value="' . _('Go') . '" /></th></tr>';
+	echo '<input type="hidden" name="SelectedTabs" value="' . $SelectedTabs . '" />
+			<br />
+			<table class="selection">
+			<tr>
+				<th colspan="7">' . _('Detail Of Movement For Last ') .':<input type="text" class="intger" name="Days" value="' . $Days . '" maxlength="3" size="4" />' . _('Days');
+	echo '<input type="submit" name="Go" value="' . _('Go') . '" /></th>
+		</tr>';
 
 	$sql = "SELECT pcashdetails.counterindex,
 				pcashdetails.tabcode,
@@ -285,18 +287,22 @@ if (isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 
 	// Do the postings
 	include ('includes/GLPostings.inc');
-	echo '</table><br /><div class="centre"><input type="submit" name="Submit" value="' . _('Update') . '" /></div>
-          </div>
-          </form>';
+	echo '</table>
+			<br />
+			<div class="centre">
+				<input type="submit" name="Submit" value="' . _('Update') . '" /></div>
+			</div>
+		</form>';
 
 
 } else { /*The option to submit was not hit so display form */
 
 
-echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'">';
-echo '<div>';
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<br /><table class="selection">'; //Main table
+echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'">
+	<div>
+		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+		<br />
+		<table class="selection">'; //Main table
 
 	$SQL = "SELECT tabcode
 		FROM pctabs
@@ -304,8 +310,9 @@ echo '<br /><table class="selection">'; //Main table
 
 	$result = DB_query($SQL,$db);
 
-echo '<tr><td>' . _('Authorise expenses to Petty Cash Tab') . ':</td>
-        <td><select name="SelectedTabs">';
+echo '<tr>
+		<td>' . _('Authorise expenses to Petty Cash Tab') . ':</td>
+		<td><select name="SelectedTabs" required="required" autofocus="autofocus" >';
 
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['SelectTabs']) and $myrow['tabcode']==$_POST['SelectTabs']) {
@@ -317,14 +324,18 @@ echo '<tr><td>' . _('Authorise expenses to Petty Cash Tab') . ':</td>
 
 	} //end while loop get type of tab
 
-	echo '</select></td></tr>';
-	echo '</table>'; // close main table
+	echo '</select></td>
+		</tr>
+		</table>'; // close main table
     DB_free_result($result);
 
-	echo '<br /><div class="centre"><input type="submit" name="Process" value="' . _('Accept') . '" />
-								<input type="submit" name="Cancel" value="' . _('Cancel') . '" /></div>';
-    echo '</div>';
-	echo '</form>';
+	echo '<br />
+		<div class="centre">
+			<input type="submit" name="Process" value="' . _('Accept') . '" />
+			<input type="submit" name="Cancel" value="' . _('Cancel') . '" />
+		</div>
+		</div>
+		</form>';
 } /*end of else not submit */
 include('includes/footer.inc');
 ?>

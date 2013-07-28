@@ -127,9 +127,12 @@ if (isset($_POST['submit'])) {
 		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
         echo '<div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-		echo '<br /><div class="centre"><input type="submit" name="Return" value="' . _('Return to list of tab types') . '" /></div>';
-		echo '</div>
-              </form>';
+		echo '<br />
+			<div class="centre">
+				<input type="submit" name="Return" value="' . _('Return to list of tab types') . '" />
+			</div>
+			</div>
+		</form>';
 		include('includes/footer.inc');
 		exit;
 	} else {
@@ -212,10 +215,11 @@ if (! isset($_GET['delete'])) {
 		$_POST['TypeTabCode'] = $myrow['typetabcode'];
 		$_POST['TypeTabDescription']  = $myrow['typetabdescription'];
 
-		echo '<input type="hidden" name="SelectedTab" value="' . $SelectedTab . '" />';
-		echo '<input type="hidden" name="TypeTabCode" value="' . $_POST['TypeTabCode']. '" />';
-		echo '<table class="selection">
-				<tr><td>' . _('Code Of Type Of Tab') . ':</td>
+		echo '<input type="hidden" name="SelectedTab" value="' . $SelectedTab . '" />
+			<input type="hidden" name="TypeTabCode" value="' . $_POST['TypeTabCode']. '" />
+			<table class="selection">
+				<tr>
+					<td>' . _('Code Of Type Of Tab') . ':</td>
 					<td>' . $_POST['TypeTabCode'] . '</td>
 				</tr>';
 
@@ -230,7 +234,7 @@ if (! isset($_GET['delete'])) {
 		echo '<table class="selection">
 				<tr>
 					<td>' . _('Code Of Type Of Tab') . ':</td>
-					<td><input type="text" ' . (in_array('TypeTabCode',$Errors) ? 'class="inputerror"' : '' ) .' name="TypeTabCode" /></td>
+					<td><input type="text" ' . (in_array('TypeTabCode',$Errors) ? 'class="inputerror"' : '' ) .' required="required" autofocus="autofocus" pattern="[0-9a-zA-Z_]*" name="TypeTabCode" title="' . _('Only alpha-numeric characters and the underscore character are allowed') . '" /></td>
 				</tr>';
 
 	}
@@ -243,9 +247,8 @@ if (! isset($_GET['delete'])) {
 			<td><input type="text" name="TypeTabDescription" size="50" maxlength="49" value="' . $_POST['TypeTabDescription'] . '" /></td>
 		</tr>';
 
-	echo '</table>'; // close main table
-
-	echo '<br />
+	echo '</table>
+		<br />
 		<div class="centre">
 			<input type="submit" name="submit" value="' . _('Accept') . '" />
 			<input type="submit" name="Cancel" value="' . _('Cancel') . '" />

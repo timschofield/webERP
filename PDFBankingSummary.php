@@ -30,10 +30,11 @@ if (!isset($_POST['BatchNo'])){
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
     echo '<div>';
-    echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table class="selection">';
-	echo '<tr><td>' . _('Select the batch number of receipts to be printed') . ':</td>';
-	echo '<td><select name="BatchNo">';
+    echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+		<table class="selection">
+		<tr>
+			<td>' . _('Select the batch number of receipts to be printed') . ':</td>
+			<td><select required="required" autofocus="autofocus" name="BatchNo">';
 	while ($myrow=DB_fetch_array($result)) {
 		echo '<option value="'.$myrow['transno'].'">'._('Batch') .' '. $myrow['transno'].' - '.ConvertSqlDate($myrow['transdate']).'</option>';
 	}

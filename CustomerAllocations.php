@@ -40,10 +40,18 @@ if (isset($_POST['UpdateDatabase']) OR isset($_POST['RefreshAllocTotal'])) {
 	$TotalAllocated = 0;
 	$TotalDiffOnExch = 0;
 
+	echo '<br />Total number of potential allocations = ' . $_POST['TotalNumberOfAllocs'];
+
+
 	for ($AllocCounter=0;$AllocCounter < $_POST['TotalNumberOfAllocs']; $AllocCounter++) {
 	// loop through amounts allocated using AllocnItm->ID for each record
+		echo '<br />Counter = ' . $AllocCounter;
 		if (isset($_POST['Amt' . $AllocCounter])) {
-			// allocatable charge amounts
+
+
+			echo ' - Amount allocated' . $_POST['Amt' . $AllocCounter] . ' for ' . $_POST['AllocID' . $AllocCounter];
+			
+ 			// allocatable charge amounts
 			if (!is_numeric(filter_number_format($_POST['Amt' . $AllocCounter]))) {
 				$_POST['Amt' . $AllocCounter] = 0;
 			}
@@ -72,10 +80,7 @@ if (isset($_POST['UpdateDatabase']) OR isset($_POST['RefreshAllocTotal'])) {
 	}
 
 	if ($TotalAllocated + $_SESSION['Alloc']->TransAmt > 0.008) {
-		prnMsg(_('Allocation could not be processed because the amount allocated is more than the').' ' .
-		$_SESSION['Alloc']->TransTypeName  . ' '._('being allocated') . '<br />' . _('Total allocated').' = ' .
-		$TotalAllocated . ' '._('and the total amount of the') .' ' . $_SESSION['Alloc']->TransTypeName  . ' '.
-		_('was').' ' . -$_SESSION['Alloc']->TransAmt,'error');
+		prnMsg(_('Allocation could not be processed because the amount allocated is more than the').' ' . $_SESSION['Alloc']->TransTypeName  . ' '._('being allocated') . '<br />' . _('Total allocated').' = ' . $TotalAllocated . ' '._('and the total amount of the') .' ' . $_SESSION['Alloc']->TransTypeName  . ' ' . _('was').' ' . -$_SESSION['Alloc']->TransAmt,'error');
 		$InputError=1;
 	}
 }
@@ -85,53 +90,53 @@ if (isset($_POST['UpdateDatabase'])) {
 		//
 		//========[ START TRANSACTION ]===========
 		//
-		$error = '';
-		$Result=DB_Txn_Begin($db);
+		$Error = '';
+		$Result= DB_Txn_Begin($db);
 		$AllAllocations = 0;
 		foreach ($_SESSION['Alloc']->Allocs as $AllocnItem) {
 			if ($AllocnItem->PrevAllocRecordID != 'NA') {
 			// original allocation has changed so delete the old allocation record
 				$SQL = "DELETE FROM custallocns WHERE id = '" . $AllocnItem->PrevAllocRecordID . "'";
 				if( !$Result = DB_query($SQL,$db) ) {
-					$error = 'Could not delete old allocation record';
+					$Error = _('Could not delete old allocation record');
 				}
 			 }
 
-//			 if ($AllocnItem->OrigAlloc != $AllocnItem->AllocAmt) // has previous allocated amount changed?
-//			 {
-				if ($AllocnItem->AllocAmt > 0) {
-					$SQL = "INSERT INTO
-								custallocns (
-								datealloc,
-								amt,
-								transid_allocfrom,
-								transid_allocto
-							) VALUES (
-								'" . date('Y-m-d') . "',
-								'" . $AllocnItem->AllocAmt . "',
-								'" . $_SESSION['Alloc']->AllocTrans . "',
-								'" . $AllocnItem->ID . "'
-							)";
-					if( !$Result = DB_query($SQL,$db) ) {
-						$error = 'Could not change allocation record';
-					}
-				}
-				$NewAllocTotal = $AllocnItem->PrevAlloc + $AllocnItem->AllocAmt;
-				$AllAllocations = $AllAllocations + $AllocnItem->AllocAmt;
-				$Settled = (abs($NewAllocTotal-$AllocnItem->TransAmount) < 0.005) ? 1 : 0;
-
-				$SQL = "UPDATE debtortrans
-						SET diffonexch='" . $AllocnItem->DiffOnExch . "',
-						alloc = '" . $NewAllocTotal . "',
-						settled = '" . $Settled . "'
-						WHERE id = '" . $AllocnItem->ID."'";
+			if ($AllocnItem->AllocAmt > 0) {
+				$SQL = "INSERT INTO
+							custallocns (
+							datealloc,
+							amt,
+							transid_allocfrom,
+							transid_allocto
+						) VALUES (
+							'" . date('Y-m-d') . "',
+							'" . $AllocnItem->AllocAmt . "',
+							'" . $_SESSION['Alloc']->AllocTrans . "',
+							'" . $AllocnItem->ID . "'
+						)";
 				if( !$Result = DB_query($SQL,$db) ) {
-					$error = 'Could not update difference on exchange';
+					$Error = _('Could not change allocation record');
 				}
-//			 }
-		}
-		$Settled = (abs($TotalAllocated + $_SESSION['Alloc']->TransAmt) < 0.01) ? 1 : 0;
+			}
+			$NewAllocTotal = $AllocnItem->PrevAlloc + $AllocnItem->AllocAmt;
+			$AllAllocations = $AllAllocations + $AllocnItem->AllocAmt;
+			$Settled = (abs($NewAllocTotal-$AllocnItem->TransAmount) < 0.005) ? 1 : 0;
 
+			$SQL = "UPDATE debtortrans
+					SET diffonexch='" . $AllocnItem->DiffOnExch . "',
+					alloc = '" . $NewAllocTotal . "',
+					settled = '" . $Settled . "'
+					WHERE id = '" . $AllocnItem->ID."'";
+			if( !$Result = DB_query($SQL,$db) ) {
+				$Error = _('Could not update difference on exchange');
+			}
+		}
+		if (abs($TotalAllocated + $_SESSION['Alloc']->TransAmt) < 0.01) {
+			$Settled = 1;
+		} else {
+			$Settled = 0;
+		}
 		// Update the receipt or credit note
 		$SQL = "UPDATE debtortrans
 				SET alloc = '" .  -$AllAllocations . "',
@@ -140,7 +145,7 @@ if (isset($_POST['UpdateDatabase'])) {
 				WHERE id = '" . $_POST['AllocTrans']."'";
 
 		if( !$Result = DB_query($SQL,$db) ) {
-			$error = 'Could not update receipt or credit note';
+			$Error = _('Could not update receipt or credit note');
 		}
 
 		// If GLLink to debtors active post diff on exchange to GL
@@ -169,7 +174,7 @@ if (isset($_POST['UpdateDatabase'])) {
 								'" . $MovtInDiffOnExch . "'
 							)";
 				if( !$Result = DB_query($SQL,$db) ) {
-					$error = 'Could not update exchange difference in General Ledger';
+					$Error = _('Could not update exchange difference in General Ledger');
 				}
 
 		  		$SQL = "INSERT INTO gltrans (
@@ -190,7 +195,7 @@ if (isset($_POST['UpdateDatabase'])) {
 							'" . -$MovtInDiffOnExch . "'
 						)";
 				if( !$Result = DB_query($SQL,$db) ) {
-					$error = 'Could not update debtors control in General Ledger';
+					$Error = _('Could not update debtors control in General Ledger');
 				}
 			}
 
@@ -199,11 +204,11 @@ if (isset($_POST['UpdateDatabase'])) {
 		//
 		//========[ COMMIT TRANSACTION ]===========
 		//
-		if ( empty($error) ) {
+		if (empty($Error) ) {
 				$Result = DB_Txn_Commit($db);
 		} else {
 				$Result = DB_Txn_Rollback($db);
-				prnMsg($error,'error');
+				prnMsg($Error,'error');
 		}
 		unset($_SESSION['Alloc']);
 		unset($_POST['AllocTrans']);
@@ -211,25 +216,26 @@ if (isset($_POST['UpdateDatabase'])) {
 }
 
 if (isset($_GET['AllocTrans'])) {
+	
 	if (isset($_SESSION['Alloc'])) {
 		unset($_SESSION['Alloc']->Allocs);
 		unset($_SESSION['Alloc']);
 	}
 
 	$_SESSION['Alloc'] = new Allocation;
-	$_POST['AllocTrans'] = $_GET['AllocTrans']; 	// Set AllocTrans when page first called
+	$_POST['AllocTrans'] = $_GET['AllocTrans']; // Set AllocTrans when page first called
 
 	$SQL= "SELECT systypes.typename,
-					debtortrans.type,
-					debtortrans.transno,
-					debtortrans.trandate,
-					debtortrans.debtorno,
-					debtorsmaster.name,
-					debtortrans.rate,
-					(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount) as total,
-					debtortrans.diffonexch,
-					debtortrans.alloc,
-					currencies.decimalplaces
+				debtortrans.type,
+				debtortrans.transno,
+				debtortrans.trandate,
+				debtortrans.debtorno,
+				debtorsmaster.name,
+				debtortrans.rate,
+				(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount) as total,
+				debtortrans.diffonexch,
+				debtortrans.alloc,
+				currencies.decimalplaces
 			FROM debtortrans INNER JOIN systypes
 			ON debtortrans.type = systypes.typeid
 			INNER JOIN debtorsmaster
@@ -339,26 +345,22 @@ $TableHeader = '<tr>
 				</tr>';
 
 if (isset($_POST['AllocTrans'])) {
-	// Page called with trans number
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-    echo '<div>';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<input type="hidden" name="AllocTrans" value="' . $_POST['AllocTrans'] . '" />';
-
-	// Show trans already allocated and potential new allocations
-
-	echo '<table class="selection">';
-	echo '<tr>
+	/* Page called with trans number
+		Show trans already allocated and potential new allocations
+	*/
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
+		<div>
+		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+		<input type="hidden" name="AllocTrans" value="' . $_POST['AllocTrans'] . '" />
+		<table class="selection">
+		<tr>
 			<th colspan="7">
 			<div class="centre">
 				<b>' . $_SESSION['Alloc']->DebtorNo . ' - ' . $_SESSION['Alloc']->CustomerName . '</b>
 			</div>';
 
 	if ($_SESSION['Alloc']->TransExRate != 1) {
-			echo '<br />' . _('Amount in customer currency') . ' <b>' .
-			locale_number_format(-$_SESSION['Alloc']->TransAmt,$_SESSION['Alloc']->CurrDecimalPlaces) .
-			'</b><i> ('._('converted into local currency at an exchange rate of'). ' '
-			. $_SESSION['Alloc']->TransExRate . ')</i>';
+			echo '<br />' . _('Amount in customer currency') . ' <b>' . locale_number_format(-$_SESSION['Alloc']->TransAmt,$_SESSION['Alloc']->CurrDecimalPlaces) . '</b><i> (' .  _('converted into local currency at an exchange rate of'). ' ' . $_SESSION['Alloc']->TransExRate . ')</i>';
 	}
 	echo '</th>
 		</tr>
@@ -374,7 +376,7 @@ if (isset($_POST['AllocTrans'])) {
 
 	$Counter = 0;
 	$TotalAllocated = 0;
-	$balance = 0;
+	$Balance = 0;
 	$j=0;
 	foreach ($_SESSION['Alloc']->Allocs as $AllocnItem) {
 		$YetToAlloc = ($AllocnItem->TransAmount - $AllocnItem->PrevAlloc);
@@ -397,9 +399,9 @@ if (isset($_POST['AllocTrans'])) {
 		$j++;
 
 		if ($AllocnItem->TransAmount < 0) {
-				$balance+=$YetToAlloc;
+				$Balance+=$YetToAlloc;
 				echo '<td>' . $curTrans .'</td>
-						<td class="number">' . locale_number_format($balance,$_SESSION['Alloc']->CurrDecimalPlaces) . '</td>
+						<td class="number">' . locale_number_format($Balance,$_SESSION['Alloc']->CurrDecimalPlaces) . '</td>
 					</tr>';
 		} else {
 				echo '<td class="number"><input type="hidden" name="YetToAlloc' . $Counter . '" value="' . round($YetToAlloc,$_SESSION['Alloc']->CurrDecimalPlaces) . '" />';
@@ -410,11 +412,11 @@ if (isset($_POST['AllocTrans'])) {
 				} else {
 						echo ' />';
 				}
-				$balance += $YetToAlloc-$AllocnItem->AllocAmt;
+				$Balance += $YetToAlloc-$AllocnItem->AllocAmt;
 				$j++;
 				echo '<input tabindex="' . $j . '" type="text" class="number" ' . ($j==1 ? 'autofocus="autofocus"' :'') . ' name="Amt' . $Counter .'" title="' . _('Enter the amount of this transaction to be allocated. Nothing should be entered here if the entire transaction is to be allocated, use the check box') . '" maxlength="12" size="13" value="' . locale_number_format(round($AllocnItem->AllocAmt,$_SESSION['Alloc']->CurrDecimalPlaces),$_SESSION['Alloc']->CurrDecimalPlaces) . '" />
 					<input type="hidden" name="AllocID' . $Counter . '" value="' . $AllocnItem->ID . '" ></td>
-					<td class="number">' . locale_number_format($balance,$_SESSION['Alloc']->CurrDecimalPlaces) . '</td>
+					<td class="number">' . locale_number_format($Balance,$_SESSION['Alloc']->CurrDecimalPlaces) . '</td>
 				</tr>';
 		}
 		$TotalAllocated += round($AllocnItem->AllocAmt,$_SESSION['Alloc']->CurrDecimalPlaces);
@@ -495,8 +497,9 @@ if (isset($_POST['AllocTrans'])) {
 				<td>' . ConvertSQLDate($myrow['trandate']) . '</td>
 				<td class="number">' . locale_number_format($myrow['total'],$myrow['currdecimalplaces']) . '</td>
 				<td class="number">' . locale_number_format($myrow['total']-$myrow['alloc'],$myrow['currdecimalplaces']) . '</td>
-				<td>' . $myrow['currcode'] . '</td>';
-		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'). '?AllocTrans=' . $myrow['id'] . '">' . _('Allocate') . '</a></td></tr>';
+				<td>' . $myrow['currcode'] . '</td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'). '?AllocTrans=' . $myrow['id'] . '">' . _('Allocate') . '</a></td>
+			</tr>';
 	}
 	echo '</table>';
 } else {
@@ -559,7 +562,7 @@ if (isset($_POST['AllocTrans'])) {
 			$BalRow = DB_fetch_array($BalResult);
 			$Balance = $BalRow['total'];
 		}
-		$CurrentTransaction ++;
+		$CurrentTransaction++;
 		$CurrCode = $myrow['currcode'];
 		$CurrDecimalPlaces = $myrow['currdecimalplaces'];
 		if (isset($Balance) AND abs($Balance) < -0.01 ) {
@@ -574,16 +577,16 @@ if (isset($_POST['AllocTrans'])) {
 			$k++;
 		}
 
-		echo 	'<td>' . $myrow['typename'] .'</td>
-				<td>' . $myrow['name'] . '</td>
-				<td>' . $myrow['debtorno'] . '</td>
-				<td>' . $myrow['transno'] . '</td>
-				<td>' . ConvertSQLDate($myrow['trandate']) . '</td>
-				<td class="number">' . locale_number_format($myrow['total'],$CurrDecimalPlaces) . '</td>
-				<td class="number">' . locale_number_format($myrow['total']-$myrow['alloc'],$CurrDecimalPlaces) . '</td>
-				<td>' . $CurrCode . '</td>
-				<td>' . $AllocateLink . '</td>
-				</tr>';
+		echo '<td>' . $myrow['typename'] .'</td>
+			<td>' . $myrow['name'] . '</td>
+			<td>' . $myrow['debtorno'] . '</td>
+			<td>' . $myrow['transno'] . '</td>
+			<td>' . ConvertSQLDate($myrow['trandate']) . '</td>
+			<td class="number">' . locale_number_format($myrow['total'],$CurrDecimalPlaces) . '</td>
+			<td class="number">' . locale_number_format($myrow['total']-$myrow['alloc'],$CurrDecimalPlaces) . '</td>
+			<td>' . $CurrCode . '</td>
+			<td>' . $AllocateLink . '</td>
+		</tr>';
 
 	} //end loop around unallocated receipts and credit notes
 

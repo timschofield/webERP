@@ -260,10 +260,10 @@ if (isset($SelectedTab)) {
 }
 if (!isset($_GET['delete'])) {
 
-	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<br />'; //Main table
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
+			<div>
+			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+			<br />'; //Main table
 
 	if ( isset($SelectedTab) AND $SelectedTab!='' ) {
 
@@ -292,10 +292,10 @@ if (!isset($_GET['delete'])) {
 				<td>' . $_POST['TabCode'] . '</td>
 				</tr>';
 	} else 	{
-		// This is a new type so the user may volunteer a type code
+		// This is a new type so the user must enter a type code
 		echo '<table class="selection">
 				<tr><td>' . _('Tab Code') . ':</td>
-					<td><input type="text"' . (in_array('TypeTabCode',$Errors) ? 'class="inputerror"' : '' ) .' name="TabCode" /></td></tr>';
+					<td><input type="text"' . (in_array('TypeTabCode',$Errors) ? 'class="inputerror"' : '' ) .' name="TabCode" required="required" autofocus="autofocus" /></td></tr>';
 
 	}
 
@@ -303,7 +303,8 @@ if (!isset($_GET['delete'])) {
 		$_POST['typetabdescription']='';
 	}
 
-	echo '<tr><td>' . _('User Name') . ':</td>
+	echo '<tr>
+			<td>' . _('User Name') . ':</td>
 			<td><select name="SelectUser">';
 
 	$SQL = "SELECT userid,
@@ -322,10 +323,12 @@ if (!isset($_GET['delete'])) {
 
 	} //end while loop get user
 
-	echo '</select></td></tr>';
+	echo '</select></td>
+		</tr>';
     DB_free_result($result);
 
-	echo '<tr><td>' . _('Type Of Tab') . ':</td>
+	echo '<tr>
+			<td>' . _('Type Of Tab') . ':</td>
 			<td><select name="SelectTabs">';
 
 	$SQL = "SELECT typetabcode,
@@ -348,7 +351,8 @@ if (!isset($_GET['delete'])) {
 	echo '</select></td></tr>';
     DB_free_result($result);
 
-	echo '<tr><td>' . _('Currency') . ':</td>
+	echo '<tr>
+			<td>' . _('Currency') . ':</td>
 			<td><select name="SelectCurrency">';
 
 	$SQL = "SELECT currency, currabrev FROM currencies";
@@ -365,17 +369,20 @@ if (!isset($_GET['delete'])) {
 
 	} //end while loop get type of tab
 
-	echo '</select></td></tr>';
+	echo '</select></td>
+		</tr>';
     DB_free_result($result);
 
 	if (!isset($_POST['TabLimit'])) {
 		$_POST['TabLimit']=0;
 	}
 
-	echo '<tr><td>' . _('Limit Of Tab') . ':</td>
-			<td><input type="text" class="number" name="TabLimit" size="12" maxlength="11" value="' . $_POST['TabLimit'] . '" /></td></tr>';
+	echo '<tr>
+			<td>' . _('Limit Of Tab') . ':</td>
+			<td><input type="text" class="integer" name="TabLimit" size="12" maxlength="11" value="' . $_POST['TabLimit'] . '" /></td></tr>';
 
-	echo '<tr><td>' . _('Assigner') . ':</td>
+	echo '<tr>
+			<td>' . _('Assigner') . ':</td>
 			<td><select name="SelectAssigner">';
 
 	$SQL = "SELECT userid,
@@ -395,10 +402,13 @@ if (!isset($_GET['delete'])) {
 
 	} //end while loop get assigner
 
-    echo '</select></td></tr>';
+    echo '</select></td>
+		</tr>';
     DB_free_result($result);
 
-	echo '<tr><td>' . _('Authoriser') . ":</td><td><select name='SelectAuthoriser'>";
+	echo '<tr>
+			<td>' . _('Authoriser') . ':</td>
+			<td><select name="SelectAuthoriser">';
 
 	$SQL = "SELECT userid,
 					realname
@@ -417,10 +427,12 @@ if (!isset($_GET['delete'])) {
 
 	} //end while loop get authoriser
 
-    echo '</select></td></tr>';
+    echo '</select></td>
+		</tr>';
     DB_free_result($result);
 
-	echo '<tr><td>' . _('GL Account Cash Assignment') . ':</td>
+	echo '<tr>
+			<td>' . _('GL Account Cash Assignment') . ':</td>
 			<td><select name="GLAccountCash">';
 
 	$SQL = "SELECT chartmaster.accountcode,
@@ -441,10 +453,12 @@ if (!isset($_GET['delete'])) {
 
 	} //end while loop
 
-    echo '</select></td></tr>';
+    echo '</select></td>
+		</tr>';
     DB_free_result($result);
 
-	echo '<tr><td>' . _('GL Account Petty Cash Tab') . ':</td>
+	echo '<tr>
+			<td>' . _('GL Account Petty Cash Tab') . ':</td>
 			<td><select name="GLAccountPcashTab">';
 
 	$SQL = "SELECT accountcode, accountname
@@ -463,14 +477,18 @@ if (!isset($_GET['delete'])) {
 
 	} //end while loop
 
-    echo '</select></td></tr>';
-   	echo '</table>'; // close main table
+    echo '</select></td>
+		</tr>
+		</table>'; // close main table
     DB_free_result($result);
 
-	echo '<br /><div class="centre"><input type="submit" name="Submit" value="' . _('Accept') . '" /><input type="submit" name="Cancel" value="' . _('Cancel') . '" /></div>';
-
-	echo '</div>
-          </form>';
+	echo '<br />
+		<div class="centre">
+			<input type="submit" name="Submit" value="' . _('Accept') . '" />
+			<input type="submit" name="Cancel" value="' . _('Cancel') . '" />
+		</div>
+		</div>
+	</form>';
 
 } // end if user wish to delete
 
