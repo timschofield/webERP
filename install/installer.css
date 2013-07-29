@@ -123,10 +123,10 @@ form fieldset {
 }
 form legend {
     font: 24px Georgia, "Times New Roman", Times, serif;
-	color: #384313;
+	color: #333333;
 	font-weight: bold;
 	padding: 10px 0px;
-	text-shadow: 0 1px 1px #a9dbd8;
+
 }
 form ul {
     padding:0;
