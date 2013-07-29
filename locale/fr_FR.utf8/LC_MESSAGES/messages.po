@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: weberp 3.12\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-07-06 15:49+1200\n"
-"PO-Revision-Date: 2013-06-11 10:50-0600\n"
+"PO-Revision-Date: 2013-07-24 07:50-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: French <none>\n"
 "MIME-Version: 1.0\n"
@@ -3575,7 +3575,7 @@ msgstr "Montant en"
 #: includes/PDFTransPageHeader.inc:206
 #: includes/PDFTransPageHeaderPortrait.inc:261
 msgid "Item Code"
-msgstr "Code"
+msgstr "Code article"
 
 # JDN
 #: ConfirmDispatch_Invoice.php:287 ContractCosting.php:80

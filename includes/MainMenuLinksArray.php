@@ -357,11 +357,11 @@ $MenuItems['GL']['Reports']['URL'] = array ('/GLTrialBalance.php',
 											'/GLTagProfit_Loss.php',
 											'/Tax.php' );
 
-$MenuItems['GL']['Maintenance']['Caption'] = array (	_('GL Accounts'),
-											_('GL Budgets'),
-											_('Account Groups'),
-											_('Account Sections'),
-											_('GL Tags') );
+$MenuItems['GL']['Maintenance']['Caption'] = array (	_('Account Sections'),
+														_('Account Groups'),
+														_('GL Accounts'),
+														_('GL Budgets'),
+														_('GL Tags') );
 
 $MenuItems['GL']['Maintenance']['URL'] = array ('/GLAccounts.php',
 												'/GLBudgets.php',
