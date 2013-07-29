@@ -363,11 +363,11 @@ $MenuItems['GL']['Maintenance']['Caption'] = array (	_('Account Sections'),
 														_('GL Budgets'),
 														_('GL Tags') );
 
-$MenuItems['GL']['Maintenance']['URL'] = array ('/GLAccounts.php',
-												'/GLBudgets.php',
-												'/AccountGroups.php',
-												'/AccountSections.php',
-												'/GLTags.php' );
+$MenuItems['GL']['Maintenance']['URL'] = array (	'/AccountSections.php',
+													'/AccountGroups.php',
+													'/GLAccounts.php',
+													'/GLBudgets.php',
+													'/GLTags.php' );
 
 $MenuItems['FA']['Transactions']['Caption'] = array (_('Add a new Asset'),
 													_('Select an Asset'),
