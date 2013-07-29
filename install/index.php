@@ -847,7 +847,7 @@ function Installation($DefaultLanguage)
         <div class="page_help_text">
             <p>'. _('webERP is an open source application licenced under GPL V2 and absolutely free to download.<br /> By installing webERP you acknowledge you have read <a href="http://www.gnu.org/licenses/gpl-2.0.html#SEC1" target="_blank">the licence</a>. <br />Please visit the official webERP website for more information.').'
             </p>
-            <p><img src="../css/webERPweb.gif" title="webERP" alt="webERP" />&#160; <a href="http://www.weberp.org">http://www.weberp.org</a></p>
+            <p><img src="../css/webERPsm.gif" title="webERP" alt="webERP" />&#160; <a href="http://www.weberp.org">http://www.weberp.org</a></p>
         </div>';
         ?>
 
