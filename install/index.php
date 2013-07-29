@@ -910,6 +910,8 @@ function DbConfig($Language,$MysqlExt = FALSE){//The screen for users to input m
         <fieldset>
             <button type="submit" name="DbConfig"><?php echo _('Next Step'); ?></button>
         </fieldset>
+    </form>
+</div>
 
 	<?php
 }
@@ -1017,7 +1019,7 @@ function CompanySetup($UserLanguage,$HostName,$UserName,$Password,$DatabaseName,
             <legend><?php echo _('Installation option'); ?></legend>
             <ul>
                 <li>
-                    <label for="InstallDemo"><?php echo _('Install the demo data?'); ?>: </label><input type="checkbox" name="Demo" checked="checked"  />
+                    <label for="InstallDemo"><?php echo _('Install the demo data?'); ?> </label><input type="checkbox" name="Demo" checked="checked"  />
                     <span><?php echo _("WebERPDemo site and data will be installed"); ?></span>
                 </li>
             </ul>
@@ -1066,6 +1068,9 @@ function CompanySetup($UserLanguage,$HostName,$UserName,$Password,$DatabaseName,
             <fieldset>
               <button type="submit" name="Install"><?php echo _('Install'); ?></button>
             </fieldset>
+    </form>
+</div>
+
 <?php
 
 }
