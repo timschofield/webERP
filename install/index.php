@@ -4,14 +4,6 @@
 	session_name('weberp_installation');
 	session_start();
 
-    //we need a languate for the LanguageSetup.php functions - first load we have none
-    if (!isset($_POST['Language'])) { //check that we haven't selected a language already
-        $DefaultLanguage = 'en_US.utf8'; // load a default language early so we can use defines - this will be overridden by user one
-	}
-	$PathPrefix = '../';//To make the LanguageSetup.php script run properly
-	include('../includes/LanguageSetup.php'); // load LanguagesSetup early so we can use it earlier
-	include('../includes/MiscFunctions.php');
-
 /*
  * Web ERP Installer
  * Step 1: Licence acknowledgement and Choose Language
@@ -28,7 +20,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title><?php echo _('WebERP Installer'); ?></title>
+    <title>WebERP Installation Wizard</title>
     <link rel="stylesheet" type="text/css" href="installer.css" />
 </head>
 <body>
@@ -147,7 +139,9 @@
 
 		}
 
-
+	$PathPrefix = '../';//To make the LanguageSetup.php script run properly
+	include('../includes/LanguageSetup.php');
+	include('../includes/MiscFunctions.php');
 	//prevent the installation file from running again
 
 	if(file_exists('../config.php') or file_exists('../Config.php')){
@@ -874,12 +868,12 @@ function DbConfig($Language,$MysqlExt = FALSE){//The screen for users to input m
             <ul>
                 <li>
                     <label for="HostName"><?php echo _('Host Name'); ?>: </label>
-                    <input type="text" name="HostName" id="HostName" required="true" placeholder="<?php echo _('Enter database host name'); ?>" />
+                    <input type="text" name="HostName" id="HostName" required="true" value="localhost" placeholder="<?php echo _('Enter database host name'); ?>" />
                     <span><?php echo _('Commonly: localhost or 127.0.0.1'); ?></span>
                 </li>
                 <li>
                     <label for="Database"><?php echo _('Database Name'); ?>: </label>
-                    <input type="text" name="Database" id="Database" required="true" maxlength="16" placeholder="<?php echo _('The database name'); ?>" />
+                    <input type="text" name="Database" id="Database" required="true" value="weberp" maxlength="16" placeholder="<?php echo _('The database name'); ?>" />
                     <span><?php echo _('The database must have a valid name'); ?></span>
                 </li>
                 <li>
@@ -889,7 +883,7 @@ function DbConfig($Language,$MysqlExt = FALSE){//The screen for users to input m
                 </li>
                 <li>
                     <label for="UserName"><?php echo _('Database User Name'); ?>: </label>
-                    <input type="text" name="UserName" id="UserName" placeholder="<?php echo _('A valid database user name'); ?>" maxlength="16" required="true" />&#160;
+                    <input type="text" name="UserName" id="UserName" value="root" placeholder="<?php echo _('A valid database user name'); ?>" maxlength="16" required="true" />&#160;
                     <span><?php echo _('Must be a user that has permission to create a database.'); ?></span>
                 </li>
                 <li>
@@ -1047,7 +1041,7 @@ function CompanySetup($UserLanguage,$HostName,$UserName,$Password,$DatabaseName,
                     </li>
                     <li>
                         <label for="Email"><?php echo _('Email address'); ?>: </label>
-                        <input type="text" name="Email" required="true" placeholder="admin@yoursite.com" pattern="[a-z0-9!#$%&'*+/=?^_`{|}~.-]+@[a-z0-9-]+(\.[a-z0-9-]+)*" />
+                        <input type="text" name="Email" required="true" placeholder="admin@yoursite.com" value="admin@weberp.org" pattern="[a-z0-9!#$%&'*+/=?^_`{|}~.-]+@[a-z0-9-]+(\.[a-z0-9-]+)*" />
                         <span> <?php echo _('For example: admin@yourcompany.com'); ?></span>
                     </li>
                     <li>
