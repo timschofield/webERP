@@ -128,25 +128,25 @@ if (isset($_POST['PrintPDF'])) {
         echo '<div>';
         echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<table class="selection">';
-		echo '<tr><td>' . _('Sales Made From') . ' (' . _('in the format') . ' ' . $_SESSION['DefaultDateFormat'] . '):</td>
-				<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" size="10" maxlength="10" value="' . $_POST['FromDate'] . '" /></td>
-			</tr>';
-
-		echo '<tr><td>' . _('Sales Made To') . ' (' . _('in the format') . ' ' . $_SESSION['DefaultDateFormat'] . '):</td>
-					<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" size="10" maxlength="10" value="' . $_POST['ToDate'] . '" /></td>
-			</tr>';
-
-		echo '<tr><td>' . _('Show sales with GP % below') . ':</td>
-				<td><input type="text" class="number" name="GPMin" maxlength="3" size="3" value="' . $_POST['GPMin'] . '" /></td>
-			</tr>';
-
-		echo '</table>
-				<br />
-				<div class="centre">
-					<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
-				</div>';
-        echo '</div>
-              </form>';
+		echo '<tr>
+				<td>' . _('Sales Made From') . ' (' . _('in the format') . ' ' . $_SESSION['DefaultDateFormat'] . '):</td>
+				<td><input type="text" required="required" autofocus="autofocus" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" size="10" maxlength="10" value="' . $_POST['FromDate'] . '" /></td>
+			</tr>
+			<tr>
+				<td>' . _('Sales Made To') . ' (' . _('in the format') . ' ' . $_SESSION['DefaultDateFormat'] . '):</td>
+				<td><input type="text" required="required" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" size="10" maxlength="10" value="' . $_POST['ToDate'] . '" /></td>
+			</tr>
+			<tr>
+				<td>' . _('Show sales with GP % below') . ':</td>
+				<td><input type="text" class="integer" name="GPMin" maxlength="3" size="3" value="' . $_POST['GPMin'] . '" /></td>
+			</tr>
+			</table>
+			<br />
+			<div class="centre">
+				<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
+			</div>
+			</div>
+        </form>';
 	}
 	include('includes/footer.inc');
 

@@ -24,31 +24,29 @@ if (!isset($_POST['FromDate'])){
 		prnMsg($msg,'error');
 	}
 
-	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table class="selection">';
-	echo '<tr>
-				<td>' . _('Enter the date from which the transactions are to be listed') . ':</td>
-				<td><input type="text" name="FromDate" maxlength="10" size="10" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
-			</tr>';
-	 echo '<tr>
-				<td>' . _('Enter the date to which the transactions are to be listed') . ':</td>
-				<td><input type="text" name="ToDate" maxlength="10" size="10" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
-			</tr>';
-
-	echo '<tr><td>' . _('Transaction type') . '</td><td>';
-
-	echo '<select name="TransType">';
-
-	echo '<option value="10">' . _('Sales Invoice').'</option>
-			<option value="11">' . _('Sales Credit Note').'</option>
-			<option value="16">' . _('Location Transfer').'</option>
-			<option value="17">' . _('Stock Adjustment').'</option>
-			<option value="25">' . _('Purchase Order Delivery').'</option>
-			<option value="26">' . _('Work Order Receipt').'</option>
-			<option value="28">' . _('Work Order Issue').'</option>
-			</select></td>
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
+		<div>
+		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+		<table class="selection">
+		<tr>
+			<td>' . _('Enter the date from which the transactions are to be listed') . ':</td>
+			<td><input type="text" required="required" autofocus="autofocus" name="FromDate" maxlength="10" size="10" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
+		</tr>
+		<tr>
+			<td>' . _('Enter the date to which the transactions are to be listed') . ':</td>
+			<td><input type="text" required="required" name="ToDate" maxlength="10" size="10" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
+		</tr>
+		<tr>
+			<td>' . _('Transaction type') . '</td>
+			<td><select name="TransType">
+				<option value="10">' . _('Sales Invoice').'</option>
+				<option value="11">' . _('Sales Credit Note').'</option>
+				<option value="16">' . _('Location Transfer').'</option>
+				<option value="17">' . _('Stock Adjustment').'</option>
+				<option value="25">' . _('Purchase Order Delivery').'</option>
+				<option value="26">' . _('Work Order Receipt').'</option>
+				<option value="28">' . _('Work Order Issue').'</option>
+				</select></td>
 		</tr>';
 
 	$sql = "SELECT loccode, locationname FROM locations";
@@ -56,7 +54,7 @@ if (!isset($_POST['FromDate'])){
 
 	echo '<tr>
 			<td>' . _('For Stock Location') . ':</td>
-			<td><select name="StockLocation">
+			<td><select required="required" name="StockLocation">
 				<option value="All">' . _('All') . '</option>';
 
 	while ($myrow=DB_fetch_array($resultStkLocs)){

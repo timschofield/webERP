@@ -30,10 +30,11 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 	echo '<table class="selection">
 			<tr>
 			<td>' . _('Enter the date from which variances between orders and deliveries are to be listed') . ':</td>
-			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat']. '" name="FromDate" maxlength="10" size="10" value="' . Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m')-1,0,Date('y'))) . '" /></td>
+			<td><input type="text" required="required" autofocus="autofocus" class="date" alt="' . $_SESSION['DefaultDateFormat']. '" name="FromDate" maxlength="10" size="10" value="' . Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m')-1,0,Date('y'))) . '" /></td>
 			</tr>';
 	echo '<tr>
-			<td>' . _('Enter the date to which variances between orders and deliveries are to be listed') . ':</td><td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat']. '"  name="ToDate" maxlength="10" size="10" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
+			<td>' . _('Enter the date to which variances between orders and deliveries are to be listed') . ':</td>
+			<td><input type="text" required="required" class="date" alt="' . $_SESSION['DefaultDateFormat']. '"  name="ToDate" maxlength="10" size="10" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
 			</tr>';
 	echo '<tr>
 			<td>' . _('Inventory Category') . '</td>
@@ -56,9 +57,8 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 	}
 
 	 echo '</select></td>
-		</tr>';
-
-	 echo '<tr>
+		</tr>
+		<tr>
 			<td>' . _('Inventory Location') . ':</td>
 			<td><select name="Location">
 				<option selected="selected" value="All">' . _('All Locations')  . '</option>';
@@ -80,9 +80,9 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 			<br />
 			<div class="centre">
 				<input type="submit" name="Go" value="' . _('Create PDF') . '" />
-			</div>';
-     echo '</div>
-           </form>';
+			</div>
+			</div>
+		</form>';
 
 	 if ($InputError==1){
 	 	prnMsg($msg,'error');

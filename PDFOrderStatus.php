@@ -30,31 +30,37 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' ' . _('Order Status Report') . '</p>';
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table class="selection">
-			<tr>
-				<td>' . _('Enter the date from which orders are to be listed') . ':</td>
-				<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" maxlength="10" size="10" value="' . Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m'),Date('d')-1,Date('y'))) . '" /></td>
-			</tr>';
-	echo '<tr><td>' . _('Enter the date to which orders are to be listed') . ':</td><td>';
-	echo '<input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" maxlength="10" size="10" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td></tr>';
-	echo '<tr><td>' . _('Inventory Category') . '</td><td>';
+    echo '<div>
+		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+		<table class="selection">
+		<tr>
+			<td>' . _('Enter the date from which orders are to be listed') . ':</td>
+			<td><input type="text" required="required" autofocus="autofocus" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" maxlength="10" size="10" value="' . Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m'),Date('d')-1,Date('y'))) . '" /></td>
+		</tr>
+		<tr>
+			<td>' . _('Enter the date to which orders are to be listed') . ':</td>
+			<td><input type="text" required="required" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" maxlength="10" size="10" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
+		</tr>
+		<tr>
+			<td>' . _('Inventory Category') . '</td>
+			<td>';
 
 	$sql = "SELECT categorydescription, categoryid FROM stockcategory WHERE stocktype<>'D' AND stocktype<>'L'";
 	$result = DB_query($sql,$db);
 
 
-	echo '<select name="CategoryID">';
-	echo '<option selected="selected" value="All">' . _('Over All Categories') . '</option>';
+	echo '<select required="required" name="CategoryID">
+		<option selected="selected" value="All">' . _('Over All Categories') . '</option>';
 
 	while ($myrow=DB_fetch_array($result)){
 		echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription'] . '</option>';
 	}
-	echo '</select></td></tr>';
-
-	echo '<tr><td>' . _('Inventory Location') . ':</td><td><select name="Location">';
-	echo '<option selected="selected" value="All">' . _('All Locations') . '</option>';
+	echo '</select></td>
+		</tr>
+		<tr>
+			<td>' . _('Inventory Location') . ':</td>
+			<td><select name="Location">
+				<option selected="selected" value="All">' . _('All Locations') . '</option>';
 
 	$result= DB_query("SELECT loccode, locationname FROM locations",$db);
 	while ($myrow=DB_fetch_array($result)){
@@ -62,19 +68,20 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
 	}
 	echo '</select></td></tr>';
 
-	echo '<tr><td>' . _('Back Order Only') . ':</td>
-				<td><select name="BackOrders">
-					<option selected="selected" value="Yes">' . _('Only Show Back Orders') . '</option>
-					<option value="No">' . _('Show All Orders') . '</option>
-				</select></td>
-			</tr>
-			</table>
-			<br />
-			<div class="centre">
-				<input type="submit" name="Go" value="' . _('Create PDF') . '" />
-			</div>';
-    echo '</div>
-          </form>';
+	echo '<tr>
+			<td>' . _('Back Order Only') . ':</td>
+			<td><select name="BackOrders">
+				<option selected="selected" value="Yes">' . _('Only Show Back Orders') . '</option>
+				<option value="No">' . _('Show All Orders') . '</option>
+			</select></td>
+		</tr>
+		</table>
+		<br />
+		<div class="centre">
+			<input type="submit" name="Go" value="' . _('Create PDF') . '" />
+		</div>
+		</div>
+	</form>';
 
 	include('includes/footer.inc');
 	exit;

@@ -265,18 +265,18 @@ if (! isset($_GET['delete'])) {
 	}
 	echo '<tr>
 			<td>' . _('Payment Method') . ':' . '</td>
-			<td><input type="text" '. (in_array('MethodName',$Errors) ? 'class="inputerror"' : '' ) .' name="MethodName" size="30" maxlength="30" value="' . $_POST['MethodName'] . '" /></td>
+			<td><input type="text" '. (in_array('MethodName',$Errors) ? 'class="inputerror"' : '' ) .' name="MethodName" autofocus="autofocus" required="required" size="30" maxlength="30" value="' . $_POST['MethodName'] . '" /></td>
 		</tr>';
 	echo '<tr>
 		<td>' . _('Use For Payments') . ':' . '</td>
-		<td><select name="ForPayment">
+		<td><select required="required" name="ForPayment">
 			<option' . ($_POST['ForPayment'] ? ' selected="selected"' : '') .' value="1">' . _('Yes') . '</option>
 			<option' . ($_POST['ForPayment'] ? '' : ' selected="selected"') .' value="0">' . _('No') . '</option>
             </select></td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('Use For Receipts') . ':' . '</td>
-			<td><select name="ForReceipt">
+			<td><select required="required" name="ForReceipt">
 				<option' . ($_POST['ForReceipt'] ? ' selected="selected"' : '') .' value="1">' . _('Yes') . '</option>
 				<option' . ($_POST['ForReceipt'] ? '' : ' selected="selected"') .' value="0">' . _('No') . '</option>
 			</select></td>

@@ -30,12 +30,12 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 	 echo '<table class="selection">
 			<tr>
 				<td>' . _('Enter the date from which variances between orders and deliveries are to be listed') . ':</td>
-				<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'].'" name="FromDate" maxlength="10" size="10" value="' . Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m')-1,0,Date('y'))) . '" /></td>
+				<td><input type="text" required="required" autofocus="autofocus" class="date" alt="' .$_SESSION['DefaultDateFormat'].'" name="FromDate" maxlength="10" size="10" value="' . Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m')-1,0,Date('y'))) . '" /></td>
+			</tr>
+			<tr>
+				<td>' . _('Enter the date to which variances between orders and deliveries are to be listed') . ':</td>
+				<td><input type="text" required="required" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="ToDate" maxlength="10" size="10" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
 			</tr>';
-	 echo '<tr>
-			<td>' . _('Enter the date to which variances between orders and deliveries are to be listed') . ':</td>
-			<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="ToDate" maxlength="10" size="10" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
-		</tr>';
 
 	 if (!isset($_POST['DaysAcceptable'])){
 		$_POST['DaysAcceptable'] = 1;
@@ -43,9 +43,11 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 
 	 echo '<tr>
 				<td>' . _('Enter the number of days considered acceptable between delivery requested date and invoice date(ie the date dispatched)') . ':</td>
-				<td><input type="text" class="number" name="DaysAcceptable" maxlength="2" size="2" value="' . $_POST['DaysAcceptable'] . '" /></td>
-			</tr>';
-	 echo '<tr><td>' . _('Inventory Category') . '</td><td>';
+				<td><input type="text" class="integer" name="DaysAcceptable" maxlength="2" size="2" value="' . $_POST['DaysAcceptable'] . '" /></td>
+			</tr>
+			<tr>
+				<td>' . _('Inventory Category') . '</td>
+				<td>';
 
 	 $sql = "SELECT categorydescription, categoryid FROM stockcategory WHERE stocktype<>'D' AND stocktype<>'L'";
 	 $result = DB_query($sql,$db);
@@ -60,9 +62,10 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 
 	 echo '</select></td></tr>';
 
-	 echo '<tr><td>' . _('Inventory Location') . ':</td>
-			<td><select name="Location">';
-	 echo '<option selected="selected" value="All">' . _('All Locations') . '</option>';
+	 echo '<tr>
+			<td>' . _('Inventory Location') . ':</td>
+			<td><select name="Location">
+				<option selected="selected" value="All">' . _('All Locations') . '</option>';
 
 	$result= DB_query("SELECT loccode, locationname FROM locations",$db);
 	while ($myrow=DB_fetch_array($result)){
@@ -70,7 +73,8 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 	}
 	 echo '</select></td></tr>';
 
-	 echo '<tr><td>' . _('Email the report off') . ':</td>
+	 echo '<tr>
+			<td>' . _('Email the report off') . ':</td>
 			<td><select name="Email">
 				<option selected="selected" value="No">' . _('No') . '</option>
 				<option value="Yes">' . _('Yes') . '</option>
@@ -80,9 +84,9 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 		<br />
 		<div class="centre">
 		<input type="submit" name="Go" value="' . _('Create PDF') . '" />
-		</div>';
-     echo '</div>
-           </form>';
+		</div>
+		</div>
+	</form>';
 
 	 if ($InputError==1){
 	 	prnMsg($msg,'error');

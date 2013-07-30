@@ -52,7 +52,7 @@ if (isset($_POST['submit'])) {
 
 	if (ContainsIllegalCharacters($_POST['BranchCode']) OR mb_strstr($_POST['BranchCode'],' ') OR mb_strstr($_POST['BranchCode'],'-')) {
 		$InputError = 1;
-		prnMsg(_('The Branch code cannot contain any of the following characters')." -  &amp; \'",'error');
+		prnMsg(_('The Branch code cannot contain any of the following characters')." -  &amp; \' &lt; &gt;",'error');
 		$Errors[$i] = 'BranchCode';
 		$i++;
 	}
@@ -446,9 +446,9 @@ if (!isset($SelectedBranch)){
 			<table class="selection">
 			<tr>
 				<td><div class="centre">';
-		echo '<b>'.$TotalEnable.'</b> ' . _('Branches are enabled.') . '<br />';
-		echo '<b>'.$TotalDisable.'</b> ' . _('Branches are disabled.') . '<br />';
-		echo '<b>'.($TotalEnable+$TotalDisable). '</b> ' . _('Total Branches') . '</div></td>
+		echo '<b>' . $TotalEnable.'</b> ' . _('Branches are enabled.') . '<br />';
+		echo '<b>' . $TotalDisable.'</b> ' . _('Branches are disabled.') . '<br />';
+		echo '<b>' . ($TotalEnable+$TotalDisable). '</b> ' . _('Total Branches') . '</div></td>
 			</tr>
 			</table>';
 	} else {

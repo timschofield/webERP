@@ -280,7 +280,7 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 		echo '<table class="selection">';
 		echo '<tr>
 				<td>' . _('Label to print') . ':</td>
-				<td><select name="LabelID">';
+				<td><select required="required" autofocus="autofocus" name="LabelID">';
 
 		$LabelResult = DB_query("SELECT labelid, description FROM labels",$db);
 		while ($LabelRow = DB_fetch_array($LabelResult)){
@@ -335,10 +335,11 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 				echo '<option value="' . $myrow['currabrev'] . '">' . $myrow['country'] . ' - ' .$myrow['currency'] . '</option>';
 			}
 		}
-		echo '</select></td></tr>';
-
-		echo '<tr><td>' . _('Effective As At') . ':</td>';
-        echo '<td><input type="text" size="11" class="date"	alt="' . $_SESSION['DefaultDateFormat'] . '" name="EffectiveDate" value="' . Date($_SESSION['DefaultDateFormat']) . '" />';
+		echo '</select></td>
+		</tr>
+		<tr>
+			<td>' . _('Effective As At') . ':</td>
+			<td><input type="text" size="11" class="date"	alt="' . $_SESSION['DefaultDateFormat'] . '" name="EffectiveDate" value="' . Date($_SESSION['DefaultDateFormat']) . '" />';
         echo '</td></tr>';
 
 		echo '</table>

@@ -288,25 +288,31 @@ If (isset($_POST['PrintPDF'])
 		}
 		echo '</select></td></tr>';
 
-		echo '<tr><td>' . _('Show Gross Profit %') . ':</td>
-                  <td><select name="ShowGPPercentages">';
-		echo '<option selected="selected" value="No">'. _('Prices Only') . '</option>';
-		echo '<option value="Yes">'. _('Show GP % too') . '</option>';
-		echo '</select></td></tr>';
-
-		echo '<tr><td>' . _('Price Listing Type'). ':</td><td><select name="CustomerSpecials">';
-		echo '<option selected="selected" value="Sales Type Prices">'. _('Default Sales Type Prices') . '</option>';
-		echo '<option value="Customer Special Prices Only">'. _('Customer Special Prices Only') . '</option>';
-		echo '<option value="Full Description">'. _('Full Description') . '</option>';
-		echo '</select></td></tr>';
-
-		echo '<tr><td>' . _('Effective As At') . ':</td>';
-        echo '<td><input type="text" size="11" class="date"	alt="' . $_SESSION['DefaultDateFormat'] . '" name="EffectiveDate" value="' . Date($_SESSION['DefaultDateFormat']) . '" />';
-        echo '</td></tr>';
-
-		echo '</table><br /><div class="centre"><input type="submit" name="PrintPDF" value="'. _('Print PDF'). '" /></div>';
-        echo '</div>
-              </form>';
+		echo '<tr>
+				<td>' . _('Show Gross Profit %') . ':</td>
+				<td><select name="ShowGPPercentages">
+					<option selected="selected" value="No">'. _('Prices Only') . '</option>
+					<option value="Yes">'. _('Show GP % too') . '</option>
+					</select></td>
+			</tr>
+			<tr>
+				<td>' . _('Price Listing Type'). ':</td><td><select name="CustomerSpecials">
+					<option selected="selected" value="Sales Type Prices">'. _('Default Sales Type Prices') . '</option>
+					<option value="Customer Special Prices Only">'. _('Customer Special Prices Only') . '</option>
+					<option value="Full Description">'. _('Full Description') . '</option>
+					</select></td>
+			</tr>
+			<tr>
+				<td>' . _('Effective As At') . ':</td>
+				<td><input type="text" required="required" size="11" class="date"	alt="' . $_SESSION['DefaultDateFormat'] . '" name="EffectiveDate" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
+			</tr>
+			</table>
+			<br />
+			<div class="centre">
+				<input type="submit" name="PrintPDF" value="'. _('Print PDF'). '" />
+			</div>
+			</div>
+		</form>';
 	}
 	include('includes/footer.inc');
 

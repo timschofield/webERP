@@ -13,7 +13,7 @@ if (isset($_POST['supplierid'])) {
 				currcode,
 				paymentterms
 			FROM suppliers
-			WHERE supplierid='".$_POST['supplierid']."'";
+			WHERE supplierid='" . $_POST['supplierid'] . "'";
 	$result = DB_query($sql, $db);
 	$myrow=DB_fetch_array($result);
 	$SupplierName=$myrow['suppname'];
@@ -31,24 +31,24 @@ if (!isset($_POST['supplierid'])) {
 			ON offers.currcode=purchorderauth.currabrev
 		LEFT JOIN suppliers
 			ON suppliers.supplierid=offers.supplierid
-		WHERE purchorderauth.userid='".$_SESSION['UserID']."'
+		WHERE purchorderauth.userid='" . $_SESSION['UserID'] . "'
 		AND offers.expirydate>'" . date('Y-m-d') . "'
 		AND purchorderauth.cancreate=0";
 	$result=DB_query($sql, $db);
 	if (DB_num_rows($result)==0) {
 		prnMsg(_('There are no offers outstanding that you are authorised to deal with'), 'information');
 	} else {
-		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . _('Select Supplier') . '" alt="" />
+		echo '<p class="page_title_text"><img src="' . $RootPath.'/css/' . $Theme.'/images/supplier.png" title="' . _('Select Supplier') . '" alt="" />
              ' . ' ' . _('Select Supplier') . '</p>';
 		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'">';
         echo '<div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<table class="selection">
 			<tr>
-				<td>'._('Select Supplier').'</td>
+				<td>' . _('Select Supplier').'</td>
 				<td><select name=supplierid>';
 		while ($myrow=DB_fetch_array($result)) {
-			echo '<option value="'.$myrow['supplierid'].'">'.$myrow['suppname'].'</option>';
+			echo '<option value="' . $myrow['supplierid'].'">' . $myrow['suppname'].'</option>';
 		}
 		echo '</select></td>
 			</tr>
@@ -97,23 +97,23 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<p class="page_title_text">
-			<img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . _('Supplier Offers') . '" alt="" />' . ' ' . _('Supplier Offers') . '
+			<img src="' . $RootPath.'/css/' . $Theme.'/images/supplier.png" title="' . _('Supplier Offers') . '" alt="" />' . ' ' . _('Supplier Offers') . '
 		</p>';
 
 	echo '<table class="selection">
 			<tr>
-				<th>'._('Offer ID').'</th>
-				<th>'._('Supplier').'</th>
-				<th>'._('Stock Item').'</th>
-				<th>'._('Quantity').'</th>
-				<th>'._('Units').'</th>
-				<th>'._('Price').'</th>
-				<th>'._('Total').'</th>
-				<th>'._('Currency').'</th>
-				<th>'._('Offer Expires').'</th>
-				<th>'._('Accept').'</th>
-				<th>'._('Reject').'</th>
-				<th>'._('Defer').'</th>
+				<th>' . _('Offer ID').'</th>
+				<th>' . _('Supplier').'</th>
+				<th>' . _('Stock Item').'</th>
+				<th>' . _('Quantity').'</th>
+				<th>' . _('Units').'</th>
+				<th>' . _('Price').'</th>
+				<th>' . _('Total').'</th>
+				<th>' . _('Currency').'</th>
+				<th>' . _('Offer Expires').'</th>
+				<th>' . _('Accept').'</th>
+				<th>' . _('Reject').'</th>
+				<th>' . _('Defer').'</th>
 			</tr>';
 	$k=0;
 	echo 'The result has rows '.DB_num_rows($result).'<br/>';
@@ -125,19 +125,19 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 			echo '<tr class="OddTableRows">';
 			$k++;
 		}
-		echo '<td>'.$myrow['offerid'].'</td>
-			<td>'.$myrow['suppname'].'</td>
-			<td>'.$myrow['description'].'</td>
+		echo '<td>' . $myrow['offerid'].'</td>
+			<td>' . $myrow['suppname'].'</td>
+			<td>' . $myrow['description'].'</td>
 			<td class="number">'.locale_number_format($myrow['quantity'],$myrow['decimalplaces']).'</td>
-			<td>'.$myrow['uom'].'</td>
+			<td>' . $myrow['uom'].'</td>
 			<td class="number">'.locale_number_format($myrow['price'],$myrow['currdecimalplaces']).'</td>
 			<td class="number">'.locale_number_format($myrow['price']*$myrow['quantity'],$myrow['currdecimalplaces']).'</td>
-			<td>'.$myrow['currcode'].'</td>
-			<td>'.$myrow['expirydate'].'</td>
-			<td><input type="radio" name="action'.$myrow['offerid'].'" value="1" /></td>
-			<td><input type="radio" name="action'.$myrow['offerid'].'" value="2" /></td>
-			<td><input type="radio" checked name="action'.$myrow['offerid'].'" value="3" /></td>
-			<td><input type="hidden" name="supplierid" value="'.$myrow['supplierid'].'" /></td>
+			<td>' . $myrow['currcode'].'</td>
+			<td>' . $myrow['expirydate'].'</td>
+			<td><input type="radio" name="action' . $myrow['offerid'] . '" value="1" /></td>
+			<td><input type="radio" name="action' . $myrow['offerid'] . '" value="2" /></td>
+			<td><input type="radio" checked name="action' . $myrow['offerid'] . '" value="3" /></td>
+			<td><input type="hidden" name="supplierid" value="' . $myrow['supplierid'] . '" /></td>
 		</tr>';
 	}
 	echo '<tr>
@@ -152,27 +152,27 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
         </form>';
 } else if(isset($_POST['submit']) and isset($_POST['supplierid'])) {
 	include ('includes/htmlMimeMail.php');
-	$accepts=array();
+	$Accepts=array();
 	$RejectsArray=array();
-	$defers=array();
+	$Defers=array();
 	foreach ($_POST as $key => $value) {
 		if(mb_substr($key,0,6)=='action') {
 			$OfferID=mb_substr($key,6);
 			switch ($value) {
 				case 1:
-					$accepts[]=$OfferID;
+					$Accepts[]=$OfferID;
 					break;
 				case 2:
 					$RejectsArray[]=$OfferID;
 					break;
 				case 3:
-					$defers[]=$OfferID;
+					$Defers[]=$OfferID;
 					break;
 			}
 		}
 	}
-	if (sizeOf($accepts)>0){
-		$MailText=_('This email has been automatically generated by the webERP installation at'). ' ' . $_SESSION['CompanyRecord']['coyname']."\n";
+	if (sizeOf($Accepts)>0){
+		$MailText=_('This email has been automatically generated by the webERP installation at'). ' ' . $_SESSION['CompanyRecord']['coyname'] . "\n";
 		$MailText.=_('The following offers you made have been accepted')."\n";
 		$MailText.=_('An official order will be sent to you in due course')."\n\n";
 		$sql="SELECT rate FROM currencies where currabrev='" . $CurrCode ."'";
@@ -192,18 +192,18 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 					stat_comment,
 					paymentterms)
 				VALUES (
-					'".$OrderNo."',
-					'".$_POST['supplierid']."',
+					'" . $OrderNo."',
+					'" . $_POST['supplierid'] . "',
 					'".date('Y-m-d')."',
-					'".$Rate."',
-					'".$_SESSION['UserID']."',
-					'".$_SESSION['DefaultFactoryLocation']."',
+					'" . $Rate."',
+					'" . $_SESSION['UserID'] . "',
+					'" . $_SESSION['DefaultFactoryLocation'] . "',
 					'".date('Y-m-d')."',
 					'"._('Pending')."',
 					'"._('Automatically generated from tendering system')."',
-					'".$PaymentTerms."')";
+					'" . $PaymentTerms."')";
 		DB_query($sql, $db);
-		foreach ($accepts as $AcceptID) {
+		foreach ($Accepts as $AcceptID) {
 			$sql="SELECT offers.quantity,
 							offers.price,
 							offers.uom,
@@ -212,10 +212,10 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 						FROM offers
 						LEFT JOIN stockmaster
 							ON offers.stockid=stockmaster.stockid
-						WHERE offerid='".$AcceptID."'";
+						WHERE offerid='" . $AcceptID."'";
 			$result= DB_query($sql, $db);
 			$myrow=DB_fetch_array($result);
-			$MailText.=$myrow['description']."\t"._('Quantity').' '.$myrow['quantity']."\t"._('Price').' '.
+			$MailText.=$myrow['description'] . "\t"._('Quantity').' ' . $myrow['quantity'] . "\t"._('Price').' '.
 					locale_number_format($myrow['price'])."\n";
 			$sql="INSERT INTO purchorderdetails (orderno,
 												itemcode,
@@ -225,20 +225,20 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 												actprice,
 												quantityord,
 												suppliersunit)
-									VALUES ('".$OrderNo."',
-											'".$myrow['stockid']."',
+									VALUES ('" . $OrderNo."',
+											'" . $myrow['stockid'] . "',
 											'".date('Y-m-d')."',
 											'".DB_escape_string($myrow['description'])."',
-											'".$myrow['price']."',
-											'".$myrow['price']."',
-											'".$myrow['quantity']."',
-											'".$myrow['uom']."')";
+											'" . $myrow['price'] . "',
+											'" . $myrow['price'] . "',
+											'" . $myrow['quantity'] . "',
+											'" . $myrow['uom'] . "')";
 			$result=DB_query($sql, $db);
-			$sql="DELETE FROM offers WHERE offerid='".$AcceptID."'";
+			$sql="DELETE FROM offers WHERE offerid='" . $AcceptID."'";
 			$result=DB_query($sql, $db);
 		}
 		$mail = new htmlMimeMail();
-		$mail->setSubject(_('Your offer to').' '.$_SESSION['CompanyRecord']['coyname'].' '._('has been accepted'));
+		$mail->setSubject(_('Your offer to').' ' . $_SESSION['CompanyRecord']['coyname'].' ' . _('has been accepted'));
 		$mail->setText($MailText);
 		$Recipients = GetMailList('OffersReceivedResultRecipients');
 		if (sizeOf($Recipients) == 0) {
@@ -254,16 +254,16 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 			$result = SendMailBySmtp($mail,$Recipients);
 		}
 		if($result){
-			prnMsg(_('The accepted offers from').' '.$SupplierName.' '._('have been converted to purchase orders and an email sent to')
-				.' '.$Email."\n"._('Please review the order contents').' '.'<a href="'.$RootPath .
-				'/PO_Header.php?ModifyOrderNumber=' . $OrderNo.'">'._('here').'</a>', 'success');
+			prnMsg(_('The accepted offers from').' ' . $SupplierName.' ' . _('have been converted to purchase orders and an email sent to')
+				.' ' . $Email."\n"._('Please review the order contents').' '.'<a href="' . $RootPath .
+				'/PO_Header.php?ModifyOrderNumber=' . $OrderNo.'">' . _('here').'</a>', 'success');
 		}else{
-			prnMsg(_('The accepted offers from').' '.$SupplierName.' '._('have been converted to purcharse orders but failed to mail, you can view the order contents').' '.'<a href="'.$RootPath.'/PO_Header.php?ModifyOrderNumber=' . $OrderNo.'">'._('here').'</a>','warn');
+			prnMsg(_('The accepted offers from').' ' . $SupplierName.' ' . _('have been converted to purcharse orders but failed to mail, you can view the order contents').' '.'<a href="' . $RootPath.'/PO_Header.php?ModifyOrderNumber=' . $OrderNo.'">' . _('here').'</a>','warn');
 		}
 	}
 	if (sizeOf($RejectsArray)>0){
 		$MailText=_('This email has been automatically generated by the webERP installation at').' '.
-		$_SESSION['CompanyRecord']['coyname']."\n";
+		$_SESSION['CompanyRecord']['coyname'] . "\n";
 		$MailText.=_('The following offers you made have been rejected')."\n\n";
 		foreach ($RejectsArray as $RejectID) {
 			$sql="SELECT offers.quantity,
@@ -272,7 +272,7 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 						FROM offers
 						LEFT JOIN stockmaster
 							ON offers.stockid=stockmaster.stockid
-						WHERE offerid='".$RejectID."'";
+						WHERE offerid='" . $RejectID."'";
 			$result= DB_query($sql, $db);
 			$myrow=DB_fetch_array($result);
 			$MailText .= $myrow['description'] . "\t" . _('Quantity') . ' ' . $myrow['quantity'] . "\t" . _('Price') . ' ' . locale_number_format($myrow['price'])."\n";
@@ -280,7 +280,7 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 			$result=DB_query($sql, $db);
 		}
 		$mail = new htmlMimeMail();
-		$mail->setSubject(_('Your offer to').' '.$_SESSION['CompanyRecord']['coyname'].' '._('has been rejected'));
+		$mail->setSubject(_('Your offer to').' ' . $_SESSION['CompanyRecord']['coyname'].' ' . _('has been rejected'));
 		$mail->setText($MailText);
 		$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . ' <' . $_SESSION['CompanyRecord']['email'] . '>');
 		$Recipients = GetMailList('OffersReceivedResultRecipients');
@@ -297,11 +297,11 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 			$result = SendmailBySmtp($mail,$Recipients);
 		}
 		if($result){
-			prnMsg(_('The rejected offers from').' '.$SupplierName.' '._('have been removed from the system and an email sent to')
-				.' '.$Email, 'success');
+			prnMsg(_('The rejected offers from').' ' . $SupplierName.' ' . _('have been removed from the system and an email sent to')
+				.' ' . $Email, 'success');
 		}else{
-			prnMsg(_('The rejected offers from').' '.$SupplierName.' '._('have been removed from the system and but no email was not sent to')
-				.' '.$Email, 'warn');
+			prnMsg(_('The rejected offers from').' ' . $SupplierName.' ' . _('have been removed from the system and but no email was not sent to')
+				.' ' . $Email, 'warn');
 
 		}
 	}

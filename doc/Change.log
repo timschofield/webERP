@@ -1,5 +1,6 @@
 webERP Change Log
 
+29/7/13 Serge Gélinas: Profit and loss now has option to show all accounts and by default just shows those with a balance
 25/7/13 Serge Gélinas: Balance sheet now has option to show all accounts and by default just shows those with a balance
 24/7/13 Exson: Fixed that empty password should be allowed. Reported by Tim. 
 24/7/13 Exson: Add the html5 mark for some input fields in WWW_Users.php.

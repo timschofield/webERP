@@ -277,13 +277,13 @@ if (!isset($_GET['delete'])) {
 			</tr>';
 		echo '<tr>
 				<td>' . _('Term Code') . ':</td>
-				<td><input type="text" name="TermsIndicator"' . (in_array('TermsIndicator',$Errors) ? 'class="inputerror"' : '' ) .' value="' . $_POST['TermsIndicator'] . '" size="3" maxlength="2" /></td>
+				<td><input type="text" name="TermsIndicator"' . (in_array('TermsIndicator',$Errors) ? 'class="inputerror"' : '' ) .' autofocus="autofocus" required="required" pattern="[0-9a-ZA-Z_]*" title="' . _('A 2 character code to identify this payment term. Any alpha-numeric characters can be used') . '" value="' . $_POST['TermsIndicator'] . '" size="3" maxlength="2" /></td>
 			</tr>';
 	}
 
 	echo '<tr>
 			<td>'. _('Terms Description'). ':</td>
-			<td><input type="text"' . (in_array('Terms',$Errors) ? 'class="inputerror"' : '' ) .' name="Terms" value="'.$_POST['Terms']. '" size="35" maxlength="40" /></td>
+			<td><input type="text"' . (in_array('Terms',$Errors) ? 'class="inputerror"' : '' ) .' name="Terms" ' . (isset($SelectedTerms)? 'autofocus="autofocus"': '') . ' required="required" value="'.$_POST['Terms']. '" title="' . _('A description of the payment terms is required') . '" size="35" maxlength="40" /></td>
 		</tr>
 		<tr>
 			<td>'._('Due After A Given No. Of Days').':</td>
@@ -294,7 +294,7 @@ if (!isset($_GET['delete'])) {
     echo '  /></td>
 		</tr>
 		<tr><td>'._('Days (Or Day In Following Month)').':</td>
-			<td><input type="text"' . (in_array('DayNumber',$Errors) ? 'class="inputerror"' : '' ) .' name="DayNumber" class="number"  size="4" maxlength="3" value="';
+			<td><input type="text" ' . (in_array('DayNumber',$Errors) ? 'class="inputerror"' : '' ) .' name="DayNumber" required="required" class="integer"  size="4" maxlength="3" value="';
 	if ($DaysBeforeDue !=0) {
 		echo locale_number_format($DaysBeforeDue,0);
 	} else {
