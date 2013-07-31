@@ -45,10 +45,10 @@ $YPos +=5;
 
 /*set up the headings */
 $Xpos = $Left_Margin+1;
-$LeftOvers = $pdf->addTextWrap($Xpos,$YPos,100-$Left_Margin,$FontSize,_('Item Code'), 'centre');
-$LeftOvers = $pdf->addTextWrap(150,$YPos,150-$Left_Margin,$FontSize,_('Description'), 'centre');
-$LeftOvers = $pdf->addTextWrap(341,$YPos,120,$FontSize,_('Qty Shipped'), 'centre');
-$LeftOvers = $pdf->addTextWrap(341+120,$YPos,120,$FontSize,_('Qty Received'), 'centre');
+$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 100, $FontSize, _('Item Code'), 'left');
+$LeftOvers = $pdf->addTextWrap($Left_Margin+100, $YPos, 250, $FontSize, _('Description'), 'left');
+$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-100-100, $YPos, 100, $FontSize, _('Qty Shipped'), 'right');
+$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-100, $YPos, 100, $FontSize, _('Qty Received'), 'right');
 
 $FontSize=10;
 $YPos -= 30;
