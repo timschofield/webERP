@@ -6,15 +6,31 @@ if ($PageNumber>1){
 	$pdf->newPage();
 }
 
-$FontSize=12;
 $YPos= $Page_Height-$Top_Margin;
-$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,$_SESSION['CompanyRecord']['coyname']);
-$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-120,$YPos,120,$FontSize, _('Printed'). ': ' . Date($_SESSION['DefaultDateFormat']) . '   ' . _('Page'). ' ' . $PageNumber);
-
-$YPos -=15;
+$YPos -=15; // Downs one line height (coordinates are from bottom left page to bottom left text).
 $FontSize=12;
-$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,550,$FontSize,
-_('Transfer No').': ' . $_GET['TransferNo']);
+$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,$_SESSION['CompanyRecord']['coyname']);
+
+$LeftOvers = $pdf->addTextWrap(	$Page_Width-$Right_Margin-550,
+								$Page_Height-$Top_Margin-$FontSize*1,
+								550,
+								$FontSize,
+								_('Transfer No').': ' . $_GET['TransferNo'],
+								'right'); // Prints inventory location transfer reference number.
+
+$LeftOvers = $pdf->addTextWrap(	$Page_Width-$Right_Margin-120,
+								$Page_Height-$Top_Margin-$FontSize*2,
+								120,
+								$FontSize,
+								_('Printed'). ': ' . Date($_SESSION['DefaultDateFormat']),
+								'right'); // Prints current date.
+
+$LeftOvers = $pdf->addTextWrap(	$Page_Width-$Right_Margin-120,
+								$Page_Height-$Top_Margin-$FontSize*3,
+								120,
+								$FontSize,
+								_('Page'). ' ' . $PageNumber,
+								'right'); // Prints current page number.
 
 $YPos -=15;
 $FontSize=12;
@@ -28,8 +44,8 @@ _('From').' ' . $TransferRow['shiplocname']);
 
 $YPos -=15;
 $FontSize=12;
-$LeftOvers2 = $pdf->addTextWrap($Left_Margin,$YPos,550,$FontSize, _('to').'
-' . $TransferRow['reclocname']);
+$LeftOvers2 = $pdf->addTextWrap($Left_Margin,$YPos,550,$FontSize, 
+_('to').' ' . $TransferRow['reclocname']);
 
 /*Draw a rectangle to put the headings in     */
 $BoxHeight =20;
