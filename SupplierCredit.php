@@ -523,7 +523,7 @@ if ($_SESSION['SuppTrans']->GLLink_Creditors ==1){
 }
 
 echo '<tr>
-		<td colspan="2"><input type="submit" name="ToggleTaxMethod" value="' . _('Change Tax Calculation Method') .  '" /></td>
+		<td colspan="2"><input type="submit" name="ToggleTaxMethod" value="' . _('Update Tax Calculation') .  '" /></td>
 		<td><select name="OverRideTax" onchange="ReloadForm(form1.ToggleTaxMethod)">';
 
 if ($_POST['OverRideTax']=='Man'){
