@@ -52,9 +52,9 @@ if (get_magic_quotes_gpc()){
                 foreach ($CompanyList as $key => $CompanyEntry){
                     if (is_dir('companies/' . $CompanyEntry['database']) ){
                         if ($CompanyEntry['database'] == $DefaultDatabase) {
-                            echo '<option selected="selected" label="'.$CompanyEntry['company'].'" value="'.$key.'">'.$CompanyEntry['company'].'</option>';
+                            echo '<option selected="selected" label="'.htmlspecialchars($CompanyEntry['company'],ENT_QUOTES,'UTF-8').'" value="'.$key.'">'.htmlspecialchars($CompanyEntry['company'],ENT_QUOTES,'UTF-8').'</option>';
                         } else {
-                            echo '<option label="'.$CompanyEntry['company'].'" value="'.$key.'">'.$CompanyEntry['company'].'</option>';
+                            echo '<option label="'.htmlspecialchars($CompanyEntry['company'],ENT_QUOTES,'UTF-8').'" value="'.$key.'">'.htmlspecialchars($CompanyEntry['company'],ENT_QUOTES,'UTF-8').'</option>';
                         }
                     }
                 }

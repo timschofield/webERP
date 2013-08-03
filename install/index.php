@@ -380,7 +380,7 @@
 			$msg .=  "//Installed companies \n";
 			foreach ($CompanyList as $k=>$compinfo)
 			{
-		        $msg .= "\$CompanyList[".$k."] = array('database'=>'".$compinfo['database']."' ,'company'=>'".htmlspecialchars($compinfo['company'],ENT_QUOTES,'UTF-8')."' );\n"; //simpler to manipulate this way
+		        $msg .= "\$CompanyList[".$k."] = array('database'=>'".$compinfo['database']."' ,'company'=>'".addslashes($compinfo['company'])."' );\n"; //simpler to manipulate this way
             }
             $msg .=  "//End Installed companies-do not change this line\n";
             $msg .= "//Make sure there is nothing - not even spaces after this last ?>\n";

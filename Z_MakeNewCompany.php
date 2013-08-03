@@ -30,7 +30,6 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 		OR ContainsIllegalCharacters($_POST['NewDatabase'])){
 		prnMsg(_('Company database must not contain spaces, \& or " or \''),'error');
 	} else {
-
 		$_POST['NewDatabase'] = strtolower($_POST['NewDatabase']);
 		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' . SID . '">';
         echo '<div class="centre">';
@@ -165,19 +164,14 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 			exit;
 		}
 
-		$_SESSION['DatabaseName'] = $_POST['NewDatabase'];
-
-		unset ($_SESSION['CustomerID']);
-		unset ($_SESSION['SupplierID']);
-		unset ($_SESSION['StockID']);
-		unset ($_SESSION['Items']);
-		unset ($_SESSION['CreditItems']);
 
          //now update the config.php file if using the obfuscated database login else we don't want it there
         if (isset($CompanyList) && is_array($CompanyList)) {
             $ConfigFile = './config.php';
             $config_php = join('', file($ConfigFile));
-            $config_php = preg_replace('/\/\/End Installed companies-do not change this line/', "\$CompanyList[] = array('database'=>'".$_POST['NewDatabase']."' ,'company'=>'".htmlspecialchars($_POST['NewCompany'],ENT_QUOTES,'UTF-8')."');\n//End Installed companies-do not change this line", $config_php);
+            //fix the Post var - it is being preprocessed with slashes and entity encoded which we do not want here
+            $_POST['NewCompany'] =  html_entity_decode($_POST['NewCompany'],ENT_QUOTES,'UTF-8');
+            $config_php = preg_replace('/\/\/End Installed companies-do not change this line/', "\$CompanyList[] = array('database'=>'".$_POST['NewDatabase']."' ,'company'=>'".$_POST['NewCompany']."');\n//End Installed companies-do not change this line", $config_php);
             if (!$fp = fopen($ConfigFile, 'wb')) {
                 prnMsg(_("Cannot open the configuration file: ").$ConfigFile.". Please add the following line to the end of the file:\n\$CompanyList[] = array('database'=>'".$_POST['NewDatabase']."' ,'company'=>'".htmlspecialchars($_POST['NewCompany'],ENT_QUOTES,'UTF-8').");",'error');
             } else {
@@ -185,6 +179,14 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
                 fclose ($fp);
             }
         }
+
+		$_SESSION['DatabaseName'] = $_POST['NewDatabase'];
+
+		unset ($_SESSION['CustomerID']);
+		unset ($_SESSION['SupplierID']);
+		unset ($_SESSION['StockID']);
+		unset ($_SESSION['Items']);
+		unset ($_SESSION['CreditItems']);
 
 		$SQL ="UPDATE config SET confvalue='companies/" . $_POST['NewDatabase'] . "/EDI__Sent' WHERE confname='EDI_MsgSent'";
 		$result = DB_query($SQL,$db);
@@ -204,7 +206,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 		include('includes/GetConfig.php');
 
 
-		prnMsg (_('The new company database has been created for' . ' ' . $_POST['NewCompany'] . '. ' . _('The company details and parameters should now be set up for the new company. NB: Only a single user "demo" is defined with the password "weberp" in the new company database. A new system administrator user should be defined for the new company and this account deleted immediately.')), 'info');
+		prnMsg (_('The new company database has been created for' . ' ' . htmlspecialchars($_POST['NewCompany'],ENT_QUOTES,'UTF-8') . '. ' . _('The company details and parameters should now be set up for the new company. NB: Only a single user "demo" is defined with the password "weberp" in the new company database. A new system administrator user should be defined for the new company and this account deleted immediately.')), 'info');
 
 		echo '<p><a href="' . $RootPath . '/CompanyPreferences.php">' . _('Set Up New Company Details') . '</a>';
 		echo '<p><a href="' . $RootPath . '/SystemParameters.php">' . _('Set Up Configuration Details') . '</a>';
@@ -229,7 +231,7 @@ echo '<div class="centre">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<table><tr>';
-echo '<td>' . _('Enter the name of the database used for the comopany up to 32 characters in lower case') . ':</td>
+echo '<td>' . _('Enter the name of the database used for the company up to 32 characters in lower case') . ':</td>
 	<td><input type="text" size="33" maxlength="32" name="NewDatabase" /></td>
 	</tr>
 	<td>' . _('Enter a unique name for the company of up to 50 characters') . ':</td>
