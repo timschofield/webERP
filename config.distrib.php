@@ -5,7 +5,7 @@
 // User configurable variables
 //---------------------------------------------------
 
-//DefaultLanguage to use for the login screen and the setup of new users 
+//DefaultLanguage to use for the login screen and the setup of new users
 //The users' language selection will override
 $DefaultLanguage ='en_GB.utf8';
 
@@ -45,7 +45,7 @@ $DBPassword = 'weberp_db_pwd';
 // depending if you allow the user to select the name of the company or must use the default one described at $DefaultCompany
 // If set to 'ShowSelectionBox' webERP examines each of the directories under the companies directory to determine all the companies that can be logged into
 // a new company directory together with the necessary subdirectories is created each time a new company is created by Z_MakeNewCompany.php
-// It would also be inappropiate in some environments to show the name of the company (database name) --> Choose 'Hide'. 
+// It would also be inappropiate in some environments to show the name of the company (database name) --> Choose 'Hide'.
 // Options:
 // 	'ShowSelectionBox' (default)
 //	'ShowInputBox'
@@ -53,9 +53,9 @@ $DBPassword = 'weberp_db_pwd';
 
 $AllowCompanySelectionBox = 'ShowSelectionBox';
 
-//If $AllowCompanySelectionBox is not 'ShowSelectionBox' above then the $DefaultCompany string is entered in the login screen as a default 
-//otherwise the user is expected to know the name of the company to log into.
-$DefaultCompany = 'weberpdemo';
+//If $AllowCompanySelectionBox is not 'ShowSelectionBox' above then the $DefaultDatabase string is used to determined the default Company
+//entered in the login screen as a default, otherwise the user is expected to know the name of the company to log into.
+$DefaultDatabase = 'weberpdemo';
 
 //The maximum time that a login session can be idle before automatic logout
 //time is in seconds  3600 seconds in an hour
@@ -85,7 +85,7 @@ $DefaultClock = 12;
 
 //The $RootPath is used in most scripts to tell the script the installation details of the files.
 //NOTE: In some windows installation this command doesn't work and the administrator must set this to the path of the installation manually:
-//eg. if the files are under the webserver root directory then rootpath =''; 
+//eg. if the files are under the webserver root directory then rootpath ='';
 //if they are under webERP then webERP is the rootpath - notice no additional slashes are necessary.
 
 $RootPath = dirname(htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'));

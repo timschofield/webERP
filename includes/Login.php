@@ -27,6 +27,7 @@ if (get_magic_quotes_gpc()){
 	echo _('Your webserver is configured to enable Magic Quotes. This may cause problems if you use punctuation (such as quotes) when doing data entry. You should contact your webmaster to disable Magic Quotes');
 	echo '</p>';
 }
+
 ?>
 
 <div id="container">
@@ -47,16 +48,28 @@ if (get_magic_quotes_gpc()){
 			// Show selection box ($AllowCompanySelectionBox == 'ShowSelectionBox')
 			echo _('Company');
 			echo '<select name="CompanyNameField">';
-			$Companies = scandir('companies/', 0);
-			foreach ($Companies as $CompanyEntry){
+			if (isset($CompanyList) && is_array($CompanyList)) {
+                foreach ($CompanyList as $key => $CompanyEntry){
+                    if (is_dir('companies/' . $CompanyEntry['database']) ){
+                        if ($CompanyEntry['database'] == $DefaultDatabase) {
+                            echo '<option selected="selected" label="'.$CompanyEntry['company'].'" value="'.$key.'">'.$CompanyEntry['company'].'</option>';
+                        } else {
+                            echo '<option label="'.$CompanyEntry['company'].'" value="'.$key.'">'.$CompanyEntry['company'].'</option>';
+                        }
+                    }
+                }
+            } else { //provision for backward compat
+                $Companies = scandir('companies/', 0);
+			    foreach ($Companies as $CompanyEntry){
 				if (is_dir('companies/' . $CompanyEntry) AND $CompanyEntry != '..' AND $CompanyEntry != '' AND $CompanyEntry!='.svn' AND $CompanyEntry!='.'){
-					if ($CompanyEntry==$DefaultCompany) {
+					if ($CompanyEntry==$DefaultDatabase) {
 						echo '<option selected="selected" label="'.$CompanyEntry.'" value="'.$CompanyEntry.'">'.$CompanyEntry.'</option>';
 					} else {
 						echo '<option label="'.$CompanyEntry.'" value="'.$CompanyEntry.'">'.$CompanyEntry.'</option>';
 					}
 				}
 			}
+            }
 			echo '</select>';
 		}
 	?>

@@ -148,7 +148,6 @@
 		prnMsg(_('It seems that the system has been already installed. If you want to install again, please remove the config.php file first'),'error');
 		exit;
 	}
-
 	if(isset($_POST['Install'])){//confirm the final install data, the last validation step before we submit the data
 		//first do necessary validation
 		//Since user may have changed the DatabaseName so we need check it again
@@ -158,12 +157,29 @@
 			//The mysql database name cannot contains illegal characters such as "/","\","." etc
 			//and it should not contains illegal characters as file name such as "?""%"<"">"" " etc
 
-			if(preg_match(',[/\\\?%:\|<>\.\s"]+,',$_POST['CompanyName'])){
+			if(!preg_match(',[a-zA-Z0-9_\&\-\ ]*,',$_POST['CompanyName'])){
+				$InputError = 1;
+				prnMsg(_('The Company names can only contain alphanumeric characters plus -,_, & and spaces'),'error');
+
+			}
+			$CompanyName= $_POST['CompanyName'];
+		}else{
+				$InputError = 1;
+				prnMsg(_('The Company Name name should not be empty'),'error');
+		}
+		//provision for differing database post inputs - need to review and make these consistent
+		if ( (isset($_POST['DatabaseName'])  && !empty($_POST['DatabaseName'])) && (!isset($_POST['Database']) || empty($_POST['Database']))) $_POST['Database'] = $_POST['DatabaseName'];
+		if(!empty($_POST['Database'])){
+			//validate the Database name setting
+			//The mysql database name cannot contains illegal characters such as "/","\","." etc
+			//and it should not contains illegal characters as file name such as "?""%"<"">"" " etc
+
+			if(!preg_match(',[a-zA-Z0-9_\&amp;\-\ ]*,',$_POST['Database'])){
 				$InputError = 1;
 				prnMsg(_('The database name should not contains illegal characters such as "/\?%:|<>" blank etc'),'error');
 
 			}
-			$DatabaseName = $_POST['CompanyName'];
+			$DatabaseName = $_POST['Database'];
 		}else{
 				$InputError = 1;
 				prnMsg(_('The database name should not be empty'),'error');
@@ -176,8 +192,11 @@
 				prnMsg(_('The timezone must be legal'),'error');
 			}
 		}
+		$OnlyDemo = 0;
+		$DualCompany = 0;
+		$NewCompany = 0;
 		if(!empty($_POST['Demo']) and $_POST['Demo'] == 'on'){
-			if(strtolower($DatabaseName) == 'weberpdemo'){//user select to install the weberpdemo
+			if(strtolower($DatabaseName) === 'weberpdemo'){//user select to install the weberpdemo
 				$OnlyDemo = 1;
 
 			}else{
@@ -278,6 +297,7 @@
 
 		}else{
 		    //start to installation
+		    $CompanyList = array();
 			$Path_To_Root = '..';
 			$Config_File = $Path_To_Root . '/config.php';
 			if((isset($DualCompany) and $DualCompany == 1) or (isset($NewCompany) and $NewCompany == 1)){
@@ -302,6 +322,16 @@
 					$Result = copy ($Path_To_Root . '/logo_server.jpg',$CompanyDir.'/logo.jpg');
 				}
 			}
+			if ( isset($NewCompany) and ($NewCompany == 1)) {
+			    $CompanyList[] = array('database' => $DatabaseName, 'company' => $CompanyName);
+			} elseif (isset($DualCompany) and $DualCompany == 1) {
+			    $CompanyList[] = array('database' => $DatabaseName, 'company' => $CompanyName);
+			    $CompanyList[] = array('database' => 'weberpdemo', 'company' => _('WebERP Demo Company'));
+			} else {
+			    //make sure we have at least the demo
+			    $CompanyList[] = array('database' => 'weberpdemo', 'company' => _('WebERP Demo Company'));
+			}
+
 			//$msg holds the text of the new config.php file
 			$msg = "<?php\n\n";
 			$msg .= "// User configurable variables\n";
@@ -328,9 +358,9 @@
 			$msg .= "\$SysAdminEmail = '".$AdminEmail."';\n";
 			}
 			if(isset($NewCompany)){
-				$msg .= "\$DefaultCompany = '".$DatabaseName."';\n";
+				$msg .= "\$DefaultDatabase = '".$DatabaseName."';\n";
 			}else{
-				$msg .= "\$DefaultCompany = '".$DatabaseName."';\n";
+				$msg .= "\$DefaultDatabase = 'weberpdemo';\n";
 			}
 			$msg .= "\$SessionLifeTime = 3600;\n";
 			$msg .= "\$MaximumExecutionTime = 120;\n";
@@ -347,6 +377,13 @@
 			$msg .= "	\$RootPath = '';\n";
 			$msg .= "}\n";
 			$msg .= "error_reporting (E_ALL & ~E_NOTICE);\n";
+			$msg .=  "//Installed companies \n";
+			foreach ($CompanyList as $k=>$compinfo)
+			{
+		        $msg .= "\$CompanyList[".$k."] = array('database'=>'".$compinfo['database']."' ,'company'=>'".htmlspecialchars($compinfo['company'],ENT_QUOTES,'UTF-8')."' );\n"; //simpler to manipulate this way
+            }
+            $msg .=  "//End Installed companies-do not change this line\n";
+            $msg .= "//Make sure there is nothing - not even spaces after this last ?>\n";
 			$msg .= "?>";
 
 			//write the config.php file since we have test the writability of the root path and companies,
@@ -371,11 +408,9 @@
 			}
 			}elseif($DBConnectType == 'mysql'){
 				$Db = mysql_connect($HostName,$UserName,$Password);
-
-
-			if(!$Db){
-				prnMsg(_('Failed to connect the database, the error is ').mysql_connect_error(),'error');
-			}
+                if(!$Db){
+                    prnMsg(_('Failed to connect the database, the error is ').mysql_connect_error(),'error');
+                }
 			}
 			$NewSQLFile = $Path_To_Root.'/sql/mysql/coa/'.$COA;
 			$DemoSQLFile = $Path_To_Root.'/sql/mysql/coa/weberp-demo.sql';
@@ -385,9 +420,9 @@
 				$result = ($DBConnectType == 'mysqli') ? mysqli_query($Db,$sql) : mysql_query($sql,$Db);
 				if(!$result){
 					if($DBConnectType == 'mysqli'){
-						prnMsg(_('Failed to create database '.' '.$DatabaseName.' and the error is '.' '.mysqli_error($Db)),'error');
+						prnMsg(_('Failed to create database '.$DatabaseName.' and the error is '.' '.mysqli_error($Db)),'error');
 					}else{
-						prnMsg(_('Failed to create database '.' '.$DatabaseName.' and the error is '.' '.mysql_error($Db)),'error');
+						prnMsg(_('Failed to create database '.$DatabaseName.' and the error is '.' '.mysql_error($Db)),'error');
 
 					}
 				}
@@ -404,7 +439,7 @@
 
 				}
 				PopulateSQLData($NewSQLFile,false,$Db,$DBConnectType,$DatabaseName);
-				DBUpdate($Db,$DatabaseName,$DBConnectType,$AdminPassword,$Email,$UserLanguage,$DatabaseName);
+				DBUpdate($Db,$DatabaseName,$DBConnectType,$AdminPassword,$Email,$UserLanguage,$CompanyName);
 				PopulateSQLData(false,$DemoSQLFile,$Db,$DBConnectType,'weberpdemo');
 				DBUpdate($Db,'weberpdemo',$DBConnectType,$AdminPassword,$Email,$UserLanguage,'weberpdemo');
 
@@ -414,18 +449,18 @@
 				$result = ($DBConnectType == 'mysqli')? mysqli_query($Db,$sql) : mysql_query($sql,$Db);
 				if(!$result){
 					if($DBConnectType == 'mysqli'){
-						prnMsg(_('Failed to create database weberpdemo and the error is '.' '.mysqli_error($Db)),'error');
+						prnMsg(_('Failed to create database '.$DatabaseName.'  and the error is '.' '.mysqli_error($Db)),'error');
 					}else{
-						prnMsg(_('Failed to create database weberpdemo and the error is '.' '.mysql_error($Db)),'error');
+						prnMsg(_('Failed to create database '.$DatabaseName.'  and the error is '.' '.mysql_error($Db)),'error');
 
 					}
 
 
 				}
 				PopulateSQLData($NewSQLFile,false,$Db,$DBConnectType,$DatabaseName);
-				DBUpdate($Db,$DatabaseName,$DBConnectType,$AdminPassword,$Email,$UserLanguage,$DatabaseName);
+				DBUpdate($Db,$DatabaseName,$DBConnectType,$AdminPassword,$Email,$UserLanguage,$CompanyName);
 
-			}elseif(!empty($OnlyDemo) and $OnlyDemo == 1){//only install the demo data
+			}else { //if(!empty($OnlyDemo) and $OnlyDemo == 1){//only install the demo data
 				$sql = 'CREATE DATABASE IF NOT EXISTS `weberpdemo`';
 				$result = ($DBConnectType == 'mysqli') ? mysqli_query($Db,$sql) : mysql_query($sql,$Db);
 				if(!$result){
@@ -967,7 +1002,6 @@ function DbCheck($UserLanguage,$HostName,$UserName,$Password,$DatabaseName,$Mysq
 //@para $MysqlEx is refer to the php mysql extention if it's false, it means the php configuration only support mysql instead of mysqli
 //The purpose of this function is to display the final screen for users to input company, admin user accounts etc informatioin
 function CompanySetup($UserLanguage,$HostName,$UserName,$Password,$DatabaseName,$MysqlExt = FALSE){//display the company setup for users
-
 ?>
     <h1><?php echo _('webERP Installation Wizard'); ?></h1>
     <!--<p style="text-align:center;"><?php echo _("Please enter the company name and please pay attention the company will be as same as the database name"); ?></p>-->
@@ -980,8 +1014,8 @@ function CompanySetup($UserLanguage,$HostName,$UserName,$Password,$DatabaseName,
             <ul>
                 <li>
                     <label for="CompanyName"><?php echo _("Company Name"); ?>: </label>
-                    <input type="text" name="CompanyName" required="true" value="<?php echo $DatabaseName; ?>" maxlength="50" />
-                    <span><?php echo _('Currently, must be the same as the database name'); ?></span>
+                    <input type="text" name="CompanyName" required="true" pattern="[a-zA-Z0-9_\'\&\-\ ]*" value="<?php echo $CompanyName; ?>" maxlength="50" />
+                    <span><?php echo _('The name of your company'); ?></span>
                 </li>
                 <li>
                     <label for="COA"><?php echo _("Chart of Accounts"); ?>: </label>
@@ -1002,7 +1036,7 @@ function CompanySetup($UserLanguage,$HostName,$UserName,$Password,$DatabaseName,
                         }
                     ?>
                     </select>
-                    <span><?php echo _('Will be installed as starter Chart of Accounts'); ?> </span>
+                    <span><?php echo _('A starter Chart of Accounts (use weberp-new.sql if having empty db problems)'); ?> </span>
                 </li>
                 <li>
                     <label for="TimeZone"><?php echo _("Time Zone"); ?>: </label>
@@ -1059,7 +1093,7 @@ function CompanySetup($UserLanguage,$HostName,$UserName,$Password,$DatabaseName,
             </fieldset>
             <input type="hidden" name="HostName" value="<?php echo $HostName; ?>" />
             <input type="hidden" name="UserName" value="<?php echo $UserName; ?>" />
-
+            <input type="hidden" name="DatabaseName" value="<?php echo $DatabaseName; ?>" />
             <input type="hidden" name="Password" value="<?php echo $Password; ?>" />
             <input type="hidden" name="MysqlExt" value="<?php echo $MysqlExt; ?>" />
             <input type="hidden" name="UserLanguage" value="<?php echo $UserLanguage; ?>" />

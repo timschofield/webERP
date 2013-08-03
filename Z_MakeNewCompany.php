@@ -12,7 +12,6 @@ if (isset($_POST['EnterCompanyDetails'])) {
 	header ('Location:' . $RootPath . '/CompanyPreferences.php?' . SID);
 	exit;
 }
-
 $Title = _('Make New Company Database Utility');
 
 include('includes/header.inc');
@@ -25,25 +24,24 @@ if (! is_writeable('./companies/')){
 		exit;
 }
 
+if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 
-if (isset($_POST['submit']) AND isset($_POST['NewCompany'])) {
-
-	if(mb_strlen($_POST['NewCompany'])>32
-		OR ContainsIllegalCharacters($_POST['NewCompany'])){
-		prnMsg(_('Company abbreviations must not contain spaces, \& or " or \''),'error');
+	if(mb_strlen($_POST['NewDatabase'])>32
+		OR ContainsIllegalCharacters($_POST['NewDatabase'])){
+		prnMsg(_('Company database must not contain spaces, \& or " or \''),'error');
 	} else {
 
-		$_POST['NewCompany'] = strtolower($_POST['NewCompany']);
+		$_POST['NewDatabase'] = strtolower($_POST['NewDatabase']);
 		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' . SID . '">';
         echo '<div class="centre">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		/* check for directory existence */
-		if (!file_exists('./companies/' . $_POST['NewCompany'])
+		if (!file_exists('./companies/' . $_POST['NewDatabase'])
 				AND (isset($_FILES['LogoFile']) AND $_FILES['LogoFile']['name'] !='')) {
 
 			$result    = $_FILES['LogoFile']['error'];
 			$UploadTheLogo = 'Yes'; //Assume all is well to start off with
-			$filename = './companies/' . $_POST['NewCompany'] . '/logo.jpg';
+			$filename = './companies/' . $_POST['NewDatabase'] . '/logo.jpg';
 
 			//But check for the worst
 			if (mb_strtoupper(mb_substr(trim($_FILES['LogoFile']['name']),mb_strlen($_FILES['LogoFile']['name'])-3))!='JPG'){
@@ -67,11 +65,11 @@ if (isset($_POST['submit']) AND isset($_POST['NewCompany'])) {
 			if ($_POST['CreateDB']==TRUE){
 				/* Need to read in the sql script and process the queries to initate a new DB */
 
-				$result = DB_query('CREATE DATABASE ' . $_POST['NewCompany'],$db);
+				$result = DB_query('CREATE DATABASE ' . $_POST['NewDatabase'],$db);
 
 				if ($DBType=='postgres'){
 
-					$PgConnStr = 'dbname=' . $_POST['NewCompany'];
+					$PgConnStr = 'dbname=' . $_POST['NewDatabase'];
 					if ( isset($host) && ($host != "")) {
 						$PgConnStr = 'host=' . $host . ' ' . $PgConnStr;
 					}
@@ -87,10 +85,10 @@ if (isset($_POST['submit']) AND isset($_POST['NewCompany'])) {
 					$SQLScriptFile = file('./sql/pg/weberp-new.psql');
 
 				} elseif ($DBType =='mysql') { //its a mysql db < 4.1
-					mysql_select_db($_POST['NewCompany'],$db);
+					mysql_select_db($_POST['NewDatabase'],$db);
 					$SQLScriptFile = file('./sql/mysql/weberp-new.sql');
 				} elseif ($DBType =='mysqli') { //its a mysql db using the >4.1 library functions
-					mysqli_select_db($db,$_POST['NewCompany']);
+					mysqli_select_db($db,$_POST['NewDatabase']);
 					$SQLScriptFile = file('./sql/mysql/weberp-new.sql');
 				}
 
@@ -129,18 +127,18 @@ if (isset($_POST['submit']) AND isset($_POST['NewCompany'])) {
 			} //end if CreateDB was checked
 
 			prnMsg (_('Attempting to create the new company directories') . '.....<br />', 'info');
-			$Result = mkdir('./companies/' . $_POST['NewCompany']);
-			$Result = mkdir('./companies/' . $_POST['NewCompany'] . '/part_pics');
-			$Result = mkdir('./companies/' . $_POST['NewCompany'] . '/EDI_Incoming_Orders');
-			$Result = mkdir('./companies/' . $_POST['NewCompany'] . '/reports');
-			$Result = mkdir('./companies/' . $_POST['NewCompany'] . '/EDI_Sent');
-			$Result = mkdir('./companies/' . $_POST['NewCompany'] . '/EDI_Pending');
-			$Result = mkdir('./companies/' . $_POST['NewCompany'] . '/FormDesigns');
-			$Result = mkdir('./companies/' . $_POST['NewCompany'] . '/reportwriter');
+			$Result = mkdir('./companies/' . $_POST['NewDatabase']);
+			$Result = mkdir('./companies/' . $_POST['NewDatabase'] . '/part_pics');
+			$Result = mkdir('./companies/' . $_POST['NewDatabase'] . '/EDI_Incoming_Orders');
+			$Result = mkdir('./companies/' . $_POST['NewDatabase'] . '/reports');
+			$Result = mkdir('./companies/' . $_POST['NewDatabase'] . '/EDI_Sent');
+			$Result = mkdir('./companies/' . $_POST['NewDatabase'] . '/EDI_Pending');
+			$Result = mkdir('./companies/' . $_POST['NewDatabase'] . '/FormDesigns');
+			$Result = mkdir('./companies/' . $_POST['NewDatabase'] . '/reportwriter');
 
-			copy ('./companies/' . $_SESSION['DatabaseName'] . '/FormDesigns/GoodsReceived.xml', './companies/' .$_POST['NewCompany']  . '/FormDesigns/GoodsReceived.xml');
-			copy ('./companies/' . $_SESSION['DatabaseName'] . '/FormDesigns/PickingList.xml', './companies/' .$_POST['NewCompany']  . '/FormDesigns/PickingList.xml');
-			copy ('./companies/' . $_SESSION['DatabaseName'] . '/FormDesigns/PurchaseOrder.xml', './companies/' .$_POST['NewCompany']  . '/FormDesigns/PurchaseOrder.xml');
+			copy ('./companies/' . $_SESSION['DatabaseName'] . '/FormDesigns/GoodsReceived.xml', './companies/' .$_POST['NewDatabase']  . '/FormDesigns/GoodsReceived.xml');
+			copy ('./companies/' . $_SESSION['DatabaseName'] . '/FormDesigns/PickingList.xml', './companies/' .$_POST['NewDatabase']  . '/FormDesigns/PickingList.xml');
+			copy ('./companies/' . $_SESSION['DatabaseName'] . '/FormDesigns/PurchaseOrder.xml', './companies/' .$_POST['NewDatabase']  . '/FormDesigns/PurchaseOrder.xml');
 
 			/*OK Now upload the logo */
 			if ($UploadTheLogo=='Yes'){
@@ -167,7 +165,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewCompany'])) {
 			exit;
 		}
 
-		$_SESSION['DatabaseName'] = $_POST['NewCompany'];
+		$_SESSION['DatabaseName'] = $_POST['NewDatabase'];
 
 		unset ($_SESSION['CustomerID']);
 		unset ($_SESSION['SupplierID']);
@@ -175,19 +173,36 @@ if (isset($_POST['submit']) AND isset($_POST['NewCompany'])) {
 		unset ($_SESSION['Items']);
 		unset ($_SESSION['CreditItems']);
 
-		$SQL ="UPDATE config SET confvalue='companies/" . $_POST['NewCompany'] . "/EDI__Sent' WHERE confname='EDI_MsgSent'";
+         //now update the config.php file if using the obfuscated database login else we don't want it there
+        if (isset($CompanyList) && is_array($CompanyList)) {
+            $ConfigFile = './config.php';
+            $config_php = join('', file($ConfigFile));
+            $config_php = preg_replace('/\/\/End Installed companies-do not change this line/', "\$CompanyList[] = array('database'=>'".$_POST['NewDatabase']."' ,'company'=>'".htmlspecialchars($_POST['NewCompany'],ENT_QUOTES,'UTF-8')."');\n//End Installed companies-do not change this line", $config_php);
+            if (!$fp = fopen($ConfigFile, 'wb')) {
+                prnMsg(_("Cannot open the configuration file: ").$ConfigFile.". Please add the following line to the end of the file:\n\$CompanyList[] = array('database'=>'".$_POST['NewDatabase']."' ,'company'=>'".htmlspecialchars($_POST['NewCompany'],ENT_QUOTES,'UTF-8').");",'error');
+            } else {
+                fwrite ($fp, $config_php);
+                fclose ($fp);
+            }
+        }
+
+		$SQL ="UPDATE config SET confvalue='companies/" . $_POST['NewDatabase'] . "/EDI__Sent' WHERE confname='EDI_MsgSent'";
 		$result = DB_query($SQL,$db);
-		$SQL ="UPDATE config SET confvalue='companies/" . $_POST['NewCompany'] . "/EDI_Incoming_Orders' WHERE confname='EDI_Incoming_Orders'";
+		$SQL ="UPDATE config SET confvalue='companies/" . $_POST['NewDatabase'] . "/EDI_Incoming_Orders' WHERE confname='EDI_Incoming_Orders'";
 		$result = DB_query($SQL,$db);
-		$SQL ="UPDATE config SET confvalue='companies/" . $_POST['NewCompany'] . "/part_pics' WHERE confname='part_pics_dir'";
+		$SQL ="UPDATE config SET confvalue='companies/" . $_POST['NewDatabase'] . "/part_pics' WHERE confname='part_pics_dir'";
 		$result = DB_query($SQL,$db);
-		$SQL ="UPDATE config SET confvalue='companies/" . $_POST['NewCompany'] . "/reports' WHERE confname='reports_dir'";
+		$SQL ="UPDATE config SET confvalue='companies/" . $_POST['NewDatabase'] . "/reports' WHERE confname='reports_dir'";
 		$result = DB_query($SQL,$db);
-		$SQL ="UPDATE config SET confvalue='companies/" . $_POST['NewCompany'] . "/EDI_Pending' WHERE confname='EDI_MsgPending'";
+		$SQL ="UPDATE config SET confvalue='companies/" . $_POST['NewDatabase'] . "/EDI_Pending' WHERE confname='EDI_MsgPending'";
 		$result = DB_query($SQL,$db);
+		//add new company
+        $SQL = "UPDATE companies SET coyname='".$_POST['NewCompany']."' where coycode = 1";
+        $result = DB_query($SQL,$db);
 
 		$ForceConfigReload=true;
 		include('includes/GetConfig.php');
+
 
 		prnMsg (_('The new company database has been created for' . ' ' . $_POST['NewCompany'] . '. ' . _('The company details and parameters should now be set up for the new company. NB: Only a single user "demo" is defined with the password "weberp" in the new company database. A new system administrator user should be defined for the new company and this account deleted immediately.')), 'info');
 
@@ -214,9 +229,11 @@ echo '<div class="centre">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<table><tr>';
-echo '<td>' . _('Enter up to 32 character lower case character abbreviation for the company') . '</td>
-	<td><input type="text" size="33" maxlength="32" name="NewCompany" /></td>
+echo '<td>' . _('Enter the name of the database used for the comopany up to 32 characters in lower case') . ':</td>
+	<td><input type="text" size="33" maxlength="32" name="NewDatabase" /></td>
 	</tr>
+	<td>' . _('Enter a unique name for the company of up to 50 characters') . ':</td>
+	<td><input type="text" size="33" maxlength="32" name="NewCompany" /></td>
 	<tr>
 		<td>'. _('Logo Image File (.jpg)') . ':</td><td><input type="file" id="LogoFile" name="LogoFile" /></td>
 	</tr>
