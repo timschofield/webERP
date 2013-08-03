@@ -39,37 +39,48 @@
 
 <h2>Using the webERP Installer</h2>
 
-<p>Assuming that a web server with PHP functionality is operational and a MySQL database server is available either on the same machine or on the network and that the web-server is running under a user that is able to write to the webERP installation directory then a new installation can proceed.</p>
-
-<ul>
-    <li>An installation must first copy the scripts to a directory under the web-server's document root directory. Then from a browser enter the URL for the new webERP directory and the installer screen will display:</li>
+<p>A new installation of webERP requires the following to start:</p>
+    <ul>
+        <li>A functioning web server running a minimum of PHP version 5.1</li>
+        <li>A MySQL database server available either on the same machine or on the network</li>
+        <li>The web server is running under a user that is able to write to the webERP web directory</li>
+        <li>The database user must have privileges to create a database and tables</li>
+    </ul>
+<ol>
+    <li>Copy all of the downloaded webERP files to a directory under the web server's document root directory. At this point there should be no 'config.php' file in the webERP directory.</li>
+    <li>Enter the URL for the new webERP directory into your web browser, and the installer welcome screen will display:</li>
 
     <li style="list-style: none; display: inline">
         <p align="center"><img src="images/Installer_1.jpg"></p>
     </li>
 
-    <li>The installer checks that all the pre-requistes are met for an installation. You will note from the screen shot above that this installation does not have sufficient privileges to install webERP because the web-server is unable to write to the webERP directory. <b>It is first necessary to change the permissions on the directory where webERP is installed to ensure that the user that the web-server runs as is able to write a new configuration file to the web space.</b> Cpanel and Plesk have facilities to enable this change to the permissions. Any messages on this screen displayed in red need to be resolved before the installation can proceed. Do not attempt to run the installer while red messages persist.</li>
+    <li>The installer welcome screen provides information on the type of messages you might receive during installation. At this page, you must also select your preferred language from the drop down selection box. Click on Next Step to go to the next phase of installation.</li>
+    <li style="list-style: none; display: inline">
+        <p align="center"><img src="images/Installer_1a.jpg"></p>
+    </li>
 
-    <li>Many of the fields required will be populated correctly by default - but all entries should be reviewed to ensure that they are correct. The installer will not be able to determine the host (computer) where the mysql database server is installed and this must be entered.</li>
-
-    <li>The user name and the password to the mysql database server are also required.</li>
-
+    <li>The installer checks that all the pre-requistes are met for an installation. You will note from the screen shot above that this installation does not have sufficient privileges to install webERP because the web server is unable to write to the webERP directory. <b>It is necessary to change the permissions on the directory where webERP is installed to ensure that the user that the web-server runs as is able to write a new configuration file to the web space.</b> Cpanel and Plesk have facilities to enable this change to the permissions. Any error messages displayed in red need to be resolved before the installation can proceed. Do not attempt to run the installer while red messages persist. Fix the error and then click on Check Again to restart from the prior step.</li>
     <li style="list-style: none; display: inline">
         <p align="center"><img src="images/Installer_2.jpg"></p>
     </li>
+    <li>If your web server fulfills all requirements for the installation, clicking on Next Step will display the Database Settings screen. Many of the fields required will be populated correctly by default - but all entries should be reviewed to ensure that they are correct. The installer will not be able to determine the host (computer) where the mysql database server is installed and this must be entered. Help appears when you click into an input field.</li>
 
-    <li>The name of the company entered in the installer screen will become the name of the mysql database created. Perhaps an abbreviated name for the company without spaces is ideal. weberpdemo is the name of the weberpdemo database and that is a good place to test webERP functionality. You should change this to the name of your company in a live enviroment.</li>
+    <li>The user name and the password to the mysql database server are also required. The mysql database user must have permission to create a database and tables. Once the required information is entered and checked, click on Next Screen to continue.</li>
 
-    <li>It is possible to install the demo database rather than the new empty database to use for a new installation by clicking the check box.</li>
+    <li style="list-style: none; display: inline">
+        <p align="center"><img src="images/Installer_3.jpg"></p>
+    </li>
 
+    <li>The next installer screen displays Company Settings, Options and Administrator Account settings. The name of the company entered in the installer screen will be used in the log in screen and in various reports and screens in your final webERP instsallation.</li>
+    <li>The Chart of Accounts will be loaded into your webERP installation as a set of starter accounts. T There is a larger file but this may result in errors as your mysql server must be able to handle larger packet sizes. Leave the default selection of 'weberp-new.sql' if in any doubt as it is smaller and should load with default mysql settings.</li>
+     <li>The logo for the business used on invoices and statments, orders etc. can be uploaded to the appropriate place on the web-server by selecting it on the installer screen. The logo should be a .jpg file and just a small image no more than 170 px accross and 80 pixels high.</li>
     <li>The time-zone is important if your installation is to display the correct time on the local browsers in the country where the business is domiciled. e.g. it is possible to use a US web-server, and operate the business from France. If no entry was entered for the time-zone then the browser would display the time where the web-server was (in the USA) but it is more appropriate to display the time where the business operates from. It is possible to select from any of the PHP defined time-zones.</li>
+    <li>The Installation Option section enables you to choose to install the demo database in addition to your own Company database. This will provide you with a demo company loaded with some data to test with.</li>
 
-    <li>The logo for the business used on invoices and statments, orders etc. can be uploaded to the appropriate place on the web-server by selecting it on the installer screen. The logo should be a .jpg file and just a small image no more than 170 px accross and 80 pixels high.</li>
+    <li>Finally the webERP user Administrator account option section enables you to input an email address and choose a new password for the default 'admin' account.</li>
 
-    <li>Finally the webERP user &quot;admin&quot; is created, and the password for this user needs to be defined from entries on the installer screen. It is also possible to specify your email address which is stored in the database.</li>
-</ul>
-
-<p>Hitting the install webERP button will then create the database for the company with the user admin given the password details and provide a fresh webERP installation from which to start the configuration of the company, see below.</p>
+<li>Click on the INSTALL button to finalise installation. This might take a while as the installer will create required databases, create a special directory for your webERP install in the 'companies' directory, and writes out the webERP configuration file, config.php.  Wait until the login screen appears. You now have a fresh webERP installation from which to start the configuration of the company, see below.</li>
+<p> </p>
 
 <div class="floatright">
     <a class="minitext" href="#top">⬆ Top</a>

@@ -46,7 +46,7 @@ if (get_magic_quotes_gpc()){
 			echo _('Company') . '<input type="text" name="CompanyNameField"  autofocus="autofocus" required="required" value="' . $DefaultCompany . '" />';
 		} else {
 			// Show selection box ($AllowCompanySelectionBox == 'ShowSelectionBox')
-			echo _('Company');
+			echo _('Company:').'<br />';
 			echo '<select name="CompanyNameField">';
 			if (isset($CompanyList) && is_array($CompanyList)) {
                 foreach ($CompanyList as $key => $CompanyEntry){

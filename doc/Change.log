@@ -1,21 +1,28 @@
 webERP Change Log
-
+04/8/13 icedlava: Update Manual - Using the webERP Installer - rework of some text due to new installer, and updated screen shots
+03/8/13 icedlava: Obfuscate database name in login, do not show company in login if directory/company not wanted.
 29/7/13 Serge Gélinas: Profit and loss now has option to show all accounts and by default just shows those with a balance
+29/7/13 icedlava: Hard code the page title in Installer html, previously missing - no language strings available at this time - used English
+28/7/13 icedlava: Installer - strip inline styles, add html5/css to pretty up, fix small typo/bugs and spelling/grammar. No logic changes.
+28/7/13 icedlava: Allow ampersands in company name eg Matthew & Sons Ltd
+26/7/13 icedlava: Move Supplier Contact Detail review link to top of page away from Delete button
+26/7/13 icedlava: Fix Form Designer xml for GL Journal
+26/7/13 icedlava: Fix PO PDF Preview when $result returns Bool in some environments.
 25/7/13 Serge Gélinas: Balance sheet now has option to show all accounts and by default just shows those with a balance
-24/7/13 Exson: Fixed that empty password should be allowed. Reported by Tim. 
+24/7/13 Exson: Fixed that empty password should be allowed. Reported by Tim.
 24/7/13 Exson: Add the html5 mark for some input fields in WWW_Users.php.
 22/7/13 Exson: Fixed the document.form not defined error in GLJournal.php.
 22/7/13 Thumb: Fixed the onchange overwritten problem for number class in MiscFunctions.js. Reported by Tim for GLJournal.php lost Credit and Debit mutually exclusive feature.
 21/07/13 Exson: allowed the input of numeric format like .5 in MiscFunctions.js rLocalNumber() function. Reported by Tim.
-7/21/13 Exson: Fixed the keyChar control to avoid backspace mistake. 
-7/21/13 Exson: Fixed the number class function in MiscFunctions.js prevent character 0 from input for integer. Reported by Icedlava 
+7/21/13 Exson: Fixed the keyChar control to avoid backspace mistake.
+7/21/13 Exson: Fixed the number class function in MiscFunctions.js prevent character 0 from input for integer. Reported by Icedlava
 20/7/13 Phil: Added Tim's javascript as modified a bit to use different styles to allow sorting of tables - images for styles to all themes and added th.ascending th.descending to theme/default.css scripts
 19/7/13 Phil: Swag of scripts updated for html5 <input type="tel" "email" pattern required="required" autofocus="autofocus" as per http://www.weberp.org/wiki/TransitionToHtml5 also added many title="" tooltips
 19/7/13 Exson: add required to the input field of WWW_Access.php
 19/7/13: Exson make the WWW_Access.php html5 compatible
 18/7/13: Exson: Move the hidden input after the html document type definition. Reported by Tim.
-18/7/13 Exson: fixed the LanguageSetup.php extra language mark introduced by handle locale number. Reported by Tim. 
-18/7/13: Exson: Fixed the missing negative mark problem reported by Tim. 
+18/7/13 Exson: fixed the LanguageSetup.php extra language mark introduced by handle locale number. Reported by Tim.
+18/7/13: Exson: Fixed the missing negative mark problem reported by Tim.
 18/7/13: Exson add a locale style check to pass the style to MisFunctions.js to do locale number format validation in LanguageSetup.php.
 18/7/13 Exson: modify the MisFunctions.js to improve the locale number validation feature.
 17/7/13 icedlava: stripslashes on Description for consistency with LongDescription but why- only until we fix source of this problem in the code

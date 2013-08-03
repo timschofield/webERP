@@ -129,6 +129,10 @@
 			$Language = 'en_US.utf8';
 			$DefaultLanguage = 'en_US.utf8';
 		}
+		//This is the first step - let us initialise some variables (esp. important if installer is rerun)
+		$DatabaseName = '';
+		$DefaultDatabase = '';
+
 	}else{
 
 		$Language = $_POST['Language'];
@@ -454,8 +458,6 @@
 						prnMsg(_('Failed to create database '.$DatabaseName.'  and the error is '.' '.mysql_error($Db)),'error');
 
 					}
-
-
 				}
 				PopulateSQLData($NewSQLFile,false,$Db,$DBConnectType,$DatabaseName);
 				DBUpdate($Db,$DatabaseName,$DBConnectType,$AdminPassword,$Email,$UserLanguage,$CompanyName);
@@ -470,7 +472,6 @@
 						prnMsg(_('Failed to create database weberpdemo and the error is '.' '.mysql_error($Db)),'error');
 
 					}
-
 
 				}
 				PopulateSQLData(false,$DemoSQLFile,$Db,$DBConnectType,'weberpdemo');
@@ -896,7 +897,7 @@ function DbConfig($Language,$MysqlExt = FALSE){//The screen for users to input m
             <legend><?php echo _('Database settings'); ?></legend>
             <div class="page_help_text">
                 <p>
-                    <?php echo _('Please enter your MySQL Database information below. The database name is also used at log in time to choose the company for use.'); ?><br />
+                    <?php echo _('Please enter your MySQL Database information below.'); ?><br />
                     <span><?php echo _('* Denotes required field'); ?></span>
                 </p>
             </div>
@@ -919,7 +920,7 @@ function DbConfig($Language,$MysqlExt = FALSE){//The screen for users to input m
                 <li>
                     <label for="UserName"><?php echo _('Database User Name'); ?>: </label>
                     <input type="text" name="UserName" id="UserName" value="root" placeholder="<?php echo _('A valid database user name'); ?>" maxlength="16" required="true" />&#160;
-                    <span><?php echo _('Must be a user that has permission to create a database.'); ?></span>
+                    <span><?php echo _('Must be a user that has permission to create a database'); ?></span>
                 </li>
                 <li>
                     <label for="Password"><?php echo _('Password'); ?>: </label>
