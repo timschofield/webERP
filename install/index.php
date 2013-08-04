@@ -387,7 +387,7 @@
 		        $msg .= "\$CompanyList[".$k."] = array('database'=>'".$compinfo['database']."' ,'company'=>'".addslashes($compinfo['company'])."' );\n"; //simpler to manipulate this way
             }
             $msg .=  "//End Installed companies-do not change this line\n";
-            $msg .= "//Make sure there is nothing - not even spaces after this last ?>\n";
+            $msg .= "/* Make sure there is nothing - not even spaces after this last ?> */\n";
 			$msg .= "?>";
 
 			//write the config.php file since we have test the writability of the root path and companies,
