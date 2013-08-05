@@ -1414,7 +1414,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 					 *  4.) credit the disposal account with the sale proceeds net of discounts */
 
 					/* 1 debit accum depn */
-					if ($DisposalRow['accumdpen']!=0){
+					if ($DisposalRow['accumdepn']!=0){
 						$SQL = "INSERT INTO gltrans (type,
 													typeno,
 													trandate,
@@ -1428,8 +1428,8 @@ invoices can have a zero amount but there must be a quantity to invoice */
 												'" . $DefaultDispatchDate . "',
 												'" . $PeriodNo . "',
 												'" . $DisposalRow['accumdepnact'] . "',
-												'" . $_SESSION['Items'.$identifier]->DebtorNo . ' - ' . $OrderLine->StockID . ' ' . _('disposal') . "',
-												'" . -$DisposalRow['accumdpen'] . "')";
+												'" . $_SESSION['Items'.$identifier]->DebtorNo . ' - ' . $OrderLine->StockID . ' ' . _('accumulated depreciation disposal') . "',
+												'" . $DisposalRow['accumdepn'] . "')";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The reversal of accumulated depreciation GL posting on disposal could not be inserted because');
 					$DbgMsg = _('The following SQL to insert the GLTrans record was used');
@@ -1450,7 +1450,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 											'" . $DefaultDispatchDate . "',
 											'" . $PeriodNo . "',
 											'" . $DisposalRow['costact'] . "',
-											'" . $_SESSION['Items'.$identifier]->DebtorNo . " - " . $OrderLine->StockID . ' ' . _('disposal') . "',
+											'" . $_SESSION['Items'.$identifier]->DebtorNo . " - " . $OrderLine->StockID . ' ' . _('cost disposal') . "',
 											'" . -$DisposalRow['cost'] . "')";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The reversal of asset cost on disposal GL posting could not be inserted because');
@@ -1472,7 +1472,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 											'" . $DefaultDispatchDate . "',
 											'" . $PeriodNo . "',
 											'" . $DisposalRow['disposalact'] . "',
-											'" . $_SESSION['Items'.$identifier]->DebtorNo . " - " . $OrderLine->StockID .  ' ' . _('disposal') . "',
+											'" . $_SESSION['Items'.$identifier]->DebtorNo . " - " . $OrderLine->StockID .  ' ' . _('net book value disposal') . "',
 											'" . ($DisposalRow['cost']-$DisposalRow['accumdepn']) . "')";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The disposal net book value GL posting could not be inserted because');
@@ -1494,7 +1494,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 										'" . $DefaultDispatchDate . "',
 										'" . $PeriodNo . "',
 										'" . $DisposalRow['disposalact'] . "',
-										'" . $_SESSION['Items'.$identifier]->DebtorNo . " - " . $OrderLine->StockID .  ' ' . _('disposal') . "',
+										'" . $_SESSION['Items'.$identifier]->DebtorNo . " - " . $OrderLine->StockID .  ' ' . _('asset disposal proceeds') . "',
 										'" . round((-$OrderLine->Price * $OrderLine->QtyDispatched* (1 - $OrderLine->DiscountPercent)/$_SESSION['CurrencyRate']),$_SESSION['CompanyRecord']['decimalplaces']) . "')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The disposal proceeds GL posting could not be inserted because');
