@@ -13,6 +13,7 @@ if (!isset($_SESSION['DatabaseName'])){ //need to get the database name from the
             foreach ($CompanyList as $key => $CompanyEntry){
                if (is_dir('./companies/'.strtolower($CompanyEntry['database']).'') && ($key == $_POST['CompanyNameField']) ){
                    $_SESSION['DatabaseName'] = $CompanyEntry['database'];
+                   $_SESSION['CompanyName'] = $CompanyEntry['company'];
                     include_once ($PathPrefix . 'includes/ConnectDB_' . $DBType . '.inc');
                     break;
                 }
@@ -34,6 +35,7 @@ if (!isset($_SESSION['DatabaseName'])){ //need to get the database name from the
             }
             if (is_dir('companies/' . $_POST['CompanyNameField']) AND $_POST['CompanyNameField'] != '..'){
                 $_SESSION['DatabaseName'] = $_POST['CompanyNameField'];
+                $_SESSION['CompanyName'] =  $_POST['CompanyNameField'];
                 include_once ($PathPrefix . 'includes/ConnectDB_' . $DBType . '.inc');
             } else {
                 prnMsg(_('The company name entered' . ' (' . $_POST['CompanyNameField'] . ') ' . 'is not configured for use with this installation of webERP. Check that a directory named ' . $_POST['CompanyNameField'] . ' is set up under the companies sub-directory.'),'error');
@@ -44,6 +46,7 @@ if (!isset($_SESSION['DatabaseName'])){ //need to get the database name from the
 
 	} elseif (isset($DatabaseName)) { /* Scripts that do not require a login must have the $DatabaseName variable set in hard code */
 		$_SESSION['DatabaseName'] = $DatabaseName;
+		$_SESSION['CompanyName']= $DatabaseName;
 		include_once ($PathPrefix . 'includes/ConnectDB_' . $DBType . '.inc');
 	}
 } else {
