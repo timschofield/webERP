@@ -1421,7 +1421,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			echo '<a target="_blank" href="' . $RootPath . '/StockStatus.php?identifier='.$identifier . '&amp;StockID=' . $OrderLine->StockID . '&amp;DebtorNo=' . $_SESSION['Items'.$identifier]->DebtorNo . '">' . $OrderLine->StockID . '</a></td>
 				<td title="' . $OrderLine->LongDescription . '">' . $OrderLine->ItemDescription . '</td>';
 
-			echo '<td><input class="number" tabindex="2" type="text" required="required" name="Quantity_' . $OrderLine->LineNumber . '" size="6" maxlength="6" value="' . locale_number_format($OrderLine->Quantity,$OrderLine->DecimalPlaces) . '" title="' . _('Enter the quantity of this item ordered by the customer') . '" />';
+			echo '<td><input class="number" tabindex="2" type="text" required="required" name="Quantity_' . $OrderLine->LineNumber . '" size="6" maxlength="8" value="' . locale_number_format($OrderLine->Quantity,$OrderLine->DecimalPlaces) . '" title="' . _('Enter the quantity of this item ordered by the customer') . '" />';
 			if ($QtyRemain != $QtyOrdered){
 				echo '<br />'.locale_number_format($OrderLine->QtyInv,$OrderLine->DecimalPlaces) .' ' . _('of') . ' ' . locale_number_format($OrderLine->Quantity,$OrderLine->DecimalPlaces).' ' . _('invoiced');
 			}
@@ -1650,7 +1650,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 						$i,
 						$i,
 						$myrow['stockid']);
-						
+
 				if ($j==1) {
 					$jsCall = '<script  type="text/javascript">
 									if (document.getElementById("SelectParts")!=null {
