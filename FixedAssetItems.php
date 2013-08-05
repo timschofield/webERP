@@ -588,8 +588,6 @@ echo '</select></td>
 	</table>';
 
 if (isset($AssetRow)){
-if ($AssetRow['disposaldate'] != '0000-00-00'){
-}
 	echo '<table>
 		<tr>
 			<th colspan="2">' . _('Asset Financial Summary') . '</th>
