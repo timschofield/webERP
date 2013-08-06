@@ -11,7 +11,6 @@ if ((isset($AllowDemoMode)) AND ($AllowDemoMode == True) AND (!isset($demo_text)
 echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 			"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
 ?>
-
 <html>
 <head>
 	<title>webERP Login screen</title>
@@ -38,17 +37,24 @@ if (get_magic_quotes_gpc()){
 	<input type="hidden" name="FormID" value="<?php echo $_SESSION['FormID']; ?>" />
 	<span>
 	<?php
-		if ($AllowCompanySelectionBox === 'Hide'){
-			// do not show input or selection box
-			echo '<input type="hidden" name="CompanyNameField"  value="' . $DefaultCompany . '" />';
-		} else if ($AllowCompanySelectionBox === 'ShowInputBox'){
-			// show input box
-			echo _('Company') . '<input type="text" name="CompanyNameField"  autofocus="autofocus" required="required" value="' . $DefaultCompany . '" />';
-		} else {
-			// Show selection box ($AllowCompanySelectionBox == 'ShowSelectionBox')
-			echo _('Company:').'<br />';
-			echo '<select name="CompanyNameField">';
-			if (isset($CompanyList) && is_array($CompanyList)) {
+	    if (isset($CompanyList) && is_array($CompanyList)) {
+            foreach ($CompanyList as $key => $CompanyEntry){
+                if ($DefaultDatabase == $CompanyEntry['database']) {
+                    $CompanyNameField = "$key";
+                    $DefaultCompany = $CompanyEntry['company'];
+                }
+            }
+	        if ($AllowCompanySelectionBox === 'Hide'){
+			    // do not show input or selection box
+			    echo '<input type="hidden" name="CompanyNameField"  value="' .  $CompanyNameField . '" />';
+		    } elseif ($AllowCompanySelectionBox === 'ShowInputBox'){
+			    // show input box
+			    echo _('Company') .': <br />'. '<input type="text" name="DefaultCompany"  autofocus="autofocus" required="required" value="' .  htmlspecialchars($DefaultCompany ,ENT_QUOTES,'UTF-8') . '" disabled="disabled"/>';//use disabled input for display consistency
+		        echo '<input type="hidden" name="CompanyNameField"  value="' .  $CompanyNameField . '" />';
+		    } else {
+                // Show selection box ($AllowCompanySelectionBox == 'ShowSelectionBox')
+                echo _('Company:').'<br />';
+                echo '<select name="CompanyNameField">';
                 foreach ($CompanyList as $key => $CompanyEntry){
                     if (is_dir('companies/' . $CompanyEntry['database']) ){
                         if ($CompanyEntry['database'] == $DefaultDatabase) {
@@ -58,20 +64,33 @@ if (get_magic_quotes_gpc()){
                         }
                     }
                 }
-            } else { //provision for backward compat
-                $Companies = scandir('companies/', 0);
-			    foreach ($Companies as $CompanyEntry){
-				if (is_dir('companies/' . $CompanyEntry) AND $CompanyEntry != '..' AND $CompanyEntry != '' AND $CompanyEntry!='.svn' AND $CompanyEntry!='.'){
-					if ($CompanyEntry==$DefaultDatabase) {
-						echo '<option selected="selected" label="'.$CompanyEntry.'" value="'.$CompanyEntry.'">'.$CompanyEntry.'</option>';
-					} else {
-						echo '<option label="'.$CompanyEntry.'" value="'.$CompanyEntry.'">'.$CompanyEntry.'</option>';
-					}
-				}
-			}
+                echo '</select>';
             }
-			echo '</select>';
-		}
+	    }
+	      else { //provision for backward compat - remove when we have a reliable upgrade for config.php
+            if ($AllowCompanySelectionBox === 'Hide'){
+			    // do not show input or selection box
+			    echo '<input type="hidden" name="CompanyNameField"  value="' . $DefaultCompany . '" />';
+		    } else if ($AllowCompanySelectionBox === 'ShowInputBox'){
+			    // show input box
+			    echo _('Company') . '<input type="text" name="CompanyNameField"  autofocus="autofocus" required="required" value="' . $DefaultCompany . '" />';
+		    } else {
+      			// Show selection box ($AllowCompanySelectionBox == 'ShowSelectionBox')
+    			echo _('Company:').'<br />';
+	    		echo '<select name="CompanyNameField">';
+	    		$Companies = scandir('companies/', 0);
+			    foreach ($Companies as $CompanyEntry){
+                    if (is_dir('companies/' . $CompanyEntry) AND $CompanyEntry != '..' AND $CompanyEntry != '' AND $CompanyEntry!='.svn' AND $CompanyEntry!='.'){
+                        if ($CompanyEntry==$DefaultDatabase) {
+                            echo '<option selected="selected" label="'.$CompanyEntry.'" value="'.$CompanyEntry.'">'.$CompanyEntry.'</option>';
+                        } else {
+                            echo '<option label="'.$CompanyEntry.'" value="'.$CompanyEntry.'">'.$CompanyEntry.'</option>';
+                        }
+                    }
+    	        }
+    	         echo '</select>';
+            }
+        } //end provision for backward compat
 	?>
 	</span>
 	<br />

@@ -11,7 +11,7 @@ if (!isset($_SESSION['DatabaseName'])){ //need to get the database name from the
 	if (isset($_POST['CompanyNameField'])){
 	    if (isset($CompanyList) && is_array($CompanyList)) {
             foreach ($CompanyList as $key => $CompanyEntry){
-               if (is_dir('./companies/'.strtolower($CompanyEntry['database']).'') && ($key == $_POST['CompanyNameField']) ){
+               if (is_dir('./companies/'.strtolower($CompanyEntry['database']).'') && ($key == $_POST['CompanyNameField'])  && ($DefaultDatabase == $CompanyEntry['database'])) {
                    $_SESSION['DatabaseName'] = $CompanyEntry['database'];
                    $_SESSION['CompanyName'] = $CompanyEntry['company'];
                     include_once ($PathPrefix . 'includes/ConnectDB_' . $DBType . '.inc');
@@ -27,7 +27,9 @@ if (!isset($_SESSION['DatabaseName'])){ //need to get the database name from the
                 echo '<br /><a href="index.php">' . _('Back to login page') . '</a>';
                 exit;
             }
-        } else { //provision for old setup
+        }
+        //provision for old setup - delete when we have a reliable upgrade for config.php
+            else {
            if (ContainsIllegalCharacters($_POST['CompanyNameField'])){
                 prnMsg(_('The company database being logged into cannot contain any of the illegal characters'),'error');
                 echo '<br /><a href="index.php">' . _('Back to login page') . '</a>';
@@ -42,13 +44,14 @@ if (!isset($_SESSION['DatabaseName'])){ //need to get the database name from the
                 prnMsg(_('Check the company name entered' . ' (' . $_POST['CompanyNameField'] . ') ' . 'is the same as the database name.'),'error');
                 prnMsg(_('The company name abbreviation entered at login must also have a company directory defined. See your system administrator'),'error');
             }
-        }
+        } // end provision for old setup
 
 	} elseif (isset($DatabaseName)) { /* Scripts that do not require a login must have the $DatabaseName variable set in hard code */
 		$_SESSION['DatabaseName'] = $DatabaseName;
 		$_SESSION['CompanyName']= $DatabaseName;
 		include_once ($PathPrefix . 'includes/ConnectDB_' . $DBType . '.inc');
 	}
+
 } else {
  	include_once($PathPrefix .'includes/ConnectDB_' . $DBType . '.inc');
 }
