@@ -73,14 +73,14 @@ if (isset($_POST['submit'])) {
 		$sql = "UPDATE stockcategory SET stocktype = '" . $_POST['StockType'] . "',
 									 categorydescription = '" . $_POST['CategoryDescription'] . "',
 									 defaulttaxcatid = '" . $_POST['DefaultTaxCatID'] . "',
-									 stockact = " . $_POST['StockAct'] . ",
-									 adjglact = " . $_POST['AdjGLAct'] . ",
-									 issueglact = " . $_POST['IssueGLAct'] . ",
-									 purchpricevaract = " . $_POST['PurchPriceVarAct'] . ",
-									 materialuseagevarac = " . $_POST['MaterialUseageVarAc'] . ",
-									 wipact = " . $_POST['WIPAct'] . "
+									 stockact = '" . $_POST['StockAct'] . "',
+									 adjglact = '" . $_POST['AdjGLAct'] . "',
+									 issueglact = '" . $_POST['IssueGLAct'] . "',
+									 purchpricevaract = '" . $_POST['PurchPriceVarAct'] . "',
+									 materialuseagevarac = '" . $_POST['MaterialUseageVarAc'] . "',
+									 wipact = '" . $_POST['WIPAct'] . "'
 									 WHERE
-									 categoryid = '$SelectedCategory'";
+									 categoryid = '" . $SelectedCategory. "'";
 		$ErrMsg = _('Could not update the stock category') . $_POST['CategoryDescription'] . _('because');
 		$result = DB_query($sql,$db,$ErrMsg);
 
