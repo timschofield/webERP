@@ -32,8 +32,11 @@ function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
 		$_SESSION['PageSize'] = '';
 		$_SESSION['UserStockLocation'] = '';
 		$_SESSION['AttemptsCounter']++;
+
 		// Show login screen
 		if (!isset($Name) or $Name == '') {
+			$_SESSION['DatabaseName'] = '';
+		    $_SESSION['CompanyName'] = '';
 			return  UL_SHOWLOGIN;
 		}
 		/* The SQL to get the user info must use the * syntax because the field name could change between versions if the fields are specifed directly then the sql fails and the db upgrade will fail */
@@ -111,7 +114,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
 				$myMaintenanceRow = DB_fetch_row($Maintenance_Result);
 				if (($myMaintenanceRow[0] == -1) AND ($UserIsSysAdmin == FALSE)){
 					// the configuration setting has been set to -1 ==> Allow SysAdmin Access Only
-					// the user is NOT a SysAdmin 
+					// the user is NOT a SysAdmin
 					return  UL_MAINTENANCE;
 				}
 			}
@@ -126,13 +129,13 @@ function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
 							WHERE www_users.userid='" . $Name . "'";
 				$Auth_Result = DB_query($sql, $db);
 
-				if ($SysAdminEmail != ''){	
+				if ($SysAdminEmail != ''){
 					$EmailSubject = _('User access blocked'). ' ' . $Name ;
 					$EmailText =  _('User ID') . ' ' . $Name . ' - ' . $Password . ' - ' . _('has been blocked access at') . ' ' .
 								Date('Y-m-d H:i:s') . ' ' . _('from IP') . ' ' . $_SERVER["REMOTE_ADDR"] . ' ' . _('due to too many failed attempts.');
 					if($_SESSION['SmtpSetting']==0){
 							mail($SysAdminEmail,$EmailSubject,$EmailText);
-	
+
 					}else{
 							include('includes/htmlMimeMail.php');
 							$mail = new htmlMimeMail();
