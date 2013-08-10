@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-07-06 15:49+1200\n"
-"PO-Revision-Date: 2013-07-15 09:49-0600\n"
+"PO-Revision-Date: 2013-08-10 12:17-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "MIME-Version: 1.0\n"
@@ -41595,10 +41595,9 @@ msgstr "Plantilla para Pedidos Frecuentes"
 msgid "Process Recurring Orders"
 msgstr "Procesar Pedidos Frecuentes"
 
-#: includes/MainMenuLinksArray.php:47 includes/MainMenuLinksArray
-#: (puppypc32158's conflicted copy 2013-06-24).php:47
-msgid "Order Inquiry"
-msgstr "Consultar Pedidos"
+#: includes/MainMenuLinksArray.php:47
+msgid "Sales Order Inquiry"
+msgstr "Consultar órdenes de venta"
 
 #: includes/MainMenuLinksArray.php:48 includes/MainMenuLinksArray
 #: (puppypc32158's conflicted copy 2013-06-24).php:48

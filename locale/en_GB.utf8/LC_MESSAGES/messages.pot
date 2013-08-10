@@ -36203,7 +36203,7 @@ msgstr ""
 
 #: includes/MainMenuLinksArray.php:47
 #: includes/MainMenuLinksArray (puppypc32158's conflicted copy 2013-06-24).php:47
-msgid "Order Inquiry"
+msgid "Sales Order Inquiry"
 msgstr ""
 
 #: includes/MainMenuLinksArray.php:48

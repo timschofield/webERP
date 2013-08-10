@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.09.1/trunk\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-07-06 15:49+1200\n"
-"PO-Revision-Date: 2013-06-01 11:21-0600\n"
+"PO-Revision-Date: 2013-08-10 10:47-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: Deutsch <weberp-translation@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -41203,7 +41203,7 @@ msgstr "Daueraufträge verarbeiten"
 
 #: includes/MainMenuLinksArray.php:47 includes/MainMenuLinksArray
 #: (puppypc32158's conflicted copy 2013-06-24).php:47
-msgid "Order Inquiry"
+msgid "Sales Order Inquiry"
 msgstr "Auftragsauswertung"
 
 #: includes/MainMenuLinksArray.php:48 includes/MainMenuLinksArray
@@ -47086,8 +47086,8 @@ msgstr "Umlagerung"
 #~ "currency codes"
 #~ msgstr ""
 #~ "Der Währungsschlüssel darf maximal 3 Zeichen lang sein, damit die "
-#~ "automatischen Kursaktualisierungen funktionieren muss es einer der ISO-"
-#~ "4217-Schlüssel sein."
+#~ "automatischen Kursaktualisierungen funktionieren muss es einer der "
+#~ "ISO-4217-Schlüssel sein."
 
 #~ msgid "The currency name must be 20 characters or less long"
 #~ msgstr "Die Währungsbezeichnung darf bis zu 20 Zeichen haben"
