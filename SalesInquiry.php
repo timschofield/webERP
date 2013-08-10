@@ -189,7 +189,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 							   salesorders.branchcode,
 							   salesorderdetails.quantity,
 							   salesorderdetails.qtyinvoiced,
-							   (salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent)) as extprice,
+							   (salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent)) / currencies.rate as extprice,
 							   (salesorderdetails.quantity * stockmaster.actualcost) as extcost,
 							   IF(salesorderdetails.quantity = salesorderdetails.qtyinvoiced ||
 								  salesorderdetails.completed = 1,'Completed','Open') as linestatus,
@@ -204,6 +204,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 						LEFT JOIN debtorsmaster ON salesorders.debtorno = debtorsmaster.debtorno
 						LEFT JOIN custbranch ON salesorders.branchcode = custbranch.branchcode
 						LEFT JOIN stockmaster ON salesorderdetails.stkcode = stockmaster.stockid
+						LEFT JOIN currencies ON currencies.currabrev = debtorsmaster.currcode
 						WHERE salesorders.orddate >='" . $FromDate . "'
 						 AND salesorders.orddate <='" . $ToDate . "'
 						 AND salesorders.quotation = '" . $_POST['OrderType'] . "'" .
@@ -226,7 +227,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 							   salesorders.branchcode,
 							   salesorderdetails.quantity,
 							   salesorderdetails.qtyinvoiced,
-							   (tempstockmoves.qty * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent)) * -1 as extprice,
+							   (tempstockmoves.qty * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent)) * -1 / currencies.rate as extprice,
 							   (tempstockmoves.qty * tempstockmoves.standardcost) * -1 as extcost,
 							   IF(salesorderdetails.quantity = salesorderdetails.qtyinvoiced ||
 								  salesorderdetails.completed = 1,'Completed','Open') as linestatus,
@@ -246,6 +247,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 						LEFT JOIN debtorsmaster ON salesorders.debtorno = debtorsmaster.debtorno
 						LEFT JOIN custbranch ON salesorders.branchcode = custbranch.branchcode
 						LEFT JOIN stockmaster ON salesorderdetails.stkcode = stockmaster.stockid
+						LEFT JOIN currencies ON currencies.currabrev = debtorsmaster.currcode
 						WHERE tempstockmoves.trandate >='" . $FromDate . "'
 						 AND tempstockmoves.trandate <='" . $ToDate . "'
 						 AND tempstockmoves.stockid=salesorderdetails.stkcode
@@ -277,7 +279,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 					$sql = "SELECT salesorderdetails.stkcode,
 								   SUM(salesorderdetails.quantity) as quantity,
 								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
-								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent)) as extprice,
+								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent)) / currencies.rate as extprice,
 								   SUM(salesorderdetails.quantity * stockmaster.actualcost) as extcost,
 								   stockmaster.description,
 								   stockmaster.decimalplaces
@@ -289,6 +291,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
 							LEFT JOIN salesman ON salesman.salesmancode = custbranch.salesman
 							LEFT JOIN areas ON areas.areacode = custbranch.area
+							LEFT JOIN currencies ON currencies.currabrev = debtorsmaster.currcode
 							WHERE salesorders.orddate >='" . $FromDate . "'
 							 AND salesorders.orddate <='" . $ToDate . "'
 							 AND salesorders.quotation = '" . $_POST['OrderType'] . "' " .
@@ -311,7 +314,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 					               debtorsmaster.name,
 								   SUM(salesorderdetails.quantity) as quantity,
 								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
-								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent)) as extprice,
+								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent)) / currencies.rate as extprice,
 								   SUM(salesorderdetails.quantity * stockmaster.actualcost) as extcost
 								   FROM salesorderdetails
 							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
@@ -321,6 +324,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
 							LEFT JOIN salesman ON salesman.salesmancode = custbranch.salesman
 							LEFT JOIN areas ON areas.areacode = custbranch.area
+							LEFT JOIN currencies ON currencies.currabrev = debtorsmaster.currcode
 							WHERE salesorders.orddate >='" . $FromDate . "'
 							 AND salesorders.orddate <='" . $ToDate  . "'
 							 AND salesorders.quotation = '" . $_POST['OrderType'] . "' " .
@@ -344,7 +348,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 					               debtorsmaster.name,
 								   SUM(salesorderdetails.quantity) as quantity,
 								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
-								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent)) as extprice,
+								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent)) / currencies.rate as extprice,
 								   SUM(salesorderdetails.quantity * stockmaster.actualcost) as extcost
 								   FROM salesorderdetails
 							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
@@ -354,6 +358,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
 							LEFT JOIN salesman ON salesman.salesmancode = custbranch.salesman
 							LEFT JOIN areas ON areas.areacode = custbranch.area
+							LEFT JOIN currencies ON currencies.currabrev = debtorsmaster.currcode
 							WHERE salesorders.orddate >='" . $FromDate . "'
 							 AND salesorders.orddate <='" . $ToDate . "'
 							 AND salesorders.quotation = '" . $_POST['OrderType'] . "' " .
@@ -373,7 +378,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 								   CONCAT(MONTHNAME(salesorders.orddate),' ',YEAR(salesorders.orddate)) as monthname,
 								   SUM(salesorderdetails.quantity) as quantity,
 								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
-								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent)) as extprice,
+								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent)) / currencies.rate as extprice,
 								   SUM(salesorderdetails.quantity * stockmaster.actualcost) as extcost
 								   FROM salesorderdetails
 							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
@@ -383,6 +388,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
 							LEFT JOIN salesman ON salesman.salesmancode = custbranch.salesman
 							LEFT JOIN areas ON areas.areacode = custbranch.area
+							LEFT JOIN currencies ON currencies.currabrev = debtorsmaster.currcode
 							WHERE salesorders.orddate >='" . $FromDate . "'
 							 AND salesorders.orddate <='" . $ToDate . "'
 							 AND salesorders.quotation = '" . $_POST['OrderType'] . "'" .
@@ -402,7 +408,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 								   stockcategory.categorydescription,
 								   SUM(salesorderdetails.quantity) as quantity,
 								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
-								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent)) as extprice,
+								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent)) / currencies.rate as extprice,
 								   SUM(salesorderdetails.quantity * stockmaster.actualcost) as extcost
 								   FROM salesorderdetails
 							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
@@ -412,6 +418,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
 							LEFT JOIN salesman ON salesman.salesmancode = custbranch.salesman
 							LEFT JOIN areas ON areas.areacode = custbranch.area
+							LEFT JOIN currencies ON currencies.currabrev = debtorsmaster.currcode
 							WHERE salesorders.orddate >='" . $FromDate . "'
 							 AND salesorders.orddate <='" . $ToDate . "'
 							 AND salesorders.quotation = '" . $_POST['OrderType'] . "'" .
@@ -432,7 +439,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 								   salesman.salesmanname,
 								   SUM(salesorderdetails.quantity) as quantity,
 								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
-								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent)) as extprice,
+								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent)) / currencies.rate as extprice,
 								   SUM(salesorderdetails.quantity * stockmaster.actualcost) as extcost
 								   FROM salesorderdetails
 							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
@@ -442,6 +449,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
 							LEFT JOIN salesman ON salesman.salesmancode = custbranch.salesman
 							LEFT JOIN areas ON areas.areacode = custbranch.area
+							LEFT JOIN currencies ON currencies.currabrev = debtorsmaster.currcode
 							WHERE salesorders.orddate >='" . $FromDate . "'
 							 AND salesorders.orddate <='" . $ToDate . "'
 							 AND salesorders.quotation = '" . $_POST['OrderType'] . "'" .
@@ -461,7 +469,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 								   areas.areadescription,
 								   SUM(salesorderdetails.quantity) as quantity,
 								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
-								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent)) as extprice,
+								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent)) / currencies.rate as extprice,
 								   SUM(salesorderdetails.quantity * stockmaster.actualcost) as extcost
 								   FROM salesorderdetails
 							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
@@ -471,6 +479,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
 							LEFT JOIN salesman ON salesman.salesmancode = custbranch.salesman
 							LEFT JOIN areas ON areas.areacode = custbranch.area
+							LEFT JOIN currencies ON currencies.currabrev = debtorsmaster.currcode
 							WHERE salesorders.orddate >='" . $FromDate . "'
 							 AND salesorders.orddate <='" . $ToDate . "'
 							 AND salesorders.quotation = '" . $_POST['OrderType'] . "' " .
@@ -492,7 +501,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 					$sql = "SELECT salesorderdetails.stkcode,
 								   SUM(salesorderdetails.quantity) as quantity,
 								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
-								   SUM(tempstockmoves.qty * tempstockmoves.price) * -1 as extprice,
+								   SUM(tempstockmoves.qty * tempstockmoves.price) * -1 / currencies.rate as extprice,
 								   SUM(tempstockmoves.qty * tempstockmoves.standardcost) * -1 as extcost,
 								   stockmaster.description,
 								   SUM(tempstockmoves.qty * -1) as qty
@@ -505,6 +514,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
 							LEFT JOIN salesman ON salesman.salesmancode = custbranch.salesman
 							LEFT JOIN areas ON areas.areacode = custbranch.area
+							LEFT JOIN currencies ON currencies.currabrev = debtorsmaster.currcode
 							WHERE tempstockmoves.trandate >='" . $FromDate . "'
 							 AND tempstockmoves.trandate <='" . $ToDate . "'
 						     AND tempstockmoves.stockid=salesorderdetails.stkcode
@@ -528,7 +538,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 					               debtorsmaster.name,
 								   SUM(salesorderdetails.quantity) as quantity,
 								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
-								   SUM(tempstockmoves.qty * tempstockmoves.price) * -1 as extprice,
+								   SUM(tempstockmoves.qty * tempstockmoves.price) * -1 / currencies.rate as extprice,
 								   SUM(tempstockmoves.qty * tempstockmoves.standardcost) * -1 as extcost,
 								   SUM(tempstockmoves.qty * -1) as qty
 								   FROM tempstockmoves
@@ -540,6 +550,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
 							LEFT JOIN salesman ON salesman.salesmancode = custbranch.salesman
 							LEFT JOIN areas ON areas.areacode = custbranch.area
+							LEFT JOIN currencies ON currencies.currabrev = debtorsmaster.currcode
 							WHERE tempstockmoves.trandate >='" . $FromDate . "'
 							 AND tempstockmoves.trandate <='" . $ToDate . "'
 						     AND tempstockmoves.stockid=salesorderdetails.stkcode
@@ -566,7 +577,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 					               debtorsmaster.name,
 								   SUM(salesorderdetails.quantity) as quantity,
 								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
-								   SUM(tempstockmoves.qty * tempstockmoves.price) * -1 as extprice,
+								   SUM(tempstockmoves.qty * tempstockmoves.price) * -1 / currencies.rate as extprice,
 								   SUM(tempstockmoves.qty * tempstockmoves.standardcost) * -1 as extcost,
 								   SUM(tempstockmoves.qty * -1) as qty
 								   FROM tempstockmoves
@@ -578,6 +589,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
 							LEFT JOIN salesman ON salesman.salesmancode = custbranch.salesman
 							LEFT JOIN areas ON areas.areacode = custbranch.area
+							LEFT JOIN currencies ON currencies.currabrev = debtorsmaster.currcode
 							WHERE tempstockmoves.trandate >='" . $FromDate . "'
 							 AND tempstockmoves.trandate <='" . $ToDate . "'
 						     AND tempstockmoves.stockid=salesorderdetails.stkcode
@@ -600,7 +612,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 								   CONCAT(MONTHNAME(salesorders.orddate),' ',YEAR(salesorders.orddate)) as monthname,
 								   SUM(salesorderdetails.quantity) as quantity,
 								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
-								   SUM(tempstockmoves.qty * tempstockmoves.price) * -1 as extprice,
+								   SUM(tempstockmoves.qty * tempstockmoves.price) * -1 / currencies.rate as extprice,
 								   SUM(tempstockmoves.qty * tempstockmoves.standardcost) * -1 as extcost,
 								   SUM(tempstockmoves.qty * -1) as qty
 								   FROM tempstockmoves
@@ -612,6 +624,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
 							LEFT JOIN salesman ON salesman.salesmancode = custbranch.salesman
 							LEFT JOIN areas ON areas.areacode = custbranch.area
+							LEFT JOIN currencies ON currencies.currabrev = debtorsmaster.currcode
 							WHERE tempstockmoves.trandate >='" . $FromDate . "'
 							 AND tempstockmoves.trandate <='" . $ToDate . "'
 						     AND tempstockmoves.stockid=salesorderdetails.stkcode
@@ -634,7 +647,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 								   stockcategory.categorydescription,
 								   SUM(salesorderdetails.quantity) as quantity,
 								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
-								   SUM(tempstockmoves.qty * tempstockmoves.price) * -1 as extprice,
+								   SUM(tempstockmoves.qty * tempstockmoves.price) * -1 / currencies.rate as extprice,
 								   SUM(tempstockmoves.qty * tempstockmoves.standardcost) * -1 as extcost,
 								   SUM(tempstockmoves.qty * -1) as qty
 								   FROM tempstockmoves
@@ -646,6 +659,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
 							LEFT JOIN salesman ON salesman.salesmancode = custbranch.salesman
 							LEFT JOIN areas ON areas.areacode = custbranch.area
+							LEFT JOIN currencies ON currencies.currabrev = debtorsmaster.currcode
 							WHERE tempstockmoves.trandate >='" . $FromDate . "'
 							 AND tempstockmoves.trandate <='" . $ToDate . "'
 						     AND tempstockmoves.stockid=salesorderdetails.stkcode
@@ -668,7 +682,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 								   salesman.salesmanname,
 								   SUM(salesorderdetails.quantity) as quantity,
 								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
-								   SUM(tempstockmoves.qty * tempstockmoves.price) * -1 as extprice,
+								   SUM(tempstockmoves.qty * tempstockmoves.price) * -1 / currencies.rate as extprice,
 								   SUM(tempstockmoves.qty * tempstockmoves.standardcost) * -1 as extcost,
 								   SUM(tempstockmoves.qty * -1) as qty
 								   FROM tempstockmoves
@@ -680,6 +694,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
 							LEFT JOIN salesman ON salesman.salesmancode = custbranch.salesman
 							LEFT JOIN areas ON areas.areacode = custbranch.area
+							LEFT JOIN currencies ON currencies.currabrev = debtorsmaster.currcode
 							WHERE tempstockmoves.trandate >='" . $FromDate . "'
 							 AND tempstockmoves.trandate <='" . $ToDate . "'
 						     AND tempstockmoves.stockid=salesorderdetails.stkcode
@@ -702,7 +717,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 								   areas.areadescription,
 								   SUM(salesorderdetails.quantity) as quantity,
 								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
-								   SUM(tempstockmoves.qty * tempstockmoves.price) * -1 as extprice,
+								   SUM(tempstockmoves.qty * tempstockmoves.price) * -1 / currencies.rate as extprice,
 								   SUM(tempstockmoves.qty * tempstockmoves.standardcost) * -1 as extcost,
 								   SUM(tempstockmoves.qty * -1) as qty
 								   FROM tempstockmoves
@@ -714,6 +729,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
 							LEFT JOIN salesman ON salesman.salesmancode = custbranch.salesman
 							LEFT JOIN areas ON areas.areacode = custbranch.area
+							LEFT JOIN currencies ON currencies.currabrev = debtorsmaster.currcode
 							WHERE tempstockmoves.trandate >='" . $FromDate . "'
 							 AND tempstockmoves.trandate <='" . $ToDate . "'
 						     AND tempstockmoves.stockid=salesorderdetails.stkcode
