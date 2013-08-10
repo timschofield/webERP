@@ -1,7 +1,7 @@
 <?php
 
 /* $Id: MainMenuLinksArray.php 5982 2013-05-23 04:22:02Z tehonu $*/
-// webERP menus.
+/* webERP menus with Captions and URLs. */
 
 $ModuleLink = array('orders', 'AR', 'PO', 'AP', 'stock', 'manuf',  'GL', 'FA', 'PC', 'system', 'Utilities');
 $ReportList = array('orders'=>'ord',
