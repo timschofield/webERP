@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: 3.13rc0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-07-06 15:49+1200\n"
-"PO-Revision-Date: 2013-06-01 16:36-0600\n"
+"PO-Revision-Date: 2013-08-10 12:41-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: Swedish <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -40968,9 +40968,8 @@ msgstr "Mall för återkommande kundorder"
 msgid "Process Recurring Orders"
 msgstr "Bearbeta återkommande order"
 
-#: includes/MainMenuLinksArray.php:47 includes/MainMenuLinksArray
-#: (puppypc32158's conflicted copy 2013-06-24).php:47
-msgid "Order Inquiry"
+#: includes/MainMenuLinksArray.php:47
+msgid "Sales Order Inquiry"
 msgstr "Orderfråga"
 
 #: includes/MainMenuLinksArray.php:48 includes/MainMenuLinksArray

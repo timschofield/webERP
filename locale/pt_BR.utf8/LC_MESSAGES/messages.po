@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-07-06 15:49+1200\n"
-"PO-Revision-Date: 2013-06-01 12:16-0600\n"
+"PO-Revision-Date: 2013-08-10 12:44-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: pt-br <gsavix@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -39828,9 +39828,8 @@ msgstr "Formulário Pedidos Recorrentes"
 msgid "Process Recurring Orders"
 msgstr "Processar Pedidos Recorrentes"
 
-#: includes/MainMenuLinksArray.php:47 includes/MainMenuLinksArray
-#: (puppypc32158's conflicted copy 2013-06-24).php:47
-msgid "Order Inquiry"
+#: includes/MainMenuLinksArray.php:47
+msgid "Sales Order Inquiry"
 msgstr "Consulta Pedidos"
 
 #: includes/MainMenuLinksArray.php:48 includes/MainMenuLinksArray
