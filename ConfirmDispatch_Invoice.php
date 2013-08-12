@@ -786,7 +786,6 @@ invoices can have a zero amount but there must be a quantity to invoice */
 									invtext,
 									shipvia,
 									consignment,
-									trackingnumber,
 									packages,
 									salesperson )
 								VALUES (
@@ -807,7 +806,6 @@ invoices can have a zero amount but there must be a quantity to invoice */
 									'" . $_POST['InvoiceText'] . "',
 									'" . $_SESSION['Items'.$identifier]->ShipVia . "',
 									'" . $_POST['Consignment'] . "',
-									'" . $_POST['ShipmentTrackingNumber'] . "',
 									'" . $_POST['Packages'] . "',
 									'" . $_SESSION['Items'.$identifier]->SalesPerson . "' )";
 
@@ -1648,9 +1646,6 @@ invoices can have a zero amount but there must be a quantity to invoice */
 	if (!isset($_POST['Consignment'])) {
 		$_POST['Consignment']='';
 	}
-	if (!isset($_POST['ShipmentTrackingNumber'])) {
-		$_POST['ShipmentTrackingNumber']='';
-	}
 	if (!isset($_POST['Packages'])) {
 		$_POST['Packages']='1';
 	}
@@ -1667,11 +1662,6 @@ invoices can have a zero amount but there must be a quantity to invoice */
 	echo '<tr>
 			<td>' . _('Consignment Note Ref'). ':</td>
 			<td><input tabindex="'.$j.'" type="text" pattern="[a-zA-Z0-9_\-\ ]*" title="' . _('Enter the consignment note reference to enable tracking of the delivery in the event of customer proof of delivery issues') . '" maxlength="15" size="15" name="Consignment" value="' . $_POST['Consignment'] . '" /></td>
-		</tr>';
-	$j++;
-	echo '<tr>
-			<td>' . _('Shipment Tracking Number'). ':</td>
-			<td><input tabindex="'.$j.'" type="text" pattern="[a-zA-Z0-9_\-\ ]*" title="' . _('Enter the tracking number issued by the freight company to track the shipment to the customer') . '" maxlength="40" size="40" name="ShipmentTrackingNumber" value="' . $_POST['ShipmentTrackingNumber'] . '" /></td>
 		</tr>';
 	$j++;
 	echo '<tr>
