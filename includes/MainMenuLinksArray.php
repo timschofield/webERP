@@ -1,6 +1,7 @@
 <?php
 
-/* $Id: MainMenuLinksArray.php 5982 2013-05-23 04:22:02Z tehonu $*/
+/* $Id: MainMenuLinksArray.php 6190 2013-08-12 02:12:02Z rchacon $*/
+
 /* webERP menus with Captions and URLs. */
 
 $ModuleLink = array('orders', 'AR', 'PO', 'AP', 'stock', 'manuf',  'GL', 'FA', 'PC', 'system', 'Utilities');
@@ -80,12 +81,12 @@ $MenuItems['orders']['Reports']['URL'] = array( '/SelectCompletedOrder.php',
 												'/PDFLowGP.php',
 												'/PDFSellThroughSupportClaim.php');
 
-$MenuItems['orders']['Maintenance']['Caption'] = array( _('Select Contract'),
-														_('Create Contract'),
+$MenuItems['orders']['Maintenance']['Caption'] = array( _('Create Contract'),
+														_('Select Contract'),
 														_('Sell Through Support Deals'));
 
-$MenuItems['orders']['Maintenance']['URL'] = array( '/SelectContract.php',
-													'/Contracts.php',
+$MenuItems['orders']['Maintenance']['URL'] = array( '/Contracts.php',
+													'/SelectContract.php',
 													'/SellThroughSupport.php');
 
 $MenuItems['AR']['Transactions']['Caption'] = array(_('Select Order to Invoice'),
