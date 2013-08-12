@@ -185,5 +185,7 @@ ALTER TABLE  `salescat` ADD  `active` INT NOT NULL DEFAULT  '1' COMMENT  '1 if a
 
 INSERT INTO config VALUES ('ShopManagerEmail','');
 
+ALTER TABLE  `debtortrans` ADD  `trackingnumber` VARCHAR( 40 ) NOT NULL AFTER  `consignment`;
+
 UPDATE config SET confvalue='4.11.0' WHERE confname='VersionNumber';
 
