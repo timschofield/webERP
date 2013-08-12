@@ -30,7 +30,7 @@ $ModuleList = array(_('Sales'),
 					_('Setup'),
 					_('Utilities'));
 
-$MenuItems['orders']['Transactions']['Caption'] = array( _('Enter An Order or Quotation'),
+$MenuItems['orders']['Transactions']['Caption'] = array(_('New Sales Order or Quotation'),
 														_('Enter Counter Sales'),
 														_('Enter Counter Returns'),
 														_('Print Picking Lists'),
@@ -39,7 +39,7 @@ $MenuItems['orders']['Transactions']['Caption'] = array( _('Enter An Order or Qu
 														_('Recurring Order Template'),
 														_('Process Recurring Orders'));
 
-$MenuItems['orders']['Transactions']['URL'] = array( '/SelectOrderItems.php?NewOrder=Yes',
+$MenuItems['orders']['Transactions']['URL'] = array('/SelectOrderItems.php?NewOrder=Yes',
 													'/CounterSales.php',
 													'/CounterReturns.php',
 													'/PDFPickingList.php',
@@ -81,23 +81,23 @@ $MenuItems['orders']['Reports']['URL'] = array( '/SelectCompletedOrder.php',
 												'/PDFSellThroughSupportClaim.php');
 
 $MenuItems['orders']['Maintenance']['Caption'] = array( _('Select Contract'),
-													_('Create Contract'),
-													_('Sell Through Support Deals'));
+														_('Create Contract'),
+														_('Sell Through Support Deals'));
 
 $MenuItems['orders']['Maintenance']['URL'] = array( '/SelectContract.php',
 													'/Contracts.php',
 													'/SellThroughSupport.php');
 
-$MenuItems['AR']['Transactions']['Caption'] = array (_('Select Order to Invoice'),
-														_('Create A Credit Note'),
-														_('Enter Receipts'),
-														_('Allocate Receipts or Credit Notes'));
-$MenuItems['AR']['Transactions']['URL'] = array ('/SelectSalesOrder.php',
-													'/SelectCreditItems.php?NewCredit=Yes',
-													'/CustomerReceipt.php?NewReceipt=Yes&amp;Type=Customer',
-													'/CustomerAllocations.php');
+$MenuItems['AR']['Transactions']['Caption'] = array(_('Select Order to Invoice'),
+													_('Create A Credit Note'),
+													_('Enter Receipts'),
+													_('Allocate Receipts or Credit Notes'));
+$MenuItems['AR']['Transactions']['URL'] = array('/SelectSalesOrder.php',
+												'/SelectCreditItems.php?NewCredit=Yes',
+												'/CustomerReceipt.php?NewReceipt=Yes&amp;Type=Customer',
+												'/CustomerAllocations.php');
 
-$MenuItems['AR']['Reports']['Caption'] = array (_('Where Allocated Inquiry'),
+$MenuItems['AR']['Reports']['Caption'] = array(	_('Where Allocated Inquiry'),
 												_('Print Invoices or Credit Notes'),
 												_('Print Statements'),
 												_('Sales Analysis Reports'),
@@ -115,7 +115,7 @@ if ($_SESSION['InvoicePortraitFormat']==0){
 	$PrintInvoicesOrCreditNotesScript = '/PrintCustTransPortrait.php';
 }
 
-$MenuItems['AR']['Reports']['URL'] = array ('/CustWhereAlloc.php',
+$MenuItems['AR']['Reports']['URL'] = array(	'/CustWhereAlloc.php',
 											$PrintInvoicesOrCreditNotesScript,
 											'/PrintCustStatements.php',
 											'/SalesAnalRepts.php',
@@ -127,17 +127,17 @@ $MenuItems['AR']['Reports']['URL'] = array ('/CustWhereAlloc.php',
 											'/PDFCustTransListing.php',
 											'/CustomerTransInquiry.php');
 
-$MenuItems['AR']['Maintenance']['Caption'] = array (_('Add Customer'),
+$MenuItems['AR']['Maintenance']['Caption'] = array(	_('Add Customer'),
 													_('Select Customer'));
-$MenuItems['AR']['Maintenance']['URL'] = array ('/Customers.php',
+$MenuItems['AR']['Maintenance']['URL'] = array(	'/Customers.php',
 												'/SelectCustomer.php');
 
-$MenuItems['AP']['Transactions']['Caption'] = array (_('Select Supplier'),
+$MenuItems['AP']['Transactions']['Caption'] = array(_('Select Supplier'),
 													_('Supplier Allocations'));
-$MenuItems['AP']['Transactions']['URL'] = array ('/SelectSupplier.php',
+$MenuItems['AP']['Transactions']['URL'] = array('/SelectSupplier.php',
 												'/SupplierAllocations.php');
 
-$MenuItems['AP']['Reports']['Caption'] = array (_('Aged Supplier Report'),
+$MenuItems['AP']['Reports']['Caption'] = array(	_('Aged Supplier Report'),
 												_('Payment Run Report'),
 												_('Remittance Advices'),
 												_('Outstanding GRNs Report'),
@@ -145,7 +145,7 @@ $MenuItems['AP']['Reports']['Caption'] = array (_('Aged Supplier Report'),
 												_('List Daily Transactions'),
 												_('Supplier Transaction Inquiries'));
 
-$MenuItems['AP']['Reports']['URL'] = array ('/AgedSuppliers.php',
+$MenuItems['AP']['Reports']['URL'] = array(	'/AgedSuppliers.php',
 											'/SuppPaymentRun.php',
 											'/PDFRemittanceAdvice.php',
 											'/OutstandingGRNs.php',
@@ -153,43 +153,43 @@ $MenuItems['AP']['Reports']['URL'] = array ('/AgedSuppliers.php',
 											'/PDFSuppTransListing.php',
 											'/SupplierTransInquiry.php');
 
-$MenuItems['AP']['Maintenance']['Caption'] = array (_('Add Supplier'),
+$MenuItems['AP']['Maintenance']['Caption'] = array(	_('Add Supplier'),
 													_('Select Supplier'),
 													_('Maintain Factor Companies'));
-$MenuItems['AP']['Maintenance']['URL'] = array ('/Suppliers.php',
+$MenuItems['AP']['Maintenance']['URL'] = array(	'/Suppliers.php',
 												'/SelectSupplier.php',
 												'/Factors.php');
 
-$MenuItems['PO']['Transactions']['Caption'] = array (_('Purchase Orders'),
-													_('Add Purchase Order'),
+$MenuItems['PO']['Transactions']['Caption'] = array(_('New Purchase Order'),
+													_('Purchase Orders'),
 													_('Create a New Tender'),
 													_('Edit Existing Tenders'),
 													_('Process Tenders and Offers'),
 													_('Orders to Authorise'),
 													_('Shipment Entry'),
 													_('Select A Shipment'));
-$MenuItems['PO']['Transactions']['URL'] = array ('/PO_SelectOSPurchOrder.php',
-												'/PO_Header.php?NewOrder=Yes',
-												'/SupplierTenderCreate.php?New=Yes',
-												'/SupplierTenderCreate.php?Edit=Yes',
-												'/OffersReceived.php',
-												'/PO_AuthoriseMyOrders.php',
-												'/SelectSupplier.php',
-												'/Shipt_Select.php');
+$MenuItems['PO']['Transactions']['URL'] = array(	'/PO_Header.php?NewOrder=Yes',
+													'/PO_SelectOSPurchOrder.php',
+													'/SupplierTenderCreate.php?New=Yes',
+													'/SupplierTenderCreate.php?Edit=Yes',
+													'/OffersReceived.php',
+													'/PO_AuthoriseMyOrders.php',
+													'/SelectSupplier.php',
+													'/Shipt_Select.php');
 
-$MenuItems['PO']['Reports']['Caption'] = array (_('Purchase Order Inquiry'),
+$MenuItems['PO']['Reports']['Caption'] = array(	_('Purchase Order Inquiry'),
 												_('Purchase Order Detail Or Summary Inquiries'),
 												_('Supplier Price List'));
 
-$MenuItems['PO']['Reports']['URL'] = array ('/PO_SelectPurchOrder.php',
+$MenuItems['PO']['Reports']['URL'] = array(	'/PO_SelectPurchOrder.php',
 											'/POReport.php',
 											'/SuppPriceList.php');
 
-$MenuItems['PO']['Maintenance']['Caption'] = array (_('Maintain Supplier Price Lists'));
+$MenuItems['PO']['Maintenance']['Caption'] = array(_('Maintain Supplier Price Lists'));
 
-$MenuItems['PO']['Maintenance']['URL'] = array ('/SupplierPriceList.php');
+$MenuItems['PO']['Maintenance']['URL'] = array('/SupplierPriceList.php');
 
-$MenuItems['stock']['Transactions']['Caption'] = array (_('Receive Purchase Orders'),
+$MenuItems['stock']['Transactions']['Caption'] = array(	_('Receive Purchase Orders'),
 														_('Bulk Inventory Transfer') . ' - ' . _('Dispatch'),
 														_('Bulk Inventory Transfer') . ' - ' . _('Receive'),
 														_('Inventory Location Transfers'),
@@ -200,7 +200,7 @@ $MenuItems['stock']['Transactions']['Caption'] = array (_('Receive Purchase Orde
 														_('Authorise Internal Stock Requests'),
 														_('Fulfill Internal Stock Requests'));
 
-$MenuItems['stock']['Transactions']['URL'] = array ('/PO_SelectOSPurchOrder.php',
+$MenuItems['stock']['Transactions']['URL'] = array(	'/PO_SelectOSPurchOrder.php',
 													'/StockLocTransfer.php',
 													'/StockLocTransferReceive.php',
 													'/StockTransfers.php?New=Yes',
@@ -211,7 +211,7 @@ $MenuItems['stock']['Transactions']['URL'] = array ('/PO_SelectOSPurchOrder.php'
 													'/InternalStockRequestAuthorisation.php',
 													'/InternalStockRequestFulfill.php');
 
-$MenuItems['stock']['Reports']['Caption'] = array (_('Serial Item Research Tool'),
+$MenuItems['stock']['Reports']['Caption'] = array(	_('Serial Item Research Tool'),
 													_('Print Price Labels'),
 													_('Reprint GRN'),
 													_('Inventory Item Movements'),
@@ -234,7 +234,7 @@ $MenuItems['stock']['Reports']['Caption'] = array (_('Serial Item Research Tool'
 													_('Period Stock Transaction Listing'),
 													_('Stock Transfer Note'));
 
-$MenuItems['stock']['Reports']['URL'] = array ('/StockSerialItemResearch.php',
+$MenuItems['stock']['Reports']['URL'] = array(	'/StockSerialItemResearch.php',
 												'/PDFPrintLabel.php',
 												'/ReprintGRN.php',
 												'/StockMovements.php',
@@ -257,7 +257,7 @@ $MenuItems['stock']['Reports']['URL'] = array ('/StockSerialItemResearch.php',
 												'/PDFPeriodStockTransListing.php',
 												'/PDFStockTransfer.php');
 
-$MenuItems['stock']['Maintenance']['Caption'] = array (_('Add A New Item'),
+$MenuItems['stock']['Maintenance']['Caption'] = array(	_('Add A New Item'),
 														_('Select An Item'),
 														_('Sales Category Maintenance'),
 														_('Brands Maintenance'),
@@ -265,7 +265,7 @@ $MenuItems['stock']['Maintenance']['Caption'] = array (_('Add A New Item'),
 														_('View or Update Prices Based On Costs'),
 														_('Reorder Level By Category/Location'));
 
-$MenuItems['stock']['Maintenance']['URL'] = array ('/Stocks.php',
+$MenuItems['stock']['Maintenance']['URL'] = array(	'/Stocks.php',
 													'/SelectProduct.php',
 													'/SalesCategories.php',
 													'/Manufacturers.php',
@@ -273,13 +273,13 @@ $MenuItems['stock']['Maintenance']['URL'] = array ('/Stocks.php',
 													'/PricesByCost.php',
 													'/ReorderLevelLocation.php');
 
-$MenuItems['manuf']['Transactions']['Caption'] = array (_('Work Order Entry'),
+$MenuItems['manuf']['Transactions']['Caption'] = array(	_('Work Order Entry'),
 														_('Select A Work Order'));
 
-$MenuItems['manuf']['Transactions']['URL'] = array ('/WorkOrderEntry.php',
+$MenuItems['manuf']['Transactions']['URL'] = array(	'/WorkOrderEntry.php',
 													'/SelectWorkOrder.php');
 
-$MenuItems['manuf']['Reports']['Caption'] = array (_('Select A Work Order'),
+$MenuItems['manuf']['Reports']['Caption'] = array(	_('Select A Work Order'),
 													_('Costed Bill Of Material Inquiry'),
 													_('Where Used Inquiry'),
 													_('Bill Of Material Listing'),
@@ -293,7 +293,7 @@ $MenuItems['manuf']['Reports']['Caption'] = array (_('Select A Work Order'),
 													_('MRP Suggested Work Orders'),
 													_('MRP Reschedules Required'));
 
-$MenuItems['manuf']['Reports']['URL'] = array ('/SelectWorkOrder.php',
+$MenuItems['manuf']['Reports']['URL'] = array(	'/SelectWorkOrder.php',
 												'/BOMInquiry.php',
 												'/WhereUsedInquiry.php',
 												'/BOMListing.php',
@@ -307,35 +307,35 @@ $MenuItems['manuf']['Reports']['URL'] = array ('/SelectWorkOrder.php',
 												'/MRPPlannedWorkOrders.php',
 												'/MRPReschedules.php');
 
-$MenuItems['manuf']['Maintenance']['Caption'] = array (_('Work Centre'),
-												_('Bills Of Material'),
-												_('Copy a Bill Of Materials Between Items'),
-												_('Master Schedule'),
-												_('Auto Create Master Schedule'),
-												_('MRP Calculation'));
+$MenuItems['manuf']['Maintenance']['Caption'] = array(	_('Work Centre'),
+														_('Bills Of Material'),
+														_('Copy a Bill Of Materials Between Items'),
+														_('Master Schedule'),
+														_('Auto Create Master Schedule'),
+														_('MRP Calculation'));
 
-$MenuItems['manuf']['Maintenance']['URL'] = array ('/WorkCentres.php',
-											'/BOMs.php',
-											'/CopyBOM.php',
-											'/MRPDemands.php',
-											'/MRPCreateDemands.php',
-											'/MRP.php');
+$MenuItems['manuf']['Maintenance']['URL'] = array(	'/WorkCentres.php',
+													'/BOMs.php',
+													'/CopyBOM.php',
+													'/MRPDemands.php',
+													'/MRPCreateDemands.php',
+													'/MRP.php');
 
-$MenuItems['GL']['Transactions']['Caption'] = array (_('Bank Account Payments Entry'),
+$MenuItems['GL']['Transactions']['Caption'] = array(	_('Bank Account Payments Entry'),
 														_('Bank Account Receipts Entry'),
 														_('Import Bank Transactions'),
 														_('Journal Entry'),
 														_('Bank Account Payments Matching'),
 														_('Bank Account Receipts Matching'));
 
-$MenuItems['GL']['Transactions']['URL'] = array ('/Payments.php?NewPayment=Yes',
+$MenuItems['GL']['Transactions']['URL'] = array('/Payments.php?NewPayment=Yes',
 												'/CustomerReceipt.php?NewReceipt=Yes&amp;Type=GL',
 												'/ImportBankTrans.php',
 												'/GLJournal.php?NewJournal=Yes',
 												'/BankMatching.php?Type=Payments',
 												'/BankMatching.php?Type=Receipts');
 
-$MenuItems['GL']['Reports']['Caption'] = array (_('Trial Balance'),
+$MenuItems['GL']['Reports']['Caption'] = array(	_('Trial Balance'),
 												_('Account Inquiry'),
 												_('Account Listing'),
 												_('Account Listing to CSV File'),
@@ -348,7 +348,7 @@ $MenuItems['GL']['Reports']['Caption'] = array (_('Trial Balance'),
 												_('Tag Reports'),
 												_('Tax Reports'));
 
-$MenuItems['GL']['Reports']['URL'] = array ('/GLTrialBalance.php',
+$MenuItems['GL']['Reports']['URL'] = array(	'/GLTrialBalance.php',
 											'/SelectGLAccount.php',
 											'/GLAccountReport.php',
 											'/GLAccountCSV.php',
@@ -361,67 +361,67 @@ $MenuItems['GL']['Reports']['URL'] = array ('/GLTrialBalance.php',
 											'/GLTagProfit_Loss.php',
 											'/Tax.php');
 
-$MenuItems['GL']['Maintenance']['Caption'] = array (	_('Account Sections'),
-														_('Account Groups'),
-														_('GL Accounts'),
-														_('GL Budgets'),
-														_('GL Tags'));
+$MenuItems['GL']['Maintenance']['Caption'] = array(	_('Account Sections'),
+													_('Account Groups'),
+													_('GL Accounts'),
+													_('GL Budgets'),
+													_('GL Tags'));
 
-$MenuItems['GL']['Maintenance']['URL'] = array (	'/AccountSections.php',
+$MenuItems['GL']['Maintenance']['URL'] = array(		'/AccountSections.php',
 													'/AccountGroups.php',
 													'/GLAccounts.php',
 													'/GLBudgets.php',
 													'/GLTags.php');
 
-$MenuItems['FA']['Transactions']['Caption'] = array (_('Add a new Asset'),
+$MenuItems['FA']['Transactions']['Caption'] = array(_('Add a new Asset'),
 													_('Select an Asset'),
 													_('Change Asset Location'),
 													_('Depreciation Journal'));
 
-$MenuItems['FA']['Transactions']['URL'] = array ('/FixedAssetItems.php',
+$MenuItems['FA']['Transactions']['URL'] = array('/FixedAssetItems.php',
 												'/SelectAsset.php',
 												'/FixedAssetTransfer.php',
 												'/FixedAssetDepreciation.php');
 
-$MenuItems['FA']['Reports']['Caption'] = array (_('Asset Register'),
+$MenuItems['FA']['Reports']['Caption'] = array(	_('Asset Register'),
 												_('My Maintenance Schedule'),
 												_('Maintenance Reminder Emails'));
 
-$MenuItems['FA']['Reports']['URL'] = array ('/FixedAssetRegister.php',
+$MenuItems['FA']['Reports']['URL'] = array(	'/FixedAssetRegister.php',
 											'/MaintenanceUserSchedule.php',
 											'/MaintenanceReminders.php');
 
-$MenuItems['FA']['Maintenance']['Caption'] = array (_('Asset Categories Maintenance'),
+$MenuItems['FA']['Maintenance']['Caption'] = array(	_('Asset Categories Maintenance'),
 													_('Add or Maintain Asset Locations'),
 													_('Maintenance Tasks'));
 
-$MenuItems['FA']['Maintenance']['URL'] = array ('/FixedAssetCategories.php',
+$MenuItems['FA']['Maintenance']['URL'] = array(	'/FixedAssetCategories.php',
 												'/FixedAssetLocations.php',
 												'/MaintenanceTasks.php');
 
-$MenuItems['PC']['Transactions']['Caption'] = array (_('Assign Cash to PC Tab'),
+$MenuItems['PC']['Transactions']['Caption'] = array(_('Assign Cash to PC Tab'),
 													_('Claim Expenses From PC Tab'),
 													_('Expenses Authorisation'));
 
-$MenuItems['PC']['Transactions']['URL'] = array ('/PcAssignCashToTab.php',
+$MenuItems['PC']['Transactions']['URL'] = array('/PcAssignCashToTab.php',
 												'/PcClaimExpensesFromTab.php',
 												'/PcAuthorizeExpenses.php');
 
-$MenuItems['PC']['Reports']['Caption'] = array (_('PC Tab General Report'), );
+$MenuItems['PC']['Reports']['Caption'] = array(_('PC Tab General Report'), );
 
-$MenuItems['PC']['Reports']['URL'] = array ('/PcReportTab.php', );
+$MenuItems['PC']['Reports']['URL'] = array('/PcReportTab.php', );
 
-$MenuItems['PC']['Maintenance']['Caption'] = array (_('Types of PC Tabs'),
+$MenuItems['PC']['Maintenance']['Caption'] = array(	_('Types of PC Tabs'),
 													_('PC Tabs'),
 													_('PC Expenses'),
 													_('Expenses for Type of PC Tab'));
 
-$MenuItems['PC']['Maintenance']['URL'] = array ('/PcTypeTabs.php',
+$MenuItems['PC']['Maintenance']['URL'] = array(	'/PcTypeTabs.php',
 												'/PcTabs.php',
 												'/PcExpenses.php',
 												'/PcExpensesTypeTab.php');
 
-$MenuItems['system']['Transactions']['Caption'] = array (_('Company Preferences'),
+$MenuItems['system']['Transactions']['Caption'] = array(_('Company Preferences'),
 														_('Configuration Settings'),
 														_('User Maintenance'),
 														_('Maintain Security Tokens'),
@@ -442,7 +442,7 @@ $MenuItems['system']['Transactions']['Caption'] = array (_('Company Preferences'
 														_('SMTP Server Details'),
 												       		_('Mailing Group Maintenance')	);
 
-$MenuItems['system']['Transactions']['URL'] = array ('/CompanyPreferences.php',
+$MenuItems['system']['Transactions']['URL'] = array('/CompanyPreferences.php',
 													'/SystemParameters.php',
 													'/WWW_Users.php',
 													'/SecurityTokens.php',
@@ -463,7 +463,7 @@ $MenuItems['system']['Transactions']['URL'] = array ('/CompanyPreferences.php',
 													'/SMTPServer.php',
 											       		'/MailingGroupMaintenance.php'	);
 
-$MenuItems['system']['Reports']['Caption'] = array (_('Sales Types'),
+$MenuItems['system']['Reports']['Caption'] = array(	_('Sales Types'),
 													_('Customer Types'),
 													_('Supplier Types'),
 													_('Credit Status'),
@@ -478,7 +478,7 @@ $MenuItems['system']['Reports']['Caption'] = array (_('Sales Types'),
 													_('Freight Costs Maintenance'),
 													_('Discount Matrix'));
 
-$MenuItems['system']['Reports']['URL'] = array ('/SalesTypes.php',
+$MenuItems['system']['Reports']['URL'] = array(	'/SalesTypes.php',
 												'/CustomerTypes.php',
 												'/SupplierTypes.php',
 												'/CreditStatus.php',
@@ -493,7 +493,7 @@ $MenuItems['system']['Reports']['URL'] = array ('/SalesTypes.php',
 												'/FreightCosts.php',
 												'/DiscountMatrix.php');
 
-$MenuItems['system']['Maintenance']['Caption'] = array (_('Inventory Categories Maintenance'),
+$MenuItems['system']['Maintenance']['Caption'] = array(	_('Inventory Categories Maintenance'),
 														_('Inventory Locations Maintenance'),
 														_('Discount Category Maintenance'),
 														_('Units of Measure'),
@@ -503,7 +503,7 @@ $MenuItems['system']['Maintenance']['Caption'] = array (_('Inventory Categories 
 														_('Maintain Internal Stock Categories to User Roles'),
 														_('Label Templates Maintenance'));
 
-$MenuItems['system']['Maintenance']['URL'] = array ('/StockCategories.php',
+$MenuItems['system']['Maintenance']['URL'] = array(	'/StockCategories.php',
 													'/Locations.php',
 													'/DiscountCategories.php',
 													'/UnitsOfMeasure.php',
@@ -513,7 +513,7 @@ $MenuItems['system']['Maintenance']['URL'] = array ('/StockCategories.php',
 													'/InternalStockCategoriesByRole.php',
 													'/Labels.php');
 
-$MenuItems['Utilities']['Transactions']['Caption'] = array (_('Import GL Payments Receipts Or Journals From CSV'),
+$MenuItems['Utilities']['Transactions']['Caption'] = array(	_('Import GL Payments Receipts Or Journals From CSV'),
 															_('Change A Customer Code'),
 															_('Change A Customer Branch Code'),
 															_('Change A Supplier Code'),
@@ -525,7 +525,7 @@ $MenuItems['Utilities']['Transactions']['Caption'] = array (_('Import GL Payment
 															_('Delete sales transactions'),
 															_('Reverse all supplier payments on a specified date'));
 
-$MenuItems['Utilities']['Transactions']['URL'] = array ('/Z_ImportGLTransactions.php',
+$MenuItems['Utilities']['Transactions']['URL'] = array(	'/Z_ImportGLTransactions.php',
 														'/Z_ChangeCustomerCode.php',
 														'/Z_ChangeBranchCode.php',
 														'/Z_ChangeSupplierCode.php',
@@ -537,17 +537,17 @@ $MenuItems['Utilities']['Transactions']['URL'] = array ('/Z_ImportGLTransactions
 														'/Z_DeleteSalesTransActions.php',
 														'/Z_ReverseSuppPaymentRun.php');
 
-$MenuItems['Utilities']['Reports']['Caption'] = array (_('Show Local Currency Total Debtor Balances'),
-													_('Show Local Currency Total Suppliers Balances'),
-													_('Show General Transactions That Do Not Balance'),
-													_('List of items without picture'));
+$MenuItems['Utilities']['Reports']['Caption'] = array(	_('Show Local Currency Total Debtor Balances'),
+														_('Show Local Currency Total Suppliers Balances'),
+														_('Show General Transactions That Do Not Balance'),
+														_('List of items without picture'));
 
-$MenuItems['Utilities']['Reports']['URL'] = array ('/Z_CurrencyDebtorsBalances.php',
-												'/Z_CurrencySuppliersBalances.php',
-												'/Z_CheckGLTransBalance.php',
-												'/Z_ItemsWithoutPicture.php');
+$MenuItems['Utilities']['Reports']['URL'] = array(	'/Z_CurrencyDebtorsBalances.php',
+													'/Z_CurrencySuppliersBalances.php',
+													'/Z_CheckGLTransBalance.php',
+													'/Z_ItemsWithoutPicture.php');
 
-$MenuItems['Utilities']['Maintenance']['Caption'] = array (_('Maintain Language Files'),
+$MenuItems['Utilities']['Maintenance']['Caption'] = array(	_('Maintain Language Files'),
 															_('Make New Company'),
 															_('Data Export Options'),
 															_('Import Stock Items from .csv'),
@@ -558,7 +558,7 @@ $MenuItems['Utilities']['Maintenance']['Caption'] = array (_('Maintain Language 
 															_('Purge all old prices'),
 															_('Import Price List from CSV file'));
 
-$MenuItems['Utilities']['Maintenance']['URL'] = array ('/Z_poAdmin.php',
+$MenuItems['Utilities']['Maintenance']['URL'] = array(	'/Z_poAdmin.php',
 														'/Z_MakeNewCompany.php',
 														'/Z_DataExport.php',
 														'/Z_ImportStocks.php',

@@ -18048,7 +18048,9 @@ msgstr ""
 msgid "Receive this order"
 msgstr ""
 
-#: PO_Header.php:801
+#: PO_Header.php:801 PO_SelectOSPurchOrder.php:138
+#: PO_SelectOSPurchOrder.php:140
+#: includes/MainMenuLinksArray.php:160
 msgid "New Purchase Order"
 msgstr ""
 
@@ -18879,12 +18881,6 @@ msgstr ""
 #: SelectCompletedOrder.php:228 SelectSalesOrder.php:502
 #: SelectWorkOrder.php:111
 msgid "The SQL used to retrieve the searched parts was"
-msgstr ""
-
-#: PO_SelectOSPurchOrder.php:138 PO_SelectOSPurchOrder.php:140
-#: includes/MainMenuLinksArray.php:160
-#: includes/MainMenuLinksArray (puppypc32158's conflicted copy 2013-06-24).php:160
-msgid "Add Purchase Order"
 msgstr ""
 
 #: PO_SelectOSPurchOrder.php:145 PO_SelectPurchOrder.php:118
@@ -36167,8 +36163,7 @@ msgid "Purchases"
 msgstr ""
 
 #: includes/MainMenuLinksArray.php:29
-#: includes/MainMenuLinksArray (puppypc32158's conflicted copy 2013-06-24).php:29
-msgid "Enter An Order or Quotation"
+msgid "New Sales Order or Quotation"
 msgstr ""
 
 #: includes/MainMenuLinksArray.php:30

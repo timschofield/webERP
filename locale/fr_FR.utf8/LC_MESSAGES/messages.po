@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: weberp 3.12\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-07-06 15:49+1200\n"
-"PO-Revision-Date: 2013-08-10 10:51-0600\n"
+"PO-Revision-Date: 2013-08-11 18:54-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: French <none>\n"
 "MIME-Version: 1.0\n"
@@ -20623,7 +20623,8 @@ msgstr "Ré-imprimer"
 msgid "Receive this order"
 msgstr "Recevoir cet ordre"
 
-#: PO_Header.php:801
+#: PO_Header.php:801 PO_SelectOSPurchOrder.php:138
+#: PO_SelectOSPurchOrder.php:140 includes/MainMenuLinksArray.php:160
 msgid "New Purchase Order"
 msgstr "Nouveau bon de commande"
 
@@ -21564,12 +21565,6 @@ msgstr "Pour le fournisseur"
 #: SelectWorkOrder.php:111
 msgid "The SQL used to retrieve the searched parts was"
 msgstr "Commande SQL d'affichage des éléments recherchés:"
-
-#: PO_SelectOSPurchOrder.php:138 PO_SelectOSPurchOrder.php:140
-#: includes/MainMenuLinksArray.php:160 includes/MainMenuLinksArray
-#: (puppypc32158's conflicted copy 2013-06-24).php:160
-msgid "Add Purchase Order"
-msgstr "Passer une commande fournisseur"
 
 #: PO_SelectOSPurchOrder.php:145 PO_SelectPurchOrder.php:118
 #: Shipt_Select.php:109
@@ -42333,9 +42328,8 @@ msgid "Purchases"
 msgstr "Achats"
 
 # JDN
-#: includes/MainMenuLinksArray.php:29 includes/MainMenuLinksArray
-#: (puppypc32158's conflicted copy 2013-06-24).php:29
-msgid "Enter An Order or Quotation"
+#: includes/MainMenuLinksArray.php:29
+msgid "New Sales Order or Quotation"
 msgstr "Saisir une commande / devis"
 
 # JDN
