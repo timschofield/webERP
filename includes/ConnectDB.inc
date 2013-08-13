@@ -11,7 +11,7 @@ if (!isset($_SESSION['DatabaseName'])){ //need to get the database name from the
 	if (isset($_POST['CompanyNameField'])){
 	    if (isset($CompanyList) && is_array($CompanyList)) {
             foreach ($CompanyList as $key => $CompanyEntry){
-               if (is_dir('./companies/'.strtolower($CompanyEntry['database']).'') && ($key == $_POST['CompanyNameField'])  && ($DefaultDatabase == $CompanyEntry['database'])) {
+               if (is_dir('./companies/'.strtolower($CompanyEntry['database']).'') && ($key == $_POST['CompanyNameField']) ) {
                    $_SESSION['DatabaseName'] = $CompanyEntry['database'];
                    $_SESSION['CompanyName'] = $CompanyEntry['company'];
                     include_once ($PathPrefix . 'includes/ConnectDB_' . $DBType . '.inc');
