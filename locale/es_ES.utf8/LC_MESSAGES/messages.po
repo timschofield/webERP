@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-07-06 15:49+1200\n"
-"PO-Revision-Date: 2013-08-11 19:19-0600\n"
+"PO-Revision-Date: 2013-08-12 18:16-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "MIME-Version: 1.0\n"
@@ -16983,7 +16983,7 @@ msgstr "No hay ofertas destacadas que estén autorizadas para hacer tratos"
 #: includes/MainMenuLinksArray (puppypc32158's conflicted copy
 #: 2013-06-24).php:131 2013-06-24).php:153
 msgid "Select Supplier"
-msgstr "Seleccionar un Proveedor"
+msgstr "Seleccionar proveedor"
 
 #: OffersReceived.php:105
 msgid "Offer ID"
@@ -17202,9 +17202,8 @@ msgid ""
 msgstr ""
 
 #: OutstandingGRNs.php:178
-#, fuzzy
 msgid "PO#"
-msgstr "OC"
+msgstr "OC#"
 
 #: OutstandingGRNs.php:180 WorkOrderEntry.php:534
 #: includes/PDFStockLocTransferHeader.inc:51
@@ -24324,9 +24323,8 @@ msgid "Deleted the selected translation"
 msgstr "Eliminar transacciones de venta"
 
 #: SalesCategoryDescriptions.php:95
-#, fuzzy
 msgid "Sales Category"
-msgstr "Informe de Categoría de Ventas"
+msgstr "Categoría de ventas"
 
 #: SalesCategoryDescriptions.php:97
 #, fuzzy
@@ -25121,7 +25119,7 @@ msgstr "Pedidos de Venta"
 #: includes/MainMenuLinksArray (puppypc32158's conflicted copy
 #: 2013-06-24).php:79
 msgid "Select Contract"
-msgstr "Seleccione Contrato"
+msgstr "Seleccionar contrato"
 
 #: SelectContract.php:13 SupplierCredit.php:239 SupplierCredit.php:300
 #: SupplierInvoice.php:582 SupplierInvoice.php:644
@@ -41646,7 +41644,7 @@ msgstr "Informe de Ventas con Baja de Ganancias Brutas"
 #: includes/MainMenuLinksArray.php:80 includes/MainMenuLinksArray
 #: (puppypc32158's conflicted copy 2013-06-24).php:80
 msgid "Create Contract"
-msgstr "Crear Contrato"
+msgstr "Agregar contrato"
 
 #: includes/MainMenuLinksArray.php:81 includes/MainMenuLinksArray
 #: (puppypc32158's conflicted copy 2013-06-24).php:81
@@ -41713,12 +41711,12 @@ msgstr "Lista de Transacciones Diarias"
 #: includes/MainMenuLinksArray.php:126 includes/MainMenuLinksArray
 #: (puppypc32158's conflicted copy 2013-06-24).php:126
 msgid "Add Customer"
-msgstr "Registrar un Nuevo Cliente"
+msgstr "Agregar cliente"
 
 #: includes/MainMenuLinksArray.php:127 includes/MainMenuLinksArray
 #: (puppypc32158's conflicted copy 2013-06-24).php:127
 msgid "Select Customer"
-msgstr "Seleccionar un cliente"
+msgstr "Seleccionar cliente"
 
 #: includes/MainMenuLinksArray.php:136 includes/MainMenuLinksArray
 #: (puppypc32158's conflicted copy 2013-06-24).php:136
@@ -41738,7 +41736,7 @@ msgstr "Consultas de Proveedores de Transacción"
 #: includes/MainMenuLinksArray.php:152 includes/MainMenuLinksArray
 #: (puppypc32158's conflicted copy 2013-06-24).php:152
 msgid "Add Supplier"
-msgstr "Registrar un Nuevo Proveedor"
+msgstr "Agregar proveedor"
 
 #: includes/MainMenuLinksArray.php:154 includes/MainMenuLinksArray
 #: (puppypc32158's conflicted copy 2013-06-24).php:154
@@ -41906,12 +41904,12 @@ msgstr "Nota de Transferencia de Existencias"
 #: includes/MainMenuLinksArray.php:256 includes/MainMenuLinksArray
 #: (puppypc32158's conflicted copy 2013-06-24).php:256
 msgid "Add A New Item"
-msgstr "Agregar un Nuevo Artículo"
+msgstr "Agregar artículo"
 
 #: includes/MainMenuLinksArray.php:257 includes/MainMenuLinksArray
 #: (puppypc32158's conflicted copy 2013-06-24).php:257
 msgid "Select An Item"
-msgstr "Seleccionar un Artículo"
+msgstr "Seleccionar artículo"
 
 #: includes/MainMenuLinksArray.php:260 includes/MainMenuLinksArray
 #: (puppypc32158's conflicted copy 2013-06-24).php:260
@@ -46869,7 +46867,7 @@ msgstr "Nombre del Transportista"
 
 #: ../webshop/index.php:83 ../webshop/includes/header.php:180
 msgid "Shopping Cart"
-msgstr ""
+msgstr "Carrito de compras"
 
 #: ../webshop/index.php:123
 #, fuzzy
