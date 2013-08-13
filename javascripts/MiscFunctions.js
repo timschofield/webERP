@@ -252,7 +252,7 @@ function SortSelect(selElem) {
 				direction="a";
 			} else {
 				selElem.className='ascending';
-				direction="a";
+				direction="d";
 			}
 		}
 	}

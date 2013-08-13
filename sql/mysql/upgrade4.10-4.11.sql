@@ -164,11 +164,10 @@ ALTER TABLE  `purchorderauth` CHANGE  `authlevel`  `authlevel` DOUBLE NOT NULL D
 INSERT INTO config VALUES ('ShopShowOnlyAvailableItems','0');
 INSERT INTO config VALUES ('ShopShowQOHColumn','1');
 INSERT INTO config VALUES ('ShopStockLocations','');
-INSERT INTO config VALUES ('ShopShowLeftCategoryMenu','1');
+
 
 ALTER TABLE  `freightcosts` ADD  `destinationcountry` VARCHAR( 40 ) NOT NULL AFTER  `locationfrom`;
 
-INSERT INTO config VALUES ('ShopShowInfoLinks','1');
 INSERT INTO config VALUES ('ShopTitle','Shop Home');
 
 ALTER TABLE  `stockmaster` CHANGE  `kgs`  `grossweight` DECIMAL( 20, 4 ) NOT NULL DEFAULT  '0.0000';
@@ -176,9 +175,6 @@ ALTER TABLE  `stockmaster` CHANGE  `kgs`  `grossweight` DECIMAL( 20, 4 ) NOT NUL
 ALTER TABLE  `custbranch` CHANGE  `brpostaddr3`  `brpostaddr3` VARCHAR( 40 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT  '',
 						  CHANGE  `brpostaddr4`  `brpostaddr4` VARCHAR( 50 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT  '',
  						  CHANGE  `brpostaddr6`  `brpostaddr6` VARCHAR( 40 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT  '';
-
-INSERT INTO config VALUES ('ShopShowTopCategoryMenu','1');
-INSERT INTO config VALUES ('ShopShowLogoAndShopName','1');
 
 ALTER TABLE `stockcategory` ADD `defaulttaxcatid` TINYINT NOT NULL DEFAULT '1';
 ALTER TABLE  `salescat` ADD  `active` INT NOT NULL DEFAULT  '1' COMMENT  '1 if active 0 if inactive';

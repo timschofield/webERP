@@ -538,7 +538,7 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 	echo '<table cellpadding="3" class="selection">
 	<tr>
 		<td>' . _('Enter text in the supplier name') . ':</td>
-		<td><input type="text" name="Keywords" size="20" maxlength="25" /></td>
+		<td><input type="text" name="Keywords" autofocus="autofocus" size="20" maxlength="25" /></td>
 		<td><h3><b>' . _('OR') . '</b></h3></td>
 		<td>' . _('Enter text extract in the supplier code') . ':</td>
 		<td><input type="text" name="SuppCode" size="15" maxlength="18" /></td>
@@ -548,8 +548,6 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 	<div class="centre">
 	<input type="submit" name="SearchSuppliers" value="' . _('Search Now') . '" />
 	<input type="submit" value="' . _('Reset') . '" /></div>';
-
-	echo '<script  type="text/javascript">defaultControl(document.forms[0].Keywords);</script>';
 
 	if (isset($result_SuppSelect)) {
 		echo '<br /><table cellpadding="3" class="selection">';
@@ -742,7 +740,7 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 		</tr>
 		<tr>
 			<td>' . _('Delivery Date') . ':</td>
-			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="DeliveryDate" size="11" value="' . $_POST['DeliveryDate'] . '" /></td>
+			<td><input type="text" required="required" autofocus="autofocus" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="DeliveryDate" size="11" value="' . $_POST['DeliveryDate'] . '" /></td>
 		</tr>';
 
 	if (!isset($_POST['Initiator'])) {
@@ -757,9 +755,11 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 		</tr>
 		<tr>
 			<td>' . _('Requisition Ref') . ':</td>
-			<td><input type="text" name="Requisition" size="16" maxlength="15" value="' . $_POST['Requisition'] . '" /></td>
+			<td><input type="text" name="Requisition" size="16" maxlength="15" title="' . _('Enter our purchase requisition reference if needed') . '" value="' . $_POST['Requisition'] . '" /></td>
 		</tr>
-		<tr><td>' . _('Date Printed') . ':</td><td>';
+		<tr>
+			<td>' . _('Date Printed') . ':</td>
+			<td>';
 
 	if (isset($_SESSION['PO' . $identifier]->DatePurchaseOrderPrinted) AND mb_strlen($_SESSION['PO' . $identifier]->DatePurchaseOrderPrinted) > 6) {
 		echo ConvertSQLDate($_SESSION['PO' . $identifier]->DatePurchaseOrderPrinted);
@@ -793,7 +793,9 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
             <table class="selection" width="100%">';
 
 	if ($_SESSION['ExistingOrder'] != 0 AND $_SESSION['PO' . $identifier]->Status == 'Printed') {
-		echo '<tr><td><a href="' . $RootPath . '/GoodsReceived.php?PONumber=' . $_SESSION['PO' . $identifier]->OrderNo . '&amp;identifier=' . $identifier . '">' . _('Receive this order') . '</a></td></tr>';
+		echo '<tr>
+				<td><a href="' . $RootPath . '/GoodsReceived.php?PONumber=' . $_SESSION['PO' . $identifier]->OrderNo . '&amp;identifier=' . $identifier . '">' . _('Receive this order') . '</a></td>
+			</tr>';
 	}
 
 	if ($_SESSION['PO' . $identifier]->Status == '') { //then its a new order
@@ -843,13 +845,15 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 			</tr>
 			<tr>
 				<td colspan="2">' . html_entity_decode($_SESSION['PO' . $identifier]->StatusComments, ENT_QUOTES, 'UTF-8') . '</td>
+			</tr>
+			<input type="hidden" name="StatusCommentsComplete" value="' . htmlspecialchars($_SESSION['PO' . $identifier]->StatusComments, ENT_QUOTES, 'UTF-8') . '" />
+			<tr>
+				<td><input type="submit" name="UpdateStatus" value="' . _('Status Update') . '" /></td>
 			</tr>';
-
-		echo '<input type="hidden" name="StatusCommentsComplete" value="' . htmlspecialchars($_SESSION['PO' . $identifier]->StatusComments, ENT_QUOTES, 'UTF-8') . '" />';
-		echo '<tr><td><input type="submit" name="UpdateStatus" value="' . _('Status Update') . '" /></td></tr>';
 	} //end its not a new order
 
-	echo '</table></td></tr>';
+	echo '</table></td>
+		</tr>';
 
 	echo '<tr>
 			<th><h3>' . _('Warehouse Info') . '</h3></th>
@@ -862,7 +866,7 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 	echo '<table class="selection" width="100%">
 			<tr>
 				<td>' . _('Warehouse') . ':</td>
-				<td><select name="StkLocation" onchange="ReloadForm(form1.LookupDeliveryAddress)">';
+				<td><select required="required" name="StkLocation" onchange="ReloadForm(form1.LookupDeliveryAddress)">';
 
 	$sql = "SELECT loccode,
 					locationname
@@ -967,7 +971,7 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 
 	echo '<tr>
 			<td>' . _('Delivery Contact') . ':</td>
-			<td><input type="text" name="Contact" size="41"  value="' . $_SESSION['PO' . $identifier]->Contact . '" /></td>
+			<td><input type="text" name="Contact" size="41"  title="' . _('Enter the name of the contact at the delivery address - normally our warehouse person at that warehouse') .  '" value="' . $_SESSION['PO' . $identifier]->Contact . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Address') . ' 1 :</td>
@@ -995,10 +999,11 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 		</tr>
 		<tr>
 			<td>' . _('Phone') . ':</td>
-			<td><input type="text" name="Tel" size="31" maxlength="30" value="' . $_SESSION['PO' . $identifier]->Tel . '" /></td>
+			<td><input type="tel" name="Tel" pattern="[0-9+\-\s]*" size="31" maxlength="30" value="' . $_SESSION['PO' . $identifier]->Tel . '" /></td>
 		</tr>
 		<tr>
-			<td>' . _('Delivery By') . ':</td><td><select name="DeliveryBy">';
+			<td>' . _('Delivery By') . ':</td>
+			<td><select name="DeliveryBy">';
 
 	$ShipperResult = DB_query("SELECT shipper_id, shippername FROM shippers", $db);
 
@@ -1079,7 +1084,7 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 		</tr>
 		<tr>
 			<td>' . _('Phone') . ':</td>
-			<td><input type="text" name="SuppTel" size="31" maxlength="30" value="' . $_SESSION['PO' . $identifier]->SuppTel . '" /></td>
+			<td><input type="tel" name="SuppTel" pattern="[0-9+\-\s]*" size="31" maxlength="30" value="' . $_SESSION['PO' . $identifier]->SuppTel . '" /></td>
 		</tr>';
 
 	$result = DB_query("SELECT terms, termsindicator FROM paymentterms", $db);
@@ -1122,7 +1127,8 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 	/*end of sub table */
 
 	echo '</td></tr>
-			<tr><th colspan="4"><h3>' . _('Comments');
+			<tr>
+				<th colspan="4"><h3>' . _('Comments');
 
 	$Default_Comments = '';
 

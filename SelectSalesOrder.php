@@ -606,15 +606,13 @@ if (isset($StockItemsResult)
 	AND DB_num_rows($StockItemsResult)>0) {
 
 	echo '<table cellpadding="2" class="selection">';
-	$TableHeader = '<tr>
-						<th>' . _('Code') . '</th>
-						<th>' . _('Description') . '</th>
-						<th>' . _('On Hand') . '</th>
-						<th>' . _('Units') . '</th>
-					</tr>';
-	echo $TableHeader;
-
-	$j = 1;
+	echo '<tr>
+			<th class="ascending" onclick="SortSelect(this)" >' . _('Code') . '</th>
+			<th class="ascending" onclick="SortSelect(this)" >' . _('Description') . '</th>
+			<th class="ascending" onclick="SortSelect(this)" >' . _('On Hand') . '</th>
+			<th>' . _('Units') . '</th>
+		</tr>';
+	
 	$k=0; //row colour counter
 
 	while ($myrow=DB_fetch_array($StockItemsResult)) {
@@ -636,12 +634,6 @@ if (isset($StockItemsResult)
 				$myrow['description'],
 				locale_number_format($myrow['qoh'],$myrow['decimalplaces']),
 				$myrow['units']);
-
-		$j++;
-		if ($j == 12){
-			$j=1;
-			echo $TableHeader;
-		}
 //end of page full new headings if
 	}
 //end of while loop
@@ -855,38 +847,38 @@ if (isset($StockItemsResult)
 		echo '<table cellpadding="2" width="95%" class="selection">';
 
 		if (isset($_POST['Quotations']) AND $_POST['Quotations']=='Orders_Only'){
-			$tableheader = '<tr>
+			$TableHeader = '<tr>
 								<th>' . _('Modify') . '</th>
 								<th>' . _('Invoice') . '</th>
 								<th>' . _('Dispatch Note') . '</th>
-								<th>' . _('Customer') . '</th>
-								<th>' . _('Branch') . '</th>
-								<th>' . _('Cust Order') . ' #</th>
-								<th>' . _('Order Date') . '</th>
-								<th>' . _('Req Del Date') . '</th>
-								<th>' . _('Delivery To') . '</th>
-								<th>' . _('Order Total') . '<br />' . $_SESSION['CompanyRecord']['currencydefault'] . '</th>';
+								<th class="ascending" onclick="SortSelect(this)" >' . _('Customer') . '</th>
+								<th class="ascending" onclick="SortSelect(this)" >' . _('Branch') . '</th>
+								<th class="ascending" onclick="SortSelect(this)" >' . _('Cust Order') . ' #</th>
+								<th class="ascending" onclick="SortSelect(this)" >' . _('Order Date') . '</th>
+								<th class="ascending" onclick="SortSelect(this)" >' . _('Req Del Date') . '</th>
+								<th class="ascending" onclick="SortSelect(this)" >' . _('Delivery To') . '</th>
+								<th class="ascending" onclick="SortSelect(this)" >' . _('Order Total') . '<br />' . $_SESSION['CompanyRecord']['currencydefault'] . '</th>';
 
 			if ($AuthRow['cancreate']==0){ //If cancreate==0 then this means the user can create orders hmmm!!
-				$tableheader .= '<th>' . _('Place PO') . '</th></tr>';
+				$TableHeader .= '<th>' . _('Place PO') . '</th></tr>';
 			} else {
-				$tableheader .= '</tr>';
+				$TableHeader .= '</tr>';
 			}
 		} else {  /* displaying only quotations */
-			$tableheader = '<tr>
+			$TableHeader = '<tr>
 								<th>' . _('Modify') . '</th>
 								<th>' . _('Print Quote') . '</th>
-								<th>' . _('Customer') . '</th>
-								<th>' . _('Branch') . '</th>
-								<th>' . _('Cust Ref') . ' #</th>
-								<th>' . _('Quote Date') . '</th>
-								<th>' . _('Req Del Date') . '</th>
-								<th>' . _('Delivery To') . '</th>
-								<th>' . _('Quote Total') .  '<br />' . $_SESSION['CompanyRecord']['currencydefault'] . '</th>
+								<th class="ascending" onclick="SortSelect(this)" >' . _('Customer') . '</th>
+								<th class="ascending" onclick="SortSelect(this)" >' . _('Branch') . '</th>
+								<th class="ascending" onclick="SortSelect(this)" >' . _('Cust Ref') . ' #</th>
+								<th class="ascending" onclick="SortSelect(this)" >' . _('Quote Date') . '</th>
+								<th class="ascending" onclick="SortSelect(this)" >' . _('Req Del Date') . '</th>
+								<th class="ascending" onclick="SortSelect(this)" >' . _('Delivery To') . '</th>
+								<th class="ascending" onclick="SortSelect(this)" >' . _('Quote Total') .  '<br />' . $_SESSION['CompanyRecord']['currencydefault'] . '</th>
 							</tr>';
 		}
 
-		echo $tableheader;
+		echo $TableHeader;
 
 		$i = 1;
                 $j = 1;
@@ -1003,12 +995,7 @@ if (isset($StockItemsResult)
 						$FormatedOrderValue);
 			}
 			$i++;
-			$j++;
 			$OrdersTotal += $myrow['ordervalue'];
-			if ($j == 12){
-				$j=1;
-				echo $tableheader;
-			}
 		//end of page full new headings if
 		}//end while loop through orders to display
 		if ($_POST['Quotations']=='Orders_Only'

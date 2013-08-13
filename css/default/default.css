@@ -54,19 +54,31 @@ th{
 	background-color:#B06161;
 	color:white;
 }
-
 th.ascending {
   cursor: s-resize;
-  color:#B06161;
-  background: url(images/ascending.png) center right no-repeat;
 }
-
 th.descending {
   cursor: n-resize;
-  color:#B06161;
-  background: url(images/descending.png) centre right no-repeat;
 }
-
+th:after {
+	content: "";
+	float: right;
+	margin-top: 7px;
+	visibility: hidden;
+}
+th.ascending:after {
+	border-width: 0 4px 4px;
+	border-style: solid;
+	border-color: #000 transparent;
+	visibility: visible;
+}
+th.descending:after {
+	border-bottom: none;
+	border-left: 4px solid transparent;
+	border-right: 4px solid transparent;
+	border-top: 4px solid #000;
+	visibility: visible;
+}
 th.number{
 	text-align:right;
 	font-weight:normal;

@@ -209,6 +209,7 @@ $CountriesArray['VU'] = _('Vanuatu');
 $CountriesArray['WS'] = _('Samoa');
 $CountriesArray['YE'] = _('Yemen');
 $CountriesArray['ZM'] = _('Zambia');
+$CountriesArray['ZA'] = _('South Africa');
 $CountriesArray['ZW'] = _('Zimbabwe');
 
 asort($CountriesArray);

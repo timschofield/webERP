@@ -73,22 +73,6 @@ if (isset($_POST['submit'])) {
 			if ($_SESSION['ShopStockLocations'] != $ShopStockLocations){
 				$SQL[] = "UPDATE config SET confvalue='" . $ShopStockLocations . "' WHERE confname='ShopStockLocations'";
 			}
-		}	
-
-		if ($_SESSION['ShopShowTopCategoryMenu'] != $_POST['X_ShopShowTopCategoryMenu'] ) {
-			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopShowTopCategoryMenu']."' WHERE confname = 'ShopShowTopCategoryMenu'";
-		}
-
-		if ($_SESSION['ShopShowLeftCategoryMenu'] != $_POST['X_ShopShowLeftCategoryMenu'] ) {
-			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopShowLeftCategoryMenu']."' WHERE confname = 'ShopShowLeftCategoryMenu'";
-		}
-
-		if ($_SESSION['ShopShowLogoAndShopName'] != $_POST['X_ShopShowLogoAndShopName'] ) {
-			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopShowLogoAndShopName']."' WHERE confname = 'ShopShowLogoAndShopName'";
-		}
-
-		if ($_SESSION['ShopShowInfoLinks'] != $_POST['X_ShopShowInfoLinks'] ) {
-			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopShowInfoLinks']."' WHERE confname = 'ShopShowInfoLinks'";
 		}
 
 		if ($_SESSION['ShopAllowSurcharges'] != $_POST['X_ShopAllowSurcharges'] ) {
@@ -177,6 +161,9 @@ if (isset($_POST['submit'])) {
 		}
 		$ErrMsg =  _('The shop configuration could not be updated because');
 		$DbgMsg = _('The SQL that failed was:');
+
+		print_r($SQL);
+		
 		if (sizeof($SQL) > 0 ) {
 			$result = DB_Txn_Begin($db);
 			foreach ($SQL as $SqlLine) {
@@ -367,68 +354,8 @@ echo '</select></td>
 		<td>' . _('Select the webERP service item to use for payment surcharges to be processed as') . '</td>
 	</tr>';
 
-echo '<tr><th colspan="3">' . _('Web-Store CMS Integration Settings') . '</th></tr>';
-echo $TableHeader;
-
 echo '<tr>
-		<td>' . _('Show/Hide Top Sales Categories Menu') . ':</td>
-		<td><select name="X_ShopShowTopCategoryMenu">';
-if ($_SESSION['ShopShowTopCategoryMenu'] == '1') {
-	echo '<option selected="selected" value="1">' . _('Show') . '</option>';
-	echo '<option value="0">' . _('Hide') . '</option>';
-} else {
-	echo '<option selected="selected" value="0">' . _('Hide') . '</option>';
-	echo '<option value="1">' . _('Show') . '</option>';
-}
-
-echo '</select></td>
-		<td>' . _('Shows / Hides the horizontal sales categories menu below the webSHOP cart summary.') . '</td>
-	</tr>';	
-
-echo '<tr>
-		<td>' . _('Show/Hide Left Sales Categories Menu') . ':</td>
-		<td><select name="X_ShopShowLeftCategoryMenu">';
-if ($_SESSION['ShopShowLeftCategoryMenu'] == '1') {
-	echo '<option selected="selected" value="1">' . _('Show') . '</option>';
-	echo '<option value="0">' . _('Hide') . '</option>';
-} else {
-	echo '<option selected="selected" value="0">' . _('Hide') . '</option>';
-	echo '<option value="1">' . _('Show') . '</option>';
-}
-
-echo '</select></td>
-		<td>' . _('Shows / Hides the vertical sales categories menu on the left column.') . '</td>
-	</tr>';	
-
-echo '<tr>
-		<td>' . _('Show/Hide Logo and Shop Name') . ':</td>
-		<td><select name="X_ShopShowLogoAndShopName">';
-if ($_SESSION['ShopShowLogoAndShopName'] == '1') {
-	echo '<option selected="selected" value="1">' . _('Show') . '</option>';
-	echo '<option value="0">' . _('Hide') . '</option>';
-} else {
-	echo '<option selected="selected" value="0">' . _('Hide') . '</option>';
-	echo '<option value="1">' . _('Show') . '</option>';
-}
-echo '</select></td>
-		<td>' . _('Shows / Hides the logo and webSHOP names. Useful to use Hide if webSHOP is used as an iFrame in a CMS system, if the information displayed is already in the CMS system.') . '</td>
-	</tr>';	
-	
-echo '<tr>
-		<td>' . _('Show/Hide InfoLinks Menu') . ':</td>
-		<td><select name="X_ShopShowInfoLinks">';
-if ($_SESSION['ShopShowInfoLinks'] == '1') {
-	echo '<option selected="selected" value="1">' . _('Show') . '</option>';
-	echo '<option value="0">' . _('Hide') . '</option>';
-} else {
-	echo '<option selected="selected" value="0">' . _('Hide') . '</option>';
-	echo '<option value="1">' . _('Show') . '</option>';
-}
-echo '</select></td>
-		<td>' . _('Shows / Hides the information links menu at the footer of all the shop webpages. Useful to use Hide if webSHOP is used as an iFrame in a CMS system, if the information displayed is already in the CMS system.') . '</td>
-	</tr>';	
-	
-echo '<tr><th colspan="3">' . _('Bank Transfer Settings') . '</th></tr>';
+		<th colspan="3">' . _('Bank Transfer Settings') . '</th></tr>';
 echo $TableHeader;
 	
 echo '<tr>

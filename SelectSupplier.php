@@ -273,19 +273,17 @@ if (isset($_POST['Search'])) {
 		<br />
 		<br />
 		<table cellpadding="2">';
-	$tableheader = '<tr>
-				  		<th>' . _('Code') . '</th>
-						<th>' . _('Supplier Name') . '</th>
-						<th>' . _('Currency') . '</th>
-						<th>' . _('Address 1') . '</th>
-						<th>' . _('Address 2') . '</th>
-						<th>' . _('Address 3') . '</th>
-						<th>' . _('Address 4') . '</th>
-						<th>' . _('Telephone') . '</th>
-						<th>' . _('Email') . '</th>
-					</tr>';
-	echo $tableheader;
-	$j = 1;
+	echo '<tr>
+	  		<th class="ascending" onclick="SortSelect(this)">' . _('Code') . '</th>
+			<th class="ascending" onclick="SortSelect(this)">' . _('Supplier Name') . '</th>
+			<th class="ascending" onclick="SortSelect(this)">' . _('Currency') . '</th>
+			<th class="ascending" onclick="SortSelect(this)">' . _('Address 1') . '</th>
+			<th class="ascending" onclick="SortSelect(this)">' . _('Address 2') . '</th>
+			<th class="ascending" onclick="SortSelect(this)">' . _('Address 3') . '</th>
+			<th class="ascending" onclick="SortSelect(this)">' . _('Address 4') . '</th>
+			<th class="ascending" onclick="SortSelect(this)">' . _('Telephone') . '</th>
+			<th class="ascending" onclick="SortSelect(this)">' . _('Email') . '</th>
+		</tr>';
 	$k = 0; //row counter to determine background colour
 	$RowIndex = 0;
 	if (DB_num_rows($result) <> 0) {

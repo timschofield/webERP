@@ -212,7 +212,9 @@ if (isset($_GET['Edit'])) {
 		</tr>';
 	echo '<input type="hidden" name="CurrCode" value="'.$Currency.'" />';
 } else {
-	echo '<tr><td>'._('Currency').'</td><td><select name="CurrCode">';
+	echo '<tr>
+			<td>'._('Currency').'</td>
+			<td><select name="CurrCode">';
 	$currencysql="SELECT currabrev,currency FROM currencies";
 	$currencyresult=DB_query($currencysql,$db);
 	while ($myrow=DB_fetch_array($currencyresult)) {
@@ -247,7 +249,7 @@ if ($OffHold==1) {
 
 echo '<tr>
 		<td>'._('User can authorise orders up to :').'</td>';
-echo '<td><input type="text" name="AuthLevel" size="11" class="number" value="'  . locale_number_format($AuthLevel,$CurrDecimalPlaces) . '" /></td>
+echo '<td><input type="text" name="AuthLevel" size="11" class="integer" title="' . _('Enter the amount that this user is premitted to authorise purchase orders up to') . '" value="'  . locale_number_format($AuthLevel,$CurrDecimalPlaces) . '" /></td>
 	</tr>
 	</table>';
 

@@ -639,14 +639,13 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					<br />
 					<table class="selection">';
 
-		$TableHeader = '<tr>
-							<th>' . _('Customer') . '</th>
-							<th>' . _('Branch') . '</th>
-							<th>' . _('Contact') . '</th>
-							<th>' . _('Phone') . '</th>
-							<th>' . _('Fax') . '</th>
-						</tr>';
-		echo $TableHeader;
+		echo '<tr>
+				<th class="ascending" onclick="SortSelect(this)" >' . _('Customer') . '</th>
+				<th class="ascending" onclick="SortSelect(this)" >' . _('Branch') . '</th>
+				<th class="ascending" onclick="SortSelect(this)" >' . _('Contact') . '</th>
+				<th>' . _('Phone') . '</th>
+				<th>' . _('Fax') . '</th>
+			</tr>';
 
 		$j = 1;
 		$k = 0; //row counter to determine background colour
@@ -660,18 +659,15 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				echo '<tr class="OddTableRows">';
 				$k=1;
 			}
-			if ($LastCustomer != $myrow['name']) {
-				echo '<td>'.htmlspecialchars($myrow['name'], ENT_QUOTES, 'UTF-8', false).'</td>';
-			} else {
-				echo '<td></td>';
-			}
-			echo '<td><input tabindex="'.strval($j+5).'" type="submit" name="SubmitCustomerSelection' . $j .'" value="' . htmlspecialchars($myrow['brname'], ENT_QUOTES, 'UTF-8', false). '" />
+
+			echo '	<td>' . htmlspecialchars($myrow['name'], ENT_QUOTES, 'UTF-8', false).'</td>
+					<td><input tabindex="'.strval($j+5).'" type="submit" name="SubmitCustomerSelection' . $j .'" value="' . htmlspecialchars($myrow['brname'], ENT_QUOTES, 'UTF-8', false). '" />
 					<input type="hidden" name="SelectedCustomer' . $j .'" value="'.$myrow['debtorno'].'" />
 					<input type="hidden" name="SelectedBranch' . $j .'" value="'. $myrow['branchcode'].'" /></td>
 					<td>' . $myrow['contactname'] . '</td>
 					<td>' . $myrow['phoneno'] . '</td>
 					<td>' . $myrow['faxno'] . '</td>
-					</tr>';
+				</tr>';
 			$LastCustomer=$myrow['name'];
 			$j++;
 //end of page full new headings if
@@ -1373,8 +1369,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		if($_SESSION['Items'.$identifier]->DefaultPOLine == 1){
 			echo '<th>' . _('PO Line') . '</th>';
 		}
-		echo '<th>' . _('Item Code') . '</th>
-				<th>' . _('Item Description') . '</th>
+		echo '<th class="ascending" onclick="SortSelect(this)" >' . _('Item Code') . '</th>
+				<th class="ascending" onclick="SortSelect(this)" >' . _('Item Description') . '</th>
 				<th>' . _('Quantity') . '</th>
 				<th>' . _('QOH') . '</th>
 				<th>' . _('Unit') . '</th>
@@ -1536,17 +1532,16 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					<br />
 					<table class="table1">';
 
-			$TableHeader = '<tr>
-								<th>' . _('Code') . '</th>
-								<th>' . _('Description') . '</th>
-								<th>' . _('Units') . '</th>
-								<th>' . _('On Hand') . '</th>
-								<th>' . _('On Demand') . '</th>
-								<th>' . _('On Order') . '</th>
-								<th>' . _('Available') . '</th>
-								<th>' . _('Quantity') . '</th>
-							</tr>';
-			echo $TableHeader;
+			echo '<tr>
+					<th class="ascending" onclick="SortSelect(this)" >' . _('Code') . '</th>
+					<th class="ascending" onclick="SortSelect(this)" >' . _('Description') . '</th>
+					<th>' . _('Units') . '</th>
+					<th class="ascending" onclick="SortSelect(this)" >' . _('On Hand') . '</th>
+					<th class="ascending" onclick="SortSelect(this)" >' . _('On Demand') . '</th>
+					<th class="ascending" onclick="SortSelect(this)" >' . _('On Order') . '</th>
+					<th class="ascending" onclick="SortSelect(this)" >' . _('Available') . '</th>
+					<th class="ascending" onclick="SortSelect(this)" >' . _('Quantity') . '</th>
+				</tr>';
 			$i=0;
 			$j=1;
 			$k=0; //row colour counter
@@ -1737,17 +1732,16 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			echo '<tr><td colspan="1"><input type="hidden" name="PreviousList" value="'.strval($Offset-1).'" /><input tabindex="'.strval($j+8).'" type="submit" name="Previous" value="'._('Previous').'" /></td>';
 			echo '<td style="text-align:center" colspan="6"><input type="hidden" name="SelectingOrderItems" value="1" /><input tabindex="'.strval($j+9).'" type="submit" value="'._('Add to Sales Order').'" /></td>';
 			echo '<td colspan="1"><input type="hidden" name="NextList" value="'.strval($Offset+1).'" /><input tabindex="'.strval($j+10).'" type="submit" name="Next" value="'._('Next').'" /></td></tr>';
-			$TableHeader = '<tr>
-								<th>' . _('Code') . '</th>
-					   			<th>' . _('Description') . '</th>
-					   			<th>' . _('Units') . '</th>
-					   			<th>' . _('On Hand') . '</th>
-					   			<th>' . _('On Demand') . '</th>
-					   			<th>' . _('On Order') . '</th>
-					   			<th>' . _('Available') . '</th>
-					   			<th>' . _('Quantity') . '</th>
-					   		</tr>';
-			echo $TableHeader;
+			echo '<tr>
+					<th class="ascending" onclick="SortSelect(this)" >' . _('Code') . '</th>
+		   			<th class="ascending" onclick="SortSelect(this)" >' . _('Description') . '</th>
+		   			<th>' . _('Units') . '</th>
+		   			<th class="ascending" onclick="SortSelect(this)" >' . _('On Hand') . '</th>
+		   			<th class="ascending" onclick="SortSelect(this)" >' . _('On Demand') . '</th>
+		   			<th class="ascending" onclick="SortSelect(this)" >' . _('On Order') . '</th>
+		   			<th class="ascending" onclick="SortSelect(this)" >' . _('Available') . '</th>
+		   			<th>' . _('Quantity') . '</th>
+		   		</tr>';
 			$ImageSource = _('No Image');
 			$i=0;
 			$k=0; //row colour counter
@@ -1860,11 +1854,13 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	#end of page full new headings if
 			}
 	#end of while loop
-			echo '<tr><td><input type="hidden" name="PreviousList" value="'. strval($Offset-1).'" /><input tabindex="'. strval($j+7).'" type="submit" name="Previous" value="'._('Previous').'" /></td>';
-			echo '<td style="text-align:center" colspan="6"><input type="hidden" name="SelectingOrderItems" value="1" /><input tabindex="'. strval($j+8).'" type="submit" value="'._('Add to Sales Order').'" /></td>';
-			echo '<td><input type="hidden" name="NextList" value="'.strval($Offset+1).'" /><input tabindex="'.strval($j+9).'" type="submit" name="Next" value="'._('Next').'" /></td></tr>';
-			echo '</table>
-                  </div>';
+			echo '<tr>
+					<td><input type="hidden" name="PreviousList" value="'. strval($Offset-1).'" /><input tabindex="'. strval($j+7).'" type="submit" name="Previous" value="'._('Previous').'" /></td>
+					<td style="text-align:center" colspan="6"><input type="hidden" name="SelectingOrderItems" value="1" /><input tabindex="'. strval($j+8).'" type="submit" value="'._('Add to Sales Order').'" /></td>
+					<td><input type="hidden" name="NextList" value="'.strval($Offset+1).'" /><input tabindex="'.strval($j+9).'" type="submit" name="Next" value="'._('Next').'" /></td>
+				</tr>
+				</table>
+				</div>';
 			echo $jsCall;
 
 		}#end if SearchResults to show
