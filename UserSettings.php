@@ -121,7 +121,7 @@ echo '<tr>
 
 echo '<tr>
 	<td>' . _('Maximum Number of Records to Display') . ':</td>
-	<td><input type="text" class="number" name="DisplayRecordsMax" size="3" maxlength="3" value="' . $_POST['DisplayRecordsMax'] . '"  /></td>
+	<td><input type="text" class="integer" required="required" title="'._('Must be postive integer').'" name="DisplayRecordsMax" size="3" maxlength="3" value="' . $_POST['DisplayRecordsMax'] . '"  /></td>
 	</tr>';
 
 
@@ -172,11 +172,11 @@ if (!isset($_POST['Password'])) {
 echo '</select></td></tr>
 	<tr>
 		<td>' . _('New Password') . ':</td>
-		<td><input type="password" name="Password" size="20" value="' .  $_POST['Password'] . '" /></td>
+		<td><input type="password" name="Password" pattern="(?!^'.$_SESSION['UserID'].'$).{5,}" title="'._('Must be more than 5 characters and cannot be as same as userid').'" placeholder="'._('More than 5 characters').'" size="20" value="' .  $_POST['Password'] . '" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Confirm Password') . ':</td>
-		<td><input type="password" name="PasswordCheck" size="20"  value="' . $_POST['PasswordCheck'] . '" /></td>
+		<td><input type="password" name="PasswordCheck" pattern="(?!^'.$_SESSION['UserID'].'$).{5,}" title="'._('Must be more than 5 characters and cannot be as same as userid').'" placeholder="'._('More than 5 characters').'" size="20"  value="' . $_POST['PasswordCheck'] . '" /></td>
 	</tr>
 	<tr>
 		<td colspan="2" align="center"><i>' . _('If you leave the password boxes empty your password will not change') . '</i></td>
@@ -191,7 +191,7 @@ if(!isset($_POST['email'])){
 	$_POST['email'] = $myrow['email'];
 }
 
-echo '<td><input type="text" name="email" size="40" value="' . $_POST['email'] . '" /></td>
+echo '<td><input type="email" name="email" size="40" value="' . $_POST['email'] . '" /></td>
 	</tr>';
 
 if (!isset($_POST['PDFLanguage'])){
