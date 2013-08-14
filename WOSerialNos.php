@@ -263,9 +263,9 @@ if ($Serialised==1 AND $NextSerialNo>0){
 				<tr><td>';
 		echo _('Add a single batch/lot number');
 	}
-	echo '</td><td><input type="text" name="Reference" maxlength="30" size="30" /></td>';
+	echo '</td><td><input type="text" name="Reference" maxlength="30" size="30" title="'._('The reference must be input').'" placeholder="'._('SNs or batch no').'" /></td>';
 	if ($Serialised==0){ //also need to add the quantity
-		echo '<td><input type="text" name="Quantity" size="10" class="number" maxlength="10" value="1" /></td>';
+		echo '<td><input type="text" required="required" name="Quantity" size="10" class="number" maxlength="10" value="1" title="'._('The quantity must be input').'" placeholder="'._('Quantity').'" /></td>';
 	} else { //it will be 1 for a serial item
 		echo '<td><input type="hidden" name="Quantity" value="1" /></td>';
 	}
@@ -314,10 +314,10 @@ if (DB_num_rows($WOSerialNoResult)==0){
 		}
 
 		echo '<tr>
-				<td><input type="text" name="Reference' . $i .'" value="' . $WOSNRow['serialno'] . '"/>';
+				<td><input required="required" type="text" name="Reference' . $i .'" value="' . $WOSNRow['serialno'] . '"/>';
 		echo '<input type="hidden" name="OldReference' . $i . '" value="' . $WOSNRow['serialno'] . '"/></td>';
 		if ($Serialised==0){
-			echo '<td><input type="text" name="Quantity' . $i .'" value="' . locale_number_format($WOSNRow['quantity'],'Variable') . '" />';
+			echo '<td><input type="text" class="number" required="required" name="Quantity' . $i .'" value="' . locale_number_format($WOSNRow['quantity'],'Variable') . '" />';
 			echo '<input type="hidden" name="OldQuantity' . $i . '" value="' . locale_number_format($WOSNRow['quantity'],'Variable') . '" /></td>';
 		} else {
 			echo '<td><input type="hidden" name="Quantity' . $i . '" value="1" /></td>';
