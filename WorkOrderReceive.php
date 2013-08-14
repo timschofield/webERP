@@ -856,7 +856,7 @@ if($WORow['controlled']==1){ //controlled
 					echo '</tr>
 						<tr>';
 				}
-				echo '<td><input type="textbox" name="SerialNo' . $i . '" ';
+				echo '<td><input type="textbox" name="SerialNo' . $i . '" placeholder="'._('Serial No').'" ';
 				if ($i==0){
 					echo 'value="' . $StringBitOfLotSNRef . ($LotSNRefNumeric + 1) . '"';
 				}
@@ -898,8 +898,8 @@ if($WORow['controlled']==1){ //controlled
 					if (($i/5 -intval($i/5))==0){
 						echo '</tr><tr>';
 					}
-					echo '<td><input type="textbox" name="BatchRef' . $i . '" value="' . $WOSNRow[0] . '" /></td>
-						  <td><input type="textbox" class="number" name="Qty' . $i . '" />
+					echo '<td><input type="textbox" name="BatchRef' . $i . '" value="' . $WOSNRow[0] . '" placeholder="'._('Batch/Lot No').'" /></td>
+						  <td><input type="textbox" class="number" name="Qty' . $i . '" placeholder="'._('Quantity').'" />
 						  		<input type="hidden" name="QualityText' . $i . '" value="' . $WOSNRow[2] . '" />
 						  		<input type="hidden" name="QtyReqd' . $i . '" value="' . locale_number_format($WOSNRow[1],'Variable') . '" /></td>
 						  	</tr>';
@@ -909,7 +909,7 @@ if($WORow['controlled']==1){ //controlled
 		} else { // batches/lots yet to be set up enter them manually
 			for ($i=0;$i<15;$i++){
 				echo '<tr>
-						<td><input type="textbox" name="BatchRef' . $i .'" ';
+						<td><input type="textbox" name="BatchRef' . $i .'" placeholder="'._('Batch/Lot No').'" ';
 
 				if ($i==0){
 					echo 'value="' . $StringBitOfLotSNRef . ($LotSNRefNumeric + 1) . '"';
@@ -932,7 +932,7 @@ if($WORow['controlled']==1){ //controlled
 	echo '<tr>
             <td><input type="hidden" name="CountOfInputs" value="1" /></td>
 			<td>' . _('Quantity Received') . ':</td>
-			<td><input type="text" class="number" name="Qty" /></td>
+			<td><input type="text" class="number" name="Qty" required="required" title="'._('The input must be numeric').'" placeholder="'._('Received Qty').'" /></td>
 		</tr>
 		</table>';
 	echo '<br />
