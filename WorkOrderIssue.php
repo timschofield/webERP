@@ -808,7 +808,7 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 				echo '<tr>
 						<td><select name="SerialNos[]" multiple="multiple">';
 				while ($SerialNoRow = DB_fetch_array($SerialNoResult)){
-					if (in_array($SerialNoRow['serialno'],$_POST['SerialNos'])){
+					if (isset($_POST['SerialNos']) and in_array($SerialNoRow['serialno'],$_POST['SerialNos'])){
 						echo '<option selected="selected" value="' . $SerialNoRow['serialno'] . '">' . $SerialNoRow['serialno'] . '</option>';
 					} else {
 						echo '<option value="' . $SerialNoRow['serialno'] . '">' . $SerialNoRow['serialno'] . '</option>';
@@ -827,7 +827,7 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 			for ($i=0;$i<15;$i++){
 				echo '<tr>
 						<td><input type="text" name="BatchRef' . $i .'" title="' . _('Enter a batch/roll reference being used with this work order') . '" /></td>
-					  <td><input type="number" title="' . _('Enter the quantity of this batch/roll to issue to the work order') . '" name="Qty' . $i .'" value="0" /></td></tr>';
+					  <td><input class="number" title="' . _('Enter the quantity of this batch/roll to issue to the work order') . '" name="Qty' . $i .'" value="0" /></td></tr>';
 			}
 			echo '<input type="hidden" name="IssueItem" value="' . $_POST['IssueItem'] . '" />';
 			echo '<tr>
