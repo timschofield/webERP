@@ -38,9 +38,9 @@ echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($StockID)) {
-	echo _('Enter an Item Code') . ': <input type="text" name="StockID" size="21" maxlength="20" value="' . $StockID . '" />';
+	echo _('Enter an Item Code') . ': <input type="text" required="required" pattern="[^ +%-]{1,}" title="'._('Illegal characters and blank is not allowed').'" name="StockID" size="21" maxlength="20" value="' . $StockID . '" placeholder="'._('No illegal characters allowed').'" />';
 } else {
-	echo _('Enter an Item Code') . ': <input type="text" name="StockID" size="21" maxlength="20" />';
+	echo _('Enter an Item Code') . ': <input type="text" required="required" pattern="[^ +%-]{1,}"  title="'._('Illegal characters and blank is not allowed').'" name="StockID" size="21" maxlength="20" placeholder="'._('No illegal characters allowed').'" />';
 }
 
 echo '<input type="submit" name="ShowWhereUsed" value="' . _('Show Where Used') . '" />';
