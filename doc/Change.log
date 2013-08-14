@@ -1,4 +1,5 @@
 webERP Change Log
+2013/08/14 Exson: Fixed INSERT sql errors and href link error and make it html5 compatible in WOSerialNos.php.
 04/8/13 icedlava: Update Manual - Using the webERP Installer - rework of some text due to new installer, and updated screen shots
 03/8/13 icedlava: Obfuscate database name in login, do not show company in login if directory/company not wanted.
 29/7/13 Serge Gélinas: Profit and loss now has option to show all accounts and by default just shows those with a balance
