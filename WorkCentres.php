@@ -123,11 +123,11 @@ or deletion of the records*/
 	$result = DB_query($sql,$db);
 	echo '<table class="selection">
 			<tr>
-				<th>' . _('WC Code') . '</th>
-				<th>' . _('Description') . '</th>
-				<th>' . _('Location') . '</th>
-				<th>' . _('Overhead GL Account') . '</th>
-				<th>' . _('Overhead Per Hour') . '</th>
+				<th class="assending" onclick="SortSelect(this)">' . _('WC Code') . '</th>
+				<th class="assending" onclick="SortSelect(this)">' . _('Description') . '</th>
+				<th class="assending" onclick="SortSelect(this)">' . _('Location') . '</th>
+				<th class="assending" onclick="SortSelect(this)">' . _('Overhead GL Account') . '</th>
+				<th class="assending" onclick="SortSelect(this)">' . _('Overhead Per Hour') . '</th>
 			</tr>';
 
 	while ($myrow = DB_fetch_array($result)) {
