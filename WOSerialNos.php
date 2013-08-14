@@ -65,7 +65,8 @@ if (isset($_POST['AddControlledItems'])){
 										VALUES ('" . $StockID . "',
 												'" . $WO . "',
 												'',
-												'' ";
+												' ";
+			$ValueLine = '';
 			for ($i=0;$i< filter_number_format($_POST['NumberToAdd']);$i++){
 				$NextItemNumber = $NextSerialNo + $i;
 				$result = DB_query("SELECT serialno FROM woserialnos
@@ -86,6 +87,8 @@ if (isset($_POST['AddControlledItems'])){
 				if (!$InputError){
 					if ($i>0){
 						$sql .= ',';
+						$ValueLine = "('".$StockId."','".$WO."','','";
+						
 					}
 					$sql .= $ValueLine . $NextItemNumber . "')";
 				}
@@ -243,7 +246,7 @@ echo '<table class="selection">';
 if ($Serialised==1 AND $NextSerialNo>0){
 	echo '<tr><td>' . _('Add A Number of New Serial Numbers');
 	echo ':</td>
-		<td><input type="text" name="NumberToAdd" size="10" class="number" maxlength="10" value="1" /></td>
+		<td><input type="text" name="NumberToAdd" required="required" size="10" class="number" maxlength="10" value="1" title="'._('The input must be in number format').'" placeholder="'._('Number of new serial numbers').'" /></td>
 		<td>' . _('Starting at') . ':</td><td align="right">' . $NextSerialNo . '</td>';
 } else {
 	//Need to allow entry of batch or serial number and its a batch a quantity too for individual entry
