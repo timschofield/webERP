@@ -32,9 +32,9 @@ elseif (isset($_POST['SelectedSupplier'])) {
 	$SelectedSupplier = trim($_POST['SelectedSupplier']);
 }
 
-echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
-echo '<div>';
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">
+	<div>
+	<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 
 if (isset($_POST['ResetPart'])) {
@@ -142,7 +142,7 @@ if (!isset($OrderNumber) or $OrderNumber == '') {
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 	echo '<table class="selection">
 			<tr>
-				<td>' . _('Order Number') . ': <input type="text" name="OrderNumber" maxlength="8" size="9" />  ' . _('Into Stock Location') . ':
+				<td>' . _('Order Number') . ': <input type="text" name="OrderNumber" autofocus="autofocus" maxlength="8" size="9" />  ' . _('Into Stock Location') . ':
 				<select name="StockLocation">';
 
 	$sql = "SELECT loccode, locationname FROM locations";
@@ -232,11 +232,11 @@ echo '<br />';
 if (isset($StockItemsResult)) {
 	echo '<table cellpadding="2" class="selection">';
 	$TableHeader = '<tr>
-						<th>' . _('Code') . '</th>
-						<th>' . _('Description') . '</th>
-						<th>' . _('On Hand') . '</th>
-						<th>' . _('Orders') . '<br />' . _('Outstanding') . '</th>
-						<th>' . _('Units') . '</th>
+						<th class="ascending" onclick="SortSelect(this)">' . _('Code') . '</th>
+						<th class="ascending" onclick="SortSelect(this)">' . _('Description') . '</th>
+						<th class="ascending" onclick="SortSelect(this)">' . _('On Hand') . '</th>
+						<th class="ascending" onclick="SortSelect(this)">' . _('Orders') . '<br />' . _('Outstanding') . '</th>
+						<th class="ascending" onclick="SortSelect(this)">' . _('Units') . '</th>
 					</tr>';
 	echo $TableHeader;
 	$j = 1;
@@ -470,17 +470,17 @@ else {
 
 
 	echo '<tr>
-			<th>' . _('Order #') . '</th>
-			<th>' . _('Order Date') . '</th>
-			<th>' . _('Delivery Date') . '</th>
-			<th>' . _('Initiated by') . '</th>
-			<th>' . _('Supplier') . '</th>
-			<th>' . _('Currency') . '</th>';
+			<th class="ascending" onclick="SortSelect(this)">' . _('Order #') . '</th>
+			<th class="ascending" onclick="SortSelect(this)">' . _('Order Date') . '</th>
+			<th class="ascending" onclick="SortSelect(this)">' . _('Delivery Date') . '</th>
+			<th class="ascending" onclick="SortSelect(this)">' . _('Initiated by') . '</th>
+			<th class="ascending" onclick="SortSelect(this)">' . _('Supplier') . '</th>
+			<th class="ascending" onclick="SortSelect(this)">' . _('Currency') . '</th>';
 
 	if (in_array($PricesSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($PricesSecurity)) {
-		echo '<th>' . _('Order Total') . '</th>';
+		echo '<th class="ascending" onclick="SortSelect(this)">' . _('Order Total') . '</th>';
 	}
-	echo '<th>' . _('Status') . '</th>
+	echo '<th class="ascending" onclick="SortSelect(this)">' . _('Status') . '</th>
 			<th>' . _('Print') . '</th>
 			<th>' . _('Receive') . '</th>
 		</tr>';
@@ -533,15 +533,13 @@ else {
 			echo '<td class="number">' . $FormatedOrderValue . '</td>';
 		}
 		echo '<td>' . _($myrow['status']) . '</td>
-					<td>' . $PrintPurchOrder . '</td>
-					<td>' . $ReceiveOrder . '</td>
-				</tr>';
-		//end of page full new headings if
+				<td>' . $PrintPurchOrder . '</td>
+				<td>' . $ReceiveOrder . '</td>
+			</tr>';
 	} //end of while loop around purchase orders retrieved
 
 	echo '</table>';
 }
-echo '<script  type="text/javascript">defaultControl(document.forms[0].StockCode);</script>';
 echo '</div>
       </form>';
 include('includes/footer.inc');

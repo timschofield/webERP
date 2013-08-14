@@ -213,15 +213,15 @@ if (DB_num_rows($result) > 0) {
 				<th colspan="7">
 				<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />' .
 				_('Pricing for part') . ':
-				<input type="text" name="Item" size="22" value="' . $Item . '" maxlength="20" />
+				<input type="text" required="required" autofocus="autofocus" name="Item" size="22" value="' . $Item . '" maxlength="20" />
 				<input type="submit" name="NewPart" value="' . _('Review Prices') . '" /></th>
 			</tr>';
 
-	echo '<tr><th>' . _('Currency') . '</th>
-				<th>' . _('Sales Type') . '</th>
-				<th>' . _('Price') . '</th>
-				<th>' . _('Start Date') . ' </th>
-				<th>' . _('End Date') . '</th>
+	echo '<tr><th class="ascending" onclick="SortSelect(this)">' . _('Currency') . '</th>
+				<th class="ascending" onclick="SortSelect(this)">' . _('Sales Type') . '</th>
+				<th class="ascending" onclick="SortSelect(this)">' . _('Price') . '</th>
+				<th class="ascending" onclick="SortSelect(this)">' . _('Start Date') . ' </th>
+				<th class="ascending" onclick="SortSelect(this)">' . _('End Date') . '</th>
 			</tr>';
 
 	$k=0; //row colour counter
@@ -306,7 +306,8 @@ while ($myrow = DB_fetch_array($result)) {
 
 DB_free_result($result);
 
-echo '</select>	</td></tr>
+echo '</select>	</td>
+		</tr>
 		<tr>
 			<td>' . _('Sales Type Price List') . ':</td>
 			<td><select name="TypeAbbrev">';
@@ -334,13 +335,13 @@ if (!isset($_POST['EndDate'])){
 	$_POST['EndDate'] = '';
 }
 echo '<tr><td>' . _('Price Effective From Date')  . ':</td>
-			<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="StartDate" size="10" maxlength="10" value="' . $_POST['StartDate'] . '" /></td></tr>';
+			<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="StartDate" required="required" size="10" maxlength="10" title="' . _('Enter the date from which this price should take effect.') . '" value="' . $_POST['StartDate'] . '" /></td></tr>';
 echo '<tr><td>' . _('Price Effective To Date')  . ':</td>
-			<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="EndDate" size="10" maxlength="10" value="' . $_POST['EndDate'] . '" />';
+			<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="EndDate" size="10" maxlength="10" title="' . _('Enter the date to which this price should be in effect to, or leave empty if the price should continue indefinitely') . '" value="' . $_POST['EndDate'] . '" />';
 echo '<input type="hidden" name="Item" value="' . $Item.'" /></td></tr>';
 echo '<tr><td>' . _('Price') . ':</td>
           <td>
-          <input type="text" class="number" name="Price" size="12" maxlength="11" value="';
+          <input type="text" class="number" required="required" name="Price" size="12" maxlength="11" value="';
           if (isset($_POST['Price'])) {
 	         echo $_POST['Price'];
           }
