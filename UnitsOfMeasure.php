@@ -167,7 +167,7 @@ if (isset($_POST['Submit'])) {
 
 	echo '<table class="selection">
 			<tr>
-				<th>' . _('Units of Measure') . '</th>
+				<th class="assending" onclick="SortSelect(this)">' . _('Units of Measure') . '</th>
 			</tr>';
 
 	$k=0; //row colour counter
@@ -233,7 +233,7 @@ if (! isset($_GET['delete'])) {
 	}
 	echo '<tr>
 		<td>' . _('Unit of Measure') . ':' . '</td>
-		<td><input type="text" name="MeasureName" size="30" maxlength="30" value="' . $_POST['MeasureName'] . '" /></td>
+		<td><input required="required" pattern="(?!^ *$)[^+<>-]{1,}" type="text" name="MeasureName" title="'._('Cannot be blank or contains illegal characters').'" placeholder="'._('More than one characters').'" size="30" maxlength="30" value="' . $_POST['MeasureName'] . '" /></td>
 		</tr>';
 	echo '</table>';
 
