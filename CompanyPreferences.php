@@ -171,7 +171,7 @@ if ($InputError != 1) {
 
 echo '<tr>
 		<td>' . _('Name') . ' (' . _('to appear on reports') . '):</td>
-		<td><input '.(in_array('CoyName',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="1" type="text" autofocus="autofocus" required="required" name="CoyName" value="' . stripslashes($_POST['CoyName']) . '" minlength="5" pattern="[a-zA-Z0-9_\&\-\ ]*" title="' . _('Enter the name of the business, this will appear on all reports and at the top of each screen. Only alphanumeric characters space and dashes are allowed.') . '" size="52" maxlength="50" /></td>
+		<td><input '.(in_array('CoyName',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="1" type="text" autofocus="autofocus" required="required" name="CoyName" value="' . stripslashes($_POST['CoyName']) . '" minlength="5" pattern="[\w\&\'\-\s]+?" title="' . _('Enter the name of the business. This will appear on all reports and at the top of each screen. Only alphanumeric characters, space, ampersand, apostrophe and dashes are allowed') . '" size="52" maxlength="50" /></td>
 	</tr>';
 
 echo '<tr>
