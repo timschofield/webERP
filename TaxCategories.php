@@ -164,7 +164,7 @@ if (isset($_POST['submit'])) {
 
 	echo '<table class="selection">
 			<tr>
-				<th>' . _('Tax Categories') . '</th>
+				<th class="assending" onclick="SortSelect(this)">' . _('Tax Categories') . '</th>
 			</tr>';
 
 	$k=0; //row colour counter
@@ -177,11 +177,14 @@ if (isset($_POST['submit'])) {
 			echo '<tr class="OddTableRows">';
 			$k++;
 		}
-
+		if($myrow[1]!='Freight'){
 		echo '<td>' . $myrow[1] . '</td>
 				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedTaxCategory=' . $myrow[0] . '">' . _('Edit') . '</a></td>
 				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedTaxCategory=' . $myrow[0] . '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this tax category?') . '\');">' . _('Delete') .'</a></td>
-			</tr>';
+				</tr>';
+		}else{
+			echo '<td>'.$myrow[1].'</td><td></td><td></td></tr>';
+		}
 
 	} //END WHILE LIST LOOP
 	echo '</table><br />';
@@ -229,7 +232,7 @@ if (! isset($_GET['delete'])) {
 	}
 	echo '<tr>
 			<td>' . _('Tax Category Name') . ':' . '</td>
-			<td><input type="text" name="TaxCategoryName" size="30" maxlength="30" value="' . $_POST['TaxCategoryName'] . '" /></td>
+			<td><input pattern="(?!^ +$)[^><+-]+" required="required" placeholder="'._('No more than 30 characters').'" type="text" title="'._('No illegal characters allowed and cannot be blank').'" name="TaxCategoryName" size="30" maxlength="30" value="' . $_POST['TaxCategoryName'] . '" /></td>
 		</tr>
 		</table>';
 
