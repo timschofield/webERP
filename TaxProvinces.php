@@ -162,7 +162,7 @@ if (isset($_POST['submit'])) {
 
 	echo '<table class="selection">
 			<tr>
-				<th>' . _('Tax Provinces') . '</th>
+				<th class="assending" onclick="SortSelect(this)">' . _('Tax Provinces') . '</th>
 			</tr>';
 
 	$k=0; //row colour counter
@@ -226,7 +226,7 @@ if (! isset($_GET['delete'])) {
 	}
 	echo '<tr>
 			<td>' . _('Tax Province Name') . ':' . '</td>
-			<td><input type="text" name="TaxProvinceName" size="30" maxlength="30" value="' . $_POST['TaxProvinceName'] . '" /></td>
+			<td><input type="text" pattern="(?!^ *$)[^\\><+-]+" required="true" title="'._('The tax province cannot be left blank and includes illegal characters').'" placeholder="'._('Within 30 legal characters').'" name="TaxProvinceName" size="30" maxlength="30" value="' . $_POST['TaxProvinceName'] . '" /></td>
 		</tr>
 		</table>';
 
