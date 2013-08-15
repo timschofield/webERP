@@ -577,11 +577,11 @@ if (!isset($_GET['delete'])) {
 		</tr>
 		<tr>
 			<td>' .  _('Telephone No') . ':' . '</td>
-			<td><input type="tel" name="Tel" pattern="[0-9\+\s]*]" value="' . $_POST['Tel'] . '" size="31" maxlength="30" /></td>
+			<td><input type="tel" name="Tel" pattern="[0-9\+\s]*" value="' . $_POST['Tel'] . '" size="31" maxlength="30" title="' . _('The phone number should consist of numbers, spaces or the + character') . '" /></td>
 		</tr>
 		<tr>
 			<td>' .  _('Facsimile No') . ':' . '</td>
-			<td><input type="tel" name="Fax" pattern="[0-9\+\s]*]" value="' . $_POST['Fax'] . '" size="31" maxlength="30" /></td>
+			<td><input type="tel" name="Fax" pattern="[0-9\+\s]*" value="' . $_POST['Fax'] . '" size="31" maxlength="30" title="' . _('The fax number should consist of numbers, spaces or the + character') . '"/></td>
 		</tr>
 		<tr>
 			<td>' .  _('Email') . ':' . '</td>
