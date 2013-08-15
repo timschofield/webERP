@@ -397,18 +397,18 @@ echo '<tr><th colspan="3">' . _('Accounts Receivable/Payable Settings') . '</th>
 
 // PastDueDays1
 echo '<tr style="outline: 1px solid"><td>' . _('First Overdue Deadline in (days)') . ':</td>
-	<td><input type="text" class="number" name="X_PastDueDays1" value="' . $_SESSION['PastDueDays1'] . '" size="3" maxlength="3" /></td>
+	<td><input type="text" class="integer" required="required"  pattern="(?!^0\d+$)[\d]+" title="'._('The input must be integer').'" name="X_PastDueDays1" value="' . $_SESSION['PastDueDays1'] . '" size="3" maxlength="3" /></td>
 	<td>' . _('Customer and supplier balances are displayed as overdue by this many days. This parameter is used on customer and supplier enquiry screens and aged listings') . '</td></tr>';
 
 // PastDueDays2
 echo '<tr style="outline: 1px solid"><td>' . _('Second Overdue Deadline in (days)') . ':</td>
-	<td><input type="text" class="number" name="X_PastDueDays2" value="' . $_SESSION['PastDueDays2'] . '" size="3" maxlength="3" /></td>
+	<td><input type="text" class="integer" required="required"  pattern="(?!^0\d+$)[\d]+" title="'._('The input must be integer').'" name="X_PastDueDays2" value="' . $_SESSION['PastDueDays2'] . '" size="3" maxlength="3" /></td>
 	<td>' . _('As above but the next level of overdue') . '</td></tr>';
 
 
 // DefaultCreditLimit
 echo '<tr style="outline: 1px solid"><td>' . _('Default Credit Limit') . ':</td>
-	<td><input type="text" class="number" name="X_DefaultCreditLimit" value="' . $_SESSION['DefaultCreditLimit'] . '" size="12" maxlength="12" /></td>
+	<td><input type="text" class="number" required="required" title="'._('The input must be numeric').'" name="X_DefaultCreditLimit" value="' . $_SESSION['DefaultCreditLimit'] . '" size="12" maxlength="12" /></td>
 	<td>' . _('The default used in new customer set up') . '</td></tr>';
 
 // Check Credit Limits
@@ -435,12 +435,12 @@ echo '<tr style="outline: 1px solid"><td>' . _('Romalpa Clause') . ':</td>
 
 // QuickEntries
 echo '<tr style="outline: 1px solid"><td>' . _('Quick Entries') . ':</td>
-	<td><input type="text" class="number" name="X_QuickEntries" value="' . $_SESSION['QuickEntries'] . '" size="3" maxlength="2" /></td>
+	<td><input type="text" class="integer" required="required" pattern="[1-9][\d]{0,1}" name="X_QuickEntries" value="' . $_SESSION['QuickEntries'] . '" size="3" maxlength="2" /></td>
 	<td>' . _('This parameter defines the layout of the sales order entry screen. The number of fields available for quick entries. Any number from 1 to 99 can be entered.') . '</td></tr>';
 
 // Frequently Ordered Items
 echo '<tr style="outline: 1px solid"><td>' . _('Frequently Ordered Items') . ':</td>
-	<td><input type="text" class="number" name="X_FrequentlyOrderedItems" value="' . $_SESSION['FrequentlyOrderedItems'] . '" size="3" maxlength="2" /></td>
+	<td><input type="text" class="integer" pattern="(?!^0[1-9]+$)[\d]{1,2}" name="X_FrequentlyOrderedItems" value="' . $_SESSION['FrequentlyOrderedItems'] . '" size="3" maxlength="2" /></td>
 	<td>' . _('To show the most frequently ordered items enter the number of frequently ordered items you wish to display from 1 to 99. If you do not wish to display the frequently ordered item list enter 0.') . '</td></tr>';
 
 // SO_AllowSameItemMultipleTimes
@@ -493,7 +493,7 @@ echo '<tr style="outline: 1px solid"><td>' . _('A picking note must be produced 
 echo '<tr style="outline: 1px solid"><td>' . _('Auto Update Exchange Rates Daily') . ':</td>
 	<td><select name="X_UpdateCurrencyRatesDaily">
 	<option '.($_SESSION['UpdateCurrencyRatesDaily']!='1'?'selected="selected" ':'').'value="1">'._('Automatic').'</option>
-	<option '.($_SESSION['UpdateCurrencyRatesDaily']=='0'?'selected="selected" ':'').'value="0">'._('Manual').'</option>
+	<option '.($_SESSION['UpdateCurrencyRatesDaily']=='0'?'selected="selected" ':'').'value="0">'._('Manually').'</option>
 	</select></td>
 	<td>' . _('Automatic updates to exchange rates will retrieve the latest daily rates from either the European Central Bank or Google once per day - when the first user logs in for the day. Manual will never update the rates automatically - exchange rates will need to be maintained manually') . '</td>
 	</tr>';
@@ -610,7 +610,7 @@ echo '<tr style="outline: 1px solid"><td>' . _('Do Freight Calculation') . ':</t
 
 //FreightChargeAppliesIfLessThan
 echo '<tr style="outline: 1px solid"><td>' . _('Apply freight charges if an order is less than') . ':</td>
-	<td><input type="text" class="number" name="X_FreightChargeAppliesIfLessThan" size="12" maxlength="12" value="' . $_SESSION['FreightChargeAppliesIfLessThan'] . '" /></td>
+	<td><input type="text" class="number" required="required" title="'._('The input must be numeric').'" name="X_FreightChargeAppliesIfLessThan" size="12" maxlength="12" value="' . $_SESSION['FreightChargeAppliesIfLessThan'] . '" /></td>
 	<td>' . _('This parameter is only effective if Do Freight Calculation is set to Yes. If it is set to 0 then freight is always charged. The total order value is compared to this value in deciding whether or not to charge freight') .'</td></tr>';
 
 
@@ -703,12 +703,12 @@ echo '<tr style="outline: 1px solid"><td>' . _('Check Price Charged vs Order Pri
 
 // OverChargeProportion
 echo '<tr style="outline: 1px solid"><td>' . _('Allowed Over Charge Proportion') . ':</td>
-	<td><input type="text" class="number" name="X_OverChargeProportion" size="4" maxlength="3" value="' . $_SESSION['OverChargeProportion'] . '" /></td>
+	<td><input type="text" class="integer" pattern="(?!^0\d+$)[\d]{1,2}|(100)" required="required" title="'._('The input must between 0~100').'" name="X_OverChargeProportion" size="4" maxlength="3" value="' . $_SESSION['OverChargeProportion'] . '" placeholder="'._('integer between 0-100').'" /></td>
 	<td>' . _('If check price charges vs Order price is set to yes then this proportion determines the percentage by which invoices can be overcharged with respect to price') .'</td></tr>';
 
 // OverReceiveProportion
 echo '<tr style="outline: 1px solid"><td>' . _('Allowed Over Receive Proportion') . ':</td>
-	<td><input type="text" class="number" name="X_OverReceiveProportion" size="4" maxlength="3" value="' . $_SESSION['OverReceiveProportion'] . '" /></td>
+	<td><input type="text" class="integer" pattern="(?!^0\d+$)[\d]{1,2}|(100)" required="required" title="'._('The input must between 0~100').'" name="X_OverReceiveProportion" size="4" maxlength="3" value="' . $_SESSION['OverReceiveProportion'] . '" /></td>
 	<td>' . _('If check quantity charged vs delivery quantity is set to yes then this proportion determines the percentage by which invoices can be overcharged with respect to delivery') .'</td></tr>';
 
 // PO_AllowSameItemMultipleTimes
@@ -751,13 +751,13 @@ echo '</select></td>
 
 //PageLength
 echo '<tr style="outline: 1px solid"><td>' . _('Report Page Length') . ':</td>
-	<td><input type="text" class="number" name="X_PageLength" size="4" maxlength="6" value="' . $_SESSION['PageLength'] . '" /></td><td>&nbsp;</td>
+	<td><input type="text" class="integer" pattern="(?!^0\d*$)[\d]{1,3}" title="'._('The input should be between 1~999').'" placeholder="'._(' 1 to 999').'" name="X_PageLength" size="4" maxlength="6" value="' . $_SESSION['PageLength'] . '" /></td><td>&nbsp;</td>
 </tr>';
 
 //DefaultDisplayRecordsMax
 echo '<tr style="outline: 1px solid">
 		<td>' . _('Default Maximum Number of Records to Show') . ':</td>
-		<td><input type="text" class="number" name="X_DefaultDisplayRecordsMax" size="4" maxlength="3" value="' . $_SESSION['DefaultDisplayRecordsMax'] . '" /></td>
+		<td><input type="text" class="integer" pattern="(?!^0\d*$)[\d]{1,3}" required="required" title="'._('The records should be between 1 and 999').'" name="X_DefaultDisplayRecordsMax" size="4" maxlength="3" value="' . $_SESSION['DefaultDisplayRecordsMax'] . '" /></td>
 		<td>' . _('When pages have code to limit the number of returned records - such as select customer, select supplier and select item, then this will be the default number of records to show for a user who has not changed this for themselves in user settings.') . '</td>
 	</tr>';
 
@@ -775,7 +775,7 @@ echo '<tr style="outline: 1px solid">
 //MaxImageSize
 echo '<tr style="outline: 1px solid">
 		<td>' . _('Maximum Size in KB of uploaded images') . ':</td>
-		<td><input type="text" class="number" name="X_MaxImageSize" size="4" maxlength="3" value="' . $_SESSION['MaxImageSize'] . '" /></td>
+		<td><input type="text" class="integer" pattern="(?!^0\d*$)[\d]{1,3}" required="required" title="'._('The input should be between 1 to 999').'" placeholder="'._('1 t0 999').'" name="X_MaxImageSize" size="4" maxlength="3" value="' . $_SESSION['MaxImageSize'] . '" /></td>
 		<td>' . _('Picture files of items can be uploaded to the server. The system will check that files uploaded are less than this size (in KB) before they will be allowed to be uploaded. Large pictures will make the system slow and will be difficult to view in the stock maintenance screen.') .'</td>
 	</tr>';
 //NumberOfMonthMustBeShown
@@ -789,7 +789,7 @@ $row = DB_fetch_array($result);
 $_SESSION['NumberOfMonthMustBeShown'] = $row['confvalue'];
 
 echo '<tr style="outline: 1px solid"><td>' . _('Number Of Month Must Be Shown') . ':</td>
-		  <td><input type="text" class="number" name="X_NumberOfMonthMustBeShown" size="4" maxlength="3" value="' . $_SESSION['NumberOfMonthMustBeShown'] . '" /></td>
+		  <td><input type="text" class="integer" pattern="(?!^0\d*$)[\d]+" required="required" title="'._('input must be positive integer').'" placeholder="'._('postive integer').'" name="X_NumberOfMonthMustBeShown" size="4" maxlength="3" value="' . $_SESSION['NumberOfMonthMustBeShown'] . '" /></td>
 		  <td>' . _('Number of month must be shown on report can be changed with this parameters ex: in CustomerInquiry.php ') .'</td>
       </tr>';
 
@@ -1025,7 +1025,7 @@ echo '</select></td><td>' . _('Setting this parameter to Yes prevents invoicing 
 
 //Months of Audit Trail to Keep
 echo '<tr style="outline: 1px solid"><td>' . _('Months of Audit Trail to Retain') . ':</td>
-	<td><input type="text" class="number" name="X_MonthsAuditTrail" size="3" maxlength="2" value="' . $_SESSION['MonthsAuditTrail'] . '" /></td><td>' . _('If this parameter is set to 0 (zero) then no audit trail is retained. An audit trail is a log of which users performed which additions updates and deletes of database records. The full SQL is retained') . '</td>
+	<td><input type="text" class="integer" pattern="(?!^0\d+$)[\d]{1,2}" required="required" name="X_MonthsAuditTrail" size="3" maxlength="2" value="' . $_SESSION['MonthsAuditTrail'] . '" /></td><td>' . _('If this parameter is set to 0 (zero) then no audit trail is retained. An audit trail is a log of which users performed which additions updates and deletes of database records. The full SQL is retained') . '</td>
 </tr>';
 
 //Which messages to log
