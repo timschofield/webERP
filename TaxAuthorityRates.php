@@ -109,7 +109,7 @@ if (DB_num_rows($TaxRatesResult)>0){
 
 		printf('<td>%s</td>
 				<td>%s</td>
-				<td><input type="text" class="number" name="%s" maxlength="5" size="5" value="%s" /></td>
+				<td><input type="text" required="required" title="'._('Input must be numeric').'" class="number" name="%s" maxlength="5" size="5" value="%s" /></td>
 				</tr>',
 				$myrow['taxprovincename'],
 				$myrow['taxcatname'],
