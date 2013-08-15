@@ -143,14 +143,14 @@ if (!isset($SelectedTaxAuthID)) {
 
 	echo '<table class="selection">
 			<tr>
-				<th>' . _('ID') . '</th>
-				<th>' . _('Description') . '</th>
-				<th>' . _('Input Tax') . '<br />' . _('GL Account') . '</th>
-				<th>' . _('Output Tax') . '<br />' . _('GL Account') . '</th>
-				<th>' . _('Bank') . '</th>
-				<th>' . _('Bank Account') . '</th>
-				<th>' . _('Bank Act Type') . '</th>
-				<th>' . _('Bank Swift') . '</th>
+				<th class="assending" onclick="SortSelect(this)" >' . _('ID') . '</th>
+				<th class="assending" onclick="SortSelect(this)" >' . _('Description') . '</th>
+				<th class="assending" onclick="SortSelect(this)" >' . _('Input Tax') . '<br />' . _('GL Account') . '</th>
+				<th class="assending" onclick="SortSelect(this)" >' . _('Output Tax') . '<br />' . _('GL Account') . '</th>
+				<th class="assending" onclick="SortSelect(this)" >' . _('Bank') . '</th>
+				<th class="assending" onclick="SortSelect(this)" >' . _('Bank Account') . '</th>
+				<th class="assending" onclick="SortSelect(this)" >' . _('Bank Act Type') . '</th>
+				<th class="assending" onclick="SortSelect(this)" >' . _('Bank Swift') . '</th>
 			</tr>';
 	$k=0;
 	while ($myrow = DB_fetch_row($result)) {
@@ -256,7 +256,7 @@ if (!isset($_POST['Description'])) {
 echo '<table class="selection">
 		<tr>
 			<td>' . _('Tax Type Description') . ':</td>
-			<td><input type="text" name="Description" size="21" maxlength="20" value="' . $_POST['Description'] . '" /></td>
+			<td><input type="text" pattern="(?!^ +$)[^><+-]+" title="'._('No illegal characters allowed and should not be blank').'" placeholder="'._('Within 20 characters').'" required="required" name="Description" size="21" maxlength="20" value="' . $_POST['Description'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Input tax GL Account') . ':</td>
@@ -308,19 +308,19 @@ echo '</select></td>
 	</tr>
 	<tr>
 		<td>' . _('Bank Name') . ':</td>
-		<td><input type="text" name="Bank" size="41" maxlength="40" value="' . $_POST['Bank'] . '" /></td>
+		<td><input type="text" name="Bank" size="41" maxlength="40" value="' . $_POST['Bank'] . '" placeholder="'._('Not more than 40 chacraters').'" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Bank Account Type') . ':</td>
-		<td><input type="text" name="BankAccType" size="15" maxlength="20" value="' . $_POST['BankAccType'] . '" /></td>
+		<td><input type="text" name="BankAccType" size="15" maxlength="20" value="' . $_POST['BankAccType'] . '" placeholder="'._('No more than 20 characters').'" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Bank Account') . ':</td>
-		<td><input type="text" name="BankAcc" size="21" maxlength="20" value="' . $_POST['BankAcc'] . '" /></td>
+		<td><input type="text" name="BankAcc" size="21" maxlength="20" value="' . $_POST['BankAcc'] . '" placeholder="'._('No more than 20 characters').'" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Bank Swift No') . ':</td>
-		<td><input type="text" name="BankSwift" size="15" maxlength="14" value="' . $_POST['BankSwift'] . '" /></td>
+		<td><input type="text" name="BankSwift" size="15" maxlength="14" value="' . $_POST['BankSwift'] . '" placeholder="'._('No more than 15 characters').'" /></td>
 	</tr>
 	</table>';
 
