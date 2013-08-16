@@ -1,4 +1,5 @@
 webERP Change Log 
+16/8/2013 Exson: Remove redundant Ref no and make SuppPaymentRun.php html5 compatible.
 16/08/2013 Exson: Make the SuppShiptChgs.php html5 compatible.
 16/08/2013 Exson: Fixed the account code max length in SuppTransGLAnalysis.php and make it html5 compatible. 
 15/8/2013 Exson: Modify 'manual' to 'manually' in SystemParameters.php to remove the translation frustration and make it html5 compatible.
