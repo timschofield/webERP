@@ -263,11 +263,11 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 	}
 	echo '<tr>
 			<td>' . _('From Supplier Code') . ':</td>
-            <td><input type="text" maxlength="6" size="7" name="FromCriteria" value="' . $DefaultFromCriteria . '" /></td>
+            <td><input type="text" pattern="[^><+-]{1,10}" title="'._('Illegal Characters are not allowed').'" maxlength="10" size="7" name="FromCriteria" value="' . $DefaultFromCriteria . '" /></td>
           </tr>';
 	echo '<tr>
 			<td>' . _('To Supplier Code') . ':</td>
-            <td><input type="text" maxlength="6" size="7" name="ToCriteria" value="' . $DefaultToCriteria . '" /></td>
+            <td><input type="text" pattern="[^<>+-]{1,10}" title="'._('Illegal characters are not allowed').'" maxlength="10" size="7" name="ToCriteria" value="' . $DefaultToCriteria . '" /></td>
          </tr>';
 
 
@@ -295,7 +295,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 	}
 	echo '<tr>
 			<td>' . _('Exchange Rate') . ':</td>
-            <td><input type="text" class="number" name="ExRate" maxlength="11" size="12" value="' . locale_number_format($DefaultExRate,'Variable') . '" /></td>
+            <td><input type="text" class="number" title="'._('The input must be number').'" name="ExRate" maxlength="11" size="12" value="' . locale_number_format($DefaultExRate,'Variable') . '" /></td>
           </tr>';
 
 	if (!isset($_POST['AmountsDueBy'])){
@@ -365,19 +365,6 @@ Payment types can be modified by editing that file */
 	echo '</select></td>
 		</tr>';
 
-	if (!isset($_POST['Ref']) OR !is_numeric($_POST['Ref'])){
-		$DefaultRef = '1';
-	} else {
-		$DefaultRef = $_POST['Ref'];
-	}
-	if (!isset($_POST['Ref'])) {
-		$_POST['Ref'] = '';
-	}
-
-	echo '<tr>
-			<td>' . _('Starting Reference no (eg chq no)') . ':</td>
-            <td><input type="text" name="Ref" maxlength="11" size="12" value="' . $_POST['Ref'] . '" /></td>
-          </tr>';
 
 	echo '</table>
 			<br />
