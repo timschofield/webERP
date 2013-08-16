@@ -110,7 +110,7 @@ if (!isset($_POST['ShiptRef'])) {
 echo '<table class="selection">';
 echo '<tr>
 		<td>' . _('Shipment Reference') . ':</td>
-		<td><input type="text" name="ShiptRef" size="12" maxlength="11" value="' .  $_POST['ShiptRef'] . '" /></td>
+		<td><input type="integer" pattern="[1-9][\d]{0,10}" title="'._('The shiment Ref should be positive integer').'" placeholder="'._('positive integer').'" name="ShiptRef" size="12" maxlength="11" value="' .  $_POST['ShiptRef'] . '" /></td>
 	</tr>';
 echo '<tr>
 		<td>' . _('Shipment Selection') . ':
@@ -145,7 +145,7 @@ if (!isset($_POST['Amount'])) {
 }
 echo '<tr>
 		<td>' . _('Amount') . ':</td>
-		<td><input type="text" name="Amount" size="12" maxlength="11" value="' .  locale_number_format($_POST['Amount'],$_SESSION['SuppTrans']->CurrDecimalPlaces) . '" /></td>
+		<td><input type="number"  pattern="(?!^[-]?0[,.]0*$).{1,11}" required="required" title="'._('The input must be non zero number').'" placeholder="'._('Non zero number').'" name="Amount" size="12" maxlength="11" value="' .  locale_number_format($_POST['Amount'],$_SESSION['SuppTrans']->CurrDecimalPlaces) . '" /></td>
 	</tr>
 	</table>';
 
