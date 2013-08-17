@@ -24,9 +24,9 @@ if (isset($_GET['SelectedSupplier'])) {
 } elseif (isset($_POST['SelectedSupplier'])) {
 	$SelectedSupplier = $_POST['SelectedSupplier'];
 }
-echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-echo '<div>';
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
+	<div>
+	<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 if (isset($_POST['ResetPart'])) {
 	unset($SelectedStockItem);
 }
@@ -115,7 +115,7 @@ if (!isset($OrderNumber) or $OrderNumber == "") {
 	if (isset($SelectedStockItem)) {
 		echo _('For the part') . ':<b>' . $SelectedStockItem . '</b> ' . _('and') . ' <input type="hidden" name="SelectedStockItem" value="' . $SelectedStockItem . '" />';
 	}
-	echo _('Order Number') . ': <input type="text" name="OrderNumber" autofocus="autofocus" maxlength="8" size="9" /> ' . _('Into Stock Location') . ':<select name="StockLocation"> ';
+	echo _('Order Number') . ': <input type="integer" name="OrderNumber" autofocus="autofocus" maxlength="8" size="9" /> ' . _('Into Stock Location') . ':<select name="StockLocation"> ';
 	$sql = "SELECT loccode, locationname FROM locations";
 	$resultStkLocs = DB_query($sql, $db);
 	while ($myrow = DB_fetch_array($resultStkLocs)) {
@@ -429,16 +429,16 @@ else {
 		/*show a table of the orders returned by the SQL */
 		echo '<table cellpadding="2" width="90%" class="selection">';
 		$TableHeader = '<tr>
-						<th>' . _('View') . '</th>
-						<th>' . _('Supplier') . '</th>
-						<th>' . _('Currency') . '</th>
-						<th>' . _('Requisition') . '</th>
-						<th>' . _('Order Date') . '</th>
-						<th>' . _('Delivery Date') . '</th>
-						<th>' . _('Initiator') . '</th>
-						<th>' . _('Order Total') . '</th>
-						<th>' . _('Status') . '</th>
-					</tr>';
+							<th class="ascending" onClick="SortSelect(this)">' . _('View') . '</th>
+							<th class="ascending" onClick="SortSelect(this)">' . _('Supplier') . '</th>
+							<th class="ascending" onClick="SortSelect(this)">' . _('Currency') . '</th>
+							<th class="ascending" onClick="SortSelect(this)">' . _('Requisition') . '</th>
+							<th class="ascending" onClick="SortSelect(this)">' . _('Order Date') . '</th>
+							<th class="ascending" onClick="SortSelect(this)">' . _('Delivery Date') . '</th>
+							<th class="ascending" onClick="SortSelect(this)">' . _('Initiator') . '</th>
+							<th class="ascending" onClick="SortSelect(this)">' . _('Order Total') . '</th>
+							<th class="ascending" onClick="SortSelect(this)">' . _('Status') . '</th>
+						</tr>';
 		echo $TableHeader;
 		$j = 1;
 		$k = 0; //row colour counter

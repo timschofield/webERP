@@ -17,9 +17,9 @@ $EmailRow=DB_fetch_array($EmailResult);
 
 if (isset($_POST['UpdateAll'])) {
 	foreach ($_POST as $key => $value) {
-		if (mb_substr($key,0,6)=='status') {
+		if (mb_substr($key,0,6)=='Status') {
 			$OrderNo=mb_substr($key,6);
-			$Status=$_POST['status'.$OrderNo];
+			$Status=$_POST['Status'.$OrderNo];
 			$Comment=date($_SESSION['DefaultDateFormat']).' - '._('Authorised by').' <a href="mailto:' . $EmailRow['email'].'">'.$_SESSION['UserID'].'</a><br />' . html_entity_decode($_POST['comment'],ENT_QUOTES,'UTF-8');
 			$sql="UPDATE purchorders
 					SET status='".$Status."',
@@ -49,18 +49,18 @@ $sql="SELECT purchorders.*,
 $result=DB_query($sql, $db);
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-echo '<div>';
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<table class="selection">';
+echo '<div>
+	<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+	<table class="selection">';
 
 /* Create the table for the purchase order header */
 echo '<tr>
-		<th>'._('Order Number').'</th>
-		<th>'._('Supplier').'</th>
-		<th>'._('Date Ordered').'</th>
-		<th>'._('Initiator').'</th>
-		<th>'._('Delivery Date').'</th>
-		<th>'._('Status').'</th>
+		<th class="ascending" onClick="SortSelect(this)">'._('Order Number').'</th>
+		<th class="ascending" onClick="SortSelect(this)">'._('Supplier').'</th>
+		<th class="ascending" onClick="SortSelect(this)">'._('Date Ordered').'</th>
+		<th class="ascending" onClick="SortSelect(this)">'._('Initiator').'</th>
+		<th class="ascending" onClick="SortSelect(this)">'._('Delivery Date').'</th>
+		<th class="ascending" onClick="SortSelect(this)">'._('Status').'</th>
 	</tr>';
 
 while ($myrow=DB_fetch_array($result)) {
@@ -88,7 +88,7 @@ while ($myrow=DB_fetch_array($result)) {
 				<td>'.ConvertSQLDate($myrow['orddate']).'</td>
 				<td><a href="mailto:'.$myrow['email'].'">'.$myrow['realname'].'</td>
 				<td>'.ConvertSQLDate($myrow['deliverydate']).'</td>
-				<td><select name="status'.$myrow['orderno'].'">
+				<td><select name="Status'.$myrow['orderno'].'">
 					<option selected="selected" value="Pending">'._('Pending').'</option>
 					<option value="Authorised">'._('Authorised').'</option>
 					<option value="Rejected">'._('Rejected').'</option>
@@ -110,11 +110,11 @@ while ($myrow=DB_fetch_array($result)) {
 				<td colspan="5" align="left">
 					<table class="selection" align="left">
 					<tr>
-						<th>'._('Product').'</th>
-						<th>'._('Quantity Ordered').'</th>
-						<th>'._('Currency').'</th>
-						<th>'._('Price').'</th>
-						<th>'._('Line Total').'</th>
+						<th class="ascending" onClick="SortSelect(this)">'._('Product').'</th>
+						<th class="ascending" onClick="SortSelect(this)">'._('Quantity Ordered').'</th>
+						<th class="ascending" onClick="SortSelect(this)">'._('Currency').'</th>
+						<th class="ascending" onClick="SortSelect(this)">'._('Price').'</th>
+						<th class="ascending" onClick="SortSelect(this)">'._('Line Total').'</th>
 					</tr>';
 
 		while ($LineRow=DB_fetch_array($LineResult)) {

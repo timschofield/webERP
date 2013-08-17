@@ -714,17 +714,17 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 	echo '<br /><b>'._(' Order Summary') . '</b></p>';
 	echo '<table cellpadding="2" class="selection">';
 	echo '<tr>
-			<th>' . _('Item Code') . '</th>
-			<th>' . _('Description') . '</th>
-			<th>' . _('Quantity Our Units') . '</th>
+			<th class="ascending" onClick="SortSelect(this)">' . _('Item Code') . '</th>
+			<th class="ascending" onClick="SortSelect(this)">' . _('Description') . '</th>
+			<th class="ascending" onClick="SortSelect(this)">' . _('Quantity Our Units') . '</th>
 			<th>' . _('Our Unit') .'</th>
-			<th>' . _('Price Our Units') .' (' . $_SESSION['PO'.$identifier]->CurrCode .  ')</th>
+			<th class="ascending" onClick="SortSelect(this)">' . _('Price Our Units') .' (' . $_SESSION['PO'.$identifier]->CurrCode .  ')</th>
 			<th>' . _('Unit Conversion Factor') . '</th>
-			<th>' . _('Order Quantity') . '<br />' . _('Supplier Units') . '</th>
+			<th class="ascending" onClick="SortSelect(this)">' . _('Order Quantity') . '<br />' . _('Supplier Units') . '</th>
 			<th>' .  _('Supplier Unit') . '</th>
-			<th>' . _('Order Price') . '<br />' . _('Supp Units') . ' ('.$_SESSION['PO'.$identifier]->CurrCode.  ')</th>
-			<th>' . _('Sub-Total') .' ('.$_SESSION['PO'.$identifier]->CurrCode.  ')</th>
-			<th>' . _('Deliver By') .'</th>
+			<th class="ascending" onClick="SortSelect(this)">' . _('Order Price') . '<br />' . _('Supp Units') . ' ('.$_SESSION['PO'.$identifier]->CurrCode.  ')</th>
+			<th class="ascending" onClick="SortSelect(this)">' . _('Sub-Total') .' ('.$_SESSION['PO'.$identifier]->CurrCode.  ')</th>
+			<th class="ascending" onClick="SortSelect(this)">' . _('Deliver By') .'</th>
 			</tr>';
 
 	$_SESSION['PO'.$identifier]->Total = 0;
@@ -792,8 +792,8 @@ if (isset($_POST['NonStockOrder'])) {
 				<td>' . _('Item Description') . '</td>';
 	echo '<td><input type="text" name="ItemDescription" size="40" /></td></tr>';
 	echo '<tr>
-			<td>' . _('General Ledger Code') . '</td>';
-	echo '<td><select name="GLCode">';
+			<td>' . _('General Ledger Code') . '</td>
+			<td><select name="GLCode">';
 	$sql="SELECT accountcode,
 				  accountname
 				FROM chartmaster
@@ -807,7 +807,12 @@ if (isset($_POST['NonStockOrder'])) {
 	echo '<tr>
 			<td>'._('OR Asset ID'). '</td>
 			<td><select name="AssetID">';
-	$AssetsResult = DB_query("SELECT assetid, description, datepurchased FROM fixedassets ORDER BY assetid DESC",$db);
+	$AssetsResult = DB_query("SELECT assetid,
+									description,
+									datepurchased
+								FROM fixedassets
+								ORDER BY assetid DESC",
+							$db);
 	echo '<option selected="selected" value="Not an Asset">' . _('Not an Asset') . '</option>';
 	while ($AssetRow = DB_fetch_array($AssetsResult)){
 		if ($AssetRow['datepurchased']=='0000-00-00'){
@@ -1147,8 +1152,8 @@ if (isset($SearchResult)) {
 	echo '<table cellpadding="1" class="selection">';
 
 	$TableHeader = '<tr>
-						<th>' . _('Code')  . '</th>
-						<th>' . _('Description') . '</th>
+						<th class="ascending" onClick="SortSelect(this)">' . _('Code')  . '</th>
+						<th class="ascending" onClick="SortSelect(this)">' . _('Description') . '</th>
 						<th>' . _('Our Units') . '</th>
 						<th>' . _('Conversion') . '<br />' ._('Factor') . '</th>
 						<th>' . _('Supplier/Order') . '<br />' .  _('Units') . '</th>

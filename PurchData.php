@@ -268,15 +268,15 @@ if ($Edit == false) {
 		
         echo '<table cellpadding="2" class="selection">';
         $TableHeader = '<tr>
-							<th>' . _('Supplier') . '</th>
-							<th>' . _('Price') . '</th>
+							<th class="ascending" onClick="SortSelect(this)">' . _('Supplier') . '</th>
+							<th class="ascending" onClick="SortSelect(this)">' . _('Price') . '</th>
 							<th>' . _('Supplier Unit') . '</th>
 							<th>' . _('Conversion Factor') . '</th>
-							<th>' . _('Cost Per Our Unit') .  '</th>
-							<th>' . _('Currency') . '</th>
-							<th>' . _('Effective From') . '</th>
-							<th>' . _('Min Order Qty') . '</th>
-							<th>' . _('Lead Time') . '</th>
+							<th class="ascending" onClick="SortSelect(this)">' . _('Cost Per Our Unit') .  '</th>
+							<th class="ascending" onClick="SortSelect(this)">' . _('Currency') . '</th>
+							<th class="ascending" onClick="SortSelect(this)">' . _('Effective From') . '</th>
+							<th class="ascending" onClick="SortSelect(this)">' . _('Min Order Qty') . '</th>
+							<th class="ascending" onClick="SortSelect(this)">' . _('Lead Time') . '</th>
 							<th>' . _('Preferred') . '</th>
 						</tr>';
 		echo $TableHeader;
@@ -382,7 +382,7 @@ if (isset($SupplierID) AND $SupplierID != '' AND !isset($_POST['SearchSupplier']
 					<td><input type="text" name="Keywords" size="20" maxlength="25" /></td>
 					<td><b>' . _('OR') . '</b></td>
 					<td>' . _('Text in Supplier') . ' <b>' . _('CODE') . '</b>:</td>
-					<td><input type="text" name="SupplierCode" size="20" maxlength="50" /></td>
+					<td><input type="text" name="SupplierCode" pattern="[0-9a-zA-Z_\-]*" size="20" maxlength="50" /></td>
 				</tr>
 				</table>
 				<br />
@@ -466,12 +466,12 @@ if (isset($SuppliersResult)) {
 			<table cellpadding="2" colspan="7" class="selection">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
     $TableHeader = '<tr>
-						<th>' . _('Code') . '</th>
-	                	<th>' . _('Supplier Name') . '</th>
-						<th>' . _('Currency') . '</th>
-						<th>' . _('Address 1') . '</th>
-						<th>' . _('Address 2') . '</th>
-						<th>' . _('Address 3') . '</th>
+						<th class="ascending" onClick="SortSelect(this)">' . _('Code') . '</th>
+	                	<th class="ascending" onClick="SortSelect(this)">' . _('Supplier Name') . '</th>
+						<th class="ascending" onClick="SortSelect(this)">' . _('Currency') . '</th>
+						<th class="ascending" onClick="SortSelect(this)">' . _('Address 1') . '</th>
+						<th class="ascending" onClick="SortSelect(this)">' . _('Address 2') . '</th>
+						<th class="ascending" onClick="SortSelect(this)">' . _('Address 3') . '</th>
 					</tr>';
     echo $TableHeader;
 	$k = 0;
@@ -657,7 +657,7 @@ if (!isset($SuppliersResult)) {
 	}
 	echo '<tr>
 			<td>' . _('Lead Time') . ' (' . _('in days from date of order') . '):</td>
-			<td><input type="text" class="number" name="LeadTime" maxlength="4" size="5" value="' . $_POST['LeadTime'] . '" /></td>
+			<td><input type="text" class="integer" name="LeadTime" maxlength="4" size="5" value="' . $_POST['LeadTime'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Preferred Supplier') . ':</td>
@@ -696,11 +696,11 @@ if (!isset($SuppliersResult)) {
 		
 		echo '<table cellpadding="2" colspan="7" class="selection">
 				<tr>
-					<th>' . _('Discount Name') . '</th>
-	               	<th>' . _('Discount') . '<br />' . _('Value') . '</th>
-					<th>' . _('Discount') . '<br />' . _('Percent') . '</th>
-					<th>' . _('Effective From') . '</th>
-					<th>' . _('Effective To') . '</th>
+					<th class="ascending" onClick="SortSelect(this)">' . _('Discount Name') . '</th>
+	               	<th class="ascending" onClick="SortSelect(this)">' . _('Discount') . '<br />' . _('Value') . '</th>
+					<th class="ascending" onClick="SortSelect(this)">' . _('Discount') . '<br />' . _('Percent') . '</th>
+					<th class="ascending" onClick="SortSelect(this)">' . _('Effective From') . '</th>
+					<th class="ascending" onClick="SortSelect(this)">' . _('Effective To') . '</th>
 				</tr>';
 	    $k = 0;
 	    $i = 0; //DiscountCounter

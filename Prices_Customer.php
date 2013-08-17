@@ -252,8 +252,10 @@ if (DB_num_rows($result) == 0) {
 	echo '<tr><td>' . _('There are no special prices set up for this part') . '</td></tr>';
 } else {
 /*THERE IS ALREADY A spl price setup */
-	echo '<tr><th>' . _('Special Price') .
-	     '</th><th>' . _('Branch') . '</th></tr>';
+	echo '<tr>
+			<th>' . _('Special Price') . '</th>
+			<th>' . _('Branch') . '</th>
+		</tr>';
 
 	while ($myrow = DB_fetch_array($result)) {
 

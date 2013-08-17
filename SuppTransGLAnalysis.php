@@ -104,12 +104,12 @@ echo '</p>
 	<table class="selection">';
 
 $TableHeader = '<tr>
-					<th>' . _('Account') . '</th>
-					<th>' . _('Name') . '</th>
-					<th>' . _('Amount') . '<br />' . _('in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
+					<th class="ascending" onclick="SortSelect(this)">' . _('Account') . '</th>
+					<th class="ascending" onclick="SortSelect(this)">' . _('Name') . '</th>
+					<th class="ascending" onclick="SortSelect(this)">' . _('Amount') . '<br />' . _('in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
 					<th>' . _('Narrative') . '</th>
-					<th>' . _('Tag') . '</th>
-					</tr>';
+					<th class="ascending" onclick="SortSelect(this)">' . _('Tag') . '</th>
+				</tr>';
 echo $TableHeader;
 $TotalGLValue=0;
 $i=0;
@@ -187,7 +187,7 @@ echo '</select></td>
 
 echo '<tr>
 		<td>' . _('Account Code') . ':</td>
-		<td><input type="integer" pattern="[1-9][\d]{0,20}" title="'._('The input must be positive integer').'" placeholder="'._('Integer less than 20 digits').'" name="GLCode" size="21" maxlength="20" value="' .  $_POST['GLCode'] . '" />
+		<td><input type="text" pattern="[a-zA-Z0-9_\-]*{0,20}" title="'._('The input must be positive integer').'" name="GLCode" size="21" maxlength="20" value="' .  $_POST['GLCode'] . '" />
 		<input type="hidden" name="JobRef" value="" /></td>
 	</tr>';
 echo '<tr>

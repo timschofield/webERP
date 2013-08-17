@@ -147,18 +147,19 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 	echo '<div class="page_help_text">' . _('Items in') . ' ' . $CategoryText . ' ' . _('With Prices') . ' ' . $Comparator . '' . $_POST['Margin'] . ' ' . _('times') . ' ' . _('Cost in Price List') . ' ' . $SalesTypeRow['sales_type'] . '</div><br /><br />';
 
 	if ($numrow > 0) { //the number of prices returned from the main prices query is
-		echo '<table class="selection">';
-		echo '<tr><th>' . _('Code') . '</th>
-				<th>' . _('Description') . '</th>
-				<th>' . _('Customer') . '</th>
-				<th>' . _('Branch') . '</th>
-				<th>' . _('Start Date') . '</th>
-				<th>' . _('End Date') . '</th>
-				<th>' . _('Cost') . '</th>
-				<th>' . _('GP %') . '</th>
-				<th>' . _('Price Proposed') . '</th>
-				<th>' . _('List Price') . '</th>
-			<tr>';
+		echo '<table class="selection">
+				<tr>
+					<th class="ascending" onClick="SortSelect(this)">' . _('Code') . '</th>
+					<th class="ascending" onClick="SortSelect(this)">' . _('Description') . '</th>
+					<th class="ascending" onClick="SortSelect(this)">' . _('Customer') . '</th>
+					<th class="ascending" onClick="SortSelect(this)">' . _('Branch') . '</th>
+					<th class="ascending" onClick="SortSelect(this)">' . _('Start Date') . '</th>
+					<th class="ascending" onClick="SortSelect(this)">' . _('End Date') . '</th>
+					<th class="ascending" onClick="SortSelect(this)">' . _('Cost') . '</th>
+					<th class="ascending" onClick="SortSelect(this)">' . _('GP %') . '</th>
+					<th class="ascending" onClick="SortSelect(this)">' . _('Price Proposed') . '</th>
+					<th class="ascending" onClick="SortSelect(this)">' . _('List Price') . '</th>
+				<tr>';
 		$k = 0; //row colour counter
 		echo '<form action="' .htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'" method="post" id="update">';
         echo '<div>';
@@ -248,7 +249,8 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 		echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
 	}
 	echo '</select></td></tr>';
-	echo '<tr><td>' . _('Price') . '
+	echo '<tr>
+			<td>' . _('Price') . '
 				<select name="Comparator">
                 <option value="1">' . _('Less than or equal to') . '</option>
                 <option value="2">' . _('Greater than or equal to') . '</option>';
@@ -260,7 +262,8 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 	if (!isset($_POST['Margin'])){
 		$_POST['Margin']=1;
 	}
-	echo '<td><input type="text" class="number" name="Margin" maxlength="8" size="8" value="' .$_POST['Margin'] . '" /></td></tr>';
+	echo '<td><input type="text" class="number" name="Margin" maxlength="8" size="8" value="' .$_POST['Margin'] . '" /></td>
+		</tr>';
 	$result = DB_query("SELECT typeabbrev, sales_type FROM salestypes", $db);
 	echo '<tr><td>' . _('Sales Type') . '/' . _('Price List') . ':</td>
 		<td><select name="SalesType">';
@@ -273,9 +276,11 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 	} //end while loop
 	DB_data_seek($result, 0);
 	$result = DB_query("SELECT currency, currabrev FROM currencies", $db);
-	echo '</select></td></tr>
-		<tr><td>' . _('Currency') . ':</td>
-		<td><select name="CurrCode">';
+	echo '</select></td>
+		</tr>
+		<tr>
+			<td>' . _('Currency') . ':</td>
+			<td><select name="CurrCode">';
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['CurrCode']) and $_POST['CurrCode'] == $myrow['currabrev']) {
 			echo '<option selected="selected" value="' . $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
@@ -286,9 +291,10 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 	DB_data_seek($result, 0);
 	echo '</select></td></tr>';
 	echo '</table>
-		<br /><div class="centre"><input type="submit" name="submit" value="' . _('Submit') . '" /></div>';
-    echo '</div>
-          </form>';
+		<br />
+			<div class="centre"><input type="submit" name="submit" value="' . _('Submit') . '" /></div>
+		</div>
+	</form>';
 } /*end of else not submit */
 include ('includes/footer.inc');
 ?>

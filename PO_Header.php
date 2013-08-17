@@ -253,7 +253,7 @@ echo '<span style="float:left"><a href="' . $RootPath . '/PO_SelectOSPurchOrder.
 
 if (isset($_GET['ModifyOrderNumber'])) {
 	include('includes/PO_ReadInOrder.inc');
-} //isset($_GET['ModifyOrderNumber'])
+} 
 
 
 if (!isset($_SESSION['PO' . $identifier])) {
@@ -552,15 +552,12 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 	if (isset($result_SuppSelect)) {
 		echo '<br /><table cellpadding="3" class="selection">';
 
-		$tableheader = '<tr>
-							<th>' . _('Code') . '</th>
-							<th>' . _('Supplier Name') . '</th>
-							<th>' . _('Address') . '</th>
-							<th>' . _('Currency') . '</th>
-						</tr>';
-
-		echo $tableheader;
-
+		echo '<tr>
+				<th class="ascending" onClick="SortSelect(this)">' . _('Code') . '</th>
+				<th class="ascending" onClick="SortSelect(this)">' . _('Supplier Name') . '</th>
+				<th class="ascending" onClick="SortSelect(this)">' . _('Address') . '</th>
+				<th class="ascending" onClick="SortSelect(this)">' . _('Currency') . '</th>
+			</tr>';
 		$j = 1;
 		$k = 0;
 		/*row counter to determine background colour */
@@ -664,7 +661,26 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 			$PurchItemRow['leadtime'] = 1;
 		}
 
-		$_SESSION['PO' . $identifier]->add_to_order(1, $Purch_Item, $PurchItemRow['serialised'], $PurchItemRow['controlled'], $Qty * $PurchItemRow['conversionfactor'], $PurchItemRow['description'], $PurchItemRow['price'] / $PurchItemRow['conversionfactor'], $PurchItemRow['units'], $PurchItemRow['stockact'], $_SESSION['PO' . $identifier]->DeliveryDate, 0, 0, '', 0, 0, '', $PurchItemRow['decimalplaces'], $PurchItemRow['suppliersuom'], $PurchItemRow['conversionfactor'], $PurchItemRow['leadtime'], $PurchItemRow['suppliers_partno']);
+		$_SESSION['PO' . $identifier]->add_to_order(1,
+													$Purch_Item,
+													$PurchItemRow['serialised'],
+													$PurchItemRow['controlled'],
+													$Qty * $PurchItemRow['conversionfactor'],
+													$PurchItemRow['description'],
+													$PurchItemRow['price'] / $PurchItemRow['conversionfactor'],
+													$PurchItemRow['units'],
+													$PurchItemRow['stockact'],
+													$_SESSION['PO' . $identifier]->DeliveryDate, 0,
+													0,
+													'',
+													0,
+													0,
+													'',
+													$PurchItemRow['decimalplaces'],
+													$PurchItemRow['suppliersuom'],
+													$PurchItemRow['conversionfactor'],
+													$PurchItemRow['leadtime'],
+													$PurchItemRow['suppliers_partno']);
 
 		echo '<meta http-equiv="refresh" content="0; url=' . $RootPath . '/PO_Items.php?identifier=' . $identifier . '">';
 	}
@@ -698,7 +714,8 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 		$_POST['InitiatorName'] = $myrow['realname'];
 	}
 
-	echo '<br /><table width="80%">
+	echo '<br />
+		<table width="80%">
 		<tr>
 			<th><h3>' . _('Order Initiation Details') . '</h3></th>
 			<th><h3>' . _('Order Status') . '</h3></th>
@@ -837,9 +854,9 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 						<option value="Pending">' . _('Pending') . '</option>';
 				break;
 		}
-		echo '</select></td></tr>';
-
-		echo '<tr>
+		echo '</select></td>
+			</tr>
+			<tr>
 				<td>' . _('Status Comment') . ':</td>
 				<td><input type="text" name="StatusComments" size="50" /></td>
 			</tr>
@@ -853,9 +870,8 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 	} //end its not a new order
 
 	echo '</table></td>
-		</tr>';
-
-	echo '<tr>
+		</tr>
+		<tr>
 			<th><h3>' . _('Warehouse Info') . '</h3></th>
 		<!--    <th><h3>' . _('Delivery To') . '</h3></th> -->
 			<th><h3>' . _('Supplier Info') . '</h3></th>
