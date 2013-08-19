@@ -331,9 +331,9 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'ID';
 		$i++;
 	}
-	if (mb_strlen($_POST['SuppName']) > 40
-		OR mb_strlen($_POST['SuppName']) == 0
-		OR $_POST['SuppName'] == '') {
+	if (mb_strlen(trim($_POST['SuppName'])) > 40
+		OR mb_strlen(trim($_POST['SuppName'])) == 0
+		OR trim($_POST['SuppName']) == '') {
 
 		$InputError = 1;
 		prnMsg(_('The supplier name must be entered and be forty characters or less long'),'error');
@@ -671,25 +671,25 @@ if (!isset($SupplierID)) {
 
 	echo '<table class="selection">';
 	echo '<tr><td>' . _('Supplier Code') . ':</td>
-			<td><input type="text" name="SupplierID" size="11" maxlength="10" /></td>
+		<td><input type="text" pattern="(?!^\s+$)[^><+-]{1,10}" title="'._('The supplier id should not be within 10 legal characters and cannot be blank').'" required="required" name="SupplierID" placeholder="'._('within 10 characters').'" size="11" maxlength="10" /></td>
 		</tr>';
 	echo '<tr><td>' . _('Supplier Name') . ':</td>
-			<td><input type="text" name="SuppName" size="42" maxlength="40" /></td>
+			<td><input type="text" pattern="(?!^\s+$)[^<>+-]{1,40}" required="required" title="'._('The supplier name should not be blank and should be less than 40 legal characters').'" name="SuppName" size="42" placeholder="'._('Within 40 legal characters').'" maxlength="40" /></td>
 		</tr>';
 	echo '<tr><td>' . _('Address Line 1 (Street)') . ':</td>
-			<td><input type="text" name="Address1" size="42" maxlength="40" /></td>
+			<td><input type="text" pattern=".{1,40}" title="'._('The input should be less than 40 characters').'" placeholder="'._('Less than 40 characters').'" name="Address1" size="42" maxlength="40" /></td>
 		</tr>';
 	echo '<tr><td>' . _('Address Line 2 (Street)') . ':</td>
-			<td><input type="text" name="Address2" size="42" maxlength="40" /></td>
+			<td><input type="text" name="Address2" pattern=".{1,40}" title="'._('The input should be less than 40 characters').'" placeholder="'._('Less than 40 characters').'" size="42" maxlength="40" /></td>
 		</tr>';
 	echo '<tr><td>' . _('Address Line 3 (Suburb/City)') . ':</td>
-			<td><input type="text" name="Address3" size="42" maxlength="40" /></td>
+			<td><input type="text" title="'._('The input should be less than 40 characters').'" placeholder="'._('Less than 40 characters').'" name="Address3" size="42" maxlength="40" /></td>
 		</tr>';
 	echo '<tr><td>' . _('Address Line 4 (State/Province)') . ':</td>
-			<td><input type="text" name="Address4" size="42" maxlength="40" /></td>
+			<td><input type="text" name="Address4" placeholder="'._('Less than 50 characters').'" size="42" maxlength="50" /></td>
 		</tr>';
 	echo '<tr><td>' . _('Address Line 5 (Postal Code)') . ':</td>
-			<td><input type="text" name="Address5" size="42" maxlength="40" /></td>
+			<td><input type="text" name="Address5" size="42" placeholder="'._('Less than 40 characters').'" maxlength="40" /></td>
 		</tr>';
 
 	echo '<tr>
@@ -708,13 +708,13 @@ if (!isset($SupplierID)) {
 		</tr>';
 
 	echo '<tr><td>' . _('Telephone') . ':</td>
-			<td><input type="text" name="Phone" size="30" maxlength="40" /></td>
+			<td><input type="tel" pattern="[\s\d+)(-]{1,40}" title="'._('The input should be phone number').'" placeholder="'._('only number + - ( and ) allowed').'" name="Phone" size="30" maxlength="40" /></td>
 		</tr>';
 	echo '<tr><td>' . _('Facsimile') . ':</td>
-			<td><input type="text" name="Fax" size="30" maxlength="40" /></td>
+			<td><input type="tel" pattern="[\s\d+)(-]{1,40}" title="'._('The input should be fax number').'" placeholder="'._('only number + - ( and ) allowed').'" name="Fax" size="30" maxlength="40" /></td>
 		</tr>';
 	echo '<tr><td>' . _('Email Address') . ':</td>
-			<td><input type="text" name="Email" size="30" maxlength="40" /></td>
+			<td><input type="email" name="Email" required="true" title="'._('Only email address are allowed').'" placeholder="'._('email format such as xx@mail.cn').'" size="30" maxlength="40" /></td>
 		</tr>';
 	echo '<tr><td>' . _('Supplier Type') . ':</td>
 			<td><select name="SupplierType">';
@@ -735,7 +735,7 @@ if (!isset($SupplierID)) {
 			<td><input type="text" name="BankRef" value="0" size="13" maxlength="12" /></td>
 		</tr>';
 	echo '<tr><td>' . _('Bank Account No') . ':</td>
-			<td><input type="text" name="BankAct" size="31" maxlength="30" /></td></tr>';
+			<td><input type="text" placeholder="'._('Less than 30 characters').'" name="BankAct" size="31" maxlength="30" /></td></tr>';
 
 	$result=DB_query("SELECT terms, termsindicator FROM paymentterms", $db);
 
@@ -763,7 +763,7 @@ if (!isset($SupplierID)) {
 	DB_data_seek($result, 0);
 	echo '</select></td></tr>';
 	echo '<tr><td>' . _('Tax Reference') . ':</td>
-			<td><input type="text" name="TaxRef" size="21" maxlength="20" /></td></tr>';
+			<td><input type="text" name="TaxRef" placehoder="'._('Within 20 characters').'" size="21" maxlength="20" /></td></tr>';
 
 	$result=DB_query("SELECT currency, currabrev FROM currencies", $db);
 	if (!isset($_POST['CurrCode'])){
@@ -886,15 +886,15 @@ if (!isset($SupplierID)) {
 	echo '<tr><td>' . _('Supplier Name') . ':</td>
 			<td><input '.(in_array('Name',$Errors) ? 'class="inputerror"' : '').' type="text" name="SuppName" value="' . $_POST['SuppName'] . '" size="42" maxlength="40" /></td></tr>';
 	echo '<tr><td>' . _('Address Line 1 (Street)') . ':</td>
-			<td><input type="text" name="Address1" value="' . $_POST['Address1'] . '" size="42" maxlength="40" /></td></tr>';
+			<td><input type="text" name="Address1"  value="' . $_POST['Address1'] . '" size="42" maxlength="40" /></td></tr>';
 	echo '<tr><td>' . _('Address Line 2 (Street)') . ':</td>
 			<td><input type="text" name="Address2" value="' . $_POST['Address2'] . '" size="42" maxlength="40" /></td></tr>';
 	echo '<tr><td>' . _('Address Line 3 (Suburb/City)') . ':</td>
-			<td><input type="text" name="Address3" value="' . $_POST['Address3'] . '" size="42" maxlength="40" /></td></tr>';
+			<td><input type="text" name="Address3" placeholder="'._('Within 40 characters').'" value="' . $_POST['Address3'] . '" size="42" maxlength="40" /></td></tr>';
 	echo '<tr><td>' . _('Address Line 4 (State/Province)') . ':</td>
-			<td><input type="text" name="Address4" value="' . $_POST['Address4'] . '" size="42" maxlength="40" /></td></tr>';
+			<td><input type="text" name="Address4" value="' . $_POST['Address4'] . '" placeholder="'._('Within 40 characters').'" size="42" maxlength="40" /></td></tr>';
 	echo '<tr><td>' . _('Address Line 5 (Postal Code)') . ':</td>
-			<td><input type="text" name="Address5" value="' . $_POST['Address5'] . '" size="42" maxlength="40" /></td></tr>';
+			<td><input type="text" name="Address5" value="' . $_POST['Address5'] . '" size="42" placeholder="'._('Witin 40 characters').'" maxlength="40" /></td></tr>';
 
 	echo '<tr>
 			<td>' . _('Country') . ':</td>
@@ -912,11 +912,11 @@ if (!isset($SupplierID)) {
 		</tr>';
 
 	echo '<tr><td>' . _('Telephone') . ':</td>
-			<td><input '.(in_array('Name',$Errors) ? 'class="inputerror"' : '').' type="text" name="Phone" value="' . $_POST['Phone'] . '" size="42" maxlength="40" /></td></tr>';
+			<td><input '.(in_array('Name',$Errors) ? 'class="inputerror"' : '').' type="tel" pattern="[\s\d+()-]{1,40}" placeholder="'._('Only digit blank ( ) and - allowed').'" name="Phone" value="' . $_POST['Phone'] . '" size="42" maxlength="40" /></td></tr>';
 	echo '<tr><td>' . _('Facsimile') . ':</td>
-			<td><input '.(in_array('Name',$Errors) ? 'class="inputerror"' : '').' type="text" name="Fax" value="' . $_POST['Fax'] . '" size="42" maxlength="40" /></td></tr>';
+			<td><input '.(in_array('Name',$Errors) ? 'class="inputerror"' : '').' type="tel" pattern="[\s\d+()-]{1,40}" placeholder="'._('Only digit blank ( ) and - allowed').'" name="Fax" value="' . $_POST['Fax'] . '" size="42" maxlength="40" /></td></tr>';
 	echo '<tr><td>' . _('Email Address') . ':</td>
-			<td><input '.(in_array('Name',$Errors) ? 'class="inputerror"' : '').' type="text" name="Email" value="' . $_POST['Email'] . '" size="42" maxlength="40" /></td></tr>';
+			<td><input '.(in_array('Name',$Errors) ? 'class="inputerror"' : '').' type="email" title="'._('The input must be in email format').'" name="Email" value="' . $_POST['Email'] . '" size="42" maxlength="40" /></td></tr>';
 	echo '<tr><td>' . _('Supplier Type') . ':</td>
 			<td><select name="SupplierType">';
 	$result=DB_query("SELECT typeid, typename FROM suppliertype", $db);
