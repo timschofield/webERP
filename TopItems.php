@@ -160,14 +160,14 @@ if (!(isset($_POST['Search']))) {
 	echo '<table class="selection">';
 	$TableHeader = '<tr>
 						<th>' . _('#') . '</th>
-						<th class="assending" onclick="SortSelect(this)">' . _('Code') . '</th>
-						<th class="assending" onclick="SortSelect(this)">' . _('Description') . '</th>
-						<th class="assending" onclick="SortSelect(this)">' . _('Total Invoiced') . '</th>
-						<th class="assending" onclick="SortSelect(this)">' . _('Units') . '</th>
-						<th class="assending" onclick="SortSelect(this)">' . _('Value Sales') . '</th>
-						<th class="assending" onclick="SortSelect(this)">' . _('On Hand') . '</th>
-						<th class="assending" onclick="SortSelect(this)">' . _('On Order') . '</th>
-						<th class="assending" onclick="SortSelect(this)">' . _('Stock (Days)') . '</th>
+						<th class="ascending" onclick="SortSelect(this)">' . _('Code') . '</th>
+						<th class="ascending" onclick="SortSelect(this)">' . _('Description') . '</th>
+						<th class="ascending" onclick="SortSelect(this)">' . _('Total Invoiced') . '</th>
+						<th class="ascending" onclick="SortSelect(this)">' . _('Units') . '</th>
+						<th class="ascending" onclick="SortSelect(this)">' . _('Value Sales') . '</th>
+						<th class="ascending" onclick="SortSelect(this)">' . _('On Hand') . '</th>
+						<th class="ascending" onclick="SortSelect(this)">' . _('On Order') . '</th>
+						<th class="ascending" onclick="SortSelect(this)">' . _('Stock (Days)') . '</th>
 					</tr>';
 	echo $TableHeader;
 	echo '<input type="hidden" value="' . $_POST['Location'] . '" name="Location" />

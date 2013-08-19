@@ -169,8 +169,8 @@ if (!isset($SelectedType)){
 
 	echo '<table class="selection">';
 	echo '<tr>
-		<th class="assending" onclick="SortSelect(this)" >' . _('Type ID') . '</th>
-		<th class="assending" onclick="SortSelect(this)" >' . _('Type Name') . '</th>
+		<th class="ascending" onclick="SortSelect(this)" >' . _('Type ID') . '</th>
+		<th class="ascending" onclick="SortSelect(this)" >' . _('Type Name') . '</th>
 		</tr>';
 
 $k=0; //row colour counter
