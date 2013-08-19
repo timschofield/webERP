@@ -50,10 +50,8 @@ if (isset($_POST['submit'])) {
 		$InputError = 1;
 		prnMsg(_('User names cannot contain any of the following characters') . " - ' & + \" \\ " . _('or a space'),'error');
 	} elseif (mb_strlen($_POST['Password'])<5){
-		if (!$SelectedUser){
 			$InputError = 1;
 			prnMsg(_('The password entered must be at least 5 characters long'),'error');
-		}
 	} elseif (mb_strstr($_POST['Password'],$_POST['UserID'])!= False){
 		$InputError = 1;
 		prnMsg(_('The password cannot contain the user id'),'error');
@@ -63,8 +61,7 @@ if (isset($_POST['submit'])) {
 	$i=0;
 	$ModulesAllowed = '';
 	while ($i < count($ModuleList)){
-		$FormVbl = 'Module_' . $i;
-		$ModulesAllowed .= $_POST[($FormVbl)] . ',';
+		$ModulesAllowed .= ' '. ',';//no any modules allowed for the suppliers
 		$i++;
 	}
 
@@ -116,7 +113,7 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 echo '<table class="selection">
 		<tr>
 			<td>' . _('User Login') . ':</td>
-			<td><input type="text" name="UserID" size="22" maxlength="20" /></td>
+			<td><input type="text" pattern="[^><+-]{4,20}" title="'._('The user ID must has more than 4 legal characters').'" required="required" placeholder="'._('More than 4 characters').'" name="UserID" size="22" maxlength="20" /></td>
 		</tr>';
 
 
@@ -134,19 +131,19 @@ if (!isset($_POST['Email'])) {
 }
 echo '<tr>
 		<td>' . _('Password') . ':</td>
-		<td><input type="password" name="Password" size="22" maxlength="20" value="' . $_POST['Password'] . '" /></td>
+		<td><input type="password" pattern=".{5,20}" placeholder="'._('More than 5 characters').'" required="required" title="'._('Password must be more than 5 characters').'"  name="Password" size="22" maxlength="20" value="' . $_POST['Password'] . '" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Full Name') . ':</td>
-		<td><input type="text" name="RealName" value="' . $_POST['RealName'] . '" size="36" maxlength="35" /></td>
+		<td><input type="text" pattern=".{0,35}" title="'._('Must be less than 35 characters').'" placeholder="'._('User name').'" name="RealName" value="' . $_POST['RealName'] . '" size="36" maxlength="35" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Telephone No') . ':</td>
-		<td><input type="text" name="Phone" value="' . $_POST['Phone'] . '" size="32" maxlength="30" /></td>
+		<td><input type="tel" pattern="[\s+()-\d]{1,30}" title="'._('The input must be phone number').'" placeholder="'._('number and allowed charactrs').'" name="Phone" value="' . $_POST['Phone'] . '" size="32" maxlength="30" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Email Address') .':</td>
-		<td><input type="text" name="Email" value="' . $_POST['Email'] .'" size="32" maxlength="55" /></td>
+		<td><input type="email" name="Email" title="'._('The input must be email address').'" placeholder="'._('email address format').'" value="' . $_POST['Email'] .'" size="32" maxlength="55" /></td>
 	</tr>';
 
 
