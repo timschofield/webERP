@@ -322,13 +322,13 @@ if (isset($_POST['TenderType']) and $_POST['TenderType']!=3 and isset($_SESSION[
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Items to offer from').' '.$Supplier .'</p>';
 	echo '<table>
 			<tr>
-				<th>'._('Stock ID').'</th>
-				<th>'._('Description').'</th>
-				<th>'._('Quantity').'</th>
-				<th>'._('UOM').'</th>
-				<th>'._('Price').' ('.$Currency.')</th>
-				<th>'._('Line Total').' ('.$Currency.')</th>
-				<th>'._('Expiry Date').'</th>
+				<th class="assending" onclick="SortSelect(this)">'._('Stock ID').'</th>
+				<th class="assending" onclick="SortSelect(this)">'._('Description').'</th>
+				<th class="assending" onclick="SortSelect(this)">'._('Quantity').'</th>
+				<th class="assending" onclick="SortSelect(this)">'._('UOM').'</th>
+				<th class="assending" onclick="SortSelect(this)">'._('Price').' ('.$Currency.')</th>
+				<th class="assending" onclick="SortSelect(this)">'._('Line Total').' ('.$Currency.')</th>
+				<th class="assending" onclick="SortSelect(this)">'._('Expiry Date').'</th>
 			</tr>';
 	$k=0;
 	foreach ($_SESSION['offer'.$identifier]->LineItems as $LineItems) {
@@ -346,11 +346,11 @@ if (isset($_POST['TenderType']) and $_POST['TenderType']!=3 and isset($_SESSION[
 			echo '<input type="hidden" name="StockID'.$LineItems->LineNo.'" value="'.$LineItems->StockID.'" />';
 			echo '<td>'.$LineItems->StockID.'</td>
 					<td>'.$LineItems->ItemDescription.'</td>
-					<td><input type="text" class="number" name="Qty'.$LineItems->LineNo.'" value="'.locale_number_format($LineItems->Quantity,$LineItems->DecimalPlaces).'" /></td>
+					<td><input type="text" class="number" required="true" name="Qty'.$LineItems->LineNo.'" value="'.locale_number_format($LineItems->Quantity,$LineItems->DecimalPlaces).'" /></td>
 					<td>'.$LineItems->Units.'</td>
-					<td><input type="text" class="number" name="Price'.$LineItems->LineNo.'" value="'.locale_number_format($LineItems->Price,2,'.','').'" /></td>
+					<td><input type="text" class="number" required="true" name="Price'.$LineItems->LineNo.'" value="'.locale_number_format($LineItems->Price,2,'.','').'" /></td>
 					<td class="number">'.locale_number_format($LineItems->Price*$LineItems->Quantity,2).'</td>
-					<td><input type="text" size="11" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="expirydate'.$LineItems->LineNo.'" value="'.$LineItems->ExpiryDate.'" /></td>
+					<td><input type="text" size="11" class="date" required="true" alt="'.$_SESSION['DefaultDateFormat'].'" name="expirydate'.$LineItems->LineNo.'" value="'.$LineItems->ExpiryDate.'" /></td>
 					<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier.'&Delete=' . $LineItems->LineNo . '&Type=' . $_POST['TenderType'] . '">' . _('Remove') . '</a></td>
 				</tr>';
 		}
@@ -554,12 +554,12 @@ if (isset($_POST['TenderType'])
 			if ($MyItemRow['suppliersuom']=='') {
 				$MyItemRow['suppliersuom']=$MyItemRow['units'];
 			}
-			echo '<td><input type="text" class="number" size="10" name="Qty'. $i . '" value="' . locale_number_format($MyItemRow['quantity'], $MyItemRow['decimalplaces']) . '" /></td>
+			echo '<td><input type="text" class="number" title="'._('Input must be in numeric format').'" size="10" name="Qty'. $i . '" value="' . locale_number_format($MyItemRow['quantity'], $MyItemRow['decimalplaces']) . '" /></td>
 				<input type="hidden" name="UOM'. $i . '" value="' . $MyItemRow['units'] . '" />
 				<input type="hidden" name="DecimalPlaces'. $i . '" value="' . $MyItemRow['decimalplaces'] . '" />
 				<td>' . $MyItemRow['suppliersuom'] . '</td>
 				<td>' . $myrow[1] . '</td>
-				<td><input type="text" class="number" size="10" name="Price'. $i . '" value="0.00" /></td>
+				<td><input type="text" class="number" title="'._('Input must be in numeric format').'"  size="10" name="Price'. $i . '" value="0.00" /></td>
 				<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="RequiredByDate'. $i . '" size="11" value="' . ConvertSQLDate($MyItemRow['requiredbydate']) . '" /></td>
 				</tr>';
 			$i++;
@@ -685,12 +685,12 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 		echo '<table cellpadding="1">';
 
 		$TableHeader = '<tr>
-						<th>' . _('Code')  . '</th>
-						<th>' . _('Description') . '</th>
-						<th>' . _('Units') . '</th>
-						<th>' . _('Image') . '</th>
-						<th>' . _('Quantity') . '</th>
-						<th>' . _('Price') .' ('.$Currency.')</th>
+						<th class="assending" onclick="SortSelect(this)">' . _('Code')  . '</th>
+						<th class="assending" onclick="SortSelect(this)">' . _('Description') . '</th>
+						<th class="assending" onclick="SortSelect(this)">' . _('Units') . '</th>
+						<th class="assending" onclick="SortSelect(this)">' . _('Image') . '</th>
+						<th class="assending" onclick="SortSelect(this)">' . _('Quantity') . '</th>
+						<th class="assending" onclick="SortSelect(this)">' . _('Price') .' ('.$Currency.')</th>
 					</tr>';
 		echo $TableHeader;
 
@@ -740,8 +740,8 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 					<td>'.$myrow['description'].'</td>
 					<td>'.$UOM.'</td>
 					<td>'.$ImageSource.'</td>
-					<td><input class="number" type="text" size="6" value="0" name="Qty'.$i.'" /></td>
-					<td><input class="number" type="text" size="12" value="0" name="Price'.$i.'" /></td>
+					<td><input class="number" title="'._('The input must be numeric').'" type="text" size="6" value="0" name="Qty'.$i.'" /></td>
+					<td><input class="number" title="'._('The input must be numeric').'" type="text" size="12" value="0" name="Price'.$i.'" /></td>
 					<input type="hidden" size="12" value="'.$myrow['stockid'].'" name="StockID'.$i.'" />
 					<input type="hidden" value="'.$UOM.'" name="uom'.$i.'" />
 					</tr>';
