@@ -250,7 +250,7 @@ if (!isset($_SESSION['tender'.$identifier])
 		</tr>';
 	echo '<tr>
 			<td>' . _('Delivery Must Be Made Before') . '</td>
-			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="RequiredByDate" size="11" value="' . ConvertSQLDate($_SESSION['tender'.$identifier]->RequiredByDate) . '" /></td>
+			<td><input type="text" class="date" required="required" alt="' . $_SESSION['DefaultDateFormat'] . '" name="RequiredByDate" size="11" value="' . ConvertSQLDate($_SESSION['tender'.$identifier]->RequiredByDate) . '" /></td>
 		</tr>';
 
 	if (!isset($_POST['StkLocation']) or $_POST['StkLocation']==''){
@@ -360,35 +360,35 @@ if (!isset($_SESSION['tender'.$identifier])
 	 */
 	echo '<tr>
 			<td>' . _('Delivery Contact') . ':</td>
-			<td><input type="text" name="Contact" size="41"  value="' . $_SESSION['tender'.$identifier]->Contact . '" /></td>
+			<td><input type="text" name="Contact" size="41"  value="' . $_SESSION['tender'.$identifier]->Contact . '" readonly /></td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('Address') . ' 1 :</td>
-			<td><input type="text" name="DelAdd1" size="41" maxlength="40" value="' . $_POST['DelAdd1'] . '" /></td>
+			<td><input type="text" name="DelAdd1" pattern=".{1,40}" title="'._('The address should not be over 40 characters').'" size="41" maxlength="40" value="' . $_POST['DelAdd1'] . '" /></td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('Address') . ' 2 :</td>
-			<td><input type="text" name="DelAdd2" size="41" maxlength="40" value="' . $_POST['DelAdd2'] . '" /></td>
+			<td><input type="text" name="DelAdd2" pattern=".{1,40}" title="'._('The address should not be over 40 characters').'" size="41" size="41" maxlength="40" value="' . $_POST['DelAdd2'] . '" /></td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('Address') . ' 3 :</td>
-			<td><input type="text" name="DelAdd3" size="41" maxlength="40" value="' . $_POST['DelAdd3'] . '" /></td>
+			<td><input type="text" name="DelAdd3" pattern=".{1,40}" title="'._('The address should not be over 40 characters').'" size="41" size="41" maxlength="40" value="' . $_POST['DelAdd3'] . '" /></td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('Address') . ' 4 :</td>
-			<td><input type="text" name="DelAdd4" size="21" maxlength="20" value="' . $_POST['DelAdd4'] . '" /></td>
+			<td><input type="text" name="DelAdd4" pattern=".{1,40}" title="'._('The characters should not be over 20 characters').'"  size="41" maxlength="40" value="' . $_POST['DelAdd4'] . '" /></td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('Address') . ' 5 :</td>
-			<td><input type="text" name="DelAdd5" size="16" maxlength="15" value="' . $_POST['DelAdd5'] . '" /></td>
+			<td><input type="text" name="DelAdd5" pattern=".{1,20}" title="'._('The characters should not be over 20 characters').'" size="21" maxlength="20" value="' . $_POST['DelAdd5'] . '" /></td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('Address') . ' 6 :</td>
-			<td><input type="text" name="DelAdd6" size="16" maxlength="15" value="' . $_POST['DelAdd6'] . '" /></td>
+			<td><input type="text" name="DelAdd6" pattern=".{1,15}" title="'._('The characters should not be over 15 characters').'"  size="16" maxlength="15" value="' . $_POST['DelAdd6'] . '" /></td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('Phone') . ':</td>
-			<td><input type="text" name="Tel" size="31" maxlength="30" value="' . $_SESSION['tender'.$identifier]->Telephone . '" /></td>
+			<td><input type="tel" name="Tel" pattern="[\d+)(\s]{1,25}" size="31" title="'._('The input should be telephone number and should not be over 25 charaters').'" maxlength="25" value="' . $_SESSION['tender'.$identifier]->Telephone . '" /></td>
 		</tr>';
 	echo '</table><br />';
 
@@ -549,15 +549,15 @@ if (isset($_POST['Suppliers'])) {
 				<td>' . _('Enter a partial Name') . ':</td>
 				<td>';
 	if (isset($_POST['Keywords'])) {
-		echo '<input type="text" name="Keywords" value="' . $_POST['Keywords'] . '" size="20" maxlength="25" />';
+		echo '<input type="text" placeholder="'._('Left it blank to show all').'" name="Keywords" value="' . $_POST['Keywords'] . '" size="20" maxlength="25" />';
 	} else {
-		echo '<input type="text" name="Keywords" size="20" maxlength="25" />';
+		echo '<input type="text" placeholder="'._('Left it blank to show all').'" name="Keywords" size="20" maxlength="25" />';
 	}
 	echo '</td><td><b>' . _('OR') . '</b></td><td>' . _('Enter a partial Code') . ':</td><td>';
 	if (isset($_POST['SupplierCode'])) {
-		echo '<input type="text" name="SupplierCode" value="' . $_POST['SupplierCode'] . '" size="15" maxlength="18" />';
+		echo '<input type="text" placeholder="'._('Left it blank to show all').'" name="SupplierCode" value="' . $_POST['SupplierCode'] . '" size="15" maxlength="18" />';
 	} else {
-		echo '<input type="text" name="SupplierCode" size="15" maxlength="18" />';
+		echo '<input type="text" placeholder="'._('Left it blank to show all').'" name="SupplierCode" size="15" maxlength="18" />';
 	}
 	echo '</td></tr></table><br /><div class="centre"><input type="submit" name="SearchSupplier" value="' . _('Search Now') . '" /></div>';
 	echo '</div>
@@ -604,19 +604,21 @@ if (isset($_POST['SearchSupplier'])) {
 		<br />
 		<table cellpadding="2">';
 	echo '<tr>
-	  		<th>' . _('Code') . '</th>
-			<th>' . _('Supplier Name') . '</th>
-			<th>' . _('Currency') . '</th>
-			<th>' . _('Address 1') . '</th>
-			<th>' . _('Address 2') . '</th>
-			<th>' . _('Address 3') . '</th>
-			<th>' . _('Address 4') . '</th>
+	  		<th class="assending" onclick="SortSelect(this)">' . _('Code') . '</th>
+			<th class="assending" onclick="SortSelect(this)">' . _('Supplier Name') . '</th>
+			<th class="assending" onclick="SortSelect(this)">' . _('Currency') . '</th>
+			<th class="assending" onclick="SortSelect(this)">' . _('Address 1') . '</th>
+			<th class="assending" onclick="SortSelect(this)">' . _('Address 2') . '</th>
+			<th class="assending" onclick="SortSelect(this)">' . _('Address 3') . '</th>
+			<th class="assending" onclick="SortSelect(this)">' . _('Address 4') . '</th>
 		</tr>';
 	$j = 1;
 	$k = 0; //row counter to determine background colour
 	$RowIndex = 0;
 	if (DB_num_rows($result) <> 0) {
 		DB_data_seek($result, ($_POST['PageOffset'] - 1) * $_SESSION['DisplayRecordsMax']);
+	}else{
+		prnMsg(_('There are no suppliers data returned, one reason maybe no email addresses set for those suppliers'),'warn');
 	}
 	while (($myrow = DB_fetch_array($result)) and ($RowIndex <> $_SESSION['DisplayRecordsMax'])) {
 		if ($k == 1) {
@@ -683,9 +685,9 @@ if (isset($_POST['Items'])) {
 		<td>' . _('Enter partial') . '<b> ' . _('Description') . '</b>:</td>
 		<td>';
 	if (isset($_POST['Keywords'])) {
-		echo '<input type="text" name="Keywords" value="' . $_POST['Keywords'] . '" size="20" maxlength="25" />';
+		echo '<input type="text" name="Keywords" placeholder="'._('Leave it bank to show all').'" value="' . $_POST['Keywords'] . '" size="20" maxlength="25" />';
 	} else {
-		echo '<input type="text" name="Keywords" size="20" maxlength="25" />';
+		echo '<input type="text" name="Keywords" placeholder="'._('Leave it bank to show all').'" size="20" maxlength="25" />';
 	}
 	echo '</td>
 		</tr>
@@ -694,9 +696,9 @@ if (isset($_POST['Items'])) {
 			<td><b>' . _('OR') . ' ' . '</b>' . _('Enter partial') . ' <b>' . _('Stock Code') . '</b>:</td>
 			<td>';
 	if (isset($_POST['StockCode'])) {
-		echo '<input type="text" name="StockCode" value="' . $_POST['StockCode'] . '" size="15" maxlength="18" />';
+		echo '<input type="text" name="StockCode" placeholder="'._('Leave it bank to show all').'" value="' . $_POST['StockCode'] . '" size="15" maxlength="18" />';
 	} else {
-		echo '<input type="text" name="StockCode" size="15" maxlength="18" />';
+		echo '<input type="text" name="StockCode" placeholder="'._('Leave it bank to show all').'" size="15" maxlength="18" />';
 	}
 	echo '</td></tr>
 		</table>
@@ -838,11 +840,11 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 
 		echo '<table cellpadding="1">';
 		echo '<tr>
-				<th>' . _('Code')  . '</th>
-				<th>' . _('Description') . '</th>
-				<th>' . _('Units') . '</th>
-				<th>' . _('Image') . '</th>
-				<th>' . _('Quantity') . '</th>
+				<th class="assending" onclick="SortSelect(this)">' . _('Code')  . '</th>
+				<th class="assending" onclick="SortSelect(this)">' . _('Description') . '</th>
+				<th class="assending" onclick="SortSelect(this)">' . _('Units') . '</th>
+				<th class="assending" onclick="SortSelect(this)">' . _('Image') . '</th>
+				<th class="assending" onclick="SortSelect(this)">' . _('Quantity') . '</th>
 			</tr>';
 
 		$i = 0;
