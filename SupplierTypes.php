@@ -39,7 +39,7 @@ if (isset($_POST['submit'])) {
 		$i++;
 	}
 
-	if (mb_strlen($_POST['TypeName'])==0) {
+	if (mb_strlen(trim($_POST['TypeName']))==0) {
 		$InputError = 1;
 		echo prnMsg(_('The supplier type name description must contain at least one character'),'error');
 		$Errors[$i] = 'SupplierType';
@@ -169,8 +169,8 @@ if (!isset($SelectedType)){
 
 	echo '<table class="selection">';
 	echo '<tr>
-		<th>' . _('Type ID') . '</th>
-		<th>' . _('Type Name') . '</th>
+		<th class="assending" onclick="SortSelect(this)" >' . _('Type ID') . '</th>
+		<th class="assending" onclick="SortSelect(this)" >' . _('Type Name') . '</th>
 		</tr>';
 
 $k=0; //row colour counter
@@ -246,7 +246,7 @@ if (! isset($_GET['delete'])) {
 	}
 	echo '<tr>
 			<td>' . _('Type Name') . ':</td>
-			<td><input type="text" name="TypeName" value="' . $_POST['TypeName'] . '" /></td>
+			<td><input type="text"  required="true" pattern="(?!^\s+$)[^<>+-]{1,100}" title="'._('The input should not be over 100 characters and contains illegal characters').'" name="TypeName" placeholder="'._('less than 100 characters').'" value="' . $_POST['TypeName'] . '" /></td>
 		</tr>';
 
 	echo '<tr>
