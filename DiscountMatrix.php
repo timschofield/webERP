@@ -39,8 +39,8 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'DiscountRate';
 		$i++;
 	}
-	if (filter_number_format($_POST['DiscountRate'])<=0 OR filter_number_format($_POST['DiscountRate'])>=100){
-		prnMsg( _('The discount rate applicable for this record is either less than 0% or greater than 100%') . '. ' . _('Numbers between 1 and 99 are expected'),'warn');
+	if (filter_number_format($_POST['DiscountRate'])<=0 OR filter_number_format($_POST['DiscountRate'])>100){
+		prnMsg( _('The discount rate applicable for this record is either less than 0% or greater than 100%') . '. ' . _('Numbers between 1 and 100 are expected'),'warn');
 		$InputError =1;
 		$Errors[$i] = 'DiscountRate';
 		$i++;
