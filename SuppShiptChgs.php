@@ -110,7 +110,7 @@ if (!isset($_POST['ShiptRef'])) {
 echo '<table class="selection">';
 echo '<tr>
 		<td>' . _('Shipment Reference') . ':</td>
-		<td><input type="integer" pattern="[1-9][\d]{0,10}" title="'._('The shiment Ref should be positive integer').'" placeholder="'._('positive integer').'" name="ShiptRef" size="12" maxlength="11" value="' .  $_POST['ShiptRef'] . '" /></td>
+		<td><input class="integer" pattern="[1-9][\d]{0,10}" title="'._('The shiment Ref should be positive integer').'" placeholder="'._('positive integer').'" name="ShiptRef" size="12" maxlength="11" value="' .  $_POST['ShiptRef'] . '" /></td>
 	</tr>';
 echo '<tr>
 		<td>' . _('Shipment Selection') . ':

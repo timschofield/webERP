@@ -696,7 +696,7 @@ if (!isset($_GET['delete'])) {
 	if (!isset($_POST['FwdDate'])) {
 		$_POST['FwdDate']=0;
 	}
-	echo '<td><input ' .(in_array('FwdDate',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="12" type="integer" class="number" name="FwdDate" size="4" maxlength="2" value="'. $_POST['FwdDate'].'" /></td>
+	echo '<td><input ' .(in_array('FwdDate',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="12" class="integer" name="FwdDate" size="4" maxlength="2" value="'. $_POST['FwdDate'].'" /></td>
 		</tr>';
 
 
