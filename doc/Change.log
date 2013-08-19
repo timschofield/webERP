@@ -1,4 +1,5 @@
 webERP Change Log 
+19/8/2013 Exson: Fixed blank validation error in Suppliers.php and make it html5 compatible.
 19/8/2013 Exson: Add warning messages for no suppliers returned in SupplierTenderCreate.php and make it html5 compatible and table sortable.
 19/8/2013 Exson: Make SupplierTenders.php html5 compatible and sortable.
 19/8/2013 Exson: Fixed the validation error which allow blank supplier type and make it html5 compatible and sortable. 
