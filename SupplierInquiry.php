@@ -205,14 +205,14 @@ if (DB_num_rows($TransResult) == 0){
 
 echo '<table width="90%" class="selection">';
 $TableHeader = '<tr>
-					<th>' . _('Trans') . ' #' .'</th>
-					<th>' . _('Type') .	'</th>
-					<th>' . _('Supplier Ref') . '</th>
-					<th>' . _('Date') . '</th>
-					<th>' . _('Total') . '</th>
-					<th>' . _('Allocated') . '</th>
-					<th>' . _('Balance') . '</th>
-					<th>' . _('Comments') . '</th>
+					<th class="ascending" onclick="SortSelect(this)">' . _('Trans') . ' #' .'</th>
+					<th class="ascending" onclick="SortSelect(this)">' . _('Type') .	'</th>
+					<th class="ascending" onclick="SortSelect(this)">' . _('Supplier Ref') . '</th>
+					<th class="ascending" onclick="SortSelect(this)">' . _('Date') . '</th>
+					<th class="ascending" onclick="SortSelect(this)">' . _('Total') . '</th>
+					<th class="ascending" onclick="SortSelect(this)">' . _('Allocated') . '</th>
+					<th class="ascending" onclick="SortSelect(this)">' . _('Balance') . '</th>
+					<th class="ascending" onclick="SortSelect(this)">' . _('Comments') . '</th>
 					<th colspan="2"></th>
 				</tr>';
 
