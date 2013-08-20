@@ -625,7 +625,7 @@ if (!isset($_POST['PostInvoice'])){
 
 	echo '<tr>
 			<td>' . _('Supplier Invoice Reference') . ':</td>
-			<td><input type="text" size="20" maxlength="20" name="SuppReference" value="' . $_SESSION['SuppTrans']->SuppReference . '" /></td>';
+			<td><input type="text" required="required" pattern=".{1,20}" title="'._('The input should not be blank and should be less than 20 characters').'" placeholder="'._('Within 20 characters needed').'" size="20" maxlength="20" name="SuppReference" value="' . $_SESSION['SuppTrans']->SuppReference . '" /></td>';
 
 	if (!isset($_SESSION['SuppTrans']->TranDate)){
 		$_SESSION['SuppTrans']->TranDate= Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m'),Date('d')-1,Date('y')));
@@ -633,7 +633,7 @@ if (!isset($_POST['PostInvoice'])){
 	echo '<td>' . _('Invoice Date') . ' (' . _('in format') . ' ' . $_SESSION['DefaultDateFormat'] . ') :</td>
 		<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" size="11" maxlength="10" name="TranDate" value="' . $_SESSION['SuppTrans']->TranDate . '" /></td>
 		<td>' . _('Exchange Rate') . ':</td>
-		<td><input type="text" class="number" size="11" maxlength="10" name="ExRate" value="' . locale_number_format($_SESSION['SuppTrans']->ExRate,'Variable') . '" /></td>
+		<td><input type="text" class="number" size="11" maxlength="10" name="ExRate" value="' . locale_number_format($_SESSION['SuppTrans']->ExRate,8) . '" /></td>
 	</tr>
 	</table>';
 
@@ -865,7 +865,7 @@ if (!isset($_POST['PostInvoice'])){
 				<table class="selection">
 				<tr>
 					<td>' . _('Amount in supplier currency') . ':</td>
-					<td colspan="2" class="number"><input type="text" size="12" maxlength="10" name="OvAmount" value="' . locale_number_format( $_SESSION['SuppTrans']->OvAmount,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '" /></td>
+					<td colspan="2" class="number"><input type="text" class="number" title="'._('The input must be numeric').'" size="12" maxlength="10" name="OvAmount" value="' . locale_number_format( $_SESSION['SuppTrans']->OvAmount,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '" /></td>
 				</tr>';
 	}
 
@@ -875,10 +875,10 @@ if (!isset($_POST['PostInvoice'])){
 
 	if ($_POST['OverRideTax']=='Man'){
 		echo '<option value="Auto">' . _('Automatic') . '</option>
-				<option selected="selected" value="Man">' . _('Manual') . '</option>';
+				<option selected="selected" value="Man">' . _('Manually') . '</option>';
 	} else {
 		echo '<option selected="selected" value="Auto">' . _('Automatic') . '</option>
-				<option  value="Man">' . _('Manual') . '</option>';
+				<option  value="Man">' . _('Manually') . '</option>';
 	}
 
 	echo '</select></td>
