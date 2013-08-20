@@ -1,4 +1,5 @@
 webERP Change Log 
+20/8/2013 Exson: Make SupplierInquiry.php table sortable
 20/8/2013 Exson: SupplierContacts.php html5 compatible and table sortable.
 20/8/2013 Exson: Make SupplierCredit.php html5 compatible.
 20/8/2013 Exson: Use manually instead of manual to make distinguish translation possible and make it html5 compatible in SupplierInvoice.php.
