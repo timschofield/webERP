@@ -281,7 +281,7 @@ echo '<br />
 		<table class="selection">';
 echo '<tr>
 		<td style="color:red">' . _('Supplier Credit Note Reference') . ':</td>
-		<td><input type="text" size="20" maxlength="20" name="SuppReference" value="' . $_SESSION['SuppTrans']->SuppReference . '" /></td>';
+		<td><input type="text" required="required" size="20" maxlength="20" name="SuppReference" value="' . $_SESSION['SuppTrans']->SuppReference . '" /></td>';
 
 if (!isset($_SESSION['SuppTrans']->TranDate)){
 	$_SESSION['SuppTrans']->TranDate= Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m'),Date('d')-1,Date('y')));
@@ -519,7 +519,7 @@ if ($_SESSION['SuppTrans']->GLLink_Creditors ==1){
 			<tr>
 				<td style="color:red">' . _('Credit Amount in Supplier Currency') .
 		  ':</td>
-		  	<td colspan="2" class="number"><input type="text" size="12" maxlength="10" name="OvAmount" value="' . locale_number_format($_SESSION['SuppTrans']->OvAmount,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '" /></td></tr>';
+		  	<td colspan="2" class="number"><input type="text" size="12" class="number" maxlength="10" name="OvAmount" value="' . locale_number_format($_SESSION['SuppTrans']->OvAmount,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '" /></td></tr>';
 }
 
 echo '<tr>
