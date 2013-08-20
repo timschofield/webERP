@@ -85,7 +85,7 @@ if (isset($_GET['Delete'])){
 echo '<table class="selection">';
 echo '<tr>
 		<th colspan="6"><h3>' . _('Credits Against Goods Received Selected') . '</h3></th>
-	</tr>';
+	</tr></table><table class="selection">';
 $TableHeader = '<tr>
 					<th>' . _('GRN') . '</th>
 					<th>' . _('Item Code') . '</th>
@@ -177,20 +177,20 @@ echo '<br />
 echo '<input type="text" name="Show_Since" maxlength="11" size="12" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" value="' . $_POST['Show_Since'] . '" />
 		<input type="submit" name="FindGRNs" value="' . _('Display GRNs') . '" />
 		<h3> ' . _('From') . ' ' . $_SESSION['SuppTrans']->SupplierName . '</h3></th>
-	</tr>';
+	</tr></table><table class="selection">';
 
 if (DB_num_rows($GRNResults)>0){
 	$TableHeader = '<tr>
-						<th>' . _('GRN') . '</th>
-						<th>' . _('Order') . '</th>
-						<th>' . _('Item Code') . '</th>
-						<th>' . _('Description') . '</th>
-						<th>' . _('Delivered') . '</th>
-						<th>' . _('Total Qty') . '<br />' . _('Received') . '</th>
-						<th>' . _('Qty Invoiced') . '</th>
-						<th>' . _('Qty Yet') . '<br />' . _('invoice') . '</th>
-						<th>' . _('Price') . '<br />' . $_SESSION['SuppTrans']->CurrCode . '</th>
-						<th>' . _('Line Value') . '<br />' . _('In') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
+						<th class="ascending" onclick="SortSelect(this)">' . _('GRN') . '</th>
+						<th class="ascending" onclick="SortSelect(this)">' . _('Order') . '</th>
+						<th class="ascending" onclick="SortSelect(this)">' . _('Item Code') . '</th>
+						<th class="ascending" onclick="SortSelect(this)">' . _('Description') . '</th>
+						<th class="ascending" onclick="SortSelect(this)">' . _('Delivered') . '</th>
+						<th class="ascending" onclick="SortSelect(this)">' . _('Total Qty') . '<br />' . _('Received') . '</th>
+						<th class="ascending" onclick="SortSelect(this)">' . _('Qty Invoiced') . '</th>
+						<th class="ascending" onclick="SortSelect(this)">' . _('Qty Yet') . '<br />' . _('invoice') . '</th>
+						<th class="ascending" onclick="SortSelect(this)">' . _('Price') . '<br />' . $_SESSION['SuppTrans']->CurrCode . '</th>
+						<th class="ascending" onclick="SortSelect(this)">' . _('Line Value') . '<br />' . _('In') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
 					</tr>';
 
 	echo $TableHeader;
@@ -293,9 +293,9 @@ if (DB_num_rows($GRNResults)>0){
 				<td>' . $_POST['GRNNo'] . '</td>
 				<td>' . $myrow['itemcode'] . ' ' . $myrow['itemdescription'] . '</td>
 				<td class="number">' . locale_number_format($myrow['qtyostdg'],$myrow['decimalplaces']) . '</td>
-				<td><input type="text" name="This_QuantityCredited" value="' . locale_number_format($myrow['qtyostdg'],$myrow['decimalplaces']) . '" size="11" maxlength="10" /></td>
+				<td><input type="text" class="number" name="This_QuantityCredited" value="' . locale_number_format($myrow['qtyostdg'],$myrow['decimalplaces']) . '" size="11" maxlength="10" /></td>
 				<td class="number">' . locale_number_format($Price,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
-				<td><input type="text" name="ChgPrice" value="' . locale_number_format($Price,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '" size="11" maxlength="10" /></td>
+				<td><input type="text" class="number" name="ChgPrice" value="' . locale_number_format($Price,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '" size="11" maxlength="10" /></td>
 			</tr>
 			</table>';
 

@@ -75,10 +75,10 @@ echo '</p></div>';
 
 echo '<table class="selection">';
 $TableHeader = '<tr>
-					<th>' . _('Contract') . '</th>
-					<th>' . _('Amount') . '</th>
-					<th>' . _('Narrative') . '</th>
-					<th>' . _('Anticipated') . '</th>
+					<th class="ascending" onclick="SortSelect(this)">' . _('Contract') . '</th>
+					<th class="ascending" onclick="SortSelect(this)">' . _('Amount') . '</th>
+					<th class="ascending" onclick="SortSelect(this)">' . _('Narrative') . '</th>
+					<th class="ascending" onclick="SortSelect(this)">' . _('Anticipated') . '</th>
 				</tr>';
 echo $TableHeader;
 
@@ -103,7 +103,7 @@ foreach ($_SESSION['SuppTrans']->Contracts as $EnteredContract){
 
 }
 
-echo '<tr>
+echo '</table><table class="selection"><tr>
 		<td class="number">' . _('Total') . ':</td>
 		<td class="number">' . locale_number_format($TotalContractsValue,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 	</tr>
@@ -162,14 +162,14 @@ if (!isset($_POST['Narrative'])) {
 }
 echo '<tr>
 		<td>' . _('Amount') . ':</td>
-		<td><input type="text" name="Amount" size="12" maxlength="11" value="' .  locale_number_format($_POST['Amount'],$_SESSION['CompanyRecord']['decimalplaces']) . '" /></td>
+		<td><input type="text" class="number" pattern="(?!^[-]?0[.,]0*$).{1,11}" title="'._('Amount must be numeric').'" placeholder="'._('Non zero amount').'" name="Amount" size="12" maxlength="11" value="' .  locale_number_format($_POST['Amount'],$_SESSION['CompanyRecord']['decimalplaces']) . '" /></td>
 	</tr>';
 echo '<tr>
 		<td>' . _('Narrative') . ':</td>
 		<td><input type="text" name="Narrative" size="42" maxlength="40" value="' .  $_POST['Narrative'] . '" /></td>
 	</tr>';
 echo '<tr>
-		<td>' . _('Aniticpated Cost') . ':</td>
+		<td>' . _('Anticipated Cost') . ':</td>
 		<td>';
 if (isset($_POST['AnticipatedCost']) AND $_POST['AnticipatedCost']==1){
 	echo '<input type="checkbox" name="AnticipatedCost" checked />';

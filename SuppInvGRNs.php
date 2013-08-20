@@ -118,9 +118,9 @@ if (isset($_GET['Delete'])){
 echo '<table class="selection">
 		<tr>
 			<th colspan="6"><h3>' . _('Invoiced Goods Received Selected') . '</h3></th>
-		</tr>';
+		</tr></table>';
 
-$tableheader = '<tr>
+$tableheader = '<table class="selection"><tr>
 					<th>' . _('Sequence') . ' #</th>
 					<th>' . _('Item Code') . '</th>
 					<th>' . _('Description') . '</th>
@@ -149,11 +149,7 @@ foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){
 
 	$TotalValueCharged = $TotalValueCharged + ($EnteredGRN->ChgPrice * $EnteredGRN->This_QuantityInv);
 
-	$i++;
-	if ($i>15){
-		$i=0;
-		echo $tableheader;
-	}
+	
 }
 
 echo '<tr>
@@ -297,19 +293,19 @@ else {
 		echo '<table class="selection">
 				<tr>
 					<th colspan="10"><h3>' . _('Goods Received Yet to be Invoiced From') . ' ' . $_SESSION['SuppTrans']->SupplierName.'</h3></th>
-				</tr>';
+				</tr></table>';
 
-		$tableheader = '<tr>
-							<th>' . _('Select') . '</th>
-							<th>' . _('Sequence') . ' #</th>
-							<th>' . _('Order') . '</th>
-							<th>' . _('Item Code') . '</th>
-							<th>' . _('Description') . '</th>
-							<th>' . _('Total Qty Received') . '</th>
-							<th>' . _('Qty Already Invoiced') . '</th>
-							<th>' . _('Qty Yet To Invoice') . '</th>
-							<th>' . _('Order Price in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
-							<th>' . _('Line Value in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
+		$tableheader = '<table><tr>
+							<th class="ascending" onclick="SortSelect(this)">' . _('Select') . '</th>
+							<th class="ascending" onclick="SortSelect(this)">' . _('Sequence') . ' #</th>
+							<th class="ascending" onclick="SortSelect(this)">' . _('Order') . '</th>
+							<th class="ascending" onclick="SortSelect(this)">' . _('Item Code') . '</th>
+							<th class="ascending" onclick="SortSelect(this)">' . _('Description') . '</th>
+							<th class="ascending" onclick="SortSelect(this)">' . _('Total Qty Received') . '</th>
+							<th class="ascending" onclick="SortSelect(this)">' . _('Qty Already Invoiced') . '</th>
+							<th class="ascending" onclick="SortSelect(this)">' . _('Qty Yet To Invoice') . '</th>
+							<th class="ascending" onclick="SortSelect(this)">' . _('Order Price in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
+							<th class="ascending" onclick="SortSelect(this)">' . _('Line Value in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
 						</tr>';
 		$i = 0;
 		$POs = array();
@@ -345,10 +341,7 @@ else {
 			<td class="number">' . locale_number_format($GRNTmp->OrderPrice,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
 			<td class="number">' . locale_number_format($GRNTmp->OrderPrice * ($GRNTmp->QtyRecd - $GRNTmp->Prev_QuantityInv),$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
 			</tr>';
-		$i++;
-		if ($i>15){
-			$i=0;
-		}
+	
 		}
 		echo '</table>';
 		echo '<br />

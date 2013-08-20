@@ -74,9 +74,9 @@ echo $_SESSION['SuppTrans']->SuppReference . ' ' ._('From') . ' ' . $_SESSION['S
 echo '</p></div>';
 echo '<table class="selection">';
 $TableHeader = '<tr>
-					<th>' . _('Asset ID') . '</th>
-					<th>' . _('Description') . '</th>
-					<th>' . _('Amount') . '</th>
+					<th class="ascending" onclick="SortSelect(this)">' . _('Asset ID') . '</th>
+					<th class="ascending" onclick="SortSelect(this)">' . _('Description') . '</th>
+					<th class="ascending" onclick="SortSelect(this)">' . _('Amount') . '</th>
 				</tr>';
 echo $TableHeader;
 
@@ -93,7 +93,7 @@ foreach ($_SESSION['SuppTrans']->Assets as $EnteredAsset){
 
 }
 
-echo '<tr>
+echo '</table><table class="selection"><tr>
 	<td class="number"><h4>' . _('Total') . ':</h4></td>
 	<td class="number"><h4>' . locale_number_format($TotalAssetValue,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</h4></td>
 </tr>
@@ -120,7 +120,7 @@ echo '<br /><table class="selection">';
 
 echo '<tr>
 		<td>' . _('Enter Asset ID') . ':</td>
-		<td><input type="text" name="AssetID" size="5" maxlength="6" value="' .  $_POST['AssetID'] . '" /> <a href="FixedAssetItems.php" target="_blank">'. _('New Fixed Asset') . '</a></td>
+		<td><input type="text" class="integer" pattern="[^-]{1,5}" name="AssetID" title="'._('The Asset ID should be positive integer').'" size="7" maxlength="6" placeholder="'._('Postive integer').'" value="' .  $_POST['AssetID'] . '" /> <a href="FixedAssetItems.php" target="_blank">'. _('New Fixed Asset') . '</a></td>
 	</tr>';
 echo '<tr>
 		<td><b>' . _('OR') .' </b>'. _('Select from list') . ':</td>
@@ -151,7 +151,7 @@ if (!isset($_POST['Amount'])) {
 }
 echo '<tr>
 		<td>' . _('Amount') . ':</td>
-		<td><input type="text" class="number" name="Amount" size="12" maxlength="11" value="' .  locale_number_format($_POST['Amount'],$_SESSION['SuppTrans']->CurrDecimalPlaces) . '" /></td>
+		<td><input type="text" class="number" pattern="(?!^-?0[,.]0*$).{1,11}" title="'._('The amount must be numeric and cannot be zero').'" name="Amount" size="12" maxlength="11" value="' .  locale_number_format($_POST['Amount'],$_SESSION['SuppTrans']->CurrDecimalPlaces) . '" /></td>
 	</tr>';
 echo '</table>';
 

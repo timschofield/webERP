@@ -451,13 +451,13 @@ if (isset($_POST['AllocTrans'])){
 
 		echo '<table class="selection">';
 	  	$TableHeader = '<tr>
-							<th>' . _('Type') . '</th>
-				 			<th>' . _('Trans') . '<br />' . _('Number') . '</th>
-							<th>' . _('Trans') .'<br />' . _('Date') . '</th>
-							<th>' . _('Supp') . '<br />' . _('Ref') . '</th>
-							<th>' . _('Total') . '<br />' . _('Amount') .'</th>
-							<th>' . _('Yet to') . '<br />' . _('Allocate') . '</th>
-							<th>' . _('This') . '<br />' . _('Allocation') . '</th>
+							<th class="ascending" onclick="SortSelect(this)">' . _('Type') . '</th>
+				 			<th class="ascending" onclick="SortSelect(this)">' . _('Trans') . '<br />' . _('Number') . '</th>
+							<th class="ascending" onclick="SortSelect(this)">' . _('Trans') .'<br />' . _('Date') . '</th>
+							<th class="ascending" onclick="SortSelect(this)">' . _('Supp') . '<br />' . _('Ref') . '</th>
+							<th class="ascending" onclick="SortSelect(this)">' . _('Total') . '<br />' . _('Amount') .'</th>
+							<th class="ascending" onclick="SortSelect(this)">' . _('Yet to') . '<br />' . _('Allocate') . '</th>
+							<th class="ascending" onclick="SortSelect(this)">' . _('This') . '<br />' . _('Allocation') . '</th>
 						</tr>';
 		$k = 0;
 		$Counter = 0;
