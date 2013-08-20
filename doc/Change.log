@@ -1,4 +1,5 @@
 webERP Change Log 
+20/8/2013 Exson: Use manually instead of manual to make distinguish translation possible and make it html5 compatible in SupplierInvoice.php.
 19/9/2013 Exson: Fixed the typo that should be class integer instead of type integer. Reported by Tim.
 19/8/2013 Exson: Fixed the account code pattern to make it compatible with the definition in GLAccounts.php 
 19/8/2013 Exson: Fixed the type error to class is integer. Reported by Tim. 
