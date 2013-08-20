@@ -146,14 +146,14 @@ if (!isset($SelectedContact)){
 		echo '<table class="selection">
 				<tr>
 					<th colspan="7"><h3>' . _('Contacts Defined for') . ' - ' . $myrow['suppname'] . '</h3></th>
-				</tr>';
-
-		echo '<tr>
-				<th>' . _('Name') . '</th>
-				<th>' . _('Position') . '</th>
-				<th>' . _('Phone No') . '</th>
-				<th>' . _('Fax No') . '</th>
-				<th>' . _('Email') . '</th>
+				</tr></table>';
+		 
+		echo '<table class="selection"><tr>
+				<th class="ascending" onclick="SortSelect(this)">' . _('Name') . '</th>
+				<th class="ascending" onclick="SortSelect(this)">' . _('Position') . '</th>
+				<th class="ascending" onclick="SortSelect(this)">' . _('Phone No') . '</th>
+				<th class="ascending" onclick="SortSelect(this)">' . _('Fax No') . '</th>
+				<th class="ascending" onclick="SortSelect(this)">' . _('Email') . '</th>
 			</tr>';
 
 		do {
@@ -237,7 +237,7 @@ if (! isset($_GET['delete'])) {
 		echo '<table class="selection">
 				<tr>
 					<td>' . _('Contact Name') . ':</td>
-					<td><input type="text" name="Contact" size="41" maxlength="40" value="' . $_POST['Contact'] . '" /></td>
+					<td><input type="text" required="required" pattern="(?!^\s+$).{1,40}" title="'._('The contact name must be more than one characters long').'" placeholder="'._('More than one characters long').'" name="Contact" size="41" maxlength="40" value="' . $_POST['Contact'] . '" /></td>
 				</tr>';
 	}
 	if (!isset($_POST['Position'])) {
@@ -263,19 +263,19 @@ if (! isset($_GET['delete'])) {
 		</tr>
 		<tr>
 			<td>' . _('Telephone No') . ':</td>
-			<td><input type="text" name="Tel" size="31" maxlength="30" value="' . $_POST['Tel'] . '" /></td>
+			<td><input type="tel" pattern="[\d\s+()-]{1,30}" title="'._('The input should be phone number').'" placeholder="'._('Only digits,space,+,-,(,) allowed').'" name="Tel" size="31" maxlength="30" value="' . $_POST['Tel'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Facsimile No') . ':</td>
-			<td><input type="text" name="Fax" size="31" maxlength="30" value="' . $_POST['Fax'] . '" /></td>
+			<td><input type="tel" pattern="[\d\s+()-]{1,30}" title="'._('The input should be phone number').'" placeholder="'._('Only digits,space,+,-,(,) allowed').'" name="Fax" size="31" maxlength="30" value="' . $_POST['Fax'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Mobile No') . ':</td>
-			<td><input type="text" name="Mobile" size="31" maxlength="30" value="' . $_POST['Mobile'] . '" /></td>
+			<td><input type="tel" pattern="[\d\s+()-]{1,30}" title="'._('The input should be phone number').'" placeholder="'._('Only digits,space,+,-,(,) allowed').'" name="Mobile" size="31" maxlength="30" value="' . $_POST['Mobile'] . '" /></td>
 		</tr>
 		<tr>
 			<td><a href="Mailto:' . $_POST['Email'] . '">' . _('Email') . ':</a></td>
-			<td><input type="text" name="Email" size="51" maxlength="50" value="' . $_POST['Email'] . '" /></td>
+			<td><input type="email" name="Email" title="'._('The input must be email format').'" placeholder="'._('should be email format such as adm@weberp.org').'" size="51" maxlength="50" value="' . $_POST['Email'] . '" /></td>
 		</tr>
 		</table>
 		<br />';
