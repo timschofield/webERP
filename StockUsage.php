@@ -61,7 +61,7 @@ if ($myrow[2]=='K'
 		</tr>';
 }
 
-echo '<tr><td>' . _('Stock Code') . ':<input type="text" name="StockID" size="21" maxlength="20" value="' . $StockID . '" />';
+echo '<tr><td>' . _('Stock Code') . ':<input type="text" pattern="(?!^\s+$)[^%]{1,20}" title="'._('The input should not be blank or percentage mark').'" required="required" name="StockID" size="21" maxlength="20" value="' . $StockID . '" />';
 
 echo _('From Stock Location') . ':<select name="StockLocation">';
 
@@ -143,8 +143,8 @@ if (isset($_POST['ShowUsage'])){
 
 	echo '<table class="selection">';
 	$tableheader = '<tr>
-						<th>' . _('Month') . '</th>
-						<th>' . _('Usage') . '</th>
+						<th class="ascending" onclick="SortSelect(this)">' . _('Month') . '</th>
+						<th class="ascending" onclick="SortSelect(this)">' . _('Usage') . '</th>
 					</tr>';
 	echo $tableheader;
 
@@ -177,13 +177,13 @@ if (isset($_POST['ShowUsage'])){
 	//end of page full new headings if
 	}
 	//end of while loop
-
+		echo '</table>';
 	if ($TotalUsage>0 AND $PeriodsCounter>0){
-		echo '<tr>
+		echo '<table class="selection"><tr>
 				<th colspan="2">' . _('Average Usage per month is') . ' ' . locale_number_format($TotalUsage/$PeriodsCounter) . '</th>
-			</tr>';
+			</tr></table>';
 	}
-	echo '</table>';
+
 } /* end if Show Usage is clicked */
 
 echo '<div class="centre">';
