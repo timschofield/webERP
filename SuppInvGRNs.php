@@ -118,9 +118,9 @@ if (isset($_GET['Delete'])){
 echo '<table class="selection">
 		<tr>
 			<th colspan="6"><h3>' . _('Invoiced Goods Received Selected') . '</h3></th>
-		</tr></table>';
+		</tr>';
 
-$tableheader = '<table class="selection"><tr>
+$tableheader = '<tbody><tr>
 					<th>' . _('Sequence') . ' #</th>
 					<th>' . _('Item Code') . '</th>
 					<th>' . _('Description') . '</th>
@@ -152,7 +152,7 @@ foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){
 	
 }
 
-echo '<tr>
+echo '</tbody><tr>
 		<td colspan="5" align="right">' . _('Total Value of Goods Charged') . ':</td>
 		<td class="number"><h4>' . locale_number_format($TotalValueCharged,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</h4></td>
 	</tr>
@@ -293,9 +293,9 @@ else {
 		echo '<table class="selection">
 				<tr>
 					<th colspan="10"><h3>' . _('Goods Received Yet to be Invoiced From') . ' ' . $_SESSION['SuppTrans']->SupplierName.'</h3></th>
-				</tr></table>';
+				</tr>';
 
-		$tableheader = '<table><tr>
+		$tableheader = '<tbody><tr>
 							<th class="ascending" onclick="SortSelect(this)">' . _('Select') . '</th>
 							<th class="ascending" onclick="SortSelect(this)">' . _('Sequence') . ' #</th>
 							<th class="ascending" onclick="SortSelect(this)">' . _('Order') . '</th>
@@ -340,7 +340,7 @@ else {
 			<td class="number">' . locale_number_format(($GRNTmp->QtyRecd - $GRNTmp->Prev_QuantityInv),$GRNTmp->DecimalPlaces) . '</td>
 			<td class="number">' . locale_number_format($GRNTmp->OrderPrice,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
 			<td class="number">' . locale_number_format($GRNTmp->OrderPrice * ($GRNTmp->QtyRecd - $GRNTmp->Prev_QuantityInv),$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
-			</tr>';
+			</tr></tbody>';
 	
 		}
 		echo '</table>';
