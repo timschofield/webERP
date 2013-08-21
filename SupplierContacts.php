@@ -146,9 +146,9 @@ if (!isset($SelectedContact)){
 		echo '<table class="selection">
 				<tr>
 					<th colspan="7"><h3>' . _('Contacts Defined for') . ' - ' . $myrow['suppname'] . '</h3></th>
-				</tr></table>';
+				</tr>';
 		 
-		echo '<table class="selection"><tr>
+		echo '<tbody><tr>
 				<th class="ascending" onclick="SortSelect(this)">' . _('Name') . '</th>
 				<th class="ascending" onclick="SortSelect(this)">' . _('Position') . '</th>
 				<th class="ascending" onclick="SortSelect(this)">' . _('Phone No') . '</th>
@@ -177,7 +177,7 @@ if (!isset($SelectedContact)){
 					$SupplierID,
 					$myrow['contact']);
 		} while ($myrow = DB_fetch_array($result));
-        echo '</table><br />';
+        echo '</tbody><br />';
 	} else {
 		prnMsg(_('There are no contacts defined for this supplier'),'info');
 	}
