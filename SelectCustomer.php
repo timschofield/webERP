@@ -328,7 +328,7 @@ if (isset($_POST['CustType'])) {
 	}
 } else { //CustType is not set
 	// No option selected="selected" yet, so show Customer Type drop down list
-	$result2 = DB_query("SELECT typeid, typename FROM debtortype", $db);
+	$result2 = DB_query("SELECT typeid, typename FROM debtortype ORDER BY typename", $db);
 	// Error if no customer types setup
 	if (DB_num_rows($result2) == 0) {
 		$DataError = 1;
