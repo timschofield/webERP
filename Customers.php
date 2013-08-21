@@ -439,7 +439,7 @@ if (!isset($DebtorNo)) {
 	if ($_SESSION['AutoDebtorNo']==0)  {
 		echo '<tr>
 				<td>' . _('Customer Code') . ':</td>
-				<td><input tabindex="1" type="text" name="DebtorNo"  required="required" autofocus="autofocus" pattern=[0-9a-zA-Z_]*" title="' . _('The customer code can be up to 10 alpha-numeric characters long or underscore') . '" size="11" maxlength="10" /></td></tr>';
+				<td><input tabindex="1" type="text" name="DebtorNo"  required="required" autofocus="autofocus" pattern="[0-9a-zA-Z_]*" title="' . _('The customer code can be up to 10 alpha-numeric characters long or underscore') . '" size="11" maxlength="10" /></td></tr>';
 	}
 
 	echo '<tr>
