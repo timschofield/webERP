@@ -217,7 +217,7 @@ if (DB_num_rows($result) > 0) {
 				<input type="submit" name="NewPart" value="' . _('Review Prices') . '" /></th>
 			</tr>';
 
-	echo '<tr><th class="ascending" onclick="SortSelect(this)">' . _('Currency') . '</th>
+	echo '<tbody><tr><th class="ascending" onclick="SortSelect(this)">' . _('Currency') . '</th>
 				<th class="ascending" onclick="SortSelect(this)">' . _('Sales Type') . '</th>
 				<th class="ascending" onclick="SortSelect(this)">' . _('Price') . '</th>
 				<th class="ascending" onclick="SortSelect(this)">' . _('Start Date') . ' </th>
@@ -259,7 +259,7 @@ if (DB_num_rows($result) > 0) {
 
 	}
 	//END WHILE LIST LOOP
-	echo '</table><br />';
+	echo '</tbody></table><br />';
 	echo '</div>
 		  </form>';
 } else {
