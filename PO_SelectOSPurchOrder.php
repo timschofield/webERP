@@ -166,25 +166,27 @@ if (!isset($OrderNumber) or $OrderNumber == '') {
 	} else {
 		echo '<option value="Pending_Authorised">' . _('Pending and Authorised') . '</option>';
 	}
-	if ($_POST['Status'] == 'Pending') {
-		echo '<option selected="selected" value="Pending">' . _('Pending') . '</option>';
-	} else {
-		echo '<option value="Pending">' . _('Pending') . '</option>';
-	}
-	if ($_POST['Status'] == 'Authorised') {
-		echo '<option selected="selected" value="Authorised">' . _('Authorised') . '</option>';
-	} else {
-		echo '<option value="Authorised">' . _('Authorised') . '</option>';
-	}
-	if ($_POST['Status'] == 'Cancelled') {
-		echo '<option selected="selected" value="Cancelled">' . _('Cancelled') . '</option>';
-	} else {
-		echo '<option value="Cancelled">' . _('Cancelled') . '</option>';
-	}
-	if ($_POST['Status'] == 'Rejected') {
-		echo '<option selected="selected" value="Rejected">' . _('Rejected') . '</option>';
-	} else {
-		echo '<option value="Rejected">' . _('Rejected') . '</option>';
+	if(isset($_POST['Status'])){
+		if ($_POST['Status'] == 'Pending') {
+			echo '<option selected="selected" value="Pending">' . _('Pending') . '</option>';
+		} else {
+			echo '<option value="Pending">' . _('Pending') . '</option>';
+		}
+		if ($_POST['Status'] == 'Authorised') {
+			echo '<option selected="selected" value="Authorised">' . _('Authorised') . '</option>';
+		} else {
+			echo '<option value="Authorised">' . _('Authorised') . '</option>';
+		}
+		if ($_POST['Status'] == 'Cancelled') {
+			echo '<option selected="selected" value="Cancelled">' . _('Cancelled') . '</option>';
+		} else {
+			echo '<option value="Cancelled">' . _('Cancelled') . '</option>';
+		}
+		if ($_POST['Status'] == 'Rejected') {
+			echo '<option selected="selected" value="Rejected">' . _('Rejected') . '</option>';
+		} else {
+			echo '<option value="Rejected">' . _('Rejected') . '</option>';
+		}
 	}
 	echo '</select> <input type="submit" name="SearchOrders" value="' . _('Search Purchase Orders') . '" />
 		</td>
@@ -211,11 +213,11 @@ while ($myrow1 = DB_fetch_array($result1)) {
 	}
 } //end loop through categories
 echo '</select></td>';
-echo '<td>' . _('Enter text extracts in the') . '<b>' . _('description') . '</b>:</td>';
+echo '<td>' . _('Enter text extracts in the') .' '. '<b>' . _('description') . '</b>:</td>';
 echo '<td><input type="text" name="Keywords" size="20" maxlength="25" /></td>
 		</tr>
 		<tr><td></td>';
-echo '<td><b>' . _('OR') . '</b>' . _('Enter extract of the') . '<b>' . _('Stock Code') . '</b>:</td>';
+echo '<td><b>' . _('OR').' '. '</b>' . _('Enter extract of the') .' '. '<b>' . _('Stock Code') . '</b>:</td>';
 echo '<td><input type="text" name="StockCode" size="15" maxlength="18" /></td>
 	</tr>
 	</table>
