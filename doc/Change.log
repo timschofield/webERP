@@ -1,4 +1,5 @@
 webERP Change Log
+21/8/2013 Exson: Fixed the notice error of undefined index Status and and space for some string. 
 21/8/2013 Exson: Fixed the sortable not workable bug in Prices.php.
 21/8/2013 Exson: Change sortable block from table to tbody. Reported by Tim.
 20/8/2013 Exson: make StockUsage.php html5 compatible and table sortable. 
