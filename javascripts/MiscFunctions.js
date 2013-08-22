@@ -238,7 +238,8 @@ function clickDate(){
 function changeDate(){
 	isDate(this.value,this.alt);
 }
-function SortSelect(selElem) {
+function SortSelect() {
+	selElem=this;
 	var tmpArray = new Array();
 	columnText=selElem.innerHTML;
 	parentElem=selElem.parentNode;
@@ -326,6 +327,12 @@ function initial(){
 				ds[i].newonchange=rLocaleNumber;
 				ds[i].onchange=function(){if(this.origonchange) this.origonchange();this.newonchange();};
 		
+		}
+		var ds=document.getElementsByTagName("th");
+	}
+	for (i=0;i<ds.length;i++){
+		if (ds[i].className=="ascending"){
+			ds[i].onclick=SortSelect;
 		}
 	}
 }

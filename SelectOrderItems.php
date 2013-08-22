@@ -640,9 +640,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					<table class="selection">';
 
 		echo '<tr>
-				<th class="ascending" onclick="SortSelect(this)" >' . _('Customer') . '</th>
-				<th class="ascending" onclick="SortSelect(this)" >' . _('Branch') . '</th>
-				<th class="ascending" onclick="SortSelect(this)" >' . _('Contact') . '</th>
+				<th class="ascending" >' . _('Customer') . '</th>
+				<th class="ascending" >' . _('Branch') . '</th>
+				<th class="ascending" >' . _('Contact') . '</th>
 				<th>' . _('Phone') . '</th>
 				<th>' . _('Fax') . '</th>
 			</tr>';
@@ -1369,8 +1369,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		if($_SESSION['Items'.$identifier]->DefaultPOLine == 1){
 			echo '<th>' . _('PO Line') . '</th>';
 		}
-		echo '<th class="ascending" onclick="SortSelect(this)" >' . _('Item Code') . '</th>
-				<th class="ascending" onclick="SortSelect(this)" >' . _('Item Description') . '</th>
+		echo '<th class="ascending" >' . _('Item Code') . '</th>
+				<th class="ascending" >' . _('Item Description') . '</th>
 				<th>' . _('Quantity') . '</th>
 				<th>' . _('QOH') . '</th>
 				<th>' . _('Unit') . '</th>
@@ -1533,14 +1533,14 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					<table class="table1">';
 
 			echo '<tr>
-					<th class="ascending" onclick="SortSelect(this)" >' . _('Code') . '</th>
-					<th class="ascending" onclick="SortSelect(this)" >' . _('Description') . '</th>
+					<th class="ascending" >' . _('Code') . '</th>
+					<th class="ascending" >' . _('Description') . '</th>
 					<th>' . _('Units') . '</th>
-					<th class="ascending" onclick="SortSelect(this)" >' . _('On Hand') . '</th>
-					<th class="ascending" onclick="SortSelect(this)" >' . _('On Demand') . '</th>
-					<th class="ascending" onclick="SortSelect(this)" >' . _('On Order') . '</th>
-					<th class="ascending" onclick="SortSelect(this)" >' . _('Available') . '</th>
-					<th class="ascending" onclick="SortSelect(this)" >' . _('Quantity') . '</th>
+					<th class="ascending" >' . _('On Hand') . '</th>
+					<th class="ascending" >' . _('On Demand') . '</th>
+					<th class="ascending" >' . _('On Order') . '</th>
+					<th class="ascending" >' . _('Available') . '</th>
+					<th class="ascending" >' . _('Quantity') . '</th>
 				</tr>';
 			$i=0;
 			$j=1;
@@ -1733,13 +1733,13 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			echo '<td style="text-align:center" colspan="6"><input type="hidden" name="SelectingOrderItems" value="1" /><input tabindex="'.strval($j+9).'" type="submit" value="'._('Add to Sales Order').'" /></td>';
 			echo '<td colspan="1"><input type="hidden" name="NextList" value="'.strval($Offset+1).'" /><input tabindex="'.strval($j+10).'" type="submit" name="Next" value="'._('Next').'" /></td></tr>';
 			echo '<tr>
-					<th class="ascending" onclick="SortSelect(this)" >' . _('Code') . '</th>
-		   			<th class="ascending" onclick="SortSelect(this)" >' . _('Description') . '</th>
+					<th class="ascending" >' . _('Code') . '</th>
+		   			<th class="ascending" >' . _('Description') . '</th>
 		   			<th>' . _('Units') . '</th>
-		   			<th class="ascending" onclick="SortSelect(this)" >' . _('On Hand') . '</th>
-		   			<th class="ascending" onclick="SortSelect(this)" >' . _('On Demand') . '</th>
-		   			<th class="ascending" onclick="SortSelect(this)" >' . _('On Order') . '</th>
-		   			<th class="ascending" onclick="SortSelect(this)" >' . _('Available') . '</th>
+		   			<th class="ascending" >' . _('On Hand') . '</th>
+		   			<th class="ascending" >' . _('On Demand') . '</th>
+		   			<th class="ascending" >' . _('On Order') . '</th>
+		   			<th class="ascending" >' . _('Available') . '</th>
 		   			<th>' . _('Quantity') . '</th>
 		   		</tr>';
 			$ImageSource = _('No Image');

@@ -287,11 +287,11 @@ or deletion of the records*/
 
 	echo '<table class="selection">
 			<tr>
-				<th class="ascending" onClick="SortSelect(this)">' . _('Group Name') . '</th>
-				<th class="ascending" onClick="SortSelect(this)">' . _('Section') . '</th>
-				<th class="ascending" onClick="SortSelect(this)">' . _('Sequence In TB') . '</th>
-				<th class="ascending" onClick="SortSelect(this)">' . _('Profit and Loss') . '</th>
-				<th class="ascending" onClick="SortSelect(this)">' . _('Parent Group') . '</th>
+				<th class="ascending">' . _('Group Name') . '</th>
+				<th class="ascending">' . _('Section') . '</th>
+				<th class="ascending">' . _('Sequence In TB') . '</th>
+				<th class="ascending">' . _('Profit and Loss') . '</th>
+				<th class="ascending">' . _('Parent Group') . '</th>
 			</tr>';
 
 	$k=0; //row colour counter

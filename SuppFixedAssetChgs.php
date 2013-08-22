@@ -74,9 +74,9 @@ echo $_SESSION['SuppTrans']->SuppReference . ' ' ._('From') . ' ' . $_SESSION['S
 echo '</p></div>';
 echo '<table class="selection">';
 $TableHeader = '<tr>
-					<th class="ascending" onclick="SortSelect(this)">' . _('Asset ID') . '</th>
-					<th class="ascending" onclick="SortSelect(this)">' . _('Description') . '</th>
-					<th class="ascending" onclick="SortSelect(this)">' . _('Amount') . '</th>
+					<th class="ascending">' . _('Asset ID') . '</th>
+					<th class="ascending">' . _('Description') . '</th>
+					<th class="ascending">' . _('Amount') . '</th>
 				</tr>';
 echo $TableHeader;
 

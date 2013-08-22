@@ -553,10 +553,10 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 		echo '<br /><table cellpadding="3" class="selection">';
 
 		echo '<tr>
-				<th class="ascending" onClick="SortSelect(this)">' . _('Code') . '</th>
-				<th class="ascending" onClick="SortSelect(this)">' . _('Supplier Name') . '</th>
-				<th class="ascending" onClick="SortSelect(this)">' . _('Address') . '</th>
-				<th class="ascending" onClick="SortSelect(this)">' . _('Currency') . '</th>
+				<th class="ascending">' . _('Code') . '</th>
+				<th class="ascending">' . _('Supplier Name') . '</th>
+				<th class="ascending">' . _('Address') . '</th>
+				<th class="ascending">' . _('Currency') . '</th>
 			</tr>';
 		$j = 1;
 		$k = 0;

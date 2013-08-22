@@ -46,8 +46,8 @@ if (isset($_POST['CheckCode'])) {
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 	echo '<table class="selection">
 			<tr>
-				<th class="ascending" onclick="SortSelect(this)">'._('Stock Code').'</th>
-				<th class="ascending" onclick="SortSelect(this)">'._('Stock Description').'</th>
+				<th class="ascending">'._('Stock Code').'</th>
+				<th class="ascending">'._('Stock Description').'</th>
 			</tr>';
 	while ($myrow = DB_fetch_array($result)) {
 		echo '<tr>

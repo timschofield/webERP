@@ -143,14 +143,14 @@ if (!isset($SelectedTaxAuthID)) {
 
 	echo '<table class="selection">
 			<tr>
-				<th class="ascending" onclick="SortSelect(this)" >' . _('ID') . '</th>
-				<th class="ascending" onclick="SortSelect(this)" >' . _('Description') . '</th>
-				<th class="ascending" onclick="SortSelect(this)" >' . _('Input Tax') . '<br />' . _('GL Account') . '</th>
-				<th class="ascending" onclick="SortSelect(this)" >' . _('Output Tax') . '<br />' . _('GL Account') . '</th>
-				<th class="ascending" onclick="SortSelect(this)" >' . _('Bank') . '</th>
-				<th class="ascending" onclick="SortSelect(this)" >' . _('Bank Account') . '</th>
-				<th class="ascending" onclick="SortSelect(this)" >' . _('Bank Act Type') . '</th>
-				<th class="ascending" onclick="SortSelect(this)" >' . _('Bank Swift') . '</th>
+				<th class="ascending" >' . _('ID') . '</th>
+				<th class="ascending" >' . _('Description') . '</th>
+				<th class="ascending" >' . _('Input Tax') . '<br />' . _('GL Account') . '</th>
+				<th class="ascending" >' . _('Output Tax') . '<br />' . _('GL Account') . '</th>
+				<th class="ascending" >' . _('Bank') . '</th>
+				<th class="ascending" >' . _('Bank Account') . '</th>
+				<th class="ascending" >' . _('Bank Act Type') . '</th>
+				<th class="ascending" >' . _('Bank Swift') . '</th>
 			</tr>';
 	$k=0;
 	while ($myrow = DB_fetch_row($result)) {

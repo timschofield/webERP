@@ -143,8 +143,8 @@ if (isset($_POST['ShowUsage'])){
 
 	echo '<table class="selection">';
 	$tableheader = '<tr>
-						<th class="ascending" onclick="SortSelect(this)">' . _('Month') . '</th>
-						<th class="ascending" onclick="SortSelect(this)">' . _('Usage') . '</th>
+						<th class="ascending">' . _('Month') . '</th>
+						<th class="ascending">' . _('Usage') . '</th>
 					</tr>';
 	echo $tableheader;
 

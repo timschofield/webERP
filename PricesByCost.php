@@ -149,16 +149,16 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 	if ($numrow > 0) { //the number of prices returned from the main prices query is
 		echo '<table class="selection">
 				<tr>
-					<th class="ascending" onClick="SortSelect(this)">' . _('Code') . '</th>
-					<th class="ascending" onClick="SortSelect(this)">' . _('Description') . '</th>
-					<th class="ascending" onClick="SortSelect(this)">' . _('Customer') . '</th>
-					<th class="ascending" onClick="SortSelect(this)">' . _('Branch') . '</th>
-					<th class="ascending" onClick="SortSelect(this)">' . _('Start Date') . '</th>
-					<th class="ascending" onClick="SortSelect(this)">' . _('End Date') . '</th>
-					<th class="ascending" onClick="SortSelect(this)">' . _('Cost') . '</th>
-					<th class="ascending" onClick="SortSelect(this)">' . _('GP %') . '</th>
-					<th class="ascending" onClick="SortSelect(this)">' . _('Price Proposed') . '</th>
-					<th class="ascending" onClick="SortSelect(this)">' . _('List Price') . '</th>
+					<th class="ascending">' . _('Code') . '</th>
+					<th class="ascending">' . _('Description') . '</th>
+					<th class="ascending">' . _('Customer') . '</th>
+					<th class="ascending">' . _('Branch') . '</th>
+					<th class="ascending">' . _('Start Date') . '</th>
+					<th class="ascending">' . _('End Date') . '</th>
+					<th class="ascending">' . _('Cost') . '</th>
+					<th class="ascending">' . _('GP %') . '</th>
+					<th class="ascending">' . _('Price Proposed') . '</th>
+					<th class="ascending">' . _('List Price') . '</th>
 				<tr>';
 		$k = 0; //row colour counter
 		echo '<form action="' .htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'" method="post" id="update">';

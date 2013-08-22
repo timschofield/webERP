@@ -205,14 +205,14 @@ if (DB_num_rows($TransResult) == 0){
 
 echo '<table width="90%" class="selection">';
 $TableHeader = '<tr>
-					<th class="ascending" onclick="SortSelect(this)">' . _('Trans') . ' #' .'</th>
-					<th class="ascending" onclick="SortSelect(this)">' . _('Type') .	'</th>
-					<th class="ascending" onclick="SortSelect(this)">' . _('Supplier Ref') . '</th>
-					<th class="ascending" onclick="SortSelect(this)">' . _('Date') . '</th>
-					<th class="ascending" onclick="SortSelect(this)">' . _('Total') . '</th>
-					<th class="ascending" onclick="SortSelect(this)">' . _('Allocated') . '</th>
-					<th class="ascending" onclick="SortSelect(this)">' . _('Balance') . '</th>
-					<th class="ascending" onclick="SortSelect(this)">' . _('Comments') . '</th>
+					<th class="ascending">' . _('Trans') . ' #' .'</th>
+					<th class="ascending">' . _('Type') .	'</th>
+					<th class="ascending">' . _('Supplier Ref') . '</th>
+					<th class="ascending">' . _('Date') . '</th>
+					<th class="ascending">' . _('Total') . '</th>
+					<th class="ascending">' . _('Allocated') . '</th>
+					<th class="ascending">' . _('Balance') . '</th>
+					<th class="ascending">' . _('Comments') . '</th>
 					<th colspan="2"></th>
 				</tr>';
 

@@ -322,13 +322,13 @@ if (isset($_POST['TenderType']) and $_POST['TenderType']!=3 and isset($_SESSION[
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Items to offer from').' '.$Supplier .'</p>';
 	echo '<table>
 			<tr>
-				<th class="assending" onclick="SortSelect(this)">'._('Stock ID').'</th>
-				<th class="assending" onclick="SortSelect(this)">'._('Description').'</th>
-				<th class="assending" onclick="SortSelect(this)">'._('Quantity').'</th>
-				<th class="assending" onclick="SortSelect(this)">'._('UOM').'</th>
-				<th class="assending" onclick="SortSelect(this)">'._('Price').' ('.$Currency.')</th>
-				<th class="assending" onclick="SortSelect(this)">'._('Line Total').' ('.$Currency.')</th>
-				<th class="assending" onclick="SortSelect(this)">'._('Expiry Date').'</th>
+				<th class="assending">'._('Stock ID').'</th>
+				<th class="assending">'._('Description').'</th>
+				<th class="assending">'._('Quantity').'</th>
+				<th class="assending">'._('UOM').'</th>
+				<th class="assending">'._('Price').' ('.$Currency.')</th>
+				<th class="assending">'._('Line Total').' ('.$Currency.')</th>
+				<th class="assending">'._('Expiry Date').'</th>
 			</tr>';
 	$k=0;
 	foreach ($_SESSION['offer'.$identifier]->LineItems as $LineItems) {
@@ -685,12 +685,12 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 		echo '<table cellpadding="1">';
 
 		$TableHeader = '<tr>
-						<th class="assending" onclick="SortSelect(this)">' . _('Code')  . '</th>
-						<th class="assending" onclick="SortSelect(this)">' . _('Description') . '</th>
-						<th class="assending" onclick="SortSelect(this)">' . _('Units') . '</th>
-						<th class="assending" onclick="SortSelect(this)">' . _('Image') . '</th>
-						<th class="assending" onclick="SortSelect(this)">' . _('Quantity') . '</th>
-						<th class="assending" onclick="SortSelect(this)">' . _('Price') .' ('.$Currency.')</th>
+						<th class="assending">' . _('Code')  . '</th>
+						<th class="assending">' . _('Description') . '</th>
+						<th class="assending">' . _('Units') . '</th>
+						<th class="assending">' . _('Image') . '</th>
+						<th class="assending">' . _('Quantity') . '</th>
+						<th class="assending">' . _('Price') .' ('.$Currency.')</th>
 					</tr>';
 		echo $TableHeader;
 

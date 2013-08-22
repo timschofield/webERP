@@ -268,15 +268,15 @@ if ($Edit == false) {
 		
         echo '<table cellpadding="2" class="selection">';
         $TableHeader = '<tr>
-							<th class="ascending" onClick="SortSelect(this)">' . _('Supplier') . '</th>
-							<th class="ascending" onClick="SortSelect(this)">' . _('Price') . '</th>
+							<th class="ascending">' . _('Supplier') . '</th>
+							<th class="ascending">' . _('Price') . '</th>
 							<th>' . _('Supplier Unit') . '</th>
 							<th>' . _('Conversion Factor') . '</th>
-							<th class="ascending" onClick="SortSelect(this)">' . _('Cost Per Our Unit') .  '</th>
-							<th class="ascending" onClick="SortSelect(this)">' . _('Currency') . '</th>
-							<th class="ascending" onClick="SortSelect(this)">' . _('Effective From') . '</th>
-							<th class="ascending" onClick="SortSelect(this)">' . _('Min Order Qty') . '</th>
-							<th class="ascending" onClick="SortSelect(this)">' . _('Lead Time') . '</th>
+							<th class="ascending">' . _('Cost Per Our Unit') .  '</th>
+							<th class="ascending">' . _('Currency') . '</th>
+							<th class="ascending">' . _('Effective From') . '</th>
+							<th class="ascending">' . _('Min Order Qty') . '</th>
+							<th class="ascending">' . _('Lead Time') . '</th>
 							<th>' . _('Preferred') . '</th>
 						</tr>';
 		echo $TableHeader;
@@ -466,12 +466,12 @@ if (isset($SuppliersResult)) {
 			<table cellpadding="2" colspan="7" class="selection">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
     $TableHeader = '<tr>
-						<th class="ascending" onClick="SortSelect(this)">' . _('Code') . '</th>
-	                	<th class="ascending" onClick="SortSelect(this)">' . _('Supplier Name') . '</th>
-						<th class="ascending" onClick="SortSelect(this)">' . _('Currency') . '</th>
-						<th class="ascending" onClick="SortSelect(this)">' . _('Address 1') . '</th>
-						<th class="ascending" onClick="SortSelect(this)">' . _('Address 2') . '</th>
-						<th class="ascending" onClick="SortSelect(this)">' . _('Address 3') . '</th>
+						<th class="ascending">' . _('Code') . '</th>
+	                	<th class="ascending">' . _('Supplier Name') . '</th>
+						<th class="ascending">' . _('Currency') . '</th>
+						<th class="ascending">' . _('Address 1') . '</th>
+						<th class="ascending">' . _('Address 2') . '</th>
+						<th class="ascending">' . _('Address 3') . '</th>
 					</tr>';
     echo $TableHeader;
 	$k = 0;
@@ -696,11 +696,11 @@ if (!isset($SuppliersResult)) {
 		
 		echo '<table cellpadding="2" colspan="7" class="selection">
 				<tr>
-					<th class="ascending" onClick="SortSelect(this)">' . _('Discount Name') . '</th>
-	               	<th class="ascending" onClick="SortSelect(this)">' . _('Discount') . '<br />' . _('Value') . '</th>
-					<th class="ascending" onClick="SortSelect(this)">' . _('Discount') . '<br />' . _('Percent') . '</th>
-					<th class="ascending" onClick="SortSelect(this)">' . _('Effective From') . '</th>
-					<th class="ascending" onClick="SortSelect(this)">' . _('Effective To') . '</th>
+					<th class="ascending">' . _('Discount Name') . '</th>
+	               	<th class="ascending">' . _('Discount') . '<br />' . _('Value') . '</th>
+					<th class="ascending">' . _('Discount') . '<br />' . _('Percent') . '</th>
+					<th class="ascending">' . _('Effective From') . '</th>
+					<th class="ascending">' . _('Effective To') . '</th>
 				</tr>';
 	    $k = 0;
 	    $i = 0; //DiscountCounter

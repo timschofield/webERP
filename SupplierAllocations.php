@@ -451,13 +451,13 @@ if (isset($_POST['AllocTrans'])){
 
 		echo '<table class="selection">';
 	  	$TableHeader = '<tr>
-							<th class="ascending" onclick="SortSelect(this)">' . _('Type') . '</th>
-				 			<th class="ascending" onclick="SortSelect(this)">' . _('Trans') . '<br />' . _('Number') . '</th>
-							<th class="ascending" onclick="SortSelect(this)">' . _('Trans') .'<br />' . _('Date') . '</th>
-							<th class="ascending" onclick="SortSelect(this)">' . _('Supp') . '<br />' . _('Ref') . '</th>
-							<th class="ascending" onclick="SortSelect(this)">' . _('Total') . '<br />' . _('Amount') .'</th>
-							<th class="ascending" onclick="SortSelect(this)">' . _('Yet to') . '<br />' . _('Allocate') . '</th>
-							<th class="ascending" onclick="SortSelect(this)">' . _('This') . '<br />' . _('Allocation') . '</th>
+							<th class="ascending">' . _('Type') . '</th>
+				 			<th class="ascending">' . _('Trans') . '<br />' . _('Number') . '</th>
+							<th class="ascending">' . _('Trans') .'<br />' . _('Date') . '</th>
+							<th class="ascending">' . _('Supp') . '<br />' . _('Ref') . '</th>
+							<th class="ascending">' . _('Total') . '<br />' . _('Amount') .'</th>
+							<th class="ascending">' . _('Yet to') . '<br />' . _('Allocate') . '</th>
+							<th class="ascending">' . _('This') . '<br />' . _('Allocation') . '</th>
 						</tr>';
 		$k = 0;
 		$Counter = 0;

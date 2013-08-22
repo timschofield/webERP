@@ -169,8 +169,8 @@ if (!isset($SelectedGroup)) {
 	} else {
 		echo '<table class="selection">
 				<tr>
-					<th class="ascending" onclick="SortSelect(this)" >' . _('Group No') . '</th>
-					<th class="ascending" onclick="SortSelect(this)" >' . _('Tax Group') . '</th>
+					<th class="ascending" >' . _('Group No') . '</th>
+					<th class="ascending" >' . _('Tax Group') . '</th>
 				</tr>';
 
 		$k=0; //row colour counter

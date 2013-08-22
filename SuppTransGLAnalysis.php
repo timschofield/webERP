@@ -104,11 +104,11 @@ echo '</p>
 	<table class="selection">';
 
 $TableHeader = '<tr>
-					<th class="ascending" onclick="SortSelect(this)">' . _('Account') . '</th>
-					<th class="ascending" onclick="SortSelect(this)">' . _('Name') . '</th>
-					<th class="ascending" onclick="SortSelect(this)">' . _('Amount') . '<br />' . _('in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
+					<th class="ascending">' . _('Account') . '</th>
+					<th class="ascending">' . _('Name') . '</th>
+					<th class="ascending">' . _('Amount') . '<br />' . _('in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
 					<th>' . _('Narrative') . '</th>
-					<th class="ascending" onclick="SortSelect(this)">' . _('Tag') . '</th>
+					<th class="ascending">' . _('Tag') . '</th>
 				</tr>';
 echo $TableHeader;
 $TotalGLValue=0;

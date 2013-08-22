@@ -714,17 +714,17 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 	echo '<br /><b>'._(' Order Summary') . '</b></p>';
 	echo '<table cellpadding="2" class="selection">';
 	echo '<tr>
-			<th class="ascending" onClick="SortSelect(this)">' . _('Item Code') . '</th>
-			<th class="ascending" onClick="SortSelect(this)">' . _('Description') . '</th>
-			<th class="ascending" onClick="SortSelect(this)">' . _('Quantity Our Units') . '</th>
+			<th class="ascending">' . _('Item Code') . '</th>
+			<th class="ascending">' . _('Description') . '</th>
+			<th class="ascending">' . _('Quantity Our Units') . '</th>
 			<th>' . _('Our Unit') .'</th>
-			<th class="ascending" onClick="SortSelect(this)">' . _('Price Our Units') .' (' . $_SESSION['PO'.$identifier]->CurrCode .  ')</th>
+			<th class="ascending">' . _('Price Our Units') .' (' . $_SESSION['PO'.$identifier]->CurrCode .  ')</th>
 			<th>' . _('Unit Conversion Factor') . '</th>
-			<th class="ascending" onClick="SortSelect(this)">' . _('Order Quantity') . '<br />' . _('Supplier Units') . '</th>
+			<th class="ascending">' . _('Order Quantity') . '<br />' . _('Supplier Units') . '</th>
 			<th>' .  _('Supplier Unit') . '</th>
-			<th class="ascending" onClick="SortSelect(this)">' . _('Order Price') . '<br />' . _('Supp Units') . ' ('.$_SESSION['PO'.$identifier]->CurrCode.  ')</th>
-			<th class="ascending" onClick="SortSelect(this)">' . _('Sub-Total') .' ('.$_SESSION['PO'.$identifier]->CurrCode.  ')</th>
-			<th class="ascending" onClick="SortSelect(this)">' . _('Deliver By') .'</th>
+			<th class="ascending">' . _('Order Price') . '<br />' . _('Supp Units') . ' ('.$_SESSION['PO'.$identifier]->CurrCode.  ')</th>
+			<th class="ascending">' . _('Sub-Total') .' ('.$_SESSION['PO'.$identifier]->CurrCode.  ')</th>
+			<th class="ascending">' . _('Deliver By') .'</th>
 			</tr>';
 
 	$_SESSION['PO'.$identifier]->Total = 0;
@@ -1152,8 +1152,8 @@ if (isset($SearchResult)) {
 	echo '<table cellpadding="1" class="selection">';
 
 	$TableHeader = '<tr>
-						<th class="ascending" onClick="SortSelect(this)">' . _('Code')  . '</th>
-						<th class="ascending" onClick="SortSelect(this)">' . _('Description') . '</th>
+						<th class="ascending">' . _('Code')  . '</th>
+						<th class="ascending">' . _('Description') . '</th>
 						<th>' . _('Our Units') . '</th>
 						<th>' . _('Conversion') . '<br />' ._('Factor') . '</th>
 						<th>' . _('Supplier/Order') . '<br />' .  _('Units') . '</th>

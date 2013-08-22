@@ -234,11 +234,11 @@ echo '<br />';
 if (isset($StockItemsResult)) {
 	echo '<table cellpadding="2" class="selection">';
 	$TableHeader = '<tr>
-						<th class="ascending" onclick="SortSelect(this)">' . _('Code') . '</th>
-						<th class="ascending" onclick="SortSelect(this)">' . _('Description') . '</th>
-						<th class="ascending" onclick="SortSelect(this)">' . _('On Hand') . '</th>
-						<th class="ascending" onclick="SortSelect(this)">' . _('Orders') . '<br />' . _('Outstanding') . '</th>
-						<th class="ascending" onclick="SortSelect(this)">' . _('Units') . '</th>
+						<th class="ascending">' . _('Code') . '</th>
+						<th class="ascending">' . _('Description') . '</th>
+						<th class="ascending">' . _('On Hand') . '</th>
+						<th class="ascending">' . _('Orders') . '<br />' . _('Outstanding') . '</th>
+						<th class="ascending">' . _('Units') . '</th>
 					</tr>';
 	echo $TableHeader;
 	$j = 1;
@@ -472,17 +472,17 @@ else {
 
 
 	echo '<tr>
-			<th class="ascending" onclick="SortSelect(this)">' . _('Order #') . '</th>
-			<th class="ascending" onclick="SortSelect(this)">' . _('Order Date') . '</th>
-			<th class="ascending" onclick="SortSelect(this)">' . _('Delivery Date') . '</th>
-			<th class="ascending" onclick="SortSelect(this)">' . _('Initiated by') . '</th>
-			<th class="ascending" onclick="SortSelect(this)">' . _('Supplier') . '</th>
-			<th class="ascending" onclick="SortSelect(this)">' . _('Currency') . '</th>';
+			<th class="ascending">' . _('Order #') . '</th>
+			<th class="ascending">' . _('Order Date') . '</th>
+			<th class="ascending">' . _('Delivery Date') . '</th>
+			<th class="ascending">' . _('Initiated by') . '</th>
+			<th class="ascending">' . _('Supplier') . '</th>
+			<th class="ascending">' . _('Currency') . '</th>';
 
 	if (in_array($PricesSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($PricesSecurity)) {
-		echo '<th class="ascending" onclick="SortSelect(this)">' . _('Order Total') . '</th>';
+		echo '<th class="ascending">' . _('Order Total') . '</th>';
 	}
-	echo '<th class="ascending" onclick="SortSelect(this)">' . _('Status') . '</th>
+	echo '<th class="ascending">' . _('Status') . '</th>
 			<th>' . _('Print') . '</th>
 			<th>' . _('Receive') . '</th>
 		</tr>';

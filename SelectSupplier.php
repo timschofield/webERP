@@ -274,15 +274,15 @@ if (isset($_POST['Search'])) {
 		<br />
 		<table cellpadding="2">';
 	echo '<tr>
-	  		<th class="ascending" onclick="SortSelect(this)">' . _('Code') . '</th>
-			<th class="ascending" onclick="SortSelect(this)">' . _('Supplier Name') . '</th>
-			<th class="ascending" onclick="SortSelect(this)">' . _('Currency') . '</th>
-			<th class="ascending" onclick="SortSelect(this)">' . _('Address 1') . '</th>
-			<th class="ascending" onclick="SortSelect(this)">' . _('Address 2') . '</th>
-			<th class="ascending" onclick="SortSelect(this)">' . _('Address 3') . '</th>
-			<th class="ascending" onclick="SortSelect(this)">' . _('Address 4') . '</th>
-			<th class="ascending" onclick="SortSelect(this)">' . _('Telephone') . '</th>
-			<th class="ascending" onclick="SortSelect(this)">' . _('Email') . '</th>
+	  		<th class="ascending">' . _('Code') . '</th>
+			<th class="ascending">' . _('Supplier Name') . '</th>
+			<th class="ascending">' . _('Currency') . '</th>
+			<th class="ascending">' . _('Address 1') . '</th>
+			<th class="ascending">' . _('Address 2') . '</th>
+			<th class="ascending">' . _('Address 3') . '</th>
+			<th class="ascending">' . _('Address 4') . '</th>
+			<th class="ascending">' . _('Telephone') . '</th>
+			<th class="ascending">' . _('Email') . '</th>
 		</tr>';
 	$k = 0; //row counter to determine background colour
 	$RowIndex = 0;

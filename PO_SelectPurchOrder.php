@@ -210,11 +210,11 @@ echo '</select></td>
 if (isset($StockItemsResult)) {
 	echo '<table class="selection">';
 	$TableHeader = '<tr>
-						<th class="ascending" onclick="SortSelect(this)">' . _('Code') . '</th>
-						<th class="ascending" onclick="SortSelect(this)">' . _('Description') . '</th>
-						<th class="ascending" onclick="SortSelect(this)">' . _('On Hand') . '</th>
-						<th class="ascending" onclick="SortSelect(this)">' . _('Orders') . '<br />' . _('Outstanding') . '</th>
-						<th class="ascending" onclick="SortSelect(this)">' . _('Units') . '</th>
+						<th class="ascending">' . _('Code') . '</th>
+						<th class="ascending">' . _('Description') . '</th>
+						<th class="ascending">' . _('On Hand') . '</th>
+						<th class="ascending">' . _('Orders') . '<br />' . _('Outstanding') . '</th>
+						<th class="ascending">' . _('Units') . '</th>
 					</tr>';
 	echo $TableHeader;
 	$j = 1;
@@ -429,15 +429,15 @@ else {
 		/*show a table of the orders returned by the SQL */
 		echo '<table cellpadding="2" width="90%" class="selection">';
 		$TableHeader = '<tr>
-							<th class="ascending" onClick="SortSelect(this)">' . _('View') . '</th>
-							<th class="ascending" onClick="SortSelect(this)">' . _('Supplier') . '</th>
-							<th class="ascending" onClick="SortSelect(this)">' . _('Currency') . '</th>
-							<th class="ascending" onClick="SortSelect(this)">' . _('Requisition') . '</th>
-							<th class="ascending" onClick="SortSelect(this)">' . _('Order Date') . '</th>
-							<th class="ascending" onClick="SortSelect(this)">' . _('Delivery Date') . '</th>
-							<th class="ascending" onClick="SortSelect(this)">' . _('Initiator') . '</th>
-							<th class="ascending" onClick="SortSelect(this)">' . _('Order Total') . '</th>
-							<th class="ascending" onClick="SortSelect(this)">' . _('Status') . '</th>
+							<th class="ascending">' . _('View') . '</th>
+							<th class="ascending">' . _('Supplier') . '</th>
+							<th class="ascending">' . _('Currency') . '</th>
+							<th class="ascending">' . _('Requisition') . '</th>
+							<th class="ascending">' . _('Order Date') . '</th>
+							<th class="ascending">' . _('Delivery Date') . '</th>
+							<th class="ascending">' . _('Initiator') . '</th>
+							<th class="ascending">' . _('Order Total') . '</th>
+							<th class="ascending">' . _('Status') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$j = 1;

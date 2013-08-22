@@ -505,10 +505,10 @@ if($result ) {
 				<th colspan="4">'._('Inventory items for') . ' ' . $CategoryPath . '</th>
 			</tr>
 			<tr>
-				<th class="ascending" onClick="SortSelect(this)">' . _('Item') . '</th>
-				<th class="ascending" onClick="SortSelect(this)">' . _('Description') . '</th>
-				<th class="ascending" onClick="SortSelect(this)">' . _('Brand') . '</th>
-				<th class="ascending" onClick="SortSelect(this)">' . _('Featured') . '</th>
+				<th class="ascending">' . _('Item') . '</th>
+				<th class="ascending">' . _('Description') . '</th>
+				<th class="ascending">' . _('Brand') . '</th>
+				<th class="ascending">' . _('Featured') . '</th>
 			</tr>';
 
 		$k=0; //row colour counter

@@ -149,11 +149,11 @@ if (!isset($SelectedContact)){
 				</tr>';
 		 
 		echo '<tbody><tr>
-				<th class="ascending" onclick="SortSelect(this)">' . _('Name') . '</th>
-				<th class="ascending" onclick="SortSelect(this)">' . _('Position') . '</th>
-				<th class="ascending" onclick="SortSelect(this)">' . _('Phone No') . '</th>
-				<th class="ascending" onclick="SortSelect(this)">' . _('Fax No') . '</th>
-				<th class="ascending" onclick="SortSelect(this)">' . _('Email') . '</th>
+				<th class="ascending">' . _('Name') . '</th>
+				<th class="ascending">' . _('Position') . '</th>
+				<th class="ascending">' . _('Phone No') . '</th>
+				<th class="ascending">' . _('Fax No') . '</th>
+				<th class="ascending">' . _('Email') . '</th>
 			</tr>';
 
 		do {

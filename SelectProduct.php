@@ -767,8 +767,8 @@ if (isset($SearchResult) AND !isset($_POST['Select'])) {
 		echo '<table id="ItemSearchTable" class="selection">';
 		$TableHeader = '<tr>
 							<th>' . _('Stock Status') . '</th>
-							<th class="ascending" onclick="SortSelect(this)">' . _('Code') . '</th>
-							<th class="ascending" onclick="SortSelect(this)">' . _('Description') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Description') . '</th>
 							<th>' . _('Total Qty On Hand') . '</th>
 							<th>' . _('Units') . '</th>
 						</tr>';

@@ -296,16 +296,16 @@ else {
 				</tr>';
 
 		$tableheader = '<tbody><tr>
-							<th class="ascending" onclick="SortSelect(this)">' . _('Select') . '</th>
-							<th class="ascending" onclick="SortSelect(this)">' . _('Sequence') . ' #</th>
-							<th class="ascending" onclick="SortSelect(this)">' . _('Order') . '</th>
-							<th class="ascending" onclick="SortSelect(this)">' . _('Item Code') . '</th>
-							<th class="ascending" onclick="SortSelect(this)">' . _('Description') . '</th>
-							<th class="ascending" onclick="SortSelect(this)">' . _('Total Qty Received') . '</th>
-							<th class="ascending" onclick="SortSelect(this)">' . _('Qty Already Invoiced') . '</th>
-							<th class="ascending" onclick="SortSelect(this)">' . _('Qty Yet To Invoice') . '</th>
-							<th class="ascending" onclick="SortSelect(this)">' . _('Order Price in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
-							<th class="ascending" onclick="SortSelect(this)">' . _('Line Value in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
+							<th class="ascending">' . _('Select') . '</th>
+							<th class="ascending">' . _('Sequence') . ' #</th>
+							<th class="ascending">' . _('Order') . '</th>
+							<th class="ascending">' . _('Item Code') . '</th>
+							<th class="ascending">' . _('Description') . '</th>
+							<th class="ascending">' . _('Total Qty Received') . '</th>
+							<th class="ascending">' . _('Qty Already Invoiced') . '</th>
+							<th class="ascending">' . _('Qty Yet To Invoice') . '</th>
+							<th class="ascending">' . _('Order Price in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
+							<th class="ascending">' . _('Line Value in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
 						</tr>';
 		$i = 0;
 		$POs = array();

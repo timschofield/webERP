@@ -604,13 +604,13 @@ if (isset($_POST['SearchSupplier'])) {
 		<br />
 		<table cellpadding="2">';
 	echo '<tr>
-	  		<th class="assending" onclick="SortSelect(this)">' . _('Code') . '</th>
-			<th class="assending" onclick="SortSelect(this)">' . _('Supplier Name') . '</th>
-			<th class="assending" onclick="SortSelect(this)">' . _('Currency') . '</th>
-			<th class="assending" onclick="SortSelect(this)">' . _('Address 1') . '</th>
-			<th class="assending" onclick="SortSelect(this)">' . _('Address 2') . '</th>
-			<th class="assending" onclick="SortSelect(this)">' . _('Address 3') . '</th>
-			<th class="assending" onclick="SortSelect(this)">' . _('Address 4') . '</th>
+	  		<th class="assending">' . _('Code') . '</th>
+			<th class="assending">' . _('Supplier Name') . '</th>
+			<th class="assending">' . _('Currency') . '</th>
+			<th class="assending">' . _('Address 1') . '</th>
+			<th class="assending">' . _('Address 2') . '</th>
+			<th class="assending">' . _('Address 3') . '</th>
+			<th class="assending">' . _('Address 4') . '</th>
 		</tr>';
 	$j = 1;
 	$k = 0; //row counter to determine background colour
@@ -840,11 +840,11 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 
 		echo '<table cellpadding="1">';
 		echo '<tr>
-				<th class="assending" onclick="SortSelect(this)">' . _('Code')  . '</th>
-				<th class="assending" onclick="SortSelect(this)">' . _('Description') . '</th>
-				<th class="assending" onclick="SortSelect(this)">' . _('Units') . '</th>
-				<th class="assending" onclick="SortSelect(this)">' . _('Image') . '</th>
-				<th class="assending" onclick="SortSelect(this)">' . _('Quantity') . '</th>
+				<th class="assending">' . _('Code')  . '</th>
+				<th class="assending">' . _('Description') . '</th>
+				<th class="assending">' . _('Units') . '</th>
+				<th class="assending">' . _('Image') . '</th>
+				<th class="assending">' . _('Quantity') . '</th>
 			</tr>';
 
 		$i = 0;

@@ -607,9 +607,9 @@ if (isset($StockItemsResult)
 
 	echo '<table cellpadding="2" class="selection">';
 	echo '<tr>
-			<th class="ascending" onclick="SortSelect(this)" >' . _('Code') . '</th>
-			<th class="ascending" onclick="SortSelect(this)" >' . _('Description') . '</th>
-			<th class="ascending" onclick="SortSelect(this)" >' . _('On Hand') . '</th>
+			<th class="ascending" >' . _('Code') . '</th>
+			<th class="ascending" >' . _('Description') . '</th>
+			<th class="ascending" >' . _('On Hand') . '</th>
 			<th>' . _('Units') . '</th>
 		</tr>';
 	
@@ -851,13 +851,13 @@ if (isset($StockItemsResult)
 								<th>' . _('Modify') . '</th>
 								<th>' . _('Invoice') . '</th>
 								<th>' . _('Dispatch Note') . '</th>
-								<th class="ascending" onclick="SortSelect(this)" >' . _('Customer') . '</th>
-								<th class="ascending" onclick="SortSelect(this)" >' . _('Branch') . '</th>
-								<th class="ascending" onclick="SortSelect(this)" >' . _('Cust Order') . ' #</th>
-								<th class="ascending" onclick="SortSelect(this)" >' . _('Order Date') . '</th>
-								<th class="ascending" onclick="SortSelect(this)" >' . _('Req Del Date') . '</th>
-								<th class="ascending" onclick="SortSelect(this)" >' . _('Delivery To') . '</th>
-								<th class="ascending" onclick="SortSelect(this)" >' . _('Order Total') . '<br />' . $_SESSION['CompanyRecord']['currencydefault'] . '</th>';
+								<th class="ascending" >' . _('Customer') . '</th>
+								<th class="ascending" >' . _('Branch') . '</th>
+								<th class="ascending" >' . _('Cust Order') . ' #</th>
+								<th class="ascending" >' . _('Order Date') . '</th>
+								<th class="ascending" >' . _('Req Del Date') . '</th>
+								<th class="ascending" >' . _('Delivery To') . '</th>
+								<th class="ascending" >' . _('Order Total') . '<br />' . $_SESSION['CompanyRecord']['currencydefault'] . '</th>';
 
 			if ($AuthRow['cancreate']==0){ //If cancreate==0 then this means the user can create orders hmmm!!
 				$TableHeader .= '<th>' . _('Place PO') . '</th></tr>';
@@ -868,13 +868,13 @@ if (isset($StockItemsResult)
 			$TableHeader = '<tr>
 								<th>' . _('Modify') . '</th>
 								<th>' . _('Print Quote') . '</th>
-								<th class="ascending" onclick="SortSelect(this)" >' . _('Customer') . '</th>
-								<th class="ascending" onclick="SortSelect(this)" >' . _('Branch') . '</th>
-								<th class="ascending" onclick="SortSelect(this)" >' . _('Cust Ref') . ' #</th>
-								<th class="ascending" onclick="SortSelect(this)" >' . _('Quote Date') . '</th>
-								<th class="ascending" onclick="SortSelect(this)" >' . _('Req Del Date') . '</th>
-								<th class="ascending" onclick="SortSelect(this)" >' . _('Delivery To') . '</th>
-								<th class="ascending" onclick="SortSelect(this)" >' . _('Quote Total') .  '<br />' . $_SESSION['CompanyRecord']['currencydefault'] . '</th>
+								<th class="ascending" >' . _('Customer') . '</th>
+								<th class="ascending" >' . _('Branch') . '</th>
+								<th class="ascending" >' . _('Cust Ref') . ' #</th>
+								<th class="ascending" >' . _('Quote Date') . '</th>
+								<th class="ascending" >' . _('Req Del Date') . '</th>
+								<th class="ascending" >' . _('Delivery To') . '</th>
+								<th class="ascending" >' . _('Quote Total') .  '<br />' . $_SESSION['CompanyRecord']['currencydefault'] . '</th>
 							</tr>';
 		}
 

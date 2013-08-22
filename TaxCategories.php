@@ -164,7 +164,7 @@ if (isset($_POST['submit'])) {
 
 	echo '<table class="selection">
 			<tr>
-				<th class="ascending" onclick="SortSelect(this)">' . _('Tax Categories') . '</th>
+				<th class="ascending">' . _('Tax Categories') . '</th>
 			</tr>';
 
 	$k=0; //row colour counter

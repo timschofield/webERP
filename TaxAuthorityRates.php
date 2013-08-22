@@ -84,9 +84,9 @@ if (DB_num_rows($TaxRatesResult)>0){
 			<th colspan="3"><h3>' . _('Update') . ' ' . $myrow[0] . ' ' . _('Rates') . '</h3></th>
 		</tr>';
 	$TableHeader = '<tr>
-						<th class="ascending" onClick="SortSelect(this)">' . _('Deliveries From') . '<br />' . _('Tax Province') . '</th>
-						<th class="ascending" onClick="SortSelect(this)">' . _('Tax Category') . '</th>
-						<th class="ascending" onClick="SortSelect(this)">' . _('Tax Rate') . ' %</th>
+						<th class="ascending">' . _('Deliveries From') . '<br />' . _('Tax Province') . '</th>
+						<th class="ascending">' . _('Tax Category') . '</th>
+						<th class="ascending">' . _('Tax Rate') . ' %</th>
 					</tr>';
 	echo $TableHeader;
 	$j = 1;

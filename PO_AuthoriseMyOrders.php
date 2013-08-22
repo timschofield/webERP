@@ -55,12 +55,12 @@ echo '<div>
 
 /* Create the table for the purchase order header */
 echo '<tr>
-		<th class="ascending" onClick="SortSelect(this)">'._('Order Number').'</th>
-		<th class="ascending" onClick="SortSelect(this)">'._('Supplier').'</th>
-		<th class="ascending" onClick="SortSelect(this)">'._('Date Ordered').'</th>
-		<th class="ascending" onClick="SortSelect(this)">'._('Initiator').'</th>
-		<th class="ascending" onClick="SortSelect(this)">'._('Delivery Date').'</th>
-		<th class="ascending" onClick="SortSelect(this)">'._('Status').'</th>
+		<th class="ascending">'._('Order Number').'</th>
+		<th class="ascending">'._('Supplier').'</th>
+		<th class="ascending">'._('Date Ordered').'</th>
+		<th class="ascending">'._('Initiator').'</th>
+		<th class="ascending">'._('Delivery Date').'</th>
+		<th class="ascending">'._('Status').'</th>
 	</tr>';
 
 while ($myrow=DB_fetch_array($result)) {
@@ -110,11 +110,11 @@ while ($myrow=DB_fetch_array($result)) {
 				<td colspan="5" align="left">
 					<table class="selection" align="left">
 					<tr>
-						<th class="ascending" onClick="SortSelect(this)">'._('Product').'</th>
-						<th class="ascending" onClick="SortSelect(this)">'._('Quantity Ordered').'</th>
-						<th class="ascending" onClick="SortSelect(this)">'._('Currency').'</th>
-						<th class="ascending" onClick="SortSelect(this)">'._('Price').'</th>
-						<th class="ascending" onClick="SortSelect(this)">'._('Line Total').'</th>
+						<th class="ascending">'._('Product').'</th>
+						<th class="ascending">'._('Quantity Ordered').'</th>
+						<th class="ascending">'._('Currency').'</th>
+						<th class="ascending">'._('Price').'</th>
+						<th class="ascending">'._('Line Total').'</th>
 					</tr>';
 
 		while ($LineRow=DB_fetch_array($LineResult)) {

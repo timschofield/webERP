@@ -181,16 +181,16 @@ echo '<input type="text" name="Show_Since" maxlength="11" size="12" class="date"
 
 if (DB_num_rows($GRNResults)>0){
 	$TableHeader = '<tr>
-						<th class="ascending" onclick="SortSelect(this)">' . _('GRN') . '</th>
-						<th class="ascending" onclick="SortSelect(this)">' . _('Order') . '</th>
-						<th class="ascending" onclick="SortSelect(this)">' . _('Item Code') . '</th>
-						<th class="ascending" onclick="SortSelect(this)">' . _('Description') . '</th>
-						<th class="ascending" onclick="SortSelect(this)">' . _('Delivered') . '</th>
-						<th class="ascending" onclick="SortSelect(this)">' . _('Total Qty') . '<br />' . _('Received') . '</th>
-						<th class="ascending" onclick="SortSelect(this)">' . _('Qty Invoiced') . '</th>
-						<th class="ascending" onclick="SortSelect(this)">' . _('Qty Yet') . '<br />' . _('invoice') . '</th>
-						<th class="ascending" onclick="SortSelect(this)">' . _('Price') . '<br />' . $_SESSION['SuppTrans']->CurrCode . '</th>
-						<th class="ascending" onclick="SortSelect(this)">' . _('Line Value') . '<br />' . _('In') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
+						<th class="ascending">' . _('GRN') . '</th>
+						<th class="ascending">' . _('Order') . '</th>
+						<th class="ascending">' . _('Item Code') . '</th>
+						<th class="ascending">' . _('Description') . '</th>
+						<th class="ascending">' . _('Delivered') . '</th>
+						<th class="ascending">' . _('Total Qty') . '<br />' . _('Received') . '</th>
+						<th class="ascending">' . _('Qty Invoiced') . '</th>
+						<th class="ascending">' . _('Qty Yet') . '<br />' . _('invoice') . '</th>
+						<th class="ascending">' . _('Price') . '<br />' . $_SESSION['SuppTrans']->CurrCode . '</th>
+						<th class="ascending">' . _('Line Value') . '<br />' . _('In') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
 					</tr>';
 
 	echo $TableHeader;

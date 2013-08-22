@@ -75,10 +75,10 @@ echo '</p></div>';
 
 echo '<table class="selection">';
 $TableHeader = '<tr>
-					<th class="ascending" onclick="SortSelect(this)">' . _('Contract') . '</th>
-					<th class="ascending" onclick="SortSelect(this)">' . _('Amount') . '</th>
-					<th class="ascending" onclick="SortSelect(this)">' . _('Narrative') . '</th>
-					<th class="ascending" onclick="SortSelect(this)">' . _('Anticipated') . '</th>
+					<th class="ascending">' . _('Contract') . '</th>
+					<th class="ascending">' . _('Amount') . '</th>
+					<th class="ascending">' . _('Narrative') . '</th>
+					<th class="ascending">' . _('Anticipated') . '</th>
 				</tr>';
 echo $TableHeader;
 

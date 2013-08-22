@@ -203,11 +203,11 @@ if ($AllowGLAnalysis==false){
 						<th colspan="5">' . _('General ledger Analysis') . '</th>
 					</tr>
 					<tr>
-						<th class="ascending" onclick="SortSelect(this)">' . _('Account') . '</th>
-						<th class="ascending" onclick="SortSelect(this)">' . _('Name') . '</th>
-						<th class="ascending" onclick="SortSelect(this)">' . _('Amount') . '<br />' . _('in') . ' ' . $_SESSION['Statement']->CurrCode . '</th>
+						<th class="ascending">' . _('Account') . '</th>
+						<th class="ascending">' . _('Name') . '</th>
+						<th class="ascending">' . _('Amount') . '<br />' . _('in') . ' ' . $_SESSION['Statement']->CurrCode . '</th>
 						<th>' . _('Narrative') . '</th>
-						<th class="ascending" onclick="SortSelect(this)">' . _('Tag') . '</th>
+						<th class="ascending">' . _('Tag') . '</th>
 					</tr>';
 	echo $TableHeader;
 	$TotalGLValue=0;

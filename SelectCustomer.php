@@ -417,14 +417,14 @@ if (isset($result)) {
 				<table cellpadding="2" class="selection">';
 
 		echo '<tr>
-				<th class="ascending" onclick="SortSelect(this)">' . _('Code') . '</th>
-				<th class="ascending" onclick="SortSelect(this)">' . _('Customer Name') . '</th>
-				<th class="ascending" onclick="SortSelect(this)">' . _('Branch') . '</th>
-				<th class="ascending" onclick="SortSelect(this)">' . _('Contact') . '</th>
-				<th class="ascending" onclick="SortSelect(this)">' . _('Type') . '</th>
-				<th class="ascending" onclick="SortSelect(this)">' . _('Phone') . '</th>
-				<th class="ascending" onclick="SortSelect(this)">' . _('Fax') . '</th>
-				<th class="ascending" onclick="SortSelect(this)">' . _('Email') . '</th>
+				<th class="ascending">' . _('Code') . '</th>
+				<th class="ascending">' . _('Customer Name') . '</th>
+				<th class="ascending">' . _('Branch') . '</th>
+				<th class="ascending">' . _('Contact') . '</th>
+				<th class="ascending">' . _('Type') . '</th>
+				<th class="ascending">' . _('Phone') . '</th>
+				<th class="ascending">' . _('Fax') . '</th>
+				<th class="ascending">' . _('Email') . '</th>
 			</tr>';
 		$k = 0; //row counter to determine background colour
 		$RowIndex = 0;
@@ -606,10 +606,10 @@ if (isset($_SESSION['CustomerID']) AND $_SESSION['CustomerID'] != '') {
 			echo '<br /><div class="centre"><img src="' . $RootPath . '/css/' . $Theme . '/images/group_add.png" title="' . _('Customer Contacts') . '" alt="" />' . ' ' . _('Customer Contacts') . '</div>';
 			echo '<br /><table width="45%">';
 			echo '<tr>
-					<th class="ascending" onclick="SortSelect(this)">' . _('Name') . '</th>
-					<th class="ascending" onclick="SortSelect(this)">' . _('Role') . '</th>
-					<th class="ascending" onclick="SortSelect(this)">' . _('Phone Number') . '</th>
-					<th class="ascending" onclick="SortSelect(this)">' . _('Email') . '</th>
+					<th class="ascending">' . _('Name') . '</th>
+					<th class="ascending">' . _('Role') . '</th>
+					<th class="ascending">' . _('Phone Number') . '</th>
+					<th class="ascending">' . _('Email') . '</th>
 					<th>' . _('Notes') . '</th>
 					<th>' . _('Edit') . '</th>
 					<th>' . _('Delete') . '</th>
@@ -656,10 +656,10 @@ if (isset($_SESSION['CustomerID']) AND $_SESSION['CustomerID'] != '') {
 			echo '<br /><div class="centre"><img src="' . $RootPath . '/css/' . $Theme . '/images/note_add.png" title="' . _('Customer Notes') . '" alt="" />' . ' ' . _('Customer Notes') . '</div><br />';
 			echo '<table width="45%">';
 			echo '<tr>
-					<th class="ascending" onclick="SortSelect(this)">' . _('Date') . '</th>
+					<th class="ascending">' . _('Date') . '</th>
 					<th>' . _('Note') . '</th>
 					<th>' . _('Hyperlink') . '</th>
-					<th class="ascending" onclick="SortSelect(this)">' . _('Priority') . '</th>
+					<th class="ascending">' . _('Priority') . '</th>
 					<th>' . _('Edit') . '</th>
 					<th>' . _('Delete') . '</th>
 					<th> <a href="AddCustomerNotes.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . ' ' . _('Add New Note') . '</a> </th>
@@ -698,10 +698,10 @@ if (isset($_SESSION['CustomerID']) AND $_SESSION['CustomerID'] != '') {
 			echo '<br /><div class="centre"><img src="' . $RootPath . '/css/' . $Theme . '/images/folder_add.png" title="' . _('Customer Type (Group) Notes') . '" alt="" />' . ' ' . _('Customer Type (Group) Notes for:' . '<b> ' . $CustomerTypeName . '</b>') . '</div><br />';
 			echo '<table width="45%">';
 			echo '<tr>
-				 	<th class="ascending" onclick="SortSelect(this)">' . _('Date') . '</th>
+				 	<th class="ascending">' . _('Date') . '</th>
 				  	<th>' . _('Note') . '</th>
 				   	<th>' . _('File Link / Reference / URL') . '</th>
-				   	<th class="ascending" onclick="SortSelect(this)">' . _('Priority') . '</th>
+				   	<th class="ascending">' . _('Priority') . '</th>
 				   	<th>' . _('Edit') . '</th>
 				   	<th>' . _('Delete') . '</th>
 				   	<th><a href="AddCustomerTypeNotes.php?DebtorType=' . $CustomerType . '">' . _('Add New Group Note') . '</a></th>

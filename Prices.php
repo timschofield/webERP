@@ -217,11 +217,11 @@ if (DB_num_rows($result) > 0) {
 				<input type="submit" name="NewPart" value="' . _('Review Prices') . '" /></th>
 			</tr>';
 
-	echo '<tbody><tr><th class="ascending" onclick="SortSelect(this)">' . _('Currency') . '</th>
-				<th class="ascending" onclick="SortSelect(this)">' . _('Sales Type') . '</th>
-				<th class="ascending" onclick="SortSelect(this)">' . _('Price') . '</th>
-				<th class="ascending" onclick="SortSelect(this)">' . _('Start Date') . ' </th>
-				<th class="ascending" onclick="SortSelect(this)">' . _('End Date') . '</th>
+	echo '<tbody><tr><th class="ascending">' . _('Currency') . '</th>
+				<th class="ascending">' . _('Sales Type') . '</th>
+				<th class="ascending">' . _('Price') . '</th>
+				<th class="ascending">' . _('Start Date') . ' </th>
+				<th class="ascending">' . _('End Date') . '</th>
 			</tr>';
 
 	$k=0; //row colour counter
