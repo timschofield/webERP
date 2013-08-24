@@ -186,8 +186,8 @@ or deletion of the records*/
 
 	echo '<br /><table class="selection">';
 	echo '<tr>
-		<th>' . _('Type ID') . '</th>
-		<th>' . _('Type Name') . '</th>
+			<th class="ascending">' . _('Type ID') . '</th>
+			<th class="ascending">' . _('Type Name') . '</th>
 		</tr>';
 
 $k=0; //row colour counter
@@ -262,7 +262,7 @@ if (! isset($_GET['delete'])) {
 	}
 	echo '<tr>
 			<td>' . _('Type Name') . ':</td>
-			<td><input type="text" name="typename"  required="required" title="' . _('The customer type name is required') . '" value="' . $_POST['TypeName'] . '" /></td>
+			<td><input type="text" name="TypeName"  required="required" title="' . _('The customer type name is required') . '" value="' . $_POST['TypeName'] . '" /></td>
 		</tr>
 		</table>
 		<br />

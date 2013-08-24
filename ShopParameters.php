@@ -162,7 +162,7 @@ if (isset($_POST['submit'])) {
 		$ErrMsg =  _('The shop configuration could not be updated because');
 		$DbgMsg = _('The SQL that failed was:');
 
-		print_r($SQL);
+		//print_r($SQL);
 		
 		if (sizeof($SQL) > 0 ) {
 			$result = DB_Txn_Begin($db);
@@ -212,34 +212,34 @@ echo '<tr>
 //Shop Name
 echo '<tr>
 		<td>' . _('Shop Name') . ':</td>
-		<td><input type="text" name="X_ShopName" required size="40" maxlength="40" value="' . $_SESSION['ShopName'] . '" /></td>
+		<td><input type="text" name="X_ShopName" required="required" autofocus="autofocus" size="40" maxlength="40" value="' . $_SESSION['ShopName'] . '" /></td>
 		<td>' . _('Enter the name of the shop that will be displayed on all the store pages') . '</td>
 	</tr>';
 
 //Shop Title
 echo '<tr>
 		<td>' . _('Shop Title') . ':</td>
-		<td><input type="text" name="X_ShopTitle" required size="40" maxlength="40" value="' . $_SESSION['ShopTitle'] . '" /></td>
+		<td><input type="text" name="X_ShopTitle" required="required" size="40" maxlength="40" value="' . $_SESSION['ShopTitle'] . '" /></td>
 		<td>' . _('Enter the title of the shop that will be displayed on the main webSHOP page. Useful for SEO purposes.') . '</td>
 	</tr>';
 
 //Shop Manager Email
 echo '<tr>
 		<td>' . _('Shop Manager Email') . ':</td>
-		<td><input type="email" name="X_ShopManagerEmail" required size="50" maxlength="50" value="' . $_SESSION['ShopManagerEmail'] . '" /></td>
+		<td><input type="email" name="X_ShopManagerEmail" required="required" size="50" maxlength="50" value="' . $_SESSION['ShopManagerEmail'] . '" /></td>
 		<td>' . _('Enter the email address of the webSHOP manager.') . '</td>
 	</tr>';
 	
 // Shop Customer
 echo '<tr>
 		<td>' . _('Default Web Shop Customer Acount') . ':</td>
-	   <td><input type="text"size="12" maxlength="10" required name="X_ShopDebtorNo" value="' . $_SESSION['ShopDebtorNo'] . '" /></td>
+	   <td><input type="text"size="12" maxlength="10" required="required" name="X_ShopDebtorNo" value="' . $_SESSION['ShopDebtorNo'] . '" /></td>
 		<td>' . _('Select the customer account that is to be used for the web-store sales') . '</td>
 	</tr>';
 // Shop Customer Branch
 echo '<tr>
 		<td>'._('Default Web Shop Branch Code').':</td>
-		<td><input type="text" required size="12" maxlength="10" name="X_ShopBranchCode" value="' . $_SESSION['ShopBranchCode'] . '" /></td>
+		<td><input type="text" required="required" size="12" maxlength="10" name="X_ShopBranchCode" value="' . $_SESSION['ShopBranchCode'] . '" /></td>
 		<td>' . _('The customer branch code that is to be used - a branch of the above custoemr account - for web-store sales') . '</td>
 	</tr>';
 
@@ -247,30 +247,30 @@ echo '<tr>
 echo '<tr>
 		<td>' . _('Privacy Statement') . ':</td>
 		<td><textarea name="X_ShopPrivacyStatement" rows="8" cols="60">' . stripslashes($_SESSION['ShopPrivacyStatement']) . '</textarea></td>
-		<td>' . _('This text will appear on the web-store page that spells out the privacy policy of the web-shop') . '</td>
+		<td>' . _('This text will appear on the web-store page that spells out the privacy policy of the web-shop') . ' ' . _('Enter the raw html without any line breaks') .  '</td>
 	</tr>';
 //Terms and Conditions
 echo '<tr>
 		<td>' . _('Terms and Conditions') . ':</td>
 		<td><textarea name="X_ShopTermsConditions" rows="8" cols="60">' . stripslashes($_SESSION['ShopTermsConditions']) . '</textarea></td>
-		<td>' . _('This text will appear on the web-store page that spells out the terms and conditions associated with sales from the web-shop') . '</td>
+		<td>' . _('This text will appear on the web-store page that spells out the terms and conditions associated with sales from the web-shop') . ' ' . _('Enter the raw html without any line breaks') . '</td>
 	</tr>';
 //About Us
 echo '<tr>
 		<td>' . _('About Us') . ':</td>
 		<td><textarea name="X_ShopAboutUs" rows="8" cols="60">' . stripslashes($_SESSION['ShopAboutUs']) . '</textarea></td>
-		<td>' . _('This text will appear on the web-store page that provides information about us to users of the web-store.') . '</td>
+		<td>' . _('This text will appear on the web-store page that provides information about us to users of the web-store.') . ' ' . _('Enter the raw html without any line breaks') .'</td>
 	</tr>';
 echo '<tr>
 		<td>' . _('Contact Us') . ':</td>
 		<td><textarea name="X_ShopContactUs" rows="8" cols="60">' . stripslashes($_SESSION['ShopContactUs']) . '</textarea></td>
-		<td>' . _('This text will appear on the web-store page that provides contact information to users of the web-store.') . '</td>
+		<td>' . _('This text will appear on the web-store page that provides contact information to users of the web-store.') . ' ' . _('Enter the raw html without any line breaks') . '</td>
 	</tr>';
 //Freight Policy
 echo '<tr>
 		<td>' . _('Freight Policy') . ':</td>
 		<td><textarea name="X_ShopFreightPolicy" rows="8" cols="60">' . stripslashes($_SESSION['ShopFreightPolicy']) . '</textarea></td>
-		<td>' . _('This text will appear on the web-store page that spells out the freight policy of the web-shop') . '</td>
+		<td>' . _('This text will appear on the web-store page that spells out the freight policy of the web-shop') . ' ' . _('Enter the raw html without any line breaks') .'</td>
 	</tr>';
 
 

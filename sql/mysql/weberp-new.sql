@@ -1,9 +1,9 @@
 SET FOREIGN_KEY_CHECKS = 0;
--- MySQL dump 10.13  Distrib 5.5.24, for Linux (i686)
+-- MySQL dump 10.13  Distrib 5.5.32, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: weberpdemo
 -- ------------------------------------------------------
--- Server version	5.5.24
+-- Server version	5.5.32-0ubuntu0.13.04.1
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -458,10 +458,10 @@ CREATE TABLE `custbranch` (
   `disabletrans` tinyint(4) NOT NULL DEFAULT '0',
   `brpostaddr1` varchar(40) NOT NULL DEFAULT '',
   `brpostaddr2` varchar(40) NOT NULL DEFAULT '',
-  `brpostaddr3` varchar(30) NOT NULL DEFAULT '',
-  `brpostaddr4` varchar(20) NOT NULL DEFAULT '',
+  `brpostaddr3` varchar(40) NOT NULL DEFAULT '',
+  `brpostaddr4` varchar(50) NOT NULL DEFAULT '',
   `brpostaddr5` varchar(20) NOT NULL DEFAULT '',
-  `brpostaddr6` varchar(15) NOT NULL DEFAULT '',
+  `brpostaddr6` varchar(40) NOT NULL DEFAULT '',
   `specialinstructions` text NOT NULL,
   `custbranchcode` varchar(30) NOT NULL DEFAULT '',
   PRIMARY KEY (`branchcode`,`debtorno`),
@@ -513,7 +513,7 @@ CREATE TABLE `custnotes` (
   `date` date NOT NULL DEFAULT '0000-00-00',
   `priority` varchar(20) NOT NULL,
   PRIMARY KEY (`noteid`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -945,6 +945,7 @@ CREATE TABLE `fixedassettrans` (
 CREATE TABLE `freightcosts` (
   `shipcostfromid` int(11) NOT NULL AUTO_INCREMENT,
   `locationfrom` varchar(5) NOT NULL DEFAULT '',
+  `destinationcountry` varchar(40) NOT NULL,
   `destination` varchar(40) NOT NULL DEFAULT '',
   `shipperid` int(11) NOT NULL DEFAULT '0',
   `cubrate` double NOT NULL DEFAULT '0',
@@ -1622,7 +1623,7 @@ CREATE TABLE `purchorderauth` (
   `userid` varchar(20) NOT NULL DEFAULT '',
   `currabrev` char(3) NOT NULL DEFAULT '',
   `cancreate` smallint(2) NOT NULL DEFAULT '0',
-  `authlevel` int(11) NOT NULL DEFAULT '0',
+  `authlevel` double NOT NULL DEFAULT '0',
   `offhold` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`userid`,`currabrev`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -1997,6 +1998,7 @@ CREATE TABLE `salescat` (
   `salescatid` tinyint(4) NOT NULL AUTO_INCREMENT,
   `parentcatid` tinyint(4) DEFAULT NULL,
   `salescatname` varchar(50) DEFAULT NULL,
+  `active` int(11) NOT NULL DEFAULT '1' COMMENT '1 if active 0 if inactive',
   PRIMARY KEY (`salescatid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -2017,6 +2019,7 @@ CREATE TABLE `salescatprod` (
   KEY `stockid` (`stockid`),
   KEY `manufacturer_id` (`manufacturers_id`),
   KEY `manufacturers_id` (`manufacturers_id`),
+  KEY `manufacturers_id_2` (`manufacturers_id`),
   CONSTRAINT `salescatprod_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`),
   CONSTRAINT `salescatprod_ibfk_2` FOREIGN KEY (`salescatid`) REFERENCES `salescat` (`salescatid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -2331,6 +2334,7 @@ CREATE TABLE `stockcategory` (
   `purchpricevaract` varchar(20) NOT NULL DEFAULT '80000',
   `materialuseagevarac` varchar(20) NOT NULL DEFAULT '80000',
   `wipact` varchar(20) NOT NULL DEFAULT '0',
+  `defaulttaxcatid` tinyint(4) NOT NULL DEFAULT '1',
   PRIMARY KEY (`categoryid`),
   KEY `CategoryDescription` (`categorydescription`),
   KEY `StockType` (`stocktype`)
@@ -3163,12 +3167,12 @@ CREATE TABLE `www_users` (
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-07-06 15:59:42
--- MySQL dump 10.13  Distrib 5.5.24, for Linux (i686)
+-- Dump completed on 2013-08-24 10:33:38
+-- MySQL dump 10.13  Distrib 5.5.32, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: weberpdemo
 -- ------------------------------------------------------
--- Server version	5.5.24
+-- Server version	5.5.32-0ubuntu0.13.04.1
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -3635,6 +3639,232 @@ INSERT INTO `reportlinks` VALUES ('worksorders','stockmaster','worksorders.stock
 INSERT INTO `reportlinks` VALUES ('stockmaster','worksorders','stockmaster.stockid=worksorders.stockid');
 INSERT INTO `reportlinks` VALUES ('www_users','locations','www_users.defaultlocation=locations.loccode');
 INSERT INTO `reportlinks` VALUES ('locations','www_users','locations.loccode=www_users.defaultlocation');
+INSERT INTO `reportlinks` VALUES ('accountgroups','accountsection','accountgroups.sectioninaccounts=accountsection.sectionid');
+INSERT INTO `reportlinks` VALUES ('accountsection','accountgroups','accountsection.sectionid=accountgroups.sectioninaccounts');
+INSERT INTO `reportlinks` VALUES ('bankaccounts','chartmaster','bankaccounts.accountcode=chartmaster.accountcode');
+INSERT INTO `reportlinks` VALUES ('chartmaster','bankaccounts','chartmaster.accountcode=bankaccounts.accountcode');
+INSERT INTO `reportlinks` VALUES ('banktrans','systypes','banktrans.type=systypes.typeid');
+INSERT INTO `reportlinks` VALUES ('systypes','banktrans','systypes.typeid=banktrans.type');
+INSERT INTO `reportlinks` VALUES ('banktrans','bankaccounts','banktrans.bankact=bankaccounts.accountcode');
+INSERT INTO `reportlinks` VALUES ('bankaccounts','banktrans','bankaccounts.accountcode=banktrans.bankact');
+INSERT INTO `reportlinks` VALUES ('bom','stockmaster','bom.parent=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','bom','stockmaster.stockid=bom.parent');
+INSERT INTO `reportlinks` VALUES ('bom','stockmaster','bom.component=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','bom','stockmaster.stockid=bom.component');
+INSERT INTO `reportlinks` VALUES ('bom','workcentres','bom.workcentreadded=workcentres.code');
+INSERT INTO `reportlinks` VALUES ('workcentres','bom','workcentres.code=bom.workcentreadded');
+INSERT INTO `reportlinks` VALUES ('bom','locations','bom.loccode=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','bom','locations.loccode=bom.loccode');
+INSERT INTO `reportlinks` VALUES ('buckets','workcentres','buckets.workcentre=workcentres.code');
+INSERT INTO `reportlinks` VALUES ('workcentres','buckets','workcentres.code=buckets.workcentre');
+INSERT INTO `reportlinks` VALUES ('chartdetails','chartmaster','chartdetails.accountcode=chartmaster.accountcode');
+INSERT INTO `reportlinks` VALUES ('chartmaster','chartdetails','chartmaster.accountcode=chartdetails.accountcode');
+INSERT INTO `reportlinks` VALUES ('chartdetails','periods','chartdetails.period=periods.periodno');
+INSERT INTO `reportlinks` VALUES ('periods','chartdetails','periods.periodno=chartdetails.period');
+INSERT INTO `reportlinks` VALUES ('chartmaster','accountgroups','chartmaster.group_=accountgroups.groupname');
+INSERT INTO `reportlinks` VALUES ('accountgroups','chartmaster','accountgroups.groupname=chartmaster.group_');
+INSERT INTO `reportlinks` VALUES ('contractbom','workcentres','contractbom.workcentreadded=workcentres.code');
+INSERT INTO `reportlinks` VALUES ('workcentres','contractbom','workcentres.code=contractbom.workcentreadded');
+INSERT INTO `reportlinks` VALUES ('contractbom','locations','contractbom.loccode=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','contractbom','locations.loccode=contractbom.loccode');
+INSERT INTO `reportlinks` VALUES ('contractbom','stockmaster','contractbom.component=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','contractbom','stockmaster.stockid=contractbom.component');
+INSERT INTO `reportlinks` VALUES ('contractreqts','contracts','contractreqts.contract=contracts.contractref');
+INSERT INTO `reportlinks` VALUES ('contracts','contractreqts','contracts.contractref=contractreqts.contract');
+INSERT INTO `reportlinks` VALUES ('contracts','custbranch','contracts.debtorno=custbranch.debtorno');
+INSERT INTO `reportlinks` VALUES ('custbranch','contracts','custbranch.debtorno=contracts.debtorno');
+INSERT INTO `reportlinks` VALUES ('contracts','stockcategory','contracts.branchcode=stockcategory.categoryid');
+INSERT INTO `reportlinks` VALUES ('stockcategory','contracts','stockcategory.categoryid=contracts.branchcode');
+INSERT INTO `reportlinks` VALUES ('contracts','salestypes','contracts.typeabbrev=salestypes.typeabbrev');
+INSERT INTO `reportlinks` VALUES ('salestypes','contracts','salestypes.typeabbrev=contracts.typeabbrev');
+INSERT INTO `reportlinks` VALUES ('custallocns','debtortrans','custallocns.transid_allocfrom=debtortrans.id');
+INSERT INTO `reportlinks` VALUES ('debtortrans','custallocns','debtortrans.id=custallocns.transid_allocfrom');
+INSERT INTO `reportlinks` VALUES ('custallocns','debtortrans','custallocns.transid_allocto=debtortrans.id');
+INSERT INTO `reportlinks` VALUES ('debtortrans','custallocns','debtortrans.id=custallocns.transid_allocto');
+INSERT INTO `reportlinks` VALUES ('custbranch','debtorsmaster','custbranch.debtorno=debtorsmaster.debtorno');
+INSERT INTO `reportlinks` VALUES ('debtorsmaster','custbranch','debtorsmaster.debtorno=custbranch.debtorno');
+INSERT INTO `reportlinks` VALUES ('custbranch','areas','custbranch.area=areas.areacode');
+INSERT INTO `reportlinks` VALUES ('areas','custbranch','areas.areacode=custbranch.area');
+INSERT INTO `reportlinks` VALUES ('custbranch','salesman','custbranch.salesman=salesman.salesmancode');
+INSERT INTO `reportlinks` VALUES ('salesman','custbranch','salesman.salesmancode=custbranch.salesman');
+INSERT INTO `reportlinks` VALUES ('custbranch','locations','custbranch.defaultlocation=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','custbranch','locations.loccode=custbranch.defaultlocation');
+INSERT INTO `reportlinks` VALUES ('custbranch','shippers','custbranch.defaultshipvia=shippers.shipper_id');
+INSERT INTO `reportlinks` VALUES ('shippers','custbranch','shippers.shipper_id=custbranch.defaultshipvia');
+INSERT INTO `reportlinks` VALUES ('debtorsmaster','holdreasons','debtorsmaster.holdreason=holdreasons.reasoncode');
+INSERT INTO `reportlinks` VALUES ('holdreasons','debtorsmaster','holdreasons.reasoncode=debtorsmaster.holdreason');
+INSERT INTO `reportlinks` VALUES ('debtorsmaster','currencies','debtorsmaster.currcode=currencies.currabrev');
+INSERT INTO `reportlinks` VALUES ('currencies','debtorsmaster','currencies.currabrev=debtorsmaster.currcode');
+INSERT INTO `reportlinks` VALUES ('debtorsmaster','paymentterms','debtorsmaster.paymentterms=paymentterms.termsindicator');
+INSERT INTO `reportlinks` VALUES ('paymentterms','debtorsmaster','paymentterms.termsindicator=debtorsmaster.paymentterms');
+INSERT INTO `reportlinks` VALUES ('debtorsmaster','salestypes','debtorsmaster.salestype=salestypes.typeabbrev');
+INSERT INTO `reportlinks` VALUES ('salestypes','debtorsmaster','salestypes.typeabbrev=debtorsmaster.salestype');
+INSERT INTO `reportlinks` VALUES ('debtortrans','custbranch','debtortrans.debtorno=custbranch.debtorno');
+INSERT INTO `reportlinks` VALUES ('custbranch','debtortrans','custbranch.debtorno=debtortrans.debtorno');
+INSERT INTO `reportlinks` VALUES ('debtortrans','systypes','debtortrans.type=systypes.typeid');
+INSERT INTO `reportlinks` VALUES ('systypes','debtortrans','systypes.typeid=debtortrans.type');
+INSERT INTO `reportlinks` VALUES ('debtortrans','periods','debtortrans.prd=periods.periodno');
+INSERT INTO `reportlinks` VALUES ('periods','debtortrans','periods.periodno=debtortrans.prd');
+INSERT INTO `reportlinks` VALUES ('debtortranstaxes','taxauthorities','debtortranstaxes.taxauthid=taxauthorities.taxid');
+INSERT INTO `reportlinks` VALUES ('taxauthorities','debtortranstaxes','taxauthorities.taxid=debtortranstaxes.taxauthid');
+INSERT INTO `reportlinks` VALUES ('debtortranstaxes','debtortrans','debtortranstaxes.debtortransid=debtortrans.id');
+INSERT INTO `reportlinks` VALUES ('debtortrans','debtortranstaxes','debtortrans.id=debtortranstaxes.debtortransid');
+INSERT INTO `reportlinks` VALUES ('discountmatrix','salestypes','discountmatrix.salestype=salestypes.typeabbrev');
+INSERT INTO `reportlinks` VALUES ('salestypes','discountmatrix','salestypes.typeabbrev=discountmatrix.salestype');
+INSERT INTO `reportlinks` VALUES ('freightcosts','locations','freightcosts.locationfrom=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','freightcosts','locations.loccode=freightcosts.locationfrom');
+INSERT INTO `reportlinks` VALUES ('freightcosts','shippers','freightcosts.shipperid=shippers.shipper_id');
+INSERT INTO `reportlinks` VALUES ('shippers','freightcosts','shippers.shipper_id=freightcosts.shipperid');
+INSERT INTO `reportlinks` VALUES ('gltrans','chartmaster','gltrans.account=chartmaster.accountcode');
+INSERT INTO `reportlinks` VALUES ('chartmaster','gltrans','chartmaster.accountcode=gltrans.account');
+INSERT INTO `reportlinks` VALUES ('gltrans','systypes','gltrans.type=systypes.typeid');
+INSERT INTO `reportlinks` VALUES ('systypes','gltrans','systypes.typeid=gltrans.type');
+INSERT INTO `reportlinks` VALUES ('gltrans','periods','gltrans.periodno=periods.periodno');
+INSERT INTO `reportlinks` VALUES ('periods','gltrans','periods.periodno=gltrans.periodno');
+INSERT INTO `reportlinks` VALUES ('grns','suppliers','grns.supplierid=suppliers.supplierid');
+INSERT INTO `reportlinks` VALUES ('suppliers','grns','suppliers.supplierid=grns.supplierid');
+INSERT INTO `reportlinks` VALUES ('grns','purchorderdetails','grns.podetailitem=purchorderdetails.podetailitem');
+INSERT INTO `reportlinks` VALUES ('purchorderdetails','grns','purchorderdetails.podetailitem=grns.podetailitem');
+INSERT INTO `reportlinks` VALUES ('locations','taxprovinces','locations.taxprovinceid=taxprovinces.taxprovinceid');
+INSERT INTO `reportlinks` VALUES ('taxprovinces','locations','taxprovinces.taxprovinceid=locations.taxprovinceid');
+INSERT INTO `reportlinks` VALUES ('locstock','locations','locstock.loccode=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','locstock','locations.loccode=locstock.loccode');
+INSERT INTO `reportlinks` VALUES ('locstock','stockmaster','locstock.stockid=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','locstock','stockmaster.stockid=locstock.stockid');
+INSERT INTO `reportlinks` VALUES ('loctransfers','locations','loctransfers.shiploc=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','loctransfers','locations.loccode=loctransfers.shiploc');
+INSERT INTO `reportlinks` VALUES ('loctransfers','locations','loctransfers.recloc=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','loctransfers','locations.loccode=loctransfers.recloc');
+INSERT INTO `reportlinks` VALUES ('loctransfers','stockmaster','loctransfers.stockid=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','loctransfers','stockmaster.stockid=loctransfers.stockid');
+INSERT INTO `reportlinks` VALUES ('orderdeliverydifferencesl','stockmaster','orderdeliverydifferenceslog.stockid=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','orderdeliverydifferencesl','stockmaster.stockid=orderdeliverydifferenceslog.stockid');
+INSERT INTO `reportlinks` VALUES ('orderdeliverydifferencesl','custbranch','orderdeliverydifferenceslog.debtorno=custbranch.debtorno');
+INSERT INTO `reportlinks` VALUES ('custbranch','orderdeliverydifferencesl','custbranch.debtorno=orderdeliverydifferenceslog.debtorno');
+INSERT INTO `reportlinks` VALUES ('orderdeliverydifferencesl','salesorders','orderdeliverydifferenceslog.branchcode=salesorders.orderno');
+INSERT INTO `reportlinks` VALUES ('salesorders','orderdeliverydifferencesl','salesorders.orderno=orderdeliverydifferenceslog.branchcode');
+INSERT INTO `reportlinks` VALUES ('prices','stockmaster','prices.stockid=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','prices','stockmaster.stockid=prices.stockid');
+INSERT INTO `reportlinks` VALUES ('prices','currencies','prices.currabrev=currencies.currabrev');
+INSERT INTO `reportlinks` VALUES ('currencies','prices','currencies.currabrev=prices.currabrev');
+INSERT INTO `reportlinks` VALUES ('prices','salestypes','prices.typeabbrev=salestypes.typeabbrev');
+INSERT INTO `reportlinks` VALUES ('salestypes','prices','salestypes.typeabbrev=prices.typeabbrev');
+INSERT INTO `reportlinks` VALUES ('purchdata','stockmaster','purchdata.stockid=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','purchdata','stockmaster.stockid=purchdata.stockid');
+INSERT INTO `reportlinks` VALUES ('purchdata','suppliers','purchdata.supplierno=suppliers.supplierid');
+INSERT INTO `reportlinks` VALUES ('suppliers','purchdata','suppliers.supplierid=purchdata.supplierno');
+INSERT INTO `reportlinks` VALUES ('purchorderdetails','purchorders','purchorderdetails.orderno=purchorders.orderno');
+INSERT INTO `reportlinks` VALUES ('purchorders','purchorderdetails','purchorders.orderno=purchorderdetails.orderno');
+INSERT INTO `reportlinks` VALUES ('purchorders','suppliers','purchorders.supplierno=suppliers.supplierid');
+INSERT INTO `reportlinks` VALUES ('suppliers','purchorders','suppliers.supplierid=purchorders.supplierno');
+INSERT INTO `reportlinks` VALUES ('purchorders','locations','purchorders.intostocklocation=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','purchorders','locations.loccode=purchorders.intostocklocation');
+INSERT INTO `reportlinks` VALUES ('recurringsalesorders','custbranch','recurringsalesorders.branchcode=custbranch.branchcode');
+INSERT INTO `reportlinks` VALUES ('custbranch','recurringsalesorders','custbranch.branchcode=recurringsalesorders.branchcode');
+INSERT INTO `reportlinks` VALUES ('recurrsalesorderdetails','recurringsalesorders','recurrsalesorderdetails.recurrorderno=recurringsalesorders.recurrorderno');
+INSERT INTO `reportlinks` VALUES ('recurringsalesorders','recurrsalesorderdetails','recurringsalesorders.recurrorderno=recurrsalesorderdetails.recurrorderno');
+INSERT INTO `reportlinks` VALUES ('recurrsalesorderdetails','stockmaster','recurrsalesorderdetails.stkcode=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','recurrsalesorderdetails','stockmaster.stockid=recurrsalesorderdetails.stkcode');
+INSERT INTO `reportlinks` VALUES ('reportcolumns','reportheaders','reportcolumns.reportid=reportheaders.reportid');
+INSERT INTO `reportlinks` VALUES ('reportheaders','reportcolumns','reportheaders.reportid=reportcolumns.reportid');
+INSERT INTO `reportlinks` VALUES ('salesanalysis','periods','salesanalysis.periodno=periods.periodno');
+INSERT INTO `reportlinks` VALUES ('periods','salesanalysis','periods.periodno=salesanalysis.periodno');
+INSERT INTO `reportlinks` VALUES ('salescatprod','stockmaster','salescatprod.stockid=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','salescatprod','stockmaster.stockid=salescatprod.stockid');
+INSERT INTO `reportlinks` VALUES ('salescatprod','salescat','salescatprod.salescatid=salescat.salescatid');
+INSERT INTO `reportlinks` VALUES ('salescat','salescatprod','salescat.salescatid=salescatprod.salescatid');
+INSERT INTO `reportlinks` VALUES ('salesorderdetails','salesorders','salesorderdetails.orderno=salesorders.orderno');
+INSERT INTO `reportlinks` VALUES ('salesorders','salesorderdetails','salesorders.orderno=salesorderdetails.orderno');
+INSERT INTO `reportlinks` VALUES ('salesorderdetails','stockmaster','salesorderdetails.stkcode=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','salesorderdetails','stockmaster.stockid=salesorderdetails.stkcode');
+INSERT INTO `reportlinks` VALUES ('salesorders','custbranch','salesorders.branchcode=custbranch.branchcode');
+INSERT INTO `reportlinks` VALUES ('custbranch','salesorders','custbranch.branchcode=salesorders.branchcode');
+INSERT INTO `reportlinks` VALUES ('salesorders','shippers','salesorders.debtorno=shippers.shipper_id');
+INSERT INTO `reportlinks` VALUES ('shippers','salesorders','shippers.shipper_id=salesorders.debtorno');
+INSERT INTO `reportlinks` VALUES ('salesorders','locations','salesorders.fromstkloc=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','salesorders','locations.loccode=salesorders.fromstkloc');
+INSERT INTO `reportlinks` VALUES ('securitygroups','securityroles','securitygroups.secroleid=securityroles.secroleid');
+INSERT INTO `reportlinks` VALUES ('securityroles','securitygroups','securityroles.secroleid=securitygroups.secroleid');
+INSERT INTO `reportlinks` VALUES ('securitygroups','securitytokens','securitygroups.tokenid=securitytokens.tokenid');
+INSERT INTO `reportlinks` VALUES ('securitytokens','securitygroups','securitytokens.tokenid=securitygroups.tokenid');
+INSERT INTO `reportlinks` VALUES ('shipmentcharges','shipments','shipmentcharges.shiptref=shipments.shiptref');
+INSERT INTO `reportlinks` VALUES ('shipments','shipmentcharges','shipments.shiptref=shipmentcharges.shiptref');
+INSERT INTO `reportlinks` VALUES ('shipmentcharges','systypes','shipmentcharges.transtype=systypes.typeid');
+INSERT INTO `reportlinks` VALUES ('systypes','shipmentcharges','systypes.typeid=shipmentcharges.transtype');
+INSERT INTO `reportlinks` VALUES ('shipments','suppliers','shipments.supplierid=suppliers.supplierid');
+INSERT INTO `reportlinks` VALUES ('suppliers','shipments','suppliers.supplierid=shipments.supplierid');
+INSERT INTO `reportlinks` VALUES ('stockcheckfreeze','stockmaster','stockcheckfreeze.stockid=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','stockcheckfreeze','stockmaster.stockid=stockcheckfreeze.stockid');
+INSERT INTO `reportlinks` VALUES ('stockcheckfreeze','locations','stockcheckfreeze.loccode=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','stockcheckfreeze','locations.loccode=stockcheckfreeze.loccode');
+INSERT INTO `reportlinks` VALUES ('stockcounts','stockmaster','stockcounts.stockid=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','stockcounts','stockmaster.stockid=stockcounts.stockid');
+INSERT INTO `reportlinks` VALUES ('stockcounts','locations','stockcounts.loccode=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','stockcounts','locations.loccode=stockcounts.loccode');
+INSERT INTO `reportlinks` VALUES ('stockmaster','stockcategory','stockmaster.categoryid=stockcategory.categoryid');
+INSERT INTO `reportlinks` VALUES ('stockcategory','stockmaster','stockcategory.categoryid=stockmaster.categoryid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','taxcategories','stockmaster.taxcatid=taxcategories.taxcatid');
+INSERT INTO `reportlinks` VALUES ('taxcategories','stockmaster','taxcategories.taxcatid=stockmaster.taxcatid');
+INSERT INTO `reportlinks` VALUES ('stockmoves','stockmaster','stockmoves.stockid=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','stockmoves','stockmaster.stockid=stockmoves.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmoves','systypes','stockmoves.type=systypes.typeid');
+INSERT INTO `reportlinks` VALUES ('systypes','stockmoves','systypes.typeid=stockmoves.type');
+INSERT INTO `reportlinks` VALUES ('stockmoves','locations','stockmoves.loccode=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','stockmoves','locations.loccode=stockmoves.loccode');
+INSERT INTO `reportlinks` VALUES ('stockmoves','periods','stockmoves.prd=periods.periodno');
+INSERT INTO `reportlinks` VALUES ('periods','stockmoves','periods.periodno=stockmoves.prd');
+INSERT INTO `reportlinks` VALUES ('stockmovestaxes','taxauthorities','stockmovestaxes.taxauthid=taxauthorities.taxid');
+INSERT INTO `reportlinks` VALUES ('taxauthorities','stockmovestaxes','taxauthorities.taxid=stockmovestaxes.taxauthid');
+INSERT INTO `reportlinks` VALUES ('stockserialitems','stockmaster','stockserialitems.stockid=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','stockserialitems','stockmaster.stockid=stockserialitems.stockid');
+INSERT INTO `reportlinks` VALUES ('stockserialitems','locations','stockserialitems.loccode=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','stockserialitems','locations.loccode=stockserialitems.loccode');
+INSERT INTO `reportlinks` VALUES ('stockserialmoves','stockmoves','stockserialmoves.stockmoveno=stockmoves.stkmoveno');
+INSERT INTO `reportlinks` VALUES ('stockmoves','stockserialmoves','stockmoves.stkmoveno=stockserialmoves.stockmoveno');
+INSERT INTO `reportlinks` VALUES ('stockserialmoves','stockserialitems','stockserialmoves.stockid=stockserialitems.stockid');
+INSERT INTO `reportlinks` VALUES ('stockserialitems','stockserialmoves','stockserialitems.stockid=stockserialmoves.stockid');
+INSERT INTO `reportlinks` VALUES ('suppallocs','supptrans','suppallocs.transid_allocfrom=supptrans.id');
+INSERT INTO `reportlinks` VALUES ('supptrans','suppallocs','supptrans.id=suppallocs.transid_allocfrom');
+INSERT INTO `reportlinks` VALUES ('suppallocs','supptrans','suppallocs.transid_allocto=supptrans.id');
+INSERT INTO `reportlinks` VALUES ('supptrans','suppallocs','supptrans.id=suppallocs.transid_allocto');
+INSERT INTO `reportlinks` VALUES ('suppliercontacts','suppliers','suppliercontacts.supplierid=suppliers.supplierid');
+INSERT INTO `reportlinks` VALUES ('suppliers','suppliercontacts','suppliers.supplierid=suppliercontacts.supplierid');
+INSERT INTO `reportlinks` VALUES ('suppliers','currencies','suppliers.currcode=currencies.currabrev');
+INSERT INTO `reportlinks` VALUES ('currencies','suppliers','currencies.currabrev=suppliers.currcode');
+INSERT INTO `reportlinks` VALUES ('suppliers','paymentterms','suppliers.paymentterms=paymentterms.termsindicator');
+INSERT INTO `reportlinks` VALUES ('paymentterms','suppliers','paymentterms.termsindicator=suppliers.paymentterms');
+INSERT INTO `reportlinks` VALUES ('suppliers','taxgroups','suppliers.taxgroupid=taxgroups.taxgroupid');
+INSERT INTO `reportlinks` VALUES ('taxgroups','suppliers','taxgroups.taxgroupid=suppliers.taxgroupid');
+INSERT INTO `reportlinks` VALUES ('supptrans','systypes','supptrans.type=systypes.typeid');
+INSERT INTO `reportlinks` VALUES ('systypes','supptrans','systypes.typeid=supptrans.type');
+INSERT INTO `reportlinks` VALUES ('supptrans','suppliers','supptrans.supplierno=suppliers.supplierid');
+INSERT INTO `reportlinks` VALUES ('suppliers','supptrans','suppliers.supplierid=supptrans.supplierno');
+INSERT INTO `reportlinks` VALUES ('supptranstaxes','taxauthorities','supptranstaxes.taxauthid=taxauthorities.taxid');
+INSERT INTO `reportlinks` VALUES ('taxauthorities','supptranstaxes','taxauthorities.taxid=supptranstaxes.taxauthid');
+INSERT INTO `reportlinks` VALUES ('supptranstaxes','supptrans','supptranstaxes.supptransid=supptrans.id');
+INSERT INTO `reportlinks` VALUES ('supptrans','supptranstaxes','supptrans.id=supptranstaxes.supptransid');
+INSERT INTO `reportlinks` VALUES ('taxauthorities','chartmaster','taxauthorities.taxglcode=chartmaster.accountcode');
+INSERT INTO `reportlinks` VALUES ('chartmaster','taxauthorities','chartmaster.accountcode=taxauthorities.taxglcode');
+INSERT INTO `reportlinks` VALUES ('taxauthorities','chartmaster','taxauthorities.purchtaxglaccount=chartmaster.accountcode');
+INSERT INTO `reportlinks` VALUES ('chartmaster','taxauthorities','chartmaster.accountcode=taxauthorities.purchtaxglaccount');
+INSERT INTO `reportlinks` VALUES ('taxauthrates','taxauthorities','taxauthrates.taxauthority=taxauthorities.taxid');
+INSERT INTO `reportlinks` VALUES ('taxauthorities','taxauthrates','taxauthorities.taxid=taxauthrates.taxauthority');
+INSERT INTO `reportlinks` VALUES ('taxauthrates','taxcategories','taxauthrates.taxcatid=taxcategories.taxcatid');
+INSERT INTO `reportlinks` VALUES ('taxcategories','taxauthrates','taxcategories.taxcatid=taxauthrates.taxcatid');
+INSERT INTO `reportlinks` VALUES ('taxauthrates','taxprovinces','taxauthrates.dispatchtaxprovince=taxprovinces.taxprovinceid');
+INSERT INTO `reportlinks` VALUES ('taxprovinces','taxauthrates','taxprovinces.taxprovinceid=taxauthrates.dispatchtaxprovince');
+INSERT INTO `reportlinks` VALUES ('taxgrouptaxes','taxgroups','taxgrouptaxes.taxgroupid=taxgroups.taxgroupid');
+INSERT INTO `reportlinks` VALUES ('taxgroups','taxgrouptaxes','taxgroups.taxgroupid=taxgrouptaxes.taxgroupid');
+INSERT INTO `reportlinks` VALUES ('taxgrouptaxes','taxauthorities','taxgrouptaxes.taxauthid=taxauthorities.taxid');
+INSERT INTO `reportlinks` VALUES ('taxauthorities','taxgrouptaxes','taxauthorities.taxid=taxgrouptaxes.taxauthid');
+INSERT INTO `reportlinks` VALUES ('workcentres','locations','workcentres.location=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','workcentres','locations.loccode=workcentres.location');
+INSERT INTO `reportlinks` VALUES ('worksorders','locations','worksorders.loccode=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','worksorders','locations.loccode=worksorders.loccode');
+INSERT INTO `reportlinks` VALUES ('worksorders','stockmaster','worksorders.stockid=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','worksorders','stockmaster.stockid=worksorders.stockid');
+INSERT INTO `reportlinks` VALUES ('www_users','locations','www_users.defaultlocation=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','www_users','locations.loccode=www_users.defaultlocation');
 
 --
 -- Dumping data for table `salesglpostings`
@@ -3668,7 +3898,7 @@ INSERT INTO `systypes` VALUES (25,'Purchase Order Delivery',52);
 INSERT INTO `systypes` VALUES (26,'Work Order Receipt',8);
 INSERT INTO `systypes` VALUES (28,'Work Order Issue',17);
 INSERT INTO `systypes` VALUES (29,'Work Order Variance',1);
-INSERT INTO `systypes` VALUES (30,'Sales Order',5);
+INSERT INTO `systypes` VALUES (30,'Sales Order',6);
 INSERT INTO `systypes` VALUES (31,'Shipment Close',28);
 INSERT INTO `systypes` VALUES (32,'Contract Close',6);
 INSERT INTO `systypes` VALUES (35,'Cost Update',24);
@@ -3741,7 +3971,7 @@ INSERT INTO `taxprovinces` VALUES (1,'Default Tax province');
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('admin','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','','','MEL',8,0,'2013-07-06 15:32:37','','A4','1,1,1,1,1,1,1,1,1,1,1,',0,50,'aguapop','en_GB.utf8',3,0);
+INSERT INTO `www_users` VALUES ('admin','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','','admin@weberp.org','MEL',8,0,'2013-08-23 19:38:23','','A4','1,1,1,1,1,1,1,1,1,1,1,',0,50,'fluid','en_GB.utf8',3,0);
 INSERT INTO `www_users` VALUES ('PhilDa1','bf3d297ef7c3218f38d71de15d4fb11171e7209c','Phil Daintree','16','','','64275567890','phil@logicworks.co.nz','TOR',7,0,NULL,'16','A4','1,1,0,0,0,0,0,0',0,30,'gel','en_GB.utf8',0,0);
 
 --
@@ -3964,19 +4194,20 @@ INSERT INTO `config` VALUES ('RadionBeaconFTP_user_pass','Radio Beacon remote ft
 INSERT INTO `config` VALUES ('reports_dir','companies/weberpdemo/reportwriter');
 INSERT INTO `config` VALUES ('RequirePickingNote','0');
 INSERT INTO `config` VALUES ('RomalpaClause','Ownership will not pass to the buyer until the goods have been paid for in full.');
-INSERT INTO `config` VALUES ('ShopAboutUs','This web-shop software has been developed by Logic Works Ltd for webERP. For support contact Phil Daintree by &lt;a href=&quot;mailto:support@logicworks.co.nz&quot;&gt;email&lt;/a&gt;');
+INSERT INTO `config` VALUES ('ShopAboutUs','This web-shop software has been developed by Logic Works Ltd for webERP. For support contact Phil Daintree by rn&lt;a href=&quot;mailto:support@logicworks.co.nz&quot;&gt;email&lt;/a&gt;rn');
 INSERT INTO `config` VALUES ('ShopAllowBankTransfer','1');
 INSERT INTO `config` VALUES ('ShopAllowCreditCards','1');
 INSERT INTO `config` VALUES ('ShopAllowPayPal','1');
 INSERT INTO `config` VALUES ('ShopAllowSurcharges','1');
 INSERT INTO `config` VALUES ('ShopBankTransferSurcharge','0.0');
 INSERT INTO `config` VALUES ('ShopBranchCode','ANGRY');
-INSERT INTO `config` VALUES ('ShopContactUs','For support contact Logic Works Ltd by &lt;a href=&quot;mailto:support@logicworks.co.nz&quot;&gt;email&lt;/a&gt;');
+INSERT INTO `config` VALUES ('ShopContactUs','For support contact Logic Works Ltd by rn&lt;a href=&quot;mailto:support@logicworks.co.nz&quot;&gt;email&lt;/a&gt;');
 INSERT INTO `config` VALUES ('ShopCreditCardBankAccount','1030');
 INSERT INTO `config` VALUES ('ShopCreditCardGateway','SwipeHQ');
 INSERT INTO `config` VALUES ('ShopCreditCardSurcharge','2.5');
 INSERT INTO `config` VALUES ('ShopDebtorNo','ANGRY');
 INSERT INTO `config` VALUES ('ShopFreightPolicy','Shipping information');
+INSERT INTO `config` VALUES ('ShopManagerEmail','shopmanager@yourdomain.com');
 INSERT INTO `config` VALUES ('ShopMode','live');
 INSERT INTO `config` VALUES ('ShopName','webERP Demo Store');
 INSERT INTO `config` VALUES ('ShopPayFlowMerchant','');
@@ -3991,13 +4222,15 @@ INSERT INTO `config` VALUES ('ShopPayPalProUser','');
 INSERT INTO `config` VALUES ('ShopPayPalSignature','');
 INSERT INTO `config` VALUES ('ShopPayPalSurcharge','3.4');
 INSERT INTO `config` VALUES ('ShopPayPalUser','');
-INSERT INTO `config` VALUES ('ShopPrivacyStatement','&lt;h2&gt;We are committed to protecting your privacy.&lt;/h2&gt;&lt;p&gt;We recognise that your personal information is confidential and we understand that it is important for you to know how we treat your personal information. Please read on for more information about our Privacy Policy.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;h2&gt;1. What information do we collect and how do we use it?&lt;/h2&gt;&lt;br /&gt;We use the information it collects from you for the following purposes:&lt;ul&gt;&lt;li&gt;To assist us in providing you with a quality service&lt;/li&gt;&lt;li&gt;To respond to, and process, your request&lt;/li&gt;&lt;li&gt;To notify competition winners or fulfil promotional obligations&lt;/li&gt;&lt;li&gt;To inform you of, and provide you with, new and existing products and services offered by us from time to time &lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Any information we collect will not be used in ways that you have not consented to.&lt;/p&gt;&lt;p&gt;If you send us an email, we will store your email address and the contents of the email. This information will only be used for the purpose for which you have provided it. Electronic mail submitted to us is handled and saved according to the provisions of the the relevant statues.&lt;/p&gt;&lt;p&gt;When we offer contests and promotions, customers who choose to enter are asked to provide personal information. This information may then be used by us to notify winners, or to fulfil promotional obligations.&lt;/p&gt;&lt;p&gt;We may use the information we collect to occasionally notify you about important functionality changes to our website, new and special offers we think you will find valuable. If at any stage you no longer wish to receive these notifications you may opt out by sending us an email.&lt;/p&gt;&lt;p&gt;We do monitor this website in order to identify user trends and to improve the site if necessary. Any of this information, such as the type of site browser your computer has, will be used only in aggregate form and your individual details will not be identified.&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;h2&gt;2. How do we store and protect your personal information and who has access to that information?&lt;/h2&gt;&lt;p&gt;As required by statute, we follow strict procedures when storing and using the information you have provided.&lt;/p&gt;&lt;p&gt;We do not sell, trade or rent your personal information to others. We may provide aggregate statistics about our customers and website trends. However, these statistics will not have any personal information which would identify you.&lt;/p&gt;&lt;p&gt;Only specific employees within our company are able to access your personal data.&lt;/p&gt;&lt;p&gt;This policy means that we may require proof of identity before we disclose any information to you.&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;h2&gt;3. What should I do if I want to change my details or if I don’t want to be contacted any more?&lt;/h2&gt;&lt;p&gt;At any stage you have the right to access and amend or update your personal details. If you do not want to receive any communications from us you may opt out by contacting us see &lt;a href=&quot;index.php?Page=ContactUs&quot;&gt;the Contact Us Page&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;h2&gt;4. What happens if we decide to change this Privacy Policy?&lt;/h2&gt;&lt;p&gt;If we change any aspect of our Privacy Policy we will post these changes on this page so that you are always aware of how we are treating your personal information.&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;h2&gt;5. How can you contact us if you have any questions, comments or concerns about our Privacy Policy?&lt;/h2&gt;&lt;p&gt;We welcome any questions or comments you may have please email us via the contact details provided on our &lt;a href=&quot;index.php?Page=ContactUs&quot;&gt;Contact Us Page&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Please also refer to our &lt;a href=&quot;index.php?Page=TermsConditions&quot;&gt;Terms and Conditions&lt;/a&gt; for more information.&lt;/p&gt;');
+INSERT INTO `config` VALUES ('ShopPrivacyStatement','&lt;h2&gt;We are committed to protecting your privacy.&lt;/h2&gt;&lt;p&gt;We recognise that your personal information is confidential and we understand that it is important for you to know how we treat your personal information. Please read on for more information about our Privacy Policy.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;h2&gt;1. What information do we collect and how do we use it?&lt;/h2&gt;&lt;br /&gt;We use the information it collects from you for the following purposes:&lt;ul&gt;&lt;li&gt;To assist us in providing you with a quality service&lt;/li&gt;&lt;li&gt;To respond to, and process, your request&lt;/li&gt;&lt;li&gt;To notify competition winners or fulfil promotional obligations&lt;/li&gt;&lt;li&gt;To inform you of, and provide you with, new and existing products and services offered by us from time to time &lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Any information we collect will not be used in ways that you have not consented to.&lt;/p&gt;&lt;p&gt;If you send us an email, we will store your email address and the contents of the email. This information will only be used for the purpose for which you have provided it. Electronic mail submitted to us is handled and saved according to the provisions of the the relevant statues.&lt;/p&gt;&lt;p&gt;When we offer contests and promotions, customers who choose to enter are asked to provide personal information. This information may then be used by us to notify winners, or to fulfil promotional obligations.&lt;/p&gt;&lt;p&gt;We may use the information we collect to occasionally notify you about important functionality changes to our website, new and special offers we think you will find valuable. If at any stage you no longer wish to receive these notifications you may opt out by sending us an email.&lt;/p&gt;&lt;p&gt;We do monitor this website in order to identify user trends and to improve the site if necessary. Any of this information, such as the type of site browser your computer has, will be used only in aggregate form and your individual details will not be identified.&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;h2&gt;2. How do we store and protect your personal information and who has access to that information?&lt;/h2&gt;&lt;p&gt;As required by statute, we follow strict procedures when storing and using the information you have provided.&lt;/p&gt;&lt;p&gt;We do not sell, trade or rent your personal information to others. We may provide aggregate statistics about our customers and website trends. However, these statistics will not have any personal information which would identify you.&lt;/p&gt;&lt;p&gt;Only specific employees within our company are able to access your personal data.&lt;/p&gt;&lt;p&gt;This policy means that we may require proof of identity before we disclose any information to you.&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;h2&gt;3. What should I do if I want to change my details or if I donâ€™t want to be contacted any more?&lt;/h2&gt;&lt;p&gt;At any stage you have the right to access and amend or update your personal details. If you do not want to receive any communications from us you may opt out by contacting us see &lt;a href=&quot;index.php?Page=ContactUs&quot;&gt;the Contact Us Page&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;h2&gt;4. What happens if we decide to change this Privacy Policy?&lt;/h2&gt;&lt;p&gt;If we change any aspect of our Privacy Policy we will post these changes on this page so that you are always aware of how we are treating your personal information.&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;h2&gt;5. How can you contact us if you have any questions, comments or concerns about our Privacy Policy?&lt;/h2&gt;&lt;p&gt;We welcome any questions or comments you may have please email us via the contact details provided on our &lt;a href=&quot;index.php?Page=ContactUs&quot;&gt;Contact Us Page&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Please also refer to our &lt;a href=&quot;index.php?Page=TermsAndConditions&quot;&gt;Terms and Conditions&lt;/a&gt; for more information.&lt;/p&gt;');
 INSERT INTO `config` VALUES ('ShopShowOnlyAvailableItems','0');
 INSERT INTO `config` VALUES ('ShopShowQOHColumn','1');
+INSERT INTO `config` VALUES ('ShopStockLocations','MEL,TOR');
 INSERT INTO `config` VALUES ('ShopSurchargeStockID','PAYTSURCHARGE');
 INSERT INTO `config` VALUES ('ShopSwipeHQAPIKey','');
 INSERT INTO `config` VALUES ('ShopSwipeHQMerchantID','');
-INSERT INTO `config` VALUES ('ShopTermsConditions','&lt;p&gt;These terms cover the use of this website. Use includes visits to our sites, purchases on our sites, participation in our database and promotions. These terms of use apply to you when you use our websites. Please read these terms carefully - if you need to refer to them again they can be accessed from the link at the bottom of any page of our websites.&lt;/p&gt;&lt;br /&gt;&lt;ul&gt;&lt;li&gt;&lt;h2&gt;1. Content&lt;/h2&gt;&lt;p&gt;While we endeavour to supply accurate information on this site, errors and omissions may occur. We do not accept any liability, direct or indirect, for any loss or damage which may directly or indirectly result from any advice, opinion, information, representation or omission whether negligent or otherwise, contained on this site. You are solely responsible for the actions you take in reliance on the content on, or accessed, through this site.&lt;/p&gt;&lt;p&gt;We reserve the right to make changes to the content on this site at any time and without notice.&lt;/p&gt;&lt;p&gt;To the extent permitted by law, we make no warranties in relation to the merchantability, fitness for purpose, freedom from computer virus, accuracy or availability of this web site or any other web site.&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;h2&gt;2. Making a contract with us&lt;/h2&gt;&lt;p&gt;When you place an order with us, you are making an offer to buy goods. We will send you an e-mail to confirm that we have received and accepted your order, which indicates that a contract has been made between us. We will take payment from you when we accept your order. In the unlikely event that the goods are no longer available, we will refund your payment to the account it originated from, and advise that the goods are no longer available.&lt;/p&gt;&lt;p&gt;An order is placed on our website via adding a product to the shopping cart and proceeding through our checkout process. The checkout process includes giving us delivery and any other relevant details for your order, entering payment information and submitting your order. The final step consists of a confirmation page with full details of your order, which you are able to print as a receipt of your order. We will also email you with confirmation of your order.&lt;/p&gt;&lt;p&gt;We reserve the right to refuse or cancel any orders that we believe, solely by our own judgement, to be placed for commercial purposes, e.g. any kind of reseller. We also reserve the right to refuse or cancel any orders that we believe, solely by our own judgement, to have been placed fraudulently.&lt;/p&gt;&lt;p&gt;We reserve the right to limit the number of an item customers can purchase in a single transaction.&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;h2&gt;3. Payment options&lt;/h2&gt;&lt;p&gt;We currently accept the following credit cards:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Visa&lt;/li&gt;&lt;li&gt;MasterCard&lt;/li&gt;&lt;li&gt;American Express&lt;/li&gt;&lt;/ul&gt;You can also pay using PayPal and internet bank transfer. Surcharges may apply for payment by PayPal or credit cards.&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;h2&gt;4. Pricing&lt;/h2&gt;&lt;p&gt;All prices listed are inclusive of relevant taxes.  All prices are correct when published. Please note that we reserve the right to alter prices at any time for any reason. If this should happen after you have ordered a product, we will contact you prior to processing your order. Online and in store pricing may differ.&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;h2&gt;5. Website and Credit Card Security&lt;/h2&gt;&lt;p&gt;We want you to have a safe and secure shopping experience online. All payments via our sites are processed using SSL (Secure Socket Layer) protocol, whereby sensitive information is encrypted to protect your privacy.&lt;/p&gt;&lt;p&gt;You can help to protect your details from unauthorised access by logging out each time you finish using the site, particularly if you are doing so from a public or shared computer.&lt;/p&gt;&lt;p&gt;For security purposes certain transactions may require proof of identification.&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;h2&gt;6. Delivery and Delivery Charges&lt;/h2&gt;&lt;p&gt;We do not deliver to Post Office boxes.&lt;/p&gt;&lt;p&gt;Please note that a signature is required for all deliveries. The goods become the recipient’s property and responsibility once they have been signed for at the time of delivery. If goods are lost or damaged in transit, please contact us within 7 business days &lt;a href=&quot;index.php?Page=ContactUs&quot;&gt;see Contact Us page for contact details&lt;/a&gt;. We will use this delivery information to make a claim against our courier company. We will offer you the choice of a replacement or a full refund, once we have received confirmation from our courier company that delivery was not successful.&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;h2&gt;7. Restricted Products&lt;/h2&gt;&lt;p&gt;Some products on our site carry an age restriction, if a product you have selected is R16 or R18 a message will appear in the cart asking you to confirm you are an appropriate age to purchase the item(s).  Confirming this means that you are of an eligible age to purchase the selected product(s).  You are also agreeing that you are not purchasing the item on behalf of a person who is not the appropriate age.&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;h2&gt;8. Delivery Period&lt;/h2&gt;&lt;p&gt;Delivery lead time for products may vary. Deliveries to rural addresses may take longer.  You will receive an email that confirms that your order has been dispatched.&lt;/p&gt;&lt;p&gt;To ensure successful delivery, please provide a delivery address where someone will be present during business hours to sign for the receipt of your package. You can track your order by entering the tracking number emailed to you in the dispatch email at the Courier\\\'s web-site.&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;h2&gt;9. Disclaimer&lt;/h2&gt;&lt;p&gt;Our websites are intended to provide information for people shopping our products and accessing our services, including making purchases via our website and registering on our database to receive e-mails from us.&lt;/p&gt;&lt;p&gt;While we endeavour to supply accurate information on this site, errors and omissions may occur. We do not accept any liability, direct or indirect, for any loss or damage which may directly or indirectly result from any advice, opinion, information, representation or omission whether negligent or otherwise, contained on this site. You are solely responsible for the actions you take in reliance on the content on, or accessed, through this site.&lt;/p&gt;&lt;p&gt;We reserve the right to make changes to the content on this site at any time and without notice.&lt;/p&gt;&lt;p&gt;To the extent permitted by law, we make no warranties in relation to the merchantability, fitness for purpose, freedom from computer virus, accuracy or availability of this web site or any other web site.&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;h2&gt;10. Links&lt;/h2&gt;&lt;p&gt;Please note that although this site has some hyperlinks to other third party websites, these sites have not been prepared by us are not under our control. The links are only provided as a convenience, and do not imply that we endorse, check, or approve of the third party site. We are not responsible for the privacy principles or content of these third party sites. We are not responsible for the availability of any of these links.&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;h2&gt;11. Jurisdiction&lt;/h2&gt;&lt;p&gt;This website is governed by, and is to be interpreted in accordance with, the laws of  ????.&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;h2&gt;12. Changes to this Agreement&lt;/h2&gt;&lt;p&gt;We reserve the right to alter, modify or update these terms of use. These terms apply to your order. We may change our terms and conditions at any time, so please do not assume that the same terms will apply to future orders.&lt;/p&gt;&lt;/li&gt;&lt;/ul&gt;');
+INSERT INTO `config` VALUES ('ShopTermsConditions','&lt;p&gt;These terms cover the use of this website. Use includes visits to our sites, purchases on our sites, participation in our database and promotions. These terms of use apply to you when you use our websites. Please read these terms carefully - if you need to refer to them again they can be accessed from the link at the bottom of any page of our websites.&lt;/p&gt;&lt;br /&gt;&lt;ul&gt;&lt;li&gt;&lt;h2&gt;1. Content&lt;/h2&gt;&lt;p&gt;While we endeavour to supply accurate information on this site, errors and omissions may occur. We do not accept any liability, direct or indirect, for any loss or damage which may directly or indirectly result from any advice, opinion, information, representation or omission whether negligent or otherwise, contained on this site. You are solely responsible for the actions you take in reliance on the content on, or accessed, through this site.&lt;/p&gt;&lt;p&gt;We reserve the right to make changes to the content on this site at any time and without notice.&lt;/p&gt;&lt;p&gt;To the extent permitted by law, we make no warranties in relation to the merchantability, fitness for purpose, freedom from computer virus, accuracy or availability of this web site or any other web site.&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;h2&gt;2. Making a contract with us&lt;/h2&gt;&lt;p&gt;When you place an order with us, you are making an offer to buy goods. We will send you an e-mail to confirm that we have received and accepted your order, which indicates that a contract has been made between us. We will take payment from you when we accept your order. In the unlikely event that the goods are no longer available, we will refund your payment to the account it originated from, and advise that the goods are no longer available.&lt;/p&gt;&lt;p&gt;An order is placed on our website via adding a product to the shopping cart and proceeding through our checkout process. The checkout process includes giving us delivery and any other relevant details for your order, entering payment information and submitting your order. The final step consists of a confirmation page with full details of your order, which you are able to print as a receipt of your order. We will also email you with confirmation of your order.&lt;/p&gt;&lt;p&gt;We reserve the right to refuse or cancel any orders that we believe, solely by our own judgement, to be placed for commercial purposes, e.g. any kind of reseller. We also reserve the right to refuse or cancel any orders that we believe, solely by our own judgement, to have been placed fraudulently.&lt;/p&gt;&lt;p&gt;We reserve the right to limit the number of an item customers can purchase in a single transaction.&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;h2&gt;3. Payment options&lt;/h2&gt;&lt;p&gt;We currently accept the following credit cards:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Visa&lt;/li&gt;&lt;li&gt;MasterCard&lt;/li&gt;&lt;li&gt;American Express&lt;/li&gt;&lt;/ul&gt;You can also pay using PayPal and internet bank transfer. Surcharges may apply for payment by PayPal or credit cards.&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;h2&gt;4. Pricing&lt;/h2&gt;&lt;p&gt;All prices listed are inclusive of relevant taxes.  All prices are correct when published. Please note that we reserve the right to alter prices at any time for any reason. If this should happen after you have ordered a product, we will contact you prior to processing your order. Online and in store pricing may differ.&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;h2&gt;5. Website and Credit Card Security&lt;/h2&gt;&lt;p&gt;We want you to have a safe and secure shopping experience online. All payments via our sites are processed using SSL (Secure Socket Layer) protocol, whereby sensitive information is encrypted to protect your privacy.&lt;/p&gt;&lt;p&gt;You can help to protect your details from unauthorised access by logging out each time you finish using the site, particularly if you are doing so from a public or shared computer.&lt;/p&gt;&lt;p&gt;For security purposes certain transactions may require proof of identification.&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;h2&gt;6. Delivery and Delivery Charges&lt;/h2&gt;&lt;p&gt;We do not deliver to Post Office boxes.&lt;/p&gt;&lt;p&gt;Please note that a signature is required for all deliveries. The goods become the recipientâ€™s property and responsibility once they have been signed for at the time of delivery. If goods are lost or damaged in transit, please contact us within 7 business days &lt;a href=&quot;index.php?Page=ContactUs&quot;&gt;see Contact Us page for contact details&lt;/a&gt;. We will use this delivery information to make a claim against our courier company. We will offer you the choice of a replacement or a full refund, once we have received confirmation from our courier company that delivery was not successful.&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;h2&gt;7. Restricted Products&lt;/h2&gt;&lt;p&gt;Some products on our site carry an age restriction, if a product you have selected is R16 or R18 a message will appear in the cart asking you to confirm you are an appropriate age to purchase the item(s).  Confirming this means that you are of an eligible age to purchase the selected product(s).  You are also agreeing that you are not purchasing the item on behalf of a person who is not the appropriate age.&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;h2&gt;8. Delivery Period&lt;/h2&gt;&lt;p&gt;Delivery lead time for products may vary. Deliveries to rural addresses may take longer.  You will receive an email that confirms that your order has been dispatched.&lt;/p&gt;&lt;p&gt;To ensure successful delivery, please provide a delivery address where someone will be present during business hours to sign for the receipt of your package. You can track your order by entering the tracking number emailed to you in the dispatch email at the Courier\\\'s web-site.&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;h2&gt;9. Disclaimer&lt;/h2&gt;&lt;p&gt;Our websites are intended to provide information for people shopping our products and accessing our services, including making purchases via our website and registering on our database to receive e-mails from us.&lt;/p&gt;&lt;p&gt;While we endeavour to supply accurate information on this site, errors and omissions may occur. We do not accept any liability, direct or indirect, for any loss or damage which may directly or indirectly result from any advice, opinion, information, representation or omission whether negligent or otherwise, contained on this site. You are solely responsible for the actions you take in reliance on the content on, or accessed, through this site.&lt;/p&gt;&lt;p&gt;We reserve the right to make changes to the content on this site at any time and without notice.&lt;/p&gt;&lt;p&gt;To the extent permitted by law, we make no warranties in relation to the merchantability, fitness for purpose, freedom from computer virus, accuracy or availability of this web site or any other web site.&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;h2&gt;10. Links&lt;/h2&gt;&lt;p&gt;Please note that although this site has some hyperlinks to other third party websites, these sites have not been prepared by us are not under our control. The links are only provided as a convenience, and do not imply that we endorse, check, or approve of the third party site. We are not responsible for the privacy principles or content of these third party sites. We are not responsible for the availability of any of these links.&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;h2&gt;11. Jurisdiction&lt;/h2&gt;&lt;p&gt;This website is governed by, and is to be interpreted in accordance with, the laws of  ????.&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;h2&gt;12. Changes to this Agreement&lt;/h2&gt;&lt;p&gt;We reserve the right to alter, modify or update these terms of use. These terms apply to your order. We may change our terms and conditions at any time, so please do not assume that the same terms will apply to future orders.&lt;/p&gt;&lt;/li&gt;&lt;/ul&gt;');
+INSERT INTO `config` VALUES ('ShopTitle','Shop Home');
 INSERT INTO `config` VALUES ('ShowStockidOnImages','0');
 INSERT INTO `config` VALUES ('ShowValueOnGRN','1');
 INSERT INTO `config` VALUES ('Show_Settled_LastMonth','1');
@@ -4518,7 +4751,7 @@ INSERT INTO `accountsection` VALUES (50,'Financed By');
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-07-06 15:59:42
+-- Dump completed on 2013-08-24 10:33:38
 SET FOREIGN_KEY_CHECKS = 1;
 UPDATE systypes SET typeno=0;
 INSERT INTO shippers VALUES (1,'Default Shipper',0);
