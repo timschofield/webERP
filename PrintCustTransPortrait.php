@@ -351,7 +351,7 @@ If (isset($PrintPDF)
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+350,$YPos,36,$FontSize,$DisplayQty,'right');
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+390,$YPos,26,$FontSize,$myrow2['units'],'center');
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+420,$YPos,26,$FontSize,$DisplayDiscount,'right');
-				$LeftOvers = $pdf->addTextWrap($Left_Margin+450,$YPos,72,$FontSize,$DisplayNet,'right');
+				$LeftOvers = $pdf->addTextWrap($Page_Width-$Left_Margin-72, $YPos, 72, $FontSize, $DisplayNet, 'right');
 
 				if ($myrow2['controlled']==1){
 
@@ -460,23 +460,23 @@ If (isset($PrintPDF)
 		$YPos = $Bottom_Margin+(3*$line_height);
 	/* Print out the payment terms */
 
-  		$pdf->addTextWrap($Left_Margin+5,$YPos+3,280,$FontSize,_('Payment Terms') . ': ' . $myrow['terms']);
+  		$pdf->addTextWrap($Left_Margin, $YPos+3, 280, $FontSize,_('Payment Terms') . ': ' . $myrow['terms']);
 
 		$FontSize =8;
 		$LeftOvers=explode('\r\n',DB_escape_string($myrow['invtext']));
 		for ($i=0;$i<sizeOf($LeftOvers);$i++) {
-			$pdf->addText($Left_Margin+5, $YPos-8-($i*8), $FontSize, $LeftOvers[$i]);
+			$pdf->addText($Left_Margin, $YPos-8-($i*8), $FontSize, $LeftOvers[$i]);
 		}
 		$FontSize = 10;
 
-		$pdf->addText($Page_Width-$Right_Margin-220, $YPos+12,$FontSize, _('Sub Total'));
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+450,$YPos+5,72,$FontSize,$DisplaySubTot, 'right');
+		$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-220, $YPos+5, 72, $FontSize, _('Sub Total'));
+		$LeftOvers = $pdf->addTextWrap($Page_Width-$Left_Margin-72, $YPos+5, 72, $FontSize, $DisplaySubTot, 'right');
 
-		$pdf->addText($Page_Width-$Right_Margin-220, ($YPos+12)-$line_height+5,$FontSize, _('Freight'));
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+450,$YPos-$line_height+5,72,$FontSize,$DisplayFreight, 'right');
+		$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-220, $YPos+5-$line_height, 72, $FontSize, _('Freight'));
+		$LeftOvers = $pdf->addTextWrap($Page_Width-$Left_Margin-72, $YPos+5-$line_height, 72, $FontSize, $DisplayFreight, 'right');
 
-		$pdf->addText($Page_Width-$Right_Margin-220, ($YPos+12)-(2*$line_height)+5,$FontSize, _('Tax'));
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+450,$YPos-(2*$line_height)+5,72, $FontSize,$DisplayTax, 'right');
+		$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-220, $YPos+5-$line_height*2, 72, $FontSize, _('Tax'));
+		$LeftOvers = $pdf->addTextWrap($Page_Width-$Left_Margin-72, $YPos+5-$line_height*2, 72, $FontSize, $DisplayTax, 'right');
 
 		/*rule off for total */
 		$pdf->line($Page_Width-$Right_Margin-222, $YPos-(2*$line_height),$Page_Width-$Right_Margin,$YPos-(2*$line_height));
@@ -486,24 +486,24 @@ If (isset($PrintPDF)
 
 		$YPos+=10;
 		if ($InvOrCredit=='Invoice'){
-			$pdf->addText($Page_Width-$Right_Margin-220, ($YPos+6) - ($line_height*3),$FontSize, _('TOTAL INVOICE'));
+			$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-220, $Bottom_Margin+5, 144, $FontSize, _('TOTAL INVOICE'));
 			$FontSize=8;
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+5,$YPos-18,280,$FontSize,$_SESSION['RomalpaClause']);
+			$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos-18,280,$FontSize,$_SESSION['RomalpaClause']);
 			while (mb_strlen($LeftOvers)>0 AND $YPos > $Bottom_Margin){
 				$YPos -=10;
-				$LeftOvers = $pdf->addTextWrap($Left_Margin+5,$YPos-18,280,$FontSize,$LeftOvers);
+				$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos-18,280,$FontSize,$LeftOvers);
 			}
-/* Add Images for Visa / Mastercard / Paypal */
+			/* Add Images for Visa / Mastercard / Paypal */
 			if (file_exists('companies/' . $_SESSION['DatabaseName'] . '/payment.jpg')) {
 				$pdf->addJpegFromFile('companies/' . $_SESSION['DatabaseName'] . '/payment.jpg',$Page_Width/2 -60,$YPos-15,0,20);
 			}
-// Print Bank acount details if available and default for invoices is selected
-            $pdf->addText($Page_Width-$Right_Margin-450, $YPos - ($line_height*3)+22,$FontSize, $DefaultBankAccountCode . '  ' . $DefaultBankAccountNumber);
+			// Print Bank acount details if available and default for invoices is selected
+            $pdf->addText($Left_Margin, $YPos+22-$line_height*3, $FontSize, $DefaultBankAccountCode . '  ' . $DefaultBankAccountNumber);
 			$FontSize=10;
 		} else {
-			$pdf->addText($Page_Width-$Right_Margin-220, ($YPos+6)-($line_height*3),$FontSize, _('TOTAL CREDIT'));
+			$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-220, $Bottom_Margin+5, 144, $FontSize, _('TOTAL CREDIT'));
  		}
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+450,35,72, $FontSize,$DisplayTotal, 'right');
+		$LeftOvers = $pdf->addTextWrap($Page_Width-$Left_Margin-72, $Bottom_Margin+5, 72, $FontSize, $DisplayTotal, 'right');
 	    } /* end of check to see that there was an invoice record to print */
 
 	    $FromTransNo++;

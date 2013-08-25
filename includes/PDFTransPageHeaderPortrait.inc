@@ -19,9 +19,9 @@ if ($InvOrCredit=='Invoice') {
 	$pdf->addText($Page_Width/2 - 60, $YPos, $FontSize, _('TAX CREDIT NOTE') . ' ');
 }
 
+// Prints page number
 $FontSize = 10;
-$pdf->addText($Page_Width-128, $YPos, $FontSize, _('Page'));
-$pdf->addText($Page_Width-60, $YPos, $FontSize, $PageNumber);
+$pdf->addTextWrap($Page_Width-$Left_Margin-72, $YPos-$FontSize, 72, $FontSize, _('Page').' '.$PageNumber, 'right');
 
 
 $XPos = $Page_Width - 265;
@@ -259,13 +259,13 @@ $YPos -= 12;
 
 $TopOfColHeadings = $YPos;
 
-$pdf->addText($Left_Margin+5, $YPos+12, $FontSize, _('Item Code'));
+$pdf->addText($Left_Margin, $YPos+12, $FontSize, _('Item Code'));
 $pdf->addText($Left_Margin+80, $YPos+12, $FontSize, _('Description'));
 $pdf->addText($Left_Margin+270, $YPos+12, $FontSize, _('Unit Price'));
 $pdf->addText($Left_Margin+350, $YPos+12, $FontSize, _('Qty'));
 $pdf->addText($Left_Margin+390, $YPos+12, $FontSize, _('UOM'));
 $pdf->addText($Left_Margin+420, $YPos+12, $FontSize, _('Disc.'));
-$pdf->addText($Left_Margin+450, $YPos+12, $FontSize, _('Price'));
+$pdf->addTextWrap($Page_Width-$Left_Margin-72, $YPos, 72, $FontSize, _('Price'), 'right');
 
 $YPos-=0;
 
