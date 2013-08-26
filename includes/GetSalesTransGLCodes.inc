@@ -14,7 +14,7 @@ Function GetCOGSGLAccount ($Area, $StockID, $SalesType, &$db) {
 
 	/*Get the StockCategory for this item */
 
-	$SQL = "SELECT categoryid FROM stockmaster WHERE stockid='" . $StockID . "'";
+	$SQL = "SELECT categoryid` FROM stockmaster WHERE stockid='" . $StockID . "'";
 	$Result=DB_query($SQL,$db);
 	$myrow = DB_fetch_row($Result);
 	$StockCategory = $myrow[0];
@@ -64,15 +64,13 @@ Function GetCOGSGLAccount ($Area, $StockID, $SalesType, &$db) {
 
 		$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
 	}
-
 	if (DB_num_rows($Result)==0){
+
 		DB_free_result($Result);
-		$SQL = "SELECT salesglcode,
-						discountglcode
-				FROM salesglpostings
-				WHERE area = 'AN'
-				AND salestype='" . $SalesType . "'
-				AND stkcat = '" . $StockCategory . "'";
+		$SQL = "SELECT glcode FROM cogsglpostings
+			WHERE area = 'AN'
+			AND stkcat = = '" . $StockCategory . "'
+			AND salestype = '" . $SalesType . "'";
 
 		$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
 	}
@@ -208,6 +206,18 @@ Function GetSalesGLAccount ($Area, $StockID, $SalesType, &$db) {
 				WHERE area = '" . $Area . "'
 				AND stkcat = 'ANY'
 				AND salestype = '" . $SalesType . "'";
+
+		$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
+	}
+
+	if (DB_num_rows($Result)==0){
+		DB_free_result($Result);
+		$SQL = "SELECT salesglcode,
+						discountglcode
+				FROM salesglpostings
+				WHERE area = 'AN'
+				AND salestype='" . $SalesType . "'
+				AND stkcat = '" . $StockCategory . "'";
 
 		$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
 	}
