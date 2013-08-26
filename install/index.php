@@ -1003,6 +1003,7 @@ function DbCheck($UserLanguage,$HostName,$UserName,$Password,$DatabaseName,$Mysq
 //@para $MysqlEx is refer to the php mysql extention if it's false, it means the php configuration only support mysql instead of mysqli
 //The purpose of this function is to display the final screen for users to input company, admin user accounts etc informatioin
 function CompanySetup($UserLanguage,$HostName,$UserName,$Password,$DatabaseName,$MysqlExt = FALSE){//display the company setup for users
+	$CompanyName = $DatabaseName;
 ?>
     <h1><?php echo _('webERP Installation Wizard'); ?></h1>
     <!--<p style="text-align:center;"><?php echo _("Please enter the company name and please pay attention the company will be as same as the database name"); ?></p>-->
