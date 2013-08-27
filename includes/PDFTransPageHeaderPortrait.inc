@@ -9,6 +9,7 @@ if (!$FirstPage){ /* only initiate a new page if its not the first */
 
 $YPos = $Page_Height - $Top_Margin;
 
+// Company Logo
 $pdf->addJpegFromFile($_SESSION['LogoFile'],$Page_Width/2 -118,$YPos-60,0,35);
 
 $FontSize =15;
@@ -21,11 +22,12 @@ if ($InvOrCredit=='Invoice') {
 
 // Prints page number
 $FontSize = 10;
-$pdf->addTextWrap($Page_Width-$Left_Margin-72, $YPos-$FontSize, 72, $FontSize, _('Page').' '.$PageNumber, 'right');
+$YPos -= $FontSize; //Downs one line height mesure (addText position is from left-bottom).
+$pdf->addTextWrap($Page_Width-$Left_Margin-72, $YPos, 72, $FontSize, _('Page').' '.$PageNumber, 'right');
 
 
 $XPos = $Page_Width - 265;
-$YPos -= 95;
+$YPos -= 85;
 /*draw a nice curved corner box around the billing details */
 /*from the top right */
 $pdf->partEllipse($XPos+225,$YPos+67,0,90,10,10);
