@@ -1029,7 +1029,7 @@ function CompanySetup($UserLanguage,$HostName,$UserName,$Password,$DatabaseName,
                             foreach($COAs as $Value){
                                 if($Value == 'weberp-new.sql'){
                                     echo '<option value="'.$Value.'" selected="true">'.$Value.'</option>';
-                                }else{
+                                }elseif($Value != 'weberp-demo.sql'){// the demo sql selection is not necessary so not allowed
                                     echo '<option value="'.$Value.'">'.$Value.'</option>';
                                 }
                             }
