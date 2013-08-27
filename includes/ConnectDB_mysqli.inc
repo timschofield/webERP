@@ -144,7 +144,9 @@ function DB_data_seek (&$ResultIndex,$Record) {
 }
 
 function DB_free_result (&$ResultIndex){
-	mysqli_free_result($ResultIndex);
+    if (is_resource($ResultIndex)) {
+    	mysqli_free_result($ResultIndex);
+    }
 }
 
 function DB_num_rows (&$ResultIndex){
