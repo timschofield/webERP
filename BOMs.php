@@ -390,8 +390,8 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		UpdateCost($db, $ComponentArray[0]);
 
 		prnMsg(_('The component part') . ' - ' . $SelectedComponent . ' - ' . _('has been deleted from this BOM'),'success');
-		// Now reselect
-
+		// Now reset to enable New Component Details to display after delete
+        unset($_GET['SelectedComponent']);
 	} elseif (isset($SelectedParent)
 		AND !isset($SelectedComponent)
 		AND ! isset($_POST['submit'])) {
@@ -586,8 +586,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 	}
 	echo '</table>
 		<br />';
-
-	if (! isset($_GET['delete'])) {
+    /* We do want to show the new component entry form in any case - it is a lot of work to get back to it otherwise if we need to add */
 
 		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Select=' . $SelectedParent .'">';
         echo '<div>';
@@ -793,7 +792,6 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
             </div>
 			</form>';
 
-	} //end if record deleted no point displaying form to add record
 
 	// end of BOM maintenance code - look at the parent selection form if not relevant
 // ----------------------------------------------------------------------------------
