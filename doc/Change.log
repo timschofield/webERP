@@ -1,4 +1,5 @@
 webERP Change Log
+27/8/2013 Exson: Remove the option of weberp-demo.sql to avoid installation error. Reported by icedlava. 
 26/8/2013 Exson Add A default company name to make the installation as dummy as possible. 
 21/8/2013 Thumb: Fixed the object no definition error in StockTransfers.php. 
 21/8/2013 Exson: Fixed the notice error of undefined index Status and and space for some string. 
