@@ -135,13 +135,17 @@ $TotalValueCharged=0;
 
 $i=0;
 foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){
-
+        if ($EnteredGRN->ChgPrice > 1) {
+			$DisplayPrice = locale_number_format($EnteredGRN->ChgPrice,$_SESSION['SuppTrans']->CurrDecimalPlaces);
+		} else {
+			$DisplayPrice = locale_number_format($EnteredGRN->ChgPrice,4);
+		}
 	echo '<tr>
 			<td>' . $EnteredGRN->GRNNo . '</td>
 			<td>' . $EnteredGRN->ItemCode . '</td>
 			<td>' . $EnteredGRN->ItemDescription . '</td>
 			<td class="number">' . locale_number_format($EnteredGRN->This_QuantityInv,'Variable') . '</td>
-			<td class="number">' . locale_number_format($EnteredGRN->ChgPrice,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
+			<td class="number">' . $DisplayPrice  . '</td>
 			<td class="number">' . locale_number_format($EnteredGRN->ChgPrice * $EnteredGRN->This_QuantityInv,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
 			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Modify=' . $EnteredGRN->GRNNo . '">'. _('Modify') . '</a></td>
 			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=' . $EnteredGRN->GRNNo . '">' . _('Delete') . '</a></td>
@@ -149,7 +153,7 @@ foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){
 
 	$TotalValueCharged = $TotalValueCharged + ($EnteredGRN->ChgPrice * $EnteredGRN->This_QuantityInv);
 
-	
+
 }
 
 echo '</tbody><tr>
@@ -341,7 +345,7 @@ else {
 			<td class="number">' . locale_number_format($GRNTmp->OrderPrice,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
 			<td class="number">' . locale_number_format($GRNTmp->OrderPrice * ($GRNTmp->QtyRecd - $GRNTmp->Prev_QuantityInv),$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
 			</tr></tbody>';
-	
+
 		}
 		echo '</table>';
 		echo '<br />

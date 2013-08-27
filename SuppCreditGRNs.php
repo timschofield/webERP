@@ -101,13 +101,18 @@ $TotalValueCharged=0;
 $i=0;
 
 foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){
+    if ($EnteredGRN->ChgPrice > 1) {
+        $DisplayPrice = locale_number_format($EnteredGRN->ChgPrice,$_SESSION['SuppTrans']->CurrDecimalPlaces);
+    } else {
+        $DisplayPrice = locale_number_format($EnteredGRN->ChgPrice,4);
+    }
 
 	echo '<tr>
 			<td>' . $EnteredGRN->GRNNo . '</td>
 			<td>' . $EnteredGRN->ItemCode . '</td>
 			<td>' . $EnteredGRN->ItemDescription . '</td>
 			<td class="number">' . locale_number_format($EnteredGRN->This_QuantityInv,$EnteredGRN->DecimalPlaces) . '</td>
-			<td class="number">' . locale_number_format($EnteredGRN->ChgPrice,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
+			<td class="number">' . $DisplayPrice . '</td>
 			<td class="number">' . locale_number_format($EnteredGRN->ChgPrice * $EnteredGRN->This_QuantityInv,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
 			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=' . $EnteredGRN->GRNNo . '">' . _('Delete') . '</a></td>
 		</tr>';
@@ -215,6 +220,13 @@ if (DB_num_rows($GRNResults)>0){
 			if ($myrow['decimalplaces']==''){
 				$myrow['decimalplaces'] =2;
 			}
+
+			if ($Price > 1) {
+                $DisplayPrice = locale_number_format($Price,$_SESSION['SuppTrans']->CurrDecimalPlaces);
+            } else {
+                $DisplayPrice = locale_number_format($Price,4);
+            }
+
 			echo '<tr>
 					<td><input type="submit" name="GRNNo" value="' . $myrow['grnno'] . '" /></td>
 					<td>' . $myrow['orderno'] . '</td>
@@ -224,7 +236,7 @@ if (DB_num_rows($GRNResults)>0){
 					<td class="number">' . locale_number_format($myrow['qtyrecd'],$myrow['decimalplaces']) . '</td>
 					<td class="number">' . locale_number_format($myrow['quantityinv'],$myrow['decimalplaces']) . '</td>
 					<td class="number">' . locale_number_format($myrow['qtyrecd'] - $myrow['quantityinv'],$myrow['decimalplaces']) . '</td>
-					<td class="number">' . locale_number_format($Price,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
+					<td class="number">' . $DisplayPrice . '</td>
 					<td class="number">' . locale_number_format($Price*($myrow['qtyrecd'] - $myrow['quantityinv']),$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
 	              	</tr>';
 			$i++;
@@ -289,12 +301,17 @@ if (DB_num_rows($GRNResults)>0){
 		if ($myrow['decimalplaces']==''){
 			$myrow['decimalplaces'] =2;
 		}
+        if ($Price > 1) {
+            $DisplayPrice = locale_number_format($Price,$_SESSION['SuppTrans']->CurrDecimalPlaces);
+        } else {
+            $DisplayPrice = locale_number_format($Price,4);
+        }
 		echo '<tr>
 				<td>' . $_POST['GRNNo'] . '</td>
 				<td>' . $myrow['itemcode'] . ' ' . $myrow['itemdescription'] . '</td>
 				<td class="number">' . locale_number_format($myrow['qtyostdg'],$myrow['decimalplaces']) . '</td>
 				<td><input type="text" class="number" name="This_QuantityCredited" value="' . locale_number_format($myrow['qtyostdg'],$myrow['decimalplaces']) . '" size="11" maxlength="10" /></td>
-				<td class="number">' . locale_number_format($Price,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
+				<td class="number">' . $DisplayPrice . '</td>
 				<td><input type="text" class="number" name="ChgPrice" value="' . locale_number_format($Price,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '" size="11" maxlength="10" /></td>
 			</tr>
 			</table>';

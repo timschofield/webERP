@@ -151,7 +151,11 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_POST['ProcessGo
 		$DisplayQtyOrd = locale_number_format($LnItm->Quantity,$LnItm->DecimalPlaces);
 		$DisplayQtyRec = locale_number_format($LnItm->QtyReceived,$LnItm->DecimalPlaces);
 		$DisplayLineTotal = locale_number_format($LineTotal,$_SESSION['PO'.$identifier]->CurrDecimalPlaces);
-		$DisplayPrice = locale_number_format($LnItm->Price,$_SESSION['PO'.$identifier]->CurrDecimalPlaces);
+		 if ($LnItm->Price > 1) {
+			$DisplayPrice = locale_number_format($LnItm->Price,$_SESSION['PO'.$identifier]->CurrDecimalPlaces);
+		} else {
+			$DisplayPrice = locale_number_format($LnItm->Price,4);
+		}
 
 
 		//Now Display LineItem
@@ -172,7 +176,7 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_POST['ProcessGo
 			echo '<input type="hidden" name="RecvQty_' . $LnItm->LineNo . '" value="' . locale_number_format($LnItm->ReceiveQty,$LnItm->DecimalPlaces) . '" /><a href="GoodsReceivedControlled.php?identifier=' . $identifier . '&amp;LineNo=' . $LnItm->LineNo . '">' . locale_number_format($LnItm->ReceiveQty,$LnItm->DecimalPlaces) . '</a></td>';
 
 		} else {
-			echo '<input type="text" class="number" name="RecvQty_' . $LnItm->LineNo . '" pattern="(?:^\d{1,3}(?:\.?\d{3})*(?:,\d{1,})?$)|(?:^\d{1,3}(?:,?\d{3})*(?:\.\d{1,})?$)|(?:^\d{1,3}(?:\s?\d{3})*(?:\.\d{1,})?$)|(?:^\d{1,3}(?:\s?\d{3})*(?:,\d{1,})?$)|(?:^(\d{1,2},)?(\d{2},)*(\d{3})(\.\d+)?|(\d{1,3})(\.\d+)?$)" title="' . _('Enter the quantity to receive against this order line as a number') . '" 
+			echo '<input type="text" class="number" name="RecvQty_' . $LnItm->LineNo . '" pattern="(?:^\d{1,3}(?:\.?\d{3})*(?:,\d{1,})?$)|(?:^\d{1,3}(?:,?\d{3})*(?:\.\d{1,})?$)|(?:^\d{1,3}(?:\s?\d{3})*(?:\.\d{1,})?$)|(?:^\d{1,3}(?:\s?\d{3})*(?:,\d{1,})?$)|(?:^(\d{1,2},)?(\d{2},)*(\d{3})(\.\d+)?|(\d{1,3})(\.\d+)?$)" title="' . _('Enter the quantity to receive against this order line as a number') . '"
 maxlength="10" size="10" value="' . locale_number_format(round($LnItm->ReceiveQty,$LnItm->DecimalPlaces),$LnItm->DecimalPlaces) . '" /></td>';
 		}
 		echo '<td><input type="checkbox" name="Complete_'. $LnItm->LineNo . '"';
@@ -662,12 +666,12 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 											narrative,
 											amount)
 									VALUES (
-											25,'" . 
-											$GRN . "','" . 
-											$_POST['DefaultReceivedDate'] . "','" . 
-											$PeriodNo . "','" . 
-											$OrderLine->GLCode . "','" . 
-											_('PO') . $_SESSION['PO'.$identifier]->OrderNo . ': ' . $_SESSION['PO'.$identifier]->SupplierID . ' - ' . $OrderLine->StockID . ' - ' . DB_escape_string($OrderLine->ItemDescription) . ' x ' . $OrderLine->ReceiveQty . " @ " . locale_number_format($CurrentStandardCost,$_SESSION['CompanyRecord']['decimalplaces']) . "','" . 
+											25,'" .
+											$GRN . "','" .
+											$_POST['DefaultReceivedDate'] . "','" .
+											$PeriodNo . "','" .
+											$OrderLine->GLCode . "','" .
+											_('PO') . $_SESSION['PO'.$identifier]->OrderNo . ': ' . $_SESSION['PO'.$identifier]->SupplierID . ' - ' . $OrderLine->StockID . ' - ' . DB_escape_string($OrderLine->ItemDescription) . ' x ' . $OrderLine->ReceiveQty . " @ " . locale_number_format($CurrentStandardCost,$_SESSION['CompanyRecord']['decimalplaces']) . "','" .
 											$CurrentStandardCost * $OrderLine->ReceiveQty . "')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The purchase GL posting could not be inserted because');
@@ -684,12 +688,12 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 											account,
 											narrative,
 											amount)
-									VALUES (25,'" . 
-											$GRN . "','" . 
-											$_POST['DefaultReceivedDate'] . "','" . 
-											$PeriodNo . "','" . 
-											$_SESSION['CompanyRecord']['grnact'] . "','" . 
-											_('PO') . $_SESSION['PO'.$identifier]->OrderNo . ': ' . $_SESSION['PO'.$identifier]->SupplierID . ' - ' . $OrderLine->StockID . ' - ' . DB_escape_string($OrderLine->ItemDescription) . ' x ' . $OrderLine->ReceiveQty . ' @ ' . locale_number_format($UnitCost,$_SESSION['CompanyRecord']['decimalplaces']) . "','" . 
+									VALUES (25,'" .
+											$GRN . "','" .
+											$_POST['DefaultReceivedDate'] . "','" .
+											$PeriodNo . "','" .
+											$_SESSION['CompanyRecord']['grnact'] . "','" .
+											_('PO') . $_SESSION['PO'.$identifier]->OrderNo . ': ' . $_SESSION['PO'.$identifier]->SupplierID . ' - ' . $OrderLine->StockID . ' - ' . DB_escape_string($OrderLine->ItemDescription) . ' x ' . $OrderLine->ReceiveQty . ' @ ' . locale_number_format($UnitCost,$_SESSION['CompanyRecord']['decimalplaces']) . "','" .
 											-$UnitCost * $OrderLine->ReceiveQty . "')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GRN suspense side of the GL posting could not be inserted because');
