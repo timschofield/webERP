@@ -59,7 +59,7 @@ if ($myrow[2]=='K'){
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<div class="centre"><input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo _('Stock Code') . ':<input type="text" name="StockID" size="21" value="' . $StockID . '" maxlength="20" />';
+echo _('Stock Code') . ':<input type="text" pattern="(?!^[\s%]*$)[^+><-]{1,20}" title ="'._('Input actual stock ID. Blank or percentage mark is not allowed').'" placeholder="'._('Only blank or % is not allowed').'" required="required" name="StockID" size="21" value="' . $StockID . '" maxlength="20" />';
 
 echo ' <input type="submit" name="ShowStatus" value="' . _('Show Stock Status') . '" />';
 
@@ -79,23 +79,23 @@ $DbgMsg = _('The SQL that was used to update the stock item and failed was');
 $LocStockResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
 
 echo '<br />
-		<table class="selection">';
+		<table class="selection"><tbody>';
 
 if ($Its_A_KitSet_Assembly_Or_Dummy == True){
 	$TableHeader = '<tr>
-						<th>' . _('Location') . '</th>
-						<th>' . _('Demand') . '</th>
+						<th class="ascending">' . _('Location') . '</th>
+						<th class="ascending">' . _('Demand') . '</th>
 					</tr>';
 } else {
 	$TableHeader = '<tr>
-						<th>' . _('Location') . '</th>
-						<th>' . _('Bin Location') . '</th>
-						<th>' . _('Quantity On Hand') . '</th>
-						<th>' . _('Re-Order Level') . '</th>
-						<th>' . _('Demand') . '</th>
-						<th>' . _('In Transit') . '</th>
-						<th>' . _('Available') . '</th>
-						<th>' . _('On Order') . '</th>
+						<th class="ascending">' . _('Location') . '</th>
+						<th class="ascending">' . _('Bin Location') . '</th>
+						<th class="ascending">' . _('Quantity On Hand') . '</th>
+						<th class="ascending">' . _('Re-Order Level') . '</th>
+						<th class="ascending">' . _('Demand') . '</th>
+						<th class="ascending">' . _('In Transit') . '</th>
+						<th class="ascending">' . _('Available') . '</th>
+						<th class="ascending">' . _('On Order') . '</th>
 					</tr>';
 }
 echo $TableHeader;
@@ -249,7 +249,7 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 				<td class="number">%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>
-				<td class="number">%s</td></tr>',
+				<td class="number">%s</td>',
 				locale_number_format($myrow['quantity'], $DecimalPlaces),
 				locale_number_format($myrow['reorderlevel'], $DecimalPlaces),
 				locale_number_format($DemandQty, $DecimalPlaces),
@@ -260,9 +260,11 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 
 		if ($Serialised ==1){ /*The line is a serialised item*/
 
-			echo '<td><a target="_blank" href="' . $RootPath . '/StockSerialItems.php?Serialised=Yes&amp;Location=' . $myrow['loccode'] . '&amp;StockID=' .$StockID . '">' . _('Serial Numbers') . '</a></td></tr>';
+			echo '<td><a target="_blank" href="' . $RootPath . '/StockSerialItems.php?Serialised=Yes&amp;Location=' . $myrow['loccode'] . '&amp;StockID=' .$StockID . '">' . _('Serial Numbers') . '</tr>';
 		} elseif ($Controlled==1){
 			echo '<td><a target="_blank" href="' . $RootPath . '/StockSerialItems.php?Location=' . $myrow['loccode'] . '&amp;StockID=' .$StockID . '">' . _('Batches') . '</a></td></tr>';
+		}else{
+			echo '</tr>';
 		}
 
 	} else {
@@ -277,7 +279,7 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 //end of page full new headings if
 }
 //end of while loop
-echo '<tr>
+echo '</tbody><tr>
 		<td></td>
 		<td><input type="submit" name="UpdateBinLocations" value="' . _('Update Bins') . '" /></td>
 	</tr>
@@ -349,12 +351,12 @@ if ($DebtorNo) { /* display recent pricing history for this debtor and this stoc
 			<table class="selection">
 			<tr>
 				<th colspan="4"><font color="navy" size="2">' . _('Pricing history for sales of') . ' ' . $StockID . ' ' . _('to') . ' ' . $DebtorNo . '</font></th>
-			</tr>';
+			</tr><tbody>';
 	  $TableHeader = '<tr>
-						<th>' . _('Date Range') . '</th>
-						<th>' . _('Quantity') . '</th>
-						<th>' . _('Price') . '</th>
-						<th>' . _('Discount') . '</th>
+						<th class="ascending">' . _('Date Range') . '</th>
+						<th class="ascending">' . _('Quantity') . '</th>
+						<th class="ascending">' . _('Price') . '</th>
+						<th class="ascending">' . _('Discount') . '</th>
 					</tr>';
 
 	  $j = 0;
@@ -385,7 +387,7 @@ if ($DebtorNo) { /* display recent pricing history for this debtor and this stoc
 					locale_number_format($PreviousPrice[2],$_SESSION['CompanyRecord']['decimalplaces']),
 					locale_number_format($PreviousPrice[3]*100,2));
 	  }
-	 echo '</table>';
+	 echo '</tbody></table>';
 	 }
 	//end of while loop
 	else {
