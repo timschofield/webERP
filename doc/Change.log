@@ -1,4 +1,5 @@
 webERP Change Log
+28/8/2013 Exson: Fixed MiscFunctions.js bug which make onclick event failed for tag whose class is date, number or integer. Solution from Tim. And update the sql file in coa directory. 
 27/8/2013 Exson: Remove the option of weberp-demo.sql to avoid installation error. Reported by icedlava. 
 26/8/2013 Exson Add A default company name to make the installation as dummy as possible. 
 21/8/2013 Thumb: Fixed the object no definition error in StockTransfers.php. 
