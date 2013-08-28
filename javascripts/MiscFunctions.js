@@ -328,8 +328,9 @@ function initial(){
 				ds[i].onchange=function(){if(this.origonchange) this.origonchange();this.newonchange();};
 		
 		}
-		var ds=document.getElementsByTagName("th");
 	}
+		var ds=document.getElementsByTagName("th");
+	
 	for (i=0;i<ds.length;i++){
 		if (ds[i].className=="ascending"){
 			ds[i].onclick=SortSelect;
