@@ -53,7 +53,7 @@ if (isset($_POST['submit'])) {
 		
 			if ($UploadTheFile=='Yes'){
 				$result  =  move_uploaded_file($_FILES['BrandPicture']['tmp_name'], $FileName);
-				$message = ($result)?_('File url') .'<a href="' . $FileName .'">' .  $FileName . '</a>' : _('Something is wrong with uploading a file');
+				$message = ($result)?_('File url')  . '<a href="' . $FileName .'">' .  $FileName . '</a>' : _('Something is wrong with uploading a file');
 				$_POST['ManufacturersImage'] = 'BRAND-' . $SelectedManufacturer;
 			} else {
 				$_POST['ManufacturersImage'] = '';
@@ -125,7 +125,7 @@ if (isset($_POST['submit'])) {
 		
 			if ($UploadTheFile=='Yes'){
 				$result  =  move_uploaded_file($_FILES['BrandPicture']['tmp_name'], $FileName);
-				$message = ($result)?_('File url') .'<a href="' . $FileName .'">' .  $FileName . '</a>' : _('Something is wrong with uploading a file');
+				$message = ($result)?_('File url')  . '<a href="' . $FileName .'">' .  $FileName . '</a>' : _('Something is wrong with uploading a file');
 				DB_query("UPDATE manufacturers SET  manufacturers_image='" . $FileName . "'",$db);
 			} 
 		}
@@ -269,13 +269,13 @@ if (!isset($_GET['delete'])) {
 		echo '<input type="hidden" name="SelectedManufacturer" value="' . $SelectedManufacturer . '" />';
 		echo '<table class="selection">';
 		echo '<tr>
-				<th colspan="2">'._('Amend Brand Details').'</th>
+				<th colspan="2">' . _('Amend Brand Details') . '</th>
 			</tr>';
 	} else { //end of if $SelectedManufacturer only do the else when a new record is being entered
 		
 		echo '<table class="selection">
 				<tr>
-					<th colspan="2"><h3>'._('New Brand/Manufacturer Details').'</h3></th>
+					<th colspan="2"><h3>' . _('New Brand/Manufacturer Details') . '</h3></th>
 				</tr>';
 	}
 	if (!isset($_POST['ManufacturersName'])) {
@@ -297,7 +297,7 @@ if (!isset($_GET['delete'])) {
 			<td><input type="text" name="ManufacturersURL" value="' . $_POST['ManufacturersURL'] . '" size="50" maxlength="50" /></td>
 		</tr>
 		<tr>
-			<td>'. _('Brand Image File (.jpg)') . ':</td>
+			<td>' .  _('Brand Image File (.jpg)') . ':</td>
 			<td><input type="file" id="BrandPicture" name="BrandPicture" /></td>
 		</tr>';
 		if (isset($SelectedManufacturer)){

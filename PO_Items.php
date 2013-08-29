@@ -96,7 +96,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 			$AuthRow=DB_fetch_array($AuthResult);
 
 			if (DB_num_rows($AuthResult) > 0 AND $AuthRow['authlevel'] > $_SESSION['PO'.$identifier]->Order_Value()) { //user has authority to authrorise as well as create the order
-				$StatusComment=date($_SESSION['DefaultDateFormat']).' - ' . _('Order Created and Authorised by') . $UserDetails . '<br />'. $_SESSION['PO'.$identifier]->StatusComments.'<br />';
+				$StatusComment=date($_SESSION['DefaultDateFormat']).' - ' . _('Order Created and Authorised by') . $UserDetails . '<br />' .  $_SESSION['PO'.$identifier]->StatusComments . '<br />';
 				$_SESSION['PO'.$identifier]->AllowPrintPO=1;
 				$_SESSION['PO'.$identifier]->Status = 'Authorised';
 			} else { // no authority to authorise this order
@@ -106,19 +106,19 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 					$AuthMessage = _('You can only authorise up to').' '.$_SESSION['PO'.$identifier]->CurrCode.' '.$AuthRow['authlevel'] .'.<br />';
 				}
 
-				prnMsg( _('You do not have permission to authorise this purchase order').'.<br />'. _('This order is for').' '.
+				prnMsg( _('You do not have permission to authorise this purchase order').'.<br />' .  _('This order is for').' '.
 					$_SESSION['PO'.$identifier]->CurrCode . ' '. $_SESSION['PO'.$identifier]->Order_Value() .'. '.
 					$AuthMessage .
-					_('If you think this is a mistake please contact the systems administrator') . '<br />'.
+					_('If you think this is a mistake please contact the systems administrator') . '<br />' . 
 					_('The order will be created with a status of pending and will require authorisation'), 'warn');
 
 				$_SESSION['PO'.$identifier]->AllowPrintPO=0;
-				$StatusComment=date($_SESSION['DefaultDateFormat']).' - ' . _('Order Created by') . $UserDetails . '<br />' . $_SESSION['PO'.$identifier]->StatusComments.'<br />';
+				$StatusComment=date($_SESSION['DefaultDateFormat']).' - ' . _('Order Created by') . $UserDetails . '<br />' . $_SESSION['PO'.$identifier]->StatusComments . '<br />';
 				$_SESSION['PO'.$identifier]->Status = 'Pending';
 			}
 		} else { //auto authorise is set to off
 			$_SESSION['PO'.$identifier]->AllowPrintPO=0;
-			$StatusComment=date($_SESSION['DefaultDateFormat']).' - ' . _('Order Created by') . $UserDetails . ' - '.$_SESSION['PO'.$identifier]->StatusComments.'<br />';
+			$StatusComment=date($_SESSION['DefaultDateFormat']).' - ' . _('Order Created by') . $UserDetails . ' - '.$_SESSION['PO'.$identifier]->StatusComments . '<br />';
 			$_SESSION['PO'.$identifier]->Status = 'Pending';
 		}
 
@@ -685,7 +685,7 @@ if (isset($_POST['NewItem'])
 				} else { //no rows returned by the SQL to get the item
 					prnMsg (_('The item code') . ' ' . $ItemCode . ' ' . _('does not exist in the database and therefore cannot be added to the order'),'error');
 					if ($debug==1){
-						echo '<br />'.$sql;
+						echo '<br />' . $sql;
 					}
 					include('includes/footer.inc');
 					exit;
@@ -711,20 +711,20 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 	if (isset($_SESSION['PO'.$identifier]->OrderNo)) {
 		echo  ' ' . _('Purchase Order') .' '. $_SESSION['PO'.$identifier]->OrderNo ;
 	}
-	echo '<br /><b>'._(' Order Summary') . '</b></p>';
+	echo '<br /><b>' . _(' Order Summary') . '</b></p>';
 	echo '<table cellpadding="2" class="selection">';
 	echo '<tr>
 			<th class="ascending">' . _('Item Code') . '</th>
 			<th class="ascending">' . _('Description') . '</th>
 			<th class="ascending">' . _('Quantity Our Units') . '</th>
-			<th>' . _('Our Unit') .'</th>
+			<th>' . _('Our Unit')  . '</th>
 			<th class="ascending">' . _('Price Our Units') .' (' . $_SESSION['PO'.$identifier]->CurrCode .  ')</th>
 			<th>' . _('Unit Conversion Factor') . '</th>
 			<th class="ascending">' . _('Order Quantity') . '<br />' . _('Supplier Units') . '</th>
 			<th>' .  _('Supplier Unit') . '</th>
 			<th class="ascending">' . _('Order Price') . '<br />' . _('Supp Units') . ' ('.$_SESSION['PO'.$identifier]->CurrCode.  ')</th>
 			<th class="ascending">' . _('Sub-Total') .' ('.$_SESSION['PO'.$identifier]->CurrCode.  ')</th>
-			<th class="ascending">' . _('Deliver By') .'</th>
+			<th class="ascending">' . _('Deliver By')  . '</th>
 			</tr>';
 
 	$_SESSION['PO'.$identifier]->Total = 0;
@@ -803,11 +803,11 @@ if (isset($_POST['NonStockOrder'])) {
 
 	$result=DB_query($sql, $db);
 	while ($myrow=DB_fetch_array($result)) {
-		echo '<option value="'.$myrow['accountcode'].'">'.$myrow['accountcode'].' - '.$myrow['accountname'].'</option>';
+		echo '<option value="'.$myrow['accountcode'].'">' . $myrow['accountcode'].' - '.$myrow['accountname'] . '</option>';
 	}
 	echo '</select></td></tr>';
 	echo '<tr>
-			<td>'._('OR Asset ID'). '</td>
+			<td>' . _('OR Asset ID'). '</td>
 			<td><select name="AssetID">';
 	$AssetsResult = DB_query("SELECT assetid,
 									description,
@@ -825,21 +825,21 @@ if (isset($_POST['NonStockOrder'])) {
 		echo '<option value="' . $AssetRow['assetid'] . '">'  . $AssetRow['assetid'] . ' - '.  $DatePurchased . ' - ' . $AssetRow['description'] . '</option>';
 	}
 
-	echo'</select><a href="FixedAssetItems.php" target=_blank>'. _('New Fixed Asset') . '</a></td></tr>
+	echo'</select><a href="FixedAssetItems.php" target=_blank>' .  _('New Fixed Asset') . '</a></td></tr>
 		<tr>
-			<td>'._('Quantity to purchase').'</td>
+			<td>' . _('Quantity to purchase') . '</td>
 			<td><input type="text" class="number" name="Qty" size="10" value="1" /></td>
 		</tr>
 		<tr>
-			<td>'._('Price per item').'</td>
+			<td>' . _('Price per item') . '</td>
 			<td><input type="text" class="number" name="Price" size="10" /></td>
 		</tr>
 		<tr>
-			<td>'._('Unit').'</td>
+			<td>' . _('Unit') . '</td>
 			<td><input type="text" name="SuppliersUnit" size="10" value="' . _('each') . '" /></td>
 		</tr>
 		<tr>
-			<td>'._('Delivery Date').'</td>
+			<td>' . _('Delivery Date') . '</td>
 			<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="ReqDelDate" size="11" value="'.$_SESSION['PO'.$identifier]->DeliveryDate .'" /></td>
 		</tr>
 		</table>
@@ -1100,7 +1100,7 @@ if (!isset($_GET['Edit'])) {
 
 	echo '<table class="selection">
 			<tr>
-				<th colspan="3"><h3>'. _('Search For Stock Items') . ':</h3></th>';
+				<th colspan="3"><h3>' .  _('Search For Stock Items') . ':</h3></th>';
 
 	echo '</tr>
 			<tr><td>' . _('Item Category') . ': <select name="StockCat">';
@@ -1159,7 +1159,7 @@ if (isset($SearchResult)) {
 						<th>' . _('Our Units') . '</th>
 						<th>' . _('Conversion') . '<br />' ._('Factor') . '</th>
 						<th>' . _('Supplier/Order') . '<br />' .  _('Units') . '</th>
-						<th colspan="2"><a href="#end">'._('Go to end of list').'</a></th>
+						<th colspan="2"><a href="#end">' . _('Go to end of list') . '</a></th>
 					</tr>';
 	echo $TableHeader;
 
@@ -1180,7 +1180,7 @@ if (isset($SearchResult)) {
 		if (file_exists( $_SESSION['part_pics_dir'] . '/' . $FileName) ) {
 			$ImageSource = '<img src="'.$RootPath . '/' . $_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.jpg" width="50" height="50" />';
 		} else {
-			$ImageSource = '<i>'._('No Image').'</i>';
+			$ImageSource = '<i>' . _('No Image') . '</i>';
 		}
 
 		/*Get conversion factor and supplier units if any */
@@ -1200,10 +1200,10 @@ if (isset($SearchResult)) {
 			$OrderUnits=$myrow['units'];
 			$ConversionFactor =1;
 		}
-		echo '<td>' . $myrow['stockid'] .'</td>
-			<td>' . $myrow['description'] .'</td>
-			<td>' . $myrow['units'] .'</td>
-			<td class="number">' . $ConversionFactor .'</td>
+		echo '<td>' . $myrow['stockid']  . '</td>
+			<td>' . $myrow['description']  . '</td>
+			<td>' . $myrow['units']  . '</td>
+			<td class="number">' . $ConversionFactor  . '</td>
 			<td>' . $OrderUnits . '</td>
 			<td>' . $ImageSource . '</td>
 			<td><input class="number" type="text" size="6" value="0" name="NewQty' . $j . '" /></td>

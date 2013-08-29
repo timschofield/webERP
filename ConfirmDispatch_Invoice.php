@@ -213,7 +213,7 @@ if (!isset($_GET['OrderNumber']) AND !isset($_SESSION['ProcessingOrder'])) {
 
 	} else { /*end if the order was returned sucessfully */
 
-		echo '<br />'.
+		echo '<br />' . 
 		prnMsg( _('This order item could not be retrieved. Please select another order'), 'warn');
 		include ('includes/footer.inc');
 		exit;
@@ -265,7 +265,7 @@ echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/i
 	'" alt="" />' . ' ' . _('Confirm Dispatch and Invoice'). '</p>';
 echo '<table class="selection">
 			<tr>
-				<th><img src="'.$RootPath.'/css/'.$Theme.'/images/customer.png" title="' . _('Customer') . '" alt="" />' . ' ' . _('Customer Code') . ' :<b> ' . $_SESSION['Items'.$identifier]->DebtorNo.'</b></th>
+				<th><img src="'.$RootPath.'/css/'.$Theme.'/images/customer.png" title="' . _('Customer') . '" alt="" />' . ' ' . _('Customer Code') . ' :<b> ' . $_SESSION['Items'.$identifier]->DebtorNo . '</b></th>
 				<th>' . _('Customer Name') . ' :<b> ' . $_SESSION['Items'.$identifier]->CustomerName. '</b></th>
 			</tr>
 			<tr>
@@ -326,10 +326,10 @@ foreach ($_SESSION['Items'.$identifier]->LineItems as $LnItm) {
 	$_SESSION['Items'.$identifier]->totalWeight += ($LnItm->QtyDispatched * $LnItm->Weight);
 
     echo $RowStarter;
-	echo '<td>'.$LnItm->StockID.'</td>
-		<td title="'. $LnItm->LongDescription . '">' .$LnItm->ItemDescription.'</td>
+	echo '<td>' . $LnItm->StockID . '</td>
+		<td title="'. $LnItm->LongDescription . '">' .$LnItm->ItemDescription . '</td>
 		<td class="number">' . locale_number_format($LnItm->Quantity,$LnItm->DecimalPlaces) . '</td>
-		<td>'.$LnItm->Units.'</td>
+		<td>' . $LnItm->Units . '</td>
 		<td class="number">' . locale_number_format($LnItm->QtyInv,$LnItm->DecimalPlaces) . '</td>';
 
 	if ($LnItm->Controlled==1){
@@ -349,9 +349,9 @@ foreach ($_SESSION['Items'.$identifier]->LineItems as $LnItm) {
 	$DisplayDiscountPercent = locale_number_format($LnItm->DiscountPercent*100,2) . '%';
 	$DisplayLineNetTotal = locale_number_format($LineTotal,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
 	$DisplayPrice = locale_number_format($LnItm->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
-	echo '<td class="number">'.$DisplayPrice.'</td>
-		<td class="number">'.$DisplayDiscountPercent.'</td>
-		<td class="number">'.$DisplayLineNetTotal.'</td>';
+	echo '<td class="number">' . $DisplayPrice . '</td>
+		<td class="number">' . $DisplayDiscountPercent . '</td>
+		<td class="number">' . $DisplayLineNetTotal . '</td>';
 
 	/*Need to list the taxes applicable to this line */
 	echo '<td>';
@@ -400,8 +400,8 @@ foreach ($_SESSION['Items'.$identifier]->LineItems as $LnItm) {
 
 	$DisplayGrossLineTotal = locale_number_format($LineTotal+ $TaxLineTotal,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
 
-	echo '<td class="number">'.$DisplayTaxAmount.'</td>
-			<td class="number">'.$DisplayGrossLineTotal.'</td>';
+	echo '<td class="number">' . $DisplayTaxAmount . '</td>
+			<td class="number">' . $DisplayGrossLineTotal . '</td>';
 
 	if ($LnItm->Controlled==1){
 		if (!isset($_POST['ProcessInvoice'])) {
@@ -461,7 +461,7 @@ if(!isset($_SESSION['Items'.$identifier]->FreightCost)) {
 				$BestShipper = $ShipperReturned[0];
 			} else {
 				prnMsg( _('There are no shippers defined') . '. ' . _('Please use the link below to set up shipping freight companies, the system expects the shipping company to be selected or a default freight company to be used'),'error');
-				echo '<a href="' . $RootPath . 'Shippers.php">'. _('Enter') . '/' . _('Amend Freight Companies'). '</a>';
+				echo '<a href="' . $RootPath . 'Shippers.php">' .  _('Enter') . '/' . _('Amend Freight Companies'). '</a>';
 			}
 		}
 	}
@@ -489,11 +489,11 @@ if ($_SESSION['Items'.$identifier]->Any_Already_Delivered()==1
 	AND (!isset($_SESSION['Items'.$identifier]->FreightCost)
 		OR $_POST['ChargeFreightCost']==0)) {
 
-	echo '<td colspan="2" class="number">'. _('Charge Freight Cost inc Tax').'</td>
+	echo '<td colspan="2" class="number">' .  _('Charge Freight Cost inc Tax') . '</td>
 		<td><input tabindex="'.$j.'" type="text" required="required" class="number" size="10" maxlength="12" name="ChargeFreightCost" value="0" /></td>';
 	$_SESSION['Items'.$identifier]->FreightCost=0;
 } else {
-	echo '<td colspan="2" class="number">'. _('Charge Freight Cost inc Tax').'</td>';
+	echo '<td colspan="2" class="number">' .  _('Charge Freight Cost inc Tax') . '</td>';
 	if (isset($_POST['ProcessInvoice'])) {
 		echo '<td class="number">' . locale_number_format($_SESSION['Items'.$identifier]->FreightCost,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</td>';
 	} else {
@@ -558,7 +558,7 @@ $_POST['ChargeFreightCost'] = round(filter_number_format($_POST['ChargeFreightCo
 
 echo '<tr>
 	<td colspan="8" class="number">' . _('Invoice Totals'). '</td>
-	<td class="number"><hr /><b>'.$DisplaySubTotal.'</b><hr /></td>
+	<td class="number"><hr /><b>' . $DisplaySubTotal . '</b><hr /></td>
 	<td colspan="2"></td>
 	<td class="number"><hr /><b>' . locale_number_format($TaxTotal,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</b><hr /></td>
 	<td class="number"><hr /><b>' . locale_number_format($TaxTotal+($_SESSION['Items'.$identifier]->total + $_POST['ChargeFreightCost']),$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</b><hr /></td>
@@ -694,7 +694,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 	/*there should be the same number of items returned from this query as there are lines on the invoice - if  not 	then someone has already invoiced or credited some lines */
 
 		if ($debug==1){
-			echo '<br />'.$SQL;
+			echo '<br />' . $SQL;
 			echo '<br />' . _('Number of rows returned by SQL') . ':' . DB_num_rows($Result);
 			echo '<br />' . _('Count of items in the session') . ' ' . count($_SESSION['Items'.$identifier]->LineItems);
 		}
@@ -715,13 +715,13 @@ invoices can have a zero amount but there must be a quantity to invoice */
 		if ($_SESSION['Items'.$identifier]->LineItems[$myrow['orderlineno']]->Quantity != $myrow['quantity']
 			OR $_SESSION['Items'.$identifier]->LineItems[$myrow['orderlineno']]->QtyInv != $myrow['qtyinvoiced']) {
 
-			echo '<br />'. _('Orig order for'). ' ' . $myrow['orderlineno'] . ' '. _('has a quantity of'). ' ' . $myrow['quantity'] . ' '. _('and an invoiced qty of'). ' ' . $myrow['qtyinvoiced'] . ' '. _('the session shows quantity of'). ' ' . $_SESSION['Items'.$identifier]->LineItems[$myrow['orderlineno']]->Quantity . ' ' . _('and quantity invoice of'). ' ' . $_SESSION['Items'.$identifier]->LineItems[$myrow['orderlineno']]->QtyInv;
+			echo '<br />' .  _('Orig order for'). ' ' . $myrow['orderlineno'] . ' '. _('has a quantity of'). ' ' . $myrow['quantity'] . ' '. _('and an invoiced qty of'). ' ' . $myrow['qtyinvoiced'] . ' '. _('the session shows quantity of'). ' ' . $_SESSION['Items'.$identifier]->LineItems[$myrow['orderlineno']]->Quantity . ' ' . _('and quantity invoice of'). ' ' . $_SESSION['Items'.$identifier]->LineItems[$myrow['orderlineno']]->QtyInv;
 
 			prnMsg( _('This order has been changed or invoiced since this delivery was started to be confirmed') . ' ' . _('Processing halted.') . ' ' . _('To enter and confirm this dispatch, it must be re-selected and re-read again to update the changes made by the other user'), 'error');
 
 			echo '<br />';
 
-			echo '<div class="centre"><a href="'. $RootPath . '/SelectSalesOrder.php">'. _('Select a sales order for confirming deliveries and invoicing'). '</a></div>';
+			echo '<div class="centre"><a href="'. $RootPath . '/SelectSalesOrder.php">' .  _('Select a sales order for confirming deliveries and invoicing'). '</a></div>';
 
 			unset($_SESSION['Items'.$identifier]->LineItems);
 			unset($_SESSION['Items'.$identifier]);
@@ -1232,7 +1232,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 						salesanalysis.salesperson";
 
 			$ErrMsg = _('The count of existing Sales analysis records could not run because');
-			$DbgMsg = '<br />'. _('SQL to count the no of sales analysis records');
+			$DbgMsg = '<br />' .  _('SQL to count the no of sales analysis records');
 			$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
 			$myrow = DB_fetch_row($Result);
@@ -1632,12 +1632,12 @@ invoices can have a zero amount but there must be a quantity to invoice */
 	echo '<br /><div class="centre">';
 
 	if ($_SESSION['InvoicePortraitFormat']==0){
-		echo '<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . '<a target="_blank" href="'.$RootPath.'/PrintCustTrans.php?FromTransNo='.$InvoiceNo.'&amp;InvOrCredit=Invoice&amp;PrintPDF=True">'. _('Print this invoice'). ' (' . _('Landscape') . ')</a><br /><br />';
+		echo '<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . '<a target="_blank" href="'.$RootPath.'/PrintCustTrans.php?FromTransNo='.$InvoiceNo.'&amp;InvOrCredit=Invoice&amp;PrintPDF=True">' .  _('Print this invoice'). ' (' . _('Landscape') . ')</a><br /><br />';
 	} else {
-		echo '<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . '<a target="_blank" href="'.$RootPath.'/PrintCustTransPortrait.php?FromTransNo='.$InvoiceNo.'&amp;InvOrCredit=Invoice&amp;PrintPDF=True">'. _('Print this invoice'). ' (' . _('Portrait') . ')</a><br /><br />';
+		echo '<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . '<a target="_blank" href="'.$RootPath.'/PrintCustTransPortrait.php?FromTransNo='.$InvoiceNo.'&amp;InvOrCredit=Invoice&amp;PrintPDF=True">' .  _('Print this invoice'). ' (' . _('Portrait') . ')</a><br /><br />';
 	}
-	echo '<a href="'.$RootPath.'/SelectSalesOrder.php">'. _('Select another order for invoicing'). '</a><br /><br />';
-	echo '<a href="'.$RootPath.'/SelectOrderItems.php?NewOrder=Yes">'._('Sales Order Entry').'</a></div><br />';
+	echo '<a href="'.$RootPath.'/SelectSalesOrder.php">' .  _('Select another order for invoicing'). '</a><br /><br />';
+	echo '<a href="'.$RootPath.'/SelectOrderItems.php?NewOrder=Yes">' . _('Sales Order Entry') . '</a></div><br />';
 /*end of process invoice */
 
 
@@ -1671,8 +1671,8 @@ invoices can have a zero amount but there must be a quantity to invoice */
 	
 	$j++;
 	echo '<tr>
-			<td>'._('Action For Balance'). ':</td>
-			<td><select tabindex="'.$j.'" name="BOPolicy"><option selected="selected" value="BO">'._('Automatically put balance on back order').'</option><option value="CAN">'._('Cancel any quantities not delivered').'</option></select></td>
+			<td>' . _('Action For Balance'). ':</td>
+			<td><select tabindex="'.$j.'" name="BOPolicy"><option selected="selected" value="BO">' . _('Automatically put balance on back order') . '</option><option value="CAN">' . _('Cancel any quantities not delivered') . '</option></select></td>
 		</tr>';
 	$j++;
 	echo '<tr>

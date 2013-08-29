@@ -45,10 +45,10 @@ if (!isset($_POST['supplierid'])) {
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<table class="selection">
 			<tr>
-				<td>' . _('Select Supplier').'</td>
+				<td>' . _('Select Supplier') . '</td>
 				<td><select name=supplierid>';
 		while ($myrow=DB_fetch_array($result)) {
-			echo '<option value="' . $myrow['supplierid'].'">' . $myrow['suppname'].'</option>';
+			echo '<option value="' . $myrow['supplierid'].'">' . $myrow['suppname'] . '</option>';
 		}
 		echo '</select></td>
 			</tr>
@@ -102,21 +102,21 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 
 	echo '<table class="selection">
 			<tr>
-				<th>' . _('Offer ID').'</th>
-				<th>' . _('Supplier').'</th>
-				<th>' . _('Stock Item').'</th>
-				<th>' . _('Quantity').'</th>
-				<th>' . _('Units').'</th>
-				<th>' . _('Price').'</th>
-				<th>' . _('Total').'</th>
-				<th>' . _('Currency').'</th>
-				<th>' . _('Offer Expires').'</th>
-				<th>' . _('Accept').'</th>
-				<th>' . _('Reject').'</th>
-				<th>' . _('Defer').'</th>
+				<th>' . _('Offer ID') . '</th>
+				<th>' . _('Supplier') . '</th>
+				<th>' . _('Stock Item') . '</th>
+				<th>' . _('Quantity') . '</th>
+				<th>' . _('Units') . '</th>
+				<th>' . _('Price') . '</th>
+				<th>' . _('Total') . '</th>
+				<th>' . _('Currency') . '</th>
+				<th>' . _('Offer Expires') . '</th>
+				<th>' . _('Accept') . '</th>
+				<th>' . _('Reject') . '</th>
+				<th>' . _('Defer') . '</th>
 			</tr>';
 	$k=0;
-	echo 'The result has rows '.DB_num_rows($result).'<br/>';
+	echo 'The result has rows '.DB_num_rows($result) . '<br/>';
 	while ($myrow=DB_fetch_array($result)) {
 		if ($k==1){
 			echo '<tr class="EvenTableRows">';
@@ -125,15 +125,15 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 			echo '<tr class="OddTableRows">';
 			$k++;
 		}
-		echo '<td>' . $myrow['offerid'].'</td>
-			<td>' . $myrow['suppname'].'</td>
-			<td>' . $myrow['description'].'</td>
-			<td class="number">'.locale_number_format($myrow['quantity'],$myrow['decimalplaces']).'</td>
-			<td>' . $myrow['uom'].'</td>
-			<td class="number">'.locale_number_format($myrow['price'],$myrow['currdecimalplaces']).'</td>
-			<td class="number">'.locale_number_format($myrow['price']*$myrow['quantity'],$myrow['currdecimalplaces']).'</td>
-			<td>' . $myrow['currcode'].'</td>
-			<td>' . $myrow['expirydate'].'</td>
+		echo '<td>' . $myrow['offerid'] . '</td>
+			<td>' . $myrow['suppname'] . '</td>
+			<td>' . $myrow['description'] . '</td>
+			<td class="number">' . locale_number_format($myrow['quantity'],$myrow['decimalplaces']) . '</td>
+			<td>' . $myrow['uom'] . '</td>
+			<td class="number">' . locale_number_format($myrow['price'],$myrow['currdecimalplaces']) . '</td>
+			<td class="number">' . locale_number_format($myrow['price']*$myrow['quantity'],$myrow['currdecimalplaces']) . '</td>
+			<td>' . $myrow['currcode'] . '</td>
+			<td>' . $myrow['expirydate'] . '</td>
 			<td><input type="radio" name="action' . $myrow['offerid'] . '" value="1" /></td>
 			<td><input type="radio" name="action' . $myrow['offerid'] . '" value="2" /></td>
 			<td><input type="radio" checked name="action' . $myrow['offerid'] . '" value="3" /></td>
@@ -255,10 +255,10 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 		}
 		if($result){
 			prnMsg(_('The accepted offers from').' ' . $SupplierName.' ' . _('have been converted to purchase orders and an email sent to')
-				.' ' . $Email."\n"._('Please review the order contents').' '.'<a href="' . $RootPath .
-				'/PO_Header.php?ModifyOrderNumber=' . $OrderNo.'">' . _('here').'</a>', 'success');
+				.' ' . $Email."\n"._('Please review the order contents').' ' . '<a href="' . $RootPath .
+				'/PO_Header.php?ModifyOrderNumber=' . $OrderNo.'">' . _('here') . '</a>', 'success');
 		}else{
-			prnMsg(_('The accepted offers from').' ' . $SupplierName.' ' . _('have been converted to purcharse orders but failed to mail, you can view the order contents').' '.'<a href="' . $RootPath.'/PO_Header.php?ModifyOrderNumber=' . $OrderNo.'">' . _('here').'</a>','warn');
+			prnMsg(_('The accepted offers from').' ' . $SupplierName.' ' . _('have been converted to purcharse orders but failed to mail, you can view the order contents').' ' . '<a href="' . $RootPath.'/PO_Header.php?ModifyOrderNumber=' . $OrderNo.'">' . _('here') . '</a>','warn');
 		}
 	}
 	if (sizeOf($RejectsArray)>0){

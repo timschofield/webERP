@@ -2,7 +2,7 @@
 include('includes/session.inc');
 $Title = _('Mailing Group Maintenance');
 include('includes/header.inc');
-$Header = '<p class= "page_title_text"><img src="'. $RootPath.'/css/'.$Theme.'/images/group_add.png" alt="" />'. $Title.'</p>';
+$Header = '<p class= "page_title_text"><img src="'. $RootPath.'/css/'.$Theme.'/images/group_add.png" alt="" />' .  $Title . '</p>';
 echo $Header;
 //show the mail group existed only when user request this page first
 if(!isset($_POST['Clean']) and !isset($_GET['Delete']) and !isset($_GET['Edit']) and !isset($_GET['Add']) and !isset($_GET['Remove'])){
@@ -175,8 +175,8 @@ if(DB_num_rows($result) != 0){
 ?>
 			<tr><td><?php echo $myrow['groupname']; ?></td>
 	
-				<td><?php echo '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?GroupId='.$myrow['id'].'&amp;Edit=1&amp;GroupName='.$myrow['groupname'].'" >'. _('Edit').'</a>'; ?></td>
-				<td><?php echo '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?Id='.$myrow['id'].'&amp;Delete=1" onclick="return confirm(\'' ._('Are you sure you wish to delete this group?').'\');">'._('Delete'); ?></a></td>
+				<td><?php echo '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?GroupId='.$myrow['id'].'&amp;Edit=1&amp;GroupName='.$myrow['groupname'].'" >' .  _('Edit') . '</a>'; ?></td>
+				<td><?php echo '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?Id='.$myrow['id'].'&amp;Delete=1" onclick="return confirm(\'' ._('Are you sure you wish to delete this group?').'\');">' . _('Delete'); ?></a></td>
 			</tr>
 
 <?php

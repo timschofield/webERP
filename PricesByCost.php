@@ -255,9 +255,9 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
                 <option value="1">' . _('Less than or equal to') . '</option>
                 <option value="2">' . _('Greater than or equal to') . '</option>';
 	if ($_SESSION['WeightedAverageCosting']==1) {
-		echo '</select>'.' '. _('Average Cost') . ' x </td>';
+		echo '</select>' . ' '. _('Average Cost') . ' x </td>';
 	} else {
-		echo '</select>'.' '. _('Standard Cost') . ' x </td>';
+		echo '</select>' . ' '. _('Standard Cost') . ' x </td>';
 	}
 	if (!isset($_POST['Margin'])){
 		$_POST['Margin']=1;

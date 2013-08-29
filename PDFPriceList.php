@@ -125,7 +125,7 @@ If (isset($_POST['PrintPDF'])
 		$Title = _('Price List') . ' - ' . _('Problem Report....');
 		include('includes/header.inc');
 		prnMsg( _('The Price List could not be retrieved by the SQL because'). ' - ' . DB_error_msg($db), 'error');
-		echo '<br /><a href="' .$RootPath .'/index.php">'.  _('Back to the menu'). '</a>';
+		echo '<br /><a href="' .$RootPath .'/index.php">' .   _('Back to the menu'). '</a>';
 		if ($debug==1){
 			prnMsg(_('For debugging purposes the SQL used was:') . $SQL,'error');
 		}
@@ -136,7 +136,7 @@ If (isset($_POST['PrintPDF'])
 		$Title = _('Print Price List Error');
 		include('includes/header.inc');
 		prnMsg(_('There were no price details to print out for the customer or category specified'),'warn');
-		echo '<br /><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">'. _('Back').'</a>';
+		echo '<br /><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' .  _('Back') . '</a>';
 		include('includes/footer.inc');
 		exit;
 	}
@@ -257,7 +257,7 @@ If (isset($_POST['PrintPDF'])
         echo '<div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
         echo '<table class="selection">';
-		echo '<tr><td>'. _('From Inventory Category Code') .':</td>
+		echo '<tr><td>' .  _('From Inventory Category Code') .':</td>
                   <td><select name="FromCriteria">';
 
 		$sql='SELECT categoryid, categorydescription FROM stockcategory ORDER BY categoryid';
@@ -291,15 +291,15 @@ If (isset($_POST['PrintPDF'])
 		echo '<tr>
 				<td>' . _('Show Gross Profit %') . ':</td>
 				<td><select name="ShowGPPercentages">
-					<option selected="selected" value="No">'. _('Prices Only') . '</option>
-					<option value="Yes">'. _('Show GP % too') . '</option>
+					<option selected="selected" value="No">' .  _('Prices Only') . '</option>
+					<option value="Yes">' .  _('Show GP % too') . '</option>
 					</select></td>
 			</tr>
 			<tr>
 				<td>' . _('Price Listing Type'). ':</td><td><select name="CustomerSpecials">
-					<option selected="selected" value="Sales Type Prices">'. _('Default Sales Type Prices') . '</option>
-					<option value="Customer Special Prices Only">'. _('Customer Special Prices Only') . '</option>
-					<option value="Full Description">'. _('Full Description') . '</option>
+					<option selected="selected" value="Sales Type Prices">' .  _('Default Sales Type Prices') . '</option>
+					<option value="Customer Special Prices Only">' .  _('Customer Special Prices Only') . '</option>
+					<option value="Full Description">' .  _('Full Description') . '</option>
 					</select></td>
 			</tr>
 			<tr>

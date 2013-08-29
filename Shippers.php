@@ -127,7 +127,7 @@ or deletion of the records*/
 	$result = DB_query($sql,$db);
 
 	echo '<table class="selection">
-		<tr><th>'. _('Shipper ID'). '</th><th>'. _('Shipper Name'). '</th></tr>';
+		<tr><th>' .  _('Shipper ID'). '</th><th>' .  _('Shipper Name'). '</th></tr>';
 
 	$k=0; //row colour counter
 
@@ -141,8 +141,8 @@ or deletion of the records*/
 		}
 		printf('<td>%s</td>
 			<td>%s</td>
-			<td><a href="%sSelectedShipper=%s">'. _('Edit').'</a></td>
-			<td><a href="%sSelectedShipper=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this shipper?') . '\');">'. _('Delete'). '</a></td></tr>',
+			<td><a href="%sSelectedShipper=%s">' .  _('Edit') . '</a></td>
+			<td><a href="%sSelectedShipper=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this shipper?') . '\');">' .  _('Delete'). '</a></td></tr>',
 			$myrow[0],
 			$myrow[1],
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' ,
@@ -159,7 +159,7 @@ if (isset($SelectedShipper)) {
 	echo '<p class="page_title_text">
 			<img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title .
 		'</p>';
-	echo '<div class="centre"><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">'._('REVIEW RECORDS').'</a></div>';
+	echo '<div class="centre"><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('REVIEW RECORDS') . '</a></div>';
 }
 
 if (!isset($_GET['delete'])) {
@@ -181,7 +181,7 @@ if (!isset($_GET['delete'])) {
 
 		echo '<input type="hidden" name="SelectedShipper" value="'. $SelectedShipper .'" />';
 		echo '<input type="hidden" name="Shipper_ID" value="' . $_POST['Shipper_ID'] . '" />';
-		echo '<br /><table class="selection"><tr><td>'. _('Shipper Code').':</td><td>' . $_POST['Shipper_ID'] . '</td></tr>';
+		echo '<br /><table class="selection"><tr><td>' .  _('Shipper Code').':</td><td>' . $_POST['Shipper_ID'] . '</td></tr>';
 	} else {
 		echo '<br />
 			<table class="selection">';
@@ -190,7 +190,7 @@ if (!isset($_GET['delete'])) {
 		$_POST['ShipperName']='';
 	}
 
-	echo '<tr><td>'. _('Shipper Name') .':</td>
+	echo '<tr><td>' .  _('Shipper Name') .':</td>
 			<td>
 				<input type="text" name="ShipperName"'. (in_array('ShipperName',$Errors) ? 'class="inputerror"' : '' ) . ' value="'. $_POST['ShipperName'] .'" size="35" maxlength="40" />
 			</td>

@@ -89,7 +89,7 @@ echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/s
 
 echo '<table class="selection" cellpadding="2">
 		<tr>
-			<th colspan="8"><b>'. _('Order Header Details'). '</b></th>
+			<th colspan="8"><b>' .  _('Order Header Details'). '</b></th>
 		</tr>
 		<tr>
 			<td>' . _('Supplier Code'). '</td>
@@ -134,22 +134,22 @@ echo '<table class="selection" cellpadding="2">
 			<td>' . $myrow['deladd6'] . '</td>
 		</tr>
 		<tr>
-			<td>'. _('Printing') . '</td>
+			<td>' .  _('Printing') . '</td>
 			<td colspan="3">';
 
 if ($myrow['dateprinted'] == ''){
-	echo '<i>'. _('Not yet printed') . '</i> &nbsp; &nbsp; ';
-	echo '[<a href="PO_PDFPurchOrder.php?OrderNo='. $_GET['OrderNo'] .'">'. _('Print') .'</a>]';
+	echo '<i>' .  _('Not yet printed') . '</i> &nbsp; &nbsp; ';
+	echo '[<a href="PO_PDFPurchOrder.php?OrderNo='. $_GET['OrderNo'] .'">' .  _('Print')  . '</a>]';
 } else {
 	echo _('Printed on').' '. ConvertSQLDate($myrow['dateprinted']). '&nbsp; &nbsp;';
-	echo '[<a href="PO_PDFPurchOrder.php?OrderNo='. $_GET['OrderNo'] .'">'. _('Print a Copy') .'</a>]';
+	echo '[<a href="PO_PDFPurchOrder.php?OrderNo='. $_GET['OrderNo'] .'">' .  _('Print a Copy')  . '</a>]';
 }
 
 echo  '</td>
 	</tr>
 	<tr>
-		<td>'. _('Status') . '</td>
-		<td>'. _($myrow['status']) . '</td>
+		<td>' .  _('Status') . '</td>
+		<td>' .  _($myrow['status']) . '</td>
 	</tr>
 	<tr>
 		<td>' . _('Comments'). '</td>
@@ -175,7 +175,7 @@ $LineItemsResult = DB_query($LineItemsSQL,$db, $ErrMsg);
 
 echo '<table class="selection" cellpadding="0">
 		<tr>
-			<th colspan="8"><b>'. _('Order Line Details'). '</b></th>
+			<th colspan="8"><b>' .  _('Order Line Details'). '</b></th>
 		</tr>
 		<tr>
 			<td>' . _('Item Code'). '</td>
@@ -240,7 +240,7 @@ while ($myrow=DB_fetch_array($LineItemsResult)) {
 echo '<tr><td><br /></td>
 	</tr>
 	<tr>
-		<td colspan="4" class="number">' . _('Total Order Value Excluding Tax') .'</td>
+		<td colspan="4" class="number">' . _('Total Order Value Excluding Tax')  . '</td>
 		<td colspan="2" class="number">' . locale_number_format($OrderTotal,$CurrDecimalPlaces) . '</td>
 	</tr>
 	<tr>

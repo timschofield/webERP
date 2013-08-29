@@ -82,27 +82,27 @@ echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<input type="hidden" name="MailServerSetting" value="' . $MailServerSetting . '" />';
 echo '<table class="selection">';
-echo '<tr><td>'._('Server Host Name').'</td>
+echo '<tr><td>' . _('Server Host Name') . '</td>
 		<td><input type="text" name="Host" value="'.$myrow['host'].'" /></td></tr>';
-echo '<tr><td>'._('SMTP port').'</td>
+echo '<tr><td>' . _('SMTP port') . '</td>
 		<td><input type="text" name="Port" size="4" class="number" value="'.$myrow['port'].'" /></td></tr>';
-echo '<tr><td>'._('Helo Command').'</td>
+echo '<tr><td>' . _('Helo Command') . '</td>
 		<td><input type="text" name="HeloAddress" value="'.$myrow['heloaddress'].'" /></td></tr>';
-echo '<tr><td>'._('Authorisation Required').'</td><td>';
+echo '<tr><td>' . _('Authorisation Required') . '</td><td>';
 echo '<select name="Auth">';
 if ($myrow['auth']==1) {
-	echo '<option selected="selected" value="1">'._('True').'</option>';
-	echo '<option value="0">'._('False').'</option>';
+	echo '<option selected="selected" value="1">' . _('True') . '</option>';
+	echo '<option value="0">' . _('False') . '</option>';
 } else {
-	echo '<option value="1">'._('True').'</option>';
-	echo '<option selected="selected" value="0">'._('False').'</option>';
+	echo '<option value="1">' . _('True') . '</option>';
+	echo '<option selected="selected" value="0">' . _('False') . '</option>';
 }
 echo '</select></td></tr>';
-echo '<tr><td>'._('User Name').'</td>
+echo '<tr><td>' . _('User Name') . '</td>
 	<td><input type="text" name="UserName" value="'.$myrow['username'].'" /></td></tr>';
-echo '<tr><td>'._('Password').'</td>
+echo '<tr><td>' . _('Password') . '</td>
 	<td><input type="password" name="Password" value="'.$myrow['password'].'" /></td></tr>';
-echo '<tr><td>'._('Timeout (seconds)').'</td>
+echo '<tr><td>' . _('Timeout (seconds)') . '</td>
 	<td><input type="text" size="5" name="Timeout" class="number" value="'.$myrow['timeout'].'" /></td></tr>';
 echo '<tr><td colspan="2"><div class="centre"><input type="submit" name="submit" value="' . _('Update') . '" /></div></td></tr>';
 echo '</table>

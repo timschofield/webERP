@@ -343,9 +343,9 @@ if (isset($LocationFrom) AND isset($ShipperID)) {
 			<td><select name="DestinationCountry">';
 	foreach ($CountriesArray as $CountryEntry => $CountryName){
 		if (isset($_POST['DestinationCountry']) AND (strtoupper($_POST['DestinationCountry']) == strtoupper($CountryName))){
-			echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName .'</option>';
+			echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName  . '</option>';
 		} else {
-			echo '<option value="' . $CountryName . '">' . $CountryName .'</option>';
+			echo '<option value="' . $CountryName . '">' . $CountryName  . '</option>';
 		}
 	}
 	echo '</select></td>

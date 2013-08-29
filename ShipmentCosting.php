@@ -48,17 +48,17 @@ $HeaderData = DB_fetch_array($GetShiptHdrResult);
 echo '<br />
 	<table class="selection">
 	<tr>
-		<th colspan="4"><h3>'._('Shipment Details').'</h3></th>
+		<th colspan="4"><h3>' . _('Shipment Details') . '</h3></th>
 	</tr>
 	<tr>
-		<td><b>'. _('Shipment') .': </b></td>
+		<td><b>' .  _('Shipment') .': </b></td>
 		<td><b>' . $_GET['SelectedShipment'] . '</b></td>
-		<td><b>'. _('From').' ' . $HeaderData['suppname'] . '</b></td>
+		<td><b>' .  _('From').' ' . $HeaderData['suppname'] . '</b></td>
 	</tr>
 	<tr>
 		<td>' . _('Vessel'). ': </td>
 		<td>' . $HeaderData['vessel'] . '</td>
-		<td>'. _('Voyage Ref'). ': </td>
+		<td>' .  _('Voyage Ref'). ': </td>
 		<td>' . $HeaderData['voyageref'] . '</td>
 	</tr>
 	<tr>
@@ -145,14 +145,14 @@ if (DB_num_rows($LineItemsResult) > 0) {
 			<th colspan="9"><h3>' . _('Items on shipment'). '</h3></th></tr>';
 
 	$TableHeader = '<tr>
-						<th>'. _('Item'). '</th>
-						<th>'. _('Quantity'). '<br />'. _('Invoiced'). '</th>
-						<th>'. _('Quantity'). '<br />'. _('Received'). '</th>
-						<th>'. _('Invoiced'). '<br />'. _('Charges'). '</th>
-						<th>'. _('Shipment'). '<br />'. _('Charges'). '</th>
-						<th>'. _('Shipment'). '<br />'. _('Cost'). '</th>
-						<th>'. _('Standard'). '<br />'. _('Cost'). '</th>
-						<th>'. _('Variance'). '</th>
+						<th>' .  _('Item'). '</th>
+						<th>' .  _('Quantity'). '<br />' .  _('Invoiced'). '</th>
+						<th>' .  _('Quantity'). '<br />' .  _('Received'). '</th>
+						<th>' .  _('Invoiced'). '<br />' .  _('Charges'). '</th>
+						<th>' .  _('Shipment'). '<br />' .  _('Charges'). '</th>
+						<th>' .  _('Shipment'). '<br />' .  _('Cost'). '</th>
+						<th>' .  _('Standard'). '<br />' .  _('Cost'). '</th>
+						<th>' .  _('Variance'). '</th>
 						<th>%</th>
 					</tr>';
 	echo  $TableHeader;
@@ -484,9 +484,9 @@ if (DB_num_rows($LineItemsResult) > 0) {
 	}
 }
 echo '<tr>
-		<td colspan="3" class="number"><b>'. _('Total Shipment Charges'). '</b></td>
+		<td colspan="3" class="number"><b>' .  _('Total Shipment Charges'). '</b></td>
 		<td class="number">' . locale_number_format($TotalInvoiceValueOfShipment,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-		<td class="number">' . locale_number_format($TotalCostsToApportion,$_SESSION['CompanyRecord']['decimalplaces']) .'</td>
+		<td class="number">' . locale_number_format($TotalCostsToApportion,$_SESSION['CompanyRecord']['decimalplaces'])  . '</td>
 	</tr>';
 
 echo '<tr>
@@ -532,12 +532,12 @@ echo '<tr>
 	</tr>';
 
 $TableHeader = '<tr>
-					<th>'. _('Supplier'). '</th>
-					<th>'. _('Type'). '</th>
-					<th>'. _('Ref'). '</th>
-					<th>'. _('Date'). '</th>
-					<th>'. _('Item'). '</th>
-					<th>'. _('Local Amount'). '<br />'. _('Charged'). '</th>
+					<th>' .  _('Supplier'). '</th>
+					<th>' .  _('Type'). '</th>
+					<th>' .  _('Ref'). '</th>
+					<th>' .  _('Date'). '</th>
+					<th>' .  _('Item'). '</th>
+					<th>' .  _('Local Amount'). '<br />' .  _('Charged'). '</th>
 				</tr>';
 
 echo  $TableHeader;
@@ -571,7 +571,7 @@ while ($myrow=DB_fetch_array($ChargesResult)) {
 }
 
 echo '<tr>
-		<td colspan="5" class="number"><b>'. _('Total Charges Against Shipment Items'). ':</b></td>
+		<td colspan="5" class="number"><b>' .  _('Total Charges Against Shipment Items'). ':</b></td>
 		<td class="number">' . locale_number_format($TotalItemShipmentChgs,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 	</tr>';
 
@@ -605,15 +605,15 @@ $ChargesResult = DB_query($sql,$db);
 
 echo '<table cellpadding="2" class="selection">';
 echo '<tr>
-		<th colspan="6"><h3>'._('General Shipment Charges').'</h3></th>
+		<th colspan="6"><h3>' . _('General Shipment Charges') . '</h3></th>
 	</tr>';
 
 $TableHeader = '<tr>
-					<th>'. _('Supplier'). '</th>
-					<th>'. _('Type'). '</th>
-					<th>'. _('Ref'). '</th>
-					<th>'. _('Date'). '</th>
-					<th>'. _('Local Amount'). '<br />'. _('Charged'). '</th>
+					<th>' .  _('Supplier'). '</th>
+					<th>' .  _('Type'). '</th>
+					<th>' .  _('Ref'). '</th>
+					<th>' .  _('Date'). '</th>
+					<th>' .  _('Local Amount'). '<br />' .  _('Charged'). '</th>
 				</tr>';
 
 echo  $TableHeader;
@@ -645,7 +645,7 @@ while ($myrow=DB_fetch_array($ChargesResult)) {
 }
 
 echo '<tr>
-	<td class="number" colspan="4"><b>'. _('Total General Shipment Charges'). ':</b></td>
+	<td class="number" colspan="4"><b>' .  _('Total General Shipment Charges'). ':</b></td>
 	<td class="number">' . locale_number_format($TotalGeneralShipmentChgs,$_SESSION['CompanyRecord']['decimalplaces']) . '</td></tr>';
 
 echo '</table>';
@@ -664,8 +664,8 @@ if ( isset($_GET['Close'])) { /* Only an opportunity to confirm user wishes to c
 		if ($_SESSION['WeightedAverageCosting']==0){
 		/* We are standard costing - so show the option to update costs - under W. Avg cost updates are implicit */
 			echo _('Update Standard Costs') .':<select name="UpdateCost">
-					<option selected="selected" value="Yes">'. _('Yes') . '</option>
-					<option value="No">'. _('No') . '</option>
+					<option selected="selected" value="Yes">' .  _('Yes') . '</option>
+					<option value="No">' .  _('No') . '</option>
 					</select>';
 		}
 	echo '<br />

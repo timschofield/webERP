@@ -67,7 +67,7 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 
 	echo '<table class="selection">
 			<tr>
-				<th colspan="4"><h3>'._('Order Header Details For Order No').' '.$_GET['OrderNumber'].'</h3></th>
+				<th colspan="4"><h3>' . _('Order Header Details For Order No').' '.$_GET['OrderNumber'] . '</h3></th>
 			</tr>
 			<tr>
 				<th style="text-align: left">' . _('Customer Code') . ':</th>
@@ -122,8 +122,8 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 				<td class="OddTableRows">' . $myrow['freightcost'] . '</td>
 			</tr>
 			<tr>
-				<th style="text-align: left">'._('Comments'). ': </th>
-				<td colspan="3">'.$myrow['comments'] . '</td>
+				<th style="text-align: left">' . _('Comments'). ': </th>
+				<td colspan="3">' . $myrow['comments'] . '</td>
 			</tr>
 			</table>';
 }
@@ -162,7 +162,7 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 		echo '<br />
 			<table class="selection">
 			<tr>
-				<th colspan="9"><h3>'._('Order Line Details For Order No').' '.$_GET['OrderNumber'].'</h3></th>
+				<th colspan="9"><h3>' . _('Order Line Details For Order No').' '.$_GET['OrderNumber'] . '</h3></th>
 			</tr>
 			<tr>
 				<th>' . _('Item Code') . '</th>

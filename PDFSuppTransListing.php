@@ -18,7 +18,7 @@ if (!isset($_POST['Date'])){
 	 include ('includes/header.inc');
 
 	echo '<div class="centre"><p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' '
-		. _('Supplier Transaction Listing').'</p></div>';
+		. _('Supplier Transaction Listing') . '</p></div>';
 
 	if ($InputError==1){
 		prnMsg($msg,'error');

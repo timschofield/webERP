@@ -9,7 +9,7 @@ $Title = _('Discount Categories Maintenance');
 $ViewTopic= "SalesOrders";
 $BookMark = "DiscountMatrix";
 include('includes/header.inc');
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p><br />';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
 
 if (isset($_POST['stockID'])) {
 	$_POST['StockID']=$_POST['stockID'];
@@ -74,7 +74,7 @@ if (isset($_POST['SelectChoice'])) {
 	$sql = "SELECT DISTINCT discountcategory FROM stockmaster WHERE discountcategory <>''";
 	$result = DB_query($sql, $db);
 	if (DB_num_rows($result) > 0) {
-		echo '<table class="selection"><tr><td>'. _('Discount Category Code') .': </td>';
+		echo '<table class="selection"><tr><td>' .  _('Discount Category Code') .': </td>';
 
 		echo '<td><select name="DiscCat" onchange="ReloadForm(update.select)">';
 
@@ -104,20 +104,20 @@ if (isset($_POST['SelectChoice'])) {
 	if (isset($_POST['ChooseOption']) and $_POST['ChooseOption']==1) {
 		echo '<table class="selection">
 				<tr>
-					<td>'. _('Discount Category Code') .':</td>
+					<td>' .  _('Discount Category Code') .':</td>
 					<td>';
 
 		if (isset($_POST['DiscCat'])) {
 			echo '<input type="text" required="required" name="DiscountCategory" pattern="[0-9a-zA-Z_]*" title="' . _('Enter the discount category up to 2 alpha-numeric characters') . '" maxlength="2" size="2" value="' . $_POST['DiscCat'] .'" /></td>
-				<td>'._('OR') . '</td>
+				<td>' . _('OR') . '</td>
 				<td></td>
-				<td>'._('OR').'</td>
+				<td>' . _('OR') . '</td>
 				</tr>';
 		} else {
 			echo '<input type="text" name="DiscountCategory" required="required" name="DiscountCategory" pattern="[0-9a-zA-Z_]*" title="' . _('Enter the discount category up to 2 alpha-numeric characters') . '" maxlength="2" size="2" /></td>
 				<td>' ._('OR') . '</td>
 				<td></td>
-				<td>'._('OR') . '</td>
+				<td>' . _('OR') . '</td>
 				</tr>';
 		}
 
@@ -131,9 +131,9 @@ if (isset($_POST['SelectChoice'])) {
 			$_POST['PartDesc']='';
 		}
 		echo '<tr>
-				<td>'. _('Enter Stock Code') .':</td>
+				<td>' .  _('Enter Stock Code') .':</td>
 				<td><input type="text" name="StockID" name="DiscountCategory" pattern="[0-9a-zA-Z_]*" title="' . _('Enter the stock code of the item in this discount category up to 20 alpha-numeric characters') . '"  size="20" maxlength="20" value="' . $_POST['StockID'] . '" /></td>
-				<td>'._('Partial code') . ':</td>
+				<td>' . _('Partial code') . ':</td>
 				<td><input type="text" name="PartID" pattern="[0-9a-zA-Z_]*" title="' . _('Enter a portion of the item code only alpha-numeric characters') . '" size="10" maxlength="10" value="' . $_POST['PartID'] . '" /></td>
 				<td>' . _('Partial description') . ':</td>
 				<td><input type="text" name="PartDesc" size="10" value="' . $_POST['PartDesc'] .'" maxlength="10" /></td>
@@ -166,16 +166,16 @@ if (isset($_POST['SelectChoice'])) {
 	} else {
 		echo '<table class="selection">
 				<tr>
-				<td>'._('Assign discount category').'</td>';
+				<td>' . _('Assign discount category') . '</td>';
 		echo '<td><input type="text" required="required" name="DiscountCategory" pattern="[0-9a-zA-Z_]*" title="' . _('Enter the discount category up to 2 alpha-numeric characters') . '"  maxlength="2" size="2" /></td>';
-		echo '<td>'._('to all items in stock category').'</td>';
+		echo '<td>' . _('to all items in stock category') . '</td>';
 		$sql = "SELECT categoryid,
 				categorydescription
 				FROM stockcategory";
 		$result = DB_query($sql, $db);
 		echo '<td><select name="stockcategory">';
 		while ($myrow=DB_fetch_array($result)) {
-			echo '<option value="'.$myrow['categoryid'].'">'.$myrow['categorydescription'].'</option>';
+			echo '<option value="'.$myrow['categoryid'].'">' . $myrow['categorydescription'] . '</option>';
 		}
 		echo '</select></td></tr></table>';
 		echo '<br /><div class="centre"><input type="submit" name="SubmitCategory" value="'. _('Update Items') .'" /></div>';
@@ -209,8 +209,8 @@ if (isset($_POST['SelectChoice'])) {
 
 		echo '<br /><table class="selection">';
 		echo '<tr>
-			<th>'. _('Discount Category') .'</th>
-			<th>'. _('Item') .'</th></tr>';
+			<th>' .  _('Discount Category')  . '</th>
+			<th>' .  _('Item')  . '</th></tr>';
 
 		$k=0; //row colour counter
 
@@ -226,7 +226,7 @@ if (isset($_POST['SelectChoice'])) {
 
 			printf('<td>%s</td>
 					<td>%s - %s</td>
-					<td><a href="%s" onclick="return confirm(\'' . _('Are you sure you wish to delete this discount category?') . '\');">'. _('Delete') .'</a></td>
+					<td><a href="%s" onclick="return confirm(\'' . _('Are you sure you wish to delete this discount category?') . '\');">' .  _('Delete')  . '</a></td>
 					</tr>',
 					$myrow['discountcategory'],
 					$myrow['stockid'],
@@ -250,10 +250,10 @@ if (!isset($_POST['SelectChoice'])) {
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">';
 	echo '<tr>
-			<td>'._('Update discount category for').'</td>
+			<td>' . _('Update discount category for') . '</td>
 			<td><select name="ChooseOption" onchange="ReloadForm(choose.SelectChoice)">
-				<option value="1">'._('a single stock item').'</option>
-				<option value="2">'._('a complete stock category').'</option>
+				<option value="1">' . _('a single stock item') . '</option>
+				<option value="2">' . _('a complete stock category') . '</option>
 				</select></td>
 		</tr>
 		</table>

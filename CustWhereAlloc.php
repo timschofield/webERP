@@ -35,7 +35,7 @@ if ($_POST['TransType']==10){
 echo '</select></td>';
 
 if (!isset($_POST['TransNo'])) {$_POST['TransNo']='';}
-echo '<td>'._('Transaction Number').':</td>
+echo '<td>' . _('Transaction Number').':</td>
 		<td><input tabindex="2" type="text" class="number" name="TransNo"  required="required" maxlength="10" size="10" value="'. $_POST['TransNo'] . '" /></td>
 	</tr>
 	</table>
@@ -102,7 +102,7 @@ if (isset($_POST['ShowResults']) AND $_POST['TransNo']!=''){
 			echo '<tr>
 					<th colspan="6">
 					<div class="centre">
-						<b>'._('Allocations made against invoice number') . ' ' . $_POST['TransNo'] . '<br />'._('Transaction Total').': '. locale_number_format($myrow['totamt'],$CurrDecimalPlaces) . ' ' . $CurrCode . '</b>
+						<b>' . _('Allocations made against invoice number') . ' ' . $_POST['TransNo'] . '<br />' . _('Transaction Total').': '. locale_number_format($myrow['totamt'],$CurrDecimalPlaces) . ' ' . $CurrCode . '</b>
 					</div>
 					</th>
 				</tr>';
@@ -153,7 +153,7 @@ if (isset($_POST['ShowResults']) AND $_POST['TransNo']!=''){
 			}
 			//end of while loop
 			echo '<tr>
-					<td colspan="5" class="number">'._('Total allocated').'</td>
+					<td colspan="5" class="number">' . _('Total allocated') . '</td>
 					<td class="number">' . locale_number_format($AllocsTotal,$CurrDecimalPlaces) . '</td>
 				</tr>
 				</table>';

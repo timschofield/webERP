@@ -13,19 +13,19 @@ function SimpleTextLine($key) {
 	 * given in the object $key
 	 */
 	$FontSizes=FontSizes();
-	echo '<td class="number">'._('Font Size').' = '.'</td><td><select name="'.$key['id'].'FontSize">';
+	echo '<td class="number">' . _('Font Size').' = ' . '</td><td><select name="'.$key['id'].'FontSize">';
 	foreach ($FontSizes as $FontSize) {
 		if ($FontSize==$key->FontSize) {
-			echo '<option selected="selected" value="'.$FontSize.'">'.$FontSize.'</option>';
+			echo '<option selected="selected" value="'.$FontSize.'">' . $FontSize . '</option>';
 		} else {
-			echo '<option value="'.$FontSize.'">'.$FontSize.'</option>';
+			echo '<option value="'.$FontSize.'">' . $FontSize . '</option>';
 		}
 	}
 	echo '</select></td>';
 	/* Display the X co-ordinate (mm from the left hand side of page) */
-	echo '<td class="number">'._('x').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'x" size="4" maxlength="4" value="'.$key->x.'" /></td>';
+	echo '<td class="number">' . _('x').' = ' . '</td><td><input type="text" class="number" name="'.$key['id'].'x" size="4" maxlength="4" value="'.$key->x.'" /></td>';
 	/* Display the Y co-ordinate (mm from the top of the page) */
-	echo '<td class="number">'._('y').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'y" size="4" maxlength="4" value="'.$key->y.'" /></td>';
+	echo '<td class="number">' . _('y').' = ' . '</td><td><input type="text" class="number" name="'.$key['id'].'y" size="4" maxlength="4" value="'.$key->y.'" /></td>';
 }
 function MultiTextLine($key) {
 	/* Displays a table row containing the attributes for a
@@ -33,21 +33,21 @@ function MultiTextLine($key) {
 	 * given in the object $key
 	 */
 	$FontSizes=FontSizes();
-	echo '<td class="number">'._('Font Size').' = '.'</td><td><select name="'.$key['id'].'FontSize">';
+	echo '<td class="number">' . _('Font Size').' = ' . '</td><td><select name="'.$key['id'].'FontSize">';
 	foreach ($FontSizes as $FontSize) {
 		if ($FontSize==$key->FontSize) {
-			echo '<option selected="selected" value="'.$FontSize.'">'.$FontSize.'</option>';
+			echo '<option selected="selected" value="'.$FontSize.'">' . $FontSize . '</option>';
 		} else {
-			echo '<option value="'.$FontSize.'">'.$FontSize.'</option>';
+			echo '<option value="'.$FontSize.'">' . $FontSize . '</option>';
 		}
 	}
 	echo '</select></td>';
 	/* Display the length of the field in mm */
-	echo '<td class="number">'._('Length').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'Length" size="4" maxlength="4" value="'.$key->Length.'" /></td></tr><tr>';
+	echo '<td class="number">' . _('Length').' = ' . '</td><td><input type="text" class="number" name="'.$key['id'].'Length" size="4" maxlength="4" value="'.$key->Length.'" /></td></tr><tr>';
 	/* Display the X co-ordinate (mm from the left hand side of page) */
-	echo '<td class="number">'._('x').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'x" size="4" maxlength="4" value="'.$key->x.'" /></td>';
+	echo '<td class="number">' . _('x').' = ' . '</td><td><input type="text" class="number" name="'.$key['id'].'x" size="4" maxlength="4" value="'.$key->x.'" /></td>';
 	/* Display the Y co-ordinate (mm from the top of the page) */
-	echo '<td class="number">'._('y').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'y" size="4" maxlength="4" value="'.$key->y.'" /></td>';
+	echo '<td class="number">' . _('y').' = ' . '</td><td><input type="text" class="number" name="'.$key['id'].'y" size="4" maxlength="4" value="'.$key->y.'" /></td>';
 }
 function DataTextLine($key) {
 	/* Displays a table row containing the attributes for a
@@ -55,19 +55,19 @@ function DataTextLine($key) {
 	 * given in the object $key
 	 */
 	$FontSizes=FontSizes();
-	echo '<td class="number">'._('Font Size').' = '.'</td><td><select name="'.$key['id'].'FontSize">';
+	echo '<td class="number">' . _('Font Size').' = ' . '</td><td><select name="'.$key['id'].'FontSize">';
 	foreach ($FontSizes as $FontSize) {
 		if ($FontSize==$key->FontSize) {
-			echo '<option selected="selected" value="'.$FontSize.'">'.$FontSize.'</option>';
+			echo '<option selected="selected" value="'.$FontSize.'">' . $FontSize . '</option>';
 		} else {
-			echo '<option value="'.$FontSize.'">'.$FontSize.'</option>';
+			echo '<option value="'.$FontSize.'">' . $FontSize . '</option>';
 		}
 	}
 	echo '</select></td>';
 	/* Display the length of the field in mm */
-	echo '<td class="number">'._('Length').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'Length" size="4" maxlength="4" value="'.$key->Length.'" /></td>';
+	echo '<td class="number">' . _('Length').' = ' . '</td><td><input type="text" class="number" name="'.$key['id'].'Length" size="4" maxlength="4" value="'.$key->Length.'" /></td>';
 	/* Display the X co-ordinate (mm from the left hand side of page) */
-	echo '<td class="number">'._('x').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'x" size="4" maxlength="4" value="'.$key->x.'" /></td>';
+	echo '<td class="number">' . _('x').' = ' . '</td><td><input type="text" class="number" name="'.$key['id'].'x" size="4" maxlength="4" value="'.$key->x.'" /></td>';
 }
 /* If the user has chosen to either preview the form, or
  * save it then we first have to get the POST values into a
@@ -118,27 +118,27 @@ if (isset($_POST['preview']) or isset($_POST['save'])) {
 		if (is_writable($PathPrefix.'companies/'.$_SESSION['DatabaseName'].'/FormDesigns/'.$_POST['FormName'])) {
 			$FormDesign->asXML($PathPrefix.'companies/'.$_SESSION['DatabaseName'].'/FormDesigns/'.$_POST['FormName']);
 		} else {
-			prnMsg( _('The web server does not have write permissions on the file ').'<br />'.$PathPrefix.'companies/'.$_SESSION['DatabaseName'].'/FormDesigns/'.$_POST['FormName'].
-				'<br />'._('Your changes cannot be saved').'<br />'._('See your system administrator to correct this problem'), 'error');
+			prnMsg( _('The web server does not have write permissions on the file ') . '<br />' . $PathPrefix.'companies/'.$_SESSION['DatabaseName'].'/FormDesigns/'.$_POST['FormName'].
+				'<br />' . _('Your changes cannot be saved') . '<br />' . _('See your system administrator to correct this problem'), 'error');
 		}
 	}
 }
 /* If no form has been selected to edit, then offer a
  * drop down list of possible forms */
 if (empty($_POST['FormName'])) {
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p><br />';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
 	echo '<form method="post" id="ChooseForm" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' . SID . '">';
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table><tr>';
-	echo '<td>'. _('Select the form to edit') .'</td><td><select name="FormName">';
+	echo '<td>' .  _('Select the form to edit')  . '</td><td><select name="FormName">';
 	/* Iterate throght the appropriate companies FormDesigns/ directory
 	 * and extract the form name from each of the xml files found */
 	if ($handle = opendir($PathPrefix.'companies/'.$_SESSION['DatabaseName'].'/FormDesigns/')) {
 		while (false !== ($file = readdir($handle))) {
 			if ($file[0]!='.') {
 				$FormDesign = simplexml_load_file($PathPrefix.'companies/'.$_SESSION['DatabaseName'].'/FormDesigns/'.$file);
-				echo '<option value="'.$file.'">'.$FormDesign['name'].'</option>';
+				echo '<option value="'.$file.'">' . $FormDesign['name'] . '</option>';
 			}
 		}
 		closedir($handle);
@@ -155,17 +155,17 @@ if (empty($_POST['FormName'])) {
 if (empty($_POST['preview'])) {
 	$FormDesign = simplexml_load_file($PathPrefix.'companies/'.$_SESSION['DatabaseName'].'/FormDesigns/'.$_POST['FormName']);
 }
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/reports.png" title="' . _('Form Design') . '" alt="" />' . ' ' . _('Form Design').'<br />'. $FormDesign['name'] . '</p>';
-echo '<div class="page_help_text">' . _('Enter the changes that you want in the form layout below.') .'<br /> '. _('All measurements are in points') . '.</div><br />';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/reports.png" title="' . _('Form Design') . '" alt="" />' . ' ' . _('Form Design') . '<br />' .  $FormDesign['name'] . '</p>';
+echo '<div class="page_help_text">' . _('Enter the changes that you want in the form layout below.')  . '<br /> '. _('All measurements are in points') . '.</div><br />';
 $Papers=array('A4_Landscape', 'A4_Portrait', 'A5_Landscape', 'A5_Portrait', 'A3_Landscape', 'A3_Portrait', 'letter_Portrait', 'letter_Landscape', 'legal_Portrait', 'legal_Landscape'); // Possible paper sizes/orientations
 echo '<form method="post" id="Form" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' . SID . '">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<input name="FormName" type="hidden" value="'.$_POST['FormName'].'" />';
 echo '<table width="95%" border="1">'; //Start of outer table
-echo '<tr><th style="width:33%">'._('Form Name').'<input type="text" name="formname" value="'.$FormDesign['name'].'" /></th>';
+echo '<tr><th style="width:33%">' . _('Form Name') . '<input type="text" name="formname" value="'.$FormDesign['name'].'" /></th>';
 /* Select the paper size/orientation */
-echo '<th style="width:33%">'._('Paper Size').'<select name="PaperSize">';
+echo '<th style="width:33%">' . _('Paper Size') . '<select name="PaperSize">';
 foreach ($Papers as $Paper) {
 	if (mb_substr($Paper,-8)=='Portrait') {
 		$PaperValue=mb_substr($Paper,0,mb_strlen($Paper)-9);
@@ -173,30 +173,30 @@ foreach ($Papers as $Paper) {
 		$PaperValue=$Paper;
 	}
 	if ($PaperValue==$FormDesign->PaperSize) {
-		echo '<option selected="selected" value="'.$PaperValue.'">'.$Paper.'</option>';
+		echo '<option selected="selected" value="'.$PaperValue.'">' . $Paper . '</option>';
 	} else {
-		echo '<option value="'.$PaperValue.'">'.$Paper.'</option>';
+		echo '<option value="'.$PaperValue.'">' . $Paper . '</option>';
 	}
 }
 echo '</select></th>';
 /* and the standard line height for the form */
-echo '<th style="width:33%">'._('Line Height').'<input type="text" class="number" name="LineHeight" size="3" maxlength="3" value="'.$FormDesign->LineHeight.'" /></th></tr><tr>';
+echo '<th style="width:33%">' . _('Line Height') . '<input type="text" class="number" name="LineHeight" size="3" maxlength="3" value="'.$FormDesign->LineHeight.'" /></th></tr><tr>';
 $counter=1; // Count how many sub tables are in the row
 foreach ($FormDesign as $key) {
 	switch ($key['type']) {
 		case 'image':
-			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="8">'.$key['name'].'</th></tr>';
+			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="8">' . $key['name'] . '</th></tr>';
             echo '<tr>';
-			echo '<td class="number">'._('x').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'x" size="4" maxlength="4" value="'.$key->x.'" /></td>';
-			echo '<td class="number">'._('y').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'y" size="4" maxlength="4" value="'.$key->y.'" /></td>';
-			echo '<td class="number">'._('Width').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'width" size="4" maxlength="4" value="'.$key->width.'" /></td>';
-			echo '<td class="number">'._('Height').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'height" size="4" maxlength="4" value="'.$key->height.'" /></td>';
+			echo '<td class="number">' . _('x').' = ' . '</td><td><input type="text" class="number" name="'.$key['id'].'x" size="4" maxlength="4" value="'.$key->x.'" /></td>';
+			echo '<td class="number">' . _('y').' = ' . '</td><td><input type="text" class="number" name="'.$key['id'].'y" size="4" maxlength="4" value="'.$key->y.'" /></td>';
+			echo '<td class="number">' . _('Width').' = ' . '</td><td><input type="text" class="number" name="'.$key['id'].'width" size="4" maxlength="4" value="'.$key->width.'" /></td>';
+			echo '<td class="number">' . _('Height').' = ' . '</td><td><input type="text" class="number" name="'.$key['id'].'height" size="4" maxlength="4" value="'.$key->height.'" /></td>';
             echo '</tr>';
 			echo '</table></td>';
 			$counter=$counter+1;
 			break;
 		case 'SimpleText':
-			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="6">'.$key['name'].'</th></tr>'."\n";
+			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="6">' . $key['name'] . '</th></tr>' . "\n";
             echo '<tr>';
 			SimpleTextLine($key);
             echo '</tr>';
@@ -204,7 +204,7 @@ foreach ($FormDesign as $key) {
 			$counter=$counter+1;
 			break;
 		case 'MultiLineText':
-			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="4">'.$key['name'].'</th></tr>'."\n";
+			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="4">' . $key['name'] . '</th></tr>' . "\n";
             echo '<tr>';
 			MultiTextLine($key);
             echo '</tr>';
@@ -212,25 +212,25 @@ foreach ($FormDesign as $key) {
 			$counter=$counter+1;
 			break;
 		case 'ElementArray':
-			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="7">'.$key['name'].'</th></tr>'."\n";
+			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="7">' . $key['name'] . '</th></tr>' . "\n";
 			foreach ($key as $subkey) {
 				if ($subkey['type']=='SimpleText') {
 					echo '<tr>';
-					echo '<td>'.$subkey['name'].'</td>';
+					echo '<td>' . $subkey['name'] . '</td>';
 					SimpleTextLine($subkey);
 					echo '</tr>';
 				} else if ($subkey['type']=='MultiLineText') {
 					echo '<tr>';
-					echo '<td>'.$subkey['name'].'</td>';
+					echo '<td>' . $subkey['name'] . '</td>';
 					MultiTextLine($subkey);
 					echo '</tr>';
 				} else {
 					echo '<tr>';
 					if ($subkey['type']=='DataText') {
-						echo '<td>'.$subkey['name'].'</td>';
+						echo '<td>' . $subkey['name'] . '</td>';
 						DataTextLine($subkey);
 					} elseif ($subkey['type']=='StartLine') {
-						echo '<td colspan="3">'.$subkey['name'].' = '.'</td><td><input type="text" class="number" name="StartLine" size="4" maxlength="4" value="'.$key->y.'" /></td>';
+						echo '<td colspan="3">' . $subkey['name'].' = ' . '</td><td><input type="text" class="number" name="StartLine" size="4" maxlength="4" value="'.$key->y.'" /></td>';
 					}
 					echo '</tr>';
 				}
@@ -239,35 +239,35 @@ foreach ($FormDesign as $key) {
 			$counter=$counter+1;
 			break;
 		case 'CurvedRectangle':
-			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="6">'.$key['name'].'</th></tr>';
+			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="6">' . $key['name'] . '</th></tr>';
             echo '<tr>';
-			echo '<td class="number">'._('x').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'x" size="4" maxlength="4" value="'.$key->x.'" /></td>';
-			echo '<td class="number">'._('y').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'y" size="4" maxlength="4" value="'.$key->y.'" /></td>';
-			echo '<td class="number">'._('Width').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'width" size="4" maxlength="4" value="'.$key->width.'" /></td></tr><tr>';
-			echo '<td class="number">'._('Height').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'height" size="4" maxlength="4" value="'.$key->height.'" /></td>';
-			echo '<td class="number">'._('Radius').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'radius" size="3" maxlength="3" value="'.$key->radius.'" /></td>';
+			echo '<td class="number">' . _('x').' = ' . '</td><td><input type="text" class="number" name="'.$key['id'].'x" size="4" maxlength="4" value="'.$key->x.'" /></td>';
+			echo '<td class="number">' . _('y').' = ' . '</td><td><input type="text" class="number" name="'.$key['id'].'y" size="4" maxlength="4" value="'.$key->y.'" /></td>';
+			echo '<td class="number">' . _('Width').' = ' . '</td><td><input type="text" class="number" name="'.$key['id'].'width" size="4" maxlength="4" value="'.$key->width.'" /></td></tr><tr>';
+			echo '<td class="number">' . _('Height').' = ' . '</td><td><input type="text" class="number" name="'.$key['id'].'height" size="4" maxlength="4" value="'.$key->height.'" /></td>';
+			echo '<td class="number">' . _('Radius').' = ' . '</td><td><input type="text" class="number" name="'.$key['id'].'radius" size="3" maxlength="3" value="'.$key->radius.'" /></td>';
             echo '</tr>';
 			echo '</table></td>';
 			$counter=$counter+1;
 			break;
 		case 'Rectangle':
-			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="6">'.$key['name'].'</th></tr>';
+			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="6">' . $key['name'] . '</th></tr>';
             echo '<tr>';
-			echo '<td class="number">'._('x').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'x" size="4" maxlength="4" value="'.$key->x.'" /></td>';
-			echo '<td class="number">'._('y').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'y" size="4" maxlength="4" value="'.$key->y.'" /></td></tr><tr>';
-			echo '<td class="number">'._('Width').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'width" size="4" maxlength="4" value="'.$key->width.'" /></td>';
-			echo '<td class="number">'._('Height').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'height" size="4" maxlength="4" value="'.$key->height.'" /></td>';
+			echo '<td class="number">' . _('x').' = ' . '</td><td><input type="text" class="number" name="'.$key['id'].'x" size="4" maxlength="4" value="'.$key->x.'" /></td>';
+			echo '<td class="number">' . _('y').' = ' . '</td><td><input type="text" class="number" name="'.$key['id'].'y" size="4" maxlength="4" value="'.$key->y.'" /></td></tr><tr>';
+			echo '<td class="number">' . _('Width').' = ' . '</td><td><input type="text" class="number" name="'.$key['id'].'width" size="4" maxlength="4" value="'.$key->width.'" /></td>';
+			echo '<td class="number">' . _('Height').' = ' . '</td><td><input type="text" class="number" name="'.$key['id'].'height" size="4" maxlength="4" value="'.$key->height.'" /></td>';
             echo '</tr>';
 			echo '</table></td>';
 			$counter=$counter+1;
 			break;
 		case 'Line':
-			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="6">'.$key['name'].'</th></tr>';
+			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="6">' . $key['name'] . '</th></tr>';
             echo '<tr>';
-			echo '<td class="number">'._('Start x co-ordinate').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'startx" size="4" maxlength="4" value="'.$key->startx.'" /></td>';
-			echo '<td class="number">'._('Start y co-ordinate').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'starty" size="4" maxlength="4" value="'.$key->starty.'" /></td></tr><tr>';
-			echo '<td class="number">'._('End x co-ordinate').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'endx" size="4" maxlength="4" value="'.$key->endx.'" /></td>';
-			echo '<td class="number">'._('End y co-ordinate').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'endy" size="4" maxlength="4" value="'.$key->endy.'" /></td>';
+			echo '<td class="number">' . _('Start x co-ordinate').' = ' . '</td><td><input type="text" class="number" name="'.$key['id'].'startx" size="4" maxlength="4" value="'.$key->startx.'" /></td>';
+			echo '<td class="number">' . _('Start y co-ordinate').' = ' . '</td><td><input type="text" class="number" name="'.$key['id'].'starty" size="4" maxlength="4" value="'.$key->starty.'" /></td></tr><tr>';
+			echo '<td class="number">' . _('End x co-ordinate').' = ' . '</td><td><input type="text" class="number" name="'.$key['id'].'endx" size="4" maxlength="4" value="'.$key->endx.'" /></td>';
+			echo '<td class="number">' . _('End y co-ordinate').' = ' . '</td><td><input type="text" class="number" name="'.$key['id'].'endy" size="4" maxlength="4" value="'.$key->endy.'" /></td>';
             echo '</tr>';
 			echo '</table></td>';
 			$counter=$counter+1;

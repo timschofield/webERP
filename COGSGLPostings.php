@@ -16,7 +16,7 @@ if (isset($_POST['SelectedCOGSPostingID'])){
 	$SelectedCOGSPostingID=$_GET['SelectedCOGSPostingID'];
 }
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p><br />';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
 
 if (isset($_POST['submit'])) {
 
@@ -110,7 +110,7 @@ if (!isset($SelectedCOGSPostingID)) {
 					<td>%s</td>
 					<td>%s</td>
 					<td><a href="%sSelectedCOGSPostingID=%s">' . _('Edit') . '</a></td>
-					<td><a href="%sSelectedCOGSPostingID=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this COGS GL posting record?') . '\');">'. _('Delete') . '</a></td></tr>',
+					<td><a href="%sSelectedCOGSPostingID=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this COGS GL posting record?') . '\');">' .  _('Delete') . '</a></td></tr>',
 					$myrow['area'],
 					$myrow['stkcat'],
 					$myrow['salestype'],

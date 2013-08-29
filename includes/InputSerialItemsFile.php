@@ -55,14 +55,14 @@ foreach ($LineItem->SerialItems as $Bundle){
 /*Display the totals and rule off before allowing new entries */
 if ($LineItem->Serialised==1){
 	echo '<tr>
-			<td class="number"><b>'.  _('Total Quantity'). ': ' . locale_number_format($TotalQuantity,$LineItem->DecimalPlaces) . '</b></td>
+			<td class="number"><b>' .   _('Total Quantity'). ': ' . locale_number_format($TotalQuantity,$LineItem->DecimalPlaces) . '</b></td>
 		</tr>
 		<tr>
 			<td><hr /></td>
 		</tr>';
 } else {
 	echo '<tr>
-			<td class="number"><b>'. _('Total Quantity'). ':</b></td>
+			<td class="number"><b>' .  _('Total Quantity'). ':</b></td>
 			<td class="number"><b>' . locale_number_format($TotalQuantity,$LineItem->DecimalPlaces) . '</b></td>
 		</tr>
 		<tr>
@@ -88,11 +88,11 @@ if ((isset($_FILES['ImportFile']) AND $_FILES['ImportFile']['name'] == '') AND $
 	exit();
 }
 if ((isset($_FILES['ImportFile']) AND $_FILES['ImportFile']['error'] != '') AND !isset($_SESSION['CurImportFile'])){
-		echo _('There was a problem with the uploaded file') . '. ' . _('We received').':<br />'.
-				 _('Name').':'.$_FILES['ImportFile']['name'].'<br />'.
-				 _('Size').':'.locale_number_format($_FILES['ImportFile']['size']/1024,2).'kb<br />'.
-				 _('Type').':'.$_FILES['ImportFile']['type'].'<br />';
-		echo '<br />'._('Error was').' '.$_FILES['ImportFile']['error'].'<br />';
+		echo _('There was a problem with the uploaded file') . '. ' . _('We received').':<br />' . 
+				 _('Name').':'.$_FILES['ImportFile']['name'] . '<br />' . 
+				 _('Size').':'.locale_number_format($_FILES['ImportFile']['size']/1024,2).'kb<br />' . 
+				 _('Type').':'.$_FILES['ImportFile']['type'] . '<br />';
+		echo '<br />' . _('Error was').' '.$_FILES['ImportFile']['error'] . '<br />';
 		$LineItem->SerialItemsValid=false;
 		echo '</td></tr></table><br />';
 		include('includes/footer.inc');
@@ -141,23 +141,23 @@ if ($ShowFileInfo){
 
 	echo '<br /><table class="selection" width="33%">';
 	echo '<tr>
-			<td>'._('Name').':</td>
-			<td>'.$_SESSION['CurImportFile']['name'].'</td>
+			<td>' . _('Name').':</td>
+			<td>' . $_SESSION['CurImportFile']['name'] . '</td>
 		</tr>
 		<tr>
-			<td>'. _('Size') .':</td>
+			<td>' .  _('Size') .':</td>
 			<td>' . locale_number_format($_SESSION['CurImportFile']['size']/1024,4) . 'kb</td>
 		</tr>
 		<tr>
-			<td>'. _('Type') .':</td>
+			<td>' .  _('Type') .':</td>
 			<td>' . $_SESSION['CurImportFile']['type'] . '</td>
 		</tr>
 		<tr>
-			<td>'. _('TempName') .':</td>
+			<td>' .  _('TempName') .':</td>
 			<td>' . basename($_SESSION['CurImportFile']['tmp_name']) . '</td>
 		</tr>
 		<tr>
-			<td>'. _('Status') .':</td>
+			<td>' .  _('Status') .':</td>
 			<td>' . ($invalid_imports==0?getMsg(_('Valid'),'success'):getMsg(_('Invalid'),'error')) . '</td>
 		</tr>
 	</table><br />';
@@ -174,7 +174,7 @@ if ($invalid_imports>0 AND !$_SESSION['CurImportFile']['Processed']){
 			<input type="hidden" name="StockID" value="' . $StockID . '" />
 			<input type="hidden" name="EntryType" value="FILE" />
 			</form>
-			<p>'. _('1st 10 Lines of File'). '....</p>
+			<p>' .  _('1st 10 Lines of File'). '....</p>
 			<hr width="15%">
 		<pre>';
 

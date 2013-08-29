@@ -32,7 +32,7 @@ $DefaultPeriodDate = Date ('Y-m-d', Mktime(0,0,0,Date('m'),0,Date('Y')));
 /*Show a form to allow input of criteria for the report */
 echo '<table>
 	        <tr>
-	         <td>'._('Selected Accounts') . ':</td>
+	         <td>' . _('Selected Accounts') . ':</td>
 	         <td><select name="Account[]" size="12" multiple="multiple">';
 $sql = "SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode";
 $AccountsResult = DB_query($sql,$db);
@@ -47,7 +47,7 @@ while ($myrow=DB_fetch_array($AccountsResult,$db)){
 }
 echo '</select></td>';
 
-echo '<td>'._('For Period range').':</td>
+echo '<td>' . _('For Period range').':</td>
 		<td><select name="Period[]" size="12" multiple="multiple">';
 $sql = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC";
 $Periods = DB_query($sql,$db);

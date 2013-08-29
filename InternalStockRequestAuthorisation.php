@@ -84,16 +84,16 @@ while ($myrow=DB_fetch_array($result)) {
 			<td colspan="5" align="left">
 				<table class="selection" align="left">
 				<tr>
-					<th>'._('Product').'</th>
-					<th>'._('Quantity Required').'</th>
-					<th>'._('Units').'</th>
+					<th>' . _('Product') . '</th>
+					<th>' . _('Quantity Required') . '</th>
+					<th>' . _('Units') . '</th>
 				</tr>';
 
 	while ($linerow=DB_fetch_array($lineresult)) {
 		echo '<tr>
-				<td>'.$linerow['description'].'</td>
-				<td class="number">'.locale_number_format($linerow['quantity'],$linerow['decimalplaces']).'</td>
-				<td>'.$linerow['uom'].'</td>
+				<td>' . $linerow['description'] . '</td>
+				<td class="number">' . locale_number_format($linerow['quantity'],$linerow['decimalplaces']) . '</td>
+				<td>' . $linerow['uom'] . '</td>
 			</tr>';
 	} // end while order line detail
 	echo '</table>

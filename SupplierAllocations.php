@@ -453,9 +453,9 @@ if (isset($_POST['AllocTrans'])){
 	  	$TableHeader = '<tr>
 							<th class="ascending">' . _('Type') . '</th>
 				 			<th class="ascending">' . _('Trans') . '<br />' . _('Number') . '</th>
-							<th class="ascending">' . _('Trans') .'<br />' . _('Date') . '</th>
+							<th class="ascending">' . _('Trans')  . '<br />' . _('Date') . '</th>
 							<th class="ascending">' . _('Supp') . '<br />' . _('Ref') . '</th>
-							<th class="ascending">' . _('Total') . '<br />' . _('Amount') .'</th>
+							<th class="ascending">' . _('Total') . '<br />' . _('Amount')  . '</th>
 							<th class="ascending">' . _('Yet to') . '<br />' . _('Allocate') . '</th>
 							<th class="ascending">' . _('This') . '<br />' . _('Allocation') . '</th>
 						</tr>';
@@ -563,7 +563,7 @@ if (isset($_POST['AllocTrans'])){
   echo '<table class="selection">';
 
   $TableHeader = '<tr>
-					<th>' . _('Trans Type') .'</th>
+					<th>' . _('Trans Type')  . '</th>
 					<th>' . _('Supplier') . '</th>
 					<th>' . _('Number') . '</th>
 					<th>' . _('Date') .  '</th>
@@ -592,7 +592,7 @@ if (isset($_POST['AllocTrans'])){
 			<td>%s</td>
 			<td class="number">%s</td>
 			<td class="number">%s</td>
-			<td><a href="%sAllocTrans=%s">' . _('Allocate') .'</a></td>
+			<td><a href="%sAllocTrans=%s">' . _('Allocate')  . '</a></td>
 			</tr>',
 			$myrow['typename'],
 			$myrow['suppname'],

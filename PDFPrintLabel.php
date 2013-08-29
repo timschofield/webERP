@@ -43,7 +43,7 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 
 	if (DB_error_no($db) !=0) {
 		prnMsg( _('The Price Labels could not be retrieved by the SQL because'). ' - ' . DB_error_msg($db), 'error');
-		echo '<br /><a href="' .$RootPath .'/index.php">'.  _('Back to the menu'). '</a>';
+		echo '<br /><a href="' .$RootPath .'/index.php">' .   _('Back to the menu'). '</a>';
 		if ($debug==1){
 			prnMsg(_('For debugging purposes the SQL used was:') . $SQL,'error');
 		}
@@ -52,7 +52,7 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 	}
 	if (DB_num_rows($LabelsResult)==0){
 		prnMsg(_('There were no price labels to print out for the category specified'),'warn');
-		echo '<br /><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">'. _('Back').'</a>';
+		echo '<br /><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' .  _('Back') . '</a>';
 		include('includes/footer.inc');
 		exit;
 	}
@@ -289,7 +289,7 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 		echo '</select></td>
 			</tr>
 			<tr>
-				<td>'. _('From Inventory Category Code') .':</td>
+				<td>' .  _('From Inventory Category Code') .':</td>
 				<td><select name="FromCriteria">';
 
 		$CatResult= DB_query("SELECT categoryid, categorydescription FROM stockcategory ORDER BY categoryid",$db);

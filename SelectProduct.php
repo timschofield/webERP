@@ -40,7 +40,7 @@ $SQL = "SELECT categoryid,
 		ORDER BY categorydescription";
 $result1 = DB_query($SQL, $db);
 if (DB_num_rows($result1) == 0) {
-	echo '<p class="bad">' . _('Problem Report') . ':<br />' . _('There are no stock categories currently defined please use the link below to set them up').'</p>';
+	echo '<p class="bad">' . _('Problem Report') . ':<br />' . _('There are no stock categories currently defined please use the link below to set them up') . '</p>';
 	echo '<br /><a href="' . $RootPath . '/StockCategories.php">' . _('Define Stock Categories') . '</a>';
 	exit;
 }
@@ -471,7 +471,7 @@ if ($Its_A_Kitset_Assembly_Or_Dummy == false) {
 				} else {
 					$EOQ = $myrow['eoq'];
 				}
-				echo '<a href="' . $RootPath . '/PO_Header.php?NewOrder=Yes' . '&amp;SelectedSupplier=' . $SuppRow['supplierid'] . '&amp;StockID=' . $StockID . '&amp;Quantity='.$EOQ.'&amp;LeadTime='.$SuppRow['leadtime'].'">'. _('Purchase this Item from') . ' ' . $SuppRow['suppname'] . '</a>
+				echo '<a href="' . $RootPath . '/PO_Header.php?NewOrder=Yes' . '&amp;SelectedSupplier=' . $SuppRow['supplierid'] . '&amp;StockID=' . $StockID . '&amp;Quantity='.$EOQ.'&amp;LeadTime='.$SuppRow['leadtime'].'">' .  _('Purchase this Item from') . ' ' . $SuppRow['suppname'] . '</a>
 				<br />';
 				$LastSupplierShown = $SuppRow['supplierid'];
 			}
@@ -530,15 +530,15 @@ if (!isset($_POST['StockCat'])) {
 	$_POST['StockCat'] ='';
 }
 if ($_POST['StockCat'] == 'All') {
-	echo '<option selected="selected" value="All">' . _('All').'</option>';
+	echo '<option selected="selected" value="All">' . _('All') . '</option>';
 } else {
-	echo '<option value="All">' . _('All').'</option>';
+	echo '<option value="All">' . _('All') . '</option>';
 }
 while ($myrow1 = DB_fetch_array($result1)) {
 	if ($myrow1['categoryid'] == $_POST['StockCat']) {
-		echo '<option selected="selected" value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'].'</option>';
+		echo '<option selected="selected" value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
 	} else {
-		echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'].'</option>';
+		echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
 	}
 }
 echo '</select></td>';

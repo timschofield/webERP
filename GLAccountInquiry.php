@@ -45,7 +45,7 @@ $DefaultPeriodDate = Date ('Y-m-d', Mktime(0,0,0,Date('m'),0,Date('Y')));
 /*Show a form to allow input of criteria for TB to show */
 echo '<table class="selection">
 		<tr>
-			<td>'._('Account').':</td>
+			<td>' . _('Account').':</td>
 			<td><select name="Account">';
 
 $sql = "SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode";
@@ -84,7 +84,7 @@ echo '</select></td>
 	</tr>';
 // End select tag
 echo '<tr>
-		<td>'._('For Period range').':</td>
+		<td>' . _('For Period range').':</td>
 		<td><select name="Period[]" size="12" multiple="multiple">';
 
 $sql = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC";
@@ -165,7 +165,7 @@ if (isset($_POST['Show'])){
 	echo '<br />
 		<table class="selection">
 		<tr>
-			<th colspan="8"><b>' ._('Transactions for account').' '.$SelectedAccount. ' - '. $SelectedAccountName.'</b></th>
+			<th colspan="8"><b>' ._('Transactions for account').' '.$SelectedAccount. ' - '. $SelectedAccountName . '</b></th>
 		</tr>';
 
 	$TableHeader = '<tr>
@@ -333,7 +333,7 @@ if (isset($ShowIntegrityReport) AND $ShowIntegrityReport==True AND $_POST['tag']
 		$IntegrityReport='';
 	}
 	prnMsg( _('There are differences between the sum of the transactions and the recorded movements in the ChartDetails table') . '. ' . _('A log of the account differences for the periods report shows below'),'warn');
-	echo '<p>'.$IntegrityReport;
+	echo '<p>' . $IntegrityReport;
 }
 include('includes/footer.inc');
 ?>

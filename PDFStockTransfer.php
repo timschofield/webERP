@@ -19,13 +19,13 @@ if (!isset($_GET['TransferNo'])){
 	//open a form for entering a transfer number
 		$Title = _('Print Stock Transfer');
 		include('includes/header.inc');
-		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print Transfer Note') . '" alt="" />' . ' ' . $Title.'</p><br />';
+		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print Transfer Note') . '" alt="" />' . ' ' . $Title . '</p><br />';
 		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" id="form">';
         echo '<div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<table class="selection">
 			<tr>
-				<td>'._('Print Stock Transfer Note').' : '.'</td>
+				<td>' . _('Print Stock Transfer Note').' : ' . '</td>
 				<td><input type="text" class="number"  name="TransferNo" maxlength="10" size="11" /></td>
 			</tr>
 			</table>';
@@ -72,7 +72,7 @@ if (DB_num_rows($result) == 0){
 	$Title = _('Print Stock Transfer - Error');
 	include ('includes/header.inc');
 	prnMsg(_('There was no transfer found with number') . ': ' . $_GET['TransferNo'], 'error');
-	echo '<a href="PDFStockTransfer.php">' . _('Try Again') .'</a>';
+	echo '<a href="PDFStockTransfer.php">' . _('Try Again')  . '</a>';
 	include ('includes/footer.inc');
 	exit;
 }

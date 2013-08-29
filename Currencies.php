@@ -28,7 +28,7 @@ if (isset($Errors)) {
 
 $Errors = array();
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p>
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>
 	<br />';
 
 if (isset($_POST['submit'])) {
@@ -298,10 +298,10 @@ or deletion of the records*/
 			<th>' . _('Country') . '</th>
 			<th>' . _('Hundredths Name') . '</th>
 			<th>' . _('Decimal Places') . '</th>
-			<th>' . _('Use in webCART') .'</th>
+			<th>' . _('Use in webCART')  . '</th>
 			<th>' . _('Exchange Rate') . '</th>
 			<th>' . _('1 / Ex Rate') . '</th>
-			<th>' . _('Ex Rate - ECB') .'</th>
+			<th>' . _('Ex Rate - ECB')  . '</th>
 		</tr>';
 
 	$k=0; //row colour counter
@@ -395,7 +395,7 @@ or deletion of the records*/
 
 
 if (isset($SelectedCurrency)) {
-	echo '<div class="centre"><a href="' .htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8')  . '">'._('Show all currency definitions').'</a></div>';
+	echo '<div class="centre"><a href="' .htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8')  . '">' . _('Show all currency definitions') . '</a></div>';
 }
 
 echo '<br />';
@@ -454,7 +454,7 @@ if (!isset($_GET['delete'])) {
 	}
 
 	echo '<tr>
-			<td>'._('Country').':</td>
+			<td>' . _('Country').':</td>
 			<td>';
 	if (!isset($_POST['Country'])) {
 		$_POST['Country']='';
@@ -462,7 +462,7 @@ if (!isset($_GET['delete'])) {
 	echo '<input ' . (in_array('Country',$Errors) ?  'class="inputerror"' : '' ) . ' type="text" name="Country" size="30" maxlength="50" value="' . $_POST['Country'] . '" /></td>
 		</tr>
 		<tr>
-			<td>'._('Hundredths Name').':</td>
+			<td>' . _('Hundredths Name').':</td>
 			<td>';
 	if (!isset($_POST['HundredsName'])) {
 		$_POST['HundredsName']='';
@@ -470,7 +470,7 @@ if (!isset($_GET['delete'])) {
 	echo '<input ' . (in_array('HundredsName',$Errors) ?  'class="inputerror"' : '' ) . ' type="text" name="HundredsName" size="10" maxlength="15" value="'. $_POST['HundredsName'].'" /></td>
 		</tr>
 		<tr>
-			<td>'._('Decimal Places to Display').':</td>
+			<td>' . _('Decimal Places to Display').':</td>
 			<td>';
 	if (!isset($_POST['DecimalPlaces'])) {
 		$_POST['DecimalPlaces']='0';
@@ -478,7 +478,7 @@ if (!isset($_GET['delete'])) {
 	echo '<input ' . (in_array('DecimalPlaces',$Errors) ?  'class="integer inputerror"' : 'class="integer"' ) . ' type="number" required="required" name="DecimalPlaces" size="2" maxlength="2" value="' . $_POST['DecimalPlaces'].'" /></td>
 		</tr>
 		<tr>
-			<td>'._('Exchange Rate').':</td>
+			<td>' . _('Exchange Rate').':</td>
 			<td>';
 	if (!isset($_POST['ExchangeRate'])) {
 		$_POST['ExchangeRate']='1';

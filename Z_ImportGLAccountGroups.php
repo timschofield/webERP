@@ -23,7 +23,7 @@ if (isset($_POST['update'])) {
    	$FieldNames = explode(',', $buffer);
    	$SuccessStyle='style="color:green; font-weight:bold"';
    	$FailureStyle='style="color:red; font-weight:bold"';
-   	echo '<table><tr><th>'. _('Account Group') .'</th><th>'. _('Result') . '</th><th>'. _('Comments') .'</th></tr>';
+   	echo '<table><tr><th>' .  _('Account Group')  . '</th><th>' .  _('Result') . '</th><th>' .  _('Comments')  . '</th></tr>';
    	$successes=0;
    	$failures=0;
  	while (!feof ($fp)) {
@@ -45,12 +45,12 @@ if (isset($_POST['update'])) {
 			$response = $client->send($msg);
 			$answer = php_xmlrpc_decode($response->value());
 			if ($answer[0]==0) {
-				echo '<tr '.$SuccessStyle.'><td>'.$AccountGroupDetails['groupname'].'</td><td>'.'Success'.'</td></tr>';
+				echo '<tr '.$SuccessStyle.'><td>' . $AccountGroupDetails['groupname'] . '</td><td>' . 'Success' . '</td></tr>';
 				$successes++;
 			} else {
-				echo '<tr '.$FailureStyle.'><td>'.$AccountGroupDetails['groupname'].'</td><td>'.'Failure'.'</td><td>';
+				echo '<tr '.$FailureStyle.'><td>' . $AccountGroupDetails['groupname'] . '</td><td>' . 'Failure' . '</td><td>';
 				for ($i=0; $i<sizeof($answer); $i++) {
-					echo 'Error no '.$answer[$i].' - '.$ErrorDescription[$answer[$i]].'<br />';
+					echo 'Error no '.$answer[$i].' - '.$ErrorDescription[$answer[$i]] . '<br />';
 				}
 				echo '</td></tr>';
 				$failures++;
@@ -58,8 +58,8 @@ if (isset($_POST['update'])) {
     	}
 		unset($AccountDetails);
 	}
-	echo '<tr><td>'.$successes._(' records successfully imported') .'</td></tr>';
-	echo '<tr><td>'.$failures._(' records failed to import') .'</td></tr>';
+	echo '<tr><td>' . $successes._(' records successfully imported')  . '</td></tr>';
+	echo '<tr><td>' . $failures._(' records failed to import')  . '</td></tr>';
 	echo '</table>';
 	fclose ($fp);
 } else {
@@ -69,7 +69,7 @@ if (isset($_POST['update'])) {
 	echo '<form id="ItemForm" enctype="multipart/form-data" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' .SID .'">';
     echo '<div class="centre">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table><tr><td>'._('File to import').'</td>'.
+	echo '<table><tr><td>' . _('File to import') . '</td>' . 
 		'<td><input type="file" id="ImportFile" name="ImportFile" /></td></tr></table>';
 	echo '<div class="centre"><input type="submit" name="update" value="Process" /></div>';
 	echo '</div>

@@ -232,7 +232,7 @@ if (isset($_POST['PrintPDF'])) {
 	include('includes/header.inc');
 
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' .
-		_('Search') . '" alt="" />' . ' ' . $Title.'</p><br />';
+		_('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
         <div>
         <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />

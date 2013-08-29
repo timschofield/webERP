@@ -69,9 +69,9 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
     echo '<tr>
             <th>' . _('Code') . '</th>
             <th>' . _('Description') . '</th>
-            <th>' . _('Total Invoiced').'<br />'._('At Location') . '</th>
-            <th>' . _('On Hand') .'<br />'._('At All Locations') . '</th>
-            <th>' . _('On Hand') .'<br />' ._('At Location') . '</th>
+            <th>' . _('Total Invoiced') . '<br />' . _('At Location') . '</th>
+            <th>' . _('On Hand')  . '<br />' . _('At All Locations') . '</th>
+            <th>' . _('On Hand')  . '<br />' ._('At Location') . '</th>
             <th>' . _('Reorder Level') . '</th>
             <th>' . _('Bin Location') . '</th>
         </tr>';
@@ -114,11 +114,11 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 		$TotQtyResult = DB_query($SqlOH,$db);
 		$TotQtyRow = DB_fetch_array($TotQtyResult);
 
-		echo $myrow['stockid'].'</td>
-			<td>'.$myrow['description'].'</td>
-			<td class="number">'.locale_number_format($SalesRow['qtyinvoiced'],$myrow['decimalplaces']).'</td>
-			<td class="number">'.locale_number_format($TotQtyRow['qty'],$myrow['decimalplaces']).'</td>
-			<td class="number">'.locale_number_format($myrow['quantity'],$myrow['decimalplaces']).'</td>
+		echo $myrow['stockid'] . '</td>
+			<td>' . $myrow['description'] . '</td>
+			<td class="number">' . locale_number_format($SalesRow['qtyinvoiced'],$myrow['decimalplaces']) . '</td>
+			<td class="number">' . locale_number_format($TotQtyRow['qty'],$myrow['decimalplaces']) . '</td>
+			<td class="number">' . locale_number_format($myrow['quantity'],$myrow['decimalplaces']) . '</td>
 			<td><input type="text" class="number" name="ReorderLevel' . $i .'" maxlength="10" size="10" value="'. locale_number_format($myrow['reorderlevel'],0) .'" />
 				<input type="hidden" name="StockID' . $i . '" value="' . $myrow['stockid'] . '" /></td>
 			<td><input type="text" name="BinLocation' . $i .'" maxlength="10" size="10" value="'. $myrow['bin'] .'" /></td>
@@ -181,8 +181,8 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 	echo '<tr>
 			<td>' . _('Order By') . ':</td>
 			<td><select name="Sequence">
-				<option value="1">'. _('Total Invoiced') . '</option>
-				<option value="2">'. _('Item Code') . '</option>
+				<option value="1">' .  _('Total Invoiced') . '</option>
+				<option value="2">' .  _('Item Code') . '</option>
 				</select></td>
 		</tr>';
 	echo '</table>

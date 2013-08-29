@@ -123,14 +123,14 @@ if (!isset($_POST['Show'])) {
 				</tr>
 				<tr>
 					<th>' . ('Date') . '</th>
-					<th>'._('Transaction type').'</th>
-					<th>'._('Type').'</th>
-					<th>'._('Reference').'</th>
-					<th>'._('Amount in').' '.$BankDetailRow['currcode'].'</th>
-					<th>'._('Running Total').' '.$BankDetailRow['currcode'].'</th>
-					<th>'._('Amount in').' '.$_SESSION['CompanyRecord']['currencydefault'].'</th>
-					<th>'._('Running Total').' '.$_SESSION['CompanyRecord']['currencydefault'].'</th>
-					<th>'._('Cleared') . '</th>
+					<th>' . _('Transaction type') . '</th>
+					<th>' . _('Type') . '</th>
+					<th>' . _('Reference') . '</th>
+					<th>' . _('Amount in').' '.$BankDetailRow['currcode'] . '</th>
+					<th>' . _('Running Total').' '.$BankDetailRow['currcode'] . '</th>
+					<th>' . _('Amount in').' '.$_SESSION['CompanyRecord']['currencydefault'] . '</th>
+					<th>' . _('Running Total').' '.$_SESSION['CompanyRecord']['currencydefault'] . '</th>
+					<th>' . _('Cleared') . '</th>
 				</tr>';
 
 		$AccountCurrTotal=0;
@@ -148,10 +148,10 @@ if (!isset($_POST['Show'])) {
                         }
 
 			echo '<tr>
-					<td>'. ConvertSQLDate($myrow['transdate']) . '</td>
-					<td>'.$myrow['typename'].'</td>
-					<td>'.$myrow['banktranstype'].'</td>
-					<td>'.$myrow['ref'].'</td>
+					<td>' .  ConvertSQLDate($myrow['transdate']) . '</td>
+					<td>' . $myrow['typename'] . '</td>
+					<td>' . $myrow['banktranstype'] . '</td>
+					<td>' . $myrow['ref'] . '</td>
 					<td class="number">' . locale_number_format($myrow['amount'],$BankDetailRow['decimalplaces']) . '</td>
 					<td class="number">' . locale_number_format($AccountCurrTotal,$BankDetailRow['decimalplaces']) . '</td>
 					<td class="number">' . locale_number_format($myrow['amount']/$myrow['functionalexrate']/$myrow['exrate'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>

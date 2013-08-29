@@ -268,7 +268,7 @@ if ($ListCount == 0){
 	$Title = _('Print Quotation Error');
 	include('includes/header.inc');
 	prnMsg(_('There were no items on the quotation') . '. ' . _('The quotation cannot be printed'),'info');
-	echo '<br /><a href="' . $RootPath . '/SelectSalesOrder.php?Quotation=Quotes_only">'. _('Print Another Quotation'). '</a>
+	echo '<br /><a href="' . $RootPath . '/SelectSalesOrder.php?Quotation=Quotes_only">' .  _('Print Another Quotation'). '</a>
 			<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 	include('includes/footer.inc');
 	exit;

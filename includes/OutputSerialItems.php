@@ -17,9 +17,9 @@ include ('includes/Add_SerialItemsOut.php');
 global $tableheader;
 /* Link to clear the list and start from scratch */
 $EditLink =  '<br /><div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?EditControlled=true&StockID=' . $LineItem->StockID .
-	'&LineNo=' . $LineNo .'">'. _('Edit'). '</a> | ';
+	'&LineNo=' . $LineNo .'">' .  _('Edit'). '</a> | ';
 $RemoveLink = '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?DELETEALL=YES&StockID=' . $LineItem->StockID .
-	'&LineNo=' . $LineNo .'">'. _('Remove All'). '</a><br /></div>';
+	'&LineNo=' . $LineNo .'">' .  _('Remove All'). '</a><br /></div>';
 $sql="SELECT perishable
 		FROM stockmaster
 		WHERE stockid='".$StockID."'";
@@ -28,25 +28,25 @@ $myrow=DB_fetch_array($result);
 $Perishable=$myrow['perishable'];
 if ($LineItem->Serialised==1){
 	$tableheader .= '<tr>
-						<th>'. _('Serial No').'</th>
+						<th>' .  _('Serial No') . '</th>
 					</tr>';
 	$listtableheader=$tableheader;
 } else if ($LineItem->Serialised==0 and $Perishable==1){
 	$tableheader = '<tr>
-						<th>'. _('Batch/Roll/Bundle'). ' #</th>
-						<th>'. _('Available'). '</th>
-						<th>'. _('Quantity'). '</th>
-						<th>'. _('Expiry Date'). '</th>
+						<th>' .  _('Batch/Roll/Bundle'). ' #</th>
+						<th>' .  _('Available'). '</th>
+						<th>' .  _('Quantity'). '</th>
+						<th>' .  _('Expiry Date'). '</th>
 					</tr>';
 	$listtableheader = '<tr>
-							<th>'. _('Batch/Roll/Bundle'). ' #</th>
-							<th>'. _('Quantity'). '</th>
-							<th>'. _('Expiry Date'). '</th>
+							<th>' .  _('Batch/Roll/Bundle'). ' #</th>
+							<th>' .  _('Quantity'). '</th>
+							<th>' .  _('Expiry Date'). '</th>
 						</tr>';
 } else {
 	$tableheader = '<tr>
-				<th>'. _('Batch/Roll/Bundle'). ' #</th>
-				<th>'. _('Quantity'). '</th>
+				<th>' .  _('Batch/Roll/Bundle'). ' #</th>
+				<th>' .  _('Quantity'). '</th>
 				</tr>';
 	$listtableheader=$tableheader;
 }
@@ -96,7 +96,7 @@ foreach ($LineItem->SerialItems as $Bundle){
 		echo '<td class="number">' . $Bundle->ExpiryDate . '</td>';
 	}
 
-	echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=' . $Bundle->BundleRef . '&StockID=' . $LineItem->StockID . '&LineNo=' . $LineNo .'">'. _('Delete'). '</a></td></tr>';
+	echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=' . $Bundle->BundleRef . '&StockID=' . $LineItem->StockID . '&LineNo=' . $LineNo .'">' .  _('Delete'). '</a></td></tr>';
 
 	$TotalQuantity += $Bundle->BundleQty;
 }
@@ -104,10 +104,10 @@ foreach ($LineItem->SerialItems as $Bundle){
 
 /*Display the totals and rule off before allowing new entries */
 if ($LineItem->Serialised==1){
-	echo '<tr><td class="number"><b>'. _('Total Quantity'). ': ' . locale_number_format($TotalQuantity,$LineItem->DecimalPlaces) . '</b></td></tr>';
+	echo '<tr><td class="number"><b>' .  _('Total Quantity'). ': ' . locale_number_format($TotalQuantity,$LineItem->DecimalPlaces) . '</b></td></tr>';
 } else {
 	echo '<tr>
-			<td class="number"><b>'. _('Total Quantity'). ':</b></td>
+			<td class="number"><b>' .  _('Total Quantity'). ':</b></td>
 			<td class="number"><b>' . locale_number_format($TotalQuantity,$LineItem->DecimalPlaces) . '</b></td>
 		</tr>';
 }
@@ -182,7 +182,7 @@ $RowNumber=0;
 while ($myrow=DB_fetch_array($result)){
 
 	echo '<tr>
-			<td valign="top">'.$myrow['serialno'].'<input type="hidden" name="SerialNo'. ($RowNumber) .'" size="21" value="'.$myrow['serialno'].'" maxlength="20" /></td>';
+			<td valign="top">' . $myrow['serialno'] . '<input type="hidden" name="SerialNo'. ($RowNumber) .'" size="21" value="'.$myrow['serialno'].'" maxlength="20" /></td>';
 
 	/*if the item is controlled not serialised - batch quantity required so just enter bundle refs
 	into the form for entry of quantities manually */
@@ -191,12 +191,12 @@ while ($myrow=DB_fetch_array($result)){
 		echo '<input type="hidden" name="Qty' . ($StartAddingAt+$RowNumber) .'" value="1" /></tr>';
 	} else if ($LineItem->Serialised==0 and $Perishable==1) {
 		if (isset($LineItem->SerialItems[$myrow['serialno']])) {
-			echo '<td class="number">'.locale_number_format($myrow['quantity']-$LineItem->SerialItems[$myrow['serialno']]->BundleQty,$LineItem->DecimalPlaces).'</td>';
+			echo '<td class="number">' . locale_number_format($myrow['quantity']-$LineItem->SerialItems[$myrow['serialno']]->BundleQty,$LineItem->DecimalPlaces) . '</td>';
 		} else {
-			echo '<td class="number">'.locale_number_format($myrow['quantity'],$LineItem->DecimalPlaces).'</td>';
+			echo '<td class="number">' . locale_number_format($myrow['quantity'],$LineItem->DecimalPlaces) . '</td>';
 		}
 		echo '<td><input type="text" class="number" name="Qty' . ($StartAddingAt+$RowNumber) .'" size="11" value="0" maxlength="10" /></td>';
-		echo '<td><input type="hidden" class="date" name="ExpiryDate' . ($StartAddingAt+$RowNumber) .'" size="11" value="'.ConvertSQLDate($myrow['expirationdate']).'" alt="'.$_SESSION['DefaultDateFormat'].'"  maxlength="10" />' . ConvertSQLDate($myrow['expirationdate']).'</td></tr>';
+		echo '<td><input type="hidden" class="date" name="ExpiryDate' . ($StartAddingAt+$RowNumber) .'" size="11" value="'.ConvertSQLDate($myrow['expirationdate']).'" alt="'.$_SESSION['DefaultDateFormat'].'"  maxlength="10" />' . ConvertSQLDate($myrow['expirationdate']) . '</td></tr>';
 	} else {
 		echo '<td><input type="text" class="number" name="Qty' . ($StartAddingAt+$RowNumber) .'" size=11  value="'. locale_number_format($myrow['quantity'],$LineItem->DecimalPlaces).'"  maxlength="10" /></td></tr>';
 	}

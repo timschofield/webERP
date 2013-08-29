@@ -322,7 +322,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 					$AuthMessage = _('You can only authorise up to').' '.$_SESSION['SPL'.$identifier]->SuppCurrCode.' '.$AuthRow['authlevel'] .'.<br />';
 				}
 
-				prnMsg( _('You do not have permission to authorise this purchase order').'.<br />'. _('This order is for').' '. $_SESSION['SPL'.$identifier]->SuppCurrCode . ' '. $_SESSION['SPL'.$identifier]->Order_Value() .'. '. $AuthMessage . _('If you think this is a mistake please contact the systems administrator') . '<br />'. _('The order will be created with a status of pending and will require authorisation'), 'warn');
+				prnMsg( _('You do not have permission to authorise this purchase order').'.<br />' .  _('This order is for').' '. $_SESSION['SPL'.$identifier]->SuppCurrCode . ' '. $_SESSION['SPL'.$identifier]->Order_Value() .'. '. $AuthMessage . _('If you think this is a mistake please contact the systems administrator') . '<br />' .  _('The order will be created with a status of pending and will require authorisation'), 'warn');
 
 				$StatusComment=date($_SESSION['DefaultDateFormat']).' - ' . _('Order Created by') . $UserDetails;
 				$_SESSION['SPL'.$identifier]->Status = 'Pending';

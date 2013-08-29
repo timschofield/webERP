@@ -252,7 +252,7 @@ echo '<tr>
 		<td>' . _('Distribution Period') . ':</td>
 		<td><select name="Period">
 			<option selected="selected" value="weekly">' . _('Weekly') . '</option>
-			<option value="monthly">' . _('Monthly') .'</option>
+			<option value="monthly">' . _('Monthly')  . '</option>
 			</select></td>
 	</tr>
 	<tr>

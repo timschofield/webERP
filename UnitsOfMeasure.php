@@ -183,7 +183,7 @@ if (isset($_POST['Submit'])) {
 
 		echo '<td>' . $myrow[1] . '</td>';
 		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedMeasureID=' . $myrow[0] . '">' . _('Edit') . '</a></td>';
-		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedMeasureID=' . $myrow[0] . '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this unit of measure?') . '\');">' . _('Delete') .'</a></td>';
+		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedMeasureID=' . $myrow[0] . '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this unit of measure?') . '\');">' . _('Delete')  . '</a></td>';
 		echo '</tr>';
 
 	} //END WHILE LIST LOOP

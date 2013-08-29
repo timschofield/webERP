@@ -103,7 +103,7 @@ if (isset($_POST['PrintPDF'])
 	   prnMsg(_('The inventory quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
 	   echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 	   if ($debug==1){
-	      echo '<br />'.$SQL;
+	      echo '<br />' . $SQL;
 	   }
 	   include('includes/footer.inc');
 	   exit;
@@ -213,7 +213,7 @@ if (isset($_POST['PrintPDF'])
 	   		prnMsg( _('The sales order demand quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
 	   		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 	   		if ($debug==1){
-	      			echo '<br />'.$SQL;
+	      			echo '<br />' . $SQL;
 	   		}
 	   		include('includes/footer.inc');
 	   		exit;
@@ -261,7 +261,7 @@ if (isset($_POST['PrintPDF'])
 	   		prnMsg( _('The sales order demand quantities from parent assemblies could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
 	   		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 	   		if ($debug==1){
-	      			echo '<br />'.$SQL;
+	      			echo '<br />' . $SQL;
 	   		}
 	   		include('includes/footer.inc');
 	   		exit;
@@ -376,7 +376,7 @@ if (isset($_POST['PrintPDF'])
 	include('includes/header.inc');
 
 	echo '<p class="page_title_text">
-			<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p>';
+			<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	if (empty($_POST['FromCriteria']) or empty($_POST['ToCriteria'])) {
 
@@ -418,10 +418,10 @@ if (isset($_POST['PrintPDF'])
 		$sql = "SELECT loccode, locationname FROM locations";
 		$LocnResult=DB_query($sql,$db);
 
-		echo '<option value="All">' . _('All Locations').'</option>';
+		echo '<option value="All">' . _('All Locations') . '</option>';
 
 		while ($myrow=DB_fetch_array($LocnResult)){
-			echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'].'</option>';
+			echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		}
 		echo '</select>
 				</td>
@@ -430,18 +430,18 @@ if (isset($_POST['PrintPDF'])
 		echo '<tr>
 				<td>' . _('Stock Planning') . ':</td>
 				<td><select name="NumberMonthsHolding">
-					<option selected="selected" value="1">' . _('One Month MAX') .'</option>
-					<option value="1.5">' . _('One Month and a half MAX') .'</option>
-					<option value="2">' . _('Two Months MAX') .'</option>
-					<option value="2.5">' . _('Two Month and a half MAX') .'</option>
-					<option value="3">' . _('Three Months MAX') .'</option>
-					<option value="4">' . _('Four Months MAX') .'</option>
-					<option value="11">' . _('One Month AVG') .'</option>
-					<option value="11.5">' . _('One Month and a half AVG') .'</option>
-					<option value="12">' . _('Two Months AVG') .'</option>
-					<option value="12.5">' . _('Two Month and a half AVG') .'</option>
-					<option value="13">' . _('Three Months AVG') .'</option>
-					<option value="14">' . _('Four Months AVG') .'</option>
+					<option selected="selected" value="1">' . _('One Month MAX')  . '</option>
+					<option value="1.5">' . _('One Month and a half MAX')  . '</option>
+					<option value="2">' . _('Two Months MAX')  . '</option>
+					<option value="2.5">' . _('Two Month and a half MAX')  . '</option>
+					<option value="3">' . _('Three Months MAX')  . '</option>
+					<option value="4">' . _('Four Months MAX')  . '</option>
+					<option value="11">' . _('One Month AVG')  . '</option>
+					<option value="11.5">' . _('One Month and a half AVG')  . '</option>
+					<option value="12">' . _('Two Months AVG')  . '</option>
+					<option value="12.5">' . _('Two Month and a half AVG')  . '</option>
+					<option value="13">' . _('Three Months AVG')  . '</option>
+					<option value="14">' . _('Four Months AVG')  . '</option>
 					</select>
 				</td>
 		</tr>

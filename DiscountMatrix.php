@@ -13,7 +13,7 @@ if (isset($Errors)) {
 $Errors = array();
 $i=1;
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p><br />';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
 
 if (isset($_POST['submit'])) {
 
@@ -113,7 +113,7 @@ $sql = "SELECT DISTINCT discountcategory FROM stockmaster WHERE discountcategory
 $result = DB_query($sql, $db);
 if (DB_num_rows($result) > 0) {
 	echo '<tr>
-			<td>'. _('Discount Category Code') .': </td>
+			<td>' .  _('Discount Category Code') .': </td>
 			<td><select name="DiscountCategory">';
 
 	while ($myrow = DB_fetch_array($result)){

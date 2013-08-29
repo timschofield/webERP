@@ -217,10 +217,10 @@ if ($_SESSION['RequireCustomerSelection'] ==1
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' .
-		_('Search') . '" alt="" />' . ' ' . _('Select Customer For Credit Note').'</p>';
+		_('Search') . '" alt="" />' . ' ' . _('Select Customer For Credit Note') . '</p>';
 
 	echo '<table cellpadding="3" class="selection">';
-	echo '<tr><th colspan="5"><h3> ' . _('Customer Selection') .'</h3></th></tr>';
+	echo '<tr><th colspan="5"><h3> ' . _('Customer Selection')  . '</h3></th></tr>';
 	echo '<tr>
 			<td>' . _('Enter text in the customer name') . ':</td>
 			<td><input type="text" name="Keywords" size="20" maxlength="25" /></td>
@@ -261,7 +261,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			}
 
 			if ($LastCustomer != $myrow['name']) {
-				echo '<td>'.$myrow['name'].'</td>';
+				echo '<td>' . $myrow['name'] . '</td>';
 			} else {
 				echo '<td></td>';
 			}
@@ -288,7 +288,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
    first add a header to show who we are making a credit note for */
 
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' .
-		_('Search') . '" alt="" />' . ' ' . $_SESSION['CreditItems'.$identifier]->CustomerName  . ' - ' . $_SESSION['CreditItems'.$identifier]->DeliverTo.'</p>';
+		_('Search') . '" alt="" />' . ' ' . $_SESSION['CreditItems'.$identifier]->CustomerName  . ' - ' . $_SESSION['CreditItems'.$identifier]->DeliverTo . '</p>';
 
 	if (isset($_POST['SalesPerson'])){
 		$_SESSION['CreditItems' . $identifier]->SalesPerson = $_POST['SalesPerson'];
@@ -795,7 +795,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		echo '<tr>
 				<td colspan="5"></td>';
 
-		echo '<td colspan="2" class="number">'. _('Credit Freight').'</td>
+		echo '<td colspan="2" class="number">' .  _('Credit Freight') . '</td>
 			<td><input type="text" class="number" size="6" maxlength="6" name="ChargeFreightCost" value="' . locale_number_format($_SESSION['CreditItems'.$identifier]->FreightCost,$_SESSION['CreditItems'.$identifier]->CurrDecimalPlaces) . '" /></td>';
 
 		$FreightTaxTotal =0; //initialise tax total
@@ -1020,7 +1020,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			  $TableHeader = '<tr>
 								<th>' . _('Code') . '</th>
 					  			<th>' . _('Description') . '</th>
-								<th>' . _('Units') .'</th>
+								<th>' . _('Units')  . '</th>
 							</tr>';
 			  echo $TableHeader;
 

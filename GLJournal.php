@@ -125,7 +125,7 @@ if (isset($_POST['CommitBatch']) AND $_POST['CommitBatch']==_('Accept and Proces
 
 	/*Set up a newy in case user wishes to enter another */
 	echo '<br />
-			<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?NewJournal=Yes">'._('Enter Another General Ledger Journal').'</a>';
+			<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?NewJournal=Yes">' . _('Enter Another General Ledger Journal') . '</a>';
 	/*And post the journal too */
 	include ('includes/GLPostings.inc');
 	include ('includes/footer.inc');
@@ -261,16 +261,16 @@ echo '<table>
         <tr>
         <td colspan="5"><table class="selection">
 						<tr>
-							<td>'._('Date to Process Journal') . ':</td>
+							<td>' . _('Date to Process Journal') . ':</td>
 							<td><input type="text" required="required" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="JournalProcessDate" maxlength="10" size="11" value="' . $_SESSION['JournalDetail']->JnlDate . '" /></td>
 							<td>' . _('Type') . ':</td>
 							<td><select name="JournalType">';
 
 if ($_POST['JournalType'] == 'Reversing'){
-	echo '<option selected="selected" value = "Reversing">' . _('Reversing').'</option>';
-	echo '<option value = "Normal">' . _('Normal').'</option>';
+	echo '<option selected="selected" value = "Reversing">' . _('Reversing') . '</option>';
+	echo '<option value = "Normal">' . _('Normal') . '</option>';
 } else {
-	echo '<option value = "Reversing">' . _('Reversing').'</option>';
+	echo '<option value = "Reversing">' . _('Reversing') . '</option>';
 	echo '<option selected="selected" value = "Normal">' . _('Normal') . '</option>';
 }
 
@@ -311,7 +311,7 @@ $result=DB_query($SQL,$db);
 echo '<option value="0">0 - ' . _('None') . '</option>';
 while ($myrow=DB_fetch_array($result)){
 	if (isset($_POST['tag']) and $_POST['tag']==$myrow['tagref']){
-		echo '<option selected="selected" value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription'].'</option>';
+		echo '<option selected="selected" value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription'] . '</option>';
 	} else {
 		echo '<option value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription'] . '</option>';
 	}
@@ -322,7 +322,7 @@ echo '</select></td>';
 if (!isset($_POST['GLManualCode'])) {
 	$_POST['GLManualCode']='';
 }
-echo '<td><input class="number" type="text" name="GLManualCode" maxlength="12" size="12" onchange="inArray(this.value, GLCode.options,'.	"'".'The account code '."'".'+ this.value+ '."'".' doesnt exist'."'".')" value="'. $_POST['GLManualCode'] .'"  /></td>';
+echo '<td><input class="number" type="text" autofocus="autofocus" name="GLManualCode" maxlength="12" size="12" onchange="inArray(this.value, GLCode.options,'.	"'".'The account code '."'".'+ this.value+ '."'".' doesnt exist'."'".')" value="'. $_POST['GLManualCode'] .'"  /></td>';
 
 $sql="SELECT accountcode,
 			accountname
@@ -336,7 +336,7 @@ while ($myrow=DB_fetch_array($result)){
 	if (isset($_POST['tag']) and $_POST['tag']==$myrow['accountcode']){
 		echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'].' - ' .htmlspecialchars($myrow['accountname'], ENT_QUOTES,'UTF-8', false) . '</option>';
 	} else {
-		echo '<option value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'].' - ' .htmlspecialchars($myrow['accountname'], ENT_QUOTES,'UTF-8', false) .'</option>';
+		echo '<option value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'].' - ' .htmlspecialchars($myrow['accountname'], ENT_QUOTES,'UTF-8', false)  . '</option>';
 	}
 }
 echo '</select></td>';
@@ -363,7 +363,7 @@ echo '</tr>
 	<tr>
 		<td></td>
 		<td></td>
-		<th>'. _('Narrative'). '</th>
+		<th>' .  _('Narrative'). '</th>
 	</tr>
 	<tr>
 		<th></th>
@@ -383,11 +383,11 @@ echo '<table class="selection" width="85%">
 			<th colspan="6"><div class="centre"><h2>' . _('Journal Summary') . '</h2></div></th>
 		</tr>
 		<tr>
-			<th>'._('GL Tag').'</th>
-			<th>'._('GL Account').'</th>
-			<th>'._('Debit').'</th>
-			<th>'._('Credit').'</th>
-			<th>'._('Narrative').'</th>
+			<th>' . _('GL Tag') . '</th>
+			<th>' . _('GL Account') . '</th>
+			<th>' . _('Debit') . '</th>
+			<th>' . _('Credit') . '</th>
+			<th>' . _('Narrative') . '</th>
 		</tr>';
 
 $DebitTotal=0;
@@ -426,7 +426,7 @@ foreach ($_SESSION['JournalDetail']->GLEntries as $JournalItem) {
 	}
 
 	echo '<td>' . $JournalItem->Narrative  . '</td>
-		<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=' . $JournalItem->ID . '">' . _('Delete').'</a></td>
+		<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=' . $JournalItem->ID . '">' . _('Delete') . '</a></td>
 	</tr>';
 }
 
@@ -461,12 +461,7 @@ if (abs($_SESSION['JournalDetail']->JournalTotal)<0.001 AND $_SESSION['JournalDe
 	prnMsg(_('The journal must balance ie debits equal to credits before it can be processed'),'warn');
 }
 
-if (!isset($_GET['NewJournal']) or $_GET['NewJournal']=='') {
-	echo '<script  type="text/javascript">defaultControl(document.form.GLManualCode);</script>';
-} else {
-	echo '<script  type="text/javascript">defaultControl(document.form.JournalProcessDate);</script>';
-}
-echo '</div>';
-echo '</form>';
+echo '</div>
+	</form>';
 include('includes/footer.inc');
 ?>

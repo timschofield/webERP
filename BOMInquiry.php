@@ -183,7 +183,7 @@ if (isset($StockID) and $StockID!=""){
 	if (DB_num_rows($BOMResult)==0){
 		prnMsg(_('The bill of material for this part is not set up') . ' - ' . _('there are no components defined for it'),'warn');
 	} else {
-		echo '<a href="'.$RootPath.'/index.php">'._('Return to Main Menu').'</a>';
+		echo '<a href="'.$RootPath.'/index.php">' . _('Return to Main Menu') . '</a>';
 		echo '<p class="page_title_text">
 				<img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'
 				</p>

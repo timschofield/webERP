@@ -15,7 +15,7 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 	$result = DB_query("SELECT * FROM loctransfers WHERE reference='" . $_POST['Trf_ID'] . "'",$db);
 	if (DB_num_rows($result)!=0){
 		$InputError = true;
-		$ErrorMessage = _('This transaction has already been entered') . '. ' . _('Please start over now').'<br />';
+		$ErrorMessage = _('This transaction has already been entered') . '. ' . _('Please start over now') . '<br />';
 		unset($_POST['submit']);
 		unset($_POST['EnterMoreItems']);
 		for ($i=$_POST['LinesCounter']-10;$i<$_POST['LinesCounter'];$i++){
@@ -122,12 +122,12 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 					DB_free_result( $result );
 					if (!is_numeric(filter_number_format($_POST['StockQTY' . $i]))){
 						$InputError = True;
-						$ErrorMessage .= _('The quantity entered of'). ' ' . $_POST['StockQTY' . $i] . ' '. _('for part code'). ' ' . $_POST['StockID' . $i] . ' '. _('is not numeric') . '. ' . _('The quantity entered for transfers is expected to be numeric').'<br />';
+						$ErrorMessage .= _('The quantity entered of'). ' ' . $_POST['StockQTY' . $i] . ' '. _('for part code'). ' ' . $_POST['StockID' . $i] . ' '. _('is not numeric') . '. ' . _('The quantity entered for transfers is expected to be numeric') . '<br />';
 						$_POST['LinesCounter'] -= 10;
 					}
 					if (filter_number_format($_POST['StockQTY' . $i]) <= 0){
 						$InputError = True;
-						$ErrorMessage .= _('The quantity entered for').' '. $_POST['StockID' . $i] . ' ' . _('is less than or equal to 0') . '. ' . _('Please correct this or remove the item').'<br />';
+						$ErrorMessage .= _('The quantity entered for').' '. $_POST['StockID' . $i] . ' ' . _('is less than or equal to 0') . '. ' . _('Please correct this or remove the item') . '<br />';
 						$_POST['LinesCounter'] -= 10;
 					}
 					if ($_SESSION['ProhibitNegativeStock']==1){
@@ -158,7 +158,7 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 						$StockIDAccQty[$_POST['StockID'.$i]] += filter_number_format($_POST['StockQTY' . $i]);
 						if($myrow[0] < $StockIDAccQty[$_POST['StockID'.$i]]){
 							$InputError = True;
-							$ErrorMessage .=_('The part code entered of'). ' ' . $_POST['StockID'.$i] . ' '._('does not have enough stock available for transter due to accumulated quantity is over quantity on hand.').'<br />';
+							$ErrorMessage .=_('The part code entered of'). ' ' . $_POST['StockID'.$i] . ' '._('does not have enough stock available for transter due to accumulated quantity is over quantity on hand.') . '<br />';
 							$_POST['LinesCounter'] -= 10;
 						}
 					} else {
@@ -173,7 +173,7 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 
 		if ($TotalItems == 0){
 			$InputError = True;
-			$ErrorMessage .= _('You must enter at least 1 Stock Item to transfer').'<br />';
+			$ErrorMessage .= _('You must enter at least 1 Stock Item to transfer') . '<br />';
 		}
 
 	/*Ship location and Receive location are different */
@@ -218,7 +218,7 @@ if(isset($_POST['Submit']) AND $InputError==False){
 	DB_Txn_Commit($db);
 
 	prnMsg( _('The inventory transfer records have been created successfully'),'success');
-	echo '<p><a href="'.$RootPath.'/PDFStockLocTransfer.php?TransferNo=' . $_POST['Trf_ID'] . '">'. _('Print the Transfer Docket'). '</a></p>';
+	echo '<p><a href="'.$RootPath.'/PDFStockLocTransfer.php?TransferNo=' . $_POST['Trf_ID'] . '">' .  _('Print the Transfer Docket'). '</a></p>';
 	include('includes/footer.inc');
 
 } else {
@@ -249,7 +249,7 @@ if(isset($_POST['Submit']) AND $InputError==False){
 
 	echo '<table class="selection">';
 	echo '<tr>
-			<th colspan="4"><input type="hidden" name="Trf_ID" value="' . $Trf_ID . '" /><h3>'. _('Inventory Location Transfer Shipment Reference').' # '. $Trf_ID. '</h3></th>
+			<th colspan="4"><input type="hidden" name="Trf_ID" value="' . $Trf_ID . '" /><h3>' .  _('Inventory Location Transfer Shipment Reference').' # '. $Trf_ID. '</h3></th>
 		</tr>';
 
 	$sql = "SELECT loccode, locationname FROM locations ORDER BY locationname";
@@ -276,7 +276,7 @@ if(isset($_POST['Submit']) AND $InputError==False){
 	echo '</select></td>';
 
 	DB_data_seek($resultStkLocs,0); //go back to the start of the locations result
-	echo '<td>'._('To Stock Location').':</td>
+	echo '<td>' . _('To Stock Location').':</td>
 			<td><select name="ToStockLocation">';
 	while ($myrow=DB_fetch_array($resultStkLocs)){
 		if (isset($_POST['ToStockLocation'])){
@@ -303,8 +303,8 @@ if(isset($_POST['Submit']) AND $InputError==False){
 	echo '<br /><table class="selection">';
 
 	$TableHeader = '<tr>
-						<th>'. _('Item Code'). '</th>
-						<th>'. _('Quantity'). '</th>
+						<th>' .  _('Item Code'). '</th>
+						<th>' .  _('Quantity'). '</th>
 						<th>' . _('Clear All') . ':<input type="checkbox" name="ClearAll" /></th>
 					</tr>';
 	echo $TableHeader;

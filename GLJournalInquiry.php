@@ -8,7 +8,7 @@ $BookMark = 'GLJournalInquiry';
 
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (!isset($_POST['Show'])) {
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
@@ -24,8 +24,8 @@ if (!isset($_POST['Show'])) {
 
 	echo '<tr>
 			<td>' . _('Journal Number Range') . ' (' . _('Between') . ' 1 ' . _('and') . ' ' . $MaxJournalNumberUsed . ')</td>
-			<td>' . _('From') . ':'. '<input type="text" class="number" name="NumberFrom" size="10" maxlength="11" value="1" />'.'</td>
-			<td>' . _('To') . ':'. '<input type="text" class="number" name="NumberTo" size="10" maxlength="11" value="' . $MaxJournalNumberUsed . '" />'.'</td>
+			<td>' . _('From') . ':'. '<input type="text" class="number" name="NumberFrom" size="10" maxlength="11" value="1" />' . '</td>
+			<td>' . _('To') . ':'. '<input type="text" class="number" name="NumberTo" size="10" maxlength="11" value="' . $MaxJournalNumberUsed . '" />' . '</td>
 		</tr>';
 
 	$sql = "SELECT MIN(trandate) AS fromdate,
@@ -78,12 +78,12 @@ if (!isset($_POST['Show'])) {
 		echo '<table class="selection">';
 		echo '<tr>
 				<th>' . ('Date') . '</th>
-				<th>'._('Journal Number').'</th>
-				<th>'._('Account Code').'</th>
-				<th>'._('Account Description').'</th>
-				<th>'._('Narrative').'</th>
-				<th>'._('Amount').' '.$_SESSION['CompanyRecord']['currencydefault'].'</th>
-				<th>'._('Tag').'</th>
+				<th>' . _('Journal Number') . '</th>
+				<th>' . _('Account Code') . '</th>
+				<th>' . _('Account Description') . '</th>
+				<th>' . _('Narrative') . '</th>
+				<th>' . _('Amount').' '.$_SESSION['CompanyRecord']['currencydefault'] . '</th>
+				<th>' . _('Tag') . '</th>
 			</tr>';
 
 		$LastJournal = 0;
@@ -96,21 +96,21 @@ if (!isset($_POST['Show'])) {
 
 			if ($myrow['typeno']!=$LastJournal) {
 				echo '<tr><td colspan="8"</td></tr><tr>
-					<td>'. ConvertSQLDate($myrow['trandate']) . '</td>
-					<td class="number">'.$myrow['typeno'].'</td>';
+					<td>' .  ConvertSQLDate($myrow['trandate']) . '</td>
+					<td class="number">' . $myrow['typeno'] . '</td>';
 
 			} else {
 				echo '<tr><td colspan="2"></td>';
 			}
 
-			echo '<td>'.$myrow['account'].'</td>
-					<td>'.$myrow['accountname'].'</td>
-					<td>'.$myrow['narrative'] .'</td>
-					<td class="number">'.locale_number_format($myrow['amount'],$_SESSION['CompanyRecord']['decimalplaces']).'</td>
-					<td class="number">'.$myrow['tag'] . ' - ' . $myrow['tagdescription'].'</td>';
+			echo '<td>' . $myrow['account'] . '</td>
+					<td>' . $myrow['accountname'] . '</td>
+					<td>' . $myrow['narrative']  . '</td>
+					<td class="number">' . locale_number_format($myrow['amount'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+					<td class="number">' . $myrow['tag'] . ' - ' . $myrow['tagdescription'] . '</td>';
 
 			if ($myrow['typeno']!=$LastJournal) {
-				echo '<td class="number"><a href="PDFGLJournal.php?JournalNo='.$myrow['typeno'].'">'._('Print') .'</a></td></tr>';
+				echo '<td class="number"><a href="PDFGLJournal.php?JournalNo='.$myrow['typeno'].'">' . _('Print')  . '</a></td></tr>';
 
 				$LastJournal = $myrow['typeno'];
 			} else {

@@ -141,7 +141,7 @@ if (!isset($SelectedArea)) {
 				FROM areas";
 	$result = DB_query($sql,$db);
 
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p><br />';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
 
 	echo '<table class="selection">
 			<tr>

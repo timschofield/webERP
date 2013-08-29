@@ -203,7 +203,7 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 						}
 
 						if (DB_num_rows($AuthResult) > 0 AND $AuthRow['authlevel'] > $Order_Value) { //user has authority to authrorise as well as create the order
-							$StatusComment = date($_SESSION['DefaultDateFormat']).' - ' . _('Order Created and Authorised by') . ' ' . $UserDetails . ' - '._('Auto created from sales orders') .'<br />';
+							$StatusComment = date($_SESSION['DefaultDateFormat']).' - ' . _('Order Created and Authorised by') . ' ' . $UserDetails . ' - '._('Auto created from sales orders')  . '<br />';
 							$ErrMsg = _('Could not update purchase order status to Authorised');
 							$DbgMsg = _('The SQL that failed was');
 							$result = DB_query("UPDATE purchorders SET allowprint=1,
@@ -218,9 +218,9 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 								$AuthMessage = _('You can only authorise up to') . ' ' . $SuppRow['currcode'] . ' ' . $AuthRow['authlevel'] . '.<br />';
 							}
 
-							prnMsg( _('You do not have permission to authorise this purchase order').'.<br />'. _('This order is for').' '.
+							prnMsg( _('You do not have permission to authorise this purchase order').'.<br />' .  _('This order is for').' '.
 							$SuppRow['currcode'] . ' '. $Order_Value .'. '.
-							$AuthMessage . _('If you think this is a mistake please contact the systems administrator') . '<br />'.
+							$AuthMessage . _('If you think this is a mistake please contact the systems administrator') . '<br />' . 
 							_('The order has been created with a status of pending and will require authorisation'), 'warn');
 						}
 					} //end of authorisation status settings
@@ -257,7 +257,7 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 					$SuppResult = DB_query($sql, $db, $ErrMsg);
 					$SuppRow = DB_fetch_array($SuppResult);
 
-					$StatusComment=date($_SESSION['DefaultDateFormat']).' - ' . _('Order Created by') . ' ' . $UserDetails . ' - '._('Auto created from sales orders') .'<br />';
+					$StatusComment=date($_SESSION['DefaultDateFormat']).' - ' . _('Order Created by') . ' ' . $UserDetails . ' - '._('Auto created from sales orders')  . '<br />';
 					/*Insert to purchase order header record */
 					$sql = "INSERT INTO purchorders ( orderno,
                 									  supplierno,
@@ -367,7 +367,7 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 				}
 
 				if (DB_num_rows($AuthResult) > 0 AND $AuthRow['authlevel'] > $Order_Value) { //user has authority to authrorise as well as create the order
-					$StatusComment = date($_SESSION['DefaultDateFormat']).' - ' . _('Order Created and Authorised by') . $UserDetails . ' - '._('Auto created from sales orders') .'<br />';
+					$StatusComment = date($_SESSION['DefaultDateFormat']).' - ' . _('Order Created and Authorised by') . $UserDetails . ' - '._('Auto created from sales orders')  . '<br />';
 					$ErrMsg = _('Could not update purchase order status to Authorised');
 					$DbgMsg = _('The SQL that failed was');
 					$result = DB_query("UPDATE purchorders SET allowprint=1,
@@ -382,7 +382,7 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 						$AuthMessage = _('You can only authorise up to').' '.$SuppRow['currcode'].' '.$AuthRow['authlevel'].'.<br />';
 					}
 
-					prnMsg( _('You do not have permission to authorise this purchase order').'.<br />'. _('This order is for').' '. $SuppRow['currcode'] . ' '. $Order_Value .'. '. $AuthMessage . _('If you think this is a mistake please contact the systems administrator') . '<br />'. _('The order has been created with a status of pending and will require authorisation'), 'warn');
+					prnMsg( _('You do not have permission to authorise this purchase order').'.<br />' .  _('This order is for').' '. $SuppRow['currcode'] . ' '. $Order_Value .'. '. $AuthMessage . _('If you think this is a mistake please contact the systems administrator') . '<br />' .  _('The order has been created with a status of pending and will require authorisation'), 'warn');
 				}
 			} //end of authorisation status settings
 

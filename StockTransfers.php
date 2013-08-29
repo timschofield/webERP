@@ -46,15 +46,15 @@ if (isset($_POST['CheckCode'])) {
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 	echo '<table class="selection">
 			<tr>
-				<th class="ascending">'._('Stock Code').'</th>
-				<th class="ascending">'._('Stock Description').'</th>
+				<th class="ascending">' . _('Stock Code') . '</th>
+				<th class="ascending">' . _('Stock Description') . '</th>
 			</tr>';
 	while ($myrow = DB_fetch_array($result)) {
 		echo '<tr>
-				<td>'.$myrow['stockid'].'</td>
-				<td>'.$myrow['description'].'</td>
+				<td>' . $myrow['stockid'] . '</td>
+				<td>' . $myrow['description'] . '</td>
 				<td><a href="' . $RootPath . '/StockTransfers.php?StockID='.$myrow['stockid'].'&amp;Description='.$myrow['description'].'&amp;NewTransfer=Yes&amp;Quantity='. filter_number_format($_POST['Quantity']).'&amp;From='.$_POST['StockLocationFrom'].'&amp;To='.$_POST['StockLocationTo'].'">'
-				._('Transfer').'</a></td>
+				._('Transfer') . '</a></td>
 			</tr>';
 
 	}
@@ -467,16 +467,16 @@ if (!isset($_GET['Description'])) {
 }
 echo '<table class="selection">
 		<tr>
-			<td>'. _('Stock Code'). ':</td>
+			<td>' .  _('Stock Code'). ':</td>
 			<td>';
 if (!isset($_POST['StockID'])) {
 	$_POST['StockID'] = '';
 }
 	echo '<input type="text"  title="'._('The stock ID should not be blank or contains illegal characters, you can choose left this blank and only keyin')._('Partial Stock Code')._('or')._('Partial Description')._('then push')._('Check Part').'" name="StockID" size="21" value="' . $_POST['StockID'] . '" maxlength="20" /></td></tr>';
 
-echo '<tr><td>'. _('Partial Description'). ':</td>
+echo '<tr><td>' .  _('Partial Description'). ':</td>
 		<td><input type="text" name="StockText" title="'._('You can key in part of stock description or left this and ')._('Partial Stock Code')._('blank and click ')._('Check Part').' '._('to view the whole stock list').'" size="21" value="' . $_GET['Description'] .'" /></td>
-		<td>'._('Partial Stock Code'). ':</td><td>';
+		<td>' . _('Partial Stock Code'). ':</td><td>';
 if (isset($_POST['StockID'])) {
 	echo '<input type="text" title="'._('You can key in partial of the stock code or just left this blank to click').' '._('Check Part').'" name="StockCode" size="21" value="' . $_POST['StockID'] .'" maxlength="20" />';
 } else {
@@ -518,7 +518,7 @@ echo '</select></td>
 	</tr>';
 
 echo '<tr>
-		<td>'. _('To Stock Location').': </td>
+		<td>' .  _('To Stock Location').': </td>
 		<td><select name="StockLocationTo"> ';
 
 DB_data_seek($resultStkLocs,0);
@@ -542,7 +542,7 @@ while ($myrow=DB_fetch_array($resultStkLocs)){
 echo '</select></td></tr>';
 
 echo '<tr>
-		<td>'._('Transfer Quantity').':</td>';
+		<td>' . _('Transfer Quantity').':</td>';
 
 if (isset($_SESSION['Transfer']->TransferItem[0]->Controlled)
 	AND $_SESSION['Transfer']->TransferItem[0]->Controlled==1){
@@ -570,15 +570,15 @@ if (empty($_SESSION['Transfer']->TransferItem[0]->StockID) and isset($_POST['Sto
 }
 if (isset($_SESSION['Transfer'])) {
 	echo '<br />
-		<a href="'.$RootPath.'/StockStatus.php?StockID=' . $StockID . '">'._('Show Stock Status').'</a>';
+		<a href="'.$RootPath.'/StockStatus.php?StockID=' . $StockID . '">' . _('Show Stock Status') . '</a>';
 	echo '<br />
-		<a href="'.$RootPath.'/StockMovements.php?StockID=' . $StockID . '">'._('Show Movements').'</a>';
+		<a href="'.$RootPath.'/StockMovements.php?StockID=' . $StockID . '">' . _('Show Movements') . '</a>';
 	echo '<br />
 		<a href="'.$RootPath.'/StockUsage.php?StockID=' . $StockID . '&amp;StockLocation=' . $_SESSION['Transfer']->StockLocationFrom . '">' . _('Show Stock Usage') . '</a>';
 	echo '<br />
 		<a href="'.$RootPath.'/SelectSalesOrder.php?SelectedStockItem=' . $StockID . '&amp;StockLocation=' . $_SESSION['Transfer']->StockLocationFrom . '">' . _('Search Outstanding Sales Orders') . '</a>';
 	echo '<br />
-		<a href="'.$RootPath.'/SelectCompletedOrder.php?SelectedStockItem=' . $StockID . '">'._('Search Completed Sales Orders').'</a>';
+		<a href="'.$RootPath.'/SelectCompletedOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Completed Sales Orders') . '</a>';
 }
 echo '</div>
     </div>

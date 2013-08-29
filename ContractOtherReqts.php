@@ -82,7 +82,7 @@ if (isset($_POST['EnterNewRequirement'])){
 echo '<form name="ContractReqtsForm" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier. '" method="post">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/contract.png" title="' . _('Contract Other Requirements') . '" alt="" />  ' . _('Contract Other Requirements') . ' - ' . $_SESSION['Contract'.$identifier]->CustomerName.'</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/contract.png" title="' . _('Contract Other Requirements') . '" alt="" />  ' . _('Contract Other Requirements') . ' - ' . $_SESSION['Contract'.$identifier]->CustomerName . '</p>';
 
 if (count($_SESSION['Contract'.$identifier]->ContractReqts)>0){
 
@@ -90,7 +90,7 @@ if (count($_SESSION['Contract'.$identifier]->ContractReqts)>0){
 
 	if (isset($_SESSION['Contract'.$identifier]->ContractRef)) {
 		echo  '<tr>
-				<th colspan="5">' . _('Contract Reference:') .' '. $_SESSION['Contract'.$identifier]->ContractRef.'</th>
+				<th colspan="5">' . _('Contract Reference:') .' '. $_SESSION['Contract'.$identifier]->ContractRef . '</th>
 			</tr>';
 	}
 

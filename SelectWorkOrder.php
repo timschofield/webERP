@@ -6,10 +6,10 @@ include('includes/session.inc');
 $Title = _('Search Work Orders');
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
-echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-echo '<div>';
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>
+	<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
+	<div>
+		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 
 if (isset($_GET['WO'])) {
@@ -130,7 +130,7 @@ if (!isset($StockID)) {
 		if (isset($SelectedStockItem)) {
 			echo _('For the item') . ': ' . $SelectedStockItem . ' ' . _('and') . ' <input type="hidden" name="SelectedStockItem" value="' . $SelectedStockItem . '" />';
 		}
-		echo _('Work Order number') . ': <input type="text" name="WO" maxlength="8" size="9" />&nbsp; ' . _('Processing at') . ':<select name="StockLocation"> ';
+		echo _('Work Order number') . ': <input type="text" name="WO" autofocus="autofocus" maxlength="8" size="9" />&nbsp; ' . _('Processing at') . ':<select name="StockLocation"> ';
 
 		$sql = "SELECT loccode, locationname FROM locations";
 
@@ -150,8 +150,8 @@ if (!isset($StockID)) {
 			}
 		}
 
-		echo '</select> &nbsp;&nbsp;';
-		echo '<select name="ClosedOrOpen">';
+		echo '</select> &nbsp;&nbsp;
+			<select name="ClosedOrOpen">';
 
 		if ($_GET['ClosedOrOpen']=='Closed_Only'){
 			$_POST['ClosedOrOpen']='Closed_Only';
@@ -165,9 +165,12 @@ if (!isset($StockID)) {
 			echo '<option selected="selected" value="Open_Only">' . _('Open Work Orders Only')  . '</option>';
 		}
 
-		echo '</select> &nbsp;&nbsp;';
-		echo '<input type="submit" name="SearchOrders" value="' . _('Search') . '" />';
-		echo '&nbsp;&nbsp;<a href="' . $RootPath . '/WorkOrderEntry.php">' . _('New Work Order') . '</a></td></tr></table><br />';
+		echo '</select> &nbsp;&nbsp;
+			<input type="submit" name="SearchOrders" value="' . _('Search') . '" />
+			&nbsp;&nbsp;<a href="' . $RootPath . '/WorkOrderEntry.php">' . _('New Work Order') . '</a></td>
+			</tr>
+			</table>
+			<br />';
 	}
 
 	$SQL="SELECT categoryid,
@@ -193,7 +196,8 @@ if (!isset($StockID)) {
 	  		<td>' . _('Enter text extract(s) in the description') . ':</td>
 	  		<td><input type="text" name="Keywords" size="20" maxlength="25" /></td>
 		</tr>
-	  	<tr><td></td>
+	  	<tr>
+			<td></td>
 	  		<td><b>' . _('OR') . ' </b>' . _('Enter extract of the Stock Code') . ':</td>
 	  		<td><input type="text" name="StockCode" size="15" maxlength="18" /></td>
 	  	</tr>
@@ -204,16 +208,13 @@ if (!isset($StockID)) {
 	if (isset($StockItemsResult)) {
 
 		echo '<br />
-			<table cellpadding="2" class="selection">';
-		$TableHeader = '<tr>
-							<th>' . _('Code') . '</th>
-							<th>' . _('Description') . '</th>
-							<th>' . _('On Hand') . '</th>
-							<th>' . _('Units') . '</th>
-						</tr>';
-		echo $TableHeader;
-
-		$j = 1;
+			<table cellpadding="2" class="selection">
+			<tr>
+				<th class="ascending">' . _('Code') . '</th>
+				<th class="ascending">' . _('Description') . '</th>
+				<th class="ascending">' . _('On Hand') . '</th>
+				<th>' . _('Units') . '</th>
+			</tr>';
 		$k=0; //row colour counter
 
 		while ($myrow=DB_fetch_array($StockItemsResult)) {
@@ -236,17 +237,8 @@ if (!isset($StockID)) {
 					locale_number_format($myrow['qoh'],$myrow['decimalplaces']),
 					$myrow['units']);
 
-			$j++;
-			if ($j == 12){
-				$j=1;
-				echo $TableHeader;
-			}
-	//end of page full new headings if
-		}
-	//end of while loop
-
+		}//end of while loop
 		echo '</table>';
-
 	}
 	//end if stock search results to show
 	  else {
@@ -322,26 +314,21 @@ if (!isset($StockID)) {
 		/*show a table of the orders returned by the SQL */
 		if (DB_num_rows($WorkOrdersResult)>0) {
 			echo '<br />
-				<table cellpadding="2" width="95%" class="selection">';
+				<table cellpadding="2" width="95%" class="selection">
+				<tr>
+					<th>' . _('Modify') . '</th>
+					<th class="ascending">' . _('Status') . '</th>
+					<th>' . _('Receive') . '</th>
+					<th>' . _('Issue To') . '</th>
+					<th>' . _('Costing') . '</th>
+					<th class="ascending">' . _('Item') . '</th>
+					<th class="ascending">' . _('Quantity Required') . '</th>
+					<th class="ascending">' . _('Quantity Received') . '</th>
+					<th class="ascending">' . _('Quantity Outstanding') . '</th>
+					<th class="ascending">' . _('Start Date')  . '</th>
+					<th class="ascending">' . _('Required Date') . '</th>
+				</tr>';
 
-
-			$tableheader = '<tr>
-								<th>' . _('Modify') . '</th>
-								<th>' . _('Status') . '</th>
-								<th>' . _('Receive') . '</th>
-								<th>' . _('Issue To') . '</th>
-								<th>' . _('Costing') . '</th>
-								<th>' . _('Item') . '</th>
-								<th>' . _('Quantity Required') . '</th>
-								<th>' . _('Quantity Received') . '</th>
-								<th>' . _('Quantity Outstanding') . '</th>
-								<th>' . _('Start Date')  . '</th>
-								<th>' . _('Required Date') . '</th>
-							</tr>';
-
-			echo $tableheader;
-
-		$j = 1;
 		$k=0; //row colour counter
 		while ($myrow=DB_fetch_array($WorkOrdersResult)) {
 
@@ -388,12 +375,6 @@ if (!isset($StockID)) {
 					locale_number_format($myrow['qtyreqd']-$myrow['qtyrecd'],$myrow['decimalplaces']),
 					$FormatedStartDate,
 					$FormatedRequiredByDate);
-
-			$j++;
-			if ($j == 12){
-				$j=1;
-				echo $tableheader;
-			}
 		//end of page full new headings if
 		}
 		//end of while loop
@@ -401,8 +382,6 @@ if (!isset($StockID)) {
 		echo '</table>';
       }
 	}
-
-	echo '<script  type="text/javascript">defaultControl(document.forms[0].WO);</script>';
 
 	echo '</div>
           </form>';

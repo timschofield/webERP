@@ -1028,7 +1028,7 @@ if ($_SESSION['CompanyRecord']['gllink_creditors']==1 AND $_SESSION['PaymentDeta
 	}
 
 	echo '<tr>
-			<td>'. _('Cheque/Voucher Number') .'</td>
+			<td>' .  _('Cheque/Voucher Number')  . '</td>
 			<td><input type="text" name="Cheque" maxlength="12" size="12" /></td>
 		</tr>';
 
@@ -1066,7 +1066,7 @@ if ($_SESSION['CompanyRecord']['gllink_creditors']==1 AND $_SESSION['PaymentDeta
 		echo '<br />
 			<table class="selection">
 			<tr>
-				<th>' . _('Cheque No').'</th>
+				<th>' . _('Cheque No') . '</th>
 				<th>' . _('Amount') . ' (' . $_SESSION['PaymentDetail' . $identifier]->Currency . ')</th>
 				<th>' . _('GL Account') . '</th>
 				<th>' . _('Narrative') . '</th>

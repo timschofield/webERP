@@ -91,7 +91,7 @@ else
 	echo '<form method="post" action=' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' . SID . '>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	echo '<table><tr><th" colspan="2" ALIGN="center">'. _('Language File Header for') . ' "' . $_POST['language'] . '"</th></tr>';
+	echo '<table><tr><th" colspan="2" ALIGN="center">' .  _('Language File Header for') . ' "' . $_POST['language'] . '"</th></tr>';
 	echo '<tr><td colspan="2"></td></tr>';
 
 	for ($i=1; $i<=17; $i++) {

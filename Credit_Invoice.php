@@ -269,7 +269,7 @@ if ($_SESSION['CreditItems' . $identifier]->ItemsOrdered > 0 OR isset($_POST['Ne
 
 /* Always display credit quantities
 NB QtyDispatched in the LineItems array is used for the quantity to credit */
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/credit.gif" title="' . _('Search') . '" alt="" />' . $Title.'</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/credit.gif" title="' . _('Search') . '" alt="" />' . $Title . '</p>';
 
 if (!isset($_POST['ProcessCredit'])) {
 
@@ -281,7 +281,7 @@ if (!isset($_POST['ProcessCredit'])) {
 	echo '<table cellpadding="2" class="selection">';
 	echo '<tr><th colspan="13">';
 	echo '<div class="centre"><b>' . _('Credit Invoice') . ' ' . $_SESSION['ProcessingCredit'] . '</b>
-		<b>'.' - ' . $_SESSION['CreditItems' . $identifier]->CustomerName . '</b>
+		<b>' . ' - ' . $_SESSION['CreditItems' . $identifier]->CustomerName . '</b>
 		 - ' . _('Credit Note amounts stated in') . ' ' . $_SESSION['CreditItems' . $identifier]->DefaultCurrency . '</div>';
 	echo '</th></tr>';
 	echo '<tr><th>' . _('Item Code') . '</th>
@@ -1450,7 +1450,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 	unset($_SESSION['CreditItems' . $identifier]);
 	unset($_SESSION['ProcessingCredit']);
 
-	echo '<div class="centre">'._('Credit Note number') . ' ' . $CreditNo . ' ' . _('has been processed');
+	echo '<div class="centre">' . _('Credit Note number') . ' ' . $CreditNo . ' ' . _('has been processed');
 	if ($_SESSION['InvoicePortraitFormat']==0){
 		echo '<br /><a href="' . $RootPath . '/PrintCustTrans.php?FromTransNo=' . $CreditNo . '&InvOrCredit=Credit&PrintPDF=True">' . _('Print this credit note') . '</a>';
 	} else {

@@ -31,7 +31,7 @@ echo '<table class="selection"><tr>';
 if ($_GET['Action']=='View'){
 	echo '<td><a href="' . $RootPath . '/StockCounts.php?&amp;Action=Enter">' . _('Resuming Entering Counts') . '</a> </td><td>' . _('Viewing Entered Counts') . '</td>';
 } else {
-	echo '<td>'._('Entering Counts') .'</td><td> <a href="' . $RootPath . '/StockCounts.php?&amp;Action=View">' . _('View Entered Counts') . '</a></td>';
+	echo '<td>' . _('Entering Counts')  . '</td><td> <a href="' . $RootPath . '/StockCounts.php?&amp;Action=View">' . _('View Entered Counts') . '</a></td>';
 }
 echo '</tr></table><br />';
 

@@ -67,9 +67,9 @@ if ($SerialNo!='') {
 	$result = DB_query($SQL,$db);
 
 	if (DB_num_rows($result) == 0){
-		prnMsg( _('No History found for Serial Number'). ': <b>'.$SerialNo.'</b>' , 'warn');
+		prnMsg( _('No History found for Serial Number'). ': <b>' . $SerialNo . '</b>' , 'warn');
 	} else {
-		echo '<h4>'. _('Details for Serial Item').': <b>'.$SerialNo.'</b><br />'. _('Length').'='.mb_strlen($SerialNo).'</h4>';
+		echo '<h4>' .  _('Details for Serial Item').': <b>' . $SerialNo . '</b><br />' .  _('Length').'='.mb_strlen($SerialNo) . '</h4>';
 		echo '<table class="selection">';
 		echo '<tr>
 				<th>' . _('StockID') . '</th>

@@ -60,8 +60,8 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 echo '<br />
 	<table>
 	<tr>
-		<td>'. _('Description') . '</td>
-		<td><input type="text" required="required" size="30" maxlength="30" name="Description" title="' . _('Enter the description of the general ledger tag up to 30 characters') . '" value="' . $Description . '" /></td>
+		<td>' .  _('Description') . '</td>
+		<td><input type="text" required="required" autofocus="autofocus" size="30" maxlength="30" name="Description" title="' . _('Enter the description of the general ledger tag up to 30 characters') . '" value="' . $Description . '" /></td>
 		<td><input type="hidden" name="reference" value="'.$_GET['SelectedTag'].'" />';
 
 if (isset($_GET['Action']) AND $_GET['Action']=='edit') {
@@ -78,8 +78,8 @@ echo '</td>
 	</form>
 	<table class="selection">
 	<tr>
-		<th>'. _('Tag ID') .'</th>
-		<th>'. _('Description'). '</th>
+		<th>' .  _('Tag ID')  . '</th>
+		<th>' .  _('Description'). '</th>
 	</tr>';
 
 $sql="SELECT tagref,
@@ -99,8 +99,6 @@ while ($myrow = DB_fetch_array($result,$db)){
 }
 
 echo '</table>';
-
-echo '<script  type="text/javascript">defaultControl(document.form.Description);</script>';
 
 include('includes/footer.inc');
 

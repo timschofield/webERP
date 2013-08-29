@@ -76,7 +76,7 @@ if ( isset($_POST['submit']) ) {
 
 	if ($InputError !=1) {
 		$result = DB_query($sql,$db);
-				//echo '<br />'.$sql;
+				//echo '<br />' . $sql;
 
 		echo '<br />';
 		prnMsg($msg, 'success');
@@ -119,7 +119,7 @@ if (!isset($Id)) {
 			WHERE debtorno='".$DebtorNo."'
 			ORDER BY contid";
 	$result = DB_query($sql,$db);
-			//echo '<br />'.$sql;
+			//echo '<br />' . $sql;
 
 	echo '<table class="selection">';
 	echo '<tr>
@@ -146,7 +146,7 @@ if (!isset($Id)) {
 				<td><a href="mailto:%s">%s</a></td>
 				<td>%s</td>
 				<td><a href="%sId=%s&amp;DebtorNo=%s">' . _('Edit') . '</a></td>
-				<td><a href="%sId=%s&amp;DebtorNo=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this contact?') . '\');">'. _('Delete'). '</a></td></tr>',
+				<td><a href="%sId=%s&amp;DebtorNo=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this contact?') . '\');">' .  _('Delete'). '</a></td></tr>',
 				$myrow['contactname'],
 				$myrow['role'],
 				$myrow['phoneno'],
@@ -203,7 +203,7 @@ if (!isset($_GET['delete'])) {
 		echo '<br />
 				<table class="selection">
 				<tr>
-					<td>'. _('Contact Code').':</td>
+					<td>' .  _('Contact Code').':</td>
 					<td>' . $_POST['Con_ID'] . '</td>
 				</tr>';
 	} else {
@@ -211,7 +211,7 @@ if (!isset($_GET['delete'])) {
 	}
 
 	echo '<tr>
-			<td>'. _('Contact Name') . '</td>';
+			<td>' .  _('Contact Name') . '</td>';
 	if (isset($_POST['ContactName'])) {
 		echo '<td><input type="text" autofocus="autofocus" required="required" name="ContactName" value="' . $_POST['ContactName']. '" size="35" maxlength="40" /></td>
 			</tr>';
@@ -249,7 +249,7 @@ if (!isset($_GET['delete'])) {
 	echo '<tr>
 			<td>' . _('Notes') . '</td>';
 	if (isset($_POST['ContactNotes'])) {
-		echo '<td><textarea name="ContactNotes" rows="3" cols="40">'. $_POST['ContactNotes'] . '</textarea></td>';
+		echo '<td><textarea name="ContactNotes" rows="3" cols="40">' .  $_POST['ContactNotes'] . '</textarea></td>';
 	} else {
 	   echo '<td><textarea name="ContactNotes" rows="3" cols="40"></textarea></td>';
 	}

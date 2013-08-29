@@ -19,7 +19,7 @@ echo '<a href="'. $RootPath . '/WorkOrderCosting.php?WO=' .  $_POST['WO'] . '">'
 	<br />';
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/group_add.png" title="' .
-	_('Search') . '" alt="" />' . ' ' . $Title.'</p>';
+	_('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<div>';
@@ -28,8 +28,8 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 
 if (!isset($_POST['WO']) OR !isset($_POST['StockID'])) {
 	/* This page can only be called with a work order number for issuing stock to*/
-	echo '<div class="centre"><a href="' . $RootPath . '/SelectWorkOrder.php">'.
-		_('Select a work order to issue materials to').'</a></div>';
+	echo '<div class="centre"><a href="' . $RootPath . '/SelectWorkOrder.php">' . 
+		_('Select a work order to issue materials to') . '</a></div>';
 	prnMsg(_('This page can only be opened if a work order has been selected. Please select a work order to issue materials to first'),'info');
 	include ('includes/footer.inc');
 	exit;
@@ -524,7 +524,7 @@ $WORow = DB_fetch_array($WOResult);
 echo '<table class="selection">
 		<tr>
 			<td class="label">' . _('Issue to work order') . ':</td>
-			<td>' . $_POST['WO'] .'</td>
+			<td>' . $_POST['WO']  . '</td>
 		</tr>
 		<tr>
 			<td class="label">' . _('Manufactured at') . ':</td>
@@ -631,7 +631,7 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 		} else {
 			echo '<tr>
 					<td class="notavailable">' . _('Auto Issue') . '</td>
-					<td class="notavailable">' .$RequirementsRow['stockid'] . ' - ' . $RequirementsRow['description'] .'</td>';
+					<td class="notavailable">' .$RequirementsRow['stockid'] . ' - ' . $RequirementsRow['description']  . '</td>';
 		}
 		$IssuedAlreadyResult = DB_query("SELECT SUM(-qty) FROM stockmoves
 											WHERE stockmoves.type=28
@@ -774,9 +774,9 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 	echo '<table class="selection">
 		<tr>
 			<td class="label">' . _('Issuing') . ':</td>
-			<td>' . $_POST['IssueItem'] . ' - ' . $IssueItemRow['description'] .'</td>
+			<td>' . $_POST['IssueItem'] . ' - ' . $IssueItemRow['description']  . '</td>
 			<td class="label">' . _('Units') . ':</td>
-			<td>' . $IssueItemRow['units'] .'</td>
+			<td>' . $IssueItemRow['units']  . '</td>
 		</tr>
 		</table>';
 

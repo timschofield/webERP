@@ -97,7 +97,7 @@ if ($LineCount == 0) {   //UldisN
 	$Title = _('Printing Error');
 	include('includes/header.inc');
 	prnMsg(_('There were no Journals to print'),'warn');
-	echo '<br /><a href="'.$RootPath.'/index.php">'. _('Back to the menu').'</a>';
+	echo '<br /><a href="'.$RootPath.'/index.php">' .  _('Back to the menu') . '</a>';
 	include('includes/footer.inc');
 	exit;
 } else {

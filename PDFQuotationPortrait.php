@@ -263,9 +263,9 @@ if (DB_num_rows($result)>0){
 if ($ListCount == 0){
         $Title = _('Print Quotation Error');
         include('includes/header.inc');
-        echo '<p>'. _('There were no items on the quotation') . '. ' . _('The quotation cannot be printed').
-                '<br /><a href="' . $RootPath . '/SelectSalesOrder.php?Quotation=Quotes_only">'. _('Print Another Quotation').
-                '</a>' . '<br />'. '<a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
+        echo '<p>' .  _('There were no items on the quotation') . '. ' . _('The quotation cannot be printed').
+                '<br /><a href="' . $RootPath . '/SelectSalesOrder.php?Quotation=Quotes_only">' .  _('Print Another Quotation').
+                '</a>' . '<br />' .  '<a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
         include('includes/footer.inc');
 	exit;
 } else {

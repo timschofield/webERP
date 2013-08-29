@@ -49,18 +49,18 @@ if (get_magic_quotes_gpc()){
 			    echo '<input type="hidden" name="CompanyNameField"  value="' .  $CompanyNameField . '" />';
 		    } elseif ($AllowCompanySelectionBox === 'ShowInputBox'){
 			    // show input box
-			    echo _('Company') .': <br />'. '<input type="text" name="DefaultCompany"  autofocus="autofocus" required="required" value="' .  htmlspecialchars($DefaultCompany ,ENT_QUOTES,'UTF-8') . '" disabled="disabled"/>';//use disabled input for display consistency
+			    echo _('Company') .': <br />' .  '<input type="text" name="DefaultCompany"  autofocus="autofocus" required="required" value="' .  htmlspecialchars($DefaultCompany ,ENT_QUOTES,'UTF-8') . '" disabled="disabled"/>';//use disabled input for display consistency
 		        echo '<input type="hidden" name="CompanyNameField"  value="' .  $CompanyNameField . '" />';
 		    } else {
                 // Show selection box ($AllowCompanySelectionBox == 'ShowSelectionBox')
-                echo _('Company:').'<br />';
+                echo _('Company:') . '<br />';
                 echo '<select name="CompanyNameField">';
                 foreach ($CompanyList as $key => $CompanyEntry){
                     if (is_dir('companies/' . $CompanyEntry['database']) ){
                         if ($CompanyEntry['database'] == $DefaultDatabase) {
-                            echo '<option selected="selected" label="'.htmlspecialchars($CompanyEntry['company'],ENT_QUOTES,'UTF-8').'" value="'.$key.'">'.htmlspecialchars($CompanyEntry['company'],ENT_QUOTES,'UTF-8').'</option>';
+                            echo '<option selected="selected" label="'.htmlspecialchars($CompanyEntry['company'],ENT_QUOTES,'UTF-8').'" value="'.$key.'">' . htmlspecialchars($CompanyEntry['company'],ENT_QUOTES,'UTF-8') . '</option>';
                         } else {
-                            echo '<option label="'.htmlspecialchars($CompanyEntry['company'],ENT_QUOTES,'UTF-8').'" value="'.$key.'">'.htmlspecialchars($CompanyEntry['company'],ENT_QUOTES,'UTF-8').'</option>';
+                            echo '<option label="'.htmlspecialchars($CompanyEntry['company'],ENT_QUOTES,'UTF-8').'" value="'.$key.'">' . htmlspecialchars($CompanyEntry['company'],ENT_QUOTES,'UTF-8') . '</option>';
                         }
                     }
                 }
@@ -76,15 +76,15 @@ if (get_magic_quotes_gpc()){
 			    echo _('Company') . '<input type="text" name="CompanyNameField"  autofocus="autofocus" required="required" value="' . $DefaultCompany . '" />';
 		    } else {
       			// Show selection box ($AllowCompanySelectionBox == 'ShowSelectionBox')
-    			echo _('Company:').'<br />';
+    			echo _('Company:') . '<br />';
 	    		echo '<select name="CompanyNameField">';
 	    		$Companies = scandir('companies/', 0);
 			    foreach ($Companies as $CompanyEntry){
                     if (is_dir('companies/' . $CompanyEntry) AND $CompanyEntry != '..' AND $CompanyEntry != '' AND $CompanyEntry!='.svn' AND $CompanyEntry!='.'){
                         if ($CompanyEntry==$DefaultDatabase) {
-                            echo '<option selected="selected" label="'.$CompanyEntry.'" value="'.$CompanyEntry.'">'.$CompanyEntry.'</option>';
+                            echo '<option selected="selected" label="'.$CompanyEntry.'" value="'.$CompanyEntry.'">' . $CompanyEntry . '</option>';
                         } else {
-                            echo '<option label="'.$CompanyEntry.'" value="'.$CompanyEntry.'">'.$CompanyEntry.'</option>';
+                            echo '<option label="'.$CompanyEntry.'" value="'.$CompanyEntry.'">' . $CompanyEntry . '</option>';
                         }
                     }
     	        }

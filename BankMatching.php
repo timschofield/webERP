@@ -272,7 +272,7 @@ if ($InputError !=1
 
 	echo '<table cellpadding="2" class="selection">
 			<tr>
-				<th class="ascending">'. _('Cheque No') . '</th>
+				<th class="ascending">' .  _('Cheque No') . '</th>
 				<th class="ascending">' . _('Ref') . '</th>
 				<th class="ascending">' . $TypeName . '</th>
 				<th class="ascending">' . _('Date') . '</th>

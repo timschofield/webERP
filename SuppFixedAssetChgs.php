@@ -66,7 +66,7 @@ if (isset($_GET['Delete'])){
 
 /*Show all the selected ShiptRefs so far from the SESSION['SuppInv']->Shipts array */
 if ($_SESSION['SuppTrans']->InvoiceOrCredit=='Invoice'){
-	echo '<div class="centre"><p class="page_title_text">'. _('Fixed Assets on Invoice') . ' ';
+	echo '<div class="centre"><p class="page_title_text">' .  _('Fixed Assets on Invoice') . ' ';
 } else {
 	echo '<div class="centre"><p class="page_title_text">' . _('Fixed Asset credits on Credit Note') . ' ';
 }
@@ -120,10 +120,10 @@ echo '<br /><table class="selection">';
 
 echo '<tr>
 		<td>' . _('Enter Asset ID') . ':</td>
-		<td><input type="text" class="integer" pattern="[^-]{1,5}" name="AssetID" title="'._('The Asset ID should be positive integer').'" size="7" maxlength="6" placeholder="'._('Postive integer').'" value="' .  $_POST['AssetID'] . '" /> <a href="FixedAssetItems.php" target="_blank">'. _('New Fixed Asset') . '</a></td>
+		<td><input type="text" class="integer" pattern="[^-]{1,5}" name="AssetID" title="'._('The Asset ID should be positive integer').'" size="7" maxlength="6" placeholder="'._('Postive integer').'" value="' .  $_POST['AssetID'] . '" /> <a href="FixedAssetItems.php" target="_blank">' .  _('New Fixed Asset') . '</a></td>
 	</tr>';
 echo '<tr>
-		<td><b>' . _('OR') .' </b>'. _('Select from list') . ':</td>
+		<td><b>' . _('OR') .' </b>' .  _('Select from list') . ':</td>
 		<td><select name="AssetSelection">';
 
 $sql = "SELECT assetid,

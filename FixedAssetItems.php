@@ -54,7 +54,7 @@ if (isset($_FILES['ItemPicture']) AND $_FILES['ItemPicture']['name'] !='') {
 
 	if ($UploadTheFile=='Yes'){
 		$result  =  move_uploaded_file($_FILES['ItemPicture']['tmp_name'], $filename);
-		$message = ($result)?_('File url') .'<a href="' . $filename .'">' .  $filename . '</a>' : _('Something is wrong with uploading a file');
+		$message = ($result)?_('File url')  . '<a href="' . $filename .'">' .  $filename . '</a>' : _('Something is wrong with uploading a file');
 	}
  /* EOR Add Image upload for New Item  - by Ori */
 }
@@ -282,7 +282,7 @@ if (isset($_POST['submit'])) {
 			$result = DB_Txn_Commit($db);
 		}
 	} else {
-		echo '<br />'. "\n";
+		echo '<br />' .  "\n";
 		prnMsg( _('Validation failed, no updates or deletes took place'), 'error');
 	}
 
@@ -481,7 +481,7 @@ echo '<tr>
 if (!isset($New) ) { //ie not new at all!
 
 	echo '<tr>
-			<td>'. _('Image File (.jpg)') . ':</td>
+			<td>' .  _('Image File (.jpg)') . ':</td>
 			<td><input type="file" id="ItemPicture" name="ItemPicture" /></td>';
 
 	if (function_exists('imagecreatefromjpg')){
@@ -500,7 +500,7 @@ if (!isset($New) ) { //ie not new at all!
 	}
 
 	if ($AssetImgLink!=_('No Image')) {
-		echo '<td>' . _('Image') . '<br />'.$AssetImgLink . '</td></tr>';
+		echo '<td>' . _('Image') . '<br />' . $AssetImgLink . '</td></tr>';
 	} else {
 		echo '</td></tr>';
 	}
@@ -525,7 +525,7 @@ while ($myrow=DB_fetch_array($result)){
 	}
 	$category=$myrow['categoryid'];
 }
-echo '</select><a target="_blank" href="'. $RootPath . '/FixedAssetCategories.php">'.' ' . _('Add or Modify Asset Categories') . '</a></td></tr>';
+echo '</select><a target="_blank" href="'. $RootPath . '/FixedAssetCategories.php">' . ' ' . _('Add or Modify Asset Categories') . '</a></td></tr>';
 if (!isset($_POST['AssetCategoryID'])) {
 	$_POST['AssetCategoryID']=$category;
 }
@@ -554,7 +554,7 @@ while ($myrow=DB_fetch_array($result)){
 	}
 }
 echo '</select>
-	<a target="_blank" href="'. $RootPath . '/FixedAssetLocations.php">'.' ' . _('Add Asset Location') . '</a></td>
+	<a target="_blank" href="'. $RootPath . '/FixedAssetLocations.php">' . ' ' . _('Add Asset Location') . '</a></td>
 	</tr>
 	<tr>
 		<td>' . _('Bar Code') . ':</td>

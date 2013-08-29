@@ -40,12 +40,12 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 			</tr>
 			<tr>
 				<th>' . _('Date') . '</th>
-				<th>' . _('Period') .'</th>
-				<th>'. _('GL Account') .'</th>
-				<th>'. _('Debits') .'</th>
-				<th>'. _('Credits') .'</th>
-				<th>' . _('Description') .'</th>
-				<th>'. _('Posted') . '</th>
+				<th>' . _('Period')  . '</th>
+				<th>' .  _('GL Account')  . '</th>
+				<th>' .  _('Debits')  . '</th>
+				<th>' .  _('Credits')  . '</th>
+				<th>' . _('Description')  . '</th>
+				<th>' .  _('Posted') . '</th>
 			</tr>';
 
 		$SQL = "SELECT gltrans.type,

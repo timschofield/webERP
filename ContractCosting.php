@@ -63,12 +63,12 @@ if ($_SESSION['Contract'.$identifier]->Status==3){
 } elseif ($_SESSION['Contract'.$identifier]->Status==1){
 	echo _('Quoted')  . ' ';
 }
-echo _('Contract') . '<br />' . $_SESSION['Contract'.$identifier]->CustomerName . '<br />' . $_SESSION['Contract'.$identifier]->ContractDescription.'</p>';
+echo _('Contract') . '<br />' . $_SESSION['Contract'.$identifier]->CustomerName . '<br />' . $_SESSION['Contract'.$identifier]->ContractDescription . '</p>';
 
 echo '<table class="selection">
 	<tr>
-		<th colspan="6">' . _('Original Costing') .'</th>
-		<th colspan="6">' . _('Actual Costs')  .'</th>
+		<th colspan="6">' . _('Original Costing')  . '</th>
+		<th colspan="6">' . _('Actual Costs')   . '</th>
 	</tr>';
 
 echo '<tr>

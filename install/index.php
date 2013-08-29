@@ -585,14 +585,14 @@
 		    //Check if the browser has been set properly
 		    if(!isset($_SESSION['CookieAllowed']) or !($_SESSION['CookieAllowed'] == 1)){
 			    $InputError = 1;
-			    $ErrMsg .= '<p>'._('Please set Cookies allowed in your web brower, otherwise webERP cannot run properly').'</p>';
+			    $ErrMsg .= '<p>' . _('Please set Cookies allowed in your web brower, otherwise webERP cannot run properly') . '</p>';
 
 		    }
 		    //Check the situation of php safe mode
 		    if(!empty($_POST['SafeModeWarning'])){
 			    if(!ContainsIllegalCharacters($_POST['SafeModeWarning'])){
 				    $InputWarn = 1;
-				    $WarnMsg .= '<p>'._($_POST['SafeModeWarning']).'</p>';
+				    $WarnMsg .= '<p>' . _($_POST['SafeModeWarning']) . '</p>';
 			    }else{//Something must be wrong since this messages have been defined.
 				    prnMsg(_('Illegal characters or data has been identified, please see your admistrator for help'),'error');
 				    exit;
@@ -601,51 +601,51 @@
 		    }
 		    //check the php version
 		    if(empty($_POST['PHPVersion'])){
-			    	  $InputError = 1;
-				  $ErrMsg .= '<p>'._('You PHP version should be greater than 5.1').'</p>';
+				$InputError = 1;
+				$ErrMsg .= '<p>' . _('Although webERP should work with PHP version 5.1 onwards, a PHP version greater than 5.2 is strongly recommended') . '</p>';
 		    }
 		    //check the directory access authority of rootpath and companies
 		    if(empty($_POST['ConfigFile'])){
 			    $InputError = 1;
 			    //get the directory where weberp live
 			    $WebERPHome = dirname(dirname(__FILE__));
-			    $ErrMsg .= '<p>'._('The directory').' '.$WebERPHome.' '._('must be writable by web server').'</p>';
+			    $ErrMsg .= '<p>' . _('The directory').' '.$WebERPHome.' '._('must be writable by web server') . '</p>';
 		    }
 		    if(empty($_POST['CompaniesCreate'])){
 			    $InputError = 1;
 			    $WebERPHome = dirname(dirname(__FILE__));
-			    $ErrMsg .= '<p>'._('The directory').' '.$WebERPHome.'/companies/'.' '.('must be writable by web server').'</p>';
+			    $ErrMsg .= '<p>' . _('The directory').' '.$WebERPHome.'/companies/'.' '.('must be writable by web server') . '</p>';
 		    }
 		    //check the necessary php extensions
 		    if(empty($_POST['MbstringExt']) or $_POST['MbstringExt'] != 1){
 			    $InputError = 1;
-			    $ErrMsg .= '<p>'._('The mbstring extension is not availble in your PHP').'</p>';
+			    $ErrMsg .= '<p>' . _('The mbstring extension is not availble in your PHP') . '</p>';
 		    }
 		    //check if the libxml is exist
 		    if(empty($_POST['LibxmlExt']) or $_POST['LibxmlExt'] != 1){
 			    $InputError = 1;
-			    $ErrMsg .='<p>'._('The libxml extension is not available in your PHP').'</p>';
+			    $ErrMsg .='<p>' . _('The libxml extension is not available in your PHP') . '</p>';
 
 		    }
 		    //check if the mysqli or mysql is exist
 		    if(!empty($_POST['NosqlExt']) and $_POST['NosqlExt'] == 1){
 			    $InputError = 1;
-			    $ErrMsg .= '<p>'._('There is no MySQL or MySQL extension available').'</p>';
+			    $ErrMsg .= '<p>' . _('There is no MySQL or MySQL extension available') . '</p>';
 		    }
 		    if(!empty($_POST['MysqlExt']) and $_POST['MysqlExt'] == 1 and empty($_POST['PHP55'])){
 
 			    $InputWarn = 1;
 			    $MysqlExt = 1;
-			    $WarnMsg .= _('The PHP MySQLI extension is recommend as MySQL extension has been deprecated since PHP 5.5').'<br/>';
+			    $WarnMsg .= _('The PHP MySQLI extension is recommend as MySQL extension has been deprecated since PHP 5.5') . '<br/>';
 
 		    }elseif(!empty($_POST['MysqlExt']) and $_POST['MysqlExt'] ==1 and !empty($_POST['PHP55'])){
 			    $InputError = 1;
-			    $ErrMsg .='<p>'._('The MySQL extension has been deprecated since 5.5. You should install the MySQLI extension or downgrade you PHP version to  one prior to 5.5').'</p>';
+			    $ErrMsg .='<p>' . _('The MySQL extension has been deprecated since 5.5. You should install the MySQLI extension or downgrade you PHP version to  one prior to 5.5') . '</p>';
 		    }
 		    //Check if the GD extension is available
 		    if(empty($_POST['GdExt']) or $_POST['GdExt'] != 1){
 			    $InputWarn = 1;
-			    $WarnMsg .='<p>'. _('The GD extension should be installed in your PHP configuration').'</p>';
+			    $WarnMsg .='<p>' .  _('The GD extension should be installed in your PHP configuration') . '</p>';
 
 		    }
 
@@ -747,10 +747,10 @@ function Installation($DefaultLanguage)
         <div class="page_help_text">
             <?php echo '
             <ul>
-                 <li>'._('During installation you may see different status messages.').'</li>
-                <li>'._('When there is an error message you must correct the error to continue.').'</li>
-                <li>'._('If you see a warning message you should take notice before you proceed.').'</li>
-                <li>'._('If you are unsure of an option value, you may keep the default setting.').'</li>
+                 <li>' . _('During installation you may see different status messages.') . '</li>
+                <li>' . _('When there is an error message you must correct the error to continue.') . '</li>
+                <li>' . _('If you see a warning message you should take notice before you proceed.') . '</li>
+                <li>' . _('If you are unsure of an option value, you may keep the default setting.') . '</li>
             </ul>';
             ?>
 
@@ -772,21 +772,21 @@ function Installation($DefaultLanguage)
                                             //chance that different locale but use same first 2 letters.
                         if(!isset($SelectedKey) and substr($DefaultLanugage,0,2) == substr($Key,0,2)){
                             $SelectedKey = $Key;
-                            echo '<option value="'.$Key.'" selected="selected">'.$Language1['LanguageName'].$Language1['WindowsLocale'].'</option>';
+                            echo '<option value="'.$Key.'" selected="selected">' . $Language1['LanguageName'].$Language1['WindowsLocale'] . '</option>';
                         }
                         if(!isset($SelectedKey) or (isset($SelectedKey) and $Key != $SelectedKey)){
-                            echo '<option value="'.$Key.'" >'.$Language1['LanguageName'].$Language1['WindowsLocale'].'</option>';
+                            echo '<option value="'.$Key.'" >' . $Language1['LanguageName'].$Language1['WindowsLocale'] . '</option>';
                         }
                     }
                 }else{
                     foreach($LanguagesArray as $Key => $Language1){
                         if(!isset($SelectedKey) and substr($Key,0,2) == 'en'){
                             $SelectedKey = $Key;
-                            echo '<option value="'.$Key.'" selected="selected">'.$Language1['LanguageName'].'</option>';
+                            echo '<option value="'.$Key.'" selected="selected">' . $Language1['LanguageName'] . '</option>';
                         }
                         if(!isset($SelectedKey) or (isset($SelectedKey) and $SelectedKey != $Key)){
 
-                            echo '<option value="'.$Key.'" >'.$Language1['LanguageName'].'</option>';
+                            echo '<option value="'.$Key.'" >' . $Language1['LanguageName'] . '</option>';
                         }
                     }
                 }
@@ -875,7 +875,7 @@ function Installation($DefaultLanguage)
 
         <?php echo '
         <div class="page_help_text">
-            <p>'. _('webERP is an open source application licenced under GPL V2 and absolutely free to download.<br /> By installing webERP you acknowledge you have read <a href="http://www.gnu.org/licenses/gpl-2.0.html#SEC1" target="_blank">the licence</a>. <br />Please visit the official webERP website for more information.').'
+            <p>' .  _('webERP is an open source application licenced under GPL V2 and absolutely free to download.<br /> By installing webERP you acknowledge you have read <a href="http://www.gnu.org/licenses/gpl-2.0.html#SEC1" target="_blank">the licence</a>. <br />Please visit the official webERP website for more information.').'
             </p>
             <p><img src="../css/webERPsm.gif" title="webERP" alt="webERP" />&#160; <a href="http://www.weberp.org">http://www.weberp.org</a></p>
         </div>';
@@ -978,8 +978,8 @@ function DbCheck($UserLanguage,$HostName,$UserName,$Password,$DatabaseName,$Mysq
 			$Con = mysqli_connect($HostName,$UserName,$Password);
 		}
 		if(!$Con){
-			echo '<h1>'._('webERP Installation Wizard').'</h1>';
-			prnMsg(_('Failed to connect to the database. Please correct the following error:').'<br/>'.mysqli_connect_error().'<br/> '.('This error is usually caused by entry of an incorrect database password or user name.'),'error');
+			echo '<h1>' . _('webERP Installation Wizard') . '</h1>';
+			prnMsg(_('Failed to connect to the database. Please correct the following error:') . '<br/>' . mysqli_connect_error() . '<br/> '.('This error is usually caused by entry of an incorrect database password or user name.'),'error');
 			if($MysqlExt){
 				DbConfig($UserLanguage,$MysqlExt);
 			}else{
@@ -1028,13 +1028,13 @@ function CompanySetup($UserLanguage,$HostName,$UserName,$Password,$DatabaseName,
                         if(!empty($COAs)){
                             foreach($COAs as $Value){
                                 if($Value == 'weberp-new.sql'){
-                                    echo '<option value="'.$Value.'" selected="true">'.$Value.'</option>';
+                                    echo '<option value="'.$Value.'" selected="true">' . $Value . '</option>';
                                 }elseif($Value != 'weberp-demo.sql'){// the demo sql selection is not necessary so not allowed
-                                    echo '<option value="'.$Value.'">'.$Value.'</option>';
+                                    echo '<option value="'.$Value.'">' . $Value . '</option>';
                                 }
                             }
                         }else{
-                            echo '<option value="1">'._('Default').'</option>';
+                            echo '<option value="1">' . _('Default') . '</option>';
                         }
                     ?>
                     </select>

@@ -234,7 +234,7 @@ if(isset($_POST['ProcessTransfer'])){
 							AND loccode='" . $_SESSION['Transfer']->StockLocationTo . "'
 							AND serialno='" . $Item->BundleRef . "'";
 
-						$Result = DB_query($SQL,$db,'<br />'. _('Could not determine if the serial item exists') );
+						$Result = DB_query($SQL,$db,'<br />' .  _('Could not determine if the serial item exists') );
 						$SerialItemExistsRow = DB_fetch_row($Result);
 
 
@@ -445,13 +445,13 @@ if (isset($_SESSION['Transfer'])){
 		</tr>';
 
 	$tableheader = '<tr>
-						<th>'. _('Item Code') . '</th>
-						<th>'. _('Item Description'). '</th>
-						<th>'. _('Quantity Dispatched'). '</th>
-						<th>'. _('Quantity Received'). '</th>
-						<th>'. _('Quantity To Receive'). '</th>
-						<th>'. _('Units'). '</th>
-						<th>'. _('Cancel Balance') . '</th>
+						<th>' .  _('Item Code') . '</th>
+						<th>' .  _('Item Description'). '</th>
+						<th>' .  _('Quantity Dispatched'). '</th>
+						<th>' .  _('Quantity Received'). '</th>
+						<th>' .  _('Quantity To Receive'). '</th>
+						<th>' .  _('Units'). '</th>
+						<th>' .  _('Cancel Balance') . '</th>
 					</tr>';
 
 	echo $tableheader;
@@ -518,7 +518,7 @@ if (isset($_SESSION['Transfer'])){
 		</div>
         </div>
 		</form>';
-	echo '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'). '?NewTransfer=true">'. _('Select A Different Transfer').'</a>';
+	echo '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'). '?NewTransfer=true">' .  _('Select A Different Transfer') . '</a>';
 
 } else { /*Not $_SESSION['Transfer'] set */
 
@@ -532,7 +532,7 @@ if (isset($_SESSION['Transfer'])){
 
 	echo '<table class="selection">';
 	echo '<tr>
-			<td>'. _('Select Location Receiving Into'). ':</td>
+			<td>' .  _('Select Location Receiving Into'). ':</td>
 			<td>';
 	echo '<select name="RecLocation" onchange="ReloadForm(form1.RefreshTransferList)">';
 	if (!isset($_POST['RecLocation'])){
@@ -565,11 +565,11 @@ if (isset($_SESSION['Transfer'])){
 		$LocResult = DB_query($LocSql,$db);
 		$LocRow = DB_fetch_array($LocResult);
 		echo '<table class="selection">';
-		echo '<tr><th colspan="4"><h3>'._('Pending Transfers Into').' '.$LocRow['locationname'].'</h3></th></tr>';
+		echo '<tr><th colspan="4"><h3>' . _('Pending Transfers Into').' '.$LocRow['locationname'] . '</h3></th></tr>';
 		echo '<tr>
-			<th>'. _('Transfer Ref'). '</th>
-			<th>'. _('Transfer From'). '</th>
-			<th>'. _('Dispatch Date'). '</th></tr>';
+			<th>' .  _('Transfer Ref'). '</th>
+			<th>' .  _('Transfer From'). '</th>
+			<th>' .  _('Dispatch Date'). '</th></tr>';
 		$k=0;
 		while ($myrow=DB_fetch_array($TrfResult)){
 
@@ -583,7 +583,7 @@ if (isset($_SESSION['Transfer'])){
 			echo '<td class="number">' . $myrow['reference'] . '</td>
 					<td>' . $myrow['trffromloc'] . '</td>
 					<td>' . ConvertSQLDateTime($myrow['shipdate']) . '</td>
-					<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Trf_ID=' . $myrow['reference'] . '">'. _('Receive'). '</a></td>
+					<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Trf_ID=' . $myrow['reference'] . '">' .  _('Receive'). '</a></td>
 					</tr>';
 		}
 		echo '</table>';

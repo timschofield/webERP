@@ -553,7 +553,7 @@ if (isset($_POST['submit'])) {
 		}
 		echo '<table class="selection">
 				<tr>
-					<th colspan="3"><h3>'._('Last Run Details').'</h3></th>
+					<th colspan="3"><h3>' . _('Last Run Details') . '</h3></th>
 				</tr>
 				<tr>
 					<td>' . _('Last Run Time') . ':</td><td>' . $myrow['runtime'] . '</td>
@@ -589,7 +589,7 @@ if (isset($_POST['submit'])) {
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">
 			<tr>
-				<th colspan="3"><h3>'._('This Run Details').'</h3></th>
+				<th colspan="3"><h3>' . _('This Run Details') . '</h3></th>
 			</tr>
 			<tr>
 				<td>' . _('Location') . '</td>

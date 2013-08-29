@@ -33,7 +33,7 @@ if (!isset($Item) OR !isset($_SESSION['CustomerID']) OR $_SESSION['CustomerID']=
 }
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') .
-		'" alt="" />' . _('Special Customer Prices').'</p><br />';
+		'" alt="" />' . _('Special Customer Prices') . '</p><br />';
 echo '<b>' . htmlspecialchars($myrow['name'], ENT_QUOTES, 'UTF-8') . ' ' . _('in') . ' ' . $myrow['currcode'] . '<br />' . ' ' . _('for') . ' ';
 
 $CurrCode = $myrow['currcode'];
@@ -270,12 +270,12 @@ if (DB_num_rows($result) == 0) {
 		$EndDateDisplay = ConvertSQLDate($myrow['enddate']);
 	}
 	echo '<tr style="background-color:#CCCCCC">
-			<td class="number">'.locale_number_format($myrow['price'],$CurrDecimalPlaces).'</td>
-			<td>' . $Branch.'</td>
-			<td>'.$myrow['units'].'</td>
-			<td class="number">'.$myrow['conversionfactor'].'</td>
-			<td>'.ConvertSQLDate($myrow['startdate']).'</td>
-			<td>'.$EndDateDisplay.'</td>
+			<td class="number">' . locale_number_format($myrow['price'],$CurrDecimalPlaces) . '</td>
+			<td>' . $Branch . '</td>
+			<td>' . $myrow['units'] . '</td>
+			<td class="number">' . $myrow['conversionfactor'] . '</td>
+			<td>' . ConvertSQLDate($myrow['startdate']) . '</td>
+			<td>' . $EndDateDisplay . '</td>
 	 		<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?Item='.$Item.'&amp;Price='.$myrow['price'].'&amp;Branch='.$myrow['branchcode'].
 				'&amp;StartDate='.$myrow['startdate'].'&amp;EndDate='.$myrow['enddate'].'&amp;Edit=1">' . _('Edit') . '</a></td>
 			<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?Item='.$Item.'&amp;Branch='.$myrow['branchcode'].'&amp;StartDate='.$myrow['startdate'] .'&amp;EndDate='.$myrow['enddate'].'&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this price?') . '\');">' . _('Delete') . '</a></td>
@@ -338,9 +338,9 @@ if ($myrow['branchcode']=='') {
 
 while ($myrow=DB_fetch_array($result)) {
 	if ($myrow['branchcode']==$_GET['Branch']) {
-		echo '<option selected="selected" value="'.$myrow['branchcode'].'">'.htmlspecialchars($myrow['brname'], ENT_QUOTES, 'UTF-8').'</option>';
+		echo '<option selected="selected" value="'.$myrow['branchcode'].'">' . htmlspecialchars($myrow['brname'], ENT_QUOTES, 'UTF-8') . '</option>';
 	} else {
-		echo '<option value="'.$myrow['branchcode'].'">'.htmlspecialchars($myrow['brname'], ENT_QUOTES, 'UTF-8').'</option>';
+		echo '<option value="'.$myrow['branchcode'].'">' . htmlspecialchars($myrow['brname'], ENT_QUOTES, 'UTF-8') . '</option>';
 	}
 }
 echo '</select></td></tr>';

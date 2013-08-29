@@ -15,7 +15,7 @@ echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/i
 
 if (!isset($_SESSION['Transfer'])) {
 	/* This page can only be called when a stock Transfer is pending */
-	echo '<div class="centre"><a href="' . $RootPath . '/StockTransfers.php?NewTransfer=Yes">'._('Enter A Stock Transfer').'</a><br />';
+	echo '<div class="centre"><a href="' . $RootPath . '/StockTransfers.php?NewTransfer=Yes">' . _('Enter A Stock Transfer') . '</a><br />';
 	prnMsg( _('This page can only be opened if a Stock Transfer for a Controlled Item has been initiated'),'error');
 	echo '</div>';
 	include('includes/footer.inc');
@@ -41,9 +41,9 @@ if (isset($TransferItem)){ /*we are in a bulk transfer */
 //Make sure this item is really controlled
 if ($LineItem->Controlled != 1 ){
 	if (isset($TransferItem)){
-		echo '<div class="centre"><a href="' . $RootPath . '/StockLocTransferReceive.php>'._('Receive A Stock Transfer').'</a></div>';
+		echo '<div class="centre"><a href="' . $RootPath . '/StockLocTransferReceive.php>' . _('Receive A Stock Transfer') . '</a></div>';
 	} else {
-		echo '<div class="centre"><a href="' . $RootPath . '/StockTransfers.php?NewTransfer=Yes">'._('Enter A Stock Transfer').'</a></div>';
+		echo '<div class="centre"><a href="' . $RootPath . '/StockTransfers.php?NewTransfer=Yes">' . _('Enter A Stock Transfer') . '</a></div>';
 	}
 	prnMsg(_('Notice') . ' - ' . _('The transferred item must be defined as controlled to require input of the batch numbers or serial numbers being transferred'),'error');
 	include('includes/footer.inc');
@@ -57,14 +57,14 @@ if (isset($TransferItem)){
 	echo _('Transfer Items is set equal to') . ' ' . $TransferItem;
 
 	echo '<br />
-			<a href="'.$RootPath.'/StockLocTransferReceive.php?StockID='.$LineItem->StockID.'">'._('Back To Transfer Screen').'</a>';
+			<a href="'.$RootPath.'/StockLocTransferReceive.php?StockID='.$LineItem->StockID.'">' . _('Back To Transfer Screen') . '</a>';
 } else {
 	echo '<br />
-			<a href="'.$RootPath.'/StockTransfers.php?StockID='.$LineItem->StockID. '">'._('Back To Transfer Screen').'</a>';
+			<a href="'.$RootPath.'/StockTransfers.php?StockID='.$LineItem->StockID. '">' . _('Back To Transfer Screen') . '</a>';
 }
 
 echo '<br />
-	<font size="2"><b>'. _('Transfer of controlled item'). ' ' . $LineItem->StockID  . ' - ' . $LineItem->ItemDescription . '</b></font>
+	<font size="2"><b>' .  _('Transfer of controlled item'). ' ' . $LineItem->StockID  . ' - ' . $LineItem->ItemDescription . '</b></font>
 	</div>';
 
 /** vars needed by InputSerialItem : **/

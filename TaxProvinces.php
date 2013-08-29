@@ -178,7 +178,7 @@ if (isset($_POST['submit'])) {
 
 		echo '<td>' . $myrow[1] . '</td>
 				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedTaxProvince=' . $myrow[0] . '">' . _('Edit') . '</a></td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedTaxProvince=' . $myrow[0] . '&amp;delete=1">' . _('Delete') .'</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedTaxProvince=' . $myrow[0] . '&amp;delete=1">' . _('Delete')  . '</a></td>
 			</tr>';
 
 	} //END WHILE LIST LOOP

@@ -54,7 +54,7 @@ function DB_query ($SQL,
 		if ($TrapErrors){
 			require_once($PathPrefix . 'includes/header.inc');
 		}
-		prnMsg($ErrorMessage.'<BR>' . DB_error_msg($Conn),'error', _('DB ERROR:'));
+		prnMsg($ErrorMessage . '<BR>' . DB_error_msg($Conn),'error', _('DB ERROR:'));
 		if ($debug==1){
 			echo '<BR>' . $DebugMessage. "<BR>$SQL<BR>";
 		}
@@ -62,7 +62,7 @@ function DB_query ($SQL,
 			$SQL = 'rollback';
 			$Result = DB_query($SQL,$Conn);
 			if (DB_error_no($Conn) !=0){
-				prnMsg('<br />'.  _('Error Rolling Back Transaction!!'), '', _('DB DEBUG:') );
+				prnMsg('<br />' .   _('Error Rolling Back Transaction!!'), '', _('DB DEBUG:') );
 			}
 		}
 		if ($TrapErrors){

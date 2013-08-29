@@ -181,7 +181,7 @@ if (isset($_POST['DeleteRecurringOrder'])){
 
 	prnMsg(_('Successfully deleted recurring sales order template number') . ' ' . $_POST['ExistingRecurrOrderNo'],'success');
 
-	echo '<p><a href="'.$RootPath.'/SelectRecurringSalesOrder.php">'. _('Select A Recurring Sales Order Template') .'</a>';
+	echo '<p><a href="'.$RootPath.'/SelectRecurringSalesOrder.php">' .  _('Select A Recurring Sales Order Template')  . '</a>';
 
 	unset($_SESSION['Items'.$identifier]->LineItems);
 	unset($_SESSION['Items'.$identifier]);
@@ -305,9 +305,9 @@ If (isset($_POST['Process'])) {
 			prnmsg(_('The recurring order template has been updated'),'success');
 		}
 
-	echo '<p><a href="'.$RootPath.'/SelectOrderItems.php?NewOrder=Yes">'. _('Enter New Sales Order') .'</a>';
+	echo '<p><a href="'.$RootPath.'/SelectOrderItems.php?NewOrder=Yes">' .  _('Enter New Sales Order')  . '</a>';
 
-	echo '<p><a href="'.$RootPath.'/SelectRecurringSalesOrder.php">'. _('Select A Recurring Sales Order Template') .'</a>';
+	echo '<p><a href="'.$RootPath.'/SelectRecurringSalesOrder.php">' .  _('Select A Recurring Sales Order Template')  . '</a>';
 
 	unset($_SESSION['Items'.$identifier]->LineItems);
 	unset($_SESSION['Items'.$identifier]);
@@ -318,21 +318,21 @@ If (isset($_POST['Process'])) {
 }
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/customer.png" title="' . _('Search') .
-		'" alt="" /><b>'.' '. _('Recurring Order for Customer') .' : ' . $_SESSION['Items'.$identifier]->CustomerName .'</b></p>';
+		'" alt="" /><b>' . ' '. _('Recurring Order for Customer') .' : ' . $_SESSION['Items'.$identifier]->CustomerName  . '</b></p>';
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier. '" method="post">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<table cellpadding="2" class="selection">';
-echo '<tr><th colspan="7"><b>'._('Order Line Details').'</b></th></tr>';
+echo '<tr><th colspan="7"><b>' . _('Order Line Details') . '</b></th></tr>';
 echo '<tr>
-	<th>'. _('Item Code') .'</th>
-	<th>'. _('Item Description') .'</th>
-	<th>'. _('Quantity') .'</th>
-	<th>'. _('Unit') .'</th>
-	<th>'. _('Price') .'</th>
-	<th>'. _('Discount') .' %</th>
-	<th>'. _('Total') .'</th>
+	<th>' .  _('Item Code')  . '</th>
+	<th>' .  _('Item Description')  . '</th>
+	<th>' .  _('Quantity')  . '</th>
+	<th>' .  _('Unit')  . '</th>
+	<th>' .  _('Price')  . '</th>
+	<th>' .  _('Discount') .' %</th>
+	<th>' .  _('Total')  . '</th>
 </tr>';
 
 $_SESSION['Items'.$identifier]->total = 0;
@@ -373,51 +373,51 @@ foreach ($_SESSION['Items'.$identifier]->LineItems as $StockItem) {
 
 $DisplayTotal = locale_number_format($_SESSION['Items'.$identifier]->total,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
 echo '<tr>
-		<td colspan="6" class="number"><b>'. _('TOTAL Excl Tax/Freight') .'</b></td>
+		<td colspan="6" class="number"><b>' .  _('TOTAL Excl Tax/Freight')  . '</b></td>
 		<td class="number">' . $DisplayTotal . '</td>
 	</tr>
 	</table>';
 
 echo '<br /><table class="selection">';
-echo '<tr><th colspan="7"><h3>'._('Order Header Details').'</h3></th></tr>';
+echo '<tr><th colspan="7"><h3>' . _('Order Header Details') . '</h3></th></tr>';
 
 echo '<tr>
-	<td>'. _('Deliver To') .':</td>
+	<td>' .  _('Deliver To') .':</td>
 	<td>' . $_SESSION['Items'.$identifier]->DeliverTo . '</td></tr>';
 
 echo '<tr>
-	<td>'. _('Deliver from the warehouse at') .':</td>
+	<td>' .  _('Deliver from the warehouse at') .':</td>
 	<td>' . $_SESSION['Items'.$identifier]->Location . '</td></tr>';
 
 echo '<tr>
-	<td>'. _('Street') .':</td>
+	<td>' .  _('Street') .':</td>
 	<td>' . $_SESSION['Items'.$identifier]->DelAdd1 . '</td></tr>';
 
 echo '<tr>
-	<td>'. _('Suburb') .':</td>
+	<td>' .  _('Suburb') .':</td>
 	<td>' . $_SESSION['Items'.$identifier]->DelAdd2 . '</td></tr>';
 
 echo '<tr>
-	<td>'. _('City') . '/' . _('Region') .':</td>
+	<td>' .  _('City') . '/' . _('Region') .':</td>
 	<td>' . $_SESSION['Items'.$identifier]->DelAdd3 . '</td></tr>';
 
 echo '<tr>
-	<td>'. _('Post Code') .':</td>
+	<td>' .  _('Post Code') .':</td>
 	<td>' . $_SESSION['Items'.$identifier]->DelAdd4 . '</td></tr>';
 
 echo '<tr>
-	<td>'. _('Contact Phone Number') .':</td>
+	<td>' .  _('Contact Phone Number') .':</td>
 	<td>' . $_SESSION['Items'.$identifier]->PhoneNo . '</td></tr>';
 
 echo '<tr><td>' . _('Contact Email') .':</td>
 	<td>' . $_SESSION['Items'.$identifier]->Email . '</td></tr>';
 
-echo '<tr><td>'. _('Customer Reference') .':</td>
+echo '<tr><td>' .  _('Customer Reference') .':</td>
 	<td>' . $_SESSION['Items'.$identifier]->CustRef . '</td></tr>';
 
 echo '<tr>
-	<td>'. _('Comments') .':</td>
-	<td>' . $_SESSION['Items'.$identifier]->Comments .'</td></tr>';
+	<td>' .  _('Comments') .':</td>
+	<td>' . $_SESSION['Items'.$identifier]->Comments  . '</td></tr>';
 
 if (!isset($_POST['StartDate'])){
 	$_POST['StartDate'] = date($_SESSION['DefaultDateFormat']);
@@ -425,11 +425,11 @@ if (!isset($_POST['StartDate'])){
 
 if ($NewRecurringOrder=='Yes'){
 	echo '<tr>
-	<td>'. _('Start Date') .':</td>
+	<td>' .  _('Start Date') .':</td>
 	<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="StartDate" size="11" maxlength="10" value="' . $_POST['StartDate'] .'" /></td></tr>';
 } else {
 	echo '<tr>
-	<td>'. _('Last Recurrence') . ':</td>
+	<td>' .  _('Last Recurrence') . ':</td>
 	<td>' . $_POST['StartDate'];
 	echo '<input type="hidden" name="StartDate" value="' . $_POST['StartDate'] . '" /></td></tr>';
 }
@@ -439,11 +439,11 @@ if (!isset($_POST['StopDate'])){
 }
 
 echo '<tr>
-	<td>'. _('Finish Date') .':</td>
+	<td>' .  _('Finish Date') .':</td>
 	<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="StopDate" size="11" maxlength="10" value="' . $_POST['StopDate'] .'" /></td></tr>';
 
 echo '<tr>
-	<td>'. _('Frequency of Recurrence') .':</td>
+	<td>' .  _('Frequency of Recurrence') .':</td>
 	<td><select name="Frequency">';
 
 if (isset($_POST['Frequency']) and $_POST['Frequency']==52){

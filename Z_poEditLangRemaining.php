@@ -121,7 +121,7 @@ echo '<br />&nbsp;' . _('Current language is') . ' ' . $_SESSION['Language'];
 		for ($i=1; $i<=$TotalLines; $i++) {
 			if ($ModuleText[$i] == "") {
 				echo '<tr>';
-				echo '<td VALIGN="top"><I>'. $DefaultText[$i] . '</I></td>';
+				echo '<td VALIGN="top"><I>' .  $DefaultText[$i] . '</I></td>';
 				echo '<td VALIGN="top"><input type="text" size="60" name="moduletext_' . $msgstr[$i] . '" value="' . $ModuleText[$i] . '" /></td>';
 				echo '<td VALIGN="top">' . $AlsoIn[$i] . '<input type="hidden" name="msgstr_' . $msgstr[$i] . '" value="' . $msgstr[$i] . '" /></td>';
 				echo '</tr>';

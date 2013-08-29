@@ -38,7 +38,7 @@ include('includes/header.inc');
 			<td>' . _('Start Period:') . '</td>
 			<td><select name="FromPeriod">';
 
-	$ToSelect = '<tr><td>' . _('End Period:') .'</td>
+	$ToSelect = '<tr><td>' . _('End Period:')  . '</td>
 					<td><select name="ToPeriod">';
 
 	$SQL = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno";
@@ -46,10 +46,10 @@ include('includes/header.inc');
 
 	while ( $perRow=DB_fetch_array($perResult) ) {
 		$FromSelected = ( $perRow['periodno'] == $DefaultFromPeriod ) ? 'selected="selected"' : '';
-		echo '<option ' . $FromSelected . ' value="' . $perRow['periodno'] . '">' .MonthAndYearFromSQLDate($perRow['lastdate_in_period']) .'</option>';
+		echo '<option ' . $FromSelected . ' value="' . $perRow['periodno'] . '">' .MonthAndYearFromSQLDate($perRow['lastdate_in_period'])  . '</option>';
 
 		$ToSelected = ( $perRow['periodno'] == $DefaultToPeriod ) ? 'selected="selected"' : '';
-		$ToSelect .= '<option ' . $ToSelected . ' value="' . $perRow['periodno'] . '">' . MonthAndYearFromSQLDate($perRow['lastdate_in_period']) .'</option>';
+		$ToSelect .= '<option ' . $ToSelected . ' value="' . $perRow['periodno'] . '">' . MonthAndYearFromSQLDate($perRow['lastdate_in_period'])  . '</option>';
 	}
 	DB_free_result($perResult);
 	echo '</select></td></tr>';

@@ -102,10 +102,10 @@ if ((!isset($_POST['FromPeriod'])
 	echo '</select></td></tr>';
 
 	echo '<tr>
-			<td>'._('Detail Or Summary').':</td>
+			<td>' . _('Detail Or Summary').':</td>
 			<td><select name="Detail">
-					<option selected="selected" value="Summary">'._('Summary') . '</option>
-					<option selected="selected" value="Detailed">'._('All Accounts') . '</option>
+					<option selected="selected" value="Summary">' . _('Summary') . '</option>
+					<option selected="selected" value="Detailed">' . _('All Accounts') . '</option>
 					</select>
 			</td>
 		</tr>
@@ -185,9 +185,9 @@ if ((!isset($_POST['FromPeriod'])
 		$Title = _('Profit and Loss') . ' - ' . _('Problem Report') . '....';
 		include('includes/header.inc');
 		prnMsg( _('No general ledger accounts were returned by the SQL because') . ' - ' . DB_error_msg($db) );
-		echo '<br /><a href="' .$RootPath .'/index.php">'. _('Back to the menu'). '</a>';
+		echo '<br /><a href="' .$RootPath .'/index.php">' .  _('Back to the menu'). '</a>';
 		if ($debug == 1){
-			echo '<br />'. $SQL;
+			echo '<br />' .  $SQL;
 		}
 		include('includes/footer.inc');
 		exit;
@@ -197,7 +197,7 @@ if ((!isset($_POST['FromPeriod'])
 		include('includes/header.inc');
 		echo '<br />';
 		prnMsg( _('There were no entries to print out for the selections specified'),'warn' );
-		echo '<br /><a href="'. $RootPath.'/index.php">'. _('Back to the menu'). '</a>';
+		echo '<br /><a href="'. $RootPath.'/index.php">' .  _('Back to the menu'). '</a>';
 		include('includes/footer.inc');
 		exit;
 	}
@@ -617,15 +617,15 @@ if ((!isset($_POST['FromPeriod'])
 	if ($_POST['Detail']=='Detailed'){
 		$TableHeader = '<tr>
 							<th>' . _('Account') . '</th>
-							<th>'._('Account Name') .'</th>
-							<th colspan="2">' . _('Period Actual') .'</th>
-							<th colspan="2">' . _('Period Budget') .'</th>
+							<th>' . _('Account Name')  . '</th>
+							<th colspan="2">' . _('Period Actual')  . '</th>
+							<th colspan="2">' . _('Period Budget')  . '</th>
 							<th colspan="2">' . _('Last Year') . '</th>
 						</tr>';
 	} else { /*summary */
 		$TableHeader = '<tr>
 							<th colspan="2"></th>
-							<th colspan="2">' . _('Period Actual') .'</th>
+							<th colspan="2">' . _('Period Actual')  . '</th>
 							<th colspan="2">' . _('Period Budget') . '</th>
 							<th colspan="2">' . _('Last Year') . '</th>
 						</tr>';
@@ -812,7 +812,7 @@ if ((!isset($_POST['FromPeriod'])
 							<td colspan="6"><hr /></td>
 						</tr>';
 					printf('<tr style="background-color:#ffffff">
-							<td colspan="2"><h2>'._('Gross Profit').'</h2></td>
+							<td colspan="2"><h2>' . _('Gross Profit') . '</h2></td>
 							<td></td>
 							<td class="number">%s</td>
 							<td></td>
@@ -844,7 +844,7 @@ if ((!isset($_POST['FromPeriod'])
 							<td colspan="6"><hr /></td>
 						</tr>';
 					printf('<tr style="background-color:#ffffff">
-							<td colspan="2"><h4><i>'._('Gross Profit Percent').'</i></h4></td>
+							<td colspan="2"><h4><i>' . _('Gross Profit Percent') . '</i></h4></td>
 							<td></td>
 							<td class="number"><i>%s</i></td>
 							<td></td>
@@ -865,7 +865,7 @@ if ((!isset($_POST['FromPeriod'])
 						</tr>';
 
 					printf('<tr style="background-color:#ffffff">
-								<td colspan="2"><h4><b>'._('Profit').' - '._('Loss'). ' '. _('after'). ' ' . $Sections[$Section] .'</b></h2></td>
+								<td colspan="2"><h4><b>' . _('Profit').' - '._('Loss'). ' '. _('after'). ' ' . $Sections[$Section]  . '</b></h2></td>
 								<td></td>
 								<td class="number">%s</td>
 								<td></td>
@@ -893,7 +893,7 @@ if ((!isset($_POST['FromPeriod'])
 						$LYNPPercent = 0;
 					}
 					printf('<tr style="background-color:#ffffff">
-								<td colspan="2"><h4><i>'._('P/L Percent after').' ' . $Sections[$Section] .'</i></h4></td>
+								<td colspan="2"><h4><i>' . _('P/L Percent after').' ' . $Sections[$Section]  . '</i></h4></td>
 								<td></td>
 								<td class="number"><i>%s</i></td>
 								<td></td>
@@ -1170,7 +1170,7 @@ if ((!isset($_POST['FromPeriod'])
 					<td colspan="6"><hr /></td>
 				</tr>';
 			printf('<tr>
-						<td colspan="2"><h2>'._('Gross Profit').'</h2></td>
+						<td colspan="2"><h2>' . _('Gross Profit') . '</h2></td>
 						<td></td>
 						<td class="number">%s</td>
 						<td></td>
@@ -1202,7 +1202,7 @@ if ((!isset($_POST['FromPeriod'])
 					<td colspan="6"><hr /></td>
 				</tr>';
 			printf('<tr>
-					<td colspan="2"><h4><i>'._('Gross Profit Percent').'</i></h4></td>
+					<td colspan="2"><h4><i>' . _('Gross Profit Percent') . '</i></h4></td>
 					<td></td>
 					<td class="number"><i>%s</i></td>
 					<td></td>
@@ -1239,7 +1239,7 @@ if ((!isset($_POST['FromPeriod'])
 		</tr>';
 
 	printf('<tr style="background-color:#ffffff">
-				<td colspan="2"><h2><b>'._('Profit').' - '._('Loss').'</b></h2></td>
+				<td colspan="2"><h2><b>' . _('Profit').' - '._('Loss') . '</b></h2></td>
 				<td></td>
 				<td class="number">%s</td>
 				<td></td>
@@ -1272,7 +1272,7 @@ if ((!isset($_POST['FromPeriod'])
 		</tr>';
 
 	printf('<tr style="background-color:#ffffff">
-				<td colspan="2"><h4><i>'._('Net Profit Percent').'</i></h4></td>
+				<td colspan="2"><h4><i>' . _('Net Profit Percent') . '</i></h4></td>
 				<td></td>
 				<td class="number"><i>%s</i></td>
 				<td></td>

@@ -334,7 +334,7 @@ if (! isset($_GET['delete'])) {
 	echo '<option value="0">0 - ' . _('None') . '</option>';
 	while ($myrow=DB_fetch_array($result)){
 		if (isset($_POST['Tag']) and $_POST['Tag']==$myrow['tagref']){
-			echo '<option selected="selected" value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription'].'</option>';
+			echo '<option selected="selected" value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription'] . '</option>';
 		} else {
 			echo '<option value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription'] . '</option>';
 		}

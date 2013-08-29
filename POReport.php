@@ -58,15 +58,15 @@ if (isset($_POST['SummaryType']) and $_POST['SummaryType'] == 'suppname') {
 
 if (isset($_POST['submit'])) {
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') .
-		'" alt="" />' . ' ' . $Title.'</p>';
+		'" alt="" />' . ' ' . $Title . '</p>';
 	submit($db,$PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$SupplierName,$SupplierNameOp,$SaveSummaryType);
 } else if (isset($_POST['submitcsv'])) {
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') .
-		'" alt="" />' . ' ' . $Title.'</p>';
+		'" alt="" />' . ' ' . $Title . '</p>';
 	submitcsv($db,$PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$SupplierName,$SupplierNameOp,$SaveSummaryType);
 } else {
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') .
-		'" alt="" />' . $Title.'</p>';
+		'" alt="" />' . $Title . '</p>';
 	display($db);
 }
 
@@ -508,9 +508,9 @@ function submit(&$db,$PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$Suppli
 		} else {
 			$SortBy_Display = $Detail_Array[$_POST['SortBy']];
 		}
-		echo '<tr><th colspan="2">'._('Header Details').'</th></tr>';
+		echo '<tr><th colspan="2">' . _('Header Details') . '</th></tr>';
 		echo '<tr><td>' . _('Purchase Order Report') . '</td>
-					<td>' . $_POST['ReportType'] . ' ' . _('By') . ' '.$SortBy_Display .'</td></tr>';
+					<td>' . $_POST['ReportType'] . ' ' . _('By') . ' '.$SortBy_Display  . '</td></tr>';
 		echo '<tr><td>' . _('Date Type') . '</td>
 				<td>' . $_POST['DateType'] . '</td></tr>';
 		echo '<tr><td>' . _('Date Range') . '</td>
@@ -626,7 +626,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$Suppli
 						<th>' . _('Order Date') . '</th>
 						<th>' . _('Supplier No') . '</th>
 						<th>' . _('Supplier Name') . '</th>
-						<th>' . _('Received') .'</th>
+						<th>' . _('Received')  . '</th>
 						<th>' . _('Extended Cost') . '</th>
 						<th>' . _('Extended Price') . '</th>
 						<th>' . _('Invoiced Qty') . '</th>
@@ -1484,7 +1484,7 @@ function submitcsv(&$db,
 				' ');
 		} // End of if ($_POST['ReportType']
 		fclose($FileHandle);
-		echo '<div class="centre"><p>'._('The report has been exported as a csv file.').'</p>';
+		echo '<div class="centre"><p>' . _('The report has been exported as a csv file.') . '</p>';
 		echo '<p><a href="' .  $FileName . '">' . _('click here') . '</a> ' . _('to view the file') . '</div></p>';
 
 	} // End of if inputerror != 1
@@ -1571,7 +1571,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 
 	echo '<tr>
 			<td>' . _('Order Number') . ':</td>
-			<td>'._('Equals').':&nbsp;&nbsp;<input type="text" name="OrderNo" size="10" maxlength="10" value="';
+			<td>' . _('Equals').':&nbsp;&nbsp;<input type="text" name="OrderNo" size="10" maxlength="10" value="';
     if (isset($_POST['OrderNo'])) {
         echo $_POST['OrderNo'] . '" /></td>
 				</tr>';

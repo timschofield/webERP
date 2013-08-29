@@ -91,7 +91,7 @@ if (!isset($Id)) {
 	$SQLname="SELECT typename from debtortype where typeid='".$DebtorType."'";
 	$result = DB_query($SQLname,$db);
 	$myrow = DB_fetch_array($result);
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/customer.png" title="' . _('Search') . '" alt="" />'  . _('Notes for Customer Type').': <b>' .$myrow['typename'].'</b></p>
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/customer.png" title="' . _('Search') . '" alt="" />'  . _('Notes for Customer Type').': <b>' .$myrow['typename'] . '</b></p>
 		<br />';
 
 	$sql = "SELECT noteid,
@@ -104,7 +104,7 @@ if (!isset($Id)) {
 				WHERE typeid='".$DebtorType."'
 				ORDER BY date DESC";
 	$result = DB_query($sql,$db);
-			//echo '<br />'.$sql;
+			//echo '<br />' . $sql;
 
 	echo '<table class="selection">';
 	echo '<tr>
@@ -128,8 +128,8 @@ if (!isset($Id)) {
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
-				<td><a href="%sId=%s&amp;DebtorType=%s">'. _('Edit') . '</a></td>
-				<td><a href="%sId=%s&amp;DebtorType=%s&amp;delete=1">'. _('Delete') . '</a></td></tr>',
+				<td><a href="%sId=%s&amp;DebtorType=%s">' .  _('Edit') . '</a></td>
+				<td><a href="%sId=%s&amp;DebtorType=%s&amp;delete=1">' .  _('Delete') . '</a></td></tr>',
 				$myrow['date'],
 				$myrow['note'],
 				$myrow['href'],
@@ -147,7 +147,7 @@ if (!isset($Id)) {
 }
 if (isset($Id)) {
 	echo '<div class="centre">
-			<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?DebtorType=' . $DebtorType . '">' . _('Review all notes for this Customer Type') .'</a>
+			<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?DebtorType=' . $DebtorType . '">' . _('Review all notes for this Customer Type')  . '</a>
 		</div>';
 }
 
@@ -171,7 +171,7 @@ if (!isset($_GET['delete'])) {
 					AND typeid='".$DebtorType."'";
 
 		$result = DB_query($sql, $db);
-				//echo '<br />'.$sql;
+				//echo '<br />' . $sql;
 
 		$myrow = DB_fetch_array($result);
 
@@ -186,7 +186,7 @@ if (!isset($_GET['delete'])) {
 		echo '<input type="hidden" name="DebtorType" value="' . $_POST['typeid'] . '" />';
 		echo '<table class="selection">
 				<tr>
-					<td>'. _('Note ID').':</td>
+					<td>' .  _('Note ID').':</td>
 					<td>' . $_POST['NoteID'] . '</td>
 				</tr>';
 	} else {
@@ -200,19 +200,19 @@ if (!isset($_GET['delete'])) {
 	}
 
 	echo '<tr>
-			<td>'._('Contact Group Note').':</td>
-			<td><textarea name="Note" autofocus required rows="3" cols="32">'. $_POST['Note'].'</textarea></td>
+			<td>' . _('Contact Group Note').':</td>
+			<td><textarea name="Note" autofocus required rows="3" cols="32">' .  $_POST['Note'] . '</textarea></td>
 		</tr>
 		<tr>
-			<td>'. _('Web site').':</td>
+			<td>' .  _('Web site').':</td>
 			<td><input type="url" name="Href" value="'. $_POST['Href'].'" size="35" maxlength="100" /></td>
 		</tr>
 		<tr>
-			<td>'. _('Date').':</td>
+			<td>' .  _('Date').':</td>
 			<td><input type="date" required name="NoteDate" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" value="'. $_POST['NoteDate']. '" size="10" maxlength="10" /></td>
 		</tr>
 		<tr>
-			<td>'. _('Priority').':</td>
+			<td>' .  _('Priority').':</td>
 			<td><input type="number" required min="1" class="number" name="Priority" value="'. $_POST['Priority'] .'" size="1" maxlength="3" /></td>
 		</tr>
 		</table>

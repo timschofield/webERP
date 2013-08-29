@@ -422,7 +422,7 @@ if (isset($_GET['ReceivePO']) AND $_GET['ReceivePO']!=''){
 					} /* end of if GL and stock integrated and standard cost !=0 */
 				} /*end of OrderLine loop */
 
-				$StatusComment=date($_SESSION['DefaultDateFormat']) .' - ' . _('Order Completed on entry of GRN') .'<br />' . $_SESSION['PO'.$identifier]->StatusComments;
+				$StatusComment=date($_SESSION['DefaultDateFormat']) .' - ' . _('Order Completed on entry of GRN')  . '<br />' . $_SESSION['PO'.$identifier]->StatusComments;
 				$sql="UPDATE purchorders
 						SET status='Completed',
 						stat_comment='" . $StatusComment . "'
@@ -1893,7 +1893,7 @@ then do the updates and inserts to process the invoice entered */
 } /*end of process invoice */
 
 if($InputError==true){ //add a link to return if users make input errors.
-	echo '<div class="centre"><a href="'.$RootPath.'/SupplierInvoice.php" >'._('Back to Invoice Entry').'</a></div>';
+	echo '<div class="centre"><a href="'.$RootPath.'/SupplierInvoice.php" >' . _('Back to Invoice Entry') . '</a></div>';
 } //end of return link for input errors
 
 include('includes/footer.inc');

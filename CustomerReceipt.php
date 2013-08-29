@@ -254,11 +254,11 @@ if (isset($_POST['CommitBatch'])){
 
 	echo '<table class="selection">
 			<tr>
-				<th>'._('Batch Number').'</th>
+				<th>' . _('Batch Number') . '</th>
 				<th>' . _('Date Banked') . '</th>
 				<th>' . _('Customer Name') . '</th>
 				<th>' . _('GL Code') . '</th>
-				<th>' . _('Amount of Receipt').'</th>
+				<th>' . _('Amount of Receipt') . '</th>
 			</tr>';
 
 	foreach ($_SESSION['ReceiptBatch']->Items as $ReceiptItem) {
@@ -275,14 +275,14 @@ if (isset($_POST['CommitBatch'])){
 		$Result=DB_query($SQL,$db);
 		$myrow=DB_fetch_array($Result);
 
-		echo '<td>'.$_SESSION['ReceiptBatch']->BatchNo.'</td>
-				<td>'.$_SESSION['ReceiptBatch']->DateBanked.'</td>
-				<td>'.$ReceiptItem->CustomerName.'</td>
-				<td>'.$ReceiptItem->GLCode.' - '.$myrow['accountname'].'</td>
-				<td class="number">'.locale_number_format($ReceiptItem->Amount/$_SESSION['ReceiptBatch']->ExRate/$_SESSION['ReceiptBatch']->FunctionalExRate,$_SESSION['ReceiptBatch']->CurrDecimalPlaces) .'</td>';
+		echo '<td>' . $_SESSION['ReceiptBatch']->BatchNo . '</td>
+				<td>' . $_SESSION['ReceiptBatch']->DateBanked . '</td>
+				<td>' . $ReceiptItem->CustomerName . '</td>
+				<td>' . $ReceiptItem->GLCode.' - '.$myrow['accountname'] . '</td>
+				<td class="number">' . locale_number_format($ReceiptItem->Amount/$_SESSION['ReceiptBatch']->ExRate/$_SESSION['ReceiptBatch']->FunctionalExRate,$_SESSION['ReceiptBatch']->CurrDecimalPlaces)  . '</td>';
 
 		if ($ReceiptItem->GLCode ==''){
-			echo '<td><a target="_blank"  href="' . $RootPath . '/PDFReceipt.php?BatchNumber=' . $_SESSION['ReceiptBatch']->BatchNo. '&ReceiptNumber='.$CustomerReceiptCounter.'">'._('Print a Customer Receipt').'</a></td></tr>';
+			echo '<td><a target="_blank"  href="' . $RootPath . '/PDFReceipt.php?BatchNumber=' . $_SESSION['ReceiptBatch']->BatchNo. '&ReceiptNumber='.$CustomerReceiptCounter.'">' . _('Print a Customer Receipt') . '</a></td></tr>';
 			$CustomerReceiptCounter += 1;
 		}
 
@@ -877,9 +877,9 @@ include('includes/GetPaymentMethods.php');
 
 foreach ($ReceiptTypes as $RcptType) {
 	if (isset($_POST['ReceiptType']) and $_POST['ReceiptType']==$RcptType){
-		echo '<option selected="selected" value="' . $RcptType . '">' . $RcptType .'</option>';
+		echo '<option selected="selected" value="' . $RcptType . '">' . $RcptType  . '</option>';
 	} else {
-		echo '<option value="' .$RcptType . '">' . $RcptType .'</option>';
+		echo '<option value="' .$RcptType . '">' . $RcptType  . '</option>';
 	}
 }
 echo '</select></td>
@@ -935,9 +935,9 @@ if (isset($_SESSION['ReceiptBatch'])){
 				<td class="number">' . locale_number_format($ReceiptItem->Amount,$_SESSION['ReceiptBatch']->CurrDecimalPlaces) . '</td>
 				<td class="number">' . locale_number_format($ReceiptItem->Discount,$_SESSION['ReceiptBatch']->CurrDecimalPlaces) . '</td>
 				<td>' . stripslashes($ReceiptItem->CustomerName) . '</td>
-				<td>'.$ReceiptItem->GLCode.' - '.$myrow['accountname'].'</td>
-				<td>'. stripslashes($ReceiptItem->Narrative) . '</td>
-				<td>'. $ReceiptItem->TagName . '</td>
+				<td>' . $ReceiptItem->GLCode.' - '.$myrow['accountname'] . '</td>
+				<td>' .  stripslashes($ReceiptItem->Narrative) . '</td>
+				<td>' .  $ReceiptItem->TagName . '</td>
 				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=' . $ReceiptItem->ID . '&Type=' . $_GET['Type']. '">' . _('Delete') . '</a></td>
 			</tr>';
 		$BatchTotal= $BatchTotal + $ReceiptItem->Amount;

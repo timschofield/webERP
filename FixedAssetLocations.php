@@ -95,9 +95,9 @@ $result=DB_query($sql, $db);
 if (DB_num_rows($result) > 0) {
 	echo '<table class="selection">
 		<tr>
-			<th>'._('Location ID').'</th>
-			<th>'._('Location Description').'</th>
-			<th>'._('Parent Location').'</th>
+			<th>' . _('Location ID') . '</th>
+			<th>' . _('Location Description') . '</th>
+			<th>' . _('Parent Location') . '</th>
 		</tr>';
 }
 while ($myrow=DB_fetch_array($result)) {
@@ -118,21 +118,21 @@ echo '<form id="LocationForm" method="post" action="' . htmlspecialchars($_SERVE
     <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 	<table class="selection">
 	<tr>
-		<th style="text-align:left">'._('Location ID').'</th>';
+		<th style="text-align:left">' . _('Location ID') . '</th>';
 if (isset($_GET['SelectedLocation'])) {
 	echo '<input type="hidden" name="LocationID" value="'.$LocationID.'" />';
-	echo '<td>'.$LocationID.'</td>';
+	echo '<td>' . $LocationID . '</td>';
 } else {
 	echo '<td><input type="text" name="LocationID" required="required" title="' . _('Enter the location code of the fixed asset location. Up to six alpha-numeric characters') . '" pattern="[0-9a-zA-Z_]*" size="6" value="'.$LocationID.'" /></td>
 		</tr>';
 }
 
 echo '<tr>
-		<th style="text-align:left">'._('Location Description').'</th>
+		<th style="text-align:left">' . _('Location Description') . '</th>
 		<td><input type="text" name="LocationDescription" required="required" title="' . _('Enter the fixed asset location description. Up to 20 characters') . '" size="20" value="'.$LocationDescription.'" /></td>
 	</tr>
 	<tr>
-		<th style="text-align:left">'._('Parent Location').'</th>
+		<th style="text-align:left">' . _('Parent Location') . '</th>
 		<td><select name="ParentLocationID">';
 
 $sql="SELECT locationid, locationdescription FROM fixedassetlocations";
@@ -141,7 +141,7 @@ $result=DB_query($sql, $db);
 echo '<option value=""></option>';
 while ($myrow=DB_fetch_array($result)) {
 	if ($myrow['locationid']==$ParentLocationID) {
-		echo '<option selected="selected" value="' . $myrow['locationid'] . '">' . $myrow['locationdescription'].'</option>';
+		echo '<option selected="selected" value="' . $myrow['locationid'] . '">' . $myrow['locationdescription'] . '</option>';
 	} else {
 		echo '<option value="' . $myrow['locationid'] . '">' . $myrow['locationdescription'] . '</option>';
 	}

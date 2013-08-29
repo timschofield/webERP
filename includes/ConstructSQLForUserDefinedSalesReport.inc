@@ -323,7 +323,7 @@ while ($Cols = DB_fetch_array($ColsResult)){
 $SQLTheLot =	$SQLSelectCls . ' ' . $SQLFromCls . ' ' . $SQLWhereCls . ' ' . $SQLGroupCls ;
 
 /*For the purposes of debugging */
-/*echo '<P>'. $SQLTheLot;
+/*echo '<P>' .  $SQLTheLot;
 exit;
 */
 

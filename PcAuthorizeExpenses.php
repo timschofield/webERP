@@ -43,7 +43,7 @@ if (isset($_POST['Go'])) {
 
 if (isset($SelectedTabs)) {
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Petty Cash') .
-		'" alt="" />' . _('Authorisation Of Petty Cash Expenses ') . ''.$SelectedTabs.'</p>';
+		'" alt="" />' . _('Authorisation Of Petty Cash Expenses ') . ''.$SelectedTabs . '</p>';
 } else {
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Petty Cash') .
 		'" alt="" />' . _('Authorisation Of Petty Cash Expenses ') . '</p>';
@@ -247,19 +247,19 @@ if (isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 		} else {
 			$Posted=_('Yes');
 		}
-		echo'<td>'.ConvertSQLDate($myrow['date']).'</td>
-			<td>'.$myrow['codeexpense'].'</td>
-			<td class="number">'.locale_number_format($myrow['amount'],$CurrDecimalPlaces).'</td>
+		echo'<td>' . ConvertSQLDate($myrow['date']) . '</td>
+			<td>' . $myrow['codeexpense'] . '</td>
+			<td class="number">' . locale_number_format($myrow['amount'],$CurrDecimalPlaces) . '</td>
 			<td>' . $Posted . '</td>
 			<td>'  .$myrow['notes'] . '</td>
 			<td>' . $myrow['receipt'] . '</td>';
 
 		if (isset($_POST[$myrow['counterindex']])){
-			echo'<td>'.ConvertSQLDate(Date('Y-m-d'));
+			echo'<td>' . ConvertSQLDate(Date('Y-m-d'));
 		}else{
 			//compare against raw SQL format date, then convert for display.
 			if(($myrow['authorized']!='0000-00-00')){
-				echo'<td>'.ConvertSQLDate($myrow['authorized']);
+				echo'<td>' . ConvertSQLDate($myrow['authorized']);
 			}else{
 				echo '<td align="right"><input type="checkbox" name="'.$myrow['counterindex'].'" />';
 			}
@@ -283,7 +283,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 	}
 
 	echo '<tr><td colspan="2" class="number">' . _('Current balance') . ':</td>
-				<td class="number">'.locale_number_format($Amount['0'],$CurrDecimalPlaces).'</td></tr>';
+				<td class="number">' . locale_number_format($Amount['0'],$CurrDecimalPlaces) . '</td></tr>';
 
 	// Do the postings
 	include ('includes/GLPostings.inc');

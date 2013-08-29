@@ -86,7 +86,7 @@ if ((! isset($_POST['FromPeriod'])
 	}
 
 	echo '<tr>
-			<td>' . _('Select Period To:') .'</td>
+			<td>' . _('Select Period To:')  . '</td>
 			<td><select name="ToPeriod">';
 
 	$RetResult = DB_data_seek($Periods,0);
@@ -165,9 +165,9 @@ if ((! isset($_POST['FromPeriod'])
 		$BookMark = 'TrialBalance';
 		include('includes/header.inc');
 		prnMsg( _('No general ledger accounts were returned by the SQL because') . ' - ' . DB_error_msg($db) );
-		echo '<br /><a href="' .$RootPath .'/index.php">'. _('Back to the menu'). '</a>';
+		echo '<br /><a href="' .$RootPath .'/index.php">' .  _('Back to the menu'). '</a>';
 		if ($debug==1){
-			echo '<br />'. $SQL;
+			echo '<br />' .  $SQL;
 		}
 		include('includes/footer.inc');
 		exit;
@@ -179,7 +179,7 @@ if ((! isset($_POST['FromPeriod'])
 		include('includes/header.inc');
 		echo '<p>';
 		prnMsg( _('There were no entries to print out for the selections specified') );
-		echo '<br /><a href="'. $RootPath.'/index.php">'. _('Back to the menu'). '</a>';
+		echo '<br /><a href="'. $RootPath.'/index.php">' .  _('Back to the menu'). '</a>';
 		include('includes/footer.inc');
 		exit;
 	}
@@ -446,7 +446,7 @@ if ((! isset($_POST['FromPeriod'])
 
 	echo '<table cellpadding="2" class="selection">';
 	echo '<tr>
-			<th colspan="6"><b>'. _('Trial Balance for the month of ') . $PeriodToDate . _(' and for the ') . $NumberOfMonths . _(' months to ') . $PeriodToDate .'</b></th>
+			<th colspan="6"><b>' .  _('Trial Balance for the month of ') . $PeriodToDate . _(' and for the ') . $NumberOfMonths . _(' months to ') . $PeriodToDate  . '</b></th>
 		</tr>';
 	$TableHeader = '<tr>
 						<th>' . _('Account') . '</th>
@@ -454,7 +454,7 @@ if ((! isset($_POST['FromPeriod'])
 						<th>' . _('Month Actual') . '</th>
 						<th>' . _('Month Budget') . '</th>
 						<th>' . _('Period Actual') . '</th>
-						<th>' . _('Period Budget') .'</th>
+						<th>' . _('Period Budget')  . '</th>
 					</tr>';
 
 	$j = 1;

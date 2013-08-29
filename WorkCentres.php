@@ -139,7 +139,7 @@ or deletion of the records*/
 					<td>%s</td>
 					<td class="number">%s</td>
 					<td><a href="%s&amp;SelectedWC=%s">' . _('Edit') . '</a></td>
-					<td><a href="%s&amp;SelectedWC=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this work centre?') . '\');">' . _('Delete') .'</a></td>
+					<td><a href="%s&amp;SelectedWC=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this work centre?') . '\');">' . _('Delete')  . '</a></td>
 				</tr>',
 				$myrow['code'],
 				$myrow['description'],

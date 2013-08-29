@@ -184,7 +184,7 @@ if (isset($_POST['Submit'])) {
 		echo '<td>' . $myrow['description'] . '</td>
 				<td>' . $myrow['authoriser'] . '</td>
 				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedDepartmentID=' . $myrow['departmentid'] . '">' . _('Edit') . '</a></td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedDepartmentID=' . $myrow['departmentid'] . '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this department?') . '\');">'  . _('Delete') .'</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedDepartmentID=' . $myrow['departmentid'] . '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this department?') . '\');">'  . _('Delete')  . '</a></td>
 			</tr>';
 
 	} //END WHILE LIST LOOP
@@ -245,9 +245,9 @@ if (! isset($_GET['delete'])) {
 	$userresult=DB_query($usersql,$db);
 	while ($myrow=DB_fetch_array($userresult)) {
 		if ($myrow['userid']==$AuthoriserID) {
-			echo '<option selected="True" value="'.$myrow['userid'].'">'.$myrow['userid'].'</option>';
+			echo '<option selected="True" value="'.$myrow['userid'].'">' . $myrow['userid'] . '</option>';
 		} else {
-			echo '<option value="'.$myrow['userid'].'">'.$myrow['userid'].'</option>';
+			echo '<option value="'.$myrow['userid'].'">' . $myrow['userid'] . '</option>';
 		}
 	}
 	echo '</select></td>

@@ -317,7 +317,7 @@ if (!isset($SelectedTabs)){
 
 		echo '<tr>
 				<td colspan="2" style="text-align:right" >' . _('Current balance') . ':</td>
-				<td class="number">'.locale_number_format($Amount['0'],$CurrDecimalPlaces) . '</td>
+				<td class="number">' . locale_number_format($Amount['0'],$CurrDecimalPlaces) . '</td>
 			</tr>
 			</table>
 			</div>

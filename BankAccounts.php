@@ -374,23 +374,23 @@ if (isset($SelectedBankAccount)) {
 	$result = DB_query("SELECT invoice FROM bankaccounts where accountcode =" . $SelectedBankAccount ,$db);
 	while ($myrow = DB_fetch_array($result)) {
 		if ($myrow['invoice']== 1) {
-			echo '<option selected="selected" value="1">'._('Fall Back Default').'</option>
-					<option value="2">'._('Currency Default') . '</option>
-					<option value="0">'._('No').'</option>';
+			echo '<option selected="selected" value="1">' . _('Fall Back Default') . '</option>
+					<option value="2">' . _('Currency Default') . '</option>
+					<option value="0">' . _('No') . '</option>';
 		} elseif ($myrow['invoice']== 2) {
-			echo '<option value="0">'._('No').'</option>
-					<option selected="selected" value="2">'._('Currency Default') . '</option>
-					<option value="1">'._('Fall Back Default').'</option>';
+			echo '<option value="0">' . _('No') . '</option>
+					<option selected="selected" value="2">' . _('Currency Default') . '</option>
+					<option value="1">' . _('Fall Back Default') . '</option>';
 		} else {
-			echo '<option selected="selected" value="0">'._('No').'</option>
-					<option  value="2">'._('Currency Default') . '</option>
-					<option value="1">'._('Fall Back Default').'</option>';
+			echo '<option selected="selected" value="0">' . _('No') . '</option>
+					<option  value="2">' . _('Currency Default') . '</option>
+					<option value="1">' . _('Fall Back Default') . '</option>';
 		}
 	}//end while loop
 } else {
-	echo '<option value="1">'._('Fall Back Default').'</option>
-			<option  value="2">'._('Currency Default') . '</option>
-			<option value="0">'._('No').'</option>';
+	echo '<option value="1">' . _('Fall Back Default') . '</option>
+			<option  value="2">' . _('Currency Default') . '</option>
+			<option value="0">' . _('No') . '</option>';
 }
 
 echo '</select></td>';

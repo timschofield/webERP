@@ -13,7 +13,7 @@ $BookMark = 'AssetMaintenance';
 
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/group_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p><br />';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/group_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
 
 
 if (isset($_GET['Complete'])) {
@@ -73,7 +73,7 @@ while ($myrow=DB_fetch_array($Result)) {
 			<td>' . ConvertSQLDate($myrow['duedate']) . '</td>
 			<td>' . $myrow['realname'] . '</td>
 			<td>' . $ManagerName . '</td>
-			<td><a href="'.$RootPath.'/MaintenanceUserSchedule.php?Complete=Yes&amp;TaskID=' . $myrow['taskid'] .'" onclick="return confirm(\'' . _('Are you sure you wish to mark this maintenance task as completed?') . '\');">'._('Mark Completed').'</a></td>
+			<td><a href="'.$RootPath.'/MaintenanceUserSchedule.php?Complete=Yes&amp;TaskID=' . $myrow['taskid'] .'" onclick="return confirm(\'' . _('Are you sure you wish to mark this maintenance task as completed?') . '\');">' . _('Mark Completed') . '</a></td>
 		</tr>';
 }
 

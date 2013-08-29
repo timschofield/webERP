@@ -222,7 +222,7 @@ if (isset($_POST['ShowSales'])){
 			<th>' . _('Sales Value') . '</th>
 			<th>' . _('Refunds') . '</th>
 			<th>' . _('Net Sales') . '</th>
-			<th>' . _('Sales') .'<br />' . _('Quantity') . '</th>
+			<th>' . _('Sales')  . '<br />' . _('Quantity') . '</th>
 		</tr>';
 
 	$CumulativeTotalSales = 0;

@@ -481,7 +481,7 @@ if (!isset($_GET['delete'])) {
 		echo '<input type="hidden" name="LocCode" value="' . $_POST['LocCode'] . '" />';
 		echo '<table class="selection">';
 		echo '<tr>
-				<th colspan="2">'._('Amend Location details').'</th>
+				<th colspan="2">' . _('Amend Location details') . '</th>
 			</tr>';
 		echo '<tr>
 				<td>' . _('Location Code') . ':</td>
@@ -493,7 +493,7 @@ if (!isset($_GET['delete'])) {
 		}
 		echo '<table class="selection">
 				<tr>
-					<th colspan="2"><h3>'._('New Location details').'</h3></th>
+					<th colspan="2"><h3>' . _('New Location details') . '</h3></th>
 				</tr>';
 		echo '<tr>
 				<td>' . _('Location Code') . ':</td>

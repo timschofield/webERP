@@ -33,7 +33,7 @@ $BookMark = 'UserMaintenance';
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/group_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p>
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/group_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>
 	<br />';
 
 // Make an array of the security roles
@@ -286,10 +286,10 @@ if (!isset($SelectedUser)) {
 				<th>' . _('Supplier Code') . '</th>
 				<th>' . _('Salesperson') . '</th>
 				<th>' . _('Last Visit') . '</th>
-				<th>' . _('Security Role') .'</th>
-				<th>' . _('Report Size') .'</th>
-				<th>' . _('Theme') .'</th>
-				<th>' . _('Language') .'</th>
+				<th>' . _('Security Role')  . '</th>
+				<th>' . _('Report Size')  . '</th>
+				<th>' . _('Theme')  . '</th>
+				<th>' . _('Language')  . '</th>
 			</tr>';
 
 	$k=0; //row colour counter
@@ -472,9 +472,9 @@ echo '<tr>
 
 foreach ($SecurityRoles as $SecKey => $SecVal) {
 	if (isset($_POST['Access']) and $SecKey == $_POST['Access']){
-		echo '<option selected="selected" value="' . $SecKey . '">' . $SecVal .'</option>';
+		echo '<option selected="selected" value="' . $SecKey . '">' . $SecVal  . '</option>';
 	} else {
-		echo '<option value="' . $SecKey . '">' . $SecVal .'</option>';
+		echo '<option value="' . $SecKey . '">' . $SecVal  . '</option>';
 	}
 }
 echo '</select>';
@@ -504,9 +504,9 @@ $result = DB_query($sql,$db);
 
 while ($myrow=DB_fetch_array($result)){
 	if (isset($_POST['DefaultLocation']) AND $myrow['loccode'] == $_POST['DefaultLocation']){
-		echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] .'</option>';
+		echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname']  . '</option>';
 	} else {
-		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] .'</option>';
+		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname']  . '</option>';
 	}
 }
 
@@ -566,44 +566,44 @@ echo '<tr>
 		<td><select name="PageSize">';
 
 if(isset($_POST['PageSize']) AND $_POST['PageSize']=='A4'){
-	echo '<option selected="selected" value="A4">' . _('A4') .'</option>';
+	echo '<option selected="selected" value="A4">' . _('A4')  . '</option>';
 } else {
 	echo '<option value="A4">' . _('A4') . '</option>';
 }
 
 if(isset($_POST['PageSize']) AND $_POST['PageSize']=='A3'){
-	echo '<option selected="selected" value="A3">' . _('A3') .'</option>';
+	echo '<option selected="selected" value="A3">' . _('A3')  . '</option>';
 } else {
-	echo '<option value="A3">' . _('A3') .'</option>';
+	echo '<option value="A3">' . _('A3')  . '</option>';
 }
 
 if(isset($_POST['PageSize']) AND $_POST['PageSize']=='A3_landscape'){
-	echo '<option selected="selected" value="A3_landscape">' . _('A3') . ' ' . _('landscape') .'</option>';
+	echo '<option selected="selected" value="A3_landscape">' . _('A3') . ' ' . _('landscape')  . '</option>';
 } else {
-	echo '<option value="A3_landscape">' . _('A3') . ' ' . _('landscape') .'</option>';
+	echo '<option value="A3_landscape">' . _('A3') . ' ' . _('landscape')  . '</option>';
 }
 
 if(isset($_POST['PageSize']) AND $_POST['PageSize']=='letter'){
-	echo '<option selected="selected" value="letter">' . _('Letter') .'</option>';
+	echo '<option selected="selected" value="letter">' . _('Letter')  . '</option>';
 } else {
-	echo '<option value="letter">' . _('Letter') .'</option>';
+	echo '<option value="letter">' . _('Letter')  . '</option>';
 }
 
 if(isset($_POST['PageSize']) AND $_POST['PageSize']=='letter_landscape'){
-	echo '<option selected="selected" value="letter_landscape">' . _('Letter') . ' ' . _('landscape') .'</option>';
+	echo '<option selected="selected" value="letter_landscape">' . _('Letter') . ' ' . _('landscape')  . '</option>';
 } else {
-	echo '<option value="letter_landscape">' . _('Letter') . ' ' . _('landscape') .'</option>';
+	echo '<option value="letter_landscape">' . _('Letter') . ' ' . _('landscape')  . '</option>';
 }
 
 if(isset($_POST['PageSize']) AND $_POST['PageSize']=='legal'){
-	echo '<option selected="selected" value="legal">' . _('Legal') .'</option>';
+	echo '<option selected="selected" value="legal">' . _('Legal')  . '</option>';
 } else {
-	echo '<option value="legal">' . _('Legal') .'</option>';
+	echo '<option value="legal">' . _('Legal')  . '</option>';
 }
 if(isset($_POST['PageSize']) AND $_POST['PageSize']=='legal_landscape'){
-	echo '<option selected="selected" value="legal_landscape">' . _('Legal') . ' ' . _('landscape') .'</option>';
+	echo '<option selected="selected" value="legal_landscape">' . _('Legal') . ' ' . _('landscape')  . '</option>';
 } else {
-	echo '<option value="legal_landscape">' . _('Legal') . ' ' . _('landscape') .'</option>';
+	echo '<option value="legal_landscape">' . _('Legal') . ' ' . _('landscape')  . '</option>';
 }
 
 echo '</select></td>
@@ -621,9 +621,9 @@ foreach ($ThemeDirectories as $ThemeName) {
 	if (is_dir('css/' . $ThemeName) AND $ThemeName != '.' AND $ThemeName != '..' AND $ThemeName != '.svn'){
 
 		if (isset($_POST['Theme']) AND $_POST['Theme'] == $ThemeName){
-			echo '<option selected="selected" value="' . $ThemeName . '">' . $ThemeName .'</option>';
+			echo '<option selected="selected" value="' . $ThemeName . '">' . $ThemeName  . '</option>';
 		} else if (!isset($_POST['Theme']) AND ($_SESSION['DefaultTheme']==$ThemeName)) {
-			echo '<option selected="selected" value="' . $ThemeName . '">' . $ThemeName .'</option>';
+			echo '<option selected="selected" value="' . $ThemeName . '">' . $ThemeName  . '</option>';
 		} else {
 			echo '<option value="' . $ThemeName . '">' . $ThemeName . '</option>';
 		}
@@ -640,11 +640,11 @@ echo '<tr>
 
 foreach ($LanguagesArray as $LanguageEntry => $LanguageName){
 	if (isset($_POST['UserLanguage']) AND $_POST['UserLanguage'] == $LanguageEntry){
-		echo '<option selected="selected" value="' . $LanguageEntry . '">' . $LanguageName['LanguageName'] .'</option>';
+		echo '<option selected="selected" value="' . $LanguageEntry . '">' . $LanguageName['LanguageName']  . '</option>';
 	} elseif (!isset($_POST['UserLanguage']) AND $LanguageEntry == $DefaultLanguage) {
-		echo '<option selected="selected" value="' . $LanguageEntry . '">' . $LanguageName['LanguageName'] .'</option>';
+		echo '<option selected="selected" value="' . $LanguageEntry . '">' . $LanguageName['LanguageName']  . '</option>';
 	} else {
-		echo '<option value="' . $LanguageEntry . '">' . $LanguageName['LanguageName'] .'</option>';
+		echo '<option value="' . $LanguageEntry . '">' . $LanguageName['LanguageName']  . '</option>';
 	}
 }
 echo '</select></td>

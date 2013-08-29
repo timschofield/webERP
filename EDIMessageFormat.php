@@ -102,7 +102,7 @@ echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<br />
-	<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p>';
+	<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (!isset($SelectedMessageLine)) {
 
@@ -124,7 +124,7 @@ or deletion of the records*/
 	$result = DB_query($sql,$db);
 
 	echo '<table class="selection">';
-	echo '<tr><th colspan="5"><h3>' . _('Definition of') . ' ' . $MessageType . ' ' . _('for') . ' ' . $PartnerCode.'</h3></th></tr>';
+	echo '<tr><th colspan="5"><h3>' . _('Definition of') . ' ' . $MessageType . ' ' . _('for') . ' ' . $PartnerCode . '</h3></th></tr>';
 	$TableHeader = '<tr>
 					<th>' . _('Section') . '</th>
 					<th>' . _('Sequence') . '</th>
@@ -202,7 +202,7 @@ if (isset($SelectedMessageLine)) {
 echo '<table class="selection">';
 
 if ($myrow['messagetype']!='') {
-	echo '<tr><th colspan="2">' . _('Definition of') . ' ' . $myrow['messagetype'] . ' ' . _('for') . ' ' . $myrow['partnercode'].'</th></tr>';
+	echo '<tr><th colspan="2">' . _('Definition of') . ' ' . $myrow['messagetype'] . ' ' . _('for') . ' ' . $myrow['partnercode'] . '</th></tr>';
 }
 
 echo '<tr><td>' . _('Section') . ':</td>';
@@ -237,7 +237,7 @@ echo '</td></tr>';
 echo '<tr><td>Sequence Number:</td>';
 echo '<td><input tabindex="3" type="text" name="SequenceNo" size="3" maxlength="3" value="'.$_POST['SequenceNo'].'" />';
 echo '</td></tr>';
-echo '<tr><td>' .  _('Line Text') . ':' .'</td>';
+echo '<tr><td>' .  _('Line Text') . ':'  . '</td>';
 echo '<td>';
 echo '<input tabindex="4" type="text" name="LineText" size="50" maxlength="50" value="'.$_POST['LineText'] .'" />';
 echo '</td></tr>';

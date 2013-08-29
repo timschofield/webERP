@@ -169,7 +169,7 @@ if (!isset($_GET['SelectedSectionID']) AND !isset($_POST['SelectedSectionID'])) 
 
 	$ErrMsg = _('Could not get account group sections because');
 	$result = DB_query($sql,$db,$ErrMsg);
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'<br /></p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '<br /></p>';
 
 	echo '<table class="selection">
 			<tr>
@@ -191,9 +191,9 @@ if (!isset($_GET['SelectedSectionID']) AND !isset($_POST['SelectedSectionID'])) 
 		echo '<td>' . $myrow['sectionid'] . '</td><td>' . $myrow['sectionname'] . '</td>';
 		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?SelectedSectionID=' . urlencode($myrow['sectionid']), ENT_QUOTES, 'UTF-8') . '">' . _('Edit') . '</a></td>';
 		if ( $myrow['sectionid'] == '1' or $myrow['sectionid'] == '2' ) {
-			echo '<td><b>'._('Restricted').'</b></td>';
+			echo '<td><b>' . _('Restricted') . '</b></td>';
 		} else {
-			echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?SelectedSectionID=' . urlencode($myrow['sectionid']) . '&delete=1', ENT_QUOTES, 'UTF-8') . '">' . _('Delete') .'</a></td>';
+			echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?SelectedSectionID=' . urlencode($myrow['sectionid']) . '&delete=1', ENT_QUOTES, 'UTF-8') . '">' . _('Delete')  . '</a></td>';
 		}
 		echo '</tr>';
 	} //END WHILE LIST LOOP

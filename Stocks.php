@@ -91,7 +91,7 @@ if (isset($_FILES['ItemPicture']) AND $_FILES['ItemPicture']['name'] !='') {
 
 	if ($UploadTheFile=='Yes'){
 		$result  =  move_uploaded_file($_FILES['ItemPicture']['tmp_name'], $filename);
-		$message = ($result)?_('File url') .'<a href="' . $filename .'">' .  $filename . '</a>' : _('Something is wrong with uploading a file');
+		$message = ($result)?_('File url')  . '<a href="' . $filename .'">' .  $filename . '</a>' : _('Something is wrong with uploading a file');
 	}
 }
 
@@ -701,7 +701,7 @@ if (isset($_POST['submit'])) {
 
 
 	} else {
-		echo '<br />'. "\n";
+		echo '<br />' .  "\n";
 		prnMsg( _('Validation failed, no updates or deletes took place'), 'error');
 	}
 
@@ -868,12 +868,12 @@ if (!isset($StockID) OR $StockID=='' or isset($_POST['UpdateCategories'])) {
 	}
 	if ($New==1) {
 		echo '<tr>
-				<td>'. _('Item Code'). ':</td>
+				<td>' .  _('Item Code'). ':</td>
 				<td><input ' . (in_array('StockID',$Errors) ?  'class="inputerror"' : '' ) .'  autofocus="autofocus" required="required" pattern="[0-9a-zA-Z_]*{1,20}" type="text" value="'.$StockID.'" name="StockID" size="20" maxlength="20" /></td>
 			</tr>';
 	} else {
 		echo '<tr>
-				<td>'. _('Item Code'). ':</td>
+				<td>' .  _('Item Code'). ':</td>
 				<td>' . $StockID . '<input type="hidden" name ="StockID" value="' . $StockID . '" /></td>
 			</tr>';
 	}
@@ -940,13 +940,13 @@ if (!isset($StockID) OR $StockID=='' or isset($_POST['UpdateCategories'])) {
 	}
 
 	echo '<tr><td>' . _('Item Code') . ':</td>
-			<td>'.$StockID.'<input type="hidden" name="StockID" value="' . $StockID . '" /></td>
+			<td>' . $StockID . '<input type="hidden" name="StockID" value="' . $StockID . '" /></td>
 			</tr>';
 
 } else { // some changes were made to the data so don't re-set form variables to DB ie the code above
 	echo '<tr>
 			<td>' . _('Item Code') . ':</td>
-			<td>'.$StockID.'<input type="hidden" name="StockID" value="' . $StockID . '" /></td>
+			<td>' . $StockID . '<input type="hidden" name="StockID" value="' . $StockID . '" /></td>
 		</tr>';
 }
 
@@ -984,7 +984,7 @@ echo '<tr>
 		<td><textarea ' . (in_array('LongDescription',$Errors) ?  'class="texterror"' : '' ) .'  name="LongDescription" cols="40" rows="3">' . stripslashes($LongDescription) . '</textarea></td>
 	</tr>
 	<tr>
-		<td>'. _('Image File (.jpg)') . ':</td>
+		<td>' .  _('Image File (.jpg)') . ':</td>
 		<td><input type="file" id="ItemPicture" name="ItemPicture" />
 		<br /><input type="checkbox" name="ClearImage" id="ClearImage" value="1" > '._('Clear Image').'
 		</td>';
@@ -1014,7 +1014,7 @@ echo '<tr>
 }
 
 if ($StockImgLink!=_('No Image')) {
-	echo '<td>' . _('Image') . '<br />'.$StockImgLink . '</td>';
+	echo '<td>' . _('Image') . '<br />' . $StockImgLink . '</td>';
 }
 echo '</tr>';
 

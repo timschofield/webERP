@@ -596,7 +596,7 @@ class Mail_RFC822
             $name   = $this->_splitCheck($parts, '<');
 
             $phrase     = trim($name);
-            $route_addr = trim(mb_substr($mailbox, mb_strlen($name.'<'), -1));
+            $route_addr = trim(mb_substr($mailbox, mb_strlen($name . '<'), -1));
 
             if ($this->_validatePhrase($phrase) === false || ($route_addr = $this->_validateRouteAddr($route_addr)) === false)
                 return false;

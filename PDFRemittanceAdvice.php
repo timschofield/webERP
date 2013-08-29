@@ -37,7 +37,7 @@ If ((isset($_POST['PrintPDF']))
 		$Title = _('Print Remittance Advices Error');
 		include('includes/header.inc');
 		prnMsg(_('There were no remittance advices to print out for the supplier range and payment date specified'),'warn');
-		echo '<br /><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">'. _('Back').'</a>';
+		echo '<br /><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' .  _('Back') . '</a>';
 		include('includes/footer.inc');
 		exit;
 	}

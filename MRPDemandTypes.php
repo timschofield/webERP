@@ -118,7 +118,7 @@ if (!isset($SelectedDT) or isset($_GET['delete'])) {
 		printf('<tr><td>%s</td>
 				<td>%s</td>
 				<td><a href="%sSelectedDT=%s">' . _('Edit') . '</a></td>
-				<td><a href="%sSelectedDT=%s&amp;delete=yes">' . _('Delete') .'</a></td>
+				<td><a href="%sSelectedDT=%s&amp;delete=yes">' . _('Delete')  . '</a></td>
 				</tr>',
 				$myrow[0],
 				$myrow[1],

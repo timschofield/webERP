@@ -238,7 +238,7 @@ echo '<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].
 
 echo '<tr>
 		<td>' . _('Narrative') . ':</td>
-		<td><textarea name="Narrative" cols="30" rows="5">'.$_SESSION['Request']->Narrative.'</textarea></td>
+		<td><textarea name="Narrative" cols="30" rows="5">' . $_SESSION['Request']->Narrative . '</textarea></td>
 	</tr>
 	</table>
 	<br />';
@@ -264,11 +264,11 @@ echo '<br />
 		<th colspan="7"><h4>' . _('Details of Items Requested') . '</h4></th>
 	</tr>
 	<tr>
-		<th>'. _('Line Number') . '</th>
-		<th>'. _('Item Code') . '</th>
-		<th>'. _('Item Description'). '</th>
-		<th>'. _('Quantity Required'). '</th>
-		<th>'. _('UOM'). '</th>
+		<th>' .  _('Line Number') . '</th>
+		<th class="ascending">' .  _('Item Code') . '</th>
+		<th class="ascending">' .  _('Item Description'). '</th>
+		<th class="ascending">' .  _('Quantity Required'). '</th>
+		<th>' .  _('UOM'). '</th>
 	</tr>';
 
 $k=0;
@@ -314,7 +314,7 @@ $SQL = "SELECT stockcategory.categoryid,
 			ORDER BY stockcategory.categorydescription";
 $result1 = DB_query($SQL, $db);
 if (DB_num_rows($result1) == 0) {
-	echo '<p class="bad">' . _('Problem Report') . ':<br />' . _('There are no stock categories currently defined please use the link below to set them up').'</p>';
+	echo '<p class="bad">' . _('Problem Report') . ':<br />' . _('There are no stock categories currently defined please use the link below to set them up') . '</p>';
 	echo '<br />
 		<a href="' . $RootPath . '/StockCategories.php">' . _('Define Stock Categories') . '</a>';
 	exit;
@@ -327,15 +327,15 @@ if (!isset($_POST['StockCat'])) {
 	$_POST['StockCat'] = '';
 }
 if ($_POST['StockCat'] == 'All') {
-	echo '<option selected="True" value="All">' . _('All Authorized').'</option>';
+	echo '<option selected="True" value="All">' . _('All Authorized') . '</option>';
 } else {
-	echo '<option value="All">' . _('All Authorized').'</option>';
+	echo '<option value="All">' . _('All Authorized') . '</option>';
 }
 while ($myrow1 = DB_fetch_array($result1)) {
 	if ($myrow1['categoryid'] == $_POST['StockCat']) {
-		echo '<option selected="True" value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'].'</option>';
+		echo '<option selected="True" value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
 	} else {
-		echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'].'</option>';
+		echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
 	}
 }
 echo '</select></td>
@@ -351,7 +351,7 @@ echo '</tr>
 			<td><h3>' . _('OR') . ' ' . '</h3>' . _('Enter partial') . ' <b>' . _('Stock Code') . '</b>:</td>';
 
 if (isset($_POST['StockCode'])) {
-	echo '<td><input type="text" name="StockCode" value="' . $_POST['StockCode'] . '" size="15" maxlength="18" /></td>';
+	echo '<td><input type="text" autofocus="autofocus" name="StockCode" value="' . $_POST['StockCode'] . '" size="15" maxlength="18" /></td>';
 } else {
 	echo '<td><input type="text" name="StockCode" size="15" maxlength="18" /></td>';
 }
@@ -361,10 +361,9 @@ echo '</tr>
 	<div class="centre">
 		<input type="submit" name="Search" value="' . _('Search Now') . '" />
 	</div>
-	<br />';
-echo '<script  type="text/javascript">defaultControl(document.forms[0].StockCode);</script>';
-echo '</div>';
-echo '</form>';
+	<br />
+	</div>
+	</form>';
 
 if (isset($_POST['Search']) or isset($_POST['Next']) or isset($_POST['Prev'])){
 
@@ -585,7 +584,7 @@ if (isset($searchresult) AND !isset($_POST['Select'])) {
 			}
 
 			echo '<td><input type="submit" name="Select" value="' . $myrow['stockid'] . '" /></td>
-					<td>'.$myrow['description'].'</td>
+					<td>' . $myrow['description'] . '</td>
 					<td class="number">' . $qoh . '</td>
 					<td>' . $myrow['units'] . '</td>
 					<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?StockID=' . $myrow['stockid'].'">' . _('View') . '</a></td>
@@ -603,33 +602,35 @@ if (isset($searchresult) AND !isset($_POST['Select'])) {
 /* end display list if there is more than one record */
 
 if (isset($SearchResult)) {
-	echo '<br />';
-	echo '<div class="page_help_text">' . _('Select an item by entering the quantity required.  Click Order when ready.') . '</div>';
-	echo '<br />';
 	$j = 1;
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" id="orderform">';
-    echo '<div>';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table class="table1">';
-	echo '<tr><td>
-			<input type="hidden" name="Previous" value="'.($Offset-1).'" />
-			<input tabindex="'.($j+8).'" type="submit" name="Prev" value="'._('Prev').'" /></td>';
-	echo '<td style="text-align:center" colspan="6">
-			<input type="hidden" name="order_items" value="1" />
-			<input tabindex="'.($j+9).'" type="submit" value="'._('Add to Requisition').'" /></td>';
-	echo '<td>
-			<input type="hidden" name="NextList" value="'.($Offset+1).'" />
-			<input tabindex="'.($j+10).'" type="submit" name="Next" value="'._('Next').'" /></td></tr>';
-	echo '<tr>
-			<th>' . _('Code') . '</th>
-			<th>' . _('Description') . '</th>
-			<th>' . _('Units') . '</th>
-			<th>' . _('On Hand') . '</th>
-			<th>' . _('On Demand') . '</th>
-			<th>' . _('On Order') . '</th>
-			<th>' . _('Available') . '</th>
-			<th>' . _('Quantity') . '</th>
-		</tr>';
+	echo '<br />
+		<div class="page_help_text">' . _('Select an item by entering the quantity required.  Click Order when ready.') . '</div>
+		<br />
+		<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" id="orderform">
+		<div>
+		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+		<table class="table1">
+		<tr>
+			<td>
+				<input type="hidden" name="Previous" value="'.($Offset-1).'" />
+				<input tabindex="'.($j+8).'" type="submit" name="Prev" value="'._('Prev').'" /></td>
+				<td style="text-align:center" colspan="6">
+				<input type="hidden" name="order_items" value="1" />
+				<input tabindex="'.($j+9).'" type="submit" value="'._('Add to Requisition').'" /></td>
+			<td>
+				<input type="hidden" name="NextList" value="'.($Offset+1).'" />
+				<input tabindex="'.($j+10).'" type="submit" name="Next" value="'._('Next').'" /></td>
+			</tr>
+			<tr>
+				<th class="ascending">' . _('Code') . '</th>
+				<th class="ascending">' . _('Description') . '</th>
+				<th>' . _('Units') . '</th>
+				<th class="ascending">' . _('On Hand') . '</th>
+				<th class="ascending">' . _('On Demand') . '</th>
+				<th class="ascending">' . _('On Order') . '</th>
+				<th class="ascending">' . _('Available') . '</th>
+				<th class="ascending">' . _('Quantity') . '</th>
+			</tr>';
 	$ImageSource = _('No Image');
 
 	$k=0; //row colour counter
@@ -715,38 +716,34 @@ if (isset($SearchResult)) {
 		}
 		$OnOrder = $PurchQty + $WoQty;
 		$Available = $QOH - $DemandQty + $OnOrder;
-		echo '<td>'.$myrow['stockid'].'</td>
-				<td>'.$myrow['description'].'</td>
-				<td>'.$myrow['stockunits'].'</td>
-				<td class="number">'.locale_number_format($QOH,$DecimalPlaces).'</td>
-				<td class="number">'.locale_number_format($DemandQty,$DecimalPlaces).'</td>
-				<td class="number">'.locale_number_format($OnOrder, $DecimalPlaces).'</td>
-				<td class="number">'.locale_number_format($Available,$DecimalPlaces).'</td>
-				<td><input class="number"  tabindex="'.($j+7).'" type="text" size="6" name="Quantity'.$i.'" value="0" />
+		echo '<td>' . $myrow['stockid'] . '</td>
+				<td>' . $myrow['description'] . '</td>
+				<td>' . $myrow['stockunits'] . '</td>
+				<td class="number">' . locale_number_format($QOH,$DecimalPlaces) . '</td>
+				<td class="number">' . locale_number_format($DemandQty,$DecimalPlaces) . '</td>
+				<td class="number">' . locale_number_format($OnOrder, $DecimalPlaces) . '</td>
+				<td class="number">' . locale_number_format($Available,$DecimalPlaces) . '</td>
+				<td><input class="number" ' . ($i==0 ? 'autofocus="autofocus"':'') . ' tabindex="'.($j+7).'" type="text" size="6" name="Quantity'.$i.'" value="0" />
 				<input type="hidden" name="StockID'.$i.'" value="'.$myrow['stockid'].'" />
 				</td>
 			</tr>';
 		echo '<input type="hidden" name="DecimalPlaces'.$i.'" value="' . $myrow['decimalplaces'] . '" />';
 		echo '<input type="hidden" name="ItemDescription'.$i.'" value="' . $myrow['description'] . '" />';
 		echo '<input type="hidden" name="Units'.$i.'" value="' . $myrow['stockunits'] . '" />';
-		if ($j==1) {
-			$jsCall = '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.itm'.$myrow['stockid'].');}</script>';
-		}
 		$i++;
-#end of page full new headings if
 	}
 #end of while loop
-	echo '<tr><td><input type="hidden" name="Previous" value="'.($Offset-1).'" />
-			<input tabindex="'.($j+7).'" type="submit" name="Prev" value="'._('Prev').'" /></td>';
-	echo '<td style="text-align:center" colspan="6"><input type="hidden" name="order_items" value="1" />
-		<input tabindex="'.($j+8).'" type="submit" value="'._('Add to Requisition').'" /></td>';
-	echo '<td><input type="hidden" name="NextList" value="'.($Offset+1).'" />
-		<input tabindex="'.($j+9).'" type="submit" name="Next" value="'._('Next').'" /></td><tr/>';
-	echo '</table>
-          </div>
-          </form>';
-	echo $jsCall;
-
+	echo '<tr>
+			<td><input type="hidden" name="Previous" value="'.($Offset-1).'" />
+				<input tabindex="'.($j+7).'" type="submit" name="Prev" value="'._('Prev').'" /></td>
+			<td style="text-align:center" colspan="6"><input type="hidden" name="order_items" value="1" />
+				<input tabindex="'.($j+8).'" type="submit" value="'._('Add to Requisition').'" /></td>
+			<td><input type="hidden" name="NextList" value="'.($Offset+1).'" />
+				<input tabindex="'.($j+9).'" type="submit" name="Next" value="'._('Next').'" /></td>\
+		<tr/>
+		</table>
+       </div>
+       </form>';
 }#end if SearchResults to show
 
 //*********************************************************************************************************

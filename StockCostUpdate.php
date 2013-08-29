@@ -125,8 +125,8 @@ echo '<table cellpadding="2" class="selection">';
 echo '<tr><th colspan="2">' . _('Item Code') . ':<input type="text" name="StockID" value="' . $StockID . '"  maxlength="20" />';
 echo '<input type="submit" name="Show" value="' . _('Show Cost Details') . '" /></th></tr>';
 echo '<tr><th colspan="2">' . $StockID . ' - ' . $myrow['description'] . '</th></tr>';
-echo '<tr><th colspan="2">'. _('Total Quantity On Hand') . ': ' . $myrow['totalqoh'] . ' ' . $myrow['units'] .'</th></tr>';
-echo '<tr><th colspan="2">'. _('Last Cost update on') . ': ' . ConvertSQLDate($myrow['lastcostupdate']) .'</th></tr>';
+echo '<tr><th colspan="2">' .  _('Total Quantity On Hand') . ': ' . $myrow['totalqoh'] . ' ' . $myrow['units']  . '</th></tr>';
+echo '<tr><th colspan="2">' .  _('Last Cost update on') . ': ' . ConvertSQLDate($myrow['lastcostupdate'])  . '</th></tr>';
 
 if (($myrow['mbflag']=='D' AND $myrow['stocktype'] != 'L')
 							OR $myrow['mbflag']=='A'
@@ -193,7 +193,7 @@ if (! in_array($UpdateSecurity,$_SESSION['AllowedPageSecurityTokens'])){
 if ($myrow['mbflag']!='D'){
 	echo '<div class="centre"><a href="' . $RootPath . '/StockStatus.php?StockID=' . $StockID . '">' . _('Show Stock Status') . '</a>';
 	echo '<br /><a href="' . $RootPath . '/StockMovements.php?StockID=' . $StockID . '">' . _('Show Stock Movements') . '</a>';
-	echo '<br /><a href="' . $RootPath . '/StockUsage.php?StockID=' . $StockID . '">' . _('Show Stock Usage')  .'</a>';
+	echo '<br /><a href="' . $RootPath . '/StockUsage.php?StockID=' . $StockID . '">' . _('Show Stock Usage')   . '</a>';
 	echo '<br /><a href="' . $RootPath . '/SelectSalesOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Outstanding Sales Orders') . '</a>';
 	echo '<br /><a href="' . $RootPath . '/SelectCompletedOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Completed Sales Orders') . '</a></div>';
 }

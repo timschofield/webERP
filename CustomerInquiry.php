@@ -250,7 +250,7 @@ while ($myrow=DB_fetch_array($TransResult)) {
 						<td class="number">%s</td>';
 
 
-	$CreditInvoiceFormatString = '<td><a href="%s/Credit_Invoice.php?InvoiceNumber=%s">' . _('Credit ') .'<img src="%s/credit.gif" title="' . _('Click to credit the invoice') . '" alt="" /></a></td>';
+	$CreditInvoiceFormatString = '<td><a href="%s/Credit_Invoice.php?InvoiceNumber=%s">' . _('Credit ')  . '<img src="%s/credit.gif" title="' . _('Click to credit the invoice') . '" alt="" /></a></td>';
 
 	$PreviewInvoiceFormatString = '<td><a href="%s/PrintCustTrans.php?FromTransNo=%s&amp;InvOrCredit=Invoice">' . _('HTML ') . '<img src="%s/preview.gif" title="' . _('Click to preview the invoice') . '" alt="" /></a></td>
 	<td><a href="%s/%s?FromTransNo=%s&amp;InvOrCredit=Invoice&amp;PrintPDF=True">' . _('PDF ') . '<img src="%s/css/' . $Theme . '/images/pdf.png" title="' . _('Click for PDF') . '" alt="" /></a></td>

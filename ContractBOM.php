@@ -233,7 +233,7 @@ if (count($_SESSION['Contract'.$identifier]->ContractBOM)>0){
 
 	if (isset($_SESSION['Contract'.$identifier]->ContractRef)) {
 		echo  '<tr>
-				<th colspan="7">' . _('Contract Reference:') .' '. $_SESSION['Contract'.$identifier]->ContractRef.'</th>
+				<th colspan="7">' . _('Contract Reference:') .' '. $_SESSION['Contract'.$identifier]->ContractRef . '</th>
 			</tr>';
 	}
 
@@ -241,7 +241,7 @@ if (count($_SESSION['Contract'.$identifier]->ContractBOM)>0){
 			<th>' . _('Item Code') . '</th>
 			<th>' . _('Description') . '</th>
 			<th>' . _('Quantity') . '</th>
-			<th>' . _('UOM') .'</th>
+			<th>' . _('UOM')  . '</th>
 			<th>' . _('Unit Cost') .  '</th>
 			<th>' . _('Sub-total') . '</th>
 		</tr>';
@@ -303,12 +303,12 @@ if (!isset($_GET['Edit'])) {
 			<tr>
 				<td><select name="StockCat">';
 
-	echo '<option selected="selected" value="All">' . _('All').'</option>';
+	echo '<option selected="selected" value="All">' . _('All') . '</option>';
 	while ($myrow1 = DB_fetch_array($result1)) {
 		if (isset($_POST['StockCat']) and $_POST['StockCat']==$myrow1['categoryid']){
-			echo '<option selected="selected" value="'. $myrow1['categoryid'] . '">' . $myrow1['categorydescription'].'</option>';
+			echo '<option selected="selected" value="'. $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
 		} else {
-			echo '<option value="'. $myrow1['categoryid'] . '">' . $myrow1['categorydescription'].'</option>';
+			echo '<option value="'. $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
 		}
 	}
 
@@ -373,7 +373,7 @@ if (isset($SearchResult)) {
 		if (file_exists( $_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.jpg') ) {
 			$ImageSource = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC&amp;StockID=' . $myrow['stockid']. '&amp;text=&amp;width=50&amp;height=50" />';
 		} else {
-			$ImageSource = '<i>'._('No Image').'</i>';
+			$ImageSource = '<i>' . _('No Image') . '</i>';
 		}
 
 		echo '<td>' . $myrow['stockid'] . '</td>

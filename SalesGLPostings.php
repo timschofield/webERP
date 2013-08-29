@@ -135,7 +135,7 @@ if (!isset($SelectedSalesPostingID)) {
 				<td>%s</td>
 				<td>%s</td>
 				<td><a href="%sSelectedSalesPostingID=%s">' . _('Edit') . '</a></td>
-				<td><a href="%sSelectedSalesPostingID=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this sales GL posting record?') . '\');">'. _('Delete') . '</a></td></tr>',
+				<td><a href="%sSelectedSalesPostingID=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this sales GL posting record?') . '\');">' .  _('Delete') . '</a></td></tr>',
 				$myrow[1],
 				$myrow[2],
 				$myrow[3],
@@ -251,7 +251,7 @@ if (!isset($SelectedSalesPostingID)) {
 				<td>%s</td>
 				<td>%s</td>
 				<td><a href="%sSelectedSalesPostingID=%s">' . _('Edit') . '</a></td>
-				<td><a href="%sSelectedSalesPostingID=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this sales GL posting record?') . '\');">'. _('Delete') . '</a></td></tr>',
+				<td><a href="%sSelectedSalesPostingID=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this sales GL posting record?') . '\');">' .  _('Delete') . '</a></td></tr>',
 				$myrow[1],
 				$myrow[2],
 				$myrow[3],
@@ -322,7 +322,7 @@ if (!isset($_GET['delete'])) {
 		} else {
 			echo '<option value="';
 		}
-		echo $myrow['areacode'] . '">'. $myrow['areadescription'] . '</option>';
+		echo $myrow['areacode'] . '">' .  $myrow['areadescription'] . '</option>';
 
 	} //end while loop
 

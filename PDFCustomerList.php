@@ -232,9 +232,9 @@ if (isset($_POST['PrintPDF'])){
 	  $Title = _('Customer List') . ' - ' . _('Problem Report') . '....';
 	  include('includes/header.inc');
 	   prnMsg( _('The customer List could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db) );
-	   echo '<br /><a href="' .$RootPath .'/index.php">'. _('Back to the menu'). '</a>';
+	   echo '<br /><a href="' .$RootPath .'/index.php">' .  _('Back to the menu'). '</a>';
 	   if ($debug==1){
-	      echo '<br />'. $SQL;
+	      echo '<br />' .  $SQL;
 	   }
 	   include('includes/footer.inc');
 	   exit;
@@ -244,7 +244,7 @@ if (isset($_POST['PrintPDF'])){
 	  $Title = _('Customer List') . ' - ' . _('Problem Report') . '....';
 	  include('includes/header.inc');
 	  prnMsg( _('This report has no output because there were no customers retrieved'), 'error' );
-	  echo '<br /><a href="' .$RootPath .'/index.php">'. _('Back to the menu'). '</a>';
+	  echo '<br /><a href="' .$RootPath .'/index.php">' .  _('Back to the menu'). '</a>';
 	  include('includes/footer.inc');
 	  exit;
 	}
@@ -388,7 +388,7 @@ if (isset($_POST['PrintPDF'])){
 
 	echo '<tr><td>' . _('For Sales folk'). ':</td>
 			<td><select name="SalesPeople[]" multiple="multiple">
-				<option selected="selected" value="All">'. _('All sales folk') . '</option>';
+				<option selected="selected" value="All">' .  _('All sales folk') . '</option>';
 
 	$sql = "SELECT salesmancode, salesmanname FROM salesman";
 	$SalesFolkResult = DB_query($sql,$db);
@@ -400,9 +400,9 @@ if (isset($_POST['PrintPDF'])){
 
 	echo '<tr><td>' . _('Level Of Activity'). ':</td>
 			<td><select name="Activity">
-				<option selected="selected" value="All">'. _('All customers') . '</option>
-				<option value="GreaterThan">'. _('Sales Greater Than') . '</option>
-				<option value="LessThan">'. _('Sales Less Than') . '</option>
+				<option selected="selected" value="All">' .  _('All customers') . '</option>
+				<option value="GreaterThan">' .  _('Sales Greater Than') . '</option>
+				<option value="LessThan">' .  _('Sales Less Than') . '</option>
 				</select></td>
 			<td>';
 

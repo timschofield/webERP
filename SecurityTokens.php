@@ -82,27 +82,27 @@ if (isset($_POST['Update']) AND $InputError == 0) {
 	$_POST['TokenID']='';
 }
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' .
-		_('Print') . '" alt="" />' . ' ' . $Title . '</p>';
-
-echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" id="form">';
-echo '<div>';
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<br />
-		<table>
+		_('Print') . '" alt="" />' . ' ' . $Title . '</p>
+	<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" id="form">
+	<div>
+	<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+	<br />
+	<table>
 		<tr>';
 
 if (isset($_GET['Action']) and $_GET['Action']=='edit') {
-	echo '<td>'. _('Description') . '</td>
-		<td><input type="text" size="50" maxlength="50" name="TokenDescription" value="'.$_POST['TokenDescription'] .'" /></td>
+	echo '<td>' .  _('Description') . '</td>
+		<td><input type="text" size="50" autofocus="autofocus" required="required" maxlength="50" name="TokenDescription" value="'.$_POST['TokenDescription'] .'" /></td>
 		<td><input type="hidden" name="TokenID" value="'.$_GET['SelectedToken'].'" />
 			<input type="submit" name="Update" value="' . _('Update') . '" />';
 } else {
-	echo '<td>'._('Token ID') . '</td>
-			<td><input type="text" name="TokenID" value="'.$_POST['TokenID'].'" /></td>
+	echo '<td>' . _('Token ID') . '</td>
+			<td><input type="text" autofocus="autofocus" required="required" class="integer" name="TokenID" value="'.$_POST['TokenID'].'" /></td>
 		</tr>
 		<tr>
-		<td>'. _('Description') . '</td>
-		<td><input type="text" size="50" maxlength="50" name="TokenDescription" value="'.$_POST['TokenDescription'] .'" /></td>
+		<td>' .  _('Description') . '</td>
+		<td><input type="text" required="required" size="50" maxlength="50" name="TokenDescription" value="'.$_POST['TokenDescription'] .'" title="' . _(
+		'The security token description should describe which functions this token allows a user/role to access') . '" /></td>
 		<td><input type="submit" name="Submit" value="' . _('Insert') . '" />';
 }
 
@@ -116,8 +116,8 @@ echo '</div>
 
 echo '<table class="selection">';
 echo '<tr>
-		<th>'. _('Token ID') .'</th>
-		<th>'. _('Description'). '</th>
+		<th>' .  _('Token ID')  . '</th>
+		<th>' .  _('Description'). '</th>
 	</tr>';
 
 $sql="SELECT tokenid, tokenname FROM securitytokens ORDER BY tokenid";
@@ -125,16 +125,14 @@ $Result= DB_query($sql,$db);
 
 while ($myrow = DB_fetch_array($Result,$db)){
 	echo '<tr>
-			<td>'.$myrow['tokenid'].'</td>
-			<td>'.htmlspecialchars($myrow['tokenname'],ENT_QUOTES,'UTF-8').'</td>
+			<td>' . $myrow['tokenid'] . '</td>
+			<td>' . htmlspecialchars($myrow['tokenname'],ENT_QUOTES,'UTF-8') . '</td>
 			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedToken=' . $myrow['tokenid'] . '&amp;Action=edit">' . _('Edit') . '</a></td>
 			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedToken=' . $myrow['tokenid'] . '&amp;Action=delete" onclick="return confirm(\'' . _('Are you sure you wish to delete this security token?') . '\');">' . _('Delete') . '</a></td>
 		</tr>';
 }
 
-echo '</table><br />';
-
-echo '<script  type="text/javascript">defaultControl(document.form.TokenDescription);</script>';
+echo '</table>';
 
 include('includes/footer.inc');
 ?>

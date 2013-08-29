@@ -110,7 +110,7 @@ if (DB_num_rows($result)==0){
                         '<br />' . _('This check is there to ensure that duplicate packing slips are not produced and dispatched more than once to the customer'), 'warn' );
               echo '<p><a href="' . $RootPath . '/PrintCustOrder.php?TransNo=' . $_GET['TransNo'] . '&Reprint=OK">'
                 . _('Do a Re-Print') . ' (' . _('On Pre-Printed Stationery') . ') ' . _('Even Though Previously Printed') . '</a><p>' .
-                '<a href="' . $RootPath. '/PrintCustOrder_generic.php?TransNo=' . $_GET['TransNo'] . '&Reprint=OK">'. _('Do a Re-Print') . ' (' . _('Plain paper') . ' - ' . _('A4') . ' ' . _('landscape') . ') ' . _('Even Though Previously Printed'). '</a>';
+                '<a href="' . $RootPath. '/PrintCustOrder_generic.php?TransNo=' . $_GET['TransNo'] . '&Reprint=OK">' .  _('Do a Re-Print') . ' (' . _('Plain paper') . ' - ' . _('A4') . ' ' . _('landscape') . ') ' . _('Even Though Previously Printed'). '</a>';
 
                 echo '<br /><br /><br />';
                 echo  _('Or select another Order Number to Print');
@@ -243,8 +243,8 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 if ($ListCount == 0) {
 	$Title = _('Print Packing Slip Error');
 	include('includes/header.inc');
-	echo '<p>'. _('There were no outstanding items on the order to deliver') . '. ' . _('A packing slip cannot be printed').
-			'<br /><a href="' . $RootPath . '/SelectSalesOrder.php">'. _('Print Another Packing Slip/Order').
+	echo '<p>' .  _('There were no outstanding items on the order to deliver') . '. ' . _('A packing slip cannot be printed').
+			'<br /><a href="' . $RootPath . '/SelectSalesOrder.php">' .  _('Print Another Packing Slip/Order').
 			'</a>
 			<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 	include('includes/footer.inc');

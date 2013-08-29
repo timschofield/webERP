@@ -82,7 +82,7 @@ if ($Serialised==1){
 echo $myrow[0]. '</font></th></tr>';
 
 echo '<tr>
-		<th colspan="11"><font color="navy" size="2">' . $StockID .'-'. $Description .'</b>  (' . _('In units of') . ' ' . $UOM . ')</font></th>
+		<th colspan="11"><font color="navy" size="2">' . $StockID .'-'. $Description  . '</b>  (' . _('In units of') . ' ' . $UOM . ')</font></th>
 	</tr>';
 
 if ($Serialised == 1 and $Perishable==0){
@@ -146,18 +146,18 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 	$TotalQuantity += $myrow['quantity'];
 
 	if ($Serialised == 1 and $Perishable==0){
-		echo '<td>'.$myrow['serialno'].'</td>';
+		echo '<td>' . $myrow['serialno'] . '</td>';
 		echo '<th></th>';
 	} else if ($Serialised == 1 and $Perishable==1) {
-		echo '<td>'.$myrow['serialno'].'</td>
+		echo '<td>' . $myrow['serialno'] . '</td>
 				<td>' . ConvertSQLDate($myrow['expirationdate']). '</td>';
 	} else if ($Serialised == 0 and $Perishable==0) {
-		echo '<td>'.$myrow['serialno'].'</td>
-			<td class="number">'.locale_number_format($myrow['quantity'],$DecimalPlaces).'</td>';
+		echo '<td>' . $myrow['serialno'] . '</td>
+			<td class="number">' . locale_number_format($myrow['quantity'],$DecimalPlaces) . '</td>';
 		echo '<th></th>';
 	} else if ($Serialised == 0 and $Perishable==1){
-		echo '<td>'.$myrow['serialno'].'</td>
-			<td class="number">'.locale_number_format($myrow['quantity'],$DecimalPlaces). '</td>
+		echo '<td>' . $myrow['serialno'] . '</td>
+			<td class="number">' . locale_number_format($myrow['quantity'],$DecimalPlaces). '</td>
 			<td>' . ConvertSQLDate($myrow['expirationdate']). '</td>
 			<th></th>';
 	}

@@ -8,7 +8,7 @@ $Title = _('Access Permission Maintenance');
 include('includes/header.inc');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/group_add.png" title="' .
-		_('Search') . '" alt="" />' . ' ' . $Title.'</p>';
+		_('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (isset($_GET['SelectedRole'])){
 	$SelectedRole = $_GET['SelectedRole'];
@@ -201,8 +201,8 @@ if (isset($SelectedRole)) {
 	echo '<br /><table class="selection"><tr>';
 
 	if (DB_num_rows($Result)>0 ) {
-		echo '<th colspan="3"><div class="centre">'._('Assigned Security Tokens').'</div></th>';
-		echo '<th colspan="3"><div class="centre">'._('Available Security Tokens').'</div></th>';
+		echo '<th colspan="3"><div class="centre">' . _('Assigned Security Tokens') . '</div></th>';
+		echo '<th colspan="3"><div class="centre">' . _('Available Security Tokens') . '</div></th>';
 	}
 	echo '</tr>';
 

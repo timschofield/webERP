@@ -229,9 +229,9 @@ echo '</td>
 		<td>' . _('Enter a partial Code') . ':</td>
 		<td>';
 if (isset($_POST['SupplierCode'])) {
-	echo '<input type="text" name="SupplierCode" value="' . $_POST['SupplierCode'] . '" size="15" maxlength="18" />';
+	echo '<input type="text" autofocus="autofocus" name="SupplierCode" value="' . $_POST['SupplierCode'] . '" size="15" maxlength="18" />';
 } else {
-	echo '<input type="text" name="SupplierCode" size="15" maxlength="18" />';
+	echo '<input type="text" autofocus="autofocus" name="SupplierCode" size="15" maxlength="18" />';
 }
 echo '</td></tr>
 		</table>
@@ -298,13 +298,13 @@ if (isset($_POST['Search'])) {
 			$k = 1;
 		}
 		echo '<td><input type="submit" name="Select" value="'.$myrow['supplierid'].'" /></td>
-				<td>'.$myrow['suppname'].'</td>
-				<td>'.$myrow['currcode'].'</td>
-				<td>'.$myrow['address1'].'</td>
-				<td>'.$myrow['address2'].'</td>
-				<td>'.$myrow['address3'].'</td>
-				<td>'.$myrow['address4'].'</td>
-				<td>'.$myrow['telephone'].'</td>
+				<td>' . $myrow['suppname'] . '</td>
+				<td>' . $myrow['currcode'] . '</td>
+				<td>' . $myrow['address1'] . '</td>
+				<td>' . $myrow['address2'] . '</td>
+				<td>' . $myrow['address3'] . '</td>
+				<td>' . $myrow['address4'] . '</td>
+				<td>' . $myrow['telephone'] . '</td>
 				<td><a href="mailto://'.$myrow['email'].'">' . $myrow['email']. '</a></td>
 			</tr>';
 		$RowIndex = $RowIndex + 1;
@@ -384,20 +384,19 @@ if (isset($_SESSION['SupplierID']) and $_SESSION['SupplierID'] != '') {
 					</tr>';
 			}
 			echo '<tr>
-					<td valign="top" class="select">'._('Last Paid Amount:') . '</td>
+					<td valign="top" class="select">' . _('Last Paid Amount:') . '</td>
 					<td valign="top" class="select">  <b>' . locale_number_format($myrow['lastpaid'], $myrow['currdecimalplaces']) . '</b></td></tr>';
 			echo '<tr>
-					<td valign="top" class="select">'._('Supplier since:') . '</td>
+					<td valign="top" class="select">' . _('Supplier since:') . '</td>
 					<td valign="top" class="select"> <b>' . ConvertSQLDate($myrow['suppliersince']) . '</b></td>
 					</tr>';
 			echo '<tr>
-					<td valign="top" class="select">'._('Total Spend with this Supplier:') . '</td>
+					<td valign="top" class="select">' . _('Total Spend with this Supplier:') . '</td>
 					<td valign="top" class="select"> <b>' . locale_number_format($row['total'], $myrow['currdecimalplaces']) . '</b></td>
 					</tr>';
 			echo '</table>';
 		}
 	}
 }
-echo '<script  type="text/javascript">defaultControl(document.forms[0].SupplierCode);</script>';
 include ('includes/footer.inc');
 ?>

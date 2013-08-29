@@ -660,7 +660,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				$k=1;
 			}
 
-			echo '	<td>' . htmlspecialchars($myrow['name'], ENT_QUOTES, 'UTF-8', false).'</td>
+			echo '	<td>' . htmlspecialchars($myrow['name'], ENT_QUOTES, 'UTF-8', false) . '</td>
 					<td><input tabindex="'.strval($j+5).'" type="submit" name="SubmitCustomerSelection' . $j .'" value="' . htmlspecialchars($myrow['brname'], ENT_QUOTES, 'UTF-8', false). '" />
 					<input type="hidden" name="SelectedCustomer' . $j .'" value="'.$myrow['debtorno'].'" />
 					<input type="hidden" name="SelectedBranch' . $j .'" value="'. $myrow['branchcode'].'" /></td>
@@ -1419,7 +1419,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 			echo '<td><input class="number" tabindex="2" type="text" required="required" name="Quantity_' . $OrderLine->LineNumber . '" size="6" maxlength="8" value="' . locale_number_format($OrderLine->Quantity,$OrderLine->DecimalPlaces) . '" title="' . _('Enter the quantity of this item ordered by the customer') . '" />';
 			if ($QtyRemain != $QtyOrdered){
-				echo '<br />'.locale_number_format($OrderLine->QtyInv,$OrderLine->DecimalPlaces) .' ' . _('of') . ' ' . locale_number_format($OrderLine->Quantity,$OrderLine->DecimalPlaces).' ' . _('invoiced');
+				echo '<br />' . locale_number_format($OrderLine->QtyInv,$OrderLine->DecimalPlaces) .' ' . _('of') . ' ' . locale_number_format($OrderLine->Quantity,$OrderLine->DecimalPlaces).' ' . _('invoiced');
 			}
 			echo '</td>
 					<td class="number">' . locale_number_format($OrderLine->QOHatLoc,$OrderLine->DecimalPlaces) . '</td>

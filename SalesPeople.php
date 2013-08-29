@@ -17,7 +17,7 @@ if (isset($Errors)) {
 
 $Errors = array();
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (isset($_POST['submit'])) {
 
@@ -229,7 +229,7 @@ or deletion of the records*/
 			<td class="number">%s</td>
 			<td class="number">%s</td>
 			<td>%s</td>
-			<td><a href="%sSelectedSalesPerson=%s">'. _('Edit') . '</a></td>
+			<td><a href="%sSelectedSalesPerson=%s">' .  _('Edit') . '</a></td>
 			<td><a href="%sSelectedSalesPerson=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this sales person?') . '\');">' . _('Delete') . '</a></td>
 			</tr>',
 			$myrow['salesmancode'],

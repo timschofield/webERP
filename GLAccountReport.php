@@ -233,7 +233,7 @@ if (isset($_POST['RunReport'])){
 	/*Show a form to allow input of criteria for the report */
 	echo '<table>
 		        <tr>
-		         <td>'._('Selected Accounts') . ':</td>
+		         <td>' . _('Selected Accounts') . ':</td>
 		         <td><select name="Account[]" multiple="multiple">';
 	$sql = "SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode";
 	$AccountsResult = DB_query($sql,$db);
@@ -248,7 +248,7 @@ if (isset($_POST['RunReport'])){
 	}
 	echo '</select></td>';
 
-	echo '<td>'._('For Period range').':</td>
+	echo '<td>' . _('For Period range').':</td>
 			<td><select Name=Period[] multiple="multiple">';
 	$sql = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC";
 	$Periods = DB_query($sql,$db);

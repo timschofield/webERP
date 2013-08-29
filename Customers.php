@@ -404,8 +404,8 @@ if (!isset($DebtorNo)) {
 	$result=DB_query($sql, $db);
 	$myrow=DB_fetch_row($result);
 	if ($myrow[0]==0) {
-		prnMsg( _('In order to create a new customer you must first set up at least one sales type/price list').'<br />'.
-			_('Click').' '.'<a target="_blank" href="' . $RootPath . '/SalesTypes.php">' . _('here').' ' . '</a>'._('to set up your price lists'),'warning').'<br />';
+		prnMsg( _('In order to create a new customer you must first set up at least one sales type/price list') . '<br />' . 
+			_('Click').' ' . '<a target="_blank" href="' . $RootPath . '/SalesTypes.php">' . _('here').' ' . '</a>' . _('to set up your price lists'),'warning') . '<br />';
 		$SetupErrors += 1;
 	}
 	$sql="SELECT COUNT(typeid)
@@ -413,13 +413,13 @@ if (!isset($DebtorNo)) {
 	$result=DB_query($sql, $db);
 	$myrow=DB_fetch_row($result);
 	if ($myrow[0]==0) {
-		prnMsg( _('In order to create a new customer you must first set up at least one customer type').'<br />'.
-			_('Click').' '.'<a target="_blank" href="' . $RootPath . '/CustomerTypes.php">' . _('here').' ' . '</a>'._('to set up your customer types'),'warning');
+		prnMsg( _('In order to create a new customer you must first set up at least one customer type') . '<br />' . 
+			_('Click').' ' . '<a target="_blank" href="' . $RootPath . '/CustomerTypes.php">' . _('here').' ' . '</a>' . _('to set up your customer types'),'warning');
 		$SetupErrors += 1;
 	}
 
 	if ($SetupErrors>0) {
-		echo '<br /><div class="centre"><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'" >'._('Click here to continue').'</a></div>';
+		echo '<br /><div class="centre"><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'" >' . _('Click here to continue') . '</a></div>';
 		include('includes/footer.inc');
 		exit;
 	}
@@ -475,9 +475,9 @@ if (!isset($DebtorNo)) {
 			<td><select name="Address6">';
 	foreach ($CountriesArray as $CountryEntry => $CountryName){
 		if (isset($_POST['Address6']) AND (strtoupper($_POST['Address6']) == strtoupper($CountryName))){
-			echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName .'</option>';
+			echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName  . '</option>';
 		} else {
-			echo '<option value="' . $CountryName . '">' . $CountryName .'</option>';
+			echo '<option value="' . $CountryName . '">' . $CountryName  . '</option>';
 		}
 	}
 	echo '</select></td>
@@ -626,9 +626,9 @@ if (!isset($DebtorNo)) {
 
 	foreach ($LanguagesArray as $LanguageCode => $LanguageName){
 		if ($_POST['LanguageID'] == $LanguageCode){
-			echo '<option selected="selected" value="' . $LanguageCode . '">' . $LanguageName['LanguageName'] .'</option>';
+			echo '<option selected="selected" value="' . $LanguageCode . '">' . $LanguageName['LanguageName']  . '</option>';
 		} else {
-			echo '<option value="' . $LanguageCode . '">' . $LanguageName['LanguageName'] .'</option>';
+			echo '<option value="' . $LanguageCode . '">' . $LanguageName['LanguageName']  . '</option>';
 		}
 	}
 	echo '</select></td>
@@ -779,11 +779,11 @@ if (!isset($DebtorNo)) {
 				<td><select name="Address6">';
 		foreach ($CountriesArray as $CountryEntry => $CountryName){
 			if (isset($_POST['Address6']) AND (strtoupper($_POST['Address6']) == strtoupper($CountryName))){
-				echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName .'</option>';
+				echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName  . '</option>';
 			}elseif (!isset($_POST['Address6']) AND $CountryName == "") {
-				echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName .'</option>';
+				echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName  . '</option>';
 			} else {
-				echo '<option value="' . $CountryName . '">' . $CountryName .'</option>';
+				echo '<option value="' . $CountryName . '">' . $CountryName  . '</option>';
 			}
 		}
 		echo '</select></td>
@@ -818,11 +818,11 @@ if (!isset($DebtorNo)) {
 				<td><select name="Address6">';
 		foreach ($CountriesArray as $CountryEntry => $CountryName){
 			if (isset($_POST['Address6']) AND (strtoupper($_POST['Address6']) == strtoupper($CountryName))){
-				echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName .'</option>';
+				echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName  . '</option>';
 			}elseif (!isset($_POST['Address6']) AND $CountryName == "") {
-				echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName .'</option>';
+				echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName  . '</option>';
 			} else {
-				echo '<option value="' . $CountryName . '">' . $CountryName .'</option>';
+				echo '<option value="' . $CountryName . '">' . $CountryName  . '</option>';
 			}
 		}
 		echo '</select></td>
@@ -858,7 +858,7 @@ if (!isset($DebtorNo)) {
 		$myrow=DB_fetch_array($result);
 		echo '<tr>
 				<td>' . _('Customer Type') . ':</td>
-				<td>'.$myrow['typename'] . '</td>
+				<td>' . $myrow['typename'] . '</td>
 			</tr>';
 	} else {
 		$result=DB_query("SELECT typeid, typename FROM debtortype ORDER BY typename",$db);
@@ -964,7 +964,7 @@ if (!isset($DebtorNo)) {
 		$myrow=DB_fetch_array($result);
 		echo '<tr>
 				<td>' . _('Credit Status') . ':</td>
-				<td>'.$myrow['reasondescription'] . '</td>
+				<td>' . $myrow['reasondescription'] . '</td>
 			</tr>';
 	} else {
 		$result=DB_query("SELECT reasoncode, reasondescription FROM holdreasons",$db);
@@ -1015,9 +1015,9 @@ if (!isset($DebtorNo)) {
 
 	foreach ($LanguagesArray as $LanguageCode => $LanguageName){
 		if ($_POST['LanguageID'] == $LanguageCode){
-			echo '<option selected="selected" value="' . $LanguageCode . '">' . $LanguageName['LanguageName'] .'</option>';
+			echo '<option selected="selected" value="' . $LanguageCode . '">' . $LanguageName['LanguageName']  . '</option>';
 		} else {
-			echo '<option value="' . $LanguageCode . '">' . $LanguageName['LanguageName'] .'</option>';
+			echo '<option value="' . $LanguageCode . '">' . $LanguageName['LanguageName']  . '</option>';
 		}
 	}
 	echo '</select></td>
@@ -1026,9 +1026,9 @@ if (!isset($DebtorNo)) {
 			<td>' . _('Require Customer PO Line on SO') . ':</td>';
 	if (isset($_GET['Modify'])) {
 		if ($_POST['CustomerPOLine']==0){
-			echo '<td>'._('No') . '</td>';
+			echo '<td>' . _('No') . '</td>';
 		} else {
-			echo '<td>'._('Yes') . '</td>';
+			echo '<td>' . _('Yes') . '</td>';
 		}
 	} else {
 		echo '<td><select name="CustomerPOLine">';
@@ -1047,12 +1047,12 @@ if (!isset($DebtorNo)) {
 		if ($_POST['InvAddrBranch']==0){
 			echo '<tr>
 					<td>' . _('Invoice Addressing') . ':</td>
-					<td>'._('Address to HO').'</td>
+					<td>' . _('Address to HO') . '</td>
 				</tr>';
 		} else {
 			echo '<tr>
 					<td>' . _('Invoice Addressing') . ':</td>
-					<td>'._('Address to Branch').'</td>
+					<td>' . _('Address to Branch') . '</td>
 				</tr>';
 		}
 	} else {
@@ -1145,8 +1145,8 @@ if (!isset($DebtorNo)) {
 					<td>%s</td>
 					<td><a href="mailto:%s">%s</a></td>
 					<td>%s</td>
-					<td><a href="AddCustomerContacts.php?Id=%s&amp;DebtorNo=%s">'. _('Edit'). '</a></td>
-					<td><a href="%sID=%s&amp;DebtorNo=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this customer contact?') . '\');">'. _('Delete'). '</a></td>
+					<td><a href="AddCustomerContacts.php?Id=%s&amp;DebtorNo=%s">' .  _('Edit'). '</a></td>
+					<td><a href="%sID=%s&amp;DebtorNo=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this customer contact?') . '\');">' .  _('Delete'). '</a></td>
 					</tr>',
 					$myrow['contactname'],
 					$myrow['role'],

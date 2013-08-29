@@ -8,7 +8,7 @@ $Title = _('Audit Trail');
 
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (!isset($_POST['FromDate'])){
 	$_POST['FromDate'] = Date($_SESSION['DefaultDateFormat'],mktime(0,0,0, Date('m')-$_SESSION['MonthsAuditTrail']));
@@ -40,17 +40,17 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 echo '<table class="selection">';
 
 echo '<tr>
-		<td>'. _('From Date') . ' ' . $_SESSION['DefaultDateFormat'] .'</td>
+		<td>' .  _('From Date') . ' ' . $_SESSION['DefaultDateFormat']  . '</td>
 		<td><input tabindex="1" type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="FromDate" size="11" maxlength="10" autofocus="autofocus" required="required" value="' .$_POST['FromDate']. '" onchange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')"/></td>
 	</tr>
 	<tr>
-		<td>'. _('To Date') . ' ' . $_SESSION['DefaultDateFormat'] .'</td>
+		<td>' .  _('To Date') . ' ' . $_SESSION['DefaultDateFormat']  . '</td>
 		<td><input tabindex="2" type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="ToDate" size="11" maxlength="10" required="required" value="' . $_POST['ToDate'] . '" onchange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')"/></td>
 	</tr>';
 
 // Show user selections
 echo '<tr>
-		<td>'. _('User ID'). '</td>
+		<td>' .  _('User ID'). '</td>
 		<td><select tabindex="3" name="SelectedUser">
 			<option value="ALL">' . _('All') . '</option>';
 while ($Users = DB_fetch_row($UserResult)) {
@@ -64,7 +64,7 @@ echo '</select></td></tr>';
 
 // Show table selections
 echo '<tr>
-		<td>'. _('Table '). '</td>
+		<td>' .  _('Table '). '</td>
 		<td><select tabindex="4" name="SelectedTable">
 			<option value="ALL">' . _('All') . '</option>';
 while ($Tables = DB_fetch_row($TableResult)) {
@@ -213,8 +213,8 @@ if (isset($_POST['View'])) {
 						<td></td>
 						<td></td>
 						<td></td>';
-					echo '<td>'.$_SESSION['SQLString']['fields'][$i].'</td>
-						<td>'. trim(str_replace("'","",$_SESSION['SQLString']['values'][$i])) .'</td>';
+					echo '<td>' . $_SESSION['SQLString']['fields'][$i] . '</td>
+						<td>' .  trim(str_replace("'","",$_SESSION['SQLString']['values'][$i]))  . '</td>';
 					echo '</tr>';
 				}
 			}

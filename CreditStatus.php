@@ -148,9 +148,9 @@ or deletion of the records*/
 
 	echo '<table class="selection">
 		<tr>
-			<th>'. _('Status Code') .'</th>
-			<th>'. _('Description') .'</th>
-			<th>'. _('Disallow Invoices') .'</th>
+			<th>' .  _('Status Code')  . '</th>
+			<th>' .  _('Description')  . '</th>
+			<th>' .  _('Disallow Invoices')  . '</th>
         </tr>';
 
 	$k=0; //row colour counter
@@ -159,7 +159,7 @@ or deletion of the records*/
 		if ($myrow['dissallowinvoices']==0) {
 			$DissallowText = _('Invoice OK');
 		} else {
-			$DissallowText = '<b>'. _('NO INVOICING') .'</b>';
+			$DissallowText = '<b>' .  _('NO INVOICING')  . '</b>';
 		}
 		if ($k==1){
 			echo '<tr class="EvenTableRows">';
@@ -173,7 +173,7 @@ or deletion of the records*/
 			<td>%s</td>
 			<td>%s</td>
 			<td><a href="%s?SelectedReason=%s">' . _('Edit') . '</a></td>
-			<td><a href="%s?SelectedReason=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this credit status record?') . '\');">'. _('Delete') .'</a></td>
+			<td><a href="%s?SelectedReason=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this credit status record?') . '\');">' .  _('Delete')  . '</a></td>
 			</tr>',
 			$myrow['reasoncode'],
 			$myrow['reasondescription'],
@@ -220,7 +220,7 @@ if (!isset($_GET['delete'])) {
 		echo '<input type="hidden" name="ReasonCode" value="' . $_POST['ReasonCode'] . '" />';
 		echo '<table class="selection">
 				<tr>
-					<td>'. _('Status Code') .':</td>
+					<td>' .  _('Status Code') .':</td>
 					<td>' . $_POST['ReasonCode'] . '</td>
 				</tr>';
 
@@ -231,7 +231,7 @@ if (!isset($_GET['delete'])) {
 		echo '<br />
 			<table class="selection">
 			<tr>
-				<td>'. _('Status Code') .':</td>
+				<td>' .  _('Status Code') .':</td>
 				<td><input ' . (in_array('ReasonCode',$Errors) ? 'class="integer inputerror"' : 'class="integer"' ) . ' tabindex="1" type="number" name="ReasonCode" required="required" value="'. $_POST['ReasonCode'] .'" size="3" maxlength="2" /></td>
 			</tr>';
 	}
@@ -240,12 +240,12 @@ if (!isset($_GET['delete'])) {
 		$_POST['ReasonDescription'] = '';
 	}
 	echo '<tr>
-			<td>'. _('Description') .':</td>
+			<td>' .  _('Description') .':</td>
 			<td><input ' . (in_array('ReasonDescription',$Errors) ? 'class="inputerror"' : '' ) .
 			 ' tabindex="2" type="text" name="ReasonDescription" required="required" value="'. $_POST['ReasonDescription'] .'" size="28" maxlength="30" /></td>
 		</tr>
 		<tr>
-			<td>'. _('Disallow Invoices') . '</td>';
+			<td>' .  _('Disallow Invoices') . '</td>';
 	if (isset($_POST['DisallowInvoices']) and $_POST['DisallowInvoices']==1) {
 		echo '<td><input tabindex="3" type="checkbox" checked="checked" name="DisallowInvoices" /></td>
 			</tr>';

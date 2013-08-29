@@ -188,7 +188,7 @@ if (isset($_POST['ShowUsage'])){
 
 echo '<div class="centre">';
 echo '<br />
-    <a href="' . $RootPath . '/StockStatus.php?StockID=' . $StockID . '">' . _('Show Stock Status') .'</a>';
+    <a href="' . $RootPath . '/StockStatus.php?StockID=' . $StockID . '">' . _('Show Stock Status')  . '</a>';
 echo '<br />
 	<a href="' . $RootPath . '/StockMovements.php?StockID=' . $StockID . '&amp;StockLocation=' . $_POST['StockLocation'] . '">' . _('Show Stock Movements') . '</a>';
 echo '<br />

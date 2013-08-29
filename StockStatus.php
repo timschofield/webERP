@@ -391,7 +391,7 @@ if ($DebtorNo) { /* display recent pricing history for this debtor and this stoc
 	 }
 	//end of while loop
 	else {
-	  echo '<p>'._('No history of sales of') . ' ' . $StockID . ' ' . _('to') . ' ' . $DebtorNo;
+	  echo '<p>' . _('No history of sales of') . ' ' . $StockID . ' ' . _('to') . ' ' . $DebtorNo;
 	}
 }//end of displaying price history for a debtor
 

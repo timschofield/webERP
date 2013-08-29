@@ -767,11 +767,11 @@ if (count($_SESSION['Items' . $identifier]->LineItems)>0){ /*only show return li
 	echo '<table><tr><td>';
 	//nested table
 	echo '<table><tr>
-		<td style="color:red">'. _('Returned By') .':</td>
+		<td style="color:red">' .  _('Returned By') .':</td>
 		<td><input type="text" size="25" maxlength="25" name="DeliverTo" value="' . stripslashes($_SESSION['Items' . $identifier]->DeliverTo) . '" /></td>
 	</tr>';
 	echo '<tr>
-		<td style="color:red">'. _('Contact Phone Number') .':</td>
+		<td style="color:red">' .  _('Contact Phone Number') .':</td>
 		<td><input type="tel" size="25" maxlength="25" name="PhoneNo"  required="required" title="' . _('A phone number is required for counter returns') . '" value="' . stripslashes($_SESSION['Items' . $identifier]->PhoneNo) . '" /></td>
 	</tr>';
 
@@ -780,7 +780,7 @@ if (count($_SESSION['Items' . $identifier]->LineItems)>0){ /*only show return li
 			<td><input type="email" size="25" maxlength="30" name="Email" value="' . stripslashes($_SESSION['Items' . $identifier]->Email) . '" /></td></tr>';
 
 	echo '<tr>
-			<td style="color:red">'. _('Customer Reference') .':</td>
+			<td style="color:red">' .  _('Customer Reference') .':</td>
 			<td><input type="text" size="25" maxlength="25" name="CustRef" value="' . stripcslashes($_SESSION['Items' . $identifier]->CustRef) . '" /></td>
 		</tr>';
 	echo '<tr>
@@ -801,8 +801,8 @@ if (count($_SESSION['Items' . $identifier]->LineItems)>0){ /*only show return li
 	echo '</select></td>
 		</tr>';
 	echo '<tr>
-		<td style="color:red">'. _('Reason for Return') .':</td>
-		<td><textarea name="Comments" cols="23" rows="5">' . stripcslashes($_SESSION['Items' . $identifier]->Comments) .'</textarea></td>
+		<td style="color:red">' .  _('Reason for Return') .':</td>
+		<td><textarea name="Comments" cols="23" rows="5">' . stripcslashes($_SESSION['Items' . $identifier]->Comments)  . '</textarea></td>
 	</tr>';
 	echo '</table>'; //end the sub table in the first column of master table
 	echo '</td><th valign="bottom">'; //for the master table
@@ -1580,9 +1580,9 @@ if (isset($_POST['ProcessReturn']) AND $_POST['ProcessReturn'] != ''){
 		echo '<br /><div class="centre">';
 
 		if ($_SESSION['InvoicePortraitFormat']==0){
-			echo '<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . '<a target="_blank" href="'.$RootPath.'/PrintCustTrans.php?FromTransNo='.$CreditNoteNo.'&InvOrCredit=Credit&PrintPDF=True">'. _('Print this credit note'). ' (' . _('Landscape') . ')</a><br /><br />';
+			echo '<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . '<a target="_blank" href="'.$RootPath.'/PrintCustTrans.php?FromTransNo='.$CreditNoteNo.'&InvOrCredit=Credit&PrintPDF=True">' .  _('Print this credit note'). ' (' . _('Landscape') . ')</a><br /><br />';
 		} else {
-			echo '<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . '<a target="_blank" href="'.$RootPath.'/PrintCustTransPortrait.php?FromTransNo='.$CreditNoteNo.'&InvOrCredit=Credit&PrintPDF=True" onClick="return window.location=\'index.php\'">'. _('Print this credit note'). ' (' . _('Portrait') . ')</a><br /><br />';
+			echo '<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . '<a target="_blank" href="'.$RootPath.'/PrintCustTransPortrait.php?FromTransNo='.$CreditNoteNo.'&InvOrCredit=Credit&PrintPDF=True" onClick="return window.location=\'index.php\'">' .  _('Print this credit note'). ' (' . _('Portrait') . ')</a><br /><br />';
 		}
 		echo '<br /><br /><a href="' .htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Start a new Counter Return') . '</a></div>';
 
@@ -1610,10 +1610,10 @@ if (!isset($_POST['ProcessReturn'])){
 					<td><b>' . _('Select a Stock Category') . ': </b><select tabindex="1" name="StockCat">';
 
 		if (!isset($_POST['StockCat'])){
-			echo '<option selected="selected" value="All">' . _('All').'</option>';
+			echo '<option selected="selected" value="All">' . _('All') . '</option>';
 			$_POST['StockCat'] ='All';
 		} else {
-			echo '<option value="All">' . _('All').'</option>';
+			echo '<option value="All">' . _('All') . '</option>';
 		}
 		$SQL="SELECT categoryid,
 					categorydescription
@@ -1623,9 +1623,9 @@ if (!isset($_POST['ProcessReturn'])){
 		$result1 = DB_query($SQL,$db);
 		while ($myrow1 = DB_fetch_array($result1)) {
 			if ($_POST['StockCat']==$myrow1['categoryid']){
-				echo '<option selected="selected" value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'].'</option>';
+				echo '<option selected="selected" value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
 			} else {
-				echo '<option value="'. $myrow1['categoryid'] . '">' . $myrow1['categorydescription'].'</option>';
+				echo '<option value="'. $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
 			}
 		}
 

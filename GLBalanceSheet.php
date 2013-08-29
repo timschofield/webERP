@@ -30,7 +30,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">
 			<tr>
-				<td>'._('Select the balance date').':</td>
+				<td>' . _('Select the balance date').':</td>
 				<td><select required="required" name="BalancePeriodEnd">';
 
 	$periodno=GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
@@ -53,10 +53,10 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 	echo '</select></td></tr>';
 
 	echo '<tr>
-			<td>'._('Detail Or Summary').':</td>
+			<td>' . _('Detail Or Summary').':</td>
 			<td><select required="required" name="Detail" title="' . _('Selecting Summary will show on the totals at the account group level') . '" >
-				<option value="Summary">'._('Summary') . '</option>
-				<option selected="selected" value="Detailed">'._('All Accounts') . '</option>
+				<option value="Summary">' . _('Summary') . '</option>
+				<option selected="selected" value="Detailed">' . _('All Accounts') . '</option>
 			</select></td>
 		</tr>
 		<tr>
@@ -109,9 +109,9 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 		include('includes/header.inc');
 		prnMsg( _('The accumulated profits brought forward could not be calculated by the SQL because') . ' - ' . DB_error_msg($db) );
 		echo '<br />
-				<a href="' .$RootPath .'/index.php">'. _('Back to the menu'). '</a>';
+				<a href="' .$RootPath .'/index.php">' .  _('Back to the menu'). '</a>';
 		if ($debug==1){
-			echo '<br />'. $SQL;
+			echo '<br />' .  $SQL;
 		}
 		include('includes/footer.inc');
 		exit;
@@ -147,9 +147,9 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 		$Title = _('Balance Sheet') . ' - ' . _('Problem Report') . '....';
 		include('includes/header.inc');
 		prnMsg( _('No general ledger accounts were returned by the SQL because') . ' - ' . DB_error_msg($db) );
-		echo '<br /><a href="' .$RootPath .'/index.php">'. _('Back to the menu'). '</a>';
+		echo '<br /><a href="' .$RootPath .'/index.php">' .  _('Back to the menu'). '</a>';
 		if ($debug==1){
-			echo '<br />'. $SQL;
+			echo '<br />' .  $SQL;
 		}
 		include('includes/footer.inc');
 		exit;
@@ -326,7 +326,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 		$Title = _('Print Balance Sheet Error');
 		include('includes/header.inc');
 		prnMsg( _('There were no entries to print out for the selections specified') );
-		echo '<br /><a href="'. $RootPath.'/index.php?' . SID . '">'. _('Back to the menu'). '</a>';
+		echo '<br /><a href="'. $RootPath.'/index.php?' . SID . '">' .  _('Back to the menu'). '</a>';
 		include('includes/footer.inc');
 		exit;
 	} else {
@@ -391,17 +391,17 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 			<tr>
 				<th colspan="6">
 					<div class="centre"><h1>' .
-		_('Balance Sheet as at') . ' ' . $BalanceDate .'</h1>
+		_('Balance Sheet as at') . ' ' . $BalanceDate  . '</h1>
 					</div>
 				</th>
 			</tr>';
 
 	if ($_POST['Detail']=='Detailed'){
 		$TableHeader = '<tr>
-							<th>'._('Account').'</th>
-							<th>'._('Account Name').'</th>
+							<th>' . _('Account') . '</th>
+							<th>' . _('Account Name') . '</th>
 							<th colspan="2">' . $BalanceDate . '</th>
-							<th colspan="2">'._('Last Year').'</th>
+							<th colspan="2">' . _('Last Year') . '</th>
 						</tr>';
 	} else { /*summary */
 		$TableHeader = '<tr>
@@ -684,7 +684,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 		</tr>';
 
 	printf('<tr>
-		<td colspan="3"><h2>'._('Check Total').'</h2></td>
+		<td colspan="3"><h2>' . _('Check Total') . '</h2></td>
 		<td class="number">%s</td>
 		<td></td>
 		<td class="number">%s</td>

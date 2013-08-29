@@ -20,7 +20,7 @@ if (isset($_POST['UpdateAll'])) {
 		if (mb_substr($key,0,6)=='Status') {
 			$OrderNo=mb_substr($key,6);
 			$Status=$_POST['Status'.$OrderNo];
-			$Comment=date($_SESSION['DefaultDateFormat']).' - '._('Authorised by').' <a href="mailto:' . $EmailRow['email'].'">'.$_SESSION['UserID'].'</a><br />' . html_entity_decode($_POST['comment'],ENT_QUOTES,'UTF-8');
+			$Comment=date($_SESSION['DefaultDateFormat']).' - '._('Authorised by').' <a href="mailto:' . $EmailRow['email'].'">' . $_SESSION['UserID'] . '</a><br />' . html_entity_decode($_POST['comment'],ENT_QUOTES,'UTF-8');
 			$sql="UPDATE purchorders
 					SET status='".$Status."',
 						stat_comment='".$Comment."',
@@ -55,12 +55,12 @@ echo '<div>
 
 /* Create the table for the purchase order header */
 echo '<tr>
-		<th class="ascending">'._('Order Number').'</th>
-		<th class="ascending">'._('Supplier').'</th>
-		<th class="ascending">'._('Date Ordered').'</th>
-		<th class="ascending">'._('Initiator').'</th>
-		<th class="ascending">'._('Delivery Date').'</th>
-		<th class="ascending">'._('Status').'</th>
+		<th class="ascending">' . _('Order Number') . '</th>
+		<th class="ascending">' . _('Supplier') . '</th>
+		<th class="ascending">' . _('Date Ordered') . '</th>
+		<th class="ascending">' . _('Initiator') . '</th>
+		<th class="ascending">' . _('Delivery Date') . '</th>
+		<th class="ascending">' . _('Status') . '</th>
 	</tr>';
 
 while ($myrow=DB_fetch_array($result)) {
@@ -83,16 +83,16 @@ while ($myrow=DB_fetch_array($result)) {
 
 	if ($AuthLevel>=$OrderValue) {
 		echo '<tr>
-				<td>'.$myrow['orderno'].'</td>
-				<td>'.$myrow['suppname'].'</td>
-				<td>'.ConvertSQLDate($myrow['orddate']).'</td>
-				<td><a href="mailto:'.$myrow['email'].'">'.$myrow['realname'].'</td>
-				<td>'.ConvertSQLDate($myrow['deliverydate']).'</td>
+				<td>' . $myrow['orderno'] . '</td>
+				<td>' . $myrow['suppname'] . '</td>
+				<td>' . ConvertSQLDate($myrow['orddate']) . '</td>
+				<td><a href="mailto:'.$myrow['email'].'">' . $myrow['realname'] . '</td>
+				<td>' . ConvertSQLDate($myrow['deliverydate']) . '</td>
 				<td><select name="Status'.$myrow['orderno'].'">
-					<option selected="selected" value="Pending">'._('Pending').'</option>
-					<option value="Authorised">'._('Authorised').'</option>
-					<option value="Rejected">'._('Rejected').'</option>
-					<option value="Cancelled">'._('Cancelled').'</option>
+					<option selected="selected" value="Pending">' . _('Pending') . '</option>
+					<option value="Authorised">' . _('Authorised') . '</option>
+					<option value="Rejected">' . _('Rejected') . '</option>
+					<option value="Cancelled">' . _('Cancelled') . '</option>
 					</select></td>
 			</tr>';
 		echo '<input type="hidden" name="comment" value="' . htmlspecialchars($myrow['stat_comment'], ENT_QUOTES,'UTF-8') . '" />';
@@ -110,11 +110,11 @@ while ($myrow=DB_fetch_array($result)) {
 				<td colspan="5" align="left">
 					<table class="selection" align="left">
 					<tr>
-						<th class="ascending">'._('Product').'</th>
-						<th class="ascending">'._('Quantity Ordered').'</th>
-						<th class="ascending">'._('Currency').'</th>
-						<th class="ascending">'._('Price').'</th>
-						<th class="ascending">'._('Line Total').'</th>
+						<th class="ascending">' . _('Product') . '</th>
+						<th class="ascending">' . _('Quantity Ordered') . '</th>
+						<th class="ascending">' . _('Currency') . '</th>
+						<th class="ascending">' . _('Price') . '</th>
+						<th class="ascending">' . _('Line Total') . '</th>
 					</tr>';
 
 		while ($LineRow=DB_fetch_array($LineResult)) {
@@ -124,11 +124,11 @@ while ($myrow=DB_fetch_array($result)) {
 				$DecimalPlaces = 2;
 			}
 			echo '<tr>
-					<td>'.$LineRow['description'].'</td>
-					<td class="number">'.locale_number_format($LineRow['quantityord'],$DecimalPlaces).'</td>
-					<td>'.$myrow['currcode'].'</td>
-					<td class="number">'.locale_number_format($LineRow['unitprice'],$myrow['currdecimalplaces']).'</td>
-					<td class="number">'.locale_number_format($LineRow['unitprice']*$LineRow['quantityord'],$myrow['currdecimalplaces']).'</td>
+					<td>' . $LineRow['description'] . '</td>
+					<td class="number">' . locale_number_format($LineRow['quantityord'],$DecimalPlaces) . '</td>
+					<td>' . $myrow['currcode'] . '</td>
+					<td class="number">' . locale_number_format($LineRow['unitprice'],$myrow['currdecimalplaces']) . '</td>
+					<td class="number">' . locale_number_format($LineRow['unitprice']*$LineRow['quantityord'],$myrow['currdecimalplaces']) . '</td>
 				</tr>';
 		} // end while order line detail
 		echo '</table>

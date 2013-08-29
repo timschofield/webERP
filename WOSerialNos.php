@@ -322,7 +322,7 @@ if (DB_num_rows($WOSerialNoResult)==0){
 		} else {
 			echo '<td><input type="hidden" name="Quantity' . $i . '" value="1" /></td>';
 		}
-		echo '<td><textarea name="Notes' . $i .'" cols="60" rows="3">' . $WOSNRow['qualitytext'] .'</textarea></td>';
+		echo '<td><textarea name="Notes' . $i .'" cols="60" rows="3">' . $WOSNRow['qualitytext']  . '</textarea></td>';
 		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=1&Reference=' . $WOSNRow['serialno'] . '&Quantity=' . locale_number_format($WOSNRow['quantity'],'Variable') . '&WO=' . $WO . '&StockID=' . $StockID . '&Description=' . $Description . '&Serialised=' . $Serialised . '&NextSerialNo=' . $NextSerialNo . '">' . _('Delete') . '</a></td></tr>';
 		$i++;
 		$j++;
@@ -340,7 +340,7 @@ if (DB_num_rows($WOSerialNoResult)==0){
 
 } //end of if there are woserialno items defined
 
-echo '<br /><a href="' . $RootPath . '/WorkOrderEntry.php?WO=' . $WO . '">' . _('Back To Work Order') . ' ' . $WO .'</a>';
+echo '<br /><a href="' . $RootPath . '/WorkOrderEntry.php?WO=' . $WO . '">' . _('Back To Work Order') . ' ' . $WO  . '</a>';
 
 echo '</div>
       </form>';

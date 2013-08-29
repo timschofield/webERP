@@ -238,7 +238,7 @@ echo '<tr>
 	</tr>';
 // Shop Customer Branch
 echo '<tr>
-		<td>'._('Default Web Shop Branch Code').':</td>
+		<td>' . _('Default Web Shop Branch Code').':</td>
 		<td><input type="text" required="required" size="12" maxlength="10" name="X_ShopBranchCode" value="' . $_SESSION['ShopBranchCode'] . '" /></td>
 		<td>' . _('The customer branch code that is to be used - a branch of the above custoemr account - for web-store sales') . '</td>
 	</tr>';
@@ -259,7 +259,7 @@ echo '<tr>
 echo '<tr>
 		<td>' . _('About Us') . ':</td>
 		<td><textarea name="X_ShopAboutUs" rows="8" cols="60">' . stripslashes($_SESSION['ShopAboutUs']) . '</textarea></td>
-		<td>' . _('This text will appear on the web-store page that provides information about us to users of the web-store.') . ' ' . _('Enter the raw html without any line breaks') .'</td>
+		<td>' . _('This text will appear on the web-store page that provides information about us to users of the web-store.') . ' ' . _('Enter the raw html without any line breaks')  . '</td>
 	</tr>';
 echo '<tr>
 		<td>' . _('Contact Us') . ':</td>
@@ -270,7 +270,7 @@ echo '<tr>
 echo '<tr>
 		<td>' . _('Freight Policy') . ':</td>
 		<td><textarea name="X_ShopFreightPolicy" rows="8" cols="60">' . stripslashes($_SESSION['ShopFreightPolicy']) . '</textarea></td>
-		<td>' . _('This text will appear on the web-store page that spells out the freight policy of the web-shop') . ' ' . _('Enter the raw html without any line breaks') .'</td>
+		<td>' . _('This text will appear on the web-store page that spells out the freight policy of the web-shop') . ' ' . _('Enter the raw html without any line breaks')  . '</td>
 	</tr>';
 
 
@@ -316,9 +316,9 @@ echo '<tr>
 $LocResult = DB_query("SELECT loccode, locationname FROM locations",$db);
 while ($LocRow = DB_fetch_array($LocResult)){
 	if (in_array($LocRow['loccode'],$Locations)){
-		echo '<option selected="selected" value="' . $LocRow['loccode'] . '">' . $LocRow['locationname'] .'</option>';
+		echo '<option selected="selected" value="' . $LocRow['loccode'] . '">' . $LocRow['locationname']  . '</option>';
 	} else {
-		echo '<option value="' . $LocRow['loccode'] . '">' . $LocRow['locationname'] .'</option>';
+		echo '<option value="' . $LocRow['loccode'] . '">' . $LocRow['locationname']  . '</option>';
 	}
 }
 echo '</select></td>

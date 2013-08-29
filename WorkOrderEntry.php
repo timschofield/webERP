@@ -536,7 +536,6 @@ echo '<tr><th>' . _('Output Item') . '</th>
 		  <th>' . _('Next Lot/SN Ref') . '</th>
 		  </tr>';
 $j=0;
-
 if (isset($NumberOfOutputs)){
 	for ($i=1;$i<=$NumberOfOutputs;$i++){
 		if ($j==1) {
@@ -554,7 +553,7 @@ if (isset($NumberOfOutputs)){
 		} else {
 		  	echo'<td><input type="text" required="required" class="number" name="OutputQty' . $i . '" value="' . locale_number_format($_POST['OutputQty' . $i]-$_POST['RecdQty' .$i], $_POST['DecimalPlaces' . $i]) . '" size="10" maxlength="10" title="'._('The input format must be positive numeric').'" /></td>';
 		}
-		 echo '<td class="number"><input type="hidden" name="RecdQty' . $i . '" value="' . locale_number_format($_POST['RecdQty' .$i], $_POST['DecimalPlaces' . $i]) . '" />' . locale_number_format($_POST['RecdQty' .$i], $_POST['DecimalPlaces' . $i]) .'</td>
+		 echo '<td class="number"><input type="hidden" name="RecdQty' . $i . '" value="' . locale_number_format($_POST['RecdQty' .$i], $_POST['DecimalPlaces' . $i]) . '" />' . locale_number_format($_POST['RecdQty' .$i], $_POST['DecimalPlaces' . $i])  . '</td>
 		  		<td class="number">' . locale_number_format(($_POST['OutputQty' . $i] - $_POST['RecdQty' .$i]), $_POST['DecimalPlaces' . $i]) . '</td>';
 		if ($_POST['Controlled'.$i]==1){
 			echo '<td><input type="text" name="NextLotSNRef' .$i . '" value="' . $_POST['NextLotSNRef'.$i] . '" /></td>';
@@ -625,24 +624,29 @@ if (!isset($_POST['StockCode'])) {
 }
 
 echo '</select>
-    <td>' . _('Enter text extracts in the') . ' <b>' . _('description') . '</b>:</td>
-    <td><input type="text" name="Keywords" size="20" maxlength="25" value="' . $_POST['Keywords'] . '" /></td></tr>
-    <tr><td>&nbsp;</td>
-	<td><font size="3"><b>' . _('OR') . ' </b></font>' . _('Enter extract of the') . ' <b>' . _('Stock Code') . '</b>:</td>
-	<td><input type="text" name="StockCode" size="15" maxlength="18" value="' . $_POST['StockCode'] . '" /></td>
+		<td>' . _('Enter text extracts in the') . ' <b>' . _('description') . '</b>:</td>
+		<td><input type="text" name="Keywords" size="20" maxlength="25" value="' . $_POST['Keywords'] . '" /></td>
+	</tr>
+    <tr>
+		<td>&nbsp;</td>
+		<td><font size="3"><b>' . _('OR') . ' </b></font>' . _('Enter extract of the') . ' <b>' . _('Stock Code') . '</b>:</td>
+		<td><input type="text" name="StockCode" autofocus="autofocus" size="15" maxlength="18" value="' . $_POST['StockCode'] . '" /></td>
 	</tr>
 	</table>
-	<br /><div class="centre"><button type="submit" name="Search">' . _('Search Now') . '</button></div>';
+	<br />
+	<div class="centre">
+		<button type="submit" name="Search">' . _('Search Now') . '</button>
+	</div>';
 
 if (isset($SearchResult)) {
 
 	if (DB_num_rows($SearchResult)>1){
 
-		echo '<br /><table cellpadding="2" class="selection">';
-		$TableHeader = '<tr><th>' . _('Code') . '</th>
-				   			<th>' . _('Description') . '</th>
-				   			<th>' . _('Units') . '</th></tr>';
-		echo $TableHeader;
+		echo '<br /><table cellpadding="2" class="selection">
+			<tr>
+				<th class="ascending">' . _('Code') . '</th>
+	   			<th class="ascending">' . _('Description') . '</th>
+	   			<th>' . _('Units') . '</th></tr>';
 		$j = 1;
 		$k=0; //row colour counter
 		$ItemCodes = array();
@@ -685,23 +689,12 @@ if (isset($SearchResult)) {
 						htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?WO=' . $_POST['WO'] . '&NewItem=' . $myrow['stockid'].'&Line='.$i);
 
 				$j++;
-				If ($j == 25){
-					$j=1;
-					echo $TableHeader;
-				} //end of page full new headings if
 			} //end if not already on work order
 		}//end of while loop
 	} //end if more than 1 row to show
 	echo '</table>';
 
 }#end if SearchResults to show
-
-
-if (!isset($_GET['NewItem']) OR $_GET['NewItem']=='') {
-	echo '<script>defaultControl(document.forms[0].StockCode);</script>';
-} else {
-	echo '<script>defaultControl(document.forms[0].OutputQty"'.$_GET['Line'].'");</script>';
-}
 
 echo '</form>';
 include('includes/footer.inc');

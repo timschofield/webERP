@@ -19,7 +19,7 @@ if (!isset($_FILES['ImportFile']) AND !isset($_SESSION['Statement'])) {
     echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table>
 			 <tr>
-				 <td>'. _('MT940 format Bank Statement File to import').'</td>
+				 <td>' .  _('MT940 format Bank Statement File to import') . '</td>
 	             <td><input type="file" id="ImportFile" autofocus="autofocus" required="required" title="' . _('Select the file that contains the bank transactions in MT940 format') . '" name="ImportFile"></td>
 			 </tr>
         </table>';
@@ -575,7 +575,7 @@ if (isset($_SESSION['Statement'])){
 			echo '<td></td><td class="number">' . number_format($_SESSION['Trans'][$i]->Amount,$_SESSION['Statement']->CurrDecimalPlaces) . '</td>';
 		}
 		if ($AllowImport==true) {
-			echo '<td><a href="' . $RootPath . '/ImportBankTransAnalysis.php?TransID=' . $i .'">' . _('Analysis') .'</a></td>';
+			echo '<td><a href="' . $RootPath . '/ImportBankTransAnalysis.php?TransID=' . $i .'">' . _('Analysis')  . '</a></td>';
 		}
 		echo '</tr>';
 	}

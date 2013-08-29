@@ -180,10 +180,10 @@ if (isset($_POST['submit'])) {
 		if($myrow[1]!='Freight'){
 		echo '<td>' . $myrow[1] . '</td>
 				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedTaxCategory=' . $myrow[0] . '">' . _('Edit') . '</a></td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedTaxCategory=' . $myrow[0] . '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this tax category?') . '\');">' . _('Delete') .'</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedTaxCategory=' . $myrow[0] . '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this tax category?') . '\');">' . _('Delete')  . '</a></td>
 				</tr>';
 		}else{
-			echo '<td>'.$myrow[1].'</td><td></td><td></td></tr>';
+			echo '<td>' . $myrow[1] . '</td><td></td><td></td></tr>';
 		}
 
 	} //END WHILE LIST LOOP

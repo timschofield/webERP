@@ -303,15 +303,15 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 
 echo '<table class="selection">
 		<tr>
-			<td><b>'. _('Shipment').': </b></td>
+			<td><b>' .  _('Shipment').': </b></td>
 			<td><b>' . $_SESSION['Shipment']->ShiptRef . '</b></td>
-			<td><b>'. _('From'). ' ' . $_SESSION['Shipment']->SupplierName . '</b></td>
+			<td><b>' .  _('From'). ' ' . $_SESSION['Shipment']->SupplierName . '</b></td>
 		</tr>';
 
 echo '<tr>
-		<td>'. _('Vessel Name /Transport Agent'). ': </td>
+		<td>' .  _('Vessel Name /Transport Agent'). ': </td>
 		<td colspan="3"><input type="text" name="Vessel" maxlength="50" size="50" value="' . $_SESSION['Shipment']->Vessel . '" /></td>
-		<td>'._('Voyage Ref / Consignment Note').': </td>
+		<td>' . _('Voyage Ref / Consignment Note').': </td>
 		<td><input type="text" name="VoyageRef" maxlength="20" size="20" value="' . $_SESSION['Shipment']->VoyageRef . '" /></td>
 	</tr>';
 
@@ -321,13 +321,13 @@ if (isset($_SESSION['Shipment']->ETA)){
 	$ETA ='';
 }
 
-echo '<tr><td>'. _('Expected Arrival Date (ETA)'). ': </td>';
+echo '<tr><td>' .  _('Expected Arrival Date (ETA)'). ': </td>';
 if (isset($_SESSION['Shipment']->ETA)) {
 	echo '<td><input type="text" name="ETA" class="date" alt="'.$_SESSION['DefaultDateFormat'].'"  maxlength="10" size="10" value="' . $ETA . '" /></td>';
 } else {
 	echo '<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="ETA" maxlength="10" size="10" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>';
 }
-echo '<td>'. _('Into').' ';
+echo '<td>' .  _('Into').' ';
 
 if (count($_SESSION['Shipment']->LineItems)>0){
 
@@ -393,17 +393,17 @@ if (count($_SESSION['Shipment']->LineItems)>0){
 	/* Always display all shipment lines */
 
 	echo '<br /><table class="selection">';
-	echo '<tr><th colspan="9"><h3>'. _('Order Lines On This Shipment'). '</h3></th></tr>';
+	echo '<tr><th colspan="9"><h3>' .  _('Order Lines On This Shipment'). '</h3></th></tr>';
 
 	$TableHeader = '<tr>
-						<th>'. _('Order'). '</th>
-						<th>'. _('Item'). '</th>
-						<th>'. _('Quantity'). '<br />'. _('Ordered'). '</th>
-						<th>'. _('Units'). '</th>
-						<th>'. _('Quantity').'<br />'. _('Received'). '</th>
-						<th>'. _('Quantity').'<br />'. _('Invoiced'). '</th>
-						<th>'. $_SESSION['Shipment']->CurrCode .' '. _('Price') . '</th>
-						<th>'. _('Current'). '<br />'. _('Std Cost'). '</th>
+						<th>' .  _('Order'). '</th>
+						<th>' .  _('Item'). '</th>
+						<th>' .  _('Quantity'). '<br />' .  _('Ordered'). '</th>
+						<th>' .  _('Units'). '</th>
+						<th>' .  _('Quantity') . '<br />' .  _('Received'). '</th>
+						<th>' .  _('Quantity') . '<br />' .  _('Invoiced'). '</th>
+						<th>' .  $_SESSION['Shipment']->CurrCode .' '. _('Price') . '</th>
+						<th>' .  _('Current'). '<br />' .  _('Std Cost'). '</th>
 					</tr>';
 
 	echo  $TableHeader;
@@ -430,14 +430,14 @@ if (count($_SESSION['Shipment']->LineItems)>0){
 		}
 
 
-		echo '<td>'.$LnItm->OrderNo.'</td>
-			<td>'. $LnItm->StockID .' - '. $LnItm->ItemDescription. '</td><td class="number">' . locale_number_format($LnItm->QuantityOrd,$LnItm->DecimalPlaces) . '</td>
-			<td>'. $LnItm->UOM .'</td>
+		echo '<td>' . $LnItm->OrderNo . '</td>
+			<td>' .  $LnItm->StockID .' - '. $LnItm->ItemDescription. '</td><td class="number">' . locale_number_format($LnItm->QuantityOrd,$LnItm->DecimalPlaces) . '</td>
+			<td>' .  $LnItm->UOM  . '</td>
 			<td class="number">' . locale_number_format($LnItm->QuantityRecd,$LnItm->DecimalPlaces) . '</td>
 			<td class="number">' . locale_number_format($LnItm->QtyInvoiced,$LnItm->DecimalPlaces) . '</td>
 			<td class="number">' . locale_number_format($LnItm->UnitPrice, $_SESSION['Shipment']->CurrDecimalPlaces) . '</td>
 			<td class="number">' . locale_number_format($LnItm->StdCostUnit,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=' . $LnItm->PODetailItem . '">'. _('Delete'). '</a></td>
+			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=' . $LnItm->PODetailItem . '">' .  _('Delete'). '</a></td>
 			</tr>';
 	}//for each line on the shipment
 echo '</table>';
@@ -479,16 +479,16 @@ if (DB_num_rows($result)>0){
 
 	echo '<table cellpadding="2" class="selection">';
 	echo '<tr>
-			<th colspan="7"><h3>'. _('Possible Order Lines To Add To This Shipment').'</h3></th>
+			<th colspan="7"><h3>' .  _('Possible Order Lines To Add To This Shipment') . '</h3></th>
 		</tr>';
 
 	$TableHeader = '<tr>
-						<th>'. _('Order').'</th>
-						<th>'. _('Item').'</th>
-						<th>'. _('Quantity').'<br />'. _('Ordered').'</th>
-						<th>'. _('Units').'</th>
-						<th>'. _('Quantity').'<br />'. _('Received').'</th>
-						<th>'. _('Delivery').'<br />'. _('Date').'</th>
+						<th>' .  _('Order') . '</th>
+						<th>' .  _('Item') . '</th>
+						<th>' .  _('Quantity') . '<br />' .  _('Ordered') . '</th>
+						<th>' .  _('Units') . '</th>
+						<th>' .  _('Quantity') . '<br />' .  _('Received') . '</th>
+						<th>' .  _('Delivery') . '<br />' .  _('Date') . '</th>
 					</tr>';
 
 	echo  $TableHeader;
@@ -520,7 +520,7 @@ if (DB_num_rows($result)>0){
 				<td>' . $myrow['units'] . '</td>
 				<td class="number">' . locale_number_format($myrow['quantityrecd'],$myrow['decimalplaces']) . '</td>
 				<td class="number">' . ConvertSQLDate($myrow['deliverydate']) . '</td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' . 'Add=' . $myrow['podetailitem'] . '">'. _('Add').'</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' . 'Add=' . $myrow['podetailitem'] . '">' .  _('Add') . '</a></td>
 			</tr>';
 
 	}

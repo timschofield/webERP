@@ -7,7 +7,7 @@ include('includes/session.inc');
 $Title = _('Purchase Order Authorisation Maintenance');
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/group_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p><br />';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/group_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
 
 
 /*Note: If CanCreate==0 then this means the user can create orders
@@ -125,7 +125,7 @@ echo '<table class="selection">
 		<th>' . _('User Name') . '</th>
 		<th>' . _('Currency') . '</th>
 		<th>' . _('Create Order') . '</th>
-		<th>' . _('Can Release') . '<br />'. _('Invoices').'</th>
+		<th>' . _('Can Release') . '<br />' .  _('Invoices') . '</th>
 		<th>' . _('Authority Level') . '</th>
     </tr>';
 
@@ -146,11 +146,11 @@ while ($myrow=DB_fetch_array($Result)) {
 			<td>' . $myrow['currency'] . '</td>
 			<td>' . $DisplayCanCreate . '</td>
 			<td>' . $DisplayOffHold . '</td>
-			<td class="number">'.locale_number_format($myrow['authlevel'],$myrow['decimalplaces']).'</td>
+			<td class="number">' . locale_number_format($myrow['authlevel'],$myrow['decimalplaces']) . '</td>
 			<td><a href="'.$RootPath.'/PO_AuthorisationLevels.php?Edit=Yes&amp;UserID=' . $myrow['userid'] .
-	'&amp;Currency='.$myrow['currabrev'].'">'._('Edit').'</a></td>
+	'&amp;Currency='.$myrow['currabrev'].'">' . _('Edit') . '</a></td>
 			<td><a href="'.$RootPath.'/PO_AuthorisationLevels.php?Delete=Yes&amp;UserID=' . $myrow['userid'] .
-	'&amp;Currency='.$myrow['currabrev'].'" onclick="return confirm(\'' . _('Are you sure you wish to delete this authorisation level?') . '\');">'._('Delete').'</a></td>
+	'&amp;Currency='.$myrow['currabrev'].'" onclick="return confirm(\'' . _('Are you sure you wish to delete this authorisation level?') . '\');">' . _('Delete') . '</a></td>
 		</tr>';
 }
 
@@ -170,17 +170,17 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 echo '<table class="selection">';
 
 if (isset($_GET['Edit'])) {
-	echo '<tr><td>'._('User ID').'</td><td>'.$_GET['UserID'].'</td></tr>';
+	echo '<tr><td>' . _('User ID') . '</td><td>' . $_GET['UserID'] . '</td></tr>';
 	echo '<input type="hidden" name="UserID" value="'.$_GET['UserID'].'" />';
 } else {
-	echo '<tr><td>'._('User ID').'</td><td><select name="UserID">';
+	echo '<tr><td>' . _('User ID') . '</td><td><select name="UserID">';
 	$usersql="SELECT userid FROM www_users";
 	$userresult=DB_query($usersql,$db);
 	while ($myrow=DB_fetch_array($userresult)) {
 		if ($myrow['userid']==$UserID) {
-			echo '<option selected="selected" value="'.$myrow['userid'].'">'.$myrow['userid'].'</option>';
+			echo '<option selected="selected" value="'.$myrow['userid'].'">' . $myrow['userid'] . '</option>';
 		} else {
-			echo '<option value="'.$myrow['userid'].'">'.$myrow['userid'].'</option>';
+			echo '<option value="'.$myrow['userid'].'">' . $myrow['userid'] . '</option>';
 		}
 	}
 	echo '</select></td></tr>';
@@ -207,28 +207,28 @@ if (isset($_GET['Edit'])) {
 	$CurrDecimalPlaces=$myrow['decimalplaces'];
 
 	echo '<tr>
-			<td>'._('Currency').'</td>
+			<td>' . _('Currency') . '</td>
 			<td>' . $myrow['currency'] . '</td>
 		</tr>';
 	echo '<input type="hidden" name="CurrCode" value="'.$Currency.'" />';
 } else {
 	echo '<tr>
-			<td>'._('Currency').'</td>
+			<td>' . _('Currency') . '</td>
 			<td><select name="CurrCode">';
 	$currencysql="SELECT currabrev,currency FROM currencies";
 	$currencyresult=DB_query($currencysql,$db);
 	while ($myrow=DB_fetch_array($currencyresult)) {
 		if ($myrow['currabrev']==$Currency) {
-			echo '<option selected="selected" value="'.$myrow['currabrev'].'">'.$myrow['currency'].'</option>';
+			echo '<option selected="selected" value="'.$myrow['currabrev'].'">' . $myrow['currency'] . '</option>';
 		} else {
-			echo '<option value="'.$myrow['currabrev'].'">'.$myrow['currency'].'</option>';
+			echo '<option value="'.$myrow['currabrev'].'">' . $myrow['currency'] . '</option>';
 		}
 	}
 	echo '</select></td></tr>';
 }
 
 echo '<tr>
-		<td>'._('User can create orders').'</td>';
+		<td>' . _('User can create orders') . '</td>';
 if ($CanCreate==1) {
 	echo '<td><input type="checkbox" name="CanCreate" /></td>
 		</tr>';
@@ -238,7 +238,7 @@ if ($CanCreate==1) {
 }
 
 echo '<tr>
-		<td>'._('User can release invoices').'</td>';
+		<td>' . _('User can release invoices') . '</td>';
 if ($OffHold==1) {
 	echo '<td><input type="checkbox" name="OffHold" /></td>
 		</tr>';
@@ -248,7 +248,7 @@ if ($OffHold==1) {
 }
 
 echo '<tr>
-		<td>'._('User can authorise orders up to :').'</td>';
+		<td>' . _('User can authorise orders up to :') . '</td>';
 echo '<td><input type="text" name="AuthLevel" size="11" class="integer" title="' . _('Enter the amount that this user is premitted to authorise purchase orders up to') . '" value="'  . locale_number_format($AuthLevel,$CurrDecimalPlaces) . '" /></td>
 	</tr>
 	</table>';

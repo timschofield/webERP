@@ -314,12 +314,12 @@ if (isset($_POST['Location'])) {
 				<td colspan="5" align="left">
 					<table class="selection" align="left">
 					<tr>
-						<th>'._('Product').'</th>
-						<th>'._('Quantity') . '<br />' . _('Required').'</th>
-						<th>'._('Quantity') . '<br />' . _('Delivered').'</th>
-						<th>'._('Units').'</th>
-						<th>'._('Completed').'</th>
-						<th>'._('Tag').'</th>
+						<th>' . _('Product') . '</th>
+						<th>' . _('Quantity') . '<br />' . _('Required') . '</th>
+						<th>' . _('Quantity') . '<br />' . _('Delivered') . '</th>
+						<th>' . _('Units') . '</th>
+						<th>' . _('Completed') . '</th>
+						<th>' . _('Tag') . '</th>
 					</tr>';
 
 		while ($LineRow=DB_fetch_array($LineResult)) {
@@ -327,7 +327,7 @@ if (isset($_POST['Location'])) {
 					<td>' . $LineRow['description'] . '</td>
 					<td class="number">' . locale_number_format($LineRow['quantity']-$LineRow['qtydelivered'],$LineRow['decimalplaces']) . '</td>
 					<td class="number"><input type="text" class="number" name="'. $LineRow['dispatchid'] . 'Qty'. $LineRow['dispatchitemsid'] . '" value="'.locale_number_format($LineRow['quantity']-$LineRow['qtydelivered'],$LineRow['decimalplaces']).'" /></td>
-					<td>'.$LineRow['uom'].'</td>
+					<td>' . $LineRow['uom'] . '</td>
 					<td><input type="checkbox" name="'. $LineRow['dispatchid'] . 'Completed'. $LineRow['dispatchitemsid'] . '" /></td>
 					<td><select name="'. $LineRow['dispatchid'] . 'Tag'. $LineRow['dispatchitemsid'] . '">';
 

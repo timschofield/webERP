@@ -127,12 +127,12 @@ if (!isset($ShiptRef) or $ShiptRef==""){
 	echo '</select>';
 	echo ' <select name="OpenOrClosed">';
 	if ($_POST['OpenOrClosed']==1){
-		echo '<option selected="selected" value="1">'. _('Closed Shipments Only')  . '</option>';
-		echo '<option value="0">'. _('Open Shipments Only')  . '</option>';
+		echo '<option selected="selected" value="1">' .  _('Closed Shipments Only')  . '</option>';
+		echo '<option value="0">' .  _('Open Shipments Only')  . '</option>';
 	} else {
 		$_POST['OpenOrClosed']=0;
-		echo '<option value="1">'. _('Closed Shipments Only')  . '</option>';
-		echo '<option selected="selected" value="0">'. _('Open Shipments Only')  . '</option>';
+		echo '<option value="1">' .  _('Closed Shipments Only')  . '</option>';
+		echo '<option selected="selected" value="0">' .  _('Open Shipments Only')  . '</option>';
 	}
 	echo '</select></td></tr></table>';
 
@@ -152,7 +152,7 @@ $result1 = DB_query($SQL,$db);
 
 echo '<table class="selection">';
 echo '<tr>
-		<th colspan="5"><h3>'._('To search for shipments for a specific part use the part selection facilities below') . '</h3></th>
+		<th colspan="5"><h3>' . _('To search for shipments for a specific part use the part selection facilities below') . '</h3></th>
 	</tr>
 	<tr>
 		<td>' . _('Select a stock category') . ':
@@ -187,11 +187,11 @@ if (isset($StockItemsResult)) {
 
 	echo '<table class="selection">';
 	$TableHeader = '<tr>
-						<th>'. _('Code').'</th>
-						<th>'. _('Description').'</th>
-						<th>'. _('On Hand').'</th>
-						<th>'. _('Orders') . '<br />' . _('Outstanding').'</th>
-						<th>'. _('Units').'</th>
+						<th>' .  _('Code') . '</th>
+						<th>' .  _('Description') . '</th>
+						<th>' .  _('On Hand') . '</th>
+						<th>' .  _('Orders') . '<br />' . _('Outstanding') . '</th>
+						<th>' .  _('Units') . '</th>
 					</tr>';
 	echo $TableHeader;
 
@@ -290,11 +290,11 @@ Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand 
 
 		echo '<table width="95%" class="selection">';
 		$TableHeader = '<tr>
-							<th>'. _('Shipment'). '</th>
-							<th>'. _('Supplier'). '</th>
-							<th>'. _('Vessel'). '</th>
-							<th>'. _('Voyage'). '</th>
-							<th>'. _('Expected Arrival'). '</th>
+							<th>' .  _('Shipment'). '</th>
+							<th>' .  _('Supplier'). '</th>
+							<th>' .  _('Vessel'). '</th>
+							<th>' .  _('Voyage'). '</th>
+							<th>' .  _('Expected Arrival'). '</th>
 						</tr>';
 
 		echo $TableHeader;
@@ -327,9 +327,9 @@ Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand 
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
-					<td><a href="%s">'._('Costing').'</a></td>
-					<td><a href="%s">'._('Modify').'</a></td>
-					<td><a href="%s"><b>'._('Close').'</b></a></td>
+					<td><a href="%s">' . _('Costing') . '</a></td>
+					<td><a href="%s">' . _('Modify') . '</a></td>
+					<td><a href="%s"><b>' . _('Close') . '</b></a></td>
 					</tr>',
 					$myrow['shiptref'],
 					$myrow['suppname'],
@@ -346,7 +346,7 @@ Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand 
 						<td>%s</td>
 						<td>%s</td>
 						<td>%s</td>
-						<td><a href="%s">'._('Costing').'</a></td>
+						<td><a href="%s">' . _('Costing') . '</a></td>
 						</tr>',
 						$myrow['shiptref'],
 						$myrow['suppname'],

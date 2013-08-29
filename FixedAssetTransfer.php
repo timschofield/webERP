@@ -41,7 +41,7 @@ if (isset($_GET['AssetID'])) {
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<table class="selection"><tr>';
-	echo '<td>'. _('In Asset Category') . ': </td>';
+	echo '<td>' .  _('In Asset Category') . ': </td>';
 	echo '<td><select name="AssetCat">';
 
 	if (!isset($_POST['AssetCat'])) {
@@ -57,7 +57,7 @@ if (isset($_GET['AssetID'])) {
 	}
 
 	echo '</select></td>';
-	echo '<td>'. _('Enter partial') . '<b> ' . _('Description') . '</b>:</td><td>';
+	echo '<td>' .  _('Enter partial') . '<b> ' . _('Description') . '</b>:</td><td>';
 
 
 	if (isset($_POST['Keywords'])) {
@@ -91,7 +91,7 @@ if (isset($_GET['AssetID'])) {
 			echo '</select>';
 
 
-	echo '<td><b>' . _('OR').' ' . '</b>' . _('Enter partial') .' <b>'. _('Asset Code') . '</b>:</td>';
+	echo '<td><b>' . _('OR').' ' . '</b>' . _('Enter partial') .' <b>' .  _('Asset Code') . '</b>:</td>';
 	echo '<td>';
 
 	if (isset($_POST['AssetID'])) {
@@ -176,19 +176,19 @@ if (isset($_POST['Search'])) {
 				<td>' . $myrow['assetid'] . '</td>
 				<td>' . $myrow['description'] . '</td>
 				<td>' . $myrow['serialno'] . '</td>
-				<td class="number">' . locale_number_format($myrow['cost'],$_SESSION['CompanyRecord']['decimalplaces']).'</td>
-				<td class="number">' . locale_number_format($myrow['accumdepn'],$_SESSION['CompanyRecord']['decimalplaces']).'</td>
+				<td class="number">' . locale_number_format($myrow['cost'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class="number">' . locale_number_format($myrow['accumdepn'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				<td>' . $myrow['ItemAssetLocation'] . '</td>';
 		echo '<td><select name="Location' . $myrow['assetid'] . '" onchange="ReloadForm(Move'.$myrow['assetid'].')">';
 		$ThisDropDownName	= 'Location' . $myrow['assetid'];
 		while ($LocationRow=DB_fetch_array($LocationResult)) {
 
 			if(isset($_POST[$ThisDropDownName]) AND ($_POST[$ThisDropDownName] == $LocationRow['locationid'])) {
-				echo '<option selected="selected" value="' . $LocationRow['locationid'].'">'.$LocationRow['locationdescription'] . '</option>';
+				echo '<option selected="selected" value="' . $LocationRow['locationid'].'">' . $LocationRow['locationdescription'] . '</option>';
 			} elseif ($LocationRow['locationid'] == $myrow['ItemAssetLocation']) {
-				echo '<option selected="selected" value="'.$LocationRow['locationid'].'">'.$LocationRow['locationdescription'] . '</option>';
+				echo '<option selected="selected" value="'.$LocationRow['locationid'].'">' . $LocationRow['locationdescription'] . '</option>';
 			} else {
-				echo '<option value="'.$LocationRow['locationid'].'">'.$LocationRow['locationdescription'].'</option>';
+				echo '<option value="'.$LocationRow['locationid'].'">' . $LocationRow['locationdescription'] . '</option>';
 			}
 		}
 		DB_data_seek($LocationResult,0);

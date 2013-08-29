@@ -93,8 +93,8 @@ $Heading = '<tr>
 				<th>' . _('Cost') . '</th>
 				<th>' . _('Accum Depn') . '</th>
 				<th>' . _('B/fwd Book Value') . '</th>
-				<th>'. _('Depn Type') . '</th>
-				<th>'. _('Depn Rate') . '</th>
+				<th>' .  _('Depn Type') . '</th>
+				<th>' .  _('Depn Rate') . '</th>
 				<th>' . _('New Depn') . '</th>
 			</tr>';
 echo $Heading;
@@ -269,7 +269,7 @@ if (isset($_POST['CommitDepreciation']) AND $InputError==false){
 	$result = DB_Txn_Commit($db);
 	prnMsg(_('Depreciation') . ' ' . $TransNo . ' ' . _('has been successfully entered'),'success');
 	unset($_POST['ProcessDate']);
-	echo '<br /><a href="index.php">' ._('Return to main menu').'</a>';
+	echo '<br /><a href="index.php">' ._('Return to main menu') . '</a>';
 	/*And post the journal too */
 	include ('includes/GLPostings.inc');
 } else {
@@ -280,11 +280,11 @@ if (isset($_POST['CommitDepreciation']) AND $InputError==false){
 		<table class="selection" width="30%">
 		<tr>';
 	if ($AllowUserEnteredProcessDate){
-		echo '<td>'._('Date to Process Depreciation'). ':</td>
+		echo '<td>' . _('Date to Process Depreciation'). ':</td>
 			<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat']. '" required="required" name="ProcessDate" maxlength="10" size="11" value="' . $_POST['ProcessDate'] . '" /></td>';
 	} else {
-		echo '<td>'._('Date to Process Depreciation'). ':</td>
-			<td>' . $_POST['ProcessDate'] .'</td>';
+		echo '<td>' . _('Date to Process Depreciation'). ':</td>
+			<td>' . $_POST['ProcessDate']  . '</td>';
 	}
 	echo '<td><div class="centre"><input type="submit" name="CommitDepreciation" value="'._('Commit Depreciation').'" /></div></td>
 		</tr>

@@ -37,7 +37,7 @@ echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'
 		<br />
 		<table>
 		<tr>
-			<td>'.  _('Select GL Account').  ':</td>
+			<td>' .   _('Select GL Account').  ':</td>
 			<td><select name="SelectedAccount" required="required" onchange="ReloadForm(selectaccount.Select)">';
 
 $SQL = "SELECT accountcode,
@@ -168,20 +168,20 @@ if (isset($SelectedAccount) and $SelectedAccount != '') {
 	echo '<br />
 			<table class="selection">
 			<tr>
-				<th colspan="3">'. _('Last Financial Year') .'</th>
-				<th colspan="3">'. _('This Financial Year') .'</th>
-				<th colspan="3">'. _('Next Financial Year') .'</th>
+				<th colspan="3">' .  _('Last Financial Year')  . '</th>
+				<th colspan="3">' .  _('This Financial Year')  . '</th>
+				<th colspan="3">' .  _('Next Financial Year')  . '</th>
 			</tr>
 			<tr>
-				<th colspan="3">'. _('Year ended').' - ' . Date($_SESSION['DefaultDateFormat'],YearEndDate($_SESSION['YearEnd'],-1)) .'</th>
-				<th colspan="3">'. _('Year ended').' - ' . Date($_SESSION['DefaultDateFormat'],YearEndDate($_SESSION['YearEnd'],0)) .'</th>
-				<th colspan="3">'. _('Year ended').' - ' . Date($_SESSION['DefaultDateFormat'],YearEndDate($_SESSION['YearEnd'],1)) .'</th>
+				<th colspan="3">' .  _('Year ended').' - ' . Date($_SESSION['DefaultDateFormat'],YearEndDate($_SESSION['YearEnd'],-1))  . '</th>
+				<th colspan="3">' .  _('Year ended').' - ' . Date($_SESSION['DefaultDateFormat'],YearEndDate($_SESSION['YearEnd'],0))  . '</th>
+				<th colspan="3">' .  _('Year ended').' - ' . Date($_SESSION['DefaultDateFormat'],YearEndDate($_SESSION['YearEnd'],1))  . '</th>
 			</tr>
 			<tr>';
 	for ($i=0; $i<3; $i++) {
-		echo '<th>'. _('Period'). '</th>
-				<th>'. _('Actual') . '</th>
-				<th>'. _('Budget') . '</th>';
+		echo '<th>' .  _('Period'). '</th>
+				<th>' .  _('Actual') . '</th>
+				<th>' .  _('Budget') . '</th>';
 	}
 	echo '</tr>';
 
@@ -189,14 +189,14 @@ if (isset($SelectedAccount) and $SelectedAccount != '') {
 
 	for ($i=1; $i<=12; $i++) {
 		echo '<tr>';
-		echo '<th>'. $PeriodEnd[$CurrentYearEndPeriod-(24-$i)] .'</th>';
-		echo '<td style="background-color:d2e5e8" class="number">'.locale_number_format($Actual[$CurrentYearEndPeriod-(24-$i)],$_SESSION['CompanyRecord']['decimalplaces']).'</td>';
+		echo '<th>' .  $PeriodEnd[$CurrentYearEndPeriod-(24-$i)]  . '</th>';
+		echo '<td style="background-color:d2e5e8" class="number">' . locale_number_format($Actual[$CurrentYearEndPeriod-(24-$i)],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>';
 		echo '<td><input type="text" class="number" size="14" name="'.$i.'last" value="'.locale_number_format($Budget[$CurrentYearEndPeriod-(24-$i)],$_SESSION['CompanyRecord']['decimalplaces']) .'" /></td>';
-		echo '<th>'. $PeriodEnd[$CurrentYearEndPeriod-(12-$i)] .'</th>';
-		echo '<td style="background-color:d2e5e8" class="number">'.locale_number_format($Actual[$CurrentYearEndPeriod-(12-$i)],$_SESSION['CompanyRecord']['decimalplaces']).'</td>';
+		echo '<th>' .  $PeriodEnd[$CurrentYearEndPeriod-(12-$i)]  . '</th>';
+		echo '<td style="background-color:d2e5e8" class="number">' . locale_number_format($Actual[$CurrentYearEndPeriod-(12-$i)],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>';
 		echo '<td><input type="text" class="number" size="14" name="'.$i.'this" value="'. locale_number_format($Budget[$CurrentYearEndPeriod-(12-$i)],$_SESSION['CompanyRecord']['decimalplaces']) .'" /></td>';
-		echo '<th>'. $PeriodEnd[$CurrentYearEndPeriod+($i)] .'</th>';
-		echo '<td style="background-color:d2e5e8" class="number">'.locale_number_format($Actual[$CurrentYearEndPeriod+$i],$_SESSION['CompanyRecord']['decimalplaces']).'</td>';
+		echo '<th>' .  $PeriodEnd[$CurrentYearEndPeriod+($i)]  . '</th>';
+		echo '<td style="background-color:d2e5e8" class="number">' . locale_number_format($Actual[$CurrentYearEndPeriod+$i],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>';
 		echo '<td><input type="text" class="number" size="14" name="'.$i.'next" value="'. locale_number_format($Budget[$CurrentYearEndPeriod+$i],$_SESSION['CompanyRecord']['decimalplaces']) .'" /></td>';
 		echo '</tr>';
 		$LastYearActual=$LastYearActual+$Actual[$CurrentYearEndPeriod-(24-$i)];
@@ -210,18 +210,18 @@ if (isset($SelectedAccount) and $SelectedAccount != '') {
 // Total Line
 
 	echo '<tr>
-			<th>'. _('Total') .'</th>
-			<th class="number">'.locale_number_format($LastYearActual,$_SESSION['CompanyRecord']['decimalplaces']). '</th>
-			<th class="number">'.locale_number_format($LastYearBudget,$_SESSION['CompanyRecord']['decimalplaces']). '</th>
+			<th>' .  _('Total')  . '</th>
+			<th class="number">' . locale_number_format($LastYearActual,$_SESSION['CompanyRecord']['decimalplaces']). '</th>
+			<th class="number">' . locale_number_format($LastYearBudget,$_SESSION['CompanyRecord']['decimalplaces']). '</th>
 			<th class="number"></th>
-			<th class="number">'.locale_number_format($ThisYearActual,$_SESSION['CompanyRecord']['decimalplaces']). '</th>
-			<th class="number">'.locale_number_format($ThisYearBudget,$_SESSION['CompanyRecord']['decimalplaces']). '</th>
+			<th class="number">' . locale_number_format($ThisYearActual,$_SESSION['CompanyRecord']['decimalplaces']). '</th>
+			<th class="number">' . locale_number_format($ThisYearBudget,$_SESSION['CompanyRecord']['decimalplaces']). '</th>
 			<th class="number"></th>
-			<th class="number">'.locale_number_format($NextYearActual,$_SESSION['CompanyRecord']['decimalplaces']). '</th>
-			<th class="number">'.locale_number_format($NextYearBudget,$_SESSION['CompanyRecord']['decimalplaces']). '</th>
+			<th class="number">' . locale_number_format($NextYearActual,$_SESSION['CompanyRecord']['decimalplaces']). '</th>
+			<th class="number">' . locale_number_format($NextYearBudget,$_SESSION['CompanyRecord']['decimalplaces']). '</th>
 		</tr>
 		<tr>
-			<td colspan="2">'._('Annual Budget').'</td>
+			<td colspan="2">' . _('Annual Budget') . '</td>
 			<td><input class="number" type="text" size="14" name="AnnualAmountLY" value="0.00" /></td>
 			<td></td>
 			<td></td>

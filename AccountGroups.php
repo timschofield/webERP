@@ -230,7 +230,7 @@ if (isset($_POST['submit'])) {
 			if (isset($_POST['ParentGroupName']) AND $_POST['ParentGroupName']==$RroupRow['groupname']) {
 				echo '<option selected="selected" value="'.htmlentities($GroupRow['groupname'], ENT_QUOTES,'UTF-8').'">' .htmlentities($GroupRow['groupname'], ENT_QUOTES,'UTF-8'). '</option>';
 			} else {
-				echo '<option value="'.htmlentities($GroupRow['groupname'], ENT_QUOTES,'UTF-8').'">' .htmlentities($GroupRow['groupname'], ENT_QUOTES,'UTF-8').'</option>';
+				echo '<option value="'.htmlentities($GroupRow['groupname'], ENT_QUOTES,'UTF-8').'">' .htmlentities($GroupRow['groupname'], ENT_QUOTES,'UTF-8') . '</option>';
 			}
 		}
 		echo '</select>';
@@ -283,7 +283,7 @@ or deletion of the records*/
 	$DbgMsg = _('The sql that was used to retrieve the account group information was ');
 	$ErrMsg = _('Could not get account groups because');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'<br /></p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '<br /></p>';
 
 	echo '<table class="selection">
 			<tr>
@@ -323,7 +323,7 @@ or deletion of the records*/
 			<td>' . $PandLText . '</td>
 			<td>' . $myrow['parentgroupname'] . '</td>';
 		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?SelectedAccountGroup=' . urlencode($myrow['groupname']), ENT_QUOTES,'UTF-8') . '">' . _('Edit') . '</a></td>';
-		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?SelectedAccountGroup=' . urlencode($myrow['groupname']), ENT_QUOTES,'UTF-8') . '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this account group?') . '\');">' . _('Delete') .'</a></td></tr>';
+		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?SelectedAccountGroup=' . urlencode($myrow['groupname']), ENT_QUOTES,'UTF-8') . '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this account group?') . '\');">' . _('Delete')  . '</a></td></tr>';
 
 	} //END WHILE LIST LOOP
 	echo '</table>';
@@ -410,17 +410,17 @@ if (!isset($_GET['delete'])) {
 	$sql = "SELECT groupname FROM accountgroups";
 	$groupresult = DB_query($sql, $db,$ErrMsg,$DbgMsg);
 	if (!isset($_POST['ParentGroupName'])){
-		echo '<option selected="selected" value="">' ._('Top Level Group').'</option>';
+		echo '<option selected="selected" value="">' ._('Top Level Group') . '</option>';
 	} else {
-		echo '<option value="">' ._('Top Level Group').'</option>';
+		echo '<option value="">' ._('Top Level Group') . '</option>';
 	}
 
 	while ( $grouprow = DB_fetch_array($groupresult) ) {
 
 		if (isset($_POST['ParentGroupName']) AND $_POST['ParentGroupName']==$grouprow['groupname']) {
-			echo '<option selected="selected" value="'.htmlspecialchars($grouprow['groupname'], ENT_QUOTES,'UTF-8').'">' .htmlspecialchars($grouprow['groupname'], ENT_QUOTES,'UTF-8').'</option>';
+			echo '<option selected="selected" value="'.htmlspecialchars($grouprow['groupname'], ENT_QUOTES,'UTF-8').'">' .htmlspecialchars($grouprow['groupname'], ENT_QUOTES,'UTF-8') . '</option>';
 		} else {
-			echo '<option value="'.htmlspecialchars($grouprow['groupname'], ENT_QUOTES,'UTF-8').'">' .htmlspecialchars($grouprow['groupname'], ENT_QUOTES,'UTF-8').'</option>';
+			echo '<option value="'.htmlspecialchars($grouprow['groupname'], ENT_QUOTES,'UTF-8').'">' .htmlspecialchars($grouprow['groupname'], ENT_QUOTES,'UTF-8') . '</option>';
 		}
 	}
 	echo '</select></td>
@@ -433,9 +433,9 @@ if (!isset($_GET['delete'])) {
 	$secresult = DB_query($sql, $db,$ErrMsg,$DbgMsg);
 	while( $secrow = DB_fetch_array($secresult) ) {
 		if ($_POST['SectionInAccounts']==$secrow['sectionid']) {
-			echo '<option selected="selected" value="'.$secrow['sectionid'].'">'.$secrow['sectionname'].' ('.$secrow['sectionid'].')</option>';
+			echo '<option selected="selected" value="'.$secrow['sectionid'].'">' . $secrow['sectionname'].' ('.$secrow['sectionid'].')</option>';
 		} else {
-			echo '<option value="'.$secrow['sectionid'].'">'.$secrow['sectionname'].' ('.$secrow['sectionid'].')</option>';
+			echo '<option value="'.$secrow['sectionid'].'">' . $secrow['sectionname'].' ('.$secrow['sectionid'].')</option>';
 		}
 	}
 	echo '</select></td>
@@ -445,14 +445,14 @@ if (!isset($_GET['delete'])) {
 			<td><select tabindex="4" name="PandL" title="' . _('Select YES if this account group will contain accounts that will consist of only profit and loss accounts or NO if the group will contain balance sheet account') . '">';
 
 	if ($_POST['PandL']!=0 ) {
-		echo '<option selected="selected" value="1">' . _('Yes').'</option>';
+		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
 	} else {
-		echo '<option value="1">' . _('Yes').'</option>';
+		echo '<option value="1">' . _('Yes') . '</option>';
 	}
 	if ($_POST['PandL']==0) {
-		echo '<option selected="selected" value="0">' . _('No').'</option>';
+		echo '<option selected="selected" value="0">' . _('No') . '</option>';
 	} else {
-		echo '<option value="0">' . _('No').'</option>';
+		echo '<option value="0">' . _('No') . '</option>';
 	}
 
 	echo '</select></td>

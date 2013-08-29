@@ -17,7 +17,7 @@ if (!isset($_POST['FromDate'])){
 	 include ('includes/header.inc');
 
 	echo '<div class="centre">
-			<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' '. _('Stock Transaction Listing').'</p>
+			<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' '. _('Stock Transaction Listing') . '</p>
 		</div>';
 
 	if ($InputError==1){
@@ -39,13 +39,13 @@ if (!isset($_POST['FromDate'])){
 		<tr>
 			<td>' . _('Transaction type') . '</td>
 			<td><select name="TransType">
-				<option value="10">' . _('Sales Invoice').'</option>
-				<option value="11">' . _('Sales Credit Note').'</option>
-				<option value="16">' . _('Location Transfer').'</option>
-				<option value="17">' . _('Stock Adjustment').'</option>
-				<option value="25">' . _('Purchase Order Delivery').'</option>
-				<option value="26">' . _('Work Order Receipt').'</option>
-				<option value="28">' . _('Work Order Issue').'</option>
+				<option value="10">' . _('Sales Invoice') . '</option>
+				<option value="11">' . _('Sales Credit Note') . '</option>
+				<option value="16">' . _('Location Transfer') . '</option>
+				<option value="17">' . _('Stock Adjustment') . '</option>
+				<option value="25">' . _('Purchase Order Delivery') . '</option>
+				<option value="26">' . _('Work Order Receipt') . '</option>
+				<option value="28">' . _('Work Order Issue') . '</option>
 				</select></td>
 		</tr>';
 
@@ -141,7 +141,7 @@ if (DB_error_no($db)!=0){
 	$Title = _('Transaction Listing');
 	include('includes/header.inc');
 	echo '<br />';
-	prnMsg (_('There were no transactions found in the database between the dates') . ' ' . $_POST['FromDate'] . ' ' . _('and') . ' '. $_POST['ToDate'] .'<br />' ._('Please try again selecting a different date'), 'info');
+	prnMsg (_('There were no transactions found in the database between the dates') . ' ' . $_POST['FromDate'] . ' ' . _('and') . ' '. $_POST['ToDate']  . '<br />' ._('Please try again selecting a different date'), 'info');
 	include('includes/footer.inc');
   	exit;
 }

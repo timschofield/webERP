@@ -423,7 +423,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
         echo '<table class="selection">';
 		echo '<tr><td>' . _('Starting Customer statement to print (Customer code)'). '
 			</td><td><input type="text" maxlength="6" size="7" name="FromCust" value="1" /></td></tr>
-			<tr><td>'. _('Ending Customer statement to print (Customer code)').'</td><td>
+			<tr><td>' .  _('Ending Customer statement to print (Customer code)') . '</td><td>
 				<input type="text" maxlength="6" size="7" name="ToCust" value="zzzzzz" /></td></tr></table>
 				<br /><div class="centre">
 				<input type="submit" name="PrintPDF" value="' .

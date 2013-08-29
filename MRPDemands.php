@@ -307,7 +307,7 @@ function listall(&$db,$part,$DemandType)  {//####LISTALL_LISTALL_LISTALL_LISTALL
 				<td>' . locale_number_format($myrow['quantity'],$myrow['decimalplaces']) . '</td>
 				<td>' . $displaydate . '</td>
 				<td><a href="' .htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'?DemandID=' . $myrow['demandid'] . '&amp;StockID=' . $myrow['stockid'] . '">' . _('Edit') . '</a></td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?DemandID=' . $myrow['demandid'] . '&amp;StockID=' . $myrow['stockid'].'&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this demand?') . '\');">' . _('Delete') .'</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?DemandID=' . $myrow['demandid'] . '&amp;StockID=' . $myrow['stockid'].'&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this demand?') . '\');">' . _('Delete')  . '</a></td>
 				</tr>';
 	}
 
@@ -339,7 +339,7 @@ function display(&$db,&$StockID,&$DemandID) { //####DISPLAY_DISPLAY_DISPLAY_DISP
 			<td>' . _('Enter extract of the') . ' <b>' . _('Stock Code') . '</b>:</td>
 			<td><input tabindex="2" type="text" name="StockCode" size="15" maxlength="20" /></td>
 			<td><b>' . _('OR') . '</b></td>
-			<td><a href="'. htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?listall=yes">' . _('List All Demands') .'</a></td></tr>
+			<td><a href="'. htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?listall=yes">' . _('List All Demands')  . '</a></td></tr>
 			<tr><td colspan="7"><div class="centre"><input tabindex="3" type="submit" name="Search" value="' . _('Search Now') .
             '" /></div></td></tr></table>';
 	} else {

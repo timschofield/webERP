@@ -697,11 +697,11 @@ if (!isset($SupplierID)) {
 			<td><select name="Address6">';
 	foreach ($CountriesArray as $CountryEntry => $CountryName){
 		if (isset($_POST['Address6']) AND ($_POST['Address6'] == $CountryName)){
-			echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName .'</option>';
+			echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName  . '</option>';
 		}elseif (!isset($_POST['Address6']) AND $CountryName == "") {
-			echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName .'</option>';
+			echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName  . '</option>';
 		} else {
-			echo '<option value="' . $CountryName . '">' . $CountryName .'</option>';
+			echo '<option value="' . $CountryName . '">' . $CountryName  . '</option>';
 		}
 	}
 	echo '</select></td>
@@ -720,7 +720,7 @@ if (!isset($SupplierID)) {
 			<td><select name="SupplierType">';
 	$result=DB_query("SELECT typeid, typename FROM suppliertype", $db);
 	while ($myrow = DB_fetch_array($result)) {
-		echo '<option value="' . $myrow['typeid'] . '">' . $myrow['typename'] .'</option>';
+		echo '<option value="' . $myrow['typeid'] . '">' . $myrow['typename']  . '</option>';
 	} //end while loop
 	echo '</select></td></tr>';
 
@@ -743,7 +743,7 @@ if (!isset($SupplierID)) {
 			<td><select name="PaymentTerms">';
 
 	while ($myrow = DB_fetch_array($result)) {
-		echo '<option value="'. $myrow['termsindicator'] . '">' . $myrow['terms'] .'</option>';
+		echo '<option value="'. $myrow['termsindicator'] . '">' . $myrow['terms']  . '</option>';
 	} //end while loop
 	DB_data_seek($result, 0);
     echo '</select></td></tr>';
@@ -755,9 +755,9 @@ if (!isset($SupplierID)) {
 	echo '<option value="0">' . _('None') . '</option>';
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['FactorID']) AND $_POST['FactorID'] == $myrow['id']){
-		echo '<option selected="selected" value="' . $myrow['id'] . '">' . $myrow['coyname'] .'</option>';
+		echo '<option selected="selected" value="' . $myrow['id'] . '">' . $myrow['coyname']  . '</option>';
 		} else {
-		echo '<option value="' . $myrow['id'] . '">' . $myrow['coyname'] .'</option>';
+		echo '<option value="' . $myrow['id'] . '">' . $myrow['coyname']  . '</option>';
 		}
 	} //end while loop
 	DB_data_seek($result, 0);
@@ -901,11 +901,11 @@ if (!isset($SupplierID)) {
 			<td><select name="Address6">';
 	foreach ($CountriesArray as $CountryEntry => $CountryName){
 		if (isset($_POST['Address6']) AND ($_POST['Address6'] == $CountryName)){
-			echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName .'</option>';
+			echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName  . '</option>';
 		}elseif (!isset($_POST['Address6']) AND $CountryName == "") {
-			echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName .'</option>';
+			echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName  . '</option>';
 		} else {
-			echo '<option value="' . $CountryName . '">' . $CountryName .'</option>';
+			echo '<option value="' . $CountryName . '">' . $CountryName  . '</option>';
 		}
 	}
 	echo '</select></td>
@@ -922,9 +922,9 @@ if (!isset($SupplierID)) {
 	$result=DB_query("SELECT typeid, typename FROM suppliertype", $db);
 	while ($myrow = DB_fetch_array($result)) {
 		if ($_POST['SupplierType']==$myrow['typeid']) {
-			echo '<option selected="selected" value="'. $myrow['typeid'] . '">' . $myrow['typename'] .'</option>';
+			echo '<option selected="selected" value="'. $myrow['typeid'] . '">' . $myrow['typename']  . '</option>';
 		} else {
-			echo '<option value="' . $myrow['typeid'] . '">' . $myrow['typename'] .'</option>';
+			echo '<option value="' . $myrow['typeid'] . '">' . $myrow['typename']  . '</option>';
 		}
 	} //end while loop
 	echo '</select></td></tr>';
@@ -945,9 +945,9 @@ if (!isset($SupplierID)) {
 
 	while ($myrow = DB_fetch_array($result)) {
 		if ($_POST['PaymentTerms'] == $myrow['termsindicator']){
-		echo '<option selected="selected" value="' . $myrow['termsindicator'] . '">' . $myrow['terms'] .'</option>';
+		echo '<option selected="selected" value="' . $myrow['termsindicator'] . '">' . $myrow['terms']  . '</option>';
 		} else {
-		echo '<option value="' . $myrow['termsindicator'] . '">' . $myrow['terms'] .'</option>';
+		echo '<option value="' . $myrow['termsindicator'] . '">' . $myrow['terms']  . '</option>';
 		}
 	} //end while loop
 	DB_data_seek($result, 0);
@@ -960,9 +960,9 @@ if (!isset($SupplierID)) {
 	echo '<option value="0">' . _('None') . '</option>';
 	while ($myrow = DB_fetch_array($result)) {
 		if ($_POST['FactorID'] == $myrow['id']){
-		echo '<option selected="selected" value="' . $myrow['id'] . '">' . $myrow['coyname'] .'</option>';
+		echo '<option selected="selected" value="' . $myrow['id'] . '">' . $myrow['coyname']  . '</option>';
 		} else {
-		echo '<option value="' . $myrow['id'] . '">' . $myrow['coyname'] .'</option>';
+		echo '<option value="' . $myrow['id'] . '">' . $myrow['coyname']  . '</option>';
 		}
 	} //end while loop
 	DB_data_seek($result, 0);
@@ -976,9 +976,9 @@ if (!isset($SupplierID)) {
 			<td><select name="CurrCode">';
 	while ($myrow = DB_fetch_array($result)) {
 		if ($_POST['CurrCode'] == $myrow['currabrev']){
-			echo '<option selected="selected" value="' . $myrow['currabrev'] . '">' . $myrow['currency'] .'</option>';
+			echo '<option selected="selected" value="' . $myrow['currabrev'] . '">' . $myrow['currency']  . '</option>';
 		} else {
-			echo '<option value="' . $myrow['currabrev'] . '">' . $myrow['currency'] .'</option>';
+			echo '<option value="' . $myrow['currabrev'] . '">' . $myrow['currency']  . '</option>';
 		}
 	} //end while loop
 	DB_data_seek($result, 0);
@@ -988,11 +988,11 @@ if (!isset($SupplierID)) {
 			<td><select name="Remittance">';
 
 	if ($_POST['Remittance'] == 0){
-		echo '<option selected="selected" value="0">' . _('Not Required') .'</option>';
-		echo '<option value="1">' . _('Required') .'</option>';
+		echo '<option selected="selected" value="0">' . _('Not Required')  . '</option>';
+		echo '<option value="1">' . _('Required')  . '</option>';
 	} else {
-		echo '<option value="0">' . _('Not Required') .'</option>';
-		echo '<option selected="selected" value="1">' . _('Required') .'</option>';
+		echo '<option value="0">' . _('Not Required')  . '</option>';
+		echo '<option selected="selected" value="1">' . _('Required')  . '</option>';
 
 	}
 

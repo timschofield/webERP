@@ -1079,7 +1079,7 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 						</tr>';
 				} else {
 				     echo '<tr>
-							<td class="number" style="color:red"><b>' . _('TOTAL CREDIT') .'</b></td>
+							<td class="number" style="color:red"><b>' . _('TOTAL CREDIT')  . '</b></td>
 				     		<td class="number" style="background-color:#EEEEEE;color:red"><b>' . $DisplayTotal . '</b></td>
 				     	</tr>';
 				}

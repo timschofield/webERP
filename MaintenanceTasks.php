@@ -11,7 +11,7 @@ $BookMark = 'AssetMaintenance';
 
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/group_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p><br />';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/group_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
 
 
 if (isset($_POST['Submit'])) {
@@ -115,8 +115,8 @@ while ($myrow=DB_fetch_array($Result)) {
 			<td>' . ConvertSQLDate($myrow['lastcompleted']) . '</td>
 			<td>' . $myrow['realname'] . '</td>
 			<td>' . $ManagerName . '</td>
-			<td><a href="'.$RootPath.'/MaintenanceTasks.php?Edit=Yes&amp;TaskID=' . $myrow['taskid'] .'">'._('Edit').'</a></td>
-			<td><a href="'.$RootPath.'/MaintenanceTasks.php?Delete=Yes&amp;TaskID=' . $myrow['taskid'] .'" onclick="return confirm(\'' . _('Are you sure you wish to delete this maintenance task?') . '\');">'._('Delete').'</a></td>
+			<td><a href="'.$RootPath.'/MaintenanceTasks.php?Edit=Yes&amp;TaskID=' . $myrow['taskid'] .'">' . _('Edit') . '</a></td>
+			<td><a href="'.$RootPath.'/MaintenanceTasks.php?Delete=Yes&amp;TaskID=' . $myrow['taskid'] .'" onclick="return confirm(\'' . _('Are you sure you wish to delete this maintenance task?') . '\');">' . _('Delete') . '</a></td>
 		</tr>';
 }
 
@@ -130,8 +130,8 @@ echo '<table class="selection">';
 
 if (isset($_GET['Edit'])) {
 	echo '<tr>
-			<td>'._('Task ID').'</td>
-                        <td>'.$_GET['TaskID'].'</td>
+			<td>' . _('Task ID') . '</td>
+                        <td>' . $_GET['TaskID'] . '</td>
 		</tr>';
 	echo '<input type="hidden" name="TaskID" value="'.$_GET['TaskID'].'" />';
 	$sql="SELECT assetid,
@@ -169,47 +169,47 @@ if (!isset($_POST['AssetID'])){
 }
 
 echo '<tr>
-		<td>'._('Asset to Maintain').':</td>
+		<td>' . _('Asset to Maintain').':</td>
 		<td><select required="required" name="AssetID">';
 $AssetSQL="SELECT assetid, description FROM fixedassets";
 $AssetResult=DB_query($AssetSQL,$db);
 while ($myrow=DB_fetch_array($AssetResult)) {
 	if ($myrow['assetid']==$_POST['AssetID']) {
-		echo '<option selected="selected" value="'.$myrow['assetid'].'">'.$myrow['assetid'] . ' - ' . $myrow['description'] .'</option>';
+		echo '<option selected="selected" value="'.$myrow['assetid'].'">' . $myrow['assetid'] . ' - ' . $myrow['description']  . '</option>';
 	} else {
-		echo '<option value="'.$myrow['assetid'].'">'.$myrow['assetid'] . ' - ' . $myrow['description'] .'</option>';
+		echo '<option value="'.$myrow['assetid'].'">' . $myrow['assetid'] . ' - ' . $myrow['description']  . '</option>';
 	}
 }
 echo '</select></td>
 	</tr>';
 
 echo '<tr>
-		<td>'._('Task Description').':</td>
+		<td>' . _('Task Description').':</td>
 		<td><textarea name="TaskDescription" required="required" cols="40" rows="3">' . $_POST['TaskDescription'] . '</textarea></td>
 	</tr>';
 
 echo '<tr>
-		<td>'._('Days Before Task Due').':</td>
+		<td>' . _('Days Before Task Due').':</td>
 		<td><input type="text" class="integer" required="required" name="FrequencyDays" size="5" maxlength="5" value="' . $_POST['FrequencyDays'] . '" /></td>
 	</tr>';
 
 echo '<tr>
-		<td>'._('Responsible').':</td>
+		<td>' . _('Responsible').':</td>
 		<td><select required="required" name="UserResponsible">';
 $UserSQL="SELECT userid FROM www_users";
 $UserResult=DB_query($UserSQL,$db);
 while ($myrow=DB_fetch_array($UserResult)) {
 	if ($myrow['userid']==$_POST['UserResponsible']) {
-		echo '<option selected="selected" value="'.$myrow['userid'].'">'.$myrow['userid'].'</option>';
+		echo '<option selected="selected" value="'.$myrow['userid'].'">' . $myrow['userid'] . '</option>';
 	} else {
-		echo '<option value="'.$myrow['userid'].'">'.$myrow['userid'].'</option>';
+		echo '<option value="'.$myrow['userid'].'">' . $myrow['userid'] . '</option>';
 	}
 }
 echo '</select></td>
 	</tr>';
 
 echo '<tr>
-		<td>'._('Manager').':</td>
+		<td>' . _('Manager').':</td>
 		<td><select required="required" name="Manager">';
 if ($_POST['Manager']==''){
 	echo '<option selected="selected" value="">' . _('No Manager') . '</option>';
@@ -220,9 +220,9 @@ $ManagerSQL="SELECT userid FROM www_users";
 $ManagerResult=DB_query($UserSQL,$db);
 while ($myrow=DB_fetch_array($ManagerResult)) {
 	if ($myrow['userid']==$_POST['Manager']) {
-		echo '<option selected="selected" value="'.$myrow['userid'].'">'.$myrow['userid'].'</option>';
+		echo '<option selected="selected" value="'.$myrow['userid'].'">' . $myrow['userid'] . '</option>';
 	} else {
-		echo '<option value="'.$myrow['userid'].'">'.$myrow['userid'].'</option>';
+		echo '<option value="'.$myrow['userid'].'">' . $myrow['userid'] . '</option>';
 	}
 }
 echo '</select></td>

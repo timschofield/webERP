@@ -9,7 +9,7 @@ $Title = _('Payment Methods');
 include('includes/header.inc');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('Payments') .
-	'" alt="" />' . ' ' . $Title.'</p>';
+	'" alt="" />' . ' ' . $Title . '</p>';
 
 if ( isset($_GET['SelectedPaymentID']) )
 	$SelectedPaymentID = $_GET['SelectedPaymentID'];
@@ -185,7 +185,7 @@ if (isset($_POST['submit'])) {
 			<th>' . _('Payment Method') . '</th>
 			<th>' . _('For Payments') . '</th>
 			<th>' . _('For Receipts') . '</th>
-			<th>' . _('Use Pre-printed') .'<br />' . _('Stationery') . '</th>
+			<th>' . _('Use Pre-printed')  . '<br />' . _('Stationery') . '</th>
 			<th>' . _('Open Cash Drawer') . '</th>
 		</tr>';
 
@@ -206,7 +206,7 @@ if (isset($_POST['submit'])) {
 				<td>' . ($myrow['usepreprintedstationery'] ? _('Yes') : _('No')) . '</td>
 				<td>' . ($myrow['opencashdrawer'] ? _('Yes') : _('No')) . '</td>
 				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedPaymentID=' . $myrow['paymentid'] . '">' . _('Edit') . '</a></td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedPaymentID=' . $myrow['paymentid'] . '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this payment method?') . '\');">' . _('Delete') .'</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedPaymentID=' . $myrow['paymentid'] . '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this payment method?') . '\');">' . _('Delete')  . '</a></td>
 			</tr>';
 
 	} //END WHILE LIST LOOP

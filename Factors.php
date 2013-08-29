@@ -284,17 +284,17 @@ if (empty($FactorID) AND !isset($_POST['Create']) AND !isset($_POST['Amend'])) {
 	echo '<table class="selection">
 			<tr>
 				<th>' . _('ID') . '</th>
-				<th>' . _('Company Name').'</th>
-				<th>' . _('Address 1').'</th>
-				<th>' . _('Address 2').'</th>
-				<th>' . _('Address 3').'</th>
-				<th>' . _('Address 4').'</th>
-				<th>' . _('Address 5').'</th>
-				<th>' . _('Address 6').'</th>
-				<th>' . _('Contact').'</th>
-				<th>' . _('Telephone').'</th>
-				<th>' . _('Fax Number').'</th>
-				<th>' . _('Email').'</th>
+				<th>' . _('Company Name') . '</th>
+				<th>' . _('Address 1') . '</th>
+				<th>' . _('Address 2') . '</th>
+				<th>' . _('Address 3') . '</th>
+				<th>' . _('Address 4') . '</th>
+				<th>' . _('Address 5') . '</th>
+				<th>' . _('Address 6') . '</th>
+				<th>' . _('Contact') . '</th>
+				<th>' . _('Telephone') . '</th>
+				<th>' . _('Fax Number') . '</th>
+				<th>' . _('Email') . '</th>
 			</tr>';
 	$sql = "SELECT id,
 					coyname,
@@ -320,18 +320,18 @@ if (empty($FactorID) AND !isset($_POST['Create']) AND !isset($_POST['Amend'])) {
 			$j++;
 		}
 		echo '<td>' . $myrow['id'] . '</td>
-			<td>' . $myrow['coyname'].'</td>
-			<td>' . $myrow['address1'].'</td>
-			<td>' . $myrow['address2'].'</td>
-			<td>' . $myrow['address3'].'</td>
-			<td>' . $myrow['address4'].'</td>
-			<td>' . $myrow['address5'].'</td>
-			<td>' . $myrow['address6'].'</td>
-			<td>' . $myrow['contact'].'</td>
-			<td>' . $myrow['telephone'].'</td>
-			<td>' . $myrow['fax'].'</td>
-			<td>' . $myrow['email'].'</td>
-			<td><a href="'.$RootPath . '/Factors.php?FactorID='.$myrow['id'].'">'._('Edit').'</a></td>
+			<td>' . $myrow['coyname'] . '</td>
+			<td>' . $myrow['address1'] . '</td>
+			<td>' . $myrow['address2'] . '</td>
+			<td>' . $myrow['address3'] . '</td>
+			<td>' . $myrow['address4'] . '</td>
+			<td>' . $myrow['address5'] . '</td>
+			<td>' . $myrow['address6'] . '</td>
+			<td>' . $myrow['contact'] . '</td>
+			<td>' . $myrow['telephone'] . '</td>
+			<td>' . $myrow['fax'] . '</td>
+			<td>' . $myrow['email'] . '</td>
+			<td><a href="'.$RootPath . '/Factors.php?FactorID='.$myrow['id'].'">' . _('Edit') . '</a></td>
 			</tr>';
 	} //end while loop
 	echo '</table>

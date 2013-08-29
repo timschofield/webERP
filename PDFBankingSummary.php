@@ -36,7 +36,7 @@ if (!isset($_POST['BatchNo'])){
 			<td>' . _('Select the batch number of receipts to be printed') . ':</td>
 			<td><select required="required" autofocus="autofocus" name="BatchNo">';
 	while ($myrow=DB_fetch_array($result)) {
-		echo '<option value="'.$myrow['transno'].'">'._('Batch') .' '. $myrow['transno'].' - '.ConvertSqlDate($myrow['transdate']).'</option>';
+		echo '<option value="'.$myrow['transno'].'">' . _('Batch') .' '. $myrow['transno'].' - '.ConvertSqlDate($myrow['transdate']) . '</option>';
 	}
 	echo '</select></td>
 			</tr>

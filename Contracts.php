@@ -108,7 +108,7 @@ if (isset($_SESSION['Contract'.$identifier]) AND
 	}
 } /* end of if going to contract BOM or contract requriements */
 
-echo '<a href="'. $RootPath . '/SelectContract.php">'. _('Back to Contract Selection'). '</a><br />';
+echo '<a href="'. $RootPath . '/SelectContract.php">' .  _('Back to Contract Selection'). '</a><br />';
 
 //attempting to upload the drawing image file
 if (isset($_FILES['Drawing']) AND $_FILES['Drawing']['name'] !='' AND $_SESSION['Contract'.$identifier]->ContractRef!='') {
@@ -796,14 +796,14 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 				$k=1;
 			}
 			if ($LastCustomer != $myrow['name']) {
-				echo '<td>'. $myrow['name'] .'</td>';
+				echo '<td>' .  $myrow['name']  . '</td>';
 			} else {
 				echo '<td></td>';
 			}
 			echo '<td><input type="submit" name="Submit'.$j.'" value="' . $myrow['brname'] . '" /></td>
 					<input type="hidden" name="SelectedCustomer'.$j.'" value="'. $myrow['debtorno'] . '" />
 					<input type="hidden" name="SelectedBranch'.$j.'" value="' . $myrow['branchcode'] . '" />
-					<td>' . $myrow['contactname'] .'</td>
+					<td>' . $myrow['contactname']  . '</td>
 					<td>' . $myrow['phoneno'] . '</td>
 					<td>' . $myrow['faxno'] . '</td>
 					</tr>';
@@ -859,9 +859,9 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 
 	while ($myrow=DB_fetch_array($result)){
 		if (!isset($_SESSION['Contract'.$identifier]->CategoryID) or $myrow['categoryid']==$_SESSION['Contract'.$identifier]->CategoryID){
-			echo '<option selected="selected" value="'. $myrow['categoryid'] . '">' . $myrow['categorydescription'].'</option>';
+			echo '<option selected="selected" value="'. $myrow['categoryid'] . '">' . $myrow['categorydescription'] . '</option>';
 		} else {
-			echo '<option value="'. $myrow['categoryid'] . '">' . $myrow['categorydescription'].'</option>';
+			echo '<option value="'. $myrow['categoryid'] . '">' . $myrow['categorydescription'] . '</option>';
 		}
 	}
 
@@ -913,7 +913,7 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 			<td>' . _('Contract Description') . ':</td>
 			<td><textarea name="ContractDescription" style="width:100%" required="required" title="' . _('A description of the contract is required') . '" minlength="5" rows="5" cols="40">' . $_SESSION['Contract'.$identifier]->ContractDescription . '</textarea></td>
 		</tr><tr>
-			<td>'. _('Drawing File') . ' .jpg' . ' ' . _('format only') .':</td>
+			<td>' .  _('Drawing File') . ' .jpg' . ' ' . _('format only') .':</td>
 			<td><input type="file" id="Drawing" name="Drawing" /></td>
 		</tr>';
 

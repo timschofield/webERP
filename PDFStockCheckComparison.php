@@ -34,7 +34,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 			include('includes/header.inc');
 			echo '<br />';
 			prnMsg( _('The inventory check file could not be retrieved because'). ' - ' . DB_error_msg($db),'error');
-			echo '<br /><a href="' .$RootPath .'/index.php">'. _('Back to the menu').'</a>';
+			echo '<br /><a href="' .$RootPath .'/index.php">' .  _('Back to the menu') . '</a>';
 			if ($debug==1){
 	      			echo '<br />' . $sql;
 			}
@@ -60,9 +60,9 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 				include('includes/header.inc');
 				echo '<br />';
 				prnMsg( _('The inventory counts file could not be retrieved because'). ' - ' . DB_error_msg($db). 'error');
-				echo '<br /><a href="' .$RootPath .'/index.php">'. _('Back to the menu').'</a>';
+				echo '<br /><a href="' .$RootPath .'/index.php">' .  _('Back to the menu') . '</a>';
 				if ($debug==1){
-					echo '<br />'. $sql;
+					echo '<br />' .  $sql;
 				}
 				include('includes/footer.inc');
 				exit;
@@ -206,7 +206,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 		include('includes/header.inc');
 		echo '<p>';
 		prnMsg(_('There is no inventory check data to report on'), 'warn');
-		echo '<p>'. _('To start an inventory check first run the'). ' <a href="' . $RootPath . '/StockCheck.php">'. _('inventory check sheets') . '</a> - '. _('and select the option to create new Inventory Comparison data file');
+		echo '<p>' .  _('To start an inventory check first run the'). ' <a href="' . $RootPath . '/StockCheck.php">' .  _('inventory check sheets') . '</a> - '. _('and select the option to create new Inventory Comparison data file');
 		include('includes/footer.inc');
 		exit;
 	}
@@ -265,9 +265,9 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 	  		include('includes/header.inc');
 	   		echo '<br />';
 			prnMsg( _('The inventory counts could not be retrieved by the SQL because').' - ' . DB_error_msg($db), 'error');
-	   		echo '<br /><a href="' .$RootPath .'/index.php">'. _('Back to the menu'). '</a>';
+	   		echo '<br /><a href="' .$RootPath .'/index.php">' .  _('Back to the menu'). '</a>';
 	   		if ($debug==1){
-	      			echo '<br />'. $SQL;
+	      			echo '<br />' .  $SQL;
 	   		}
 	   		include('includes/footer.inc');
 	   		exit;
@@ -338,22 +338,22 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
               <td><select name="ReportOrClose">';
 
 	if ($_POST['ReportOrClose']=='ReportAndClose'){
-		echo '<option selected="selected" value="ReportAndClose">'. _('Report and Close the Inventory Comparison Processing Adjustments As Necessary') . '</option>';
-		echo '<option value="ReportOnly">'. _('Report The Inventory Comparison Differences Only - No Adjustments') . '</option>';
+		echo '<option selected="selected" value="ReportAndClose">' .  _('Report and Close the Inventory Comparison Processing Adjustments As Necessary') . '</option>';
+		echo '<option value="ReportOnly">' .  _('Report The Inventory Comparison Differences Only - No Adjustments') . '</option>';
 	} else {
 		echo '<option selected="selected" value="ReportOnly">' . _('Report The Inventory Comparison Differences Only - No Adjustments') . '</option>';
 		echo '<option value="ReportAndClose">' . _('Report and Close the Inventory Comparison Processing Adjustments As Necessary') . '</option>';
 	}
 
 	echo '</select></td></tr>';
-	echo '<tr><td>'. _('Action for Zero Counts') . ':</td>
+	echo '<tr><td>' .  _('Action for Zero Counts') . ':</td>
               <td><select name="ZeroCounts">';
 
 	if ($_POST['ZeroCounts'] =='Adjust'){
-		echo '<option selected="selected" value="Adjust">'. _('Adjust System stock to Nil') . '</option>';
+		echo '<option selected="selected" value="Adjust">' .  _('Adjust System stock to Nil') . '</option>';
 		echo '<option value="Leave">' . _('Do not Adjust System stock to Nil') . '</option>';
 	} else {
-		echo '<option value="Adjust">'. _('Adjust System stock to Nil') . '</option>';
+		echo '<option value="Adjust">' .  _('Adjust System stock to Nil') . '</option>';
 		echo '<option selected="selected" value="Leave">' . _('Do not Adjust System stock to Nil') . '</option>';
 	}
 

@@ -34,9 +34,9 @@ if (DB_num_rows($ShiptsResult)==0){
 
 echo '<table cellpadding="2" class="selection">';
 echo '<tr>
-		<th>'. _('Reference'). '</th>
-		<th>'. _('Vessel'). '</th>
-		<th>'. _('ETA'). '</th></tr>';
+		<th>' .  _('Reference'). '</th>
+		<th>' .  _('Vessel'). '</th>
+		<th>' .  _('ETA'). '</th></tr>';
 
 $j = 1;
 $k = 0; //row colour counter
@@ -50,9 +50,9 @@ while ($myrow=DB_fetch_array($ShiptsResult)) {
               $k=1;
        }
 
-       echo '<td><a href="'.$RootPath.'/Shipments.php?' . SID . 'SelectedShipment='.$myrow['shiptref'].'">'.$myrow['shiptref'].'</a></td>
-       		<td>'.$myrow['vessel'].'</td>
-		<td>'.ConvertSQLDate($myrow['eta']).'</td>
+       echo '<td><a href="'.$RootPath.'/Shipments.php?' . SID . 'SelectedShipment='.$myrow['shiptref'].'">' . $myrow['shiptref'] . '</a></td>
+       		<td>' . $myrow['vessel'] . '</td>
+		<td>' . ConvertSQLDate($myrow['eta']) . '</td>
 		</tr>';
 
 }

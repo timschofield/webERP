@@ -12,7 +12,7 @@ if (isset($_GET['SelectedGroup'])){
 	$SelectedGroup = $_POST['SelectedGroup'];
 }
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p><br />';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
 
 if (isset($_POST['submit']) OR isset($_GET['remove']) OR isset($_GET['add']) ) {
 
@@ -283,12 +283,12 @@ if (isset($SelectedGroup)) {
 				<input type="hidden" name="SelectedGroup" value="' . $SelectedGroup .'" />';
 		echo '<table class="selection">
 				<tr>
-					<th colspan="3"><h3>'._('Calculation Order').'</h3></th>
+					<th colspan="3"><h3>' . _('Calculation Order') . '</h3></th>
 				</tr>
 				<tr>
-					<th>'._('Tax Authority').'</th>
-					<th>'._('Order').'</th>
-					<th>'._('Tax on Prior Taxes').'</th>
+					<th>' . _('Tax Authority') . '</th>
+					<th>' . _('Order') . '</th>
+					<th>' . _('Tax on Prior Taxes') . '</th>
 				</tr>';
 		$k=0; //row colour counter
 		for ($i=1;$i < count($TaxAuthRow)+1;$i++) {
@@ -332,7 +332,7 @@ if (isset($SelectedGroup)) {
 		echo '<br />';
 		echo '<table class="selection">
 				<tr>
-					<th colspan="4">'._('Assigned Taxes') . '</th>
+					<th colspan="4">' . _('Assigned Taxes') . '</th>
 					<th></th>
 					<th colspan="2">' . _('Available Taxes') . '</th>
 				</tr>

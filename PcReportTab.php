@@ -66,7 +66,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 			<td><input tabindex="2" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="text" name="FromDate" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" /></td>
 		</tr>
 		<tr>
-			<td>' . _('To Date:') .'</td>
+			<td>' . _('To Date:')  . '</td>
 			<td><input tabindex="3" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="text" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" /></td>
 		</tr>
 		</table>
@@ -261,19 +261,19 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 
 	echo '<tr><td>' . _('Tab Code') . '</td>
 				<td>:</td>
-				<td style="width:200px">' . ''.$SelectedTabs.'</td>'  .
+				<td style="width:200px">' . ''.$SelectedTabs . '</td>'  .
 				'<td>' . _('From') . '</td><td>:</td><td>' .
-			''.$_POST['FromDate'].'</td></tr>';
+			''.$_POST['FromDate'] . '</td></tr>';
 
 	echo '<tr><td>' . _('User') . '</td>
 				<td>:</td>
-				<td>' . ''.$Tabs['usercode'].'</td>'.
+				<td>' . ''.$Tabs['usercode'] . '</td>' . 
 				'<td>' . _('To') . '</td><td>:</td><td>' .
-			''.$_POST['ToDate'].'</td></tr>';
+			''.$_POST['ToDate'] . '</td></tr>';
 
-	echo '<tr><td>' . _('Authoriser') . '</td><td>:</td><td>' . ''.$Tabs['authorizer'].'</td>
+	echo '<tr><td>' . _('Authoriser') . '</td><td>:</td><td>' . ''.$Tabs['authorizer'] . '</td>
 			</tr>';
-	echo '<tr><td>' . _('Currency') . '</td><td>:</td><td>' . ''.$Tabs['currency'].'</td>
+	echo '<tr><td>' . _('Currency') . '</td><td>:</td><td>' . ''.$Tabs['currency'] . '</td>
 			</tr>';
 
 	$SqlBalance = "SELECT SUM(amount)
@@ -289,9 +289,9 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 		$Balance['0']=0;
 	}
 
-	echo '<tr><td>' . _('Balance before ') . ''.$_POST['FromDate'].'</td>
+	echo '<tr><td>' . _('Balance before ') . ''.$_POST['FromDate'] . '</td>
 				<td>:</td>
-				<td>' . locale_number_format($Balance['0'],$_SESSION['CompanyRecord']['decimalplaces']).' '.$Tabs['currency'].'</td>
+				<td>' . locale_number_format($Balance['0'],$_SESSION['CompanyRecord']['decimalplaces']).' '.$Tabs['currency'] . '</td>
 			</tr>';
 
 	$SqlBalanceNotAut = "SELECT SUM(amount)
@@ -308,7 +308,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 		$BalanceNotAut['0']=0;
 	}
 
-	echo '<tr><td>' . _('Total not authorised before ') . ''.$_POST['FromDate'].'</td><td>:</td><td>' . ''.locale_number_format($BalanceNotAut['0'],$_SESSION['CompanyRecord']['decimalplaces']) . ' ' . $Tabs['currency'].'</td></tr>';
+	echo '<tr><td>' . _('Total not authorised before ') . ''.$_POST['FromDate'] . '</td><td>:</td><td>' . ''.locale_number_format($BalanceNotAut['0'],$_SESSION['CompanyRecord']['decimalplaces']) . ' ' . $Tabs['currency'] . '</td></tr>';
 
 
 	echo '</table>';
@@ -406,7 +406,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	}
 
 	echo '<tr><td colspan="2" style="text-align:right">' . _('Balance At') . ' '.$_POST['ToDate'].':</td>
-				<td>'.locale_number_format($Amount[0],$_SESSION['CompanyRecord']['decimalplaces']).' </td><td>'.$Tabs['currency'].'</td></tr>';
+				<td>' . locale_number_format($Amount[0],$_SESSION['CompanyRecord']['decimalplaces']).' </td><td>' . $Tabs['currency'] . '</td></tr>';
 
 	echo '</table>';
 	echo '<br /><div class="centre"><input type="submit" name="SelectDifferentDate" value="' . _('Select A Different Date') . '" /></div>';

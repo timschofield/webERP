@@ -160,7 +160,7 @@ echo '<br />
 		<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<div>
         <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo _('Show all transactions after') . ': ' .'<input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="TransAfterDate" value="' . $_POST['TransAfterDate'] . '" maxlength="10" size="10" />
+echo _('Show all transactions after') . ': '  . '<input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="TransAfterDate" value="' . $_POST['TransAfterDate'] . '" maxlength="10" size="10" />
 	    <input type="submit" name="Refresh Inquiry" value="' . _('Refresh Inquiry') . '" />
     </div>
 	</form>
@@ -205,7 +205,7 @@ if (DB_num_rows($TransResult) == 0){
 
 echo '<table width="90%" class="selection">';
 $TableHeader = '<tr>
-					<th class="ascending">' . _('Trans') . ' #' .'</th>
+					<th class="ascending">' . _('Trans') . ' #'  . '</th>
 					<th class="ascending">' . _('Type') .	'</th>
 					<th class="ascending">' . _('Supplier Ref') . '</th>
 					<th class="ascending">' . _('Date') . '</th>
@@ -252,7 +252,7 @@ while ($myrow=DB_fetch_array($TransResult)) {
 					<td>' . $myrow['typename'] . '</td>
 					<td>' . $myrow['suppreference'] . '</td>
 					<td>' . ConvertSQLDate($myrow['trandate']) . '</td>
-					<td class="number">' . locale_number_format($myrow['totalamount'],$SupplierRecord['currdecimalplaces']) .'</td>
+					<td class="number">' . locale_number_format($myrow['totalamount'],$SupplierRecord['currdecimalplaces'])  . '</td>
 					<td class="number">' . locale_number_format($myrow['allocated'],$SupplierRecord['currdecimalplaces']) . '</td>
 					<td class="number">' . locale_number_format($myrow['totalamount']-$myrow['allocated'],$SupplierRecord['currdecimalplaces']) . '</td>
 					<td align="left">' . $myrow['transtext'] . '</td>
@@ -266,7 +266,7 @@ while ($myrow=DB_fetch_array($TransResult)) {
 					<td>' . ConvertSQLDate($myrow['trandate']) . '</td>
 					<td class="number">' . locale_number_format($myrow['totalamount'],$SupplierRecord['currdecimalplaces']) . '</td>
 					<td class="number">' .locale_number_format($myrow['allocated'],$SupplierRecord['currdecimalplaces']) . '</td>
-					<td class="number">' . locale_number_format($myrow['totalamount'] - $myrow['allocated'],$SupplierRecord['currdecimalplaces']) .'</td>
+					<td class="number">' . locale_number_format($myrow['totalamount'] - $myrow['allocated'],$SupplierRecord['currdecimalplaces'])  . '</td>
 					<td align="left">' . $myrow['transtext'] . '</td>';
 
 				$AuthSQL="SELECT offhold
@@ -279,12 +279,12 @@ while ($myrow=DB_fetch_array($TransResult)) {
 				$AuthRow=DB_fetch_array($AuthResult);
 
 				if ($AuthRow[0]==0) {
-					echo '<td><a href="' .htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?HoldType=' . $myrow['type'] . '&amp;HoldTrans=' . $myrow['transno']. '&amp;HoldStatus=' . $HoldValue . '&amp;FromDate=' . $_POST['TransAfterDate'].'">' . $HoldValue .'</a></td>';
+					echo '<td><a href="' .htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?HoldType=' . $myrow['type'] . '&amp;HoldTrans=' . $myrow['transno']. '&amp;HoldStatus=' . $HoldValue . '&amp;FromDate=' . $_POST['TransAfterDate'].'">' . $HoldValue  . '</a></td>';
 				} else {
 					if ($HoldValue==_('Release')) {
-						echo '<td>' . $HoldValue .'</a></td>';
+						echo '<td>' . $HoldValue  . '</a></td>';
 					} else {
-						echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'). '?' . 'HoldType=' . $myrow['type'] .'&amp;HoldTrans=' . $myrow['transno'] . '&amp;HoldStatus=' . $HoldValue . '&amp;FromDate=' . $_POST['TransAfterDate'] .'">'.$HoldValue .'</a></td>';
+						echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'). '?' . 'HoldType=' . $myrow['type'] .'&amp;HoldTrans=' . $myrow['transno'] . '&amp;HoldStatus=' . $HoldValue . '&amp;FromDate=' . $_POST['TransAfterDate'] .'">' . $HoldValue  . '</a></td>';
 					}
 				}
 				echo '<td><a target="_blank" href="' . $RootPath . '/GLTransInquiry.php?TypeID=' . $myrow['type'] .'&amp;TransNo=' . $myrow['transno'] .'">' ._('View GL Postings') . '</a></td></tr>';

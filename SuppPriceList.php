@@ -250,8 +250,8 @@ if (isset($_POST['PrintPDF'])) {
 	echo '<tr>
 			<td>' . _('Price List') . ':</td>
 			<td><select name="price">
-				<option value="all">' ._('All Prices').'</option>
-				<option value="current">' ._('Only Current Price').'</option>
+				<option value="all">' ._('All Prices') . '</option>
+				<option value="current">' ._('Only Current Price') . '</option>
 				</select>
 			</td>
 		</tr>';

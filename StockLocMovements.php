@@ -12,7 +12,7 @@ echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') .
-	'" alt="" />' . ' ' . $Title.'</p>';
+	'" alt="" />' . ' ' . $Title . '</p>';
 
 echo '<table class="selection">
      <tr>

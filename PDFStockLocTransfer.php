@@ -14,13 +14,13 @@ if (!isset($_GET['TransferNo'])){
 
 	include ('includes/header.inc');
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') .
-		'" alt="" />' . ' ' . _('Reprint transfer docket').'</p><br />';
+		'" alt="" />' . ' ' . _('Reprint transfer docket') . '</p><br />';
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table>
 			<tr>
-				<td>'._('Transfer docket to reprint').'</td>
+				<td>' . _('Transfer docket to reprint') . '</td>
 				<td><input type="text" class="number" size="10" name="TransferNo" /></td>
 			</tr>
 		</table>';
@@ -40,7 +40,7 @@ $FontSize=10;
 $PageNumber=1;
 $line_height=30;
 
-$ErrMsg = _('An error occurred retrieving the items on the transfer'). '.' . '<p>'. _('This page must be called with a location transfer reference number').'.';
+$ErrMsg = _('An error occurred retrieving the items on the transfer'). '.' . '<p>' .  _('This page must be called with a location transfer reference number').'.';
 $DbgMsg = _('The SQL that failed while retrieving the items on the transfer was');
 $sql = "SELECT loctransfers.reference,
 			   loctransfers.stockid,

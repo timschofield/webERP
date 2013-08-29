@@ -45,7 +45,7 @@ if (DB_num_rows($result) == 0) {
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
 	<div>
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-		<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p>
+		<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>
 		<table class="selection">
 		<tr>
 			<td>' . _('In Asset Category') . ':</td>
@@ -71,9 +71,9 @@ echo '</select></td>
 	<td>' . _('Enter partial description') . ':</td>
 	<td>';
 if (isset($_POST['Keywords'])) {
-	echo '<input type="text" name="Keywords" value="' . $_POST['Keywords'] . '" size="20" maxlength="25" />';
+	echo '<input type="text" name="Keywords" autofocus="autofocus" value="' . $_POST['Keywords'] . '" size="20" maxlength="25" />';
 } else {
-	echo '<input type="text" name="Keywords" size="20" maxlength="25" />';
+	echo '<input type="text" name="Keywords" autofocus="autofocus" size="20" maxlength="25" />';
 }
 echo '</td>
 	</tr>
@@ -117,7 +117,6 @@ echo '</td>
 	</div>
 	<br />
     </div>';
-echo '<script  type="text/javascript">defaultControl(document.forms[0].Keywords);</script>';
 
 // query for list of record(s)
 if(isset($_POST['Go']) OR isset($_POST['Next']) OR isset($_POST['Previous'])) {

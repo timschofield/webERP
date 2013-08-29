@@ -60,7 +60,7 @@ if (isset($SelectedCategory) AND isset($_FILES['CategoryPicture']) AND $_FILES['
 
 	if ($UploadTheFile=='Yes'){
 		$result  =  move_uploaded_file($_FILES['CategoryPicture']['tmp_name'], $FileName);
-		$message = ($result)?_('File url') .'<a href="' . $FileName .'">' .  $FileName . '</a>' : _('Somthing is wrong with uploading a file');
+		$message = ($result)?_('File url')  . '<a href="' . $FileName .'">' .  $FileName . '</a>' : _('Somthing is wrong with uploading a file');
 	}
  /* EOR Add Image upload for New Item  - by Ori */
 }
@@ -193,7 +193,7 @@ for($Busy = (isset($TmpParentID) AND ($TmpParentID != 0));
 		if (DB_num_rows($result) > 0) {
 			$row = DB_fetch_array($result);
 			$LastParentName =  $row['salescatname'];
-			$TempPath = '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?ParentCategory='.$TmpParentID.'">'.$LastParentName . '</a>'.'&nbsp;\\&nbsp;' . $TempPath;
+			$TempPath = '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?ParentCategory='.$TmpParentID.'">' . $LastParentName . '</a>' . '&nbsp;\\&nbsp;' . $TempPath;
 			$TmpParentID = $row['parentcatid']; // Set For Next Round
 		} else {
 			$Busy = false;
@@ -270,7 +270,7 @@ if (DB_num_rows($result) == 0) {
 				<td>%s</td>
 				<td><a href="%sParentCategory=%s">' . _('Select') . '</td>
 				<td><a href="%sSelectedCategory=%s&amp;ParentCategory=%s">' . _('Edit') . '</td>
-				<td><a href="%sSelectedCategory=%s&amp;Delete=yes&amp;EditName=1&amp;ParentCategory=%s" onclick="return confirm(\'' . _('Are you sure you wish to delete this sales category?') . '\');">' . _('Delete') .'</a></td>
+				<td><a href="%sSelectedCategory=%s&amp;Delete=yes&amp;EditName=1&amp;ParentCategory=%s" onclick="return confirm(\'' . _('Are you sure you wish to delete this sales category?') . '\');">' . _('Delete')  . '</a></td>
 				<td>%s</td>
 				</tr>',
 				$myrow['salescatname'],
@@ -360,7 +360,7 @@ echo '</select></td>
 // Image upload only if we have a selected category
 if (isset($SelectedCategory)) {
 	echo '<tr>
-			<td>'. _('Image File (.jpg)') . ':</td>
+			<td>' .  _('Image File (.jpg)') . ':</td>
 			<td><input type="file" id="CategoryPicture" name="CategoryPicture" /></td>
 		</tr>';
 }
@@ -431,7 +431,7 @@ if($result AND DB_num_rows($result)) {
 	
 	echo '<table class="selection">
 		<tr>
-			<th colspan="2">'._('Add Inventory to this category').'</th>
+			<th colspan="2">' . _('Add Inventory to this category') . '</th>
 		</tr>
 		<tr>
 			<td>' . _('Select Item') . ':</td>
@@ -440,7 +440,7 @@ if($result AND DB_num_rows($result)) {
 	while( $myrow = DB_fetch_array($result) ) {
 		if ( !array_keys( $StockIDs, $myrow['stockid']  ) ) {
 			// Only if the StockID is not already selected
-			echo '<option value="'.$myrow['stockid'].'">'.
+			echo '<option value="'.$myrow['stockid'].'">' . 
 				$myrow['stockid'] . '&nbsp;-&nbsp;&quot;'.
 				$myrow['description'] . '&quot;</option>';
 		}
@@ -453,7 +453,7 @@ if($result AND DB_num_rows($result)) {
 			 <option value="">' . _('Select Brand') . '</option>';
 	$BrandResult = DB_query("SELECT manufacturers_id, manufacturers_name FROM manufacturers",$db); 
 	while( $myrow = DB_fetch_array($BrandResult) ) {
-		echo '<option value="'.$myrow['manufacturers_id'].'">'. $myrow['manufacturers_name'] . '</option>';
+		echo '<option value="'.$myrow['manufacturers_id'].'">' .  $myrow['manufacturers_name'] . '</option>';
 	}
 
 	echo '</select></td>
@@ -502,7 +502,7 @@ if($result ) {
 	if( DB_num_rows($result)) {
 		echo '<table class="selection">';
 		echo '<tr>
-				<th colspan="4">'._('Inventory items for') . ' ' . $CategoryPath . '</th>
+				<th colspan="4">' . _('Inventory items for') . ' ' . $CategoryPath . '</th>
 			</tr>
 			<tr>
 				<th class="ascending">' . _('Item') . '</th>
@@ -528,12 +528,12 @@ if($result ) {
 				<td>';
 			if ($myrow['featured']==1){
 				echo '<img src="css/' . $Theme . '/images/tick.png"></td>
-				<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?RemoveFeature=Yes&amp;ParentCategory='.$ParentCategory.'&amp;StockID='.$myrow['stockid'].'">'. _('Cancel Feature') . '</a></td>';
+				<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?RemoveFeature=Yes&amp;ParentCategory='.$ParentCategory.'&amp;StockID='.$myrow['stockid'].'">' .  _('Cancel Feature') . '</a></td>';
 			} else {
 				echo '</td>
-				<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?AddFeature=Yes&amp;ParentCategory='.$ParentCategory.'&amp;StockID='.$myrow['stockid'].'">'. _('Make Featured') . '</a></td>';
+				<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?AddFeature=Yes&amp;ParentCategory='.$ParentCategory.'&amp;StockID='.$myrow['stockid'].'">' .  _('Make Featured') . '</a></td>';
 			}
-			echo '<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?ParentCategory='.$ParentCategory.'&amp;DelStockID='.$myrow['stockid'].'">'. _('Remove') . '</a></td>
+			echo '<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?ParentCategory='.$ParentCategory.'&amp;DelStockID='.$myrow['stockid'].'">' .  _('Remove') . '</a></td>
 			</tr>';
 		}
 		echo '</table>';

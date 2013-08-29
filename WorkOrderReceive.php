@@ -28,7 +28,7 @@ echo '<div>
 	</div>';
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/group_add.png" title="' .
-	_('Search') . '" alt="" />' . ' ' . $Title.'</p>';
+	_('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<div>';
@@ -37,7 +37,7 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 if (!isset($SelectedWO) OR !isset($StockID)) {
 	/* This page can only be called with a purchase order number for invoicing*/
 	echo '<div class="centre">
-			<a href="' . $RootPath . '/SelectWorkOrder.php">'. _('Select a work order to receive').'</a>
+			<a href="' . $RootPath . '/SelectWorkOrder.php">' .  _('Select a work order to receive') . '</a>
 		</div>';
 	prnMsg(_('This page can only be opened if a work order has been selected. Please select a work order to receive first'),'info');
 	include ('includes/footer.inc');
@@ -764,7 +764,7 @@ if (!isset($_POST['ReceivedDate'])){
 echo '<table class="selection">
 		<tr>
 			<td>' . _('Receive work order') . ':</td>
-			<td>' . $_POST['WO'] .'</td><td>' . _('Item') . ':</td>
+			<td>' . $_POST['WO']  . '</td><td>' . _('Item') . ':</td>
 			<td>' . $_POST['StockID'] . ' - ' . $WORow['description'] . '</td>
 		</tr>
 		 <tr>
@@ -846,7 +846,7 @@ if($WORow['controlled']==1){ //controlled
 						echo '</tr>
 							<tr>';
 					}
-					echo '<td><input type="checkbox" name="CheckItem' . $i . '" />'. $WOSNRow[0] .'<input type="hidden" name="SerialNo' . $i . '" value="' . $WOSNRow[0] . '" /><input type="hidden" name="QualityText' . $i . '" value="' . $WOSNRow[1] . '" /></td>';
+					echo '<td><input type="checkbox" name="CheckItem' . $i . '" />' .  $WOSNRow[0]  . '<input type="hidden" name="SerialNo' . $i . '" value="' . $WOSNRow[0] . '" /><input type="hidden" name="QualityText' . $i . '" value="' . $WOSNRow[1] . '" /></td>';
 					$i++;
 				}
 			}

@@ -40,17 +40,11 @@ if (isset($_POST['UpdateDatabase']) OR isset($_POST['RefreshAllocTotal'])) {
 	$TotalAllocated = 0;
 	$TotalDiffOnExch = 0;
 
-	echo '<br />Total number of potential allocations = ' . $_POST['TotalNumberOfAllocs'];
-
-
 	for ($AllocCounter=0;$AllocCounter < $_POST['TotalNumberOfAllocs']; $AllocCounter++) {
 	// loop through amounts allocated using AllocnItm->ID for each record
-		echo '<br />Counter = ' . $AllocCounter;
+
 		if (isset($_POST['Amt' . $AllocCounter])) {
 
-
-			echo ' - Amount allocated' . $_POST['Amt' . $AllocCounter] . ' for ' . $_POST['AllocID' . $AllocCounter];
-			
  			// allocatable charge amounts
 			if (!is_numeric(filter_number_format($_POST['Amt' . $AllocCounter]))) {
 				$_POST['Amt' . $AllocCounter] = 0;
@@ -400,7 +394,7 @@ if (isset($_POST['AllocTrans'])) {
 
 		if ($AllocnItem->TransAmount < 0) {
 				$Balance+=$YetToAlloc;
-				echo '<td>' . $curTrans .'</td>
+				echo '<td>' . $curTrans  . '</td>
 						<td class="number">' . locale_number_format($Balance,$_SESSION['Alloc']->CurrDecimalPlaces) . '</td>
 					</tr>';
 		} else {
@@ -424,15 +418,15 @@ if (isset($_POST['AllocTrans'])) {
 	}
 
 	echo '<tr>
-			<td colspan="5" class="number"><b>'._('Total Allocated').':</b></td>
+			<td colspan="5" class="number"><b>' . _('Total Allocated').':</b></td>
 			<td class="number"><b>' . locale_number_format($TotalAllocated,$_SESSION['Alloc']->CurrDecimalPlaces) . '</b></td>';
 	$j++;
 	echo '<td colspan="2">
 			<input tabindex="'.$j.'" type="submit" name="RefreshAllocTotal" value="' . _('Recalculate Total To Allocate') . '" /></td>
         </tr>
 		<tr>
-			<td colspan="5" class="number"><b>'._('Left to allocate').'</b></td>
-			<td class="number"><b>' . locale_number_format(-$_SESSION['Alloc']->TransAmt-$TotalAllocated,$_SESSION['Alloc']->CurrDecimalPlaces).'</b></td>
+			<td colspan="5" class="number"><b>' . _('Left to allocate') . '</b></td>
+			<td class="number"><b>' . locale_number_format(-$_SESSION['Alloc']->TransAmt-$TotalAllocated,$_SESSION['Alloc']->CurrDecimalPlaces) . '</b></td>
 		</tr>
 		</table>
 		<br />
@@ -490,7 +484,7 @@ if (isset($_POST['AllocTrans'])) {
 			echo  '<tr class="OddTableRows">';;
 			$k++;
 		}
-		echo '<td>' . $myrow['typename'] .'</td>
+		echo '<td>' . $myrow['typename']  . '</td>
 				<td>' . $myrow['name'] . '</td>
 				<td>' . $myrow['debtorno'] . '</td>
 				<td>' . $myrow['transno'] . '</td>
@@ -545,7 +539,7 @@ if (isset($_POST['AllocTrans'])) {
 		if ( $CurrentDebtor != $myrow['debtorno'] ) {
 			if ( $CurrentTransaction > 1 ) {
 				echo '<tr class="OddTableRows">
-						<td colspan="7" class="number"><b>' . locale_number_format($Balance,$CurrDecimalPlaces) .'</b></td>
+						<td colspan="7" class="number"><b>' . locale_number_format($Balance,$CurrDecimalPlaces)  . '</b></td>
 						<td><b>' . $CurrCode . '</b></td>
 						<td><b>' . _('Balance') . '</b></td>
 					</tr>';
@@ -577,7 +571,7 @@ if (isset($_POST['AllocTrans'])) {
 			$k++;
 		}
 
-		echo '<td>' . $myrow['typename'] .'</td>
+		echo '<td>' . $myrow['typename']  . '</td>
 			<td>' . $myrow['name'] . '</td>
 			<td>' . $myrow['debtorno'] . '</td>
 			<td>' . $myrow['transno'] . '</td>
@@ -597,7 +591,7 @@ if (isset($_POST['AllocTrans'])) {
 		prnMsg(_('There are no allocations to be done'),'info');
 	} else {
 		echo '<tr class="OddTableRows">
-				<td colspan="7" class="number"><b>' . locale_number_format($Balance,$CurrDecimalPlaces) .'</b></td>
+				<td colspan="7" class="number"><b>' . locale_number_format($Balance,$CurrDecimalPlaces)  . '</b></td>
 				<td><b>' . $CurrCode . '</b></td>
 				<td><b>' . _('Balance') . '</b></td>
 			</tr>';

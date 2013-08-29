@@ -61,7 +61,7 @@ echo '<p class="page_title_text">
 echo '<table cellpadding="2" class="selection">
 	<tr>
 		<td class="label">' . _('Work order Number') . ':</td>
-		<td>' . $SelectedWO .'</td>
+		<td>' . $SelectedWO  . '</td>
 		<td class="label">' . _('Item') . ':</td>
 		<td>' . $StockID . ' - ' . $WORow['description'] . '</td>
 	</tr>
@@ -117,7 +117,7 @@ echo '<table cellpadding="2" class="selection">
 		} else {
 			echo '<tr>
 					<td class="notavailable">' . _('Auto Issue') . '</td>
-					<td class="notavailable">' .$RequirementsRow['stockid'] . ' - ' . $RequirementsRow['description'] .'</td>';
+					<td class="notavailable">' .$RequirementsRow['stockid'] . ' - ' . $RequirementsRow['description']  . '</td>';
 		}
 		$IssuedAlreadyResult = DB_query("SELECT SUM(-qty) FROM stockmoves
 										WHERE stockmoves.type=28

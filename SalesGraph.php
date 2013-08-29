@@ -36,7 +36,7 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	echo '<table class="selection">
 			<tr><td>' . _('Select Period From:') . '</td>
@@ -75,7 +75,7 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 	}
 
 	echo '<tr>
-			<td>' . _('Select Period To:') .'</td>
+			<td>' . _('Select Period To:')  . '</td>
 			<td><select name="ToPeriod">';
 
 	$RetResult = DB_data_seek($Periods,0);
@@ -96,7 +96,7 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 		$_POST['SalesArea']='';
 	}
 	echo '<tr>
-			<td>' . _('For Sales Area/Region:') .'</td>
+			<td>' . _('For Sales Area/Region:')  . '</td>
 			<td><select name="SalesArea">';
 	if($_POST['SalesArea']=='All'){
 		echo '<option selected="selected" value="All">' . _('All') . '</option>';
@@ -118,7 +118,7 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 		$_POST['CategoryID']='';
 	}
 	echo '<tr>
-			<td>' . _('For Stock Category:') .'</td>
+			<td>' . _('For Stock Category:')  . '</td>
 			<td><select name="CategoryID">';
 	if($_POST['CategoryID']=='All'){
 		echo '<option selected="selected" value="All">' . _('All') . '</option>';
@@ -141,7 +141,7 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 	}
 
 	echo '<tr>
-			<td>' . _('For Sales Person:') .'</td>
+			<td>' . _('For Sales Person:')  . '</td>
 			<td><select name="SalesmanCode">';
 
 	if($_POST['SalesmanCode']=='All'){
@@ -160,18 +160,18 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 			<td>' . $_POST['SalesmanCode'] . '</td>
 		</tr>';
 
-	echo '<tr><td>'._('Graph Type').'</td>';
+	echo '<tr><td>' . _('Graph Type') . '</td>';
 	echo '<td><select name="GraphType">';
-	echo '<option value="bars">'._('Bar Graph').'</option>';
-	echo '<option value="stackedbars">'._('Stacked Bar Graph').'</option>';
-	echo '<option value="lines">'._('Line Graph').'</option>';
-	echo '<option value="linepoints">'._('Line Point Graph').'</option>';
-	echo '<option value="area">'._('Area Graph').'</option>';
-	echo '<option value="points">'._('Points Graph').'</option>';
-	echo '<option value="pie">'._('Pie Graph').'</option>';
-	echo '<option value="thinbarline">'._('Thin Bar Line Graph').'</option>';
-	echo '<option value="squared">'._('Squared Graph').'</option>';
-	echo '<option value="stackedarea">'._('Stacked Area Graph').'</option>';
+	echo '<option value="bars">' . _('Bar Graph') . '</option>';
+	echo '<option value="stackedbars">' . _('Stacked Bar Graph') . '</option>';
+	echo '<option value="lines">' . _('Line Graph') . '</option>';
+	echo '<option value="linepoints">' . _('Line Point Graph') . '</option>';
+	echo '<option value="area">' . _('Area Graph') . '</option>';
+	echo '<option value="points">' . _('Points Graph') . '</option>';
+	echo '<option value="pie">' . _('Pie Graph') . '</option>';
+	echo '<option value="thinbarline">' . _('Thin Bar Line Graph') . '</option>';
+	echo '<option value="squared">' . _('Squared Graph') . '</option>';
+	echo '<option value="stackedarea">' . _('Stacked Area Graph') . '</option>';
 	echo '</select></td></tr>';
 
 	if (!isset($_POST['ValueFrom'])){

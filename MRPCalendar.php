@@ -268,7 +268,7 @@ function ShowInputForm(&$db,&$ChangeDate)  {//####DISPLAY_DISPLAY_DISPLAY_DISPLA
 		</tr>
 		<tr><td></td></tr>
 		<tr><td></td></tr>
-		<tr><td>'._('Exclude The Following Days').'</td></tr>
+		<tr><td>' . _('Exclude The Following Days') . '</td></tr>
 		 <tr>
 			<td>' . _('Saturday') . ':</td>
 			<td><input type="checkbox" name="Saturday" value="Saturday" /></td>

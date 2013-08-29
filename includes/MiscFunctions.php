@@ -430,7 +430,7 @@ function GetMailList($Recipients){
 		
 		//Create the string which meets the Recipients requirements
 		while($myrow = DB_fetch_array($result)){
-			$ToList[]= $myrow['realname'].'<'.$myrow['email'].'>';
+			$ToList[]= $myrow['realname'] . '<'.$myrow['email'].'>';
 
 		}
 	

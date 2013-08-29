@@ -577,12 +577,12 @@ if (!isset($SuppliersResult)) {
 				<input type="hidden" name="SupplierID" maxlength="10" size="11" value="' . $SupplierID . '" />';
 
 		if ($SupplierID!='') {
-			echo '<td>'.$SuppName;
+			echo '<td>' . $SuppName;
 		}
 		if (!isset($SuppName) OR $SuppName = '') {
 			echo '(' . _('A search facility is available below if necessary') . ')';
 		} else {
-			echo '<td>'.$SuppName;
+			echo '<td>' . $SuppName;
 		}
 		echo '</td></tr>';
 	}

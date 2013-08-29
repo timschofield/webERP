@@ -38,7 +38,7 @@ if (isset($_GET['LineNo']) AND $_GET['LineNo']>0){
 	$LineNo = $_POST['LineNo'];
 } else {
 	echo '<div class="centre">
-			<a href="' . $RootPath . '/GoodsReceived.php">' . _('Select a line Item to Receive').'</a>
+			<a href="' . $RootPath . '/GoodsReceived.php">' . _('Select a line Item to Receive') . '</a>
 		</div>';
 	prnMsg( _('This page can only be opened if a Line Item on a PO has been selected') . '. ' . _('Please do that first'), 'error');
 	include( 'includes/footer.inc');
@@ -63,9 +63,9 @@ if ($LineItem->Controlled !=1 ){ /*This page only relavent for controlled items 
 ********************************************/
 echo '<div class="centre">
 		<br />
-		<a href="'.$RootPath.'/GoodsReceived.php?identifier=' .$identifier . '">'. _('Back To Purchase Order'). ' # '. $_SESSION['PO'.$identifier]->OrderNo . '</a>
+		<a href="'.$RootPath.'/GoodsReceived.php?identifier=' .$identifier . '">' .  _('Back To Purchase Order'). ' # '. $_SESSION['PO'.$identifier]->OrderNo . '</a>
 		<br />
-		<h4>'. _('Receive controlled item'). ' '. $LineItem->StockID  . ' - ' . $LineItem->ItemDescription . ' ' . _('on order') . ' ' . $_SESSION['PO'.$identifier]->OrderNo . ' ' . _('from') . ' ' . $_SESSION['PO'.$identifier]->SupplierName . '</h4>
+		<h4>' .  _('Receive controlled item'). ' '. $LineItem->StockID  . ' - ' . $LineItem->ItemDescription . ' ' . _('on order') . ' ' . $_SESSION['PO'.$identifier]->OrderNo . ' ' . _('from') . ' ' . $_SESSION['PO'.$identifier]->SupplierName . '</h4>
 	</div>';
 
 /** vars needed by InputSerialItem : **/

@@ -283,7 +283,7 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 		}else{
 			echo '<td>' . ConvertSQLDate($myrow['date']) . '</td>
 				<td>' . $Description['0'] . '</td>
-				<td class="number">' . locale_number_format($myrow['amount'],$CurrDecimalPlaces).'</td>
+				<td class="number">' . locale_number_format($myrow['amount'],$CurrDecimalPlaces) . '</td>
 				<td>' . ConvertSQLDate($myrow['authorized']) . '</td>
 				<td>' . $myrow['notes'] . '</td>
 				<td>' . $myrow['receipt'] . '</td>
@@ -350,11 +350,11 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 				<table class="selection">'; //Main table
         if (isset($_GET['SelectedIndex'])) {
             echo '<tr>
-					<th colspan="2"><h3>'._('Update Cash Assignment').'</h3></th>
+					<th colspan="2"><h3>' . _('Update Cash Assignment') . '</h3></th>
 				</tr>';
         } else {
             echo '<tr>
-					<th colspan="2"><h3>'._('New Cash Assignment').'</h3></th>
+					<th colspan="2"><h3>' . _('New Cash Assignment') . '</h3></th>
 				</tr>';
         }
 		echo '<tr>

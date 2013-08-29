@@ -28,8 +28,8 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 
 if (!isset($SelectedWO)) {
 	/* This page can only be called with a work order number */
-	echo '<div class="centre><a href="' . $RootPath . '/SelectWorkOrder.php">'.
-		_('Select a work order').'</a></div>';
+	echo '<div class="centre><a href="' . $RootPath . '/SelectWorkOrder.php">' . 
+		_('Select a work order') . '</a></div>';
 	prnMsg(_('This page can only be opened if a work order has been selected.'),'info');
 	include ('includes/footer.inc');
 	exit;
@@ -62,7 +62,7 @@ $WorkOrderRow = DB_fetch_array($WOResult);
 echo '<table class="selection">
 	<tr>
 		<td class="label">' . _('Work order') . ':</td>
-		<td>' . $_POST['WO'] .'</td>
+		<td>' . $_POST['WO']  . '</td>
 	 	<td class="label">' . _('Manufactured at') . ':</td>
 		<td>' . $WorkOrderRow['locationname'] . '</td>
 		<td class="label">' . _('Required By') . ':</td>
@@ -280,9 +280,9 @@ if (DB_num_rows($WOIssuesResult)>0){
 				<td class="number">0</td>
 				<td class="number">0</td>
 				<td>' . ConvertSQLDate($WOIssuesRow['trandate']) . '</td>
-				<td class="number">' . locale_number_format(-$WOIssuesRow['qty'],$WOIssuesRow['decimalplaces'])  .'</td>
-				<td class="number">' . locale_number_format(-$WOIssuesRow['qty']*$WOIssuesRow['standardcost'],$_SESSION['CompanyRecord']['decimalplaces'])  .'</td>
-				<td class="number">' . locale_number_format($WOIssuesRow['qty']*$WOIssuesRow['standardcost'],$_SESSION['CompanyRecord']['decimalplaces'])  .'</td>
+				<td class="number">' . locale_number_format(-$WOIssuesRow['qty'],$WOIssuesRow['decimalplaces'])   . '</td>
+				<td class="number">' . locale_number_format(-$WOIssuesRow['qty']*$WOIssuesRow['standardcost'],$_SESSION['CompanyRecord']['decimalplaces'])   . '</td>
+				<td class="number">' . locale_number_format($WOIssuesRow['qty']*$WOIssuesRow['standardcost'],$_SESSION['CompanyRecord']['decimalplaces'])   . '</td>
 				<td class="number">0</td>
 			</tr>';
 
@@ -299,9 +299,9 @@ echo '<tr>
 echo '<tr>
 		<td colspan="2" class="number">' . _('Totals') . '</td>
 		<td></td>
-		<td class="number">' . locale_number_format($TotalReqdCost,$_SESSION['CompanyRecord']['decimalplaces']) .'</td>
+		<td class="number">' . locale_number_format($TotalReqdCost,$_SESSION['CompanyRecord']['decimalplaces'])  . '</td>
 		<td></td><td></td>
-		<td class="number">' . locale_number_format($TotalIssuedCost,$_SESSION['CompanyRecord']['decimalplaces']) .'</td>
+		<td class="number">' . locale_number_format($TotalIssuedCost,$_SESSION['CompanyRecord']['decimalplaces'])  . '</td>
 		<td class="number">' . locale_number_format($TotalUsageVar,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 		<td class="number">' . locale_number_format($TotalCostVar,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 	</tr>';
