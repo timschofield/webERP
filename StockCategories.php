@@ -344,7 +344,7 @@ if (isset($SelectedCategory)) {
 	echo '<table class="selection">
 			<tr>
 				<td>' . _('Category Code') . ':</td>
-				<td><input type="text" name="CategoryID" required="required" autofocus="autofocus" pattern="[0-9a-zA-Z_]*{1,6}" title="' . _('Enter up to six alphanumeric characters or underscore as a code for this stock category') . '" size="7" maxlength="6" value="' . $_POST['CategoryID'] . '" /></td>
+				<td><input type="text" name="CategoryID" required="required" autofocus="autofocus" pattern="[0-9a-zA-Z_]{1,6}" title="' . _('Enter up to six alphanumeric characters or underscore as a code for this stock category') . '" size="7" maxlength="6" value="' . $_POST['CategoryID'] . '" /></td>
 			</tr>';
 }
 
