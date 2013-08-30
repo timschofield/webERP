@@ -1369,8 +1369,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		if($_SESSION['Items'.$identifier]->DefaultPOLine == 1){
 			echo '<th>' . _('PO Line') . '</th>';
 		}
-		echo '<th class="ascending" >' . _('Item Code') . '</th>
-				<th class="ascending" >' . _('Item Description') . '</th>
+		echo '<th>' . _('Item Code') . '</th>
+				<th>' . _('Item Description') . '</th>
 				<th>' . _('Quantity') . '</th>
 				<th>' . _('QOH') . '</th>
 				<th>' . _('Unit') . '</th>
@@ -1378,10 +1378,10 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 		if (in_array($_SESSION['PageSecurityArray']['OrderEntryDiscountPricing'], $_SESSION['AllowedPageSecurityTokens'])){
 			echo '<th>' . _('Discount') . '</th>
-						<th>' . _('GP %') . '</th>';
+					<th>' . _('GP %') . '</th>';
 		}
 		echo '<th>' . _('Total') . '</th>
-			<th>' . _('Due Date') . '</th></tr>';
+				<th>' . _('Due Date') . '</th></tr>';
 
 		$_SESSION['Items'.$identifier]->total = 0;
 		$_SESSION['Items'.$identifier]->totalVolume = 0;
@@ -1453,7 +1453,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 			if ($_SESSION['AllowOrderLineItemNarrative'] == 1){
 				echo $RowStarter;
-				echo '<td colspan="10">' . _('Narrative') . ':<textarea name="Narrative_' . $OrderLine->LineNumber . '" cols="100%" rows="1" title="' . _('Enter any narrative to describe to the customer the nature of the charge for this line') . '" >' . stripslashes(AddCarriageReturns($OrderLine->Narrative)) . '</textarea><br /></td></tr>';
+				echo '<td colspan="10">' . _('Narrative') . ':<textarea name="Narrative_' . $OrderLine->LineNumber . '" cols="100%" rows="1" title="' . _('Enter any narrative to describe to the customer the nature of the charge for this line') . '" >' . stripslashes(AddCarriageReturns($OrderLine->Narrative)) . '</textarea><br /></td>
+					</tr>';
 			} else {
 				echo '<tr>
 						<td><input type="hidden" name="Narrative" value="" /></td>
@@ -1480,18 +1481,17 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 		$DisplayVolume = locale_number_format($_SESSION['Items'.$identifier]->totalVolume,2);
 		$DisplayWeight = locale_number_format($_SESSION['Items'.$identifier]->totalWeight,2);
-		echo '<table><tr class="EvenTableRows"><td>' . _('Total Weight') . ':</td>
+		echo '<table>
+					<tr class="EvenTableRows"><td>' . _('Total Weight') . ':</td>
 						 <td>' . $DisplayWeight . '</td>
 						 <td>' . _('Total Volume') . ':</td>
 						 <td>' . $DisplayVolume . '</td>
 					</tr>
-				</table>';
-
-
-		echo '<br />
+				</table>
+				<br />
 				<div class="centre">
-				<input type="submit" name="Recalculate" value="' . _('Re-Calculate') . '" />
-				<input type="submit" name="DeliveryDetails" value="' . _('Enter Delivery Details and Confirm Order') . '" />
+					<input type="submit" name="Recalculate" value="' . _('Re-Calculate') . '" />
+					<input type="submit" name="DeliveryDetails" value="' . _('Enter Delivery Details and Confirm Order') . '" />
 				</div>
 				<br />';
 	} # end of if lines
@@ -1530,18 +1530,17 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					<div class="page_help_text">' . _('Frequently Ordered Items') . _(', shows the most frequently ordered items in the last 6 months.  You can choose from this list, or search further for other items') .
 					'.</div>
 					<br />
-					<table class="table1">';
-
-			echo '<tr>
-					<th class="ascending" >' . _('Code') . '</th>
-					<th class="ascending" >' . _('Description') . '</th>
-					<th>' . _('Units') . '</th>
-					<th class="ascending" >' . _('On Hand') . '</th>
-					<th class="ascending" >' . _('On Demand') . '</th>
-					<th class="ascending" >' . _('On Order') . '</th>
-					<th class="ascending" >' . _('Available') . '</th>
-					<th class="ascending" >' . _('Quantity') . '</th>
-				</tr>';
+					<table class="table1">
+					<tr>
+						<th class="ascending" >' . _('Code') . '</th>
+						<th class="ascending" >' . _('Description') . '</th>
+						<th>' . _('Units') . '</th>
+						<th class="ascending" >' . _('On Hand') . '</th>
+						<th class="ascending" >' . _('On Demand') . '</th>
+						<th class="ascending" >' . _('On Order') . '</th>
+						<th class="ascending" >' . _('Available') . '</th>
+						<th class="ascending" >' . _('Quantity') . '</th>
+					</tr>';
 			$i=0;
 			$j=1;
 			$k=0; //row colour counter
@@ -1628,7 +1627,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
-						<td><input class="number"  tabindex="%s" type="text" required="required" size="6" name="OrderQty%s" value="0" />
+						<td><input class="number" ' . ($i==0 ? 'autofocus="autofocus"':'') . ' tabindex="%s" type="text" required="required" size="6" name="OrderQty%s" value="0" />
 						<input type="hidden" name="StockID%s" value="%s" />
 						</td>
 						</tr>',
@@ -1645,16 +1644,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 						$i,
 						$i,
 						$myrow['stockid']);
-
-				if ($j==1) {
-					$jsCall = '<script  type="text/javascript">
-									if (document.getElementById("SelectParts")!=null {
-										defaultControl(document.SelectParts.itm'.$myrow['stockid'].');
-									}
-								</script>';
-				}
 				$i++;
-				$j++;
 #end of page full new headings if
 			}
 #end of while loop for Frequently Ordered Items
@@ -1698,7 +1688,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
         }
         echo '" /></td>';
 
-		echo '<td align="right"><b>' . _('OR') .  ' ' . _('Enter extract of the Stock Code') . ':</b><input tabindex="3" type="text" autofocus="autofocus" name="StockCode" size="15" maxlength="18" value="';
+		echo '<td align="right"><b>' . _('OR') .  ' ' . _('Enter extract of the Stock Code') . ':</b><input tabindex="3" type="text" ' . (!isset($_POST['PartSearch']) ? 'autofocus="autofocus"' :'') . ' name="StockCode" size="15" maxlength="18" value="';
         if (isset($_POST['StockCode'])) {
             echo  $_POST['StockCode'];
         }
@@ -1713,13 +1703,10 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			echo '<td style="text-align:center" colspan="1"><input tabindex="6" type="submit" name="ChangeCustomer" value="' . _('Change Customer') . '" /></td>
 			<td style="text-align:center" colspan="1"><input tabindex="7" type="submit" name="SelectAsset" value="' . _('Fixed Asset Disposal') . '" /></td>';
 		}
-        echo '</tr></table><br />';
-        echo '</div>';
-        if (!isset($_POST['PartSearch'])) {
-            echo '<script  type="text/javascript">
-					defaultControl(document.forms[0].Keywords);
-				</script>';
-        }
+        echo '</tr>
+			</table>
+			<br />
+			</div>';
 		if (isset($SearchResult)) {
 			echo '<br />';
 			echo '<div class="page_help_text">' . _('Select an item by entering the quantity required.  Click Order when ready.') . '</div>';
@@ -1830,7 +1817,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
-						<td><input class="number"  tabindex="%s" type="text" size="6" name="OrderQty%s" value="0" min="0"/>
+						<td><input class="number" tabindex="%s" type="text" size="6" name="OrderQty%s"  ' . ($i==0 ? 'autofocus="autofocus"':'') . ' value="0" min="0"/>
 						<input type="hidden" name="StockID%s" value="%s" />
 						</td>
 						</tr>',
@@ -1847,9 +1834,6 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 						$i,
 						$myrow['stockid'] );
 				$i++;
-				if ($j==1) {
-					$jsCall = '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.itm'.$myrow['stockid'].');}</script>';
-				}
 				$j++;
 	#end of page full new headings if
 			}
@@ -1889,37 +1873,46 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				echo '<td><input type="text" name="part_' . $i . '" size="21" maxlength="20" title="' . _('Enter the item code ordered') . '" /></td>
 						<td><input class="number" type="text" name="qty_' . $i . '" size="6" maxlength="6" title="' . _('Enter the quantity of the item ordered by the customer') . '" /></td>
 						<td><input type="text" class="date" name="itemdue_' . $i . '" size="25" maxlength="25"
-                        alt="'.$_SESSION['DefaultDateFormat'].'" value="' . $DefaultDeliveryDate . '" title="' . _('Enter the date that the customer requires delivery by') . '" /></td></tr>';
+                        alt="'.$_SESSION['DefaultDateFormat'].'" value="' . $DefaultDeliveryDate . '" title="' . _('Enter the date that the customer requires delivery by') . '" /></td>
+                      </tr>';
 	   		}
 			echo '</table>
-					<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.part_1);}</script>';
-
-		 	echo '<br /><div class="centre"><input type="submit" name="QuickEntry" value="' . _('Quick Entry') . '" />
-                     <input type="submit" name="PartSearch" value="' . _('Search Parts') . '" /></div>';
-
-            echo '</div>
+					<br />
+					<div class="centre">
+						<input type="submit" name="QuickEntry" value="' . _('Quick Entry') . '" />
+						<input type="submit" name="PartSearch" value="' . _('Search Parts') . '" />
+					</div>
+					</div>
                   </form>';
 	  	} elseif (isset($_POST['SelectAsset'])){
 
-			echo '<div class="page_help_text"><b>' . _('Use this screen to select an asset to dispose of to this customer') . '</b></div><br />
+			echo '<div class="page_help_text"><b>' . _('Use this screen to select an asset to dispose of to this customer') . '</b></div>
+					<br />
 		 			<table border="1">';
 			/*do not display colum unless customer requires po line number by sales order line*/
 		 	if($_SESSION['Items'.$identifier]->DefaultPOLine ==1){
-				echo	'<tr><td>' . _('PO Line') . '</td>
-							<td><input type="text" name="poline" size="21" maxlength="20" title="' . _('Enter the customer\'s purchase order reference') . '" /></td></tr>';
+				echo	'<tr>
+							<td>' . _('PO Line') . '</td>
+							<td><input type="text" name="poline" size="21" maxlength="20" title="' . _('Enter the customer\'s purchase order reference') . '" /></td>
+						</tr>';
 			}
-			echo '<tr><td>' . _('Asset to Dispose Of') . ':</td>
-						<td><select name="AssetToDisposeOf">';
+			echo '<tr>
+					<td>' . _('Asset to Dispose Of') . ':</td>
+					<td><select name="AssetToDisposeOf">';
 			$AssetsResult = DB_query("SELECT assetid, description FROM fixedassets WHERE disposaldate='0000-00-00'",$db);
 			echo '<option selected="selected" value="NoAssetSelected">' . _('Select Asset To Dispose of From the List Below') . '</option>';
 			while ($AssetRow = DB_fetch_array($AssetsResult)){
 				echo '<option value="' . $AssetRow['assetid'] . '">' . $AssetRow['assetid'] . ' - ' . $AssetRow['description'] . '</option>';
 			}
-			echo '</select></td></tr></table>
-						<br /><div class="centre"><input type="submit" name="AssetDisposalEntered" value="' . _('Add Asset To Order') . '" />
-                     <input type="submit" name="PartSearch" value="' . _('Search Parts') . '" /></div>';
-
-            echo '</div></form>';
+			echo '</select></td>
+				</tr>
+				</table>
+				<br />
+				<div class="centre">
+					<input type="submit" name="AssetDisposalEntered" value="' . _('Add Asset To Order') . '" />
+					<input type="submit" name="PartSearch" value="' . _('Search Parts') . '" />
+				</div>
+				</form>';
 
 		} //end of if it is a Quick Entry screen/part search or asset selection form to display
 
@@ -1927,8 +1920,12 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier .
 				'" method="post" name="deleteform">';
             		echo '<div>';
-			echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	  		echo '<br /><div class="centre"><input type="submit" name="CancelOrder" value="' . _('Cancel Whole Order') . '" onclick="return confirm(\'' . _('Are you sure you wish to cancel this entire order?') . '\');" /></div></form>';
+			echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+				<br />
+				<div class="centre">
+					<input type="submit" name="CancelOrder" value="' . _('Cancel Whole Order') . '" onclick="return confirm(\'' . _('Are you sure you wish to cancel this entire order?') . '\');" />
+				</div>
+				</form>';
 		}
 	}#end of else not selecting a customer
 

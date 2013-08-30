@@ -1633,7 +1633,7 @@ if (!isset($_POST['ProcessReturn'])){
 
 		</select></td>
 		<td><b><?php echo _('Enter partial Description'); ?>:</b>
-		<input tabindex="2" type="text" name="Keywords" autofocus="autofocus" size="20" maxlength="25" value="<?php if (isset($_POST['Keywords'])) echo $_POST['Keywords']; ?>" /></td>
+		<input tabindex="2" type="text" name="Keywords" <?php isset($SearchResult)? '': 'autofocus="autofocus"' ?> size="20" maxlength="25" value="<?php if (isset($_POST['Keywords'])) echo $_POST['Keywords']; ?>" /></td>
 
 		<td align="right"><b><?php echo _('OR'); ?> </b><b><?php echo _('Enter extract of the Stock Code'); ?>:</b>
 		<input tabindex="3" type="text" name="StockCode" size="15" maxlength="18" value="<?php if (isset($_POST['StockCode'])) echo $_POST['StockCode']; ?>" /></td>
@@ -1757,7 +1757,7 @@ if (!isset($_POST['ProcessReturn'])){
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
-						<td><input class="number"  tabindex="'.strval($j+7).'" type="number"  required="required" size="6" name="ReturnQty%s" value="0" /></font><input type="hidden" name="StockID%s" value="%s" /></td>
+						<td><input class="number"  tabindex="'.strval($j+7).'" type="text"  required="required" ' . ($i==0?'autofocus="autofocus"':'') . ' size="6" name="ReturnQty%s" value="0" /><input type="hidden" name="StockID%s" value="%s" /></td>
 						</tr>',
 						$myrow['stockid'],
 						$myrow['longdescription'],
@@ -1770,26 +1770,26 @@ if (!isset($_POST['ProcessReturn'])){
 						$i,
 						$i,
 						$myrow['stockid']);
-				if ($j==1) {
-					$jsCall = '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.itm'.$myrow['stockid'].');}</script>';
-				}
 				$j++;
 				$i++;
 	#end of page full new headings if
 			}
 	#end of while loop
-			echo '<input type="hidden" name="CustRef" value="'.$_SESSION['Items' . $identifier]->CustRef.'" />';
-			echo '<input type="hidden" name="Comments" value="'.$_SESSION['Items' . $identifier]->Comments.'" />';
-			echo '<input type="hidden" name="DeliverTo" value="'.$_SESSION['Items' . $identifier]->DeliverTo.'" />';
-			echo '<input type="hidden" name="PhoneNo" value="'.$_SESSION['Items' . $identifier]->PhoneNo.'" />';
-			echo '<input type="hidden" name="Email" value="'.$_SESSION['Items' . $identifier]->Email.'" />';
-
-			echo '<tr><td><input type="hidden" name="previous" value="'.strval($Offset-1).'" /><input tabindex="'.strval($j+7).'" type="submit" name="Prev" value="'._('Prev').'" /></td>';
-			echo '<td style="text-align:center" colspan="6"><input type="hidden" name="SelectingReturnItems" value="1" /><input tabindex="'.strval($j+8).'" type="submit" value="'._('Add to Sale').'" /></td>';
-			echo '<td><input type="hidden" name="NextList" value="'.strval($Offset+1).'" /><input tabindex="'.strval($j+9).'" type="submit" name="Next" value="'._('Next').'" /></td></tr>';
-			echo '</table></form>';
-			echo $jsCall;
-
+			echo '<input type="hidden" name="CustRef" value="'.$_SESSION['Items' . $identifier]->CustRef.'" />
+				<input type="hidden" name="Comments" value="'.$_SESSION['Items' . $identifier]->Comments.'" />
+				<input type="hidden" name="DeliverTo" value="'.$_SESSION['Items' . $identifier]->DeliverTo.'" />
+				<input type="hidden" name="PhoneNo" value="'.$_SESSION['Items' . $identifier]->PhoneNo.'" />
+				<input type="hidden" name="Email" value="'.$_SESSION['Items' . $identifier]->Email.'" />
+				<tr>
+					<td><input type="hidden" name="previous" value="'.strval($Offset-1).'" />
+						<input tabindex="'.strval($j+7).'" type="submit" name="Prev" value="'._('Prev').'" /></td>
+					<td style="text-align:center" colspan="6"><input type="hidden" name="SelectingReturnItems" value="1" />
+						<input tabindex="'.strval($j+8).'" type="submit" value="'._('Add to Sale').'" /></td>
+					<td><input type="hidden" name="NextList" value="'.strval($Offset+1).'" />
+						<input tabindex="'.strval($j+9).'" type="submit" name="Next" value="'._('Next').'" /></td>
+				</tr>
+				</table>
+				</form>';
 		}#end if SearchResults to show
 	} /*end of PartSearch options to be displayed */
 		else { /* show the quick entry form variable */
@@ -1803,11 +1803,11 @@ if (!isset($_POST['ProcessReturn'])){
 				</tr>';
 		$ReturnDate = Date($_SESSION['DefaultDateFormat']);
 		if (count($_SESSION['Items' . $identifier]->LineItems)==0) {
-			echo '<input type="hidden" name="CustRef" value="'.$_SESSION['Items' . $identifier]->CustRef.'" />';
-			echo '<input type="hidden" name="Comments" value="'.$_SESSION['Items' . $identifier]->Comments.'" />';
-			echo '<input type="hidden" name="DeliverTo" value="'.$_SESSION['Items' . $identifier]->DeliverTo.'" />';
-			echo '<input type="hidden" name="PhoneNo" value="'.$_SESSION['Items' . $identifier]->PhoneNo.'" />';
-			echo '<input type="hidden" name="Email" value="'.$_SESSION['Items' . $identifier]->Email.'" />';
+			echo '<input type="hidden" name="CustRef" value="'.$_SESSION['Items' . $identifier]->CustRef.'" />
+			<input type="hidden" name="Comments" value="'.$_SESSION['Items' . $identifier]->Comments.'" />
+			<input type="hidden" name="DeliverTo" value="'.$_SESSION['Items' . $identifier]->DeliverTo.'" />
+			<input type="hidden" name="PhoneNo" value="'.$_SESSION['Items' . $identifier]->PhoneNo.'" />
+			<input type="hidden" name="Email" value="'.$_SESSION['Items' . $identifier]->Email.'" />';
 		}
 		for ($i=1;$i<=$_SESSION['QuickEntries'];$i++){
 

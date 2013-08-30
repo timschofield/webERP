@@ -7,15 +7,14 @@ $Title = _('Supplier Purchasing Data');
 include ('includes/header.inc');
 
 if (isset($_POST['StockSearch'])) {
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
-    echo '<div>';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<input type="hidden" value="' . $_POST['SupplierID'] . '" name="SupplierID" />';
-
-	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Inventory Items'). '</p>';
-	echo '<table class="selection"><tr>';
-	echo '<td>' . _('In Stock Category') . ':';
-	echo '<select name="StockCat">';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">
+		<div>
+		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+		<input type="hidden" value="' . $_POST['SupplierID'] . '" name="SupplierID" />
+		<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Inventory Items'). '</p>
+		<table class="selection">
+		<tr>
+			<td>' . _('In Stock Category') . ':<select name="StockCat">';
 	if (!isset($_POST['StockCat'])) {
 		$_POST['StockCat'] = '';
 	}
@@ -39,23 +38,31 @@ if (isset($_POST['StockSearch'])) {
 	echo '</select></td>';
 	echo '<td>' . _('Enter partial') . '<b> ' . _('Description') . '</b>:</td><td>';
 	if (isset($_POST['Keywords'])) {
-		echo '<input type="search" name="Keywords" value="' . $_POST['Keywords'] . '" size="34" maxlength="25" />';
+		echo '<input type="search" name="Keywords" value="' . $_POST['Keywords'] . '" autofocus="autofocus" size="34" maxlength="25" />';
 	} else {
-		echo '<input type="search" name="Keywords" size="34" maxlength="25" placeholder="Enter part of the item description" />';
+		echo '<input type="search" name="Keywords" size="34" maxlength="25" autofocus="autofocus" placeholder="Enter part of the item description" />';
 	}
-	echo '</td></tr><tr><td></td>';
-	echo '<td><b>' . _('OR') . ' ' . '</b>' . _('Enter partial') . ' <b>' . _('Stock Code') . '</b>:</td>';
-	echo '<td>';
+	echo '</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td><b>' . _('OR') . ' ' . '</b>' . _('Enter partial') . ' <b>' . _('Stock Code') . '</b>:</td>
+			<td>';
 	if (isset($_POST['StockCode'])) {
 		echo '<input type="text" name="StockCode" value="' . $_POST['StockCode'] . '" size="15" maxlength="18" />';
 	} else {
 		echo '<input type="text" name="StockCode" size="15" maxlength="18" />';
 	}
-	echo '</td></tr></table><br />';
-	echo '<div class="centre"><input type="submit" name="Search" value="' . _('Search Now') . '" /></div><br />';
-	echo '<script  type="text/javascript">defaultControl(document.forms[0].StockCode);</script>';
-	echo '</div>
-          </form>';
+	echo '</td>
+		</tr>
+		</table>
+		<br />
+		<div class="centre">
+			<input type="submit" name="Search" value="' . _('Search Now') . '" />
+		</div>
+		<br />
+		</div>
+	</form>';
 	include('includes/footer.inc');
 	exit;
 }
@@ -215,10 +222,10 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 /* display list if there is more than one record */
 if (isset($searchresult) AND !isset($_POST['Select'])) {
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Inventory Items'). '</p>';
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
-    echo '<div>';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<input type="hidden" value="' . $_POST['SupplierID'] . '" name="SupplierID" />';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">
+		<div>
+		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+		<input type="hidden" value="' . $_POST['SupplierID'] . '" name="SupplierID" />';
 	$ListCount = DB_num_rows($searchresult);
 	if ($ListCount > 0) {
 		// If the user hit the search button and there is more than one item to show
@@ -260,8 +267,8 @@ if (isset($searchresult) AND !isset($_POST['Select'])) {
 		}
 		echo '<table class="selection">';
 		echo'<tr>
-				<th>' . _('Code') . '</th>
-				<th>' . _('Description') . '</th>
+				<th class="ascending">' . _('Code') . '</th>
+				<th class="ascending">' . _('Description') . '</th>
 				<th>' . _('Units') . '</th>
 			</tr>';
 		$j = 1;

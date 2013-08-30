@@ -298,18 +298,15 @@ if(isset($_POST['Submit']) AND $InputError==False){
 			<td>' . _('Upload CSV file of Transfer Items and Quantites') . ':</td>
 			<td><input name="SelectedTransferFile" type="file" /></td>
 		  </tr>
-		  </table>';
+		  </table>
+		  <br />
+		  <table class="selection">
+			<tr>
+				<th>' .  _('Item Code'). '</th>
+				<th>' .  _('Quantity'). '</th>
+				<th>' . _('Clear All') . ':<input type="checkbox" name="ClearAll" /></th>
+			</tr>';
 
-	echo '<br /><table class="selection">';
-
-	$TableHeader = '<tr>
-						<th>' .  _('Item Code'). '</th>
-						<th>' .  _('Quantity'). '</th>
-						<th>' . _('Clear All') . ':<input type="checkbox" name="ClearAll" /></th>
-					</tr>';
-	echo $TableHeader;
-
-	$k=0; /* page heading row counter */
 	$j=0; /* row counter for reindexing */
 	if(isset($_POST['LinesCounter'])){
 
@@ -320,20 +317,15 @@ if(isset($_POST['Submit']) AND $InputError==False){
 			if ($_POST['StockID' . $i] ==''){
 				break;
 			}
-			if ($k==18){
-				echo $TableHeader;
-				$k=0;
-			}
-			$k++;
 
 			echo '<tr>
-				<td><input type="text" name="StockID' . $j .'" size="21"  maxlength="20" value="' . $_POST['StockID' . $i] . '" /></td>
-				<td><input type="text" name="StockQTY' . $j .'" size="10" maxlength="10" class="number" value="' . locale_number_format($_POST['StockQTY' . $i],'Variable') . '" /></td>
-				<td>' . _('Delete') . '<input type="checkbox" name="Delete' . $j .'" /></td>
-			</tr>';
+					<td><input type="text" name="StockID' . $j .'" size="21"  maxlength="20" value="' . $_POST['StockID' . $i] . '" /></td>
+					<td><input type="text" name="StockQTY' . $j .'" size="10" maxlength="10" class="number" value="' . locale_number_format($_POST['StockQTY' . $i],'Variable') . '" /></td>
+					<td>' . _('Delete') . '<input type="checkbox" name="Delete' . $j .'" /></td>
+				</tr>';
 			$j++;
 		}
-	}else {
+	} else {
 		$j = 0;
 	}
 	// $i is incremented an extra time, so 9 to get 10...
@@ -347,9 +339,9 @@ if(isset($_POST['Submit']) AND $InputError==False){
 			$_POST['StockQTY' . $j]=0;
 		}
 		echo '<tr>
-			<td><input type="text" name="StockID' . $j .'" size="21"  maxlength="20" value="' . $_POST['StockID' . $j] . '" /></td>
-			<td><input type="text" name="StockQTY' . $j .'" size="10" maxlength="10" class="number" value="' . locale_number_format($_POST['StockQTY' . $j]) . '" /></td>
-		</tr>';
+				<td><input type="text" name="StockID' . $j .'" ' . ($j==0 OR $j==$z-9 ? 'autofocus="autofocus"' : '') . ' size="21"  maxlength="20" value="' . $_POST['StockID' . $j] . '" /></td>
+				<td><input type="text" name="StockQTY' . $j .'" size="10" maxlength="10" class="number" value="' . locale_number_format($_POST['StockQTY' . $j]) . '" /></td>
+			</tr>';
 		$j++;
 	}
 
@@ -359,13 +351,10 @@ if(isset($_POST['Submit']) AND $InputError==False){
 		<input type="hidden" name="LinesCounter" value="'. $j .'" />
 		<input type="submit" name="EnterMoreItems" value="'. _('Add More Items'). '" />
 		<input type="submit" name="Submit" value="'. _('Create Transfer Shipment'). '" />
-		<br />';
-
-	echo '<script type="text/javascript">defaultControl(document.forms[0].StockID' . (int)($j-9) . ');</script>';
-
-	echo '</div>
-          </div>
-          </form>';
+		<br />
+		</div>
+		</div>
+		</form>';
 	include('includes/footer.inc');
 }
 ?>

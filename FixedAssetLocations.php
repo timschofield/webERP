@@ -25,9 +25,9 @@ if (isset($_POST['submit']) AND !isset($_POST['delete'])) {
 	}
 	if ($InputError==0) {
 		$sql="INSERT INTO fixedassetlocations
-							VALUES ('".$_POST['LocationID']."',
-									'".$_POST['LocationDescription']."',
-									'".$_POST['ParentLocationID']."')";
+				VALUES ('".$_POST['LocationID']."',
+						'".$_POST['LocationDescription']."',
+						'".$_POST['ParentLocationID']."')";
 		$result=DB_query($sql, $db);
 	}
 }
@@ -95,9 +95,9 @@ $result=DB_query($sql, $db);
 if (DB_num_rows($result) > 0) {
 	echo '<table class="selection">
 		<tr>
-			<th>' . _('Location ID') . '</th>
-			<th>' . _('Location Description') . '</th>
-			<th>' . _('Parent Location') . '</th>
+			<th class="ascending">' . _('Location ID') . '</th>
+			<th class="ascending">' . _('Location Description') . '</th>
+			<th class="ascending">' . _('Parent Location') . '</th>
 		</tr>';
 }
 while ($myrow=DB_fetch_array($result)) {

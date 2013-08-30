@@ -263,15 +263,9 @@ if (! isset($_GET['delete'])) {
 			<td colspan="2"><div class="centre"><input tabindex="3" type="submit" name="submit" value="' . _('Enter Information') . '" /></div></td>
 		</tr>
 		</table>
-		<br />';
-
-	if (!isset($_GET['SelectedSectionID']) or $_GET['SelectedSectionID']=='') {
-		echo '<script type="text/javascript">defaultControl(document.AccountSections.SectionID);</script>';
-	} else {
-		echo '<script type="text/javascript">defaultControl(document.AccountSections.SectionName);</script>';
-	}
-    echo '</div>';
-	echo '</form>';
+		<br />
+		</div>
+		</form>';
 
 } //end if record deleted no point displaying form to add record
 

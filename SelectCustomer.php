@@ -732,6 +732,5 @@ if (isset($_SESSION['CustomerID']) AND $_SESSION['CustomerID'] != '') {
 		}
 	} //end if Extended_CustomerInfo is turned on
 } //end if isset($_SESSION['CustomerID']) AND $_SESSION['CustomerID'] != ''
-echo '<script  type="text/javascript">defaultControl(document.forms[0].CustCode);</script>';
 include('includes/footer.inc');
 ?>

@@ -421,11 +421,13 @@ if (!isset($_SESSION['tender'.$identifier])
 	/* Item Details
 	 */
 	echo '<td valign="top"><table class="selection">';
-	echo '<tr><th colspan="6"><h3>' . _('Items in Tender') . '</h3></th></tr>';
 	echo '<tr>
-			<th>' . _('Stock ID') . '</th>
-			<th>' . _('Description') . '</th>
-			<th>' . _('Quantity') . '</th>
+			<th colspan="6"><h3>' . _('Items in Tender') . '</h3></th>
+		</tr>
+		<tr>
+			<th class="ascending">' . _('Stock ID') . '</th>
+			<th class="ascending">' . _('Description') . '</th>
+			<th class="ascending">' . _('Quantity') . '</th>
 			<th>' . _('UOM') . '</th>
 		</tr>';
 	$k=0;
@@ -439,16 +441,19 @@ if (!isset($_SESSION['tender'.$identifier])
 				$k=1;
 			}
 			echo '<td>' . $LineItems->StockID . '</td>
-				<td>' . $LineItems->ItemDescription . '</td>
-				<td class="number">' . locale_number_format($LineItems->Quantity,$LineItems->DecimalPlaces) . '</td>
-				<td>' . $LineItems->Units . '</td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'].'?identifier='.$identifier,ENT_QUOTES,'UTF-8') . '&amp;DeleteItem=' . $LineItems->LineNo . '">' . _('Delete') . '</a></td>
+					<td>' . $LineItems->ItemDescription . '</td>
+					<td class="number">' . locale_number_format($LineItems->Quantity,$LineItems->DecimalPlaces) . '</td>
+					<td>' . $LineItems->Units . '</td>
+					<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'].'?identifier='.$identifier,ENT_QUOTES,'UTF-8') . '&amp;DeleteItem=' . $LineItems->LineNo . '">' . _('Delete') . '</a></td>
 				</tr>';
 		}
 	}
-	echo '</table></td></tr></table><br />';
-
-	echo '<div class="centre">
+	echo '</table>
+		</td>
+		</tr>
+		</table>
+		<br />
+		<div class="centre">
 			<input type="submit" name="Suppliers" value="' . _('Select Suppliers') . '" />
 			<input type="submit" name="Items" value="' . _('Select Item Details') . '" />
 		';

@@ -38,15 +38,14 @@ echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($StockID)) {
-	echo _('Enter an Item Code') . ': <input type="text" required="required" pattern="[^ +%-]{1,}" title="'._('Illegal characters and blank is not allowed').'" name="StockID" size="21" maxlength="20" value="' . $StockID . '" placeholder="'._('No illegal characters allowed').'" />';
+	echo _('Enter an Item Code') . ': <input type="text" required="required" pattern="[^ +%-]{1,}" title="'._('Illegal characters and blank is not allowed').'" name="StockID" autofocus="autofocus" size="21" maxlength="20" value="' . $StockID . '" placeholder="'._('No illegal characters allowed').'" />';
 } else {
-	echo _('Enter an Item Code') . ': <input type="text" required="required" pattern="[^ +%-]{1,}"  title="'._('Illegal characters and blank is not allowed').'" name="StockID" size="21" maxlength="20" placeholder="'._('No illegal characters allowed').'" />';
+	echo _('Enter an Item Code') . ': <input type="text" required="required" pattern="[^ +%-]{1,}"  title="'._('Illegal characters and blank is not allowed').'" name="StockID" autofocus="autofocus" size="21" maxlength="20" placeholder="'._('No illegal characters allowed').'" />';
 }
 
-echo '<input type="submit" name="ShowWhereUsed" value="' . _('Show Where Used') . '" />';
-
-echo '<br />
-      </div>';
+echo '<input type="submit" name="ShowWhereUsed" value="' . _('Show Where Used') . '" />
+		<br />
+	</div>';
 
 if (isset($StockID)) {
 
@@ -64,17 +63,15 @@ if (isset($StockID)) {
 		prnMsg(_('The selected item') . ' ' . $StockID . ' ' . _('is not used as a component of any other parts'),'error');
 	} else {
 
-		echo '<table width="97%" class="selection">';
-
-		$TableHeader = '<tr>
-							<th>' . _('Used By') . '</th>
-							<th>' . _('Work Centre') . '</th>
-							<th>' . _('Location') . '</th>
-							<th>' . _('Quantity Required') . '</th>
-							<th>' . _('Effective After') . '</th>
-							<th>' . _('Effective To') . '</th>
-						</tr>';
-		echo $TableHeader;
+		echo '<table width="97%" class="selection">
+				<tr>
+					<th class="ascending">' . _('Used By') . '</th>
+					<th class="ascending">' . _('Work Centre') . '</th>
+					<th class="ascending">' . _('Location') . '</th>
+					<th class="ascending">' . _('Quantity Required') . '</th>
+					<th class="ascending">' . _('Effective After') . '</th>
+					<th class="ascending">' . _('Effective To') . '</th>
+				</tr>';
 		$k=0;
 		while ($myrow=DB_fetch_array($result)) {
 
@@ -87,22 +84,18 @@ if (isset($StockID)) {
 			}
 
 			echo '<td><a target="_blank" href="' . $RootPath . '/BOMInquiry.php?StockID=' . $myrow['parent'] . '" alt="' . _('Show Bill Of Material') . '">' . $myrow['parent']. ' - ' . $myrow['description']. '</a></td>
-				<td>' . $myrow['workcentreadded']. '</td>
-				<td>' . $myrow['loccode']. '</td>
-				<td class="number">' . locale_number_format($myrow['quantity'],'Variable') . '</td>
-				<td>' . ConvertSQLDate($myrow['effectiveafter']) . '</td>
-				<td>' . ConvertSQLDate($myrow['effectiveto']) . '</td>
+					<td>' . $myrow['workcentreadded']. '</td>
+					<td>' . $myrow['loccode']. '</td>
+					<td class="number">' . locale_number_format($myrow['quantity'],'Variable') . '</td>
+					<td>' . ConvertSQLDate($myrow['effectiveafter']) . '</td>
+					<td>' . ConvertSQLDate($myrow['effectiveto']) . '</td>
                 </tr>';
 
 			//end of page full new headings if
 		}
-
 		echo '</table>';
 	}
 } // StockID is set
-
-echo '<script  type="text/javascript">defaultControl(document.forms[0].StockID);</script>';
-
 echo '</form>';
 include('includes/footer.inc');
 ?>
