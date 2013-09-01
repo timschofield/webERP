@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: weberp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-24 10:31+1200\n"
+"POT-Creation-Date: 2013-09-01 19:22+1200\n"
 "PO-Revision-Date: 2013-06-01 11:32-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: www.baliboss.com <open@baliboss.com>\n"
@@ -245,9 +245,9 @@ msgstr "Tdk dapat mengambil grup akun karena"
 #: AddCustomerTypeNotes.php:94 AgedDebtors.php:448 AgedSuppliers.php:276
 #: Areas.php:144 AuditTrail.php:11 BankReconciliation.php:17
 #: BOMExtendedQty.php:252 BOMIndented.php:246 BOMIndentedReverse.php:235
-#: BOMInquiry.php:188 BOMListing.php:109 BOMs.php:231 BOMs.php:864
+#: BOMInquiry.php:188 BOMListing.php:109 BOMs.php:231 BOMs.php:862
 #: COGSGLPostings.php:19 CompanyPreferences.php:102 CounterReturns.php:1605
-#: CounterSales.php:2092 CounterSales.php:2218 Credit_Invoice.php:272
+#: CounterSales.php:2092 CounterSales.php:2215 Credit_Invoice.php:272
 #: CreditStatus.php:21 Currencies.php:31 CustEDISetup.php:17
 #: DailyBankTransactions.php:15 DebtorsAtPeriodEnd.php:129
 #: DiscountCategories.php:12 DiscountCategories.php:140 DiscountMatrix.php:16
@@ -270,22 +270,22 @@ msgstr "Tdk dapat mengambil grup akun karena"
 #: SelectCompletedOrder.php:11 SelectContract.php:69 SelectCreditItems.php:220
 #: SelectCreditItems.php:291 SelectCustomer.php:265 SelectGLAccount.php:65
 #: SelectOrderItems.php:609 SelectOrderItems.php:1526
-#: SelectOrderItems.php:1665 SelectProduct.php:525 SelectSalesOrder.php:563
+#: SelectOrderItems.php:1655 SelectProduct.php:525 SelectSalesOrder.php:563
 #: SelectSupplier.php:14 SelectSupplier.php:217 SelectWorkOrder.php:9
 #: SelectWorkOrder.php:169 SellThroughSupport.php:229 ShipmentCosting.php:11
 #: Shipments.php:17 Shippers.php:123 Shippers.php:160 Shipt_Select.php:8
 #: StockLocMovements.php:14 StockLocStatus.php:28
-#: StockSerialItemResearch.php:30 SupplierPriceList.php:15
-#: SupplierPriceList.php:217 SupplierPriceList.php:387
-#: SupplierPriceList.php:391 SupplierPriceList.php:442
-#: SupplierPriceList.php:492 Suppliers.php:305 SupplierTenderCreate.php:546
-#: SupplierTenderCreate.php:654 SupplierTenders.php:322
+#: StockSerialItemResearch.php:30 SupplierPriceList.php:14
+#: SupplierPriceList.php:224 SupplierPriceList.php:394
+#: SupplierPriceList.php:398 SupplierPriceList.php:449
+#: SupplierPriceList.php:499 Suppliers.php:305 SupplierTenderCreate.php:551
+#: SupplierTenderCreate.php:659 SupplierTenders.php:322
 #: SupplierTenders.php:388 SupplierTransInquiry.php:10 TaxGroups.php:15
 #: TaxProvinces.php:11 TopItems.php:114 UnitsOfMeasure.php:10
 #: WhereUsedInquiry.php:18 WorkCentres.php:111 WorkCentres.php:162
 #: WorkOrderCosting.php:22 WorkOrderEntry.php:11 WorkOrderIssue.php:22
 #: WorkOrderReceive.php:31 WorkOrderStatus.php:58 WWW_Access.php:11
-#: WWW_Users.php:36 Z_BottomUpCosts.php:57 ../webSHOP/includes/header.php:238
+#: WWW_Users.php:36 Z_BottomUpCosts.php:57 ../webSHOP/includes/header.php:236
 msgid "Search"
 msgstr "Cari"
 
@@ -308,7 +308,7 @@ msgid "Profit and Loss"
 msgstr "Laba/Rugi"
 
 #: AccountGroups.php:310 AccountGroups.php:313 AccountGroups.php:448
-#: AccountGroups.php:450 BOMs.php:124 BOMs.php:775 BOMs.php:777
+#: AccountGroups.php:450 BOMs.php:124 BOMs.php:774 BOMs.php:776
 #: CompanyPreferences.php:426 CompanyPreferences.php:428
 #: CompanyPreferences.php:441 CompanyPreferences.php:443
 #: CompanyPreferences.php:456 CompanyPreferences.php:458
@@ -355,8 +355,8 @@ msgstr "Ya"
 
 #: AccountGroups.php:316 AccountGroups.php:453 AccountGroups.php:455
 #: BankAccounts.php:210 BankAccounts.php:379 BankAccounts.php:381
-#: BankAccounts.php:385 BankAccounts.php:393 BOMs.php:126 BOMs.php:774
-#: BOMs.php:778 CompanyPreferences.php:425 CompanyPreferences.php:429
+#: BankAccounts.php:385 BankAccounts.php:393 BOMs.php:126 BOMs.php:773
+#: BOMs.php:777 CompanyPreferences.php:425 CompanyPreferences.php:429
 #: CompanyPreferences.php:440 CompanyPreferences.php:444
 #: CompanyPreferences.php:455 CompanyPreferences.php:459
 #: ContractCosting.php:200 Currencies.php:334 Currencies.php:503
@@ -452,7 +452,7 @@ msgstr "Apakah Anda yakin ingin menghapus grup akun ini?"
 #: PaymentMethods.php:209 Payments.php:1093 PaymentTerms.php:206
 #: PcAssignCashToTab.php:281 PcClaimExpensesFromTab.php:277 PcExpenses.php:227
 #: PcExpensesTypeTab.php:187 PcTabs.php:237 PcTypeTabs.php:181
-#: PO_AuthorisationLevels.php:153 PO_Items.php:768 Prices_Customer.php:281
+#: PO_AuthorisationLevels.php:153 PO_Items.php:770 Prices_Customer.php:281
 #: Prices.php:250 PurchData.php:314 PurchData.php:721
 #: SalesAnalReptCols.php:299 SalesAnalRepts.php:307 SalesCategories.php:273
 #: SalesGLPostings.php:138 SalesGLPostings.php:254 SalesPeople.php:233
@@ -461,10 +461,10 @@ msgstr "Apakah Anda yakin ingin menghapus grup akun ini?"
 #: SelectCustomer.php:682 SelectCustomer.php:706 SelectCustomer.php:723
 #: SelectOrderItems.php:1441 SellThroughSupport.php:299 Shipments.php:440
 #: Shippers.php:145 SpecialOrder.php:667 StockCategories.php:268
-#: StockCategories.php:613 StockLocTransfer.php:332 SuppContractChgs.php:99
-#: SuppCreditGRNs.php:112 SuppFixedAssetChgs.php:90 SuppInvGRNs.php:147
+#: StockCategories.php:613 StockLocTransfer.php:324 SuppContractChgs.php:99
+#: SuppCreditGRNs.php:117 SuppFixedAssetChgs.php:90 SuppInvGRNs.php:151
 #: SupplierContacts.php:166 SupplierTenderCreate.php:417
-#: SupplierTenderCreate.php:445 SupplierTypes.php:191 SuppShiptChgs.php:90
+#: SupplierTenderCreate.php:447 SupplierTypes.php:191 SuppShiptChgs.php:90
 #: SuppTransGLAnalysis.php:126 TaxAuthorities.php:175 TaxCategories.php:183
 #: TaxGroups.php:189 TaxProvinces.php:181 UnitsOfMeasure.php:186
 #: WorkCentres.php:142 WOSerialNos.php:326 WWW_Access.php:127
@@ -537,7 +537,7 @@ msgstr ""
 
 #: AccountGroups.php:465 AccountSections.php:263 AddCustomerContacts.php:260
 #: AddCustomerNotes.php:242 AddCustomerTypeNotes.php:221 Areas.php:229
-#: BankAccounts.php:399 BOMs.php:791 COGSGLPostings.php:365
+#: BankAccounts.php:399 BOMs.php:790 COGSGLPostings.php:365
 #: CreditStatus.php:259 Currencies.php:513 CustLoginSetup.php:273
 #: Departments.php:258 DiscountMatrix.php:142 EDIMessageFormat.php:248
 #: FixedAssetCategories.php:350 FixedAssetLocations.php:161
@@ -698,7 +698,7 @@ msgstr "Telpon"
 #: SupplierContacts.php:156 SupplierContacts.php:277 UserSettings.php:185
 #: WWW_Users.php:283 includes/PDFPickingListHeader.inc:25
 #: includes/PDFStatementPageHeader.inc:67 includes/PDFTransPageHeader.inc:82
-#: includes/PDFTransPageHeaderPortrait.inc:109
+#: includes/PDFTransPageHeaderPortrait.inc:111
 #: includes/PO_PDFOrderPageHeader.inc:29 ../webSHOP/Checkout.php:296
 #: ../webSHOP/Register.php:595
 msgid "Email"
@@ -736,7 +736,7 @@ msgstr "Nama Kontak"
 #: SelectCustomer.php:425 SelectOrderItems.php:646
 #: SupplierTenderCreate.php:390 includes/PDFStatementPageHeader.inc:63
 #: includes/PDFTransPageHeader.inc:81
-#: includes/PDFTransPageHeaderPortrait.inc:105 ../webSHOP/Checkout.php:387
+#: includes/PDFTransPageHeaderPortrait.inc:107 ../webSHOP/Checkout.php:387
 #: ../webSHOP/Register.php:255 ../webSHOP/Register.php:723
 msgid "Phone"
 msgstr "Telpon"
@@ -777,8 +777,8 @@ msgstr "Catatan utk Customer"
 #: AddCustomerNotes.php:117 AddCustomerNotes.php:222
 #: AddCustomerTypeNotes.php:111 AddCustomerTypeNotes.php:211
 #: BankMatching.php:278 BankReconciliation.php:212 BankReconciliation.php:289
-#: ContractCosting.php:177 CustomerAllocations.php:340
-#: CustomerAllocations.php:370 CustomerInquiry.php:204
+#: ContractCosting.php:177 CustomerAllocations.php:334
+#: CustomerAllocations.php:364 CustomerInquiry.php:204
 #: CustomerTransInquiry.php:106 GLAccountInquiry.php:174
 #: GLAccountReport.php:343 GLTransInquiry.php:42 MRPCalendar.php:219
 #: PaymentAllocations.php:66 PcAssignCashToTab.php:238
@@ -794,7 +794,7 @@ msgstr "Catatan utk Customer"
 #: includes/PDFQuotationPortraitPageHeader.inc:88
 #: includes/PDFStatementPageHeader.inc:169 includes/PDFTaxPageHeader.inc:36
 #: includes/PDFTransPageHeader.inc:48
-#: includes/PDFTransPageHeaderPortrait.inc:58
+#: includes/PDFTransPageHeaderPortrait.inc:60
 msgid "Date"
 msgstr "Tgl"
 
@@ -920,7 +920,7 @@ msgstr "Analisa Umur Piutang"
 #: PDFSellThroughSupportClaim.php:17 PDFStockCheckComparison.php:33
 #: PDFStockCheckComparison.php:59 PDFStockCheckComparison.php:264
 #: ReorderLevel.php:60 SelectAsset.php:39 SelectProduct.php:43
-#: StockCheck.php:65 StockCheck.php:139 SupplierTenderCreate.php:661
+#: StockCheck.php:65 StockCheck.php:139 SupplierTenderCreate.php:666
 #: SupplierTenders.php:397 SuppPriceList.php:138
 #: includes/PDFPaymentRun_PymtFooter.php:152
 msgid "Problem Report"
@@ -1012,9 +1012,9 @@ msgstr "tdk dapat diambil karena"
 #: SellThroughSupport.php:97 SMTPServer.php:62 StockCheck.php:224
 #: StockCostUpdate.php:78 StockCostUpdate.php:88 StockLocStatus.php:164
 #: StockMovements.php:91 StockQuantityByDate.php:97 StockReorderLevel.php:41
-#: StockStatus.php:310 StockTransfers.php:203 StockUsageGraph.php:53
+#: StockStatus.php:312 StockTransfers.php:203 StockUsageGraph.php:53
 #: StockUsage.php:139 SupplierInquiry.php:78 SupplierInquiry.php:100
-#: SupplierInquiry.php:136 SupplierInquiry.php:192 SupplierPriceList.php:375
+#: SupplierInquiry.php:136 SupplierInquiry.php:192 SupplierPriceList.php:382
 #: SupplierTransInquiry.php:97 SuppPaymentRun.php:114 SuppPaymentRun.php:188
 #: SuppPaymentRun.php:219 WorkOrderCosting.php:429 WorkOrderReceive.php:292
 #: WOSerialNos.php:49 Z_ChangeBranchCode.php:105 Z_ChangeCustomerCode.php:91
@@ -1303,8 +1303,8 @@ msgid "User ID"
 msgstr "ID User"
 
 #: AuditTrail.php:55 AuditTrail.php:69 ContractBOM.php:306
-#: CounterReturns.php:1613 CounterReturns.php:1616 CounterSales.php:2224
-#: CounterSales.php:2227 CustomerTransInquiry.php:36
+#: CounterReturns.php:1613 CounterReturns.php:1616 CounterSales.php:2223
+#: CounterSales.php:2226 CustomerTransInquiry.php:36
 #: DailyBankTransactions.php:72 DailySalesInquiry.php:46
 #: DailySalesInquiry.php:48 FixedAssetRegister.php:59
 #: FixedAssetRegister.php:68 InventoryQuantities.php:168
@@ -1312,23 +1312,23 @@ msgstr "ID User"
 #: MRPReport.php:524 MRPReport.php:526 MRPReschedules.php:145
 #: NoSalesItems.php:22 NoSalesItems.php:48 NoSalesItems.php:68
 #: NoSalesItems.php:70 PDFPeriodStockTransListing.php:58 PDFPriceList.php:198
-#: PO_Items.php:1106 POReport.php:1586 ReorderLevel.php:212
+#: PO_Items.php:1108 POReport.php:1586 ReorderLevel.php:212
 #: ReorderLevel.php:214 ReorderLevel.php:244 ReorderLevel.php:246
 #: SalesGraph.php:102 SalesGraph.php:104 SalesGraph.php:124 SalesGraph.php:126
 #: SalesGraph.php:148 SalesGraph.php:150 SalesGraph.php:184
 #: SalesInquiry.php:1091 SalesInquiry.php:1154 SelectCreditItems.php:986
-#: SelectOrderItems.php:1673 SelectOrderItems.php:1676 SelectProduct.php:533
+#: SelectOrderItems.php:1663 SelectOrderItems.php:1666 SelectProduct.php:533
 #: SelectProduct.php:535 StockDispatch.php:82 StockDispatch.php:393
 #: StockDispatch.php:395 StockLocStatus.php:71 StockLocStatus.php:73
 #: StockLocStatus.php:91 StockLocStatus.php:96 StockLocStatus.php:101
-#: StockLocStatus.php:106 StockQuantityByDate.php:25 SupplierPriceList.php:23
-#: SupplierPriceList.php:25 SupplierTenderCreate.php:673
-#: SupplierTenderCreate.php:675 SupplierTenders.php:409
+#: StockLocStatus.php:106 StockQuantityByDate.php:25 SupplierPriceList.php:22
+#: SupplierPriceList.php:24 SupplierTenderCreate.php:678
+#: SupplierTenderCreate.php:680 SupplierTenders.php:409
 #: SupplierTenders.php:411 SupplierTransInquiry.php:31
 #: SystemParameters.php:1038 SystemParameters.php:1044
 #: SystemParameters.php:1050 SystemParameters.php:1056
 #: SystemParameters.php:1062 TopItems.php:29 TopItems.php:45 TopItems.php:67
-#: TopItems.php:69 WorkOrderEntry.php:604 WorkOrderEntry.php:607
+#: TopItems.php:69 WorkOrderEntry.php:603 WorkOrderEntry.php:606
 #: WorkOrderIssue.php:662 WorkOrderIssue.php:665
 msgid "All"
 msgstr "Semua"
@@ -1341,7 +1341,7 @@ msgstr "Tabel "
 msgid "Containing text"
 msgstr "Berisi kalimat"
 
-#: AuditTrail.php:90 InternalStockRequest.php:591 MRPReport.php:778
+#: AuditTrail.php:90 InternalStockRequest.php:590 MRPReport.php:779
 #: PO_SelectPurchOrder.php:432 SelectContract.php:184 SelectProduct.php:806
 msgid "View"
 msgstr "Lihat"
@@ -1355,7 +1355,7 @@ msgid "User"
 msgstr "User"
 
 #: AuditTrail.php:177 BankReconciliation.php:213 BankReconciliation.php:290
-#: CustomerAllocations.php:368 CustomerInquiry.php:202
+#: CustomerAllocations.php:362 CustomerInquiry.php:202
 #: CustomerPurchases.php:68 CustomerTransInquiry.php:25
 #: CustomerTransInquiry.php:104 CustWhereAlloc.php:21 CustWhereAlloc.php:111
 #: DailyBankTransactions.php:127 GLAccountInquiry.php:172
@@ -1565,7 +1565,7 @@ msgstr "Nomor Rekening Bank"
 msgid "Bank Address"
 msgstr "Alamat Bank"
 
-#: BankAccounts.php:196 Currencies.php:446 CustomerAllocations.php:343
+#: BankAccounts.php:196 Currencies.php:446 CustomerAllocations.php:337
 #: CustomerReceipt.php:803 CustomerTransInquiry.php:114 OffersReceived.php:112
 #: PcReportTab.php:276 PcTabs.php:208 PcTabs.php:355
 #: PO_AuthorisationLevels.php:126 PO_AuthorisationLevels.php:210
@@ -1574,8 +1574,8 @@ msgstr "Alamat Bank"
 #: PricesByCost.php:282 Prices.php:220 Prices.php:296 PurchData.php:276
 #: PurchData.php:471 PurchData.php:612 SelectSupplier.php:279
 #: SellThroughSupport.php:161 SupplierCredit.php:263 SupplierInvoice.php:606
-#: SupplierPriceList.php:450 SupplierTenderCreate.php:609
-#: SupplierTenders.php:126 SupplierTenders.php:538
+#: SupplierPriceList.php:457 SupplierTenderCreate.php:614
+#: SupplierTenders.php:126 SupplierTenders.php:536
 #: SupplierTransInquiry.php:111 SuppPriceList.php:303
 #: includes/PDFBankingSummaryPageHeader.inc:42
 #: includes/PDFDebtorBalsPageHeader.inc:33
@@ -1706,7 +1706,7 @@ msgstr "dari"
 #: PrintCustTransPortrait.php:65 SalesGraph.php:218 SalesGraph.php:247
 #: SalesGraph.php:251 StockLocTransferReceive.php:306
 #: StockLocTransferReceive.php:444 Stocks.php:300 Stocks.php:305
-#: StockStatus.php:351 StockStatus.php:392 StockTransfers.php:448
+#: StockStatus.php:353 StockStatus.php:394 StockTransfers.php:448
 #: includes/PDFAgedDebtorsPageHeader.inc:18
 #: includes/PDFAgedSuppliersPageHeader.inc:17
 #: includes/PDFChequeListingPageHeader.inc:17
@@ -1812,7 +1812,7 @@ msgid "Ref"
 msgstr "Ref"
 
 #: BankMatching.php:279 ConfirmDispatch_Invoice.php:297 Credit_Invoice.php:297
-#: CustomerAllocations.php:371 CustomerReceipt.php:918
+#: CustomerAllocations.php:365 CustomerReceipt.php:918
 #: CustomerTransInquiry.php:113 CustWhereAlloc.php:115 GLJournalInquiry.php:85
 #: ImportBankTransAnalysis.php:208 ImportBankTransAnalysis.php:288
 #: PaymentAllocations.php:67 Payments.php:1049 Payments.php:1054
@@ -1837,7 +1837,7 @@ msgstr "Jumlah"
 #: BankMatching.php:280 BankReconciliation.php:217 BankReconciliation.php:294
 #: PDFOrdersInvoiced.php:361 PDFOrderStatus.php:332
 #: PO_SelectOSPurchOrder.php:240 PO_SelectPurchOrder.php:216
-#: Shipt_Select.php:193 SuppCreditGRNs.php:279
+#: Shipt_Select.php:193 SuppCreditGRNs.php:291
 #: includes/PDFStatementPageHeader.inc:173
 #: includes/PDFStatementPageHeader.inc:180
 msgid "Outstanding"
@@ -1946,7 +1946,7 @@ msgid "Add back unpresented cheques"
 msgstr "Tambahkan kembali cek yg belum dicairkan"
 
 #: BankReconciliation.php:214 BankReconciliation.php:291
-#: CustomerAllocations.php:339 CustomerAllocations.php:369
+#: CustomerAllocations.php:333 CustomerAllocations.php:363
 #: CustomerInquiry.php:203 CustomerTransInquiry.php:105 CustWhereAlloc.php:112
 #: EmailCustTrans.php:15 GLAccountInquiry.php:173 ImportBankTrans.php:538
 #: PrintCustTrans.php:509 PrintCustTrans.php:731 PrintCustTrans.php:964
@@ -1960,7 +1960,7 @@ msgstr "Tambahkan kembali cek yg belum dicairkan"
 #: includes/PDFQuotationPortraitPageHeader.inc:86
 #: includes/PDFStatementPageHeader.inc:168
 #: includes/PDFStatementPageHeader.inc:179 includes/PDFTransPageHeader.inc:44
-#: includes/PDFTransPageHeaderPortrait.inc:52
+#: includes/PDFTransPageHeaderPortrait.inc:54
 msgid "Number"
 msgstr "Nomor"
 
@@ -2025,7 +2025,7 @@ msgstr ""
 
 #: BankReconciliation.php:361 CounterReturns.php:740 CounterSales.php:832
 #: Customers.php:1177 SelectOrderItems.php:1452 Stocks.php:1392
-#: WorkOrderCosting.php:551 WorkOrderEntry.php:590
+#: WorkOrderCosting.php:551 WorkOrderEntry.php:589
 msgid "Are You Sure?"
 msgstr "Anda Yakin?"
 
@@ -2095,16 +2095,16 @@ msgstr ""
 
 #: BOMExtendedQty.php:263 BOMExtendedQty.php:330 BOMExtendedQty.php:331
 #: BOMExtendedQty.php:332 BOMExtendedQty.php:333 BOMIndented.php:315
-#: BOMIndentedReverse.php:295 BOMInquiry.php:201 BOMs.php:557 BOMs.php:737
+#: BOMIndentedReverse.php:295 BOMInquiry.php:201 BOMs.php:557 BOMs.php:736
 #: ContractBOM.php:243 ContractBOM.php:357 ContractCosting.php:81
 #: ContractCosting.php:87 ContractCosting.php:152 ContractOtherReqts.php:99
 #: Contracts.php:994 Contracts.php:1030 CounterReturns.php:669
 #: CounterReturns.php:1674 CounterReturns.php:1802 CounterSales.php:745
-#: CounterSales.php:2103 CounterSales.php:2291 CounterSales.php:2428
+#: CounterSales.php:2103 CounterSales.php:2284 CounterSales.php:2416
 #: Credit_Invoice.php:291 CustomerPurchases.php:73 DeliveryDetails.php:872
-#: DeliveryDetails.php:942 GoodsReceived.php:101 GoodsReceived.php:105
-#: GoodsReceived.php:108 InternalStockRequestFulfill.php:318
-#: InternalStockRequestFulfill.php:319 InternalStockRequest.php:631
+#: DeliveryDetails.php:942 GoodsReceived.php:102 GoodsReceived.php:106
+#: GoodsReceived.php:109 InternalStockRequestFulfill.php:318
+#: InternalStockRequestFulfill.php:319 InternalStockRequest.php:632
 #: InventoryPlanningPrefSupplier.php:78 InventoryQuantities.php:248
 #: MRPDemands.php:297 MRPDemands.php:395 MRPPlannedPurchaseOrders.php:341
 #: MRPPlannedWorkOrders.php:261 MRPPlannedWorkOrders.php:395 MRPReport.php:413
@@ -2118,16 +2118,16 @@ msgstr ""
 #: SalesAnalReptCols.php:16 SalesAnalReptCols.php:18 SalesGraph.php:193
 #: SalesGraph.php:276 SalesInquiry.php:993 SalesTopItemsInquiry.php:225
 #: SelectCreditItems.php:688 SelectCreditItems.php:1068
-#: SelectOrderItems.php:1374 SelectOrderItems.php:1543
-#: SelectOrderItems.php:1743 SelectOrderItems.php:1878 ShipmentCosting.php:149
+#: SelectOrderItems.php:1374 SelectOrderItems.php:1542
+#: SelectOrderItems.php:1730 SelectOrderItems.php:1862 ShipmentCosting.php:149
 #: ShipmentCosting.php:150 Shipments.php:401 Shipments.php:403
 #: Shipments.php:404 Shipments.php:488 Shipments.php:490 SpecialOrder.php:628
-#: StockCounts.php:114 StockLocMovements.php:93 StockLocTransfer.php:307
-#: StockMovements.php:101 StockStatus.php:355 StockUsageGraph.php:12
-#: SuppCreditGRNs.php:279 SuppCreditGRNs.php:280 SupplierCredit.php:318
-#: SupplierTenderCreate.php:428 SupplierTenderCreate.php:847
-#: SupplierTenders.php:124 SupplierTenders.php:327 SupplierTenders.php:533
-#: SupplierTenders.php:536 SupplierTenders.php:692 WorkOrderReceive.php:902
+#: StockCounts.php:114 StockLocMovements.php:93 StockLocTransfer.php:306
+#: StockMovements.php:101 StockStatus.php:357 StockUsageGraph.php:12
+#: SuppCreditGRNs.php:291 SuppCreditGRNs.php:292 SupplierCredit.php:318
+#: SupplierTenderCreate.php:430 SupplierTenderCreate.php:851
+#: SupplierTenders.php:124 SupplierTenders.php:327 SupplierTenders.php:531
+#: SupplierTenders.php:534 SupplierTenders.php:690 WorkOrderReceive.php:902
 #: WOSerialNos.php:262 WOSerialNos.php:268 WOSerialNos.php:302
 #: includes/InputSerialItemsFile.php:200 includes/InputSerialItems.php:128
 #: includes/InputSerialItems.php:134 includes/OutputSerialItems.php:38
@@ -2191,7 +2191,7 @@ msgstr "Daftar BOM dgn Uraian Kuantiti Utk\t   "
 #: BOMExtendedQty.php:312 BOMIndented.php:302 BOMIndentedReverse.php:282
 #: GLAccountReport.php:327 InventoryPlanningPrefSupplier.php:58
 #: InventoryQuantities.php:234 MRPPlannedPurchaseOrders.php:320
-#: MRPPlannedWorkOrders.php:374 MRPReport.php:816 MRPReschedules.php:180
+#: MRPPlannedWorkOrders.php:374 MRPReport.php:817 MRPReschedules.php:180
 #: MRPShortages.php:334 PDFOrderStatus.php:315 PDFPriceList.php:345
 #: PDFReceipt.php:31 PO_Header.php:840 PO_PDFPurchOrder.php:64
 #: PO_SelectOSPurchOrder.php:511 ReorderLevel.php:283 StockDispatch.php:476
@@ -2229,7 +2229,7 @@ msgstr "Dicetak"
 #: FixedAssetRegister.php:367 GLAccountReport.php:327
 #: InventoryPlanningPrefSupplier.php:58 InventoryQuantities.php:235
 #: MRPPlannedPurchaseOrders.php:321 MRPPlannedWorkOrders.php:375
-#: MRPReport.php:817 MRPReschedules.php:181 MRPShortages.php:335
+#: MRPReport.php:818 MRPReschedules.php:181 MRPShortages.php:335
 #: PDFPriceList.php:345 PDFReceipt.php:31 PDFRemittanceAdvice.php:218
 #: PrintCustOrder.php:170 PrintCustTrans.php:769 PrintCustTrans.php:978
 #: PrintCustTrans.php:1027 PrintCustTransPortrait.php:814
@@ -2276,7 +2276,7 @@ msgstr "Dicetak"
 #: includes/PDFTagProfitAndLossPageHeader.inc:30
 #: includes/PDFTaxPageHeader.inc:21 includes/PDFTopItemsHeader.inc:34
 #: includes/PDFTransPageHeader.inc:65
-#: includes/PDFTransPageHeaderPortrait.inc:23
+#: includes/PDFTransPageHeaderPortrait.inc:26
 #: includes/PDFTrialBalancePageHeader.inc:18
 #: includes/PO_PDFOrderPageHeader.inc:17
 msgid "Page"
@@ -2290,13 +2290,13 @@ msgstr "Qty Membuat:  "
 msgid "Build"
 msgstr "Membuat"
 
-#: BOMExtendedQty.php:323 BOMInquiry.php:110 BOMs.php:889
-#: CounterReturns.php:1670 CounterSales.php:2099 CounterSales.php:2287
-#: InternalStockRequest.php:627 PO_SelectOSPurchOrder.php:239
+#: BOMExtendedQty.php:323 BOMInquiry.php:110 BOMs.php:887
+#: CounterReturns.php:1670 CounterSales.php:2099 CounterSales.php:2280
+#: InternalStockRequest.php:628 PO_SelectOSPurchOrder.php:239
 #: PO_SelectPurchOrder.php:215 ReorderLevelLocation.php:73
 #: ReorderLevelLocation.php:74 SelectCompletedOrder.php:556
-#: SelectOrderItems.php:1539 SelectOrderItems.php:1739
-#: SelectSalesOrder.php:612 SelectWorkOrder.php:211 Shipt_Select.php:192
+#: SelectOrderItems.php:1538 SelectOrderItems.php:1726
+#: SelectSalesOrder.php:612 SelectWorkOrder.php:215 Shipt_Select.php:192
 #: TopItems.php:168 includes/PDFTopItemsHeader.inc:54
 msgid "On Hand"
 msgstr "Total Qty"
@@ -2364,44 +2364,44 @@ msgid "One Level"
 msgstr "Satu Tingkat"
 
 #: BOMIndented.php:312 BOMIndentedReverse.php:292 BOMInquiry.php:109
-#: BOMInquiry.php:200 BOMs.php:554 BOMs.php:888 ContractBOM.php:242
+#: BOMInquiry.php:200 BOMs.php:554 BOMs.php:886 ContractBOM.php:242
 #: ContractBOM.php:354 ContractOtherReqts.php:98 CounterReturns.php:1668
-#: CounterSales.php:2097 CounterSales.php:2285 CreditStatus.php:152
+#: CounterSales.php:2097 CounterSales.php:2278 CreditStatus.php:152
 #: CreditStatus.php:243 CustomerPurchases.php:67 EmailConfirmation.php:218
 #: EmailConfirmation.php:348 FixedAssetCategories.php:167
 #: FixedAssetDepreciation.php:91 FixedAssetRegister.php:87
 #: FixedAssetRegister.php:388 FixedAssetTransfer.php:60
 #: FixedAssetTransfer.php:162 GLTags.php:63 GLTags.php:82
-#: GLTransInquiry.php:47 GoodsReceived.php:100
+#: GLTransInquiry.php:47 GoodsReceived.php:101
 #: InternalStockCategoriesByRole.php:168 InternalStockRequest.php:342
-#: InternalStockRequest.php:557 InternalStockRequest.php:625
+#: InternalStockRequest.php:556 InternalStockRequest.php:626
 #: InventoryQuantities.php:246 Labels.php:288 MaintenanceTasks.php:95
 #: MaintenanceUserSchedule.php:50 MaterialsNotUsed.php:35 MRPDemands.php:92
 #: MRPDemands.php:295 MRPDemandTypes.php:113 MRPPlannedWorkOrders.php:258
-#: MRPReport.php:536 MRPReport.php:749 MRPReschedules.php:192
+#: MRPReport.php:536 MRPReport.php:750 MRPReschedules.php:192
 #: MRPShortages.php:350 NoSalesItems.php:187 PaymentTerms.php:182
 #: PcExpenses.php:190 PcExpenses.php:296 PcExpensesTypeTab.php:171
 #: PcReportTab.php:179 PcTypeTabs.php:164 PDFOrdersInvoiced.php:358
-#: PDFOrderStatus.php:329 PO_Items.php:718 PO_Items.php:1156
+#: PDFOrderStatus.php:329 PO_Items.php:718 PO_Items.php:1158
 #: PO_SelectOSPurchOrder.php:238 PO_SelectPurchOrder.php:214
 #: PricesByCost.php:153 ReorderLevelLocation.php:71 ReorderLevel.php:298
-#: ReverseGRN.php:391 SalesCategories.php:509 SecurityTokens.php:95
-#: SecurityTokens.php:104 SecurityTokens.php:120 SelectAsset.php:265
+#: ReverseGRN.php:391 SalesCategories.php:509 SecurityTokens.php:94
+#: SecurityTokens.php:103 SecurityTokens.php:120 SelectAsset.php:264
 #: SelectCompletedOrder.php:555 SelectContract.php:144
-#: SelectCreditItems.php:1022 SelectOrderItems.php:1537
-#: SelectOrderItems.php:1737 SelectProduct.php:545 SelectProduct.php:771
-#: SelectSalesOrder.php:611 SelectWorkOrder.php:210 Shipt_Select.php:191
+#: SelectCreditItems.php:1022 SelectOrderItems.php:1536
+#: SelectOrderItems.php:1724 SelectProduct.php:545 SelectProduct.php:771
+#: SelectSalesOrder.php:611 SelectWorkOrder.php:214 Shipt_Select.php:191
 #: StockCategories.php:238 StockDispatch.php:503 StockLocStatus.php:172
 #: StockQuantityByDate.php:108 Stocks.php:971 SuppCreditGRNs.php:92
-#: SuppCreditGRNs.php:187 SuppFixedAssetChgs.php:78 SuppInvGRNs.php:126
-#: SuppInvGRNs.php:303 SupplierCredit.php:317 SupplierCredit.php:385
-#: SupplierInvoice.php:665 SupplierInvoice.php:745 SupplierPriceList.php:40
-#: SupplierPriceList.php:264 SupplierPriceList.php:526
-#: SupplierTenderCreate.php:427 SupplierTenderCreate.php:685
-#: SupplierTenderCreate.php:844 SupplierTenders.php:326
-#: SupplierTenders.php:421 SupplierTenders.php:689 SuppPriceList.php:309
+#: SuppCreditGRNs.php:192 SuppFixedAssetChgs.php:78 SuppInvGRNs.php:126
+#: SuppInvGRNs.php:307 SupplierCredit.php:317 SupplierCredit.php:385
+#: SupplierInvoice.php:665 SupplierInvoice.php:745 SupplierPriceList.php:39
+#: SupplierPriceList.php:271 SupplierPriceList.php:533
+#: SupplierTenderCreate.php:429 SupplierTenderCreate.php:690
+#: SupplierTenderCreate.php:848 SupplierTenders.php:326
+#: SupplierTenders.php:421 SupplierTenders.php:687 SuppPriceList.php:309
 #: TaxAuthorities.php:147 TopItems.php:164 WorkCentres.php:127
-#: WorkOrderCosting.php:98 WorkOrderCosting.php:130 WorkOrderEntry.php:643
+#: WorkOrderCosting.php:98 WorkOrderCosting.php:130 WorkOrderEntry.php:648
 #: WorkOrderIssue.php:707 Z_ItemsWithoutPicture.php:33
 #: includes/DefineLabelClass.php:12 includes/DefineLabelClass.php:45
 #: includes/PDFGrnHeader.inc:29 includes/PDFInventoryPlanPageHeader.inc:51
@@ -2409,7 +2409,7 @@ msgstr "Satu Tingkat"
 #: includes/PDFStockLocTransferHeader.inc:65
 #: includes/PDFStockTransferHeader.inc:36 includes/PDFTopItemsHeader.inc:50
 #: includes/PDFTransPageHeader.inc:208
-#: includes/PDFTransPageHeaderPortrait.inc:263 api/api_xml-rpc.php:3489
+#: includes/PDFTransPageHeaderPortrait.inc:265 api/api_xml-rpc.php:3489
 #: ../webSHOP/includes/PlaceOrder.php:233
 msgid "Description"
 msgstr "Keterangan"
@@ -2456,11 +2456,11 @@ msgstr "Komponen:"
 msgid "Costed Bill Of Material"
 msgstr "Biaya Bahan Baku"
 
-#: BOMInquiry.php:20 BOMs.php:866
+#: BOMInquiry.php:20 BOMs.php:864
 msgid "Select a manufactured part"
 msgstr "Pilih brg diproduksi"
 
-#: BOMInquiry.php:20 BOMs.php:866
+#: BOMInquiry.php:20 BOMs.php:864
 msgid "or Assembly or Kit part"
 msgstr "atau brg Rakitan atau Set"
 
@@ -2468,61 +2468,61 @@ msgstr "atau brg Rakitan atau Set"
 msgid "to view the costed bill of materials"
 msgstr "utk melihat biaya bahan baku"
 
-#: BOMInquiry.php:21 BOMs.php:866
+#: BOMInquiry.php:21 BOMs.php:864
 msgid "Parts must be defined in the stock item entry"
 msgstr "Brg harus dibuat di entri item stok"
 
-#: BOMInquiry.php:21 BOMs.php:866
+#: BOMInquiry.php:21 BOMs.php:864
 msgid "modification screen as manufactured"
 msgstr "menu pengubahan sbg diproduksi"
 
-#: BOMInquiry.php:21 BOMs.php:866
+#: BOMInquiry.php:21 BOMs.php:864
 msgid ""
 "kits or assemblies to be available for construction of a bill of material"
 msgstr "set atau rakitan supaya tersedia utk pembuatan bahan baku"
 
-#: BOMInquiry.php:26 BOMs.php:870 MRPDemands.php:336
+#: BOMInquiry.php:26 BOMs.php:868 MRPDemands.php:336
 #: PO_SelectOSPurchOrder.php:216 PO_SelectPurchOrder.php:190
-#: Shipt_Select.php:169 WorkOrderEntry.php:628 WorkOrderIssue.php:678
+#: Shipt_Select.php:169 WorkOrderEntry.php:627 WorkOrderIssue.php:678
 msgid "Enter text extracts in the"
 msgstr "Masukkan sebagian teks di"
 
-#: BOMInquiry.php:26 BOMs.php:870 MRPDemands.php:336
+#: BOMInquiry.php:26 BOMs.php:868 MRPDemands.php:336
 #: PO_SelectOSPurchOrder.php:216 PO_SelectPurchOrder.php:190
-#: Shipt_Select.php:169 WorkOrderEntry.php:628 WorkOrderIssue.php:678
+#: Shipt_Select.php:169 WorkOrderEntry.php:627 WorkOrderIssue.php:678
 msgid "description"
 msgstr "keterangan"
 
-#: BOMInquiry.php:28 BOMs.php:872 ContractBOM.php:332 ContractBOM.php:337
+#: BOMInquiry.php:28 BOMs.php:870 ContractBOM.php:332 ContractBOM.php:337
 #: Contracts.php:759 Contracts.php:762 CounterReturns.php:1638
-#: CounterSales.php:2249 CustomerReceipt.php:1129 CustomerReceipt.php:1132
+#: CounterSales.php:2247 CustomerReceipt.php:1129 CustomerReceipt.php:1132
 #: DiscountCategories.php:112 DiscountCategories.php:114
 #: DiscountCategories.php:118 DiscountCategories.php:120
 #: FixedAssetTransfer.php:94 InternalStockRequest.php:351 MRPDemands.php:338
-#: MRPDemands.php:341 MRPReport.php:543 PO_Header.php:542 PO_Items.php:1135
-#: PO_Items.php:1139 PO_SelectOSPurchOrder.php:220 PO_SelectPurchOrder.php:195
+#: MRPDemands.php:341 MRPReport.php:546 PO_Header.php:542 PO_Items.php:1137
+#: PO_Items.php:1141 PO_SelectOSPurchOrder.php:220 PO_SelectPurchOrder.php:195
 #: PurchData.php:383 SelectAsset.php:104 SelectCompletedOrder.php:534
 #: SelectCreditItems.php:227 SelectCreditItems.php:1005 SelectCustomer.php:274
 #: SelectCustomer.php:284 SelectCustomer.php:293 SelectCustomer.php:303
 #: SelectCustomer.php:350 SelectGLAccount.php:79 SelectOrderItems.php:619
-#: SelectOrderItems.php:622 SelectOrderItems.php:1701 SelectProduct.php:552
-#: SelectSalesOrder.php:595 SelectSupplier.php:228 SelectWorkOrder.php:197
+#: SelectOrderItems.php:622 SelectOrderItems.php:1691 SelectProduct.php:552
+#: SelectSalesOrder.php:595 SelectSupplier.php:228 SelectWorkOrder.php:201
 #: SellThroughSupport.php:202 Shipt_Select.php:174 SuppFixedAssetChgs.php:126
-#: SupplierPriceList.php:47 SupplierPriceList.php:399
-#: SupplierTenderCreate.php:556 SupplierTenderCreate.php:696
-#: SupplierTenders.php:433 WorkOrderEntry.php:631 WorkOrderIssue.php:683
+#: SupplierPriceList.php:49 SupplierPriceList.php:406
+#: SupplierTenderCreate.php:561 SupplierTenderCreate.php:701
+#: SupplierTenders.php:433 WorkOrderEntry.php:632 WorkOrderIssue.php:683
 msgid "OR"
 msgstr "ATAU"
 
-#: BOMInquiry.php:29 BOMs.php:873 MRPDemands.php:339
+#: BOMInquiry.php:29 BOMs.php:871 MRPDemands.php:339
 #: PO_SelectOSPurchOrder.php:220 PO_SelectPurchOrder.php:195
-#: Shipt_Select.php:174 WorkOrderEntry.php:631 WorkOrderIssue.php:683
+#: Shipt_Select.php:174 WorkOrderEntry.php:632 WorkOrderIssue.php:683
 msgid "Enter extract of the"
 msgstr "Masukkan sebagian"
 
-#: BOMInquiry.php:29 BOMs.php:873 EmailConfirmation.php:217
+#: BOMInquiry.php:29 BOMs.php:871 EmailConfirmation.php:217
 #: EmailConfirmation.php:347 InternalStockRequest.php:152
-#: InternalStockRequest.php:351 MRPDemands.php:339 MRPReport.php:543
+#: InternalStockRequest.php:351 MRPDemands.php:339 MRPReport.php:546
 #: PO_SelectOSPurchOrder.php:220 PO_SelectPurchOrder.php:195
 #: SalesInquiry.php:765 SalesInquiry.php:776 SalesInquiry.php:796
 #: SalesInquiry.php:822 SalesInquiry.php:841 SalesInquiry.php:951
@@ -2531,32 +2531,32 @@ msgstr "Masukkan sebagian"
 #: StockAdjustments.php:403 StockCounts.php:113 StockCounts.php:155
 #: StockMovements.php:36 StockReorderLevel.php:47 StockStatus.php:62
 #: StockTransfers.php:49 StockTransfers.php:470 StockUsage.php:64
-#: SupplierPriceList.php:47 SupplierTenderCreate.php:696
-#: SupplierTenders.php:433 WorkOrderEntry.php:631 WorkOrderIssue.php:683
+#: SupplierPriceList.php:49 SupplierTenderCreate.php:701
+#: SupplierTenders.php:433 WorkOrderEntry.php:632 WorkOrderIssue.php:683
 #: Z_ChangeStockCategory.php:92 Z_ChangeStockCode.php:177
 #: ../webSHOP/includes/PlaceOrder.php:232
 msgid "Stock Code"
 msgstr "Kode Stok"
 
-#: BOMInquiry.php:35 BOMs.php:877 ContractBOM.php:342 Contracts.php:769
-#: CounterReturns.php:1642 CounterSales.php:2255 CustomerReceipt.php:1139
+#: BOMInquiry.php:35 BOMs.php:875 ContractBOM.php:342 Contracts.php:769
+#: CounterReturns.php:1642 CounterSales.php:2253 CustomerReceipt.php:1139
 #: FixedAssetTransfer.php:107 InternalStockRequest.php:362 MRPDemands.php:343
-#: MRPReport.php:555 PO_Header.php:549 PO_Items.php:1143 SelectAsset.php:116
+#: MRPReport.php:558 PO_Header.php:549 PO_Items.php:1145 SelectAsset.php:116
 #: SelectCreditItems.php:234 SelectCreditItems.php:1012 SelectCustomer.php:375
-#: SelectGLAccount.php:103 SelectOrderItems.php:629 SelectOrderItems.php:1709
+#: SelectGLAccount.php:103 SelectOrderItems.php:629 SelectOrderItems.php:1699
 #: SelectProduct.php:560 SelectSupplier.php:238 SelectSupplier.php:271
-#: SupplierPriceList.php:55 SupplierTenderCreate.php:562
-#: SupplierTenderCreate.php:601 SupplierTenderCreate.php:707
-#: SupplierTenders.php:445 WorkOrderEntry.php:635 WorkOrderIssue.php:690
+#: SupplierPriceList.php:61 SupplierTenderCreate.php:567
+#: SupplierTenderCreate.php:606 SupplierTenderCreate.php:712
+#: SupplierTenders.php:445 WorkOrderEntry.php:638 WorkOrderIssue.php:690
 msgid "Search Now"
 msgstr "Cari Sekarang"
 
-#: BOMInquiry.php:47 BOMs.php:807 ContractBOM.php:52 MRPDemands.php:56
-#: MRPReport.php:577 PO_Items.php:853 PO_SelectOSPurchOrder.php:65
+#: BOMInquiry.php:47 BOMs.php:805 ContractBOM.php:52 MRPDemands.php:56
+#: MRPReport.php:578 PO_Items.php:855 PO_SelectOSPurchOrder.php:65
 #: PO_SelectPurchOrder.php:48 SelectCompletedOrder.php:97
 #: SelectCreditItems.php:301 SelectProduct.php:573 SelectSalesOrder.php:448
-#: SelectWorkOrder.php:51 Shipt_Select.php:61 SupplierPriceList.php:69
-#: SupplierTenderCreate.php:722 SupplierTenders.php:578 WorkOrderEntry.php:86
+#: SelectWorkOrder.php:51 Shipt_Select.php:61 SupplierPriceList.php:76
+#: SupplierTenderCreate.php:726 SupplierTenders.php:576 WorkOrderEntry.php:86
 #: WorkOrderIssue.php:379
 msgid ""
 "Stock description keywords have been used in preference to the Stock code "
@@ -2565,7 +2565,7 @@ msgstr ""
 "Kata kunci keterangan stok telah digunakkan dibandingkan dgn sebagian kode "
 "Stok yg dimasukkan"
 
-#: BOMInquiry.php:50 BOMs.php:810 MRPDemands.php:59
+#: BOMInquiry.php:50 BOMs.php:808 MRPDemands.php:59
 msgid ""
 "At least one stock description keyword or an extract of a stock code must be "
 "entered for the search"
@@ -2573,48 +2573,48 @@ msgstr ""
 "Minimum satu kata kunci keterangan stok atau sebagian kode stok harus "
 "dimasukkan utk pencarian"
 
-#: BOMInquiry.php:95 BOMs.php:856 MRPCalendar.php:213 MRPDemands.php:80
+#: BOMInquiry.php:95 BOMs.php:854 MRPCalendar.php:213 MRPDemands.php:80
 #: MRPDemands.php:289 POReport.php:481 POReport.php:1256 SalesInquiry.php:754
 msgid "The SQL to find the parts selected failed with the message"
 msgstr "SQL utk mencari brg yg dipilih gagal dgn pesan"
 
-#: BOMInquiry.php:108 BOMs.php:553 BOMs.php:887 ContractBOM.php:353
-#: CounterReturns.php:1667 CounterSales.php:2096 CounterSales.php:2284
+#: BOMInquiry.php:108 BOMs.php:553 BOMs.php:885 ContractBOM.php:353
+#: CounterReturns.php:1667 CounterSales.php:2096 CounterSales.php:2277
 #: CustomerBranches.php:382 CustomerReceipt.php:1150 GLCodesInquiry.php:26
-#: InternalStockRequest.php:556 InternalStockRequest.php:624
+#: InternalStockRequest.php:555 InternalStockRequest.php:625
 #: MaterialsNotUsed.php:34 MRPDemands.php:91 MRPPlannedWorkOrders.php:257
-#: MRPReport.php:748 NoSalesItems.php:186 PDFOrdersInvoiced.php:357
-#: PDFOrderStatus.php:328 PO_Header.php:556 PO_Items.php:1155
+#: MRPReport.php:749 NoSalesItems.php:186 PDFOrdersInvoiced.php:357
+#: PDFOrderStatus.php:328 PO_Header.php:556 PO_Items.php:1157
 #: PO_SelectOSPurchOrder.php:237 PO_SelectPurchOrder.php:213
 #: PricesByCost.php:152 PurchData.php:469 ReorderLevelLocation.php:70
 #: SalesPeople.php:199 SelectCompletedOrder.php:554 SelectCreditItems.php:1021
-#: SelectCustomer.php:420 SelectGLAccount.php:112 SelectOrderItems.php:1536
-#: SelectOrderItems.php:1736 SelectProduct.php:770 SelectSalesOrder.php:610
-#: SelectSupplier.php:277 SelectWorkOrder.php:209 SellThroughSupport.php:159
-#: Shipt_Select.php:190 SpecialOrder.php:149 SupplierPriceList.php:263
-#: SupplierPriceList.php:448 SupplierTenderCreate.php:607
-#: SupplierTenderCreate.php:843 SupplierTenders.php:688 SuppPriceList.php:308
-#: TopItems.php:163 WorkOrderEntry.php:642 WorkOrderIssue.php:706
+#: SelectCustomer.php:420 SelectGLAccount.php:112 SelectOrderItems.php:1535
+#: SelectOrderItems.php:1723 SelectProduct.php:770 SelectSalesOrder.php:610
+#: SelectSupplier.php:277 SelectWorkOrder.php:213 SellThroughSupport.php:159
+#: Shipt_Select.php:190 SpecialOrder.php:149 SupplierPriceList.php:270
+#: SupplierPriceList.php:455 SupplierTenderCreate.php:612
+#: SupplierTenderCreate.php:847 SupplierTenders.php:686 SuppPriceList.php:308
+#: TopItems.php:163 WorkOrderEntry.php:647 WorkOrderIssue.php:706
 #: includes/PDFTaxPageHeader.inc:38 includes/PDFTopItemsHeader.inc:49
 #: includes/PO_PDFOrderPageHeader.inc:75 ../webSHOP/ItemDetails.php:72
 msgid "Code"
 msgstr "Kode"
 
-#: BOMInquiry.php:111 BOMs.php:890 ConfirmDispatch_Invoice.php:289
+#: BOMInquiry.php:111 BOMs.php:888 ConfirmDispatch_Invoice.php:289
 #: ContractBOM.php:355 CounterReturns.php:1669 CounterSales.php:2098
-#: CounterSales.php:2286 Credit_Invoice.php:290 GoodsReceived.php:102
-#: GoodsReceived.php:106 InternalStockRequestAuthorisation.php:89
-#: InternalStockRequestFulfill.php:320 InternalStockRequest.php:559
-#: InternalStockRequest.php:626 MRPReport.php:751 NoSalesItems.php:190
-#: OffersReceived.php:109 PO_Items.php:1159 PO_SelectOSPurchOrder.php:241
+#: CounterSales.php:2279 Credit_Invoice.php:290 GoodsReceived.php:103
+#: GoodsReceived.php:107 InternalStockRequestAuthorisation.php:89
+#: InternalStockRequestFulfill.php:320 InternalStockRequest.php:558
+#: InternalStockRequest.php:627 MRPReport.php:752 NoSalesItems.php:190
+#: OffersReceived.php:109 PO_Items.php:1161 PO_SelectOSPurchOrder.php:241
 #: PO_SelectPurchOrder.php:217 SelectCompletedOrder.php:559
-#: SelectCreditItems.php:1023 SelectOrderItems.php:1538
-#: SelectOrderItems.php:1738 SelectProduct.php:130 SelectProduct.php:773
-#: SelectSalesOrder.php:613 SelectWorkOrder.php:212 Shipments.php:402
+#: SelectCreditItems.php:1023 SelectOrderItems.php:1537
+#: SelectOrderItems.php:1725 SelectProduct.php:130 SelectProduct.php:773
+#: SelectSalesOrder.php:613 SelectWorkOrder.php:216 Shipments.php:402
 #: Shipments.php:489 Shipt_Select.php:194 StockLocTransferReceive.php:453
-#: SupplierPriceList.php:265 SupplierTenderCreate.php:845
-#: SupplierTenders.php:690 TopItems.php:166 WorkOrderCosting.php:100
-#: WorkOrderEntry.php:644 WorkOrderIssue.php:708 WorkOrderIssue.php:778
+#: SupplierPriceList.php:272 SupplierTenderCreate.php:849
+#: SupplierTenders.php:688 TopItems.php:166 WorkOrderCosting.php:100
+#: WorkOrderEntry.php:649 WorkOrderIssue.php:708 WorkOrderIssue.php:778
 #: includes/DefineLabelClass.php:21 includes/PDFInventoryValnPageHeader.inc:34
 msgid "Units"
 msgstr "Satuan"
@@ -2639,7 +2639,7 @@ msgstr "Kembali ke Menu Utama"
 msgid "per"
 msgstr "per"
 
-#: BOMInquiry.php:199 BOMs.php:628 WorkOrderReceive.php:176
+#: BOMInquiry.php:199 BOMs.php:627 WorkOrderReceive.php:176
 #: WorkOrderReceive.php:396 Z_BottomUpCosts.php:33
 msgid "Component"
 msgstr "Komponen"
@@ -2750,8 +2750,8 @@ msgstr "Tdk menurunkan kadar"
 msgid "Drill Down"
 msgstr "Telusuri"
 
-#: BOMs.php:122 BOMs.php:128 BOMs.php:136 BOMs.php:906
-#: InternalStockRequest.php:577 OrderDetails.php:192 PaymentTerms.php:190
+#: BOMs.php:122 BOMs.php:128 BOMs.php:136 BOMs.php:904
+#: InternalStockRequest.php:576 OrderDetails.php:192 PaymentTerms.php:190
 #: PaymentTerms.php:196 PO_SelectOSPurchOrder.php:516
 #: SalesAnalReptCols.php:285 SelectProduct.php:128 SelectProduct.php:175
 #: SelectProduct.php:255 SelectProduct.php:256 SelectProduct.php:791
@@ -2945,30 +2945,30 @@ msgstr "Set"
 msgid "Level"
 msgstr "Tingkat"
 
-#: BOMs.php:555 BOMs.php:687 Contracts.php:876 FixedAssetRegister.php:89
+#: BOMs.php:555 BOMs.php:686 Contracts.php:876 FixedAssetRegister.php:89
 #: InventoryQuantities.php:247 Locations.php:349 MRP.php:562 MRP.php:595
 #: NoSalesItems.php:185 PDFOrdersInvoiced.php:319 PDFOrderStatus.php:288
 #: ReorderLevelLocation.php:154 ReorderLevel.php:290 ReorderLevel.php:299
 #: StockCounts.php:156 StockReorderLevel.php:54 StockSerialItemResearch.php:80
 #: StockStatus.php:86 StockStatus.php:91 SupplierTenderCreate.php:135
-#: WhereUsedInquiry.php:72 WorkCentres.php:128 WorkCentres.php:222
+#: WhereUsedInquiry.php:70 WorkCentres.php:128 WorkCentres.php:223
 #: includes/PDFPeriodStockTransListingPageHeader.inc:51
 #: includes/PDFStockNegativesHeader.inc:31 api/api_xml-rpc.php:2531
 #: api/api_xml-rpc.php:2577 api/api_xml-rpc.php:2773
 msgid "Location"
 msgstr "Lokasi"
 
-#: BOMs.php:556 WhereUsedInquiry.php:71 includes/MainMenuLinksArray.php:311
+#: BOMs.php:556 WhereUsedInquiry.php:69 includes/MainMenuLinksArray.php:311
 msgid "Work Centre"
 msgstr "Workshop"
 
-#: BOMs.php:558 BOMs.php:756 WhereUsedInquiry.php:74
+#: BOMs.php:558 BOMs.php:755 WhereUsedInquiry.php:72
 #: includes/PDFBOMListingPageHeader.inc:40
 msgid "Effective After"
 msgstr "Efektif Setelah"
 
-#: BOMs.php:559 BOMs.php:760 PurchData.php:703 SellThroughSupport.php:267
-#: WhereUsedInquiry.php:75 includes/PDFBOMListingPageHeader.inc:41
+#: BOMs.php:559 BOMs.php:759 PurchData.php:703 SellThroughSupport.php:267
+#: WhereUsedInquiry.php:73 includes/PDFBOMListingPageHeader.inc:41
 msgid "Effective To"
 msgstr "Efektif Sampai"
 
@@ -2984,56 +2984,56 @@ msgstr "Total Qty"
 msgid "No materials found."
 msgstr "Tdk ada bahan ditemukan."
 
-#: BOMs.php:619
+#: BOMs.php:618
 msgid "Edit the details of the selected component in the fields below"
 msgstr "Ubah rincian dari komponen yg dipilih pada kolom-kolom di bawah ini"
 
-#: BOMs.php:619
+#: BOMs.php:618
 msgid "Click on the Enter Information button to update the component details"
 msgstr "Klik pada tombol Masukkan Informasi utk memperbarui rincian komponen"
 
-#: BOMs.php:640
+#: BOMs.php:639
 msgid "New Component Details"
 msgstr "Rincian Komponen Baru"
 
-#: BOMs.php:643
+#: BOMs.php:642
 msgid "Component code"
 msgstr "Kode Komponen"
 
-#: BOMs.php:673
+#: BOMs.php:672
 msgid "Could not retrieve the list of potential components because"
 msgstr "Tdk dapat mengambil daftar komponen berpotensi karena"
 
-#: BOMs.php:674
+#: BOMs.php:673
 msgid "The SQL used to retrieve the list of potential components part was"
 msgstr "SQL yg digunakna utk mengambil daftar brg komponen potensial adalah"
 
-#: BOMs.php:709
+#: BOMs.php:708
 msgid "Work Centre Added"
 msgstr "Workshop telah Ditambahkan"
 
-#: BOMs.php:715 Contracts.php:891
+#: BOMs.php:714 Contracts.php:891
 msgid "There are no work centres set up yet"
 msgstr "Belum ada workshop yg sdh dibuat"
 
-#: BOMs.php:715 Contracts.php:891
+#: BOMs.php:714 Contracts.php:891
 msgid "Please use the link below to set up work centres"
 msgstr "Gunakan link di bawah utk membuat workshop"
 
-#: BOMs.php:716 Contracts.php:892
+#: BOMs.php:715 Contracts.php:892
 msgid "Work Centre Maintenance"
 msgstr "Pengaturan Workshop"
 
-#: BOMs.php:738
+#: BOMs.php:737
 #, fuzzy
 msgid "Enter the quantity of this item required for the parent item"
 msgstr "Masukkan tgl akhir order"
 
-#: BOMs.php:766
+#: BOMs.php:765
 msgid "Auto Issue this Component to Work Orders"
 msgstr "Terbitkan Otomatis Komponen ini ke Order Produksi"
 
-#: BOMs.php:866
+#: BOMs.php:864
 msgid "to maintain the bill of material for using the options below"
 msgstr "utk mengatur daftar bahan baku dgn menggunakan pilihan berikut"
 
@@ -3389,17 +3389,17 @@ msgstr ""
 #: CompanyPreferences.php:469 ConfirmDispatch_Invoice.php:648
 #: ConfirmDispatch_Invoice.php:1687 Credit_Invoice.php:1563
 #: FixedAssetItems.php:127 FixedAssetItems.php:652 GLBudgets.php:240
-#: GLTags.php:68 GoodsReceived.php:251 GoodsReceived.php:257
-#: GoodsReceived.php:264 GoodsReceived.php:746 ImportBankTransAnalysis.php:154
+#: GLTags.php:68 GoodsReceived.php:257 GoodsReceived.php:263
+#: GoodsReceived.php:270 GoodsReceived.php:752 ImportBankTransAnalysis.php:154
 #: ImportBankTransAnalysis.php:185 InternalStockRequestAuthorisation.php:104
 #: InternalStockRequestFulfill.php:359 InternalStockRequest.php:247
 #: MRPCalendar.php:315 Payments.php:922 PcAuthorizeExpenses.php:108
 #: PcAuthorizeExpenses.php:293 PO_AuthoriseMyOrders.php:142
 #: PricesByCost.php:223 PurchData.php:758 ReorderLevelLocation.php:130
-#: SecurityTokens.php:98 SelectCreditItems.php:957 SellThroughSupport.php:476
+#: SecurityTokens.php:97 SelectCreditItems.php:957 SellThroughSupport.php:476
 #: ShopParameters.php:563 SMTPServer.php:107 StockCostUpdate.php:188
 #: StockReorderLevel.php:108 Stocks.php:1386 SystemParameters.php:1143
-#: TaxAuthorityRates.php:84 WorkOrderEntry.php:588 WOSerialNos.php:336
+#: TaxAuthorityRates.php:84 WorkOrderEntry.php:587 WOSerialNos.php:336
 msgid "Update"
 msgstr "Perbarui"
 
@@ -3520,7 +3520,7 @@ msgid "Confirm Dispatch and Invoice"
 msgstr "Konfirmasi Pengiriman dan Faktur"
 
 #: ConfirmDispatch_Invoice.php:268 Contracts.php:778 CustLoginSetup.php:32
-#: CustomerAllocations.php:337 CustomerBranches.php:378
+#: CustomerAllocations.php:331 CustomerBranches.php:378
 #: CustomerBranches.php:557 CustomerBranches.php:604 CustomerInquiry.php:130
 #: CustomerPurchases.php:31 CustomerReceipt.php:920 CustomerReceipt.php:976
 #: CustomerReceipt.php:1124 Customers.php:24 Customers.php:331
@@ -3551,7 +3551,7 @@ msgstr "Customer"
 #: SalesInquiry.php:1219 WWW_Users.php:284 WWW_Users.php:526
 #: Z_ChangeBranchCode.php:202 includes/PDFStatementPageHeader.inc:112
 #: includes/PDFTransPageHeader.inc:46
-#: includes/PDFTransPageHeaderPortrait.inc:55
+#: includes/PDFTransPageHeaderPortrait.inc:57
 msgid "Customer Code"
 msgstr "Kode Customer"
 
@@ -3572,8 +3572,8 @@ msgstr "Jumlah Faktur dinyatakan dalam"
 
 #: ConfirmDispatch_Invoice.php:286 ContractBOM.php:241 ContractCosting.php:79
 #: ContractCosting.php:85 Contracts.php:992 CounterReturns.php:667
-#: CounterReturns.php:1801 CounterSales.php:743 CounterSales.php:2427
-#: Credit_Invoice.php:287 DeliveryDetails.php:870 GoodsReceived.php:99
+#: CounterReturns.php:1801 CounterSales.php:743 CounterSales.php:2415
+#: Credit_Invoice.php:287 DeliveryDetails.php:870 GoodsReceived.php:100
 #: InternalStockRequest.php:268 Labels.php:565 Labels.php:567 Labels.php:609
 #: OrderDetails.php:168 OutstandingGRNs.php:179 PDFPrintLabel.php:65
 #: PO_Items.php:717 PO_OrderDetails.php:181 PrintCustTrans.php:892
@@ -3582,19 +3582,19 @@ msgstr "Jumlah Faktur dinyatakan dalam"
 #: PrintCustTransPortrait.php:1097 RecurringSalesOrders.php:329
 #: ReorderLevelLocation.php:185 ReprintGRN.php:84 ReverseGRN.php:390
 #: SalesGraph.php:186 SelectCreditItems.php:686 SelectOrderItems.php:1372
-#: StockCostUpdate.php:125 StockLocMovements.php:88 StockLocTransfer.php:306
+#: StockCostUpdate.php:125 StockLocMovements.php:88 StockLocTransfer.php:305
 #: StockLocTransferReceive.php:448 StockQuantityByDate.php:107 Stocks.php:871
 #: Stocks.php:876 Stocks.php:942 Stocks.php:948 SuppCreditGRNs.php:91
-#: SuppCreditGRNs.php:186 SuppInvGRNs.php:125 SuppInvGRNs.php:302
+#: SuppCreditGRNs.php:191 SuppInvGRNs.php:125 SuppInvGRNs.php:306
 #: SupplierCredit.php:316 SupplierInvoice.php:664 SupplierTenders.php:122
-#: SupplierTenders.php:530 SupplierTenders.php:532
+#: SupplierTenders.php:528 SupplierTenders.php:530
 #: Z_ItemsWithoutPicture.php:32 includes/PDFOrderPageHeader_generic.inc:91
 #: includes/PDFPickingListHeader.inc:72 includes/PDFQuotationPageHeader.inc:99
 #: includes/PDFQuotationPortraitPageHeader.inc:97
 #: includes/PDFSalesOrder_generic.inc:93
 #: includes/PDFStockLocTransferHeader.inc:64
 #: includes/PDFTransPageHeader.inc:207
-#: includes/PDFTransPageHeaderPortrait.inc:262
+#: includes/PDFTransPageHeaderPortrait.inc:264
 msgid "Item Code"
 msgstr "Kode Item"
 
@@ -3603,14 +3603,14 @@ msgstr "Kode Item"
 #: CounterSales.php:744 Credit_Invoice.php:288 DeliveryDetails.php:871
 #: DeliveryDetails.php:941 InternalStockRequest.php:156
 #: InternalStockRequest.php:269 Labels.php:570 OrderDetails.php:169
-#: PDFPrintLabel.php:66 PO_Items.php:792 PO_OrderDetails.php:182
+#: PDFPrintLabel.php:66 PO_Items.php:794 PO_OrderDetails.php:182
 #: PrintCustTrans.php:893 PrintCustTrans.php:982 PrintCustTrans.php:1031
 #: PrintCustTransPortrait.php:944 PrintCustTransPortrait.php:1042
 #: PrintCustTransPortrait.php:1098 RecurringSalesOrders.php:330
 #: ReprintGRN.php:85 SalesInquiry.php:835 SalesInquiry.php:853
 #: SalesInquiry.php:952 SelectCreditItems.php:687 SelectOrderItems.php:1373
 #: SpecialOrder.php:626 StockLocTransferReceive.php:449
-#: SupplierTenders.php:123 SupplierTenders.php:531
+#: SupplierTenders.php:123 SupplierTenders.php:529
 #: includes/PDFOrderPageHeader_generic.inc:92
 #: includes/PDFPickingListHeader.inc:73
 #: includes/PDFQuotationPageHeader.inc:100
@@ -3622,14 +3622,14 @@ msgstr "Kode Item"
 msgid "Item Description"
 msgstr "Keterangan Item"
 
-#: ConfirmDispatch_Invoice.php:288 GoodsReceived.php:101 GoodsReceived.php:105
+#: ConfirmDispatch_Invoice.php:288 GoodsReceived.php:102 GoodsReceived.php:106
 #: PDFOrdersInvoiced.php:359 PDFOrderStatus.php:330 Shipments.php:401
 #: Shipments.php:488
 msgid "Ordered"
 msgstr "Dipesan"
 
 #: ConfirmDispatch_Invoice.php:290 FTP_RadioBeacon.php:83
-#: GoodsReceived.php:103 GoodsReceived.php:107
+#: GoodsReceived.php:104 GoodsReceived.php:108
 #, php-format
 msgid "Already"
 msgstr "Sdh"
@@ -3645,7 +3645,7 @@ msgstr "Pengiriman ini"
 
 #: ConfirmDispatch_Invoice.php:292 CounterReturns.php:671 CounterSales.php:748
 #: Credit_Invoice.php:292 CustomerPurchases.php:72 DeliveryDetails.php:874
-#: DeliveryDetails.php:944 GoodsReceived.php:112 Labels.php:580 Labels.php:582
+#: DeliveryDetails.php:944 GoodsReceived.php:113 Labels.php:580 Labels.php:582
 #: Labels.php:612 OffersReceived.php:110 OffersReceived.php:218
 #: OffersReceived.php:278 OrderDetails.php:172 PDFOrdersInvoiced.php:401
 #: PDFPriceList.php:373 PDFPrintLabel.php:67 PO_AuthoriseMyOrders.php:116
@@ -3655,13 +3655,13 @@ msgstr "Pengiriman ini"
 #: PrintCustTransPortrait.php:1101 PurchData.php:272 PurchData.php:616
 #: RecurringSalesOrders.php:333 SelectCreditItems.php:690
 #: SelectOrderItems.php:1377 Shipments.php:405 StockLocMovements.php:95
-#: StockMovements.php:103 StockStatus.php:356 SuppCreditGRNs.php:192
-#: SuppCreditGRNs.php:281 SuppCreditGRNs.php:282 SupplierPriceList.php:527
-#: SupplierTenders.php:127 SupplierTenders.php:329 SupplierTenders.php:539
-#: SupplierTenders.php:693 SuppPriceList.php:311
+#: StockMovements.php:103 StockStatus.php:358 SuppCreditGRNs.php:197
+#: SuppCreditGRNs.php:293 SuppCreditGRNs.php:294 SupplierPriceList.php:534
+#: SupplierTenders.php:127 SupplierTenders.php:329 SupplierTenders.php:537
+#: SupplierTenders.php:691 SuppPriceList.php:311
 #: includes/DefineLabelClass.php:49 includes/PDFQuotationPageHeader.inc:102
 #: includes/PDFQuotationPortraitPageHeader.inc:100
-#: includes/PDFTransPageHeaderPortrait.inc:268
+#: includes/PDFTransPageHeaderPortrait.inc:270
 #: includes/PO_PDFOrderPageHeader.inc:80 api/api_xml-rpc.php:981
 #: ../webSHOP/includes/DisplayShoppingCart.php:9
 #: ../webSHOP/includes/Functions.php:59
@@ -3676,7 +3676,7 @@ msgstr "Harga"
 #: PurchData.php:700 PurchData.php:701 RecurringSalesOrders.php:334
 #: SalesAnalReptCols.php:41 SalesAnalReptCols.php:43 SelectCreditItems.php:692
 #: SelectOrderItems.php:1380 StockLocMovements.php:96 StockMovements.php:104
-#: StockStatus.php:357 includes/PDFQuotationPageHeader.inc:103
+#: StockStatus.php:359 includes/PDFQuotationPageHeader.inc:103
 #: includes/PDFQuotationPortraitPageHeader.inc:101
 #: includes/PDFTransPageHeader.inc:212
 msgid "Discount"
@@ -3685,8 +3685,8 @@ msgstr "Diskon"
 #: ConfirmDispatch_Invoice.php:294 ConfirmDispatch_Invoice.php:298
 #: CounterReturns.php:676 CounterReturns.php:756 CounterSales.php:755
 #: CounterSales.php:849 CounterSales.php:851 Credit_Invoice.php:294
-#: Credit_Invoice.php:298 CustomerAllocations.php:341
-#: CustomerAllocations.php:371 CustomerInquiry.php:209 DeliveryDetails.php:876
+#: Credit_Invoice.php:298 CustomerAllocations.php:335
+#: CustomerAllocations.php:365 CustomerInquiry.php:209 DeliveryDetails.php:876
 #: DeliveryDetails.php:945 GLBalanceSheet.php:191 GLBalanceSheet.php:203
 #: GLBalanceSheet.php:293 GLBalanceSheet.php:302 GLBudgets.php:213
 #: GLJournal.php:434 GLTransInquiry.php:189 GLTrialBalance.php:225
@@ -3873,12 +3873,12 @@ msgid "Please remedy this"
 msgstr "Silahkan perbaiki ini"
 
 #: ConfirmDispatch_Invoice.php:675 Credit_Invoice.php:504
-#: GoodsReceived.php:276
+#: GoodsReceived.php:282
 msgid "The company information and preferences could not be retrieved"
 msgstr "Informasi perusahaan dan preferensinya tdk dapat diambil"
 
 #: ConfirmDispatch_Invoice.php:675 Credit_Invoice.php:504
-#: GoodsReceived.php:276
+#: GoodsReceived.php:282
 msgid "see your system administrator"
 msgstr "hubungi admin sistem Anda"
 
@@ -3897,7 +3897,7 @@ msgid ""
 msgstr ""
 "Order ini telah diubah atau difaktur sejak pengiriman mulai dikonfirmasi"
 
-#: ConfirmDispatch_Invoice.php:703 GoodsReceived.php:313
+#: ConfirmDispatch_Invoice.php:703 GoodsReceived.php:319
 msgid "Processing halted"
 msgstr "Pemrosesan ditunda"
 
@@ -3994,10 +3994,10 @@ msgstr "SQL yg digunakan utk memperbarui pengirim utama cabang adalah"
 #: Credit_Invoice.php:1076 Credit_Invoice.php:1098 Credit_Invoice.php:1268
 #: Credit_Invoice.php:1308 Credit_Invoice.php:1335 Credit_Invoice.php:1356
 #: Credit_Invoice.php:1385 Credit_Invoice.php:1411 Credit_Invoice.php:1437
-#: GoodsReceived.php:295 GoodsReceived.php:392 GoodsReceived.php:433
-#: GoodsReceived.php:463 GoodsReceived.php:491 GoodsReceived.php:522
-#: GoodsReceived.php:540 GoodsReceived.php:569 GoodsReceived.php:586
-#: GoodsReceived.php:673 GoodsReceived.php:695
+#: GoodsReceived.php:301 GoodsReceived.php:398 GoodsReceived.php:439
+#: GoodsReceived.php:469 GoodsReceived.php:497 GoodsReceived.php:528
+#: GoodsReceived.php:546 GoodsReceived.php:575 GoodsReceived.php:592
+#: GoodsReceived.php:679 GoodsReceived.php:701
 #: InternalStockRequestFulfill.php:84 InternalStockRequestFulfill.php:97
 #: InternalStockRequestFulfill.php:105 InternalStockRequestFulfill.php:132
 #: InternalStockRequestFulfill.php:154 InternalStockRequest.php:84
@@ -4116,11 +4116,11 @@ msgstr "KESALAHAN FATAL"
 #: Credit_Invoice.php:996 Credit_Invoice.php:1036 Credit_Invoice.php:1076
 #: Credit_Invoice.php:1098 Credit_Invoice.php:1268 Credit_Invoice.php:1308
 #: Credit_Invoice.php:1335 Credit_Invoice.php:1356 Credit_Invoice.php:1385
-#: Credit_Invoice.php:1411 Credit_Invoice.php:1437 GoodsReceived.php:295
-#: GoodsReceived.php:392 GoodsReceived.php:433 GoodsReceived.php:463
-#: GoodsReceived.php:491 GoodsReceived.php:522 GoodsReceived.php:540
-#: GoodsReceived.php:569 GoodsReceived.php:586 GoodsReceived.php:673
-#: GoodsReceived.php:695 InternalStockRequestFulfill.php:84
+#: Credit_Invoice.php:1411 Credit_Invoice.php:1437 GoodsReceived.php:301
+#: GoodsReceived.php:398 GoodsReceived.php:439 GoodsReceived.php:469
+#: GoodsReceived.php:497 GoodsReceived.php:528 GoodsReceived.php:546
+#: GoodsReceived.php:575 GoodsReceived.php:592 GoodsReceived.php:679
+#: GoodsReceived.php:701 InternalStockRequestFulfill.php:84
 #: InternalStockRequestFulfill.php:97 InternalStockRequestFulfill.php:105
 #: InternalStockRequestFulfill.php:132 InternalStockRequestFulfill.php:154
 #: InternalStockRequest.php:84 InternalStockRequest.php:102 Labels.php:281
@@ -4279,7 +4279,7 @@ msgstr "Data lokasi stok tdk dapat diperbarui karena"
 
 #: ConfirmDispatch_Invoice.php:976 ContractCosting.php:341
 #: CounterReturns.php:991 CounterSales.php:1412 Credit_Invoice.php:702
-#: GoodsReceived.php:492 ReverseGRN.php:220 SelectCreditItems.php:1421
+#: GoodsReceived.php:498 ReverseGRN.php:220 SelectCreditItems.php:1421
 #: StockTransfers.php:434 StockTransfers.php:443 SupplierInvoice.php:277
 #: WorkOrderIssue.php:162 WorkOrderReceive.php:340 WorkOrderReceive.php:447
 msgid "The following SQL to update the location stock record was used"
@@ -4313,7 +4313,7 @@ msgstr "Tdk dapat mengambil qty stok utk lokasi komponen rakitan karena "
 #: MRPReport.php:412 PDFOrdersInvoiced.php:314 PDFOrderStatus.php:284
 #: SelectCompletedOrder.php:605 SelectContract.php:140
 #: SelectOrderItems.php:735 SelectProduct.php:386 Shipments.php:399
-#: Shipments.php:486 SuppCreditGRNs.php:185 SuppInvGRNs.php:301
+#: Shipments.php:486 SuppCreditGRNs.php:190 SuppInvGRNs.php:305
 #: TaxGroups.php:290 includes/PDFDeliveryDifferencesPageHeader.inc:41
 #: includes/PDFDIFOTPageHeader.inc:40 includes/PDFOstdgGRNsPageHeader.inc:37
 #: api/api_salesorders.php:920
@@ -4369,7 +4369,7 @@ msgstr "Data pergerakkan stok tdk dapat dimasukkan karena"
 
 #: ConfirmDispatch_Invoice.php:1141 ContractCosting.php:370
 #: CounterReturns.php:1155 CounterSales.php:1577 Credit_Invoice.php:899
-#: Credit_Invoice.php:997 Credit_Invoice.php:1037 GoodsReceived.php:523
+#: Credit_Invoice.php:997 Credit_Invoice.php:1037 GoodsReceived.php:529
 #: RecurringSalesOrdersProcess.php:364 ReverseGRN.php:249
 #: SelectCreditItems.php:1319 SupplierInvoice.php:308 WorkOrderIssue.php:193
 #: WorkOrderReceive.php:369 WorkOrderReceive.php:477
@@ -4411,7 +4411,7 @@ msgid "The following SQL to update the serial stock item record was used"
 msgstr "SQL berikut digunakan utk memperbarui data item stok serial"
 
 #: ConfirmDispatch_Invoice.php:1193 Credit_Invoice.php:953
-#: GoodsReceived.php:586 SelectCreditItems.php:1399 StockAdjustments.php:273
+#: GoodsReceived.php:592 SelectCreditItems.php:1399 StockAdjustments.php:273
 #: StockLocTransferReceive.php:169 StockLocTransferReceive.php:281
 #: StockTransfers.php:312 StockTransfers.php:421 WorkOrderIssue.php:229
 #: WorkOrderIssue.php:284 WorkOrderReceive.php:528 WorkOrderReceive.php:599
@@ -4419,7 +4419,7 @@ msgid "The serial stock movement record could not be inserted because"
 msgstr "Data pergerakkan stok serial tdk dapat dimasukkan karena"
 
 #: ConfirmDispatch_Invoice.php:1194 Credit_Invoice.php:954
-#: GoodsReceived.php:587 StockAdjustments.php:274
+#: GoodsReceived.php:593 StockAdjustments.php:274
 #: StockLocTransferReceive.php:170 StockLocTransferReceive.php:282
 #: StockTransfers.php:313 StockTransfers.php:422 WorkOrderIssue.php:230
 #: WorkOrderIssue.php:285 WorkOrderReceive.php:529 WorkOrderReceive.php:600
@@ -4551,7 +4551,7 @@ msgstr "Posting GL hasil penjualan tdk dapat dimasukkan karena"
 msgid "The fixed asset transaction could not be inserted because"
 msgstr "Transaksi aktiva tetap tdk dapat dimasukkan karena"
 
-#: ConfirmDispatch_Invoice.php:1529 GoodsReceived.php:625 ReverseGRN.php:176
+#: ConfirmDispatch_Invoice.php:1529 GoodsReceived.php:631 ReverseGRN.php:176
 #: SupplierCredit.php:1228 SupplierCredit.php:1316 SupplierInvoice.php:344
 #: SupplierInvoice.php:1771 SupplierInvoice.php:1858
 msgid "The following SQL to insert the fixed asset transaction record was used"
@@ -4715,21 +4715,21 @@ msgid "to continue"
 msgstr "utk meneruskan"
 
 #: ContractBOM.php:144 CounterReturns.php:324 CounterSales.php:348
-#: InternalStockRequest.php:498 PO_Items.php:1072 SelectCreditItems.php:390
-#: SelectOrderItems.php:862 SupplierTenderCreate.php:825
-#: SupplierTenders.php:669 WorkOrderEntry.php:181 WorkOrderIssue.php:468
+#: InternalStockRequest.php:497 PO_Items.php:1074 SelectCreditItems.php:390
+#: SelectOrderItems.php:862 SupplierTenderCreate.php:829
+#: SupplierTenders.php:667 WorkOrderEntry.php:181 WorkOrderIssue.php:468
 msgid "There is a problem selecting the part records to display because"
 msgstr "Ada kesalahan saat memilih data brg utk ditampilkan karena"
 
-#: ContractBOM.php:145 PO_Items.php:1073 SupplierTenderCreate.php:826
-#: SupplierTenders.php:670 Z_ChangeGLAccountCode.php:55
+#: ContractBOM.php:145 PO_Items.php:1075 SupplierTenderCreate.php:830
+#: SupplierTenders.php:668 Z_ChangeGLAccountCode.php:55
 #: Z_ChangeLocationCode.php:90 Z_ChangeStockCategory.php:65
 #: Z_ChangeStockCode.php:101 includes/MiscFunctions.php:446
 msgid "The SQL statement that failed was"
 msgstr "SQL yg gagal adalah"
 
-#: ContractBOM.php:149 PO_Items.php:1077 SupplierTenderCreate.php:830
-#: SupplierTenders.php:674
+#: ContractBOM.php:149 PO_Items.php:1079 SupplierTenderCreate.php:834
+#: SupplierTenders.php:672
 msgid "There are no products to display matching the criteria provided"
 msgstr "Tdk ada produk utk ditampilkan yg sesuai dgn kriteria"
 
@@ -4786,9 +4786,9 @@ msgid "Contract Reference:"
 msgstr "Referensi Kontrak:"
 
 #: ContractBOM.php:244 InternalStockRequest.php:271
-#: SupplierTenderCreate.php:429 SupplierTenders.php:328
+#: SupplierTenderCreate.php:431 SupplierTenders.php:328
 #: includes/PDFTransPageHeader.inc:211
-#: includes/PDFTransPageHeaderPortrait.inc:266
+#: includes/PDFTransPageHeaderPortrait.inc:268
 msgid "UOM"
 msgstr "Satuan"
 
@@ -4818,19 +4818,19 @@ msgstr "Perbarui Baris"
 msgid "Back To Contract Header"
 msgstr "Kembali Utk Header Kontrak"
 
-#: ContractBOM.php:295 PO_Items.php:1095
+#: ContractBOM.php:295 PO_Items.php:1097
 msgid "The supplier category details could not be retrieved because"
 msgstr "Rincian kategori supplier tdk dapat diambil karena"
 
-#: ContractBOM.php:296 PO_Items.php:1096
+#: ContractBOM.php:296 PO_Items.php:1098
 msgid "The SQL used to retrieve the category details but failed was"
 msgstr "SQL yg digunakan utk mengambil rincian kategori tapi gagal adalah"
 
-#: ContractBOM.php:299 PO_Items.php:1101
+#: ContractBOM.php:299 PO_Items.php:1103
 msgid "Search For Stock Items"
 msgstr "Cari Item Stok"
 
-#: ContractBOM.php:327 PO_Items.php:1128 SelectCompletedOrder.php:529
+#: ContractBOM.php:327 PO_Items.php:1130 SelectCompletedOrder.php:529
 #: SelectCreditItems.php:1002
 msgid "Enter text extracts in the description"
 msgstr "Masukkan sebagian teks di keterangan"
@@ -4841,9 +4841,9 @@ msgid ""
 "your search"
 msgstr ""
 
-#: ContractBOM.php:332 CounterReturns.php:1638 CounterSales.php:2249
-#: PO_Items.php:1135 SelectCompletedOrder.php:534 SelectCreditItems.php:1005
-#: SelectOrderItems.php:1701 SelectSalesOrder.php:595 SelectWorkOrder.php:197
+#: ContractBOM.php:332 CounterReturns.php:1638 CounterSales.php:2247
+#: PO_Items.php:1137 SelectCompletedOrder.php:534 SelectCreditItems.php:1005
+#: SelectOrderItems.php:1691 SelectSalesOrder.php:595 SelectWorkOrder.php:201
 msgid "Enter extract of the Stock Code"
 msgstr "Masukkan sebagian Kode Stok"
 
@@ -4853,21 +4853,21 @@ msgid ""
 "that text in the code"
 msgstr ""
 
-#: ContractBOM.php:337 PO_Items.php:1139
+#: ContractBOM.php:337 PO_Items.php:1141
 msgid "Create a New Stock Item"
 msgstr "Buat Item Stok Baru"
 
 #: ContractBOM.php:356 FixedAssetItems.php:503 Stocks.php:1017
-#: SupplierTenderCreate.php:846 SupplierTenders.php:691
+#: SupplierTenderCreate.php:850 SupplierTenders.php:689
 msgid "Image"
 msgstr "Gambar"
 
 #: ContractBOM.php:376 CounterSales.php:2111 FixedAssetItems.php:498
-#: FixedAssetItems.php:502 InternalStockRequest.php:633 Manufacturers.php:211
-#: PO_Items.php:1181 SalesCategories.php:261 SelectCreditItems.php:1051
-#: SelectOrderItems.php:1551 SelectOrderItems.php:1745 SelectProduct.php:446
+#: FixedAssetItems.php:502 InternalStockRequest.php:634 Manufacturers.php:211
+#: PO_Items.php:1183 SalesCategories.php:261 SelectCreditItems.php:1051
+#: SelectOrderItems.php:1550 SelectOrderItems.php:1732 SelectProduct.php:446
 #: Stocks.php:1008 Stocks.php:1012 Stocks.php:1016
-#: SupplierTenderCreate.php:869 SupplierTenders.php:716 WorkOrderEntry.php:662
+#: SupplierTenderCreate.php:873 SupplierTenders.php:714 WorkOrderEntry.php:666
 #: WorkOrderIssue.php:724
 #, php-format
 msgid "No Image"
@@ -4878,15 +4878,15 @@ msgstr "Tdk Ada Gambar"
 msgid "Enter the quantity required of this item to complete the contract"
 msgstr "Masukkan nama template yg akan dibuat"
 
-#: ContractBOM.php:399 SupplierTenders.php:760
+#: ContractBOM.php:399 SupplierTenders.php:758
 msgid "Only the first"
 msgstr "Hanya"
 
-#: ContractBOM.php:399 SupplierTenders.php:760
+#: ContractBOM.php:399 SupplierTenders.php:758
 msgid "can be displayed"
 msgstr "yg pertama dapat ditampilkan"
 
-#: ContractBOM.php:399 SupplierTenders.php:761
+#: ContractBOM.php:399 SupplierTenders.php:759
 msgid "Please restrict your search to only the parts required"
 msgstr "Silahkan batasi pencarian Anda ke hanya brg yg diperlukan"
 
@@ -4942,7 +4942,7 @@ msgstr "Persediaan Diperlukan"
 
 #: ContractCosting.php:82 ContractCosting.php:88 Contracts.php:995
 #: CounterReturns.php:670 CounterSales.php:747 DeliveryDetails.php:873
-#: DeliveryDetails.php:943 OrderDetails.php:171 PO_Items.php:836
+#: DeliveryDetails.php:943 OrderDetails.php:171 PO_Items.php:838
 #: PrintCustTrans.php:895 PrintCustTrans.php:984 PrintCustTrans.php:1033
 #: PrintCustTransPortrait.php:946 PrintCustTransPortrait.php:1044
 #: PrintCustTransPortrait.php:1100 RecurringSalesOrders.php:332
@@ -4980,7 +4980,7 @@ msgstr "Biaya Anggaran Lain2"
 #: PO_SelectPurchOrder.php:433 PurchData.php:271 ReprintGRN.php:81
 #: SelectProduct.php:349 SelectSupplier.php:158 ShipmentCosting.php:535
 #: ShipmentCosting.php:612 Shipt_Select.php:294 ShiptsList.php:11
-#: SuppCreditGRNs.php:281 SupplierAllocations.php:567
+#: SuppCreditGRNs.php:293 SupplierAllocations.php:567
 #: SupplierAllocations.php:642 SupplierCredit.php:262 SupplierInquiry.php:118
 #: SupplierInvoice.php:605 SupplierTransInquiry.php:106 SuppLoginSetup.php:33
 #: SuppPriceList.php:222 SuppPriceList.php:295
@@ -5038,7 +5038,7 @@ msgstr "Tdk dapat memperbarui order produksi ke selesai karena:"
 msgid "The SQL used to close the work order was:"
 msgstr "SQL yg digunakan utk menutup order produksi tersebut adalah:"
 
-#: ContractCosting.php:340 GoodsReceived.php:491
+#: ContractCosting.php:340 GoodsReceived.php:497
 #: InternalStockRequestFulfill.php:97 InternalStockRequestFulfill.php:105
 #: PDFStockCheckComparison.php:127 ReverseGRN.php:219 StockAdjustments.php:286
 #: StockLocTransferReceive.php:293 StockLocTransferReceive.php:302
@@ -5166,8 +5166,8 @@ msgid "Requirement Description"
 msgstr "Keterangan Persyaratan"
 
 #: ContractOtherReqts.php:159 InternalStockRequestAuthorisation.php:88
-#: InternalStockRequest.php:270 SelectWorkOrder.php:335
-#: WhereUsedInquiry.php:73 WorkOrderCosting.php:99
+#: InternalStockRequest.php:270 SelectWorkOrder.php:325
+#: WhereUsedInquiry.php:71 WorkOrderCosting.php:99
 msgid "Quantity Required"
 msgstr "Qty yg Diperlukan"
 
@@ -5529,11 +5529,11 @@ msgstr "Data customer yg dipilih"
 
 #: Contracts.php:718 CounterReturns.php:119 CounterReturns.php:148
 #: CounterReturns.php:1699 CounterSales.php:124 CounterSales.php:158
-#: CounterSales.php:2131 CounterSales.php:2317 DeliveryDetails.php:158
-#: InternalStockRequest.php:665 PO_Header.php:411 PO_Header.php:485
+#: CounterSales.php:2131 CounterSales.php:2309 DeliveryDetails.php:158
+#: InternalStockRequest.php:666 PO_Header.php:411 PO_Header.php:485
 #: SelectCreditItems.php:182 SelectOrderItems.php:405 SelectOrderItems.php:452
-#: SelectOrderItems.php:534 SelectOrderItems.php:575 SelectOrderItems.php:1571
-#: SelectOrderItems.php:1771 SpecialOrder.php:68 SpecialOrder.php:92
+#: SelectOrderItems.php:534 SelectOrderItems.php:575 SelectOrderItems.php:1570
+#: SelectOrderItems.php:1758 SpecialOrder.php:68 SpecialOrder.php:92
 #: StockCheck.php:222 StockLocStatus.php:196 StockLocStatus.php:220
 #: StockLocStatus.php:251 StockStatus.php:123 StockStatus.php:147
 #: StockStatus.php:167 StockStatus.php:189 StockStatus.php:206
@@ -5613,7 +5613,7 @@ msgstr "Reset"
 #: includes/PDFDeliveryDifferencesPageHeader.inc:45
 #: includes/PDFDIFOTPageHeader.inc:44 includes/PDFOrderPageHeader.inc:50
 #: includes/PDFTransPageHeader.inc:47
-#: includes/PDFTransPageHeaderPortrait.inc:56
+#: includes/PDFTransPageHeaderPortrait.inc:58
 msgid "Branch"
 msgstr "Cabang"
 
@@ -5630,7 +5630,7 @@ msgstr "Kontak"
 #: includes/PDFQuotationPortraitPageHeader.inc:22
 #: includes/PDFSalesOrder_generic.inc:34
 #: includes/PDFStatementPageHeader.inc:65 includes/PDFTransPageHeader.inc:81
-#: includes/PDFTransPageHeaderPortrait.inc:107
+#: includes/PDFTransPageHeaderPortrait.inc:109
 #: includes/PO_PDFOrderPageHeader.inc:28
 msgid "Fax"
 msgstr "Fax"
@@ -5641,7 +5641,7 @@ msgstr "Fax"
 #: includes/PDFQuotationPageHeader.inc:93
 #: includes/PDFQuotationPortraitPageHeader.inc:91
 #: includes/PDFStatementPageHeader.inc:116 includes/PDFTransPageHeader.inc:159
-#: includes/PDFTransPageHeaderPortrait.inc:210
+#: includes/PDFTransPageHeaderPortrait.inc:212
 #: includes/PO_PDFOrderPageHeader.inc:71
 msgid "All amounts stated in"
 msgstr "Semua jumlah tertera dalam"
@@ -5710,7 +5710,7 @@ msgstr "File Gambar"
 msgid "format only"
 msgstr "saja formatnya"
 
-#: Contracts.php:925 SelectContract.php:146 SelectWorkOrder.php:339
+#: Contracts.php:925 SelectContract.php:146 SelectWorkOrder.php:329
 msgid "Required Date"
 msgstr "Tgl Diperlukan"
 
@@ -5761,7 +5761,7 @@ msgstr "Pengaturan"
 msgid "Quote"
 msgstr "Penawaran"
 
-#: Contracts.php:957 GoodsReceived.php:109 InternalStockRequestFulfill.php:321
+#: Contracts.php:957 GoodsReceived.php:110 InternalStockRequestFulfill.php:321
 #: PO_Header.php:844 POReport.php:1587 PO_SelectPurchOrder.php:151
 #: PO_SelectPurchOrder.php:153 SalesInquiry.php:1155 SelectContract.php:54
 msgid "Completed"
@@ -5963,17 +5963,17 @@ msgstr "Keterangan item telah digunakan dalam pencarian"
 msgid "Item Code has been used in search"
 msgstr "Kode Item telah digunakan dalam pencarian"
 
-#: CounterReturns.php:208 CounterSales.php:238 InternalStockRequest.php:376
+#: CounterReturns.php:208 CounterSales.php:238 InternalStockRequest.php:375
 #: SelectOrderItems.php:758
 msgid "Stock Category has been used in search"
 msgstr "Kategori Stok telah digunakan dalam pencarian"
 
-#: CounterReturns.php:325 CounterSales.php:349 InternalStockRequest.php:499
+#: CounterReturns.php:325 CounterSales.php:349 InternalStockRequest.php:498
 #: SelectOrderItems.php:863 WorkOrderEntry.php:182 WorkOrderIssue.php:469
 msgid "The SQL used to get the part selection was"
 msgstr "SQL yg digunakan utk mendapatkan pilihan brg adalah"
 
-#: CounterReturns.php:329 CounterSales.php:353 InternalStockRequest.php:503
+#: CounterReturns.php:329 CounterSales.php:353 InternalStockRequest.php:502
 #: SelectOrderItems.php:868 WorkOrderEntry.php:186 WorkOrderIssue.php:473
 msgid "There are no products available meeting the criteria specified"
 msgstr "Tdk ditemukan produk yg memenuhi kriteria yg dimasukkan"
@@ -6225,12 +6225,12 @@ msgstr "Cetak nota kredit ini"
 msgid "Yes Please"
 msgstr "Ya"
 
-#: CounterReturns.php:1606 CounterReturns.php:1607 CounterSales.php:2219
-#: CounterSales.php:2220
+#: CounterReturns.php:1606 CounterReturns.php:1607 CounterSales.php:2215
+#: CounterSales.php:2216
 msgid "Search for Items"
 msgstr "Cari Produk"
 
-#: CounterReturns.php:1607 CounterSales.php:2220 SelectOrderItems.php:1667
+#: CounterReturns.php:1607 CounterSales.php:2216 SelectOrderItems.php:1657
 msgid ""
 ", Searches the database for items, you can narrow the results by selecting a "
 "stock category, or just enter a partial item description or partial item code"
@@ -6239,15 +6239,15 @@ msgstr ""
 "kategori stok, atau hanya memasukkan sebagian keterangan item atau sebagian "
 "kode item"
 
-#: CounterReturns.php:1610 CounterSales.php:2221 SelectOrderItems.php:1670
+#: CounterReturns.php:1610 CounterSales.php:2220 SelectOrderItems.php:1660
 msgid "Select a Stock Category"
 msgstr "Pilih Kategori Stok"
 
-#: CounterReturns.php:1635 CounterSales.php:2244 SelectOrderItems.php:1694
+#: CounterReturns.php:1635 CounterSales.php:2243 SelectOrderItems.php:1684
 msgid "Enter partial Description"
 msgstr "Masukkan sebagian Keterangan"
 
-#: CounterReturns.php:1643 CounterSales.php:2256 SelectOrderItems.php:1710
+#: CounterReturns.php:1643 CounterSales.php:2254 SelectOrderItems.php:1700
 msgid "Use Quick Entry"
 msgstr "Entri Cepat"
 
@@ -6256,9 +6256,9 @@ msgid ""
 "Select an item by entering the quantity required.  Click Return when ready."
 msgstr "Pilih item dgn memasukkan qty yg diperlukan. Klik Retur saat siap."
 
-#: CounterReturns.php:1662 CounterReturns.php:1787 CounterSales.php:2279
-#: CounterSales.php:2406 InternalStockRequest.php:616
-#: InternalStockRequest.php:740
+#: CounterReturns.php:1662 CounterReturns.php:1785 CounterSales.php:2272
+#: CounterSales.php:2395 InternalStockRequest.php:616
+#: InternalStockRequest.php:738
 msgid "Prev"
 msgstr "Sebelum"
 
@@ -6266,54 +6266,54 @@ msgstr "Sebelum"
 msgid "Return Item(s)"
 msgstr "Retur Item"
 
-#: CounterReturns.php:1664 CounterReturns.php:1789 CounterSales.php:2281
-#: CounterSales.php:2408 InternalStockRequest.php:547
-#: InternalStockRequest.php:622 InternalStockRequest.php:744 MRPReport.php:740
-#: SelectAsset.php:252 SelectCustomer.php:413 SelectCustomer.php:490
-#: SelectOrderItems.php:1734 SelectOrderItems.php:1860 SelectProduct.php:760
-#: SelectSupplier.php:268 SelectSupplier.php:332 SupplierPriceList.php:254
-#: SupplierTenderCreate.php:598
+#: CounterReturns.php:1664 CounterReturns.php:1789 CounterSales.php:2274
+#: CounterSales.php:2397 InternalStockRequest.php:546
+#: InternalStockRequest.php:622 InternalStockRequest.php:742 MRPReport.php:741
+#: SelectAsset.php:251 SelectCustomer.php:413 SelectCustomer.php:490
+#: SelectOrderItems.php:1721 SelectOrderItems.php:1844 SelectProduct.php:760
+#: SelectSupplier.php:268 SelectSupplier.php:332 SupplierPriceList.php:261
+#: SupplierTenderCreate.php:603
 msgid "Next"
 msgstr "Berikut"
 
-#: CounterReturns.php:1671 CounterSales.php:2100 CounterSales.php:2288
-#: InternalStockRequest.php:628 SelectOrderItems.php:1540
-#: SelectOrderItems.php:1740
+#: CounterReturns.php:1671 CounterSales.php:2100 CounterSales.php:2281
+#: InternalStockRequest.php:629 SelectOrderItems.php:1539
+#: SelectOrderItems.php:1727
 msgid "On Demand"
 msgstr "Atas Permintaan"
 
-#: CounterReturns.php:1672 CounterSales.php:2101 CounterSales.php:2289
-#: InternalStockRequest.php:629 ReorderLevel.php:302 SelectOrderItems.php:1541
-#: SelectOrderItems.php:1741 StockLocStatus.php:178 StockStatus.php:98
+#: CounterReturns.php:1672 CounterSales.php:2101 CounterSales.php:2282
+#: InternalStockRequest.php:630 ReorderLevel.php:302 SelectOrderItems.php:1540
+#: SelectOrderItems.php:1728 StockLocStatus.php:178 StockStatus.php:98
 #: TopItems.php:169
 msgid "On Order"
 msgstr "Sdg Dipesan"
 
-#: CounterReturns.php:1673 CounterSales.php:2102 CounterSales.php:2290
-#: InternalStockRequest.php:630 SelectOrderItems.php:1542
-#: SelectOrderItems.php:1742 StockDispatch.php:516 StockDispatch.php:517
+#: CounterReturns.php:1673 CounterSales.php:2102 CounterSales.php:2283
+#: InternalStockRequest.php:631 SelectOrderItems.php:1541
+#: SelectOrderItems.php:1729 StockDispatch.php:516 StockDispatch.php:517
 #: StockLocStatus.php:177 StockStatus.php:97 includes/OutputSerialItems.php:37
 #: includes/PDFStockCheckPageHeader.inc:40
 msgid "Available"
 msgstr "Tersedia"
 
-#: CounterReturns.php:1699 CounterSales.php:2130 CounterSales.php:2317
-#: InternalStockRequest.php:665 SelectOrderItems.php:1570
-#: SelectOrderItems.php:1771 StockCheck.php:222 StockLocStatus.php:196
+#: CounterReturns.php:1699 CounterSales.php:2130 CounterSales.php:2309
+#: InternalStockRequest.php:666 SelectOrderItems.php:1569
+#: SelectOrderItems.php:1758 StockCheck.php:222 StockLocStatus.php:196
 #: StockLocStatus.php:220 StockStatus.php:123 StockStatus.php:147
 msgid "The demand for this product from"
 msgstr "Permintaan produk ini dari"
 
 #: CounterReturns.php:1718 CounterReturns.php:1732 CounterSales.php:2149
-#: CounterSales.php:2163 CounterSales.php:2336 CounterSales.php:2350
-#: InternalStockRequest.php:685 InternalStockRequest.php:699
-#: SelectOrderItems.php:1590 SelectOrderItems.php:1604
-#: SelectOrderItems.php:1792 SelectOrderItems.php:1806
+#: CounterSales.php:2163 CounterSales.php:2328 CounterSales.php:2342
+#: InternalStockRequest.php:686 InternalStockRequest.php:700
+#: SelectOrderItems.php:1589 SelectOrderItems.php:1603
+#: SelectOrderItems.php:1779 SelectOrderItems.php:1793
 msgid "The order details for this product cannot be retrieved because"
 msgstr "Rincian order utk produk ini tdk dapat diambil karena"
 
-#: CounterReturns.php:1788 CounterSales.php:2212 CounterSales.php:2280
-#: CounterSales.php:2407
+#: CounterReturns.php:1787 CounterSales.php:2209 CounterSales.php:2273
+#: CounterSales.php:2396
 msgid "Add to Sale"
 msgstr "Tambahkan ke Penjualan"
 
@@ -6330,14 +6330,14 @@ msgid ""
 "characters underscore or hyphen."
 msgstr ""
 
-#: CounterReturns.php:1824 CounterSales.php:2442 SelectCreditItems.php:1014
-#: SelectCreditItems.php:1065 SelectOrderItems.php:1870
-#: SelectOrderItems.php:1897
+#: CounterReturns.php:1824 CounterSales.php:2430 SelectCreditItems.php:1014
+#: SelectCreditItems.php:1065 SelectOrderItems.php:1854
+#: SelectOrderItems.php:1882
 msgid "Quick Entry"
 msgstr "Entri Cepat"
 
-#: CounterReturns.php:1825 CounterSales.php:2443 SelectCreditItems.php:1083
-#: SelectOrderItems.php:1898 SelectOrderItems.php:1920
+#: CounterReturns.php:1825 CounterSales.php:2431 SelectCreditItems.php:1083
+#: SelectOrderItems.php:1883 SelectOrderItems.php:1913
 msgid "Search Parts"
 msgstr "Cari Brg"
 
@@ -6642,29 +6642,29 @@ msgstr ""
 ", menampilkan item yg sering dipesan dalam 6 bulan terakhir. Anda dapat "
 "memilih dari daftar ini, atau cari lebih jauh utk brg lain"
 
-#: CounterSales.php:2269 InternalStockRequest.php:607
-#: SelectOrderItems.php:1725
+#: CounterSales.php:2262 InternalStockRequest.php:607
+#: SelectOrderItems.php:1712
 msgid ""
 "Select an item by entering the quantity required.  Click Order when ready."
 msgstr ""
 "Pilih item dgn memasukkan qty yg diperlukan. Klik Order setelah selesai."
 
-#: CounterSales.php:2416
+#: CounterSales.php:2405
 msgid "Use this form to add items quickly if the item codes are already known"
 msgstr ""
 "Gunakan formulir ini utk menambahkan item dgn cepat jika kode item diketahui"
 
-#: CounterSales.php:2435
+#: CounterSales.php:2423
 msgid ""
 "Enter a part code to be sold. Part codes can contain any alpha-numeric "
 "characters underscore or hyphen."
 msgstr ""
 
-#: CounterSales.php:2449
+#: CounterSales.php:2437
 msgid "Cancel Sale"
 msgstr "Batal Jual"
 
-#: CounterSales.php:2449
+#: CounterSales.php:2437
 msgid "Are you sure you wish to cancel this sale?"
 msgstr "Apakah Anda yakin ingin membatalkan penjualan ini?"
 
@@ -6771,7 +6771,7 @@ msgstr "Difakturkan"
 
 #: Credit_Invoice.php:291 GLAccountInquiry.php:176 GLAccountReport.php:345
 #: GLJournal.php:360 GLJournal.php:389 GLJournal.php:443
-#: SuppCreditGRNs.php:282
+#: SuppCreditGRNs.php:294
 msgid "Credit"
 msgstr "Kredit"
 
@@ -6933,7 +6933,7 @@ msgid ""
 "The freight GL posting for this credit note could not be inserted because"
 msgstr "Posting GL pengiriman utk nota kredit ini tdk dapat dimasukkan karena"
 
-#: Credit_Invoice.php:1453 GoodsReceived.php:724 SupplierCredit.php:1329
+#: Credit_Invoice.php:1453 GoodsReceived.php:730 SupplierCredit.php:1329
 #: SupplierInvoice.php:1879 WorkOrderIssue.php:353 WorkOrderReceive.php:695
 #: Z_BottomUpCosts.php:33
 msgid "has been processed"
@@ -7006,7 +7006,7 @@ msgstr ""
 "dipilih"
 
 #: CreditItemsControlled.php:61 CreditItemsControlled.php:77
-#: SuppContractChgs.php:118 SuppCreditGRNs.php:131 SuppFixedAssetChgs.php:105
+#: SuppContractChgs.php:118 SuppCreditGRNs.php:136 SuppFixedAssetChgs.php:105
 #: SuppShiptChgs.php:23 SuppTransGLAnalysis.php:152
 msgid "Back to Credit Note Entry"
 msgstr "Kembali ke Masukkan Nota Kredit"
@@ -7220,7 +7220,7 @@ msgstr "Nama Mata Uang"
 #: Currencies.php:298 Currencies.php:457 CustomerBranches.php:663
 #: Customers.php:474 Customers.php:778 Customers.php:817
 #: DeliveryDetails.php:1071 FreightCosts.php:215 Suppliers.php:696
-#: Suppliers.php:900 ../webSHOP/Checkout.php:413 ../webSHOP/Checkout.php:473
+#: Suppliers.php:900 ../webSHOP/Checkout.php:413 ../webSHOP/Checkout.php:472
 #: ../webSHOP/CreditCardPayPalPro.php:293 ../webSHOP/Register.php:651
 #: ../webSHOP/Register.php:693
 msgid "Country"
@@ -7467,7 +7467,7 @@ msgstr "Buat Penjualan Kasir utk Customer ini"
 
 #: CustLoginSetup.php:150 SMTPServer.php:103 SuppLoginSetup.php:133
 #: WWW_Users.php:454 includes/Login.php:99 ../webSHOP/Checkout.php:300
-#: ../webSHOP/Register.php:600 ../webSHOP/includes/header.php:225
+#: ../webSHOP/Register.php:600 ../webSHOP/includes/header.php:224
 msgid "Password"
 msgstr "Kata Sandi"
 
@@ -7580,137 +7580,137 @@ msgstr "coba gunakan link navigasi yg disediakan, dan bukan tombol back"
 msgid "to avoid this message in future"
 msgstr "utk menghindari pesan ini lain kali"
 
-#: CustomerAllocations.php:59
+#: CustomerAllocations.php:53
 msgid "Amount entered was negative"
 msgstr "Jumlah yg dimasukkan negatif"
 
-#: CustomerAllocations.php:59
+#: CustomerAllocations.php:53
 msgid "Only positive amounts are allowed"
 msgstr "Hanya jumlah positif yg diperbolehkan"
 
-#: CustomerAllocations.php:83
+#: CustomerAllocations.php:77
 msgid ""
 "Allocation could not be processed because the amount allocated is more than "
 "the"
 msgstr "Alokasi tdk dapat diproses karena jumlah yg dialokasikan lebih dari"
 
-#: CustomerAllocations.php:83 SupplierAllocations.php:92
+#: CustomerAllocations.php:77 SupplierAllocations.php:92
 msgid "being allocated"
 msgstr "yg sedang dialokasikan"
 
-#: CustomerAllocations.php:83 CustWhereAlloc.php:156
+#: CustomerAllocations.php:77 CustWhereAlloc.php:156
 #: SupplierAllocations.php:92
 msgid "Total allocated"
 msgstr "Total dialokasikan"
 
-#: CustomerAllocations.php:83
+#: CustomerAllocations.php:77
 msgid "and the total amount of the"
 msgstr "dan total jumlah dari"
 
-#: CustomerAllocations.php:83
+#: CustomerAllocations.php:77
 msgid "was"
 msgstr "adalah"
 
-#: CustomerAllocations.php:101
+#: CustomerAllocations.php:95
 #, fuzzy
 msgid "Could not delete old allocation record"
 msgstr "Tdk dapat menghapus data aktiva"
 
-#: CustomerAllocations.php:119
+#: CustomerAllocations.php:113
 #, fuzzy
 msgid "Could not change allocation record"
 msgstr "Total data alokasi"
 
-#: CustomerAllocations.php:132
+#: CustomerAllocations.php:126
 #, fuzzy
 msgid "Could not update difference on exchange"
 msgstr "Tdk dapat memperbarui akun karena"
 
-#: CustomerAllocations.php:148
+#: CustomerAllocations.php:142
 #, fuzzy
 msgid "Could not update receipt or credit note"
 msgstr "Hanya dapat mengalokasi penerimaan atau nota kredit"
 
-#: CustomerAllocations.php:177
+#: CustomerAllocations.php:171
 #, fuzzy
 msgid "Could not update exchange difference in General Ledger"
 msgstr "Tdk dapat memperbarui mata uang karena"
 
-#: CustomerAllocations.php:198
+#: CustomerAllocations.php:192
 #, fuzzy
 msgid "Could not update debtors control in General Ledger"
 msgstr "Tdk dapat mengembalikan transaksi bank ini karena"
 
-#: CustomerAllocations.php:332
+#: CustomerAllocations.php:326
 msgid "Allocate Receipt"
 msgstr "Alokasi Penerimaan"
 
-#: CustomerAllocations.php:332 CustomerReceipt.php:562
+#: CustomerAllocations.php:326 CustomerReceipt.php:562
 msgid "Allocate Receipts"
 msgstr "Alokasi Penerimaan"
 
-#: CustomerAllocations.php:336 PDFRemittanceAdvice.php:307
+#: CustomerAllocations.php:330 PDFRemittanceAdvice.php:307
 #: SupplierAllocations.php:566 SupplierAllocations.php:641
 #: includes/PDFStatementPageHeader.inc:167
 msgid "Trans Type"
 msgstr "Tipe Transaksi"
 
-#: CustomerAllocations.php:338
+#: CustomerAllocations.php:332
 msgid "Cust No"
 msgstr "No Cust"
 
-#: CustomerAllocations.php:342 SupplierAllocations.php:571
+#: CustomerAllocations.php:336 SupplierAllocations.php:571
 #: SupplierAllocations.php:646
 msgid "To Alloc"
 msgstr "Utk Dialokasi"
 
-#: CustomerAllocations.php:344
+#: CustomerAllocations.php:338
 msgid "Action"
 msgstr "Tindakan"
 
-#: CustomerAllocations.php:363
+#: CustomerAllocations.php:357
 msgid "Amount in customer currency"
 msgstr "Jumlah dalam mata uang customer"
 
-#: CustomerAllocations.php:363 SupplierAllocations.php:443
+#: CustomerAllocations.php:357 SupplierAllocations.php:443
 msgid "converted into local currency at an exchange rate of"
 msgstr "dikonversikan ke mata uang lokal dgn kurs"
 
-#: CustomerAllocations.php:368 CustomerAllocations.php:369
-#: CustomerAllocations.php:370 SupplierAllocations.php:455
+#: CustomerAllocations.php:362 CustomerAllocations.php:363
+#: CustomerAllocations.php:364 SupplierAllocations.php:455
 #: SupplierAllocations.php:456 SupplierInquiry.php:208
 #: includes/PDFLowGPPageHeader.inc:43 includes/PDFStatementPageHeader.inc:178
 msgid "Trans"
 msgstr "Trans"
 
-#: CustomerAllocations.php:372 SupplierAllocations.php:459
+#: CustomerAllocations.php:366 SupplierAllocations.php:459
 msgid "Yet to"
 msgstr "Belum di"
 
-#: CustomerAllocations.php:372 CustomerAllocations.php:501
-#: CustomerAllocations.php:543 CustomerReceipt.php:251 CustomerReceipt.php:562
+#: CustomerAllocations.php:366 CustomerAllocations.php:495
+#: CustomerAllocations.php:537 CustomerReceipt.php:251 CustomerReceipt.php:562
 #: SupplierAllocations.php:459 SupplierAllocations.php:595
 #: SupplierAllocations.php:671
 #, php-format
 msgid "Allocate"
 msgstr "Alokasi"
 
-#: CustomerAllocations.php:373 SupplierAllocations.php:460
+#: CustomerAllocations.php:367 SupplierAllocations.php:460
 msgid "This"
 msgstr "Ini"
 
-#: CustomerAllocations.php:373 CustomerInquiry.php:369 CustomerInquiry.php:402
+#: CustomerAllocations.php:367 CustomerInquiry.php:369 CustomerInquiry.php:402
 #: CustomerInquiry.php:435 CustomerInquiry.php:455 SupplierAllocations.php:460
 #, php-format
 msgid "Allocation"
 msgstr "Alokasi"
 
-#: CustomerAllocations.php:374
+#: CustomerAllocations.php:368
 msgid "Running"
 msgstr "Berjalan"
 
-#: CustomerAllocations.php:374 CustomerAllocations.php:550
-#: CustomerAllocations.php:602 CustomerInquiry.php:211
+#: CustomerAllocations.php:368 CustomerAllocations.php:544
+#: CustomerAllocations.php:596 CustomerInquiry.php:211
 #: GLAccountInquiry.php:178 SupplierInquiry.php:214
 #: includes/PDFAgedDebtorsPageHeader.inc:49
 #: includes/PDFAgedSuppliersPageHeader.inc:35
@@ -7720,39 +7720,39 @@ msgstr "Berjalan"
 msgid "Balance"
 msgstr "Saldo"
 
-#: CustomerAllocations.php:386
+#: CustomerAllocations.php:380
 msgid "Being allocated"
 msgstr "Yg sedang dialokasikan"
 
-#: CustomerAllocations.php:408
+#: CustomerAllocations.php:402
 msgid ""
 "Check this box to allocate the entire amouunt of this transaction. Just "
 "enter the amount without ticking this check box for a partial allocation"
 msgstr ""
 
-#: CustomerAllocations.php:417
+#: CustomerAllocations.php:411
 msgid ""
 "Enter the amount of this transaction to be allocated. Nothing should be "
 "entered here if the entire transaction is to be allocated, use the check box"
 msgstr ""
 
-#: CustomerAllocations.php:427 SupplierAllocations.php:506
+#: CustomerAllocations.php:421 SupplierAllocations.php:506
 msgid "Total Allocated"
 msgstr "Total Dialokasi"
 
-#: CustomerAllocations.php:431 SupplierAllocations.php:519
+#: CustomerAllocations.php:425 SupplierAllocations.php:519
 msgid "Recalculate Total To Allocate"
 msgstr "Hitung-Ulg Total Utk Dialokasi"
 
-#: CustomerAllocations.php:434 SupplierAllocations.php:511
+#: CustomerAllocations.php:428 SupplierAllocations.php:511
 msgid "Left to allocate"
 msgstr "Belum dialokasi"
 
-#: CustomerAllocations.php:441 SupplierAllocations.php:520
+#: CustomerAllocations.php:435 SupplierAllocations.php:520
 msgid "Process Allocations"
 msgstr "Proses Alokasi"
 
-#: CustomerAllocations.php:442 CustomerReceipt.php:1114
+#: CustomerAllocations.php:436 CustomerReceipt.php:1114
 #: InternalStockCategoriesByRole.php:137 InternalStockCategoriesByRole.php:227
 #: Payments.php:1062 PcAssignCashToTab.php:182 PcAssignCashToTab.php:399
 #: PcAuthorizeExpenses.php:335 PcClaimExpensesFromTab.php:175
@@ -7762,12 +7762,12 @@ msgstr "Proses Alokasi"
 msgid "Cancel"
 msgstr "Batal"
 
-#: CustomerAllocations.php:478
+#: CustomerAllocations.php:472
 msgid "No outstanding receipts or credits to be allocated for this customer"
 msgstr ""
 "Customer ini tdk ada penerimaan atau kredit blm-selesai utk dialokasikan"
 
-#: CustomerAllocations.php:597 SupplierAllocations.php:688
+#: CustomerAllocations.php:591 SupplierAllocations.php:688
 msgid "There are no allocations to be done"
 msgstr "Tdk ada alokasi utk diselesaikan"
 
@@ -8428,7 +8428,7 @@ msgstr "Tdk ada item utk Customer ini"
 msgid "Transaction Date"
 msgstr "Tgl Transaksi"
 
-#: CustomerPurchases.php:66 SupplierTenderCreate.php:426
+#: CustomerPurchases.php:66 SupplierTenderCreate.php:428
 #: SupplierTenders.php:325 api/api_xml-rpc.php:744 api/api_xml-rpc.php:812
 #: api/api_xml-rpc.php:843 api/api_xml-rpc.php:874 api/api_xml-rpc.php:913
 #: api/api_xml-rpc.php:944 api/api_xml-rpc.php:975 api/api_xml-rpc.php:1018
@@ -8715,11 +8715,11 @@ msgstr "Disetor ke"
 msgid "on"
 msgstr "pada"
 
-#: CustomerReceipt.php:918 GoodsReceived.php:103 GoodsReceived.php:107
-#: GoodsReceived.php:113 POReport.php:629 POReport.php:1360 ReverseGRN.php:392
+#: CustomerReceipt.php:918 GoodsReceived.php:104 GoodsReceived.php:108
+#: GoodsReceived.php:114 POReport.php:629 POReport.php:1360 ReverseGRN.php:392
 #: ReverseGRN.php:393 ShipmentCosting.php:150 Shipments.php:403
 #: Shipments.php:490 StockDispatch.php:507 StockDispatch.php:514
-#: SuppCreditGRNs.php:189
+#: SuppCreditGRNs.php:194
 msgid "Received"
 msgstr "Diterima"
 
@@ -9171,7 +9171,7 @@ msgstr "Pilih tipe transaksi utk dibuat laporan."
 #: SalesAnalRepts.php:435 SalesAnalRepts.php:463 SalesAnalRepts.php:492
 #: SalesAnalRepts.php:511 ShipmentCosting.php:56 Shipments.php:308
 #: StockDispatch.php:511 StockLocTransferReceive.php:209
-#: StockTransfers.php:351 SuppContractChgs.php:72 SuppCreditGRNs.php:179
+#: StockTransfers.php:351 SuppContractChgs.php:72 SuppCreditGRNs.php:184
 #: SuppFixedAssetChgs.php:73 SupplierTransInquiry.php:51 SuppShiptChgs.php:77
 #: includes/PDFChequeListingPageHeader.inc:17
 #: includes/PDFDeliveryDifferencesPageHeader.inc:19
@@ -9836,22 +9836,22 @@ msgid "Order Summary"
 msgstr "Ringkasan Order"
 
 #: DeliveryDetails.php:917 OrderDetails.php:216 RecurringSalesOrders.php:376
-#: SelectOrderItems.php:1476
+#: SelectOrderItems.php:1477
 msgid "TOTAL Excl Tax/Freight"
 msgstr "TOTAL Sblm Pajak/Pengiriman"
 
 #: DeliveryDetails.php:927 DeliveryDetails.php:985 OrderDetails.php:224
-#: SelectOrderItems.php:1483
+#: SelectOrderItems.php:1485
 msgid "Total Weight"
 msgstr "Total Berat"
 
 #: DeliveryDetails.php:929 DeliveryDetails.php:987 OrderDetails.php:226
-#: SelectOrderItems.php:1485
+#: SelectOrderItems.php:1487
 msgid "Total Volume"
 msgstr "Total Volume"
 
 #: DeliveryDetails.php:997 OrderDetails.php:81 RecurringSalesOrders.php:385
-#: SelectOrderItems.php:744 SupplierTenders.php:111 SupplierTenders.php:498
+#: SelectOrderItems.php:744 SupplierTenders.php:111 SupplierTenders.php:496
 #: includes/PDFPickingListHeader.inc:28 includes/PO_PDFOrderPageHeader.inc:31
 msgid "Deliver To"
 msgstr "Dikirim Ke"
@@ -10105,7 +10105,7 @@ msgid "Discount Category Code"
 msgstr "Kode Kategori Diskon"
 
 #: DiscountCategories.php:90 DiscountCategories.php:261 PO_Header.php:901
-#: SalesCategories.php:271 SuppInvGRNs.php:299 SupplierTenderCreate.php:356
+#: SalesCategories.php:271 SuppInvGRNs.php:303 SupplierTenderCreate.php:356
 #: SupplierTenders.php:178
 #, php-format
 msgid "Select"
@@ -10165,10 +10165,10 @@ msgstr "Kategori Diskon"
 
 #: DiscountCategories.php:213 InventoryPlanningPrefSupplier.php:72
 #: PDFPriceList.php:366 SalesCategories.php:157 SalesCategories.php:508
-#: SalesTopItemsInquiry.php:220 SelectWorkOrder.php:334
+#: SalesTopItemsInquiry.php:220 SelectWorkOrder.php:324
 #: ShipmentCosting.php:148 ShipmentCosting.php:539 Shipments.php:400
-#: Shipments.php:487 StockUsage.php:60 SuppCreditGRNs.php:278
-#: SuppInvGRNs.php:253 WorkOrderCosting.php:97 WorkOrderCosting.php:129
+#: Shipments.php:487 StockUsage.php:60 SuppCreditGRNs.php:290
+#: SuppInvGRNs.php:257 WorkOrderCosting.php:97 WorkOrderCosting.php:129
 #: WorkOrderIssue.php:604 WorkOrderReceive.php:767 WorkOrderStatus.php:65
 #: WorkOrderStatus.php:97 includes/PDFInventoryPlanPageHeader.inc:50
 #: includes/PDFInventoryValnPageHeader.inc:32
@@ -10303,8 +10303,8 @@ msgstr "Baris pesan yg dipilih telah dihapus"
 msgid "Definition of"
 msgstr "Definisi dari"
 
-#: EDIMessageFormat.php:130 SuppInvGRNs.php:124 SuppInvGRNs.php:252
-#: SuppInvGRNs.php:300
+#: EDIMessageFormat.php:130 SuppInvGRNs.php:124 SuppInvGRNs.php:256
+#: SuppInvGRNs.php:304
 msgid "Sequence"
 msgstr "Urutan"
 
@@ -10963,8 +10963,8 @@ msgid "Delivered To"
 msgstr "Dikirim Ke"
 
 #: EmailConfirmation.php:215 EmailConfirmation.php:345
-#: SelectOrderItems.php:1370 SelectOrderItems.php:1875
-#: SelectOrderItems.php:1908
+#: SelectOrderItems.php:1370 SelectOrderItems.php:1859
+#: SelectOrderItems.php:1895
 msgid "PO Line"
 msgstr "Baris PO"
 
@@ -10977,7 +10977,7 @@ msgstr "Qty Dipesan"
 #: EmailConfirmation.php:220 EmailConfirmation.php:350 MRPDemands.php:298
 #: MRPDemands.php:399 MRPPlannedPurchaseOrders.php:339
 #: MRPPlannedWorkOrders.php:260 MRPPlannedWorkOrders.php:393 MRPReport.php:414
-#: MRPReport.php:420 SelectOrderItems.php:1384 SelectOrderItems.php:1879
+#: MRPReport.php:420 SelectOrderItems.php:1384 SelectOrderItems.php:1863
 #: SupplierTransInquiry.php:108
 msgid "Due Date"
 msgstr "Jatuh Tempo"
@@ -11148,25 +11148,25 @@ msgid "Company Name"
 msgstr "Nama Perusahaan"
 
 #: Factors.php:288 PurchData.php:472 SelectSupplier.php:280
-#: SellThroughSupport.php:162 SupplierPriceList.php:451
-#: SupplierTenderCreate.php:136 SupplierTenderCreate.php:610
+#: SellThroughSupport.php:162 SupplierPriceList.php:458
+#: SupplierTenderCreate.php:136 SupplierTenderCreate.php:615
 msgid "Address 1"
 msgstr "Alamat 1"
 
 #: Factors.php:289 PurchData.php:473 SelectSupplier.php:281
-#: SellThroughSupport.php:163 SupplierPriceList.php:452
-#: SupplierTenderCreate.php:137 SupplierTenderCreate.php:611
+#: SellThroughSupport.php:163 SupplierPriceList.php:459
+#: SupplierTenderCreate.php:137 SupplierTenderCreate.php:616
 msgid "Address 2"
 msgstr "Alamat 2"
 
 #: Factors.php:290 PurchData.php:474 SelectSupplier.php:282
-#: SellThroughSupport.php:164 SupplierPriceList.php:453
-#: SupplierTenderCreate.php:138 SupplierTenderCreate.php:612
+#: SellThroughSupport.php:164 SupplierPriceList.php:460
+#: SupplierTenderCreate.php:138 SupplierTenderCreate.php:617
 msgid "Address 3"
 msgstr "Alamat 3"
 
 #: Factors.php:291 SelectSupplier.php:283 SupplierTenderCreate.php:139
-#: SupplierTenderCreate.php:613
+#: SupplierTenderCreate.php:618
 msgid "Address 4"
 msgstr "Alamat 4"
 
@@ -11388,7 +11388,7 @@ msgstr ""
 msgid "Asset ID"
 msgstr "ID Aktiva"
 
-#: FixedAssetDepreciation.php:92 FixedAssetItems.php:535 SelectAsset.php:267
+#: FixedAssetDepreciation.php:92 FixedAssetItems.php:535 SelectAsset.php:266
 msgid "Date Purchased"
 msgstr "Tgl Dibeli"
 
@@ -11661,7 +11661,7 @@ msgid "Deleted the asset  record for asset number"
 msgstr "Menghapus data aktiva utk nomor aktiva"
 
 #: FixedAssetItems.php:441 FixedAssetItems.php:448 FixedAssetTransfer.php:94
-#: SelectAsset.php:264
+#: SelectAsset.php:263
 msgid "Asset Code"
 msgstr "Kode Aktiva"
 
@@ -11719,7 +11719,7 @@ msgid "The SQL used to retrieve asset locations and failed was"
 msgstr "SQL digunakan utk mengambil lokasi aktiva dan gagal adalah"
 
 #: FixedAssetItems.php:546 FixedAssetRegister.php:279
-#: FixedAssetTransfer.php:72 SelectAsset.php:81 SelectAsset.php:266
+#: FixedAssetTransfer.php:72 SelectAsset.php:81 SelectAsset.php:265
 msgid "Asset Location"
 msgstr "Lokasi Aktiva"
 
@@ -11907,7 +11907,7 @@ msgid "Disposal Value"
 msgstr "Nilai Penjualan"
 
 #: FixedAssetRegister.php:208 FixedAssetRegister.php:227
-#: PDFBankingSummary.php:182 PDFChequeListing.php:184 PO_Items.php:776
+#: PDFBankingSummary.php:182 PDFChequeListing.php:184 PO_Items.php:778
 #: includes/PDFSalesAnalysis.inc:71 includes/PDFSalesAnalysis.inc:125
 #: includes/PDFSalesAnalysis.inc:178 includes/PDFSalesAnalysis.inc:312
 #: includes/PDFSalesAnalysis.inc:364 includes/PDFSalesAnalysis.inc:414
@@ -11989,9 +11989,9 @@ msgstr "Dalam Kategori Aktiva"
 
 #: FixedAssetTransfer.php:60 FixedAssetTransfer.php:94
 #: InternalStockRequest.php:342 InternalStockRequest.php:351 MRPReport.php:536
-#: MRPReport.php:543 SelectProduct.php:545 SelectProduct.php:552
-#: SupplierPriceList.php:40 SupplierPriceList.php:47
-#: SupplierTenderCreate.php:685 SupplierTenderCreate.php:696
+#: MRPReport.php:546 SelectProduct.php:545 SelectProduct.php:552
+#: SupplierPriceList.php:39 SupplierPriceList.php:49
+#: SupplierTenderCreate.php:690 SupplierTenderCreate.php:701
 #: SupplierTenders.php:421 SupplierTenders.php:433
 msgid "Enter partial"
 msgstr "Masukkan sebagian"
@@ -12276,8 +12276,8 @@ msgstr "Tdk ada order yg dikembalikan karena"
 
 #: FTP_RadioBeacon.php:49 SelectContract.php:139 SelectContract.php:169
 #: SelectRecurringSalesOrder.php:90 SelectSalesOrder.php:851
-#: SelectSalesOrder.php:869 SelectWorkOrder.php:329 Shipt_Select.php:331
-#: SuppInvGRNs.php:146 UserSettings.php:216 Z_poEditLangHeader.php:106
+#: SelectSalesOrder.php:869 SelectWorkOrder.php:319 Shipt_Select.php:331
+#: SuppInvGRNs.php:150 UserSettings.php:216 Z_poEditLangHeader.php:106
 #: Z_poEditLangModule.php:168 Z_poEditLangRemaining.php:137
 #, php-format
 msgid "Modify"
@@ -12303,7 +12303,7 @@ msgstr "Order Customer"
 #: SalesInquiry.php:842 SalesInquiry.php:1082 SelectCompletedOrder.php:609
 #: SelectSalesOrder.php:857 includes/PDFOrderPageHeader_generic.inc:77
 #: includes/PDFSalesOrder_generic.inc:79 includes/PDFTransPageHeader.inc:56
-#: includes/PDFTransPageHeaderPortrait.inc:66
+#: includes/PDFTransPageHeaderPortrait.inc:68
 #: includes/PO_PDFOrderPageHeader.inc:51
 msgid "Order Date"
 msgstr "Tgl Order"
@@ -13722,8 +13722,8 @@ msgid "has a status of"
 msgstr "memiliki status"
 
 #: GoodsReceived.php:73 PO_SelectOSPurchOrder.php:487
-#: PO_SelectOSPurchOrder.php:504 SelectWorkOrder.php:331
-#: SelectWorkOrder.php:368 StockLocTransferReceive.php:586
+#: PO_SelectOSPurchOrder.php:504 SelectWorkOrder.php:321
+#: SelectWorkOrder.php:355 StockLocTransferReceive.php:586
 #: WorkOrderCosting.php:103 WorkOrderCosting.php:117
 #: includes/MainMenuLinksArray.php:195
 #, php-format
@@ -13746,40 +13746,40 @@ msgstr "Satuan Supplier"
 msgid "Our Receiving Units"
 msgstr "Satuan Saat Diterima Kita"
 
-#: GoodsReceived.php:104 PO_Items.php:1158
+#: GoodsReceived.php:105 PO_Items.php:1160
 msgid "Conversion"
 msgstr "Faktor"
 
-#: GoodsReceived.php:104 PO_Items.php:1158
+#: GoodsReceived.php:105 PO_Items.php:1160
 msgid "Factor"
 msgstr "Konversi"
 
-#: GoodsReceived.php:108
+#: GoodsReceived.php:109
 msgid "This Delivery"
 msgstr "Pengiriman Ini"
 
-#: GoodsReceived.php:113
+#: GoodsReceived.php:114
 msgid "Total Value"
 msgstr "Nilai Total"
 
-#: GoodsReceived.php:175
+#: GoodsReceived.php:180
 #, fuzzy
 msgid "Enter the quantity to receive against this order line as a number"
 msgstr "Qty item order harus numerik"
 
-#: GoodsReceived.php:193
+#: GoodsReceived.php:198
 msgid "Enter Serial Nos"
 msgstr "Masukkan Nomor Seri"
 
-#: GoodsReceived.php:196
+#: GoodsReceived.php:201
 msgid "Enter Batches"
 msgstr "Masukkan Batch"
 
-#: GoodsReceived.php:203
+#: GoodsReceived.php:209
 msgid "Total value of goods received"
 msgstr "Nilai total brg diterima"
 
-#: GoodsReceived.php:242
+#: GoodsReceived.php:248
 msgid ""
 "Receiving a negative quantity that results in negative stock is prohibited "
 "by the parameter settings. This delivery of stock cannot be processed until "
@@ -13789,15 +13789,15 @@ msgstr ""
 "pengaturan parameter. Pengiriman stok ini tdk dapat diproses sampai stok "
 "item tersebut dibetulkan."
 
-#: GoodsReceived.php:250
+#: GoodsReceived.php:256
 msgid "There is nothing to process"
 msgstr "Tdk ada yg diproses"
 
-#: GoodsReceived.php:250
+#: GoodsReceived.php:256
 msgid "Please enter valid quantities greater than zero"
 msgstr "Masukkan jumlah yg lebih besar dari nol"
 
-#: GoodsReceived.php:255
+#: GoodsReceived.php:261
 msgid ""
 "Negative stocks would result by processing a negative delivery - quantities "
 "must be changed or the stock quantity of the item going negative corrected "
@@ -13807,7 +13807,7 @@ msgstr ""
 "dirubah atau qty stok item tersebut jadi negatif dibetulkan sebelum "
 "pengiriman ini akan diproses."
 
-#: GoodsReceived.php:261
+#: GoodsReceived.php:267
 msgid ""
 "Entered quantities cannot be greater than the quantity entered on the "
 "purchase invoice including the allowed over-receive percentage"
@@ -13815,7 +13815,7 @@ msgstr ""
 "Jumlah yg dimasukkan tdk dapat lebih besar dari jumlah yg dimasukkan ke "
 "faktur pembelian termasuk persentase kelebihan-terima yg diperbolehkan"
 
-#: GoodsReceived.php:263
+#: GoodsReceived.php:269
 msgid ""
 "Modify the ordered items on the purchase invoice if you wish to increase the "
 "quantities"
@@ -13823,7 +13823,7 @@ msgstr ""
 "Ubahlah item yg dipesan pada faktur pembelian jika Anda ingin menambah "
 "jumlah item"
 
-#: GoodsReceived.php:295
+#: GoodsReceived.php:301
 msgid ""
 "Could not check that the details of the purchase order had not been changed "
 "by another user because"
@@ -13831,11 +13831,11 @@ msgstr ""
 "Tdk dapat memeriksa kalau rincian order pembelian belum diubah oleh user "
 "lain karena"
 
-#: GoodsReceived.php:296
+#: GoodsReceived.php:302
 msgid "The following SQL to retrieve the purchase order details was used"
 msgstr "SQL berikut digunakan utk mengambil rincian order pembelian"
 
-#: GoodsReceived.php:313
+#: GoodsReceived.php:319
 msgid ""
 "This order has been changed or invoiced since this delivery was started to "
 "be actioned"
@@ -13843,11 +13843,11 @@ msgstr ""
 "Order ini telah diubah atau difakturkan karena pengiriman telah mulai "
 "ditindak"
 
-#: GoodsReceived.php:313
+#: GoodsReceived.php:319
 msgid "To enter a delivery against this purchase order"
 msgstr "Utk memasukkan pengiriman terhadap order pembelian ini"
 
-#: GoodsReceived.php:313
+#: GoodsReceived.php:319
 msgid ""
 "it must be re-selected and re-read again to update the changes made by the "
 "other user"
@@ -13855,83 +13855,83 @@ msgstr ""
 "harus dipilih kembali and dibaca kembali utk memperbarui perubahan yg dibuat "
 "oleh user lain"
 
-#: GoodsReceived.php:318
+#: GoodsReceived.php:324
 msgid "GL Code of the Line Item"
 msgstr "Kode GL utk Item Baris"
 
-#: GoodsReceived.php:323
+#: GoodsReceived.php:329
 msgid "ShiptRef of the Line Item"
 msgstr "Keterangan pengiriman Item Baris"
 
-#: GoodsReceived.php:328
+#: GoodsReceived.php:334
 msgid "Contract Reference of the Line Item"
 msgstr "Referensi Kontrak Item Baris"
 
-#: GoodsReceived.php:333
+#: GoodsReceived.php:339
 msgid "Quantity Invoiced of the Line Item"
 msgstr "Jumlah yg difakturkan utk Item Baris"
 
-#: GoodsReceived.php:338
+#: GoodsReceived.php:344
 msgid "Stock Code of the Line Item"
 msgstr "Kode Stok utk Item Baris"
 
-#: GoodsReceived.php:343
+#: GoodsReceived.php:349
 msgid "Order Quantity of the Line Item"
 msgstr "Jumlah Order utk Item Baris"
 
-#: GoodsReceived.php:348
+#: GoodsReceived.php:354
 msgid "Quantity of the Line Item Already Received"
 msgstr "Jumlah Item Baris yg Sdh Diterima"
 
-#: GoodsReceived.php:355 GoodsReceived.php:730
+#: GoodsReceived.php:361 GoodsReceived.php:736
 msgid "Select a different purchase order for receiving goods against"
 msgstr "Pilih order pembelian yg lain utk penerimaan brg"
 
-#: GoodsReceived.php:356
+#: GoodsReceived.php:362
 msgid "Re-read the updated purchase order for receiving goods against"
 msgstr "Baca kembali order pembelian yg sdh diperbarui utk penerimaan brg"
 
-#: GoodsReceived.php:392 SupplierInvoice.php:185
+#: GoodsReceived.php:398 SupplierInvoice.php:185
 msgid ""
 "The standard cost of the item being received cannot be retrieved because"
 msgstr "HPP standar item yg sedang diterima tdk dapat diambil karena"
 
-#: GoodsReceived.php:393 SupplierInvoice.php:186
+#: GoodsReceived.php:399 SupplierInvoice.php:186
 msgid "The following SQL to retrieve the standard cost was used"
 msgstr "SQL berikut yg digunakan utk mengambil HPP standar"
 
-#: GoodsReceived.php:433 SupplierInvoice.php:218
+#: GoodsReceived.php:439 SupplierInvoice.php:218
 msgid ""
 "The purchase order detail record could not be updated with the quantity "
 "received because"
 msgstr ""
 "Rincian data order pembelian tdk dapat diperbarui dgn qty diterima karena"
 
-#: GoodsReceived.php:434 ReverseGRN.php:129 SupplierInvoice.php:219
+#: GoodsReceived.php:440 ReverseGRN.php:129 SupplierInvoice.php:219
 msgid "The following SQL to update the purchase order detail record was used"
 msgstr "SQL berikut digunakan utk memperbarui rincian order pembelian"
 
-#: GoodsReceived.php:463 SupplierInvoice.php:248
+#: GoodsReceived.php:469 SupplierInvoice.php:248
 msgid "A GRN record could not be inserted"
 msgstr "Data GRN tdk dapat dimasukkan"
 
-#: GoodsReceived.php:463 SupplierInvoice.php:248
+#: GoodsReceived.php:469 SupplierInvoice.php:248
 msgid "This receipt of goods has not been processed because"
 msgstr "Penerimaan brg ini tdk dapat diproses karena"
 
-#: GoodsReceived.php:464 ReverseGRN.php:156 SupplierInvoice.php:249
+#: GoodsReceived.php:470 ReverseGRN.php:156 SupplierInvoice.php:249
 msgid "The following SQL to insert the GRN record was used"
 msgstr "SQL berikut digunakan utk memasukkan data GRN"
 
-#: GoodsReceived.php:522 SupplierInvoice.php:307
+#: GoodsReceived.php:528 SupplierInvoice.php:307
 msgid "stock movement records could not be inserted because"
 msgstr "data perpindahan stok tdk dapat dimasukkan karena"
 
-#: GoodsReceived.php:540
+#: GoodsReceived.php:546
 msgid "Could not check if a batch or lot stock item already exists because"
 msgstr "Tdk dapat memeriksa apakah item stok batch atau lot sdh ada karena"
 
-#: GoodsReceived.php:541
+#: GoodsReceived.php:547
 msgid ""
 "The following SQL to test for an already existing controlled but not "
 "serialised stock item was used"
@@ -13939,21 +13939,21 @@ msgstr ""
 "SQL berikut digunakan utk menguji item stok terkontrol yg sdh ada tapi bukan "
 "berseri"
 
-#: GoodsReceived.php:569 WorkOrderIssue.php:214 WorkOrderReceive.php:513
+#: GoodsReceived.php:575 WorkOrderIssue.php:214 WorkOrderReceive.php:513
 #: WorkOrderReceive.php:584
 msgid "The serial stock item record could not be inserted because"
 msgstr "Data item stok berseri tdk dapat dimasukkan karena"
 
-#: GoodsReceived.php:570 WorkOrderIssue.php:215 WorkOrderReceive.php:514
+#: GoodsReceived.php:576 WorkOrderIssue.php:215 WorkOrderReceive.php:514
 #: WorkOrderReceive.php:585
 msgid "The following SQL to insert the serial stock item records was used"
 msgstr "SQL berikut digunakan utk memasukkan data item stok berseri"
 
-#: GoodsReceived.php:622 SupplierInvoice.php:341 SupplierInvoice.php:1855
+#: GoodsReceived.php:628 SupplierInvoice.php:341 SupplierInvoice.php:1855
 msgid "cost"
 msgstr "biaya"
 
-#: GoodsReceived.php:624 ReverseGRN.php:175 SupplierCredit.php:1227
+#: GoodsReceived.php:630 ReverseGRN.php:175 SupplierCredit.php:1227
 #: SupplierCredit.php:1315 SupplierInvoice.php:343 SupplierInvoice.php:1770
 #: SupplierInvoice.php:1857
 msgid ""
@@ -13963,7 +13963,7 @@ msgstr ""
 "KRITIS ERROR! CATATAN BAWAH INI KESALAHAN DAN MENCARI BANTUAN Transaksi "
 "aktiva tetap tdk dapat dimasukkan karena"
 
-#: GoodsReceived.php:645 SupplierInvoice.php:364 SupplierInvoice.php:1872
+#: GoodsReceived.php:651 SupplierInvoice.php:364 SupplierInvoice.php:1872
 msgid ""
 "CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE. The fixed asset "
 "cost and date purchased was not able to be updated because:"
@@ -13971,7 +13971,7 @@ msgstr ""
 "KRITIS ERROR! CATATAN BAWAH INI KESALAHAN DAN MENCARI BANTUAN. Biaya "
 "perolehan aktiva tetap dan tgl pembelian tdk dapat diperbarui karena:"
 
-#: GoodsReceived.php:646 SupplierInvoice.php:365 SupplierInvoice.php:1873
+#: GoodsReceived.php:652 SupplierInvoice.php:365 SupplierInvoice.php:1873
 msgid ""
 "The following SQL was used to attempt the update of the cost and the date "
 "the asset was purchased"
@@ -13979,44 +13979,44 @@ msgstr ""
 "SQL berikut ini digunakan utk mencoba memperbarui biaya dan tgl aktiva "
 "tersebut dibeli"
 
-#: GoodsReceived.php:670 GoodsReceived.php:692 SelectSalesOrder.php:1004
+#: GoodsReceived.php:676 GoodsReceived.php:698 SelectSalesOrder.php:1004
 #: SupplierInvoice.php:414
 msgid "PO"
 msgstr "PO"
 
-#: GoodsReceived.php:673 SupplierInvoice.php:395
+#: GoodsReceived.php:679 SupplierInvoice.php:395
 msgid "The purchase GL posting could not be inserted because"
 msgstr "Posting GL pembelian tdk dapat dimasukkan karena"
 
-#: GoodsReceived.php:674 ReverseGRN.php:307 SupplierInvoice.php:396
+#: GoodsReceived.php:680 ReverseGRN.php:307 SupplierInvoice.php:396
 msgid "The following SQL to insert the purchase GLTrans record was used"
 msgstr "SQL berikut digunakan utk memasukkan data GLTrans pembelian"
 
-#: GoodsReceived.php:695 ReverseGRN.php:328 SupplierInvoice.php:418
+#: GoodsReceived.php:701 ReverseGRN.php:328 SupplierInvoice.php:418
 msgid "The GRN suspense side of the GL posting could not be inserted because"
 msgstr "Posting GL bagian GRN belum-ditagih tdk dapat dimasukkan karena"
 
-#: GoodsReceived.php:696 ReverseGRN.php:329 SupplierInvoice.php:419
+#: GoodsReceived.php:702 ReverseGRN.php:329 SupplierInvoice.php:419
 msgid "The following SQL to insert the GRN Suspense GLTrans record was used"
 msgstr "SQL berikut digunakan utk memasukkan Penundaan GRN ke data GLTrans"
 
-#: GoodsReceived.php:704 SupplierInvoice.php:425
+#: GoodsReceived.php:710 SupplierInvoice.php:425
 msgid "Order Completed on entry of GRN"
 msgstr "Order Selesai saat entri GRN"
 
-#: GoodsReceived.php:724 ReverseGRN.php:336
+#: GoodsReceived.php:730 ReverseGRN.php:336
 msgid "GRN number"
 msgstr "Nomor GRN"
 
-#: GoodsReceived.php:727
+#: GoodsReceived.php:733
 msgid "Print this Goods Received Note (GRN)"
 msgstr "Cetak Surat Penerimaan Brg (GRN) ini"
 
-#: GoodsReceived.php:742
+#: GoodsReceived.php:748
 msgid "Modify Order Items"
 msgstr "Ubah Item Order"
 
-#: GoodsReceived.php:749
+#: GoodsReceived.php:755
 msgid "Process Goods Received"
 msgstr "Proses Brg Diterima"
 
@@ -14577,11 +14577,11 @@ msgstr "Memenuhi Permintaan Stok"
 msgid "Issue"
 msgstr "Terbitkan"
 
-#: InternalStockRequestFulfill.php:37 InternalStockRequest.php:533
-#: MRPReport.php:726 SelectAsset.php:238 SelectCustomer.php:399
+#: InternalStockRequestFulfill.php:37 InternalStockRequest.php:532
+#: MRPReport.php:727 SelectAsset.php:237 SelectCustomer.php:399
 #: SelectCustomer.php:475 SelectOrderItems.php:1422 SelectProduct.php:746
 #: SelectSupplier.php:254 SelectSupplier.php:318 StockLocTransfer.php:61
-#: SupplierPriceList.php:240 SupplierTenderCreate.php:584
+#: SupplierPriceList.php:247 SupplierTenderCreate.php:589
 #: WorkOrderIssue.php:353 WorkOrderReceive.php:695
 #: includes/Add_SerialItemsOut.php:28 includes/Add_SerialItems.php:33
 #: includes/Add_SerialItems.php:184 includes/Add_SerialItems.php:281
@@ -14678,12 +14678,12 @@ msgid "Select another location"
 msgstr "Pilih lokasi lain"
 
 #: InternalStockRequestFulfill.php:318 Suppliers.php:790 Suppliers.php:992
-#: Suppliers.php:995 SupplierTenders.php:533
+#: Suppliers.php:995 SupplierTenders.php:531
 msgid "Required"
 msgstr "Diperlukan"
 
 #: InternalStockRequestFulfill.php:319 POReport.php:634 POReport.php:1365
-#: SuppCreditGRNs.php:188
+#: SuppCreditGRNs.php:193
 msgid "Delivered"
 msgstr "Dikirim"
 
@@ -14793,14 +14793,14 @@ msgid "Submit"
 msgstr "Ajukan"
 
 #: InternalStockRequest.php:308 MRPReport.php:516 SelectProduct.php:525
-#: SupplierPriceList.php:15 SupplierPriceList.php:217
-#: SupplierTenderCreate.php:654 SupplierTenders.php:388
+#: SupplierPriceList.php:14 SupplierPriceList.php:224
+#: SupplierTenderCreate.php:659 SupplierTenders.php:388
 msgid "Search for Inventory Items"
 msgstr "Cari Item Persediaan"
 
 #: InternalStockRequest.php:317 InventoryQuantities.php:181 MRPReport.php:508
 #: ReorderLevel.php:231 SelectProduct.php:43 StockDispatch.php:378
-#: StockLocStatus.php:59 SupplierTenderCreate.php:662 SupplierTenders.php:398
+#: StockLocStatus.php:59 SupplierTenderCreate.php:667 SupplierTenders.php:398
 msgid ""
 "There are no stock categories currently defined please use the link below to "
 "set them up"
@@ -14810,14 +14810,14 @@ msgstr ""
 
 #: InternalStockRequest.php:319 InventoryQuantities.php:182 MRPReport.php:509
 #: ReorderLevel.php:232 SelectProduct.php:44 StockDispatch.php:379
-#: StockLocStatus.php:60 SupplierTenderCreate.php:663 SupplierTenders.php:399
+#: StockLocStatus.php:60 SupplierTenderCreate.php:668 SupplierTenders.php:399
 msgid "Define Stock Categories"
 msgstr "Masukkan Kategori Stok"
 
-#: InternalStockRequest.php:324 InventoryQuantities.php:188 MRPReport.php:518
+#: InternalStockRequest.php:324 InventoryQuantities.php:188 MRPReport.php:519
 #: NoSalesItems.php:61 ReorderLevel.php:238 SelectProduct.php:527
 #: StockDispatch.php:387 StockLocStatus.php:65 SupplierPriceList.php:17
-#: SupplierTenderCreate.php:668 SupplierTenders.php:403 TopItems.php:60
+#: SupplierTenderCreate.php:673 SupplierTenders.php:403 TopItems.php:60
 msgid "In Stock Category"
 msgstr "Dalam Kategori Stok"
 
@@ -14825,59 +14825,59 @@ msgstr "Dalam Kategori Stok"
 msgid "All Authorized"
 msgstr "Semua Diotorisasi"
 
-#: InternalStockRequest.php:372 SelectOrderItems.php:754
+#: InternalStockRequest.php:371 SelectOrderItems.php:754
 msgid "Order Item description has been used in search"
 msgstr "Keterangan Item Order telah digunakan dalam pencarian"
 
-#: InternalStockRequest.php:374 SelectOrderItems.php:756
+#: InternalStockRequest.php:373 SelectOrderItems.php:756
 msgid "Stock Code has been used in search"
 msgstr "Kode Stok telah digunakan dalam pencarian"
 
-#: InternalStockRequest.php:533 MRPReport.php:726 SelectAsset.php:238
+#: InternalStockRequest.php:532 MRPReport.php:727 SelectAsset.php:237
 #: SelectCustomer.php:399 SelectCustomer.php:475 SelectProduct.php:746
-#: SelectSupplier.php:254 SelectSupplier.php:318 SupplierPriceList.php:240
-#: SupplierTenderCreate.php:584
+#: SelectSupplier.php:254 SelectSupplier.php:318 SupplierPriceList.php:247
+#: SupplierTenderCreate.php:589
 msgid "pages"
 msgstr "halaman"
 
-#: InternalStockRequest.php:533 MRPReport.php:726 SelectAsset.php:238
+#: InternalStockRequest.php:532 MRPReport.php:727 SelectAsset.php:237
 #: SelectCustomer.php:399 SelectCustomer.php:475 SelectProduct.php:746
-#: SelectSupplier.php:254 SelectSupplier.php:318 SupplierPriceList.php:240
-#: SupplierTenderCreate.php:584
+#: SelectSupplier.php:254 SelectSupplier.php:318 SupplierPriceList.php:247
+#: SupplierTenderCreate.php:589
 msgid "Go to Page"
 msgstr "Pergi ke Hal"
 
-#: InternalStockRequest.php:545 MRPReport.php:738 PcAssignCashToTab.php:235
+#: InternalStockRequest.php:544 MRPReport.php:739 PcAssignCashToTab.php:235
 #: PcAuthorizeExpenses.php:65 PcClaimExpensesFromTab.php:215
-#: SelectAsset.php:250 SelectCustomer.php:411 SelectCustomer.php:488
+#: SelectAsset.php:249 SelectCustomer.php:411 SelectCustomer.php:488
 #: SelectProduct.php:758 SelectSupplier.php:266 SelectSupplier.php:330
-#: SupplierPriceList.php:252 SupplierTenderCreate.php:596
+#: SupplierPriceList.php:259 SupplierTenderCreate.php:601
 msgid "Go"
 msgstr "Pergi"
 
-#: InternalStockRequest.php:546 MRPReport.php:739 SelectAsset.php:251
-#: SelectCustomer.php:412 SelectCustomer.php:489 SelectOrderItems.php:1732
-#: SelectOrderItems.php:1858 SelectProduct.php:759 SelectSupplier.php:267
-#: SelectSupplier.php:331 SupplierPriceList.php:253
-#: SupplierTenderCreate.php:597
+#: InternalStockRequest.php:545 MRPReport.php:740 SelectAsset.php:250
+#: SelectCustomer.php:412 SelectCustomer.php:489 SelectOrderItems.php:1719
+#: SelectOrderItems.php:1842 SelectProduct.php:759 SelectSupplier.php:267
+#: SelectSupplier.php:331 SupplierPriceList.php:260
+#: SupplierTenderCreate.php:602
 msgid "Previous"
 msgstr "Sebelum"
 
-#: InternalStockRequest.php:558 MRPReport.php:750 SelectProduct.php:772
+#: InternalStockRequest.php:557 MRPReport.php:751 SelectProduct.php:772
 msgid "Total Qty On Hand"
 msgstr "Total Qty"
 
-#: InternalStockRequest.php:560 MRPReport.php:752 SelectProduct.php:769
+#: InternalStockRequest.php:559 MRPReport.php:753 SelectProduct.php:769
 #: StockStatus.php:7
 msgid "Stock Status"
 msgstr "Status Stok"
 
-#: InternalStockRequest.php:582 SelectProduct.php:81 SelectProduct.php:796
+#: InternalStockRequest.php:581 SelectProduct.php:81 SelectProduct.php:796
 #: Stocks.php:1168 Stocks.php:1170
 msgid "Obsolete"
 msgstr "Non-Aktif"
 
-#: InternalStockRequest.php:619 InternalStockRequest.php:742
+#: InternalStockRequest.php:619 InternalStockRequest.php:740
 msgid "Add to Requisition"
 msgstr "Tambah ke Permintaan"
 
@@ -15044,7 +15044,7 @@ msgid "Deviation"
 msgstr "Deviasi"
 
 #: InventoryPlanningPrefSupplier.php:84 PurchData.php:279 PurchData.php:659
-#: SelectProduct.php:353 SupplierPriceList.php:531
+#: SelectProduct.php:353 SupplierPriceList.php:538
 msgid "Lead Time"
 msgstr "Waktu Tunggu"
 
@@ -16713,7 +16713,7 @@ msgid "Review"
 msgstr "Lihatan"
 
 #: MRPReport.php:17 MRPReport.php:18 MRPReport.php:147 MRPReport.php:495
-#: MRPReport.php:815
+#: MRPReport.php:816
 msgid "MRP Report"
 msgstr "Laporan MRP"
 
@@ -16825,18 +16825,18 @@ msgstr ""
 "Laporan ini menampilkan perhitungan MRP utk item tertentu - kode item harus "
 "dipilih"
 
-#: MRPReport.php:693 PO_SelectOSPurchOrder.php:126 PO_SelectPurchOrder.php:105
+#: MRPReport.php:694 PO_SelectOSPurchOrder.php:126 PO_SelectPurchOrder.php:105
 #: SelectCompletedOrder.php:227 SelectProduct.php:714 SelectSalesOrder.php:501
-#: SupplierPriceList.php:206
+#: SupplierPriceList.php:213
 msgid "No stock items were returned by the SQL because"
 msgstr "Tdk ada item stok yg dikembalikan oleh SQL karena"
 
-#: MRPReport.php:694 SelectAsset.php:209 SelectProduct.php:715
-#: SupplierPriceList.php:207
+#: MRPReport.php:695 SelectAsset.php:208 SelectProduct.php:715
+#: SupplierPriceList.php:214
 msgid "The SQL that returned an error was"
 msgstr "SQL yg mengembalikan kesalahan adalah"
 
-#: MRPReport.php:697 SelectProduct.php:718 SupplierPriceList.php:210
+#: MRPReport.php:698 SelectProduct.php:718 SupplierPriceList.php:217
 msgid ""
 "No stock items were returned by this search please re-enter alternative "
 "criteria to try again"
@@ -17267,7 +17267,7 @@ msgstr "PO#"
 msgid "Qty Received"
 msgstr "Qty Diterima"
 
-#: OutstandingGRNs.php:181 SuppCreditGRNs.php:190 SuppInvGRNs.php:255
+#: OutstandingGRNs.php:181 SuppCreditGRNs.php:195 SuppInvGRNs.php:259
 msgid "Qty Invoiced"
 msgstr "Qty Difakturkan"
 
@@ -17277,7 +17277,7 @@ msgstr "Qty Pending"
 
 #: OutstandingGRNs.php:183 SpecialOrder.php:735
 #: includes/PDFTransPageHeader.inc:209
-#: includes/PDFTransPageHeaderPortrait.inc:264
+#: includes/PDFTransPageHeaderPortrait.inc:266
 #: ../webSHOP/includes/PlaceOrder.php:235
 msgid "Unit Price"
 msgstr "Harga Satuan"
@@ -19058,7 +19058,7 @@ msgstr "Total yg Difaktur utk order"
 msgid "Ord Date"
 msgstr "Tgl Order"
 
-#: PDFOrdersInvoiced.php:373 PDFOrderStatus.php:345 PO_Items.php:766
+#: PDFOrdersInvoiced.php:373 PDFOrderStatus.php:345 PO_Items.php:768
 msgid "Complete"
 msgstr "Selesai"
 
@@ -19089,7 +19089,7 @@ msgstr "Laporan Status Order"
 
 #: PDFOrderStatus.php:289 PO_AuthoriseMyOrders.php:63 PO_Header.php:824
 #: PO_OrderDetails.php:151 PO_SelectOSPurchOrder.php:485
-#: PO_SelectPurchOrder.php:440 SelectWorkOrder.php:330 SelectWorkOrder.php:367
+#: PO_SelectPurchOrder.php:440 SelectWorkOrder.php:320 SelectWorkOrder.php:354
 #: WorkOrderCosting.php:102 WorkOrderCosting.php:116
 #: includes/InputSerialItemsFile.php:160
 #, php-format
@@ -19916,7 +19916,7 @@ msgstr "Tgl Dipesan"
 msgid "Initiator"
 msgstr "Inisiator"
 
-#: PO_AuthoriseMyOrders.php:62 PO_Header.php:759 PO_Items.php:840
+#: PO_AuthoriseMyOrders.php:62 PO_Header.php:759 PO_Items.php:842
 #: POReport.php:1515 PO_SelectOSPurchOrder.php:477 PO_SelectPurchOrder.php:437
 #: ReprintGRN.php:86 includes/PDFPickingListHeader.inc:46
 msgid "Delivery Date"
@@ -20155,9 +20155,9 @@ msgstr "Masukkan teks kode supplier"
 #: POReport.php:1278 POReport.php:1296 POReport.php:1308 POReport.php:1359
 #: POReport.php:1414 POReport.php:1425 POReport.php:1557 POReport.php:1612
 #: POReport.php:1626 PurchData.php:470 PurchData.php:571 PurchData.php:576
-#: SelectSupplier.php:278 SellThroughSupport.php:160 SupplierPriceList.php:449
+#: SelectSupplier.php:278 SellThroughSupport.php:160 SupplierPriceList.php:456
 #: Suppliers.php:676 Suppliers.php:886 SupplierTenderCreate.php:409
-#: SupplierTenderCreate.php:608
+#: SupplierTenderCreate.php:613
 msgid "Supplier Name"
 msgstr "Nama Supplier"
 
@@ -20263,7 +20263,7 @@ msgid ""
 "warehouse person at that warehouse"
 msgstr ""
 
-#: PO_Header.php:1021 SupplierTenders.php:129 SupplierTenders.php:540
+#: PO_Header.php:1021 SupplierTenders.php:129 SupplierTenders.php:538
 msgid "Delivery By"
 msgstr "Pengiriman Oleh"
 
@@ -20616,79 +20616,79 @@ msgstr "Sub-Total"
 msgid "Deliver By"
 msgstr "Kirim Tgl"
 
-#: PO_Items.php:776
+#: PO_Items.php:778
 msgid " excluding Tax"
 msgstr " sebelum Pajak"
 
-#: PO_Items.php:781
+#: PO_Items.php:783
 msgid "Update Order Lines"
 msgstr "Perbarui Baris Order"
 
-#: PO_Items.php:783
+#: PO_Items.php:785
 msgid "Process Order"
 msgstr "Proses Order"
 
-#: PO_Items.php:795
+#: PO_Items.php:797
 msgid "General Ledger Code"
 msgstr "Kode Buku Besar"
 
-#: PO_Items.php:808
+#: PO_Items.php:810
 msgid "OR Asset ID"
 msgstr "ATAU ID Aktiva"
 
-#: PO_Items.php:816
+#: PO_Items.php:818
 msgid "Not an Asset"
 msgstr "Bukan Aktiva"
 
-#: PO_Items.php:819
+#: PO_Items.php:821
 msgid "Not yet purchased"
 msgstr "Belum dibeli"
 
-#: PO_Items.php:826 SuppFixedAssetChgs.php:123
+#: PO_Items.php:828 SuppFixedAssetChgs.php:123
 msgid "New Fixed Asset"
 msgstr "Aktiva Tetap Baru"
 
-#: PO_Items.php:828
+#: PO_Items.php:830
 msgid "Quantity to purchase"
 msgstr "Qty ingin dibeli"
 
-#: PO_Items.php:832
+#: PO_Items.php:834
 msgid "Price per item"
 msgstr "Harga per item"
 
-#: PO_Items.php:837 Stocks.php:1107 includes/PO_ReadInOrder.inc:179
+#: PO_Items.php:839 Stocks.php:1107 includes/PO_ReadInOrder.inc:179
 msgid "each"
 msgstr "unit"
 
-#: PO_Items.php:845
+#: PO_Items.php:847
 msgid "Enter Item"
 msgstr "Masukkan Item"
 
-#: PO_Items.php:1104
+#: PO_Items.php:1106
 msgid "Item Category"
 msgstr "Kategori Item"
 
-#: PO_Items.php:1130
+#: PO_Items.php:1132
 msgid "Only items defined as from this Supplier"
 msgstr "Hanya item yg dari Supplier ini"
 
-#: PO_Items.php:1144
+#: PO_Items.php:1146
 msgid "Order a non stock item"
 msgstr "Order item non-stok"
 
-#: PO_Items.php:1157
+#: PO_Items.php:1159
 msgid "Our Units"
 msgstr "Satuan Kita"
 
-#: PO_Items.php:1159
+#: PO_Items.php:1161
 msgid "Supplier/Order"
 msgstr "Supplier/Order"
 
-#: PO_Items.php:1160
+#: PO_Items.php:1162
 msgid "Go to end of list"
 msgstr "Ke akhir daftar"
 
-#: PO_Items.php:1190
+#: PO_Items.php:1192
 msgid "Could not retrieve the purchasing data for the item"
 msgstr "Tdk dapat mengambil data pembelian utk item tersebut"
 
@@ -20990,7 +20990,7 @@ msgid "Date Type"
 msgstr "Tipe Tgl"
 
 #: POReport.php:516 POReport.php:1288 POReport.php:1520 SalesInquiry.php:794
-#: SalesInquiry.php:1100 StockStatus.php:354
+#: SalesInquiry.php:1100 StockStatus.php:356
 msgid "Date Range"
 msgstr "Jangka Tgl"
 
@@ -21004,7 +21004,7 @@ msgstr "Status Item Baris"
 #: includes/PDFOrderPageHeader_generic.inc:73
 #: includes/PDFOrderPageHeader.inc:39 includes/PDFPickingListHeader.inc:44
 #: includes/PDFSalesOrder_generic.inc:75 includes/PDFTransPageHeader.inc:54
-#: includes/PDFTransPageHeaderPortrait.inc:63
+#: includes/PDFTransPageHeaderPortrait.inc:65
 msgid "Order No"
 msgstr "Nomor Order"
 
@@ -21100,7 +21100,7 @@ msgstr "Tipe Ringkasan"
 msgid "Run Inquiry"
 msgstr "Jalankan Laporan"
 
-#: PO_SelectOSPurchOrder.php:9 SelectProduct.php:408 StockStatus.php:401
+#: PO_SelectOSPurchOrder.php:9 SelectProduct.php:408 StockStatus.php:403
 #: StockUsage.php:199
 msgid "Search Outstanding Purchase Orders"
 msgstr "Cari Order Pembelian Blm-Datang"
@@ -21159,8 +21159,8 @@ msgstr ""
 
 #: PO_SelectOSPurchOrder.php:205 PO_SelectPurchOrder.php:181
 #: SelectCompletedOrder.php:517 SelectCreditItems.php:984
-#: SelectSalesOrder.php:582 SelectWorkOrder.php:185 Shipt_Select.php:158
-#: WorkOrderEntry.php:601 WorkOrderIssue.php:659
+#: SelectSalesOrder.php:582 SelectWorkOrder.php:188 Shipt_Select.php:158
+#: WorkOrderEntry.php:600 WorkOrderIssue.php:659
 msgid "Select a stock category"
 msgstr "Pilih kategori stok"
 
@@ -21171,7 +21171,7 @@ msgstr "Cari Brg Sekarang"
 
 #: PO_SelectOSPurchOrder.php:228 PO_SelectPurchOrder.php:202
 #: SelectCompletedOrder.php:540 SelectSalesOrder.php:601
-#: SelectWorkOrder.php:202 Shipt_Select.php:182
+#: SelectWorkOrder.php:206 Shipt_Select.php:182
 msgid "Show All"
 msgstr "Tampilkan Semua"
 
@@ -21507,7 +21507,7 @@ msgid "Cost in Price List"
 msgstr "HPP di Daftar Harga"
 
 #: PricesByCost.php:156 Prices_Customer.php:348 Prices.php:223
-#: RecurringSalesOrders.php:428 SelectWorkOrder.php:338 WorkOrderEntry.php:513
+#: RecurringSalesOrders.php:428 SelectWorkOrder.php:328 WorkOrderEntry.php:513
 #: WorkOrderStatus.php:85
 msgid "Start Date"
 msgstr "Tgl Awal"
@@ -22242,13 +22242,13 @@ msgstr "Silahkan pilih hanya transaksi yg bersangkutan dgn perusahaan Anda"
 #: PrintCustTrans.php:727 PrintCustTrans.php:960 PrintCustTrans.php:1009
 #: PrintCustTransPortrait.php:767 PrintCustTransPortrait.php:1015
 #: PrintCustTransPortrait.php:1070 includes/PDFTransPageHeader.inc:15
-#: includes/PDFTransPageHeaderPortrait.inc:17
+#: includes/PDFTransPageHeaderPortrait.inc:18
 msgid "TAX INVOICE"
 msgstr "FAKTUR PAJAK"
 
 #: PrintCustTrans.php:729 PrintCustTrans.php:962 PrintCustTrans.php:1011
 #: PrintCustTransPortrait.php:769 PrintCustTransPortrait.php:1017
-#: PrintCustTransPortrait.php:1072 includes/PDFTransPageHeaderPortrait.inc:19
+#: PrintCustTransPortrait.php:1072 includes/PDFTransPageHeaderPortrait.inc:20
 msgid "TAX CREDIT NOTE"
 msgstr "NOTA KREDIT PAJAK"
 
@@ -22269,7 +22269,7 @@ msgstr "Tagihan Kpd"
 
 #: PrintCustTrans.php:779 PrintCustTransPortrait.php:824
 #: includes/PDFTransPageHeader.inc:138
-#: includes/PDFTransPageHeaderPortrait.inc:188
+#: includes/PDFTransPageHeaderPortrait.inc:190
 msgid "Charge Branch"
 msgstr "Cabang Menagih"
 
@@ -22290,7 +22290,7 @@ msgstr "Tgl Faktur"
 #: PrintCustTransPortrait.php:854 PrintCustTransPortrait.php:904
 #: SalesAnalRepts.php:50 SalesAnalRepts.php:52
 #: includes/PDFTransPageHeader.inc:196
-#: includes/PDFTransPageHeaderPortrait.inc:245
+#: includes/PDFTransPageHeaderPortrait.inc:247
 msgid "Sales Person"
 msgstr "Salesman"
 
@@ -22323,7 +22323,7 @@ msgstr "Cetak Faktur atau Nota Kredit (Vertical)"
 msgid "Print Preview"
 msgstr "Lihat Cetakan"
 
-#: PurchData.php:6 SupplierPriceList.php:5 SupplierPriceList.php:492
+#: PurchData.php:6 SupplierPriceList.php:5 SupplierPriceList.php:499
 msgid "Supplier Purchasing Data"
 msgstr "Data Pembelian Supplier"
 
@@ -22520,7 +22520,7 @@ msgid "This purchasing data record has been successfully deleted"
 msgstr "Data pembelian ini telah berhasil dihapus"
 
 #: PurchData.php:241 PurchData.php:373 PurchData.php:401
-#: SupplierPriceList.php:388
+#: SupplierPriceList.php:395
 msgid "For Stock Code"
 msgstr "Utk Kode Stok"
 
@@ -22534,7 +22534,7 @@ msgstr "Rincian pembelian supplier utk brg dipilih tdk dapat diambil karena"
 msgid "There is no purchasing data set up for the part selected"
 msgstr "Tdk ada data pembelian yg diatur utk brg yg dipilih"
 
-#: PurchData.php:274 SupplierPriceList.php:529
+#: PurchData.php:274 SupplierPriceList.php:536
 msgid "Conversion Factor"
 msgstr "Faktor Konversi"
 
@@ -22543,15 +22543,15 @@ msgid "Cost Per Our Unit"
 msgstr "Biaya Per Satuan Kami"
 
 #: PurchData.php:277 PurchData.php:702 SellThroughSupport.php:266
-#: SupplierPriceList.php:533
+#: SupplierPriceList.php:540
 msgid "Effective From"
 msgstr "Efektif Dari"
 
-#: PurchData.php:278 SelectProduct.php:354 SupplierPriceList.php:535
+#: PurchData.php:278 SelectProduct.php:354 SupplierPriceList.php:542
 msgid "Min Order Qty"
 msgstr "Qty Order Min"
 
-#: PurchData.php:280 SupplierPriceList.php:532
+#: PurchData.php:280 SupplierPriceList.php:539
 msgid "Preferred"
 msgstr "Pilihan"
 
@@ -22589,20 +22589,20 @@ msgstr "TIDAK ADA supplier pilihan yg diatur utk"
 msgid "you should make one supplier only the preferred supplier"
 msgstr "Anda harus membuat hanya satu supplier sbg supplier pilihan"
 
-#: PurchData.php:359 SupplierPriceList.php:374
+#: PurchData.php:359 SupplierPriceList.php:381
 msgid ""
 "The supplier details for the selected supplier could not be retrieved because"
 msgstr "Rincian supplier yg dipilih tdk dapat diambil karena"
 
-#: PurchData.php:368 SupplierPriceList.php:382
+#: PurchData.php:368 SupplierPriceList.php:389
 msgid "The supplier code"
 msgstr "Kode supplier"
 
-#: PurchData.php:368 SupplierPriceList.php:382
+#: PurchData.php:368 SupplierPriceList.php:389
 msgid "is not an existing supplier in the database"
 msgstr "tdk terdaftar di database"
 
-#: PurchData.php:368 SupplierPriceList.php:382
+#: PurchData.php:368 SupplierPriceList.php:389
 msgid ""
 "You must enter an alternative supplier code or select a supplier using the "
 "search facility below"
@@ -22610,23 +22610,23 @@ msgstr ""
 "Anda harus masukkan kode supplier yg lain atau pilih supplier menggunakan "
 "fasilitas pencarian di bawah"
 
-#: PurchData.php:381 SellThroughSupport.php:200 SupplierPriceList.php:397
+#: PurchData.php:381 SellThroughSupport.php:200 SupplierPriceList.php:404
 msgid "Text in the Supplier"
 msgstr "Teks di Supplier"
 
-#: PurchData.php:381 SellThroughSupport.php:200 SupplierPriceList.php:397
+#: PurchData.php:381 SellThroughSupport.php:200 SupplierPriceList.php:404
 msgid "NAME"
 msgstr "NAMA"
 
-#: PurchData.php:384 SellThroughSupport.php:203 SupplierPriceList.php:400
+#: PurchData.php:384 SellThroughSupport.php:203 SupplierPriceList.php:407
 msgid "Text in Supplier"
 msgstr "Teks di Supplier"
 
-#: PurchData.php:384 SellThroughSupport.php:203 SupplierPriceList.php:400
+#: PurchData.php:384 SellThroughSupport.php:203 SupplierPriceList.php:407
 msgid "CODE"
 msgstr "KODE"
 
-#: PurchData.php:390 SellThroughSupport.php:209 SupplierPriceList.php:403
+#: PurchData.php:390 SellThroughSupport.php:209 SupplierPriceList.php:410
 msgid "Find Suppliers Now"
 msgstr "Cari Supplier Sekarang"
 
@@ -22638,12 +22638,12 @@ msgstr ""
 "Kata kunci Nama Supplier telah digunakan dibandingkan dgn sebagian Kode "
 "Supplier yg dimasukkan"
 
-#: PurchData.php:436 SellThroughSupport.php:150 SupplierPriceList.php:436
+#: PurchData.php:436 SellThroughSupport.php:150 SupplierPriceList.php:443
 msgid ""
 "The suppliers matching the criteria entered could not be retrieved because"
 msgstr "Supplier yg cocok dgn kriteria yg dimasukkan tdk dapat diambil karena"
 
-#: PurchData.php:437 SellThroughSupport.php:151 SupplierPriceList.php:437
+#: PurchData.php:437 SellThroughSupport.php:151 SupplierPriceList.php:444
 msgid "The SQL to retrieve supplier details that failed was"
 msgstr "SQL utk mengambil rincian supplier dan gagal adalah"
 
@@ -22746,14 +22746,14 @@ msgstr "Tampilkan Perpindahan Stok"
 
 #: PurchData.php:772 SelectProduct.php:405 SelectSalesOrder.php:6
 #: StockAdjustments.php:514 StockCostUpdate.php:197 StockMovements.php:207
-#: StockReorderLevel.php:114 StockStatus.php:398 StockTransfers.php:579
+#: StockReorderLevel.php:114 StockStatus.php:400 StockTransfers.php:579
 #: StockUsage.php:195
 msgid "Search Outstanding Sales Orders"
 msgstr "Cari Order Penjualan Blm-Difaktur"
 
 #: PurchData.php:773 SelectProduct.php:406 StockAdjustments.php:516
 #: StockCostUpdate.php:198 StockMovements.php:208 StockReorderLevel.php:115
-#: StockStatus.php:399 StockTransfers.php:581 StockUsage.php:197
+#: StockStatus.php:401 StockTransfers.php:581 StockUsage.php:197
 msgid "Search Completed Sales Orders"
 msgstr "Cari Order Penjualan Sdh-Difaktur"
 
@@ -22836,16 +22836,16 @@ msgstr "Masukkan Order Penjualan Baru"
 msgid "Recurring Order for Customer"
 msgstr "Order Berulang utk Customer"
 
-#: RecurringSalesOrders.php:393 ../webSHOP/Checkout.php:453
-#: ../webSHOP/Checkout.php:457 ../webSHOP/CreditCardPayPalPro.php:280
+#: RecurringSalesOrders.php:393 ../webSHOP/Checkout.php:452
+#: ../webSHOP/Checkout.php:456 ../webSHOP/CreditCardPayPalPro.php:280
 msgid "Street"
 msgstr "Jalan"
 
-#: RecurringSalesOrders.php:397 ../webSHOP/Checkout.php:461
+#: RecurringSalesOrders.php:397 ../webSHOP/Checkout.php:460
 msgid "Suburb"
 msgstr "Kecamatan"
 
-#: RecurringSalesOrders.php:401 ../webSHOP/Checkout.php:465
+#: RecurringSalesOrders.php:401 ../webSHOP/Checkout.php:464
 #: ../webSHOP/CreditCardPayPalPro.php:282
 msgid "City"
 msgstr "Kota"
@@ -23155,7 +23155,7 @@ msgstr "Baris Order PO"
 msgid "GRN Number"
 msgstr "Nomor GRN"
 
-#: ReprintGRN.php:87 SelectWorkOrder.php:336 StockLocTransferReceive.php:451
+#: ReprintGRN.php:87 SelectWorkOrder.php:326 StockLocTransferReceive.php:451
 #: WorkOrderCosting.php:101 WorkOrderReceive.php:934
 msgid "Quantity Received"
 msgstr "Qty yg Diterima"
@@ -23369,8 +23369,8 @@ msgstr "Tdk ada brg diterima blm-selesai yg belum difaktur utk"
 msgid "To reverse a GRN that has been invoiced first it must be credited"
 msgstr "Utk membalikkan GRN yg sdh difakturkan, sebelumnya harus dikreditkan"
 
-#: ReverseGRN.php:388 SuppCreditGRNs.php:90 SuppCreditGRNs.php:184
-#: SuppCreditGRNs.php:277 SupplierCredit.php:315 SupplierCredit.php:988
+#: ReverseGRN.php:388 SuppCreditGRNs.php:90 SuppCreditGRNs.php:189
+#: SuppCreditGRNs.php:289 SupplierCredit.php:315 SupplierCredit.php:988
 #: SupplierCredit.php:1027 SupplierCredit.php:1053 SupplierInvoice.php:1227
 #: SupplierInvoice.php:1294 SupplierInvoice.php:1342 SupplierInvoice.php:1379
 #: SupplierInvoice.php:1404 includes/PDFOstdgGRNsPageHeader.inc:36
@@ -24784,9 +24784,15 @@ msgstr "Keterangan token harus dimasukkan"
 msgid "This token ID has already been used. Please use a new one"
 msgstr "ID token ini telah digunakan. Silahkan gunakan yg baru"
 
-#: SecurityTokens.php:100 SecurityTokens.php:119
+#: SecurityTokens.php:99 SecurityTokens.php:119
 msgid "Token ID"
 msgstr "ID Token"
+
+#: SecurityTokens.php:105
+msgid ""
+"The security token description should describe which functions this token "
+"allows a user/role to access"
+msgstr ""
 
 #: SecurityTokens.php:131
 msgid "Are you sure you wish to delete this security token?"
@@ -24819,7 +24825,7 @@ msgstr "Masukkan sebagian keterangan"
 msgid "Enter partial asset code"
 msgstr "Masukkan sebagian kode aktiva"
 
-#: SelectAsset.php:132
+#: SelectAsset.php:131
 msgid ""
 "Asset description keywords have been used in preference to the asset code "
 "extract entered"
@@ -24827,11 +24833,11 @@ msgstr ""
 "kata kunci keterangan Aktiva telah digunakan di preferensi utk ekstrak kode "
 "aktiva yg dimasukkan"
 
-#: SelectAsset.php:208
+#: SelectAsset.php:207
 msgid "No assets were returned by the SQL because"
 msgstr "Tdk ada aktiva yg dikembalikan oleh SQL karena"
 
-#: SelectAsset.php:213
+#: SelectAsset.php:212
 msgid ""
 "No assets were returned by this search please re-enter alternative criteria "
 "to try again"
@@ -24933,7 +24939,7 @@ msgstr "Tdk ada kontrak yg dikembalikan oleh SQL karena"
 msgid "Issue To WO"
 msgstr "Isu Utk WO"
 
-#: SelectContract.php:142 SelectWorkOrder.php:333 SelectWorkOrder.php:370
+#: SelectContract.php:142 SelectWorkOrder.php:323 SelectWorkOrder.php:357
 #: Shipt_Select.php:330 Shipt_Select.php:349
 #, php-format
 msgid "Costing"
@@ -25091,11 +25097,11 @@ msgstr "Apakah Anda yakin ingin membatalkan seluruh nota kredit ini?"
 msgid "Process Credit Note"
 msgstr "Proses Nota Kredit"
 
-#: SelectCreditItems.php:1013 SelectOrderItems.php:1713
+#: SelectCreditItems.php:1013 SelectOrderItems.php:1703
 msgid "Change Customer"
 msgstr "Ganti Customer"
 
-#: SelectCreditItems.php:1067 SelectOrderItems.php:1877
+#: SelectCreditItems.php:1067 SelectOrderItems.php:1861
 #: Z_ImportPartCodes.php:29
 msgid "Part Code"
 msgstr "Kode Brg"
@@ -25284,11 +25290,11 @@ msgstr "Konfigurasi EDI Customer"
 msgid "Search for Customers"
 msgstr "Cari Customer"
 
-#: SelectCustomer.php:267 SelectSupplier.php:220 SupplierTenderCreate.php:549
+#: SelectCustomer.php:267 SelectSupplier.php:220 SupplierTenderCreate.php:554
 msgid "Enter a partial Name"
 msgstr "Masukkan sebagian Nama"
 
-#: SelectCustomer.php:274 SelectSupplier.php:229 SupplierTenderCreate.php:556
+#: SelectCustomer.php:274 SelectSupplier.php:229 SupplierTenderCreate.php:561
 msgid "Enter a partial Code"
 msgstr "Masukkan sebagian Kode"
 
@@ -25699,73 +25705,73 @@ msgstr ""
 msgid "Enter Delivery Details and Confirm Order"
 msgstr "Masukkan Rincian Pengiriman dan Konfirmasi Order"
 
-#: SelectOrderItems.php:1661 SelectOrderItems.php:1733
-#: SelectOrderItems.php:1859
+#: SelectOrderItems.php:1651 SelectOrderItems.php:1720
+#: SelectOrderItems.php:1843
 msgid "Add to Sales Order"
 msgstr "Tambahkan ke Order Penjualan"
 
-#: SelectOrderItems.php:1666 SelectOrderItems.php:1667
+#: SelectOrderItems.php:1656 SelectOrderItems.php:1657
 msgid "Search for Order Items"
 msgstr "Cari Item Order"
 
-#: SelectOrderItems.php:1714
+#: SelectOrderItems.php:1704
 msgid "Fixed Asset Disposal"
 msgstr "Penghapusan Aktiva Tetap"
 
-#: SelectOrderItems.php:1870
+#: SelectOrderItems.php:1854
 msgid "Use this screen for the "
 msgstr "Gunakan menu ini utk "
 
-#: SelectOrderItems.php:1870
+#: SelectOrderItems.php:1854
 msgid " of products to be ordered"
 msgstr " produk yg ingin dipesan"
 
-#: SelectOrderItems.php:1887
+#: SelectOrderItems.php:1871
 #, fuzzy
 msgid "Enter the customer purchase order reference"
 msgstr "Referensi Order Produksi"
 
-#: SelectOrderItems.php:1889
+#: SelectOrderItems.php:1873
 #, fuzzy
 msgid "Enter the item code ordered"
 msgstr "Masukkan kode item stok di atas"
 
-#: SelectOrderItems.php:1890
+#: SelectOrderItems.php:1874
 #, fuzzy
 msgid "Enter the quantity of the item ordered by the customer"
 msgstr "Qty item order harus numerik"
 
-#: SelectOrderItems.php:1892
+#: SelectOrderItems.php:1876
 #, fuzzy
 msgid "Enter the date that the customer requires delivery by"
 msgstr "Masukkan sebagian teks di kode customer"
 
-#: SelectOrderItems.php:1904
+#: SelectOrderItems.php:1889
 msgid "Use this screen to select an asset to dispose of to this customer"
 msgstr "Gunakan menu ini utk memilih aktiva utk dilepas ke customer ini"
 
-#: SelectOrderItems.php:1909
+#: SelectOrderItems.php:1896
 #, fuzzy
 msgid "Enter the customer's purchase order reference"
 msgstr "Referensi Order Produksi"
 
-#: SelectOrderItems.php:1911
+#: SelectOrderItems.php:1900
 msgid "Asset to Dispose Of"
 msgstr "Aktiva utk Dilepas"
 
-#: SelectOrderItems.php:1914
+#: SelectOrderItems.php:1903
 msgid "Select Asset To Dispose of From the List Below"
 msgstr "Pilih Aktiva Utk Dilepas dari Daftar Berikut"
 
-#: SelectOrderItems.php:1919
+#: SelectOrderItems.php:1912
 msgid "Add Asset To Order"
 msgstr "Tambahkan Asset Utk Order"
 
-#: SelectOrderItems.php:1931
+#: SelectOrderItems.php:1926
 msgid "Cancel Whole Order"
 msgstr "Batalkan Seluruh Order"
 
-#: SelectOrderItems.php:1931
+#: SelectOrderItems.php:1926
 msgid "Are you sure you wish to cancel this entire order?"
 msgstr "Apakah Anda yakin ingin membatalkan seluruh order ini?"
 
@@ -26055,7 +26061,7 @@ msgstr "Hanya Order"
 msgid "Add Sales Order"
 msgstr "Tambahkan Order Penjualan"
 
-#: SelectSalesOrder.php:590 SelectWorkOrder.php:193
+#: SelectSalesOrder.php:590 SelectWorkOrder.php:196
 msgid "Enter text extract(s) in the description"
 msgstr "Masukkan sebagian teks di keterangan"
 
@@ -26113,7 +26119,7 @@ msgstr "Cari Supplier"
 msgid "Suppliers"
 msgstr "Supplier"
 
-#: SelectSupplier.php:86 SupplierTenderCreate.php:478
+#: SelectSupplier.php:86 SupplierTenderCreate.php:483
 msgid ""
 "Supplier name keywords have been used in preference to the Supplier code "
 "extract entered"
@@ -26211,7 +26217,7 @@ msgstr "Buat Pengiriman Baru"
 msgid "Supplier Login Configuration"
 msgstr "Supplier Login Konfigurasi"
 
-#: SelectSupplier.php:217 SupplierTenderCreate.php:546
+#: SelectSupplier.php:217 SupplierTenderCreate.php:551
 msgid "Search for Suppliers"
 msgstr "Cari Supplier"
 
@@ -26289,7 +26295,7 @@ msgstr "Hanya Order Produksi Blm-Selesai"
 msgid "New Work Order"
 msgstr "Order Produksi Baru"
 
-#: SelectWorkOrder.php:182
+#: SelectWorkOrder.php:185
 msgid ""
 "To search for work orders for a specific item use the item selection "
 "facilities below"
@@ -26297,20 +26303,20 @@ msgstr ""
 "Utk mencari order produksi item tertentu, gunakan fasilitas pilihan item di "
 "bawah"
 
-#: SelectWorkOrder.php:201
+#: SelectWorkOrder.php:205
 msgid "Search Items Now"
 msgstr "Cari Item Sekarang"
 
-#: SelectWorkOrder.php:319
+#: SelectWorkOrder.php:311
 msgid "No works orders were returned by the SQL because"
 msgstr "Tdk ada order produksi yg dikembalikan oleh SQL karena"
 
-#: SelectWorkOrder.php:332 SelectWorkOrder.php:369
+#: SelectWorkOrder.php:322 SelectWorkOrder.php:356
 #, php-format
 msgid "Issue To"
 msgstr "Terbitkan Ke"
 
-#: SelectWorkOrder.php:337
+#: SelectWorkOrder.php:327
 msgid "Quantity Outstanding"
 msgstr "Qty Blm-Selesai"
 
@@ -27847,7 +27853,7 @@ msgstr "Qty Penyesuaian"
 msgid "Enter Stock Adjustment"
 msgstr "Masukkan Penyesuaian Stok"
 
-#: StockAdjustments.php:510 StockStatus.php:396 StockTransfers.php:575
+#: StockAdjustments.php:510 StockStatus.php:398 StockTransfers.php:575
 msgid "Show Movements"
 msgstr "Tampilkan Perpindahan"
 
@@ -28554,7 +28560,7 @@ msgstr "Tampilkan Perpindahan sebelum"
 msgid "But after"
 msgstr "Tapi setelah"
 
-#: StockLocMovements.php:83 StockMovements.php:90 StockStatus.php:309
+#: StockLocMovements.php:83 StockMovements.php:90 StockStatus.php:311
 msgid ""
 "The stock movements for the selected criteria could not be retrieved because"
 msgstr "Perpindahan stok utk kriteria yg dipilih tdk dapat diambil karena"
@@ -28596,7 +28602,7 @@ msgid "The stock held at each location cannot be retrieved because"
 msgstr "Stok yg tersedia di tiap lokasi tdk dapat diambil karena"
 
 #: StockLocStatus.php:171 StockSerialItemResearch.php:75
-#: SupplierPriceList.php:525 api/api_xml-rpc.php:2316
+#: SupplierPriceList.php:532 api/api_xml-rpc.php:2316
 msgid "StockID"
 msgstr "ID Stok"
 
@@ -28617,7 +28623,7 @@ msgid "Serial Numbers"
 msgstr "Nomor Seri"
 
 #: StockLocStatus.php:298 StockLocStatus.php:330 StockStatus.php:265
-#: WorkOrderEntry.php:565
+#: WorkOrderEntry.php:564
 msgid "Batches"
 msgstr "Batch"
 
@@ -28743,15 +28749,15 @@ msgstr "Referensi Pengiriman Perpindahan lokasi Persediaan"
 msgid "Upload CSV file of Transfer Items and Quantites"
 msgstr "Upload file CSV utk Perpindahan Item dan Qty"
 
-#: StockLocTransfer.php:308
+#: StockLocTransfer.php:307
 msgid "Clear All"
 msgstr "Hapus Semua"
 
-#: StockLocTransfer.php:360
+#: StockLocTransfer.php:352
 msgid "Add More Items"
 msgstr "Tambahkan Item"
 
-#: StockLocTransfer.php:361
+#: StockLocTransfer.php:353
 msgid "Create Transfer Shipment"
 msgstr "Buat Pengiriman Perpindahan"
 
@@ -29628,8 +29634,8 @@ msgstr "Berat Di-Kardus (KG)"
 msgid "Net Weight (KGs)"
 msgstr "Berat Di-Kardus (KG)"
 
-#: Stocks.php:1100 SupplierTenders.php:125 SupplierTenders.php:534
-#: SupplierTenders.php:537 UnitsOfMeasure.php:170
+#: Stocks.php:1100 SupplierTenders.php:125 SupplierTenders.php:532
+#: SupplierTenders.php:535 UnitsOfMeasure.php:170
 #: includes/MainMenuLinksArray.php:500
 msgid "Units of Measure"
 msgstr "Satuan Ukuran"
@@ -29761,6 +29767,16 @@ msgstr "Ini adalah brg rakitan dan tdk dapat memiliki hitungan stok"
 msgid "This is an dummy part and cannot have a stock holding"
 msgstr "Ini adalah brg model dan tdk dapat memiliki hitungan stok"
 
+#: StockStatus.php:62
+#, fuzzy
+msgid "Input actual stock ID. Blank or percentage mark is not allowed"
+msgstr "Item tak dapat ditambahkan karena"
+
+#: StockStatus.php:62
+#, fuzzy
+msgid "Only blank or % is not allowed"
+msgstr "inisiator tdk boleh kosong"
+
 #: StockStatus.php:96
 msgid "In Transit"
 msgstr "Dlm Perjalanan"
@@ -29773,19 +29789,19 @@ msgstr "Permintaan komponen order produksi utk produk ini dari"
 msgid "The quantity on work orders for this product to be received into"
 msgstr "Jumlah pada order produksi utk produk ini yg akan diterima ke"
 
-#: StockStatus.php:282
+#: StockStatus.php:284
 msgid "Update Bins"
 msgstr "Perbarui Bin"
 
-#: StockStatus.php:351
+#: StockStatus.php:353
 msgid "Pricing history for sales of"
 msgstr "Histori harga utk penjualan"
 
-#: StockStatus.php:392
+#: StockStatus.php:394
 msgid "No history of sales of"
 msgstr "Tdk ada histori penjualan"
 
-#: StockStatus.php:397
+#: StockStatus.php:399
 msgid "Show Usage"
 msgstr "Tampilkan Penggunaan"
 
@@ -30051,7 +30067,7 @@ msgstr "Kontrak biaya pada Faktur"
 msgid "Contract credits on Credit Note"
 msgstr "Kredit Kontrak di Nota Kredit"
 
-#: SuppContractChgs.php:114 SuppFixedAssetChgs.php:103 SuppInvGRNs.php:162
+#: SuppContractChgs.php:114 SuppFixedAssetChgs.php:103 SuppInvGRNs.php:166
 #: SupplierInvoice.php:1896 SuppShiptChgs.php:21 SuppTransGLAnalysis.php:147
 msgid "Back to Invoice Entry"
 msgstr "Kembali ke Masukkan Faktur"
@@ -30134,27 +30150,27 @@ msgstr "Jumlah yg Dikredit"
 msgid "Price Credited in"
 msgstr "Harga yg Dikredit dalam"
 
-#: SuppCreditGRNs.php:95 SuppInvGRNs.php:129 SuppInvGRNs.php:308
+#: SuppCreditGRNs.php:95 SuppInvGRNs.php:129 SuppInvGRNs.php:312
 msgid "Line Value in"
 msgstr "Nilai Baris dalam"
 
-#: SuppCreditGRNs.php:125
+#: SuppCreditGRNs.php:130
 msgid "Total Value Credited Against Goods"
 msgstr "Total Nilai yg Dikreditkan Terhadap Brg2"
 
-#: SuppCreditGRNs.php:162
+#: SuppCreditGRNs.php:167
 msgid "There are no goods received records for"
 msgstr "Tdk ada data brg yg diterima utk"
 
-#: SuppCreditGRNs.php:162
+#: SuppCreditGRNs.php:167
 msgid "since"
 msgstr "sejak"
 
-#: SuppCreditGRNs.php:162
+#: SuppCreditGRNs.php:167
 msgid "To enter a credit against goods received"
 msgstr "Utk memasukkan kredit terhadap brg yg diterima"
 
-#: SuppCreditGRNs.php:162
+#: SuppCreditGRNs.php:167
 msgid ""
 "the goods must first be received using the link below to select purchase "
 "orders to receive"
@@ -30162,60 +30178,60 @@ msgstr ""
 "brg harus diterima lebih dulu menggunakan link di bawah utk memilih order "
 "pembelian yg akan diterima"
 
-#: SuppCreditGRNs.php:164 SuppInvGRNs.php:195
+#: SuppCreditGRNs.php:169 SuppInvGRNs.php:199
 msgid "Select Purchase Orders to Receive"
 msgstr "Pilih Order Pembelian utk Diterima"
 
-#: SuppCreditGRNs.php:176
+#: SuppCreditGRNs.php:181
 msgid "Show Goods Received Since"
 msgstr "Tampilkan Brg yg diterima sejak"
 
-#: SuppCreditGRNs.php:178
+#: SuppCreditGRNs.php:183
 msgid "Display GRNs"
 msgstr "Tampilkan GRN"
 
-#: SuppCreditGRNs.php:189
+#: SuppCreditGRNs.php:194
 msgid "Total Qty"
 msgstr "Total Qty"
 
-#: SuppCreditGRNs.php:191
+#: SuppCreditGRNs.php:196
 msgid "Qty Yet"
 msgstr "Qty Blm-Diterima"
 
-#: SuppCreditGRNs.php:191
+#: SuppCreditGRNs.php:196
 msgid "invoice"
 msgstr "faktur"
 
-#: SuppCreditGRNs.php:193 SupplierTenders.php:128
+#: SuppCreditGRNs.php:198 SupplierTenders.php:128
 msgid "Line Value"
 msgstr "Nilai Baris"
 
-#: SuppCreditGRNs.php:193
+#: SuppCreditGRNs.php:198
 msgid "In"
 msgstr "Dalam"
 
-#: SuppCreditGRNs.php:274
+#: SuppCreditGRNs.php:286
 msgid "GRN Selected For Adding To A Suppliers Credit Note"
 msgstr "GRN yg Dipilih Utk Ditambahkan Ke Nota Kredit Supplier"
 
-#: SuppCreditGRNs.php:280
+#: SuppCreditGRNs.php:292
 msgid "credited"
 msgstr "dikreditkan"
 
-#: SuppCreditGRNs.php:304
+#: SuppCreditGRNs.php:321
 msgid ""
 "Unfortunately the shipment that this purchase order line item was allocated "
 "to has been closed"
 msgstr "Sayangnya pengiriman utk item baris order pembelian ini sdh selesai"
 
-#: SuppCreditGRNs.php:304
+#: SuppCreditGRNs.php:321
 msgid ""
 "if you add this item to the transaction then no shipments will not be updated"
 msgstr ""
 "jika Anda menambahkan item ini ke transaksi maka pengiriman tdk akan "
 "diperbarui"
 
-#: SuppCreditGRNs.php:304
+#: SuppCreditGRNs.php:321
 msgid ""
 "If you wish to allocate the order line item to a different shipment the "
 "order must be modified first"
@@ -30223,7 +30239,7 @@ msgstr ""
 "Jika Anda ingin memindahkan item baris order ke pengiriman lain, order "
 "tersebut harus diubah dulu"
 
-#: SuppCreditGRNs.php:311
+#: SuppCreditGRNs.php:328
 msgid "Add to Credit Note"
 msgstr "Tambahkan ke Nota Kredit"
 
@@ -30362,19 +30378,19 @@ msgstr "Qty yg Dibebankan"
 msgid "Price Charge in"
 msgstr "Tagihan Harga dalam"
 
-#: SuppInvGRNs.php:156 SupplierInvoice.php:688
+#: SuppInvGRNs.php:160 SupplierInvoice.php:688
 msgid "Total Value of Goods Charged"
 msgstr "Total Nilai Brg Ditagih"
 
-#: SuppInvGRNs.php:194
+#: SuppInvGRNs.php:198
 msgid "There are no outstanding goods received from"
 msgstr "Tdk ada brg diterima blm-sesuai dari"
 
-#: SuppInvGRNs.php:194
+#: SuppInvGRNs.php:198
 msgid "that have not been invoiced by them"
 msgstr "yg belum difakturkan oleh mereka"
 
-#: SuppInvGRNs.php:194
+#: SuppInvGRNs.php:198
 msgid ""
 "The goods must first be received using the link below to select purchase "
 "orders to receive"
@@ -30382,55 +30398,55 @@ msgstr ""
 "Brg harus diterima lebih dulu menggunakan link di bawah utk memilih order "
 "pembelian yg akan diterima"
 
-#: SuppInvGRNs.php:249
+#: SuppInvGRNs.php:253
 msgid "GRN Selected For Adding To A Purchase Invoice"
 msgstr "GRN yg Dipilih Utk Menambahkan Ke Faktur Pembelian"
 
-#: SuppInvGRNs.php:254
+#: SuppInvGRNs.php:258
 msgid "Qty Outstanding"
 msgstr "Qty Blm-Sesuai"
 
-#: SuppInvGRNs.php:256 SuppInvGRNs.php:307
+#: SuppInvGRNs.php:260 SuppInvGRNs.php:311
 msgid "Order Price in"
 msgstr "Harga Order dalam"
 
-#: SuppInvGRNs.php:257
+#: SuppInvGRNs.php:261
 msgid "Actual Price in"
 msgstr "Harga Aktual dalam"
 
-#: SuppInvGRNs.php:274
+#: SuppInvGRNs.php:278
 msgid "Modify Line"
 msgstr "Ubah Baris"
 
-#: SuppInvGRNs.php:295
+#: SuppInvGRNs.php:299
 msgid "Goods Received Yet to be Invoiced From"
 msgstr "Brg yg Diterima tapi Blm-Difakturkan Dari"
 
-#: SuppInvGRNs.php:304
+#: SuppInvGRNs.php:308
 msgid "Total Qty Received"
 msgstr "Total Qty Diterima"
 
-#: SuppInvGRNs.php:305
+#: SuppInvGRNs.php:309
 msgid "Qty Already Invoiced"
 msgstr "Qty Sdh Difaktur"
 
-#: SuppInvGRNs.php:306
+#: SuppInvGRNs.php:310
 msgid "Qty Yet To Invoice"
 msgstr "Qty Blm Difaktur"
 
-#: SuppInvGRNs.php:320
+#: SuppInvGRNs.php:324
 msgid "Add Whole PO to Invoice"
 msgstr "Tambahkan Semua PO utk Difaktur"
 
-#: SuppInvGRNs.php:349
+#: SuppInvGRNs.php:353
 msgid "Select All"
 msgstr "Pilih Semua"
 
-#: SuppInvGRNs.php:350
+#: SuppInvGRNs.php:354
 msgid "Deselect All"
 msgstr "Batal Pilih Semua"
 
-#: SuppInvGRNs.php:352
+#: SuppInvGRNs.php:356
 msgid "Add to Invoice"
 msgstr "Tambahkan ke Faktur"
 
@@ -31327,8 +31343,8 @@ msgstr "Total penambahan aktiva"
 msgid "Total contract charges"
 msgstr "Total beban kontrak"
 
-#: SupplierInvoice.php:868 SupplierTenders.php:743 SupplierTenders.php:744
-#: SystemParameters.php:411 SystemParameters.php:613 WorkCentres.php:272
+#: SupplierInvoice.php:868 SupplierTenders.php:741 SupplierTenders.php:742
+#: SystemParameters.php:411 SystemParameters.php:613 WorkCentres.php:273
 #: WorkOrderReceive.php:935
 #, fuzzy
 msgid "The input must be numeric"
@@ -31540,31 +31556,31 @@ msgstr "Masukkan Faktur lain utk Supplier ini"
 msgid "Enter payment"
 msgstr "Masukkan pembayaran"
 
-#: SupplierPriceList.php:391
+#: SupplierPriceList.php:398
 msgid "Search for a supplier"
 msgstr "Cari supplier"
 
-#: SupplierPriceList.php:442
+#: SupplierPriceList.php:449
 msgid "Select a supplier"
 msgstr "Pilih supplier"
 
-#: SupplierPriceList.php:521
+#: SupplierPriceList.php:528
 msgid "Supplier purchasing data for"
 msgstr "Data Pembelian supplier utk"
 
-#: SupplierPriceList.php:522
+#: SupplierPriceList.php:529
 msgid "Find new Item Code"
 msgstr "Cari Kode Item baru"
 
-#: SupplierPriceList.php:528
+#: SupplierPriceList.php:535
 msgid "Suppliers UOM"
 msgstr "Satuan Supplier"
 
-#: SupplierPriceList.php:530
+#: SupplierPriceList.php:537
 msgid "Suppliers Description"
 msgstr "Keterangan Supplier"
 
-#: SupplierPriceList.php:534
+#: SupplierPriceList.php:541
 msgid "Suppliers Item Code"
 msgstr "Kode Item Supplier"
 
@@ -32011,33 +32027,33 @@ msgstr "Nomor telepon maksimum 25 karakter"
 msgid "Suppliers To Send Tender"
 msgstr "Supplier Utk Kirim Tender"
 
-#: SupplierTenderCreate.php:424
+#: SupplierTenderCreate.php:425
 msgid "Items in Tender"
 msgstr "Item di Tender"
 
-#: SupplierTenderCreate.php:452
+#: SupplierTenderCreate.php:457
 msgid "Select Suppliers"
 msgstr "Pilih Supplier"
 
-#: SupplierTenderCreate.php:453
+#: SupplierTenderCreate.php:458
 msgid "Select Item Details"
 msgstr "Pilih Rincian Item"
 
-#: SupplierTenderCreate.php:457
+#: SupplierTenderCreate.php:462
 #, fuzzy
 msgid "Close This Tender"
 msgstr "Selesaikan Order Produksi Ini"
 
-#: SupplierTenderCreate.php:465
+#: SupplierTenderCreate.php:470
 msgid "Save Tender"
 msgstr "Simpan Tender"
 
-#: SupplierTenderCreate.php:552 SupplierTenderCreate.php:554
-#: SupplierTenderCreate.php:558 SupplierTenderCreate.php:560
+#: SupplierTenderCreate.php:557 SupplierTenderCreate.php:559
+#: SupplierTenderCreate.php:563 SupplierTenderCreate.php:565
 msgid "Left it blank to show all"
 msgstr ""
 
-#: SupplierTenderCreate.php:621
+#: SupplierTenderCreate.php:626
 #, fuzzy
 msgid ""
 "There are no suppliers data returned, one reason maybe no email addresses "
@@ -32045,21 +32061,21 @@ msgid ""
 msgstr ""
 "Supplier ini tdk ada pembayaran atau kredit blm-selesai utk dialokasikan"
 
-#: SupplierTenderCreate.php:688 SupplierTenderCreate.php:690
-#: SupplierTenderCreate.php:699 SupplierTenderCreate.php:701
+#: SupplierTenderCreate.php:693 SupplierTenderCreate.php:695
+#: SupplierTenderCreate.php:704 SupplierTenderCreate.php:706
 msgid "Leave it bank to show all"
 msgstr ""
 
-#: SupplierTenderCreate.php:719 SupplierTenders.php:86 SupplierTenders.php:164
-#: SupplierTenders.php:460 SupplierTenders.php:575
+#: SupplierTenderCreate.php:723 SupplierTenders.php:86 SupplierTenders.php:164
+#: SupplierTenders.php:458 SupplierTenders.php:573
 msgid "Tenders"
 msgstr "Tender"
 
-#: SupplierTenderCreate.php:719
+#: SupplierTenderCreate.php:723
 msgid "Select items required on this tender"
 msgstr "Pilih item-item yg diperlukan utk tender ini"
 
-#: SupplierTenderCreate.php:890
+#: SupplierTenderCreate.php:894
 msgid "Add to Tender"
 msgstr "Tambahkan ke Tender"
 
@@ -32075,11 +32091,11 @@ msgstr "Fungsi ini hanya dapat diakses melalui login supplier."
 msgid "Confirm the Response For Tender"
 msgstr "Konfirmasi Balasan Utk Tender"
 
-#: SupplierTenders.php:119 SupplierTenders.php:506
+#: SupplierTenders.php:119 SupplierTenders.php:504
 msgid "Tender Number"
 msgstr "Nomor Tender"
 
-#: SupplierTenders.php:124 SupplierTenders.php:536
+#: SupplierTenders.php:124 SupplierTenders.php:534
 msgid "Offered"
 msgstr "Yg Ditawarkan"
 
@@ -32115,15 +32131,15 @@ msgstr "Lihat tender terbuka apapun tanpa tawaran dari"
 msgid "Items to offer from"
 msgstr "Produk yg ditawarkan dari"
 
-#: SupplierTenders.php:460
+#: SupplierTenders.php:458
 msgid "Tenders Waiting For Offers"
 msgstr "Tender Menunggu Utk Tawaran"
 
-#: SupplierTenders.php:475
+#: SupplierTenders.php:473
 msgid "Outstanding Tenders Waiting For Offer"
 msgstr "Tender Blm-Selesai Menunggu Utk Tawaran"
 
-#: SupplierTenders.php:508 Z_ChangeBranchCode.php:215
+#: SupplierTenders.php:506 Z_ChangeBranchCode.php:215
 #: Z_ChangeCustomerCode.php:242 Z_ChangeGLAccountCode.php:145
 #: Z_ChangeLocationCode.php:261 Z_ChangeStockCategory.php:110
 #: Z_ChangeStockCode.php:197 Z_ChangeSupplierCode.php:25
@@ -32131,21 +32147,21 @@ msgstr "Tender Blm-Selesai Menunggu Utk Tawaran"
 msgid "Process"
 msgstr "Proses"
 
-#: SupplierTenders.php:508
+#: SupplierTenders.php:506
 msgid "Tender"
 msgstr "Tender"
 
-#: SupplierTenders.php:535 WorkOrderCosting.php:68 WorkOrderEntry.php:522
+#: SupplierTenders.php:533 WorkOrderCosting.php:68 WorkOrderEntry.php:522
 #: WorkOrderIssue.php:532 WorkOrderReceive.php:773 WorkOrderStatus.php:71
 msgid "Required By"
 msgstr "Diperlukan Pada"
 
-#: SupplierTenders.php:557 SupplierTenders.php:562
+#: SupplierTenders.php:555 SupplierTenders.php:560
 #, fuzzy
 msgid "Input must be in numeric format"
 msgstr "harus dalam format"
 
-#: SupplierTenders.php:575
+#: SupplierTenders.php:573
 msgid "Select items to offer from"
 msgstr "Pilih item yg ditawarkan dari"
 
@@ -35009,23 +35025,23 @@ msgstr "(Maks. 80 karakter)"
 msgid "Show Where Used"
 msgstr "Tampilkan Dimana Digunakan"
 
-#: WhereUsedInquiry.php:61
+#: WhereUsedInquiry.php:60
 msgid "The parents for the selected part could not be retrieved because"
 msgstr "Induk utk brg yg dipilih tdk dapat diambil karena"
 
-#: WhereUsedInquiry.php:64
+#: WhereUsedInquiry.php:63
 msgid "The selected item"
 msgstr "Item yg dipilih"
 
-#: WhereUsedInquiry.php:64
+#: WhereUsedInquiry.php:63
 msgid "is not used as a component of any other parts"
 msgstr "tdk digunakan sbg komponen dari brg lainnya"
 
-#: WhereUsedInquiry.php:70
+#: WhereUsedInquiry.php:68
 msgid "Used By"
 msgstr "Digunakan Oleh"
 
-#: WhereUsedInquiry.php:89
+#: WhereUsedInquiry.php:86
 msgid "Show Bill Of Material"
 msgstr "Tampilkan Bahan Baku"
 
@@ -35093,7 +35109,7 @@ msgstr "Kode Workshop"
 msgid "Overhead GL Account"
 msgstr "Akun GL Overhead"
 
-#: WorkCentres.php:130 WorkCentres.php:271
+#: WorkCentres.php:130 WorkCentres.php:272
 msgid "Overhead Per Hour"
 msgstr "Overhead Per Jam"
 
@@ -35137,7 +35153,7 @@ msgstr "Metode pembayaran tdk boleh berisi karakter"
 msgid "More than 3 legal characters"
 msgstr "atau karakter"
 
-#: WorkCentres.php:241
+#: WorkCentres.php:242
 msgid "Overhead Recovery GL Account"
 msgstr "Akun GL Pemulihan Overhead"
 
@@ -35441,20 +35457,20 @@ msgstr "Sisa Saldo"
 msgid "Next Lot/SN Ref"
 msgstr "Lot/Ref Nomor Seri Berikut"
 
-#: WorkOrderEntry.php:555
+#: WorkOrderEntry.php:554
 #, fuzzy
 msgid "The input format must be positive numeric"
 msgstr "Batas kredit harus angka positif"
 
-#: WorkOrderEntry.php:563
+#: WorkOrderEntry.php:562
 msgid "S/Ns"
 msgstr "Nomor Seri"
 
-#: WorkOrderEntry.php:590
+#: WorkOrderEntry.php:589
 msgid "Cancel This Work Order"
 msgstr "Batalkan Order Produksi Ini"
 
-#: WorkOrderEntry.php:679 WorkOrderIssue.php:742
+#: WorkOrderEntry.php:683 WorkOrderIssue.php:742
 #, php-format
 msgid "Add to Work Order"
 msgstr "Tambahkan ke Order Produksi"
@@ -41183,7 +41199,7 @@ msgstr ""
 "Dari label pengaturan sistem, pilih pengaturan perusahaan utk memasukkan "
 "informasi perusahaan dan preferensi sistem"
 
-#: includes/GetConfig.php:86 ../webSHOP/includes/GetCustomerDetails.php:50
+#: includes/GetConfig.php:86 ../webSHOP/includes/GetCustomerDetails.php:51
 #: ../webSHOP/includes/session.php:113
 msgid "CRITICAL PROBLEM"
 msgstr "MASALAH KRITIS"
@@ -41475,7 +41491,7 @@ msgid "Company:"
 msgstr "Perusahaan"
 
 #: includes/Login.php:108 ../webSHOP/Checkout.php:304
-#: ../webSHOP/includes/header.php:226
+#: ../webSHOP/includes/header.php:225
 msgid "Login"
 msgstr "Login"
 
@@ -42399,7 +42415,7 @@ msgstr "Kesalahan dalam Mengembalikan Transaksi"
 msgid "Database Rollback Due to Error Above"
 msgstr "Kesalahan Mengembalikan Database"
 
-#: includes/ConnectDB_mysqli.inc:202 includes/ConnectDB_mysql.inc:187
+#: includes/ConnectDB_mysqli.inc:204 includes/ConnectDB_mysql.inc:187
 msgid ""
 "The system has just run the regular database administration and optimisation "
 "routine."
@@ -42588,7 +42604,7 @@ msgstr "Tdk dapat mengambil kode GL HPP karena"
 msgid "SQL to get the cost of sales GL Code"
 msgstr "SQL utk mendapatkan kode GL HPP"
 
-#: includes/GetSalesTransGLCodes.inc:114
+#: includes/GetSalesTransGLCodes.inc:125
 msgid ""
 "Could not determine the correct general ledger account to use for posting "
 "the cost of this sale. Go to the setup menu and define appropriate COGS "
@@ -42600,15 +42616,15 @@ msgstr ""
 "Penjualan) yg sesuai. Utk memungkinkan faktur ini dibukukan, faktur ini "
 "telah dibukukan ke penjualan dan HPP standar - nomor akun 1"
 
-#: includes/GetSalesTransGLCodes.inc:144
+#: includes/GetSalesTransGLCodes.inc:155
 msgid "There was a problem retrieving the sales general ledger code because"
 msgstr "Ada masalah saat mengambil kode buku besar penjualan karena"
 
-#: includes/GetSalesTransGLCodes.inc:145
+#: includes/GetSalesTransGLCodes.inc:156
 msgid "SQL to get the sales GL Codes for sales and discounts"
 msgstr "SQL utk mengambil kode GL penjualan utk penjualan dan diskon"
 
-#: includes/GetSalesTransGLCodes.inc:251
+#: includes/GetSalesTransGLCodes.inc:274
 msgid ""
 "Could not determine the correct general ledger account to use for posting "
 "this sale to. Go to the setup menu and define appropriate Sale GL Posting "
@@ -42628,11 +42644,11 @@ msgstr "Item"
 msgid "Manual"
 msgstr "Manual"
 
-#: includes/header.inc:90 ../webSHOP/includes/header.php:218
+#: includes/header.inc:90 ../webSHOP/includes/header.php:217
 msgid "Are you sure you wish to logout?"
 msgstr "Apakah Anda yakin ingin logout?"
 
-#: includes/header.inc:90 ../webSHOP/includes/header.php:218
+#: includes/header.inc:90 ../webSHOP/includes/header.php:217
 msgid "Logout"
 msgstr "Logout"
 
@@ -42873,7 +42889,7 @@ msgstr "Perencanaan persediaan utk Produk Kategori"
 #: includes/PDFInventoryPlanPageHeader.inc:54
 #: includes/PDFInventoryPlanPageHeader.inc:55
 #: includes/PDFInventoryPlanPageHeader.inc:56
-#: includes/PDFTransPageHeaderPortrait.inc:265
+#: includes/PDFTransPageHeaderPortrait.inc:267
 msgid "Qty"
 msgstr "Qty"
 
@@ -43137,17 +43153,17 @@ msgid "CREDIT NOTE"
 msgstr "NOTA KREDIT"
 
 #: includes/PDFTransPageHeader.inc:58
-#: includes/PDFTransPageHeaderPortrait.inc:69
+#: includes/PDFTransPageHeaderPortrait.inc:71
 msgid "Dispatch Detail"
 msgstr "Rincian Pengiriman"
 
 #: includes/PDFTransPageHeader.inc:60
-#: includes/PDFTransPageHeaderPortrait.inc:72
+#: includes/PDFTransPageHeaderPortrait.inc:74
 msgid "Dispatched From"
 msgstr "Dikirim Dari"
 
 #: includes/PDFTransPageHeader.inc:91
-#: includes/PDFTransPageHeaderPortrait.inc:122
+#: includes/PDFTransPageHeaderPortrait.inc:124
 msgid "Sold To"
 msgstr "Dijual Ke"
 
@@ -43159,19 +43175,19 @@ msgstr "Ref Pajak Customer"
 msgid "Customer Order Ref."
 msgstr "Ref Order Customer"
 
-#: includes/PDFTransPageHeaderPortrait.inc:157
+#: includes/PDFTransPageHeaderPortrait.inc:159
 msgid "Delivered To (check Dispatch Detail)"
 msgstr "Dikirim Ke (periksa rincian Pengiriman)"
 
-#: includes/PDFTransPageHeaderPortrait.inc:239
+#: includes/PDFTransPageHeaderPortrait.inc:241
 msgid "Cust. Tax Ref"
 msgstr "Ref Pajak Customer"
 
-#: includes/PDFTransPageHeaderPortrait.inc:242
+#: includes/PDFTransPageHeaderPortrait.inc:244
 msgid "Cust. Reference No."
 msgstr "Nomor Referensi Customer"
 
-#: includes/PDFTransPageHeaderPortrait.inc:267
+#: includes/PDFTransPageHeaderPortrait.inc:269
 #, fuzzy
 msgid "Disc."
 msgstr "Disk"
@@ -45906,7 +45922,7 @@ msgid "Return Value"
 msgstr "Nilai Kembali"
 
 #: ../webSHOP/Checkout.php:9 ../webSHOP/Checkout.php:369
-#: ../webSHOP/Checkout.php:449 ../webSHOP/Checkout.php:526
+#: ../webSHOP/Checkout.php:449 ../webSHOP/Checkout.php:521
 #: ../webSHOP/includes/header.php:212
 #, fuzzy
 msgid "Checkout"
@@ -46088,7 +46104,7 @@ msgid ""
 msgstr ""
 
 #: ../webSHOP/Checkout.php:319 ../webSHOP/Register.php:537
-#: ../webSHOP/Register.php:728 ../webSHOP/includes/header.php:228
+#: ../webSHOP/Register.php:728 ../webSHOP/includes/header.php:219
 #, fuzzy
 msgid "Register"
 msgstr "Daftar Aktiva"
@@ -46192,129 +46208,119 @@ msgstr "Rincian Pengiriman"
 msgid "Select Payment Method"
 msgstr "Metode Pembayaran"
 
-#: ../webSHOP/Checkout.php:451
+#: ../webSHOP/Checkout.php:450
 #, fuzzy
 msgid "Delivery Address"
 msgstr "Alamat Pengiriman 1"
 
-#: ../webSHOP/Checkout.php:469
+#: ../webSHOP/Checkout.php:468
 msgid "ZIP"
 msgstr ""
 
-#: ../webSHOP/Checkout.php:477 ../webSHOP/Checkout.php:659
+#: ../webSHOP/Checkout.php:476
 #, fuzzy
 msgid "Change Delivery Details"
 msgstr "Rincian Pengiriman"
 
-#: ../webSHOP/Checkout.php:480
+#: ../webSHOP/Checkout.php:479
 #, fuzzy
 msgid "Choose Your Preferred Payment Method"
 msgstr "Lihat Semua Metode Pembayaran"
 
-#: ../webSHOP/Checkout.php:482 ../webSHOP/Checkout.php:534
+#: ../webSHOP/Checkout.php:481 ../webSHOP/includes/DisplayShoppingCart.php:77
 #, fuzzy
 msgid "Surcharge"
 msgstr "Pembelian"
 
-#: ../webSHOP/Checkout.php:498 ../webSHOP/Checkout.php:551
+#: ../webSHOP/Checkout.php:496 ../webSHOP/Checkout.php:531
 msgid "Pay By PayPal"
 msgstr ""
 
-#: ../webSHOP/Checkout.php:500 ../webSHOP/Checkout.php:587
+#: ../webSHOP/Checkout.php:498 ../webSHOP/Checkout.php:562
 #: ../webSHOP/CreditCardPayFlowPro.php:284
 #: ../webSHOP/CreditCardPayPalPro.php:347
 msgid "Pay By Credit Card"
 msgstr ""
 
-#: ../webSHOP/Checkout.php:512 ../webSHOP/Checkout.php:620
+#: ../webSHOP/Checkout.php:509 ../webSHOP/Checkout.php:624
 #, fuzzy
 msgid "Back to Delivery Details"
 msgstr "Pilih Rincian Pengiriman"
 
-#: ../webSHOP/Checkout.php:513
+#: ../webSHOP/Checkout.php:510
 #, fuzzy
 msgid "Review Freight Method and Charges"
 msgstr "Lihat Semua Metode Pembayaran"
 
-#: ../webSHOP/Checkout.php:514
+#: ../webSHOP/Checkout.php:511
 #, fuzzy
 msgid "Confirm Selected Payment Method"
 msgstr "Lihat Semua Metode Pembayaran"
 
-#: ../webSHOP/Checkout.php:526
+#: ../webSHOP/Checkout.php:521
 #, fuzzy
 msgid "Payment and Order Confirmation"
 msgstr "Masukkan Order / Penawaran"
 
-#: ../webSHOP/Checkout.php:528 ../webSHOP/includes/PlaceOrder.php:144
+#: ../webSHOP/Checkout.php:523 ../webSHOP/includes/PlaceOrder.php:144
 #, fuzzy
 msgid "Order Confirmation"
 msgstr "Konfirmasi Order-Order Penjualan"
 
-#: ../webSHOP/Checkout.php:538 ../webSHOP/includes/DisplayShoppingCart.php:81
-#, fuzzy
-msgid "Total Amount Due"
-msgstr "Total Jumlah"
-
-#: ../webSHOP/Checkout.php:551
+#: ../webSHOP/Checkout.php:531
 msgid "Process payment using your PayPal Account"
 msgstr ""
 
-#: ../webSHOP/Checkout.php:554 ../webSHOP/CreditCardPayFlowPro.php:290
+#: ../webSHOP/Checkout.php:533 ../webSHOP/CreditCardPayFlowPro.php:290
 msgid "The shop is in TEST MODE - no payments will be processed"
 msgstr ""
 
-#: ../webSHOP/Checkout.php:603 ../webSHOP/Checkout.php:622
+#: ../webSHOP/Checkout.php:578 ../webSHOP/Checkout.php:626
 #, fuzzy
 msgid "Confirm and Place Order"
 msgstr "Konfirmasi order"
 
-#: ../webSHOP/Checkout.php:607
+#: ../webSHOP/Checkout.php:582
 msgid "Thank you for purchasing from us. Please note the order number"
 msgstr ""
 
-#: ../webSHOP/Checkout.php:607 ../webSHOP/Checkout.php:627
+#: ../webSHOP/Checkout.php:582 ../webSHOP/Checkout.php:596
 #, fuzzy
 msgid "for your reference"
 msgstr "Referensi Order Produksi"
 
-#: ../webSHOP/Checkout.php:614
+#: ../webSHOP/Checkout.php:589
 #, fuzzy
 msgid ""
 "No order has been created due to an internal error. Please contact us to "
 "advise."
 msgstr "Order baru telah dibuat dari template order berulang utk customer"
 
-#: ../webSHOP/Checkout.php:621 ../webSHOP/Checkout.php:662
-#, fuzzy
-msgid "Change Payment Method"
-msgstr "Metode Pembayaran"
-
-#: ../webSHOP/Checkout.php:627
+#: ../webSHOP/Checkout.php:596
 msgid "Thank you for your order. Please note the order number"
 msgstr ""
 
-#: ../webSHOP/Checkout.php:635
+#: ../webSHOP/Checkout.php:604
 msgid "Please deposit the amount due (in full) to our bank account."
 msgstr ""
 
-#: ../webSHOP/Checkout.php:638
+#: ../webSHOP/Checkout.php:607
 msgid ""
 "To speed up the process, please send us a scanned copy of your transfer slip "
 "to"
 msgstr ""
 
-#: ../webSHOP/Checkout.php:646 ../webSHOP/includes/PlaceOrder.php:318
+#: ../webSHOP/Checkout.php:615 ../webSHOP/includes/PlaceOrder.php:318
 msgid ""
 "Please note that goods will be shipped once your funds transfer is confirmed"
 msgstr ""
 
-#: ../webSHOP/Checkout.php:656
+#: ../webSHOP/Checkout.php:625
 #, fuzzy
-msgid "Add more items to Shopping Cart"
-msgstr "Perbarui Supplier"
+msgid "Change Payment Method"
+msgstr "Metode Pembayaran"
 
-#: ../webSHOP/Checkout.php:671
+#: ../webSHOP/Checkout.php:631
 #, fuzzy
 msgid "Back to Shop Home Page"
 msgstr "Kembali ke halaman login"
@@ -46557,47 +46563,47 @@ msgstr "Cari Sekarang"
 msgid "Featured Items"
 msgstr "Cair"
 
-#: ../webSHOP/index.php:153
+#: ../webSHOP/index.php:156
 #, fuzzy
 msgid "Could not get the items to display for this category because"
 msgstr "Tak bisa mendapatkan masalah persediaan utk kontrak ini karena"
 
-#: ../webSHOP/index.php:178
+#: ../webSHOP/index.php:181
 #, fuzzy
 msgid "There are no items matching this search"
 msgstr "Tdk ada item utk Customer ini"
 
-#: ../webSHOP/ItemDetails.php:95
+#: ../webSHOP/ItemDetails.php:98
 #, fuzzy
 msgid "incl Tax"
 msgstr "Termasuk Pajak"
 
-#: ../webSHOP/ItemDetails.php:99 ../webSHOP/ItemDetails.php:108
+#: ../webSHOP/ItemDetails.php:102 ../webSHOP/ItemDetails.php:111
 #: ../webSHOP/includes/Functions.php:43 ../webSHOP/includes/Functions.php:52
 msgid "Arriving Soon"
 msgstr ""
 
-#: ../webSHOP/ItemDetails.php:106
+#: ../webSHOP/ItemDetails.php:109
 #, fuzzy
 msgid "In Stock QTY"
 msgstr "Tipe Stok"
 
-#: ../webSHOP/ItemDetails.php:114
+#: ../webSHOP/ItemDetails.php:117
 #, fuzzy
 msgid "Enter the quantity you wish to purchase of this item"
 msgstr "Masukkan tgl akhir order"
 
-#: ../webSHOP/ItemDetails.php:116 ../webSHOP/includes/Functions.php:63
+#: ../webSHOP/ItemDetails.php:119 ../webSHOP/includes/Functions.php:63
 #, fuzzy
 msgid "Add to Order"
 msgstr "Tambahkan Item ke Order"
 
-#: ../webSHOP/ItemDetails.php:118
+#: ../webSHOP/ItemDetails.php:121
 #, fuzzy
 msgid "Back to Category"
 msgstr "Kategori Stok"
 
-#: ../webSHOP/ItemDetails.php:131
+#: ../webSHOP/ItemDetails.php:134
 #, fuzzy
 msgid "Product Details"
 msgstr "Rincian Kredit"
@@ -46953,25 +46959,28 @@ msgstr "Menghapus Item"
 msgid "Enter New Quantity"
 msgstr "Masukkan Order Penjualan Baru"
 
-#: ../webSHOP/includes/DisplayShoppingCart.php:64
-#: ../webSHOP/includes/DisplayShoppingCart.php:71
+#: ../webSHOP/includes/DisplayShoppingCart.php:62
 #, fuzzy
-msgid "Total Order Value"
-msgstr "Total Nilai Order dalam"
+msgid "Freight cost"
+msgstr "Biaya Pengiriman"
 
-#: ../webSHOP/includes/DisplayShoppingCart.php:64
-#: ../webSHOP/includes/DisplayShoppingCart.php:71
-#: ../webSHOP/includes/DisplayShoppingCart.php:81
+#: ../webSHOP/includes/DisplayShoppingCart.php:66
+#: ../webSHOP/includes/PlaceOrder.php:277
+#, fuzzy
+msgid "Freight Costs paid by"
+msgstr "Biaya Pengangkutan"
+
+#: ../webSHOP/includes/DisplayShoppingCart.php:77
+#: ../webSHOP/includes/DisplayShoppingCart.php:83
 #: ../webSHOP/includes/Functions.php:61
 #, fuzzy
 msgid "incl GST"
 msgstr "Termasuk Pajak"
 
-#: ../webSHOP/includes/DisplayShoppingCart.php:75
-#: ../webSHOP/includes/PlaceOrder.php:277
+#: ../webSHOP/includes/DisplayShoppingCart.php:83
 #, fuzzy
-msgid "Freight Costs paid by"
-msgstr "Biaya Pengangkutan"
+msgid "Total Due"
+msgstr "Total Jatuh Tempo Utk"
 
 #: ../webSHOP/includes/Functions.php:27 ../webSHOP/includes/Functions.php:30
 #, fuzzy
@@ -47042,12 +47051,12 @@ msgid "An error occurred accessing the default customer configuration"
 msgstr ""
 "Kesalahan terjadi saat mengakses database utk mengambil informasi perusahaan"
 
-#: ../webSHOP/includes/GetCustomerDetails.php:49
+#: ../webSHOP/includes/GetCustomerDetails.php:50
 #, fuzzy
 msgid "The customer defaults have not yet been set up"
 msgstr "Data perusahaan belum dibuat"
 
-#: ../webSHOP/includes/GetCustomerDetails.php:50
+#: ../webSHOP/includes/GetCustomerDetails.php:51
 #, fuzzy
 msgid ""
 "From the webERP system setup tab select shop maintenance to enter the "
@@ -47071,16 +47080,16 @@ msgstr "Ringkasan"
 msgid "Home"
 msgstr "Volume"
 
-#: ../webSHOP/includes/header.php:216
+#: ../webSHOP/includes/header.php:215
 msgid "Logged in as"
 msgstr ""
 
-#: ../webSHOP/includes/header.php:217
+#: ../webSHOP/includes/header.php:216
 #, fuzzy
 msgid "Update Account Details"
 msgstr "Rincian Akun"
 
-#: ../webSHOP/includes/header.php:224
+#: ../webSHOP/includes/header.php:223
 #, fuzzy
 msgid "Enter Email"
 msgstr "Masukkan sebagian"
@@ -47210,6 +47219,18 @@ msgstr "Kredit "
 #, fuzzy
 msgid "Bank Transfer"
 msgstr "Perpindahan"
+
+#, fuzzy
+#~ msgid "Total Amount Due"
+#~ msgstr "Total Jumlah"
+
+#, fuzzy
+#~ msgid "Add more items to Shopping Cart"
+#~ msgstr "Perbarui Supplier"
+
+#, fuzzy
+#~ msgid "Total Order Value"
+#~ msgstr "Total Nilai Order dalam"
 
 #~ msgid "The Line 4 of the address must be forty characters or less long"
 #~ msgstr "Alamat baris 4 maksimum 40 karakter"

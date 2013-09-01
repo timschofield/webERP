@@ -81,14 +81,14 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 						}
 					}
 					$db = pg_connect( $PgConnStr );
-					$SQLScriptFile = file('./sql/pg/weberp-new.psql');
+					$SQLScriptFile = file('./sql/pg/coa/weberp-new.psql');
 
 				} elseif ($DBType =='mysql') { //its a mysql db < 4.1
 					mysql_select_db($_POST['NewDatabase'],$db);
-					$SQLScriptFile = file('./sql/mysql/weberp-new.sql');
+					$SQLScriptFile = file('./sql/mysql/coa/weberp-new.sql');
 				} elseif ($DBType =='mysqli') { //its a mysql db using the >4.1 library functions
 					mysqli_select_db($db,$_POST['NewDatabase']);
-					$SQLScriptFile = file('./sql/mysql/weberp-new.sql');
+					$SQLScriptFile = file('./sql/mysql/coa/weberp-new.sql');
 				}
 
 				$ScriptFileEntries = sizeof($SQLScriptFile);

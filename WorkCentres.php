@@ -203,7 +203,7 @@ if (isset($SelectedWC)) {
 	echo '<table class="selection">
 			<tr>
 				<td>' . _('Work Centre Code') . ':</td>
-				<td><input type="text" name="Code" pattern="[^&+-]{2,}" required="required" title="'._('The code should be at least 2 characters and no illegal characters allowed').'"  size="6" maxlength="5" value="' . $_POST['Code'] . '" placeholder="'._('More than 2 legal characters').'" /></td>
+				<td><input type="text" name="Code" pattern="[^&+-]{2,}" required="required" autofocus="autofocus" title="'._('The code should be at least 2 characters and no illegal characters allowed').'"  size="6" maxlength="5" value="' . $_POST['Code'] . '" placeholder="'._('More than 2 legal characters').'" /></td>
 			</tr>';
 }
 
@@ -217,9 +217,10 @@ if (!isset($_POST['Description'])) {
 }
 echo '<tr>
 		<td>' . _('Work Centre Description') . ':</td>
-		<td><input type="text" pattern="[^&+-]{3,}" required="required" title="'._('The Work Center should be more than 3 characters and no illegal characters allowed').'" name="Description" size="21" maxlength="20" value="' . $_POST['Description'] . '" placeholder="'._('More than 3 legal characters').'" /></td>
+		<td><input type="text" pattern="[^&+-]{3,}" required="required" title="'._('The Work Center should be more than 3 characters and no illegal characters allowed').'" name="Description" ' . (isset($SelectedWC)? 'autofocus="autofocus"': '') . ' size="21" maxlength="20" value="' . $_POST['Description'] . '" placeholder="'._('More than 3 legal characters').'" /></td>
 	</tr>
-	<tr><td>' . _('Location') . ':</td>
+	<tr>
+		<td>' . _('Location') . ':</td>
 		<td><select name="Location">';
 
 while ($myrow = DB_fetch_array($result)) {
@@ -273,20 +274,12 @@ echo '<tr>
 
 echo '</td>
 	</tr>
-	</table>';
-
-echo '<br />
+	</table>
+	<br />
 	<div class="centre">
 		<input type="submit" name="submit" value="' . _('Enter Information') . '" />
-	</div>';
-
-if (!isset($_GET['SelectedWC']) or $_GET['SelectedWC']=='') {
-	echo '<script  type="text/javascript">defaultControl(document.forms[0].Code);</script>';
-} else {
-	echo '<script  type="text/javascript">defaultControl(document.forms[0].Description);</script>';
-}
-
-echo '</div>
+	</div>
+	</div>
       </form>';
 include('includes/footer.inc');
 ?>
