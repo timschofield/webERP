@@ -1640,7 +1640,6 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 						locale_number_format($OnOrder, $QOHRow['decimalplaces']),
 						locale_number_format($Available, $QOHRow['decimalplaces']),
 						strval($j+7),
-						pow(10,-$QOHRow['decimalplaces']),
 						$i,
 						$i,
 						$myrow['stockid']);
