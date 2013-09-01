@@ -213,7 +213,7 @@ if (!isset($_GET['OrderNumber']) AND !isset($_SESSION['ProcessingOrder'])) {
 
 	} else { /*end if the order was returned sucessfully */
 
-		echo '<br />' . 
+		echo '<br />' .
 		prnMsg( _('This order item could not be retrieved. Please select another order'), 'warn');
 		include ('includes/footer.inc');
 		exit;
@@ -489,11 +489,11 @@ if ($_SESSION['Items'.$identifier]->Any_Already_Delivered()==1
 	AND (!isset($_SESSION['Items'.$identifier]->FreightCost)
 		OR $_POST['ChargeFreightCost']==0)) {
 
-	echo '<td colspan="2" class="number">' .  _('Charge Freight Cost inc Tax') . '</td>
+	echo '<td colspan="2" class="number">' .  _('Charge Freight Cost ex Tax') . '</td>
 		<td><input tabindex="'.$j.'" type="text" required="required" class="number" size="10" maxlength="12" name="ChargeFreightCost" value="0" /></td>';
 	$_SESSION['Items'.$identifier]->FreightCost=0;
 } else {
-	echo '<td colspan="2" class="number">' .  _('Charge Freight Cost inc Tax') . '</td>';
+	echo '<td colspan="2" class="number">' .  _('Charge Freight Cost ex Tax') . '</td>';
 	if (isset($_POST['ProcessInvoice'])) {
 		echo '<td class="number">' . locale_number_format($_SESSION['Items'.$identifier]->FreightCost,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</td>';
 	} else {
@@ -1668,7 +1668,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 			<td>' . _('No Of Packages in Delivery'). ':</td>
 			<td><input tabindex="'.$j.'" type="number" maxlength="6" size="6" class="integer" name="Packages" value="' . $_POST['Packages'] . '" /></td>
 		</tr>';
-	
+
 	$j++;
 	echo '<tr>
 			<td>' . _('Action For Balance'). ':</td>

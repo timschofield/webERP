@@ -14,7 +14,7 @@ Function GetCOGSGLAccount ($Area, $StockID, $SalesType, &$db) {
 
 	/*Get the StockCategory for this item */
 
-	$SQL = "SELECT categoryid` FROM stockmaster WHERE stockid='" . $StockID . "'";
+	$SQL = "SELECT categoryid FROM stockmaster WHERE stockid='" . $StockID . "'";
 	$Result=DB_query($SQL,$db);
 	$myrow = DB_fetch_row($Result);
 	$StockCategory = $myrow[0];
@@ -69,7 +69,7 @@ Function GetCOGSGLAccount ($Area, $StockID, $SalesType, &$db) {
 		DB_free_result($Result);
 		$SQL = "SELECT glcode FROM cogsglpostings
 			WHERE area = 'AN'
-			AND stkcat = = '" . $StockCategory . "'
+			AND stkcat = '" . $StockCategory . "'
 			AND salestype = '" . $SalesType . "'";
 
 		$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg);

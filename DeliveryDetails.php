@@ -118,15 +118,15 @@ if (isset($_POST['Update'])
 	if ($InputErrors==0){
 
 		if ($_SESSION['DoFreightCalc']==True){
-			list ($_POST['FreightCost'], $BestShipper) = CalcFreightCost($_SESSION['Items'.$identifier]->total, 
-																		$_POST['BrAdd2'], 
-																		$_POST['BrAdd3'], 
-																		$_POST['BrAdd4'], 
-																		$_POST['BrAdd5'], 
-																		$_POST['BrAdd6'], 
-																		$_SESSION['Items'.$identifier]->totalVolume, 
-																		$_SESSION['Items'.$identifier]->totalWeight, 
-																		$_SESSION['Items'.$identifier]->Location, 
+			list ($_POST['FreightCost'], $BestShipper) = CalcFreightCost($_SESSION['Items'.$identifier]->total,
+																		$_POST['BrAdd2'],
+																		$_POST['BrAdd3'],
+																		$_POST['BrAdd4'],
+																		$_POST['BrAdd5'],
+																		$_POST['BrAdd6'],
+																		$_SESSION['Items'.$identifier]->totalVolume,
+																		$_SESSION['Items'.$identifier]->totalWeight,
+																		$_SESSION['Items'.$identifier]->Location,
 																		$_SESSION['Items'.$identifier]->DefaultCurrency,
 																		$db);
 			if ( !empty($BestShipper) ){
@@ -571,14 +571,14 @@ if (isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.
 				//Send email to the Factory Manager
 				if($_SESSION['SmtpSetting']==0){
 					mail($_SESSION['FactoryManagerEmail'],$EmailSubject,$FactoryManagerEmail);
-	
+
 				}else{
 					include('includes/htmlMimeMail.php');
 					$mail = new htmlMimeMail();
 					$mail->setSubject($EmailSubject);
 					$result = SendmailBySmtp($mail,array($_SESSION['FactoryManagerEmail']));
 				}
-				
+
 			} //end if with this sales order there is a shortfall of stock - need to create the WO
 		}//end if auto create WOs in on
 	} /* end inserted line items into sales order details */
@@ -1081,7 +1081,7 @@ foreach ($CountriesArray as $CountryEntry => $CountryName){
 }
 echo '</select></td>
 	</tr>';
-	
+
 echo'	<tr>
 		<td>' .  _('Contact Phone Number') .':</td>
 		<td><input type="tel" size="25" maxlength="25" required="required" name="PhoneNo" value="' . $_SESSION['Items'.$identifier]->PhoneNo . '" title="' . _('Enter the telephone number of the contact at the delivery address.') . '" /></td>
@@ -1153,7 +1153,7 @@ echo'	<tr>
 		}
 
 		echo '<tr>
-				<td>' .  _('Charge Freight Cost inc tax') .':</td>
+				<td>' .  _('Charge Freight Cost ex tax') .':</td>
 				<td><input type="text" class="number" size="10" maxlength="12" name="FreightCost" value="' . $_SESSION['Items'.$identifier]->FreightCost . '" /></td>';
 
 		if ($_SESSION['DoFreightCalc']==true){
