@@ -10,7 +10,7 @@ if ($PageNumber>1){
 $FontSize=8;
 $YPos= $Page_Height-$Top_Margin;
 
-$pdf->addText($Left_Margin, $YPos,$FontSize, $_SESSION['CompanyRecord']['coyname']);
+$pdf->addText($Left_Margin, $YPos,$FontSize, html_entity_decode($_SESSION['CompanyRecord']['coyname']));
 
 $YPos -=$line_height;
 
