@@ -1,4 +1,7 @@
 webERP Change Log
+
+1/9/13 Version 4.11.0
+
 29/8/2013 Exson: Fixed the pattern typo error in StockCategories.php.
 28/8/2013 Exson: Fixed html tag mark error and make it html5 compatible and table sortable in StockStatus.php
 28/8/2013 Exson: Fixed MiscFunctions.js bug which make onclick event failed for tag whose class is date, number or integer. Solution from Tim. And update the sql file in coa directory. 
