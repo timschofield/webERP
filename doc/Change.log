@@ -1,5 +1,5 @@
 webERP Change Log
-
+4/9/2013 Exson: Fixed the undefined StockID error and make it html5 compatible and table sorting in StockReorderLevel.php
 1/9/13 Version 4.11.0
 
 29/8/2013 Exson: Fixed the pattern typo error in StockCategories.php.
