@@ -10,6 +10,8 @@ if (isset($_GET['StockID'])){
 	$StockID = trim(mb_strtoupper($_GET['StockID']));
 } elseif (isset($_POST['StockID'])){
 	$StockID = trim(mb_strtoupper($_POST['StockID']));
+}else{
+	$StockID = '';
 }
 
 echo '<a href="' . $RootPath . '/SelectProduct.php">' . _('Back to Items') . '</a>';
@@ -44,20 +46,19 @@ $LocStockResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
 
 echo '<table class="selection">';
 echo '<tr>
-		<th colspan="3">' . _('Stock Code') . ':<input type="text" name="StockID" size="21" value="' . $StockID . '" maxlength="20" /><input type="submit" name="Show" value="' . _('Show Re-Order Levels') . '" /></th>
+		<th colspan="3">' . _('Stock Code') . ':<input  type="text" pattern="(?!^\s+$)[^><+%-]{1,20}" title="'._('The stock id should not contains illegal characters and blank or percentage mark is not allowed').'" required="required" name="StockID" size="21" value="' . $StockID . '" maxlength="20" /><input type="submit" name="Show" value="' . _('Show Re-Order Levels') . '" /></th>
 	</tr>';
 echo '<tr>
 		<th colspan="3"><h3><b>' . $StockID . ' - ' . $myrow[0] . '</b>  (' . _('In Units of') . ' ' . $myrow[1] . ')</h3></th>
 	</tr>';
 
-$TableHeader = '<tr>
-					<th>' . _('Location') . '</th>
-					<th>' . _('Quantity On Hand') . '</th>
-					<th>' . _('Re-Order Level') . '</th>
+$TableHeader = '<tbody><tr>
+					<th class="ascending">' . _('Location') . '</th>
+					<th class="ascending">' . _('Quantity On Hand') . '</th>
+					<th class="ascending">' . _('Re-Order Level') . '</th>
 				</tr>';
 
 echo $TableHeader;
-$j = 1;
 $k=0; //row colour counter
 
 while ($myrow=DB_fetch_array($LocStockResult)) {
@@ -85,7 +86,7 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 
 	printf('<td>%s</td>
 			<td class="number">%s</td>
-			<td><input type="text" class="number" name="%s" maxlength="10" size="10" value="%s" />
+			<td><input title="'._('Input safety stock quantity').'" type="text" class="number" name="%s" maxlength="10" size="10" value="%s" />
 			<input type="hidden" name="Old_%s" value="%s" /></td></tr>',
 			$myrow['locationname'],
 			locale_number_format($myrow['quantity'],$myrow['decimalplaces']),
@@ -93,16 +94,12 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 			$myrow['reorderlevel'],
 			$myrow['loccode'],
 			$myrow['reorderlevel']);
-	$j++;
-	If ($j == 12){
-		$j=1;
-		echo $TableHeader;
-	}
+
 //end of page full new headings if
 }
 //end of while loop
 
-echo '</table>
+echo '</tbody></table>
 	<br />
 	<div class="centre">
 		<input type="submit" name="UpdateData" value="' . _('Update') . '" />
