@@ -325,7 +325,11 @@ function initial(){
 		
 				ds[i].origonchange=ds[i].onchange;
 				ds[i].newonchange=rLocaleNumber;
-				ds[i].onchange=function(){if(this.origonchange) this.origonchange();this.newonchange();};
+				ds[i].onchange=function(){
+					if(this.origonchange)
+						this.origonchange();
+					this.newonchange();
+				};
 		
 		}
 	}

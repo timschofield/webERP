@@ -280,16 +280,16 @@
 			}
 
 		}
-		if(!empty($_POST['COA'])){
-			if(preg_match('/[a-zA-Z_-]+(\.sql)/',$_POST['COA'])){
-				$COA = $_POST['COA'];
+		if(!empty($_POST['CountrySQL'])){
+			if(preg_match('/[a-zA-Z_-]+(\.sql)/',$_POST['CountrySQL'])){
+				$CountrySQL = $_POST['CountrySQL'];
 			}else{
 				$InputError = 1;
-				prnMsg(_('The COA file name must only contain letters,"-","_"'),'error');
+				prnMsg(_('The country SQL file name must only contain letters,"-","_"'),'error');
 			}
 		}else{
 				$InputError = 1;
-				prnMsg(_('There is no COA file selected. Please select a file.'),'error');
+				prnMsg(_('There is no country SQL file selected. Please select a file.'),'error');
 
 		}
 		if($InputError == 1){//return to the company configuration stage
@@ -403,7 +403,7 @@
 				fclose($zp);
 			}
 			//Now it is the time to create the mysql data
-			//Just get the data from $COA and read data from this file
+			//Just get the data from $CountrySQL and read data from this file
 			//At the mean time, we should check the user need demo database or not
 			if($DBConnectType == 'mysqli'){
 				$Db = mysqli_connect($HostName,$UserName,$Password);
@@ -416,8 +416,8 @@
                     prnMsg(_('Failed to connect the database, the error is ').mysql_connect_error(),'error');
                 }
 			}
-			$NewSQLFile = $Path_To_Root.'/sql/mysql/coa/'.$COA;
-			$DemoSQLFile = $Path_To_Root.'/sql/mysql/coa/weberp-demo.sql';
+			$NewSQLFile = $Path_To_Root.'/sql/mysql/country_sql/'.$CountrySQL;
+			$DemoSQLFile = $Path_To_Root.'/sql/mysql/country_sql/demo.sql';
 			if(!empty($DualCompany) and $DualCompany == 1){
 				//we should install the production data and demo data
 				$sql = 'CREATE DATABASE IF NOT EXISTS `'.$DatabaseName.'`';
@@ -1020,13 +1020,13 @@ function CompanySetup($UserLanguage,$HostName,$UserName,$Password,$DatabaseName,
                     <span><?php echo _('The name of your company'); ?></span>
                 </li>
                 <li>
-                    <label for="COA"><?php echo _("Chart of Accounts"); ?>: </label>
-                    <select name="COA">
+                    <label for="CountrySQL"><?php echo _("Chart of Accounts"); ?>: </label>
+                    <select name="CountrySQL">
                     <?php
-                        $COAs = scandir('../sql/mysql/coa');
-                        $COAs = array_diff($COAs,array('.','..'));
-                        if(!empty($COAs)){
-                            foreach($COAs as $Value){
+                        $CountrySQLs = scandir('../sql/mysql/coa');
+                        $CountrySQLs = array_diff($CountrySQLs,array('.','..'));
+                        if(!empty($CountrySQLs)){
+                            foreach($CountrySQLs as $Value){
                                 if($Value == 'weberp-new.sql'){
                                     echo '<option value="'.$Value.'" selected="true">' . $Value . '</option>';
                                 }elseif($Value != 'weberp-demo.sql'){// the demo sql selection is not necessary so not allowed
@@ -1110,7 +1110,7 @@ function CompanySetup($UserLanguage,$HostName,$UserName,$Password,$DatabaseName,
 <?php
 
 }
-//@para $NewSQL is the weberp new sql file which contains the COA file
+//@para $NewSQL is the weberp new sql file which contains the CountrySQL file
 //@para $Demo is the weberp demo sql file
 //@para $db refer to the database connection reference
 //@para $DBType refer to the database connection type mysqli or mysql

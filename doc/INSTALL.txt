@@ -194,10 +194,10 @@ Note: The scripts provided are created using mysqldump and contain comments. Unf
 WebERP expects each company that it manages to have a separate database. For example, if you have a company called MyCompany, then it will expect a database called mycompany (note that it must all be lower case).  Before you start, ensure that you have no such database on your system, if you do then you will either have to remove it, rename it, or choose a different name for your
 company for the purposes of WebERP. The simplest tool is webmin, or you could use phpMyAdmin.
 
-Once you have confirmed that you are ready to create a database you are now ready to go ahead, two scripts are provided to ease the database creation.
+Once you have confirmed that you are ready to create a database you are now ready to go ahead, two scripts are provided to ease the database creation under the directory sql/mysql/country_sql:
 
-1. weberp-demo.sql  This has a minimal amount of demonstration data in a bogus company set up so that transactions can be tried to see how the system works.
-2. weberp-new.sql This script has only the basic data necessary to start a new company system off. If you wish to set up your company on webERP then this is the script to use. weberp-new.sql you will need to create a database first (using phpMyAdmin for example) or add the following sql commands to this script
+1. demo.sql  This has a minimal amount of demonstration data in a bogus company set up so that transactions can be tried to see how the system works.
+2. default.sql This script has only the basic data necessary to start a new company system off. If you wish to set up your company on webERP then this is the script to use. weberp-new.sql you will need to create a database first (using phpMyAdmin for example) or add the following sql commands to this script
 	CREATE DATABASE mycompanyname DEFAULT CHARACTER SET utf8 DEFAULT 
 		COLLATE utf8_unicode_ci;
 	USE mycompanyname
@@ -205,13 +205,12 @@ Once you have confirmed that you are ready to create a database you are now read
 Instead of mycompanyname use the name of your company. Note that the name of the database must all be in lower case.
 
 This creates a weberp database and populates it with only the very basic data to start off.
-The files weberp-demo.sql and weberp-new.sql should be in webERP/sql/mysql directory.
 
-shell > mysql --user=weberp_db_user -p mysql < /path_to_the_sql_script/weberp-demo.sql
+shell > mysql --user=weberp_db_user -p mysql < /path_to_the_sql_script/demo.sql
 
 or
 
-shell > mysql --user=weberp_db_user --p mysql < /path_to_the_sql_script/weberp-new.sql
+shell > mysql --user=weberp_db_user --p mysql < /path_to_the_sql_script/default.sql
 
 as required. You will be prompted for the mysql password that you created earlier.
 
@@ -358,4 +357,4 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
 
 A copy of the GNU General Public License is included in the doc directory along with this program; if not, write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
-Copyright weberp.org 2010 - Contact: info@weberp.org
+Copyright weberp.org 2003-2013 - Contact: info@weberp.org
