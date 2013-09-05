@@ -80,6 +80,9 @@ if (isset($_FILES['ItemPicture']) AND $_FILES['ItemPicture']['name'] !='') {
 	} elseif ( $_FILES['ItemPicture']['type'] == 'text/plain' ) {  //File Type Check
 		prnMsg( _('Only graphics files can be uploaded'),'warn');
 		 	$UploadTheFile ='No';
+    } elseif ( $_FILES['ItemPicture']['error'] == 6 ) {  //upload temp directory check
+		prnMsg( _('No tmp directory set. You must have a tmp directory set in your PHP for upload of files. '),'warn');
+		 	$UploadTheFile ='No';
 	} elseif (file_exists($filename)){
 		prnMsg(_('Attempting to overwrite an existing item image'),'warn');
 		$result = unlink($filename);
@@ -989,7 +992,7 @@ echo '<tr>
 		<br /><input type="checkbox" name="ClearImage" id="ClearImage" value="1" > '._('Clear Image').'
 		</td>';
 
- if (function_exists('imagecreatefromjpg')){
+if (function_exists('imagecreatefromjpg') && isset($StockID) && !empty($StockID)){
 	$StockImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
 		'&amp;StockID='.urlencode($StockID).
 		'&amp;text='.
@@ -997,7 +1000,7 @@ echo '<tr>
 		'&amp;height=100'.
 		'" alt="" />';
 } else {
-	if( isset($StockID) AND file_exists($_SESSION['part_pics_dir'] . '/' .$StockID.'.jpg') ) {
+	if( isset($StockID) AND  !empty($StockID) AND file_exists($_SESSION['part_pics_dir'] . '/' .$StockID.'.jpg') ) {
 		$StockImgLink = '<img src="' . $_SESSION['part_pics_dir'] . '/' . $StockID . '.jpg" height="100" width="100" />';
 		if (isset($_POST['ClearImage']) ) {
 		    //workaround for many variations of permission issues that could cause unlink fail

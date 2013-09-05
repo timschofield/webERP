@@ -1,4 +1,6 @@
 webERP Change Log
+5/9/2013 icedlava: Stocks.php Set error message for upload image failure when no upload tmp directory set in php.
+5/9/2013 icedlava: Stocks.php Clear item image for new item creation.
 5/9/2013 icedlava: Suppliers.php regex pattern for email, also not all suppliers have email.
 4/9/2013 Exson: Fixed the undefined StockID error and make it html5 compatible and table sorting in StockReorderLevel.php
 2/9/2013 icedlava: SelectOrderItems.php fix frequently ordered items to accept entry as was not working.
