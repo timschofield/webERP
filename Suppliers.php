@@ -714,7 +714,7 @@ if (!isset($SupplierID)) {
 			<td><input type="tel" pattern="[\s\d+)(-]{1,40}" title="'._('The input should be fax number').'" placeholder="'._('only number + - ( and ) allowed').'" name="Fax" size="30" maxlength="40" /></td>
 		</tr>';
 	echo '<tr><td>' . _('Email Address') . ':</td>
-			<td><input type="email" name="Email" required="true" title="'._('Only email address are allowed').'" placeholder="'._('email format such as xx@mail.cn').'" size="30" maxlength="40" /></td>
+			<td><input type="email" name="Email"  title="'._('Only email address are allowed').'" placeholder="'._('email format such as xx@mail.cn').'" size="30" maxlength="40" pattern="[a-z0-9!#$%&\'*+/=?^_`{|}~.-]+@[a-z0-9-]+(\.[a-z0-9-]+)*" /></td>
 		</tr>';
 	echo '<tr><td>' . _('Supplier Type') . ':</td>
 			<td><select name="SupplierType">';
@@ -916,7 +916,7 @@ if (!isset($SupplierID)) {
 	echo '<tr><td>' . _('Facsimile') . ':</td>
 			<td><input '.(in_array('Name',$Errors) ? 'class="inputerror"' : '').' type="tel" pattern="[\s\d+()-]{1,40}" placeholder="'._('Only digit blank ( ) and - allowed').'" name="Fax" value="' . $_POST['Fax'] . '" size="42" maxlength="40" /></td></tr>';
 	echo '<tr><td>' . _('Email Address') . ':</td>
-			<td><input '.(in_array('Name',$Errors) ? 'class="inputerror"' : '').' type="email" title="'._('The input must be in email format').'" name="Email" value="' . $_POST['Email'] . '" size="42" maxlength="40" /></td></tr>';
+			<td><input '.(in_array('Name',$Errors) ? 'class="inputerror"' : '').' type="email" title="'._('The input must be in email format').'" name="Email" value="' . $_POST['Email'] . '" size="42" maxlength="40" placeholder="'._('email format such as xx@mail.cn').'"  pattern="[a-z0-9!#$%&\'*+/=?^_`{|}~.-]+@[a-z0-9-]+(\.[a-z0-9-]+)*" /></td></tr>';
 	echo '<tr><td>' . _('Supplier Type') . ':</td>
 			<td><select name="SupplierType">';
 	$result=DB_query("SELECT typeid, typename FROM suppliertype", $db);
