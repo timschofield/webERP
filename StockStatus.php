@@ -21,7 +21,7 @@ if (isset($_POST['UpdateBinLocations'])){
 		if (mb_substr($PostVariableName,0,11) == 'BinLocation') {
 			$sql = "UPDATE locstock SET bin='" . strtoupper($Bin) . "' WHERE loccode='" . mb_substr($PostVariableName,11) . "' AND stockid='" . $StockID . "'";
 			$result = DB_query($sql, $db);
-		}   
+		}
 	}
 }
 $result = DB_query("SELECT description,
@@ -59,7 +59,7 @@ if ($myrow[2]=='K'){
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<div class="centre"><input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo _('Stock Code') . ':<input type="text" pattern="(?!^[\s%]*$)[^+><-]{1,20}" title ="'._('Input actual stock ID. Blank or percentage mark is not allowed').'" placeholder="'._('Only blank or % is not allowed').'" required="required" name="StockID" size="21" value="' . $StockID . '" maxlength="20" />';
+echo _('Stock Code') . ':<input type="text" pattern="(?!^[\s%]*$)[^+><]{1,20}" title ="'._('Input actual stock ID. Blank, percentage, plus, left and right angle bracket is not allowed').'" placeholder="'._('Blank, %, plus, left and right angle bracket is not allowed').'" required="required" name="StockID" size="21" value="' . $StockID . '" maxlength="20" />';
 
 echo ' <input type="submit" name="ShowStatus" value="' . _('Show Stock Status') . '" />';
 
