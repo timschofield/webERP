@@ -1,4 +1,6 @@
 webERP Change Log
+7/9/13 icedlava: Fix PrintStatements.php to allow selection of alphanumeric customer codes in length to match database definition.
+7/9/13 icedlava: StockStatus.php Allow dash in stock code again.
 
 6/9/13 Version 4.11.1
 
