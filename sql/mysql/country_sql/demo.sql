@@ -3169,7 +3169,7 @@ CREATE TABLE `www_users` (
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-09-01 22:28:39
+-- Dump completed on 2013-09-06 20:41:07
 -- MySQL dump 10.13  Distrib 5.5.32, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: weberpdemo
@@ -29121,6 +29121,7 @@ INSERT INTO `locstock` VALUES ('AN','PAYTSURCHARGE',0,0,'');
 INSERT INTO `locstock` VALUES ('AN','SALT',-1.5,0,'');
 INSERT INTO `locstock` VALUES ('AN','SELLTAPE',0,0,'');
 INSERT INTO `locstock` VALUES ('AN','SLICE',0,0,'');
+INSERT INTO `locstock` VALUES ('AN','STROD34',0,0,'');
 INSERT INTO `locstock` VALUES ('AN','TAPE1',-24.4,0,'');
 INSERT INTO `locstock` VALUES ('AN','TAPE2',86.5,0,'');
 INSERT INTO `locstock` VALUES ('AN','Test123',0,0,'');
@@ -29150,6 +29151,7 @@ INSERT INTO `locstock` VALUES ('MEL','PAYTSURCHARGE',0,0,'');
 INSERT INTO `locstock` VALUES ('MEL','SALT',0,0,'');
 INSERT INTO `locstock` VALUES ('MEL','SELLTAPE',0,0,'');
 INSERT INTO `locstock` VALUES ('MEL','SLICE',0,0,'');
+INSERT INTO `locstock` VALUES ('MEL','STROD34',0,0,'');
 INSERT INTO `locstock` VALUES ('MEL','TAPE1',110,0,'');
 INSERT INTO `locstock` VALUES ('MEL','TAPE2',0,0,'');
 INSERT INTO `locstock` VALUES ('MEL','Test123',0,0,'');
@@ -29179,6 +29181,7 @@ INSERT INTO `locstock` VALUES ('TOR','PAYTSURCHARGE',0,0,'');
 INSERT INTO `locstock` VALUES ('TOR','SALT',0,0,'');
 INSERT INTO `locstock` VALUES ('TOR','SELLTAPE',0,0,'');
 INSERT INTO `locstock` VALUES ('TOR','SLICE',0,0,'');
+INSERT INTO `locstock` VALUES ('TOR','STROD34',0,0,'');
 INSERT INTO `locstock` VALUES ('TOR','TAPE1',0,0,'');
 INSERT INTO `locstock` VALUES ('TOR','TAPE2',0,0,'');
 INSERT INTO `locstock` VALUES ('TOR','Test123',0,0,'');
@@ -30772,6 +30775,9 @@ INSERT INTO `stockcatproperties` VALUES (4,'DVD','Genre',1,'Action,Thriller,Come
 INSERT INTO `stockdescriptiontranslations` VALUES ('PAYTSURCHARGE','de_DE.utf8','');
 INSERT INTO `stockdescriptiontranslations` VALUES ('PAYTSURCHARGE','fr_FR.utf8','');
 INSERT INTO `stockdescriptiontranslations` VALUES ('PAYTSURCHARGE','it_IT.utf8','');
+INSERT INTO `stockdescriptiontranslations` VALUES ('STROD34','de_DE.utf8','');
+INSERT INTO `stockdescriptiontranslations` VALUES ('STROD34','fr_FR.utf8','');
+INSERT INTO `stockdescriptiontranslations` VALUES ('STROD34','it_IT.utf8','');
 
 --
 -- Dumping data for table `stockitemproperties`
@@ -30811,6 +30817,7 @@ INSERT INTO `stockmaster` VALUES ('PAYTSURCHARGE','ZPAYT','Payment Surcharges','
 INSERT INTO `stockmaster` VALUES ('SALT','BAKE','Salt','Salt','kgs','B',0.0000,1.2000,2.5000,0.0000,0.0000,0,0,0,0,0.0000,0.0000,'','',1,0,'none',0,3,0,0,0,0.0000,'0000-00-00');
 INSERT INTO `stockmaster` VALUES ('SELLTAPE','TAPE','Selling units of tape','Selling units of tape','each','A',0.0000,0.0000,0.0100,0.0000,0.0000,0,0,0,0,0.0000,0.0000,'','',1,0,'none',0,0,0,0,0,0.0000,'0000-00-00');
 INSERT INTO `stockmaster` VALUES ('SLICE','FOOD','Slice Of Bread','Slice Of Bread','each','A',0.0000,0.0000,0.0563,0.0000,0.0000,0,0,0,0,0.0000,0.0000,'','',1,0,'0',0,0,0,0,0,0.0000,'0000-00-00');
+INSERT INTO `stockmaster` VALUES ('STROD34','TAPE','Stainless 3/4&quot; Rod','Stainless 3/4&quot; Rod','each','B',0.0000,0.0000,0.0000,0.0000,0.0000,0,0,0,0,0.0000,0.0000,'','',1,0,'none',0,0,0,0,0,0.0000,'0000-00-00');
 INSERT INTO `stockmaster` VALUES ('TAPE1','TAPE','Log of tape','Log of tape','feet','B',0.0000,0.0000,10.0000,0.0000,0.0000,0,0,0,0,0.0000,0.0000,'','',1,0,'none',0,2,0,0,0,0.0000,'2013-02-08');
 INSERT INTO `stockmaster` VALUES ('TAPE2','TAPE','Tape 2','Tape 2','feet','M',0.0000,0.0000,2.5000,0.0000,0.0000,0,0,0,0,0.0100,0.1000,'','',1,0,'none',0,0,0,0,0,0.0000,'0000-00-00');
 INSERT INTO `stockmaster` VALUES ('Test123','TAPE','Testing manufact tape','Testing manufact tape','each','M',0.0000,0.0000,396.9000,0.0000,0.0000,0,0,0,0,0.0000,0.0000,'','',1,0,'none',0,0,0,0,0,0.0000,'0000-00-00');
@@ -31126,7 +31133,7 @@ INSERT INTO `workorders` VALUES (32,'TOR','2013-07-21','2013-06-21',32.5,0);
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('admin','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','','admin@weberp.org','MEL',8,1,'2013-09-01 22:26:48','','A4','1,1,1,1,1,1,1,1,1,1,1,',0,50,'fluid','en_GB.utf8',3,0);
+INSERT INTO `www_users` VALUES ('admin','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','','admin@weberp.org','MEL',8,1,'2013-09-06 20:25:39','','A4','1,1,1,1,1,1,1,1,1,1,1,',0,50,'fluid','en_GB.utf8',3,0);
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -31134,5 +31141,5 @@ INSERT INTO `www_users` VALUES ('admin','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-09-01 22:28:40
+-- Dump completed on 2013-09-06 20:41:08
 SET FOREIGN_KEY_CHECKS = 1;
