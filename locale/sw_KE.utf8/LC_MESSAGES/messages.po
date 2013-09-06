@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web-erp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-06 20:40+1200\n"
+"POT-Creation-Date: 2013-09-06 21:34+1200\n"
 "PO-Revision-Date: 2013-06-01 16:37-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: Swahili <sw@li.org>\n"
@@ -4335,7 +4335,7 @@ msgstr "Hakuweza Retrieve vipengele kanisa kutoka database"
 #: PricesBasedOnMarkUp.php:336 PricesBasedOnMarkUp.php:352
 #: SelectCreditItems.php:1441 SpecialOrder.php:502 StockCategories.php:21
 #: StockCategories.php:84 StockCategories.php:164 Z_ReApplyCostToSA.php:63
-#: Z_ReApplyCostToSA.php:75
+#: Z_ReApplyCostToSA.php:75 Z_UpdateSalesAnalysisWithLatestCustomerData.php:40
 msgid "because"
 msgstr "kwa sababu"
 
@@ -39636,7 +39636,7 @@ msgstr "Hakuweza Retrieve mauzo ya uchambuzi wa kumbukumbu kuwa updated sababu"
 msgid "Could not recalculate the current cost of the assembly item"
 msgstr "Hakuweza recalculate gharama ya sasa ya bidhaa kanisa"
 
-#: Z_ReApplyCostToSA.php:75
+#: Z_ReApplyCostToSA.php:75 Z_UpdateSalesAnalysisWithLatestCustomerData.php:40
 msgid "Could not update the sales analysis records for"
 msgstr "Hakuweza update mauzo ya uchambuzi wa kumbukumbu kwa"
 
@@ -39864,6 +39864,37 @@ msgstr ""
 #: Z_UpdateChartDetailsBFwd.php:14
 msgid "Please re-select the reporting period"
 msgstr "Tafadhali re-chagua kipindi cha taarifa"
+
+#: Z_UpdateSalesAnalysisWithLatestCustomerData.php:6
+#, fuzzy
+msgid "Apply Current Customer and Branch data to Sales Analysis"
+msgstr "Kuomba Hali Gharama ya Uchambuzi Sales"
+
+#: Z_UpdateSalesAnalysisWithLatestCustomerData.php:14
+#, fuzzy
+msgid "Update Sales Analysis Customer Data"
+msgstr "Gharama za mauzo ya Mwisho Uchambuzi"
+
+#: Z_UpdateSalesAnalysisWithLatestCustomerData.php:29
+#, fuzzy
+msgid "Could not retrieve the customer records to be updated because"
+msgstr "Hakuweza Retrieve mauzo ya uchambuzi wa kumbukumbu kuwa updated sababu"
+
+#: Z_UpdateSalesAnalysisWithLatestCustomerData.php:43
+#, fuzzy
+msgid "Updated sales analysis for customer code"
+msgstr "Updated mauzo ya uchambuzi kwa kipindi"
+
+#: Z_UpdateSalesAnalysisWithLatestCustomerData.php:43
+#, fuzzy
+msgid "and branch code"
+msgstr "Kanuni tawi"
+
+#: Z_UpdateSalesAnalysisWithLatestCustomerData.php:47
+msgid ""
+"Updated the sales analysis with all the latest sales areas, salesman and "
+"sales types as set up now"
+msgstr ""
 
 #: Z_Upgrade_3.01-3.02.php:6
 msgid "Upgrade webERP 3.01 - 3.02"

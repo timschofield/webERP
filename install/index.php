@@ -1023,13 +1023,13 @@ function CompanySetup($UserLanguage,$HostName,$UserName,$Password,$DatabaseName,
                     <label for="CountrySQL"><?php echo _("Chart of Accounts"); ?>: </label>
                     <select name="CountrySQL">
                     <?php
-                        $CountrySQLs = scandir('../sql/mysql/coa');
+                        $CountrySQLs = scandir('../sql/mysql/country_sql');
                         $CountrySQLs = array_diff($CountrySQLs,array('.','..'));
                         if(!empty($CountrySQLs)){
                             foreach($CountrySQLs as $Value){
-                                if($Value == 'weberp-new.sql'){
+                                if($Value == 'default.sql'){
                                     echo '<option value="'.$Value.'" selected="true">' . $Value . '</option>';
-                                }elseif($Value != 'weberp-demo.sql'){// the demo sql selection is not necessary so not allowed
+                                }elseif($Value != 'demo.sql'){// the demo sql selection is not necessary so not allowed
                                     echo '<option value="'.$Value.'">' . $Value . '</option>';
                                 }
                             }
@@ -1038,7 +1038,7 @@ function CompanySetup($UserLanguage,$HostName,$UserName,$Password,$DatabaseName,
                         }
                     ?>
                     </select>
-                    <span><?php echo _('A starter Chart of Accounts (use weberp-new.sql if having empty db problems)'); ?> </span>
+                    <span><?php echo _('A starter Chart of Accounts (use default.sql if having empty db problems)'); ?> </span>
                 </li>
                 <li>
                     <label for="TimeZone"><?php echo _("Time Zone"); ?>: </label>

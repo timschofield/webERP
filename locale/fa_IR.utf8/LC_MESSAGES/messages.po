@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Persian & rtl support\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-06 20:40+1200\n"
+"POT-Creation-Date: 2013-09-06 21:34+1200\n"
 "PO-Revision-Date: 2013-06-01 11:25-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: Persian <hosseini@iossd.org>\n"
@@ -4324,7 +4324,7 @@ msgstr "آیا بازیابی قطعات مونتاژ شده از بانک اط�
 #: PricesBasedOnMarkUp.php:336 PricesBasedOnMarkUp.php:352
 #: SelectCreditItems.php:1441 SpecialOrder.php:502 StockCategories.php:21
 #: StockCategories.php:84 StockCategories.php:164 Z_ReApplyCostToSA.php:63
-#: Z_ReApplyCostToSA.php:75
+#: Z_ReApplyCostToSA.php:75 Z_UpdateSalesAnalysisWithLatestCustomerData.php:40
 msgid "because"
 msgstr "زیرا"
 
@@ -40447,7 +40447,7 @@ msgstr "آیا قیمت های ویژه می توان بازیابی نیست ،
 msgid "Could not recalculate the current cost of the assembly item"
 msgstr "ممکن است مکان فعلی سهام از جزء مونتاژ می کنید"
 
-#: Z_ReApplyCostToSA.php:75
+#: Z_ReApplyCostToSA.php:75 Z_UpdateSalesAnalysisWithLatestCustomerData.php:40
 #, fuzzy
 msgid "Could not update the sales analysis records for"
 msgstr "بروز رسانی می تواند دسته ای / پرونده سهام سریال نیست"
@@ -40705,6 +40705,36 @@ msgstr ""
 #, fuzzy
 msgid "Please re-select the reporting period"
 msgstr "لطفا reselect دوره گزارش"
+
+#: Z_UpdateSalesAnalysisWithLatestCustomerData.php:6
+msgid "Apply Current Customer and Branch data to Sales Analysis"
+msgstr ""
+
+#: Z_UpdateSalesAnalysisWithLatestCustomerData.php:14
+#, fuzzy
+msgid "Update Sales Analysis Customer Data"
+msgstr "فروش تجزیه و تحلیل گزارش"
+
+#: Z_UpdateSalesAnalysisWithLatestCustomerData.php:29
+#, fuzzy
+msgid "Could not retrieve the customer records to be updated because"
+msgstr "آیا قیمت های ویژه می توان بازیابی نیست ، زیرا"
+
+#: Z_UpdateSalesAnalysisWithLatestCustomerData.php:43
+#, fuzzy
+msgid "Updated sales analysis for customer code"
+msgstr "بههنگام شده در دارایی ثابت برای رکورد رده"
+
+#: Z_UpdateSalesAnalysisWithLatestCustomerData.php:43
+#, fuzzy
+msgid "and branch code"
+msgstr "کد شاخه"
+
+#: Z_UpdateSalesAnalysisWithLatestCustomerData.php:47
+msgid ""
+"Updated the sales analysis with all the latest sales areas, salesman and "
+"sales types as set up now"
+msgstr ""
 
 #: Z_Upgrade_3.01-3.02.php:6
 msgid "Upgrade webERP 3.01 - 3.02"

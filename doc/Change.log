@@ -1,57 +1,62 @@
 webERP Change Log
-5/9/2013 icedlava: Stocks.php Set error message for upload image failure when no upload tmp directory set in php.
-5/9/2013 icedlava: Stocks.php Clear item image for new item creation.
-5/9/2013 icedlava: Suppliers.php regex pattern for email, also not all suppliers have email.
-4/9/2013 Exson: Fixed the undefined StockID error and make it html5 compatible and table sorting in StockReorderLevel.php
-2/9/2013 icedlava: SelectOrderItems.php fix frequently ordered items to accept entry as was not working.
-2/9/2013 icedlava: inc tax corrected to ex tax on ConfirmDespatch.php and DeliveryDetails.php
+
+6/9/13 Version 4.11.1
+
+6/9/13 Phil: Typo in ConfirmDispatch_Invoice preventing invoicing - changed patterns to remove {1,20} statements which make the pattern fail to validate. SelectProduct removed pattern from keyword search on description to allow entry of any characte as reported by Brian May
+5/9/13 icedlava: Stocks.php Set error message for upload image failure when no upload tmp directory set in php.
+5/9/13 icedlava: Stocks.php Clear item image for new item creation.
+5/9/13 icedlava: Suppliers.php regex pattern for email, also not all suppliers have email.
+4/9/13 Exson: Fixed the undefined StockID error and make it html5 compatible and table sorting in StockReorderLevel.php
+2/9/13 icedlava: SelectOrderItems.php fix frequently ordered items to accept entry as was not working.
+2/9/13 icedlava: inc tax corrected to ex tax on ConfirmDespatch.php and DeliveryDetails.php
+
 1/9/13 Version 4.11.0
 
-29/8/2013 Exson: Fixed the pattern typo error in StockCategories.php.
-28/8/2013 Exson: Fixed html tag mark error and make it html5 compatible and table sortable in StockStatus.php
-28/8/2013 Exson: Fixed MiscFunctions.js bug which make onclick event failed for tag whose class is date, number or integer. Solution from Tim. And update the sql file in coa directory.
-27/8/2013 Exson: Remove the option of weberp-demo.sql to avoid installation error. Reported by icedlava.
-27/8/2013 icedlava: Allow display of BOM component entry screen after deletion of component in BOM.php
-27/8/2013 icedlava: Fix rounding error in supplier unit price when less than 1
-26/8/2013 Exson Add A default company name to make the installation as dummy as possible.
-26/8/2013 icedlava: Fix COGS and Sales GL interface to include AN area and specific Sales Type and Stock Category.
-21/8/2013 Thumb: Fixed the object no definition error in StockTransfers.php.
-21/8/2013 Exson: Fixed the notice error of undefined index Status and and space for some string.
-21/8/2013 Exson: Fixed the sortable not workable bug in Prices.php.
-21/8/2013 Exson: Change sortable block from table to tbody. Reported by Tim.
-20/8/2013 Exson: make StockUsage.php html5 compatible and table sortable.
-20/8/2013 Exson: html5 compatible and table sortable for SuppContractChgs.php,SuppCreditGRNs.php,SuppFixedAssetChgs.php,SuppInvGRNs.php, SupplierAllocations.php
-20/8/2013 Exson: Make SupplierInquiry.php table sortable
-20/8/2013 Exson: SupplierContacts.php html5 compatible and table sortable.
-20/8/2013 Exson: Make SupplierCredit.php html5 compatible.
-20/8/2013 Exson: Use manually instead of manual to make distinguish translation possible and make it html5 compatible in SupplierInvoice.php.
-19/9/2013 Exson: Fixed the typo that should be class integer instead of type integer. Reported by Tim.
-19/8/2013 Exson: Fixed the account code pattern to make it compatible with the definition in GLAccounts.php
-19/8/2013 Exson: Fixed the type error to class is integer. Reported by Tim.
-19/8/2013 Exson: Fixed blank validation error in Suppliers.php and make it html5 compatible.
-19/8/2013 Exson: Add warning messages for no suppliers returned in SupplierTenderCreate.php and make it html5 compatible and table sortable.
-19/8/2013 Exson: Make SupplierTenders.php html5 compatible and sortable.
-19/8/2013 Exson: Fixed the validation error which allow blank supplier type and make it html5 compatible and sortable.
-19/8/2013 Exson: Make SuppLoginSetup.php html5 compatible.
-16/8/2013 Exson: Remove redundant Ref no and make SuppPaymentRun.php html5 compatible.
-16/08/2013 Exson: Make the SuppShiptChgs.php html5 compatible.
-16/08/2013 Exson: Fixed the account code max length in SuppTransGLAnalysis.php and make it html5 compatible.
-15/8/2013 Exson: Modify 'manual' to 'manually' in SystemParameters.php to remove the translation frustration and make it html5 compatible.
-15/8/2013 Exson: Make TaxAuthorities.php html5 compatible and table columns sortable.
-15/8/2013 Exson: Make TaxAuthorityRates.php html5 compatible.
-15/8/2013 Exson: Make the tax category 'Freight' undeleted in TaxCategories.php and make it html5 compatible and table sortable.
-15/8/2013 Exson: Make TaxGroups.php html5 compatible.
-15/8/2013 Exson: Make TaxProvinces.php html5 compatible.
-15/8/2013 Exson: Fixed the no-number warning in TopItems.php and make it html5 compatible.
+29/8/13 Exson: Fixed the pattern typo error in StockCategories.php.
+28/8/13 Exson: Fixed html tag mark error and make it html5 compatible and table sortable in StockStatus.php
+28/8/13 Exson: Fixed MiscFunctions.js bug which make onclick event failed for tag whose class is date, number or integer. Solution from Tim. And update the sql file in coa directory.
+27/8/13 Exson: Remove the option of weberp-demo.sql to avoid installation error. Reported by icedlava.
+27/8/13 icedlava: Allow display of BOM component entry screen after deletion of component in BOM.php
+27/8/13 icedlava: Fix rounding error in supplier unit price when less than 1
+26/8/13 Exson Add A default company name to make the installation as dummy as possible.
+26/8/13 icedlava: Fix COGS and Sales GL interface to include AN area and specific Sales Type and Stock Category.
+21/8/13 Thumb: Fixed the object no definition error in StockTransfers.php.
+21/8/13 Exson: Fixed the notice error of undefined index Status and and space for some string.
+21/8/13 Exson: Fixed the sortable not workable bug in Prices.php.
+21/8/13 Exson: Change sortable block from table to tbody. Reported by Tim.
+20/8/13 Exson: make StockUsage.php html5 compatible and table sortable.
+20/8/13 Exson: html5 compatible and table sortable for SuppContractChgs.php,SuppCreditGRNs.php,SuppFixedAssetChgs.php,SuppInvGRNs.php, SupplierAllocations.php
+20/8/13 Exson: Make SupplierInquiry.php table sortable
+20/8/13 Exson: SupplierContacts.php html5 compatible and table sortable.
+20/8/13 Exson: Make SupplierCredit.php html5 compatible.
+20/8/13 Exson: Use manually instead of manual to make distinguish translation possible and make it html5 compatible in SupplierInvoice.php.
+19/9/13 Exson: Fixed the typo that should be class integer instead of type integer. Reported by Tim.
+19/8/13 Exson: Fixed the account code pattern to make it compatible with the definition in GLAccounts.php
+19/8/13 Exson: Fixed the type error to class is integer. Reported by Tim.
+19/8/13 Exson: Fixed blank validation error in Suppliers.php and make it html5 compatible.
+19/8/13 Exson: Add warning messages for no suppliers returned in SupplierTenderCreate.php and make it html5 compatible and table sortable.
+19/8/13 Exson: Make SupplierTenders.php html5 compatible and sortable.
+19/8/13 Exson: Fixed the validation error which allow blank supplier type and make it html5 compatible and sortable.
+19/8/13 Exson: Make SuppLoginSetup.php html5 compatible.
+16/8/13 Exson: Remove redundant Ref no and make SuppPaymentRun.php html5 compatible.
+16/08/13 Exson: Make the SuppShiptChgs.php html5 compatible.
+16/08/13 Exson: Fixed the account code max length in SuppTransGLAnalysis.php and make it html5 compatible.
+15/8/13 Exson: Modify 'manual' to 'manually' in SystemParameters.php to remove the translation frustration and make it html5 compatible.
+15/8/13 Exson: Make TaxAuthorities.php html5 compatible and table columns sortable.
+15/8/13 Exson: Make TaxAuthorityRates.php html5 compatible.
+15/8/13 Exson: Make the tax category 'Freight' undeleted in TaxCategories.php and make it html5 compatible and table sortable.
+15/8/13 Exson: Make TaxGroups.php html5 compatible.
+15/8/13 Exson: Make TaxProvinces.php html5 compatible.
+15/8/13 Exson: Fixed the no-number warning in TopItems.php and make it html5 compatible.
 14/8/2012 Exson: make UnitsOfMeasure.php html5 compatible.
-14/08/2013 Exson: html5 compatible for UserSettings.php
-14/8/2013 Exson: Make table in WorkCentres.php sortable.
-14/8/2013 Exson: make WhereUsedInquiry.php Html5 compatible.
-14/08/2013 Exson: Make WorkCentres.php html5 compatible.
-14/8/2013 Exson: HTML5 compatible for WorkOrderEntry.php.
-14/8/2013 Exson: fixed the in_array() warning in WorkOrderIssue.php and make it html5 compatible.
-14/8/2013 Exson: html5 compatible for WorkOrderReceive.php
-14/08/2013 Exson: Html5 compatible
+14/08/13 Exson: html5 compatible for UserSettings.php
+14/8/13 Exson: Make table in WorkCentres.php sortable.
+14/8/13 Exson: make WhereUsedInquiry.php Html5 compatible.
+14/08/13 Exson: Make WorkCentres.php html5 compatible.
+14/8/13 Exson: HTML5 compatible for WorkOrderEntry.php.
+14/8/13 Exson: fixed the in_array() warning in WorkOrderIssue.php and make it html5 compatible.
+14/8/13 Exson: html5 compatible for WorkOrderReceive.php
+14/08/13 Exson: Html5 compatible
 2013/08/14 Exson: Fixed INSERT sql errors and href link error and make it html5 compatible in WOSerialNos.php.
 04/8/13 icedlava: Update Manual - Using the webERP Installer - rework of some text due to new installer, and updated screen shots
 03/8/13 icedlava: Obfuscate database name in login, do not show company in login if directory/company not wanted.

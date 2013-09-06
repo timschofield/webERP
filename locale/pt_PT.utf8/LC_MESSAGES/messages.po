@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-06 20:40+1200\n"
+"POT-Creation-Date: 2013-09-06 21:34+1200\n"
 "PO-Revision-Date: 2013-06-01 12:16-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: Portugese (Portugal) <thiago.figueiredo@microskills.eu>\n"
@@ -4369,7 +4369,7 @@ msgstr ""
 #: PricesBasedOnMarkUp.php:336 PricesBasedOnMarkUp.php:352
 #: SelectCreditItems.php:1441 SpecialOrder.php:502 StockCategories.php:21
 #: StockCategories.php:84 StockCategories.php:164 Z_ReApplyCostToSA.php:63
-#: Z_ReApplyCostToSA.php:75
+#: Z_ReApplyCostToSA.php:75 Z_UpdateSalesAnalysisWithLatestCustomerData.php:40
 msgid "because"
 msgstr "pois"
 
@@ -40292,7 +40292,7 @@ msgstr ""
 msgid "Could not recalculate the current cost of the assembly item"
 msgstr "Não foi possível recalcular o custo corrente do item de montagem"
 
-#: Z_ReApplyCostToSA.php:75
+#: Z_ReApplyCostToSA.php:75 Z_UpdateSalesAnalysisWithLatestCustomerData.php:40
 msgid "Could not update the sales analysis records for"
 msgstr "Não foi possível actualizar os registros de análise de vendas para"
 
@@ -40518,6 +40518,39 @@ msgstr "Re-cálculo de saldos previstos na tabela de detalhes ???"
 #: Z_UpdateChartDetailsBFwd.php:14
 msgid "Please re-select the reporting period"
 msgstr "Favor seleccionar o período de relatório/prestação de contas"
+
+#: Z_UpdateSalesAnalysisWithLatestCustomerData.php:6
+#, fuzzy
+msgid "Apply Current Customer and Branch data to Sales Analysis"
+msgstr "Aplicar custo corrente à análise de vendas"
+
+#: Z_UpdateSalesAnalysisWithLatestCustomerData.php:14
+#, fuzzy
+msgid "Update Sales Analysis Customer Data"
+msgstr "Actualizar custos na análise de vendas"
+
+#: Z_UpdateSalesAnalysisWithLatestCustomerData.php:29
+#, fuzzy
+msgid "Could not retrieve the customer records to be updated because"
+msgstr ""
+"Não foi possível obter os registros de análise de vendas a serem "
+"actualizados pois"
+
+#: Z_UpdateSalesAnalysisWithLatestCustomerData.php:43
+#, fuzzy
+msgid "Updated sales analysis for customer code"
+msgstr "Análise de vendas atualizada para o período"
+
+#: Z_UpdateSalesAnalysisWithLatestCustomerData.php:43
+#, fuzzy
+msgid "and branch code"
+msgstr "Código da Filial"
+
+#: Z_UpdateSalesAnalysisWithLatestCustomerData.php:47
+msgid ""
+"Updated the sales analysis with all the latest sales areas, salesman and "
+"sales types as set up now"
+msgstr ""
 
 #: Z_Upgrade_3.01-3.02.php:6
 msgid "Upgrade webERP 3.01 - 3.02"

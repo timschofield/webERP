@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WEBERP3.05 VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-06 20:40+1200\n"
+"POT-Creation-Date: 2013-09-06 21:34+1200\n"
 "PO-Revision-Date: 2013-06-01 16:40-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: WebERP Translation Team <web-erp-translation@lists."
@@ -4228,7 +4228,7 @@ msgstr "找不到BOM组件信息"
 #: PricesBasedOnMarkUp.php:336 PricesBasedOnMarkUp.php:352
 #: SelectCreditItems.php:1441 SpecialOrder.php:502 StockCategories.php:21
 #: StockCategories.php:84 StockCategories.php:164 Z_ReApplyCostToSA.php:63
-#: Z_ReApplyCostToSA.php:75
+#: Z_ReApplyCostToSA.php:75 Z_UpdateSalesAnalysisWithLatestCustomerData.php:40
 msgid "because"
 msgstr "因为"
 
@@ -37373,7 +37373,7 @@ msgstr "未能提取要更新的销售分析, 因为"
 msgid "Could not recalculate the current cost of the assembly item"
 msgstr "未能重计组装物料的现有成本"
 
-#: Z_ReApplyCostToSA.php:75
+#: Z_ReApplyCostToSA.php:75 Z_UpdateSalesAnalysisWithLatestCustomerData.php:40
 msgid "Could not update the sales analysis records for"
 msgstr "未能更新销售记录于"
 
@@ -37596,6 +37596,37 @@ msgstr "重计明细资料表的转结结余"
 #: Z_UpdateChartDetailsBFwd.php:14
 msgid "Please re-select the reporting period"
 msgstr "请重新输入重新报告的期间"
+
+#: Z_UpdateSalesAnalysisWithLatestCustomerData.php:6
+#, fuzzy
+msgid "Apply Current Customer and Branch data to Sales Analysis"
+msgstr "应用现有成本到销售分析"
+
+#: Z_UpdateSalesAnalysisWithLatestCustomerData.php:14
+#, fuzzy
+msgid "Update Sales Analysis Customer Data"
+msgstr "更新销售分析成本"
+
+#: Z_UpdateSalesAnalysisWithLatestCustomerData.php:29
+#, fuzzy
+msgid "Could not retrieve the customer records to be updated because"
+msgstr "未能提取要更新的销售分析, 因为"
+
+#: Z_UpdateSalesAnalysisWithLatestCustomerData.php:43
+#, fuzzy
+msgid "Updated sales analysis for customer code"
+msgstr "期间的销售分析已更新"
+
+#: Z_UpdateSalesAnalysisWithLatestCustomerData.php:43
+#, fuzzy
+msgid "and branch code"
+msgstr "分公司"
+
+#: Z_UpdateSalesAnalysisWithLatestCustomerData.php:47
+msgid ""
+"Updated the sales analysis with all the latest sales areas, salesman and "
+"sales types as set up now"
+msgstr ""
 
 #: Z_Upgrade_3.01-3.02.php:6
 msgid "Upgrade webERP 3.01 - 3.02"

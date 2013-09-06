@@ -524,7 +524,8 @@ $MenuItems['Utilities']['Transactions']['Caption'] = array(	_('Import GL Payment
 															_('Update costs for all BOM items, from the bottom up'),
 															_('Re-apply costs to Sales Analysis'),
 															_('Delete sales transactions'),
-															_('Reverse all supplier payments on a specified date'));
+															_('Reverse all supplier payments on a specified date'),
+															_('Update sales analysis with latest customer data'));
 
 $MenuItems['Utilities']['Transactions']['URL'] = array(	'/Z_ImportGLTransactions.php',
 														'/Z_ChangeCustomerCode.php',
@@ -536,7 +537,8 @@ $MenuItems['Utilities']['Transactions']['URL'] = array(	'/Z_ImportGLTransactions
 														'/Z_BottomUpCosts.php',
 														'/Z_ReApplyCostToSA.php',
 														'/Z_DeleteSalesTransActions.php',
-														'/Z_ReverseSuppPaymentRun.php');
+														'/Z_ReverseSuppPaymentRun.php',
+														'/Z_UpdateSalesAnalysisWithLatestCustomerData.php');
 
 $MenuItems['Utilities']['Reports']['Caption'] = array(	_('Show Local Currency Total Debtor Balances'),
 														_('Show Local Currency Total Suppliers Balances'),

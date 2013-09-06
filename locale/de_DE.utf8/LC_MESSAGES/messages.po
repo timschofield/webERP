@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WebERP 4.09.1/trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-06 20:40+1200\n"
+"POT-Creation-Date: 2013-09-06 21:34+1200\n"
 "PO-Revision-Date: 2013-08-11 18:37-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: Deutsch <weberp-translation@lists.sourceforge.net>\n"
@@ -4354,7 +4354,7 @@ msgstr "Konnte die Komponenten nicht aus der Datenbank ermitteln für"
 #: PricesBasedOnMarkUp.php:336 PricesBasedOnMarkUp.php:352
 #: SelectCreditItems.php:1441 SpecialOrder.php:502 StockCategories.php:21
 #: StockCategories.php:84 StockCategories.php:164 Z_ReApplyCostToSA.php:63
-#: Z_ReApplyCostToSA.php:75
+#: Z_ReApplyCostToSA.php:75 Z_UpdateSalesAnalysisWithLatestCustomerData.php:40
 msgid "because"
 msgstr "weil"
 
@@ -39576,7 +39576,7 @@ msgstr "Konnte die neu zu bewertenden Umsatzpositionen nicht abrufen, weil"
 msgid "Could not recalculate the current cost of the assembly item"
 msgstr "Konnte die aktuellen Kosten nicht ermitteln für den Sammelartikel"
 
-#: Z_ReApplyCostToSA.php:75
+#: Z_ReApplyCostToSA.php:75 Z_UpdateSalesAnalysisWithLatestCustomerData.php:40
 msgid "Could not update the sales analysis records for"
 msgstr "Konnte die Umsatzpositionen nicht ändern für"
 
@@ -39801,6 +39801,37 @@ msgstr "Neuberechnung der Saldenvorträge in der Hauptbuchsaldentabelle"
 #: Z_UpdateChartDetailsBFwd.php:14
 msgid "Please re-select the reporting period"
 msgstr "Bitte geben Sie die Buchungsperiode nochmals ein"
+
+#: Z_UpdateSalesAnalysisWithLatestCustomerData.php:6
+#, fuzzy
+msgid "Apply Current Customer and Branch data to Sales Analysis"
+msgstr "Umsatzpositionen neu bewerten"
+
+#: Z_UpdateSalesAnalysisWithLatestCustomerData.php:14
+#, fuzzy
+msgid "Update Sales Analysis Customer Data"
+msgstr "Umsätze neu mit Kosten bewerten"
+
+#: Z_UpdateSalesAnalysisWithLatestCustomerData.php:29
+#, fuzzy
+msgid "Could not retrieve the customer records to be updated because"
+msgstr "Konnte die neu zu bewertenden Umsatzpositionen nicht abrufen, weil"
+
+#: Z_UpdateSalesAnalysisWithLatestCustomerData.php:43
+#, fuzzy
+msgid "Updated sales analysis for customer code"
+msgstr "Umsatzpositionen wurden geändert für Periode"
+
+#: Z_UpdateSalesAnalysisWithLatestCustomerData.php:43
+#, fuzzy
+msgid "and branch code"
+msgstr "Niederlassung"
+
+#: Z_UpdateSalesAnalysisWithLatestCustomerData.php:47
+msgid ""
+"Updated the sales analysis with all the latest sales areas, salesman and "
+"sales types as set up now"
+msgstr ""
 
 #: Z_Upgrade_3.01-3.02.php:6
 msgid "Upgrade webERP 3.01 - 3.02"

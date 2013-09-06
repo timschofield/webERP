@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-06 20:40+1200\n"
+"POT-Creation-Date: 2013-09-06 21:34+1200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3992,7 +3992,7 @@ msgstr ""
 #: PricesBasedOnMarkUp.php:336 PricesBasedOnMarkUp.php:352
 #: SelectCreditItems.php:1441 SpecialOrder.php:502 StockCategories.php:21
 #: StockCategories.php:84 StockCategories.php:164 Z_ReApplyCostToSA.php:63
-#: Z_ReApplyCostToSA.php:75
+#: Z_ReApplyCostToSA.php:75 Z_UpdateSalesAnalysisWithLatestCustomerData.php:40
 msgid "because"
 msgstr ""
 
@@ -34406,7 +34406,7 @@ msgstr ""
 msgid "Could not recalculate the current cost of the assembly item"
 msgstr ""
 
-#: Z_ReApplyCostToSA.php:75
+#: Z_ReApplyCostToSA.php:75 Z_UpdateSalesAnalysisWithLatestCustomerData.php:40
 msgid "Could not update the sales analysis records for"
 msgstr ""
 
@@ -34622,6 +34622,30 @@ msgstr ""
 
 #: Z_UpdateChartDetailsBFwd.php:14
 msgid "Please re-select the reporting period"
+msgstr ""
+
+#: Z_UpdateSalesAnalysisWithLatestCustomerData.php:6
+msgid "Apply Current Customer and Branch data to Sales Analysis"
+msgstr ""
+
+#: Z_UpdateSalesAnalysisWithLatestCustomerData.php:14
+msgid "Update Sales Analysis Customer Data"
+msgstr ""
+
+#: Z_UpdateSalesAnalysisWithLatestCustomerData.php:29
+msgid "Could not retrieve the customer records to be updated because"
+msgstr ""
+
+#: Z_UpdateSalesAnalysisWithLatestCustomerData.php:43
+msgid "Updated sales analysis for customer code"
+msgstr ""
+
+#: Z_UpdateSalesAnalysisWithLatestCustomerData.php:43
+msgid "and branch code"
+msgstr ""
+
+#: Z_UpdateSalesAnalysisWithLatestCustomerData.php:47
+msgid "Updated the sales analysis with all the latest sales areas, salesman and sales types as set up now"
 msgstr ""
 
 #: Z_Upgrade_3.01-3.02.php:6
