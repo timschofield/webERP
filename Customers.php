@@ -423,23 +423,24 @@ if (!isset($DebtorNo)) {
 		include('includes/footer.inc');
 		exit;
 	}
-	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-
-	echo '<input type="hidden" name="New" value="Yes" />';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
+		<div>
+		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+		<input type="hidden" name="New" value="Yes" />';
 
 	$DataError =0;
 
 	echo '<table class="selection" cellspacing="4">
-			<tr><td valign="top"><table class="selection">';
+			<tr>
+				<td valign="top">
+					<table class="selection">';
 
 	/* if $AutoDebtorNo in config.php has not been set or if it has been set to a number less than one,
 	then provide an input box for the DebtorNo to manually assigned */
 	if ($_SESSION['AutoDebtorNo']==0)  {
 		echo '<tr>
 				<td>' . _('Customer Code') . ':</td>
-				<td><input tabindex="1" type="text" name="DebtorNo"  required="required" autofocus="autofocus" pattern="[0-9a-zA-Z_]*" title="' . _('The customer code can be up to 10 alpha-numeric characters long or underscore') . '" size="11" maxlength="10" /></td></tr>';
+				<td><input tabindex="1" type="text" name="DebtorNo"  required="required" autofocus="autofocus" pattern="[0-9a-zA-Z_]{1,10}" title="' . _('The customer code can be up to 10 alpha-numeric characters long or underscore') . '" size="11" maxlength="10" /></td></tr>';
 	}
 
 	echo '<tr>

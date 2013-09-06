@@ -872,7 +872,7 @@ if (!isset($StockID) OR $StockID=='' or isset($_POST['UpdateCategories'])) {
 	if ($New==1) {
 		echo '<tr>
 				<td>' .  _('Item Code'). ':</td>
-				<td><input ' . (in_array('StockID',$Errors) ?  'class="inputerror"' : '' ) .'  autofocus="autofocus" required="required" pattern="[0-9a-zA-Z_]*" type="text" value="'.$StockID.'" name="StockID" size="20" maxlength="20" /></td>
+				<td><input ' . (in_array('StockID',$Errors) ?  'class="inputerror"' : '' ) .'  autofocus="autofocus" required="required" pattern="[0-9a-zA-Z_\-]{1,20}" type="text" value="'.$StockID.'" name="StockID" size="20" maxlength="20"  title ="'._('Input the stock code, only alpha-numeric characters are allowed in stock codes with no spaces punctuation or special characters. Underscore and dashes are also allowed').'" placeholder="'._('alpha-numeric only').'" /></td>
 			</tr>';
 	} else {
 		echo '<tr>
@@ -971,9 +971,9 @@ foreach ($ItemDescriptionLanguages as $DescriptionLanguage) {
 			$_POST[$PostVariableName] ='';
 		}
 		echo '<tr>
-			<td>' . $LanguagesArray[$DescriptionLanguage]['LanguageName'] . ' ' . _('Description') . ':</td>
-			<td><input type="text" name="'. $PostVariableName . '" size="52" maxlength="50" value="' . $_POST[$PostVariableName] . '" /></td>
-		</tr>';
+				<td>' . $LanguagesArray[$DescriptionLanguage]['LanguageName'] . ' ' . _('Description') . ':</td>
+				<td><input type="text" name="'. $PostVariableName . '" size="52" maxlength="50" value="' . $_POST[$PostVariableName] . '" title="' . _('This language translation of the item will be used in invoices and credits to customers who are defined to use this language. The language translations to maintain here can be configured in the system parameters page') .  '" /></td>
+			</tr>';
 	}
 }
 

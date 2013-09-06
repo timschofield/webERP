@@ -605,7 +605,7 @@ if (!isset($_GET['delete'])) {
 		echo '<table class="selection">
 				<tr>
 					<td>' . _('Branch Code'). ':</td>
-					<td><input ' .(in_array('BranchCode',$Errors) ?  'class="inputerror"' : '' ) . ' tabindex="1" type="text" name="BranchCode" required="required" pattern="[a-zA-Z0-9_]*" title="' . _('The branch code can be up to 10 alpha-numeric characters or underscores') . '" size="12" maxlength="10" value="' . $_POST['BranchCode'] . '" /></td>
+					<td><input ' .(in_array('BranchCode',$Errors) ?  'class="inputerror"' : '' ) . ' tabindex="1" type="text" name="BranchCode" required="required" pattern="[0-9a-zA-Z_]{1,10}" title="' . _('The branch code can be up to 10 alpha-numeric characters or underscores') . '" size="12" maxlength="10" value="' . $_POST['BranchCode'] . '" /></td>
 				</tr>';
 		$_POST['DeliverBlind'] = $_SESSION['DefaultBlindPackNote'];
 	}
@@ -619,13 +619,14 @@ if (!isset($_GET['delete'])) {
 	echo _('Branch Name').':</td>';
 	if (!isset($_POST['BrName'])) {$_POST['BrName']='';}
 	echo '<td><input tabindex="2" type="text" autofocus="autofocus" required="required" name="BrName" title="' . _('The branch name should identify the particular delivery address of the customer and must be entered') . '" minlength="5" size="41" maxlength="40" value="'. $_POST['BrName'].'" /></td>
-		</tr>';
-	echo '<tr>
+		</tr>
+		<tr>
 			<td>' . _('Branch Contact').':</td>';
 	if (!isset($_POST['ContactName'])) {$_POST['ContactName']='';}
 	echo '<td><input tabindex="3" type="text" name="ContactName" required="required" size="41" maxlength="40" value="'. $_POST['ContactName'].'" /></td>
-		</tr>';
-	echo '<tr><td>' . _('Street Address 1 (Street)').':</td>';
+		</tr>
+		<tr>
+			<td>' . _('Street Address 1 (Street)').':</td>';
 	if (!isset($_POST['BrAddress1'])) {
 		$_POST['BrAddress1']='';
 	}
@@ -792,11 +793,12 @@ if (!isset($_GET['delete'])) {
 		</tr>
 		<tr>
 			<td>' . _('Phone Number').':</td>';
-	if (!isset($_POST['PhoneNo'])) {$_POST['PhoneNo']='';}
+	if (!isset($_POST['PhoneNo'])) {
+		$_POST['PhoneNo']='';
+	}
 	echo '<td><input tabindex="16" type="tel" name="PhoneNo" pattern="[0-9+()\s]*" size="22" maxlength="20" value="'. $_POST['PhoneNo'].'" /></td>
-		</tr>';
-
-	echo '<tr>
+		</tr>
+		<tr>
 			<td>' . _('Fax Number').':</td>';
 	if (!isset($_POST['FaxNo'])) {
 		$_POST['FaxNo']='';
@@ -853,8 +855,6 @@ if (!isset($_GET['delete'])) {
 
 	echo '	</select></td>
 		</tr>';
-	
-	
 
 	$SQL = "SELECT shipper_id, shippername FROM shippers";
 	$ShipperResults = DB_query($SQL,$db);
