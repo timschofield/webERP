@@ -124,7 +124,7 @@ if (isset($_POST['PrintPDF'])
 
 	$ViewTopic = 'ARReports';
 	$BookMark = 'PriorMonthDebtors';
-	
+
 	include('includes/header.inc');
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/customer.png" title="' . _('Search') .
 	 '" alt="" />' . ' ' . $Title . '</p><br />';
@@ -140,11 +140,11 @@ if (isset($_POST['PrintPDF'])
 		echo '<table class="selection">';
 		echo '<tr>
 				<td>' . _('From Customer Code') .':</td>
-				<td><input tabindex="1" type="text" maxlength="6" size="7" name="FromCriteria" required="required" pattern="[0-9a-zA-Z_]*" title="' . _('Enter a portion of the code of first customer to report') . '" value="1" /></td>
+				<td><input tabindex="1" type="text" maxlength="10" size="8" name="FromCriteria" required="required" pattern="[0-9a-zA-Z_]*" title="' . _('Enter a portion of the code of first customer to report') . '" value="1" /></td>
 			</tr>
 			<tr>
 				<td>' . _('To Customer Code') . ':</td>
-				<td><input tabindex="2" type="text" maxlength="6" size="7" name="ToCriteria" required="required" pattern="[0-9a-zA-Z_]*" title="' . _('Enter a portion of the code of last customer to report') . '" value="zzzzzz" /></td>
+				<td><input tabindex="2" type="text" maxlength="10" size="8" name="ToCriteria" required="required" pattern="[0-9a-zA-Z_]*" title="' . _('Enter a portion of the code of last customer to report') . '" value="zzzzzz" /></td>
 			</tr>
 			<tr>
 				<td>' . _('Balances As At') . ':</td>
