@@ -544,9 +544,9 @@ while ($myrow1 = DB_fetch_array($result1)) {
 echo '</select></td>';
 echo '<td>' . _('Enter partial') . '<b> ' . _('Description') . '</b>:</td><td>';
 if (isset($_POST['Keywords'])) {
-	echo '<input type="text" autofocus="autofocus" name="Keywords" value="' . $_POST['Keywords'] . '" pattern="[a-zA-Z0-9_\-\ ]*" title="' . _('Enter text that you wish to search for in the item description') . '" size="20" maxlength="25" />';
+	echo '<input type="text" autofocus="autofocus" name="Keywords" value="' . $_POST['Keywords'] . '" title="' . _('Enter text that you wish to search for in the item description') . '" size="20" maxlength="25" />';
 } else {
-	echo '<input type="text" autofocus="autofocus" name="Keywords" pattern="[a-zA-Z0-9_\-\ ]*" title="' . _('Enter text that you wish to search for in the item description') . '" size="20" maxlength="25" />';
+	echo '<input type="text" autofocus="autofocus" name="Keywords" title="' . _('Enter text that you wish to search for in the item description') . '" size="20" maxlength="25" />';
 }
 echo '</td></tr><tr><td></td>';
 echo '<td><b>' . _('OR') . ' ' . '</b>' . _('Enter partial') . ' <b>' . _('Stock Code') . '</b>:</td>';

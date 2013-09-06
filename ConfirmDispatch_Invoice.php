@@ -1133,7 +1133,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 												'" . -$OrderLine->QtyDispatched . "',
 												'" . $OrderLine->DiscountPercent . "',
 												'" . $OrderLine->StandardCost . "',
-												'" . DB_escape_striing($OrderLine->Narrative) . "')";
+												'" . DB_escape_string($OrderLine->Narrative) . "')";
 			}
 
 

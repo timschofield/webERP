@@ -872,7 +872,7 @@ if (!isset($StockID) OR $StockID=='' or isset($_POST['UpdateCategories'])) {
 	if ($New==1) {
 		echo '<tr>
 				<td>' .  _('Item Code'). ':</td>
-				<td><input ' . (in_array('StockID',$Errors) ?  'class="inputerror"' : '' ) .'  autofocus="autofocus" required="required" pattern="[0-9a-zA-Z_]*{1,20}" type="text" value="'.$StockID.'" name="StockID" size="20" maxlength="20" /></td>
+				<td><input ' . (in_array('StockID',$Errors) ?  'class="inputerror"' : '' ) .'  autofocus="autofocus" required="required" pattern="[0-9a-zA-Z_]*" type="text" value="'.$StockID.'" name="StockID" size="20" maxlength="20" /></td>
 			</tr>';
 	} else {
 		echo '<tr>

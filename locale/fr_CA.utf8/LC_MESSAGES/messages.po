@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WebERP 4.10.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-01 19:22+1200\n"
+"POT-Creation-Date: 2013-09-06 20:40+1200\n"
 "PO-Revision-Date: 2013-08-11 18:55-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: french <none>\n"
@@ -194,8 +194,8 @@ msgstr "Ce groupe ne peut pas être supprimé car les comptes du GL l'utilisent.
 #: PcExpenses.php:161 SalesCategories.php:128 SalesCategories.php:135
 #: SalesPeople.php:150 SalesPeople.php:157 SalesPeople.php:163
 #: SalesTypes.php:140 SalesTypes.php:150 Shippers.php:81 Shippers.php:93
-#: StockCategories.php:191 Stocks.php:721 Stocks.php:730 Stocks.php:738
-#: Stocks.php:746 Stocks.php:754 Stocks.php:762 Stocks.php:770 Stocks.php:778
+#: StockCategories.php:191 Stocks.php:724 Stocks.php:733 Stocks.php:741
+#: Stocks.php:749 Stocks.php:757 Stocks.php:765 Stocks.php:773 Stocks.php:781
 #: Suppliers.php:629 Suppliers.php:638 Suppliers.php:646 SupplierTypes.php:145
 #: TaxCategories.php:131 TaxGroups.php:132 TaxGroups.php:140
 #: TaxProvinces.php:129 UnitsOfMeasure.php:135 WorkCentres.php:89
@@ -284,7 +284,7 @@ msgstr "Impossible d'accèder aux groupes car"
 #: SelectCompletedOrder.php:11 SelectContract.php:69 SelectCreditItems.php:220
 #: SelectCreditItems.php:291 SelectCustomer.php:265 SelectGLAccount.php:65
 #: SelectOrderItems.php:609 SelectOrderItems.php:1526
-#: SelectOrderItems.php:1655 SelectProduct.php:525 SelectSalesOrder.php:563
+#: SelectOrderItems.php:1654 SelectProduct.php:525 SelectSalesOrder.php:563
 #: SelectSupplier.php:14 SelectSupplier.php:217 SelectWorkOrder.php:9
 #: SelectWorkOrder.php:169 SellThroughSupport.php:229 ShipmentCosting.php:11
 #: Shipments.php:17 Shippers.php:123 Shippers.php:160 Shipt_Select.php:8
@@ -299,7 +299,7 @@ msgstr "Impossible d'accèder aux groupes car"
 #: WhereUsedInquiry.php:18 WorkCentres.php:111 WorkCentres.php:162
 #: WorkOrderCosting.php:22 WorkOrderEntry.php:11 WorkOrderIssue.php:22
 #: WorkOrderReceive.php:31 WorkOrderStatus.php:58 WWW_Access.php:11
-#: WWW_Users.php:36 Z_BottomUpCosts.php:57 ../webSHOP/includes/header.php:236
+#: WWW_Users.php:36 Z_BottomUpCosts.php:57 ../webSHOP/includes/header.php:251
 msgid "Search"
 msgstr "Recherche"
 
@@ -351,8 +351,8 @@ msgstr "Pertes et profits"
 #: ShipmentCosting.php:667 ShopParameters.php:284 ShopParameters.php:288
 #: ShopParameters.php:332 ShopParameters.php:336 ShopParameters.php:365
 #: ShopParameters.php:369 ShopParameters.php:387 ShopParameters.php:391
-#: ShopParameters.php:448 ShopParameters.php:452 Stocks.php:1199
-#: Stocks.php:1201 Stocks.php:1224 Stocks.php:1226 SuppContractChgs.php:90
+#: ShopParameters.php:448 ShopParameters.php:452 Stocks.php:1202
+#: Stocks.php:1204 Stocks.php:1227 Stocks.php:1229 SuppContractChgs.php:90
 #: SystemParameters.php:426 SystemParameters.php:449 SystemParameters.php:486
 #: SystemParameters.php:558 SystemParameters.php:566 SystemParameters.php:606
 #: SystemParameters.php:682 SystemParameters.php:691 SystemParameters.php:699
@@ -398,8 +398,8 @@ msgstr "Oui"
 #: ShipmentCosting.php:668 ShopParameters.php:285 ShopParameters.php:287
 #: ShopParameters.php:333 ShopParameters.php:335 ShopParameters.php:366
 #: ShopParameters.php:368 ShopParameters.php:388 ShopParameters.php:390
-#: ShopParameters.php:449 ShopParameters.php:451 Stocks.php:1194
-#: Stocks.php:1196 Stocks.php:1219 Stocks.php:1221 SuppContractChgs.php:92
+#: ShopParameters.php:449 ShopParameters.php:451 Stocks.php:1197
+#: Stocks.php:1199 Stocks.php:1222 Stocks.php:1224 SuppContractChgs.php:92
 #: SystemParameters.php:427 SystemParameters.php:450 SystemParameters.php:487
 #: SystemParameters.php:559 SystemParameters.php:567 SystemParameters.php:607
 #: SystemParameters.php:683 SystemParameters.php:692 SystemParameters.php:700
@@ -674,7 +674,7 @@ msgstr "L'adresse courriel n'est pas correcte"
 #: FixedAssetItems.php:250 MRPCalendar.php:176 PcAssignCashToTab.php:91
 #: PcClaimExpensesFromTab.php:82 PcExpenses.php:98 PcTabs.php:104
 #: PcTypeTabs.php:63 PO_Items.php:379 SalesAnalReptCols.php:129
-#: SalesPeople.php:97 SalesTypes.php:66 Stocks.php:558 Suppliers.php:524
+#: SalesPeople.php:97 SalesTypes.php:66 Stocks.php:561 Suppliers.php:524
 #: SupplierTypes.php:67
 msgid "has been updated"
 msgstr "a été mis à jour"
@@ -720,7 +720,7 @@ msgstr "Tél:"
 #: WWW_Users.php:283 includes/PDFPickingListHeader.inc:25
 #: includes/PDFStatementPageHeader.inc:67 includes/PDFTransPageHeader.inc:82
 #: includes/PDFTransPageHeaderPortrait.inc:111
-#: includes/PO_PDFOrderPageHeader.inc:29 ../webSHOP/Checkout.php:296
+#: includes/PO_PDFOrderPageHeader.inc:29 ../webSHOP/Checkout.php:298
 #: ../webSHOP/Register.php:595
 msgid "Email"
 msgstr "Courriel"
@@ -748,7 +748,7 @@ msgid "Contact Code"
 msgstr "Code de contact"
 
 #: AddCustomerContacts.php:214 Factors.php:234 SupplierContacts.php:239
-#: ../webSHOP/Checkout.php:377 ../webSHOP/Register.php:610
+#: ../webSHOP/Checkout.php:379 ../webSHOP/Register.php:610
 msgid "Contact Name"
 msgstr "Nom du contact"
 
@@ -757,7 +757,7 @@ msgstr "Nom du contact"
 #: SelectCustomer.php:425 SelectOrderItems.php:646
 #: SupplierTenderCreate.php:390 includes/PDFStatementPageHeader.inc:63
 #: includes/PDFTransPageHeader.inc:81
-#: includes/PDFTransPageHeaderPortrait.inc:107 ../webSHOP/Checkout.php:387
+#: includes/PDFTransPageHeaderPortrait.inc:107 ../webSHOP/Checkout.php:389
 #: ../webSHOP/Register.php:255 ../webSHOP/Register.php:723
 msgid "Phone"
 msgstr "Téléphone"
@@ -820,7 +820,7 @@ msgid "Date"
 msgstr "Date"
 
 #: AddCustomerNotes.php:118 AddCustomerTypeNotes.php:112 PcReportTab.php:181
-#: SelectCustomer.php:660 SelectCustomer.php:702 Stocks.php:1203
+#: SelectCustomer.php:660 SelectCustomer.php:702 Stocks.php:1206
 #: UpgradeDatabase.php:229 UpgradeDatabase.php:232 UpgradeDatabase.php:235
 #: UpgradeDatabase.php:238 UpgradeDatabase.php:241 UpgradeDatabase.php:244
 #: UpgradeDatabase.php:247 UpgradeDatabase.php:250 UpgradeDatabase.php:253
@@ -1036,7 +1036,7 @@ msgstr "ne peut pas être retrouvé car"
 #: SelectSalesOrder.php:372 SellThroughSupport.php:81
 #: SellThroughSupport.php:97 SMTPServer.php:62 StockCheck.php:224
 #: StockCostUpdate.php:78 StockCostUpdate.php:88 StockLocStatus.php:164
-#: StockMovements.php:91 StockQuantityByDate.php:97 StockReorderLevel.php:41
+#: StockMovements.php:91 StockQuantityByDate.php:97 StockReorderLevel.php:43
 #: StockStatus.php:312 StockTransfers.php:203 StockUsageGraph.php:53
 #: StockUsage.php:139 SupplierInquiry.php:78 SupplierInquiry.php:100
 #: SupplierInquiry.php:136 SupplierInquiry.php:192 SupplierPriceList.php:382
@@ -1053,7 +1053,7 @@ msgstr "ne peut pas être retrouvé car"
 #: includes/PDFPaymentRun_PymtFooter.php:189 includes/ConnectDB_mysqli.inc:76
 #: includes/ConnectDB_mysql.inc:66
 #: ../webSHOP/includes/DatabaseFunctions.php:60
-#: ../webSHOP/includes/Functions.php:438 ../webSHOP/includes/PlaceOrder.php:67
+#: ../webSHOP/includes/Functions.php:438 ../webSHOP/includes/PlaceOrder.php:70
 msgid "The SQL that failed was"
 msgstr "Commande SQL qui a échoué:"
 
@@ -1342,7 +1342,7 @@ msgstr "ID utilisateur"
 #: SalesGraph.php:102 SalesGraph.php:104 SalesGraph.php:124 SalesGraph.php:126
 #: SalesGraph.php:148 SalesGraph.php:150 SalesGraph.php:184
 #: SalesInquiry.php:1091 SalesInquiry.php:1154 SelectCreditItems.php:986
-#: SelectOrderItems.php:1663 SelectOrderItems.php:1666 SelectProduct.php:533
+#: SelectOrderItems.php:1662 SelectOrderItems.php:1665 SelectProduct.php:533
 #: SelectProduct.php:535 StockDispatch.php:82 StockDispatch.php:393
 #: StockDispatch.php:395 StockLocStatus.php:71 StockLocStatus.php:73
 #: StockLocStatus.php:91 StockLocStatus.php:96 StockLocStatus.php:101
@@ -1480,7 +1480,7 @@ msgid "Bank Accounts Maintenance"
 msgstr "Gestion de compte bancaire"
 
 #: BankAccounts.php:12 TaxAuthorities.php:150
-#: ../webSHOP/includes/Functions.php:756
+#: ../webSHOP/includes/Functions.php:755
 msgid "Bank"
 msgstr "Banque"
 
@@ -1728,7 +1728,7 @@ msgstr "de"
 #: PrintCustTrans.php:63 PrintCustTrans.php:66 PrintCustTransPortrait.php:62
 #: PrintCustTransPortrait.php:65 SalesGraph.php:218 SalesGraph.php:247
 #: SalesGraph.php:251 StockLocTransferReceive.php:306
-#: StockLocTransferReceive.php:444 Stocks.php:300 Stocks.php:305
+#: StockLocTransferReceive.php:444 Stocks.php:303 Stocks.php:308
 #: StockStatus.php:353 StockStatus.php:394 StockTransfers.php:448
 #: includes/PDFAgedDebtorsPageHeader.inc:18
 #: includes/PDFAgedSuppliersPageHeader.inc:17
@@ -1853,7 +1853,7 @@ msgstr "Réf"
 #: Z_CheckAllocs.php:66 includes/PDFBankingSummaryPageHeader.inc:55
 #: includes/PDFChequeListingPageHeader.inc:37
 #: includes/PDFGLJournalHeader.inc:22 ../webSHOP/CreditCardPayFlowPro.php:276
-#: ../webSHOP/CreditCardPayPalPro.php:337
+#: ../webSHOP/CreditCardPayPalPro.php:338
 msgid "Amount"
 msgstr "Montant"
 
@@ -2004,7 +2004,7 @@ msgstr "Numéro"
 #: includes/PDFPeriodStockTransListingPageHeader.inc:52
 #: includes/PDFStockComparisonPageHeader.inc:36
 #: includes/PDFSuppTransListingPageHeader.inc:49
-#: ../webSHOP/includes/Functions.php:765
+#: ../webSHOP/includes/Functions.php:764
 msgid "Reference"
 msgstr "Référence"
 
@@ -2051,7 +2051,7 @@ msgstr ""
 "change ci-dessus reflète la valeur actuelle de la monnaie de compte bancaire"
 
 #: BankReconciliation.php:361 CounterReturns.php:740 CounterSales.php:832
-#: Customers.php:1177 SelectOrderItems.php:1452 Stocks.php:1392
+#: Customers.php:1177 SelectOrderItems.php:1452 Stocks.php:1395
 #: WorkOrderCosting.php:551 WorkOrderEntry.php:589
 msgid "Are You Sure?"
 msgstr "Etes-vous sûr?"
@@ -2149,7 +2149,7 @@ msgstr ""
 #: SalesGraph.php:276 SalesInquiry.php:993 SalesTopItemsInquiry.php:225
 #: SelectCreditItems.php:688 SelectCreditItems.php:1068
 #: SelectOrderItems.php:1374 SelectOrderItems.php:1542
-#: SelectOrderItems.php:1730 SelectOrderItems.php:1862 ShipmentCosting.php:149
+#: SelectOrderItems.php:1729 SelectOrderItems.php:1861 ShipmentCosting.php:149
 #: ShipmentCosting.php:150 Shipments.php:401 Shipments.php:403
 #: Shipments.php:404 Shipments.php:488 Shipments.php:490 SpecialOrder.php:628
 #: StockCounts.php:114 StockLocMovements.php:93 StockLocTransfer.php:306
@@ -2180,7 +2180,7 @@ msgstr ""
 #: includes/PO_PDFOrderPageHeader.inc:77 api/api_xml-rpc.php:2533
 #: api/api_xml-rpc.php:2579 api/api_xml-rpc.php:2775
 #: ../webSHOP/includes/DisplayShoppingCart.php:8
-#: ../webSHOP/includes/PlaceOrder.php:234
+#: ../webSHOP/includes/PlaceOrder.php:237
 msgid "Quantity"
 msgstr "Quantité"
 
@@ -2326,7 +2326,7 @@ msgstr "Construire"
 #: InternalStockRequest.php:628 PO_SelectOSPurchOrder.php:239
 #: PO_SelectPurchOrder.php:215 ReorderLevelLocation.php:73
 #: ReorderLevelLocation.php:74 SelectCompletedOrder.php:556
-#: SelectOrderItems.php:1538 SelectOrderItems.php:1726
+#: SelectOrderItems.php:1538 SelectOrderItems.php:1725
 #: SelectSalesOrder.php:612 SelectWorkOrder.php:215 Shipt_Select.php:192
 #: TopItems.php:168 includes/PDFTopItemsHeader.inc:54
 msgid "On Hand"
@@ -2358,8 +2358,8 @@ msgid "M/B"
 msgstr "M / B"
 
 #: BOMExtendedQty.php:329 POReport.php:549 POReport.php:635 POReport.php:726
-#: POReport.php:1315 POReport.php:1366 POReport.php:1420 Stocks.php:959
-#: Stocks.php:983
+#: POReport.php:1315 POReport.php:1366 POReport.php:1420 Stocks.php:962
+#: Stocks.php:986
 msgid "Part Description"
 msgstr "Description du composant"
 
@@ -2421,10 +2421,10 @@ msgstr "Un niveau"
 #: SecurityTokens.php:103 SecurityTokens.php:120 SelectAsset.php:264
 #: SelectCompletedOrder.php:555 SelectContract.php:144
 #: SelectCreditItems.php:1022 SelectOrderItems.php:1536
-#: SelectOrderItems.php:1724 SelectProduct.php:545 SelectProduct.php:771
+#: SelectOrderItems.php:1723 SelectProduct.php:545 SelectProduct.php:771
 #: SelectSalesOrder.php:611 SelectWorkOrder.php:214 Shipt_Select.php:191
 #: StockCategories.php:238 StockDispatch.php:503 StockLocStatus.php:172
-#: StockQuantityByDate.php:108 Stocks.php:971 SuppCreditGRNs.php:92
+#: StockQuantityByDate.php:108 Stocks.php:974 SuppCreditGRNs.php:92
 #: SuppCreditGRNs.php:192 SuppFixedAssetChgs.php:78 SuppInvGRNs.php:126
 #: SuppInvGRNs.php:307 SupplierCredit.php:317 SupplierCredit.php:385
 #: SupplierInvoice.php:665 SupplierInvoice.php:745 SupplierPriceList.php:39
@@ -2442,7 +2442,7 @@ msgstr "Un niveau"
 #: includes/PDFStockTransferHeader.inc:36 includes/PDFTopItemsHeader.inc:50
 #: includes/PDFTransPageHeader.inc:208
 #: includes/PDFTransPageHeaderPortrait.inc:265 api/api_xml-rpc.php:3489
-#: ../webSHOP/includes/PlaceOrder.php:233
+#: ../webSHOP/includes/PlaceOrder.php:236
 msgid "Description"
 msgstr "Description"
 
@@ -2537,7 +2537,7 @@ msgstr "Description"
 #: SelectCreditItems.php:227 SelectCreditItems.php:1005 SelectCustomer.php:274
 #: SelectCustomer.php:284 SelectCustomer.php:293 SelectCustomer.php:303
 #: SelectCustomer.php:350 SelectGLAccount.php:79 SelectOrderItems.php:619
-#: SelectOrderItems.php:622 SelectOrderItems.php:1691 SelectProduct.php:552
+#: SelectOrderItems.php:622 SelectOrderItems.php:1690 SelectProduct.php:552
 #: SelectSalesOrder.php:595 SelectSupplier.php:228 SelectWorkOrder.php:201
 #: SellThroughSupport.php:202 Shipt_Select.php:174 SuppFixedAssetChgs.php:126
 #: SupplierPriceList.php:49 SupplierPriceList.php:406
@@ -2561,12 +2561,12 @@ msgstr "Texte à rechercher dans le"
 #: SalesInquiry.php:1109 SalesInquiry.php:1199 SalesInquiry.php:1217
 #: SelectProduct.php:552 Shipt_Select.php:174 StockAdjustments.php:116
 #: StockAdjustments.php:403 StockCounts.php:113 StockCounts.php:155
-#: StockMovements.php:36 StockReorderLevel.php:47 StockStatus.php:62
+#: StockMovements.php:36 StockReorderLevel.php:49 StockStatus.php:62
 #: StockTransfers.php:49 StockTransfers.php:470 StockUsage.php:64
 #: SupplierPriceList.php:49 SupplierTenderCreate.php:701
 #: SupplierTenders.php:433 WorkOrderEntry.php:632 WorkOrderIssue.php:683
 #: Z_ChangeStockCategory.php:92 Z_ChangeStockCode.php:177
-#: ../webSHOP/includes/PlaceOrder.php:232
+#: ../webSHOP/includes/PlaceOrder.php:235
 msgid "Stock Code"
 msgstr "Code Article"
 
@@ -2575,7 +2575,7 @@ msgstr "Code Article"
 #: FixedAssetTransfer.php:107 InternalStockRequest.php:362 MRPDemands.php:343
 #: MRPReport.php:558 PO_Header.php:549 PO_Items.php:1145 SelectAsset.php:116
 #: SelectCreditItems.php:234 SelectCreditItems.php:1012 SelectCustomer.php:375
-#: SelectGLAccount.php:103 SelectOrderItems.php:629 SelectOrderItems.php:1699
+#: SelectGLAccount.php:103 SelectOrderItems.php:629 SelectOrderItems.php:1698
 #: SelectProduct.php:560 SelectSupplier.php:238 SelectSupplier.php:271
 #: SupplierPriceList.php:61 SupplierTenderCreate.php:567
 #: SupplierTenderCreate.php:606 SupplierTenderCreate.php:712
@@ -2619,7 +2619,7 @@ msgstr "Commande SQL de recherche des éléments"
 #: PricesByCost.php:152 PurchData.php:469 ReorderLevelLocation.php:70
 #: SalesPeople.php:199 SelectCompletedOrder.php:554 SelectCreditItems.php:1021
 #: SelectCustomer.php:420 SelectGLAccount.php:112 SelectOrderItems.php:1535
-#: SelectOrderItems.php:1723 SelectProduct.php:770 SelectSalesOrder.php:610
+#: SelectOrderItems.php:1722 SelectProduct.php:770 SelectSalesOrder.php:610
 #: SelectSupplier.php:277 SelectWorkOrder.php:213 SellThroughSupport.php:159
 #: Shipt_Select.php:190 SpecialOrder.php:149 SupplierPriceList.php:270
 #: SupplierPriceList.php:455 SupplierTenderCreate.php:612
@@ -2639,7 +2639,7 @@ msgstr "Code"
 #: OffersReceived.php:109 PO_Items.php:1161 PO_SelectOSPurchOrder.php:241
 #: PO_SelectPurchOrder.php:217 SelectCompletedOrder.php:559
 #: SelectCreditItems.php:1023 SelectOrderItems.php:1537
-#: SelectOrderItems.php:1725 SelectProduct.php:130 SelectProduct.php:773
+#: SelectOrderItems.php:1724 SelectProduct.php:130 SelectProduct.php:773
 #: SelectSalesOrder.php:613 SelectWorkOrder.php:216 Shipments.php:402
 #: Shipments.php:489 Shipt_Select.php:194 StockLocTransferReceive.php:453
 #: SupplierPriceList.php:272 SupplierTenderCreate.php:849
@@ -2936,16 +2936,16 @@ msgstr "Commande SQL d'affichage de la description de la pièce parent"
 
 #: BOMs.php:425 ConfirmDispatch_Invoice.php:1041 CounterReturns.php:1058
 #: CounterSales.php:1478 Credit_Invoice.php:779 Credit_Invoice.php:807
-#: SelectCreditItems.php:1487 Stocks.php:1124 Stocks.php:1126
+#: SelectCreditItems.php:1487 Stocks.php:1127 Stocks.php:1129
 #: api/api_debtortransactions.php:753 api/api_salesorders.php:920
 msgid "Assembly"
 msgstr "Assemblé"
 
-#: BOMs.php:428 FixedAssetRegister.php:390 Stocks.php:1144 Stocks.php:1146
+#: BOMs.php:428 FixedAssetRegister.php:390 Stocks.php:1147 Stocks.php:1149
 msgid "Purchased"
 msgstr "Acheté"
 
-#: BOMs.php:431 Stocks.php:1134 Stocks.php:1136
+#: BOMs.php:431 Stocks.php:1137 Stocks.php:1139
 msgid "Manufactured"
 msgstr "Fabriqué"
 
@@ -2953,7 +2953,7 @@ msgstr "Fabriqué"
 msgid "Kit Set"
 msgstr "Composition du Kit"
 
-#: BOMs.php:437 BOMs.php:529 Stocks.php:1139 Stocks.php:1141
+#: BOMs.php:437 BOMs.php:529 Stocks.php:1142 Stocks.php:1144
 msgid "Phantom"
 msgstr "Fantôme"
 
@@ -2981,7 +2981,7 @@ msgstr "Niveau"
 #: InventoryQuantities.php:247 Locations.php:349 MRP.php:562 MRP.php:595
 #: NoSalesItems.php:185 PDFOrdersInvoiced.php:319 PDFOrderStatus.php:288
 #: ReorderLevelLocation.php:154 ReorderLevel.php:290 ReorderLevel.php:299
-#: StockCounts.php:156 StockReorderLevel.php:54 StockSerialItemResearch.php:80
+#: StockCounts.php:156 StockReorderLevel.php:56 StockSerialItemResearch.php:80
 #: StockStatus.php:86 StockStatus.php:91 SupplierTenderCreate.php:135
 #: WhereUsedInquiry.php:70 WorkCentres.php:128 WorkCentres.php:223
 #: includes/PDFPeriodStockTransListingPageHeader.inc:51
@@ -3280,7 +3280,7 @@ msgstr "Fax"
 
 #: CompanyPreferences.php:228 CustLoginSetup.php:162 Suppliers.php:716
 #: Suppliers.php:918 SupplierTenderCreate.php:410 SuppLoginSetup.php:145
-#: WWW_Users.php:466 ../webSHOP/Checkout.php:428
+#: WWW_Users.php:466 ../webSHOP/Checkout.php:430
 msgid "Email Address"
 msgstr "Courriel"
 
@@ -3437,7 +3437,7 @@ msgstr ""
 #: PricesByCost.php:223 PurchData.php:758 ReorderLevelLocation.php:130
 #: SecurityTokens.php:97 SelectCreditItems.php:957 SellThroughSupport.php:476
 #: ShopParameters.php:563 SMTPServer.php:107 StockCostUpdate.php:188
-#: StockReorderLevel.php:108 Stocks.php:1386 SystemParameters.php:1143
+#: StockReorderLevel.php:105 Stocks.php:1389 SystemParameters.php:1143
 #: TaxAuthorityRates.php:84 WorkOrderEntry.php:587 WOSerialNos.php:336
 msgid "Update"
 msgstr "Mise à jour"
@@ -3621,8 +3621,8 @@ msgstr "Montant de facture"
 #: ReorderLevelLocation.php:185 ReprintGRN.php:84 ReverseGRN.php:390
 #: SalesGraph.php:186 SelectCreditItems.php:686 SelectOrderItems.php:1372
 #: StockCostUpdate.php:125 StockLocMovements.php:88 StockLocTransfer.php:305
-#: StockLocTransferReceive.php:448 StockQuantityByDate.php:107 Stocks.php:871
-#: Stocks.php:876 Stocks.php:942 Stocks.php:948 SuppCreditGRNs.php:91
+#: StockLocTransferReceive.php:448 StockQuantityByDate.php:107 Stocks.php:874
+#: Stocks.php:879 Stocks.php:945 Stocks.php:951 SuppCreditGRNs.php:91
 #: SuppCreditGRNs.php:191 SuppInvGRNs.php:125 SuppInvGRNs.php:306
 #: SupplierCredit.php:316 SupplierInvoice.php:664 SupplierTenders.php:122
 #: SupplierTenders.php:528 SupplierTenders.php:530
@@ -3748,7 +3748,7 @@ msgstr "Remise"
 #: includes/PO_PDFOrderPageHeader.inc:81 api/api_debtortransactions.php:1271
 #: api/api_debtortransactions.php:1284 api/api_debtortransactions.php:1581
 #: ../webSHOP/includes/DisplayShoppingCart.php:7
-#: ../webSHOP/includes/PlaceOrder.php:282
+#: ../webSHOP/includes/PlaceOrder.php:285
 #, php-format
 msgid "Total"
 msgstr "Total"
@@ -3841,7 +3841,8 @@ msgid "Recalculated Freight Cost"
 msgstr "Frais de transport recalculés"
 
 #: ConfirmDispatch_Invoice.php:492 ConfirmDispatch_Invoice.php:496
-msgid "Charge Freight Cost inc Tax"
+#, fuzzy
+msgid "Charge Freight Cost ex Tax"
 msgstr "Prix du fret Tx incl"
 
 #: ConfirmDispatch_Invoice.php:560
@@ -4311,7 +4312,7 @@ msgstr "Impossible de récupérer la mbflag"
 
 #: ConfirmDispatch_Invoice.php:959 CounterReturns.php:974
 #: CounterSales.php:1395 FixedAssetItems.php:654 SalesAnalReptCols.php:327
-#: Stocks.php:1389 Suppliers.php:1032 includes/MiscFunctions.php:36
+#: Stocks.php:1392 Suppliers.php:1032 includes/MiscFunctions.php:36
 msgid "WARNING"
 msgstr "ATTENTION"
 
@@ -4940,7 +4941,7 @@ msgstr ""
 
 #: ContractBOM.php:332 CounterReturns.php:1638 CounterSales.php:2247
 #: PO_Items.php:1137 SelectCompletedOrder.php:534 SelectCreditItems.php:1005
-#: SelectOrderItems.php:1691 SelectSalesOrder.php:595 SelectWorkOrder.php:201
+#: SelectOrderItems.php:1690 SelectSalesOrder.php:595 SelectWorkOrder.php:201
 msgid "Enter extract of the Stock Code"
 msgstr "Entrer une partie du code article"
 
@@ -4954,7 +4955,7 @@ msgstr ""
 msgid "Create a New Stock Item"
 msgstr "Créer un objet Bourse de New"
 
-#: ContractBOM.php:356 FixedAssetItems.php:503 Stocks.php:1017
+#: ContractBOM.php:356 FixedAssetItems.php:503 Stocks.php:1020
 #: SupplierTenderCreate.php:850 SupplierTenders.php:689
 msgid "Image"
 msgstr "Image"
@@ -4962,8 +4963,8 @@ msgstr "Image"
 #: ContractBOM.php:376 CounterSales.php:2111 FixedAssetItems.php:498
 #: FixedAssetItems.php:502 InternalStockRequest.php:634 Manufacturers.php:211
 #: PO_Items.php:1183 SalesCategories.php:261 SelectCreditItems.php:1051
-#: SelectOrderItems.php:1550 SelectOrderItems.php:1732 SelectProduct.php:446
-#: Stocks.php:1008 Stocks.php:1012 Stocks.php:1016
+#: SelectOrderItems.php:1550 SelectOrderItems.php:1731 SelectProduct.php:446
+#: Stocks.php:1011 Stocks.php:1015 Stocks.php:1019
 #: SupplierTenderCreate.php:873 SupplierTenders.php:714 WorkOrderEntry.php:666
 #: WorkOrderIssue.php:724
 #, php-format
@@ -5368,19 +5369,19 @@ msgid "Only graphics files can be uploaded"
 msgstr "Seuls les fichiers graphiques peuvent être téléchargés"
 
 #: Contracts.php:131 FixedAssetItems.php:47 Manufacturers.php:46
-#: Manufacturers.php:118 SalesCategories.php:53 Stocks.php:84
+#: Manufacturers.php:118 SalesCategories.php:53 Stocks.php:87
 #: Z_MakeNewCompany.php:56
 msgid "Attempting to overwrite an existing item image"
 msgstr "Tenter de remplacer une image existante point"
 
 #: Contracts.php:134 FixedAssetItems.php:50 Manufacturers.php:49
-#: Manufacturers.php:121 SalesCategories.php:56 Stocks.php:87
+#: Manufacturers.php:121 SalesCategories.php:56 Stocks.php:90
 #: Z_MakeNewCompany.php:59
 msgid "The existing image could not be removed"
 msgstr "L'image existante ne pouvait pas être retiré"
 
 #: Contracts.php:141 FixedAssetItems.php:57 Manufacturers.php:56
-#: Manufacturers.php:128 SalesCategories.php:63 Stocks.php:94
+#: Manufacturers.php:128 SalesCategories.php:63 Stocks.php:97
 #: Z_MakeNewCompany.php:145
 msgid "File url"
 msgstr "url du fichier"
@@ -5555,11 +5556,11 @@ msgstr "L'item nouveau contrat ne peut être ajouté en raison"
 msgid "The SQL that was used to insert the contract item failed was"
 msgstr "Le SQL qui a été utilisé pour insérer l'objet du contrat n'a pas été"
 
-#: Contracts.php:502 Stocks.php:662 Z_ImportStocks.php:238
+#: Contracts.php:502 Stocks.php:665 Z_ImportStocks.php:238
 msgid "The locations for the item"
 msgstr "La localisation de l article"
 
-#: Contracts.php:502 Factors.php:80 Stocks.php:662 SupplierCredit.php:756
+#: Contracts.php:502 Factors.php:80 Stocks.php:665 SupplierCredit.php:756
 #: SupplierCredit.php:815 SupplierCredit.php:1202 SupplierCredit.php:1256
 #: SupplierCredit.php:1284 SupplierInvoice.php:1140 SupplierInvoice.php:1198
 #: SupplierInvoice.php:1563 SupplierInvoice.php:1798 SupplierInvoice.php:1827
@@ -5567,13 +5568,13 @@ msgstr "La localisation de l article"
 msgid "could not be added because"
 msgstr "ne peut pas être ajouté car"
 
-#: Contracts.php:503 Stocks.php:663 Z_ImportStocks.php:239
+#: Contracts.php:503 Stocks.php:666 Z_ImportStocks.php:239
 msgid "NB Locations records can be added by opening the utility page"
 msgstr ""
 "NB : Des fiches de lieu peuvent être ajoutées au travers de la page des "
 "paramètres"
 
-#: Contracts.php:503 Stocks.php:663 Z_ImportStocks.php:239
+#: Contracts.php:503 Stocks.php:666 Z_ImportStocks.php:239
 msgid "The SQL that was used to add the location records that failed was"
 msgstr "Commande SQL d'ajoût de fiche de lieu"
 
@@ -5653,7 +5654,7 @@ msgstr "Le dossier client sélectionné"
 #: InternalStockRequest.php:666 PO_Header.php:411 PO_Header.php:485
 #: SelectCreditItems.php:182 SelectOrderItems.php:405 SelectOrderItems.php:452
 #: SelectOrderItems.php:534 SelectOrderItems.php:575 SelectOrderItems.php:1570
-#: SelectOrderItems.php:1758 SpecialOrder.php:68 SpecialOrder.php:92
+#: SelectOrderItems.php:1757 SpecialOrder.php:68 SpecialOrder.php:92
 #: StockCheck.php:222 StockLocStatus.php:196 StockLocStatus.php:220
 #: StockLocStatus.php:251 StockStatus.php:123 StockStatus.php:147
 #: StockStatus.php:167 StockStatus.php:189 StockStatus.php:206
@@ -5780,7 +5781,7 @@ msgstr ""
 #: Contracts.php:852 InventoryQuantities.php:237 PDFPriceList.php:366
 #: PricesByCost.php:245 ReorderLevelLocation.php:169 ReorderLevel.php:286
 #: SalesCategoryPeriodInquiry.php:164 SalesTopItemsInquiry.php:221
-#: SpecialOrder.php:697 StockDispatch.php:486 Stocks.php:1022
+#: SpecialOrder.php:697 StockDispatch.php:486 Stocks.php:1025
 #: SuppPriceList.php:237 SuppPriceList.php:299 Z_ItemsWithoutPicture.php:31
 #: includes/PDFInventoryValnPageHeader.inc:32
 #: includes/PDFInventoryValnPageHeader.inc:38
@@ -5788,12 +5789,12 @@ msgid "Category"
 msgstr "Catégorie"
 
 #: Contracts.php:856 PricesBasedOnMarkUp.php:108 SpecialOrder.php:701
-#: Stocks.php:1026
+#: Stocks.php:1029
 msgid "The stock categories could not be retrieved because"
 msgstr "Les catégories (stock) ne peuvent être affichées: "
 
 #: Contracts.php:857 FixedAssetItems.php:517 PricesBasedOnMarkUp.php:109
-#: SpecialOrder.php:702 Stocks.php:1027
+#: SpecialOrder.php:702 Stocks.php:1030
 msgid "The SQL used to retrieve stock categories and failed was"
 msgstr "Commande SQL d'affichage des catégories (stock)"
 
@@ -6386,7 +6387,7 @@ msgstr "Oui, s'il vous plaît"
 msgid "Search for Items"
 msgstr "Rechercher des articles"
 
-#: CounterReturns.php:1607 CounterSales.php:2216 SelectOrderItems.php:1657
+#: CounterReturns.php:1607 CounterSales.php:2216 SelectOrderItems.php:1656
 msgid ""
 ", Searches the database for items, you can narrow the results by selecting a "
 "stock category, or just enter a partial item description or partial item code"
@@ -6395,15 +6396,15 @@ msgstr ""
 "résultats en sélectionnant une catégorie d'actions, ou tout simplement "
 "entrer le code une description partielle de l'objet ou partielle élément"
 
-#: CounterReturns.php:1610 CounterSales.php:2220 SelectOrderItems.php:1660
+#: CounterReturns.php:1610 CounterSales.php:2220 SelectOrderItems.php:1659
 msgid "Select a Stock Category"
 msgstr "Choisissez une catégorie (stock)"
 
-#: CounterReturns.php:1635 CounterSales.php:2243 SelectOrderItems.php:1684
+#: CounterReturns.php:1635 CounterSales.php:2243 SelectOrderItems.php:1683
 msgid "Enter partial Description"
 msgstr "Entrez une description partielle"
 
-#: CounterReturns.php:1643 CounterSales.php:2254 SelectOrderItems.php:1700
+#: CounterReturns.php:1643 CounterSales.php:2254 SelectOrderItems.php:1699
 msgid "Use Quick Entry"
 msgstr "Utiliser la Saisie rapide"
 
@@ -6430,7 +6431,7 @@ msgstr "Articles"
 #: CounterSales.php:2397 InternalStockRequest.php:546
 #: InternalStockRequest.php:622 InternalStockRequest.php:742 MRPReport.php:741
 #: SelectAsset.php:251 SelectCustomer.php:413 SelectCustomer.php:490
-#: SelectOrderItems.php:1721 SelectOrderItems.php:1844 SelectProduct.php:760
+#: SelectOrderItems.php:1720 SelectOrderItems.php:1843 SelectProduct.php:760
 #: SelectSupplier.php:268 SelectSupplier.php:332 SupplierPriceList.php:261
 #: SupplierTenderCreate.php:603
 msgid "Next"
@@ -6438,20 +6439,20 @@ msgstr "Suivant"
 
 #: CounterReturns.php:1671 CounterSales.php:2100 CounterSales.php:2281
 #: InternalStockRequest.php:629 SelectOrderItems.php:1539
-#: SelectOrderItems.php:1727
+#: SelectOrderItems.php:1726
 msgid "On Demand"
 msgstr "À la demande"
 
 #: CounterReturns.php:1672 CounterSales.php:2101 CounterSales.php:2282
 #: InternalStockRequest.php:630 ReorderLevel.php:302 SelectOrderItems.php:1540
-#: SelectOrderItems.php:1728 StockLocStatus.php:178 StockStatus.php:98
+#: SelectOrderItems.php:1727 StockLocStatus.php:178 StockStatus.php:98
 #: TopItems.php:169
 msgid "On Order"
 msgstr "Sur Commande"
 
 #: CounterReturns.php:1673 CounterSales.php:2102 CounterSales.php:2283
 #: InternalStockRequest.php:631 SelectOrderItems.php:1541
-#: SelectOrderItems.php:1729 StockDispatch.php:516 StockDispatch.php:517
+#: SelectOrderItems.php:1728 StockDispatch.php:516 StockDispatch.php:517
 #: StockLocStatus.php:177 StockStatus.php:97 includes/OutputSerialItems.php:37
 #: includes/PDFStockCheckPageHeader.inc:40
 msgid "Available"
@@ -6459,7 +6460,7 @@ msgstr "Disponible"
 
 #: CounterReturns.php:1699 CounterSales.php:2130 CounterSales.php:2309
 #: InternalStockRequest.php:666 SelectOrderItems.php:1569
-#: SelectOrderItems.php:1758 StockCheck.php:222 StockLocStatus.php:196
+#: SelectOrderItems.php:1757 StockCheck.php:222 StockLocStatus.php:196
 #: StockLocStatus.php:220 StockStatus.php:123 StockStatus.php:147
 msgid "The demand for this product from"
 msgstr "La demande pour ce produit de"
@@ -6468,7 +6469,7 @@ msgstr "La demande pour ce produit de"
 #: CounterSales.php:2163 CounterSales.php:2328 CounterSales.php:2342
 #: InternalStockRequest.php:686 InternalStockRequest.php:700
 #: SelectOrderItems.php:1589 SelectOrderItems.php:1603
-#: SelectOrderItems.php:1779 SelectOrderItems.php:1793
+#: SelectOrderItems.php:1778 SelectOrderItems.php:1792
 msgid "The order details for this product cannot be retrieved because"
 msgstr ""
 "Les détails de la commande de ce produit ne peut pas être trouvé en raison"
@@ -6493,13 +6494,13 @@ msgid ""
 msgstr ""
 
 #: CounterReturns.php:1824 CounterSales.php:2430 SelectCreditItems.php:1014
-#: SelectCreditItems.php:1065 SelectOrderItems.php:1854
-#: SelectOrderItems.php:1882
+#: SelectCreditItems.php:1065 SelectOrderItems.php:1853
+#: SelectOrderItems.php:1881
 msgid "Quick Entry"
 msgstr "La saisie rapide"
 
 #: CounterReturns.php:1825 CounterSales.php:2431 SelectCreditItems.php:1083
-#: SelectOrderItems.php:1883 SelectOrderItems.php:1913
+#: SelectOrderItems.php:1882 SelectOrderItems.php:1912
 msgid "Search Parts"
 msgstr "Recherche de pièces détachées"
 
@@ -6615,7 +6616,7 @@ msgstr "Enlevé par"
 #: SupplierTransInquiry.php:107 Z_ImportChartOfAccounts.php:28
 #: Z_ImportGLAccountGroups.php:26 Z_ImportGLAccountSections.php:29
 #: Z_ImportPartCodes.php:31 includes/PDFOrderPageHeader_generic.inc:58
-#: includes/PO_PDFOrderPageHeader.inc:65 ../webSHOP/Checkout.php:433
+#: includes/PO_PDFOrderPageHeader.inc:65 ../webSHOP/Checkout.php:435
 msgid "Comments"
 msgstr "Commentaires"
 
@@ -6678,7 +6679,7 @@ msgstr ""
 "pas été"
 
 #: CounterSales.php:1103 DeliveryDetails.php:394
-#: RecurringSalesOrdersProcess.php:146 ../webSHOP/includes/PlaceOrder.php:68
+#: RecurringSalesOrdersProcess.php:146 ../webSHOP/includes/PlaceOrder.php:71
 msgid "The order cannot be added because"
 msgstr "La commande ne peut pas être ajoutée:"
 
@@ -6689,7 +6690,7 @@ msgstr ""
 "pas été"
 
 #: CounterSales.php:1135 DeliveryDetails.php:423
-#: ../webSHOP/includes/PlaceOrder.php:90
+#: ../webSHOP/includes/PlaceOrder.php:93
 msgid "Unable to add the sales order line"
 msgstr "Impossible d'ajouter la ligne de commande client"
 
@@ -6822,7 +6823,7 @@ msgstr ""
 "d'autres articles"
 
 #: CounterSales.php:2262 InternalStockRequest.php:607
-#: SelectOrderItems.php:1712
+#: SelectOrderItems.php:1711
 msgid ""
 "Select an item by entering the quantity required.  Click Order when ready."
 msgstr ""
@@ -7417,8 +7418,8 @@ msgstr "Nom de Devise"
 #: Currencies.php:298 Currencies.php:457 CustomerBranches.php:663
 #: Customers.php:474 Customers.php:778 Customers.php:817
 #: DeliveryDetails.php:1071 FreightCosts.php:215 Suppliers.php:696
-#: Suppliers.php:900 ../webSHOP/Checkout.php:413 ../webSHOP/Checkout.php:472
-#: ../webSHOP/CreditCardPayPalPro.php:293 ../webSHOP/Register.php:651
+#: Suppliers.php:900 ../webSHOP/Checkout.php:415 ../webSHOP/Checkout.php:474
+#: ../webSHOP/CreditCardPayPalPro.php:294 ../webSHOP/Register.php:651
 #: ../webSHOP/Register.php:693
 msgid "Country"
 msgstr "Pays"
@@ -7494,7 +7495,7 @@ msgstr ""
 "suivants"
 
 #: CustEDISetup.php:31 CustLoginSetup.php:51 Customers.php:66
-#: InternalStockCategoriesByRole.php:24 Stocks.php:135 SuppLoginSetup.php:51
+#: InternalStockCategoriesByRole.php:24 Stocks.php:138 SuppLoginSetup.php:51
 #: TaxCategories.php:31 WorkCentres.php:35 WWW_Users.php:73
 #: Z_ChangeBranchCode.php:28 Z_ImportStocks.php:116
 msgid "or a space"
@@ -7674,8 +7675,8 @@ msgid "Enter a userid for this customer login"
 msgstr "Créer une vente au comptoir pour ce client"
 
 #: CustLoginSetup.php:150 SMTPServer.php:103 SuppLoginSetup.php:133
-#: WWW_Users.php:454 includes/Login.php:99 ../webSHOP/Checkout.php:300
-#: ../webSHOP/Register.php:600 ../webSHOP/includes/header.php:224
+#: WWW_Users.php:454 includes/Login.php:99 ../webSHOP/Checkout.php:302
+#: ../webSHOP/Register.php:600 ../webSHOP/includes/header.php:239
 msgid "Password"
 msgstr "Mot de Passe"
 
@@ -8084,7 +8085,7 @@ msgstr "Notice Géocode"
 #: SupplierTenderCreate.php:366 SupplierTenderCreate.php:370
 #: SupplierTenderCreate.php:374 SupplierTenderCreate.php:378
 #: SupplierTenderCreate.php:382 SupplierTenderCreate.php:386
-#: ../webSHOP/includes/Functions.php:759
+#: ../webSHOP/includes/Functions.php:758
 msgid "Address"
 msgstr "Adresse"
 
@@ -8532,7 +8533,7 @@ msgid "Total Balance"
 msgstr "Total Solde"
 
 #: CustomerInquiry.php:143 CustomerReceipt.php:987 PrintCustStatements.php:360
-#: SalesPeople.php:206 Shipments.php:406 Stocks.php:1163 Stocks.php:1165
+#: SalesPeople.php:206 Shipments.php:406 Stocks.php:1166 Stocks.php:1168
 #: SupplierInquiry.php:143 includes/PDFAgedDebtorsPageHeader.inc:50
 #: includes/PDFAgedSuppliersPageHeader.inc:36
 msgid "Current"
@@ -9736,7 +9737,7 @@ msgstr "Entre"
 #: SelectCompletedOrder.php:88 SelectCompletedOrder.php:236
 #: SelectContract.php:34 SelectSalesOrder.php:437 SelectSalesOrder.php:441
 #: SelectWorkOrder.php:131 Shipt_Select.php:48 StockMovements.php:61
-#: Stocks.php:387 Stocks.php:1342 includes/PDFBOMListingPageHeader.inc:21
+#: Stocks.php:390 Stocks.php:1345 includes/PDFBOMListingPageHeader.inc:21
 #: includes/PDFCustomerListPageHeader.inc:31
 #: includes/PDFCustomerListPageHeader.inc:53
 #: includes/PDFDebtorBalsPageHeader.inc:17
@@ -10235,7 +10236,8 @@ msgid "Last printed"
 msgstr "Dernière Impression"
 
 #: DeliveryDetails.php:1156
-msgid "Charge Freight Cost inc tax"
+#, fuzzy
+msgid "Charge Freight Cost ex tax"
 msgstr "Du prix du fret chargé TTC"
 
 #: DeliveryDetails.php:1160
@@ -10258,7 +10260,7 @@ msgstr "SQL utilisée pour récupérer les détails expéditeur a été"
 msgid "Quotation Only"
 msgstr "Seule cotation"
 
-#: DeliveryDetails.php:1205 ../webSHOP/index.php:91
+#: DeliveryDetails.php:1205 ../webSHOP/index.php:95
 msgid "Place Order"
 msgstr "Confirmer la commande"
 
@@ -10459,7 +10461,7 @@ msgid "Update Items"
 msgstr "Articles mise à jour"
 
 #: DiscountCategories.php:212 DiscountMatrix.php:162 StockDispatch.php:239
-#: Stocks.php:1251
+#: Stocks.php:1254
 msgid "Discount Category"
 msgstr "Catégorie de Remise"
 
@@ -11276,8 +11278,8 @@ msgid "Delivered To"
 msgstr "Livré à"
 
 #: EmailConfirmation.php:215 EmailConfirmation.php:345
-#: SelectOrderItems.php:1370 SelectOrderItems.php:1859
-#: SelectOrderItems.php:1895
+#: SelectOrderItems.php:1370 SelectOrderItems.php:1858
+#: SelectOrderItems.php:1894
 msgid "PO Line"
 msgstr "PO Line"
 
@@ -11290,7 +11292,7 @@ msgstr "Quantité commandée"
 #: EmailConfirmation.php:220 EmailConfirmation.php:350 MRPDemands.php:298
 #: MRPDemands.php:399 MRPPlannedPurchaseOrders.php:339
 #: MRPPlannedWorkOrders.php:260 MRPPlannedWorkOrders.php:393 MRPReport.php:414
-#: MRPReport.php:420 SelectOrderItems.php:1384 SelectOrderItems.php:1863
+#: MRPReport.php:420 SelectOrderItems.php:1384 SelectOrderItems.php:1862
 #: SupplierTransInquiry.php:108
 msgid "Due Date"
 msgstr "Date d'échéance"
@@ -11387,7 +11389,7 @@ msgstr "Le SQL qui a été utilisé pour insérer le facteur, mais n'a pas été
 msgid "A new factoring company for"
 msgstr "Une société d'affacturage pour les nouveaux"
 
-#: Factors.php:85 SalesAnalReptCols.php:186 Stocks.php:667 Suppliers.php:582
+#: Factors.php:85 SalesAnalReptCols.php:186 Stocks.php:670 Suppliers.php:582
 msgid "has been added to the database"
 msgstr "a été ajouté la base de données"
 
@@ -11846,7 +11848,7 @@ msgid "Fixed Asset Items"
 msgstr "Éléments de l'actif fixe"
 
 #: FixedAssetItems.php:57 Manufacturers.php:56 Manufacturers.php:128
-#: Stocks.php:94 Z_MakeNewCompany.php:145
+#: Stocks.php:97 Z_MakeNewCompany.php:145
 msgid "Something is wrong with uploading a file"
 msgstr "Quelque chose ne va pas avec le téléchargement d'un fichier"
 
@@ -11867,7 +11869,7 @@ msgstr ""
 "La description des actifs à long ne peut pas être une chaîne de longueur "
 "zéro, une longue description est nécessaire"
 
-#: FixedAssetItems.php:94 Stocks.php:148 Z_ImportStocks.php:125
+#: FixedAssetItems.php:94 Stocks.php:151 Z_ImportStocks.php:125
 msgid "The barcode must be 20 characters or less long"
 msgstr "Le code barre ne peut avoir plus de 20 symboles"
 
@@ -11944,7 +11946,7 @@ msgid "The new asset has been added to the database with an asset code of:"
 msgstr ""
 "Le nouvel atout a été ajouté à la base de données avec un code d'actif de:"
 
-#: FixedAssetItems.php:286 Stocks.php:705
+#: FixedAssetItems.php:286 Stocks.php:708
 msgid "Validation failed, no updates or deletes took place"
 msgstr ""
 "La validation ne marche pas, aucune mise à jour ou suppression ne peut être "
@@ -12015,7 +12017,7 @@ msgstr "Asset pour éliminer"
 msgid "Asset Description"
 msgstr "Description des actifs"
 
-#: FixedAssetItems.php:467 Stocks.php:959
+#: FixedAssetItems.php:467 Stocks.php:962
 msgid "short"
 msgstr "courte"
 
@@ -12024,7 +12026,7 @@ msgstr "courte"
 msgid "Enter the description of the item. Up to 50 characters can be used."
 msgstr "Une description surface de vente de la surface de vente d'intérêt."
 
-#: FixedAssetItems.php:477 Stocks.php:983
+#: FixedAssetItems.php:477 Stocks.php:986
 msgid "long"
 msgstr "longue"
 
@@ -12035,7 +12037,7 @@ msgid ""
 "characters are allowed."
 msgstr "L'indicatif régional doit être, au moins, de trois caractères"
 
-#: FixedAssetItems.php:484 SalesCategories.php:363 Stocks.php:987
+#: FixedAssetItems.php:484 SalesCategories.php:363 Stocks.php:990
 msgid "Image File (.jpg)"
 msgstr "Fichier image (. Jpg)"
 
@@ -12068,7 +12070,7 @@ msgstr "Asset Lieu"
 msgid "Add Asset Location"
 msgstr "Ajouter un bien lieu"
 
-#: FixedAssetItems.php:560 StockCounts.php:112 Stocks.php:1241
+#: FixedAssetItems.php:560 StockCounts.php:112 Stocks.php:1244
 #: includes/DefineLabelClass.php:50
 msgid "Bar Code"
 msgstr "Code barre"
@@ -12496,7 +12498,7 @@ msgid "Freight Costs Maintenance"
 msgstr "Gestion des tarifs de transport"
 
 #: FreightCosts.php:28 FreightCosts.php:83
-#: ../webSHOP/includes/PlaceOrder.php:271
+#: ../webSHOP/includes/PlaceOrder.php:274
 msgid "Freight Costs"
 msgstr "Les frais de transport"
 
@@ -15318,8 +15320,8 @@ msgid "Go"
 msgstr "Aller"
 
 #: InternalStockRequest.php:545 MRPReport.php:740 SelectAsset.php:250
-#: SelectCustomer.php:412 SelectCustomer.php:489 SelectOrderItems.php:1719
-#: SelectOrderItems.php:1842 SelectProduct.php:759 SelectSupplier.php:267
+#: SelectCustomer.php:412 SelectCustomer.php:489 SelectOrderItems.php:1718
+#: SelectOrderItems.php:1841 SelectProduct.php:759 SelectSupplier.php:267
 #: SelectSupplier.php:331 SupplierPriceList.php:260
 #: SupplierTenderCreate.php:602
 msgid "Previous"
@@ -15335,7 +15337,7 @@ msgid "Stock Status"
 msgstr "L'état des stocks"
 
 #: InternalStockRequest.php:581 SelectProduct.php:81 SelectProduct.php:796
-#: Stocks.php:1168 Stocks.php:1170
+#: Stocks.php:1171 Stocks.php:1173
 msgid "Obsolete"
 msgstr "Obsolète"
 
@@ -15613,7 +15615,7 @@ msgstr "Quantités présentation de l'inventaire"
 #: MRPPlannedWorkOrders.php:321 PricesByCost.php:8 ReorderLevelLocation.php:12
 #: ReorderLevel.php:194 SelectProduct.php:87 StockDispatch.php:319
 #: StockMovements.php:22 StockQties_csv.php:8 StockQuantityByDate.php:10
-#: StockReorderLevel.php:18 StockSerialItemResearch.php:9
+#: StockReorderLevel.php:20 StockSerialItemResearch.php:9
 #: StockSerialItems.php:9 StockStatus.php:45 StockTransferControlled.php:14
 #: SuppLoginSetup.php:24 WWW_Users.php:16 includes/MainMenuLinksArray.php:26
 msgid "Inventory"
@@ -17561,7 +17563,7 @@ msgstr "Sélection Fournisseur"
 msgid "Offer ID"
 msgstr "Offre ID"
 
-#: OffersReceived.php:107 PurchData.php:459 Stocks.php:558
+#: OffersReceived.php:107 PurchData.php:459 Stocks.php:561
 #: includes/PDFPeriodStockTransListingPageHeader.inc:47
 msgid "Stock Item"
 msgstr "Article"
@@ -17679,7 +17681,7 @@ msgstr "Clicker sur Retour"
 msgid "The SQL that failed to get the order header was"
 msgstr "Commande SQL des en-têtes de commande:"
 
-#: OrderDetails.php:56 ../webSHOP/index.php:85
+#: OrderDetails.php:56 ../webSHOP/index.php:89
 msgid "Order Details"
 msgstr "Détails de la commande"
 
@@ -17788,7 +17790,7 @@ msgstr "Dans l'attente de"
 #: OutstandingGRNs.php:183 SpecialOrder.php:735
 #: includes/PDFTransPageHeader.inc:209
 #: includes/PDFTransPageHeaderPortrait.inc:266
-#: ../webSHOP/includes/PlaceOrder.php:235
+#: ../webSHOP/includes/PlaceOrder.php:238
 msgid "Unit Price"
 msgstr "Prix Unitaire"
 
@@ -21336,7 +21338,7 @@ msgstr "Quantité d'achat"
 msgid "Price per item"
 msgstr "Prix par article"
 
-#: PO_Items.php:839 Stocks.php:1107 includes/PO_ReadInOrder.inc:179
+#: PO_Items.php:839 Stocks.php:1110 includes/PO_ReadInOrder.inc:179
 msgid "each"
 msgstr "pièce"
 
@@ -22395,7 +22397,7 @@ msgid "Item Prices"
 msgstr "Prix Point"
 
 #: Prices.php:32 PurchData.php:51 StockCostUpdate.php:18
-#: StockReorderLevel.php:15 Stocks.php:61 WhereUsedInquiry.php:15
+#: StockReorderLevel.php:17 Stocks.php:61 WhereUsedInquiry.php:15
 msgid "Back to Items"
 msgstr "Retour aux articles"
 
@@ -23466,20 +23468,20 @@ msgid "Show Stock Status"
 msgstr "Afficher le statut de stock"
 
 #: PurchData.php:771 SelectProduct.php:400 StockCostUpdate.php:195
-#: StockLocMovements.php:53 StockMovements.php:61 StockReorderLevel.php:112
+#: StockLocMovements.php:53 StockMovements.php:61 StockReorderLevel.php:109
 #: StockUsage.php:193
 msgid "Show Stock Movements"
 msgstr "Afficher les mouvements de stock"
 
 #: PurchData.php:772 SelectProduct.php:405 SelectSalesOrder.php:6
 #: StockAdjustments.php:514 StockCostUpdate.php:197 StockMovements.php:207
-#: StockReorderLevel.php:114 StockStatus.php:400 StockTransfers.php:579
+#: StockReorderLevel.php:111 StockStatus.php:400 StockTransfers.php:579
 #: StockUsage.php:195
 msgid "Search Outstanding Sales Orders"
 msgstr "Chercher les Commandes de Ventes en attente"
 
 #: PurchData.php:773 SelectProduct.php:406 StockAdjustments.php:516
-#: StockCostUpdate.php:198 StockMovements.php:208 StockReorderLevel.php:115
+#: StockCostUpdate.php:198 StockMovements.php:208 StockReorderLevel.php:112
 #: StockStatus.php:401 StockTransfers.php:581 StockUsage.php:197
 msgid "Search Completed Sales Orders"
 msgstr "Chercher les Commandes de Ventes traitées"
@@ -23568,17 +23570,17 @@ msgstr "Entrez New Order ventes"
 msgid "Recurring Order for Customer"
 msgstr "Commandez récurrent pour le client"
 
-#: RecurringSalesOrders.php:393 ../webSHOP/Checkout.php:452
-#: ../webSHOP/Checkout.php:456 ../webSHOP/CreditCardPayPalPro.php:280
+#: RecurringSalesOrders.php:393 ../webSHOP/Checkout.php:454
+#: ../webSHOP/Checkout.php:458 ../webSHOP/CreditCardPayPalPro.php:281
 msgid "Street"
 msgstr "Rue"
 
-#: RecurringSalesOrders.php:397 ../webSHOP/Checkout.php:460
+#: RecurringSalesOrders.php:397 ../webSHOP/Checkout.php:462
 msgid "Suburb"
 msgstr "Localite"
 
-#: RecurringSalesOrders.php:401 ../webSHOP/Checkout.php:464
-#: ../webSHOP/CreditCardPayPalPro.php:282
+#: RecurringSalesOrders.php:401 ../webSHOP/Checkout.php:466
+#: ../webSHOP/CreditCardPayPalPro.php:283
 msgid "City"
 msgstr "Ville"
 
@@ -25886,11 +25888,11 @@ msgstr "Êtes-vous sûr de vouloir annuler la totalité de cette note de crédit
 msgid "Process Credit Note"
 msgstr "Note Processus de crédit"
 
-#: SelectCreditItems.php:1013 SelectOrderItems.php:1703
+#: SelectCreditItems.php:1013 SelectOrderItems.php:1702
 msgid "Change Customer"
 msgstr "Changement à la clientèle"
 
-#: SelectCreditItems.php:1067 SelectOrderItems.php:1861
+#: SelectCreditItems.php:1067 SelectOrderItems.php:1860
 #: Z_ImportPartCodes.php:29
 msgid "Part Code"
 msgstr "Partie Code"
@@ -26524,73 +26526,73 @@ msgstr ""
 msgid "Enter Delivery Details and Confirm Order"
 msgstr "Entrer les conditions de Livraison et confirmer la Commande"
 
-#: SelectOrderItems.php:1651 SelectOrderItems.php:1720
-#: SelectOrderItems.php:1843
+#: SelectOrderItems.php:1650 SelectOrderItems.php:1719
+#: SelectOrderItems.php:1842
 msgid "Add to Sales Order"
 msgstr "Ajouter à la commande client"
 
-#: SelectOrderItems.php:1656 SelectOrderItems.php:1657
+#: SelectOrderItems.php:1655 SelectOrderItems.php:1656
 msgid "Search for Order Items"
 msgstr "Recherche pour les commandes"
 
-#: SelectOrderItems.php:1704
+#: SelectOrderItems.php:1703
 msgid "Fixed Asset Disposal"
 msgstr "De cessions d'actifs fixes"
 
-#: SelectOrderItems.php:1854
+#: SelectOrderItems.php:1853
 msgid "Use this screen for the "
 msgstr "Utiliser cet écran pour la "
 
-#: SelectOrderItems.php:1854
+#: SelectOrderItems.php:1853
 msgid " of products to be ordered"
 msgstr " des produits à commander"
 
-#: SelectOrderItems.php:1871
+#: SelectOrderItems.php:1870
 #, fuzzy
 msgid "Enter the customer purchase order reference"
 msgstr "Référence bon de travail"
 
-#: SelectOrderItems.php:1873
+#: SelectOrderItems.php:1872
 #, fuzzy
 msgid "Enter the item code ordered"
 msgstr "Saisir la reference de l'article ci dessus"
 
-#: SelectOrderItems.php:1874
+#: SelectOrderItems.php:1873
 #, fuzzy
 msgid "Enter the quantity of the item ordered by the customer"
 msgstr "La quantité d un article commandé doit être numérique"
 
-#: SelectOrderItems.php:1876
+#: SelectOrderItems.php:1875
 #, fuzzy
 msgid "Enter the date that the customer requires delivery by"
 msgstr "Texte à rechercher dans le code client"
 
-#: SelectOrderItems.php:1889
+#: SelectOrderItems.php:1888
 msgid "Use this screen to select an asset to dispose of to this customer"
 msgstr "Utiliser cet écran pour sélectionner un atout de disposer de ce client"
 
-#: SelectOrderItems.php:1896
+#: SelectOrderItems.php:1895
 #, fuzzy
 msgid "Enter the customer's purchase order reference"
 msgstr "Référence bon de travail"
 
-#: SelectOrderItems.php:1900
+#: SelectOrderItems.php:1899
 msgid "Asset to Dispose Of"
 msgstr "Asset pour éliminer"
 
-#: SelectOrderItems.php:1903
+#: SelectOrderItems.php:1902
 msgid "Select Asset To Dispose of From the List Below"
 msgstr "Sélectionnez Asset Pour Eliminer partir de la liste ci-dessous"
 
-#: SelectOrderItems.php:1912
+#: SelectOrderItems.php:1911
 msgid "Add Asset To Order"
 msgstr "Ajouter Asset Pour commander"
 
-#: SelectOrderItems.php:1926
+#: SelectOrderItems.php:1925
 msgid "Cancel Whole Order"
 msgstr "Annuler toute la Commande"
 
-#: SelectOrderItems.php:1926
+#: SelectOrderItems.php:1925
 msgid "Are you sure you wish to cancel this entire order?"
 msgstr "Êtes-vous sûr de vouloir annuler cette commande en entier?"
 
@@ -26685,7 +26687,7 @@ msgstr ""
 "être trouvé en raison"
 
 #: SelectProduct.php:331 StockLocStatus.php:173 StockQuantityByDate.php:109
-#: StockReorderLevel.php:55 StockSerialItems.php:108 StockSerialItems.php:111
+#: StockReorderLevel.php:57 StockSerialItems.php:108 StockSerialItems.php:111
 #: StockSerialItems.php:114 StockSerialItems.php:119 StockSerialItems.php:123
 #: StockSerialItems.php:127 StockStatus.php:93
 msgid "Quantity On Hand"
@@ -26724,7 +26726,7 @@ msgid "Item Maintenance"
 msgstr "Maintenance des articles"
 
 #: SelectProduct.php:403 StockAdjustments.php:512 StockCostUpdate.php:196
-#: StockMovements.php:206 StockReorderLevel.php:113 StockTransfers.php:577
+#: StockMovements.php:206 StockReorderLevel.php:110 StockTransfers.php:577
 #: StockUsage.php:93
 msgid "Show Stock Usage"
 msgstr "Afficher l utilisation du stock"
@@ -27940,9 +27942,9 @@ msgstr ""
 msgid "Enter the raw html without any line breaks"
 msgstr ""
 
-#: ShopParameters.php:254 ../webSHOP/Checkout.php:196
+#: ShopParameters.php:254 ../webSHOP/Checkout.php:198
 #: ../webSHOP/CreditCardPayFlowPro.php:199
-#: ../webSHOP/CreditCardPayPalPro.php:205 ../webSHOP/index.php:14
+#: ../webSHOP/CreditCardPayPalPro.php:206 ../webSHOP/index.php:14
 #: ../webSHOP/ItemDetails.php:22 ../webSHOP/Register.php:482
 #: ../webSHOP/includes/footer.php:6 ../webSHOP/includes/InfoLinks.php:6
 #, fuzzy
@@ -27955,11 +27957,11 @@ msgid ""
 "conditions associated with sales from the web-shop"
 msgstr ""
 
-#: ShopParameters.php:260 ../webSHOP/Checkout.php:200
+#: ShopParameters.php:260 ../webSHOP/Checkout.php:202
 #: ../webSHOP/CreditCardPayFlowPro.php:203
-#: ../webSHOP/CreditCardPayPalPro.php:209 ../webSHOP/index.php:18
+#: ../webSHOP/CreditCardPayPalPro.php:210 ../webSHOP/index.php:18
 #: ../webSHOP/ItemDetails.php:26 ../webSHOP/Register.php:486
-#: ../webSHOP/includes/footer.php:7 ../webSHOP/includes/InfoLinks.php:18
+#: ../webSHOP/includes/footer.php:9 ../webSHOP/includes/InfoLinks.php:18
 #, fuzzy
 msgid "About Us"
 msgstr "Inutilis"
@@ -27970,8 +27972,7 @@ msgid ""
 "us to users of the web-store."
 msgstr ""
 
-#: ShopParameters.php:265 ../webSHOP/includes/footer.php:9
-#: ../webSHOP/includes/header.php:210
+#: ShopParameters.php:265 ../webSHOP/includes/footer.php:10
 #, fuzzy
 msgid "Contact Us"
 msgstr "Contrats"
@@ -27982,7 +27983,9 @@ msgid ""
 "information to users of the web-store."
 msgstr ""
 
-#: ShopParameters.php:271
+#: ShopParameters.php:271 ../webSHOP/Checkout.php:214 ../webSHOP/index.php:26
+#: ../webSHOP/ItemDetails.php:34 ../webSHOP/Register.php:498
+#: ../webSHOP/includes/footer.php:8 ../webSHOP/includes/InfoLinks.php:14
 #, fuzzy
 msgid "Freight Policy"
 msgstr "Frais de transport"
@@ -28725,7 +28728,7 @@ msgstr "Code Stock partiel"
 msgid "Check Part"
 msgstr "Vérifiez la partie"
 
-#: StockAdjustments.php:423 StockReorderLevel.php:50 StockTransfers.php:491
+#: StockAdjustments.php:423 StockReorderLevel.php:52 StockTransfers.php:491
 msgid "In Units of"
 msgstr "En unité de"
 
@@ -29510,7 +29513,7 @@ msgstr "Seuls les éléments où le stock est disponible"
 msgid "Only items currently on order"
 msgstr "Seuls les articles ci-dessous pour re-commander Quantité"
 
-#: StockLocStatus.php:163 StockReorderLevel.php:40 StockStatus.php:77
+#: StockLocStatus.php:163 StockReorderLevel.php:42 StockStatus.php:77
 msgid "The stock held at each location cannot be retrieved because"
 msgstr "Le stock a lieu à chaque emplacement ne peut pas être trouvé en raison"
 
@@ -29524,7 +29527,7 @@ msgstr "StockID"
 msgid "Bin Loc"
 msgstr "Lieu"
 
-#: StockLocStatus.php:175 StockReorderLevel.php:56 StockStatus.php:94
+#: StockLocStatus.php:175 StockReorderLevel.php:58 StockStatus.php:94
 msgid "Re-Order Level"
 msgstr "Re-commande de niveau"
 
@@ -29958,9 +29961,23 @@ msgstr "Quantité Totale"
 msgid "Stock Re-Order Level Maintenance"
 msgstr "Maintenance Niveau de stock Re-Order"
 
-#: StockReorderLevel.php:47
+#: StockReorderLevel.php:49
+#, fuzzy
+msgid ""
+"The stock id should not contains illegal characters and blank or percentage "
+"mark is not allowed"
+msgstr ""
+"Le code de nouvelles actions pour changer le code ancien contient des "
+"caractères non - aucun changement ne sera fait"
+
+#: StockReorderLevel.php:49
 msgid "Show Re-Order Levels"
 msgstr "Afficher les niveaux de réapprovisionnement"
+
+#: StockReorderLevel.php:89
+#, php-format
+msgid "Input safety stock quantity"
+msgstr ""
 
 #: StockSerialItemResearch.php:5
 msgid "Serial Item Research"
@@ -30075,7 +30092,7 @@ msgstr "Dans les unités de"
 #: SupplierTenders.php:331 includes/InputSerialItems.php:122
 #: includes/InputSerialItems.php:129 includes/OutputSerialItems.php:39
 #: includes/OutputSerialItems.php:44 ../webSHOP/CreditCardPayFlowPro.php:245
-#: ../webSHOP/CreditCardPayPalPro.php:310
+#: ../webSHOP/CreditCardPayPalPro.php:311
 msgid "Expiry Date"
 msgstr "Date d'expiration"
 
@@ -30088,102 +30105,108 @@ msgstr "Ref Bundle lot /"
 msgid "Total quantity"
 msgstr "Quantité totale"
 
-#: Stocks.php:117 Z_ImportStocks.php:104
+#: Stocks.php:84
+msgid ""
+"No tmp directory set. You must have a tmp directory set in your PHP for "
+"upload of files. "
+msgstr ""
+
+#: Stocks.php:120 Z_ImportStocks.php:104
 msgid ""
 "The stock item description must be entered and be fifty characters or less "
 "long"
 msgstr "La description de l article doit avoir 50 caractères ou moins"
 
-#: Stocks.php:117 Z_ImportStocks.php:104
+#: Stocks.php:120 Z_ImportStocks.php:104
 msgid "It cannot be a zero length string either"
 msgstr "Ceci ne peut être une chaîne de symboles vide"
 
-#: Stocks.php:117 Z_ImportStocks.php:104
+#: Stocks.php:120 Z_ImportStocks.php:104
 msgid "a description is required"
 msgstr "une description est requise"
 
-#: Stocks.php:123 Z_ImportStocks.php:108
+#: Stocks.php:126 Z_ImportStocks.php:108
 msgid "The stock item description cannot be a zero length string"
 msgstr "La description de l article ne peut être une chaîne de symboles vide"
 
-#: Stocks.php:123 Z_ImportStocks.php:108
+#: Stocks.php:126 Z_ImportStocks.php:108
 msgid "a long description is required"
 msgstr "une description longue est requise"
 
-#: Stocks.php:129 Z_ImportStocks.php:112
+#: Stocks.php:132 Z_ImportStocks.php:112
 msgid "The Stock Item code cannot be empty"
 msgstr "Le code de l article ne peut être vide"
 
-#: Stocks.php:135 Z_ImportStocks.php:116
+#: Stocks.php:138 Z_ImportStocks.php:116
 msgid "The stock item code cannot contain any of the following characters"
 msgstr "Le code de l article ne peut contenir aucun des symboles suivants"
 
-#: Stocks.php:142 Z_ImportStocks.php:121
+#: Stocks.php:145 Z_ImportStocks.php:121
 msgid "The unit of measure must be 20 characters or less long"
 msgstr "L unité de mesure ne peut avoir plus de 20 caractères"
 
-#: Stocks.php:154 Z_ImportStocks.php:133
+#: Stocks.php:157 Z_ImportStocks.php:133
 msgid "The volume of the packaged item in cubic metres must be numeric"
 msgstr "Le volume de l article emballé en mètres cube doit être numérique"
 
-#: Stocks.php:160 Z_ImportStocks.php:137
+#: Stocks.php:163 Z_ImportStocks.php:137
 msgid "The volume of the packaged item must be a positive number"
 msgstr "Le volume de l article emballé doit être un nombre positif"
 
-#: Stocks.php:166
+#: Stocks.php:169
 #, fuzzy
 msgid "The weight of the packaged item in Gross Weight must be numeric"
 msgstr "Le poids de l article emballé en mètres cube doit être numérique"
 
-#: Stocks.php:172 Z_ImportStocks.php:145
+#: Stocks.php:175 Z_ImportStocks.php:145
 msgid "The weight of the packaged item must be a positive number"
 msgstr "Le poids de l article emballé doit être un nombre positif"
 
-#: Stocks.php:178
+#: Stocks.php:181
 #, fuzzy
 msgid "The net weight of the item in Net Weight must be numeric"
 msgstr "Le poids de l article emballé en mètres cube doit être numérique"
 
-#: Stocks.php:184
+#: Stocks.php:187
 #, fuzzy
 msgid "The net weight of the item must be a positive number"
 msgstr "Le poids de l article emballé doit être un nombre positif"
 
-#: Stocks.php:190 Z_ImportStocks.php:149
+#: Stocks.php:193 Z_ImportStocks.php:149
 msgid "The economic order quantity must be numeric"
 msgstr "La quantité économique doit être numérique"
 
-#: Stocks.php:196 Z_ImportStocks.php:153
+#: Stocks.php:199 Z_ImportStocks.php:153
 msgid "The economic order quantity must be a positive number"
 msgstr "La quantité économique doit être un nombre positif"
 
-#: Stocks.php:202 Z_ImportStocks.php:157
+#: Stocks.php:205 Z_ImportStocks.php:157
 msgid "The item can only be serialised if there is lot control enabled already"
 msgstr "L article ne peut être sérialisé que s il y a des contôles de lots"
 
-#: Stocks.php:202 Z_ImportStocks.php:157
+#: Stocks.php:205 Z_ImportStocks.php:157
 msgid "Batch control"
 msgstr "Contrôle par lot"
 
-#: Stocks.php:202 Z_ImportStocks.php:157
+#: Stocks.php:205 Z_ImportStocks.php:157
 msgid ""
 "with any number of items in a lot/bundle/roll is enabled when controlled is "
 "enabled"
 msgstr "avec n importe quel nombre d articles dans un lot lorsque contr"
 
-#: Stocks.php:202 Z_ImportStocks.php:157
+#: Stocks.php:205 Z_ImportStocks.php:157
 msgid "Serialised control requires that only one item is in the batch"
 msgstr "Le contrôle sérialisé requiert qu un article seulement est dans le lot"
 
-#: Stocks.php:202 Z_ImportStocks.php:157
+#: Stocks.php:205 Z_ImportStocks.php:157
 msgid "For serialised control"
 msgstr "Pour des contrôles sérialisés"
 
-#: Stocks.php:202 Z_ImportStocks.php:157
+#: Stocks.php:205 Z_ImportStocks.php:157
 msgid "both controlled and serialised must be enabled"
 msgstr "à la fois contrôlé et sérialisé doivent être activés"
 
-#: Stocks.php:208
+#: Stocks.php:211
 msgid ""
 "The item can only have automatically generated serial numbers if it is a "
 "serialised item"
@@ -30191,7 +30214,7 @@ msgstr ""
 "L'item ne peut avoir généré automatiquement des numéros de série si elle est "
 "de numéro de série"
 
-#: Stocks.php:214
+#: Stocks.php:217
 msgid ""
 "The item can only have automatically generated serial numbers if it is a "
 "manufactured item"
@@ -30199,14 +30222,14 @@ msgstr ""
 "L'item ne peut avoir généré automatiquement le numéro de série s'il s'agit "
 "d'un article manufacturé"
 
-#: Stocks.php:225
+#: Stocks.php:228
 msgid ""
 "Assembly/Kitset/Phantom/Service/Labour items cannot also be controlled items"
 msgstr ""
 "Assemblée / Kitset / Phantom / Service / articles du Travail ne peut "
 "également être contrôlée articles"
 
-#: Stocks.php:225
+#: Stocks.php:228
 msgid ""
 "Assemblies/Dummies/Phantom and Kitsets are not physical items and batch/"
 "serial control is therefore not appropriate"
@@ -30214,7 +30237,7 @@ msgstr ""
 "Assemblées / nuls / Phantom et Kitsets sont pas des éléments physiques et / "
 "lot de contrôle de série n'est donc pas approprié"
 
-#: Stocks.php:231 Z_ImportStocks.php:171
+#: Stocks.php:234 Z_ImportStocks.php:171
 msgid ""
 "There are no inventory categories defined. All inventory items must belong "
 "to a valid inventory category,"
@@ -30222,41 +30245,41 @@ msgstr ""
 "Il n'y a pas de catégories d'inventaire défini. Tous les articles en stock "
 "doit appartenir à une catégorie d'inventaire valide,"
 
-#: Stocks.php:237
+#: Stocks.php:240
 msgid "Pansize quantity must be numeric"
 msgstr "La quantité pansize doit être numérique"
 
-#: Stocks.php:243
+#: Stocks.php:246
 msgid "Shrinkage factor quantity must be numeric"
 msgstr "Retrait quantité facteur doit être numérique"
 
-#: Stocks.php:300 Stocks.php:305
+#: Stocks.php:303 Stocks.php:308
 msgid "The make or buy flag cannot be changed from"
 msgstr "L option fabriqué ou acheté ne peut être changé depuis"
 
-#: Stocks.php:300
+#: Stocks.php:303
 msgid "where there is a quantity of stock on hand at any location"
 msgstr "où il y a une quantité en stock assignéé et localisée"
 
-#: Stocks.php:300 Stocks.php:319 Stocks.php:338
+#: Stocks.php:303 Stocks.php:322 Stocks.php:341
 msgid "Currently there are"
 msgstr "Actuellement ils sont"
 
-#: Stocks.php:300
+#: Stocks.php:303
 msgid "on hand"
 msgstr "affecté"
 
-#: Stocks.php:305
+#: Stocks.php:308
 msgid "where the item is to be lot controlled"
 msgstr "où l'article doit être contrôlé par lot"
 
-#: Stocks.php:305
+#: Stocks.php:308
 msgid "Kitset, phantom, dummy and assembly items cannot be lot controlled"
 msgstr ""
 "articles Kitset, fantôme, mannequin et le montage ne peut pas être lot "
 "contrôlé"
 
-#: Stocks.php:319
+#: Stocks.php:322
 msgid ""
 "The make or buy flag cannot be changed to a kitset where there is a quantity "
 "outstanding to be delivered on sales orders"
@@ -30264,25 +30287,25 @@ msgstr ""
 "L option fabriqué ou acheté ne peut être changée pour un kit pour lequel il "
 "y a une quantité en attente de livraison pour une commande client"
 
-#: Stocks.php:319
+#: Stocks.php:322
 msgid "outstanding"
 msgstr "en attente"
 
-#: Stocks.php:338
+#: Stocks.php:341
 msgid "The make or buy flag cannot be changed to"
 msgstr "L option fabriquer ou acheter ne peut être changée"
 
-#: Stocks.php:338
+#: Stocks.php:341
 msgid "where there is a quantity outstanding to be received on purchase orders"
 msgstr ""
 "lorsqu il y a une quantité en attente de réception pour une commande "
 "fournisseur"
 
-#: Stocks.php:338
+#: Stocks.php:341
 msgid "yet to be received"
 msgstr "à réceptionner"
 
-#: Stocks.php:352
+#: Stocks.php:355
 msgid ""
 "The make or buy flag cannot be changed from manufactured, kitset or assembly "
 "to"
@@ -30290,17 +30313,17 @@ msgstr ""
 "L option fabriquer ou acheter ne peut être changée pour fabriquer en kit ou "
 "assembler"
 
-#: Stocks.php:352
+#: Stocks.php:355
 msgid "where there is a bill of material set up for the item"
 msgstr "lorsqu il y a une liste matériaux définie pour cet article"
 
-#: Stocks.php:352
+#: Stocks.php:355
 msgid "Bills of material are not appropriate for purchased or dummy items"
 msgstr ""
 "Les listes matériauxs ne sont pas adaptées pour des articles achetés ou "
 "fantômes"
 
-#: Stocks.php:366
+#: Stocks.php:369
 msgid ""
 "The make or buy flag cannot be changed from manufactured, purchased or dummy "
 "to a kitset or assembly where the item is a component in a bill of material"
@@ -30308,7 +30331,7 @@ msgstr ""
 "L option faire ou acheter ne peut être changée de fabriquer acheter ou dummy "
 "vers kit ou assemblé lorsque l article est un composant d une liste matériaux"
 
-#: Stocks.php:366
+#: Stocks.php:369
 msgid ""
 "Assembly and kitset items are not appropriate as components in a bill of "
 "materials"
@@ -30316,7 +30339,7 @@ msgstr ""
 "Assemblage e articles en kit ne sont pas appropriés en tant que composants "
 "dans un projet de liste de matériaux"
 
-#: Stocks.php:374
+#: Stocks.php:377
 msgid ""
 "You can not change a Non-Controlled Item to Controlled (or back from "
 "Controlled to non-controlled when there is currently stock on hand for the "
@@ -30325,7 +30348,7 @@ msgstr ""
 "Vous ne pouver pas changer un article non contrôlé en un article contrôlé "
 "( ou le contraire ) lorsqu il y a un stock assigné à cet article"
 
-#: Stocks.php:379
+#: Stocks.php:382
 msgid ""
 "You can not change a Serialised Item to Non-Serialised (or vice-versa) when "
 "there is a quantity on hand for the item"
@@ -30333,45 +30356,45 @@ msgstr ""
 "Vous ne pouvez pas modifier un objet Serialisé à non-Serialisé (ou vice-"
 "versa) quand il ya une quantité en main pour l'article"
 
-#: Stocks.php:387
+#: Stocks.php:390
 #, fuzzy
 msgid "The property value should between"
 msgstr "La valeur vert. pos. serait positive"
 
-#: Stocks.php:421
+#: Stocks.php:424
 msgid "The stock item could not be updated because"
 msgstr "L article ne peut être mis à jour car"
 
-#: Stocks.php:422 StockStatus.php:78
+#: Stocks.php:425 StockStatus.php:78
 msgid "The SQL that was used to update the stock item and failed was"
 msgstr ""
 "La requête SQL utilisé pour mettre à jour le stock, et qui ne marche pas, est"
 
-#: Stocks.php:425 Stocks.php:619
+#: Stocks.php:428 Stocks.php:622
 #, fuzzy
 msgid "Could not update the language description because"
 msgstr "Impossible mettre à jour le compte car"
 
-#: Stocks.php:426 Stocks.php:620
+#: Stocks.php:429 Stocks.php:623
 #, fuzzy
 msgid "The SQL that was used to update the language description and failed was"
 msgstr ""
 "La requête SQL utilisé pour mettre à jour les infos Utilisateur et qui a "
 "éhouée était"
 
-#: Stocks.php:480 Stocks.php:497 Stocks.php:535 Stocks.php:552
+#: Stocks.php:483 Stocks.php:500 Stocks.php:538 Stocks.php:555
 msgid "Change stock category"
 msgstr "Changer les catégories du stock"
 
-#: Stocks.php:482
+#: Stocks.php:485
 msgid "The stock cost journal could not be inserted because"
 msgstr "Le journal de coût du stock n'a pas pu être inséré car"
 
-#: Stocks.php:483
+#: Stocks.php:486
 msgid "The SQL that was used to create the stock cost journal and failed was"
 msgstr "Commande SQL de création de journal de coût du stock:"
 
-#: Stocks.php:516
+#: Stocks.php:519
 msgid ""
 "Error retrieving value of finished goods received and cost issued against "
 "work orders for this item"
@@ -30379,15 +30402,15 @@ msgstr ""
 "Impossible de trouver la valeur des biens reçus et leur coût en les "
 "rapprochant de l' bon de travail"
 
-#: Stocks.php:537
+#: Stocks.php:540
 msgid "The WIP cost journal could not be inserted because"
 msgstr "Le journal de coût du travail en cours n'a pas  pu être inséré car"
 
-#: Stocks.php:538
+#: Stocks.php:541
 msgid "The SQL that was used to create the WIP cost journal and failed was"
 msgstr "Commande SQL de création du journal de coût du travail en cours:"
 
-#: Stocks.php:568
+#: Stocks.php:571
 msgid ""
 "The stock code entered is actually already in the database - duplicate stock "
 "codes are prohibited by the system. Try choosing an alternative stock code"
@@ -30396,32 +30419,32 @@ msgstr ""
 "exemplaires des codes d'actions sont interdites par le système. Essayez de "
 "choisir un code d'actions alternatives"
 
-#: Stocks.php:614 Z_ImportStocks.php:226
+#: Stocks.php:617 Z_ImportStocks.php:226
 msgid "The item could not be added because"
 msgstr "L article ne peut être ajouté car"
 
-#: Stocks.php:615 Z_ImportStocks.php:227
+#: Stocks.php:618 Z_ImportStocks.php:227
 msgid "The SQL that was used to add the item failed was"
 msgstr ""
 "La requête SQL utilisé pour ajouter l article, et qui ne marche pas, est"
 
-#: Stocks.php:667 Z_ImportStocks.php:243
+#: Stocks.php:670 Z_ImportStocks.php:243
 msgid "New Item"
 msgstr "Nouvel article"
 
-#: Stocks.php:668
+#: Stocks.php:671
 msgid "NB: The item cost and pricing must also be setup"
 msgstr "NB: le coût et le prix de l'article doivent être définis"
 
-#: Stocks.php:669
+#: Stocks.php:672
 msgid "Enter Item Cost"
 msgstr "Saisissez le coût d'achat de l'article"
 
-#: Stocks.php:670
+#: Stocks.php:673
 msgid "Enter Item Prices"
 msgstr "Saisissez le prix de vente des articles"
 
-#: Stocks.php:720
+#: Stocks.php:723
 msgid ""
 "Cannot delete this stock item because there are stock movements that refer "
 "to this item"
@@ -30429,11 +30452,11 @@ msgstr ""
 "Impossible de supprimer cet article car il est utilisépar des mouvements de "
 "stock"
 
-#: Stocks.php:721
+#: Stocks.php:724
 msgid "stock movements that refer to this item"
 msgstr "mouvements de stock relatifs à cet article"
 
-#: Stocks.php:729
+#: Stocks.php:732
 msgid ""
 "Cannot delete this item record because there are bills of material that "
 "require this part as a component"
@@ -30441,11 +30464,11 @@ msgstr ""
 "Impossible de supprimer cet article car il est utilisécomme composant pour "
 "des liste matériauxs"
 
-#: Stocks.php:730
+#: Stocks.php:733
 msgid "bills of material that require this part as a component"
 msgstr "liste matériaux qui requiert ce composant"
 
-#: Stocks.php:737
+#: Stocks.php:740
 msgid ""
 "Cannot delete this item record because there are existing sales orders for "
 "this part"
@@ -30453,21 +30476,21 @@ msgstr ""
 "Impossible de supprimer cet article car il est utilisépour des commandes de "
 "vente"
 
-#: Stocks.php:738
+#: Stocks.php:741
 msgid "sales order items against this part"
 msgstr "articles de commande client concernant ce composant"
 
-#: Stocks.php:745
+#: Stocks.php:748
 msgid "Cannot delete this item because sales analysis records exist for it"
 msgstr ""
 "Impossible de supprimer cet article car des enregistrements de ventes "
 "existent pour lui"
 
-#: Stocks.php:746
+#: Stocks.php:749
 msgid "sales analysis records against this part"
 msgstr "données d analyse de vente concernant ce composant"
 
-#: Stocks.php:753
+#: Stocks.php:756
 msgid ""
 "Cannot delete this item because there are existing purchase order items for "
 "it"
@@ -30475,220 +30498,220 @@ msgstr ""
 "Impossible de supprimer cet article car il est utilisépour des commandes "
 "fournisseur"
 
-#: Stocks.php:754
+#: Stocks.php:757
 msgid "purchase order item record relating to this part"
 msgstr "article de commande fournisseur concernant ce composant"
 
-#: Stocks.php:761
+#: Stocks.php:764
 msgid "Cannot delete this item because there is currently some stock on hand"
 msgstr ""
 "Impossible de supprimer cet article car il correspond à du stock affecté"
 
-#: Stocks.php:762
+#: Stocks.php:765
 msgid "on hand for this part"
 msgstr "affecté pour cette pièce"
 
-#: Stocks.php:769
+#: Stocks.php:772
 #, fuzzy
 msgid "Cannot delete this item because there are offers for this item"
 msgstr ""
 "Impossible de supprimer cet article car il est utilisépour des commandes de "
 "vente"
 
-#: Stocks.php:770
+#: Stocks.php:773
 #, fuzzy
 msgid "offers from suppliers for this part"
 msgstr "Il n'y a pas de prix mis en place pour cette partie"
 
-#: Stocks.php:777
+#: Stocks.php:780
 #, fuzzy
 msgid "Cannot delete this item because there are tenders for this item"
 msgstr ""
 "Impossible de supprimer cet article car il est utilisépour des commandes de "
 "vente"
 
-#: Stocks.php:778
+#: Stocks.php:781
 #, fuzzy
 msgid "tenders from suppliers for this part"
 msgstr "Il n'y a pas de prix mis en place pour cette partie"
 
-#: Stocks.php:793
+#: Stocks.php:796
 msgid "Could not delete the location stock records because"
 msgstr "Impossible de supprimer cette localisation géographique car"
 
-#: Stocks.php:796
+#: Stocks.php:799
 msgid "Could not delete the prices for this stock record because"
 msgstr "Impossible de supprimer le prix de cet enregistrement de stock car"
 
-#: Stocks.php:799
+#: Stocks.php:802
 msgid "Could not delete the purchasing data because"
 msgstr "Imposible de supprimer cette donnée d'achat car"
 
-#: Stocks.php:802
+#: Stocks.php:805
 msgid "Could not delete the bill of material because"
 msgstr "Imposible de supprimer cette liste matériaux car"
 
-#: Stocks.php:804
+#: Stocks.php:807
 msgid "Could not delete the item record"
 msgstr "Impossible de supprimer l enregistrement article"
 
-#: Stocks.php:807
+#: Stocks.php:810
 #, fuzzy
 msgid "Could not delete the item properties"
 msgstr "Impossible de supprimer la propriété"
 
-#: Stocks.php:810
+#: Stocks.php:813
 #, fuzzy
 msgid "Could not delete the item language descriptions"
 msgstr "Impossible de supprimer la propriété"
 
-#: Stocks.php:814
+#: Stocks.php:817
 msgid "Deleted the stock master record for"
 msgstr "Enregistrement principal supprimé pour"
 
-#: Stocks.php:815
+#: Stocks.php:818
 msgid "and all the location stock records set up for the part"
 msgstr "et toutes les localisations actives pour ce composant"
 
-#: Stocks.php:816
+#: Stocks.php:819
 msgid "and any bill of material that may have been set up for the part"
 msgstr "et toute liste matériaux qui peut être active pour ce composant"
 
-#: Stocks.php:817
+#: Stocks.php:820
 msgid "and any purchasing data that may have been set up for the part"
 msgstr "et toute donnée d achat qui peut être active pour ce composant"
 
-#: Stocks.php:818
+#: Stocks.php:821
 msgid "and any prices that may have been set up for the part"
 msgstr "et tous les prix qui peuvent avoir été mis en place pour la partie"
 
-#: Stocks.php:989
+#: Stocks.php:992
 #, fuzzy
 msgid "Clear Image"
 msgstr "Subsistant"
 
-#: Stocks.php:1006
+#: Stocks.php:1009
 #, fuzzy
 msgid "You do not have access to delete this item image file."
 msgstr "Vous n'avez pas l'autorisation de rejeter ce bon de commande"
 
-#: Stocks.php:1043
+#: Stocks.php:1046
 msgid "Add or Modify Stock Categories"
 msgstr "Ajouter ou modifier une catégorie"
 
-#: Stocks.php:1083
+#: Stocks.php:1086
 msgid "Economic Order Quantity"
 msgstr "Quantité pour une commande économique"
 
-#: Stocks.php:1087
+#: Stocks.php:1090
 msgid "Packaged Volume (metres cubed)"
 msgstr "Volume conditionné (mètres cubes)"
 
-#: Stocks.php:1092
+#: Stocks.php:1095
 #, fuzzy
 msgid "Packaged Gross Weight (KGs)"
 msgstr "Poids conditionné (KGs)"
 
-#: Stocks.php:1096
+#: Stocks.php:1099
 #, fuzzy
 msgid "Net Weight (KGs)"
 msgstr "Poids conditionné (KGs)"
 
-#: Stocks.php:1100 SupplierTenders.php:125 SupplierTenders.php:532
+#: Stocks.php:1103 SupplierTenders.php:125 SupplierTenders.php:532
 #: SupplierTenders.php:535 UnitsOfMeasure.php:170
 #: includes/MainMenuLinksArray.php:500
 msgid "Units of Measure"
 msgstr "Unité de mesure"
 
-#: Stocks.php:1121
+#: Stocks.php:1124
 msgid "Assembly, Kit, Manufactured or Service/Labour"
 msgstr "Assemblée, Kit, fabriqué ou service / travail"
 
-#: Stocks.php:1129 Stocks.php:1131
+#: Stocks.php:1132 Stocks.php:1134
 msgid "Kit"
 msgstr "Kit"
 
-#: Stocks.php:1150 Stocks.php:1152
+#: Stocks.php:1153 Stocks.php:1155
 msgid "Service/Labour"
 msgstr "Service / Travail"
 
-#: Stocks.php:1159
+#: Stocks.php:1162
 msgid "Current or Obsolete"
 msgstr "Actuel ou obsolète"
 
-#: Stocks.php:1176
+#: Stocks.php:1179
 msgid "Batch, Serial or Lot Control"
 msgstr "Contrôle batch, en série ou par lot"
 
-#: Stocks.php:1180 Stocks.php:1182
+#: Stocks.php:1183 Stocks.php:1185
 msgid "No Control"
 msgstr "Aucun contrôle"
 
-#: Stocks.php:1185 Stocks.php:1187
+#: Stocks.php:1188 Stocks.php:1190
 msgid "Controlled"
 msgstr "Controlé"
 
-#: Stocks.php:1191
+#: Stocks.php:1194
 msgid "Serialised"
 msgstr "Sérialisé"
 
-#: Stocks.php:1203
+#: Stocks.php:1206
 msgid "this has no effect if the item is not Controlled"
 msgstr "Ceci n a aucun effet si l article n est pas control"
 
-#: Stocks.php:1208
+#: Stocks.php:1211
 msgid "Next Serial No (>0 for auto numbering)"
 msgstr "Suivant série n (&gt; 0 pour la numérotation automatique)"
 
-#: Stocks.php:1215
+#: Stocks.php:1218
 msgid "Perishable"
 msgstr "Périssables"
 
-#: Stocks.php:1231
+#: Stocks.php:1234
 msgid "Decimal Places for display Quantity"
 msgstr "Décimales pour la quantité d'affichage"
 
-#: Stocks.php:1256 TaxAuthorityRates.php:88
+#: Stocks.php:1259 TaxAuthorityRates.php:88
 msgid "Tax Category"
 msgstr "Catégorie fiscale"
 
-#: Stocks.php:1277
+#: Stocks.php:1280
 msgid "Pan Size"
 msgstr "Taille du plateau"
 
-#: Stocks.php:1281
+#: Stocks.php:1284
 msgid "Shrinkage Factor"
 msgstr "Retrait Factor"
 
-#: Stocks.php:1312
+#: Stocks.php:1315
 msgid "Item Category Properties"
 msgstr "Propriétés Catégorie Point"
 
-#: Stocks.php:1342
+#: Stocks.php:1345
 msgid "A number between"
 msgstr "Un nombre entre"
 
-#: Stocks.php:1342
+#: Stocks.php:1345
 msgid "is expected"
 msgstr "est attendu"
 
-#: Stocks.php:1379
+#: Stocks.php:1382
 msgid "Insert New Item"
 msgstr "Insérer un nouvel article"
 
-#: Stocks.php:1380 Stocks.php:1387 ../webSHOP/includes/Functions.php:127
+#: Stocks.php:1383 Stocks.php:1390 ../webSHOP/includes/Functions.php:127
 #: ../webSHOP/includes/ShowSalesCategoriesMenu.php:15
 msgid "Categories"
 msgstr "Catégories"
 
-#: Stocks.php:1389
+#: Stocks.php:1392
 msgid ""
 "Only click the Delete button if you are sure you wish to delete the item!"
 msgstr ""
 "Ne cliquez sur le bouton Supprimer si vous êtes sûr de vouloir supprimer "
 "l'élément!"
 
-#: Stocks.php:1389
+#: Stocks.php:1392
 msgid ""
 "Checks will be made to ensure that there are no stock movements, sales "
 "analysis records, sales order items or purchase order items for the item"
@@ -30696,11 +30719,11 @@ msgstr ""
 "Veuillez vous assurer qu il n y a pas pour cet article de mouvement de "
 "stock, d analyse de vente, de commande client ou fournisseur"
 
-#: Stocks.php:1389
+#: Stocks.php:1392
 msgid "No deletions will be allowed if they exist"
 msgstr "Aucune suppression ne sera autorisée s'ils existent"
 
-#: Stocks.php:1392
+#: Stocks.php:1395
 msgid "Delete This Item"
 msgstr "Supprimer cet article"
 
@@ -32914,7 +32937,7 @@ msgstr "Le Seuil Taux 2 doit être un nombre décimal"
 msgid "Only email address are allowed"
 msgstr "L'adresse email n'est pas correctement formé"
 
-#: Suppliers.php:717
+#: Suppliers.php:717 Suppliers.php:919
 msgid "email format such as xx@mail.cn"
 msgstr ""
 
@@ -43011,8 +43034,8 @@ msgstr "Société"
 msgid "Company:"
 msgstr "Société"
 
-#: includes/Login.php:108 ../webSHOP/Checkout.php:304
-#: ../webSHOP/includes/header.php:225
+#: includes/Login.php:108 ../webSHOP/Checkout.php:306
+#: ../webSHOP/includes/header.php:240
 msgid "Login"
 msgstr "Connexion"
 
@@ -43855,18 +43878,18 @@ msgid "due to too many failed attempts."
 msgstr ""
 
 #: includes/Z_POSDataCreation.php:211 includes/GetPrice.inc:19
-#: ../webSHOP/includes/Functions.php:547
+#: ../webSHOP/includes/Functions.php:546
 msgid "There is a problem in retrieving the pricing information for part"
 msgstr ""
 "Problème lors de la récupération des informations tarifaires pour l'Article"
 
 #: includes/Z_POSDataCreation.php:211 includes/GetPrice.inc:19
-#: ../webSHOP/includes/Functions.php:547
+#: ../webSHOP/includes/Functions.php:546
 msgid "and for Customer"
 msgstr "et pour le Client"
 
 #: includes/Z_POSDataCreation.php:211 includes/GetPrice.inc:19
-#: ../webSHOP/includes/Functions.php:547
+#: ../webSHOP/includes/Functions.php:546
 msgid "the error message returned by the SQL server was"
 msgstr "Le message d'erreur renvoyé par le serveur SQL était"
 
@@ -44210,11 +44233,11 @@ msgstr "Articles"
 msgid "Manual"
 msgstr "Manuel"
 
-#: includes/header.inc:90 ../webSHOP/includes/header.php:217
+#: includes/header.inc:90 ../webSHOP/includes/header.php:232
 msgid "Are you sure you wish to logout?"
 msgstr "Êtes-vous sûr de vouloir vous déconnecter?"
 
-#: includes/header.inc:90 ../webSHOP/includes/header.php:217
+#: includes/header.inc:90 ../webSHOP/includes/header.php:232
 msgid "Logout"
 msgstr "Sortie"
 
@@ -44260,7 +44283,7 @@ msgid "Banked into"
 msgstr "Encaissé dans"
 
 #: includes/PDFBankingSummaryPageHeader.inc:38
-#: ../webSHOP/includes/Functions.php:762
+#: ../webSHOP/includes/Functions.php:761
 msgid "Account Number"
 msgstr "Numéro de Compte"
 
@@ -47581,377 +47604,371 @@ msgstr "Paramètres"
 msgid "Return Value"
 msgstr "Valeur de retour"
 
-#: ../webSHOP/Checkout.php:9 ../webSHOP/Checkout.php:369
-#: ../webSHOP/Checkout.php:449 ../webSHOP/Checkout.php:521
-#: ../webSHOP/includes/header.php:212
+#: ../webSHOP/Checkout.php:9 ../webSHOP/Checkout.php:283
+#: ../webSHOP/Checkout.php:371 ../webSHOP/Checkout.php:451
+#: ../webSHOP/Checkout.php:523 ../webSHOP/includes/header.php:227
 #, fuzzy
 msgid "Checkout"
 msgstr "Vérification du Total"
 
-#: ../webSHOP/Checkout.php:29
+#: ../webSHOP/Checkout.php:30
 #, fuzzy
 msgid "purchases"
 msgstr "Achats"
 
-#: ../webSHOP/Checkout.php:43 ../webSHOP/Checkout.php:95
+#: ../webSHOP/Checkout.php:44 ../webSHOP/Checkout.php:96
 msgid "The swipeHQ payment request failed with a curl error"
 msgstr ""
 
-#: ../webSHOP/Checkout.php:43 ../webSHOP/Checkout.php:95
+#: ../webSHOP/Checkout.php:44 ../webSHOP/Checkout.php:96
 msgid "We are not able to process payments with your credit card at this time"
 msgstr ""
 
-#: ../webSHOP/Checkout.php:49
+#: ../webSHOP/Checkout.php:50
 msgid "The SwipeHQ payment request returned an access denied error"
 msgstr ""
 
-#: ../webSHOP/Checkout.php:52
+#: ../webSHOP/Checkout.php:53
 #, fuzzy
 msgid "The SwipeHQ payment request returned a system error"
 msgstr "l'instruction SQL a renvoyé l'erreur"
 
-#: ../webSHOP/Checkout.php:55
+#: ../webSHOP/Checkout.php:56
 msgid "The SwipeHQ payment request requires more parameters"
 msgstr ""
 
-#: ../webSHOP/Checkout.php:58
+#: ../webSHOP/Checkout.php:59
 msgid "The SwipeHQ payment request returned an inactive account error"
 msgstr ""
 
-#: ../webSHOP/Checkout.php:61
+#: ../webSHOP/Checkout.php:62
 msgid "The SwipeHQ payment request returned a permission denied error"
 msgstr ""
 
-#: ../webSHOP/Checkout.php:64
+#: ../webSHOP/Checkout.php:65
 #, fuzzy
 msgid "The SwipeHQ payment request returned an invalid format error"
 msgstr "La requis par date inscrite ici est dans un format non valide"
 
-#: ../webSHOP/Checkout.php:70
+#: ../webSHOP/Checkout.php:71
 #, fuzzy
 msgid "The SwipeHQ payment request returned an error with the message"
 msgstr ""
 "Le SQL pour supprimer les enregistrements d'analyse des ventes avec le "
 "message"
 
-#: ../webSHOP/Checkout.php:102
+#: ../webSHOP/Checkout.php:104
 msgid ""
 "Your credit card payment was processed sucessfully and your order number"
 msgstr ""
 
-#: ../webSHOP/Checkout.php:102
+#: ../webSHOP/Checkout.php:104
 msgid ""
 "is now being processed. Please quote this order number in all "
 "correspondence. Thanks for your business"
 msgstr ""
 
-#: ../webSHOP/Checkout.php:104
+#: ../webSHOP/Checkout.php:106
 #, fuzzy
 msgid "The credit card transaction was declined."
 msgstr "L'enregistrement de catégorie de vente a été mis à jour"
 
-#: ../webSHOP/Checkout.php:106
+#: ../webSHOP/Checkout.php:108
 #, fuzzy
 msgid "The error code"
 msgstr "Le code article"
 
-#: ../webSHOP/Checkout.php:106
+#: ../webSHOP/Checkout.php:108
 #, fuzzy
 msgid "and the message"
 msgstr "utilisé dans ce message"
 
-#: ../webSHOP/Checkout.php:106
+#: ../webSHOP/Checkout.php:108
 #, fuzzy
 msgid "was returned from"
 msgstr "a été créé à partir de"
 
-#: ../webSHOP/Checkout.php:111
+#: ../webSHOP/Checkout.php:113
 #, fuzzy
 msgid "The SwipeHQ verification API call failed with the message"
 msgstr "Le SQL pour créer passbom échoué avec le message"
 
-#: ../webSHOP/Checkout.php:131
+#: ../webSHOP/Checkout.php:133
 #, fuzzy
 msgid ""
 "The phone number for the billing address is too short to be valid. 5 or more "
 "numbers are expected."
 msgstr "L'adresse courriel du gestionnaire du stock n'est pas correcte"
 
-#: ../webSHOP/Checkout.php:136 ../webSHOP/Checkout.php:254
+#: ../webSHOP/Checkout.php:138 ../webSHOP/Checkout.php:256
 #: ../webSHOP/Register.php:81
 #, fuzzy
 msgid "The delivery street address is too short to be valid"
 msgstr "L'adresse courriel du gestionnaire du stock n'est pas correcte"
 
-#: ../webSHOP/Checkout.php:141
+#: ../webSHOP/Checkout.php:143
 #, fuzzy
 msgid "The delivery city name is too short to be valid"
 msgstr "L'adresse courriel du gestionnaire du stock n'est pas correcte"
 
-#: ../webSHOP/Checkout.php:146
+#: ../webSHOP/Checkout.php:148
 #, fuzzy
 msgid ""
 "The delivery contact email address does not appear to be a valid email "
 "address"
 msgstr "L'adresse de courriel n'est pas correcte, vérifiez-la."
 
-#: ../webSHOP/Checkout.php:204 ../webSHOP/CreditCardPayFlowPro.php:207
-#: ../webSHOP/CreditCardPayPalPro.php:213 ../webSHOP/index.php:22
+#: ../webSHOP/Checkout.php:206 ../webSHOP/CreditCardPayFlowPro.php:207
+#: ../webSHOP/CreditCardPayPalPro.php:214 ../webSHOP/index.php:22
 #: ../webSHOP/ItemDetails.php:30 ../webSHOP/Register.php:490
-#: ../webSHOP/includes/footer.php:8 ../webSHOP/includes/InfoLinks.php:10
+#: ../webSHOP/includes/footer.php:7 ../webSHOP/includes/InfoLinks.php:10
 #, fuzzy
 msgid "Privacy Policy"
 msgstr "Frais de transport"
 
-#: ../webSHOP/Checkout.php:208 ../webSHOP/CreditCardPayFlowPro.php:211
-#: ../webSHOP/CreditCardPayPalPro.php:217 ../webSHOP/index.php:26
+#: ../webSHOP/Checkout.php:210 ../webSHOP/CreditCardPayFlowPro.php:211
+#: ../webSHOP/CreditCardPayPalPro.php:218 ../webSHOP/index.php:30
 #: ../webSHOP/ItemDetails.php:38 ../webSHOP/Register.php:494
 #: ../webSHOP/includes/InfoLinks.php:22
 #, fuzzy
 msgid "Contact Details"
 msgstr "Revoir les contacts fournisseur"
 
-#: ../webSHOP/Checkout.php:212 ../webSHOP/ItemDetails.php:34
-#: ../webSHOP/Register.php:498 ../webSHOP/includes/InfoLinks.php:14
-#, fuzzy
-msgid "Delivery Policy"
-msgstr "Livrer à"
-
-#: ../webSHOP/Checkout.php:249 ../webSHOP/Register.php:428
+#: ../webSHOP/Checkout.php:251 ../webSHOP/Register.php:428
 #, fuzzy
 msgid "An email address is required"
 msgstr "L'adresse email n'est pas correctement formé"
 
-#: ../webSHOP/Checkout.php:250 ../webSHOP/Register.php:429
+#: ../webSHOP/Checkout.php:252 ../webSHOP/Register.php:429
 #, fuzzy
 msgid "The email address must be a valid email address"
 msgstr "L'adresse courriel n'est pas correcte"
 
-#: ../webSHOP/Checkout.php:251 ../webSHOP/Register.php:430
+#: ../webSHOP/Checkout.php:253 ../webSHOP/Register.php:430
 #, fuzzy
 msgid "The email address is expected to 5 characters or more long"
 msgstr "L'adresse de courriel ne doit pas dépasser 55 caractères"
 
-#: ../webSHOP/Checkout.php:257
+#: ../webSHOP/Checkout.php:259
 #, fuzzy
 msgid "The delivery suburb address is too short to be valid"
 msgstr "L'adresse courriel du gestionnaire du stock n'est pas correcte"
 
-#: ../webSHOP/Checkout.php:260
+#: ../webSHOP/Checkout.php:262
 #, fuzzy
 msgid "A phone number for the delivery address contact must be entered"
 msgstr "La description de l'état de crédit doit être inscrit"
 
-#: ../webSHOP/Checkout.php:261
+#: ../webSHOP/Checkout.php:263
 #, fuzzy
 msgid ""
 "The phone number for the contact the the delivery address is too short to be "
 "valid"
 msgstr "L'adresse courriel du gestionnaire du stock n'est pas correcte"
 
-#: ../webSHOP/Checkout.php:282 ../webSHOP/index.php:96
+#: ../webSHOP/Checkout.php:284 ../webSHOP/index.php:100
 #, fuzzy
 msgid "The shopping cart is empty"
 msgstr "Le nom de l'expéditeur ne peut pas être vide"
 
-#: ../webSHOP/Checkout.php:289
+#: ../webSHOP/Checkout.php:291
 #, fuzzy
 msgid "Login Or Register"
 msgstr "Connexion en tant que"
 
-#: ../webSHOP/Checkout.php:316
+#: ../webSHOP/Checkout.php:318
 msgid ""
 "To enable us to process your order, we need some details. Please click on "
 "the register button below to setup your account."
 msgstr ""
 
-#: ../webSHOP/Checkout.php:319 ../webSHOP/Register.php:537
-#: ../webSHOP/Register.php:728 ../webSHOP/includes/header.php:219
+#: ../webSHOP/Checkout.php:321 ../webSHOP/Register.php:537
+#: ../webSHOP/Register.php:728 ../webSHOP/includes/header.php:234
 #, fuzzy
 msgid "Register"
 msgstr "Registre des actifs"
 
-#: ../webSHOP/Checkout.php:369
+#: ../webSHOP/Checkout.php:371
 #, fuzzy
 msgid "Confirm Delivery Address"
 msgstr "Adresse Livraison Magasin"
 
-#: ../webSHOP/Checkout.php:373
+#: ../webSHOP/Checkout.php:375
 #, fuzzy
 msgid "Delivery Address - Building/Number"
 msgstr "Adresse de Livraison 1"
 
-#: ../webSHOP/Checkout.php:374
+#: ../webSHOP/Checkout.php:376
 #, fuzzy
 msgid "Enter the street address for the delivery"
 msgstr "Vous devez entrer l'adresse dans la case prévue"
 
-#: ../webSHOP/Checkout.php:378
+#: ../webSHOP/Checkout.php:380
 #, fuzzy
 msgid "Enter the contact name at the delivery address"
 msgstr "Entrer le texte du code fournisseur"
 
-#: ../webSHOP/Checkout.php:383 ../webSHOP/Register.php:673
+#: ../webSHOP/Checkout.php:385 ../webSHOP/Register.php:673
 #, fuzzy
 msgid "Delivery Address - Street"
 msgstr "Adresse de Livraison 1"
 
-#: ../webSHOP/Checkout.php:384
+#: ../webSHOP/Checkout.php:386
 #, fuzzy
 msgid "Enter the street of the delivery address"
 msgstr "Entrez une partie de l'adresse"
 
-#: ../webSHOP/Checkout.php:388
+#: ../webSHOP/Checkout.php:390
 msgid "Enter the telephone number of the delivery address"
 msgstr ""
 
-#: ../webSHOP/Checkout.php:393 ../webSHOP/Register.php:678
+#: ../webSHOP/Checkout.php:395 ../webSHOP/Register.php:678
 #, fuzzy
 msgid "Delivery Address - Suburb"
 msgstr "Adresse de Livraison 1"
 
-#: ../webSHOP/Checkout.php:394
+#: ../webSHOP/Checkout.php:396
 #, fuzzy
 msgid "Enter the suburb of the delivery address"
 msgstr "Entrez une partie de l'adresse"
 
-#: ../webSHOP/Checkout.php:397
+#: ../webSHOP/Checkout.php:399
 #, fuzzy
 msgid "Your order reference / no"
 msgstr "Référence bon de travail"
 
-#: ../webSHOP/Checkout.php:398
+#: ../webSHOP/Checkout.php:400
 #, fuzzy
 msgid "Enter your order reference"
 msgstr "Référence bon de travail"
 
-#: ../webSHOP/Checkout.php:403 ../webSHOP/Register.php:683
+#: ../webSHOP/Checkout.php:405 ../webSHOP/Register.php:683
 #, fuzzy
 msgid "Delivery Address - City"
 msgstr "Adresse de Livraison 1"
 
-#: ../webSHOP/Checkout.php:404
+#: ../webSHOP/Checkout.php:406
 #, fuzzy
 msgid "Enter the city of the delivery address"
 msgstr "Entrez une partie de l'adresse"
 
-#: ../webSHOP/Checkout.php:407 ../webSHOP/Register.php:688
+#: ../webSHOP/Checkout.php:409 ../webSHOP/Register.php:688
 #, fuzzy
 msgid "Delivery Address - ZIP"
 msgstr "Adresse de Livraison 1"
 
-#: ../webSHOP/Checkout.php:408
+#: ../webSHOP/Checkout.php:410
 #, fuzzy
 msgid "Enter the zip code of the delivery address"
 msgstr "Entrez une partie de l'adresse"
 
-#: ../webSHOP/Checkout.php:414
+#: ../webSHOP/Checkout.php:416
 #, fuzzy
 msgid "Select the country for the delivery"
 msgstr "Sélectionnez les options du rapport"
 
-#: ../webSHOP/Checkout.php:429
+#: ../webSHOP/Checkout.php:431
 #, fuzzy
 msgid "Enter email address of a contact person at the delivery address"
 msgstr "L'adresse de courriel n'est pas correcte, vérifiez-la."
 
-#: ../webSHOP/Checkout.php:434
+#: ../webSHOP/Checkout.php:436
 #, fuzzy
 msgid "Enter any comments you wish to note about the order"
 msgstr "Êtes-vous sûr de vouloir annuler cette commande en entier?"
 
-#: ../webSHOP/Checkout.php:441
+#: ../webSHOP/Checkout.php:443
 #, fuzzy
 msgid "Confirm Delivery Details"
 msgstr "Détails de la livraison"
 
-#: ../webSHOP/Checkout.php:449
+#: ../webSHOP/Checkout.php:451
 #, fuzzy
 msgid "Select Payment Method"
 msgstr "Mode de paiement"
 
-#: ../webSHOP/Checkout.php:450
+#: ../webSHOP/Checkout.php:452
 #, fuzzy
 msgid "Delivery Address"
 msgstr "Adresse de Livraison 1"
 
-#: ../webSHOP/Checkout.php:468
+#: ../webSHOP/Checkout.php:470
 msgid "ZIP"
 msgstr ""
 
-#: ../webSHOP/Checkout.php:476
+#: ../webSHOP/Checkout.php:478
 #, fuzzy
 msgid "Change Delivery Details"
 msgstr "Détails de la livraison"
 
-#: ../webSHOP/Checkout.php:479
+#: ../webSHOP/Checkout.php:481
 #, fuzzy
 msgid "Choose Your Preferred Payment Method"
 msgstr "Méthodes d'examen des paiements"
 
-#: ../webSHOP/Checkout.php:481 ../webSHOP/includes/DisplayShoppingCart.php:77
+#: ../webSHOP/Checkout.php:483 ../webSHOP/includes/DisplayShoppingCart.php:79
 #, fuzzy
 msgid "Surcharge"
 msgstr "Achat"
 
-#: ../webSHOP/Checkout.php:496 ../webSHOP/Checkout.php:531
+#: ../webSHOP/Checkout.php:498 ../webSHOP/Checkout.php:533
 msgid "Pay By PayPal"
 msgstr ""
 
-#: ../webSHOP/Checkout.php:498 ../webSHOP/Checkout.php:562
+#: ../webSHOP/Checkout.php:500 ../webSHOP/Checkout.php:564
 #: ../webSHOP/CreditCardPayFlowPro.php:284
-#: ../webSHOP/CreditCardPayPalPro.php:347
+#: ../webSHOP/CreditCardPayPalPro.php:348
 msgid "Pay By Credit Card"
 msgstr ""
 
-#: ../webSHOP/Checkout.php:509 ../webSHOP/Checkout.php:624
+#: ../webSHOP/Checkout.php:511 ../webSHOP/Checkout.php:626
 #, fuzzy
 msgid "Back to Delivery Details"
 msgstr "Détails de la livraison Choisir"
 
-#: ../webSHOP/Checkout.php:510
+#: ../webSHOP/Checkout.php:512
 #, fuzzy
 msgid "Review Freight Method and Charges"
 msgstr "Méthodes d'examen des paiements"
 
-#: ../webSHOP/Checkout.php:511
+#: ../webSHOP/Checkout.php:513
 #, fuzzy
 msgid "Confirm Selected Payment Method"
 msgstr "Méthodes d'examen des paiements"
 
-#: ../webSHOP/Checkout.php:521
+#: ../webSHOP/Checkout.php:523
 #, fuzzy
 msgid "Payment and Order Confirmation"
 msgstr "Entrez une ordonnance ou un devis"
 
-#: ../webSHOP/Checkout.php:523 ../webSHOP/includes/PlaceOrder.php:144
+#: ../webSHOP/Checkout.php:525 ../webSHOP/includes/PlaceOrder.php:147
 #, fuzzy
 msgid "Order Confirmation"
 msgstr "Confirmation de Commande"
 
-#: ../webSHOP/Checkout.php:531
+#: ../webSHOP/Checkout.php:533
 msgid "Process payment using your PayPal Account"
 msgstr ""
 
-#: ../webSHOP/Checkout.php:533 ../webSHOP/CreditCardPayFlowPro.php:290
+#: ../webSHOP/Checkout.php:535 ../webSHOP/CreditCardPayFlowPro.php:290
 msgid "The shop is in TEST MODE - no payments will be processed"
 msgstr ""
 
-#: ../webSHOP/Checkout.php:578 ../webSHOP/Checkout.php:626
+#: ../webSHOP/Checkout.php:580 ../webSHOP/Checkout.php:591
 #, fuzzy
 msgid "Confirm and Place Order"
 msgstr "Confirmation de Commande"
 
-#: ../webSHOP/Checkout.php:582
+#: ../webSHOP/Checkout.php:584
 msgid "Thank you for purchasing from us. Please note the order number"
 msgstr ""
 
-#: ../webSHOP/Checkout.php:582 ../webSHOP/Checkout.php:596
+#: ../webSHOP/Checkout.php:584 ../webSHOP/Checkout.php:601
 #, fuzzy
 msgid "for your reference"
 msgstr "Référence bon de travail"
 
-#: ../webSHOP/Checkout.php:589
+#: ../webSHOP/Checkout.php:594
 #, fuzzy
 msgid ""
 "No order has been created due to an internal error. Please contact us to "
@@ -47960,31 +47977,31 @@ msgstr ""
 "Un nouvel ordre a été créé à partir d'un modèle de commande récurrente pour "
 "le client"
 
-#: ../webSHOP/Checkout.php:596
+#: ../webSHOP/Checkout.php:601
 msgid "Thank you for your order. Please note the order number"
 msgstr ""
 
-#: ../webSHOP/Checkout.php:604
+#: ../webSHOP/Checkout.php:607
 msgid "Please deposit the amount due (in full) to our bank account."
 msgstr ""
 
-#: ../webSHOP/Checkout.php:607
+#: ../webSHOP/Checkout.php:610
 msgid ""
 "To speed up the process, please send us a scanned copy of your transfer slip "
 "to"
 msgstr ""
 
-#: ../webSHOP/Checkout.php:615 ../webSHOP/includes/PlaceOrder.php:318
+#: ../webSHOP/Checkout.php:617 ../webSHOP/includes/PlaceOrder.php:325
 msgid ""
 "Please note that goods will be shipped once your funds transfer is confirmed"
 msgstr ""
 
-#: ../webSHOP/Checkout.php:625
+#: ../webSHOP/Checkout.php:627
 #, fuzzy
 msgid "Change Payment Method"
 msgstr "Mode de paiement"
 
-#: ../webSHOP/Checkout.php:631
+#: ../webSHOP/Checkout.php:632
 #, fuzzy
 msgid "Back to Shop Home Page"
 msgstr "Retour à la page de connexion"
@@ -48028,81 +48045,81 @@ msgid ""
 msgstr ""
 
 #: ../webSHOP/CreditCardPayFlowPro.php:137
-#: ../webSHOP/CreditCardPayPalPro.php:99
-#: ../webSHOP/includes/ProcessPayPalPayment.php:63
+#: ../webSHOP/CreditCardPayPalPro.php:100
+#: ../webSHOP/includes/ProcessPayPalPayment.php:64
 msgid "Thanks for your order. Please quote your order number"
 msgstr ""
 
 #: ../webSHOP/CreditCardPayFlowPro.php:137
-#: ../webSHOP/CreditCardPayPalPro.php:99
-#: ../webSHOP/includes/ProcessPayPalPayment.php:63
+#: ../webSHOP/CreditCardPayPalPro.php:100
+#: ../webSHOP/includes/ProcessPayPalPayment.php:64
 msgid "in all correspondence"
 msgstr ""
 
 #: ../webSHOP/CreditCardPayFlowPro.php:137
-#: ../webSHOP/CreditCardPayPalPro.php:99
+#: ../webSHOP/CreditCardPayPalPro.php:100
 #, fuzzy
 msgid ""
 "Credit card payment has been successfully completed with the transaction ID"
 msgstr "a été introduite avec succès dans la base de données"
 
 #: ../webSHOP/CreditCardPayFlowPro.php:167
-#: ../webSHOP/CreditCardPayPalPro.php:175
+#: ../webSHOP/CreditCardPayPalPro.php:176
 #, fuzzy
 msgid "A valid credit card number must be entered"
 msgstr "Le numéro de note de crédit fournisseur doit être inscrit"
 
 #: ../webSHOP/CreditCardPayFlowPro.php:170
 #: ../webSHOP/CreditCardPayFlowPro.php:171
-#: ../webSHOP/CreditCardPayPalPro.php:178
 #: ../webSHOP/CreditCardPayPalPro.php:179
+#: ../webSHOP/CreditCardPayPalPro.php:180
 msgid "3 or 4 (for AMEX) digits are expected"
 msgstr ""
 
 #: ../webSHOP/CreditCardPayFlowPro.php:237
 #: ../webSHOP/CreditCardPayPalPro.php:15
-#: ../webSHOP/CreditCardPayPalPro.php:271
+#: ../webSHOP/CreditCardPayPalPro.php:272
 #, fuzzy
 msgid "Secure Credit Card Payment"
 msgstr "Date Note de crédit"
 
 #: ../webSHOP/CreditCardPayFlowPro.php:240
-#: ../webSHOP/CreditCardPayPalPro.php:306
+#: ../webSHOP/CreditCardPayPalPro.php:307
 #, fuzzy
 msgid "Card Number"
 msgstr "Numéro de la pièce"
 
 #: ../webSHOP/CreditCardPayFlowPro.php:241
-#: ../webSHOP/CreditCardPayPalPro.php:307
+#: ../webSHOP/CreditCardPayPalPro.php:308
 msgid "Enter the credit card number with no spaces or hyphens"
 msgstr ""
 
 #: ../webSHOP/CreditCardPayFlowPro.php:246
-#: ../webSHOP/CreditCardPayPalPro.php:311
+#: ../webSHOP/CreditCardPayPalPro.php:312
 msgid "Select the year of your credit card's expiry date"
 msgstr ""
 
 #: ../webSHOP/CreditCardPayFlowPro.php:258
-#: ../webSHOP/CreditCardPayPalPro.php:323
+#: ../webSHOP/CreditCardPayPalPro.php:324
 #, fuzzy
 msgid "Select the month of your credit card's expiry date"
 msgstr "Sélectionnez le mois pour voir les ventes quotidiennes pour"
 
 #: ../webSHOP/CreditCardPayFlowPro.php:272
-#: ../webSHOP/CreditCardPayPalPro.php:339
+#: ../webSHOP/CreditCardPayPalPro.php:340
 #, fuzzy
 msgid "Verification Code"
 msgstr "Code Site"
 
 #: ../webSHOP/CreditCardPayFlowPro.php:273
-#: ../webSHOP/CreditCardPayPalPro.php:340
+#: ../webSHOP/CreditCardPayPalPro.php:341
 msgid ""
 "Enter the 3 digit verification code or CVV - note that on AMEX cards this is "
 "a 4 digit code"
 msgstr ""
 
 #: ../webSHOP/CreditCardPayFlowPro.php:284
-#: ../webSHOP/CreditCardPayPalPro.php:347
+#: ../webSHOP/CreditCardPayPalPro.php:348
 #, fuzzy
 msgid "Submit Details and Process Payment"
 msgstr "Accpeter et Traiter le paiement"
@@ -48138,103 +48155,103 @@ msgid "The zip code must be at least 3 characters long"
 msgstr ""
 "Le code de la Direction générale doit être d'au moins un caractère à long"
 
-#: ../webSHOP/CreditCardPayPalPro.php:113
+#: ../webSHOP/CreditCardPayPalPro.php:114
 msgid "Credit cart payment was unsuccesful - the request returned the error:"
 msgstr ""
 
-#: ../webSHOP/CreditCardPayPalPro.php:113
+#: ../webSHOP/CreditCardPayPalPro.php:114
 msgid ""
 "Please either try again with a different card or use a different payment "
 "method"
 msgstr ""
 
-#: ../webSHOP/CreditCardPayPalPro.php:157
-#: ../webSHOP/CreditCardPayPalPro.php:160
-#: ../webSHOP/CreditCardPayPalPro.php:163
-#: ../webSHOP/CreditCardPayPalPro.php:166
-#: ../webSHOP/CreditCardPayPalPro.php:169
-#: ../webSHOP/CreditCardPayPalPro.php:172
+#: ../webSHOP/CreditCardPayPalPro.php:158
+#: ../webSHOP/CreditCardPayPalPro.php:161
+#: ../webSHOP/CreditCardPayPalPro.php:164
+#: ../webSHOP/CreditCardPayPalPro.php:167
+#: ../webSHOP/CreditCardPayPalPro.php:170
+#: ../webSHOP/CreditCardPayPalPro.php:173
 #, fuzzy
 msgid "At least 3 characters"
 msgstr "(Longueur max 80 caractères)"
 
-#: ../webSHOP/CreditCardPayPalPro.php:274
+#: ../webSHOP/CreditCardPayPalPro.php:275
 #, fuzzy
 msgid "First Name"
 msgstr "Nom du formulaire"
 
-#: ../webSHOP/CreditCardPayPalPro.php:275
+#: ../webSHOP/CreditCardPayPalPro.php:276
 msgid "The first name of the credit card holder"
 msgstr ""
 
-#: ../webSHOP/CreditCardPayPalPro.php:276
+#: ../webSHOP/CreditCardPayPalPro.php:277
 #, fuzzy
 msgid "Last Name"
 msgstr "Nom Label"
 
-#: ../webSHOP/CreditCardPayPalPro.php:277
+#: ../webSHOP/CreditCardPayPalPro.php:278
 #, fuzzy
 msgid "The last name of the credit card holder"
 msgstr "Le dernier avoir a être créé porte le numéro: "
 
-#: ../webSHOP/CreditCardPayPalPro.php:281
+#: ../webSHOP/CreditCardPayPalPro.php:282
 #, fuzzy
 msgid "The street of the card holder"
 msgstr "Entrer une partie du code article"
 
-#: ../webSHOP/CreditCardPayPalPro.php:283
+#: ../webSHOP/CreditCardPayPalPro.php:284
 #, fuzzy
 msgid "The city of the card holder"
 msgstr "Le code article"
 
-#: ../webSHOP/CreditCardPayPalPro.php:286
+#: ../webSHOP/CreditCardPayPalPro.php:287
 #, fuzzy
 msgid "State"
 msgstr "Statut"
 
-#: ../webSHOP/CreditCardPayPalPro.php:287
+#: ../webSHOP/CreditCardPayPalPro.php:288
 #, fuzzy
 msgid "The state of the card holder"
 msgstr "Entrer une partie du code article"
 
-#: ../webSHOP/CreditCardPayPalPro.php:288
+#: ../webSHOP/CreditCardPayPalPro.php:289
 #, fuzzy
 msgid "Zip Code"
 msgstr "Code Type"
 
-#: ../webSHOP/CreditCardPayPalPro.php:289
+#: ../webSHOP/CreditCardPayPalPro.php:290
 #, fuzzy
 msgid "The Zip of the card holder"
 msgstr "Le code article"
 
-#: ../webSHOP/CreditCardPayPalPro.php:294
+#: ../webSHOP/CreditCardPayPalPro.php:295
 #, fuzzy
 msgid "The Country of the card holder"
 msgstr "Montants Afficher sur l'Ordre"
 
-#: ../webSHOP/index.php:91
+#: ../webSHOP/index.php:95
 msgid ""
 "Click the Order Button to process your order and enter delivery and payment "
 "options"
 msgstr ""
 
-#: ../webSHOP/index.php:127
+#: ../webSHOP/index.php:131
 #, fuzzy
 msgid "Searching for:"
 msgstr "Rechercher maintenant"
 
-#: ../webSHOP/index.php:134
+#: ../webSHOP/index.php:138
 #, fuzzy
 msgid "Featured Items"
 msgstr "Valider"
 
-#: ../webSHOP/index.php:156
+#: ../webSHOP/index.php:160
 #, fuzzy
 msgid "Could not get the items to display for this category because"
 msgstr ""
 "Impossible d'obtenir les questions d'inventaire pour ce contrat parce que"
 
-#: ../webSHOP/index.php:181
+#: ../webSHOP/index.php:185
 #, fuzzy
 msgid "There are no items matching this search"
 msgstr "Passer en revue toutes les notes pour ce client"
@@ -48425,8 +48442,9 @@ msgid "We look forward to doing business with you"
 msgstr ""
 
 #: ../webSHOP/Register.php:313
-msgid "Click to go to the web-shop"
-msgstr ""
+#, fuzzy
+msgid "Click to go to"
+msgstr "Cliquez ici pour continuer"
 
 #: ../webSHOP/Register.php:335
 #, fuzzy
@@ -48628,25 +48646,25 @@ msgstr "Suppression d'éléments"
 msgid "Enter New Quantity"
 msgstr "Entrez New Order ventes"
 
-#: ../webSHOP/includes/DisplayShoppingCart.php:62
+#: ../webSHOP/includes/DisplayShoppingCart.php:64
 #, fuzzy
 msgid "Freight cost"
 msgstr "Frais de transport"
 
-#: ../webSHOP/includes/DisplayShoppingCart.php:66
-#: ../webSHOP/includes/PlaceOrder.php:277
+#: ../webSHOP/includes/DisplayShoppingCart.php:68
+#: ../webSHOP/includes/PlaceOrder.php:280
 #, fuzzy
 msgid "Freight Costs paid by"
 msgstr "Les frais de transport"
 
-#: ../webSHOP/includes/DisplayShoppingCart.php:77
-#: ../webSHOP/includes/DisplayShoppingCart.php:83
+#: ../webSHOP/includes/DisplayShoppingCart.php:79
+#: ../webSHOP/includes/DisplayShoppingCart.php:85
 #: ../webSHOP/includes/Functions.php:61
 #, fuzzy
-msgid "incl GST"
+msgid "incl tax"
 msgstr "taxe incl"
 
-#: ../webSHOP/includes/DisplayShoppingCart.php:83
+#: ../webSHOP/includes/DisplayShoppingCart.php:85
 #, fuzzy
 msgid "Total Due"
 msgstr "Total dû pour"
@@ -48661,7 +48679,7 @@ msgstr "Modification des informations d'bon de travail"
 msgid "Stock QTY"
 msgstr "Type de Stock"
 
-#: ../webSHOP/includes/Functions.php:64 ../webSHOP/includes/header.php:211
+#: ../webSHOP/includes/Functions.php:64 ../webSHOP/includes/header.php:226
 #, fuzzy
 msgid "View Order"
 msgstr "Commande libre"
@@ -48704,12 +48722,12 @@ msgid "payment for order"
 msgstr "cycle de paiement sur"
 
 #: ../webSHOP/includes/Functions.php:487
-#: ../webSHOP/includes/PlaceOrder.php:299
+#: ../webSHOP/includes/PlaceOrder.php:303
 #, fuzzy
 msgid "Transaction ID"
 msgstr "Transactions"
 
-#: ../webSHOP/includes/Functions.php:753
+#: ../webSHOP/includes/Functions.php:752
 #, fuzzy
 msgid "Bank Account Details"
 msgstr "Détails du compte"
@@ -48736,30 +48754,30 @@ msgstr ""
 "Dans l'onglet de configuration du système maintenance de la compagnie Select "
 "pour entrer dans la compagnie les renseignements et les préférences système"
 
-#: ../webSHOP/includes/header.php:175
+#: ../webSHOP/includes/header.php:191
 msgid "Click to show the detail of what is in the shopping cart"
 msgstr ""
 
-#: ../webSHOP/includes/header.php:180
+#: ../webSHOP/includes/header.php:196
 #, fuzzy
 msgid "Cart Summary"
 msgstr "Résumé"
 
-#: ../webSHOP/includes/header.php:209
+#: ../webSHOP/includes/header.php:225
 #, fuzzy
 msgid "Home"
 msgstr "Volume"
 
-#: ../webSHOP/includes/header.php:215
+#: ../webSHOP/includes/header.php:230
 msgid "Logged in as"
 msgstr ""
 
-#: ../webSHOP/includes/header.php:216
+#: ../webSHOP/includes/header.php:231
 #, fuzzy
 msgid "Update Account Details"
 msgstr "Détails du compte"
 
-#: ../webSHOP/includes/header.php:223
+#: ../webSHOP/includes/header.php:238
 #, fuzzy
 msgid "Enter Email"
 msgstr "Entrez partielle"
@@ -48776,68 +48794,74 @@ msgid ""
 "unknown to us."
 msgstr ""
 
-#: ../webSHOP/includes/PlaceOrder.php:111
+#: ../webSHOP/includes/PlaceOrder.php:114
 #, fuzzy
 msgid "Unable to add the payment surcharge line to the sales order"
 msgstr "Impossible d'ajouter la ligne de commande client"
 
-#: ../webSHOP/includes/PlaceOrder.php:162
+#: ../webSHOP/includes/PlaceOrder.php:165
 #, fuzzy
 msgid "Order to be delivered to"
 msgstr "livré à"
 
-#: ../webSHOP/includes/PlaceOrder.php:236
+#: ../webSHOP/includes/PlaceOrder.php:239
 #, fuzzy
 msgid "Line Price"
 msgstr "Liste de prix"
 
-#: ../webSHOP/includes/PlaceOrder.php:261
+#: ../webSHOP/includes/PlaceOrder.php:264
 #, fuzzy
 msgid "Total Items Ordered Value"
 msgstr "Total commande en"
 
-#: ../webSHOP/includes/PlaceOrder.php:294
+#: ../webSHOP/includes/PlaceOrder.php:297
 #, fuzzy
 msgid "Payment information"
 msgstr "Crédits de paiement"
 
-#: ../webSHOP/includes/PlaceOrder.php:299
-#: ../webSHOP/includes/PlaceOrder.php:305
+#: ../webSHOP/includes/PlaceOrder.php:303
+#: ../webSHOP/includes/PlaceOrder.php:314
 #, fuzzy
 msgid "Payment made by"
 msgstr "Récapitulaitfs des Paiements"
 
-#: ../webSHOP/includes/PlaceOrder.php:309
+#: ../webSHOP/includes/PlaceOrder.php:307
+msgid ""
+"payment attempt was not successful. We will contact you via email to double "
+"check the details and complete the payment process."
+msgstr ""
+
+#: ../webSHOP/includes/PlaceOrder.php:318
 #, fuzzy
 msgid "This order will be charged to your account"
 msgstr "Le paiement sera effectué sur le compte bancaire"
 
-#: ../webSHOP/includes/PlaceOrder.php:313
+#: ../webSHOP/includes/PlaceOrder.php:322
 #, fuzzy
 msgid "Payment to be made by bank transfer to our account"
 msgstr "Le paiement sera effectué sur le compte bancaire"
 
-#: ../webSHOP/includes/PlaceOrder.php:323
+#: ../webSHOP/includes/PlaceOrder.php:330
 msgid ""
 "This order has been credited to your account with us. Invoicing will be done "
 "as usual."
 msgstr ""
 
-#: ../webSHOP/includes/PlaceOrder.php:330
+#: ../webSHOP/includes/PlaceOrder.php:337
 #, fuzzy
 msgid "Shipment information"
 msgstr "Présenter de l'information"
 
-#: ../webSHOP/includes/PlaceOrder.php:332
+#: ../webSHOP/includes/PlaceOrder.php:339
 msgid "Your order will be shipped to you shortly via"
 msgstr ""
 
-#: ../webSHOP/includes/PlaceOrder.php:332
+#: ../webSHOP/includes/PlaceOrder.php:339
 msgid ""
 "We will send you to this email address the tracking number once shipped."
 msgstr ""
 
-#: ../webSHOP/includes/PlaceOrder.php:336
+#: ../webSHOP/includes/PlaceOrder.php:343
 msgid "Do not hesitate to contact us for any further detail you might need."
 msgstr ""
 
@@ -48847,31 +48871,31 @@ msgid ""
 "type or try again"
 msgstr ""
 
-#: ../webSHOP/includes/ProcessPayPalPayment.php:63
+#: ../webSHOP/includes/ProcessPayPalPayment.php:64
 msgid ""
 "PayPal payment has been successfully completed with  PayPal transaction ID"
 msgstr ""
 
-#: ../webSHOP/includes/ProcessPayPalPayment.php:66
+#: ../webSHOP/includes/ProcessPayPalPayment.php:67
 msgid ""
 "Although the PayPal payment has been initiated it will require your approval "
 "from your PayPal account, before it can be completed."
 msgstr ""
 
-#: ../webSHOP/includes/ProcessPayPalPayment.php:66
+#: ../webSHOP/includes/ProcessPayPalPayment.php:67
 msgid "The PayPal payment is recorded as pending because"
 msgstr ""
 
-#: ../webSHOP/includes/ProcessPayPalPayment.php:66
+#: ../webSHOP/includes/ProcessPayPalPayment.php:67
 #, fuzzy
 msgid "The PayPal transactions ID is"
 msgstr "Afficher toutes les transactions après"
 
-#: ../webSHOP/includes/ProcessPayPalPayment.php:71
+#: ../webSHOP/includes/ProcessPayPalPayment.php:72
 msgid "PayPal payment was unsuccesful - the request returned the error:"
 msgstr ""
 
-#: ../webSHOP/includes/ProcessPayPalPayment.php:71
+#: ../webSHOP/includes/ProcessPayPalPayment.php:72
 msgid "Please retry or use another method to process your payment"
 msgstr ""
 
@@ -48889,6 +48913,14 @@ msgstr "De crédit "
 #, fuzzy
 msgid "Bank Transfer"
 msgstr "Transfert"
+
+#, fuzzy
+#~ msgid "Delivery Policy"
+#~ msgstr "Livrer à"
+
+#, fuzzy
+#~ msgid "incl GST"
+#~ msgstr "taxe incl"
 
 #, fuzzy
 #~ msgid "Total Amount Due"

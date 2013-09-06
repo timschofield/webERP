@@ -81,7 +81,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 						}
 					}
 					$db = pg_connect( $PgConnStr );
-					$SQLScriptFile = file('./sql/pg/country_sql/weberp-new.psql');
+					$SQLScriptFile = file('./sql/pg/country_sql/default.psql');
 
 				} elseif ($DBType =='mysql') { //its a mysql db < 4.1
 					mysql_select_db($_POST['NewDatabase'],$db);
