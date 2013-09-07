@@ -52,7 +52,7 @@ webERP Change Log
 15/8/13 Exson: Make TaxGroups.php html5 compatible.
 15/8/13 Exson: Make TaxProvinces.php html5 compatible.
 15/8/13 Exson: Fixed the no-number warning in TopItems.php and make it html5 compatible.
-14/8/12 Exson: make UnitsOfMeasure.php html5 compatible.
+14/8/2012 Exson: make UnitsOfMeasure.php html5 compatible.
 14/08/13 Exson: html5 compatible for UserSettings.php
 14/8/13 Exson: Make table in WorkCentres.php sortable.
 14/8/13 Exson: make WhereUsedInquiry.php Html5 compatible.
@@ -263,11 +263,11 @@ webERP Change Log
 12/10/12 Phil: SelectAsset.php now goes to FixedAssetItems.php when an item is selected to display the asset for editing
 12/10/12 Rafael Chacón: Updated CRC - Costa Rica flag image
 10/10/12 Harald Ringehahn: Updated German translation
-9/10/12 Exson: fixed typo in CounterSales.php reported by thumb.
+9/10/2012 Exson: fixed typo in CounterSales.php reported by thumb.
 9/10/12 Exson: installation would not allow demo to be installed - install/index.php
 7/10/12 Phil: Fix WorkOrderIssue.php required by date
 
-6/10/12 Release 4.09
+6/10/2012 Release 4.09
 
 27/9/12 Samudaya Nanayakkara: WorkOrderIssue.php with multiple work order items was not calculating requirements correctly nor showing all the outputs of the work order with correct quantities received and ordered. Reworked the script to show a table of the output items and the sql to get the correct component requirements.
 27/9/12 Samudaya Nanayakkara: InternalStockRequestFulfill.php fixed quantity not filtered for number formatting. Phil tidy up coding conventions
@@ -280,25 +280,25 @@ webERP Change Log
 8/9/12 Phil: removed all use of $_REQUEST across all scripts replace with GET/POST to cirumvent SQL injection attacks as reported by Daniel Compton
 6/9/12 Thomas Timothy Lie and baliboss.com Team: updated Indonesian translation
 1/9/12 Carlos Rubio: AccountGroups.php now has option to move to alternative accountgroups
-30/8/12 Exson: fixed sql problem reported bymodpr0be
+30/8/2012 Exson: fixed sql problem reported bymodpr0be
 24/8/12 Serge Gélinas: Added new fr_CA.utf8 French Quebec translation
 21/8/12 Phil: Stock.php could not change an item to an assembly if there were any old completed or deleted/rejected purchase orders for the item.
-20/8/12 Phil: StockCounts.php now allows entry Bar Codes or stock codes
-20/8/12 Phil: Now allow labour type category items to be selected searched for in CounterSales.php and SelectOrderItems.php
-30/7/12 Exson: fixed that the shipper will change sometime when modify the PO by modify file PO_ReadInOrder.inc. Reported by Craig.
-29/7/12 Phil: install/save.php now uses date_default_timezone_set function to set the time-zone to avoid all the nasty warnings
-29/7/12 Hindra Joshua: Updates to Professional and Professional-rtl themes - tidy up images not used
-28/7/12 Hindra Joshua: Fix for Gel theme and default theme to work with new styles
-26/7/12 Hindra Joshua: New wood theme - mods to index.php / header.inc and footer.inc and modify existing themes to work with new html tag classes used - using <div> tags instead of tables for layout of the main menu
-25/7/12 Exson: Fix the typo to make the $TotalQuantityOnHand is correct in SupplierInvoice.php
-24/7/12 Exson/Phil: SupplierInvoice.php incorrect calculation of weighted average cost just using the stock quantity at a single location, now corrected
-24/7/12 Phil: includes/Z_POSDataCreation.php - added system default date format config to POS data upload file
-22/7/12 Phil/Bob Thomas: Fix all scripts where demand was calculated including salesorder quotations (to exclude quotations). CounterSales.php DeliveryDetails.php SelectOrderItems.php StockCheck.php StockLocStatus.php
-22/7/12 Phil: Fixed on order quantities to exclude purchase orders with status completed and cancelled CounterSales.php SelectOrderItems.php DeliveryDetails.php StockLocStatus.php
-21/7/12 Phil: Fix api function for POS prices includes/Z_POSDataCreation.php
-21/7/12 Ricard: sorting products by discontinued then stockid to ensure obsolete items at the end of the list
-20/7/12 Tim: Added scripts to inquire on and to print General Ledger Journals
-20/7/12 Exson: Fixed that delete or editing new serial items will lead to hyper-link changed as select credit items instead of back to credit invoice in scripts InputSerialItemsKeyed.php. Report by UK-Steven from webERP Chinese Community QQ group
+20/8/2012 Phil: StockCounts.php now allows entry Bar Codes or stock codes
+20/8/2012 Phil: Now allow labour type category items to be selected searched for in CounterSales.php and SelectOrderItems.php
+30/7/2012 Exson: fixed that the shipper will change sometime when modify the PO by modify file PO_ReadInOrder.inc. Reported by Craig.
+29/7/2012 Phil: install/save.php now uses date_default_timezone_set function to set the time-zone to avoid all the nasty warnings
+29/7/2012 Hindra Joshua: Updates to Professional and Professional-rtl themes - tidy up images not used
+28/7/2012 Hindra Joshua: Fix for Gel theme and default theme to work with new styles
+26/7/2012 Hindra Joshua: New wood theme - mods to index.php / header.inc and footer.inc and modify existing themes to work with new html tag classes used - using <div> tags instead of tables for layout of the main menu
+25/7/2012 Exson: Fix the typo to make the $TotalQuantityOnHand is correct in SupplierInvoice.php
+24/7/2012 Exson/Phil: SupplierInvoice.php incorrect calculation of weighted average cost just using the stock quantity at a single location, now corrected
+24/7/2012 Phil: includes/Z_POSDataCreation.php - added system default date format config to POS data upload file
+22/7/2012 Phil/Bob Thomas: Fix all scripts where demand was calculated including salesorder quotations (to exclude quotations). CounterSales.php DeliveryDetails.php SelectOrderItems.php StockCheck.php StockLocStatus.php
+22/7/2012 Phil: Fixed on order quantities to exclude purchase orders with status completed and cancelled CounterSales.php SelectOrderItems.php DeliveryDetails.php StockLocStatus.php
+21/7/2012 Phil: Fix api function for POS prices includes/Z_POSDataCreation.php
+21/7/2012 Ricard: sorting products by discontinued then stockid to ensure obsolete items at the end of the list
+20/7/2012 Tim: Added scripts to inquire on and to print General Ledger Journals
+20/7/2012 Exson: Fixed that delete or editing new serial items will lead to hyper-link changed as select credit items instead of back to credit invoice in scripts InputSerialItemsKeyed.php. Report by UK-Steven from webERP Chinese Community QQ group
 15/7/12 Gilberto Dos Santos Alves: updated pt_BR.utf8 translation
 13/7/12 Tim: Fix up the sql where a field was selected twice
 10/7/12 Phil: Made purchase order lines look at the purchasing data lead time and set the delivery date of the line to today + the lead time if this is beyond the delivery date specified in the PO header.
@@ -308,40 +308,40 @@ webERP Change Log
 30/6/12 Phil: Attempt at quicker price retrieval
 30/6/12 Phil: Allow creation of work orders for Raw materials - well intermediary components manufacture - per Bob Thomas email
 26/06/12 Bob Thomas: StockAdjustments fix link to controlled stock adjustments entry
-24/06/12 Phil: Added tooltip/title showing long description on many scripts where short description is currently shown SelectOrderItems.php SelectCreditItems.php CreditInvoice.php DeliveryDetails.php CounterSales.php RecurringSalesOrders.php
-24/06/12 Icedlava: Add ViewTopic and BookMark vars to some functions to take advantage of new Manual contextual help. Must be added before header.inc include.
-24/06/12 Icedlava: Adjust header.inc, ManualContents.php, ManualHeader.html to take Viewtopic and Bookmark parameters in displaying manual. Add ManualOutline.php file containing manual TOC, add CSS and rework all manual docs. Still to add $Viewtopic and $Bookmark to functions (eg see Stocks.php)
+24/06/2012 Phil: Added tooltip/title showing long description on many scripts where short description is currently shown SelectOrderItems.php SelectCreditItems.php CreditInvoice.php DeliveryDetails.php CounterSales.php RecurringSalesOrders.php
+24/06/2012 Icedlava: Add ViewTopic and BookMark vars to some functions to take advantage of new Manual contextual help. Must be added before header.inc include.
+24/06/2012 Icedlava: Adjust header.inc, ManualContents.php, ManualHeader.html to take Viewtopic and Bookmark parameters in displaying manual. Add ManualOutline.php file containing manual TOC, add CSS and rework all manual docs. Still to add $Viewtopic and $Bookmark to functions (eg see Stocks.php)
 
-24/6/12 Release 4.08.1
+24/6/2012 Release 4.08.1
 
-22/06/12 Icedlava: Fixed bug preventing insert of new account section
-21/06/12 Phil: Added tooltip of long description to SelectProduct.php
-20/06/12 Ricard: Added total QOH to NoSalesItems.php.
-20/06/12 Ricard: Added opposite currency pair graph to ExchangeRateTrend.php.
-19/06/12 Ricard: Added new script Z_ChangeLocationCode.
-17/06/12 Ricard: Added a 2nd strategy for StockDispatch (items with overstock at FROM, RL=0 no matter if needed at TO).
+22/06/2012 Icedlava: Fixed bug preventing insert of new account section
+21/06/2012 Phil: Added tooltip of long description to SelectProduct.php
+20/06/2012 Ricard: Added total QOH to NoSalesItems.php.
+20/06/2012 Ricard: Added opposite currency pair graph to ExchangeRateTrend.php.
+19/06/2012 Ricard: Added new script Z_ChangeLocationCode.
+17/06/2012 Ricard: Added a 2nd strategy for StockDispatch (items with overstock at FROM, RL=0 no matter if needed at TO).
 
 15/6/12 Release 4.08
 
-02/06/12 Exson: Fixed the order cancel function failure in SelectOrderItems.php. Reported by Pak Richard.
+02/06/2012 Exson: Fixed the order cancel function failure in SelectOrderItems.php. Reported by Pak Richard.
 2/6/12 Phil: Settle counter sales and receipts should be set - now fixed.
-28/5/12 Phil: Configure xmlrpc api to work correctly with utf-8 character encoding.
-26/5/12 Phil: Fix barcode printing on PDFPrintLabel.php - barcode functionality is unreliable so used (http://www.barcodepack.com) by Tomáš Horáček very simple and clean
-23/5/12 Klaus: PO_PDFPurchOrders.php print purchase orders with supplier's code where it is available in the purchasing data
-23/5/12 Exson: Revise GLAccounts.php to make more than 10 digits account code is allowed.
+28/5/2012 Phil: Configure xmlrpc api to work correctly with utf-8 character encoding.
+26/5/2012 Phil: Fix barcode printing on PDFPrintLabel.php - barcode functionality is unreliable so used (http://www.barcodepack.com) by Tomáš Horáček very simple and clean
+23/5/2012 Klaus: PO_PDFPurchOrders.php print purchase orders with supplier's code where it is available in the purchasing data
+23/5/2012 Exson: Revise GLAccounts.php to make more than 10 digits account code is allowed.
 2012/05/22 Exson: Modify accountcode to varchar(20) to meet some countries accounting regulation for more digits account code.
-22/5/12 Phil Klaus's spot - removed issue location (must always be the same as the manufacture location) and the issued date from WorkOrderStatus.php form - as materials could be issued on many different dates and incorrect to say they are always issued on the current date
-20/5/12 Klaus Beucher (Opto): move leadtime calculation into levelnetting function and resolve bug which does not use leadtime for highest level items of a BOM  see also http://www.weberp.org/forum/showthread.php?tid=203
-18/5/12 Ahmed: Fixed bugs that the offer cannot store more than one item and remove function does not work in SupplierTenders.php and DefineOfferClass.php
-18/5/12 Ahmed.Fawzy: Fixed Branch code validation rule to rule out '-' in CustomerBranches.php.
-14/5/12 Exson: Fixed bug that when users input a Exchang Rate manually, when ones changed minds and select another currency, it'll not show the suggested rate correctly in Payments.php.
-14/5/12 Exson: Fixed when user change the currency, the suggested rate can not changed accordingly in CustomerReceipt.php. Reported by Ahmed.Fawzy.
-14/5/12 Ahmed.Fawzy: Fixed bugs that ExchangRateText be applied with locale_number_format() function in CustomerReceipt.php
-10/5/12 Exson: Fixed bug that Date selection does not work in ReverseGRN.php. Add GRN batch column.
-9/5/12 Ahmed.Fawzy: Fixed bugs in Stocks.php that the properties for new items cannot be saved. Checked status is not kept and numeric values between max and min are not validated.
-8/5/12 Exson: Fixed typo in SalesCategories.php which leads to the jpg pictures do not appear.
-8/05/12 Exson Fix typo and add 'L' type for selection in SelectOrderItems.php.
-8/05/12 Exson: Fixed the bug of Credit_Invoice.php the total will be doubled when use Update button. The bug is introduced for a fix of directly proceed the Credit. Reported by PakRichard.
+22/5/2012 Phil Klaus's spot - removed issue location (must always be the same as the manufacture location) and the issued date from WorkOrderStatus.php form - as materials could be issued on many different dates and incorrect to say they are always issued on the current date
+20/5/2012 Klaus Beucher (Opto): move leadtime calculation into levelnetting function and resolve bug which does not use leadtime for highest level items of a BOM  see also http://www.weberp.org/forum/showthread.php?tid=203
+18/5/2012 Ahmed: Fixed bugs that the offer cannot store more than one item and remove function does not work in SupplierTenders.php and DefineOfferClass.php
+18/5/2012 Ahmed.Fawzy: Fixed Branch code validation rule to rule out '-' in CustomerBranches.php.
+14/5/2012 Exson: Fixed bug that when users input a Exchang Rate manually, when ones changed minds and select another currency, it'll not show the suggested rate correctly in Payments.php.
+14/5/2012 Exson: Fixed when user change the currency, the suggested rate can not changed accordingly in CustomerReceipt.php. Reported by Ahmed.Fawzy.
+14/5/2012 Ahmed.Fawzy: Fixed bugs that ExchangRateText be applied with locale_number_format() function in CustomerReceipt.php
+10/5/2012 Exson: Fixed bug that Date selection does not work in ReverseGRN.php. Add GRN batch column.
+9/5/2012 Ahmed.Fawzy: Fixed bugs in Stocks.php that the properties for new items cannot be saved. Checked status is not kept and numeric values between max and min are not validated.
+8/5/2012 Exson: Fixed typo in SalesCategories.php which leads to the jpg pictures do not appear.
+8/05/2012 Exson Fix typo and add 'L' type for selection in SelectOrderItems.php.
+8/05/2012 Exson: Fixed the bug of Credit_Invoice.php the total will be doubled when use Update button. The bug is introduced for a fix of directly proceed the Credit. Reported by PakRichard.
 6/5/12 Phil: PaymentMethods.php added open cash drawer field for my POS.
 4/5/12 Phil: Labels.php PDFPrintLabel.php fine tuning of new labels code
 4/5/12 Phil: Fixed customer type name displayed when it is successfully deleted as reported by James Dupin
@@ -353,55 +353,55 @@ webERP Change Log
 1/5/12 MTPubRadio: Fixed Purch Order PDF file text of Order Total- Excl tax does not align with amount horizontally.
 29/4/12 Opto/Klaus: SelectWorkOrder.php added start date for the work order to the work orders displayed for selection
 29/4/12 David Short: Added EDISendInvoices_Reece.php to send Reece format EDI invoices - approved by Reece (Australian Plumbing retailer)
-28/4/12 Exson: Fixed bugs in MRPCalendar.php which caused working days cannot be calculated correctly.
-06/4/12 Exson: Fixed PO header that does not display user's default warehous when iusse a new PO in PO_Header.php.
+28/4/2012 Exson: Fixed bugs in MRPCalendar.php which caused working days cannot be calculated correctly.
+06/4/2012 Exson: Fixed PO header that does not display user's default warehous when iusse a new PO in PO_Header.php.
 25/4/12 Phil: Complete rewrite of PDFPrintLabels.php and Labels.php in webERP style - half the code and maintainable with templates stored with all the other data in the database. The new labels also allow fields to be printed as barcodes too.
-24/4/12 Phil: fix CopyBOM.php that was insering a blank stockid into stockmaster as reported by Ricard
-21/04/12 Vitaly: Editable item description in PO.
-16/04/12 Vitaly: Added option to display only items that are currently on purchase order in StockLocStatus.php
-16/04/12 Vitaly: Fixed Days textbox where it did not remember entered value.
-16/04/12 Ricard: ReorderLevelLocation.php only showing items not discontinued (current).
-14/04/12 Ricard: Adding stock category as filter for selection in TopItems.php
-12/4/12 TurboPT: Replaced table row bgcolor [or style=background-color] with the appropriate css class.
-11/4/12 Ricard: Code simplified on TopItems.php
-7/4/12 TurboPT: Remove invalid attribute colspan found within table tag elements.
-5/4/12 Exson: Fixed order delivery comments overlapped with Shipper in Packing slip of PDFOrderPageHeader_generic.inc Reported by CQZ from webERP Chinese Community QQ group
-3/4/12 Vitaly: Cleaned up Petty Cash module. Fixed several errors in SQL INSERT statements.
-3/4/12 Exson: Fixed typo in PurchData.php.
-3/4/12 Tim: fixed Supplier Code and Supplier part code inconsistent with database field length definition in PurchData.php. Reported by rfthomas.
-2/4/12 Vitaly: BOMs delete function requires Location and WorkCentre to be set
-2/4/12  Billy Chang,劉世琪: add Chinese Traditional TW locale
-2/4/12  Exson: fixed CopyBOM.php sql errors and header already sent error.
-31/3/12 Exson: Fixed for PcAuthorizeExpenses.php cannot authorized expenses due to no applying gettext function to 'Update'
-31/3/12: PakRichard: 	Fixed problem that on PCAssignCashToTab.php it should be used the decimal places of the currency of the tab, not the decimal places of the functional currency.The same in PcClaimExpensesFromTab.php
-31/3/12 Kunshan-Ouhai?G Fixed bug in PDFStockCheckComparision.php when selecting Report and Close the Inventory Comparison, there will be seriously sql errors. Reported and fixed by Kunshan-Ouhai from webERP Chinese community QQ group.
-31/3/12 Dafydd Crosby: Revise scripts Add_SerialItemsOut.php and OutputSerialItems.php fixes a problem that occurs when receiving a bulk inventory transfer. There was a hard-coded loop that prevented adding bundles that were greater than 10.
-30/3/12 Richard Andreu Modified security role to order by role name instead of by roleid to make it more user friendly in WWW_Access.php and WWW_Users.php
-29/3/12Exson:Fixed href typo error which lead to Select another location link does not work in InternalStockRequestFulfill.php
-29/3/12 Exson: Fixed typo which caused scripts does not work. Cannot add or modify existed items.
-27/3/12 Exson: fixed typo in footer.inc
-25/3/12 Exson: Add page footer with total pages for users verification purpose in PrintCustOrder.php Reported by Russell
-25/3/12 Exson: Add return back link for SupplierInvoice.php while users make input errors. Reported by Ke from webERP Chinese Community QQ group
-23/2/12 Ke: Fixed footer time displayed garbage in Win OS of simplified Chinese Language in footer.inc. Reported and fixed by Ke from webERP Chinese community QQ group.
-23/3/12 Exson: Fixed accounting period displayed abnormal in simplified Chinese language in Win OS in DateFunctions.inc. Reported by CQZ from webERP Chinese community QQ group
-23/3/12 Exson: Fixed accounting period displayed abnormal in simplified Chinese language in Win OS. Reported by CQZ from webERP Chinese community QQ group.
-22/3/12 Exson: Fixed no control of accumulated quantity of the same item during transferring which lead to negative quantity of stock in StockLocTransfer.php reported by Rong.
-22/3/12 Exson: Fixed time displayed incorrectly in footer in Win OS since the strftime() encoding is not UTF-8. Reported by CQZ and KE in webERP Chinese Community QQ group.
-22/3/12 Exson: Fixed period displayed incorrectly in GL inquiry in Win OS since the strftime() encoding is not UTF-8. Reported by CQZ and KE in webERP Chinese Community QQ group.
-21/03/12 CQZ,KE: (From webERP chinese community QQ Group) Fixed the csv file cannot display UTF-8 characters correctly in Excel.
-20/03/12 Exson: Fixed Multi currency payment exchange rate errors in Payments.php. Reported by PakRichard
-20/3/12 Exson: Fixed bugs that users push Process Credit button in Credit_Invoice.php directly without update will lead to unbalance Journal entry. Reported by Russ
-20/03/12 Exson: Fixed item properties are not deleted together with item deletion in Stocks.php. Reported by Zhoule from webERP chinese forum QQ group.
-19/3/12 Tim: Remove illegal copyright notices to prevent any legal problems.</p>
-13/3/12 Exson: Fixed that same parent and component but added in different Work Centers and Locations will display twice in BOMs.php. And fixed that to delete one line of same parents and component will delete all lines with same parents and components. Add ArrayUnique function to get unique array for multi-dimensional array.
-13/3/12 Exson: Correct mailing sending messages display error in PrintCustTransPortrait.php Reported by Thomas_lie
-12/3/12 Exson: Fixed freight cost over 1000 cannot be calculated correctly in ConfirmDispatch_Invoice.php reported by Craig Craven.
+24/4/2012 Phil: fix CopyBOM.php that was insering a blank stockid into stockmaster as reported by Ricard
+21/04/2012 Vitaly: Editable item description in PO.
+16/04/2012 Vitaly: Added option to display only items that are currently on purchase order in StockLocStatus.php
+16/04/2012 Vitaly: Fixed Days textbox where it did not remember entered value.
+16/04/2012 Ricard: ReorderLevelLocation.php only showing items not discontinued (current).
+14/04/2012 Ricard: Adding stock category as filter for selection in TopItems.php
+12/4/2012 TurboPT: Replaced table row bgcolor [or style=background-color] with the appropriate css class.
+11/4/2012 Ricard: Code simplified on TopItems.php
+7/4/2012 TurboPT: Remove invalid attribute colspan found within table tag elements.
+5/4/2012 Exson: Fixed order delivery comments overlapped with Shipper in Packing slip of PDFOrderPageHeader_generic.inc Reported by CQZ from webERP Chinese Community QQ group
+3/4/2012 Vitaly: Cleaned up Petty Cash module. Fixed several errors in SQL INSERT statements.
+3/4/2012 Exson: Fixed typo in PurchData.php.
+3/4/2012 Tim: fixed Supplier Code and Supplier part code inconsistent with database field length definition in PurchData.php. Reported by rfthomas.
+2/4/2012 Vitaly: BOMs delete function requires Location and WorkCentre to be set
+2/4/2012  Billy Chang,劉世琪: add Chinese Traditional TW locale
+2/4/2012  Exson: fixed CopyBOM.php sql errors and header already sent error.
+31/3/2012 Exson: Fixed for PcAuthorizeExpenses.php cannot authorized expenses due to no applying gettext function to 'Update'
+31/3/2012: PakRichard: 	Fixed problem that on PCAssignCashToTab.php it should be used the decimal places of the currency of the tab, not the decimal places of the functional currency.The same in PcClaimExpensesFromTab.php
+31/3/2012 Kunshan-Ouhai?G Fixed bug in PDFStockCheckComparision.php when selecting Report and Close the Inventory Comparison, there will be seriously sql errors. Reported and fixed by Kunshan-Ouhai from webERP Chinese community QQ group.
+31/3/2012 Dafydd Crosby: Revise scripts Add_SerialItemsOut.php and OutputSerialItems.php fixes a problem that occurs when receiving a bulk inventory transfer. There was a hard-coded loop that prevented adding bundles that were greater than 10.
+30/3/2012 Richard Andreu Modified security role to order by role name instead of by roleid to make it more user friendly in WWW_Access.php and WWW_Users.php
+29/3/2012Exson:Fixed href typo error which lead to Select another location link does not work in InternalStockRequestFulfill.php
+29/3/2012 Exson: Fixed typo which caused scripts does not work. Cannot add or modify existed items.
+27/3/2012 Exson: fixed typo in footer.inc
+25/3/2012 Exson: Add page footer with total pages for users verification purpose in PrintCustOrder.php Reported by Russell
+25/3/2012 Exson: Add return back link for SupplierInvoice.php while users make input errors. Reported by Ke from webERP Chinese Community QQ group
+23/2/2012 Ke: Fixed footer time displayed garbage in Win OS of simplified Chinese Language in footer.inc. Reported and fixed by Ke from webERP Chinese community QQ group.
+23/3/2012 Exson: Fixed accounting period displayed abnormal in simplified Chinese language in Win OS in DateFunctions.inc. Reported by CQZ from webERP Chinese community QQ group
+23/3/2012 Exson: Fixed accounting period displayed abnormal in simplified Chinese language in Win OS. Reported by CQZ from webERP Chinese community QQ group.
+22/3/2012 Exson: Fixed no control of accumulated quantity of the same item during transferring which lead to negative quantity of stock in StockLocTransfer.php reported by Rong.
+22/3/2012 Exson: Fixed time displayed incorrectly in footer in Win OS since the strftime() encoding is not UTF-8. Reported by CQZ and KE in webERP Chinese Community QQ group.
+22/3/2012 Exson: Fixed period displayed incorrectly in GL inquiry in Win OS since the strftime() encoding is not UTF-8. Reported by CQZ and KE in webERP Chinese Community QQ group.
+21/03/2012 CQZ,KE: (From webERP chinese community QQ Group) Fixed the csv file cannot display UTF-8 characters correctly in Excel.
+20/03/2012 Exson: Fixed Multi currency payment exchange rate errors in Payments.php. Reported by PakRichard
+20/3/2012 Exson: Fixed bugs that users push Process Credit button in Credit_Invoice.php directly without update will lead to unbalance Journal entry. Reported by Russ
+20/03/2012 Exson: Fixed item properties are not deleted together with item deletion in Stocks.php. Reported by Zhoule from webERP chinese forum QQ group.
+19/3/2012 Tim: Remove illegal copyright notices to prevent any legal problems.</p>
+13/3/2012 Exson: Fixed that same parent and component but added in different Work Centers and Locations will display twice in BOMs.php. And fixed that to delete one line of same parents and component will delete all lines with same parents and components. Add ArrayUnique function to get unique array for multi-dimensional array.
+13/3/2012 Exson: Correct mailing sending messages display error in PrintCustTransPortrait.php Reported by Thomas_lie
+12/3/2012 Exson: Fixed freight cost over 1000 cannot be calculated correctly in ConfirmDispatch_Invoice.php reported by Craig Craven.
 11/3/12 Vitaly: Added missing file encodings_maps.php to TCPDF
 11/3/12 Dr. Magdy Salib - ar_EG.utf8 arabic translation started
 11/3/12 James Dupin: French language translation update
 8/3/12 Ricard: Added parameter for show stock image on select product screen - SelectProduct.php and SystemParameters.php
-7/3/12 Exson: Fixed that serialised items cannot be processed in StockAdjustmentsControlled.php. Reported by Soujiro
-7/3/12 Exson: Fixed that serialised items cannot be processed in StockAdjustments.php. Reported by Soujiro
+7/3/2012 Exson: Fixed that serialised items cannot be processed in StockAdjustmentsControlled.php. Reported by Soujiro
+7/3/2012 Exson: Fixed that serialised items cannot be processed in StockAdjustments.php. Reported by Soujiro
 6/3/12 Exson: Rule out 'Pending' status PO from On Order Quantity in ReorderLevel.php Suggested by Brian May
 6/3/12 Exson: Remove carriage return and feed line from Quotation PDF file in PDFQuotation.php Reported by Thomas_lie
 03/06/12 Exson: add condition to prevent blank stock category description in StockCategories.php
@@ -410,9 +410,9 @@ webERP Change Log
 3/3/12 Phil: SelectProduct.php checked for existence of part pic before displaying a link that could potnetially fail
 29/2/12 Phil: Changed all htmlentities calls to htmlspecialchars calls
 28/2/12 Tim: Added functionality that allows for the set up of internal departments, and for the request of stock to be issued - a new issue account is defined in stockcategories. Issue requests must be authorised by a department manager and then issues fulfilled creates a stock adjustment with posting in the gl to the item category issue account.
-28/02/12 Vitaly: Added DB_escape_string() to narrative in SQL INSERT statements. Fixes a problem posting to database when the string contains quotes.
-26/02/12 Exson: Fixed bug that when set frequently sold items, there are sql errors which claimed that no group set for sum() function.
-26/02/12 Exson: PO_Items.php Add $_SESSION and $_POST variables to fixed extra lines added while page refreshing or push F5. Reported by CQZ and Ke from webERP Chinese forum QQ group.
+28/02/2012 Vitaly: Added DB_escape_string() to narrative in SQL INSERT statements. Fixes a problem posting to database when the string contains quotes.
+26/02/2012 Exson: Fixed bug that when set frequently sold items, there are sql errors which claimed that no group set for sum() function.
+26/02/2012 Exson: PO_Items.php Add $_SESSION and $_POST variables to fixed extra lines added while page refreshing or push F5. Reported by CQZ and Ke from webERP Chinese forum QQ group.
 
 25/2/12 Vitaly: sql in PDFSuppTransListing.php would not fetch any data and debug message was not showing. Missing FROM in upgrade4.07-4.08.sql.
 25/2/12 James Dupin: Remove extra ) after Create GL entries for stock transactions in CompanyPreferences.php

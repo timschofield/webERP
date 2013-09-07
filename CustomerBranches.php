@@ -605,7 +605,7 @@ if (!isset($_GET['delete'])) {
 		echo '<table class="selection">
 				<tr>
 					<td>' . _('Branch Code'). ':</td>
-					<td><input ' .(in_array('BranchCode',$Errors) ?  'class="inputerror"' : '' ) . ' tabindex="1" type="text" name="BranchCode" required="required" pattern="[0-9a-zA-Z_]{1,10}" title="' . _('The branch code can be up to 10 alpha-numeric characters or underscores') . '" size="12" maxlength="10" value="' . $_POST['BranchCode'] . '" /></td>
+					<td><input data-type="no-illegal-chars" ' . (in_array('BranchCode',$Errors) ?  'class="inputerror"' : '' ) . '" tabindex="1" type="text" name="BranchCode" required="required" title ="'._('Up to 10 characters for the branch code. The following characters are prohibited:') . ' \' &quot; + . &amp; \\ &gt; &lt;" placeholder="'._('alpha-numeric').'" size="12" maxlength="10" value="' . $_POST['BranchCode'] . '" /></td>
 				</tr>';
 		$_POST['DeliverBlind'] = $_SESSION['DefaultBlindPackNote'];
 	}

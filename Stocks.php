@@ -80,6 +80,9 @@ if (isset($_FILES['ItemPicture']) AND $_FILES['ItemPicture']['name'] !='') {
 	} elseif ( $_FILES['ItemPicture']['type'] == 'text/plain' ) {  //File Type Check
 		prnMsg( _('Only graphics files can be uploaded'),'warn');
 		 	$UploadTheFile ='No';
+    } elseif ( $_FILES['ItemPicture']['error'] == 6 ) {  //upload temp directory check
+		prnMsg( _('No tmp directory set. You must have a tmp directory set in your PHP for upload of files. '),'warn');
+		 	$UploadTheFile ='No';
 	} elseif (file_exists($filename)){
 		prnMsg(_('Attempting to overwrite an existing item image'),'warn');
 		$result = unlink($filename);
@@ -91,7 +94,7 @@ if (isset($_FILES['ItemPicture']) AND $_FILES['ItemPicture']['name'] !='') {
 
 	if ($UploadTheFile=='Yes'){
 		$result  =  move_uploaded_file($_FILES['ItemPicture']['tmp_name'], $filename);
-		$message = ($result)?_('File url') .'<a href="' . $filename .'">' .  $filename . '</a>' : _('Something is wrong with uploading a file');
+		$message = ($result)?_('File url')  . '<a href="' . $filename .'">' .  $filename . '</a>' : _('Something is wrong with uploading a file');
 	}
 }
 
@@ -701,7 +704,7 @@ if (isset($_POST['submit'])) {
 
 
 	} else {
-		echo '<br />'. "\n";
+		echo '<br />' .  "\n";
 		prnMsg( _('Validation failed, no updates or deletes took place'), 'error');
 	}
 
@@ -868,12 +871,12 @@ if (!isset($StockID) OR $StockID=='' or isset($_POST['UpdateCategories'])) {
 	}
 	if ($New==1) {
 		echo '<tr>
-				<td>'. _('Item Code'). ':</td>
-				<td><input ' . (in_array('StockID',$Errors) ?  'class="inputerror"' : '' ) .'  autofocus="autofocus" required="required" data-type="code" type="text" value="'.$StockID.'" name="StockID" size="20" maxlength="20" /></td>
+				<td>' .  _('Item Code'). ':</td>
+				<td><input type="text" ' . (in_array('StockID',$Errors) ?  'class="inputerror"' : '' ) .'" data-type="no-illegal-chars" autofocus="autofocus" required="required"  value="'.$StockID.'" name="StockID" size="20" maxlength="20"  title ="'._('Input the stock code, the following characters are prohibited:') . ' \' &quot; + . &amp; \\ &gt; &lt;" placeholder="'._('alpha-numeric only').'" /></td>
 			</tr>';
 	} else {
 		echo '<tr>
-				<td>'. _('Item Code'). ':</td>
+				<td>' .  _('Item Code'). ':</td>
 				<td>' . $StockID . '<input type="hidden" name ="StockID" value="' . $StockID . '" /></td>
 			</tr>';
 	}
@@ -940,13 +943,13 @@ if (!isset($StockID) OR $StockID=='' or isset($_POST['UpdateCategories'])) {
 	}
 
 	echo '<tr><td>' . _('Item Code') . ':</td>
-			<td>'.$StockID.'<input type="hidden" name="StockID" value="' . $StockID . '" /></td>
+			<td>' . $StockID . '<input type="hidden" name="StockID" value="' . $StockID . '" /></td>
 			</tr>';
 
 } else { // some changes were made to the data so don't re-set form variables to DB ie the code above
 	echo '<tr>
 			<td>' . _('Item Code') . ':</td>
-			<td>'.$StockID.'<input type="hidden" name="StockID" value="' . $StockID . '" /></td>
+			<td>' . $StockID . '<input type="hidden" name="StockID" value="' . $StockID . '" /></td>
 		</tr>';
 }
 
@@ -968,9 +971,9 @@ foreach ($ItemDescriptionLanguages as $DescriptionLanguage) {
 			$_POST[$PostVariableName] ='';
 		}
 		echo '<tr>
-			<td>' . $LanguagesArray[$DescriptionLanguage]['LanguageName'] . ' ' . _('Description') . ':</td>
-			<td><input type="text" name="'. $PostVariableName . '" size="52" maxlength="50" value="' . $_POST[$PostVariableName] . '" /></td>
-		</tr>';
+				<td>' . $LanguagesArray[$DescriptionLanguage]['LanguageName'] . ' ' . _('Description') . ':</td>
+				<td><input type="text" name="'. $PostVariableName . '" size="52" maxlength="50" value="' . $_POST[$PostVariableName] . '" title="' . _('This language translation of the item will be used in invoices and credits to customers who are defined to use this language. The language translations to maintain here can be configured in the system parameters page') .  '" /></td>
+			</tr>';
 	}
 }
 
@@ -984,12 +987,12 @@ echo '<tr>
 		<td><textarea ' . (in_array('LongDescription',$Errors) ?  'class="texterror"' : '' ) .'  name="LongDescription" cols="40" rows="3">' . stripslashes($LongDescription) . '</textarea></td>
 	</tr>
 	<tr>
-		<td>'. _('Image File (.jpg)') . ':</td>
+		<td>' .  _('Image File (.jpg)') . ':</td>
 		<td><input type="file" id="ItemPicture" name="ItemPicture" />
 		<br /><input type="checkbox" name="ClearImage" id="ClearImage" value="1" > '._('Clear Image').'
 		</td>';
 
- if (function_exists('imagecreatefromjpg')){
+if (function_exists('imagecreatefromjpg') && isset($StockID) && !empty($StockID)){
 	$StockImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
 		'&amp;StockID='.urlencode($StockID).
 		'&amp;text='.
@@ -997,7 +1000,7 @@ echo '<tr>
 		'&amp;height=100'.
 		'" alt="" />';
 } else {
-	if( isset($StockID) AND file_exists($_SESSION['part_pics_dir'] . '/' .$StockID.'.jpg') ) {
+	if( isset($StockID) AND  !empty($StockID) AND file_exists($_SESSION['part_pics_dir'] . '/' .$StockID.'.jpg') ) {
 		$StockImgLink = '<img src="' . $_SESSION['part_pics_dir'] . '/' . $StockID . '.jpg" height="100" width="100" />';
 		if (isset($_POST['ClearImage']) ) {
 		    //workaround for many variations of permission issues that could cause unlink fail
@@ -1014,7 +1017,7 @@ echo '<tr>
 }
 
 if ($StockImgLink!=_('No Image')) {
-	echo '<td>' . _('Image') . '<br />'.$StockImgLink . '</td>';
+	echo '<td>' . _('Image') . '<br />' . $StockImgLink . '</td>';
 }
 echo '</tr>';
 

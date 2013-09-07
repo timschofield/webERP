@@ -319,20 +319,23 @@ function initial(){
 			ds[i].onclick=clickDate;
 			ds[i].onchange=changeDate;
 		}
-		if(ds[i].getAttribute("data-type") == 'code') ds[i].pattern="(?!^ +$)[^?\'\"+.&\\><]*";
+		if(ds[i].getAttribute("data-type") == 'no-illegal-chars') ds[i].pattern="(?!^ +$)[^?\'\"+.&\\><]*";
 		if (ds[i].className=="number") ds[i].onkeypress=rTN;
 		if (ds[i].className=="integer") ds[i].onkeypress=rTI;
 		if (ds[i].className=="number"){
 		
 				ds[i].origonchange=ds[i].onchange;
 				ds[i].newonchange=rLocaleNumber;
-				ds[i].onchange=function(){if(this.origonchange) this.origonchange();this.newonchange();};
+				ds[i].onchange=function(){
+					if(this.origonchange)
+						this.origonchange();
+					this.newonchange();
+				};
 		
 		}
-
-
 	}
-	var ds=document.getElementsByTagName("th");
+		var ds=document.getElementsByTagName("th");
+	
 	for (i=0;i<ds.length;i++){
 		if (ds[i].className=="ascending"){
 			ds[i].onclick=SortSelect;
