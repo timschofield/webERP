@@ -294,7 +294,7 @@ if (isset($_POST['SearchParts']) AND $_POST['SearchParts']!=''){
 						AND salesorderdetails.completed".$Completed."
 						GROUP BY salesorders.orderno,
 							debtorsmaster.name,
-							currencies.decimalplaces
+							currencies.decimalplaces,
 							custbranch.brname,
 							salesorders.customerref,
 							salesorders.orddate,
