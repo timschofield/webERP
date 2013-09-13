@@ -274,9 +274,9 @@ echo '</td>
 	<td><b>' . _('OR') . '</b></td><td>' . _('Enter a partial Code') . ':</td>
 	<td>';
 if (isset($_POST['CustCode'])) {
-	echo '<input type="text" name="CustCode" pattern="[0-9+()\s]*" value="' . $_POST['CustCode'] . '" size="15" maxlength="18" />';
+	echo '<input type="text" name="CustCode" pattern="[\w-]*" value="' . $_POST['CustCode'] . '" size="15" maxlength="18" />';
 } else {
-	echo '<input type="text" name="CustCode" pattern="[0-9+()\s]*" size="15" maxlength="18" />';
+	echo '<input type="text" name="CustCode" pattern="[\w-]*" size="15" maxlength="18" />';
 }
 echo '</td>
 	</tr>
@@ -285,9 +285,9 @@ echo '</td>
 		<td>' . _('Enter a partial Phone Number') . ':</td>
 		<td>';
 if (isset($_POST['CustPhone'])) {
-	echo '<input type="tel" name="CustPhone"  pattern="[0-9a-zA-Z_]*" value="' . $_POST['CustPhone'] . '" size="15" maxlength="18" />';
+	echo '<input type="tel" name="CustPhone"  pattern="[0-9\-\s()+]*" value="' . $_POST['CustPhone'] . '" size="15" maxlength="18" />';
 } else {
-	echo '<input type="tel" name="CustPhone"  pattern="[0-9\-\s()+]*"size="15" maxlength="18" />';
+	echo '<input type="tel" name="CustPhone"  pattern="[0-9\-\s()+]* "size="15" maxlength="18" />';
 }
 echo '</td>';
 echo '<td><b>' . _('OR') . '</b></td>
