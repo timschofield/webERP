@@ -319,7 +319,7 @@ function initial(){
 			ds[i].onclick=clickDate;
 			ds[i].onchange=changeDate;
 		}
-		if(ds[i].getAttribute("data-type") == 'no-illegal-chars') ds[i].pattern="(?!^ +$)[^?\'\"+.&\\><]*";
+		if(ds[i].getAttribute("data-type") == 'no-illegal-chars') ds[i].pattern="(?!^ +$)[^?\'\u0022+.&\\\\><]*";
 		if (ds[i].className=="number") ds[i].onkeypress=rTN;
 		if (ds[i].className=="integer") ds[i].onkeypress=rTI;
 		if (ds[i].className=="number"){
