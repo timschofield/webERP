@@ -123,7 +123,7 @@ if (isset($_GET['SelectedLocation'])) {
 	echo '<input type="hidden" name="LocationID" value="'.$LocationID.'" />';
 	echo '<td>' . $LocationID . '</td>';
 } else {
-	echo '<td><input type="text" name="LocationID" required="required" title="' . _('Enter the location code of the fixed asset location. Up to six alpha-numeric characters') . '" pattern="[0-9a-zA-Z_]*" size="6" value="'.$LocationID.'" /></td>
+	echo '<td><input type="text" name="LocationID" required="required" title="' . _('Enter the location code of the fixed asset location. Up to six alpha-numeric characters') . '" data-type="no-illegal-chars" size="6" value="'.$LocationID.'" /></td>
 		</tr>';
 }
 

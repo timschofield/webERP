@@ -187,7 +187,7 @@ echo '</select></td>
 
 echo '<tr>
 		<td>' . _('Account Code') . ':</td>
-		<td><input type="text" pattern="[a-zA-Z0-9_-]{0,20}" title="'._('The input must be alpha-numeric characters').'" placeholder="'._('less than 20 alpha-numeric characters').'" name="GLCode" size="21" maxlength="20" value="' .  $_POST['GLCode'] . '" />
+		<td><input type="text" data-type="no-illegal-chars" title="'._('The input must be alpha-numeric characters').'" placeholder="'._('less than 20 alpha-numeric characters').'" name="GLCode" size="21" maxlength="20" value="' .  $_POST['GLCode'] . '" />
 		<input type="hidden" name="JobRef" value="" /></td>
 	</tr>';
 echo '<tr>

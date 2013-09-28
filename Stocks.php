@@ -803,14 +803,14 @@ if (isset($_POST['submit'])) {
 			/*and cascade delete the bill of material if any */
 			$sql = "DELETE FROM bom WHERE parent='".$StockID."'";
 			$result=DB_query($sql,$db,_('Could not delete the bill of material because'),'',true);
-			$sql="DELETE FROM stockmaster WHERE stockid='".$StockID."'";
-			$result=DB_query($sql,$db, _('Could not delete the item record'),'',true);
 			//and cascade delete the item properties
 			$sql="DELETE FROM stockitemproperties WHERE stockid='".$StockID."'";
 			$result=DB_query($sql,$db, _('Could not delete the item properties'),'',true);
 			//and cascade delete the item descriptions in other languages
 			$sql = "DELETE FROM stockdescriptiontranslations WHERE stockid='" . $StockID . "'";
 			$result=DB_query($sql,$db,_('Could not delete the item language descriptions'),'',true);
+			$sql="DELETE FROM stockmaster WHERE stockid='".$StockID."'";
+			$result=DB_query($sql,$db, _('Could not delete the item record'),'',true);
 
 		$result = DB_Txn_Commit($db);
 

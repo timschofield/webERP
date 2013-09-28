@@ -252,7 +252,7 @@ if (isset($SelectedCategory) and !isset($_POST['submit'])) {
 	echo '<table class="selection">
 			<tr>
 				<td>' . _('Category Code') . ':</td>
-				<td><input type="text" name="CategoryID" required="required" title="' . _('Enter the asset category code. Up to 6 alpha-numeric characters are allowed') . '" pattern="[0-9a-zA-Z_]*" size="7" maxlength="6" value="' . $_POST['CategoryID'] . '" /></td>
+				<td><input type="text" name="CategoryID" required="required" title="' . _('Enter the asset category code. Up to 6 alpha-numeric characters are allowed') . '" data-type="no-illegal-chars" size="7" maxlength="6" value="' . $_POST['CategoryID'] . '" /></td>
 			</tr>';
 }
 

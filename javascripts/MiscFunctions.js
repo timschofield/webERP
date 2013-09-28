@@ -334,12 +334,9 @@ function initial(){
 		
 		}
 	}
-		var ds=document.getElementsByTagName("th");
-	
+	var ds=document.getElementsByTagName("th");
 	for (i=0;i<ds.length;i++){
-		if (ds[i].className=="ascending"){
-			ds[i].onclick=SortSelect;
-		}
+		if (ds[i].className=="ascending") ds[i].onclick=SortSelect;
 	}
 }
 window.onload=initial;

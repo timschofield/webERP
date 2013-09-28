@@ -671,7 +671,7 @@ if (!isset($SupplierID)) {
 
 	echo '<table class="selection">';
 	echo '<tr><td>' . _('Supplier Code') . ':</td>
-		<td><input type="text" pattern="(?!^\s+$)[^><+-]{1,10}" title="'._('The supplier id should not be within 10 legal characters and cannot be blank').'" required="required" name="SupplierID" placeholder="'._('within 10 characters').'" size="11" maxlength="10" /></td>
+		<td><input type="text" data-type="no-illegal-chars" title="'._('The supplier id should not be within 10 legal characters and cannot be blank').'" required="required" name="SupplierID" placeholder="'._('within 10 characters').'" size="11" maxlength="10" /></td>
 		</tr>';
 	echo '<tr><td>' . _('Supplier Name') . ':</td>
 			<td><input type="text" pattern="(?!^\s+$)[^<>+-]{1,40}" required="required" title="'._('The supplier name should not be blank and should be less than 40 legal characters').'" name="SuppName" size="42" placeholder="'._('Within 40 legal characters').'" maxlength="40" /></td>

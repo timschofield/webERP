@@ -382,7 +382,7 @@ if (isset($SupplierID) AND $SupplierID != '' AND !isset($_POST['SearchSupplier']
 					<td><input type="text" name="Keywords" size="20" maxlength="25" /></td>
 					<td><b>' . _('OR') . '</b></td>
 					<td>' . _('Text in Supplier') . ' <b>' . _('CODE') . '</b>:</td>
-					<td><input type="text" name="SupplierCode" pattern="[0-9a-zA-Z_\-]*" size="20" maxlength="50" /></td>
+					<td><input type="text" name="SupplierCode" data-type="no-illegal-chars" size="20" maxlength="50" /></td>
 				</tr>
 				</table>
 				<br />

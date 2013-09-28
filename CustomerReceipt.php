@@ -846,7 +846,7 @@ if ($_SESSION['ReceiptBatch']->AccountCurrency!=$_SESSION['ReceiptBatch']->Curre
 	}
 	echo '<tr>
 			<td>' . _('Receipt Exchange Rate') . ':</td>
-			<td><input tabindex="4" type="text" name="ExRate" required="required" maxlength="10" size="12" pattern="[0-9\.,]*" class="number" value="' . locale_number_format($_SESSION['ReceiptBatch']->ExRate,6) . '" /></td>
+			<td><input tabindex="4" type="text" name="ExRate" required="required" maxlength="10" size="12" class="number" value="' . locale_number_format($_SESSION['ReceiptBatch']->ExRate,6) . '" /></td>
 			<td>' . $SuggestedExRateText . ' <i>' . _('The exchange rate between the currency of the bank account currency and the currency of the receipt') . '. 1 ' . $_SESSION['ReceiptBatch']->AccountCurrency . ' = ? ' . $_SESSION['ReceiptBatch']->Currency . '</i></td>
 		</tr>';
 }
@@ -1128,7 +1128,7 @@ if (((isset($_SESSION['CustomerRecord'])
 			<td><input tabindex="9" type="text" name="Keywords" size="15" maxlength="25" /></td>
 			<td><b>' . _('OR') . '</b></td>
 			<td>' . _('Text extract in the Customer') . ' ' . '<b>' . _('code') . '</b>:</td>
-			<td><input tabindex="10" type="text" name="CustCode" pattern="[0-9a-zA-Z_]*" title="' . _('Enter an extract of the customer code to search for. Customer codes can contain any alpha-numeric character or underscore') . '" size="10" maxlength="18" /></td>
+			<td><input tabindex="10" type="text" name="CustCode" data-type="no-illegal-chars" title="' . _('Enter an extract of the customer code to search for. Customer codes can contain any alpha-numeric character or underscore') . '" size="10" maxlength="18" /></td>
 			<td><b>' . _('OR') . '</b></td>
 			<td>' . _('Customer invoice number') . ':</td>
 			<td><input tabindex="11" type="text" name="CustInvNo" class="integer" size="8" maxlength="8" /></td>

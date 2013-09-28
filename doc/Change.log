@@ -1,5 +1,6 @@
 webERP Change Log
 
+28/9/13 Phil: Followed Exson's example to set pattern to prevent dodgy characters in other scripts that were using a pattern that only allowed [a-zA-Z0-9] thus making it impossible to enter non latin characters.
 11/9/13 icedlava: SelectCompletedOrder.php Fix SQL typo.
 7/9/13 Exson: using javascript to set the pattern attribute based on a new attribute data-type and first script Stocks.php
 7/9/13 icedlava: Fix PrintStatements.php to allow selection of alphanumeric customer codes in length to match database definition.

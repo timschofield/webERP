@@ -401,7 +401,7 @@ if (!isset($_GET['delete'])) {
 	}
 	echo '<tr>
 			<td>' . _('Account Group Name') . ':' . '</td>
-			<td><input tabindex="1" autofocus="autofocus" required="required" pattern="[a-zA-Z0-9_\-\ ]*" placeholder="' . _('Enter the account group name') . '" ' . (in_array('GroupName',$Errors) ?  '"class=inputerror"' : '' ) . ' type="text" name="GroupName" size="30" minlength="3" maxlength="30" value="' . $_POST['GroupName'] . '" title="' . _('A unique name for the account group must be entered - at least 3 characters long and less than 30 characters long. Only alpha numeric characters can be used.') . '" /></td>
+			<td><input tabindex="1" autofocus="autofocus" required="required" data-type="no-illegal-chars" placeholder="' . _('Enter the account group name') . '" ' . (in_array('GroupName',$Errors) ?  '"class=inputerror"' : '' ) . ' type="text" name="GroupName" size="30" minlength="3" maxlength="30" value="' . $_POST['GroupName'] . '" title="' . _('A unique name for the account group must be entered - at least 3 characters long and less than 30 characters long. Only alpha numeric characters can be used.') . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Parent Group') . ':' . '</td>

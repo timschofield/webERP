@@ -524,17 +524,17 @@ if (!isset($_POST['SupplierID'])) {
 }
 echo '<tr>
 		<td>' . _('Customer Code') . ':</td>
-		<td><input type="text" name="Cust" pattern="[0-9a-zA-Z_]*" title="' . _('If this user login is to be associated with a customer account, enter the customer account code') . '" size="10" maxlength="10" value="' . $_POST['Cust'] . '" /></td>
+		<td><input type="text" name="Cust" data-type="no-illegal-chars" title="' . _('If this user login is to be associated with a customer account, enter the customer account code') . '" size="10" maxlength="10" value="' . $_POST['Cust'] . '" /></td>
 	</tr>';
 
 echo '<tr>
 		<td>' . _('Branch Code') . ':</td>
-		<td><input type="text" name="BranchCode" pattern="[0-9a-zA-Z_]*" title="' . _('If this user login is to be associated with a customer account a valid branch for the customer account must be entered.') . '" size="10" maxlength="10" value="' . $_POST['BranchCode'] .'" /></td>
+		<td><input type="text" name="BranchCode" data-type="no-illegal-chars" title="' . _('If this user login is to be associated with a customer account a valid branch for the customer account must be entered.') . '" size="10" maxlength="10" value="' . $_POST['BranchCode'] .'" /></td>
 	</tr>';
 
 echo '<tr>
 		<td>' . _('Supplier Code') . ':</td>
-		<td><input type="text" name="SupplierID" pattern="[0-9a-zA-Z_]*" size="10" maxlength="10" value="' . $_POST['SupplierID'] .'" /></td>
+		<td><input type="text" name="SupplierID" data-type="no-illegal-chars" size="10" maxlength="10" value="' . $_POST['SupplierID'] .'" /></td>
 	</tr>';
 
 echo '<tr>

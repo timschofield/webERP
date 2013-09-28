@@ -232,7 +232,7 @@ if (!isset($_GET['delete'])) {
 		echo '<table class="selection">';
 		echo '<tr>
 				<td>' . _('Account Code') . ':</td>
-				<td><input type="text" name="AccountCode" required="required" autofocus="autofocus" pattern="[0-9a-zA-Z_-]*" title="' . _('Enter up to 20 alpha-numeric characters for the general ledger account code') . '" size="20" maxlength="20" /></td>
+				<td><input type="text" name="AccountCode" required="required" autofocus="autofocus" data-type="no-illegal-chars" title="' . _('Enter up to 20 alpha-numeric characters for the general ledger account code') . '" size="20" maxlength="20" /></td>
 			</tr>';
 	}
 

@@ -265,11 +265,11 @@ If (isset($_POST['PrintPDF']) AND DB_num_rows($GRNsResult)>0){
 
 	echo '<tr>
 			<td>' . _('From Supplier Code') . ':</td>
-			<td><input type="text" name="FromCriteria" required="required" autofocus="autofocus" pattern="[0-9a-zA-Z]*" value="0" /></td>
+			<td><input type="text" name="FromCriteria" required="required" autofocus="autofocus" data-type="no-illegal-chars" value="0" /></td>
 		</tr>
 		<tr>
 			<td>' . _('To Supplier Code'). ':</td>
-			<td><input type="text" name="ToCriteria" required="required" pattern="[0-9a-zA-Z]*"  value="zzzzzzz" /></td>
+			<td><input type="text" name="ToCriteria" required="required" data-type="no-illegal-chars"  value="zzzzzzz" /></td>
 		</tr>
 		</table>
 		<br />

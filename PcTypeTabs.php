@@ -234,7 +234,7 @@ if (! isset($_GET['delete'])) {
 		echo '<table class="selection">
 				<tr>
 					<td>' . _('Code Of Type Of Tab') . ':</td>
-					<td><input type="text" ' . (in_array('TypeTabCode',$Errors) ? 'class="inputerror"' : '' ) .' required="required" autofocus="autofocus" pattern="[0-9a-zA-Z_]*" name="TypeTabCode" title="' . _('Only alpha-numeric characters and the underscore character are allowed') . '" /></td>
+					<td><input type="text" ' . (in_array('TypeTabCode',$Errors) ? 'class="inputerror"' : '' ) .' required="required" autofocus="autofocus" data-type="no-illegal-chars"  name="TypeTabCode" title="' . _('Only alpha-numeric characters and the underscore character are allowed') . '" size="20" maxlength="20" /></td>
 				</tr>';
 
 	}

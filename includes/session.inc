@@ -97,8 +97,8 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 	/*  Need to set the theme to make login screen nice */
 	$Theme = (isset($_SESSION['Theme'])) ? $_SESSION['Theme'] : 'gel';
 	switch ($rc) {
-	case  UL_OK;
-		include($PathPrefix . 'includes/LanguageSetup.php');
+	case  UL_OK; //user logged in successfully
+		include($PathPrefix . 'includes/LanguageSetup.php'); //set up the language
 		break;
 
 	case UL_SHOWLOGIN:
@@ -139,9 +139,8 @@ include($PathPrefix . 'includes/GetConfig.php');
 if (strcmp($Version,$_SESSION['VersionNumber'])>0 AND (basename($_SERVER['SCRIPT_NAME'])!='UpgradeDatabase.php')) {
 	header('Location: UpgradeDatabase.php');
 }
-
-if(isset($_SESSION['DB_Maintenance'])){
-	if ($_SESSION['DB_Maintenance']>0)  {
+if(isset($_SESSION['DB_Maintenance'])){ 
+	if ($_SESSION['DB_Maintenance']>0)  { //run the DB maintenance script
 		if (DateDiff(Date($_SESSION['DefaultDateFormat']),
 				ConvertSQLDate($_SESSION['DB_Maintenance_LastRun'])
 				,'d')	>= 	$_SESSION['DB_Maintenance']){
@@ -153,7 +152,7 @@ if(isset($_SESSION['DB_Maintenance'])){
 	}
 }
 //purge the audit trail if necessary
-if (isset($_SESSION['MonthsAuditTrail'])){
+if (isset($_SESSION['MonthsAuditTrail'])){ 
 	 $sql = "DELETE FROM audittrail
 			WHERE  transactiondate <= '" . Date('Y-m-d', mktime(0,0,0, Date('m')-$_SESSION['MonthsAuditTrail'])) . "'";
 	$ErrMsg = _('There was a problem deleting expired audit-trail history');
@@ -161,7 +160,6 @@ if (isset($_SESSION['MonthsAuditTrail'])){
 }
 /*Check to see if currency rates need to be updated */
 if (isset($_SESSION['UpdateCurrencyRatesDaily'])){
-
 	if ($_SESSION['UpdateCurrencyRatesDaily']!=0)  {
 		if (DateDiff(Date($_SESSION['DefaultDateFormat']),
 			ConvertSQLDate($_SESSION['UpdateCurrencyRatesDaily']),'d')> 0){
@@ -193,7 +191,6 @@ if (isset($_SESSION['UpdateCurrencyRatesDaily'])){
 		}
 	}
 }
-
 
 If (isset($_POST['Theme']) AND ($_SESSION['UsersRealName'] == $_POST['RealName'])) {
 	$_SESSION['Theme'] = $_POST['Theme'];
@@ -308,7 +305,7 @@ if (!isset($AllowAnyone)){
 		include($PathPrefix . 'includes/footer.inc');
 		exit;
 	}
- }
+}
 
 //$PageSecurity = 9 hard coded for supplier access Supplier access must have just 9 and 0 tokens
 if (in_array(9,$_SESSION['AllowedPageSecurityTokens']) AND count($_SESSION['AllowedPageSecurityTokens'])==2){

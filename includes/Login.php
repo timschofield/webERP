@@ -4,9 +4,9 @@
 // Display demo user name and password within login form if $AllowDemoMode is true
 //include ('LanguageSetup.php');
 if ((isset($AllowDemoMode)) AND ($AllowDemoMode == True) AND (!isset($demo_text))) {
-	$demo_text = _('login as user') .': <i>' . _('admin') . '</i><br />' ._('with password') . ': <i>' . _('weberp') . '</i>';
+	$demo_text = _('Login as user') .': <i>' . _('admin') . '</i><br />' ._('with password') . ': <i>' . _('weberp') . '</i>';
 } elseif (!isset($demo_text)) {
-	$demo_text = _('Please login here');
+	$demo_text = '';
 }
 echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 			"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
@@ -95,9 +95,9 @@ if (get_magic_quotes_gpc()){
 	</span>
 	<br />
 	<span><?php echo _('User name'); ?>:</span><br />
-	<input type="text" name="UserNameEntryField" required="required" autofocus="autofocus" maxlength="20" /><br />
+	<input type="text" name="UserNameEntryField" required="required" autofocus="autofocus" maxlength="20" placeholder="<?php echo _('User name'); ?>" /><br />
 	<span><?php echo _('Password'); ?>:</span><br />
-	<input type="password" required="required" name="Password" /><br />
+	<input type="password" required="required" name="Password" placeholder="<?php echo _('password'); ?>" /><br />
 	<div id="demo_text">
 	<?php
 	if (isset($demo_text)){

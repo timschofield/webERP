@@ -747,7 +747,7 @@ if (!isset($DebtorNo)) {
 		if ($_SESSION['AutoDebtorNo']== 0 )  {
 			echo '<tr>
 					<td>' . _('Customer Code') . ':</td>
-					<td><input ' . (in_array('DebtorNo',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="DebtorNo" required="required" pattern=[0-9a-zA-Z_]*" title="' . _('The customer code can be up to 10 alpha-numeric characters long or underscore') . '" value="' . $DebtorNo . '" size="12" maxlength="10" /></td></tr>';
+					<td><input ' . (in_array('DebtorNo',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="DebtorNo" required="required" data-type="no-illegal-chars" title="' . _('The customer code can be up to 10 alpha-numeric characters long or underscore') . '" value="' . $DebtorNo . '" size="12" maxlength="10" /></td></tr>';
 		}
 	}
 	if (isset($_GET['Modify'])) {

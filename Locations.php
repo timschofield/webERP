@@ -497,7 +497,7 @@ if (!isset($_GET['delete'])) {
 				</tr>';
 		echo '<tr>
 				<td>' . _('Location Code') . ':</td>
-				<td><input type="text" autofocus="autofocus" required="required" title="' . _('Enter up to five characters for the inventory location code') . '" pattern="[0-9a-zA-Z_]*" name="LocCode" value="' . $_POST['LocCode'] . '" size="5" maxlength="5" /></td>
+				<td><input type="text" autofocus="autofocus" required="required" title="' . _('Enter up to five characters for the inventory location code') . '" data-type="no-illegal-chars" name="LocCode" value="' . $_POST['LocCode'] . '" size="5" maxlength="5" /></td>
 			</tr>';
 	}
 	if (!isset($_POST['LocationName'])) {
@@ -604,11 +604,11 @@ if (!isset($_GET['delete'])) {
 		</tr>
 		<tr>
 			<td>' . _('Default Counter Sales Customer Code') . ':' . '</td>
-			<td><input type="text" name="CashSaleCustomer" pattern="[0-9a-zA-Z_]*" title="' . _('If counter sales are being used for this location then an existing customer account code needs to be entered here. All sales created from the counter sales will be recorded against this customer account') . '" value="' . $_POST['CashSaleCustomer'] . '" size="11" maxlength="10" /></td>
+			<td><input type="text" name="CashSaleCustomer" data-type="no-illegal-chars" title="' . _('If counter sales are being used for this location then an existing customer account code needs to be entered here. All sales created from the counter sales will be recorded against this customer account') . '" value="' . $_POST['CashSaleCustomer'] . '" size="11" maxlength="10" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Counter Sales Branch Code') . ':' . '</td>
-			<td><input type="text" name="CashSaleBranch" pattern="[0-9a-zA-Z_]*" title="' . _('If counter sales are being used for this location then an existing customer branch code for the customer account code entered above needs to be entered here. All sales created from the counter sales will be recorded against this branch') . '" value="' . $_POST['CashSaleBranch'] . '" size="11" maxlength="10" /></td>
+			<td><input type="text" name="CashSaleBranch" data-type="no-illegal-chars" title="' . _('If counter sales are being used for this location then an existing customer branch code for the customer account code entered above needs to be entered here. All sales created from the counter sales will be recorded against this branch') . '" value="' . $_POST['CashSaleBranch'] . '" size="11" maxlength="10" /></td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('Allow internal requests?') . ':</td>
