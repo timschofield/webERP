@@ -122,7 +122,7 @@ If (isset($_POST['PrintPDF'])
 			</tr>';
 
 		echo '<tr><td>' . _('To Inventory Part Code') . ':' . '</td>
-				<td><input tabindex="2" type="text" required="required"data-type="no-illegal-chars" title="' . _('Enter the end alpha numeric code of any parent bom items to list the bill of material for') .  '" name="ToCriteria" size="20" maxlength="20" value="zzzzzzz" /></td>
+				<td><input tabindex="2" type="text" required="required" data-type="no-illegal-chars" title="' . _('Enter the end alpha numeric code of any parent bom items to list the bill of material for') .  '" name="ToCriteria" size="20" maxlength="20" value="zzzzzzz" /></td>
 			</tr>';
 
 
