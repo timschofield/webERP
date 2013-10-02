@@ -94,7 +94,8 @@ if (isset($_POST['Search'])
 					address3,
 					address4,
 					telephone,
-					email
+					email,
+					url
 				FROM suppliers
 				ORDER BY suppname";
 	} else {
@@ -110,7 +111,8 @@ if (isset($_POST['Search'])
 							address3,
 							address4,
 							telephone,
-							email
+							email,
+							url
 						FROM suppliers
 						WHERE suppname " . LIKE . " '" . $SearchString . "'
 						ORDER BY suppname";
@@ -124,7 +126,8 @@ if (isset($_POST['Search'])
 							address3,
 							address4,
 							telephone,
-							email
+							email,
+							url
 						FROM suppliers
 						WHERE supplierid " . LIKE . " '%" . $_POST['SupplierCode'] . "%'
 						ORDER BY supplierid";
@@ -283,6 +286,7 @@ if (isset($_POST['Search'])) {
 			<th class="ascending">' . _('Address 4') . '</th>
 			<th class="ascending">' . _('Telephone') . '</th>
 			<th class="ascending">' . _('Email') . '</th>
+			<th class="ascending">' . _('URL') . '</th>
 		</tr>';
 	$k = 0; //row counter to determine background colour
 	$RowIndex = 0;
@@ -306,6 +310,7 @@ if (isset($_POST['Search'])) {
 				<td>' . $myrow['address4'] . '</td>
 				<td>' . $myrow['telephone'] . '</td>
 				<td><a href="mailto://'.$myrow['email'].'">' . $myrow['email']. '</a></td>
+				<td><a href="'.$myrow['url'].'"target="_blank">' . $myrow['url']. '</a></td>
 			</tr>';
 		$RowIndex = $RowIndex + 1;
 		//end of page full new headings if
