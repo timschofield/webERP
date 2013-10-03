@@ -1,6 +1,7 @@
 webERP Change Log
 
-2/10/13 David Lynn: Added new field url to suppliers modified SelectSupplier.php and Suppliers.php 
+3/10/13 icedlava: PO_Items.php with non-stock items still require GL Code in case of modified order at invoice time else SQL error is generated due to invalid GL Code.
+2/10/13 David Lynn: Added new field url to suppliers modified SelectSupplier.php and Suppliers.php
 28/9/13 wh_hsn: help with regular expression to trap quotes and backslashes for data-type="no-illegal-chars"
 28/9/13 Phil: Followed Exson's example to set pattern to prevent dodgy characters in other scripts that were using a pattern that only allowed [a-zA-Z0-9] thus making it impossible to enter non latin characters.
 11/9/13 icedlava: SelectCompletedOrder.php Fix SQL typo.

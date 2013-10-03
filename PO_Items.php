@@ -109,7 +109,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 				prnMsg( _('You do not have permission to authorise this purchase order').'.<br />' .  _('This order is for').' '.
 					$_SESSION['PO'.$identifier]->CurrCode . ' '. $_SESSION['PO'.$identifier]->Order_Value() .'. '.
 					$AuthMessage .
-					_('If you think this is a mistake please contact the systems administrator') . '<br />' . 
+					_('If you think this is a mistake please contact the systems administrator') . '<br />' .
 					_('The order will be created with a status of pending and will require authorisation'), 'warn');
 
 				$_SESSION['PO'.$identifier]->AllowPrintPO=0;
@@ -440,7 +440,10 @@ if (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
  /*It's not a stock item */
 
 		/*need to check GL Code is valid if GLLink is active */
-	if ($_SESSION['PO'.$identifier]->GLLink==1){
+		/* [icedlava] GL Code is required for non stock item variance in price vs purchase order when supplier invoice generated else
+		   there will be an sql error  in SupplierInvoice.php without a valid GL Code
+		*/
+	//if ($_SESSION['PO'.$identifier]->GLLink==1){
 
 		$sql = "SELECT accountname
 				FROM chartmaster
@@ -464,10 +467,10 @@ if (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 			$myrow = DB_fetch_row($GLValidResult);
 			$GLAccountName = $myrow[0];
 		}
-	} /* dont bother checking the GL Code if there is no GL code to check ie not linked to GL */
-	else {
-		$_POST['GLCode']=0;
-	}
+	//} /* dont bother checking the GL Code if there is no GL code to check ie not linked to GL */
+	//else {
+	//	$_POST['GLCode']=0;
+	//}
 	if ($_POST['AssetID'] !='Not an Asset'){
 		$ValidAssetResult = DB_query("SELECT assetid,
 											description,
