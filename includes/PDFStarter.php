@@ -119,7 +119,7 @@ switch ($PaperSize) {
 		$Right_Margin = 36; // Half inch = 72/2
 		break;
 
-   case 'letter_landscape':
+   case 'Letter_Landscape': // 279mm x 216mm
 
 		$DocumentPaper = 'LETTER';
 		$DocumentOrientation ='L';
