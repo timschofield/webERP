@@ -107,6 +107,9 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['ShopPayPalBankAccount'] != $_POST['X_ShopPayPalBankAccount'] ) {
 			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopPayPalBankAccount']."' WHERE confname = 'ShopPayPalBankAccount'";
 		}
+		if ($_SESSION['ShopFreightModule'] != $_POST['X_ShopFreightModule'] ) {
+			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopFreightModule']."' WHERE confname = 'ShopFreightModule'";
+		}
 
 		if (!$AllowDemoMode) {
 			if ($_SESSION['ShopCreditCardGateway'] != $_POST['X_ShopCreditCardGateway'] ) {
@@ -353,6 +356,27 @@ while ($ItemsRow = DB_fetch_array($DummyItemsResult)){
 echo '</select></td>
 		<td>' . _('Select the webERP service item to use for payment surcharges to be processed as') . '</td>
 	</tr>';
+
+echo '<tr>
+		<td>' . _('Freight Calculations') . ':</td>
+		<td><select name="X_ShopFreightModule">';
+
+$FreightModules = array(array('MethodName'=>'No Freight','MethodCode'=>'NoFreight'),
+						array('MethodName'=>'webERP calculation','MethodCode'=>'webERPDefault'),
+						array('MethodName'=>'Australia Post API','MethodCode'=>'AusPost'));
+
+foreach($FreightModules as $FreightCalc){
+	if ($_SESSION['ShopFreightModule'] ==$FreightCalc['MethodCode']) {
+		echo '<option selected="selected" value="' . $FreightCalc['MethodCode'] . '">' . $FreightCalc['MethodName'] . '</option>';
+	} else {
+		echo '<option value="' . $FreightCalc['MethodCode'] . '">' . $FreightCalc['MethodName'] . '</option>';
+	}
+}
+echo '</select></td>
+		<td>' . _('Select the freight calculation method to use for the webSHOP') . '</td>
+	</tr>';
+
+
 
 echo '<tr>
 		<th colspan="3">' . _('Bank Transfer Settings') . '</th></tr>';

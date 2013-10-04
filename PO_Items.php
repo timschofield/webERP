@@ -437,13 +437,12 @@ if (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 		prnMsg( _('Cannot Enter this order line') . '</b><br />' . _('The date entered must be in the format') . ' ' . $_SESSION['DefaultDateFormat'], 'error');
 	}
 
- /*It's not a stock item */
-
-		/*need to check GL Code is valid if GLLink is active */
-		/* [icedlava] GL Code is required for non stock item variance in price vs purchase order when supplier invoice generated else
-		   there will be an sql error  in SupplierInvoice.php without a valid GL Code
-		*/
-	//if ($_SESSION['PO'.$identifier]->GLLink==1){
+ /*It's not a stock item
+  * need to check GL Code is valid if GLLink is active
+  * [icedlava] GL Code is required for non stock item variance in price vs purchase order when supplier invoice generated even if stock not linked to GL, but AP is else
+  * there will be an sql error  in SupplierInvoice.php without a valid GL Code
+	*/
+	if ($_SESSION['PO'.$identifier]->GLLink==1 OR $_SESSION['CompanyRecord']['gllink_creditors']==1){
 
 		$sql = "SELECT accountname
 				FROM chartmaster
@@ -467,10 +466,10 @@ if (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 			$myrow = DB_fetch_row($GLValidResult);
 			$GLAccountName = $myrow[0];
 		}
-	//} /* dont bother checking the GL Code if there is no GL code to check ie not linked to GL */
-	//else {
-	//	$_POST['GLCode']=0;
-	//}
+	} /* dont bother checking the GL Code if there is no GL code to check ie not linked to GL */
+	 else {
+		$_POST['GLCode']=0;
+	}
 	if ($_POST['AssetID'] !='Not an Asset'){
 		$ValidAssetResult = DB_query("SELECT assetid,
 											description,
