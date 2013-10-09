@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-09-06 21:34+1200\n"
-"PO-Revision-Date: 2013-08-12 18:32-0600\n"
+"PO-Revision-Date: 2013-10-08 15:09-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -505,9 +505,8 @@ msgid "Account Group Name"
 msgstr "Nombre de grupo contable"
 
 #: AccountGroups.php:404
-#, fuzzy
 msgid "Enter the account group name"
-msgstr "No se pudo obtener los grupos contables porque"
+msgstr "Introduzca el nombre del grupo de cuentas"
 
 #: AccountGroups.php:404
 #, fuzzy
@@ -1281,9 +1280,8 @@ msgid "Enter the sales area code - up to 3 characters are allowed"
 msgstr "El código de zona no puede tener más de 3 caracteres"
 
 #: Areas.php:223
-#, fuzzy
 msgid "Enter the description of the sales area"
-msgstr "Una descripción del área de ventas de su interés."
+msgstr "Introduzca la descripción del área de ventas"
 
 #: AuditTrail.php:7
 msgid "Audit Trail"
@@ -4922,9 +4920,8 @@ msgstr ""
 "contrato?"
 
 #: ContractBOM.php:272
-#, fuzzy
 msgid "Confirm Deletion"
-msgstr "Selección de Contrato"
+msgstr "Confirmar borrado"
 
 #: ContractBOM.php:283
 msgid "Update Lines"
@@ -5846,9 +5843,8 @@ msgid "Contract Description"
 msgstr "Descripción del Contrato"
 
 #: Contracts.php:914
-#, fuzzy
 msgid "A description of the contract is required"
-msgstr "se requiere una descripción"
+msgstr "Se requiere una descripción del contrato"
 
 #: Contracts.php:916
 msgid "Drawing File"
@@ -21166,14 +21162,12 @@ msgid " excluding Tax"
 msgstr " excluyendo Impuestos"
 
 #: PO_Items.php:783
-#, fuzzy
 msgid "Update Order Lines"
-msgstr "Actualizar Líneas"
+msgstr "Actualizar líneas"
 
 #: PO_Items.php:785
-#, fuzzy
 msgid "Process Order"
-msgstr "Procesar Pedidos EDI"
+msgstr "Procesar Pedido"
 
 #: PO_Items.php:797
 msgid "General Ledger Code"
@@ -21585,7 +21579,7 @@ msgstr "Costo Extendido"
 #: POReport.php:1363 POReport.php:1452 SalesInquiry.php:830
 #: SalesInquiry.php:846 SalesInquiry.php:996
 msgid "Invoiced Qty"
-msgstr "Cantidad Facturada"
+msgstr "Cant. facturada"
 
 #: POReport.php:547 POReport.php:633 POReport.php:1313 POReport.php:1364
 #: SalesInquiry.php:831 SalesInquiry.php:849
@@ -21648,7 +21642,7 @@ msgstr "Todas las Categorías"
 
 #: POReport.php:1607 SalesInquiry.php:1196
 msgid "Sort By"
-msgstr "Ordenar Por"
+msgstr "Ordenar por"
 
 #: POReport.php:1620 SalesInquiry.php:1213
 msgid "Summary Type"
@@ -21686,9 +21680,8 @@ msgid "The SQL used to retrieve the searched parts was"
 msgstr "El SQL usado para obtener los códigos buscados fue"
 
 #: PO_SelectOSPurchOrder.php:138 PO_SelectOSPurchOrder.php:140
-#, fuzzy
 msgid "Add Purchase Order"
-msgstr "Orden de compra"
+msgstr "Agregar orden de compra"
 
 #: PO_SelectOSPurchOrder.php:145 PO_SelectPurchOrder.php:118
 #: Shipt_Select.php:109
@@ -24032,7 +24025,7 @@ msgstr ""
 #: SupplierInvoice.php:1294 SupplierInvoice.php:1342 SupplierInvoice.php:1379
 #: SupplierInvoice.php:1404 includes/PDFOstdgGRNsPageHeader.inc:36
 msgid "GRN"
-msgstr "Nota Remisoria"
+msgstr "NRB"
 
 #: ReverseGRN.php:389
 msgid "GRN Batch"
@@ -34339,7 +34332,7 @@ msgstr "La cantidad debe ser mayor que 0"
 
 #: SystemParameters.php:706
 msgid "integer between 0-100"
-msgstr ""
+msgstr "número entero entre 0-100"
 
 #: SystemParameters.php:707
 msgid ""
@@ -37422,7 +37415,7 @@ msgstr ""
 
 #: WWW_Users.php:467
 msgid "e.g. user@domain.com"
-msgstr ""
+msgstr "e.g. user@domain.com"
 
 #: WWW_Users.php:467
 #, fuzzy
