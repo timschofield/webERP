@@ -291,7 +291,7 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
                 										'" . $SupplierID . "',
                 										'" . Date('Y-m-d') . "',
                 										'" . $SuppRow['rate'] . "',
-                										'" . $_SESSION['UsersRealName'] . "',
+                										'" . $_SESSION['UserID'] . "',
                 										'" . $_SESSION['UserStockLocation'] . "',
                 										'" . $DelAddRow['locationname'] . "',
                 										'" . $DelAddRow['deladd1'] . "',
