@@ -68,7 +68,7 @@ if (isset($_POST['submit'])) {
 	if (mb_strlen($_POST['UserID'])<4){
 		$InputError = 1;
 		prnMsg(_('The user ID entered must be at least 4 characters long'),'error');
-	} elseif (ContainsIllegalCharacters($_POST['UserID'])) {
+	} elseif (ContainsIlLegalCharacters($_POST['UserID'])) {
 		$InputError = 1;
 		prnMsg(_('User names cannot contain any of the following characters') . " - ' &amp; + \" \\ " . _('or a space'),'error');
 	} elseif (mb_strlen($_POST['Password'])<5){
@@ -420,7 +420,7 @@ if (isset($SelectedUser)) {
 	echo '<table class="selection">
 			<tr>
 				<td>' . _('User Login') . ':</td>
-				<td><input pattern="(?!^([aA]{1}[dD]{1}[mM]{1}[iI]{1}[nN]{1})$)[^?+.&\\>< ]{4,}" type="text" required="required" name="UserID" size="22" maxlength="20" placeholder="'._('At least 4 characters').'" title="'._('Please input not less than 4 characters and canot be admin or contains illegal characters').'"  /></td>
+				<td><input pattern="(?!^([aA]{1}[dD]{1}[mM]{1}[iI]{1}[nN]{1})$)[^?+.&\\>< ]{4,}" type="text" required="required" name="UserID" size="22" maxlength="20" placeholder="'._('At least 4 characters').'" title="'._('Please input not less than 4 characters and canot be admin or contains ilLegal characters').'"  /></td>
 			</tr>';
 
 	/*set the default modules to show to all
@@ -524,17 +524,17 @@ if (!isset($_POST['SupplierID'])) {
 }
 echo '<tr>
 		<td>' . _('Customer Code') . ':</td>
-		<td><input type="text" name="Cust" data-type="no-illegal-chars" title="' . _('If this user login is to be associated with a customer account, enter the customer account code') . '" size="10" maxlength="10" value="' . $_POST['Cust'] . '" /></td>
+		<td><input type="text" name="Cust" data-type="no-ilLegal-chars" title="' . _('If this user login is to be associated with a customer account, enter the customer account code') . '" size="10" maxlength="10" value="' . $_POST['Cust'] . '" /></td>
 	</tr>';
 
 echo '<tr>
 		<td>' . _('Branch Code') . ':</td>
-		<td><input type="text" name="BranchCode" data-type="no-illegal-chars" title="' . _('If this user login is to be associated with a customer account a valid branch for the customer account must be entered.') . '" size="10" maxlength="10" value="' . $_POST['BranchCode'] .'" /></td>
+		<td><input type="text" name="BranchCode" data-type="no-ilLegal-chars" title="' . _('If this user login is to be associated with a customer account a valid branch for the customer account must be entered.') . '" size="10" maxlength="10" value="' . $_POST['BranchCode'] .'" /></td>
 	</tr>';
 
 echo '<tr>
 		<td>' . _('Supplier Code') . ':</td>
-		<td><input type="text" name="SupplierID" data-type="no-illegal-chars" size="10" maxlength="10" value="' . $_POST['SupplierID'] .'" /></td>
+		<td><input type="text" name="SupplierID" data-type="no-ilLegal-chars" size="10" maxlength="10" value="' . $_POST['SupplierID'] .'" /></td>
 	</tr>';
 
 echo '<tr>
@@ -577,33 +577,33 @@ if(isset($_POST['PageSize']) AND $_POST['PageSize']=='A3'){
 	echo '<option value="A3">' . _('A3')  . '</option>';
 }
 
-if(isset($_POST['PageSize']) AND $_POST['PageSize']=='A3_landscape'){
-	echo '<option selected="selected" value="A3_landscape">' . _('A3') . ' ' . _('landscape')  . '</option>';
+if(isset($_POST['PageSize']) AND $_POST['PageSize']=='A3_Landscape'){
+	echo '<option selected="selected" value="A3_Landscape">' . _('A3') . ' ' . _('landscape')  . '</option>';
 } else {
-	echo '<option value="A3_landscape">' . _('A3') . ' ' . _('landscape')  . '</option>';
+	echo '<option value="A3_Landscape">' . _('A3') . ' ' . _('landscape')  . '</option>';
 }
 
-if(isset($_POST['PageSize']) AND $_POST['PageSize']=='letter'){
-	echo '<option selected="selected" value="letter">' . _('Letter')  . '</option>';
+if(isset($_POST['PageSize']) AND $_POST['PageSize']=='Letter'){
+	echo '<option selected="selected" value="Letter">' . _('Letter')  . '</option>';
 } else {
-	echo '<option value="letter">' . _('Letter')  . '</option>';
+	echo '<option value="Letter">' . _('Letter')  . '</option>';
 }
 
-if(isset($_POST['PageSize']) AND $_POST['PageSize']=='letter_landscape'){
-	echo '<option selected="selected" value="letter_landscape">' . _('Letter') . ' ' . _('landscape')  . '</option>';
+if(isset($_POST['PageSize']) AND $_POST['PageSize']=='Letter_Landscape'){
+	echo '<option selected="selected" value="Letter_Landscape">' . _('Letter') . ' ' . _('landscape')  . '</option>';
 } else {
-	echo '<option value="letter_landscape">' . _('Letter') . ' ' . _('landscape')  . '</option>';
+	echo '<option value="Letter_Landscape">' . _('Letter') . ' ' . _('landscape')  . '</option>';
 }
 
-if(isset($_POST['PageSize']) AND $_POST['PageSize']=='legal'){
-	echo '<option selected="selected" value="legal">' . _('Legal')  . '</option>';
+if(isset($_POST['PageSize']) AND $_POST['PageSize']=='Legal'){
+	echo '<option selected="selected" value="Legal">' . _('Legal')  . '</option>';
 } else {
-	echo '<option value="legal">' . _('Legal')  . '</option>';
+	echo '<option value="Legal">' . _('Legal')  . '</option>';
 }
-if(isset($_POST['PageSize']) AND $_POST['PageSize']=='legal_landscape'){
-	echo '<option selected="selected" value="legal_landscape">' . _('Legal') . ' ' . _('landscape')  . '</option>';
+if(isset($_POST['PageSize']) AND $_POST['PageSize']=='Legal_Landscape'){
+	echo '<option selected="selected" value="Legal_Landscape">' . _('Legal') . ' ' . _('landscape')  . '</option>';
 } else {
-	echo '<option value="legal_landscape">' . _('Legal') . ' ' . _('landscape')  . '</option>';
+	echo '<option value="Legal_Landscape">' . _('Legal') . ' ' . _('landscape')  . '</option>';
 }
 
 echo '</select></td>
