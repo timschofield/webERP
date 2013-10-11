@@ -5,6 +5,8 @@
 include('includes/session.inc');
 
 $Title = _('Fulfill Stock Requests');
+$ViewTopic = 'Inventory';
+$BookMark = 'FulfilRequest';
 
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');

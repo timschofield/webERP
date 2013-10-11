@@ -1,5 +1,8 @@
 webERP Change Log
-2013/10/09  Exson: commit the fixed "Unable to Locate Purchase Order Number" error when the PO is created by SO interface. Fixed provided by Tim and reported by Merci from webERP forum. 
+
+11/10/13 Tim: Links for manual internal transfers and supplier payment link to allocations
+9/10/13  Exson: commit the fixed "Unable to Locate Purchase Order Number" error when the PO is created by SO interface. Fixed provided by Tim and reported by Merci from webERP forum. 
+6/10/13 Phil: New script to show a grid of items by preferred supplier for placing purchase orders to the users's default inventory location - orders will be authorised if the user has authority and the auto-authorise config option is enabled.
 3/10/13 icedlava: PO_Items.php with non-stock items still require GL Code in case of modified order at invoice time else SQL error is generated due to invalid GL Code.
 2/10/13 David Lynn: Added new field url to suppliers modified SelectSupplier.php and Suppliers.php
 28/9/13 wh_hsn: help with regular expression to trap quotes and backslashes for data-type="no-illegal-chars"

@@ -602,7 +602,7 @@ if (isset($_POST['CommitBatch'])){
 								'" . $_SESSION['PaymentDetail' . $identifier]->FunctionalExRate . "',
 								'" . FormatDateForSQL($_SESSION['PaymentDetail' . $identifier]->DatePaid) . "',
 								'" . $_SESSION['PaymentDetail' . $identifier]->Paymenttype . "',
-								'" . -$PaymentItem->Amount . "',
+								'" . -$_SESSION['PaymentDetail' . $identifier]->Amount . "',
 								'" . $_SESSION['PaymentDetail' . $identifier]->Currency . "' )";
 
 				$ErrMsg = _('Cannot insert a bank transaction because');
@@ -629,12 +629,15 @@ if (isset($_POST['CommitBatch'])){
 
 		/*Set up a newy in case user wishes to enter another */
 		if (isset($LastSupplier) and $LastSupplier!='') {
-			$sql="SELECT suppname FROM suppliers
+			$SupplierSQL="SELECT suppname FROM suppliers
 					WHERE supplierid='".$LastSupplier."'";
-			$result=DB_query($sql, $db);
-			$myrow=DB_fetch_array($result);
-			echo '<br /><a href="' . $RootPath . '/Payments.php?SupplierID=' . $LastSupplier . '">' .
-				_('Enter another Payment for') . ' ' . $myrow['suppname'] . '</a>';
+			 $SupplierResult = DB_query($SupplierSQL, $db);
+                         $SupplierRow = DB_fetch_array($SupplierResult);
+                         $TransSQL = "SELECT id FROM supptrans WHERE type=22 AND transno='" . $TransNo . "'";
+                         $TransResult = DB_query($IdSQL, $db);
+                         $TransRow = DB_fetch_array($IdResult);
+                         echo '<br /><a href="' . $RootPath . '/SupplierAllocations.php?AllocTrans=' . $TransRow['id'] . '">' . _('Allocate this payment') . '</a>';
+                         echo '<br /><a href="' . $RootPath . '/Payments.php?SupplierID=' . $LastSupplier . '">' . _('Enter another Payment for') . ' ' . $SupplierRow['suppname'] . '</a>';
 		} else {
 			echo '<br /><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Enter another General Ledger Payment') . '</a><br />';
 		}

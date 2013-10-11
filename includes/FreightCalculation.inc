@@ -51,7 +51,7 @@ Function CalcFreightCost ($TotalValue,
 			AND destinationcountry = '" . $BrAddCountry . "'
 			AND maxkgs > " . $TotalWeight . "
 			AND maxcub >" . $TotalVolume . " ";
-			if (($BrAdd2 != "") OR ($BrAdd3 != "") OR ($BrAdd4 != "") OR ($BrAdd5 != "")){
+			if (($BrAdd2 != '') OR ($BrAdd3 != '') OR ($BrAdd4 != '') OR ($BrAdd5 != '')){
 				// if there is some details of the address besides the country
 				$sql .= " AND (";
 				foreach ($FindCity as $City) {
@@ -61,7 +61,7 @@ Function CalcFreightCost ($TotalValue,
 					/* For international shipments empty destination (ANY) is allowed */
 					$sql = $sql . " destination = '' OR";
 				}
-				$sql = mb_substr($sql, 0, strrpos($sql,' OR')) . ')';
+				$sql = mb_substr($sql, 0, mb_strrpos($sql,' OR')) . ')';
 			}
 
 	$CalcFreightCostResult = DB_query($sql,$db);

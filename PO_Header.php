@@ -1015,7 +1015,7 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 		</tr>
 		<tr>
 			<td>' . _('Phone') . ':</td>
-			<td><input type="tel" name="Tel" pattern="[0-9+\-\s]*" size="31" maxlength="30" value="' . $_SESSION['PO' . $identifier]->Tel . '" /></td>
+			<td><input type="tel" name="Tel" pattern="[0-9+()\-\s]*" size="31" maxlength="30" value="' . $_SESSION['PO' . $identifier]->Tel . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Delivery By') . ':</td>

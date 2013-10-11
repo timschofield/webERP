@@ -107,8 +107,8 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['ShopPayPalBankAccount'] != $_POST['X_ShopPayPalBankAccount'] ) {
 			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopPayPalBankAccount']."' WHERE confname = 'ShopPayPalBankAccount'";
 		}
-		if ($_SESSION['ShopFreightModule'] != $_POST['X_ShopFreightModule'] ) {
-			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopFreightModule']."' WHERE confname = 'ShopFreightModule'";
+		if ($_SESSION['ShopFreightMethod'] != $_POST['X_ShopFreightMethod'] ) {
+			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopFreightMethod']."' WHERE confname = 'ShopFreightMethod'";
 		}
 
 		if (!$AllowDemoMode) {
@@ -165,9 +165,8 @@ if (isset($_POST['submit'])) {
 		$ErrMsg =  _('The shop configuration could not be updated because');
 		$DbgMsg = _('The SQL that failed was:');
 
-		//print_r($SQL);
-		
 		if (sizeof($SQL) > 0 ) {
+			
 			$result = DB_Txn_Begin($db);
 			foreach ($SQL as $SqlLine) {
 				$result = DB_query($SqlLine,$db,$ErrMsg,$DbgMsg,true);
@@ -359,17 +358,17 @@ echo '</select></td>
 
 echo '<tr>
 		<td>' . _('Freight Calculations') . ':</td>
-		<td><select name="X_ShopFreightModule">';
+		<td><select name="X_ShopFreightMethod">';
 
-$FreightModules = array(array('MethodName'=>'No Freight','MethodCode'=>'NoFreight'),
-						array('MethodName'=>'webERP calculation','MethodCode'=>'webERPDefault'),
+$FreightMethods = array(array('MethodName'=>'No Freight','MethodCode'=>'NoFreight'),
+						array('MethodName'=>'webERP calculation','MethodCode'=>'webERPCalculation'),
 						array('MethodName'=>'Australia Post API','MethodCode'=>'AusPost'));
 
-foreach($FreightModules as $FreightCalc){
-	if ($_SESSION['ShopFreightModule'] ==$FreightCalc['MethodCode']) {
-		echo '<option selected="selected" value="' . $FreightCalc['MethodCode'] . '">' . $FreightCalc['MethodName'] . '</option>';
+foreach($FreightMethods as $FreightMethod){
+	if ($_SESSION['ShopFreightMethod'] == $FreightMethod['MethodCode']) {
+		echo '<option selected="selected" value="' . $FreightMethod['MethodCode'] . '">' . $FreightMethod['MethodName'] . '</option>';
 	} else {
-		echo '<option value="' . $FreightCalc['MethodCode'] . '">' . $FreightCalc['MethodName'] . '</option>';
+		echo '<option value="' . $FreightMethod['MethodCode'] . '">' . $FreightMethod['MethodName'] . '</option>';
 	}
 }
 echo '</select></td>

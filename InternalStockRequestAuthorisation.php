@@ -5,6 +5,8 @@
 include('includes/session.inc');
 
 $Title = _('Authorise Internal Stock Requests');
+$ViewTopic = 'Inventory';
+$BookMark = 'AuthoriseRequest';
 
 include('includes/header.inc');
 

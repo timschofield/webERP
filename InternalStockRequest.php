@@ -6,6 +6,8 @@ include('includes/DefineStockRequestClass.php');
 
 include('includes/session.inc');
 $Title = _('Create an Internal Materials Request');
+$ViewTopic = 'Inventory';
+$BookMark = 'CreateRequest';
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
