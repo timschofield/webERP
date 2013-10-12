@@ -36,7 +36,7 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 			. _('Print') . '" alt="" />' . ' ' . $Title . '</p>';
 		echo '<table class="selection">'; //Main table
 		echo '<tr>
-				<th colspan="7"><h2><b>' . $TransName . ' ' . $_GET['TransNo'] . '</b></h2></th>
+				<th colspan="7"><h2><b>' . _($TransName) . ' ' . $_GET['TransNo'] . '</b></h2></th>
 			</tr>
 			<tr>
 				<th>' . _('Date') . '</th>
