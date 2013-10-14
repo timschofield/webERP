@@ -124,7 +124,7 @@ if (isset($_GET['SupplierID'])){
 		}
 		if (isset($_GET['Amount']) AND is_numeric($_GET['Amount'])){
 			$_SESSION['PaymentDetail' . $identifier]->Amount = filter_number_format($_GET['Amount']);
-		} 
+		}
 	}
 }
 
@@ -165,8 +165,8 @@ if (isset($_POST['Paymenttype']) AND $_POST['Paymenttype']!=''){
 if (isset($_POST['Currency']) AND $_POST['Currency']!=''){
 	/* Payment currency is the currency that is being paid */
 	$_SESSION['PaymentDetail' . $identifier]->Currency=$_POST['Currency']; //payment currency
-	
-	
+
+
 	if ($_SESSION['PaymentDetail' . $identifier]->AccountCurrency==$_SESSION['CompanyRecord']['currencydefault']){
 		$_POST['FunctionalExRate']=1;
 		$_SESSION['PaymentDetail' . $identifier]->FunctionalExRate=1;
@@ -188,8 +188,8 @@ if (isset($_POST['Currency']) AND $_POST['Currency']!=''){
 		$SuggestedFunctionalExRate = $myrow[0];
 
 	}
-	
-	
+
+
 	if ($_POST['Currency']==$_SESSION['PaymentDetail' . $identifier]->AccountCurrency){
 		/* if the currency being paid is the same as the bank account currency then default ex rate to 1 */
 		$_POST['ExRate']=1;
@@ -634,8 +634,8 @@ if (isset($_POST['CommitBatch'])){
 			 $SupplierResult = DB_query($SupplierSQL, $db);
                          $SupplierRow = DB_fetch_array($SupplierResult);
                          $TransSQL = "SELECT id FROM supptrans WHERE type=22 AND transno='" . $TransNo . "'";
-                         $TransResult = DB_query($IdSQL, $db);
-                         $TransRow = DB_fetch_array($IdResult);
+                         $TransResult = DB_query($TransSQL, $db);
+                         $TransRow = DB_fetch_array($TransResult);
                          echo '<br /><a href="' . $RootPath . '/SupplierAllocations.php?AllocTrans=' . $TransRow['id'] . '">' . _('Allocate this payment') . '</a>';
                          echo '<br /><a href="' . $RootPath . '/Payments.php?SupplierID=' . $LastSupplier . '">' . _('Enter another Payment for') . ' ' . $SupplierRow['suppname'] . '</a>';
 		} else {
