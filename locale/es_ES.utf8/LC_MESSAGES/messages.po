@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-09-06 21:34+1200\n"
-"PO-Revision-Date: 2013-10-12 10:38-0600\n"
+"PO-Revision-Date: 2013-10-14 09:11-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -16178,9 +16178,8 @@ msgid "Failed to retrieve user information"
 msgstr "No se pudo obtener la información de la transacción"
 
 #: MailingGroupMaintenance.php:211
-#, fuzzy
 msgid "Current Mail Group"
-msgstr "Grupo ancestro"
+msgstr "Grupo de correo actual"
 
 #: MailingGroupMaintenance.php:212
 #, fuzzy
@@ -16278,14 +16277,12 @@ msgid "NB: THIS JOB IS OVERDUE"
 msgstr ""
 
 #: MaintenanceReminders.php:77
-#, fuzzy
 msgid "Asset:"
-msgstr "Activo"
+msgstr "Activo:"
 
 #: MaintenanceReminders.php:77
-#, fuzzy
 msgid "Task:"
-msgstr "ID Centro de Costo"
+msgstr "Tarea:"
 
 #: MaintenanceReminders.php:77
 msgid "Due:"
@@ -16366,9 +16363,8 @@ msgid "Days Before Task Due"
 msgstr ""
 
 #: MaintenanceTasks.php:197
-#, fuzzy
 msgid "Responsible"
-msgstr "Código de Respuesta"
+msgstr "Responsable"
 
 #: MaintenanceTasks.php:215 MaintenanceTasks.php:217
 msgid "No Manager"
@@ -31628,9 +31624,8 @@ msgid "The contact name must be more than one characters long"
 msgstr "El nombre del contacto debe ser al menos un caracter de largo"
 
 #: SupplierContacts.php:240
-#, fuzzy
 msgid "More than one characters long"
-msgstr "o el caracter"
+msgstr "Más de una letra de largo"
 
 #: SupplierContacts.php:266 SupplierContacts.php:270 SupplierContacts.php:274
 #: Suppliers.php:711
@@ -31640,7 +31635,7 @@ msgstr "El tope de comisión debe ser número real"
 
 #: SupplierContacts.php:266 SupplierContacts.php:270 SupplierContacts.php:274
 msgid "Only digits,space,+,-,(,) allowed"
-msgstr ""
+msgstr "Sólo dígitos, espacio, (+), (-) o (,)"
 
 #: SupplierContacts.php:273
 msgid "Mobile No"
@@ -31653,7 +31648,7 @@ msgstr "La fecha debe estar en el formato"
 
 #: SupplierContacts.php:278
 msgid "should be email format such as adm@weberp.org"
-msgstr ""
+msgstr "Debe ser en formato de correo electrónico como adm@weberp.org"
 
 #: SupplierCredit.php:28 SupplierCredit.php:49
 msgid "Supplier Credit Note"
