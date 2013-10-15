@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-09-06 21:34+1200\n"
-"PO-Revision-Date: 2013-10-14 09:11-0600\n"
+"PO-Revision-Date: 2013-10-15 10:42-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -3111,7 +3111,7 @@ msgstr "Zona"
 #: SalesInquiry.php:770 SalesInquiry.php:805 SalesInquiry.php:972
 #: SalesInquiry.php:1222
 msgid "Stock Category"
-msgstr "Categoría de Existencia"
+msgstr "Categoría de inventario"
 
 #: COGSGLPostings.php:94 COGSGLPostings.php:199 COGSGLPostings.php:316
 #: Customers.php:495 Customers.php:837 Customers.php:842 DiscountMatrix.php:97
@@ -3146,7 +3146,7 @@ msgstr "Mostrar los registros de todos los costos de venta"
 #: COGSGLPostings.php:275 COGSGLPostings.php:296 COGSGLPostings.php:318
 #: SalesGLPostings.php:317 SalesGLPostings.php:339 SalesGLPostings.php:365
 msgid "Any Other"
-msgstr "Otra"
+msgstr "Cualquier otro"
 
 #: COGSGLPostings.php:316 Customers.php:495 Customers.php:842
 #: EDIProcessOrders.php:386 PDFCustomerList.php:334 PDFPriceList.php:16
@@ -6418,7 +6418,7 @@ msgstr ""
 
 #: CounterReturns.php:1610 CounterSales.php:2220 SelectOrderItems.php:1659
 msgid "Select a Stock Category"
-msgstr "Seleccionar una Categoría de Existencia"
+msgstr "Seleccionar una categoría de inventario"
 
 #: CounterReturns.php:1635 CounterSales.php:2243 SelectOrderItems.php:1683
 msgid "Enter partial Description"
@@ -24829,7 +24829,7 @@ msgstr "Informe de Categoría de Ventas"
 
 #: SalesGLPostings.php:6
 msgid "Sales GL Postings Set Up"
-msgstr "Configuración de Registros Contables de Ventas"
+msgstr "Configuración de registros contables de ventas"
 
 #: SalesGLPostings.php:36
 msgid "The sales GL posting record has been updated"
@@ -24861,11 +24861,11 @@ msgstr ""
 
 #: SalesGLPostings.php:118 SalesGLPostings.php:233
 msgid "Sales Account"
-msgstr "Cuenta de Ventas"
+msgstr "Cuenta de ventas"
 
 #: SalesGLPostings.php:119 SalesGLPostings.php:234
 msgid "Discount Account"
-msgstr "Cuenta de Descuento"
+msgstr "Cuenta de descuentos"
 
 #: SalesGLPostings.php:138 SalesGLPostings.php:254
 #, php-format
@@ -24879,11 +24879,11 @@ msgstr "Mostrar Todos los Códigos de Ventas Definidos"
 
 #: SalesGLPostings.php:380
 msgid "Post Sales to GL Account"
-msgstr "Apuntar las Ventas en la Cuenta Contable"
+msgstr "Registrar ventas en la cuenta contable"
 
 #: SalesGLPostings.php:408
 msgid "Post Discount to GL Account"
-msgstr "Apuntar el Descuento en la Cuenta Contable"
+msgstr "Registrar descuentos en la cuenta contable"
 
 #: SalesGraph.php:7
 msgid "Sales Report Graph"
