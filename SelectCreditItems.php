@@ -333,7 +333,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			}
 
 		} elseif ($_POST['StockCode']!=''){
-			$_POST['StockCode'] = '%' . $_POST['StockCode'] . '%';
+			$SearchString = '%' . $_POST['StockCode'] . '%';
 			if ($_POST['StockCat']=='All'){
 				$SQL = "SELECT stockmaster.stockid,
 						stockmaster.description,
@@ -341,7 +341,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					FROM stockmaster INNER JOIN stockcategory
 					ON stockmaster.categoryid=stockcategory.categoryid
 					WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
-					AND  stockmaster.stockid " . LIKE . " '" . $_POST['StockCode'] . "'
+					AND  stockmaster.stockid " . LIKE . " '" . $SearchString . "'
 					GROUP BY stockmaster.stockid,
 						stockmaster.description,
 						stockmaster.units
@@ -353,7 +353,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 						FROM stockmaster INNER JOIN stockcategory
 						ON stockmaster.categoryid=stockcategory.categoryid
 						WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
-						AND stockmaster.stockid " . LIKE . " '" . $_POST['StockCode'] . "'
+						AND stockmaster.stockid " . LIKE . " '" . $SearchString . "'
 						AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
 						GROUP BY stockmaster.stockid,
 							stockmaster.description,
