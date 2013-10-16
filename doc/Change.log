@@ -1,5 +1,6 @@
 webERP Change Log
 
+15/10/13 Paul T: change variable name from OrderNumber to OrderNo.
 11/10/13 Tim: Links for manual internal transfers and supplier payment link to allocations
 9/10/13  Exson: commit the fixed "Unable to Locate Purchase Order Number" error when the PO is created by SO interface. Fixed provided by Tim and reported by Merci from webERP forum. 
 6/10/13 Phil: New script to show a grid of items by preferred supplier for placing purchase orders to the users's default inventory location - orders will be authorised if the user has authority and the auto-authorise config option is enabled.
@@ -72,14 +73,14 @@ webERP Change Log
 2013/08/14 Exson: Fixed INSERT sql errors and href link error and make it html5 compatible in WOSerialNos.php.
 04/8/13 icedlava: Update Manual - Using the webERP Installer - rework of some text due to new installer, and updated screen shots
 03/8/13 icedlava: Obfuscate database name in login, do not show company in login if directory/company not wanted.
-29/7/13 Serge Gélinas: Profit and loss now has option to show all accounts and by default just shows those with a balance
+29/7/13 Serge GÃ©linas: Profit and loss now has option to show all accounts and by default just shows those with a balance
 29/7/13 icedlava: Hard code the page title in Installer html, previously missing - no language strings available at this time - used English
 28/7/13 icedlava: Installer - strip inline styles, add html5/css to pretty up, fix small typo/bugs and spelling/grammar. No logic changes.
 28/7/13 icedlava: Allow ampersands in company name eg Matthew & Sons Ltd
 26/7/13 icedlava: Move Supplier Contact Detail review link to top of page away from Delete button
 26/7/13 icedlava: Fix Form Designer xml for GL Journal
 26/7/13 icedlava: Fix PO PDF Preview when $result returns Bool in some environments.
-25/7/13 Serge Gélinas: Balance sheet now has option to show all accounts and by default just shows those with a balance
+25/7/13 Serge GÃ©linas: Balance sheet now has option to show all accounts and by default just shows those with a balance
 24/7/13 Exson: Fixed that empty password should be allowed. Reported by Tim.
 24/7/13 Exson: Add the html5 mark for some input fields in WWW_Users.php.
 22/7/13 Exson: Fixed the document.form not defined error in GLJournal.php.
@@ -111,8 +112,8 @@ webERP Change Log
 12/6/13 tomglare: SelectSupplier - improve handling if single supplier selected
 25/5/13 Phil: CountriesArray.php now uses the index as the ISO 2 character code for the country.
 25/5/13 Phil: Currencies.php now takes advantage of Rafael's new CurrenciesArray - to ensure correct ISO 3 letter abbreviation is selected - also allows for translation of currency names
-25/5/13 Rafael Chacón: New include/CurrenciesArray.php listing all ISO currencies and their code
-22/5/13 Rafael Chacón: include/PO_PDFOrderPageHeader.inc now allows different length labels for date and intiator without running into the field data - needed for translations of different lengths
+25/5/13 Rafael ChacÃ³n: New include/CurrenciesArray.php listing all ISO currencies and their code
+22/5/13 Rafael ChacÃ³n: include/PO_PDFOrderPageHeader.inc now allows different length labels for date and intiator without running into the field data - needed for translations of different lengths
 18/5/13 Exson: Stop session.inc execution when there is no config.php found.
 17/5/13 Phil: ConfirmDispatch_Invoice.php -include qty already invoiced in order when cancelling any balance on subsequent deliveries.
 12/5/13 Tim: Add patch for the email groups are set situation in PDFChequeListing.php, MailSalesReport.php, MailSalesReport_csv.php, OffersReceived.php.
@@ -132,7 +133,7 @@ webERP Change Log
 11/5/13 Exson: Make the inventory valuation report can be mailed.
 11/5/13 Exson: Add Mail Validation Report to inventory module in MainMenuLinksArray.php.
 11/5/13 Exson: Revise the CURDATE() to CURRENT_DATE to make it a more general SQL compatible in OffersReceived.php. Recommend by Tim.
-12/5/13 Rafael Chacón: Spanish translation update
+12/5/13 Rafael ChacÃ³n: Spanish translation update
 11/5/13 Exson: Add OffersRecievedResultRecipients group to mailgroups in ugrade4.10-4.11.sql/mysql/upgrade4.10-4.11.sql
 11/5/13 Exson: Add OffersReceivedRecipients Group, added feature to use mail instead of smtp mail only, fixed the problem that item with single quotation mark cannot be stored and the same date comparison problem.
 11/5/13 Exson: Add MailSalesReport_csv to scripts and add SalesAnalysisReportRecipients for mailing list in sql/mysql/upgrade4.10-4.11.sql
@@ -203,7 +204,7 @@ webERP Change Log
 18/2/13 Fahad Hatib: Committed by Phil - added BookMarks and ViewTopic links in the General Ledger scripts and modifications to the general ledger manual to add these bookmarks.
 18/2/13 Tim Schofield: Z_ImportPriceList.php to import a price list from a csv file
 15/2/13 Gilberto Dos Santos Alves: Updated Brazilian Portuguese (pt_BR.utf8) translation
-15/2/13 Rafael Chacón: Corrected CRC flag
+15/2/13 Rafael ChacÃ³n: Corrected CRC flag
 13/2/13 Phil: Fix bugs in labelling of fields in view customer details in Customers.php
 12/2/13 Paul Harness: Fix of serialized transfer quantities/includes, StockTransferControlled.php
 11/2/13 Fahad Hatib: Committed by Phil - added Manual links for AR, Fixed Assets and AP manual sections
@@ -269,7 +270,7 @@ webERP Change Log
 13/10/12 Samudaya Nanayakkara: Typo fox in FixedAssetLocations.php and FixedAssetTransfer.php added location to search for existing assets to transfer
 12/10/12 Phil: Fix pagination/selection of order items in SelectOrderItems.php and CounterSales.php
 12/10/12 Phil: SelectAsset.php now goes to FixedAssetItems.php when an item is selected to display the asset for editing
-12/10/12 Rafael Chacón: Updated CRC - Costa Rica flag image
+12/10/12 Rafael ChacÃ³n: Updated CRC - Costa Rica flag image
 10/10/12 Harald Ringehahn: Updated German translation
 9/10/2012 Exson: fixed typo in CounterSales.php reported by thumb.
 9/10/12 Exson: installation would not allow demo to be installed - install/index.php
@@ -289,7 +290,7 @@ webERP Change Log
 6/9/12 Thomas Timothy Lie and baliboss.com Team: updated Indonesian translation
 1/9/12 Carlos Rubio: AccountGroups.php now has option to move to alternative accountgroups
 30/8/2012 Exson: fixed sql problem reported bymodpr0be
-24/8/12 Serge Gélinas: Added new fr_CA.utf8 French Quebec translation
+24/8/12 Serge GÃ©linas: Added new fr_CA.utf8 French Quebec translation
 21/8/12 Phil: Stock.php could not change an item to an assembly if there were any old completed or deleted/rejected purchase orders for the item.
 20/8/2012 Phil: StockCounts.php now allows entry Bar Codes or stock codes
 20/8/2012 Phil: Now allow labour type category items to be selected searched for in CounterSales.php and SelectOrderItems.php
@@ -334,7 +335,7 @@ webERP Change Log
 02/06/2012 Exson: Fixed the order cancel function failure in SelectOrderItems.php. Reported by Pak Richard.
 2/6/12 Phil: Settle counter sales and receipts should be set - now fixed.
 28/5/2012 Phil: Configure xmlrpc api to work correctly with utf-8 character encoding.
-26/5/2012 Phil: Fix barcode printing on PDFPrintLabel.php - barcode functionality is unreliable so used (http://www.barcodepack.com) by Tomáš Horáček very simple and clean
+26/5/2012 Phil: Fix barcode printing on PDFPrintLabel.php - barcode functionality is unreliable so used (http://www.barcodepack.com) by TomÃ¡Å¡ HorÃ¡Ä�ek very simple and clean
 23/5/2012 Klaus: PO_PDFPurchOrders.php print purchase orders with supplier's code where it is available in the purchasing data
 23/5/2012 Exson: Revise GLAccounts.php to make more than 10 digits account code is allowed.
 2012/05/22 Exson: Modify accountcode to varchar(20) to meet some countries accounting regulation for more digits account code.
@@ -378,7 +379,7 @@ webERP Change Log
 3/4/2012 Exson: Fixed typo in PurchData.php.
 3/4/2012 Tim: fixed Supplier Code and Supplier part code inconsistent with database field length definition in PurchData.php. Reported by rfthomas.
 2/4/2012 Vitaly: BOMs delete function requires Location and WorkCentre to be set
-2/4/2012  Billy Chang,劉世琪: add Chinese Traditional TW locale
+2/4/2012  Billy Chang,åŠ‰ä¸–ç�ª: add Chinese Traditional TW locale
 2/4/2012  Exson: fixed CopyBOM.php sql errors and header already sent error.
 31/3/2012 Exson: Fixed for PcAuthorizeExpenses.php cannot authorized expenses due to no applying gettext function to 'Update'
 31/3/2012: PakRichard: 	Fixed problem that on PCAssignCashToTab.php it should be used the decimal places of the currency of the tab, not the decimal places of the functional currency.The same in PcClaimExpensesFromTab.php
@@ -475,7 +476,7 @@ webERP Change Log
 
 Release 4.06.6
 
-7/1/12 Phil: José Roberge (robergej) reported that purchase invoice tax on tax was not being processed correctly although it was appearing on the supplier invoice during entry of the invoice the processing was not calculating the tax on tax. Fixed SupplierInvoice.php
+7/1/12 Phil: JosÃ© Roberge (robergej) reported that purchase invoice tax on tax was not being processed correctly although it was appearing on the supplier invoice during entry of the invoice the processing was not calculating the tax on tax. Fixed SupplierInvoice.php
 7/1/12 Phil: Brian May reported that was unable to add completed (fully received) lines off a purchase order against a shipment. Removed trap to allow completed (fully received) lines to be added.
 5/1/12 Phil: Brian May reported issues with entering shipments discovered parameter DecimalPlaces missed off adding line to shipment also quotation error in entering shipment ETA date.
 
@@ -781,8 +782,8 @@ Release 4.06.6
 10/3/11: Tims: launchpad fixes brought in MRP.php fix for table charset utf8 so joins work correctly; typeo in PO_Header preventing purchasing data being retrieved ($result not $Result); correct sql on searching for customer in SelectCreditItems.php; StockStatus.php pricing history bug resolved (4450); StockQuantityByDate.php now allowed to show for all categories - enclosed 'All' in gettext
 8/3/11: Tim/Phil: PO_Items.php in committing an order detail the assetid of 'Not an Asset' was being inserted to an integer field. Modified $_POST['AssetID'] to = 0 if it was 'Not an Asset' as advised by Tim
 8/3/11: Phil: fix SalesAnalysis reports for TCPDF as reported by Joe Zhou
-5/3/11: Kovács Attila: fix to Stocks.php to use ANSI GROUP BY for aggregate functions SQL
-5/3/11: Kovács Attila: fix to LanguageSetup.php to use utf-8 not ISO-8859-1. Phil hardcoded UTF-8 now as no dynamic changing of character set required all translations are utf-8
+5/3/11: KovÃ¡cs Attila: fix to Stocks.php to use ANSI GROUP BY for aggregate functions SQL
+5/3/11: KovÃ¡cs Attila: fix to LanguageSetup.php to use utf-8 not ISO-8859-1. Phil hardcoded UTF-8 now as no dynamic changing of character set required all translations are utf-8
 3/3/11: Exson/Baran/Phil fix to customer login to ensure that other customers orders are not displayed when searching by customer ref or order no
 3/3/11: Tim launchpad mods to revision 4441 including change to allow supplier currency to be changed if there are no transactions already against the supplier.  Ensure credit note session variable is unset before attempting to create a new credit note from the supplier form. Tim's work to add perisable expiry dates to the serial items logic - affects quite a few scripts. Headings to stock check script even if no quantity is shown. Portrait quotations. Not included change to default delivery date to the date the customer requested - left to be the current day's date. Not included Tim's unit pricing work .. yet launchpad revisions 4442-4447 inclusive
 27/2/11: Phil/Tim/Peter launchpad added category option for MRPShortages.php links with matching quotes in WorkOrderEntry
@@ -1316,15 +1317,15 @@ Version 4.0RC1
 23/04/10 Matt Taylor: Z_BottomUpCost.php : Add script for batch updating BOM costs.
 22/04/10 Zhiguo: SelectProduct.php - Add a link to StockStatus.php direct from the selection page.
 22/04/10 Lindsay: add missing ; to second last line of upgrade3.11.1-3.12.sql
-22/04/10 Zhiguo: index.php - Change SID to sid, so as to solve the locale issue of Turkish I(ı) & İ(i)
-22/04/10 Zhiguo: PrintCustStatements.php - Change addInfo() to addinfo() and also change INTERVAL() to interval(), so as to solve the locale issue of Turkish I(ı) & İ(i)
-22/04/10 Zhiguo: PDFOrdersInvoiced.php - Change addInfo() to addinfo() and Is_Date() to is_date() also change SID to sid, so as to solve the locale issue of Turkish I(ı) & İ(i)
-22/04/10 Zhiguo: PDFDIFOT.php - Change addInfo() to addinfo() and also change SID to sid, so as to solve the locale issue of Turkish I(ı) & İ(i)
-22/04/10 Zhiguo: PDFDeliveryDifferences.php - Change addInfo() to addinfo() and also change SID to sid, so as to solve the locale issue of Turkish I(ı) & İ(i)
-22/04/10 Zhiguo: ConnectDB_mysql.inc - Change INTERVAL() to interval(), so as to solve the locale issue of Turkish I(ı) & İ(i)
-22/04/10 Zhiguo: ConnectDB_mysqli.inc - Change INTERVAL() to interval(), so as to solve the locale issue of Turkish I(ı) & İ(i)
-22/04/10 Zhiguo: DateFunctions.inc - Change Is_Date() to is_date(), so as to solve the locale issue of Turkish I(ı) & İ(i)
-22/04/10 Zhiguo: class.pdf.php - Change addInfo() to addinfo(), so as to solve the locale issue of Turkish I(ı) & İ(i)
+22/04/10 Zhiguo: index.php - Change SID to sid, so as to solve the locale issue of Turkish I(Ä±) & Ä°(i)
+22/04/10 Zhiguo: PrintCustStatements.php - Change addInfo() to addinfo() and also change INTERVAL() to interval(), so as to solve the locale issue of Turkish I(Ä±) & Ä°(i)
+22/04/10 Zhiguo: PDFOrdersInvoiced.php - Change addInfo() to addinfo() and Is_Date() to is_date() also change SID to sid, so as to solve the locale issue of Turkish I(Ä±) & Ä°(i)
+22/04/10 Zhiguo: PDFDIFOT.php - Change addInfo() to addinfo() and also change SID to sid, so as to solve the locale issue of Turkish I(Ä±) & Ä°(i)
+22/04/10 Zhiguo: PDFDeliveryDifferences.php - Change addInfo() to addinfo() and also change SID to sid, so as to solve the locale issue of Turkish I(Ä±) & Ä°(i)
+22/04/10 Zhiguo: ConnectDB_mysql.inc - Change INTERVAL() to interval(), so as to solve the locale issue of Turkish I(Ä±) & Ä°(i)
+22/04/10 Zhiguo: ConnectDB_mysqli.inc - Change INTERVAL() to interval(), so as to solve the locale issue of Turkish I(Ä±) & Ä°(i)
+22/04/10 Zhiguo: DateFunctions.inc - Change Is_Date() to is_date(), so as to solve the locale issue of Turkish I(Ä±) & Ä°(i)
+22/04/10 Zhiguo: class.pdf.php - Change addInfo() to addinfo(), so as to solve the locale issue of Turkish I(Ä±) & Ä°(i)
 21/04/10 Matt Taylor: Z_ImportStocks.php : Fix bug in checking of perishable field.
 18/04/10 Ricard: InventoryPlanning.php - Remove discontinued items from inventory planning reports.
 15/04/10 Kalmer Piiskop: MiscFunctions.js - Update IsDAte() function for all date formats.
@@ -1582,8 +1583,8 @@ Version 4.0RC1
 30/10/09 Tim: WorkOrderReceive.php - Layout improvements.
 30/10/09 Tim: upgrade3.11-3.11.1 - Remove change to www_users as not a bug in 3.11
 30/10/09 Tim: Update images to ensure that all themes have the same images
-30/10/09 Tim: StockDispatch - New version for StockDispatch with some printing improvements and also with an option to choose a “simple” or “standard” form, depending on the company needs.
-30/10/09 Pak Ricard: StockDispatch - New version for StockDispatch with some printing improvements and also with an option to choose a “simple” or “standard” form, depending on the company needs.
+30/10/09 Tim: StockDispatch - New version for StockDispatch with some printing improvements and also with an option to choose a â€œsimpleâ€� or â€œstandardâ€� form, depending on the company needs.
+30/10/09 Pak Ricard: StockDispatch - New version for StockDispatch with some printing improvements and also with an option to choose a â€œsimpleâ€� or â€œstandardâ€� form, depending on the company needs.
 30/10/09 Pak Ricard: PrintCustTransPortrait.php - Allows PrintCustTransPortrait to use prices from salesordersdetails, instead of stockmoves, to solve the multicurrency issue with large exchage rates.
 30/10/09 Pak Ricard: PrintCustTrans.php - Allows PrintCustTrans to use prices from salesordersdetails, instead of stockmoves, to solve the multicurrency issue with large exchage rates.
 30/10/09 Tim: upgrade3.11-3.12.sql - Remove duplicated indexes
@@ -1846,8 +1847,8 @@ Version 3.11
 17/07/09 Ricard Andreu: InventoryValuation.php - Changes to allow longer part descriptions
 16/07/09 Nagaraj Potti: New installer from Moxx consulting
 16/07/09 Tim: SelectOrderItems.php - Button labels not formatted for gettext
-16/07/09 Tim: ManualHeader.html - Change manual to work with utf-8 as per Javier de Lorenzo-Cáceres
-16/07/09 Tim: ManualContributors.html - Javier de Lorenzo-Cáceres
+16/07/09 Tim: ManualHeader.html - Change manual to work with utf-8 as per Javier de Lorenzo-CÃ¡ceres
+16/07/09 Tim: ManualContributors.html - Javier de Lorenzo-CÃ¡ceres
 16/07/09 Tim: ShipmentCosting.php - Correct typo
 16/07/09 Tim: WorkOrderReceive.php - Correct typo
 16/07/09 Tim: Payments.php - Correct typo
@@ -2172,7 +2173,7 @@ Version 3.11
 02/05/09 Tim: StockCategories.php - Correct form refresh to show changes in stock types when a category is being edited
 30/4/09 Phil: Add field to Stocks.php for NextSerialNo - where > 0 and Serialised then automatically allocates serial numbers for quantities on new work orders - and work orders will not allow quantities to change once created
 29/04/09 Tim: StockCategories.php - Change default behaviour to show Stock GL Code
-29/04/09 Ricard Andreu: InventoryPlanning.php - InventoryPlanning.php now allowing 1, 1.5, 2, 3 and 4 months of 'Maximum number of Months Holding' instead of 3 or 4 as used to be. Also the “Nil” on Suggested order column gets right justified as all the other fields.
+29/04/09 Ricard Andreu: InventoryPlanning.php - InventoryPlanning.php now allowing 1, 1.5, 2, 3 and 4 months of 'Maximum number of Months Holding' instead of 3 or 4 as used to be. Also the â€œNilâ€� on Suggested order column gets right justified as all the other fields.
 28/04/09 Murray: fix some HTML typos in DeliveryDetails and remove 6 digit price restriction from Credit_Invoice
 27/04/09 Tim: api/api_xml-rpc.php - Corrections to enable API documentation to be shown
 27/04/09 Tim: doc/Manual/ManualAPIFunctions.php - Corrections to enable API documentation to be shown
@@ -2603,7 +2604,7 @@ Version 3.10
 10/9/08 Tim: Add field for suppliers tax reference
 10/9/08 KStan: Insert link back to SelectProduct.php on successful insert of new strock item
 09/9/08 Tim: Fixed colour scheme problem
-09/9/08 Björn Paulsen: Fixed bug in PDFStockLocTransferHeader.inc for translation error, and improved layout.
+09/9/08 BjÃ¶rn Paulsen: Fixed bug in PDFStockLocTransferHeader.inc for translation error, and improved layout.
 09/9/08 Ashish Shukla: Fixed bug in AuditTrauil.php where the field value contains a comma, as per Ashish Shukla
 09/9/08 Thomas Pulina: Correct typo in Payments.php
 09/9/08 Tim: Correct bug in MiscFunctions.php for when default currency is not in the ECB list
@@ -3052,7 +3053,7 @@ Version 3.05
 9/12/05 Obscure bug in GetPrice.inc - if special prices set up for a salestype/customer combo but not default price set up for the salestype then the special price is picked up for customers belonging to the sales type even though it is specific to a different customer! - now fixed
 9/12/05 Danie - StockLocTransfers.php -now checks for positive stock in the location before allowing a transfer.
 6/12/05 Updated the webERP php-gettext to the latest version 1.05
-3/12/05 Jo� - WWW_Users.php now options to set theme and language before user logs in. Previously had to be set from the user settings when the user logged in themselves now the sysadmin can change them. Changed locale setting to LC_ALL then changed the LC_NUMERIC back to en_GB.
+3/12/05 Joï¿½ - WWW_Users.php now options to set theme and language before user logs in. Previously had to be set from the user settings when the user logged in themselves now the sysadmin can change them. Changed locale setting to LC_ALL then changed the LC_NUMERIC back to en_GB.
 21/11/05 Dave Premo - report writer tool - allows adding reports on any web erp data and formating thereof provided some knowledge of the tables etc. Export to PDF, CSV - import and export of reports too. New directory for the files reportwriter as well as changes to session.inc, header.inc, config.php, footer.inc
  16/11/05 Tech Nossomy Credit status - tidied up consistency of wording "Disallow invoices". Also used white and black in .css files instead of #FFFFFF and #000000 respectively
 
