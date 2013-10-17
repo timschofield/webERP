@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-09-06 21:34+1200\n"
-"PO-Revision-Date: 2013-10-15 10:42-0600\n"
+"PO-Revision-Date: 2013-10-17 10:05-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -12387,7 +12387,7 @@ msgstr "Consulte a su administrador del sistema para corregir este problema"
 
 #: FormDesigner.php:134
 msgid "Select the form to edit"
-msgstr "Seleccione el formulario de editar"
+msgstr "Seleccione el formulario a editar"
 
 #: FormDesigner.php:147
 msgid "Edit Form Layout"
@@ -12395,7 +12395,7 @@ msgstr "Editar el diseño del formulario"
 
 #: FormDesigner.php:158
 msgid "Form Design"
-msgstr "Diseño de Formulario"
+msgstr "Diseño del formulario"
 
 #: FormDesigner.php:159
 msgid "Enter the changes that you want in the form layout below."
@@ -12408,11 +12408,11 @@ msgstr "Todas las medidas están en los puntos"
 
 #: FormDesigner.php:166
 msgid "Form Name"
-msgstr "Nombre del Formulario"
+msgstr "Nombre del formulario"
 
 #: FormDesigner.php:168
 msgid "Paper Size"
-msgstr "Tamaño del Papel"
+msgstr "Tamaño del papel"
 
 #: FormDesigner.php:183
 msgid "Line Height"
@@ -12450,11 +12450,11 @@ msgstr "Coordenada Y Final"
 
 #: FormDesigner.php:282
 msgid "Preview the Form Layout"
-msgstr "Vista Previa del Diseño del Formulario"
+msgstr "Vista previa del diseño del formulario"
 
 #: FormDesigner.php:283
 msgid "Save the Form Layout"
-msgstr "Guardar el Diseño del Formulario"
+msgstr "Guardar el diseño del formulario"
 
 #: FreightCosts.php:6 includes/MainMenuLinksArray.php:479
 msgid "Freight Costs Maintenance"
@@ -43316,7 +43316,7 @@ msgstr "Ver Auditor"
 
 #: includes/MainMenuLinksArray.php:441
 msgid "Form Layout Editor"
-msgstr "Editor de Formulario de Presentación"
+msgstr "Editor de diseño de formulario"
 
 #: includes/MainMenuLinksArray.php:442
 #, fuzzy

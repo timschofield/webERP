@@ -440,7 +440,7 @@ $MenuItems['system']['Transactions']['Caption'] = array(_('Company Preferences')
 														_('Report Builder Tool'),
 														_('View Audit Trail'),
 														_('Geocode Setup'),
-														_('Form Layout Editor'),
+														_('Form Design'),
 														_('Web-Store Configuration'),
 														_('SMTP Server Details'),
 												       		_('Mailing Group Maintenance')	);
