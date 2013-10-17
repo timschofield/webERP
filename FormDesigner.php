@@ -138,7 +138,7 @@ if (empty($_POST['FormName'])) {
 		while (false !== ($file = readdir($handle))) {
 			if ($file[0]!='.') {
 				$FormDesign = simplexml_load_file($PathPrefix.'companies/'.$_SESSION['DatabaseName'].'/FormDesigns/'.$file);
-				echo '<option value="'.$file.'">' . $FormDesign['name'] . '</option>';
+				echo '<option value="'.$file.'">' . _($FormDesign['name']) . '</option>';
 			}
 		}
 		closedir($handle);
