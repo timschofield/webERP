@@ -1,5 +1,6 @@
 webERP Change Log
 
+18/10/13 Paul T: Add bracket to complete closing h3 tag.
 15/10/13 Paul T: change variable name from OrderNumber to OrderNo.
 11/10/13 Tim: Links for manual internal transfers and supplier payment link to allocations
 9/10/13  Exson: commit the fixed "Unable to Locate Purchase Order Number" error when the PO is created by SO interface. Fixed provided by Tim and reported by Merci from webERP forum. 
