@@ -1,7 +1,8 @@
 webERP Change Log
 
-18/10/13 Paul T: Add bracket to complete closing h3 tag.
-15/10/13 Paul T: change variable name from OrderNumber to OrderNo.
+18/10/13 Paul T: ManualSecuritySchema.html, add missing tr tags, reduced doubled-closing td tags to one, and changed & to &amp; for HTML.  
+18/10/13 Paul T: ManualInventory.html, add bracket to complete closing h3 tag.
+15/10/13 Paul T: GoodsReceived.php, change variable name from OrderNumber to OrderNo.
 11/10/13 Tim: Links for manual internal transfers and supplier payment link to allocations
 9/10/13  Exson: commit the fixed "Unable to Locate Purchase Order Number" error when the PO is created by SO interface. Fixed provided by Tim and reported by Merci from webERP forum. 
 6/10/13 Phil: New script to show a grid of items by preferred supplier for placing purchase orders to the users's default inventory location - orders will be authorised if the user has authority and the auto-authorise config option is enabled.
