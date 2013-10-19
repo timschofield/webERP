@@ -107,6 +107,9 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['ShopPayPalBankAccount'] != $_POST['X_ShopPayPalBankAccount'] ) {
 			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopPayPalBankAccount']."' WHERE confname = 'ShopPayPalBankAccount'";
 		}
+		if ($_SESSION['ShopPayPalCommissionAccount'] != $_POST['X_ShopPayPalCommissionAccount'] ) {
+			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopPayPalCommissionAccount']."' WHERE confname = 'ShopPayPalCommissionAccount'";
+		}
 		if ($_SESSION['ShopFreightMethod'] != $_POST['X_ShopFreightMethod'] ) {
 			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopFreightMethod']."' WHERE confname = 'ShopFreightMethod'";
 		}
@@ -430,6 +433,27 @@ while ($BankAccountRow = DB_fetch_array($BankAccountsResult)){
 }
 echo '</select></td>
 		<td>' . _('Select the webERP bank account to use for receipts processed by Pay Pal') . '</td>
+	</tr>';
+
+
+echo '<tr>
+		<td>' . _('Pay Pal Commission Account') . ':</td>
+		<td><select name="X_ShopPayPalCommissionAccount">';
+$AccountsResult = DB_query("SELECT accountcode,
+						accountname
+					FROM chartmaster INNER JOIN accountgroups
+					ON chartmaster.group_=accountgroups.groupname
+					WHERE accountgroups.pandl=1
+					ORDER BY chartmaster.accountcode",$db);
+while ($AccountRow = DB_fetch_array($AccountsResult)){
+	if ($_SESSION['ShopPayPalCommissionAccount'] == $AccountRow['accountcode']) {
+		echo '<option selected="selected" value="' . $AccountRow['accountcode'] . '">' . $AccountRow['accountname'] . '</option>';
+	} else {
+		echo '<option value="' . $AccountRow['accountcode'] . '">' . $AccountRow['accountname'] . '</option>';
+	}
+}
+echo '</select></td>
+		<td>' . _('Select the webERP P/L account to use for commissions (transaction fees) charged by Pay Pal') . '</td>
 	</tr>';
 
 echo '<tr>
