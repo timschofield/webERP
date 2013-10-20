@@ -1,5 +1,5 @@
 <?php
-/* $Id: StockClone.php  $*/
+/* $Id$ */
 
 include('includes/session.inc');
 $Title = _('Clone Item');
