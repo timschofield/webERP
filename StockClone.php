@@ -40,7 +40,10 @@ if (isset($_POST['StockID']) && !empty($_POST['StockID']) && !isset($_POST['Upda
 	if (($myrow[0]==0) && ($_POST['OldStockID'] != '')) {
 		 $_POST['New'] =1;
 	} else {
-		 $_POST['New']=0;
+    	prnMsg(_('The stock code entered is already in the database - duplicate stock codes are prohibited by the system. Try choosing an alternative stock code'),'error');
+		$Errors[1] = 'DuplicateStockID';
+		$_POST['New']=0;
+		$_POST['StockID'] = $_POST['OldStockID'];
 	}
 }
 
@@ -266,7 +269,8 @@ if (isset($_POST['submit'])) {
 								WHERE stockid='" . $_POST['StockID'] ."'",$db);
 			if (DB_num_rows($result)==1){
 				prnMsg(_('The stock code entered is already in the database - duplicate stock codes are prohibited by the system. Try choosing an alternative stock code'),'error');
-				exit;
+				$Errors[$i] = 'DuplicateStockID';
+				//exit;
 			} else {
 				$sql = "INSERT INTO stockmaster (stockid,
 												description,
@@ -542,10 +546,10 @@ if (isset($_POST['submit'])) {
 						unset($_POST['ShrinkFactor']);
 						unset($_POST['Pansize']);
 						unset($_POST['StockID']);
-						unset($_POST['OldStockID']);
+						//unset($_POST['OldStockID']);
 						foreach ($ItemDescriptionLanguages as $DescriptionLanguage) {
 						unset($_POST['Description_' . str_replace('.','_',$DescriptionLanguage)]);
-						 $_POST['New']   = 0; //do not show input form again
+						 $_POST['New']   = 1; //do not show input form again
 						}
 					}//Reset the form variables
 				}//Stock records finished
@@ -567,12 +571,12 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 	<input type="hidden" name="New" value="'.$_POST['New'].'" />
 	<table class="selection">';
 
-if ($_POST['StockID'] == '' || ($_POST['StockID'] == $_POST['OldStockID']) ||isset($_POST['UpdateCategories'])) {
+if ($_POST['StockID'] == '' || ($_POST['StockID'] == $_POST['OldStockID']) || isset($_POST['UpdateCategories'])) {
 
 /*If the page was called without $StockID or empty $StockID  then a new cloned stock item is to be entered. Show a form with a part Code field,
   otherwise show form for editing with only a hidden OldStockID field. */
 
-	if ($_POST['New']==1) {
+	//if ($_POST['New']==1) {
 	    $StockIDStyle= !empty($_POST['StockID'])  && ($_POST['StockID'] != $_POST['OldStockID'])? '' : ' style="color:red;border: 2px solid red;background-color:#fddbdb;" ';
 	    $StockID= !empty($_POST['StockID'])? $_POST['StockID']:$_POST['OldStockID'];
 		echo '<tr>
@@ -582,7 +586,7 @@ if ($_POST['StockID'] == '' || ($_POST['StockID'] == $_POST['OldStockID']) ||iss
 				</td>
 
 			</tr>';
-	}
+	//}
 
 }
 if ( (!isset($_POST['UpdateCategories']) AND ($InputError!=1))  OR $_POST['New']== 1 ) { // Must be modifying an existing item and no changes made yet
@@ -648,7 +652,7 @@ if ( (!isset($_POST['UpdateCategories']) AND ($InputError!=1))  OR $_POST['New']
 
 }
 
-if ($_POST['New'] == 1) {
+//if ($_POST['New'] == 1) {
     if (isset($_POST['Description'])) {
         $Description = $_POST['Description'];
     } else {
@@ -1091,7 +1095,7 @@ if ($_POST['New'] == 1) {
 	echo '<input type="submit" name="submit" value="' . _('Insert New Item') . '" />';
 	echo '<input type="submit" name="UpdateCategories" style="visibility:hidden;width:1px" value="' . _('Categories') . '" />';
 
-}
+//}
 echo '</div>
     </div>
 	</form>';
