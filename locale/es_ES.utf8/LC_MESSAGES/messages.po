@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-09-06 21:34+1200\n"
-"PO-Revision-Date: 2013-10-17 10:05-0600\n"
+"PO-Revision-Date: 2013-10-22 09:03-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -12551,9 +12551,8 @@ msgid "using"
 msgstr "usando"
 
 #: FreightCosts.php:342
-#, fuzzy
 msgid "Destination Country"
-msgstr "Destino"
+msgstr "País destino"
 
 #: FreightCosts.php:354
 #, fuzzy
@@ -25071,11 +25070,11 @@ msgstr "Transacción Nº"
 
 #: SalesInquiry.php:977
 msgid "Salesman Code"
-msgstr "Código del Vendedor"
+msgstr "Código del vendedor"
 
 #: SalesInquiry.php:978 api/api_xml-rpc.php:1778
 msgid "Salesman Name"
-msgstr "Nombre del Vendedor"
+msgstr "Nombre del vendedor"
 
 #: SalesInquiry.php:983
 msgid "Area Description"
@@ -25531,7 +25530,7 @@ msgstr "Buscar Todas las Pedidos de Venta"
 
 #: SelectCompletedOrder.php:12
 msgid "Search Sales Orders"
-msgstr "Buscar Pedidos de Venta"
+msgstr "Buscar órdenes de venta"
 
 #: SelectCompletedOrder.php:71 SelectCompletedOrder.php:82
 #: SelectContract.php:34 SelectSalesOrder.php:437
@@ -42781,7 +42780,7 @@ msgstr "Nueva orden de venta o cotización"
 
 #: includes/MainMenuLinksArray.php:35
 msgid "Enter Counter Sales"
-msgstr "Introducir Ventas de Mostrador"
+msgstr "Introducir ventas de mostrador"
 
 #: includes/MainMenuLinksArray.php:36
 msgid "Enter Counter Returns"
@@ -42930,7 +42929,7 @@ msgstr "Administrar Compañías Financieras"
 
 #: includes/MainMenuLinksArray.php:166
 msgid "Create a New Tender"
-msgstr "Crear una Nueva Licitación"
+msgstr "Crear una nueva licitación"
 
 #: includes/MainMenuLinksArray.php:167
 msgid "Edit Existing Tenders"
@@ -47812,9 +47811,8 @@ msgstr "Fecha Abono"
 
 #: ../webSHOP/CreditCardPayFlowPro.php:240
 #: ../webSHOP/CreditCardPayPalPro.php:307
-#, fuzzy
 msgid "Card Number"
-msgstr "Número de Pieza"
+msgstr "Número de tarjeta"
 
 #: ../webSHOP/CreditCardPayFlowPro.php:241
 #: ../webSHOP/CreditCardPayPalPro.php:308
@@ -47834,9 +47832,8 @@ msgstr "Seleccione el mes para el que mostrar las ventas diarias"
 
 #: ../webSHOP/CreditCardPayFlowPro.php:272
 #: ../webSHOP/CreditCardPayPalPro.php:340
-#, fuzzy
 msgid "Verification Code"
-msgstr "Código Localidad"
+msgstr "Código de verificación"
 
 #: ../webSHOP/CreditCardPayFlowPro.php:273
 #: ../webSHOP/CreditCardPayPalPro.php:341
@@ -47852,34 +47849,28 @@ msgid "Submit Details and Process Payment"
 msgstr "Aceptar y Procesar el Pago"
 
 #: ../webSHOP/CreditCardPayPalPro.php:38
-#, fuzzy
 msgid "The first name must be at least 3 characters long"
-msgstr "El nombre del contacto debe ser al menos un caracter de largo"
+msgstr "El nombre debe tener al menos 3 caracteres"
 
 #: ../webSHOP/CreditCardPayPalPro.php:43
-#, fuzzy
 msgid "The last name must be at least 3 characters long"
-msgstr "El nombre del contacto debe ser al menos un caracter de largo"
+msgstr "El apellido debe tener al menos 3 caracteres"
 
 #: ../webSHOP/CreditCardPayPalPro.php:48
-#, fuzzy
 msgid "The street must be at least 3 characters long"
-msgstr "El  identificador de usuario debe tener al menos 4 caracteres"
+msgstr "La calle debe tener al menos 3 caracteres"
 
 #: ../webSHOP/CreditCardPayPalPro.php:53
-#, fuzzy
 msgid "The city must be at least 3 characters long"
-msgstr "El nombre del contacto debe ser al menos un caracter de largo"
+msgstr "La ciudad debe tener al menos 3 caracteres"
 
 #: ../webSHOP/CreditCardPayPalPro.php:58
-#, fuzzy
 msgid "The state must be at least 2 characters long"
-msgstr "El nombre del contacto debe ser al menos un caracter de largo"
+msgstr "El estado debe tener al menos 2 caracteres"
 
 #: ../webSHOP/CreditCardPayPalPro.php:63
-#, fuzzy
 msgid "The zip code must be at least 3 characters long"
-msgstr "El Código de la Sucursal no puede estar vacío"
+msgstr "El código postal debe tener al menos 3 caracteres"
 
 #: ../webSHOP/CreditCardPayPalPro.php:114
 msgid "Credit cart payment was unsuccesful - the request returned the error:"
@@ -47897,23 +47888,20 @@ msgstr ""
 #: ../webSHOP/CreditCardPayPalPro.php:167
 #: ../webSHOP/CreditCardPayPalPro.php:170
 #: ../webSHOP/CreditCardPayPalPro.php:173
-#, fuzzy
 msgid "At least 3 characters"
-msgstr "(80 caracteres máximo)"
+msgstr "Al menos 3 caracteres"
 
 #: ../webSHOP/CreditCardPayPalPro.php:275
-#, fuzzy
 msgid "First Name"
-msgstr "Nombre del Formulario"
+msgstr "Nombre"
 
 #: ../webSHOP/CreditCardPayPalPro.php:276
 msgid "The first name of the credit card holder"
 msgstr ""
 
 #: ../webSHOP/CreditCardPayPalPro.php:277
-#, fuzzy
 msgid "Last Name"
-msgstr "Etiqueta de Nombre"
+msgstr "Apellido"
 
 #: ../webSHOP/CreditCardPayPalPro.php:278
 #, fuzzy
@@ -47931,7 +47919,6 @@ msgid "The city of the card holder"
 msgstr "El código de artículo"
 
 #: ../webSHOP/CreditCardPayPalPro.php:287
-#, fuzzy
 msgid "State"
 msgstr "Estado"
 
@@ -47941,9 +47928,8 @@ msgid "The state of the card holder"
 msgstr "Introduzca una parte del Código de Existencia"
 
 #: ../webSHOP/CreditCardPayPalPro.php:289
-#, fuzzy
 msgid "Zip Code"
-msgstr "Código del Tipo"
+msgstr "Código postal"
 
 #: ../webSHOP/CreditCardPayPalPro.php:290
 #, fuzzy
@@ -47951,9 +47937,8 @@ msgid "The Zip of the card holder"
 msgstr "El código de artículo"
 
 #: ../webSHOP/CreditCardPayPalPro.php:295
-#, fuzzy
 msgid "The Country of the card holder"
-msgstr "Mostrar Cantidades en el Pedido"
+msgstr "País del titular de la tarjeta"
 
 #: ../webSHOP/index.php:95
 msgid ""
@@ -48088,9 +48073,8 @@ msgid "Thanks for registering as a"
 msgstr ""
 
 #: ../webSHOP/Register.php:242
-#, fuzzy
 msgid "customer"
-msgstr "Cliente"
+msgstr "cliente"
 
 #: ../webSHOP/Register.php:244
 msgid "The details that we have on record for you are as follows"
@@ -48137,34 +48121,28 @@ msgid "Delivery Country"
 msgstr "Contacto de Entrega"
 
 #: ../webSHOP/Register.php:283
-#, fuzzy
 msgid "Postal Address 1 "
-msgstr "Dirección Postal"
+msgstr "Dirección postal 1"
 
 #: ../webSHOP/Register.php:287
-#, fuzzy
 msgid "Postal Address 2 "
-msgstr "Dirección Postal"
+msgstr "Dirección postal 2"
 
 #: ../webSHOP/Register.php:291
-#, fuzzy
 msgid "Postal Address 3 "
-msgstr "Dirección Postal"
+msgstr "Dirección postal 3"
 
 #: ../webSHOP/Register.php:295
-#, fuzzy
 msgid "Postal Address 4 "
-msgstr "Dirección Postal"
+msgstr "Dirección postal 4"
 
 #: ../webSHOP/Register.php:299
-#, fuzzy
 msgid "Postal Address 5 "
-msgstr "Dirección Postal"
+msgstr "Dirección postal 5"
 
 #: ../webSHOP/Register.php:303
-#, fuzzy
 msgid "Postal Address Country"
-msgstr "Dirección Postal"
+msgstr "País de dirección postal"
 
 #: ../webSHOP/Register.php:309
 msgid "We look forward to doing business with you"
