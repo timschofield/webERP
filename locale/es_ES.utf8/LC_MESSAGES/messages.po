@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-09-06 21:34+1200\n"
-"PO-Revision-Date: 2013-10-22 09:03-0600\n"
+"PO-Revision-Date: 2013-10-26 11:04-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -1689,7 +1689,7 @@ msgstr ""
 #: CustomerReceipt.php:769 DailyBankTransactions.php:37 Payments.php:774
 #: PDFChequeListing.php:46 TaxAuthorities.php:151 TaxAuthorities.php:318
 msgid "Bank Account"
-msgstr "Cuenta Bancaria"
+msgstr "Cuenta bancaria"
 
 #: BankMatching.php:127 ShopParameters.php:298 ShopParameters.php:302
 msgid "Show"
@@ -1843,7 +1843,7 @@ msgstr "Ref."
 #: includes/PDFGLJournalHeader.inc:22 ../webSHOP/CreditCardPayFlowPro.php:276
 #: ../webSHOP/CreditCardPayPalPro.php:338
 msgid "Amount"
-msgstr "Importe"
+msgstr "Monto"
 
 #: BankMatching.php:280 BankReconciliation.php:217 BankReconciliation.php:294
 #: PDFOrdersInvoiced.php:361 PDFOrderStatus.php:332
@@ -5787,7 +5787,7 @@ msgstr "Fax"
 #: includes/PDFTransPageHeaderPortrait.inc:212
 #: includes/PO_PDFOrderPageHeader.inc:71
 msgid "All amounts stated in"
-msgstr "Todos los precios se muestran en"
+msgstr "Todos los montos en"
 
 #: Contracts.php:840 SelectContract.php:31 SelectContract.php:41
 #: SuppContractChgs.php:132
@@ -6105,7 +6105,7 @@ msgstr "inventario"
 
 #: CounterReturns.php:197 CounterSales.php:227
 msgid "all amounts in"
-msgstr "todas las cantidades en"
+msgstr "todos los montos en"
 
 #: CounterReturns.php:204 CounterSales.php:234
 msgid "Item description has been used in search"
@@ -8992,7 +8992,7 @@ msgstr ""
 #: GLAccountReport.php:269 Payments.php:935 StockAdjustments.php:477
 #: SuppTransGLAnalysis.php:168
 msgid "Select Tag"
-msgstr "Seleccionar Centro de Costo"
+msgstr "Seleccione centro de costo"
 
 #: CustomerReceipt.php:1051 GLBudgets.php:52 Payments.php:1017
 msgid "No General ledger accounts have been set up yet"
@@ -13430,7 +13430,7 @@ msgstr "Presupuesto actualizado exitosamente"
 
 #: GLBudgets.php:40 GLJournal.php:296 Payments.php:1011
 msgid "Select GL Account"
-msgstr "Seleccionar cuenta contable"
+msgstr "Seleccione cuenta contable"
 
 #: GLBudgets.php:52
 msgid "budgets cannot be allocated until the GL accounts are set up"
@@ -13835,7 +13835,7 @@ msgstr "Ingresos y Gastos por Etiqueta"
 
 #: GLTagProfit_Loss.php:97
 msgid "Select tag"
-msgstr "Seleccionar Centro de Costo"
+msgstr "Seleccione centro de costo"
 
 #: GLTagProfit_Loss.php:128
 msgid "Show Statement of Income and Expenditure"
@@ -18125,7 +18125,7 @@ msgstr "Pagado el día"
 
 #: Payments.php:807
 msgid "Currency of Payment"
-msgstr "Moneda del Pago"
+msgstr "Moneda de pago"
 
 #: Payments.php:815
 msgid ""
@@ -18184,7 +18184,7 @@ msgstr "Ingreso de Análisis de Pagos Contables"
 
 #: Payments.php:959 Payments.php:964
 msgid "Enter GL Account Manually"
-msgstr "Introduzca Manualmente la Cuenta Contable"
+msgstr "Introduzca manualmente la cuenta contable"
 
 #: Payments.php:960 Payments.php:965
 #, fuzzy
@@ -18198,7 +18198,7 @@ msgstr "No existe"
 
 #: Payments.php:970
 msgid "Select GL Group"
-msgstr "Seleccionar un Grupo de Cuentas Contables"
+msgstr "Seleccione grupo contable"
 
 #: Payments.php:981
 msgid "No General ledger account groups have been set up yet"
@@ -30981,9 +30981,8 @@ msgid "Amount must be numeric"
 msgstr "Las cantidad debe ser numérica"
 
 #: SuppContractChgs.php:165
-#, fuzzy
 msgid "Non zero amount"
-msgstr "Importe Neto"
+msgstr "Monto no nulo"
 
 #: SuppContractChgs.php:172
 #, fuzzy
@@ -31231,9 +31230,8 @@ msgid "Select from list"
 msgstr "Seleccionar de la lista"
 
 #: SuppFixedAssetChgs.php:154 SuppTransGLAnalysis.php:220
-#, fuzzy
 msgid "The amount must be numeric and cannot be zero"
-msgstr "La cantidad no puede ser cero"
+msgstr "El monto debe ser numérico y no puede ser cero"
 
 #: SuppFixedAssetChgs.php:160
 msgid "Enter Fixed Asset"
@@ -44074,7 +44072,7 @@ msgstr "Impuestos"
 #: includes/PDFCustTransListingPageHeader.inc:53
 #: includes/PDFSuppTransListingPageHeader.inc:53
 msgid "Total Amount"
-msgstr "Monto Total"
+msgstr "Monto total"
 
 #: includes/PDFDebtorBalsPageHeader.inc:17
 msgid "Customer Balances For Customers between"
@@ -47710,6 +47708,8 @@ msgstr ""
 #: ../webSHOP/Checkout.php:607
 msgid "Please deposit the amount due (in full) to our bank account."
 msgstr ""
+"Por favor deposite el monto adeudado (en su totalidad) en nuestra cuenta "
+"bancaria."
 
 #: ../webSHOP/Checkout.php:610
 msgid ""
