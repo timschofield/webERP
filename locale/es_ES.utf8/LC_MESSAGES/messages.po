@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-09-06 21:34+1200\n"
-"PO-Revision-Date: 2013-10-26 11:04-0600\n"
+"PO-Revision-Date: 2013-10-26 11:53-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -14410,9 +14410,8 @@ msgstr ""
 
 #: ImportBankTransAnalysis.php:20 ImportBankTransAnalysis.php:34
 #: ImportBankTrans.php:7 includes/MainMenuLinksArray.php:327
-#, fuzzy
 msgid "Import Bank Transactions"
-msgstr "Importar Transacciones Bancarias"
+msgstr "Importar transacciones bancarias"
 
 #: ImportBankTransAnalysis.php:40
 msgid ""
@@ -43134,19 +43133,19 @@ msgstr "PRM - Cálculo"
 
 #: includes/MainMenuLinksArray.php:325
 msgid "Bank Account Payments Entry"
-msgstr "Registro de Pagos de la Cuenta Bancaria"
+msgstr "Registrar egresos de cuenta bancaria"
 
 #: includes/MainMenuLinksArray.php:326
 msgid "Bank Account Receipts Entry"
-msgstr "Registro de Ingresos de la Cuenta Bancaria"
+msgstr "Registrar ingresos a cuenta bancaria"
 
 #: includes/MainMenuLinksArray.php:329
 msgid "Bank Account Payments Matching"
-msgstr "Conciliar Pagos de la Cuenta Bancaria"
+msgstr "Conciliar egresos de cuenta bancaria"
 
 #: includes/MainMenuLinksArray.php:330
 msgid "Bank Account Receipts Matching"
-msgstr "Conciliar Ingresos de la Cuenta Bancaria"
+msgstr "Conciliar ingresos a cuenta bancaria"
 
 #: includes/MainMenuLinksArray.php:340
 msgid "Account Inquiry"
@@ -43190,11 +43189,11 @@ msgstr "Cuentas contables"
 
 #: includes/MainMenuLinksArray.php:368
 msgid "GL Budgets"
-msgstr "Presupuestos Contables"
+msgstr "Presupuestos contables"
 
 #: includes/MainMenuLinksArray.php:369
 msgid "GL Tags"
-msgstr "Centros de Costo"
+msgstr "Centros de costo"
 
 #: includes/MainMenuLinksArray.php:377
 msgid "Add a new Asset"
