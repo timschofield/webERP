@@ -381,7 +381,7 @@ if (isset($_POST['submit'])) {
 		prnMsg(_('The URL address must be 50 characters or less long'),'error');
 		$Errors[$i] = 'URL';
 		$i++;
-	}	
+	}
 	if (mb_strlen($_POST['BankRef']) > 12) {
 		$InputError = 1;
 		prnMsg(_('The bank reference text must be less than 12 characters long'),'error');
@@ -686,7 +686,7 @@ if (!isset($SupplierID)) {
 		</tr>';
 	echo '<tr>
 			<td>' . _('Supplier Name') . ':</td>
-			<td><input type="text" pattern="(?!^\s+$)[^<>+-]{1,40}" required="required" title="'._('The supplier name should not be blank and should be less than 40 legal characters').'" name="SuppName" size="42" placeholder="'._('Within 40 legal characters').'" maxlength="40" /></td>
+			<td><input type="text" pattern="(?!^\s+$)[^<>+]{1,40}" required="required" title="'._('The supplier name should not be blank and should be less than 40 legal characters').'" name="SuppName" size="42" placeholder="'._('Within 40 legal characters').'" maxlength="40" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Address Line 1 (Street)') . ':</td>
