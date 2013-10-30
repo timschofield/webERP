@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-09-06 21:34+1200\n"
-"PO-Revision-Date: 2013-10-26 11:53-0600\n"
+"PO-Revision-Date: 2013-10-30 11:57-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -2574,7 +2574,7 @@ msgstr "Código de Inventario"
 #: SupplierTenderCreate.php:606 SupplierTenderCreate.php:712
 #: SupplierTenders.php:445 WorkOrderEntry.php:638 WorkOrderIssue.php:690
 msgid "Search Now"
-msgstr "Buscar Ahora"
+msgstr "Buscar ahora"
 
 #: BOMInquiry.php:47 BOMs.php:805 ContractBOM.php:52 MRPDemands.php:56
 #: MRPReport.php:578 PO_Items.php:855 PO_SelectOSPurchOrder.php:65
@@ -4941,7 +4941,7 @@ msgstr "El SQL que falló al obtener los detalles de la categoría fue"
 
 #: ContractBOM.php:299 PO_Items.php:1103
 msgid "Search For Stock Items"
-msgstr "Buscar Artículos de Existencias"
+msgstr "Buscar artículos de inventario"
 
 #: ContractBOM.php:327 PO_Items.php:1130 SelectCompletedOrder.php:529
 #: SelectCreditItems.php:1002
@@ -4968,7 +4968,7 @@ msgstr ""
 
 #: ContractBOM.php:337 PO_Items.php:1141
 msgid "Create a New Stock Item"
-msgstr "Crear un Nuevo Artículo de Existencias"
+msgstr "Crear un nuevo artículo de inventario"
 
 #: ContractBOM.php:356 FixedAssetItems.php:503 Stocks.php:1020
 #: SupplierTenderCreate.php:850 SupplierTenders.php:689
@@ -30588,7 +30588,7 @@ msgstr "se espera"
 
 #: Stocks.php:1382
 msgid "Insert New Item"
-msgstr "Agregar Nuevo Artículo"
+msgstr "Agregar nuevo artículo"
 
 #: Stocks.php:1383 Stocks.php:1390 ../webSHOP/includes/Functions.php:127
 #: ../webSHOP/includes/ShowSalesCategoriesMenu.php:15
@@ -47946,9 +47946,8 @@ msgid ""
 msgstr ""
 
 #: ../webSHOP/index.php:131
-#, fuzzy
 msgid "Searching for:"
-msgstr "Buscar Ahora"
+msgstr "Buscando:"
 
 #: ../webSHOP/index.php:138
 #, fuzzy
