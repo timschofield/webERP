@@ -1,4 +1,5 @@
 webERP Change Log
+30/10/2013 Exson: Modify the the insert new stocks event to transaction. 
 24/10/13 MailingGroupMaintenance.php, minor tag and other formatting corrections.
 20/10/13 icedlava: Add StockClone.php script to create a new item with the same properties, image, cost, purchasing and pricing data as the selected item, and allow modification of image and general item details before cloning.
 18/10/13 Paul T: ManualSecuritySchema.html, add missing tr tags, reduced doubled-closing td tags to one, and changed & to &amp; for HTML.
