@@ -147,8 +147,7 @@ if (!isset($_GET['Delete']) AND isset($_SESSION['ReceiptBatch'])){
 		$SuggestedExRate = $TableExRate/$SuggestedFunctionalExRate;
 	}
 	
-	
-
+	$_SESSION['ReceiptBatch']->BankTransRef = $_POST['BankTransRef'];
 	$_SESSION['ReceiptBatch']->Narrative = $_POST['BatchNarrative'];
 
 } elseif (isset($_GET['Delete'])) {
@@ -463,7 +462,7 @@ if (isset($_POST['CommitBatch'])){
 			12,
 			'" . $_SESSION['ReceiptBatch']->BatchNo . "',
 			'" . $_SESSION['ReceiptBatch']->Account . "',
-			'" . $_SESSION['ReceiptBatch']->Narrative . "',
+			'" . $_SESSION['ReceiptBatch']->BankTransRef . "',
 			'" . $_SESSION['ReceiptBatch']->ExRate . "',
 			'" . $_SESSION['ReceiptBatch']->FunctionalExRate . "',
 			'" . FormatDateForSQL($_SESSION['ReceiptBatch']->DateBanked) . "',
@@ -758,7 +757,7 @@ $DbgMsg = _('The SQL used to retrieve the bank accounts was');
 $AccountsResults = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
 
 if (isset($_POST['GLEntry'])) {
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('Enter Receipt') . '" alt="" />' . ' ' . _('General Ledger Receipt Entry') . '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('Bank Account Receipts Entry') . '" alt="" />' . ' ' . _('Bank Account Receipts Entry') . '</p>';
 } else {
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('Enter Receipt') . '" alt="" />' . ' ' . _('Enter Customer Receipt') . '</p>';
 	echo '<div class="page_help_text">' . _('To enter a payment TO a customer (ie. to pay out a credit note), enter a negative payment amount.') . '</div>';
@@ -873,7 +872,8 @@ echo '<tr>
 		<td><select tabindex="6" name="ReceiptType">';
 
 include('includes/GetPaymentMethods.php');
-/* The array ReceiptTypes is defined from the setup tab of the main menu under payment methods - the array is populated from the include file GetPaymentMethods.php */
+/* The array ReceiptTypes is defined from the setup tab of the main menu under 
+payment methods - the array is populated from the include file GetPaymentMethods.php */
 
 foreach ($ReceiptTypes as $RcptType) {
 	if (isset($_POST['ReceiptType']) and $_POST['ReceiptType']==$RcptType){
@@ -884,6 +884,17 @@ foreach ($ReceiptTypes as $RcptType) {
 }
 echo '</select></td>
 	</tr>';
+
+/* Receipt (Bank Account) info to be inserted on banktrans.ref, varchar(50). */
+if (!isset($_SESSION['ReceiptBatch']->BankTransRef)) {
+	$_SESSION['ReceiptBatch']->BankTransRef='';
+}
+echo '<tr>
+		<td>' . _('Reference') . ':</td>
+		<td><input tabindex="7" type="text" name="BankTransRef" maxlength="50" size="52" value="' . $_SESSION['ReceiptBatch']->BankTransRef . '" />  ' . _('Reference on Bank Transactions Inquiry') . '</td>
+	</tr>';
+
+/* Receipt (Bank Account) info to be inserted on gltrans.narrative, varchar(200). */
 if (!isset($_SESSION['ReceiptBatch']->Narrative)) {
 	$_SESSION['ReceiptBatch']->Narrative='';
 }
@@ -892,13 +903,13 @@ if (!isset($_POST['Currency'])){
 }
 echo '<tr>
 		<td>' . _('Narrative') . ':</td>
-		<td><input tabindex="7" type="text" name="BatchNarrative" maxlength="50" size="52" value="' . $_SESSION['ReceiptBatch']->Narrative . '" /></td>
+		<td><input tabindex="8" type="text" name="BatchNarrative" maxlength="200" size="52" value="' . $_SESSION['ReceiptBatch']->Narrative . '" />  ' . _('Narrative on General Ledger Account Inquiry') . '</td>
 	</tr>
 	<input type="hidden" name="PreviousCurrency" value="' . $_POST['Currency'] . '" />
 	<tr>
 		<td colspan="3">
 		<div class="centre">
-			<input tabindex="8" type="submit" name="BatchInput" value="' . _('Accept') . '" />
+			<input tabindex="9" type="submit" name="BatchInput" value="' . _('Accept') . '" />
 		</div>
 		</td>
 	</tr>

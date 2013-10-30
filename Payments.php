@@ -52,8 +52,8 @@ if ((isset($_POST['UpdateHeader'])
 }
 
 echo '<p class="page_title_text">
-		<img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('Payment Entry')
-. '" alt="" />' . ' ' . _('Payment Entry') . '
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('Bank Account Payments Entry')
+. '" alt="" />' . ' ' . _('Bank Account Payments Entry') . '
 	</p>';
 echo '<div class="page_help_text">' . _('Use this screen to enter payments FROM your bank account.  <br />Note: To enter a payment FROM a supplier, first select the Supplier, click Enter a Payment to, or Receipt from the Supplier, and use a negative Payment amount on this form.') . '</div>
 	<br />';
@@ -919,7 +919,7 @@ if (!isset($_POST['BankTransRef'])) {	// Payment (Bank Account) info to be inser
 }
 echo '<tr>
 		<td>' . _('Reference') . ':</td>
-		<td colspan="2"><input type="text" name="BankTransRef" maxlength="50" size="52" value="' . stripslashes($_POST['BankTransRef'] ) . '" />  ' . _('Reference on Bank Transactions Inquiry (Max. length 50 characters)') . '</td>
+		<td colspan="2"><input type="text" name="BankTransRef" maxlength="50" size="52" value="' . stripslashes($_POST['BankTransRef'] ) . '" />  ' . _('Reference on Bank Transactions Inquiry') . '</td>
 	</tr>';
 
 if (!isset($_POST['Narrative'])) {	// Payment (Bank Account) info to be inserted on gltrans.narrative, varchar(200).
@@ -927,7 +927,7 @@ if (!isset($_POST['Narrative'])) {	// Payment (Bank Account) info to be inserted
 }
 echo '<tr>
 		<td>' . _('Narrative') . ':</td>
-		<td colspan="2"><input type="text" name="Narrative" maxlength="80" size="82" value="' . stripslashes($_POST['Narrative'] ) . '" />  ' . _('Narrative on GL Trans') . '</td>
+		<td colspan="2"><input type="text" name="Narrative" maxlength="200" size="52" value="' . stripslashes($_POST['Narrative'] ) . '" />  ' . _('Narrative on General Ledger Account Inquiry') . '</td>
 	</tr>
 		<td><input type="hidden" name="PreviousCurrency" value="' . $_POST['Currency'].'" /></td>
 		<td colspan="3"><div class="centre"><input type="submit" name="UpdateHeader" value="' . _('Update'). '" /></div></td>

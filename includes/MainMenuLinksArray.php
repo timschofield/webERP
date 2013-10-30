@@ -327,16 +327,16 @@ $MenuItems['manuf']['Maintenance']['URL'] = array(	'/WorkCentres.php',
 $MenuItems['GL']['Transactions']['Caption'] = array(	_('Bank Account Payments Entry'),
 														_('Bank Account Receipts Entry'),
 														_('Import Bank Transactions'),
-														_('Journal Entry'),
 														_('Bank Account Payments Matching'),
-														_('Bank Account Receipts Matching'));
+														_('Bank Account Receipts Matching'),
+														_('Journal Entry'));
 
 $MenuItems['GL']['Transactions']['URL'] = array('/Payments.php?NewPayment=Yes',
 												'/CustomerReceipt.php?NewReceipt=Yes&amp;Type=GL',
 												'/ImportBankTrans.php',
-												'/GLJournal.php?NewJournal=Yes',
 												'/BankMatching.php?Type=Payments',
-												'/BankMatching.php?Type=Receipts');
+												'/BankMatching.php?Type=Receipts',
+												'/GLJournal.php?NewJournal=Yes');
 
 $MenuItems['GL']['Reports']['Caption'] = array(	_('Trial Balance'),
 												_('Account Inquiry'),

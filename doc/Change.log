@@ -1,4 +1,5 @@
 webERP Change Log
+30/10/2013 rchacon: Allow insert different data on banktrans.ref and gltrans.narrative for the bank account on CustomerReceipt.php. Match the page_title_text with the MainMenuLinksArray option for Bank Account Payments Entry and Bank Account Receipts Entry. Regroup the General Ledger Transactions menu.
 30/10/2013 Exson: Add required attribute for Z_MakeNewCompany.php to avoid file void error and make it more user friendly.
 30/10/2013: Exson modify the locstock table change the bin to NULL to avoid stick sql standard constraint failed for those items without bin.
 30/10/2013 Exson: Modify the the insert new stocks event to transaction. 
