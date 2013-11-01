@@ -164,7 +164,7 @@ if (isset($_POST['Paymenttype']) AND $_POST['Paymenttype']!=''){
 
 if (isset($_POST['Currency']) AND $_POST['Currency']!=''){
 	/* Payment currency is the currency that is being paid */
-	$_SESSION['PaymentDetail' . $identifier]->Currency=$_POST['Currency']; //payment currency
+	$_SESSION['PaymentDetail' . $identifier]->Currency=$_POST['Currency']; // Payment currency
 
 
 	if ($_SESSION['PaymentDetail' . $identifier]->AccountCurrency==$_SESSION['CompanyRecord']['currencydefault']){
@@ -803,7 +803,7 @@ if (DB_num_rows($AccountsResults)==0){
 
 echo '<tr>
 		<td>' . _('Date Paid') . ':</td>
-		<td><input type="text" name="DatePaid" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" required="required" maxlength="10" size="11" onchange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')" value="' . $_SESSION['PaymentDetail' . $identifier]->DatePaid . '" /></td>
+		<td><input type="text" name="DatePaid" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" required="required" maxlength="10" size="10" onchange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')" value="' . $_SESSION['PaymentDetail' . $identifier]->DatePaid . '" /></td>
 	</tr>';
 
 
@@ -819,11 +819,12 @@ if ($_SESSION['PaymentDetail' . $identifier]->SupplierID==''){
 			</tr>';
 		prnMsg( _('No currencies are defined yet. Payments cannot be entered until a currency is defined'),'error');
 	} else {
+		include($PathPrefix . 'includes/CurrenciesArray.php'); // To get the currency name.
 		while ($myrow=DB_fetch_array($result)){
 			if ($_SESSION['PaymentDetail' . $identifier]->Currency==$myrow['currabrev']){
-				echo '<option selected="selected" value="' . $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
+				echo '<option selected="selected" value="' . $myrow['currabrev'] . '">' . _($CurrenciesArray[$myrow['currabrev']]['Currency']) . '</option>';
 			} else {
-				echo '<option value="' . $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
+				echo '<option value="' . $myrow['currabrev'] . '">' . _($CurrenciesArray[$myrow['currabrev']]['Currency']) . '</option>';
 			}
 		}
 		echo '</select></td>
