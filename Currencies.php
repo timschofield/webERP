@@ -8,7 +8,6 @@ $ViewTopic= 'Currencies';
 $BookMark = 'Currencies';
 include('includes/header.inc');
 include('includes/CurrenciesArray.php');
-
 include('includes/SQL_CommonFunctions.inc');
 
 if (isset($_GET['SelectedCurrency'])){
@@ -351,7 +350,7 @@ or deletion of the records*/
 					</tr>',
 					$ImageFile,
 					$myrow['currabrev'],
-					_($myrow['currency']),
+					_($CurrenciesArray[$myrow['currabrev']]['Currency']), // To get the currency name from the Currencies Array.
 					$myrow['country'],
 					$myrow['hundredsname'],
 					locale_number_format($myrow['decimalplaces'],0),
@@ -379,7 +378,7 @@ or deletion of the records*/
 					</tr>',
 					$ImageFile,
 					$myrow['currabrev'],
-					_($myrow['currency']),
+					_($CurrenciesArray[$myrow['currabrev']]['Currency']), // To get the currency name from the Currencies Array.
 					$myrow['country'],
 					$myrow['hundredsname'],
 					locale_number_format($myrow['decimalplaces'],0),

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: 3.13rc0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-09-06 21:34+1200\n"
-"PO-Revision-Date: 2013-08-11 19:08-0600\n"
+"PO-Revision-Date: 2013-11-01 22:48-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: Swedish <LL@li.org>\n"
 "Language: sv\n"
@@ -40812,9 +40812,8 @@ msgid "Argentine peso"
 msgstr "Område"
 
 #: includes/CurrenciesArray.php:34
-#, fuzzy
 msgid "Australian dollar"
-msgstr "Audit Trail"
+msgstr "Australisk dollar"
 
 #: includes/CurrenciesArray.php:37
 msgid "Aruban florin"
@@ -40872,7 +40871,7 @@ msgstr ""
 
 #: includes/CurrenciesArray.php:76
 msgid "Bahamian dollar"
-msgstr ""
+msgstr "Bahamansk dollar"
 
 #: includes/CurrenciesArray.php:79
 msgid "Bhutanese ngultrum"
@@ -40887,13 +40886,12 @@ msgid "Belarusian ruble"
 msgstr ""
 
 #: includes/CurrenciesArray.php:88
-#, fuzzy
 msgid "Belize dollar"
-msgstr "Storlek"
+msgstr "Belizisk dollar"
 
 #: includes/CurrenciesArray.php:91
 msgid "Canadian dollar"
-msgstr ""
+msgstr "Kanadensisk dollar"
 
 #: includes/CurrenciesArray.php:94
 #, fuzzy
@@ -40927,16 +40925,15 @@ msgstr "Kinesiska"
 
 #: includes/CurrenciesArray.php:115
 msgid "Colombian peso"
-msgstr ""
+msgstr "Colombiansk peso"
 
 #: includes/CurrenciesArray.php:118
 msgid "Colombian Unidad de Valor Real"
 msgstr ""
 
 #: includes/CurrenciesArray.php:121
-#, fuzzy
 msgid "Costa Rican colon"
-msgstr "Kostnad krävs"
+msgstr "Costaricansk colon"
 
 #: includes/CurrenciesArray.php:124
 msgid "Cuban peso convertible"
@@ -41251,9 +41248,8 @@ msgid "Nepalese rupee"
 msgstr "Netto försäljningsvärde"
 
 #: includes/CurrenciesArray.php:343
-#, fuzzy
 msgid "New Zealand dollar"
-msgstr "Nya Depn"
+msgstr "Nyzeeländsk dollar"
 
 #: includes/CurrenciesArray.php:346
 msgid "Omani rial"
@@ -41331,7 +41327,7 @@ msgstr ""
 
 #: includes/CurrenciesArray.php:397
 msgid "Swedish krona"
-msgstr ""
+msgstr "Svensk krona"
 
 #: includes/CurrenciesArray.php:400
 #, fuzzy
@@ -41415,12 +41411,11 @@ msgstr ""
 
 #: includes/CurrenciesArray.php:457
 msgid "Ugandan shilling"
-msgstr ""
+msgstr "Ugandisk shilling"
 
 #: includes/CurrenciesArray.php:460
-#, fuzzy
 msgid "United States dollar"
-msgstr "Organisationsenhet"
+msgstr "Amerikansk dollar"
 
 #: includes/CurrenciesArray.php:463
 msgid "United States dollar next day (funds code)"
@@ -42083,7 +42078,7 @@ msgstr ""
 
 #: includes/LanguagesArray.php:129
 msgid "Swedish"
-msgstr ""
+msgstr "Svenska"
 
 #: includes/LanguagesArray.php:134
 msgid "Kiswahili"

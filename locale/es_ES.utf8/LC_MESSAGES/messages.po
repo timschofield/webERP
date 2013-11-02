@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-09-06 21:34+1200\n"
-"PO-Revision-Date: 2013-10-30 11:57-0600\n"
+"PO-Revision-Date: 2013-11-01 22:27-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -24762,7 +24762,7 @@ msgstr "Nombre de la Clase"
 
 #: SalesCategories.php:348
 msgid "Display in webSHOP?"
-msgstr ""
+msgstr "¿Mostrar en webSHOP?"
 
 #: SalesCategories.php:371
 msgid "Submit Information"
@@ -27187,14 +27187,12 @@ msgid "Rebate Percent"
 msgstr "Porcentaje de rebaja"
 
 #: SellThroughSupport.php:465
-#, fuzzy
 msgid "Support Start Date"
-msgstr "Fecha Inicio"
+msgstr "Fecha inicio del soporte"
 
 #: SellThroughSupport.php:469
-#, fuzzy
 msgid "Support End Date"
-msgstr "No hay Fecha Final"
+msgstr "Fecha final del soporte"
 
 #: ShipmentCosting.php:6
 msgid "Shipment Costing"
@@ -27743,9 +27741,8 @@ msgid "Test or Live Mode"
 msgstr "El código de artículo"
 
 #: ShopParameters.php:203 ShopParameters.php:206
-#, fuzzy
 msgid "Test"
-msgstr "Empezar de nuevo"
+msgstr "Prueba"
 
 #: ShopParameters.php:204 ShopParameters.php:207
 #, fuzzy
