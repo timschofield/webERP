@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-09-06 21:34+1200\n"
-"PO-Revision-Date: 2013-11-01 22:27-0600\n"
+"PO-Revision-Date: 2013-11-02 18:01-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -8992,7 +8992,7 @@ msgstr ""
 #: GLAccountReport.php:269 Payments.php:935 StockAdjustments.php:477
 #: SuppTransGLAnalysis.php:168
 msgid "Select Tag"
-msgstr "Seleccione centro de costo"
+msgstr "Seleccionar centro de costo"
 
 #: CustomerReceipt.php:1051 GLBudgets.php:52 Payments.php:1017
 msgid "No General ledger accounts have been set up yet"
@@ -33904,7 +33904,7 @@ msgstr ""
 
 #: SystemParameters.php:432
 msgid "Romalpa Clause"
-msgstr "Cláusula Rot (Romalpa)"
+msgstr "Cláusula de reserva de titularidad (cláusula Romalpa)"
 
 #: SystemParameters.php:434
 msgid ""
@@ -33971,14 +33971,15 @@ msgstr ""
 
 #: SystemParameters.php:467
 msgid "Languages to Maintain Translations for Item Descriptions"
-msgstr ""
+msgstr "Idiomas para tener traducciones de las descripciones de artículos"
 
 #: SystemParameters.php:478
-#, fuzzy
 msgid ""
 "Select all the languages for which item description translations are to be "
 "maintained."
-msgstr "Introduzca la fecha en que las transacciones se deben listar"
+msgstr ""
+"Seleccionar todos los idiomas en los cuales se mantendrán las descripciones "
+"de artículos."
 
 #: SystemParameters.php:484
 msgid "A picking note must be produced before an order can be delivered"
@@ -34033,7 +34034,7 @@ msgstr "Formato de las Hojas de Embalaje"
 
 #: SystemParameters.php:511
 msgid "Laser Printed"
-msgstr "Imprimir en una Láser"
+msgstr "Imprimir en una láser"
 
 #: SystemParameters.php:512
 msgid "Special Stationery"
@@ -34045,7 +34046,7 @@ msgstr "Elija el formato predeterminado al imprimir hojas de embalaje."
 
 #: SystemParameters.php:518
 msgid "Invoice Orientation"
-msgstr "Orientación de la Factura"
+msgstr "Orientación de la factura"
 
 #: SystemParameters.php:523
 msgid "Select the invoice layout"
@@ -34059,11 +34060,11 @@ msgstr "Mostrar detalles de la compañía en las Hojas de Embalaje"
 
 #: SystemParameters.php:529
 msgid "Show Company Details"
-msgstr "Mostrar Detalles de la Compañía"
+msgstr "Mostrar detalles de la compañía"
 
 #: SystemParameters.php:530
 msgid "Hide Company Details"
-msgstr "Ocultar Detalles de la Compañía"
+msgstr "Ocultar detalles de la compañía"
 
 #: SystemParameters.php:532
 msgid ""
@@ -34081,15 +34082,15 @@ msgstr ""
 
 #: SystemParameters.php:537
 msgid "Working Days on a Week"
-msgstr "Días de Trabajo en una Semana"
+msgstr "Días de trabajo en una semana"
 
 #: SystemParameters.php:539 SystemParameters.php:540 SystemParameters.php:541
 msgid "working days"
-msgstr "Días de Trabajo"
+msgstr "Días de trabajo"
 
 #: SystemParameters.php:543
 msgid "Number of working days on a week"
-msgstr "Número de días laborables en una semana: "
+msgstr "Número de días laborales en una semana"
 
 #: SystemParameters.php:548
 msgid "Dispatch Cut-Off Time"
@@ -34136,12 +34137,12 @@ msgstr "No se pudo cargar las Listas de Precios"
 
 #: SystemParameters.php:575
 msgid "Default Price List"
-msgstr "Lista de Precios Predeterminada"
+msgstr "Lista de precios predeterminada"
 
 #: SystemParameters.php:578 SystemParameters.php:594 SystemParameters.php:638
 #: SystemParameters.php:657
 msgid "Unavailable"
-msgstr "No Disponible"
+msgstr "No disponible"
 
 #: SystemParameters.php:585
 msgid ""
@@ -34158,7 +34159,7 @@ msgstr "No se pudo cargar los transportistas"
 
 #: SystemParameters.php:591
 msgid "Default Shipper"
-msgstr "Transportista Predeterminado"
+msgstr "Transportista predeterminado"
 
 #: SystemParameters.php:601
 msgid ""
@@ -34170,7 +34171,7 @@ msgstr ""
 
 #: SystemParameters.php:604
 msgid "Do Freight Calculation"
-msgstr "Calcular Flete"
+msgstr "Calcular flete"
 
 #: SystemParameters.php:609
 msgid ""
@@ -34259,7 +34260,7 @@ msgstr "Posiciones Decimales para Costo Estándar"
 
 #: SystemParameters.php:670
 msgid "Decimal Places to be used in Standard Cost"
-msgstr "Decimales que se Utilizarán en el Costo Estándar"
+msgstr "Decimales que se usarán en el costo estándar"
 
 #: SystemParameters.php:673
 msgid "Number Of Periods Of StockUsage"

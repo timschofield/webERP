@@ -350,7 +350,7 @@ or deletion of the records*/
 					</tr>',
 					$ImageFile,
 					$myrow['currabrev'],
-					_($CurrenciesArray[$myrow['currabrev']]['Currency']), // To get the currency name from the Currencies Array.
+					$CurrenciesArray[$myrow['currabrev']]['Currency'], // To get the currency name from the Currencies Array.
 					$myrow['country'],
 					$myrow['hundredsname'],
 					locale_number_format($myrow['decimalplaces'],0),
@@ -378,7 +378,7 @@ or deletion of the records*/
 					</tr>',
 					$ImageFile,
 					$myrow['currabrev'],
-					_($CurrenciesArray[$myrow['currabrev']]['Currency']), // To get the currency name from the Currencies Array.
+					$CurrenciesArray[$myrow['currabrev']]['Currency'], // To get the currency name from the Currencies Array.
 					$myrow['country'],
 					$myrow['hundredsname'],
 					locale_number_format($myrow['decimalplaces'],0),
