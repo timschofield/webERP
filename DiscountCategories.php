@@ -19,7 +19,7 @@ if (isset($_POST['stockID'])) {
 	$_POST['SelectChoice']=1;
 }
 
-if (isset($_POST['submit'])) {
+if (isset($_POST['submit']) and !isset($_POST['SubmitCategory'])) {
 
 	//initialise no input errors assumed initially before we test
 	$InputError = 0;
@@ -31,7 +31,7 @@ if (isset($_POST['submit'])) {
 
 	$result = DB_query("SELECT stockid
 						FROM stockmaster
-						WHERE mbflag <>'K'
+						WHERE mbflag <>'K'：
 						AND mbflag<>'D'
 						AND stockid='" . mb_strtoupper($_POST['StockID']) . "'",$db);
 	if (DB_num_rows($result)==0){
@@ -60,10 +60,19 @@ if (isset($_POST['submit'])) {
 	prnMsg( _('The stock master record has been updated to no discount category'),'success');
 	echo '<br />';
 } elseif (isset($_POST['SubmitCategory'])) {
-	$sql="UPDATE stockmaster
-			SET discountcategory='".$_POST['DiscountCategory']."'
-			WHERE categoryid='".$_POST['stockcategory']."'";
-	$result=DB_query($sql, $db);
+	$sql = "SELECT stockid FROM stockmaster WHERE categoryid='".$_POST['stockcategory']."'";
+	$ErrMsg = _('Failed to retrieve stock category data');
+	$result = DB_query($sql,$db,$ErrMsg);
+	if(DB_num_rows($result)>0){
+		$sql="UPDATE stockmaster
+				SET discountcategory='".$_POST['DiscountCategory']."'
+				WHERE categoryid='".$_POST['stockcategory']."'";
+		$result=DB_query($sql, $db);
+	}else{
+		prnMsg(_('There are no stock defined for this stock category, you must define stock for it first'),'error');
+		include('includes/footer.inc');
+		exit;
+	}
 }
 
 if (isset($_POST['SelectChoice'])) {
@@ -108,13 +117,13 @@ if (isset($_POST['SelectChoice'])) {
 					<td>';
 
 		if (isset($_POST['DiscCat'])) {
-			echo '<input type="text" required="required" name="DiscountCategory" data-type="no-illegal-chars" title="' . _('Enter the discount category up to 2 alpha-numeric characters') . '" maxlength="2" size="2" value="' . $_POST['DiscCat'] .'" /></td>
+			echo '<input type="text" required="required" name="DiscountCategory" pattern="[0-9a-zA-Z_]*" title="' . _('Enter the discount category up to 2 alpha-numeric characters') . '" maxlength="2" size="2" value="' . $_POST['DiscCat'] .'" /></td>
 				<td>' . _('OR') . '</td>
 				<td></td>
 				<td>' . _('OR') . '</td>
 				</tr>';
 		} else {
-			echo '<input type="text" name="DiscountCategory" required="required" name="DiscountCategory" data-type="no-illegal-chars" title="' . _('Enter the discount category up to 2 alpha-numeric characters') . '" maxlength="2" size="2" /></td>
+			echo '<input type="text" name="DiscountCategory" required="required" name="DiscountCategory" pattern="[0-9a-zA-Z_]*" title="' . _('Enter the discount category up to 2 alpha-numeric characters') . '" maxlength="2" size="2" /></td>
 				<td>' ._('OR') . '</td>
 				<td></td>
 				<td>' . _('OR') . '</td>
@@ -132,9 +141,9 @@ if (isset($_POST['SelectChoice'])) {
 		}
 		echo '<tr>
 				<td>' .  _('Enter Stock Code') .':</td>
-				<td><input type="text" name="StockID" name="DiscountCategory" data-type="no-illegal-chars" title="' . _('Enter the stock code of the item in this discount category up to 20 alpha-numeric characters') . '"  size="20" maxlength="20" value="' . $_POST['StockID'] . '" /></td>
+				<td><input type="text" name="StockID" name="DiscountCategory" pattern="[0-9a-zA-Z_]*" title="' . _('Enter the stock code of the item in this discount category up to 20 alpha-numeric characters') . '"  size="20" maxlength="20" value="' . $_POST['StockID'] . '" /></td>
 				<td>' . _('Partial code') . ':</td>
-				<td><input type="text" name="PartID" data-type="no-illegal-chars" title="' . _('Enter a portion of the item code only alpha-numeric characters') . '" size="10" maxlength="10" value="' . $_POST['PartID'] . '" /></td>
+				<td><input type="text" name="PartID" pattern="[0-9a-zA-Z_]*" title="' . _('Enter a portion of the item code only alpha-numeric characters') . '" size="10" maxlength="10" value="' . $_POST['PartID'] . '" /></td>
 				<td>' . _('Partial description') . ':</td>
 				<td><input type="text" name="PartDesc" size="10" value="' . $_POST['PartDesc'] .'" maxlength="10" /></td>
 				<td><input type="submit" name="search" value="' . _('Search') .'" /></td>
@@ -167,7 +176,7 @@ if (isset($_POST['SelectChoice'])) {
 		echo '<table class="selection">
 				<tr>
 				<td>' . _('Assign discount category') . '</td>';
-		echo '<td><input type="text" required="required" name="DiscountCategory" data-type="no-illegal-chars" title="' . _('Enter the discount category up to 2 alpha-numeric characters') . '"  maxlength="2" size="2" /></td>';
+		echo '<td><input type="text" required="required" name="DiscountCategory" pattern="[0-9a-zA-Z_]*" title="' . _('Enter the discount category up to 2 alpha-numeric characters') . '"  maxlength="2" size="2" /></td>';
 		echo '<td>' . _('to all items in stock category') . '</td>';
 		$sql = "SELECT categoryid,
 				categorydescription
