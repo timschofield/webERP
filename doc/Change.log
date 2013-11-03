@@ -1,6 +1,7 @@
 webERP Change Log
+
 3/11/2013 Exson fixed the bug that discount id for category cannot be set and add an error message when there is no stockid set for the respective category.
-03/11/2013 Exson: Fixed bug in MiscFunctions.js allow '0' input as number. 
+03/11/2013 Exson: Fi3/11/2013 Exson: fixed bug by removing pattern and add no-illegal-chars to stockid in StockReorderLevel.php.xed bug in MiscFunctions.js allow '0' input as number. 
 01/11/2013 rchacon: Allow translate the name of the currency on Currencies.php.
 31/10/2013 rchacon: Allow translate the name of the currency on CustomerReceipt.php and Payments.php.
 30/10/2013 rchacon: Allow insert different data on banktrans.ref and gltrans.narrative for the bank account on CustomerReceipt.php. Match the page_title_text with the MainMenuLinksArray option for Bank Account Payments Entry and Bank Account Receipts Entry. Regroup the General Ledger Transactions menu.
