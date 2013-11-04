@@ -1,14 +1,15 @@
 webERP Change Log
 
+04/11/2013 icedlava: change insert new clone stock event to transaction as in Stocks.php for new item.
 03/11/2013 rchacon: Allow translate the name of the currency on CompanyPreferences.php.
 3/11/2013 Exson fixed the bug that discount id for category cannot be set and add an error message when there is no stockid set for the respective category.
-03/11/2013 Exson: Fi3/11/2013 Exson: fixed bug by removing pattern and add no-illegal-chars to stockid in StockReorderLevel.php.xed bug in MiscFunctions.js allow '0' input as number. 
+03/11/2013 Exson: Fi3/11/2013 Exson: fixed bug by removing pattern and add no-illegal-chars to stockid in StockReorderLevel.php.xed bug in MiscFunctions.js allow '0' input as number.
 01/11/2013 rchacon: Allow translate the name of the currency on Currencies.php.
 31/10/2013 rchacon: Allow translate the name of the currency on CustomerReceipt.php and Payments.php.
 30/10/2013 rchacon: Allow insert different data on banktrans.ref and gltrans.narrative for the bank account on CustomerReceipt.php. Match the page_title_text with the MainMenuLinksArray option for Bank Account Payments Entry and Bank Account Receipts Entry. Regroup the General Ledger Transactions menu.
 30/10/2013 Exson: Add required attribute for Z_MakeNewCompany.php to avoid file void error and make it more user friendly.
 30/10/2013: Exson modify the locstock table change the bin to NULL to avoid stick sql standard constraint failed for those items without bin.
-30/10/2013 Exson: Modify the the insert new stocks event to transaction. 
+30/10/2013 Exson: Modify the the insert new stocks event to transaction.
 24/10/13 MailingGroupMaintenance.php, minor tag and other formatting corrections.
 20/10/13 icedlava: Add StockClone.php script to create a new item with the same properties, image, cost, purchasing and pricing data as the selected item, and allow modification of image and general item details before cloning.
 18/10/13 Paul T: ManualSecuritySchema.html, add missing tr tags, reduced doubled-closing td tags to one, and changed & to &amp; for HTML.
