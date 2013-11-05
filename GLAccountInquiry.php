@@ -16,7 +16,7 @@ if (isset($_POST['Account'])){
 if (isset($_POST['Period'])){
 	$SelectedPeriod = $_POST['Period'];
 } elseif (isset($_GET['Period'])){
-	$SelectedPeriod = $_GET['Period'];
+	$SelectedPeriod = array($_GET['Period']);
 }
 
 /* Get the start and periods, depending on how this script was called*/
