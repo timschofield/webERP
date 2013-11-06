@@ -204,14 +204,19 @@ if (DB_num_rows($result)>0){
 		$LeftOvers = $pdf->addTextWrap(330,$YPos,85,$FontSize,$DisplayTaxClass,'right');
 		$LeftOvers = $pdf->addTextWrap(410,$YPos,85,$FontSize,$DisplayTaxAmount,'center');
 		$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-90, $YPos, 90, $FontSize, $DisplayTotal,'right');
-		if (mb_strlen($myrow2['narrative'])>1){
-			$YPos -= 10;
-			$LeftOvers = $pdf->addTextWrap($XPos+1,$YPos,750,10,$myrow2['narrative']);
-			if (mb_strlen($LeftOvers>1)){
-				$YPos -= 10;
-				$LeftOvers = $pdf->addTextWrap($XPos+1,$YPos,750,10,$LeftOvers);
+
+		// Prints salesorderdetails.narrative
+		$Split = explode("\r\n", wordwrap($myrow2['narrative'], 130, "\r\n"));
+		foreach ($Split as $TextLine) {
+			$YPos -= $line_height; // rchacon's suggestion: $YPos -= $FontSize;
+			if ($YPos < ($Bottom_Margin + $line_height)){ // Begins new page
+				$PageNumber++;
+				include ('includes/PDFQuotationPageHeader.inc');
 			}
+			$LeftOvers = $pdf->addTextWrap($XPos+1, $YPos, 750, 10, $TextLine);
 		}
+		$YPos -= $line_height;
+
 		$QuotationTotal +=$LineTotal;
 		$QuotationTotalEx +=$SubTot;
 		$TaxTotal +=$TaxAmount;

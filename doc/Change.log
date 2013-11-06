@@ -1,4 +1,5 @@
 webERP Change Log
+06/11/2013 rchacon: Allow multiline printing of salesorderdetails.narrative in Quotations.
 5/11/2013 Phil: Fixed the warning error in GLAccountInquiry.php add change variable type to array to make min() and max() reasonable. Reported by Jo
 04/11/2013 icedlava: change insert new clone stock event to transaction as in Stocks.php for new item.
 03/11/2013 rchacon: Allow translate the name of the currency on CompanyPreferences.php.
