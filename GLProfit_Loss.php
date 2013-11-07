@@ -969,16 +969,15 @@ if ((!isset($_POST['FromPeriod'])
 
 		if ($_POST['Detail']=='Detailed'){
 
-			if ($k==1){
-				echo '<tr class="EvenTableRows">';
-				$k=0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k++;
-			}
 			if (isset($_POST['ShowZeroBalances']) OR (!isset($_POST['ShowZeroBalances']) AND ($AccountPeriodActual <> 0 OR $AccountPeriodBudget <> 0 OR $AccountPeriodLY <> 0))){
+				if ($k==1){
+					echo '<tr class="EvenTableRows">';
+					$k=0;
+				} else {
+					echo '<tr class="OddTableRows">';
+					$k++;
+				}
 				$ActEnquiryURL = '<a href="' . $RootPath . '/GLAccountInquiry.php?Period=' . $_POST['ToPeriod'] . '&amp;Account=' . $myrow['accountcode'] . '&amp;Show=Yes">' . $myrow['accountcode'] . '</a>';
-	
 				if ($Section ==1){
 					 printf('<td>%s</td>
 							<td>%s</td>
