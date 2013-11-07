@@ -623,8 +623,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				<td>' . _('Part of the Branch Phone Number') . ':</td>
 				<td><input tabindex="3" type="text" name="CustPhone" size="15" maxlength="18" title="' . _('Enter a part of a customer\'s phone number that you wish to search for then click the Search Now button to find matching customers') . '"/></td>
 				</tr>
+				
 			</table>
-			<br />
+			
 			<div class="centre">
 				<input tabindex="4" type="submit" name="SearchCust" value="' . _('Search Now') . '" />
 				<input tabindex="5" type="submit" name="reset" value="' .  _('Reset') . '" />
@@ -749,6 +750,11 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	}
 	$msg ='';
 	if (isset($_POST['Search']) OR isset($_POST['Next']) OR isset($_POST['Previous'])){
+		if(!empty($_POST['RawMaterialFlag'])){
+			$RawMaterialSellable = " OR stockcategory.stocktype='M'";
+		}else{
+			$RawMaterialSellable = '';
+		}
 
 		if ($_POST['Keywords']!='' AND $_POST['StockCode']=='') {
 			$msg='<div class="page_help_text">' . _('Order Item description has been used in search') . '.</div>';
@@ -769,7 +775,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 								stockmaster.units
 						FROM stockmaster INNER JOIN stockcategory
 						ON stockmaster.categoryid=stockcategory.categoryid
-						WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D' OR stockcategory.stocktype='L')
+						WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D' OR stockcategory.stocktype='L'".$RawMaterialSellable.")
 						AND stockmaster.mbflag <>'G'
 						AND stockmaster.description " . LIKE . " '" . $SearchString . "'
 						AND stockmaster.discontinued=0
@@ -781,7 +787,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 								stockmaster.units
 						FROM stockmaster INNER JOIN stockcategory
 						ON stockmaster.categoryid=stockcategory.categoryid
-						WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D' OR stockcategory.stocktype='L')
+						WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D' OR stockcategory.stocktype='L'".$RawMaterialSellable.")
 						AND stockmaster.mbflag <>'G'
 						AND stockmaster.discontinued=0
 						AND stockmaster.description " . LIKE . " '" . $SearchString . "'
@@ -801,7 +807,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 								stockmaster.units
 						FROM stockmaster INNER JOIN stockcategory
 						ON stockmaster.categoryid=stockcategory.categoryid
-						WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D' OR stockcategory.stocktype='L')
+						WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D' OR stockcategory.stocktype='L'".$RawMaterialSellable.")
 						AND stockmaster.stockid " . LIKE . " '" . $SearchString . "'
 						AND stockmaster.mbflag <>'G'
 						AND stockmaster.discontinued=0
@@ -813,7 +819,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 								stockmaster.units
 						FROM stockmaster INNER JOIN stockcategory
 						ON stockmaster.categoryid=stockcategory.categoryid
-						WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D' OR stockcategory.stocktype='L')
+						WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D' OR stockcategory.stocktype='L'".$RawMaterialSellable.")
 						AND stockmaster.stockid " . LIKE . " '" . $SearchString . "'
 						AND stockmaster.mbflag <>'G'
 						AND stockmaster.discontinued=0
@@ -829,7 +835,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 								stockmaster.units
 						FROM stockmaster INNER JOIN stockcategory
 						ON stockmaster.categoryid=stockcategory.categoryid
-						WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D' OR stockcategory.stocktype='L')
+						WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D' OR stockcategory.stocktype='L'".$RawMaterialSellable.")
 						AND stockmaster.mbflag <>'G'
 						AND stockmaster.discontinued=0
 						ORDER BY stockmaster.stockid";
@@ -840,7 +846,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 								stockmaster.units
 						FROM stockmaster INNER JOIN stockcategory
 						ON stockmaster.categoryid=stockcategory.categoryid
-						WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D' OR stockcategory.stocktype='L')
+						WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D' OR stockcategory.stocktype='L'".$RawMaterialSellable.")
 						AND stockmaster.mbflag <>'G'
 						AND stockmaster.discontinued=0
 						AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
@@ -1691,7 +1697,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
         if (isset($_POST['StockCode'])) {
             echo  $_POST['StockCode'];
         }
-        echo '" /></td>
+	echo '" /></td>
+
+		<td><input type="checkbox" name="RawMaterialFlag" value="M" />'._('Raw material flag').'&nbsp;&nbsp;<br/><span class="dpTbl">'._('If checked, Raw material will be show on search result').'</span> </td>
 			</tr>';
 
 		echo '<tr>
