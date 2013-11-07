@@ -189,7 +189,7 @@ $counter=1; // Count how many sub tables are in the row
 foreach ($FormDesign as $key) {
 	switch ($key['type']) {
 		case 'image':
-			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="8">' . $key['name'] . '</th></tr>';
+			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="8">' . _($key['name']) . '</th></tr>';
             echo '<tr>';
 			echo '<td class="number">' . _('x').' = ' . '</td><td><input type="text" class="number" name="'.$key['id'].'x" size="4" maxlength="4" value="'.$key->x.'" /></td>';
 			echo '<td class="number">' . _('y').' = ' . '</td><td><input type="text" class="number" name="'.$key['id'].'y" size="4" maxlength="4" value="'.$key->y.'" /></td>';
@@ -200,7 +200,7 @@ foreach ($FormDesign as $key) {
 			$counter=$counter+1;
 			break;
 		case 'SimpleText':
-			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="6">' . $key['name'] . '</th></tr>' . "\n";
+			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="6">' . _($key['name']) . '</th></tr>' . "\n";
             echo '<tr>';
 			SimpleTextLine($key);
             echo '</tr>';
@@ -208,7 +208,7 @@ foreach ($FormDesign as $key) {
 			$counter=$counter+1;
 			break;
 		case 'MultiLineText':
-			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="4">' . $key['name'] . '</th></tr>' . "\n";
+			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="4">' . _($key['name']) . '</th></tr>' . "\n";
             echo '<tr>';
 			MultiTextLine($key);
             echo '</tr>';
@@ -216,7 +216,7 @@ foreach ($FormDesign as $key) {
 			$counter=$counter+1;
 			break;
 		case 'ElementArray':
-			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="7">' . $key['name'] . '</th></tr>' . "\n";
+			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="7">' . _($key['name']) . '</th></tr>' . "\n";
 			foreach ($key as $subkey) {
 				if ($subkey['type']=='SimpleText') {
 					echo '<tr>';
@@ -243,7 +243,7 @@ foreach ($FormDesign as $key) {
 			$counter=$counter+1;
 			break;
 		case 'CurvedRectangle':
-			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="6">' . $key['name'] . '</th></tr>';
+			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="6">' . _($key['name']) . '</th></tr>';
             echo '<tr>';
 			echo '<td class="number">' . _('x').' = ' . '</td><td><input type="text" class="number" name="'.$key['id'].'x" size="4" maxlength="4" value="'.$key->x.'" /></td>';
 			echo '<td class="number">' . _('y').' = ' . '</td><td><input type="text" class="number" name="'.$key['id'].'y" size="4" maxlength="4" value="'.$key->y.'" /></td>';
@@ -255,7 +255,7 @@ foreach ($FormDesign as $key) {
 			$counter=$counter+1;
 			break;
 		case 'Rectangle':
-			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="6">' . $key['name'] . '</th></tr>';
+			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="6">' . _($key['name']) . '</th></tr>';
             echo '<tr>';
 			echo '<td class="number">' . _('x').' = ' . '</td><td><input type="text" class="number" name="'.$key['id'].'x" size="4" maxlength="4" value="'.$key->x.'" /></td>';
 			echo '<td class="number">' . _('y').' = ' . '</td><td><input type="text" class="number" name="'.$key['id'].'y" size="4" maxlength="4" value="'.$key->y.'" /></td></tr><tr>';
@@ -266,7 +266,7 @@ foreach ($FormDesign as $key) {
 			$counter=$counter+1;
 			break;
 		case 'Line':
-			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="6">' . $key['name'] . '</th></tr>';
+			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="6">' . _($key['name']) . '</th></tr>';
             echo '<tr>';
 			echo '<td class="number">' . _('Start x co-ordinate').' = ' . '</td><td><input type="text" class="number" name="'.$key['id'].'startx" size="4" maxlength="4" value="'.$key->startx.'" /></td>';
 			echo '<td class="number">' . _('Start y co-ordinate').' = ' . '</td><td><input type="text" class="number" name="'.$key['id'].'starty" size="4" maxlength="4" value="'.$key->starty.'" /></td></tr><tr>';
