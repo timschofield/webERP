@@ -7,6 +7,7 @@ include('includes/session.inc');
 $Title = _('Location Maintenance');
 
 include('includes/header.inc');
+include('includes/CountriesArray.php');
 
 if (isset($_GET['SelectedLocation'])){
 	$SelectedLocation = $_GET['SelectedLocation'];
@@ -552,36 +553,46 @@ if (!isset($_GET['delete'])) {
 			<td><input type="text" name="Contact" required="required" value="' . $_POST['Contact'] . '" title="' . _('Enter the name of the responsible person to contact for this inventory location') . '" size="31" maxlength="30" /></td>
 		</tr>
 		<tr>
-			<td>' .  _('Delivery Address 1') . ':' . '</td>
+			<td>' .  _('Delivery Address 1 (Building)') . ':' . '</td>
 			<td><input type="text" name="DelAdd1" value="' . $_POST['DelAdd1'] . '" size="41" maxlength="40" /></td>
 		</tr>
 		<tr>
-			<td>' . _('Delivery Address 2') . ':' . '</td>
+			<td>' . _('Delivery Address 2 (Street)') . ':' . '</td>
 			<td><input type="text" name="DelAdd2" value="' .  $_POST['DelAdd2'] . '" size="41" maxlength="40" /></td>
 		</tr>
 		<tr>
-			<td>' .  _('Delivery Address 3') . ':' . '</td>
+			<td>' .  _('Delivery Address 3 (Suburb)') . ':' . '</td>
 			<td><input type="text" name="DelAdd3" value="' .  $_POST['DelAdd3'] . '" size="41" maxlength="40" /></td>
 		</tr>
 		<tr>
-			<td>' .  _('Delivery Address 4') . ':' . '</td>
+			<td>' .  _('Delivery Address 4 (City)') . ':' . '</td>
 			<td><input type="text" name="DelAdd4" value="' . $_POST['DelAdd4'] . '" size="41" maxlength="40" /></td>
 		</tr>
 		<tr>
-			<td>' .  _('Delivery Address 5') . ':' . '</td>
+			<td>' .  _('Delivery Address 5 (Zip Code)') . ':' . '</td>
 			<td><input type="text" name="DelAdd5" value="' . $_POST['DelAdd5'] . '" size="21" maxlength="20" /></td>
 		</tr>
 		<tr>
-			<td>' . _('Delivery Address 6') . ':' . '</td>
-			<td><input type="text" name="DelAdd6" value="' . $_POST['DelAdd6'] . '" size="16" maxlength="15" /></td>
+			<td>' . _('Country') . ':</td>
+			<td><select name="DelAdd6">';
+		foreach ($CountriesArray as $CountryEntry => $CountryName){
+			if (isset($_POST['DelAdd6']) AND (strtoupper($_POST['DelAdd6']) == strtoupper($CountryName))){
+				echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName  . '</option>';
+			}elseif (!isset($_POST['Address6']) AND $CountryName == "") {
+				echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName  . '</option>';
+			} else {
+				echo '<option value="' . $CountryName . '">' . $CountryName  . '</option>';
+			}
+		}
+		echo '</select></td>
 		</tr>
 		<tr>
 			<td>' .  _('Telephone No') . ':' . '</td>
-			<td><input type="tel" name="Tel" pattern="[0-9\+\s\(\)]*" value="' . $_POST['Tel'] . '" size="31" maxlength="30" title="' . _('The phone number should consist of numbers, spaces, parentheses, or the + character') . '" /></td>
+			<td><input type="tel" name="Tel" pattern="[0-9+\-\s()]*" value="' . $_POST['Tel'] . '" size="31" maxlength="30" title="' . _('The phone number should consist of numbers, spaces, parentheses, or the + character') . '" /></td>
 		</tr>
 		<tr>
 			<td>' .  _('Facsimile No') . ':' . '</td>
-			<td><input type="tel" name="Fax" pattern="[0-9\+\s\(\)]*" value="' . $_POST['Fax'] . '" size="31" maxlength="30" title="' . _('The fax number should consist of numbers, parentheses, spaces or the + character') . '"/></td>
+			<td><input type="tel" name="Fax" pattern="[0-9+\-\s()]*" value="' . $_POST['Fax'] . '" size="31" maxlength="30" title="' . _('The fax number should consist of numbers, parentheses, spaces or the + character') . '"/></td>
 		</tr>
 		<tr>
 			<td>' .  _('Email') . ':' . '</td>
