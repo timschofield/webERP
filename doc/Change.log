@@ -1,4 +1,5 @@
 webERP Change Log
+12/11/2013 rchacon: Allow translation of the subkey name in FormDesigner.php.
 07/11/2013 rchacon: Allow translation of the key name in FormDesigner.php.
 7/11/2013 Exson: Add check box to allow user to decide weather raw material is sellable or not.
 7/11/2013 Exson Revise the bin definition to NOT NULL DEFAULT '' as suggest by Tim to make it more ISO compatible.

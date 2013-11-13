@@ -220,18 +220,18 @@ foreach ($FormDesign as $key) {
 			foreach ($key as $subkey) {
 				if ($subkey['type']=='SimpleText') {
 					echo '<tr>';
-					echo '<td>' . $subkey['name'] . '</td>';
+					echo '<td>' . _($subkey['name']) . '</td>';
 					SimpleTextLine($subkey);
 					echo '</tr>';
 				} else if ($subkey['type']=='MultiLineText') {
 					echo '<tr>';
-					echo '<td>' . $subkey['name'] . '</td>';
+					echo '<td>' . _($subkey['name']) . '</td>';
 					MultiTextLine($subkey);
 					echo '</tr>';
 				} else {
 					echo '<tr>';
 					if ($subkey['type']=='DataText') {
-						echo '<td>' . $subkey['name'] . '</td>';
+						echo '<td>' . _($subkey['name']) . '</td>';
 						DataTextLine($subkey);
 					} elseif ($subkey['type']=='StartLine') {
 						echo '<td colspan="3">' . $subkey['name'].' = ' . '</td><td><input type="text" class="number" name="StartLine" size="4" maxlength="4" value="'.$key->y.'" /></td>';
