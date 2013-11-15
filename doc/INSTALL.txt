@@ -22,7 +22,7 @@ It is recommended to use phpMyAdmin to run the upgrade script since you select t
 
 If you are running the upgrade script with the mysql command line client, after editing the script as described above the syntax to use is as follows:
 
-mysql --user=weberp_db_user --password='some_pass' < /webERP/sql/upgradescriptname.sql
+mysql --user=weberp_db_user --password='some_pass' < /webERP/sql/mysql/upgradescriptname.sql
 
 where weberp_db_user is the name of your mysql user and some_pass is the password for that user.
 

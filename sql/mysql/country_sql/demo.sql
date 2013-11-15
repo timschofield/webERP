@@ -1,5 +1,3 @@
-CREATE DATABASE IF NOT EXISTS weberpdemo;
-USE weberpdemo;
 SET FOREIGN_KEY_CHECKS = 0;
 -- MySQL dump 10.13  Distrib 5.5.32, for debian-linux-gnu (x86_64)
 --

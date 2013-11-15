@@ -145,7 +145,7 @@ if (!isset($_POST['Amount'])) {
 }
 echo '<tr>
 		<td>' . _('Amount') . ':</td>
-		<td><input type="number"  pattern="(?!^[-]?0[,.]0*$).{1,11}" required="required" title="'._('The input must be non zero number').'" placeholder="'._('Non zero number').'" name="Amount" size="12" maxlength="11" value="' .  locale_number_format($_POST['Amount'],$_SESSION['SuppTrans']->CurrDecimalPlaces) . '" /></td>
+		<td><input type="text"  class="number" required="required" title="'._('The input must be non zero number').'" placeholder="'._('Non zero number').'" name="Amount" size="12" maxlength="11" value="' .  locale_number_format($_POST['Amount'],$_SESSION['SuppTrans']->CurrDecimalPlaces) . '" /></td>
 	</tr>
 	</table>';
 
