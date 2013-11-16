@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-09-06 21:34+1200\n"
-"PO-Revision-Date: 2013-11-02 18:01-0600\n"
+"PO-Revision-Date: 2013-11-16 11:08-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -17812,7 +17812,7 @@ msgstr "Total Pagos"
 
 #: PaymentMethods.php:7 includes/MainMenuLinksArray.php:473
 msgid "Payment Methods"
-msgstr "Formas de Pago"
+msgstr "Formas de pago"
 
 #: PaymentMethods.php:39
 msgid "The payment method cannot contain illegal characters"
@@ -17879,15 +17879,15 @@ msgstr "No se pudo obtener la forma de pago porque"
 
 #: PaymentMethods.php:185 PaymentMethods.php:267
 msgid "Payment Method"
-msgstr "Forma de Pago"
+msgstr "Forma de pago"
 
 #: PaymentMethods.php:186
 msgid "For Payments"
-msgstr "Por Pagos"
+msgstr "Para pagos"
 
 #: PaymentMethods.php:187
 msgid "For Receipts"
-msgstr "Para Recibos (A Cobrar)"
+msgstr "Para ingresos"
 
 #: PaymentMethods.php:188
 msgid "Use Pre-printed"
@@ -17899,7 +17899,7 @@ msgstr "Papelería"
 
 #: PaymentMethods.php:189
 msgid "Open Cash Drawer"
-msgstr "Abrir Caja de Efectivo"
+msgstr "Abrir caja registradora"
 
 #: PaymentMethods.php:209
 msgid "Are you sure you wish to delete this payment method?"
@@ -17907,7 +17907,7 @@ msgstr "¿Confirma que desea eliminar este método de pago?"
 
 #: PaymentMethods.php:218
 msgid "Review Payment Methods"
-msgstr "Revisar Formas de Pago"
+msgstr "Revisar formas de pago"
 
 #: PaymentMethods.php:242
 msgid "Could not retrieve the requested payment method, please try again."
@@ -17916,19 +17916,19 @@ msgstr ""
 
 #: PaymentMethods.php:271
 msgid "Use For Payments"
-msgstr "Usar Para Pagos"
+msgstr "Usar en pagos"
 
 #: PaymentMethods.php:278
 msgid "Use For Receipts"
-msgstr "Usar Para Recibos (Cobros)"
+msgstr "Usar en recibos"
 
 #: PaymentMethods.php:285
 msgid "Use Pre-printed Stationery"
-msgstr "Usar Papelería Preimpresa"
+msgstr "Usar en papelería preimpresa"
 
 #: PaymentMethods.php:292
 msgid "Open POS Cash Drawer for Sale"
-msgstr "Abrir Caja Registradora para Venta"
+msgstr "Abrir caja registradora para ventas"
 
 #: Payments.php:23
 msgid "Payment Cancelled since cheque was not printed"
@@ -47622,9 +47622,8 @@ msgid "Change Delivery Details"
 msgstr "Detalles de la Entrega"
 
 #: ../webSHOP/Checkout.php:481
-#, fuzzy
 msgid "Choose Your Preferred Payment Method"
-msgstr "Revisar Formas de Pago"
+msgstr "Elija su forma de pago preferida"
 
 #: ../webSHOP/Checkout.php:483 ../webSHOP/includes/DisplayShoppingCart.php:79
 #, fuzzy
@@ -47647,14 +47646,12 @@ msgid "Back to Delivery Details"
 msgstr "Selección de detalles de reparto"
 
 #: ../webSHOP/Checkout.php:512
-#, fuzzy
 msgid "Review Freight Method and Charges"
-msgstr "Revisar Formas de Pago"
+msgstr "Revise forma de envío y cargos."
 
 #: ../webSHOP/Checkout.php:513
-#, fuzzy
 msgid "Confirm Selected Payment Method"
-msgstr "Revisar Formas de Pago"
+msgstr "Confirmar forma de pago seleccionada"
 
 #: ../webSHOP/Checkout.php:523
 #, fuzzy

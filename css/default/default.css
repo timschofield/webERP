@@ -88,11 +88,14 @@ th.number{
 td {
 	text-align:left;
 }
-td.select{
-	background-color:#eee;
+td.centre{
+	text-align:center;
 }
 td.number{
 	text-align:right;
+}
+td.select{
+	background-color:#eee;
 }
 div.centre{
 	margin:0 auto;
