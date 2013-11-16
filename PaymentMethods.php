@@ -183,10 +183,10 @@ if (isset($_POST['submit'])) {
 	echo '<table class="selection">
 		<tr>
 			<th>' . _('Payment Method') . '</th>
-			<th>' . _('For Payments') . '</th>
-			<th>' . _('For Receipts') . '</th>
-			<th>' . _('Use Pre-printed')  . '<br />' . _('Stationery') . '</th>
-			<th>' . _('Open Cash Drawer') . '</th>
+			<th>' . _('Use For Payments') . '</th>
+			<th>' . _('Use For Receipts') . '</th>
+			<th>' . _('Use Pre-printed Stationery') . '</th>
+			<th>' . _('Open POS Cash Drawer for Sale') . '</th>
 		</tr>';
 
 	$k=0; //row colour counter
@@ -201,10 +201,10 @@ if (isset($_POST['submit'])) {
 		}
 
 		echo '<td>' . $myrow['paymentname'] . '</td>
-				<td>' . ($myrow['paymenttype'] ? _('Yes') : _('No')) . '</td>
-				<td>' . ($myrow['receipttype'] ? _('Yes') : _('No')) . '</td>
-				<td>' . ($myrow['usepreprintedstationery'] ? _('Yes') : _('No')) . '</td>
-				<td>' . ($myrow['opencashdrawer'] ? _('Yes') : _('No')) . '</td>
+				<td class="centre">' . ($myrow['paymenttype'] ? _('Yes') : _('No')) . '</td>
+				<td class="centre">' . ($myrow['receipttype'] ? _('Yes') : _('No')) . '</td>
+				<td class="centre">' . ($myrow['usepreprintedstationery'] ? _('Yes') : _('No')) . '</td>
+				<td class="centre">' . ($myrow['opencashdrawer'] ? _('Yes') : _('No')) . '</td>
 				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedPaymentID=' . $myrow['paymentid'] . '">' . _('Edit') . '</a></td>
 				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedPaymentID=' . $myrow['paymentid'] . '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this payment method?') . '\');">' . _('Delete')  . '</a></td>
 			</tr>';
