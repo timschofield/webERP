@@ -1,5 +1,5 @@
 webERP Change Log
-
+2013/11/18 Exson Make company name client side requirements consistent with server side in CompanyPreferences.php.
 16/11/13 rchacon: Mejora la traducción y el formato en PaymentMethods.php.
 16/11/13 Phil: MacPhotoBiker reported shipment charges html5 type=number removed to use the class=number javascript'
 12/11/13 rchacon: Allow translation of the subkey name in FormDesigner.php.
