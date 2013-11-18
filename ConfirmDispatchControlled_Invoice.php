@@ -73,7 +73,7 @@ $RecvQty = $LineItem->Quantity-$LineItem->QtyInv;
 $ItemMustExist = true;  /*Can only invoice valid batches/serial numbered items that exist */
 $LocationOut = $_SESSION['Items'.$identifier]->Location;
 $InOutModifier=1;
-$ShowExisting=false;
+$ShowExisting=true;
 
 include ('includes/InputSerialItems.php');
 
