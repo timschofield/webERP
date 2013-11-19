@@ -460,7 +460,7 @@ echo '<tr>
 	</tr>';
 echo '<tr>
 		<td>' . _('Telephone No') . ':</td>
-		<td><input type="tel" name="Phone" pattern="[0-9+()\s]*" value="' . $_POST['Phone'] . '"  size="32" maxlength="30" /></td>
+		<td><input type="tel" name="Phone" pattern="[0-9+()\s-]*" value="' . $_POST['Phone'] . '"  size="32" maxlength="30" /></td>
 	</tr>';
 echo '<tr>
 		<td>' . _('Email Address') .':</td>

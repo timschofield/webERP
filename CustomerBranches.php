@@ -796,14 +796,14 @@ if (!isset($_GET['delete'])) {
 	if (!isset($_POST['PhoneNo'])) {
 		$_POST['PhoneNo']='';
 	}
-	echo '<td><input tabindex="16" type="tel" name="PhoneNo" pattern="[0-9+()\s]*" size="22" maxlength="20" value="'. $_POST['PhoneNo'].'" /></td>
+	echo '<td><input tabindex="16" type="tel" name="PhoneNo" pattern="[0-9+()\s-]*" size="22" maxlength="20" value="'. $_POST['PhoneNo'].'" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Fax Number').':</td>';
 	if (!isset($_POST['FaxNo'])) {
 		$_POST['FaxNo']='';
 	}
-	echo '<td><input tabindex="17" type="tel" name="FaxNo" pattern="[0-9+()\s]*" size="22" maxlength="20" value="'. $_POST['FaxNo'].'" /></td>
+	echo '<td><input tabindex="17" type="tel" name="FaxNo" pattern="[0-9+()\s-]*" size="22" maxlength="20" value="'. $_POST['FaxNo'].'" /></td>
 		</tr>';
 
 	if (!isset($_POST['Email'])) {
