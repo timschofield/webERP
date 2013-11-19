@@ -7,7 +7,7 @@ MYSQL_PWD=woofwoof;
 
 cd $BASE_DIR;
 
-xgettext --no-wrap --from-code=utf-8 --language=PHP -o locale/en_GB.utf8/LC_MESSAGES/messages.pot *php includes/*.php includes/*.inc reportwriter/*.php reportwriter/*.inc reportwriter/forms/*.html reportwriter/admin/*.php reportwriter/admin/*.inc reportwriter/admin/forms/*.html api/*.php ../webSHOP/*.php ../webSHOP/includes/*.php
+xgettext --no-wrap --from-code=utf-8 --language=PHP -o locale/en_GB.utf8/LC_MESSAGES/messages.pot *php includes/*.php includes/*.inc reportwriter/*.php reportwriter/*.inc reportwriter/forms/*.html reportwriter/admin/*.php reportwriter/admin/*.inc reportwriter/admin/forms/*.html api/*.php install/*.php ../webSHOP/*.php ../webSHOP/includes/*.php
 
 msgmerge -U --backup=off locale/ar_EG.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
 msgmerge -U --backup=off locale/cs_CZ.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
