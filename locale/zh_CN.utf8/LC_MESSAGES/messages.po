@@ -8,16 +8,15 @@ msgstr ""
 "Project-Id-Version: WEBERP3.05 VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-09-06 21:34+1200\n"
-"PO-Revision-Date: 2013-06-01 16:40-0600\n"
+"PO-Revision-Date: 2013-11-19 12:32+0800\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: WebERP Translation Team <web-erp-translation@lists."
 "sourceforge.net>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2011-01-29 15:16+0000\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 1.5.7\n"
 "X-Poedit-Basepath: C:\\AppServ/www/\n"
 "X-Poedit-SearchPath-0: weberptrunk\n"
 
@@ -8528,7 +8527,7 @@ msgstr "选择客户"
 
 #: CustomerReceipt.php:1127
 msgid "Text in the Customer"
-msgstr "顾客的文字"
+msgstr "顾客的部分"
 
 #: CustomerReceipt.php:1127
 msgid "name"
@@ -8536,11 +8535,11 @@ msgstr "名称包含"
 
 #: CustomerReceipt.php:1130
 msgid "Text extract in the Customer"
-msgstr "顾客名称中摘取的文字"
+msgstr "顾客的部分"
 
 #: CustomerReceipt.php:1130
 msgid "code"
-msgstr "包含"
+msgstr "编号"
 
 #: CustomerReceipt.php:1131
 msgid ""
