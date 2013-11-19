@@ -1,4 +1,5 @@
 webERP Change Log
+2013/11/19 Thumb: Add '-' to telephone no pattern in CustomerBranches.php and WWW_Users.php.
 2013/11/19 Thumb: Correct translation of customer text and customer code in CustomerReceipt.php of locale file.
 2013/11/19 Thumb: Text 'settled transaction' position adjusted to proper position in PrintCustStatements.php.
 2013/11/18 Exson: Make inventory it as default to show inventory serial no in ConfirmDispatchControlled_Invoice.php.
