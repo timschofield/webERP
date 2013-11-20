@@ -142,15 +142,22 @@ if (isset($_POST['BankAccount']) AND $_POST['BankAccount']!=''){
 						$ErrMsg);
 
 	$myrow = DB_fetch_array($result);
-	$_SESSION['PaymentDetail' . $identifier]->AccountCurrency=$myrow['currcode'];
-	$_SESSION['PaymentDetail' . $identifier]->CurrDecimalPlaces=$myrow['decimalplaces'];
-
+	if ($_SESSION['PaymentDetail' . $identifier]->AccountCurrency != $myrow['currcode']) {
+		//then we'd better update the functional exchange rate
+		$DefaultFunctionalRate = true;
+		$_SESSION['PaymentDetail' . $identifier]->AccountCurrency = $myrow['currcode'];
+		$_SESSION['PaymentDetail' . $identifier]->CurrDecimalPlaces = $myrow['decimalplaces'];
+	} else {
+		$DefaultFunctionalRate = false;
+	}
 } else {
-	$_SESSION['PaymentDetail' . $identifier]->AccountCurrency =$_SESSION['CompanyRecord']['currencydefault'];
-	$_SESSION['PaymentDetail' . $identifier]->CurrDecimalPlaces=$_SESSION['CompanyRecord']['decimalplaces'];
+	
+	$_SESSION['PaymentDetail' . $identifier]->AccountCurrency = $_SESSION['CompanyRecord']['currencydefault'];
+	$_SESSION['PaymentDetail' . $identifier]->CurrDecimalPlaces = $_SESSION['CompanyRecord']['decimalplaces'];
+
 }
 if (isset($_POST['DatePaid']) AND $_POST['DatePaid']!='' AND Is_Date($_POST['DatePaid'])){
-	$_SESSION['PaymentDetail' . $identifier]->DatePaid=$_POST['DatePaid'];
+	$_SESSION['PaymentDetail' . $identifier]->DatePaid = $_POST['DatePaid'];
 }
 if (isset($_POST['ExRate']) AND $_POST['ExRate']!=''){
 	$_SESSION['PaymentDetail' . $identifier]->ExRate=filter_number_format($_POST['ExRate']); //ex rate between payment currency and account currency
@@ -165,7 +172,6 @@ if (isset($_POST['Paymenttype']) AND $_POST['Paymenttype']!=''){
 if (isset($_POST['Currency']) AND $_POST['Currency']!=''){
 	/* Payment currency is the currency that is being paid */
 	$_SESSION['PaymentDetail' . $identifier]->Currency=$_POST['Currency']; // Payment currency
-
 
 	if ($_SESSION['PaymentDetail' . $identifier]->AccountCurrency==$_SESSION['CompanyRecord']['currencydefault']){
 		$_POST['FunctionalExRate']=1;
@@ -186,9 +192,10 @@ if (isset($_POST['Currency']) AND $_POST['Currency']!=''){
 		$result = DB_query("SELECT rate FROM currencies WHERE currabrev='" . $_SESSION['PaymentDetail' . $identifier]->AccountCurrency . "'",$db);
 		$myrow = DB_fetch_row($result);
 		$SuggestedFunctionalExRate = $myrow[0];
-
+		if ($DefaultFunctionalRate) {
+			$_SESSION['PaymentDetail' . $identifier]->FunctionalExRate = $SuggestedFunctionalExRate;
+		}
 	}
-
 
 	if ($_POST['Currency']==$_SESSION['PaymentDetail' . $identifier]->AccountCurrency){
 		/* if the currency being paid is the same as the bank account currency then default ex rate to 1 */
@@ -203,7 +210,6 @@ if (isset($_POST['Currency']) AND $_POST['Currency']!=''){
 		/*Calculate cross rate to suggest appropriate exchange rate between payment currency and account currency */
 		$SuggestedExRate = $TableExRate/$SuggestedFunctionalExRate;
 	}
-
 }
 
 if (isset($_POST['BankTransRef']) AND $_POST['BankTransRef']!=''){	// Reference on Bank Transactions Inquiry
