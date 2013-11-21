@@ -1,7 +1,7 @@
 <?php
 $LanguagesArray = array();
 
-$LanguagesArray['en_US.utf8']['LanguageName'] = 'English US';
+$LanguagesArray['en_US.utf8']['LanguageName'] = 'US English';
 $LanguagesArray['en_US.utf8']['WindowsLocale'] = 'english-us';
 $LanguagesArray['en_US.utf8']['DecimalPoint'] = '.';
 $LanguagesArray['en_US.utf8']['ThousandsSeparator'] = ',';
@@ -151,12 +151,12 @@ $LanguagesArray['zh_CN.utf8']['WindowsLocale'] = 'chinese-simplified';
 $LanguagesArray['zh_CN.utf8']['DecimalPoint'] = '.';
 $LanguagesArray['zh_CN.utf8']['ThousandsSeparator'] = ',';
 
-$LanguagesArray['zh_HK.utf8']['LanguageName'] = _('Chinese - Traditional Hongkong');
+$LanguagesArray['zh_HK.utf8']['LanguageName'] = '正體中文  香港特別行政區';
 $LanguagesArray['zh_HK.utf8']['WindowsLocale'] = 'chinese-traditional';
 $LanguagesArray['zh_HK.utf8']['DecimalPoint'] = '.';
 $LanguagesArray['zh_HK.utf8']['ThousandsSeparator'] = ',';
 
-$LanguagesArray['zh_TW.utf8']['LanguageName'] = _('Chinese - Traditional Taiwan');
+$LanguagesArray['zh_TW.utf8']['LanguageName'] = '正體中文  中國臺灣';
 $LanguagesArray['zh_TW.utf8']['WindowsLocale'] = 'chinese-traditional';
 $LanguagesArray['zh_TW.utf8']['DecimalPoint'] = '.';
 $LanguagesArray['zh_TW.utf8']['ThousandsSeparator'] = ',';
