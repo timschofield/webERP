@@ -51,7 +51,7 @@ $LanguagesArray['fa_IR.utf8']['WindowsLocale'] = 'persian';
 $LanguagesArray['fa_IR.utf8']['DecimalPoint'] = ',';
 $LanguagesArray['fa_IR.utf8']['ThousandsSeparator'] = '.';
 
-$LanguagesArray['fr_CA.utf8']['LanguageName'] = 'Français Quebec';
+$LanguagesArray['fr_CA.utf8']['LanguageName'] = 'Français Québec';
 $LanguagesArray['fr_CA.utf8']['WindowsLocale'] = 'french-quebec';
 $LanguagesArray['fr_CA.utf8']['DecimalPoint'] = ',';
 $LanguagesArray['fr_CA.utf8']['ThousandsSeparator'] = ' ';
