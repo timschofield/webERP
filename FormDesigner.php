@@ -1,76 +1,76 @@
 <?php
 /* $Id$ */
 
-include('includes/session.inc');
-$Title = _('Form Design');
-/*
-$ViewTopic = 'to_add_topic'; // This is to do.
-$BookMark = 'to_add_bookmark'; // This is to do.
-*/
-include('includes/header.inc');
+/*	Form Designer notes:
+	- All measurements are in PostScript points (72 points = 25,4 mm).
+	- All coordinates are measured from the lower left corner of the sheet to 
+	  the the top left corner of the field.*/
 
-// General function to select a text alignment
-function SelectAlignment($keyId, $keyAlignment) {
+/* BEGIN: Start common code division. */
+include('includes/session.inc');
+$Title = _('Form Designer');
+/* $ViewTopic = 'to_add_topic'; // This is to do.*/
+/* $BookMark = 'FormDesigner'; // This is to do.*/
+include('includes/header.inc');
+/* END: Start common code division. */
+
+/* BEGIN: Functions division. */
+// Function to select a text alignment.
+function SelectAlignment($keyName, $keyValue) {
 	$Alignments = array(); // Possible alignments
 	$Alignments['left']['Caption'] = _('Left');
 	$Alignments['left']['Title'] = _('Text lines are rendered flush left');
 	$Alignments['centre']['Caption'] = _('Centre');
-	$Alignments['centre']['Title'] = _('Text lines are centered');
+	$Alignments['centre']['Title'] = _('Text lines are centred');
 	$Alignments['right']['Caption'] = _('Right');
 	$Alignments['right']['Title'] = _('Text lines are rendered flush right');
 	$Alignments['full']['Caption'] = _('Justify');
 	$Alignments['full']['Title'] = _('Text lines are justified to both margins');
-	echo '<select name="' . $keyId . 'Alignment">';
+	echo '<select name="' . $keyName . 'Alignment">';
 	foreach ($Alignments as $AlignmentValue => $AlignmentOption) {
 		echo '<option';
-		if ($AlignmentValue==$keyAlignment) {echo ' selected="selected"';}
+		if ($AlignmentValue==$keyValue) {echo ' selected="selected"';}
 		echo ' value="'.$AlignmentValue.'" title="' . $AlignmentOption['Title'] . '">' . $AlignmentOption['Caption'] . '</option>';
 	}
 	echo '</select>';
 }
-
-// General function to select a font size
-function SelectFontSize($keyId, $keyFontSize) {
+// Function to select a font size.
+function SelectFontSize($keyName, $keyValue) {
 	$FontSizes = array(6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 20, 22, 24, 26, 28, 32, 36); // Possible font sizes
-	echo '<select name="' . $keyId . 'FontSize">';
+	echo '<select name="' . $keyName . 'FontSize">';
 	foreach ($FontSizes as $FontSize) {
 		echo '<option';
-		if ($FontSize==$keyFontSize) {echo ' selected="selected"';}
+		if ($FontSize==$keyValue) {echo ' selected="selected"';}
 		echo ' value="'.$FontSize.'">' . $FontSize . '</option>';
 	}
 	echo '</select>';
 }
-
+// Function to display a table row for the attributes of a single-line text.
 function SimpleTextLine($key) {
-	/* Displays a table row containing the attributes for a
-	 * line of text of type `SimpleText` and the values
-	 * given in the object $key
-	 */
-
-	// Displays the text font size in dpi (72 dpi = 1 inch)
+/*	Displays a table row containing the attributes for a line of text of type 
+	'SimpleText' and the values given in the object $key. */
+	/* Displays the text font size in PostScript points (72 points = 25,4 mm). */
 	echo '<td class="number">' . _('Font Size'). ' = </td><td>';
 	SelectFontSize($key['id'], $key->FontSize);
 	echo '</td>';
-	/* Display the X co-ordinate (mm from the left hand side of page) */
+	/* Display the X co-ordinate in PostScript points (72 points = 25,4 mm) from the left hand side of page. */
 	echo '<td class="number">' . _('x').' = ' . '</td><td><input type="text" class="number" name="'.$key['id'].'x" size="4" maxlength="4" value="'.$key->x.'" /></td>';
-	/* Display the Y co-ordinate (mm from the top of the page) */
+	/* Display the Y co-ordinate in PostScript points (72 points = 25,4 mm) from the bottom of the page. */
 	echo '<td class="number">' . _('y').' = ' . '</td><td><input type="text" class="number" name="'.$key['id'].'y" size="4" maxlength="4" value="'.$key->y.'" /></td>';
 }
+// Function to display a table row for the attributes of a multiline text.
 function MultiTextLine($key) {
-	/* Displays a table row containing the attributes for a
-	 * line of text of type `MultiLineText` and the values
-	 * given in the object $key
-	 */
-
-	// Displays the text font size in dpi (72 dpi = 1 inch)
+/*	Displays a table row containing the attributes for a line of text of type 
+	'MultiLineText' and the values given in the object $key. */
+	// Displays the text font size in PostScript points (72 points = 25,4 mm).
 	echo '<td class="number">' . _('Font Size'). ' = </td><td>';
 	SelectFontSize($key['id'], $key->FontSize);
 	echo '</td>';
-	/* Display the length of the field in mm */
-	echo '<td class="number">' . _('Length').' = ' . '</td><td><input type="text" class="number" name="'.$key['id'].'Length" size="4" maxlength="4" value="'.$key->Length.'" /></td></tr><tr>';
-	/* Display the X co-ordinate (mm from the left hand side of page) */
+	/* Display the width of the field in PostScript points (72 points = 25,4 mm).*/
+	echo '<td class="number">' . _('Width').' = ' . '</td><td><input type="text" class="number" name="'.$key['id'].'Length" size="4" maxlength="4" value="'.$key->Length.'" /></td></tr><tr>';
+	/* Display the X co-ordinate in PostScript points (72 points = 25,4 mm) from the left hand side of page. */
 	echo '<td class="number">' . _('x').' = ' . '</td><td><input type="text" class="number" name="'.$key['id'].'x" size="4" maxlength="4" value="'.$key->x.'" /></td>';
-	/* Display the Y co-ordinate (mm from the top of the page) */
+	/* Display the Y co-ordinate in PostScript points (72 points = 25,4 mm) from the bottom of the page. */
 	echo '<td class="number">' . _('y').' = ' . '</td><td><input type="text" class="number" name="'.$key['id'].'y" size="4" maxlength="4" value="'.$key->y.'" /></td>';
 }
 function DataTextLine($key) {
@@ -78,16 +78,18 @@ function DataTextLine($key) {
 	 * line of text of type `DataText` and the values
 	 * given in the object $key
 	 */
-
-	// Displays the text font size in dpi (72 dpi = 1 inch)
+	// Displays the text font size in PostScript points (72 points = 25,4 mm).
 	echo '<td class="number">' . _('Font Size'). ' = </td><td>';
 	SelectFontSize($key['id'], $key->FontSize);
 	echo '</td>';
-	/* Display the length of the field in mm */
-	echo '<td class="number">' . _('Length').' = ' . '</td><td><input type="text" class="number" name="'.$key['id'].'Length" size="4" maxlength="4" value="'.$key->Length.'" /></td>';
-	/* Display the X co-ordinate (mm from the left hand side of page) */
+	/* Display the width of the field in PostScript points (72 points = 25,4 mm).*/
+	echo '<td class="number">' . _('Width').' = ' . '</td><td><input type="text" class="number" name="'.$key['id'].'Length" size="4" maxlength="4" value="'.$key->Length.'" /></td>';
+	/* Display the X co-ordinate in PostScript points (72 points = 25,4 mm) from the left hand side of page. */
 	echo '<td class="number">' . _('x').' = ' . '</td><td><input type="text" class="number" name="'.$key['id'].'x" size="4" maxlength="4" value="'.$key->x.'" /></td>';
 }
+/* END: Functions division. */
+
+/* BEGIN: Procedure division. */
 /* If the user has chosen to either preview the form, or
  * save it then we first have to get the POST values into a
  * simplexml object and then save the file as either a
@@ -175,7 +177,11 @@ if (empty($_POST['preview'])) {
 	$FormDesign = simplexml_load_file($PathPrefix.'companies/'.$_SESSION['DatabaseName'].'/FormDesigns/'.$_POST['FormName']);
 }
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/reports.png" title="' . _('Form Design') . '" alt="" />' . ' ' . _('Form Design') . '<br />' .  $FormDesign['name'] . '</p>';
-echo '<div class="page_help_text">' . _('Enter the changes that you want in the form layout below.')  . '<br /> '. _('All measurements are in points') . '.</div><br />';
+echo '<div class="page_help_text">' . 
+	_('Enter the changes that you want in the form layout below.')  . '<br /> '. 
+	_('All measurements are in PostScript points (72 points = 25,4 mm).')  . '<br /> '. 
+	_('All coordinates are measured from the lower left corner of the sheet to the the top left corner of the field.') . '</div><br />';
+
 $Papers=array('A4_Landscape', 'A4_Portrait', 'A5_Landscape', 'A5_Portrait', 'A3_Landscape', 'A3_Portrait', 'Letter_Portrait', 'Letter_Landscape', 'Legal_Portrait', 'Legal_Landscape'); // Possible paper sizes/orientations
 echo '<form method="post" id="Form" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' . SID . '">';
 echo '<div>';
@@ -297,5 +303,9 @@ echo '<br /><div class="centre"><input tabindex="6" type="submit" name="preview"
 echo '<br /><div class="centre"><input tabindex="6" type="submit" name="save" value="' . _('Save the Form Layout') . '" /></div>';
 echo '</div>';
 echo '</form>';
+/* END: Procedure division. */
+
+/* BEGIN: Final common code division. */
 include('includes/footer.inc');
+/* END: Final common code division. */
 ?>
