@@ -16,7 +16,7 @@ $LanguagesArray['en_IN.utf8']['WindowsLocale'] = 'english-in';
 $LanguagesArray['en_IN.utf8']['DecimalPoint'] = '.';
 $LanguagesArray['en_IN.utf8']['ThousandsSeparator'] = ',';
 
-$LanguagesArray['ar_EG.utf8']['LanguageName'] = _('Arabic Eygptian');
+$LanguagesArray['ar_EG.utf8']['LanguageName'] = 'مصرى'; // Egyptian Spoken Arabic ?
 $LanguagesArray['ar_EG.utf8']['WindowsLocale'] = 'arabic';
 $LanguagesArray['ar_EG.utf8']['DecimalPoint'] = ',';
 $LanguagesArray['ar_EG.utf8']['ThousandsSeparator'] = ' ';
