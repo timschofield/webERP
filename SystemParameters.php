@@ -4,7 +4,7 @@
 
 include('includes/session.inc');
 
-$Title = _('System Configuration');
+$Title = _('System Parameters');
 $ViewTopic= 'GettingStarted';
 $BookMark = 'SystemConfiguration';
 include('includes/header.inc');

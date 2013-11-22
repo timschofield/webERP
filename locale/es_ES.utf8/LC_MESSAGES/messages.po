@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-09-06 21:34+1200\n"
-"PO-Revision-Date: 2013-11-16 11:08-0600\n"
+"PO-Revision-Date: 2013-11-22 16:18-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -3211,15 +3211,15 @@ msgstr ""
 
 #: CompanyPreferences.php:178
 msgid "Official Company Number"
-msgstr "Número Oficial de la Compañía (DUN)"
+msgstr "Número oficial de la compañía (DUN)"
 
 #: CompanyPreferences.php:183
 msgid "Tax Authority Reference"
-msgstr "Referencia de la Autoridad Fiscal"
+msgstr "Referencia de la administración tributaria"
 
 #: CompanyPreferences.php:188 Factors.php:211
 msgid "Address Line 1"
-msgstr "Dirección (1) Calle"
+msgstr "Dirección (línea 1)"
 
 #: CompanyPreferences.php:189
 msgid ""
@@ -3229,7 +3229,7 @@ msgstr ""
 
 #: CompanyPreferences.php:193 Factors.php:214
 msgid "Address Line 2"
-msgstr "Dirección (2)"
+msgstr "Dirección (línea 2)"
 
 #: CompanyPreferences.php:194
 msgid ""
@@ -3239,7 +3239,7 @@ msgstr ""
 
 #: CompanyPreferences.php:198 Factors.php:218
 msgid "Address Line 3"
-msgstr "Dirección (3)"
+msgstr "Dirección (línea 3)"
 
 #: CompanyPreferences.php:199
 msgid ""
@@ -3249,7 +3249,7 @@ msgstr ""
 
 #: CompanyPreferences.php:203 Factors.php:222
 msgid "Address Line 4"
-msgstr "Dirección (4)"
+msgstr "Dirección (línea 4)"
 
 #: CompanyPreferences.php:204
 msgid ""
@@ -3259,11 +3259,11 @@ msgstr ""
 
 #: CompanyPreferences.php:208 Factors.php:226
 msgid "Address Line 5"
-msgstr "Dirección (5)"
+msgstr "Dirección (línea 5)"
 
 #: CompanyPreferences.php:213 Factors.php:230
 msgid "Address Line 6"
-msgstr "Dirección (6) País"
+msgstr "Dirección (línea 6)"
 
 #: CompanyPreferences.php:218
 msgid "Telephone Number"
@@ -3297,7 +3297,7 @@ msgstr "Moneda local"
 
 #: CompanyPreferences.php:261
 msgid "Debtors Control GL Account"
-msgstr "Cuenta de Control de Deudores"
+msgstr "Cuenta para control de deudores"
 
 #: CompanyPreferences.php:262
 msgid ""
@@ -3309,7 +3309,7 @@ msgstr ""
 
 #: CompanyPreferences.php:278
 msgid "Creditors Control GL Account"
-msgstr "Cuenta de Control de Acreedores"
+msgstr "Cuenta para control de acreedores"
 
 #: CompanyPreferences.php:279
 msgid ""
@@ -3321,11 +3321,11 @@ msgstr ""
 
 #: CompanyPreferences.php:295
 msgid "Payroll Net Pay Clearing GL Account"
-msgstr "Cuenta de Pago de Nómina"
+msgstr "Cuenta para pago de nómina"
 
 #: CompanyPreferences.php:312
 msgid "Goods Received Clearing GL Account"
-msgstr "Cuenta de Compensación (Liquidación) de Bienes Recibidos"
+msgstr "Cuenta para compensación de bienes recibidos"
 
 #: CompanyPreferences.php:313
 msgid ""
@@ -3337,7 +3337,7 @@ msgstr ""
 
 #: CompanyPreferences.php:328
 msgid "Retained Earning Clearing GL Account"
-msgstr "Cuenta de Compensación (Liquidación) de Ganancias Retenidas"
+msgstr "Cuenta para compensación de ganancias retenidas"
 
 #: CompanyPreferences.php:329
 msgid ""
@@ -3352,7 +3352,7 @@ msgstr "Cuenta de Transportes Re-Cargados"
 
 #: CompanyPreferences.php:370
 msgid "Sales Exchange Variances GL Account"
-msgstr "Cuenta de Diferencias al Cambio de Ventas"
+msgstr "Cuenta para diferencias de cambio en ventas"
 
 #: CompanyPreferences.php:371
 msgid ""
@@ -3366,7 +3366,7 @@ msgstr ""
 
 #: CompanyPreferences.php:387
 msgid "Purchases Exchange Variances GL Account"
-msgstr "Cuenta de Diferencias al Cambio de Compras"
+msgstr "Cuenta para diferencias de cambio en compras"
 
 #: CompanyPreferences.php:388
 msgid ""
@@ -3380,7 +3380,7 @@ msgstr ""
 
 #: CompanyPreferences.php:404
 msgid "Payment Discount GL Account"
-msgstr "Cuenta de Descuentos en Pagos"
+msgstr "Cuenta para descuentos en pagos"
 
 #: CompanyPreferences.php:405
 msgid ""
@@ -3391,7 +3391,7 @@ msgstr ""
 
 #: CompanyPreferences.php:421
 msgid "Create GL entries for accounts receivable transactions"
-msgstr "Crear asientos contables para transacciones de Cuentas a Cobrar"
+msgstr "Crear asientos contables para transacciones de cuentas por cobrar"
 
 #: CompanyPreferences.php:422
 msgid ""
@@ -3403,7 +3403,7 @@ msgstr ""
 
 #: CompanyPreferences.php:436
 msgid "Create GL entries for accounts payable transactions"
-msgstr "Crear asientos contables para transacciones de Cuentas a Pagar"
+msgstr "Crear asientos contables para transacciones de cuentas por pagar"
 
 #: CompanyPreferences.php:437
 msgid ""
@@ -3415,7 +3415,7 @@ msgstr ""
 
 #: CompanyPreferences.php:451
 msgid "Create GL entries for stock transactions"
-msgstr "Crear asientos contables para transacciones de Existencias"
+msgstr "Crear asientos contables para transacciones de inventario"
 
 #: CompanyPreferences.php:452
 msgid ""
@@ -33780,7 +33780,7 @@ msgstr "Parámetro"
 
 #: SystemParameters.php:370
 msgid "Default Date Format"
-msgstr "Formato de Fecha"
+msgstr "Formato de fecha"
 
 #: SystemParameters.php:372
 msgid "d/m/Y"
@@ -33804,28 +33804,27 @@ msgstr "A-m-d"
 
 #: SystemParameters.php:378
 msgid "The default date format for entry of dates and display."
-msgstr ""
-"El formato de fecha predeterminado al entrar y mostrar valores de fecha."
+msgstr "El formato de fecha predeterminado para introducir y mostrar fechas."
 
 #: SystemParameters.php:381
 msgid "New Users Default Theme"
-msgstr "Tema Predeterminado para Nuevos Usuarios"
+msgstr "Tema predeterminado para usuarios nuevos"
 
 #: SystemParameters.php:394
 msgid ""
 "The default theme is used for new users who have not yet defined the display "
 "colour scheme theme of their choice"
 msgstr ""
-"El tema predeterminado, o esquema de colores por defecto, se usa en los "
-"nuevos usuarios que aún no han elegido el suyo."
+"El tema por defecto se usa para los usuarios nuevos que aún no han elegido "
+"el estilo de presentación en pantalla."
 
 #: SystemParameters.php:396
 msgid "Accounts Receivable/Payable Settings"
-msgstr "Configuración de las Cuentas de Cobros/Pagos"
+msgstr "Configuración de las cuentas por cobrar/pagar"
 
 #: SystemParameters.php:399
 msgid "First Overdue Deadline in (days)"
-msgstr "Días para la Primera Fecha de Entrega"
+msgstr "Plazo del primer vencimiento (en días)"
 
 #: SystemParameters.php:400 SystemParameters.php:405
 #, fuzzy
@@ -33844,7 +33843,7 @@ msgstr ""
 
 #: SystemParameters.php:404
 msgid "Second Overdue Deadline in (days)"
-msgstr "Plazo del Segundo Vencimiento (en días)"
+msgstr "Plazo del segundo vencimiento (en días)"
 
 #: SystemParameters.php:406
 msgid "As above but the next level of overdue"
@@ -33852,7 +33851,7 @@ msgstr "Similar al de arriba pero es el siguiente nivel de retraso."
 
 #: SystemParameters.php:410
 msgid "Default Credit Limit"
-msgstr "Límite de Crédito Predeterminado"
+msgstr "Límite de crédito predeterminado"
 
 #: SystemParameters.php:412
 msgid "The default used in new customer set up"
@@ -33860,19 +33859,19 @@ msgstr "El que se usará por defecto en la configuración de nuevos clientes."
 
 #: SystemParameters.php:415
 msgid "Check Credit Limits"
-msgstr "Comprobar Límites de Crédito"
+msgstr "Comprobar límites de crédito"
 
 #: SystemParameters.php:417
 msgid "Do not check"
-msgstr "No Comprobar"
+msgstr "No comprobar"
 
 #: SystemParameters.php:418
 msgid "Warn on breach"
-msgstr "Avisar"
+msgstr "Avisar en incumplimiento"
 
 #: SystemParameters.php:419
 msgid "Prohibit Sales"
-msgstr "Prohibir Ventas"
+msgstr "Prohibir ventas"
 
 #: SystemParameters.php:421
 msgid ""
@@ -33904,7 +33903,7 @@ msgstr ""
 
 #: SystemParameters.php:432
 msgid "Romalpa Clause"
-msgstr "Cláusula de reserva de titularidad (cláusula Romalpa)"
+msgstr "Cláusula Romalpa (protección para deudas incobrables)"
 
 #: SystemParameters.php:434
 msgid ""
@@ -33921,7 +33920,7 @@ msgstr ""
 
 #: SystemParameters.php:437
 msgid "Quick Entries"
-msgstr "Entradas Rápidas"
+msgstr "Entradas rápidas"
 
 #: SystemParameters.php:439
 msgid ""

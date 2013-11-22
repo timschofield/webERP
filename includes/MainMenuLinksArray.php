@@ -425,7 +425,7 @@ $MenuItems['PC']['Maintenance']['URL'] = array(	'/PcTypeTabs.php',
 												'/PcExpensesTypeTab.php');
 
 $MenuItems['system']['Transactions']['Caption'] = array(_('Company Preferences'),
-														_('Configuration Settings'),
+														_('System Parameters'),
 														_('User Maintenance'),
 														_('Maintain Security Tokens'),
 														_('Access Permissions Maintenance'),
@@ -440,10 +440,10 @@ $MenuItems['system']['Transactions']['Caption'] = array(_('Company Preferences')
 														_('Report Builder Tool'),
 														_('View Audit Trail'),
 														_('Geocode Setup'),
-														_('Form Design'),
+														_('Form Designer'),
 														_('Web-Store Configuration'),
 														_('SMTP Server Details'),
-												       		_('Mailing Group Maintenance')	);
+												       	_('Mailing Group Maintenance'));
 
 $MenuItems['system']['Transactions']['URL'] = array('/CompanyPreferences.php',
 													'/SystemParameters.php',
@@ -464,7 +464,7 @@ $MenuItems['system']['Transactions']['URL'] = array('/CompanyPreferences.php',
 													'/FormDesigner.php',
 													'/ShopParameters.php',
 													'/SMTPServer.php',
-											       		'/MailingGroupMaintenance.php'	);
+											       	'/MailingGroupMaintenance.php');
 
 $MenuItems['system']['Reports']['Caption'] = array(	_('Sales Types'),
 													_('Customer Types'),
