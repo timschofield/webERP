@@ -150,7 +150,7 @@ CREATE TABLE `banktrans` (
   KEY `ref_10` (`ref`),
   CONSTRAINT `banktrans_ibfk_1` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
   CONSTRAINT `banktrans_ibfk_2` FOREIGN KEY (`bankact`) REFERENCES `bankaccounts` (`accountcode`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1017,7 +1017,7 @@ CREATE TABLE `gltrans` (
   CONSTRAINT `gltrans_ibfk_1` FOREIGN KEY (`account`) REFERENCES `chartmaster` (`accountcode`),
   CONSTRAINT `gltrans_ibfk_2` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
   CONSTRAINT `gltrans_ibfk_3` FOREIGN KEY (`periodno`) REFERENCES `periods` (`periodno`)
-) ENGINE=InnoDB AUTO_INCREMENT=129 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=142 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1044,7 +1044,7 @@ CREATE TABLE `grns` (
   KEY `SupplierID` (`supplierid`),
   CONSTRAINT `grns_ibfk_1` FOREIGN KEY (`supplierid`) REFERENCES `suppliers` (`supplierid`),
   CONSTRAINT `grns_ibfk_2` FOREIGN KEY (`podetailitem`) REFERENCES `purchorderdetails` (`podetailitem`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1664,7 +1664,7 @@ CREATE TABLE `purchorderdetails` (
   KEY `ShiptRef` (`shiptref`),
   KEY `Completed` (`completed`),
   CONSTRAINT `purchorderdetails_ibfk_1` FOREIGN KEY (`orderno`) REFERENCES `purchorders` (`orderno`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1716,7 +1716,7 @@ CREATE TABLE `purchorders` (
   KEY `AllowPrintPO` (`allowprint`),
   CONSTRAINT `purchorders_ibfk_1` FOREIGN KEY (`supplierno`) REFERENCES `suppliers` (`supplierid`),
   CONSTRAINT `purchorders_ibfk_2` FOREIGN KEY (`intostocklocation`) REFERENCES `locations` (`loccode`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2751,6 +2751,7 @@ CREATE TABLE `suppliers` (
   `email` varchar(55) DEFAULT NULL,
   `fax` varchar(25) DEFAULT NULL,
   `telephone` varchar(25) DEFAULT NULL,
+  `url` varchar(50) NOT NULL DEFAULT '',
   PRIMARY KEY (`supplierid`),
   KEY `CurrCode` (`currcode`),
   KEY `PaymentTerms` (`paymentterms`),
@@ -2811,7 +2812,7 @@ CREATE TABLE `supptrans` (
   KEY `Type` (`type`),
   CONSTRAINT `supptrans_ibfk_1` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
   CONSTRAINT `supptrans_ibfk_2` FOREIGN KEY (`supplierno`) REFERENCES `suppliers` (`supplierid`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -3167,7 +3168,7 @@ CREATE TABLE `www_users` (
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-09-06 21:34:39
+-- Dump completed on 2013-11-24 10:39:39
 -- MySQL dump 10.13  Distrib 5.5.32, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: weberpdemo
@@ -3396,8 +3397,8 @@ INSERT INTO `holdreasons` VALUES (51,'In liquidation',1);
 -- Dumping data for table `locations`
 --
 
-INSERT INTO `locations` VALUES ('AN','Anaheim',' ','','','','Los Angeles','USA','','','','Brett',1,'',0,'',0);
-INSERT INTO `locations` VALUES ('MEL','Melbourne','1234 Collins Street','Melbourne','Victoria 2345','','','Australia','+61 3 56789012','+61 3 56789013','jacko@webdemo.com','Jack Roberts',1,'KES',0,'KES',1);
+INSERT INTO `locations` VALUES ('AN','Anaheim',' ','','','','','United States','','','','Brett',1,'',0,'',0);
+INSERT INTO `locations` VALUES ('MEL','Melbourne','1234 Collins Street','Melbourne','Victoria 2345','','2345','Australia','+(61) (3) 5678901','+61 3 56789013','jacko@webdemo.com','Jack Roberts',1,'',0,'',1);
 INSERT INTO `locations` VALUES ('TOR','Toronto','Level 100 ','CN Tower','Toronto','','','','','','','Clive Contrary',1,'',1,'',1);
 
 --
@@ -4114,13 +4115,13 @@ INSERT INTO `systypes` VALUES (12,'Receipt',4);
 INSERT INTO `systypes` VALUES (15,'Journal - Debtors',0);
 INSERT INTO `systypes` VALUES (16,'Location Transfer',27);
 INSERT INTO `systypes` VALUES (17,'Stock Adjustment',28);
-INSERT INTO `systypes` VALUES (18,'Purchase Order',28);
+INSERT INTO `systypes` VALUES (18,'Purchase Order',29);
 INSERT INTO `systypes` VALUES (19,'Picking List',0);
-INSERT INTO `systypes` VALUES (20,'Purchase Invoice',37);
+INSERT INTO `systypes` VALUES (20,'Purchase Invoice',38);
 INSERT INTO `systypes` VALUES (21,'Debit Note',8);
-INSERT INTO `systypes` VALUES (22,'Creditors Payment',8);
+INSERT INTO `systypes` VALUES (22,'Creditors Payment',11);
 INSERT INTO `systypes` VALUES (23,'Creditors Journal',0);
-INSERT INTO `systypes` VALUES (25,'Purchase Order Delivery',52);
+INSERT INTO `systypes` VALUES (25,'Purchase Order Delivery',53);
 INSERT INTO `systypes` VALUES (26,'Work Order Receipt',8);
 INSERT INTO `systypes` VALUES (28,'Work Order Issue',17);
 INSERT INTO `systypes` VALUES (29,'Work Order Variance',1);
@@ -4138,7 +4139,7 @@ INSERT INTO `systypes` VALUES (43,'Delete w/down asset',1);
 INSERT INTO `systypes` VALUES (44,'Depreciation',1);
 INSERT INTO `systypes` VALUES (49,'Import Fixed Assets',1);
 INSERT INTO `systypes` VALUES (50,'Opening Balance',0);
-INSERT INTO `systypes` VALUES (500,'Auto Debtor Number',16);
+INSERT INTO `systypes` VALUES (500,'Auto Debtor Number',17);
 
 --
 -- Dumping data for table `taxauthorities`
@@ -4197,7 +4198,8 @@ INSERT INTO `taxprovinces` VALUES (1,'Default Tax province');
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('admin','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','','admin@weberp.org','MEL',8,1,'2013-09-06 21:29:10','','A4','1,1,1,1,1,1,1,1,1,1,1,',0,50,'fluid','en_GB.utf8',3,0);
+INSERT INTO `www_users` VALUES ('admin','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','','admin@weberp.org','MEL',8,1,'2013-11-24 10:10:09','','A4','1,1,1,1,1,1,1,1,1,1,1,',0,50,'fluid','en_GB.utf8',3,0);
+INSERT INTO `www_users` VALUES ('WEB0000017','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Phil Daintree','WEB0000017','','','+64(0)275567890','phil@logicworks.co.nz','TOR',7,0,NULL,'WEB0000017','A4','0,0,0,0,0,0,0,0,0,0,0',0,30,'silverwolf','en_GB.utf8',0,0);
 
 --
 -- Dumping data for table `edi_orders_segs`
@@ -4431,9 +4433,10 @@ INSERT INTO `config` VALUES ('ShopCreditCardBankAccount','1030');
 INSERT INTO `config` VALUES ('ShopCreditCardGateway','SwipeHQ');
 INSERT INTO `config` VALUES ('ShopCreditCardSurcharge','2.5');
 INSERT INTO `config` VALUES ('ShopDebtorNo','ANGRY');
+INSERT INTO `config` VALUES ('ShopFreightMethod','NoFreight');
 INSERT INTO `config` VALUES ('ShopFreightPolicy','Shipping information');
 INSERT INTO `config` VALUES ('ShopManagerEmail','shopmanager@yourdomain.com');
-INSERT INTO `config` VALUES ('ShopMode','live');
+INSERT INTO `config` VALUES ('ShopMode','test');
 INSERT INTO `config` VALUES ('ShopName','webERP Demo Store');
 INSERT INTO `config` VALUES ('ShopPayFlowMerchant','');
 INSERT INTO `config` VALUES ('ShopPayFlowPassword','');
@@ -4598,6 +4601,7 @@ INSERT INTO `scripts` VALUES ('InternalStockRequestAuthorisation.php',1,'Authori
 INSERT INTO `scripts` VALUES ('InternalStockRequestFulfill.php',1,'Fulfill an internal stock request');
 INSERT INTO `scripts` VALUES ('InventoryPlanning.php',2,'Creates a pdf report showing the last 4 months use of items including as a component of assemblies together with stock quantity on hand, current demand for the item and current quantity on sales order.');
 INSERT INTO `scripts` VALUES ('InventoryPlanningPrefSupplier.php',2,'Produces a report showing the inventory to be ordered by supplier');
+INSERT INTO `scripts` VALUES ('InventoryPlanningPrefSupplier_CSV.php',2,'Inventory planning spreadsheet');
 INSERT INTO `scripts` VALUES ('InventoryQuantities.php',2,'');
 INSERT INTO `scripts` VALUES ('InventoryValuation.php',2,'Creates a pdf report showing the value of stock at standard cost for a range of product categories selected');
 INSERT INTO `scripts` VALUES ('Labels.php',15,'Produces item pricing labels in a pdf from a range of selected criteria');
@@ -4688,6 +4692,7 @@ INSERT INTO `scripts` VALUES ('PrintCustStatements.php',2,'Creates a pdf for the
 INSERT INTO `scripts` VALUES ('PrintCustTrans.php',1,'Creates either a html invoice or credit note or a pdf. A range of invoices or credit notes can be selected also.');
 INSERT INTO `scripts` VALUES ('PrintCustTransPortrait.php',1,'');
 INSERT INTO `scripts` VALUES ('PrintSalesOrder_generic.php',2,'');
+INSERT INTO `scripts` VALUES ('PurchaseByPrefSupplier.php',2,'Purchase ordering by preferred supplier');
 INSERT INTO `scripts` VALUES ('PurchData.php',4,'Entry of supplier purchasing data, the suppliers part reference and the suppliers currency cost of the item');
 INSERT INTO `scripts` VALUES ('RecurringSalesOrders.php',1,'');
 INSERT INTO `scripts` VALUES ('RecurringSalesOrdersProcess.php',1,'Process Recurring Sales Orders');
@@ -4848,6 +4853,7 @@ INSERT INTO `scripts` VALUES ('Z_RePostGLFromPeriod.php',15,'Utility to repost a
 INSERT INTO `scripts` VALUES ('Z_ReverseSuppPaymentRun.php',15,'Utility to reverse an entire Supplier payment run');
 INSERT INTO `scripts` VALUES ('Z_SalesIntegrityCheck.php',15,'');
 INSERT INTO `scripts` VALUES ('Z_UpdateChartDetailsBFwd.php',15,'Utility to recalculate the ChartDetails table B/Fwd balances - extreme care!!');
+INSERT INTO `scripts` VALUES ('Z_UpdateSalesAnalysisWithLatestCustomerData.php',15,'Updates the salesanalysis table with the latest data from the customer debtorsmaster salestype and custbranch sales area and sales person irrespective of the sales type, area, salesperson at the time when the sale was made');
 INSERT INTO `scripts` VALUES ('Z_Upgrade3.10.php',15,'');
 INSERT INTO `scripts` VALUES ('Z_Upgrade_3.01-3.02.php',15,'');
 INSERT INTO `scripts` VALUES ('Z_Upgrade_3.04-3.05.php',15,'');
@@ -4976,7 +4982,7 @@ INSERT INTO `accountsection` VALUES (50,'Financed By');
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-09-06 21:34:39
+-- Dump completed on 2013-11-24 10:39:39
 SET FOREIGN_KEY_CHECKS = 1;
 UPDATE systypes SET typeno=0;
 INSERT INTO shippers VALUES (1,'Default Shipper',0);
