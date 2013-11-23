@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-09-06 21:34+1200\n"
-"PO-Revision-Date: 2013-11-22 16:18-0600\n"
+"PO-Revision-Date: 2013-11-22 21:37-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -10158,29 +10158,24 @@ msgid "Confirmed Order Date"
 msgstr "Fecha de Pedido Confirmado"
 
 #: DeliveryDetails.php:1051
-#, fuzzy
 msgid "Delivery Address 1 (Street)"
-msgstr "Dirección de Entrega 1"
+msgstr "Dirección de entrega 1"
 
 #: DeliveryDetails.php:1055
-#, fuzzy
 msgid "Delivery Address 2 (Street)"
-msgstr "Dirección de Entrega 1"
+msgstr "Dirección de entrega 2"
 
 #: DeliveryDetails.php:1059
-#, fuzzy
 msgid "Delivery Address 3 (Suburb/City)"
-msgstr "Dirección de Entrega 1"
+msgstr "Dirección de entrega 3"
 
 #: DeliveryDetails.php:1063
-#, fuzzy
 msgid "Delivery Address 4 (State/Province)"
-msgstr "Dirección línea 4 (Estado/Provincia)"
+msgstr "Dirección de entrega 4"
 
 #: DeliveryDetails.php:1067
-#, fuzzy
 msgid "Delivery Address 5 (Postal Code)"
-msgstr "Dirección línea 5 (Código postal)"
+msgstr "Dirección de entrega 5"
 
 #: DeliveryDetails.php:1087
 #, fuzzy
@@ -14749,9 +14744,8 @@ msgid "Opening Balance as at"
 msgstr "Saldo a día"
 
 #: ImportBankTrans.php:578
-#, fuzzy
 msgid "Analysis"
-msgstr "Análisos de Ventas"
+msgstr "Análisis"
 
 #: ImportBankTrans.php:583
 #, fuzzy
@@ -24774,9 +24768,8 @@ msgid "Add Inventory to this category"
 msgstr "Añadir Inventario a esta Categoría."
 
 #: SalesCategories.php:437
-#, fuzzy
 msgid "Select Item"
-msgstr "Seleccionar un Artículo"
+msgstr "Seleccionar artículo"
 
 #: SalesCategories.php:451
 #, fuzzy
@@ -24789,9 +24782,8 @@ msgid "Select Brand"
 msgstr "Seleccionar Centro de Costo"
 
 #: SalesCategories.php:463
-#, fuzzy
 msgid "Add Item To Sales Category"
-msgstr "Artículo o categoría"
+msgstr "Añadir artículo a categoría de ventas"
 
 #: SalesCategories.php:469
 msgid "No more Inventory items to add"
@@ -33286,24 +33278,20 @@ msgid "The user ID must has more than 4 legal characters"
 msgstr "El  identificador de usuario debe tener al menos 4 caracteres"
 
 #: SuppLoginSetup.php:116
-#, fuzzy
 msgid "More than 4 characters"
-msgstr "o el caracter"
+msgstr "Más de 4 caracteres"
 
 #: SuppLoginSetup.php:134 UserSettings.php:175 UserSettings.php:179
-#, fuzzy
 msgid "More than 5 characters"
-msgstr "o el caracter"
+msgstr "Más de 5 caracteres"
 
 #: SuppLoginSetup.php:134
-#, fuzzy
 msgid "Password must be more than 5 characters"
-msgstr "La cabecera del informe debe tener más de dos caracteres"
+msgstr "La contraseña debe tener más de 5 caracteres"
 
 #: SuppLoginSetup.php:138
-#, fuzzy
 msgid "Must be less than 35 characters"
-msgstr "(80 caracteres máximo)"
+msgstr "Debe ser menor de 35 caracteres"
 
 #: SuppLoginSetup.php:138 includes/Login.php:97 api/api_xml-rpc.php:18
 #: api/api_xml-rpc.php:68 api/api_xml-rpc.php:104 api/api_xml-rpc.php:140
@@ -33579,9 +33567,8 @@ msgid "The shiment Ref should be positive integer"
 msgstr "El número de días debe ser un número positivo"
 
 #: SuppShiptChgs.php:113
-#, fuzzy
 msgid "positive integer"
-msgstr "interfaz de registros contables"
+msgstr "entero positivo"
 
 #: SuppShiptChgs.php:116
 msgid "Shipment Selection"
