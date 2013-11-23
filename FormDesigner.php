@@ -355,7 +355,8 @@ echo '<input tabindex="7" type="submit" name="save" value="' . _('Save the Form 
 /*echo '<br /><div class="centre"><input tabindex="8" type="submit" name="return" value="' . _('Return') . '" /></div>';*/
 echo '</div>';
 echo '</form>';
-/* END: Procedure division. */
+
+/* END: PROCEDURE DIVISION. */
 
 /* BEGIN: Final common code division. */
 include('includes/footer.inc');
