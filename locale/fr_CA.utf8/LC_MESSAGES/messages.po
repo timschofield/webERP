@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.10.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-11-24 10:11+1300\n"
-"PO-Revision-Date: 2013-08-11 18:55-0600\n"
+"PO-Revision-Date: 2013-11-24 10:49-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: french <none>\n"
 "Language: fr\n"
@@ -12454,7 +12454,7 @@ msgstr "Déplacer vers:"
 
 #: FormDesigner.php:22 includes/MainMenuLinksArray.php:443
 msgid "Form Designer"
-msgstr "Créateur de formulaire"
+msgstr "Concepteur de formulaires"
 
 #: FormDesigner.php:33
 msgid "x"
@@ -12465,6 +12465,7 @@ msgid ""
 "Distance from the left side of the sheet to the left side of the element in "
 "points"
 msgstr ""
+"Distance du côté gauche de la feuille au côté gauche de l'élément en points"
 
 #: FormDesigner.php:42
 msgid "y"
@@ -12475,6 +12476,8 @@ msgid ""
 "Distance from the lower side of the sheet to the top side of the element in "
 "points"
 msgstr ""
+"Distance du côté inférieur de la feuille au côté supérieur de l'élément en "
+"points"
 
 #: FormDesigner.php:50 FormDesigner.php:241 FormDesigner.php:305
 #: FormDesigner.php:328 Labels.php:293
@@ -12483,7 +12486,7 @@ msgstr "Largeur"
 
 #: FormDesigner.php:52
 msgid "Width of the element in points"
-msgstr ""
+msgstr "Largeur de l'élément en points"
 
 #: FormDesigner.php:59 Labels.php:292
 msgid "Height"
@@ -12491,64 +12494,59 @@ msgstr "Hauteur"
 
 #: FormDesigner.php:61
 msgid "Height of the element in points"
-msgstr ""
+msgstr "Hauteur de l'élément aux points"
 
 #: FormDesigner.php:69
 msgid "Left"
-msgstr ""
+msgstr "Gauche"
 
 #: FormDesigner.php:70
 msgid "Text lines are rendered flush left"
-msgstr ""
+msgstr "Alignement du texte gauche"
 
 #: FormDesigner.php:71
-#, fuzzy
 msgid "Centre"
-msgstr "Centre de Charge"
+msgstr "Centre"
 
 #: FormDesigner.php:72
 msgid "Text lines are centred"
-msgstr ""
+msgstr "Alignement du texte au milieu"
 
 #: FormDesigner.php:73
-#, fuzzy
 msgid "Right"
-msgstr "hauteur"
+msgstr "Droite"
 
 #: FormDesigner.php:74
 msgid "Text lines are rendered flush right"
-msgstr ""
+msgstr "Alignement du texte à droite"
 
 #: FormDesigner.php:75
 msgid "Justify"
-msgstr ""
+msgstr "Justifié"
 
 #: FormDesigner.php:76
 msgid "Text lines are justified to both margins"
-msgstr ""
+msgstr "Alignement du texte à droite et à gauche"
 
 #: FormDesigner.php:77
 msgid "Alignment"
-msgstr ""
+msgstr "Alignment"
 
 #: FormDesigner.php:88 Labels.php:547
 msgid "Font Size"
 msgstr "Taille de la police"
 
 #: FormDesigner.php:92
-#, fuzzy
 msgid "Font size in points"
-msgstr "Taille de la police"
+msgstr "Taille de la police en points"
 
 #: FormDesigner.php:100
-#, fuzzy
 msgid "Does not display this element"
-msgstr "Impossible de supprimer ce prix"
+msgstr "Ne pas afficher cet élément"
 
 #: FormDesigner.php:102
-#, fuzzy
 msgid "Displays this element"
-msgstr "Pour cent Dispatch"
+msgstr "Afficher cet élément"
 
 #: FormDesigner.php:165
 msgid "The web server does not have write permissions on the file "
@@ -12556,7 +12554,7 @@ msgstr "Le serveur web n'a pas les permissions d'écriture sur le fichier "
 
 #: FormDesigner.php:166
 msgid "Your changes cannot be saved"
-msgstr "Vos modifications ne peuvent être sauvés"
+msgstr "Vos modifications ne peuvent pas être sauvés"
 
 #: FormDesigner.php:166
 msgid "See your system administrator to correct this problem"
@@ -12581,15 +12579,16 @@ msgstr ""
 "ci-dessous."
 
 #: FormDesigner.php:205
-#, fuzzy
 msgid "All measurements are in PostScript points (72 points = 25,4 mm)."
-msgstr "Toutes les mesures sont en millimètres"
+msgstr "Toutes les mesures sont en points PostScript (72 points = 25,4 mm)."
 
 #: FormDesigner.php:206
 msgid ""
 "All coordinates are measured from the lower left corner of the sheet to the "
-"top left corner of the field."
+"top left corner of the element."
 msgstr ""
+"Toutes les coordonnées sont mesurées  à partir du coin gauche inférieur de "
+"la feuille au coin haut gauche de l'élément. "
 
 #: FormDesigner.php:214
 msgid "Form Name"
@@ -12609,7 +12608,7 @@ msgstr "Rayon"
 
 #: FormDesigner.php:309
 msgid "Radius of the rounded corners"
-msgstr ""
+msgstr "Rayon des coins arrondis"
 
 #: FormDesigner.php:338
 msgid "Start x co-ordinate"
@@ -34285,9 +34284,8 @@ msgid "No zero numeric"
 msgstr "être numérique"
 
 #: SystemParameters.php:7 includes/MainMenuLinksArray.php:428
-#, fuzzy
 msgid "System Parameters"
-msgstr "Paramètres"
+msgstr "Paramètres du système"
 
 #: SystemParameters.php:31
 msgid "First overdue deadline days must be a number"

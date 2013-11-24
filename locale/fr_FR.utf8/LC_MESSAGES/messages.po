@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: weberp 3.12\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-11-24 10:11+1300\n"
-"PO-Revision-Date: 2013-11-24 10:10-0600\n"
+"PO-Revision-Date: 2013-11-24 10:49-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: French <none>\n"
 "Language: fr_FR\n"
@@ -12691,7 +12691,7 @@ msgstr "Hauteur"
 
 #: FormDesigner.php:61
 msgid "Height of the element in points"
-msgstr "Taille de l'élément aux points"
+msgstr "Hauteur de l'élément aux points"
 
 #: FormDesigner.php:69
 msgid "Left"
@@ -12719,7 +12719,7 @@ msgstr "Alignement du texte à droite"
 
 #: FormDesigner.php:75
 msgid "Justify"
-msgstr "justifié"
+msgstr "Justifié"
 
 #: FormDesigner.php:76
 msgid "Text lines are justified to both margins"
@@ -12735,7 +12735,7 @@ msgstr "Taille de la police"
 
 #: FormDesigner.php:92
 msgid "Font size in points"
-msgstr "Taille de la police en points "
+msgstr "Taille de la police en points"
 
 #: FormDesigner.php:100
 msgid "Does not display this element"
@@ -12743,7 +12743,7 @@ msgstr "Ne pas afficher cet élément"
 
 #: FormDesigner.php:102
 msgid "Displays this element"
-msgstr "Affiche cet élément"
+msgstr "Afficher cet élément"
 
 #: FormDesigner.php:165
 msgid "The web server does not have write permissions on the file "

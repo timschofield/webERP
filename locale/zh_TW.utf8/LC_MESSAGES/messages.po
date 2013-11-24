@@ -12502,7 +12502,7 @@ msgstr ""
 #: FormDesigner.php:206
 msgid ""
 "All coordinates are measured from the lower left corner of the sheet to the "
-"top left corner of the field."
+"top left corner of the element."
 msgstr ""
 
 #: FormDesigner.php:214

@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.09.1/trunk\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-11-24 10:11+1300\n"
-"PO-Revision-Date: 2013-08-11 18:37-0600\n"
+"PO-Revision-Date: 2013-11-24 11:03-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: Deutsch <weberp-translation@lists.sourceforge.net>\n"
 "Language: de_DE\n"
@@ -12434,14 +12434,15 @@ msgid "Enter the changes that you want in the form layout below."
 msgstr "Geben Sie die beabsichtigten Änderungen in das Formular unten ein."
 
 #: FormDesigner.php:205
-#, fuzzy
 msgid "All measurements are in PostScript points (72 points = 25,4 mm)."
-msgstr "Alle Maßangaben werden in Punkten angegeben"
+msgstr ""
+"Alle Maßangaben werden in PostScript Punkten angegeben (72 Punkten = 25,4 "
+"mm)."
 
 #: FormDesigner.php:206
 msgid ""
 "All coordinates are measured from the lower left corner of the sheet to the "
-"top left corner of the field."
+"top left corner of the element."
 msgstr ""
 
 #: FormDesigner.php:214
