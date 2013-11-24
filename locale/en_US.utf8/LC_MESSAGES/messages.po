@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.10.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-11-24 10:11+1300\n"
-"PO-Revision-Date: 2013-06-11 10:48-0600\n"
+"PO-Revision-Date: 2013-11-24 10:23-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: WebERP Translation Team <web-erp-translation@lists."
 "sourceforge.net>\n"
@@ -11996,100 +11996,100 @@ msgstr ""
 
 #: FormDesigner.php:22 includes/MainMenuLinksArray.php:443
 msgid "Form Designer"
-msgstr ""
+msgstr "Form Designer"
 
 #: FormDesigner.php:33
 msgid "x"
-msgstr ""
+msgstr "x"
 
 #: FormDesigner.php:35
 msgid ""
 "Distance from the left side of the sheet to the left side of the element in "
 "points"
 msgstr ""
+"Distance from the left side of the sheet to the left side of the element in "
+"points"
 
 #: FormDesigner.php:42
 msgid "y"
-msgstr ""
+msgstr "y"
 
 #: FormDesigner.php:44
 msgid ""
 "Distance from the lower side of the sheet to the top side of the element in "
 "points"
 msgstr ""
+"Distance from the lower side of the sheet to the top side of the element in "
+"points"
 
 #: FormDesigner.php:50 FormDesigner.php:241 FormDesigner.php:305
 #: FormDesigner.php:328 Labels.php:293
 msgid "Width"
-msgstr ""
+msgstr "Width"
 
 #: FormDesigner.php:52
 msgid "Width of the element in points"
-msgstr ""
+msgstr "Width of the element in points"
 
 #: FormDesigner.php:59 Labels.php:292
-#, fuzzy
 msgid "Height"
-msgstr "Shipping"
+msgstr "Height"
 
 #: FormDesigner.php:61
 msgid "Height of the element in points"
-msgstr ""
+msgstr "Height of the element in points"
 
 #: FormDesigner.php:69
 msgid "Left"
-msgstr ""
+msgstr "Left"
 
 #: FormDesigner.php:70
 msgid "Text lines are rendered flush left"
-msgstr ""
+msgstr "Text lines are rendered flush left"
 
 #: FormDesigner.php:71
 msgid "Centre"
-msgstr ""
+msgstr "Center"
 
 #: FormDesigner.php:72
 msgid "Text lines are centred"
-msgstr ""
+msgstr "Text lines are centred"
 
 #: FormDesigner.php:73
-#, fuzzy
 msgid "Right"
-msgstr "Shipping"
+msgstr "Right"
 
 #: FormDesigner.php:74
 msgid "Text lines are rendered flush right"
-msgstr ""
+msgstr "Text lines are rendered flush right"
 
 #: FormDesigner.php:75
 msgid "Justify"
-msgstr ""
+msgstr "Justify"
 
 #: FormDesigner.php:76
 msgid "Text lines are justified to both margins"
-msgstr ""
+msgstr "Text lines are justified to both margins"
 
 #: FormDesigner.php:77
 msgid "Alignment"
-msgstr ""
+msgstr "Alignment"
 
 #: FormDesigner.php:88 Labels.php:547
 msgid "Font Size"
-msgstr ""
+msgstr "Font Size"
 
 #: FormDesigner.php:92
 msgid "Font size in points"
-msgstr ""
+msgstr "Font size in points"
 
 #: FormDesigner.php:100
-#, fuzzy
 msgid "Does not display this element"
-msgstr ""
-"Cannot delete this shipping-method because it was used to create sales orders"
+msgstr "Does not display this element"
 
 #: FormDesigner.php:102
 msgid "Displays this element"
-msgstr ""
+msgstr "Displays this element"
 
 #: FormDesigner.php:165
 msgid "The web server does not have write permissions on the file "
@@ -12121,18 +12121,19 @@ msgstr ""
 
 #: FormDesigner.php:205
 msgid "All measurements are in PostScript points (72 points = 25,4 mm)."
-msgstr ""
+msgstr "All measurements are in PostScript points (72 points = 25,4 mm)."
 
 #: FormDesigner.php:206
 msgid ""
 "All coordinates are measured from the lower left corner of the sheet to the "
-"top left corner of the field."
+"top left corner of the element."
 msgstr ""
+"All coordinates are measured from the lower left corner of the sheet to the "
+"top left corner of the element."
 
 #: FormDesigner.php:214
-#, fuzzy
 msgid "Form Name"
-msgstr "Shipping-Method Name"
+msgstr "Form Name"
 
 #: FormDesigner.php:216
 msgid "Paper Size"

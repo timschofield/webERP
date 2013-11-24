@@ -199,11 +199,11 @@ if (empty($_POST['FormName'])) {
 if (empty($_POST['preview'])) {
 	$FormDesign = simplexml_load_file($PathPrefix.'companies/'.$_SESSION['DatabaseName'].'/FormDesigns/'.$_POST['FormName']);
 }
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/reports.png" title="' . _('Form Design') . '" alt="" />' . ' ' . _('Form Design') . '<br />' .  $FormDesign['name'] . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/reports.png" title="' . _('Form Designer') . '" alt="" />' . ' ' . _('Form Designer') . '<br />' .  _($FormDesign['name']) . '</p>';
 echo '<div class="page_help_text">' . 
 	_('Enter the changes that you want in the form layout below.')  . '<br /> '. 
 	_('All measurements are in PostScript points (72 points = 25,4 mm).')  . '<br /> '. 
-	_('All coordinates are measured from the lower left corner of the sheet to the top left corner of the field.') . '</div><br />';
+	_('All coordinates are measured from the lower left corner of the sheet to the top left corner of the element.') . '</div><br />';
 
 $Papers=array('A4_Landscape', 'A4_Portrait', 'A5_Landscape', 'A5_Portrait', 'A3_Landscape', 'A3_Portrait', 'Letter_Portrait', 'Letter_Landscape', 'Legal_Portrait', 'Legal_Landscape'); // Possible paper sizes/orientations
 echo '<form method="post" id="Form" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' . SID . '">';

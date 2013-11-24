@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-11-24 10:11+1300\n"
-"PO-Revision-Date: 2013-11-22 21:37-0600\n"
+"PO-Revision-Date: 2013-11-24 10:13-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -12417,7 +12417,7 @@ msgstr "Mover a:"
 
 #: FormDesigner.php:22 includes/MainMenuLinksArray.php:443
 msgid "Form Designer"
-msgstr "Diseñador de Formularios"
+msgstr "Diseñador de formularios"
 
 #: FormDesigner.php:33
 msgid "x"
@@ -12428,6 +12428,8 @@ msgid ""
 "Distance from the left side of the sheet to the left side of the element in "
 "points"
 msgstr ""
+"Distancia desde el lado izquierdo de la hoja al lado izquierdo del elemento "
+"en puntos"
 
 #: FormDesigner.php:42
 msgid "y"
@@ -12438,6 +12440,8 @@ msgid ""
 "Distance from the lower side of the sheet to the top side of the element in "
 "points"
 msgstr ""
+"Distancia desde el lado inferior de la hoja al lado superior del elemento en "
+"puntos"
 
 #: FormDesigner.php:50 FormDesigner.php:241 FormDesigner.php:305
 #: FormDesigner.php:328 Labels.php:293
@@ -12446,7 +12450,7 @@ msgstr "Ancho"
 
 #: FormDesigner.php:52
 msgid "Width of the element in points"
-msgstr ""
+msgstr "Ancho del elemento en puntos"
 
 #: FormDesigner.php:59 Labels.php:292
 msgid "Height"
@@ -12454,64 +12458,59 @@ msgstr "Alto"
 
 #: FormDesigner.php:61
 msgid "Height of the element in points"
-msgstr ""
+msgstr "Alto del elemento en puntos"
 
 #: FormDesigner.php:69
 msgid "Left"
-msgstr ""
+msgstr "Izquierda"
 
 #: FormDesigner.php:70
 msgid "Text lines are rendered flush left"
-msgstr ""
+msgstr "Alinear texto a la izquierda"
 
 #: FormDesigner.php:71
-#, fuzzy
 msgid "Centre"
-msgstr "Centro de Trabajo"
+msgstr "Centrada"
 
 #: FormDesigner.php:72
 msgid "Text lines are centred"
-msgstr ""
+msgstr "Alinear texto al centro"
 
 #: FormDesigner.php:73
-#, fuzzy
 msgid "Right"
-msgstr "ocho"
+msgstr "Derecha"
 
 #: FormDesigner.php:74
 msgid "Text lines are rendered flush right"
-msgstr ""
+msgstr "Alinear texto a la derecha"
 
 #: FormDesigner.php:75
 msgid "Justify"
-msgstr ""
+msgstr "Justificado"
 
 #: FormDesigner.php:76
 msgid "Text lines are justified to both margins"
-msgstr ""
+msgstr "Alinear texto a ambos lados"
 
 #: FormDesigner.php:77
 msgid "Alignment"
-msgstr ""
+msgstr "Alineación"
 
 #: FormDesigner.php:88 Labels.php:547
 msgid "Font Size"
-msgstr "Tamaño de Letra"
+msgstr "Tamaño de letra"
 
 #: FormDesigner.php:92
-#, fuzzy
 msgid "Font size in points"
-msgstr "Tamaño de la fuente"
+msgstr "Tamaño de letra en puntos"
 
 #: FormDesigner.php:100
-#, fuzzy
 msgid "Does not display this element"
-msgstr "No se puede eliminar este Departamento"
+msgstr "No mostrar este elemento"
 
 #: FormDesigner.php:102
-#, fuzzy
 msgid "Displays this element"
-msgstr "Despachar Porcentaje"
+msgstr "Mostrar este elemento"
 
 #: FormDesigner.php:165
 msgid "The web server does not have write permissions on the file "
@@ -12519,7 +12518,7 @@ msgstr "El servidor web no tiene permisos de escritura en el archivo"
 
 #: FormDesigner.php:166
 msgid "Your changes cannot be saved"
-msgstr "Los cambios no se pueden guardar"
+msgstr "Sus cambios no se pueden guardar"
 
 #: FormDesigner.php:166
 msgid "See your system administrator to correct this problem"
@@ -12543,15 +12542,16 @@ msgstr ""
 "Introduzca los cambios que desee en el diseño del formulario a continuación."
 
 #: FormDesigner.php:205
-#, fuzzy
 msgid "All measurements are in PostScript points (72 points = 25,4 mm)."
-msgstr "Todas las medidas están en los puntos"
+msgstr "Todas las medidas están en puntos PostScript (72 puntos = 25,4 mm)."
 
 #: FormDesigner.php:206
 msgid ""
 "All coordinates are measured from the lower left corner of the sheet to the "
-"top left corner of the field."
+"top left corner of the element."
 msgstr ""
+"Todas las coordenadas se miden desde la esquina inferior izquierda de la "
+"hoja a la esquina superior izquierda del elemento."
 
 #: FormDesigner.php:214
 msgid "Form Name"
@@ -12571,7 +12571,7 @@ msgstr "Radio"
 
 #: FormDesigner.php:309
 msgid "Radius of the rounded corners"
-msgstr ""
+msgstr "Radio de las esquinas redondeadas"
 
 #: FormDesigner.php:338
 msgid "Start x co-ordinate"
@@ -13401,6 +13401,8 @@ msgstr "Cuenta"
 msgid ""
 "Enter up to 50 alpha-numeric characters for the general ledger account name"
 msgstr ""
+"Introduzca hasta 50 caracteres alfanuméricos para el nombre de cuenta del "
+"libro mayor"
 
 #: GLAccounts.php:250 GLAccounts.php:297 Z_ImportGLAccountGroups.php:26
 msgid "Account Group"

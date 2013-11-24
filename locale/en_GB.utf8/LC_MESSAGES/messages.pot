@@ -11094,7 +11094,7 @@ msgid "All measurements are in PostScript points (72 points = 25,4 mm)."
 msgstr ""
 
 #: FormDesigner.php:206
-msgid "All coordinates are measured from the lower left corner of the sheet to the top left corner of the field."
+msgid "All coordinates are measured from the lower left corner of the sheet to the top left corner of the element."
 msgstr ""
 
 #: FormDesigner.php:214
