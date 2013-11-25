@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: weberp 3.12\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-11-24 10:11+1300\n"
-"PO-Revision-Date: 2013-11-24 10:49-0600\n"
+"PO-Revision-Date: 2013-11-24 19:50-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: French <none>\n"
 "Language: fr_FR\n"
@@ -3321,15 +3321,15 @@ msgstr ""
 
 #: CompanyPreferences.php:208 Factors.php:226
 msgid "Address Line 5"
-msgstr "Adresse Ligne 5"
+msgstr "Adresse ligne 5"
 
 #: CompanyPreferences.php:213 Factors.php:230
 msgid "Address Line 6"
-msgstr "Adresse Ligne 6"
+msgstr "Adresse ligne 6"
 
 #: CompanyPreferences.php:218
 msgid "Telephone Number"
-msgstr "N° tél"
+msgstr "Téléphone"
 
 #: CompanyPreferences.php:219
 msgid ""
@@ -7523,7 +7523,7 @@ msgstr " Code ISO4217"
 
 #: Currencies.php:296
 msgid "Currency Name"
-msgstr "Nom"
+msgstr "Nom de la monnaie"
 
 #: Currencies.php:297 Currencies.php:456 CustomerBranches.php:664
 #: Customers.php:475 Customers.php:779 Customers.php:818
@@ -7807,7 +7807,7 @@ msgstr "Impossible d'accèder aux groupes:"
 #: CustLoginSetup.php:158 Locations.php:590 SalesPeople.php:332
 #: SupplierContacts.php:265 SuppLoginSetup.php:141 WWW_Users.php:462
 msgid "Telephone No"
-msgstr "N° tél"
+msgstr "N° téléphone"
 
 #: CustLoginSetup.php:163
 #, fuzzy
@@ -11073,7 +11073,7 @@ msgstr "Annuler la commande si elle n'est pas envoyée avant"
 
 #: EDIProcessOrders.php:269
 msgid "Order date"
-msgstr "Date de Commande"
+msgstr "Date de commande"
 
 #: EDIProcessOrders.php:275 EDIProcessOrders.php:277
 #: SupplierAllocations.php:437
@@ -45618,7 +45618,7 @@ msgstr "en date du"
 
 #: includes/PDFPickingListHeader.inc:23 includes/PO_PDFOrderPageHeader.inc:27
 msgid "Tel"
-msgstr "N° tél"
+msgstr "Tél"
 
 #: includes/PDFPickingListHeader.inc:77
 msgid "Actual Picked"

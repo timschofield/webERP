@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.10.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-11-24 10:11+1300\n"
-"PO-Revision-Date: 2013-11-24 10:49-0600\n"
+"PO-Revision-Date: 2013-11-24 11:35-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: french <none>\n"
 "Language: fr\n"
@@ -7433,7 +7433,7 @@ msgstr "ISO4217 Code"
 
 #: Currencies.php:296
 msgid "Currency Name"
-msgstr "Nom de Devise"
+msgstr "Nom de la monnaie"
 
 #: Currencies.php:297 Currencies.php:456 CustomerBranches.php:664
 #: Customers.php:475 Customers.php:779 Customers.php:818
