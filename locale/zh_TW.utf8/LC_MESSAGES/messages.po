@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.05\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-11-24 10:11+1300\n"
-"PO-Revision-Date: 2013-06-01 16:42-0600\n"
+"PO-Revision-Date: 2013-11-25 08:28-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team:  <small.chang@gmail.com>\n"
 "Language: zh_TW\n"
@@ -12374,7 +12374,7 @@ msgstr ""
 msgid ""
 "Distance from the left side of the sheet to the left side of the element in "
 "points"
-msgstr ""
+msgstr "從紙張左側開始到元素左側的距離以點數表示"
 
 #: FormDesigner.php:42
 msgid "y"
@@ -12384,7 +12384,7 @@ msgstr ""
 msgid ""
 "Distance from the lower side of the sheet to the top side of the element in "
 "points"
-msgstr ""
+msgstr "從紙張底部到元素頂部的距離以點數表示"
 
 #: FormDesigner.php:50 FormDesigner.php:241 FormDesigner.php:305
 #: FormDesigner.php:328 Labels.php:293
@@ -12393,7 +12393,7 @@ msgstr ""
 
 #: FormDesigner.php:52
 msgid "Width of the element in points"
-msgstr ""
+msgstr "元素的寬度以點數表示"
 
 #: FormDesigner.php:59 Labels.php:292
 #, fuzzy
@@ -12402,7 +12402,7 @@ msgstr "重量"
 
 #: FormDesigner.php:61
 msgid "Height of the element in points"
-msgstr ""
+msgstr "元素高度以點數表示"
 
 #: FormDesigner.php:69
 msgid "Left"
@@ -12449,9 +12449,8 @@ msgid "Font Size"
 msgstr "報告大小"
 
 #: FormDesigner.php:92
-#, fuzzy
 msgid "Font size in points"
-msgstr "報告大小"
+msgstr "字體大小以點數表示"
 
 #: FormDesigner.php:100
 #, fuzzy
@@ -12493,17 +12492,17 @@ msgstr "設計"
 
 #: FormDesigner.php:204
 msgid "Enter the changes that you want in the form layout below."
-msgstr ""
+msgstr "輸入報表中你需要修改的部分"
 
 #: FormDesigner.php:205
 msgid "All measurements are in PostScript points (72 points = 25,4 mm)."
-msgstr ""
+msgstr "所用的計量單位爲PostScript的點 (72點 = 25.4 毫米)"
 
 #: FormDesigner.php:206
 msgid ""
 "All coordinates are measured from the lower left corner of the sheet to the "
 "top left corner of the element."
-msgstr ""
+msgstr "所有的坐標值均從紙張的左下角開始到元素的左上角"
 
 #: FormDesigner.php:214
 #, fuzzy

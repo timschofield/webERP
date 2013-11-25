@@ -8,11 +8,10 @@ msgstr ""
 "Project-Id-Version: WEBERP3.05 VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-11-24 10:11+1300\n"
-"PO-Revision-Date: 2013-06-01 16:42-0600\n"
+"PO-Revision-Date: 2013-11-25 08:24-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: WebERP Translation Team <web-erp-translation@lists."
 "sourceforge.net>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -11913,7 +11912,7 @@ msgstr "x"
 msgid ""
 "Distance from the left side of the sheet to the left side of the element in "
 "points"
-msgstr ""
+msgstr "從紙張左側開始到元素左側的距離以點數表示"
 
 #: FormDesigner.php:42
 msgid "y"
@@ -11923,7 +11922,7 @@ msgstr "y"
 msgid ""
 "Distance from the lower side of the sheet to the top side of the element in "
 "points"
-msgstr ""
+msgstr "從紙張底部到元素頂部的距離以點數表示"
 
 #: FormDesigner.php:50 FormDesigner.php:241 FormDesigner.php:305
 #: FormDesigner.php:328 Labels.php:293
@@ -11932,7 +11931,7 @@ msgstr "宽度"
 
 #: FormDesigner.php:52
 msgid "Width of the element in points"
-msgstr ""
+msgstr "元素的寬度以點數表示"
 
 #: FormDesigner.php:59 Labels.php:292
 msgid "Height"
@@ -11940,7 +11939,7 @@ msgstr "告"
 
 #: FormDesigner.php:61
 msgid "Height of the element in points"
-msgstr ""
+msgstr "元素高度以點數表示"
 
 #: FormDesigner.php:69
 msgid "Left"
@@ -11985,9 +11984,8 @@ msgid "Font Size"
 msgstr "字体大小"
 
 #: FormDesigner.php:92
-#, fuzzy
 msgid "Font size in points"
-msgstr "字体大小"
+msgstr "字體大小以點數表示"
 
 #: FormDesigner.php:100
 #, fuzzy
@@ -12025,18 +12023,17 @@ msgstr "表单设计"
 
 #: FormDesigner.php:204
 msgid "Enter the changes that you want in the form layout below."
-msgstr "在下面输入您需要变更的表单"
+msgstr "在下面输入您需要变更的表单輸入報表中你需要修改的部分"
 
 #: FormDesigner.php:205
-#, fuzzy
 msgid "All measurements are in PostScript points (72 points = 25,4 mm)."
-msgstr "所有的单位均为毫米"
+msgstr "所用的計量單位爲PostScript的點 (72點 = 25.4 毫米)"
 
 #: FormDesigner.php:206
 msgid ""
 "All coordinates are measured from the lower left corner of the sheet to the "
 "top left corner of the element."
-msgstr ""
+msgstr "所有的坐標值均從紙張的左下角開始到元素的左上角。"
 
 #: FormDesigner.php:214
 msgid "Form Name"

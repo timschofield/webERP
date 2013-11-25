@@ -233,8 +233,8 @@ $counter=1; // Count how many sub tables are in the row
 foreach ($FormDesign as $key) {
 	switch ($key['type']) {
 		case 'image':
-			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="4">' . _($key['name']) . '</th></tr>';
-            echo '<tr>';
+			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="4">' . _($key['name']) . '</th>';
+			echo '</tr><tr>'; // New table row.
 				InputX($key['id'], $key->x);
 				InputY($key['id'], $key->y);
 			echo '</tr><tr>'; // New table row.
@@ -247,8 +247,8 @@ foreach ($FormDesign as $key) {
 			break;
 		case 'SimpleText':
 			echo '<td colspan="1" valign="top"><table width="100%" border="1">';
-		        echo '<tr><th colspan="6">' . _($key['name']) . '</th></tr>';
-		        echo '<tr>';
+		        echo '<tr><th colspan="6">' . _($key['name']) . '</th>';
+				echo '</tr><tr>'; // New table row.
 					InputX($key['id'], $key->x);
 					InputY($key['id'], $key->y);
 					SelectFontSize($key['id'], $key->FontSize);
@@ -258,8 +258,8 @@ foreach ($FormDesign as $key) {
 			break;
 		case 'MultiLineText':
 			echo '<td colspan="1" valign="top"><table width="100%" border="1">';
-		        echo '<tr><th colspan="8">' . _($key['name']) . '</th></tr>';
-		        echo '<tr>';
+		        echo '<tr><th colspan="8">' . _($key['name']) . '</th>';
+				echo '</tr><tr>'; // New table row.
 					InputX($key['id'], $key->x);
 					InputY($key['id'], $key->y);
 					InputWidth($key['id'], $key->Length);
@@ -298,8 +298,8 @@ foreach ($FormDesign as $key) {
 			$counter=$counter+1;
 			break;
 		case 'CurvedRectangle':
-			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="6">' . _($key['name']) . '</th></tr>';
-            echo '<tr>';
+			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="6">' . _($key['name']) . '</th>';
+			echo '</tr><tr>'; // New table row.
 				InputX($key['id'], $key->x);
 				InputY($key['id'], $key->y);
 				echo '<td class="number">' . _('Width').' = ' . '</td><td><input type="text" class="number" name="'.$key['id'].'width" size="4" maxlength="4" value="'.$key->width.'" /></td>';
@@ -320,8 +320,8 @@ foreach ($FormDesign as $key) {
 			$counter=$counter+1;
 			break;
 		case 'Rectangle': // This case is probably included in CurvedRectangle.
-			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="8">' . _($key['name']) . '</th></tr>';
-            echo '<tr>';
+			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="8">' . _($key['name']) . '</th>';
+			echo '</tr><tr>'; // New table row.
 				InputX($key['id'], $key->x);
 				InputY($key['id'], $key->y);
 			echo '</tr><tr>'; // New table row.
