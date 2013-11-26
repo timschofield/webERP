@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-11-24 10:11+1300\n"
-"PO-Revision-Date: 2013-11-24 15:23-0600\n"
+"PO-Revision-Date: 2013-11-26 08:18-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -3232,7 +3232,7 @@ msgstr "Referencia de la administración tributaria"
 
 #: CompanyPreferences.php:188 Factors.php:211
 msgid "Address Line 1"
-msgstr "Dirección (línea 1)"
+msgstr "Dirección línea 1"
 
 #: CompanyPreferences.php:189
 msgid ""
@@ -3242,7 +3242,7 @@ msgstr ""
 
 #: CompanyPreferences.php:193 Factors.php:214
 msgid "Address Line 2"
-msgstr "Dirección (línea 2)"
+msgstr "Dirección línea 2"
 
 #: CompanyPreferences.php:194
 msgid ""
@@ -3252,7 +3252,7 @@ msgstr ""
 
 #: CompanyPreferences.php:198 Factors.php:218
 msgid "Address Line 3"
-msgstr "Dirección (línea 3)"
+msgstr "Dirección línea 3"
 
 #: CompanyPreferences.php:199
 msgid ""
@@ -3262,7 +3262,7 @@ msgstr ""
 
 #: CompanyPreferences.php:203 Factors.php:222
 msgid "Address Line 4"
-msgstr "Dirección (línea 4)"
+msgstr "Dirección línea 4"
 
 #: CompanyPreferences.php:204
 msgid ""
@@ -3272,11 +3272,11 @@ msgstr ""
 
 #: CompanyPreferences.php:208 Factors.php:226
 msgid "Address Line 5"
-msgstr "Dirección (línea 5)"
+msgstr "Dirección línea 5"
 
 #: CompanyPreferences.php:213 Factors.php:230
 msgid "Address Line 6"
-msgstr "Dirección (línea 6)"
+msgstr "Dirección línea 6"
 
 #: CompanyPreferences.php:218
 msgid "Telephone Number"
@@ -3678,7 +3678,7 @@ msgstr "Código de artículo"
 #: includes/PO_PDFOrderPageHeader.inc:76
 #: ../webSHOP/includes/DisplayShoppingCart.php:6
 msgid "Item Description"
-msgstr "Descripción del artículo"
+msgstr "Descripción de artículo"
 
 #: ConfirmDispatch_Invoice.php:288 GoodsReceived.php:102 GoodsReceived.php:106
 #: PDFOrdersInvoiced.php:359 PDFOrderStatus.php:330 Shipments.php:401
@@ -3781,7 +3781,7 @@ msgstr "Sin Impuesto"
 #: ConfirmDispatch_Invoice.php:295 Credit_Invoice.php:295
 #: SelectCreditItems.php:694 SupplierInvoice.php:608 TaxGroups.php:289
 msgid "Tax Authority"
-msgstr "Autoridad Fiscal"
+msgstr "Autoridad fiscal"
 
 #: ConfirmDispatch_Invoice.php:296
 msgid "Tax %"
@@ -38873,7 +38873,7 @@ msgstr "Provisiones hechas contra"
 
 #: Z_CheckAllocs.php:34
 msgid "Invoice Number"
-msgstr "Tactura No."
+msgstr "Factura No."
 
 #: Z_CheckAllocs.php:35
 msgid "Original Invoice Total"
