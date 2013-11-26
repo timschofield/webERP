@@ -145,7 +145,7 @@ Class SuppTrans {
 									$GLCode,
 									$Hold){
 
-		if ($This_QuantityInv!=0 && isset($This_QuantityInv)){
+		if ($This_QuantityInv!=0 AND isset($This_QuantityInv)){
 			$this->GRNs[$GRNNo]->Modify($PODetailItem,
 										$ItemCode,
 										$ItemDescription,

@@ -1,5 +1,6 @@
 webERP Change Log
 
+26/11/13 Phil: Supplier invoice entry now allows modification of invoice quantities and prices for multiple goods received lines in line rather than having to go into each line to modify individually.
 20/11/13 rchacon: Translate the name of each language to the name in their respective language.
 20/11/13 Phil: Payments.php FunctionalExchangeRate was not defaulted appropriately when entering a supplier payment in FX from a bank account of the same currency selected and the transaction was posted immediately without update first. Fixed
 19/11/13 Thumb/CQZ: Add webERP Chinese country sql including Chinese COA, currency, role,tax, transaction type etc which should be localized. 
