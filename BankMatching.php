@@ -244,7 +244,7 @@ if ($InputError !=1
 						WHERE amount < 0
 							AND transdate >= '". $SQLAfterDate . "'
 							AND transdate <= '" . $SQLBeforeDate . "'
-							AND bankact=" . $_POST['BankAccount'] . "
+							AND bankact='" . $_POST['BankAccount'] . "'
 							AND  ABS(amountcleared - (amount / exrate)) > 0.009
 						ORDER BY transdate";
 		} else { /* Type must == Receipts */
