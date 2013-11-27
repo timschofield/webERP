@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-11-24 10:11+1300\n"
-"PO-Revision-Date: 2013-11-26 08:18-0600\n"
+"PO-Revision-Date: 2013-11-26 19:12-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -34148,9 +34148,8 @@ msgid "No zero numeric"
 msgstr "ser numérico"
 
 #: SystemParameters.php:7 includes/MainMenuLinksArray.php:428
-#, fuzzy
 msgid "System Parameters"
-msgstr "Parámetros"
+msgstr "Parámetros del sistema"
 
 #: SystemParameters.php:31
 msgid "First overdue deadline days must be a number"
@@ -37804,7 +37803,7 @@ msgstr "Europa del Este Ruso Japonés Coreano Vietnamita Árabe Hebreo Tailandé
 
 #: WWW_Users.php:29 includes/MainMenuLinksArray.php:429
 msgid "User Maintenance"
-msgstr "Administrar Usuarios"
+msgstr "Administrar usuarios"
 
 #: WWW_Users.php:87
 #, fuzzy
@@ -43719,7 +43718,7 @@ msgstr "Cuentas Bancarias"
 
 #: includes/MainMenuLinksArray.php:434
 msgid "Currency Maintenance"
-msgstr "Administrar Divisas (moneda)"
+msgstr "Administrar monedas"
 
 #: includes/MainMenuLinksArray.php:435
 msgid "Tax Authorities and Rates Maintenance"

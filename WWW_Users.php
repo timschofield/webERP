@@ -26,7 +26,7 @@ $PDFLanguages = array(_('Latin Western Languages'),
 						_('Chinese'),
 						_('Free Serif'));
 
-$Title = _('User Maintenance');
+$Title = _('Users Maintenance');
 /* webERP manual links before header.inc */
 $ViewTopic= 'GettingStarted';
 $BookMark = 'UserMaintenance';
