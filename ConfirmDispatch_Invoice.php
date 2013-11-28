@@ -85,6 +85,10 @@ if (!isset($_GET['OrderNumber']) AND !isset($_SESSION['ProcessingOrder'])) {
 						ON locations.loccode=salesorders.fromstkloc
 						WHERE salesorders.orderno = '" . $_GET['OrderNumber']."'";
 
+	if ($_SESSION['SalesmanLogin'] != '') {
+		$OrderHeaderSQL .= " AND salesorders.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
+	}
+
 	$ErrMsg = _('The order cannot be retrieved because');
 	$DbgMsg = _('The SQL to get the order header was');
 	$GetOrdHdrResult = DB_query($OrderHeaderSQL,$db,$ErrMsg,$DbgMsg);
