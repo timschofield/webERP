@@ -311,43 +311,35 @@ if (isset($_POST['SearchCust'])
 	AND $_SESSION['RequireCustomerSelection']==1
 	AND in_array($_SESSION['PageSecurityArray']['ConfirmDispatch_Invoice.php'], $_SESSION['AllowedPageSecurityTokens'])){
 
-	if (($_POST['CustKeywords']=='') AND ($_POST['CustCode']=='')  AND ($_POST['CustPhone']=='')) {
 		$SQL = "SELECT custbranch.brname,
-						custbranch.contactname,
-						custbranch.phoneno,
-						custbranch.faxno,
-						custbranch.branchcode,
-						custbranch.debtorno,
-						debtorsmaster.name
-					FROM custbranch
-					LEFT JOIN debtorsmaster
-					ON custbranch.debtorno=debtorsmaster.debtorno";
+					custbranch.contactname,
+					custbranch.phoneno,
+					custbranch.faxno,
+					custbranch.branchcode,
+					custbranch.debtorno,
+					debtorsmaster.name
+				FROM custbranch
+				LEFT JOIN debtorsmaster
+				ON custbranch.debtorno=debtorsmaster.debtorno 
+				WHERE custbranch.disabletrans=0 ";
+
+	if (($_POST['CustKeywords']=='') AND ($_POST['CustCode']=='')  AND ($_POST['CustPhone']=='')) {
+		$SQL .= "";
 	} else {
 		//insert wildcard characters in spaces
 		$_POST['CustKeywords'] = mb_strtoupper(trim($_POST['CustKeywords']));
 		$SearchString = str_replace(' ', '%', $_POST['CustKeywords']) ;
 
-		$SQL = "SELECT custbranch.brname,
-						custbranch.contactname,
-						custbranch.phoneno,
-						custbranch.faxno,
-						custbranch.branchcode,
-						custbranch.debtorno,
-						debtorsmaster.name
-					FROM custbranch
-					LEFT JOIN debtorsmaster
-					ON custbranch.debtorno=debtorsmaster.debtorno
-					WHERE custbranch.brname " . LIKE . " '%" . $SearchString . "%'
-					AND custbranch.branchcode " . LIKE . " '%" . mb_strtoupper(trim($_POST['CustCode'])) . "%'
-					AND custbranch.phoneno " . LIKE . " '%" . trim($_POST['CustPhone']) . "%'";
-
-			if ($_SESSION['SalesmanLogin']!=''){
-				$SQL .= " AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'";
-			}
-			$SQL .=	" AND custbranch.disabletrans=0
-						ORDER BY custbranch.debtorno,
-								custbranch.branchcode";
+		$SQL .= "AND custbranch.brname " . LIKE . " '%" . $SearchString . "%'
+				AND custbranch.branchcode " . LIKE . " '%" . mb_strtoupper(trim($_POST['CustCode'])) . "%'
+				AND custbranch.phoneno " . LIKE . " '%" . trim($_POST['CustPhone']) . "%'";
+	
 	} /*one of keywords or custcode was more than a zero length string */
+	if ($_SESSION['SalesmanLogin']!=''){
+		$SQL .= " AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'";
+	}
+	$SQL .=	" ORDER BY custbranch.debtorno,
+					custbranch.branchcode";
 
 	$ErrMsg = _('The searched customer records requested cannot be retrieved because');
 	$result_CustSelect = DB_query($SQL,$db,$ErrMsg);
@@ -529,7 +521,7 @@ if (isset($SelectedCustomer)) {
 			ON debtorsmaster.holdreason=holdreasons.reasoncode
 			INNER JOIN currencies
 			ON debtorsmaster.currcode=currencies.currabrev
-			AND debtorsmaster.debtorno = '" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
+			WHERE debtorsmaster.debtorno = '" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
 
 	$ErrMsg = _('The details for the customer selected') . ': ' .$_SESSION['Items'.$identifier]->DebtorNo . ' ' . _('cannot be retrieved because');
 	$DbgMsg = _('SQL used to retrieve the customer details was') . ':<br />' . $sql;
