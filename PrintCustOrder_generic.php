@@ -69,6 +69,10 @@ $sql = "SELECT salesorders.debtorno,
 		ON salesorders.fromstkloc=locations.loccode
 		WHERE salesorders.orderno='" . $_GET['TransNo'] . "'";
 
+if ($_SESSION['SalesmanLogin'] != '') {
+	$sql .= " AND salesorders.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
+}
+
 $result=DB_query($sql,$db, $ErrMsg);
 
 //If there are no rows, there's a problem.
