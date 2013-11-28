@@ -1,4 +1,5 @@
 webERP Change Log
+2013/11/28 Thumb: Add salesman constraints to ConfirmDispatch_Invoice.php to ensure that sales can only print his own sales orders' invoice. 
 2013/11/28 Thumb: Add constraints to salesman that he can only print his own sales orders in PrintCustOrder_generic.php
 2013/11/28 Thumb: Add constraints to salesman that he can only print his own sales orders in PrintCustOrder.php
 2013/11/28 Thumb: Add salesman login constraint to only their own customers available in SelectOrderItems.php and fixed SQL error of customers login. 
