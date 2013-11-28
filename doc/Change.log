@@ -1,4 +1,6 @@
 webERP Change Log
+2013/11/28 Thumb: Add constraints to salesman that he can only print his own sales orders in PrintCustOrder_generic.php
+2013/11/28 Thumb: Add constraints to salesman that he can only print his own sales orders in PrintCustOrder.php
 2013/11/28 Thumb: Add salesman login constraint to only their own customers available in SelectOrderItems.php and fixed SQL error of customers login. 
 2013/11/27 Thumb: Add create new scripts to import Customers and Debtors. 
 26/11/13 Phil: Supplier invoice entry now allows modification of invoice quantities and prices for multiple goods received lines in line rather than having to go into each line to modify individually.
