@@ -55,7 +55,9 @@ Function CalcFreightCost ($TotalValue,
 				// if there is some details of the address besides the country
 				$sql .= " AND (";
 				foreach ($FindCity as $City) {
-					$sql = $sql . " destination LIKE '" . ucwords($City) . "%' OR";
+					if (ucwords($City) != ''){
+						$sql = $sql . " destination LIKE '" . ucwords($City) . "%' OR";
+					}
 				}
 				if ($BrAddCountry != $CountriesArray[$_SESSION['CountryOfOperation']]){
 					/* For international shipments empty destination (ANY) is allowed */
@@ -63,7 +65,7 @@ Function CalcFreightCost ($TotalValue,
 				}
 				$sql = mb_substr($sql, 0, mb_strrpos($sql,' OR')) . ')';
 			}
-
+// echo ($sql);
 	$CalcFreightCostResult = DB_query($sql,$db);
 	if (DB_error_no($db) !=0) {
 		echo _('The freight calculation for the destination city cannot be performed because') . ' - ' . DB_error_msg($db) . ' - ' . $sql;
