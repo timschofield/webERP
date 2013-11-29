@@ -368,13 +368,17 @@ $MenuItems['GL']['Maintenance']['Caption'] = array(	_('Account Sections'),
 													_('Account Groups'),
 													_('GL Accounts'),
 													_('GL Budgets'),
-													_('GL Tags'));
+													_('GL Tags'),
+													_('Bank Accounts'),
+													_('Bank Account Authorized Users'));
 
 $MenuItems['GL']['Maintenance']['URL'] = array(		'/AccountSections.php',
 													'/AccountGroups.php',
 													'/GLAccounts.php',
 													'/GLBudgets.php',
-													'/GLTags.php');
+													'/GLTags.php',
+													'/BankAccounts.php',
+													'/BankAccountUsers.php'));
 
 $MenuItems['FA']['Transactions']['Caption'] = array(_('Add a new Asset'),
 													_('Select an Asset'),
@@ -430,7 +434,6 @@ $MenuItems['system']['Transactions']['Caption'] = array(_('Company Preferences')
 														_('Maintain Security Tokens'),
 														_('Access Permissions Maintenance'),
 														_('Page Security Settings'),
-														_('Bank Accounts'),
 														_('Currencies Maintenance'),
 														_('Tax Authorities and Rates Maintenance'),
 														_('Tax Group Maintenance'),
@@ -451,7 +454,6 @@ $MenuItems['system']['Transactions']['URL'] = array('/CompanyPreferences.php',
 													'/SecurityTokens.php',
 													'/WWW_Access.php',
 													'/PageSecurity.php',
-													'/BankAccounts.php',
 													'/Currencies.php',
 													'/TaxAuthorities.php',
 													'/TaxGroups.php',
