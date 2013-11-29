@@ -378,7 +378,7 @@ $MenuItems['GL']['Maintenance']['URL'] = array(		'/AccountSections.php',
 													'/GLBudgets.php',
 													'/GLTags.php',
 													'/BankAccounts.php',
-													'/BankAccountUsers.php'));
+													'/BankAccountUsers.php');
 
 $MenuItems['FA']['Transactions']['Caption'] = array(_('Add a new Asset'),
 													_('Select an Asset'),
