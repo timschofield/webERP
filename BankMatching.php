@@ -100,7 +100,12 @@ echo '<table class="selection">
 			<td align="left">' . _('Bank Account') . ':</td>
 			<td colspan="3"><select tabindex="1" autofocus="autofocus" name="BankAccount">';
 
-$sql = "SELECT accountcode, bankaccountname FROM bankaccounts";
+$sql = "SELECT bankaccounts.accountcode, 
+				bankaccounts.bankaccountname 
+		FROM bankaccounts, bankaccountusers
+		WHERE bankaccounts.accountcode=bankaccountusers.accountcode
+			AND bankaccountusers.userid = '" . $_SESSION['UserID'] ."'
+		ORDER BY bankaccounts.bankaccountname";
 $resultBankActs = DB_query($sql,$db);
 while ($myrow=DB_fetch_array($resultBankActs)){
 	if (isset($_POST['BankAccount'])

@@ -773,8 +773,12 @@ echo ' ' . _('on') . ' ' . $_SESSION['PaymentDetail' . $identifier]->DatePaid . 
 $SQL = "SELECT bankaccountname,
 				bankaccounts.accountcode,
 				bankaccounts.currcode
-		FROM bankaccounts INNER JOIN chartmaster
-		ON bankaccounts.accountcode=chartmaster.accountcode
+		FROM bankaccounts 
+		INNER JOIN chartmaster
+			ON bankaccounts.accountcode=chartmaster.accountcode
+		INNER JOIN bankaccountusers
+			ON bankaccounts.accountcode=bankaccountusers.accountcode
+		WHERE bankaccountusers.userid = '" . $_SESSION['UserID'] ."'
 		ORDER BY bankaccountname";
 
 $ErrMsg = _('The bank accounts could not be retrieved because');
