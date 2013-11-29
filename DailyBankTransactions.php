@@ -26,8 +26,11 @@ if (!isset($_POST['Show'])) {
 					bankaccounts.accountcode,
 					bankaccounts.currcode
 			FROM bankaccounts,
-				chartmaster
-			WHERE bankaccounts.accountcode=chartmaster.accountcode";
+				chartmaster, 
+				bankaccountusers
+			WHERE bankaccounts.accountcode=chartmaster.accountcode
+				AND bankaccounts.accountcode=bankaccountusers.accountcode
+			AND bankaccountusers.userid = '" . $_SESSION['UserID'] ."'";
 
 	$ErrMsg = _('The bank accounts could not be retrieved because');
 	$DbgMsg = _('The SQL used to retrieve the bank accounts was');
