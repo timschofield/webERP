@@ -995,7 +995,7 @@ echo '<br />
 	<table class="selection">
 	<tr>
 		<td>' .  _('Deliver To') .':</td>
-		<td><input type="text" autofocus="autofocus" required="required" size="42" maxlength="40" name="DeliverTo" value="' . $_SESSION['Items'.$identifier]->DeliverTo . '" title="' . _('Enter the name of the customer to deliver this order to') . '" /></td>
+		<td><input type="text" autofocus="autofocus" required="required" size="42" maxlength="40" name="DeliverTo" value="' .  stripslashes($_SESSION['Items' . $identifier]->DeliverTo . '" title="' . _('Enter the name of the customer to deliver this order to') . '" /></td>
 	</tr>';
 
 echo '<tr>

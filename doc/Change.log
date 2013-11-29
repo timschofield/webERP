@@ -1,9 +1,11 @@
 webERP Change Log
-2013/11/28 Thumb: Add salesman constraints to ConfirmDispatch_Invoice.php to ensure that sales can only print his own sales orders' invoice. 
-2013/11/28 Thumb: Add constraints to salesman that he can only print his own sales orders in PrintCustOrder_generic.php
-2013/11/28 Thumb: Add constraints to salesman that he can only print his own sales orders in PrintCustOrder.php
-2013/11/28 Thumb: Add salesman login constraint to only their own customers available in SelectOrderItems.php and fixed SQL error of customers login. 
-2013/11/27 Thumb: Add create new scripts to import Customers and Debtors. 
+
+28/11/13 Phil: Apply Tim's idea for stripping slashes from incorrectly displayed items PO_Items.php and DeliveryDetails.php
+28/11/13 Thumb: Add salesman constraints to ConfirmDispatch_Invoice.php to ensure that sales can only print his own sales orders' invoice. 
+28/11/13 Thumb: Add constraints to salesman that he can only print his own sales orders in PrintCustOrder_generic.php
+28/11/13 Thumb: Add constraints to salesman that he can only print his own sales orders in PrintCustOrder.php
+28/11/13 Thumb: Add salesman login constraint to only their own customers available in SelectOrderItems.php and fixed SQL error of customers login. 
+27/11/13 Thumb: Add create new scripts to import Customers and Debtors. 
 26/11/13 Phil: Supplier invoice entry now allows modification of invoice quantities and prices for multiple goods received lines in line rather than having to go into each line to modify individually.
 20/11/13 rchacon: Translate the name of each language to the name in their respective language.
 20/11/13 Phil: Payments.php FunctionalExchangeRate was not defaulted appropriately when entering a supplier payment in FX from a bank account of the same currency selected and the transaction was posted immediately without update first. Fixed
