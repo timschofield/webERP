@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-11-24 10:11+1300\n"
-"PO-Revision-Date: 2013-11-26 19:12-0600\n"
+"PO-Revision-Date: 2013-11-29 12:04-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -8502,9 +8502,8 @@ msgid "Postal Address 4 (Postal Code)"
 msgstr "Dirección Postal, 4 (Código Postal)"
 
 #: CustomerBranches.php:934
-#, fuzzy
 msgid "Postal Address 5"
-msgstr "Dirección Postal"
+msgstr "Dirección postal 5"
 
 #: CustomerBranches.php:942
 msgid "Customers Internal Branch Code (EDI)"
@@ -10494,7 +10493,7 @@ msgstr "Actualizar Artículos"
 #: DiscountCategories.php:221 DiscountMatrix.php:162 StockClone.php:969
 #: StockDispatch.php:239 Stocks.php:1256
 msgid "Discount Category"
-msgstr "Clase de Descuento"
+msgstr "Clase de descuento"
 
 #: DiscountCategories.php:222 InventoryPlanningPrefSupplier.php:72
 #: PDFPriceList.php:366 SalesCategories.php:157 SalesCategories.php:508
@@ -12106,7 +12105,7 @@ msgstr "Agregar Ubicaciones de Activo Fijo"
 #: FixedAssetItems.php:560 StockClone.php:959 StockCounts.php:112
 #: Stocks.php:1246 includes/DefineLabelClass.php:50
 msgid "Bar Code"
-msgstr "Código de Barras"
+msgstr "Código de barras"
 
 #: FixedAssetItems.php:564 FixedAssetRegister.php:88
 #: StockSerialItemResearch.php:30 StockSerialItems.php:90
@@ -26806,7 +26805,7 @@ msgstr "Categoría:"
 
 #: SelectProduct.php:95
 msgid "Item Type:"
-msgstr "Tipo de Artículo:"
+msgstr "Tipo de artículo:"
 
 #: SelectProduct.php:99
 msgid "Assembly Item"
@@ -29655,23 +29654,21 @@ msgstr "Cantidad económica de pedido"
 
 #: StockClone.php:805 Stocks.php:1092
 msgid "Packaged Volume (metres cubed)"
-msgstr "Volumen (metros cúbicos)"
+msgstr "Volumen empacado (metros cúbicos)"
 
 #: StockClone.php:810 Stocks.php:1097
-#, fuzzy
 msgid "Packaged Gross Weight (KGs)"
-msgstr "Peso (KG)"
+msgstr "Peso bruto empacado (kg)"
 
 #: StockClone.php:814 Stocks.php:1101
-#, fuzzy
 msgid "Net Weight (KGs)"
-msgstr "Peso (KG)"
+msgstr "Peso neto (kg)"
 
 #: StockClone.php:818 Stocks.php:1105 SupplierTenders.php:125
 #: SupplierTenders.php:532 SupplierTenders.php:535 UnitsOfMeasure.php:170
 #: includes/MainMenuLinksArray.php:502
 msgid "Units of Measure"
-msgstr "Unidades de Medida"
+msgstr "Unidades de medida"
 
 #: StockClone.php:839 Stocks.php:1126
 msgid "Assembly, Kit, Manufactured or Service/Labour"
@@ -29719,11 +29716,11 @@ msgstr "Perecedero"
 
 #: StockClone.php:949 Stocks.php:1236
 msgid "Decimal Places for display Quantity"
-msgstr "Decimales al mostrar Cantidades"
+msgstr "Decimales al mostrar cantidades"
 
 #: StockClone.php:974 Stocks.php:1261 TaxAuthorityRates.php:88
 msgid "Tax Category"
-msgstr "Clase de Impuesto"
+msgstr "Clase de impuesto"
 
 #: StockClone.php:995 Stocks.php:1282
 msgid "Pan Size"
