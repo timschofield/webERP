@@ -209,8 +209,13 @@ if (isset($_POST['ShowSales'])){
 					WHERE (stockmoves.type=10 or stockmoves.type=11)
 					AND show_on_inv_crds =1
 					AND debtortrans.trandate>='" . $FromDate . "'
-					AND debtortrans.trandate<='" . $ToDate . "'
-					GROUP BY debtortrans.trandate,
+					AND debtortrans.trandate<='" . $ToDate . "'";
+
+			if ($_SESSION['SalesmanLogin'] != '') {
+				$sql .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
+			}
+
+			$sql .= " GROUP BY debtortrans.trandate,
 							tpe
 					ORDER BY debtortrans.trandate,
 							tpe";
@@ -242,8 +247,13 @@ if (isset($_POST['ShowSales'])){
 					WHERE (stockmoves.type=10 or stockmoves.type=11)
 					AND show_on_inv_crds =1
 					AND debtortrans.trandate>='" . $FromDate . "'
-					AND debtortrans.trandate<='" . $ToDate . "'
-					GROUP BY week_no,
+					AND debtortrans.trandate<='" . $ToDate . "'";
+
+			if ($_SESSION['SalesmanLogin'] != '') {
+				$sql .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
+			}
+
+			$sql .= " GROUP BY week_no,
 							transyear,
 							tpe
 					ORDER BY transyear,
@@ -278,8 +288,13 @@ if (isset($_POST['ShowSales'])){
 					WHERE (stockmoves.type=10 or stockmoves.type=11)
 					AND show_on_inv_crds =1
 					AND debtortrans.trandate>='" . $FromDate . "'
-					AND debtortrans.trandate<='" . $ToDate . "'
-					GROUP BY month_no,
+					AND debtortrans.trandate<='" . $ToDate . "'";
+
+			if ($_SESSION['SalesmanLogin'] != '') {
+				$sql .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
+			}
+
+			$sql .= " GROUP BY month_no,
 							month_name,
 							transyear,
 							debtortrans.tpe
@@ -314,8 +329,13 @@ if (isset($_POST['ShowSales'])){
 					WHERE (stockmoves.type=10 or stockmoves.type=11)
 					AND show_on_inv_crds =1
 					AND debtortrans.trandate>='" . $FromDate . "'
-					AND debtortrans.trandate<='" . $ToDate . "'
-					GROUP BY quarter_no,
+					AND debtortrans.trandate<='" . $ToDate . "'";
+
+			if ($_SESSION['SalesmanLogin'] != '') {
+				$sql .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
+			}
+
+			$sql .= " GROUP BY quarter_no,
 							transyear,
 							tpe
 					ORDER BY transyear,

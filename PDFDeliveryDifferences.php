@@ -173,6 +173,10 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 		AND trandate <= '" . FormatDateForSQL($_POST['ToDate']) . "'";
 }
 
+if ($_SESSION['SalesmanLogin'] != '') {
+	$sql .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
+}
+
 $Result=DB_query($sql,$db,'','',false,false); //dont error check - see below
 
 if (DB_error_no($db)!=0){
@@ -270,6 +274,11 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 		AND trandate <= '" . FormatDateForSQL($_POST['ToDate']) . "'";
 
 }
+
+if ($_SESSION['SalesmanLogin'] != '') {
+	$sql .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
+}
+
 $ErrMsg = _('Could not retrieve the count of sales order lines in the period under review');
 $result = DB_query($sql,$db,$ErrMsg);
 

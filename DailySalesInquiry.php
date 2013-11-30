@@ -37,13 +37,19 @@ while ($PeriodRow = DB_fetch_array($PeriodsResult)){
 	}
 }
 echo '</select></td>
-	<td>' . _('Salesperson') . ':</td>
-	<td><select tabindex="2" name="Salesperson">';
+	<td>' . _('Salesperson') . ':</td>';
 
-$SalespeopleResult = DB_query("SELECT salesmancode, salesmanname FROM salesman",$db);
-if (!isset($_POST['Salesperson'])){
-	$_POST['Salesperson'] = 'All';
-	echo '<option selected="selected" value="All">' . _('All') . '</option>';
+if($_SESSION['SalesmanLogin'] != '') {
+	echo '<td>';
+	echo $_SESSION['UsersRealName'];
+	echo '</td>';
+}else{
+	echo '<td><select tabindex="2" name="Salesperson">';
+
+	$SalespeopleResult = DB_query("SELECT salesmancode, salesmanname FROM salesman",$db);
+	if (!isset($_POST['Salesperson'])){
+		$_POST['Salesperson'] = 'All';
+		echo '<option selected="selected" value="All">' . _('All') . '</option>';
 } else {
 	echo '<option value="All">' . _('All') . '</option>';
 }
@@ -56,7 +62,7 @@ while ($SalespersonRow = DB_fetch_array($SalespeopleResult)){
 	}
 }
 echo '</select></td>';
-
+}
 echo '</tr>
 	</table>
 	<br />
@@ -94,7 +100,9 @@ $sql = "SELECT 	trandate,
 			AND trandate>='" . $StartDateSQL . "'
 			AND trandate<='" . $EndDateSQL . "'";
 
-if ($_POST['Salesperson']!='All') {
+if ($_SESSION['SalesmanLogin'] != '') {
+	$SQL .= " AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'";
+}elseif ($_POST['Salesperson']!='All') {
 	$sql .= " AND custbranch.salesman='" . $_POST['Salesperson'] . "'";
 }
 

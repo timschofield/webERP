@@ -259,16 +259,7 @@ if (isset($_POST['SearchParts']) AND $_POST['SearchParts']!=''){
 						ON debtorsmaster.currcode = currencies.currabrev
 					WHERE salesorders.orderno='". $OrderNumber ."'
 					AND salesorders.quotation=0
-					AND salesorderdetails.completed " . $Completed ."
-					GROUP BY salesorders.orderno,
-						debtorsmaster.name,
-						currencies.decimalplaces,
-						custbranch.brname,
-						salesorders.customerref,
-						salesorders.orddate,
-						salesorders.deliverydate,
-						salesorders.deliverto
-					ORDER BY salesorders.orderno";
+					AND salesorderdetails.completed " . $Completed;
 	} elseif (isset($CustomerRef)) {
 		if (isset($SelectedCustomer)) {
 			$SQL = "SELECT salesorders.orderno,
@@ -291,16 +282,7 @@ if (isset($_POST['SearchParts']) AND $_POST['SearchParts']!=''){
 						WHERE salesorders.debtorno='" . $SelectedCustomer ."'
 						AND salesorders.customerref like '%". $CustomerRef."%'
 						AND salesorders.quotation=0
-						AND salesorderdetails.completed".$Completed."
-						GROUP BY salesorders.orderno,
-							debtorsmaster.name,
-							currencies.decimalplaces,
-							custbranch.brname,
-							salesorders.customerref,
-							salesorders.orddate,
-							salesorders.deliverydate,
-							salesorders.deliverto
-						ORDER BY salesorders.orderno";
+						AND salesorderdetails.completed".$Completed;
 		} else { //customer not selected
 			$SQL = "SELECT salesorders.orderno,
 							debtorsmaster.name,
@@ -321,16 +303,7 @@ if (isset($_POST['SearchParts']) AND $_POST['SearchParts']!=''){
 							ON debtorsmaster.currcode = currencies.currabrev
 						WHERE salesorders.customerref " . LIKE . " '%". $CustomerRef . "%'
 						AND salesorders.quotation=0
-						AND salesorderdetails.completed" . $Completed . "
-						GROUP BY salesorders.orderno,
-							debtorsmaster.name,
-							currencies.decimalplaces,
-							custbranch.brname,
-							salesorders.customerref,
-							salesorders.orddate,
-							salesorders.deliverydate,
-							salesorders.deliverto
-						ORDER BY salesorders.orderno";
+						AND salesorderdetails.completed" . $Completed;
 		}
 
 	} else {
@@ -360,16 +333,7 @@ if (isset($_POST['SearchParts']) AND $_POST['SearchParts']!=''){
 							AND salesorders.debtorno='" . $SelectedCustomer ."'
 							AND salesorders.orddate >= '" . $DateAfterCriteria ."'
 							AND salesorders.quotation=0
-							AND salesorderdetails.completed".$Completed."
-							GROUP BY salesorders.orderno,
-								debtorsmaster.name,
-								currencies.decimalplaces,
-								custbranch.brname,
-								salesorders.customerref,
-								salesorders.orddate,
-								salesorders.deliverydate,
-								salesorders.deliverto
-							ORDER BY salesorders.orderno";
+							AND salesorderdetails.completed".$Completed;
 			} else {
 				$SQL = "SELECT salesorders.orderno,
 								debtorsmaster.name,
@@ -391,16 +355,7 @@ if (isset($_POST['SearchParts']) AND $_POST['SearchParts']!=''){
 							WHERE salesorders.debtorno='" . $SelectedCustomer . "'
 							AND salesorders.orddate >= '" . $DateAfterCriteria . "'
 							AND salesorders.quotation=0
-							AND salesorderdetails.completed".$Completed."
-							GROUP BY salesorders.orderno,
-								debtorsmaster.name,
-								currencies.decimalplaces,
-								custbranch.brname,
-								salesorders.customerref,
-								salesorders.orddate,
-								salesorders.deliverydate,
-								salesorders.deliverto
-							ORDER BY salesorders.orderno";
+							AND salesorderdetails.completed".$Completed;
 			}
 		} else { //no customer selected
 			if (isset($SelectedStockItem)) {
@@ -424,16 +379,7 @@ if (isset($_POST['SearchParts']) AND $_POST['SearchParts']!=''){
 							WHERE salesorderdetails.stkcode='". $SelectedStockItem ."'
 							AND salesorders.orddate >= '" . $DateAfterCriteria . "'
 							AND salesorders.quotation=0
-							AND salesorderdetails.completed".$Completed."
-							GROUP BY salesorders.orderno,
-								debtorsmaster.name,
-								currencies.decimalplaces,
-								custbranch.brname,
-								salesorders.customerref,
-								salesorders.orddate,
-								salesorders.deliverydate,
-								salesorders.deliverto
-							ORDER BY salesorders.orderno";
+							AND salesorderdetails.completed".$Completed;
 			} else {
 				$SQL = "SELECT salesorders.orderno,
 								debtorsmaster.name,
@@ -454,19 +400,23 @@ if (isset($_POST['SearchParts']) AND $_POST['SearchParts']!=''){
 								ON debtorsmaster.currcode = currencies.currabrev
 							WHERE salesorders.orddate >= '".$DateAfterCriteria . "'
 							AND salesorders.quotation=0
-							AND salesorderdetails.completed".$Completed."
-							GROUP BY salesorders.orderno,
-								debtorsmaster.name,
-								currencies.decimalplaces,
-								custbranch.brname,
-								salesorders.customerref,
-								salesorders.orddate,
-								salesorders.deliverydate,
-								salesorders.deliverto
-							ORDER BY salesorders.orderno";
+							AND salesorderdetails.completed".$Completed;
 			}
 		} //end selected customer
 	} //end not order number selected
+
+	if ($_SESSION['SalesmanLogin'] != '') {
+		$SQL .= " AND salesorders.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
+	}
+	$SQL .= " GROUP BY salesorders.orderno,
+					debtorsmaster.name,
+					currencies.decimalplaces,
+					custbranch.brname,
+					salesorders.customerref,
+					salesorders.orddate,
+					salesorders.deliverydate,
+					salesorders.deliverto
+				ORDER BY salesorders.orderno";
 
 	$SalesOrdersResult = DB_query($SQL,$db);
 

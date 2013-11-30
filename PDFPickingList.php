@@ -130,6 +130,10 @@ if (!isset($_POST['TransDate']) AND $_GET['TransNo'] != 'Preview') {
             	AND salesorders.deliverydate<='" . FormatDateForSQL($_POST['TransDate'])."'";
 }
 
+if ($_SESSION['SalesmanLogin'] != '') {
+	$sql .= " AND salesorders.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
+}
+
 if (isset($_POST['TransDate'])
 	OR (isset($_GET['TransNo']) AND $_GET['TransNo'] != 'Preview')) {
 	$result=DB_query($sql,$db, $ErrMsg);
