@@ -3,7 +3,6 @@
 /* $Id$*/
 
 include('includes/SQL_CommonFunctions.inc');
-
 include('includes/session.inc');
 $Title = _('Supplier Inquiry');
 include('includes/header.inc');
@@ -113,12 +112,14 @@ if ($NIL_BALANCE == True){
 	$SupplierRecord['overdue1'] = 0;
 	$SupplierRecord['overdue2'] = 0;
 }
-
-echo '<p class="page_title_text">
-		<img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . _('Supplier') . '" alt="" />' . ' ' . _('Supplier') . ' : ' . $SupplierRecord['suppname'] . ' - (' . _('All amounts stated in') . ' ' . $SupplierRecord['currency'] . ')
-		<br />
-		<br />' . _('Terms') . ': ' . $SupplierRecord['terms'] . '
-	</p>';
+include('includes/CurrenciesArray.php'); // To get the currency name.
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . _('Supplier') . '" alt="" /> ' .
+		_('Supplier') . ': ' .
+			$SupplierID . ' - ' . $SupplierRecord['suppname'] . '<br />' .
+		_('All amounts stated in') . ': ' .
+			$SupplierRecord['currcode'] . ' - ' . $CurrenciesArray[$SupplierRecord['currcode']]['Currency'] . '<br />' .
+		_('Terms') . ': ' .
+			$SupplierRecord['terms'] . '</p>';
 
 if (isset($_GET['HoldType']) AND isset($_GET['HoldTrans'])){
 
