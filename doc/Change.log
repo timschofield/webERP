@@ -1,5 +1,5 @@
 webERP Change Log
-
+2013/11/30 Thumb: Add salesman constraint to show salesperson's own sales orders invoice, customer etc in DailySalesInquiry.php,PDFDeliveryDifferences.php,PDFOrdersInvoiced.php,PDFOrderStatus.php,PDFPickingList.php,SalesByTypePeriodInquiry.php,SalesInquiry.php,SelectCompletedOrder.php.
 28/11/13 Phil: Apply Tim's idea for stripping slashes from incorrectly displayed items PO_Items.php and DeliveryDetails.php
 28/11/13 Thumb: Add salesman constraints to ConfirmDispatch_Invoice.php to ensure that sales can only print his own sales orders' invoice. 
 28/11/13 Thumb: Add constraints to salesman that he can only print his own sales orders in PrintCustOrder_generic.php
