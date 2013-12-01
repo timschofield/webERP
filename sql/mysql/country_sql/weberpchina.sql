@@ -10,12 +10,6 @@
 /*!40101 SET NAMES utf8 */;
 /*!40014 SET FOREIGN_KEY_CHECKS=0 */;
 
--- Dumping database structure for weberpcn
-DROP DATABASE IF EXISTS `weberpcn`;
-CREATE DATABASE IF NOT EXISTS `weberpcn` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `weberpcn`;
-
-
 -- Dumping structure for table weberpcn.accountgroups
 DROP TABLE IF EXISTS `accountgroups`;
 CREATE TABLE IF NOT EXISTS `accountgroups` (
