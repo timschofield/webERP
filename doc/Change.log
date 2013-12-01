@@ -1,5 +1,5 @@
 webERP Change Log
-
+1/12/2013 Exson: Fixed country Chinese sql for installation failure. 
 1/12/13 CQZ: Correct Chinese translation error dispatch cut_off time. 
 
 1/12/13 Release 4.11.2
