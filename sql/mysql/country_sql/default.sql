@@ -114,6 +114,18 @@ CREATE TABLE `bankaccounts` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `bankaccountusers`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `bankaccountusers` (
+  `accountcode` varchar(20) NOT NULL COMMENT 'Bank account code',
+  `userid` varchar(20) NOT NULL COMMENT 'User code'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `banktrans`
 --
 
@@ -1017,7 +1029,7 @@ CREATE TABLE `gltrans` (
   CONSTRAINT `gltrans_ibfk_1` FOREIGN KEY (`account`) REFERENCES `chartmaster` (`accountcode`),
   CONSTRAINT `gltrans_ibfk_2` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
   CONSTRAINT `gltrans_ibfk_3` FOREIGN KEY (`periodno`) REFERENCES `periods` (`periodno`)
-) ENGINE=InnoDB AUTO_INCREMENT=142 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=145 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1185,7 +1197,7 @@ CREATE TABLE `locstock` (
   `stockid` varchar(20) NOT NULL DEFAULT '',
   `quantity` double NOT NULL DEFAULT '0',
   `reorderlevel` bigint(20) NOT NULL DEFAULT '0',
-  `bin` varchar(10) NOT NULL,
+  `bin` varchar(10) NOT NULL DEFAULT '',
   PRIMARY KEY (`loccode`,`stockid`),
   KEY `StockID` (`stockid`),
   KEY `bin` (`bin`),
@@ -2812,7 +2824,7 @@ CREATE TABLE `supptrans` (
   KEY `Type` (`type`),
   CONSTRAINT `supptrans_ibfk_1` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
   CONSTRAINT `supptrans_ibfk_2` FOREIGN KEY (`supplierno`) REFERENCES `suppliers` (`supplierid`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -3168,7 +3180,7 @@ CREATE TABLE `www_users` (
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-11-24 10:39:39
+-- Dump completed on 2013-12-01 20:34:55
 -- MySQL dump 10.13  Distrib 5.5.32, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: weberpdemo
@@ -3365,7 +3377,7 @@ INSERT INTO `chartmaster` VALUES ('9100','Income Tax Provision','Income Tax');
 -- Dumping data for table `companies`
 --
 
-INSERT INTO `companies` VALUES (1,'weberpdemo','not entered yet','','123 Web Way','PO Box 123','Queen Street','Melbourne','Victoria 3043','Australia','+61 3 4567 8901','+61 3 4567 8902','weberp@weberpdemo.com','USD','1100','4900','2100','2400','2150','4200','5200','3500',1,1,1,'5600');
+INSERT INTO `companies` VALUES (1,'webERP Demo Company Inc','not entered yet','','123 Web Way','PO Box 123','Queen Street','Melbourne','Victoria 3043','Australia','+61 3 4567 8901','+61 3 4567 8902','weberp@weberpdemo.com','USD','1100','4900','2100','2400','2150','4200','5200','3500',1,1,1,'5600');
 
 --
 -- Dumping data for table `cogsglpostings`
@@ -4117,7 +4129,7 @@ INSERT INTO `systypes` VALUES (16,'Location Transfer',27);
 INSERT INTO `systypes` VALUES (17,'Stock Adjustment',28);
 INSERT INTO `systypes` VALUES (18,'Purchase Order',29);
 INSERT INTO `systypes` VALUES (19,'Picking List',0);
-INSERT INTO `systypes` VALUES (20,'Purchase Invoice',38);
+INSERT INTO `systypes` VALUES (20,'Purchase Invoice',39);
 INSERT INTO `systypes` VALUES (21,'Debit Note',8);
 INSERT INTO `systypes` VALUES (22,'Creditors Payment',11);
 INSERT INTO `systypes` VALUES (23,'Creditors Journal',0);
@@ -4198,7 +4210,7 @@ INSERT INTO `taxprovinces` VALUES (1,'Default Tax province');
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('admin','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','','admin@weberp.org','MEL',8,1,'2013-11-24 10:10:09','','A4','1,1,1,1,1,1,1,1,1,1,1,',0,50,'fluid','en_GB.utf8',3,0);
+INSERT INTO `www_users` VALUES ('admin','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','','admin@weberp.org','MEL',8,1,'2013-12-01 20:30:06','','A4','1,1,1,1,1,1,1,1,1,1,1,',0,50,'fluid','en_GB.utf8',3,0);
 INSERT INTO `www_users` VALUES ('WEB0000017','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Phil Daintree','WEB0000017','','','+64(0)275567890','phil@logicworks.co.nz','TOR',7,0,NULL,'WEB0000017','A4','0,0,0,0,0,0,0,0,0,0,0',0,30,'silverwolf','en_GB.utf8',0,0);
 
 --
@@ -4377,9 +4389,9 @@ INSERT INTO `config` VALUES ('DispatchCutOffTime','14');
 INSERT INTO `config` VALUES ('DoFreightCalc','0');
 INSERT INTO `config` VALUES ('EDIHeaderMsgId','D:01B:UN:EAN010');
 INSERT INTO `config` VALUES ('EDIReference','WEBERP');
-INSERT INTO `config` VALUES ('EDI_Incoming_Orders','companies/weberpdemo/EDI_Incoming_Orders');
-INSERT INTO `config` VALUES ('EDI_MsgPending','companies/weberpdemo/EDI_MsgPending');
-INSERT INTO `config` VALUES ('EDI_MsgSent','companies/weberpdemo/EDI_Sent');
+INSERT INTO `config` VALUES ('EDI_Incoming_Orders','companies/test/EDI_Incoming_Orders');
+INSERT INTO `config` VALUES ('EDI_MsgPending','companies/test/EDI_Pending');
+INSERT INTO `config` VALUES ('EDI_MsgSent','companies/test/EDI__Sent');
 INSERT INTO `config` VALUES ('ExchangeRateFeed','Google');
 INSERT INTO `config` VALUES ('Extended_CustomerInfo','1');
 INSERT INTO `config` VALUES ('Extended_SupplierInfo','1');
@@ -4402,7 +4414,7 @@ INSERT INTO `config` VALUES ('OverChargeProportion','30');
 INSERT INTO `config` VALUES ('OverReceiveProportion','20');
 INSERT INTO `config` VALUES ('PackNoteFormat','1');
 INSERT INTO `config` VALUES ('PageLength','48');
-INSERT INTO `config` VALUES ('part_pics_dir','companies/weberpdemo/part_pics');
+INSERT INTO `config` VALUES ('part_pics_dir','companies/test/part_pics');
 INSERT INTO `config` VALUES ('PastDueDays1','30');
 INSERT INTO `config` VALUES ('PastDueDays2','60');
 INSERT INTO `config` VALUES ('PO_AllowSameItemMultipleTimes','1');
@@ -4418,7 +4430,7 @@ INSERT INTO `config` VALUES ('RadioBeaconStockLocation','BL');
 INSERT INTO `config` VALUES ('RadioBraconFTP_server','192.168.2.2');
 INSERT INTO `config` VALUES ('RadioBreaconFilePrefix','ORDXX');
 INSERT INTO `config` VALUES ('RadionBeaconFTP_user_pass','Radio Beacon remote ftp server password');
-INSERT INTO `config` VALUES ('reports_dir','companies/weberpdemo/reportwriter');
+INSERT INTO `config` VALUES ('reports_dir','companies/test/reports');
 INSERT INTO `config` VALUES ('RequirePickingNote','0');
 INSERT INTO `config` VALUES ('RomalpaClause','Ownership will not pass to the buyer until the goods have been paid for in full.');
 INSERT INTO `config` VALUES ('ShopAboutUs','This web-shop software has been developed by Logic Works Ltd for webERP. For support contact Phil Daintree by rn&lt;a href=&quot;mailto:support@logicworks.co.nz&quot;&gt;email&lt;/a&gt;rn');
@@ -4443,6 +4455,7 @@ INSERT INTO `config` VALUES ('ShopPayFlowPassword','');
 INSERT INTO `config` VALUES ('ShopPayFlowUser','');
 INSERT INTO `config` VALUES ('ShopPayFlowVendor','');
 INSERT INTO `config` VALUES ('ShopPayPalBankAccount','1040');
+INSERT INTO `config` VALUES ('ShopPaypalCommissionAccount','7220');
 INSERT INTO `config` VALUES ('ShopPayPalPassword','');
 INSERT INTO `config` VALUES ('ShopPayPalProPassword','');
 INSERT INTO `config` VALUES ('ShopPayPalProSignature','');
@@ -4467,7 +4480,7 @@ INSERT INTO `config` VALUES ('SO_AllowSameItemMultipleTimes','1');
 INSERT INTO `config` VALUES ('StandardCostDecimalPlaces','2');
 INSERT INTO `config` VALUES ('TaxAuthorityReferenceName','');
 INSERT INTO `config` VALUES ('UpdateCurrencyRatesDaily','0');
-INSERT INTO `config` VALUES ('VersionNumber','4.11.0');
+INSERT INTO `config` VALUES ('VersionNumber','4.11.2');
 INSERT INTO `config` VALUES ('WeightedAverageCosting','1');
 INSERT INTO `config` VALUES ('WikiApp','MediaWiki');
 INSERT INTO `config` VALUES ('WikiPath','wiki');
@@ -4508,6 +4521,7 @@ INSERT INTO `scripts` VALUES ('AgedSuppliers.php',2,'Lists supplier account bala
 INSERT INTO `scripts` VALUES ('Areas.php',3,'Defines the sales areas - all customers must belong to a sales area for the purposes of sales analysis');
 INSERT INTO `scripts` VALUES ('AuditTrail.php',15,'Shows the activity with SQL statements and who performed the changes');
 INSERT INTO `scripts` VALUES ('BankAccounts.php',10,'Defines the general ledger code for bank accounts and specifies that bank transactions be created for these accounts for the purposes of reconciliation');
+INSERT INTO `scripts` VALUES ('BankAccountUsers.php',15,'Maintains table bankaccountusers (Authorized users to work with a bank account in webERP)');
 INSERT INTO `scripts` VALUES ('BankMatching.php',7,'Allows payments and receipts to be matched off against bank statements');
 INSERT INTO `scripts` VALUES ('BankReconciliation.php',7,'Displays the bank reconciliation for a selected bank account');
 INSERT INTO `scripts` VALUES ('BOMExtendedQty.php',2,'Shows the component requirements to make an item');
@@ -4744,6 +4758,7 @@ INSERT INTO `scripts` VALUES ('StockAdjustments.php',11,'Entry of quantity corre
 INSERT INTO `scripts` VALUES ('StockAdjustmentsControlled.php',11,'Entry of batch references or serial numbers on controlled stock items being adjusted');
 INSERT INTO `scripts` VALUES ('StockCategories.php',11,'Defines the stock categories. All items must refer to one of these categories. The category record also allows the specification of the general ledger codes where stock items are to be posted - the balance sheet account and the profit and loss effect of any adjustments and the profit and loss effect of any price variances');
 INSERT INTO `scripts` VALUES ('StockCheck.php',2,'Allows creation of a stock check file - copying the current quantites in stock for later comparison to the entered counts. Also produces a pdf for the count sheets.');
+INSERT INTO `scripts` VALUES ('StockClone.php',11,'Script to copy a stock item and associated properties, image, price, purchase and cost data');
 INSERT INTO `scripts` VALUES ('StockCostUpdate.php',9,'Allows update of the standard cost of items producing general ledger journals if the company preferences stock GL interface is active');
 INSERT INTO `scripts` VALUES ('StockCounts.php',2,'Allows entry of stock counts');
 INSERT INTO `scripts` VALUES ('StockDispatch.php',2,'');
@@ -4982,7 +4997,7 @@ INSERT INTO `accountsection` VALUES (50,'Financed By');
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-11-24 10:39:39
+-- Dump completed on 2013-12-01 20:34:56
 SET FOREIGN_KEY_CHECKS = 1;
 UPDATE systypes SET typeno=0;
 INSERT INTO shippers VALUES (1,'Default Shipper',0);
