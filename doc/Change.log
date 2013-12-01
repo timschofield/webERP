@@ -1,5 +1,7 @@
 webERP Change Log
 
+1/12/13 CQZ: Correct Chinese translation error dispatch cut_off time. 
+
 1/12/13 Release 4.11.2
 
 30/11/13 Ricard: Added user permissions by bank account so only certain users can see and create payments/receipts on bank accounts selected.
