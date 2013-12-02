@@ -1,4 +1,5 @@
 webERP Change Log
+2/12/2013 Exson: Fixed the typo in WWW_Users.php. Reported by Thumb.
 1/12/2013 Exson: Fixed country Chinese sql for installation failure. 
 1/12/13 CQZ: Correct Chinese translation error dispatch cut_off time. 
 
