@@ -53,7 +53,7 @@ if (get_magic_quotes_gpc()){
 		        echo '<input type="hidden" name="CompanyNameField"  value="' .  $CompanyNameField . '" />';
 		    } else {
                 // Show selection box ($AllowCompanySelectionBox == 'ShowSelectionBox')
-                echo _('Company:') . '<br />';
+                echo _('Company') . ':<br />';
                 echo '<select name="CompanyNameField">';
                 foreach ($CompanyList as $key => $CompanyEntry){
                     if (is_dir('companies/' . $CompanyEntry['database']) ){
@@ -76,7 +76,7 @@ if (get_magic_quotes_gpc()){
 			    echo _('Company') . '<input type="text" name="CompanyNameField"  autofocus="autofocus" required="required" value="' . $DefaultCompany . '" />';
 		    } else {
       			// Show selection box ($AllowCompanySelectionBox == 'ShowSelectionBox')
-    			echo _('Company:') . '<br />';
+    			echo _('Company') . ':<br />';
 	    		echo '<select name="CompanyNameField">';
 	    		$Companies = scandir('companies/', 0);
 			    foreach ($Companies as $CompanyEntry){
@@ -97,7 +97,7 @@ if (get_magic_quotes_gpc()){
 	<span><?php echo _('User name'); ?>:</span><br />
 	<input type="text" name="UserNameEntryField" required="required" autofocus="autofocus" maxlength="20" placeholder="<?php echo _('User name'); ?>" /><br />
 	<span><?php echo _('Password'); ?>:</span><br />
-	<input type="password" required="required" name="Password" placeholder="<?php echo _('password'); ?>" /><br />
+	<input type="password" required="required" name="Password" placeholder="<?php echo _('Password'); ?>" /><br />
 	<div id="demo_text">
 	<?php
 	if (isset($demo_text)){

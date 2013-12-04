@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-12-01 20:34+1300\n"
-"PO-Revision-Date: 2013-12-04 09:45-0600\n"
+"PO-Revision-Date: 2013-12-04 11:50-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -34556,11 +34556,11 @@ msgstr "Idiomas para tener traducciones de las descripciones de artículos"
 
 #: SystemParameters.php:478
 msgid ""
-"Select all the languages for which item description translations are to be "
-"maintained."
+"Select the languages ​​in which translations of the item description will be "
+"maintained. The default language is excluded."
 msgstr ""
-"Seleccionar todos los idiomas en los cuales se mantendrán las descripciones "
-"de artículos."
+"Seleccione los idiomas en los cuales se mantendrá traducciones de las "
+"descripciones de los artículos. Se excluye el idioma predeterminado."
 
 #: SystemParameters.php:484
 msgid "A picking note must be produced before an order can be delivered"
@@ -43332,9 +43332,8 @@ msgid "Company"
 msgstr "Compañía"
 
 #: includes/Login.php:56 includes/Login.php:79
-#, fuzzy
 msgid "Company:"
-msgstr "Compañía"
+msgstr "Compañía:"
 
 #: includes/Login.php:100
 #, fuzzy
