@@ -29967,7 +29967,7 @@ msgid "Languages to Maintain Translations for Item Descriptions"
 msgstr ""
 
 #: SystemParameters.php:478
-msgid "Select the languages ​​in which translations of the item description will be maintained. The default language is excluded."
+msgid "Select the languages in which translations of the item description will be maintained. The default language is excluded."
 msgstr ""
 
 #: SystemParameters.php:484
