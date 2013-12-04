@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-12-01 20:34+1300\n"
-"PO-Revision-Date: 2013-12-04 11:50-0600\n"
+"PO-Revision-Date: 2013-12-04 14:30-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -34408,9 +34408,8 @@ msgid "First Overdue Deadline in (days)"
 msgstr "Plazo del primer vencimiento (en días)"
 
 #: SystemParameters.php:400 SystemParameters.php:405
-#, fuzzy
 msgid "The input must be integer"
-msgstr "El código de la cuenta debe ser un entero"
+msgstr "La entrada debe ser un número entero"
 
 #: SystemParameters.php:401
 msgid ""
@@ -34556,7 +34555,7 @@ msgstr "Idiomas para tener traducciones de las descripciones de artículos"
 
 #: SystemParameters.php:478
 msgid ""
-"Select the languages ​​in which translations of the item description will be "
+"Select the languages in which translations of the item description will be "
 "maintained. The default language is excluded."
 msgstr ""
 "Seleccione los idiomas en los cuales se mantendrá traducciones de las "
@@ -34577,25 +34576,24 @@ msgstr ""
 
 #: SystemParameters.php:493
 msgid "Auto Update Exchange Rates Daily"
-msgstr "Auto Actualizar Tasas de Cambio Diariamente"
+msgstr "Actualización automática diaria del tipo de cambio"
 
 #: SystemParameters.php:498
-#, fuzzy
 msgid ""
 "Automatic updates to exchange rates will retrieve the latest daily rates "
 "from either the European Central Bank or Google once per day - when the "
 "first user logs in for the day. Manual will never update the rates "
 "automatically - exchange rates will need to be maintained manually"
 msgstr ""
-"Actualizaciones automáticas obtendrá del Banco Central Europeo las tasas de "
-"cambio diarias más recientes, una vez al día, cuando inicie sesión el primer "
-"usuario del día. Elija Manual para que las tasas nunca se actualicen "
-"automáticamente y administrarlas manualmente."
+"La actualización automática de los tipos de cambio podrá obtener los últimos "
+"tipos diarios desde ya sea el Banco Central Europeo o de Google una vez al "
+"día -cuando el primer usuario inicia la sesión en el día. La opción manual "
+"nunca actualizará las tasas de forma automática -los tipos de cambio tendrán "
+"que ser mantenidos manualmente"
 
 #: SystemParameters.php:500
-#, fuzzy
 msgid "Source Exchange Rates From"
-msgstr "Tasa de Cambio del Ingreso"
+msgstr "Fuente de los tipos de cambio"
 
 #: SystemParameters.php:502
 msgid "European Central Bank"
@@ -34896,9 +34894,8 @@ msgid "Allowed Over Charge Proportion"
 msgstr "Proporción de Sobre Cargo Permitida"
 
 #: SystemParameters.php:706 SystemParameters.php:711
-#, fuzzy
 msgid "The input must between 0~100"
-msgstr "La cantidad debe ser mayor que 0"
+msgstr "La entrada debe estar entre 0 y 100"
 
 #: SystemParameters.php:706
 msgid "integer between 0-100"
@@ -35022,9 +35019,8 @@ msgid "Report Page Length"
 msgstr "Longitud de la Página del Informe"
 
 #: SystemParameters.php:754
-#, fuzzy
 msgid "The input should be between 1~999"
-msgstr "El valor de la propiedad debe entre"
+msgstr "La entrada debe estar entre 1 y 999"
 
 #: SystemParameters.php:754
 msgid " 1 to 999"
@@ -35508,13 +35504,16 @@ msgstr ""
 
 #: SystemParameters.php:1122
 msgid "Using Smtp Mail"
-msgstr ""
+msgstr "Usar correo SMTP"
 
 #: SystemParameters.php:1135
 msgid ""
 "The default setting is using mail in default php.ini, if you choose Yes for "
 "this selection, you can use the SMTP set in the setup section."
 msgstr ""
+"La configuración predeterminada es usar el correo predeterminado en php.ini, "
+"si escoge Sí en esta selección, puede utilizar el conjunto de SMTP en la "
+"sección de configuración."
 
 #: TaxAuthorities.php:6 TaxAuthorityRates.php:134
 msgid "Tax Authorities"
