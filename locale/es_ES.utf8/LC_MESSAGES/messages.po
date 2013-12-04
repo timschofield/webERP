@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-12-01 20:34+1300\n"
-"PO-Revision-Date: 2013-11-29 12:04-0600\n"
+"PO-Revision-Date: 2013-12-04 08:00-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -37893,7 +37893,6 @@ msgid "Eastern European Russian Japanese Korean Vietnamese Hebrew Arabic Thai"
 msgstr "Europa del Este Ruso Japonés Coreano Vietnamita Árabe Hebreo Tailandés"
 
 #: WWW_Users.php:29 includes/MainMenuLinksArray.php:433
-#, fuzzy
 msgid "Users Maintenance"
 msgstr "Administrar usuarios"
 
