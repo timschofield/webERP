@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-12-01 20:34+1300\n"
-"PO-Revision-Date: 2013-12-04 14:30-0600\n"
+"PO-Revision-Date: 2013-12-04 15:10-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -34613,7 +34613,7 @@ msgstr "Formato de las Hojas de Embalaje"
 
 #: SystemParameters.php:511
 msgid "Laser Printed"
-msgstr "Imprimir en una láser"
+msgstr "Imprimir en láser"
 
 #: SystemParameters.php:512
 msgid "Special Stationery"
@@ -34630,7 +34630,7 @@ msgstr "Orientación de la factura"
 #: SystemParameters.php:523
 msgid "Select the invoice layout"
 msgstr ""
-"Seleccione la orientación de la Factura, Horizontal (apaisada) ó Vertical "
+"Seleccione la orientación de la factura: horizontal (apaisada) o vertical "
 "(retrato)."
 
 #: SystemParameters.php:527
@@ -34661,11 +34661,11 @@ msgstr ""
 
 #: SystemParameters.php:537
 msgid "Working Days on a Week"
-msgstr "Días de trabajo en una semana"
+msgstr "Días laborales en una semana"
 
 #: SystemParameters.php:539 SystemParameters.php:540 SystemParameters.php:541
 msgid "working days"
-msgstr "Días de trabajo"
+msgstr "días laborales"
 
 #: SystemParameters.php:543
 msgid "Number of working days on a week"
@@ -34823,23 +34823,21 @@ msgstr ""
 
 #: SystemParameters.php:655
 msgid "Country Of Operation"
-msgstr "País de Operación"
+msgstr "País de operación"
 
 #: SystemParameters.php:663
-#, fuzzy
 msgid ""
 "This parameter is only effective if Do Freight Calculation is set to Yes."
 msgstr ""
-"Este parámetro sólo es efectivo si Calcular Flete es Sí. Los nombres de "
-"países proceden de la tabla de monedas."
+"Este parámetro sólo es efectivo si Calcular Flete está configurado en Si."
 
 #: SystemParameters.php:666
 msgid "Standard Cost Decimal Places"
-msgstr "Posiciones Decimales para Costo Estándar"
+msgstr "Decimales para costo estándar"
 
 #: SystemParameters.php:670
 msgid "Decimal Places to be used in Standard Cost"
-msgstr "Decimales que se usarán en el costo estándar"
+msgstr "Cantidad de decimales que se usarán en el costo estándar"
 
 #: SystemParameters.php:673
 msgid "Number Of Periods Of StockUsage"
@@ -35465,7 +35463,7 @@ msgstr ""
 
 #: SystemParameters.php:1109
 msgid "Factory Manager Email Address"
-msgstr "Dirección de Correo Electrónico del Director de Fábrica"
+msgstr "Dirección de correo-e del Director de Fábrica"
 
 #: SystemParameters.php:1111
 msgid ""
@@ -35489,7 +35487,7 @@ msgstr ""
 
 #: SystemParameters.php:1117
 msgid "Inventory Manager Email Address"
-msgstr "Dirección de Correo Electrónico del Gerente de Inventario"
+msgstr "Dirección de correo-e del Gerente de Inventario"
 
 #: SystemParameters.php:1119
 msgid ""
@@ -45421,7 +45419,7 @@ msgstr "Nombre del Contacto Inválido"
 
 #: api/api_errorcodes.php:214
 msgid "Invalid Email Address"
-msgstr "Dirección de Correo Electrónico Inválida"
+msgstr "Dirección de correo-e inválida"
 
 #: api/api_errorcodes.php:215
 msgid "Location Code Not Setup"
