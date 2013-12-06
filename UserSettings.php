@@ -93,8 +93,7 @@ if (isset($_POST['Modify'])) {
 		$Theme = $_SESSION['Theme'];
 		$_SESSION['Language'] = trim($_POST['Language']);
 		$_SESSION['PDFLanguage'] = $_POST['PDFLanguage'];
-		include ('includes/LanguageSetup.php');
-
+		include ('includes/LanguageSetup.php'); // After last changes in LanguageSetup.php, is it required to update?
 	}
 }
 

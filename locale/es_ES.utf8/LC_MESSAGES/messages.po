@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-12-01 20:34+1300\n"
-"PO-Revision-Date: 2013-12-04 15:10-0600\n"
+"PO-Revision-Date: 2013-12-06 09:56-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -1314,7 +1314,7 @@ msgstr "Hasta la Fecha"
 #: PO_AuthorisationLevels.php:173 PO_AuthorisationLevels.php:176
 #: UserSettings.php:113 includes/UserLogin.php:134
 msgid "User ID"
-msgstr "ID de Usuario"
+msgstr "ID de usuario"
 
 #: AuditTrail.php:55 AuditTrail.php:69 ContractBOM.php:306
 #: CounterReturns.php:1613 CounterReturns.php:1616 CounterSales.php:2223
@@ -1744,7 +1744,7 @@ msgstr "Código usuario"
 #: BankAccountUsers.php:162 PcTabs.php:206 PcTabs.php:307
 #: PO_AuthorisationLevels.php:125 SMTPServer.php:101 UserSettings.php:118
 msgid "User Name"
-msgstr "Nombre usuario"
+msgstr "Nombre de usuario"
 
 #: BankAccountUsers.php:178
 #, fuzzy, php-format
@@ -28222,9 +28222,8 @@ msgstr ""
 #: ../webSHOP/CreditCardPayPalPro.php:206 ../webSHOP/index.php:14
 #: ../webSHOP/ItemDetails.php:22 ../webSHOP/Register.php:494
 #: ../webSHOP/includes/footer.php:6 ../webSHOP/includes/InfoLinks.php:6
-#, fuzzy
 msgid "Terms and Conditions"
-msgstr "Artículo y Descripción"
+msgstr "Términos y condiciones"
 
 #: ShopParameters.php:261
 msgid ""
@@ -28237,9 +28236,8 @@ msgstr ""
 #: ../webSHOP/CreditCardPayPalPro.php:210 ../webSHOP/index.php:18
 #: ../webSHOP/ItemDetails.php:26 ../webSHOP/Register.php:498
 #: ../webSHOP/includes/footer.php:9 ../webSHOP/includes/InfoLinks.php:18
-#, fuzzy
 msgid "About Us"
-msgstr "No Usado"
+msgstr "¿Quiénes somos?"
 
 #: ShopParameters.php:267
 msgid ""
@@ -28260,9 +28258,8 @@ msgstr ""
 #: ShopParameters.php:276 ../webSHOP/Checkout.php:282 ../webSHOP/index.php:26
 #: ../webSHOP/ItemDetails.php:34 ../webSHOP/Register.php:510
 #: ../webSHOP/includes/footer.php:8 ../webSHOP/includes/InfoLinks.php:14
-#, fuzzy
 msgid "Freight Policy"
-msgstr "Costo de Transporte"
+msgstr "Política de envíos"
 
 #: ShopParameters.php:278
 msgid ""
@@ -34669,7 +34666,7 @@ msgstr "días laborales"
 
 #: SystemParameters.php:543
 msgid "Number of working days on a week"
-msgstr "Número de días laborales en una semana"
+msgstr "Cantidad de días laborales en una semana"
 
 #: SystemParameters.php:548
 msgid "Dispatch Cut-Off Time"
@@ -34785,7 +34782,7 @@ msgstr ""
 
 #: SystemParameters.php:618 Z_ImportDebtors.php:653
 msgid "Create Debtor Codes Automatically"
-msgstr "Crear Códigos de Deudor Automáticamente"
+msgstr "Crear códigos de deudor automáticamente"
 
 #: SystemParameters.php:629
 msgid ""
@@ -36269,7 +36266,7 @@ msgstr "Imprimir a PDF"
 
 #: UnitsOfMeasure.php:6
 msgid "Units Of Measure"
-msgstr "Unidades De Medida"
+msgstr "Unidades de medida"
 
 #: UnitsOfMeasure.php:30
 msgid "The unit of measure cannot contain any of the illegal characters"
@@ -36562,7 +36559,7 @@ msgstr "Número de Error"
 
 #: UserSettings.php:6 UserSettings.php:10
 msgid "User Settings"
-msgstr "Configuración del Usuario"
+msgstr "Configuración de usuario"
 
 #: UserSettings.php:12
 msgid "Latin Western Languages - Times"
@@ -36603,7 +36600,7 @@ msgstr "No se pudo procesar las modificaciones del usuario porque"
 #: UserSettings.php:68 UserSettings.php:84 WWW_Users.php:210
 #: ../webSHOP/Register.php:375
 msgid "The SQL that was used to update the user and failed was"
-msgstr "EL SQL fallo:"
+msgstr "El SQL que se usó para actualizar el usuario y falló era"
 
 #: UserSettings.php:72 UserSettings.php:88
 msgid "The user settings have been updated"
@@ -36615,7 +36612,7 @@ msgstr "Asegúrese de recordar la contraseña para la próxima vez que entre"
 
 #: UserSettings.php:123
 msgid "Maximum Number of Records to Display"
-msgstr "Número máximo de registros a mostrar"
+msgstr "Cantidad máxima de registros a mostrar"
 
 #: UserSettings.php:124
 msgid "Must be postive integer"
@@ -36623,7 +36620,7 @@ msgstr ""
 
 #: UserSettings.php:174
 msgid "New Password"
-msgstr "Nueva Contraseña"
+msgstr "Contraseña nueva"
 
 #: UserSettings.php:175 UserSettings.php:179
 msgid "Must be more than 5 characters and cannot be as same as userid"
@@ -36631,15 +36628,15 @@ msgstr ""
 
 #: UserSettings.php:178 ../webSHOP/Register.php:617
 msgid "Confirm Password"
-msgstr "Confirme Contraseña"
+msgstr "Confirme contraseña"
 
 #: UserSettings.php:182
 msgid "If you leave the password boxes empty your password will not change"
-msgstr "Si deja vacías los campos de contraseña su contraseña no cambiará"
+msgstr "Si deja los campos de contraseña vacíos, su contraseña no cambiará"
 
 #: UserSettings.php:202 WWW_Users.php:678
 msgid "PDF Language Support"
-msgstr "Soporte de Idiomas PDF"
+msgstr "Soporte de idioma para PDF"
 
 #: WhereUsedInquiry.php:6 includes/MainMenuLinksArray.php:287
 msgid "Where Used Inquiry"
@@ -48484,9 +48481,8 @@ msgstr ""
 #: ../webSHOP/CreditCardPayPalPro.php:214 ../webSHOP/index.php:22
 #: ../webSHOP/ItemDetails.php:30 ../webSHOP/Register.php:502
 #: ../webSHOP/includes/footer.php:7 ../webSHOP/includes/InfoLinks.php:10
-#, fuzzy
 msgid "Privacy Policy"
-msgstr "Costo de Transporte"
+msgstr "Política de privacidad"
 
 #: ../webSHOP/Checkout.php:278 ../webSHOP/CreditCardPayFlowPro.php:211
 #: ../webSHOP/CreditCardPayPalPro.php:218 ../webSHOP/index.php:30
@@ -49076,9 +49072,8 @@ msgid "Searching for:"
 msgstr "Buscando:"
 
 #: ../webSHOP/index.php:138
-#, fuzzy
 msgid "Featured Items"
-msgstr "Borrar"
+msgstr "Artículos destacados"
 
 #: ../webSHOP/index.php:160
 #, fuzzy
@@ -49539,9 +49534,8 @@ msgid "Stock QTY"
 msgstr "Tipo de Stock"
 
 #: ../webSHOP/includes/Functions.php:64 ../webSHOP/includes/header.php:227
-#, fuzzy
 msgid "View Order"
-msgstr "Nuevo Pedido"
+msgstr "Ver pedido"
 
 #: ../webSHOP/includes/Functions.php:278
 msgid "Sending the PayPal Request"
@@ -49623,9 +49617,8 @@ msgid "Cart Summary"
 msgstr "Sumario"
 
 #: ../webSHOP/includes/header.php:226
-#, fuzzy
 msgid "Home"
-msgstr "Volumen"
+msgstr "Inicio"
 
 #: ../webSHOP/includes/header.php:231
 msgid "Logged in as"
