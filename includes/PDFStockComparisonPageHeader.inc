@@ -13,7 +13,7 @@ $LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-120,$YPos,120,$FontSize
 
 $YPos -=15;
 
-$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,550,$FontSize, _('Stock Check Comparison') );
+$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,550,$FontSize, _('Stock Check Comparison at') . ' ' . $LocationName );
 
 
 $YPos -=15;

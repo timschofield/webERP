@@ -396,7 +396,7 @@ class htmlMimeMail
 /**
 * Adds a text subpart to a mime_part object
 */
-	function _addTextPart(&$obj, $text) // // FIXED PHP & PEAR LIBRARY ERROR - ONLY VARIABLE REFERENCES SHOULD BE RETURNED BY REFERENCE
+	function _addTextPart($obj, $text) // // FIXED PHP & PEAR LIBRARY ERROR - ONLY VARIABLE REFERENCES SHOULD BE RETURNED BY REFERENCE
 	{
 		$params['content_type'] = 'text/plain';
 		$params['encoding']     = $this->build_params['text_encoding'];
@@ -411,7 +411,7 @@ class htmlMimeMail
 /**
 * Adds a html subpart to a mime_part object
 */
-	function _addHtmlPart(&$obj) // // FIXED PHP & PEAR LIBRARY ERROR - ONLY VARIABLE REFERENCES SHOULD BE RETURNED BY REFERENCE
+	function _addHtmlPart($obj) // // FIXED PHP & PEAR LIBRARY ERROR - ONLY VARIABLE REFERENCES SHOULD BE RETURNED BY REFERENCE
 	{
 		$params['content_type'] = 'text/html';
 		$params['encoding']     = $this->build_params['html_encoding'];
@@ -435,7 +435,7 @@ class htmlMimeMail
 /**
 * Adds an alternative part to a mime_part object
 */
-	function _addAlternativePart(&$obj) // // FIXED PHP & PEAR LIBRARY ERROR - ONLY VARIABLE REFERENCES SHOULD BE RETURNED BY REFERENCE
+	function _addAlternativePart($obj) // // FIXED PHP & PEAR LIBRARY ERROR - ONLY VARIABLE REFERENCES SHOULD BE RETURNED BY REFERENCE
 	{
 		$params['content_type'] = 'multipart/alternative';
 		if (is_object($obj)) {
@@ -448,7 +448,7 @@ class htmlMimeMail
 /**
 * Adds a html subpart to a mime_part object
 */
-	function _addRelatedPart(&$obj) // // FIXED PHP & PEAR LIBRARY ERROR - ONLY VARIABLE REFERENCES SHOULD BE RETURNED BY REFERENCE
+	function _addRelatedPart($obj) // // FIXED PHP & PEAR LIBRARY ERROR - ONLY VARIABLE REFERENCES SHOULD BE RETURNED BY REFERENCE
 	{
 		$params['content_type'] = 'multipart/related';
 		if (is_object($obj)) {
@@ -461,7 +461,7 @@ class htmlMimeMail
 /**
 * Adds an html image subpart to a mime_part object
 */
-	function _addHtmlImagePart(&$obj, $value) // // FIXED PHP & PEAR LIBRARY ERROR - ONLY VARIABLE REFERENCES SHOULD BE RETURNED BY REFERENCE
+	function _addHtmlImagePart($obj, $value) // // FIXED PHP & PEAR LIBRARY ERROR - ONLY VARIABLE REFERENCES SHOULD BE RETURNED BY REFERENCE
 	{
 		$params['content_type'] = $value['c_type'];
 		$params['encoding']     = 'base64';
@@ -474,7 +474,7 @@ class htmlMimeMail
 /**
 * Adds an attachment subpart to a mime_part object
 */
-	function _addAttachmentPart(&$obj, $value) // // FIXED PHP & PEAR LIBRARY ERROR - ONLY VARIABLE REFERENCES SHOULD BE RETURNED BY REFERENCE
+	function _addAttachmentPart($obj, $value) // // FIXED PHP & PEAR LIBRARY ERROR - ONLY VARIABLE REFERENCES SHOULD BE RETURNED BY REFERENCE
 	{
 		$params['content_type'] = $value['c_type'];
 		$params['encoding']     = $value['encoding'];
@@ -526,11 +526,11 @@ class htmlMimeMail
 
 		switch (true) {
 			case $text AND !$attachments:
-				$message = &$this->_addTextPart($null, $this->text);
+				$message = $this->_addTextPart($null, $this->text);
 				break;
 
 			case !$text AND $attachments AND !$html:
-				$message = &$this->_addMixedPart();
+				$message = $this->_addMixedPart();
 
 				for ($i=0; $i<count($this->attachments); $i++) {
 					$this->_addAttachmentPart($message, $this->attachments[$i]);
@@ -538,7 +538,7 @@ class htmlMimeMail
 				break;
 
 			case $text AND $attachments:
-				$message = &$this->_addMixedPart();
+				$message = $this->_addMixedPart();
 				$this->_addTextPart($message, $this->text);
 
 				for ($i=0; $i<count($this->attachments); $i++) {
@@ -548,22 +548,22 @@ class htmlMimeMail
 
 			case $html AND !$attachments AND !$html_images:
 				if (!is_null($this->html_text)) {
-					$message = &$this->_addAlternativePart($null);
+					$message = $this->_addAlternativePart($null);
 					$this->_addTextPart($message, $this->html_text);
 					$this->_addHtmlPart($message);
 				} else {
-					$message = &$this->_addHtmlPart($null);
+					$message = $this->_addHtmlPart($null);
 				}
 				break;
 
 			case $html AND !$attachments AND $html_images:
 				if (!is_null($this->html_text)) {
-					$message = &$this->_addAlternativePart($null);
+					$message = $this->_addAlternativePart($null);
 					$this->_addTextPart($message, $this->html_text);
-					$related = &$this->_addRelatedPart($message);
+					$related = $this->_addRelatedPart($message);
 				} else {
-					$message = &$this->_addRelatedPart($null);
-					$related = &$message;
+					$message = $this->_addRelatedPart($null);
+					$related = $message;
 				}
 				$this->_addHtmlPart($related);
 				for ($i=0; $i<count($this->html_images); $i++) {
@@ -572,9 +572,9 @@ class htmlMimeMail
 				break;
 
 			case $html AND $attachments AND !$html_images:
-				$message = &$this->_addMixedPart();
+				$message = $this->_addMixedPart();
 				if (!is_null($this->html_text)) {
-					$alt = &$this->_addAlternativePart($message);
+					$alt = $this->_addAlternativePart($message);
 					$this->_addTextPart($alt, $this->html_text);
 					$this->_addHtmlPart($alt);
 				} else {
@@ -586,13 +586,13 @@ class htmlMimeMail
 				break;
 
 			case $html AND $attachments AND $html_images:
-				$message = &$this->_addMixedPart();
+				$message = $this->_addMixedPart();
 				if (!is_null($this->html_text)) {
-					$alt = &$this->_addAlternativePart($message);
+					$alt = $this->_addAlternativePart($message);
 					$this->_addTextPart($alt, $this->html_text);
-					$rel = &$this->_addRelatedPart($alt);
+					$rel = $this->_addRelatedPart($alt);
 				} else {
-					$rel = &$this->_addRelatedPart($message);
+					$rel = $this->_addRelatedPart($message);
 				}
 				$this->_addHtmlPart($rel);
 				for ($i=0; $i<count($this->html_images); $i++) {
@@ -688,7 +688,7 @@ class htmlMimeMail
 			case 'smtp':
 				require_once(dirname(__FILE__) . '/smtp.php');
 				require_once(dirname(__FILE__) . '/RFC822.php');
-				$smtp = &smtp::connect($this->smtp_params);
+				$smtp = smtp::connect($this->smtp_params);
 
 				// Parse recipients argument for internet addresses
 				foreach ($recipients as $recipient) {

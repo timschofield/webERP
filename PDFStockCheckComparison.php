@@ -210,7 +210,10 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 		include('includes/footer.inc');
 		exit;
 	}
-
+	$FirstRow = DB_fetch_array($CheckedItems);
+	$LocationName = $FirstRow['locationname'];
+	DB_data_seek($CheckedItems,0);
+	
 	include ('includes/PDFStockComparisonPageHeader.inc');
 
 	$Location = '';
@@ -245,13 +248,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 			$YPos -=$line_height;
 		}
 
-		$YPos -=$line_height;
-		$FontSize=8;
-
-		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,120,$FontSize,$CheckItemRow['stockid'], 'left');
-		$LeftOvers = $pdf->addTextWrap(135,$YPos,180,$FontSize,$CheckItemRow['description'], 'left');
-		$LeftOvers = $pdf->addTextWrap(315,$YPos,60,$FontSize,locale_number_format($CheckItemRow['qoh'],$CheckItemRow['decimalplaces']), 'right');
-
+		
 		$SQL = "SELECT qtycounted,
 						reference
 				FROM stockcounts
@@ -272,17 +269,22 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 	   		include('includes/footer.inc');
 	   		exit;
 		}
+		if ($CheckItemRow['qoh']!=0 OR DB_num_rows($Counts)>0) {
+			$YPos -=$line_height;
+			$FontSize=8;
+			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,120,$FontSize,$CheckItemRow['stockid'], 'left');
+			$LeftOvers = $pdf->addTextWrap(135,$YPos,180,$FontSize,$CheckItemRow['description'], 'left');
+			$LeftOvers = $pdf->addTextWrap(315,$YPos,60,$FontSize,locale_number_format($CheckItemRow['qoh'],$CheckItemRow['decimalplaces']), 'right');
+		}
 
-
-		if (DB_num_rows($Counts)==0){
+		if (DB_num_rows($Counts)==0 AND $CheckItemRow['qoh']!=0){
 			$LeftOvers = $pdf->addTextWrap(380, $YPos,160, $FontSize, _('No counts entered'), 'left');
 			if ($_POST['ZeroCounts']=='Adjust'){
 				$LeftOvers = $pdf->addTextWrap(485, $YPos, 60, $FontSize, locale_number_format(-($CheckItemRow['qoh']),$CheckItemRow['decimalplaces']), 'right');
 			}
-		} else {
+		} elseif (DB_num_rows($Counts)>0) {
 			$TotalCount =0;
 			while ($CountRow=DB_fetch_array($Counts,$db)){
-
 				$LeftOvers = $pdf->addTextWrap(375, $YPos, 60, $FontSize, locale_number_format(($CountRow['qtycounted']),$CheckItemRow['decimalplaces']), 'right');
 				$LeftOvers = $pdf->addTextWrap(440, $YPos, 100, $FontSize, $CountRow['reference'], 'left');
 				$TotalCount += $CountRow['qtycounted'];

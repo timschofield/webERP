@@ -1,7 +1,9 @@
 webERP Change Log
-4/12/2013 Exson: Alter table stockmoves reference to varchar(100) to make it can meet mysql strict mode requirements when data is more than original 40. 
-2/12/2013 Exson: Fixed the typo in WWW_Users.php. Reported by Thumb.
-1/12/2013 Exson: Fixed country Chinese sql for installation failure. 
+
+7/12/13 Phil: Fixed htmlMimeEmail.inc following Tim's submission - removed & value by reference errors 
+4/12/13 Exson: Alter table stockmoves reference to varchar(100) to make it can meet mysql strict mode requirements when data is more than original 40. 
+2/12/13 Exson: Fixed the typo in WWW_Users.php. Reported by Thumb.
+1/12/13 Exson: Fixed country Chinese sql for installation failure. 
 1/12/13 CQZ: Correct Chinese translation error dispatch cut_off time. 
 
 1/12/13 Release 4.11.2
