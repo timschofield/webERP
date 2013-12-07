@@ -95,7 +95,8 @@ if (DB_num_rows($CustomerResult)==0){
 
 	$NIL_BALANCE = True;
 
-	$SQL = "SELECT debtorsmaster.name,
+	$SQL =  "SELECT debtorsmaster.name,
+					debtorsmaster.currcode,
 					currencies.currency,
 					currencies.decimalplaces,
 					paymentterms.terms,
@@ -104,10 +105,10 @@ if (DB_num_rows($CustomerResult)==0){
 					holdreasons.reasondescription
 			FROM debtorsmaster INNER JOIN paymentterms
 			ON debtorsmaster.paymentterms = paymentterms.termsindicator
-			INNER JOIN holdreasons
-			ON debtorsmaster.holdreason = holdreasons.reasoncode
 			INNER JOIN currencies
 			ON debtorsmaster.currcode = currencies.currabrev
+			INNER JOIN holdreasons
+			ON debtorsmaster.holdreason = holdreasons.reasoncode
 			WHERE debtorsmaster.debtorno = '" . $CustomerID . "'";
 
 	$ErrMsg =_('The customer details could not be retrieved by the SQL because');
@@ -125,13 +126,19 @@ if ($NIL_BALANCE==True){
 	$CustomerRecord['overdue1']=0;
 	$CustomerRecord['overdue2']=0;
 }
-
-	echo '<p class="page_title_text">
-			<img src="'.$RootPath.'/css/'.$Theme.'/images/customer.png" title="' . _('Customer') . '" alt="" /> ' . _('Customer') . ' : ' . $CustomerRecord['name'] . ' - (' . _('All amounts stated in') . ' ' . $CustomerRecord['currency'] . ')
-			<br />
-			<br />' . _('Terms') . ' : ' . $CustomerRecord['terms'] . '
-			<br />' . _('Credit Limit') . ': ' . locale_number_format($CustomerRecord['creditlimit'],0) . ' ' . _('Credit Status') . ': ' . $CustomerRecord['reasondescription'] . '
-		</p>';
+include('includes/CurrenciesArray.php'); // To get the currency name.
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/customer.png" title="' . _('Customer') . '" alt="" /> ' .
+	_('Customer') . ': ' .
+		$CustomerID . ' - ' . $CustomerRecord['name'] . '<br />' .
+	_('All amounts stated in') . ': ' .
+		$CustomerRecord['currency'] . '<br />' . // To be replaced by:
+/*		$CustomerRecord['currcode'] . ' - ' . $CurrenciesArray[$CustomerRecord['currcode']]['Currency'] . '<br />' . // <-- Replacement */
+	_('Terms') . ': ' .
+		$CustomerRecord['terms'] . '<br />' .
+	_('Credit Limit') . ': ' .
+		locale_number_format($CustomerRecord['creditlimit'],0) . '<br />' .
+	_('Credit Status') . ': ' .
+		$CustomerRecord['reasondescription'] . '</p>';
 
 if ($CustomerRecord['dissallowinvoices']!=0){
 	echo '<br /><font color="red" size="4"><b>' . _('ACCOUNT ON HOLD') . '</font></b><br />';
