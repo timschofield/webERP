@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-12-01 20:34+1300\n"
-"PO-Revision-Date: 2013-12-06 09:56-0600\n"
+"PO-Revision-Date: 2013-12-09 12:52-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -9507,7 +9507,7 @@ msgstr ""
 
 #: Customers.php:605
 msgid "Customer Currency"
-msgstr "Moneda Cliente"
+msgstr "Moneda del cliente"
 
 #: Customers.php:639
 msgid "Customer PO Line on SO"
@@ -9517,7 +9517,7 @@ msgstr ""
 
 #: Customers.php:647 Customers.php:1050 Customers.php:1055 Customers.php:1061
 msgid "Invoice Addressing"
-msgstr "Dirección Facturación"
+msgstr "Dirección de facturación"
 
 #: Customers.php:649 Customers.php:1051 Customers.php:1064 Customers.php:1067
 msgid "Address to HO"
@@ -9529,7 +9529,7 @@ msgstr "Dirección de la Sucursal"
 
 #: Customers.php:660 Customers.php:1171
 msgid "Add New Customer"
-msgstr "Registrar el Nuevo Cliente"
+msgstr "Agregar nuevo cliente"
 
 #: Customers.php:750
 msgid ""
@@ -9538,7 +9538,7 @@ msgstr ""
 
 #: Customers.php:991 Customers.php:996
 msgid "Customers Currency"
-msgstr "Moneda a Utilizar"
+msgstr "Moneda del cliente"
 
 #: Customers.php:1027
 msgid "Require Customer PO Line on SO"

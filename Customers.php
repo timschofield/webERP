@@ -988,19 +988,19 @@ if (!isset($DebtorNo)) {
 		$result=DB_query("SELECT currency FROM currencies WHERE currabrev='".$_POST['CurrCode']."'",$db);
 		$myrow=DB_fetch_array($result);
 		echo '<tr>
-				<td>' . _('Customers Currency') . ':</td>
-				<td>' . $myrow['currency'] . '</td></tr>';
+				<td>' . _('Customer Currency') . ':</td>
+				<td>' . _($myrow['currency']) . '</td></tr>'; // Translates from currencies.currency ***
 	} else {
 		$result=DB_query("SELECT currency, currabrev FROM currencies",$db);
 		echo '<tr>
-				<td>' . _('Customers Currency') . ':</td>
+				<td>' . _('Customer Currency') . ':</td>
 				<td><select name="CurrCode" required="required">';
 		while ($myrow = DB_fetch_array($result)) {
+			echo '<option';
 			if ($_POST['CurrCode']==$myrow['currabrev']){
-				echo '<option selected="selected" value="'. $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
-			} else {
-				echo '<option value="'. $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
+				echo ' selected="selected"';
 			}
+			echo ' value="'. $myrow['currabrev'] . '">' . _($myrow['currency']) . '</option>'; // Translates from currencies.currency ***
 		} //end while loop
 		DB_data_seek($result,0);
 		echo '</select></td>
