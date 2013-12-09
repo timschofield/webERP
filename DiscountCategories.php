@@ -31,7 +31,7 @@ if (isset($_POST['submit']) and !isset($_POST['SubmitCategory'])) {
 
 	$result = DB_query("SELECT stockid
 						FROM stockmaster
-						WHERE mbflag <>'K'：
+						WHERE mbflag <>'K'
 						AND mbflag<>'D'
 						AND stockid='" . mb_strtoupper($_POST['StockID']) . "'",$db);
 	if (DB_num_rows($result)==0){
