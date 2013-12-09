@@ -183,8 +183,9 @@ if (isset($_POST['submit'])) {
 
 //Always do this stuff
 
-$sql = "SELECT currencies.currency,
-        	salestypes.sales_type,
+$sql = "SELECT 
+		currencies.currency,
+        salestypes.sales_type,
 		prices.price,
 		prices.stockid,
 		prices.typeabbrev,
@@ -221,11 +222,15 @@ if (DB_num_rows($result) > 0) {
 				<th class="ascending">' . _('Sales Type') . '</th>
 				<th class="ascending">' . _('Price') . '</th>
 				<th class="ascending">' . _('Start Date') . ' </th>
-				<th class="ascending">' . _('End Date') . '</th>
-			</tr>';
+				<th class="ascending">' . _('End Date') . '</th>';
+	if (in_array(5, $_SESSION['AllowedPageSecurityTokens'])) { // If is allow to modify prices.
+		echo   '<th colspan="2">' . _('Maintenance') . '</th>';
+	}
+	echo	'</tr>';
 
 	$k=0; //row colour counter
 
+	include('includes/CurrenciesArray.php'); // To get the currency name.
 	while ($myrow = DB_fetch_array($result)) {
 		if ($k==1){
 			echo '<tr class="EvenTableRows">';
@@ -239,23 +244,19 @@ if (DB_num_rows($result) > 0) {
 		} else {
 			$EndDateDisplay = ConvertSQLDate($myrow['enddate']);
 		}
-		/*Only allow access to modify prices if securiy token 5 is allowed */
-		if (in_array(5,$_SESSION['AllowedPageSecurityTokens'])) {
-			echo '<td>' . $myrow['currency'] . '</td>
-				<td>' .  $myrow['sales_type'] . '</td>
-				<td class="number">' .locale_number_format($myrow['price'],$myrow['currdecimalplaces']+1) . '</td>
-				<td>' . ConvertSQLDate($myrow['startdate']) . '</td>
-				<td>' . $EndDateDisplay . '</td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Item=' . $myrow['stockid'] . '&amp;TypeAbbrev=' .$myrow['typeabbrev'] . '&amp;CurrAbrev=' . $myrow['currabrev'] . '&amp;Price=' . locale_number_format($myrow['price'],$myrow['currdecimalplaces']) . '&amp;StartDate=' . $myrow['startdate'] . '&amp;EndDate=' . $myrow['enddate'] . '&amp;Edit=1">' . _('Edit') . '</a></td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Item=' . $myrow['stockid'] . '&amp;TypeAbbrev=' .$myrow['typeabbrev'] . '&amp;CurrAbrev=' . $myrow['currabrev'] . '&amp;StartDate=' . $myrow['startdate'] . '&amp;EndDate=' . $myrow['enddate'] . '&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this price?') . '\');">' . _('Delete') . '</a></td></tr>';
 
-		} else {
-			echo '<td>' . $myrow['currency'] . '</td>
+		echo   '<td>' . $CurrenciesArray[$myrow['currabrev']]['Currency'] . '</td>
 				<td>' .  $myrow['sales_type'] . '</td>
-				<td class="number">' . locale_number_format($myrow['price'],$myrow['currdecimalplaces']+1)  . '</td>
+				<td class="number">' . locale_number_format($myrow['price'], $myrow['currdecimalplaces']+2) . '</td>
 				<td>' . ConvertSQLDate($myrow['startdate']) . '</td>
-				<td>' . $EndDateDisplay . '</td></tr>';
+				<td>' . $EndDateDisplay . '</td>';
+
+		/*Only allow access to modify prices if securiy token 5 is allowed */
+		if (in_array(5, $_SESSION['AllowedPageSecurityTokens'])) {
+			echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Item=' . $myrow['stockid'] . '&amp;TypeAbbrev=' . $myrow['typeabbrev'] . '&amp;CurrAbrev=' . $myrow['currabrev'] . '&amp;Price=' . locale_number_format($myrow['price'],$myrow['currdecimalplaces']) . '&amp;StartDate=' . $myrow['startdate'] . '&amp;EndDate=' . $myrow['enddate'] . '&amp;Edit=1">' . _('Edit') . '</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Item=' . $myrow['stockid'] . '&amp;TypeAbbrev=' . $myrow['typeabbrev'] . '&amp;CurrAbrev=' . $myrow['currabrev'] . '&amp;StartDate=' . $myrow['startdate'] . '&amp;EndDate=' . $myrow['enddate'] . '&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this price?') . '\');">' . _('Delete') . '</a></td>';
 		}
+		echo '</tr>';
 
 	}
 	//END WHILE LIST LOOP
@@ -286,27 +287,24 @@ if (isset($_GET['Edit'])){
 	}
 }
 
-$SQL = "SELECT currabrev,
-				currency
-		FROM currencies";
+$SQL = "SELECT currabrev FROM currencies";
 $result = DB_query($SQL,$db);
 
 echo '<br /><table class="selection">';
 echo '<tr><th colspan="5"><h3>' . $Item . ' - ' . $PartDescription . '</h3></th></tr>';
 echo '<tr><td>' . _('Currency') . ':</td>
-		<td><select name="CurrAbrev">';
+			<td><select name="CurrAbrev">';
 while ($myrow = DB_fetch_array($result)) {
+	echo '<option';
 	if ($myrow['currabrev']==$_POST['CurrAbrev']) {
-		echo '<option selected="selected" value="';
-	} else {
-		echo '<option value="';
+		echo ' selected="selected"';
 	}
-	echo $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
-} //end while loop
+	echo ' value="' . $myrow['currabrev'] . '">' . $CurrenciesArray[$myrow['currabrev']]['Currency'] . '</option>';
+} // End while loop
 
 DB_free_result($result);
 
-echo '</select>	</td>
+echo '</select></td>
 		</tr>
 		<tr>
 			<td>' . _('Sales Type Price List') . ':</td>
