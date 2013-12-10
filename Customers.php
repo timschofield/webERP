@@ -3,6 +3,7 @@
 /* $Id$ */
 
 include('includes/session.inc');
+include('includes/CurrenciesArray.php');
 
 if (isset($_POST['Edit']) or isset($_GET['Edit']) or isset($_GET['DebtorNo'])) {
 	$ViewTopic = 'AccountsReceivable';
@@ -985,11 +986,9 @@ if (!isset($DebtorNo)) {
 	}
 
 	if (isset($_GET['Modify'])) {
-		$result=DB_query("SELECT currency FROM currencies WHERE currabrev='".$_POST['CurrCode']."'",$db);
-		$myrow=DB_fetch_array($result);
 		echo '<tr>
 				<td>' . _('Customer Currency') . ':</td>
-				<td>' . _($myrow['currency']) . '</td></tr>'; // Translates from currencies.currency ***
+				<td>' . $CurrenciesArray[$_POST['CurrCode']]['Currency'] . '</td></tr>'; // Translates from currencies.currency ***
 	} else {
 		$result=DB_query("SELECT currency, currabrev FROM currencies",$db);
 		echo '<tr>
@@ -1000,7 +999,7 @@ if (!isset($DebtorNo)) {
 			if ($_POST['CurrCode']==$myrow['currabrev']){
 				echo ' selected="selected"';
 			}
-			echo ' value="'. $myrow['currabrev'] . '">' . _($myrow['currency']) . '</option>'; // Translates from currencies.currency ***
+			echo ' value="'. $myrow['currabrev'] . '">' . $CurrenciesArray[$myrow['currabrev']]['Currency'] . '</option>'; // Translates from currencies.currency ***
 		} //end while loop
 		DB_data_seek($result,0);
 		echo '</select></td>

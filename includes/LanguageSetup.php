@@ -24,7 +24,7 @@ If (isset($_POST['Language'])) {
 	$Language = $_SESSION['Language'];
 }
 //Check users' locale format via their language
-//Then pass this information to the js for validation purpose
+//Then pass this information to the js for number validation purpose
 
 $Collect = array('US'=> array('en_US.utf8','en_GB.utf8','ja_JP.utf8','hi_IN.utf8','sw_KE.utf8','tr_TR.utf8','vi_VN.utf8','zh_CN.utf8','zh_HK.utf8','zh_TW.utf8'),
 	'IN'=>array('en_IN.utf8'),
@@ -39,6 +39,7 @@ foreach ($Collect as $Key=>$Value){
 	}
 
 }
+
 
 /*Since LanguagesArray requires the function _() to translate the language names - we must provide a substitute if it doesn't exist aready before we include includes/LanguagesArray.php
  * */
