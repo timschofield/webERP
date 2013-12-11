@@ -1444,7 +1444,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 
 					while ($AssParts = DB_fetch_array($AssResult,$db)){
 
-						$StandardCost += $AssParts['standard'];
+						$StandardCost += $AssParts['standard'] * $AssParts['quantity'];
 
 /*Need to get the current location quantity will need it later for the stock movement */
 					   	$SQL="SELECT locstock.quantity
