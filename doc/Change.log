@@ -1,4 +1,5 @@
 webERP Change Log
+11/12/13 Thumb: fixed bug that using limit without offsetting in PO_Items.php,WorkOrderEntry.php and make users' DisplayRecordsMax effective in SelectOrderItems.php.And fixed typo in SelectCreditItems.php.
 9/12/13 Exson Fixed the typo of sql in DiscountCategories.php. Report by tangjun
 7/12/13 Phil: Allow entry of stock counts by stock category
 7/12/13 Phil: Fixed htmlMimeEmail.inc following Tim's submission - removed & value by reference errors 
