@@ -1,4 +1,5 @@
 webERP Change Log
+11/12/13: Thumb fixed bug that calculated the wrong StandardCost of assembly parts in Credit_Invoice.php and SelectCreditItems.php. Bug confirmed by Phil.
 11/12/13 Thumb: fixed bug that using limit without offsetting in PO_Items.php,WorkOrderEntry.php and make users' DisplayRecordsMax effective in SelectOrderItems.php.And fixed typo in SelectCreditItems.php.
 9/12/13 Exson Fixed the typo of sql in DiscountCategories.php. Report by tangjun
 7/12/13 Phil: Allow entry of stock counts by stock category
