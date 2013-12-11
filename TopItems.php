@@ -91,18 +91,18 @@ if (!(isset($_POST['Search']))) {
 	echo '<tr>
 			<td>' . _('Number Of Days') . ' </td>
 			<td>:</td>
-			<td><input class="integer" required="required" pattern="(?!^0*$)(\d+)" title="'._('The input must be positive integer').'" tabindex="3" type="text" name="NumberOfDays" size="8"	maxlength="8" value="30" /></td>
+			<td><input class="integer" required="required" pattern="(?!^0*$)(\d+)" title="'._('The input must be positive integer').'" tabindex="3" type="text" name="NumberOfDays" size="8" maxlength="8" value="30" /></td>
 		 </tr>';
 	//Stock in days less than
 	echo '<tr>
 			<td>' . _('With less than') . ' </td><td>:</td>
-			<td><input class="integer" required="required" pattern="(?!^0*$)(\d+)" title="'._('The input must be postive integer').'" tabindex="4" type="text" name="MaxDaysOfStock" size="8"	maxlength="8" value="99999" /></td>
+			<td><input class="integer" required="required" pattern="(?!^0*$)(\d+)" title="'._('The input must be positive integer').'" tabindex="4" type="text" name="MaxDaysOfStock" size="8" maxlength="8" value="99999" /></td>
 			<td>' . ' ' . _('Days of Stock (QOH + QOO) Available') . ' </td>
 		 </tr>';
 	//view number of NumberOfTopItems items
 	echo '<tr>
 			<td>' . _('Number Of Top Items') . ' </td><td>:</td>
-			<td><input class="integer" required="required" pattern="(?!^0*$)(\d+)" title="'._('The input must be positive integer').'" tabindex="4" type="text" name="NumberOfTopItems" size="8"	maxlength="8" value="100" /></td>
+			<td><input class="integer" required="required" pattern="(?!^0*$)(\d+)" title="'._('The input must be positive integer').'" tabindex="4" type="text" name="NumberOfTopItems" size="8" maxlength="8" value="100" /></td>
 		 </tr>
 		 <tr>
 			<td></td>

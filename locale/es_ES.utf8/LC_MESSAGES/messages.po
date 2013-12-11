@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-12-01 20:34+1300\n"
-"PO-Revision-Date: 2013-12-09 12:52-0600\n"
+"PO-Revision-Date: 2013-12-11 17:03-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -16414,24 +16414,20 @@ msgid "Current Mail Group"
 msgstr "Grupo de correo actual"
 
 #: MailingGroupMaintenance.php:212
-#, fuzzy
 msgid "View All Groups"
-msgstr "Revisar grupos contables"
+msgstr "Ver todos los grupos"
 
 #: MailingGroupMaintenance.php:216
-#, fuzzy
 msgid "Assigned Users"
-msgstr "Asignador"
+msgstr "Usuarios asignados"
 
 #: MailingGroupMaintenance.php:217
-#, fuzzy
 msgid "Available Users"
-msgstr "Impuestos Disponibles"
+msgstr "Usuarios disponibles"
 
 #: MailingGroupMaintenance.php:238
-#, fuzzy
 msgid "Are you sure you wish to remove this user from this mail group?"
-msgstr "¿Confirma que desea eliminar esta autoridad fiscal del grupo?"
+msgstr "¿Está seguro que desea eliminar este usuario de este grupo de correo?"
 
 #: MailingGroupMaintenance.php:238 SalesCategories.php:536
 #: StockAdjustments.php:469 SupplierTenders.php:354 TaxGroups.php:380
@@ -16566,9 +16562,8 @@ msgid "Last Completed"
 msgstr "No Completado"
 
 #: MaintenanceTasks.php:97 MaintenanceUserSchedule.php:53
-#, fuzzy
 msgid "Person"
-msgstr "Versión"
+msgstr "Persona"
 
 #: MaintenanceTasks.php:98 MaintenanceTasks.php:212
 #: MaintenanceUserSchedule.php:54
@@ -16712,9 +16707,8 @@ msgid "There are no manufacturers to display"
 msgstr "No existen transacciones a desplegar desde"
 
 #: Manufacturers.php:188
-#, fuzzy
 msgid "Manufacturers"
-msgstr "Fabricado"
+msgstr "Fabricantes"
 
 #: Manufacturers.php:192
 #, fuzzy
@@ -18329,9 +18323,8 @@ msgstr ""
 "bancaria a través de SQL"
 
 #: Payments.php:647
-#, fuzzy
 msgid "Allocate this payment"
-msgstr "No se puede localizar el Envío"
+msgstr "Asignar este pago"
 
 #: Payments.php:648
 msgid "Enter another Payment for"
@@ -18430,12 +18423,10 @@ msgid "Enter GL Account Manually"
 msgstr "Introduzca manualmente la cuenta contable"
 
 #: Payments.php:982 Payments.php:987
-#, fuzzy
 msgid "The account code"
-msgstr "Código de cuenta contable"
+msgstr "El código de cuenta"
 
 #: Payments.php:982 Payments.php:987
-#, fuzzy
 msgid "doesnt exist"
 msgstr "No existe"
 
@@ -21444,9 +21435,8 @@ msgid "each"
 msgstr "c/u"
 
 #: PO_Items.php:849
-#, fuzzy
 msgid "Enter Item"
-msgstr "Introducir Costo del Artículo"
+msgstr "Introducir artículo"
 
 #: PO_Items.php:1108
 msgid "Item Category"
@@ -23215,9 +23205,8 @@ msgid "For Supplier"
 msgstr "Para proveedor"
 
 #: PurchaseByPrefSupplier.php:362
-#, fuzzy
 msgid "Show Items"
-msgstr "Artículo de Existencias"
+msgstr "Mostrar artículos"
 
 #: PurchaseByPrefSupplier.php:399
 #, fuzzy
@@ -23241,24 +23230,21 @@ msgid "Supp Ords"
 msgstr "Ords. Expir."
 
 #: PurchaseByPrefSupplier.php:419 PurchaseByPrefSupplier.php:422
-#, fuzzy
 msgid "Last"
-msgstr "Cant. ultimo envio"
+msgstr "Último"
 
 #: PurchaseByPrefSupplier.php:420 PurchaseByPrefSupplier.php:421
 #: PurchaseByPrefSupplier.php:422
-#, fuzzy
 msgid "Week"
-msgstr "Semanal"
+msgstr "Semana"
 
 #: PurchaseByPrefSupplier.php:420
-#, fuzzy
 msgid "3"
-msgstr "A3"
+msgstr "3"
 
 #: PurchaseByPrefSupplier.php:421
 msgid "2"
-msgstr ""
+msgstr "2"
 
 #: PurchaseByPrefSupplier.php:447 PurchaseByPrefSupplier.php:471
 #: PurchaseByPrefSupplier.php:500 PurchaseByPrefSupplier.php:531
@@ -23517,9 +23503,8 @@ msgid "Conversion Factor"
 msgstr "Factor de Conversión (a nuestra Unidad de Medida) "
 
 #: PurchData.php:275
-#, fuzzy
 msgid "Cost Per Our Unit"
-msgstr "Costo Unitario"
+msgstr "Costo por nuestra unidad"
 
 #: PurchData.php:277 PurchData.php:702 SellThroughSupport.php:266
 #: SupplierPriceList.php:540
@@ -25123,14 +25108,13 @@ msgid "Sub Category"
 msgstr "Sub Categoría"
 
 #: SalesCategories.php:244
-#, fuzzy
 msgid "Active?"
-msgstr "Acción"
+msgstr "¡Activo?"
 
 #: SalesCategories.php:273
-#, fuzzy, php-format
+#, php-format
 msgid "Are you sure you wish to delete this sales category?"
-msgstr "¿Seguro que desea eliminar esta categoría de impuestos?"
+msgstr "¡Está seguro que desea eliminar esta categoría de ventas?"
 
 #: SalesCategories.php:325
 msgid "Edit Sub Category"
@@ -27333,7 +27317,7 @@ msgstr "Buscar Proveedores"
 
 #: SelectSupplier.php:289 Suppliers.php:738 Suppliers.php:958
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: SelectSupplier.php:347
 msgid "Mapping is enabled, but no Mapping data to display for this Supplier."
@@ -28104,9 +28088,8 @@ msgid "ETA"
 msgstr "FEA"
 
 #: ShopParameters.php:7 ShopParameters.php:11
-#, fuzzy
 msgid "Shop Configuration"
-msgstr "Parámetros ERP de la Compañía"
+msgstr "Configuración de la tienda"
 
 #: ShopParameters.php:168
 #, fuzzy
@@ -28148,9 +28131,8 @@ msgid ""
 msgstr ""
 
 #: ShopParameters.php:219
-#, fuzzy
 msgid "Shop Name"
-msgstr "Nombre del Transportista"
+msgstr "Nombre de la tienda"
 
 #: ShopParameters.php:221
 #, fuzzy
@@ -28159,9 +28141,8 @@ msgid ""
 msgstr "Entre el nombre de la plantilla a ser creada"
 
 #: ShopParameters.php:226
-#, fuzzy
 msgid "Shop Title"
-msgstr "Título del Informe"
+msgstr "Título de la tienda"
 
 #: ShopParameters.php:228
 #, fuzzy
@@ -28287,9 +28268,8 @@ msgid "Show/Hide QOH column"
 msgstr "La columna"
 
 #: ShopParameters.php:304 ShopParameters.php:306
-#, fuzzy
 msgid "Hide"
-msgstr "Hindi"
+msgstr "Ocultar"
 
 #: ShopParameters.php:310
 msgid ""
@@ -28298,9 +28278,8 @@ msgid ""
 msgstr ""
 
 #: ShopParameters.php:319
-#, fuzzy
 msgid "Stock Locations"
-msgstr "Ubicación de existencia"
+msgstr "Ubicaciones de inventarios"
 
 #: ShopParameters.php:330
 msgid ""
@@ -28345,9 +28324,8 @@ msgid "Bank Transfer Settings"
 msgstr "Regresar a la Pantalla de Transferencia"
 
 #: ShopParameters.php:388
-#, fuzzy
 msgid "Allow Bank Transfer Payment"
-msgstr "No / Cancelar Pago"
+msgstr "Permitir pagos con transferencias bancarias."
 
 #: ShopParameters.php:398
 msgid "Allow bank transfers to be used for payments."
@@ -28453,7 +28431,7 @@ msgstr "Imprima y procese pagos"
 
 #: ShopParameters.php:492
 msgid "Allow Credit Card Payments"
-msgstr ""
+msgstr "Permitir pagos con tarjeta de crédito"
 
 #: ShopParameters.php:502
 msgid ""
@@ -32853,9 +32831,8 @@ msgid "The input must be numeric"
 msgstr "El período final debe ser numérico"
 
 #: SupplierInvoice.php:878 SupplierInvoice.php:881 SystemParameters.php:496
-#, fuzzy
 msgid "Manually"
-msgstr "Manual"
+msgstr "Manualmente"
 
 #: SupplierInvoice.php:943
 msgid "Invoice Total"
@@ -33067,9 +33044,8 @@ msgid "Enter another Invoice for this Supplier"
 msgstr "Introduzca otra Factura para este Proveedor"
 
 #: SupplierInvoice.php:1884
-#, fuzzy
 msgid "Enter payment"
-msgstr "Introduzca una parte de ..."
+msgstr "Introduzca pago"
 
 #: SupplierPriceList.php:398
 msgid "Search for a supplier"
@@ -33365,14 +33341,12 @@ msgid "The input should be less than 40 characters"
 msgstr "el número entrado debe ser menor que 361 días"
 
 #: Suppliers.php:693 Suppliers.php:697 Suppliers.php:701 Suppliers.php:709
-#, fuzzy
 msgid "Less than 40 characters"
-msgstr "(80 caracteres máximo)"
+msgstr "Menos de 40 caracteres"
 
 #: Suppliers.php:705
-#, fuzzy
 msgid "Less than 50 characters"
-msgstr "(80 caracteres máximo)"
+msgstr "Menos de 50 caracteres"
 
 #: Suppliers.php:727 Suppliers.php:731
 msgid "only number + - ( and ) allowed"
@@ -35091,9 +35065,8 @@ msgid "input must be positive integer"
 msgstr "El límite de crédito debe ser un número positivo"
 
 #: SystemParameters.php:792
-#, fuzzy
 msgid "postive integer"
-msgstr "interfaz de registros contables"
+msgstr "entero positivo"
 
 #: SystemParameters.php:793
 msgid ""
@@ -36227,18 +36200,16 @@ msgid "Value of Sales"
 msgstr "Valor de Ventas"
 
 #: TopItems.php:94 TopItems.php:105
-#, fuzzy
 msgid "The input must be positive integer"
-msgstr "El límite de crédito debe ser un número positivo"
+msgstr "La entrada debe ser un número entero positivo"
 
 #: TopItems.php:98
 msgid "With less than"
 msgstr "Con menos de"
 
 #: TopItems.php:99
-#, fuzzy
 msgid "The input must be postive integer"
-msgstr "El límite de crédito debe ser un número positivo"
+msgstr "La entrada debe ser un número entero positivo"
 
 #: TopItems.php:100
 msgid "Days of Stock (QOH + QOO) Available"
@@ -36351,9 +36322,8 @@ msgid "Cannot be blank or contains illegal characters"
 msgstr "La forma de pago no puede contener caracteres prohibidos"
 
 #: UnitsOfMeasure.php:236
-#, fuzzy
 msgid "More than one characters"
-msgstr "o el caracter"
+msgstr "Más de un caracter"
 
 #: UpgradeDatabase.php:7
 msgid "Upgrade webERP Database"
@@ -37954,9 +37924,8 @@ msgid "User code"
 msgstr "Código usuario"
 
 #: WWW_Users.php:423
-#, fuzzy
 msgid "At least 4 characters"
-msgstr "(80 caracteres máximo)"
+msgstr "Por lo menos 4 caracteres"
 
 #: WWW_Users.php:423
 #, fuzzy
@@ -37966,9 +37935,8 @@ msgid ""
 msgstr "La forma de pago no puede contener caracteres prohibidos"
 
 #: WWW_Users.php:455
-#, fuzzy
 msgid "At least 5 characters"
-msgstr "(80 caracteres máximo)"
+msgstr "Por lo menos 5 caracteres"
 
 #: WWW_Users.php:455
 msgid ""
@@ -38347,9 +38315,8 @@ msgid "UTILITY PAGE Change A GL Account Code"
 msgstr "PÁGINA DE HERRAMIENTAS Cambiar un Código de Localidad"
 
 #: Z_ChangeGLAccountCode.php:19
-#, fuzzy
 msgid "The GL account code"
-msgstr "Código de cuenta contable"
+msgstr "El código de cuenta contable"
 
 #: Z_ChangeGLAccountCode.php:19
 #, fuzzy
@@ -38429,7 +38396,6 @@ msgid "The SQL to delete the old chartmaster record failed"
 msgstr "Falló el SQL para eliminar el antiguo registro maestro de existencia"
 
 #: Z_ChangeGLAccountCode.php:124
-#, fuzzy
 msgid "GL account Code"
 msgstr "Código de cuenta contable"
 

@@ -233,7 +233,7 @@ if (! isset($_GET['delete'])) {
 	}
 	echo '<tr>
 		<td>' . _('Unit of Measure') . ':' . '</td>
-		<td><input required="required" pattern="(?!^ *$)[^+<>-]{1,}" type="text" name="MeasureName" title="'._('Cannot be blank or contains illegal characters').'" placeholder="'._('More than one characters').'" size="30" maxlength="30" value="' . $_POST['MeasureName'] . '" /></td>
+		<td><input required="required" pattern="(?!^ *$)[^+<>-]{1,}" type="text" name="MeasureName" title="'._('Cannot be blank or contains illegal characters').'" placeholder="'._('More than one character').'" size="30" maxlength="30" value="' . $_POST['MeasureName'] . '" /></td>
 		</tr>';
 	echo '</table>';
 

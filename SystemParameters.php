@@ -787,7 +787,7 @@ $row = DB_fetch_array($result);
 $_SESSION['NumberOfMonthMustBeShown'] = $row['confvalue'];
 
 echo '<tr style="outline: 1px solid"><td>' . _('Number Of Month Must Be Shown') . ':</td>
-		  <td><input type="text" class="integer" pattern="(?!^0\d*$)[\d]+" required="required" title="'._('input must be positive integer').'" placeholder="'._('postive integer').'" name="X_NumberOfMonthMustBeShown" size="4" maxlength="3" value="' . $_SESSION['NumberOfMonthMustBeShown'] . '" /></td>
+		  <td><input type="text" class="integer" pattern="(?!^0\d*$)[\d]+" required="required" title="'._('input must be positive integer').'" placeholder="'._('positive integer').'" name="X_NumberOfMonthMustBeShown" size="4" maxlength="3" value="' . $_SESSION['NumberOfMonthMustBeShown'] . '" /></td>
 		  <td>' . _('Number of month must be shown on report can be changed with this parameters ex: in CustomerInquiry.php ')  . '</td>
       </tr>';
 
