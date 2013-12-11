@@ -208,8 +208,8 @@ $YPos = $Page_Height - $Top_Margin - 190;
 $XPos = $Left_Margin;
 $FontSize = 8;
 
-include($PathPrefix . 'includes/CurrenciesArray.php'); // To get the currency name
-$pdf->addText($Left_Margin, $YPos-8, $FontSize, _('All amounts stated in') . ': ' . $myrow['currcode'] . ' ' . $CurrenciesArray[$myrow['currcode']]['Currency']);
+include($PathPrefix . 'includes/CurrenciesArray.php'); // To get the currency name from the currency code.
+$pdf->addText($Left_Margin, $YPos-8, $FontSize, _('All amounts stated in') . ': ' . $myrow['currcode'] . ' ' . $CurrencyName[$myrow['currcode']]);
 
 $BoxHeight = $Page_Height-282;
 

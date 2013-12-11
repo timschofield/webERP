@@ -829,12 +829,12 @@ if ($_SESSION['PaymentDetail' . $identifier]->SupplierID==''){
 			</tr>';
 		prnMsg( _('No currencies are defined yet. Payments cannot be entered until a currency is defined'),'error');
 	} else {
-		include($PathPrefix . 'includes/CurrenciesArray.php'); // To get the currency name.
+		include('includes/CurrenciesArray.php'); // To get the currency name from the currency code.
 		while ($myrow=DB_fetch_array($result)){
 			if ($_SESSION['PaymentDetail' . $identifier]->Currency==$myrow['currabrev']){
-				echo '<option selected="selected" value="' . $myrow['currabrev'] . '">' . $CurrenciesArray[$myrow['currabrev']]['Currency'] . '</option>';
+				echo '<option selected="selected" value="' . $myrow['currabrev'] . '">' . $CurrencyName[$myrow['currabrev']] . '</option>';
 			} else {
-				echo '<option value="' . $myrow['currabrev'] . '">' . $CurrenciesArray[$myrow['currabrev']]['Currency'] . '</option>';
+				echo '<option value="' . $myrow['currabrev'] . '">' . $CurrencyName[$myrow['currabrev']] . '</option>';
 			}
 		}
 		echo '</select></td>

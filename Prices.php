@@ -229,8 +229,7 @@ if (DB_num_rows($result) > 0) {
 	echo	'</tr>';
 
 	$k=0; //row colour counter
-
-	include('includes/CurrenciesArray.php'); // To get the currency name.
+	include('includes/CurrenciesArray.php'); // To get the currency name from the currency code.
 	while ($myrow = DB_fetch_array($result)) {
 		if ($k==1){
 			echo '<tr class="EvenTableRows">';
@@ -245,7 +244,7 @@ if (DB_num_rows($result) > 0) {
 			$EndDateDisplay = ConvertSQLDate($myrow['enddate']);
 		}
 
-		echo   '<td>' . $CurrenciesArray[$myrow['currabrev']]['Currency'] . '</td>
+		echo   '<td>' . $CurrencyName[$myrow['currabrev']] . '</td>
 				<td>' .  $myrow['sales_type'] . '</td>
 				<td class="number">' . locale_number_format($myrow['price'], $myrow['currdecimalplaces']+2) . '</td>
 				<td>' . ConvertSQLDate($myrow['startdate']) . '</td>
@@ -299,7 +298,7 @@ while ($myrow = DB_fetch_array($result)) {
 	if ($myrow['currabrev']==$_POST['CurrAbrev']) {
 		echo ' selected="selected"';
 	}
-	echo ' value="' . $myrow['currabrev'] . '">' . $CurrenciesArray[$myrow['currabrev']]['Currency'] . '</option>';
+	echo ' value="' . $myrow['currabrev'] . '">' . $CurrencyName[$myrow['currabrev']] . '</option>';
 } // End while loop
 
 DB_free_result($result);

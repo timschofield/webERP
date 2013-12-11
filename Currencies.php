@@ -7,7 +7,7 @@ $Title = _('Currencies Maintenance');
 $ViewTopic= 'Currencies';
 $BookMark = 'Currencies';
 include('includes/header.inc');
-include('includes/CurrenciesArray.php');
+include('includes/CurrenciesArray.php'); // To get the currency name from the currency code.
 include('includes/SQL_CommonFunctions.inc');
 
 if (isset($_GET['SelectedCurrency'])){
@@ -124,7 +124,7 @@ if (isset($_POST['submit'])) {
 										decimalplaces,
 										rate,
 										webcart)
-								VALUES ('" . $CurrenciesArray[$_POST['Abbreviation']]['Currency'] . "',
+								VALUES ('" . $CurrencyName[$_POST['Abbreviation']] . "',
 										'" . $_POST['Abbreviation'] . "',
 										'" . $_POST['Country'] . "',
 										'" . $_POST['HundredsName'] .  "',
@@ -291,7 +291,7 @@ or deletion of the records*/
 
 	echo '<table class="selection">';
 	echo '<tr>
-			<td></td>
+			<th>&nbsp;</th>
 			<th>' . _('ISO4217 Code') . '</th>
 			<th>' . _('Currency Name') . '</th>
 			<th>' . _('Country') . '</th>
@@ -301,6 +301,7 @@ or deletion of the records*/
 			<th>' . _('Exchange Rate') . '</th>
 			<th>' . _('1 / Ex Rate') . '</th>
 			<th>' . _('Ex Rate - ECB')  . '</th>
+			<th colspan="3">' . _('Maintenance')  . '</th>
 		</tr>';
 
 	$k=0; //row colour counter
@@ -340,7 +341,7 @@ or deletion of the records*/
 					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
-					<td>%s</td>
+					<td class="centre">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -350,7 +351,7 @@ or deletion of the records*/
 					</tr>',
 					$ImageFile,
 					$myrow['currabrev'],
-					$CurrenciesArray[$myrow['currabrev']]['Currency'], // To get the currency name from the Currencies Array.
+					$CurrencyName[$myrow['currabrev']],
 					$myrow['country'],
 					$myrow['hundredsname'],
 					locale_number_format($myrow['decimalplaces'],0),
@@ -373,17 +374,20 @@ or deletion of the records*/
 					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
-					<td>%s</td>
-					<td colspan="5">%s</td>
+					<td class="centre">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="centre" colspan="4">%s</td>
 					</tr>',
 					$ImageFile,
 					$myrow['currabrev'],
-					$CurrenciesArray[$myrow['currabrev']]['Currency'], // To get the currency name from the Currencies Array.
+					$CurrencyName[$myrow['currabrev']],
 					$myrow['country'],
 					$myrow['hundredsname'],
 					locale_number_format($myrow['decimalplaces'],0),
 					$ShowInWebText,
-					1,
+					locale_number_format(1,8),
+					locale_number_format(1,2),
 					_('Functional Currency'));
 		}
 
@@ -444,8 +448,8 @@ if (!isset($_GET['delete'])) {
 			<tr>
 				<td>' ._('Currency') . ':</td>
 				<td><select name="Abbreviation">';
-		foreach ($CurrenciesArray as $CurrencyAbbreviation => $CurrencyArray) {
-			echo '<option value="' . $CurrencyAbbreviation . '">' . $CurrencyAbbreviation . '-' . $CurrencyArray['Currency'] . '</option>';
+		foreach ($CurrencyName as $CurrencyCode => $CurrencyNameTxt) {
+			echo '<option value="' . $CurrencyCode . '">' . $CurrencyCode . ' - ' . $CurrencyNameTxt . '</option>';
 		}
 
 		echo '</select></td>

@@ -231,7 +231,7 @@ echo '<tr>
 
 
 $result=DB_query("SELECT currabrev, currency FROM currencies",$db);
-include($PathPrefix . 'includes/CurrenciesArray.php'); // To get the currency name.
+include('includes/CurrenciesArray.php'); // To get the currency name from the currency code.
 
 echo '<tr>
 		<td>' . _('Home Currency') . ':</td>
@@ -239,9 +239,9 @@ echo '<tr>
 
 while ($myrow = DB_fetch_array($result)) {
 	if ($_POST['CurrencyDefault']==$myrow['currabrev']){
-		echo '<option selected="selected" value="'. $myrow['currabrev'] . '">' . $CurrenciesArray[$myrow['currabrev']]['Currency'] . '</option>';
+		echo '<option selected="selected" value="'. $myrow['currabrev'] . '">' . $CurrencyName[$myrow['currabrev']] . '</option>';
 	} else {
-		echo '<option value="' . $myrow['currabrev'] . '">' . $CurrenciesArray[$myrow['currabrev']]['Currency'] . '</option>';
+		echo '<option value="' . $myrow['currabrev'] . '">' . $CurrencyName[$myrow['currabrev']] . '</option>';
 	}
 } //end while loop
 

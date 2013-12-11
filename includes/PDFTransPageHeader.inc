@@ -155,8 +155,8 @@ $XPos = $Page_Width/2;
 $XPos = $Left_Margin;
 $YPos -= ($line_height*2);
 
-include($PathPrefix . 'includes/CurrenciesArray.php'); // To get the currency name
-$pdf->addText($Left_Margin, $YPos-8, $FontSize, _('All amounts stated in') . ': ' . $myrow['currcode'] . ' ' . $CurrenciesArray[$myrow['currcode']]['Currency']);
+include($PathPrefix . 'includes/CurrenciesArray.php'); // To get the currency name from the currency code.
+$pdf->addText($Left_Margin, $YPos-8, $FontSize, _('All amounts stated in') . ': ' . $myrow['currcode'] . ' ' . $CurrencyName[$myrow['currcode']]);
 
 /*draw a box with nice round corner for entering line items */
 /*90 degree arc at top right of box 0 degrees starts a bottom */

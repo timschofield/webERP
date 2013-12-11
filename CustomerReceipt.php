@@ -817,12 +817,12 @@ if (DB_num_rows($result)==0){
 	prnMsg(_('No currencies are defined yet') . '. ' . _('Receipts cannot be entered until a currency is defined'),'warn');
 
 } else {
-	include($PathPrefix . 'includes/CurrenciesArray.php'); // To get the currency name.
+	include('includes/CurrenciesArray.php'); // To get the currency name from the currency code.
 	while ($myrow=DB_fetch_array($result)){
 		if ($_SESSION['ReceiptBatch']->Currency==$myrow['currabrev']){
-			echo '<option selected="selected" value="' . $myrow['currabrev'] . '">' . $CurrenciesArray[$myrow['currabrev']]['Currency'] . '</option>';
+			echo '<option selected="selected" value="' . $myrow['currabrev'] . '">' . $CurrencyName[$myrow['currabrev']] . '</option>';
 		} else {
-			echo '<option value="' . $myrow['currabrev'] . '">' . $CurrenciesArray[$myrow['currabrev']]['Currency'] . '</option>';
+			echo '<option value="' . $myrow['currabrev'] . '">' . $CurrencyName[$myrow['currabrev']] . '</option>';
 		}
 	}
 	echo '</select></td>

@@ -126,13 +126,13 @@ if ($NIL_BALANCE==True){
 	$CustomerRecord['overdue1']=0;
 	$CustomerRecord['overdue2']=0;
 }
-include('includes/CurrenciesArray.php'); // To get the currency name.
+include('includes/CurrenciesArray.php'); // To get the currency name from the currency code.
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/customer.png" title="' . _('Customer') . '" alt="" /> ' .
 	_('Customer') . ': ' .
 		$CustomerID . ' - ' . $CustomerRecord['name'] . '<br />' .
 	_('All amounts stated in') . ': ' .
 		$CustomerRecord['currency'] . '<br />' . // To be replaced by:
-/*		$CustomerRecord['currcode'] . ' - ' . $CurrenciesArray[$CustomerRecord['currcode']]['Currency'] . '<br />' . // <-- Replacement */
+/*		$CustomerRecord['currcode'] . ' - ' . $CurrencyName[$CustomerRecord['currcode']] . '<br />' . // <-- Replacement */
 	_('Terms') . ': ' .
 		$CustomerRecord['terms'] . '<br />' .
 	_('Credit Limit') . ': ' .
