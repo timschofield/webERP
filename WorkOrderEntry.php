@@ -80,7 +80,7 @@ if (!isset($_POST['StockLocation'])){
 }
 
 
-if (isset($_POST['Search'])){
+if (isset($_POST['Search']) OR isset($_POST['Prev']) OR isset($_POST['Next'])){
 
 	If ($_POST['Keywords'] AND $_POST['StockCode']) {
 		prnMsg(_('Stock description keywords have been used in preference to the Stock code extract entered'),'warn');
@@ -175,8 +175,34 @@ if (isset($_POST['Search'])){
 						ORDER BY stockmaster.stockid";
 		  }
 	}
+	$sql=$SQL;
+	
+	$sqlcount = substr($sql,strpos($sql,   "FROM"));
+	$sqlcount = substr($sqlcount,0, strpos($sqlcount,   "ORDER"));
+	$sqlcount = 'SELECT COUNT(*) '.$sqlcount;
+	$SearchResult = DB_query($sqlcount,$db,$ErrMsg,$DbgMsg);
+	$myrow=DB_fetch_array($SearchResult);
+	DB_free_result($SearchResult);
+	unset($SearchResult);
+	$ListCount = $myrow[0];
+	$ListPageMax = ceil($ListCount / $_SESSION['DisplayRecordsMax'])-1;
+	
+	if (isset($_POST['Next'])) {
+		$Offset = $_POST['currpage']+1;
+	}
+	if (isset($_POST['Prev'])) {
+		$Offset = $_POST['currpage']-1;
+	}
+	if (!isset($Offset)) {
+		$Offset=0;
+	}
+	if($Offset<0)$Offset=0;
+	if($Offset>$ListPageMax)$Offset=$ListPageMax;
+	$sql = $sql . ' LIMIT ' . $_SESSION['DisplayRecordsMax'].' OFFSET ' . strval($_SESSION['DisplayRecordsMax']*$Offset);
 
-	$SQL = $SQL . ' LIMIT ' . $_SESSION['DisplayRecordsMax'];
+
+	$SQL=$sql;
+
 
 	$ErrMsg = _('There is a problem selecting the part records to display because');
 	$DbgMsg = _('The SQL used to get the part selection was');
@@ -642,8 +668,21 @@ if (isset($SearchResult)) {
 
 	if (DB_num_rows($SearchResult)>1){
 
-		echo '<br /><table cellpadding="2" class="selection">
-			<tr>
+		$PageBar = '<tr><td><input type="hidden" name="currpage" value="'.$Offset.'">';
+		if($Offset>0)
+			$PageBar .= '<input type="submit" name="Prev" value="'._('Prev').'" />';
+		else
+			$PageBar .= '<input type="submit" name="Prev" value="'._('Prev').'" disabled="disabled"/>';
+		$PageBar .= '</td><td>';
+		if($Offset<$ListPageMax)
+			$PageBar .= '<input type="submit" name="Next" value="'._('Next').'" />';
+		else
+			$PageBar .= '<input type="submit" name="Next" value="'._('Next').'" disabled="disabled"/>';
+		$PageBar .= '</td></tr>';
+
+		echo '<br /><table cellpadding="2" class="selection">';
+		echo $PageBar;
+		echo '<tr>
 				<th class="ascending">' . _('Code') . '</th>
 	   			<th class="ascending">' . _('Description') . '</th>
 	   			<th>' . _('Units') . '</th></tr>';

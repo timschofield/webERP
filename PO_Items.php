@@ -851,7 +851,7 @@ if (isset($_POST['NonStockOrder'])) {
 }
 
 /* Now show the stock item selection search stuff below */
-if (isset($_POST['Search'])){  /*ie seach for stock items */
+if (isset($_POST['Search'])||isset($_POST['Prev'])||isset($_POST['Next'])){  /*ie seach for stock items */
 
 	if ($_POST['Keywords'] AND $_POST['StockCode']) {
 		prnMsg( _('Stock description keywords have been used in preference to the Stock code extract entered'), 'info' );
@@ -877,7 +877,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 						AND purchdata.supplierno='" . $_SESSION['PO'.$identifier]->SupplierID . "'
 						AND stockmaster.description " . LIKE . " '" . $SearchString ."'
 						ORDER BY stockmaster.stockid
-						LIMIT " .$_SESSION['DefaultDisplayRecordsMax'];
+						";
 			} else { // not just supplier purchdata items
 
 				$sql = "SELECT stockmaster.stockid,
@@ -892,7 +892,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 					AND stockmaster.discontinued<>1
 					AND stockmaster.description " . LIKE . " '" . $SearchString ."'
 					ORDER BY stockmaster.stockid
-					LIMIT " .$_SESSION['DefaultDisplayRecordsMax'];
+					";
 			}
 		} else { //for a specific stock category
 			if ($_POST['SupplierItemsOnly']=='on'){
@@ -912,7 +912,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 						AND stockmaster.description " . LIKE . " '". $SearchString ."'
 						AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
 						ORDER BY stockmaster.stockid
-						LIMIT ".$_SESSION['DefaultDisplayRecordsMax'];
+						";
 			} else {
 				$sql = "SELECT stockmaster.stockid,
 								stockmaster.description,
@@ -927,7 +927,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 						AND stockmaster.description " . LIKE . " '". $SearchString ."'
 						AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
 						ORDER BY stockmaster.stockid
-						LIMIT ".$_SESSION['DefaultDisplayRecordsMax'];
+						";
 			}
 		}
 
@@ -952,7 +952,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 						AND stockmaster.discontinued<>1
 						AND stockmaster.stockid " . LIKE . " '" . $_POST['StockCode'] . "'
 						ORDER BY stockmaster.stockid
-						LIMIT ".$_SESSION['DefaultDisplayRecordsMax'];
+						";
 			} else {
 				$sql = "SELECT stockmaster.stockid,
 							stockmaster.description,
@@ -966,7 +966,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 					AND stockmaster.discontinued<>1
 					AND stockmaster.stockid " . LIKE . " '" . $_POST['StockCode'] . "'
 					ORDER BY stockmaster.stockid
-					LIMIT ".$_SESSION['DefaultDisplayRecordsMax'];
+					";
 			}
 		} else { //for a specific stock category and LIKE stock code
 			if ($_POST['SupplierItemsOnly']=='on'){
@@ -986,7 +986,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 						AND stockmaster.stockid " . LIKE  . " '" . $_POST['StockCode'] . "'
 						AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
 						ORDER BY stockmaster.stockid
-						LIMIT ".$_SESSION['DefaultDisplayRecordsMax'];
+						";
 			} else {
 				$sql = "SELECT stockmaster.stockid,
 							stockmaster.description,
@@ -1001,7 +1001,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 					AND stockmaster.stockid " . LIKE  . " '" . $_POST['StockCode'] . "'
 					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
 					ORDER BY stockmaster.stockid
-					LIMIT ".$_SESSION['DefaultDisplayRecordsMax'];
+					";
 			}
 		}
 
@@ -1022,7 +1022,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 						AND purchdata.supplierno='" . $_SESSION['PO'.$identifier]->SupplierID . "'
 						AND stockmaster.discontinued<>1
 						ORDER BY stockmaster.stockid
-						LIMIT " . $_SESSION['DefaultDisplayRecordsMax'];
+						";
 			} else {
 				$sql = "SELECT stockmaster.stockid,
 							stockmaster.description,
@@ -1035,7 +1035,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 					AND stockmaster.mbflag<>'G'
 					AND stockmaster.discontinued<>1
 					ORDER BY stockmaster.stockid
-					LIMIT " . $_SESSION['DefaultDisplayRecordsMax'];
+					";
 			}
 		} else { // for a specific stock category
 			if ($_POST['SupplierItemsOnly']=='on'){
@@ -1054,7 +1054,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 						AND stockmaster.discontinued<>1
 						AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
 						ORDER BY stockmaster.stockid
-						LIMIT " . $_SESSION['DefaultDisplayRecordsMax'];
+						";
 			} else {
 				$sql = "SELECT stockmaster.stockid,
 							stockmaster.description,
@@ -1068,10 +1068,36 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 					AND stockmaster.discontinued<>1
 					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
 					ORDER BY stockmaster.stockid
-					LIMIT " . $_SESSION['DefaultDisplayRecordsMax'];
+					";
 			}
 		}
 	}
+	
+	$sqlcount = substr($sql,strpos($sql,   "FROM"));
+	$sqlcount = substr($sqlcount,0, strpos($sqlcount,   "ORDER"));
+	$sqlcount = 'SELECT COUNT(*) '.$sqlcount;
+	$SearchResult = DB_query($sqlcount,$db,$ErrMsg,$DbgMsg);
+	$myrow=DB_fetch_array($SearchResult);
+	DB_free_result($SearchResult);
+	unset($SearchResult);
+	$ListCount = $myrow[0];
+	$ListPageMax = ceil($ListCount / $_SESSION['DisplayRecordsMax'])-1;
+	
+	if (isset($_POST['Next'])) {
+		$Offset = $_POST['currpage']+1;
+	}
+	if (isset($_POST['Prev'])) {
+		$Offset = $_POST['currpage']-1;
+	}
+	if (!isset($Offset)) {
+		$Offset=0;
+	}
+	if($Offset<0)$Offset=0;
+	if($Offset>$ListPageMax)$Offset=$ListPageMax;
+	
+	$sql = $sql . "LIMIT " . $_SESSION['DisplayRecordsMax']." OFFSET " . strval($_SESSION['DisplayRecordsMax']*$Offset);
+
+
 
 	$ErrMsg = _('There is a problem selecting the part records to display because');
 	$DbgMsg = _('The SQL statement that failed was');
@@ -1152,9 +1178,22 @@ if (!isset($_GET['Edit'])) {
 }
 
 if (isset($SearchResult)) {
+	$PageBar = '<tr><td><input type="hidden" name="currpage" value="'.$Offset.'">';
+	if($Offset>0)
+		$PageBar .= '<input type="submit" name="Prev" value="'._('Prev').'" />';
+	else
+		$PageBar .= '<input type="submit" name="Prev" value="'._('Prev').'" disabled="disabled"/>';
+	$PageBar .= '</td><td style="text-align:center" colspan="4"><input type="submit" value="'._('Order some').'" name="NewItem"/></td><td>';
+	if($Offset<$ListPageMax)
+		$PageBar .= '<input type="submit" name="Next" value="'._('Next').'" />';
+	else
+		$PageBar .= '<input type="submit" name="Next" value="'._('Next').'" disabled="disabled"/>';
+	$PageBar .= '</td></tr>';
+	
+
 
 	echo '<table cellpadding="1" class="selection">';
-
+	echo $PageBar;
 	$TableHeader = '<tr>
 						<th class="ascending">' . _('Code')  . '</th>
 						<th class="ascending">' . _('Description') . '</th>
@@ -1215,6 +1254,7 @@ if (isset($SearchResult)) {
 		$PartsDisplayed++;
 #end of page full new headings if
 	}
+	echo $PageBar;
 #end of while loop
 	echo '</table>';
 	echo '<input type="hidden" name="PO_ItemsResubmitFormValue" value="' . $_SESSION['PO_ItemsResubmitForm' . $identifier] . '" />';
