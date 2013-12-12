@@ -749,7 +749,7 @@ echo '</select></td>
 
 //PageLength
 echo '<tr style="outline: 1px solid"><td>' . _('Report Page Length') . ':</td>
-	<td><input type="text" class="integer" pattern="(?!^0\d*$)[\d]{1,3}" title="'._('The input should be between 1~999').'" placeholder="'._(' 1 to 999').'" name="X_PageLength" size="4" maxlength="6" value="' . $_SESSION['PageLength'] . '" /></td><td>&nbsp;</td>
+	<td><input type="text" class="integer" pattern="(?!^0\d*$)[\d]{1,3}" title="'._('The input should be between 1~999').'" placeholder="'._('1 to 999').'" name="X_PageLength" size="4" maxlength="6" value="' . $_SESSION['PageLength'] . '" /></td><td>&nbsp;</td>
 </tr>';
 
 //DefaultDisplayRecordsMax
@@ -773,7 +773,7 @@ echo '<tr style="outline: 1px solid">
 //MaxImageSize
 echo '<tr style="outline: 1px solid">
 		<td>' . _('Maximum Size in KB of uploaded images') . ':</td>
-		<td><input type="text" class="integer" pattern="(?!^0\d*$)[\d]{1,3}" required="required" title="'._('The input should be between 1 to 999').'" placeholder="'._('1 t0 999').'" name="X_MaxImageSize" size="4" maxlength="3" value="' . $_SESSION['MaxImageSize'] . '" /></td>
+		<td><input type="text" class="integer" pattern="(?!^0\d*$)[\d]{1,3}" required="required" title="'._('The input should be between 1 to 999').'" placeholder="'._('1 to 999').'" name="X_MaxImageSize" size="4" maxlength="3" value="' . $_SESSION['MaxImageSize'] . '" /></td>
 		<td>' . _('Picture files of items can be uploaded to the server. The system will check that files uploaded are less than this size (in KB) before they will be allowed to be uploaded. Large pictures will make the system slow and will be difficult to view in the stock maintenance screen.')  . '</td>
 	</tr>';
 //NumberOfMonthMustBeShown

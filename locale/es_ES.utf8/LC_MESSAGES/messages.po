@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-12-01 20:34+1300\n"
-"PO-Revision-Date: 2013-12-11 17:03-0600\n"
+"PO-Revision-Date: 2013-12-11 20:46-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -7612,9 +7612,8 @@ msgid "Decimal Places"
 msgstr "Lugares Decimales"
 
 #: Currencies.php:300
-#, fuzzy
 msgid "Use in webSHOP"
-msgstr "¿Mostrar en webSHOP?"
+msgstr "Usar en webSHOP"
 
 #: Currencies.php:302
 msgid "1 / Ex Rate"
@@ -7656,7 +7655,6 @@ msgid "Decimal Places to Display"
 msgstr "Decimales al mostrar"
 
 #: Currencies.php:493
-#, fuzzy
 msgid "Show in webSHOP?"
 msgstr "¿Mostrar en webSHOP?"
 
@@ -8437,9 +8435,8 @@ msgid ""
 msgstr ""
 
 #: CustomerBranches.php:608 Customers.php:443
-#, fuzzy
 msgid "alpha-numeric"
-msgstr "ser numérico"
+msgstr "alfanumérico"
 
 #: CustomerBranches.php:619 SalesInquiry.php:830 SalesInquiry.php:849
 #: SpecialOrder.php:150
@@ -10484,9 +10481,8 @@ msgid "The selected departemnt could not be found."
 msgstr "No se pudo encontrar el departamento seleccionado"
 
 #: Departments.php:239
-#, fuzzy
 msgid "The department name is required"
-msgstr "El departamento no se pudo insertar"
+msgstr "Se requiere el nombre del departamento"
 
 #: DiscountCategories.php:7
 msgid "Discount Categories Maintenance"
@@ -14825,9 +14821,8 @@ msgid ""
 msgstr "El SQL usado para obtener los detalles de la cuenta bancaria fue"
 
 #: ImportBankTrans.php:162
-#, fuzzy
 msgid "The account"
-msgstr "La columna"
+msgstr "La cuenta"
 
 #: ImportBankTrans.php:162
 msgid ""
@@ -31117,7 +31112,7 @@ msgstr ""
 
 #: Stocks.php:877
 msgid "alpha-numeric only"
-msgstr ""
+msgstr "solo alfanumerico"
 
 #: Stocks.php:977
 msgid ""
@@ -31185,7 +31180,7 @@ msgstr ""
 
 #: StockStatus.php:62
 msgid "Alpha-numeric only"
-msgstr ""
+msgstr "Solo alfanumerico"
 
 #: StockStatus.php:96
 msgid "In Transit"
@@ -31754,7 +31749,7 @@ msgstr "Se espera que el costo sea un número positivo"
 
 #: SuppFixedAssetChgs.php:123
 msgid "Postive integer"
-msgstr ""
+msgstr "Entero positivo"
 
 #: SuppFixedAssetChgs.php:126
 msgid "Select from list"
@@ -34993,7 +34988,7 @@ msgstr "La entrada debe estar entre 1 y 999"
 
 #: SystemParameters.php:754
 msgid " 1 to 999"
-msgstr ""
+msgstr "1 a 999"
 
 #: SystemParameters.php:759
 msgid "Default Maximum Number of Records to Show"
@@ -35036,7 +35031,7 @@ msgstr "El valor de la propiedad debe entre"
 
 #: SystemParameters.php:778
 msgid "1 t0 999"
-msgstr ""
+msgstr "1 a 999"
 
 #: SystemParameters.php:779
 msgid ""

@@ -279,8 +279,7 @@ then none of the above are true and the list of payment termss will be displayed
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
-	$sql = "SELECT currency,
-					currabrev,
+	$sql = "SELECT	currabrev,
 					country,
 					hundredsname,
 					rate,
@@ -297,7 +296,7 @@ or deletion of the records*/
 			<th>' . _('Country') . '</th>
 			<th>' . _('Hundredths Name') . '</th>
 			<th>' . _('Decimal Places') . '</th>
-			<th>' . _('Use in webSHOP')  . '</th>
+			<th>' . _('Show in webSHOP')  . '</th>
 			<th>' . _('Exchange Rate') . '</th>
 			<th>' . _('1 / Ex Rate') . '</th>
 			<th>' . _('Ex Rate - ECB')  . '</th>
@@ -412,13 +411,12 @@ if (!isset($_GET['delete'])) {
 	if (isset($SelectedCurrency) AND $SelectedCurrency!='') {
 		//editing an existing currency
 
-		$sql = "SELECT currency,
-					currabrev,
-					country,
-					hundredsname,
-					decimalplaces,
-					rate,
-					webcart
+		$sql = "SELECT	currabrev,
+						country,
+						hundredsname,
+						decimalplaces,
+						rate,
+						webcart
 				FROM currencies
 				WHERE currabrev='" . $SelectedCurrency . "'";
 
@@ -494,7 +492,7 @@ if (!isset($_GET['delete'])) {
 	}
 
 	echo '<tr>
-			<td>' . _('Show in webSHOP?') . ':</td>
+			<td>' . _('Show in webSHOP') . ':</td>
 			<td><select name="webcart">';
 
 	if ($_POST['webcart']==1){
@@ -507,7 +505,6 @@ if (!isset($_GET['delete'])) {
 	} else {
 		echo '<option value="0">' . _('No') . '</option>';
 	}
-
 
 	echo '</table>';
 
