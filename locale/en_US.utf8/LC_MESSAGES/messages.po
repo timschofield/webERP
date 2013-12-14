@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.10.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-12-01 20:34+1300\n"
-"PO-Revision-Date: 2013-11-24 10:23-0600\n"
+"PO-Revision-Date: 2013-12-14 07:34-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: WebERP Translation Team <web-erp-translation@lists."
 "sourceforge.net>\n"
@@ -32962,8 +32962,8 @@ msgstr ""
 
 #: SystemParameters.php:478
 msgid ""
-"Select all the languages for which item description translations are to be "
-"maintained."
+"Select the languages in which translations of the item description will be "
+"maintained. The default language is excluded."
 msgstr ""
 
 #: SystemParameters.php:484
@@ -33259,12 +33259,13 @@ msgstr ""
 
 #: SystemParameters.php:706 SystemParameters.php:711
 #, fuzzy
-msgid "The input must between 0~100"
+msgid "The input must between 0 and 100"
 msgstr "The Amount must be greater than 0"
 
 #: SystemParameters.php:706
-msgid "integer between 0-100"
-msgstr ""
+#, fuzzy
+msgid "integer between 0 and 100"
+msgstr "The Amount must be greater than 0"
 
 #: SystemParameters.php:707
 msgid ""
@@ -33368,8 +33369,9 @@ msgid "Report Page Length"
 msgstr ""
 
 #: SystemParameters.php:754
-msgid "The input should be between 1~999"
-msgstr ""
+#, fuzzy
+msgid "The input should be between 1 and 999"
+msgstr "The Shipping cost entered is expected to be numeric"
 
 #: SystemParameters.php:754
 msgid " 1 to 999"

@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: weberp 3.12\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-12-01 20:34+1300\n"
-"PO-Revision-Date: 2013-11-24 19:50-0600\n"
+"PO-Revision-Date: 2013-12-14 07:32-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: French <none>\n"
 "Language: fr_FR\n"
@@ -35214,8 +35214,8 @@ msgstr ""
 #: SystemParameters.php:478
 #, fuzzy
 msgid ""
-"Select all the languages for which item description translations are to be "
-"maintained."
+"Select the languages in which translations of the item description will be "
+"maintained. The default language is excluded."
 msgstr "Saisir la date à laquelle les opérations seront listées"
 
 # JDN
@@ -35570,12 +35570,13 @@ msgstr "Permettre la sur-facturation"
 
 #: SystemParameters.php:706 SystemParameters.php:711
 #, fuzzy
-msgid "The input must between 0~100"
+msgid "The input must between 0 and 100"
 msgstr "Le montant doit être supérieur à 0"
 
 #: SystemParameters.php:706
-msgid "integer between 0-100"
-msgstr ""
+#, fuzzy
+msgid "integer between 0 and 100"
+msgstr "Le chiffre doit être compris entre 1 et 10"
 
 # JDN (à vérifier)
 #: SystemParameters.php:707
@@ -35698,7 +35699,7 @@ msgstr "Longueur des pages de rapport"
 
 #: SystemParameters.php:754
 #, fuzzy
-msgid "The input should be between 1~999"
+msgid "The input should be between 1 and 999"
 msgstr "La valeur vert. pos. serait positive"
 
 #: SystemParameters.php:754
@@ -50693,6 +50694,10 @@ msgstr "Crédité"
 #, fuzzy
 msgid "Bank Transfer"
 msgstr "Transfert"
+
+#, fuzzy
+#~ msgid "The input should be between 1~999"
+#~ msgstr "La valeur vert. pos. serait positive"
 
 # JDN
 #~ msgid "Form Design"

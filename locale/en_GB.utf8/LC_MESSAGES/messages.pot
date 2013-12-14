@@ -30200,11 +30200,11 @@ msgid "Allowed Over Charge Proportion"
 msgstr ""
 
 #: SystemParameters.php:706 SystemParameters.php:711
-msgid "The input must between 0~100"
+msgid "The input must between 0 and 100"
 msgstr ""
 
 #: SystemParameters.php:706
-msgid "integer between 0-100"
+msgid "integer between 0 and 100"
 msgstr ""
 
 #: SystemParameters.php:707
@@ -30296,7 +30296,7 @@ msgid "Report Page Length"
 msgstr ""
 
 #: SystemParameters.php:754
-msgid "The input should be between 1~999"
+msgid "The input should be between 1 and 999"
 msgstr ""
 
 #: SystemParameters.php:754

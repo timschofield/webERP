@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-12-01 20:34+1300\n"
-"PO-Revision-Date: 2013-12-11 20:46-0600\n"
+"PO-Revision-Date: 2013-12-14 07:31-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -34858,11 +34858,13 @@ msgid "Allowed Over Charge Proportion"
 msgstr "Proporción de Sobre Cargo Permitida"
 
 #: SystemParameters.php:706 SystemParameters.php:711
-msgid "The input must between 0~100"
+#, fuzzy
+msgid "The input must between 0 and 100"
 msgstr "La entrada debe estar entre 0 y 100"
 
 #: SystemParameters.php:706
-msgid "integer between 0-100"
+#, fuzzy
+msgid "integer between 0 and 100"
 msgstr "número entero entre 0-100"
 
 #: SystemParameters.php:707
@@ -34983,8 +34985,9 @@ msgid "Report Page Length"
 msgstr "Longitud de la Página del Informe"
 
 #: SystemParameters.php:754
-msgid "The input should be between 1~999"
-msgstr "La entrada debe estar entre 1 y 999"
+#, fuzzy
+msgid "The input should be between 1 and 999"
+msgstr "El valor de la propiedad debe entre"
 
 #: SystemParameters.php:754
 msgid " 1 to 999"
@@ -49755,6 +49758,9 @@ msgstr "Crédito "
 #, fuzzy
 msgid "Bank Transfer"
 msgstr "Transferencia"
+
+#~ msgid "The input should be between 1~999"
+#~ msgstr "La entrada debe estar entre 1 y 999"
 
 #~ msgid "Form Design"
 #~ msgstr "Diseño del formulario"
