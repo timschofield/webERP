@@ -197,18 +197,18 @@ if (isset($_POST['Show'])){
 		$ChartDetailRow = DB_fetch_array($ChartDetailsResult);
 
 		$RunningTotal =$ChartDetailRow['bfwd'];
-		if ($RunningTotal < 0 ){ //its a credit balance b/fwd
 			echo '<tr>
-					<td colspan="3"><b>' . _('Brought Forward Balance') . '</b></td>
+					<td colspan="3"><b>' . _('Brought Forward Balance') . '</b></td>';
+		if ($RunningTotal < 0 ){ //its a credit balance b/fwd
+			echo '
 					<td></td>
 					<td class="number"><b>' . locale_number_format(-$RunningTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
-					<td></td>
+					<td colspan="3">&nbsp;</td>
 				</tr>';
 		} else { //its a debit balance b/fwd
-			echo '<tr>
-					<td colspan="3"><b>' . _('Brought Forward Balance') . '</b></td>
+			echo '
 					<td class="number"><b>' . locale_number_format($RunningTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
-					<td colspan="2"></td>
+					<td colspan="4">&nbsp;</td>
 				</tr>';
 		}
 	}
@@ -242,15 +242,15 @@ if (isset($_POST['Show'])){
 					}
 					echo '<td></td>
 						<td class="number"><b>' . locale_number_format(-$PeriodTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
-						<td></td>
-						</tr>';
+						<td colspan="3">&nbsp;</td>
+				</tr>';
 				} else { //its a debit balance b/fwd
 					if ($PandLAccount==True) {
 						$RunningTotal = 0;
 					}
 					echo '<td class="number"><b>' . locale_number_format($PeriodTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
-							<td colspan="2"></td>
-						</tr>';
+							<td colspan="4">&nbsp;</td>
+				</tr>';
 				}
 				$IntegrityReport .= '<br />' . _('Period') . ': ' . $PeriodNo  . _('Account movement per transaction') . ': '  . locale_number_format($PeriodTotal,$_SESSION['CompanyRecord']['decimalplaces']) . ' ' . _('Movement per ChartDetails record') . ': ' . locale_number_format($ChartDetailRow['actual'],$_SESSION['CompanyRecord']['decimalplaces']) . ' ' . _('Period difference') . ': ' . locale_number_format($PeriodTotal -$ChartDetailRow['actual'],3);
 
