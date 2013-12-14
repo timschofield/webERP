@@ -4,9 +4,7 @@
 
 include('includes/session.inc');
 $Title = _('View Currency Trends');
-
 include('includes/header.inc');
-
 
 $FunctionalCurrency = $_SESSION['CompanyRecord']['currencydefault'];
 
@@ -27,22 +25,22 @@ if ( isset($_GET['CurrencyToShow']) ){
 		_('View Currency Trend') . '" alt="" />' . ' ' . _('View Currency Trend') . '</p></div>';
 	echo '<table>'; // First column
 
-	$SQL = "SELECT * FROM currencies";
+	$SQL = "SELECT currabrev FROM currencies";
 	$result=DB_query($SQL,$db);
-
+	include('includes/CurrenciesArray.php'); // To get the currency name from the currency code.
 
 	// CurrencyToShow Currency Picker
 	echo '<tr>
 			<td><select name="CurrencyToShow" onchange="ReloadForm(update.submit)">';
 
-	DB_data_seek($result,0);
+	DB_data_seek($result, 0);
 	while ($myrow=DB_fetch_array($result)) {
 		if ($myrow['currabrev']!=$_SESSION['CompanyRecord']['currencydefault']){
+			echo '<option';
 			if ( $CurrencyToShow==$myrow['currabrev'] )	{
-				echo '<option selected="selected" value="' . $myrow['currabrev'] . '">' . $myrow['country'] . ' ' . $myrow['currency'] . '&nbsp;(' . $myrow['currabrev'] . ')'. '</option>';
-			} else {
-				echo '<option value="' . $myrow['currabrev'] . '">' . $myrow['country'] . ' ' . $myrow['currency'] . '&nbsp;(' . $myrow['currabrev'] . ')'. '</option>';
+				echo ' selected="selected"';
 			}
+			echo ' value="' . $myrow['currabrev'] . '">' . $CurrencyName[$myrow['currabrev']] . ' (' . $myrow['currabrev'] . ')</option>';
 		}
 	}
 	echo '</select></td>
