@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-12-01 20:34+1300\n"
-"PO-Revision-Date: 2013-12-14 07:31-0600\n"
+"PO-Revision-Date: 2013-12-14 08:01-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -10679,9 +10679,8 @@ msgstr ""
 "70%"
 
 #: DiscountMatrix.php:43
-#, fuzzy
 msgid "Numbers between 1 and 100 are expected"
-msgstr "Sólo se permite un número del 1 al 69"
+msgstr "Se esperan números entre 1 y 100"
 
 #: DiscountMatrix.php:64
 msgid "The discount matrix record has been added"
@@ -34863,9 +34862,8 @@ msgid "The input must between 0 and 100"
 msgstr "La entrada debe estar entre 0 y 100"
 
 #: SystemParameters.php:706
-#, fuzzy
 msgid "integer between 0 and 100"
-msgstr "número entero entre 0-100"
+msgstr "número entero entre 0 y 100"
 
 #: SystemParameters.php:707
 msgid ""
@@ -34985,9 +34983,8 @@ msgid "Report Page Length"
 msgstr "Longitud de la Página del Informe"
 
 #: SystemParameters.php:754
-#, fuzzy
 msgid "The input should be between 1 and 999"
-msgstr "El valor de la propiedad debe entre"
+msgstr "La entrada debe estar entre 1 y 999"
 
 #: SystemParameters.php:754
 msgid " 1 to 999"
@@ -34998,9 +34995,8 @@ msgid "Default Maximum Number of Records to Show"
 msgstr "Número Máximo Predeterminado de Registros a mostrar"
 
 #: SystemParameters.php:760
-#, fuzzy
 msgid "The records should be between 1 and 999"
-msgstr "La Clase de Impuesto Predeterminada debe estar entre 1 y 9"
+msgstr "Los registros deben estar entre 1 y 999"
 
 #: SystemParameters.php:761
 msgid ""
@@ -35028,9 +35024,8 @@ msgid "Maximum Size in KB of uploaded images"
 msgstr "Tamaño Máximo en KB de imágenes a cargar"
 
 #: SystemParameters.php:778
-#, fuzzy
 msgid "The input should be between 1 to 999"
-msgstr "El valor de la propiedad debe entre"
+msgstr "La entrada debe estar entre 1 y 999"
 
 #: SystemParameters.php:778
 msgid "1 t0 999"
