@@ -18,6 +18,7 @@ if (isset($_POST['submit']) AND $_POST['MailServerSetting']==1) {//If there are 
 				username='".$_POST['UserName']."',
 				password='".$_POST['Password']."',
 				auth='".$_POST['Auth']."'";
+				
 	$ErrMsg = _('The email setting information failed to update');
 	$DbgMsg = _('The SQL failed to update is ');
 	$result1=DB_query($sql, $db, $ErrMsg, $DbgMsg);
@@ -32,13 +33,12 @@ if (isset($_POST['submit']) AND $_POST['MailServerSetting']==1) {//If there are 
 						username,
 						password,
 						auth)
-				VALUES (
-					'".$_POST['Host']."',
-					'".$_POST['Port']."',
-					'".$_POST['HeloAddress']."',
-					'".$_POST['UserName']."',
-					'".$_POST['Password']."',
-					'".$_POST['Auth']."')";
+				VALUES ('".$_POST['Host']."',
+						'".$_POST['Port']."',
+						'".$_POST['HeloAddress']."',
+						'".$_POST['UserName']."',
+						'".$_POST['Password']."',
+						'".$_POST['Auth']."')";
 	$ErrMsg = _('The email settings failed to be inserted');
 	$DbgMsg = _('The SQL failed to insert the email information is');
 	$result2 = DB_query($sql,$db);
@@ -77,19 +77,26 @@ if (isset($_POST['submit']) AND $_POST['MailServerSetting']==1) {//If there are 
 		}
 
 
-echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-echo '<div>';
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<input type="hidden" name="MailServerSetting" value="' . $MailServerSetting . '" />';
-echo '<table class="selection">';
-echo '<tr><td>' . _('Server Host Name') . '</td>
-		<td><input type="text" name="Host" value="'.$myrow['host'].'" /></td></tr>';
-echo '<tr><td>' . _('SMTP port') . '</td>
-		<td><input type="text" name="Port" size="4" class="number" value="'.$myrow['port'].'" /></td></tr>';
-echo '<tr><td>' . _('Helo Command') . '</td>
-		<td><input type="text" name="HeloAddress" value="'.$myrow['heloaddress'].'" /></td></tr>';
-echo '<tr><td>' . _('Authorisation Required') . '</td><td>';
-echo '<select name="Auth">';
+echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
+	<div>
+	<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+	<input type="hidden" name="MailServerSetting" value="' . $MailServerSetting . '" />
+	<table class="selection">
+	<tr>
+		<td>' . _('Server Host Name') . '</td>
+		<td><input type="text" name="Host" required="required" value="' . $myrow['host'] . '" /></td>
+	</tr>
+	<tr>
+		<td>' . _('SMTP port') . '</td>
+		<td><input type="text" name="Port" required="required" size="4" class="number" value="' . $myrow['port'].'" /></td>
+	</tr>
+	<tr>
+		<td>' . _('Helo Command') . '</td>
+		<td><input type="text" name="HeloAddress" value="' . $myrow['heloaddress'] . '" /></td>
+	</tr>
+	<tr>
+		<td>' . _('Authorisation Required') . '</td>
+		<td><select name="Auth">';
 if ($myrow['auth']==1) {
 	echo '<option selected="selected" value="1">' . _('True') . '</option>';
 	echo '<option value="0">' . _('False') . '</option>';
@@ -97,17 +104,26 @@ if ($myrow['auth']==1) {
 	echo '<option value="1">' . _('True') . '</option>';
 	echo '<option selected="selected" value="0">' . _('False') . '</option>';
 }
-echo '</select></td></tr>';
-echo '<tr><td>' . _('User Name') . '</td>
-	<td><input type="text" name="UserName" value="'.$myrow['username'].'" /></td></tr>';
-echo '<tr><td>' . _('Password') . '</td>
-	<td><input type="password" name="Password" value="'.$myrow['password'].'" /></td></tr>';
-echo '<tr><td>' . _('Timeout (seconds)') . '</td>
-	<td><input type="text" size="5" name="Timeout" class="number" value="'.$myrow['timeout'].'" /></td></tr>';
-echo '<tr><td colspan="2"><div class="centre"><input type="submit" name="submit" value="' . _('Update') . '" /></div></td></tr>';
-echo '</table>
-      </div>
-      </form>';
+echo '</select></td>
+	</tr>
+	<tr>
+		<td>' . _('User Name') . '</td>
+		<td><input type="text" required="required" name="UserName" size="50" maxlength="50" value="' . $myrow['username']  .'" /></td>
+	</tr>
+	<tr>
+		<td>' . _('Password') . '</td>
+		<td><input type="password" required="required" name="Password" value="' . $myrow['password'] . '" /></td>
+	</tr>
+	<tr>
+		<td>' . _('Timeout (seconds)') . '</td>
+		<td><input type="text" size="5" name="Timeout" class="number" value="' . $myrow['timeout'] . '" /></td>
+	</tr>
+	<tr>
+		<td colspan="2"><div class="centre"><input type="submit" name="submit" value="' . _('Update') . '" /></div></td>
+	</tr>
+	</table>
+	</div>
+	</form>';
 
 include('includes/footer.inc');
 

@@ -450,7 +450,8 @@ if (!isset($AssetID) OR $AssetID=='') {
 		</tr>';
 	echo '<tr><td><input type="hidden" name="AssetID" value="' . $AssetID . '"/></td></tr>';
 }
-if ($AssetRow['disposaldate'] != '0000-00-00'){
+
+if (isset($AssetRow['disposaldate']) AND $AssetRow['disposaldate'] !='0000-00-00'){
 	echo '<tr>
 			<td>' . _('Asset Already disposed on') . ':</td>
 			<td>' . ConvertSQLDate($AssetRow['disposaldate']) . '</td>
