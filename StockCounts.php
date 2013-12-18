@@ -95,8 +95,7 @@ if ($_GET['Action'] == 'Enter'){
 						FROM stockcategory INNER JOIN stockmaster
 							ON stockcategory.categoryid=stockmaster.categoryid
 							INNER JOIN stockcheckfreeze
-							ON stockmaster.stockid=stockcheckfreeze.stockid
-						WHERE stocktype='F'",$db);
+							ON stockmaster.stockid=stockcheckfreeze.stockid",$db);
 
 	if (DB_num_rows($CatsResult) ==0) {
 		prnMsg(_('The stock check sheets must be run first to create the stock check. Only once these are created can the stock counts be entered. Currently there is no stock check to enter counts for'),'error');
