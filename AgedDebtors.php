@@ -18,6 +18,9 @@ if (isset($_POST['PrintPDF'])
 	$line_height = 12;
 
 	  /*Now figure out the aged analysis for the customer range under review */
+	if ($_SESSION['SalesmanLogin'] != '') {
+		$_POST['Salesman'] = $_SESSION['SalesmanLogin'];
+	}
 	if (trim($_POST['Salesman'])!=''){
 		$SalesLimit = " AND debtorsmaster.debtorno IN (SELECT DISTINCT debtorno FROM custbranch WHERE salesman = '".$_POST['Salesman']."') ";
 	} else {
@@ -357,6 +360,9 @@ if (isset($_POST['PrintPDF'])
 						AND debtortrans.debtorno = '" . $AgedAnalysis['debtorno'] . "'
 						AND ABS(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc)>0.004";
 
+			if ($_SESSION['SalesmanLogin'] != '') {
+				$sql .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
+			}
 
 			$DetailResult = DB_query($sql,$db,'','',False,False); /*Dont trap errors */
 			if (DB_error_no($db) !=0) {
@@ -473,18 +479,24 @@ if (isset($_POST['PrintPDF'])
 				</td>
 			</tr>
 			<tr>
-				<td>' . _('Only Show Customers Of') . ':' . '</td>
-				<td><select tabindex="4" name="Salesman">';
+				<td>' . _('Only Show Customers Of') . ':' . '</td>';
+		if ($_SESSION['SalesmanLogin'] != '') {
+			echo '<td>';
+			echo $_SESSION['UsersRealName'];
+			echo '</td>';
+		}else{
+			echo '<td><select tabindex="4" name="Salesman">';
 
-		$sql = "SELECT salesmancode, salesmanname FROM salesman";
+			$sql = "SELECT salesmancode, salesmanname FROM salesman";
 
-		$result=DB_query($sql,$db);
-		echo '<option value="">' . _('All Sales people') . '</option>';
-		while ($myrow=DB_fetch_array($result)){
-				echo '<option value="' . $myrow['salesmancode'] . '">' . $myrow['salesmanname'] . '</option>';
+			$result=DB_query($sql,$db);
+			echo '<option value="">' . _('All Sales people') . '</option>';
+			while ($myrow=DB_fetch_array($result)){
+					echo '<option value="' . $myrow['salesmancode'] . '">' . $myrow['salesmanname'] . '</option>';
+			}
+			echo '</select></td>';
 		}
-		echo '</select></td>
-			</tr>
+		echo '</tr>
 			<tr>
 				<td>' . _('Only show customers trading in') . ':' . '</td>
 				<td><select tabindex="5" name="Currency">';

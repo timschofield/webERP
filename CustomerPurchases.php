@@ -1,5 +1,4 @@
 <?php
-
 include('includes/session.inc');
 $Title = _('Customer Purchases');
 include('includes/header.inc');
@@ -32,25 +31,34 @@ echo '<p class="page_title_text">
 	</p>';
 
 $SQL = "SELECT stockmoves.stockid,
-				stockmaster.description,
-				systypes.typename,
-				transno,
-				locations.locationname,
-				trandate,
-				branchcode,
-				price,
-				reference,
-				qty,
-				narrative
-			FROM stockmoves
-			INNER JOIN stockmaster
-				ON stockmaster.stockid=stockmoves.stockid
-			INNER JOIN systypes
-				ON stockmoves.type=systypes.typeid
-			INNER JOIN locations
-				ON stockmoves.loccode=locations.loccode
-			WHERE debtorno='" . $DebtorNo . "'
-			ORDER BY trandate DESC";
+			stockmaster.description,
+			systypes.typename,
+			transno,
+			locations.locationname,
+			trandate,
+			stockmoves.branchcode,
+			price,
+			reference,
+			qty,
+			narrative
+		FROM stockmoves
+		INNER JOIN stockmaster
+			ON stockmaster.stockid=stockmoves.stockid
+		INNER JOIN systypes
+			ON stockmoves.type=systypes.typeid
+		INNER JOIN locations
+			ON stockmoves.loccode=locations.loccode";
+
+$SQLWhere=" WHERE stockmoves.debtorno='" . $DebtorNo . "'";
+
+if ($_SESSION['SalesmanLogin'] != '') {
+	$SQL .= " INNER JOIN custbranch
+				ON stockmoves.branchcode=custbranch.branchcode";
+	$SQLWhere .= " AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'";
+}
+
+$SQL .= $SQLWhere . " ORDER BY trandate DESC";
+
 $ErrMsg = _('The stock movement details could not be retrieved by the SQL because');
 $StockMovesResult = DB_query($SQL, $db, $ErrMsg);
 

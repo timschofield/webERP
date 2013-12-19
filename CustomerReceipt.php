@@ -410,7 +410,8 @@ if (isset($_POST['CommitBatch'])){
 											rate,
 											ovamount,
 											ovdiscount,
-											invtext)
+											invtext,
+											salesperson)
 					VALUES (
 						'" . $_SESSION['ReceiptBatch']->BatchNo . "',
 						12,
@@ -424,7 +425,8 @@ if (isset($_POST['CommitBatch'])){
 						'" . ($_SESSION['ReceiptBatch']->FunctionalExRate*$_SESSION['ReceiptBatch']->ExRate) . "',
 						'" . -$ReceiptItem->Amount . "',
 						'" . -$ReceiptItem->Discount . "',
-						'" . $ReceiptItem->Narrative. "'
+						'" . $ReceiptItem->Narrative. "',
+						'" . $_SESSION['SalesmanLogin']. "'
 					)";
 			$DbgMsg = _('The SQL that failed to insert the customer receipt transaction was');
 			$ErrMsg = _('Cannot insert a receipt transaction against the customer because') ;
@@ -604,6 +606,14 @@ if (isset($_POST['Search'])){
 					WHERE debtortrans.transno " . LIKE . " '%" . $_POST['CustInvNo'] . "%'
 					AND debtorsmaster.currcode= '" . $_SESSION['ReceiptBatch']->Currency . "'";
 		}
+	
+		if ($_SESSION['SalesmanLogin'] != '') {
+			$SQL .= " AND EXISTS (
+						SELECT *
+						FROM 	custbranch
+						WHERE 	custbranch.debtorno = debtorsmaster.debtorno
+							AND custbranch.salesperson='" . $_SESSION['SalesmanLogin'] . "')";
+		}
 
 		$CustomerSearchResult = DB_query($SQL,$db,'','',false,false);
 		if (DB_error_no($db) !=0) {
@@ -674,8 +684,11 @@ customer record returned by the search - this record is then auto selected */
 			ON debtorsmaster.currcode = currencies.currabrev
 			INNER JOIN debtortrans
 			ON debtorsmaster.debtorno = debtortrans.debtorno
-			WHERE debtorsmaster.debtorno = '" . $_POST['CustomerID'] . "'
-			GROUP BY debtorsmaster.name,
+			WHERE debtorsmaster.debtorno = '" . $_POST['CustomerID'] . "'";
+	if ($_SESSION['SalesmanLogin'] != '') {
+		$SQL .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
+	}
+	$SQL .= " GROUP BY debtorsmaster.name,
 				debtorsmaster.pymtdiscount,
 				debtorsmaster.currcode,
 				currencies.currency,
@@ -754,7 +767,7 @@ $SQL = "SELECT bankaccountname,
 		INNER JOIN bankaccountusers
 			ON bankaccounts.accountcode=bankaccountusers.accountcode
 		WHERE bankaccountusers.userid = '" . $_SESSION['UserID'] ."'
-ORDER BY bankaccountname";
+		ORDER BY bankaccountname";
 
 $ErrMsg = _('The bank accounts could not be retrieved because');
 $DbgMsg = _('The SQL used to retrieve the bank accounts was');

@@ -50,6 +50,9 @@ if (isset($_POST['submit'])) {
 
 	$_POST['BranchCode'] = mb_strtoupper($_POST['BranchCode']);
 
+	if ($_SESSION['SalesmanLogin'] != '') {
+		$_POST['Salesman'] = $_SESSION['SalesmanLogin'];
+	}
 	if (ContainsIllegalCharacters($_POST['BranchCode']) OR mb_strstr($_POST['BranchCode'],' ') OR mb_strstr($_POST['BranchCode'],'-')) {
 		$InputError = 1;
 		prnMsg(_('The Branch code cannot contain any of the following characters')." -  &amp; \' &lt; &gt;",'error');
@@ -169,6 +172,10 @@ if (isset($_POST['submit'])) {
 						deliverblind='" . $_POST['DeliverBlind'] . "'
 					WHERE branchcode = '".$SelectedBranch."' AND debtorno='".$DebtorNo."'";
 
+		if ($_SESSION['SalesmanLogin'] != '') {
+			$sql .= " AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'";
+		}
+
 		$msg = $_POST['BrName'] . ' '._('branch has been updated.');
 
 	} else if ($InputError !=1) {
@@ -286,6 +293,7 @@ if (isset($_POST['submit'])) {
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'DebtorTrans'
 
 	$sql= "SELECT COUNT(*) FROM debtortrans WHERE debtortrans.branchcode='".$SelectedBranch."' AND debtorno = '".$DebtorNo."'";
+
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {
@@ -333,6 +341,9 @@ if (isset($_POST['submit'])) {
 						echo '<br />' . _('There are').' ' . $myrow[0] . ' '._('contracts referring to this branch/customer');
 					} else {
 						$sql="DELETE FROM custbranch WHERE branchcode='" . $SelectedBranch . "' AND debtorno='" . $DebtorNo . "'";
+						if ($_SESSION['SalesmanLogin'] != '') {
+							$SQL .= " AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'";
+						}
 						$ErrMsg = _('The branch record could not be deleted') . ' - ' . _('the SQL server returned the following message');
 							$result = DB_query($sql,$db,$ErrMsg);
 						if (DB_error_no($db)==0){
@@ -369,6 +380,10 @@ if (!isset($SelectedBranch)){
 				INNER JOIN taxgroups
 				ON custbranch.taxgroupid=taxgroups.taxgroupid
 				WHERE custbranch.debtorno = '".$DebtorNo."'";
+	
+	if ($_SESSION['SalesmanLogin'] != '') {
+		$sql .= " AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'";
+	}
 
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_row($result);
@@ -516,6 +531,10 @@ if (!isset($_GET['delete'])) {
 					FROM custbranch
 					WHERE branchcode='".$SelectedBranch."'
 					AND debtorno='".$DebtorNo."'";
+		
+		if ($_SESSION['SalesmanLogin'] != '') {
+			$sql .= " AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'";
+		}
 
 		$result = DB_query($sql, $db);
 		$myrow = DB_fetch_array($result);
@@ -605,7 +624,7 @@ if (!isset($_GET['delete'])) {
 		echo '<table class="selection">
 				<tr>
 					<td>' . _('Branch Code'). ':</td>
-					<td><input data-type="no-illegal-chars" ' . (in_array('BranchCode',$Errors) ?  'class="inputerror"' : '' ) . '" tabindex="1" type="text" name="BranchCode" required="required" title ="'._('Up to 10 characters for the branch code. The following characters are prohibited:') . ' \' &quot; + . &amp; \\ &gt; &lt;" placeholder="'._('alpha-numeric').'" size="12" maxlength="10" value="' . $_POST['BranchCode'] . '" /></td>
+					<td><input data-type="no-illegal-chars" ' . (in_array('BranchCode',$Errors) ?  'class="inputerror"' : '' ) . ' tabindex="1" type="text" name="BranchCode" required="required" title ="'._('Up to 10 characters for the branch code. The following characters are prohibited:') . ' \' &quot; + . &amp; \\ &gt; &lt;" placeholder="'._('alpha-numeric').'" size="12" maxlength="10" value="' . $_POST['BranchCode'] . '" /></td>
 				</tr>';
 		$_POST['DeliverBlind'] = $_SESSION['DefaultBlindPackNote'];
 	}
@@ -619,14 +638,13 @@ if (!isset($_GET['delete'])) {
 	echo _('Branch Name').':</td>';
 	if (!isset($_POST['BrName'])) {$_POST['BrName']='';}
 	echo '<td><input tabindex="2" type="text" autofocus="autofocus" required="required" name="BrName" title="' . _('The branch name should identify the particular delivery address of the customer and must be entered') . '" minlength="5" size="41" maxlength="40" value="'. $_POST['BrName'].'" /></td>
-		</tr>
-		<tr>
+		</tr>';
+	echo '<tr>
 			<td>' . _('Branch Contact').':</td>';
 	if (!isset($_POST['ContactName'])) {$_POST['ContactName']='';}
 	echo '<td><input tabindex="3" type="text" name="ContactName" required="required" size="41" maxlength="40" value="'. $_POST['ContactName'].'" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Street Address 1 (Street)').':</td>';
+		</tr>';
+	echo '<tr><td>' . _('Street Address 1 (Street)').':</td>';
 	if (!isset($_POST['BrAddress1'])) {
 		$_POST['BrAddress1']='';
 	}
@@ -700,42 +718,49 @@ if (!isset($_GET['delete'])) {
 	echo '<td><input ' .(in_array('FwdDate',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="12" class="integer" name="FwdDate" size="4" maxlength="2" value="'. $_POST['FwdDate'].'" /></td>
 		</tr>';
 
+	if ($_SESSION['SalesmanLogin'] != '') {
+		echo '<tr>
+				<td>' . _('Salesperson').':</td><td>';
+		echo $_SESSION['UsersRealName'];
+		echo '</td>
+			</tr>';
+	}else{
 
-	//SQL to poulate account selection boxes
-	$sql = "SELECT salesmanname,
-					salesmancode
-			FROM salesman
-			WHERE current = 1";
+		//SQL to poulate account selection boxes
+		$sql = "SELECT salesmanname,
+						salesmancode
+				FROM salesman
+				WHERE current = 1";
 
-	$result = DB_query($sql,$db);
+		$result = DB_query($sql,$db);
 
-	if (DB_num_rows($result)==0){
-		echo '</table>';
-		prnMsg(_('There are no sales people defined as yet') . ' - ' . _('customer branches must be allocated to a sales person') . '. ' . _('Please use the link below to define at least one sales person'),'error');
-		echo '<p align="center"><a href="' . $RootPath . '/SalesPeople.php">' . _('Define Sales People') . '</a>';
-		include('includes/footer.inc');
-		exit;
-	}
-
-	echo '<tr>
-			<td>' . _('Salesperson').':</td>
-			<td><select tabindex="13" name="Salesman">';
-
-	while ($myrow = DB_fetch_array($result)) {
-		if (isset($_POST['Salesman']) AND $myrow['salesmancode']==$_POST['Salesman']) {
-			echo '<option selected="selected" value="';
-		} else {
-			echo '<option value="';
+		if (DB_num_rows($result)==0){
+			echo '</table>';
+			prnMsg(_('There are no sales people defined as yet') . ' - ' . _('customer branches must be allocated to a sales person') . '. ' . _('Please use the link below to define at least one sales person'),'error');
+			echo '<p align="center"><a href="' . $RootPath . '/SalesPeople.php">' . _('Define Sales People') . '</a>';
+			include('includes/footer.inc');
+			exit;
 		}
-		echo $myrow['salesmancode'] . '">' . $myrow['salesmanname'] . '</option>';
 
-	} //end while loop
+		echo '<tr>
+				<td>' . _('Salesperson').':</td>
+				<td><select tabindex="13" name="Salesman">';
 
-	echo '</select></td>
-		</tr>';
+		while ($myrow = DB_fetch_array($result)) {
+			if (isset($_POST['Salesman']) AND $myrow['salesmancode']==$_POST['Salesman']) {
+				echo '<option selected="selected" value="';
+			} else {
+				echo '<option value="';
+			}
+			echo $myrow['salesmancode'] . '">' . $myrow['salesmanname'] . '</option>';
 
-	DB_data_seek($result,0);
+		} //end while loop
 
+		echo '</select></td>
+			</tr>';
+
+	//	DB_data_seek($result,0); //by thumb
+	}
 	$sql = "SELECT areacode, areadescription FROM areas";
 	$result = DB_query($sql,$db);
 	if (DB_num_rows($result)==0){
@@ -797,8 +822,9 @@ if (!isset($_GET['delete'])) {
 		$_POST['PhoneNo']='';
 	}
 	echo '<td><input tabindex="16" type="tel" name="PhoneNo" pattern="[0-9+()\s-]*" size="22" maxlength="20" value="'. $_POST['PhoneNo'].'" /></td>
-		</tr>
-		<tr>
+		</tr>';
+
+	echo '<tr>
 			<td>' . _('Fax Number').':</td>';
 	if (!isset($_POST['FaxNo'])) {
 		$_POST['FaxNo']='';
@@ -855,6 +881,8 @@ if (!isset($_GET['delete'])) {
 
 	echo '	</select></td>
 		</tr>';
+	
+	
 
 	$SQL = "SELECT shipper_id, shippername FROM shippers";
 	$ShipperResults = DB_query($SQL,$db);

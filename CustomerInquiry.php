@@ -76,8 +76,13 @@ $SQL = "SELECT debtorsmaster.name,
      		AND debtorsmaster.currcode = currencies.currabrev
      		AND debtorsmaster.holdreason = holdreasons.reasoncode
      		AND debtorsmaster.debtorno = '" . $CustomerID . "'
-     		AND debtorsmaster.debtorno = debtortrans.debtorno
-		GROUP BY debtorsmaster.name,
+     		AND debtorsmaster.debtorno = debtortrans.debtorno";
+
+if ($_SESSION['SalesmanLogin'] != '') {
+	$SQL .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
+}
+
+$SQL .= " GROUP BY debtorsmaster.name,
 			currencies.currency,
 			paymentterms.terms,
 			paymentterms.daysbeforedue,
@@ -95,7 +100,7 @@ if (DB_num_rows($CustomerResult)==0){
 
 	$NIL_BALANCE = True;
 
-	$SQL =  "SELECT debtorsmaster.name,
+	$SQL = "SELECT debtorsmaster.name,
 					debtorsmaster.currcode,
 					currencies.currency,
 					currencies.decimalplaces,
@@ -105,10 +110,10 @@ if (DB_num_rows($CustomerResult)==0){
 					holdreasons.reasondescription
 			FROM debtorsmaster INNER JOIN paymentterms
 			ON debtorsmaster.paymentterms = paymentterms.termsindicator
-			INNER JOIN currencies
-			ON debtorsmaster.currcode = currencies.currabrev
 			INNER JOIN holdreasons
 			ON debtorsmaster.holdreason = holdreasons.reasoncode
+			INNER JOIN currencies
+			ON debtorsmaster.currcode = currencies.currabrev
 			WHERE debtorsmaster.debtorno = '" . $CustomerID . "'";
 
 	$ErrMsg =_('The customer details could not be retrieved by the SQL because');
@@ -190,8 +195,13 @@ $SQL = "SELECT systypes.typename,
 		FROM debtortrans INNER JOIN systypes
 		ON debtortrans.type = systypes.typeid
 		WHERE debtortrans.debtorno = '" . $CustomerID . "'
-		AND debtortrans.trandate >= '" . $DateAfterCriteria . "'
-		ORDER BY debtortrans.id";
+		AND debtortrans.trandate >= '" . $DateAfterCriteria . "'";
+
+if ($_SESSION['SalesmanLogin'] != '') {
+	$SQL .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
+}
+
+$SQL .= " ORDER BY debtortrans.id";
 
 $ErrMsg = _('No transactions were returned by the SQL because');
 $TransResult = DB_query($SQL,$db,$ErrMsg);
