@@ -481,7 +481,8 @@ $MenuItems['system']['Reports']['Caption'] = array(	_('Sales Types'),
 													_('Sales GL Interface Postings'),
 													_('COGS GL Interface Postings'),
 													_('Freight Costs Maintenance'),
-													_('Discount Matrix'));
+													_('Discount Matrix'),
+													_('Price Matrix'));
 
 $MenuItems['system']['Reports']['URL'] = array(	'/SalesTypes.php',
 												'/CustomerTypes.php',
@@ -496,7 +497,8 @@ $MenuItems['system']['Reports']['URL'] = array(	'/SalesTypes.php',
 												'/SalesGLPostings.php',
 												'/COGSGLPostings.php',
 												'/FreightCosts.php',
-												'/DiscountMatrix.php');
+												'/DiscountMatrix.php',
+												'/PriceMatrix.php');
 
 $MenuItems['system']['Maintenance']['Caption'] = array(	_('Inventory Categories Maintenance'),
 														_('Inventory Locations Maintenance'),
