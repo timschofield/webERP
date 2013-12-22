@@ -103,21 +103,18 @@ while ($myrow = DB_fetch_array($result)){
 echo '</select></td></tr>';
 
 
-$sql = "SELECT stockid FROM stockmaster WHERE stockid <>''";
+$sql = "SELECT stockid FROM stockmaster WHERE stockid <>'' LIMIT 300";//if the quantity is over, users have to input it himselves
 $result = DB_query($sql, $db);
 if (DB_num_rows($result) > 0) {
 	echo '<tr>
-			<td>' .  _('Stock Code') .': </td>
-			<td><select name="StockID">';
+		<td>' .  _('Stock Code') .': </td>
+		<td><input type="text" name="StockID" list="StockList" /></td>';
+	echo	'<datalist id="StockList">';
 
 	while ($myrow = DB_fetch_array($result)){
-		if ($myrow['stockid']==$_POST['DiscCat']){
-			echo '<option selected="selected" value="' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</option>';
-		} else {
 			echo '<option value="' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</option>';
-		}
 	}
-	echo '</select></td></tr>';
+		echo '</datalist>';
 } else {
 	echo '<tr><td><input type="hidden" name="StockID" value="" /></td></tr>';
 }
