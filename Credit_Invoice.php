@@ -480,6 +480,26 @@ if (!isset($_POST['ProcessCredit'])) {
 $DefaultDispatchDate = Date($_SESSION['DefaultDateFormat']);
 
 $OKToProcess = true;
+//Here we just validate if there is no credit qty available since the credit items not retrieve from salesorders, so following method is not 100% correct.
+if(isset($_POST['CreditType']) AND ($_POST['CreditType']=='WriteOff' OR $_POST['CreditType'] == 'Return' OR $_POST['CreditType']=='ReverseOverCharge')){
+	foreach ($_SESSION['CreditItems' . $identifier]->LineItems as $CreditLine) {
+		$SQL = "SELECT count(*) FROM salesorderdetails WHERE orderno = '".$_SESSION['CreditItems'.$identifier]->OrderNo."'
+									AND stkcode = '".$CreditLine->StockID."'
+									AND quantity >=".$CreditLine->QtyDispatched." 
+									AND qtyinvoiced >= ".$CreditLine->QtyDispatched;
+		$ErrMsg = _('Failed to retrieve salesoderdetails to compare if the credit is overkill');
+		$DuplicateCreditResult = DB_query($SQL,$db,$ErrMsg);
+		$myrow1 = DB_fetch_array($DuplicateCreditResult);
+		if($myrow1[0] == 0){
+			prnMsg(_('The credit quantity for ').$CreditLine->StockID.(' is over than quantity invoiced, must reduce the quantity to credit or you are duplicating the same invoice which is not allowed'),'error');
+			$OKToProcess = false;
+			include('includes/footer.inc');
+			exit;
+		}
+	}
+}
+	
+
 
 if ((isset($_POST['CreditType']) AND $_POST['CreditType']=='WriteOff') AND !isset($_POST['WriteOffGLCode'])){
 	prnMsg (_('The GL code to write off the credit value to must be specified. Please select the appropriate GL code for the selection box'),'info');
