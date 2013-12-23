@@ -37,8 +37,8 @@ if ( (isset($_POST['AddBatches']) AND $_POST['AddBatches']!='')) {
 							$AddThisBundle = true;
 						}
 					}
-					if ($AddThisBundle==true){
-						$LineItem->SerialItems[$_POST['SerialNo' . $i]] = new SerialItem ($_POST['SerialNo' . $i], ($InOutModifier>0?1:-1) * filter_number_format($_POST['Qty' . $i]));
+					if ($AddThisBundle==true){//the $InOutModifier should not appeared here. Otherwise, the users cannot remove the quantity but add it.
+						$LineItem->SerialItems[$_POST['SerialNo' . $i]] = new SerialItem ($_POST['SerialNo' . $i], ($InOutModifier>0?1:1) * filter_number_format($_POST['Qty' . $i]));
 					}
 				} /*end if ExistingBundleQty >0 */
 				else {
