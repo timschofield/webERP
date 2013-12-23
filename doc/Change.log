@@ -1,4 +1,5 @@
 webERP Change Log
+23/12/13 Exson: Fixed the controlled items cannot be removed due to the negative operator is modified and balance of a serial no is wrong due negative operator is missing during credit controlled items by KEYED method. Other input method has not be inspected. 
 22/12/2013 Exson: Add a fool-proof to Credit_Invoice.php to prevent an invoice was credit again and again. 
 22/12/2013 Exson: Modify the stock select element to a combox box which autocomplete the limited stock ID options to 300 in PriceMatrix.php. Otherwise, users have to input an stock ID themselves. To avoid a too long stock list as pointed by Tim.
 
