@@ -178,12 +178,12 @@
 			//The mysql database name cannot contains illegal characters such as "/","\","." etc
 			//and it should not contains illegal characters as file name such as "?""%"<"">"" " etc
 
-			if(!preg_match(',[a-zA-Z0-9_\&amp;\-\ ]*,',$_POST['Database'])){
+			if(!preg_match(',[a-z0-9_\&amp;\-\ ]*,',$_POST['Database'])){
 				$InputError = 1;
-				prnMsg(_('The database name should not contains illegal characters such as "/\?%:|<>" blank etc'),'error');
+				prnMsg(_('The database name must be lower case and should not contains illegal characters such as "/\?%:|<>" blank etc'),'error');
 
 			}
-			$DatabaseName = $_POST['Database'];
+			$DatabaseName = strtolower($_POST['Database']);
 		}else{
 				$InputError = 1;
 				prnMsg(_('The database name should not be empty'),'error');
@@ -482,7 +482,7 @@
 			session_destroy();
 
 			header('Location: ' . $Path_To_Root . '/index.php?newDb=1');
-			ini_set('max_execution_time', '60');
+			ini_set('max_execution_time', '120');
 			echo '<META HTTP-EQUIV="Refresh" CONTENT="0; URL=' . $Path_To_Root . '/index.php">';
 
 
@@ -526,10 +526,10 @@
 			}
 			if(preg_match(',[/\\\?%:\|<>\.\s"]+,',$_POST['Database'])){
 				$InputError = 1;
-				prnMsg(_('The database name should not contains illegal characters such as "/\?%:|<>" or blank spaces'),'error');
+				prnMsg(_('The database name should be lower case and not contains illegal characters such as "/\?%:|<>" or blank spaces'),'error');
 
 			}
-			$DatabaseName = $_POST['Database'];
+			$DatabaseName = strtolower($_POST['Database']);
 		}else{
 				$InputError = 1;
 				prnMsg(_('The database name should not be empty'),'error');
@@ -909,7 +909,7 @@ function DbConfig($Language,$MysqlExt = FALSE){//The screen for users to input m
                 </li>
                 <li>
                     <label for="Database"><?php echo _('Database Name'); ?>: </label>
-                    <input type="text" name="Database" id="Database" required="true" value="weberp" maxlength="16" placeholder="<?php echo _('The database name'); ?>" />
+                    <input type="text" name="Database" id="Database" required="true" pattern="^[a-z0-9$]+_$" value="weberp" maxlength="16" placeholder="<?php echo _('The database name'); ?>" />
                     <span><?php echo _('The database must have a valid name'); ?></span>
                 </li>
                 <li>
