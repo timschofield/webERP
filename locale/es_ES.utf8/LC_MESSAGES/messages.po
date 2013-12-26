@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-12-01 20:34+1300\n"
-"PO-Revision-Date: 2013-12-14 08:01-0600\n"
+"PO-Revision-Date: 2013-12-26 11:02-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -2699,7 +2699,7 @@ msgstr "Introduzca una parte del"
 #: Z_ChangeStockCategory.php:92 Z_ChangeStockCode.php:177
 #: ../webSHOP/includes/PlaceOrder.php:235
 msgid "Stock Code"
-msgstr "Código de Inventario"
+msgstr "Código de inventario"
 
 #: BOMInquiry.php:35 BOMs.php:875 ContractBOM.php:342 Contracts.php:769
 #: CounterReturns.php:1642 CounterSales.php:2253 CustomerReceipt.php:1155
@@ -11763,7 +11763,7 @@ msgstr "Mostrar todas las categorías de activos fijos"
 #: InternalStockCategoriesByRole.php:167 StockCategories.php:336
 #: StockCategories.php:346
 msgid "Category Code"
-msgstr "Código de la Categoría"
+msgstr "Código de categoría"
 
 #: FixedAssetCategories.php:255
 #, fuzzy
@@ -11774,7 +11774,7 @@ msgstr "El código de zona no puede tener más de 3 caracteres"
 #: FixedAssetCategories.php:283 POReport.php:741 POReport.php:1435
 #: SalesInquiry.php:977 StockCategories.php:377
 msgid "Category Description"
-msgstr "Descripción de la Categoría"
+msgstr "Descripción de categoría"
 
 #: FixedAssetCategories.php:284
 #, fuzzy
@@ -15154,9 +15154,8 @@ msgid "Are you sure you wish to delete this internal stock category code?"
 msgstr "¿Seguro que desea eliminar esta categoría de impuestos?"
 
 #: InternalStockCategoriesByRole.php:201
-#, fuzzy
 msgid "Select Stock Category Code"
-msgstr "Seleccionar una Categoría de Existencia"
+msgstr "Seleccionar un código de categoría de inventario"
 
 #: InternalStockRequestAuthorisation.php:7 includes/MainMenuLinksArray.php:203
 msgid "Authorise Internal Stock Requests"
@@ -15431,7 +15430,7 @@ msgstr "Enviar"
 #: SupplierPriceList.php:14 SupplierPriceList.php:224
 #: SupplierTenderCreate.php:659 SupplierTenders.php:388
 msgid "Search for Inventory Items"
-msgstr "Buscar Artículos del Inventario"
+msgstr "Buscar artículos de inventario"
 
 #: InternalStockRequest.php:319 InventoryQuantities.php:181 MRPReport.php:508
 #: ReorderLevel.php:231 SelectProduct.php:43 StockDispatch.php:378
@@ -15820,14 +15819,14 @@ msgstr "Reorden"
 #: InventoryValuation.php:15 MailInventoryValuation.php:51
 #: MailInventoryValuation.php:230 includes/MainMenuLinksArray.php:226
 msgid "Inventory Valuation Report"
-msgstr "Informe de Valoración del Inventario"
+msgstr "Informe de valoración de inventario"
 
 #: InventoryValuation.php:16 InventoryValuation.php:78
 #: MailInventoryValuation.php:21 MailInventoryValuation.php:52
 #: MailInventoryValuation.php:119 MailSalesReport_csv.php:30
 #: MailSalesReport.php:23
 msgid "Inventory Valuation"
-msgstr "Valoración del Inventario"
+msgstr "Valoración de inventario"
 
 #: InventoryValuation.php:80 MailInventoryValuation.php:121
 msgid "The inventory valuation could not be retrieved by the SQL because"
@@ -16320,9 +16319,8 @@ msgid "Allow internal requests?"
 msgstr "Cumplir con las Solicitudes de Existencia Internas"
 
 #: MailingGroupMaintenance.php:3 includes/MainMenuLinksArray.php:449
-#, fuzzy
 msgid "Mailing Group Maintenance"
-msgstr "Administrar Grupos de Impuestos"
+msgstr "Administrar grupos de correo"
 
 #: MailingGroupMaintenance.php:18
 msgid ""
@@ -16343,9 +16341,8 @@ msgid ""
 msgstr "La forma de pago no puede contener caracteres prohibidos"
 
 #: MailingGroupMaintenance.php:43
-#, fuzzy
 msgid "The Group Id must be integer"
-msgstr "El código de la cuenta debe ser un entero"
+msgstr "El código de grupo debe ser un entero"
 
 #: MailingGroupMaintenance.php:51
 #, fuzzy
@@ -16363,9 +16360,8 @@ msgid "Failed to delete the mail group which id is "
 msgstr ""
 
 #: MailingGroupMaintenance.php:71
-#, fuzzy
 msgid "The group id must be numeric"
-msgstr "El período final debe ser numérico"
+msgstr "El código de grupo debe ser un entero"
 
 #: MailingGroupMaintenance.php:87 MailingGroupMaintenance.php:107
 #: MailingGroupMaintenance.php:125
@@ -16452,9 +16448,8 @@ msgid "Please find herewith the stock valuation report"
 msgstr "Por favor, vea el informe de valoración de existencias adjunto"
 
 #: MailInventoryValuation.php:239
-#, fuzzy
 msgid "Print Inventory Valuation"
-msgstr "Imprimir Error de Valoración del Inventario"
+msgstr "Imprimir valoración de inventario"
 
 #: MailInventoryValuation.php:241
 #, fuzzy
@@ -16860,7 +16855,7 @@ msgstr "Tipo de Demanda"
 #: MRPCreateDemands.php:211 MRPShortages.php:267 PDFDeliveryDifferences.php:40
 #: PDFDIFOT.php:49 PDFOrdersInvoiced.php:49 PDFOrderStatus.php:45
 msgid "Inventory Category"
-msgstr "Categorìa de Inventario"
+msgstr "Categoría de inventario"
 
 #: MRPCreateDemands.php:213 MRPShortages.php:268
 msgid "All Stock Categories"
@@ -25131,9 +25126,8 @@ msgid "Submit Information"
 msgstr "Enviar Información"
 
 #: SalesCategories.php:434
-#, fuzzy
 msgid "Add Inventory to this category"
-msgstr "Añadir Inventario a esta Categoría."
+msgstr "Añadir inventario a esta categoría."
 
 #: SalesCategories.php:437
 msgid "Select Item"
@@ -25158,9 +25152,8 @@ msgid "No more Inventory items to add"
 msgstr "No hay más artículos de Inventario que añadir"
 
 #: SalesCategories.php:505
-#, fuzzy
 msgid "Inventory items for"
-msgstr "Artículos de Inventario"
+msgstr "Artículos de inventario para"
 
 #: SalesCategories.php:511
 #, fuzzy
@@ -28536,18 +28529,16 @@ msgid "Pay Flow Pro Vendor"
 msgstr ""
 
 #: ShopParameters.php:591
-#, fuzzy
 msgid "vendor"
-msgstr "inventario"
+msgstr "proveedor"
 
 #: ShopParameters.php:594
 msgid "Pay Flow Pro Merchant"
 msgstr ""
 
 #: ShopParameters.php:596
-#, fuzzy
 msgid "merchant"
-msgstr "Por Ciento"
+msgstr ""
 
 #: ShopParameters.php:599
 msgid "SwipeHQ Merchant ID"
@@ -29140,11 +29131,11 @@ msgstr ""
 
 #: StockCategories.php:208
 msgid "The stock category"
-msgstr "La categoría de existencia"
+msgstr "La categoría de inventario"
 
 #: StockCategories.php:240
 msgid "Stock GL"
-msgstr "CC Stock"
+msgstr "CC Inventario"
 
 #: StockCategories.php:241
 msgid "Adjts GL"
@@ -29156,15 +29147,15 @@ msgstr "Emisiones Contables"
 
 #: StockCategories.php:243
 msgid "Price Var GL"
-msgstr "CC Variación Precio"
+msgstr "CC Varianza en precio"
 
 #: StockCategories.php:244
 msgid "Usage Var GL"
-msgstr "CC Variación Uso"
+msgstr "CC Varianza en cantidad"
 
 #: StockCategories.php:245
 msgid "WIP GL"
-msgstr "CC Trabajo en Progreso"
+msgstr "CC Trabajo en proceso"
 
 #: StockCategories.php:268
 #, php-format
@@ -29179,7 +29170,7 @@ msgstr ""
 
 #: StockCategories.php:293
 msgid "Show All Stock Categories"
-msgstr "Mostrar todas las categorías de existencia"
+msgstr "Mostrar todas las categorías de inventario"
 
 #: StockCategories.php:347
 msgid ""
@@ -29194,11 +29185,11 @@ msgstr "se requiere una descripción"
 
 #: StockCategories.php:383
 msgid "Stock Type"
-msgstr "Tipo de Stock"
+msgstr "Tipo de inventario"
 
 #: StockCategories.php:386 StockCategories.php:388
 msgid "Finished Goods"
-msgstr "Bienes Terminados"
+msgstr "Bienes terminados"
 
 #: StockCategories.php:396 StockCategories.php:398
 msgid "Dummy Item - (No Movements)"
@@ -29206,11 +29197,11 @@ msgstr "Artículos Simulados - (Sin Movimiento)"
 
 #: StockCategories.php:401 StockCategories.php:403
 msgid "Labour"
-msgstr "Mano de Obra"
+msgstr "Mano de obra"
 
 #: StockCategories.php:410 SystemParameters.php:635
 msgid "Default Tax Category"
-msgstr "Clase de Impuesto Predeterminado"
+msgstr "Categoría predeterminada de impuesto"
 
 #: StockCategories.php:433
 msgid "Recovery GL Code"
@@ -29218,15 +29209,15 @@ msgstr "Recuperación del Código Contable"
 
 #: StockCategories.php:436
 msgid "Stock GL Code"
-msgstr "Cuenta Contable de Existencias"
+msgstr "Cuenta contable de inventario"
 
 #: StockCategories.php:452
 msgid "WIP GL Code"
-msgstr "Cuenta Contable de Trabajo en Progreso"
+msgstr "Cuenta contable de trabajo en proceso"
 
 #: StockCategories.php:467
 msgid "Stock Adjustments GL Code"
-msgstr "Cuenta Contable de Ajustes Inventario"
+msgstr "Cuenta contable de ajustes de inventario"
 
 #: StockCategories.php:482
 msgid "Internal Stock Issues GL Code"
@@ -29234,15 +29225,15 @@ msgstr "Código Contable de Emisiones Internas de Existencias"
 
 #: StockCategories.php:497
 msgid "Price Variance GL Code"
-msgstr "Cuenta Contable de Variación de Precio"
+msgstr "Cuenta contable de varianza en precio"
 
 #: StockCategories.php:515
 msgid "Labour Efficiency Variance GL Code"
-msgstr "Código Contable de Variación de Eficiencia Laboral"
+msgstr "Código contable de varianza en mano de obra"
 
 #: StockCategories.php:517
 msgid "Usage Variance GL Code"
-msgstr "Cuenta Contable de Variación de Uso"
+msgstr "Cuenta contable de varianza en cantidad"
 
 #: StockCategories.php:561
 msgid "Property Label"
@@ -29258,15 +29249,15 @@ msgstr "Valor predeterminado"
 
 #: StockCategories.php:564
 msgid "Numeric Value"
-msgstr "Valor Númerico"
+msgstr "Valor númerico"
 
 #: StockCategories.php:565
 msgid "Minimum Value"
-msgstr "Valor Mínimo"
+msgstr "Valor mínimo"
 
 #: StockCategories.php:566
 msgid "Maximum Value"
-msgstr "Valor Máximo"
+msgstr "Valor máximo"
 
 #: StockCategories.php:567
 msgid "Require in SO"
@@ -29286,7 +29277,7 @@ msgstr "Casilla de Verificación"
 
 #: StockCategories.php:591 StockCategories.php:593 StockCategories.php:625
 msgid "Date Box"
-msgstr "Fecha Caja"
+msgstr "Caja de fecha"
 
 #: StockCategories.php:613
 msgid ""
@@ -43872,7 +43863,7 @@ msgstr "Matriz de Descuentos"
 
 #: includes/MainMenuLinksArray.php:501
 msgid "Inventory Categories Maintenance"
-msgstr "Administrar Categorías de Inventario"
+msgstr "Administrar categorías de inventario"
 
 #: includes/MainMenuLinksArray.php:502
 msgid "Inventory Locations Maintenance"
@@ -49062,9 +49053,8 @@ msgid "Arriving Soon"
 msgstr ""
 
 #: ../webSHOP/ItemDetails.php:116
-#, fuzzy
 msgid "In Stock QTY"
-msgstr "Tipo de Stock"
+msgstr "Cantidad en inventario"
 
 #: ../webSHOP/ItemDetails.php:124
 #, fuzzy
@@ -49488,9 +49478,8 @@ msgid "Click for more information"
 msgstr "Cambiando la la información de la orden de trabajo"
 
 #: ../webSHOP/includes/Functions.php:50
-#, fuzzy
 msgid "Stock QTY"
-msgstr "Tipo de Stock"
+msgstr "Cantidad en inventario"
 
 #: ../webSHOP/includes/Functions.php:64 ../webSHOP/includes/header.php:227
 msgid "View Order"
