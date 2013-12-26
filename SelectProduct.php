@@ -91,8 +91,8 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 	echo '<tr>
 			<td style="width:40%" valign="top">
 			<table>'; //nested table
-	echo '<tr><th class="number">' . _('Category:') . '</th> <td colspan="2" class="select">' . $myrow['categorydescription'] , '</td></tr>';
-	echo '<tr><th class="number">' . _('Item Type:') . '</th>
+	echo '<tr><th class="number">' . _('Category') . ':</th> <td colspan="2" class="select">' . $myrow['categorydescription'] , '</td></tr>';
+	echo '<tr><th class="number">' . _('Item Type') . ':</th>
 			<td colspan="2" class="select">';
 	switch ($myrow['mbflag']) {
 		case 'A':
@@ -119,7 +119,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 			echo _('Manufactured Item');
 		break;
 	}
-	echo '</td><th class="number">' . _('Control Level:') . '</th><td class="select">';
+	echo '</td><th class="number">' . _('Control Level') . ':</th><td class="select">';
 	if ($myrow['serialised'] == 1) {
 		echo _('serialised');
 	} elseif ($myrow['controlled'] == 1) {

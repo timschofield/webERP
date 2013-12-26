@@ -120,7 +120,7 @@ echo '<tr>
 
 echo '<tr>
 	<td>' . _('Maximum Number of Records to Display') . ':</td>
-	<td><input type="text" class="integer" required="required" title="'._('Must be postive integer').'" name="DisplayRecordsMax" size="3" maxlength="3" value="' . $_POST['DisplayRecordsMax'] . '"  /></td>
+	<td><input type="text" class="integer" required="required" title="'._('The input must be positive integer').'" name="DisplayRecordsMax" size="3" maxlength="3" value="' . $_POST['DisplayRecordsMax'] . '"  /></td>
 	</tr>';
 
 

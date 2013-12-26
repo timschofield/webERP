@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-12-01 20:34+1300\n"
-"PO-Revision-Date: 2013-12-26 11:02-0600\n"
+"PO-Revision-Date: 2013-12-26 12:40-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -3349,6 +3349,8 @@ msgid ""
 "Enter the name of the business. This will appear on all reports and at the "
 "top of each screen. "
 msgstr ""
+"Introduzca el nombre de la empresa. Esto aparecerá en todos los informes y "
+"en la parte superior de cada pantalla."
 
 #: CompanyPreferences.php:178
 msgid "Official Company Number"
@@ -3367,6 +3369,8 @@ msgid ""
 "Enter the first line of the company registered office. This will appear on "
 "invoices and statements."
 msgstr ""
+"Introduzca la primera línea del domicilio social de la compañía. Esto "
+"aparecerá en las facturas y declaraciones."
 
 #: CompanyPreferences.php:193 Factors.php:214
 msgid "Address Line 2"
@@ -3377,6 +3381,8 @@ msgid ""
 "Enter the second line of the company registered office. This will appear on "
 "invoices and statements."
 msgstr ""
+"Introduzca la segunda línea del domicilio social de la compañía. Esto "
+"aparecerá en las facturas y declaraciones."
 
 #: CompanyPreferences.php:198 Factors.php:218
 msgid "Address Line 3"
@@ -3387,6 +3393,8 @@ msgid ""
 "Enter the third line of the company registered office. This will appear on "
 "invoices and statements."
 msgstr ""
+"Introduzca la tercera línea del domicilio social de la compañía. Esto "
+"aparecerá en las facturas y declaraciones."
 
 #: CompanyPreferences.php:203 Factors.php:222
 msgid "Address Line 4"
@@ -3397,6 +3405,8 @@ msgid ""
 "Enter the fourth line of the company registered office. This will appear on "
 "invoices and statements."
 msgstr ""
+"Introduzca la cuarta línea del domicilio social de la compañía. Esto "
+"aparecerá en las facturas y declaraciones."
 
 #: CompanyPreferences.php:208 Factors.php:226
 msgid "Address Line 5"
@@ -3408,17 +3418,19 @@ msgstr "Dirección línea 6"
 
 #: CompanyPreferences.php:218
 msgid "Telephone Number"
-msgstr "Teléfono"
+msgstr "Número de teléfono"
 
 #: CompanyPreferences.php:219
 msgid ""
 "Enter the main telephone number of the company registered office. This will "
 "appear on invoices and statements."
 msgstr ""
+"Introduzca el número de teléfono principal del domicilio social de la "
+"compañía. Esto aparecerá en las facturas y declaraciones."
 
 #: CompanyPreferences.php:223
 msgid "Facsimile Number"
-msgstr "Fax"
+msgstr "Número de facsímil"
 
 #: CompanyPreferences.php:228 CustLoginSetup.php:162 Suppliers.php:734
 #: Suppliers.php:956 SupplierTenderCreate.php:410 SuppLoginSetup.php:145
@@ -3431,6 +3443,8 @@ msgid ""
 "Enter the main company email address. This will appear on invoices and "
 "statements."
 msgstr ""
+"Introduzca la dirección principal de correo electrónico de la empresa. Esto "
+"aparecerá en las facturas y declaraciones."
 
 #: CompanyPreferences.php:237
 msgid "Home Currency"
@@ -12170,7 +12184,7 @@ msgstr "El código de zona no puede tener más de 3 caracteres"
 #: FixedAssetItems.php:484 SalesCategories.php:363 StockClone.php:691
 #: Stocks.php:992
 msgid "Image File (.jpg)"
-msgstr "Fichero de Imagen (.jpg)"
+msgstr "Archivo de imagen (.jpg)"
 
 #: FixedAssetItems.php:512 FixedAssetRegister.php:264
 msgid "Asset Category"
@@ -13595,7 +13609,7 @@ msgstr "Todas las Cuentas"
 
 #: GLBalanceSheet.php:63 GLProfit_Loss.php:113
 msgid "Show all Accounts including zero balances"
-msgstr ""
+msgstr "Mostrar todas las cuentas incluyendo saldos en cero"
 
 #: GLBalanceSheet.php:64 GLProfit_Loss.php:114
 msgid ""
@@ -16738,9 +16752,8 @@ msgid "New Brand/Manufacturer Details"
 msgstr ""
 
 #: Manufacturers.php:300
-#, fuzzy
 msgid "Brand Image File (.jpg)"
-msgstr "Fichero de Imagen (.jpg)"
+msgstr "Archivo de imagen (.jpg)"
 
 #: MaterialsNotUsed.php:6
 msgid "Raw Materials Not Used Anywhere"
@@ -27041,9 +27054,8 @@ msgid "Maintain Discount Category"
 msgstr "Administrar clase de descuento"
 
 #: SelectProduct.php:502
-#, fuzzy
 msgid "Clone This Item"
-msgstr "Eliminar Este Artículo"
+msgstr "Clonar este artículo"
 
 #: SelectProduct.php:548 SelectProduct.php:550
 #, fuzzy
@@ -29379,9 +29391,8 @@ msgid "Print and Process"
 msgstr "Imprimir y Procesar"
 
 #: StockClone.php:5
-#, fuzzy
 msgid "Clone Item"
-msgstr "Convertir Artículos"
+msgstr "Clonar artículo"
 
 #: StockClone.php:27
 msgid ""
@@ -29405,6 +29416,10 @@ msgid ""
 "purchasing and pricing data as the selected item. Item image and general "
 "item details can be changed below prior to cloning."
 msgstr ""
+"La clonación creará un nuevo artículo con las mismas propiedades, imagen, "
+"costo, datos de compra y de precios como el elemento seleccionado. La imagen "
+"del artículo y los detalleres generales del artículo se pueden cambiar abajo "
+"antes de la clonación."
 
 #: StockClone.php:68
 #, fuzzy
@@ -29426,10 +29441,13 @@ msgid ""
 "There was an image file to clone but there was an error copying. Please "
 "upload a new image if required."
 msgstr ""
+"Había un archivo de imagen para clonar, pero hubo un error al copiar. Sube "
+"una nueva imagen si es necesario."
 
 #: StockClone.php:98
 msgid "Unable to delete the temporary image file for cloned item."
 msgstr ""
+"No se puede eliminar el archivo de imagen temporal para el artículo clonado."
 
 #: StockClone.php:124 Stocks.php:120 Z_ImportStocks.php:104
 msgid ""
@@ -29613,30 +29631,27 @@ msgid "The SQL that was used to update the language description and failed was"
 msgstr "EL SQL fallo:"
 
 #: StockClone.php:419
-#, fuzzy
 msgid ""
 "The cloned supplier purchasing details could not be added to the database "
 "because"
 msgstr ""
 "No se pudo agregar en la base de datos el detalle de la compra al proveedor "
-"porque"
+"porqueLos detalles clonados de compra al proveedor no pudieron ser añadidos "
+"a la base de datos porque"
 
 #: StockClone.php:469
-#, fuzzy
 msgid "The cloned pricing could not be added"
-msgstr "El nuevo precio no se podra añadir"
+msgstr "Los precios clonados no pudieron ser añadidos"
 
 #: StockClone.php:503
-#, fuzzy
 msgid "The cost details for the cloned stock item could not be updated because"
 msgstr ""
-"No se pudieron actualizar los detalles de costos del artículo de existencias "
+"Los detalles de costo para el artículo clonado no pudieron ser actualizados "
 "porque"
 
 #: StockClone.php:510
-#, fuzzy
 msgid "New Cloned Item"
-msgstr "Elemento nuevo"
+msgstr "Nuevo artículo clonado"
 
 #: StockClone.php:511
 msgid "We also attempted to setup item purchase data and pricing."
@@ -29664,9 +29679,8 @@ msgid "Review Item Purchase Data."
 msgstr "Revisar una orden de compra"
 
 #: StockClone.php:525
-#, fuzzy
 msgid "Costing was updated for this cloned item."
-msgstr "los precios no se actualizarán para este artículo"
+msgstr "Costeo fue actualizado para este artículo clonado."
 
 #: StockClone.php:526
 #, fuzzy
@@ -29674,14 +29688,12 @@ msgid "Review Item Cost"
 msgstr "Introducir Costo del Artículo"
 
 #: StockClone.php:584
-#, fuzzy
 msgid "Cloned Item Code"
-msgstr "Código de artículo"
+msgstr "Código de artículo clonado"
 
 #: StockClone.php:586
-#, fuzzy
 msgid "Enter a unique item code for the new item."
-msgstr "Introduzca arriba un código de artículo de existencias"
+msgstr "Introduzca un código de artículo único para el nuevo artículo."
 
 #: StockClone.php:694 Stocks.php:994
 #, fuzzy
@@ -33992,11 +34004,11 @@ msgstr ""
 
 #: SuppPaymentRun.php:266
 msgid "Illegal Characters are not allowed"
-msgstr ""
+msgstr "Caracteres ilegales no son permitidos"
 
 #: SuppPaymentRun.php:270
 msgid "Illegal characters are not allowed"
-msgstr ""
+msgstr "Caracteres ilegales no son permitidos"
 
 #: SuppPaymentRun.php:275
 msgid "For Suppliers Trading in"
@@ -36185,7 +36197,7 @@ msgstr "Valor de Ventas"
 
 #: TopItems.php:94 TopItems.php:105
 msgid "The input must be positive integer"
-msgstr "La entrada debe ser un número entero positivo"
+msgstr "La entrada debe ser un entero positivo"
 
 #: TopItems.php:98
 msgid "With less than"
@@ -36570,7 +36582,7 @@ msgstr "Cantidad máxima de registros a mostrar"
 
 #: UserSettings.php:124
 msgid "Must be postive integer"
-msgstr ""
+msgstr "Debe ser entero positivo"
 
 #: UserSettings.php:174
 msgid "New Password"
