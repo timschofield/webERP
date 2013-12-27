@@ -77,8 +77,24 @@ if (isset($_POST['tag'])){
 if (isset($_POST['Narrative'])){
 	$_SESSION['Adjustment' . $identifier]->Narrative = $_POST['Narrative'];
 }
+
+$sql = "SELECT loccode, locationname FROM locations";
+$resultStkLocs = DB_query($sql,$db);
+$LocationList=array();
+while ($myrow=DB_fetch_array($resultStkLocs)){
+	$LocationList[$myrow['loccode']]=$myrow['locationname'];
+}
+
 if (isset($_POST['StockLocation'])){
 	$_SESSION['Adjustment' . $identifier]->StockLocation = $_POST['StockLocation'];
+}else{
+	if(empty($_SESSION['Adjustment' . $identifier]->StockLocation)){
+		if(empty($_SESSION['UserStockLocation'])){
+			$_SESSION['Adjustment' . $identifier]->StockLocation=key(reset($LocationList));
+		}else{
+			$_SESSION['Adjustment' . $identifier]->StockLocation=$_SESSION['UserStockLocation'];
+		}
+	}
 }
 if (isset($_POST['Quantity'])){
 	if ($_POST['Quantity']=='' OR !is_numeric(filter_number_format($_POST['Quantity']))){
@@ -89,6 +105,9 @@ if (isset($_POST['Quantity'])){
 }
 if($_POST['Quantity'] != 0){//To prevent from serilised quantity changing to zero
 	$_SESSION['Adjustment' . $identifier]->Quantity = filter_number_format($_POST['Quantity']);
+}
+if(isset($_GET['OldIdentifier'])){
+	$_SESSION['Adjustment'.$identifier]->StockLocation=$_SESSION['Adjustment'.$_GET['OldIdentifier']]->StockLocation;
 }
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . _('Inventory Adjustment') . '" alt="" />' . ' ' . _('Inventory Adjustment') . '</p>';
@@ -120,7 +139,7 @@ if (isset($_POST['CheckCode'])) {
 		echo '<tr>
 				<td>' . $myrow[0] . '</td>
 				<td>' . $myrow[1] . '</td>
-				<td><a href="StockAdjustments.php?StockID='.$myrow[0].'&amp;Description='.$myrow[1].'">' . _('Adjust') . '</a>
+				<td><a href="StockAdjustments.php?StockID='.$myrow[0].'&amp;Description='.$myrow[1].'&amp;OldIdentifier='.$identifier.'">' . _('Adjust') . '</a>
 			</tr>';
 	}
 	echo '</table>';
@@ -285,7 +304,6 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 
 		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' ._('The location stock record could not be updated because');
 		$DbgMsg = _('The following SQL to update the stock record was used');
-
 		$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
 
 		if ($_SESSION['CompanyRecord']['gllink_stock']==1 AND $_SESSION['Adjustment' . $identifier]->StandardCost > 0){
@@ -424,23 +442,13 @@ if (isset($_SESSION['Adjustment' . $identifier]) AND mb_strlen($_SESSION['Adjust
 		</tr>';
 }
 
-echo '<tr><td>' .  _('Adjustment to Stock At Location').':</td>
-		<td><select name="StockLocation"> ';
-
-$sql = "SELECT loccode, locationname FROM locations";
-$resultStkLocs = DB_query($sql,$db);
-while ($myrow=DB_fetch_array($resultStkLocs)){
-	if (isset($_SESSION['Adjustment' . $identifier]->StockLocation)){
-		if ($myrow['loccode'] == $_SESSION['Adjustment' . $identifier]->StockLocation){
-			 echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
-		} else {
-			 echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
-		}
-	} elseif ($myrow['loccode']==$_SESSION['UserStockLocation']){
-		 echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname']  . '</option>';
-		 $_POST['StockLocation']=$myrow['loccode'];
+echo '<tr><td>'. _('Adjustment to Stock At Location').':</td>
+		<td><select name="StockLocation" onchange="submit();"> ';
+foreach ($LocationList as $Loccode=>$Locationname){
+	if ($Loccode == $_SESSION['Adjustment' . $identifier]->StockLocation){
+		 echo '<option selected="selected" value="' . $Loccode . '">' . $Locationname . '</option>';
 	} else {
-		 echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+		 echo '<option value="' . $Loccode . '">' . $Locationname . '</option>';
 	}
 }
 
