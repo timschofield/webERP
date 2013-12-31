@@ -68,7 +68,7 @@ if (isset($_POST['submit'])) {
 										VALUES ('" . $_POST['SelectedBankAccount'] . "',
 												'" . $_POST['SelectedUser'] . "')";
 
-			$msg = _('User:') . ' ' . $_POST['SelectedUser'].' '._('has been authorised to use') .' '. $_POST['SelectedBankAccount'] .  ' ' . _('bank account');
+			$msg = _('User') . ': ' . $_POST['SelectedUser'].' '._('has been authorised to use') .' '. $_POST['SelectedBankAccount'] .  ' ' . _('bank account');
 			$result = DB_query($sql,$db);
 			prnMsg($msg,'success');
 			unset($_POST['SelectedUser']);

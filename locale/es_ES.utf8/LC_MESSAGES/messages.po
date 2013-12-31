@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-12-01 20:34+1300\n"
-"PO-Revision-Date: 2013-12-26 12:40-0600\n"
+"PO-Revision-Date: 2013-12-26 20:33-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -1635,19 +1635,16 @@ msgid "Currency Of Account"
 msgstr "Divisa de la Cuenta"
 
 #: BankAccountUsers.php:4
-#, fuzzy
 msgid "Maintenance Of Bank Account Authorised Users"
-msgstr "Código de la Cuenta Bancaria"
+msgstr "Administración de usuarios autorizados en cuentas bancarias"
 
 #: BankAccountUsers.php:7 includes/MainMenuLinksArray.php:373
-#, fuzzy
 msgid "Bank Account Authorised Users"
-msgstr "Código de la Cuenta Bancaria"
+msgstr "Usuarios autorizados en cuentas bancarias"
 
 #: BankAccountUsers.php:31
-#, fuzzy
 msgid "You have not selected any bank account"
-msgstr "No ha seleccionado un gasto para reclamar en esta ficha"
+msgstr "No ha seleccionado ninguna cuenta bancaria"
 
 #: BankAccountUsers.php:44
 #, fuzzy
@@ -1655,19 +1652,16 @@ msgid "You have not selected an user to be authorised to use this bank account"
 msgstr "No ha seleccionado un gasto a añadir a esta ficha"
 
 #: BankAccountUsers.php:63
-#, fuzzy
 msgid "The user"
-msgstr "ID del Usuario"
+msgstr "El usuario"
 
 #: BankAccountUsers.php:63
-#, fuzzy
 msgid "already authorised to use this bank account"
-msgstr "¿Confirma que desea eliminar esta cuenta bancaria?"
+msgstr "ya autorizada para usar esta cuenta bancaria"
 
 #: BankAccountUsers.php:71
-#, fuzzy
 msgid "User:"
-msgstr "Usuario"
+msgstr "Usuario:"
 
 #: BankAccountUsers.php:71
 #, fuzzy
@@ -1675,7 +1669,6 @@ msgid "has been authorised to use"
 msgstr "ha sido enviada por correo electrónico a"
 
 #: BankAccountUsers.php:71 BankAccountUsers.php:84 BankAccountUsers.php:141
-#, fuzzy
 msgid "bank account"
 msgstr "Cuenta bancaria"
 
@@ -1690,9 +1683,8 @@ msgid "has been un-authorised to use"
 msgstr "ha sido enviada por correo electrónico a"
 
 #: BankAccountUsers.php:97
-#, fuzzy
 msgid "Select Bank Account"
-msgstr "Seleccionar Cuenta"
+msgstr "Seleccionar cuenta bancaria"
 
 #: BankAccountUsers.php:105 BankAccountUsers.php:205
 #: InternalStockCategoriesByRole.php:120 InternalStockCategoriesByRole.php:209
@@ -1727,19 +1719,16 @@ msgid "Cancel"
 msgstr "Cancelar"
 
 #: BankAccountUsers.php:141
-#, fuzzy
 msgid "Authorised users for"
-msgstr "Autorizado por"
+msgstr "Usuarios autorizados para"
 
 #: BankAccountUsers.php:159
-#, fuzzy
 msgid "Authorised users for bank account"
-msgstr "Autorizado por"
+msgstr "Usuarios autorizados de la cuenta bancaria"
 
 #: BankAccountUsers.php:161
-#, fuzzy
 msgid "User Code"
-msgstr "Código usuario"
+msgstr "Código de usuario"
 
 #: BankAccountUsers.php:162 PcTabs.php:206 PcTabs.php:307
 #: PO_AuthorisationLevels.php:125 SMTPServer.php:101 UserSettings.php:118
@@ -1752,14 +1741,13 @@ msgid "Are you sure you wish to un-authorise this user?"
 msgstr "¿Confirma que desea eliminar este usuario?"
 
 #: BankAccountUsers.php:178
-#, fuzzy, php-format
+#, php-format
 msgid "Un-authorise"
-msgstr "No Autorizado"
+msgstr "Desautorizar"
 
 #: BankAccountUsers.php:196
-#, fuzzy
 msgid "Select User"
-msgstr "Seleccionar Período Hasta"
+msgstr "Seleccionar usuario"
 
 #: BankMatching.php:6
 msgid "Bank Account Matching"
@@ -7859,9 +7847,8 @@ msgid "User Login"
 msgstr "Nombre de Usuario"
 
 #: CustLoginSetup.php:133
-#, fuzzy
 msgid "Enter a userid for this customer login"
-msgstr "Crear una Venta de Mostrador para este Cliente"
+msgstr "Introduzca una identificación de usuario para el acceso este cliente"
 
 #: CustLoginSetup.php:150 SMTPServer.php:103 SuppLoginSetup.php:133
 #: WWW_Users.php:454 includes/Login.php:99 install/index.php:926
@@ -7871,9 +7858,8 @@ msgid "Password"
 msgstr "Contraseña"
 
 #: CustLoginSetup.php:151
-#, fuzzy
 msgid "Enter a password for this customer login"
-msgstr "No hay artículos para este cliente"
+msgstr "Introduzca una contraseña para el acceso este cliente"
 
 #: CustLoginSetup.php:154 SuppLoginSetup.php:137 WWW_Users.php:281
 #: WWW_Users.php:458
@@ -9522,9 +9508,7 @@ msgstr "Moneda del cliente"
 
 #: Customers.php:639
 msgid "Customer PO Line on SO"
-msgstr ""
-"Línea PO (nº del cliente en la orden de compra) del Cliente en SO (orden de "
-"venta)"
+msgstr "Línea de orden de compra del cliente en orden de venta"
 
 #: Customers.php:647 Customers.php:1050 Customers.php:1055 Customers.php:1061
 msgid "Invoice Addressing"
@@ -9553,8 +9537,7 @@ msgstr "Moneda del cliente"
 
 #: Customers.php:1027
 msgid "Require Customer PO Line on SO"
-msgstr ""
-"Requerir Línea de la Orden de Compra del Cliente en el Pedido de Ventas"
+msgstr "Requerir línea de orden de compra del cliente en orden de venta"
 
 #: Customers.php:1084
 msgid "Contact Deleted"
@@ -9562,7 +9545,7 @@ msgstr "Contacto Eliminado"
 
 #: Customers.php:1116
 msgid "Add Contact"
-msgstr "Añadir un Contacto"
+msgstr "Añadir contacto"
 
 #: Customers.php:1150
 #, php-format
@@ -48209,7 +48192,7 @@ msgstr ""
 
 #: install/index.php:1044
 msgid "Time Zone"
-msgstr ""
+msgstr "Huso horario"
 
 #: install/index.php:1048
 #, fuzzy
@@ -48262,7 +48245,7 @@ msgstr "Correo electrónico"
 
 #: install/index.php:1083
 msgid "For example: admin@yourcompany.com"
-msgstr ""
+msgstr "Por ejemplo: administrador@suempresa.com"
 
 #: install/index.php:1086
 #, fuzzy
@@ -48276,7 +48259,7 @@ msgstr "Nueva Contraseña"
 
 #: install/index.php:1105
 msgid "Install"
-msgstr ""
+msgstr "Instalar"
 
 #: install/index.php:1127
 #, fuzzy

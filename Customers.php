@@ -988,7 +988,7 @@ if (!isset($DebtorNo)) {
 	if (isset($_GET['Modify'])) {
 		echo '<tr>
 				<td>' . _('Customer Currency') . ':</td>
-				<td>' . $CurrencyName[$_POST['CurrCode']] . '</td></tr>'; // Translates from currencies.currency ***
+				<td>' . $CurrencyName[$_POST['CurrCode']] . '</td></tr>';
 	} else {
 		$result=DB_query("SELECT currency, currabrev FROM currencies",$db);
 		echo '<tr>
