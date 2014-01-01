@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-12-01 20:34+1300\n"
-"PO-Revision-Date: 2013-12-26 20:33-0600\n"
+"PO-Revision-Date: 2014-01-01 09:44-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -1664,9 +1664,8 @@ msgid "User:"
 msgstr "Usuario:"
 
 #: BankAccountUsers.php:71
-#, fuzzy
 msgid "has been authorised to use"
-msgstr "ha sido enviada por correo electrónico a"
+msgstr "ha sido autorizado a usar"
 
 #: BankAccountUsers.php:71 BankAccountUsers.php:84 BankAccountUsers.php:141
 msgid "bank account"
@@ -1678,9 +1677,8 @@ msgid "The bank account user record could not be deleted because"
 msgstr "No se pudo obtener la configuración de cuentas bancarias porque"
 
 #: BankAccountUsers.php:84
-#, fuzzy
 msgid "has been un-authorised to use"
-msgstr "ha sido enviada por correo electrónico a"
+msgstr "ha sido desautorizado a usar"
 
 #: BankAccountUsers.php:97
 msgid "Select Bank Account"
@@ -8433,6 +8431,8 @@ msgid ""
 "Up to 10 characters for the branch code. The following characters are "
 "prohibited:"
 msgstr ""
+"Hasta 10 caracteres para el código de sucursal. Los siguientes caracteres "
+"están prohibidos:"
 
 #: CustomerBranches.php:608 Customers.php:443
 msgid "alpha-numeric"
@@ -8448,6 +8448,8 @@ msgid ""
 "The branch name should identify the particular delivery address of the "
 "customer and must be entered"
 msgstr ""
+"El nombre de la sucursal debe identificar la dirección de entrega particular "
+"del cliente y deberá ser introducida"
 
 #: CustomerBranches.php:629
 msgid "Street Address 1 (Street)"
@@ -8604,19 +8606,19 @@ msgstr "Ocultar detalles de la compañía y el logotipo"
 
 #: CustomerBranches.php:902
 msgid "Postal Address 1 (Street)"
-msgstr "Dirección Postal, 1 (Calle)"
+msgstr "Dirección postal 1"
 
 #: CustomerBranches.php:910
 msgid "Postal Address 2 (Suburb/City)"
-msgstr "Dirección Postal, 2 (Ciudad)"
+msgstr "Dirección postal 2"
 
 #: CustomerBranches.php:918
 msgid "Postal Address 3 (State)"
-msgstr "Dirección Postal, 3 (Provincia/Estado)"
+msgstr "Dirección postal 3"
 
 #: CustomerBranches.php:926
 msgid "Postal Address 4 (Postal Code)"
-msgstr "Dirección Postal, 4 (Código Postal)"
+msgstr "Dirección postal 4"
 
 #: CustomerBranches.php:934
 msgid "Postal Address 5"
@@ -8627,9 +8629,8 @@ msgid "Customers Internal Branch Code (EDI)"
 msgstr "Código de Sucursal Interno de los Clientes (EDI)"
 
 #: CustomerBranches.php:948
-#, fuzzy
 msgid "Enter Or Update Branch"
-msgstr "Introducir Sucursal"
+msgstr "Introducir o actualizar sucursal"
 
 #: CustomerInquiry.php:8
 msgid "Customer Inquiry"
@@ -8664,7 +8665,7 @@ msgstr "Límite de crédito"
 #: CustomerInquiry.php:133 CustomerReceipt.php:992 Customers.php:575
 #: Customers.php:967 Customers.php:973 includes/MainMenuLinksArray.php:474
 msgid "Credit Status"
-msgstr "Tipos de Estado de Crédito"
+msgstr "Estado de crédito"
 
 #: CustomerInquiry.php:137 CustomerReceipt.php:996
 msgid "ACCOUNT ON HOLD"
@@ -8673,7 +8674,7 @@ msgstr "Cuenta en Espera"
 #: CustomerInquiry.php:142 CustomerReceipt.php:1002
 #: PrintCustStatements.php:364 SupplierInquiry.php:143
 msgid "Total Balance"
-msgstr "Saldo Total"
+msgstr "Saldo total"
 
 #: CustomerInquiry.php:143 CustomerReceipt.php:1003
 #: PrintCustStatements.php:360 SalesPeople.php:206 Shipments.php:406
@@ -9407,6 +9408,8 @@ msgid ""
 "Up to 10 characters for the customer code. The following characters are "
 "prohibited:"
 msgstr ""
+"Hasta 10 caracteres para el código de cliente. Los siguientes caracteres "
+"están prohibidos:"
 
 #: Customers.php:451 Customers.php:759 Customers.php:798 Suppliers.php:692
 #: Suppliers.php:926
@@ -9516,7 +9519,7 @@ msgstr "Dirección de facturación"
 
 #: Customers.php:649 Customers.php:1051 Customers.php:1064 Customers.php:1067
 msgid "Address to HO"
-msgstr "Dirección del Cliente"
+msgstr "Dirección del cliente"
 
 #: Customers.php:650 Customers.php:1056 Customers.php:1065 Customers.php:1068
 msgid "Address to Branch"
@@ -9530,6 +9533,8 @@ msgstr "Agregar nuevo cliente"
 msgid ""
 "The customer code can be up to 10 alpha-numeric characters long or underscore"
 msgstr ""
+"El código de cliente puede ser de hasta 10 caracteres alfanuméricos o "
+"subrayado"
 
 #: Customers.php:991 Customers.php:996
 msgid "Customers Currency"
@@ -9631,7 +9636,7 @@ msgstr "Clic para previsualizar el crédito"
 #: CustomerTypes.php:6 CustomerTypes.php:21
 #: includes/MainMenuLinksArray.php:472
 msgid "Customer Types"
-msgstr "Tipos de Cliente"
+msgstr "Tipos de cliente"
 
 #: CustomerTypes.php:6 index.php:149 SupplierTypes.php:6
 msgid "Maintenance"
@@ -9639,11 +9644,11 @@ msgstr "Administración"
 
 #: CustomerTypes.php:22
 msgid "Customer Type Setup"
-msgstr "Configurar Tipos de Cliente"
+msgstr "Configurar tipos de cliente"
 
 #: CustomerTypes.php:23
 msgid "Add/edit/delete Customer Types"
-msgstr "Añadir/Editar/Eliminar Tipos de Clientes"
+msgstr "Añadir/Editar/Eliminar tipos de clientes"
 
 #: CustomerTypes.php:37
 msgid "The customer type name description must be 100 characters or less long"
@@ -9728,12 +9733,12 @@ msgstr "No se pudo eliminar el registro del Tipo porque"
 #: CustomerTypes.php:189 CustomerTypes.php:253 SupplierTypes.php:172
 #: SupplierTypes.php:239
 msgid "Type ID"
-msgstr "ID del Tipo"
+msgstr "ID del tipo"
 
 #: CustomerTypes.php:190 CustomerTypes.php:264 SalesTypes.php:190
 #: SupplierTypes.php:173 SupplierTypes.php:248
 msgid "Type Name"
-msgstr "Nombre del Tipo"
+msgstr "Nombre del tipo"
 
 #: CustomerTypes.php:207
 #, php-format
@@ -9742,7 +9747,7 @@ msgstr "¿Confirma eliminar este Tipo de Cliente?"
 
 #: CustomerTypes.php:223 SupplierTypes.php:208
 msgid "Show All Types Defined"
-msgstr "Mostrar Todos los Tipos Definidos"
+msgstr "Mostrar todos los tipos definidos"
 
 #: CustomerTypes.php:265
 #, fuzzy
@@ -15906,19 +15911,19 @@ msgstr "Filas x Columnas"
 
 #: Labels.php:290 Labels.php:488
 msgid "Page Width"
-msgstr "Ancho de Página"
+msgstr "Ancho de página"
 
 #: Labels.php:291 Labels.php:492
 msgid "Page Height"
-msgstr "Altura de Página"
+msgstr "Alto de página"
 
 #: Labels.php:294 Labels.php:513
 msgid "Row Height"
-msgstr "Altura de Fila"
+msgstr "Alto de fila"
 
 #: Labels.php:295 Labels.php:517
 msgid "Column Width"
-msgstr "Ancho de Columna"
+msgstr "Ancho de columna"
 
 #: Labels.php:324 Labels.php:349
 #, php-format
@@ -15931,7 +15936,7 @@ msgstr "Revisar todos los registros definidos de etiquetas"
 
 #: Labels.php:431
 msgid "Label Description"
-msgstr "Descripción de la Etiqueta"
+msgstr "Descripción de etiqueta"
 
 #: Labels.php:435
 msgid "Label Paper Size"
@@ -15943,7 +15948,7 @@ msgstr "Tamaño Personalizado"
 
 #: Labels.php:497
 msgid "Label Height"
-msgstr "Altura de la Etiqueta"
+msgstr "Alto de etiqueta"
 
 #: Labels.php:501
 msgid "Label Width"
@@ -15951,7 +15956,7 @@ msgstr "Ancho de Etiqueta"
 
 #: Labels.php:505
 msgid "Top Margin"
-msgstr "Márgen al Tope"
+msgstr "Margen superior"
 
 #: Labels.php:509
 msgid "Left Margin"
@@ -16252,22 +16257,18 @@ msgid ""
 msgstr ""
 
 #: Locations.php:556
-#, fuzzy
 msgid "Delivery Address 1 (Building)"
-msgstr "Dirección de Entrega 1"
+msgstr "Dirección de entrega 1"
 
 #: Locations.php:564
-#, fuzzy
 msgid "Delivery Address 3 (Suburb)"
-msgstr "Dirección de Entrega 1"
+msgstr "Dirección de entrega 3"
 
 #: Locations.php:568
-#, fuzzy
 msgid "Delivery Address 4 (City)"
-msgstr "Dirección de Entrega 1"
+msgstr "Dirección de entrega 4"
 
 #: Locations.php:572
-#, fuzzy
 msgid "Delivery Address 5 (Zip Code)"
 msgstr "Dirección de entrega 5"
 
@@ -23238,14 +23239,12 @@ msgid "Preferred supplier purchasing"
 msgstr "Proveedor Preferido: "
 
 #: PurchaseByPrefSupplier.php:558
-#, fuzzy
 msgid "Enter the quantity to purchase of this item"
-msgstr "Introduzca la fecha hasta la que se listarán las órdenes"
+msgstr "Introduzca la cantidad a comprar de este artículo"
 
 #: PurchaseByPrefSupplier.php:563
-#, fuzzy
 msgid "Create Purchase Order"
-msgstr "Imprimir orden de compra"
+msgstr "Crear orden de compra"
 
 #: PurchaseByPrefSupplier.php:563
 msgid ""
@@ -26492,18 +26491,17 @@ msgid "Enter extract of text in the Account name"
 msgstr "Indicar una parte del nombre de la Cuenta"
 
 #: SelectGLAccount.php:88
-#, fuzzy
 msgid "Select an Account Code"
-msgstr "Seleccionar Cuenta"
+msgstr "Seleccionar un código de cuenta"
 
 #: SelectGLAccount.php:115
 msgid "Account Type"
 msgstr "Tipo de Cuenta"
 
 #: SelectGLAccount.php:116 SelectGLAccount.php:131
-#, fuzzy, php-format
+#, php-format
 msgid "Inquiry"
-msgstr "Ejecutar Consulta"
+msgstr "Consulta"
 
 #: SelectOrderItems.php:12
 msgid "Modifying Order"
@@ -26726,9 +26724,8 @@ msgid ""
 msgstr ""
 
 #: SelectOrderItems.php:1418
-#, fuzzy
 msgid "Enter the quantity of this item ordered by the customer"
-msgstr "La cantidad del artículo del pedido debe ser numérica"
+msgstr "Introducir la cantidad de este artículo pedida por el cliente"
 
 #: SelectOrderItems.php:1420
 msgid "invoiced"
@@ -26802,14 +26799,12 @@ msgid "Enter the customer purchase order reference"
 msgstr "Referencia de la Orden de Trabajo"
 
 #: SelectOrderItems.php:1872
-#, fuzzy
 msgid "Enter the item code ordered"
-msgstr "Introduzca arriba un código de artículo de existencias"
+msgstr "Introducir el código de artículo pedido"
 
 #: SelectOrderItems.php:1873
-#, fuzzy
 msgid "Enter the quantity of the item ordered by the customer"
-msgstr "La cantidad del artículo del pedido debe ser numérica"
+msgstr "Introducir la cantidad del artículo pedida por el cliente"
 
 #: SelectOrderItems.php:1875
 #, fuzzy
@@ -27041,14 +27036,12 @@ msgid "Clone This Item"
 msgstr "Clonar este artículo"
 
 #: SelectProduct.php:548 SelectProduct.php:550
-#, fuzzy
 msgid "Enter text that you wish to search for in the item description"
-msgstr "Introduzca una parte de la descripción"
+msgstr "Introducir el texto que desea buscar en la descripción del artículo"
 
 #: SelectProduct.php:556 SelectProduct.php:558
-#, fuzzy
 msgid "Enter text that you wish to search for in the item code"
-msgstr "Introduzca la fecha hasta la que se listarán las órdenes"
+msgstr "Introducir el texto que desea buscar en el código del artículo"
 
 #: SelectRecurringSalesOrder.php:5
 msgid "Search Recurring Sales Orders"
@@ -28429,11 +28422,11 @@ msgstr "Fecha Abono"
 
 #: ShopParameters.php:514 ShopParameters.php:516
 msgid "PayPal Pro"
-msgstr ""
+msgstr "PayPal Pro"
 
 #: ShopParameters.php:519 ShopParameters.php:521
 msgid "PayFlow Pro"
-msgstr ""
+msgstr "PayFlow Pro"
 
 #: ShopParameters.php:524 ShopParameters.php:526
 #, fuzzy
@@ -28470,7 +28463,7 @@ msgstr "Cuenta de Control de Acreedores"
 
 #: ShopParameters.php:562
 msgid "PayPal Pro User"
-msgstr ""
+msgstr "Usuario de PayPal Pro"
 
 #: ShopParameters.php:564
 msgid ""
@@ -47888,9 +47881,8 @@ msgid ""
 msgstr "El Plan de Cuentas no se pudo obtener porque"
 
 #: install/index.php:263
-#, fuzzy
 msgid "The user language defintion is not in the correct format"
-msgstr "El archivo seleccionado contiene campos en el orden incorrecto ("
+msgstr "La definición del idioma del usuario no está en el formato correcto"
 
 #: install/index.php:270
 msgid ""
@@ -48048,9 +48040,8 @@ msgid "If you are unsure of an option value, you may keep the default setting."
 msgstr ""
 
 #: install/index.php:760
-#, fuzzy
 msgid "Select your language"
-msgstr "Seleccionar su departamento"
+msgstr "Seleccione su idioma"
 
 #: install/index.php:763
 msgid ""
@@ -48059,7 +48050,6 @@ msgid ""
 msgstr ""
 
 #: install/index.php:767
-#, fuzzy
 msgid "Language:"
 msgstr "Idioma"
 
@@ -48109,19 +48099,16 @@ msgid "Commonly: localhost or 127.0.0.1"
 msgstr ""
 
 #: install/index.php:912
-#, fuzzy
 msgid "The database name"
-msgstr "Nombre de Base de Datos"
+msgstr "El nombre de la base de datos"
 
 #: install/index.php:913
-#, fuzzy
 msgid "The database must have a valid name"
-msgstr "La dirección de correo electrónico no parece ser válida"
+msgstr "La base de datos debe tener un nombre válido"
 
 #: install/index.php:916
-#, fuzzy
 msgid "Database Prefix"
-msgstr "Nombre de Base de Datos"
+msgstr "Prefijo de base de datos"
 
 #: install/index.php:917
 msgid "Useful with shared hosting"
@@ -48132,23 +48119,20 @@ msgid "Optional: in the form of prefix_"
 msgstr ""
 
 #: install/index.php:921
-#, fuzzy
 msgid "Database User Name"
-msgstr "Nombre de Base de Datos"
+msgstr "Nombre de usuario de la base de datos"
 
 #: install/index.php:922
-#, fuzzy
 msgid "A valid database user name"
-msgstr "La Fecha es inválida"
+msgstr "Un nombre de usuario la base de datos válido"
 
 #: install/index.php:923
 msgid "Must be a user that has permission to create a database"
 msgstr ""
 
 #: install/index.php:927
-#, fuzzy
 msgid "mySQL user password"
-msgstr "Contraseña de Usuario"
+msgstr "Contraseña de usuario de MySQL"
 
 #: install/index.php:928
 #, fuzzy
@@ -48156,9 +48140,8 @@ msgid "Enter the user password if one exists"
 msgstr "Introduzca una parte de la Dirección"
 
 #: install/index.php:960
-#, fuzzy
 msgid "Check Again"
-msgstr "Comprobar Pieza"
+msgstr "Comprobar de nuevo"
 
 #: install/index.php:982
 msgid "Failed to connect to the database. Please correct the following error:"
@@ -48171,14 +48154,12 @@ msgid ""
 msgstr ""
 
 #: install/index.php:1012
-#, fuzzy
 msgid "Company Settings"
-msgstr "Configuración General"
+msgstr "Configuración de la compañía"
 
 #: install/index.php:1020
-#, fuzzy
 msgid "The name of your company"
-msgstr "La compañía financiera"
+msgstr "El nombre de su compañía"
 
 #: install/index.php:1023
 #, fuzzy
@@ -48195,9 +48176,8 @@ msgid "Time Zone"
 msgstr "Huso horario"
 
 #: install/index.php:1048
-#, fuzzy
 msgid "Company logo file"
-msgstr "Nombre de Empresa"
+msgstr "Archivo del logotipo de la compañía"
 
 #: install/index.php:1049
 msgid "A jpg file up to 10k, and not greater than 170px x 80px"
@@ -48234,42 +48214,36 @@ msgid "The default password is 'weberp' which you can change below."
 msgstr ""
 
 #: install/index.php:1077
-#, fuzzy
 msgid "webERP Admin Account"
-msgstr "Editar Cuenta"
+msgstr "Cuenta del administrador del webERP"
 
 #: install/index.php:1081
-#, fuzzy
 msgid "Email address"
-msgstr "Correo electrónico"
+msgstr "Dirección de correo electrónico"
 
 #: install/index.php:1083
 msgid "For example: admin@yourcompany.com"
 msgstr "Por ejemplo: administrador@suempresa.com"
 
 #: install/index.php:1086
-#, fuzzy
 msgid "webERP Password"
-msgstr "Nueva Contraseña"
+msgstr "Contraseña del webERP"
 
 #: install/index.php:1090
-#, fuzzy
 msgid "Re-enter Password"
-msgstr "Nueva Contraseña"
+msgstr "Reintroduzca la contraseña"
 
 #: install/index.php:1105
 msgid "Install"
 msgstr "Instalar"
 
 #: install/index.php:1127
-#, fuzzy
 msgid "Failed to open the new sql file"
-msgstr "no se pudo obtener porque"
+msgstr "No se pudo abrir el nuevo archivo sql"
 
 #: install/index.php:1132
-#, fuzzy
 msgid "Failed to populate the database "
-msgstr "No se puede ubicar en la base de datos"
+msgstr "No se pudo llenar la base de datos"
 
 #: install/index.php:1272
 msgid ""
@@ -48291,9 +48265,8 @@ msgid "Checkout"
 msgstr "Comprobar Total"
 
 #: ../webSHOP/Checkout.php:30
-#, fuzzy
 msgid "purchases"
-msgstr "Compras"
+msgstr "compras"
 
 #: ../webSHOP/Checkout.php:44 ../webSHOP/Checkout.php:96
 msgid "The swipeHQ payment request failed with a curl error"
@@ -48519,7 +48492,7 @@ msgstr "Total Adeudado Para"
 
 #: ../webSHOP/Checkout.php:373 ../webSHOP/Checkout.php:630
 msgid "ZIP"
-msgstr ""
+msgstr "Código postal"
 
 #: ../webSHOP/Checkout.php:393
 #, fuzzy
@@ -49376,33 +49349,28 @@ msgstr ""
 "El nombre de la cuenta debe ser de cincuenta caracteres o menos de longitud"
 
 #: ../webSHOP/Register.php:551
-#, fuzzy
 msgid "Update Your Account Details"
-msgstr "Detalles de la Cuenta"
+msgstr "Actualizar los detalles de su cuenta"
 
 #: ../webSHOP/Register.php:632
-#, fuzzy
 msgid "Billing Address - Number/Street"
-msgstr "Dirección Postal, 1 (Calle)"
+msgstr "Dirección de facturación - Número/Calle"
 
 #: ../webSHOP/Register.php:637
-#, fuzzy
 msgid "Billing Address - Street"
-msgstr "Dirección Postal, 1 (Calle)"
+msgstr "Dirección de facturación - Calle"
 
 #: ../webSHOP/Register.php:642
-#, fuzzy
 msgid "Billing Address - Suburb"
-msgstr "Dirección Postal, 2 (Ciudad)"
+msgstr "Dirección de facturación - Suburbio"
 
 #: ../webSHOP/Register.php:647
 msgid "Billing Address - City"
 msgstr ""
 
 #: ../webSHOP/Register.php:652
-#, fuzzy
 msgid "Billing Address - ZIP"
-msgstr "Dirección del Banco"
+msgstr "Dirección de facturación - Código postal"
 
 #: ../webSHOP/Register.php:657
 msgid "VAT No."
@@ -49415,39 +49383,32 @@ msgid ""
 msgstr ""
 
 #: ../webSHOP/Register.php:677
-#, fuzzy
 msgid "Delivery Address As Billing Address"
-msgstr "Dirección de Entrega 1"
+msgstr "Dirección de entrega como dirección de facturación"
 
 #: ../webSHOP/Register.php:680
-#, fuzzy
 msgid "Delivery Address - Number/Street"
-msgstr "Dirección de Entrega 1"
+msgstr "Dirección de entrega - Número/Calle"
 
 #: ../webSHOP/Register.php:718
-#, fuzzy
 msgid "Billing Currency"
-msgstr "Moneda"
+msgstr "Moneda de facturación"
 
 #: ../webSHOP/Register.php:740
-#, fuzzy
 msgid "Update Details"
-msgstr "Actualizar Detalles del Envío"
+msgstr "Actualizar detalles"
 
 #: ../webSHOP/includes/DisplayShoppingCart.php:25
-#, fuzzy
 msgid "Update Quantity"
-msgstr "Actualizar cotización"
+msgstr "Actualizar cantidad"
 
 #: ../webSHOP/includes/DisplayShoppingCart.php:26
-#, fuzzy
 msgid "Remove item"
-msgstr "Quitando Artículos"
+msgstr "Quitar artículo"
 
 #: ../webSHOP/includes/DisplayShoppingCart.php:29
-#, fuzzy
 msgid "Enter New Quantity"
-msgstr "Introduzca una Nuevo Pedido de Venta"
+msgstr "Introducir cantidad nueva"
 
 #: ../webSHOP/includes/DisplayShoppingCart.php:64
 #, fuzzy
@@ -49463,9 +49424,8 @@ msgstr "Costos de Flete"
 #: ../webSHOP/includes/DisplayShoppingCart.php:79
 #: ../webSHOP/includes/DisplayShoppingCart.php:85
 #: ../webSHOP/includes/Functions.php:61
-#, fuzzy
 msgid "incl tax"
-msgstr "Con Impuesto"
+msgstr "con impuesto"
 
 #: ../webSHOP/includes/Functions.php:27 ../webSHOP/includes/Functions.php:30
 #, fuzzy
@@ -49508,9 +49468,8 @@ msgid "web shop receipt"
 msgstr "Usar Para Recibos (Cobros)"
 
 #: ../webSHOP/includes/Functions.php:474
-#, fuzzy
 msgid "web"
-msgstr "weberp"
+msgstr "Web"
 
 #: ../webSHOP/includes/Functions.php:487
 #, fuzzy
@@ -49524,9 +49483,8 @@ msgid "Transaction ID"
 msgstr "Transacción"
 
 #: ../webSHOP/includes/Functions.php:752
-#, fuzzy
 msgid "Bank Account Details"
-msgstr "Detalles de la Cuenta"
+msgstr "Detalles de la cuenta bancaria"
 
 #: ../webSHOP/includes/GetCustomerDetails.php:46
 #, fuzzy
@@ -49573,9 +49531,8 @@ msgid "Update Account Details"
 msgstr "Detalles de la Cuenta"
 
 #: ../webSHOP/includes/header.php:239
-#, fuzzy
 msgid "Enter Email"
-msgstr "Introduzca una parte de ..."
+msgstr "Introducir correo-e"
 
 #: ../webSHOP/includes/Login.php:31
 msgid ""
@@ -49610,15 +49567,13 @@ msgid "Total Items Ordered Value"
 msgstr "Total Valor de Órden(es) en"
 
 #: ../webSHOP/includes/PlaceOrder.php:297
-#, fuzzy
 msgid "Payment information"
-msgstr "Asignaciones de Pagos"
+msgstr "Información sobre el pago"
 
 #: ../webSHOP/includes/PlaceOrder.php:303
 #: ../webSHOP/includes/PlaceOrder.php:314
-#, fuzzy
 msgid "Payment made by"
-msgstr "Resumen Pagos"
+msgstr "Pago hecho por"
 
 #: ../webSHOP/includes/PlaceOrder.php:307
 msgid ""
@@ -49724,19 +49679,16 @@ msgstr ""
 "deudores fue"
 
 #: ../webSHOP/includes/session.php:131
-#, fuzzy
 msgid "Pay Pal"
-msgstr "Usuario PayPal"
+msgstr "PayPal"
 
 #: ../webSHOP/includes/session.php:134
-#, fuzzy
 msgid "Credit Card"
-msgstr "Crédito "
+msgstr "Tarjeta de crédito"
 
 #: ../webSHOP/includes/session.php:137
-#, fuzzy
 msgid "Bank Transfer"
-msgstr "Transferencia"
+msgstr "Transferencia bancaria"
 
 #~ msgid "The input should be between 1~999"
 #~ msgstr "La entrada debe estar entre 1 y 999"

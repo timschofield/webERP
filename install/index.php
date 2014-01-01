@@ -30,7 +30,7 @@
 
 	//get the php-gettext function
 	//When users have not select the language, we guess user's language via the http header information.
-	//once the user has select their lanugage, use the language user selected
+	//once the user has selected their language, use the language user selected
 	if(!isset($_POST['Language'])){
 		if(!empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])){//get users preferred language
 			$ClientLang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'],0,2);
