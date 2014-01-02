@@ -1,4 +1,5 @@
 webERP Change Log
+2/1/14 Exson: Fixed php-mbstring extension detection failure in install/index.php during installation. 
 27/12/13 Thumb: Fixed the stock location will loss problem when move to StockAdjustmentsControlled.php interface in StockAdjustments.php.
 23/12/13 Exson: Fixed the controlled items cannot be removed due to the negative operator is modified and balance of a serial no is wrong due negative operator is missing during credit controlled items by KEYED method. Other input method has not be inspected. 
 22/12/2013 Exson: Add a fool-proof to Credit_Invoice.php to prevent an invoice was credit again and again. 
