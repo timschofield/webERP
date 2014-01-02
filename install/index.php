@@ -3,6 +3,10 @@
 	ini_set('max_execution_time', "600");
 	session_name('weberp_installation');
 	session_start();
+if(!extension_loaded('mbstring')){
+	echo 'The php-mbstring extension has not been installed or loaded, please correct your php configuration first';
+	exit;
+}
 
 /*
  * Web ERP Installer
