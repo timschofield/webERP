@@ -3,23 +3,13 @@
 /* $Id$ */
 
 include('includes/session.inc');
-
-if (isset($_POST['PrintPDF'])
+if ((isset($_POST['PrintPDF']) OR isset($_POST['CSV']))
 	AND isset($_POST['FromCriteria'])
 	AND mb_strlen($_POST['FromCriteria'])>=1
 	AND isset($_POST['ToCriteria'])
 	AND mb_strlen($_POST['ToCriteria'])>=1){
 
-	include('includes/PDFStarter.php');
-
-	$pdf->addInfo('Title',_('Inventory Valuation Report'));
-	$pdf->addInfo('Subject',_('Inventory Valuation'));
-	$FontSize=9;
-	$PageNumber=1;
-	$line_height=12;
-
-
-	/*Now figure out the inventory data to report for the category range under review */
+/*Now figure out the inventory data to report for the category range under review */
 	if ($_POST['Location']=='All'){
 		$SQL = "SELECT stockmaster.categoryid,
 					stockcategory.categorydescription,
@@ -85,6 +75,24 @@ if (isset($_POST['PrintPDF'])
 	   include('includes/footer.inc');
 	   exit;
 	}
+}
+
+if (isset($_POST['PrintPDF'])
+	AND isset($_POST['FromCriteria'])
+	AND mb_strlen($_POST['FromCriteria'])>=1
+	AND isset($_POST['ToCriteria'])
+	AND mb_strlen($_POST['ToCriteria'])>=1){
+
+	include('includes/PDFStarter.php');
+
+	$pdf->addInfo('Title',_('Inventory Valuation Report'));
+	$pdf->addInfo('Subject',_('Inventory Valuation'));
+	$FontSize=9;
+	$PageNumber=1;
+	$line_height=12;
+
+
+	
 	if (DB_num_rows($InventoryResult)==0){
 		$Title = _('Print Inventory Valuation Error');
 		include('includes/header.inc');
@@ -191,8 +199,23 @@ if (isset($_POST['PrintPDF'])
 
 	$pdf->OutputD($_SESSION['DatabaseName'] . '_Inventory_Valuation_' . Date('Y-m-d') . '.pdf');
 	$pdf->__destruct();
+	
+} elseif (isset($_POST['CSV'])) {
 
-} else { /*The option to print PDF was not hit */
+	$CSVListing = _('Category ID') .','. _('Category Description') .','. _('Stock ID') .','. _('Description') .','. _('Decimal Places') .','. _('Qty On Hand') .','. _('Units') .','. _('Unit Cost') .','. _('Total') . "\n";
+	while ($InventoryValn = DB_fetch_row($InventoryResult, $db)) {
+		$CSVListing .= implode(',', $InventoryValn) . "\n";
+	}
+	header('Content-Encoding: UTF-8');
+    header('Content-type: text/csv; charset=UTF-8');
+    header("Content-disposition: attachment; filename=InventoryValuation_Categories_" .  $_POST['FromCriteria']  . '-' .  $_POST['Toriteria']  .'.csv');
+    header("Pragma: public");
+    header("Expires: 0");
+    echo "\xEF\xBB\xBF"; // UTF-8 BOM
+	echo $CSVListing;
+	exit;
+
+} else { /*The option to print PDF nor to create the CSV was not hit */
 
 	$Title=_('Inventory Valuation Reporting');
 	include('includes/header.inc');
@@ -267,6 +290,7 @@ if (isset($_POST['PrintPDF'])
 			<br />
 			<div class="centre">
 				<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
+				<input type="submit" name="CSV" value="' . _('Output to CSV') . '" />
 			</div>';
         echo '</div>
               </form>';

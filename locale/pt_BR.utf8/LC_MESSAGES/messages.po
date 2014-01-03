@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WebERP 4.2112\n"
-"Report-Msgid-Bugs-To: <gsavix@gmail.com>\n"
+"Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-12-01 20:34+1300\n"
 "PO-Revision-Date: 2013-12-24 23:41-0300\n"
 "Last-Translator: gilberto dos santos alves <gsavix@gmail.com>\n"
@@ -22934,8 +22934,8 @@ msgid ""
 "Unable to determine the area where the sale is to, from the customer "
 "branches table, please select an area for this branch"
 msgstr ""
-"Incapaz de deteminar para qual área de vendas, da tabela de "
-"sucursais(filiais), por favor selecione uma area para esta filial"
+"Incapaz de deteminar para qual área de vendas, da tabela de sucursais"
+"(filiais), por favor selecione uma area para esta filial"
 
 #: RecurringSalesOrdersProcess.php:228
 msgid ""
@@ -32721,9 +32721,10 @@ msgid "Languages to Maintain Translations for Item Descriptions"
 msgstr ""
 
 #: SystemParameters.php:478
+#, fuzzy
 msgid ""
-"Select all the languages for which item description translations are to be "
-"maintained."
+"Select the languages in which translations of the item description will be "
+"maintained. The default language is excluded."
 msgstr "Selecione os idiomas para o qual a descrição do item será mantida"
 
 #: SystemParameters.php:484
@@ -33034,12 +33035,14 @@ msgid "Allowed Over Charge Proportion"
 msgstr "Permitido Sobre Taxa na Proporção"
 
 #: SystemParameters.php:706 SystemParameters.php:711
-msgid "The input must between 0~100"
+#, fuzzy
+msgid "The input must between 0 and 100"
 msgstr "Valor de ser entre 0 e 100"
 
 #: SystemParameters.php:706
-msgid "integer between 0-100"
-msgstr ""
+#, fuzzy
+msgid "integer between 0 and 100"
+msgstr "Um núm. entre 1 e 10 é esperado"
 
 #: SystemParameters.php:707
 msgid ""
@@ -33145,8 +33148,9 @@ msgid "Report Page Length"
 msgstr "Tamanho Pág. Relatório"
 
 #: SystemParameters.php:754
-msgid "The input should be between 1~999"
-msgstr ""
+#, fuzzy
+msgid "The input should be between 1 and 999"
+msgstr "registros devem ser entre 1 e 999"
 
 #: SystemParameters.php:754
 msgid " 1 to 999"
