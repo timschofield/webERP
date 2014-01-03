@@ -17,9 +17,11 @@ if ($PageNumber>1){
 $FontSize=10;
 $YPos= $Page_Height-$Top_Margin;
 $XPos=0;
-$pdf->addJpegFromFile($_SESSION['LogoFile'] ,$XPos+20,$YPos-50,0,60);
 
+/* Prints company logo */
+$pdf->addJpegFromFile($_SESSION['LogoFile'], $XPos+20, $YPos-50, 0, 60);
 
+/* Prints company info */
 $LeftOvers = $pdf->addTextWrap(50,$YPos-($line_height*6),300,$FontSize,$_SESSION['CompanyRecord']['coyname']);
 $LeftOvers = $pdf->addTextWrap(50,$YPos-($line_height*7),300,$FontSize,$_SESSION['CompanyRecord']['regoffice1']);
 $LeftOvers = $pdf->addTextWrap(50,$YPos-($line_height*8),300,$FontSize,$_SESSION['CompanyRecord']['regoffice2']);
@@ -27,6 +29,7 @@ $LeftOvers = $pdf->addTextWrap(50,$YPos-($line_height*9),300,$FontSize,$_SESSION
 $LeftOvers = $pdf->addTextWrap(50,$YPos-($line_height*10),300,$FontSize,$_SESSION['CompanyRecord']['regoffice4']);
 $LeftOvers = $pdf->addTextWrap(50,$YPos-($line_height*11),300,$FontSize,$_SESSION['CompanyRecord']['regoffice5']);
 $LeftOvers = $pdf->addTextWrap(50,$YPos-($line_height*12),300,$FontSize,$_SESSION['CompanyRecord']['regoffice6']);
+
 $LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-180,$YPos-($line_height*3),550,$FontSize, _('Customer Receipt Number ').'  : ' . $_GET['BatchNumber'] .'/'.$_GET['ReceiptNumber'] );
 $LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-180,$YPos-($line_height*4.5),140,$FontSize, _('Printed').': ' . Date($_SESSION['DefaultDateFormat']) . '   '. _('Page'). ' ' . $PageNumber);
 
@@ -64,16 +67,16 @@ $DebtorNo = $myrow['debtorno'];
 $Amount = $myrow['ovamount'];
 $Narrative = $myrow['invtext'];
 
-$sql="SELECT currency,
-		     decimalplaces
-		FROM currencies
-		WHERE currabrev=(SELECT currcode
-    	FROM banktrans
-		WHERE type=12
-		AND transno='" . $_GET['BatchNumber']."')";
+$sql = "SELECT 	currabrev,
+				decimalplaces
+			FROM currencies
+			WHERE currabrev=(SELECT currcode
+				FROM banktrans
+				WHERE type=12
+				AND transno='" . $_GET['BatchNumber']."')";
 $result=DB_query($sql, $db);
 $myrow=DB_fetch_array($result);
-$Currency=$myrow['currency'];
+$CurrencyCode=$myrow['currabrev'];
 $DecimalPlaces=$myrow['decimalplaces'];
 
 $sql="SELECT name,
@@ -89,8 +92,8 @@ $sql="SELECT name,
 $result=DB_query($sql, $db);
 $myrow=DB_fetch_array($result);
 
-$LeftOvers = $pdf->addTextWrap(50,$YPos,300,$FontSize,_('Received From').' : ');
-
+/* Prints customer info */
+$LeftOvers = $pdf->addTextWrap(50,$YPos,300,$FontSize,_('Received From').' :');
 $LeftOvers = $pdf->addTextWrap(150,$YPos,300,$FontSize, htmlspecialchars_decode($myrow['name']));
 $LeftOvers = $pdf->addTextWrap(150,$YPos-($line_height*1),300,$FontSize, htmlspecialchars_decode($myrow['address1']));
 $LeftOvers = $pdf->addTextWrap(150,$YPos-($line_height*2),300,$FontSize, htmlspecialchars_decode($myrow['address2']));
@@ -101,12 +104,14 @@ $LeftOvers = $pdf->addTextWrap(150,$YPos-($line_height*6),300,$FontSize, htmlspe
 
 $YPos=$YPos-($line_height*8);
 
-$LeftOvers = $pdf->addTextWrap(50,$YPos,300,$FontSize,_('The Sum Of').' : ');
-$LeftOvers = $pdf->addTextWrap(150,$YPos,300,$FontSize,locale_number_format(-$Amount,$DecimalPlaces).'  '.$Currency);
+$LeftOvers = $pdf->addTextWrap(50,$YPos,300,$FontSize, _('The Sum Of').' :');
+include('includes/CurrenciesArray.php'); // To get the currency name from the currency code.
+$LeftOvers = $pdf->addTextWrap(150,$YPos,300,$FontSize, locale_number_format(-$Amount,$DecimalPlaces).' '. $CurrencyCode . '-' . $CurrencyName[$CurrencyCode]);
 
 $YPos=$YPos-($line_height*2);
 
-$LeftOvers = $pdf->addTextWrap(50,$YPos,500,$FontSize,_('Details').' :     '.$Narrative);
+$LeftOvers = $pdf->addTextWrap(50,$YPos,500,$FontSize, _('Details').' :');
+$LeftOvers = $pdf->addTextWrap(150,$YPos,500,$FontSize, $Narrative);
 
 $YPos=$YPos-($line_height*8);
 
