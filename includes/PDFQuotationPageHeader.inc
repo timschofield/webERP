@@ -13,6 +13,8 @@ $XPos = $XPos + 80;
 
 $FontSize=18;
 $pdf->addText($XPos, 500,$FontSize, _('Quotation'));
+
+// Prints company info
 $FontSize=14;
 $YPos = 482;
 $pdf->addText($XPos, $YPos,$FontSize, $_SESSION['CompanyRecord']['coyname']);
@@ -35,8 +37,8 @@ $pdf->addText($XPos, $YPos-30,$FontSize, $myrow['deladd1']);
 $pdf->addText($XPos, $YPos-45,$FontSize, $myrow['deladd2']);
 $pdf->addText($XPos, $YPos-60,$FontSize, $myrow['deladd3'] . ' ' . $myrow['deladd4'] . ' ' . $myrow['deladd5']);
 
+// Prints 'Quotation For' info
 $YPos -= 80;
-
 $pdf->addText($XPos, $YPos,$FontSize, _('Quotation For').':');
 $pdf->addText($XPos, $YPos-15,$FontSize, $myrow['name']);
 $pdf->addText($XPos, $YPos-30,$FontSize, $myrow['address1']);
@@ -96,13 +98,22 @@ $YPos -= 37;
 $XPos = 40;
 
 $FontSize=10;
-$LeftOvers = $pdf->addTextWrap($XPos+2,$YPos,127,$FontSize, _('Item Code'),'left');
-$LeftOvers = $pdf->addTextWrap(145,$YPos,250,$FontSize, _('Item Description'),'left');
-$LeftOvers = $pdf->addTextWrap(420,$YPos,85,$FontSize, _('Quantity'),'right');
-$LeftOvers = $pdf->addTextWrap(485,$YPos,85,$FontSize,_('Price'),'right');
-$LeftOvers = $pdf->addTextWrap(535,$YPos,85,$FontSize, _('Discount'),'right');
-$LeftOvers = $pdf->addTextWrap(585,$YPos,85,$FontSize, _('Tax Class'),'right');
-$LeftOvers = $pdf->addTextWrap(650,$YPos,85,$FontSize, _('Tax Amount'),'right');
+$LeftOvers = $pdf->addTextWrap( 42, $YPos,103,$FontSize, _('Item Code'),'left');
+	if (strlen($LeftOvers) > 0) { // If translated text is greater than 103, prints remainder
+		$LeftOvers = $pdf->addTextWrap(585,$YPos-$FontSize,65,$FontSize, $LeftOvers,'left');
+	}
+$LeftOvers = $pdf->addTextWrap(145, $YPos,250,$FontSize, _('Item Description'),'left');
+$LeftOvers = $pdf->addTextWrap(420, $YPos, 85,$FontSize, _('Quantity'),'right');
+$LeftOvers = $pdf->addTextWrap(485, $YPos, 85,$FontSize, _('Price'),'right');
+$LeftOvers = $pdf->addTextWrap(535, $YPos, 85,$FontSize, _('Discount'),'right');
+$LeftOvers = $pdf->addTextWrap(615, $YPos, 55,$FontSize, _('Tax Class'),'right');
+	if (strlen($LeftOvers) > 0) { // If translated text is greater than 55, prints remainder
+		$LeftOvers = $pdf->addTextWrap(615,$YPos-$FontSize,55,$FontSize, $LeftOvers,'right');
+	}
+$LeftOvers = $pdf->addTextWrap(665, $YPos, 70,$FontSize, _('Tax Amount'),'right');
+	if (strlen($LeftOvers) > 0) { // If translated text is greater than 70, prints remainder
+		$LeftOvers = $pdf->addTextWrap(665, $YPos-$FontSize, 70,$FontSize, $LeftOvers,'right');
+	}
 $LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-90, $YPos, 90, $FontSize, _('Total'),'right');
 
 /*draw a box with nice round corner for entering line items */
