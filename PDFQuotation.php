@@ -107,7 +107,7 @@ if (DB_num_rows($result)==0){
 /* Then there's an order to print and its not been printed already (or its been flagged for reprinting/ge_Width=807;
 )
 LETS GO */
-$PaperSize = 'A4_Landscape'; //	PDFStarter.php: $Page_Width=842; $Page_Height=595; $Top_Margin=30; $Bottom_Margin=30; $Left_Margin=40; $Right_Margin=30;
+$PaperSize = 'A4_Landscape';// PDFStarter.php: $Page_Width=842; $Page_Height=595; $Top_Margin=30; $Bottom_Margin=30; $Left_Margin=40; $Right_Margin=30;
 include('includes/PDFStarter.php');
 $pdf->addInfo('Title', _('Customer Quotation') );
 $pdf->addInfo('Subject', _('Quotation') . ' ' . $_GET['QuotationNo']);
@@ -198,7 +198,7 @@ if (DB_num_rows($result)>0){
 		$LeftOvers = $pdf->addTextWrap(145,$YPos,295,$FontSize,$myrow2['description']);
 		$LeftOvers = $pdf->addTextWrap(420,$YPos,85,$FontSize,$DisplayQty,'right');
 		$LeftOvers = $pdf->addTextWrap(485,$YPos,85,$FontSize,$DisplayPrice,'right');
-		if ($DisplayDiscount > 0){
+		if ($DisplayDiscount > 0) {
 			$LeftOvers = $pdf->addTextWrap(535,$YPos,85,$FontSize,$DisplayDiscount,'right');
 		}
 		$LeftOvers = $pdf->addTextWrap(585,$YPos,85,$FontSize,$DisplayTaxClass,'right');
@@ -220,7 +220,6 @@ if (DB_num_rows($result)>0){
 		}
 		$line_height = 15;// Back to the default line height
 
-/*		$YPos -= $line_height;*/
 		$QuotationTotal +=$LineTotal;
 		$QuotationTotalEx +=$SubTot;
 		$TaxTotal +=$TaxAmount;
