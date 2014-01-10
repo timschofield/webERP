@@ -1,9 +1,12 @@
 webERP Change Log
+
 2/1/14 Exson: Fixed php-mbstring extension detection failure in install/index.php during installation. 
 27/12/13 Thumb: Fixed the stock location will loss problem when move to StockAdjustmentsControlled.php interface in StockAdjustments.php.
 23/12/13 Exson: Fixed the controlled items cannot be removed due to the negative operator is modified and balance of a serial no is wrong due negative operator is missing during credit controlled items by KEYED method. Other input method has not be inspected. 
-22/12/2013 Exson: Add a fool-proof to Credit_Invoice.php to prevent an invoice was credit again and again. 
-22/12/2013 Exson: Modify the stock select element to a combox box which autocomplete the limited stock ID options to 300 in PriceMatrix.php. Otherwise, users have to input an stock ID themselves. To avoid a too long stock list as pointed by Tim.
+6/1/14 Phil: Apply Tim's bug report regarding conversion of database name to lower case in ConnectDB.inc Although uppercase characters should not be included in database names, removing this trap allows backward compatibility with users who did install with upper case database name
+4/1/14 Phil: Add option to create CSV from inventory valuation rather than create PDF
+22/12/13 Exson: Add a fool-proof to Credit_Invoice.php to prevent an invoice was credit again and again. 
+22/12/13 Exson: Modify the stock select element to a combox box which autocomplete the limited stock ID options to 300 in PriceMatrix.php. Otherwise, users have to input an stock ID themselves. To avoid a too long stock list as pointed by Tim.
 
 21/12/13 Exson: Add price matrix features. Modified MainMenuLinksArray.php, GetPrice.inc and add pricematrix table and PriceMatrix.php
 20/12/13 Thumb: Salesman can only review his own customer's data 

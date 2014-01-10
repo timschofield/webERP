@@ -10,8 +10,8 @@ require_once ($PathPrefix .'includes/MiscFunctions.php');
 if (!isset($_SESSION['DatabaseName'])){ //need to get the database name from the file structure
 	if (isset($_POST['CompanyNameField'])){
 	    if (isset($CompanyList) && is_array($CompanyList)) {
-            foreach ($CompanyList as $key => $CompanyEntry){
-               if (is_dir('./companies/'.strtolower($CompanyEntry['database']).'') && ($key == $_POST['CompanyNameField']) ) {
+            foreach ($CompanyList as $CompanyEntryKey => $CompanyEntry){
+               if (is_dir('./companies/'. $CompanyEntry['database']) AND ($CompanyEntryKey == $_POST['CompanyNameField']) ) {
                    $_SESSION['DatabaseName'] = $CompanyEntry['database'];
                    $_SESSION['CompanyName'] = $CompanyEntry['company'];
                     include_once ($PathPrefix . 'includes/ConnectDB_' . $DBType . '.inc');
