@@ -1,6 +1,6 @@
 webERP Change Log
 
-
+11/1/14 CQZ: Fixed that no bank accounts recorded in gl in CounterReturns.php
 6/1/14 Phil: Apply Tim's bug report regarding conversion of database name to lower case in ConnectDB.inc Although uppercase characters should not be included in database names, removing this trap allows backward compatibility with users who did install with upper case database name
 4/1/14 Phil: Add option to create CSV from inventory valuation rather than create PDF
 2/1/14 Exson: Fixed php-mbstring extension detection failure in install/index.php during installation. 
