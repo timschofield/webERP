@@ -823,6 +823,20 @@ if (count($_SESSION['Items' . $identifier]->LineItems)>0){ /*only show return li
 	}
 	echo '</select></td></tr>';
 
+	$BankAccountsResult = DB_query("SELECT bankaccountname, accountcode FROM bankaccounts",$db);
+	
+	echo '<tr>
+			<td style="color:red">' . _('Bank Account') . ':</td>
+			<td><select name="BankAccount">';
+	while ($BankAccountsRow = DB_fetch_array($BankAccountsResult)){
+		if (isset($_POST['BankAccount']) AND $_POST['BankAccount'] == $BankAccountsRow['accountcode']){
+			echo '<option selected="selected" value="' . $BankAccountsRow['accountcode'] . '">' . $BankAccountsRow['bankaccountname'] . '</option>';
+		} else {
+			echo '<option value="' . $BankAccountsRow['accountcode'] . '">' . $BankAccountsRow['bankaccountname'] . '</option>';
+		}
+	}
+	echo '</select></td>
+		</tr>';
 	if (!isset($_POST['AmountPaid'])){
 		$_POST['AmountPaid'] =0;
 	}
