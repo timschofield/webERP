@@ -98,9 +98,9 @@ if (isset($_POST['submit'])) {
 	}
 	if ($_SESSION['geocode_integration']==1 ){
 		// Get the lat/long from our geocoding host
-		$sql = "SELECT * FROM geocode_param WHERE 1";
+		$SQL = "SELECT * FROM geocode_param WHERE 1";
 		$ErrMsg = _('An error occurred in retrieving the information');
-		$resultgeo = DB_query($sql, $db, $ErrMsg);
+		$resultgeo = DB_query($SQL, $db, $ErrMsg);
 		$row = DB_fetch_array($resultgeo);
 		$api_key = $row['geocode_key'];
 		$map_host = $row['map_host'];
@@ -141,7 +141,7 @@ if (isset($_POST['submit'])) {
 
 		/*SelectedBranch could also exist if submit had not been clicked this code would not run in this case cos submit is false of course see the 	delete code below*/
 
-		$sql = "UPDATE custbranch SET brname = '" . $_POST['BrName'] . "',
+		$SQL = "UPDATE custbranch SET brname = '" . $_POST['BrName'] . "',
 						braddress1 = '" . $_POST['BrAddress1'] . "',
 						braddress2 = '" . $_POST['BrAddress2'] . "',
 						braddress3 = '" . $_POST['BrAddress3'] . "',
@@ -173,7 +173,7 @@ if (isset($_POST['submit'])) {
 					WHERE branchcode = '".$SelectedBranch."' AND debtorno='".$DebtorNo."'";
 
 		if ($_SESSION['SalesmanLogin'] != '') {
-			$sql .= " AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'";
+			$SQL .= " AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'";
 		}
 
 		$msg = $_POST['BrName'] . ' '._('branch has been updated.');
@@ -182,7 +182,7 @@ if (isset($_POST['submit'])) {
 
 	/*Selected branch is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new Customer Branches form */
 
-		$sql = "INSERT INTO custbranch (branchcode,
+		$SQL = "INSERT INTO custbranch (branchcode,
 						debtorno,
 						brname,
 						braddress1,
@@ -252,7 +252,7 @@ if (isset($_POST['submit'])) {
 
 	$ErrMsg = _('The branch record could not be inserted or updated because');
 	if ($InputError==0) {
-		$result = DB_query($sql,$db, $ErrMsg);
+		$result = DB_query($SQL,$db, $ErrMsg);
 	}
 
 	if (DB_error_no($db) ==0 AND $InputError==0) {
@@ -292,18 +292,18 @@ if (isset($_POST['submit'])) {
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'DebtorTrans'
 
-	$sql= "SELECT COUNT(*) FROM debtortrans WHERE debtortrans.branchcode='".$SelectedBranch."' AND debtorno = '".$DebtorNo."'";
+	$SQL= "SELECT COUNT(*) FROM debtortrans WHERE debtortrans.branchcode='".$SelectedBranch."' AND debtorno = '".$DebtorNo."'";
 
-	$result = DB_query($sql,$db);
+	$result = DB_query($SQL,$db);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {
 		prnMsg(_('Cannot delete this branch because customer transactions have been created to this branch') . '<br />' .
 			 _('There are').' ' . $myrow[0] . ' '._('transactions with this Branch Code'),'error');
 
 	} else {
-		$sql= "SELECT COUNT(*) FROM salesanalysis WHERE salesanalysis.custbranch='".$SelectedBranch."' AND salesanalysis.cust = '".$DebtorNo."'";
+		$SQL= "SELECT COUNT(*) FROM salesanalysis WHERE salesanalysis.custbranch='".$SelectedBranch."' AND salesanalysis.cust = '".$DebtorNo."'";
 
-		$result = DB_query($sql,$db);
+		$result = DB_query($SQL,$db);
 
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0]>0) {
@@ -312,8 +312,8 @@ if (isset($_POST['submit'])) {
 
 		} else {
 
-			$sql= "SELECT COUNT(*) FROM salesorders WHERE salesorders.branchcode='".$SelectedBranch."' AND salesorders.debtorno = '".$DebtorNo."'";
-			$result = DB_query($sql,$db);
+			$SQL= "SELECT COUNT(*) FROM salesorders WHERE salesorders.branchcode='".$SelectedBranch."' AND salesorders.debtorno = '".$DebtorNo."'";
+			$result = DB_query($SQL,$db);
 
 			$myrow = DB_fetch_row($result);
 			if ($myrow[0]>0) {
@@ -321,31 +321,31 @@ if (isset($_POST['submit'])) {
 				echo '<br />' . _('There are').' ' . $myrow[0] . ' '._('sales orders for this Branch/customer');
 			} else {
 				// Check if there are any users that refer to this branch code
-				$sql= "SELECT COUNT(*) FROM www_users WHERE www_users.branchcode='".$SelectedBranch."' AND www_users.customerid = '".$DebtorNo."'";
+				$SQL= "SELECT COUNT(*) FROM www_users WHERE www_users.branchcode='".$SelectedBranch."' AND www_users.customerid = '".$DebtorNo."'";
 
-				$result = DB_query($sql,$db);
+				$result = DB_query($SQL,$db);
 				$myrow = DB_fetch_row($result);
 
 				if ($myrow[0]>0) {
 					prnMsg(_('Cannot delete this branch because users exist that refer to it') . '. ' . _('Purge old users first'),'warn');
-					echo '<br />' . _('There are').' ' . $myrow[0] . ' '._('users referring to this Branch/customer');
+					echo '<br />' . _('There are') . ' ' . $myrow[0] . ' '._('users referring to this Branch/customer');
 				} else {
 						// Check if there are any contract that refer to this branch code
-					$sql= "SELECT COUNT(*) FROM contracts WHERE contracts.branchcode='".$SelectedBranch."' AND contracts.debtorno = '".$DebtorNo."'";
-	
-					$result = DB_query($sql,$db);
+					$SQL = "SELECT COUNT(*) FROM contracts WHERE contracts.branchcode='" . $SelectedBranch . "' AND contracts.debtorno = '" . $DebtorNo . "'";
+
+					$result = DB_query($SQL,$db);
 					$myrow = DB_fetch_row($result);
 	
 					if ($myrow[0]>0) {
 						prnMsg(_('Cannot delete this branch because contract have been created that refer to it') . '. ' . _('Purge old contracts first'),'warn');
-						echo '<br />' . _('There are').' ' . $myrow[0] . ' '._('contracts referring to this branch/customer');
+						echo '<br />' . _('There are') . ' ' . $myrow[0] . ' '._('contracts referring to this branch/customer');
 					} else {
-						$sql="DELETE FROM custbranch WHERE branchcode='" . $SelectedBranch . "' AND debtorno='" . $DebtorNo . "'";
+						$SQL="DELETE FROM custbranch WHERE branchcode='" . $SelectedBranch . "' AND debtorno='" . $DebtorNo . "'";
 						if ($_SESSION['SalesmanLogin'] != '') {
 							$SQL .= " AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'";
 						}
 						$ErrMsg = _('The branch record could not be deleted') . ' - ' . _('the SQL server returned the following message');
-							$result = DB_query($sql,$db,$ErrMsg);
+						$result = DB_query($SQL,$db,$ErrMsg);
 						if (DB_error_no($db)==0){
 							prnMsg(_('Branch Deleted'),'success');
 						}
@@ -360,7 +360,7 @@ if (!isset($SelectedBranch)){
 
 /* It could still be the second time the page has been run and a record has been selected for modification - SelectedBranch will exist because it was sent with the new call. If its the first time the page has been displayed with no parameters then none of the above are true and the list of branches will be displayed with links to delete or edit each. These will call the same page again and allow update/input or deletion of the records*/
 
-	$sql = "SELECT debtorsmaster.name,
+	$SQL = "SELECT debtorsmaster.name,
 					custbranch.branchcode,
 					brname,
 					salesman.salesmanname,
@@ -382,10 +382,10 @@ if (!isset($SelectedBranch)){
 				WHERE custbranch.debtorno = '".$DebtorNo."'";
 	
 	if ($_SESSION['SalesmanLogin'] != '') {
-		$sql .= " AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'";
+		$SQL .= " AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'";
 	}
 
-	$result = DB_query($sql,$db);
+	$result = DB_query($SQL,$db);
 	$myrow = DB_fetch_row($result);
 	$TotalEnable = 0;
 	$TotalDisable = 0;
@@ -467,7 +467,7 @@ if (!isset($SelectedBranch)){
 			</tr>
 			</table>';
 	} else {
-		$sql = "SELECT debtorsmaster.name,
+		$SQL = "SELECT debtorsmaster.name,
 						address1,
 						address2,
 						address3,
@@ -477,7 +477,7 @@ if (!isset($SelectedBranch)){
 					FROM debtorsmaster
 					WHERE debtorno = '".$DebtorNo."'";
 
-		$result = DB_query($sql,$db);
+		$result = DB_query($SQL,$db);
 		$myrow = DB_fetch_row($result);
 		echo '<div class="page_help_text">' . _('No Branches are defined for').' - '.$myrow[0]. '. ' . _('You must have a minimum of one branch for each Customer. Please add a branch now.')  . '</div>';
 		$_POST['BranchCode'] = mb_substr($DebtorNo,0,10);
@@ -500,7 +500,7 @@ if (!isset($_GET['delete'])) {
 	if (isset($SelectedBranch)) {
 		//editing an existing branch
 
-		$sql = "SELECT branchcode,
+		$SQL = "SELECT branchcode,
 						brname,
 						braddress1,
 						braddress2,
@@ -533,10 +533,10 @@ if (!isset($_GET['delete'])) {
 					AND debtorno='".$DebtorNo."'";
 		
 		if ($_SESSION['SalesmanLogin'] != '') {
-			$sql .= " AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'";
+			$SQL .= " AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'";
 		}
 
-		$result = DB_query($sql, $db);
+		$result = DB_query($SQL, $db);
 		$myrow = DB_fetch_array($result);
 
 		if ($InputError==0) {
@@ -596,7 +596,7 @@ if (!isset($_GET['delete'])) {
 			Maybe should only do this when that page is the referrer?
 	*/
 		if (isset($_GET['BranchCode'])){
-			$sql="SELECT name,
+			$SQL="SELECT name,
 						address1,
 						address2,
 						address3,
@@ -606,7 +606,7 @@ if (!isset($_GET['delete'])) {
 					FROM
 					debtorsmaster
 					WHERE debtorno='".$_GET['BranchCode']."'";
-			$result = DB_query($sql, $db);
+			$result = DB_query($SQL, $db);
 			$myrow = DB_fetch_array($result);
 			$_POST['BranchCode'] = $_GET['BranchCode'];
 			$_POST['BrName']     = $myrow['name'];
@@ -727,12 +727,12 @@ if (!isset($_GET['delete'])) {
 	}else{
 
 		//SQL to poulate account selection boxes
-		$sql = "SELECT salesmanname,
+		$SQL = "SELECT salesmanname,
 						salesmancode
 				FROM salesman
 				WHERE current = 1";
 
-		$result = DB_query($sql,$db);
+		$result = DB_query($SQL,$db);
 
 		if (DB_num_rows($result)==0){
 			echo '</table>';
@@ -761,8 +761,8 @@ if (!isset($_GET['delete'])) {
 
 	//	DB_data_seek($result,0); //by thumb
 	}
-	$sql = "SELECT areacode, areadescription FROM areas";
-	$result = DB_query($sql,$db);
+	$SQL = "SELECT areacode, areadescription FROM areas";
+	$result = DB_query($SQL,$db);
 	if (DB_num_rows($result)==0){
 		echo '</table>';
 		prnMsg(_('There are no areas defined as yet') . ' - ' . _('customer branches must be allocated to an area') . '. ' . _('Please use the link below to define at least one sales area'),'error');
@@ -789,8 +789,8 @@ if (!isset($_GET['delete'])) {
 		</tr>';
 	DB_data_seek($result,0);
 
-	$sql = "SELECT loccode, locationname FROM locations";
-	$result = DB_query($sql,$db);
+	$SQL = "SELECT loccode, locationname FROM locations";
+	$result = DB_query($SQL,$db);
 
 	if (DB_num_rows($result)==0){
 		echo '</table>';
@@ -843,8 +843,8 @@ if (!isset($_GET['delete'])) {
 
 	DB_data_seek($result,0);
 
-	$sql = "SELECT taxgroupid, taxgroupdescription FROM taxgroups";
-	$TaxGroupResults = DB_query($sql,$db);
+	$SQL = "SELECT taxgroupid, taxgroupdescription FROM taxgroups";
+	$TaxGroupResults = DB_query($SQL,$db);
 	if (DB_num_rows($TaxGroupResults)==0){
 		echo '</table>';
 		prnMsg(_('There are no tax groups defined - these must be set up first before any branches can be set up') . '
