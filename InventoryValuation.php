@@ -208,7 +208,7 @@ if (isset($_POST['PrintPDF'])
 	}
 	header('Content-Encoding: UTF-8');
     header('Content-type: text/csv; charset=UTF-8');
-    header("Content-disposition: attachment; filename=InventoryValuation_Categories_" .  $_POST['FromCriteria']  . '-' .  $_POST['Toriteria']  .'.csv');
+    header("Content-disposition: attachment; filename=InventoryValuation_Categories_" .  $_POST['FromCriteria']  . '-' .  $_POST['ToCriteria']  .'.csv');
     header("Pragma: public");
     header("Expires: 0");
     echo "\xEF\xBB\xBF"; // UTF-8 BOM
