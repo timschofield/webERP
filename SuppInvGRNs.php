@@ -91,10 +91,10 @@ if (isset($_POST['ModifyGRN'])){
 														$_SESSION['SuppTrans']->GRNs[$_POST['GRNNo'.$i]]->OrderPrice,
 														filter_number_format($_POST['ChgPrice' . $i]),
 														$Complete,
-														$_POST['StdCostUnit'],
-														$_POST['ShiptRef'],
-														$_POST['JobRef'],
-														$_POST['GLCode'],
+														$_SESSION['SuppTrans']->GRNs[$_POST['GRNNo'.$i]]->StdCostUnit,
+														$_SESSION['SuppTrans']->GRNs[$_POST['GRNNo'.$i]]->ShiptRef,
+														$_SESSION['SuppTrans']->GRNs[$_POST['GRNNo'.$i]]->JobRef,
+														$_SESSION['SuppTrans']->GRNs[$_POST['GRNNo'.$i]]->GLCode,
 														$Hold);
 		}
 	}
