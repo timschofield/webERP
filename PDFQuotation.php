@@ -112,7 +112,6 @@ include('includes/PDFStarter.php');
 $pdf->addInfo('Title', _('Customer Quotation') );
 $pdf->addInfo('Subject', _('Quotation') . ' ' . $_GET['QuotationNo']);
 $FontSize=12;
-$PageNumber = 1;
 $line_height=15;
 
 
@@ -154,7 +153,6 @@ if (DB_num_rows($result)>0){
 			OR (mb_strlen($myrow2['narrative']) >1 AND $YPos-$line_height <= 62)
 			OR $YPos-$line_height <= 50){
 		/* We reached the end of the page so finsih off the page and start a newy */
-			$PageNumber++;
 			include ('includes/PDFQuotationPageHeader.inc');
 
 		} //end if need a new page headed up
@@ -213,7 +211,6 @@ if (DB_num_rows($result)>0){
 		while (mb_strlen($LeftOvers) > 0) {
 			$YPos -= $line_height;// Suggestion: $line_height = $FontSize;
 			if ($YPos < ($Bottom_Margin)) {// Begin new page
-				$PageNumber++;
 				include ('includes/PDFQuotationPageHeader.inc');
 			}
 			$LeftOvers = $pdf->addTextWrap(40, $YPos, 772, $FontSize, $LeftOvers, 'left');
@@ -232,7 +229,6 @@ if (DB_num_rows($result)>0){
 			OR (mb_strlen($myrow['comments']) >1 AND $YPos-$line_height <= 62)
 			OR $YPos-$line_height <= 50){
 		/* We reached the end of the page so finish off the page and start a newy */
-			$PageNumber++;
 			include ('includes/PDFQuotationPageHeader.inc');
 	} //end if need a new page headed up
 
@@ -256,7 +252,6 @@ if (DB_num_rows($result)>0){
 	while (mb_strlen($LeftOvers) > 0) {
 		$YPos -= $line_height;// Suggestion: $line_height = $FontSize;
 		if ($YPos < ($Bottom_Margin)) {// Begin new page
-			$PageNumber++;
 			include ('includes/PDFQuotationPageHeader.inc');
 		}
 		$LeftOvers = $pdf->addTextWrap(40, $YPos, 772, $FontSize, $LeftOvers, 'left');
