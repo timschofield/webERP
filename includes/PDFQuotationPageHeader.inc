@@ -53,47 +53,16 @@ $pdf->addText($XPos, $YPos-30, $FontSize, $myrow['address1']);
 $pdf->addText($XPos, $YPos-45, $FontSize, $myrow['address2']);
 $pdf->addText($XPos, $YPos-60, $FontSize, $myrow['address3'] . ' ' . $myrow['address4'] . ' ' . $myrow['address5']);
 
-
+// Draw a rectangle with rounded corners around 'Delivery To' info
 $XPos= 50;
 $YPos += 12;
-/*draw a nice curved corner box around the delivery details */
-/*from the top right */
-$pdf->partEllipse($XPos+225,$YPos+60,0,90,10,10);
-/*line to the top left */
-$pdf->line($XPos+225, $YPos+70,$XPos, $YPos+70);
-/*Dow top left corner */
-$pdf->partEllipse($XPos, $YPos+60,90,180,10,10);
-/*Do a line to the bottom left corner */
-$pdf->line($XPos-10, $YPos+60,$XPos-10, $YPos);
-/*Now do the bottom left corner 180 - 270 coming back west*/
-$pdf->partEllipse($XPos, $YPos,180,270,10,10);
-/*Now a line to the bottom right */
-$pdf->line($XPos, $YPos-10,$XPos+225, $YPos-10);
-/*Now do the bottom right corner */
-$pdf->partEllipse($XPos+225, $YPos,270,360,10,10);
-/*Finally join up to the top right corner where started */
-$pdf->line($XPos+235, $YPos,$XPos+235, $YPos+60);
+$pdf->RoundRectangle($XPos-10, $YPos+60+10, 225+10+10, 60+10+10, 10, 10);// Function RoundRectangle from includes/class.pdf.php
 
-
+// Draw a rectangle with rounded corners around 'Quotation For' info
 $YPos -= 82;
-/*draw a nice curved corner box around the billing details */
-/*from the top right */
-$pdf->partEllipse($XPos+225,$YPos+60,0,90,10,10);
-/*line to the top left */
-$pdf->line($XPos+225, $YPos+70,$XPos, $YPos+70);
-/*Dow top left corner */
-$pdf->partEllipse($XPos, $YPos+60,90,180,10,10);
-/*Do a line to the bottom left corner */
-$pdf->line($XPos-10, $YPos+60,$XPos-10, $YPos);
-/*Now do the bottom left corner 180 - 270 coming back west*/
-$pdf->partEllipse($XPos, $YPos,180,270,10,10);
-/*Now a line to the bottom right */
-$pdf->line($XPos, $YPos-10,$XPos+225, $YPos-10);
-/*Now do the bottom right corner */
-$pdf->partEllipse($XPos+225, $YPos,270,360,10,10);
-/*Finally join up to the top right corner where started */
-$pdf->line($XPos+235, $YPos,$XPos+235, $YPos+60);
+$pdf->RoundRectangle($XPos-10, $YPos+60+10, 225+10+10, 60+10+10, 10, 10);// Function RoundRectangle from includes/class.pdf.php
 
+// Print the currency name
 include($PathPrefix . 'includes/CurrenciesArray.php'); // To get the currency name from the currency code.
 $pdf->addText($Page_Width/2-60, $YPos-5, $FontSize, _('All amounts stated in') . ' - ' . $myrow['currcode'] . ' ' . $CurrencyName[$myrow['currcode']]);
 

@@ -274,8 +274,8 @@ function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Ma
 	$line_height=12;
 	$FontSize=9;
 	$YPos= $Page_Height-$Top_Margin;
-	$pdf->RoundRectangle($Left_Margin-5, $YPos+5, 300, ($line_height*3), 10);
-	$pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,$_SESSION['CompanyRecord']['coyname']);
+	$pdf->RoundRectangle($Left_Margin-5, $YPos+5+10, 310, ($line_height*3)+10+10, 10, 10);// Function RoundRectangle from includes/class.pdf.php
+	$pdf->addTextWrap($Left_Margin,$YPos,290,$FontSize,$_SESSION['CompanyRecord']['coyname']);
 
 	$YPos -=$line_height;
 

@@ -109,9 +109,9 @@
 	</DeliveryAddress>
 	<DeliveryAddressBox type="CurvedRectangle" name="Delivery address box" id="DeliveryAddressBox">
 		<x>436</x>
-		<y>142</y>
-		<width>240</width>
-		<height>72</height>
+		<y>154</y>
+		<width>252</width>
+		<height>96</height>
 		<radius>12</radius>
 	</DeliveryAddressBox>
 	<SupplierName type="SimpleText" name="Supplier name" id="SupplierName">

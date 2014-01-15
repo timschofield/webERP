@@ -218,23 +218,15 @@ if (!class_exists('Cpdf', false)) {
 			$this->Output($DocumentFilename,'D');
 		}
 
-		function RoundRectangle($XPos, $YPos, $Width, $Height, $Radius) {
-			/*from the top right */
-			$this->partEllipse($XPos+$Width,$YPos,0,90,$Radius,$Radius);
-			/*line to the top left */
-			$this->line($XPos+$Width, $YPos+$Radius,$XPos+$Radius, $YPos+$Radius);
-			/*Do top left corner */
-			$this->partEllipse($XPos+$Radius, $YPos,90,180,$Radius,$Radius);
-			/*Do a line to the bottom left corner */
-			$this->line($XPos+$Radius, $YPos-$Height-$Radius,$XPos+$Width, $YPos-$Height-$Radius);
-			/*Now do the bottom left corner 180 - 270 coming back west*/
-			$this->partEllipse($XPos+$Radius, $YPos-$Height,180,270,$Radius,$Radius);
-			/*Now a line to the bottom right */
-			$this->line($XPos, $YPos-$Height,$XPos, $YPos);
-			/*Now do the bottom right corner */
-			$this->partEllipse($XPos+$Width, $YPos-$Height,270,360,$Radius,$Radius);
-			/*Finally join up to the top right corner where started */
-			$this->line($XPos+$Width+$Radius, $YPos-$Height,$XPos+$Width+$Radius, $YPos);
+		function RoundRectangle($XPos, $YPos, $Width, $Height, $RadiusX, $RadiusY) {
+			$this->line($XPos, $YPos-$RadiusY, $XPos, $YPos-$Height+$RadiusY);// Left side
+			$this->line($XPos+$RadiusX, $YPos, $XPos+$Width-$RadiusX, $YPos);// Top side
+			$this->line($XPos+$RadiusX, $YPos-$Height-$Radius, $XPos+$Width-$RadiusX, $YPos-$Height-$Radius);// Bottom side
+			$this->line($XPos+$Width, $YPos-$RadiusY, $XPos+$Width, $YPos-$Height+$RadiusY);// Right side
+			$this->partEllipse($XPos+$RadiusX, $YPos-$RadiusY, 90, 180, $RadiusX, $RadiusY);// Top left corner
+			$this->partEllipse($XPos+$RadiusX, $YPos-$Height+$RadiusY, 180, 270, $RadiusX, $RadiusY);// Bottom left corner
+			$this->partEllipse($XPos+$Width-$RadiusX, $YPos-$RadiusY, 0, 90, $RadiusX, $RadiusY);// Top right corner
+			$this->partEllipse($XPos+$Width-$RadiusX, $YPos-$Height+$RadiusY, 270, 360, $RadiusX, $RadiusY);// Bottom right corner
 		}
 
 		function Rectangle($XPos, $YPos, $Width, $Height) {
