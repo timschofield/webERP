@@ -177,6 +177,7 @@ if (isset($_POST['UpdateItems'])){
 //update the serial numbers and quantities and notes for each serial number or batch
 	$InputError=false;
 	$WOQuantityTotal=0;
+	$sql = array();
 	for ($i=0;$i<$_POST['CountOfItems'];$i++){
 
 			if (mb_strlen($_POST['Reference' . $i])==0){

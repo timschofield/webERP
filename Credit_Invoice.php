@@ -227,7 +227,7 @@ if (isset($_POST['Location'])){
 if (isset($_POST['ChargeFreightCost'])){
 	$_SESSION['CreditItems' . $identifier]->FreightCost = filter_number_format($_POST['ChargeFreightCost']);
 }
-if ($_SESSION['SalesmanLogin'] != '') {}else{
+if ($_SESSION['SalesmanLogin'] == '') {
 	if (isset($_POST['SalesPerson'])){
 		$_SESSION['CreditItems' . $identifier]->SalesPerson = $_POST['SalesPerson'];
 	}
