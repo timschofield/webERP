@@ -395,12 +395,14 @@ if ( isset($_POST['EnterTransfer']) ){
 														loccode,
 														serialno,
 														expirationdate,
-														quantity)
+														quantity,
+														qualitytext)
 						VALUES ('" . $_SESSION['Transfer']->TransferItem[0]->StockID . "',
 								'" . $_SESSION['Transfer']->StockLocationTo . "',
 								'" . $Item->BundleRef . "',
 								'" . FormatDateForSQL($Item->ExpiryDate) . "',
-								'" . $Item->BundleQty . "')";
+								'" . $Item->BundleQty . "',
+								'')";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be added because');
 					$DbgMsg = _('The following SQL to insert the serial stock item record was used:');
