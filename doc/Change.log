@@ -1,5 +1,5 @@
 webERP Change Log
-
+16/01/14 Exson: Fixed sql strict mode failure problem in StockTransfers.php by adding a '' to qualitytext fields.
 14/4/14 Tim: system would go to get currency rates even though they were set to manual - bug fixed.
 14/1/14 Phil: Fixed bug that was not recording the standard cost against goods received - this would put all accounting out for both standard and weighted average journals.
 13/1/14 Phil: Fixed SuppInvGRNs.php price variance was not calculated correctly because cost not brought accross correctly as reported by Don Grimes
