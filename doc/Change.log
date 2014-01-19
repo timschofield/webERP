@@ -1,4 +1,5 @@
 webERP Change Log
+18/01/14 Paul T: Change property name value to uppercase to match use in the script. [causing input loss]
 16/01/14 Exson: Fixed sql strict mode failure problem in StockTransfers.php by adding a '' to qualitytext fields.
 14/4/14 Tim: system would go to get currency rates even though they were set to manual - bug fixed.
 14/1/14 Phil: Fixed bug that was not recording the standard cost against goods received - this would put all accounting out for both standard and weighted average journals.

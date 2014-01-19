@@ -736,7 +736,7 @@ if (!isset($SupplierID)) {
 		</tr>
 		<tr>
 			<td>' . _('URL') . ':</td>
-			<td><input type="url" name="url" title="'._('Only URL address are allowed').'" placeholder="'._('URL format such as www.example.com').'" size="30" maxlength="50" /></td>
+			<td><input type="url" name="URL" title="'._('Only URL address are allowed').'" placeholder="'._('URL format such as www.example.com').'" size="30" maxlength="50" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Supplier Type') . ':</td>
