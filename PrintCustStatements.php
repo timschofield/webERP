@@ -104,8 +104,13 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 				FROM debtortrans INNER JOIN systypes
 					ON debtortrans.type=systypes.typeid
 				WHERE debtortrans.debtorno='" . $StmtHeader['debtorno'] . "'
-				AND debtortrans.settled=0
-				ORDER BY debtortrans.id";
+				AND debtortrans.settled=0";
+	
+		if ($_SESSION['SalesmanLogin'] != '') {
+			$sql .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
+		}
+
+		$sql .= " ORDER BY debtortrans.id";
 
 		$OstdgTrans=DB_query($sql,$db, $ErrMsg);
 
@@ -129,8 +134,13 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 						WHERE custallocns.datealloc >='" .
 							Date('Y-m-d',Mktime(0,0,0,Date('m')-1,Date('d'),Date('y'))) . "'
 						AND debtortrans.debtorno='" . $StmtHeader['debtorno'] . "'
-						AND debtortrans.settled=1
-						ORDER BY debtortrans.id";
+						AND debtortrans.settled=1";
+
+			if ($_SESSION['SalesmanLogin'] != '') {
+				$sql .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
+			}
+
+			$sql .= " ORDER BY debtortrans.id";
 
 			$SetldTrans=DB_query($sql,$db, $ErrMsg);
 			$NumberOfRecordsReturned += DB_num_rows($SetldTrans);
@@ -264,7 +274,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 		/* head up a new statement/credit note page */
 			$PageNumber++;
 			$pdf->newPage();
-		include ('includes/PDFStatementPageHeader.inc');
+			include ('includes/PDFStatementPageHeader.inc');
 		}
 			/*Now figure out the aged analysis for the customer under review */
 
@@ -325,8 +335,13 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 					INNER JOIN debtortrans
 						ON debtorsmaster.debtorno = debtortrans.debtorno
 					WHERE
-						debtorsmaster.debtorno = '" . $StmtHeader['debtorno'] . "'
-					GROUP BY
+						debtorsmaster.debtorno = '" . $StmtHeader['debtorno'] . "'";
+
+			if ($_SESSION['SalesmanLogin'] != '') {
+				$sql .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
+			}
+
+			$sql .= " GROUP BY
 						debtorsmaster.name,
 						currencies.currency,
 						paymentterms.terms,
@@ -396,7 +411,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 
 	if (isset($pdf)){
 
-        $pdf->OutputI($_SESSION['DatabaseName'] . '_CustStatements_' . date('Y-m-d') . '.pdf');
+        $pdf->OutputD($_SESSION['DatabaseName'] . '_CustStatements_' . date('Y-m-d') . '.pdf');
         $pdf->__destruct();
 
 	} else {
