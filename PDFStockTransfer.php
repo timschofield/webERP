@@ -86,7 +86,10 @@ while ($myrow=DB_fetch_array($result)) {
 	$Description=$myrow['description'];
 
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+1,$YPos-10,300-$Left_Margin,$FontSize, $StockID);
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+75,$YPos-10,300-$Left_Margin,$FontSize-2, $Description);
+	/*resmoart mods*/
+	/*$LeftOvers = $pdf->addTextWrap($Left_Margin+75,$YPos-10,300-$Left_Margin,$FontSize-2, $Description);*/
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+75,$YPos-10,300-$Left_Margin,$FontSize, $Description);
+	/*resmart ends*/
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos-10,300-$Left_Margin,$FontSize, $From);
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+350,$YPos-10,300-$Left_Margin,$FontSize, $To);
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+475,$YPos-10,300-$Left_Margin,$FontSize, $Quantity);
@@ -96,6 +99,39 @@ while ($myrow=DB_fetch_array($result)) {
 	if ($YPos < $Bottom_Margin + $line_height){
 	   include('includes/PDFStockTransferHeader.inc');
 	}
+	/*resmart mods*/
+	$SQL = "SELECT stockmaster.controlled
+			FROM stockmaster WHERE stockid ='" . $StockID . "'";
+	$CheckControlledResult = DB_query($SQL,$db,'<br />' . _('Could not determine if the item was controlled or not because') . ' ');
+	$ControlledRow = DB_fetch_row($CheckControlledResult);
+	
+	if ($ControlledRow[0]==1) { /*Then its a controlled item */
+		$SQL = "SELECT stockserialmoves.serialno,
+				stockserialmoves.moveqty
+				FROM stockmoves INNER JOIN stockserialmoves
+				ON stockmoves.stkmoveno= stockserialmoves.stockmoveno
+				WHERE stockmoves.stockid='" . $StockID . "'
+				AND stockmoves.type =16
+				AND qty > 0
+				AND stockmoves.transno='" .$_GET['TransferNo']. "'";
+		$GetStockMoveResult = DB_query($SQL,$db,_('Could not retrieve the stock movement reference number which is required in order to retrieve details of the serial items that came in with this GRN'));
+		while ($SerialStockMoves = DB_fetch_array($GetStockMoveResult)){
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+40,$YPos-10,300-$Left_Margin,$FontSize, _('Lot/Serial:'));
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+75,$YPos-10,300-$Left_Margin,$FontSize, $SerialStockMoves['serialno']);
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos-10,300-$Left_Margin,$FontSize, $SerialStockMoves['moveqty']);
+			$YPos=$YPos-$line_height;
+			
+			if ($YPos < $Bottom_Margin + $line_height){
+				include('includes/PDFStockTransferHeader.inc');
+			} //while SerialStockMoves
+		}
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+40,$YPos-10,300-$Left_Margin,$FontSize, ' ');
+		$YPos=$YPos-$line_height;
+		if ($YPos < $Bottom_Margin + $line_height){
+			include('includes/PDFStockTransferHeader.inc');
+		} //controlled item*/
+	}
+	/*resmart ends*/	
 }
 $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos-70,300-$Left_Margin,$FontSize, _('Date of transfer: ').$Date);
 

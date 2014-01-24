@@ -1,7 +1,7 @@
 ALTER table stockmoves CHANGE reference reference varchar(100) NOT NULL DEFAULT '';
-alter  table stockcatproperties drop foreign key stockcatproperties_ibfk_2;
-alter  table stockcatproperties drop foreign key stockcatproperties_ibfk_3;
-ALTER TABLE  `emailsettings` CHANGE  `username`  `username` VARCHAR( 50 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL
+alter table stockcatproperties drop foreign key stockcatproperties_ibfk_2;
+alter table stockcatproperties drop foreign key stockcatproperties_ibfk_3;
+ALTER TABLE  `emailsettings` CHANGE  `username`  `username` VARCHAR( 50 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
 CREATE TABLE IF NOT EXISTS `pricematrix` (
   `salestype` char(2) NOT NULL DEFAULT '',
   `stockid` varchar(20) NOT NULL DEFAULT '',
