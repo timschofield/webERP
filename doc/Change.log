@@ -1,4 +1,6 @@
 webERP Change Log
+
+23/1/14 Phil: Fixed incompatible error traps on hyphens between new customers and new branches. Now both allow hyphens. Also prevented deletion of the last customer branch. Customer branches are now deleted when a customer is attempted to be deleted provided there are no dependent records.
 19/01/14 Exson: Add sales man login control and modify the PDF to download to harmony with other files and solve backward failure problem in PrintCustStatements.php.
 18/01/14 Paul T: Change property name value to uppercase to match use in the script. [causing input loss]
 16/01/14 Exson: Fixed sql strict mode failure problem in StockTransfers.php by adding a '' to qualitytext fields.

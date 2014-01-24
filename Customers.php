@@ -312,24 +312,40 @@ if (isset($_POST['submit'])) {
 				prnMsg( _('Cannot delete this customer record because sales analysis records exist for it'),'warn');
 				echo '<br /> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('sales analysis records against this customer');
 			} else {
-				$sql= "SELECT COUNT(*) FROM custbranch WHERE debtorno='" . $_POST['DebtorNo'] . "'";
-				$result = DB_query($sql,$db);
+
+				// Check if there are any users that refer to this CUSTOMER code
+				$SQL= "SELECT COUNT(*) FROM www_users WHERE www_users.customerid = '" . $_POST['DebtorNo'] . "'";
+
+				$result = DB_query($SQL,$db);
 				$myrow = DB_fetch_row($result);
+
 				if ($myrow[0]>0) {
-					$CancelDelete = 1;
-					prnMsg(_('Cannot delete this customer because there are branch records set up against it'),'warn');
-					echo '<br /> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('branch records relating to this customer');
+					prnMsg(_('Cannot delete this customer because users exist that refer to it') . '. ' . _('Purge old users first'),'warn');
+					echo '<br />' . _('There are') . ' ' . $myrow[0] . ' '._('users referring to this Branch/customer');
+				} else {
+						// Check if there are any contract that refer to this branch code
+					$SQL = "SELECT COUNT(*) FROM contracts WHERE contracts.debtorno = '" . $_POST['DebtorNo'] . "'";
+
+					$result = DB_query($SQL,$db);
+					$myrow = DB_fetch_row($result);
+	
+					if ($myrow[0]>0) {
+						prnMsg(_('Cannot delete this customer because contracts have been created that refer to it') . '. ' . _('Purge old contracts first'),'warn');
+						echo '<br />' . _('There are') . ' ' . $myrow[0] . ' '._('contracts referring to this customer');
+					}
 				}
 			}
 		}
 
 	}
 	if ($CancelDelete==0) { //ie not cancelled the delete as a result of above tests
+		$SQL="DELETE FROM custbranch WHERE debtorno='" . $_POST['DebtorNo'] . "'";
+		$result = DB_query($SQL,$db,$ErrMsg);
 		$sql="DELETE FROM custcontacts WHERE debtorno='" . $_POST['DebtorNo'] . "'";
 		$result = DB_query($sql,$db);
 		$sql="DELETE FROM debtorsmaster WHERE debtorno='" . $_POST['DebtorNo'] . "'";
 		$result = DB_query($sql,$db);
-		prnMsg( _('Customer') . ' ' . $_POST['DebtorNo'] . ' ' . _('has been deleted - together with all the associated contacts') . ' !','success');
+		prnMsg( _('Customer') . ' ' . $_POST['DebtorNo'] . ' ' . _('has been deleted - together with all the associated branches and contacts'),'success');
 		include('includes/footer.inc');
 		unset($_SESSION['CustomerID']);
 		exit;
