@@ -2,7 +2,7 @@
 
 /* $Id$*/
 
-/*Through deviousness and cunning, this system allows trial balances for any date range that recalcuates the p & l balances
+/*Through deviousness AND cunning, this system allows trial balances for any date range that recalcuates the p & l balances
 and shows the balance sheets as at the end of the period selected - so first off need to show the input of criteria screen
 while the user is selecting the criteria the system is posting any unposted transactions */
 
@@ -257,7 +257,7 @@ if ((! isset($_POST['FromPeriod'])
 						$GrpPrdActual[$Level] =0;
 						$GrpPrdBduget[$Level] =0;
 						$Level--;
-					} while ($Level>0 and $myrow['parentgroupname']!=$ParentGroups[$Level]);
+					} while ($Level>0 AND $myrow['parentgroupname']!=$ParentGroups[$Level]);
 
 					if ($Level>0){
 						$YPos -= $line_height;
@@ -354,7 +354,7 @@ if ((! isset($_POST['FromPeriod'])
 	}  //end of while loop
 
 
-	while ($Level>0 and $myrow['parentgroupname']!=$ParentGroups[$Level]) {
+	while ($Level>0 AND $myrow['parentgroupname']!=$ParentGroups[$Level]) {
 
 		$YPos -= (.5 * $line_height);
 		$pdf->line($Left_Margin+250, $YPos+$line_height,$Left_Margin+500, $YPos+$line_height);
@@ -446,7 +446,7 @@ if ((! isset($_POST['FromPeriod'])
 
 	echo '<table cellpadding="2" class="selection">';
 	echo '<tr>
-			<th colspan="6"><b>' .  _('Trial Balance for the month of ') . $PeriodToDate . _(' and for the ') . $NumberOfMonths . _(' months to ') . $PeriodToDate  . '</b></th>
+			<th colspan="6"><b>' .  _('Trial Balance for the month of ') . $PeriodToDate . _(' AND for the ') . $NumberOfMonths . _(' months to ') . $PeriodToDate  . '</b></th>
 		</tr>';
 	$TableHeader = '<tr>
 						<th>' . _('Account') . '</th>
@@ -532,7 +532,7 @@ if ((! isset($_POST['FromPeriod'])
 						$Level--;
 
 						$j++;
-					} while ($Level>0 and $myrow['groupname']!=$ParentGroups[$Level]);
+					} while ($Level>0 AND $myrow['groupname']!=$ParentGroups[$Level]);
 
 					if ($Level>0){
 						printf('<tr>
@@ -688,7 +688,7 @@ if ((! isset($_POST['FromPeriod'])
 				$Level--;
 
 				$j++;
-			} while (isset($ParentGroups[$Level]) and ($myrow['groupname']!=$ParentGroups[$Level] and $Level>0));
+			} while (isset($ParentGroups[$Level]) AND ($myrow['groupname']!=$ParentGroups[$Level] AND $Level>0));
 
 			if ($Level >0){
 				printf('<tr>

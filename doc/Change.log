@@ -2,7 +2,8 @@ webERP Change Log
 19/01/14 Exson: Add sales man login control and modify the PDF to download to harmony with other files and solve backward failure problem in PrintCustStatements.php.
 18/01/14 Paul T: Change property name value to uppercase to match use in the script. [causing input loss]
 16/01/14 Exson: Fixed sql strict mode failure problem in StockTransfers.php by adding a '' to qualitytext fields.
-14/4/14 Tim: system would go to get currency rates even though they were set to manual - bug fixed.
+23/1/14 Tim: PO_SelectOSPurchOrder.php now allows selection of purchase orders based on order dates 
+14/1/14 Tim: system would go to get currency rates even though they were set to manual - bug fixed.
 14/1/14 Phil: Fixed bug that was not recording the standard cost against goods received - this would put all accounting out for both standard and weighted average journals.
 13/1/14 Phil: Fixed SuppInvGRNs.php price variance was not calculated correctly because cost not brought accross correctly as reported by Don Grimes
 11/1/14 CQZ: Fixed that no bank accounts recorded in gl in CounterReturns.php

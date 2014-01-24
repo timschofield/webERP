@@ -235,7 +235,7 @@ Class Cart {
 				/* something has been delivered. Clear the remaining Qty and Mark Completed */
 				$result = DB_query("UPDATE salesorderdetails SET quantity=qtyinvoiced,
 																completed=1
-									WHERE orderno='".$_SESSION['ExistingOrder']."'
+									WHERE orderno='" . $_SESSION['ExistingOrder' . $identifier] ."'
 									AND orderlineno='" . $LineNumber . "'" ,
 									$db,
 								   _('The order line could not be updated as completed because')

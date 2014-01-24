@@ -2371,9 +2371,7 @@ CREATE TABLE `stockcatproperties` (
   `numericvalue` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`stkcatpropid`),
   KEY `categoryid` (`categoryid`),
-  CONSTRAINT `stockcatproperties_ibfk_1` FOREIGN KEY (`categoryid`) REFERENCES `stockcategory` (`categoryid`),
-  CONSTRAINT `stockcatproperties_ibfk_2` FOREIGN KEY (`categoryid`) REFERENCES `stockcategory` (`categoryid`),
-  CONSTRAINT `stockcatproperties_ibfk_3` FOREIGN KEY (`categoryid`) REFERENCES `stockcategory` (`categoryid`)
+  CONSTRAINT `stockcatproperties_ibfk_1` FOREIGN KEY (`categoryid`) REFERENCES `stockcategory` (`categoryid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
