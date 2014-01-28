@@ -20,4 +20,5 @@ DELETE FROM scripts WHERE script='PrintSalesOrder.php';
 DELETE FROM scripts WHERE script='ReportBug.php';
 DELETE FROM scripts WHERE script='ReportletContainer.php';
 DELETE FROM scripts WHERE script='SystemCheck.php';
+UPDATE holdreasons set dissallowinvoices=2 WHERE reasoncode=20;
 UPDATE config SET confvalue='4.11.3' WHERE confname='VersionNumber';
