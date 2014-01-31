@@ -17,8 +17,7 @@ function display_children($Parent, $Level, &$BOMTree) {
 	// retrive all children of parent
 	$c_result = DB_query("SELECT parent,
 								component
-						FROM bom WHERE parent='" . $Parent. "'"
-						,$db);
+						FROM bom WHERE parent='" . $Parent. "' ORDER BY sequence ASC" ,$db);
 	if (DB_num_rows($c_result) > 0) {
 
 		while ($row = DB_fetch_array($c_result)) {
@@ -70,7 +69,8 @@ ie the BOM is recursive otherwise false ie 0 */
 function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level, $db) {
 
 		global $ParentMBflag;
-		$sql = "SELECT bom.component,
+		$sql = "SELECT bom.sequence,
+						bom.component,
 						stockmaster.description as itemdescription,
 						locations.locationname,
 						locations.loccode,
@@ -143,6 +143,7 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level, $db) {
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
+					<td>%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -153,6 +154,7 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level, $db) {
 					 <td><a href="%s&amp;Select=%s&amp;SelectedComponent=%s&amp;delete=1&amp;ReSelect=%s&amp;Location=%s&amp;WorkCentre=%s" onclick="return confirm(\'' . _('Are you sure you wish to delete this component from the bill of material?') . '\');">' . _('Delete') . '</a></td>
 					 </tr>',
 					$Level1,
+					$myrow['sequence'],
 					$myrow['component'],
 					$myrow['itemdescription'],
 					$myrow['locationname'],
@@ -289,7 +291,8 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		if (isset($SelectedParent) AND isset($SelectedComponent) AND $InputError != 1) {
 
 
-			$sql = "UPDATE bom SET workcentreadded='" . $_POST['WorkCentreAdded'] . "',
+			$sql = "UPDATE bom SET sequence='" . $_POST['Sequence'] . "',
+						workcentreadded='" . $_POST['WorkCentreAdded'] . "',
 						loccode='" . $_POST['LocCode'] . "',
 						effectiveafter='" . $EffectiveAfterSQL . "',
 						effectiveto='" . $EffectiveToSQL . "',
@@ -328,7 +331,8 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 				if (DB_num_rows($result)==0) {
 
-					$sql = "INSERT INTO bom (parent,
+					$sql = "INSERT INTO bom (sequence,
+											parent,
 											component,
 											workcentreadded,
 											loccode,
@@ -336,7 +340,8 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 											effectiveafter,
 											effectiveto,
 											autoissue)
-							VALUES ('".$SelectedParent."',
+							VALUES ('" . $_POST['Sequence'] . "',
+								'".$SelectedParent."',
 								'" . $_POST['Component'] . "',
 								'" . $_POST['WorkCentreAdded'] . "',
 								'" . $_POST['LocCode'] . "',
@@ -550,6 +555,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 	$TableHeader =  '<tr>
 						<th>' . _('Level') . '</th>
+						<th>' . _('Sequence') . '</th>
 						<th>' . _('Code') . '</th>
 						<th>' . _('Description') . '</th>
 						<th>' . _('Location') . '</th>
@@ -595,7 +601,8 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		if (isset($_GET['SelectedComponent']) AND $InputError !=1) {
 		//editing a selected component from the link to the line item
 
-			$sql = "SELECT loccode,
+			$sql = "SELECT sequence,
+						loccode,
 						effectiveafter,
 						effectiveto,
 						workcentreadded,
@@ -608,6 +615,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			$result = DB_query($sql, $db);
 			$myrow = DB_fetch_array($result);
 
+			$_POST['Sequence'] = $myrow['sequence'];
 			$_POST['LocCode'] = $myrow['loccode'];
 			$_POST['EffectiveAfter'] = ConvertSQLDate($myrow['effectiveafter']);
 			$_POST['EffectiveTo'] = ConvertSQLDate($myrow['effectiveto']);
@@ -630,7 +638,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 				</tr>';
 
 		} else { //end of if $SelectedComponent
-
+			$_POST['Sequence'] = 0;
 			echo '<input type="hidden" name="SelectedParent" value="' . $SelectedParent . '" />';
 			/* echo "Enter the details of a new component in the fields below. <br />Click on 'Enter Information' to add the new component, once all fields are completed.";
 			*/
@@ -681,7 +689,11 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			echo '</select></td>
 				</tr>';
 		}
-
+		echo '<tr>
+                <td>' . _('Sequence in BOM') . ':</td>
+                <td><input type="text" class="integer" required="required" size="5" name="Sequence" value="' . $_POST['Sequence'] . '" /></td>
+            </tr>';
+		
 		echo '<tr>
 				<td>' . _('Location') . ': </td>
 				<td><select tabindex="2" name="LocCode">';
