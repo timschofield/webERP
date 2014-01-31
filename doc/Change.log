@@ -1,5 +1,6 @@
 webERP Change Log
 
+31/1/14 Andrew Galuski: Profit and Loss format fixed for detailed - don't show zero balances accounts
 31/1/14 Muthu: Added sequence field to BOMs.php
 30/1/14 gilberto dos santos alves: Updated pt_BR and also applied to pt_PT translation since pt_PT translation was quite old
 28/01/14 Exson: Update the hold reason table default data dissallowinvoice to make customers' credit on watch is workable. 
