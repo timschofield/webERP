@@ -1,5 +1,7 @@
 webERP Change Log
 
+2/2/14 Release 4.11.3
+
 31/1/14 Andrew Galuski: Profit and Loss format fixed for detailed - don't show zero balances accounts
 31/1/14 Muthu: Added sequence field to BOMs.php
 30/1/14 gilberto dos santos alves: Updated pt_BR and also applied to pt_PT translation since pt_PT translation was quite old
@@ -21,7 +23,6 @@ webERP Change Log
 23/12/13 Exson: Fixed the controlled items cannot be removed due to the negative operator is modified and balance of a serial no is wrong due negative operator is missing during credit controlled items by KEYED method. Other input method has not be inspected. 
 22/12/13 Exson: Add a fool-proof to Credit_Invoice.php to prevent an invoice was credit again and again. 
 22/12/13 Exson: Modify the stock select element to a combox box which autocomplete the limited stock ID options to 300 in PriceMatrix.php. Otherwise, users have to input an stock ID themselves. To avoid a too long stock list as pointed by Tim.
-
 21/12/13 Exson: Add price matrix features. Modified MainMenuLinksArray.php, GetPrice.inc and add pricematrix table and PriceMatrix.php
 20/12/13 Thumb: Salesman can only review his own customer's data 
 14/12/12: Phil: As per Gilberto dos santos alves - Extended smtp user name to varchar(50) as sometimes a full email address is required - tidied the script a bit too.

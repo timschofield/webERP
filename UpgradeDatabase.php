@@ -180,6 +180,7 @@ if (isset($_POST['DoUpgrade'])){
 				case '4.11.1':
 					$SQLScripts[] = './sql/mysql/upgrade4.11.1-4.11.2.sql';
 				case '4.11.2':
+					$SQLScripts[] = './sql/mysql/upgrade4.11.2-4.11.3.sql';
 					break;
 			} //end switch
 		}

@@ -30,7 +30,9 @@ if(isset($_POST['ProcessTransfer'])){
 		if (is_numeric(filter_number_format($_POST['Qty' . $i]))){
 		/*Update the quantity received from the inputs */
 			$_SESSION['Transfer']->TransferItem[$i]->Quantity= round(filter_number_format($_POST['Qty' . $i]),$_SESSION['Transfer']->TransferItem[$i]->DecimalPlaces);
-  		} else {
+  		} elseif ($_POST['Qty' . $i]=='') {
+			$_SESSION['Transfer']->TransferItem[$i]->Quantity= 0;
+		} else { 
 			prnMsg(_('The quantity entered for'). ' ' . $TrfLine->StockID . ' '. _('is not numeric') . '. ' . _('All quantities must be numeric'),'error');
 			$InputError = True;
 		}
