@@ -337,7 +337,9 @@ if (isset($_POST['CommitBatch'])){
 					 /*The functional currency amount will be the
 					 payment currenct amount  / the bank account currency exchange rate  - to get to the bank account currency
 					 then / the functional currency exchange rate to get to the functional currency */
-					if ($PaymentItem->Cheque=='') $PaymentItem->Cheque=0;
+					if ($PaymentItem->Cheque=='') {
+						$PaymentItem->Cheque=0;
+					}
 					$SQL = "INSERT INTO gltrans (type,
 												typeno,
 												trandate,
@@ -346,17 +348,16 @@ if (isset($_POST['CommitBatch'])){
 												narrative,
 												amount,
 												chequeno,
-												tag) ";
-				 	$SQL= $SQL . "VALUES (1,
-						'" . $TransNo . "',
-						'" . FormatDateForSQL($_SESSION['PaymentDetail' . $identifier]->DatePaid) . "',
-						'" . $PeriodNo . "',
-						'" . $PaymentItem->GLCode . "',
-						'" . $PaymentItem->Narrative . "',
-						'" . ($PaymentItem->Amount/$_SESSION['PaymentDetail' . $identifier]->ExRate/$_SESSION['PaymentDetail' . $identifier]->FunctionalExRate) . "',
-						'". $PaymentItem->Cheque ."',
-						'" . $PaymentItem->Tag . "'
-						)";
+												tag)
+							VALUES (1,
+									'" . $TransNo . "',
+									'" . FormatDateForSQL($_SESSION['PaymentDetail' . $identifier]->DatePaid) . "',
+									'" . $PeriodNo . "',
+									'" . $PaymentItem->GLCode . "',
+									'" . $PaymentItem->Narrative . "',
+									'" . ($PaymentItem->Amount/$_SESSION['PaymentDetail' . $identifier]->ExRate/$_SESSION['PaymentDetail' . $identifier]->FunctionalExRate) . "',
+									'". $PaymentItem->Cheque ."',
+									'" . $PaymentItem->Tag . "')";
 					$ErrMsg = _('Cannot insert a GL entry for the payment using the SQL');
 					$result = DB_query($SQL,$db,$ErrMsg,_('The SQL that failed was'),true);
 
@@ -564,44 +565,16 @@ if (isset($_POST['CommitBatch'])){
 		}
 
 		/*now enter the BankTrans entry */
-		if ($TransType==22) {
-			$SQL="INSERT INTO banktrans (transno,
-										type,
-										bankact,
-										ref,
-										exrate,
-										functionalexrate,
-										transdate,
-										banktranstype,
-										amount,
-										currcode)
-							VALUES ('" . $TransNo . "',
-									'" . $TransType . "',
-									'" . $_SESSION['PaymentDetail' . $identifier]->Account . "',
-									'" . $_SESSION['PaymentDetail' . $identifier]->BankTransRef . "',
-									'" . $_SESSION['PaymentDetail' . $identifier]->ExRate . "',
-									'" . $_SESSION['PaymentDetail' . $identifier]->FunctionalExRate . "',
-									'" . FormatDateForSQL($_SESSION['PaymentDetail' . $identifier]->DatePaid) . "',
-									'" . $_SESSION['PaymentDetail' . $identifier]->Paymenttype . "',
-									'" . -$_SESSION['PaymentDetail' . $identifier]->Amount . "',
-									'" . $_SESSION['PaymentDetail' . $identifier]->Currency . "'
-								)";
-
-			$ErrMsg = _('Cannot insert a bank transaction because');
-			$DbgMsg = _('Cannot insert a bank transaction using the SQL');
-			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
-		} else {
-			foreach ($_SESSION['PaymentDetail' . $identifier]->GLItems as $PaymentItem) {
-				$SQL="INSERT INTO banktrans (transno,
-											type,
-											bankact,
-											ref,
-											exrate,
-											functionalexrate,
-											transdate,
-											banktranstype,
-											amount,
-											currcode)
+		$SQL="INSERT INTO banktrans (transno,
+									type,
+									bankact,
+									ref,
+									exrate,
+									functionalexrate,
+									transdate,
+									banktranstype,
+									amount,
+									currcode)
 						VALUES ('" . $TransNo . "',
 								'" . $TransType . "',
 								'" . $_SESSION['PaymentDetail' . $identifier]->Account . "',
@@ -611,13 +584,11 @@ if (isset($_POST['CommitBatch'])){
 								'" . FormatDateForSQL($_SESSION['PaymentDetail' . $identifier]->DatePaid) . "',
 								'" . $_SESSION['PaymentDetail' . $identifier]->Paymenttype . "',
 								'" . -$_SESSION['PaymentDetail' . $identifier]->Amount . "',
-								'" . $_SESSION['PaymentDetail' . $identifier]->Currency . "' )";
+								'" . $_SESSION['PaymentDetail' . $identifier]->Currency . "')";
 
-				$ErrMsg = _('Cannot insert a bank transaction because');
-				$DbgMsg = _('Cannot insert a bank transaction using the SQL');
-				$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
-			}
-		}
+		$ErrMsg = _('Cannot insert a bank transaction because');
+		$DbgMsg = _('Cannot insert a bank transaction using the SQL');
+		$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
 		DB_Txn_Commit($db);
 		prnMsg(_('Payment') . ' ' . $TransNo . ' ' . _('has been successfully entered'),'success');
