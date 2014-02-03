@@ -1126,7 +1126,8 @@ function PopulateSQLData($NewSQL=false,$Demo=false,$db,$DBType,$NewDB = false){
 				if($DBType == 'mysqli'){//if the mysql db type is mysqli
 						mysqli_select_db($db,$NewDB);
 						//currently there is no 'USE' statements in sql file, no bother to remove them
-						$sql = file_get_contents($NewSQL);
+						$sql = 'SET names UTF8;';
+						$sql .= file_get_contents($NewSQL);
 						if(!$sql){
 							die(_('Failed to open the new sql file'));
 						}
@@ -1210,7 +1211,7 @@ function PopulateSQLDataBySQL($File,$db,$DBType,$NewDB=false,$DemoDB='weberpdemo
 						($DBType=='mysqli')?mysqli_select_db($db,$dbName):mysql_select_db($dbName,$db);
 						$SQLScriptFile = file($File);
 						$ScriptFileEntries = sizeof($SQLScriptFile);
-						$SQL ='';
+						$SQL =' SET names UTF8;';
 						$InAFunction = false;
 						for ($i=0; $i<$ScriptFileEntries; $i++) {
 
