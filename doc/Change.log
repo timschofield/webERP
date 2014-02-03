@@ -1,7 +1,7 @@
 webERP Change Log
 
 2/2/14 Release 4.11.3
-
+3/2/14 Exson: Make company names alow characters other than alphanumeric in installer. 
 3/2/14 Exson: Fixed installer now allows characters in the database name
 3/2/14 Phil: Fix bug in Payments.php that was duplicating payments for mutliple GL analysis entries. Now just a single bank trans is created for the payment which can be analysed to any number of GL accounts
 31/1/14 Andrew Galuski: Profit and Loss format fixed for detailed - don't show zero balances accounts
