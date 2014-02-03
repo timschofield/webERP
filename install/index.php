@@ -165,9 +165,9 @@ if(!extension_loaded('mbstring')){
 			//The mysql database name cannot contains illegal characters such as "/","\","." etc
 			//and it should not contains illegal characters as file name such as "?""%"<"">"" " etc
 
-			if(!preg_match(',[a-zA-Z0-9_\&\-\ ]*,',$_POST['CompanyName'])){
+			if(!preg_match(',^[^/\\\?%:\|<>\"]+$,',$_POST['CompanyName'])){
 				$InputError = 1;
-				prnMsg(_('The Company names can only contain alphanumeric characters plus -,_, & and spaces'),'error');
+				prnMsg(_('The Company names cannot contain illegal characters such as /\?%:|<>"'),'error');
 
 			}
 			$CompanyName= $_POST['CompanyName'];
@@ -182,9 +182,9 @@ if(!extension_loaded('mbstring')){
 			//The mysql database name cannot contains illegal characters such as "/","\","." etc
 			//and it should not contains illegal characters as file name such as "?""%"<"">"" " etc
 
-			if(!preg_match(',[a-z0-9_\&amp;\-\ ]*,',$_POST['Database'])){
+			if(!preg_match(',[a-zA-Z0-9_\&\-\ ]*,',$_POST['Database'])){
 				$InputError = 1;
-				prnMsg(_('The database name must be lower case and should not contains illegal characters such as "/\?%:|<>" blank etc'),'error');
+				prnMsg(_('The database name should not contains illegal characters such as "/\?%:|<>" etc'),'error');
 
 			}
 			$DatabaseName = strtolower($_POST['Database']);
@@ -528,12 +528,12 @@ if(!extension_loaded('mbstring')){
 			if(!empty($_POST['Prefix'])){
 				$_POST['Database'] = $_POST['Prefix'].$_POST['Database'];
 			}
-			if(preg_match(',[/\\\?%:\|<>\.\s"]+,',$_POST['Database'])){
+			if(preg_match(',[/\\\?%:\|<>\."]+,',$_POST['Database'])){
 				$InputError = 1;
-				prnMsg(_('The database name should be lower case and not contains illegal characters such as "/\?%:|<>" or blank spaces'),'error');
+				prnMsg(_('The database name should be lower case and not contains illegal characters such as "/\?%:|<>"'),'error');
 
 			}
-			$DatabaseName = strtolower($_POST['Database']);
+			$DatabaseName = $_POST['Database'];
 		}else{
 				$InputError = 1;
 				prnMsg(_('The database name should not be empty'),'error');
@@ -913,7 +913,7 @@ function DbConfig($Language,$MysqlExt = FALSE){//The screen for users to input m
                 </li>
                 <li>
                     <label for="Database"><?php echo _('Database Name'); ?>: </label>
-                    <input type="text" name="Database" id="Database" required="true" pattern="^[a-z0-9$]+_$" value="weberp" maxlength="16" placeholder="<?php echo _('The database name'); ?>" />
+                    <input type="text" name="Database" id="Database" required="true" pattern="^[a-zA-Z0-9_\&\-\ ]+$" value="weberp" maxlength="16" placeholder="<?php echo _('The database name'); ?>" />
                     <span><?php echo _('The database must have a valid name'); ?></span>
                 </li>
                 <li>
@@ -1020,8 +1020,8 @@ function CompanySetup($UserLanguage,$HostName,$UserName,$Password,$DatabaseName,
             <ul>
                 <li>
                     <label for="CompanyName"><?php echo _("Company Name"); ?>: </label>
-                    <input type="text" name="CompanyName" required="true" pattern="[a-zA-Z0-9_\'\&\-\ ]*" value="<?php echo $CompanyName; ?>" maxlength="50" />
-                    <span><?php echo _('The name of your company'); ?></span>
+                    <input type="text" name="CompanyName" required="true" pattern='[^|/\\\?%:\<>"]+' value="<?php echo $CompanyName; ?>" maxlength="50" />
+                    <span><?php echo _('The name of your company should not contain characters such as |\?%:<>"'); ?></span>
                 </li>
                 <li>
                     <label for="CountrySQL"><?php echo _("Chart of Accounts"); ?>: </label>
