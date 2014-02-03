@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 3.071\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-02 21:58+1300\n"
+"POT-Creation-Date: 2014-02-03 22:05+1300\n"
 "PO-Revision-Date: 2013-06-01 16:39-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: BrainCo Technologies <sales@braincotech.com>\n"
@@ -452,7 +452,7 @@ msgstr "Bạn có chắc chắn muốn xóa chi nhánh này?"
 #: InternalStockRequest.php:293 Labels.php:324 Labels.php:349 Labels.php:597
 #: Locations.php:405 MailingGroupMaintenance.php:179 MaintenanceTasks.php:119
 #: Manufacturers.php:218 MRPDemands.php:310 MRPDemandTypes.php:121
-#: PaymentMethods.php:209 Payments.php:1115 PaymentTerms.php:206
+#: PaymentMethods.php:209 Payments.php:1086 PaymentTerms.php:206
 #: PcAssignCashToTab.php:281 PcClaimExpensesFromTab.php:277 PcExpenses.php:227
 #: PcExpensesTypeTab.php:187 PcTabs.php:237 PcTypeTabs.php:181
 #: PO_AuthorisationLevels.php:153 PO_Items.php:772 PriceMatrix.php:174
@@ -1029,7 +1029,7 @@ msgstr "không thể lấy làm lại vì"
 #: Credit_Invoice.php:746 Credit_Invoice.php:767 CustomerReceipt.php:557
 #: CustomerReceipt.php:707 CustomerReceipt.php:735 CustomerTransInquiry.php:97
 #: DeliveryDetails.php:409 GLProfit_Loss.php:609 GLTagProfit_Loss.php:515
-#: Payments.php:361 PDFRemittanceAdvice.php:85 PurchData.php:114
+#: Payments.php:362 PDFRemittanceAdvice.php:85 PurchData.php:114
 #: PurchData.php:132 PurchData.php:360 RecurringSalesOrders.php:267
 #: ReverseGRN.php:191 ReverseGRN.php:205 ReverseGRN.php:379
 #: SelectCreditItems.php:1442 SelectSalesOrder.php:208
@@ -1703,7 +1703,7 @@ msgstr "Không có giai đoạn nào được chọn"
 #: CustomerReceipt.php:1142 CustomerTypes.php:270 ExchangeRateTrend.php:51
 #: FreightCosts.php:60 GLJournal.php:139 GLJournal.php:376
 #: InternalStockCategoriesByRole.php:136 InternalStockCategoriesByRole.php:226
-#: OffersReceived.php:114 Payments.php:1083 PcAssignCashToTab.php:181
+#: OffersReceived.php:114 Payments.php:1054 PcAssignCashToTab.php:181
 #: PcAssignCashToTab.php:398 PcAuthorizeExpenses.php:334
 #: PcClaimExpensesFromTab.php:174 PcClaimExpensesFromTab.php:422
 #: PcExpenses.php:350 PcExpensesTypeTab.php:139 PcExpensesTypeTab.php:229
@@ -1715,7 +1715,7 @@ msgstr "chấp nhận"
 #: BankAccountUsers.php:124 BankAccountUsers.php:223
 #: CustomerAllocations.php:452 CustomerReceipt.php:1143
 #: InternalStockCategoriesByRole.php:137 InternalStockCategoriesByRole.php:227
-#: Payments.php:1084 PcAssignCashToTab.php:182 PcAssignCashToTab.php:399
+#: Payments.php:1055 PcAssignCashToTab.php:182 PcAssignCashToTab.php:399
 #: PcAuthorizeExpenses.php:335 PcClaimExpensesFromTab.php:175
 #: PcClaimExpensesFromTab.php:423 PcExpenses.php:351 PcExpensesTypeTab.php:140
 #: PcExpensesTypeTab.php:230 PcTabs.php:488 PcTypeTabs.php:254
@@ -1819,7 +1819,7 @@ msgstr ""
 
 #: BankMatching.php:100 BankReconciliation.php:113 CounterReturns.php:829
 #: Currencies.php:219 CustomerReceipt.php:785 DailyBankTransactions.php:40
-#: Payments.php:789 PDFChequeListing.php:46 TaxAuthorities.php:151
+#: Payments.php:760 PDFChequeListing.php:46 TaxAuthorities.php:151
 #: TaxAuthorities.php:318
 msgid "Bank Account"
 msgstr "Tài khoản ngân hàng"
@@ -1839,7 +1839,7 @@ msgstr "Từ"
 #: BankMatching.php:137 ConfirmDispatchControlled_Invoice.php:68
 #: CounterReturns.php:197 EmailCustTrans.php:64 FixedAssetRegister.php:82
 #: FTP_RadioBeacon.php:280 GLAccountCSV.php:178 GLAccountReport.php:106
-#: Payments.php:764 PcReportTab.php:110 PDFChequeListing.php:117
+#: Payments.php:735 PcReportTab.php:110 PDFChequeListing.php:117
 #: PDFChequeListing.php:127 PDFChequeListing.php:196
 #: PDFDeliveryDifferences.php:194 PDFDeliveryDifferences.php:207
 #: PDFDeliveryDifferences.php:306 PDFDIFOT.php:197 PDFDIFOT.php:210
@@ -1948,7 +1948,7 @@ msgid "The payments with the selected criteria could not be retrieved because"
 msgstr ""
 "Các khoản thanh toán với các tiêu chuẩn lựa chọn không thể được lấy ra vì"
 
-#: BankMatching.php:280 Payments.php:1091
+#: BankMatching.php:280 Payments.php:1062
 msgid "Cheque No"
 msgstr "Số séc"
 
@@ -1961,8 +1961,8 @@ msgstr "Tham khảo"
 #: CustomerAllocations.php:381 CustomerReceipt.php:947
 #: CustomerTransInquiry.php:113 CustWhereAlloc.php:115 GLJournalInquiry.php:85
 #: ImportBankTransAnalysis.php:208 ImportBankTransAnalysis.php:288
-#: PaymentAllocations.php:67 Payments.php:1071 Payments.php:1076
-#: Payments.php:1092 PcAssignCashToTab.php:240 PcAssignCashToTab.php:371
+#: PaymentAllocations.php:67 Payments.php:1042 Payments.php:1047
+#: Payments.php:1063 PcAssignCashToTab.php:240 PcAssignCashToTab.php:371
 #: PcAuthorizeExpenses.php:95 PcClaimExpensesFromTab.php:236
 #: PcClaimExpensesFromTab.php:396 PcReportTab.php:180 PcReportTab.php:335
 #: PrintCheque.php:83 PrintCheque.php:97 SelectCreditItems.php:696
@@ -2044,7 +2044,7 @@ msgid "The bank accounts could not be retrieved by the SQL because"
 msgstr "Tài khoản ngân hàng không truy xuất được từ cơ sở dữ liệu SQL bởi vì"
 
 #: BankReconciliation.php:110 CustomerReceipt.php:773
-#: DailyBankTransactions.php:36 Payments.php:785 SuppPaymentRun.php:319
+#: DailyBankTransactions.php:36 Payments.php:756 SuppPaymentRun.php:319
 msgid "The SQL used to retrieve the bank accounts was"
 msgstr "Cơ sở dữ liệu SQL dùng để truy xuất tài khoản ngân hàng là"
 
@@ -2057,12 +2057,12 @@ msgid "You must first"
 msgstr "Đầu tiên bạn phải"
 
 #: BankReconciliation.php:120 CustomerReceipt.php:793
-#: DailyBankTransactions.php:46 Payments.php:797 SuppPaymentRun.php:332
+#: DailyBankTransactions.php:46 Payments.php:768 SuppPaymentRun.php:332
 msgid "define the bank accounts"
 msgstr "xác định tài khoản"
 
 #: BankReconciliation.php:120 CustomerReceipt.php:793
-#: DailyBankTransactions.php:46 Payments.php:797 SuppPaymentRun.php:332
+#: DailyBankTransactions.php:46 Payments.php:768 SuppPaymentRun.php:332
 msgid "and general ledger accounts to be affected"
 msgstr "và những tài khoản sổ cái bị ảnh hưởng"
 
@@ -2117,7 +2117,7 @@ msgstr "Số"
 #: ContractCosting.php:176 CustomerInquiry.php:223 CustomerPurchases.php:83
 #: CustomerReceipt.php:911 CustomerTransInquiry.php:109 CustWhereAlloc.php:113
 #: DailyBankTransactions.php:131 GLAccountReport.php:342
-#: PaymentAllocations.php:64 PaymentAllocations.php:65 Payments.php:932
+#: PaymentAllocations.php:64 PaymentAllocations.php:65 Payments.php:903
 #: PDFRemittanceAdvice.php:309 ShiptsList.php:37 StockCounts.php:145
 #: StockCounts.php:170 StockCounts.php:214 StockLocMovements.php:94
 #: StockMovements.php:102 Z_CheckAllocs.php:64
@@ -3273,7 +3273,7 @@ msgid "Are you sure you wish to delete this COGS GL posting record?"
 msgstr "B?n có ch?c mu?n xóa nhà cung c?p này?"
 
 #: COGSGLPostings.php:200 CustomerReceipt.php:1074 GLJournal.php:387
-#: GLTransInquiry.php:44 Payments.php:1093 SupplierTransInquiry.php:172
+#: GLTransInquiry.php:44 Payments.php:1064 SupplierTransInquiry.php:172
 #: TaxAuthorities.php:148 TaxAuthorities.php:149
 msgid "GL Account"
 msgstr "Sổ cái tài khoản"
@@ -3570,7 +3570,7 @@ msgstr ""
 #: GoodsReceived.php:270 GoodsReceived.php:752 ImportBankTransAnalysis.php:154
 #: ImportBankTransAnalysis.php:185 InternalStockRequestAuthorisation.php:106
 #: InternalStockRequestFulfill.php:361 InternalStockRequest.php:249
-#: MRPCalendar.php:315 Payments.php:944 PcAuthorizeExpenses.php:108
+#: MRPCalendar.php:315 Payments.php:915 PcAuthorizeExpenses.php:108
 #: PcAuthorizeExpenses.php:293 PO_AuthoriseMyOrders.php:142
 #: PricesByCost.php:223 PurchData.php:758 ReorderLevelLocation.php:130
 #: SecurityTokens.php:97 SelectCreditItems.php:957 SellThroughSupport.php:476
@@ -6267,7 +6267,7 @@ msgstr "thuần, ròng"
 #: GLJournal.php:366 GLJournal.php:390 ImportBankTransAnalysis.php:209
 #: ImportBankTransAnalysis.php:296 InternalStockRequestAuthorisation.php:58
 #: InternalStockRequestFulfill.php:287 InternalStockRequest.php:242
-#: Payments.php:940 Payments.php:1094 SelectOrderItems.php:1455
+#: Payments.php:911 Payments.php:1065 SelectOrderItems.php:1455
 #: SellThroughSupport.php:265 SellThroughSupport.php:453
 #: SuppContractChgs.php:80 SuppContractChgs.php:168 SupplierCredit.php:421
 #: SupplierCredit.php:460 SupplierInvoice.php:785 SupplierInvoice.php:829
@@ -8721,11 +8721,11 @@ msgstr "cổng tiếp nhận"
 msgid "A bank account must be selected for this receipt"
 msgstr ""
 
-#: CustomerReceipt.php:66 Payments.php:741
+#: CustomerReceipt.php:66 Payments.php:712
 msgid "The bank account name cannot be retrieved because"
 msgstr "tài khoản ngân hàng không thể lấy lại vì"
 
-#: CustomerReceipt.php:76 Payments.php:751
+#: CustomerReceipt.php:76 Payments.php:722
 msgid "The bank account number"
 msgstr "Số tài khoản ngân hàng"
 
@@ -8750,11 +8750,11 @@ msgstr ""
 "được làm lại - chỉ những khách hàng kinh doanh các loại tiền tệ được chọn có "
 "thể được lựa chọn"
 
-#: CustomerReceipt.php:177 Payments.php:692
+#: CustomerReceipt.php:177 Payments.php:663
 msgid "No General Ledger code has been chosen"
 msgstr ""
 
-#: CustomerReceipt.php:177 GLJournal.php:174 Payments.php:675 Payments.php:692
+#: CustomerReceipt.php:177 GLJournal.php:174 Payments.php:646 Payments.php:663
 msgid "so this GL analysis item could not be added"
 msgstr ""
 
@@ -8812,7 +8812,7 @@ msgstr "thực hành chuyển giao"
 msgid "The SQL that failed to insert the bank transaction was"
 msgstr "Dữ liệu SQL dùng để chèn các giao dịch ngân hàng không thành công là"
 
-#: CustomerReceipt.php:388 Payments.php:591 Payments.php:617
+#: CustomerReceipt.php:388 Payments.php:590
 msgid "Cannot insert a bank transaction using the SQL"
 msgstr "Không thể dùng dữ liệu SQL để chèn giao dịch ngân hàng"
 
@@ -8881,7 +8881,7 @@ msgstr "hãy thay đổi tiêu chí tìm kiếm của bạn và thử lại"
 msgid "The customer details could not be retrieved because"
 msgstr "Không truy xuất được chi tiết khách hàng bởi vì"
 
-#: CustomerReceipt.php:772 DailyBankTransactions.php:35 Payments.php:784
+#: CustomerReceipt.php:772 DailyBankTransactions.php:35 Payments.php:755
 msgid "The bank accounts could not be retrieved because"
 msgstr "Không truy xuất được tài khoản ngân hàng bởi vì"
 
@@ -8913,8 +8913,8 @@ msgstr "Chưa có loại tiền tệ nào được xác định"
 msgid "Receipts cannot be entered until a currency is defined"
 msgstr "Biên lai có thể không được nhập vào cho đến khi tiền được xác định"
 
-#: CustomerReceipt.php:855 CustomerReceipt.php:874 Payments.php:868
-#: Payments.php:888
+#: CustomerReceipt.php:855 CustomerReceipt.php:874 Payments.php:839
+#: Payments.php:859
 msgid "Suggested rate:"
 msgstr "tỷ lệ đề nghị"
 
@@ -8930,11 +8930,11 @@ msgstr ""
 "Tỷ giá hối đoái giữa đồng tiền của các loại tiền tệ của tài khoản ngân hàng "
 "và tiền tệ của các biên nhận"
 
-#: CustomerReceipt.php:882 Payments.php:896
+#: CustomerReceipt.php:882 Payments.php:867
 msgid "Functional Exchange Rate"
 msgstr "Chức năng thị trường ngoại tệ"
 
-#: CustomerReceipt.php:884 Payments.php:897 Payments.php:898
+#: CustomerReceipt.php:884 Payments.php:868 Payments.php:869
 msgid ""
 "The exchange rate between the currency of the business (the functional "
 "currency) and the currency of the bank account"
@@ -8944,12 +8944,12 @@ msgstr ""
 msgid "Receipt Type"
 msgstr "loại biên lai"
 
-#: CustomerReceipt.php:912 Payments.php:933
+#: CustomerReceipt.php:912 Payments.php:904
 #, fuzzy
 msgid "Reference on Bank Transactions Inquiry"
 msgstr "Yêu cầu giao dịch"
 
-#: CustomerReceipt.php:924 Payments.php:941
+#: CustomerReceipt.php:924 Payments.php:912
 #, fuzzy
 msgid "Narrative on General Ledger Account Inquiry"
 msgstr "Yêu cầu sổ cái tài khoản chính"
@@ -8962,7 +8962,7 @@ msgstr "dồn"
 msgid "Banked into the"
 msgstr "dồn vào trong"
 
-#: CustomerReceipt.php:942 Payments.php:771 PO_Items.php:236
+#: CustomerReceipt.php:942 Payments.php:742 PO_Items.php:236
 #: SelectSalesOrder.php:230 SelectSalesOrder.php:391 SpecialOrder.php:480
 msgid "on"
 msgstr "trên"
@@ -8978,7 +8978,7 @@ msgstr "nhận, đã nhận"
 #: CustomerReceipt.php:952 GLAccountInquiry.php:179 GLAccountReport.php:347
 #: GLJournalInquiry.php:86 ImportBankTransAnalysis.php:210
 #: ImportBankTransAnalysis.php:301 InternalStockRequestFulfill.php:324
-#: Payments.php:1095 PcExpenses.php:193 PcExpenses.php:325
+#: Payments.php:1066 PcExpenses.php:193 PcExpenses.php:325
 #: SupplierCredit.php:461 SupplierInvoice.php:830 SuppTransGLAnalysis.php:111
 msgid "Tag"
 msgstr ""
@@ -8995,12 +8995,12 @@ msgid "General Ledger Receipt Entry"
 msgstr ""
 
 #: CustomerReceipt.php:1051 GLAccountCSV.php:67 GLAccountInquiry.php:65
-#: GLAccountReport.php:269 Payments.php:957 StockAdjustments.php:485
+#: GLAccountReport.php:269 Payments.php:928 StockAdjustments.php:485
 #: SuppTransGLAnalysis.php:168
 msgid "Select Tag"
 msgstr ""
 
-#: CustomerReceipt.php:1080 GLBudgets.php:52 Payments.php:1039
+#: CustomerReceipt.php:1080 GLBudgets.php:52 Payments.php:1010
 msgid "No General ledger accounts have been set up yet"
 msgstr "Không có tài khoản sổ cái chung chưa thiết lập chưa"
 
@@ -9010,7 +9010,7 @@ msgid ""
 "up"
 msgstr ""
 
-#: CustomerReceipt.php:1124 Payments.php:1144
+#: CustomerReceipt.php:1124 Payments.php:1115
 msgid "Amount of Discount"
 msgstr "Lượng được giảm giá"
 
@@ -9677,7 +9677,7 @@ msgstr "biên lai"
 msgid "Bank Transactions Inquiry"
 msgstr "Yêu cầu giao dịch"
 
-#: DailyBankTransactions.php:46 Payments.php:797 SuppPaymentRun.php:332
+#: DailyBankTransactions.php:46 Payments.php:768 SuppPaymentRun.php:332
 msgid "Bank Accounts have not yet been defined. You must first"
 msgstr "Tài khoản ngân hàng chưa được xác định. Bạn là đầu tiên"
 
@@ -11781,7 +11781,7 @@ msgstr ""
 msgid "Depreciation"
 msgstr "khấu hao"
 
-#: FixedAssetDepreciation.php:270 GLJournal.php:119 Payments.php:623
+#: FixedAssetDepreciation.php:270 GLJournal.php:119 Payments.php:594
 msgid "has been successfully entered"
 msgstr "Đã được nhập vào thành công"
 
@@ -13406,7 +13406,7 @@ msgstr "Tạo ngân sách sổ cái tài khoản"
 msgid "Budget updated successfully"
 msgstr ""
 
-#: GLBudgets.php:40 GLJournal.php:296 Payments.php:1033
+#: GLBudgets.php:40 GLJournal.php:296 Payments.php:1004
 msgid "Select GL Account"
 msgstr "Chọn sổ cái tài khoản"
 
@@ -13576,7 +13576,7 @@ msgid ""
 "receipt or a bank account payment"
 msgstr ""
 
-#: GLJournal.php:174 Payments.php:675
+#: GLJournal.php:174 Payments.php:646
 msgid "The manual GL code entered does not exist in the database"
 msgstr ""
 
@@ -13619,7 +13619,7 @@ msgstr "không"
 msgid "Select a general ledger account code"
 msgstr ""
 
-#: GLJournal.php:370 Payments.php:1059 Payments.php:1064
+#: GLJournal.php:370 Payments.php:1030 Payments.php:1035
 msgid "GL Narrative"
 msgstr ""
 
@@ -17734,8 +17734,8 @@ msgstr "Quay lại"
 msgid "Supplier Number"
 msgstr "Mã số nhà cung cấp"
 
-#: PaymentAllocations.php:65 PaymentAllocations.php:66 Payments.php:623
-#: Payments.php:761 PrintCustStatements.php:403
+#: PaymentAllocations.php:65 PaymentAllocations.php:66 Payments.php:594
+#: Payments.php:732 PrintCustStatements.php:403
 msgid "Payment"
 msgstr "thanh toán"
 
@@ -17923,39 +17923,38 @@ msgstr "Có / Tiếp tục"
 msgid "No / Cancel Payment"
 msgstr "Không/ H?y thanh toán"
 
-#: Payments.php:360
+#: Payments.php:361
 msgid "Cannot insert a GL entry for the payment using the SQL"
 msgstr "Không chèn du?c Nh?p báo cáo s? cái cho thanh toán s? d?ng d? li?u SQL"
 
-#: Payments.php:433
+#: Payments.php:434
 msgid "Act Transfer From "
 msgstr ""
 
-#: Payments.php:441 Payments.php:590 Payments.php:616
-#: PcAuthorizeExpenses.php:224
+#: Payments.php:442 Payments.php:589 PcAuthorizeExpenses.php:224
 msgid "Cannot insert a bank transaction because"
 msgstr "Không thể chèn vào một giao dịch ngân hàng vì"
 
-#: Payments.php:442 PcAuthorizeExpenses.php:225
+#: Payments.php:443 PcAuthorizeExpenses.php:225
 msgid "Cannot insert a bank transaction with the SQL"
 msgstr "Không th? chèn m?t giao d?ch ngân hàng v?i d? li?u SQL"
 
-#: Payments.php:475
+#: Payments.php:476
 msgid "Cannot insert a payment transaction against the supplier because"
 msgstr ""
 
-#: Payments.php:476
+#: Payments.php:477
 msgid "Cannot insert a payment transaction against the supplier using the SQL"
 msgstr ""
 
-#: Payments.php:487
+#: Payments.php:488
 msgid ""
 "Cannot update the supplier record for the date of the last payment made "
 "because"
 msgstr ""
 "Không th? c?p nh?t h? so nhà cung c?p vào ngày có thanh toán g?n nh?t vì"
 
-#: Payments.php:488
+#: Payments.php:489
 msgid ""
 "Cannot update the supplier record for the date of the last payment made "
 "using the SQL"
@@ -17963,91 +17962,91 @@ msgstr ""
 "Không th? c?p nh?t h? so nhà cung c?p cho ngày thanh toán g?n nh?t s? d?ng "
 "d? li?u SQL"
 
-#: Payments.php:510
+#: Payments.php:511
 msgid "Cannot insert a GL transaction for the creditors account debit because"
 msgstr "Không chèn du?c giao d?ch s? cái cho các ch? n? ghi n? tài kho?n vì"
 
-#: Payments.php:511
+#: Payments.php:512
 msgid ""
 "Cannot insert a GL transaction for the creditors account debit using the SQL"
 msgstr ""
 "Không th? chèn giao d?ch s? cái cho các ch? n? ghi n? tài kho?n s? d?ng d? "
 "li?u SQL vì"
 
-#: Payments.php:531
+#: Payments.php:532
 msgid "Cannot insert a GL transaction for the payment discount credit because"
 msgstr "Không th? chèn giao d?ch s? cái cho tín d?ng chi?t kh?u thanh toán vì"
 
-#: Payments.php:532
+#: Payments.php:533
 msgid ""
 "Cannot insert a GL transaction for the payment discount credit using the SQL"
 msgstr ""
 "Không th? chèn giao d?ch s? cái cho tín d?ng chi?t kh?u thanh toán s? d?ng "
 "d? li?u SQL"
 
-#: Payments.php:558
+#: Payments.php:559
 msgid "Cannot insert a GL transaction for the bank account credit because"
 msgstr "Không th? chèn giao d?ch s? cái cho tài kho?n ngân hàng tín d?ng vì"
 
-#: Payments.php:559
+#: Payments.php:560
 msgid ""
 "Cannot insert a GL transaction for the bank account credit using the SQL"
 msgstr ""
 "Không th? chèn giao d?ch s? cái cho tài kho?n ngân hàng tín d?ng s? d?ng d? "
 "li?u SQL"
 
-#: Payments.php:647
+#: Payments.php:618
 #, fuzzy
 msgid "Allocate this payment"
 msgstr "nhận cấp phát"
 
-#: Payments.php:648
+#: Payments.php:619
 msgid "Enter another Payment for"
 msgstr "Nhập thanh toán khách cho"
 
-#: Payments.php:650
+#: Payments.php:621
 msgid "Enter another General Ledger Payment"
 msgstr "Nh?p vào m?t s? cái thanh toán khác"
 
-#: Payments.php:678
+#: Payments.php:649
 msgid "The Cheque/Voucher number has already been used"
 msgstr "S? séc/phi?u dã du?c s? d?ng"
 
-#: Payments.php:678 Payments.php:690
+#: Payments.php:649 Payments.php:661
 msgid "This GL analysis item could not be added"
 msgstr "Không thêm du?c s? cái phân tích m?t hàng này"
 
-#: Payments.php:690
+#: Payments.php:661
 msgid "The cheque number has already been used"
 msgstr "S? séc dã du?c s? d?ng"
 
-#: Payments.php:742
+#: Payments.php:713
 msgid "SQL used to retrieve the bank account name was"
 msgstr "D? li?u SQL dùng d? truy xu?t tên tài kho?n ngân hàng là"
 
-#: Payments.php:751
+#: Payments.php:722
 msgid "is not set up as a bank account with a valid general ledger account"
 msgstr ""
 "không du?c thi?t l?p nhu là m?t tài kho?n ngân hàng v?i tài kho?n s? cái h?p "
 "l?"
 
-#: Payments.php:768
+#: Payments.php:739
 msgid "from the"
 msgstr "từ"
 
-#: Payments.php:790
+#: Payments.php:761
 msgid "Select the bank account that the payment has been made from"
 msgstr ""
 
-#: Payments.php:815
+#: Payments.php:786
 msgid "Date Paid"
 msgstr "Ngày tr?"
 
-#: Payments.php:822
+#: Payments.php:793
 msgid "Currency of Payment"
 msgstr "Tiền tệ thanh toán sử dụng"
 
-#: Payments.php:830
+#: Payments.php:801
 msgid ""
 "No currencies are defined yet. Payments cannot be entered until a currency "
 "is defined"
@@ -18055,22 +18054,22 @@ msgstr ""
 "Chưa xác định dạng tiền tệ. Không thể nhập thanh toán khi chưa xác định dạng "
 "tiền tệ."
 
-#: Payments.php:841
+#: Payments.php:812
 msgid ""
 "The transaction currency does not need to be the same as the bank account "
 "currency"
 msgstr ""
 "Ti?n t? giao d?ch không c?n ph?i gi?ng v?i ti?n t? c?a tài kho?n ngân hàng"
 
-#: Payments.php:847 Suppliers.php:808 Suppliers.php:1015
+#: Payments.php:818 Suppliers.php:808 Suppliers.php:1015
 msgid "Supplier Currency"
 msgstr "Tiền tệ của nhà cung cấp"
 
-#: Payments.php:879
+#: Payments.php:850
 msgid "Payment Exchange Rate"
 msgstr "T? giá h?i doái c?a thanh toán"
 
-#: Payments.php:880 Payments.php:881
+#: Payments.php:851 Payments.php:852
 msgid ""
 "The exchange rate between the currency of the bank account currency and the "
 "currency of the payment"
@@ -18078,47 +18077,47 @@ msgstr ""
 "T? giá h?i doái gi?a ti?n t? c?a tài kho?n ngân hàng và ti?n t? c?a thanh "
 "toán"
 
-#: Payments.php:902
+#: Payments.php:873
 msgid "Payment type"
 msgstr "Loại thanh toán"
 
-#: Payments.php:924
+#: Payments.php:895
 msgid "Cheque Number"
 msgstr "Số séc"
 
-#: Payments.php:925
+#: Payments.php:896
 msgid "(if using pre-printed stationery)"
 msgstr ""
 
-#: Payments.php:954
+#: Payments.php:925
 msgid "General Ledger Payment Analysis Entry"
 msgstr ""
 
-#: Payments.php:981 Payments.php:986
+#: Payments.php:952 Payments.php:957
 msgid "Enter GL Account Manually"
 msgstr "Nh?p S? cái tài kho?n b?ng tay"
 
-#: Payments.php:982 Payments.php:987
+#: Payments.php:953 Payments.php:958
 #, fuzzy
 msgid "The account code"
 msgstr "Mã số sổ cái tài khoản"
 
-#: Payments.php:982 Payments.php:987
+#: Payments.php:953 Payments.php:958
 #, fuzzy
 msgid "doesnt exist"
 msgstr "Không tồn tại"
 
-#: Payments.php:992
+#: Payments.php:963
 #, fuzzy
 msgid "Select GL Group"
 msgstr "Chọn sổ cái tài khoản"
 
-#: Payments.php:1003
+#: Payments.php:974
 #, fuzzy
 msgid "No General ledger account groups have been set up yet"
 msgstr "Không có tài khoản sổ cái chung chưa thiết lập chưa"
 
-#: Payments.php:1003 Payments.php:1039
+#: Payments.php:974 Payments.php:1010
 msgid ""
 "payments cannot be analysed against GL accounts until the GL accounts are "
 "set up"
@@ -18126,20 +18125,20 @@ msgstr ""
 "thanh toán s? không du?c phân tích cho s? cái tài kho?n cho d?n khi s? cài "
 "tài kho?n du?c thi?t l?p"
 
-#: Payments.php:1053
+#: Payments.php:1024
 msgid "Cheque/Voucher Number"
 msgstr "S? séc/phi?u"
 
-#: Payments.php:1115
+#: Payments.php:1086
 #, fuzzy
 msgid "Are you sure you wish to delete this payment analysis item?"
 msgstr "Bạn có chắc chắn muốn xóa chi nhánh này?"
 
-#: Payments.php:1128 Payments.php:1151
+#: Payments.php:1099 Payments.php:1122
 msgid "Accept and Process Payment"
 msgstr "Ch?p nh?n và s? lý thanh toán"
 
-#: Payments.php:1137
+#: Payments.php:1108
 msgid "Amount of Payment"
 msgstr "Lượng thanh toán"
 
@@ -46220,10 +46219,8 @@ msgstr ""
 
 #: install/index.php:170
 #, fuzzy
-msgid ""
-"The Company names can only contain alphanumeric characters plus -,_, & and "
-"spaces"
-msgstr "mã chi nhánh phải chứa ít nhất một ký tự dài"
+msgid "The Company names cannot contain illegal characters such as /\\?%:|<>\""
+msgstr "Các phương thức thanh toán không thể chứa các ký tự"
 
 #: install/index.php:176
 #, fuzzy
@@ -46233,8 +46230,8 @@ msgstr "Phương thức thanh toàn không được để trống"
 #: install/index.php:187
 #, fuzzy
 msgid ""
-"The database name must be lower case and should not contains illegal "
-"characters such as \"/\\?%:|<>\" blank etc"
+"The database name should not contains illegal characters such as \"/\\?%:|<>"
+"\" etc"
 msgstr "Các phương thức thanh toán không thể chứa các ký tự"
 
 #: install/index.php:193 install/index.php:539
@@ -46339,7 +46336,7 @@ msgstr "Phương thức thanh toàn không được để trống"
 #, fuzzy
 msgid ""
 "The database name should be lower case and not contains illegal characters "
-"such as \"/\\?%:|<>\" or blank spaces"
+"such as \"/\\?%:|<>\""
 msgstr "Các phương thức thanh toán không thể chứa các ký tự"
 
 #: install/index.php:561
@@ -46554,8 +46551,9 @@ msgstr "Tủy chỉnh chung"
 
 #: install/index.php:1024
 #, fuzzy
-msgid "The name of your company"
-msgstr "Công ty bán tài kho?n ph?i thu"
+msgid ""
+"The name of your company should not contain characters such as |\\?%:<>\""
+msgstr "Các phương thức thanh toán không thể chứa các ký tự"
 
 #: install/index.php:1027
 #, fuzzy
@@ -48105,6 +48103,16 @@ msgstr "Tín d?ng "
 #, fuzzy
 msgid "Bank Transfer"
 msgstr "Chuy?n"
+
+#, fuzzy
+#~ msgid ""
+#~ "The Company names can only contain alphanumeric characters plus -,_, & "
+#~ "and spaces"
+#~ msgstr "mã chi nhánh phải chứa ít nhất một ký tự dài"
+
+#, fuzzy
+#~ msgid "The name of your company"
+#~ msgstr "Công ty bán tài kho?n ph?i thu"
 
 #, fuzzy
 #~ msgid "User:"

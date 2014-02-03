@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-02 21:58+1300\n"
+"POT-Creation-Date: 2014-02-03 22:05+1300\n"
 "PO-Revision-Date: 2013-06-01 11:22-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -462,7 +462,7 @@ msgstr "Είστε βέβαιοι ότι επιθυμείτε τη διαγρα�
 #: InternalStockRequest.php:293 Labels.php:324 Labels.php:349 Labels.php:597
 #: Locations.php:405 MailingGroupMaintenance.php:179 MaintenanceTasks.php:119
 #: Manufacturers.php:218 MRPDemands.php:310 MRPDemandTypes.php:121
-#: PaymentMethods.php:209 Payments.php:1115 PaymentTerms.php:206
+#: PaymentMethods.php:209 Payments.php:1086 PaymentTerms.php:206
 #: PcAssignCashToTab.php:281 PcClaimExpensesFromTab.php:277 PcExpenses.php:227
 #: PcExpensesTypeTab.php:187 PcTabs.php:237 PcTypeTabs.php:181
 #: PO_AuthorisationLevels.php:153 PO_Items.php:772 PriceMatrix.php:174
@@ -1047,7 +1047,7 @@ msgstr "δεν μπορούσε να ανακτηθεί επειδή"
 #: Credit_Invoice.php:746 Credit_Invoice.php:767 CustomerReceipt.php:557
 #: CustomerReceipt.php:707 CustomerReceipt.php:735 CustomerTransInquiry.php:97
 #: DeliveryDetails.php:409 GLProfit_Loss.php:609 GLTagProfit_Loss.php:515
-#: Payments.php:361 PDFRemittanceAdvice.php:85 PurchData.php:114
+#: Payments.php:362 PDFRemittanceAdvice.php:85 PurchData.php:114
 #: PurchData.php:132 PurchData.php:360 RecurringSalesOrders.php:267
 #: ReverseGRN.php:191 ReverseGRN.php:205 ReverseGRN.php:379
 #: SelectCreditItems.php:1442 SelectSalesOrder.php:208
@@ -1739,7 +1739,7 @@ msgstr "Δεν επιλεγμένη χρονική"
 #: CustomerReceipt.php:1142 CustomerTypes.php:270 ExchangeRateTrend.php:51
 #: FreightCosts.php:60 GLJournal.php:139 GLJournal.php:376
 #: InternalStockCategoriesByRole.php:136 InternalStockCategoriesByRole.php:226
-#: OffersReceived.php:114 Payments.php:1083 PcAssignCashToTab.php:181
+#: OffersReceived.php:114 Payments.php:1054 PcAssignCashToTab.php:181
 #: PcAssignCashToTab.php:398 PcAuthorizeExpenses.php:334
 #: PcClaimExpensesFromTab.php:174 PcClaimExpensesFromTab.php:422
 #: PcExpenses.php:350 PcExpensesTypeTab.php:139 PcExpensesTypeTab.php:229
@@ -1751,7 +1751,7 @@ msgstr "Αποδοχή"
 #: BankAccountUsers.php:124 BankAccountUsers.php:223
 #: CustomerAllocations.php:452 CustomerReceipt.php:1143
 #: InternalStockCategoriesByRole.php:137 InternalStockCategoriesByRole.php:227
-#: Payments.php:1084 PcAssignCashToTab.php:182 PcAssignCashToTab.php:399
+#: Payments.php:1055 PcAssignCashToTab.php:182 PcAssignCashToTab.php:399
 #: PcAuthorizeExpenses.php:335 PcClaimExpensesFromTab.php:175
 #: PcClaimExpensesFromTab.php:423 PcExpenses.php:351 PcExpensesTypeTab.php:140
 #: PcExpensesTypeTab.php:230 PcTabs.php:488 PcTypeTabs.php:254
@@ -1857,7 +1857,7 @@ msgstr ""
 
 #: BankMatching.php:100 BankReconciliation.php:113 CounterReturns.php:829
 #: Currencies.php:219 CustomerReceipt.php:785 DailyBankTransactions.php:40
-#: Payments.php:789 PDFChequeListing.php:46 TaxAuthorities.php:151
+#: Payments.php:760 PDFChequeListing.php:46 TaxAuthorities.php:151
 #: TaxAuthorities.php:318
 msgid "Bank Account"
 msgstr "Τραπεζικός Λογαριασμός"
@@ -1877,7 +1877,7 @@ msgstr "από"
 #: BankMatching.php:137 ConfirmDispatchControlled_Invoice.php:68
 #: CounterReturns.php:197 EmailCustTrans.php:64 FixedAssetRegister.php:82
 #: FTP_RadioBeacon.php:280 GLAccountCSV.php:178 GLAccountReport.php:106
-#: Payments.php:764 PcReportTab.php:110 PDFChequeListing.php:117
+#: Payments.php:735 PcReportTab.php:110 PDFChequeListing.php:117
 #: PDFChequeListing.php:127 PDFChequeListing.php:196
 #: PDFDeliveryDifferences.php:194 PDFDeliveryDifferences.php:207
 #: PDFDeliveryDifferences.php:306 PDFDIFOT.php:197 PDFDIFOT.php:210
@@ -1986,7 +1986,7 @@ msgid "The payments with the selected criteria could not be retrieved because"
 msgstr ""
 "Οι πληρωμές με τα επιλεγμένα κριτήρια δεν θα μπορούσαν να ανακτηθούν επειδή"
 
-#: BankMatching.php:280 Payments.php:1091
+#: BankMatching.php:280 Payments.php:1062
 msgid "Cheque No"
 msgstr "Επιταγή αριθ"
 
@@ -1999,8 +1999,8 @@ msgstr "Συ/ση"
 #: CustomerAllocations.php:381 CustomerReceipt.php:947
 #: CustomerTransInquiry.php:113 CustWhereAlloc.php:115 GLJournalInquiry.php:85
 #: ImportBankTransAnalysis.php:208 ImportBankTransAnalysis.php:288
-#: PaymentAllocations.php:67 Payments.php:1071 Payments.php:1076
-#: Payments.php:1092 PcAssignCashToTab.php:240 PcAssignCashToTab.php:371
+#: PaymentAllocations.php:67 Payments.php:1042 Payments.php:1047
+#: Payments.php:1063 PcAssignCashToTab.php:240 PcAssignCashToTab.php:371
 #: PcAuthorizeExpenses.php:95 PcClaimExpensesFromTab.php:236
 #: PcClaimExpensesFromTab.php:396 PcReportTab.php:180 PcReportTab.php:335
 #: PrintCheque.php:83 PrintCheque.php:97 SelectCreditItems.php:696
@@ -2087,7 +2087,7 @@ msgstr ""
 "Οι τραπεζικοί λογαριασμοί δεν μπορούσαν να ανακτηθούν από την SQL επειδή"
 
 #: BankReconciliation.php:110 CustomerReceipt.php:773
-#: DailyBankTransactions.php:36 Payments.php:785 SuppPaymentRun.php:319
+#: DailyBankTransactions.php:36 Payments.php:756 SuppPaymentRun.php:319
 msgid "The SQL used to retrieve the bank accounts was"
 msgstr "Η SQL χρησιμοποιείται για την ανάκτηση των τραπεζικών λογαριασμών ήταν"
 
@@ -2100,12 +2100,12 @@ msgid "You must first"
 msgstr "Πρέπει πρώτα"
 
 #: BankReconciliation.php:120 CustomerReceipt.php:793
-#: DailyBankTransactions.php:46 Payments.php:797 SuppPaymentRun.php:332
+#: DailyBankTransactions.php:46 Payments.php:768 SuppPaymentRun.php:332
 msgid "define the bank accounts"
 msgstr "καθορίστε τους τραπεζικούς λογαριασμούς"
 
 #: BankReconciliation.php:120 CustomerReceipt.php:793
-#: DailyBankTransactions.php:46 Payments.php:797 SuppPaymentRun.php:332
+#: DailyBankTransactions.php:46 Payments.php:768 SuppPaymentRun.php:332
 msgid "and general ledger accounts to be affected"
 msgstr "και γενικούς καθολικούς λογαριασμούς που επηρεάζονται"
 
@@ -2162,7 +2162,7 @@ msgstr "Αριθμός"
 #: ContractCosting.php:176 CustomerInquiry.php:223 CustomerPurchases.php:83
 #: CustomerReceipt.php:911 CustomerTransInquiry.php:109 CustWhereAlloc.php:113
 #: DailyBankTransactions.php:131 GLAccountReport.php:342
-#: PaymentAllocations.php:64 PaymentAllocations.php:65 Payments.php:932
+#: PaymentAllocations.php:64 PaymentAllocations.php:65 Payments.php:903
 #: PDFRemittanceAdvice.php:309 ShiptsList.php:37 StockCounts.php:145
 #: StockCounts.php:170 StockCounts.php:214 StockLocMovements.php:94
 #: StockMovements.php:102 Z_CheckAllocs.php:64
@@ -3340,7 +3340,7 @@ msgid "Are you sure you wish to delete this COGS GL posting record?"
 msgstr "Είστε σίγουροι ότι θέλετε να διαγράψετε αυτή την τιμή;"
 
 #: COGSGLPostings.php:200 CustomerReceipt.php:1074 GLJournal.php:387
-#: GLTransInquiry.php:44 Payments.php:1093 SupplierTransInquiry.php:172
+#: GLTransInquiry.php:44 Payments.php:1064 SupplierTransInquiry.php:172
 #: TaxAuthorities.php:148 TaxAuthorities.php:149
 msgid "GL Account"
 msgstr "Λογαριασμός ΓΛ"
@@ -3639,7 +3639,7 @@ msgstr ""
 #: GoodsReceived.php:270 GoodsReceived.php:752 ImportBankTransAnalysis.php:154
 #: ImportBankTransAnalysis.php:185 InternalStockRequestAuthorisation.php:106
 #: InternalStockRequestFulfill.php:361 InternalStockRequest.php:249
-#: MRPCalendar.php:315 Payments.php:944 PcAuthorizeExpenses.php:108
+#: MRPCalendar.php:315 Payments.php:915 PcAuthorizeExpenses.php:108
 #: PcAuthorizeExpenses.php:293 PO_AuthoriseMyOrders.php:142
 #: PricesByCost.php:223 PurchData.php:758 ReorderLevelLocation.php:130
 #: SecurityTokens.php:97 SelectCreditItems.php:957 SellThroughSupport.php:476
@@ -6471,7 +6471,7 @@ msgstr "Καθαρού"
 #: GLJournal.php:366 GLJournal.php:390 ImportBankTransAnalysis.php:209
 #: ImportBankTransAnalysis.php:296 InternalStockRequestAuthorisation.php:58
 #: InternalStockRequestFulfill.php:287 InternalStockRequest.php:242
-#: Payments.php:940 Payments.php:1094 SelectOrderItems.php:1455
+#: Payments.php:911 Payments.php:1065 SelectOrderItems.php:1455
 #: SellThroughSupport.php:265 SellThroughSupport.php:453
 #: SuppContractChgs.php:80 SuppContractChgs.php:168 SupplierCredit.php:421
 #: SupplierCredit.php:460 SupplierInvoice.php:785 SupplierInvoice.php:829
@@ -9058,11 +9058,11 @@ msgid "A bank account must be selected for this receipt"
 msgstr ""
 "Ο τραπεζικός λογαριασμός θα πρέπει να επιλέγονται γι&#39;αυτόν παραλαβή"
 
-#: CustomerReceipt.php:66 Payments.php:741
+#: CustomerReceipt.php:66 Payments.php:712
 msgid "The bank account name cannot be retrieved because"
 msgstr "Το όνομα τραπεζικού λογαριασμού δεν μπορεί να ανακτηθεί επειδή"
 
-#: CustomerReceipt.php:76 Payments.php:751
+#: CustomerReceipt.php:76 Payments.php:722
 msgid "The bank account number"
 msgstr "Ο αριθμός τραπεζικού λογαριασμού"
 
@@ -9088,11 +9088,11 @@ msgstr ""
 "καταχωρήσεις θα πρέπει να γίνει εκ νέου - μόνο των συναλλαγών των πελατών "
 "στο επιλεγμένο νόμισμα μπορεί να επιλεγεί"
 
-#: CustomerReceipt.php:177 Payments.php:692
+#: CustomerReceipt.php:177 Payments.php:663
 msgid "No General Ledger code has been chosen"
 msgstr "Δεν Γενική Λογιστική έχει επιλεγεί"
 
-#: CustomerReceipt.php:177 GLJournal.php:174 Payments.php:675 Payments.php:692
+#: CustomerReceipt.php:177 GLJournal.php:174 Payments.php:646 Payments.php:663
 msgid "so this GL analysis item could not be added"
 msgstr "οπότε αυτό το στοιχείο ανάλυσης GL δεν θα μπορούσαν να προστεθούν"
 
@@ -9150,7 +9150,7 @@ msgstr "Μεταφορά Πράξης"
 msgid "The SQL that failed to insert the bank transaction was"
 msgstr "Η SQL που απέτυχε να εισάγει τη τραπεζική συναλλαγή  ήταν"
 
-#: CustomerReceipt.php:388 Payments.php:591 Payments.php:617
+#: CustomerReceipt.php:388 Payments.php:590
 msgid "Cannot insert a bank transaction using the SQL"
 msgstr "Δεν μπορείτε να εισάγετε μια τραπεζική συναλλαγή  χρησιμοποιώντας SQL"
 
@@ -9229,7 +9229,7 @@ msgstr "παρακαλώ αλλάξτε τα κριτήρια αναζήτησή
 msgid "The customer details could not be retrieved because"
 msgstr "Οι λεπτομέρειες πελατών δεν θα μπορούσαν να ανακτηθούν επειδή"
 
-#: CustomerReceipt.php:772 DailyBankTransactions.php:35 Payments.php:784
+#: CustomerReceipt.php:772 DailyBankTransactions.php:35 Payments.php:755
 msgid "The bank accounts could not be retrieved because"
 msgstr "Οι τραπεζικοί λογαριασμοί δεν ήταν δυνατό να ανακτηθούν επειδή"
 
@@ -9261,8 +9261,8 @@ msgstr "Κανένα νόμισμα δεν καθορίστηκε ακόμα"
 msgid "Receipts cannot be entered until a currency is defined"
 msgstr "Οι αποδείξεις δεν μπορούν να εισαχθούν έως ότου καθοριστεί ένα νόμισμα"
 
-#: CustomerReceipt.php:855 CustomerReceipt.php:874 Payments.php:868
-#: Payments.php:888
+#: CustomerReceipt.php:855 CustomerReceipt.php:874 Payments.php:839
+#: Payments.php:859
 msgid "Suggested rate:"
 msgstr "Προτεινόμενη τιμή:"
 
@@ -9278,11 +9278,11 @@ msgstr ""
 "Η συναλλαγματική ισοτιμία μεταξύ του νομίσματος του νομίσματος τραπεζικό "
 "λογαριασμό και το νόμισμα της απόδειξης"
 
-#: CustomerReceipt.php:882 Payments.php:896
+#: CustomerReceipt.php:882 Payments.php:867
 msgid "Functional Exchange Rate"
 msgstr "Λειτουργική συναλλαγματικής ισοτιμίας"
 
-#: CustomerReceipt.php:884 Payments.php:897 Payments.php:898
+#: CustomerReceipt.php:884 Payments.php:868 Payments.php:869
 msgid ""
 "The exchange rate between the currency of the business (the functional "
 "currency) and the currency of the bank account"
@@ -9294,12 +9294,12 @@ msgstr ""
 msgid "Receipt Type"
 msgstr "Τύπος Απόδειξης"
 
-#: CustomerReceipt.php:912 Payments.php:933
+#: CustomerReceipt.php:912 Payments.php:904
 #, fuzzy
 msgid "Reference on Bank Transactions Inquiry"
 msgstr "Συναλλαγή Εξεταστική"
 
-#: CustomerReceipt.php:924 Payments.php:941
+#: CustomerReceipt.php:924 Payments.php:912
 #, fuzzy
 msgid "Narrative on General Ledger Account Inquiry"
 msgstr "Γενικά Εξεταστική λογαριασμό του καθολικού"
@@ -9312,7 +9312,7 @@ msgstr "Banked"
 msgid "Banked into the"
 msgstr "Κατατέθηκε στο"
 
-#: CustomerReceipt.php:942 Payments.php:771 PO_Items.php:236
+#: CustomerReceipt.php:942 Payments.php:742 PO_Items.php:236
 #: SelectSalesOrder.php:230 SelectSalesOrder.php:391 SpecialOrder.php:480
 msgid "on"
 msgstr "στο"
@@ -9328,7 +9328,7 @@ msgstr "Ελήφθει"
 #: CustomerReceipt.php:952 GLAccountInquiry.php:179 GLAccountReport.php:347
 #: GLJournalInquiry.php:86 ImportBankTransAnalysis.php:210
 #: ImportBankTransAnalysis.php:301 InternalStockRequestFulfill.php:324
-#: Payments.php:1095 PcExpenses.php:193 PcExpenses.php:325
+#: Payments.php:1066 PcExpenses.php:193 PcExpenses.php:325
 #: SupplierCredit.php:461 SupplierInvoice.php:830 SuppTransGLAnalysis.php:111
 msgid "Tag"
 msgstr "Ετικέτα"
@@ -9348,12 +9348,12 @@ msgid "General Ledger Receipt Entry"
 msgstr "Καταχώρηση Απόδειξης Γενικής Λογιστικής"
 
 #: CustomerReceipt.php:1051 GLAccountCSV.php:67 GLAccountInquiry.php:65
-#: GLAccountReport.php:269 Payments.php:957 StockAdjustments.php:485
+#: GLAccountReport.php:269 Payments.php:928 StockAdjustments.php:485
 #: SuppTransGLAnalysis.php:168
 msgid "Select Tag"
 msgstr "Επιλέξτε Tag"
 
-#: CustomerReceipt.php:1080 GLBudgets.php:52 Payments.php:1039
+#: CustomerReceipt.php:1080 GLBudgets.php:52 Payments.php:1010
 msgid "No General ledger accounts have been set up yet"
 msgstr "Δεν έχουν ρυθμιστεί ακόμη λογαριασμοί Γενικής Λογιστικής"
 
@@ -9365,7 +9365,7 @@ msgstr ""
 "δεν μπορούν να καταχωρηθούν αποδείξεις σε λογαριασμούς ΓΛ μέχρι αυτοί να "
 "καθοριστούν"
 
-#: CustomerReceipt.php:1124 Payments.php:1144
+#: CustomerReceipt.php:1124 Payments.php:1115
 msgid "Amount of Discount"
 msgstr "Ποσό Έκπτωσης"
 
@@ -10061,7 +10061,7 @@ msgstr "Απόδειξη"
 msgid "Bank Transactions Inquiry"
 msgstr "Συναλλαγή Εξεταστική"
 
-#: DailyBankTransactions.php:46 Payments.php:797 SuppPaymentRun.php:332
+#: DailyBankTransactions.php:46 Payments.php:768 SuppPaymentRun.php:332
 msgid "Bank Accounts have not yet been defined. You must first"
 msgstr "Τραπεζικοί λογαριασμοί δεν έχουν ακόμη καθοριστεί. Πρέπει πρώτα να"
 
@@ -12254,7 +12254,7 @@ msgstr "Γενικό Σύνολο"
 msgid "Depreciation"
 msgstr "Απόσβεση"
 
-#: FixedAssetDepreciation.php:270 GLJournal.php:119 Payments.php:623
+#: FixedAssetDepreciation.php:270 GLJournal.php:119 Payments.php:594
 msgid "has been successfully entered"
 msgstr "έχει εισαχθεί επιτυχώς"
 
@@ -13997,7 +13997,7 @@ msgstr "Δημιουργία GL Προϋπολογισμών"
 msgid "Budget updated successfully"
 msgstr "Όλες οι τιμές ενημερώθηκαν με επιτυχία"
 
-#: GLBudgets.php:40 GLJournal.php:296 Payments.php:1033
+#: GLBudgets.php:40 GLJournal.php:296 Payments.php:1004
 msgid "Select GL Account"
 msgstr "Επιλέξτε GL Λογαριασμού"
 
@@ -14181,7 +14181,7 @@ msgstr ""
 "Τραπεζικός λογαριασμός γενικές καταχωρίσεις καθολικού πρέπει να αναγράφεται "
 "είτε με απόδειξη τραπεζικού λογαριασμού ή πληρωμή τραπεζικό λογαριασμό"
 
-#: GLJournal.php:174 Payments.php:675
+#: GLJournal.php:174 Payments.php:646
 msgid "The manual GL code entered does not exist in the database"
 msgstr "Ο κωδικός GL τέθηκε εγχειρίδιο δεν υπάρχει στη βάση δεδομένων"
 
@@ -14224,7 +14224,7 @@ msgstr "Κανένας"
 msgid "Select a general ledger account code"
 msgstr "Επιλέξτε ένα γενικό κωδικό λογαριασμού του καθολικού"
 
-#: GLJournal.php:370 Payments.php:1059 Payments.php:1064
+#: GLJournal.php:370 Payments.php:1030 Payments.php:1035
 msgid "GL Narrative"
 msgstr "GL Αφήγηση"
 
@@ -18516,8 +18516,8 @@ msgstr "Επιστροφή"
 msgid "Supplier Number"
 msgstr "Προμηθευτής Αριθμός"
 
-#: PaymentAllocations.php:65 PaymentAllocations.php:66 Payments.php:623
-#: Payments.php:761 PrintCustStatements.php:403
+#: PaymentAllocations.php:65 PaymentAllocations.php:66 Payments.php:594
+#: Payments.php:732 PrintCustStatements.php:403
 msgid "Payment"
 msgstr "Πληρωμής"
 
@@ -18714,37 +18714,36 @@ msgstr "Ναι / Συνέχεια"
 msgid "No / Cancel Payment"
 msgstr "Δεν / Ακύρωση Πληρωμής"
 
-#: Payments.php:360
+#: Payments.php:361
 msgid "Cannot insert a GL entry for the payment using the SQL"
 msgstr ""
 "Δε μπορεί να εισαχθεί μια καταχώρηση GL για την πληρωμή χρησιμοποιώντας το "
 "SQL"
 
-#: Payments.php:433
+#: Payments.php:434
 msgid "Act Transfer From "
 msgstr "Πράξη μεταβίβασης Από "
 
-#: Payments.php:441 Payments.php:590 Payments.php:616
-#: PcAuthorizeExpenses.php:224
+#: Payments.php:442 Payments.php:589 PcAuthorizeExpenses.php:224
 msgid "Cannot insert a bank transaction because"
 msgstr "Δεν είναι δυνατή η εισαγωγή μιας τραπεζικής συναλλαγής, διότι"
 
-#: Payments.php:442 PcAuthorizeExpenses.php:225
+#: Payments.php:443 PcAuthorizeExpenses.php:225
 msgid "Cannot insert a bank transaction with the SQL"
 msgstr "Δεν είναι δυνατή η εισαγωγή μιας τραπεζικής συναλλαγής με το SQL"
 
-#: Payments.php:475
+#: Payments.php:476
 msgid "Cannot insert a payment transaction against the supplier because"
 msgstr ""
 "Δεν είναι δυνατή η εισαγωγή μιας πράξης πληρωμής κατά του προμηθευτή, διότι"
 
-#: Payments.php:476
+#: Payments.php:477
 msgid "Cannot insert a payment transaction against the supplier using the SQL"
 msgstr ""
 "Δεν είναι δυνατή η εισαγωγή μιας πράξης πληρωμής κατά του προμηθευτή "
 "χρησιμοποιώντας το SQL"
 
-#: Payments.php:487
+#: Payments.php:488
 msgid ""
 "Cannot update the supplier record for the date of the last payment made "
 "because"
@@ -18752,7 +18751,7 @@ msgstr ""
 "Δεν είναι δυνατή η ενημέρωση της εγγραφής προμηθευτή για την ημερομηνία της "
 "τελευταίας πληρωμής, διότι"
 
-#: Payments.php:488
+#: Payments.php:489
 msgid ""
 "Cannot update the supplier record for the date of the last payment made "
 "using the SQL"
@@ -18760,99 +18759,99 @@ msgstr ""
 "Δεν είναι δυνατή η ενημέρωση της εγγραφής προμηθευτή για την ημερομηνία της "
 "τελευταίας πληρωμής χρησιμοποιώντας το SQL"
 
-#: Payments.php:510
+#: Payments.php:511
 msgid "Cannot insert a GL transaction for the creditors account debit because"
 msgstr ""
 "Δε μπορεί να εισαχθεί GL συναλλαγών για τους πιστωτές χρεωστικού "
 "λογαριασμού, επειδή"
 
-#: Payments.php:511
+#: Payments.php:512
 msgid ""
 "Cannot insert a GL transaction for the creditors account debit using the SQL"
 msgstr ""
 "Δε μπορεί να εισαχθεί GL συναλλαγών για τους πιστωτές χρεωστικού λογαριασμού "
 "χρησιμοποιώντας το SQL"
 
-#: Payments.php:531
+#: Payments.php:532
 msgid "Cannot insert a GL transaction for the payment discount credit because"
 msgstr ""
 "Δε μπορεί να εισαχθεί μια συναλλαγή GL για την πίστωση έκπτωση πληρωμής "
 "επειδή"
 
-#: Payments.php:532
+#: Payments.php:533
 msgid ""
 "Cannot insert a GL transaction for the payment discount credit using the SQL"
 msgstr ""
 "Δε μπορεί να εισαχθεί μια συναλλαγή GL για την πίστωση έκπτωση πληρωμής μέσω "
 "του SQL"
 
-#: Payments.php:558
+#: Payments.php:559
 msgid "Cannot insert a GL transaction for the bank account credit because"
 msgstr ""
 "Δε μπορεί να εισαχθεί μια συναλλαγή GL για την πίστωση του τραπεζικού "
 "λογαριασμού, επειδή"
 
-#: Payments.php:559
+#: Payments.php:560
 msgid ""
 "Cannot insert a GL transaction for the bank account credit using the SQL"
 msgstr ""
 "Δε μπορεί να εισαχθεί μια συναλλαγή GL για την πίστωση του τραπεζικού "
 "λογαριασμού χρησιμοποιώντας το SQL"
 
-#: Payments.php:647
+#: Payments.php:618
 #, fuzzy
 msgid "Allocate this payment"
 msgstr "Αδυναμία εντοπισμού αποστολή"
 
-#: Payments.php:648
+#: Payments.php:619
 msgid "Enter another Payment for"
 msgstr "Πληκτρολογήστε μια άλλη πληρωμή για"
 
-#: Payments.php:650
+#: Payments.php:621
 msgid "Enter another General Ledger Payment"
 msgstr "Πληκτρολογήστε μια άλλη Γενική Λογιστική Πληρωμής"
 
-#: Payments.php:678
+#: Payments.php:649
 msgid "The Cheque/Voucher number has already been used"
 msgstr "Ο Επιταγή / αριθμός κουπονιών έχει ήδη χρησιμοποιηθεί"
 
-#: Payments.php:678 Payments.php:690
+#: Payments.php:649 Payments.php:661
 msgid "This GL analysis item could not be added"
 msgstr "Η θέση αυτή ανάλυση GL δεν θα μπορούσε να προστεθεί"
 
-#: Payments.php:690
+#: Payments.php:661
 msgid "The cheque number has already been used"
 msgstr "Ο αριθμός έλεγχος έχει ήδη χρησιμοποιηθεί"
 
-#: Payments.php:742
+#: Payments.php:713
 msgid "SQL used to retrieve the bank account name was"
 msgstr ""
 "H SQL που χρησιμοποιήθηκε για να ανακτηθεί το όνομα τραπεζικού λογαριασμού "
 "ήταν"
 
-#: Payments.php:751
+#: Payments.php:722
 msgid "is not set up as a bank account with a valid general ledger account"
 msgstr ""
 "Δεν έχει οριστεί ως έναν τραπεζικό λογαριασμό με έγκυρη γενικό λογαριασμό "
 "του καθολικού"
 
-#: Payments.php:768
+#: Payments.php:739
 msgid "from the"
 msgstr "από την"
 
-#: Payments.php:790
+#: Payments.php:761
 msgid "Select the bank account that the payment has been made from"
 msgstr ""
 
-#: Payments.php:815
+#: Payments.php:786
 msgid "Date Paid"
 msgstr "Ημερομηνία πληρωμής"
 
-#: Payments.php:822
+#: Payments.php:793
 msgid "Currency of Payment"
 msgstr "Νόμισμα Πληρωμής"
 
-#: Payments.php:830
+#: Payments.php:801
 msgid ""
 "No currencies are defined yet. Payments cannot be entered until a currency "
 "is defined"
@@ -18860,7 +18859,7 @@ msgstr ""
 "Δεν νομίσματα ακόμη καθοριστεί. Οι πληρωμές δεν μπορούν να εισαχθούν έως "
 "ότου ένα νόμισμα ορίζεται"
 
-#: Payments.php:841
+#: Payments.php:812
 msgid ""
 "The transaction currency does not need to be the same as the bank account "
 "currency"
@@ -18868,15 +18867,15 @@ msgstr ""
 "Το νόμισμα συναλλαγών δεν πρέπει να είναι το ίδιο με το νόμισμα του "
 "τραπεζικού λογαριασμού"
 
-#: Payments.php:847 Suppliers.php:808 Suppliers.php:1015
+#: Payments.php:818 Suppliers.php:808 Suppliers.php:1015
 msgid "Supplier Currency"
 msgstr "Προμηθευτής Νόμισμα"
 
-#: Payments.php:879
+#: Payments.php:850
 msgid "Payment Exchange Rate"
 msgstr "Η πληρωμή της συναλλαγματικής ισοτιμίας"
 
-#: Payments.php:880 Payments.php:881
+#: Payments.php:851 Payments.php:852
 msgid ""
 "The exchange rate between the currency of the bank account currency and the "
 "currency of the payment"
@@ -18884,47 +18883,47 @@ msgstr ""
 "Η συναλλαγματική ισοτιμία μεταξύ του νομίσματος του νομίσματος τραπεζικού "
 "λογαριασμού και το νόμισμα της πληρωμής"
 
-#: Payments.php:902
+#: Payments.php:873
 msgid "Payment type"
 msgstr "Τύπος πληρωμής"
 
-#: Payments.php:924
+#: Payments.php:895
 msgid "Cheque Number"
 msgstr "Επιταγή Αριθμός"
 
-#: Payments.php:925
+#: Payments.php:896
 msgid "(if using pre-printed stationery)"
 msgstr "(Αν χρησιμοποιείτε το προ-τυπωμένα χαρτικά)"
 
-#: Payments.php:954
+#: Payments.php:925
 msgid "General Ledger Payment Analysis Entry"
 msgstr "Γενική Λογιστική Έναρξη Πληρωμής Ανάλυση"
 
-#: Payments.php:981 Payments.php:986
+#: Payments.php:952 Payments.php:957
 msgid "Enter GL Account Manually"
 msgstr "Εισάγετε GL Λογαριασμός χειροκίνητα"
 
-#: Payments.php:982 Payments.php:987
+#: Payments.php:953 Payments.php:958
 #, fuzzy
 msgid "The account code"
 msgstr "GL Κωδικός Λογαριασμού"
 
-#: Payments.php:982 Payments.php:987
+#: Payments.php:953 Payments.php:958
 #, fuzzy
 msgid "doesnt exist"
 msgstr "Δεν υπάρχει"
 
-#: Payments.php:992
+#: Payments.php:963
 #, fuzzy
 msgid "Select GL Group"
 msgstr "Επιλέξτε GL Λογαριασμού"
 
-#: Payments.php:1003
+#: Payments.php:974
 #, fuzzy
 msgid "No General ledger account groups have been set up yet"
 msgstr "Δεν έχουν ρυθμιστεί ακόμη λογαριασμοί Γενικής Λογιστικής"
 
-#: Payments.php:1003 Payments.php:1039
+#: Payments.php:974 Payments.php:1010
 msgid ""
 "payments cannot be analysed against GL accounts until the GL accounts are "
 "set up"
@@ -18932,20 +18931,20 @@ msgstr ""
 "πληρωμές δεν μπορεί να αναλυθεί κατά GL λογαριασμούς μέχρι τους λογαριασμούς "
 "GL έχουν συσταθεί"
 
-#: Payments.php:1053
+#: Payments.php:1024
 msgid "Cheque/Voucher Number"
 msgstr "Επιταγή / αριθμός του τίτλου"
 
-#: Payments.php:1115
+#: Payments.php:1086
 #, fuzzy
 msgid "Are you sure you wish to delete this payment analysis item?"
 msgstr "Είστε βέβαιοι ότι επιθυμείτε τη διαγραφή αυτού του δικτύου;"
 
-#: Payments.php:1128 Payments.php:1151
+#: Payments.php:1099 Payments.php:1122
 msgid "Accept and Process Payment"
 msgstr "Αποδοχή και διαδικασία πληρωμής"
 
-#: Payments.php:1137
+#: Payments.php:1108
 msgid "Amount of Payment"
 msgstr "Ποσό Πληρωμής"
 
@@ -49222,10 +49221,8 @@ msgstr ""
 
 #: install/index.php:170
 #, fuzzy
-msgid ""
-"The Company names can only contain alphanumeric characters plus -,_, & and "
-"spaces"
-msgstr "Ο κωδικός Δικτύου πρέπει να είναι τουλάχιστον ένας χαρακτήρας"
+msgid "The Company names cannot contain illegal characters such as /\\?%:|<>\""
+msgstr "Η μέθοδος πληρωμής δεν μπορούν να περιέχουν το χαρακτήρα"
 
 #: install/index.php:176
 #, fuzzy
@@ -49235,8 +49232,8 @@ msgstr "Η μέθοδος πληρωμής δεν μπορεί να είναι �
 #: install/index.php:187
 #, fuzzy
 msgid ""
-"The database name must be lower case and should not contains illegal "
-"characters such as \"/\\?%:|<>\" blank etc"
+"The database name should not contains illegal characters such as \"/\\?%:|<>"
+"\" etc"
 msgstr "Η μέθοδος πληρωμής δεν μπορούν να περιέχουν το χαρακτήρα"
 
 #: install/index.php:193 install/index.php:539
@@ -49344,7 +49341,7 @@ msgstr "Η μέθοδος πληρωμής δεν μπορεί να είναι �
 #, fuzzy
 msgid ""
 "The database name should be lower case and not contains illegal characters "
-"such as \"/\\?%:|<>\" or blank spaces"
+"such as \"/\\?%:|<>\""
 msgstr ""
 "Ο νέος κώδικας απόθεμα για να αλλάξετε τον παλιό κώδικα για να περιλαμβάνει "
 "την παράνομη χαρακτήρες - δεν θα γίνουν αλλαγές"
@@ -49565,8 +49562,9 @@ msgstr "Γενικές Ρυθμίσεις"
 
 #: install/index.php:1024
 #, fuzzy
-msgid "The name of your company"
-msgstr "Η εταιρεία factoring"
+msgid ""
+"The name of your company should not contain characters such as |\\?%:<>\""
+msgstr "Η μέθοδος πληρωμής δεν μπορούν να περιέχουν το χαρακτήρα"
 
 #: install/index.php:1027
 #, fuzzy
@@ -51162,6 +51160,16 @@ msgstr "Πιστωτικά "
 #, fuzzy
 msgid "Bank Transfer"
 msgstr "Μεταφορά"
+
+#, fuzzy
+#~ msgid ""
+#~ "The Company names can only contain alphanumeric characters plus -,_, & "
+#~ "and spaces"
+#~ msgstr "Ο κωδικός Δικτύου πρέπει να είναι τουλάχιστον ένας χαρακτήρας"
+
+#, fuzzy
+#~ msgid "The name of your company"
+#~ msgstr "Η εταιρεία factoring"
 
 #, fuzzy
 #~ msgid "User:"
