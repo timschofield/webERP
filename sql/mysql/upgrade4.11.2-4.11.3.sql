@@ -23,4 +23,5 @@ DELETE FROM scripts WHERE script='SystemCheck.php';
 UPDATE holdreasons set dissallowinvoices=2 WHERE reasoncode=20;
 ALTER table stockmoves CHANGE reference reference varchar(100) NOT NULL DEFAULT '';
 ALTER TABLE bom ADD COLUMN sequence INT(11) NOT NULL DEFAULT 0 AFTER parent;
+INSERT INTO scripts VALUES('TopCustomers.php',1,'Shows the top customers');
 UPDATE config SET confvalue='4.11.3' WHERE confname='VersionNumber';
