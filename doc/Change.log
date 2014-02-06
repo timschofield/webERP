@@ -1,5 +1,6 @@
 webERP Change Log
 
+6/2/14 icedlava: Payments.php - correct javascript to prevent error popup on every manual GL code entry, correct spacing.
 6/2/14 icedlava: BankMatching.php - correct column heading order.
 
 2/2/14 Release 4.11.3

@@ -151,7 +151,7 @@ if (isset($_POST['BankAccount']) AND $_POST['BankAccount']!=''){
 		$DefaultFunctionalRate = false;
 	}
 } else {
-	
+
 	$_SESSION['PaymentDetail' . $identifier]->AccountCurrency = $_SESSION['CompanyRecord']['currencydefault'];
 	$_SESSION['PaymentDetail' . $identifier]->CurrDecimalPlaces = $_SESSION['CompanyRecord']['decimalplaces'];
 
@@ -744,7 +744,7 @@ echo ' ' . _('on') . ' ' . $_SESSION['PaymentDetail' . $identifier]->DatePaid . 
 $SQL = "SELECT bankaccountname,
 				bankaccounts.accountcode,
 				bankaccounts.currcode
-		FROM bankaccounts 
+		FROM bankaccounts
 		INNER JOIN chartmaster
 			ON bankaccounts.accountcode=chartmaster.accountcode
 		INNER JOIN bankaccountusers
@@ -950,12 +950,12 @@ if ($_SESSION['CompanyRecord']['gllink_creditors']==1 AND $_SESSION['PaymentDeta
 	if (isset($_POST['GLManualCode'])) {
 		echo '<tr>
 				<td>' . _('Enter GL Account Manually') . ':</td>
-				<td><input type="text" name="GLManualCode" maxlength="12" size="12" onchange="return inArray(this, GLCode.options,\'' . _('The account code') . ' \' + this.value + \'' . _('doesnt exist') . '\')" value="'. $_POST['GLManualCode'] .'"   /></td>
+				<td><input type="text" name="GLManualCode" maxlength="12" size="12" onchange="return inArray(this.value, GLCode.options,\'' . _('The account code') . ' \' + this.value + \' ' . _('doesnt exist') . '\')" value="'. $_POST['GLManualCode'] .'"   /></td>
 			</tr>';
 	} else {
 		echo '<tr>
 				<td>' . _('Enter GL Account Manually') . ':</td>
-				<td><input type="text" name="GLManualCode" maxlength="12" size="12" onchange="return inArray(this, GLCode.options,\'' . _('The account code') . ' \' + this.value + \'' . _('doesnt exist') . '\')" /></td>
+				<td><input type="text" name="GLManualCode" maxlength="12" size="12" onchange="return inArray(this.value, GLCode.options,\'' . _('The account code') . ' \' + this.value + \' ' . _('doesnt exist') . '\')" /></td>
 			</tr>';
 	}
 
