@@ -100,8 +100,8 @@ echo '<table class="selection">
 			<td align="left">' . _('Bank Account') . ':</td>
 			<td colspan="3"><select tabindex="1" autofocus="autofocus" name="BankAccount">';
 
-$sql = "SELECT bankaccounts.accountcode, 
-				bankaccounts.bankaccountname 
+$sql = "SELECT bankaccounts.accountcode,
+				bankaccounts.bankaccountname
 		FROM bankaccounts, bankaccountusers
 		WHERE bankaccounts.accountcode=bankaccountusers.accountcode
 			AND bankaccountusers.userid = '" . $_SESSION['UserID'] ."'
@@ -279,8 +279,8 @@ if ($InputError !=1
 			<tr>
 				<th class="ascending">' .  _('Cheque No') . '</th>
 				<th class="ascending">' . _('Ref') . '</th>
-				<th class="ascending">' . $TypeName . '</th>
 				<th class="ascending">' . _('Date') . '</th>
+				<th class="ascending">' . $TypeName . '</th>
 				<th class="ascending">' . _('Amount') . '</th>
 				<th class="ascending">' . _('Outstanding') . '</th>
 				<th colspan="3">' . _('Clear') . ' / ' . _('Unclear') . '</th>

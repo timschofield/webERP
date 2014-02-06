@@ -1,5 +1,7 @@
 webERP Change Log
 
+6/2/14 icedlava: BankMatching.php - correct column heading order.
+
 2/2/14 Release 4.11.3
 
 4/2/14 Tim: SalesTopCustomersInquiry.php - shows top customers over specified date range showing invoices/returns and net sales
@@ -8,36 +10,36 @@ webERP Change Log
 31/1/14 Andrew Galuski: Profit and Loss format fixed for detailed - don't show zero balances accounts
 31/1/14 Muthu: Added sequence field to BOMs.php
 30/1/14 gilberto dos santos alves: Updated pt_BR and also applied to pt_PT translation since pt_PT translation was quite old
-28/01/14 Exson: Update the hold reason table default data dissallowinvoice to make customers' credit on watch is workable. 
+28/01/14 Exson: Update the hold reason table default data dissallowinvoice to make customers' credit on watch is workable.
 24/1/14 Andrew Galuski: Display serial items on GRN printouts
 23/1/14 Phil: Fixed incompatible error traps on hyphens between new customers and new branches. Now both allow hyphens. Also prevented deletion of the last customer branch. Customer branches are now deleted when a customer is attempted to be deleted provided there are no dependent records.
 19/01/14 Exson: Add sales man login control and modify the PDF to download to harmony with other files and solve backward failure problem in PrintCustStatements.php.
 18/01/14 Paul T: Change property name value to uppercase to match use in the script. [causing input loss]
 16/01/14 Exson: Fixed sql strict mode failure problem in StockTransfers.php by adding a '' to qualitytext fields.
-23/1/14 Tim: PO_SelectOSPurchOrder.php now allows selection of purchase orders based on order dates 
+23/1/14 Tim: PO_SelectOSPurchOrder.php now allows selection of purchase orders based on order dates
 14/1/14 Tim: system would go to get currency rates even though they were set to manual - bug fixed.
 14/1/14 Phil: Fixed bug that was not recording the standard cost against goods received - this would put all accounting out for both standard and weighted average journals.
 13/1/14 Phil: Fixed SuppInvGRNs.php price variance was not calculated correctly because cost not brought accross correctly as reported by Don Grimes
 11/1/14 CQZ: Fixed that no bank accounts recorded in gl in CounterReturns.php
 6/1/14 Phil: Apply Tim's bug report regarding conversion of database name to lower case in ConnectDB.inc Although uppercase characters should not be included in database names, removing this trap allows backward compatibility with users who did install with upper case database name
 4/1/14 Phil: Add option to create CSV from inventory valuation rather than create PDF
-2/1/14 Exson: Fixed php-mbstring extension detection failure in install/index.php during installation. 
+2/1/14 Exson: Fixed php-mbstring extension detection failure in install/index.php during installation.
 27/12/13 Thumb: Fixed the stock location will loss problem when move to StockAdjustmentsControlled.php interface in StockAdjustments.php.
-23/12/13 Exson: Fixed the controlled items cannot be removed due to the negative operator is modified and balance of a serial no is wrong due negative operator is missing during credit controlled items by KEYED method. Other input method has not be inspected. 
-22/12/13 Exson: Add a fool-proof to Credit_Invoice.php to prevent an invoice was credit again and again. 
+23/12/13 Exson: Fixed the controlled items cannot be removed due to the negative operator is modified and balance of a serial no is wrong due negative operator is missing during credit controlled items by KEYED method. Other input method has not be inspected.
+22/12/13 Exson: Add a fool-proof to Credit_Invoice.php to prevent an invoice was credit again and again.
 22/12/13 Exson: Modify the stock select element to a combox box which autocomplete the limited stock ID options to 300 in PriceMatrix.php. Otherwise, users have to input an stock ID themselves. To avoid a too long stock list as pointed by Tim.
 21/12/13 Exson: Add price matrix features. Modified MainMenuLinksArray.php, GetPrice.inc and add pricematrix table and PriceMatrix.php
-20/12/13 Thumb: Salesman can only review his own customer's data 
+20/12/13 Thumb: Salesman can only review his own customer's data
 14/12/12: Phil: As per Gilberto dos santos alves - Extended smtp user name to varchar(50) as sometimes a full email address is required - tidied the script a bit too.
 11/12/13: Thumb: fixed bug that calculated the wrong StandardCost of assembly parts in Credit_Invoice.php and SelectCreditItems.php. Bug confirmed by Phil.
 11/12/13 Thumb: fixed bug that using limit without offsetting in PO_Items.php,WorkOrderEntry.php and make users' DisplayRecordsMax effective in SelectOrderItems.php.And fixed typo in SelectCreditItems.php.
 9/12/13 Exson Fixed the typo of sql in DiscountCategories.php. Report by tangjun
 7/12/13 Phil: Allow entry of stock counts by stock category
-7/12/13 Phil: Fixed htmlMimeEmail.inc following Tim's submission - removed & value by reference errors 
-4/12/13 Exson: Alter table stockmoves reference to varchar(100) to make it can meet mysql strict mode requirements when data is more than original 40. 
+7/12/13 Phil: Fixed htmlMimeEmail.inc following Tim's submission - removed & value by reference errors
+4/12/13 Exson: Alter table stockmoves reference to varchar(100) to make it can meet mysql strict mode requirements when data is more than original 40.
 2/12/13 Exson: Fixed the typo in WWW_Users.php. Reported by Thumb.
-1/12/13 Exson: Fixed country Chinese sql for installation failure. 
-1/12/13 CQZ: Correct Chinese translation error dispatch cut_off time. 
+1/12/13 Exson: Fixed country Chinese sql for installation failure.
+1/12/13 CQZ: Correct Chinese translation error dispatch cut_off time.
 
 1/12/13 Release 4.11.2
 
@@ -45,15 +47,15 @@ webERP Change Log
 30/11/13 rchacon: Includes supplier-code, currency-code, and currency-name-from-CurrenciesArray.php in SelectSupplier.php.
 2013/11/30 Thumb: Add salesman constraint to show salesperson's own sales orders invoice, customer etc in DailySalesInquiry.php,PDFDeliveryDifferences.php,PDFOrdersInvoiced.php,PDFOrderStatus.php,PDFPickingList.php,SalesByTypePeriodInquiry.php,SalesInquiry.php,SelectCompletedOrder.php.
 28/11/13 Phil: Apply Tim's idea for stripping slashes from incorrectly displayed items PO_Items.php and DeliveryDetails.php
-28/11/13 Thumb: Add salesman constraints to ConfirmDispatch_Invoice.php to ensure that sales can only print his own sales orders' invoice. 
+28/11/13 Thumb: Add salesman constraints to ConfirmDispatch_Invoice.php to ensure that sales can only print his own sales orders' invoice.
 28/11/13 Thumb: Add constraints to salesman that he can only print his own sales orders in PrintCustOrder_generic.php
 28/11/13 Thumb: Add constraints to salesman that he can only print his own sales orders in PrintCustOrder.php
-28/11/13 Thumb: Add salesman login constraint to only their own customers available in SelectOrderItems.php and fixed SQL error of customers login. 
-27/11/13 Thumb: Add create new scripts to import Customers and Debtors. 
+28/11/13 Thumb: Add salesman login constraint to only their own customers available in SelectOrderItems.php and fixed SQL error of customers login.
+27/11/13 Thumb: Add create new scripts to import Customers and Debtors.
 26/11/13 Phil: Supplier invoice entry now allows modification of invoice quantities and prices for multiple goods received lines in line rather than having to go into each line to modify individually.
 20/11/13 rchacon: Translate the name of each language to the name in their respective language.
 20/11/13 Phil: Payments.php FunctionalExchangeRate was not defaulted appropriately when entering a supplier payment in FX from a bank account of the same currency selected and the transaction was posted immediately without update first. Fixed
-19/11/13 Thumb/CQZ: Add webERP Chinese country sql including Chinese COA, currency, role,tax, transaction type etc which should be localized. 
+19/11/13 Thumb/CQZ: Add webERP Chinese country sql including Chinese COA, currency, role,tax, transaction type etc which should be localized.
 19/11/13 Thumb: Add '-' to telephone no pattern in CustomerBranches.php and WWW_Users.php.
 19/11/13 Thumb: Correct translation of customer text and customer code in CustomerReceipt.php of locale file.
 19/11/13 Thumb: Text 'settled transaction' position adjusted to proper position in PrintCustStatements.php.
