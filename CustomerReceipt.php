@@ -175,18 +175,36 @@ if (isset($_POST['Process'])){ //user hit submit a new entry to the receipt batc
 
 	if ($_POST['GLCode'] == '' AND $_GET['Type']=='GL') {
 		prnMsg( _('No General Ledger code has been chosen') . ' - ' . _('so this GL analysis item could not be added'),'warn');
-	} else {
-		$_SESSION['ReceiptBatch']->add_to_batch(filter_number_format($_POST['Amount']),
-												$_POST['CustomerID'],
-												filter_number_format($_POST['Discount']),
-												$_POST['Narrative'],
-												$_POST['GLCode'],
-												$_POST['PayeeBankDetail'],
-												$_POST['CustomerName'],
-												$_POST['tag']);
 
-		/*Make sure the same receipt is not double processed by a page refresh */
-		$Cancel = 1;
+	} else {
+		$AllowThisPosting = true;
+ 		if ($_SESSION['ProhibitJournalsToControlAccounts'] == 1) {
+ 			if ($_SESSION['CompanyRecord']['gllink_debtors'] == '1' AND $_POST['GLCode'] == $_SESSION['CompanyRecord']['debtorsact']) {
+ 				prnMsg(_('Payments involving the debtors control account cannot be entered. The general ledger debtors ledger (AR) integration is enabled so control accounts are automatically maintained. This setting can be disabled in System Configuration'), 'warn');
+ 				$AllowThisPosting = false;
+ 			}
+ 			if ($_SESSION['CompanyRecord']['gllink_creditors'] == '1' AND
+				($_POST['GLCode'] == $_SESSION['CompanyRecord']['creditorsact'] OR $_POST['GLCode'] == $_SESSION['CompanyRecord']['grnact'])) {
+ 				prnMsg(_('Payments involving the creditors control account or the GRN suspense account cannot be entered. The general ledger creditors ledger (AP) integration is enabled so control accounts are automatically maintained. This setting can be disabled in System Configuration'), 'warn');
+ 				$AllowThisPosting = false;
+ 			}
+ 			if ($_POST['GLCode'] == $_SESSION['CompanyRecord']['retainedearnings']) {
+ 				prnMsg(_('Payments involving the retained earnings control account cannot be entered. This account is automtically maintained.'), 'warn');
+ 				$AllowThisPosting = false;
+ 			}
+ 		}
+ 		if ($AllowThisPosting) {
+ 			$_SESSION['ReceiptBatch']->add_to_batch(filter_number_format($_POST['Amount']),
+													$_POST['CustomerID'],
+													filter_number_format($_POST['Discount']),
+													$_POST['Narrative'],
+													$_POST['GLCode'],
+													$_POST['PayeeBankDetail'],
+													$_POST['CustomerName'],
+													$_POST['tag']);
+			/*Make sure the same receipt is not double processed by a page refresh */
+			$Cancel = 1;
+		}
 	}
 }
 

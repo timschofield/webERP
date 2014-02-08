@@ -13,14 +13,29 @@ include('includes/header.inc');
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (isset($_POST['UpdateAll'])) {
-	foreach ($_POST as $key => $value) {
-		if (mb_substr($key,0,6)=='status') {
-			$RequestNo=mb_substr($key,6);
+	foreach ($_POST as $POSTVariableName => $POSTValue) {
+		if (mb_substr($POSTVariableName,0,6)=='status') {
+			$RequestNo=mb_substr($POSTVariableName,6);
 			$sql="UPDATE stockrequest
 					SET authorised='1'
-					WHERE dispatchid='".$RequestNo."'";
+					WHERE dispatchid='" . $RequestNo . "'";
 			$result=DB_query($sql, $db);
 		}
+		if (strpos($POSTVariableName, 'cancel')) {
+ 			$CancelItems = explode('cancel', $POSTVariableName);
+ 			$sql = "UPDATE stockrequestitems
+ 						SET completed=1
+ 						WHERE dispatchid='" . $CancelItems[0] . "'
+ 						AND dispatchitemsid='" . $CancelItems[1] . "'";
+ 			$result = DB_query($sql, $db);
+ 			$result = DB_Query("SELECT stockid FROM stockrequestitems WHERE completed=0 AND dispatchid='" . $CancelItems[0] . "'",$db);
+ 			if (DB_num_rows($result) ==0){
+				$result = DB_query("UPDATE stockrequest
+									SET authorised='1'
+									WHERE dispatchid='" . $CancelItems[0] . "'",$db);
+			}
+		
+ 		}
 	}
 }
 
@@ -47,10 +62,8 @@ $result=DB_query($sql, $db);
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<table class="selection">';
-
-/* Create the table for the purchase order header */
-echo '<tr>
+echo '<table class="selection">
+	<tr>
 		<th>' . _('Request Number') . '</th>
 		<th>' . _('Department') . '</th>
 		<th>' . _('Location Of Stock') . '</th>
@@ -69,7 +82,7 @@ while ($myrow=DB_fetch_array($result)) {
 			<td>' . $myrow['narrative'] . '</td>
 			<td><input type="checkbox" name="status'.$myrow['dispatchid'].'" /></td>
 		</tr>';
-	$linesql="SELECT stockrequestitems.dispatchitemsid,
+	$LinesSQL="SELECT stockrequestitems.dispatchitemsid,
 						stockrequestitems.stockid,
 						stockrequestitems.decimalplaces,
 						stockrequestitems.uom,
@@ -78,8 +91,9 @@ while ($myrow=DB_fetch_array($result)) {
 				FROM stockrequestitems
 				INNER JOIN stockmaster
 				ON stockmaster.stockid=stockrequestitems.stockid
-			WHERE dispatchid='".$myrow['dispatchid'] . "'";
-	$lineresult=DB_query($linesql, $db);
+			WHERE dispatchid='".$myrow['dispatchid'] . "'
+			AND completed=0";
+	$LineResult=DB_query($LinesSQL, $db);
 
 	echo '<tr>
 			<td></td>
@@ -89,13 +103,15 @@ while ($myrow=DB_fetch_array($result)) {
 					<th>' . _('Product') . '</th>
 					<th>' . _('Quantity Required') . '</th>
 					<th>' . _('Units') . '</th>
+					<th>' . _('Cancel Line') . '</th>
 				</tr>';
 
-	while ($linerow=DB_fetch_array($lineresult)) {
+	while ($LineRow=DB_fetch_array($LineResult)) {
 		echo '<tr>
-				<td>' . $linerow['description'] . '</td>
-				<td class="number">' . locale_number_format($linerow['quantity'],$linerow['decimalplaces']) . '</td>
-				<td>' . $linerow['uom'] . '</td>
+				<td>' . $LineRow['description'] . '</td>
+				<td class="number">' . locale_number_format($LineRow['quantity'],$LineRow['decimalplaces']) . '</td>
+				<td>' . $LineRow['uom'] . '</td>
+				<td><input type="checkbox" name="' . $myrow['dispatchid'] . 'cancel' . $LineRow['dispatchitemsid'] . '" /></td
 			</tr>';
 	} // end while order line detail
 	echo '</table>

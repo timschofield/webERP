@@ -649,13 +649,31 @@ if (isset($_POST['CommitBatch'])){
 			prnMsg( _('The Cheque/Voucher number has already been used') . ' - ' . _('This GL analysis item could not be added'),'error');
 		} else {
 			$myrow = DB_fetch_array($Result);
-			$_SESSION['PaymentDetail' . $identifier]->add_to_glanalysis(filter_number_format($_POST['GLAmount']),
-															$_POST['GLNarrative'],
-															$_POST['GLManualCode'],
-															$myrow['accountname'],
-															$_POST['Tag'],
-															$_POST['Cheque']);
-			unset($_POST['GLManualCode']);
+			$AllowThisPosting = true;
+			if ($_SESSION['ProhibitJournalsToControlAccounts'] == 1) {
+				if ($_SESSION['CompanyRecord']['gllink_debtors'] == '1' AND $_POST['GLManualCode'] == $_SESSION['CompanyRecord']['debtorsact']) {
+					prnMsg(_('Payments involving the debtors control account cannot be entered. The general ledger debtors ledger (AR) integration is enabled so control accounts are automatically maintained. This setting can be disabled in System Configuration'), 'warn');
+					$AllowThisPosting = false;
+				}
+	 			if ($_SESSION['CompanyRecord']['gllink_creditors'] == '1' AND
+					($_POST['GLManualCode'] == $_SESSION['CompanyRecord']['creditorsact'] OR $_POST['GLManualCode'] == $_SESSION['CompanyRecord']['grnact'])) {
+	 				prnMsg(_('Payments involving the creditors control account or the GRN suspense account cannot be entered. The general ledger creditors ledger (AP) integration is enabled so control accounts are automatically maintained. This setting can be disabled in System Configuration'), 'warn');
+	 				$AllowThisPosting = false;
+	 			}
+	 			if ($_POST['GLManualCode'] == $_SESSION['CompanyRecord']['retainedearnings']) {
+	 				prnMsg(_('Payments involving the retained earnings control account cannot be entered. This account is automtically maintained.'), 'warn');
+	 				$AllowThisPosting = false;
+	 			}
+	 		}
+	 		if ($AllowThisPosting) {
+				$_SESSION['PaymentDetail' . $identifier]->add_to_glanalysis(filter_number_format($_POST['GLAmount']),
+																								$_POST['GLNarrative'],
+																								$_POST['GLManualCode'],
+																								$myrow['accountname'],
+																								$_POST['Tag'],
+																								$_POST['Cheque']);
+				unset($_POST['GLManualCode']);
+			}
 		}
 	} else if (DB_num_rows($ChequeNoResult)!=0 AND $_POST['Cheque']!=''){
 		prnMsg( _('The cheque number has already been used') . ' - ' . _('This GL analysis item could not be added'),'error');
