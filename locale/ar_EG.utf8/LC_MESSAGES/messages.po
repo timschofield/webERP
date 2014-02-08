@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web-erp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-03 22:05+1300\n"
+"POT-Creation-Date: 2014-02-08 17:33+1300\n"
 "PO-Revision-Date: 2013-06-01 11:19-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: Arabic <ar@li.org>\n"
@@ -15,10 +15,10 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-03-07 23:01+0000\n"
 "X-Generator: Poedit 1.5.4\n"
+"X-Launchpad-Export-Date: 2012-03-07 23:01+0000\n"
 
-#: AccountGroups.php:7 includes/MainMenuLinksArray.php:368
+#: AccountGroups.php:7 includes/MainMenuLinksArray.php:370
 msgid "Account Groups"
 msgstr "مجموعات العضوية"
 
@@ -37,28 +37,24 @@ msgid ""
 msgstr ""
 
 #: AccountGroups.php:50
-#, fuzzy
 msgid "An error occurred in moving the account group"
-msgstr "حدث خطأ اثناء تحديث مجموعة العضو"
+msgstr ""
 
 #: AccountGroups.php:51
-#, fuzzy
 msgid "The SQL that was used to move the account group was"
-msgstr "الطلب المستخدم لإضافة مجموعة الحسابات هي"
+msgstr ""
 
 #: AccountGroups.php:53 AccountGroups.php:334
 msgid "Review Account Groups"
 msgstr ""
 
 #: AccountGroups.php:54
-#, fuzzy
 msgid "All accounts in the account group:"
-msgstr "حدث خطأ اثناء تحديث مجموعة العضو"
+msgstr ""
 
 #: AccountGroups.php:54
-#, fuzzy
 msgid "have been changed to the account group:"
-msgstr "الطلب المستخدم لإضافة مجموعة الحسابات هي"
+msgstr ""
 
 #: AccountGroups.php:73 AccountGroups.php:110 AccountGroups.php:211
 #: AccountGroups.php:246
@@ -118,14 +114,12 @@ msgid "The sequence in the TB must be numeric and less than"
 msgstr ""
 
 #: AccountGroups.php:152
-#, fuzzy
 msgid "An error occurred in renaming the account group"
-msgstr "حدث خطأ اثناء تحديث مجموعة العضو"
+msgstr ""
 
 #: AccountGroups.php:153
-#, fuzzy
 msgid "The SQL that was used to rename the account group was"
-msgstr "الطلب المستخدم لإضافة مجموعة الحسابات هي"
+msgstr ""
 
 #: AccountGroups.php:172
 msgid "An error occurred in updating the account group"
@@ -425,16 +419,15 @@ msgid "Edit"
 msgstr "تحرير"
 
 #: AccountGroups.php:326
-#, fuzzy
 msgid "Are you sure you wish to delete this account group?"
-msgstr "حدث خطأ ما اثناء حذف مجموعة الحسابات"
+msgstr ""
 
 #: AccountGroups.php:326 AccountSections.php:196 AddCustomerContacts.php:149
 #: AddCustomerNotes.php:138 AddCustomerTypeNotes.php:132 Areas.php:165
 #: BankAccounts.php:224 BOMs.php:154 COGSGLPostings.php:113
 #: COGSGLPostings.php:217 ContractBOM.php:272 ContractOtherReqts.php:124
 #: CounterReturns.php:740 CounterSales.php:836 Credit_Invoice.php:403
-#: CreditStatus.php:176 Currencies.php:366 CustomerReceipt.php:970
+#: CreditStatus.php:176 Currencies.php:366 CustomerReceipt.php:988
 #: Customers.php:1165 CustomerTypes.php:207 Departments.php:187
 #: DiscountCategories.php:238 DiscountMatrix.php:183 EDIMessageFormat.php:151
 #: FixedAssetCategories.php:191 FreightCosts.php:254 GeocodeSetup.php:174
@@ -443,7 +436,7 @@ msgstr "حدث خطأ ما اثناء حذف مجموعة الحسابات"
 #: InternalStockRequest.php:293 Labels.php:324 Labels.php:349 Labels.php:597
 #: Locations.php:405 MailingGroupMaintenance.php:179 MaintenanceTasks.php:119
 #: Manufacturers.php:218 MRPDemands.php:310 MRPDemandTypes.php:121
-#: PaymentMethods.php:209 Payments.php:1086 PaymentTerms.php:206
+#: PaymentMethods.php:209 Payments.php:1104 PaymentTerms.php:206
 #: PcAssignCashToTab.php:281 PcClaimExpensesFromTab.php:277 PcExpenses.php:227
 #: PcExpensesTypeTab.php:187 PcTabs.php:237 PcTypeTabs.php:181
 #: PO_AuthorisationLevels.php:153 PO_Items.php:772 PriceMatrix.php:174
@@ -483,31 +476,27 @@ msgid "The account group name does not exist in the database"
 msgstr ""
 
 #: AccountGroups.php:372
-#, fuzzy
 msgid "Edit Account Group Details"
-msgstr "مجموعات العضوية"
+msgstr ""
 
 #: AccountGroups.php:396
-#, fuzzy
 msgid "New Account Group Details"
-msgstr "مجموعات العضوية"
+msgstr ""
 
 #: AccountGroups.php:403
 msgid "Account Group Name"
 msgstr ""
 
 #: AccountGroups.php:404
-#, fuzzy
 msgid "Enter the account group name"
-msgstr "لم يتمكن الحصول على مجموات العضو لان"
+msgstr ""
 
 #: AccountGroups.php:404
-#, fuzzy
 msgid ""
 "A unique name for the account group must be entered - at least 3 characters "
 "long and less than 30 characters long. Only alpha numeric characters can be "
 "used."
-msgstr "اسم المجموعة يجب ان يحتوي علي الأقل علي حرف واحد"
+msgstr ""
 
 #: AccountGroups.php:413 AccountGroups.php:415
 msgid "Top Level Group"
@@ -549,7 +538,7 @@ msgstr ""
 msgid "Enter Information"
 msgstr "أدخل المعلومات"
 
-#: AccountSections.php:7 includes/MainMenuLinksArray.php:367
+#: AccountSections.php:7 includes/MainMenuLinksArray.php:369
 msgid "Account Sections"
 msgstr "أعدادات العضو"
 
@@ -558,9 +547,8 @@ msgid "The account section already exists in the database"
 msgstr "قسم العضو موجود مسبقا فى قاعدة البيانات"
 
 #: AccountSections.php:71
-#, fuzzy
 msgid "The account section name cannot contain any illegal characters"
-msgstr "لا يمكن ان يحتوى اسم العضوية على الحرف"
+msgstr ""
 
 #: AccountSections.php:77
 msgid "The account section name must contain at least one character"
@@ -619,23 +607,20 @@ msgid "Back to Customers"
 msgstr "العودة الى العملاء"
 
 #: AddCustomerContacts.php:25
-#, fuzzy
 msgid "Contacts for Customer"
-msgstr "العودة الى العملاء"
+msgstr ""
 
 #: AddCustomerContacts.php:27
 msgid "Edit contact for"
 msgstr ""
 
 #: AddCustomerContacts.php:39
-#, fuzzy
 msgid "The Contact ID must be an integer."
-msgstr "يجب ان يكون القسم فى الحساب عدد صحيح"
+msgstr ""
 
 #: AddCustomerContacts.php:42
-#, fuzzy
 msgid "The contact name must be forty characters or less long"
-msgstr "اسم المجموعة يجب ان يحتوي علي الأقل علي حرف واحد"
+msgstr ""
 
 #: AddCustomerContacts.php:45
 msgid "The contact name may not be empty"
@@ -774,7 +759,7 @@ msgstr ""
 
 #: AddCustomerNotes.php:117 AddCustomerNotes.php:222
 #: AddCustomerTypeNotes.php:111 AddCustomerTypeNotes.php:211
-#: BankMatching.php:283 BankReconciliation.php:217 BankReconciliation.php:294
+#: BankMatching.php:282 BankReconciliation.php:217 BankReconciliation.php:294
 #: ContractCosting.php:177 CustomerAllocations.php:350
 #: CustomerAllocations.php:380 CustomerInquiry.php:221
 #: CustomerTransInquiry.php:106 GLAccountInquiry.php:174
@@ -846,9 +831,8 @@ msgid "The Contact priority must be an integer."
 msgstr ""
 
 #: AddCustomerTypeNotes.php:34
-#, fuzzy
 msgid "The contacts notes must be two hundred characters or less long"
-msgstr "اسم المجموعة يجب ان يحتوي علي الأقل علي حرف واحد"
+msgstr ""
 
 #: AddCustomerTypeNotes.php:37
 msgid "The contacts notes may not be empty"
@@ -1006,8 +990,8 @@ msgstr ""
 #: ConfirmDispatch_Invoice.php:171 ConfirmDispatch_Invoice.php:998
 #: ConfirmDispatch_Invoice.php:1012 Contracts.php:592 CounterReturns.php:1024
 #: CounterReturns.php:1038 CounterSales.php:1442 CounterSales.php:1456
-#: Credit_Invoice.php:746 Credit_Invoice.php:767 CustomerReceipt.php:557
-#: CustomerReceipt.php:707 CustomerReceipt.php:735 CustomerTransInquiry.php:97
+#: Credit_Invoice.php:746 Credit_Invoice.php:767 CustomerReceipt.php:575
+#: CustomerReceipt.php:725 CustomerReceipt.php:753 CustomerTransInquiry.php:97
 #: DeliveryDetails.php:409 GLProfit_Loss.php:609 GLTagProfit_Loss.php:515
 #: Payments.php:362 PDFRemittanceAdvice.php:85 PurchData.php:114
 #: PurchData.php:132 PurchData.php:360 RecurringSalesOrders.php:267
@@ -1391,9 +1375,8 @@ msgid "Backup webERP Database"
 msgstr ""
 
 #: BackupDatabase.php:20
-#, fuzzy
 msgid "Deleted"
-msgstr "حذف"
+msgstr ""
 
 #: BackupDatabase.php:23
 msgid "Unable to delete"
@@ -1548,7 +1531,7 @@ msgid "Bank Address"
 msgstr ""
 
 #: BankAccounts.php:196 Currencies.php:447 CustomerAllocations.php:353
-#: CustomerReceipt.php:819 CustomerTransInquiry.php:114 OffersReceived.php:112
+#: CustomerReceipt.php:837 CustomerTransInquiry.php:114 OffersReceived.php:112
 #: PcReportTab.php:276 PcTabs.php:208 PcTabs.php:355
 #: PO_AuthorisationLevels.php:126 PO_AuthorisationLevels.php:210
 #: PO_AuthorisationLevels.php:216 PO_AuthoriseMyOrders.php:115
@@ -1597,14 +1580,12 @@ msgid "Currency Of Account"
 msgstr ""
 
 #: BankAccountUsers.php:4
-#, fuzzy
 msgid "Maintenance Of Bank Account Authorised Users"
-msgstr "مجموعات العضوية"
+msgstr ""
 
-#: BankAccountUsers.php:7 includes/MainMenuLinksArray.php:373
-#, fuzzy
+#: BankAccountUsers.php:7 includes/MainMenuLinksArray.php:375
 msgid "Bank Account Authorised Users"
-msgstr "مجموعات العضوية"
+msgstr ""
 
 #: BankAccountUsers.php:31
 msgid "You have not selected any bank account"
@@ -1623,29 +1604,24 @@ msgid "already authorised to use this bank account"
 msgstr ""
 
 #: BankAccountUsers.php:71
-#, fuzzy
 msgid "has been authorised to use"
-msgstr "تم حذف المجموعة"
+msgstr ""
 
 #: BankAccountUsers.php:71 BankAccountUsers.php:84 BankAccountUsers.php:141
-#, fuzzy
 msgid "bank account"
-msgstr "مجموعات العضوية"
+msgstr ""
 
 #: BankAccountUsers.php:82
-#, fuzzy
 msgid "The bank account user record could not be deleted because"
-msgstr "لم  أستطيع استرجاع القطاع المطلوب حاول مجددا"
+msgstr ""
 
 #: BankAccountUsers.php:84
-#, fuzzy
 msgid "has been un-authorised to use"
-msgstr "تم حذف المجموعة"
+msgstr ""
 
 #: BankAccountUsers.php:97
-#, fuzzy
 msgid "Select Bank Account"
-msgstr "مجموعات العضوية"
+msgstr ""
 
 #: BankAccountUsers.php:105 BankAccountUsers.php:205
 #: InternalStockCategoriesByRole.php:120 InternalStockCategoriesByRole.php:209
@@ -1655,11 +1631,11 @@ msgstr "مجموعات العضوية"
 msgid "Not Yet Selected"
 msgstr ""
 
-#: BankAccountUsers.php:123 BankAccountUsers.php:222 CustomerReceipt.php:930
-#: CustomerReceipt.php:1142 CustomerTypes.php:270 ExchangeRateTrend.php:51
+#: BankAccountUsers.php:123 BankAccountUsers.php:222 CustomerReceipt.php:948
+#: CustomerReceipt.php:1160 CustomerTypes.php:270 ExchangeRateTrend.php:51
 #: FreightCosts.php:60 GLJournal.php:139 GLJournal.php:376
 #: InternalStockCategoriesByRole.php:136 InternalStockCategoriesByRole.php:226
-#: OffersReceived.php:114 Payments.php:1054 PcAssignCashToTab.php:181
+#: OffersReceived.php:114 Payments.php:1072 PcAssignCashToTab.php:181
 #: PcAssignCashToTab.php:398 PcAuthorizeExpenses.php:334
 #: PcClaimExpensesFromTab.php:174 PcClaimExpensesFromTab.php:422
 #: PcExpenses.php:350 PcExpensesTypeTab.php:139 PcExpensesTypeTab.php:229
@@ -1669,9 +1645,9 @@ msgid "Accept"
 msgstr ""
 
 #: BankAccountUsers.php:124 BankAccountUsers.php:223
-#: CustomerAllocations.php:452 CustomerReceipt.php:1143
+#: CustomerAllocations.php:452 CustomerReceipt.php:1161
 #: InternalStockCategoriesByRole.php:137 InternalStockCategoriesByRole.php:227
-#: Payments.php:1055 PcAssignCashToTab.php:182 PcAssignCashToTab.php:399
+#: Payments.php:1073 PcAssignCashToTab.php:182 PcAssignCashToTab.php:399
 #: PcAuthorizeExpenses.php:335 PcClaimExpensesFromTab.php:175
 #: PcClaimExpensesFromTab.php:423 PcExpenses.php:351 PcExpensesTypeTab.php:140
 #: PcExpensesTypeTab.php:230 PcTabs.php:488 PcTypeTabs.php:254
@@ -1697,9 +1673,9 @@ msgid "User Name"
 msgstr ""
 
 #: BankAccountUsers.php:178
-#, fuzzy, php-format
+#, php-format
 msgid "Are you sure you wish to un-authorise this user?"
-msgstr "حدث خطأ ما اثناء حذف مجموعة الحسابات"
+msgstr ""
 
 #: BankAccountUsers.php:178
 #, php-format
@@ -1707,9 +1683,8 @@ msgid "Un-authorise"
 msgstr ""
 
 #: BankAccountUsers.php:196
-#, fuzzy
 msgid "Select User"
-msgstr "العودة الى العملاء"
+msgstr ""
 
 #: BankMatching.php:6
 msgid "Bank Account Matching"
@@ -1768,8 +1743,8 @@ msgid ""
 msgstr ""
 
 #: BankMatching.php:100 BankReconciliation.php:113 CounterReturns.php:829
-#: Currencies.php:219 CustomerReceipt.php:785 DailyBankTransactions.php:40
-#: Payments.php:760 PDFChequeListing.php:46 TaxAuthorities.php:151
+#: Currencies.php:219 CustomerReceipt.php:803 DailyBankTransactions.php:40
+#: Payments.php:778 PDFChequeListing.php:46 TaxAuthorities.php:151
 #: TaxAuthorities.php:318
 msgid "Bank Account"
 msgstr ""
@@ -1789,7 +1764,7 @@ msgstr ""
 #: BankMatching.php:137 ConfirmDispatchControlled_Invoice.php:68
 #: CounterReturns.php:197 EmailCustTrans.php:64 FixedAssetRegister.php:82
 #: FTP_RadioBeacon.php:280 GLAccountCSV.php:178 GLAccountReport.php:106
-#: Payments.php:735 PcReportTab.php:110 PDFChequeListing.php:117
+#: Payments.php:753 PcReportTab.php:110 PDFChequeListing.php:117
 #: PDFChequeListing.php:127 PDFChequeListing.php:196
 #: PDFDeliveryDifferences.php:194 PDFDeliveryDifferences.php:207
 #: PDFDeliveryDifferences.php:306 PDFDIFOT.php:197 PDFDIFOT.php:210
@@ -1897,7 +1872,7 @@ msgstr ""
 msgid "The payments with the selected criteria could not be retrieved because"
 msgstr ""
 
-#: BankMatching.php:280 Payments.php:1062
+#: BankMatching.php:280 Payments.php:1080
 msgid "Cheque No"
 msgstr ""
 
@@ -1907,11 +1882,11 @@ msgid "Ref"
 msgstr ""
 
 #: BankMatching.php:284 ConfirmDispatch_Invoice.php:301 Credit_Invoice.php:300
-#: CustomerAllocations.php:381 CustomerReceipt.php:947
+#: CustomerAllocations.php:381 CustomerReceipt.php:965
 #: CustomerTransInquiry.php:113 CustWhereAlloc.php:115 GLJournalInquiry.php:85
 #: ImportBankTransAnalysis.php:208 ImportBankTransAnalysis.php:288
-#: PaymentAllocations.php:67 Payments.php:1042 Payments.php:1047
-#: Payments.php:1063 PcAssignCashToTab.php:240 PcAssignCashToTab.php:371
+#: PaymentAllocations.php:67 Payments.php:1060 Payments.php:1065
+#: Payments.php:1081 PcAssignCashToTab.php:240 PcAssignCashToTab.php:371
 #: PcAuthorizeExpenses.php:95 PcClaimExpensesFromTab.php:236
 #: PcClaimExpensesFromTab.php:396 PcReportTab.php:180 PcReportTab.php:335
 #: PrintCheque.php:83 PrintCheque.php:97 SelectCreditItems.php:696
@@ -1989,26 +1964,26 @@ msgstr ""
 msgid "The bank accounts could not be retrieved by the SQL because"
 msgstr ""
 
-#: BankReconciliation.php:110 CustomerReceipt.php:773
-#: DailyBankTransactions.php:36 Payments.php:756 SuppPaymentRun.php:319
+#: BankReconciliation.php:110 CustomerReceipt.php:791
+#: DailyBankTransactions.php:36 Payments.php:774 SuppPaymentRun.php:319
 msgid "The SQL used to retrieve the bank accounts was"
 msgstr ""
 
-#: BankReconciliation.php:120 CustomerReceipt.php:793
+#: BankReconciliation.php:120 CustomerReceipt.php:811
 msgid "Bank Accounts have not yet been defined"
 msgstr ""
 
-#: BankReconciliation.php:120 CustomerReceipt.php:793
+#: BankReconciliation.php:120 CustomerReceipt.php:811
 msgid "You must first"
 msgstr ""
 
-#: BankReconciliation.php:120 CustomerReceipt.php:793
-#: DailyBankTransactions.php:46 Payments.php:768 SuppPaymentRun.php:332
+#: BankReconciliation.php:120 CustomerReceipt.php:811
+#: DailyBankTransactions.php:46 Payments.php:786 SuppPaymentRun.php:332
 msgid "define the bank accounts"
 msgstr ""
 
-#: BankReconciliation.php:120 CustomerReceipt.php:793
-#: DailyBankTransactions.php:46 Payments.php:768 SuppPaymentRun.php:332
+#: BankReconciliation.php:120 CustomerReceipt.php:811
+#: DailyBankTransactions.php:46 Payments.php:786 SuppPaymentRun.php:332
 msgid "and general ledger accounts to be affected"
 msgstr ""
 
@@ -2059,9 +2034,9 @@ msgstr ""
 
 #: BankReconciliation.php:220 BankReconciliation.php:297
 #: ContractCosting.php:176 CustomerInquiry.php:223 CustomerPurchases.php:83
-#: CustomerReceipt.php:911 CustomerTransInquiry.php:109 CustWhereAlloc.php:113
+#: CustomerReceipt.php:929 CustomerTransInquiry.php:109 CustWhereAlloc.php:113
 #: DailyBankTransactions.php:131 GLAccountReport.php:342
-#: PaymentAllocations.php:64 PaymentAllocations.php:65 Payments.php:903
+#: PaymentAllocations.php:64 PaymentAllocations.php:65 Payments.php:921
 #: PDFRemittanceAdvice.php:309 ShiptsList.php:37 StockCounts.php:145
 #: StockCounts.php:170 StockCounts.php:214 StockLocMovements.php:94
 #: StockMovements.php:102 Z_CheckAllocs.php:64
@@ -2200,24 +2175,24 @@ msgstr ""
 #: PrintCustTransPortrait.php:1099 RecurringSalesOrders.php:331
 #: ReorderLevel.php:300 ReverseGRN.php:393 ReverseGRN.php:394
 #: SalesAnalReptCols.php:16 SalesAnalReptCols.php:18 SalesGraph.php:193
-#: SalesGraph.php:276 SalesInquiry.php:997 SalesTopItemsInquiry.php:225
-#: SelectCreditItems.php:688 SelectCreditItems.php:1068
-#: SelectOrderItems.php:1373 SelectOrderItems.php:1541
-#: SelectOrderItems.php:1730 SelectOrderItems.php:1862 ShipmentCosting.php:149
-#: ShipmentCosting.php:150 Shipments.php:401 Shipments.php:403
-#: Shipments.php:404 Shipments.php:488 Shipments.php:490 SpecialOrder.php:628
-#: StockCounts.php:144 StockCounts.php:169 StockLocMovements.php:93
-#: StockLocTransfer.php:306 StockMovements.php:101 StockStatus.php:357
-#: StockUsageGraph.php:12 SuppCreditGRNs.php:291 SuppCreditGRNs.php:292
-#: SupplierCredit.php:318 SupplierTenderCreate.php:430
-#: SupplierTenderCreate.php:851 SupplierTenders.php:124
-#: SupplierTenders.php:327 SupplierTenders.php:531 SupplierTenders.php:534
-#: SupplierTenders.php:690 WorkOrderReceive.php:902 WOSerialNos.php:263
-#: WOSerialNos.php:269 WOSerialNos.php:303
-#: includes/InputSerialItemsFile.php:200 includes/InputSerialItems.php:128
-#: includes/InputSerialItems.php:134 includes/OutputSerialItems.php:38
-#: includes/OutputSerialItems.php:43 includes/OutputSerialItems.php:49
-#: includes/PDFBOMListingPageHeader.inc:44
+#: SalesGraph.php:276 SalesInquiry.php:997 SalesTopCustomersInquiry.php:218
+#: SalesTopItemsInquiry.php:225 SelectCreditItems.php:688
+#: SelectCreditItems.php:1068 SelectOrderItems.php:1373
+#: SelectOrderItems.php:1541 SelectOrderItems.php:1730
+#: SelectOrderItems.php:1862 ShipmentCosting.php:149 ShipmentCosting.php:150
+#: Shipments.php:401 Shipments.php:403 Shipments.php:404 Shipments.php:488
+#: Shipments.php:490 SpecialOrder.php:628 StockCounts.php:144
+#: StockCounts.php:169 StockLocMovements.php:93 StockLocTransfer.php:306
+#: StockMovements.php:101 StockStatus.php:357 StockUsageGraph.php:12
+#: SuppCreditGRNs.php:291 SuppCreditGRNs.php:292 SupplierCredit.php:318
+#: SupplierTenderCreate.php:430 SupplierTenderCreate.php:851
+#: SupplierTenders.php:124 SupplierTenders.php:327 SupplierTenders.php:531
+#: SupplierTenders.php:534 SupplierTenders.php:690 TopCustomers.php:217
+#: WorkOrderReceive.php:902 WOSerialNos.php:263 WOSerialNos.php:269
+#: WOSerialNos.php:303 includes/InputSerialItemsFile.php:200
+#: includes/InputSerialItems.php:128 includes/InputSerialItems.php:134
+#: includes/OutputSerialItems.php:38 includes/OutputSerialItems.php:43
+#: includes/OutputSerialItems.php:49 includes/PDFBOMListingPageHeader.inc:44
 #: includes/PDFDeliveryDifferencesPageHeader.inc:43
 #: includes/PDFDIFOTPageHeader.inc:42
 #: includes/PDFInventoryValnPageHeader.inc:33
@@ -2577,7 +2552,7 @@ msgstr ""
 
 #: BOMInquiry.php:28 BOMs.php:882 ContractBOM.php:332 ContractBOM.php:337
 #: Contracts.php:759 Contracts.php:762 CounterReturns.php:1652
-#: CounterSales.php:2260 CustomerReceipt.php:1158 CustomerReceipt.php:1161
+#: CounterSales.php:2260 CustomerReceipt.php:1176 CustomerReceipt.php:1179
 #: DiscountCategories.php:121 DiscountCategories.php:123
 #: DiscountCategories.php:127 DiscountCategories.php:129
 #: FixedAssetTransfer.php:94 InternalStockRequest.php:353 MRPDemands.php:338
@@ -2621,7 +2596,7 @@ msgid "Stock Code"
 msgstr ""
 
 #: BOMInquiry.php:35 BOMs.php:887 ContractBOM.php:342 Contracts.php:769
-#: CounterReturns.php:1656 CounterSales.php:2266 CustomerReceipt.php:1168
+#: CounterReturns.php:1656 CounterSales.php:2266 CustomerReceipt.php:1186
 #: FixedAssetTransfer.php:107 InternalStockRequest.php:364 MRPDemands.php:343
 #: MRPReport.php:558 PO_Header.php:549 PO_Items.php:1173 SelectAsset.php:116
 #: SelectCreditItems.php:234 SelectCreditItems.php:1012 SelectCustomer.php:375
@@ -2658,7 +2633,7 @@ msgstr ""
 
 #: BOMInquiry.php:108 BOMs.php:559 BOMs.php:897 ContractBOM.php:353
 #: CounterReturns.php:1681 CounterSales.php:2109 CounterSales.php:2290
-#: CustomerBranches.php:407 CustomerReceipt.php:1179 GLCodesInquiry.php:26
+#: CustomerBranches.php:407 CustomerReceipt.php:1197 GLCodesInquiry.php:26
 #: InternalStockRequest.php:557 InternalStockRequest.php:627
 #: MaterialsNotUsed.php:34 MRPDemands.php:91 MRPPlannedWorkOrders.php:257
 #: MRPReport.php:749 NoSalesItems.php:186 PDFOrdersInvoiced.php:331
@@ -2682,7 +2657,7 @@ msgstr ""
 #: BOMInquiry.php:111 BOMs.php:900 ConfirmDispatch_Invoice.php:293
 #: ContractBOM.php:355 CounterReturns.php:1683 CounterSales.php:2111
 #: CounterSales.php:2292 Credit_Invoice.php:293 GoodsReceived.php:103
-#: GoodsReceived.php:107 InternalStockRequestAuthorisation.php:91
+#: GoodsReceived.php:107 InternalStockRequestAuthorisation.php:105
 #: InternalStockRequestFulfill.php:322 InternalStockRequest.php:560
 #: InternalStockRequest.php:629 InventoryValuation.php:205 MRPReport.php:752
 #: NoSalesItems.php:190 OffersReceived.php:109 PO_Items.php:1202
@@ -2756,7 +2731,7 @@ msgid "to view the costed bill of material for"
 msgstr ""
 
 #: BOMListing.php:14 BOMListing.php:15 BOMListing.php:107
-#: includes/MainMenuLinksArray.php:288
+#: includes/MainMenuLinksArray.php:290
 msgid "Bill Of Material Listing"
 msgstr ""
 
@@ -3037,7 +3012,7 @@ msgstr ""
 msgid "Location"
 msgstr ""
 
-#: BOMs.php:562 WhereUsedInquiry.php:69 includes/MainMenuLinksArray.php:313
+#: BOMs.php:562 WhereUsedInquiry.php:69 includes/MainMenuLinksArray.php:315
 msgid "Work Centre"
 msgstr ""
 
@@ -3175,8 +3150,8 @@ msgstr ""
 msgid "Are you sure you wish to delete this COGS GL posting record?"
 msgstr ""
 
-#: COGSGLPostings.php:200 CustomerReceipt.php:1074 GLJournal.php:387
-#: GLTransInquiry.php:44 Payments.php:1064 SupplierTransInquiry.php:172
+#: COGSGLPostings.php:200 CustomerReceipt.php:1092 GLJournal.php:387
+#: GLTransInquiry.php:44 Payments.php:1082 SupplierTransInquiry.php:172
 #: TaxAuthorities.php:148 TaxAuthorities.php:149
 msgid "GL Account"
 msgstr ""
@@ -3202,7 +3177,7 @@ msgstr ""
 msgid "Post to GL account"
 msgstr ""
 
-#: CompanyPreferences.php:7 includes/MainMenuLinksArray.php:431
+#: CompanyPreferences.php:7 includes/MainMenuLinksArray.php:433
 msgid "Company Preferences"
 msgstr ""
 
@@ -3471,9 +3446,9 @@ msgstr ""
 #: FixedAssetItems.php:127 FixedAssetItems.php:653 GLBudgets.php:240
 #: GLTags.php:68 GoodsReceived.php:257 GoodsReceived.php:263
 #: GoodsReceived.php:270 GoodsReceived.php:752 ImportBankTransAnalysis.php:154
-#: ImportBankTransAnalysis.php:185 InternalStockRequestAuthorisation.php:106
+#: ImportBankTransAnalysis.php:185 InternalStockRequestAuthorisation.php:122
 #: InternalStockRequestFulfill.php:361 InternalStockRequest.php:249
-#: MRPCalendar.php:315 Payments.php:915 PcAuthorizeExpenses.php:108
+#: MRPCalendar.php:315 Payments.php:933 PcAuthorizeExpenses.php:108
 #: PcAuthorizeExpenses.php:293 PO_AuthoriseMyOrders.php:142
 #: PricesByCost.php:223 PurchData.php:758 ReorderLevelLocation.php:130
 #: SecurityTokens.php:97 SelectCreditItems.php:957 SellThroughSupport.php:476
@@ -3594,17 +3569,17 @@ msgstr ""
 #: ConfirmDispatch_Invoice.php:272 Contracts.php:778 CustLoginSetup.php:32
 #: CustomerAllocations.php:347 CustomerBranches.php:403
 #: CustomerBranches.php:586 CustomerBranches.php:633 CustomerInquiry.php:135
-#: CustomerInquiry.php:136 CustomerPurchases.php:30 CustomerReceipt.php:949
-#: CustomerReceipt.php:1005 CustomerReceipt.php:1153 Customers.php:25
+#: CustomerInquiry.php:136 CustomerPurchases.php:30 CustomerReceipt.php:967
+#: CustomerReceipt.php:1023 CustomerReceipt.php:1171 Customers.php:25
 #: Customers.php:348 CustomerTransInquiry.php:107 DeliveryDetails.php:850
 #: FTP_RadioBeacon.php:51 PDFOrdersInvoiced.php:289 PDFOrderStatus.php:285
-#: PricesByCost.php:154 SalesGraph.php:185 SelectCompletedOrder.php:556
-#: SelectContract.php:145 SelectCreditItems.php:242 SelectCustomer.php:24
-#: SelectCustomer.php:210 SelectOrderItems.php:636
-#: SelectRecurringSalesOrder.php:91 SelectSalesOrder.php:854
-#: SelectSalesOrder.php:871 SellThroughSupport.php:262
-#: StockLocMovements.php:92 StockMovements.php:99
-#: includes/PDFAgedDebtorsPageHeader.inc:48
+#: PricesByCost.php:154 SalesGraph.php:185 SalesTopCustomersInquiry.php:214
+#: SelectCompletedOrder.php:556 SelectContract.php:145
+#: SelectCreditItems.php:242 SelectCustomer.php:24 SelectCustomer.php:210
+#: SelectOrderItems.php:636 SelectRecurringSalesOrder.php:91
+#: SelectSalesOrder.php:854 SelectSalesOrder.php:871
+#: SellThroughSupport.php:262 StockLocMovements.php:92 StockMovements.php:99
+#: TopCustomers.php:213 includes/PDFAgedDebtorsPageHeader.inc:48
 #: includes/PDFBankingSummaryPageHeader.inc:56
 #: includes/PDFCustTransListingPageHeader.inc:48
 #: includes/PDFDebtorBalsPageHeader.inc:30
@@ -3628,8 +3603,8 @@ msgstr ""
 msgid "Customer Code"
 msgstr ""
 
-#: ConfirmDispatch_Invoice.php:273 CustEDISetup.php:97 CustomerReceipt.php:258
-#: CustomerReceipt.php:1180 Customers.php:464 Customers.php:772
+#: ConfirmDispatch_Invoice.php:273 CustEDISetup.php:97 CustomerReceipt.php:276
+#: CustomerReceipt.php:1198 Customers.php:464 Customers.php:772
 #: Customers.php:811 DeliveryDetails.php:851 OrderDetails.php:75
 #: POReport.php:494 POReport.php:1270 SalesInquiry.php:772
 #: SalesInquiry.php:782 SalesInquiry.php:806 SalesInquiry.php:950
@@ -3742,7 +3717,7 @@ msgid "Price"
 msgstr ""
 
 #: ConfirmDispatch_Invoice.php:297 CounterReturns.php:672 CounterSales.php:754
-#: Credit_Invoice.php:296 CustomerReceipt.php:948 DeliveryDetails.php:875
+#: Credit_Invoice.php:296 CustomerReceipt.php:966 DeliveryDetails.php:875
 #: OrderDetails.php:173 PrintCustTrans.php:897 PrintCustTrans.php:986
 #: PrintCustTrans.php:1035 PrintCustTransPortrait.php:948
 #: PrintCustTransPortrait.php:1046 PrintCustTransPortrait.php:1102
@@ -4637,7 +4612,7 @@ msgstr ""
 
 #: ConfirmDispatch_Invoice.php:1639 ConfirmDispatch_Invoice.php:1641
 #: ContractBOM.php:299 CounterReturns.php:1597 CounterReturns.php:1599
-#: CounterSales.php:2064 CounterSales.php:2066 CustomerReceipt.php:562
+#: CounterSales.php:2064 CounterSales.php:2066 CustomerReceipt.php:580
 #: DeliveryDetails.php:601 DeliveryDetails.php:605 DeliveryDetails.php:823
 #: DeliveryDetails.php:827 GLBalanceSheet.php:22 GLJournalInquiry.php:113
 #: GLProfit_Loss.php:25 GLTagProfit_Loss.php:25 GLTagProfit_Loss.php:523
@@ -4837,9 +4812,8 @@ msgid "Are you sure you wish to delete this item from the contract BOM?"
 msgstr ""
 
 #: ContractBOM.php:272
-#, fuzzy
 msgid "Confirm Deletion"
-msgstr "أدخل المعلومات"
+msgstr ""
 
 #: ContractBOM.php:283
 msgid "Update Lines"
@@ -5150,9 +5124,8 @@ msgid "The cost per unit of the new requirement is expected to be numeric"
 msgstr ""
 
 #: ContractOtherReqts.php:120 ContractOtherReqts.php:156
-#, fuzzy
 msgid "Enter a description of this requirement for the contract"
-msgstr "لا يمكن ان يحتوى اسم العضوية على الحرف"
+msgstr ""
 
 #: ContractOtherReqts.php:121 ContractOtherReqts.php:160
 msgid "Enter the quantity of this requirement for the contract"
@@ -5178,7 +5151,7 @@ msgstr ""
 msgid "Requirement Description"
 msgstr ""
 
-#: ContractOtherReqts.php:159 InternalStockRequestAuthorisation.php:90
+#: ContractOtherReqts.php:159 InternalStockRequestAuthorisation.php:104
 #: InternalStockRequest.php:272 SelectWorkOrder.php:325
 #: WhereUsedInquiry.php:71 WorkOrderCosting.php:99
 msgid "Quantity Required"
@@ -5491,7 +5464,7 @@ msgid ""
 "Phone Number entered"
 msgstr ""
 
-#: Contracts.php:685 CustomerReceipt.php:620 SelectCustomer.php:155
+#: Contracts.php:685 CustomerReceipt.php:638 SelectCustomer.php:155
 #: SelectOrderItems.php:344
 msgid "The searched customer records requested cannot be retrieved because"
 msgstr ""
@@ -5620,7 +5593,7 @@ msgstr ""
 msgid "Fax"
 msgstr ""
 
-#: Contracts.php:829 CustomerInquiry.php:138 CustomerReceipt.php:1005
+#: Contracts.php:829 CustomerInquiry.php:138 CustomerReceipt.php:1023
 #: PDFRemittanceAdvice.php:275 PO_Header.php:604 PrintCustTrans.php:879
 #: PrintCustTransPortrait.php:929 SupplierInquiry.php:119
 #: includes/PDFQuotationPageHeader.inc:67
@@ -6026,12 +5999,12 @@ msgid "Net"
 msgstr ""
 
 #: CounterReturns.php:744 CounterSales.php:840 CustomerPurchases.php:84
-#: CustomerReceipt.php:923 CustomerReceipt.php:951 CustomerReceipt.php:1136
+#: CustomerReceipt.php:941 CustomerReceipt.php:969 CustomerReceipt.php:1154
 #: GLAccountInquiry.php:177 GLAccountReport.php:346 GLJournalInquiry.php:84
 #: GLJournal.php:366 GLJournal.php:390 ImportBankTransAnalysis.php:209
-#: ImportBankTransAnalysis.php:296 InternalStockRequestAuthorisation.php:58
+#: ImportBankTransAnalysis.php:296 InternalStockRequestAuthorisation.php:71
 #: InternalStockRequestFulfill.php:287 InternalStockRequest.php:242
-#: Payments.php:911 Payments.php:1065 SelectOrderItems.php:1455
+#: Payments.php:929 Payments.php:1083 SelectOrderItems.php:1455
 #: SellThroughSupport.php:265 SellThroughSupport.php:453
 #: SuppContractChgs.php:80 SuppContractChgs.php:168 SupplierCredit.php:421
 #: SupplierCredit.php:460 SupplierInvoice.php:785 SupplierInvoice.php:829
@@ -6077,9 +6050,8 @@ msgid "Payment Type"
 msgstr ""
 
 #: CounterReturns.php:844
-#, fuzzy
 msgid "Paid to Customer"
-msgstr "العودة الى العملاء"
+msgstr ""
 
 #: CounterReturns.php:853 CounterSales.php:961 SelectOrderItems.php:1492
 msgid "Re-Calculate"
@@ -6117,20 +6089,20 @@ msgid ""
 "was"
 msgstr ""
 
-#: CounterReturns.php:1458 CounterSales.php:1915 CustomerReceipt.php:501
+#: CounterReturns.php:1458 CounterSales.php:1915 CustomerReceipt.php:519
 #: ../webSHOP/includes/Functions.php:504
 #: ../webSHOP/includes/ProcessPayPalPayment.php:137
 msgid "Cannot insert a GL transaction for the bank account debit"
 msgstr ""
 
-#: CounterReturns.php:1476 CounterSales.php:1933 CustomerReceipt.php:524
+#: CounterReturns.php:1476 CounterSales.php:1933 CustomerReceipt.php:542
 #: ../webSHOP/includes/Functions.php:522
 msgid ""
 "The SQL that failed to insert the GL transaction for the debtors account "
 "credit was"
 msgstr ""
 
-#: CounterReturns.php:1477 CounterSales.php:1934 CustomerReceipt.php:525
+#: CounterReturns.php:1477 CounterSales.php:1934 CustomerReceipt.php:543
 #: ../webSHOP/includes/Functions.php:523
 #: ../webSHOP/includes/ProcessPayPalPayment.php:156
 msgid "Cannot insert a GL transaction for the debtors account credit"
@@ -6142,32 +6114,31 @@ msgstr ""
 msgid "Counter Sale"
 msgstr ""
 
-#: CounterReturns.php:1533 CounterSales.php:1989 CustomerReceipt.php:475
+#: CounterReturns.php:1533 CounterSales.php:1989 CustomerReceipt.php:493
 #: ../webSHOP/includes/Functions.php:478
 #: ../webSHOP/includes/ProcessPayPalPayment.php:111
 msgid "The SQL that failed to insert the bank account transaction was"
 msgstr ""
 
-#: CounterReturns.php:1534 CounterSales.php:1990 CustomerReceipt.php:476
+#: CounterReturns.php:1534 CounterSales.php:1990 CustomerReceipt.php:494
 #: ../webSHOP/includes/Functions.php:479
 #: ../webSHOP/includes/ProcessPayPalPayment.php:112
 msgid "Cannot insert a bank transaction"
 msgstr ""
 
-#: CounterReturns.php:1562 CounterSales.php:2022 CustomerReceipt.php:431
+#: CounterReturns.php:1562 CounterSales.php:2022 CustomerReceipt.php:449
 msgid "The SQL that failed to insert the customer receipt transaction was"
 msgstr ""
 
-#: CounterReturns.php:1563 CounterSales.php:2023 CustomerReceipt.php:432
+#: CounterReturns.php:1563 CounterSales.php:2023 CustomerReceipt.php:450
 msgid "Cannot insert a receipt transaction against the customer because"
 msgstr ""
 
 #: CounterReturns.php:1579
-#, fuzzy
 msgid ""
 "The SQL that failed to insert the allocation of the receipt to the credit "
 "note was"
-msgstr "الطلب المستخدم لإضافة مجموعة الحسابات هي"
+msgstr ""
 
 #: CounterReturns.php:1580 CounterSales.php:2047
 msgid ""
@@ -6306,9 +6277,8 @@ msgid "Cancel Return"
 msgstr ""
 
 #: CounterReturns.php:1846
-#, fuzzy
 msgid "Are you sure you wish to cancel this return?"
-msgstr "حدث خطأ ما اثناء حذف مجموعة الحسابات"
+msgstr ""
 
 #: CounterSales.php:11 CounterSales.php:230
 msgid "Counter Sales"
@@ -6543,12 +6513,12 @@ msgstr ""
 msgid "has been entered"
 msgstr ""
 
-#: CounterSales.php:2032 CustomerReceipt.php:440
+#: CounterSales.php:2032 CustomerReceipt.php:458
 #: ../webSHOP/includes/Functions.php:447
 msgid "The SQL that failed to update the date of the last payment received was"
 msgstr ""
 
-#: CounterSales.php:2033 CustomerReceipt.php:441
+#: CounterSales.php:2033 CustomerReceipt.php:459
 #: ../webSHOP/includes/Functions.php:448
 msgid ""
 "Cannot update the customer record for the date of the last payment received "
@@ -6706,9 +6676,8 @@ msgid "Enter the price at which to credit this item"
 msgstr ""
 
 #: Credit_Invoice.php:403
-#, fuzzy
 msgid "Are you sure you wish to delete this item from the credit?"
-msgstr "حدث خطأ ما اثناء حذف مجموعة الحسابات"
+msgstr ""
 
 #: Credit_Invoice.php:421
 msgid "Freight cost charged on invoice"
@@ -7005,7 +6974,7 @@ msgstr ""
 msgid "Show Defined Credit Status Codes"
 msgstr ""
 
-#: Currencies.php:6 includes/MainMenuLinksArray.php:437
+#: Currencies.php:6 includes/MainMenuLinksArray.php:439
 msgid "Currencies Maintenance"
 msgstr ""
 
@@ -7291,9 +7260,8 @@ msgid "A customer must first be selected before logins can be defined for it"
 msgstr ""
 
 #: CustLoginSetup.php:15
-#, fuzzy
 msgid "Select A Customer"
-msgstr "العودة الى العملاء"
+msgstr ""
 
 #: CustLoginSetup.php:32 SelectCustomer.php:210 SuppLoginSetup.php:33
 msgid " has been selected"
@@ -7340,9 +7308,8 @@ msgid "The user could not be added because"
 msgstr ""
 
 #: CustLoginSetup.php:116 SuppLoginSetup.php:100 ../webSHOP/Register.php:226
-#, fuzzy
 msgid "The SQL that was used to insert the new user and failed was"
-msgstr "الطلب المستخدم لإضافة مجموعة الحسابات هي"
+msgstr ""
 
 #: CustLoginSetup.php:118
 msgid "A new customer login has been created"
@@ -7374,9 +7341,8 @@ msgid "Full Name"
 msgstr ""
 
 #: CustLoginSetup.php:155
-#, fuzzy
 msgid "Enter the user's real name"
-msgstr "لم يتمكن الحصول على مجموات العضو لان"
+msgstr ""
 
 #: CustLoginSetup.php:158 Locations.php:590 SalesPeople.php:332
 #: SupplierContacts.php:265 SuppLoginSetup.php:141 WWW_Users.php:462
@@ -7503,39 +7469,34 @@ msgid "was"
 msgstr ""
 
 #: CustomerAllocations.php:95
-#, fuzzy
 msgid "Could not delete old allocation record"
-msgstr "الطلب المستخدم لإسترجاع المعلومات كان"
+msgstr ""
 
 #: CustomerAllocations.php:113
-#, fuzzy
 msgid "Could not change allocation record"
-msgstr "لم يتمكن الحصول على مجموات العضو لان"
+msgstr ""
 
 #: CustomerAllocations.php:126
-#, fuzzy
 msgid "Could not update difference on exchange"
-msgstr "لم يتم التحقق من وجود المجموعة بسبب"
+msgstr ""
 
 #: CustomerAllocations.php:142
 msgid "Could not update receipt or credit note"
 msgstr ""
 
 #: CustomerAllocations.php:171
-#, fuzzy
 msgid "Could not update exchange difference in General Ledger"
-msgstr "لم يتم التحقق من وجود المجموعة بسبب"
+msgstr ""
 
 #: CustomerAllocations.php:192
-#, fuzzy
 msgid "Could not update debtors control in General Ledger"
-msgstr "لم  أستطيع استرجاع القطاع المطلوب حاول مجددا"
+msgstr ""
 
 #: CustomerAllocations.php:342
 msgid "Allocate Receipt"
 msgstr ""
 
-#: CustomerAllocations.php:342 CustomerReceipt.php:563
+#: CustomerAllocations.php:342 CustomerReceipt.php:581
 msgid "Allocate Receipts"
 msgstr ""
 
@@ -7578,7 +7539,7 @@ msgid "Yet to"
 msgstr ""
 
 #: CustomerAllocations.php:382 CustomerAllocations.php:517
-#: CustomerAllocations.php:565 CustomerReceipt.php:250 CustomerReceipt.php:563
+#: CustomerAllocations.php:565 CustomerReceipt.php:268 CustomerReceipt.php:581
 #: SupplierAllocations.php:459 SupplierAllocations.php:595
 #: SupplierAllocations.php:671
 #, php-format
@@ -8126,31 +8087,31 @@ msgstr ""
 msgid "The config value NumberOfMonthMustBeShown cannot be retrieved"
 msgstr ""
 
-#: CustomerInquiry.php:141 CustomerReceipt.php:1005 SelectOrderItems.php:740
+#: CustomerInquiry.php:141 CustomerReceipt.php:1023 SelectOrderItems.php:740
 #: SupplierCredit.php:264 SupplierInquiry.php:121 SupplierInvoice.php:607
 msgid "Terms"
 msgstr ""
 
-#: CustomerInquiry.php:143 CustomerReceipt.php:1005 Customers.php:566
+#: CustomerInquiry.php:143 CustomerReceipt.php:1023 Customers.php:566
 #: Customers.php:917 Customers.php:947
 msgid "Credit Limit"
 msgstr ""
 
-#: CustomerInquiry.php:145 CustomerReceipt.php:1005 Customers.php:592
-#: Customers.php:984 Customers.php:990 includes/MainMenuLinksArray.php:474
+#: CustomerInquiry.php:145 CustomerReceipt.php:1023 Customers.php:592
+#: Customers.php:984 Customers.php:990 includes/MainMenuLinksArray.php:476
 msgid "Credit Status"
 msgstr ""
 
-#: CustomerInquiry.php:149 CustomerReceipt.php:1009
+#: CustomerInquiry.php:149 CustomerReceipt.php:1027
 msgid "ACCOUNT ON HOLD"
 msgstr ""
 
-#: CustomerInquiry.php:154 CustomerReceipt.php:1015
+#: CustomerInquiry.php:154 CustomerReceipt.php:1033
 #: PrintCustStatements.php:379 SupplierInquiry.php:143
 msgid "Total Balance"
 msgstr ""
 
-#: CustomerInquiry.php:155 CustomerReceipt.php:1016
+#: CustomerInquiry.php:155 CustomerReceipt.php:1034
 #: PrintCustStatements.php:375 SalesPeople.php:206 Shipments.php:406
 #: StockClone.php:881 StockClone.php:883 Stocks.php:1168 Stocks.php:1170
 #: SupplierInquiry.php:144 includes/PDFAgedDebtorsPageHeader.inc:50
@@ -8158,16 +8119,16 @@ msgstr ""
 msgid "Current"
 msgstr ""
 
-#: CustomerInquiry.php:156 CustomerReceipt.php:1017 SupplierInquiry.php:145
+#: CustomerInquiry.php:156 CustomerReceipt.php:1035 SupplierInquiry.php:145
 msgid "Now Due"
 msgstr ""
 
-#: CustomerInquiry.php:157 CustomerInquiry.php:158 CustomerReceipt.php:1018
-#: CustomerReceipt.php:1019 SupplierInquiry.php:146 SupplierInquiry.php:147
+#: CustomerInquiry.php:157 CustomerInquiry.php:158 CustomerReceipt.php:1036
+#: CustomerReceipt.php:1037 SupplierInquiry.php:146 SupplierInquiry.php:147
 msgid "Days Overdue"
 msgstr ""
 
-#: CustomerInquiry.php:158 CustomerReceipt.php:1019
+#: CustomerInquiry.php:158 CustomerReceipt.php:1037
 #: PrintCustStatements.php:378 SupplierInquiry.php:147
 msgid "Over"
 msgstr ""
@@ -8325,11 +8286,11 @@ msgstr ""
 msgid "A bank account must be selected for this receipt"
 msgstr ""
 
-#: CustomerReceipt.php:66 Payments.php:712
+#: CustomerReceipt.php:66 Payments.php:730
 msgid "The bank account name cannot be retrieved because"
 msgstr ""
 
-#: CustomerReceipt.php:76 Payments.php:722
+#: CustomerReceipt.php:76 Payments.php:740
 msgid "The bank account number"
 msgstr ""
 
@@ -8351,218 +8312,240 @@ msgid ""
 "re-done - only customers trading in the selected currency can be selected"
 msgstr ""
 
-#: CustomerReceipt.php:177 Payments.php:663
+#: CustomerReceipt.php:177 Payments.php:681
 msgid "No General Ledger code has been chosen"
 msgstr ""
 
-#: CustomerReceipt.php:177 GLJournal.php:174 Payments.php:646 Payments.php:663
+#: CustomerReceipt.php:177 GLJournal.php:174 Payments.php:646 Payments.php:681
 msgid "so this GL analysis item could not be added"
 msgstr ""
 
-#: CustomerReceipt.php:223
+#: CustomerReceipt.php:183 Payments.php:655
+msgid ""
+"Payments involving the debtors control account cannot be entered. The "
+"general ledger debtors ledger (AR) integration is enabled so control "
+"accounts are automatically maintained. This setting can be disabled in "
+"System Configuration"
+msgstr ""
+
+#: CustomerReceipt.php:188 Payments.php:660
+msgid ""
+"Payments involving the creditors control account or the GRN suspense account "
+"cannot be entered. The general ledger creditors ledger (AP) integration is "
+"enabled so control accounts are automatically maintained. This setting can "
+"be disabled in System Configuration"
+msgstr ""
+
+#: CustomerReceipt.php:192 Payments.php:664
+msgid ""
+"Payments involving the retained earnings control account cannot be entered. "
+"This account is automtically maintained."
+msgstr ""
+
+#: CustomerReceipt.php:241
 msgid "The company has not yet been set up properly"
 msgstr ""
 
-#: CustomerReceipt.php:223
+#: CustomerReceipt.php:241
 msgid "this information is needed to process the batch"
 msgstr ""
 
-#: CustomerReceipt.php:223
+#: CustomerReceipt.php:241
 msgid "Processing has been cancelled"
 msgstr ""
 
-#: CustomerReceipt.php:250
+#: CustomerReceipt.php:268
 msgid "Summary of Receipt Batch"
 msgstr ""
 
-#: CustomerReceipt.php:256 includes/InputSerialItemsFile.php:199
+#: CustomerReceipt.php:274 includes/InputSerialItemsFile.php:199
 msgid "Batch Number"
 msgstr ""
 
-#: CustomerReceipt.php:257 CustomerReceipt.php:815
+#: CustomerReceipt.php:275 CustomerReceipt.php:833
 msgid "Date Banked"
 msgstr ""
 
-#: CustomerReceipt.php:259 CustomerReceipt.php:950
+#: CustomerReceipt.php:277 CustomerReceipt.php:968
 msgid "GL Code"
 msgstr ""
 
-#: CustomerReceipt.php:260 CustomerReceipt.php:1118
+#: CustomerReceipt.php:278 CustomerReceipt.php:1136
 msgid "Amount of Receipt"
 msgstr ""
 
-#: CustomerReceipt.php:284
+#: CustomerReceipt.php:302
 msgid "Print a Customer Receipt"
 msgstr ""
 
-#: CustomerReceipt.php:308 ImportBankTrans.php:286 ImportBankTrans.php:305
+#: CustomerReceipt.php:326 ImportBankTrans.php:286 ImportBankTrans.php:305
 #: ImportBankTrans.php:350
 msgid "Cannot insert a GL entry for the receipt because"
 msgstr ""
 
-#: CustomerReceipt.php:309 ImportBankTrans.php:287 ImportBankTrans.php:306
+#: CustomerReceipt.php:327 ImportBankTrans.php:287 ImportBankTrans.php:306
 #: ImportBankTrans.php:351
 msgid "The SQL that failed to insert the receipt GL entry was"
 msgstr ""
 
-#: CustomerReceipt.php:378
+#: CustomerReceipt.php:396
 msgid "Act Transfer"
 msgstr ""
 
-#: CustomerReceipt.php:387 ImportBankTrans.php:510
+#: CustomerReceipt.php:405 ImportBankTrans.php:510
 msgid "The SQL that failed to insert the bank transaction was"
 msgstr ""
 
-#: CustomerReceipt.php:388 Payments.php:590
+#: CustomerReceipt.php:406 Payments.php:590
 msgid "Cannot insert a bank transaction using the SQL"
 msgstr ""
 
-#: CustomerReceipt.php:500 ../webSHOP/includes/Functions.php:503
+#: CustomerReceipt.php:518 ../webSHOP/includes/Functions.php:503
 msgid ""
 "The SQL that failed to insert the GL transaction fro the bank account debit "
 "was"
 msgstr ""
 
-#: CustomerReceipt.php:548
+#: CustomerReceipt.php:566
 msgid ""
 "The SQL that failed to insert the GL transaction for the payment discount "
 "debit was"
 msgstr ""
 
-#: CustomerReceipt.php:549
+#: CustomerReceipt.php:567
 msgid "Cannot insert a GL transaction for the payment discount debit"
 msgstr ""
 
-#: CustomerReceipt.php:556 GLJournal.php:116
+#: CustomerReceipt.php:574 GLJournal.php:116
 msgid "Cannot commit the changes"
 msgstr ""
 
-#: CustomerReceipt.php:560
+#: CustomerReceipt.php:578
 msgid "Receipt batch"
 msgstr ""
 
-#: CustomerReceipt.php:560
+#: CustomerReceipt.php:578
 msgid "has been successfully entered into the database"
 msgstr ""
 
-#: CustomerReceipt.php:562
+#: CustomerReceipt.php:580
 msgid "Print PDF Batch Summary"
 msgstr ""
 
-#: CustomerReceipt.php:564 includes/MainMenuLinksArray.php:94
+#: CustomerReceipt.php:582 includes/MainMenuLinksArray.php:96
 msgid "Enter Receipts"
 msgstr ""
 
-#: CustomerReceipt.php:577 SelectCreditItems.php:73
+#: CustomerReceipt.php:595 SelectCreditItems.php:73
 msgid ""
 "Customer name keywords have been used in preference to the customer code "
 "extract entered"
 msgstr ""
 
-#: CustomerReceipt.php:583 SelectCreditItems.php:76
+#: CustomerReceipt.php:601 SelectCreditItems.php:76
 msgid ""
 "At least one Customer Name keyword OR an extract of a Customer Code must be "
 "entered for the search"
 msgstr ""
 
-#: CustomerReceipt.php:622 SelectCreditItems.php:112 SelectOrderItems.php:527
+#: CustomerReceipt.php:640 SelectCreditItems.php:112 SelectOrderItems.php:527
 msgid "SQL used to retrieve the customer details was"
 msgstr ""
 
-#: CustomerReceipt.php:629 SelectCustomer.php:165
+#: CustomerReceipt.php:647 SelectCustomer.php:165
 msgid "No customer records contain the selected text"
 msgstr ""
 
-#: CustomerReceipt.php:629 PO_Header.php:360 SelectCreditItems.php:121
+#: CustomerReceipt.php:647 PO_Header.php:360 SelectCreditItems.php:121
 #: includes/PO_ReadInOrder.inc:126
 msgid "please alter your search criteria and try again"
 msgstr ""
 
-#: CustomerReceipt.php:706 CustomerReceipt.php:734 Customers.php:720
+#: CustomerReceipt.php:724 CustomerReceipt.php:752 Customers.php:720
 msgid "The customer details could not be retrieved because"
 msgstr ""
 
-#: CustomerReceipt.php:772 DailyBankTransactions.php:35 Payments.php:755
+#: CustomerReceipt.php:790 DailyBankTransactions.php:35 Payments.php:773
 msgid "The bank accounts could not be retrieved because"
 msgstr ""
 
-#: CustomerReceipt.php:777 includes/MainMenuLinksArray.php:328
+#: CustomerReceipt.php:795 includes/MainMenuLinksArray.php:330
 msgid "Bank Account Receipts Entry"
 msgstr ""
 
-#: CustomerReceipt.php:779
+#: CustomerReceipt.php:797
 msgid "Enter Receipt"
 msgstr ""
 
-#: CustomerReceipt.php:779
+#: CustomerReceipt.php:797
 msgid "Enter Customer Receipt"
 msgstr ""
 
-#: CustomerReceipt.php:780
+#: CustomerReceipt.php:798
 msgid ""
 "To enter a payment TO a customer (ie. to pay out a credit note), enter a "
 "negative payment amount."
 msgstr ""
 
-#: CustomerReceipt.php:830 Z_ImportGLTransactions.php:244
+#: CustomerReceipt.php:848 Z_ImportGLTransactions.php:244
 msgid "No currencies are defined yet"
 msgstr ""
 
-#: CustomerReceipt.php:830 Z_ImportGLTransactions.php:244
+#: CustomerReceipt.php:848 Z_ImportGLTransactions.php:244
 msgid "Receipts cannot be entered until a currency is defined"
 msgstr ""
 
-#: CustomerReceipt.php:855 CustomerReceipt.php:874 Payments.php:839
-#: Payments.php:859
+#: CustomerReceipt.php:873 CustomerReceipt.php:892 Payments.php:857
+#: Payments.php:877
 msgid "Suggested rate:"
 msgstr ""
 
-#: CustomerReceipt.php:865
+#: CustomerReceipt.php:883
 msgid "Receipt Exchange Rate"
 msgstr ""
 
-#: CustomerReceipt.php:867
+#: CustomerReceipt.php:885
 msgid ""
 "The exchange rate between the currency of the bank account currency and the "
 "currency of the receipt"
 msgstr ""
 
-#: CustomerReceipt.php:882 Payments.php:867
+#: CustomerReceipt.php:900 Payments.php:885
 msgid "Functional Exchange Rate"
 msgstr ""
 
-#: CustomerReceipt.php:884 Payments.php:868 Payments.php:869
+#: CustomerReceipt.php:902 Payments.php:886 Payments.php:887
 msgid ""
 "The exchange rate between the currency of the business (the functional "
 "currency) and the currency of the bank account"
 msgstr ""
 
-#: CustomerReceipt.php:889
+#: CustomerReceipt.php:907
 msgid "Receipt Type"
 msgstr ""
 
-#: CustomerReceipt.php:912 Payments.php:904
+#: CustomerReceipt.php:930 Payments.php:922
 msgid "Reference on Bank Transactions Inquiry"
 msgstr ""
 
-#: CustomerReceipt.php:924 Payments.php:912
+#: CustomerReceipt.php:942 Payments.php:930
 msgid "Narrative on General Ledger Account Inquiry"
 msgstr ""
 
-#: CustomerReceipt.php:940
+#: CustomerReceipt.php:958
 msgid "Banked"
 msgstr ""
 
-#: CustomerReceipt.php:941
+#: CustomerReceipt.php:959
 msgid "Banked into the"
 msgstr ""
 
-#: CustomerReceipt.php:942 Payments.php:742 PO_Items.php:236
+#: CustomerReceipt.php:960 Payments.php:760 PO_Items.php:236
 #: SelectSalesOrder.php:230 SelectSalesOrder.php:391 SpecialOrder.php:480
 msgid "on"
 msgstr ""
 
-#: CustomerReceipt.php:947 GoodsReceived.php:104 GoodsReceived.php:108
+#: CustomerReceipt.php:965 GoodsReceived.php:104 GoodsReceived.php:108
 #: GoodsReceived.php:114 POReport.php:629 POReport.php:1360 ReverseGRN.php:392
 #: ReverseGRN.php:393 ShipmentCosting.php:150 Shipments.php:403
 #: Shipments.php:490 StockDispatch.php:507 StockDispatch.php:514
@@ -8570,88 +8553,88 @@ msgstr ""
 msgid "Received"
 msgstr ""
 
-#: CustomerReceipt.php:952 GLAccountInquiry.php:179 GLAccountReport.php:347
+#: CustomerReceipt.php:970 GLAccountInquiry.php:179 GLAccountReport.php:347
 #: GLJournalInquiry.php:86 ImportBankTransAnalysis.php:210
 #: ImportBankTransAnalysis.php:301 InternalStockRequestFulfill.php:324
-#: Payments.php:1066 PcExpenses.php:193 PcExpenses.php:325
+#: Payments.php:1084 PcExpenses.php:193 PcExpenses.php:325
 #: SupplierCredit.php:461 SupplierInvoice.php:830 SuppTransGLAnalysis.php:111
 msgid "Tag"
 msgstr ""
 
-#: CustomerReceipt.php:994
+#: CustomerReceipt.php:1012
 msgid ""
 "The selected customer does not trade in the currency of the receipt being "
 "entered - either the currency of the receipt needs to be changed or a "
 "different customer selected"
 msgstr ""
 
-#: CustomerReceipt.php:1046
+#: CustomerReceipt.php:1064
 msgid "General Ledger Receipt Entry"
 msgstr ""
 
-#: CustomerReceipt.php:1051 GLAccountCSV.php:67 GLAccountInquiry.php:65
-#: GLAccountReport.php:269 Payments.php:928 StockAdjustments.php:485
+#: CustomerReceipt.php:1069 GLAccountCSV.php:67 GLAccountInquiry.php:65
+#: GLAccountReport.php:269 Payments.php:946 StockAdjustments.php:485
 #: SuppTransGLAnalysis.php:168
 msgid "Select Tag"
 msgstr ""
 
-#: CustomerReceipt.php:1080 GLBudgets.php:52 Payments.php:1010
+#: CustomerReceipt.php:1098 GLBudgets.php:52 Payments.php:1028
 msgid "No General ledger accounts have been set up yet"
 msgstr ""
 
-#: CustomerReceipt.php:1080
+#: CustomerReceipt.php:1098
 msgid ""
 "receipts cannot be entered against GL accounts until the GL accounts are set "
 "up"
 msgstr ""
 
-#: CustomerReceipt.php:1124 Payments.php:1115
+#: CustomerReceipt.php:1142 Payments.php:1133
 msgid "Amount of Discount"
 msgstr ""
 
-#: CustomerReceipt.php:1125
+#: CustomerReceipt.php:1143
 msgid "agreed prompt payment discount is"
 msgstr ""
 
-#: CustomerReceipt.php:1132
+#: CustomerReceipt.php:1150
 msgid "Payee Bank Details"
 msgstr ""
 
-#: CustomerReceipt.php:1153
+#: CustomerReceipt.php:1171
 msgid "Select a Customer"
 msgstr ""
 
-#: CustomerReceipt.php:1156
+#: CustomerReceipt.php:1174
 msgid "Text in the Customer"
 msgstr ""
 
-#: CustomerReceipt.php:1156
+#: CustomerReceipt.php:1174
 msgid "name"
 msgstr ""
 
-#: CustomerReceipt.php:1159
+#: CustomerReceipt.php:1177
 msgid "Text extract in the Customer"
 msgstr ""
 
-#: CustomerReceipt.php:1159
+#: CustomerReceipt.php:1177
 msgid "code"
 msgstr ""
 
-#: CustomerReceipt.php:1160
+#: CustomerReceipt.php:1178
 msgid ""
 "Enter an extract of the customer code to search for. Customer codes can "
 "contain any alpha-numeric character or underscore"
 msgstr ""
 
-#: CustomerReceipt.php:1162
+#: CustomerReceipt.php:1180
 msgid "Customer invoice number"
 msgstr ""
 
-#: CustomerReceipt.php:1171
+#: CustomerReceipt.php:1189
 msgid "Enter A GL Receipt"
 msgstr ""
 
-#: CustomerReceipt.php:1219
+#: CustomerReceipt.php:1237
 msgid "Accept and Process Batch"
 msgstr ""
 
@@ -8795,9 +8778,8 @@ msgid ""
 msgstr ""
 
 #: Customers.php:334
-#, fuzzy
 msgid "contracts referring to this customer"
-msgstr "العودة الى العملاء"
+msgstr ""
 
 #: Customers.php:348
 msgid ""
@@ -8919,7 +8901,7 @@ msgstr ""
 
 #: Customers.php:581 Customers.php:960 Customers.php:966 PaymentTerms.php:12
 #: PO_Header.php:1109 PrintCustTrans.php:400 PrintCustTransPortrait.php:463
-#: Suppliers.php:771 Suppliers.php:983 includes/MainMenuLinksArray.php:475
+#: Suppliers.php:771 Suppliers.php:983 includes/MainMenuLinksArray.php:477
 #: includes/PO_PDFOrderPageHeader.inc:60 includes/PO_PDFOrderPageHeader.inc:62
 msgid "Payment Terms"
 msgstr ""
@@ -9057,7 +9039,7 @@ msgid "Click to preview the credit"
 msgstr ""
 
 #: CustomerTypes.php:6 CustomerTypes.php:21
-#: includes/MainMenuLinksArray.php:472
+#: includes/MainMenuLinksArray.php:474
 msgid "Customer Types"
 msgstr ""
 
@@ -9239,7 +9221,7 @@ msgstr ""
 msgid "Bank Transactions Inquiry"
 msgstr ""
 
-#: DailyBankTransactions.php:46 Payments.php:768 SuppPaymentRun.php:332
+#: DailyBankTransactions.php:46 Payments.php:786 SuppPaymentRun.php:332
 msgid "Bank Accounts have not yet been defined. You must first"
 msgstr ""
 
@@ -9264,9 +9246,8 @@ msgid "Show transactions"
 msgstr ""
 
 #: DailyBankTransactions.php:95
-#, fuzzy
 msgid "Could not retrieve the bank account details"
-msgstr "لم  أستطيع استرجاع القطاع المطلوب حاول مجددا"
+msgstr ""
 
 #: DailyBankTransactions.php:120 GLJournalInquiry.php:76
 msgid "There are no transactions for this account in the date range selected"
@@ -9346,7 +9327,8 @@ msgid "Show Daily Sales For The Selected Month"
 msgstr ""
 
 #: DailySalesInquiry.php:110 SalesByTypePeriodInquiry.php:348
-#: SalesCategoryPeriodInquiry.php:158 SalesTopItemsInquiry.php:212
+#: SalesCategoryPeriodInquiry.php:158 SalesTopCustomersInquiry.php:207
+#: SalesTopItemsInquiry.php:212 TopCustomers.php:206
 msgid "The sales data could not be retrieved because"
 msgstr ""
 
@@ -9801,9 +9783,8 @@ msgid "Departments"
 msgstr ""
 
 #: Departments.php:30
-#, fuzzy
 msgid "The description of the department must not contain the character"
-msgstr "لا يمكن ان يحتوى اسم العضوية على الحرف"
+msgstr ""
 
 #: Departments.php:34
 msgid "The Name of the Department should not be empty"
@@ -9863,9 +9844,8 @@ msgid "Authoriser"
 msgstr ""
 
 #: Departments.php:187
-#, fuzzy
 msgid "Are you sure you wish to delete this department?"
-msgstr "حدث خطأ ما اثناء حذف مجموعة الحسابات"
+msgstr ""
 
 #: Departments.php:197
 msgid "View all Departments"
@@ -9910,9 +9890,8 @@ msgid "The stock master record has been updated to no discount category"
 msgstr ""
 
 #: DiscountCategories.php:64
-#, fuzzy
 msgid "Failed to retrieve stock category data"
-msgstr "الطلب المستخدم لإسترجاع المعلومات كان"
+msgstr ""
 
 #: DiscountCategories.php:72
 msgid ""
@@ -10742,9 +10721,8 @@ msgid "Your PO"
 msgstr ""
 
 #: EmailConfirmation.php:149 EmailConfirmation.php:288
-#, fuzzy
 msgid "Email Confirmation"
-msgstr "أدخل المعلومات"
+msgstr ""
 
 #: EmailConfirmation.php:175 EmailConfirmation.php:296
 msgid "Order Acknowledgement"
@@ -11095,9 +11073,8 @@ msgid "Category Description"
 msgstr ""
 
 #: FixedAssetCategories.php:284
-#, fuzzy
 msgid "Enter the asset category description up to 20 characters"
-msgstr "اسم المجموعة يجب ان يحتوي علي الأقل علي حرف واحد"
+msgstr ""
 
 #: FixedAssetCategories.php:287
 msgid "Fixed Asset Cost GL Code"
@@ -11146,9 +11123,8 @@ msgid "Depreciation Journal Entry"
 msgstr ""
 
 #: FixedAssetDepreciation.php:33
-#, fuzzy
 msgid "The date is expected to be in the format"
-msgstr "الطلب المستخدم لإسترجاع المعلومات كان"
+msgstr ""
 
 #: FixedAssetDepreciation.php:79
 msgid ""
@@ -11245,7 +11221,8 @@ msgid ""
 msgstr ""
 
 #: FixedAssetDepreciation.php:256 SalesByTypePeriodInquiry.php:576
-#: SalesCategoryPeriodInquiry.php:210 SalesTopItemsInquiry.php:267
+#: SalesCategoryPeriodInquiry.php:210 SalesTopCustomersInquiry.php:259
+#: SalesTopItemsInquiry.php:267 TopCustomers.php:258
 msgid "GRAND Total"
 msgstr ""
 
@@ -11719,7 +11696,7 @@ msgstr ""
 msgid "Depn C/Fwd"
 msgstr ""
 
-#: FixedAssetTransfer.php:7 includes/MainMenuLinksArray.php:385
+#: FixedAssetTransfer.php:7 includes/MainMenuLinksArray.php:387
 msgid "Change Asset Location"
 msgstr ""
 
@@ -11778,7 +11755,7 @@ msgid "Move To"
 msgstr ""
 
 #: FormDesigner.php:22 FormDesigner.php:202
-#: includes/MainMenuLinksArray.php:446
+#: includes/MainMenuLinksArray.php:448
 msgid "Form Designer"
 msgstr ""
 
@@ -11949,7 +11926,7 @@ msgstr ""
 msgid "Save the Form Layout"
 msgstr ""
 
-#: FreightCosts.php:6 includes/MainMenuLinksArray.php:483
+#: FreightCosts.php:6 includes/MainMenuLinksArray.php:485
 msgid "Freight Costs Maintenance"
 msgstr ""
 
@@ -12238,23 +12215,23 @@ msgstr ""
 msgid "Geocoding of Customers and Suppliers"
 msgstr ""
 
-#: geocode.php:83
-msgid "Customer Branch Code:"
+#: geocode.php:54
+msgid "Customer Code: "
 msgstr ""
 
-#: geocode.php:83
+#: geocode.php:89
 msgid "failed to geocode."
 msgstr ""
 
-#: geocode.php:127
+#: geocode.php:106
 msgid "Supplier Code: "
 msgstr ""
 
-#: geocode.php:135
+#: geocode.php:145
 msgid "Go back to Geocode Setup"
 msgstr ""
 
-#: GeocodeSetup.php:6 includes/MainMenuLinksArray.php:445
+#: GeocodeSetup.php:6 includes/MainMenuLinksArray.php:447
 msgid "Geocode Maintenance"
 msgstr ""
 
@@ -12374,10 +12351,10 @@ msgid "Display Map of Suppliers"
 msgstr ""
 
 #: geo_displaymap_customers.php:5
-msgid "Geocoded Customer Branches Report"
+msgid "Geocoded Customers Report"
 msgstr ""
 
-#: geo_displaymap_customers.php:90 geo_displaymap_suppliers.php:90
+#: geo_displaymap_customers.php:118 geo_displaymap_suppliers.php:118
 msgid "Go to Geocode Setup"
 msgstr ""
 
@@ -12702,7 +12679,7 @@ msgstr ""
 #: GLAccounts.php:283 GLBalanceSheet.php:9 GLBalanceSheet.php:22
 #: GLBalanceSheet.php:84 GLBalanceSheet.php:85 GLBalanceSheet.php:108
 #: GLBalanceSheet.php:147 SelectGLAccount.php:23 SelectGLAccount.php:38
-#: SelectGLAccount.php:51 includes/MainMenuLinksArray.php:350
+#: SelectGLAccount.php:51 includes/MainMenuLinksArray.php:352
 msgid "Balance Sheet"
 msgstr ""
 
@@ -12842,7 +12819,7 @@ msgstr ""
 msgid "Budget updated successfully"
 msgstr ""
 
-#: GLBudgets.php:40 GLJournal.php:296 Payments.php:1004
+#: GLBudgets.php:40 GLJournal.php:296 Payments.php:1022
 msgid "Select GL Account"
 msgstr ""
 
@@ -12920,14 +12897,13 @@ msgstr ""
 msgid "Group"
 msgstr ""
 
-#: GLJournalInquiry.php:4 includes/MainMenuLinksArray.php:345
+#: GLJournalInquiry.php:4 includes/MainMenuLinksArray.php:347
 msgid "General Ledger Journal Inquiry"
 msgstr ""
 
 #: GLJournalInquiry.php:18
-#, fuzzy
 msgid "Selection Criteria"
-msgstr "وصف القطاع"
+msgstr ""
 
 #: GLJournalInquiry.php:26
 msgid "Journal Number Range"
@@ -12938,16 +12914,15 @@ msgid "Journals Dated Between"
 msgstr ""
 
 #: GLJournalInquiry.php:81
-#, fuzzy
 msgid "Journal Number"
-msgstr "رقم القطاع"
+msgstr ""
 
 #: GLJournalInquiry.php:83 PcExpenses.php:192
 #: includes/PDFGLJournalHeader.inc:20
 msgid "Account Description"
 msgstr ""
 
-#: GLJournal.php:8 includes/MainMenuLinksArray.php:332
+#: GLJournal.php:8 includes/MainMenuLinksArray.php:334
 msgid "Journal Entry"
 msgstr ""
 
@@ -13050,7 +13025,7 @@ msgstr ""
 msgid "Select a general ledger account code"
 msgstr ""
 
-#: GLJournal.php:370 Payments.php:1030 Payments.php:1035
+#: GLJournal.php:370 Payments.php:1048 Payments.php:1053
 msgid "GL Narrative"
 msgstr ""
 
@@ -13266,14 +13241,12 @@ msgid ""
 msgstr ""
 
 #: GLTags.php:23
-#, fuzzy
 msgid "The selected tag has been deleted"
-msgstr "تم حذف المجموعة"
+msgstr ""
 
 #: GLTags.php:64
-#, fuzzy
 msgid "Enter the description of the general ledger tag up to 30 characters"
-msgstr "لا يمكن ان يحتوى اسم العضوية على الحرف"
+msgstr ""
 
 #: GLTags.php:70 SecurityTokens.php:106
 msgid "Insert"
@@ -13317,7 +13290,7 @@ msgstr ""
 
 #: GLTrialBalance.php:11 GLTrialBalance.php:33 GLTrialBalance.php:120
 #: GLTrialBalance.php:121 GLTrialBalance.php:163 GLTrialBalance.php:442
-#: includes/MainMenuLinksArray.php:341
+#: includes/MainMenuLinksArray.php:343
 msgid "Trial Balance"
 msgstr ""
 
@@ -13419,7 +13392,7 @@ msgstr ""
 msgid "Receive controlled item"
 msgstr ""
 
-#: GoodsReceived.php:22 includes/MainMenuLinksArray.php:195
+#: GoodsReceived.php:22 includes/MainMenuLinksArray.php:197
 msgid "Receive Purchase Orders"
 msgstr ""
 
@@ -13450,7 +13423,7 @@ msgstr ""
 #: PO_SelectOSPurchOrder.php:529 SelectWorkOrder.php:321
 #: SelectWorkOrder.php:355 StockLocTransferReceive.php:588
 #: WorkOrderCosting.php:103 WorkOrderCosting.php:117
-#: includes/MainMenuLinksArray.php:197
+#: includes/MainMenuLinksArray.php:199
 #, php-format
 msgid "Receive"
 msgstr ""
@@ -13730,7 +13703,7 @@ msgid ""
 msgstr ""
 
 #: ImportBankTransAnalysis.php:20 ImportBankTransAnalysis.php:34
-#: ImportBankTrans.php:7 includes/MainMenuLinksArray.php:329
+#: ImportBankTrans.php:7 includes/MainMenuLinksArray.php:331
 msgid "Import Bank Transactions"
 msgstr ""
 
@@ -13810,9 +13783,8 @@ msgid "GL Payment"
 msgstr ""
 
 #: ImportBankTransAnalysis.php:164
-#, fuzzy
 msgid "Receipt to Customer Account"
-msgstr "العودة الى العملاء"
+msgstr ""
 
 #: ImportBankTransAnalysis.php:173 ImportBankTransAnalysis.php:175
 #: Z_ImportGLTransactions.php:236
@@ -13880,15 +13852,13 @@ msgid "The MT940 bank statement file cannot be imported and processed"
 msgstr ""
 
 #: ImportBankTrans.php:157
-#, fuzzy
 msgid ""
 "Could not retrieve bank accounts that match with the statement being imported"
-msgstr "لم  أستطيع استرجاع القطاع المطلوب حاول مجددا"
+msgstr ""
 
 #: ImportBankTrans.php:162
-#, fuzzy
 msgid "The account"
-msgstr "مجموعات العضوية"
+msgstr ""
 
 #: ImportBankTrans.php:162
 msgid ""
@@ -13915,114 +13885,98 @@ msgid ""
 msgstr ""
 
 #: ImportBankTrans.php:221
-#, fuzzy
 msgid "Could not update the bank transaction as cleared"
-msgstr "لم  أستطيع استرجاع القطاع المطلوب حاول مجددا"
+msgstr ""
 
 #: ImportBankTrans.php:222
-#, fuzzy
 msgid "The SQL that failed to update the bank transaction as cleared was"
-msgstr "الطلب المستخدم لإضافة مجموعة الحسابات هي"
+msgstr ""
 
 #: ImportBankTrans.php:256
 msgid "Could not insert the customer transaction"
 msgstr ""
 
 #: ImportBankTrans.php:257
-#, fuzzy
 msgid "The SQL used to insert the debtortrans was"
-msgstr "الطلب المستخدم لإسترجاع المعلومات كان"
+msgstr ""
 
 #: ImportBankTrans.php:265
 msgid "Could not update the last payment date and amount paid"
 msgstr ""
 
 #: ImportBankTrans.php:266
-#, fuzzy
 msgid "The SQL that failed to update the debtorsmaster was"
-msgstr "الطلب المستخدم لإسترجاع المعلومات كان"
+msgstr ""
 
 #: ImportBankTrans.php:329
 msgid "Cannot insert a GL entry for the receipt gl analysis because"
 msgstr ""
 
 #: ImportBankTrans.php:330
-#, fuzzy
 msgid "The SQL that failed to insert the gl analysis of this receipt was"
-msgstr "الطلب المستخدم لإضافة مجموعة الحسابات هي"
+msgstr ""
 
 #: ImportBankTrans.php:379
-#, fuzzy
 msgid "Could not insert the supplier transaction"
-msgstr "لم يتمكن الحصول على مجموات العضو لان"
+msgstr ""
 
 #: ImportBankTrans.php:380
-#, fuzzy
 msgid "The SQL used to insert the supptrans was"
-msgstr "الطلب المستخدم لإضافة مجموعة الحسابات هي"
+msgstr ""
 
 #: ImportBankTrans.php:388
 msgid "Could not update the supplier last payment date and amount paid"
 msgstr ""
 
 #: ImportBankTrans.php:389
-#, fuzzy
 msgid ""
 "The SQL that failed to update the supplier with the last payment amount and "
 "date was"
-msgstr "الطلب المستخدم لإضافة مجموعة الحسابات هي"
+msgstr ""
 
 #: ImportBankTrans.php:408
-#, fuzzy
 msgid ""
 "Cannot insert a GL entry for the supplier payment to creditors control "
 "because"
-msgstr "لم يتمكن الحصول على مجموات العضو لان"
+msgstr ""
 
 #: ImportBankTrans.php:409
-#, fuzzy
 msgid "The SQL that failed to insert the creditors control GL entry was"
-msgstr "الطلب المستخدم لإضافة مجموعة الحسابات هي"
+msgstr ""
 
 #: ImportBankTrans.php:428
-#, fuzzy
 msgid "Cannot insert a GL entry for the supplier payment because"
-msgstr "لم يتمكن الحصول على مجموات العضو لان"
+msgstr ""
 
 #: ImportBankTrans.php:429
-#, fuzzy
 msgid ""
 "The SQL that failed to insert the supplier payment GL entry to the bank "
 "account was"
-msgstr "الطلب المستخدم لإضافة مجموعة الحسابات هي"
+msgstr ""
 
 #: ImportBankTrans.php:453
 msgid "Cannot insert a GL entry for the payment gl analysis because"
 msgstr ""
 
 #: ImportBankTrans.php:454
-#, fuzzy
 msgid "The SQL that failed to insert the gl analysis of this payment was"
-msgstr "الطلب المستخدم لإضافة مجموعة الحسابات هي"
+msgstr ""
 
 #: ImportBankTrans.php:475
-#, fuzzy
 msgid "Cannot insert a GL entry for the payment because"
-msgstr "لم يتمكن الحصول على مجموات العضو لان"
+msgstr ""
 
 #: ImportBankTrans.php:476
-#, fuzzy
 msgid "The SQL that failed to insert the payment GL entry was"
-msgstr "الطلب المستخدم لإضافة مجموعة الحسابات هي"
+msgstr ""
 
 #: ImportBankTrans.php:504
 msgid "Imported"
 msgstr ""
 
 #: ImportBankTrans.php:509
-#, fuzzy
 msgid "Could not insert the bank transaction"
-msgstr "لم  أستطيع استرجاع القطاع المطلوب حاول مجددا"
+msgstr ""
 
 #: ImportBankTrans.php:516
 msgid "Completed the importing of analysed bank transactions"
@@ -14126,9 +14080,8 @@ msgid "Payment Entry"
 msgstr ""
 
 #: InternalStockCategoriesByRole.php:24
-#, fuzzy
 msgid "The Selected type cannot contain any of the following characters"
-msgstr "لا يمكن ان يحتوى اسم العضوية على الحرف"
+msgstr ""
 
 #: InternalStockCategoriesByRole.php:40
 msgid ""
@@ -14175,9 +14128,8 @@ msgid "for user role"
 msgstr ""
 
 #: InternalStockCategoriesByRole.php:113
-#, fuzzy
 msgid "Select User Role"
-msgstr "العودة الى العملاء"
+msgstr ""
 
 #: InternalStockCategoriesByRole.php:147
 msgid "Stock Categories available as internal for role"
@@ -14188,46 +14140,49 @@ msgid "Internal Stock Categories Allowed to user role"
 msgstr ""
 
 #: InternalStockCategoriesByRole.php:184
-#, fuzzy, php-format
+#, php-format
 msgid "Are you sure you wish to delete this internal stock category code?"
-msgstr "حدث خطأ ما اثناء حذف مجموعة الحسابات"
+msgstr ""
 
 #: InternalStockCategoriesByRole.php:201
 msgid "Select Stock Category Code"
 msgstr ""
 
-#: InternalStockRequestAuthorisation.php:7 includes/MainMenuLinksArray.php:203
+#: InternalStockRequestAuthorisation.php:7 includes/MainMenuLinksArray.php:205
 msgid "Authorise Internal Stock Requests"
 msgstr ""
 
-#: InternalStockRequestAuthorisation.php:54
+#: InternalStockRequestAuthorisation.php:67
 #: InternalStockRequestFulfill.php:283
-#, fuzzy
 msgid "Request Number"
-msgstr "رقم القطاع"
+msgstr ""
 
-#: InternalStockRequestAuthorisation.php:55
+#: InternalStockRequestAuthorisation.php:68
 #: InternalStockRequestFulfill.php:284 InternalStockRequest.php:190
 msgid "Department"
 msgstr ""
 
-#: InternalStockRequestAuthorisation.php:56
+#: InternalStockRequestAuthorisation.php:69
 #: InternalStockRequestFulfill.php:285
 msgid "Location Of Stock"
 msgstr ""
 
-#: InternalStockRequestAuthorisation.php:57
+#: InternalStockRequestAuthorisation.php:70
 #: InternalStockRequestFulfill.php:286
 msgid "Requested Date"
 msgstr ""
 
-#: InternalStockRequestAuthorisation.php:59
+#: InternalStockRequestAuthorisation.php:72
 msgid "Authorise"
 msgstr ""
 
-#: InternalStockRequestAuthorisation.php:89
+#: InternalStockRequestAuthorisation.php:103
 #: InternalStockRequestFulfill.php:319 PO_AuthoriseMyOrders.php:113
 msgid "Product"
+msgstr ""
+
+#: InternalStockRequestAuthorisation.php:106
+msgid "Cancel Line"
 msgstr ""
 
 #: InternalStockRequestFulfill.php:7 InternalStockRequestFulfill.php:14
@@ -14398,7 +14353,7 @@ msgstr ""
 #: StockLocTransfer.php:244 StockLocTransferReceive.php:433
 #: StockLocTransferReceive.php:527 StockTransfers.php:29
 #: StockTransfers.php:460 StockUsage.php:28 SuppCreditGRNs.php:19
-#: SuppInvGRNs.php:16 includes/MainMenuLinksArray.php:196
+#: SuppInvGRNs.php:16 includes/MainMenuLinksArray.php:198
 msgid "Dispatch"
 msgstr ""
 
@@ -14407,9 +14362,8 @@ msgid "Edit the Request Line"
 msgstr ""
 
 #: InternalStockRequest.php:150
-#, fuzzy
 msgid "Line number"
-msgstr "رقم القطاع"
+msgstr ""
 
 #: InternalStockRequest.php:162 UnitsOfMeasure.php:235
 msgid "Unit of Measure"
@@ -14444,9 +14398,8 @@ msgid "Details of Items Requested"
 msgstr ""
 
 #: InternalStockRequest.php:269
-#, fuzzy
 msgid "Line Number"
-msgstr "رقم القطاع"
+msgstr ""
 
 #: InternalStockRequest.php:300 MailingGroupMaintenance.php:145
 #: MRPCreateDemands.php:280 PricesByCost.php:295 ReorderLevelLocation.php:191
@@ -14540,7 +14493,7 @@ msgstr ""
 msgid "Add to Requisition"
 msgstr ""
 
-#: InventoryPlanning.php:37 includes/MainMenuLinksArray.php:228
+#: InventoryPlanning.php:37 includes/MainMenuLinksArray.php:230
 msgid "Inventory Planning Report"
 msgstr ""
 
@@ -14780,7 +14733,7 @@ msgstr ""
 msgid "Parts With Quantities"
 msgstr ""
 
-#: InventoryQuantities.php:84 includes/MainMenuLinksArray.php:223
+#: InventoryQuantities.php:84 includes/MainMenuLinksArray.php:225
 msgid "Inventory Quantities"
 msgstr ""
 
@@ -14843,7 +14796,7 @@ msgid "The inventory valuation could not be retrieved by the SQL because"
 msgstr ""
 
 #: InventoryValuation.php:88 MailInventoryValuation.php:51
-#: MailInventoryValuation.php:230 includes/MainMenuLinksArray.php:226
+#: MailInventoryValuation.php:230 includes/MainMenuLinksArray.php:228
 msgid "Inventory Valuation Report"
 msgstr ""
 
@@ -14950,9 +14903,8 @@ msgid "Review all defined label records"
 msgstr ""
 
 #: Labels.php:431
-#, fuzzy
 msgid "Label Description"
-msgstr "وصف القطاع"
+msgstr ""
 
 #: Labels.php:435
 msgid "Label Paper Size"
@@ -14979,9 +14931,8 @@ msgid "Left Margin"
 msgstr ""
 
 #: Labels.php:536
-#, fuzzy
 msgid "Could not get the label fields because"
-msgstr "لم يتم التحقق من وجود المجموعة بسبب"
+msgstr ""
 
 #: Labels.php:544
 msgid "Field"
@@ -15005,9 +14956,8 @@ msgid "Bar-code"
 msgstr ""
 
 #: Labels.php:572 Labels.php:610
-#, fuzzy
 msgid "Item Descrption"
-msgstr "وصف القطاع"
+msgstr ""
 
 #: Labels.php:575 Labels.php:577 Labels.php:611
 msgid "Item Barcode"
@@ -15295,7 +15245,7 @@ msgstr ""
 msgid "Allow internal requests?"
 msgstr ""
 
-#: MailingGroupMaintenance.php:3 includes/MainMenuLinksArray.php:449
+#: MailingGroupMaintenance.php:3 includes/MainMenuLinksArray.php:451
 msgid "Mailing Group Maintenance"
 msgstr ""
 
@@ -15310,23 +15260,20 @@ msgid "Failed to add new mail group"
 msgstr ""
 
 #: MailingGroupMaintenance.php:36 MailingGroupMaintenance.php:115
-#, fuzzy
 msgid ""
 "The User Id should be set and must be less than 21 and cannot contains "
 "illegal characters"
-msgstr "لا يمكن ان يحتوى اسم العضوية على الحرف"
+msgstr ""
 
 #: MailingGroupMaintenance.php:43
-#, fuzzy
 msgid "The Group Id must be integer"
-msgstr "يجب ان يكون القسم فى الحساب عدد صحيح"
+msgstr ""
 
 #: MailingGroupMaintenance.php:51
-#, fuzzy
 msgid ""
 "The Group name should be set and must be less than 100 characters and cannot "
 "contains illegal characters"
-msgstr "لا يمكن ان يحتوى اسم العضوية على الحرف"
+msgstr ""
 
 #: MailingGroupMaintenance.php:57
 msgid "Failed to add users to mail group"
@@ -15337,16 +15284,14 @@ msgid "Failed to delete the mail group which id is "
 msgstr ""
 
 #: MailingGroupMaintenance.php:71
-#, fuzzy
 msgid "The group id must be numeric"
-msgstr "يجب ان يكون القسم فى الحساب عدد صحيح"
+msgstr ""
 
 #: MailingGroupMaintenance.php:87 MailingGroupMaintenance.php:107
 #: MailingGroupMaintenance.php:125
-#, fuzzy
 msgid ""
 "The Group Name should be less than 100 and cannot contains illegal characters"
-msgstr "لا يمكن ان يحتوى اسم العضوية على الحرف"
+msgstr ""
 
 #: MailingGroupMaintenance.php:93
 msgid "The page must be called with a group id"
@@ -15357,23 +15302,20 @@ msgid "Mail Group"
 msgstr ""
 
 #: MailingGroupMaintenance.php:167
-#, fuzzy
 msgid "Failed to retrieve mail groups information"
-msgstr "الطلب المستخدم لإسترجاع المعلومات كان"
+msgstr ""
 
 #: MailingGroupMaintenance.php:179
-#, fuzzy
 msgid "Are you sure you wish to delete this group?"
-msgstr "حدث خطأ ما اثناء حذف مجموعة الحسابات"
+msgstr ""
 
 #: MailingGroupMaintenance.php:193
 msgid "Failed to retrieve userid"
 msgstr ""
 
 #: MailingGroupMaintenance.php:206
-#, fuzzy
 msgid "Failed to retrieve user information"
-msgstr "الطلب المستخدم لإسترجاع المعلومات كان"
+msgstr ""
 
 #: MailingGroupMaintenance.php:211
 msgid "Current Mail Group"
@@ -15392,9 +15334,8 @@ msgid "Available Users"
 msgstr ""
 
 #: MailingGroupMaintenance.php:238
-#, fuzzy
 msgid "Are you sure you wish to remove this user from this mail group?"
-msgstr "حدث خطأ ما اثناء حذف مجموعة الحسابات"
+msgstr ""
 
 #: MailingGroupMaintenance.php:238 SalesCategories.php:536
 #: StockAdjustments.php:477 SupplierTenders.php:354 TaxGroups.php:380
@@ -15427,9 +15368,8 @@ msgid "Print Inventory Valuation"
 msgstr ""
 
 #: MailInventoryValuation.php:241
-#, fuzzy
 msgid "The Inventory valuation report has been mailed"
-msgstr "تم حذف المجموعة"
+msgstr ""
 
 #: MailInventoryValuation.php:249
 msgid "There are errors lead to mails not sent"
@@ -15489,9 +15429,8 @@ msgid "Fixed Asset Maintenance Tasks"
 msgstr ""
 
 #: MaintenanceTasks.php:19 MaintenanceTasks.php:45
-#, fuzzy
 msgid "The days before a task falls due is expected to be a postive"
-msgstr "الطلب المستخدم لإسترجاع المعلومات كان"
+msgstr ""
 
 #: MaintenanceTasks.php:33 PO_AuthorisationLevels.php:50
 msgid "The authentication details cannot be inserted because"
@@ -15532,18 +15471,16 @@ msgid "No Manager Set"
 msgstr ""
 
 #: MaintenanceTasks.php:119
-#, fuzzy
 msgid "Are you sure you wish to delete this maintenance task?"
-msgstr "حدث خطأ ما اثناء حذف مجموعة الحسابات"
+msgstr ""
 
 #: MaintenanceTasks.php:172
 msgid "Asset to Maintain"
 msgstr ""
 
 #: MaintenanceTasks.php:187
-#, fuzzy
 msgid "Task Description"
-msgstr "وصف القطاع"
+msgstr ""
 
 #: MaintenanceTasks.php:192
 msgid "Days Before Task Due"
@@ -15586,15 +15523,14 @@ msgid "Now Complete"
 msgstr ""
 
 #: MaintenanceUserSchedule.php:76
-#, fuzzy
 msgid "Are you sure you wish to mark this maintenance task as completed?"
-msgstr "حدث خطأ ما اثناء حذف مجموعة الحسابات"
+msgstr ""
 
 #: MaintenanceUserSchedule.php:76
 msgid "Mark Completed"
 msgstr ""
 
-#: Manufacturers.php:8 includes/MainMenuLinksArray.php:266
+#: Manufacturers.php:8 includes/MainMenuLinksArray.php:268
 msgid "Brands Maintenance"
 msgstr ""
 
@@ -15603,29 +15539,24 @@ msgid "manufacturer record because"
 msgstr ""
 
 #: Manufacturers.php:78
-#, fuzzy
 msgid "The SQL used to update the manufacturer record was"
-msgstr "الطلب المستخدم لإضافة مجموعة الحسابات هي"
+msgstr ""
 
 #: Manufacturers.php:82
-#, fuzzy
 msgid "The manufacturer record has been updated"
-msgstr "تم حذف المجموعة"
+msgstr ""
 
 #: Manufacturers.php:97
-#, fuzzy
 msgid "An error occurred inserting the new manufacturer record because"
-msgstr "حدث خطأ ما اثناء اضافة المجموعة"
+msgstr ""
 
 #: Manufacturers.php:98
-#, fuzzy
 msgid "The SQL used to insert the manufacturer record was"
-msgstr "الطلب المستخدم لإضافة مجموعة الحسابات هي"
+msgstr ""
 
 #: Manufacturers.php:133
-#, fuzzy
 msgid "The new manufacturer record has been added"
-msgstr "تم حذف المجموعة"
+msgstr ""
 
 #: Manufacturers.php:153
 msgid ""
@@ -15654,9 +15585,8 @@ msgid "Brand Code"
 msgstr ""
 
 #: Manufacturers.php:193 Manufacturers.php:292
-#, fuzzy
 msgid "Brand Name"
-msgstr "إسم المجموعة"
+msgstr ""
 
 #: Manufacturers.php:194 Manufacturers.php:296
 msgid "Brand URL"
@@ -15667,9 +15597,9 @@ msgid "Brands Image"
 msgstr ""
 
 #: Manufacturers.php:218
-#, fuzzy, php-format
+#, php-format
 msgid "Are you sure you wish to delete this brand?"
-msgstr "حدث خطأ ما اثناء حذف مجموعة الحسابات"
+msgstr ""
 
 #: Manufacturers.php:252 SalesCategories.php:510
 msgid "Brand"
@@ -15939,7 +15869,7 @@ msgstr ""
 msgid "Or Delete Record"
 msgstr ""
 
-#: MRPDemandTypes.php:6 includes/MainMenuLinksArray.php:508
+#: MRPDemandTypes.php:6 includes/MainMenuLinksArray.php:510
 msgid "MRP Demand Types"
 msgstr ""
 
@@ -16460,7 +16390,7 @@ msgstr ""
 msgid "MRP Shortages Report"
 msgstr ""
 
-#: MRPShortages.php:27 includes/MainMenuLinksArray.php:294
+#: MRPShortages.php:27 includes/MainMenuLinksArray.php:296
 msgid "MRP Shortages"
 msgstr ""
 
@@ -16591,9 +16521,8 @@ msgid "Number Of Days"
 msgstr ""
 
 #: NoSalesItems.php:84
-#, fuzzy
 msgid "Enter the number of days to examine the sales for"
-msgstr "قسم الرقم يجب ان يكون عدد صحيح"
+msgstr ""
 
 #: NoSalesItems.php:188
 msgid "Location QOH"
@@ -16612,7 +16541,7 @@ msgid "There are no offers outstanding that you are authorised to deal with"
 msgstr ""
 
 #: OffersReceived.php:41 OffersReceived.php:42 OffersReceived.php:48
-#: includes/MainMenuLinksArray.php:136 includes/MainMenuLinksArray.php:158
+#: includes/MainMenuLinksArray.php:138 includes/MainMenuLinksArray.php:160
 msgid "Select Supplier"
 msgstr ""
 
@@ -16824,7 +16753,7 @@ msgid "No outstanding GRNs valuation details retrieved"
 msgstr ""
 
 #: OutstandingGRNs.php:77 OutstandingGRNs.php:254
-#: includes/MainMenuLinksArray.php:144
+#: includes/MainMenuLinksArray.php:146
 msgid "Outstanding GRNs Report"
 msgstr ""
 
@@ -16940,7 +16869,7 @@ msgid "Supplier Number"
 msgstr ""
 
 #: PaymentAllocations.php:65 PaymentAllocations.php:66 Payments.php:594
-#: Payments.php:732 PrintCustStatements.php:403
+#: Payments.php:750 PrintCustStatements.php:403
 msgid "Payment"
 msgstr ""
 
@@ -16948,14 +16877,13 @@ msgstr ""
 msgid "Total Payment"
 msgstr ""
 
-#: PaymentMethods.php:7 includes/MainMenuLinksArray.php:477
+#: PaymentMethods.php:7 includes/MainMenuLinksArray.php:479
 msgid "Payment Methods"
 msgstr ""
 
 #: PaymentMethods.php:39
-#, fuzzy
 msgid "The payment method cannot contain illegal characters"
-msgstr "لا يمكن ان يحتوى اسم العضوية على الحرف"
+msgstr ""
 
 #: PaymentMethods.php:45
 msgid "The payment method may not be empty."
@@ -17051,7 +16979,7 @@ msgstr ""
 msgid "A bank account must be selected to make this payment from"
 msgstr ""
 
-#: Payments.php:55 Payments.php:56 includes/MainMenuLinksArray.php:327
+#: Payments.php:55 Payments.php:56 includes/MainMenuLinksArray.php:329
 msgid "Bank Account Payments Entry"
 msgstr ""
 
@@ -17186,120 +17114,119 @@ msgstr ""
 msgid "The Cheque/Voucher number has already been used"
 msgstr ""
 
-#: Payments.php:649 Payments.php:661
+#: Payments.php:649 Payments.php:679
 msgid "This GL analysis item could not be added"
 msgstr ""
 
-#: Payments.php:661
+#: Payments.php:679
 msgid "The cheque number has already been used"
 msgstr ""
 
-#: Payments.php:713
+#: Payments.php:731
 msgid "SQL used to retrieve the bank account name was"
 msgstr ""
 
-#: Payments.php:722
+#: Payments.php:740
 msgid "is not set up as a bank account with a valid general ledger account"
 msgstr ""
 
-#: Payments.php:739
+#: Payments.php:757
 msgid "from the"
 msgstr ""
 
-#: Payments.php:761
+#: Payments.php:779
 msgid "Select the bank account that the payment has been made from"
 msgstr ""
 
-#: Payments.php:786
+#: Payments.php:804
 msgid "Date Paid"
 msgstr ""
 
-#: Payments.php:793
+#: Payments.php:811
 msgid "Currency of Payment"
 msgstr ""
 
-#: Payments.php:801
+#: Payments.php:819
 msgid ""
 "No currencies are defined yet. Payments cannot be entered until a currency "
 "is defined"
 msgstr ""
 
-#: Payments.php:812
+#: Payments.php:830
 msgid ""
 "The transaction currency does not need to be the same as the bank account "
 "currency"
 msgstr ""
 
-#: Payments.php:818 Suppliers.php:808 Suppliers.php:1015
+#: Payments.php:836 Suppliers.php:808 Suppliers.php:1015
 msgid "Supplier Currency"
 msgstr ""
 
-#: Payments.php:850
+#: Payments.php:868
 msgid "Payment Exchange Rate"
 msgstr ""
 
-#: Payments.php:851 Payments.php:852
+#: Payments.php:869 Payments.php:870
 msgid ""
 "The exchange rate between the currency of the bank account currency and the "
 "currency of the payment"
 msgstr ""
 
-#: Payments.php:873
+#: Payments.php:891
 msgid "Payment type"
 msgstr ""
 
-#: Payments.php:895
+#: Payments.php:913
 msgid "Cheque Number"
 msgstr ""
 
-#: Payments.php:896
+#: Payments.php:914
 msgid "(if using pre-printed stationery)"
 msgstr ""
 
-#: Payments.php:925
+#: Payments.php:943
 msgid "General Ledger Payment Analysis Entry"
 msgstr ""
 
-#: Payments.php:952 Payments.php:957
+#: Payments.php:970 Payments.php:975
 msgid "Enter GL Account Manually"
 msgstr ""
 
-#: Payments.php:953 Payments.php:958
-#, fuzzy
+#: Payments.php:971 Payments.php:976
 msgid "The account code"
-msgstr "مجموعات العضوية"
+msgstr ""
 
-#: Payments.php:953 Payments.php:958
+#: Payments.php:971 Payments.php:976
 msgid "doesnt exist"
 msgstr ""
 
-#: Payments.php:963
+#: Payments.php:981
 msgid "Select GL Group"
 msgstr ""
 
-#: Payments.php:974
+#: Payments.php:992
 msgid "No General ledger account groups have been set up yet"
 msgstr ""
 
-#: Payments.php:974 Payments.php:1010
+#: Payments.php:992 Payments.php:1028
 msgid ""
 "payments cannot be analysed against GL accounts until the GL accounts are "
 "set up"
 msgstr ""
 
-#: Payments.php:1024
+#: Payments.php:1042
 msgid "Cheque/Voucher Number"
 msgstr ""
 
-#: Payments.php:1086
+#: Payments.php:1104
 msgid "Are you sure you wish to delete this payment analysis item?"
 msgstr ""
 
-#: Payments.php:1099 Payments.php:1122
+#: Payments.php:1117 Payments.php:1140
 msgid "Accept and Process Payment"
 msgstr ""
 
-#: Payments.php:1108
+#: Payments.php:1126
 msgid "Amount of Payment"
 msgstr ""
 
@@ -17434,9 +17361,8 @@ msgid "Terms Description"
 msgstr ""
 
 #: PaymentTerms.php:286
-#, fuzzy
 msgid "A description of the payment terms is required"
-msgstr "لا يمكن ان يحتوى اسم العضوية على الحرف"
+msgstr ""
 
 #: PaymentTerms.php:289
 msgid "Due After A Given No. Of Days"
@@ -17456,14 +17382,12 @@ msgstr ""
 
 #: PcAssignCashToTab.php:49 PcAuthorizeExpenses.php:39
 #: PcClaimExpensesFromTab.php:51
-#, fuzzy
 msgid "The number of days must be a positive number"
-msgstr "قسم الرقم يجب ان يكون عدد صحيح"
+msgstr ""
 
 #: PcAssignCashToTab.php:68
-#, fuzzy
 msgid "The Amount must be input"
-msgstr "يجب ان يكون القسم فى الحساب عدد صحيح"
+msgstr ""
 
 #: PcAssignCashToTab.php:79
 msgid ""
@@ -17574,9 +17498,8 @@ msgid "You have not selected an expense to claim on this tab"
 msgstr ""
 
 #: PcClaimExpensesFromTab.php:70
-#, fuzzy
 msgid "The amount must be greater than 0"
-msgstr "يجب ان يكون القسم فى الحساب عدد صحيح"
+msgstr ""
 
 #: PcClaimExpensesFromTab.php:82 PcClaimExpensesFromTab.php:109
 msgid "The Expense Claim on Tab"
@@ -17648,17 +17571,15 @@ msgid "The Expense code must be twenty characters or less long"
 msgstr ""
 
 #: PcExpenses.php:61
-#, fuzzy
 msgid ""
 "The Expense code cannot contain any of the following characters \" ' - &amp;"
-msgstr "لا يمكن ان يحتوى اسم العضوية على الحرف"
+msgstr ""
 
 #: PcExpenses.php:67
-#, fuzzy
 msgid ""
 "The Expense description cannot contain any of the following characters \" ' "
 "- &amp;"
-msgstr "لا يمكن ان يحتوى اسم العضوية على الحرف"
+msgstr ""
 
 #: PcExpenses.php:73 PcTypeTabs.php:52
 msgid "The tab code must be Fifty characters or less long"
@@ -18006,10 +17927,9 @@ msgid "The tab code must be twenty characters or less long"
 msgstr ""
 
 #: PcTypeTabs.php:49
-#, fuzzy
 msgid ""
 "The petty cash tab type code cannot contain any of the illegal characters"
-msgstr "لا يمكن ان يحتوى اسم العضوية على الحرف"
+msgstr ""
 
 #: PcTypeTabs.php:63
 msgid "The Tabs type"
@@ -18874,9 +18794,8 @@ msgid "Effective Date Range"
 msgstr ""
 
 #: PDFPriceList.php:368
-#, fuzzy
 msgid "Product Image / Description"
-msgstr "وصف القطاع"
+msgstr ""
 
 #: PDFPriceList.php:376 includes/PDFLowGPPageHeader.inc:49
 #: includes/PDFLowGPPageHeader.inc:50
@@ -18908,7 +18827,7 @@ msgstr ""
 msgid "Price_Labels"
 msgstr ""
 
-#: PDFPrintLabel.php:272 includes/MainMenuLinksArray.php:218
+#: PDFPrintLabel.php:272 includes/MainMenuLinksArray.php:220
 msgid "Print Price Labels"
 msgstr ""
 
@@ -19067,7 +18986,7 @@ msgstr ""
 msgid "Remittance_Advices"
 msgstr ""
 
-#: PDFRemittanceAdvice.php:130 includes/MainMenuLinksArray.php:143
+#: PDFRemittanceAdvice.php:130 includes/MainMenuLinksArray.php:145
 msgid "Remittance Advices"
 msgstr ""
 
@@ -19088,7 +19007,7 @@ msgid "This Payment"
 msgstr ""
 
 #: PDFSellThroughSupportClaim.php:6 PDFSellThroughSupportClaim.php:164
-#: includes/MainMenuLinksArray.php:66
+#: includes/MainMenuLinksArray.php:67
 msgid "Sell Through Support Claims Report"
 msgstr ""
 
@@ -19521,9 +19440,8 @@ msgid ""
 msgstr ""
 
 #: PO_Header.php:109
-#, fuzzy
 msgid "See shipment number"
-msgstr "رقم القطاع"
+msgstr ""
 
 #: PO_Header.php:114 ReverseGRN.php:136
 msgid "by"
@@ -19702,7 +19620,7 @@ msgstr ""
 msgid "Receive this order"
 msgstr ""
 
-#: PO_Header.php:820 includes/MainMenuLinksArray.php:164
+#: PO_Header.php:820 includes/MainMenuLinksArray.php:166
 msgid "New Purchase Order"
 msgstr ""
 
@@ -20011,19 +19929,16 @@ msgid "The purchasing data for"
 msgstr ""
 
 #: PO_Items.php:605 PurchaseByPrefSupplier.php:55
-#, fuzzy
 msgid "The SQL used to retrieve the purchasing data but failed was"
-msgstr "الطلب المستخدم لإسترجاع المعلومات كان"
+msgstr ""
 
 #: PO_Items.php:621 PurchaseByPrefSupplier.php:72
-#, fuzzy
 msgid "Could not retrieve the supplier discounts applicable to the item"
-msgstr "لم  أستطيع استرجاع القطاع المطلوب حاول مجددا"
+msgstr ""
 
 #: PO_Items.php:622 PurchaseByPrefSupplier.php:73
-#, fuzzy
 msgid "The SQL used to retrive the supplier discounts that failed was"
-msgstr "الطلب المستخدم لإسترجاع المعلومات كان"
+msgstr ""
 
 #: PO_Items.php:629 PurchaseByPrefSupplier.php:80
 msgid "Taken accumulated supplier percentage discounts of"
@@ -20169,9 +20084,8 @@ msgid "Go to end of list"
 msgstr ""
 
 #: PO_Items.php:1233
-#, fuzzy
 msgid "Could not retrieve the purchasing data for the item"
-msgstr "لم  أستطيع استرجاع القطاع المطلوب حاول مجددا"
+msgstr ""
 
 #: PO_OrderDetails.php:8
 msgid "Reviewing Purchase Order Number"
@@ -20295,7 +20209,7 @@ msgid "Select a Purchase Order Number to Print before calling this page"
 msgstr ""
 
 #: PO_PDFPurchOrder.php:20 PO_PDFPurchOrder.php:125
-#: includes/MainMenuLinksArray.php:183
+#: includes/MainMenuLinksArray.php:185
 msgid "Purchase Order Inquiry"
 msgstr ""
 
@@ -20679,7 +20593,7 @@ msgstr ""
 
 #: PO_SelectPurchOrder.php:9 SelectCompletedOrder.php:507
 #: SupplierCredit.php:204 SupplierCredit.php:298 SupplierInvoice.php:557
-#: SupplierInvoice.php:642 includes/MainMenuLinksArray.php:165
+#: SupplierInvoice.php:642 includes/MainMenuLinksArray.php:167
 msgid "Purchase Orders"
 msgstr ""
 
@@ -20704,19 +20618,16 @@ msgid "at which the price will apply is 0 or less than 0"
 msgstr ""
 
 #: PriceMatrix.php:37
-#, fuzzy
 msgid "The price must be entered as a positive number"
-msgstr "قسم الرقم يجب ان يكون عدد صحيح"
+msgstr ""
 
 #: PriceMatrix.php:58
-#, fuzzy
 msgid "The price matrix record has been added"
-msgstr "تم حذف المجموعة"
+msgstr ""
 
 #: PriceMatrix.php:74
-#, fuzzy
 msgid "The price matrix record has been deleted"
-msgstr "تم حذف المجموعة"
+msgstr ""
 
 #: PriceMatrix.php:128
 msgid ""
@@ -20725,9 +20636,8 @@ msgid ""
 msgstr ""
 
 #: PriceMatrix.php:153
-#, fuzzy
 msgid "Price Matrix Category"
-msgstr "العودة الى العملاء"
+msgstr ""
 
 #: PriceMatrix.php:155 SelectProduct.php:139 SpecialOrder.php:630
 #: includes/PDFLowGPPageHeader.inc:47
@@ -21334,9 +21244,8 @@ msgid "ten"
 msgstr ""
 
 #: PrintCheque.php:151
-#, fuzzy
 msgid "eleven"
-msgstr "حذف"
+msgstr ""
 
 #: PrintCheque.php:152
 msgid "twelve"
@@ -21419,9 +21328,8 @@ msgid "There was a problem retrieving the order details for Order Number"
 msgstr ""
 
 #: PrintCustOrder_generic.php:218
-#, fuzzy
 msgid "Could not retrieve the components of the ordered assembly item"
-msgstr "لم  أستطيع استرجاع القطاع المطلوب حاول مجددا"
+msgstr ""
 
 #: PrintCustOrder_generic.php:220
 msgid "Assembly Components:-"
@@ -21480,7 +21388,7 @@ msgid ""
 msgstr ""
 
 #: PrintCustStatements.php:84 PrintCustStatements.php:418
-#: includes/MainMenuLinksArray.php:103
+#: includes/MainMenuLinksArray.php:105
 msgid "Print Statements"
 msgstr ""
 
@@ -21610,9 +21518,8 @@ msgid "TOTAL INVOICE"
 msgstr ""
 
 #: PrintCustTrans.php:467
-#, fuzzy
 msgid "Account No:"
-msgstr "مجموعات العضوية"
+msgstr ""
 
 #: PrintCustTrans.php:477 PrintCustTrans.php:1082
 #: PrintCustTransPortrait.php:504 PrintCustTransPortrait.php:1146
@@ -21636,7 +21543,7 @@ msgid "Print Invoices or Credit Notes (Landscape Mode)"
 msgstr ""
 
 #: PrintCustTrans.php:539 PrintCustTransPortrait.php:567
-#: includes/MainMenuLinksArray.php:102
+#: includes/MainMenuLinksArray.php:104
 msgid "Print Invoices or Credit Notes"
 msgstr ""
 
@@ -21808,9 +21715,8 @@ msgid ""
 msgstr ""
 
 #: PurchaseByPrefSupplier.php:295
-#, fuzzy
 msgid "has been created."
-msgstr "تم حذف المجموعة"
+msgstr ""
 
 #: PurchaseByPrefSupplier.php:295
 msgid "Total order value of"
@@ -21837,9 +21743,8 @@ msgid "Show Items"
 msgstr ""
 
 #: PurchaseByPrefSupplier.php:399
-#, fuzzy
 msgid "Supplier Ordering"
-msgstr "وصف القطاع"
+msgstr ""
 
 #: PurchaseByPrefSupplier.php:401
 msgid ""
@@ -21847,18 +21752,16 @@ msgid ""
 msgstr ""
 
 #: PurchaseByPrefSupplier.php:414
-#, fuzzy
 msgid "Bin"
-msgstr "رقم القطاع"
+msgstr ""
 
 #: PurchaseByPrefSupplier.php:417
 msgid "Supp Ords"
 msgstr ""
 
 #: PurchaseByPrefSupplier.php:419 PurchaseByPrefSupplier.php:422
-#, fuzzy
 msgid "Last"
-msgstr "إسم المجموعة"
+msgstr ""
 
 #: PurchaseByPrefSupplier.php:420 PurchaseByPrefSupplier.php:421
 #: PurchaseByPrefSupplier.php:422
@@ -21967,11 +21870,10 @@ msgid "No changes will be made to the database"
 msgstr ""
 
 #: PurchData.php:89
-#, fuzzy
 msgid ""
 "The date this purchase price is to take effect from must be entered in the "
 "format"
-msgstr "الطلب المستخدم لإسترجاع المعلومات كان"
+msgstr ""
 
 #: PurchData.php:113
 msgid ""
@@ -22044,14 +21946,12 @@ msgid ""
 msgstr ""
 
 #: PurchData.php:191
-#, fuzzy
 msgid "Could not insert a new supplier discount entry because"
-msgstr "لم يتمكن الحصول على مجموات العضو لان"
+msgstr ""
 
 #: PurchData.php:192
-#, fuzzy
 msgid "The SQL used to insert the supplier discount entry that failed was"
-msgstr "الطلب المستخدم لإضافة مجموعة الحسابات هي"
+msgstr ""
 
 #: PurchData.php:194
 msgid "A new supplier purchasing discount record was entered successfully"
@@ -22258,14 +22158,12 @@ msgid "The supplier discounts could not be retrieved because"
 msgstr ""
 
 #: PurchData.php:694
-#, fuzzy
 msgid "The SQL to retrieve supplier discounts for this item that failed was"
-msgstr "الطلب المستخدم لإسترجاع المعلومات كان"
+msgstr ""
 
 #: PurchData.php:699
-#, fuzzy
 msgid "Discount Name"
-msgstr "إسم المجموعة"
+msgstr ""
 
 #: PurchData.php:701 SellThroughSupport.php:264
 msgid "Percent"
@@ -22577,14 +22475,13 @@ msgid "At All Locations"
 msgstr ""
 
 #: ReorderLevelLocation.php:75 ReorderLevel.php:60
-#: includes/MainMenuLinksArray.php:224
+#: includes/MainMenuLinksArray.php:226
 msgid "Reorder Level"
 msgstr ""
 
 #: ReorderLevelLocation.php:76 StockStatus.php:92
-#, fuzzy
 msgid "Bin Location"
-msgstr "رقم القطاع"
+msgstr ""
 
 #: ReorderLevelLocation.php:141 ReorderLevel.php:195
 msgid ""
@@ -22683,7 +22580,7 @@ msgstr ""
 msgid "Reprint"
 msgstr ""
 
-#: ReverseGRN.php:9 includes/MainMenuLinksArray.php:200
+#: ReverseGRN.php:9 includes/MainMenuLinksArray.php:202
 msgid "Reverse Goods Received"
 msgstr ""
 
@@ -22696,7 +22593,8 @@ msgid "Could not retrieve the supplier name for"
 msgstr ""
 
 #: ReverseGRN.php:31 SalesByTypePeriodInquiry.php:356
-#: SalesTopItemsInquiry.php:225 SelectSalesOrder.php:402
+#: SalesTopCustomersInquiry.php:218 SalesTopItemsInquiry.php:225
+#: SelectSalesOrder.php:402 TopCustomers.php:217
 #: includes/MainMenuLinksArray.php:22
 msgid "Sales"
 msgstr ""
@@ -23246,9 +23144,8 @@ msgid "The deletion of the report column failed because"
 msgstr ""
 
 #: SalesAnalRepts.php:257
-#, fuzzy
 msgid "The SQL used to delete the report column was"
-msgstr "الطلب المستخدم لإسترجاع المعلومات كان"
+msgstr ""
 
 #: SalesAnalRepts.php:262
 msgid "The deletion of the report heading failed because"
@@ -23375,43 +23272,50 @@ msgid "Sales Report"
 msgstr ""
 
 #: SalesByTypePeriodInquiry.php:11 SalesCategoryPeriodInquiry.php:10
-#: SalesTopItemsInquiry.php:10
+#: SalesTopCustomersInquiry.php:10 SalesTopItemsInquiry.php:10
+#: TopCustomers.php:10
 msgid "Select the parameters for the report"
 msgstr ""
 
 #: SalesByTypePeriodInquiry.php:30 SalesCategoryPeriodInquiry.php:23
-#: SalesTopItemsInquiry.php:26
-#, fuzzy
+#: SalesTopCustomersInquiry.php:24 SalesTopItemsInquiry.php:26
+#: TopCustomers.php:24
 msgid "Date Selection"
-msgstr "قسم"
+msgstr ""
 
 #: SalesByTypePeriodInquiry.php:33 SalesCategoryPeriodInquiry.php:26
-#: SalesTopItemsInquiry.php:29
+#: SalesTopCustomersInquiry.php:27 SalesTopItemsInquiry.php:29
+#: TopCustomers.php:27
 msgid "Custom Range"
 msgstr ""
 
 #: SalesByTypePeriodInquiry.php:41 SalesCategoryPeriodInquiry.php:34
-#: SalesTopItemsInquiry.php:37
+#: SalesTopCustomersInquiry.php:36 SalesTopItemsInquiry.php:37
+#: TopCustomers.php:35
 msgid "This Week"
 msgstr ""
 
 #: SalesByTypePeriodInquiry.php:49 SalesCategoryPeriodInquiry.php:42
-#: SalesTopItemsInquiry.php:45
+#: SalesTopCustomersInquiry.php:44 SalesTopItemsInquiry.php:45
+#: TopCustomers.php:43
 msgid "This Month"
 msgstr ""
 
 #: SalesByTypePeriodInquiry.php:57 SalesCategoryPeriodInquiry.php:50
-#: SalesTopItemsInquiry.php:53
+#: SalesTopCustomersInquiry.php:52 SalesTopItemsInquiry.php:53
+#: TopCustomers.php:51
 msgid "This Quarter"
 msgstr ""
 
 #: SalesByTypePeriodInquiry.php:70 SalesCategoryPeriodInquiry.php:64
-#: SalesTopItemsInquiry.php:67 SuppPriceList.php:312
+#: SalesTopCustomersInquiry.php:66 SalesTopItemsInquiry.php:67
+#: SuppPriceList.php:312 TopCustomers.php:65
 msgid "Date From"
 msgstr ""
 
 #: SalesByTypePeriodInquiry.php:74 SalesCategoryPeriodInquiry.php:68
-#: SalesTopItemsInquiry.php:71
+#: SalesTopCustomersInquiry.php:70 SalesTopItemsInquiry.php:71
+#: TopCustomers.php:69
 msgid "Date To"
 msgstr ""
 
@@ -23425,26 +23329,30 @@ msgid "Daily"
 msgstr ""
 
 #: SalesByTypePeriodInquiry.php:123 SalesCategoryPeriodInquiry.php:75
-#: SalesTopItemsInquiry.php:113
+#: SalesTopCustomersInquiry.php:112 SalesTopItemsInquiry.php:113
+#: TopCustomers.php:111
 msgid "Show Sales"
 msgstr ""
 
 #: SalesByTypePeriodInquiry.php:139 SalesCategoryPeriodInquiry.php:87
-#: SalesTopItemsInquiry.php:124
+#: SalesTopCustomersInquiry.php:123 SalesTopItemsInquiry.php:124
+#: TopCustomers.php:122
 msgid ""
 "The date entered for the from date is not in the appropriate format. Dates "
 "must be entered in the format"
 msgstr ""
 
 #: SalesByTypePeriodInquiry.php:143 SalesCategoryPeriodInquiry.php:91
-#: SalesTopItemsInquiry.php:128
+#: SalesTopCustomersInquiry.php:127 SalesTopItemsInquiry.php:128
+#: TopCustomers.php:126
 msgid ""
 "The date entered for the to date is not in the appropriate format. Dates "
 "must be entered in the format"
 msgstr ""
 
 #: SalesByTypePeriodInquiry.php:147 SalesCategoryPeriodInquiry.php:95
-#: SalesTopItemsInquiry.php:132
+#: SalesTopCustomersInquiry.php:131 SalesTopItemsInquiry.php:132
+#: TopCustomers.php:130
 msgid ""
 "The from date is expected to be a date prior to the to date. Please review "
 "the selected date range"
@@ -23459,12 +23367,14 @@ msgid "Total Sales"
 msgstr ""
 
 #: SalesByTypePeriodInquiry.php:359 SalesCategoryPeriodInquiry.php:166
-#: SalesTopItemsInquiry.php:223
+#: SalesTopCustomersInquiry.php:216 SalesTopItemsInquiry.php:223
+#: TopCustomers.php:215
 msgid "Refunds"
 msgstr ""
 
 #: SalesByTypePeriodInquiry.php:360 SalesCategoryPeriodInquiry.php:167
-#: SalesTopItemsInquiry.php:224
+#: SalesTopCustomersInquiry.php:217 SalesTopItemsInquiry.php:224
+#: TopCustomers.php:216
 msgid "Net Sales"
 msgstr ""
 
@@ -23482,7 +23392,7 @@ msgstr ""
 msgid "Qtr"
 msgstr ""
 
-#: SalesCategories.php:7 includes/MainMenuLinksArray.php:265
+#: SalesCategories.php:7 includes/MainMenuLinksArray.php:267
 msgid "Sales Category Maintenance"
 msgstr ""
 
@@ -23491,9 +23401,8 @@ msgid "Somthing is wrong with uploading a file"
 msgstr ""
 
 #: SalesCategories.php:82
-#, fuzzy
 msgid "The Sales category description must be fifty characters or less long"
-msgstr "اسم المجموعة يجب ان يحتوي علي الأقل علي حرف واحد"
+msgstr ""
 
 #: SalesCategories.php:94
 msgid "The Sales category record has been updated"
@@ -23564,9 +23473,9 @@ msgid "Active?"
 msgstr ""
 
 #: SalesCategories.php:273
-#, fuzzy, php-format
+#, php-format
 msgid "Are you sure you wish to delete this sales category?"
-msgstr "حدث خطأ ما اثناء حذف مجموعة الحسابات"
+msgstr ""
 
 #: SalesCategories.php:325
 msgid "Edit Sub Category"
@@ -23593,18 +23502,16 @@ msgid "Add Inventory to this category"
 msgstr ""
 
 #: SalesCategories.php:437
-#, fuzzy
 msgid "Select Item"
-msgstr "العودة الى العملاء"
+msgstr ""
 
 #: SalesCategories.php:451
 msgid "Select Manufacturer/Brand"
 msgstr ""
 
 #: SalesCategories.php:453
-#, fuzzy
 msgid "Select Brand"
-msgstr "وصف القطاع"
+msgstr ""
 
 #: SalesCategories.php:463
 msgid "Add Item To Sales Category"
@@ -23787,7 +23694,8 @@ msgstr ""
 msgid "Show Sales Graph"
 msgstr ""
 
-#: SalesGraph.php:208 SalesGraph.php:272 SalesTopItemsInquiry.php:222
+#: SalesGraph.php:208 SalesGraph.php:272 SalesTopCustomersInquiry.php:215
+#: SalesTopItemsInquiry.php:222 TopCustomers.php:214
 msgid "Sales Value"
 msgstr ""
 
@@ -23828,7 +23736,8 @@ msgstr ""
 msgid "There is not sales data for the criteria entered to graph"
 msgstr ""
 
-#: SalesInquiry.php:9 SalesInquiry.php:791 SalesTopItemsInquiry.php:9
+#: SalesInquiry.php:9 SalesInquiry.php:791 SalesTopCustomersInquiry.php:9
+#: SalesTopItemsInquiry.php:9 TopCustomers.php:9
 msgid "Sales Inquiry"
 msgstr ""
 
@@ -23907,18 +23816,16 @@ msgid "Transaction Number summary only valid for Invoice Date Type"
 msgstr ""
 
 #: SalesInquiry.php:1267
-#, fuzzy
 msgid "The SQL to the create temp stock moves table failed with the message"
-msgstr "الطلب المستخدم لإضافة مجموعة الحسابات هي"
+msgstr ""
 
 #: SalesInquiry.php:1275
 msgid "The SQL to insert temporary stockmoves records failed with the message"
 msgstr ""
 
 #: SalesInquiry.php:1284
-#, fuzzy
 msgid "The SQL to update tempstockmoves failed with the message"
-msgstr "الطلب المستخدم لإضافة مجموعة الحسابات هي"
+msgstr ""
 
 #: SalesPeople.php:5
 msgid "Sales People Maintenance"
@@ -24051,35 +23958,45 @@ msgstr ""
 msgid "Current?"
 msgstr ""
 
-#: SalesTopItemsInquiry.php:6
-msgid "Top Sales Inquiry"
+#: SalesTopCustomersInquiry.php:6 SalesTopCustomersInquiry.php:9
+#: TopCustomers.php:9
+msgid "Top Customer Sales Inquiry"
 msgstr ""
 
-#: SalesTopItemsInquiry.php:9
-msgid "Top Sales Items Inquiry"
-msgstr ""
-
-#: SalesTopItemsInquiry.php:83 WWW_Users.php:660
+#: SalesTopCustomersInquiry.php:82 SalesTopItemsInquiry.php:83
+#: TopCustomers.php:81 WWW_Users.php:660
 msgid "Display"
 msgstr ""
 
-#: SalesTopItemsInquiry.php:86
+#: SalesTopCustomersInquiry.php:85 SalesTopItemsInquiry.php:86
+#: TopCustomers.php:84
 msgid "Order By Net Sales"
 msgstr ""
 
-#: SalesTopItemsInquiry.php:94
+#: SalesTopCustomersInquiry.php:93 SalesTopItemsInquiry.php:94
+#: TopCustomers.php:92
 msgid "Order By Quantity"
 msgstr ""
 
-#: SalesTopItemsInquiry.php:105
+#: SalesTopCustomersInquiry.php:104 SalesTopItemsInquiry.php:105
+#: TopCustomers.php:103
 msgid "Number to Display"
 msgstr ""
 
-#: SalesTopItemsInquiry.php:219
+#: SalesTopCustomersInquiry.php:213 SalesTopItemsInquiry.php:219
+#: TopCustomers.php:212
 msgid "Rank"
 msgstr ""
 
-#: SalesTypes.php:5 includes/MainMenuLinksArray.php:471
+#: SalesTopItemsInquiry.php:6 TopCustomers.php:6
+msgid "Top Sales Inquiry"
+msgstr ""
+
+#: SalesTopItemsInquiry.php:9 includes/MainMenuLinksArray.php:63
+msgid "Top Sales Items Inquiry"
+msgstr ""
+
+#: SalesTypes.php:5 includes/MainMenuLinksArray.php:473
 msgid "Sales Types"
 msgstr ""
 
@@ -24197,7 +24114,7 @@ msgstr ""
 msgid "Sales Type Name"
 msgstr ""
 
-#: SecurityTokens.php:6 includes/MainMenuLinksArray.php:434
+#: SecurityTokens.php:6 includes/MainMenuLinksArray.php:436
 msgid "Maintain Security Tokens"
 msgstr ""
 
@@ -24235,7 +24152,7 @@ msgstr ""
 msgid "Are you sure you wish to delete this security token?"
 msgstr ""
 
-#: SelectAsset.php:5 includes/MainMenuLinksArray.php:384
+#: SelectAsset.php:5 includes/MainMenuLinksArray.php:386
 msgid "Select an Asset"
 msgstr ""
 
@@ -24291,9 +24208,8 @@ msgid "For customer"
 msgstr ""
 
 #: SelectCompletedOrder.php:77
-#, fuzzy
 msgid "and for customer"
-msgstr "العودة الى العملاء"
+msgstr ""
 
 #: SelectCompletedOrder.php:88 SelectSalesOrder.php:441 Shipt_Select.php:52
 msgid "for the part"
@@ -24331,7 +24247,7 @@ msgstr ""
 msgid "Sales Orders"
 msgstr ""
 
-#: SelectContract.php:6 includes/MainMenuLinksArray.php:85
+#: SelectContract.php:6 includes/MainMenuLinksArray.php:87
 msgid "Select Contract"
 msgstr ""
 
@@ -24646,7 +24562,7 @@ msgstr ""
 msgid "Customer Transactions"
 msgstr ""
 
-#: SelectCustomer.php:221 includes/MainMenuLinksArray.php:111
+#: SelectCustomer.php:221 includes/MainMenuLinksArray.php:113
 msgid "Customer Transaction Inquiries"
 msgstr ""
 
@@ -24842,9 +24758,8 @@ msgid "Enter extract of text in the Account name"
 msgstr ""
 
 #: SelectGLAccount.php:88
-#, fuzzy
 msgid "Select an Account Code"
-msgstr "مجموعات العضوية"
+msgstr ""
 
 #: SelectGLAccount.php:115
 msgid "Account Type"
@@ -25514,7 +25429,7 @@ msgstr ""
 
 #: SelectSupplier.php:180 SuppPriceList.php:16 SuppPriceList.php:152
 #: SuppPriceList.php:208 SuppPriceList.php:210
-#: includes/MainMenuLinksArray.php:185
+#: includes/MainMenuLinksArray.php:187
 msgid "Supplier Price List"
 msgstr ""
 
@@ -25713,9 +25628,8 @@ msgid "The sell through support record could not be updated because"
 msgstr ""
 
 #: SellThroughSupport.php:99
-#, fuzzy
 msgid "Sell Through Support record has been updated"
-msgstr "تم حذف المجموعة"
+msgstr ""
 
 #: SellThroughSupport.php:254
 msgid "The supplier sell through support deals could not be retrieved because"
@@ -25735,23 +25649,21 @@ msgstr ""
 
 #: SellThroughSupport.php:286 SellThroughSupport.php:384
 #: SellThroughSupport.php:386
-#, fuzzy
 msgid "All Customers"
-msgstr "العودة الى العملاء"
+msgstr ""
 
 #: SellThroughSupport.php:299
-#, fuzzy, php-format
+#, php-format
 msgid "Are you sure you wish to delete this sell through support record?"
-msgstr "حدث خطأ ما اثناء حذف مجموعة الحسابات"
+msgstr ""
 
 #: SellThroughSupport.php:335
 msgid "The supplier sell through support could not be retrieved because"
 msgstr ""
 
 #: SellThroughSupport.php:381
-#, fuzzy
 msgid "Support for Customer"
-msgstr "العودة الى العملاء"
+msgstr ""
 
 #: SellThroughSupport.php:402
 msgid "Support Whole Category"
@@ -25770,14 +25682,12 @@ msgid "Support An Entire Category"
 msgstr ""
 
 #: SellThroughSupport.php:438
-#, fuzzy
 msgid "Could not retrieve the items that the supplier provides"
-msgstr "لم يتم التحقق من وجود المجموعة بسبب"
+msgstr ""
 
 #: SellThroughSupport.php:439
-#, fuzzy
 msgid "The SQL that was used to get the supplier items and failed was"
-msgstr "الطلب المستخدم لإضافة مجموعة الحسابات هي"
+msgstr ""
 
 #: SellThroughSupport.php:457
 msgid "Rebate value per unit"
@@ -26281,9 +26191,8 @@ msgid "ETA"
 msgstr ""
 
 #: ShopParameters.php:7 ShopParameters.php:11
-#, fuzzy
 msgid "Shop Configuration"
-msgstr "أدخل المعلومات"
+msgstr ""
 
 #: ShopParameters.php:168
 msgid "The shop configuration could not be updated because"
@@ -26320,9 +26229,8 @@ msgid ""
 msgstr ""
 
 #: ShopParameters.php:219
-#, fuzzy
 msgid "Shop Name"
-msgstr "إسم المجموعة"
+msgstr ""
 
 #: ShopParameters.php:221
 msgid ""
@@ -26330,9 +26238,8 @@ msgid ""
 msgstr ""
 
 #: ShopParameters.php:226
-#, fuzzy
 msgid "Shop Title"
-msgstr "إسم المجموعة"
+msgstr ""
 
 #: ShopParameters.php:228
 msgid ""
@@ -26458,9 +26365,8 @@ msgid ""
 msgstr ""
 
 #: ShopParameters.php:319
-#, fuzzy
 msgid "Stock Locations"
-msgstr "رقم القطاع"
+msgstr ""
 
 #: ShopParameters.php:330
 msgid ""
@@ -26640,9 +26546,8 @@ msgid ""
 msgstr ""
 
 #: ShopParameters.php:557
-#, fuzzy
 msgid "Credit card user account details"
-msgstr "لم  أستطيع استرجاع القطاع المطلوب حاول مجددا"
+msgstr ""
 
 #: ShopParameters.php:562
 msgid "PayPal Pro User"
@@ -26679,9 +26584,8 @@ msgid "Pay Flow Pro User"
 msgstr ""
 
 #: ShopParameters.php:580
-#, fuzzy
 msgid "Merchant User account"
-msgstr "مجموعات العضوية"
+msgstr ""
 
 #: ShopParameters.php:584
 msgid "Pay Flow Pro Password"
@@ -26752,9 +26656,8 @@ msgid "The email settings failed to be inserted"
 msgstr ""
 
 #: SMTPServer.php:43
-#, fuzzy
 msgid "The SQL failed to insert the email information is"
-msgstr "الطلب المستخدم لإسترجاع المعلومات كان"
+msgstr ""
 
 #: SMTPServer.php:46
 msgid "The settings for the SMTP server have been sucessfully inserted"
@@ -27133,7 +27036,7 @@ msgstr ""
 msgid "Show Movements"
 msgstr ""
 
-#: StockCategories.php:6 includes/MainMenuLinksArray.php:503
+#: StockCategories.php:6 includes/MainMenuLinksArray.php:505
 msgid "Inventory Categories Maintenance"
 msgstr ""
 
@@ -27488,9 +27391,8 @@ msgid "Print and Process"
 msgstr ""
 
 #: StockClone.php:5
-#, fuzzy
 msgid "Clone Item"
-msgstr "العودة الى العملاء"
+msgstr ""
 
 #: StockClone.php:27
 msgid ""
@@ -27591,14 +27493,12 @@ msgid "The weight of the packaged item must be a positive number"
 msgstr ""
 
 #: StockClone.php:191 Stocks.php:181
-#, fuzzy
 msgid "The net weight of the item in Net Weight must be numeric"
-msgstr "يجب ان يكون القسم فى الحساب عدد صحيح"
+msgstr ""
 
 #: StockClone.php:197 Stocks.php:187
-#, fuzzy
 msgid "The net weight of the item must be a positive number"
-msgstr "قسم الرقم يجب ان يكون عدد صحيح"
+msgstr ""
 
 #: StockClone.php:203 Stocks.php:193 Z_ImportStocks.php:149
 msgid "The economic order quantity must be numeric"
@@ -27680,14 +27580,12 @@ msgid "The SQL that was used to add the item failed was"
 msgstr ""
 
 #: StockClone.php:322 Stocks.php:428 Stocks.php:624
-#, fuzzy
 msgid "Could not update the language description because"
-msgstr "لم يتم التحقق من وجود المجموعة بسبب"
+msgstr ""
 
 #: StockClone.php:323 Stocks.php:429 Stocks.php:625
-#, fuzzy
 msgid "The SQL that was used to update the language description and failed was"
-msgstr "الطلب المستخدم لإضافة مجموعة الحسابات هي"
+msgstr ""
 
 #: StockClone.php:419
 msgid ""
@@ -27700,14 +27598,12 @@ msgid "The cloned pricing could not be added"
 msgstr ""
 
 #: StockClone.php:503
-#, fuzzy
 msgid "The cost details for the cloned stock item could not be updated because"
-msgstr "لم  أستطيع استرجاع القطاع المطلوب حاول مجددا"
+msgstr ""
 
 #: StockClone.php:510
-#, fuzzy
 msgid "New Cloned Item"
-msgstr "العودة الى العملاء"
+msgstr ""
 
 #: StockClone.php:511
 msgid "We also attempted to setup item purchase data and pricing."
@@ -27778,7 +27674,7 @@ msgstr ""
 
 #: StockClone.php:818 Stocks.php:1105 SupplierTenders.php:125
 #: SupplierTenders.php:532 SupplierTenders.php:535 UnitsOfMeasure.php:170
-#: includes/MainMenuLinksArray.php:506
+#: includes/MainMenuLinksArray.php:508
 msgid "Units of Measure"
 msgstr ""
 
@@ -27989,9 +27885,8 @@ msgid "Stock Check Counts at Location"
 msgstr ""
 
 #: StockCounts.php:118
-#, fuzzy
 msgid "Enter By Category"
-msgstr "العودة الى العملاء"
+msgstr ""
 
 #: StockCounts.php:139
 msgid "Entering Counts For Stock Category"
@@ -28181,9 +28076,8 @@ msgid "Shipped"
 msgstr ""
 
 #: StockDispatch.php:510
-#, fuzzy
 msgid "Image/Description"
-msgstr "وصف القطاع"
+msgstr ""
 
 #: StockLocMovements.php:6
 msgid "All Stock Movements By Location"
@@ -28244,9 +28138,8 @@ msgid "StockID"
 msgstr ""
 
 #: StockLocStatus.php:174
-#, fuzzy
 msgid "Bin Loc"
-msgstr "رقم القطاع"
+msgstr ""
 
 #: StockLocStatus.php:175 StockReorderLevel.php:58 StockStatus.php:94
 msgid "Re-Order Level"
@@ -28494,9 +28387,8 @@ msgid "Cancelled balance of transfer"
 msgstr ""
 
 #: StockLocTransferReceive.php:337
-#, fuzzy
 msgid "To Location"
-msgstr "رقم القطاع"
+msgstr ""
 
 #: StockLocTransferReceive.php:338
 msgid "Stock code"
@@ -28656,11 +28548,10 @@ msgid "Stock Re-Order Level Maintenance"
 msgstr ""
 
 #: StockReorderLevel.php:49
-#, fuzzy
 msgid ""
 "The stock id should not contains illegal characters and blank or percentage "
 "mark is not allowed"
-msgstr "لا يمكن ان يحتوى اسم العضوية على الحرف"
+msgstr ""
 
 #: StockReorderLevel.php:49
 msgid "Show Re-Order Levels"
@@ -28903,9 +28794,8 @@ msgid "The stock cost journal could not be inserted because"
 msgstr ""
 
 #: Stocks.php:486
-#, fuzzy
 msgid "The SQL that was used to create the stock cost journal and failed was"
-msgstr "الطلب المستخدم لإضافة مجموعة الحسابات هي"
+msgstr ""
 
 #: Stocks.php:519
 msgid ""
@@ -28918,9 +28808,8 @@ msgid "The WIP cost journal could not be inserted because"
 msgstr ""
 
 #: Stocks.php:541
-#, fuzzy
 msgid "The SQL that was used to create the WIP cost journal and failed was"
-msgstr "الطلب المستخدم لإسترجاع المعلومات كان"
+msgstr ""
 
 #: Stocks.php:572
 msgid ""
@@ -29033,14 +28922,12 @@ msgid "Could not delete the bill of material because"
 msgstr ""
 
 #: Stocks.php:810
-#, fuzzy
 msgid "Could not delete the item properties"
-msgstr "لم يتم التحقق من وجود المجموعة بسبب"
+msgstr ""
 
 #: Stocks.php:813
-#, fuzzy
 msgid "Could not delete the item language descriptions"
-msgstr "لم يتم التحقق من وجود المجموعة بسبب"
+msgstr ""
 
 #: Stocks.php:815
 msgid "Could not delete the item record"
@@ -29414,9 +29301,8 @@ msgid "otherwise select the contract from the list"
 msgstr ""
 
 #: SuppContractChgs.php:165
-#, fuzzy
 msgid "Amount must be numeric"
-msgstr "يجب ان يكون القسم فى الحساب عدد صحيح"
+msgstr ""
 
 #: SuppContractChgs.php:165
 msgid "Non zero amount"
@@ -29623,9 +29509,8 @@ msgid "Enter Asset ID"
 msgstr ""
 
 #: SuppFixedAssetChgs.php:123
-#, fuzzy
 msgid "The Asset ID should be positive integer"
-msgstr "قسم الرقم يجب ان يكون عدد صحيح"
+msgstr ""
 
 #: SuppFixedAssetChgs.php:123
 msgid "Postive integer"
@@ -29636,9 +29521,8 @@ msgid "Select from list"
 msgstr ""
 
 #: SuppFixedAssetChgs.php:154 SuppTransGLAnalysis.php:220
-#, fuzzy
 msgid "The amount must be numeric and cannot be zero"
-msgstr "يجب ان يكون القسم فى الحساب عدد صحيح"
+msgstr ""
 
 #: SuppFixedAssetChgs.php:160
 msgid "Enter Fixed Asset"
@@ -29695,9 +29579,8 @@ msgid "Order Value"
 msgstr ""
 
 #: SuppInvGRNs.php:158
-#, fuzzy
 msgid "Update Amounts Invoiced"
-msgstr "مجموعات العضوية"
+msgstr ""
 
 #: SuppInvGRNs.php:195
 msgid "There are no outstanding goods received from"
@@ -29754,7 +29637,7 @@ msgid "Supplier Payment"
 msgstr ""
 
 #: SupplierAllocations.php:30 SupplierBalsAtPeriodEnd.php:117
-#: SupplierContacts.php:21 includes/MainMenuLinksArray.php:137
+#: SupplierContacts.php:21 includes/MainMenuLinksArray.php:139
 msgid "Supplier Allocations"
 msgstr ""
 
@@ -29978,20 +29861,17 @@ msgid "Show all the supplier contacts for"
 msgstr ""
 
 #: SupplierContacts.php:240
-#, fuzzy
 msgid "The contact name must be more than one characters long"
-msgstr "اسم المجموعة يجب ان يحتوي علي الأقل علي حرف واحد"
+msgstr ""
 
 #: SupplierContacts.php:240
-#, fuzzy
 msgid "More than one characters long"
-msgstr "او الحرف"
+msgstr ""
 
 #: SupplierContacts.php:266 SupplierContacts.php:270 SupplierContacts.php:274
 #: Suppliers.php:727
-#, fuzzy
 msgid "The input should be phone number"
-msgstr "قسم الرقم يجب ان يكون عدد صحيح"
+msgstr ""
 
 #: SupplierContacts.php:266 SupplierContacts.php:270 SupplierContacts.php:274
 msgid "Only digits,space,+,-,(,) allowed"
@@ -30002,9 +29882,8 @@ msgid "Mobile No"
 msgstr ""
 
 #: SupplierContacts.php:278
-#, fuzzy
 msgid "The input must be email format"
-msgstr "يجب ان يكون القسم فى الحساب عدد صحيح"
+msgstr ""
 
 #: SupplierContacts.php:278
 msgid "should be email format such as adm@weberp.org"
@@ -30529,9 +30408,8 @@ msgid "Supplier Invoice Reference"
 msgstr ""
 
 #: SupplierInvoice.php:628
-#, fuzzy
 msgid "The input should not be blank and should be less than 20 characters"
-msgstr "لا يمكن ان يحتوى اسم العضوية على الحرف"
+msgstr ""
 
 #: SupplierInvoice.php:628
 msgid "Within 20 characters needed"
@@ -30580,9 +30458,8 @@ msgstr ""
 #: SupplierInvoice.php:868 SupplierTenders.php:741 SupplierTenders.php:742
 #: SystemParameters.php:411 SystemParameters.php:611 WorkCentres.php:273
 #: WorkOrderReceive.php:935
-#, fuzzy
 msgid "The input must be numeric"
-msgstr "يجب ان يكون القسم فى الحساب عدد صحيح"
+msgstr ""
 
 #: SupplierInvoice.php:878 SupplierInvoice.php:881 SystemParameters.php:494
 msgid "Manually"
@@ -30787,9 +30664,8 @@ msgid "Suppliers UOM"
 msgstr ""
 
 #: SupplierPriceList.php:537
-#, fuzzy
 msgid "Suppliers Description"
-msgstr "وصف القطاع"
+msgstr ""
 
 #: SupplierPriceList.php:541
 msgid "Suppliers Item Code"
@@ -30911,9 +30787,8 @@ msgid "The Supplier Code cannot be empty"
 msgstr ""
 
 #: Suppliers.php:351 Z_ImportSuppliers.php:153
-#, fuzzy
 msgid "The supplier code cannot contain any of the illegal characters"
-msgstr "لا يمكن ان يحتوى اسم العضوية على الحرف"
+msgstr ""
 
 #: Suppliers.php:357 Z_ImportSuppliers.php:159
 msgid "The telephone number must be 25 characters or less long"
@@ -30928,9 +30803,8 @@ msgid "The email address must be 55 characters or less long"
 msgstr ""
 
 #: Suppliers.php:381
-#, fuzzy
 msgid "The URL address must be 50 characters or less long"
-msgstr "اسم المجموعة يجب ان يحتوي علي الأقل علي حرف واحد"
+msgstr ""
 
 #: Suppliers.php:387 Z_ImportSuppliers.php:183
 msgid "The bank reference text must be less than 12 characters long"
@@ -31012,36 +30886,30 @@ msgid ""
 msgstr ""
 
 #: Suppliers.php:685
-#, fuzzy
 msgid "within 10 characters"
-msgstr "او الحرف"
+msgstr ""
 
 #: Suppliers.php:689
-#, fuzzy
 msgid ""
 "The supplier name should not be blank and should be less than 40 legal "
 "characters"
-msgstr "لا يمكن ان يحتوى اسم العضوية على الحرف"
+msgstr ""
 
 #: Suppliers.php:689
-#, fuzzy
 msgid "Within 40 legal characters"
-msgstr "او الحرف"
+msgstr ""
 
 #: Suppliers.php:693 Suppliers.php:697 Suppliers.php:701
-#, fuzzy
 msgid "The input should be less than 40 characters"
-msgstr "اسم المجموعة يجب ان يحتوي علي الأقل علي حرف واحد"
+msgstr ""
 
 #: Suppliers.php:693 Suppliers.php:697 Suppliers.php:701 Suppliers.php:709
-#, fuzzy
 msgid "Less than 40 characters"
-msgstr "او الحرف"
+msgstr ""
 
 #: Suppliers.php:705
-#, fuzzy
 msgid "Less than 50 characters"
-msgstr "او الحرف"
+msgstr ""
 
 #: Suppliers.php:727 Suppliers.php:731
 msgid "only number + - ( and ) allowed"
@@ -31088,18 +30956,16 @@ msgid "Bank Account No"
 msgstr ""
 
 #: Suppliers.php:766
-#, fuzzy
 msgid "Less than 30 characters"
-msgstr "او الحرف"
+msgstr ""
 
 #: Suppliers.php:783 Suppliers.php:998
 msgid "Factor Company"
 msgstr ""
 
 #: Suppliers.php:798 TaxAuthorities.php:259
-#, fuzzy
 msgid "Within 20 characters"
-msgstr "او الحرف"
+msgstr ""
 
 #: Suppliers.php:824 Suppliers.php:1031 Suppliers.php:1034
 msgid "Not Required"
@@ -31110,28 +30976,24 @@ msgid "Insert New Supplier"
 msgstr ""
 
 #: Suppliers.php:931 Suppliers.php:933
-#, fuzzy
 msgid "Within 40 characters"
-msgstr "او الحرف"
+msgstr ""
 
 #: Suppliers.php:935
-#, fuzzy
 msgid "Witin 40 characters"
-msgstr "او الحرف"
+msgstr ""
 
 #: Suppliers.php:953 Suppliers.php:955
 msgid "Only digit blank ( ) and - allowed"
 msgstr ""
 
 #: Suppliers.php:957
-#, fuzzy
 msgid "The input must be in email format"
-msgstr "الطلب المستخدم لإسترجاع المعلومات كان"
+msgstr ""
 
 #: Suppliers.php:959
-#, fuzzy
 msgid "The input must be in url format"
-msgstr "يجب ان يكون القسم فى الحساب عدد صحيح"
+msgstr ""
 
 #: Suppliers.php:959
 msgid "url format such as www.example.com"
@@ -31220,9 +31082,8 @@ msgid "The address should not be over 40 characters"
 msgstr ""
 
 #: SupplierTenderCreate.php:379 SupplierTenderCreate.php:383
-#, fuzzy
 msgid "The characters should not be over 20 characters"
-msgstr "اسم المجموعة يجب ان يحتوي علي الأقل علي حرف واحد"
+msgstr ""
 
 #: SupplierTenderCreate.php:387
 msgid "The characters should not be over 15 characters"
@@ -31299,9 +31160,8 @@ msgid "Confirm the Response For Tender"
 msgstr ""
 
 #: SupplierTenders.php:119 SupplierTenders.php:504
-#, fuzzy
 msgid "Tender Number"
-msgstr "رقم القطاع"
+msgstr ""
 
 #: SupplierTenders.php:124 SupplierTenders.php:534
 msgid "Offered"
@@ -31400,7 +31260,7 @@ msgstr ""
 
 #: SupplierTypes.php:6 SupplierTypes.php:21 SuppPaymentRun.php:240
 #: SystemParameters.php:13 TaxAuthorities.php:10 TaxAuthorityRates.php:16
-#: TaxCategories.php:10 Tax.php:289 includes/MainMenuLinksArray.php:473
+#: TaxCategories.php:10 Tax.php:289 includes/MainMenuLinksArray.php:475
 msgid "Supplier Types"
 msgstr ""
 
@@ -31457,15 +31317,13 @@ msgid "Are you sure you wish to delete this Supplier Type?"
 msgstr ""
 
 #: SupplierTypes.php:249
-#, fuzzy
 msgid ""
 "The input should not be over 100 characters and contains illegal characters"
-msgstr "لا يمكن ان يحتوى اسم العضوية على الحرف"
+msgstr ""
 
 #: SupplierTypes.php:249
-#, fuzzy
 msgid "less than 100 characters"
-msgstr "او الحرف"
+msgstr ""
 
 #: SuppLoginSetup.php:15
 msgid "A supplier must first be selected before logins can be defined for it"
@@ -31496,29 +31354,24 @@ msgid "A new supplier login has been created"
 msgstr ""
 
 #: SuppLoginSetup.php:116
-#, fuzzy
 msgid "The user ID must has more than 4 legal characters"
-msgstr "يجب ان يحتوى اسم العضو على الاقل حرف واحد"
+msgstr ""
 
 #: SuppLoginSetup.php:116
-#, fuzzy
 msgid "More than 4 characters"
-msgstr "او الحرف"
+msgstr ""
 
 #: SuppLoginSetup.php:134 UserSettings.php:174 UserSettings.php:178
-#, fuzzy
 msgid "More than 5 characters"
-msgstr "او الحرف"
+msgstr ""
 
 #: SuppLoginSetup.php:134
-#, fuzzy
 msgid "Password must be more than 5 characters"
-msgstr "يجب ان يحتوى اسم العضو على الاقل حرف واحد"
+msgstr ""
 
 #: SuppLoginSetup.php:138
-#, fuzzy
 msgid "Must be less than 35 characters"
-msgstr "او الحرف"
+msgstr ""
 
 #: SuppLoginSetup.php:138 includes/Login.php:97 includes/Login.php:98
 #: api/api_xml-rpc.php:18 api/api_xml-rpc.php:68 api/api_xml-rpc.php:104
@@ -31557,9 +31410,8 @@ msgid "User name"
 msgstr ""
 
 #: SuppLoginSetup.php:142
-#, fuzzy
 msgid "The input must be phone number"
-msgstr "قسم الرقم يجب ان يكون عدد صحيح"
+msgstr ""
 
 #: SuppLoginSetup.php:142
 msgid "number and allowed charactrs"
@@ -31588,7 +31440,7 @@ msgstr ""
 msgid "Payment Run - Problem Report"
 msgstr ""
 
-#: SuppPaymentRun.php:30 includes/MainMenuLinksArray.php:142
+#: SuppPaymentRun.php:30 includes/MainMenuLinksArray.php:144
 msgid "Payment Run Report"
 msgstr ""
 
@@ -31662,9 +31514,8 @@ msgid "For Suppliers Trading in"
 msgstr ""
 
 #: SuppPaymentRun.php:298
-#, fuzzy
 msgid "The input must be number"
-msgstr "يجب ان يكون القسم فى الحساب عدد صحيح"
+msgstr ""
 
 #: SuppPaymentRun.php:308
 msgid "Payments Due To"
@@ -31765,9 +31616,8 @@ msgid "Shipment Reference"
 msgstr ""
 
 #: SuppShiptChgs.php:113
-#, fuzzy
 msgid "The shiment Ref should be positive integer"
-msgstr "قسم الرقم يجب ان يكون عدد صحيح"
+msgstr ""
 
 #: SuppShiptChgs.php:113 SystemParameters.php:790
 msgid "positive integer"
@@ -31782,14 +31632,12 @@ msgid "otherwise select the shipment from the list"
 msgstr ""
 
 #: SuppShiptChgs.php:148
-#, fuzzy
 msgid "The input must be non zero number"
-msgstr "قسم الرقم يجب ان يكون عدد صحيح"
+msgstr ""
 
 #: SuppShiptChgs.php:148
-#, fuzzy
 msgid "Non zero number"
-msgstr "رقم القطاع"
+msgstr ""
 
 #: SuppShiptChgs.php:154
 msgid "Enter Shipment Charge"
@@ -31826,9 +31674,8 @@ msgid "General Ledger Analysis of Credit Note From"
 msgstr ""
 
 #: SuppTransGLAnalysis.php:190
-#, fuzzy
 msgid "The input must be alpha-numeric characters"
-msgstr "اسم المجموعة يجب ان يحتوي علي الأقل علي حرف واحد"
+msgstr ""
 
 #: SuppTransGLAnalysis.php:190
 msgid "less than 20 alpha-numeric characters"
@@ -31838,7 +31685,7 @@ msgstr ""
 msgid "No zero numeric"
 msgstr ""
 
-#: SystemParameters.php:7 includes/MainMenuLinksArray.php:432
+#: SystemParameters.php:7 includes/MainMenuLinksArray.php:434
 msgid "System Parameters"
 msgstr ""
 
@@ -31991,9 +31838,8 @@ msgid "First Overdue Deadline in (days)"
 msgstr ""
 
 #: SystemParameters.php:400 SystemParameters.php:405
-#, fuzzy
 msgid "The input must be integer"
-msgstr "يجب ان يكون القسم فى الحساب عدد صحيح"
+msgstr ""
 
 #: SystemParameters.php:401
 msgid ""
@@ -32391,9 +32237,8 @@ msgid "Allowed Over Charge Proportion"
 msgstr ""
 
 #: SystemParameters.php:704 SystemParameters.php:709
-#, fuzzy
 msgid "The input must between 0 and 100"
-msgstr "يجب ان يكون القسم فى الحساب عدد صحيح"
+msgstr ""
 
 #: SystemParameters.php:704
 msgid "integer between 0 and 100"
@@ -32501,9 +32346,8 @@ msgid "Report Page Length"
 msgstr ""
 
 #: SystemParameters.php:752 SystemParameters.php:776
-#, fuzzy
 msgid "The input should be between 1 and 999"
-msgstr "قسم الرقم يجب ان يكون عدد صحيح"
+msgstr ""
 
 #: SystemParameters.php:752 SystemParameters.php:776
 msgid "1 to 999"
@@ -32554,9 +32398,8 @@ msgid "Number Of Month Must Be Shown"
 msgstr ""
 
 #: SystemParameters.php:790
-#, fuzzy
 msgid "input must be positive integer"
-msgstr "قسم الرقم يجب ان يكون عدد صحيح"
+msgstr ""
 
 #: SystemParameters.php:791
 msgid ""
@@ -32995,27 +32838,24 @@ msgid "Bank Name"
 msgstr ""
 
 #: TaxAuthorities.php:311
-#, fuzzy
 msgid "Not more than 40 chacraters"
-msgstr "او الحرف"
+msgstr ""
 
 #: TaxAuthorities.php:314
 msgid "Bank Account Type"
 msgstr ""
 
 #: TaxAuthorities.php:315 TaxAuthorities.php:319
-#, fuzzy
 msgid "No more than 20 characters"
-msgstr "او الحرف"
+msgstr ""
 
 #: TaxAuthorities.php:322
 msgid "Bank Swift No"
 msgstr ""
 
 #: TaxAuthorities.php:323
-#, fuzzy
 msgid "No more than 15 characters"
-msgstr "او الحرف"
+msgstr ""
 
 #: TaxAuthorityRates.php:12
 msgid "Tax Rates"
@@ -33052,9 +32892,9 @@ msgid "Tax Rate"
 msgstr ""
 
 #: TaxAuthorityRates.php:112
-#, fuzzy, php-format
+#, php-format
 msgid "Input must be numeric"
-msgstr "يجب ان يكون القسم فى الحساب عدد صحيح"
+msgstr ""
 
 #: TaxAuthorityRates.php:126
 msgid "Update Rates"
@@ -33157,9 +32997,8 @@ msgid "Tax Category Name"
 msgstr ""
 
 #: TaxCategories.php:235
-#, fuzzy
 msgid "No more than 30 characters"
-msgstr "او الحرف"
+msgstr ""
 
 #: TaxCategories.php:235
 msgid "No illegal characters allowed and cannot be blank"
@@ -33265,16 +33104,14 @@ msgid "The selected tax group is no longer available."
 msgstr ""
 
 #: TaxGroups.php:240
-#, fuzzy
 msgid ""
 "The group name must be more 4 and less than 40 characters and cannot be left "
 "blank"
-msgstr "لا يمكن ان يحتوى اسم العضوية على الحرف"
+msgstr ""
 
 #: TaxGroups.php:240
-#, fuzzy
 msgid "4 to 40 legal characters"
-msgstr "او الحرف"
+msgstr ""
 
 #: TaxGroups.php:241
 msgid "Enter Group"
@@ -33439,9 +33276,8 @@ msgid "Summary Only"
 msgstr ""
 
 #: TaxProvinces.php:32
-#, fuzzy
 msgid "The tax province name cannot contain any of the illegal characters"
-msgstr "لا يمكن وضع هذا الحرف في اسم المجموعة"
+msgstr ""
 
 #: TaxProvinces.php:36
 msgid "The tax province name may not be empty"
@@ -33525,14 +33361,12 @@ msgid "Tax Province Name"
 msgstr ""
 
 #: TaxProvinces.php:229
-#, fuzzy
 msgid "The tax province cannot be left blank and includes illegal characters"
-msgstr "لا يمكن وضع هذا الحرف في اسم المجموعة"
+msgstr ""
 
 #: TaxProvinces.php:229
-#, fuzzy
 msgid "Within 30 legal characters"
-msgstr "او الحرف"
+msgstr ""
 
 #: TaxProvinces.php:245
 msgid "Edit/Review Tax Authorities"
@@ -33567,9 +33401,8 @@ msgid "Value of Sales"
 msgstr ""
 
 #: TopItems.php:94 TopItems.php:99 TopItems.php:105 UserSettings.php:123
-#, fuzzy
 msgid "The input must be positive integer"
-msgstr "قسم الرقم يجب ان يكون عدد صحيح"
+msgstr ""
 
 #: TopItems.php:98
 msgid "With less than"
@@ -33604,9 +33437,8 @@ msgid "Units Of Measure"
 msgstr ""
 
 #: UnitsOfMeasure.php:30
-#, fuzzy
 msgid "The unit of measure cannot contain any of the illegal characters"
-msgstr "لا يمكن وضع هذا الحرف في اسم المجموعة"
+msgstr ""
 
 #: UnitsOfMeasure.php:34
 msgid "The unit of measure may not be empty"
@@ -33675,14 +33507,12 @@ msgid "Could not retrieve the requested unit of measure, please try again."
 msgstr ""
 
 #: UnitsOfMeasure.php:236
-#, fuzzy
 msgid "Cannot be blank or contains illegal characters"
-msgstr "لا يمكن ان يحتوى اسم العضوية على الحرف"
+msgstr ""
 
 #: UnitsOfMeasure.php:236
-#, fuzzy
 msgid "More than one character"
-msgstr "او الحرف"
+msgstr ""
 
 #: UpgradeDatabase.php:7
 msgid "Upgrade webERP Database"
@@ -33943,7 +33773,7 @@ msgstr ""
 msgid "PDF Language Support"
 msgstr ""
 
-#: WhereUsedInquiry.php:6 includes/MainMenuLinksArray.php:287
+#: WhereUsedInquiry.php:6 includes/MainMenuLinksArray.php:289
 msgid "Where Used Inquiry"
 msgstr ""
 
@@ -33968,9 +33798,8 @@ msgid "Illegal characters and blank is not allowed"
 msgstr ""
 
 #: WhereUsedInquiry.php:41 WhereUsedInquiry.php:43
-#, fuzzy
 msgid "No illegal characters allowed"
-msgstr "او الحرف"
+msgstr ""
 
 #: WhereUsedInquiry.php:46
 msgid "Show Where Used"
@@ -34074,31 +33903,27 @@ msgid "Work Centre Code"
 msgstr ""
 
 #: WorkCentres.php:206
-#, fuzzy
 msgid ""
 "The code should be at least 2 characters and no illegal characters allowed"
-msgstr "لا يمكن ان يحتوى اسم العضوية على الحرف"
+msgstr ""
 
 #: WorkCentres.php:206
-#, fuzzy
 msgid "More than 2 legal characters"
-msgstr "او الحرف"
+msgstr ""
 
 #: WorkCentres.php:219
 msgid "Work Centre Description"
 msgstr ""
 
 #: WorkCentres.php:220
-#, fuzzy
 msgid ""
 "The Work Center should be more than 3 characters and no illegal characters "
 "allowed"
-msgstr "لا يمكن ان يحتوى اسم العضوية على الحرف"
+msgstr ""
 
 #: WorkCentres.php:220
-#, fuzzy
 msgid "More than 3 legal characters"
-msgstr "او الحرف"
+msgstr ""
 
 #: WorkCentres.php:242
 msgid "Overhead Recovery GL Account"
@@ -34268,7 +34093,7 @@ msgid ""
 "or receipts of manufactured items"
 msgstr ""
 
-#: WorkOrderEntry.php:6 includes/MainMenuLinksArray.php:279
+#: WorkOrderEntry.php:6 includes/MainMenuLinksArray.php:281
 msgid "Work Order Entry"
 msgstr ""
 
@@ -34334,9 +34159,8 @@ msgid "The work order could not be deleted"
 msgstr ""
 
 #: WorkOrderEntry.php:424
-#, fuzzy
 msgid "The SQL used to delete the work order was"
-msgstr "الطلب المستخدم لإسترجاع المعلومات كان"
+msgstr ""
 
 #: WorkOrderEntry.php:433
 msgid "The work order serial numbers could not be deleted"
@@ -34375,9 +34199,8 @@ msgid "Next Lot/SN Ref"
 msgstr ""
 
 #: WorkOrderEntry.php:580
-#, fuzzy
 msgid "The input format must be positive numeric"
-msgstr "قسم الرقم يجب ان يكون عدد صحيح"
+msgstr ""
 
 #: WorkOrderEntry.php:588
 msgid "S/Ns"
@@ -34665,10 +34488,9 @@ msgid ""
 msgstr ""
 
 #: WorkOrderReceive.php:376
-#, fuzzy
 msgid ""
 "Could not update the work order cost for an auto-issue component because"
-msgstr "لم  أستطيع استرجاع القطاع المطلوب حاول مجددا"
+msgstr ""
 
 #: WorkOrderReceive.php:377
 msgid "The following SQL to update the work order cost was used"
@@ -34887,9 +34709,8 @@ msgid "Add A Number of New Serial Numbers"
 msgstr ""
 
 #: WOSerialNos.php:250
-#, fuzzy
 msgid "The input must be in number format"
-msgstr "يجب ان يكون القسم فى الحساب عدد صحيح"
+msgstr ""
 
 #: WOSerialNos.php:250
 msgid "Number of new serial numbers"
@@ -34912,23 +34733,20 @@ msgid "Add a single batch/lot number"
 msgstr ""
 
 #: WOSerialNos.php:267
-#, fuzzy
 msgid "The reference must be input"
-msgstr "يجب ان يكون القسم فى الحساب عدد صحيح"
+msgstr ""
 
 #: WOSerialNos.php:267
 msgid "SNs or batch no"
 msgstr ""
 
 #: WOSerialNos.php:269
-#, fuzzy
 msgid "The quantity must be input"
-msgstr "يجب ان يكون القسم فى الحساب عدد صحيح"
+msgstr ""
 
 #: WOSerialNos.php:287
-#, fuzzy
 msgid "Could not get the work order serial/batch items"
-msgstr "لم  أستطيع استرجاع القطاع المطلوب حاول مجددا"
+msgstr ""
 
 #: WOSerialNos.php:291
 msgid ""
@@ -35038,7 +34856,7 @@ msgstr ""
 msgid "Eastern European Russian Japanese Korean Vietnamese Hebrew Arabic Thai"
 msgstr ""
 
-#: WWW_Users.php:29 includes/MainMenuLinksArray.php:433
+#: WWW_Users.php:29 includes/MainMenuLinksArray.php:435
 msgid "Users Maintenance"
 msgstr ""
 
@@ -35063,9 +34881,8 @@ msgid "A new user record has been inserted"
 msgstr ""
 
 #: WWW_Users.php:240
-#, fuzzy
 msgid "The demonstration user called demo cannot be deleted"
-msgstr "تم حذف المجموعة"
+msgstr ""
 
 #: WWW_Users.php:245
 msgid "Cannot delete user as entries already exist in the audit trail"
@@ -35105,21 +34922,18 @@ msgid "User code"
 msgstr ""
 
 #: WWW_Users.php:423
-#, fuzzy
 msgid "At least 4 characters"
-msgstr "او الحرف"
+msgstr ""
 
 #: WWW_Users.php:423
-#, fuzzy
 msgid ""
 "Please input not less than 4 characters and canot be admin or contains "
 "illegal characters"
-msgstr "لا يمكن ان يحتوى اسم العضوية على الحرف"
+msgstr ""
 
 #: WWW_Users.php:455
-#, fuzzy
 msgid "At least 5 characters"
-msgstr "او الحرف"
+msgstr ""
 
 #: WWW_Users.php:455
 msgid ""
@@ -35462,11 +35276,10 @@ msgid "does not currently exist as a GL account code in the system"
 msgstr ""
 
 #: Z_ChangeGLAccountCode.php:24
-#, fuzzy
 msgid ""
 "The new GL account code to change the old code to contains illegal "
 "characters - no changes will be made"
-msgstr "لا يمكن ان يحتوى اسم العضوية على الحرف"
+msgstr ""
 
 #: Z_ChangeGLAccountCode.php:29
 msgid ""
@@ -35490,9 +35303,8 @@ msgid "Adding the new chartmaster record"
 msgstr ""
 
 #: Z_ChangeGLAccountCode.php:56
-#, fuzzy
 msgid "The SQL to insert the new chartmaster record failed"
-msgstr "الطلب المستخدم لإضافة مجموعة الحسابات هي"
+msgstr ""
 
 #: Z_ChangeGLAccountCode.php:58 Z_ChangeGLAccountCode.php:121
 #: Z_ChangeLocationCode.php:93 Z_ChangeLocationCode.php:99
@@ -35519,14 +35331,12 @@ msgid "Deleting the old chartmaster record"
 msgstr ""
 
 #: Z_ChangeGLAccountCode.php:119
-#, fuzzy
 msgid "The SQL to delete the old chartmaster record failed"
-msgstr "الطلب المستخدم لإسترجاع المعلومات كان"
+msgstr ""
 
 #: Z_ChangeGLAccountCode.php:124
-#, fuzzy
 msgid "GL account Code"
-msgstr "مجموعات العضوية"
+msgstr ""
 
 #: Z_ChangeGLAccountCode.php:124 Z_ChangeLocationCode.php:237
 #: Z_ChangeStockCategory.php:92 Z_ChangeStockCode.php:177
@@ -35538,9 +35348,8 @@ msgid "Existing GL Account Code"
 msgstr ""
 
 #: Z_ChangeGLAccountCode.php:140
-#, fuzzy
 msgid "New GL Account Code"
-msgstr "مجموعات العضوية"
+msgstr ""
 
 #: Z_ChangeLocationCode.php:6
 msgid "UTILITY PAGE Change A Location Code"
@@ -35565,11 +35374,10 @@ msgid "The new location code to change the old code to must be entered as well"
 msgstr ""
 
 #: Z_ChangeLocationCode.php:34
-#, fuzzy
 msgid ""
 "The new location name to change the old name to contains illegal characters "
 "- no changes will be made"
-msgstr "لا يمكن ان يحتوى اسم العضوية على الحرف"
+msgstr ""
 
 #: Z_ChangeLocationCode.php:39
 msgid "The new location name to change the old name to must be entered as well"
@@ -35592,9 +35400,8 @@ msgid "Adding the new location record"
 msgstr ""
 
 #: Z_ChangeLocationCode.php:91
-#, fuzzy
 msgid "The SQL to insert the new location record failed"
-msgstr "الطلب المستخدم لإضافة مجموعة الحسابات هي"
+msgstr ""
 
 #: Z_ChangeLocationCode.php:95
 msgid "Changing the BOM table records"
@@ -35613,27 +35420,24 @@ msgid "Changing the contracts table records"
 msgstr ""
 
 #: Z_ChangeLocationCode.php:109
-#, fuzzy
 msgid "The SQL to update the contracts records failed"
-msgstr "الطلب المستخدم لإسترجاع المعلومات كان"
+msgstr ""
 
 #: Z_ChangeLocationCode.php:113
 msgid "Changing the custbranch table records"
 msgstr ""
 
 #: Z_ChangeLocationCode.php:115
-#, fuzzy
 msgid "The SQL to update the custbranch records failed"
-msgstr "الطلب المستخدم لإضافة مجموعة الحسابات هي"
+msgstr ""
 
 #: Z_ChangeLocationCode.php:119
 msgid "Changing the freightcosts table records"
 msgstr ""
 
 #: Z_ChangeLocationCode.php:121
-#, fuzzy
 msgid "The SQL to update the freightcosts records failed"
-msgstr "الطلب المستخدم لإضافة مجموعة الحسابات هي"
+msgstr ""
 
 #: Z_ChangeLocationCode.php:125
 msgid "Changing stock location records"
@@ -35668,9 +35472,8 @@ msgid "Changing purchase orders information"
 msgstr ""
 
 #: Z_ChangeLocationCode.php:156
-#, fuzzy
 msgid "The SQL to update the purchase orders records failed"
-msgstr "الطلب المستخدم لإسترجاع المعلومات كان"
+msgstr ""
 
 #: Z_ChangeLocationCode.php:160
 msgid "Changing recurring sales orders information"
@@ -35701,18 +35504,16 @@ msgid "Changing stockcounts records"
 msgstr ""
 
 #: Z_ChangeLocationCode.php:180
-#, fuzzy
 msgid "The SQL to update stockcounts records failed"
-msgstr "الطلب المستخدم لإضافة مجموعة الحسابات هي"
+msgstr ""
 
 #: Z_ChangeLocationCode.php:184
 msgid "Changing stockmoves records"
 msgstr ""
 
 #: Z_ChangeLocationCode.php:186
-#, fuzzy
 msgid "The SQL to update stockmoves records failed"
-msgstr "الطلب المستخدم لإضافة مجموعة الحسابات هي"
+msgstr ""
 
 #: Z_ChangeLocationCode.php:190
 msgid "Changing stockrequest records"
@@ -35735,9 +35536,8 @@ msgid "Changing tenders records"
 msgstr ""
 
 #: Z_ChangeLocationCode.php:204
-#, fuzzy
 msgid "The SQL to update tenders records failed"
-msgstr "الطلب المستخدم لإضافة مجموعة الحسابات هي"
+msgstr ""
 
 #: Z_ChangeLocationCode.php:208
 msgid "Changing workcentres records"
@@ -35752,9 +35552,8 @@ msgid "Changing workorders records"
 msgstr ""
 
 #: Z_ChangeLocationCode.php:216
-#, fuzzy
 msgid "The SQL to update workorders records failed"
-msgstr "الطلب المستخدم لإسترجاع المعلومات كان"
+msgstr ""
 
 #: Z_ChangeLocationCode.php:220
 msgid "Changing users records"
@@ -35769,9 +35568,8 @@ msgid "Deleting the old location record"
 msgstr ""
 
 #: Z_ChangeLocationCode.php:232
-#, fuzzy
 msgid "The SQL to delete the old location record failed"
-msgstr "الطلب المستخدم لإسترجاع المعلومات كان"
+msgstr ""
 
 #: Z_ChangeLocationCode.php:237
 msgid "Location code"
@@ -35786,9 +35584,8 @@ msgid "New Location Code"
 msgstr ""
 
 #: Z_ChangeLocationCode.php:256
-#, fuzzy
 msgid "New Location Name"
-msgstr "رقم القطاع"
+msgstr ""
 
 #: Z_ChangeStockCategory.php:6
 msgid "UTILITY PAGE Change A Stock Category"
@@ -35957,9 +35754,8 @@ msgid "Inserting the new supplier record"
 msgstr ""
 
 #: Z_ChangeSupplierCode.php:83
-#, fuzzy
 msgid "The SQL to insert the new suppliers master record failed"
-msgstr "الطلب المستخدم لإضافة مجموعة الحسابات هي"
+msgstr ""
 
 #: Z_ChangeSupplierCode.php:87 includes/MiscFunctions.php:444
 msgid "Changing"
@@ -35974,18 +35770,16 @@ msgid "The SQL to update"
 msgstr ""
 
 #: Z_ChangeSupplierCode.php:89 includes/MiscFunctions.php:447
-#, fuzzy
 msgid "records failed"
-msgstr "تم التحديث"
+msgstr ""
 
 #: Z_ChangeSupplierCode.php:93
 msgid "Deleting the supplier code from the suppliers master table"
 msgstr ""
 
 #: Z_ChangeSupplierCode.php:96
-#, fuzzy
 msgid "The SQL to delete the old supplier record failed"
-msgstr "الطلب المستخدم لإسترجاع المعلومات كان"
+msgstr ""
 
 #: Z_ChangeSupplierCode.php:113
 msgid "The New supplier code"
@@ -36318,18 +36112,16 @@ msgid "the sql server returned the following error"
 msgstr ""
 
 #: Z_DeleteCreditNote.php:67 Z_DeleteInvoice.php:92
-#, fuzzy
 msgid "The custallocns record has been deleted"
-msgstr "تم حذف المجموعة"
+msgstr ""
 
 #: Z_DeleteCreditNote.php:74 Z_DeleteInvoice.php:99
 msgid "The debtortranstaxes record could not be deleted"
 msgstr ""
 
 #: Z_DeleteCreditNote.php:77 Z_DeleteInvoice.php:102
-#, fuzzy
 msgid "The debtortranstaxes record has been deleted"
-msgstr "تم حذف المجموعة"
+msgstr ""
 
 #: Z_DeleteCreditNote.php:83
 msgid ""
@@ -36356,9 +36148,8 @@ msgid "The SQL to delete the sales analysis records with the message"
 msgstr ""
 
 #: Z_DeleteCreditNote.php:126 Z_DeleteInvoice.php:157
-#, fuzzy
 msgid "SQL to delete the stock movement tax records failed with the message"
-msgstr "الطلب المستخدم لإضافة مجموعة الحسابات هي"
+msgstr ""
 
 #: Z_DeleteCreditNote.php:128 Z_DeleteInvoice.php:159
 msgid "Deleted the credit note stock move taxes"
@@ -36373,9 +36164,8 @@ msgid "Deleted the credit note stock movements"
 msgstr ""
 
 #: Z_DeleteCreditNote.php:144
-#, fuzzy
 msgid "SQL to delete the gl transaction records failed with the message"
-msgstr "الطلب المستخدم لإضافة مجموعة الحسابات هي"
+msgstr ""
 
 #: Z_DeleteCreditNote.php:146
 msgid "Deleted the credit note general ledger transactions"
@@ -36479,18 +36269,16 @@ msgid "UTILITY PAGE To Delete All Old Prices"
 msgstr ""
 
 #: Z_DeleteOldPrices.php:10
-#, fuzzy
 msgid "All old prices have been deleted"
-msgstr "تم حذف المجموعة"
+msgstr ""
 
 #: Z_DeleteOldPrices.php:18
 msgid "Purge Old Prices"
 msgstr ""
 
 #: Z_DeleteOldPrices.php:18
-#, fuzzy
 msgid "Are You Sure you wish to delete all old prices?"
-msgstr "حدث خطأ ما اثناء حذف مجموعة الحسابات"
+msgstr ""
 
 #: Z_DeleteSalesTransActions.php:6
 msgid "Delete Sales Transactions"
@@ -36691,27 +36479,24 @@ msgid "Making a comma separated values file of the stock items"
 msgstr ""
 
 #: Z_ExportSalesAnalysis.php:25
-#, fuzzy
 msgid "The SQL to get the stock items failed with the message"
-msgstr "الطلب المستخدم لإضافة مجموعة الحسابات هي"
+msgstr ""
 
 #: Z_ExportSalesAnalysis.php:56
 msgid "Making a comma separated values file of the customers"
 msgstr ""
 
 #: Z_ExportSalesAnalysis.php:58
-#, fuzzy
 msgid "The SQL to get the customers failed with the message"
-msgstr "الطلب المستخدم لإضافة مجموعة الحسابات هي"
+msgstr ""
 
 #: Z_ExportSalesAnalysis.php:86
 msgid "Making a comma separated values file of the sales lines"
 msgstr ""
 
 #: Z_ExportSalesAnalysis.php:88
-#, fuzzy
 msgid "The SQL to get the sales data failed with the message"
-msgstr "الطلب المستخدم لإضافة مجموعة الحسابات هي"
+msgstr ""
 
 #: Z_ImportChartOfAccounts.php:7 Z_ImportGLAccountGroups.php:5
 #: Z_ImportGLAccountSections.php:5
@@ -36792,9 +36577,8 @@ msgid "has been completed. All transactions committed to the database."
 msgstr ""
 
 #: Z_ImportDebtors.php:625 Z_ImportSuppliers.php:333
-#, fuzzy
 msgid "Updated:"
-msgstr "تم التحديث"
+msgstr ""
 
 #: Z_ImportDebtors.php:625 Z_ImportDebtors.php:627 Z_ImportSuppliers.php:333
 #: Z_ImportSuppliers.php:335
@@ -36998,14 +36782,12 @@ msgid "File contains incorrect headers"
 msgstr ""
 
 #: Z_ImportGLTransactions.php:95
-#, fuzzy
 msgid "Account code "
-msgstr "مجموعات العضوية"
+msgstr ""
 
 #: Z_ImportGLTransactions.php:101
-#, fuzzy
 msgid "The date \""
-msgstr "الطلب المستخدم لإضافة مجموعة الحسابات هي"
+msgstr ""
 
 #: Z_ImportGLTransactions.php:111
 msgid "Tag ref"
@@ -37037,9 +36819,8 @@ msgid "Batch import has been rolled back"
 msgstr ""
 
 #: Z_ImportGLTransactions.php:211
-#, fuzzy
 msgid "has been completed. All transactions committed to the database"
-msgstr "قسم العضو موجود مسبقا فى قاعدة البيانات"
+msgstr ""
 
 #: Z_ImportGLTransactions.php:223
 msgid ""
@@ -37082,9 +36863,8 @@ msgid "GL Journal"
 msgstr ""
 
 #: Z_ImportGLTransactions.php:239
-#, fuzzy
 msgid "Select Currency"
-msgstr "وصف القطاع"
+msgstr ""
 
 #: Z_ImportPartCodes.php:6
 msgid "Import Stock Items"
@@ -37131,9 +36911,8 @@ msgid "SalesType/Price List"
 msgstr ""
 
 #: Z_ImportPriceList.php:125
-#, fuzzy
 msgid "The SQL that was used to add the price failed was"
-msgstr "الطلب المستخدم لإضافة مجموعة الحسابات هي"
+msgstr ""
 
 #: Z_ImportPriceList.php:151
 msgid ""
@@ -37607,9 +37386,8 @@ msgid "Create POS Data File"
 msgstr ""
 
 #: Z_POS_Data.php:35
-#, fuzzy
 msgid "POS Customer Code"
-msgstr "العودة الى العملاء"
+msgstr ""
 
 #: Z_POS_Data.php:39
 msgid "POS Branch Code"
@@ -37898,9 +37676,8 @@ msgid "Update Sales Analysis Customer Data"
 msgstr ""
 
 #: Z_UpdateSalesAnalysisWithLatestCustomerData.php:29
-#, fuzzy
 msgid "Could not retrieve the customer records to be updated because"
-msgstr "لم  أستطيع استرجاع القطاع المطلوب حاول مجددا"
+msgstr ""
 
 #: Z_UpdateSalesAnalysisWithLatestCustomerData.php:43
 msgid "Updated sales analysis for customer code"
@@ -38109,9 +37886,8 @@ msgid "There is none of"
 msgstr ""
 
 #: includes/Add_SerialItemsOut.php:25
-#, fuzzy
 msgid "left"
-msgstr "حذف"
+msgstr ""
 
 #: includes/Add_SerialItemsOut.php:28 includes/Add_SerialItems.php:32
 #: includes/Add_SerialItems.php:184 includes/Add_SerialItems.php:281
@@ -39941,9 +39717,8 @@ msgid ""
 msgstr ""
 
 #: includes/DefineOfferClass.php:132
-#, fuzzy
 msgid "has been deleted in the database"
-msgstr "قسم العضو موجود مسبقا فى قاعدة البيانات"
+msgstr ""
 
 #: includes/DefineOfferClass.php:144
 msgid "Offer received from"
@@ -39994,9 +39769,8 @@ msgid " Unit "
 msgstr ""
 
 #: includes/DefineTenderClass.php:45
-#, fuzzy
 msgid " Item Description"
-msgstr "وصف القطاع"
+msgstr ""
 
 #: includes/DefineTenderClass.php:49
 msgid "Tender received from"
@@ -40246,634 +40020,631 @@ msgstr ""
 msgid "Sales Order Detail Or Summary Inquiries"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:63
-msgid "Top Sales Items Report"
-msgstr ""
-
 #: includes/MainMenuLinksArray.php:64
-msgid "Worst Sales Items Report"
+msgid "Top Customers Inquiry"
 msgstr ""
 
 #: includes/MainMenuLinksArray.php:65
+msgid "Worst Sales Items Report"
+msgstr ""
+
+#: includes/MainMenuLinksArray.php:66
 msgid "Sales With Low Gross Profit Report"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:84
+#: includes/MainMenuLinksArray.php:86
 msgid "Create Contract"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:86
+#: includes/MainMenuLinksArray.php:88
 msgid "Sell Through Support Deals"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:92
+#: includes/MainMenuLinksArray.php:94
 msgid "Select Order to Invoice"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:93
+#: includes/MainMenuLinksArray.php:95
 msgid "Create A Credit Note"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:95
+#: includes/MainMenuLinksArray.php:97
 msgid "Allocate Receipts or Credit Notes"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:101
+#: includes/MainMenuLinksArray.php:103
 msgid "Where Allocated Inquiry"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:104
+#: includes/MainMenuLinksArray.php:106
 msgid "Sales Analysis Reports"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:105
+#: includes/MainMenuLinksArray.php:107
 msgid "Aged Customer Balances/Overdues Report"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:106
+#: includes/MainMenuLinksArray.php:108
 msgid "Re-Print A Deposit Listing"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:107
+#: includes/MainMenuLinksArray.php:109
 msgid "Debtor Balances At A Prior Month End"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:108
+#: includes/MainMenuLinksArray.php:110
 msgid "Customer Listing By Area/Salesperson"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:109
+#: includes/MainMenuLinksArray.php:111
 msgid "Sales Graphs"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:110 includes/MainMenuLinksArray.php:146
+#: includes/MainMenuLinksArray.php:112 includes/MainMenuLinksArray.php:148
 msgid "List Daily Transactions"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:131
+#: includes/MainMenuLinksArray.php:133
 msgid "Add Customer"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:132
-#, fuzzy
+#: includes/MainMenuLinksArray.php:134
 msgid "Select Customer"
-msgstr "العودة الى العملاء"
+msgstr ""
 
-#: includes/MainMenuLinksArray.php:141
+#: includes/MainMenuLinksArray.php:143
 msgid "Aged Supplier Report"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:145
+#: includes/MainMenuLinksArray.php:147
 msgid "Supplier Balances At A Prior Month End"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:147
+#: includes/MainMenuLinksArray.php:149
 msgid "Supplier Transaction Inquiries"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:157
+#: includes/MainMenuLinksArray.php:159
 msgid "Add Supplier"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:159
+#: includes/MainMenuLinksArray.php:161
 msgid "Maintain Factor Companies"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:166
+#: includes/MainMenuLinksArray.php:168
 msgid "Purchase Order Grid Entry"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:167
+#: includes/MainMenuLinksArray.php:169
 msgid "Create a New Tender"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:168
+#: includes/MainMenuLinksArray.php:170
 msgid "Edit Existing Tenders"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:169
+#: includes/MainMenuLinksArray.php:171
 msgid "Process Tenders and Offers"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:170
+#: includes/MainMenuLinksArray.php:172
 msgid "Orders to Authorise"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:171
+#: includes/MainMenuLinksArray.php:173
 msgid "Shipment Entry"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:172
+#: includes/MainMenuLinksArray.php:174
 msgid "Select A Shipment"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:184
+#: includes/MainMenuLinksArray.php:186
 msgid "Purchase Order Detail Or Summary Inquiries"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:191
+#: includes/MainMenuLinksArray.php:193
 msgid "Maintain Supplier Price Lists"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:196 includes/MainMenuLinksArray.php:197
+#: includes/MainMenuLinksArray.php:198 includes/MainMenuLinksArray.php:199
 msgid "Bulk Inventory Transfer"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:198
+#: includes/MainMenuLinksArray.php:200
 msgid "Inventory Location Transfers"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:199
+#: includes/MainMenuLinksArray.php:201
 msgid "Inventory Adjustments"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:201
+#: includes/MainMenuLinksArray.php:203
 msgid "Enter Stock Counts"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:202
+#: includes/MainMenuLinksArray.php:204
 msgid "Create a New Internal Stock Request"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:204
+#: includes/MainMenuLinksArray.php:206
 msgid "Fulfill Internal Stock Requests"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:217
+#: includes/MainMenuLinksArray.php:219
 msgid "Serial Item Research Tool"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:219
+#: includes/MainMenuLinksArray.php:221
 msgid "Reprint GRN"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:220
+#: includes/MainMenuLinksArray.php:222
 msgid "Inventory Item Movements"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:221
+#: includes/MainMenuLinksArray.php:223
 msgid "Inventory Item Status"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:222
+#: includes/MainMenuLinksArray.php:224
 msgid "Inventory Item Usage"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:225
+#: includes/MainMenuLinksArray.php:227
 msgid "Stock Dispatch"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:227
+#: includes/MainMenuLinksArray.php:229
 msgid "Mail Inventory Valuation Report"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:229
+#: includes/MainMenuLinksArray.php:231
 msgid "Inventory Planning Based On Preferred Supplier Data"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:230
+#: includes/MainMenuLinksArray.php:232
 msgid "Inventory Stock Check Sheets"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:231
+#: includes/MainMenuLinksArray.php:233
 msgid "Make Inventory Quantities CSV"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:232
+#: includes/MainMenuLinksArray.php:234
 msgid "Compare Counts Vs Stock Check Data"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:233
+#: includes/MainMenuLinksArray.php:235
 msgid "All Inventory Movements By Location/Date"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:234
+#: includes/MainMenuLinksArray.php:236
 msgid "List Inventory Status By Location/Category"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:235
+#: includes/MainMenuLinksArray.php:237
 msgid "Historical Stock Quantity By Location/Category"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:236
+#: includes/MainMenuLinksArray.php:238
 msgid "List Negative Stocks"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:237
+#: includes/MainMenuLinksArray.php:239
 msgid "Period Stock Transaction Listing"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:238
+#: includes/MainMenuLinksArray.php:240
 msgid "Stock Transfer Note"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:263
+#: includes/MainMenuLinksArray.php:265
 msgid "Add A New Item"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:264
+#: includes/MainMenuLinksArray.php:266
 msgid "Select An Item"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:267
+#: includes/MainMenuLinksArray.php:269
 msgid "Add or Update Prices Based On Costs"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:268
+#: includes/MainMenuLinksArray.php:270
 msgid "View or Update Prices Based On Costs"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:269
+#: includes/MainMenuLinksArray.php:271
 msgid "Reorder Level By Category/Location"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:280 includes/MainMenuLinksArray.php:285
+#: includes/MainMenuLinksArray.php:282 includes/MainMenuLinksArray.php:287
 msgid "Select A Work Order"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:286
+#: includes/MainMenuLinksArray.php:288
 msgid "Costed Bill Of Material Inquiry"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:289
+#: includes/MainMenuLinksArray.php:291
 msgid "Indented Bill Of Material Listing"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:290
+#: includes/MainMenuLinksArray.php:292
 msgid "List Components Required"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:291
+#: includes/MainMenuLinksArray.php:293
 msgid "List Materials Not Used Anywhere"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:292
+#: includes/MainMenuLinksArray.php:294
 msgid "Indented Where Used Listing"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:293
+#: includes/MainMenuLinksArray.php:295
 msgid "MRP"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:295
+#: includes/MainMenuLinksArray.php:297
 msgid "MRP Suggested Purchase Orders"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:296
+#: includes/MainMenuLinksArray.php:298
 msgid "MRP Suggested Work Orders"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:297
+#: includes/MainMenuLinksArray.php:299
 msgid "MRP Reschedules Required"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:314
+#: includes/MainMenuLinksArray.php:316
 msgid "Bills Of Material"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:315
+#: includes/MainMenuLinksArray.php:317
 msgid "Copy a Bill Of Materials Between Items"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:316
+#: includes/MainMenuLinksArray.php:318
 msgid "Master Schedule"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:317
+#: includes/MainMenuLinksArray.php:319
 msgid "Auto Create Master Schedule"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:318
+#: includes/MainMenuLinksArray.php:320
 msgid "MRP Calculation"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:330
+#: includes/MainMenuLinksArray.php:332
 msgid "Bank Account Payments Matching"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:331
+#: includes/MainMenuLinksArray.php:333
 msgid "Bank Account Receipts Matching"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:342
+#: includes/MainMenuLinksArray.php:344
 msgid "Account Inquiry"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:343
+#: includes/MainMenuLinksArray.php:345
 msgid "Account Listing"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:344
+#: includes/MainMenuLinksArray.php:346
 msgid "Account Listing to CSV File"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:346
+#: includes/MainMenuLinksArray.php:348
 msgid "Bank Account Reconciliation Statement"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:347
+#: includes/MainMenuLinksArray.php:349
 msgid "Cheque Payments Listing"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:348
+#: includes/MainMenuLinksArray.php:350
 msgid "Daily Bank Transactions"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:349
+#: includes/MainMenuLinksArray.php:351
 msgid "Profit and Loss Statement"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:351
+#: includes/MainMenuLinksArray.php:353
 msgid "Tag Reports"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:352
+#: includes/MainMenuLinksArray.php:354
 msgid "Tax Reports"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:369
-#, fuzzy
-msgid "GL Accounts"
-msgstr "مجموعات العضوية"
-
-#: includes/MainMenuLinksArray.php:370
-msgid "GL Budgets"
-msgstr ""
-
 #: includes/MainMenuLinksArray.php:371
-msgid "GL Tags"
+msgid "GL Accounts"
 msgstr ""
 
 #: includes/MainMenuLinksArray.php:372
+msgid "GL Budgets"
+msgstr ""
+
+#: includes/MainMenuLinksArray.php:373
+msgid "GL Tags"
+msgstr ""
+
+#: includes/MainMenuLinksArray.php:374
 msgid "Bank Accounts"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:383
+#: includes/MainMenuLinksArray.php:385
 msgid "Add a new Asset"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:386
+#: includes/MainMenuLinksArray.php:388
 msgid "Depreciation Journal"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:393
+#: includes/MainMenuLinksArray.php:395
 msgid "Asset Register"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:394
+#: includes/MainMenuLinksArray.php:396
 msgid "My Maintenance Schedule"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:395
+#: includes/MainMenuLinksArray.php:397
 msgid "Maintenance Reminder Emails"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:401
+#: includes/MainMenuLinksArray.php:403
 msgid "Asset Categories Maintenance"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:402
+#: includes/MainMenuLinksArray.php:404
 msgid "Add or Maintain Asset Locations"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:403
+#: includes/MainMenuLinksArray.php:405
 msgid "Maintenance Tasks"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:409
+#: includes/MainMenuLinksArray.php:411
 msgid "Assign Cash to PC Tab"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:410
+#: includes/MainMenuLinksArray.php:412
 msgid "Claim Expenses From PC Tab"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:411
+#: includes/MainMenuLinksArray.php:413
 msgid "Expenses Authorisation"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:417
+#: includes/MainMenuLinksArray.php:419
 msgid "PC Tab General Report"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:421
+#: includes/MainMenuLinksArray.php:423
 msgid "Types of PC Tabs"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:422
+#: includes/MainMenuLinksArray.php:424
 msgid "PC Tabs"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:423
+#: includes/MainMenuLinksArray.php:425
 msgid "PC Expenses"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:424
+#: includes/MainMenuLinksArray.php:426
 msgid "Expenses for Type of PC Tab"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:435
+#: includes/MainMenuLinksArray.php:437
 msgid "Access Permissions Maintenance"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:436
+#: includes/MainMenuLinksArray.php:438
 msgid "Page Security Settings"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:438
+#: includes/MainMenuLinksArray.php:440
 msgid "Tax Authorities and Rates Maintenance"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:439
+#: includes/MainMenuLinksArray.php:441
 msgid "Tax Group Maintenance"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:440
+#: includes/MainMenuLinksArray.php:442
 msgid "Dispatch Tax Province Maintenance"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:441
+#: includes/MainMenuLinksArray.php:443
 msgid "Tax Category Maintenance"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:442
+#: includes/MainMenuLinksArray.php:444
 msgid "List Periods Defined"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:443
+#: includes/MainMenuLinksArray.php:445
 msgid "Report Builder Tool"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:444
+#: includes/MainMenuLinksArray.php:446
 msgid "View Audit Trail"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:447
+#: includes/MainMenuLinksArray.php:449
 msgid "Web-Store Configuration"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:448
+#: includes/MainMenuLinksArray.php:450
 msgid "SMTP Server Details"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:476
+#: includes/MainMenuLinksArray.php:478
 msgid "Set Purchase Order Authorisation levels"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:478
+#: includes/MainMenuLinksArray.php:480
 msgid "Sales People"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:479
+#: includes/MainMenuLinksArray.php:481
 msgid "Sales Areas"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:480
+#: includes/MainMenuLinksArray.php:482
 msgid "Shippers"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:481
+#: includes/MainMenuLinksArray.php:483
 msgid "Sales GL Interface Postings"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:482
+#: includes/MainMenuLinksArray.php:484
 msgid "COGS GL Interface Postings"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:484
+#: includes/MainMenuLinksArray.php:486
 msgid "Discount Matrix"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:485
+#: includes/MainMenuLinksArray.php:487
 msgid "Price Matrix"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:504
+#: includes/MainMenuLinksArray.php:506
 msgid "Inventory Locations Maintenance"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:505
+#: includes/MainMenuLinksArray.php:507
 msgid "Discount Category Maintenance"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:507
+#: includes/MainMenuLinksArray.php:509
 msgid "MRP Available Production Days"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:509
+#: includes/MainMenuLinksArray.php:511
 msgid "Maintain Internal Departments"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:510
+#: includes/MainMenuLinksArray.php:512
 msgid "Maintain Internal Stock Categories to User Roles"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:511
+#: includes/MainMenuLinksArray.php:513
 msgid "Label Templates Maintenance"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:523
+#: includes/MainMenuLinksArray.php:525
 msgid "Import GL Payments Receipts Or Journals From CSV"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:524
+#: includes/MainMenuLinksArray.php:526
 msgid "Change A Customer Code"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:525
+#: includes/MainMenuLinksArray.php:527
 msgid "Change A Customer Branch Code"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:526
+#: includes/MainMenuLinksArray.php:528
 msgid "Change A Supplier Code"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:527
+#: includes/MainMenuLinksArray.php:529
 msgid "Change An Inventory Item Code"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:528
-#, fuzzy
-msgid "Change A GL Account Code"
-msgstr "مجموعات العضوية"
-
-#: includes/MainMenuLinksArray.php:529
-msgid "Change A Location Code"
-msgstr ""
-
 #: includes/MainMenuLinksArray.php:530
-msgid "Update costs for all BOM items, from the bottom up"
+msgid "Change A GL Account Code"
 msgstr ""
 
 #: includes/MainMenuLinksArray.php:531
-msgid "Re-apply costs to Sales Analysis"
+msgid "Change A Location Code"
 msgstr ""
 
 #: includes/MainMenuLinksArray.php:532
-msgid "Delete sales transactions"
+msgid "Update costs for all BOM items, from the bottom up"
 msgstr ""
 
 #: includes/MainMenuLinksArray.php:533
-msgid "Reverse all supplier payments on a specified date"
+msgid "Re-apply costs to Sales Analysis"
 msgstr ""
 
 #: includes/MainMenuLinksArray.php:534
+msgid "Delete sales transactions"
+msgstr ""
+
+#: includes/MainMenuLinksArray.php:535
+msgid "Reverse all supplier payments on a specified date"
+msgstr ""
+
+#: includes/MainMenuLinksArray.php:536
 msgid "Update sales analysis with latest customer data"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:549
+#: includes/MainMenuLinksArray.php:551
 msgid "Show Local Currency Total Debtor Balances"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:550
+#: includes/MainMenuLinksArray.php:552
 msgid "Show Local Currency Total Suppliers Balances"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:551
+#: includes/MainMenuLinksArray.php:553
 msgid "Show General Transactions That Do Not Balance"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:552
+#: includes/MainMenuLinksArray.php:554
 msgid "List of items without picture"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:559
+#: includes/MainMenuLinksArray.php:561
 msgid "Maintain Language Files"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:560
+#: includes/MainMenuLinksArray.php:562
 msgid "Make New Company"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:561
+#: includes/MainMenuLinksArray.php:563
 msgid "Data Export Options"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:562
+#: includes/MainMenuLinksArray.php:564
 msgid "Import Stock Items from .csv"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:563
+#: includes/MainMenuLinksArray.php:565
 msgid "Import Fixed Assets from .csv file"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:564
+#: includes/MainMenuLinksArray.php:566
 msgid "Create new company template SQL file and submit to webERP"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:565
+#: includes/MainMenuLinksArray.php:567
 msgid "Re-calculate brought forward amounts in GL"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:566
+#: includes/MainMenuLinksArray.php:568
 msgid "Re-Post all GL transactions from a specified period"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:567
+#: includes/MainMenuLinksArray.php:569
 msgid "Purge all old prices"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:568
+#: includes/MainMenuLinksArray.php:570
 msgid "Import Price List from CSV file"
 msgstr ""
 
@@ -40903,9 +40674,8 @@ msgid "Failed to retrieve mail lists"
 msgstr ""
 
 #: includes/MiscFunctions.php:447
-#, fuzzy
 msgid "The SQL to update "
-msgstr "الطلب المستخدم لإضافة مجموعة الحسابات هي"
+msgstr ""
 
 #: includes/PDFPaymentRun_PymtFooter.php:8
 msgid "Total Due For"
@@ -40996,11 +40766,10 @@ msgid ""
 msgstr ""
 
 #: includes/ConnectDB.inc:26 includes/ConnectDB.inc:34
-#, fuzzy
 msgid ""
 "The company database being logged into cannot contain any of the illegal "
 "characters"
-msgstr "لا يمكن ان يحتوى اسم العضوية على الحرف"
+msgstr ""
 
 #: includes/ConnectDB.inc:27 includes/ConnectDB.inc:35
 #: includes/ConnectDB_mysqli.inc:43 includes/ConnectDB_mysqli.inc:50
@@ -41229,9 +40998,8 @@ msgid ""
 msgstr ""
 
 #: includes/GetPrice.inc:11
-#, fuzzy
 msgid "Failed to retrieve price from price matrix"
-msgstr "الطلب المستخدم لإسترجاع المعلومات كان"
+msgstr ""
 
 #: includes/GetPrice.inc:154
 msgid "There are no prices set up for"
@@ -41474,9 +41242,8 @@ msgid "Days Between Requested Delivery Date and Invoice Date"
 msgstr ""
 
 #: includes/PDFGLJournalHeader.inc:11
-#, fuzzy
 msgid "Journal number "
-msgstr "رقم القطاع"
+msgstr ""
 
 #: includes/PDFGLJournalHeader.inc:12
 msgid "Journal Date "
@@ -41679,9 +41446,8 @@ msgid "This is not an invoice"
 msgstr ""
 
 #: includes/PDFSellThroughSupportClaimPageHeader.inc:15
-#, fuzzy
 msgid "Sell Through Support Claims Between"
-msgstr "تم حذف المجموعة"
+msgstr ""
 
 #: includes/PDFSellThroughSupportClaimPageHeader.inc:23
 msgid "Transaction"
@@ -41756,9 +41522,8 @@ msgid "Supplier Invoices"
 msgstr ""
 
 #: includes/PDFSuppTransListingPageHeader.inc:18
-#, fuzzy
 msgid "Supplier Credit Notes"
-msgstr "وصف القطاع"
+msgstr ""
 
 #: includes/PDFSuppTransListingPageHeader.inc:21
 msgid "Supplier Payments"
@@ -41971,9 +41736,8 @@ msgid "Security Permissions Problem"
 msgstr ""
 
 #: includes/session.inc:338 ../webSHOP/includes/session.php:147
-#, fuzzy
 msgid "Error in form verification"
-msgstr "أدخل المعلومات"
+msgstr ""
 
 #: includes/session.inc:340 ../webSHOP/includes/session.php:151
 msgid "This form was not submitted with a correct ID"
@@ -43634,9 +43398,8 @@ msgstr ""
 #: api/api_xml-rpc.php:1385 api/api_xml-rpc.php:1416 api/api_xml-rpc.php:1448
 #: api/api_xml-rpc.php:1687 api/api_xml-rpc.php:1809 api/api_xml-rpc.php:2063
 #: api/api_xml-rpc.php:2095 api/api_xml-rpc.php:2185 api/api_xml-rpc.php:2221
-#, fuzzy
 msgid "Function Description go here"
-msgstr "وصف القطاع"
+msgstr ""
 
 #: api/api_xml-rpc.php:1386 ../webSHOP/Register.php:19
 msgid "Account Details"
@@ -44295,29 +44058,26 @@ msgid ""
 msgstr ""
 
 #: install/index.php:170
-#, fuzzy
 msgid "The Company names cannot contain illegal characters such as /\\?%:|<>\""
-msgstr "لا يمكن ان يحتوى اسم العضوية على الحرف"
+msgstr ""
 
 #: install/index.php:176
 msgid "The Company Name name should not be empty"
 msgstr ""
 
 #: install/index.php:187
-#, fuzzy
 msgid ""
 "The database name should not contains illegal characters such as \"/\\?%:|<>"
 "\" etc"
-msgstr "لا يمكن ان يحتوى اسم العضوية على الحرف"
+msgstr ""
 
 #: install/index.php:193 install/index.php:539
 msgid "The database name should not be empty"
 msgstr ""
 
 #: install/index.php:200
-#, fuzzy
 msgid "The timezone must be legal"
-msgstr "يجب ان يكون القسم فى الحساب عدد صحيح"
+msgstr ""
 
 #: install/index.php:221
 msgid "You must enter a valid email address for the Administrator."
@@ -44334,15 +44094,13 @@ msgid "The Host Name is not a valid name."
 msgstr ""
 
 #: install/index.php:245
-#, fuzzy
 msgid "The Host Name must not be empty."
-msgstr "اسم المجموعة يجب ان يحتوي علي الأقل علي حرف واحد"
+msgstr ""
 
 #: install/index.php:251
-#, fuzzy
 msgid ""
 "The user name cannot be empty and length must not be over 16 characters."
-msgstr "اسم المجموعة يجب ان يحتوي علي الأقل علي حرف واحد"
+msgstr ""
 
 #: install/index.php:267
 msgid "The user language defintion is not in the correct format"
@@ -44359,9 +44117,8 @@ msgid "The logo file failed to upload as it was over 10KB size limit."
 msgstr ""
 
 #: install/index.php:292
-#, fuzzy
 msgid "The country SQL file name must only contain letters,\"-\",\"_\""
-msgstr "يجب ان يحتوى اسم العضو على الاقل حرف واحد"
+msgstr ""
 
 #: install/index.php:296
 msgid "There is no country SQL file selected. Please select a file."
@@ -44402,11 +44159,10 @@ msgid "The Host Name should not be empty"
 msgstr ""
 
 #: install/index.php:533
-#, fuzzy
 msgid ""
 "The database name should be lower case and not contains illegal characters "
 "such as \"/\\?%:|<>\""
-msgstr "لا يمكن ان يحتوى اسم العضوية على الحرف"
+msgstr ""
 
 #: install/index.php:561
 msgid "Please correct the displayed error first"
@@ -44491,9 +44247,8 @@ msgid "If you are unsure of an option value, you may keep the default setting."
 msgstr ""
 
 #: install/index.php:764
-#, fuzzy
 msgid "Select your language"
-msgstr "وصف القطاع"
+msgstr ""
 
 #: install/index.php:767
 msgid ""
@@ -44531,23 +44286,20 @@ msgid "* Denotes required field"
 msgstr ""
 
 #: install/index.php:910
-#, fuzzy
 msgid "Host Name"
-msgstr "إسم المجموعة"
+msgstr ""
 
 #: install/index.php:911
-#, fuzzy
 msgid "Enter database host name"
-msgstr "لم يتمكن الحصول على مجموات العضو لان"
+msgstr ""
 
 #: install/index.php:912
 msgid "Commonly: localhost or 127.0.0.1"
 msgstr ""
 
 #: install/index.php:916
-#, fuzzy
 msgid "The database name"
-msgstr "الطلب المستخدم لإضافة مجموعة الحسابات هي"
+msgstr ""
 
 #: install/index.php:917
 msgid "The database must have a valid name"
@@ -44582,9 +44334,8 @@ msgid "mySQL user password"
 msgstr ""
 
 #: install/index.php:932
-#, fuzzy
 msgid "Enter the user password if one exists"
-msgstr "لم يتمكن الحصول على مجموات العضو لان"
+msgstr ""
 
 #: install/index.php:964
 msgid "Check Again"
@@ -44605,15 +44356,13 @@ msgid "Company Settings"
 msgstr ""
 
 #: install/index.php:1024
-#, fuzzy
 msgid ""
 "The name of your company should not contain characters such as |\\?%:<>\""
-msgstr "لا يمكن ان يحتوى اسم العضوية على الحرف"
+msgstr ""
 
 #: install/index.php:1027
-#, fuzzy
 msgid "Chart of Accounts"
-msgstr "مجموعات العضوية"
+msgstr ""
 
 #: install/index.php:1045
 msgid ""
@@ -44653,9 +44402,8 @@ msgid "Administrator account settings"
 msgstr ""
 
 #: install/index.php:1072
-#, fuzzy
 msgid "The default user name is 'admin' and it cannot be changed."
-msgstr "يجب ان يكون القسم فى الحساب عدد صحيح"
+msgstr ""
 
 #: install/index.php:1075
 msgid "The default password is 'weberp' which you can change below."
@@ -44685,21 +44433,21 @@ msgstr ""
 msgid "Install"
 msgstr ""
 
-#: install/index.php:1131
+#: install/index.php:1132
 msgid "Failed to open the new sql file"
 msgstr ""
 
-#: install/index.php:1136
+#: install/index.php:1137
 msgid "Failed to populate the database "
 msgstr ""
 
-#: install/index.php:1276
+#: install/index.php:1277
 msgid ""
 "Failed to update the email address and password of the administrator and the "
 "error is"
 msgstr ""
 
-#: install/index.php:1284
+#: install/index.php:1285
 msgid "Failed to update the company name and the erroris"
 msgstr ""
 
@@ -44707,9 +44455,8 @@ msgstr ""
 #: ../webSHOP/Checkout.php:496 ../webSHOP/Checkout.php:584
 #: ../webSHOP/Checkout.php:611 ../webSHOP/Checkout.php:684
 #: ../webSHOP/includes/header.php:228
-#, fuzzy
 msgid "Checkout"
-msgstr "مجموعات العضوية"
+msgstr ""
 
 #: ../webSHOP/Checkout.php:30
 msgid "purchases"
@@ -44763,9 +44510,8 @@ msgid ""
 msgstr ""
 
 #: ../webSHOP/Checkout.php:107
-#, fuzzy
 msgid "The credit card transaction was declined."
-msgstr "تم حذف المجموعة"
+msgstr ""
 
 #: ../webSHOP/Checkout.php:109
 msgid "The error code"
@@ -44780,9 +44526,8 @@ msgid "was returned from"
 msgstr ""
 
 #: ../webSHOP/Checkout.php:114
-#, fuzzy
 msgid "The SwipeHQ verification API call failed with the message"
-msgstr "الطلب المستخدم لإضافة مجموعة الحسابات هي"
+msgstr ""
 
 #: ../webSHOP/Checkout.php:134
 msgid ""
@@ -44791,21 +44536,18 @@ msgid ""
 msgstr ""
 
 #: ../webSHOP/Checkout.php:139
-#, fuzzy
 msgid "The delivery building address is too short to be valid"
-msgstr "اسم المجموعة يجب ان يحتوي علي الأقل علي حرف واحد"
+msgstr ""
 
 #: ../webSHOP/Checkout.php:144
-#, fuzzy
 msgid ""
 "The delivery street address is too short to be valid. At least 4 characters "
 "are expected"
-msgstr "اسم المجموعة يجب ان يحتوي علي الأقل علي حرف واحد"
+msgstr ""
 
 #: ../webSHOP/Checkout.php:149
-#, fuzzy
 msgid "The delivery city name is too short to be valid"
-msgstr "اسم المجموعة يجب ان يحتوي علي الأقل علي حرف واحد"
+msgstr ""
 
 #: ../webSHOP/Checkout.php:154
 msgid ""
@@ -44847,14 +44589,12 @@ msgid "The email address must be a valid email address"
 msgstr ""
 
 #: ../webSHOP/Checkout.php:324 ../webSHOP/Register.php:438
-#, fuzzy
 msgid "The email address is expected to 5 characters or more long"
-msgstr "اسم المجموعة يجب ان يحتوي علي الأقل علي حرف واحد"
+msgstr ""
 
 #: ../webSHOP/Checkout.php:327
-#, fuzzy
 msgid "The delivery building number/street address is too short to be valid"
-msgstr "اسم المجموعة يجب ان يحتوي علي الأقل علي حرف واحد"
+msgstr ""
 
 #: ../webSHOP/Checkout.php:330 ../webSHOP/Register.php:86
 msgid "The delivery street address is too short to be valid"
@@ -44865,9 +44605,8 @@ msgid "The delivery suburb address is too short to be valid"
 msgstr ""
 
 #: ../webSHOP/Checkout.php:336
-#, fuzzy
 msgid "A phone number for the delivery address contact must be entered"
-msgstr "اسم المجموعة يجب ان يحتوي علي الأقل علي حرف واحد"
+msgstr ""
 
 #: ../webSHOP/Checkout.php:337
 msgid ""
@@ -44888,14 +44627,12 @@ msgid "webSHOP could not calculate freight costs for"
 msgstr ""
 
 #: ../webSHOP/Checkout.php:367
-#, fuzzy
 msgid "Customer Phone"
-msgstr "العودة الى العملاء"
+msgstr ""
 
 #: ../webSHOP/Checkout.php:368
-#, fuzzy
 msgid "Customer Email"
-msgstr "أدخل المعلومات"
+msgstr ""
 
 #: ../webSHOP/Checkout.php:369 ../webSHOP/includes/DisplayShoppingCart.php:85
 msgid "Total Due"
@@ -44914,9 +44651,8 @@ msgid "We will contact you shortly."
 msgstr ""
 
 #: ../webSHOP/Checkout.php:400
-#, fuzzy
 msgid "Return to Shop Home"
-msgstr "إسم المجموعة"
+msgstr ""
 
 #: ../webSHOP/Checkout.php:413
 msgid "Login Or Register"
@@ -45038,9 +44774,8 @@ msgid "My address is correct. Report this problem"
 msgstr ""
 
 #: ../webSHOP/Checkout.php:611
-#, fuzzy
 msgid "Select Payment Method"
-msgstr "وصف القطاع"
+msgstr ""
 
 #: ../webSHOP/Checkout.php:612
 msgid "Delivery Address"
@@ -45081,14 +44816,12 @@ msgid "Confirm Selected Payment Method"
 msgstr ""
 
 #: ../webSHOP/Checkout.php:684
-#, fuzzy
 msgid "Payment and Order Confirmation"
-msgstr "أدخل المعلومات"
+msgstr ""
 
 #: ../webSHOP/Checkout.php:686 ../webSHOP/includes/PlaceOrder.php:147
-#, fuzzy
 msgid "Order Confirmation"
-msgstr "أدخل المعلومات"
+msgstr ""
 
 #: ../webSHOP/Checkout.php:694
 msgid "Make payment from your PayPal Account"
@@ -45163,9 +44896,8 @@ msgstr ""
 
 #: ../webSHOP/CreditCardPayFlowPro.php:32
 #: ../webSHOP/CreditCardPayPalPro.php:33
-#, fuzzy
 msgid "The credit verification value must be numeric"
-msgstr "يجب ان يكون القسم فى الحساب عدد صحيح"
+msgstr ""
 
 #: ../webSHOP/CreditCardPayFlowPro.php:104
 msgid "Pay Flow payment failed"
@@ -45201,9 +44933,8 @@ msgstr ""
 
 #: ../webSHOP/CreditCardPayFlowPro.php:167
 #: ../webSHOP/CreditCardPayPalPro.php:176
-#, fuzzy
 msgid "A valid credit card number must be entered"
-msgstr "اسم المجموعة يجب ان يحتوي علي الأقل علي حرف واحد"
+msgstr ""
 
 #: ../webSHOP/CreditCardPayFlowPro.php:170
 #: ../webSHOP/CreditCardPayFlowPro.php:171
@@ -45220,9 +44951,8 @@ msgstr ""
 
 #: ../webSHOP/CreditCardPayFlowPro.php:240
 #: ../webSHOP/CreditCardPayPalPro.php:307
-#, fuzzy
 msgid "Card Number"
-msgstr "رقم القطاع"
+msgstr ""
 
 #: ../webSHOP/CreditCardPayFlowPro.php:241
 #: ../webSHOP/CreditCardPayPalPro.php:308
@@ -45257,34 +44987,28 @@ msgid "Submit Details and Process Payment"
 msgstr ""
 
 #: ../webSHOP/CreditCardPayPalPro.php:38
-#, fuzzy
 msgid "The first name must be at least 3 characters long"
-msgstr "اسم المجموعة يجب ان يحتوي علي الأقل علي حرف واحد"
+msgstr ""
 
 #: ../webSHOP/CreditCardPayPalPro.php:43
-#, fuzzy
 msgid "The last name must be at least 3 characters long"
-msgstr "اسم المجموعة يجب ان يحتوي علي الأقل علي حرف واحد"
+msgstr ""
 
 #: ../webSHOP/CreditCardPayPalPro.php:48
-#, fuzzy
 msgid "The street must be at least 3 characters long"
-msgstr "اسم المجموعة يجب ان يحتوي علي الأقل علي حرف واحد"
+msgstr ""
 
 #: ../webSHOP/CreditCardPayPalPro.php:53
-#, fuzzy
 msgid "The city must be at least 3 characters long"
-msgstr "اسم المجموعة يجب ان يحتوي علي الأقل علي حرف واحد"
+msgstr ""
 
 #: ../webSHOP/CreditCardPayPalPro.php:58
-#, fuzzy
 msgid "The state must be at least 2 characters long"
-msgstr "اسم المجموعة يجب ان يحتوي علي الأقل علي حرف واحد"
+msgstr ""
 
 #: ../webSHOP/CreditCardPayPalPro.php:63
-#, fuzzy
 msgid "The zip code must be at least 3 characters long"
-msgstr "اسم المجموعة يجب ان يحتوي علي الأقل علي حرف واحد"
+msgstr ""
 
 #: ../webSHOP/CreditCardPayPalPro.php:114
 msgid "Credit cart payment was unsuccesful - the request returned the error:"
@@ -45302,23 +45026,20 @@ msgstr ""
 #: ../webSHOP/CreditCardPayPalPro.php:167
 #: ../webSHOP/CreditCardPayPalPro.php:170
 #: ../webSHOP/CreditCardPayPalPro.php:173
-#, fuzzy
 msgid "At least 3 characters"
-msgstr "او الحرف"
+msgstr ""
 
 #: ../webSHOP/CreditCardPayPalPro.php:275
-#, fuzzy
 msgid "First Name"
-msgstr "إسم المجموعة"
+msgstr ""
 
 #: ../webSHOP/CreditCardPayPalPro.php:276
 msgid "The first name of the credit card holder"
 msgstr ""
 
 #: ../webSHOP/CreditCardPayPalPro.php:277
-#, fuzzy
 msgid "Last Name"
-msgstr "إسم المجموعة"
+msgstr ""
 
 #: ../webSHOP/CreditCardPayPalPro.php:278
 msgid "The last name of the credit card holder"
@@ -45359,18 +45080,16 @@ msgid ""
 msgstr ""
 
 #: ../webSHOP/index.php:131
-#, fuzzy
 msgid "Searching for:"
-msgstr "إبحث"
+msgstr ""
 
 #: ../webSHOP/index.php:138
 msgid "Featured Items"
 msgstr ""
 
 #: ../webSHOP/index.php:160
-#, fuzzy
 msgid "Could not get the items to display for this category because"
-msgstr "لم يتم التحقق من وجود المجموعة بسبب"
+msgstr ""
 
 #: ../webSHOP/index.php:185
 msgid "There are no items matching this search"
@@ -45402,14 +45121,12 @@ msgid "Add to Order"
 msgstr ""
 
 #: ../webSHOP/ItemDetails.php:128
-#, fuzzy
 msgid "Back to Category"
-msgstr "العودة الى العملاء"
+msgstr ""
 
 #: ../webSHOP/ItemDetails.php:141
-#, fuzzy
 msgid "Product Details"
-msgstr "مجموعات العضوية"
+msgstr ""
 
 #: ../webSHOP/Register.php:37
 msgid ""
@@ -45422,18 +45139,16 @@ msgid "The email address does not appear to be in a valid email address format"
 msgstr ""
 
 #: ../webSHOP/Register.php:49 ../webSHOP/includes/Login.php:14
-#, fuzzy
 msgid "The password must contain at least five characters"
-msgstr "يجب ان يحتوى اسم العضو على الاقل حرف واحد"
+msgstr ""
 
 #: ../webSHOP/Register.php:54
 msgid "The password and the confirmation do not match"
 msgstr ""
 
 #: ../webSHOP/Register.php:61 ../webSHOP/Register.php:450
-#, fuzzy
 msgid "The contact name must be entered"
-msgstr "اسم المجموعة يجب ان يحتوي علي الأقل علي حرف واحد"
+msgstr ""
 
 #: ../webSHOP/Register.php:66
 msgid ""
@@ -45454,9 +45169,8 @@ msgid "The phone number for the billing address is too short to be valid"
 msgstr ""
 
 #: ../webSHOP/Register.php:91
-#, fuzzy
 msgid "The delivery city address is too short to be valid"
-msgstr "اسم المجموعة يجب ان يحتوي علي الأقل علي حرف واحد"
+msgstr ""
 
 #: ../webSHOP/Register.php:193
 msgid "This customer branch could not be added because"
@@ -45475,9 +45189,8 @@ msgid "Thanks for registering as a"
 msgstr ""
 
 #: ../webSHOP/Register.php:247
-#, fuzzy
 msgid "customer"
-msgstr "العودة الى العملاء"
+msgstr ""
 
 #: ../webSHOP/Register.php:249
 msgid "The details that we have on record for you are as follows"
@@ -45568,119 +45281,98 @@ msgid "A password is required"
 msgstr ""
 
 #: ../webSHOP/Register.php:442
-#, fuzzy
 msgid "The password is expected to 5 characters or more long"
-msgstr "اسم المجموعة يجب ان يحتوي علي الأقل علي حرف واحد"
+msgstr ""
 
 #: ../webSHOP/Register.php:445
-#, fuzzy
 msgid "The confirmation password must be entered"
-msgstr "اسم المجموعة يجب ان يحتوي علي الأقل علي حرف واحد"
+msgstr ""
 
 #: ../webSHOP/Register.php:446
 msgid "The confrimation password and the password fields must be identical"
 msgstr ""
 
 #: ../webSHOP/Register.php:447
-#, fuzzy
 msgid "The confirmation password is expected to 5 characters or more long"
-msgstr "اسم المجموعة يجب ان يحتوي علي الأقل علي حرف واحد"
+msgstr ""
 
 #: ../webSHOP/Register.php:451
-#, fuzzy
 msgid "The contact name is expected to 3 characters or more long"
-msgstr "اسم المجموعة يجب ان يحتوي علي الأقل علي حرف واحد"
+msgstr ""
 
 #: ../webSHOP/Register.php:454
-#, fuzzy
 msgid "The billing building address or number must be entered"
-msgstr "اسم المجموعة يجب ان يحتوي علي الأقل علي حرف واحد"
+msgstr ""
 
 #: ../webSHOP/Register.php:455
-#, fuzzy
 msgid ""
 "The billing building address or number is expected to 2 characters or more "
 "long"
-msgstr "اسم المجموعة يجب ان يحتوي علي الأقل علي حرف واحد"
+msgstr ""
 
 #: ../webSHOP/Register.php:458
-#, fuzzy
 msgid "The billing street address must be entered"
-msgstr "اسم المجموعة يجب ان يحتوي علي الأقل علي حرف واحد"
+msgstr ""
 
 #: ../webSHOP/Register.php:459
-#, fuzzy
 msgid "The billing street address is expected to 4 characters or more long"
-msgstr "اسم المجموعة يجب ان يحتوي علي الأقل علي حرف واحد"
+msgstr ""
 
 #: ../webSHOP/Register.php:462
-#, fuzzy
 msgid "The billing address city must be entered"
-msgstr "اسم المجموعة يجب ان يحتوي علي الأقل علي حرف واحد"
+msgstr ""
 
 #: ../webSHOP/Register.php:463
-#, fuzzy
 msgid "The billing address city is expected to 4 characters or more long"
-msgstr "اسم المجموعة يجب ان يحتوي علي الأقل علي حرف واحد"
+msgstr ""
 
 #: ../webSHOP/Register.php:466
-#, fuzzy
 msgid "The billing address zip code must be entered"
-msgstr "اسم المجموعة يجب ان يحتوي علي الأقل علي حرف واحد"
+msgstr ""
 
 #: ../webSHOP/Register.php:467
-#, fuzzy
 msgid "The billing address zip code is expected to 3 characters or more long"
-msgstr "اسم المجموعة يجب ان يحتوي علي الأقل علي حرف واحد"
+msgstr ""
 
 #: ../webSHOP/Register.php:470
-#, fuzzy
 msgid "The phone number must be entered"
-msgstr "قسم الرقم يجب ان يكون عدد صحيح"
+msgstr ""
 
 #: ../webSHOP/Register.php:471
-#, fuzzy
 msgid "The phone must be at least 5 digits long"
-msgstr "اسم المجموعة يجب ان يحتوي علي الأقل علي حرف واحد"
+msgstr ""
 
 #: ../webSHOP/Register.php:472
 msgid "The phone number can only contain digits"
 msgstr ""
 
 #: ../webSHOP/Register.php:475
-#, fuzzy
 msgid "The delivery street address must be entered"
-msgstr "اسم المجموعة يجب ان يحتوي علي الأقل علي حرف واحد"
+msgstr ""
 
 #: ../webSHOP/Register.php:476
-#, fuzzy
 msgid "The delivery street address is expected to 4 characters or more long"
-msgstr "اسم المجموعة يجب ان يحتوي علي الأقل علي حرف واحد"
+msgstr ""
 
 #: ../webSHOP/Register.php:479
-#, fuzzy
 msgid "The delivery city must be entered"
-msgstr "اسم المجموعة يجب ان يحتوي علي الأقل علي حرف واحد"
+msgstr ""
 
 #: ../webSHOP/Register.php:480
-#, fuzzy
 msgid "The delivery city is expected to 3 characters or more long"
-msgstr "اسم المجموعة يجب ان يحتوي علي الأقل علي حرف واحد"
+msgstr ""
 
 #: ../webSHOP/Register.php:483
-#, fuzzy
 msgid "The delivery zip code must be entered"
-msgstr "يجب ان يكون القسم فى الحساب عدد صحيح"
+msgstr ""
 
 #: ../webSHOP/Register.php:484
-#, fuzzy
 msgid "The delivery zip code is expected to 3 characters or more long"
-msgstr "اسم المجموعة يجب ان يحتوي علي الأقل علي حرف واحد"
+msgstr ""
 
 #: ../webSHOP/Register.php:551
-#, fuzzy
 msgid "Update Your Account Details"
-msgstr "مجموعات العضوية"
+msgstr ""
 
 #: ../webSHOP/Register.php:632
 msgid "Billing Address - Number/Street"
@@ -45733,9 +45425,8 @@ msgid "Update Quantity"
 msgstr ""
 
 #: ../webSHOP/includes/DisplayShoppingCart.php:26
-#, fuzzy
 msgid "Remove item"
-msgstr "العودة الى العملاء"
+msgstr ""
 
 #: ../webSHOP/includes/DisplayShoppingCart.php:29
 msgid "Enter New Quantity"
@@ -45797,9 +45488,8 @@ msgid "web"
 msgstr ""
 
 #: ../webSHOP/includes/Functions.php:487
-#, fuzzy
 msgid "payment for order"
-msgstr "العودة الى العملاء"
+msgstr ""
 
 #: ../webSHOP/includes/Functions.php:487
 #: ../webSHOP/includes/PlaceOrder.php:303
@@ -45807,14 +45497,12 @@ msgid "Transaction ID"
 msgstr ""
 
 #: ../webSHOP/includes/Functions.php:752
-#, fuzzy
 msgid "Bank Account Details"
-msgstr "مجموعات العضوية"
+msgstr ""
 
 #: ../webSHOP/includes/GetCustomerDetails.php:46
-#, fuzzy
 msgid "An error occurred accessing the default customer configuration"
-msgstr "حدث خطأ اثناء تحديث مجموعة العضو"
+msgstr ""
 
 #: ../webSHOP/includes/GetCustomerDetails.php:52
 msgid "The customer defaults have not yet been set up"
@@ -45844,14 +45532,12 @@ msgid "Logged in as"
 msgstr ""
 
 #: ../webSHOP/includes/header.php:232
-#, fuzzy
 msgid "Update Account Details"
-msgstr "مجموعات العضوية"
+msgstr ""
 
 #: ../webSHOP/includes/header.php:239
-#, fuzzy
 msgid "Enter Email"
-msgstr "أدخل المعلومات"
+msgstr ""
 
 #: ../webSHOP/includes/Login.php:31
 msgid ""
@@ -45882,9 +45568,8 @@ msgid "Total Items Ordered Value"
 msgstr ""
 
 #: ../webSHOP/includes/PlaceOrder.php:297
-#, fuzzy
 msgid "Payment information"
-msgstr "أدخل المعلومات"
+msgstr ""
 
 #: ../webSHOP/includes/PlaceOrder.php:303
 #: ../webSHOP/includes/PlaceOrder.php:314
@@ -45912,9 +45597,8 @@ msgid ""
 msgstr ""
 
 #: ../webSHOP/includes/PlaceOrder.php:337
-#, fuzzy
 msgid "Shipment information"
-msgstr "أدخل المعلومات"
+msgstr ""
 
 #: ../webSHOP/includes/PlaceOrder.php:339
 msgid "Your order will be shipped to you shortly via"
@@ -45972,18 +45656,16 @@ msgid "Paypal Fees for Transaction ID"
 msgstr ""
 
 #: ../webSHOP/includes/ProcessPayPalPayment.php:136
-#, fuzzy
 msgid ""
 "The SQL that failed to insert the Paypal transaction fee from the bank "
 "account debit was"
-msgstr "الطلب المستخدم لإضافة مجموعة الحسابات هي"
+msgstr ""
 
 #: ../webSHOP/includes/ProcessPayPalPayment.php:155
-#, fuzzy
 msgid ""
 "The SQL that failed to insert the Paypal transaction fee for the commission "
 "account credit was"
-msgstr "الطلب المستخدم لإضافة مجموعة الحسابات هي"
+msgstr ""
 
 #: ../webSHOP/includes/session.php:131
 msgid "Pay Pal"
@@ -45996,35 +45678,3 @@ msgstr ""
 #: ../webSHOP/includes/session.php:137
 msgid "Bank Transfer"
 msgstr ""
-
-#, fuzzy
-#~ msgid "The input must be postive integer"
-#~ msgstr "يجب ان يكون القسم فى الحساب عدد صحيح"
-
-#, fuzzy
-#~ msgid "The sales category translation must be forty characters or less long"
-#~ msgstr "اسم المجموعة يجب ان يحتوي علي الأقل علي حرف واحد"
-
-#, fuzzy
-#~ msgid "The translation has been updated"
-#~ msgstr "تم حذف المجموعة"
-
-#, fuzzy
-#~ msgid "The sales catgeory translation has been added"
-#~ msgstr "تم حذف المجموعة"
-
-#, fuzzy
-#~ msgid "Are you sure you wish to delete this translation?"
-#~ msgstr "حدث خطأ ما اثناء حذف مجموعة الحسابات"
-
-#, fuzzy
-#~ msgid "The SQL to update the contract BOM records failed"
-#~ msgstr "الطلب المستخدم لإسترجاع المعلومات كان"
-
-#, fuzzy
-#~ msgid "The SQL to update the tender records failed"
-#~ msgstr "الطلب المستخدم لإضافة مجموعة الحسابات هي"
-
-#, fuzzy
-#~ msgid "The contain spaces nor any of the following characters"
-#~ msgstr "لا يمكن ان يحتوى اسم العضوية على الحرف"

@@ -1,9 +1,8 @@
 webERP Change Log
 
+8/2/14 Release 4.11.3
 
-
-10/2/14 Release 4.11.3
-
+8/2/14 Phil: prevented GL posting to control accounts from Payments.php and CustomerReceipts.php where the configuration option to stop postings to these accounts is set.
 8/2/14 Phil: Used Tim's code as the basis to allow deletion of internal stock request items.
 6/2/14 Eduardo Marzolla: geocode integration geocode with google API v3. You need to get a API Key from google. The parameters to geocode must be: geocode key: your API key geocode lat: your lat geocode long: your long geocode height: 100 geocode width: 100 host geocode: maps.googleapis.com
 6/2/14 icedlava: Payments.php - correct javascript to prevent error popup on every manual GL code entry, correct spacing.
