@@ -400,9 +400,9 @@ $MenuItems['FA']['Reports']['URL'] = array(	'/FixedAssetRegister.php',
 											'/MaintenanceUserSchedule.php',
 											'/MaintenanceReminders.php');
 
-$MenuItems['FA']['Maintenance']['Caption'] = array(	_('Asset Categories Maintenance'),
+$MenuItems['FA']['Maintenance']['Caption'] = array(	_('Fixed Asset Category Maintenance'),
 													_('Add or Maintain Asset Locations'),
-													_('Maintenance Tasks'));
+													_('Fixed Asset Maintenance Tasks'));
 
 $MenuItems['FA']['Maintenance']['URL'] = array(	'/FixedAssetCategories.php',
 												'/FixedAssetLocations.php',

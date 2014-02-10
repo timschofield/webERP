@@ -313,7 +313,7 @@ echo '</select></td>
 
 DB_data_seek($PnLAccountsResult,0);
 echo '<tr>
-		<td>' .  _('Profit or Loss on Disposal GL Code:') . '</td>
+		<td>' .  _('Profit or Loss on Disposal GL Code') . ':</td>
 		<td><select name="DisposalAct" required="required" title="' . _('Select the general ledger account where the profit or loss on disposal on assets of this category should be posted to. Only profit and loss accounts can be selected') . '" >';
 while ($myrow = DB_fetch_array($PnLAccountsResult)) {
 	if (isset($_POST['DisposalAct']) and $myrow['accountcode']==$_POST['DisposalAct']) {

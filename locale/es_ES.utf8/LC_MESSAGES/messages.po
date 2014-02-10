@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-02-08 17:33+1300\n"
-"PO-Revision-Date: 2014-01-01 09:44-0600\n"
+"PO-Revision-Date: 2014-02-10 08:53-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -4434,7 +4434,7 @@ msgstr ""
 
 #: ConfirmDispatch_Invoice.php:851
 msgid "The asset number being disposed of is:"
-msgstr ""
+msgstr "El número de activo a ser eliminado es:"
 
 #: ConfirmDispatch_Invoice.php:864 ConfirmDispatch_Invoice.php:941
 #: RecurringSalesOrdersProcess.php:323
@@ -11582,7 +11582,7 @@ msgstr "Crear una Nueva Compañía Financiera"
 
 #: FixedAssetCategories.php:7
 msgid "Fixed Asset Category Maintenance"
-msgstr "Administrar Categorías de Activos Fijos"
+msgstr "Administrar categorías de activos fijos"
 
 #: FixedAssetCategories.php:16
 msgid "Fixed Asset Categories"
@@ -11727,7 +11727,7 @@ msgstr ""
 
 #: FixedAssetCategories.php:287
 msgid "Fixed Asset Cost GL Code"
-msgstr "Código Contable de Costo del Activo Fijo"
+msgstr "Cuenta contable del costo del activo fijo"
 
 #: FixedAssetCategories.php:288
 msgid ""
@@ -11737,7 +11737,7 @@ msgstr ""
 
 #: FixedAssetCategories.php:301
 msgid "Profit and Loss Depreciation GL Code"
-msgstr "Código de la Cuenta de Amortización en Ganancias y Pérdidas"
+msgstr "Cuenta contable de la depreciación en el Estado de Resultados"
 
 #: FixedAssetCategories.php:302
 msgid ""
@@ -11747,7 +11747,7 @@ msgstr ""
 
 #: FixedAssetCategories.php:316
 msgid "Profit or Loss on Disposal GL Code:"
-msgstr "Código Contable de Ganancias y Perdidas en Descarte:"
+msgstr "Código contable de la venta del activo fijo en el Estado de Resultados"
 
 #: FixedAssetCategories.php:317
 msgid ""
@@ -11758,7 +11758,8 @@ msgstr ""
 
 #: FixedAssetCategories.php:330
 msgid "Balance Sheet Accumulated Depreciation GL Code"
-msgstr "Código Contable de la Depreciación Acumulada en el Balance "
+msgstr ""
+"Código contable de la depreciación acumulada en el Estado de Situación "
 
 #: FixedAssetCategories.php:331
 msgid ""
@@ -16348,7 +16349,7 @@ msgstr ""
 
 #: MaintenanceTasks.php:7
 msgid "Fixed Asset Maintenance Tasks"
-msgstr ""
+msgstr "Tareas de mantenimiento de activos fijos"
 
 #: MaintenanceTasks.php:19 MaintenanceTasks.php:45
 msgid "The days before a task falls due is expected to be a postive"
@@ -16377,7 +16378,7 @@ msgstr ""
 
 #: MaintenanceTasks.php:96 MaintenanceUserSchedule.php:51
 msgid "Last Completed"
-msgstr ""
+msgstr "Última completada"
 
 #: MaintenanceTasks.php:97 MaintenanceUserSchedule.php:53
 msgid "Person"
@@ -16398,15 +16399,15 @@ msgstr ""
 
 #: MaintenanceTasks.php:172
 msgid "Asset to Maintain"
-msgstr ""
+msgstr "Activo a mantener"
 
 #: MaintenanceTasks.php:187
 msgid "Task Description"
-msgstr ""
+msgstr "Descripción de la tarea"
 
 #: MaintenanceTasks.php:192
 msgid "Days Before Task Due"
-msgstr ""
+msgstr "Días antes de tarea pendiente"
 
 #: MaintenanceTasks.php:197
 msgid "Responsible"
@@ -16422,7 +16423,7 @@ msgstr ""
 
 #: MaintenanceTasks.php:240
 msgid "Enter New Task"
-msgstr ""
+msgstr "Introducir nueva tarea"
 
 #: MaintenanceUserSchedule.php:7
 msgid "My Maintenance Jobs"
@@ -43256,7 +43257,7 @@ msgstr ""
 
 #: includes/MainMenuLinksArray.php:403
 msgid "Asset Categories Maintenance"
-msgstr "Administrar Categorías de Activos"
+msgstr "Administrar categorías de activos"
 
 #: includes/MainMenuLinksArray.php:404
 msgid "Add or Maintain Asset Locations"
@@ -43264,7 +43265,7 @@ msgstr "Agregar o Administrar Ubicaciones de Activos"
 
 #: includes/MainMenuLinksArray.php:405
 msgid "Maintenance Tasks"
-msgstr ""
+msgstr "Tareas de mantenimiento"
 
 #: includes/MainMenuLinksArray.php:411
 msgid "Assign Cash to PC Tab"
