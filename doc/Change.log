@@ -1,5 +1,5 @@
 webERP Change Log
-
+14/2/2014 Exson: Fixed the Earliest date calculation when is over Friday cutoff Time in DateFunctions.inc.
 8/2/14 Release 4.11.3
 
 8/2/14 Phil: prevented GL posting to control accounts from Payments.php and CustomerReceipts.php where the configuration option to stop postings to these accounts is set.
