@@ -1876,7 +1876,7 @@ msgstr ""
 
 #: BankMatching.php:280 Payments.php:1080
 msgid "Cheque No"
-msgstr ""
+msgstr "Check No"
 
 #: BankMatching.php:281 ShipmentCosting.php:537 ShipmentCosting.php:614
 #: SupplierAllocations.php:457
@@ -2009,11 +2009,11 @@ msgstr ""
 
 #: BankReconciliation.php:209
 msgid "The unpresented cheques could not be retrieved by the SQL because"
-msgstr ""
+msgstr "The unpresented checks could not be retrieved by the SQL because"
 
 #: BankReconciliation.php:213
 msgid "Add back unpresented cheques"
-msgstr ""
+msgstr "Add back unpresented checks"
 
 #: BankReconciliation.php:219 BankReconciliation.php:296
 #: CustomerAllocations.php:349 CustomerAllocations.php:379
@@ -2058,7 +2058,7 @@ msgstr ""
 
 #: BankReconciliation.php:268
 msgid "Total of all unpresented cheques"
-msgstr ""
+msgstr "Total of all unpresented checks"
 
 #: BankReconciliation.php:287
 msgid "The uncleared deposits could not be retrieved by the SQL because"
@@ -16992,7 +16992,7 @@ msgstr ""
 
 #: Payments.php:23
 msgid "Payment Cancelled since cheque was not printed"
-msgstr ""
+msgstr "Payment Cancelled since check was not printed"
 
 #: Payments.php:47
 msgid "A bank account must be selected to make this payment from"
@@ -17040,11 +17040,11 @@ msgstr ""
 
 #: Payments.php:300
 msgid "Print Cheque using pre-printed stationery"
-msgstr ""
+msgstr "Print Check using pre-printed stationery"
 
 #: Payments.php:307
 msgid "Has the cheque been printed"
-msgstr ""
+msgstr "Has the check been printed"
 
 #: Payments.php:312
 msgid "Yes / Continue"
@@ -17131,7 +17131,7 @@ msgstr ""
 
 #: Payments.php:649
 msgid "The Cheque/Voucher number has already been used"
-msgstr ""
+msgstr "The Check/Voucher number has already been used"
 
 #: Payments.php:649 Payments.php:679
 msgid "This GL analysis item could not be added"
@@ -17139,7 +17139,7 @@ msgstr ""
 
 #: Payments.php:679
 msgid "The cheque number has already been used"
-msgstr ""
+msgstr "The check number has already been used"
 
 #: Payments.php:731
 msgid "SQL used to retrieve the bank account name was"
@@ -17197,7 +17197,7 @@ msgstr ""
 
 #: Payments.php:913
 msgid "Cheque Number"
-msgstr ""
+msgstr "Check Number"
 
 #: Payments.php:914
 msgid "(if using pre-printed stationery)"
@@ -17235,7 +17235,7 @@ msgstr ""
 
 #: Payments.php:1042
 msgid "Cheque/Voucher Number"
-msgstr ""
+msgstr "Check/Voucher Number"
 
 #: Payments.php:1104
 msgid "Are you sure you wish to delete this payment analysis item?"
@@ -18087,11 +18087,11 @@ msgstr ""
 
 #: PDFChequeListing.php:40
 msgid "Enter the date from which cheques are to be listed"
-msgstr ""
+msgstr "Enter the date from which checks are to be listed"
 
 #: PDFChequeListing.php:43
 msgid "Enter the date to which cheques are to be listed"
-msgstr ""
+msgstr "Enter the date to which checks are to be listed"
 
 #: PDFChequeListing.php:62 PDFDeliveryDifferences.php:73 PDFDIFOT.php:77
 msgid "Email the report off"
@@ -18112,11 +18112,11 @@ msgstr ""
 
 #: PDFChequeListing.php:126
 msgid "Cheque Listing"
-msgstr ""
+msgstr "Check Listing"
 
 #: PDFChequeListing.php:127
 msgid "Cheque listing from"
-msgstr ""
+msgstr "Check listing from"
 
 #: PDFChequeListing.php:151
 msgid "An error occurred getting the GL transactions"
@@ -18124,7 +18124,7 @@ msgstr ""
 
 #: PDFChequeListing.php:184
 msgid "CHEQUES"
-msgstr ""
+msgstr "CHECKS"
 
 #: PDFChequeListing.php:195
 msgid "Payments check list"
@@ -21190,7 +21190,7 @@ msgstr ""
 
 #: PrintCheque.php:18 PrintCheque.php:19
 msgid "Print Cheque"
-msgstr ""
+msgstr "Print Check"
 
 #: PrintCheque.php:32
 msgid "Can not get hundreds name"
@@ -21206,7 +21206,7 @@ msgstr ""
 
 #: PrintCheque.php:82 PrintCheque.php:96
 msgid "Cheque No."
-msgstr ""
+msgstr "Check No."
 
 #: PrintCheque.php:113
 msgid "Number is out of the range of numbers that can be expressed in words"
@@ -21242,7 +21242,7 @@ msgstr ""
 
 #: PrintCheque.php:144
 msgid "four"
-msgstr "four"
+msgstr ""
 
 #: PrintCheque.php:145
 msgid "five"
@@ -36869,7 +36869,7 @@ msgstr ""
 
 #: Z_ImportGLTransactions.php:184
 msgid "Cheque"
-msgstr ""
+msgstr "Check"
 
 #: Z_ImportGLTransactions.php:203
 msgid "The total of the transactions must balance back to zero"
@@ -40411,7 +40411,7 @@ msgstr ""
 
 #: includes/MainMenuLinksArray.php:349
 msgid "Cheque Payments Listing"
-msgstr ""
+msgstr "Check Payments Listing"
 
 #: includes/MainMenuLinksArray.php:350
 msgid "Daily Bank Transactions"

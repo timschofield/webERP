@@ -184,7 +184,7 @@ if (isset($_POST['UpdateItems'])){
 				prnMsg($_POST['OldReference' .$i] . ': ' , _('The new batch or serial number reference has not been entered - a reference is required'),'error');
 				$InputError=true;
 			}
-			if (!is_numeric($_POST['Quantity' . $i])){
+			if (!is_numeric(filter_number_format($_POST['Quantity' . $i]))){
 				prnMsg(_('The quantity for the batch must be numeric'),'error');
 				$InputError=true;
 			}
