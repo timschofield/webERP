@@ -320,8 +320,8 @@ else {
 				INNER JOIN currencies
 				ON suppliers.currcode=currencies.currabrev
 				WHERE purchorderdetails.completed=0
-				AND orddate>='" . FormatDateForSQL($_POST['DateFrom']) . "'
-				AND orddate<='" . FormatDateForSQL($_POST['DateTo']) . "'
+				AND orddate>='" . $DateFrom . "'
+				AND orddate<='" . $DateTo . "'
 				AND purchorders.orderno='" . $OrderNumber . "'
 				GROUP BY purchorders.orderno ASC,
 					suppliers.suppname,
@@ -358,8 +358,8 @@ else {
 						INNER JOIN currencies
 						ON suppliers.currcode=currencies.currabrev
 						WHERE purchorderdetails.completed=0
-						AND orddate>='" . FormatDateForSQL($_POST['DateFrom']) . "'
-						AND orddate<='" . FormatDateForSQL($_POST['DateTo']) . "'
+						AND orddate>='" . $DateFrom . "'
+						AND orddate<='" . $DateTo . "'
 						AND purchorderdetails.itemcode='" . $SelectedStockItem . "'
 						AND purchorders.supplierno='" . $SelectedSupplier . "'
 						AND purchorders.intostocklocation = '" . $_POST['StockLocation'] . "'
@@ -394,8 +394,8 @@ else {
 						INNER JOIN currencies
 						ON suppliers.currcode=currencies.currabrev
 						WHERE purchorderdetails.completed=0
-						AND orddate>='" . FormatDateForSQL($_POST['DateFrom']) . "'
-						AND orddate<='" . FormatDateForSQL($_POST['DateTo']) . "'
+						AND orddate>='" . $DateFrom . "'
+						AND orddate<='" . $DateTo . "'
 						AND purchorders.supplierno='" . $SelectedSupplier . "'
 						AND purchorders.intostocklocation = '" . $_POST['StockLocation'] . "'
 						" . $StatusCriteria . "
@@ -435,8 +435,8 @@ else {
 						INNER JOIN currencies
 						ON suppliers.currcode=currencies.currabrev
 						WHERE purchorderdetails.completed=0
-						AND orddate>='" . FormatDateForSQL($_POST['DateFrom']) . "'
-						AND orddate<='" . FormatDateForSQL($_POST['DateTo']) . "'
+						AND orddate>='" . $DateFrom . "'
+						AND orddate<='" . $DateTo . "'
 						AND purchorderdetails.itemcode='" . $SelectedStockItem . "'
 						AND purchorders.intostocklocation = '" . $_POST['StockLocation'] . "'
 						" . $StatusCriteria . "
@@ -470,8 +470,8 @@ else {
 						INNER JOIN currencies
 						ON suppliers.currcode=currencies.currabrev
 						WHERE purchorderdetails.completed=0
-						AND orddate>='" . FormatDateForSQL($_POST['DateFrom']) . "'
-						AND orddate<='" . FormatDateForSQL($_POST['DateTo']) . "'
+						AND orddate>='" . $DateFrom . "'
+						AND orddate<='" . $DateTo . "'
 						AND purchorders.intostocklocation = '" . $_POST['StockLocation'] . "'
 						" . $StatusCriteria . "
 						GROUP BY purchorders.orderno ASC,
