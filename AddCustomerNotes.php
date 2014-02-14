@@ -203,10 +203,10 @@ if (!isset($_GET['delete'])) {
 	echo '<tr>
 			<td>' . _('Contact Note'). '</td>';
 	if (isset($_POST['Note'])) {
-		echo '<td><textarea name="Note" autofocus required rows="3" cols="32">' .$_POST['Note'] . '</textarea></td>
+		echo '<td><textarea name="Note" autofocus="autofocus" required="required" rows="3" cols="32">' .$_POST['Note'] . '</textarea></td>
 			</tr>';
 	} else {
-		echo '<td><textarea name="Note" autofocus required rows="3" cols="32"></textarea></td>
+		echo '<td><textarea name="Note" autofocus="autofocus" required="required" rows="3" cols="32"></textarea></td>
 			</tr>';
 	}
 	echo '<tr>
@@ -221,19 +221,19 @@ if (!isset($_GET['delete'])) {
 	echo '<tr>
 			<td>' . _('Date')  . '</td>';
 	if (isset($_POST['NoteDate'])) {
-		echo '<td><input type="date" required name="NoteDate" class="date" alt="' .$_SESSION['DefaultDateFormat']. '" id="datepicker" value="'.ConvertSQLDate($_POST['NoteDate']).'" size="10" maxlength="10" /></td>
+		echo '<td><input type="text" required name="NoteDate" class="date" alt="' .$_SESSION['DefaultDateFormat']. '" id="datepicker" value="'.ConvertSQLDate($_POST['NoteDate']).'" size="10" maxlength="10" /></td>
 			</tr>';
 	} else {
-		echo '<td><input type="date" required name="NoteDate" class="date" alt="' .$_SESSION['DefaultDateFormat']. '" id="datepicker" size="10" maxlength="10" /></td>
+		echo '<td><input type="text" required name="NoteDate" class="date" alt="' .$_SESSION['DefaultDateFormat']. '" id="datepicker" size="10" maxlength="10" /></td>
 			</tr>';
 	}
 	echo '<tr>
 			<td>' .  _('Priority'). '</td>';
 	if (isset($_POST['Priority'])) {
-		echo '<td><input type="number" required min="1" name="Priority" class="number" value="' . $_POST['Priority']. '" size="1" maxlength="3" /></td>
+		echo '<td><input type="text" class="number" required="required" name="Priority" class="number" value="' . $_POST['Priority']. '" size="1" maxlength="3" /></td>
 			</tr>';
 	} else {
-		echo '<td><input type=number required min="1" name="Priority" value="1"  size="1" maxlength="3"/></td>
+		echo '<td><input type="text" class="number" required="required"  name="Priority" value="1"  size="1" maxlength="3"/></td>
 			</tr>';
 	}
 	echo '<tr>

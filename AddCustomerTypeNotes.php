@@ -201,7 +201,7 @@ if (!isset($_GET['delete'])) {
 
 	echo '<tr>
 			<td>' . _('Contact Group Note').':</td>
-			<td><textarea name="Note" autofocus required rows="3" cols="32">' .  $_POST['Note'] . '</textarea></td>
+			<td><textarea name="Note" autofocus="autofocus" required="required" rows="3" cols="32">' .  $_POST['Note'] . '</textarea></td>
 		</tr>
 		<tr>
 			<td>' .  _('Web site').':</td>
@@ -209,11 +209,11 @@ if (!isset($_GET['delete'])) {
 		</tr>
 		<tr>
 			<td>' .  _('Date').':</td>
-			<td><input type="date" required name="NoteDate" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" value="'. $_POST['NoteDate']. '" size="10" maxlength="10" /></td>
+			<td><input type="text" required="required" name="NoteDate" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" value="'. $_POST['NoteDate']. '" size="10" maxlength="10" /></td>
 		</tr>
 		<tr>
 			<td>' .  _('Priority').':</td>
-			<td><input type="number" required min="1" class="number" name="Priority" value="'. $_POST['Priority'] .'" size="1" maxlength="3" /></td>
+			<td><input type="text" class="number" name="Priority" value="'. $_POST['Priority'] .'" size="1" maxlength="3" /></td>
 		</tr>
 		</table>
 		<br />
