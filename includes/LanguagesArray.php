@@ -66,6 +66,11 @@ $LanguagesArray['hi_IN.utf8']['WindowsLocale'] = 'hindi';
 $LanguagesArray['hi_IN.utf8']['DecimalPoint'] = '.';
 $LanguagesArray['hi_IN.utf8']['ThousandsSeparator'] = ',';
 
+$LanguagesArray['mr_IN.utf8']['LanguageName'] = _('Marathi');
+$LanguagesArray['mr_IN.utf8']['WindowsLocale'] = 'marathi';
+$LanguagesArray['mr_IN.utf8']['DecimalPoint'] = '.';
+$LanguagesArray['mr_IN.utf8']['ThousandsSeparator'] = ',';
+
 $LanguagesArray['hr_HR.utf8']['LanguageName'] = 'Magyar';
 $LanguagesArray['hr_HR.utf8']['WindowsLocale'] = 'hungarian';
 $LanguagesArray['hr_HR.utf8']['DecimalPoint'] = ',';

@@ -26,7 +26,7 @@ If (isset($_POST['Language'])) {
 //Check users' locale format via their language
 //Then pass this information to the js for number validation purpose
 
-$Collect = array('US'=> array('en_US.utf8','en_GB.utf8','ja_JP.utf8','hi_IN.utf8','sw_KE.utf8','tr_TR.utf8','vi_VN.utf8','zh_CN.utf8','zh_HK.utf8','zh_TW.utf8'),
+$Collect = array('US'=> array('en_US.utf8','en_GB.utf8','ja_JP.utf8','hi_IN.utf8','mr_IN.utf8','sw_KE.utf8','tr_TR.utf8','vi_VN.utf8','zh_CN.utf8','zh_HK.utf8','zh_TW.utf8'),
 	'IN'=>array('en_IN.utf8'),
 	'EE'=>array('ar_EG.utf8','cz_CZ.utf8','fr_CA.utf8','fr_FR.utf8','hr_HR.utf8','pl_PL.utf8','ru_RU.utf8','sq_AL.utf8','sv_SE.utf8'),
 	'FR'=>array('ar_EG.utf8','cz_CZ.utf8','fr_CA.utf8','fr_FR.utf8','hr_HR.utf8','pl_PL.utf8','ru_RU.utf8','sq_AL.utf8','sv_SE.utf8'),
@@ -39,7 +39,6 @@ foreach ($Collect as $Key=>$Value){
 	}
 
 }
-
 
 /*Since LanguagesArray requires the function _() to translate the language names - we must provide a substitute if it doesn't exist aready before we include includes/LanguagesArray.php
  * */

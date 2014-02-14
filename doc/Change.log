@@ -1,5 +1,8 @@
 webERP Change Log
 
+
+15/2/14 Phil: Fixed POSDataCreation script to send all current prices in the POS currency including debtorno info so the POS can now deal with customer specific prices correctly.
+15/2/14 Andrew Galuski: WorkOrderStatus.php now shows requirements for multiple parent item works orders.
 12/2/14 Andrew Galuski: WOSerialNos.php - added filter number format on quantity
 12/2/14 Exson: Fixed the Earliest date calculation when is over Friday cutoff Time in DateFunctions.inc.
 

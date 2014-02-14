@@ -106,7 +106,8 @@ echo '<table cellpadding="2" class="selection">
 										qtypu
 									FROM worequirements INNER JOIN stockmaster
 									ON worequirements.stockid=stockmaster.stockid
-									WHERE wo='" . $SelectedWO . "'",
+									WHERE wo='" . $SelectedWO . "'
+									AND worequirements.parentstockid='" . $StockID . "'",
 									$db);
 
 	while ($RequirementsRow = DB_fetch_array($RequirmentsResult)){

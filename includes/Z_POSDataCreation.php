@@ -25,7 +25,7 @@ function Create_POS_Data_Full ($POSDebtorNo, $POSBranchCode, $PathPrefix, $db) {
 	}
 	$CurrCode = $CustomerRow['currcode'];
 	$SalesType = $CustomerRow['salestype'];
-
+	
 
 	$FileHandle = fopen($PathPrefix . $ReportDir . '/POS.sql','w');
 
@@ -120,25 +120,39 @@ function Create_POS_Data_Full ($POSDebtorNo, $POSBranchCode, $PathPrefix, $db) {
 
 	}
 	fwrite($FileHandle,"DELETE FROM stockmaster;\n");
+
+
 	$result = DB_query("SELECT stockid, categoryid, description, longdescription, units, barcode, taxcatid, decimalplaces FROM stockmaster WHERE (mbflag='B' OR mbflag='M') AND discontinued=0 AND controlled=0",$db);
+
 	while ($myrow = DB_fetch_array($result)) {
 
-		  fwrite($FileHandle,"INSERT INTO stockmaster VALUES ('" . SQLite_Escape ($myrow['stockid']) . "', '" . SQLite_Escape ($myrow['categoryid']) . "', '" . SQLite_Escape ($myrow['description']) . "', '" . SQLite_Escape (str_replace("\n", '', $myrow['longdescription'])) . "', '" . SQLite_Escape ($myrow['units']) . "', '" . SQLite_Escape ($myrow['barcode']) . "', '" . $myrow['taxcatid'] . "', '" . $myrow['decimalplaces'] . "');\n");
-
-		  fwrite($FileHandle,"DELETE FROM prices WHERE stockid='" . $myrow['stockid'] . "';\n");
-
-	      $Price = GetPriceQuick ($myrow['stockid'], $POSDebtorNo, $POSBranchCode, $DefaultPriceList, $db);
-	      if ($Price!=0) {
-		  	  fwrite($FileHandle,"INSERT INTO prices (stockid, currabrev, typeabbrev, price) VALUES('" . $myrow['stockid'] . "', '" . $CurrCode . "', '" . $SalesType . "', '" . $Price . "');\n");
-  		  }
-
+		fwrite($FileHandle,"INSERT INTO stockmaster VALUES ('" . SQLite_Escape ($myrow['stockid']) . "', '" . SQLite_Escape ($myrow['categoryid']) . "', '" . SQLite_Escape ($myrow['description']) . "', '" . SQLite_Escape (str_replace("\n", '', $myrow['longdescription'])) . "', '" . SQLite_Escape ($myrow['units']) . "', '" . SQLite_Escape ($myrow['barcode']) . "', '" . $myrow['taxcatid'] . "', '" . $myrow['decimalplaces'] . "');\n");
 	}
+	fwrite($FileHandle,"DELETE FROM prices;\n");
+	$result = DB_query("SELECT prices.stockid,
+								prices.typeabbrev,
+								prices.currabrev,
+								prices.debtorno,
+								prices.price
+							FROM prices INNER JOIN stockmaster
+								ON prices.stockid=stockmaster.stockid
+							WHERE (mbflag='B' OR mbflag='M')
+							AND discontinued=0
+							AND controlled=0
+							AND prices.branchcode=''
+							AND prices.currabrev='" . $CurrCode . "'
+							AND prices.startdate <='" . Date('Y-m-d:23.59') . "'
+							AND (prices.enddate >='" . Date('Y-m-d:23.59') . "' OR prices.enddate='0000-00-00')",$db);
+	while ($myrow = DB_fetch_array($result)) {
+
+		fwrite($FileHandle,"INSERT INTO prices VALUES ('" . SQLite_Escape ($myrow['stockid']) . "', '" . SQLite_Escape ($myrow['typeabbrev']) . "', '" . SQLite_Escape ($myrow['currabrev']) . "', '" . SQLite_Escape ($myrow['debtorno']) . "', '" . SQLite_Escape ($myrow['price']) . "', '');\n");
+	}
+		
 	fwrite($FileHandle,"DELETE FROM debtorsmaster;\n");
 	$result = DB_query("SELECT debtorno, name, currcode, salestype, holdreason, paymentterms, discount, creditlimit, discountcode FROM debtorsmaster WHERE currcode='". $CurrCode . "'",$db);
 	while ($myrow = DB_fetch_array($result)) {
 
 		  fwrite($FileHandle,"INSERT INTO debtorsmaster VALUES ('" . $myrow['debtorno'] . "', '" . SQLite_Escape ($myrow['name']) . "', '" . $myrow['currcode'] . "', '" . $myrow['salestype'] . "', '" . $myrow['holdreason'] . "', '" . SQLite_Escape ($myrow['paymentterms']) . "', '" . $myrow['discount'] . "', '" . $myrow['creditlimit'] . "', '" . $myrow['discountcode'] . "');\n");
-
 	}
 	fwrite($FileHandle,"DELETE FROM custbranch;\n");
 	$result = DB_query("SELECT branchcode, debtorsmaster.debtorno, brname, contactname, specialinstructions,taxgroupid FROM custbranch INNER JOIN debtorsmaster ON custbranch.debtorno=debtorsmaster.debtorno WHERE debtorsmaster.currcode='". $CurrCode . "'",$db);
@@ -195,59 +209,4 @@ function Delete_POS_Data($PathPrefix, $db){
 	}
 }
 
-function GetPriceQuick ($StockID, $DebtorNo, $BranchCode, $DefaultPriceList,$db){
-
-	$sql="SELECT prices.price, prices.debtorno, prices.branchcode, prices.enddate, prices.typeabbrev
-			FROM prices INNER JOIN debtorsmaster
-			ON prices.currabrev = debtorsmaster.currcode
-			WHERE debtorsmaster.debtorno='" . $DebtorNo . "'
-			AND (prices.typeabbrev = debtorsmaster.salestype OR prices.typeabbrev='" . $DefaultPriceList . "')
-			AND prices.stockid = '" . $StockID . "'
-			AND (prices.debtorno=debtorsmaster.debtorno OR prices.debtorno='')
-			AND (prices.branchcode='" . $BranchCode . "' OR prices.branchcode='')
-			AND prices.startdate <='" . Date('Y-m-d:23.59') . "'
-			AND (prices.enddate >='" . Date('Y-m-d:23.59') . "' OR prices.enddate='0000-00-00')";
-
-	$ErrMsg =  _('There is a problem in retrieving the pricing information for part') . ' ' . $StockID  . ' ' . _('and for Customer') . ' ' . $DebtorNo .  ' ' . _('the error message returned by the SQL server was');
-	$result = DB_query($sql, $db,$ErrMsg);
-	if (DB_num_rows($result)==0){
-		return 0;
-	} else {
-		$PricesArray = array();
-		$RankArray = array();
-		$i = 0;
-		while ($myrow=DB_fetch_array($result)){
-			$Prices[$i]['Price'] = $myrow['price'];
-			$Prices[$i]['DebtorNo'] = $myrow['debtorno'];
-			$Prices[$i]['BranchCode'] = $myrow['branchcode'];
-			$Prices[$i]['EndDate'] = $myrow['enddate'];
-			if ($myrow['debtorno']==$DebtorNo AND $myrow['branchcode']==$BranchCode AND $myrow['enddate']!='0000-00-00') {
-				$RankArray[$i] = 1;
-			} elseif ($myrow['debtorno']==$DebtorNo AND $myrow['branchcode']==$BranchCode) {
-				$RankArray[$i] = 2;
-			} elseif ($myrow['debtorno']==$DebtorNo AND $myrow['branchcode']=='' AND $myrow['enddate']!='0000-00-00'){
-				$RankArray[$i] = 3;
-			} elseif ($myrow['debtorno']==$DebtorNo AND $myrow['branchcode']=='' ){
-				$RankArray[$i] = 4;
-			} elseif ($myrow['debtorno']=='' AND $myrow['branchcode']=='' AND $myrow['typeabbrev']!=$DefaultPriceList AND $myrow['enddate']!='0000-00-00'){
-				$RankArray[$i] = 5;
-			} elseif ($myrow['debtorno']=='' AND $myrow['branchcode']=='' AND $myrow['typeabbrev']!=$DefaultPriceList){
-				$RankArray[$i] = 6;
-			} elseif ($myrow['debtorno']=='' AND $myrow['branchcode']=='' AND $myrow['enddate']!='0000-00-00'){
-				$RankArray[$i] = 7;
-			}  elseif ($myrow['debtorno']=='' AND $myrow['branchcode']==''){
-				$RankArray[$i] = 8;
-			}
-			$i++;
-		}
-		$LowestRank = 10;
-		foreach ($RankArray as $ArrayElement=>$Ranking) {
-			if ($Ranking < $LowestRank){
-				$LowestRankElement = $ArrayElement;
-				$LowestRank = $Ranking;
-			}
-		}
-		return $Prices[$ArrayElement]['Price'];
-	}
-}
 ?>
