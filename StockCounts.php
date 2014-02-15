@@ -32,13 +32,13 @@ if ($_GET['Action']=='View'){
 	echo '<td>' . _('Entering Counts')  . '</td><td> <a href="' . $RootPath . '/StockCounts.php?&amp;Action=View">' . _('View Entered Counts') . '</a></td>';
 }
 echo '</tr></table><br />';
-
 if ($_GET['Action'] == 'Enter'){
 
 	if (isset($_POST['EnterCounts'])){
 
 		$Added=0;
-		for ($i=1;$i<=10;$i++){
+		$Counter = isset($_POST['RowCount'])?$_POST['RowCount'] : 10; // Arbitrary number of 10 hard coded as default as originally used - should there be a setting?
+			for ($i=1;$i<=$Counter;$i++){
 			$InputError =False; //always assume the best to start with
 
 			$Quantity = 'Qty_' . $i;
@@ -106,9 +106,9 @@ if ($_GET['Action'] == 'Enter'){
 				<th colspan="3">' ._('Stock Check Counts at Location') . ':<select name="Location">';
 		$sql = 'SELECT loccode, locationname FROM locations';
 		$result = DB_query($sql,$db);
-	
+
 		while ($myrow=DB_fetch_array($result)){
-	
+
 			if (isset($_POST['Location']) AND $myrow['loccode']==$_POST['Location']){
 				echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 			} else {
@@ -118,7 +118,7 @@ if ($_GET['Action'] == 'Enter'){
 		echo '</select>&nbsp;<input type="submit" name="EnterByCat" value="' . _('Enter By Category') . '" /><select name="StkCat" onChange="ReloadForm(EnterCountsForm.EnterByCat)" >';
 
 		echo '<option value="">' . _('Not Yet Selected') . '</option>';
-		
+
 		while ($myrow=DB_fetch_array($CatsResult)){
 			if ($_POST['StkCat']==$myrow['categoryid']) {
 				echo '<option selected="selected" value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription'] . '</option>';
@@ -127,14 +127,12 @@ if ($_GET['Action'] == 'Enter'){
 			}
 		}
 		echo '</select></th></tr>';
-	
-	
-		
+
 		if (isset($_POST['EnterByCat'])){
-			
+
 			$StkCatResult = DB_query("SELECT categorydescription FROM stockcategory WHERE categoryid='" . $_POST['StkCat'] . "'",$db);
 			$StkCatRow = DB_fetch_row($StkCatResult);
-			
+
 			echo '<tr>
 					<th colspan="4">' . _('Entering Counts For Stock Category') . ': ' . $StkCatRow[0] . '</th>
 				</tr>
@@ -150,18 +148,18 @@ if ($_GET['Action'] == 'Enter'){
 										ON stockcheckfreeze.stockid=stockmaster.stockid
 										WHERE categoryid='" . $_POST['StkCat'] . "'
 										ORDER BY stockcheckfreeze.stockid",$db);
-			
-			$i=1;
+
+			$RowCount=1;
 			while ($StkRow = DB_fetch_array($StkItemsResult)) {
 				echo '<tr>
-						<td><input type="hidden" name="StockID_' . $i . '" value="' . $StkRow['stockid'] . '" />' . $StkRow['stockid'] . '</td>
+						<td><input type="hidden" name="StockID_' . $RowCount . '" value="' . $StkRow['stockid'] . '" />' . $StkRow['stockid'] . '</td>
 						<td>' . $StkRow['description'] . '</td>
-						<td><input type="text" name="Qty_' . $i . '" maxlength="10" size="10" /></td>
-						<td><input type="text" name="Ref_' . $i . '" maxlength="20" size="20" /></td>
+						<td><input type="text" name="Qty_' . $RowCount . '" maxlength="10" size="10" /></td>
+						<td><input type="text" name="Ref_' . $RowCount . '" maxlength="20" size="20" /></td>
 					</tr>';
-				$i++;
+				$RowCount++;
 			}
-	
+
 		} else {
 			echo '<tr>
 					<th>' . _('Bar Code') . '</th>
@@ -169,22 +167,23 @@ if ($_GET['Action'] == 'Enter'){
 					<th>' . _('Quantity') . '</th>
 					<th>' . _('Reference') . '</th>
 				</tr>';
-		
-			for ($i=1;$i<=10;$i++){
-		
+
+			for ($RowCount=1;$RowCount<=10;$RowCount++){
+
 				echo '<tr>
-						<td><input type="text" name="BarCode_' . $i . '" maxlength="20" size="20" /></td>
-						<td><input type="text" name="StockID_' . $i . '" maxlength="20" size="20" /></td>
-						<td><input type="text" name="Qty_' . $i . '" maxlength="10" size="10" /></td>
-						<td><input type="text" name="Ref_' . $i . '" maxlength="20" size="20" /></td>
+						<td><input type="text" name="BarCode_' . $RowCount . '" maxlength="20" size="20" /></td>
+						<td><input type="text" name="StockID_' . $RowCount . '" maxlength="20" size="20" /></td>
+						<td><input type="text" name="Qty_' . $RowCount . '" maxlength="10" size="10" /></td>
+						<td><input type="text" name="Ref_' . $RowCount . '" maxlength="20" size="20" /></td>
 					</tr>';
-		
+
 			}
 		}
-		
+
 		echo '</table>
 				<br />
 				<div class="centre">
+					<input type="hidden" name="RowCount" value="' .$RowCount . '" />
 					<input type="submit" name="EnterCounts" value="' . _('Enter Above Counts') . '" />
 				</div>';
 	} // there is a stock check to enter counts for
@@ -231,5 +230,4 @@ if ($_GET['Action'] == 'Enter'){
 echo '</div>
       </form>';
 include('includes/footer.inc');
-
 ?>
