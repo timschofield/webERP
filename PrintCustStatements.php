@@ -49,6 +49,25 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 
 	$FirstStatement = True;
 
+	
+	// check if the user has set a default bank account for invoices, if not leave it blank
+	$sql = "SELECT bankaccounts.invoice,
+				bankaccounts.bankaccountnumber,
+				bankaccounts.bankaccountcode
+			FROM bankaccounts
+			WHERE bankaccounts.invoice = '1'";
+	$result=DB_query($sql,$db,'','',false,false);
+	if (DB_error_no($db)!=1) {
+		if (DB_num_rows($result)==1){
+			$myrow = DB_fetch_array($result);
+			$DefaultBankAccountNumber = $myrow['bankaccountnumber'];
+		} else {
+			$DefaultBankAccountNumber = '';
+		}
+	} else {
+		$DefaultBankAccountNumber = '';
+	}
+
 /* Do a quick tidy up to settle any transactions that should have been settled at the time of allocation but for whatever reason weren't */
 	$ErrMsg = _('There was a problem settling the old transactions.');
 	$DbgMsg = _('The SQL used to settle outstanding transactions was');
@@ -397,6 +416,11 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 					'    ' . _('Amount received was').' ' . locale_number_format($StmtHeader['lastpaid'],$StmtHeader['currdecimalplaces']));
 
 			}
+
+			/* Show the bank account details */
+			$pdf->addText($Perforation-250, $Bottom_Margin+32, $FontSize, _('Please make payments to our account:') . ' ' . $DefaultBankAccountNumber);
+			$pdf->addText($Perforation-250, $Bottom_Margin+32-$line_height, $FontSize, _('Quoting your account reference') . ' ' . $StmtHeader['debtorno'] );
+			
 			/*also show the total due in the remittance section */
 			if ($AgedAnalysis['balance']>0){ /*No point showing a negative balance for payment! */
 					$FontSize=8;

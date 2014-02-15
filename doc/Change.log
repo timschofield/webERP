@@ -1,5 +1,8 @@
 webERP Change Log
+
 15/2/14 Exson: Make perishable control available in WorkOrderReceive.php. 
+15/2/14 Phil: Stock check comparison report now shows the bin location after the item code
+15/2/14 Phil: Customer statement now shows bank account number for payments based on the defined default bank account 
 15/2/14 Andrew Galuski: Reverse HTML5 input type="date" as this will not use the webERP javascript date picker used everywhere else - better be consistent as html5 date picker functionality varies between browsers - AddCustomerNotes.php and AddCustomerTypeNotes.php
 15/2/14 Vitaly: Fix PO_SelectOSPurchOrder.php date selection functionality
 15/2/14 Phil: Fixed POSDataCreation script to send all current prices in the POS currency including debtorno info so the POS can now deal with customer specific prices correctly.
