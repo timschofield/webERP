@@ -1,5 +1,6 @@
 webERP Change Log
 
+17/2/14 icedlava: CopyBOM.php - SQL fix for insert to bom and locstock tables - ensure column counts match values even when zero.
 16/2/14 icedlava: StockCounts.php - Enter by Category only counts and enters 10 items maximum - fix to allow any number that are input.
 15/2/14 Exson: Make perishable control available in WorkOrderReceive.php.
 15/2/14 Phil: Stock check comparison report now shows the bin location after the item code

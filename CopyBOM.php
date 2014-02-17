@@ -121,6 +121,7 @@ if(isset($_POST['Submit'])) {
 
 		$sql = "INSERT INTO bom
 					SELECT '".$NewStockID."' AS parent,
+					        sequence,
 							component,
 							workcentreadded,
 							loccode,
@@ -133,7 +134,12 @@ if(isset($_POST['Submit'])) {
 		$result = DB_query($sql, $db);
 
 		if($NewOrExisting == 'N') {
-			$sql = "INSERT INTO locstock
+			$sql = "INSERT INTO locstock (
+			            loccode,
+			            stockid,
+			            quantity,
+			            reorderlevel
+			        )
 		      SELECT loccode,
 					'".$NewStockID."' AS stockid,
 					0 AS quantity,
