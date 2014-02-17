@@ -508,7 +508,8 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 								$QualityText ='';
 							}
 
-							$SQL = "INSERT INTO stockserialitems (stockid,
+							if(empty($_POST['ExpiryDate'])){
+									$SQL = "INSERT INTO stockserialitems (stockid,
 																	loccode,
 																	serialno,
 																	quantity,
@@ -518,8 +519,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 													'" . $_POST['SerialNo' . $i] . "',
 													1,
 													'" . $QualityText . "')";
-							// Store expiry date for perishable product
-							if(!empty($_POST['ExpiryDate'])){
+							}else{// Store expiry date for perishable product
 
 								$SQL = "INSERT INTO stockserialitems(stockid,
 																	loccode,
@@ -595,7 +595,8 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 										AND loccode = '" . $_POST['IntoLocation'] . "'
 										AND serialno = '" . $_POST['BatchRef' .$i] . "'";
 						} else {
-							$SQL = "INSERT INTO stockserialitems (stockid,
+							if(empty($_POST['ExpiryDate'])){
+								$SQL = "INSERT INTO stockserialitems (stockid,
 																loccode,
 																serialno,
 																quantity,
@@ -605,9 +606,9 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 												'" . $_POST['BatchRef' . $i] . "',
 												'" . filter_number_format($_POST['Qty'.$i]) . "',
 												'" . $_POST['QualityText'] . "')";
-							//If it's a perishable product, add expiry date 
+						 
 
-							if(!empty($_POST['ExpiryDate'])){
+							}else{	//If it's a perishable product, add expiry date
 
 								$SQL = "INSERT INTO stockserialitems (stockid,
 																loccode,
