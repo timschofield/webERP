@@ -178,7 +178,6 @@ if (isset($_POST['ShowStatus'])){
     					<th>' . _('On Order') . '</th>
 					</tr>';
 	echo $TableHeader;
-	$j = 1;
 	$k=0; //row colour counter
 
 	while ($myrow=DB_fetch_array($LocStockResult)) {
