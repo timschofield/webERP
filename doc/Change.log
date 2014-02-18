@@ -1,4 +1,5 @@
 webERP Change Log
+18/2/14 Exson: Remove redundant code in StockLocStatus.php and InventoryPlanning.php.
 17/2/14 Exson: Tidy up variable overwrite to if else structure in WorkOrderReceive.php scripts according Tim's comments. 
 17/2/14 icedlava: CopyBOM.php - SQL fix for insert to bom and locstock tables - ensure column counts match values even when zero.
 16/2/14 icedlava: StockCounts.php - Enter by Category only counts and enters 10 items maximum - fix to allow any number that are input.
