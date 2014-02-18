@@ -230,7 +230,6 @@ if (isset($_POST['PrintPDF'])
 					INNER JOIN salesorders
 					ON salesorders.orderno = salesorderdetails.orderno
 				WHERE salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0
-				AND salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0
 				AND bom.component='" . $InventoryPlan['stockid'] . "'
 				AND stockmaster.mbflag='A'
 				AND salesorderdetails.completed=0
