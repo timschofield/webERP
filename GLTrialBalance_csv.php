@@ -10,7 +10,7 @@ while the user is selecting the criteria the system is posting any unposted tran
  * also need to work on authentication with username and password sent too*/
 
 
-$AllowAnyone = true;
+//$AllowAnyone = true;
 
 //Page must be called with GLTrialBalance_csv.php?CompanyName=XXXXX&FromPeriod=Y&ToPeriod=Z
 $_POST['CompanyNameField'] = $_GET['CompanyName'];

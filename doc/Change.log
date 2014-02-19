@@ -1,4 +1,5 @@
 webERP Change Log
+19/2/14 icedlava: GLTrialBalance_csv.php -Remove set AllowAnyone variable and prevent TB display - temp solution.
 18/2/14 Exson: Remove redundant code in StockLocStatus.php and InventoryPlanning.php.
 17/2/14 Exson: Tidy up variable overwrite to if else structure in WorkOrderReceive.php scripts according Tim's comments. 
 17/2/14 icedlava: CopyBOM.php - SQL fix for insert to bom and locstock tables - ensure column counts match values even when zero.
