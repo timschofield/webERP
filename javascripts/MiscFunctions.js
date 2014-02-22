@@ -68,19 +68,36 @@ function inArray(v,tA,m){
 	return false;
 }
 function isDate(dS,dF){
-	var mA=dS.match(/^(\d{1,2})(\/|-|.)(\d{1,2})(\/|-|.)(\d{4})$/);
+	switch (dF) {
+		case "d/m/Y":
+		case "d.m.Y":
+		case "m/d/Y":
+		var mA=dS.match(/^(\d{1,2})(\/|-|.)(\d{1,2})(\/|-|.)(\d{4})$/);
+		break;
+		case "Y/m/d":
+		case "Y-m-d":
+		var mA=dS.match(/^(\d{4})(\/|-|.)(\d{1,2})(\/|-|.)(\d{1,2})$/);
+		break;
+	}
+
 	if (mA==null){
 		alert("Please enter the date in the format "+dF);
 		return false;
 	}
-	if (dF=="d/m/Y"){
+	if (dF=="d/m/Y"||dF=="d.m.Y"){
 		d=mA[1];
 		m=mA[3];
-	}else{
-		d=mA[3];
+		y=mA[5];
+	}else if(dF=='m/d/Y'){
 		m=mA[1];
+		d=mA[3];
+		y=mA[5];
+	}else{
+		d=mA[5];
+		m=mA[3];
+		y=mA[1];
 	}
-	y=mA[5];
+	
 	if (m<1 || m>12){
 		alert("Month must be between 1 and 12");
 		return false;
