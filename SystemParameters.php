@@ -397,12 +397,12 @@ echo '<tr><th colspan="3">' . _('Accounts Receivable/Payable Settings') . '</th>
 
 // PastDueDays1
 echo '<tr style="outline: 1px solid"><td>' . _('First Overdue Deadline in (days)') . ':</td>
-	<td><input type="text" class="integer" required="required"  pattern="(?!^0\d+$)[\d]+" title="'._('The input must be integer').'" name="X_PastDueDays1" value="' . $_SESSION['PastDueDays1'] . '" size="3" maxlength="3" /></td>
+	<td><input type="text" class="integer" required="required"  pattern="(?!^0\d+$)[-\d]+" title="'._('The input must be integer').'" name="X_PastDueDays1" value="' . $_SESSION['PastDueDays1'] . '" size="3" maxlength="3" /></td>
 	<td>' . _('Customer and supplier balances are displayed as overdue by this many days. This parameter is used on customer and supplier enquiry screens and aged listings') . '</td></tr>';
 
 // PastDueDays2
 echo '<tr style="outline: 1px solid"><td>' . _('Second Overdue Deadline in (days)') . ':</td>
-	<td><input type="text" class="integer" required="required"  pattern="(?!^0\d+$)[\d]+" title="'._('The input must be integer').'" name="X_PastDueDays2" value="' . $_SESSION['PastDueDays2'] . '" size="3" maxlength="3" /></td>
+	<td><input type="text" class="integer" required="required"  pattern="(?!^0\d+$)[-\d]+" title="'._('The input must be integer').'" name="X_PastDueDays2" value="' . $_SESSION['PastDueDays2'] . '" size="3" maxlength="3" /></td>
 	<td>' . _('As above but the next level of overdue') . '</td></tr>';
 
 

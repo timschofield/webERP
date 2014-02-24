@@ -20,7 +20,7 @@ function rTI(event){
 	else return true;
 	kC=String.fromCharCode(k);
 	if ((k==null) || (k==0) || (k==8) || (k==9) || (k==13) || (k==27)) return true;
-	else if ((("0123456789").indexOf(kC)>-1)) return true;
+	else if ((("0123456789-").indexOf(kC)>-1)) return true;
 	else return false;
 }
 function rLocaleNumber(){
