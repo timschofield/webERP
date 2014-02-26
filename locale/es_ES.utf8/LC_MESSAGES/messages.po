@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-02-08 17:33+1300\n"
-"PO-Revision-Date: 2014-02-10 08:53-0600\n"
+"PO-Revision-Date: 2014-02-10 13:15-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -16395,7 +16395,7 @@ msgstr ""
 
 #: MaintenanceTasks.php:119
 msgid "Are you sure you wish to delete this maintenance task?"
-msgstr ""
+msgstr "¿Está seguro de que desea eliminar esta tarea de mantenimiento?"
 
 #: MaintenanceTasks.php:172
 msgid "Asset to Maintain"
@@ -16419,7 +16419,7 @@ msgstr "Sin administrador"
 
 #: MaintenanceTasks.php:235
 msgid "Update Task"
-msgstr ""
+msgstr "Actualizar tarea"
 
 #: MaintenanceTasks.php:240
 msgid "Enter New Task"
@@ -16427,11 +16427,11 @@ msgstr "Introducir nueva tarea"
 
 #: MaintenanceUserSchedule.php:7
 msgid "My Maintenance Jobs"
-msgstr ""
+msgstr "Mis trabajos de mantenimiento"
 
 #: MaintenanceUserSchedule.php:9
 msgid "Fixed Assets Maintenance Schedule"
-msgstr ""
+msgstr "Programa de mantenimiento de activos fijos"
 
 #: MaintenanceUserSchedule.php:43
 msgid "The maintenance schedule cannot be retrieved because"
@@ -16448,6 +16448,7 @@ msgstr ""
 #: MaintenanceUserSchedule.php:76
 msgid "Are you sure you wish to mark this maintenance task as completed?"
 msgstr ""
+"¿Está seguro que desea marcar esta tarea de mantenimiento como completada?"
 
 #: MaintenanceUserSchedule.php:76
 msgid "Mark Completed"
@@ -43249,11 +43250,11 @@ msgstr "Registro de Activos"
 
 #: includes/MainMenuLinksArray.php:396
 msgid "My Maintenance Schedule"
-msgstr ""
+msgstr "Mi plan de mantenimiento"
 
 #: includes/MainMenuLinksArray.php:397
 msgid "Maintenance Reminder Emails"
-msgstr ""
+msgstr "Correos-e para recordatorio de mantenimiento"
 
 #: includes/MainMenuLinksArray.php:403
 msgid "Asset Categories Maintenance"
@@ -43373,7 +43374,7 @@ msgstr "Matriz de Descuentos"
 
 #: includes/MainMenuLinksArray.php:487
 msgid "Price Matrix"
-msgstr ""
+msgstr "Matriz de precios"
 
 #: includes/MainMenuLinksArray.php:506
 msgid "Inventory Locations Maintenance"
@@ -43393,7 +43394,7 @@ msgstr "Administrar Departamentos Internos"
 
 #: includes/MainMenuLinksArray.php:512
 msgid "Maintain Internal Stock Categories to User Roles"
-msgstr ""
+msgstr "Mantener categorías de inventario interno por funciones de usuario"
 
 #: includes/MainMenuLinksArray.php:513
 msgid "Label Templates Maintenance"
