@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-02-08 17:33+1300\n"
-"PO-Revision-Date: 2014-02-10 13:15-0600\n"
+"PO-Revision-Date: 2014-02-28 06:50-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -1646,6 +1646,7 @@ msgstr "No ha seleccionado ninguna cuenta bancaria"
 #: BankAccountUsers.php:44
 msgid "You have not selected an user to be authorised to use this bank account"
 msgstr ""
+"No ha seleccionado un usuario para ser autorizado a usar esta cuenta bancaria"
 
 #: BankAccountUsers.php:63
 msgid "The user"
@@ -1666,6 +1667,7 @@ msgstr "Cuenta bancaria"
 #: BankAccountUsers.php:82
 msgid "The bank account user record could not be deleted because"
 msgstr ""
+"El registro de usuario de cuenta bancaria no puede ser eliminado porque"
 
 #: BankAccountUsers.php:84
 msgid "has been un-authorised to use"
@@ -1727,7 +1729,7 @@ msgstr "Nombre de usuario"
 #: BankAccountUsers.php:178
 #, php-format
 msgid "Are you sure you wish to un-authorise this user?"
-msgstr ""
+msgstr "¿Está seguro que desea desautorizar este usuario?"
 
 #: BankAccountUsers.php:178
 #, php-format
@@ -7562,7 +7564,7 @@ msgstr "Lugares Decimales"
 
 #: Currencies.php:299 Currencies.php:495
 msgid "Show in webSHOP"
-msgstr ""
+msgstr "Mostrar en webSHOP"
 
 #: Currencies.php:301
 msgid "1 / Ex Rate"
@@ -11842,7 +11844,7 @@ msgstr "DV"
 
 #: FixedAssetDepreciation.php:195 FixedAssetDepreciation.php:214
 msgid "Monthly depreciation for asset"
-msgstr ""
+msgstr "Depreciación mensual para el activo"
 
 #: FixedAssetDepreciation.php:198
 msgid "Cannot insert a depreciation GL entry for the depreciation because"
@@ -44469,11 +44471,11 @@ msgstr "Vendido a"
 
 #: includes/PDFTransPageHeader.inc:183
 msgid "Customer Tax Ref"
-msgstr "Referencia Fiscal del Cliente"
+msgstr "Referencia fiscal del cliente"
 
 #: includes/PDFTransPageHeader.inc:190
 msgid "Customer Order Ref."
-msgstr "Ref. del Pedido del Cliente"
+msgstr "Ref. del pedido del cliente"
 
 #: includes/PDFTransPageHeaderPortrait.inc:159
 msgid "Delivered To (check Dispatch Detail)"
