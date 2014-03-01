@@ -227,7 +227,7 @@ if (isset($_POST['submit'])) {
 		$GroupResult = DB_query($sql, $db,$ErrMsg,$DbgMsg);
 		while ($GroupRow = DB_fetch_array($GroupResult) ) {
 
-			if (isset($_POST['ParentGroupName']) AND $_POST['ParentGroupName']==$RroupRow['groupname']) {
+			if (isset($_POST['ParentGroupName']) AND $_POST['ParentGroupName']==$GroupRow['groupname']) {
 				echo '<option selected="selected" value="'.htmlentities($GroupRow['groupname'], ENT_QUOTES,'UTF-8').'">' .htmlentities($GroupRow['groupname'], ENT_QUOTES,'UTF-8'). '</option>';
 			} else {
 				echo '<option value="'.htmlentities($GroupRow['groupname'], ENT_QUOTES,'UTF-8').'">' .htmlentities($GroupRow['groupname'], ENT_QUOTES,'UTF-8') . '</option>';

@@ -1,4 +1,5 @@
 webERP Change Log
+1/3/14 Paul T: Correct variable spelling error. [reported in forums by serakfalcon]
 24/2/14 Exson: Make negative integer allowable in MiscFunctions.js and make negative integer inputable for PastDueDays in SystemParameters.php.
 22/2/14 Exson: Fixed the wrong error messages displayed while input date data manually in MiscFunctions.js.
 19/2/14 icedlava: GLTrialBalance_csv.php -Remove set AllowAnyone variable and prevent TB display - temp solution.
