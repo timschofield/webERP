@@ -124,5 +124,4 @@ Function CalcFreightCost ($TotalValue,
 	
 	return array ($CalcFreightCost, $CalcBestShipper);
 }
-
 ?>

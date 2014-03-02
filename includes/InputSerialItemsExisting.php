@@ -67,3 +67,4 @@ if ($_POST['EntryType'] == 'KEYED'){
 	}
 	echo '</tr></table>';
 }
+?>

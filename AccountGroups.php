@@ -319,7 +319,7 @@ or deletion of the records*/
 
 		echo '<td>' . htmlspecialchars($myrow['groupname'], ENT_QUOTES,'UTF-8') . '</td>
 			<td>' . $myrow['sectionname'] . '</td>
-			<td>' . $myrow['sequenceintb'] . '</td>
+			<td class="number">' . $myrow['sequenceintb'] . '</td>
 			<td>' . $PandLText . '</td>
 			<td>' . $myrow['parentgroupname'] . '</td>';
 		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?SelectedAccountGroup=' . urlencode($myrow['groupname']), ENT_QUOTES,'UTF-8') . '">' . _('Edit') . '</a></td>';

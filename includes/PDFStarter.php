@@ -182,5 +182,4 @@ $pdf->addInfo('Author', 'WebERP ' . $Version);
 	$pdf->AddPage();
 	$pdf->cMargin = 0;
 /* END Brought from class.pdf.php constructor */
-
 ?>

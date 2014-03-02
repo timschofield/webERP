@@ -514,5 +514,4 @@ Class Tax {
 		$this->TaxGLCode = $TaxGLCode;
 	}
 }
-
 ?>
