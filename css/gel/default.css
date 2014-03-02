@@ -523,23 +523,21 @@ li { /* ??? */
 	padding:3px;
 }
 #FooterLogoDiv{
-    float:left;
 	background:white;
-    border-radius:8px 8px 8px 8px;
-    padding:3px;
-	margin-left:47%; /* to the center (approx) */
-}
-#FooterLogoDiv img{
-	vertical-align:middle;
+    border-radius:8px;
+    float:left;
+	padding:3px;
+	margin-left:44%; /* to the center (approx) */
 }
 #FooterVersionDiv{
 	clear:both; /* below the logo */
-	float:left;
-    margin-left:47%; /* to the center (approx) */
+	text-align:center;
 }
 #FooterTimeDiv{
+	display:block;
 	float:right;
-    margin-top:-22px; /* go up to center */
+	line-height:2.8em; /* Center the text vertically.
+						  [vertical-align has no effect on text alone] */
 }
 
 /*** END ***/
