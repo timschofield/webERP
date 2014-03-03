@@ -188,8 +188,9 @@ if (!isset($_GET['SelectedSectionID']) AND !isset($_POST['SelectedSectionID'])) 
 			$k++;
 		}
 
-		echo '<td>' . $myrow['sectionid'] . '</td><td>' . $myrow['sectionname'] . '</td>';
-		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?SelectedSectionID=' . urlencode($myrow['sectionid']), ENT_QUOTES, 'UTF-8') . '">' . _('Edit') . '</a></td>';
+		echo '<td class="number">' . $myrow['sectionid'] . '</td>
+				<td>' . $myrow['sectionname'] . '</td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?SelectedSectionID=' . urlencode($myrow['sectionid']), ENT_QUOTES, 'UTF-8') . '">' . _('Edit') . '</a></td>';
 		if ( $myrow['sectionid'] == '1' or $myrow['sectionid'] == '2' ) {
 			echo '<td><b>' . _('Restricted') . '</b></td>';
 		} else {
