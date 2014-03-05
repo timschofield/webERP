@@ -1,4 +1,6 @@
 webERP Change Log
+
+05/03/2014 icedlava: Ensure there are no unescaped characters in existing data when updating purchorders after reversing GRN. This fixes a symptom of a more widespread bug and therefore temporary until more general fix is applied.
 05/03/2014 icedlava: Remove input fields (Country and Language) and display this data instead on customer view page
 03/03/2014 Exson: Remove redundant code in CustomerAllocations.php
 03/3/14 icedlava: WhereUsedInquiry.php will no longer accept StockID with dash (-) as input allowed has changed. Still need to check for consistency for StockId input elsewhere in code.
