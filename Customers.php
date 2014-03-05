@@ -1011,20 +1011,35 @@ if (!isset($DebtorNo)) {
 		echo '</select></td>
 			</tr>';
 	}
-	echo '<tr>
-			<td>' . _('Language') . ':</td>';
 
-	if (!isset($_POST['LanguageID']) OR $_POST['LanguageID']==''){
-		$_POST['LanguageID']=$_SESSION['Language'];
-	}
+    if (!isset($_POST['LanguageID']) OR $_POST['LanguageID']==''){
+        $_POST['LanguageID']=$_SESSION['Language'];
+    }
 
-	foreach ($LanguagesArray as $LanguageCode => $LanguageName){
-		if ($_POST['LanguageID'] == $LanguageCode){
-			echo '<td>' .  $LanguageName['LanguageName'] ;
-		}
-	}
-	echo '</td>
-			</tr>';
+	if (isset($_GET['Modify'])) {
+        echo '<tr>
+                <td>' . _('Language') . ':</td>';
+        foreach ($LanguagesArray as $LanguageCode => $LanguageName){
+            if ($_POST['LanguageID'] == $LanguageCode){
+                echo '<td>' . $LanguageName['LanguageName'];
+            }
+        }
+        echo '</td>
+        </tr>';
+	} else {
+        echo '<tr>
+                <td>' . _('Language') . ':</td>
+                <td><select name="LanguageID" required="required">';
+        foreach ($LanguagesArray as $LanguageCode => $LanguageName){
+            if ($_POST['LanguageID'] == $LanguageCode){
+                echo '<option selected="selected" value="' . $LanguageCode . '">' . $LanguageName['LanguageName']  . '</option>';
+            } else {
+                echo '<option value="' . $LanguageCode . '">' . $LanguageName['LanguageName']  . '</option>';
+            }
+        }
+        echo '</select></td>
+        </tr>';
+    }
 	echo '<tr>
 			<td>' . _('Require Customer PO Line on SO') . ':</td>';
 	if (isset($_GET['Modify'])) {
