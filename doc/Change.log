@@ -1,6 +1,7 @@
 webERP Change Log
+05/03/2014 icedlava: Remove input fields (Country and Language) and display this data instead on customer view page
 03/03/2014 Exson: Remove redundant code in CustomerAllocations.php
-3/3/14 icedlava: WhereUsedInquiry.php will no longer accept StockID with dash (-) as input allowed has changed. Still need to check for consistency for StockId input elsewhere in code.
+03/3/14 icedlava: WhereUsedInquiry.php will no longer accept StockID with dash (-) as input allowed has changed. Still need to check for consistency for StockId input elsewhere in code.
 2/3/14 Paul T: Div swap in footer to simplify CSS for Gel and Silverwolf themes. Some other themes will see a basic position swap of the date and version info where these vertically appeared together at the far left end.
 1/3/14 Paul T: Correct variable spelling error. [reported in forums by serakfalcon]
 24/2/14 Exson: Make negative integer allowable in MiscFunctions.js and make negative integer inputable for PastDueDays in SystemParameters.php.
