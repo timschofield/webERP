@@ -133,7 +133,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 /*Now the purchorder header status in case it was completed  - now incomplete - just printed */
 	$SQL = "UPDATE purchorders
 			SET status = 'Printed',
-				stat_comment = CONCAT('" . Date($_SESSION['DefaultDateFormat']) . ' ' . _('GRN Reversed for') . ' '  .  mysql_real_escape_string(stripslashes($GRN['itemdescription'])) . ' ' . _('by') . ' ' . $_SESSION['UsersRealName'] . "<br />', stat_comment )
+				stat_comment = CONCAT('" . Date($_SESSION['DefaultDateFormat']) . ' ' . _('GRN Reversed for') . ' '  .  DB_escape_string(stripslashes($GRN['itemdescription'])) . ' ' . _('by') . ' ' . $_SESSION['UsersRealName'] . "<br />', stat_comment )
 			WHERE orderno = '" . $GRN['orderno'] . "'";
 
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The purchase order statusand status comment could not be changed because');
