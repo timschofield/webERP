@@ -104,7 +104,7 @@ if ($RootPath == "/" OR $RootPath == "\\") {
 //This is the default value set in php.ini for most installations
 //but just to be sure it is forced here
 //turning on NOTICES destroys things */
-error_reporting (E_ALL && ~E_NOTICE);
+error_reporting(E_ALL && ~E_NOTICE && E_WARNING);
 /* For Development Use */
 //error_reporting (-1);
 
