@@ -1,8 +1,10 @@
 webERP Change Log
 
-05/03/2014 icedlava: Ensure there are no unescaped characters in existing data when updating purchorders after reversing GRN. This fixes a symptom of a more widespread bug and therefore temporary until more general fix is applied.
-05/03/2014 icedlava: Remove input fields (Country and Language) and display this data instead on customer view page
-03/03/2014 Exson: Remove redundant code in CustomerAllocations.php
+14/3/14 Jiro Akits: Updated zh_TW.utf8 translation
+14/3/14 phil: removed htmchars in DB_escape_string() functions as suggested by Tim
+05/03/14 icedlava: Ensure there are no unescaped characters in existing data when updating purchorders after reversing GRN. This fixes a symptom of a more widespread bug and therefore temporary until more general fix is applied.
+05/03/14 icedlava: Remove input fields (Country and Language) and display this data instead on customer view page
+03/03/14 Exson: Remove redundant code in CustomerAllocations.php
 03/3/14 icedlava: WhereUsedInquiry.php will no longer accept StockID with dash (-) as input allowed has changed. Still need to check for consistency for StockId input elsewhere in code.
 2/3/14 Paul T: Div swap in footer to simplify CSS for Gel and Silverwolf themes. Some other themes will see a basic position swap of the date and version info where these vertically appeared together at the far left end.
 1/3/14 Paul T: Correct variable spelling error. [reported in forums by serakfalcon]
