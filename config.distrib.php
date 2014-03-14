@@ -51,6 +51,8 @@ $DBPassword = 'weberp_db_pwd';
 //	'ShowInputBox'
 //	'Hide'
 
+
+//$AllowCompanySelectionBox = 'ShowInputBox';
 $AllowCompanySelectionBox = 'ShowSelectionBox';
 
 //If $AllowCompanySelectionBox is not 'ShowSelectionBox' above then the $DefaultDatabase string is used to determined the default Company
