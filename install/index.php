@@ -384,7 +384,7 @@ if(!extension_loaded('mbstring')){
 			$msg .= "if (\$RootPath == '/' OR \$RootPath == '\\\') {\n";
 			$msg .= "	\$RootPath = '';\n";
 			$msg .= "}\n";
-			$msg .= "error_reporting(E_ALL && ~E_NOTICE && E_WARNING);\n";
+			$msg .= "error_reporting(E_ALL && ~E_NOTICE && ~E_WARNING);\n";
 			$msg .=  "//Installed companies \n";
 			foreach ($CompanyList as $k=>$compinfo)
 			{
