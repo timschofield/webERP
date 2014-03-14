@@ -1,5 +1,6 @@
 webERP Change Log
 
+15/3/14 Andrew Galuski: Auto Supplier number functionality
 14/3/14 Jiro Akits: Updated zh_TW.utf8 translation
 14/3/14 phil: removed htmchars in DB_escape_string() functions as suggested by Tim
 05/03/14 icedlava: Ensure there are no unescaped characters in existing data when updating purchorders after reversing GRN. This fixes a symptom of a more widespread bug and therefore temporary until more general fix is applied.

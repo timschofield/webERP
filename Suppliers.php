@@ -305,8 +305,8 @@ if (isset($_GET['SupplierID'])){
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Suppliers') . '</p>';
 if (isset($SupplierID)) {
     echo '<p>
-                <a href="' . $RootPath . '/SupplierContacts.php?SupplierID=' . $SupplierID . '">' . _('Review Supplier Contact Details') . '</a>
-          </p>';
+			<a href="' . $RootPath . '/SupplierContacts.php?SupplierID=' . $SupplierID . '">' . _('Review Supplier Contact Details') . '</a>
+		</p>';
 }
 $InputError = 0;
 
@@ -340,7 +340,7 @@ if (isset($_POST['submit'])) {
 		$Errors[$i]='Name';
 		$i++;
 	}
-	if (mb_strlen($SupplierID) == 0) {
+	if ($_SESSION['AutoSupplierNo']==0 AND mb_strlen($SupplierID) == 0) {
 		$InputError = 1;
 		prnMsg(_('The Supplier Code cannot be empty'),'error');
 		$Errors[$i]='ID';
@@ -532,7 +532,10 @@ if (isset($_POST['submit'])) {
 			prnMsg(_('The supplier master record for') . ' ' . $SupplierID . ' ' . _('has been updated'),'success');
 
 		} else { //its a new supplier
-
+			if ($_SESSION['AutoSupplierNo']== 1) {
+				/* system assigned, sequential, numeric */
+				$SupplierID = GetNextTransNo(600, $db);
+			}
 			$sql = "INSERT INTO suppliers (supplierid,
 										suppname,
 										address1,
@@ -591,7 +594,11 @@ if (isset($_POST['submit'])) {
 
 			prnMsg(_('A new supplier for') . ' ' . $_POST['SuppName'] . ' ' . _('has been added to the database'),'success');
 
-			unset($SupplierID);
+			echo '<p>
+				  <a href="' . $RootPath . '/SupplierContacts.php?SupplierID=' . $SupplierID . '">' . _('Review Supplier Contact Details') . '</a>
+				  </p>';
+			
+			unset($SupplierID); 
 			unset($_POST['SuppName']);
 			unset($_POST['Address1']);
 			unset($_POST['Address2']);
@@ -681,9 +688,13 @@ if (!isset($SupplierID)) {
 	echo '<input type="hidden" name="New" value="Yes" />';
 
 	echo '<table class="selection">';
-	echo '<tr><td>' . _('Supplier Code') . ':</td>
-		<td><input type="text" data-type="no-illegal-chars" title="'._('The supplier id should not be within 10 legal characters and cannot be blank').'" required="required" name="SupplierID" placeholder="'._('within 10 characters').'" size="11" maxlength="10" /></td>
-		</tr>';
+
+	/* if $AutoSupplierNo is off (not 0) then provide an input box for the SupplierID to manually assigned */
+	if ($_SESSION['AutoSupplierNo']== 0 )  {
+		echo '<tr><td>' . _('Supplier Code') . ':</td>
+			<td><input type="text" data-type="no-illegal-chars" title="'._('The supplier id should not be within 10 legal characters and cannot be blank').'" required="required" name="SupplierID" placeholder="'._('within 10 characters').'" size="11" maxlength="10" /></td>
+			</tr>';
+	}
 	echo '<tr>
 			<td>' . _('Supplier Name') . ':</td>
 			<td><input type="text" pattern="(?!^\s+$)[^<>+]{1,40}" required="required" title="'._('The supplier name should not be blank and should be less than 40 legal characters').'" name="SuppName" size="42" placeholder="'._('Within 40 legal characters').'" maxlength="40" /></td>
@@ -849,8 +860,9 @@ if (!isset($SupplierID)) {
         <div class="centre"><input type="submit" name="submit" value="' . _('Insert New Supplier') . '" /></div>';
 	echo '</div>
           </form>';
+}
 
-} else {
+else {
 
 //SupplierID exists - either passed when calling the form or from the form itself
 
@@ -916,27 +928,43 @@ if (!isset($SupplierID)) {
 
 	} else {
 	// its a new supplier being added
+		
 		echo '<tr><td><input type="hidden" name="New" value="Yes" />';
-		echo _('Supplier Code') . ':</td>
-				<td><input '.(in_array('ID',$Errors) ? 'class="inputerror"' : '').' type="text" name="SupplierID" value="' . $SupplierID . '" size="12" maxlength="10" /></td></tr>';
+		/* if $AutoSupplierNo is off (i.e. 0) then provide an input box for the SupplierID to manually assigned */
+		if ($_SESSION['AutoSupplierNo']== 0 )  {
+			echo _('Supplier Code') . ':</td>
+					<td><input '.(in_array('ID',$Errors) ? 'class="inputerror"' : '').' type="text" name="SupplierID" value="' . $SupplierID . '" size="12" maxlength="10" /></td></tr>';
+		}
 	}
 
-	echo '<tr><td>' . _('Supplier Name') . ':</td>
-			<td><input '.(in_array('Name',$Errors) ? 'class="inputerror"' : '').' type="text" name="SuppName" value="' . $_POST['SuppName'] . '" size="42" maxlength="40" /></td></tr>';
-	echo '<tr><td>' . _('Address Line 1 (Street)') . ':</td>
-			<td><input type="text" name="Address1"  value="' . $_POST['Address1'] . '" size="42" maxlength="40" /></td></tr>';
-	echo '<tr><td>' . _('Address Line 2 (Street)') . ':</td>
-			<td><input type="text" name="Address2" value="' . $_POST['Address2'] . '" size="42" maxlength="40" /></td></tr>';
-	echo '<tr><td>' . _('Address Line 3 (Suburb/City)') . ':</td>
-			<td><input type="text" name="Address3" placeholder="'._('Within 40 characters').'" value="' . $_POST['Address3'] . '" size="42" maxlength="40" /></td></tr>';
-	echo '<tr><td>' . _('Address Line 4 (State/Province)') . ':</td>
-			<td><input type="text" name="Address4" value="' . $_POST['Address4'] . '" placeholder="'._('Within 40 characters').'" size="42" maxlength="40" /></td></tr>';
-	echo '<tr><td>' . _('Address Line 5 (Postal Code)') . ':</td>
-			<td><input type="text" name="Address5" value="' . $_POST['Address5'] . '" size="42" placeholder="'._('Witin 40 characters').'" maxlength="40" /></td></tr>';
-
 	echo '<tr>
+			<td>' . _('Supplier Name') . ':</td>
+			<td><input '.(in_array('Name',$Errors) ? 'class="inputerror"' : '').' type="text" name="SuppName" value="' . $_POST['SuppName'] . '" size="42" maxlength="40" /></td>
+		</tr>
+		<tr>
+			<td>' . _('Address Line 1 (Street)') . ':</td>
+			<td><input type="text" name="Address1"  value="' . $_POST['Address1'] . '" size="42" maxlength="40" /></td>
+		</tr>
+		<tr>
+			<td>' . _('Address Line 2 (Street)') . ':</td>
+			<td><input type="text" name="Address2" value="' . $_POST['Address2'] . '" size="42" maxlength="40" /></td>
+		</tr>
+		<tr>
+			<td>' . _('Address Line 3 (Suburb/City)') . ':</td>
+			<td><input type="text" name="Address3" placeholder="'._('Within 40 characters').'" value="' . $_POST['Address3'] . '" size="42" maxlength="40" /></td>
+		</tr>
+		<tr>
+			<td>' . _('Address Line 4 (State/Province)') . ':</td>
+			<td><input type="text" name="Address4" value="' . $_POST['Address4'] . '" placeholder="'._('Within 40 characters').'" size="42" maxlength="40" /></td>
+		</tr>
+		<tr>
+			<td>' . _('Address Line 5 (Postal Code)') . ':</td>
+			<td><input type="text" name="Address5" value="' . $_POST['Address5'] . '" size="42" placeholder="'._('Witin 40 characters').'" maxlength="40" /></td>
+		</tr>
+		<tr>
 			<td>' . _('Country') . ':</td>
 			<td><select name="Address6">';
+			
 	foreach ($CountriesArray as $CountryEntry => $CountryName){
 		if (isset($_POST['Address6']) AND ($_POST['Address6'] == $CountryName)){
 			echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName  . '</option>';
@@ -949,15 +977,24 @@ if (!isset($SupplierID)) {
 	echo '</select></td>
 		</tr>';
 
-	echo '<tr><td>' . _('Telephone') . ':</td>
-			<td><input '.(in_array('Name',$Errors) ? 'class="inputerror"' : '').' type="tel" pattern="[\s\d+()-]{1,40}" placeholder="'._('Only digit blank ( ) and - allowed').'" name="Phone" value="' . $_POST['Phone'] . '" size="42" maxlength="40" /></td></tr>';
-	echo '<tr><td>' . _('Facsimile') . ':</td>
-			<td><input '.(in_array('Name',$Errors) ? 'class="inputerror"' : '').' type="tel" pattern="[\s\d+()-]{1,40}" placeholder="'._('Only digit blank ( ) and - allowed').'" name="Fax" value="' . $_POST['Fax'] . '" size="42" maxlength="40" /></td></tr>';
-	echo '<tr><td>' . _('Email Address') . ':</td>
-			<td><input '.(in_array('Name',$Errors) ? 'class="inputerror"' : '').' type="email" title="'._('The input must be in email format').'" name="Email" value="' . $_POST['Email'] . '" size="42" maxlength="40" placeholder="'._('email format such as xx@mail.cn').'"  pattern="[a-z0-9!#$%&\'*+/=?^_`{|}~.-]+@[a-z0-9-]+(\.[a-z0-9-]+)*" /></td></tr>';
-	echo '<tr><td>' . _('URL') . ':</td>
-			<td><input '.(in_array('Name',$Errors) ? 'class="inputerror"' : '').' type="url" title="'._('The input must be in url format').'" name="URL" value="' . $_POST['URL'] . '" size="42" maxlength="40" placeholder="'._('url format such as www.example.com').'" /></td></tr>';
-	echo '<tr><td>' . _('Supplier Type') . ':</td>
+	echo '<tr>
+			<td>' . _('Telephone') . ':</td>
+			<td><input '.(in_array('Name',$Errors) ? 'class="inputerror"' : '').' type="tel" pattern="[\s\d+()-]{1,40}" placeholder="'._('Only digit blank ( ) and - allowed').'" name="Phone" value="' . $_POST['Phone'] . '" size="42" maxlength="40" /></td>
+		</tr>
+		<tr>
+			<td>' . _('Facsimile') . ':</td>
+			<td><input '.(in_array('Name',$Errors) ? 'class="inputerror"' : '').' type="tel" pattern="[\s\d+()-]{1,40}" placeholder="'._('Only digit blank ( ) and - allowed').'" name="Fax" value="' . $_POST['Fax'] . '" size="42" maxlength="40" /></td>
+		</tr>
+		<tr>
+			<td>' . _('Email Address') . ':</td>
+			<td><input '.(in_array('Name',$Errors) ? 'class="inputerror"' : '').' type="email" title="'._('The input must be in email format').'" name="Email" value="' . $_POST['Email'] . '" size="42" maxlength="40" placeholder="'._('email format such as xx@mail.cn').'"  pattern="[a-z0-9!#$%&\'*+/=?^_`{|}~.-]+@[a-z0-9-]+(\.[a-z0-9-]+)*" /></td>
+		</tr>
+		<tr>
+			<td>' . _('URL') . ':</td>
+			<td><input '.(in_array('Name',$Errors) ? 'class="inputerror"' : '').' type="url" title="'._('The input must be in url format').'" name="URL" value="' . $_POST['URL'] . '" size="42" maxlength="40" placeholder="'._('url format such as www.example.com').'" /></td>
+		</tr>
+		<tr>
+			<td>' . _('Supplier Type') . ':</td>
 			<td><select name="SupplierType">';
 	$result=DB_query("SELECT typeid, typename FROM suppliertype", $db);
 	while ($myrow = DB_fetch_array($result)) {
@@ -967,20 +1004,29 @@ if (!isset($SupplierID)) {
 			echo '<option value="' . $myrow['typeid'] . '">' . $myrow['typename']  . '</option>';
 		}
 	} //end while loop
-	echo '</select></td></tr>';
-
-	echo '<tr><td>' . _('Supplier Since') . ' (' . $_SESSION['DefaultDateFormat'] .'):</td>
-			<td><input '.(in_array('SupplierSince',$Errors) ? 'class="inputerror"' : '').'  size="12" maxlength="10" type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="SupplierSince" value="' . $_POST['SupplierSince'] . '" /></td></tr>';
-	echo '<tr><td>' . _('Bank Particulars') . ':</td>
-			<td><input type="text" name="BankPartics" size="13" maxlength="12" value="' . $_POST['BankPartics'] . '" /></td></tr>';
-	echo '<tr><td>' . _('Bank Reference') . ':</td>
-			<td><input '.(in_array('BankRef',$Errors) ? 'class="inputerror"' : '').'  type="text" name="BankRef" size="13" maxlength="12" value="' . $_POST['BankRef'] . '" /></td></tr>';
-	echo '<tr><td>' . _('Bank Account No') . ':</td>
-			<td><input type="text" name="BankAct" size="31" maxlength="30" value="' . $_POST['BankAct'] . '" /></td></tr>';
+	echo '</select></td>
+		</tr>
+		<tr>
+			<td>' . _('Supplier Since') . ' (' . $_SESSION['DefaultDateFormat'] .'):</td>
+			<td><input '.(in_array('SupplierSince',$Errors) ? 'class="inputerror"' : '').'  size="12" maxlength="10" type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="SupplierSince" value="' . $_POST['SupplierSince'] . '" /></td>
+		</tr>
+		<tr>
+			<td>' . _('Bank Particulars') . ':</td>
+			<td><input type="text" name="BankPartics" size="13" maxlength="12" value="' . $_POST['BankPartics'] . '" /></td>
+		</tr>
+		<tr>
+			<td>' . _('Bank Reference') . ':</td>
+			<td><input '.(in_array('BankRef',$Errors) ? 'class="inputerror"' : '').'  type="text" name="BankRef" size="13" maxlength="12" value="' . $_POST['BankRef'] . '" /></td>
+		</tr>
+		<tr>
+			<td>' . _('Bank Account No') . ':</td>
+			<td><input type="text" name="BankAct" size="31" maxlength="30" value="' . $_POST['BankAct'] . '" /></td>
+		</tr>';
 
 	$result=DB_query("SELECT terms, termsindicator FROM paymentterms", $db);
 
-	echo '<tr><td>' . _('Payment Terms') . ':</td>
+	echo '<tr>
+			<td>' . _('Payment Terms') . ':</td>
 			<td><select name="PaymentTerms">';
 
 	while ($myrow = DB_fetch_array($result)) {
@@ -995,7 +1041,8 @@ if (!isset($SupplierID)) {
 
 	$result=DB_query("SELECT id, coyname FROM factorcompanies", $db);
 
-	echo '<tr><td>' . _('Factor Company') . ':</td>
+	echo '<tr>
+			<td>' . _('Factor Company') . ':</td>
 			<td><select name="FactorID">';
 	echo '<option value="0">' . _('None') . '</option>';
 	while ($myrow = DB_fetch_array($result)) {
@@ -1007,12 +1054,15 @@ if (!isset($SupplierID)) {
 	} //end while loop
 	DB_data_seek($result, 0);
     echo '</select></td></tr>';
-	echo '<tr><td>' . _('Tax Reference') . ':</td>
-			<td><input type="text" name="TaxRef" size="21" maxlength="20" value="' . $_POST['TaxRef'] .'" /></td></tr>';
+	echo '<tr>
+			<td>' . _('Tax Reference') . ':</td>
+			<td><input type="text" name="TaxRef" size="21" maxlength="20" value="' . $_POST['TaxRef'] .'" /></td>
+		</tr>';
 
 	$result=DB_query("SELECT currency, currabrev FROM currencies", $db);
 
-	echo '<tr><td>' . _('Supplier Currency') . ':</td>
+	echo '<tr>
+			<td>' . _('Supplier Currency') . ':</td>
 			<td><select name="CurrCode">';
 	while ($myrow = DB_fetch_array($result)) {
 		if ($_POST['CurrCode'] == $myrow['currabrev']){
@@ -1023,8 +1073,10 @@ if (!isset($SupplierID)) {
 	} //end while loop
 	DB_data_seek($result, 0);
 
-	echo '</select></td></tr>
-		<tr><td>' . _('Remittance Advice') . ':</td>
+	echo '</select></td>
+		</tr>
+		<tr>
+			<td>' . _('Remittance Advice') . ':</td>
 			<td><select name="Remittance">';
 
 	if ($_POST['Remittance'] == 0){
@@ -1036,9 +1088,10 @@ if (!isset($SupplierID)) {
 
 	}
 
-	echo '</select></td></tr>';
-
-	echo '<tr><td>' . _('Tax Group') . ':</td>
+	echo '</select></td>
+		</tr>
+		<tr>
+			<td>' . _('Tax Group') . ':</td>
 			<td><select name="TaxGroup">';
 
 	DB_data_seek($result, 0);
@@ -1055,7 +1108,9 @@ if (!isset($SupplierID)) {
 
 	} //end while loop
 
-	echo '</select></td></tr></table>';
+	echo '</select></td>
+		</tr>
+		</table>';
 
 	if (isset($_POST['New'])) {
 		echo '<br />
