@@ -1,5 +1,6 @@
 webERP Change Log
 
+17/3/14 rchacon: Allow translations of tax category Freight
 15/3/14 Phil: Z_ChangeStockCategory.php was not updating sales analysis records correctly - fixed
 15/3/14 Andrew Galuski: Auto Supplier number functionality
 14/3/14 Jiro Akits: Updated zh_TW.utf8 translation
