@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-02-08 17:33+1300\n"
-"PO-Revision-Date: 2014-02-28 06:50-0600\n"
+"PO-Revision-Date: 2014-02-28 16:37-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -6450,7 +6450,7 @@ msgstr ""
 #: CounterSales.php:1105 CounterSales.php:1912 CounterSales.php:1931
 #: CounterSales.php:1981 CounterSales.php:2018
 msgid "Counter Sale"
-msgstr "Venta de Mostrador"
+msgstr "Venta de mostrador"
 
 #: CounterReturns.php:1533 CounterSales.php:1989 CustomerReceipt.php:493
 #: ../webSHOP/includes/Functions.php:478
@@ -6627,7 +6627,7 @@ msgstr "¿Seguro que desea cancelar de esta devolución?"
 
 #: CounterSales.php:11 CounterSales.php:230
 msgid "Counter Sales"
-msgstr "Ventas de Mostrador"
+msgstr "Ventas de mostrador"
 
 #: CounterSales.php:136
 msgid ""
@@ -6656,7 +6656,7 @@ msgstr "Esta venta ha sido cancelada conforme a lo solicitado"
 
 #: CounterSales.php:224 CounterSales.php:2068
 msgid "Start a new Counter Sale"
-msgstr "Iniciar una nueva Venta de Mostrador"
+msgstr "Iniciar una nueva venta de mostrador"
 
 #: CounterSales.php:436 SelectOrderItems.php:942 SelectOrderItems.php:1131
 msgid "An invalid date entry was made for "
@@ -16145,7 +16145,7 @@ msgstr ""
 
 #: Locations.php:617
 msgid "Default Counter Sales Customer Code"
-msgstr "Código de Cliente de Ventas de Mostrador Predeterminado"
+msgstr "Código de cliente predeterminado para ventas de mostrador "
 
 #: Locations.php:618
 msgid ""
@@ -16156,7 +16156,7 @@ msgstr ""
 
 #: Locations.php:621
 msgid "Counter Sales Branch Code"
-msgstr "Código de Sucursal de Ventas de Mostrador"
+msgstr "Código de sucursal para ventas de mostrador"
 
 #: Locations.php:622
 msgid ""
@@ -26125,7 +26125,7 @@ msgstr ""
 
 #: SelectCustomer.php:231
 msgid "Create a Counter Sale for this Customer"
-msgstr "Crear una Venta de Mostrador para este Cliente"
+msgstr "Crear una venta de mostrador para este cliente"
 
 #: SelectCustomer.php:234 SelectCustomer.php:255
 msgid "Add a New Customer"
