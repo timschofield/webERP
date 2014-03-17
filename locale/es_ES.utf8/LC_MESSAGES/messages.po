@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-02-08 17:33+1300\n"
-"PO-Revision-Date: 2014-02-28 16:37-0600\n"
+"PO-Revision-Date: 2014-03-17 09:04-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -7089,7 +7089,7 @@ msgstr ""
 
 #: Credit_Invoice.php:421
 msgid "Freight cost charged on invoice"
-msgstr "Costo de transporte cargado en la Factura"
+msgstr "Costo de flete cargado en la factura"
 
 #: Credit_Invoice.php:424
 msgid "Credit Freight Cost"
@@ -12636,7 +12636,7 @@ msgstr "Administrar Costos de Flete"
 #: FreightCosts.php:28 FreightCosts.php:83
 #: ../webSHOP/includes/PlaceOrder.php:274
 msgid "Freight Costs"
-msgstr "Costos de Flete"
+msgstr "Costos de flete"
 
 #: FreightCosts.php:38
 msgid "Select A Freight Company to set up costs for"
@@ -17686,7 +17686,7 @@ msgstr "Dirección de Entrega 6"
 
 #: OrderDetails.php:121
 msgid "Freight Cost"
-msgstr "Costo de Transporte"
+msgstr "Costo de flete"
 
 #: OrderDetails.php:153
 msgid "The SQL used to retrieve the line items, that failed was"
@@ -28029,7 +28029,7 @@ msgstr ""
 
 #: ShopParameters.php:363
 msgid "Freight Calculations"
-msgstr ""
+msgstr "Cálculos de flete"
 
 #: ShopParameters.php:378
 msgid "Select the freight calculation method to use for the webSHOP"
@@ -48707,12 +48707,12 @@ msgstr "Introducir cantidad nueva"
 
 #: ../webSHOP/includes/DisplayShoppingCart.php:64
 msgid "Freight cost"
-msgstr ""
+msgstr "Costo de flete"
 
 #: ../webSHOP/includes/DisplayShoppingCart.php:68
 #: ../webSHOP/includes/PlaceOrder.php:280
 msgid "Freight Costs paid by"
-msgstr ""
+msgstr "Costos de flete pagados por"
 
 #: ../webSHOP/includes/DisplayShoppingCart.php:79
 #: ../webSHOP/includes/DisplayShoppingCart.php:85
