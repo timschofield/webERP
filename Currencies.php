@@ -376,7 +376,8 @@ or deletion of the records*/
 					<td class="centre">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
-					<td class="centre" colspan="4">%s</td>
+					<td class="number">%s</td>
+					<td class="centre" colspan="3">%s</td>
 					</tr>',
 					$ImageFile,
 					$myrow['currabrev'],
@@ -387,7 +388,8 @@ or deletion of the records*/
 					$ShowInWebText,
 					locale_number_format(1,8),
 					locale_number_format(1,2),
-					_('Functional Currency'));
+					locale_number_format(1,8),
+					_('Home Currency'));
 		}
 
 	} //END WHILE LIST LOOP

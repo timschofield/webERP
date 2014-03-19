@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-02-08 17:33+1300\n"
-"PO-Revision-Date: 2014-03-17 09:04-0600\n"
+"PO-Revision-Date: 2014-03-19 11:26-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -6012,7 +6012,7 @@ msgstr "Ganancia Bruta"
 #: PO_OrderDetails.php:113 SupplierCredit.php:291 SupplierInvoice.php:635
 #: SuppPaymentRun.php:297
 msgid "Exchange Rate"
-msgstr "Tasa de Cambio"
+msgstr "Tipo de cambio"
 
 #: Contracts.php:944
 msgid ""
@@ -7427,7 +7427,7 @@ msgstr "Mostrar Todos los Estado de Crédito"
 
 #: Currencies.php:6 includes/MainMenuLinksArray.php:439
 msgid "Currencies Maintenance"
-msgstr "Administrar Monedas"
+msgstr "Administrar monedas"
 
 #: Currencies.php:53
 msgid "The currency already exists in the database"
@@ -7556,11 +7556,11 @@ msgstr "País"
 
 #: Currencies.php:297 Currencies.php:466
 msgid "Hundredths Name"
-msgstr "Definición de los Céntimos"
+msgstr "Nombre del centésimo"
 
 #: Currencies.php:298 InventoryValuation.php:205
 msgid "Decimal Places"
-msgstr "Lugares Decimales"
+msgstr "Decimales"
 
 #: Currencies.php:299 Currencies.php:495
 msgid "Show in webSHOP"
@@ -7568,11 +7568,11 @@ msgstr "Mostrar en webSHOP"
 
 #: Currencies.php:301
 msgid "1 / Ex Rate"
-msgstr "1/ Tasa de Cambio"
+msgstr "1 / Tipo de cambio"
 
 #: Currencies.php:302
 msgid "Ex Rate - ECB"
-msgstr "Tasa de Cambio Banco Central Europeo"
+msgstr "Tipo de cambio del BCE"
 
 #: Currencies.php:303 CustomerTypes.php:6 index.php:149 Prices.php:227
 #: StockCategories.php:266 SupplierTypes.php:6
@@ -7591,7 +7591,7 @@ msgstr "Gráfica"
 
 #: Currencies.php:390
 msgid "Functional Currency"
-msgstr "Moneda Funcional"
+msgstr "Moneda funcional"
 
 #: Currencies.php:400
 msgid "Show all currency definitions"
@@ -7608,7 +7608,7 @@ msgstr "Código ISO 4217 de la moneda"
 
 #: Currencies.php:474
 msgid "Decimal Places to Display"
-msgstr "Decimales al mostrar"
+msgstr "Decimales a mostrar"
 
 #: CustEDISetup.php:6
 msgid "Customer EDI Set Up"
@@ -9027,7 +9027,7 @@ msgstr "Tasa sugerida:"
 
 #: CustomerReceipt.php:883
 msgid "Receipt Exchange Rate"
-msgstr "Tasa de Cambio del Ingreso"
+msgstr "Tipo de cambio del recibo"
 
 #: CustomerReceipt.php:885
 msgid ""
@@ -9039,7 +9039,7 @@ msgstr ""
 
 #: CustomerReceipt.php:900 Payments.php:885
 msgid "Functional Exchange Rate"
-msgstr "Tasa de Cambio Funcional"
+msgstr "Tipo de cambio funcional"
 
 #: CustomerReceipt.php:902 Payments.php:886 Payments.php:887
 msgid ""
@@ -9592,7 +9592,7 @@ msgstr ""
 #: CustomerTransInquiry.php:112 CustWhereAlloc.php:114
 #: SupplierTransInquiry.php:109 Z_CheckAllocs.php:65
 msgid "Ex Rate"
-msgstr "Tasa de Cambio"
+msgstr "Tipo de cambio"
 
 #: CustomerTransInquiry.php:165
 #, php-format
@@ -18175,7 +18175,7 @@ msgstr "Moneda del Proveedor"
 
 #: Payments.php:868
 msgid "Payment Exchange Rate"
-msgstr "Tasa de Cambio del Pago"
+msgstr "Tipo de cambio del pago"
 
 #: Payments.php:869 Payments.php:870
 msgid ""
@@ -45018,7 +45018,7 @@ msgstr "Números de Pedidos Inválidos"
 
 #: api/api_errorcodes.php:250
 msgid "Invalid Exchange Rate"
-msgstr "Tasa de Cambio Inválida"
+msgstr "Tipo de cambio no válido"
 
 #: api/api_errorcodes.php:251
 msgid "Invalid OV Amount"
