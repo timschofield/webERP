@@ -109,6 +109,15 @@ echo '<table cellpadding="2" class="selection">
 									WHERE wo='" . $SelectedWO . "'
 									AND worequirements.parentstockid='" . $StockID . "'",
 									$db);
+		$IssuedAlreadyResult = DB_query("SELECT stockid,
+						SUM(-qty) AS total
+					FROM stockmoves
+					WHERE stockmoves.type=28
+					AND reference='".$SelectedWO."'
+					GROUP BY stockid",$db);
+	while ($IssuedRow = DB_fetch_array($IssuedAlreadyResult)){
+		$IssuedAlreadyRow[$IssuedRow['stockid']] = $IssuedRow['total'];
+	}
 
 	while ($RequirementsRow = DB_fetch_array($RequirmentsResult)){
 		if ($RequirementsRow['autoissue']==0){
@@ -120,19 +129,40 @@ echo '<table cellpadding="2" class="selection">
 					<td class="notavailable">' . _('Auto Issue') . '</td>
 					<td class="notavailable">' .$RequirementsRow['stockid'] . ' - ' . $RequirementsRow['description']  . '</td>';
 		}
-		$IssuedAlreadyResult = DB_query("SELECT SUM(-qty) FROM stockmoves
-										WHERE stockmoves.type=28
-										AND stockid='" . $RequirementsRow['stockid'] . "'
-										AND reference='" . $SelectedWO . "'",
-									$db);
-		$IssuedAlreadyRow = DB_fetch_row($IssuedAlreadyResult);
-
-		echo '<td align="right">' . locale_number_format($WORow['qtyreqd']*$RequirementsRow['qtypu'],$RequirementsRow['decimalplaces']) . '</td>
-			<td align="right">' . locale_number_format($IssuedAlreadyRow[0],$RequirementsRow['decimalplaces']) . '</td></tr>';
+		if (isset($IssuedAlreadyRow[$RequirementsRow['stockid']])){
+			$Issued = $IssuedAlreadyRow[$RequirementsRow['stockid']];
+			unset($IssuedAlreadyRow[$RequirementsRow['stockid']]);
+		}else{
+			$Issued = 0;
+		}
+		echo '<td class="number">'.locale_number_format($WORow['qtyreqd']*$RequirementsRow['qtypu'],$RequirementsRow['decimalplaces']).'</td>
+			<td class="number">'.locale_number_format($Issued,$RequirementsRow['decimalplaces']).'</td></tr>';
 	}
-
+	/* Now do any additional issues of items not in the BOM */
+	if(count($IssuedAlreadyRow)>0){
+		$AdditionalStockIDs = array_keys($IssuedAlreadyRow);
+		$AdditionalStocks = implode(',',$AdditionalStockIDs);
+		$RequirementsSQL = "SELECT stockid,
+					stockmaster.description,
+					stockmaster.decimalplaces
+				FROM stockmaster WHERE stockid IN ('".$AdditionalStocks."')";
+		$RequirementsResult = DB_query($RequirementsSQL,$db);
+			$AdditionalStocks = array();
+			while($myrow = DB_fetch_array($RequirementsResult)){
+				$AdditionalStocks[$myrow['stockid']]['description'] = $myrow['description'];
+				$AdditionalStocks[$myrow['stockid']]['decimalplaces'] = $myrow['decimalplaces'];
+			}
+			foreach ($IssuedAlreadyRow as $StockID=>$Issued) {
+			echo '<tr>
+				<td>'._('Additional Issue').'</td>
+				<td>'.$StockID . ' - '.$AdditionalStocks[$StockID]['description'].'</td>';
+				echo '<td class="number">0</td>
+					<td class="number">'.locale_number_format($Issued,$AdditionalStocks[$StockID]['decimalplaces']).'</td>
+					</tr>';
+			}
+		}
+	
 	echo '</table>';
-
-include('includes/footer.inc');
+	include('includes/footer.inc');
 
 ?>
