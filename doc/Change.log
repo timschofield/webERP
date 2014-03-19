@@ -1,5 +1,6 @@
 webERP Change Log
 
+19/3/14 Tim: Fixed the bug Items Other than those in BOM are not listed in Status of Work Order even if issued. Exson made a little revision to keep SQL query only once for those additional issued materials. Reported by newuesr990 from weberp forum. 
 18/03/14 Exson: Fixed the bugs in GoodsReceived.php which will leads to duplicated goods receiving.
 17/3/14 rchacon: Allow translations of tax category Freight
 15/3/14 Phil: Z_ChangeStockCategory.php was not updating sales analysis records correctly - fixed
