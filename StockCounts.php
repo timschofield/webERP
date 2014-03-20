@@ -99,7 +99,7 @@ if ($_GET['Action'] == 'Enter'){
 
 	if (DB_num_rows($CatsResult) ==0) {
 		prnMsg(_('The stock check sheets must be run first to create the stock check. Only once these are created can the stock counts be entered. Currently there is no stock check to enter counts for'),'error');
-		echo '<div class="center"><a href="/' . $RootPath . '/StockCheck.php">' . _('Create New Stock Check') . '</a></div>';
+		echo '<div class="center"><a href="' . $RootPath . '/StockCheck.php">' . _('Create New Stock Check') . '</a></div>';
 	} else {
 		echo '<table cellpadding="2" class="selection">';
 		echo '<tr>
@@ -146,7 +146,7 @@ if ($_GET['Action'] == 'Enter'){
 												description
 										FROM stockcheckfreeze INNER JOIN stockmaster
 										ON stockcheckfreeze.stockid=stockmaster.stockid
-										WHERE categoryid='" . $_POST['StkCat'] . "'
+										WHERE categoryid='" . $_POST['StkCat'] . "' AND loccode = '" . $_POST['Location'] . "' 
 										ORDER BY stockcheckfreeze.stockid",$db);
 
 			$RowCount=1;
