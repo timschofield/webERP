@@ -2718,7 +2718,7 @@ msgstr ""
 
 #: BOMInquiry.php:244
 msgid "Labour Cost"
-msgstr ""
+msgstr "Labor Cost"
 
 #: BOMInquiry.php:247
 msgid "Overhead Cost"
@@ -6016,7 +6016,7 @@ msgstr ""
 #: SuppTransGLAnalysis.php:227 includes/PDFBankingSummaryPageHeader.inc:58
 #: includes/PDFGLJournalHeader.inc:21
 msgid "Narrative"
-msgstr ""
+msgstr "Description"
 
 #: CounterReturns.php:762
 msgid "Rounded Total"
@@ -8441,7 +8441,7 @@ msgstr ""
 
 #: CustomerReceipt.php:582 includes/MainMenuLinksArray.php:96
 msgid "Enter Receipts"
-msgstr ""
+msgstr "Enter Customer Payments"
 
 #: CustomerReceipt.php:595 SelectCreditItems.php:73
 msgid ""
@@ -8537,7 +8537,7 @@ msgstr ""
 
 #: CustomerReceipt.php:942 Payments.php:930
 msgid "Narrative on General Ledger Account Inquiry"
-msgstr ""
+msgstr "Description on General Ledger Account Inquiry"
 
 #: CustomerReceipt.php:958
 msgid "Banked"
@@ -10439,7 +10439,7 @@ msgstr ""
 
 #: EDIProcessOrders.php:336
 msgid "Delivery subject to final authorisation"
-msgstr ""
+msgstr "Delivery subject to final authorization"
 
 #: EDIProcessOrders.php:339
 msgid "Invoiced but not replenished"
@@ -13046,7 +13046,7 @@ msgstr ""
 
 #: GLJournal.php:370 Payments.php:1048 Payments.php:1053
 msgid "GL Narrative"
-msgstr ""
+msgstr "GL Description"
 
 #: GLJournal.php:383
 msgid "Journal Summary"
@@ -19317,7 +19317,7 @@ msgstr ""
 
 #: PO_AuthorisationLevels.php:153
 msgid "Are you sure you wish to delete this authorisation level?"
-msgstr ""
+msgstr "Are you sure you wish to delete this authorization level?"
 
 #: PO_AuthorisationLevels.php:231
 msgid "User can create orders"
@@ -19329,21 +19329,23 @@ msgstr ""
 
 #: PO_AuthorisationLevels.php:251
 msgid "User can authorise orders up to :"
-msgstr ""
+msgstr "User can authorize orders up to :"
 
 #: PO_AuthorisationLevels.php:252
 msgid ""
 "Enter the amount that this user is premitted to authorise purchase orders up "
 "to"
 msgstr ""
+"Enter the amount that this user is premitted to authorize purchase orders up "
+"to"
 
 #: PO_AuthoriseMyOrders.php:7
 msgid "Authorise Purchase Orders"
-msgstr ""
+msgstr "Authorize Purchase Orders"
 
 #: PO_AuthoriseMyOrders.php:23 PO_Header.php:91
 msgid "Authorised by"
-msgstr ""
+msgstr "Authorized by"
 
 #: PO_AuthoriseMyOrders.php:60
 msgid "Date Ordered"
@@ -19472,7 +19474,7 @@ msgstr ""
 
 #: PO_Header.php:117 PO_Header.php:134
 msgid "Your authorisation limit is set at"
-msgstr ""
+msgstr "Your authorization limit is set at"
 
 #: PO_Header.php:126
 msgid ""
@@ -19554,7 +19556,7 @@ msgstr ""
 
 #: PO_Header.php:457
 msgid "You can setup authorisations"
-msgstr ""
+msgstr "You can setup authorizations"
 
 #: PO_Header.php:529 PO_Header.php:603 PO_Items.php:236 PO_Items.php:379
 #: PO_Items.php:711 PO_Items.php:714 PO_OrderDetails.php:88
@@ -19702,7 +19704,7 @@ msgstr ""
 
 #: PO_Header.php:1061
 msgid "Supplier Contact"
-msgstr ""
+msgstr "Vendor Contact"
 
 #: PO_Header.php:1165
 msgid "Enter Line Items"
@@ -19729,11 +19731,13 @@ msgid ""
 "The quantity in the supplier units is expected to be numeric. Please re-"
 "enter as a number"
 msgstr ""
-
+"The quantity in the vendor units is expected to be numeric. Please re-"
+"enter as a number"
 #: PO_Items.php:49
 msgid ""
 "The supplier price is expected to be numeric. Please re-enter as a number"
 msgstr ""
+"The vendor price is expected to be numeric. Please re-enter as a number"
 
 #: PO_Items.php:66
 msgid ""
@@ -19773,6 +19777,8 @@ msgid ""
 "The order will be created with a status of pending and will require "
 "authorisation"
 msgstr ""
+"The order will be created with a status of pending and will require "
+"authorization"
 
 #: PO_Items.php:116 PO_Items.php:121 PurchaseByPrefSupplier.php:184
 #: PurchaseByPrefSupplier.php:189 SelectSalesOrder.php:260
@@ -21565,7 +21571,7 @@ msgstr ""
 
 #: PrintCustTrans.php:537
 msgid "Print Invoices or Credit Notes (Landscape Mode)"
-msgstr ""
+msgstr "Print Invoices or Credit Memos"
 
 #: PrintCustTrans.php:539 PrintCustTransPortrait.php:567
 #: includes/MainMenuLinksArray.php:104
@@ -21725,7 +21731,7 @@ msgstr ""
 
 #: PurchaseByPrefSupplier.php:6
 msgid "Preferred Supplier Purchasing"
-msgstr ""
+msgstr "Preferred Vendor Purchasing"
 
 #: PurchaseByPrefSupplier.php:109
 msgid ""
@@ -21761,7 +21767,7 @@ msgstr ""
 
 #: PurchaseByPrefSupplier.php:311 SellThroughSupport.php:229
 msgid "For Supplier"
-msgstr ""
+msgstr "For Vendor"
 
 #: PurchaseByPrefSupplier.php:362
 msgid "Show Items"
@@ -21769,12 +21775,12 @@ msgstr ""
 
 #: PurchaseByPrefSupplier.php:399
 msgid "Supplier Ordering"
-msgstr ""
+msgstr "Vendor Ordering"
 
 #: PurchaseByPrefSupplier.php:401
 msgid ""
 "The supplier inventory quantities could not be retrieved by the SQL because"
-msgstr ""
+msgstr "The vendor inventory quantities could not be retrieved by the SQL because"
 
 #: PurchaseByPrefSupplier.php:414
 msgid "Bin"
@@ -21826,7 +21832,7 @@ msgstr "Vendor Purchasing Data"
 
 #: PurchData.php:45
 msgid "Deleted the supplier discount record"
-msgstr ""
+msgstr "Deleted the vendor discount record"
 
 #: PurchData.php:62
 msgid ""
@@ -21912,7 +21918,7 @@ msgstr "This vendor purchasing data has been added to the database"
 
 #: PurchData.php:131
 msgid "The supplier purchasing details could not be updated because"
-msgstr ""
+msgstr "The vendor purchasing details could not be updated because"
 
 #: PurchData.php:134
 msgid "Supplier purchasing data has been updated"
@@ -21920,7 +21926,7 @@ msgstr "Vendor purchasing data has been updated"
 
 #: PurchData.php:137
 msgid "The supplier purchasing discount details could not be updated because"
-msgstr ""
+msgstr "The vendor purchasing discount details could not be updated because"
 
 #: PurchData.php:141
 msgid ""
@@ -21951,6 +21957,8 @@ msgid ""
 "Supplier discount percent must be greater than zero but less than 100 "
 "percent. This discount record cannot be added."
 msgstr ""
+"Vendor discount percent must be greater than zero but less than 100 "
+"percent. This discount record cannot be added."
 
 #: PurchData.php:170
 msgid ""
@@ -22171,7 +22179,7 @@ msgstr ""
 
 #: PurchData.php:643
 msgid "Supplier Stock Code"
-msgstr ""
+msgstr "Vendor Inventory Code"
 
 #: PurchData.php:647
 msgid "MinOrderQty"
@@ -22179,7 +22187,7 @@ msgstr ""
 
 #: PurchData.php:651
 msgid "Supplier Stock Description"
-msgstr ""
+msgstr "Vendor Item Description"
 
 #: PurchData.php:659
 msgid "in days from date of order"
@@ -22191,11 +22199,11 @@ msgstr "Preferred Vendor"
 
 #: PurchData.php:693
 msgid "The supplier discounts could not be retrieved because"
-msgstr ""
+msgstr "The vendor discounts could not be retrieved because"
 
 #: PurchData.php:694
 msgid "The SQL to retrieve supplier discounts for this item that failed was"
-msgstr ""
+msgstr "The SQL to retrieve vendor discounts for this item that failed was"
 
 #: PurchData.php:699
 msgid "Discount Name"
@@ -22210,13 +22218,13 @@ msgstr ""
 #: StockQuantityByDate.php:71 StockStatus.php:64 StockTransfers.php:575
 #: StockUsage.php:191
 msgid "Show Stock Status"
-msgstr ""
+msgstr "Show Inventory Status"
 
 #: PurchData.php:771 SelectProduct.php:400 StockCostUpdate.php:195
 #: StockLocMovements.php:53 StockMovements.php:61 StockReorderLevel.php:109
 #: StockUsage.php:193
 msgid "Show Stock Movements"
-msgstr ""
+msgstr "Show Inventory Movements"
 
 #: PurchData.php:772 SelectProduct.php:405 SelectSalesOrder.php:6
 #: StockAdjustments.php:522 StockCostUpdate.php:197 StockMovements.php:207
@@ -22320,7 +22328,7 @@ msgstr ""
 
 #: RecurringSalesOrders.php:401
 msgid "Region"
-msgstr ""
+msgstr "State"
 
 #: RecurringSalesOrders.php:405
 msgid "Post Code"
@@ -23058,7 +23066,7 @@ msgstr ""
 
 #: SalesAnalRepts.php:25 SalesAnalRepts.php:27
 msgid "Product Code"
-msgstr ""
+msgstr "Item Code"
 
 #: SalesAnalRepts.php:40 SalesAnalRepts.php:42
 msgid "Product Type"
@@ -24856,7 +24864,7 @@ msgstr ""
 
 #: SelectOrderItems.php:602
 msgid "Enter an Order or Quotation"
-msgstr ""
+msgstr "Enter a Sales Order"
 
 #: SelectOrderItems.php:602
 msgid "Search for the Customer Branch."
@@ -25119,7 +25127,7 @@ msgstr ""
 
 #: SelectProduct.php:108
 msgid "Service/Labour Item"
-msgstr ""
+msgstr "Service/Labor Item"
 
 #: SelectProduct.php:116
 msgid "Purchased Item"
@@ -25234,7 +25242,7 @@ msgstr ""
 
 #: SelectProduct.php:417
 msgid "Where This Labour Item Is Used"
-msgstr ""
+msgstr "Where This Labor Item Is Used"
 
 #: SelectProduct.php:423
 msgid "Quantity Adjustments"
@@ -25341,6 +25349,8 @@ msgid ""
 "The order has been created with a status of pending and will require "
 "authorisation"
 msgstr ""
+"The order has been created with a status of pending and will require "
+"authorization"
 
 #: SelectSalesOrder.php:256
 msgid "Could not get the supplier information for the order"
@@ -27130,7 +27140,7 @@ msgstr ""
 
 #: StockCategories.php:70
 msgid "Labour stock item"
-msgstr ""
+msgstr "Labor stock item"
 
 #: StockCategories.php:70
 msgid "Finished product"
@@ -27590,6 +27600,7 @@ msgstr ""
 msgid ""
 "Assembly/Kitset/Phantom/Service/Labour items cannot also be controlled items"
 msgstr ""
+"Assembly/Kitset/Phantom/Service/Labor items cannot also be controlled items"
 
 #: StockClone.php:238 Stocks.php:228
 msgid ""
@@ -27720,7 +27731,7 @@ msgstr ""
 
 #: StockClone.php:839 Stocks.php:1126
 msgid "Assembly, Kit, Manufactured or Service/Labour"
-msgstr ""
+msgstr "Assembly, Kit, Manufactured or Service/Labor"
 
 #: StockClone.php:847 StockClone.php:849 Stocks.php:1134 Stocks.php:1136
 msgid "Kit"
@@ -27728,7 +27739,7 @@ msgstr ""
 
 #: StockClone.php:868 StockClone.php:870 Stocks.php:1155 Stocks.php:1157
 msgid "Service/Labour"
-msgstr ""
+msgstr "Service/Labor"
 
 #: StockClone.php:877 Stocks.php:1164
 msgid "Current or Obsolete"
@@ -27855,7 +27866,7 @@ msgstr ""
 
 #: StockCostUpdate.php:169
 msgid "Standard Labour Cost Per Unit"
-msgstr ""
+msgstr "Standard Labor Cost Per Unit"
 
 #: StockCostUpdate.php:173
 msgid "Standard Overhead Cost Per Unit"
@@ -29675,12 +29686,12 @@ msgstr ""
 
 #: SupplierAllocations.php:24
 msgid "Supplier Payment"
-msgstr ""
+msgstr "Vendor Payment"
 
 #: SupplierAllocations.php:30 SupplierBalsAtPeriodEnd.php:117
 #: SupplierContacts.php:21 includes/MainMenuLinksArray.php:139
 msgid "Supplier Allocations"
-msgstr ""
+msgstr "Vendor Allocations"
 
 #: SupplierAllocations.php:39
 msgid ""
@@ -31983,15 +31994,15 @@ msgstr ""
 
 #: SystemParameters.php:455
 msgid "Order Entry allows Line Item Narrative"
-msgstr ""
+msgstr "Order Entry allows Line Item Description"
 
 #: SystemParameters.php:457
 msgid "Allow Narrative Entry"
-msgstr ""
+msgstr "Allow Line Description Entrty"
 
 #: SystemParameters.php:458
 msgid "No Narrative Line"
-msgstr ""
+msgstr "No description line"
 
 #: SystemParameters.php:460
 msgid ""
@@ -40115,7 +40126,7 @@ msgstr ""
 
 #: includes/MainMenuLinksArray.php:97
 msgid "Allocate Receipts or Credit Notes"
-msgstr ""
+msgstr "Allocate Customer Payments or Credit Memos"
 
 #: includes/MainMenuLinksArray.php:103
 msgid "Where Allocated Inquiry"
@@ -40163,11 +40174,11 @@ msgstr "Aged Vendor Report"
 
 #: includes/MainMenuLinksArray.php:147
 msgid "Supplier Balances At A Prior Month End"
-msgstr ""
+msgstr "Vendor Balances At A Prior Month End"
 
 #: includes/MainMenuLinksArray.php:149
 msgid "Supplier Transaction Inquiries"
-msgstr ""
+msgstr "Vendor Transaction Inquiries"
 
 #: includes/MainMenuLinksArray.php:159
 msgid "Add Supplier"
@@ -42210,7 +42221,7 @@ msgstr ""
 
 #: api/api_errorcodes.php:262
 msgid "Invalid Labour Cost"
-msgstr ""
+msgstr "Invalid Labor Cost"
 
 #: api/api_errorcodes.php:263
 msgid "Invalid Overhead Cost"
