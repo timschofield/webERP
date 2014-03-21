@@ -1,5 +1,6 @@
 webERP Change Log
 
+21/03/14 Exson: Fixed that bugs in WorkOrderIssue.php that the issued non BOM materials not shown. And fixed bugs in WorkOrderStatus.php failed to retrieve item description. 
 20/3/14 Exson: Fixed the bugs in StockCounts that Location set does not work and link typo.
 19/3/14 Tim: Fixed the bug Items Other than those in BOM are not listed in Status of Work Order even if issued. Exson made a little revision to keep SQL query only once for those additional issued materials. Reported by newuesr990 from weberp forum. 
 18/03/14 Exson: Fixed the bugs in GoodsReceived.php which will leads to duplicated goods receiving.
