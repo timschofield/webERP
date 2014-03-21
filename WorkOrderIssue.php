@@ -622,7 +622,14 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 											stockmaster.decimalplaces,
 											autoissue",
 									$db);
+	$IssuedAlreadyResult = DB_query("SELECT stockid, SUM(-qty) as total FROM stockmoves
+										WHERE stockmoves.type=28
+										AND reference='" . $_POST['WO'] . "' GROUP BY stockid",$db);
+	while($myrow = DB_fetch_array($IssuedAlreadyResult)){
+		$IssuedMaterials[$myrow['stockid']]['description'] = $myrow['description'];
+		$IssuedMaterials[$myrow['stockid']]['total'] = $myrow['total'];
 
+	}
 	while ($RequirementsRow = DB_fetch_array($RequirmentsResult)){
 		if ($RequirementsRow['autoissue']==0){
 			echo '<tr>
@@ -633,17 +640,40 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 					<td class="notavailable">' . _('Auto Issue') . '</td>
 					<td class="notavailable">' .$RequirementsRow['stockid'] . ' - ' . $RequirementsRow['description']  . '</td>';
 		}
-		$IssuedAlreadyResult = DB_query("SELECT SUM(-qty) FROM stockmoves
-											WHERE stockmoves.type=28
-											AND stockid='" . $RequirementsRow['stockid'] . "'
-											AND reference='" . $_POST['WO'] . "'",
-										$db);
-		$IssuedAlreadyRow = DB_fetch_row($IssuedAlreadyResult);
+		if (isset($IssuedMaterials[$RequirementsRow['stockid']])){
+			$IssuedAlreadyRow = $IssuedMaterials[$RequirementsRow['total']];
+			unset($IssuedMaterials[$RequirementsRow['stockid']]);
+		} else {
+			$IssuedAlreadyRow = 0;
+		}
 
 		echo '<td class="number">' . locale_number_format($RequirementsRow['quantityrequired'],$RequirementsRow['decimalplaces']) . '</td>
 			<td class="number">' . locale_number_format($IssuedAlreadyRow[0],$RequirementsRow['decimalplaces']) . '</td>
 		</tr>';
 	}
+	/* now to deal with those addtional issues of items not in BOM */
+	if (count($IssuedMaterials)>0){
+		$IssuedStocks = implode("','",array_keys($IssuedMaterials));
+		$sql = "SELECT  stockid,
+				descrption,
+				decimalplaces
+			FROM stockmaster
+			WHERE stockid in ('" . $IssuedStocks . "')";
+		$ErrMsg = _('Failed to retrieve the item data');
+		$result = DB_query($sql,$db,$ErrMsg);
+		while($myrow = DB_fetch_array($result)){
+			echo '<tr>
+					<td><input type="submit" name="IssueItem" value="' . $myrow['stockid'] . '" /></td>
+					<td>' . $myrow['stockid'] . ' - ' . $myrow['description'] . '</td>
+					<td class="number">0</td>
+					<td class="number">' . locale_number_format($IssuedMaterials[$myrow['stockid']]['total'],$myrow['decimalplaces']) . '</td>
+				</tr>';
+			
+		}
+
+}
+
+
 
 	echo '</table>
 		<br />';

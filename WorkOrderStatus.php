@@ -140,11 +140,10 @@ echo '<table cellpadding="2" class="selection">
 	}
 	/* Now do any additional issues of items not in the BOM */
 	if(count($IssuedAlreadyRow)>0){
-		$AdditionalStockIDs = array_keys($IssuedAlreadyRow);
-		$AdditionalStocks = implode(',',$AdditionalStockIDs);
+		$AdditionalStocks = implode("','",array_keys($IssuedAlreadyRow));
 		$RequirementsSQL = "SELECT stockid,
-					stockmaster.description,
-					stockmaster.decimalplaces
+						description,
+							decimalplaces
 				FROM stockmaster WHERE stockid IN ('".$AdditionalStocks."')";
 		$RequirementsResult = DB_query($RequirementsSQL,$db);
 			$AdditionalStocks = array();
