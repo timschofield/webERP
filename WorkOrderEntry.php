@@ -196,8 +196,10 @@ if (isset($_POST['Search']) OR isset($_POST['Prev']) OR isset($_POST['Next'])){
 	if (!isset($Offset)) {
 		$Offset=0;
 	}
-	if($Offset<0)$Offset=0;
-	if($Offset>$ListPageMax)$Offset=$ListPageMax;
+	if($Offset<0){
+		$Offset=0;
+	}
+	if($Offset>$ListPageMax AND $ListPageMax>0 )$Offset=$ListPageMax;
 	$sql = $sql . ' LIMIT ' . $_SESSION['DisplayRecordsMax'].' OFFSET ' . strval($_SESSION['DisplayRecordsMax']*$Offset);
 
 
