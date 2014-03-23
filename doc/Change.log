@@ -1,5 +1,6 @@
 webERP Change Log
 
+23/03/14 Exson: Fixed the bug that the search results shows only limited to DisplayRecordsMax which does not make sense due to pagination in WorkOrderIssue.php. 
 23/03/14 Exson: Fixed that currency name not available in Prices.php.
 22/03/14 Exson: Fixed the stock searching function failure when items setup in system less than DisplayedRecordsMax in WorkOrderEntry.php. 
 21/03/14 Exson: Fixed that bugs in WorkOrderIssue.php that the issued non BOM materials not shown. And fixed bugs in WorkOrderStatus.php failed to retrieve item description. 
