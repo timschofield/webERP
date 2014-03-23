@@ -205,7 +205,7 @@ $sql = "SELECT
 		prices.startdate";
 
 $result = DB_query($sql,$db);
-
+require_once('includes/CurrenciesArray.php');
 if (DB_num_rows($result) > 0) {
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 	echo '<div>';
@@ -229,7 +229,6 @@ if (DB_num_rows($result) > 0) {
 	echo	'</tr>';
 
 	$k=0; //row colour counter
-	include('includes/CurrenciesArray.php'); // To get the currency name from the currency code.
 	while ($myrow = DB_fetch_array($result)) {
 		if ($k==1){
 			echo '<tr class="EvenTableRows">';
