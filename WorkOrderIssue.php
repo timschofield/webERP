@@ -624,8 +624,7 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 										WHERE stockmoves.type=28
 										AND reference='" . $_POST['WO'] . "' GROUP BY stockid",$db);
 	while($myrow = DB_fetch_array($IssuedAlreadyResult)){
-		$IssuedMaterials[$myrow['stockid']]['description'] = $myrow['description'];
-		$IssuedMaterials[$myrow['stockid']]['total'] = $myrow['total'];
+		$IssuedMaterials[$myrow['stockid']] = $myrow['total'];
 
 	}
 	while ($RequirementsRow = DB_fetch_array($RequirmentsResult)){
@@ -639,21 +638,21 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 					<td class="notavailable">' .$RequirementsRow['stockid'] . ' - ' . $RequirementsRow['description']  . '</td>';
 		}
 		if (isset($IssuedMaterials[$RequirementsRow['stockid']])){
-			$IssuedAlreadyRow = $IssuedMaterials[$RequirementsRow['total']];
+			$IssuedAlreadyRow = $IssuedMaterials[$RequirementsRow['stockid']];
 			unset($IssuedMaterials[$RequirementsRow['stockid']]);
 		} else {
 			$IssuedAlreadyRow = 0;
 		}
 
 		echo '<td class="number">' . locale_number_format($RequirementsRow['quantityrequired'],$RequirementsRow['decimalplaces']) . '</td>
-			<td class="number">' . locale_number_format($IssuedAlreadyRow[0],$RequirementsRow['decimalplaces']) . '</td>
+			<td class="number">' . locale_number_format($IssuedAlreadyRow,$RequirementsRow['decimalplaces']) . '</td>
 		</tr>';
 	}
 	/* now to deal with those addtional issues of items not in BOM */
 	if (count($IssuedMaterials)>0){
 		$IssuedStocks = implode("','",array_keys($IssuedMaterials));
 		$sql = "SELECT  stockid,
-				descrption,
+				description,
 				decimalplaces
 			FROM stockmaster
 			WHERE stockid in ('" . $IssuedStocks . "')";
@@ -664,7 +663,7 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 					<td><input type="submit" name="IssueItem" value="' . $myrow['stockid'] . '" /></td>
 					<td>' . $myrow['stockid'] . ' - ' . $myrow['description'] . '</td>
 					<td class="number">0</td>
-					<td class="number">' . locale_number_format($IssuedMaterials[$myrow['stockid']]['total'],$myrow['decimalplaces']) . '</td>
+					<td class="number">' . locale_number_format($IssuedMaterials[$myrow['stockid']],$myrow['decimalplaces']) . '</td>
 				</tr>';
 			
 		}
