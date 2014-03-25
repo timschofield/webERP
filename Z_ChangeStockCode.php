@@ -141,10 +141,8 @@ if (isset($_POST['ProcessStockChange'])){
 		ChangeFieldInTable("grns", "itemcode", $_POST['OldStockID'], $_POST['NewStockID'], $db);
 		ChangeFieldInTable("contractbom", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
 		ChangeFieldInTable("bom", "component", $_POST['OldStockID'], $_POST['NewStockID'], $db);
-
-		DB_IgnoreForeignKeys($db);
-
 		ChangeFieldInTable("bom", "parent", $_POST['OldStockID'], $_POST['NewStockID'], $db);
+		ChangeFieldInTable("stockrequestitems", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
 
 		echo '<br />' . _('Changing any image files');
 		if (file_exists($_SESSION['part_pics_dir'] . '/' .$_POST['OldStockID'].'.jpg')){
