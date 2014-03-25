@@ -41,6 +41,8 @@ if (isset($_POST['ProcessStockChange'])){
 
 
 	if ($InputError ==0){ // no input errors
+
+		DB_IgnoreForeignKeys($db);
 		$result = DB_Txn_Begin($db);
 		echo '<br />' . _('Adding the new stock master record');
 		$sql = "INSERT INTO stockmaster (stockid,
@@ -109,22 +111,24 @@ if (isset($_POST['ProcessStockChange'])){
 		ChangeFieldInTable("mrpdemands", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
 
 		//check if MRP tables exist before assuming
-
-		$result = DB_query("SELECT COUNT(*) FROM mrpplannedorders",$db,'','',false,false);
-		if (DB_error_no($db)==0) {
-			ChangeFieldInTable("mrpplannedorders", "part", $_POST['OldStockID'], $_POST['NewStockID'], $db);
+		$sql = "SELECT * FROM mrpparameters";
+-		$result = DB_query($sql, $db, '', '', false, false);
+-		if (DB_error_no($db) == 0) {
+			$result = DB_query("SELECT COUNT(*) FROM mrpplannedorders",$db,'','',false,false);
+			if (DB_error_no($db)==0) {
+				ChangeFieldInTable("mrpplannedorders", "part", $_POST['OldStockID'], $_POST['NewStockID'], $db);
+			}
+	
+			$result = DB_query("SELECT * FROM mrprequirements" , $db,'','',false,false);
+			if (DB_error_no($db)==0){
+				ChangeFieldInTable("mrprequirements", "part", $_POST['OldStockID'], $_POST['NewStockID'], $db);
+			}
+			
+			$result = DB_query("SELECT * FROM mrpsupplies" , $db,'','',false,false);
+			if (DB_error_no($db)==0){
+				ChangeFieldInTable("mrpsupplies", "part", $_POST['OldStockID'], $_POST['NewStockID'], $db);
+			}
 		}
-
-		$result = DB_query("SELECT * FROM mrprequirements" , $db,'','',false,false);
-		if (DB_error_no($db)==0){
-			ChangeFieldInTable("mrprequirements", "part", $_POST['OldStockID'], $_POST['NewStockID'], $db);
-		}
-		
-		$result = DB_query("SELECT * FROM mrpsupplies" , $db,'','',false,false);
-		if (DB_error_no($db)==0){
-			ChangeFieldInTable("mrpsupplies", "part", $_POST['OldStockID'], $_POST['NewStockID'], $db);
-		}
-
 		ChangeFieldInTable("salesanalysis", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
 		ChangeFieldInTable("orderdeliverydifferenceslog", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
 		ChangeFieldInTable("prices", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);

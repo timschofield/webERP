@@ -195,10 +195,6 @@ if (isset($_SESSION['UpdateCurrencyRatesDaily'])){
 If (isset($_POST['Theme']) AND ($_SESSION['UsersRealName'] == $_POST['RealName'])) {
 	$_SESSION['Theme'] = $_POST['Theme'];
 	$Theme = $_POST['Theme'];
-} elseif (!isset($_SESSION['Theme'])) {
-	$Theme = $_SESSION['DefaultTheme'];
-	$_SESSION['Theme'] = $_SESSION['DefaultTheme'];
-
 } else {
 	$Theme = $_SESSION['Theme'];
 }
