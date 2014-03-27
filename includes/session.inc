@@ -211,38 +211,14 @@ if (empty($_SESSION['LogoFile'])) {
 	 */
 
 	function findLogoFile($CompanyDir, $PathPrefix) {
-		$dir = $PathPrefix.'companies/' . $CompanyDir . '/';
-		$DirHandle = dir($dir);
-		while ($DirEntry = $DirHandle->read() ){
-			if ($DirEntry != '.' AND $DirEntry !='..'){
-				$InCompanyDir[] = $DirEntry; //make an array of all files under company directory
-			}
-		} //loop through list of files in the company directory
-		if ($InCompanyDir !== FALSE) {
-			foreach($InCompanyDir as $logofilename) {
-				if (strncasecmp($logofilename,'logo.png',8) === 0 AND
-					is_readable($dir . $logofilename) AND
-					is_file($dir . $logofilename)) {
-					$logo = $logofilename;
-					break;
-				}
-			}
-			if (!isset($logo)) {
-				foreach($InCompanyDir as $logofilename) {
-					if (strncasecmp($logofilename,'logo.jpg',8) === 0 AND
-						is_readable($dir . $logofilename) AND
-						is_file($dir . $logofilename)) {
-						$logo = $logofilename;
-						break;
-					}
-				}
-			}
-			if (empty($logo)) {
-				return null;
-			} else {
-				return 'companies/' .$CompanyDir .'/'. $logo;
-			}
-		} //end listing of files under company directory is not empty
+		$result = null;
+		$dir = $PathPrefix . 'companies/' . $CompanyDir;
+		if (file_exists($dir . '/logo.png')) {
+			$result = 'companies/' . $CompanyDir . '/logo.png';
+		} elseif (file_exists($dir . '/logo.jpg')) {
+			$result = 'companies/' . $CompanyDir . '/logo.jpg';
+		} 
+		return $result;
 	}
 
 	/* Find a logo in companies/<company of this session> */

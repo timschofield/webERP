@@ -1,5 +1,6 @@
 webERP Change Log
 
+26/3/14 Serakfalcon: fixed findLogoFile function in includes/session.inc
 24/3/14 Phil: Removed DefaultTheme configuration parameter - unecessary as noted by Serafalcon
 23/03/14 Exson: Fixed the no defined variable bugs in WorkOrderIssue.php. Reported by Tim. 
 23/03/14 Exson: Fixed the bug that the search results shows only limited to DisplayRecordsMax which does not make sense due to pagination in WorkOrderIssue.php. 
