@@ -38,7 +38,13 @@ if ( (isset($_POST['AddBatches']) AND $_POST['AddBatches']!='')) {
 						}
 					}
 					if ($AddThisBundle==true){//the $InOutModifier should not appeared here. Otherwise, the users cannot remove the quantity but add it.
-						$LineItem->SerialItems[$_POST['SerialNo' . $i]] = new SerialItem ($_POST['SerialNo' . $i], ($InOutModifier>0?1:1) * filter_number_format($_POST['Qty' . $i]));
+						if ($Perishable != 1){
+							$LineItem->SerialItems[$_POST['SerialNo' . $i]] = new SerialItem ($_POST['SerialNo' . $i], ($InOutModifier>0?1:1) * filter_number_format($_POST['Qty' . $i]));
+						} else {
+							
+							$ExpiryDate = GetExpiryDate($StockID,$LocationOut, $_POST['SerialNo' . $i]);
+							$LineItem->SerialItems[$_POST['SerialNo' . $i]] = new SerialItem ($_POST['SerialNo' . $i], filter_number_format($_POST['Qty'.$i]),$ExpiryDate);
+						}
 					}
 				} /*end if ExistingBundleQty >0 */
 				else {
@@ -73,7 +79,9 @@ if ( (isset($_POST['AddBatches']) AND $_POST['AddBatches']!='')) {
 					$LineItem->SerialItems[$NewSerialNo] = new SerialItem ($_POST['SerialNo' . $i], $NewQty, $ExpiryDate);
 				}
 			}
+			
 		} /* end if posted Serialno . i is not blank */
+		
 
 	} /* end of the loop aroung the form input fields */
 	if (!isset($_POST['Bundles'])) {
@@ -81,12 +89,30 @@ if ( (isset($_POST['AddBatches']) AND $_POST['AddBatches']!='')) {
 	}
 	//echo count($_POST['Bundles']);
 	for ($i=0;$i < count($_POST['Bundles']) AND $_POST['Bundles']!=0;$i++){ /*there is an entry in the multi select list box */
+		
 		if ($LineItem->Serialised==1){	/*only if the item is serialised */
-			$LineItem->SerialItems[$_POST['Bundles'][$i]] = new SerialItem ($_POST['Bundles'][$i],  ($InOutModifier>0 ? 1:-1) );
+			if ($Perishable != 1){
+			
+				$LineItem->SerialItems[$_POST['Bundles'][$i]] = new SerialItem ($_POST['Bundles'][$i],  ($InOutModifier>0 ? 1:-1) );
+			} else {
+					
+				$ExpiryDate = GetExpiryDate($StockID,$LocationOut,$_POST['Bundles'][$i]);
+				$LineItem->SerialItems[$_POST['Bundles'][$i]] = new SerialItem ($_POST['Bundles'][$i],  ($InOutModifier>0 ? 1:-1),$ExpiryDate );
+			}
+				
 		} else {
 			list($SerialNo, $Qty) = explode ('/|/', $_POST['Bundles'][$i]);
             if ($Qty != 0) {
+		    	if ($Perishable != 1){
+				
 				$LineItem->SerialItems[$SerialNo] = new SerialItem ($SerialNo,  $Qty*($InOutModifier>0?1:-1) );
+			} else {
+					
+				$ExpiryDate = GetExpiryDate($StockID,$LocationOut,$SerialNo);
+				
+				$LineItem->SerialItems[$SerialNo] = new SerialItem ($SerialNo,  $Qty*($InOutModifier>0 ? 1:-1),$ExpiryDate );
+						
+			}
 			}
 		}
 	}

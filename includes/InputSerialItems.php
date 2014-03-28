@@ -8,7 +8,13 @@ for controlled items - used in:
 - StockTransfers.php
 - CreditItemsControlled.php
 */
-
+//bring up perishable variable here otherwise we cannot get it in Add_SerialItems.php
+$sql="SELECT perishable
+		FROM stockmaster
+		WHERE stockid='".$StockID."'";
+$result=DB_query($sql, $db);
+$myrow=DB_fetch_array($result);
+$Perishable=$myrow['perishable'];
 include ('includes/Add_SerialItems.php');
 
 /*Setup the Data Entry Types */
@@ -105,12 +111,7 @@ $RemoveLink = '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UT
 			<br />
 			</div>';
 
-$sql="SELECT perishable
-		FROM stockmaster
-		WHERE stockid='".$StockID."'";
-$result=DB_query($sql, $db);
-$myrow=DB_fetch_array($result);
-$Perishable=$myrow['perishable'];
+
 if ($LineItem->Serialised==1){
 	if ($Perishable==0) {
 		$TableHeader .= '<tr>
