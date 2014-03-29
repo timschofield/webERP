@@ -31,8 +31,9 @@ if (isset($_POST['TaxAuthority']) AND
 	$PageNumber=0;
 	$line_height=12;
 
-      /*Now get the invoices for the tax report */
+	/*Now get the invoices for the tax report */
 
+	/*rchacon: The amounts of taxes are inserted into debtortranstaxes.taxamount in local currency and they are accumulated in debtortrans.ovgst in original currency.*/
 	$SQL = "SELECT debtortrans.transno,
 					debtortrans.type,
 					systypes.typename,
@@ -43,7 +44,7 @@ if (isset($_POST['TaxAuthority']) AND
 					debtortrans.order_,
 					(debtortrans.ovamount+debtortrans.ovfreight)/debtortrans.rate AS netamount,
 					debtortrans.ovfreight/debtortrans.rate AS freightamount,
-					debtortranstaxes.taxamount/debtortrans.rate AS tax
+					debtortranstaxes.taxamount AS tax
 			FROM debtortrans
 			INNER JOIN debtorsmaster ON debtortrans.debtorno=debtorsmaster.debtorno
 			INNER JOIN systypes ON debtortrans.type=systypes.typeid

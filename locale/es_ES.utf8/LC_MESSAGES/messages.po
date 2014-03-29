@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-02-08 17:33+1300\n"
-"PO-Revision-Date: 2014-03-19 11:26-0600\n"
+"PO-Revision-Date: 2014-03-28 18:29-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -18494,11 +18494,11 @@ msgstr "Primero debe seleccionar una ficha de Caja Chica a Autorizar"
 #: PcAuthorizeExpenses.php:45 PcAuthorizeExpenses.php:48 SuppLoginSetup.php:28
 #: WWW_Users.php:20 includes/MainMenuLinksArray.php:30
 msgid "Petty Cash"
-msgstr "Caja Chica"
+msgstr "Caja chica"
 
 #: PcAuthorizeExpenses.php:46 PcAuthorizeExpenses.php:49
 msgid "Authorisation Of Petty Cash Expenses "
-msgstr "Autorización de Gastos de Caja Chica"
+msgstr "Autorización de Gastos de caja chica"
 
 #: PcAuthorizeExpenses.php:64
 msgid "Detail Of Movement For Last "
@@ -18506,7 +18506,7 @@ msgstr "Detalle del Movimiento por el pasado"
 
 #: PcAuthorizeExpenses.php:142
 msgid "PettyCash"
-msgstr "Caja Chica"
+msgstr "Caja chica"
 
 #: PcAuthorizeExpenses.php:314
 msgid "Authorise expenses to Petty Cash Tab"
@@ -33443,7 +33443,7 @@ msgstr "Producción"
 
 #: SuppLoginSetup.php:27 WWW_Users.php:19 includes/MainMenuLinksArray.php:29
 msgid "Asset Manager"
-msgstr "Maestro de Activos"
+msgstr "Gestor de activos"
 
 #: SuppLoginSetup.php:102
 msgid "A new supplier login has been created"
@@ -35587,7 +35587,7 @@ msgstr "No hay entradas de impuesto a la lista"
 
 #: Tax.php:286
 msgid "Tax Reporting"
-msgstr "Informe Impositivo"
+msgstr "Informe impositivo"
 
 #: Tax.php:297
 msgid "Tax Authority To Report On:"
@@ -35599,11 +35599,11 @@ msgstr "Regresar Cubierta"
 
 #: Tax.php:310
 msgid "Quarter"
-msgstr "Cuarto"
+msgstr "Tres meses"
 
 #: Tax.php:311
 msgid "Six Months"
-msgstr "Seis Meses"
+msgstr "Seis meses"
 
 #: Tax.php:317
 msgid "Return To"
@@ -43220,7 +43220,7 @@ msgstr "Informes de Centros de Costo"
 
 #: includes/MainMenuLinksArray.php:354
 msgid "Tax Reports"
-msgstr "Informes de Impuestos"
+msgstr "Informes de impuestos"
 
 #: includes/MainMenuLinksArray.php:371
 msgid "GL Accounts"
