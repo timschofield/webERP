@@ -774,12 +774,12 @@ function Installation($DefaultLanguage)
                 if(substr($DefaultLanguage,0,2) !='en'){//ensure that the bilingual only display when the language is not english
                     foreach($LanguagesArray as $Key => $Language1){//since we only use the first 2 characters to separate the language, there are some
                                             //chance that different locale but use same first 2 letters.
-                        if(!isset($SelectedKey) and substr($DefaultLanugage,0,2) == substr($Key,0,2)){
+                        if(!isset($SelectedKey) and substr($DefaultLanguage,0,2) == substr($Key,0,2)){
                             $SelectedKey = $Key;
-                            echo '<option value="'.$Key.'" selected="selected">' . $Language1['LanguageName'].$Language1['WindowsLocale'] . '</option>';
+                            echo '<option value="'.$Key.'" selected="selected">' . $Language1['LanguageName'].' - '.$Language1['WindowsLocale'] . '</option>';
                         }
                         if(!isset($SelectedKey) or (isset($SelectedKey) and $Key != $SelectedKey)){
-                            echo '<option value="'.$Key.'" >' . $Language1['LanguageName'].$Language1['WindowsLocale'] . '</option>';
+                            echo '<option value="'.$Key.'" >' . $Language1['LanguageName'].' - '.$Language1['WindowsLocale'] . '</option>';
                         }
                     }
                 }else{
