@@ -1,5 +1,6 @@
 webERP Change Log
 
+2/4/14 Andrew Galuski: Get Credit available when modifiying an existing order
 28/03/14 Exson: Fixed the Expiry Date not handled right during stocks adjustments by manual key in or bar code scan in Add_SerialItems.php, DefineSerialItems.php,InputSerialItems.php and InputSerialItemsKeyed.php.
 26/3/14 Serakfalcon: fixed findLogoFile function in includes/session.inc
 24/3/14 Phil: Removed DefaultTheme configuration parameter - unecessary as noted by Serafalcon
