@@ -20,13 +20,13 @@ if (isset($_GET['StockID'])){
 	$StockID = '';
 }
 
-$ItemDescriptionLanguages = explode(',',$_SESSION['ItemDescriptionLanguages']);
+$ItemDescriptionLanguagesArray = explode(',',$_SESSION['ItemDescriptionLanguages']);
 
 if (isset($_POST['NextItem'])){
 	$Result = DB_query("SELECT stockid FROM stockmaster WHERE stockid>'" . $StockID . "' ORDER BY stockid ASC LIMIT 1",$db);
 	$NextItemRow = DB_fetch_row($Result);
 	$StockID = $NextItemRow[0];
-	foreach ($ItemDescriptionLanguages as $DescriptionLanguage) {
+	foreach ($ItemDescriptionLanguagesArray as $DescriptionLanguage) {
 		unset($_POST['Description_' . str_replace('.','_',$DescriptionLanguage)]);
 	}
 }
@@ -34,7 +34,7 @@ if (isset($_POST['PreviousItem'])){
 	$Result = DB_query("SELECT stockid FROM stockmaster WHERE stockid<'" . $StockID . "' ORDER BY stockid DESC LIMIT 1",$db);
 	$PreviousItemRow = DB_fetch_row($Result);
 	$StockID = $PreviousItemRow[0];
-	foreach ($ItemDescriptionLanguages as $DescriptionLanguage) {
+	foreach ($ItemDescriptionLanguagesArray as $DescriptionLanguage) {
 		unset($_POST['Description_' . str_replace('.','_',$DescriptionLanguage)]);
 	}
 }
@@ -429,7 +429,7 @@ if (isset($_POST['submit'])) {
 				$DbgMsg = _('The SQL that was used to update the language description and failed was');
 
 				if (count($ItemDescriptionLanguages)>0){
-					foreach ($ItemDescriptionLanguages as $DescriptionLanguage) {
+					foreach ($ItemDescriptionLanguagesArray as $DescriptionLanguage) {
 						if ($DescriptionLanguage!=''){
 							$result = DB_query("DELETE FROM stockdescriptiontranslations WHERE stockid='" . $StockID . "' AND language_id='" . $DescriptionLanguage . "'",$db,$ErrMsg,$DbgMsg,true);
 							$result = DB_query("INSERT INTO stockdescriptiontranslations VALUES('" . $StockID . "','" . $DescriptionLanguage . "', '" . $_POST['Description_' . str_replace('.','_',$DescriptionLanguage)] . "')",$db,$ErrMsg,$DbgMsg,true);
@@ -624,7 +624,7 @@ if (isset($_POST['submit'])) {
 					$ErrMsg = _('Could not update the language description because');
 					$DbgMsg = _('The SQL that was used to update the language description and failed was');
 					if (count($ItemDescriptionLanguages)>0){
-						foreach ($ItemDescriptionLanguages as $DescriptionLanguage) {
+						foreach ($ItemDescriptionLanguagesArray as $DescriptionLanguage) {
 							if ($DescriptionLanguage!=''){
 								$result = DB_query("INSERT INTO stockdescriptiontranslations VALUES('" . $StockID . "','" . $DescriptionLanguage . "', '" . $_POST['Description_' . str_replace('.','_',$DescriptionLanguage)] . "')",$db,$ErrMsg,$DbgMsg,true);
 							}
@@ -695,7 +695,7 @@ if (isset($_POST['submit'])) {
 						unset($_POST['ShrinkFactor']);
 						unset($_POST['Pansize']);
 						unset($StockID);
-						foreach ($ItemDescriptionLanguages as $DescriptionLanguage) {
+						foreach ($ItemDescriptionLanguagesArray as $DescriptionLanguage) {
 							unset($_POST['Description_' . str_replace('.','_',$DescriptionLanguage)]);
 						}
 						$New=1;
@@ -841,7 +841,7 @@ if (isset($_POST['submit'])) {
 		unset($_POST['TaxCat']);
 		unset($_POST['DecimalPlaces']);
 		unset($_SESSION['SelectedStockItem']);
-		foreach ($ItemDescriptionLanguages as $DescriptionLanguage) {
+		foreach ($ItemDescriptionLanguagesArray as $DescriptionLanguage) {
 			unset($_POST['Description_' . str_replace('.','_',$DescriptionLanguage)]);
 		}
 		unset($StockID);
@@ -935,7 +935,7 @@ if (!isset($StockID) OR $StockID=='' or isset($_POST['UpdateCategories'])) {
 
 
 	$sql = "SELECT descriptiontranslation, language_id FROM stockdescriptiontranslations WHERE stockid='" . $StockID . "' AND (";
-	foreach ($ItemDescriptionLanguages as $DescriptionLanguage) {
+	foreach ($ItemDescriptionLanguagesArray as $DescriptionLanguage) {
 		$sql .= "language_id='" . $DescriptionLanguage ."' OR ";
 	}
 	$sql = mb_substr($sql,0,mb_strlen($sql)-3) . ')';
@@ -965,7 +965,7 @@ echo '<tr>
 		<td><input ' . (in_array('Description',$Errors) ?  'class="inputerror"' : '' ) .' type="text" ' . ($New==0?'autofocus="autofocus"':'') . ' name="Description" required="required" size="52" maxlength="50" value="' . stripslashes($Description) . '" /></td>
 	</tr>';
 
-foreach ($ItemDescriptionLanguages as $DescriptionLanguage) {
+foreach ($ItemDescriptionLanguagesArray as $DescriptionLanguage) {
 	if ($DescriptionLanguage!=''){
 		//unfortunately cannot have points in POST variables so have to mess with the language id
 		$PostVariableName = 'Description_' . str_replace('.','_',$DescriptionLanguage);
