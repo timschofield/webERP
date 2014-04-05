@@ -274,7 +274,7 @@ if ($ListCount == 0){
         include('includes/footer.inc');
 	exit;
 } else {
-    $pdf->OutputI($_SESSION['DatabaseName'] . '_Quotation_' . date('Y-m-d') . '.pdf');
+    $pdf->OutputD($_SESSION['DatabaseName'] . '_Quotation_' . date('Y-m-d') . '.pdf');
     $pdf->__destruct();
 }
 ?>

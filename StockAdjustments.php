@@ -158,6 +158,9 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 	} elseif (!is_numeric($_SESSION['Adjustment' . $identifier]->Quantity)){
 		prnMsg( _('The quantity entered must be numeric'),'error');
 		$InputError = true;
+	} elseif(strlen(substr(strrchr($_SESSION['Adjustment'.$identifier]->Quantity, "."), 1))>$_SESSION['Adjustment' . $identifier]->DecimalPlaces){
+		prnMsg(_('The decimal places input is more than the decimals of this item defined,the defined decimal places is ').' '.$_SESSION['Adjustment' . $identifier]->DecimalPlaces.' '._('and the input decimal places is ').' '.strlen(substr(strrchr($_SESSION['Adjustment'.$identifier]->Quantity, "."), 1)),'error');
+		$InputError = true;
 	} elseif ($_SESSION['Adjustment' . $identifier]->Quantity==0){
 		prnMsg( _('The quantity entered cannot be zero') . '. ' . _('There would be no adjustment to make'),'error');
 		$InputError = true;
