@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-02-08 17:33+1300\n"
-"PO-Revision-Date: 2014-03-28 18:29-0600\n"
+"PO-Revision-Date: 2014-04-02 18:23-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -14917,7 +14917,7 @@ msgstr "Configuración de Cobros/Pagos"
 
 #: index.php:121
 msgid "Inquiries and Reports"
-msgstr "Consultas e Informes"
+msgstr "Consultas e informes"
 
 #: index.php:147
 msgid "Inventory Setup"
@@ -14925,11 +14925,11 @@ msgstr "Administrar el Inventario"
 
 #: index.php:182
 msgid "Custom Reports"
-msgstr "Informes Personalizados"
+msgstr "Informes personalizados"
 
 #: index.php:182
 msgid "Standard Reports and Forms"
-msgstr "Informes y Formularios Estándar"
+msgstr "Informes y formularios estándar"
 
 #: index.php:226
 msgid "There are no reports to show!"
@@ -42774,7 +42774,7 @@ msgstr "Hindi"
 
 #: includes/Login.php:7
 msgid "Login as user"
-msgstr ""
+msgstr "Entrar como usuario"
 
 #: includes/Login.php:7
 msgid "admin"
@@ -43408,19 +43408,19 @@ msgstr ""
 
 #: includes/MainMenuLinksArray.php:526
 msgid "Change A Customer Code"
-msgstr "Modificar Código de Cliente"
+msgstr "Cambiar un código de cliente"
 
 #: includes/MainMenuLinksArray.php:527
 msgid "Change A Customer Branch Code"
-msgstr "Cambiar un Código de Sucursal de Cliente"
+msgstr "Cambiar un código de sucursal de cliente"
 
 #: includes/MainMenuLinksArray.php:528
 msgid "Change A Supplier Code"
-msgstr "Cambiar Código de Proveedor"
+msgstr "Cambiar un código de proveedor"
 
 #: includes/MainMenuLinksArray.php:529
 msgid "Change An Inventory Item Code"
-msgstr "Cambiar un Código de Artículo del Inventario"
+msgstr "Cambiar un código de artículo de inventario"
 
 #: includes/MainMenuLinksArray.php:530
 msgid "Change A GL Account Code"
@@ -43428,7 +43428,7 @@ msgstr "Cambiar un código de cuenta contable"
 
 #: includes/MainMenuLinksArray.php:531
 msgid "Change A Location Code"
-msgstr "Cambiar un Código de Ubicación"
+msgstr "Cambiar un código de ubicación"
 
 #: includes/MainMenuLinksArray.php:532
 msgid "Update costs for all BOM items, from the bottom up"
