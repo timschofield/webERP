@@ -9,12 +9,14 @@ for controlled items - used in:
 - CreditItemsControlled.php
 */
 //bring up perishable variable here otherwise we cannot get it in Add_SerialItems.php
-$sql="SELECT perishable
+$sql = "SELECT perishable,
+		decimalplaces
 		FROM stockmaster
 		WHERE stockid='".$StockID."'";
-$result=DB_query($sql, $db);
-$myrow=DB_fetch_array($result);
-$Perishable=$myrow['perishable'];
+$result = DB_query($sql, $db);
+$myrow = DB_fetch_array($result);
+$Perishable = $myrow['perishable'];
+$DecimalPlaces = $myrow['decimalplaces'];
 include ('includes/Add_SerialItems.php');
 
 /*Setup the Data Entry Types */

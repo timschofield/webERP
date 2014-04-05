@@ -7,16 +7,35 @@
         Added KEYED Entry values
 ********************************************/
 if ( (isset($_POST['AddBatches']) AND $_POST['AddBatches']!='')) {
-
 	for ($i=0;$i < 10;$i++){
 		if(isset($_POST['SerialNo' . $i]) AND mb_strlen($_POST['SerialNo' . $i])>0){
+			/* add input quantity validation, the quantity left due to wrong decimal places is very annoying for controlled items */
+			if(is_numeric(filter_number_format($_POST['Qty'.$i]))){
+				if(strlen(substr(strrchr(filter_number_format($_POST['Qty'.$i]), "."), 1))>$DecimalPlaces){
+					echo '<br/>';
+					prnMsg(_('Please correct input quantity ').' '.$_POST['Qty'.$i].' '._('to').' '.$DecimalPlaces.' '._('decimalplaces'),'error');
+					$AddThisBundle = false;
+					$SerialError = true;
+					unset($LineItem->SerialItems[$_POST['SerialNo'.$i]]);
+					
+				}
+			} else {
+				echo '<br/>';
+				prnMsg(_('The input quantity must be numeric'),'error');
+				$AddThisBundle = false;
+				$SerialError = true;
+				unset($LineItem->SerialItems[$_POST['SerialNo'.$i]]);
+			}
+
 			if ($ItemMustExist){
 				$ExistingBundleQty = ValidBundleRef($StockID, $LocationOut, $_POST['SerialNo' . $i]);
 				if ($ExistingBundleQty >0 OR ($ExistingBundleQty==1 and $IsCredit=true)){
-					$AddThisBundle = true;
+					if(!isset($AddThisBundle)){
+						$AddThisBundle = true; 
+					}
 					/*If the user enters a duplicate serial number the later one over-writes
-					the first entered one - no warning given though ? */
-					if (filter_number_format($_POST['Qty' . $i]) > $ExistingBundleQty){
+						the first entered one - no warning given though ? */
+					if (((filter_number_format($_POST['Qty' . $i]))*$InOutModifier) > $ExistingBundleQty){
 						if ($LineItem->Serialised ==1){
 							echo '<br />';
 							prnMsg ( $_POST['SerialNo' . $i] . ' ' .
@@ -34,7 +53,9 @@ if ( (isset($_POST['AddBatches']) AND $_POST['AddBatches']!='')) {
 									_('The entered quantity will be reduced to the remaining amount left of this batch/bundle/roll'),
 									'warn');
 							$_POST['Qty' . $i] = $ExistingBundleQty;
-							$AddThisBundle = true;
+							if(!isset($AddThisBundle)){
+								$AddThisBundle = true;
+							}
 						}
 					}
 					if ($AddThisBundle==true){//the $InOutModifier should not appeared here. Otherwise, the users cannot remove the quantity but add it.
@@ -56,7 +77,9 @@ if ( (isset($_POST['AddBatches']) AND $_POST['AddBatches']!='')) {
 			else {
 				//Serialised items can not exist w/ Qty > 0 if we have an $NewQty of 1
 				//Serialised items must exist w/ Qty = 1 if we have $NewQty of -1
-				$SerialError = false;
+				if(!isset($SerialError)){
+					$SerialError = false;
+				}
 				$NewQty = ($InOutModifier>0?1:-1) * filter_number_format($_POST['Qty' . $i]);
 				$NewSerialNo = $_POST['SerialNo' . $i];
 
