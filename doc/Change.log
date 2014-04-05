@@ -1,5 +1,6 @@
 webERP Change Log
 
+05/04/14 rchacon: Fixes the bug that emptied ItemDescriptionLanguages.
 05/04/14 Exson: Add decimal places check for controlled items  quantity input in Add_SerialItems.php and InputSerialItems.php.The wrong decimal places will make this sections quite buggy and problem prone.
 05/04/14 Exson: Add a decimal places check in StockAdjustments.php to prevent from wrong decimal places input.
 04/04/14 Exson: Fixed the bug that controlled items can be dispatched more than order balance in ConfirmDispatch_Invoice.php.
