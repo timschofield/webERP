@@ -1,5 +1,6 @@
 webERP Change Log
 
+05/04/14 Exson: Add a decimal places check in StockAdjustments.php to prevent from wrong decimal places input.
 04/04/14 Exson: Fixed the bug that controlled items can be dispatched more than order balance in ConfirmDispatch_Invoice.php.
 2/4/14 Andrew Galuski: Get Credit available when modifiying an existing order
 28/03/14 Exson: Fixed the Expiry Date not handled right during stocks adjustments by manual key in or bar code scan in Add_SerialItems.php, DefineSerialItems.php,InputSerialItems.php and InputSerialItemsKeyed.php.
