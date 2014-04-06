@@ -160,6 +160,18 @@ switch ($PaperSize) {
 		$Left_Margin = 36; // Half inch = 72/2
 		$Right_Margin = 36; // Half inch = 72/2
 		break;
+
+	case 'A6_Landscape':
+		$DocumentPaper = 'A6';
+		$DocumentOrientation ='L';
+		$Page_Width=417;
+		$Page_Height=295;
+		$Top_Margin=10;
+		$Bottom_Margin=10;
+		$Left_Margin=10;
+		$Right_Margin=10;
+		break;
+
 	default:
 		$DocumentOrientation = 'L';
 		break;
@@ -182,4 +194,5 @@ $pdf->addInfo('Author', 'WebERP ' . $Version);
 	$pdf->AddPage();
 	$pdf->cMargin = 0;
 /* END Brought from class.pdf.php constructor */
+
 ?>

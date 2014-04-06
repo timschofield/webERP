@@ -89,6 +89,26 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 					$InputError=1;
 				} else {
 					$QuantityIssued += filter_number_format($_POST['Qty'.$i]);
+					
+					if ($_SESSION['ProhibitNegativeStock']==1 and  $_POST['BatchRef'.$i] > "") {
+						$SQL = "SELECT quantity from stockserialitems WHERE (stockid= '" . $_POST['IssueItem'] . "')
+										AND (loccode = '" . $_POST['FromLocation'] . "')
+										AND (serialno = '" . $_POST['BatchRef'.$i] . "')";
+						$Result = DB_query($SQL,$db);
+						//$CheckLot = DB_fetch_array($Result);
+						if (DB_num_rows($Result)==0){
+							$InputError = true;
+							prnMsg(_('This issue cannot be processed because the system parameter is set to prohibit negative stock and this batch does not exist'),'error');
+						}
+						else {
+							$CheckLotRow = DB_fetch_row($Result);
+							if ($CheckLotRow[0]<$_POST['Qty'.$i]){
+								$InputError = true;
+								prnMsg(_('This issue cannot be processed because the system parameter is set to prohibit negative stock and this issue would result in this batch going into negative. Please correct the stock first before attempting another issue'),'error');
+							}
+						}
+					}
+					
 				} //end if the qty field is numeric
 			} // end if the qty field is entered
 		}//end for the 15 fields available for batch/lot entry
@@ -111,6 +131,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 	if ($_SESSION['ProhibitNegativeStock']==1
 			AND ($IssueItemRow['mbflag']=='M' OR $IssueItemRow['mbflag']=='B')){
 											//don't need to check labour or dummy items
+											
 		$SQL = "SELECT quantity FROM locstock
 				WHERE stockid ='" . $_POST['IssueItem'] . "'
 				AND loccode ='" . $_POST['FromLocation'] . "'";
@@ -120,7 +141,6 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 			$InputError = true;
 			prnMsg(_('This issue cannot be processed because the system parameter is set to prohibit negative stock and this issue would result in stock going into negative. Please correct the stock first before attempting another issue'),'error');
 		}
-
 	}
 
 	if ($InputError==false){
@@ -280,7 +300,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 									VALUES ('" . $StkMoveNo . "',
 											'" . $_POST['IssueItem'] . "',
 											'" . $_POST['BatchRef'.$i]  . "',
-											'" . filter_number_format($_POST['Qty'.$i])  . "')";
+											'" . filter_number_format($_POST['Qty'.$i])*-1  . "')"; 
 						$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock movement record could not be inserted because');
 						$DbgMsg = _('The following SQL to insert the serial stock movement records was used');
 						$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);

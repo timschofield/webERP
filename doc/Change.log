@@ -1,5 +1,6 @@
 webERP Change Log
 
+6/4/14 Andrew Galuski: Extensions for printing WO documentation new labels and links to print
 05/04/14 rchacon: Fixes the bug that emptied ItemDescriptionLanguages.
 05/04/14 Exson: Add decimal places check for controlled items  quantity input in Add_SerialItems.php and InputSerialItems.php.The wrong decimal places will make this sections quite buggy and problem prone.
 05/04/14 Exson: Add a decimal places check in StockAdjustments.php to prevent from wrong decimal places input.

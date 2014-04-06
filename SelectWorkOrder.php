@@ -321,13 +321,14 @@ if (!isset($StockID)) {
 					<th>' . _('Receive') . '</th>
 					<th>' . _('Issue To') . '</th>
 					<th>' . _('Costing') . '</th>
+					<th>' . _('Paperwork') . '</th>
 					<th class="ascending">' . _('Item') . '</th>
 					<th class="ascending">' . _('Quantity Required') . '</th>
 					<th class="ascending">' . _('Quantity Received') . '</th>
 					<th class="ascending">' . _('Quantity Outstanding') . '</th>
 					<th class="ascending">' . _('Start Date')  . '</th>
 					<th class="ascending">' . _('Required Date') . '</th>
-				</tr>';
+				</tr>'; 
 
 		$k=0; //row colour counter
 		while ($myrow=DB_fetch_array($WorkOrdersResult)) {
@@ -345,6 +346,7 @@ if (!isset($StockID)) {
 			$Receive_WO = $RootPath . '/WorkOrderReceive.php?WO=' .$myrow['wo'] . '&amp;StockID=' . $myrow['stockid'];
 			$Issue_WO = $RootPath . '/WorkOrderIssue.php?WO=' .$myrow['wo'] . '&amp;StockID=' . $myrow['stockid'];
 			$Costing_WO =$RootPath . '/WorkOrderCosting.php?WO=' .$myrow['wo'];
+			$Printing_WO =$RootPath . '/PDFWOPrint.php?WO=' .$myrow['wo'] . '&amp;StockID=' . $myrow['stockid']; 
 
 			$FormatedRequiredByDate = ConvertSQLDate($myrow['requiredby']);
 			$FormatedStartDate = ConvertSQLDate($myrow['startdate']);
@@ -355,6 +357,7 @@ if (!isset($StockID)) {
 					<td><a href="%s">' . _('Receive') . '</a></td>
 					<td><a href="%s">' . _('Issue To') . '</a></td>
 					<td><a href="%s">' . _('Costing') . '</a></td>
+					<td><a href="%s">' . _('Print W/O') . '</a></td>
 					<td>%s - %s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -368,13 +371,14 @@ if (!isset($StockID)) {
 					$Receive_WO,
 					$Issue_WO,
 					$Costing_WO,
+					$Printing_WO,
 					$myrow['stockid'],
 					$myrow['description'],
 					locale_number_format($myrow['qtyreqd'],$myrow['decimalplaces']),
 					locale_number_format($myrow['qtyrecd'],$myrow['decimalplaces']),
 					locale_number_format($myrow['qtyreqd']-$myrow['qtyrecd'],$myrow['decimalplaces']),
 					$FormatedStartDate,
-					$FormatedRequiredByDate);
+					$FormatedRequiredByDate); 
 		//end of page full new headings if
 		}
 		//end of while loop

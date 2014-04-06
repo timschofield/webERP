@@ -155,6 +155,18 @@ if (isset($_POST['preview']) or isset($_POST['save'])) {
 			case 'PickingList.xml':
 				echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/PDFPickingList.php?' . SID .'TransNo=Preview">';
 				break;
+			case 'QALabel.xml':
+				echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/PDFQALabel.php?' . SID .'GRNNo=Preview&PONo=1">';
+				break;
+			case 'WOPaperwork.xml':
+				echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/PDFWOPrint.php?' . SID .'WO=Preview">';
+				break;
+			case 'FGLabel.xml':
+				echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/PDFFGLabel.php?' . SID .'WO=Preview">';
+				break;
+			case 'ShippingLabel.xml':
+				echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/PDFShipLabel.php?' . SID .'SO=Preview">';
+				break;
 		}
 	} else {
 	/* otherwise check that the web server has write premissions on the companies
@@ -182,7 +194,8 @@ if (empty($_POST['FormName'])) {
 		while (false !== ($file = readdir($handle))) {
 			if ($file[0]!='.') {
 				$FormDesign = simplexml_load_file($PathPrefix.'companies/'.$_SESSION['DatabaseName'].'/FormDesigns/'.$file);
-				echo '<option value="'.$file.'">' . _($FormDesign['name']) . '</option>';
+				//echo "name is". $FormDesign['name'];
+				echo '<option value="'.$file.'">' . /*_(*/ $FormDesign['name'] /*)*/ . '</option>';
 			}
 		}
 		closedir($handle);
@@ -205,7 +218,7 @@ echo '<div class="page_help_text">' .
 	_('All measurements are in PostScript points (72 points = 25,4 mm).')  . '<br /> '. 
 	_('All coordinates are measured from the lower left corner of the sheet to the top left corner of the element.') . '</div><br />';
 
-$Papers=array('A4_Landscape', 'A4_Portrait', 'A5_Landscape', 'A5_Portrait', 'A3_Landscape', 'A3_Portrait', 'Letter_Portrait', 'Letter_Landscape', 'Legal_Portrait', 'Legal_Landscape'); // Possible paper sizes/orientations
+$Papers=array('A4_Landscape', 'A4_Portrait', 'A5_Landscape', 'A5_Portrait', 'A6_Landscape', 'A3_Landscape', 'A3_Portrait', 'Letter_Portrait', 'Letter_Landscape', 'Legal_Portrait', 'Legal_Landscape'); // Possible paper sizes/orientations amg adds A6
 echo '<form method="post" id="Form" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' . SID . '">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';

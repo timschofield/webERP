@@ -196,10 +196,8 @@ if (isset($_POST['Search']) OR isset($_POST['Prev']) OR isset($_POST['Next'])){
 	if (!isset($Offset)) {
 		$Offset=0;
 	}
-	if($Offset<0){
-		$Offset=0;
-	}
-	if($Offset>$ListPageMax AND $ListPageMax>0 )$Offset=$ListPageMax;
+	if($Offset<0)$Offset=0;
+	if($Offset>$ListPageMax)$Offset=$ListPageMax;
 	$sql = $sql . ' LIMIT ' . $_SESSION['DisplayRecordsMax'].' OFFSET ' . strval($_SESSION['DisplayRecordsMax']*$Offset);
 
 
@@ -293,7 +291,7 @@ if (isset($NewItem) AND isset($_POST['WO'])){
 									 '" . $NewItem . "',
 									 '" . $EOQ . "',
 									 '" . $Cost . "'
-								)";
+								)"; 
 		$ErrMsg = _('The work order item could not be added');
 		$result = DB_query($sql,$db,$ErrMsg);
 
@@ -354,6 +352,9 @@ if (isset($_POST['submit']) OR isset($_POST['Search'])) { //The update button ha
 			if (!isset($_POST['NextLotSNRef'.$i])) {
 				$_POST['NextLotSNRef'.$i]='';
 			}
+			if (!isset($_POST['WOComments'.$i])) {
+				$_POST['WOComments'.$i]='';
+			}
 			if (isset($_POST['QtyRecd'.$i]) AND $_POST['QtyRecd'.$i]>$_POST['OutputQty'.$i]){
 				$_POST['OutputQty'.$i]=$_POST['QtyRecd'.$i]; //OutputQty must be >= Qty already reced
 			}
@@ -375,14 +376,16 @@ if (isset($_POST['submit']) OR isset($_POST['Search'])) { //The update button ha
 				}
 				$sql[] = "UPDATE woitems SET qtyreqd =  '". $_POST['OutputQty' . $i] . "',
 											 nextlotsnref = '". $_POST['NextLotSNRef'.$i] ."',
-											 stdcost ='" . $Cost . "'
+											 stdcost ='" . $Cost . "',
+											 comments = '". $_POST['WOComments'.$i] ."'
 										WHERE wo='" . $_POST['WO'] . "'
-										AND stockid='" . $_POST['OutputItem'.$i] . "'";
+										AND stockid='" . $_POST['OutputItem'.$i] . "'"; 
   			} elseif (isset($_POST['HasWOSerialNos'.$i]) AND $_POST['HasWOSerialNos'.$i]==false) {
 				$sql[] = "UPDATE woitems SET qtyreqd =  '". $_POST['OutputQty' . $i] . "',
-											 nextlotsnref = '". $_POST['NextLotSNRef'.$i] ."'
+											 nextlotsnref = '". $_POST['NextLotSNRef'.$i] ."',
+											 comments = '". $_POST['WOComments'.$i] ."'
 										WHERE wo='" . $_POST['WO'] . "'
-										AND stockid='" . $_POST['OutputItem'.$i] . "'";
+										AND stockid='" . $_POST['OutputItem'.$i] . "'"; 
 			}
 		}
 
@@ -403,6 +406,7 @@ if (isset($_POST['submit']) OR isset($_POST['Search'])) { //The update button ha
 				 unset($_POST['QtyRecd'.$i]);
 				 unset($_POST['NetLotSNRef'.$i]);
 				 unset($_POST['HasWOSerialNos'.$i]);
+				 unset($_POST['WOComments'.$i]); 
 		}
 	}
 } elseif (isset($_POST['delete'])) {
@@ -451,6 +455,7 @@ if (isset($_POST['submit']) OR isset($_POST['Search'])) { //The update button ha
 			unset($_POST['QtyRecd'.$i]);
 			unset($_POST['NetLotSNRef'.$i]);
 			unset($_POST['HasWOSerialNos'.$i]);
+			unset($_POST['WOComments'.$i]); 
 		}
 		include('includes/footer.inc');
 		exit;
@@ -490,10 +495,11 @@ if (DB_num_rows($WOResult)==1){
 										controlled,
 										serialised,
 										stockmaster.decimalplaces,
-										nextserialno
+										nextserialno,
+										woitems.comments
 								FROM woitems INNER JOIN stockmaster
 								ON woitems.stockid=stockmaster.stockid
-								WHERE wo='" .$_POST['WO'] . "'",$db,$ErrMsg);
+								WHERE wo='" .$_POST['WO'] . "'",$db,$ErrMsg); 
 
 	$NumberOfOutputs=DB_num_rows($WOItemsResult);
 	$i=1;
@@ -502,6 +508,7 @@ if (DB_num_rows($WOResult)==1){
 				$_POST['OutputItemDesc'.$i]=$WOItem['description'];
 				$_POST['OutputQty' . $i]= $WOItem['qtyreqd'];
 		  		$_POST['RecdQty' .$i] =$WOItem['qtyrecd'];
+				$_POST['WOComments' .$i] =$WOItem['comments']; 
 		  		$_POST['DecimalPlaces' . $i] = $WOItem['decimalplaces'];
 		  		if ($WOItem['serialised']==1 AND $WOItem['nextserialno']>0){
 		  		   $_POST['NextLotSNRef' .$i]=$WOItem['nextserialno'];
@@ -558,11 +565,12 @@ if (isset($WOResult)){
 echo '</table>
 		<br /><table class="selection">';
 echo '<tr><th>' . _('Output Item') . '</th>
+		  <th>' . _('Comments') . '</th>
 		  <th>' . _('Qty Required') . '</th>
 		  <th>' . _('Qty Received') . '</th>
 		  <th>' . _('Balance Remaining') . '</th>
 		  <th>' . _('Next Lot/SN Ref') . '</th>
-		  </tr>';
+		  </tr>'; 
 $j=0;
 if (isset($NumberOfOutputs)){
 	for ($i=1;$i<=$NumberOfOutputs;$i++){
@@ -575,6 +583,7 @@ if (isset($NumberOfOutputs)){
 		}
 		echo '<td><input type="hidden" name="OutputItem' . $i . '" value="' . $_POST['OutputItem' .$i] . '" />' .
 			$_POST['OutputItem' . $i] . ' - ' . $_POST['OutputItemDesc' .$i] . '</td>';
+		echo'<td><textarea style="width:100%" rows="5" cols="20" name="WOComments' . $i . '" >' . $_POST['WOComments' . $i] . '</textarea></td>'; 
 		if ($_POST['Controlled'.$i]==1 AND $_SESSION['DefineControlledOnWOEntry']==1){
 			echo '<td class="number">' . locale_number_format($_POST['OutputQty' . $i], $_POST['DecimalPlaces' . $i]) . '</td>';
 			echo '<input type="hidden" name="OutputQty' . $i .'" value="' . locale_number_format($_POST['OutputQty' . $i]-$_POST['RecdQty' .$i], $_POST['DecimalPlaces' . $i]) . '" />';

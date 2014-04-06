@@ -85,7 +85,8 @@ if (isset($_POST['Show'])) {
 				<th>' . _('Item Description') . '</th>
 				<th>' . _('Delivery Date') . '</th>
 				<th>' . _('Quantity Received') . '</th>
-			</tr>';
+				<th>' . _('Action') . '</th>
+			</tr>'; 
 
 	while ($myrow=DB_fetch_array($result)) {
 		if ($k==1){
@@ -102,8 +103,9 @@ if (isset($_POST['Show'])) {
 			<td>' . $myrow['itemdescription'] . '</td>
 			<td>' . $myrow['deliverydate'] . '</td>
 			<td class="number">' . locale_number_format($myrow['qtyrecd'], $myrow['decimalplaces']) . '</td>
-			<td><a href="PDFGrn.php?GRNNo=' . $myrow['grnbatch'] .'&PONo=' . $_POST['PONumber'] . '">' . _('Reprint') . '</a></td>
-		</tr>';
+			<td><a href="PDFGrn.php?GRNNo=' . $myrow['grnbatch'] .'&PONo=' . $_POST['PONumber'] . '">' . _('Reprint GRN ') . '</a>
+			&nbsp;<a href="PDFQALabel.php?GRNNo=' . $myrow['grnbatch'] .'&PONo=' . $_POST['PONumber'] . '">' . _('Reprint QA Label') . '</a></td>
+		</tr>'; 
 	}
 	echo '</table>';
 }
