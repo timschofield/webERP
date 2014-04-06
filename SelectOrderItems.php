@@ -112,6 +112,8 @@ if (isset($_GET['ModifyOrderNumber'])
 							  salesorders.printedpackingslip,
 							  salesorders.datepackingslipprinted,
 							  salesorders.quotation,
+							  salesorders.quotedate,
+							  salesorders.confirmeddate,
 							  salesorders.deliverblind,
 							  debtorsmaster.customerpoline,
 							  locations.locationname,
@@ -173,6 +175,8 @@ if (isset($_GET['ModifyOrderNumber'])
 		$_SESSION['Items'.$identifier]->Location = $myrow['fromstkloc'];
 		$_SESSION['Items'.$identifier]->LocationName = $myrow['locationname'];
 		$_SESSION['Items'.$identifier]->Quotation = $myrow['quotation'];
+		$_SESSION['Items'.$identifier]->QuoteDate = ConvertSQLDate($myrow['quotedate']);
+		$_SESSION['Items'.$identifier]->ConfirmedDate = ConvertSQLDate($myrow['confirmeddate']);
 		$_SESSION['Items'.$identifier]->FreightCost = $myrow['freightcost'];
 		$_SESSION['Items'.$identifier]->Orig_OrderDate = $myrow['orddate'];
 		$_SESSION['PrintedPackingSlip'] = $myrow['printedpackingslip'];
