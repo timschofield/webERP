@@ -52,7 +52,7 @@ if ( (isset($_POST['AddBatches']) AND $_POST['AddBatches']!='')) {
 									' '._('of') . ' ' . $_POST['SerialNo' . $i] . ' '. _('remaining') . '. ' .
 									_('The entered quantity will be reduced to the remaining amount left of this batch/bundle/roll'),
 									'warn');
-							$_POST['Qty' . $i] = $ExistingBundleQty;
+							$_POST['Qty' . $i] = $InOutModifier*$ExistingBundleQty;
 							if(!isset($AddThisBundle)){
 								$AddThisBundle = true;
 							}
