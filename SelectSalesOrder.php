@@ -1001,9 +1001,9 @@ if (isset($StockItemsResult)
 		if ($_POST['Quotations']=='Orders_Only'
 			AND $AuthRow['cancreate']==0){ //cancreate==0 means can create POs
 
-			echo '<tr><td colspan="11" class="number"><input type="submit" name="PlacePO" value="' . _('Place') . " " . _('PO') . '" onclick="return confirm(\'' . _('This will create purchase orders for all the items on the checked sales orders above, based on the preferred supplier purchasing data held in the system. Are You Absolutely Sure?') . '\');" /></td</tr>';
+			echo '<tfoot><tr><td colspan="11" class="number"><input type="submit" name="PlacePO" value="' . _('Place') . " " . _('PO') . '" onclick="return confirm(\'' . _('This will create purchase orders for all the items on the checked sales orders above, based on the preferred supplier purchasing data held in the system. Are You Absolutely Sure?') . '\');" /></td></tr></tfoot>';
 		}
-		echo '<tr><td colspan="9" class="number">';
+		echo '<tfoot><tr><td colspan="9" class="number">';
 		if ($_POST['Quotations']=='Orders_Only'){
 			echo '<b>' . _('Total Order(s) Value in');
 		} else {
@@ -1011,7 +1011,7 @@ if (isset($StockItemsResult)
 		}
 		echo ' ' . $_SESSION['CompanyRecord']['currencydefault'] . ' :</b></td>
 			<td class="number"><b>' . locale_number_format($OrdersTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
-			</tr>
+			</tr></tfoot>
 			</table>';
 	} //end if there are some orders to show
 }
