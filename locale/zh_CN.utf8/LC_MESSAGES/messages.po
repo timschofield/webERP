@@ -8,11 +8,10 @@ msgstr ""
 "Project-Id-Version: WEBERP3.05 VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-02-08 17:33+1300\n"
-"PO-Revision-Date: 2013-12-01 19:37+0800\n"
+"PO-Revision-Date: 2014-04-17 19:47+0800\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: WebERP Translation Team <web-erp-translation@lists."
 "sourceforge.net>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -494,7 +493,7 @@ msgstr "科目组名称"
 
 #: AccountGroups.php:404
 msgid "Enter the account group name"
-msgstr ""
+msgstr "输入科目组名称"
 
 #: AccountGroups.php:404
 msgid ""
@@ -1592,15 +1591,15 @@ msgstr "账户的货币"
 
 #: BankAccountUsers.php:4
 msgid "Maintenance Of Bank Account Authorised Users"
-msgstr ""
+msgstr "银行账户授权用户维护"
 
 #: BankAccountUsers.php:7 includes/MainMenuLinksArray.php:375
 msgid "Bank Account Authorised Users"
-msgstr ""
+msgstr "银行账户授权"
 
 #: BankAccountUsers.php:31
 msgid "You have not selected any bank account"
-msgstr ""
+msgstr "您还没选择银行账户"
 
 #: BankAccountUsers.php:44
 msgid "You have not selected an user to be authorised to use this bank account"
@@ -1620,7 +1619,7 @@ msgstr ""
 
 #: BankAccountUsers.php:71 BankAccountUsers.php:84 BankAccountUsers.php:141
 msgid "bank account"
-msgstr ""
+msgstr "银行账户"
 
 #: BankAccountUsers.php:82
 msgid "The bank account user record could not be deleted because"
@@ -1632,7 +1631,7 @@ msgstr ""
 
 #: BankAccountUsers.php:97
 msgid "Select Bank Account"
-msgstr ""
+msgstr "选择银行账户"
 
 #: BankAccountUsers.php:105 BankAccountUsers.php:205
 #: InternalStockCategoriesByRole.php:120 InternalStockCategoriesByRole.php:209
@@ -1668,15 +1667,15 @@ msgstr "取消"
 
 #: BankAccountUsers.php:141
 msgid "Authorised users for"
-msgstr ""
+msgstr "授权给用户"
 
 #: BankAccountUsers.php:159
 msgid "Authorised users for bank account"
-msgstr ""
+msgstr "此银行账户的授权用户"
 
 #: BankAccountUsers.php:161
 msgid "User Code"
-msgstr ""
+msgstr "用户代码"
 
 #: BankAccountUsers.php:162 PcTabs.php:206 PcTabs.php:307
 #: PO_AuthorisationLevels.php:125 SMTPServer.php:110 UserSettings.php:117
@@ -1686,16 +1685,16 @@ msgstr "用户名称"
 #: BankAccountUsers.php:178
 #, php-format
 msgid "Are you sure you wish to un-authorise this user?"
-msgstr ""
+msgstr "确信授权此用户吗？"
 
 #: BankAccountUsers.php:178
 #, php-format
 msgid "Un-authorise"
-msgstr ""
+msgstr "撤销授权"
 
 #: BankAccountUsers.php:196
 msgid "Select User"
-msgstr ""
+msgstr "选择用户"
 
 #: BankMatching.php:6
 msgid "Bank Account Matching"
@@ -3024,7 +3023,7 @@ msgstr "层"
 #: BOMs.php:558 EDIMessageFormat.php:130 SuppInvGRNs.php:118
 #: SuppInvGRNs.php:254
 msgid "Sequence"
-msgstr "编号"
+msgstr "序号"
 
 #: BOMs.php:561 BOMs.php:698 Contracts.php:876 FixedAssetRegister.php:89
 #: InventoryQuantities.php:247 Locations.php:350 MRP.php:562 MRP.php:595
@@ -3091,7 +3090,7 @@ msgstr "用于取得可用物料列表的SQL是"
 
 #: BOMs.php:693
 msgid "Sequence in BOM"
-msgstr ""
+msgstr "在BOM里的顺序"
 
 #: BOMs.php:720
 msgid "Work Centre Added"
@@ -8390,7 +8389,7 @@ msgid ""
 "general ledger debtors ledger (AR) integration is enabled so control "
 "accounts are automatically maintained. This setting can be disabled in "
 "System Configuration"
-msgstr ""
+msgstr "系统配置"
 
 #: CustomerReceipt.php:188 Payments.php:660
 msgid ""
@@ -8398,7 +8397,7 @@ msgid ""
 "cannot be entered. The general ledger creditors ledger (AP) integration is "
 "enabled so control accounts are automatically maintained. This setting can "
 "be disabled in System Configuration"
-msgstr ""
+msgstr "此选项可以在系统配置里关闭"
 
 #: CustomerReceipt.php:192 Payments.php:664
 msgid ""
@@ -13812,7 +13811,7 @@ msgstr ""
 #: ImportBankTransAnalysis.php:20 ImportBankTransAnalysis.php:34
 #: ImportBankTrans.php:7 includes/MainMenuLinksArray.php:331
 msgid "Import Bank Transactions"
-msgstr ""
+msgstr "导入银行交易"
 
 #: ImportBankTransAnalysis.php:40
 msgid ""
@@ -15354,7 +15353,7 @@ msgstr "允许此内部申请？"
 
 #: MailingGroupMaintenance.php:3 includes/MainMenuLinksArray.php:451
 msgid "Mailing Group Maintenance"
-msgstr ""
+msgstr "邮件组维护"
 
 #: MailingGroupMaintenance.php:18
 msgid ""
@@ -15513,7 +15512,7 @@ msgstr "销售分析表自动运行失败"
 
 #: MaintenanceReminders.php:29
 msgid "You have the following maintenance task(s) falling due or over-due:"
-msgstr ""
+msgstr "下列的维护任务由于超过期限而失败"
 
 #: MaintenanceReminders.php:39
 msgid "NB: THIS JOB IS OVERDUE"
@@ -15533,7 +15532,7 @@ msgstr ""
 
 #: MaintenanceTasks.php:7
 msgid "Fixed Asset Maintenance Tasks"
-msgstr ""
+msgstr "固定资产维护任务"
 
 #: MaintenanceTasks.php:19 MaintenanceTasks.php:45
 msgid "The days before a task falls due is expected to be a postive"
@@ -15549,11 +15548,11 @@ msgstr ""
 
 #: MaintenanceTasks.php:69
 msgid "The maintenance task cannot be deleted because"
-msgstr ""
+msgstr "维护任务不可以删除"
 
 #: MaintenanceTasks.php:88 MaintenanceTasks.php:145
 msgid "The maintenance task details cannot be retrieved because"
-msgstr ""
+msgstr "无法取得下列的维护细节"
 
 #: MaintenanceTasks.php:93 MaintenanceTasks.php:133
 #: MaintenanceUserSchedule.php:48
@@ -15579,7 +15578,7 @@ msgstr ""
 
 #: MaintenanceTasks.php:119
 msgid "Are you sure you wish to delete this maintenance task?"
-msgstr ""
+msgstr "确定要删除维护任务？"
 
 #: MaintenanceTasks.php:172
 msgid "Asset to Maintain"
@@ -15611,15 +15610,15 @@ msgstr ""
 
 #: MaintenanceUserSchedule.php:7
 msgid "My Maintenance Jobs"
-msgstr ""
+msgstr "我的维护工作"
 
 #: MaintenanceUserSchedule.php:9
 msgid "Fixed Assets Maintenance Schedule"
-msgstr ""
+msgstr "固定资产维护计划"
 
 #: MaintenanceUserSchedule.php:43
 msgid "The maintenance schedule cannot be retrieved because"
-msgstr ""
+msgstr "无法取得维护任务"
 
 #: MaintenanceUserSchedule.php:52
 msgid "Due By"
@@ -15631,7 +15630,7 @@ msgstr ""
 
 #: MaintenanceUserSchedule.php:76
 msgid "Are you sure you wish to mark this maintenance task as completed?"
-msgstr ""
+msgstr "确认要将此维护任务标识为完成吗？"
 
 #: MaintenanceUserSchedule.php:76
 msgid "Mark Completed"
@@ -15639,7 +15638,7 @@ msgstr ""
 
 #: Manufacturers.php:8 includes/MainMenuLinksArray.php:268
 msgid "Brands Maintenance"
-msgstr ""
+msgstr "品牌维护"
 
 #: Manufacturers.php:77
 msgid "manufacturer record because"
@@ -16753,7 +16752,7 @@ msgstr "已经从系统移除并且已发送电子邮件"
 
 #: OffersReceived.php:303
 msgid "have been removed from the system and but no email was not sent to"
-msgstr ""
+msgstr "已经从系统删除但没有发送邮件"
 
 #: OffersReceived.php:308
 msgid "All offers have been processed, and emails sent where appropriate"
@@ -24110,7 +24109,7 @@ msgstr "当前？"
 #: SalesTopCustomersInquiry.php:6 SalesTopCustomersInquiry.php:9
 #: TopCustomers.php:9
 msgid "Top Customer Sales Inquiry"
-msgstr ""
+msgstr "销售排行榜查询"
 
 #: SalesTopCustomersInquiry.php:82 SalesTopItemsInquiry.php:83
 #: TopCustomers.php:81 WWW_Users.php:660
@@ -25400,7 +25399,7 @@ msgstr "维护折扣种类"
 
 #: SelectProduct.php:502
 msgid "Clone This Item"
-msgstr ""
+msgstr "克隆此产品"
 
 #: SelectProduct.php:548 SelectProduct.php:550
 msgid "Enter text that you wish to search for in the item description"
@@ -26690,7 +26689,7 @@ msgstr ""
 
 #: ShopParameters.php:529
 msgid "Select the credit card gateway system to be used."
-msgstr ""
+msgstr "选择信用卡的gateway"
 
 #: ShopParameters.php:533
 msgid "Credit Card Surcharge"
@@ -27575,7 +27574,7 @@ msgstr ""
 msgid ""
 "The stock code entered is already in the database - duplicate stock codes "
 "are prohibited by the system. Try choosing an alternative stock code"
-msgstr ""
+msgstr "输入的料号已经存在-系统禁止重复的料号。请选择其他的物料编号"
 
 #: StockClone.php:55
 msgid ""
@@ -31877,7 +31876,7 @@ msgstr ""
 
 #: SystemParameters.php:7 includes/MainMenuLinksArray.php:434
 msgid "System Parameters"
-msgstr ""
+msgstr "系统参数"
 
 #: SystemParameters.php:31
 msgid "First overdue deadline days must be a number"
@@ -35125,7 +35124,7 @@ msgstr "中东 欧洲 俄罗斯 日本 朝鲜 希伯来 阿拉伯 泰国 "
 
 #: WWW_Users.php:29 includes/MainMenuLinksArray.php:435
 msgid "Users Maintenance"
-msgstr ""
+msgstr "用户维护"
 
 #: WWW_Users.php:87
 msgid "The demonstration user called demo cannot be modified."
@@ -37965,7 +37964,7 @@ msgstr ""
 
 #: Z_UpdateSalesAnalysisWithLatestCustomerData.php:13
 msgid "Update Sales Analysis Customer Data"
-msgstr ""
+msgstr "更新销售分析的客户数据"
 
 #: Z_UpdateSalesAnalysisWithLatestCustomerData.php:29
 msgid "Could not retrieve the customer records to be updated because"
@@ -40271,7 +40270,7 @@ msgstr "采购"
 
 #: includes/MainMenuLinksArray.php:34
 msgid "New Sales Order or Quotation"
-msgstr ""
+msgstr "新建订单或报价单"
 
 #: includes/MainMenuLinksArray.php:35
 msgid "Enter Counter Sales"
@@ -40299,7 +40298,7 @@ msgstr "执行循环销售订单"
 
 #: includes/MainMenuLinksArray.php:52
 msgid "Sales Order Inquiry"
-msgstr ""
+msgstr "销售订单查询"
 
 #: includes/MainMenuLinksArray.php:53
 msgid "Print Price Lists"
@@ -40331,7 +40330,7 @@ msgstr "销售订单细节或者总结查询"
 
 #: includes/MainMenuLinksArray.php:64
 msgid "Top Customers Inquiry"
-msgstr ""
+msgstr "顶级客户查询"
 
 #: includes/MainMenuLinksArray.php:65
 msgid "Worst Sales Items Report"
@@ -40423,7 +40422,7 @@ msgstr "维护代理公司"
 
 #: includes/MainMenuLinksArray.php:168
 msgid "Purchase Order Grid Entry"
-msgstr ""
+msgstr "采购订单快速创建"
 
 #: includes/MainMenuLinksArray.php:169
 msgid "Create a New Tender"
@@ -40507,7 +40506,7 @@ msgstr "发货"
 
 #: includes/MainMenuLinksArray.php:229
 msgid "Mail Inventory Valuation Report"
-msgstr ""
+msgstr "邮递库存价值报告"
 
 #: includes/MainMenuLinksArray.php:231
 msgid "Inventory Planning Based On Preferred Supplier Data"
@@ -40675,7 +40674,7 @@ msgstr "税报告"
 
 #: includes/MainMenuLinksArray.php:371
 msgid "GL Accounts"
-msgstr ""
+msgstr "总账科目"
 
 #: includes/MainMenuLinksArray.php:372
 msgid "GL Budgets"
@@ -40703,11 +40702,11 @@ msgstr "资产登记簿"
 
 #: includes/MainMenuLinksArray.php:396
 msgid "My Maintenance Schedule"
-msgstr ""
+msgstr "我的维护计划"
 
 #: includes/MainMenuLinksArray.php:397
 msgid "Maintenance Reminder Emails"
-msgstr ""
+msgstr "维护提醒邮件"
 
 #: includes/MainMenuLinksArray.php:403
 msgid "Asset Categories Maintenance"
@@ -40719,7 +40718,7 @@ msgstr "增加或者维护资产地点"
 
 #: includes/MainMenuLinksArray.php:405
 msgid "Maintenance Tasks"
-msgstr ""
+msgstr "维护任务"
 
 #: includes/MainMenuLinksArray.php:411
 msgid "Assign Cash to PC Tab"
@@ -40855,7 +40854,7 @@ msgstr "标签模板维护"
 
 #: includes/MainMenuLinksArray.php:525
 msgid "Import GL Payments Receipts Or Journals From CSV"
-msgstr ""
+msgstr "从CSV文件导入总账付款或者凭证"
 
 #: includes/MainMenuLinksArray.php:526
 msgid "Change A Customer Code"
@@ -40875,7 +40874,7 @@ msgstr "更改物料编号"
 
 #: includes/MainMenuLinksArray.php:530
 msgid "Change A GL Account Code"
-msgstr ""
+msgstr "更改总账编号"
 
 #: includes/MainMenuLinksArray.php:531
 msgid "Change A Location Code"
@@ -40899,7 +40898,7 @@ msgstr "撤销指定日期的所有供应商付款"
 
 #: includes/MainMenuLinksArray.php:536
 msgid "Update sales analysis with latest customer data"
-msgstr ""
+msgstr "使用最新的客户数据更新销售分析"
 
 #: includes/MainMenuLinksArray.php:551
 msgid "Show Local Currency Total Debtor Balances"
@@ -44552,99 +44551,102 @@ msgstr ""
 
 #: install/index.php:575 install/index.php:985 install/index.php:1012
 msgid "webERP Installation Wizard"
-msgstr ""
+msgstr "webERP安装精灵"
 
 #: install/index.php:592
 msgid ""
 "Please set Cookies allowed in your web brower, otherwise webERP cannot run "
 "properly"
-msgstr ""
+msgstr "请将浏览器设置为允许Cookies, 否则webERP不能正常运行"
 
 #: install/index.php:601
 msgid ""
 "Illegal characters or data has been identified, please see your admistrator "
 "for help"
-msgstr ""
+msgstr "发现非法字符或数据，请联络您的管理员"
 
 #: install/index.php:609
 msgid ""
 "Although webERP should work with PHP version 5.1 onwards, a PHP version "
 "greater than 5.2 is strongly recommended"
-msgstr ""
+msgstr "尽管webERP可以在运行于5.1以及高于5.1的版本，强烈建议使用5.2以上的版本"
 
 #: install/index.php:616 install/index.php:621
 msgid "The directory"
-msgstr ""
+msgstr "此路径"
 
 #: install/index.php:616
 msgid "must be writable by web server"
-msgstr ""
+msgstr "必须设置为网页服务器可写"
 
 #: install/index.php:626
 msgid "The mbstring extension is not availble in your PHP"
-msgstr ""
+msgstr "您的PHP没有启用mbstring扩展"
 
 #: install/index.php:631
 msgid "The libxml extension is not available in your PHP"
-msgstr ""
+msgstr "您的PHP没有启用libxml扩展"
 
 #: install/index.php:637
 msgid "There is no MySQL or MySQL extension available"
-msgstr ""
+msgstr "没有MySQL或者MySQLi扩展"
 
 #: install/index.php:643
 msgid ""
 "The PHP MySQLI extension is recommend as MySQL extension has been deprecated "
 "since PHP 5.5"
-msgstr ""
+msgstr "建议使用MySQLi扩展，因为从PHP5.5起，MySQL扩展已经弃用"
 
 #: install/index.php:647
 msgid ""
 "The MySQL extension has been deprecated since 5.5. You should install the "
 "MySQLI extension or downgrade you PHP version to  one prior to 5.5"
 msgstr ""
+"由于PHP5.5起MySQL扩展已经弃用，您应该安装MySQLi扩展或者将您的PHP版本降至5.5以"
+"前"
 
 #: install/index.php:652
 msgid "The GD extension should be installed in your PHP configuration"
-msgstr ""
+msgstr "您的PHP配置中应该启用GD扩展"
 
 #: install/index.php:750
 msgid "Welcome to the webERP Installation Wizard"
-msgstr ""
+msgstr "欢迎使用webERP安装精灵"
 
 #: install/index.php:754
 msgid "During installation you may see different status messages."
-msgstr ""
+msgstr "在安装过程中您可能会看到不同的状态信息"
 
 #: install/index.php:755
 msgid "When there is an error message you must correct the error to continue."
-msgstr ""
+msgstr "如果有错误信息，在继续进行前必须纠正"
 
 #: install/index.php:756
 msgid "If you see a warning message you should take notice before you proceed."
-msgstr ""
+msgstr "如果仅仅是警告信息，您应该在继续安装前，记录一下。"
 
 #: install/index.php:757
 msgid "If you are unsure of an option value, you may keep the default setting."
-msgstr ""
+msgstr "如果您不确信选项值，可以保留默认设置"
 
 #: install/index.php:764
 msgid "Select your language"
-msgstr ""
+msgstr "选择语言"
 
 #: install/index.php:767
 msgid ""
 "The installer will try and guess your language from your browser, but may "
 "get it wrong. Please select you preferred language below."
 msgstr ""
+"安装精灵会试着从您的浏览器语言猜测您的语言，但是可能猜错。请选择您喜欢的语言"
 
 #: install/index.php:771
 msgid "Language:"
-msgstr ""
+msgstr "语言"
 
 #: install/index.php:876 install/index.php:951
 msgid "Next Step"
-msgstr ""
+msgstr "下一步"
 
 #: install/index.php:882
 msgid ""
@@ -44654,97 +44656,100 @@ msgid ""
 "\">the licence</a>. <br />Please visit the official webERP website for more "
 "information."
 msgstr ""
+"webERP是一个基于GPL v2的开源软件，完全免费下载。<br/>安装前，请确认您已经阅读"
+"了<a href=\"http://www.gnu.org/licenses/gpl-2.0.html#SEC1\" target=\"_blank"
+"\">the licence</a>.<br/>请浏览webERP官方网站获得更多信息"
 
 #: install/index.php:901
 msgid "Database settings"
-msgstr ""
+msgstr "数据库设置"
 
 #: install/index.php:904
 msgid "Please enter your MySQL Database information below."
-msgstr ""
+msgstr "请输入您的MySQL数据库信息"
 
 #: install/index.php:905 install/index.php:1018
 msgid "* Denotes required field"
-msgstr ""
+msgstr "必填栏"
 
 #: install/index.php:910
 msgid "Host Name"
-msgstr ""
+msgstr "Host 名称"
 
 #: install/index.php:911
 msgid "Enter database host name"
-msgstr ""
+msgstr "输入数据库host名称"
 
 #: install/index.php:912
 msgid "Commonly: localhost or 127.0.0.1"
-msgstr ""
+msgstr "通常为： localhost 或者 127.0.0.1"
 
 #: install/index.php:916
 msgid "The database name"
-msgstr ""
+msgstr "数据库名称"
 
 #: install/index.php:917
 msgid "The database must have a valid name"
-msgstr ""
+msgstr "数据库名称必须是有效的名称"
 
 #: install/index.php:920
 msgid "Database Prefix"
-msgstr ""
+msgstr "数据库前缀"
 
 #: install/index.php:921
 msgid "Useful with shared hosting"
-msgstr ""
+msgstr "仅仅共享主机时适用"
 
 #: install/index.php:922
 msgid "Optional: in the form of prefix_"
-msgstr ""
+msgstr "可选： 以如下格式 prefix_"
 
 #: install/index.php:925
 msgid "Database User Name"
-msgstr ""
+msgstr "数据库用户名称"
 
 #: install/index.php:926
 msgid "A valid database user name"
-msgstr ""
+msgstr "有效数据库用户名称"
 
 #: install/index.php:927
 msgid "Must be a user that has permission to create a database"
-msgstr ""
+msgstr "必须是有权创建数据库的用户"
 
 #: install/index.php:931
 msgid "mySQL user password"
-msgstr ""
+msgstr "mySQL用户密码"
 
 #: install/index.php:932
 msgid "Enter the user password if one exists"
-msgstr ""
+msgstr "输入用户密码 如有的话"
 
 #: install/index.php:964
 msgid "Check Again"
-msgstr ""
+msgstr "重新检查"
 
 #: install/index.php:986
 msgid "Failed to connect to the database. Please correct the following error:"
-msgstr ""
+msgstr "无法链接到数据库。请改正如下错误"
 
 #: install/index.php:1013
 msgid ""
 "Please enter the company name and please pay attention the company will be "
 "as same as the database name"
-msgstr ""
+msgstr "请输入公司名称并且注意公司名称将与数据库名称一致"
 
 #: install/index.php:1016
 msgid "Company Settings"
-msgstr ""
+msgstr "公司设置"
 
 #: install/index.php:1024
 msgid ""
 "The name of your company should not contain characters such as |\\?%:<>\""
-msgstr ""
+msgstr "公司名称不可包含字符|\\?%:<>\""
 
 #: install/index.php:1027
 msgid "Chart of Accounts"
-msgstr ""
+msgstr "会计科目表"
 
 #: install/index.php:1045
 msgid ""
@@ -44753,96 +44758,96 @@ msgstr ""
 
 #: install/index.php:1048
 msgid "Time Zone"
-msgstr ""
+msgstr "时区"
 
 #: install/index.php:1052
 msgid "Company logo file"
-msgstr ""
+msgstr "公司logo文件"
 
 #: install/index.php:1053
 msgid "A jpg file up to 10k, and not greater than 170px x 80px"
-msgstr ""
+msgstr "最大10k，且不可以大于170px X80px的文件"
 
 #: install/index.php:1054
 msgid "jpg file to 10k, not greater than 170px x 80px"
-msgstr ""
+msgstr "不大于10k, 不大于170px X 80px的文件"
 
 #: install/index.php:1059
 msgid "Installation option"
-msgstr ""
+msgstr "安装选项"
 
 #: install/index.php:1062
 msgid "Install the demo data?"
-msgstr ""
+msgstr "安装演示数据？"
 
 #: install/index.php:1063
 msgid "WebERPDemo site and data will be installed"
-msgstr ""
+msgstr "webERP演示数据将被安装"
 
 #: install/index.php:1068
 msgid "Administrator account settings"
-msgstr ""
+msgstr "管理员账户设置"
 
 #: install/index.php:1072
 msgid "The default user name is 'admin' and it cannot be changed."
-msgstr ""
+msgstr "默认的用户名称是'admin'并且不可以更改。"
 
 #: install/index.php:1075
 msgid "The default password is 'weberp' which you can change below."
-msgstr ""
+msgstr "默认的密码是'weberp'您可以更改为其他密码"
 
 #: install/index.php:1081
 msgid "webERP Admin Account"
-msgstr ""
+msgstr "webERP 管理者账户"
 
 #: install/index.php:1085
 msgid "Email address"
-msgstr ""
+msgstr "电邮地址"
 
 #: install/index.php:1087
 msgid "For example: admin@yourcompany.com"
-msgstr ""
+msgstr "例如: admin@yourcompany.com"
 
 #: install/index.php:1090
 msgid "webERP Password"
-msgstr ""
+msgstr "webERP密码"
 
 #: install/index.php:1094
 msgid "Re-enter Password"
-msgstr ""
+msgstr "重新输入密码"
 
 #: install/index.php:1109
 msgid "Install"
-msgstr ""
+msgstr "安装"
 
 #: install/index.php:1132
 msgid "Failed to open the new sql file"
-msgstr ""
+msgstr "无法打开新sql文件"
 
 #: install/index.php:1137
 msgid "Failed to populate the database "
-msgstr ""
+msgstr "无法增加数据库的数据"
 
 #: install/index.php:1277
 msgid ""
 "Failed to update the email address and password of the administrator and the "
 "error is"
-msgstr ""
+msgstr "无法更新管理员的电邮地址和密码"
 
 #: install/index.php:1285
 msgid "Failed to update the company name and the erroris"
-msgstr ""
+msgstr "无法更新公司名称"
 
 #: ../webSHOP/Checkout.php:9 ../webSHOP/Checkout.php:357
 #: ../webSHOP/Checkout.php:496 ../webSHOP/Checkout.php:584
 #: ../webSHOP/Checkout.php:611 ../webSHOP/Checkout.php:684
 #: ../webSHOP/includes/header.php:228
 msgid "Checkout"
-msgstr ""
+msgstr "结算"
 
 #: ../webSHOP/Checkout.php:30
 msgid "purchases"
-msgstr ""
+msgstr "采购"
 
 #: ../webSHOP/Checkout.php:44 ../webSHOP/Checkout.php:96
 msgid "The swipeHQ payment request failed with a curl error"
@@ -45896,6 +45901,8 @@ msgid ""
 "default customer and customer branch information and other shop set up "
 "preferences"
 msgstr ""
+"在webERP系统的设置标签下，选择网店维护，输入默认的客户和客户分公司信息以及其"
+"他网店设置选项"
 
 #: ../webSHOP/includes/header.php:192
 msgid "Click to show the detail of what is in the shopping cart"
@@ -46055,11 +46062,11 @@ msgstr ""
 
 #: ../webSHOP/includes/session.php:134
 msgid "Credit Card"
-msgstr ""
+msgstr "信用卡"
 
 #: ../webSHOP/includes/session.php:137
 msgid "Bank Transfer"
-msgstr ""
+msgstr "银行交易"
 
 #~ msgid "Customer Branch Code:"
 #~ msgstr "客户分公司代码"
