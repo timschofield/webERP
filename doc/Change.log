@@ -1,4 +1,5 @@
 webERP Change Log
+17/04/14 Exson: Update zh_CN.utf8 translation.
 09/04/14 Tim: Fixed the table sort failure bugs in SelectSalesOrder.php reported by Andrew Agaluski.
 07/04/14 Exson: Add InOutModifier to input Quantity when there whole batches are removed. Otherwise, it will create a wrong quantity left in Add_SerialItems.php.
 07/04/14 Exson: Fixed the bug in Prices_Customer.php. MySQL strict mode not allowed a date is a white space.
