@@ -58,7 +58,7 @@ $pdf->addTextWrap($FormDesign->ReceivedQty->x,$Page_Height - $FormDesign->Receiv
 $pdf->addTextWrap($FormDesign->PackageQty->x,$Page_Height - $FormDesign->PackageQty->y, $FormDesign->PackageQty->Length, $FormDesign->PackageQty->FontSize, $PackQty,'right' );
 $pdf->setFont('','');
 
-if ($PrintingComments ==true) {
+if (!empty($PrintingComments)) {
    return;
 }
 $pdf->addText($FormDesign->MatReqTitle->x,$Page_Height - $FormDesign->MatReqTitle->y,$FormDesign->MatReqTitle->FontSize, _('Material Requirements for this Work Order'));
