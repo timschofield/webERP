@@ -83,7 +83,7 @@ if ($NoOfGRNs >0){
 				$LeftOvers = $pdf->addText($FormDesign->ItemDesc->x,$Page_Height-$FormDesign->ItemDesc->y,$FormDesign->ItemDesc->FontSize,'Description: ' . $myrow['itemdescription']);
 				$LeftOvers = $pdf->addText($FormDesign->SupplierName->x,$Page_Height-$FormDesign->SupplierName->y,$FormDesign->SupplierName->FontSize,'Supplier: ' . $SuppRow['suppname']);
 				$LeftOvers = $pdf->addText($FormDesign->SupplierLot->x,$Page_Height-$FormDesign->SupplierLot->y,$FormDesign->SupplierLot->FontSize,'Supplier Lot: ' . $SerialStockMoves['serialno']);
-				$LeftOvers = $pdf->addText($FormDesign->ResMartLot->x,$Page_Height-$FormDesign->ResMartLot->y,$FormDesign->ResMartLot->FontSize,'ResMart Lot: ' . $SerialStockMoves['serialno']);
+				$LeftOvers = $pdf->addText($FormDesign->Lot->x,$Page_Height-$FormDesign->Lot->y,$FormDesign->Lot->FontSize,'Lot: ' . $SerialStockMoves['serialno']);
 				$LeftOvers = $pdf->addText($FormDesign->ReceiptDate->x,$Page_Height-$FormDesign->ReceiptDate->y,$FormDesign->ReceiptDate->FontSize,'Receipt Date: ' . $myrow['deliverydate']);
 				$LeftOvers = $pdf->addText($FormDesign->OrderNumber->x,$Page_Height-$FormDesign->OrderNumber->y,$FormDesign->OrderNumber->FontSize,'P/O: ' . $myrow['orderno']);
 				$PageNumber++;
@@ -96,7 +96,7 @@ if ($NoOfGRNs >0){
 			$LeftOvers = $pdf->addText($FormDesign->ItemDesc->x,$Page_Height-$FormDesign->ItemDesc->y,$FormDesign->ItemDesc->FontSize,'Description: ' . $myrow['itemdescription']);
 			$LeftOvers = $pdf->addText($FormDesign->SupplierName->x,$Page_Height-$FormDesign->SupplierName->y,$FormDesign->SupplierName->FontSize,'Supplier: ' . $SuppRow['suppname']);
 			//$LeftOvers = $pdf->addText($FormDesign->SupplierLot->x,$Page_Height-$FormDesign->SupplierLot->y,$FormDesign->SupplierLot->FontSize,'Supplier Lot: ' . $myrow['serialno']);
-			//$LeftOvers = $pdf->addText($FormDesign->ResMartLot->x,$Page_Height-$FormDesign->ResMartLot->y,$FormDesign->ResMartLot->FontSize,'ResMart Lot: ' . $myrow['serialno']);
+			//$LeftOvers = $pdf->addText($FormDesign->Lot->x,$Page_Height-$FormDesign->Lot->y,$FormDesign->Lot->FontSize,'Lot: ' . $myrow['serialno']);
 			$LeftOvers = $pdf->addText($FormDesign->ReceiptDate->x,$Page_Height-$FormDesign->ReceiptDate->y,$FormDesign->ReceiptDate->FontSize,'Receipt Date: ' . $myrow['deliverydate']);
 			$LeftOvers = $pdf->addText($FormDesign->OrderNumber->x,$Page_Height-$FormDesign->OrderNumber->y,$FormDesign->OrderNumber->FontSize,'P/O: ' . $myrow['orderno']);
 			if ($PageNumber>1){

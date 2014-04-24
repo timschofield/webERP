@@ -23,11 +23,11 @@
 		<x>20</x>
 		<y>125</y>
 	</SupplierLot>
-	<ResMartLot type="SimpleText" name="ResMart Lot" id="ResMartLot">
+	<Lot type="SimpleText" name="Lot" id="Lot">
 		<FontSize>20</FontSize>
 		<x>20</x>
 		<y>150</y>
-	</ResMartLot>
+	</Lot>
 	<SupplierName type="SimpleText" name="Supplier name" id="SupplierName">
 		<FontSize>20</FontSize>
 		<x>20</x>

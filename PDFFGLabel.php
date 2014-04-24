@@ -164,7 +164,7 @@ if ($NoOfLabels >0){
 		$pdf->addText($FormDesign->Box->x,$Page_Height-$FormDesign->Box->y,$FormDesign->Box->FontSize,'Box' . ': ' . $myrow['box']);
 		
 		if ($ControlledRow[0]==1) { /*Then its a controlled item */
-			$pdf->addText($FormDesign->ResMartLot->x,$Page_Height-$FormDesign->ResMartLot->y,$FormDesign->ResMartLot->FontSize,'Lot: ' . $myrow['serialno']);
+			$pdf->addText($FormDesign->Lot->x,$Page_Height-$FormDesign->Lot->y,$FormDesign->Lot->FontSize,'Lot: ' . $myrow['serialno']);
 		} //controlled item*/
 	} //end of loop around GRNs to print
 

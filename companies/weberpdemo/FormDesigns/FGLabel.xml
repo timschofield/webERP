@@ -51,11 +51,11 @@
 		<x>20</x>
 		<y>125</y>
 	</ItemDesc>
-	<ResMartLot type="SimpleText" name="ResMart Lot" id="ResMartLot">
+	<Lot type="SimpleText" name="Lot" id="Lot">
 		<FontSize>20</FontSize>
 		<x>20</x>
 		<y>175</y>
-	</ResMartLot>
+	</Lot>
 	<Weight type="SimpleText" name="Weight" id="Weight">
 		<FontSize>20</FontSize>
 		<x>20</x>
