@@ -112,8 +112,8 @@ if (isset($_GET['ModifyOrderNumber'])
 							  salesorders.printedpackingslip,
 							  salesorders.datepackingslipprinted,
 							  salesorders.quotation,
+							  salesorders.quotation,
 							  salesorders.quotedate,
-							  salesorders.confirmeddate,
 							  salesorders.deliverblind,
 							  debtorsmaster.customerpoline,
 							  locations.locationname,
@@ -148,7 +148,7 @@ if (isset($_GET['ModifyOrderNumber'])
 		}
 		$_SESSION['Items'.$identifier]->OrderNo = $_GET['ModifyOrderNumber'];
 		$_SESSION['Items'.$identifier]->DebtorNo = $myrow['debtorno'];
-		$_SESSION['Items'.$identifier]->CreditAvailable = GetCreditAvailable($_SESSION['Items'.$identifier]->DebtorNo,$db); 
+		$_SESSION['Items'.$identifier]->CreditAvailable = GetCreditAvailable($_SESSION['Items'.$identifier]->DebtorNo,$db);
 /*CustomerID defined in header.inc */
 		$_SESSION['Items'.$identifier]->Branch = $myrow['branchcode'];
 		$_SESSION['Items'.$identifier]->CustomerName = $myrow['name'];
@@ -373,6 +373,7 @@ if (isset($_POST['JustSelectedACustomer'])){
 		$SelectedBranch = $_POST['SelectedBranch'.$i];
 	}
 }
+
 /* will only be true if page called from customer selection form or set because only one customer
  record returned from a search so parse the $SelectCustomer string into customer code and branch code */
 if (isset($SelectedCustomer)) {
@@ -492,7 +493,6 @@ if (isset($SelectedCustomer)) {
 		  prnMsg($_SESSION['Items'.$identifier]->SpecialInstructions,'warn');
 
 		if ($_SESSION['CheckCreditLimits'] > 0){  /*Check credit limits is 1 for warn and 2 for prohibit sales */
-
 			$_SESSION['Items'.$identifier]->CreditAvailable = GetCreditAvailable($_SESSION['Items'.$identifier]->DebtorNo,$db);
 
 			if ($_SESSION['CheckCreditLimits']==1 AND $_SESSION['Items'.$identifier]->CreditAvailable <=0){
@@ -752,7 +752,14 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		}else{
 			$RawMaterialSellable = '';
 		}
-
+		if(!empty($_POST['CustItemFlag'])){
+			$IncludeCustItem = " INNER JOIN custitem ON custitem.stockid=stockmaster.stockid 
+								AND custitem.debtorno='" .  $_SESSION['Items'.$identifier]->DebtorNo . "'";
+		}else{
+			$IncludeCustItem = " LEFT OUTER JOIN custitem ON custitem.stockid=stockmaster.stockid 
+								AND custitem.debtorno='" .  $_SESSION['Items'.$identifier]->DebtorNo . "'";
+		}
+		
 		if ($_POST['Keywords']!='' AND $_POST['StockCode']=='') {
 			$msg='<div class="page_help_text">' . _('Order Item description has been used in search') . '.</div>';
 		} elseif ($_POST['StockCode']!='' AND $_POST['Keywords']=='') {
@@ -769,9 +776,11 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				$SQL = "SELECT stockmaster.stockid,
 								stockmaster.description,
 								stockmaster.longdescription,
-								stockmaster.units
+								stockmaster.units,
+								custitem.cust_part,
+								custitem.cust_description
 						FROM stockmaster INNER JOIN stockcategory
-						ON stockmaster.categoryid=stockcategory.categoryid
+						ON stockmaster.categoryid=stockcategory.categoryid" . $IncludeCustItem . "
 						WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D' OR stockcategory.stocktype='L'".$RawMaterialSellable.")
 						AND stockmaster.mbflag <>'G'
 						AND stockmaster.description " . LIKE . " '" . $SearchString . "'
@@ -781,9 +790,11 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				$SQL = "SELECT stockmaster.stockid,
 								stockmaster.description,
 								stockmaster.longdescription,
-								stockmaster.units
+								stockmaster.units,
+								custitem.cust_part,
+								custitem.cust_description
 						FROM stockmaster INNER JOIN stockcategory
-						ON stockmaster.categoryid=stockcategory.categoryid
+						ON stockmaster.categoryid=stockcategory.categoryid" . $IncludeCustItem . "
 						WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D' OR stockcategory.stocktype='L'".$RawMaterialSellable.")
 						AND stockmaster.mbflag <>'G'
 						AND stockmaster.discontinued=0
@@ -801,9 +812,11 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				$SQL = "SELECT stockmaster.stockid,
 								stockmaster.description,
 								stockmaster.longdescription,
-								stockmaster.units
+								stockmaster.units,
+								custitem.cust_part,
+								custitem.cust_description
 						FROM stockmaster INNER JOIN stockcategory
-						ON stockmaster.categoryid=stockcategory.categoryid
+						ON stockmaster.categoryid=stockcategory.categoryid" . $IncludeCustItem . "
 						WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D' OR stockcategory.stocktype='L'".$RawMaterialSellable.")
 						AND stockmaster.stockid " . LIKE . " '" . $SearchString . "'
 						AND stockmaster.mbflag <>'G'
@@ -813,9 +826,11 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				$SQL = "SELECT stockmaster.stockid,
 								stockmaster.description,
 								stockmaster.longdescription,
-								stockmaster.units
+								stockmaster.units,
+								custitem.cust_part,
+								custitem.cust_description
 						FROM stockmaster INNER JOIN stockcategory
-						ON stockmaster.categoryid=stockcategory.categoryid
+						ON stockmaster.categoryid=stockcategory.categoryid" . $IncludeCustItem . "
 						WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D' OR stockcategory.stocktype='L'".$RawMaterialSellable.")
 						AND stockmaster.stockid " . LIKE . " '" . $SearchString . "'
 						AND stockmaster.mbflag <>'G'
@@ -829,9 +844,11 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				$SQL = "SELECT stockmaster.stockid,
 								stockmaster.description,
 								stockmaster.longdescription,
-								stockmaster.units
+								stockmaster.units,
+								custitem.cust_part,
+								custitem.cust_description
 						FROM stockmaster INNER JOIN stockcategory
-						ON stockmaster.categoryid=stockcategory.categoryid
+						ON stockmaster.categoryid=stockcategory.categoryid" . $IncludeCustItem . "
 						WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D' OR stockcategory.stocktype='L'".$RawMaterialSellable.")
 						AND stockmaster.mbflag <>'G'
 						AND stockmaster.discontinued=0
@@ -840,9 +857,11 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				$SQL = "SELECT stockmaster.stockid,
 								stockmaster.description,
 								stockmaster.longdescription,
-								stockmaster.units
+								stockmaster.units,
+								custitem.cust_part,
+								custitem.cust_description
 						FROM stockmaster INNER JOIN stockcategory
-						ON stockmaster.categoryid=stockcategory.categoryid
+						ON stockmaster.categoryid=stockcategory.categoryid" . $IncludeCustItem . "
 						WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D' OR stockcategory.stocktype='L'".$RawMaterialSellable.")
 						AND stockmaster.mbflag <>'G'
 						AND stockmaster.discontinued=0
@@ -1159,7 +1178,6 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					if ($_SESSION['CheckCreditLimits'] > 0 AND $AlreadyWarnedAboutCredit==false){
 						/*Check credit limits is 1 for warn breach their credit limit and 2 for prohibit sales */
 						$DifferenceInOrderValue = ($Quantity*$Price*(1-$DiscountPercentage/100)) - ($OrderLine->Quantity*$OrderLine->Price*(1-$OrderLine->DiscountPercent));
-
 						$_SESSION['Items'.$identifier]->CreditAvailable -= $DifferenceInOrderValue;
 
 						if ($_SESSION['CheckCreditLimits']==1 AND $_SESSION['Items'.$identifier]->CreditAvailable <=0){
@@ -1697,7 +1715,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
         }
 	echo '" /></td>
 
-		<td><input type="checkbox" name="RawMaterialFlag" value="M" />'._('Raw material flag').'&nbsp;&nbsp;<br/><span class="dpTbl">'._('If checked, Raw material will be show on search result').'</span> </td>
+		<td><input type="checkbox" name="RawMaterialFlag" value="M" />'._('Raw material flag').'&nbsp;&nbsp;<br/><span class="dpTbl">'._('If checked, Raw material will be shown on search result').'</span> </td>
+		<td><input type="checkbox" name="CustItemFlag" value="C" />'._('Customer Item flag').'&nbsp;&nbsp;<br/><span class="dpTbl">'._('If checked, only items for this customer will show').'</span> </td>			
 			</tr>';
 
 		echo '<tr>
@@ -1727,6 +1746,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			echo '<tr>
 					<th class="ascending" >' . _('Code') . '</th>
 		   			<th class="ascending" >' . _('Description') . '</th>
+					<th class="ascending" >' . _('Customer Item') . '</th>
 		   			<th>' . _('Units') . '</th>
 		   			<th class="ascending" >' . _('On Hand') . '</th>
 		   			<th class="ascending" >' . _('On Demand') . '</th>
@@ -1818,6 +1838,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				printf('<td>%s</td>
 						<td title="%s">%s</td>
 						<td>%s</td>
+						<td>%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
@@ -1829,6 +1850,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 						$myrow['stockid'],
 						$myrow['longdescription'],
 						$myrow['description'],
+						$myrow['cust_part'] . '-' . $myrow['cust_description'],
 						$myrow['units'],
 						locale_number_format($QOH,$QOHRow['decimalplaces']),
 						locale_number_format($DemandQty,$QOHRow['decimalplaces']),

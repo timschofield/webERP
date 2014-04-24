@@ -487,6 +487,7 @@ if ($Its_A_Kitset_Assembly_Or_Dummy == False) {
 	echo '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $StockID . '">' . _('Maintain Reorder Levels') . '</a><br />';
 	echo '<a href="' . $RootPath . '/StockCostUpdate.php?StockID=' . $StockID . '">' . _('Maintain Standard Cost') . '</a><br />';
 	echo '<a href="' . $RootPath . '/PurchData.php?StockID=' . $StockID . '">' . _('Maintain Purchasing Data') . '</a><br />';
+	echo '<a href="' . $RootPath . '/CustItem.php?StockID=' . $StockID . '">' . _('Maintain Customer Item Data') . '</a><br />';
 }
 if ($Its_A_Labour_Item == True) {
 	echo '<a href="' . $RootPath . '/StockCostUpdate.php?StockID=' . $StockID . '">' . _('Maintain Standard Cost') . '</a><br />';
