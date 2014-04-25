@@ -151,9 +151,7 @@ if ($Edit == false) {
 		echo $TableHeader;
 		$k = 0; //row colour counter
 		while ($myrow = DB_fetch_array($custitemResult)) {
-			if ($myrow['preferred'] == 1) {
-				echo '<tr class="EvenTableRows">';
-			} elseif ($k == 1) {
+			if ($k == 1) {
 				echo '<tr class="EvenTableRows">';
 				$k = 0;
 			} else {
