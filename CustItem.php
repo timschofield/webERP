@@ -1,4 +1,4 @@
-<?php
+`<?php
 /* $Id: CustItem.php 1 2014-04-23 05:10:46Z agaluski $*/
 
 include ('includes/session.inc');
@@ -149,7 +149,6 @@ if ($Edit == false) {
 
 						</tr>';
 		echo $TableHeader;
-		$CountPreferreds = 0;
 		$k = 0; //row colour counter
 		while ($myrow = DB_fetch_array($custitemResult)) {
 			if ($myrow['preferred'] == 1) {
@@ -161,13 +160,7 @@ if ($Edit == false) {
 				echo '<tr class="OddTableRows">';
 				$k++;
 			}
-			if ($myrow['preferred'] == 1) {
-				$DisplayPreferred = _('Yes');
-				$CountPreferreds++;
-			} else {
-				$DisplayPreferred = _('No');
-			}
-            printf('<td>%s</td>
+			printf('<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
@@ -356,6 +349,7 @@ if (!isset($debtorsmasterResult)) {
 						custitem.cust_description,
 						custitem.conversionfactor,
 						custitem.cust_part,
+						stockmaster.units,
 						currencies.decimalplaces AS currdecimalplaces
 				FROM custitem INNER JOIN debtorsmaster
 					ON custitem.debtorno=debtorsmaster.DebtorNo
