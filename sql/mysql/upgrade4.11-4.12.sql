@@ -21,3 +21,5 @@ CREATE TABLE `custitem` (
   CONSTRAINT ` custitem _ibfk_2` FOREIGN KEY (`debtorno`) REFERENCES `debtorsmaster` (`debtorno`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 UPDATE config SET confvalue='4.12' WHERE confname='VersionNumber';
+
+ALTER TABLE  `debtortrans` CHANGE  `consignment`  `consignment` VARCHAR( 20 ) NOT NULL DEFAULT  '';
