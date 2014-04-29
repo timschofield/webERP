@@ -20,6 +20,15 @@ CREATE TABLE `custitem` (
   CONSTRAINT ` custitem _ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`),
   CONSTRAINT ` custitem _ibfk_2` FOREIGN KEY (`debtorno`) REFERENCES `debtorsmaster` (`debtorno`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ALTER table pricematrix ADD column currabrev char(3) NOT NULL DEFAULT '';
+ALTER table pricematrix ADD column startdate date NOT NULL DEFAULT '0000-00-00';
+ALTER table pricematrix ADD column enddate date NOT NULL DEFAULT '9999-12-31';
+ALTER table pricematrix DROP PRIMARY KEY;
+ALTER table pricematrix ADD PRIMARY KEY (`salestype`,`stockid`,`currabrev`,`quantitybreak`,`startdate`,`enddate`);
+ALTER table pricematrix DROP KEY `DiscountCategory`;
+ALTER table pricematrix ADD KEY currabrev(`currabrev`);
+ALTER table pricematrix ADD KEY stockid(`stockid`);
+ALTER TABLE  `debtortrans` CHANGE  `consignment`  `consignment` VARCHAR( 20 ) NOT NULL DEFAULT  '';
 UPDATE config SET confvalue='4.12' WHERE confname='VersionNumber';
 
-ALTER TABLE  `debtortrans` CHANGE  `consignment`  `consignment` VARCHAR( 20 ) NOT NULL DEFAULT  '';
+

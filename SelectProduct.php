@@ -501,6 +501,7 @@ if (!$Its_A_Kitset) {
 	}
 	echo '<a href="' . $RootPath . '/DiscountCategories.php?StockID=' . $StockID . '">' . _('Maintain Discount Category') . '</a><br />';
     echo '<a href="' . $RootPath . '/StockClone.php?OldStockID=' . $StockID . '">' . _('Clone This Item') . '</a><br />';
+	echo '<a href="' . $RootPath . '/PriceMatrix.php?StockID=' . $StockID . '">' . _('Maintain Price Matrix') . '</a><br />';
 }
 echo '</td></tr></table>';
 } else {

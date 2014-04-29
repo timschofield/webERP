@@ -233,7 +233,7 @@ if (isset($_POST['PrintPDF'])) {
 				$pdf->addTextWrap(510,$YPos,40,$FontSize,'_________','right',0,$fill);
 				if($template=='fullprices'){
 					// looking for price info  
-					$DefaultPrice = GetPrice($myrow['stockid'], $ToCustomer, $ToBranch, $db, false);
+					$DefaultPrice = GetPrice($myrow['stockid'],$ToCustomer, $ToBranch, $db,$ShipQty, false);
 					if ($myrow['discountcategory'] != "")
 					{
 						$DiscountLine = ' -> ' . _('Discount Category') . ':' . $myrow['discountcategory'];

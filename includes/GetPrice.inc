@@ -1,16 +1,8 @@
 <?php
 /* $Id$*/
-function GetPrice ($StockID, $DebtorNo, $BranchCode, $db, $ReportZeroPrice=1){
+function GetPrice ($StockID, $DebtorNo, $BranchCode, $db, $OrderLineQty,$ReportZeroPrice=1){
 
 	$Price = 0;
-	//get the price from price matrix
-	$sql = "SELECT pricematrix.price FROM pricematrix,debtorsmaster 
-				WHERE debtorsmaster.salestype=pricematrix.salestype
-				AND debtorsmaster.debtorno = '".$DebtorNo."'
-				AND pricematrix.stockid = '".$StockID."'";
-	$ErrorMsg = _('Failed to retrieve price from price matrix');
-	$result = DB_query($sql,$db,$ErrMsg);
-	if (DB_num_rows($result) == 0){
 
 		/*Search by branch and customer for a date specified price */
 		$sql="SELECT prices.price
@@ -27,7 +19,6 @@ function GetPrice ($StockID, $DebtorNo, $BranchCode, $db, $ReportZeroPrice=1){
 
 				$ErrMsg =  _('There is a problem in retrieving the pricing information for part') . ' ' . $StockID  . ' ' . _('and for Customer') . ' ' . $DebtorNo .  ' ' . _('the error message returned by the SQL server was');
 				$result = DB_query($sql, $db,$ErrMsg);
-	}
 	if (DB_num_rows($result)==0){
 		/*Need to try same specific search but for a default price with a zero end date */
 		$sql="SELECT prices.price,
@@ -149,6 +140,19 @@ function GetPrice ($StockID, $DebtorNo, $BranchCode, $db, $ReportZeroPrice=1){
 								$result = DB_query($sql, $db,$ErrMsg);
 
 								if (DB_num_rows($result)==0){
+									/* Now check the price matrix */
+									$sql = "SELECT max(pricematrix.price) FROM pricematrix,
+															debtorsmaster
+												WHERE pricematrix.stockid = '".$StockID . "'
+												AND pricematrix.currabrev = debtorsmaster.currcode
+												AND pricematrix.salestype = debtorsmaster.salestype
+												AND pricematrix.quantitybreak >= '".$OrderLineQty."'
+												AND pricematrix.startdate <= '" . Date('Y-m-d') . "' 
+												AND pricematrix.enddate >='" . Date('Y-m-d')."'";
+									$ErrMsg = _('There is an error to retrieve price from price matrix for stock '.$StockID.' and the error message returned by SQL server is ');
+									$result = DB_query($sql,$db,$ErrMsg);
+								}
+								if (DB_num_rows($result)==0){	
 									/*Not even a price set up in the default price list so return 0 */
 									if ($ReportZeroPrice ==1){
 										prnMsg(_('There are no prices set up for') . ' ' . $StockID,'warn');

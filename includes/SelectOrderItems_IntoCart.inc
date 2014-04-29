@@ -109,7 +109,7 @@ if ($AlreadyOnThisOrder!=1){
 				$Discount = 0;
 			}
 
-			$Price = GetPrice($NewItem, $_SESSION['Items'.$identifier]->DebtorNo,$_SESSION['Items'.$identifier]->Branch, $db);
+			$Price = GetPrice($NewItem, $_SESSION['Items'.$identifier]->DebtorNo,$_SESSION['Items'.$identifier]->Branch, $db,$NewItemQty);
 
 			/* Need to check for sell through support deals */
 			
