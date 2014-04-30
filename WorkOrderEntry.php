@@ -196,8 +196,12 @@ if (isset($_POST['Search']) OR isset($_POST['Prev']) OR isset($_POST['Next'])){
 	if (!isset($Offset)) {
 		$Offset=0;
 	}
-	if($Offset<0)$Offset=0;
-	if($Offset>$ListPageMax)$Offset=$ListPageMax;
+	if($Offset<0){
+		$Offset=0;
+	}
+	if($Offset>$ListPageMax){
+		$Offset=$ListPageMax;
+	}
 	$sql = $sql . ' LIMIT ' . $_SESSION['DisplayRecordsMax'].' OFFSET ' . strval($_SESSION['DisplayRecordsMax']*$Offset);
 
 
@@ -355,6 +359,9 @@ if (isset($_POST['submit']) OR isset($_POST['Search'])) { //The update button ha
 			if (!isset($_POST['WOComments'.$i])) {
 				$_POST['WOComments'.$i]='';
 			}
+			$sql[] = "UPDATE woitems SET comments = '". $_POST['WOComments'.$i] ."'
+										WHERE wo='" . $_POST['WO'] . "'
+										AND stockid='" . $_POST['OutputItem'.$i] . "'"; 
 			if (isset($_POST['QtyRecd'.$i]) AND $_POST['QtyRecd'.$i]>$_POST['OutputQty'.$i]){
 				$_POST['OutputQty'.$i]=$_POST['QtyRecd'.$i]; //OutputQty must be >= Qty already reced
 			}
@@ -376,14 +383,12 @@ if (isset($_POST['submit']) OR isset($_POST['Search'])) { //The update button ha
 				}
 				$sql[] = "UPDATE woitems SET qtyreqd =  '". $_POST['OutputQty' . $i] . "',
 											 nextlotsnref = '". $_POST['NextLotSNRef'.$i] ."',
-											 stdcost ='" . $Cost . "',
-											 comments = '". $_POST['WOComments'.$i] ."'
+											 stdcost ='" . $Cost . "'
 										WHERE wo='" . $_POST['WO'] . "'
 										AND stockid='" . $_POST['OutputItem'.$i] . "'"; 
   			} elseif (isset($_POST['HasWOSerialNos'.$i]) AND $_POST['HasWOSerialNos'.$i]==false) {
 				$sql[] = "UPDATE woitems SET qtyreqd =  '". $_POST['OutputQty' . $i] . "',
-											 nextlotsnref = '". $_POST['NextLotSNRef'.$i] ."',
-											 comments = '". $_POST['WOComments'.$i] ."'
+											 nextlotsnref = '". $_POST['NextLotSNRef'.$i] ."'
 										WHERE wo='" . $_POST['WO'] . "'
 										AND stockid='" . $_POST['OutputItem'.$i] . "'"; 
 			}

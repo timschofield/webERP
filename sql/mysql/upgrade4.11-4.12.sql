@@ -29,6 +29,7 @@ ALTER table pricematrix DROP KEY `DiscountCategory`;
 ALTER table pricematrix ADD KEY currabrev(`currabrev`);
 ALTER table pricematrix ADD KEY stockid(`stockid`);
 ALTER TABLE  `debtortrans` CHANGE  `consignment`  `consignment` VARCHAR( 20 ) NOT NULL DEFAULT  '';
+ALTER TABLE `workorders` ADD `closecomments` LONGBLOB NULL DEFAULT NULL ;
 UPDATE config SET confvalue='4.12' WHERE confname='VersionNumber';
 
 

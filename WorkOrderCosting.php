@@ -44,7 +44,8 @@ $WOResult = DB_query("SELECT workorders.loccode,
 							locations.locationname,
 							workorders.requiredby,
 							workorders.startdate,
-							workorders.closed
+							workorders.closed,
+							closecomments
 						FROM workorders INNER JOIN locations
 						ON workorders.loccode=locations.loccode
 						WHERE workorders.wo='" . $_POST['WO'] . "'",
@@ -516,7 +517,7 @@ If (isset($_POST['Close'])) {
 		} //end of standard costing section
 	} // end loop around the items on the work order
 
-	$CloseWOResult =DB_query("UPDATE workorders SET closed=1 WHERE wo='" .$_POST['WO'] . "'",
+	$CloseWOResult =DB_query("UPDATE workorders SET closed=1, closecomments = '". $_POST['CloseComments'] ."' WHERE wo='" .$_POST['WO'] . "'",
 				$db,
 				_('Could not update the work order to closed because:'),
 				_('The SQL used to close the work order was:'),
@@ -543,6 +544,23 @@ If (isset($_POST['Close'])) {
 	$WorkOrderRow['closed']=1;
 }//end close button hit by user
 
+if ($WorkOrderRow['closed']==0){
+	$ReadOnly='';
+} else{
+	$ReadOnly='readonly';
+	if (!isset($_POST['CloseComments'])) {
+		$_POST['CloseComments'] = $WorkOrderRow['closecomments'];
+	}
+}
+
+echo 	'<tr>
+			<td colspan="9">
+			
+				<div class="centre">
+					<textarea ' . $ReadOnly . ' style="width:100%" rows="5" cols="80" name="CloseComments" >' . $_POST['CloseComments'] . '</textarea>
+				</div>
+			</td>
+		</tr>';
 
 if ($WorkOrderRow['closed']==0){
 	echo '<tr>
