@@ -7,6 +7,7 @@ INSERT INTO `scripts` (`script` ,`pagesecurity` ,`description` ) VALUES ('PDFQAL
 INSERT INTO `scripts` (`script` ,`pagesecurity` ,`description` ) VALUES ('CustItem.php', '11', 'Customer Items');
 ALTER TABLE `woitems` ADD `comments` LONGBLOB NULL DEFAULT NULL ;
 ALTER TABLE  `www_users` CHANGE  `modulesallowed`  `modulesallowed` VARCHAR( 25 ) NOT NULL;
+INSERT INTO scripts VALUES ('CostUpdate','10','NB Not a script but allows users to maintain item costs from withing StockCostUpdate.php');
 CREATE TABLE `custitem` (
   `debtorno` char(10) NOT NULL DEFAULT '',
   `stockid` varchar(20) NOT NULL DEFAULT '',
@@ -30,6 +31,7 @@ ALTER table pricematrix ADD KEY currabrev(`currabrev`);
 ALTER table pricematrix ADD KEY stockid(`stockid`);
 ALTER TABLE  `debtortrans` CHANGE  `consignment`  `consignment` VARCHAR( 20 ) NOT NULL DEFAULT  '';
 ALTER TABLE `workorders` ADD `closecomments` LONGBLOB NULL DEFAULT NULL ;
+
 UPDATE config SET confvalue='4.12' WHERE confname='VersionNumber';
 
 

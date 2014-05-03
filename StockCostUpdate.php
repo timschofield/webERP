@@ -117,16 +117,22 @@ $result = DB_query("SELECT description,
 
 $myrow = DB_fetch_array($result);
 
-echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-echo '<div>';
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-
-echo '<table cellpadding="2" class="selection">';
-echo '<tr><th colspan="2">' . _('Item Code') . ':<input type="text" name="StockID" value="' . $StockID . '"  maxlength="20" />';
-echo '<input type="submit" name="Show" value="' . _('Show Cost Details') . '" /></th></tr>';
-echo '<tr><th colspan="2">' . $StockID . ' - ' . $myrow['description'] . '</th></tr>';
-echo '<tr><th colspan="2">' .  _('Total Quantity On Hand') . ': ' . $myrow['totalqoh'] . ' ' . $myrow['units']  . '</th></tr>';
-echo '<tr><th colspan="2">' .  _('Last Cost update on') . ': ' . ConvertSQLDate($myrow['lastcostupdate'])  . '</th></tr>';
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
+	<div>
+	<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+	<table cellpadding="2" class="selection">
+		<tr>
+			<th colspan="2">' . _('Item Code') . ':<input type="text" name="StockID" value="' . $StockID . '"  maxlength="20" /><input type="submit" name="Show" value="' . _('Show Cost Details') . '" /></th>
+		</tr>
+		<tr>
+			<th colspan="2">' . $StockID . ' - ' . $myrow['description'] . '</th>
+		</tr>
+		<tr>
+			<th colspan="2">' .  _('Total Quantity On Hand') . ': ' . $myrow['totalqoh'] . ' ' . $myrow['units']  . '</th>
+		</tr>
+		<tr>
+			<th colspan="2">' .  _('Last Cost update on') . ': ' . ConvertSQLDate($myrow['lastcostupdate'])  . '</th>
+		</tr>';
 
 if (($myrow['mbflag']=='D' AND $myrow['stocktype'] != 'L')
 							OR $myrow['mbflag']=='A'
@@ -153,23 +159,24 @@ echo '<input type="hidden" name="QOH" value="' . $myrow['totalqoh'] .'" />';
 
 echo _('Last Cost') .':</td>
 		<td class="number">' . locale_number_format($myrow['lastcost'],$_SESSION['StandardCostDecimalPlaces']) . '</td></tr>';
-if (! in_array($UpdateSecurity,$_SESSION['AllowedPageSecurityTokens'])){
-	echo '<tr><td>' . _('Cost') . ':</td>
+if (! in_array($_SESSION['PageSecurityArray']['CostUpdate'],$_SESSION['AllowedPageSecurityTokens'])){
+	echo '<tr>
+			<td>' . _('Cost') . ':</td>
 			<td class="number">' . locale_number_format($myrow['materialcost']+$myrow['labourcost']+$myrow['overheadcost'],$_SESSION['StandardCostDecimalPlaces']) . '</td>
 		</tr>
 		</table>';
 } else {
 
 	if ($myrow['mbflag']=='M'){
-		echo '<tr><td><input type="hidden" name="MaterialCost" value="' . $myrow['materialcost'] . '" />';
-		echo _('Standard Material Cost Per Unit') .':</td>
-				<td class="number">' . locale_number_format($myrow['materialcost'],$_SESSION['StandardCostDecimalPlaces']) . '</td>
-			</tr>';
 		echo '<tr>
+				<td>' . _('Standard Material Cost Per Unit') .':</td>
+				<td class="number"><input type="text" class="number" name="MaterialCost" value="' . locale_number_format($myrow['materialcost'],$_SESSION['StandardCostDecimalPlaces']) . '" /></td>
+			</tr>
+			<tr>
 				<td>' . _('Standard Labour Cost Per Unit') . ':</td>
 				<td class="number"><input type="text" class="number" name="LabourCost" value="' . locale_number_format($myrow['labourcost'],$_SESSION['StandardCostDecimalPlaces']) . '" /></td>
-			</tr>';
-		echo '<tr>
+			</tr>
+			<tr>
 				<td>' . _('Standard Overhead Cost Per Unit') . ':</td>
 				<td class="number"><input type="text" class="number" name="OverheadCost" value="' . locale_number_format($myrow['overheadcost'],$_SESSION['StandardCostDecimalPlaces']) . '" /></td>
 			</tr>';

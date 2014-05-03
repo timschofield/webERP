@@ -1,5 +1,7 @@
 webERP Change Log
-29/4/2014 Exson: Make price matrix workable including GetPrice.inc, MainMenuLinksArray.php,SelectOrderItems_IntoCart.inc,PriceMatrix.php, SelectProduct.php,StockDispatch.php.
+
+3/5/14 Phil: StockCostUpdate.php now allows updates to manufactured items.
+29/4/14 Exson: Make price matrix workable including GetPrice.inc, MainMenuLinksArray.php,SelectOrderItems_IntoCart.inc,PriceMatrix.php, SelectProduct.php,StockDispatch.php.
 20/04/14 Exson: Fixed undefined variable bugs in PDFWOPageHeader.inc and PDFWOPrint.php and remove some redundant codes in PDFWOPrint.php
 17/04/14 Exson: Update zh_CN.utf8 translation.
 09/04/14 Tim: Fixed the table sort failure bugs in SelectSalesOrder.php reported by Andrew Agaluski.
