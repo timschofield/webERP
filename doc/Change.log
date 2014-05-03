@@ -1,5 +1,6 @@
 webERP Change Log
 
+3/5/14 Khwunchai J.: New Xenos theme
 3/5/14 Phil: StockCostUpdate.php now allows updates to manufactured items.
 29/4/14 Exson: Make price matrix workable including GetPrice.inc, MainMenuLinksArray.php,SelectOrderItems_IntoCart.inc,PriceMatrix.php, SelectProduct.php,StockDispatch.php.
 20/04/14 Exson: Fixed undefined variable bugs in PDFWOPageHeader.inc and PDFWOPrint.php and remove some redundant codes in PDFWOPrint.php

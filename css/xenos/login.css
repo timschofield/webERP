@@ -1,0 +1,109 @@
+/***
+
+"Xenos" Login theme for WebERP
+
+by Khwunchai J.
+
+***/
+
+
+/* $Id: login.css 5657 2012-09-10 11:32:07Z daintree $*/
+body {
+    background:#F1F1F1;
+    color:black;
+    font:14px "Lucida Grande","Arial","Helvetica","Verdana","sans-serif";
+    text-align:center;
+}
+
+img{
+    vertical-align:middle;
+}
+
+#container {
+    background:#FFFFFF;
+    border:thin solid #CCCCCC;
+    
+    margin-left:auto;
+    margin-right:auto;
+    margin-top:50px;
+    width:360px;
+    z-index:1000;
+    
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -moz-box-shadow:    1px 1px 2px #C3C3C3;
+	-webkit-box-shadow: 1px 1px 2px #C3C3C3;
+	box-shadow:         1px 1px 2px #C3C3C3;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#C3C3C3')";
+	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#C3C3C3')
+}
+
+#login_logo {
+    background:url("../webERP.gif") no-repeat scroll center center #FFFFFF;
+    border:medium outset gray;
+    border-radius:19px 19px 19px 19px;
+    height:44px;
+    margin:10% auto;
+    padding:12px;
+    width:190px;
+}
+form {
+    width: 240px;
+    margin: auto;
+    text-align: left;
+}
+form span {
+    font-weight: bold;
+    font-size: 16px;
+    color:#333333;
+}
+input[type='text'], input[type='password'] {
+    width:220px;
+    font-size:16px;
+    border:thin solid #C3C3C3;
+    padding:4px 8px;
+    margin-top:4px;
+    margin-bottom:16px;
+    
+    -webkit-border-radius:  4px;
+    -moz-border-radius:     4px;
+    border-radius:          4px;
+}
+input[type='text']:focus, input[type='password']:focus {
+    outline:none;
+    border-color:#2380CD;
+    
+    -moz-box-shadow:    0px 0px 5px #55B1EA;
+	-webkit-box-shadow: 0px 0px 5px #55B1EA;
+	box-shadow:         0px 0px 5px #55B1EA;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=0, Color='#55B1EA')";
+	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=0, Color='#55B1EA');
+}
+input.button {
+    background-color: #34a7e8;
+    border:thin outset #1992DA;
+    padding:8px 32px;
+    vertical-align:middle;
+    font-size: 15px;
+    font-weight:bold;
+    color: #FFFFFF;
+    margin-left: auto;
+    
+    -webkit-border-radius:  4px;
+    -moz-border-radius:     4px;
+    border-radius:          4px;
+    -moz-box-shadow:    1px 1px 1px #64BEF1 inset;
+	-webkit-box-shadow: 1px 1px 1px #64BEF1 inset;
+	box-shadow:         1px 1px 1px #64BEF1 inset;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#64BEF1')";
+	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#64BEF1');
+}
+
+input.button:hover {
+    cursor: pointer;
+}
+
+/*#demo_text{
+	padding:10px;
+}*/

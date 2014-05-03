@@ -1,0 +1,639 @@
+/*** 
+
+Xenos Theme
+by Khwunchai J.
+
+Xenos is a very clean and classy looking theme design for WebERP.
+
+NOTE: 
+This CSS is not yet fully optimized. Some styles maybe redundant and not supported by some browser.
+
+***/
+
+body {
+	font-family:Arial, Verdana, Helvetica, sans-serif;
+	font-size:10pt;
+	margin:0;
+	padding:0;
+	background:#F1F1F1;
+}
+
+/*** Default Styles ***/
+a {
+	color:#0088CD;
+	text-decoration:none;
+}
+a:hover {
+	color:#0088CD;
+	text-decoration:underline;
+}
+
+img {
+	border:none;
+	vertical-align:middle;
+}
+p.page_title_text {
+	padding-top:2px;
+	padding-bottom:2px;
+	font-size:18px;
+	color:black;
+	width:60%;
+	text-align:center;
+	margin:10px auto;
+}
+p.good {
+    font-weight:bold;
+    color:green;
+}
+p.bad {
+    font-weight:bold;
+    color:red;
+}
+table {
+    background-color:white;
+    margin:0 auto;
+    width:100%;
+    /*border-collapse: collapse;*/
+    border:thin outset #B3B3B3;
+    
+    -webkit-border-radius:  4px;
+    -moz-border-radius:     4px;
+    border-radius:          4px;
+    -moz-box-shadow:    1px 1px 2px #C3C3C3;
+	-webkit-box-shadow: 1px 1px 2px #C3C3C3;
+	box-shadow:         1px 1px 2px #C3C3C3;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#C3C3C3')";
+	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#C3C3C3')
+}
+table.selection {
+}
+th {
+	font-weight:bold;
+	color:#2C2C2C;
+	text-align:center;
+	border-bottom:thin solid #B3B3B3;
+}
+th.number {
+	text-align:right;
+	font-weight:normal;
+	background-color:#800000;
+	color:white;
+}
+th.ascending {
+  cursor:s-resize;
+}
+th.descending {
+  cursor:n-resize;
+}
+th:after {
+	content:"";
+	float:right;
+	margin-top:7px;
+	visibility:hidden;
+}
+th.ascending:after {
+	border-width:0 4px 4px;
+	border-style:solid;
+	border-color:#000 transparent;
+	visibility:visible;
+}
+th.descending:after {
+	border-bottom:none;
+	border-left:4px solid transparent;
+	border-right:4px solid transparent;
+	border-top:4px solid #000;
+	visibility:visible;
+}
+td {
+    padding:2px 4px;
+	text-align:left;
+	color:#575757;
+}
+td.select {
+	background-color:#eee;
+}
+td.number {
+	text-align:right;
+}
+td table {
+    background: red;
+}
+/*
+table tr:first-child th:first-child, table tr:first-child td:first-child {
+    -moz-border-radius-topleft:      4px;
+    -webkit-border-top-left-radius:  4px;
+    border-top-left-radius:          4px;
+}
+table tr:first-child th:last-child, table tr:first-child td:last-child {
+    -moz-border-radius-topright:     4px;
+    -webkit-border-top-right-radius: 4px;
+    border-top-right-radius:         4px;
+}
+table tr:last-child td:first-child {
+    -moz-border-radius-bottomleft:      4px;
+    -webkit-border-bottom-left-radius:  4px;
+    border-bottom-left-radius:          4px;
+}
+table tr:last-child td:last-child {
+    -moz-border-radius-bottomright:     4px;
+    -webkit-border-bottom-right-radius: 4px;
+    border-bottom-right-radius:         4px;
+}
+*/
+div.centre {
+  margin:0 auto;
+  text-align:center;
+}
+input {
+}
+input.number{
+	text-align:right;
+}
+input.image {
+	border-width:0px;
+	background-color:transparent;
+}
+input:hover{
+}
+select {
+	font-family:Arial, Verdana, Helvetica, sans-serif;;
+	font-size:12px;
+	border:thin solid #C3C3C3;
+    -webkit-border-radius:4px;
+    -moz-border-radius:4px;
+    border-radius:4px;
+    padding:4px 8px;
+    cursor: pointer;
+}
+input.inputerror, input.error, select.error, select.selecterror, label.error {
+	color:red;
+	border:2px solid red;
+}
+input[type='text'], input[type='tel'], input[type='password'], input[type='email'] {
+    border:thin solid #C3C3C3;
+    padding:4px 8px;
+    
+    -webkit-border-radius:  4px;
+    -moz-border-radius:     4px;
+    border-radius:          4px;
+}
+input:required, select:required, textarea:required {
+	background-color:#e2f5ff;
+}
+input[type='text']:focus, input[type='tel']:focus, input[type='password']:focus, input[type='email']:focus, input[type='submit'], textarea:focus, select:focus, button:focus {
+    outline:none;
+    border-color:#2380CD;
+    
+    -moz-box-shadow:    0px 0px 5px #55B1EA;
+	-webkit-box-shadow: 0px 0px 5px #55B1EA;
+	box-shadow:         0px 0px 5px #55B1EA;
+}
+input[type='submit'], button {
+    background-color:#34a7e8;
+    border:thin outset #1992DA;
+    padding:6px 24px;
+    vertical-align:middle;
+    font-weight:bold;
+    color:#FFFFFF;
+    cursor: pointer;
+    
+    -webkit-border-radius:  4px;
+    -moz-border-radius:     4px;
+    border-radius:          4px;
+    -moz-box-shadow:    1px 1px 1px #64BEF1 inset;
+	-webkit-box-shadow: 1px 1px 1px #64BEF1 inset;
+	box-shadow:         1px 1px 1px #64BEF1 inset;
+}
+select {
+    background-color: white;
+}
+textarea{
+    border:thin solid #C3C3C3;
+    padding:4px 8px;
+    
+    -webkit-border-radius:  4px;
+    -moz-border-radius:     4px;
+    border-radius:          4px;
+}
+.EvenTableRows {
+	background-color:white;
+}
+.OddTableRows {
+	background-color:#CCCCCC;
+}
+
+div.error {
+	color:red;
+}
+div.warn {
+	color:maroon;
+}
+div.success {
+	color:darkgreen;
+}
+div.info {
+	color:navy;
+}
+div.page_help_text {
+	background:lightgrey url(images/help.png) top left no-repeat;
+	border:thin solid #C3C3C3;
+	padding:4px 10px;
+	z-index:1;
+	width:80%;
+	float:none;
+	visibility:visible;
+	margin:0 auto;
+	position:static;
+	font-weight:normal;
+	color:black;
+	text-align:center;
+}
+
+/*** Calendar picker ***/
+#calendar{
+
+}
+.dpTbl {
+	border:1px solid #C3C3C3;
+	-moz-box-shadow:    0px 0px 8px #999999;
+	-webkit-box-shadow: 0px 0px 8px #999999;
+	box-shadow:         0px 0px 8px #999999;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=0, Color='#64BEF1')";
+	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=0, Color='#64BEF1');
+}
+.dpTD {
+	border: 0;
+	width:25px;
+	text-align:right;
+	cursor:pointer;
+}
+.dpTbl button {
+    padding: 4px 12px;
+}
+.dpDayHighlight {
+	border: 0;
+	width:20px;
+	background-color: yellow;
+	text-align:right;
+	cursor:pointer;
+}
+.dpTDHover {
+	border: 0;
+	width:20px;
+	background-color: #E1E1E1;
+	text-align:right;
+	cursor:pointer;
+}
+
+/* Table type is used for UI tables type 1 */
+.table1 {
+  width:90%;
+  background: #eee;
+  border: 0px 0px 2px 2px #222 solid;
+  margin: 0 auto;
+}
+/* Table type is used for UI tables type 2 */
+.table2 {
+  width:90%;
+  background: #eee;
+  border: 0px 0px 2px 2px #222 solid;
+  margin: 0 auto;
+}
+.tableheader {
+	font-weight: normal;
+	background-color: #777C59;
+}
+.notavailable {
+	font-weight:lighter;
+	font-style:italic;
+	color:#555555;
+}
+.label {
+	font-weight:bold;
+	font-style:normal;
+	font-size:120%;
+	color: #575757;
+}
+.table_index {
+	background-color: #F1FFDD;
+}
+
+
+.header {
+	background-image: url("");
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	border: none;
+	margin: 0px;
+	padding: 0px;
+}
+input.inputerror {
+	background-color: #fddbdb;
+}
+textarea.texterror {
+	background-color: #fddbdb;
+}
+select.selecterror {
+	background-color: #fddbdb;
+}
+.OsRow {
+	background-color: #234567;
+	color:white;
+}
+
+/*** CANVAS ***/
+
+#CanvasDiv{
+	background:#F1F1F1;
+	margin:0;
+}
+
+/*** HEADER ***/
+
+#HeaderDiv {
+	overflow:hidden; /* REQUIRED: height according to items contained */
+	color:#333333;
+	font-weight:bold;
+	padding-left:3px;
+	height: 44px;
+}
+#HeaderWrapDiv{
+}
+
+/*** HEADER - APP INFO ***/
+
+#AppInfoDiv{
+	float:left; /* REQUIRED: to the left */
+}
+#AppInfoDiv img{
+	vertical-align:middle; /* center image and text vertically */
+}
+#AppInfoCompanyDiv{
+	display:table-cell; /* REQUIRED: as a cell */
+}
+#AppInfoUserDiv{
+	display:table-cell; /* REQUIRED: as a cell */
+}
+#AppInfoUserDiv a{
+	color:#333333;
+	font-weight:bold;
+}
+#AppInfoUserDiv a:hover{
+	text-decoration:none;
+}
+#AppInfoModuleDiv{
+}
+
+/*** HEADER - QUICK MENU ***/
+
+#QuickMenuDiv{
+	float:right; /* to the right side  */
+	z-index: 10;
+	margin-right: 1.05%;
+}
+#QuickMenuDiv ul{
+	list-style:none; /* hide the bullets */
+	margin:0;
+	padding:0;
+
+	-webkit-border-radius:  0 0 6px 6px;
+    -moz-border-radius:     0 0 6px 6px;
+    border-radius:          0 0 6px 6px;
+    -moz-box-shadow:    1px 1px 2px #C3C3C3;
+	-webkit-box-shadow: 1px 1px 2px #C3C3C3;
+	box-shadow:         1px 1px 2px #C3C3C3;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#C3C3C3')";
+	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#C3C3C3');
+}
+#QuickMenuDiv li{
+    display:inline-block; /* items are inline */
+    height:38px;
+}
+
+/*** links as buttons!!! clicking anywhere in the button will activate 
+     the link!!! ***HJ***/
+	 
+#QuickMenuDiv li a{
+    color:white;
+    font-weight:bold;
+    padding:11px 24px;
+    background:#686868;
+    border-right:thin inset #5D5D5D;
+    border-left:thin outset #737373;
+	border-bottom:thin solid #7C7C7C;
+    display:block;
+}
+#QuickMenuDiv li:first-child a{
+    -webkit-border-radius:  0 0 0 6px;
+    -moz-border-radius:     0 0 0 6px;
+    border-radius:          0 0 0 6px;
+}
+#QuickMenuDiv li:last-child a{
+    -webkit-border-radius:  0 0 6px 0;
+    -moz-border-radius:     0 0 6px 0;
+    border-radius:          0 0 6px 0;
+}
+#QuickMenuDiv li a:hover{
+	background:#444444;
+    border-left:thin outset #5C5C5C;
+	text-decoration:none;
+}
+
+/*** BODY ***/
+
+#BodyDiv {
+	clear:both; /* REQUIRED */
+	overflow:hidden; /* REQUIRED */
+	color:black;
+	background:#F1F1F1;
+	padding:5px;
+	text-align:center;
+	min-height: 440px;
+}
+#BodyDiv table {
+	width:auto; /* automatic width */
+	margin:0 auto;
+	margin-bottom:10px;
+	
+	-webkit-border-radius:  4px;
+    -moz-border-radius:     4px;
+    border-radius:          4px;
+    -moz-box-shadow:    1px 1px 2px #C3C3C3;
+	-webkit-box-shadow: 1px 1px 2px #C3C3C3;
+	box-shadow:         1px 1px 2px #C3C3C3;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#C3C3C3')";
+	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#C3C3C3')
+}
+#BodyDiv table.selection {
+    background-color:white;
+    border:thin outset #D2D2D2;
+    padding:5px;
+    
+    -webkit-border-radius:  4px;
+    -moz-border-radius:     4px;
+    border-radius:          4px;
+    -moz-box-shadow:    1px 1px 2px #C3C3C3;
+	-webkit-box-shadow: 1px 1px 2px #C3C3C3;
+	box-shadow:         1px 1px 2px #C3C3C3;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#C3C3C3')";
+	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#C3C3C3')
+}
+
+/*** BODY - MAIN MENU ***/
+
+#MainMenuDiv{
+    margin-left: .6%;
+    margin-right: 1%;
+	float:left; /* REQUIRED: to the left side */
+	white-space:nowrap; /* don't break text */
+	text-align:center;
+	width:14%;
+	border:thin inset #5D5D5D;
+	background:#686868;
+	
+	-webkit-border-radius:  4px;
+    -moz-border-radius:     4px;
+    border-radius:          4px;
+    -moz-box-shadow:    1px 1px 2px #C3C3C3;
+	-webkit-box-shadow: 1px 1px 2px #C3C3C3;
+	box-shadow:         1px 1px 2px #C3C3C3;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#C3C3C3')";
+	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#C3C3C3')
+}
+#MainMenuDiv ul{
+	list-style:none; /* REQUIRED: hide bullets */
+	padding:0; /* REQUIRED: remove extra gaps (ex-bullets) */
+	margin:0;
+}
+#MainMenuDiv li{
+	list-style:none; /* REQUIRED */
+	padding:0; /* REQUIRED */
+}
+#MainMenuDiv li a{ /* link as button!!! not-pressed state */
+	display:block; /* REQUIRED */
+	padding:8px;
+	/*border-top:thin outset #1E1E1E;*/
+	border-top:thin solid #5D5D5D;
+    border-bottom:thin solid #737373;
+	color:white;
+	font-weight:bold;
+}
+#MainMenuDiv li:first-child a {
+    border-top: none;
+}
+#MainMenuDiv li a:hover{ /* link as button!!! pressed state */
+	text-decoration:none;
+	background:#444444;
+	border-bottom:thin solid #444444;
+}
+#MainMenuDiv .main_menu_selected a{ /* the selected button */
+	/*border:thin inset #191919;*/	
+	background:#2A2A2A;
+	border-bottom:thin solid #191919;
+}
+#MainMenuDiv .main_menu_selected a:hover{
+	background:#2A2A2A;
+}
+
+/*** BODY - SUB MENU ***/
+
+#SubMenuDiv{
+	display:table; /* display as table, sub menu will auto adjust width */
+	width:83.5%; /* main menu is 10% */
+	text-align:left;
+	border:thin outset #D2D2D2;
+	background-color:white;	/* for custom reports */
+	min-height:400px;
+	
+	-webkit-border-radius:  4px;
+    -moz-border-radius:     4px;
+    border-radius:          4px;
+	-moz-box-shadow:    1px 1px 2px #C3C3C3;
+	-webkit-box-shadow: 1px 1px 2px #C3C3C3;
+	box-shadow:         1px 1px 2px #C3C3C3;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#C3C3C3')";
+	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#C3C3C3')
+}
+#SubMenuDiv a:link, a:visited{
+	color:#0088CD;
+	text-decoration:none;
+}
+#SubMenuDiv a:hover{
+	color:#0088CD;
+	text-decoration:none;
+}
+#SubMenuDiv ul{
+	list-style-type:none;
+	padding:0;
+	margin:0;
+}
+#SubMenuDiv li{
+	padding:2px;
+	color:#333333;
+}
+#SubMenuDiv li img{
+	vertical-align:middle; /* verticall align icon with the text */
+}
+#SubMenuDiv .menu_group_headers {
+	border-bottom:thin solid #DADADA;
+	text-align:center;
+	color:#2C2C2C;
+}
+#TransactionsDiv{
+	display:table-cell;
+	border-right:thin solid #D2D2D2;
+}
+#InquiriesDiv{
+	display:table-cell;
+	border-right:thin solid #D2D2D2;
+}
+#InquiriesDiv div{ /* default div, used for custom report header */
+	color:black;
+	padding:2px;
+}
+#InquiriesDiv body{
+	background:#eee;
+	color:red;
+	padding:2px;
+}
+#MaintenanceDiv{
+	display:table-cell;
+}
+.menu_group_item p {
+	color:transparent; /* buttets color */
+	margin:4px 0 0 0;
+}
+
+/*** FOOTER ***/
+
+#FooterDiv{
+	clear:both; /* REQUIRED */
+    overflow:hidden;	
+    color:#999999;
+    width: 98.6%;
+    margin: auto;
+}
+#FooterDiv a{
+    text-decoration:underline;
+    color:#999999;
+}
+#FooterWrapDiv{
+	overflow:hidden;
+	padding:3px;
+}
+#FooterLogoDiv{ 
+	float:right; /* right side */
+    padding:2px;
+}
+#FooterLogoDiv img {
+    vertical-align:middle;
+}
+#FooterVersionDiv{
+	float:left; /* left side */
+	margin-top:3px;
+}
+#FooterTimeDiv{
+	clear:left; /* below  */
+}
+
+/*** END ***/
