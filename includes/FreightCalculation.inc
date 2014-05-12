@@ -21,12 +21,6 @@ Function CalcFreightCost ($TotalValue,
 	if ((!isset($BrAdd2)) AND (!isset($BrAdd3)) AND (!isset($BrAdd4)) AND (!isset($BrAdd5)) AND (!isset($BrAddCountry))){
 		// No address field to detect destination ==> ERROR
 		$ParameterError = TRUE;
-		//echo '<br />Branch address 2 : ' . $BrAdd2;
-		//echo '<br />Branch address 3 : ' . $BrAdd3;
-		//echo '<br />Branch address 4 : ' . $BrAdd4;
-		//echo '<br />Branch address 5 : ' . $BrAdd5;
-		//echo '<br />Branch address country : ' . $BrAddCountry;
-		
 	}
 	if ((!isset($TotalVolume)) AND (!isset($TotalWeight))){
 		// No weight AND no volume ==> ERROR
@@ -34,14 +28,10 @@ Function CalcFreightCost ($TotalValue,
 	}
 	if (!isset($FromLocation)){
 		// No location FROM ==> ERROR
-		//echo '<br />From Location : ' . $FromLocation;
-		
 		$ParameterError = TRUE;
 	}
 	if (!isset($Currency)){
 		// No Currency ==> ERROR
-		//echo '<br />Currency : ' . $Currency;
-		
 		$ParameterError = TRUE;
 	}
 	if($ParameterError){
@@ -65,7 +55,7 @@ Function CalcFreightCost ($TotalValue,
 
 	//ALL suburbs and cities are compared in upper case - so data in freight tables must be in upper case too
 	foreach ($FindCity as $City) {
-		if ( strtoupper($City) != ''){
+		if ($City != ''){
 			$sql .= " destination LIKE '" .  strtoupper($City) . "%' OR";
 		}
 	}
@@ -74,9 +64,6 @@ Function CalcFreightCost ($TotalValue,
 		$sql .= " destination = '' OR";
 	}
 	$sql = mb_substr($sql, 0, mb_strrpos($sql,' OR')) . ')';
-	
-	//echo $sql;
-
 	
 	$CalcFreightCostResult = DB_query($sql,$db);
 	if (DB_error_no($db) !=0) {
@@ -112,15 +99,11 @@ Function CalcFreightCost ($TotalValue,
 				$CalcBestShipper =$myrow['shipperid'];
 
 			}
-			//echo '<br /> calculated freight cost = ' . $CalcFreightCost;
 		}
 	} else {
 		$CalcFreightCost = "NOT AVAILABLE";
 	}
 	if ($TotalValue >= $_SESSION['FreightChargeAppliesIfLessThan'] AND $_SESSION['FreightChargeAppliesIfLessThan']!=0){
-
-		//echo '<br />Freight should be charged on orders less than ' . $_SESSION['FreightChargeAppliesIfLessThan'];
-		 
 		/*Even though the order is over the freight free threshold - still need to calculate the best shipper to ensure get best deal*/
 		$CalcFreightCost =0;
 	}

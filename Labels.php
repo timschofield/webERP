@@ -114,8 +114,8 @@ $LabelPaper['DPS01 *']['PageHeight']= 297;
 
 echo '<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Label Template Maintenance')
-	. '" alt="" />' . $Title. '
-	</p>';
+	. '" alt="" />' . $Title . ' - ' . _('all measurements in PDF points') .
+	'</p>';
 
 if (isset($_POST['SelectedLabelID'])){
 	$SelectedLabelID =$_POST['SelectedLabelID'];
