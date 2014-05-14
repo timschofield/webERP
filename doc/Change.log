@@ -1,5 +1,6 @@
 webERP Change Log
 
+14/05/14 Exson: Fixed typo in MRPReport.php which make some supplies not to be shown on the report and use itemdue instead of deliverydate in MRP to ensure that requirements are calculated correctly for items due on different date. 
 3/5/14 Khwunchai J.: New Xenos theme
 3/5/14 Phil: StockCostUpdate.php now allows updates to manufactured items.
 29/4/14 Exson: Make price matrix workable including GetPrice.inc, MainMenuLinksArray.php,SelectOrderItems_IntoCart.inc,PriceMatrix.php, SelectProduct.php,StockDispatch.php.
