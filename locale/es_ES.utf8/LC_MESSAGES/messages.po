@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-02-08 17:33+1300\n"
-"PO-Revision-Date: 2014-04-02 18:23-0600\n"
+"PO-Revision-Date: 2014-05-14 23:20-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -119,12 +119,12 @@ msgstr "La sección contable debe ser un número"
 
 #: AccountGroups.php:130
 msgid "The sequence in the trial balance must be an integer"
-msgstr "La secuencia en el Balance de Comprobación debe ser un número entero"
+msgstr "La secuencia en el balance de comprobación debe ser un número entero"
 
 #: AccountGroups.php:136
 msgid "The sequence in the TB must be numeric and less than"
 msgstr ""
-"La secuencia en el Balance de Comprobación debe ser numérica y menor que"
+"La secuencia en el balance de comprobación debe ser numérica y menor que"
 
 #: AccountGroups.php:152
 msgid "An error occurred in renaming the account group"
@@ -303,7 +303,7 @@ msgstr "Sección"
 
 #: AccountGroups.php:292 AccountGroups.php:461
 msgid "Sequence In TB"
-msgstr "Secuencia en Balance de Comprobación"
+msgstr "Secuencia en balance de comprobación"
 
 #: AccountGroups.php:293 AccountGroups.php:444 GLProfit_Loss.php:6
 #: GLProfit_Loss.php:133 GLProfit_Loss.php:134 GLProfit_Loss.php:185
@@ -621,16 +621,16 @@ msgstr "No se pudo obtener la Sección solicitada, por favor, pruebe de nuevo."
 #: AddCustomerContacts.php:6 AddCustomerContacts.php:59 SelectCustomer.php:606
 #: SelectCustomer.php:641
 msgid "Customer Contacts"
-msgstr "Contactos de Cliente"
+msgstr "Contactos de cliente"
 
 #: AddCustomerContacts.php:20 CustEDISetup.php:9 CustLoginSetup.php:21
 #: Z_CheckDebtorsControl.php:14
 msgid "Back to Customers"
-msgstr "Volver a Clientes"
+msgstr "Volver a clientes"
 
 #: AddCustomerContacts.php:25
 msgid "Contacts for Customer"
-msgstr "Contactos del Cliente"
+msgstr "Contactos del cliente"
 
 #: AddCustomerContacts.php:27
 msgid "Edit contact for"
@@ -638,7 +638,7 @@ msgstr "Editar contacto para"
 
 #: AddCustomerContacts.php:39
 msgid "The Contact ID must be an integer."
-msgstr "El ID del Contacto debe ser un entero"
+msgstr "El ID del contacto debe ser un entero"
 
 #: AddCustomerContacts.php:42
 msgid "The contact name must be forty characters or less long"
@@ -646,7 +646,7 @@ msgstr "El nombre del contacto no debe pasar de 40 caracteres"
 
 #: AddCustomerContacts.php:45
 msgid "The contact name may not be empty"
-msgstr "El nombre del Contacto no puede estar vacío"
+msgstr "El nombre del contacto no puede estar vacío"
 
 #: AddCustomerContacts.php:48
 msgid "The contact email address is not a valid email address"
@@ -665,11 +665,11 @@ msgstr "ha sido actualizado"
 
 #: AddCustomerContacts.php:74
 msgid "The contact record has been added"
-msgstr "El registro del Contacto ha sido creado"
+msgstr "El registro del contacto ha sido creado"
 
 #: AddCustomerContacts.php:103
 msgid "The contact record has been deleted"
-msgstr "El registro del Contacto ha sido eliminado"
+msgstr "El registro del contacto ha sido eliminado"
 
 #: AddCustomerContacts.php:126 CompanyPreferences.php:173
 #: CustomerBranches.php:408 Customers.php:1117 Customers.php:1125
@@ -729,12 +729,12 @@ msgstr "Revisar todos los contactos de este cliente"
 
 #: AddCustomerContacts.php:206
 msgid "Contact Code"
-msgstr "Código del Contacto"
+msgstr "Código del contacto"
 
 #: AddCustomerContacts.php:214 Factors.php:234 SupplierContacts.php:239
 #: ../webSHOP/Checkout.php:504 ../webSHOP/Register.php:622
 msgid "Contact Name"
-msgstr "Nombre del Contacto"
+msgstr "Nombre del contacto"
 
 #: AddCustomerContacts.php:232 Contracts.php:781 PDFRemittanceAdvice.php:247
 #: PO_Header.php:1017 PO_Header.php:1102 SelectCreditItems.php:245
@@ -749,15 +749,15 @@ msgstr "Teléfono"
 #: AddCustomerNotes.php:6 AddCustomerNotes.php:51 SelectCustomer.php:656
 #: SelectCustomer.php:689
 msgid "Customer Notes"
-msgstr "Notas del Cliente"
+msgstr "Notas del cliente"
 
 #: AddCustomerNotes.php:21 AddCustomerTypeNotes.php:19
 msgid "Back to Select Customer"
-msgstr "Volver a Seleccionar Cliente"
+msgstr "Volver a Seleccionar cliente"
 
 #: AddCustomerNotes.php:34
 msgid "The contact priority must be an integer."
-msgstr "La prioridad del Contacto debe ser un entero"
+msgstr "La prioridad del contacto debe ser un entero"
 
 #: AddCustomerNotes.php:37
 msgid "The contact's notes must be two hundred characters or less long"
@@ -769,11 +769,11 @@ msgstr "Las notas del contacto no pueden estar vacías"
 
 #: AddCustomerNotes.php:64
 msgid "The contact notes record has been added"
-msgstr "Se añadió el registro de Notas del Contacto"
+msgstr "Se añadió el registro de notas del contacto"
 
 #: AddCustomerNotes.php:91
 msgid "The contact note record has been deleted"
-msgstr "El registro de Nota de Contacto fue eliminado"
+msgstr "El registro de nota de contacto fue eliminado"
 
 #: AddCustomerNotes.php:101
 msgid "Notes for Customer"
@@ -834,23 +834,23 @@ msgstr "¿Confirma eliminar esta nota de cliente?"
 
 #: AddCustomerNotes.php:157
 msgid "Review all notes for this Customer"
-msgstr "Revisar todas las notas de este Cliente"
+msgstr "Revisar todas las notas de este cliente"
 
 #: AddCustomerNotes.php:196 AddCustomerTypeNotes.php:189
 msgid "Note ID"
-msgstr "ID Nota"
+msgstr "ID nota"
 
 #: AddCustomerNotes.php:204
 msgid "Contact Note"
-msgstr "Nota del Contacto"
+msgstr "Nota del contacto"
 
 #: AddCustomerTypeNotes.php:5 SelectCustomer.php:698
 msgid "Customer Type (Group) Notes"
-msgstr "Notas del Tipo (Grupo) de Cliente"
+msgstr "Notas del Tipo (Grupo) de cliente"
 
 #: AddCustomerTypeNotes.php:31
 msgid "The Contact priority must be an integer."
-msgstr "La prioridad del Contacto debe ser un entero."
+msgstr "La prioridad del contacto debe ser un entero."
 
 #: AddCustomerTypeNotes.php:34
 msgid "The contacts notes must be two hundred characters or less long"
@@ -862,19 +862,19 @@ msgstr "Las notas del contacto no pueden estar vacías"
 
 #: AddCustomerTypeNotes.php:48 SelectCustomer.php:730
 msgid "Customer Group Notes"
-msgstr "Notas del Grupo del Cliente"
+msgstr "Notas del Grupo del cliente"
 
 #: AddCustomerTypeNotes.php:61
 msgid "The contact group notes record has been added"
-msgstr "Se creó el registro de Notas del grupo de Contacto"
+msgstr "Se creó el registro de notas del grupo de contacto"
 
 #: AddCustomerTypeNotes.php:84
 msgid "The contact group note record has been deleted"
-msgstr "El registro de Nota del grupo de contacto fue eliminado"
+msgstr "El registro de nota del grupo de contacto fue eliminado"
 
 #: AddCustomerTypeNotes.php:94
 msgid "Notes for Customer Type"
-msgstr "Anotaciones para Tipo de Cliente"
+msgstr "Anotaciones para tipo de cliente"
 
 #: AddCustomerTypeNotes.php:113
 msgid "href"
@@ -882,11 +882,11 @@ msgstr "href"
 
 #: AddCustomerTypeNotes.php:150
 msgid "Review all notes for this Customer Type"
-msgstr "Revisar todas las notas para este Tipo de Cliente"
+msgstr "Revisar todas las notas para este tipo de cliente"
 
 #: AddCustomerTypeNotes.php:203
 msgid "Contact Group Note"
-msgstr "Nota del Grupo del Contacto"
+msgstr "Nota del Grupo del contacto"
 
 #: AddCustomerTypeNotes.php:207
 msgid "Web site"
@@ -894,15 +894,15 @@ msgstr "Sitio web"
 
 #: AgedDebtors.php:14
 msgid "Aged Customer Balance Listing"
-msgstr "Consulta de Saldos de Cuentas a Cobrar por Vencimiento"
+msgstr "Consulta de saldos de cuentas por cobrar por vencimiento"
 
 #: AgedDebtors.php:15
 msgid "Aged Customer Balances"
-msgstr "Saldos de Cuentas a Cobrar por Vencimiento"
+msgstr "Saldos de cuentas por cobrar por vencimiento"
 
 #: AgedDebtors.php:267 AgedDebtors.php:369 AgedDebtors.php:434
 msgid "Aged Customer Account Analysis"
-msgstr "Análisis de Saldos de Cuentas a Cobrar por Vencimiento"
+msgstr "Análisis de saldos de cuentas por cobrar por vencimiento"
 
 #: AgedDebtors.php:267 AgedDebtors.php:369 AgedDebtors.php:434
 #: AgedSuppliers.php:108 BOMExtendedQty.php:154 BOMIndented.php:150
@@ -932,7 +932,7 @@ msgstr "Análisis de Saldos de Cuentas a Cobrar por Vencimiento"
 #: SupplierTenderCreate.php:666 SupplierTenders.php:397 SuppPriceList.php:138
 #: includes/PDFPaymentRun_PymtFooter.php:152
 msgid "Problem Report"
-msgstr "Informe de Problemas"
+msgstr "Informe de problemas"
 
 #: AgedDebtors.php:269 CustomerInquiry.php:94 CustomerInquiry.php:119
 #: CustomerPurchases.php:25 DebtorsAtPeriodEnd.php:59
@@ -1053,23 +1053,27 @@ msgstr ""
 
 #: AgedDebtors.php:447
 msgid "Aged Debtor Analysis"
-msgstr "Análisis de Cartera"
+msgstr "Análisis de cartera"
 
 #: AgedDebtors.php:465 DebtorsAtPeriodEnd.php:142
 msgid "From Customer Code"
-msgstr "Del Cliente Código"
+msgstr "Del código cliente"
 
 #: AgedDebtors.php:466
 msgid "Enter the first customer code alphabetically to include in the report"
 msgstr ""
+"Introduzca el primer código de cliente alfabéticamente para incluir en el "
+"informe"
 
 #: AgedDebtors.php:469 DebtorsAtPeriodEnd.php:146
 msgid "To Customer Code"
-msgstr "Hasta Código-Cliente"
+msgstr "Hasta código cliente"
 
 #: AgedDebtors.php:470
 msgid "Enter the last customer code alphabetically to include in the report"
 msgstr ""
+"Introduzca el último código de cliente alfabéticamente para incluir en el "
+"informe"
 
 #: AgedDebtors.php:473 AgedSuppliers.php:295
 msgid "All balances or overdues only"
@@ -1089,7 +1093,7 @@ msgstr "Sólo cuentas suspendidas"
 
 #: AgedDebtors.php:482
 msgid "Only Show Customers Of"
-msgstr "Mostrar Sólo Los Clientes de"
+msgstr "Mostrar sólo los clientes de"
 
 #: AgedDebtors.php:493
 msgid "All Sales people"
@@ -1101,15 +1105,15 @@ msgstr "Mostrar sólo los clientes comerciando en"
 
 #: AgedDebtors.php:517
 msgid "Summary or detailed report"
-msgstr "Sumario ó Informe Detallado"
+msgstr "Informe detallado o resumen"
 
 #: AgedDebtors.php:519 AgedSuppliers.php:320 InventoryValuation.php:285
 msgid "Summary Report"
-msgstr "Resumen"
+msgstr "Informe resumen"
 
 #: AgedDebtors.php:520 AgedSuppliers.php:321 InventoryValuation.php:286
 msgid "Detailed Report"
-msgstr "Informe Detallado"
+msgstr "Informe detallado"
 
 #: AgedDebtors.php:527 AgedSuppliers.php:327 BOMExtendedQty.php:285
 #: BOMIndented.php:275 BOMIndentedReverse.php:254 BOMListing.php:130
@@ -1143,11 +1147,11 @@ msgstr "No se pudo obtener el detalle del proveedor mediante SQL porque"
 
 #: AgedSuppliers.php:195
 msgid "Aged Supplier Account Analysis - Problem Report"
-msgstr "Análisis Contable de Proveedores Antiguos - Informe de Problemas"
+msgstr "Análisis Contable de Proveedores Antiguos - Informe de problemas"
 
 #: AgedSuppliers.php:197
 msgid "The details of outstanding transactions for Supplier"
-msgstr "El detalle de transacciones pendientes para el Proveedor"
+msgstr "El detalle de transacciones pendientes para el proveedor"
 
 #: AgedSuppliers.php:263 AgedSuppliers.php:273
 msgid "Aged Supplier Analysis"
@@ -1161,7 +1165,7 @@ msgstr "No hay resultados por lo que el PDF esta vacío"
 #: SupplierBalsAtPeriodEnd.php:132 SuppPaymentRun.php:265
 #: Z_ClearPOBackOrders.php:20
 msgid "From Supplier Code"
-msgstr "Desde Código-Proveedor"
+msgstr "Desde código proveedor"
 
 #: AgedSuppliers.php:288
 msgid "Enter the first supplier code alphabetially to include in the report"
@@ -1171,11 +1175,13 @@ msgstr ""
 #: SupplierBalsAtPeriodEnd.php:136 SuppPaymentRun.php:269
 #: Z_ClearPOBackOrders.php:23
 msgid "To Supplier Code"
-msgstr "Hasta Código-Proveedor"
+msgstr "Hasta código proveedor"
 
 #: AgedSuppliers.php:292
 msgid "Enter the last supplier code alphabetically to include in the report"
 msgstr ""
+"Introduzca el último código de proveedor alfabéticamente para incluir en el "
+"informe"
 
 #: AgedSuppliers.php:297
 msgid "All suppliers with balances"
@@ -1187,11 +1193,11 @@ msgstr "Para proveedores de"
 
 #: AgedSuppliers.php:318 InventoryValuation.php:283
 msgid "Summary or Detailed Report"
-msgstr "Sumario ó Informe Detallado"
+msgstr "Informe detallado o resumen"
 
 #: Areas.php:7
 msgid "Sales Area Maintenance"
-msgstr "Administrar Zona de Ventas"
+msgstr "Administrar zona de ventas"
 
 #: Areas.php:40
 msgid "The area code must be three characters or less long"
@@ -1215,7 +1221,7 @@ msgstr "La descripción de la zona no puede estar vacía"
 
 #: Areas.php:72
 msgid "Area code"
-msgstr "Código de Zona"
+msgstr "Código de zona"
 
 #: Areas.php:86
 msgid "New area code"
@@ -1255,7 +1261,7 @@ msgstr "registros de análisis de ventas referidos a este código de zona"
 
 #: Areas.php:131 Areas.php:148 Areas.php:204 Areas.php:217
 msgid "Area Code"
-msgstr "Código de Zona"
+msgstr "Código de zona"
 
 #: Areas.php:131 CustomerTypes.php:168 Factors.php:140
 #: FixedAssetCategories.php:142 GLAccounts.php:197
@@ -1271,7 +1277,7 @@ msgstr "ha sido eliminado"
 
 #: Areas.php:149 Areas.php:222
 msgid "Area Name"
-msgstr "Nombre de Zona"
+msgstr "Nombre de zona"
 
 #: Areas.php:166
 msgid "View Customers from this Area"
@@ -1279,11 +1285,12 @@ msgstr "Ver clientes de esta área"
 
 #: Areas.php:176
 msgid "Review Areas Defined"
-msgstr "Revisar Zonas Definidas"
+msgstr "Revisar zonas definidas"
 
 #: Areas.php:218
 msgid "Enter the sales area code - up to 3 characters are allowed"
 msgstr ""
+"Introduzca el código de área de ventas - hasta 3 caracteres están permitidos"
 
 #: Areas.php:223
 msgid "Enter the description of the sales area"
@@ -1291,7 +1298,7 @@ msgstr "Introduzca la descripción del área de ventas"
 
 #: AuditTrail.php:7
 msgid "Audit Trail"
-msgstr "Auditoría"
+msgstr "Pista de auditoría"
 
 #: AuditTrail.php:21
 msgid "Incorrect date format used, please re-enter"
@@ -1300,12 +1307,12 @@ msgstr "Formato de fecha incorrecto, por favor, inténtelo de nuevo"
 #: AuditTrail.php:43 BOMIndented.php:316 BOMIndentedReverse.php:296
 #: MRPCalendar.php:264
 msgid "From Date"
-msgstr "Desde la Fecha"
+msgstr "Desde la fecha"
 
 #: AuditTrail.php:47 BOMIndented.php:317 BOMIndentedReverse.php:297
 #: MRPCalendar.php:266
 msgid "To Date"
-msgstr "Hasta la Fecha"
+msgstr "Hasta la fecha"
 
 #: AuditTrail.php:53 PO_AuthorisationLevels.php:124
 #: PO_AuthorisationLevels.php:173 PO_AuthorisationLevels.php:176
@@ -1390,7 +1397,7 @@ msgstr "Tabla"
 #: AuditTrail.php:179 api/api_xml-rpc.php:311 api/api_xml-rpc.php:777
 #: api/api_xml-rpc.php:2187
 msgid "Field Name"
-msgstr "Nombre del Campo"
+msgstr "Nombre del campo"
 
 #: AuditTrail.php:180 MaterialsNotUsed.php:38 PurchData.php:700
 #: SellThroughSupport.php:263 ShopParameters.php:197 SystemParameters.php:362
@@ -1400,7 +1407,7 @@ msgstr "Valor"
 
 #: BackupDatabase.php:7
 msgid "Backup webERP Database"
-msgstr "Respaldar Base de Datos"
+msgstr "Respaldar base de datos del webERP"
 
 #: BackupDatabase.php:20
 msgid "Deleted"
@@ -1469,7 +1476,7 @@ msgstr ""
 
 #: BankAccounts.php:7
 msgid "Bank Accounts Maintenance"
-msgstr "Administrar Cuentas Bancarias"
+msgstr "Administrar cuentas bancarias"
 
 #: BankAccounts.php:12 TaxAuthorities.php:150
 #: ../webSHOP/includes/Functions.php:755
@@ -1483,7 +1490,7 @@ msgid ""
 "print Account details on Invoices (only one account should be set to Fall "
 "Back Default)."
 msgstr ""
-"Actualizar detalles de la Cuenta Bancaria. El Código de Cuenta es para tipos "
+"Actualizar detalles de la cuenta bancaria. El Código de Cuenta es para tipos "
 "de Códigos Bancarios SWIFT o BSB. Ponga el Valor Predeterminado para las "
 "Facturas la Moneda Predeterminada ó Reserva Predeterminada para imprimir los "
 "detalles de la Cuenta en las Facturas (sólo una cuenta puede ser puesta en "
@@ -1568,19 +1575,19 @@ msgstr "Código de cuenta contable"
 
 #: BankAccounts.php:192 BankAccounts.php:328
 msgid "Bank Account Name"
-msgstr "Nombre de Cuenta Bancaria"
+msgstr "Nombre de cuenta bancaria"
 
 #: BankAccounts.php:193 BankAccounts.php:332
 msgid "Bank Account Code"
-msgstr "Código de la Cuenta Bancaria"
+msgstr "Código de la cuenta bancaria"
 
 #: BankAccounts.php:194 BankAccounts.php:336
 msgid "Bank Account Number"
-msgstr "Número de Cuenta Bancaria"
+msgstr "Número de cuenta bancaria"
 
 #: BankAccounts.php:195 BankAccounts.php:340
 msgid "Bank Address"
-msgstr "Dirección del Banco"
+msgstr "Dirección del banco"
 
 #: BankAccounts.php:196 Currencies.php:447 CustomerAllocations.php:353
 #: CustomerReceipt.php:837 CustomerTransInquiry.php:114 OffersReceived.php:112
@@ -1607,12 +1614,12 @@ msgstr "Predeterminado para las facturas"
 #: BankAccounts.php:212 BankAccounts.php:377 BankAccounts.php:383
 #: BankAccounts.php:387 BankAccounts.php:391
 msgid "Fall Back Default"
-msgstr "Fall Back Predeterminado"
+msgstr "Fall Back predeterminado"
 
 #: BankAccounts.php:214 BankAccounts.php:378 BankAccounts.php:382
 #: BankAccounts.php:386 BankAccounts.php:392
 msgid "Currency Default"
-msgstr "Moneda Predeterminada"
+msgstr "Moneda predeterminada"
 
 #: BankAccounts.php:224
 #, php-format
@@ -1621,7 +1628,7 @@ msgstr "¿Confirma que desea eliminar esta cuenta bancaria?"
 
 #: BankAccounts.php:248
 msgid "Show All Bank Accounts Defined"
-msgstr "Mostrar Todas las Cuentas Bancarias Definidas"
+msgstr "Mostrar Todas las cuentas bancarias definidas"
 
 #: BankAccounts.php:284 BankAccounts.php:290
 msgid "Bank Account GL Code"
@@ -1629,7 +1636,7 @@ msgstr "Código Contable del Banco"
 
 #: BankAccounts.php:344
 msgid "Currency Of Account"
-msgstr "Divisa de la Cuenta"
+msgstr "Divisa de la cuenta"
 
 #: BankAccountUsers.php:4
 msgid "Maintenance Of Bank Account Authorised Users"
@@ -1742,7 +1749,7 @@ msgstr "Seleccionar usuario"
 
 #: BankMatching.php:6
 msgid "Bank Account Matching"
-msgstr "Conciliación de Cuentas Bancarias"
+msgstr "Conciliación de cuentas bancarias"
 
 #: BankMatching.php:17 PDFCustTransListing.php:45 Z_CheckDebtorsControl.php:74
 msgid "Receipts"
@@ -1750,11 +1757,11 @@ msgstr "Cobros"
 
 #: BankMatching.php:19 BankMatching.php:28
 msgid "Bank Matching"
-msgstr "Conciliación Bancaria"
+msgstr "Conciliación bancaria"
 
 #: BankMatching.php:19
 msgid "Bank Account Matching - Receipts"
-msgstr "Conciliación de Cuenta Bancaria - Cobros"
+msgstr "Conciliación de cuenta bancaria - Cobros"
 
 #: BankMatching.php:26 PaymentAllocations.php:31 PaymentMethods.php:11
 #: PDFSuppTransListing.php:41
@@ -1763,7 +1770,7 @@ msgstr "Pagos"
 
 #: BankMatching.php:28
 msgid "Bank Account Matching - Payments"
-msgstr "Conciliación de Cuenta Bancaria - Pagos"
+msgstr "Conciliación de cuenta bancaria - Pagos"
 
 #: BankMatching.php:33
 msgid "This page must be called with a bank transaction type"
@@ -2148,7 +2155,7 @@ msgstr "Indique la posición actual de la cuenta bancaria"
 
 #: BankReconciliation.php:366 BankReconciliation.php:379
 msgid "Calculate and Post Exchange Difference"
-msgstr "Calcular y Enviar Diferencia de Tasa de Cambio"
+msgstr "Calcular y enviar diferencia de tasa de cambio"
 
 #: BankReconciliation.php:366
 msgid ""
@@ -2296,11 +2303,11 @@ msgstr "Cantidad"
 
 #: BOMExtendedQty.php:267
 msgid "Selection Option"
-msgstr "Opción de Selección"
+msgstr "Opción de selección"
 
 #: BOMExtendedQty.php:269
 msgid "Show All Parts"
-msgstr "Mostrar Todos Los Componentes"
+msgstr "Mostrar todos los componentes"
 
 #: BOMExtendedQty.php:270
 msgid "Only Show Shortages"
@@ -2310,19 +2317,19 @@ msgstr "Mostrar Sólo Escasez"
 #: MRPPlannedPurchaseOrders.php:280 MRPPlannedWorkOrders.php:336
 #: MRPReschedules.php:136 MRPShortages.php:293
 msgid "Print Option"
-msgstr "Estilo de Impresión"
+msgstr "Estilo de impresión"
 
 #: BOMExtendedQty.php:276 BOMIndented.php:267 BOMIndentedReverse.php:247
 #: MRPPlannedPurchaseOrders.php:282 MRPPlannedWorkOrders.php:338
 #: MRPReschedules.php:138 MRPShortages.php:295
 msgid "Print With Alternating Highlighted Lines"
-msgstr "Imprimir con Líneas Resaltadas Alternas"
+msgstr "Imprimir alternando líneas destacadas"
 
 #: BOMExtendedQty.php:277 BOMIndented.php:268 BOMIndentedReverse.php:248
 #: MRPPlannedPurchaseOrders.php:283 MRPPlannedWorkOrders.php:339
 #: MRPReschedules.php:139 MRPShortages.php:296
 msgid "Plain Print"
-msgstr "Imprimir sin Resaltar Líneas"
+msgstr "Imprimir sin resaltar líneas"
 
 #: BOMExtendedQty.php:310
 msgid "Extended Quantity BOM Listing For\t   "
@@ -2459,7 +2466,7 @@ msgstr "O.T."
 #: POReport.php:1419 POReport.php:1525 POReport.php:1610 POReport.php:1623
 #: ReorderLevel.php:297 StockDispatch.php:502 StockDispatch.php:509
 msgid "Part Number"
-msgstr "Número de Pieza"
+msgstr "Número de pieza"
 
 #: BOMExtendedQty.php:328 BOMIndented.php:311 BOMIndentedReverse.php:291
 #: MRPShortages.php:351
@@ -2470,7 +2477,7 @@ msgstr "M/B"
 #: POReport.php:1315 POReport.php:1366 POReport.php:1420 StockClone.php:663
 #: StockClone.php:687 Stocks.php:964 Stocks.php:988
 msgid "Part Description"
-msgstr "Descripción Parcial"
+msgstr "Descripción parcial"
 
 #: BOMExtendedQty.php:334 MRPShortages.php:356
 msgid "Shortage"
@@ -2496,11 +2503,11 @@ msgstr "Niveles"
 
 #: BOMIndented.php:259
 msgid "All Levels"
-msgstr "Todos los Niveles"
+msgstr "Todos los niveles"
 
 #: BOMIndented.php:260
 msgid "One Level"
-msgstr "Un Nivel"
+msgstr "Un nivel"
 
 #: BOMIndented.php:312 BOMIndentedReverse.php:292 BOMInquiry.php:109
 #: BOMInquiry.php:200 BOMs.php:560 BOMs.php:898 ContractBOM.php:242
@@ -2572,7 +2579,7 @@ msgstr " 12345678901234567890"
 
 #: BOMIndentedReverse.php:218
 msgid "Print Reverse Indented BOM Listing Error"
-msgstr "Error al Imprimir la Lista de Materiales Inversa"
+msgstr "Error al imprimir la Lista de Materiales Inversa"
 
 #: BOMIndentedReverse.php:220
 msgid "There were no items for the selected component"
@@ -2592,7 +2599,7 @@ msgstr "Componente:"
 
 #: BOMInquiry.php:6
 msgid "Costed Bill Of Material"
-msgstr ""
+msgstr "Lista de materiales costeada"
 
 #: BOMInquiry.php:20 BOMs.php:876
 msgid "Select a manufactured part"
@@ -2793,7 +2800,7 @@ msgstr "Componente"
 #: MRPPlannedWorkOrders.php:262 MRPShortages.php:352 SpecialOrder.php:727
 #: StockAdjustments.php:441
 msgid "Unit Cost"
-msgstr "Costo Unitario"
+msgstr "Costo unitario"
 
 #: BOMInquiry.php:203 BOMInquiry.php:251 ContractBOM.php:278
 #: ContractCosting.php:84 ContractCosting.php:90 ContractCosting.php:154
@@ -3125,7 +3132,7 @@ msgstr "Centro de Trabajo"
 #: BOMs.php:564 BOMs.php:767 WhereUsedInquiry.php:72
 #: includes/PDFBOMListingPageHeader.inc:40
 msgid "Effective After"
-msgstr "Vigente Despúes de"
+msgstr "Vigente después de"
 
 #: BOMs.php:565 BOMs.php:771 PurchData.php:703 SellThroughSupport.php:267
 #: WhereUsedInquiry.php:73 includes/PDFBOMListingPageHeader.inc:41
@@ -3157,7 +3164,7 @@ msgstr ""
 
 #: BOMs.php:647
 msgid "New Component Details"
-msgstr "Detalles de Nuevo Componente"
+msgstr "Detalles de nuevo componente"
 
 #: BOMs.php:650
 msgid "Component code"
@@ -3190,7 +3197,7 @@ msgstr "Use el siguiente vínculo para crear Centros de Trabajo"
 
 #: BOMs.php:727 Contracts.php:892
 msgid "Work Centre Maintenance"
-msgstr "Administrar Centros de Trabajo"
+msgstr "Administrar centros de trabajo"
 
 #: BOMs.php:749
 msgid "Enter the quantity of this item required for the parent item"
@@ -3252,7 +3259,7 @@ msgstr "Categoría de inventario"
 #: SalesGLPostings.php:363 SelectOrderItems.php:739 api/api_xml-rpc.php:979
 #: api/api_xml-rpc.php:1022
 msgid "Sales Type"
-msgstr "Tipo de Venta"
+msgstr "Tipo de venta"
 
 #: COGSGLPostings.php:95
 msgid "COGS Account"
@@ -3635,7 +3642,7 @@ msgstr ""
 
 #: ConfirmDispatchControlled_Invoice.php:66
 msgid "Back to Confirmation of Dispatch"
-msgstr "Volver a la Confirmación de la Nota de Entrega"
+msgstr "Volver a la Confirmación de la nota de Entrega"
 
 #: ConfirmDispatchControlled_Invoice.php:66 CounterSales.php:1323
 #: DeliveryDetails.php:610 DeliveryDetails.php:831 EmailCustTrans.php:9
@@ -3706,7 +3713,7 @@ msgstr "Confirmar Factura"
 
 #: ConfirmDispatch_Invoice.php:269
 msgid "Confirm Dispatch and Invoice"
-msgstr "Confirmar Nota de Entrega y Factura"
+msgstr "Confirmar nota de Entrega y Factura"
 
 #: ConfirmDispatch_Invoice.php:272 Contracts.php:778 CustLoginSetup.php:32
 #: CustomerAllocations.php:347 CustomerBranches.php:403
@@ -3831,7 +3838,7 @@ msgstr "Enviada"
 
 #: ConfirmDispatch_Invoice.php:295
 msgid "This Dispatch"
-msgstr "Esta Nota de Entrega"
+msgstr "Esta nota de Entrega"
 
 #: ConfirmDispatch_Invoice.php:296 CounterReturns.php:671 CounterSales.php:752
 #: Credit_Invoice.php:295 CustomerPurchases.php:80 DeliveryDetails.php:874
@@ -3908,7 +3915,7 @@ msgstr "Total"
 #: ConfirmDispatch_Invoice.php:298 Credit_Invoice.php:297
 #: SelectCreditItems.php:693
 msgid "Excl Tax"
-msgstr "Sin Impuesto"
+msgstr "Sin impuesto"
 
 #: ConfirmDispatch_Invoice.php:299 Credit_Invoice.php:298
 #: SelectCreditItems.php:694 SupplierInvoice.php:608 TaxGroups.php:289
@@ -3930,7 +3937,7 @@ msgstr "Impuestos"
 #: ConfirmDispatch_Invoice.php:302 CounterReturns.php:676 CounterSales.php:759
 #: Credit_Invoice.php:301 SelectCreditItems.php:697
 msgid "Incl Tax"
-msgstr "Con Impuesto"
+msgstr "Con impuesto"
 
 #: ConfirmDispatch_Invoice.php:350
 msgid "Enter the quantity to charge the customer for, that has been dispatched"
@@ -3980,7 +3987,7 @@ msgstr "Introducir"
 
 #: ConfirmDispatch_Invoice.php:468 DeliveryDetails.php:258
 msgid "Amend Freight Companies"
-msgstr "Corregir Compañías de Transporte"
+msgstr "Corregir compañías de transporte"
 
 #: ConfirmDispatch_Invoice.php:479
 msgid "Order Freight Cost"
@@ -4392,7 +4399,7 @@ msgstr "ERROR CRÍTICO"
 #: includes/SQL_CommonFunctions.inc:185 includes/SQL_CommonFunctions.inc:204
 #: ../webSHOP/includes/Functions.php:180 ../webSHOP/includes/Functions.php:187
 msgid "NOTE DOWN THIS ERROR AND SEEK ASSISTANCE"
-msgstr "TOME NOTA DE ESTE ERROR Y SOLICITE AYUDA"
+msgstr "TOME nota DE ESTE ERROR Y SOLICITE AYUDA"
 
 #: ConfirmDispatch_Invoice.php:770 CounterSales.php:1325
 #: RecurringSalesOrdersProcess.php:639
@@ -4882,7 +4889,7 @@ msgstr "Ingreso de órdenes de venta"
 
 #: ConfirmDispatch_Invoice.php:1662
 msgid "Date On Invoice"
-msgstr "Fecha en Factura"
+msgstr "Fecha en factura"
 
 #: ConfirmDispatch_Invoice.php:1667
 msgid "Consignment Note Ref"
@@ -4912,11 +4919,11 @@ msgstr "Cancelar cualquier cantidad no entregada"
 
 #: ConfirmDispatch_Invoice.php:1683
 msgid "Invoice Text"
-msgstr "Texto  Factura"
+msgstr "Texto de la factura"
 
 #: ConfirmDispatch_Invoice.php:1696
 msgid "Process Invoice"
-msgstr "Procesar Factura"
+msgstr "Procesar factura"
 
 #: ContractBOM.php:9
 msgid "Contract Bill of Materials"
@@ -5763,8 +5770,8 @@ msgid ""
 "Customer Branch Name keywords have been used in preference to the Customer "
 "Branch Code or Branch Phone Number entered"
 msgstr ""
-"Se han usado palabras clave del Nombre de la Sucursal del Cliente en "
-"preferencia al Código de la Sucursal del Cliente ó el Número de Teléfono de "
+"Se han usado palabras clave del Nombre de la Sucursal del cliente en "
+"preferencia al Código de la Sucursal del cliente ó el Número de Teléfono de "
 "la Sucursal que se indicaron"
 
 #: Contracts.php:617
@@ -5772,8 +5779,8 @@ msgid ""
 "Customer Branch Code has been used in preference to the Customer Branch "
 "Phone Number entered"
 msgstr ""
-"El Código de Sucursal del Cliente ha sido utilizado en preferencia al Número "
-"de Teléfono de la Sucursal del Cliente entrado"
+"El Código de Sucursal del cliente ha sido utilizado en preferencia al Número "
+"de Teléfono de la Sucursal del cliente entrado"
 
 #: Contracts.php:685 CustomerReceipt.php:638 SelectCustomer.php:155
 #: SelectOrderItems.php:344
@@ -5783,7 +5790,7 @@ msgstr "No se pudieron obtener los registros de cliente solicitados porque"
 #: Contracts.php:689 SelectOrderItems.php:352
 msgid "No Customer Branch records contain the search criteria"
 msgstr ""
-"Ningún registro de Sucursal de Cliente se ajusta al criterio de búsqueda"
+"Ningún registro de Sucursal de cliente se ajusta al criterio de búsqueda"
 
 #: Contracts.php:689 SelectOrderItems.php:352
 msgid "please try again"
@@ -5792,7 +5799,7 @@ msgstr "por favor, pruebe de nuevo"
 #: Contracts.php:689 SelectOrderItems.php:352
 msgid "Note a Customer Branch Name may be different to the Customer Name"
 msgstr ""
-"Note que un Nombre de Sucursal de Cliente puede ser diferente al Nombre del "
+"Note que un Nombre de Sucursal de cliente puede ser diferente al Nombre del "
 "Cliente"
 
 #: Contracts.php:718
@@ -5848,15 +5855,15 @@ msgstr " sus cuentas alcanzaron ó sobrepasaron sus límites de crédito"
 
 #: Contracts.php:751
 msgid "Contract: Select Customer"
-msgstr "Contrato: Seleccionar Cliente"
+msgstr "Contrato: Seleccionar cliente"
 
 #: Contracts.php:757 SelectOrderItems.php:609
 msgid "Part of the Customer Branch Name"
-msgstr "Parte del Nombre de la Sucursal del Cliente"
+msgstr "Parte del Nombre de la Sucursal del cliente"
 
 #: Contracts.php:760 SelectOrderItems.php:612
 msgid "Part of the Customer Branch Code"
-msgstr "Parte del Código de la Sucursal del Cliente"
+msgstr "Parte del Código de la Sucursal del cliente"
 
 #: Contracts.php:761
 msgid ""
@@ -5866,7 +5873,7 @@ msgstr ""
 
 #: Contracts.php:763 SelectOrderItems.php:615
 msgid "Part of the Branch Phone Number"
-msgstr "Parte del Teléfono de la Sucursal del Cliente"
+msgstr "Parte del Teléfono de la Sucursal del cliente"
 
 #: Contracts.php:770 Customers.php:677 Customers.php:1187 PO_Header.php:550
 #: SelectGLAccount.php:104 SelectOrderItems.php:623
@@ -5991,7 +5998,7 @@ msgstr "Fecha de Entrega"
 #: Contracts.php:930 CounterReturns.php:783 CounterSales.php:879
 #: DeliveryDetails.php:1094 OrderDetails.php:79 RecurringSalesOrders.php:415
 msgid "Customer Reference"
-msgstr "Referencia del Cliente"
+msgstr "Referencia del cliente"
 
 #: Contracts.php:931
 msgid "Enter the reference that the customer uses for this contract"
@@ -6041,7 +6048,7 @@ msgstr "Completado"
 
 #: Contracts.php:959
 msgid "Contract Setup"
-msgstr "Configuración de Contratos"
+msgstr "Configuración de contratos"
 
 #: Contracts.php:961
 msgid "Customer Quoted"
@@ -6354,7 +6361,7 @@ msgstr "Devuelto por"
 #: CounterReturns.php:774 CounterSales.php:870 DeliveryDetails.php:1086
 #: RecurringSalesOrders.php:409
 msgid "Contact Phone Number"
-msgstr "Número de Teléfono del Contacto"
+msgstr "Número de Teléfono del contacto"
 
 #: CounterReturns.php:775
 msgid "A phone number is required for counter returns"
@@ -6376,7 +6383,7 @@ msgstr "Motivo de la devolución"
 
 #: CounterReturns.php:815 CounterSales.php:919 SuppPaymentRun.php:351
 msgid "Payment Type"
-msgstr "Tipo de Pago"
+msgstr "Tipo de pago"
 
 #: CounterReturns.php:844
 msgid "Paid to Customer"
@@ -6521,7 +6528,7 @@ msgstr "Seleccionar una categoría de inventario"
 
 #: CounterReturns.php:1649 CounterSales.php:2256 SelectOrderItems.php:1682
 msgid "Enter partial Description"
-msgstr "Introduzca una parte de la Descripción"
+msgstr "Introduzca una parte de la descripción"
 
 #: CounterReturns.php:1657 CounterSales.php:2267 SelectOrderItems.php:1700
 msgid "Use Quick Entry"
@@ -6615,7 +6622,7 @@ msgstr "Entrada Abreviada"
 #: CounterReturns.php:1839 CounterSales.php:2444 SelectCreditItems.php:1083
 #: SelectOrderItems.php:1883 SelectOrderItems.php:1913
 msgid "Search Parts"
-msgstr "Buscar Piezas"
+msgstr "Buscar piezas"
 
 #: CounterReturns.php:1846
 msgid "Cancel Return"
@@ -6872,7 +6879,7 @@ msgstr ""
 
 #: CounterSales.php:1295 DeliveryDetails.php:570
 msgid "New Work Order Number"
-msgstr "Nuevo Número de Orden de Trabajo"
+msgstr "Nuevo número de orden de trabajo"
 
 #: CounterSales.php:1295 DeliveryDetails.php:570 EDIMessageFormat.php:127
 #: EDIMessageFormat.php:205 ImportBankTrans.php:538 Prices_Customer.php:37
@@ -6893,12 +6900,12 @@ msgstr "para"
 #: SalesInquiry.php:1209 SalesInquiry.php:1226 SelectCompletedOrder.php:69
 #: SelectCompletedOrder.php:443 SelectSalesOrder.php:433
 msgid "Order Number"
-msgstr "Número de Pedido"
+msgstr "Número de orden"
 
 #: CounterSales.php:1311 DeliveryDetails.php:589 DeliveryDetails.php:591
 #: SpecialOrder.php:569
 msgid "has been entered"
-msgstr "ha sido  creada"
+msgstr "ha sido creada"
 
 #: CounterSales.php:2032 CustomerReceipt.php:458
 #: ../webSHOP/includes/Functions.php:447
@@ -6957,7 +6964,7 @@ msgstr ""
 
 #: CounterSales.php:2450
 msgid "Cancel Sale"
-msgstr "Cancelar Venta"
+msgstr "Cancelar venta"
 
 #: CounterSales.php:2450
 msgid "Are you sure you wish to cancel this sale?"
@@ -6965,7 +6972,7 @@ msgstr "¿Seguro que desea cancelar de esta venta?"
 
 #: Credit_Invoice.php:12
 msgid "Credit An Invoice"
-msgstr "Acreditar una Factura"
+msgstr "Acreditar una factura"
 
 #: Credit_Invoice.php:25
 msgid ""
@@ -6980,7 +6987,7 @@ msgstr "Seleccione  primero una Pedidos"
 #: Credit_Invoice.php:25
 msgid "from the customer inquiry screen click the link to credit an invoice"
 msgstr ""
-"desde la pantalla Consultar Clientes, clic en el vínculo para dar crédito a "
+"desde la pantalla Consultar clientes, clic en el vínculo para dar crédito a "
 "una factura"
 
 #: Credit_Invoice.php:80
@@ -7061,7 +7068,7 @@ msgstr "Acreditar Factura"
 
 #: Credit_Invoice.php:288
 msgid "Credit Note amounts stated in"
-msgstr "Importes de Notas de Crédito que constan en"
+msgstr "Importes de notas de Crédito que constan en"
 
 #: Credit_Invoice.php:292 PDFOrdersInvoiced.php:334 PDFOrderStatus.php:331
 #: ReverseGRN.php:394 SalesInquiry.php:854 ShipmentCosting.php:149
@@ -7296,11 +7303,11 @@ msgstr "Cancelar el costo de los productos para"
 
 #: Credit_Invoice.php:1587
 msgid "Credit note text"
-msgstr "Texto de Nota de Crédito"
+msgstr "Texto de nota de Crédito"
 
 #: Credit_Invoice.php:1599
 msgid "Process Credit"
-msgstr "Procesar Nota de Crédito"
+msgstr "Procesar nota de Crédito"
 
 #: CreditItemsControlled.php:9
 msgid "Specify Credited Controlled Items"
@@ -7337,7 +7344,7 @@ msgstr ""
 #: SuppContractChgs.php:118 SuppCreditGRNs.php:136 SuppFixedAssetChgs.php:105
 #: SuppShiptChgs.php:23 SuppTransGLAnalysis.php:152
 msgid "Back to Credit Note Entry"
-msgstr "Volver a Ingreso de Nota de Crédito"
+msgstr "Volver a Ingreso de nota de Crédito"
 
 #: CreditItemsControlled.php:63 StockAdjustmentsControlled.php:40
 #: StockTransferControlled.php:48
@@ -7693,7 +7700,7 @@ msgstr "Habilitar la Recepción de Pedidos EDI"
 
 #: CustEDISetup.php:130
 msgid "Customer EDI Reference"
-msgstr "Referencia EDI del Cliente"
+msgstr "Referencia EDI del cliente"
 
 #: CustEDISetup.php:134
 msgid "EDI Communication Method"
@@ -7725,7 +7732,7 @@ msgstr "Actualizar Configuración EDI"
 
 #: CustLoginSetup.php:6 SelectCustomer.php:239
 msgid "Customer Login Configuration"
-msgstr "Configuración de inicio de sesión de los Clientes"
+msgstr "Configuración de inicio de sesión de los clientes"
 
 #: CustLoginSetup.php:15
 msgid "A customer must first be selected before logins can be defined for it"
@@ -7733,7 +7740,7 @@ msgstr "Primero debe seleccionar un cliente, antes de definir su acceso"
 
 #: CustLoginSetup.php:15
 msgid "Select A Customer"
-msgstr "Seleccionar un Cliente"
+msgstr "Seleccionar un cliente"
 
 #: CustLoginSetup.php:32 SelectCustomer.php:210 SuppLoginSetup.php:33
 msgid " has been selected"
@@ -7762,8 +7769,8 @@ msgid ""
 "If you enter a Customer Code you must also enter a Branch Code valid for "
 "this Customer"
 msgstr ""
-"Si entra un Código de Cliente también debe entrar un Código de Sucursal "
-"válido para este Cliente"
+"Si entra un Código de cliente también debe entrar un Código de Sucursal "
+"válido para este cliente"
 
 #: CustLoginSetup.php:72 WWW_Users.php:107
 msgid "The check on validity of the customer code and branch failed because"
@@ -7777,7 +7784,7 @@ msgstr "El SQL usado para comprobar el código de cliente y Sucursal fue"
 #: CustLoginSetup.php:77 WWW_Users.php:112
 msgid "The entered Branch Code is not valid for the entered Customer Code"
 msgstr ""
-"El Código de Sucursal introducido no es válido para el Código de Cliente"
+"El Código de Sucursal introducido no es válido para el Código de cliente"
 
 #: CustLoginSetup.php:115 SuppLoginSetup.php:99 ../webSHOP/Register.php:225
 msgid "The user could not be added because"
@@ -7890,11 +7897,11 @@ msgstr "Idioma"
 
 #: CustomerAllocations.php:14
 msgid "Customer Receipt"
-msgstr "Ingreso del Cliente"
+msgstr "Ingreso del cliente"
 
 #: CustomerAllocations.php:14 SupplierAllocations.php:24
 msgid "Credit Note Allocations"
-msgstr "Asignaciones de Notas de Crédito (abono)"
+msgstr "Asignaciones de notas de Crédito (abono)"
 
 #: CustomerAllocations.php:31 SupplierAllocations.php:39
 msgid "Allocations can not be processed again"
@@ -7986,7 +7993,7 @@ msgstr "Tipo de Trans."
 
 #: CustomerAllocations.php:348
 msgid "Cust No"
-msgstr "Nº de Cliente"
+msgstr "Nº de cliente"
 
 #: CustomerAllocations.php:352 SupplierAllocations.php:571
 #: SupplierAllocations.php:646
@@ -8091,7 +8098,7 @@ msgstr "No hay asignaciones que hacer"
 
 #: CustomerBranches.php:6
 msgid "Customer Branches"
-msgstr "Sucursales de Clientes"
+msgstr "Sucursales de clientes"
 
 #: CustomerBranches.php:20
 msgid ""
@@ -8204,7 +8211,7 @@ msgstr "Se actualizó la Sucursal."
 
 #: CustomerBranches.php:249
 msgid "Customer branch"
-msgstr "Sucursal del Cliente"
+msgstr "Sucursal del cliente"
 
 #: CustomerBranches.php:249
 msgid "has been added, add another branch, or return to the"
@@ -8573,7 +8580,7 @@ msgstr "Dirección postal 5"
 
 #: CustomerBranches.php:980
 msgid "Customers Internal Branch Code (EDI)"
-msgstr "Código de Sucursal Interno de los Clientes (EDI)"
+msgstr "Código de Sucursal Interno de los clientes (EDI)"
 
 #: CustomerBranches.php:986
 msgid "Enter Or Update Branch"
@@ -8581,7 +8588,7 @@ msgstr "Introducir o actualizar sucursal"
 
 #: CustomerInquiry.php:8
 msgid "Customer Inquiry"
-msgstr "Consultar Clientes"
+msgstr "Consultar clientes"
 
 #: CustomerInquiry.php:18
 msgid ""
@@ -8657,7 +8664,7 @@ msgstr ""
 
 #: CustomerInquiry.php:175 SupplierInquiry.php:165
 msgid "Refresh Inquiry"
-msgstr "Refrescar Consulta"
+msgstr "Refrescar consulta"
 
 #: CustomerInquiry.php:206 SupplierInquiry.php:192
 msgid "No transactions were returned by the SQL because"
@@ -8676,7 +8683,7 @@ msgstr "Provisto"
 #: CustomerInquiry.php:229 CustomerInquiry.php:230 CustomerInquiry.php:231
 #: CustomerInquiry.php:232 CustomerInquiry.php:233 SupplierAllocations.php:647
 msgid "More Info"
-msgstr "Más Información"
+msgstr "Más información"
 
 #: CustomerInquiry.php:270
 msgid "Credit "
@@ -8697,7 +8704,7 @@ msgstr "Clic para ver la factura"
 
 #: CustomerInquiry.php:273 CustomerInquiry.php:277
 msgid "PDF "
-msgstr "PDF"
+msgstr "PDF "
 
 #: CustomerInquiry.php:273 CustomerInquiry.php:277 SelectSalesOrder.php:925
 #: SelectSalesOrder.php:952
@@ -8707,7 +8714,7 @@ msgstr "Clic para PDF"
 
 #: CustomerInquiry.php:274
 msgid "Email "
-msgstr "Correo-e"
+msgstr "Correo-e "
 
 #: CustomerInquiry.php:274
 msgid "Click to email the invoice"
@@ -8761,7 +8768,7 @@ msgstr "No hay artículos para este cliente"
 #: CustomerPurchases.php:73 api/api_xml-rpc.php:2535 api/api_xml-rpc.php:2581
 #: api/api_xml-rpc.php:2777
 msgid "Transaction Date"
-msgstr "Fecha de la Transacción"
+msgstr "Fecha de transacción"
 
 #: CustomerPurchases.php:74 InventoryValuation.php:205
 #: SupplierTenderCreate.php:428 SupplierTenders.php:325
@@ -8874,7 +8881,7 @@ msgstr "Resumen del Lote de Recibo"
 
 #: CustomerReceipt.php:274 includes/InputSerialItemsFile.php:199
 msgid "Batch Number"
-msgstr "Número de Lote"
+msgstr "Número de lote"
 
 #: CustomerReceipt.php:275 CustomerReceipt.php:833
 msgid "Date Banked"
@@ -8882,7 +8889,7 @@ msgstr "Fecha del Banco"
 
 #: CustomerReceipt.php:277 CustomerReceipt.php:968
 msgid "GL Code"
-msgstr "Código Contable"
+msgstr "Código contable"
 
 #: CustomerReceipt.php:278 CustomerReceipt.php:1136
 msgid "Amount of Receipt"
@@ -8890,7 +8897,7 @@ msgstr "Importe del Ingreso"
 
 #: CustomerReceipt.php:302
 msgid "Print a Customer Receipt"
-msgstr "Imprimir un Recibo de Cliente"
+msgstr "Imprimir un Recibo de cliente"
 
 #: CustomerReceipt.php:326 ImportBankTrans.php:286 ImportBankTrans.php:305
 #: ImportBankTrans.php:350
@@ -8968,8 +8975,8 @@ msgid ""
 "At least one Customer Name keyword OR an extract of a Customer Code must be "
 "entered for the search"
 msgstr ""
-"Debe indicar una palabra clave del Nombre del Cliente o una parte del Código "
-"del Cliente"
+"Debe indicar una palabra clave del Nombre del cliente o una parte del Código "
+"del cliente"
 
 #: CustomerReceipt.php:640 SelectCreditItems.php:112 SelectOrderItems.php:527
 msgid "SQL used to retrieve the customer details was"
@@ -9002,7 +9009,7 @@ msgstr "Introducir Ingreso"
 
 #: CustomerReceipt.php:797
 msgid "Enter Customer Receipt"
-msgstr "Introduzca un Ingreso de Cliente"
+msgstr "Introduzca un Ingreso de cliente"
 
 #: CustomerReceipt.php:798
 msgid ""
@@ -9067,7 +9074,7 @@ msgstr "Depositado"
 
 #: CustomerReceipt.php:959
 msgid "Banked into the"
-msgstr "En la Cuenta Bancaria de"
+msgstr "En la cuenta bancaria de"
 
 #: CustomerReceipt.php:960 Payments.php:760 PO_Items.php:236
 #: SelectSalesOrder.php:230 SelectSalesOrder.php:391 SpecialOrder.php:480
@@ -9135,7 +9142,7 @@ msgstr "Detalles del Pago Bancario"
 
 #: CustomerReceipt.php:1171
 msgid "Select a Customer"
-msgstr "Seleccionar un Cliente"
+msgstr "Seleccionar un cliente"
 
 #: CustomerReceipt.php:1174
 msgid "Text in the Customer"
@@ -9161,7 +9168,7 @@ msgstr ""
 
 #: CustomerReceipt.php:1180
 msgid "Customer invoice number"
-msgstr "El Nº de Factura del Cliente"
+msgstr "El Nº de Factura del cliente"
 
 #: CustomerReceipt.php:1189
 msgid "Enter A GL Receipt"
@@ -9174,7 +9181,7 @@ msgstr "Aceptar y Procesar Lote (batch)"
 #: Customers.php:16 Customers.php:26 SelectCustomer.php:217
 #: SelectCustomer.php:248
 msgid "Customer Maintenance"
-msgstr "Administrar Clientes"
+msgstr "Administrar clientes"
 
 #: Customers.php:52
 msgid "The customer number already exists in the database"
@@ -9287,7 +9294,7 @@ msgstr ""
 
 #: Customers.php:296
 msgid "transactions against this customer"
-msgstr "Transacciones para este Cliente"
+msgstr "Transacciones para este cliente"
 
 #: Customers.php:304
 msgid ""
@@ -9298,7 +9305,7 @@ msgstr ""
 
 #: Customers.php:305
 msgid "orders against this customer"
-msgstr "Pedidos para este Cliente"
+msgstr "Pedidos para este cliente"
 
 #: Customers.php:312
 msgid ""
@@ -9310,7 +9317,7 @@ msgstr ""
 
 #: Customers.php:313
 msgid "sales analysis records against this customer"
-msgstr "Registros de Análisis de Ventas para este Cliente"
+msgstr "Registros de Análisis de Ventas para este cliente"
 
 #: Customers.php:323
 msgid "Cannot delete this customer because users exist that refer to it"
@@ -9413,15 +9420,15 @@ msgstr "No hay definidos Tipos de Ventas / Listas de Precios"
 #: Customers.php:509 Customers.php:528 SelectCustomer.php:312
 #: SelectCustomer.php:335
 msgid "Setup Types"
-msgstr "Configurar Tipos"
+msgstr "Configurar tipos"
 
 #: Customers.php:530
 msgid "No Customer types/price lists defined"
-msgstr "No hay definidos Tipos de Clientes / Listas de Precios"
+msgstr "No hay definidos Tipos de clientes / Listas de Precios"
 
 #: Customers.php:534 Customers.php:878 Customers.php:884
 msgid "Customer Type"
-msgstr "Tipo de Cliente"
+msgstr "Tipo de cliente"
 
 #: Customers.php:547 Customers.php:898 Customers.php:928
 msgid "Customer Since"
@@ -9433,7 +9440,7 @@ msgstr "Porcentaje descuento"
 
 #: Customers.php:558 Customers.php:909 Customers.php:939
 msgid "Discount Code"
-msgstr "Código Descuento"
+msgstr "Código descuento"
 
 #: Customers.php:562 Customers.php:913 Customers.php:943
 msgid "Payment Discount Percent"
@@ -9442,7 +9449,7 @@ msgstr "Porcentaje"
 #: Customers.php:570 Customers.php:921 Customers.php:951 Suppliers.php:797
 #: Suppliers.php:1010
 msgid "Tax Reference"
-msgstr "Referencia Fiscal"
+msgstr "Referencia fiscal"
 
 #: Customers.php:577
 msgid ""
@@ -9525,19 +9532,19 @@ msgstr "¿Seguro que desea eliminar este contacto del cliente?"
 
 #: Customers.php:1192
 msgid "Update Customer"
-msgstr "Actualizar Cliente"
+msgstr "Actualizar cliente"
 
 #: Customers.php:1193
 msgid "Delete Customer"
-msgstr "Eliminar Cliente"
+msgstr "Eliminar cliente"
 
 #: CustomerTransInquiry.php:6
 msgid "Customer Transactions Inquiry"
-msgstr "Consultar Transacciones de Cliente"
+msgstr "Consultar Transacciones de cliente"
 
 #: CustomerTransInquiry.php:14
 msgid "Transaction Inquiry"
-msgstr "Consultar Transacción"
+msgstr "Consultar transacción"
 
 #: CustomerTransInquiry.php:16
 msgid "Choose which type of transaction to report on."
@@ -9642,7 +9649,7 @@ msgstr " ya existe."
 
 #: CustomerTypes.php:93 CustomerTypes.php:168
 msgid "Customer type"
-msgstr "Tipo de Cliente"
+msgstr "Tipo de cliente"
 
 #: CustomerTypes.php:93 PcAssignCashToTab.php:115
 #: PcClaimExpensesFromTab.php:109 PcExpenses.php:127 PcExpensesTypeTab.php:79
@@ -9705,7 +9712,7 @@ msgstr "Nombre del tipo"
 #: CustomerTypes.php:207
 #, php-format
 msgid "Are you sure you wish to delete this Customer Type?"
-msgstr "¿Confirma eliminar este Tipo de Cliente?"
+msgstr "¿Confirma eliminar este Tipo de cliente?"
 
 #: CustomerTypes.php:223 SupplierTypes.php:208
 msgid "Show All Types Defined"
@@ -9717,11 +9724,11 @@ msgstr ""
 
 #: CustWhereAlloc.php:6
 msgid "Customer How Paid Inquiry"
-msgstr "Consultar Cómo Pagó el Cliente"
+msgstr "Consultar Cómo Pagó el cliente"
 
 #: CustWhereAlloc.php:17
 msgid "Customer Where Allocated"
-msgstr "Dónde están Asignados los Clientes"
+msgstr "Dónde están Asignados los clientes"
 
 #: CustWhereAlloc.php:28 CustWhereAlloc.php:32 PDFCustTransListing.php:43
 #: PDFSuppTransListing.php:39 PO_AuthorisationLevels.php:128
@@ -9739,7 +9746,7 @@ msgstr ""
 #: SalesInquiry.php:783 SalesInquiry.php:960 SalesInquiry.php:1213
 #: SalesInquiry.php:1227
 msgid "Transaction Number"
-msgstr "Nº de Transacción"
+msgstr "Nº de transacción"
 
 #: CustWhereAlloc.php:44
 msgid "Show How Allocated"
@@ -9858,7 +9865,7 @@ msgstr "y"
 #: DailyBankTransactions.php:129 PDFCustTransListing.php:41
 #: PDFPeriodStockTransListing.php:40 PDFSuppTransListing.php:37
 msgid "Transaction type"
-msgstr "Tipo de Transacción"
+msgstr "Tipo de transacción"
 
 #: DailyBankTransactions.php:132 DailyBankTransactions.php:134
 msgid "Amount in"
@@ -9878,11 +9885,11 @@ msgstr "Seleccione Otra Fecha"
 
 #: DailySalesInquiry.php:6 includes/MainMenuLinksArray.php:56
 msgid "Daily Sales Inquiry"
-msgstr "Consultar Ventas Diarias"
+msgstr "Consultar ventas diarias"
 
 #: DailySalesInquiry.php:9
 msgid "Daily Sales"
-msgstr "Ventas Diarias"
+msgstr "Ventas diarias"
 
 #: DailySalesInquiry.php:10
 msgid "Select the month to show daily sales for"
@@ -9947,16 +9954,16 @@ msgstr "% B.B."
 
 #: DailySalesInquiry.php:196
 msgid "Avg Daily Sales"
-msgstr "Promedio de Ventas Diarias"
+msgstr "Promedio de ventas diarias"
 
 #: DebtorsAtPeriodEnd.php:14
 msgid "Customer Balance Listing"
-msgstr "Listado de Balances de Clientes"
+msgstr "Listado de Balances de clientes"
 
 #: DebtorsAtPeriodEnd.php:15 DebtorsAtPeriodEnd.php:57
 #: DebtorsAtPeriodEnd.php:69
 msgid "Customer Balances"
-msgstr "Balances de Clientes"
+msgstr "Balances de clientes"
 
 #: DebtorsAtPeriodEnd.php:23
 msgid "Could not get the date of the last day in the period selected"
@@ -10137,15 +10144,15 @@ msgstr "Imprimir hoja de embalaje"
 
 #: DeliveryDetails.php:602 SpecialOrder.php:576
 msgid "Preprinted stationery"
-msgstr "Preimpreso"
+msgstr "Papelería preimpresa"
 
 #: DeliveryDetails.php:606 DeliveryDetails.php:828 SpecialOrder.php:577
 msgid "Laser"
-msgstr "Laser"
+msgstr "Láser"
 
 #: DeliveryDetails.php:611
 msgid "Confirm Dispatch and Produce Invoice"
-msgstr "Confirmar la Nota de Entrega y Generar Factura"
+msgstr "Confirmar la nota de Entrega y Generar Factura"
 
 #: DeliveryDetails.php:621 DeliveryDetails.php:807
 msgid "Print Quotation (Landscape)"
@@ -10209,7 +10216,7 @@ msgstr "Enviado"
 
 #: DeliveryDetails.php:848
 msgid "Delivery Details"
-msgstr "Detalles de la Entrega"
+msgstr "Detalles de entrega"
 
 #: DeliveryDetails.php:865
 msgid "Quotation Summary"
@@ -10227,12 +10234,12 @@ msgstr "TOTAL Exc. Impuestos/Transporte"
 #: DeliveryDetails.php:927 DeliveryDetails.php:985 OrderDetails.php:224
 #: SelectOrderItems.php:1484 ../webSHOP/Checkout.php:376
 msgid "Total Weight"
-msgstr "Peso"
+msgstr "Peso total"
 
 #: DeliveryDetails.php:929 DeliveryDetails.php:987 OrderDetails.php:226
 #: SelectOrderItems.php:1486 ../webSHOP/Checkout.php:375
 msgid "Total Volume"
-msgstr "Volumen"
+msgstr "Volumen total"
 
 #: DeliveryDetails.php:997 OrderDetails.php:81 RecurringSalesOrders.php:385
 #: SelectOrderItems.php:737 SupplierTenders.php:111 SupplierTenders.php:496
@@ -10443,7 +10450,7 @@ msgstr "Se requiere el nombre del departamento"
 
 #: DiscountCategories.php:7
 msgid "Discount Categories Maintenance"
-msgstr "Administrar Clases de Descuentos"
+msgstr "Administrar clases de descuentos"
 
 #: DiscountCategories.php:39
 msgid ""
@@ -10489,7 +10496,7 @@ msgstr ""
 
 #: DiscountCategories.php:86 DiscountCategories.php:116 DiscountMatrix.php:116
 msgid "Discount Category Code"
-msgstr "Código de la Clase Descuento"
+msgstr "Código de categoría de descuento"
 
 #: DiscountCategories.php:99 DiscountCategories.php:270 PO_Header.php:901
 #: SalesCategories.php:271 SuppInvGRNs.php:253 SupplierTenderCreate.php:356
@@ -10505,7 +10512,7 @@ msgstr ""
 
 #: DiscountCategories.php:143
 msgid "Enter Stock Code"
-msgstr "Introduzca Código de Existencias"
+msgstr "Introduzca código de inventario"
 
 #: DiscountCategories.php:144
 msgid ""
@@ -10515,7 +10522,7 @@ msgstr ""
 
 #: DiscountCategories.php:145
 msgid "Partial code"
-msgstr "Porción del Código"
+msgstr "Código parcial"
 
 #: DiscountCategories.php:146
 msgid "Enter a portion of the item code only alpha-numeric characters"
@@ -10523,11 +10530,11 @@ msgstr ""
 
 #: DiscountCategories.php:147
 msgid "Partial description"
-msgstr "Porción de la Descripción"
+msgstr "Descripción parcial"
 
 #: DiscountCategories.php:154
 msgid "Update Item"
-msgstr "Actualizar Artículo"
+msgstr "Actualizar artículo"
 
 #: DiscountCategories.php:169
 msgid "Select a part code"
@@ -10543,7 +10550,7 @@ msgstr "a todos los artículos de la clase de existencia"
 
 #: DiscountCategories.php:190
 msgid "Update Items"
-msgstr "Actualizar Artículos"
+msgstr "Actualizar artículos"
 
 #: DiscountCategories.php:221 DiscountMatrix.php:162 StockClone.php:969
 #: StockDispatch.php:239 Stocks.php:1256
@@ -10642,7 +10649,7 @@ msgstr "El registro de la matrz de descuento  ha sido   eliminado"
 
 #: DiscountMatrix.php:97 PriceMatrix.php:91
 msgid "Customer Price List"
-msgstr "Lista de Precios del Cliente"
+msgstr "Lista de Precios del cliente"
 
 #: DiscountMatrix.php:132 DiscountMatrix.php:163 PriceMatrix.php:123
 #: PriceMatrix.php:154
@@ -10651,7 +10658,7 @@ msgstr "Cantidad Tope"
 
 #: DiscountMatrix.php:136 DiscountMatrix.php:164
 msgid "Discount Rate"
-msgstr "Taza de Descuento"
+msgstr "Tasa de descuento"
 
 #: DiscountMatrix.php:137
 msgid ""
@@ -10793,7 +10800,7 @@ msgstr "está siendo procesado"
 
 #: EDIProcessOrders.php:123
 msgid "Customer EDI Ref"
-msgstr "Ref. EDI del Cliente"
+msgstr "Ref. EDI del cliente"
 
 #: EDIProcessOrders.php:124
 msgid "EDI Message Ref"
@@ -10861,7 +10868,7 @@ msgstr "Orden Cross-docking"
 
 #: EDIProcessOrders.php:184
 msgid "Customers order ref"
-msgstr "Ref Orden de Clientes"
+msgstr "Ref Orden de clientes"
 
 #: EDIProcessOrders.php:194
 msgid "REPLACEMENT order"
@@ -11058,7 +11065,7 @@ msgstr "Pedido General"
 #: SelectCompletedOrder.php:75 SelectCompletedOrder.php:451
 #: SpecialOrder.php:610
 msgid "Customer Ref"
-msgstr "Ref. Cliente"
+msgstr "Ref. cliente"
 
 #: EDIProcessOrders.php:376
 msgid "Import Licence"
@@ -11074,7 +11081,7 @@ msgstr "Acuerdo Promocional"
 
 #: EDIProcessOrders.php:389
 msgid "Ultimate customer ref"
-msgstr "Última Referencia de Cliente"
+msgstr "Última Referencia de cliente"
 
 #: EDIProcessOrders.php:392
 msgid "Supplier Order"
@@ -12783,7 +12790,7 @@ msgstr "Radio de aviso"
 #: FTP_RadioBeacon.php:53 SelectCompletedOrder.php:558
 #: SelectRecurringSalesOrder.php:93 SelectSalesOrder.php:856
 msgid "Cust Order"
-msgstr "Pedidos de Cliente"
+msgstr "Pedidos de cliente"
 
 #: FTP_RadioBeacon.php:54 MRPReschedules.php:196 POReport.php:540
 #: POReport.php:626 POReport.php:1306 POReport.php:1357 POReport.php:1514
@@ -12930,7 +12937,7 @@ msgstr "Configurar Códigos Geográficos (Geocode)"
 
 #: geocode.php:26
 msgid "Geocoding of Customers and Suppliers"
-msgstr "Códigos Geocode de Clientes y Proveedores"
+msgstr "Códigos Geocode de clientes y Proveedores"
 
 #: geocode.php:54
 msgid "Customer Code: "
@@ -12970,7 +12977,7 @@ msgstr "Geocode eliminado"
 
 #: GeocodeSetup.php:136 GeocodeSetup.php:230
 msgid "Setup configuration for Geocoding of Customers and Suppliers"
-msgstr "Configuración de Códigos Geográficos de Clientes y Proveedores"
+msgstr "Configuración de Códigos Geográficos de clientes y Proveedores"
 
 #: GeocodeSetup.php:137
 msgid "Get a google API key at "
@@ -13053,7 +13060,7 @@ msgid ""
 msgstr ""
 "Cuando esté listo, haga clic en el enlace de abajo para ejecutar el proceso "
 "Geocode. Ésto asignará Códigos Geográficos a todos los Proveedores y "
-"Sucursales de Cliente, y llevará algún tiempo. Los errores que se produzcan "
+"Sucursales de cliente, y llevará algún tiempo. Los errores que se produzcan "
 "se presentarán en pantalla."
 
 #: GeocodeSetup.php:277
@@ -13061,7 +13068,7 @@ msgid ""
 "Suppliers and Customer Branches are geocoded when being entered/updated. You "
 "can rerun the geocode process from this screen at any time."
 msgstr ""
-"Los Códigos Geográficos de los Proveedores y Sucursales de Cliente se "
+"Los Códigos Geográficos de los Proveedores y Sucursales de cliente se "
 "asignan al darlos de alta o actualizarlos. Se puede volver a ejecutar el "
 "proceso Geocode desde esta pantalla en cualquier momento."
 
@@ -13071,7 +13078,7 @@ msgstr "Ejecutar proceso Geocode (puede tomar mucho tiempo)"
 
 #: GeocodeSetup.php:280
 msgid "Display Map of Customer Branches"
-msgstr "Mostrar el Mapa de las Sucursales de Clientes"
+msgstr "Mostrar el Mapa de las Sucursales de clientes"
 
 #: GeocodeSetup.php:281
 msgid "Display Map of Suppliers"
@@ -14122,11 +14129,11 @@ msgstr "Hata Período:"
 
 #: GLTrialBalance.php:108
 msgid "Show Trial Balance"
-msgstr "Mostrar Balance de Comprobación"
+msgstr "Mostrar balance de comprobación"
 
 #: GLTrialBalance.php:176
 msgid "Print Trial Balance Error"
-msgstr "Error al Imprimir Balance de Comprobación (o imprimir el error?)"
+msgstr "Error al Imprimir balance de comprobación (o imprimir el error?)"
 
 #: GLTrialBalance.php:381 GLTrialBalance.php:721
 #, php-format
@@ -14141,7 +14148,7 @@ msgstr "El SQL que falló fue:"
 
 #: GLTrialBalance.php:442
 msgid "Trial Balance Report"
-msgstr "Reporte de Balance de Comprobación"
+msgstr "Reporte de balance de comprobación"
 
 #: GLTrialBalance.php:449 includes/PDFTrialBalancePageHeader.inc:23
 msgid "Trial Balance for the month of "
@@ -14439,7 +14446,7 @@ msgstr ""
 
 #: GoodsReceived.php:469 SupplierInvoice.php:248
 msgid "A GRN record could not be inserted"
-msgstr "No se pudo agregar un registro de Nota de Bienes Recibidos"
+msgstr "No se pudo agregar un registro de nota de Bienes Recibidos"
 
 #: GoodsReceived.php:469 SupplierInvoice.php:248
 msgid "This receipt of goods has not been processed because"
@@ -14448,7 +14455,7 @@ msgstr "El ingreso de productos no ha sido procesado porque"
 #: GoodsReceived.php:470 ReverseGRN.php:156 SupplierInvoice.php:249
 msgid "The following SQL to insert the GRN record was used"
 msgstr ""
-"Se usó el siguiente SQL para agregar el registro de la Nota de Bienes "
+"Se usó el siguiente SQL para agregar el registro de la nota de Bienes "
 "Recibidos"
 
 #: GoodsReceived.php:528 SupplierInvoice.php:307
@@ -14529,14 +14536,14 @@ msgstr ""
 #: GoodsReceived.php:701 ReverseGRN.php:328 SupplierInvoice.php:418
 msgid "The GRN suspense side of the GL posting could not be inserted because"
 msgstr ""
-"No se pudo agregar la parte anulada de la Nota de Bienes de Recibidos del "
+"No se pudo agregar la parte anulada de la nota de Bienes de Recibidos del "
 "registro contable porque"
 
 #: GoodsReceived.php:702 ReverseGRN.php:329 SupplierInvoice.php:419
 msgid "The following SQL to insert the GRN Suspense GLTrans record was used"
 msgstr ""
 "Se usó el siguiente SQL para agregar el registro de transacción de la "
-"Suspensión de la Nota de Bienes Recibidos"
+"Suspensión de la nota de Bienes Recibidos"
 
 #: GoodsReceived.php:710 SupplierInvoice.php:425
 msgid "Order Completed on entry of GRN"
@@ -14548,7 +14555,7 @@ msgstr "Número de Remisión"
 
 #: GoodsReceived.php:733
 msgid "Print this Goods Received Note (GRN)"
-msgstr "Imprimir esta Nota de Bienes Recibidos (GRN)"
+msgstr "Imprimir esta nota de Bienes Recibidos (GRN)"
 
 #: GoodsReceived.php:748
 msgid "Modify Order Items"
@@ -17474,7 +17481,7 @@ msgstr "seleccionar Ubicación"
 
 #: NoSalesItems.php:40 TopItems.php:37
 msgid "Select Customer Type"
-msgstr "Seleccionar Tipo de Cliente"
+msgstr "Seleccionar Tipo de cliente"
 
 #: NoSalesItems.php:82 TopItems.php:92 includes/PDFTopItemsHeader.inc:28
 msgid "Number Of Days"
@@ -17718,7 +17725,7 @@ msgstr ""
 #: OutstandingGRNs.php:61
 msgid "No outstanding GRNs valuation details retrieved"
 msgstr ""
-"No hay detalles sobresalientes de valuación de Notas de Recepción de Bienes"
+"No hay detalles sobresalientes de valuación de notas de Recepción de Bienes"
 
 #: OutstandingGRNs.php:77 OutstandingGRNs.php:254
 #: includes/MainMenuLinksArray.php:146
@@ -19181,11 +19188,11 @@ msgstr ""
 
 #: PDFCustomerList.php:12 PDFCustomerList.php:13
 msgid "Customer Listing"
-msgstr "Listado de Clientes"
+msgstr "Listado de clientes"
 
 #: PDFCustomerList.php:20 PDFCustomerList.php:232 PDFCustomerList.php:244
 msgid "Customer List"
-msgstr "Lista de Clientes"
+msgstr "Lista de clientes"
 
 #: PDFCustomerList.php:23
 msgid ""
@@ -19201,7 +19208,7 @@ msgstr "Este nivel de actividad debe ser especificado en la moneda local"
 
 #: PDFCustomerList.php:234
 msgid "The customer List could not be retrieved by the SQL because"
-msgstr "El SQL no pudo obtener la Lista de Clientes porque"
+msgstr "El SQL no pudo obtener la Lista de clientes porque"
 
 #: PDFCustomerList.php:246
 msgid "This report has no output because there were no customers retrieved"
@@ -19232,7 +19239,7 @@ msgstr "Tel"
 
 #: PDFCustomerList.php:368
 msgid "Customer Details Listing"
-msgstr "Listado de Detalles de los Clientes"
+msgstr "Listado de Detalles de los clientes"
 
 #: PDFCustomerList.php:377 SalesInquiry.php:1196
 msgid "For Sales Areas"
@@ -19278,7 +19285,7 @@ msgstr "La fecha se debe especificar en el formato"
 #: PDFCustTransListing.php:17 PDFCustTransListing.php:26
 #: PDFCustTransListing.php:103
 msgid "Customer Transaction Listing"
-msgstr "Listado de Transacciones del Cliente"
+msgstr "Listado de Transacciones del cliente"
 
 #: PDFCustTransListing.php:37 PDFSuppTransListing.php:32
 msgid "Enter the date for which the transactions are to be listed"
@@ -19475,7 +19482,7 @@ msgid ""
 msgstr ""
 "No se pudo obtener el número de referencia del movimiento de existencias que "
 "es requerido para obtener los detalles de los artículos seriados que "
-"entraron con esta Nota de Bienes Recibidos"
+"entraron con esta nota de Bienes Recibidos"
 
 #: PDFGrn.php:145 PDFStockTransfer.php:119
 msgid "Lot/Serial:"
@@ -19674,12 +19681,12 @@ msgstr "listado de transacciones de existencias desde"
 #: PDFPeriodStockTransListing.php:161
 #: includes/PDFCustTransListingPageHeader.inc:15
 msgid "Customer Invoices"
-msgstr "Facturas de Clientes"
+msgstr "Facturas de clientes"
 
 #: PDFPeriodStockTransListing.php:164
 #: includes/PDFCustTransListingPageHeader.inc:18
 msgid "Customer Credit Notes"
-msgstr "Notas de Crédito de Clientes"
+msgstr "Notas de Crédito de clientes"
 
 #: PDFPeriodStockTransListing.php:167 SelectProduct.php:424
 msgid "Location Transfers"
@@ -19771,11 +19778,11 @@ msgstr "Informe de Listas de Precios"
 #: PDFPriceList.php:22 PDFPriceList.php:301 PDFPriceList.php:349
 #: PDFPriceList.php:369
 msgid "Customer Special Prices Only"
-msgstr "Solamente Precios Especiales para Clientes"
+msgstr "Solamente Precios Especiales para clientes"
 
 #: PDFPriceList.php:25 PDFPriceList.php:34
 msgid "Special price List - No Customer Selected"
-msgstr "Lista de Precios Especial - Sin Cliente Seleccionado"
+msgstr "Lista de Precios Especial - Sin cliente Seleccionado"
 
 #: PDFPriceList.php:28
 msgid "The customer must first be selected from the select customer link"
@@ -20021,7 +20028,7 @@ msgstr "Recibo de Ventas"
 
 #: PDFReceipt.php:33
 msgid "Customer Receipt Number "
-msgstr "Número de Recepción de Cliente"
+msgstr "Número de Recepción de cliente"
 
 #: PDFReceipt.php:96
 msgid "Received From"
@@ -20318,11 +20325,11 @@ msgstr "Imprimir Transferencia de Existencias"
 
 #: PDFStockTransfer.php:22 PDFStockTransfer.php:34 StockTransfers.php:451
 msgid "Print Transfer Note"
-msgstr "Imprimir Nota de Transferencia"
+msgstr "Imprimir nota de Transferencia"
 
 #: PDFStockTransfer.php:28
 msgid "Print Stock Transfer Note"
-msgstr "Imprimir Nota de Transferencia de Existencia"
+msgstr "Imprimir nota de Transferencia de Existencia"
 
 #: PDFStockTransfer.php:45
 msgid "Stock Transfer Form"
@@ -21271,7 +21278,7 @@ msgstr "Revisar una orden de compra"
 
 #: PO_OrderDetails.php:22
 msgid "The search of the GRNs was unsuccessful"
-msgstr "La búsqueda de Notas de Bienes recibidos no fructificó"
+msgstr "La búsqueda de notas de Bienes recibidos no fructificó"
 
 #: PO_OrderDetails.php:22
 msgid "the SQL statement returned the error"
@@ -21543,7 +21550,7 @@ msgstr "Precio Extenso"
 #: POReport.php:493 POReport.php:1269 SalesInquiry.php:1125
 #: SalesInquiry.php:1211
 msgid "Customer Number"
-msgstr "Número del Cliente"
+msgstr "Número del cliente"
 
 #: POReport.php:495 POReport.php:749 POReport.php:750 POReport.php:1271
 #: POReport.php:1443 POReport.php:1444 POReport.php:1627
@@ -22224,7 +22231,7 @@ msgstr ""
 
 #: Prices_Customer.php:36 SelectCustomer.php:237
 msgid "Special Customer Prices"
-msgstr "Precios Especiales para Cliente"
+msgstr "Precios Especiales para cliente"
 
 #: Prices_Customer.php:50 Prices.php:42
 msgid "The part code entered does not exist in the database"
@@ -22568,7 +22575,7 @@ msgstr "cero"
 
 #: PrintCustOrder_generic.php:147
 msgid "Customer Laser Packing Slip"
-msgstr "Hoja de Embalaje Láser del Cliente"
+msgstr "Hoja de Embalaje Láser del cliente"
 
 #: PrintCustOrder_generic.php:148
 msgid "Laser Packing slip for order"
@@ -22606,7 +22613,7 @@ msgstr "Hubo un problema al obtener los detalles para el Número de Orden"
 
 #: PrintCustOrder.php:182
 msgid "Customer Packing Slip"
-msgstr "Hoja de Embalaje del Cliente"
+msgstr "Hoja de Embalaje del cliente"
 
 #: PrintCustOrder.php:183
 msgid "Packing slip for order"
@@ -22622,7 +22629,7 @@ msgstr ""
 
 #: PrintCustStatements.php:45
 msgid "Customer Statements"
-msgstr "Estado de las Cuentas del Cliente"
+msgstr "Estado de las Cuentas del cliente"
 
 #: PrintCustStatements.php:46
 msgid "Statements from"
@@ -22655,7 +22662,7 @@ msgstr "No se encontraron clientes"
 
 #: PrintCustStatements.php:86 PrintCustStatements.php:429
 msgid "Print Customer Account Statements"
-msgstr "Imprimir Estados de las Cuentas del Cliente"
+msgstr "Imprimir Estados de las Cuentas del cliente"
 
 #: PrintCustStatements.php:87
 msgid "There were no Customers matching your selection of "
@@ -23602,7 +23609,7 @@ msgstr "Introduzca una Nuevo Pedido de Venta"
 
 #: RecurringSalesOrders.php:321
 msgid "Recurring Order for Customer"
-msgstr "Pedido Frecuente del Cliente"
+msgstr "Pedido Frecuente del cliente"
 
 #: RecurringSalesOrders.php:393 ../webSHOP/Checkout.php:370
 #: ../webSHOP/Checkout.php:614 ../webSHOP/Checkout.php:618
@@ -23973,7 +23980,7 @@ msgstr "No se pudo obtener el detalle de la Remisión seleccionada porque"
 #: ReverseGRN.php:56
 msgid "The following SQL to retrieve the GRN details was used"
 msgstr ""
-"Se usó el siguiente SQL para obtener los detalles de la Nota de Bienes "
+"Se usó el siguiente SQL para obtener los detalles de la nota de Bienes "
 "Recibidos"
 
 #: ReverseGRN.php:65
@@ -24015,7 +24022,7 @@ msgid ""
 "The GRN can only be reversed if all the original serial number items are "
 "still in stock in the location they were received into"
 msgstr ""
-"La Nota de Bienes Recibidos sólo puede devolverse si todos los artículos de "
+"La nota de Bienes Recibidos sólo puede devolverse si todos los artículos de "
 "los números de serie originales están aún en existencias en la ubicación en "
 "la ubicación donde fueron recibidos"
 
@@ -24069,7 +24076,7 @@ msgid ""
 "CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE. The fixed asset "
 "cost addition could not be reversed:"
 msgstr ""
-"¡ERROR CRITICO! TOME NOTA DE ESTE ERROR Y BUSQUE ASISTENCIA. La adición de "
+"¡ERROR CRITICO! TOME nota DE ESTE ERROR Y BUSQUE ASISTENCIA. La adición de "
 "costos de activos fijos no puede ser revertida:"
 
 #: ReverseGRN.php:183
@@ -24431,7 +24438,7 @@ msgstr "Tipo de Producto"
 
 #: SalesAnalRepts.php:45 SalesAnalRepts.php:47
 msgid "Customer Branch"
-msgstr "Sucursal del Cliente"
+msgstr "Sucursal del cliente"
 
 #: SalesAnalRepts.php:55 SalesAnalRepts.php:57
 msgid "Not Used"
@@ -25160,7 +25167,7 @@ msgstr "Para el Vendedor:"
 
 #: SalesGraph.php:247
 msgid "For Customers from"
-msgstr "Para Clientes de"
+msgstr "Para clientes de"
 
 #: SalesGraph.php:251
 msgid "For Items from"
@@ -25828,19 +25835,19 @@ msgstr "No se puede identificar el cliente seleccionado"
 
 #: SelectCreditItems.php:220
 msgid "Select Customer For Credit Note"
-msgstr "Seleccione un Cliente Para una Nota de Crédito "
+msgstr "Seleccione un cliente Para una nota de Crédito "
 
 #: SelectCreditItems.php:223
 msgid "Customer Selection"
-msgstr "Seleccionar Cliente"
+msgstr "Seleccionar cliente"
 
 #: SelectCreditItems.php:225
 msgid "Enter text in the customer name"
-msgstr "Introduzca una parte del Nombre del Cliente"
+msgstr "Introduzca una parte del Nombre del cliente"
 
 #: SelectCreditItems.php:228
 msgid "Enter text extract in the customer code"
-msgstr "Introduzca una parte del Código del Cliente"
+msgstr "Introduzca una parte del Código del cliente"
 
 #: SelectCreditItems.php:394
 msgid "There are no products available that match the criteria specified"
@@ -25937,7 +25944,7 @@ msgstr "Procesar abono"
 
 #: SelectCreditItems.php:1013 SelectOrderItems.php:1703
 msgid "Change Customer"
-msgstr "Cambiar Cliente"
+msgstr "Cambiar cliente"
 
 #: SelectCreditItems.php:1067 SelectOrderItems.php:1861
 #: Z_ImportPartCodes.php:29
@@ -26068,7 +26075,7 @@ msgstr "Introducir Otro abono"
 
 #: SelectCustomer.php:6
 msgid "Search Customers"
-msgstr "Buscar Clientes"
+msgstr "Buscar clientes"
 
 #: SelectCustomer.php:24 includes/header.inc:73
 #: includes/PDFTopItemsHeader.inc:27
@@ -26089,23 +26096,23 @@ msgstr "Seleccione una opción de menú para trabajar sobre este cliente"
 
 #: SelectCustomer.php:215 SelectCustomer.php:246
 msgid "Customer Inquiries"
-msgstr "Consultar Clientes"
+msgstr "Consultar clientes"
 
 #: SelectCustomer.php:216 SelectCustomer.php:247
 msgid "Customer Transactions"
-msgstr "Transacciones del Cliente"
+msgstr "Transacciones del cliente"
 
 #: SelectCustomer.php:221 includes/MainMenuLinksArray.php:113
 msgid "Customer Transaction Inquiries"
-msgstr "Consultar Transacciones de Clientes"
+msgstr "Consultar Transacciones de clientes"
 
 #: SelectCustomer.php:222
 msgid "View Customer Details"
-msgstr "Ver Detalles del Cliente"
+msgstr "Ver Detalles del cliente"
 
 #: SelectCustomer.php:223
 msgid "Print Customer Statement"
-msgstr "Imprimir Estado de Cuenta del Cliente"
+msgstr "Imprimir Estado de Cuenta del cliente"
 
 #: SelectCustomer.php:224
 msgid "Order Inquiries"
@@ -26129,23 +26136,23 @@ msgstr "Crear una venta de mostrador para este cliente"
 
 #: SelectCustomer.php:234 SelectCustomer.php:255
 msgid "Add a New Customer"
-msgstr "Registrar un Nuevo Cliente"
+msgstr "Registrar un Nuevo cliente"
 
 #: SelectCustomer.php:235
 msgid "Modify Customer Details"
-msgstr "Modificar Detalle de Cliente"
+msgstr "Modificar Detalle de cliente"
 
 #: SelectCustomer.php:236
 msgid "Add/Modify/Delete Customer Branches"
-msgstr "Añadir/Editar/Eliminar Sucursales de Cliente"
+msgstr "Añadir/Editar/Eliminar Sucursales de cliente"
 
 #: SelectCustomer.php:238
 msgid "Customer EDI Configuration"
-msgstr "Configuración Cliente EDI"
+msgstr "Configuración cliente EDI"
 
 #: SelectCustomer.php:265
 msgid "Search for Customers"
-msgstr "Buscar Clientes"
+msgstr "Buscar clientes"
 
 #: SelectCustomer.php:267 SelectSupplier.php:223 SupplierTenderCreate.php:554
 msgid "Enter a partial Name"
@@ -26169,7 +26176,7 @@ msgstr "Elija un Tipo"
 
 #: SelectCustomer.php:313 SelectCustomer.php:336
 msgid "No Customer types defined"
-msgstr "No se han definido tipos de Clientes"
+msgstr "No se han definido tipos de clientes"
 
 #: SelectCustomer.php:317 SelectCustomer.php:340 SelectCustomer.php:361
 #: SellThroughSupport.php:283
@@ -26208,7 +26215,7 @@ msgstr ""
 
 #: SelectCustomer.php:508
 msgid "Customer Mapping"
-msgstr "Mapa de Cliente"
+msgstr "Mapa de cliente"
 
 #: SelectCustomer.php:512 SelectSupplier.php:354
 msgid "Mapping is enabled, Map will display below."
@@ -26216,7 +26223,7 @@ msgstr "El mapeo está habilitado, un mapa se mostrará a continuación."
 
 #: SelectCustomer.php:558
 msgid "Customer Data"
-msgstr "Datos del Cliente"
+msgstr "Datos del cliente"
 
 #: SelectCustomer.php:562
 msgid "No receipts from this customer."
@@ -26244,11 +26251,11 @@ msgstr "Gasto total de este cliente (impuestos incluidos):"
 
 #: SelectCustomer.php:594
 msgid "Customer Type:"
-msgstr "Tipo de Cliente:"
+msgstr "Tipo de cliente:"
 
 #: SelectCustomer.php:616 SelectCustomer.php:641
 msgid "Add New Contact"
-msgstr "Añadir un Nuevo Contacto"
+msgstr "Añadir un Nuevo contacto"
 
 #: SelectCustomer.php:661
 msgid "Hyperlink"
@@ -26256,15 +26263,15 @@ msgstr "Hipervínculo"
 
 #: SelectCustomer.php:665
 msgid "Add New Note"
-msgstr "Añadir una Nueva Nota"
+msgstr "Añadir una Nueva nota"
 
 #: SelectCustomer.php:689
 msgid "Add New Note for this Customer"
-msgstr "Añadir una Nueva Nota para este Cliente"
+msgstr "Añadir una Nueva nota para este cliente"
 
 #: SelectCustomer.php:698
 msgid "Customer Type (Group) Notes for:<b> "
-msgstr "Tipo de cliente (Grupo): Notas para <b>"
+msgstr "Tipo de cliente (Grupo): notas para <b>"
 
 #: SelectCustomer.php:703
 msgid "File Link / Reference / URL"
@@ -26272,7 +26279,7 @@ msgstr ""
 
 #: SelectCustomer.php:707 SelectCustomer.php:730
 msgid "Add New Group Note"
-msgstr "Añadir una Nueva Nota de Grupo"
+msgstr "Añadir una Nueva nota de Grupo"
 
 #: SelectGLAccount.php:6
 msgid "Search GL Accounts"
@@ -26374,14 +26381,14 @@ msgstr "Indique un pedido o cotización"
 
 #: SelectOrderItems.php:602
 msgid "Search for the Customer Branch."
-msgstr "Buscar la Sucursal del Cliente."
+msgstr "Buscar la Sucursal del cliente."
 
 #: SelectOrderItems.php:603
 msgid ""
 "Orders/Quotations are placed against the Customer Branch. A Customer may "
 "have several Branches."
 msgstr ""
-"Los Pedidos/cotizaciones se guardan por Sucursales de Clientes. Un Cliente "
+"Los Pedidos/cotizaciones se guardan por Sucursales de clientes. Un cliente "
 "puede tener varias Sucursales."
 
 #: SelectOrderItems.php:610
@@ -26869,8 +26876,8 @@ msgid ""
 "There might be no supplier purchasing data set up for any items on the "
 "selected sales order(s). No purchase orders have been created"
 msgstr ""
-"Puede que no haya datos de compra del proveedor para ningún artículo en el"
-"(los) pedido(s) seleccionado(s). No se han creado las órdenes de compra"
+"Puede que no haya datos de compra del proveedor para ningún artículo en "
+"el(los) pedido(s) seleccionado(s). No se han creado las órdenes de compra"
 
 #: SelectSalesOrder.php:174
 msgid ""
@@ -26937,7 +26944,7 @@ msgstr "Imprimir Cita"
 
 #: SelectSalesOrder.php:873
 msgid "Cust Ref"
-msgstr "Ref. Cliente"
+msgstr "Ref. cliente"
 
 #: SelectSalesOrder.php:877
 msgid "Quote Total"
@@ -27037,7 +27044,7 @@ msgstr "Introduzca una Factura de Proveedor"
 
 #: SelectSupplier.php:184
 msgid "Enter a Suppliers Credit Note"
-msgstr "Introduzca una Nota de Crédito (Abono) a Proveedor"
+msgstr "Introduzca una nota de Crédito (Abono) a Proveedor"
 
 #: SelectSupplier.php:185
 msgid "Enter a Payment to, or Receipt from the Supplier"
@@ -27045,7 +27052,7 @@ msgstr "Introduzca un Pago a, ó Ingreso desde, Proveedor"
 
 #: SelectSupplier.php:187
 msgid "Reverse an Outstanding Goods Received Note (GRN)"
-msgstr "Revocar una Nota de Productos Recibidos (GRN) Pendiente"
+msgstr "Revocar una nota de Productos Recibidos (GRN) Pendiente"
 
 #: SelectSupplier.php:189 SelectSupplier.php:212
 msgid "Add a New Supplier"
@@ -27057,7 +27064,7 @@ msgstr "Modificar ó Eliminar Detalles del Proveedor"
 
 #: SelectSupplier.php:191
 msgid "Add/Modify/Delete Supplier Contacts"
-msgstr "Agregar/Modificar/Eliminar Contactos del Proveedor"
+msgstr "Agregar/Modificar/Eliminar contactos del Proveedor"
 
 #: SelectSupplier.php:193
 msgid "Set Up Sell Through Support Deals"
@@ -27654,7 +27661,7 @@ msgstr "Nombre del Buque / Agente de Transporte"
 
 #: Shipments.php:314
 msgid "Voyage Ref / Consignment Note"
-msgstr "Viaje de Referencia / Nota de Consignación"
+msgstr "Viaje de Referencia / nota de Consignación"
 
 #: Shipments.php:330
 msgid "Into"
@@ -28347,7 +28354,7 @@ msgstr "Debe seleccionar un cliente de la página de selección de clientes"
 
 #: SpecialOrder.php:41
 msgid "Select the customer now"
-msgstr "Seleccione Cliente"
+msgstr "Seleccione cliente"
 
 #: SpecialOrder.php:92
 msgid "The customer record for"
@@ -31145,7 +31152,7 @@ msgstr "Cargos de Contrato en la Factura"
 
 #: SuppContractChgs.php:69
 msgid "Contract credits on Credit Note"
-msgstr "Créditos del Contrato en Nota de Crédito"
+msgstr "Créditos del Contrato en nota de Crédito"
 
 #: SuppContractChgs.php:114 SuppFixedAssetChgs.php:103 SuppInvGRNs.php:163
 #: SupplierInvoice.php:1896 SuppShiptChgs.php:21 SuppTransGLAnalysis.php:147
@@ -31179,7 +31186,7 @@ msgstr "Introduzca el Cargo del Contrato"
 #: SuppCreditGRNs.php:14
 msgid "Enter Supplier Credit Note Against Goods Received"
 msgstr ""
-"Introduzca Nota de Crédito (abono) del Proveedor respecto a Bienes Recibidos"
+"Introduzca nota de Crédito (abono) del Proveedor respecto a Bienes Recibidos"
 
 #: SuppCreditGRNs.php:23 SuppInvGRNs.php:22
 msgid ""
@@ -31192,7 +31199,7 @@ msgstr ""
 #: SuppCreditGRNs.php:23
 msgid "then the link to enter a supplier credit note must be clicked on"
 msgstr ""
-"entonces debe hacer clic en el enlace para introducir una Nota de Crédito "
+"entonces debe hacer clic en el enlace para introducir una nota de Crédito "
 "(abono) del proveedor"
 
 #: SuppCreditGRNs.php:25 SuppInvGRNs.php:24
@@ -31297,7 +31304,7 @@ msgstr "Entrada"
 msgid "GRN Selected For Adding To A Suppliers Credit Note"
 msgstr ""
 "GRN (Good Received Note) (Nota de Bienes Recibidos) seleccionada para añadir "
-"a una Nota de Crédito de los Proveedores"
+"a una nota de Crédito de los Proveedores"
 
 #: SuppCreditGRNs.php:292
 msgid "credited"
@@ -31328,7 +31335,7 @@ msgstr ""
 
 #: SuppCreditGRNs.php:328
 msgid "Add to Credit Note"
-msgstr "Añadir a Nota de Crédito"
+msgstr "Añadir a nota de Crédito"
 
 #: SuppFixedAssetChgs.php:14
 msgid "Fixed Asset Charges or Credits"
@@ -31383,7 +31390,7 @@ msgstr "Activos Fijos en la Factura"
 
 #: SuppFixedAssetChgs.php:71
 msgid "Fixed Asset credits on Credit Note"
-msgstr "Créditos de Activo Fijo en Nota de Crédito"
+msgstr "Créditos de Activo Fijo en nota de Crédito"
 
 #: SuppFixedAssetChgs.php:117
 msgid ""
@@ -31822,7 +31829,7 @@ msgstr "Nota de Crédito (Abono) a Proveedor"
 
 #: SupplierCredit.php:50
 msgid "Enter Supplier Credit Note:"
-msgstr "Ingrese la Nota de Crédito de Proveedores:"
+msgstr "Ingrese la nota de Crédito de Proveedores:"
 
 #: SupplierCredit.php:91 SupplierInvoice.php:81
 msgid "The supplier record selected"
@@ -31983,7 +31990,7 @@ msgstr "Total Abono"
 
 #: SupplierCredit.php:609
 msgid "Enter Credit Note"
-msgstr "Introduzca Nota de Crédito"
+msgstr "Introduzca nota de Crédito"
 
 #: SupplierCredit.php:648
 msgid ""
@@ -31996,7 +32003,7 @@ msgstr ""
 #: SupplierCredit.php:648
 msgid "Credit notes are expected to be entered as positive amounts to credit"
 msgstr ""
-"Las Notas de Crédito se esperan como importes positivos que se suman al "
+"Las notas de Crédito se esperan como importes positivos que se suman al "
 "crédito"
 
 #: SupplierCredit.php:651
@@ -32025,7 +32032,7 @@ msgid ""
 "The credit note as entered cannot be processed because the date is after "
 "today"
 msgstr ""
-"La Nota de Crédito introducida no puede ser procesada proque la fecha es "
+"La nota de Crédito introducida no puede ser procesada proque la fecha es "
 "posterior a hoy"
 
 #: SupplierCredit.php:657
@@ -32241,7 +32248,7 @@ msgid ""
 "CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE. The fixed asset "
 "cost was not able to be updated because:"
 msgstr ""
-"ERROR CRITICO! TOME NOTA DE ESTE ERROR Y BUSQUE AYUDA. El costo de activos "
+"ERROR CRITICO! TOME nota DE ESTE ERROR Y BUSQUE AYUDA. El costo de activos "
 "fijos no ha podido ser actualizado debido a que:"
 
 #: SupplierCredit.php:1235
@@ -32266,7 +32273,7 @@ msgid ""
 "CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE. The fixed asset "
 "cost  was not able to be updated because:"
 msgstr ""
-"ERROR CRITICO! TOME NOTA DE ESTE ERROR Y BUSQUE AYUDA. El costo de activos "
+"ERROR CRITICO! TOME nota DE ESTE ERROR Y BUSQUE AYUDA. El costo de activos "
 "fijos no ha podido ser actualizado debido a que:"
 
 #: SupplierCredit.php:1323 SupplierInvoice.php:1779
@@ -32281,7 +32288,7 @@ msgstr "Abono Proveedor"
 
 #: SupplierCredit.php:1330
 msgid "Enter another Credit Note for this Supplier"
-msgstr "Ingrese otra Nota de Crédito para este Proveedor"
+msgstr "Ingrese otra nota de Crédito para este Proveedor"
 
 #: SupplierInquiry.php:7
 msgid "Supplier Inquiry"
@@ -32673,7 +32680,7 @@ msgid ""
 "CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE. The fixed asset "
 "cost could not be updated because:"
 msgstr ""
-"ERROR CRITICO! TOME NOTA DE ESTE ERROR Y BUSQUE AYUDA. El costo de activos "
+"ERROR CRITICO! TOME nota DE ESTE ERROR Y BUSQUE AYUDA. El costo de activos "
 "fijos no se pudo actualizar debido a que:"
 
 #: SupplierInvoice.php:1879
@@ -33723,7 +33730,7 @@ msgstr "Cargos de Envío en Factura"
 
 #: SuppShiptChgs.php:75
 msgid "Shipment credits on Credit Note"
-msgstr "Créditos de Envío en Nota de Crédito"
+msgstr "Créditos de Envío en nota de Crédito"
 
 #: SuppShiptChgs.php:112
 msgid "Shipment Reference"
@@ -33791,7 +33798,7 @@ msgstr "Análisis Contable de la Factura de"
 
 #: SuppTransGLAnalysis.php:101
 msgid "General Ledger Analysis of Credit Note From"
-msgstr "Análisis Contable de Notas de Crédito Desde"
+msgstr "Análisis Contable de notas de Crédito Desde"
 
 #: SuppTransGLAnalysis.php:190
 msgid "The input must be alpha-numeric characters"
@@ -33985,7 +33992,7 @@ msgid ""
 "This parameter is used on customer and supplier enquiry screens and aged "
 "listings"
 msgstr ""
-"Los saldos de Clientes y Proveedores se muestran como vencidos o atrasados "
+"Los saldos de clientes y Proveedores se muestran como vencidos o atrasados "
 "según esta cantidad de días. Este parámetro se usa tanto en las consultas de "
 "clientes y proveedores como en los listados de vencidos."
 
@@ -34132,14 +34139,14 @@ msgstr ""
 #: SystemParameters.php:482
 msgid "A picking note must be produced before an order can be delivered"
 msgstr ""
-"Debe producirse una Nota de Recolección para que una orden pueda despacharse"
+"Debe producirse una nota de Recolección para que una orden pueda despacharse"
 
 #: SystemParameters.php:487
 msgid ""
 "Select whether or not a picking note must be produced before an order can be "
 "delivered to a customer."
 msgstr ""
-"Seleccione si desea o no que deba producirse una Nota de Recolección antes "
+"Seleccione si desea o no que deba producirse una nota de Recolección antes "
 "de que una orden pueda ser entregada a un cliente."
 
 #: SystemParameters.php:491
@@ -34608,7 +34615,7 @@ msgid ""
 "themselves in user settings."
 msgstr ""
 "Cuando las páginas tienen código que limita el número de registros a "
-"mostrar, como son Seleccionar Cliente, Seleccionar Proveedor y Seleccionar "
+"mostrar, como son Seleccionar cliente, Seleccionar Proveedor y Seleccionar "
 "Artículo, entonces éste será el número de registros por defecto que mostrar "
 "a un usuario que no se haya cambiado este valor en sus preferencias de "
 "usuario."
@@ -34761,7 +34768,7 @@ msgstr ""
 
 #: SystemParameters.php:918
 msgid "Geocode Customers and Suppliers"
-msgstr "Código Geográfico de Clientes y Proveedores"
+msgstr "Código Geográfico de clientes y Proveedores"
 
 #: SystemParameters.php:921 SystemParameters.php:925
 msgid "Geocode Integration Enabled"
@@ -34785,15 +34792,15 @@ msgstr ""
 
 #: SystemParameters.php:930
 msgid "Extended Customer Information"
-msgstr "Extender Información del Cliente"
+msgstr "Extender Información del cliente"
 
 #: SystemParameters.php:933 SystemParameters.php:937
 msgid "Extended Customer Info Enabled"
-msgstr "Habilitar Información Extendida del Cliente"
+msgstr "Habilitar Información Extendida del cliente"
 
 #: SystemParameters.php:934 SystemParameters.php:936
 msgid "Extended Customer Info Disabled"
-msgstr "Deshabilitar Información Extendida del Cliente"
+msgstr "Deshabilitar Información Extendida del cliente"
 
 #: SystemParameters.php:940
 msgid ""
@@ -35113,7 +35120,7 @@ msgstr "Impuestos Soportados"
 
 #: TaxAuthorities.php:152
 msgid "Bank Act Type"
-msgstr "Tipo de Cuenta Bancaria"
+msgstr "Tipo de cuenta bancaria"
 
 #: TaxAuthorities.php:153
 msgid "Bank Swift"
@@ -35159,7 +35166,7 @@ msgstr ""
 
 #: TaxAuthorities.php:314
 msgid "Bank Account Type"
-msgstr "Tipo de Cuenta Bancaria"
+msgstr "Tipo de cuenta bancaria"
 
 #: TaxAuthorities.php:315 TaxAuthorities.php:319
 msgid "No more than 20 characters"
@@ -37583,7 +37590,7 @@ msgstr "Corre"
 #: Z_ChangeBranchCode.php:5
 msgid "UTILITY PAGE To Changes A Customer Branch Code In All Tables"
 msgstr ""
-"PÁGINA DE UTILIDADES Para Cambiar un Código de Sucursal de un Cliente en "
+"PÁGINA DE UTILIDADES Para Cambiar un Código de Sucursal de un cliente en "
 "Todas las Tablas"
 
 #: Z_ChangeBranchCode.php:17
@@ -37726,7 +37733,7 @@ msgstr "Nuevo Código de Sucursal"
 #: Z_ChangeCustomerCode.php:6
 msgid "UTILITY PAGE To Changes A Customer Code In All Tables"
 msgstr ""
-"PÁGINA DE SOPORTE Para Modificar el Còdigo de Cliente en Todas la Tablas"
+"PÁGINA DE SOPORTE Para Modificar el Còdigo de cliente en Todas la Tablas"
 
 #: Z_ChangeCustomerCode.php:14
 msgid "The customer code"
@@ -38417,7 +38424,7 @@ msgstr "OK"
 
 #: Z_CheckAllocs.php:6
 msgid "Customer Allocations != DebtorTrans.Alloc"
-msgstr "Provisión Clientes != Prov. Trans Deudor"
+msgstr "Provisión clientes != Prov. Trans Deudor"
 
 #: Z_CheckAllocs.php:28
 msgid "There are no inconsistencies with allocations"
@@ -38615,11 +38622,11 @@ msgstr "Problema al Exportar la Lista de Precios ..."
 
 #: Z_DataExport.php:165
 msgid "Customer List Export Problem ...."
-msgstr "Problema al Exportar la Lista de Clientes ..."
+msgstr "Problema al Exportar la Lista de clientes ..."
 
 #: Z_DataExport.php:167
 msgid "The Customer List could not be retrieved by the SQL because"
-msgstr "El SQL no pudo obtener la Lista de Clientes porque"
+msgstr "El SQL no pudo obtener la Lista de clientes porque"
 
 #: Z_DataExport.php:256
 msgid "Salesman List Export Problem ...."
@@ -38685,7 +38692,7 @@ msgstr "Exportar"
 
 #: Z_DataExport.php:571
 msgid "Customer List Export"
-msgstr "Exportar Lista de Clientes"
+msgstr "Exportar Lista de clientes"
 
 #: Z_DataExport.php:594
 msgid "Salesman List Export"
@@ -39777,7 +39784,7 @@ msgid ""
 "for the new company and this account deleted immediately."
 msgstr ""
 "Los detalles y los parámetros de la empresa deberían ya estar listos para la "
-"nueva compañía. Nota: Sólo un usuario \"demo \" se define con la contraseña "
+"nueva compañía. nota: Sólo un usuario \"demo \" se define con la contraseña "
 "\"weberp \" en la nueva base de datos empresarial. Un nuevo usuario "
 "administrador del sistema debe ser definido para la nueva empresa y esta "
 "cuenta eliminada de inmediato."
@@ -40534,7 +40541,7 @@ msgid ""
 "purchorderdetails records .... please wait"
 msgstr ""
 "Script de mejora para colocar la información de costo contra los registros "
-"de Notas de Bienes Recibidos desde los registros de detalles de la orden de "
+"de notas de Bienes Recibidos desde los registros de detalles de la orden de "
 "compra ... por favor espere"
 
 #: Z_Upgrade_3.04-3.05.php:77
@@ -42412,7 +42419,7 @@ msgstr "Filas por hoja"
 
 #: includes/DefineLabelClass.php:24
 msgid "Cols per sheet"
-msgstr "Columnas por Hoja"
+msgstr "Columnas por hoja"
 
 #: includes/DefineLabelClass.php:25
 msgid "Sheet height"
@@ -42752,7 +42759,7 @@ msgstr "Fijar Tipo de dato"
 
 #: includes/InputSerialItems.php:104 includes/OutputSerialItems.php:22
 msgid "Remove All"
-msgstr "Eliminar Todo"
+msgstr "Eliminar todo"
 
 #: includes/InputSerialItems.php:127 includes/InputSerialItems.php:133
 #: includes/OutputSerialItems.php:36 includes/OutputSerialItems.php:42
@@ -42902,11 +42909,11 @@ msgstr "Facturar Pedido"
 
 #: includes/MainMenuLinksArray.php:95
 msgid "Create A Credit Note"
-msgstr "Crear una Nota de Crédito (Abono)"
+msgstr "Crear una nota de Crédito (Abono)"
 
 #: includes/MainMenuLinksArray.php:97
 msgid "Allocate Receipts or Credit Notes"
-msgstr "Asignar Recibos ó Notas de Crédito"
+msgstr "Asignar Recibos ó notas de Crédito"
 
 #: includes/MainMenuLinksArray.php:103
 msgid "Where Allocated Inquiry"
@@ -42919,7 +42926,7 @@ msgstr "Informes de Análisis de Ventas"
 #: includes/MainMenuLinksArray.php:107
 msgid "Aged Customer Balances/Overdues Report"
 msgstr ""
-"Informe de Saldos / Moras de Clientes Antiguos (cartera sana y vencida)"
+"Informe de Saldos / Moras de clientes Antiguos (cartera sana y vencida)"
 
 #: includes/MainMenuLinksArray.php:108
 msgid "Re-Print A Deposit Listing"
@@ -42931,7 +42938,7 @@ msgstr "Saldos de Deudores a Fin de Mes Previo"
 
 #: includes/MainMenuLinksArray.php:110
 msgid "Customer Listing By Area/Salesperson"
-msgstr "Listado de Clientes por Zona/Vendedor"
+msgstr "Listado de clientes por Zona/Vendedor"
 
 #: includes/MainMenuLinksArray.php:111
 msgid "Sales Graphs"
@@ -43612,7 +43619,7 @@ msgstr "Hay un problema al obtener el precio del código"
 #: includes/Z_POSDataCreation.php:211 includes/GetPrice.inc:28
 #: ../webSHOP/includes/Functions.php:546
 msgid "and for Customer"
-msgstr "y para el Cliente"
+msgstr "y para el cliente"
 
 #: includes/Z_POSDataCreation.php:211 includes/GetPrice.inc:28
 #: ../webSHOP/includes/Functions.php:546
@@ -43955,7 +43962,7 @@ msgstr "Salir"
 
 #: includes/PDFAgedDebtorsPageHeader.inc:18
 msgid "Aged Customer Balances For Customers from"
-msgstr "Saldos Vencidos de los Clientes de"
+msgstr "Saldos Vencidos de los clientes de"
 
 #: includes/PDFAgedDebtorsPageHeader.inc:19
 #: includes/PDFAgedSuppliersPageHeader.inc:18
@@ -44025,7 +44032,7 @@ msgstr "Referencia / Detalles de Registros Contables"
 
 #: includes/PDFCustomerListPageHeader.inc:18
 msgid "Customers List for"
-msgstr "Lista de Clientes para"
+msgstr "Lista de clientes para"
 
 #: includes/PDFCustomerListPageHeader.inc:21
 msgid "All Territories"
@@ -44061,7 +44068,7 @@ msgstr "Dirección Postal"
 
 #: includes/PDFCustomerListPageHeader.inc:85
 msgid "Branch Contact Information"
-msgstr "Información del Contacto de la Sucursal"
+msgstr "Información del contacto de la Sucursal"
 
 #: includes/PDFCustomerListPageHeader.inc:86
 msgid "Branch Delivery Address"
@@ -44069,7 +44076,7 @@ msgstr "Dirección de Entrega de la Sucursal"
 
 #: includes/PDFCustTransListingPageHeader.inc:21
 msgid "Customer Payments"
-msgstr "Pagos de Clientes"
+msgstr "Pagos de clientes"
 
 #: includes/PDFCustTransListingPageHeader.inc:28
 #: includes/PDFSuppTransListingPageHeader.inc:28
@@ -44101,7 +44108,7 @@ msgstr "Monto total"
 
 #: includes/PDFDebtorBalsPageHeader.inc:17
 msgid "Customer Balances For Customers between"
-msgstr "Saldos de Cliente de los Clientes entre"
+msgstr "Saldos de cliente de los clientes entre"
 
 #: includes/PDFDebtorBalsPageHeader.inc:17
 #: includes/PDFSupplierBalsPageHeader.inc:17
@@ -44125,7 +44132,7 @@ msgstr "Para Categoría de Inventario"
 #: includes/PDFDeliveryDifferencesPageHeader.inc:24
 #: includes/PDFDIFOTPageHeader.inc:24
 msgid "Deliveries ex"
-msgstr "Sin Nota de Entrega"
+msgstr "Sin nota de Entrega"
 
 #: includes/PDFDeliveryDifferencesPageHeader.inc:42
 #: includes/PDFDIFOTPageHeader.inc:41
@@ -44155,7 +44162,7 @@ msgstr ""
 
 #: includes/PDFGrnHeader.inc:20
 msgid "GRN number "
-msgstr "Número GRN Nota de Bienes Recibidos "
+msgstr "Número GRN nota de Bienes Recibidos "
 
 #: includes/PDFGrnHeader.inc:21
 msgid "PO number "
@@ -44226,7 +44233,7 @@ msgstr "Hoja de Embalaje"
 #: includes/PDFOrderPageHeader_generic.inc:17
 #: includes/PDFSalesOrder_generic.inc:17
 msgid "Customer Copy"
-msgstr "Copia para el Cliente"
+msgstr "Copia para el cliente"
 
 #: includes/PDFOrderPageHeader_generic.inc:19
 #: includes/PDFSalesOrder_generic.inc:20
@@ -44236,7 +44243,7 @@ msgstr "Copia para la Oficina"
 #: includes/PDFOrderPageHeader_generic.inc:55
 #: includes/PDFPickingListHeader.inc:51 includes/PDFSalesOrder_generic.inc:57
 msgid "Customer No."
-msgstr "Nº de Cliente"
+msgstr "Nº de cliente"
 
 #: includes/PDFOrderPageHeader_generic.inc:56
 #: includes/PDFPickingListHeader.inc:52 includes/PDFSalesOrder_generic.inc:58
@@ -44284,7 +44291,7 @@ msgstr "Listado de Orden de Estado"
 #: includes/PDFOstdgGRNsPageHeader.inc:15
 msgid "Outstanding GRNs Valuation for Suppliers between"
 msgstr ""
-"Valoración de Notas de Bienes Recibidos pendientes de Proveedores entre"
+"Valoración de notas de Bienes Recibidos pendientes de Proveedores entre"
 
 #: includes/PDFPaymentRunPageHeader.inc:18
 msgid "Final Payment Run For Supplier Codes between"
@@ -44746,7 +44753,7 @@ msgstr "Tipo de Venta No Configurado"
 
 #: api/api_errorcodes.php:182
 msgid "Invalid Client Since Date"
-msgstr "Fecha de Antigüedad del Cliente Inválida"
+msgstr "Fecha de Antigüedad del cliente Inválida"
 
 #: api/api_errorcodes.php:183
 msgid "Hold Reason Not Setup"
@@ -44870,7 +44877,7 @@ msgstr "Número de Fax Inválido"
 
 #: api/api_errorcodes.php:213
 msgid "Invalid Contact Name"
-msgstr "Nombre del Contacto Inválido"
+msgstr "Nombre del contacto Inválido"
 
 #: api/api_errorcodes.php:214
 msgid "Invalid Email Address"
@@ -44902,7 +44909,7 @@ msgstr "Instrucciones Especiales Inválidas"
 
 #: api/api_errorcodes.php:221
 msgid "Invalid Customer Branch Code"
-msgstr "Código de Sucursal de Cliente Inválida"
+msgstr "Código de Sucursal de cliente Inválida"
 
 #: api/api_errorcodes.php:222
 msgid "Branch No Does not Exist"
@@ -45074,7 +45081,7 @@ msgstr "Costo de Gastos Generales Inválido"
 
 #: api/api_errorcodes.php:264
 msgid "Invalid Customer Reference"
-msgstr "Referencia de Cliente Inválida"
+msgstr "Referencia de cliente Inválida"
 
 #: api/api_errorcodes.php:265
 msgid "Invalid Buyer Name"
@@ -45178,7 +45185,7 @@ msgstr "Longitud Inválida"
 
 #: api/api_errorcodes.php:291
 msgid "Customer type not set up"
-msgstr "Tipo de Cliente no configurado"
+msgstr "Tipo de cliente no configurado"
 
 #: api/api_errorcodes.php:292
 msgid "No sales prices setup"
@@ -45378,7 +45385,7 @@ msgstr "No es posible leer los detalles de artículos de la nota de crédito"
 
 #: api/api_errorcodes.php:340
 msgid "Can only allocate receipts or a credit notes"
-msgstr "Solo se pueden asignar Recibos ó Notas de Crédito"
+msgstr "Solo se pueden asignar Recibos ó notas de Crédito"
 
 #: api/api_errorcodes.php:341
 msgid "No transaction found to allocate"
@@ -45534,7 +45541,7 @@ msgstr ""
 
 #: api/api_xml-rpc.php:62 api/api_xml-rpc.php:134
 msgid "Customer Details"
-msgstr "Detalles del Cliente"
+msgstr "Detalles del cliente"
 
 #: api/api_xml-rpc.php:63 api/api_xml-rpc.php:100 api/api_xml-rpc.php:135
 #: api/api_xml-rpc.php:171 api/api_xml-rpc.php:471 api/api_xml-rpc.php:1219
@@ -46314,7 +46321,7 @@ msgid ""
 "necessary updates and inserts are handled for stock quantities returned, "
 "taxes, sales analysis, stock movements, sales and cost of sales journals"
 msgstr ""
-"Crea una Nota de Crédito a partir de los artículos de línea y los arreglos "
+"Crea una nota de Crédito a partir de los artículos de línea y los arreglos "
 "asociativos de detalles del encabezado. Esta función implementa la mayoría "
 "de una nota de crédito del sistema a excepción del hecho de que no puede "
 "manejar artículos serializados o controlados por lotes. Todas las "
@@ -46324,7 +46331,7 @@ msgstr ""
 
 #: api/api_xml-rpc.php:1117
 msgid "Credit Note Header Details"
-msgstr "Detalles del Encabezado de la Nota de Crédito"
+msgstr "Detalles del Encabezado de la nota de Crédito"
 
 #: api/api_xml-rpc.php:1118
 msgid ""
@@ -46337,7 +46344,7 @@ msgstr ""
 
 #: api/api_xml-rpc.php:1119
 msgid "Credit note line items"
-msgstr "Artículod de Nota de Crédito"
+msgstr "Artículod de nota de Crédito"
 
 #: api/api_xml-rpc.php:1120
 msgid ""
@@ -46436,7 +46443,7 @@ msgstr ""
 "función. No maneja impuestos en absoluto, no aporta movimientos de "
 "existencia, no actualiza existencias para cualquier cantidad devuelta o "
 "actualiza el análisis de ventas. Para crear una nota de crédito a través de "
-"webERP se utiliza la lógica la función CreateCreditNote (Crear una Nota de "
+"webERP se utiliza la lógica la función CreateCreditNote (Crear una nota de "
 "Crédito)"
 
 #: api/api_xml-rpc.php:1188
@@ -46828,13 +46835,13 @@ msgstr ""
 
 #: api/api_xml-rpc.php:2032
 msgid "Customer Type ID"
-msgstr "Tipo de Identificación de Cliente"
+msgstr "Tipo de Identificación de cliente"
 
 #: api/api_xml-rpc.php:2033
 msgid "A customer type ID as returned by the GetCustomerTypeList function."
 msgstr ""
 "Un identificador del tipo de cliente ha sido devuelto por la función "
-"GetCustomerTypeList(Obtener Lista del Tipo de Cliente) ."
+"GetCustomerTypeList(Obtener Lista del Tipo de cliente) ."
 
 #: api/api_xml-rpc.php:2038
 msgid "This function returns an array of customer type details."
@@ -48956,7 +48963,7 @@ msgstr "Transferencia bancaria"
 #~ msgstr "Código de sucursal del cliente:"
 
 #~ msgid "Geocoded Customer Branches Report"
-#~ msgstr "Informe de Sucursales de Cliente con Geocode"
+#~ msgstr "Informe de Sucursales de cliente con Geocode"
 
 #~ msgid "Top Sales Items Report"
 #~ msgstr "Informe de Artículos Más Vendidos"
@@ -48978,7 +48985,7 @@ msgstr "Transferencia bancaria"
 #~ "creadas respecto a él"
 
 #~ msgid "branch records relating to this customer"
-#~ msgstr "Registros de Sucursales de este Cliente"
+#~ msgstr "Registros de Sucursales de este cliente"
 
 #~ msgid "Customers Currency"
 #~ msgstr "Moneda del cliente"
@@ -49319,7 +49326,7 @@ msgstr "Transferencia bancaria"
 
 #~ msgid "The SQL to update GRN records failed"
 #~ msgstr ""
-#~ "Falló el SQL para actualizar los registros de Notas de Bienes Recibidos"
+#~ "Falló el SQL para actualizar los registros de notas de Bienes Recibidos"
 
 #~ msgid "Changing the contract BOM table records"
 #~ msgstr ""
@@ -49567,8 +49574,8 @@ msgstr "Transferencia bancaria"
 #~ "At least one Customer Branch Name keyword OR an extract of a Customer "
 #~ "Branch Code or Branch Phone Number must be entered for the search"
 #~ msgstr ""
-#~ "Al menos una palabra clave del Nombre de la Sucursal del Cliente ó una "
-#~ "parte del Código de la Sucursal del Cliente ó el Número de Teléfono de la "
+#~ "Al menos una palabra clave del Nombre de la Sucursal del cliente ó una "
+#~ "parte del Código de la Sucursal del cliente ó el Número de Teléfono de la "
 #~ "Sucursal debe ser indicado para la búsqueda"
 
 #~ msgid "Receivables/Payables"
@@ -49616,7 +49623,7 @@ msgstr "Transferencia bancaria"
 #~ "función e implicaciones"
 
 #~ msgid "Send All Unsent EDI Invoices and Credits"
-#~ msgstr "Enviar Todas las Facturas y Notas Crédito EDI Pendientes"
+#~ msgstr "Enviar Todas las Facturas y notas Crédito EDI Pendientes"
 
 #~ msgid "Image Manipulation Utility"
 #~ msgstr "Herramienta de Manipulación de Imágenes"
@@ -49768,19 +49775,19 @@ msgstr "Transferencia bancaria"
 #~ msgstr "Imprimir"
 
 #~ msgid "Search Result: Customer Name has been used in search"
-#~ msgstr "Resultado de la Búsqueda: se buscó usando el Nombre del Cliente"
+#~ msgstr "Resultado de la Búsqueda: se buscó usando el Nombre del cliente"
 
 #~ msgid "Search Result: Customer Code has been used in search"
-#~ msgstr "Resultado de la Búsqueda: se buscó usando el Código de Cliente"
+#~ msgstr "Resultado de la Búsqueda: se buscó usando el Código de cliente"
 
 #~ msgid "Search Result: Customer Phone has been used in search"
-#~ msgstr "Resultado de la Búsqueda: se buscó usando el Teléfono del Cliente"
+#~ msgstr "Resultado de la Búsqueda: se buscó usando el Teléfono del cliente"
 
 #~ msgid "Search Result: Customer Address has been used in search"
-#~ msgstr "Resultado de la Búsqueda: se buscó usando la Dirección del Cliente"
+#~ msgstr "Resultado de la Búsqueda: se buscó usando la Dirección del cliente"
 
 #~ msgid "Search Result: Customer Type has been used in search"
-#~ msgstr "Resultado de la Búsqueda: se buscó usando el Tipo de Cliente"
+#~ msgstr "Resultado de la Búsqueda: se buscó usando el Tipo de cliente"
 
 #~ msgid "Cannot commit the changes because"
 #~ msgstr "No se pudieron grabar los cambios porque"
@@ -49815,7 +49822,7 @@ msgstr "Transferencia bancaria"
 #~ msgstr "a costo estándar"
 
 #~ msgid "Customer branch<b>"
-#~ msgstr "Sucursal de Cliente<b>"
+#~ msgstr "Sucursal de cliente<b>"
 
 #~ msgid "Print Sales Order / Pro-forma Invoice"
 #~ msgstr "Imprimir Pedido de Venta / Factura Pro-forma"
@@ -49933,16 +49940,16 @@ msgstr "Transferencia bancaria"
 #~ msgstr "contratos que usan esta unidad de medida"
 
 #~ msgid "Bulk Change Customer Pricing"
-#~ msgstr "Cambio Masivo de Precios del Cliente"
+#~ msgstr "Cambio Masivo de Precios del cliente"
 
 #~ msgid "Item Value"
 #~ msgstr "Valor del Artículo"
 
 #~ msgid "Notes for Customer: <b>"
-#~ msgstr "Notas para el Cliente: <b>"
+#~ msgstr "Notas para el cliente: <b>"
 
 #~ msgid "Notes for Customer Type: <b>"
-#~ msgstr "Notas para el Tipo de Cliente: <b>"
+#~ msgstr "Notas para el Tipo de cliente: <b>"
 
 #~ msgid "Review Components"
 #~ msgstr "Revisar Componentes"
@@ -50104,7 +50111,7 @@ msgstr "Transferencia bancaria"
 #~ msgstr "Hasta"
 
 #~ msgid "Customer Type (Group) Notes for:"
-#~ msgstr "Notas del Tipo (Grupo) de Cliente de:"
+#~ msgstr "Notas del Tipo (Grupo) de cliente de:"
 
 #~ msgid "Unable to load StockMaster info for part"
 #~ msgstr "No fue posible cargar la información de Stockmaster para el código"
@@ -50203,7 +50210,7 @@ msgstr "Transferencia bancaria"
 #~ msgstr "es el mismo que el nombre de la base de datos."
 
 #~ msgid "Default Reports"
-#~ msgstr "Informes Predeterminados"
+#~ msgstr "Informes predeterminados"
 
 #~ msgid "Standard Reports"
 #~ msgstr "Informes Estándar"
@@ -50224,7 +50231,7 @@ msgstr "Transferencia bancaria"
 #~ "There were no GRNs with any value to print out for the specified supplier "
 #~ "range"
 #~ msgstr ""
-#~ "No hubo Notas de Bienes Recibidos con algún valor que imprimir para el "
+#~ "No hubo notas de Bienes Recibidos con algún valor que imprimir para el "
 #~ "rango de proveedores indicado"
 
 #~ msgid "You must first enter a batch number that you want to print"
