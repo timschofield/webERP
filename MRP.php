@@ -116,13 +116,13 @@ if (isset($_POST['submit'])) {
 	$sql = "SELECT * FROM tempbom";
 	$result = DB_query($sql,$db);
 	while ($myrow=DB_fetch_array($result)) {
-			$parts = explode('%',$myrow['sortpart']);
+			$Parts = explode('%',$myrow['sortpart']);
 			$Level = $myrow['level'];
 			$ctr = 0;
-			foreach ($parts as $part) {
+			foreach ($Parts as $Part) {
 			   $ctr++;
 			   $newlevel = $Level - $ctr;
-			   $sql = "INSERT INTO bomlevels (part, level) VALUES('" . $part . "','" . $newlevel . "')";
+			   $sql = "INSERT INTO bomlevels (part, level) VALUES('" . $Part . "','" . $newlevel . "')";
 			   $result2 = DB_query($sql,$db);
 			} // End of foreach
 	}  //end of while loop
@@ -640,20 +640,20 @@ if (isset($_POST['submit'])) {
 
 
 
-function LevelNetting(&$db,$part,$eoq,$PanSize,$ShrinkFactor, $LeadTime) {
+function LevelNetting(&$db,$Part,$eoq,$PanSize,$ShrinkFactor, $LeadTime) {
 		// Create an array of mrprequirements and an array of mrpsupplies, then read through
 		// them seeing if all requirements are covered by supplies. Create a planned order
 		// for any unmet requirements. Change dates if necessary for the supplies.
-		//echo '<br />Part is ' . "$part" . '<br />';
+		//echo '<br />Part is ' . "$Part" . '<br />';
 
 		// Get decimal places from stockmaster for rounding of shrinkage factor
-	$sql = "SELECT decimalplaces FROM stockmaster WHERE stockid = '" . $part . "'";
+	$sql = "SELECT decimalplaces FROM stockmaster WHERE stockid = '" . $Part . "'";
 	$result = DB_query($sql,$db);
 	$myrow=DB_fetch_row($result);
 	$DecimalPlaces = $myrow[0];
 
 	// Load mrprequirements into $Requirements array
-	$sql = "SELECT * FROM mrprequirements WHERE part = '" .$part. "' ORDER BY daterequired";
+	$sql = "SELECT * FROM mrprequirements WHERE part = '" .$Part. "' ORDER BY daterequired";
 	$result = DB_query($sql,$db);
 	$Requirements = array();
 	$i = 0;
@@ -663,7 +663,7 @@ function LevelNetting(&$db,$part,$eoq,$PanSize,$ShrinkFactor, $LeadTime) {
 	}  //end of while loop
 
 	// Load mrpsupplies into $Supplies array
-	$sql = "SELECT * FROM mrpsupplies WHERE part = '" .$part. "' ORDER BY duedate";
+	$sql = "SELECT * FROM mrpsupplies WHERE part = '" . $Part. "' ORDER BY duedate";
 	$result = DB_query($sql,$db);
 	$Supplies = array();
 	$i = 0;

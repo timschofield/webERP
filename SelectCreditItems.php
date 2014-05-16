@@ -1636,6 +1636,11 @@ the salesman or area has changed a new record is inserted for the customer and s
 set up. Considered just getting the area and salesman from the branch table but these can alter and the
 sales analysis needs to reflect the sales made before and after the changes*/
 
+			$SalesValue = 0;
+			if ($_SESSION['CurrencyRate']>0){
+				$SalesValue = $CreditLine->Price * $CreditLine->Quantity / $_SESSION['CurrencyRate'];
+			}
+
 			   $SQL="SELECT	COUNT(*),
 							salesanalysis.stkcategory,
 							salesanalysis.area
@@ -1670,8 +1675,8 @@ sales analysis needs to reflect the sales made before and after the changes*/
 
 					/*No updates to qty or cost data */
 
-					$SQL = "UPDATE salesanalysis SET amt=amt-" . $CreditLine->Price * $CreditLine->Quantity / $_SESSION['CurrencyRate'] . ",
-													disc=disc-" . $CreditLine->DiscountPercent * $CreditLine->Price * $CreditLine->Quantity / $_SESSION['CurrencyRate'] . "
+					$SQL = "UPDATE salesanalysis SET amt=amt-" . $SalesValue . ",
+													disc=disc-" . $CreditLine->DiscountPercent * $SalesValue . "
 							WHERE salesanalysis.area='" . $myrow['area'] . "'
 							AND salesanalysis.salesperson='" . $_SESSION['CreditItems'.$identifier]->SalesPerson . "'
 							AND salesanalysis.typeabbrev ='" . $_SESSION['CreditItems'.$identifier]->DefaultSalesType . "'
@@ -1684,10 +1689,10 @@ sales analysis needs to reflect the sales made before and after the changes*/
 
 				} else {
 
-					$SQL = "UPDATE salesanalysis SET Amt=Amt-" . $CreditLine->Price * $CreditLine->Quantity / $_SESSION['CurrencyRate'] . ",
+					$SQL = "UPDATE salesanalysis SET Amt=Amt-" . $SalesValue . ",
 													Cost=Cost-" . $CreditLine->StandardCost * $CreditLine->Quantity . ",
 													Qty=Qty-" . $CreditLine->Quantity . ",
-													Disc=Disc-" . $CreditLine->DiscountPercent * $CreditLine->Price * $CreditLine->Quantity / $_SESSION['CurrencyRate'] . "
+													Disc=Disc-" . $CreditLine->DiscountPercent * $SalesValue . "
 							WHERE salesanalysis.area='" . $myrow['area'] . "'
 							AND salesanalysis.salesperson='" . $_SESSION['CreditItems'.$identifier]->SalesPerson . "'
 							AND salesanalysis.typeabbrev ='" . $_SESSION['CreditItems'.$identifier]->DefaultSalesType . "'
@@ -1717,11 +1722,11 @@ sales analysis needs to reflect the sales made before and after the changes*/
 												stkcategory)
 										 SELECT '" . $_SESSION['CreditItems'.$identifier]->DefaultSalesType . "',
 												'" . $PeriodNo . "',
-												'" . -$CreditLine->Price * $CreditLine->Quantity / $_SESSION['CurrencyRate'] . "',
+												'" . -$SalesValue . "',
 												'" . $_SESSION['CreditItems'.$identifier]->DebtorNo . "',
 												'" . $_SESSION['CreditItems'.$identifier]->Branch . "',
 												0,
-												'" . -$CreditLine->DiscountPercent * $CreditLine->Price * $CreditLine->Quantity / $_SESSION['CurrencyRate'] . "',
+												'" . -$CreditLine->DiscountPercent * $SalesValue . "',
 												'" . $CreditLine->StockID . "',
 												custbranch.area,
 												1,
@@ -1749,12 +1754,12 @@ sales analysis needs to reflect the sales made before and after the changes*/
 												stkcategory)
 										SELECT '" . $_SESSION['CreditItems'.$identifier]->DefaultSalesType . "',
 												'" . $PeriodNo . "',
-												'" . -$CreditLine->Price * $CreditLine->Quantity / $_SESSION['CurrencyRate'] . "',
+												'" . -$SalesValue . "',
 												'" . -$CreditLine->StandardCost * $CreditLine->Quantity . "',
 												'" . $_SESSION['CreditItems'.$identifier]->DebtorNo . "',
 												'" . $_SESSION['CreditItems'.$identifier]->Branch . "',
 												'" . -$CreditLine->Quantity . "',
-												'" . -$CreditLine->DiscountPercent * $CreditLine->Price * $CreditLine->Quantity / $_SESSION['CurrencyRate'] . "',
+												'" . -$CreditLine->DiscountPercent * $SalesValue . "',
 												'" . $CreditLine->StockID . "',
 												custbranch.area,
 												1,
