@@ -1,5 +1,5 @@
 webERP Change Log
-
+18/5/14 Exson: Tidy up SelectSalesOrder.php SQL code and add Thumb's salesman login control and fixed bugs caused by no group by statements for customer and items selected.
 17/05/14 Phil: sales invoice and credit scripts all check for 0 exchange rate before updating sales anlaysis now
 17/05/14 Phil: Fixed Z_ChangeStockCode.php which was orphaning stockdescriptiontranslations without changing them to the new code
 14/05/14 Exson: Fixed typo in MRPReport.php which make some supplies not to be shown on the report and use itemdue instead of deliverydate in MRP to ensure that requirements are calculated correctly for items due on different date. 
