@@ -444,63 +444,7 @@ if (isset($OrderNumber) AND $OrderNumber!='') {
 
 if (isset($_POST['SearchParts'])){
 
-	if ($_POST['Keywords'] AND $_POST['StockCode']) {
-		echo _('Stock description keywords have been used in preference to the Stock code extract entered');
-	}
-	if ($_POST['Keywords']) {
-		//insert wildcard characters in spaces
-		$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
-
-		$SQL = "SELECT stockmaster.stockid,
-				stockmaster.description,
-				stockmaster.decimalplaces,
-				SUM(locstock.quantity) AS qoh,
-				stockmaster.units
-			FROM stockmaster INNER JOIN locstock
-				ON stockmaster.stockid=locstock.stockid
-			WHERE stockmaster.description " . LIKE . " '" . $SearchString . "'
-			AND stockmaster.categoryid='" . $_POST['StockCat']. "'
-			GROUP BY stockmaster.stockid,
-				stockmaster.description,
-				stockmaster.decimalplaces,
-				stockmaster.units
-			ORDER BY stockmaster.stockid";
-
-	 } elseif (isset($_POST['StockCode'])){
-		$SQL = "SELECT stockmaster.stockid,
-					stockmaster.description,
-					stockmaster.decimalplaces,
-					SUM(locstock.quantity) AS qoh,
-					stockmaster.units
-				FROM stockmaster INNER JOIN locstock
-				ON stockmaster.stockid=locstock.stockid
-				WHERE stockmaster.stockid " . LIKE . " '%" . $_POST['StockCode'] . "%'
-				AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-				GROUP BY stockmaster.stockid,
-					stockmaster.description,
-					stockmaster.decimalplaces,
-					stockmaster.units
-				ORDER BY stockmaster.stockid";
-
-	 } elseif (!isset($_POST['StockCode']) AND !isset($_POST['Keywords'])) {
-		$SQL = "SELECT stockmaster.stockid,
-					stockmaster.description,
-					stockmaster.decimalplaces,
-					SUM(locstock.quantity) AS qoh,
-					stockmaster.units
-				FROM stockmaster INNER JOIN locstock
-				ON stockmaster.stockid=locstock.stockid
-				WHERE stockmaster.categoryid='" . $_POST['StockCat'] ."'
-				GROUP BY stockmaster.stockid,
-					stockmaster.description,
-					stockmaster.decimalplaces,
-					stockmaster.units
-				ORDER BY stockmaster.stockid";
-	 }
-
-	$ErrMsg =  _('No stock items were returned by the SQL because');
-	$DbgMsg = _('The SQL used to retrieve the searched parts was');
-	$StockItemsResult = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
+	$StockItemsResult = GetSearchItems();
 
 }
 
@@ -653,9 +597,9 @@ if (isset($StockItemsResult)
 	if(!isset($_POST['StockLocation'])) {
 		$_POST['StockLocation'] = '';
 	}
-	if (isset($OrderNumber)
-		AND $OrderNumber !='') {
-			$SQL = "SELECT salesorders.orderno,
+	//Harmonize the ordervalue with SUM function since webERP allowed same items appeared several times in one sales orders. If there is no sum value, this situation not inclued. 
+
+	$SQL = "SELECT salesorders.orderno,
 					debtorsmaster.name,
 					custbranch.brname,
 					salesorders.customerref,
@@ -664,7 +608,7 @@ if (isset($StockItemsResult)
 					salesorders.deliverto,
 					salesorders.printedpackingslip,
 					salesorders.poplaced,
-					SUM(salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent)/currencies.rate) AS ordervalue
+				        SUM(salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent)/currencies.rate) AS ordervalue
 				FROM salesorders INNER JOIN salesorderdetails
 					ON salesorders.orderno = salesorderdetails.orderno
 					INNER JOIN debtorsmaster
@@ -674,10 +618,47 @@ if (isset($StockItemsResult)
 					AND salesorders.branchcode = custbranch.branchcode
 					INNER JOIN currencies
 					ON debtorsmaster.currcode = currencies.currabrev
-				WHERE salesorderdetails.completed=0
-				AND salesorders.orderno=". $OrderNumber ."
-				AND salesorders.quotation =" .$Quotations . "
-				GROUP BY salesorders.orderno,
+					WHERE salesorderdetails.completed=0 ";
+	//Add salesman role control 
+	if ($_SESSION['SalesmanLogin'] != '') {
+		$SQL .= " AND salesorders.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
+	}
+
+	if (isset($OrderNumber)
+		AND $OrderNumber !='') {
+			
+			$SQL .= "AND salesorders.orderno=". $OrderNumber ."
+				 AND salesorders.quotation=" .$Quotations;
+	} else {
+	      /* $DateAfterCriteria = FormatDateforSQL($OrdersAfterDate); */
+
+		if (isset($SelectedCustomer)) {
+
+			if (isset($SelectedStockItem)) {
+				$SQL .= "AND salesorders.quotation =" .$Quotations . "
+					 AND salesorderdetails.stkcode='". $SelectedStockItem ."'
+					 AND salesorders.debtorno='" . $SelectedCustomer ."'
+					 AND salesorders.fromstkloc = '". $_POST['StockLocation'] . "'";
+
+			} else {
+				$SQL .= "AND  salesorders.quotation =" .$Quotations . "
+					 AND salesorders.debtorno='" . $SelectedCustomer . "'
+					 AND salesorders.fromstkloc = '". $_POST['StockLocation'] . "'";
+
+			}
+		} else { //no customer selected
+			if (isset($SelectedStockItem)) {
+				$SQL .= "AND salesorders.quotation =" .$Quotations . "
+					 AND salesorderdetails.stkcode='". $SelectedStockItem . "'
+					 AND salesorders.fromstkloc = '". $_POST['StockLocation'] . "'";
+			} else {
+				$SQL .= "AND salesorders.quotation =" .$Quotations . "
+					 AND salesorders.fromstkloc = '". $_POST['StockLocation'] . "'";
+			}
+
+		} //end selected customer
+		
+		$SQL .= ' GROUP BY salesorders.orderno,
 					debtorsmaster.name,
 					custbranch.brname,
 					salesorders.customerref,
@@ -686,148 +667,9 @@ if (isset($StockItemsResult)
 					salesorders.deliverto,
 					salesorders.printedpackingslip,
 					salesorders.poplaced
-				ORDER BY salesorders.orderno";
-	} else {
-	      /* $DateAfterCriteria = FormatDateforSQL($OrdersAfterDate); */
-
-		if (isset($SelectedCustomer)) {
-
-			if (isset($SelectedStockItem)) {
-				$SQL = "SELECT salesorders.orderno,
-						debtorsmaster.name,
-						custbranch.brname,
-						salesorders.customerref,
-						salesorders.orddate,
-						salesorders.deliverydate,
-						salesorders.deliverto,
-						salesorders.printedpackingslip,
-						salesorders.poplaced,
-						salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent)/currencies.rate AS ordervalue
-					FROM salesorders INNER JOIN salesorderdetails
-						ON salesorders.orderno = salesorderdetails.orderno
-						INNER JOIN debtorsmaster
-						ON salesorders.debtorno = debtorsmaster.debtorno
-						INNER JOIN custbranch
-						ON debtorsmaster.debtorno = custbranch.debtorno
-						AND salesorders.branchcode = custbranch.branchcode
-						INNER JOIN currencies
-						ON debtorsmaster.currcode = currencies.currabrev
-					WHERE salesorderdetails.completed=0
-					AND salesorders.quotation =" .$Quotations . "
-					AND salesorderdetails.stkcode='". $SelectedStockItem ."'
-					AND salesorders.debtorno='" . $SelectedCustomer ."'
-					AND salesorders.fromstkloc = '". $_POST['StockLocation'] . "'
-					ORDER BY salesorders.orderno";
-
-
-			} else {
-				$SQL = "SELECT salesorders.orderno,
-						debtorsmaster.name,
-						custbranch.brname,
-						salesorders.customerref,
-						salesorders.orddate,
-						salesorders.deliverto,
-						salesorders.printedpackingslip,
-						salesorders.poplaced,
-						salesorders.deliverydate,
-						SUM(salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent)/currencies.rate) AS ordervalue
-					FROM salesorders INNER JOIN salesorderdetails
-						ON salesorders.orderno = salesorderdetails.orderno
-						INNER JOIN debtorsmaster
-						ON salesorders.debtorno = debtorsmaster.debtorno
-						INNER JOIN custbranch
-						ON debtorsmaster.debtorno = custbranch.debtorno
-						AND salesorders.branchcode = custbranch.branchcode
-						INNER JOIN currencies
-						ON debtorsmaster.currcode = currencies.currabrev
-					WHERE  salesorders.quotation =" .$Quotations . "
-					AND salesorderdetails.completed=0
-					AND salesorders.debtorno='" . $SelectedCustomer . "'
-					AND salesorders.fromstkloc = '". $_POST['StockLocation'] . "'
-					GROUP BY salesorders.orderno,
-						debtorsmaster.name,
-						salesorders.debtorno,
-						custbranch.brname,
-						salesorders.customerref,
-						salesorders.orddate,
-						salesorders.deliverto,
-						salesorders.deliverydate,
-						salesorders.poplaced
-					ORDER BY salesorders.orderno";
-
-			}
-		} else { //no customer selected
-			if (isset($SelectedStockItem)) {
-				$SQL = "SELECT salesorders.orderno,
-						debtorsmaster.name,
-						custbranch.brname,
-						salesorders.customerref,
-						salesorders.orddate,
-						salesorders.deliverto,
-					  	salesorders.printedpackingslip,
-					  	salesorders.poplaced,
-						salesorders.deliverydate,
-						SUM(salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent)/currencies.rate) AS ordervalue
-					FROM salesorders INNER JOIN salesorderdetails
-						ON salesorders.orderno = salesorderdetails.orderno
-						INNER JOIN debtorsmaster
-						ON salesorders.debtorno = debtorsmaster.debtorno
-						INNER JOIN custbranch
-						ON debtorsmaster.debtorno = custbranch.debtorno
-						AND salesorders.branchcode = custbranch.branchcode
-						INNER JOIN currencies
-						ON debtorsmaster.currcode = currencies.currabrev
-					WHERE salesorderdetails.completed=0
-					AND salesorders.quotation =" .$Quotations . "
-					AND salesorderdetails.stkcode='". $SelectedStockItem . "'
-					AND salesorders.fromstkloc = '". $_POST['StockLocation'] . "'
-					GROUP BY salesorders.orderno,
-						debtorsmaster.name,
-						custbranch.brname,
-						salesorders.customerref,
-						salesorders.orddate,
-						salesorders.deliverto,
-						salesorders.poplaced,
-						salesorders.deliverydate,
-						salesorders.printedpackingslip
-					ORDER BY salesorders.orderno";
-			} else {
-				$SQL = "SELECT salesorders.orderno,
-						debtorsmaster.name,
-						custbranch.brname,
-						salesorders.customerref,
-						salesorders.orddate,
-						salesorders.deliverto,
-						salesorders.deliverydate,
-						salesorders.printedpackingslip,
-						salesorders.poplaced,
-						SUM(salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent)/currencies.rate) AS ordervalue
-					FROM salesorders INNER JOIN salesorderdetails
-						ON salesorders.orderno = salesorderdetails.orderno
-						INNER JOIN debtorsmaster
-						ON salesorders.debtorno = debtorsmaster.debtorno
-						INNER JOIN custbranch
-						ON debtorsmaster.debtorno = custbranch.debtorno
-						AND salesorders.branchcode = custbranch.branchcode
-						INNER JOIN currencies
-						ON debtorsmaster.currcode = currencies.currabrev
-					WHERE salesorderdetails.completed=0
-					AND salesorders.quotation =" .$Quotations . "
-					AND salesorders.fromstkloc = '". $_POST['StockLocation'] . "'
-					GROUP BY salesorders.orderno,
-						debtorsmaster.name,
-						custbranch.brname,
-						salesorders.customerref,
-						salesorders.orddate,
-						salesorders.deliverto,
-						salesorders.deliverydate,
-						salesorders.printedpackingslip,
-						salesorders.poplaced
-					ORDER BY salesorders.orderno";
-			}
-
-		} //end selected customer
+				ORDER BY salesorders.orderno';
 	} //end not order number selected
+
 
 	$ErrMsg = _('No orders or quotations were returned by the SQL because');
 	$SalesOrdersResult = DB_query($SQL,$db,$ErrMsg);
@@ -1022,4 +864,49 @@ echo '</div>
 } //end StockID already selected
 
 include('includes/footer.inc');
+function GetSearchItems ($SQLConstraint='') {
+	global $db;
+	if ($_POST['Keywords'] AND $_POST['StockCode']) {
+		echo _('Stock description keywords have been used in preference to the Stock code extract entered');
+	}
+	$SQL =  "SELECT stockmaster.stockid,
+				stockmaster.description,
+				stockmaster.decimalplaces,
+				SUM(locstock.quantity) AS qoh,
+				stockmaster.units
+			FROM stockmaster INNER JOIN locstock
+			ON stockmaster.stockid=locstock.stockid";
+	if (isset($_POST['StockCat']) AND trim($_POST['StockCat'])==''){
+		$WhereStockCat = '';
+	} else {
+		$WhereStockCat = " AND stockmaster.categoryid='" . $_POST['StockCat'] . "' ";
+	}
+	if ($_POST['Keywords']) {
+		//insert wildcard characters in spaces
+		$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
+
+		$SQL .= " WHERE stockmaster.description " . LIKE . " '" . $SearchString . "'
+			" . $WhereStockCat ;
+			
+
+	 } elseif (isset($_POST['StockCode'])){
+		$SQL .= " WHERE stockmaster.stockid " . LIKE . " '%" . $_POST['StockCode'] . "%'" . $WhereStockCat;
+
+	 } elseif (!isset($_POST['StockCode']) AND !isset($_POST['Keywords'])) {
+		$SQL .= " WHERE stockmaster.categoryid='" . $_POST['StockCat'] ."'";
+			
+	 }
+	$SQL .= $SQLConstraint; 
+	$SQL .= " GROUP BY stockmaster.stockid,
+					stockmaster.description,
+					stockmaster.decimalplaces,
+					stockmaster.units
+					ORDER BY stockmaster.stockid";
+	
+	$ErrMsg =  _('No stock items were returned by the SQL because');
+	$DbgMsg = _('The SQL used to retrieve the searched parts was');
+	$StockItemsResult = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
+	return $StockItemsResult;
+
+}
 ?>
