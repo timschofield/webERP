@@ -1,7 +1,7 @@
 <?php
 /* $Id$*/
-function GetPrice ($StockID, $DebtorNo, $BranchCode, $db, $OrderLineQty,$ReportZeroPrice=1){
-
+function GetPrice ($StockID, $DebtorNo, $BranchCode, $OrderLineQty=1,$ReportZeroPrice=1){
+	global $db;
 	$Price = 0;
 
 		/*Search by branch and customer for a date specified price */
