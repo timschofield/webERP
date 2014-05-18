@@ -865,7 +865,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 			$SQL = "UPDATE salesorderdetails
 					SET quantity = quantity - " . ($OrderLine->Quantity - $OrderLine->QtyDispatched - $OrderLine->QtyInv) . "
 					WHERE orderno = '" . $_SESSION['ProcessingOrder'] . " '
-						AND stkcode = '" . $OrderLine->StockID . "'";
+						AND orderlineno = '" . $OrderLine->LineNumber . "'";
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sales order detail record could not be updated because');
 			$DbgMsg = _('The following SQL to update the sales order detail record was used');
