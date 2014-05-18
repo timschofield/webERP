@@ -1,4 +1,5 @@
 webERP Change Log
+18/5/14 Thumb: Fixed the bug in ConfirmDispatch_Invoice.php for Balance quantity canceled policy by line no instead of by stockid since webERP allow same stock appeared in one order multiple times.
 18/5/14 Exson: Tidy up SelectSalesOrder.php SQL code and add Thumb's salesman login control and fixed bugs caused by no group by statements for customer and items selected.
 17/05/14 Phil: sales invoice and credit scripts all check for 0 exchange rate before updating sales anlaysis now
 17/05/14 Phil: Fixed Z_ChangeStockCode.php which was orphaning stockdescriptiontranslations without changing them to the new code
