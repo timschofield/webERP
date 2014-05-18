@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-02-08 17:33+1300\n"
-"PO-Revision-Date: 2014-05-14 23:20-0600\n"
+"PO-Revision-Date: 2014-05-18 11:23-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -43418,44 +43418,48 @@ msgid "Change A Customer Code"
 msgstr "Cambiar un código de cliente"
 
 #: includes/MainMenuLinksArray.php:527
+msgid "Change A Stock Category Code"
+msgstr "Cambiar un código de categoría de inventario"
+
+#: includes/MainMenuLinksArray.php:528
 msgid "Change A Customer Branch Code"
 msgstr "Cambiar un código de sucursal de cliente"
 
-#: includes/MainMenuLinksArray.php:528
+#: includes/MainMenuLinksArray.php:529
 msgid "Change A Supplier Code"
 msgstr "Cambiar un código de proveedor"
 
-#: includes/MainMenuLinksArray.php:529
+#: includes/MainMenuLinksArray.php:530
 msgid "Change An Inventory Item Code"
 msgstr "Cambiar un código de artículo de inventario"
 
-#: includes/MainMenuLinksArray.php:530
+#: includes/MainMenuLinksArray.php:531
 msgid "Change A GL Account Code"
 msgstr "Cambiar un código de cuenta contable"
 
-#: includes/MainMenuLinksArray.php:531
+#: includes/MainMenuLinksArray.php:532
 msgid "Change A Location Code"
 msgstr "Cambiar un código de ubicación"
 
-#: includes/MainMenuLinksArray.php:532
+#: includes/MainMenuLinksArray.php:533
 msgid "Update costs for all BOM items, from the bottom up"
 msgstr ""
 "Actualización de costos de todos los elementos de lista de materiales, de "
 "abajo hacia arriba"
 
-#: includes/MainMenuLinksArray.php:533
+#: includes/MainMenuLinksArray.php:534
 msgid "Re-apply costs to Sales Analysis"
 msgstr "Aplicar Costos al Análisis de Ventas"
 
-#: includes/MainMenuLinksArray.php:534
+#: includes/MainMenuLinksArray.php:535
 msgid "Delete sales transactions"
 msgstr "Eliminar transacciones de venta"
 
-#: includes/MainMenuLinksArray.php:535
+#: includes/MainMenuLinksArray.php:536
 msgid "Reverse all supplier payments on a specified date"
 msgstr "Revocar todos los pagos a proveedores en una fecha específica"
 
-#: includes/MainMenuLinksArray.php:536
+#: includes/MainMenuLinksArray.php:537
 msgid "Update sales analysis with latest customer data"
 msgstr ""
 
