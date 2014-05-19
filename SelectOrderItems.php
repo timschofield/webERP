@@ -424,32 +424,7 @@ if (isset($SelectedCustomer)) {
 		$_SESSION['Items'.$identifier]->CurrDecimalPlaces = $myrow['decimalplaces'];
 
 # the branch was also selected from the customer selection so default the delivery details from the customer branches table CustBranch. The order process will ask for branch details later anyway
-
-		$sql = "SELECT custbranch.brname,
-						custbranch.braddress1,
-						custbranch.braddress2,
-						custbranch.braddress3,
-						custbranch.braddress4,
-						custbranch.braddress5,
-						custbranch.braddress6,
-						custbranch.phoneno,
-						custbranch.email,
-						custbranch.defaultlocation,
-						custbranch.defaultshipvia,
-						custbranch.deliverblind,
-						custbranch.specialinstructions,
-						custbranch.estdeliverydays,
-						locations.locationname,
-						custbranch.salesman
-					FROM custbranch
-					INNER JOIN locations
-					ON custbranch.defaultlocation=locations.loccode
-					WHERE custbranch.branchcode='" . $_SESSION['Items'.$identifier]->Branch . "'
-					AND custbranch.debtorno = '" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
-
-		$ErrMsg = _('The customer branch record of the customer selected') . ': ' . $_SESSION['Items'.$identifier]->DebtorNo . ' ' . _('cannot be retrieved because');
-		$DbgMsg = _('SQL used to retrieve the branch details was') . ':';
-		$result =DB_query($sql,$db,$ErrMsg,$DbgMsg);
+		$result = GetCustBranchDetails($identifier);
 
 		if (DB_num_rows($result)==0){
 
@@ -549,30 +524,7 @@ if (isset($SelectedCustomer)) {
 	// the branch would be set in the user data so default delivery details as necessary. However,
 	// the order process will ask for branch details later anyway
 
-		$sql = "SELECT custbranch.brname,
-						custbranch.branchcode,
-						custbranch.braddress1,
-						custbranch.braddress2,
-						custbranch.braddress3,
-						custbranch.braddress4,
-						custbranch.braddress5,
-						custbranch.braddress6,
-						custbranch.phoneno,
-						custbranch.email,
-						custbranch.defaultlocation,
-						custbranch.deliverblind,
-						custbranch.estdeliverydays,
-						locations.locationname,
-						custbranch.salesman
-				FROM custbranch INNER JOIN locations
-				ON custbranch.defaultlocation=locations.loccode
-				WHERE custbranch.branchcode='" . $_SESSION['Items'.$identifier]->Branch . "'
-				AND custbranch.debtorno = '" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
-
-		$ErrMsg = _('The customer branch record of the customer selected') . ': ' . $_SESSION['Items'.$identifier]->DebtorNo . ' ' . _('cannot be retrieved because');
-		$DbgMsg = _('SQL used to retrieve the branch details was');
-		$result =DB_query($sql,$db,$ErrMsg, $DbgMsg);
-
+		$result = GetCustBranchDetails($identifier);
 		$myrow = DB_fetch_array($result);
 		$_SESSION['Items'.$identifier]->DeliverTo = $myrow['brname'];
 		$_SESSION['Items'.$identifier]->DelAdd1 = $myrow['braddress1'];
@@ -767,40 +719,27 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		} elseif ($_POST['Keywords']=='' AND $_POST['StockCode']=='') {
 			$msg='<div class="page_help_text">' . _('Stock Category has been used in search') . '.</div>';
 		}
+		$SQL = "SELECT stockmaster.stockid,
+								stockmaster.description,
+								stockmaster.longdescription,
+								stockmaster.units
+						FROM stockmaster INNER JOIN stockcategory
+						ON stockmaster.categoryid=stockcategory.categoryid
+						WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D' OR stockcategory.stocktype='L')
+						AND stockmaster.mbflag <>'G'
+						AND stockmaster.discontinued=0 ";
 		if (isset($_POST['Keywords']) AND mb_strlen($_POST['Keywords'])>0) {
 			//insert wildcard characters in spaces
 			$_POST['Keywords'] = mb_strtoupper($_POST['Keywords']);
 			$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
 
 			if ($_POST['StockCat']=='All'){
-				$SQL = "SELECT stockmaster.stockid,
-								stockmaster.description,
-								stockmaster.longdescription,
-								stockmaster.units,
-								custitem.cust_part,
-								custitem.cust_description
-						FROM stockmaster INNER JOIN stockcategory
-						ON stockmaster.categoryid=stockcategory.categoryid" . $IncludeCustItem . "
-						WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D' OR stockcategory.stocktype='L'".$RawMaterialSellable.")
-						AND stockmaster.mbflag <>'G'
-						AND stockmaster.description " . LIKE . " '" . $SearchString . "'
-						AND stockmaster.discontinued=0
-						ORDER BY stockmaster.stockid";
+				$SQL .= "AND stockmaster.description " . LIKE . " '" . $SearchString . "'
+					ORDER BY stockmaster.stockid";
 			} else {
-				$SQL = "SELECT stockmaster.stockid,
-								stockmaster.description,
-								stockmaster.longdescription,
-								stockmaster.units,
-								custitem.cust_part,
-								custitem.cust_description
-						FROM stockmaster INNER JOIN stockcategory
-						ON stockmaster.categoryid=stockcategory.categoryid" . $IncludeCustItem . "
-						WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D' OR stockcategory.stocktype='L'".$RawMaterialSellable.")
-						AND stockmaster.mbflag <>'G'
-						AND stockmaster.discontinued=0
-						AND stockmaster.description " . LIKE . " '" . $SearchString . "'
-						AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-						ORDER BY stockmaster.stockid";
+				$SQL .= "AND stockmaster.description " . LIKE . " '" . $SearchString . "'
+					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+					ORDER BY stockmaster.stockid";
 			}
 
 		} elseif (mb_strlen($_POST['StockCode'])>0){
@@ -809,64 +748,20 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			$SearchString = '%' . $_POST['StockCode'] . '%';
 
 			if ($_POST['StockCat']=='All'){
-				$SQL = "SELECT stockmaster.stockid,
-								stockmaster.description,
-								stockmaster.longdescription,
-								stockmaster.units,
-								custitem.cust_part,
-								custitem.cust_description
-						FROM stockmaster INNER JOIN stockcategory
-						ON stockmaster.categoryid=stockcategory.categoryid" . $IncludeCustItem . "
-						WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D' OR stockcategory.stocktype='L'".$RawMaterialSellable.")
-						AND stockmaster.stockid " . LIKE . " '" . $SearchString . "'
-						AND stockmaster.mbflag <>'G'
-						AND stockmaster.discontinued=0
-						ORDER BY stockmaster.stockid";
+				$SQL .= "AND stockmaster.stockid " . LIKE . " '" . $SearchString . "'
+					ORDER BY stockmaster.stockid";
 			} else {
-				$SQL = "SELECT stockmaster.stockid,
-								stockmaster.description,
-								stockmaster.longdescription,
-								stockmaster.units,
-								custitem.cust_part,
-								custitem.cust_description
-						FROM stockmaster INNER JOIN stockcategory
-						ON stockmaster.categoryid=stockcategory.categoryid" . $IncludeCustItem . "
-						WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D' OR stockcategory.stocktype='L'".$RawMaterialSellable.")
-						AND stockmaster.stockid " . LIKE . " '" . $SearchString . "'
-						AND stockmaster.mbflag <>'G'
-						AND stockmaster.discontinued=0
-						AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-						ORDER BY stockmaster.stockid";
+				$SQL .= "AND stockmaster.stockid " . LIKE . " '" . $SearchString . "'
+					 AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+					 ORDER BY stockmaster.stockid";
 			}
 
 		} else {
 			if ($_POST['StockCat']=='All'){
-				$SQL = "SELECT stockmaster.stockid,
-								stockmaster.description,
-								stockmaster.longdescription,
-								stockmaster.units,
-								custitem.cust_part,
-								custitem.cust_description
-						FROM stockmaster INNER JOIN stockcategory
-						ON stockmaster.categoryid=stockcategory.categoryid" . $IncludeCustItem . "
-						WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D' OR stockcategory.stocktype='L'".$RawMaterialSellable.")
-						AND stockmaster.mbflag <>'G'
-						AND stockmaster.discontinued=0
-						ORDER BY stockmaster.stockid";
+				$SQL .= "ORDER BY stockmaster.stockid";
 			} else {
-				$SQL = "SELECT stockmaster.stockid,
-								stockmaster.description,
-								stockmaster.longdescription,
-								stockmaster.units,
-								custitem.cust_part,
-								custitem.cust_description
-						FROM stockmaster INNER JOIN stockcategory
-						ON stockmaster.categoryid=stockcategory.categoryid" . $IncludeCustItem . "
-						WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D' OR stockcategory.stocktype='L'".$RawMaterialSellable.")
-						AND stockmaster.mbflag <>'G'
-						AND stockmaster.discontinued=0
-						AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-						ORDER BY stockmaster.stockid";
+				$SQL .= "AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+					 ORDER BY stockmaster.stockid";
 			  }
 		}
 
@@ -1957,4 +1852,35 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	}#end of else not selecting a customer
 
 include('includes/footer.inc');
+
+function GetCustBranchDetails($identifier) {
+		global $db;
+		$sql = "SELECT custbranch.brname,
+						custbranch.branchcode,
+						custbranch.braddress1,
+						custbranch.braddress2,
+						custbranch.braddress3,
+						custbranch.braddress4,
+						custbranch.braddress5,
+						custbranch.braddress6,
+						custbranch.phoneno,
+						custbranch.email,
+						custbranch.defaultlocation,
+						custbranch.defaultshipvia,
+						custbranch.deliverblind,
+						custbranch.specialinstructions,
+						custbranch.estdeliverydays,
+						locations.locationname,
+						custbranch.salesman
+					FROM custbranch
+					INNER JOIN locations
+					ON custbranch.defaultlocation=locations.loccode
+					WHERE custbranch.branchcode='" . $_SESSION['Items'.$identifier]->Branch . "'
+					AND custbranch.debtorno = '" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
+		
+		$ErrMsg = _('The customer branch record of the customer selected') . ': ' . $_SESSION['Items'.$identifier]->DebtorNo . ' ' . _('cannot be retrieved because');
+		$DbgMsg = _('SQL used to retrieve the branch details was') . ':';
+		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+		return $result;
+}
 ?>
