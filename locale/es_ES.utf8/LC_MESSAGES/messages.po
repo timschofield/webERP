@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-02-08 17:33+1300\n"
-"PO-Revision-Date: 2014-05-18 11:23-0600\n"
+"PO-Revision-Date: 2014-05-19 18:08-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -1170,6 +1170,7 @@ msgstr "Desde código proveedor"
 #: AgedSuppliers.php:288
 msgid "Enter the first supplier code alphabetially to include in the report"
 msgstr ""
+"Introduzca el primer código alfabético de proveedor a incluir en el informe"
 
 #: AgedSuppliers.php:291 OutstandingGRNs.php:271 PDFRemittanceAdvice.php:157
 #: SupplierBalsAtPeriodEnd.php:136 SuppPaymentRun.php:269
@@ -43303,7 +43304,7 @@ msgstr "Fichas de la Caja Chica"
 
 #: includes/MainMenuLinksArray.php:425
 msgid "PC Expenses"
-msgstr "Gastos de la Caja Chica"
+msgstr "Gastos de caja chica"
 
 #: includes/MainMenuLinksArray.php:426
 msgid "Expenses for Type of PC Tab"
@@ -43311,7 +43312,7 @@ msgstr "Gastos por Tipo de Fichas de la Caja Chica"
 
 #: includes/MainMenuLinksArray.php:437
 msgid "Access Permissions Maintenance"
-msgstr "Administrar Permisos de Acceso"
+msgstr "Administrar permisos de acceso"
 
 #: includes/MainMenuLinksArray.php:438
 msgid "Page Security Settings"
@@ -43319,23 +43320,23 @@ msgstr "Configuración de la Página de Seguridad"
 
 #: includes/MainMenuLinksArray.php:440
 msgid "Tax Authorities and Rates Maintenance"
-msgstr "Administrar Autoridades Fiscales y Tasas"
+msgstr "Administrar autoridades fiscales y tasas"
 
 #: includes/MainMenuLinksArray.php:441
 msgid "Tax Group Maintenance"
-msgstr "Administrar Grupos de Impuestos"
+msgstr "Administrar grupos de impuestos"
 
 #: includes/MainMenuLinksArray.php:442
 msgid "Dispatch Tax Province Maintenance"
-msgstr "Administrar Jurisdicciones Fiscales"
+msgstr "Administrar jurisdicciones fiscales"
 
 #: includes/MainMenuLinksArray.php:443
 msgid "Tax Category Maintenance"
-msgstr "Administrar Clases de Impuestos"
+msgstr "Administrar clases de impuestos"
 
 #: includes/MainMenuLinksArray.php:444
 msgid "List Periods Defined"
-msgstr "Lista de Períodos definidos"
+msgstr "Lista de períodos definidos"
 
 #: includes/MainMenuLinksArray.php:445
 msgid "Report Builder Tool"
@@ -43351,11 +43352,11 @@ msgstr ""
 
 #: includes/MainMenuLinksArray.php:450
 msgid "SMTP Server Details"
-msgstr "Detalles del Servidor SMTP"
+msgstr "Detalles del servidor SMTP"
 
 #: includes/MainMenuLinksArray.php:478
 msgid "Set Purchase Order Authorisation levels"
-msgstr "Defina los niveles de Autorización de Órdenes de Compra"
+msgstr "Definir niveles de autorización de órdenes de compra"
 
 #: includes/MainMenuLinksArray.php:480
 msgid "Sales People"
@@ -43363,7 +43364,7 @@ msgstr "Vendedores"
 
 #: includes/MainMenuLinksArray.php:481
 msgid "Sales Areas"
-msgstr "Zonas de Ventas"
+msgstr "Zonas de ventas"
 
 #: includes/MainMenuLinksArray.php:482
 msgid "Shippers"
@@ -43379,7 +43380,7 @@ msgstr "Registros de la Interfaz Contable de Costo de Bienes Vendidos"
 
 #: includes/MainMenuLinksArray.php:486
 msgid "Discount Matrix"
-msgstr "Matriz de Descuentos"
+msgstr "Matriz de descuentos"
 
 #: includes/MainMenuLinksArray.php:487
 msgid "Price Matrix"
@@ -43391,7 +43392,7 @@ msgstr "Administrar Ubicaciones (Sedes, Almacenes)"
 
 #: includes/MainMenuLinksArray.php:507
 msgid "Discount Category Maintenance"
-msgstr "Administrar Clases de Descuento"
+msgstr "Administrar clases de descuento"
 
 #: includes/MainMenuLinksArray.php:509
 msgid "MRP Available Production Days"
