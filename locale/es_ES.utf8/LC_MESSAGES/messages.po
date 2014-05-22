@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-02-08 17:33+1300\n"
-"PO-Revision-Date: 2014-05-19 18:08-0600\n"
+"PO-Revision-Date: 2014-05-22 11:11-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -20037,7 +20037,7 @@ msgstr "Recibido de"
 
 #: PDFReceipt.php:107
 msgid "The Sum Of"
-msgstr "La Suma de"
+msgstr "La suma de"
 
 #: PDFReceipt.php:113
 msgid "Details"
@@ -20088,7 +20088,7 @@ msgstr "Los detalles del pago al proveedor no se pudieron recuperar, porque"
 
 #: PDFRemittanceAdvice.php:112
 msgid "Total Payment:"
-msgstr "Total Pago:"
+msgstr "Pago total:"
 
 #: PDFRemittanceAdvice.php:124
 msgid "Remittance_Advices"
@@ -20100,7 +20100,7 @@ msgstr "Avisos Remesa"
 
 #: PDFRemittanceAdvice.php:168
 msgid "Date Of Payment"
-msgstr "Fecha de Pago"
+msgstr "Fecha de pago"
 
 #: PDFRemittanceAdvice.php:216
 msgid "printed:"
@@ -25422,7 +25422,7 @@ msgstr "Actual?"
 #: SalesTopCustomersInquiry.php:6 SalesTopCustomersInquiry.php:9
 #: TopCustomers.php:9
 msgid "Top Customer Sales Inquiry"
-msgstr ""
+msgstr "Consulta de ventas a mejores clientes"
 
 #: SalesTopCustomersInquiry.php:82 SalesTopItemsInquiry.php:83
 #: TopCustomers.php:81 WWW_Users.php:660
@@ -41137,7 +41137,7 @@ msgstr "Guyana"
 
 #: includes/CountriesArray.php:88
 msgid "Hong Kong"
-msgstr ""
+msgstr "Hong Kong"
 
 #: includes/CountriesArray.php:89
 msgid "Honduras"
@@ -41633,7 +41633,7 @@ msgstr "Zambia"
 
 #: includes/CountriesArray.php:212
 msgid "South Africa"
-msgstr ""
+msgstr "Sudáfrica"
 
 #: includes/CountriesArray.php:213
 msgid "Zimbabwe"
@@ -42614,7 +42614,7 @@ msgstr "Número de Licitación"
 
 #: includes/DefineTenderClass.php:45
 msgid " Quantity "
-msgstr ""
+msgstr "Cantidad"
 
 #: includes/DefineTenderClass.php:45
 msgid " Unit "
@@ -42858,23 +42858,23 @@ msgstr "Consultar órdenes de venta"
 
 #: includes/MainMenuLinksArray.php:53
 msgid "Print Price Lists"
-msgstr "Imprimir Listas de Precios"
+msgstr "Imprimir listas de precios"
 
 #: includes/MainMenuLinksArray.php:55
 msgid "Orders Invoiced Reports"
-msgstr "Informes de Pedidos Facturados"
+msgstr "Informes de pedidos facturados"
 
 #: includes/MainMenuLinksArray.php:57
 msgid "Sales By Sales Type Inquiry"
-msgstr "Consulta de Ventas por Tipo de Ventas"
+msgstr "Consulta de ventas por tipo de venta"
 
 #: includes/MainMenuLinksArray.php:58
 msgid "Sales By Category Inquiry"
-msgstr "Consulta de Ventas por Categoría"
+msgstr "Consulta de ventas por categoría"
 
 #: includes/MainMenuLinksArray.php:59
 msgid "Top Sellers Inquiry"
-msgstr "Consulta de Mejores Ventas"
+msgstr "Consulta de mejores ventas"
 
 #: includes/MainMenuLinksArray.php:60
 msgid "Order Delivery Differences Report"
@@ -42886,7 +42886,7 @@ msgstr "Consultar Detalles/Sumario de Pedidos de Venta"
 
 #: includes/MainMenuLinksArray.php:64
 msgid "Top Customers Inquiry"
-msgstr ""
+msgstr "Consulta de mejores clientes"
 
 #: includes/MainMenuLinksArray.php:65
 msgid "Worst Sales Items Report"
