@@ -1,4 +1,8 @@
 webERP Change Log
+
+22/5/14 Tim: Currencies.php now allows FunctionalCurrency to be modified
+22/5/14 Phil: Prevent use of enter key - experimental - in number fields - prevents users from losing data in big forms where they are entering large amounts of data e.g. purchase ordering - maybe we should consider for integer fields too?
+22/5/14 Ricard/Phil: Tidy up SQL in StockClone.php
 19/5/14 Exson: Tidy up code of SelectOrderItems.php.
 18/5/14 Thumb: Fixed the bug in ConfirmDispatch_Invoice.php for Balance quantity canceled policy by line no instead of by stockid since webERP allow same stock appeared in one order multiple times.
 18/5/14 Exson: Tidy up SelectSalesOrder.php SQL code and add Thumb's salesman login control and fixed bugs caused by no group by statements for customer and items selected.

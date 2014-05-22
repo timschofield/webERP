@@ -473,21 +473,11 @@ if (isset($_POST['submit'])) {
                     //What about cost data?
                     //get any existing cost data
                     $sql = "SELECT materialcost,
-                                        labourcost,
-                                        overheadcost,
-                                        mbflag,
-                                        sum(quantity) as totalqoh
-                                FROM stockmaster INNER JOIN locstock
-                                ON stockmaster.stockid=locstock.stockid
-                                WHERE stockmaster.stockid='".$_POST['OldStockID']."'
-                                GROUP BY description,
-                                        units,
-                                        lastcost,
-                                        actualcost,
-                                        materialcost,
-                                        labourcost,
-                                        overheadcost,
-                                        mbflag";
+									labourcost,
+									overheadcost,
+									lastcost
+							FROM stockmaster 
+							WHERE stockmaster.stockid='".$_POST['OldStockID']."'";
                         $ErrMsg = _('The entered item code does not exist');
                         $OldResult = DB_query($sql,$db,$ErrMsg);
                         $OldRow = DB_fetch_array($OldResult);
@@ -507,7 +497,7 @@ if (isset($_POST['submit'])) {
 
                     //finish up
 					if (DB_error_no($db) ==0) {
-						prnMsg( _('New Cloned Item') .' ' . '<a href="SelectProduct.php?StockID=' . $_POST['StockID'] . '">' . $_POST['StockID'] . '</a> '. _('has been added to the database') .
+						prnMsg( _('New cloned Item') .' ' . '<a href="SelectProduct.php?StockID=' . $_POST['StockID'] . '">' . $_POST['StockID'] . '</a> '. _('has been added to the database') .
 							'<br />' . _('We also attempted to setup item purchase data and pricing.'));
 
                             if ($NoPricingData==1)
