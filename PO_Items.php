@@ -9,6 +9,7 @@ include('includes/SQL_CommonFunctions.inc');
  * and authorisation level check
  */
 include('includes/session.inc');
+
 $Title = _('Purchase Order Items');
 
 $identifier=$_GET['identifier'];
@@ -1254,6 +1255,7 @@ if (isset($SearchResult)) {
 		$PartsDisplayed++;
 #end of page full new headings if
 	}
+	
 	echo $PageBar;
 #end of while loop
 	echo '</table>';
