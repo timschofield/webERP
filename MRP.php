@@ -370,7 +370,9 @@ if (isset($_POST['submit'])) {
 						  WHERE purchorderdetails.orderno = purchorders.orderno
 							AND purchorders.status != 'Cancelled'
 							AND purchorders.status != 'Rejected'
-							AND(quantityord - quantityrecd) > 0";
+							AND purchorders.status != 'Completed'
+							AND(quantityord - quantityrecd) > 0
+							AND purchorderdetails.completed = 0";
 	$result = DB_query($sql,$db);
 
 	prnMsg(_('Loading supplies from inventory on hand'),'info');
