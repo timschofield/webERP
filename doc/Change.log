@@ -1,4 +1,5 @@
 webERP Change Log
+26/05/14 rchacon: Fixes other problems related to updating translations of the items description..
 22/05/14 newuser990(from webERP forum): fixed bugs in MRP.php that quantity which stated in PO with lines not completed but PO status marked Completed are calculated as supplies. Exson add PO order lines checked to avoid same problem. 
 22/5/14 Tim: Currencies.php now allows FunctionalCurrency to be modified
 22/5/14 Phil: Prevent use of enter key - experimental - in number fields - prevents users from losing data in big forms where they are entering large amounts of data e.g. purchase ordering - maybe we should consider for integer fields too?
