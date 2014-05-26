@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-02-08 17:33+1300\n"
-"PO-Revision-Date: 2014-05-22 11:43-0600\n"
+"PO-Revision-Date: 2014-05-25 11:09-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -7826,7 +7826,7 @@ msgstr "Nombre completo"
 
 #: CustLoginSetup.php:155
 msgid "Enter the user's real name"
-msgstr ""
+msgstr "Introduzca el nombre real del usuario"
 
 #: CustLoginSetup.php:158 Locations.php:590 SalesPeople.php:332
 #: SupplierContacts.php:265 SuppLoginSetup.php:141 WWW_Users.php:462
@@ -7835,7 +7835,7 @@ msgstr "Nº de Teléfono"
 
 #: CustLoginSetup.php:163
 msgid "Enter the user's email address"
-msgstr ""
+msgstr "Introduzca la dirección de correo-e del usuario"
 
 #: CustLoginSetup.php:167 CustomerBranches.php:599 CustomerBranches.php:636
 #: CustomerPurchases.php:79 WWW_Users.php:285 WWW_Users.php:531
@@ -8075,7 +8075,7 @@ msgstr ""
 
 #: CustomerAllocations.php:437 SupplierAllocations.php:506
 msgid "Total Allocated"
-msgstr "Total Asignado"
+msgstr "Total asignado"
 
 #: CustomerAllocations.php:441 SupplierAllocations.php:519
 msgid "Recalculate Total To Allocate"
@@ -19906,7 +19906,7 @@ msgstr "GB"
 
 #: PDFPrintLabel.php:45
 msgid "The Price Labels could not be retrieved by the SQL because"
-msgstr "El SQL no pudo obtener las Etiquetas de Precios porque"
+msgstr "El SQL no pudo obtener las etiquetas de precios porque"
 
 #: PDFPrintLabel.php:54
 msgid "There were no price labels to print out for the category specified"
@@ -19923,7 +19923,7 @@ msgstr "No se seleccionaron etiquetas a imprimir"
 #: PDFPrintLabel.php:184 PDFPrintLabel.php:185 PDFPrintLabel.php:268
 #: PDFPrintLabel.php:271
 msgid "Price Labels"
-msgstr "Etiquetas de Precios"
+msgstr "Etiquetas de precios"
 
 #: PDFPrintLabel.php:261
 msgid "Price_Labels"
@@ -19931,7 +19931,7 @@ msgstr "Etiquetas_Precio"
 
 #: PDFPrintLabel.php:272 includes/MainMenuLinksArray.php:220
 msgid "Print Price Labels"
-msgstr "Imrpimir Etiquetas de Precios"
+msgstr "Imprimir etiquetas de precios"
 
 #: PDFPrintLabel.php:282
 msgid "Label to print"
@@ -20029,7 +20029,7 @@ msgstr "Recibo de Ventas"
 
 #: PDFReceipt.php:33
 msgid "Customer Receipt Number "
-msgstr "Número de Recepción de cliente"
+msgstr "Número de recibo de cliente"
 
 #: PDFReceipt.php:96
 msgid "Received From"
@@ -20075,7 +20075,7 @@ msgstr "Proveedor desde"
 
 #: PDFRemittanceAdvice.php:48
 msgid "and Paid On"
-msgstr "Y Pagado en"
+msgstr "Y pagado en"
 
 #: PDFRemittanceAdvice.php:80
 msgid "Remittance Advice Problem Report"
@@ -20112,7 +20112,7 @@ msgstr "Nuestro Código:"
 
 #: PDFRemittanceAdvice.php:311
 msgid "This Payment"
-msgstr "Este Pago"
+msgstr "Este pago"
 
 #: PDFSellThroughSupportClaim.php:6 PDFSellThroughSupportClaim.php:164
 #: includes/MainMenuLinksArray.php:67
