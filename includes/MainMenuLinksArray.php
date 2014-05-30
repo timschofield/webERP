@@ -520,8 +520,7 @@ $MenuItems['system']['Maintenance']['URL'] = array(	'/StockCategories.php',
 													'/InternalStockCategoriesByRole.php',
 													'/Labels.php');
 
-$MenuItems['Utilities']['Transactions']['Caption'] = array(	_('Import GL Payments Receipts Or Journals From CSV'),
-															_('Change A Customer Code'),
+$MenuItems['Utilities']['Transactions']['Caption'] = array(	_('Change A Customer Code'),
 															_('Change A Customer Branch Code'),
 															_('Change A Supplier Code'),
 															_('Change A Stock Category Code'),
@@ -534,8 +533,7 @@ $MenuItems['Utilities']['Transactions']['Caption'] = array(	_('Import GL Payment
 															_('Reverse all supplier payments on a specified date'),
 															_('Update sales analysis with latest customer data'));
 
-$MenuItems['Utilities']['Transactions']['URL'] = array(	'/Z_ImportGLTransactions.php',
-														'/Z_ChangeCustomerCode.php',
+$MenuItems['Utilities']['Transactions']['URL'] = array(	'/Z_ChangeCustomerCode.php',
 														'/Z_ChangeBranchCode.php',
 														'/Z_ChangeSupplierCode.php',
 														'/Z_ChangeStockCategory.php',
@@ -562,21 +560,23 @@ $MenuItems['Utilities']['Maintenance']['Caption'] = array(	_('Maintain Language 
 															_('Make New Company'),
 															_('Data Export Options'),
 															_('Import Stock Items from .csv'),
+															_('Import Price List from CSV file'),
 															_('Import Fixed Assets from .csv file'),
+															_('Import GL Payments Receipts Or Journals From CSV'),
 															_('Create new company template SQL file and submit to webERP'),
 															_('Re-calculate brought forward amounts in GL'),
 															_('Re-Post all GL transactions from a specified period'),
-															_('Purge all old prices'),
-															_('Import Price List from CSV file'));
+															_('Purge all old prices'));
 
 $MenuItems['Utilities']['Maintenance']['URL'] = array(	'/Z_poAdmin.php',
 														'/Z_MakeNewCompany.php',
-														'/Z_DataExport.php',
+														'/Z_DataExport.php',													
 														'/Z_ImportStocks.php',
+														'/Z_ImportPriceList.php',
 														'/Z_ImportFixedAssets.php',
+														'/Z_ImportGLTransactions.php',	
 														'/Z_CreateCompanyTemplateFile.php',
 														'/Z_UpdateChartDetailsBFwd.php',
 														'/Z_RePostGLFromPeriod.php',
-														'/Z_DeleteOldPrices.php',
-														'/Z_ImportPriceList.php');
+														'/Z_DeleteOldPrices.php');
 ?>
