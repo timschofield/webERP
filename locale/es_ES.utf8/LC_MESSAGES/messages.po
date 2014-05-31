@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-02-08 17:33+1300\n"
-"PO-Revision-Date: 2014-05-25 11:09-0600\n"
+"PO-Revision-Date: 2014-05-30 19:38-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -15720,7 +15720,7 @@ msgstr "Informe de Valoración del Inventario"
 
 #: InventoryValuation.php:293
 msgid "Output to CSV"
-msgstr ""
+msgstr "Salida a CSV"
 
 #: Labels.php:6
 msgid "Label Templates"
@@ -39190,7 +39190,7 @@ msgstr ""
 #: Z_ImportChartOfAccounts.php:7 Z_ImportGLAccountGroups.php:5
 #: Z_ImportGLAccountSections.php:5
 msgid "Import Chart of Accounts"
-msgstr "Importar Plan de Cuentas"
+msgstr "Importar catálogo contable"
 
 #: Z_ImportChartOfAccounts.php:28 Z_ImportGLAccountGroups.php:26
 #: Z_ImportGLAccountSections.php:28 Z_ImportPartCodes.php:30
@@ -39212,8 +39212,8 @@ msgid ""
 "Select a csv file containing the details of the account codes that you wish "
 "to import into webERP. "
 msgstr ""
-"Seleccione un archivo CSV con los detalles de los Códigos de Cuenta que "
-"desea importar a WebERP. "
+"Seleccione un archivo CSV con los detalles de los códigos contables que "
+"desea importar al webERP. "
 
 #: Z_ImportChartOfAccounts.php:74 Z_ImportGLAccountGroups.php:67
 #: Z_ImportGLAccountSections.php:71 Z_ImportPartCodes.php:78
@@ -39233,7 +39233,7 @@ msgstr "Archivo a importar"
 
 #: Z_ImportDebtors.php:5
 msgid "Import Debtors And branches"
-msgstr ""
+msgstr "Importar deudores y sucursales"
 
 #: Z_ImportDebtors.php:105 Z_ImportStocks.php:52 Z_ImportSuppliers.php:67
 msgid "File contains "
@@ -39304,7 +39304,7 @@ msgstr ""
 
 #: Z_ImportFixedAssets.php:6
 msgid "Import Fixed Assets"
-msgstr "Importar los Activos Fijos"
+msgstr "Importar activos fijos"
 
 #: Z_ImportFixedAssets.php:48 Z_ImportGLTransactions.php:37
 #: Z_ImportPriceList.php:32
@@ -39451,7 +39451,7 @@ msgstr ""
 
 #: Z_ImportFixedAssets.php:287
 msgid "Get Import Template"
-msgstr "Obtener Plantilla de Importación"
+msgstr "Obtener plantilla de importación"
 
 #: Z_ImportFixedAssets.php:297
 msgid "Select Date to Upload B/Fwd Assets To:"
@@ -39466,8 +39466,8 @@ msgid ""
 "Select a csv file containing the details of the account sections that you "
 "wish to import into webERP. "
 msgstr ""
-"Seleccione un archivo CSV con los detalles de los Grupos Principales que "
-"desea importar a WebERP. "
+"Seleccione un archivo CSV con los detalles de los grupos contables que desea "
+"importar al webERP. "
 
 #: Z_ImportGLAccountSections.php:27
 msgid "Account Section"
@@ -39475,7 +39475,7 @@ msgstr "Grupo Principal"
 
 #: Z_ImportGLTransactions.php:6
 msgid "Import General Ledger Transactions"
-msgstr ""
+msgstr "Importar transacciones del Libro Mayor"
 
 #: Z_ImportGLTransactions.php:37 Z_ImportGLTransactions.php:47
 msgid "Try downloading a new template"
@@ -39572,7 +39572,7 @@ msgstr ""
 
 #: Z_ImportPartCodes.php:6
 msgid "Import Stock Items"
-msgstr "Importar Artículos de Existencias"
+msgstr "Importar artículos de inventario"
 
 #: Z_ImportPartCodes.php:75
 msgid ""
@@ -39587,7 +39587,7 @@ msgid ""
 "import into webERP. "
 msgstr ""
 "Seleccione un archivo CSV con los detalles de los Productos que desea "
-"importar a WebERP. "
+"importar al webERP. "
 
 #: Z_ImportPriceList.php:4
 msgid "Import Sales Price List"
@@ -39661,7 +39661,7 @@ msgstr ""
 
 #: Z_ImportStocks.php:5 Z_ImportSuppliers.php:5
 msgid "Import Items"
-msgstr "Importar Artículos"
+msgstr "Importar artículos"
 
 #: Z_ImportStocks.php:98
 msgid "Stock item \""
@@ -43412,7 +43412,7 @@ msgstr "Mantenimiento de Plantillas de Etiquetas"
 
 #: includes/MainMenuLinksArray.php:525
 msgid "Import GL Payments Receipts Or Journals From CSV"
-msgstr ""
+msgstr "Importar recibos de pago del Libro Mayor o diarios de archivo CSV"
 
 #: includes/MainMenuLinksArray.php:526
 msgid "Change A Customer Code"
@@ -43494,11 +43494,11 @@ msgstr "Opciones de Exportación de Datos"
 
 #: includes/MainMenuLinksArray.php:564
 msgid "Import Stock Items from .csv"
-msgstr "Importar Artículos de Existencias desde un archivo CSV"
+msgstr "Importar artículos de inventario de un archivo CSV"
 
 #: includes/MainMenuLinksArray.php:565
 msgid "Import Fixed Assets from .csv file"
-msgstr "Importación de Activos Fijos del archivo. csv"
+msgstr "Importar activos fijos de un archivo CSV"
 
 #: includes/MainMenuLinksArray.php:566
 msgid "Create new company template SQL file and submit to webERP"
