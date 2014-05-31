@@ -6,23 +6,27 @@ include('includes/session.inc');
 $Title = _('Import Fixed Assets');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
+echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme . 
+		'/images/fixed_assets.png" title="' . 
+		_('Import Fixed Assets from .csv file') . '" />' . ' ' . 
+		_('Import Fixed Assets from .csv file') . '</p>';
 
 // If this script is called with a file object, then the file contents are imported
 // If this script is called with the gettemplate flag, then a template file is served
 // Otherwise, a file upload form is displayed
 
 $FieldNames = array(
-	'Description',  //0
-	'LongDescription', //1
-	'AssetCategoryID', //2
-	'SerialNo',  //3
-	'BarCode', //4
-	'AssetLocationCode', //5
-	'Cost', //6
-	'AccumDepn', //7
-	'DepnType', //8 - SL or DV
-	'DepnRate', //9
-	'DatePurchased' //10
+	'Description',			//  0 'Title of the fixed asset',
+	'LongDescription',		//  1 'Description of the fixed asset',
+	'AssetCategoryID',		//  2 'Asset category id',
+	'SerialNo',				//  3 'Serial number',
+	'BarCode',				//  4 'Bar code',
+	'AssetLocationCode',	//  5 'Asset location code',
+	'Cost',					//  6 'Cost',
+	'AccumDepn',			//  7 'Accumulated depreciation',
+	'DepnType',				//  8 'Depreciation type - SL or DV',
+	'DepnRate',				//  9 'Depreciation rate',
+	'DatePurchased'			// 10 'Date of purchase',
 );
 
 if ($_FILES['SelectedAssetFile']['name']) { //start file processing
