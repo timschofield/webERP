@@ -1074,16 +1074,18 @@ if (isset($_POST['Search'])||isset($_POST['Prev'])||isset($_POST['Next'])){  /*i
 		}
 	}
 	
-	$sqlcount = substr($sql,strpos($sql,   "FROM"));
-	$sqlcount = substr($sqlcount,0, strpos($sqlcount,   "ORDER"));
-	$sqlcount = 'SELECT COUNT(*) '.$sqlcount;
-	$SearchResult = DB_query($sqlcount,$db,$ErrMsg,$DbgMsg);
+	$SQLCount = substr($sql,strpos($sql,   "FROM"));
+	$SQLCount = substr($SQLCount,0, strpos($SQLCount,   "ORDER"));
+	$SQLCount = 'SELECT COUNT(*) '.$SQLCount;
+	$SearchResult = DB_query($SQLCount,$db,$ErrMsg,$DbgMsg);
 	$myrow=DB_fetch_array($SearchResult);
 	DB_free_result($SearchResult);
 	unset($SearchResult);
 	$ListCount = $myrow[0];
 	$ListPageMax = ceil($ListCount / $_SESSION['DisplayRecordsMax'])-1;
-	
+	if ($ListPageMax < 0) {
+		$ListPageMax = 0;
+	}
 	if (isset($_POST['Next'])) {
 		$Offset = $_POST['currpage']+1;
 	}
@@ -1091,10 +1093,14 @@ if (isset($_POST['Search'])||isset($_POST['Prev'])||isset($_POST['Next'])){  /*i
 		$Offset = $_POST['currpage']-1;
 	}
 	if (!isset($Offset)) {
-		$Offset=0;
+		$Offset = 0;
 	}
-	if($Offset<0)$Offset=0;
-	if($Offset>$ListPageMax)$Offset=$ListPageMax;
+	if($Offset < 0){
+		$Offset = 0;
+	}
+	if($Offset > $ListPageMax) {
+		$Offset = $ListPageMax;
+	}
 	
 	$sql = $sql . "LIMIT " . $_SESSION['DisplayRecordsMax']." OFFSET " . strval($_SESSION['DisplayRecordsMax']*$Offset);
 
