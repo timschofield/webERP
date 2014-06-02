@@ -270,7 +270,9 @@ if (isset($NewItem) AND isset($_POST['WO'])){
 									INNER JOIN bom
 										ON stockmaster.stockid=bom.component
 									WHERE bom.parent='" . $NewItem . "'
-										AND bom.loccode='" . $_POST['StockLocation'] . "'",
+										AND bom.loccode='" . $_POST['StockLocation'] . "'
+										AND bom.effectivefrom<='" . Date('Y-m-d') . "'
+										AND bom.effectiveto>='" . Date('Y-m-d') . "'",
 							 $db);
 		$CostRow = DB_fetch_array($CostResult);
 		if (is_null($CostRow['cost']) OR $CostRow['cost']==0){
@@ -369,11 +371,12 @@ if (isset($_POST['submit']) OR isset($_POST['Search'])) { //The update button ha
 				/* can only change location cost if QtyRecd=0 */
 				$CostResult = DB_query("SELECT SUM((materialcost+labourcost+overheadcost)*bom.quantity) AS cost
 												FROM stockmaster
-												INNER JOIN bom
-													ON stockmaster.stockid=bom.component
+												INNER JOIN bom ON stockmaster.stockid=bom.component
 												WHERE bom.parent='" . $_POST['OutputItem'.$i] . "'
-													AND bom.loccode='" . $_POST['StockLocation'] . "'",
-									 $db);
+												AND bom.loccode='" . $_POST['StockLocation'] . "'
+												AND bom.effectivefrom<='" . Date('Y-m-d') . "'
+												AND bom.effectiveto>='" . Date('Y-m-d') . "'",
+										$db);
 				$CostRow = DB_fetch_array($CostResult);
 				if (is_null($CostRow['cost'])){
 					$Cost =0;

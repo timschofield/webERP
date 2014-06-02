@@ -1,4 +1,5 @@
 webERP Change Log
+2/6/14 Phil: Added bom effectivity dates into work order creation cost calculations - as spotted by Andrew Galuski
 1/6/14 Phil: Fixed bug in POItems.php that resulted in an SQL error when the number of items from the search was zero after previous searches had returned records
 27/05/14 RChacon: Add page title text and icon to import scripts. Page title text = menu option.
 27/05/14 RChacon: Regroups the import scripts in the utility menu.
