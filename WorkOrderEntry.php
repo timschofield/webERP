@@ -271,7 +271,7 @@ if (isset($NewItem) AND isset($_POST['WO'])){
 										ON stockmaster.stockid=bom.component
 									WHERE bom.parent='" . $NewItem . "'
 										AND bom.loccode='" . $_POST['StockLocation'] . "'
-										AND bom.effectivefrom<='" . Date('Y-m-d') . "'
+										AND bom.effectiveafter<='" . Date('Y-m-d') . "'
 										AND bom.effectiveto>='" . Date('Y-m-d') . "'",
 							 $db);
 		$CostRow = DB_fetch_array($CostResult);
@@ -374,7 +374,7 @@ if (isset($_POST['submit']) OR isset($_POST['Search'])) { //The update button ha
 												INNER JOIN bom ON stockmaster.stockid=bom.component
 												WHERE bom.parent='" . $_POST['OutputItem'.$i] . "'
 												AND bom.loccode='" . $_POST['StockLocation'] . "'
-												AND bom.effectivefrom<='" . Date('Y-m-d') . "'
+												AND bom.effectiveafter<='" . Date('Y-m-d') . "'
 												AND bom.effectiveto>='" . Date('Y-m-d') . "'",
 										$db);
 				$CostRow = DB_fetch_array($CostResult);
@@ -612,7 +612,9 @@ if (isset($NumberOfOutputs)){
 			}
 		}
 		echo '<td>';
-		wikiLink('WorkOrder', $_POST['WO'] . $_POST['OutputItem' .$i]);
+		if ($_SESSION['WikiApp']!=0){
+			wikiLink('WorkOrder', $_POST['WO'] . $_POST['OutputItem' .$i]);
+		}
 		echo '</td>';
 		echo '</tr>';
 		if (isset($_POST['Controlled' . $i])) {

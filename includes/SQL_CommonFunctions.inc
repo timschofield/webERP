@@ -209,18 +209,20 @@ function ItemCostUpdateGL($db, $StockID, $NewCost, $OldCost, $QOH) {
 
 /* Calculates the material cost of a bill of materials, given parent code*/
 function BomMaterialCost($Parent, $db) {
-	$SQL = "SELECT materialcost from stockmaster where stockid='".$Parent."'";
+	$SQL = "SELECT materialcost FROM stockmaster WHERE stockid='" . $Parent . "'";
 	$result1 = DB_query($SQL,$db);
 	$MyRow1 = DB_fetch_row($result1);
 	$OldCost = $MyRow1[0];
-	$SQL = "SELECT sum(quantity) as qoh from locstock where stockid='".$Parent."'";
+	$SQL = "SELECT sum(quantity) as qoh from locstock where stockid='" . $Parent . "'";
 	$result1 = DB_query($SQL,$db);
 	$MyRow1 = DB_fetch_row($result1);
 	$QOH = $MyRow1[0];
 	$SQL = "SELECT Sum(stockmaster.materialcost*bom.quantity) AS SumOfmaterialcost
 	   					FROM bom LEFT JOIN stockmaster
-							 ON bom.component = stockmaster.stockid
-							 WHERE bom.parent='". $Parent . "'";
+						ON bom.component = stockmaster.stockid
+						WHERE bom.parent='". $Parent . "'
+						AND bom.effectiveafter<='" . Date('Y-m-d') . "'
+						AND bom.effectiveto>='" . Date('Y-m-d') . "'";
 	$result = DB_query($SQL,$db);
 	$MyRow = DB_fetch_row($result);
 	$MaterialCost = $MyRow[0];
@@ -274,6 +276,8 @@ function WoRealRequirements($db, $WO, $LocCode, $StockID, $Qty=1, $ParentID='') 
 			ON bom.component=stockmaster.stockid
 			WHERE bom.parent='" . $StockID . "'
 			AND bom.loccode ='" . $LocCode . "'
+			AND bom.effectiveafter<='" . Date('Y-m-d') . "' 
+			AND bom.effectiveto>='" . Date('Y-m-d') . "' 
 			AND stockmaster.mbflag<>'G'
 			AND bom.component NOT IN (
 				SELECT stockid
@@ -300,6 +304,8 @@ function WoRealRequirements($db, $WO, $LocCode, $StockID, $Qty=1, $ParentID='') 
 						ON bom.component=stockmaster.stockid
 						WHERE bom.parent='" . $StockID . "'
 						AND bom.loccode ='" . $LocCode . "'
+						AND bom.effectiveafter<='" . Date('Y-m-d') . "'
+						AND bom.effectiveto>='" . Date('Y-m-d') . "'
 						AND stockmaster.mbflag<>'G'
 						AND bom.component IN (
 							SELECT stockid
@@ -322,6 +328,8 @@ function WoRealRequirements($db, $WO, $LocCode, $StockID, $Qty=1, $ParentID='') 
 			ON bom.component=stockmaster.stockid
 			WHERE parent='" . $StockID . "'
 			AND loccode ='" . $LocCode . "'
+			AND bom.effectiveafter<='" . Date('Y-m-d') . "'
+			AND bom.effectiveto>='" . Date('Y-m-d') . "'
 			AND stockmaster.mbflag='G'";
 	$result = DB_query($sql, $db);
 	while ($MyRow=DB_fetch_array($result)) {
