@@ -382,7 +382,9 @@ if ((!isset($_POST['SearchSuppliers']) or $_POST['SearchSuppliers'] == '') AND (
 	$_POST['SuppDelAdd4'] = $_SESSION['PO' . $identifier]->SuppDelAdd4;
 	$_POST['SuppDelAdd5'] = $_SESSION['PO' . $identifier]->SuppDelAdd5;
 	$_POST['SuppDelAdd6'] = $_SESSION['PO' . $identifier]->SuppDelAdd6;
-	$_POST['DeliveryDate'] = $_SESSION['PO' . $identifier]->DeliveryDate;
+	if(!isset($_POST['DeliveryDate'])){
+		$_POST['DeliveryDate'] = $_SESSION['PO' . $identifier]->DeliveryDate;
+	}
 
 }
 
