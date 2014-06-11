@@ -563,7 +563,7 @@ function GenerateCSVFile($Data, $Prefs) {
 			default:
 				$CSVLine = '';
 				foreach ($myrow as $mycolumn) { // check for embedded commas and enclose in quotes
-					if (mb_strpos($mycolumn,',')===false) $CSVLine .= $mycolumn.','; else $CSVLine .= '"'.$mycolumn.'",';
+					if (strpos($mycolumn,',')===false) $CSVLine .= $mycolumn.','; else $CSVLine .= '"'.$mycolumn.'",';
 				}
 				$CSVLine = mb_substr($CSVLine,0,-1); // Strip the last comma off
 		}
