@@ -545,8 +545,8 @@ function GenerateCSVFile($Data, $Prefs) {
 	global $Heading;
 	$CSVOutput = '';
 	// Write the column headings
-	foreach ($Heading as $mycolumn) { // check for embedded commas and enclose in quotes
-		if (mb_strpos($mycolumn,',')===false) $CSVOutput .= $mycolumn.','; else $CSVOutput .= '"'.$mycolumn.'",';
+	foreach ($Heading as $mycolumn) { // always enclose in quotes
+		$CSVOutput .= '"'.$mycolumn.'",';
 	}
 	$CSVOutput = mb_substr($CSVOutput,0,-1).chr(10); // Strip the last comma off and add line feed
 	// Now write each data line and totals
@@ -563,7 +563,7 @@ function GenerateCSVFile($Data, $Prefs) {
 			default:
 				$CSVLine = '';
 				foreach ($myrow as $mycolumn) { // check for embedded commas and enclose in quotes
-					if (strpos($mycolumn,',')===false) $CSVLine .= $mycolumn.','; else $CSVLine .= '"'.$mycolumn.'",';
+					$CSVLine .= '"'.$mycolumn.'",';
 				}
 				$CSVLine = mb_substr($CSVLine,0,-1); // Strip the last comma off
 		}

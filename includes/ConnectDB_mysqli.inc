@@ -59,7 +59,7 @@ require_once ($PathPrefix .'includes/MiscFunctions.php');
 //DB wrapper functions to change only once for whole application
 
 function DB_query ($SQL,
-					&$Conn,
+					$Conn='',
 					$ErrorMessage='',
 					$DebugMessage= '',
 					$Transaction=false,
@@ -67,28 +67,29 @@ function DB_query ($SQL,
 
 	global $debug;
 	global $PathPrefix;
+	global $db;
 
-	$result=mysqli_query($Conn, $SQL);
+	$result=mysqli_query($db, $SQL);
 
-	$_SESSION['LastInsertId'] = mysqli_insert_id($Conn);
+	$_SESSION['LastInsertId'] = mysqli_insert_id($db);
 
 	if ($DebugMessage == '') {
 		$DebugMessage = _('The SQL that failed was');
 	}
 
-	if (DB_error_no($Conn) != 0 AND $TrapErrors==true){
+	if (DB_error_no() != 0 AND $TrapErrors==true){
 		if ($TrapErrors){
 			require_once($PathPrefix . 'includes/header.inc');
 		}
-		prnMsg($ErrorMessage . '<br />' . DB_error_msg($Conn),'error', _('Database Error'). ' ' .DB_error_no($Conn));
+		prnMsg($ErrorMessage . '<br />' . DB_error_msg(),'error', _('Database Error'). ' ' .DB_error_no());
 		if ($debug==1){
 			prnMsg($DebugMessage. '<br />' . $SQL . '<br />','error',_('Database SQL Failure'));
 		}
 		if ($Transaction){
 			$SQL = 'rollback';
-			$Result = DB_query($SQL,$Conn);
-			if (DB_error_no($Conn) !=0){
-				prnMsg(_('Error Rolling Back Transaction'), 'error', _('Database Rollback Error'). ' ' .DB_error_no($Conn) );
+			$Result = DB_query($SQL);
+			if (DB_error_no() !=0){
+				prnMsg(_('Error Rolling Back Transaction'), 'error', _('Database Rollback Error'). ' ' .DB_error_no() );
 			}else{
 				prnMsg(_('Rolling Back Transaction OK'), 'error', _('Database Rollback Due to Error Above'));
 			}
@@ -97,7 +98,7 @@ function DB_query ($SQL,
 			include($PathPrefix . 'includes/footer.inc');
 			exit;
 		}
-	} elseif (isset($_SESSION['MonthsAuditTrail']) and (DB_error_no($Conn)==0 AND $_SESSION['MonthsAuditTrail']>0) AND (DB_affected_rows($result)>0)){
+	} elseif (isset($_SESSION['MonthsAuditTrail']) and (DB_error_no()==0 AND $_SESSION['MonthsAuditTrail']>0) AND (DB_affected_rows($result)>0)){
 
 		$SQLArray = explode(' ', $SQL);
 
@@ -113,7 +114,7 @@ function DB_query ($SQL,
 							'" . trim($_SESSION['UserID']) . "',
 							'" . DB_escape_string($SQL) . "')";
 
-				$AuditResult = mysqli_query($Conn, $AuditSQL);
+				$AuditResult = mysqli_query($db, $AuditSQL);
 			}
 		}
 	}
@@ -122,19 +123,16 @@ function DB_query ($SQL,
 }
 
 function DB_fetch_row (&$ResultIndex) {
-
 	$RowPointer=mysqli_fetch_row($ResultIndex);
 	Return $RowPointer;
 }
 
 function DB_fetch_assoc (&$ResultIndex) {
-
 	$RowPointer=mysqli_fetch_assoc($ResultIndex);
 	Return $RowPointer;
 }
 
 function DB_fetch_array (&$ResultIndex) {
-
 	$RowPointer=mysqli_fetch_array($ResultIndex);
 	Return $RowPointer;
 }
@@ -154,21 +152,22 @@ function DB_num_rows (&$ResultIndex){
 }
 
 function DB_affected_rows(&$ResultIndex){
-
 	global $db;
 	return mysqli_affected_rows($db);
 
 }
 
-function DB_error_no (&$Conn){
-	return mysqli_errno($Conn);
+function DB_error_no ($Conn=''){
+	global $db;
+	return mysqli_errno($db);
 }
 
-function DB_error_msg(&$Conn){
-	return mysqli_error($Conn);
+function DB_error_msg($Conn=''){
+	global $db;
+	return mysqli_error($db);
 }
 
-function DB_Last_Insert_ID(&$Conn, $Table, $FieldName){
+function DB_Last_Insert_ID($Conn='', $Table, $FieldName){
 //	return mysqli_insert_id($Conn);
 	if (isset($_SESSION['LastInsertId'])) {
 		$Last_Insert_ID = $_SESSION['LastInsertId'];
@@ -184,13 +183,14 @@ function DB_escape_string($String){
 	return mysqli_real_escape_string($db, $String);
 }
 
-function DB_show_tables(&$Conn){
-	$Result = DB_query('SHOW TABLES',$Conn);
+function DB_show_tables($Conn=''){
+	global $db;
+	$Result = DB_query('SHOW TABLES',$db);
 	Return $Result;
 }
 
-function DB_show_fields($TableName, &$Conn){
-	$Result = DB_query("DESCRIBE $TableName",$Conn);
+function DB_show_fields($TableName, $Conn=''){
+	$Result = DB_query("DESCRIBE $TableName");
 	Return $Result;
 }
 
@@ -199,38 +199,42 @@ function interval( $val, $Inter ){
 		return "\n".'interval ' . $val . ' '. $Inter."\n";
 }
 
-function DB_Maintenance($Conn){
+function DB_Maintenance($Conn=''){
 
 	prnMsg(_('The system has just run the regular database administration and optimisation routine.'),'info');
 
-	$TablesResult = DB_query('SHOW TABLES',$Conn);
+	$TablesResult = DB_query("SHOW TABLES");
 	while ($myrow = DB_fetch_row($TablesResult)){
-		$Result = DB_query('OPTIMIZE TABLE ' . $myrow[0],$Conn);
+		$Result = DB_query('OPTIMIZE TABLE ' . $myrow[0]);
 	}
 
 	$Result = DB_query("UPDATE config
 				SET confvalue='" . Date('Y-m-d') . "'
-				WHERE confname='DB_Maintenance_LastRun'",
-				$Conn);
+				WHERE confname='DB_Maintenance_LastRun'");
 }
 
-function DB_Txn_Begin($Conn){
-	mysqli_query($Conn,'SET autocommit=0');
-	mysqli_query($Conn,'START TRANSACTION');
+function DB_Txn_Begin($Conn=''){
+	global $db;
+	mysqli_query($db,'SET autocommit=0');
+	mysqli_query($db,'START TRANSACTION');
 }
 
-function DB_Txn_Commit($Conn){
-	mysqli_query($Conn,'COMMIT');
-	mysqli_query($Conn,'SET autocommit=1');
+function DB_Txn_Commit($Conn=''){
+	global $db;
+	mysqli_query($db,'COMMIT');
+	mysqli_query($db,'SET autocommit=1');
 }
 
-function DB_Txn_Rollback($Conn){
-	mysqli_query($Conn,'ROLLBACK');
+function DB_Txn_Rollback($Conn=''){
+	global $db;
+	mysqli_query($db,'ROLLBACK');
 }
-function DB_IgnoreForeignKeys($Conn){
-	mysqli_query($Conn,'SET FOREIGN_KEY_CHECKS=0');
+function DB_IgnoreForeignKeys($Conn=''){
+	global $db;
+	mysqli_query($db,'SET FOREIGN_KEY_CHECKS=0');
 }
-function DB_ReinstateForeignKeys($Conn){
-	mysqli_query($Conn, 'SET FOREIGN_KEY_CHECKS=1');
+function DB_ReinstateForeignKeys($Conn=''){
+	global $db;
+	mysqli_query($db, 'SET FOREIGN_KEY_CHECKS=1');
 }
 ?>
