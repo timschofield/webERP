@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-02-08 17:33+1300\n"
-"PO-Revision-Date: 2014-05-30 19:38-0600\n"
+"PO-Revision-Date: 2014-06-12 10:12-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -2572,7 +2572,7 @@ msgstr "C.T."
 
 #: BOMIndented.php:323
 msgid "Assembly:"
-msgstr "Ensamblado:"
+msgstr "Montaje::"
 
 #: BOMIndented.php:328 BOMIndentedReverse.php:306
 msgid " 12345678901234567890"
@@ -3067,7 +3067,7 @@ msgstr "El SQL usado para obtener la descripción de la pieza que usa ésta fue"
 #: Stocks.php:1129 Stocks.php:1131 api/api_debtortransactions.php:753
 #: api/api_salesorders.php:920
 msgid "Assembly"
-msgstr "Conjunto"
+msgstr "Montaje"
 
 #: BOMs.php:433 FixedAssetRegister.php:390 StockClone.php:862
 #: StockClone.php:864 Stocks.php:1149 Stocks.php:1151
@@ -4504,7 +4504,8 @@ msgstr ""
 #: ConfirmDispatch_Invoice.php:997 CounterReturns.php:1023
 #: CounterSales.php:1441 Credit_Invoice.php:745 SelectCreditItems.php:1441
 msgid "Could not retrieve assembly components from the database for"
-msgstr "No se pudo obtener componentes del conjunto de la base de datos"
+msgstr ""
+"No se pudo recuperar los componentes del montaje de la base de datos para"
 
 #: ConfirmDispatch_Invoice.php:997 CounterReturns.php:1023
 #: CounterSales.php:1441 Credit_Invoice.php:745 EDIMessageFormat.php:43
@@ -4542,7 +4543,7 @@ msgstr "Pedidos"
 #: CounterSales.php:1495 Credit_Invoice.php:836 SelectCreditItems.php:1494
 msgid "Stock movement records for the assembly components of"
 msgstr ""
-"Registro de movimientos de existencias para los componentes del conjunto"
+"Registro de movimientos de inventario para los componentes del montaje de"
 
 #: ConfirmDispatch_Invoice.php:1051 CounterReturns.php:1078
 #: CounterSales.php:1495 Credit_Invoice.php:836 SelectCreditItems.php:1494
@@ -22589,12 +22590,11 @@ msgstr ""
 
 #: PrintCustOrder_generic.php:218
 msgid "Could not retrieve the components of the ordered assembly item"
-msgstr ""
-"No se pudieron obtener los componentes del Artículo Ensamblado ordenado"
+msgstr "No se pudo obtener los componentes del artículo de montaje ordenado"
 
 #: PrintCustOrder_generic.php:220
 msgid "Assembly Components:-"
-msgstr "Componentes de Ensamblaje:"
+msgstr "Componentes del montaje:"
 
 #: PrintCustOrder_generic.php:250
 msgid "There were no outstanding items on the order to deliver"
@@ -28933,7 +28933,7 @@ msgstr "Cuenta contable de ajustes de inventario"
 
 #: StockCategories.php:488
 msgid "Internal Stock Issues GL Code"
-msgstr "Código Contable de Emisiones Internas de Existencias"
+msgstr "Cuenta contable de emisiones internas de inventario"
 
 #: StockCategories.php:503
 msgid "Price Variance GL Code"
@@ -28941,7 +28941,7 @@ msgstr "Cuenta contable de varianza en precio"
 
 #: StockCategories.php:521
 msgid "Labour Efficiency Variance GL Code"
-msgstr "Código contable de varianza en mano de obra"
+msgstr "Código contable de varianza en eficiencia de mano de obra"
 
 #: StockCategories.php:523
 msgid "Usage Variance GL Code"
@@ -28953,7 +28953,7 @@ msgstr "Etiqueta de Propiedad"
 
 #: StockCategories.php:568
 msgid "Control Type"
-msgstr "Tipo de Control"
+msgstr "Tipo de control"
 
 #: StockCategories.php:569
 msgid "Default Value"
@@ -29425,15 +29425,15 @@ msgstr "Servicio / Labor"
 
 #: StockClone.php:877 Stocks.php:1164
 msgid "Current or Obsolete"
-msgstr "Actual ú Obsoleto"
+msgstr "Actual u obsoleto"
 
 #: StockClone.php:894 Stocks.php:1181
 msgid "Batch, Serial or Lot Control"
-msgstr "Control de Partida, Serie ó Lote"
+msgstr "Control de lote, serie o grupo"
 
 #: StockClone.php:898 StockClone.php:900 Stocks.php:1185 Stocks.php:1187
 msgid "No Control"
-msgstr "Sin Control"
+msgstr "Sin control"
 
 #: StockClone.php:903 StockClone.php:905 Stocks.php:1190 Stocks.php:1192
 msgid "Controlled"
@@ -29527,7 +29527,7 @@ msgstr "es un artículo que es un servicio"
 
 #: StockCostUpdate.php:139
 msgid "is an assembly part"
-msgstr "es un conjunto"
+msgstr "es una parte de montaje"
 
 #: StockCostUpdate.php:141
 msgid "is a kit set part"
