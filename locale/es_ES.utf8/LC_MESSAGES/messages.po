@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-02-08 17:33+1300\n"
-"PO-Revision-Date: 2014-06-12 10:12-0600\n"
+"PO-Revision-Date: 2014-06-12 11:56-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -12738,7 +12738,7 @@ msgstr "País destino"
 
 #: FreightCosts.php:354
 msgid "Destination Zone"
-msgstr ""
+msgstr "Zona de destino"
 
 #: FreightCosts.php:356
 msgid "Rate per Cubic Metre"
@@ -12943,7 +12943,7 @@ msgstr "Códigos Geocode de clientes y Proveedores"
 
 #: geocode.php:54
 msgid "Customer Code: "
-msgstr ""
+msgstr "Código de cliente: "
 
 #: geocode.php:89
 msgid "failed to geocode."
@@ -21691,7 +21691,7 @@ msgstr "Ejecutar Consulta"
 #: PO_SelectOSPurchOrder.php:9 SelectProduct.php:408 StockStatus.php:403
 #: StockUsage.php:199
 msgid "Search Outstanding Purchase Orders"
-msgstr "Buscar Órdenes de Compra Pendientes"
+msgstr "Buscar órdenes de compra pendientes"
 
 #: PO_SelectOSPurchOrder.php:46 PO_SelectPurchOrder.php:35
 msgid "The Order Number entered"
@@ -23507,26 +23507,26 @@ msgstr "Por Ciento"
 #: StockQuantityByDate.php:71 StockStatus.php:64 StockTransfers.php:575
 #: StockUsage.php:191
 msgid "Show Stock Status"
-msgstr "Mostrar Estado de Existencias"
+msgstr "Mostrar estado del inventario"
 
 #: PurchData.php:771 SelectProduct.php:400 StockCostUpdate.php:195
 #: StockLocMovements.php:53 StockMovements.php:61 StockReorderLevel.php:109
 #: StockUsage.php:193
 msgid "Show Stock Movements"
-msgstr "Mostrar Movimiento de Existencias"
+msgstr "Mostrar movimientos del inventario"
 
 #: PurchData.php:772 SelectProduct.php:405 SelectSalesOrder.php:6
 #: StockAdjustments.php:522 StockCostUpdate.php:197 StockMovements.php:207
 #: StockReorderLevel.php:111 StockStatus.php:400 StockTransfers.php:581
 #: StockUsage.php:195
 msgid "Search Outstanding Sales Orders"
-msgstr "Buscar Órdenes de Compra Pendientes"
+msgstr "Buscar órdenes de venta pendientes"
 
 #: PurchData.php:773 SelectProduct.php:406 StockAdjustments.php:524
 #: StockCostUpdate.php:198 StockMovements.php:208 StockReorderLevel.php:112
 #: StockStatus.php:401 StockTransfers.php:583 StockUsage.php:197
 msgid "Search Completed Sales Orders"
-msgstr "Buscar Pedidos de Venta Completadas"
+msgstr "Buscar ordenes de venta completadas"
 
 #: RecurringSalesOrders.php:13
 msgid "Recurring Orders"
@@ -26766,15 +26766,15 @@ msgstr "Administrar artículos"
 #: StockMovements.php:206 StockReorderLevel.php:110 StockTransfers.php:579
 #: StockUsage.php:93
 msgid "Show Stock Usage"
-msgstr "Mostrar Uso de Existencias"
+msgstr "Mostrar uso del inventario"
 
 #: SelectProduct.php:409
 msgid "Search All Purchase Orders"
-msgstr "Buscar Todas las Órdenes de Compra"
+msgstr "Buscar todas las órdenes de compra"
 
 #: SelectProduct.php:410
 msgid "Show Part Picture (if available)"
-msgstr "Ver Imágen del código (si existe)"
+msgstr "Mostrar imagen del artículo (si está disponible)"
 
 #: SelectProduct.php:413
 msgid "View Costed Bill Of Material"
@@ -26782,7 +26782,7 @@ msgstr "Ver costo de materiales (BOM)"
 
 #: SelectProduct.php:414
 msgid "Where This Item Is Used"
-msgstr "Donde este Artículo es Usado"
+msgstr "Dónde se usa este artículo"
 
 #: SelectProduct.php:417
 msgid "Where This Labour Item Is Used"
@@ -26790,7 +26790,7 @@ msgstr "Donde este Equipo de Labor (Horas/Hombre) es Usado"
 
 #: SelectProduct.php:423
 msgid "Quantity Adjustments"
-msgstr "Ajustes de Cantidad"
+msgstr "Ajustes de cantidad"
 
 #: SelectProduct.php:474
 msgid "Purchase this Item from"
@@ -32345,7 +32345,7 @@ msgstr "Ver Asignaciones"
 
 #: SupplierInvoice.php:16
 msgid "Enter Supplier Invoice"
-msgstr "Crear Factura de Proveedor"
+msgstr "Introduzca factura del proveedor"
 
 #: SupplierInvoice.php:39
 msgid "Supplier Invoice"
@@ -32353,7 +32353,7 @@ msgstr "Factura de Proveedor"
 
 #: SupplierInvoice.php:40
 msgid "Enter Supplier Invoice:"
-msgstr "Introduzca Factura de Proveedor:"
+msgstr "Introduzca factura del proveedor:"
 
 #: SupplierInvoice.php:128
 msgid ""
@@ -32423,7 +32423,7 @@ msgstr ""
 
 #: SupplierInvoice.php:627
 msgid "Supplier Invoice Reference"
-msgstr "Referencia Fatura proveedor"
+msgstr "Referencia factura del proveedor"
 
 #: SupplierInvoice.php:628
 msgid "The input should not be blank and should be less than 20 characters"

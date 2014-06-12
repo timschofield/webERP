@@ -35,10 +35,9 @@ if (!isset($_SESSION['SuppTrans']->SupplierName)) {
 } else {
 	$SupplierName=$_SESSION['SuppTrans']->SupplierName;
 }
-
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('Supplier Invoice') . '" alt="" />
-     ' . ' ' . _('Enter Supplier Invoice:') . ' ' . $SupplierName;
-echo '</p>';
+echo '<p class="page_title_text"><img alt="" src="'.$RootPath . '/css/' . $Theme . 
+	'/images/transactions.png" title="' . _('Supplier Invoice') . '" />' . ' ' . 
+	_('Enter Supplier Invoice') . ': ' . $SupplierName . '</p>';
 if (isset($_GET['SupplierID']) AND $_GET['SupplierID']!=''){
 
  /*It must be a new invoice entry - clear any existing invoice details from the SuppTrans object and initiate a newy*/
