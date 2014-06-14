@@ -11,8 +11,8 @@ include('includes/session.inc');
 
 $ModuleList = array(_('Orders'),
 					_('Receivables'),
-					_('Payables'),
 					_('Purchasing'),
+					_('Payables'),
 					_('Inventory'),
 					_('Manufacturing'),
 					_('General Ledger'),
