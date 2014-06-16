@@ -32,6 +32,16 @@ ALTER table pricematrix ADD KEY stockid(`stockid`);
 ALTER TABLE  `debtortrans` CHANGE  `consignment`  `consignment` VARCHAR( 20 ) NOT NULL DEFAULT  '';
 ALTER TABLE `workorders` ADD `closecomments` LONGBLOB NULL DEFAULT NULL ;
 
+CREATE TABLE IF NOT EXISTS `relateditems` (
+  `stockid` varchar(20) CHARACTER SET utf8 NOT NULL,
+  `related` varchar(20) CHARACTER SET utf8 NOT NULL,
+  PRIMARY KEY (`stockid`,`related`),
+  UNIQUE KEY `Related` (`related`,`stockid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+INSERT INTO  `scripts` (`script` ,`pagesecurity` ,`description`) VALUES ('RelatedItemsUpdate.php',  '2',  'Maintains Related Items');
+
 UPDATE config SET confvalue='4.12' WHERE confname='VersionNumber';
+
 
 
