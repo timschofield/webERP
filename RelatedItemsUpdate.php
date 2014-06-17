@@ -52,7 +52,6 @@ if (isset($_POST['submit'])) {
 	ie the page has called itself with some user input */
 
 	//first off validate inputs sensible
-	// This gives some date in 1999?? $ZeroDate = Date($_SESSION['DefaultDateFormat'],Mktime(0,0,0,0,0,0));
 
 	$result_related = DB_query("SELECT stockmaster.description,
 							stockmaster.mbflag
@@ -77,6 +76,11 @@ if (isset($_POST['submit'])) {
 		$InputError =1;
 	}
 
+	if ($_POST['Related'] == $Item){
+		prnMsg( _('An item can not be related to itself') , 'warn');
+		$InputError =1;
+	}
+	
 	if ($InputError !=1) {
 		$sql = "INSERT INTO relateditems (stockid,
 									related)
@@ -95,7 +99,7 @@ if (isset($_POST['submit'])) {
 		$result_reverse = DB_query($sql_reverse, $db);
 		$myrow_reverse = DB_fetch_row($result_reverse);
 
-		if (DB_num_rows($myrow_reverse)==0){
+		if (DB_num_rows($result_reverse)==0){
 			$sql = "INSERT INTO relateditems (stockid,
 										related)
 								VALUES ('" . $_POST['Related'] . "',
