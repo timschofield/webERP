@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-02-08 17:33+1300\n"
-"PO-Revision-Date: 2014-06-12 11:56-0600\n"
+"PO-Revision-Date: 2014-06-17 08:47-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -11735,6 +11735,7 @@ msgstr "Descripción de categoría"
 #: FixedAssetCategories.php:284
 msgid "Enter the asset category description up to 20 characters"
 msgstr ""
+"Introduzca la descripción de la categoría de activos de hasta 20 caracteres"
 
 #: FixedAssetCategories.php:287
 msgid "Fixed Asset Cost GL Code"
@@ -11804,7 +11805,7 @@ msgstr "ID de Activo"
 
 #: FixedAssetDepreciation.php:92 FixedAssetItems.php:536 SelectAsset.php:266
 msgid "Date Purchased"
-msgstr "Fecha de Compra"
+msgstr "Fecha de compra"
 
 #: FixedAssetDepreciation.php:93 PricesByCost.php:158 SalesAnalReptCols.php:36
 #: SalesAnalReptCols.php:38 SelectProduct.php:196 SelectProduct.php:350
@@ -11817,7 +11818,7 @@ msgstr "Costo"
 
 #: FixedAssetDepreciation.php:94
 msgid "Accum Depn"
-msgstr "Depreciación Acumulada"
+msgstr "Depreciación acumulada"
 
 #: FixedAssetDepreciation.php:95
 msgid "B/fwd Book Value"
@@ -11825,15 +11826,15 @@ msgstr "Valor en Libros de Ida/Vuelta"
 
 #: FixedAssetDepreciation.php:96
 msgid "Depn Type"
-msgstr "Tipo de Depreciación"
+msgstr "Tipo de depreciación"
 
 #: FixedAssetDepreciation.php:97
 msgid "Depn Rate"
-msgstr "Tasa de Depreciación"
+msgstr "Tasa de depreciación"
 
 #: FixedAssetDepreciation.php:98
 msgid "New Depn"
-msgstr "Nueva Depreciación"
+msgstr "Nueva depreciación"
 
 #: FixedAssetDepreciation.php:117 FixedAssetDepreciation.php:248
 #: InventoryValuation.php:124 InventoryValuation.php:176
@@ -11901,7 +11902,7 @@ msgstr "GRAN Total"
 
 #: FixedAssetDepreciation.php:270 FixedAssetRegister.php:394
 msgid "Depreciation"
-msgstr "Amortización"
+msgstr "Depreciación"
 
 #: FixedAssetDepreciation.php:270 GLJournal.php:119 Payments.php:594
 msgid "has been successfully entered"
@@ -11909,7 +11910,7 @@ msgstr "fue entrado con éxito"
 
 #: FixedAssetDepreciation.php:272
 msgid "Return to main menu"
-msgstr "Regresar al Menú Principal"
+msgstr "Regresar al menú principal"
 
 #: FixedAssetDepreciation.php:283 FixedAssetDepreciation.php:286
 msgid "Date to Process Depreciation"
@@ -11922,7 +11923,7 @@ msgstr "Comprometer Depreciación"
 #: FixedAssetItems.php:6 SupplierCredit.php:249 SupplierCredit.php:304
 #: SupplierInvoice.php:592 SupplierInvoice.php:649
 msgid "Fixed Assets"
-msgstr "Activos Fijos"
+msgstr "Activos fijos"
 
 #: FixedAssetItems.php:14
 msgid "Back to Select"
@@ -12091,7 +12092,7 @@ msgstr "Eliminado el registro del activo para el número del activo"
 #: FixedAssetItems.php:441 FixedAssetItems.php:448 FixedAssetTransfer.php:94
 #: SelectAsset.php:263
 msgid "Asset Code"
-msgstr "Código de Activo"
+msgstr "Código de activo"
 
 #: FixedAssetItems.php:456
 msgid "Asset Already disposed on"
@@ -12099,7 +12100,7 @@ msgstr ""
 
 #: FixedAssetItems.php:468 FixedAssetItems.php:478
 msgid "Asset Description"
-msgstr "Descripción del Activo"
+msgstr "Descripción de activo"
 
 #: FixedAssetItems.php:468 StockClone.php:663 Stocks.php:964
 msgid "short"
@@ -12126,7 +12127,7 @@ msgstr "Archivo de imagen (.jpg)"
 
 #: FixedAssetItems.php:513 FixedAssetRegister.php:264
 msgid "Asset Category"
-msgstr "Categoría de Activo"
+msgstr "Categoría de activo"
 
 #: FixedAssetItems.php:517
 msgid "The asset categories could not be retrieved because"
@@ -12134,7 +12135,7 @@ msgstr "Las categorías de activos no se pudo recuperar porque"
 
 #: FixedAssetItems.php:529
 msgid "Add or Modify Asset Categories"
-msgstr "Agregar ó Modificar Categorías de Activo"
+msgstr "Agregar o modificar categorías de activos"
 
 #: FixedAssetItems.php:542
 msgid "The asset locations could not be retrieved because"
@@ -12148,11 +12149,11 @@ msgstr ""
 #: FixedAssetItems.php:547 FixedAssetRegister.php:279
 #: FixedAssetTransfer.php:72 SelectAsset.php:81 SelectAsset.php:265
 msgid "Asset Location"
-msgstr "Ubicación de Activos"
+msgstr "Ubicación de activos"
 
 #: FixedAssetItems.php:558
 msgid "Add Asset Location"
-msgstr "Agregar Ubicaciones de Activo Fijo"
+msgstr "Agregar ubicación de activo"
 
 #: FixedAssetItems.php:561 StockClone.php:959 StockCounts.php:167
 #: Stocks.php:1246 includes/DefineLabelClass.php:50
@@ -12164,15 +12165,15 @@ msgstr "Código de barras"
 #: StockSerialItems.php:92 StockSerialItems.php:94 StockSerialItems.php:98
 #: StockSerialItems.php:100 StockSerialItems.php:102
 msgid "Serial Number"
-msgstr "Número de Serie"
+msgstr "Número de serie"
 
 #: FixedAssetItems.php:569
 msgid "Depreciation Type"
-msgstr "Tipo de Amortización"
+msgstr "Tipo de depreciación"
 
 #: FixedAssetItems.php:576 FixedAssetItems.php:579
 msgid "Straight Line"
-msgstr "Línea Recta"
+msgstr "Línea recta"
 
 #: FixedAssetItems.php:577 FixedAssetItems.php:580
 msgid "Diminishing Value"
@@ -12180,7 +12181,7 @@ msgstr "Valor de Disminución"
 
 #: FixedAssetItems.php:586
 msgid "Depreciation Rate"
-msgstr "Tasa de Depreciación"
+msgstr "Tasa de depreciación"
 
 #: FixedAssetItems.php:594
 msgid "Asset Financial Summary"
@@ -12192,7 +12193,7 @@ msgstr "Costos acumulados"
 
 #: FixedAssetItems.php:601
 msgid "Accumulated Depreciation"
-msgstr "Depreciación Acumulada"
+msgstr "Depreciación acumulada"
 
 #: FixedAssetItems.php:606
 msgid "Net Book Value at disposal date"
@@ -12232,7 +12233,7 @@ msgstr ""
 
 #: FixedAssetItems.php:658
 msgid "Delete This Asset"
-msgstr "Eliminar Este Activo"
+msgstr "Suprimir este activo"
 
 #: FixedAssetItems.php:658
 msgid "Are You Sure? Only assets with a zero book value can be deleted."
@@ -12242,7 +12243,7 @@ msgstr ""
 
 #: FixedAssetLocations.php:6
 msgid "Fixed Asset Locations"
-msgstr "Ubicaciones de Activo Fijo"
+msgstr "Ubicaciones de activo fijo"
 
 #: FixedAssetLocations.php:19
 msgid "You must enter at least one character in the location ID"
@@ -12271,7 +12272,7 @@ msgstr "ID de Ubicación"
 
 #: FixedAssetLocations.php:99 FixedAssetLocations.php:131
 msgid "Location Description"
-msgstr "Descripción de la Ubicación"
+msgstr "Descripción de la ubicación"
 
 #: FixedAssetLocations.php:100 FixedAssetLocations.php:135
 msgid "Parent Location"
@@ -12289,7 +12290,7 @@ msgstr ""
 
 #: FixedAssetLocations.php:159
 msgid "Delete This Location"
-msgstr "Eliminar Esta Ubicación"
+msgstr "Suprimir esta ubicación"
 
 #: FixedAssetRegister.php:4 FixedAssetRegister.php:54
 #: FixedAssetRegister.php:55
@@ -12298,7 +12299,7 @@ msgstr "Registro de Activo Fijo"
 
 #: FixedAssetRegister.php:90
 msgid "Date Acquired"
-msgstr "Fecha de Adquisición"
+msgstr "Fecha de adquisición"
 
 #: FixedAssetRegister.php:91
 msgid "Cost B/fwd"
@@ -12375,11 +12376,11 @@ msgstr "Mostrar Activos"
 
 #: FixedAssetRegister.php:362
 msgid "Asset Category "
-msgstr "Categoría de Activos"
+msgstr "Categoría de activos"
 
 #: FixedAssetRegister.php:363
 msgid "Asset Location "
-msgstr "Ubicación de Activos"
+msgstr "Ubicación de activos"
 
 #: FixedAssetRegister.php:389
 msgid "Serial No."
@@ -12441,7 +12442,7 @@ msgstr ""
 
 #: FixedAssetTransfer.php:163
 msgid "Serial number"
-msgstr "Número de Serie"
+msgstr "Número de serie"
 
 #: FixedAssetTransfer.php:164 SpecialOrder.php:629
 msgid "Purchase Cost"
@@ -12449,11 +12450,11 @@ msgstr "Costo de compra"
 
 #: FixedAssetTransfer.php:165
 msgid "Total Depreciation"
-msgstr "Amortización Total"
+msgstr "Depreciación total"
 
 #: FixedAssetTransfer.php:166
 msgid "Current Location"
-msgstr "Ubicación Actual"
+msgstr "Ubicación actual"
 
 #: FixedAssetTransfer.php:167
 msgid "Move To"
@@ -14221,11 +14222,11 @@ msgstr "Recibir artículo controlado"
 
 #: GoodsReceived.php:22 includes/MainMenuLinksArray.php:197
 msgid "Receive Purchase Orders"
-msgstr "Aceptar Órdenes de Compra"
+msgstr "Recibir órdenes de compra"
 
 #: GoodsReceived.php:25 PO_Header.php:248
 msgid "Back to Purchase Orders"
-msgstr "Volver a Órdenes de Compra"
+msgstr "Volver a órdenes de compra"
 
 #: GoodsReceived.php:33
 msgid ""
@@ -14243,7 +14244,7 @@ msgstr ""
 
 #: GoodsReceived.php:65 SelectSalesOrder.php:524
 msgid "Order number"
-msgstr "El Pedido número"
+msgstr "Pedido número"
 
 #: GoodsReceived.php:65
 msgid "has a status of"
@@ -20118,12 +20119,12 @@ msgstr "Este pago"
 #: PDFSellThroughSupportClaim.php:6 PDFSellThroughSupportClaim.php:164
 #: includes/MainMenuLinksArray.php:67
 msgid "Sell Through Support Claims Report"
-msgstr ""
+msgstr "Informe de reclamos de ventas apoyadas por el proveedor"
 
 #: PDFSellThroughSupportClaim.php:11 PDFSellThroughSupportClaim.php:12
 #: PDFSellThroughSupportClaim.php:17
 msgid "Sell Through Support Claim"
-msgstr ""
+msgstr "Reclamos de ventas apoyadas por el proveedor"
 
 #: PDFSellThroughSupportClaim.php:73
 msgid ""
@@ -21793,7 +21794,7 @@ msgstr "Imprimir Copia"
 #: SupplierCredit.php:204 SupplierCredit.php:298 SupplierInvoice.php:557
 #: SupplierInvoice.php:642 includes/MainMenuLinksArray.php:167
 msgid "Purchase Orders"
-msgstr "Órdenes de Compra"
+msgstr "Órdenes de compra"
 
 #: PO_SelectPurchOrder.php:116 SelectCompletedOrder.php:236
 msgid "For the part"
@@ -21841,11 +21842,11 @@ msgstr ""
 #: includes/PDFLowGPPageHeader.inc:47
 #: includes/PDFSellThroughSupportClaimPageHeader.inc:26
 msgid "Sell Price"
-msgstr "Precio Venta"
+msgstr "Precio de venta"
 
 #: PricesBasedOnMarkUp.php:5
 msgid "Update Pricing"
-msgstr "Actualizar Precios"
+msgstr "Actualizar precios"
 
 #: PricesBasedOnMarkUp.php:10
 msgid ""
@@ -27069,7 +27070,7 @@ msgstr "Agregar/Modificar/Eliminar contactos del Proveedor"
 
 #: SelectSupplier.php:193
 msgid "Set Up Sell Through Support Deals"
-msgstr ""
+msgstr "Configurar ventas apoyadas por el proveedor"
 
 #: SelectSupplier.php:194
 msgid "Set Up A New Shipment"
@@ -27188,7 +27189,7 @@ msgstr "Cantidad Pendiente"
 
 #: SellThroughSupport.php:6
 msgid "Sell Through Support"
-msgstr ""
+msgstr "Ventas apoyadas por el proveedor"
 
 #: SellThroughSupport.php:29
 msgid "Deleted the supplier sell through support record"
@@ -42842,15 +42843,15 @@ msgstr "Pedidos de venta/cotizaciones pendientes"
 
 #: includes/MainMenuLinksArray.php:39
 msgid "Special Order"
-msgstr "Pedidos Especiales"
+msgstr "Pedidos especiales"
 
 #: includes/MainMenuLinksArray.php:40
 msgid "Recurring Order Template"
-msgstr "Plantilla para Pedidos Frecuentes"
+msgstr "Plantilla para pedidos frecuentes"
 
 #: includes/MainMenuLinksArray.php:41
 msgid "Process Recurring Orders"
-msgstr "Procesar Pedidos Frecuentes"
+msgstr "Procesar pedidos frecuentes"
 
 #: includes/MainMenuLinksArray.php:52
 msgid "Sales Order Inquiry"
@@ -42878,7 +42879,7 @@ msgstr "Consulta de mejores ventas"
 
 #: includes/MainMenuLinksArray.php:60
 msgid "Order Delivery Differences Report"
-msgstr "Informe de Diferencias en la Entrega de Pedidos"
+msgstr "Informe de diferencias en entrega de pedidos"
 
 #: includes/MainMenuLinksArray.php:62
 msgid "Sales Order Detail Or Summary Inquiries"
@@ -42890,11 +42891,11 @@ msgstr "Consulta de mejores clientes"
 
 #: includes/MainMenuLinksArray.php:65
 msgid "Worst Sales Items Report"
-msgstr "Informe de Artículos Menos Vendidos"
+msgstr "Informe de artículos menos vendidos"
 
 #: includes/MainMenuLinksArray.php:66
 msgid "Sales With Low Gross Profit Report"
-msgstr "Informe de Ventas con Baja de Ganancias Brutas"
+msgstr "Informe de ventas con utilidad bruta baja"
 
 #: includes/MainMenuLinksArray.php:86
 msgid "Create Contract"
@@ -42902,11 +42903,11 @@ msgstr "Agregar contrato"
 
 #: includes/MainMenuLinksArray.php:88
 msgid "Sell Through Support Deals"
-msgstr ""
+msgstr "Acuerdos de ventas apoyadas por el proveedor"
 
 #: includes/MainMenuLinksArray.php:94
 msgid "Select Order to Invoice"
-msgstr "Facturar Pedido"
+msgstr "Seleccionar pedido para facturar"
 
 #: includes/MainMenuLinksArray.php:95
 msgid "Create A Credit Note"
@@ -42987,23 +42988,23 @@ msgstr "Crear una nueva licitación"
 
 #: includes/MainMenuLinksArray.php:170
 msgid "Edit Existing Tenders"
-msgstr "Editar las Licitaciones Existentes"
+msgstr "Editar litaciones existentes"
 
 #: includes/MainMenuLinksArray.php:171
 msgid "Process Tenders and Offers"
-msgstr "Tramitar las Licitaciones y Promociones"
+msgstr "Procesar licitaciones y ofertas"
 
 #: includes/MainMenuLinksArray.php:172
 msgid "Orders to Authorise"
-msgstr "Órdenes a Autorizar"
+msgstr "Órdenes a autorizar"
 
 #: includes/MainMenuLinksArray.php:173
 msgid "Shipment Entry"
-msgstr "Ingreso de Envíos"
+msgstr "Ingreso de embarque"
 
 #: includes/MainMenuLinksArray.php:174
 msgid "Select A Shipment"
-msgstr "Seleccionar Un Envío"
+msgstr "Seleccionar un embarque"
 
 #: includes/MainMenuLinksArray.php:186
 msgid "Purchase Order Detail Or Summary Inquiries"
@@ -43015,15 +43016,15 @@ msgstr "Administrar Listas de Precios del Proveedor"
 
 #: includes/MainMenuLinksArray.php:198 includes/MainMenuLinksArray.php:199
 msgid "Bulk Inventory Transfer"
-msgstr "Transferencia de Inventario en Lote"
+msgstr "Transferencia masiva de inventario"
 
 #: includes/MainMenuLinksArray.php:200
 msgid "Inventory Location Transfers"
-msgstr "Transferencias de Ubicación de Inventario"
+msgstr "Transferencias de ubicación de inventario"
 
 #: includes/MainMenuLinksArray.php:201
 msgid "Inventory Adjustments"
-msgstr "Ajustes de Inventario"
+msgstr "Ajustes de inventario"
 
 #: includes/MainMenuLinksArray.php:203
 msgid "Enter Stock Counts"
@@ -43128,7 +43129,7 @@ msgstr "Punto de pedido por Categoría/Ubicación"
 
 #: includes/MainMenuLinksArray.php:282 includes/MainMenuLinksArray.php:287
 msgid "Select A Work Order"
-msgstr "Seleccionar una Orden de Trabajo"
+msgstr "Seleccionar una orden de trabajo"
 
 #: includes/MainMenuLinksArray.php:288
 msgid "Costed Bill Of Material Inquiry"
@@ -43196,15 +43197,15 @@ msgstr "Conciliar ingresos a cuenta bancaria"
 
 #: includes/MainMenuLinksArray.php:344
 msgid "Account Inquiry"
-msgstr "Consulta de Cuentas"
+msgstr "Consulta de cuentas"
 
 #: includes/MainMenuLinksArray.php:345
 msgid "Account Listing"
-msgstr "Lista de Cuentas"
+msgstr "Lista de cuentas"
 
 #: includes/MainMenuLinksArray.php:346
 msgid "Account Listing to CSV File"
-msgstr "Lista de Cuentas a Archivo CSV"
+msgstr "Lista de cuentas a archivo CSV"
 
 #: includes/MainMenuLinksArray.php:348
 msgid "Bank Account Reconciliation Statement"
@@ -43212,7 +43213,7 @@ msgstr "Estado de la Conciliación Bancaria"
 
 #: includes/MainMenuLinksArray.php:349
 msgid "Cheque Payments Listing"
-msgstr "Lista de Pagos en Cheque"
+msgstr "Lista de pagos con cheque"
 
 #: includes/MainMenuLinksArray.php:350
 msgid "Daily Bank Transactions"
@@ -43348,7 +43349,7 @@ msgstr "Ver Auditor"
 
 #: includes/MainMenuLinksArray.php:449
 msgid "Web-Store Configuration"
-msgstr ""
+msgstr "Configuración de tienda Web"
 
 #: includes/MainMenuLinksArray.php:450
 msgid "SMTP Server Details"
