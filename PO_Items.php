@@ -51,8 +51,8 @@ if (isset($_POST['UpdateLines']) OR isset($_POST['Commit'])) {
 			} else { //ok to update the PO object variables
 				$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->Price = filter_number_format($_POST['SuppPrice'.$POLine->LineNo])/$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->ConversionFactor;
 			}
-			$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->ReqDelDate=$_POST['ReqDelDate'.$POLine->LineNo];
-            $_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->ItemDescription =$_POST['ItemDescription'.$POLine->LineNo];
+			$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->ReqDelDate = $_POST['ReqDelDate'.$POLine->LineNo];
+            $_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->ItemDescription = $_POST['ItemDescription'.$POLine->LineNo];
 		}
 	}
 }
@@ -634,15 +634,10 @@ if (isset($_POST['NewItem'])
 						}
 						$PurchPrice = ($PurchRow['price']*(1-$ItemDiscountPercent) - $ItemDiscountAmount)/$PurchRow['conversionfactor'];
 						$ConversionFactor = $PurchRow['conversionfactor'];
-						if ($PurchRow['suppliers_partno']!= $ItemCode){   //only show supplier's part code if not the same as our item code
-      						   $SupplierDescription = $PurchRow['suppliers_partno'] .' - ';
-			                        } else {
-                                                   $SupplierDescription = '';
-                                                }
 						if (mb_strlen($PurchRow['supplierdescription'])>2){
-							$SupplierDescription .= $PurchRow['supplierdescription'];
+							$SupplierDescription = $PurchRow['supplierdescription'];
 						} else {
-							$SupplierDescription .= $ItemRow['description'];
+							$SupplierDescription = $ItemRow['description'];
 						}
 						$SuppliersUnitOfMeasure = $PurchRow['suppliersuom'];
 						$SuppliersPartNo = $PurchRow['suppliers_partno'];
@@ -1073,7 +1068,7 @@ if (isset($_POST['Search'])||isset($_POST['Prev'])||isset($_POST['Next'])){  /*i
 			}
 		}
 	}
-	
+
 	$SQLCount = substr($sql,strpos($sql,   "FROM"));
 	$SQLCount = substr($SQLCount,0, strpos($SQLCount,   "ORDER"));
 	$SQLCount = 'SELECT COUNT(*) '.$SQLCount;
@@ -1101,7 +1096,7 @@ if (isset($_POST['Search'])||isset($_POST['Prev'])||isset($_POST['Next'])){  /*i
 	if($Offset > $ListPageMax) {
 		$Offset = $ListPageMax;
 	}
-	
+
 	$sql = $sql . "LIMIT " . $_SESSION['DisplayRecordsMax']." OFFSET " . strval($_SESSION['DisplayRecordsMax']*$Offset);
 
 
@@ -1196,7 +1191,7 @@ if (isset($SearchResult)) {
 	else
 		$PageBar .= '<input type="submit" name="Next" value="'._('Next').'" disabled="disabled"/>';
 	$PageBar .= '</td></tr>';
-	
+
 
 
 	echo '<table cellpadding="1" class="selection">';
@@ -1261,7 +1256,7 @@ if (isset($SearchResult)) {
 		$PartsDisplayed++;
 #end of page full new headings if
 	}
-	
+
 	echo $PageBar;
 #end of while loop
 	echo '</table>';

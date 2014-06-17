@@ -258,12 +258,16 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 			} else {
 				$DisplayLineTotal = '----';
 			}
-			$Desc = /*- DELETED: $POLine['suppliers_partno'] . " " . -*/ $POLine['itemdescription'];	/*- suppliers_partno is duplicated inside itemdescription -*/
-
+			/* If the supplier item code is set then use this to display on the PO rather than the businesses item code */
+			if (mb_strlen($POLine['suppliers_partno'])>0){
+				$ItemCode = $POLine['suppliers_partno'];
+			} else {
+				$ItemCode = $POLine['itemcode'];
+			}
 			$OrderTotal += ($POLine['unitprice'] * $POLine['quantityord']);
 
-			$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column1->x, $YPos, $FormDesign->Data->Column1->Length, $FormDesign->Data->Column1->FontSize, $POLine['itemcode'], 'left');
-			$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column2->x, $YPos, $FormDesign->Data->Column2->Length, $FormDesign->Data->Column2->FontSize, $Desc, 'left');
+			$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column1->x, $YPos, $FormDesign->Data->Column1->Length, $FormDesign->Data->Column1->FontSize, $ItemCode, 'left');
+			$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column2->x, $YPos, $FormDesign->Data->Column2->Length, $FormDesign->Data->Column2->FontSize, $POLine['itemdescription'], 'left');
 			while (mb_strlen($LeftOvers) > 1) {
 				$YPos -= $line_height;
 				if ($YPos - $line_height <= $Bottom_Margin) {
