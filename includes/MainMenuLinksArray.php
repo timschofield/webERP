@@ -559,14 +559,15 @@ $MenuItems['Utilities']['Reports']['URL'] = array(	'/Z_CurrencyDebtorsBalances.p
 $MenuItems['Utilities']['Maintenance']['Caption'] = array(	_('Maintain Language Files'),
 															_('Make New Company'),
 															_('Data Export Options'),
-															_('Import Stock Items from .csv'),
-															_('Import Price List from CSV file'),
+															_('Import Stock Items from .csv file'),
+															_('Import Price List from .csv file'),
 															_('Import Fixed Assets from .csv file'),
-															_('Import GL Payments Receipts Or Journals From CSV'),
+															_('Import GL Payments Receipts Or Journals From .csv file'),
 															_('Create new company template SQL file and submit to webERP'),
 															_('Re-calculate brought forward amounts in GL'),
 															_('Re-Post all GL transactions from a specified period'),
-															_('Purge all old prices'));
+															_('Purge all old prices'),
+															_('Import Customers from .csv file'));
 
 $MenuItems['Utilities']['Maintenance']['URL'] = array(	'/Z_poAdmin.php',
 														'/Z_MakeNewCompany.php',
@@ -578,5 +579,6 @@ $MenuItems['Utilities']['Maintenance']['URL'] = array(	'/Z_poAdmin.php',
 														'/Z_CreateCompanyTemplateFile.php',
 														'/Z_UpdateChartDetailsBFwd.php',
 														'/Z_RePostGLFromPeriod.php',
-														'/Z_DeleteOldPrices.php');
+														'/Z_DeleteOldPrices.php',
+														'/Z_ImportDebtors.php');
 ?>

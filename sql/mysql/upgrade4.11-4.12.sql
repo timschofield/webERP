@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `relateditems` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO  `scripts` (`script` ,`pagesecurity` ,`description`) VALUES ('RelatedItemsUpdate.php',  '2',  'Maintains Related Items');
-
+INSERT INTO scripts VALUES('Z_ImportDebtors.php',15,'Import debtors by csv file');
 UPDATE config SET confvalue='4.12' WHERE confname='VersionNumber';
 
 
