@@ -1,4 +1,5 @@
 webERP Change Log
+17/06/14 Exson: Add Z_ImportDebtors.php into Utilities menu and scripts table.
 15/06/14 Akits from minghao.hk/bbs/ fixed the bugs that www_Users.php allowed modules does not matched the one displayed in index.php. 
 11/06/2014 Exson: Fixed the exported csv files with wrong aligned fields due to comma as part of fields content.
 09/06/2014 Exson: Fixed the Delivery Date lossing bugs when change Warehouse. Reported by akits from minghao.hk(weberp) bbs. 
