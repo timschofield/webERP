@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: weberp 3.12\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-02-08 17:33+1300\n"
-"PO-Revision-Date: 2013-12-14 07:32-0600\n"
+"PO-Revision-Date: 2014-06-17 18:04-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: French <none>\n"
 "Language: fr_FR\n"
@@ -43864,7 +43864,7 @@ msgid "Label Templates Maintenance"
 msgstr "Gestion des étiquettes"
 
 #: includes/MainMenuLinksArray.php:525
-msgid "Import GL Payments Receipts Or Journals From CSV"
+msgid " Import GL Payments Receipts Or Journals From .csv file"
 msgstr ""
 
 #: includes/MainMenuLinksArray.php:526
@@ -43943,7 +43943,7 @@ msgid "Data Export Options"
 msgstr "Options d'exportation de données"
 
 #: includes/MainMenuLinksArray.php:564
-msgid "Import Stock Items from .csv"
+msgid "Import Stock Items from .csv file"
 msgstr "Importer des articles à partir du fichier CSV"
 
 #: includes/MainMenuLinksArray.php:565
@@ -43968,8 +43968,8 @@ msgid "Purge all old prices"
 msgstr ""
 
 #: includes/MainMenuLinksArray.php:570
-msgid "Import Price List from CSV file"
-msgstr ""
+msgid "Import Price List from .csv file"
+msgstr "Importer des tarif à partir du fichier CSV"
 
 #: includes/MiscFunctions.php:29 includes/MiscFunctions.php:36
 msgid "Message Report"

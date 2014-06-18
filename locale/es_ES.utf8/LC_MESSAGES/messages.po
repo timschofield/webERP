@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-02-08 17:33+1300\n"
-"PO-Revision-Date: 2014-06-17 08:47-0600\n"
+"PO-Revision-Date: 2014-06-17 16:42-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -6152,7 +6152,7 @@ msgstr "A ID Stock Existente"
 
 #: CounterReturns.php:11
 msgid "Counter Returns"
-msgstr ""
+msgstr "Devoluciones en mostrador"
 
 #: CounterReturns.php:77 CounterSales.php:86
 msgid ""
@@ -6224,12 +6224,12 @@ msgstr ""
 
 #: CounterReturns.php:190 CounterReturns.php:1601
 msgid "Start a new Counter Return"
-msgstr ""
+msgstr "Iniciar una nueva devolución en mostrador"
 
 #: CounterReturns.php:196 CounterReturns.php:197 CounterReturns.php:1455
 #: CounterReturns.php:1474
 msgid "Counter Return"
-msgstr ""
+msgstr "Devolución en mostrador"
 
 #: CounterReturns.php:197 CounterSales.php:231
 msgid "inventory"
@@ -6367,7 +6367,7 @@ msgstr "Número de Teléfono del contacto"
 
 #: CounterReturns.php:775
 msgid "A phone number is required for counter returns"
-msgstr ""
+msgstr "Se requiere un número de teléfono para las devoluciones en mostrador"
 
 #: CounterReturns.php:779 CounterSales.php:875 DeliveryDetails.php:1090
 #: RecurringSalesOrders.php:412
@@ -6402,6 +6402,8 @@ msgstr "Procesar la devolución"
 #: CounterReturns.php:869
 msgid "There are no lines on this return. Please enter lines to return first"
 msgstr ""
+"No hay líneas en esta devolución. Por favor, introduzca primero las líneas "
+"de devolución"
 
 #: CounterReturns.php:873
 msgid ""
@@ -6614,6 +6616,8 @@ msgid ""
 "Enter a part code to be returned. Part codes can contain any alpha-numeric "
 "characters underscore or hyphen."
 msgstr ""
+"Introduzca un código de la pieza a ser devuelto. Los códigos de la parte "
+"pueden contener caracteres alfanuméricos, guión-bajo o guión."
 
 #: CounterReturns.php:1838 CounterSales.php:2443 SelectCreditItems.php:1014
 #: SelectCreditItems.php:1065 SelectOrderItems.php:1854
@@ -6754,6 +6758,8 @@ msgstr "Cantidad Pagada"
 msgid ""
 "Enter the amount paid by the customer, this must equal the amount of the sale"
 msgstr ""
+"Anote la cantidad pagada por el cliente, esta debe ser igual al monto de la "
+"venta"
 
 #: CounterSales.php:962
 msgid "Process The Sale"
@@ -7965,19 +7971,19 @@ msgstr ""
 
 #: CustomerAllocations.php:126
 msgid "Could not update difference on exchange"
-msgstr ""
+msgstr "No se pudo actualizar diferencia de cambio"
 
 #: CustomerAllocations.php:142
 msgid "Could not update receipt or credit note"
-msgstr ""
+msgstr "No se pudo actualizar el recibo o nota de crédito"
 
 #: CustomerAllocations.php:171
 msgid "Could not update exchange difference in General Ledger"
-msgstr ""
+msgstr "No se pudo actualizar la diferencia de cambio en el Libro Mayor"
 
 #: CustomerAllocations.php:192
 msgid "Could not update debtors control in General Ledger"
-msgstr ""
+msgstr "No se pudo actualizar el control de deudores en el Libro Mayor"
 
 #: CustomerAllocations.php:342
 msgid "Allocate Receipt"
@@ -9722,7 +9728,7 @@ msgstr "Mostrar todos los tipos definidos"
 
 #: CustomerTypes.php:265
 msgid "The customer type name is required"
-msgstr ""
+msgstr "Se requiere que el nombre del tipo de cliente"
 
 #: CustWhereAlloc.php:6
 msgid "Customer How Paid Inquiry"
@@ -12109,6 +12115,7 @@ msgstr "corta"
 #: FixedAssetItems.php:469
 msgid "Enter the description of the item. Up to 50 characters can be used."
 msgstr ""
+"Introduzca la descripción del artículo. se pueden usar hasta 50 caracteres."
 
 #: FixedAssetItems.php:478 StockClone.php:687 Stocks.php:988
 msgid "long"
@@ -12260,7 +12267,7 @@ msgstr ""
 
 #: FixedAssetLocations.php:81
 msgid "You have assets in this location so it cannot be removed"
-msgstr ""
+msgstr "Usted tiene activos en este lugar por lo que no se puede eliminar"
 
 #: FixedAssetLocations.php:87
 msgid "The location has been deleted successfully"
@@ -12287,6 +12294,8 @@ msgstr ""
 #: FixedAssetLocations.php:132
 msgid "Enter the fixed asset location description. Up to 20 characters"
 msgstr ""
+"Introduzca la descripción de la ubicación del activo fijo. Hasta 20 "
+"caracteres"
 
 #: FixedAssetLocations.php:159
 msgid "Delete This Location"
@@ -12361,6 +12370,8 @@ msgstr "Fecha Inicial"
 #: FixedAssetRegister.php:315
 msgid "Enter the start date to show the cost and accumulated depreciation from"
 msgstr ""
+"Introduzca la fecha de inicio para mostrar el costo y la depreciación "
+"acumulada"
 
 #: FixedAssetRegister.php:318
 msgid "To Date "
@@ -12369,6 +12380,8 @@ msgstr "Fecha Final"
 #: FixedAssetRegister.php:319
 msgid "Enter the end date to show the cost and accumulated depreciation to"
 msgstr ""
+"Introduzca la fecha de finalización para mostrar el costo y la depreciación "
+"acumulada"
 
 #: FixedAssetRegister.php:324
 msgid "Show Assets"
@@ -13089,7 +13102,7 @@ msgstr "Mostrar el Mapa de los Proveedores"
 
 #: geo_displaymap_customers.php:5
 msgid "Geocoded Customers Report"
-msgstr ""
+msgstr "Informe de clientes geocodificados"
 
 #: geo_displaymap_customers.php:118 geo_displaymap_suppliers.php:118
 msgid "Go to Geocode Setup"
@@ -13426,6 +13439,8 @@ msgstr "Código de la Cuenta"
 msgid ""
 "Enter up to 20 alpha-numeric characters for the general ledger account code"
 msgstr ""
+"Introduzca hasta 20 caracteres alfanuméricos para el código de cuenta del "
+"Libro Mayor"
 
 #: GLAccounts.php:243 GLAccounts.php:296 GLBalanceSheet.php:402
 #: GLCodesInquiry.php:27 GLProfit_Loss.php:621 GLTagProfit_Loss.php:537
@@ -13532,7 +13547,7 @@ msgstr "Detalle ó Sumario"
 
 #: GLBalanceSheet.php:57
 msgid "Selecting Summary will show on the totals at the account group level"
-msgstr ""
+msgstr "Selección Resumen mostrará los totales a nivel de grupo contable"
 
 #: GLBalanceSheet.php:59 GLProfit_Loss.php:108 GLTagProfit_Loss.php:121
 msgid "All Accounts"
@@ -13547,6 +13562,8 @@ msgid ""
 "Check this box to display all accounts including those accounts with no "
 "balance"
 msgstr ""
+"Marque esta casilla para mostrar todas las cuentas, incluyendo las cuentas "
+"sin saldo"
 
 #: GLBalanceSheet.php:70 GLProfit_Loss.php:119
 msgid "Show on Screen (HTML)"
@@ -13703,7 +13720,7 @@ msgstr "Criterio de búsqueda"
 
 #: GLJournalInquiry.php:26
 msgid "Journal Number Range"
-msgstr ""
+msgstr "Rango del número de Diario"
 
 #: GLJournalInquiry.php:43
 msgid "Journals Dated Between"
@@ -13711,7 +13728,7 @@ msgstr "Diarios fechado entre"
 
 #: GLJournalInquiry.php:81
 msgid "Journal Number"
-msgstr ""
+msgstr "Número de Diario"
 
 #: GLJournalInquiry.php:83 PcExpenses.php:192
 #: includes/PDFGLJournalHeader.inc:20
@@ -14269,7 +14286,7 @@ msgstr "Fecha de recepción de Bienes o Servicios"
 
 #: GoodsReceived.php:95 PO_Items.php:725
 msgid "Supplier Units"
-msgstr "Unidades del Proveedor"
+msgstr "Unidades del proveedor"
 
 #: GoodsReceived.php:97
 msgid "Our Receiving Units"
@@ -14289,7 +14306,7 @@ msgstr "Esta entrega"
 
 #: GoodsReceived.php:114
 msgid "Total Value"
-msgstr "Valor Total"
+msgstr "Valor total"
 
 #: GoodsReceived.php:180
 msgid "Enter the quantity to receive against this order line as a number"
@@ -14686,7 +14703,7 @@ msgstr ""
 
 #: ImportBankTransAnalysis.php:242
 msgid "Total Bank Transaction"
-msgstr ""
+msgstr "Total de la transacción bancaria"
 
 #: ImportBankTransAnalysis.php:248
 msgid "Yet To Enter"
@@ -14694,7 +14711,7 @@ msgstr ""
 
 #: ImportBankTransAnalysis.php:251
 msgid "Reconciled"
-msgstr ""
+msgstr "Conciliado"
 
 #: ImportBankTransAnalysis.php:267 SuppTransGLAnalysis.php:194
 msgid "Account Selection"
@@ -14722,6 +14739,8 @@ msgid ""
 "The file size is over the maximum allowed. The maximum size allowed is 1 "
 "megabyte"
 msgstr ""
+"El tamaño del archivo es superior al máximo permitido. El tamaño máximo "
+"permitido es de 1 megabyte"
 
 #: ImportBankTrans.php:46
 msgid "The MT940 bank statement file cannot be imported and processed"
@@ -14880,7 +14899,7 @@ msgstr "Tipo de cambio a usar para procesar las transacciones"
 
 #: ImportBankTrans.php:604
 msgid "Process Bank Transactions"
-msgstr ""
+msgstr "Procesar transacciones bancarias"
 
 #: ImportBankTrans.php:604
 msgid ""
@@ -15059,7 +15078,7 @@ msgstr "Producto"
 
 #: InternalStockRequestAuthorisation.php:106
 msgid "Cancel Line"
-msgstr ""
+msgstr "Cancelar línea"
 
 #: InternalStockRequestFulfill.php:7 InternalStockRequestFulfill.php:14
 msgid "Fulfill Stock Requests"
@@ -15321,7 +15340,7 @@ msgstr "Clase de Artículo"
 
 #: InternalStockRequest.php:332 InternalStockRequest.php:334
 msgid "All Authorized"
-msgstr ""
+msgstr "Todo autorizado"
 
 #: InternalStockRequest.php:373 SelectOrderItems.php:752
 msgid "Order Item description has been used in search"
@@ -15714,7 +15733,7 @@ msgstr "Valor Gran Total"
 
 #: InventoryValuation.php:205
 msgid "Category ID"
-msgstr ""
+msgstr "ID de categoría"
 
 #: InventoryValuation.php:220
 msgid "Inventory Valuation Reporting"
@@ -27318,7 +27337,7 @@ msgstr "Fecha final del soporte"
 
 #: ShipmentCosting.php:6
 msgid "Shipment Costing"
-msgstr "Costos de Envío"
+msgstr "Costeo de envío"
 
 #: ShipmentCosting.php:22
 msgid ""
@@ -29656,7 +29675,7 @@ msgstr "Eliminar?"
 
 #: StockCounts.php:226
 msgid "Save Changes"
-msgstr "Guardar Cambios"
+msgstr "Guardar cambios"
 
 #: StockDispatch.php:18 StockDispatch.php:317
 msgid "Stock Dispatch Report"
@@ -29689,7 +29708,7 @@ msgstr "No es posible introducir el registro de transferencia"
 
 #: StockDispatch.php:274
 msgid "Prepared By :"
-msgstr "Preparado Por:"
+msgstr "Preparado por:"
 
 #: StockDispatch.php:279 StockDispatch.php:290 StockDispatch.php:301
 msgid "Hour"
@@ -29737,8 +29756,7 @@ msgstr ""
 
 #: StockDispatch.php:323
 msgid "Use Bulk Inventory Transfer - Receive to process the batch"
-msgstr ""
-"Usar Transferencia-Recepción de Inventario por Lotes para procesar el lote"
+msgstr "Use el Traslado masivo de inventario - Recibir para procesar el lote"
 
 #: StockDispatch.php:342
 msgid "Dispatch Percent"
@@ -30027,8 +30045,7 @@ msgstr "No es posible grabar transacción de transferencia"
 
 #: StockLocTransfer.php:220
 msgid "The inventory transfer records have been created successfully"
-msgstr ""
-"Los registros de transferencia de inventario han sido creados correctamente"
+msgstr "Los registros de traslado de inventario han sido creados correctamente"
 
 #: StockLocTransfer.php:221
 msgid "Print the Transfer Docket"
@@ -30056,7 +30073,7 @@ msgstr "Crear Envío de Transferencia"
 
 #: StockLocTransferReceive.php:8
 msgid "Inventory Transfer"
-msgstr "Transferencia de Inventario"
+msgstr "Traslado de inventario"
 
 #: StockLocTransferReceive.php:8
 msgid "Receiving"
@@ -30229,7 +30246,7 @@ msgstr "Introduzca Referencias de Lotes"
 
 #: StockLocTransferReceive.php:518
 msgid "Process Inventory Transfer"
-msgstr "Procesar Transferencia de Inventario"
+msgstr "Procesar traslado de inventario"
 
 #: StockLocTransferReceive.php:523
 msgid "Select A Different Transfer"
@@ -31012,7 +31029,7 @@ msgstr ""
 
 #: StockTransfers.php:450
 msgid "An inventory transfer of"
-msgstr "Una transferencia de inventario de"
+msgstr "Un traslado de inventario de"
 
 #: StockTransfers.php:477
 msgid ""
@@ -34599,7 +34616,7 @@ msgstr "La entrada debe estar entre 1 y 999"
 
 #: SystemParameters.php:752 SystemParameters.php:776
 msgid "1 to 999"
-msgstr ""
+msgstr "1 a 999"
 
 #: SystemParameters.php:757
 msgid "Default Maximum Number of Records to Show"
@@ -34657,7 +34674,7 @@ msgstr "El número de mes se debe demostrar"
 
 #: SystemParameters.php:790
 msgid "input must be positive integer"
-msgstr ""
+msgstr "La entrada debe ser un número entero positivo"
 
 #: SystemParameters.php:791
 msgid ""
@@ -43016,7 +43033,7 @@ msgstr "Administrar Listas de Precios del Proveedor"
 
 #: includes/MainMenuLinksArray.php:198 includes/MainMenuLinksArray.php:199
 msgid "Bulk Inventory Transfer"
-msgstr "Transferencia masiva de inventario"
+msgstr "Traslado masivo de inventario"
 
 #: includes/MainMenuLinksArray.php:200
 msgid "Inventory Location Transfers"
@@ -43412,7 +43429,7 @@ msgid "Label Templates Maintenance"
 msgstr "Mantenimiento de Plantillas de Etiquetas"
 
 #: includes/MainMenuLinksArray.php:525
-msgid "Import GL Payments Receipts Or Journals From CSV"
+msgid "Import GL Payments Receipts Or Journals From .csv file"
 msgstr "Importar recibos de pago del Libro Mayor o diarios de archivo CSV"
 
 #: includes/MainMenuLinksArray.php:526
@@ -43494,7 +43511,7 @@ msgid "Data Export Options"
 msgstr "Opciones de Exportación de Datos"
 
 #: includes/MainMenuLinksArray.php:564
-msgid "Import Stock Items from .csv"
+msgid "Import Stock Items from .csv file"
 msgstr "Importar artículos de inventario de un archivo CSV"
 
 #: includes/MainMenuLinksArray.php:565
@@ -43518,7 +43535,7 @@ msgid "Purge all old prices"
 msgstr "Purgar todos los precios antiguos"
 
 #: includes/MainMenuLinksArray.php:570
-msgid "Import Price List from CSV file"
+msgid "Import Price List from .csv file"
 msgstr "Importar lista de precios de un archivo CSV"
 
 #: includes/MiscFunctions.php:29 includes/MiscFunctions.php:36
@@ -48622,15 +48639,15 @@ msgstr ""
 
 #: ../webSHOP/Register.php:470
 msgid "The phone number must be entered"
-msgstr ""
+msgstr "Se  debe introducir el número de teléfono"
 
 #: ../webSHOP/Register.php:471
 msgid "The phone must be at least 5 digits long"
-msgstr ""
+msgstr "El teléfono debe tener al menos 5 dígitos de longitud"
 
 #: ../webSHOP/Register.php:472
 msgid "The phone number can only contain digits"
-msgstr ""
+msgstr "El número de teléfono sólo puede tener dígitos"
 
 #: ../webSHOP/Register.php:475
 msgid "The delivery street address must be entered"
@@ -48682,7 +48699,7 @@ msgstr "Dirección de facturación - Código postal"
 
 #: ../webSHOP/Register.php:657
 msgid "VAT No."
-msgstr ""
+msgstr "No. IVA"
 
 #: ../webSHOP/Register.php:677
 msgid ""
@@ -48780,7 +48797,7 @@ msgstr ""
 #: ../webSHOP/includes/Functions.php:487
 #: ../webSHOP/includes/PlaceOrder.php:303
 msgid "Transaction ID"
-msgstr ""
+msgstr "ID de transacción"
 
 #: ../webSHOP/includes/Functions.php:752
 msgid "Bank Account Details"
@@ -48884,7 +48901,7 @@ msgstr ""
 
 #: ../webSHOP/includes/PlaceOrder.php:337
 msgid "Shipment information"
-msgstr ""
+msgstr "Información de envío"
 
 #: ../webSHOP/includes/PlaceOrder.php:339
 msgid "Your order will be shipped to you shortly via"
