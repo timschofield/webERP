@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: weberp 3.12\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-02-08 17:33+1300\n"
-"PO-Revision-Date: 2014-06-17 18:04-0600\n"
+"PO-Revision-Date: 2014-06-19 08:35-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: French <none>\n"
 "Language: fr_FR\n"
@@ -43448,11 +43448,11 @@ msgstr ""
 
 #: includes/MainMenuLinksArray.php:198 includes/MainMenuLinksArray.php:199
 msgid "Bulk Inventory Transfer"
-msgstr "Transfert de stock"
+msgstr "Transfert en vrac de stock"
 
 #: includes/MainMenuLinksArray.php:200
 msgid "Inventory Location Transfers"
-msgstr "Transferts de stock inter-sites"
+msgstr "Transfert de stock - Expédition d'article "
 
 #: includes/MainMenuLinksArray.php:201
 msgid "Inventory Adjustments"

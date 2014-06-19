@@ -195,9 +195,9 @@ $MenuItems['PO']['Maintenance']['Caption'] = array(_('Maintain Supplier Price Li
 $MenuItems['PO']['Maintenance']['URL'] = array('/SupplierPriceList.php');
 
 $MenuItems['stock']['Transactions']['Caption'] = array(	_('Receive Purchase Orders'),
-														_('Bulk Inventory Transfer') . ' - ' . _('Dispatch'),
-														_('Bulk Inventory Transfer') . ' - ' . _('Receive'),
-														_('Inventory Location Transfers'),
+														_('Inventory Location Transfers'),	//"Inventory Transfer - Item Dispatch"
+														_('Bulk Inventory Transfer') . ' - ' . _('Dispatch'),	//"Inventory Transfer - Bulk Dispatch"
+														_('Bulk Inventory Transfer') . ' - ' . _('Receive'),	//"Inventory Transfer - Receive"
 														_('Inventory Adjustments'),
 														_('Reverse Goods Received'),
 														_('Enter Stock Counts'),
@@ -206,9 +206,9 @@ $MenuItems['stock']['Transactions']['Caption'] = array(	_('Receive Purchase Orde
 														_('Fulfill Internal Stock Requests'));
 
 $MenuItems['stock']['Transactions']['URL'] = array(	'/PO_SelectOSPurchOrder.php',
+													'/StockTransfers.php?New=Yes',
 													'/StockLocTransfer.php',
 													'/StockLocTransferReceive.php',
-													'/StockTransfers.php?New=Yes',
 													'/StockAdjustments.php?NewAdjustment=Yes',
 													'/ReverseGRN.php',
 													'/StockCounts.php',

@@ -1,11 +1,14 @@
 <?php
 /* $Id$*/
+/* Inventory Transfer - Receive */
 
 include('includes/DefineSerialItems.php');
 include('includes/DefineStockTransfers.php');
 
 include('includes/session.inc');
 $Title = _('Inventory Transfer') . ' - ' . _('Receiving');
+$BookMark = "LocationTransfers";
+$ViewTopic = "Inventory";
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 

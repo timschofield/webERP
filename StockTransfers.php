@@ -1,15 +1,14 @@
 <?php
-
 /* $Id$*/
+/* Inventory Transfer - Item Dispatch */
 
 include('includes/DefineSerialItems.php');
 include('includes/DefineStockTransfers.php');
 
 include('includes/session.inc');
 $Title = _('Stock Transfers');
-/* webERP manual links before header.inc */
-$ViewTopic= "Inventory";
 $BookMark = "LocationTransfers";
+$ViewTopic = "Inventory";
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 

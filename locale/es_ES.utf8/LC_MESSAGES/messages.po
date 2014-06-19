@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-02-08 17:33+1300\n"
-"PO-Revision-Date: 2014-06-17 16:42-0600\n"
+"PO-Revision-Date: 2014-06-19 07:31-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -43037,7 +43037,7 @@ msgstr "Traslado masivo de inventario"
 
 #: includes/MainMenuLinksArray.php:200
 msgid "Inventory Location Transfers"
-msgstr "Transferencias de ubicación de inventario"
+msgstr "Traslado de inventario - Envío de artículo"
 
 #: includes/MainMenuLinksArray.php:201
 msgid "Inventory Adjustments"

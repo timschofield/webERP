@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.10.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-02-08 17:33+1300\n"
-"PO-Revision-Date: 2013-12-14 07:34-0600\n"
+"PO-Revision-Date: 2014-06-19 07:44-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: WebERP Translation Team <web-erp-translation@lists."
 "sourceforge.net>\n"
@@ -19731,8 +19731,9 @@ msgid ""
 "The quantity in the supplier units is expected to be numeric. Please re-"
 "enter as a number"
 msgstr ""
-"The quantity in the vendor units is expected to be numeric. Please re-"
-"enter as a number"
+"The quantity in the vendor units is expected to be numeric. Please re-enter "
+"as a number"
+
 #: PO_Items.php:49
 msgid ""
 "The supplier price is expected to be numeric. Please re-enter as a number"
@@ -21780,7 +21781,8 @@ msgstr "Vendor Ordering"
 #: PurchaseByPrefSupplier.php:401
 msgid ""
 "The supplier inventory quantities could not be retrieved by the SQL because"
-msgstr "The vendor inventory quantities could not be retrieved by the SQL because"
+msgstr ""
+"The vendor inventory quantities could not be retrieved by the SQL because"
 
 #: PurchaseByPrefSupplier.php:414
 msgid "Bin"
@@ -21957,8 +21959,8 @@ msgid ""
 "Supplier discount percent must be greater than zero but less than 100 "
 "percent. This discount record cannot be added."
 msgstr ""
-"Vendor discount percent must be greater than zero but less than 100 "
-"percent. This discount record cannot be added."
+"Vendor discount percent must be greater than zero but less than 100 percent. "
+"This discount record cannot be added."
 
 #: PurchData.php:170
 msgid ""
@@ -40230,7 +40232,7 @@ msgstr ""
 
 #: includes/MainMenuLinksArray.php:200
 msgid "Inventory Location Transfers"
-msgstr ""
+msgstr "Inventory Transfer - Item Dispatch"
 
 #: includes/MainMenuLinksArray.php:201
 msgid "Inventory Adjustments"
