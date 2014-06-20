@@ -86,6 +86,9 @@ while ($myrow=DB_fetch_array($resultStkLocs)){
 }
 
 if (isset($_POST['StockLocation'])){
+	if($_SESSION['Adjustment' . $identifier]->StockLocation != $_POST['StockLocation']){/* User has changed the stock location, so the serial no must be validated again */
+		$_SESSION['Adjustment' . $identifier]->SerialItems = array();
+	}
 	$_SESSION['Adjustment' . $identifier]->StockLocation = $_POST['StockLocation'];
 }else{
 	if(empty($_SESSION['Adjustment' . $identifier]->StockLocation)){
@@ -105,6 +108,9 @@ if (isset($_POST['Quantity'])){
 }
 if($_POST['Quantity'] != 0){//To prevent from serilised quantity changing to zero
 	$_SESSION['Adjustment' . $identifier]->Quantity = filter_number_format($_POST['Quantity']);
+	if(count($_SESSION['Adjustment' . $identifier]->SerialItems) == 0 AND $_SESSION['Adjustment' . $identifier]->Controlled == 1 ){/* There is no quantity available for controlled items */ 
+		$_SESSION['Adjustment' . $identifier]->Quantity = 0;
+	}
 }
 if(isset($_GET['OldIdentifier'])){
 	$_SESSION['Adjustment'.$identifier]->StockLocation=$_SESSION['Adjustment'.$_GET['OldIdentifier']]->StockLocation;
