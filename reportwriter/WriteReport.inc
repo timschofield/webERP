@@ -563,7 +563,13 @@ function GenerateCSVFile($Data, $Prefs) {
 			default:
 				$CSVLine = '';
 				foreach ($myrow as $mycolumn) { // check for embedded commas and enclose in quotes
-					$CSVLine .= '"'.$mycolumn.'",';
+					//although we use mb_strpos elswehere after discussion with Exson this seems pragmatically the best solution
+					//http://weberp-accounting.1478800.n4.nabble.com/What-s-the-real-meaning-of-Ports-td4657516.html#a4657518
+					if (strpos($mycolumn,',')===false) {
+						$CSVLine .= $mycolumn.',';
+					} else {
+						$CSVLine .= '"'.$mycolumn.'",';
+					}
 				}
 				$CSVLine = mb_substr($CSVLine,0,-1); // Strip the last comma off
 		}
