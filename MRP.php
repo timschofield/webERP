@@ -515,7 +515,7 @@ if (isset($_POST['submit'])) {
 									eoqflag,
 									usemrpdemands,
 									leeway)
-									VALUES ('" . date('Y-m-d') . "',
+									VALUES (NOW(),
 								'" . $locparm . "',
 								'" .  $_POST['PanSizeFlag']  . "',
 								'" .  $_POST['ShrinkageFlag']  . "',
