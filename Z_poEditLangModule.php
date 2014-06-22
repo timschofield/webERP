@@ -1,5 +1,4 @@
 <?php
-
 /* $Id$ */
 
 /* Steve Kitchen */
@@ -9,22 +8,25 @@
 //$PageSecurity = 15;
 
 include ('includes/session.inc');
-
-$Title = _('Edit Module');
-
+$Title = _('Edit Module');// _('Edit a Language File Module')
+$ViewTopic = "SpecialUtilities";
+$BookMark = "Z_poEditLangModule";// Anchor's id in the manual's html document.
 include('includes/header.inc');
+echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme . 
+		'/images/maintenance.png" title="' . 
+		_('Edit a Language File Module') . '" />' . ' ' . 
+		_('Edit a Language File Module') . '</p>';
 
-/* Your webserver user MUST have read/write access to here,
-	otherwise you'll be wasting your time */
-
-$PathToLanguage		= './locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po';
-$PathToNewLanguage	= './locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po.new';
+/* Your webserver user MUST have read/write access to here,	otherwise you'll be wasting your time */
 
 echo '<br />&nbsp;<a href="' . $RootPath . '/Z_poAdmin.php">' . _('Back to the translation menu') . '</a>';
 echo '<br /><br />&nbsp;' . _('Utility to edit a language file module');
 echo '<br />&nbsp;' . _('Current language is') . ' ' . $_SESSION['Language'];
 echo '<br /><br />&nbsp;' . _('To change language click on the user name at the top left, change to language desired and click Modify');
 echo '<br />&nbsp;' . _('Make sure you have selected the correct language to translate!');
+
+$PathToLanguage		= './locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po';
+$PathToNewLanguage	= './locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po.new';
 
 if (isset($_POST['ReMergePO'])){
 

@@ -1,5 +1,4 @@
 <?php
-
 /* $Id$ */
 
 /* Steve Kitchen */
@@ -10,22 +9,25 @@
 
 include ('includes/session.inc');
 
-$Title = _('Edit Remaining Items');
-
+$Title = _('Edit Remaining Items');// _('Edit Remaining Strings For This Language')
+$ViewTopic = "SpecialUtilities";
+$BookMark = "Z_poEditLangRemaining";// Anchor's id in the manual's html document.
 include('includes/header.inc');
+echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme . 
+		'/images/maintenance.png" title="' . 
+		_('Edit Remaining Strings For This Language') . '" />' . ' ' . 
+		_('Edit Remaining Strings For This Language') . '</p>';
 
-/* Your webserver user MUST have read/write access to here,
-	otherwise you'll be wasting your time */
+/* Your webserver user MUST have read/write access to here,	otherwise you'll be wasting your time */
+
+echo '<br />&nbsp;<a href="' . $RootPath . '/Z_poAdmin.php">' . _('Back to the translation menu') . '</a>';
+echo '<br /><br />&nbsp;' . _('Utility to edit a language file module');
+echo '<br />&nbsp;' . _('Current language is') . ' ' . $_SESSION['Language'];
 
 $PathToLanguage		= './locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po';
 $PathToNewLanguage	= './locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po.new';
 
-echo "<br />&nbsp;<a href='" . $RootPath . "/Z_poAdmin.php'>" . _('Back to the translation menu') . "</a>";
-echo '<br /><br />&nbsp;' . _('Utility to edit a language file module');
-echo '<br />&nbsp;' . _('Current language is') . ' ' . $_SESSION['Language'];
-
-
-	$PathToLanguage_mo = mb_substr($PathToLanguage,0,strrpos($PathToLanguage,'.')) . '.mo';
+$PathToLanguage_mo = mb_substr($PathToLanguage,0,strrpos($PathToLanguage,'.')) . '.mo';
 
   /* now read in the language file */
 

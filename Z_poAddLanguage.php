@@ -16,20 +16,23 @@ if (isset($_POST['cancel'])) {
 
 }
 
-$Title = _('New Language');
-
+$Title = _('New Language');// _('Add a New Language to the System')
+$ViewTopic = "SpecialUtilities";
+$BookMark = "Z_poAddLanguage";// Anchor's id in the manual's html document.
 include('includes/header.inc');
+echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme . 
+		'/images/maintenance.png" title="' . 
+		_('Add a New Language to the System') . '" />' . ' ' . 
+		_('Add a New Language to the System') . '</p>';
 
-$DefaultLanguage = 'en_GB';		// the default language IS English ...
+/* Your webserver user MUST have read/write access to here,	otherwise you'll be wasting your time */
 
-/* Your webserver user MUST have read/write access to here,
-	otherwise you'll be wasting your time */
-
-$PathToDefault		= './locale/' . $DefaultLanguage . '/LC_MESSAGES/messages.po';
-
-echo "<br />&nbsp;<a href='" . $RootPath . "/Z_poAdmin.php'>" . _('Back to the translation menu') . "</a>";
+echo '<br />&nbsp;<a href="' . $RootPath . '/Z_poAdmin.php">' . _('Back to the translation menu') . '</a>';
 echo '<br /><br />&nbsp;' . _('Utility to create a new language file');
 echo '<br />&nbsp;' . _('Current language is') . ' ' . $_SESSION['Language'];
+
+$DefaultLanguage = 'en_GB';// The default language is English-United Kingdom (British English).
+$PathToDefault = './locale/' . $DefaultLanguage . '/LC_MESSAGES/messages.po';
 
 if (isset($_POST['submit']) AND isset($_POST['NewLanguage'])) {
 

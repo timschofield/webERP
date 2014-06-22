@@ -6,12 +6,16 @@
 //$PageSecurity = 15;
 
 include ('includes/session.inc');
-
-$Title = _('UTILITY PAGE') . ' ' . _('that helps maintain language files');
-
+$Title = _('UTILITY PAGE') . ' ' . _('that helps maintain language files');// _('Maintain Language Files')
+$ViewTopic = "SpecialUtilities";
+$BookMark = "Z_poAdmin";// Anchor's id in the manual's html document.
 include('includes/header.inc');
+echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme . 
+		'/images/maintenance.png" title="' . 
+		_('Maintain Language Files') . '" />' . ' ' . 
+		_('Maintain Language Files') . '</p>';
 
-/* check if we have gettext - we're useless without it ... */
+/* Check if we have gettext - we're useless without it... */
 
 if (!function_exists('gettext')){
 	prnMsg (_('gettext is not installed on this system') . '. ' . _('You cannot use the language files without it'),'error');
@@ -20,9 +24,7 @@ if (!function_exists('gettext')){
 
 if (!is_writable('./locale/' . $_SESSION['Language'])) {
 	prnMsg(_('You do not have write access to the required files please contact your system administrator'),'error');
-}
-else
-{
+} else {
 	echo '<p><a href="' . $RootPath . '/Z_poRebuildDefault.php?' . SID . '">' .   _('Rebuild the System Default Language File') . '</a>';
 	echo '<p><a href="' . $RootPath . '/Z_poAddLanguage.php?' . SID . '">' . _('Add a New Language to the System')  . '</a>';
 	echo '<p><a href="' . $RootPath . '/Z_poEditLangHeader.php?' . SID . '">' .  _('Edit a Language File Header') . '</a>';
@@ -33,5 +35,4 @@ else
 }
 
 include('includes/footer.inc');
-
 ?>

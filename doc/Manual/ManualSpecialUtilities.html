@@ -29,3 +29,55 @@
 <h2>Repost General Ledger from Period</h2>
 
 <p>This script Z_RePostGLFromPeriod.php clears the actual data in the table ChartDetails - that contains the movements in each GL account, the movements are then re-calculated by setting all GLTrans to unposted and re-running the posting of all these transactions. This is a desperate measure that should only be undertaken in an extreme situation. Maybe a corrupt database or system crash etc that caused an out of balance trial balance.</p>
+
+<h2><a id="Z_poAdmin">Maintain Language Files</a></h2>
+
+<p>We use <b>gettext</b> as the internationalization and localization (i18n) system to write a multilingual program. The most commonly used implementation of gettext is GNU gettext, released by the GNU Project in 1995 as a free software implementation of the system.</p>
+
+<p>Source code is first modified to use the GNU gettext calls. This is done by wrapping strings that the user will see in the gettext function. To save typing time, and to reduce code clutter, this function is commonly aliased to _, so that the PHP code:</p>
+
+<div class="centre">
+	<pre>echo <b>gettext</b>('<i>Maintain Language Files</i>');</pre>
+</div>
+
+<p>would become:</p>
+
+<div class="centre">
+	<pre>echo <b>_</b>('<i>Maintain Language Files</i>');</pre>
+</div>
+
+<p>Comments (starting with <b>///</b>) placed directly before strings thus marked are made available as hints to translators by helper programs.</p>
+
+<!--
+To do: Add more information about the translation workflow. e.g. "This script should be run by developers when there are changes in the strings that the user will see."
+-->
+
+<h3><a id="Z_poRebuildDefault">Rebuild the System Default Language File</a></h3>
+
+<p>This script <b>Z_poRebuildDefault.php</b> runs <b>xgettext</b> on the sources to produce a .pot (<i><b>P</b>ortable <b>O</b>bject <b>T</b>emplate</i>) file, which contains a list of all the translatable strings extracted from the sources. The resultant system default language file (.pot file) is saved in the <b>.../locale/en_GB.utf8/LC_MESSAGES/messages.po</b> path.</p>
+
+<h3><a id="Z_poAddLanguage">Add a New Language to the System</a></h3>
+
+<p>This script <b>Z_poAddLanguage.php</b> adds a new language to the system, by creating a new language file (.po file) from the system default language file (.pot file).</p>
+
+<p>.</p><!-- To do: Add more information about this script. e.g. "This script should be run by developers when..."-->
+
+<h3><a id="Z_poEditLangHeader">Edit a Language File Header</a></h3>
+
+<p>.</p><!-- To do: Add more information about this script. e.g. "This script should be run by developers when..."-->
+
+<h3><a id="Z_poEditLangModule">Edit a Language File Module</a></h3>
+
+<p>.</p><!-- To do: Add more information about this script. e.g. "This script should be run by developers when..."-->
+
+<h3><a id="Z_poEditLangRemaining">Edit Remaining Strings For This Language</a></h3>
+
+<p>.</p><!-- To do: Add more information about this script. e.g. "This script should be run by developers when..."-->
+
+<h3><a id="Z_poDownloadPoFile">Download messages.po file</a></h3>
+
+<p>.</p><!-- To do: Add more information about this script. e.g. "This script should be run by developers when..."-->
+
+<h3><a id="Z_poDownloadMoFile">Download messages.mo file</a></h3>
+
+<p>.</p><!-- To do: Add more information about this script. e.g. "This script should be run by developers when..."-->

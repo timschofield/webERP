@@ -1,25 +1,34 @@
 <?php
-/* $Id$*/
+/*	$Id$*/
+/*	This script runs xgettext on the sources to produce a .pot (Portable Object 
+	Template) file, which contains a list of all the translatable strings 
+	extracted from the sources. The resultant system default language file 
+	(.pot file) is saved in the .../locale/en_GB.utf8/LC_MESSAGES/messages.po 
+	path. Note: Comments (starting with ///) placed directly before strings 
+	thus marked are made available as hints to translators by helper programs. */
 
 /* Steve Kitchen */
 
 //$PageSecurity = 15;
 
 include ('includes/session.inc');
-
-$Title = _('Rebuild');
-
+$Title = _('Rebuild');//_('Rebuild the System Default Language File')
+$ViewTopic = "SpecialUtilities";
+$BookMark = "Z_poRebuildDefault";// Anchor's id in the manual's html document.
 include('includes/header.inc');
+echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme . 
+		'/images/maintenance.png" title="' . 
+		_('Rebuild the System Default Language File') . '" />' . ' ' . 
+		_('Rebuild the System Default Language File') . '</p>';
 
-/* Your webserver user MUST have read/write access to here,
-	otherwise you'll be wasting your time */
+/* Your webserver user MUST have read/write access to here,	otherwise you'll be wasting your time */
 
-$PathToDefault		= './locale/en_GB.utf8/LC_MESSAGES/messages.po';
-$FilesToInclude = '*.php includes/*.inc includes/*.php api/*.php reportwriter/languages/en_US/reports.php';
-$xgettextCmd		= 'xgettext --no-wrap --from-code=utf-8 -L php -o ' . $PathToDefault . ' ' . $FilesToInclude;
-
-echo "<br />&nbsp;<a href='" . $RootPath . "/Z_poAdmin.php'>" . _('Back to the translation menu') . "</a>";
+echo '<br />&nbsp;<a href="' . $RootPath . '/Z_poAdmin.php">' . _('Back to the translation menu') . '</a>';
 echo '<br /><br />&nbsp;' . _('Utility page to rebuild the system default language file');
+
+$PathToDefault = './locale/en_GB.utf8/LC_MESSAGES/messages.po';
+$FilesToInclude = '*.php includes/*.inc includes/*.php api/*.php reportwriter/languages/en_US/reports.php';
+$xgettextCmd = 'xgettext --no-wrap --from-code=utf-8 -L php -o ' . $PathToDefault . ' ' . $FilesToInclude;
 
 if (isset($_POST['submit'])) {
 
@@ -27,7 +36,7 @@ if (isset($_POST['submit'])) {
 	echo '<form method="post" action=' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' . SID . '>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-/* Run xgettext to recreate the default message.po language file */
+	/// Run xgettext to recreate the default message.po language file.
 
 	prnMsg (_('Rebuilding the default language file ') . '.....<br />', 'info', ' ');
 
@@ -39,7 +48,9 @@ if (isset($_POST['submit'])) {
 	echo '</form>';
 	echo '</td></tr></table>';
 
-} else {		/* set up the page for editing */
+} else {
+
+	/* set up the page for editing */
 
 	echo '<div class="centre">';
 	echo '<br />';
@@ -58,5 +69,4 @@ if (isset($_POST['submit'])) {
 }
 
 include('includes/footer.inc');
-
 ?>
