@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-02-08 17:33+1300\n"
-"PO-Revision-Date: 2014-06-19 07:31-0600\n"
+"PO-Revision-Date: 2014-06-23 10:12-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -83,7 +83,7 @@ msgstr "o el caracter"
 #: AccountGroups.php:93
 msgid "The account group name must be at least one character long"
 msgstr ""
-"El nombre del grupo de cuenta deber ser de al menos un caracter de longitud"
+"El nombre del grupo contable deber ser de al menos un caracter de longitud"
 
 #: AccountGroups.php:100
 msgid ""
@@ -161,8 +161,7 @@ msgstr "Registro insertado"
 #: AccountGroups.php:210
 msgid "An error occurred in retrieving the group information from chartmaster"
 msgstr ""
-"Hubo un error al obtener la información de grupo en la tabla de cuentas "
-"contables"
+"Hubo un error al obtener la información del grupo en las cuentas contables"
 
 #: AccountGroups.php:215
 msgid ""
@@ -3946,7 +3945,7 @@ msgstr ""
 
 #: ConfirmDispatch_Invoice.php:387
 msgid "Enter the tax rate applicable as a number"
-msgstr ""
+msgstr "Introduzca la tasa de impuesto aplicable como un número"
 
 #: ConfirmDispatch_Invoice.php:414 StockLocTransferReceive.php:504
 msgid "Enter Serial Numbers"
@@ -4905,7 +4904,7 @@ msgstr ""
 
 #: ConfirmDispatch_Invoice.php:1672
 msgid "No Of Packages in Delivery"
-msgstr ""
+msgstr "Cantidad de paquetes en la entrega"
 
 #: ConfirmDispatch_Invoice.php:1678
 msgid "Action For Balance"
@@ -5055,6 +5054,8 @@ msgstr "Sub total"
 #: ContractBOM.php:268
 msgid "Enter the quantity of this component required to complete the contract"
 msgstr ""
+"Introduzca la cantidad de este componente requerida para completar el "
+"contrato"
 
 #: ContractBOM.php:272
 msgid "Are you sure you wish to delete this item from the contract BOM?"
@@ -5133,6 +5134,7 @@ msgstr "Sin Imagen"
 #: ContractBOM.php:383
 msgid "Enter the quantity required of this item to complete the contract"
 msgstr ""
+"Introduzca la cantidad necesaria de este artículo para completar el contrato"
 
 #: ContractBOM.php:399 SupplierTenders.php:758
 msgid "Only the first"
@@ -14871,7 +14873,7 @@ msgstr "Importado"
 
 #: ImportBankTrans.php:509
 msgid "Could not insert the bank transaction"
-msgstr ""
+msgstr "No se pudo insertar la transacción bancaria"
 
 #: ImportBankTrans.php:516
 msgid "Completed the importing of analysed bank transactions"
@@ -14883,7 +14885,7 @@ msgstr ""
 
 #: ImportBankTrans.php:541
 msgid "Opening Balance as at"
-msgstr ""
+msgstr "Saldo inicial al"
 
 #: ImportBankTrans.php:578
 msgid "Analysis"
@@ -14891,7 +14893,7 @@ msgstr "Análisis"
 
 #: ImportBankTrans.php:583
 msgid "Closing Balance as at"
-msgstr ""
+msgstr "Saldo final al"
 
 #: ImportBankTrans.php:597
 msgid "Exchange Rate to Use When Processing Transactions"
@@ -16525,7 +16527,7 @@ msgstr ""
 
 #: Manufacturers.php:163
 msgid "Manufacturer"
-msgstr ""
+msgstr "Fabricante"
 
 #: Manufacturers.php:185
 msgid "There are no manufacturers to display"
@@ -17760,7 +17762,7 @@ msgstr "Valoración de GRNs Pendientes"
 
 #: OutstandingGRNs.php:170
 msgid "Goods Received but not invoiced Yet"
-msgstr ""
+msgstr "Bienes recibidos pero no facturados todavía"
 
 #: OutstandingGRNs.php:172
 msgid ""
@@ -17784,7 +17786,7 @@ msgstr "Cantidad facturada"
 
 #: OutstandingGRNs.php:182
 msgid "Qty Pending"
-msgstr ""
+msgstr "Cantidad pendiente"
 
 #: OutstandingGRNs.php:183 SpecialOrder.php:735
 #: includes/PDFTransPageHeader.inc:209
@@ -17808,7 +17810,7 @@ msgstr ""
 
 #: OutstandingGRNs.php:278
 msgid "Show On Screen"
-msgstr ""
+msgstr "Mostrar en pantalla"
 
 #: PageSecurity.php:6 PageSecurity.php:9
 msgid "Page Security Levels"
@@ -18414,7 +18416,7 @@ msgstr "Descripción de las Condiciones o Plazos"
 
 #: PaymentTerms.php:286
 msgid "A description of the payment terms is required"
-msgstr ""
+msgstr "Se requiere una descripción de las condiciones de pago"
 
 #: PaymentTerms.php:289
 msgid "Due After A Given No. Of Days"
@@ -18555,7 +18557,7 @@ msgstr "No ha seleccionado un gasto para reclamar en esta ficha"
 
 #: PcClaimExpensesFromTab.php:70
 msgid "The amount must be greater than 0"
-msgstr ""
+msgstr "La cantidad debe ser mayor que 0"
 
 #: PcClaimExpensesFromTab.php:82 PcClaimExpensesFromTab.php:109
 msgid "The Expense Claim on Tab"
@@ -19059,7 +19061,7 @@ msgstr "Código de Tipo de Pestaña"
 
 #: PcTypeTabs.php:237
 msgid "Only alpha-numeric characters and the underscore character are allowed"
-msgstr ""
+msgstr "Sólo  se permite caracteres alfanuméricos y guión_bajo"
 
 #: PcTypeTabs.php:246
 msgid "Description Of Type of Tab"
@@ -19869,7 +19871,7 @@ msgstr "Listado de precios"
 
 #: PDFPriceList.php:250
 msgid "Print a price list"
-msgstr "Imprimir una Lista de Precios"
+msgstr "Imprimir una lista de precios"
 
 #: PDFPriceList.php:281 PDFPrintLabel.php:312 Z_DataExport.php:542
 msgid "For Sales Type/Price List"
@@ -19897,7 +19899,7 @@ msgstr "Tipo de precios de venta por defecto"
 
 #: PDFPriceList.php:302
 msgid "Full Description"
-msgstr "Descripción Completa"
+msgstr "Descripción completa"
 
 #: PDFPriceList.php:306 PDFPriceList.php:350 PDFPriceList.php:352
 #: PDFPrintLabel.php:341
@@ -19910,7 +19912,7 @@ msgstr "Precios por Categorías"
 
 #: PDFPriceList.php:352
 msgid "Prices For Categories"
-msgstr "Precios por Categorías"
+msgstr "Precios por categorías"
 
 #: PDFPriceList.php:367
 msgid "Effective Date Range"
@@ -20022,7 +20024,7 @@ msgstr "Cotización sin impuestos"
 
 #: PDFQuotation.php:239 PDFQuotationPortrait.php:259
 msgid "Total Tax"
-msgstr "Total Impuestos"
+msgstr "Total impuestos"
 
 #: PDFQuotation.php:242 PDFQuotationPortrait.php:262
 msgid "Quotation Including Tax"
@@ -21837,7 +21839,7 @@ msgstr ""
 
 #: PriceMatrix.php:37
 msgid "The price must be entered as a positive number"
-msgstr ""
+msgstr "El precio debe introducirse como un número positivo"
 
 #: PriceMatrix.php:58
 msgid "The price matrix record has been added"
@@ -39392,7 +39394,7 @@ msgstr "Se espera que el costo sea numérico"
 
 #: Z_ImportFixedAssets.php:147 Z_ImportFixedAssets.php:151
 msgid "Invalid Cost:"
-msgstr "Costo Inválido: "
+msgstr "Costo Inválido:"
 
 #: Z_ImportFixedAssets.php:150
 msgid "The cost is expected to be a positive number"
@@ -39505,7 +39507,7 @@ msgstr ""
 
 #: Z_ImportGLTransactions.php:95
 msgid "Account code "
-msgstr ""
+msgstr "Código contable"
 
 #: Z_ImportGLTransactions.php:101
 msgid "The date \""
@@ -39526,7 +39528,7 @@ msgstr ""
 
 #: Z_ImportGLTransactions.php:184
 msgid "Cheque"
-msgstr ""
+msgstr "Cheque"
 
 #: Z_ImportGLTransactions.php:203
 msgid "The total of the transactions must balance back to zero"
@@ -39892,7 +39894,7 @@ msgstr ""
 
 #: Z_poAddLanguage.php:19
 msgid "New Language"
-msgstr "Nuevo Idioma"
+msgstr "Nuevo idioma"
 
 #: Z_poAddLanguage.php:30 Z_poEditLangHeader.php:18 Z_poEditLangModule.php:23
 #: Z_poEditLangRemaining.php:23 Z_poRebuildDefault.php:21
@@ -39978,23 +39980,23 @@ msgstr ""
 
 #: Z_poAdmin.php:26
 msgid "Rebuild the System Default Language File"
-msgstr "Reconstruir el Archivo de Idioma Predeterminado del Sistema"
+msgstr "Reconstruir el archivo del idioma predeterminado del sistema"
 
 #: Z_poAdmin.php:27
 msgid "Add a New Language to the System"
-msgstr "Añadir un Nuevo Idioma al Sistema"
+msgstr "Añadir un nuevo idioma al sistema"
 
 #: Z_poAdmin.php:28
 msgid "Edit a Language File Header"
-msgstr "Editar una Cabecera de Archivo de Idioma"
+msgstr "Editar un encabezado de archivo de idioma"
 
 #: Z_poAdmin.php:29
 msgid "Edit a Language File Module"
-msgstr "Editar un Módulo de Archivo de Idioma"
+msgstr "Editar un módulo de archivo de idioma"
 
 #: Z_poAdmin.php:30
 msgid "Edit Remaining Strings For This Language"
-msgstr "Editar las Cadenas de Caracteres Restantes para este Idioma"
+msgstr "Editar los textos restantes para este idioma"
 
 #: Z_poAdmin.php:31
 msgid "Download messages.po file"
@@ -40006,15 +40008,15 @@ msgstr "Descargar archivo messages.mo"
 
 #: Z_poEditLangHeader.php:11
 msgid "Edit Header"
-msgstr "Editar Cabecera"
+msgstr "Editar encabezado"
 
 #: Z_poEditLangHeader.php:19
 msgid "Utility to edit a language file header"
-msgstr "Utilidad para editar la cabecera de un archivo de idioma"
+msgstr "Utilidad para editar un encabezado de archivo de idioma"
 
 #: Z_poEditLangHeader.php:39
 msgid "Writing the language file header"
-msgstr "Escribiendo la cabecera del archivo de idioma"
+msgstr "Escribiendo el encabezado de archivo de idioma"
 
 #: Z_poEditLangHeader.php:47
 msgid "Writing the rest of the language file"
@@ -40062,15 +40064,15 @@ msgstr ""
 
 #: Z_poEditLangHeader.php:94
 msgid "Language File Header for"
-msgstr "Cabecera de Archivo de Idioma para"
+msgstr "Encabezado de archivo de idioma para"
 
 #: Z_poEditLangHeader.php:100
 msgid "Header Line"
-msgstr "Línea de la Cabecera"
+msgstr "Línea de encabezado"
 
 #: Z_poEditLangModule.php:13
 msgid "Edit Module"
-msgstr "Editar Módulo"
+msgstr "Editar módulo"
 
 #: Z_poEditLangModule.php:24 Z_poEditLangRemaining.php:24
 msgid "Utility to edit a language file module"
@@ -40089,7 +40091,7 @@ msgstr ""
 
 #: Z_poEditLangModule.php:133 Z_poEditLangRemaining.php:110
 msgid "Language File for"
-msgstr "Archivo de Idioma para"
+msgstr "Archivo de idioma para"
 
 #: Z_poEditLangModule.php:134
 msgid "Module"
@@ -40097,7 +40099,7 @@ msgstr "Módulo"
 
 #: Z_poEditLangModule.php:140 Z_poEditLangRemaining.php:116
 msgid "Default text"
-msgstr "Texto Predeterminado"
+msgstr "Texto predeterminado"
 
 #: Z_poEditLangModule.php:141 Z_poEditLangRemaining.php:117
 msgid "Translation"
@@ -43620,11 +43622,11 @@ msgstr "No se pudieron obtener datos de usuario al iniciar sesión debido a que
 
 #: includes/UserLogin.php:134
 msgid "User access blocked"
-msgstr ""
+msgstr "Acceso del usuario bloqueado"
 
 #: includes/UserLogin.php:135
 msgid "has been blocked access at"
-msgstr ""
+msgstr "se sido bloqueado el acceso a"
 
 #: includes/UserLogin.php:136
 msgid "from IP"
@@ -43632,7 +43634,7 @@ msgstr "Desde el IP"
 
 #: includes/UserLogin.php:136
 msgid "due to too many failed attempts."
-msgstr ""
+msgstr "debido a demasiados intentos fallidos."
 
 #: includes/Z_POSDataCreation.php:211 includes/GetPrice.inc:28
 #: ../webSHOP/includes/Functions.php:546
@@ -44173,11 +44175,11 @@ msgstr "Días Entre la Fecha de Entrega Solicitada y la Fecha de la Factura"
 
 #: includes/PDFGLJournalHeader.inc:11
 msgid "Journal number "
-msgstr ""
+msgstr "Número de diario"
 
 #: includes/PDFGLJournalHeader.inc:12
 msgid "Journal Date "
-msgstr ""
+msgstr "Fecha de diario"
 
 #: includes/PDFGLJournalHeader.inc:23
 msgid "Tag Details"
@@ -48981,1347 +48983,3 @@ msgstr "Tarjeta de crédito"
 #: ../webSHOP/includes/session.php:137
 msgid "Bank Transfer"
 msgstr "Transferencia bancaria"
-
-#~ msgid "Customer Branch Code:"
-#~ msgstr "Código de sucursal del cliente:"
-
-#~ msgid "Geocoded Customer Branches Report"
-#~ msgstr "Informe de Sucursales de cliente con Geocode"
-
-#~ msgid "Top Sales Items Report"
-#~ msgstr "Informe de Artículos Más Vendidos"
-
-#~ msgid "The name of your company"
-#~ msgstr "El nombre de su compañía"
-
-#~ msgid "User:"
-#~ msgstr "Usuario:"
-
-#~ msgid "Use in webSHOP"
-#~ msgstr "Usar en webSHOP"
-
-#~ msgid ""
-#~ "Cannot delete this customer because there are branch records set up "
-#~ "against it"
-#~ msgstr ""
-#~ "No se puede eliminar este cliente porque hay registros de Sucursales "
-#~ "creadas respecto a él"
-
-#~ msgid "branch records relating to this customer"
-#~ msgstr "Registros de Sucursales de este cliente"
-
-#~ msgid "Customers Currency"
-#~ msgstr "Moneda del cliente"
-
-#~ msgid "Category:"
-#~ msgstr "Categoría:"
-
-#~ msgid "Stock Category Maintenance"
-#~ msgstr "Administrar Categorías de Existencias"
-
-#~ msgid "The quantity entered for line"
-#~ msgstr "La cantidad de la linea"
-
-#~ msgid "this line was for the part code"
-#~ msgstr "esta línea fue para el código"
-
-#~ msgid "Illegal Characters are not allowed"
-#~ msgstr "Caracteres ilegales no son permitidos"
-
-#~ msgid "The input should be between 1 to 999"
-#~ msgstr "La entrada debe estar entre 1 y 999"
-
-#~ msgid "1 t0 999"
-#~ msgstr "1 a 999"
-
-#~ msgid "postive integer"
-#~ msgstr "entero positivo"
-
-#~ msgid "The input must be postive integer"
-#~ msgstr "La entrada debe ser un número entero positivo"
-
-#~ msgid "Must be postive integer"
-#~ msgstr "Debe ser entero positivo"
-
-#~ msgid "Company:"
-#~ msgstr "Compañía:"
-
-#~ msgid "The input should be between 1~999"
-#~ msgstr "La entrada debe estar entre 1 y 999"
-
-#~ msgid "Form Design"
-#~ msgstr "Diseño del formulario"
-
-#~ msgid "Price Charge in"
-#~ msgstr "Precio de Cargo en"
-
-#~ msgid "GRN Selected For Adding To A Purchase Invoice"
-#~ msgstr ""
-#~ "GRN (Good Received Note)(Nota de Bienes Recibidos) seleccionada para "
-#~ "Agregar a una Factura de Compra"
-
-#~ msgid "Qty Outstanding"
-#~ msgstr "Cantidad Extraordinaria"
-
-#~ msgid "Actual Price in"
-#~ msgstr "Precio actual en"
-
-#~ msgid "Modify Line"
-#~ msgstr "Modificar Línea"
-
-#~ msgid "Currency Maintenance"
-#~ msgstr "Administrar monedas"
-
-#~ msgid "For Payments"
-#~ msgstr "Para pagos"
-
-#~ msgid "For Receipts"
-#~ msgstr "Para ingresos"
-
-#~ msgid "Use Pre-printed"
-#~ msgstr "Usar Pre-impreso"
-
-#~ msgid "Stationery"
-#~ msgstr "Papelería"
-
-#~ msgid "Open Cash Drawer"
-#~ msgstr "Abrir caja registradora"
-
-#~ msgid "Reference / Narrative"
-#~ msgstr "Referencia/Observaciones"
-
-#~ msgid "(Max. length 80 characters)"
-#~ msgstr "(80 caracteres máximo)"
-
-#~ msgid "Add Inventory Items"
-#~ msgstr "Agregar artículos de inventario"
-
-#~ msgid "System Configuration"
-#~ msgstr "Parámetros ERP de la Compañía"
-
-#~ msgid "English US"
-#~ msgstr "Ingles US"
-
-#~ msgid "English British"
-#~ msgstr "Ingles Britanico"
-
-#~ msgid "English India"
-#~ msgstr "Ingles de la India"
-
-#~ msgid "Arabic Eygptian"
-#~ msgstr "Árabe Egipcio"
-
-#~ msgid "Czech"
-#~ msgstr "Checo"
-
-#~ msgid "German"
-#~ msgstr "Alemán"
-
-#~ msgid "Greek"
-#~ msgstr "Griego"
-
-#~ msgid "Spanish"
-#~ msgstr "Español"
-
-#~ msgid "Estonian"
-#~ msgstr "Estonia"
-
-#~ msgid "Persian"
-#~ msgstr "Persa"
-
-#~ msgid "French"
-#~ msgstr "Francés"
-
-#~ msgid "Hungarian"
-#~ msgstr "Húngaro"
-
-#~ msgid "Indonesian"
-#~ msgstr "Indonesio"
-
-#~ msgid "Italian"
-#~ msgstr "Italiano"
-
-#~ msgid "Japanese"
-#~ msgstr "Japones"
-
-#~ msgid "Latvian"
-#~ msgstr "Latvio"
-
-#~ msgid "Dutch"
-#~ msgstr "Danes"
-
-#~ msgid "Polish"
-#~ msgstr "Polaco"
-
-#~ msgid "Brazilian Portuguese"
-#~ msgstr "Portugués de Brasil"
-
-#~ msgid "Portuguese"
-#~ msgstr "Portugues"
-
-#~ msgid "Romanian"
-#~ msgstr "Rumano"
-
-#~ msgid "Russian"
-#~ msgstr "Ruso"
-
-#~ msgid "Albanian"
-#~ msgstr "Albanés"
-
-#~ msgid "Swedish"
-#~ msgstr "Sueco"
-
-#~ msgid "Kiswahili"
-#~ msgstr "Kiswahili"
-
-#~ msgid "Turkish"
-#~ msgstr "Turco"
-
-#~ msgid "Vietnamese"
-#~ msgstr "Vietnamita"
-
-#~ msgid "Chinese - Simplified"
-#~ msgstr "Chino - Simplificado"
-
-#~ msgid "Chinese - Traditional Hongkong"
-#~ msgstr "Chino - Tradicional Hong Kong"
-
-#~ msgid "Chinese - Traditional Taiwan"
-#~ msgstr "Chino - Tradicional de Taiwán"
-
-#~ msgid "Please login here"
-#~ msgstr "Registrarse aquí"
-
-#~ msgid "Configuration Settings"
-#~ msgstr "Parámetros ERP de la Compañía"
-
-#~ msgid "Form Layout Editor"
-#~ msgstr "Editor de diseño de formulario"
-
-#~ msgid "The Line 4 of the address must be forty characters or less long"
-#~ msgstr "La Línea 4 de la dirección no puede tener más de 40 caracteres"
-
-#~ msgid "The Line 6 of the address must be fifteen characters or less long"
-#~ msgstr "La Línea 6 de la dirección no debe pasar de 15 caracteres"
-
-#~ msgid "Address Line 2 (Suburb/City)"
-#~ msgstr "Dirección, 2 (Ciudad)"
-
-#~ msgid "Address Line 3 (State/Province)"
-#~ msgstr "Dirección, 3 (Provincia/Estado)"
-
-#~ msgid "Address Line 4 (Postal Code)"
-#~ msgstr "Dirección, 4 (Código Postal)"
-
-#~ msgid "Freight Costs Set Up"
-#~ msgstr "Configuración Costos Transporte"
-
-#~ msgid "The entry for the destination must be at least two characters long"
-#~ msgstr "La entrada para el destino debe tener al menos dos caracteres"
-
-#~ msgid ""
-#~ "These entries are matched against the town names entered for customer "
-#~ "delivery addresses"
-#~ msgstr ""
-#~ "Estas entradas están comparadas respecto a los nombres de poblaciones de "
-#~ "las direcciones de entrega del cliente"
-
-#~ msgid "Sales Category"
-#~ msgstr "Categoría de ventas"
-
-#~ msgid ""
-#~ "The general ledger code specified must be numeric - all account numbers "
-#~ "must be numeric"
-#~ msgstr ""
-#~ "El código contable especificado debe ser numérico - todos los números de "
-#~ "la cuenta deben ser numéricos"
-
-#~ msgid "Enter Account No. to search from"
-#~ msgstr "Indicar el nº de Cuenta desde el que empezar a buscar"
-
-#~ msgid "Change Tax Calculation Method"
-#~ msgstr "Cambiar metodo calculo impuestos"
-
-#~ msgid "Starting Reference no (eg chq no)"
-#~ msgstr "Iniciando referencia No."
-
-#~ msgid ""
-#~ "Enter up to 32 character lower case character abbreviation for the company"
-#~ msgstr ""
-#~ "Introduzca hasta 32 caracteres en minúsculas como abreviación para la "
-#~ "empresa"
-
-#~ msgid "Unrecognised destination, delivery only to cities in"
-#~ msgstr "Destino desconocido, sólo se despacha a ciudades en"
-
-#~ msgid "Shopping Cart"
-#~ msgstr "Carrito de compras"
-
-#~ msgid "   "
-#~ msgstr "   "
-
-#~ msgid "Select one of the links below to operate using this Account"
-#~ msgstr "Escoja la función a aplicar sobre esta cuenta"
-
-#~ msgid "New Search"
-#~ msgstr "Nueva Búsqueda"
-
-#~ msgid "Select Inv. Item"
-#~ msgstr "Seleccionar Artículo Facturado"
-
-#~ msgid "Add Inventory Item"
-#~ msgstr "Agregar Artículo del Inventario"
-
-#~ msgid "Inventory items in this category."
-#~ msgstr "Artículos de inventario en esta categoría."
-
-#~ msgid "Could not load the countries from the currency table"
-#~ msgstr "No se pudo cargar los países desde la tabla de monedas"
-
-#~ msgid "The SQL to update stock movement transaction records failed"
-#~ msgstr ""
-#~ "Falló el SQL para actualizar los registros de la transacción de "
-#~ "movimientos de existencias"
-
-#~ msgid "Changing location transfer information"
-#~ msgstr "Cambiando la información del translado de ubicación"
-
-#~ msgid "Changing MRP demands information"
-#~ msgstr "Cambiando la información de demandas de MRP"
-
-#~ msgid "The SQL to update the mrpdemands records failed"
-#~ msgstr "Falló el SQL para actualizar los registros mrpdemands"
-
-#~ msgid "Changing MRP planned orders information"
-#~ msgstr "Cambiando la información de los pedidos planificados MRP"
-
-#~ msgid "The SQL to update the mrpplannedorders records failed"
-#~ msgstr "Falló el SQL para actualizar los registros mrpplannedorders"
-
-#~ msgid "Changing MRP requirements information"
-#~ msgstr "Cambiando la información de los requisitos MRP"
-
-#~ msgid "The SQL to update the mrprequirements records failed"
-#~ msgstr "Falló el SQL para actualizar los registros mrprequirements"
-
-#~ msgid "Changing MRP supplies information"
-#~ msgstr "Cambiando la información de los suministros MRP"
-
-#~ msgid "The SQL to update the mrpsupplies records failed"
-#~ msgstr "Falló el SQL para actualizar los registros mrpsupplies"
-
-#~ msgid "Changing sales orders detail records"
-#~ msgstr "Modificando registros de detalle de pedido"
-
-#~ msgid "Changing purchase order details records"
-#~ msgstr "Modificando registros de detalle de compra"
-
-#~ msgid "The SQL to update the purchase order detail records failed"
-#~ msgstr ""
-#~ "Falló el SQL usado para actualizar los registros de detalle de la orden "
-#~ "de compra"
-
-#~ msgid "Changing purchasing data records"
-#~ msgstr "Modificando registros de datos de compra"
-
-#~ msgid "The SQL to update the purchasing data records failed"
-#~ msgstr "Falló el SQL para actualizar los registros de datos de compras"
-
-#~ msgid "Changing the stock code in shipment charges records"
-#~ msgstr ""
-#~ "Cambiando el código de existencia en los registros de cargos del envío"
-
-#~ msgid "The SQL to update Shipment Charges records failed"
-#~ msgstr "Falló el SQL para actualizar los registros de Cargos del Envío"
-
-#~ msgid "Changing the stock check freeze file records"
-#~ msgstr "Modificando registros de verificación de congelación de existencia"
-
-#~ msgid "Changing the stock counts table records"
-#~ msgstr "Cambiando los registros de la tabla de cómputos de existencias"
-
-#~ msgid "The SQL to update stock counts records failed"
-#~ msgstr ""
-#~ "Falló el SQL para actualizar los registros de cómputo de existencias"
-
-#~ msgid "Changing the GRNs table records"
-#~ msgstr "Modificando registros de tabla de Remisiones"
-
-#~ msgid "The SQL to update GRN records failed"
-#~ msgstr ""
-#~ "Falló el SQL para actualizar los registros de notas de Bienes Recibidos"
-
-#~ msgid "Changing the contract BOM table records"
-#~ msgstr ""
-#~ "Cambiando los registros de la tabla de Lista de Materiales contractuales"
-
-#~ msgid "The SQL to update the contract BOM records failed"
-#~ msgstr ""
-#~ "El SQL para actualizar los registros de la lista de materiales del "
-#~ "contrato falló"
-
-#~ msgid "components"
-#~ msgstr "componentes"
-
-#~ msgid "parents"
-#~ msgstr "basees"
-
-#~ msgid "The SQL to update the BOM parent records failed"
-#~ msgstr ""
-#~ "Falló el SQL para actualizar los registros ancestros de la Lista de "
-#~ "Materiales"
-
-#~ msgid "Changing the item properties table records"
-#~ msgstr "Modificando los registros de la tabla de propiedades del artículo"
-
-#~ msgid "The SQL to update the item properties records failed"
-#~ msgstr ""
-#~ "Falló el SQL usado para actualizar los registros con las propiedades del "
-#~ "artículo"
-
-#~ msgid "Changing work order requirements information"
-#~ msgstr "Cambiando la información de los requisitos de la orden de trabajo"
-
-#~ msgid "The SQL to update the stockid worequirements records failed"
-#~ msgstr ""
-#~ "Falló el SQL para actualizar los registros worequirements del stockid"
-
-#~ msgid "The SQL to update the parent stockid worequirements records failed"
-#~ msgstr ""
-#~ "Falló el SQL para actualizar los registros worequirements del stockid "
-#~ "ancestro"
-
-#~ msgid "The SQL to update the woitem records failed"
-#~ msgstr "Falló el SQL para actualizar los registros woitem"
-
-#~ msgid "The SQL to update the sales category records failed"
-#~ msgstr "Falló el SQL para actualizar los registros de categoría de ventas"
-
-#~ msgid "Changing any serialised item information"
-#~ msgstr "Cambiar cualquier información del artículo serializado"
-
-#~ msgid "The SQL to update the stockserialitem records failed"
-#~ msgstr ""
-#~ "El SQL falló para actualizar los registros del elemento en existencia "
-#~ "serializado"
-
-#~ msgid ""
-#~ "The currency abbreviation must be 3 characters or less long and for "
-#~ "automated currency updates to work correctly be one of the ISO4217 "
-#~ "currency codes"
-#~ msgstr ""
-#~ "La abreviatura de la divisa no debe pasar de 3 caracteres y para que las "
-#~ "actualizaciones automáticas funcionen, ha de ser ISO-4217"
-
-#~ msgid "The currency name must be 20 characters or less long"
-#~ msgstr "El nombre de la moneda no debe pasar de 20 caracteres"
-
-#~ msgid "The currency code cannot contain any of the following characters"
-#~ msgstr ""
-#~ "El código de divisa (moneda) no puede contener los siguientes caracteres"
-
-#~ msgid "Currency Abbreviation"
-#~ msgstr "Abreviatura de la moneda"
-
-#~ msgid "someone else"
-#~ msgstr "algún otro"
-
-#~ msgid "Antilles, Netherlands"
-#~ msgstr "Antillas Holandesas"
-
-#~ msgid "Euskadi"
-#~ msgstr "País Vasco"
-
-#~ msgid "Guiana, French"
-#~ msgstr "Guayana Francesa"
-
-#~ msgid "Gambia, the"
-#~ msgstr "Gambia"
-
-#~ msgid "Guinea, Equatorial"
-#~ msgstr "Guinea Ecuatorial"
-
-#~ msgid "Equatorial Guinea"
-#~ msgstr "Guinea Ecuatorial"
-
-#~ msgid "Iran, Islamic Republic of"
-#~ msgstr "Irán"
-
-#~ msgid "Kosovo"
-#~ msgstr "Kosovo"
-
-#~ msgid "Sri Lanka (ex-Ceilan)"
-#~ msgstr "Sri Lanka"
-
-#~ msgid "Myanmar (ex-Burma)"
-#~ msgstr "Birmania (Myanmar)"
-
-#~ msgid "Quebec"
-#~ msgstr "Quebec"
-
-#~ msgid "Reunion"
-#~ msgstr "Reunión"
-
-#~ msgid "Log Off"
-#~ msgstr "Salir"
-
-#~ msgid "Thank you for using webERP"
-#~ msgstr "Gracias por usar el sistema"
-
-#~ msgid "below"
-#~ msgstr "abajo"
-
-#~ msgid "Date Updated"
-#~ msgstr "Fecha Actualizada"
-
-#~ msgid "File has type "
-#~ msgstr "El archivo es de tipo "
-
-#~ msgid "The SQL to to create passbom failed with the message"
-#~ msgstr "El SQL para crear el passbom falló con el mensaje"
-
-#~ msgid "Could not determine if the item"
-#~ msgstr "No se pudo determinar si el artículo"
-
-#~ msgid "is purchased or manufactured"
-#~ msgstr "es comprado ó elaborado"
-
-#~ msgid "The SQL used that failed was"
-#~ msgstr "El SQL usado que falló fue"
-
-#~ msgid "Street Address 5"
-#~ msgstr "Dirección de la Calle, 5"
-
-#~ msgid "Street Address 6"
-#~ msgstr "Dirección de la Calle, 6"
-
-#~ msgid "Print Quotation"
-#~ msgstr "Imprimir Cotización"
-
-#~ msgid "Import Item Quantities From CSV"
-#~ msgstr "Importar Cantidades de Artículos desde el CSV"
-
-#~ msgid ""
-#~ "The SQL to to create temporary item quantity table failed with the message"
-#~ msgstr ""
-#~ "El SQL para crear la tabla de cantidades de artículos temporal falló con "
-#~ "el mensaje"
-
-#~ msgid "A stock issue for"
-#~ msgstr "Una emisión de existencia para"
-
-#~ msgid "from location"
-#~ msgstr "desde la localidad"
-
-#~ msgid "Date Authoriser"
-#~ msgstr "Fecha Autorizado"
-
-#~ msgid "The preferred supplier details could not be update because"
-#~ msgstr "No pudo actualizarse el detalle del Proveedor Preferido porque"
-
-#~ msgid "Supplier preferred flag has been updated"
-#~ msgstr "La bandera de Proveedor Preferido se ha actualizado"
-
-#~ msgid "Data for Purchasing"
-#~ msgstr "Datos para la Compra"
-
-#~ msgid "date"
-#~ msgstr "fecha"
-
-#~ msgid "note"
-#~ msgstr "nota"
-
-#~ msgid "priority"
-#~ msgstr "prioridad"
-
-#~ msgid "The SQL that faild was"
-#~ msgstr "El SQL que falló fue"
-
-#~ msgid ""
-#~ "The path to the wiki installation to form the basis of wiki URLs - this "
-#~ "should be the directory on the web-server where the wiki is installed. "
-#~ "The wiki must be installed on the same web-server as webERP"
-#~ msgstr ""
-#~ "La ruta a la instalación de la wiki para formar la base de las "
-#~ "direcciones wiki. Debería ser la carpeta del servidor web donde está "
-#~ "instalada la wiki. La wiki debe estar instalada en el mismo servidor web "
-#~ "que WebERP."
-
-#~ msgid "The SQL to contract BOM records failed"
-#~ msgstr "Falló el SQL para contraer los registros de Lista de Materiales"
-
-#~ msgid "Stock Conversion Utility"
-#~ msgstr "Herramienta de Conversión de Existencias"
-
-#~ msgid "Inventory Conversion Utility"
-#~ msgstr "Herramienta de Conversión de Inventario"
-
-#~ msgid "Conversion Details"
-#~ msgstr "Detalles de Conversión"
-
-#~ msgid "Convert From Stock Code"
-#~ msgstr "Convertir desde Código de Existencias"
-
-#~ msgid "Convert To Stock Code"
-#~ msgstr "Convertir a Código de Existencias"
-
-#~ msgid "Convert Stock At Location"
-#~ msgstr "Convertir Existencia en Almacén"
-
-#~ msgid "Quantity To Convert"
-#~ msgstr "Cantidades a Convertir"
-
-#~ msgid "Test Script"
-#~ msgstr "Programa de Prueba"
-
-#~ msgid "Suppier Invoices"
-#~ msgstr "Facturas de Proveedores"
-
-#~ msgid "Suppier Credit Notes"
-#~ msgstr "Notas de crédito de Proveedores"
-
-#~ msgid "Suppier Payments"
-#~ msgstr "Pagos a los Proveedores"
-
-#~ msgid "Returns the webERP currency code"
-#~ msgstr "Devuelve el código webERP de moneda "
-
-#~ msgid ""
-#~ "If successful this function returns a string contain the default currency "
-#~ "code. "
-#~ msgstr ""
-#~ "Si tiene éxito esta función devuelve una cadena que contiene el código "
-#~ "predeterminado de la moneda."
-
-#~ msgid ""
-#~ "At least one Customer Branch Name keyword OR an extract of a Customer "
-#~ "Branch Code or Branch Phone Number must be entered for the search"
-#~ msgstr ""
-#~ "Al menos una palabra clave del Nombre de la Sucursal del cliente ó una "
-#~ "parte del Código de la Sucursal del cliente ó el Número de Teléfono de la "
-#~ "Sucursal debe ser indicado para la búsqueda"
-
-#~ msgid "Receivables/Payables"
-#~ msgstr "Clientes / Proveedores"
-
-#~ msgid "Role Permissions"
-#~ msgstr "Permisos de los Perfiles de Seguridad"
-
-#~ msgid "Periods are automatically maintained"
-#~ msgstr "Los períodos se administran automáticamente"
-
-#~ msgid "update"
-#~ msgstr "actualizar"
-
-#~ msgid "Price list"
-#~ msgstr "Lista de precios"
-
-#~ msgid ""
-#~ "At least one Supplier Name keyword OR an extract of a Supplier Code must "
-#~ "be entered for the search"
-#~ msgstr ""
-#~ "Al menos debe entrar una palabra clave de Nombre del Proveedor ó una "
-#~ "parte del Código del Proveedor para efectuar la búsqueda"
-
-#~ msgid "could not be create because"
-#~ msgstr "no se pudo crear porque"
-
-#~ msgid "The work order has been deleted"
-#~ msgstr "La orden de trabajo ha sido eliminada"
-
-#~ msgid "Delete This Work Order"
-#~ msgstr "Eliminar Esta Orden de Trabajo"
-
-#~ msgid "options"
-#~ msgstr "y sus opciones"
-
-#~ msgid "Only System Administrator"
-#~ msgstr "Sólo Administrador Sistema"
-
-#~ msgid ""
-#~ "BE VERY CAREFUL DO NOT RUN THESE LINKS BELOW WITHOUT UNDERSTANDING "
-#~ "EXACTLY WHAT THEY DO AND THE IMPLICATIONS"
-#~ msgstr ""
-#~ "ADVERTENCIA: No utilice los siguientes vínculos SI NO sabe exáctamente su "
-#~ "función e implicaciones"
-
-#~ msgid "Send All Unsent EDI Invoices and Credits"
-#~ msgstr "Enviar Todas las Facturas y notas Crédito EDI Pendientes"
-
-#~ msgid "Image Manipulation Utility"
-#~ msgstr "Herramienta de Manipulación de Imágenes"
-
-#~ msgid "The stuff below is really quite dangerous!"
-#~ msgstr "El contenido a continuación es verdaderamente peligroso!"
-
-#~ msgid "To delete a credit note call"
-#~ msgstr "Para eliminar abono"
-
-#~ msgid "and the credit note number to delete"
-#~ msgstr "y el número de abono a eliminar"
-
-#~ msgid "To delete an invoice call"
-#~ msgstr "Para eliminar factura"
-
-#~ msgid "and the invoice number to delete"
-#~ msgstr "y el número de factura crédito a eliminar"
-
-#~ msgid "Upload a file to the server"
-#~ msgstr "Cargar archivo al servidor"
-
-#~ msgid ""
-#~ "Show Debtors Control (Need to edit Z_CheckDebtorsControl.php for the "
-#~ "period to show control totals for"
-#~ msgstr ""
-#~ "Mostrar Control de Deudores (Necesita editar Z_CheckDebtorsControl.php "
-#~ "para que el período muestre los totales de control para"
-
-#~ msgid "Working with"
-#~ msgstr "Trabajando con"
-
-#~ msgid "out of"
-#~ msgstr "fuera de"
-
-#~ msgid "order"
-#~ msgstr "pedido"
-
-#~ msgid "Demand Work Orders"
-#~ msgstr "Solicitar Órdenes de Trabajo"
-
-#~ msgid "StockLocation"
-#~ msgstr "Ubicación de Existencia"
-
-#~ msgid "StockCat"
-#~ msgstr "Categoría de Existencia"
-
-#~ msgid "NumberOfDays"
-#~ msgstr "Número de Días"
-
-#~ msgid "For Sales Man"
-#~ msgstr "Para el Vendedor"
-
-#~ msgid "PDF attachment (.pdf)"
-#~ msgstr "PDF adjunto (.pdf)"
-
-#~ msgid "Qty Already"
-#~ msgstr "Cant.  Ya"
-
-#~ msgid "credit noted"
-#~ msgstr "Crédito anotado"
-
-#~ msgid "To credit note"
-#~ msgstr "A abono"
-
-#~ msgid "Date Price"
-#~ msgstr "Precio de la Fecha"
-
-#~ msgid ""
-#~ "This page updates already existing prices for a specified sales type "
-#~ "(price list)"
-#~ msgstr ""
-#~ "Esta página actualiza precios existentes para un tipo de venta específico "
-#~ "(lista de precios)"
-
-#~ msgid ""
-#~ "Choose between updating only customer special prices where the customer "
-#~ "is set up under the price list selected, or all prices under the sales "
-#~ "type or just specific prices for a customer for the stock category "
-#~ "selected"
-#~ msgstr ""
-#~ "Opte entre actualizar sólo los precios especiales de clientes "
-#~ "configurados en la lista de precios seleccionada, o todos los precios del "
-#~ "tipo de venta, o sólo precios específicos para un cliente para la clase "
-#~ "de existencia seleccionada"
-
-#~ msgid "Select the Price List to update the costs for"
-#~ msgstr "Seleccionar la Lista de Precios cuyo costo se va actualizar"
-
-#~ msgid "Which Prices to update"
-#~ msgstr "Precios a actualizar"
-
-#~ msgid "Only Non-customer special prices"
-#~ msgstr "Sólo precios especiales al detal"
-
-#~ msgid "Only customer special prices"
-#~ msgstr "Sólo precios especiales por cliente"
-
-#~ msgid "Both customer special prices and non-customer special prices"
-#~ msgstr "Ambos precios especiales al detal y cliente"
-
-#~ msgid "customer special prices only"
-#~ msgstr "sólo precios especiales de cliente"
-
-#~ msgid "and a stock category code of"
-#~ msgstr "y la categoría de inventario código"
-
-#~ msgid "and a increase percent of"
-#~ msgstr "con un incremento porcentual de"
-
-#~ msgid "sign"
-#~ msgstr "firma"
-
-#~ msgid "prices for"
-#~ msgstr "los precios para"
-
-#~ msgid "for the stock category"
-#~ msgstr "la categoría de inventario"
-
-#~ msgid "will been incremented by"
-#~ msgstr "se incrementarán en"
-
-#~ msgid "percent"
-#~ msgstr "porciento"
-
-#~ msgid "Updating prices for"
-#~ msgstr "Actualizando precios"
-
-#~ msgid "Special Prices for Inventory Categories between"
-#~ msgstr "Precios Especiales de las Categorías de Inventario entre"
-
-#~ msgid "Price List for Inventory Categories between"
-#~ msgstr "Lista de Precios de las Categorías de Inventario entre"
-
-#~ msgid "The purchase order could not be deleted because"
-#~ msgstr "No se pudo eliminar la orden de compra porque"
-
-#~ msgid ""
-#~ "The SQL statement used to delete the purchase order header record, that "
-#~ "failed was"
-#~ msgstr ""
-#~ "El SQL que falló al eliminar el registro de cabecera de la orden de "
-#~ "compra fue"
-
-#~ msgid "Return To PO List"
-#~ msgstr "Regresar al Listado de Órdenes de Compra"
-
-#~ msgid "Print Now"
-#~ msgstr "Imprimir"
-
-#~ msgid "Search Result: Customer Name has been used in search"
-#~ msgstr "Resultado de la Búsqueda: se buscó usando el Nombre del cliente"
-
-#~ msgid "Search Result: Customer Code has been used in search"
-#~ msgstr "Resultado de la Búsqueda: se buscó usando el Código de cliente"
-
-#~ msgid "Search Result: Customer Phone has been used in search"
-#~ msgstr "Resultado de la Búsqueda: se buscó usando el Teléfono del cliente"
-
-#~ msgid "Search Result: Customer Address has been used in search"
-#~ msgstr "Resultado de la Búsqueda: se buscó usando la Dirección del cliente"
-
-#~ msgid "Search Result: Customer Type has been used in search"
-#~ msgstr "Resultado de la Búsqueda: se buscó usando el Tipo de cliente"
-
-#~ msgid "Cannot commit the changes because"
-#~ msgstr "No se pudieron grabar los cambios porque"
-
-#~ msgid "The commit of the database transaction failed"
-#~ msgstr "Fallo al grabar la transacción en la base de datos"
-
-#~ msgid "The customer record of the customer selected"
-#~ msgstr "El registro del cliente seleccionado"
-
-#~ msgid "Annual Depreciation Percentage"
-#~ msgstr "Porcentaje de Amortización Anual"
-
-#~ msgid "Update Journal"
-#~ msgstr "Actualizar Diario"
-
-#~ msgid ""
-#~ "The effective after date field must be a date in the format dd/mm/yy or "
-#~ "dd/mm/yyyy or ddmmyy or ddmmyyyy or dd-mm-yy or dd-mm-yyyy"
-#~ msgstr ""
-#~ "El campo de fecha de entrada en vigencia debe escribirse en formato dd/mm/"
-#~ "aa ó  dd/mm/aaaa ó ddmmaa ó ddmmaaaa ó dd-mm-aa ó dd-mm-aaaa"
-
-#~ msgid ""
-#~ "The effective to date field must be a date in the format dd/mm/yy or dd/"
-#~ "mm/yyyy or ddmmyy or ddmmyyyy or dd-mm-yy or dd-mm-yyyy"
-#~ msgstr ""
-#~ "El campo de fecha de vencimiento debe escribirse en formato dd/mm/aa ó  "
-#~ "dd/mm/aaaa ó ddmmaa ó ddmmaaaa ó dd-mm-aa ó dd-mm-aaaa"
-
-#~ msgid "at standard cost"
-#~ msgstr "a costo estándar"
-
-#~ msgid "Customer branch<b>"
-#~ msgstr "Sucursal de cliente<b>"
-
-#~ msgid "Print Sales Order / Pro-forma Invoice"
-#~ msgstr "Imprimir Pedido de Venta / Factura Pro-forma"
-
-#~ msgid "Transaction Inquiries"
-#~ msgstr "Consultar Transacciones"
-
-#~ msgid "View System Check"
-#~ msgstr "Comprobar el Servidor"
-
-#~ msgid "The stock record of the stock selected"
-#~ msgstr "El registro de existencias del inventario seleccionado"
-
-#~ msgid "The supplier pricing details for"
-#~ msgstr "Los detalle de precios del proveedor para"
-
-#~ msgid "there is no purchasing data set up for this supplier"
-#~ msgstr "no hay datos de compras definidos para este proveedor"
-
-#~ msgid "and item"
-#~ msgstr "y el artículo"
-
-#~ msgid "The Update Could Not Be Processed"
-#~ msgstr "La actualización no Puedo ser Procesada"
-
-#~ msgid ""
-#~ "You are attempting to set the quantity ordered to zero, or the price is "
-#~ "set to an amount less than 0"
-#~ msgstr ""
-#~ "Esta intentando poner la cantidad pedida a cero, ó el precio está fijado "
-#~ "a un importe menor que 0"
-
-#~ msgid ""
-#~ "You are attempting to make the quantity ordered a quantity less than has "
-#~ "already been invoiced or received this is of course prohibited"
-#~ msgstr ""
-#~ "Esta intentando hacer que la candidad pedida sea menor que la que la "
-#~ "cantidad facturada o recibida, lo cual no es permisible"
-
-#~ msgid ""
-#~ "The quantity received can only be modified by entering a negative receipt "
-#~ "and the quantity invoiced can only be reduced by entering a credit note "
-#~ "against this item"
-#~ msgstr ""
-#~ "La cantidad recibida sólo puede modificarse introduciendo un ingreso "
-#~ "negativo y la cantidad facturada sólo se puede reducir mediante una nota "
-#~ "de abono imputada a este artículo"
-
-#~ msgid "The account name for"
-#~ msgstr "El nombre de la cuenta para"
-
-#~ msgid "The SQL used to retrieve the account details but failed was"
-#~ msgstr "El SQL que falló al obtener los detalles de la cuenta fue"
-
-#~ msgid ""
-#~ "The GL account code selected does not exist in the database see the "
-#~ "listing of GL Account Codes to ensure a valid account is selected"
-#~ msgstr ""
-#~ "El código de la cuenta contable seleccionado no existe en la base de "
-#~ "datos; vea el listado de Códigos de las Cuentas Contables para asegurarse "
-#~ "de seleccionar una cuenta válida"
-
-#~ msgid "Subtotal"
-#~ msgstr "Sub-Total"
-
-#~ msgid "Update Pricing From Costs"
-#~ msgstr "Actualizar Precios según Costos"
-
-#~ msgid "The database does not support transactions"
-#~ msgstr "La base de datos no admite transacciones"
-
-#~ msgid "A RDBMS that supports database transactions is required"
-#~ msgstr "Se requiere un RDBMS que soporte transacciones de base de datos"
-
-#~ msgid "The following SQL to initiate a database transaction was used"
-#~ msgstr ""
-#~ "Se usó el siguiente SQL para iniciar una transacción en la base de datos"
-
-#~ msgid "Please select a location and press"
-#~ msgstr "Por favor seleccione una ubicación y presione"
-
-#~ msgid "below to enter Controlled Items"
-#~ msgstr "abajo para entrar Artículos Controlados"
-
-#~ msgid "You have set or changed the From location"
-#~ msgstr "Ha fijado ó cambiado la ubicación de Origen"
-
-#~ msgid "You must re-enter the quantity and any Controlled Items now"
-#~ msgstr ""
-#~ "Debe entrar de nuevo ahora la cantidad y cualquier Artículo Controlado"
-
-#~ msgid "The transaction BEGIN failed with error"
-#~ msgstr "El inicio de la transacción falló con error"
-
-#~ msgid "The COMMIT SQL failed"
-#~ msgstr "Falló la grabación de SQL"
-
-#~ msgid "The following SQL to start an SQL transaction was used"
-#~ msgstr "Se usó el siguiente SQL para iniciar una transacción SQL"
-
-#~ msgid "All Price"
-#~ msgstr "Todos los Precios"
-
-#~ msgid "System Check"
-#~ msgstr "Inspección del Servidor"
-
-#~ msgid ""
-#~ "Cannot delete this unit of measure because contracts have been created "
-#~ "using this unit of measure"
-#~ msgstr ""
-#~ "No se puede borrar esta unidad de medida porque se han creado contratos "
-#~ "que la usan"
-
-#~ msgid "contracts that refer to this unit of measure"
-#~ msgstr "contratos que usan esta unidad de medida"
-
-#~ msgid "Bulk Change Customer Pricing"
-#~ msgstr "Cambio Masivo de Precios del cliente"
-
-#~ msgid "Item Value"
-#~ msgstr "Valor del Artículo"
-
-#~ msgid "Notes for Customer: <b>"
-#~ msgstr "Notas para el cliente: <b>"
-
-#~ msgid "Notes for Customer Type: <b>"
-#~ msgstr "Notas para el Tipo de cliente: <b>"
-
-#~ msgid "Review Components"
-#~ msgstr "Revisar Componentes"
-
-#~ msgid "FreightCost"
-#~ msgstr "Costo de Transporte"
-
-#~ msgid "Amend Factor"
-#~ msgstr "Editar una Compañía Financiera"
-
-#~ msgid "Could not insert the new asset category"
-#~ msgstr "No se pudo agregar la nueva categoría de activo"
-
-#~ msgid "A new asset category record has been added for"
-#~ msgstr "Se creó un nuevo registro de clase de activo para"
-
-#~ msgid "Annual Internal Depreciation Percentage"
-#~ msgstr "Porcentaje de Amortización Interna Anual"
-
-#~ msgid ""
-#~ "Cannot delete this asset category because stock items have been created "
-#~ "using this asset category"
-#~ msgstr ""
-#~ "No se puede eliminar esta categoría de activo porque artículos de "
-#~ "existencias han sido creados usando esta categoría de activo"
-
-#~ msgid "items referring to this asset category code"
-#~ msgstr "Artículos referidos a este código de categoría de activo"
-
-#~ msgid "Cannot delete this asset category because it is used by the sales"
-#~ msgstr ""
-#~ "No se puede eliminar esta categoría de activo porque es usada por ventas"
-
-#~ msgid ""
-#~ "Delete any records in the Sales GL Interface set up using this asset "
-#~ "category first"
-#~ msgstr ""
-#~ "Eliminar cualquier registro de la configuración de la Interfaz Contable "
-#~ "de Ventas usando primero esta categoría de activo"
-
-#~ msgid ""
-#~ "Cannot delete this asset category because it is used by the cost of sales"
-#~ msgstr ""
-#~ "No se puede eliminar esta categoría de activo porque es usada por el "
-#~ "costo de ventas"
-
-#~ msgid ""
-#~ "Delete any records in the Cost of Sales GL Interface set up using this "
-#~ "asset category first"
-#~ msgstr ""
-#~ "Eliminar cualquier registro de la configuración de la Interfaz Contable "
-#~ "de Costo de Ventas usando primero esta categoría de activo"
-
-#~ msgid "The asset category"
-#~ msgstr "La clase de activo"
-
-#~ msgid "Asset GL"
-#~ msgstr "CC Activo"
-
-#~ msgid "Sale of Asset account"
-#~ msgstr "Cuenta de Venta de Activo"
-
-#~ msgid ""
-#~ "Are you sure you wish to delete this asset category? Additional checks "
-#~ "will be performed before actual deletion to ensure data integrity is not "
-#~ "compromised."
-#~ msgstr ""
-#~ "¿Está seguro que desea eliminar esta categoría de activo? Se harán "
-#~ "comprobaciones adicionales antes de eliminarse realmente para asegurar "
-#~ "que no se compromete la integridad de los datos."
-
-#~ msgid "Asset Category Code"
-#~ msgstr "Código de la Categoría de Activo"
-
-#~ msgid "Fixed Asset GL Code"
-#~ msgstr "Cuenta de Activo Fijo"
-
-#~ msgid "Balance Sheet Depreciation GL Code"
-#~ msgstr "Código de la Cuenta de Amortización en Balance"
-
-#~ msgid "Manufactured or Purchased"
-#~ msgstr "Fabricado ó Comprado"
-
-#~ msgid "Asset Category Properties"
-#~ msgstr "Propiedades de la Categoría de Activo"
-
-#~ msgid "External Depreciation"
-#~ msgstr "Amortización Externa"
-
-#~ msgid "Internal Depreciation"
-#~ msgstr "Amortización Interna"
-
-#~ msgid "Search for a Fixed Asset"
-#~ msgstr "Buscar un Activo Fijo"
-
-#~ msgid "Statement of Income and Expenditure for "
-#~ msgstr "Estado de la Cuenta de Ingresos y Gastos para "
-
-#~ msgid "General Ledger Tags"
-#~ msgstr "Centros de Costo"
-
-#~ msgid "Please select a purchase order first"
-#~ msgstr "Por favor, antes seleccione una Orden de Compra"
-
-#~ msgid "Add a new Asset Type"
-#~ msgstr "Agregar un nuevo Tipo de Activo"
-
-#~ msgid "List All"
-#~ msgstr "Listar Todos"
-
-#~ msgid "Line Details"
-#~ msgstr "Detalles de la Fila"
-
-#~ msgid "Enter a General Ledger Payment"
-#~ msgstr "Introducir un Pago Contable"
-
-#~ msgid "Enter another Payment for this Supplier"
-#~ msgstr "Entrar otro Pago a este Proveedor"
-
-#~ msgid "You do not have permission to cancel this purchase order"
-#~ msgstr "No tiene permiso para cancelar esta Orden de Compra"
-
-#~ msgid ""
-#~ "This order cannot be cancelled because some of it has already been "
-#~ "received"
-#~ msgstr ""
-#~ "Esta orden no puede ser cancelada porque una parte ya se ha recibido"
-
-#~ msgid "The creation of the new order has been cancelled"
-#~ msgstr "La creación del nuevo pedido ha sido cancelada"
-
-#~ msgid "Please Consult your system administrator for more information"
-#~ msgstr ""
-#~ "Por favor, consulte con su administrador del sistema para más información"
-
-#~ msgid "Cancel and Delete Order"
-#~ msgstr "Cancelar o Eliminar Pedido"
-
-#~ msgid ""
-#~ "The description of the item being purchase is required where a non-stock "
-#~ "item is being ordered"
-#~ msgstr ""
-#~ "Se requiere la descripción del artículo a comprar cuando se solicita un "
-#~ "artículo no registrado en el inventario"
-
-#~ msgid "The price entered was not numeric"
-#~ msgstr "El precio introducido no es numérico"
-
-#~ msgid "no changes have been made to the database"
-#~ msgstr "no se ha modificado la base de datos"
-
-#~ msgid "The lead time entered was not numeric"
-#~ msgstr "El período inicial introducido no es numérico"
-
-#~ msgid "View Periods"
-#~ msgstr "Ver Períodos"
-
-#~ msgid "To Period"
-#~ msgstr "Hasta"
-
-#~ msgid "Customer Type (Group) Notes for:"
-#~ msgstr "Notas del Tipo (Grupo) de cliente de:"
-
-#~ msgid "Unable to load StockMaster info for part"
-#~ msgstr "No fue posible cargar la información de Stockmaster para el código"
-
-#~ msgid "Stock adjustments are therefore not possible"
-#~ msgstr "Ajuste de existencia no es posible por tanto"
-
-#~ msgid "Job"
-#~ msgstr "Trabajo"
-
-#~ msgid "Enter Credit Against Goods Recd"
-#~ msgstr "Entrar Crédito respecto a Bienes Recibidos"
-
-#~ msgid "Enter Credit Against Shipment"
-#~ msgstr "Entrar Crédito respecto al Envío"
-
-#~ msgid "Enter Against Goods Received"
-#~ msgstr "Introducir Contra Productos Recibidos"
-
-#~ msgid "Enter Against Shipment"
-#~ msgstr "Entrar Respecto a Envío"
-
-#~ msgid "The shipment reference must be numeric"
-#~ msgstr "La referencia del envío debe ser numérica"
-
-#~ msgid "The new company database has been created for"
-#~ msgstr "Se creó una nueva base de datos de empresa para"
-
-#~ msgid "The company name entered"
-#~ msgstr "El nombre de la compañía entrado"
-
-#~ msgid "Check the company name entered"
-#~ msgstr "Comprobar el nombre de la compañía entrado"
-
-#~ msgid "SQL to get the cost of sales GL Codes for sales and discounts"
-#~ msgstr ""
-#~ "SQL para obtener los Códigos Contables de costo de venta y descuentos"
-
-#~ msgid "Loc"
-#~ msgstr "Ubic."
-
-#~ msgid "Enable Warehouse Management"
-#~ msgstr "Permitir Administrar el Almacén"
-
-#~ msgid "There were no stock transfer details to print"
-#~ msgstr "No hubo detalles de la transferencia de existencias que imprimir"
-
-#~ msgid "The SQL that caused the problem was"
-#~ msgstr "El SQL que causó el problema fue"
-
-#~ msgid ""
-#~ "CSV data can be copied and used to import data into software such as a "
-#~ "spreadsheet."
-#~ msgstr ""
-#~ "Los datos en formato CSV pueden ser copiados para llevarlos a Hojas de "
-#~ "Cálculo."
-
-#~ msgid "The system is set up to prohibit this"
-#~ msgstr "El sistema está configurado para prohibir ésto"
-
-#~ msgid "Credit Amount"
-#~ msgstr "Crédito"
-
-#~ msgid "Show Suppliers"
-#~ msgstr "Mostrar Proveedores"
-
-#~ msgid ""
-#~ "Select a csv file containing the details of the account groups that you "
-#~ "wish to import into webERP. "
-#~ msgstr ""
-#~ "Seleccione un archivo CSV que contenga los detalles de los grupos de "
-#~ "cuentas que desea importar a WebERP. "
-
-#~ msgid ", but only "
-#~ msgstr ", pero sólo "
-
-#~ msgid " is allowed."
-#~ msgstr " está permitido"
-
-#~ msgid " columns, expected "
-#~ msgstr " columnas, esperado "
-
-#~ msgid "NewCompany"
-#~ msgstr "Nueva Compañía"
-
-#~ msgid "Method name"
-#~ msgstr "Nombre del Método"
-
-#~ msgid " Knowlege Base"
-#~ msgstr " Base de Conocimiento"
-
-#~ msgid "CompanyNameField"
-#~ msgstr "Campo del Nombre de la Compañía"
-
-#~ msgid "is the same as the database name."
-#~ msgstr "es el mismo que el nombre de la base de datos."
-
-#~ msgid "Default Reports"
-#~ msgstr "Informes predeterminados"
-
-#~ msgid "Standard Reports"
-#~ msgstr "Informes Estándar"
-
-#~ msgid "Print MRP Reschedules Error"
-#~ msgstr "Imprimir Error en Reprogramación MRP"
-
-#~ msgid "There were no items with due dates different from MRP dates"
-#~ msgstr "No hubo artículos con fechas debidas diferentes de las fechas MRP"
-
-#~ msgid "Print MRP Shortages Error"
-#~ msgstr "Imprimir Error en Escasez MRP"
-
-#~ msgid "Outstanding GRNs Valuation Error"
-#~ msgstr "Error en la Valoración de GRNs Pendientes"
-
-#~ msgid ""
-#~ "There were no GRNs with any value to print out for the specified supplier "
-#~ "range"
-#~ msgstr ""
-#~ "No hubo notas de Bienes Recibidos con algún valor que imprimir para el "
-#~ "rango de proveedores indicado"
-
-#~ msgid "You must first enter a batch number that you want to print"
-#~ msgstr "Primero debe entrar un número de lote que quiera imprimir"
-
-#~ msgid "Print Customer List Error"
-#~ msgstr "Error al imprimir lista de clientes"
-
-#~ msgid "There were no customers to print out for the selections specified"
-#~ msgstr "No hubo clientes para imprimir para la selección especificada"
-
-#~ msgid "Print Low GP Items Error"
-#~ msgstr "Error al Imprimir los Artículos con Bajas Ganancias Brutas"
-
-#~ msgid "There were no items below print out for the location specified"
-#~ msgstr "No hubo artículos a imprimir para la ubicación especificada"
-
-#~ msgid "Print Stock check comparison Error"
-#~ msgstr "Imprimir Error de comparación de comprobación de existencias"
-
-#~ msgid "There were no Inventory Comparison sheets to print out"
-#~ msgstr "No existen hojas de Comparación de Inventarios para imprimir"
-
-#~ msgid "There was no stock location transfer to print out"
-#~ msgstr "No hubo transferencia de ubicación de existencias que imprimir"
-
-#~ msgid "There was no negative stocks to print out"
-#~ msgstr "No existen stocks negativos para imprimir"
-
-#~ msgid "Print Check Error"
-#~ msgstr "Imprimir Error en Comprobación"
-
-#~ msgid "Could not print the cheque"
-#~ msgstr "No se pudo imprimir el Talón"
-
-#~ msgid "Printing Sales Analysis Error"
-#~ msgstr "Imprimiendo Error Análisis de Ventas"
-
-#~ msgid "Print Stock Dispatch Report"
-#~ msgstr "Imprimir Informe de Despacho de Existencias"
-
-#~ msgid "There were no items for the stock dispatch report"
-#~ msgstr "No hubo artículos para el informe de despacho de existencias"
-
-#~ msgid "Back to Contracts"
-#~ msgstr "Volver a los Contratos"
-
-#~ msgid "The contract requirments could not be deleted because"
-#~ msgstr "El requirments contrato no podía ser suprimido porque"
-
-#~ msgid ""
-#~ "Having made the contract into a quotation it cannot now be changed back "
-#~ "into just a costing."
-#~ msgstr ""
-#~ "Una vez hecho el contrato en una cita que ya no puede volver a cambiar en "
-#~ "apenas un cálculo de costos."
-
-#~ msgid ""
-#~ "The quantity required is expected to be a positive number. Please enter a "
-#~ "postive number in the quantity required field before proceeding."
-#~ msgstr ""
-#~ "La cantidad requerida se espera que sea un numero positivo. Por favor "
-#~ "ingrese un numero positivo en la cantidad requerida antes de proceder."
-
-#~ msgid ""
-#~ "The contract must first be made into a customer quotation - only then can "
-#~ "it be completed."
-#~ msgstr ""
-#~ "El contrato debe primero hacerse dentro de una cotizacion del cliente - "
-#~ "sólo despues puede ser completado."
