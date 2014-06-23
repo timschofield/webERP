@@ -1,5 +1,5 @@
 webERP Change Log
-
+23/06/14 Exson: Fixed the bug that the sales order line's quantity will be update to zero but it show no change in appearance in SelectOrderItems.php.
 22/06/14 Tim: Replace now() with CURRENT_TIMESTAMP in MRP.php to get time stamp to meet ANSI standard.
 22/06/14 Exson: Fixed the mrp parameters runtime to datetime instead of date format since MRP running records need more precision.
 22/06/14 Benjamin (bpiltz2302) from web-ERP-users mail list report and provide the solution for MRP LevelNetting unusual exit bug. The details can be found here: http://weberp-accounting.1478800.n4.nabble.com/MRP-Error-LevelNetting-td4657425.html
