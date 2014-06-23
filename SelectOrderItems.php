@@ -1085,8 +1085,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 							$AlreadyWarnedAboutCredit = true;
 						}
 					}
-
-					if ($WithinCreditLimit){
+					/* The database data will be updated at this step, it will make big mistake if users do not know this and change the quantity to zero, unfortuately, the appearance shows that this change not allowed but the sales order details' quantity has been changed to zero in database. Must to filter this out! A zero quantity order line means nothing */
+					if ($WithinCreditLimit AND $Quantity >0){
 						$_SESSION['Items'.$identifier]->update_cart_item($OrderLine->LineNumber,
 																		$Quantity,
 																		$Price,
