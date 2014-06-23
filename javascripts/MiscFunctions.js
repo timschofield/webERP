@@ -61,7 +61,7 @@ function assignComboToInput(c,i){
 }
 function inArray(v,tA,m){
 	for (i=0;i<tA.length;i++) {
-		if (v==tA[i].value) {
+		if (v.value==tA[i].value) {
 			return true;
 		}
 	}
