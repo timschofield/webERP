@@ -1,36 +1,36 @@
 <?php
-
 /* $Id$*/
 
 include('includes/session.inc');
-
 $Title = _('Item Prices');
-
+$ViewTopic = 'Prices';
+/*$BookMark = '';// Anchor's id in the manual's html document.*/
 include('includes/header.inc');
+echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme . 
+		'/images/money_add.png" title="' . 
+		_('Search') . '" />' . ' ' . 
+		$Title . '</p>';
+
+echo '<a href="' . $RootPath . '/SelectProduct.php">' . _('Back to Items') . '</a><br />';
+
 include('includes/SQL_CommonFunctions.inc');
 
 //initialise no input errors assumed initially before we test
 $InputError = 0;
 
-
-if (isset($_GET['Item'])){
+if (isset($_GET['Item'])) {
 	$Item = trim(mb_strtoupper($_GET['Item']));
-}elseif (isset($_POST['Item'])){
+} elseif (isset($_POST['Item'])) {
 	$Item = trim(mb_strtoupper($_POST['Item']));
 }
 
-if (!isset($_POST['TypeAbbrev']) OR $_POST['TypeAbbrev']==''){
+if (!isset($_POST['TypeAbbrev']) OR $_POST['TypeAbbrev']=='') {
 	$_POST['TypeAbbrev'] = $_SESSION['DefaultPriceList'];
 }
 
-if (!isset($_POST['CurrAbrev'])){
+if (!isset($_POST['CurrAbrev'])) {
 	$_POST['CurrAbrev'] = $_SESSION['CompanyRecord']['currencydefault'];
 }
-
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . _('Search') . '" alt="" />' . $Title . '</p>';
-
-echo '<a href="' . $RootPath . '/SelectProduct.php">' . _('Back to Items') . '</a><br />';
-
 
 $result = DB_query("SELECT stockmaster.description,
 							stockmaster.mbflag
@@ -38,13 +38,12 @@ $result = DB_query("SELECT stockmaster.description,
 					WHERE stockmaster.stockid='".$Item."'",$db);
 $myrow = DB_fetch_row($result);
 
-if (DB_num_rows($result)==0){
+if (DB_num_rows($result)==0) {
 	prnMsg( _('The part code entered does not exist in the database') . '. ' . _('Only valid parts can have prices entered against them'),'error');
 	$InputError=1;
 }
 
-
-if (!isset($Item)){
+if (!isset($Item)) {
 	echo '<p>';
 	prnMsg (_('An item must first be selected before this page is called') . '. ' . _('The product selection page should call this page with a valid product code'),'error');
 	include('includes/footer.inc');
@@ -53,7 +52,7 @@ if (!isset($Item)){
 
 $PartDescription = $myrow[0];
 
-if ($myrow[1]=='K'){
+if ($myrow[1]=='K') {
 	prnMsg(_('The part selected is a kit set item') .', ' . _('these items explode into their components when selected on an order') . ', ' . _('prices must be set up for the components and no price can be set for the whole kit'),'error');
 	exit;
 }
@@ -293,18 +292,17 @@ echo '<tr><th colspan="5"><h3>' . $Item . ' - ' . $PartDescription . '</h3></th>
 echo '<tr><td>' . _('Currency') . ':</td>
 			<td><select name="CurrAbrev">';
 while ($myrow = DB_fetch_array($result)) {
-	echo '<option';
+	echo '<option ';
 	if ($myrow['currabrev']==$_POST['CurrAbrev']) {
-		echo ' selected="selected"';
+		echo 'selected="selected" ';
 	}
-	echo ' value="' . $myrow['currabrev'] . '">' . $CurrencyName[$myrow['currabrev']] . '</option>';
-} // End while loop
+	echo 'value="' . $myrow['currabrev'] . '">' . $CurrencyName[$myrow['currabrev']] . '</option>';
+}// End while loop
+echo			'</select></td></tr>';
 
 DB_free_result($result);
 
-echo '</select></td>
-		</tr>
-		<tr>
+echo '<tr>
 			<td>' . _('Sales Type Price List') . ':</td>
 			<td><select name="TypeAbbrev">';
 
@@ -312,15 +310,13 @@ $SQL = "SELECT typeabbrev, sales_type FROM salestypes";
 $result = DB_query($SQL,$db);
 
 while ($myrow = DB_fetch_array($result)) {
+	echo '<option ';
 	if ($myrow['typeabbrev']==$_POST['TypeAbbrev']) {
-		echo '<option selected="selected" value="';
-	} else {
-		echo '<option value="';
+		echo 'selected="selected" ';
 	}
-	echo $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
-
-} //end while loop
-echo '</select></td></tr>';
+	echo 'value="' . $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
+}// End while loop
+echo			'</select></td></tr>';
 
 DB_free_result($result);
 

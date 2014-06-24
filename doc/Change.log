@@ -1,4 +1,5 @@
 webERP Change Log
+24/06/14 RChacon: Add $ViewTopic, $BookMark to Prices.php and minor improvements.
 23/06/14 Tim: Fixed the GL account validation pop up error in MiscFunctions.js.
 23/06/14 Exson: Fixed the bug that the sales order line's quantity will be update to zero but it show no change in appearance in SelectOrderItems.php.
 22/06/14 Tim: Replace now() with CURRENT_TIMESTAMP in MRP.php to get time stamp to meet ANSI standard.
