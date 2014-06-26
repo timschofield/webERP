@@ -1,4 +1,6 @@
 webERP Change Log
+
+26/06/14 Exson: Fixed the bug that Select Customers search result inconsistence with Customer receipt search result in SelectCustomer.php.
 24/06/14 RChacon: Add $ViewTopic, $BookMark to Prices.php and minor improvements.
 23/06/14 Tim: Fixed the GL account validation pop up error in MiscFunctions.js.
 23/06/14 Exson: Fixed the bug that the sales order line's quantity will be update to zero but it show no change in appearance in SelectOrderItems.php.
