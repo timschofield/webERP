@@ -135,11 +135,11 @@ if (isset($_POST['Search']) OR isset($_POST['CSV']) OR isset($_POST['Go']) OR is
 						ON debtorsmaster.debtorno = custbranch.debtorno
 					WHERE debtorsmaster.name " . LIKE . " '%" . $SearchKeywords . "%'
 					AND debtorsmaster.debtorno " . LIKE . " '%" . $_POST['CustCode'] . "%'
-					AND custbranch.phoneno " . LIKE . " '%" . $_POST['CustPhone'] . "%'
+					AND (custbranch.phoneno " . LIKE . " '%" . $_POST['CustPhone'] . "%' OR custbranch.phoneno IS NULL)
 					AND (debtorsmaster.address1 " . LIKE . " '%" . $_POST['CustAdd'] . "%'
 						OR debtorsmaster.address2 " . LIKE . " '%" . $_POST['CustAdd'] . "%'
 						OR debtorsmaster.address3 " . LIKE . " '%" . $_POST['CustAdd'] . "%'
-						OR debtorsmaster.address4 " . LIKE . " '%" . $_POST['CustAdd'] . "%')";
+						OR debtorsmaster.address4 " . LIKE . " '%" . $_POST['CustAdd'] . "%')";//If there is no custbranch set, the phoneno in custbranch will be null, so we add IS NULL condition otherwise those debtors without custbranches setting will be no searchable and it will make a inconsistence with customer receipt interface.
 
 		if (mb_strlen($_POST['CustType']) > 0 AND $_POST['CustType'] != 'ALL') {
 			$SQL .= " AND debtortype.typename = '" . $_POST['CustType'] . "'";
