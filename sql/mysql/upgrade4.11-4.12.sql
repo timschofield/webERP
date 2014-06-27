@@ -41,6 +41,7 @@ CREATE TABLE IF NOT EXISTS `relateditems` (
 
 INSERT INTO  `scripts` (`script` ,`pagesecurity` ,`description`) VALUES ('RelatedItemsUpdate.php',  '2',  'Maintains Related Items');
 INSERT INTO scripts VALUES('Z_ImportDebtors.php',15,'Import debtors by csv file');
+ALTER table purchorders MODIFY tel varchar(30) NOT NULL DEFAULT '';
 UPDATE config SET confvalue='4.12' WHERE confname='VersionNumber';
 
 
