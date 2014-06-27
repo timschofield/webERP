@@ -1,5 +1,6 @@
 webERP Change Log
 
+27/06/14 RChacon: Add code-comments, $ViewTopic, $BookMark, page_title_text and code to update NewStockID if OldStockID and SelectedStockItem are the same in Z_ChangeStockCode.php. Add id to the "Change An Inventory Item Code" topic anchor in ManualSpecialUtilities.html.
 27/06/14 Exson: Make tel length in PO_Header.php is as same as field definition in sql.
 26/06/14 Exson: Fixed the bug that Select Customers search result inconsistence with Customer receipt search result in SelectCustomer.php.
 24/06/14 RChacon: Add $ViewTopic, $BookMark to Prices.php and minor improvements.
