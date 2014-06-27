@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-02-08 17:33+1300\n"
-"PO-Revision-Date: 2014-06-23 10:12-0600\n"
+"PO-Revision-Date: 2014-06-27 08:32-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -31178,7 +31178,7 @@ msgstr "Créditos del Contrato en nota de Crédito"
 #: SuppContractChgs.php:114 SuppFixedAssetChgs.php:103 SuppInvGRNs.php:163
 #: SupplierInvoice.php:1896 SuppShiptChgs.php:21 SuppTransGLAnalysis.php:147
 msgid "Back to Invoice Entry"
-msgstr "Volver a Introducción de Facturas"
+msgstr "Regresar a introducción de facturas"
 
 #: SuppContractChgs.php:136
 msgid "Contract Selection"
@@ -31449,7 +31449,7 @@ msgstr "Introduzca el Activo Fijo"
 
 #: SuppInvGRNs.php:12
 msgid "Enter Supplier Invoice Against Goods Received"
-msgstr "Introduzca Factura del Proveedor respecto a Bienes Recibidos"
+msgstr "Introduzca factura del proveedor contra bienes recibidos"
 
 #: SuppInvGRNs.php:22
 msgid "then the link to enter a supplier invoice must be clicked on"
@@ -31486,27 +31486,27 @@ msgstr ""
 
 #: SuppInvGRNs.php:115
 msgid "Invoiced Goods Received Selected"
-msgstr "Bienes Recibidos Facturados seleccionados"
+msgstr "Bienes recibidos facturados seleccionados"
 
 #: SuppInvGRNs.php:121
 msgid "Quantity Yet To Inv"
-msgstr ""
+msgstr "Cantidad aún para facturar"
 
 #: SuppInvGRNs.php:122
 msgid "Quantity Inv"
-msgstr ""
+msgstr "Cantidad facturada"
 
 #: SuppInvGRNs.php:124
 msgid "Inv Price"
-msgstr ""
+msgstr "Precio en factura"
 
 #: SuppInvGRNs.php:125
 msgid "Order Value"
-msgstr ""
+msgstr "Valor del pedido"
 
 #: SuppInvGRNs.php:158
 msgid "Update Amounts Invoiced"
-msgstr ""
+msgstr "Actualizar montos facturados"
 
 #: SuppInvGRNs.php:195
 msgid "There are no outstanding goods received from"
@@ -31530,15 +31530,15 @@ msgstr "Los bienes recibidos. Sin embargo, para ser facturados de"
 
 #: SuppInvGRNs.php:258
 msgid "Total Qty Received"
-msgstr "Cantidad Total Recibida"
+msgstr "Cantidad total recibida"
 
 #: SuppInvGRNs.php:259
 msgid "Qty Already Invoiced"
-msgstr "Cantidad ya Facturada"
+msgstr "Cantidad ya facturada"
 
 #: SuppInvGRNs.php:260
 msgid "Qty Yet To Invoice"
-msgstr "Cantidad no obstante a la factura"
+msgstr "Cantidad aún para facturar"
 
 #: SuppInvGRNs.php:261
 msgid "Order Price in"
@@ -31550,15 +31550,15 @@ msgstr "Añadir toda la Orden de Compra a la Factura"
 
 #: SuppInvGRNs.php:300
 msgid "Select All"
-msgstr "Seleccionar Todos"
+msgstr "Seleccionar todo"
 
 #: SuppInvGRNs.php:301
 msgid "Deselect All"
-msgstr "Deseleccionar Todo"
+msgstr "Desmarcar todo"
 
 #: SuppInvGRNs.php:303
 msgid "Add to Invoice"
-msgstr "Agregar a la Factura"
+msgstr "Agregar a factura"
 
 #: SupplierAllocations.php:24
 msgid "Supplier Payment"
