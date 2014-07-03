@@ -86,7 +86,7 @@ $myrow = DB_fetch_array($GetOrdHdrResult);
 /* SHOW ALL THE ORDER INFO IN ONE PLACE */
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' .
 		_('Purchase Order') . '" alt="" />' . ' ' . $Title . '</p>';
-
+echo '<a href="' . $RootPath . '/PO_SelectPurchOrder.php">' . _('Outstanding Sales Orders') . '</a>';
 echo '<table class="selection" cellpadding="2">
 		<tr>
 			<th colspan="8"><b>' .  _('Order Header Details'). '</b></th>
@@ -154,6 +154,10 @@ echo  '</td>
 	<tr>
 		<td>' . _('Comments'). '</td>
 		<td colspan="3">' . $myrow['comments'] . '</td>
+	</tr>
+	<tr>
+		<td>' . _('Status Coments') . '</td>
+		<td colspan="5">' . html_entity_decode($myrow['stat_comment']) . '</td>
 	</tr>
 	</table>';
 
