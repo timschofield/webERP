@@ -2,7 +2,7 @@
 
 <p>Any of these programs should only be run by the individual in the business who is allocated the task of administering the system, who has a thorough understanding of the system. If in doubt seek advice. Many of these utilities perform major changes to the database and it is always advisable to have a backup before attempting to run one. All these utilities have a page security setting of 15 by default (see security schema).</p>
 
-<p>There are no links to the Utility menu so casual browsers cannot stumble upon this page even if they had the security privileges. The URL must be entered manually to Z_index.php. All utlity pages are prefixed with a Z_.</p>
+<p>The Utility menu is a separate module so access can be turned off to hide these utility script links by turning off the Utilities module in user settings. All utlity pages are prefixed with a Z_.</p>
 
 <h2>Re-Apply Standard Costs to Sales Analysis</h2>
 
@@ -14,15 +14,15 @@
 
 <h2>Change A Customer Code</h2>
 
-<p>This page requires the entry of an existing customer code and the new customer code. The system checks to see the new code entered doesn't already exist and that the code entered for the existing customer does exist. If all is well then the customer code data is changed in all tables through-out the system that refer to the customer code. Due to the extensive changes taking place throughout the database this utility should not be run during normal operating hours.</p>
+<p>This page requires the entry of an existing customer code and the new customer code. The system checks to see the new code entered doesn't already exist and that the code entered for the existing customer does exist. If all is well then the customer code data is changed in all tables throughout the system that refer to the customer code. Due to the extensive changes taking place throughout the database this utility should not be run during normal operating hours when others are using the system.</p>
 
 <h2><a id="Z_ChangeStockCode">Change An Inventory Item Code</a></h2>
 
-<p>This page requires the entry of an existing stock code and the new stock code. The system checks to see the new code entered doesn't already exist and that the code entered for the existing item does exist. If all is well then the stock code data is changed in all tables through-out the system. Sales analysis, stock movements, stock locations, Bills of Material, parent and component items, sales order details and purchase order details as well as the Stock Master, pricing and shipment charges. Due to the extensive changes taking place throughout the database this utility should not be run during normal operating hours.</p>
+<p>This page requires the entry of an existing stock code and the new stock code. The system checks to see the new code entered doesn&apos;t already exist and that the code entered for the existing item does exist. If all is well then the stock code data is changed in all tables through-out the system. Sales analysis, stock movements, stock locations, Bills of Material, parent and component items, sales order details and purchase order details as well as the Stock Master, pricing and shipment charges. Due to the extensive changes taking place throughout the database this utility should not be run during normal operating hours, when others are using the system.</p>
 
 <h2>Make Stock Locations</h2>
 
-<p>If the inventory database is imported from some other system, the stock location records can be created for all locations currently defined by running the script Z_MakeStockLocns.php.</p>
+<p>If the inventory database is imported from some other system, the stock location records can be created for all locations currently defined by running the script Z_MakeStockLocns.php. Inventory items will not appear on searches during entry of sales orders until their corresponding inventory locations records exist.</p>
 
 <p></p>
 

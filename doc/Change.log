@@ -1,5 +1,7 @@
 webERP Change Log
-03/07/14 Exson: Make status comments available in PO_OrderDetails.php to ensure that some important data such as grn reversing can be viewed. And add a return previous page link. 
+
+16/7/14 Andrew Galuski: Add standard cost to stock movement record for stock adjustments
+03/07/14 Exson: Make status comments available in PO_OrderDetails.php to ensure that some important data such as grn reversing can be viewed. And add a return previous page link.
 27/06/14 RChacon: Add code-comments, $ViewTopic, $BookMark, page_title_text and code to update NewStockID if OldStockID and SelectedStockItem are the same in Z_ChangeStockCode.php. Add id to the "Change An Inventory Item Code" topic anchor in ManualSpecialUtilities.html.
 27/06/14 Exson: Make tel length in PO_Header.php is as same as field definition in sql.
 26/06/14 Exson: Fixed the bug that Select Customers search result inconsistence with Customer receipt search result in SelectCustomer.php.
@@ -9,11 +11,11 @@ webERP Change Log
 22/06/14 Tim: Replace now() with CURRENT_TIMESTAMP in MRP.php to get time stamp to meet ANSI standard.
 22/06/14 Exson: Fixed the mrp parameters runtime to datetime instead of date format since MRP running records need more precision.
 22/06/14 Benjamin (bpiltz2302) from web-ERP-users mail list report and provide the solution for MRP LevelNetting unusual exit bug. The details can be found here: http://weberp-accounting.1478800.n4.nabble.com/MRP-Error-LevelNetting-td4657425.html
-21/06/14 Exson: Add location check in StockAdjustments.php to prevent from users selecting controlled items based on one location but changed the location before submit it to server which make serial not exist check absolutely failed. 
+21/06/14 Exson: Add location check in StockAdjustments.php to prevent from users selecting controlled items based on one location but changed the location before submit it to server which make serial not exist check absolutely failed.
 17/06/14 Exson: Add Z_ImportDebtors.php into Utilities menu and scripts table.
-15/06/14 Akits from minghao.hk/bbs/ fixed the bugs that www_Users.php allowed modules does not matched the one displayed in index.php. 
+15/06/14 Akits from minghao.hk/bbs/ fixed the bugs that www_Users.php allowed modules does not matched the one displayed in index.php.
 11/06/2014 Exson: Fixed the exported csv files with wrong aligned fields due to comma as part of fields content.
-09/06/2014 Exson: Fixed the Delivery Date lossing bugs when change Warehouse. Reported by akits from minghao.hk(weberp) bbs. 
+09/06/2014 Exson: Fixed the Delivery Date lossing bugs when change Warehouse. Reported by akits from minghao.hk(weberp) bbs.
 2/6/14 Phil: Added bom effectivity dates into work order creation cost calculations - as spotted by Andrew Galuski
 1/6/14 Phil: Fixed bug in POItems.php that resulted in an SQL error when the number of items from the search was zero after previous searches had returned records
 27/05/14 RChacon: Add page title text and icon to import scripts. Page title text = menu option.
@@ -21,7 +23,7 @@ webERP Change Log
 27/05/14 Exson: Add Sales man login control for PDFOrderStatus.php
 26/05/14 Thumb: Fixed discount modifier missing bug in SelectOrderItems.php.
 26/05/14 rchacon: Fixes other problems related to updating translations of the items description..
-22/05/14 newuser990(from webERP forum): fixed bugs in MRP.php that quantity which stated in PO with lines not completed but PO status marked Completed are calculated as supplies. Exson add PO order lines checked to avoid same problem. 
+22/05/14 newuser990(from webERP forum): fixed bugs in MRP.php that quantity which stated in PO with lines not completed but PO status marked Completed are calculated as supplies. Exson add PO order lines checked to avoid same problem.
 22/5/14 Tim: Currencies.php now allows FunctionalCurrency to be modified
 22/5/14 Phil: Prevent use of enter key - experimental - in number fields - prevents users from losing data in big forms where they are entering large amounts of data e.g. purchase ordering - maybe we should consider for integer fields too?
 22/5/14 Ricard/Phil: Tidy up SQL in StockClone.php
@@ -30,7 +32,7 @@ webERP Change Log
 18/5/14 Exson: Tidy up SelectSalesOrder.php SQL code and add Thumb's salesman login control and fixed bugs caused by no group by statements for customer and items selected.
 17/05/14 Phil: sales invoice and credit scripts all check for 0 exchange rate before updating sales anlaysis now
 17/05/14 Phil: Fixed Z_ChangeStockCode.php which was orphaning stockdescriptiontranslations without changing them to the new code
-14/05/14 Exson: Fixed typo in MRPReport.php which make some supplies not to be shown on the report and use itemdue instead of deliverydate in MRP to ensure that requirements are calculated correctly for items due on different date. 
+14/05/14 Exson: Fixed typo in MRPReport.php which make some supplies not to be shown on the report and use itemdue instead of deliverydate in MRP to ensure that requirements are calculated correctly for items due on different date.
 3/5/14 Khwunchai J.: New Xenos theme
 3/5/14 Phil: StockCostUpdate.php now allows updates to manufactured items.
 29/4/14 Exson: Make price matrix workable including GetPrice.inc, MainMenuLinksArray.php,SelectOrderItems_IntoCart.inc,PriceMatrix.php, SelectProduct.php,StockDispatch.php.
@@ -49,13 +51,13 @@ webERP Change Log
 28/03/14 Exson: Fixed the Expiry Date not handled right during stocks adjustments by manual key in or bar code scan in Add_SerialItems.php, DefineSerialItems.php,InputSerialItems.php and InputSerialItemsKeyed.php.
 26/3/14 Serakfalcon: fixed findLogoFile function in includes/session.inc
 24/3/14 Phil: Removed DefaultTheme configuration parameter - unecessary as noted by Serafalcon
-23/03/14 Exson: Fixed the no defined variable bugs in WorkOrderIssue.php. Reported by Tim. 
-23/03/14 Exson: Fixed the bug that the search results shows only limited to DisplayRecordsMax which does not make sense due to pagination in WorkOrderIssue.php. 
+23/03/14 Exson: Fixed the no defined variable bugs in WorkOrderIssue.php. Reported by Tim.
+23/03/14 Exson: Fixed the bug that the search results shows only limited to DisplayRecordsMax which does not make sense due to pagination in WorkOrderIssue.php.
 23/03/14 Exson: Fixed that currency name not available in Prices.php.
-22/03/14 Exson: Fixed the stock searching function failure when items setup in system less than DisplayedRecordsMax in WorkOrderEntry.php. 
-21/03/14 Exson: Fixed that bugs in WorkOrderIssue.php that the issued non BOM materials not shown. And fixed bugs in WorkOrderStatus.php failed to retrieve item description. 
+22/03/14 Exson: Fixed the stock searching function failure when items setup in system less than DisplayedRecordsMax in WorkOrderEntry.php.
+21/03/14 Exson: Fixed that bugs in WorkOrderIssue.php that the issued non BOM materials not shown. And fixed bugs in WorkOrderStatus.php failed to retrieve item description.
 20/3/14 Exson: Fixed the bugs in StockCounts that Location set does not work and link typo.
-19/3/14 Tim: Fixed the bug Items Other than those in BOM are not listed in Status of Work Order even if issued. Exson made a little revision to keep SQL query only once for those additional issued materials. Reported by newuesr990 from weberp forum. 
+19/3/14 Tim: Fixed the bug Items Other than those in BOM are not listed in Status of Work Order even if issued. Exson made a little revision to keep SQL query only once for those additional issued materials. Reported by newuesr990 from weberp forum.
 18/03/14 Exson: Fixed the bugs in GoodsReceived.php which will leads to duplicated goods receiving.
 17/3/14 rchacon: Allow translations of tax category Freight
 15/3/14 Phil: Z_ChangeStockCategory.php was not updating sales analysis records correctly - fixed

@@ -19,8 +19,9 @@ if (isset($Errors)) {
 $Errors = array();
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Supplier Types')
-	. '" alt="" />' . _('Supplier Type Setup') . '</p>';
-echo '<div class="page_help_text">' . _('Add/edit/delete Supplier Types') . '</div><br />';
+	. '" alt="" />' . _('Supplier Type Setup') . '</p>
+	<div class="page_help_text">' . _('Add/edit/delete Supplier Types') . '</div>
+	<br />';
 
 if (isset($_POST['submit'])) {
 
@@ -46,12 +47,12 @@ if (isset($_POST['submit'])) {
 		$i++;
 	}
 
-	$checksql = "SELECT count(*)
+	$CheckSQL = "SELECT count(*)
 		     FROM suppliertype
 		     WHERE typename = '" . $_POST['TypeName'] . "'";
-	$checkresult=DB_query($checksql, $db);
-	$checkrow=DB_fetch_row($checkresult);
-	if ($checkrow[0]>0) {
+	$CheckResult=DB_query($CheckSQL, $db);
+	$CheckRow=DB_fetch_row($CheckResult);
+	if ($CheckRow[0]>0) {
 		$InputError = 1;
 		echo prnMsg(_('You already have a supplier type called').' '.$_POST['TypeName'],'error');
 		$Errors[$i] = 'SupplierName';
@@ -64,37 +65,19 @@ if (isset($_POST['submit'])) {
 			SET typename = '" . $_POST['TypeName'] . "'
 			WHERE typeid = '" . $SelectedType . "'";
 
-		$msg = _('The supplier type') . ' ' . $SelectedType . ' ' .  _('has been updated');
-	} elseif ( $InputError !=1 ) {
+		prnMsg(_('The supplier type') . ' ' . $SelectedType . ' ' .  _('has been updated'),'success');
+	} elseif ($InputError !=1){
+		// Add new record on submit
 
-		// First check the type is not being duplicated
-
-		$checkSql = "SELECT count(*)
-			     FROM suppliertype
-			     WHERE typeid = '" . $_POST['TypeID'] . "'";
-
-		$checkresult = DB_query($checkSql,$db);
-		$checkrow = DB_fetch_row($checkresult);
-
-		if ( $checkrow[0] > 0 ) {
-			$InputError = 1;
-			prnMsg( _('The supplier type ') . $_POST['TypeID'] . _(' already exist.'),'error');
-		} else {
-
-			// Add new record on submit
-
-			$sql = "INSERT INTO suppliertype
-						(typename)
-					VALUES ('" . $_POST['TypeName'] . "')";
+		$sql = "INSERT INTO suppliertype
+					(typename)
+				VALUES ('" . $_POST['TypeName'] . "')";
 
 
-			$msg = _('Supplier type') . ' ' . $_POST['TypeName'] .  ' ' . _('has been created');
-			$checkSql = "SELECT count(typeid)
-			     FROM suppliertype";
-			$result = DB_query($checkSql, $db);
-			$row = DB_fetch_row($result);
-
-		}
+		$msg = _('Supplier type') . ' ' . $_POST['TypeName'] .  ' ' . _('has been created');
+		$CheckSQL = "SELECT count(typeid) FROM suppliertype";
+		$result = DB_query($CheckSQL, $db);
+		$row = DB_fetch_row($result);
 	}
 
 	if ( $InputError !=1) {
@@ -102,7 +85,7 @@ if (isset($_POST['submit'])) {
 		$result = DB_query($sql,$db);
 
 
-	// Fetch the default price list.
+	// Fetch the default supplier type
 		$sql = "SELECT confvalue
 					FROM config
 					WHERE confname='DefaultSupplierType'";
@@ -111,22 +94,20 @@ if (isset($_POST['submit'])) {
 		$DefaultSupplierType = $SupplierTypeRow[0];
 
 	// Does it exist
-		$checkSql = "SELECT count(*)
+		$CheckSQL = "SELECT count(*)
 			     FROM suppliertype
 			     WHERE typeid = '" . $DefaultSupplierType . "'";
-		$checkresult = DB_query($checkSql,$db);
-		$checkrow = DB_fetch_row($checkresult);
+		$CheckResult = DB_query($CheckSQL,$db);
+		$CheckRow = DB_fetch_row($CheckResult);
 
 	// If it doesnt then update config with newly created one.
-		if ($checkrow[0] == 0) {
+		if ($CheckRow[0] == 0) {
 			$sql = "UPDATE config
 					SET confvalue='" . $_POST['TypeID'] . "'
 					WHERE confname='DefaultSupplierType'";
 			$result = DB_query($sql,$db);
 			$_SESSION['DefaultSupplierType'] = $_POST['TypeID'];
 		}
-
-		prnMsg($msg,'success');
 
 		unset($SelectedType);
 		unset($_POST['TypeID']);
