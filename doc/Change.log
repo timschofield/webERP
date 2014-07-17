@@ -1,5 +1,6 @@
 webERP Change Log
 
+2014-07-17 RChacon: Adds ViewTopic and BookMark, adds bullet for class ascending columns, repositions columns Type and Trans, add class number to Trans, completes printf.
 16/7/14 Andrew Galuski: Add standard cost to stock movement record for stock adjustments
 03/07/14 Exson: Make status comments available in PO_OrderDetails.php to ensure that some important data such as grn reversing can be viewed. And add a return previous page link.
 27/06/14 RChacon: Add code-comments, $ViewTopic, $BookMark, page_title_text and code to update NewStockID if OldStockID and SelectedStockItem are the same in Z_ChangeStockCode.php. Add id to the "Change An Inventory Item Code" topic anchor in ManualSpecialUtilities.html.
