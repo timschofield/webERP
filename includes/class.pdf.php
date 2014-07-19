@@ -221,7 +221,7 @@ if (!class_exists('Cpdf', false)) {
 		function RoundRectangle($XPos, $YPos, $Width, $Height, $RadiusX, $RadiusY) {
 			$this->line($XPos, $YPos-$RadiusY, $XPos, $YPos-$Height+$RadiusY);// Left side
 			$this->line($XPos+$RadiusX, $YPos, $XPos+$Width-$RadiusX, $YPos);// Top side
-			$this->line($XPos+$RadiusX, $YPos-$Height-$Radius, $XPos+$Width-$RadiusX, $YPos-$Height-$Radius);// Bottom side
+			$this->line($XPos+$RadiusX, $YPos-$Height-$RadiusX, $XPos+$Width-$RadiusX, $YPos-$Height-$RadiusX);// Bottom side
 			$this->line($XPos+$Width, $YPos-$RadiusY, $XPos+$Width, $YPos-$Height+$RadiusY);// Right side
 			$this->partEllipse($XPos+$RadiusX, $YPos-$RadiusY, 90, 180, $RadiusX, $RadiusY);// Top left corner
 			$this->partEllipse($XPos+$RadiusX, $YPos-$Height+$RadiusY, 180, 270, $RadiusX, $RadiusY);// Bottom left corner
@@ -296,7 +296,9 @@ if (!class_exists('Cpdf', false)) {
 					$ls=$l;
 					$ns++;
 				}
-				$l += $cw[$i];
+				if (isset($cw[$i])) {
+					$l += $cw[$i];
+				}
 				if($l>$wmax){
 					break;
 				} else {

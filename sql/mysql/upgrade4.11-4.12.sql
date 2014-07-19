@@ -42,6 +42,17 @@ CREATE TABLE IF NOT EXISTS `relateditems` (
 INSERT INTO  `scripts` (`script` ,`pagesecurity` ,`description`) VALUES ('RelatedItemsUpdate.php',  '2',  'Maintains Related Items');
 INSERT INTO scripts VALUES('Z_ImportDebtors.php',15,'Import debtors by csv file');
 ALTER table purchorders MODIFY tel varchar(30) NOT NULL DEFAULT '';
+
+ALTER TABLE banktrans DROP KEY ref_10, DROP KEY ref_9, DROP KEY ref_8, DROP KEY ref_7;
+ALTER TABLE banktrans DROP KEY ref_6, DROP KEY ref_5, DROP KEY ref_4, DROP KEY ref_3, DROP KEY ref_2;
+ALTER TABLE gltrans DROP KEY tag_2, DROP KEY tag_3, DROP KEY tag_4;
+ALTER TABLE mrpdemandtypes DROP KEY mrpdemandtype;
+ALTER TABLE salescatprod DROP KEY manufacturers_id_2;
+ALTER TABLE salescatprod DROP KEY manufacturers_id;
+ALTER TABLE stockrequest DROP KEY departmentid_2;
+ALTER TABLE stockrequest DROP KEY loccode_2;
+ALTER TABLE stockrequestitems DROP KEY stockid_2, DROP KEY dispatchid_2;
+
 UPDATE config SET confvalue='4.12' WHERE confname='VersionNumber';
 
 

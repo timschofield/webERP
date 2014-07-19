@@ -168,7 +168,7 @@ if (isset($_POST['submit'])) {
 											purchpricevaract,
 											materialuseagevarac,
 											wipact)
-										VALUES ('" . 
+										VALUES ('" .
 											$_POST['CategoryID'] . "','" .
 											$_POST['StockType'] . "','" .
 											$_POST['CategoryDescription'] . "','" .
@@ -253,16 +253,16 @@ or deletion of the records*/
 	echo '<br />
 		<table class="selection">
 			<tr>
-				<th>' . _('Code') . '</th>
-				<th>' . _('Category Description') . '</th>' . '
-				<th>' . _('Stock Type') . '</th>' . '
-				<th>' . _('Default Tax Category') . '</th>' . '
-				<th>' . _('Stock GL') . '</th>' . '
-				<th>' . _('Adjts GL') . '</th>
-				<th>' . _('Issues GL') . '</th>
-				<th>' . _('Price Var GL') . '</th>
-				<th>' . _('Usage Var GL') . '</th>
-				<th>' . _('WIP GL') . '</th>
+				<th class="ascending">' . _('Code') . '</th>
+				<th class="ascending">' . _('Category Description') . '</th>' . '
+				<th class="ascending">' . _('Stock Type') . '</th>' . '
+				<th class="ascending">' . _('Default Tax Category') . '</th>' . '
+				<th class="ascending">' . _('Stock GL') . '</th>' . '
+				<th class="ascending">' . _('Adjts GL') . '</th>
+				<th class="ascending">' . _('Issues GL') . '</th>
+				<th class="ascending">' . _('Price Var GL') . '</th>
+				<th class="ascending">' . _('Usage Var GL') . '</th>
+				<th class="ascending">' . _('WIP GL') . '</th>
 				<th colspan="2">' . _('Maintenance') . '</th>
 			</tr>';
 
@@ -463,7 +463,7 @@ while ($myrow = DB_fetch_array($BSAccountsResult)) {
 	}
 	echo ' value="' . $myrow['accountcode'] . '">' .
 		htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) .
-		' ('.$myrow['accountcode'].')' . '</option>';	 
+		' ('.$myrow['accountcode'].')' . '</option>';
 }
 echo '</select></td></tr>';
 DB_data_seek($BSAccountsResult,0);
