@@ -243,11 +243,13 @@ If (isset($_POST['PrintPDF'])
 
 } else { /*The option to print PDF was not hit */
 
-	$Title= _('Price Listing');
+	$Title = _('Price Listing');
+	$ViewTopic = 'SalesTypes';// Filename in ManualContents.php's TOC.
+	$BookMark = 'PDFPriceList';// Anchor's id in the manual's html document.
 	include('includes/header.inc');
 
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/customer.png" title="' . _('Price List') . '" alt="" />
-         ' . ' ' . _('Print a price list') . '</p>';
+         ' . ' ' . _('Print a price list by inventory category') . '</p>';
 
 	if (!isset($_POST['FromCriteria']) or !isset($_POST['ToCriteria'])) {
 
