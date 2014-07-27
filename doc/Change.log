@@ -1,5 +1,5 @@
 webERP Change Log
-
+27/7/14 Exson: Fixed the PO header lost initiator bugs when locations changed. Report by Akits from www.minghao.hk/bbs/.
 25/7/14 Phil: Allow dummy - labour stock type items to be added to purchase orders.
 17/7/14 RChacon: Adds ViewTopic and BookMark, adds bullet for class ascending columns, repositions columns Type and Trans, add class number to Trans, completes printf.
 16/7/14 Andrew Galuski: Add standard cost to stock movement record for stock adjustments
