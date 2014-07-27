@@ -767,6 +767,9 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 		$_POST['InitiatorName'] = $_SESSION['UsersRealName'];
 		$_POST['Requisition'] = '';
 	}
+	if (!isset($_POST['InitiatorName'])){
+		$_POST['InitiatorName'] = $_SESSION['UsersRealName'];
+	}
 
 	echo '<tr>
 			<td>' . _('Initiated By') . ':</td>
