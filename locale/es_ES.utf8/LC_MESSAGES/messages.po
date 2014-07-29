@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-02-08 17:33+1300\n"
-"PO-Revision-Date: 2014-06-27 08:32-0600\n"
+"PO-Revision-Date: 2014-07-29 12:33-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -6017,7 +6017,7 @@ msgstr ""
 #: SelectProduct.php:170
 #, php-format
 msgid "Gross Profit"
-msgstr "Ganancia Bruta"
+msgstr "Margen bruto"
 
 #: Contracts.php:943 Currencies.php:300 Currencies.php:482 PO_Header.php:1134
 #: PO_OrderDetails.php:113 SupplierCredit.php:291 SupplierInvoice.php:635
@@ -15461,12 +15461,12 @@ msgstr "Reporte de Planificación de Inventario"
 #: InventoryPlanning.php:391 InventoryValuation.php:236 PDFPriceList.php:260
 #: PDFPrintLabel.php:292 StockCheck.php:272
 msgid "From Inventory Category Code"
-msgstr "Desde el Código de Categoría de Inventario"
+msgstr "Desde el código de categoría de inventario"
 
 #: InventoryPlanning.php:403 InventoryValuation.php:252 PDFPriceList.php:270
 #: PDFPrintLabel.php:301 StockCheck.php:283
 msgid "To Inventory Category Code"
-msgstr "Hasta el Código de Categoría de Inventario"
+msgstr "Hasta el código de categoría de inventario"
 
 #: InventoryPlanning.php:415 InventoryPlanningPrefSupplier.php:476
 #: InventoryValuation.php:265 StockCheck.php:295
@@ -19870,7 +19870,7 @@ msgid "Price Listing"
 msgstr "Listado de precios"
 
 #: PDFPriceList.php:250
-msgid "Print a price list"
+msgid "Print a price list by inventory category"
 msgstr "Imprimir una lista de precios"
 
 #: PDFPriceList.php:281 PDFPrintLabel.php:312 Z_DataExport.php:542
