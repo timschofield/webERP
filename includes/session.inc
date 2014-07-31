@@ -88,6 +88,8 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 
 	if (isset($_POST['UserNameEntryField']) AND isset($_POST['Password'])) {
 		$rc = userLogin($_POST['UserNameEntryField'], $_POST['Password'], $SysAdminEmail, $db);
+		header('Location: ' . $PathPrefix .'Dashboard.php');
+		exit;
 	} elseif (empty($_SESSION['DatabaseName'])) {
 		$rc = UL_SHOWLOGIN;
 	} else {
@@ -139,7 +141,7 @@ include($PathPrefix . 'includes/GetConfig.php');
 if (strcmp($Version,$_SESSION['VersionNumber'])>0 AND (basename($_SERVER['SCRIPT_NAME'])!='UpgradeDatabase.php')) {
 	header('Location: UpgradeDatabase.php');
 }
-if(isset($_SESSION['DB_Maintenance'])){ 
+if(isset($_SESSION['DB_Maintenance'])){
 	if ($_SESSION['DB_Maintenance']>0)  { //run the DB maintenance script
 		if (DateDiff(Date($_SESSION['DefaultDateFormat']),
 				ConvertSQLDate($_SESSION['DB_Maintenance_LastRun'])
@@ -152,7 +154,7 @@ if(isset($_SESSION['DB_Maintenance'])){
 	}
 }
 //purge the audit trail if necessary
-if (isset($_SESSION['MonthsAuditTrail'])){ 
+if (isset($_SESSION['MonthsAuditTrail'])){
 	 $sql = "DELETE FROM audittrail
 			WHERE  transactiondate <= '" . Date('Y-m-d', mktime(0,0,0, Date('m')-$_SESSION['MonthsAuditTrail'])) . "'";
 	$ErrMsg = _('There was a problem deleting expired audit-trail history');
@@ -217,7 +219,7 @@ if (empty($_SESSION['LogoFile'])) {
 			$result = 'companies/' . $CompanyDir . '/logo.png';
 		} elseif (file_exists($dir . '/logo.jpg')) {
 			$result = 'companies/' . $CompanyDir . '/logo.jpg';
-		} 
+		}
 		return $result;
 	}
 

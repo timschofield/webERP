@@ -52,6 +52,7 @@ ALTER TABLE salescatprod DROP KEY manufacturers_id;
 ALTER TABLE stockrequest DROP KEY departmentid_2;
 ALTER TABLE stockrequest DROP KEY loccode_2;
 ALTER TABLE stockrequestitems DROP KEY stockid_2, DROP KEY dispatchid_2;
+INSERT INTO scripts VALUES('Dashboard.php',1,'Display outstanding debtors, creditors etc');
 
 UPDATE config SET confvalue='4.12' WHERE confname='VersionNumber';
 
