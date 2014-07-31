@@ -1,4 +1,5 @@
 webERP Change Log
+31/07/14 RChacon: Corrects the bottom line of the rectangle. Adds comments (info for developers).
 29/07/14 RChacon: In PDFPriceList.php: Adds comments (info for developers), ViewTopic and BookMark, and currency name in locale language; deletes unused lines; reformats for legibility; adjusts column sizes to field sizes; improves printing of stockmaster.longdescription; improves code to reduce execution time (calculation out of loops); links right column positions to right margin; corrects IF for CustomerSpecials (deletes translation). In ManualSalesTypes.html: Adds help info about Print a price list by inventory category.
 27/7/14 Exson: Fixed the PO header lost initiator bugs when locations changed. Report by Akits from www.minghao.hk/bbs/.
 25/7/14 Phil: Allow dummy - labour stock type items to be added to purchase orders.

@@ -1,5 +1,4 @@
 <?php
-
 /* $Id$ */
 
      /* -----------------------------------------------------------------------------------------------
@@ -218,26 +217,30 @@ if (!class_exists('Cpdf', false)) {
 			$this->Output($DocumentFilename,'D');
 		}
 
-		function RoundRectangle($XPos, $YPos, $Width, $Height, $RadiusX, $RadiusY) {
-			$this->line($XPos, $YPos-$RadiusY, $XPos, $YPos-$Height+$RadiusY);// Left side
-			$this->line($XPos+$RadiusX, $YPos, $XPos+$Width-$RadiusX, $YPos);// Top side
-			$this->line($XPos+$RadiusX, $YPos-$Height-$RadiusX, $XPos+$Width-$RadiusX, $YPos-$Height-$RadiusX);// Bottom side
-			$this->line($XPos+$Width, $YPos-$RadiusY, $XPos+$Width, $YPos-$Height+$RadiusY);// Right side
-			$this->partEllipse($XPos+$RadiusX, $YPos-$RadiusY, 90, 180, $RadiusX, $RadiusY);// Top left corner
-			$this->partEllipse($XPos+$RadiusX, $YPos-$Height+$RadiusY, 180, 270, $RadiusX, $RadiusY);// Bottom left corner
-			$this->partEllipse($XPos+$Width-$RadiusX, $YPos-$RadiusY, 0, 90, $RadiusX, $RadiusY);// Top right corner
-			$this->partEllipse($XPos+$Width-$RadiusX, $YPos-$Height+$RadiusY, 270, 360, $RadiusX, $RadiusY);// Bottom right corner
+		function Rectangle($XPos, $YPos, $Width, $Height) {
+			// $XPos, $YPos = Left top position (left line, top line).
+			// $Width, $Height = Size (line-to-line).
+			$this->line($XPos, $YPos, $XPos+$Width, $YPos);// Top side.
+			$this->line($XPos, $YPos-$Height, $XPos+$Width, $YPos-$Height);// Bottom side.
+			$this->line($XPos, $YPos, $XPos, $YPos-$Height);// Left side.
+			$this->line($XPos+$Width, $YPos, $XPos+$Width, $YPos-$Height);// Right side
 		}
 
-		function Rectangle($XPos, $YPos, $Width, $Height) {
-			$this->line($XPos, $YPos, $XPos+$Width, $YPos);
-			$this->line($XPos+$Width, $YPos, $XPos+$Width, $YPos-$Height);
-			$this->line($XPos+$Width, $YPos-$Height, $XPos, $YPos-$Height);
-			$this->line($XPos, $YPos-$Height, $XPos, $YPos);
+		function RoundRectangle($XPos, $YPos, $Width, $Height, $RadiusX, $RadiusY) {
+			// $XPos, $YPos = Left top position (left line, top line).
+			// $Width, $Height = Size (line-to-line).
+			// $RadiusX, $RadiusY = corner radii (horizontal, vertical).
+			$this->line($XPos+$RadiusX, $YPos, $XPos+$Width-$RadiusX, $YPos);// Top side.
+			$this->line($XPos+$RadiusX, $YPos-$Height, $XPos+$Width-$RadiusX, $YPos-$Height);// Bottom side.
+			$this->line($XPos, $YPos-$RadiusY, $XPos, $YPos-$Height+$RadiusY);// Left side.
+			$this->line($XPos+$Width, $YPos-$RadiusY, $XPos+$Width, $YPos-$Height+$RadiusY);// Right side.
+			$this->partEllipse($XPos+$RadiusX, $YPos-$RadiusY, 90, 180, $RadiusX, $RadiusY);// Top left corner.
+			$this->partEllipse($XPos+$Width-$RadiusX, $YPos-$RadiusY, 0, 90, $RadiusX, $RadiusY);// Top right corner.
+			$this->partEllipse($XPos+$RadiusX, $YPos-$Height+$RadiusY, 180, 270, $RadiusX, $RadiusY);// Bottom left corner.
+			$this->partEllipse($XPos+$Width-$RadiusX, $YPos-$Height+$RadiusY, 270, 360, $RadiusX, $RadiusY);// Bottom right corner.
 		}
 
 		function addTextWrap($XPos, $YPos, $Width, $Height, $Text, $Align='J', $border=0, $fill=0) {
-
 			/* Returns the balance of the string that could not fit in the width
 			 * XPos = pdf horizontal coordinate
 			 * YPos = pdf vertical coordiante
