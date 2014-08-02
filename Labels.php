@@ -117,6 +117,10 @@ echo '<p class="page_title_text">
 	. '" alt="" />' . $Title . ' - ' . _('all measurements in PDF points') .
 	'</p>';
 
+if (!function_exists('gd_info')) {
+	prnMsg(_('The GD module for PHP is required to print barcode labels. Your PHP installation is not capable currently. You will most likely experience problems with this script until the GD module is enabled.'),'error');
+}
+
 if (isset($_POST['SelectedLabelID'])){
 	$SelectedLabelID =$_POST['SelectedLabelID'];
 	if (ctype_digit($_POST['NoOfFieldsDefined'])){ //Now Process any field updates
@@ -236,7 +240,7 @@ if (isset($_POST['submit'])) {
 		$result = DB_query($sql,$db,$ErrMsg);
 		$Message = _('The new label template has been added to the database');
 	}
-	
+
 	if (isset($InputError) AND $InputError !=1) {
 		unset( $_POST['PaperSize']);
 		unset( $_POST['Description']);
@@ -304,8 +308,16 @@ if (!isset($SelectedLabelID)) {
 				echo '<tr class="OddTableRows">';
 				$k++;
 			}
-			$NoOfRows = floor(($myrow['pageheight']-$myrow['topmargin'])/$myrow['rowheight']);
-			$NoOfCols = floor(($myrow['pagewidth']-$myrow['leftmargin'])/$myrow['columnwidth']);
+			if ($myrow['rowheight']>0) {
+				$NoOfRows = floor(($myrow['pageheight']-$myrow['topmargin'])/$myrow['rowheight']);
+			} else {
+				$NoOfRows = 0;
+			}
+			if ($myrow['columnwidth']>0) {
+				$NoOfCols = floor(($myrow['pagewidth']-$myrow['leftmargin'])/$myrow['columnwidth']);
+			} else {
+				$NoOfCols = 0;
+			}
 
 			foreach ($PaperSize as $PaperName=>$PaperType) {
 				if ($PaperType['PageWidth'] == $myrow['pagewidth'] AND $PaperType['PageHeight'] == $myrow['pageheight']) {

@@ -181,18 +181,18 @@ switch ($PaperSize) {
 //	$PageSize = array(0,0,$Page_Width,$Page_Height);
 //	$pdf = new Cpdf($PageSize);
 $pdf = new Cpdf($DocumentOrientation, 'pt', $DocumentPaper);
-$pdf->addInfo('Creator', 'WebERP http://www.weberp.org');
+$pdf->addInfo('Creator', 'webERP http://www.weberp.org');
 $pdf->addInfo('Author', 'WebERP ' . $Version);
 
 /* Javier: I have brought this piece from the pdf class constructor to get it closer to the admin/user,
 	I corrected it to match TCPDF, but it still needs check, after which,
 	I think it should be moved to each report to provide flexible Document Header and Margins in a per-report basis. */
 
-	$pdf->SetPrintHeader(false);	// Javier: I added this must be called before Add Page
-	$pdf->setAutoPageBreak(0);
-	$pdf->setPrintFooter(false);
-	$pdf->AddPage();
-	$pdf->cMargin = 0;
+$pdf->SetPrintHeader(false);	// Javier: I added this must be called before Add Page
+$pdf->setAutoPageBreak(0);
+$pdf->setPrintFooter(false);
+$pdf->AddPage();
+$pdf->cMargin = 0;
 /* END Brought from class.pdf.php constructor */
 
 ?>

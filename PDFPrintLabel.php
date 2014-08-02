@@ -6,7 +6,6 @@ include('includes/barcodepack/class.code128.php');
 
 $PtsPerMM = 2.83465; //pdf points per mm
 
-
 if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 	AND isset($_POST['FromCriteria'])
 	AND mb_strlen($_POST['FromCriteria'])>=1
@@ -117,10 +116,10 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 	include('includes/footer.inc');
 	exit;
 }
-if (isset($_POST['PrintLabels'])
-	AND isset($_POST['NoOfLabels'])
-	AND $_POST['NoOfLabels']>0){
-	$NoOfLabels = 0;
+
+$NoOfLabels = 0;
+if (isset($_POST['PrintLabels']) AND isset($_POST['NoOfLabels']) AND $_POST['NoOfLabels']>0){
+
 	for ($i=0;$i < $_POST['NoOfLabels'];$i++){
 		if (isset($_POST['PrintLabel'.$i])){
 			$NoOfLabels++;
@@ -271,16 +270,21 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/customer.png" title="' . _('Price Labels') . '" alt="" />
          ' . ' ' . _('Print Price Labels') . '</p>';
 
+	if (!function_exists('gd_info')) {
+		prnMsg(_('The GD module for PHP is required to print barcode labels. Your PHP installation is not capable currently. You will most likely experience problems with this script until the GD module is enabled.'),'error');
+	}
+
+
 	if (!isset($_POST['FromCriteria']) OR !isset($_POST['ToCriteria'])) {
 
 	/*if $FromCriteria is not set then show a form to allow input	*/
 
-		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-		echo '<table class="selection">';
-		echo '<tr>
-				<td>' . _('Label to print') . ':</td>
-				<td><select required="required" autofocus="autofocus" name="LabelID">';
+		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
+				<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+				<table class="selection">
+				<tr>
+					<td>' . _('Label to print') . ':</td>
+					<td><select required="required" autofocus="autofocus" name="LabelID">';
 
 		$LabelResult = DB_query("SELECT labelid, description FROM labels",$db);
 		while ($LabelRow = DB_fetch_array($LabelResult)){
