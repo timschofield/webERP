@@ -1,6 +1,6 @@
 webERP Change Log
 
-
+08/08/14 Andrew Galuski: Add SQL and maintenance screens for Location based security. added new report aged controlled stock.  additional scripts to follow as time allows
 2/1/14 Tim: Change columns around on SelectWorkOrder.php
 31/07/14 RChacon: Corrects the bottom line of the rectangle. Adds comments (info for developers).
 29/07/14 RChacon: In PDFPriceList.php: Adds comments (info for developers), ViewTopic and BookMark, and currency name in locale language; deletes unused lines; reformats for legibility; adjusts column sizes to field sizes; improves printing of stockmaster.longdescription; improves code to reduce execution time (calculation out of loops); links right column positions to right margin; corrects IF for CustomerSpecials (deletes translation). In ManualSalesTypes.html: Adds help info about Print a price list by inventory category.

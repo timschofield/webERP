@@ -237,7 +237,8 @@ $MenuItems['stock']['Reports']['Caption'] = array(	_('Serial Item Research Tool'
 													_('Historical Stock Quantity By Location/Category'),
 													_('List Negative Stocks'),
 													_('Period Stock Transaction Listing'),
-													_('Stock Transfer Note'));
+													_('Stock Transfer Note'),
+													_('Aged Controlled Stock Report'));
 
 $MenuItems['stock']['Reports']['URL'] = array(	'/StockSerialItemResearch.php',
 												'/PDFPrintLabel.php',
@@ -260,7 +261,8 @@ $MenuItems['stock']['Reports']['URL'] = array(	'/StockSerialItemResearch.php',
 												'/StockQuantityByDate.php',
 												'/PDFStockNegatives.php',
 												'/PDFPeriodStockTransListing.php',
-												'/PDFStockTransfer.php');
+												'/PDFStockTransfer.php',
+												'/AgedControlledInventory.php');
 
 $MenuItems['stock']['Maintenance']['Caption'] = array(	_('Add A New Item'),
 														_('Select An Item'),
@@ -502,6 +504,7 @@ $MenuItems['system']['Reports']['URL'] = array(	'/SalesTypes.php',
 
 $MenuItems['system']['Maintenance']['Caption'] = array(	_('Inventory Categories Maintenance'),
 														_('Inventory Locations Maintenance'),
+														_('Inventory Location Authorized Users Maintenance'),
 														_('Discount Category Maintenance'),
 														_('Units of Measure'),
 														_('MRP Available Production Days'),
@@ -512,6 +515,7 @@ $MenuItems['system']['Maintenance']['Caption'] = array(	_('Inventory Categories 
 
 $MenuItems['system']['Maintenance']['URL'] = array(	'/StockCategories.php',
 													'/Locations.php',
+													'/LocationUsers.php',
 													'/DiscountCategories.php',
 													'/UnitsOfMeasure.php',
 													'/MRPCalendar.php',

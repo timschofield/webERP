@@ -54,6 +54,27 @@ ALTER TABLE stockrequest DROP KEY loccode_2;
 ALTER TABLE stockrequestitems DROP KEY stockid_2, DROP KEY dispatchid_2;
 INSERT INTO scripts VALUES('Dashboard.php',1,'Display outstanding debtors, creditors etc');
 
+INSERT INTO `scripts` ( `script` , `pagesecurity` , `description` ) VALUES ('Z_MakeLocUsers.php', '15', 'Create User Location records');
+INSERT INTO `scripts` ( `script` , `pagesecurity` , `description` ) VALUES ('LocationUsers.php', '15', 'User Location Maintenance');
+INSERT INTO `scripts` ( `script` , `pagesecurity` , `description` ) VALUES ('AgedControlledInventory.php', '11', 'Report of Controlled Items and their age');
+
+CREATE TABLE IF NOT EXISTS `locationusers` (
+  `loccode` varchar(5) NOT NULL,
+  `userid` varchar(20) NOT NULL,
+  `canview` tinyint(4) NOT NULL DEFAULT '0',
+  `canupd` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`loccode`,`userid`),
+  KEY `UserId` (`userid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO locationusers (userid, loccode, canview, canupd)
+		SELECT www_users.userid, locations.loccode,1,1
+		FROM www_users CROSS JOIN locations
+		LEFT JOIN locationusers
+		ON www_users.userid = locationusers.userid
+		AND locations.loccode = locationusers.loccode
+        WHERE locationusers.userid IS NULL;
+
 UPDATE config SET confvalue='4.12' WHERE confname='VersionNumber';
 
 

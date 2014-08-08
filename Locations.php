@@ -175,8 +175,25 @@ if (isset($_POST['submit'])) {
 		$ErrMsg =  _('An error occurred inserting the new location stock records for all pre-existing parts because');
 		$DbgMsg =  _('The SQL used to insert the new stock location records was');
 		$result = DB_query($sql,$db,$ErrMsg, $DbgMsg);
+		prnMsg ('........ ' . _('and new stock locations inserted for all existing stock items for the new location'), 'success');		
+	
+	/* Also need to add locationuser records for all existing users*/
+		$sql = "INSERT INTO locationusers (userid, loccode, canview, canupd)
+				SELECT www_users.userid,
+				locations.loccode,
+				1,
+				1
+				FROM www_users CROSS JOIN locations
+				LEFT JOIN locationusers
+				ON www_users.userid = locationusers.userid
+				AND locations.loccode = locationusers.loccode
+				WHERE locationusers.userid IS NULL
+				AND  locations.loccode='". $_POST['LocCode'] . "';";
 
-		prnMsg ('........ ' . _('and new stock locations inserted for all existing stock items for the new location'), 'success');
+		$ErrMsg = _('The users/locations that need user location records created cannot be retrieved because');
+		$Result = DB_query($sql,$db,$ErrMsg);
+		prnMsg(_('Existing users have been authorized for this location'),'success');
+
 		unset($_POST['LocCode']);
 		unset($_POST['LocationName']);
 		unset($_POST['DelAdd1']);
@@ -346,6 +363,7 @@ if (isset($_POST['submit'])) {
 
 		$result= DB_query("DELETE FROM locstock WHERE loccode ='" . $SelectedLocation . "'",$db);
 		$result = DB_query("DELETE FROM locations WHERE loccode='" . $SelectedLocation . "'",$db);
+		$result = DB_query("DELETE FROM locationusers WHERE loccode='" . $SelectedLocation . "'",$db);
 
 		prnMsg( _('Location') . ' ' . $SelectedLocation . ' ' . _('has been deleted') . '!', 'success');
 		unset ($SelectedLocation);
