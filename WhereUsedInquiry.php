@@ -53,6 +53,7 @@ if (isset($StockID)) {
 				stockmaster.description
 			FROM bom INNER JOIN stockmaster
 			ON bom.parent = stockmaster.stockid
+			INNER JOIN locationusers ON locationusers.loccode=bom.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 			WHERE component='" . $StockID . "'
 			AND bom.effectiveafter<='" . Date('Y-m-d') . "'
 			AND bom.effectiveto >='" . Date('Y-m-d') . "'";

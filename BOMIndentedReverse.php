@@ -169,6 +169,7 @@ if (isset($_POST['PrintPDF'])) {
                    stockmaster.mbflag
               FROM tempbom INNER JOIN stockmaster
               ON tempbom.parent = stockmaster.stockid
+			  INNER JOIN locationusers ON locationusers.loccode=tempbom.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
               ORDER BY sortpart";
 	$result = DB_query($sql,$db);
 

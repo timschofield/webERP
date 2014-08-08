@@ -77,6 +77,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 							ON woitems.stockid=stockmaster.stockid
 							INNER JOIN stockcategory
 							ON stockmaster.categoryid=stockcategory.categoryid
+							INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
 							WHERE woitems.stockid='" . $_POST['StockID'] . "'
 							AND workorders.wo='".$_POST['WO'] . "'",
 							$db,
@@ -113,7 +114,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 				}
 			}
 		} //end of lot/batch control
-		
+
 		if (!empty($_POST['ExpiryDate'])){
 			if(!is_date($_POST['ExpiryDate'])){
 				$InputError = true;
@@ -606,7 +607,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 												'" . $_POST['BatchRef' . $i] . "',
 												'" . filter_number_format($_POST['Qty'.$i]) . "',
 												'" . $_POST['QualityText'] . "')";
-						 
+
 
 							}else{	//If it's a perishable product, add expiry date
 
@@ -781,6 +782,7 @@ $WOResult = DB_query("SELECT workorders.loccode,
 					ON workorders.wo=woitems.wo
 					INNER JOIN stockmaster
 					ON woitems.stockid=stockmaster.stockid
+					INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
 					WHERE woitems.stockid='" . $_POST['StockID'] . "' AND workorders.wo='".$_POST['WO'] . "'",
 					$db,
 					$ErrMsg);
@@ -833,7 +835,7 @@ echo '<table class="selection">
 		//add expiry date for perishable product
 		if($WORow['perishable']==1){
 			echo '<td>' . _('Expiry Date') . ':<td>
-			      <td><input type="text" name="ExpiryDate" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" 
+			      <td><input type="text" name="ExpiryDate" class="date" alt="'.$_SESSION['DefaultDateFormat'].'"
 				         required  />
 			      </td>';
 		}
@@ -845,7 +847,7 @@ echo '<table class="selection">
 if (!isset($_POST['IntoLocation'])){
 		$_POST['IntoLocation']=$WORow['loccode'];
 }
-$LocResult = DB_query("SELECT loccode, locationname FROM locations",$db);
+$LocResult = DB_query("SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1",$db);
 while ($LocRow = DB_fetch_array($LocResult)){
 	if ($_POST['IntoLocation'] ==$LocRow['loccode']){
 		echo '<option selected="selected" value="' . $LocRow['loccode'] .'">' . $LocRow['locationname'] . '</option>';

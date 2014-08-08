@@ -132,7 +132,8 @@ if (!isset($StockID)) {
 		}
 		echo _('Work Order number') . ': <input type="text" name="WO" autofocus="autofocus" maxlength="8" size="9" />&nbsp; ' . _('Processing at') . ':<select name="StockLocation"> ';
 
-		$sql = "SELECT loccode, locationname FROM locations";
+		$sql = "SELECT locations.loccode, locationname FROM locations
+				INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
 
 		$resultStkLocs = DB_query($sql,$db);
 
@@ -265,6 +266,7 @@ if (!isset($StockID)) {
 						FROM workorders
 						INNER JOIN woitems ON workorders.wo=woitems.wo
 						INNER JOIN stockmaster ON woitems.stockid=stockmaster.stockid
+						INNER JOIN locationusers ON locationusers.loccode=workorders.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 						WHERE workorders.closed='" . $ClosedOrOpen . "'
 						AND workorders.wo='". $SelectedWO ."'
 						ORDER BY workorders.wo,
@@ -284,6 +286,7 @@ if (!isset($StockID)) {
 							FROM workorders
 							INNER JOIN woitems ON workorders.wo=woitems.wo
 							INNER JOIN stockmaster ON woitems.stockid=stockmaster.stockid
+							INNER JOIN locationusers ON locationusers.loccode=workorders.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 							WHERE workorders.closed='" . $ClosedOrOpen . "'
 							AND woitems.stockid='". $SelectedStockItem ."'
 							AND workorders.loccode='" . $_POST['StockLocation'] . "'
@@ -300,6 +303,7 @@ if (!isset($StockID)) {
 									workorders.startdate
 							FROM workorders
 							INNER JOIN woitems ON workorders.wo=woitems.wo
+							INNER JOIN locationusers ON locationusers.loccode=workorders.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 							INNER JOIN stockmaster ON woitems.stockid=stockmaster.stockid
 							WHERE workorders.closed='" . $ClosedOrOpen . "'
 							AND workorders.loccode='" . $_POST['StockLocation'] . "'

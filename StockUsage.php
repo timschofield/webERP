@@ -65,7 +65,8 @@ echo '<tr><td>' . _('Stock Code') . ':<input type="text" pattern="(?!^\s+$)[^%]{
 
 echo _('From Stock Location') . ':<select name="StockLocation">';
 
-$sql = "SELECT loccode, locationname FROM locations";
+$sql = "SELECT locations.loccode, locationname FROM locations
+			INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
 $resultStkLocs = DB_query($sql,$db);
 while ($myrow=DB_fetch_array($resultStkLocs)){
 	if (isset($_POST['StockLocation'])){
@@ -106,12 +107,14 @@ if (isset($_POST['ShowUsage'])){
 	if($_POST['StockLocation']=='All'){
 		$sql = "SELECT periods.periodno,
 				periods.lastdate_in_period,
+				canview,
 				SUM(CASE WHEN (stockmoves.type=10 Or stockmoves.type=11 OR stockmoves.type=28)
 							AND stockmoves.hidemovt=0
 							AND stockmoves.stockid = '" . $StockID . "'
 						THEN -stockmoves.qty ELSE 0 END) AS qtyused
 				FROM periods LEFT JOIN stockmoves
 					ON periods.periodno=stockmoves.prd
+				INNER JOIN locationusers ON locationusers.loccode=stockmoves.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 				WHERE periods.periodno <='" . $CurrentPeriod . "'
 				GROUP BY periods.periodno,
 					periods.lastdate_in_period

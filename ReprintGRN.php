@@ -61,9 +61,11 @@ if (isset($_POST['Show'])) {
 			ON grns.supplierid=suppliers.supplierid
 			INNER JOIN purchorderdetails
 			ON grns.podetailitem=purchorderdetails.podetailitem
+			INNER JOIN purchorders on purchorders.orderno=purchorderdetails.orderno
+			INNER JOIN locationusers ON locationusers.loccode=purchorders.intostocklocation AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 			LEFT JOIN stockmaster
 			ON grns.itemcode=stockmaster.stockid
-			WHERE orderno='" . $_POST['PONumber'] ."'";
+			WHERE purchorderdetails.orderno='" . $_POST['PONumber'] ."'";
 	$result=DB_query($sql, $db);
 	if (DB_num_rows($result)==0) {
 		echo '<br />';
@@ -86,7 +88,7 @@ if (isset($_POST['Show'])) {
 				<th>' . _('Delivery Date') . '</th>
 				<th>' . _('Quantity Received') . '</th>
 				<th>' . _('Action') . '</th>
-			</tr>'; 
+			</tr>';
 
 	while ($myrow=DB_fetch_array($result)) {
 		if ($k==1){
@@ -104,8 +106,8 @@ if (isset($_POST['Show'])) {
 			<td>' . $myrow['deliverydate'] . '</td>
 			<td class="number">' . locale_number_format($myrow['qtyrecd'], $myrow['decimalplaces']) . '</td>
 			<td><a href="PDFGrn.php?GRNNo=' . $myrow['grnbatch'] .'&PONo=' . $_POST['PONumber'] . '">' . _('Reprint GRN ') . '</a>
-			&nbsp;<a href="PDFQALabel.php?GRNNo=' . $myrow['grnbatch'] .'&PONo=' . $_POST['PONumber'] . '">' . _('Reprint QA Label') . '</a></td>
-		</tr>'; 
+			&nbsp;<a href="PDFQALabel.php?GRNNo=' . $myrow['grnbatch'] .'&PONo=' . $_POST['PONumber'] . '">' . _('Reprint Labels') . '</a></td>
+		</tr>';
 	}
 	echo '</table>';
 }

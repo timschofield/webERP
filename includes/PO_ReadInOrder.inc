@@ -53,6 +53,7 @@
 								currencies.decimalplaces
 							FROM purchorders
 							INNER JOIN locations ON purchorders.intostocklocation=locations.loccode
+							INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
 							INNER JOIN suppliers ON purchorders.supplierno = suppliers.supplierid
 							INNER JOIN currencies ON suppliers.currcode=currencies.currabrev
 							WHERE purchorders.orderno = '" . $_GET['ModifyOrderNumber'] . "'";

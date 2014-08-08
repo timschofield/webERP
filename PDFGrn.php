@@ -52,6 +52,8 @@ if ($GRNNo == 'Preview'){
 				stockmaster.decimalplaces
 			FROM grns INNER JOIN purchorderdetails
 			ON grns.podetailitem=purchorderdetails.podetailitem
+			INNER JOIN purchorders on purchorders.orderno = purchorderdetails.orderno
+			INNER JOIN locationusers ON locationusers.loccode=purchorders.intostocklocation AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 			LEFT JOIN stockmaster
 			ON grns.itemcode=stockmaster.stockid
 			WHERE grnbatch='". $GRNNo ."'";
@@ -98,17 +100,14 @@ if ($NoOfGRNs >0){
 
 		$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column1->x,$Page_Height-$YPos,$FormDesign->Data->Column1->Length,$FormDesign->Data->Column1->FontSize, $myrow['itemcode']);
 		$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column2->x,$Page_Height-$YPos,$FormDesign->Data->Column2->Length,$FormDesign->Data->Column2->FontSize, $myrow['itemdescription']);
-		/*resmart mods */
 		/*$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column3->x,$Page_Height-$YPos,$FormDesign->Data->Column3->Length,$FormDesign->Data->Column3->FontSize, $DeliveryDate);*/
 		$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column3->x,$Page_Height-$YPos,$FormDesign->Data->Column3->Length,$FormDesign->Data->Column3->FontSize, $DeliveryDate, 'right');
-		/*resmart ends*/
 		$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column4->x,$Page_Height-$YPos,$FormDesign->Data->Column4->Length,$FormDesign->Data->Column4->FontSize, $SuppliersQuantity, 'right');
 		$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column5->x,$Page_Height-$YPos,$FormDesign->Data->Column5->Length,$FormDesign->Data->Column5->FontSize, $myrow['suppliersunit'], 'left');
 		$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column6->x,$Page_Height-$YPos,$FormDesign->Data->Column6->Length,$FormDesign->Data->Column6->FontSize, $OurUnitsQuantity, 'right');
 		$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column7->x,$Page_Height-$YPos,$FormDesign->Data->Column7->Length,$FormDesign->Data->Column7->FontSize, $myrow['units'], 'left');
 		$YPos += $line_height;
 
-		/*resmoart mods*/
 		/* move to after serial print
 		if($FooterPrintedInPage == 0){
 			$LeftOvers = $pdf->addText($FormDesign->ReceiptDate->x,$Page_Height-$FormDesign->ReceiptDate->y,$FormDesign->ReceiptDate->FontSize, _('Date of Receipt: ') . $DeliveryDate);
@@ -116,7 +115,6 @@ if ($NoOfGRNs >0){
 			$FooterPrintedInPage= 1;
 		}
 		*/
-		/*resmart ends*/
 
 		if ($YPos >= $FormDesign->LineAboveFooter->starty){
 			/* We reached the end of the page so finsih off the page and start a newy */
@@ -125,13 +123,12 @@ if ($NoOfGRNs >0){
 			$YPos=$FormDesign->Data->y;
 			include ('includes/PDFGrnHeader.inc');
 		} //end if need a new page headed up
-		
-		/*resmart mods*/
+
 		$SQL = "SELECT stockmaster.controlled
 			    FROM stockmaster WHERE stockid ='" . $myrow['itemcode'] . "'";
 		$CheckControlledResult = DB_query($SQL,$db,'<br />' . _('Could not determine if the item was controlled or not because') . ' ');
 		$ControlledRow = DB_fetch_row($CheckControlledResult);
-		
+
 		if ($ControlledRow[0]==1) { /*Then its a controlled item */
 			$SQL = "SELECT stockserialmoves.serialno,
 					stockserialmoves.moveqty
@@ -146,9 +143,9 @@ if ($NoOfGRNs >0){
 				$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column2->x,$Page_Height-$YPos,$FormDesign->Data->Column2->Length,$FormDesign->Data->Column2->FontSize, $SerialStockMoves['serialno']);
 				$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column2->x,$Page_Height-$YPos,$FormDesign->Data->Column2->Length,$FormDesign->Data->Column2->FontSize, $SerialStockMoves['moveqty'],'right');
 				$YPos += $line_height;
-				
+
 				if ($YPos >= $FormDesign->LineAboveFooter->starty){
-					$FooterPrintedInPage= 0;	
+					$FooterPrintedInPage= 0;
 					$YPos=$FormDesign->Data->y;
 					include ('includes/PDFGrnHeader.inc');
 				} //end if need a new page headed up
@@ -156,12 +153,12 @@ if ($NoOfGRNs >0){
 			$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column2->x,$Page_Height-$YPos,$FormDesign->Data->Column2->Length,$FormDesign->Data->Column2->FontSize, ' ');
 			$YPos += $line_height;
 			if ($YPos >= $FormDesign->LineAboveFooter->starty){
-				$FooterPrintedInPage= 0;	
+				$FooterPrintedInPage= 0;
 				$YPos=$FormDesign->Data->y;
 				include ('includes/PDFGrnHeader.inc');
 			} //end if need a new page headed up
 		} //controlled item*/
-		/*resmart ends*/
+
 		if($FooterPrintedInPage == 0){
 			$LeftOvers = $pdf->addText($FormDesign->ReceiptDate->x,$Page_Height-$FormDesign->ReceiptDate->y,$FormDesign->ReceiptDate->FontSize, _('Date of Receipt: ') . $DeliveryDate);
 			$LeftOvers = $pdf->addText($FormDesign->SignedFor->x,$Page_Height-$FormDesign->SignedFor->y,$FormDesign->SignedFor->FontSize, _('Signed for ').'______________________');

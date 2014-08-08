@@ -21,9 +21,10 @@ if ($_SESSION['RequirePickingNote']==0) {
 if ((!isset($_GET['TransNo']) or $_GET['TransNo']=='') and !isset($_POST['TransDate'])){
 	$Title = _('Select Picking Lists');
 	include('includes/header.inc');
-	$sql="SELECT loccode,
+	$sql="SELECT locations.loccode,
 				locationname
-			FROM locations";
+			FROM locations
+			INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
 	$result=DB_query($sql, $db);
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/sales.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" name="form">
@@ -268,7 +269,6 @@ for ($i=0;$i<sizeof($OrdersToPick);$i++){
 		}
 		$LineResult=DB_query($sql,$db, $ErrMsg);
 	}
-
 	if ((isset($_GET['TransNo'])
 		AND $_GET['TransNo'] == 'Preview')
 		OR (isset($LineResult)
@@ -330,7 +330,7 @@ for ($i=0;$i<sizeof($OrdersToPick);$i++){
 			$LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column5->x,$Page_Height - $YPos,$FormDesign->Headings->Column5->Length,$FormDesign->Headings->Column5->FontSize,$DisplayPrevDel,'right');
 
 			if ($Page_Height-$YPos-$line_height <= 50){
-			/* We reached the end of the page so finsih off the page and start a newy */
+			/* We reached the end of the page so finish off the page and start a new */
 				$PageNumber++;
 				include ('includes/PDFPickingListHeader.inc');
 			} //end if need a new page headed up

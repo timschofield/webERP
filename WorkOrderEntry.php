@@ -38,6 +38,20 @@ if (isset($_GET['loccode'])){
 	$LocCode=$_SESSION['UserStockLocation'];
 }
 
+$LocResult = DB_query("SELECT locations.loccode FROM locations
+						INNER JOIN locationusers ON locationusers.loccode=locations.loccode
+						AND locationusers.userid='" .  $_SESSION['UserID'] . "'
+						AND locationusers.canupd=1
+						WHERE locations.loccode='" . $LocCode . "'", $db);
+$LocRow = DB_fetch_array($LocResult);
+
+if (is_null($LocRow['loccode']) OR $LocRow['loccode']==''){
+	prnMsg(_('Your security settings do not allow you to create or update new Work Order at this location') . ' ' . $LocCode,'error');
+	echo '<br /><a href="' . $RootPath . '/SelectWorkOrder.php">' . _('Select an existing work order') . '</a>';
+	include('includes/footer.inc');
+	exit;
+}
+
 foreach ($_POST as $key=>$value) {
 	if (substr($key, 0, 9)=='OutputQty' OR substr($key, 0, 7)=='RecdQty') {
 		$_POST[$key] = filter_number_format($value);
@@ -78,6 +92,7 @@ if (!isset($_POST['StockLocation'])){
 		$_POST['StockLocation']=$_SESSION['UserStockLocation'];
 	}
 }
+
 
 
 if (isset($_POST['Search']) OR isset($_POST['Prev']) OR isset($_POST['Next'])){
@@ -176,7 +191,7 @@ if (isset($_POST['Search']) OR isset($_POST['Prev']) OR isset($_POST['Next'])){
 		  }
 	}
 	$sql=$SQL;
-	
+
 	$sqlcount = substr($sql,strpos($sql,   "FROM"));
 	$sqlcount = substr($sqlcount,0, strpos($sqlcount,   "ORDER"));
 	$sqlcount = 'SELECT COUNT(*) '.$sqlcount;
@@ -186,7 +201,7 @@ if (isset($_POST['Search']) OR isset($_POST['Prev']) OR isset($_POST['Next'])){
 	unset($SearchResult);
 	$ListCount = $myrow[0];
 	$ListPageMax = ceil($ListCount / $_SESSION['DisplayRecordsMax'])-1;
-	
+
 	if (isset($_POST['Next'])) {
 		$Offset = $_POST['currpage']+1;
 	}
@@ -297,7 +312,7 @@ if (isset($NewItem) AND isset($_POST['WO'])){
 									 '" . $NewItem . "',
 									 '" . $EOQ . "',
 									 '" . $Cost . "'
-								)"; 
+								)";
 		$ErrMsg = _('The work order item could not be added');
 		$result = DB_query($sql,$db,$ErrMsg);
 
@@ -363,7 +378,7 @@ if (isset($_POST['submit']) OR isset($_POST['Search'])) { //The update button ha
 			}
 			$sql[] = "UPDATE woitems SET comments = '". $_POST['WOComments'.$i] ."'
 										WHERE wo='" . $_POST['WO'] . "'
-										AND stockid='" . $_POST['OutputItem'.$i] . "'"; 
+										AND stockid='" . $_POST['OutputItem'.$i] . "'";
 			if (isset($_POST['QtyRecd'.$i]) AND $_POST['QtyRecd'.$i]>$_POST['OutputQty'.$i]){
 				$_POST['OutputQty'.$i]=$_POST['QtyRecd'.$i]; //OutputQty must be >= Qty already reced
 			}
@@ -388,12 +403,12 @@ if (isset($_POST['submit']) OR isset($_POST['Search'])) { //The update button ha
 											 nextlotsnref = '". $_POST['NextLotSNRef'.$i] ."',
 											 stdcost ='" . $Cost . "'
 										WHERE wo='" . $_POST['WO'] . "'
-										AND stockid='" . $_POST['OutputItem'.$i] . "'"; 
+										AND stockid='" . $_POST['OutputItem'.$i] . "'";
   			} elseif (isset($_POST['HasWOSerialNos'.$i]) AND $_POST['HasWOSerialNos'.$i]==false) {
 				$sql[] = "UPDATE woitems SET qtyreqd =  '". $_POST['OutputQty' . $i] . "',
 											 nextlotsnref = '". $_POST['NextLotSNRef'.$i] ."'
 										WHERE wo='" . $_POST['WO'] . "'
-										AND stockid='" . $_POST['OutputItem'.$i] . "'"; 
+										AND stockid='" . $_POST['OutputItem'.$i] . "'";
 			}
 		}
 
@@ -414,7 +429,7 @@ if (isset($_POST['submit']) OR isset($_POST['Search'])) { //The update button ha
 				 unset($_POST['QtyRecd'.$i]);
 				 unset($_POST['NetLotSNRef'.$i]);
 				 unset($_POST['HasWOSerialNos'.$i]);
-				 unset($_POST['WOComments'.$i]); 
+				 unset($_POST['WOComments'.$i]);
 		}
 	}
 } elseif (isset($_POST['delete'])) {
@@ -463,7 +478,7 @@ if (isset($_POST['submit']) OR isset($_POST['Search'])) { //The update button ha
 			unset($_POST['QtyRecd'.$i]);
 			unset($_POST['NetLotSNRef'.$i]);
 			unset($_POST['HasWOSerialNos'.$i]);
-			unset($_POST['WOComments'.$i]); 
+			unset($_POST['WOComments'.$i]);
 		}
 		include('includes/footer.inc');
 		exit;
@@ -482,6 +497,7 @@ $sql="SELECT workorders.loccode,
 			 closed
 		FROM workorders	INNER JOIN locations
 		ON workorders.loccode=locations.loccode
+		INNER JOIN locationusers ON locationusers.loccode=workorders.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
 		WHERE workorders.wo='" . $_POST['WO'] . "'";
 
 $WOResult = DB_query($sql,$db);
@@ -507,7 +523,7 @@ if (DB_num_rows($WOResult)==1){
 										woitems.comments
 								FROM woitems INNER JOIN stockmaster
 								ON woitems.stockid=stockmaster.stockid
-								WHERE wo='" .$_POST['WO'] . "'",$db,$ErrMsg); 
+								WHERE wo='" .$_POST['WO'] . "'",$db,$ErrMsg);
 
 	$NumberOfOutputs=DB_num_rows($WOItemsResult);
 	$i=1;
@@ -516,7 +532,7 @@ if (DB_num_rows($WOResult)==1){
 				$_POST['OutputItemDesc'.$i]=$WOItem['description'];
 				$_POST['OutputQty' . $i]= $WOItem['qtyreqd'];
 		  		$_POST['RecdQty' .$i] =$WOItem['qtyrecd'];
-				$_POST['WOComments' .$i] =$WOItem['comments']; 
+				$_POST['WOComments' .$i] =$WOItem['comments'];
 		  		$_POST['DecimalPlaces' . $i] = $WOItem['decimalplaces'];
 		  		if ($WOItem['serialised']==1 AND $WOItem['nextserialno']>0){
 		  		   $_POST['NextLotSNRef' .$i]=$WOItem['nextserialno'];
@@ -533,13 +549,22 @@ if (DB_num_rows($WOResult)==1){
 				}
 		  		$i++;
 	}
+} else {
+	if ($EditingExisting==true){
+		prnMsg(_('Your location security settings do not allow you to Update this Work Order'),'error');
+		echo '<br /><a href="' . $RootPath . '/SelectWorkOrder.php">' . _('Select an existing work order') . '</a>';
+		include('includes/footer.inc');
+		exit;
+	}
+
 }
 
 echo '<input type="hidden" name="WO" value="' .$_POST['WO'] . '" />';
 echo '<tr><td class="label">' . _('Work Order Reference') . ':</td><td>' . $_POST['WO'] . '</td></tr>';
 echo '<tr><td class="label">' . _('Factory Location') .':</td>
 	<td><select name="StockLocation" onChange="ReloadForm(form1.submit)">';
-$LocResult = DB_query("SELECT loccode,locationname FROM locations",$db);
+$LocResult = DB_query("SELECT locations.loccode,locationname FROM locations
+							INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1",$db);
 while ($LocRow = DB_fetch_array($LocResult)){
 	if ($_POST['StockLocation']==$LocRow['loccode']){
 		echo '<option selected="True" value="' . $LocRow['loccode'] .'">' . $LocRow['locationname'] . '</option>';
@@ -578,7 +603,7 @@ echo '<tr><th>' . _('Output Item') . '</th>
 		  <th>' . _('Qty Received') . '</th>
 		  <th>' . _('Balance Remaining') . '</th>
 		  <th>' . _('Next Lot/SN Ref') . '</th>
-		  </tr>'; 
+		  </tr>';
 $j=0;
 if (isset($NumberOfOutputs)){
 	for ($i=1;$i<=$NumberOfOutputs;$i++){
@@ -591,7 +616,7 @@ if (isset($NumberOfOutputs)){
 		}
 		echo '<td><input type="hidden" name="OutputItem' . $i . '" value="' . $_POST['OutputItem' .$i] . '" />' .
 			$_POST['OutputItem' . $i] . ' - ' . $_POST['OutputItemDesc' .$i] . '</td>';
-		echo'<td><textarea style="width:100%" rows="5" cols="20" name="WOComments' . $i . '" >' . $_POST['WOComments' . $i] . '</textarea></td>'; 
+		echo'<td><textarea style="width:100%" rows="5" cols="20" name="WOComments' . $i . '" >' . $_POST['WOComments' . $i] . '</textarea></td>';
 		if ($_POST['Controlled'.$i]==1 AND $_SESSION['DefineControlledOnWOEntry']==1){
 			echo '<td class="number">' . locale_number_format($_POST['OutputQty' . $i], $_POST['DecimalPlaces' . $i]) . '</td>';
 			echo '<input type="hidden" name="OutputQty' . $i .'" value="' . locale_number_format($_POST['OutputQty' . $i]-$_POST['RecdQty' .$i], $_POST['DecimalPlaces' . $i]) . '" />';

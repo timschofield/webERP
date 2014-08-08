@@ -78,7 +78,7 @@ if (isset($_POST['Narrative'])){
 	$_SESSION['Adjustment' . $identifier]->Narrative = $_POST['Narrative'];
 }
 
-$sql = "SELECT loccode, locationname FROM locations";
+$sql = "SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1";
 $resultStkLocs = DB_query($sql,$db);
 $LocationList=array();
 while ($myrow=DB_fetch_array($resultStkLocs)){
@@ -211,25 +211,25 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 			$QtyOnHandPrior = 0;
 		}
 		$SQL = "INSERT INTO stockmoves (stockid,
-					                    type,
-					                    transno,
-					                    loccode,
-					                    trandate,
-					                    prd,
-					                    reference,
-					                    qty,
-					                    newqoh,
-					                    standardcost)
-            VALUES ('" . $_SESSION['Adjustment' . $identifier]->StockID . "',
-                    17,
-		            '" . $AdjustmentNumber . "',
-		            '" . $_SESSION['Adjustment' . $identifier]->StockLocation . "',
-		            '" . $SQLAdjustmentDate . "',
-		            '" . $PeriodNo . "',
-		            '" . $_SESSION['Adjustment' . $identifier]->Narrative ."',
-		            '" . $_SESSION['Adjustment' . $identifier]->Quantity . "',
-		            '" . ($QtyOnHandPrior + $_SESSION['Adjustment' . $identifier]->Quantity) . "',
-		            '" . $_SESSION['Adjustment' . $identifier]->StandardCost . "')";
+										type,
+										transno,
+										loccode,
+										trandate,
+										prd,
+										reference,
+										qty,
+										newqoh,
+										standardcost)
+									VALUES ('" . $_SESSION['Adjustment' . $identifier]->StockID . "',
+										17,
+										'" . $AdjustmentNumber . "',
+										'" . $_SESSION['Adjustment' . $identifier]->StockLocation . "',
+										'" . $SQLAdjustmentDate . "',
+										'" . $PeriodNo . "',
+										'" . $_SESSION['Adjustment' . $identifier]->Narrative ."',
+										'" . $_SESSION['Adjustment' . $identifier]->Quantity . "',
+										'" . ($QtyOnHandPrior + $_SESSION['Adjustment' . $identifier]->Quantity) . "',
+										'" . $_SESSION['Adjustment' . $identifier]->StandardCost . "')";
 
 		$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock movement record cannot be inserted because');
 		$DbgMsg =  _('The following SQL to insert the stock movement record was used');

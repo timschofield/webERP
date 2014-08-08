@@ -75,6 +75,7 @@ if (isset($_POST['PrintPDF'])) {
 					 bom.effectiveto,
 					 bom.quantity
 			  FROM bom
+			  INNER JOIN locationusers ON locationusers.loccode=bom.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 			  WHERE bom.parent ='" . $_POST['Part'] . "'
 			  AND bom.effectiveto >= '" . date('Y-m-d') . "'
 			  AND bom.effectiveafter <= '" . date('Y-m-d') . "'";
@@ -108,6 +109,7 @@ if (isset($_POST['PrintPDF'])) {
 						 bom.effectiveto,
 						 bom.quantity
 				 FROM bom, passbom
+				 INNER JOIN locationusers ON locationusers.loccode=loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 				 WHERE bom.parent = passbom.part
 				  AND bom.effectiveto >= '" . date('Y-m-d') . "' AND bom.effectiveafter <= '" . date('Y-m-d') . "'";
 			$result = DB_query($sql,$db);

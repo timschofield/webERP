@@ -26,6 +26,7 @@ $sql = "SELECT stockmaster.stockid,
         ON stockmaster.stockid=locstock.stockid
         INNER JOIN locations
         ON locstock.loccode = locations.loccode
+		INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
         WHERE locstock.quantity < 0
         ORDER BY locstock.loccode,
 			stockmaster.categoryid,

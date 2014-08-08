@@ -175,8 +175,8 @@ if (isset($_POST['submit'])) {
 		$ErrMsg =  _('An error occurred inserting the new location stock records for all pre-existing parts because');
 		$DbgMsg =  _('The SQL used to insert the new stock location records was');
 		$result = DB_query($sql,$db,$ErrMsg, $DbgMsg);
-		prnMsg ('........ ' . _('and new stock locations inserted for all existing stock items for the new location'), 'success');		
-	
+		prnMsg ('........ ' . _('and new stock locations inserted for all existing stock items for the new location'), 'success');
+
 	/* Also need to add locationuser records for all existing users*/
 		$sql = "INSERT INTO locationusers (userid, loccode, canview, canupd)
 				SELECT www_users.userid,

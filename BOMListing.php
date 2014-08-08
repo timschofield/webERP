@@ -29,6 +29,7 @@ If (isset($_POST['PrintPDF'])
 				bom.effectiveafter AS eff_frm
 			FROM stockmaster INNER JOIN bom
 			ON stockmaster.stockid=bom.component
+			INNER JOIN locationusers ON locationusers.loccode=bom.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 			WHERE bom.parent >= '" . $_POST['FromCriteria'] . "'
 			AND bom.parent <= '" . $_POST['ToCriteria'] . "'
 			AND bom.effectiveto >= '" . date('Y-m-d') . "' AND bom.effectiveafter <= '" . date('Y-m-d') . "'

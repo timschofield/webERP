@@ -19,9 +19,10 @@ echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-$sql = "SELECT loccode,
+$sql = "SELECT locations.loccode,
     	       locationname
-    	FROM locations";
+    	FROM locations
+		INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
 $resultStkLocs = DB_query($sql,$db);
 
 echo '<p class="page_title_text">

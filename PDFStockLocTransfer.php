@@ -30,6 +30,24 @@ if (!isset($_GET['TransferNo'])){
           </div>';
     echo '</div>
           </form>';
+
+	echo '<form method="post" action="' . $RootPath . '/PDFShipLabel.php">';
+    echo '<div>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<input type="hidden" name="Type" value="Transfer" />';
+	echo '<table>
+			<tr>
+				<td>' . _('Transfer docket to reprint Shipping Labels') . '</td>
+				<td><input type="text" class="number" size="10" name="ORD" /></td>
+			</tr>
+		</table>';
+	echo '<br />
+          <div class="centre">
+			<input type="submit" name="Print" value="' . _('Print Shipping Labels') .'" />
+          </div>';
+    echo '</div>
+          </form>';
+
 	include ('includes/footer.inc');
 	exit;
 }

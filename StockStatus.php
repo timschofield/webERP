@@ -1,7 +1,7 @@
 <?php
 
 /* $Id$*/
-
+$PricesSecurity = 12;//don't show pricing info unless security token 12 available to user
 include('includes/session.inc');
 
 $Title = _('Stock Status');
@@ -68,9 +68,11 @@ $sql = "SELECT locstock.loccode,
 				locstock.quantity,
 				locstock.reorderlevel,
 				locstock.bin,
-				locations.managed
+				locations.managed,
+				canupd
 		FROM locstock INNER JOIN locations
 		ON locstock.loccode=locations.loccode
+		INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 		WHERE locstock.stockid = '" . $StockID . "'
 		ORDER BY locations.locationname";
 
@@ -240,9 +242,13 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 		} else {
 			$Available = $myrow['quantity'] - $DemandQty;
 		}
-
-		echo '<td>' . $myrow['locationname'] . '</td>
-			  <td><input type="text" name="BinLocation' . $myrow['loccode'] . '" value="' . $myrow['bin'] . '" maxlength="10" size="11" onchange="ReloadForm(UpdateBinLocations)"/></td>';
+		if ($myrow['canupd']==1) {
+			echo '<td>' . $myrow['locationname'] . '</td>
+				<td><input type="text" name="BinLocation' . $myrow['loccode'] . '" value="' . $myrow['bin'] . '" maxlength="10" size="11" onchange="ReloadForm(UpdateBinLocations)"/></td>';
+		} else {
+			echo '<td>' . $myrow['locationname'] . '</td>
+				<td> ' . $myrow['bin'] . '</td>';
+		}
 
 		printf('<td class="number">%s</td>
 				<td class="number">%s</td>

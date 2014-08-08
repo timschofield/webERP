@@ -53,7 +53,8 @@ if ($myrow['mbflag']=='K' OR $myrow['mbflag']=='A' OR $myrow['mbflag']=='D'){
 
 $result = DB_query("SELECT locationname
 						FROM locations
-						WHERE loccode='" . $_GET['Location'] . "'",
+						INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
+						WHERE locations.loccode='" . $_GET['Location'] . "'",
 						$db,
 						_('Could not retrieve the stock location of the item because'),
 						_('The SQL used to lookup the location was'));
@@ -64,7 +65,8 @@ $sql = "SELECT serialno,
 				quantity,
 				expirationdate
 			FROM stockserialitems
-			WHERE loccode='" . $_GET['Location'] . "'
+			INNER JOIN locationusers ON locationusers.loccode=stockserialitems.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
+			WHERE stockserialitems.loccode='" . $_GET['Location'] . "'
 			AND stockid = '" . $StockID . "'
 			AND quantity <>0";
 

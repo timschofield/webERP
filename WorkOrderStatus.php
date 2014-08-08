@@ -38,6 +38,7 @@ $WOResult = DB_query("SELECT workorders.loccode,
 						ON workorders.wo=woitems.wo
 						INNER JOIN stockmaster
 						ON woitems.stockid=stockmaster.stockid
+						INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 						WHERE woitems.stockid='" . $StockID . "'
 						AND woitems.wo ='" . $SelectedWO . "'",
 						$db,
@@ -160,7 +161,7 @@ echo '<table cellpadding="2" class="selection">
 					</tr>';
 			}
 		}
-	
+
 	echo '</table>';
 	include('includes/footer.inc');
 

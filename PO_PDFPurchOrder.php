@@ -108,6 +108,7 @@ if (isset($OrderNo) AND $OrderNo != '' AND $OrderNo > 0 AND $OrderNo != 'Preview
 					ON suppliers.currcode=currencies.currabrev
 				INNER JOIN www_users
 					ON purchorders.initiator=www_users.userid
+				INNER JOIN locationusers ON locationusers.loccode=purchorders.intostocklocation AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 				WHERE purchorders.orderno='" . $OrderNo . "'";
 	$result = DB_query($sql, $db, $ErrMsg);
 	if (DB_num_rows($result) == 0) {

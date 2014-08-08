@@ -1,7 +1,7 @@
 <?php
 
 /* $Id: PDFWOPrint.php 6146 $*/
-/* Currently this file only support one finished items produced work orders. Multiple items not supported yet */
+
 include('includes/session.inc');
 include('includes/SQL_CommonFunctions.inc');
 if (isset($_GET['WO'])) {
@@ -22,13 +22,70 @@ if (isset($_GET['StockID'])) {
 if (isset($_GET['PrintLabels'])) {
 	$PrintLabels = $_GET['PrintLabels'];
 } elseif (isset($_POST['PrintLabels'])){
+	$PrintLabels = $_POST['LabelItem'];
+} else {
+	unset($LabelItem);
+}
+
+if (isset($_GET['LabelItem'])) {
+	$LabelItem = $_GET['LabelItem'];
+} elseif (isset($_POST['LabelItem'])){
+	$LabelItem = $_POST['LabelItem'];
+} else {
+	unset($LabelItem);
+}
+if (isset($_GET['LabelDesc'])) {
+	$LabelDesc = $_GET['LabelDesc'];
+} elseif (isset($_POST['LabelDesc'])){
+	$LabelDesc = $_POST['LabelDesc'];
+} else {
+	unset($LabelDesc);
+}
+if (isset($_GET['LabelLot'])) {
+	$LabelLot = $_GET['LabelLot'];
+} elseif (isset($_POST['LabelLot'])){
+	$LabelLot = $_POST['LabelLot'];
+} else {
+	unset($LabelLot);
+}
+if (isset($_GET['NoOfBoxes'])) {
+	$NoOfBoxes = $_GET['NoOfBoxes'];
+} elseif (isset($_POST['NoOfBoxes'])){
+	$NoOfBoxes = $_POST['NoOfBoxes'];
+} else {
+	unset($NoOfBoxes);
+}
+if (isset($_GET['LabelsPerBox'])) {
+	$LabelsPerBox = $_GET['LabelsPerBox'];
+} elseif (isset($_POST['LabelsPerBox'])){
+	$LabelsPerBox = $_POST['LabelsPerBox'];
+} else {
+	unset($LabelsPerBox);
+}
+if (isset($_GET['QtyPerBox'])) {
+	$QtyPerBox = $_GET['QtyPerBox'];
+} elseif (isset($_POST['QtyPerBox'])){
+	$QtyPerBox = $_POST['QtyPerBox'];
+} else {
+	unset($QtyPerBox);
+}
+if (isset($_GET['LeftOverQty'])) {
+	$LeftOverQty = $_GET['LeftOverQty'];
+} elseif (isset($_POST['LeftOverQty'])){
+	$LeftOverQty = $_POST['LeftOverQty'];
+} else {
+	unset($LeftOverQty);
+}
+if (isset($_GET['PrintLabels'])) {
+	$PrintLabels = $_GET['PrintLabels'];
+} elseif (isset($_POST['PrintLabels'])){
 	$PrintLabels = $_POST['PrintLabels'];
 } else {
 	$PrintLabels="Yes";
 }
 
- 
-if (!isset($SelectedWO)) {
+
+if (!isset($_GET['WO']) AND !isset($_POST['WO'])) {
 	$Title = _('Select a Work Order');
 	include('includes/header.inc');
 	echo '<div class="centre"><br /><br /><br />';
@@ -52,7 +109,12 @@ if (!isset($SelectedWO)) {
 	echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a></div>';
 	exit;
 }
-
+if (isset($_GET['WO'])) {
+	$SelectedWO = $_GET['WO'];
+}
+elseif (isset($_POST['WO'])) {
+	$SelectedWO = $_POST['WO'];
+}
 $Title = _('Print Work Order Number') . ' ' . $SelectedWO;
 if (isset($_POST['PrintOrEmail']) AND isset($_POST['EmailTo'])) {
 	if ($_POST['PrintOrEmail'] == 'Email' AND !IsEmailAddress($_POST['EmailTo'])) {
@@ -105,6 +167,7 @@ if (isset($SelectedWO) AND $SelectedWO != '' AND $SelectedWO > 0 AND $SelectedWO
 						ON workorders.loccode=locations.loccode
 						INNER JOIN woitems
 						ON workorders.wo=woitems.wo
+						INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 						INNER JOIN stockmaster
 						ON woitems.stockid=stockmaster.stockid
 						WHERE woitems.stockid='" . $StockID . "'
@@ -179,8 +242,6 @@ else if ($SelectedWO == 'Preview') { // We are previewing the order
 	$WOHeader['deladd6'] = str_pad('', 15, 'x');
 	$WOHeader['stockid'] = str_pad('', 15, 'x');
 	$WOHeader['description'] = str_pad('', 50, 'x');
-	$WOHeader['wo'] = '99999999';
-	$WOHeader['loccode'] = str_pad('',5,'x');
 
 } // end of If we are previewing the order
 
@@ -266,7 +327,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 		}
 		
 	}
-	if ($SelectedWO == 'Preview' or $i > 0) {
+	if ($SelectedWO == 'Preview' or $i > -1) {
 		/*Yes there are line items to start the ball rolling with a page header */
 		include('includes/PDFWOPageHeader.inc');
 		$YPos = $Page_Height - $FormDesign->Data->y;
@@ -280,7 +341,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 				$WOLine[$i]['issued'] = 9999999.99;
 				$WOLine[$i]['decimalplaces'] = 2;
 			}
-			if ($WOLine[$i]['decimalplaces'] != NULL) {
+			if ($WOLine['decimalplaces'] != NULL) {
 				$DecimalPlaces = $WOLine[$i]['decimalplaces'];
 			}
 			else {
@@ -341,7 +402,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 											serialno,
 											stockserialitems.quantity as qty
 											FROM locstock LEFT OUTER JOIN stockserialitems
-											ON locstock.loccode=stockserialitems.loccode AND locstock.stockid = stockserialitems.stockid
+											ON locstock.loccode=stockserialitems.loccode AND locstock.stockid = stockserialitems.stockid 
 											WHERE locstock.loccode='".$WOHeader['loccode']."'
 											AND locstock.stockid='".$WOLine[$i]['item']."'",$db);
 				while ($ToIssue = DB_fetch_array($AvailQty)){
@@ -384,7 +445,6 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 			include('includes/PDFWOPageHeader.inc');
 		} //end if need a new page headed up
 	} /*end if there are order details to show on the order - or its a preview*/
-	$FooterPrintedInPage = 0; 
 	if($FooterPrintedInPage == 0){
 			$LeftOvers = $pdf->addText($FormDesign->SignedDate->x,$Page_Height-$FormDesign->SignedDate->y,$FormDesign->SignedDate->FontSize, _('Date : ') . '______________');
 			$LeftOvers = $pdf->addText($FormDesign->SignedBy->x,$Page_Height-$FormDesign->SignedBy->y,$FormDesign->SignedBy->FontSize, _('Signed for: ').'____________________________________');
@@ -509,7 +569,7 @@ else {
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
 	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	if (isset($ViewingOnly) and $ViewingOnly == 1) {
+	if ($ViewingOnly == 1) {
 		echo '<input type="hidden" name="ViewingOnly" value="1" />';
 	} //$ViewingOnly == 1
 	echo '<br /><br />';
@@ -523,7 +583,7 @@ else {
 	if (!isset($_POST['PrintOrEmail'])) {
 		$_POST['PrintOrEmail'] = 'Print';
 	}
-	if (isset($ViewingOnly) and $ViewingOnly != 0) {
+	if ($ViewingOnly != 0) {
 		echo '<option selected="selected" value="Print">' . _('Print') . '</option>';
 	}
 	else {
@@ -584,12 +644,9 @@ else {
 		echo '<form action="PDFFGLabel.php" method="post">';
 		echo '<div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-		if (isset($ViewOnly) and $ViewingOnly == 1) {
+		if ($ViewingOnly == 1) {
 			echo '<input type="hidden" name="ViewingOnly" value="1" />';
 		} //$ViewingOnly == 1
-		if(!isset($EmailTo)){
-			$EmailTo='';
-		}
 		echo '<br /><br />';
 		echo '<input type="hidden" name="WO" value="' . $SelectedWO . '" />';
 		echo '<input type="hidden" name="StockID" value="' . $StockID . '" />'; 
@@ -609,7 +666,7 @@ else {
 		if (!isset($_POST['PrintOrEmail'])) {
 			$_POST['PrintOrEmail'] = 'Print';
 	}
-		if (isset($ViewingOnly) and $ViewingOnly != 0) {
+		if ($ViewingOnly != 0) {
 			echo '<option selected="selected" value="Print">' . _('Print') . '</option>';
 		}
 		else {

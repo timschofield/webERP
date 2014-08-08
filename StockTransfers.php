@@ -497,7 +497,7 @@ echo '<tr>
 		<td>' . _('From Stock Location').':</td>
 		<td><select name="StockLocationFrom">';
 
-$sql = "SELECT loccode, locationname FROM locations";
+$sql = "SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1";
 $resultStkLocs = DB_query($sql,$db);
 while ($myrow=DB_fetch_array($resultStkLocs)){
 	if (isset($_SESSION['Transfer']->StockLocationFrom)){
