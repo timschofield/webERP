@@ -54,8 +54,6 @@ if (isset($DatabaseName)) {
         }
 }
 
-require_once ($PathPrefix .'includes/MiscFunctions.php');
-
 //DB wrapper functions to change only once for whole application
 
 function DB_query ($SQL,

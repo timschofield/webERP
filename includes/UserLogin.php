@@ -137,7 +137,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
 					if($_SESSION['SmtpSetting']==0){
 							mail($SysAdminEmail,$EmailSubject,$EmailText);
 
-					}else{
+					} else{
 							include('includes/htmlMimeMail.php');
 							$mail = new htmlMimeMail();
 							$mail->setSubject($EmailSubject);

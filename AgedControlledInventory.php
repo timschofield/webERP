@@ -5,7 +5,7 @@
 include('includes/session.inc');
 $PricesSecurity = 12;//don't show pricing info unless security token 12 available to user
 $Today =  time();
-$Title = _('Aged Controlled Inventory') . ' as-of ' . Date(($_SESSION['DefaultDateFormat']), strtotime($UpcomingDate . ' + 0 days'));
+$Title = _('Aged Controlled Inventory') . ' ' ._('as-of') .' ' . Date(($_SESSION['DefaultDateFormat']), strtotime($UpcomingDate . ' + 0 days'));
 include('includes/header.inc');
 
 echo '<p class="page_title_text">
@@ -13,22 +13,21 @@ echo '<p class="page_title_text">
 '" alt="" /><b>' . $Title. '</b>
 	</p>';
 
-$sql = "SELECT stockserialitems.stockid, 
-				stockmaster.description, 
-				stockserialitems.serialno, 
+$sql = "SELECT stockserialitems.stockid,
+				stockmaster.description,
+				stockserialitems.serialno,
 				stockserialitems.quantity,
 				stockmoves.trandate,
 				stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost AS cost,
 				decimalplaces
-			FROM stockserialitems 
-			LEFT JOIN stockserialmoves ON stockserialitems.serialno=stockserialmoves.serialno 
-			LEFT JOIN stockmoves ON stockserialmoves.stockmoveno=stockmoves.stkmoveno 
-			INNER JOIN stockmaster ON stockmaster.stockid = stockserialitems.stockid 
+			FROM stockserialitems
+			LEFT JOIN stockserialmoves ON stockserialitems.serialno=stockserialmoves.serialno
+			LEFT JOIN stockmoves ON stockserialmoves.stockmoveno=stockmoves.stkmoveno
+			INNER JOIN stockmaster ON stockmaster.stockid = stockserialitems.stockid
 			INNER JOIN locationusers ON locationusers.loccode=stockserialitems.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 			WHERE quantity > 0
 			GROUP BY stockid, serialno
-			ORDER BY trandate
-			";
+			ORDER BY trandate";
 
 $ErrMsg =  _('The stock held could not be retrieved because');
 $LocStockResult = DB_query($sql, $db, $ErrMsg);

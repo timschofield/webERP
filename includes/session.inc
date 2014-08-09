@@ -81,7 +81,6 @@ if (isset($_SESSION['DatabaseName'])){
 
 include($PathPrefix . 'includes/LanguageSetup.php');
 
-
 if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true */
 
 	include $PathPrefix . 'includes/UserLogin.php';	/* Login checking and setup */
@@ -100,7 +99,7 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 	$Theme = (isset($_SESSION['Theme'])) ? $_SESSION['Theme'] : 'gel';
 	switch ($rc) {
 	case  UL_OK; //user logged in successfully
-		include($PathPrefix . 'includes/LanguageSetup.php'); //set up the language
+		include($PathPrefix . 'includes/LanguageSetup.php'); //set up the language of the user
 		break;
 
 	case UL_SHOWLOGIN:
@@ -265,15 +264,15 @@ if (!isset($AllowAnyone)){
 		$Title = _('Security Permissions Problem');
 		include($PathPrefix . 'includes/header.inc');
 		echo '<tr>
-			<td class="menu_group_items">
-				<table width="100%" class="table_index">
-					<tr><td class="menu_group_item">';
-		echo '<b><font style="size:+1; text-align:center;">' . _('The security settings on your account do not permit you to access this function') . '</font></b>';
-
-		echo '</td>
-			</tr>
-			</table>
-			</td>
+				<td class="menu_group_items">
+					<table width="100%" class="table_index">
+						<tr>
+							<td class="menu_group_item">
+								<b><font style="size:+1; text-align:center;">' . _('The security settings on your account do not permit you to access this function') . '</font></b>
+							</td>
+						</tr>
+					</table>
+				</td>
 			</tr>';
 
 		include($PathPrefix . 'includes/footer.inc');
