@@ -387,6 +387,7 @@ if(isset($_GET['Trf_ID'])){
 			ON loctransfers.shiploc=locations.loccode
 			INNER JOIN locations as reclocations
 			ON loctransfers.recloc = reclocations.loccode
+			INNER JOIN locationusers ON locationusers.loccode=reclocations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
 			INNER JOIN stockmaster
 			ON loctransfers.stockid=stockmaster.stockid
 			WHERE reference ='" . $_GET['Trf_ID'] . "' ORDER BY loctransfers.stockid";
@@ -533,7 +534,7 @@ if (isset($_SESSION['Transfer'])){
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	$LocResult = DB_query("SELECT locationname, loccode FROM locations ORDER BY locationname",$db);
+	$LocResult = DB_query("SELECT locationname, locations.loccode FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1 ORDER BY locationname",$db);
 
 	echo '<table class="selection">';
 	echo '<tr>

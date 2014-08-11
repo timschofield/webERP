@@ -20,7 +20,8 @@ if (($_GET['Location'] == 'All') AND ($_GET['Customers'] == 'All')) {
 				stockmaster.description,
 				stockmaster.units,
 				stockmaster.decimalplaces
-			FROM 	salesorderdetails, salesorders, debtorsmaster,stockmaster
+			FROM 	salesorderdetails, salesorders INNER JOIN locationusers ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1, 
+			debtorsmaster,stockmaster
 			WHERE 	salesorderdetails.orderno = salesorders.orderno
 				AND salesorderdetails.stkcode = stockmaster.stockid
 				AND salesorders.debtorno = debtorsmaster.debtorno
@@ -35,7 +36,8 @@ if (($_GET['Location'] == 'All') AND ($_GET['Customers'] == 'All')) {
 					SUM(salesorderdetails.qtyinvoiced * salesorderdetails.unitprice ) AS valuesales,
 					stockmaster.description,
 					stockmaster.units
-				FROM 	salesorderdetails, salesorders, debtorsmaster,stockmaster
+				FROM 	salesorderdetails, salesorders INNER JOIN locationusers ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1, 
+				debtorsmaster,stockmaster
 				WHERE 	salesorderdetails.orderno = salesorders.orderno
 						AND salesorderdetails.stkcode = stockmaster.stockid
 						AND salesorders.debtorno = debtorsmaster.debtorno
@@ -53,7 +55,8 @@ if (($_GET['Location'] == 'All') AND ($_GET['Customers'] == 'All')) {
 						stockmaster.description,
 						stockmaster.units,
 						stockmaster.decimalplaces
-					FROM 	salesorderdetails, salesorders, debtorsmaster,stockmaster
+					FROM 	salesorderdetails, salesorders INNER JOIN locationusers ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1,
+					debtorsmaster,stockmaster
 					WHERE 	salesorderdetails.orderno = salesorders.orderno
 						AND salesorderdetails.stkcode = stockmaster.stockid
 						AND salesorders.debtorno = debtorsmaster.debtorno
@@ -70,7 +73,8 @@ if (($_GET['Location'] == 'All') AND ($_GET['Customers'] == 'All')) {
 						stockmaster.description,
 						stockmaster.units,
 						stockmaster.decimalplaces
-					FROM 	salesorderdetails, salesorders, debtorsmaster,stockmaster
+					FROM 	salesorderdetails, salesorders INNER JOIN locationusers ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1,
+					debtorsmaster,stockmaster
 					WHERE 	salesorderdetails.orderno = salesorders.orderno
 						AND salesorderdetails.stkcode = stockmaster.stockid
 						AND salesorders.debtorno = debtorsmaster.debtorno
@@ -90,6 +94,7 @@ if (DB_num_rows($result)>0){
 		//find the quantity onhand item
 		$sqloh = "SELECT sum(quantity)as qty
 					FROM locstock
+					INNER JOIN locationusers ON locationusers.loccode=locstock.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 					WHERE stockid='" . DB_escape_string($myrow['stkcode']) . "'";
 		$oh = DB_query($sqloh, $db);
 		$ohRow = DB_fetch_row($oh);

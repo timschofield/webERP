@@ -31,9 +31,11 @@ $sql = "SELECT locstock.loccode,
 				locations.locationname,
 				locstock.quantity,
 				locstock.reorderlevel,
-				stockmaster.decimalplaces
+				stockmaster.decimalplaces,
+				canupd
 		FROM locstock INNER JOIN locations
 			ON locstock.loccode=locations.loccode
+		INNER JOIN locationusers ON locationusers.loccode=locstock.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 			INNER JOIN stockmaster
 			ON locstock.stockid=stockmaster.stockid
 		WHERE locstock.stockid = '" . $StockID . "'
@@ -83,11 +85,15 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 	   $UpdateReorderLevel = DB_query($sql, $db);
 
 	}
-
+	if ($myrow['canupd']==1) {
+		$UpdateCode='<input title="'._('Input safety stock quantity').'" type="text" class="number" name="%s" maxlength="10" size="10" value="%s" />
+			<input type="hidden" name="Old_%s" value="%s" />';
+	} else {
+		$UpdateCode='<input type="hidden" name="%s">%s<input type="hidden" name="Old_%s" value="%s" />';
+	}
 	printf('<td>%s</td>
 			<td class="number">%s</td>
-			<td><input title="'._('Input safety stock quantity').'" type="text" class="number" name="%s" maxlength="10" size="10" value="%s" />
-			<input type="hidden" name="Old_%s" value="%s" /></td></tr>',
+			<td class="number">' . $UpdateCode . '</td></tr>',
 			$myrow['locationname'],
 			locale_number_format($myrow['quantity'],$myrow['decimalplaces']),
 			$myrow['loccode'],

@@ -48,6 +48,7 @@ $WOResult = DB_query("SELECT workorders.loccode,
 							closecomments
 						FROM workorders INNER JOIN locations
 						ON workorders.loccode=locations.loccode
+						INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
 						WHERE workorders.wo='" . $_POST['WO'] . "'",
 						$db,
 						$ErrMsg);

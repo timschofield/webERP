@@ -255,7 +255,7 @@ if(isset($_POST['Submit']) AND $InputError==False){
 			<th colspan="4"><input type="hidden" name="Trf_ID" value="' . $Trf_ID . '" /><h3>' .  _('Inventory Location Transfer Shipment Reference').' # '. $Trf_ID. '</h3></th>
 		</tr>';
 
-	$sql = "SELECT loccode, locationname FROM locations ORDER BY locationname";
+	$sql = "SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1 ORDER BY locationname";
 	$resultStkLocs = DB_query($sql,$db);
 
 	echo '<tr>

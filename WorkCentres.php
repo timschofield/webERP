@@ -118,6 +118,7 @@ or deletion of the records*/
 				workcentres.overheadperhour
 			FROM workcentres,
 				locations
+			INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 			WHERE workcentres.location = locations.loccode";
 
 	$result = DB_query($sql,$db);
@@ -177,6 +178,7 @@ if (isset($SelectedWC)) {
 					overheadrecoveryact,
 					overheadperhour
 			FROM workcentres
+			INNER JOIN locationusers ON locationusers.loccode=workcentres.location AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
 			WHERE code='" . $SelectedWC . "'";
 
 	$result = DB_query($sql, $db);
@@ -208,8 +210,9 @@ if (isset($SelectedWC)) {
 }
 
 $SQL = "SELECT locationname,
-				loccode
-		FROM locations";
+				locations.loccode
+		FROM locations
+		INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1";
 $result = DB_query($SQL,$db);
 
 if (!isset($_POST['Description'])) {

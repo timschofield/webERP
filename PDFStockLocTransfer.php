@@ -75,6 +75,8 @@ $sql = "SELECT loctransfers.reference,
 		INNER JOIN stockmaster ON loctransfers.stockid=stockmaster.stockid
 		INNER JOIN locations ON loctransfers.shiploc=locations.loccode
 		INNER JOIN locations AS locationsrec ON loctransfers.recloc = locationsrec.loccode
+		INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
+		INNER JOIN locationusers as locationusersrec ON locationusersrec.loccode=locationsrec.loccode AND locationusersrec.userid='" .  $_SESSION['UserID'] . "' AND locationusersrec.canview=1
 		WHERE loctransfers.reference='" . $_GET['TransferNo'] . "'";
 
 $result = DB_query($sql,$db, $ErrMsg, $DbgMsg);

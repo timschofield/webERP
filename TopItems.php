@@ -22,9 +22,10 @@ if (!(isset($_POST['Search']))) {
 			<td style="width:150px">' . _('Select Location') . '  </td>
 			<td>:</td>
 			<td><select name="Location">';
-	$sql = "SELECT loccode,
+	$sql = "SELECT locations.loccode,
 					locationname
-			FROM locations";
+			FROM locations
+			INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
 	$result = DB_query($sql, $db);
 	echo '<option value="All">' . _('All') . '</option>';
 	while ($myrow = DB_fetch_array($result)) {
@@ -127,8 +128,10 @@ if (!(isset($_POST['Search']))) {
 					stockmaster.mbflag,
 					currencies.rate,
 					debtorsmaster.currcode,
+					fromstkloc,
 					stockmaster.decimalplaces
-			FROM 	salesorderdetails, salesorders, debtorsmaster,stockmaster, currencies
+			FROM 	salesorderdetails, salesorders INNER JOIN locationusers ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1, 
+			debtorsmaster,stockmaster, currencies
 			WHERE 	salesorderdetails.orderno = salesorders.orderno
 					AND salesorderdetails.stkcode = stockmaster.stockid
 					AND salesorders.debtorno = debtorsmaster.debtorno
@@ -191,12 +194,14 @@ if (!(isset($_POST['Search']))) {
 			case 'B':
 				$QOHResult = DB_query("SELECT sum(quantity)
 								FROM locstock
+								INNER JOIN locationusers ON locationusers.loccode=locstock.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 								WHERE stockid = '" . DB_escape_string($myrow['stkcode']) . "'", $db);
 				$QOHRow = DB_fetch_row($QOHResult);
 				$QOH = $QOHRow[0];
 				$QOOSQL="SELECT SUM(purchorderdetails.quantityord -purchorderdetails.quantityrecd) AS QtyOnOrder
 							FROM purchorders INNER JOIN purchorderdetails
 							ON purchorders.orderno=purchorderdetails.orderno
+							INNER JOIN locationusers ON locationusers.loccode=purchorders.intostocklocation AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 							WHERE purchorderdetails.itemcode='" . DB_escape_string($myrow['stkcode']) . "'
 							AND purchorderdetails.completed =0
 							AND purchorders.status<>'Cancelled'
@@ -213,6 +218,7 @@ if (!(isset($_POST['Search']))) {
 				$sql = "SELECT SUM(woitems.qtyreqd-woitems.qtyrecd) AS qtywo
 						FROM woitems INNER JOIN workorders
 						ON woitems.wo=workorders.wo
+						INNER JOIN locationusers ON locationusers.loccode=workorders.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 						WHERE workorders.closed=0
 						AND woitems.stockid='" . DB_escape_string($myrow['stkcode']) . "'";
 				$ErrMsg = _('The quantity on work orders for this product cannot be retrieved because');

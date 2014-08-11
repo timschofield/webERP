@@ -104,7 +104,8 @@ if ($_GET['Action'] == 'Enter'){
 		echo '<table cellpadding="2" class="selection">';
 		echo '<tr>
 				<th colspan="3">' ._('Stock Check Counts at Location') . ':<select name="Location">';
-		$sql = 'SELECT loccode, locationname FROM locations';
+		$sql = "SELECT locations.loccode, locationname FROM locations
+				INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1";
 		$result = DB_query($sql,$db);
 
 		while ($myrow=DB_fetch_array($result)){
@@ -202,7 +203,9 @@ if ($_GET['Action'] == 'Enter'){
 	}
 
 	//START OF action=VIEW
-	$SQL = "select * from stockcounts";
+	$SQL = "select stockcounts.*,
+					canupd from stockcounts
+					INNER JOIN locationusers ON locationusers.loccode=stockcounts.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
 	$result = DB_query($SQL, $db);
 	echo '<input type="hidden" name="Action" value="View" />';
 	echo '<table cellpadding="2" class="selection">';
@@ -219,7 +222,11 @@ if ($_GET['Action'] == 'Enter'){
 			<td>'.$myrow['qtycounted'].'</td>
 			<td>'.$myrow['reference'].'</td>
 			<td>';
-        echo '<input type="checkbox" name="DEL[' . $myrow['id'] . ']" maxlength="20" size="20" /></td></tr>';
+		if ($myrow['canupd']==1) {	
+			echo '<input type="checkbox" name="DEL[' . $myrow['id'] . ']" maxlength="20" size="20" />';
+			
+		}
+		echo '</td></tr>';
 
 	}
 	echo '</table><br /><div class="centre"><input type="submit" name="SubmitChanges" value="' . _('Save Changes') . '" /></div>';

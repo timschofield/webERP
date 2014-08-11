@@ -57,6 +57,7 @@ if (isset($_GET['ID'])) {
 					telephone,
 					requiredbydate
 				FROM tenders
+				INNER JOIN locationusers ON locationusers.loccode=tenders.location AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 				WHERE tenderid='" . $_GET['ID'] . "'";
 	$result=DB_query($sql, $db);
 	$myrow=DB_fetch_array($result);
@@ -126,6 +127,7 @@ if (isset($_GET['Edit'])) {
 					address6,
 					telephone
 				FROM tenders
+				INNER JOIN locationusers ON locationusers.loccode=tenders.location AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
 				WHERE closed=0
 					AND requiredbydate > '" . Date('Y-m-d') . "'";
 	$result=DB_query($sql, $db);
@@ -268,7 +270,8 @@ if (!isset($_SESSION['tender'.$identifier])
 						tel,
 						contact
 					FROM locations
-					WHERE loccode='" . $_POST['StkLocation'] . "'";
+					INNER JOIN locationusers ON locationusers.loccode=.locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
+					WHERE locations.loccode='" . $_POST['StkLocation'] . "'";
 
 		$LocnAddrResult = DB_query($sql,$db);
 		if (DB_num_rows($LocnAddrResult)==1){
@@ -310,6 +313,7 @@ if (!isset($_SESSION['tender'.$identifier])
 						tel,
 						contact
 					FROM locations
+					INNER JOIN locationusers ON locationusers.loccode=.locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
 					WHERE loccode='" . $_POST['StkLocation'] . "'";
 
 		$LocnAddrResult = DB_query($sql,$db);
@@ -339,9 +343,10 @@ if (!isset($_SESSION['tender'.$identifier])
 			<td>' . _('Warehouse') . ':</td>
 			<td><select name="StkLocation" onchange="ReloadForm(form1.LookupDeliveryAddress)">';
 
-	$sql = "SELECT loccode,
+	$sql = "SELECT locations.loccode,
 					locationname
-				FROM locations";
+				FROM locations
+				INNER JOIN locationusers ON locationusers.loccode=.locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1";
 	$LocnResult = DB_query($sql,$db);
 
 	while ($LocnRow=DB_fetch_array($LocnResult)){
