@@ -20,7 +20,7 @@ echo '<table class="selection">
 			<td>' . _('Select recurring order templates for delivery from:') . ' </td>
 			<td>' . '<select name="StockLocation">';
 
-$sql = "SELECT loccode, locationname FROM locations";
+$sql = "SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
 
 $resultStkLocs = DB_query($sql,$db);
 

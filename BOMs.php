@@ -93,6 +93,7 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level, $db) {
 				INNER JOIN locstock
 				ON bom.loccode=locstock.loccode
 				AND bom.component = locstock.stockid
+				INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
 				WHERE bom.component='".$Component."'
 				AND bom.parent = '".$Parent."'";
 
@@ -448,7 +449,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 	$sql = "SELECT bom.parent,
 				stockmaster.description,
 				stockmaster.mbflag
-			FROM bom, stockmaster
+			FROM bom INNER JOIN locationusers ON locationusers.loccode=bom.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1, stockmaster
 			WHERE bom.component='".$SelectedParent."'
 			AND stockmaster.stockid=bom.parent
 			AND stockmaster.mbflag='M'";
@@ -498,6 +499,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 				stockmaster.mbflag
 			FROM bom INNER JOIN stockmaster
 			ON bom.parent=stockmaster.stockid
+			INNER JOIN locationusers ON locationusers.loccode=bom.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
 			WHERE bom.component='".$SelectedParent."'
 			AND stockmaster.mbflag='K'";
 
@@ -602,13 +604,14 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		//editing a selected component from the link to the line item
 
 			$sql = "SELECT sequence,
-						loccode,
+						bom.loccode,
 						effectiveafter,
 						effectiveto,
 						workcentreadded,
 						quantity,
 						autoissue
 					FROM bom
+					INNER JOIN locationusers ON locationusers.loccode=bom.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
 					WHERE parent='".$SelectedParent."'
 					AND component='".$SelectedComponent."'";
 
@@ -699,7 +702,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 				<td><select tabindex="2" name="LocCode">';
 
 		DB_free_result($result);
-		$sql = "SELECT locationname, loccode FROM locations";
+		$sql = "SELECT locationname, locations.loccode FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1";
 		$result = DB_query($sql,$db);
 
 		while ($myrow = DB_fetch_array($result)) {
@@ -719,7 +722,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			<tr>
 				<td>' . _('Work Centre Added') . ': </td><td>';
 
-		$sql = "SELECT code, description FROM workcentres";
+		$sql = "SELECT code, description FROM workcentres INNER JOIN locationusers ON locationusers.loccode=workcentres.location AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1";
 		$result = DB_query($sql,$db);
 
 		if (DB_num_rows($result)==0){

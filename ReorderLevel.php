@@ -42,7 +42,7 @@ if (isset($_POST['PrintPDF'])) {
 					stockmaster.decimalplaces,
 					stockmaster.serialised,
 					stockmaster.controlled
-				FROM locstock,
+				FROM locstock INNER JOIN locationusers ON locationusers.loccode=locstock.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1,
 					stockmaster
 				LEFT JOIN stockcategory
 				ON stockmaster.categoryid=stockcategory.categoryid,
@@ -126,7 +126,7 @@ if (isset($_POST['PrintPDF'])) {
 								locstock.loccode,
 								locstock.reorderlevel,
 								stockmaster.decimalplaces
-						 FROM locstock, stockmaster
+						 FROM locstock INNER JOIN locationusers ON locationusers.loccode=locstock.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1, stockmaster
 						 WHERE locstock.quantity > 0
 						 AND locstock.quantity > reorderlevel
 						 AND locstock.stockid = stockmaster.stockid
@@ -197,9 +197,9 @@ if (isset($_POST['PrintPDF'])) {
 	echo '<br /><form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	$sql = "SELECT loccode,
+	$sql = "SELECT locations.loccode,
 			locationname
-		FROM locations";
+		FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
 	$resultStkLocs = DB_query($sql,$db);
 	echo '<table class="selection">
 			<tr>

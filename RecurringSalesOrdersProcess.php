@@ -60,7 +60,7 @@ $sql = "SELECT recurringsalesorders.recurrorderno,
 			custbranch.taxgroupid,
 			locations.contact,
 			locations.email
-		FROM recurringsalesorders,
+		FROM recurringsalesorders INNER JOIN locationusers ON locationusers.loccode=recurringsalesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1,
 			debtorsmaster,
 			custbranch,
 			salestypes,
