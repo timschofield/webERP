@@ -1,5 +1,6 @@
 webERP Change Log
 
+12/08/14 RChacon: In SupplierInquiry.php: makes the field systypes.typename be translatable.
 12/08/14 RChacon: In Z_poRebuildDefault.php: extends title, improves comments, sets file to pot, updates $FilesToInclude, renames old pot file to bak extension. Minor improvements.
 08/08/14 Andrew Galuski: Add SQL and maintenance screens for Location based security. added new report aged controlled stock.  additional scripts to follow as time allows
 2/1/14 Tim: Change columns around on SelectWorkOrder.php

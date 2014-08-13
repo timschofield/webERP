@@ -207,8 +207,8 @@ if (DB_num_rows($TransResult) == 0){
 echo '<table width="90%" class="selection">';
 $TableHeader = '<tr>
 					<th class="ascending">&bull; ' . _('Type') . '</th>
-					<th class="ascending">&bull; ' . _('Trans') . '</th>
-					<th class="ascending">&bull; ' . _('Supplier Ref') . '</th>
+					<th class="ascending">&bull; ' . _('Number') . '</th>
+					<th class="ascending">&bull; ' . _('Reference') . '</th>
 					<th class="ascending">&bull; ' . _('Date') . '</th>
 					<th class="ascending">&bull; ' . _('Total') . '</th>
 					<th class="ascending">&bull; ' . _('Allocated') . '</th>
@@ -249,7 +249,7 @@ while ($myrow=DB_fetch_array($TransResult)) {
 
 			/*The trans is settled so don't show option to hold */
 
-				echo '<td>' . $myrow['typename'] . '</td>
+				echo '<td>' . _($myrow['typename']) . '</td>
 					<td class="number">' . $myrow['transno'] . '</td>
 					<td>' . $myrow['suppreference'] . '</td>
 					<td>' . ConvertSQLDate($myrow['trandate']) . '</td>
@@ -261,7 +261,7 @@ while ($myrow=DB_fetch_array($TransResult)) {
 					<td><a target="_blank" href="' . $RootPath . '/GLTransInquiry.php?TypeID=' . $myrow['type'] . '&amp;TransNo=' . $myrow['transno'] .'">' . _('View GL Postings') . '</a></td>
 					</tr>';
 			} else {
-				echo '<td>' . $myrow['typename'] . '</td>
+				echo '<td>' . _($myrow['typename']) . '</td>
 					<td class="number">' . $myrow['transno'] . '</td>
 					<td>' . $myrow['suppreference'] . '</td>
 					<td>' . ConvertSQLDate($myrow['trandate']) . '</td>
@@ -308,7 +308,7 @@ while ($myrow=DB_fetch_array($TransResult)) {
 						<td>&nbsp;</td>
 						<td>&nbsp;</td>
 						</tr>',
-						$myrow['typename'],
+						_($myrow['typename']),
 						$myrow['transno'],
 						$myrow['suppreference'],
 						ConvertSQLDate($myrow['trandate']),
@@ -318,7 +318,7 @@ while ($myrow=DB_fetch_array($TransResult)) {
 						$myrow['transtext']);
 
 			} else {
-				echo '	<td>' . $myrow['typename'] . '</td>
+				echo '	<td>' . _($myrow['typename']) . '</td>
 						<td class="number">' . $myrow['transno'] . '</td>
 						<td>' . $myrow['suppreference'] . '</td>
 						<td>' . ConvertSQLDate($myrow['trandate']) . '</td>
@@ -349,7 +349,7 @@ while ($myrow=DB_fetch_array($TransResult)) {
 					<td><a href="%s/SupplierAllocations.php?AllocTrans=%s">' . _('View Allocations') . '</a></td>
 					<td><a target="_blank" href="%s/GLTransInquiry.php?TypeID=%s&amp;TransNo=%s">' . _('View GL Postings') . '</a></td>
 					</tr>',
-					$myrow['typename'],
+					_($myrow['typename']),
 					$myrow['transno'],
 					$myrow['suppreference'],
 					ConvertSQLDate($myrow['trandate']),
@@ -375,7 +375,7 @@ while ($myrow=DB_fetch_array($TransResult)) {
 					<td><a href="%s/SupplierAllocations.php?AllocTrans=%s">' . _('View Allocations') . '</a></td>
 					<td>&nbsp;</td>
 					</tr>',
-					$myrow['typename'],
+					_($myrow['typename']),
 					$myrow['transno'],
 					$myrow['suppreference'],
 					ConvertSQLDate($myrow['trandate']),
