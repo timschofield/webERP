@@ -67,7 +67,7 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 			<td><select name="Location">
 				<option selected="selected" value="All">' . _('All Locations') . '</option>';
 
-	$result= DB_query("SELECT loccode, locationname FROM locations",$db);
+	$result= DB_query("SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1",$db);
 	while ($myrow=DB_fetch_array($result)){
 		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 	}
@@ -111,9 +111,10 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 			FROM salesorderdetails INNER JOIN stockmaster
 			ON salesorderdetails.stkcode=stockmaster.stockid
 			INNER JOIN salesorders ON salesorderdetails.orderno=salesorders.orderno
+			INNER JOIN locationusers ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 			WHERE salesorders.deliverydate >='" . FormatDateForSQL($_POST['FromDate']) . "'
 			AND salesorders.deliverydate <='" . FormatDateForSQL($_POST['ToDate']) . "'
-			AND (TO_DAYS(salesorderdetails.actualdispatchdate) - TO_DAYS(salesorders.deliverydate)) <'" . filter_number_format($_POST['DaysAcceptable']) ."'";
+			AND (TO_DAYS(salesorderdetails.actualdispatchdate) - TO_DAYS(salesorders.deliverydate))  >='" . filter_number_format($_POST['DaysAcceptable']) . "'";
 
 } elseif ($_POST['CategoryID']!='All' AND $_POST['Location']=='All') {
 				$sql= "SELECT salesorders.orderno,
@@ -129,11 +130,12 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 						FROM salesorderdetails INNER JOIN stockmaster
 						ON salesorderdetails.stkcode=stockmaster.stockid
 						INNER JOIN salesorders ON salesorderdetails.orderno=salesorders.orderno
+						INNER JOIN locationusers ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 						WHERE salesorders.deliverydate >='" . FormatDateForSQL($_POST['FromDate']) . "'
 						AND salesorders.deliverydate <='" . FormatDateForSQL($_POST['ToDate']) . "'
 						AND stockmaster.categoryid='" . $_POST['CategoryID'] ."'
 						AND (TO_DAYS(salesorderdetails.actualdispatchdate)
-							- TO_DAYS(salesorders.deliverydate)) <'" . filter_number_format($_POST['DaysAcceptable'])."'";
+							- TO_DAYS(salesorders.deliverydate))  >='" . filter_number_format($_POST['DaysAcceptable']) . "'";
 
 } elseif ($_POST['CategoryID']=='All' AND $_POST['Location']!='All') {
 
@@ -150,11 +152,12 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 						FROM salesorderdetails INNER JOIN stockmaster
 						ON salesorderdetails.stkcode=stockmaster.stockid
 						INNER JOIN salesorders ON salesorderdetails.orderno=salesorders.orderno
+						INNER JOIN locationusers ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 						WHERE salesorders.deliverydate >='" . FormatDateForSQL($_POST['FromDate']) . "'
 						AND salesorders.deliverydate <='" . FormatDateForSQL($_POST['ToDate']) . "'
 						AND salesorders.fromstkloc='" . $_POST['Location'] . "'
 						AND (TO_DAYS(salesorderdetails.actualdispatchdate)
-								- TO_DAYS(salesorders.deliverydate)) <'" . filter_number_format($_POST['DaysAcceptable']) . "'";
+								- TO_DAYS(salesorders.deliverydate))  >='" . filter_number_format($_POST['DaysAcceptable']) . "'";
 
 } elseif ($_POST['CategoryID']!='All' AND $_POST['Location']!='All'){
 
@@ -171,6 +174,7 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 						FROM salesorderdetails INNER JOIN stockmaster
 						ON salesorderdetails.stkcode=stockmaster.stockid
 						INNER JOIN salesorders ON salesorderdetails.orderno=salesorders.orderno
+						INNER JOIN locationusers ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 						WHERE salesorders.deliverydate >='" . FormatDateForSQL($_POST['FromDate']) . "'
 						AND salesorders.deliverydate <='" . FormatDateForSQL($_POST['ToDate']) . "'
 						AND stockmaster.categoryid='" . $_POST['CategoryID'] ."'
@@ -248,7 +252,9 @@ $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,_('Total number 
 if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 	$sql = "SELECT COUNT(salesorderdetails.orderno)
 			FROM salesorderdetails INNER JOIN debtortrans
-				ON salesorderdetails.orderno=debtortrans.order_
+				ON salesorderdetails.orderno=debtortrans.order_ INNER JOIN salesorders
+			ON salesorderdetails.orderno = salesorders.orderno INNER JOIN locationusers
+			ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 			WHERE debtortrans.trandate>='" . FormatDateForSQL($_POST['FromDate']) . "'
 			AND debtortrans.trandate <='" . FormatDateForSQL($_POST['ToDate']) . "'";
 
@@ -256,7 +262,9 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 	$sql = "SELECT COUNT(salesorderdetails.orderno)
 		FROM salesorderdetails INNER JOIN debtortrans
 			ON salesorderdetails.orderno=debtortrans.order_ INNER JOIN stockmaster
-			ON salesorderdetails.stkcode=stockmaster.stockid
+			ON salesorderdetails.stkcode=stockmaster.stockid INNER JOIN salesorders
+			ON salesorderdetails.orderno = salesorders.orderno INNER JOIN locationusers
+			ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 		WHERE debtortrans.trandate>='" . FormatDateForSQL($_POST['FromDate']) . "'
 		AND debtortrans.trandate <='" . FormatDateForSQL($_POST['ToDate']) . "'
 		AND stockmaster.categoryid='" . $_POST['CategoryID'] . "'";
@@ -266,7 +274,8 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 	$sql = "SELECT COUNT(salesorderdetails.orderno)
 		FROM salesorderdetails INNER JOIN debtortrans
 			ON salesorderdetails.orderno=debtortrans.order_ INNER JOIN salesorders
-			ON salesorderdetails.orderno = salesorders.orderno
+			ON salesorderdetails.orderno = salesorders.orderno INNER JOIN locationusers
+			ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 		WHERE debtortrans.trandate>='". FormatDateForSQL($_POST['FromDate']) . "'
 		AND debtortrans.trandate <='" . FormatDateForSQL($_POST['ToDate']) . "'
 		AND salesorders.fromstkloc='" . $_POST['Location'] . "'";
@@ -276,6 +285,7 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 	$sql = "SELECT COUNT(salesorderdetails.orderno)
 		FROM salesorderdetails INNER JOIN debtortrans ON salesorderdetails.orderno=debtortrans.order_
 			INNER JOIN salesorders ON salesorderdetails.orderno = salesorders.orderno
+			INNER JOIN locationusers ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 			INNER JOIN stockmaster ON salesorderdetails.stkcode = stockmaster.stockid
 		WHERE salesorders.fromstkloc ='" . $_POST['Location'] . "'
 		AND categoryid='" . $_POST['CategoryID'] . "'

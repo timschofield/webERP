@@ -83,6 +83,7 @@ if (!isset($_GET['OrderNumber']) AND !isset($_SESSION['ProcessingOrder'])) {
 						ON debtorsmaster.currcode = currencies.currabrev
 						INNER JOIN locations
 						ON locations.loccode=salesorders.fromstkloc
+						INNER JOIN locationusers ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
 						WHERE salesorders.orderno = '" . $_GET['OrderNumber']."'";
 
 	if ($_SESSION['SalesmanLogin'] != '') {

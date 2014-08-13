@@ -46,9 +46,9 @@ if (!isset($LocationFrom) OR !isset($ShipperID)) {
 				<td>' . _('Select the warehouse') . ' (' . _('ship from location') . ')</td>
 				<td><select name="LocationFrom">';
 
-	$sql = "SELECT loccode,
+	$sql = "SELECT locations.loccode,
 					locationname
-			FROM locations";
+			FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1";
 	$LocationResults = DB_query($sql,$db);
 
 	while ($myrow = DB_fetch_array($LocationResults)){

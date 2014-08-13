@@ -49,7 +49,7 @@ if (!isset($_POST['FromDate'])){
 				</select></td>
 		</tr>';
 
-	$sql = "SELECT loccode, locationname FROM locations";
+	$sql = "SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
 	$resultStkLocs = DB_query($sql, $db);
 
 	echo '<tr>
@@ -105,6 +105,7 @@ if ($_POST['StockLocation']=='All') {
 			ON stockmoves.stockid=stockmaster.stockid
 			LEFT JOIN locations
 			ON stockmoves.loccode=locations.loccode
+			INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 			WHERE type='" . $_POST['TransType'] . "'
 			AND date_format(trandate, '%Y-%m-%d')>='".FormatDateForSQL($_POST['FromDate'])."'
 			AND date_format(trandate, '%Y-%m-%d')<='".FormatDateForSQL($_POST['ToDate'])."'";
@@ -124,6 +125,7 @@ if ($_POST['StockLocation']=='All') {
 			ON stockmoves.stockid=stockmaster.stockid
 			LEFT JOIN locations
 			ON stockmoves.loccode=locations.loccode
+			INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 			WHERE type='" . $_POST['TransType'] . "'
 			AND date_format(trandate, '%Y-%m-%d')>='".FormatDateForSQL($_POST['FromDate'])."'
 			AND date_format(trandate, '%Y-%m-%d')<='".FormatDateForSQL($_POST['ToDate'])."'

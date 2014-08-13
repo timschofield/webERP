@@ -881,7 +881,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					<td>' . _('Goods Returned to Location') . ' :</td>
 					<td><select name="Location">';
 
-			$SQL="SELECT loccode, locationname FROM locations";
+			$SQL="SELECT locations.loccode, locationname FROM locations $SQL="SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1";
 			$Result = DB_query($SQL,$db);
 
 			if (!isset($_POST['Location'])){

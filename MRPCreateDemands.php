@@ -61,6 +61,7 @@ if (isset($_POST['submit'])) {
 				  SUM(salesorderdetails.quantity * salesorderdetails.unitprice ) AS totextqty
 			FROM salesorders INNER JOIN salesorderdetails
 				 ON salesorders.orderno = salesorderdetails.orderno
+			INNER JOIN locationusers ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
 			INNER JOIN stockmaster
 				 ON salesorderdetails.stkcode = stockmaster.stockid
 			WHERE orddate >='" . FormatDateForSQL($_POST['FromDate']) ."'
@@ -224,9 +225,9 @@ echo '<tr><td>' . _('Inventory Location') . ':</td>
 		<td><select name="Location">';
 echo '<option selected="selected" value="All">' . _('All Locations') . '</option>';
 
-$result= DB_query("SELECT loccode,
+$result= DB_query("SELECT locations.loccode,
 						   locationname
-					FROM locations",$db);
+					FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1",$db);
 while ($myrow=DB_fetch_array($result)){
 	echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 }

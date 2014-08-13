@@ -217,8 +217,9 @@ if (!isset($_POST['Location'])) {
 			<tr>
 				<td>' . _('Choose a location to issue requests from') . '</td>
 				<td><select name="Location">';
-	$sql = "SELECT loccode, locationname
+	$sql = "SELECT locations.loccode, locationname
 			FROM locations
+			INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
 			WHERE internalrequest = 1
 			ORDER BY locationname";
 	$resultStkLocs = DB_query($sql,$db);

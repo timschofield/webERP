@@ -133,6 +133,7 @@ if (isset($_GET['ModifyOrderNumber'])
 						ON locations.loccode=salesorders.fromstkloc
 						INNER JOIN currencies
 						ON debtorsmaster.currcode=currencies.currabrev
+						INNER JOIN locationusers ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
 						WHERE salesorders.orderno = '" . $_GET['ModifyOrderNumber'] . "'";
 
 	$ErrMsg =  _('The order cannot be retrieved because');

@@ -1008,8 +1008,8 @@ if ($_SESSION['Items'.$identifier]->Location=='' OR !isset($_SESSION['Items'.$id
 
 $ErrMsg = _('The stock locations could not be retrieved');
 $DbgMsg = _('SQL used to retrieve the stock locations was') . ':';
-$StkLocsResult = DB_query("SELECT locationname,loccode
-							FROM locations",$db, $ErrMsg, $DbgMsg);
+$StkLocsResult = DB_query("SELECT locationname,locations.loccode
+							FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1",$db, $ErrMsg, $DbgMsg);
 
 while ($myrow=DB_fetch_array($StkLocsResult)){
 	if ($_SESSION['Items'.$identifier]->Location==$myrow['loccode']){

@@ -152,7 +152,8 @@ if (isset($_POST['PrintPDF'])){
 						suppliers.suppname,
 						purchdata.leadtime/30 AS monthsleadtime,
 						SUM(locstock.quantity) AS qoh
-					FROM locstock,
+					FROM locstock 
+					INNER JOIN locationusers ON locationusers.loccode=locstock.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1,
 						stockmaster,
 						purchdata,
 						suppliers
@@ -179,7 +180,8 @@ if (isset($_POST['PrintPDF'])){
 						locstock.stockid,
 						purchdata.leadtime/30 AS monthsleadtime,
 						locstock.quantity AS qoh
-					FROM locstock,
+					FROM locstock 
+					INNER JOIN locationusers ON locationusers.loccode=locstock.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1,
 						stockmaster,
 						purchdata,
 						suppliers
@@ -246,6 +248,7 @@ if (isset($_POST['PrintPDF'])){
 						SUM(CASE WHEN prd='" . $Period_3 . "' THEN -qty ELSE 0 END) AS prd3,
 						SUM(CASE WHEN prd='" . $Period_4 . "' THEN -qty ELSE 0 END) AS prd4
 						FROM stockmoves
+						INNER JOIN locationusers ON locationusers.loccode=stockmoves.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 						WHERE stockid='" . $InventoryPlan['stockid'] . "'
 						AND (type=10 OR type=11)
 						AND stockmoves.hidemovt=0";
@@ -257,6 +260,7 @@ if (isset($_POST['PrintPDF'])){
 						SUM(CASE WHEN prd='" . $Period_3 . "' THEN -qty ELSE 0 END) AS prd3,
 						SUM(CASE WHEN prd='" . $Period_4 . "' THEN -qty ELSE 0 END) AS prd4
 						FROM stockmoves
+						INNER JOIN locationusers ON locationusers.loccode=stockmoves.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 						WHERE stockid='" . $InventoryPlan['stockid'] . "'
 						AND stockmoves.loccode ='" . $_POST['Location'] . "'
 						AND (stockmoves.type=10 OR stockmoves.type=11)
@@ -283,6 +287,7 @@ if (isset($_POST['PrintPDF'])){
 			$SQL = "SELECT SUM(salesorderdetails.quantity - salesorderdetails.qtyinvoiced) AS qtydemand
 					FROM salesorderdetails INNER JOIN salesorders
 					ON salesorderdetails.orderno=salesorders.orderno
+					INNER JOIN locationusers ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 					WHERE salesorderdetails.stkcode = '" . $InventoryPlan['stockid'] . "'
 					AND salesorderdetails.completed = 0
 					AND salesorders.quotation=0";
@@ -290,6 +295,7 @@ if (isset($_POST['PrintPDF'])){
 			$SQL = "SELECT SUM(salesorderdetails.quantity - salesorderdetails.qtyinvoiced) AS qtydemand
 					FROM salesorderdetails INNER JOIN salesorders
 					ON salesorderdetails.orderno=salesorders.orderno
+					INNER JOIN locationusers ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 					WHERE salesorders.fromstkloc ='" . $_POST['Location'] . "'
 					AND salesorderdetails.stkcode = '" . $InventoryPlan['stockid'] . "'
 					AND salesorderdetails.completed = 0
@@ -321,6 +327,7 @@ if (isset($_POST['PrintPDF'])){
 					ON stockmaster.stockid=bom.parent
 					INNER JOIN salesorders
 					ON salesorders.orderno = salesorderdetails.orderno
+					INNER JOIN locationusers ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 					WHERE  salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0
 					AND bom.component='" . $InventoryPlan['stockid'] . "'
 					AND stockmaster.mbflag='A'
@@ -334,6 +341,7 @@ if (isset($_POST['PrintPDF'])){
 					ON stockmaster.stockid=bom.parent
 					INNER JOIN salesorders
 					ON salesorders.orderno = salesorderdetails.orderno
+					INNER JOIN locationusers ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 					WHERE salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0
 					AND bom.component='" . $InventoryPlan['stockid'] . "'
 					AND salesorders.fromstkloc ='" . $_POST['Location'] . "'
@@ -361,6 +369,7 @@ if (isset($_POST['PrintPDF'])){
 				FROM purchorderdetails
 				LEFT JOIN purchorders
 				ON purchorderdetails.orderno = purchorders.orderno
+				INNER JOIN locationusers ON locationusers.loccode=purchorders.intostocklocation AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 				LEFT JOIN purchdata
 				ON purchorders.supplierno=purchdata.supplierno
 				AND purchorderdetails.itemcode=purchdata.stockid
@@ -375,6 +384,7 @@ if (isset($_POST['PrintPDF'])){
 				FROM purchorderdetails
 				LEFT JOIN purchorders
 				ON purchorderdetails.orderno = purchorders.orderno
+				INNER JOIN locationusers ON locationusers.loccode=purchorders.intostocklocation AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 				LEFT JOIN purchdata
 				ON purchorders.supplierno=purchdata.supplierno
 				AND purchorderdetails.itemcode=purchdata.stockid
@@ -475,7 +485,8 @@ if (isset($_POST['PrintPDF'])){
 
 	echo '<tr><td>' . _('For Inventory in Location') . ':</td>
 			<td><select name="Location">';
-	$sql = "SELECT loccode, locationname FROM locations";
+	$sql = "SELECT locations.loccode, locationname FROM locations
+			INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
 	$LocnResult=DB_query($sql,$db);
 
 	echo '<option value="All">' . _('All Locations') . '</option>';

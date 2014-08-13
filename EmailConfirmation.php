@@ -66,7 +66,8 @@ $sql = "SELECT salesorders.debtorno,
 				salesorders.datepackingslipprinted,
 				locations.locationname,
 				salesorders.deliverydate
-			FROM salesorders,
+			FROM salesorders
+			INNER JOIN locationusers ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1,
 				debtorsmaster,
 				shippers,
 				locations

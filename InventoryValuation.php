@@ -23,6 +23,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['CSV']))
 				FROM stockmaster,
 					stockcategory,
 					locstock
+				INNER JOIN locationusers ON locationusers.loccode=locstock.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 				WHERE stockmaster.stockid=locstock.stockid
 				AND stockmaster.categoryid=stockcategory.categoryid
 				GROUP BY stockmaster.categoryid,
@@ -53,6 +54,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['CSV']))
 				FROM stockmaster,
 					stockcategory,
 					locstock
+				INNER JOIN locationusers ON locationusers.loccode=locstock.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 				WHERE stockmaster.stockid=locstock.stockid
 				AND stockmaster.categoryid=stockcategory.categoryid
 				AND locstock.quantity!=0
@@ -265,9 +267,10 @@ if (isset($_POST['PrintPDF'])
 				<td>' . _('For Inventory in Location') . ':</td>
 				<td><select name="Location">';
 
-		$sql = "SELECT loccode,
+		$sql = "SELECT locations.loccode,
 						locationname
-				FROM locations";
+				FROM locations
+				INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
 
 		$LocnResult=DB_query($sql,$db);
 

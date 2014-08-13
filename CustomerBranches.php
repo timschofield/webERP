@@ -799,7 +799,7 @@ if (!isset($_GET['delete'])) {
 		</tr>';
 	DB_data_seek($result,0);
 
-	$SQL = "SELECT loccode, locationname FROM locations";
+	$SQL = "SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1";
 	$result = DB_query($SQL,$db);
 
 	if (DB_num_rows($result)==0){

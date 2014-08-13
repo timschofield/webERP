@@ -49,6 +49,7 @@ $OrderHeaderSQL = "SELECT purchorders.*,
 						locations.locationname,
 						currencies.decimalplaces AS currdecimalplaces
 					FROM purchorders
+					INNER JOIN locationusers ON locationusers.loccode=purchorders.intostocklocation AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 					INNER JOIN locations
 					ON locations.loccode=purchorders.intostocklocation
 					INNER JOIN suppliers
@@ -71,7 +72,7 @@ if (DB_num_rows($GetOrdHdrResult)!=1) {
         echo '<table class="table_index">
                 <tr>
 					<td class="menu_group_item">
-						<li><a href="'. $RootPath . '/PO_SelectPurchOrder.php">' . _('Outstanding Sales Orders') . '</a></li>
+						<li><a href="'. $RootPath . '/PO_SelectPurchOrder.php">' . _('Outstanding Purchase Orders') . '</a></li>
 					</td>
 				</tr>
 				</table>';
@@ -86,7 +87,7 @@ $myrow = DB_fetch_array($GetOrdHdrResult);
 /* SHOW ALL THE ORDER INFO IN ONE PLACE */
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' .
 		_('Purchase Order') . '" alt="" />' . ' ' . $Title . '</p>';
-echo '<a href="' . $RootPath . '/PO_SelectPurchOrder.php">' . _('Outstanding Sales Orders') . '</a>';
+echo '<a href="' . $RootPath . '/PO_SelectPurchOrder.php">' . _('Outstanding Purchase Orders') . '</a>';
 echo '<table class="selection" cellpadding="2">
 		<tr>
 			<th colspan="8"><b>' .  _('Order Header Details'). '</b></th>

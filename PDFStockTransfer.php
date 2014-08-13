@@ -81,6 +81,7 @@ $sql="SELECT stockmoves.stockid,
 		ON stockmoves.stockid=stockmaster.stockid
 		INNER JOIN locations
 		ON stockmoves.loccode=locations.loccode
+		INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 		WHERE transno='".$_GET['TransferNo']."'
 		AND qty < 0
 		AND type=16";

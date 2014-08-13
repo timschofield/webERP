@@ -67,6 +67,7 @@ $sql = "SELECT salesorders.customerref,
 			ON salesorders.shipvia=shippers.shipper_id
 		INNER JOIN locations
 			ON salesorders.fromstkloc=locations.loccode
+		INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 		WHERE salesorders.orderno='" . $_GET['TransNo'] . "'";
 
 if ($_SESSION['SalesmanLogin'] != '') {
