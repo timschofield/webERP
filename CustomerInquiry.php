@@ -212,12 +212,12 @@ if (DB_num_rows($TransResult)==0) {
 
 echo '<table class="selection">
 	<tr>
-		<th class="ascending">&bull; ' . _('Date') . '</th>
-		<th class="ascending">&bull; ' . _('Type') . '</th>
-		<th class="ascending">&bull; ' . _('Number') . '</th>
-		<th class="ascending">&bull; ' . _('Reference') . '</th>
-		<th>' . _('Branch') . '</th>
+		<th class="ascending">' . _('Date') . '</th>
+		<th class="ascending">' . _('Type') . '</th>
+		<th class="ascending">' . _('Number') . '</th>
+		<th class="ascending">' . _('Reference') . '</th>
 		<th>' . _('Comments') . '</th>
+		<th>' . _('Branch') . '</th>
 		<th>' . _('Order') . '</th>
 		<th>' . _('Total') . '</th>
 		<th>' . _('Allocated') . '</th>
@@ -255,8 +255,8 @@ while ($myrow=DB_fetch_array($TransResult)) {
 		<td>' . _($myrow['typename']) . '</td>
 		<td class="number">' . $myrow['transno'] . '</td>
 		<td>' . $myrow['reference'] . '</td>
+		<td>' . $myrow['invtext'] . '</td>
 		<td>' . $myrow['branchcode'] . '</td>
-		<td style="width:200px">' . $myrow['invtext'] . '</td>
 		<td class="number">' . $myrow['order_'] . '</td>
 		<td class="number">' . locale_number_format($myrow['totalamount'],$CustomerRecord['decimalplaces']) . '</td>
 		<td class="number">' . locale_number_format($myrow['allocated'],$CustomerRecord['decimalplaces']) . '</td>
@@ -290,7 +290,7 @@ while ($myrow=DB_fetch_array($TransResult)) {
 			_('Click to email the credit note') . '"><img alt="" src="' . $RootPath .
 			'/css/' . $Theme . '/images/email.gif" /> ' . _('Email') . '</a></td>';
 
-	$GLEntriesTD1 = '<td><a href="' . $RootPath . '/GLTransInquiry.php?TypeID=%s&amp;TransNo=%s" title="' .
+	$GLEntriesTD1 = '<td><a href="' . $RootPath . '/GLTransInquiry.php?TypeID=%s&amp;TransNo=%s" target="_blank" title="' .
 			_('Click to view the GL entries') . '"><img alt="" src="' . $RootPath .
 			'/css/' . $Theme . '/images/gl.png" width="16" /> ' . _('GL Entries') . '</a></td>';
 
