@@ -77,8 +77,7 @@ If (isset($_POST['PrintPDF'])
 		$FXBalance = $SupplierBalances['fxbalance'] - $SupplierBalances['fxafterdatetrans'];
 
 		if (ABS($Balance)>0.009 OR ABS($FXBalance)>0.009) {
-
-			$DisplayBalance = locale_number_format($SupplierBalances['balance'] - $SupplierBalances['afterdatetrans'],$_SESSION['CompanyRecord']['decimalplaces']);
+			$DisplayBalance = locale_number_format($SupplierBalances['balance'] - $SupplierBalances['afterdatetrans'] + $SupplierBalances['afterdatediffonexch'],$_SESSION['CompanyRecord']['decimalplaces']);
 			$DisplayFXBalance = locale_number_format($SupplierBalances['fxbalance'] - $SupplierBalances['fxafterdatetrans'],$SupplierBalances['currdecimalplaces']);
 
 			$TotBal += $Balance;
