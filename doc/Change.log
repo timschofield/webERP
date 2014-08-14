@@ -1,5 +1,6 @@
 webERP Change Log
 
+13/08/14 RChacon: includes/DatabaseTranslations.php used to store the fields of tables that are used from the database so that they can be translated in particular systypes for the types of transactions invoice credit note payment receipt etc. Can be extended for scripts and other tables where the data from the table is static and used to display
 13/08/14 RChacon: In CustomerInquiry.php: Adds class ascending and reorganizes columns Date, Type, Number and Reference; Regroups table-datacel format-strings, completes the datacel quantity by table-row; makes translatable the systypes.typename.
 12/08/14 RChacon: In SupplierInquiry.php: makes the field systypes.typename be translatable.
 12/08/14 RChacon: In Z_poRebuildDefault.php: extends title, improves comments, sets file to pot, updates $FilesToInclude, renames old pot file to bak extension. Minor improvements.
