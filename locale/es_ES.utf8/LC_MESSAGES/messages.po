@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.11.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-08-14 18:43-0600\n"
-"PO-Revision-Date: 2014-08-14 08:28-0600\n"
+"PO-Revision-Date: 2014-08-15 14:04-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -726,7 +726,7 @@ msgstr "Correo-e"
 #: PcReportTab.php:336 SelectCustomer.php:613 ShopParameters.php:198
 #: SystemParameters.php:363 WOSerialNos.php:298 WOSerialNos.php:304
 msgid "Notes"
-msgstr "Descripción"
+msgstr "Notas"
 
 #: AddCustomerContacts.php:149 SupplierContacts.php:166
 #, php-format

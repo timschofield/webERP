@@ -1,12 +1,13 @@
 <?php
-/* $Id$*/
+/*	$Id$*/
 /* pdf-php by R&OS code to set up a new sales order page */
 
-// The $PageNumber variable is initialised in 0 by PDFStarter.php
-// This page header increments variable $PageNumber before printing it.
-$PageNumber++;
-// Inserts a page break if it is not the first page
-if ($PageNumber>1) {
+/*	Please note that addTextWrap prints a font-size-height further down than
+	addText and other functions.*/
+
+// $PageNumber is initialised in 0 by includes/PDFStarter.php.
+$PageNumber ++;// Increments $PageNumber before printing.
+if ($PageNumber>1) {// Inserts a page break if it is not the first page.
 	$pdf->newPage();
 }
 
@@ -62,14 +63,16 @@ $pdf->RoundRectangle($XPos-10, $YPos+60+10, 225+10+10, 60+10+10, 10, 10);// Func
 $YPos -= 82;
 $pdf->RoundRectangle($XPos-10, $YPos+60+10, 225+10+10, 60+10+10, 10, 10);// Function RoundRectangle from includes/class.pdf.php
 
-// Print the currency name
-include($PathPrefix . 'includes/CurrenciesArray.php'); // To get the currency name from the currency code.
-$pdf->addText($Page_Width/2-60, $YPos-5, $FontSize, _('All amounts stated in') . ' - ' . $myrow['currcode'] . ' ' . $CurrencyName[$myrow['currcode']]);
+$FontSize=10;
 
-// Print table header
+// Prints the currency name:
+require_once('includes/CurrenciesArray.php');// To get the currency name from the currency code.
+$pdf->addText($Page_Width/2-60, $YPos-5, $FontSize,
+	_('All amounts stated in') . ' ' . $myrow['currcode'] . ' - ' . $CurrencyName[$myrow['currcode']]);
+
+// Prints table header:
 $XPos = 40;
 $YPos -= 37;
-$FontSize=10;
 $LeftOvers = $pdf->addTextWrap( 42, $YPos,103, $FontSize, _('Item Code'),'left');
 	if (strlen($LeftOvers) > 0) { // If translated text is greater than 103, prints remainder
 		$LeftOvers = $pdf->addTextWrap(585,$YPos-$FontSize,65, $FontSize, $LeftOvers,'left');
@@ -88,28 +91,19 @@ $LeftOvers = $pdf->addTextWrap(665, $YPos, 70, $FontSize, _('Tax Amount'),'right
 	}
 $LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-90, $YPos, 90, $FontSize, _('Total'),'right');
 
-/*draw a box with nice round corner for entering line items */
-/*90 degree arc at top right of box 0 degrees starts a bottom */
-$pdf->partEllipse($Page_Width-$Right_Margin-10, $Bottom_Margin+350,0,90,10,10);
-/*line to the top left */
-$pdf->line($Page_Width-$Right_Margin-10, $Bottom_Margin+360,$Left_Margin+10, $Bottom_Margin+360);
+// Draws a box with round corners around line items:
+$pdf->RoundRectangle(
+	$Left_Margin,// RoundRectangle $XPos.
+	$YPos+$FontSize+5,// RoundRectangle $YPos.
+	$Page_Width-$Left_Margin-$Right_Margin,// RoundRectangle $Width.
+	$YPos+$FontSize-$Bottom_Margin+5,// RoundRectangle $Height.
+	10,// RoundRectangle $RadiusX.
+	10);// RoundRectangle $RadiusY.
 
-/*line under headings to top left */
-$pdf->line($Page_Width-$Right_Margin, $Bottom_Margin+335,$Left_Margin, $Bottom_Margin+335);
+// Line under table headings:
+$LineYPos = $YPos - $FontSize -1;
+$pdf->line($Page_Width-$Right_Margin, $LineYPos, $Left_Margin, $LineYPos);
 
+$YPos -= $FontSize;// This is to use addTextWrap's $YPos instead of normal $YPos.
 
-/*Dow top left corner */
-$pdf->partEllipse($Left_Margin+10, $Bottom_Margin+350,90,180,10,10);
-/*Do a line to the bottom left corner */
-$pdf->line($Left_Margin, $Bottom_Margin+350,$Left_Margin, $Bottom_Margin+10);
-/*Now do the bottom left corner 180 - 270 coming back west*/
-$pdf->partEllipse($Left_Margin+10, $Bottom_Margin+10,180,270,10,10);
-/*Now a line to the bottom right */
-$pdf->line($Left_Margin+10, $Bottom_Margin,$Page_Width-$Right_Margin-10, $Bottom_Margin);
-/*Now do the bottom right corner */
-$pdf->partEllipse($Page_Width-$Right_Margin-10, $Bottom_Margin+10,270,350,10,10);
-/*Finally join up to the top right corner where started */
-$pdf->line($Page_Width-$Right_Margin, $Bottom_Margin+10,$Page_Width-$Right_Margin, $Bottom_Margin+350);
-
-$YPos -= (2*$line_height);
 ?>
