@@ -1,5 +1,6 @@
 webERP Change Log
 
+14/08/14 RChacon: In CustomerInquiry.php and SupplierInquiry.php makes translatable the systypes.typename.
 14/08/14 RChacon: In SupplierInquiry.php: Reorganizes columns Date, Type, Number, Reference and Comments, and regroups table-datacel format-strings as in CustomerInquiry.php code.
 13/08/14 kelo: SupplierBalsAtPeriodEnd.php fix calculation to take into account fx differences on after date transactions
 13/08/14 RChacon: includes/DatabaseTranslations.php used to store the fields of tables that are used from the database so that they can be translated in particular systypes for the types of transactions invoice credit note payment receipt etc. Can be extended for scripts and other tables where the data from the table is static and used to display

@@ -1,9 +1,7 @@
 <?php
+/*	$Id$*/
 
-/* $Id$*/
-
-/*
-	This page can be called with...
+/*	This page can be called with...
 
 	1. A SuppTrans TransNo and Type
 	The page will then show potential allocations for the transaction called with,
@@ -18,12 +16,13 @@
 	allocated
 */
 
-include('includes/DefineSuppAllocsClass.php');
 include('includes/session.inc');
-
 $Title = _('Supplier Payment') . '/' . _('Credit Note Allocations');
-
+$ViewTopic = 'ARTransactions';// Filename in ManualContents.php's TOC./* RChacon: To do ManualAPInquiries.html from ManualARInquiries.html */
+$BookMark = 'SupplierAllocations';// Anchor's id in the manual's html document.
 include('includes/header.inc');
+
+include('includes/DefineSuppAllocsClass.php');
 include('includes/SQL_CommonFunctions.inc');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' .
@@ -31,12 +30,12 @@ echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/t
 
 if (isset($_POST['UpdateDatabase']) OR isset($_POST['RefreshAllocTotal'])) {
 
-	//initialise no input errors assumed initially before we test
-
-	$InputError = 0;
-
 	if (!isset($_SESSION['Alloc'])){
-		prnMsg( _('Allocations can not be processed again') . '. ' . _('If you hit refresh on this page after having just processed an allocation') . ', ' . _('try to use the navigation links provided rather than the back button, to avoid this message in future'),'warn');
+		prnMsg(
+			_('Allocations can not be processed again') . '. ' . 
+				_('If you hit refresh on this page after having just processed an allocation') . ', ' . 
+				_('try to use the navigation links provided rather than the back button, to avoid this message in future'),
+			'warn');
 		include('includes/footer.inc');
 		exit;
 	}
@@ -46,6 +45,7 @@ if (isset($_POST['UpdateDatabase']) OR isset($_POST['RefreshAllocTotal'])) {
 	AllocnItm->ID for each record of the array - and PHP sets the value of
 	the form variable on a post*/
 
+	$InputError = 0;
 	$TotalAllocated = 0;
 	$TotalDiffOnExch = 0;
 
@@ -330,7 +330,7 @@ If (isset($_GET['AllocTrans'])){
 	$_SESSION['Alloc']->SupplierID = $myrow['supplierno'];
 	$_SESSION['Alloc']->SuppName = $myrow['suppname'];;
 	$_SESSION['Alloc']->TransType = $myrow['type'];
-	$_SESSION['Alloc']->TransTypeName = $myrow['typename'];
+	$_SESSION['Alloc']->TransTypeName = _($myrow['typename']);
 	$_SESSION['Alloc']->TransNo = $myrow['transno'];
 	$_SESSION['Alloc']->TransExRate = $myrow['rate'];
 	$_SESSION['Alloc']->TransAmt = $myrow['total'];
@@ -364,7 +364,7 @@ If (isset($_GET['AllocTrans'])){
 
 	while ($myrow=DB_fetch_array($Result)){
 		$_SESSION['Alloc']->add_to_AllocsAllocn ($myrow['id'],
-												$myrow['typename'],
+												_($myrow['typename']),
 												$myrow['transno'],
 												ConvertSQLDate($myrow['trandate']),
 												$myrow['suppreference'],
@@ -410,7 +410,7 @@ If (isset($_GET['AllocTrans'])){
 		$DiffOnExchThisOne = ($myrow['amt']/$myrow['rate']) - ($myrow['amt']/$_SESSION['Alloc']->TransExRate);
 
 		$_SESSION['Alloc']->add_to_AllocsAllocn ($myrow['id'],
-												$myrow['typename'],
+												_($myrow['typename']),
 												$myrow['transno'],
 												ConvertSQLDate($myrow['trandate']), $myrow['suppreference'], $myrow['amt'],
 												$myrow['total'],
@@ -486,7 +486,7 @@ if (isset($_POST['AllocTrans'])){
 	    $YetToAlloc = ($AllocnItem->TransAmount - $AllocnItem->PrevAlloc);
 
 	    echo '<td>' . $AllocnItem->TransType . '</td>
-			<td>' . $AllocnItem->TypeNo . '</td>
+			<td class="number">' . $AllocnItem->TypeNo . '</td>
 			<td>' . $AllocnItem->TransDate . '</td>
 			<td>' . $AllocnItem->SuppRef . '</td>
 			<td class="number">' . locale_number_format($AllocnItem->TransAmount,$_SESSION['Alloc']->CurrDecimalPlaces) . '</td>
@@ -594,7 +594,7 @@ if (isset($_POST['AllocTrans'])){
 			<td class="number">%s</td>
 			<td><a href="%sAllocTrans=%s">' . _('Allocate')  . '</a></td>
 			</tr>',
-			$myrow['typename'],
+			_($myrow['typename']),
 			$myrow['suppname'],
 			$myrow['transno'],
 			ConvertSQLDate($myrow['trandate']),
@@ -670,7 +670,7 @@ if (isset($_POST['AllocTrans'])){
 			<td class="number">%s</td>
 			<td><a href="%sAllocTrans=%s">' . _('Allocate') . '</a></td>
 			</tr>',
-			$myrow['typename'],
+			_($myrow['typename']),
 			$myrow['suppname'],
 			$myrow['transno'],
 			ConvertSQLDate($myrow['trandate']),
