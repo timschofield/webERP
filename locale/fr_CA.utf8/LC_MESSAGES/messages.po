@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: webERP 4.11.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-14 07:48-0600\n"
-"PO-Revision-Date: 2014-08-14 08:36-0600\n"
+"POT-Creation-Date: 2014-08-14 18:43-0600\n"
+"PO-Revision-Date: 2014-08-14 18:45-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: french <none>\n"
 "Language: fr\n"
@@ -175,8 +175,8 @@ msgstr "Ce groupe ne peut pas être supprimé car les comptes du GL l'utilisent.
 #: Areas.php:115 Areas.php:124 BankAccounts.php:159 CreditStatus.php:125
 #: Currencies.php:244 Currencies.php:252 Currencies.php:260
 #: CustomerBranches.php:301 CustomerBranches.php:311 CustomerBranches.php:321
-#: CustomerBranches.php:331 CustomerBranches.php:341 CustomerTypes.php:147
-#: CustomerTypes.php:157 Customers.php:296 Customers.php:305 Customers.php:313
+#: CustomerBranches.php:331 CustomerBranches.php:341 CustomerTypes.php:146
+#: CustomerTypes.php:156 Customers.php:296 Customers.php:305 Customers.php:313
 #: Customers.php:324 Customers.php:334 Departments.php:141 Factors.php:134
 #: FixedAssetCategories.php:137 GLAccounts.php:80 GLAccounts.php:96
 #: Locations.php:267 Locations.php:275 Locations.php:286 Locations.php:295
@@ -417,7 +417,7 @@ msgstr "Non"
 #: BOMs.php:153 BankAccounts.php:223 COGSGLPostings.php:112
 #: COGSGLPostings.php:216 CreditStatus.php:175 Currencies.php:362
 #: Currencies.php:379 CustItem.php:166 CustomerBranches.php:455
-#: CustomerTypes.php:206 Customers.php:1132 Customers.php:1166
+#: CustomerTypes.php:205 Customers.php:1132 Customers.php:1166
 #: Departments.php:186 EDIMessageFormat.php:150 Factors.php:334
 #: FixedAssetCategories.php:190 FixedAssetLocations.php:111
 #: FreightCosts.php:253 GLAccounts.php:317 GLTags.php:96 GeocodeSetup.php:173
@@ -455,7 +455,7 @@ msgstr "Êtes-vous sûr de vouloir supprimer ce groupe?"
 #: COGSGLPostings.php:217 ContractBOM.php:272 ContractOtherReqts.php:124
 #: CounterReturns.php:740 CounterSales.php:836 CreditStatus.php:176
 #: Credit_Invoice.php:404 Currencies.php:365 CustItem.php:167
-#: CustomerReceipt.php:987 CustomerTypes.php:207 Customers.php:1167
+#: CustomerReceipt.php:987 CustomerTypes.php:206 Customers.php:1167
 #: Departments.php:187 DiscountCategories.php:238 DiscountMatrix.php:183
 #: EDIMessageFormat.php:151 FixedAssetCategories.php:191 FreightCosts.php:254
 #: GLAccounts.php:318 GLJournal.php:430 GLTags.php:97 GeocodeSetup.php:174
@@ -665,7 +665,7 @@ msgid "The contact email address is not a valid email address"
 msgstr "L'adresse courriel n'est pas correcte"
 
 #: AddCustomerContacts.php:59 AddCustomerNotes.php:51
-#: AddCustomerTypeNotes.php:48 Areas.php:72 CustomerTypes.php:69
+#: AddCustomerTypeNotes.php:48 Areas.php:72 CustomerTypes.php:68
 #: DeliveryDetails.php:801 DeliveryDetails.php:818 Factors.php:105
 #: FixedAssetItems.php:250 MRPCalendar.php:176 PO_Items.php:380
 #: PcAssignCashToTab.php:91 PcClaimExpensesFromTab.php:82 PcExpenses.php:98
@@ -797,8 +797,8 @@ msgstr "Notes pour le client"
 #: AddCustomerTypeNotes.php:111 AddCustomerTypeNotes.php:211
 #: AgedControlledInventory.php:47 BankMatching.php:282
 #: BankReconciliation.php:217 BankReconciliation.php:294
-#: ContractCosting.php:177 CustomerAllocations.php:348
-#: CustomerAllocations.php:378 CustomerInquiry.php:215
+#: ContractCosting.php:177 CustomerAllocations.php:347
+#: CustomerAllocations.php:377 CustomerInquiry.php:215
 #: CustomerTransInquiry.php:106 GLAccountInquiry.php:174
 #: GLAccountReport.php:343 GLTransInquiry.php:42 MRPCalendar.php:219
 #: PDFRemittanceAdvice.php:308 PaymentAllocations.php:66
@@ -809,7 +809,7 @@ msgstr "Notes pour le client"
 #: StockDispatch.php:299 StockLocMovements.php:92 StockMovements.php:99
 #: StockSerialItemResearch.php:82 SupplierAllocations.php:456
 #: SupplierAllocations.php:569 SupplierAllocations.php:644
-#: SupplierInquiry.php:212 SupplierTransInquiry.php:105
+#: SupplierInquiry.php:209 SupplierTransInquiry.php:105
 #: includes/PDFQuotationPageHeader.inc:19
 #: includes/PDFQuotationPortraitPageHeader.inc:88
 #: includes/PDFStatementPageHeader.inc:169 includes/PDFTaxPageHeader.inc:36
@@ -1014,7 +1014,7 @@ msgstr ""
 #: ConfirmDispatch_Invoice.php:309 CounterReturns.php:676
 #: CounterReturns.php:756 CounterSales.php:759 CounterSales.php:853
 #: CounterSales.php:855 Credit_Invoice.php:298 Credit_Invoice.php:302
-#: CustomerAllocations.php:349 CustomerAllocations.php:379
+#: CustomerAllocations.php:348 CustomerAllocations.php:378
 #: CustomerInquiry.php:222 DeliveryDetails.php:876 DeliveryDetails.php:945
 #: GLBalanceSheet.php:191 GLBalanceSheet.php:203 GLBalanceSheet.php:293
 #: GLBalanceSheet.php:302 GLBudgets.php:213 GLJournal.php:435
@@ -1033,7 +1033,7 @@ msgstr ""
 #: SuppContractChgs.php:107 SuppFixedAssetChgs.php:97 SuppShiptChgs.php:97
 #: SuppTransGLAnalysis.php:139 SupplierAllocations.php:458
 #: SupplierAllocations.php:570 SupplierAllocations.php:645
-#: SupplierCredit.php:407 SupplierInquiry.php:213
+#: SupplierCredit.php:407 SupplierInquiry.php:214
 #: Z_CheckDebtorsControl.php:149 api/api_debtortransactions.php:1271
 #: api/api_debtortransactions.php:1284 api/api_debtortransactions.php:1581
 #: includes/PDFQuotationPageHeader.inc:89
@@ -1414,7 +1414,7 @@ msgstr "Rapports d'analyse de Ventes utilisant ce code Secteur"
 msgid "Area Code"
 msgstr "Code Secteur"
 
-#: Areas.php:131 CustomerTypes.php:168 Factors.php:140
+#: Areas.php:131 CustomerTypes.php:167 Factors.php:140
 #: FixedAssetCategories.php:142 GLAccounts.php:197
 #: InternalStockCategoriesByRole.php:102 Locations.php:368 MRPDemands.php:250
 #: Manufacturers.php:163 PcAssignCashToTab.php:138
@@ -1527,14 +1527,14 @@ msgid "User"
 msgstr "Utilisateur"
 
 #: AuditTrail.php:177 BankReconciliation.php:218 BankReconciliation.php:295
-#: CustWhereAlloc.php:21 CustWhereAlloc.php:111 CustomerAllocations.php:376
+#: CustWhereAlloc.php:21 CustWhereAlloc.php:111 CustomerAllocations.php:375
 #: CustomerInquiry.php:216 CustomerPurchases.php:77
 #: CustomerTransInquiry.php:25 CustomerTransInquiry.php:104
 #: DailyBankTransactions.php:130 GLAccountInquiry.php:172
 #: GLAccountReport.php:341 GLJournal.php:266 MRPReschedules.php:194
 #: SalesByTypePeriodInquiry.php:356 SelectCustomer.php:424
 #: ShipmentCosting.php:536 ShipmentCosting.php:613 StockLocMovements.php:90
-#: StockMovements.php:97 SupplierAllocations.php:454 SupplierInquiry.php:209
+#: StockMovements.php:97 SupplierAllocations.php:454 SupplierInquiry.php:210
 #: SupplierTransInquiry.php:20 SupplierTransInquiry.php:102
 #: Z_CheckAllocationsFrom.php:32 Z_CheckAllocationsFrom.php:57
 #: Z_CheckAllocs.php:62 Z_CheckGLTransBalance.php:11
@@ -2629,7 +2629,7 @@ msgid "Not Yet Selected"
 msgstr "En attente de sélection"
 
 #: BankAccountUsers.php:123 BankAccountUsers.php:222 CustomerReceipt.php:947
-#: CustomerReceipt.php:1159 CustomerTypes.php:270 ExchangeRateTrend.php:51
+#: CustomerReceipt.php:1159 CustomerTypes.php:269 ExchangeRateTrend.php:51
 #: FreightCosts.php:60 GLJournal.php:139 GLJournal.php:377
 #: InternalStockCategoriesByRole.php:136 InternalStockCategoriesByRole.php:226
 #: LocationUsers.php:133 LocationUsers.php:246 OffersReceived.php:114
@@ -2642,7 +2642,7 @@ msgid "Accept"
 msgstr "Accepter"
 
 #: BankAccountUsers.php:124 BankAccountUsers.php:223
-#: CustomerAllocations.php:450 CustomerReceipt.php:1160
+#: CustomerAllocations.php:449 CustomerReceipt.php:1160
 #: InternalStockCategoriesByRole.php:137 InternalStockCategoriesByRole.php:227
 #: LocationUsers.php:134 LocationUsers.php:247 Payments.php:1073
 #: PcAssignCashToTab.php:182 PcAssignCashToTab.php:399
@@ -2796,7 +2796,7 @@ msgid "Bank Address"
 msgstr "Référence bancaire (adresse postale)"
 
 #: BankAccounts.php:196 Currencies.php:449 CustItem.php:299 CustItem.php:415
-#: CustomerAllocations.php:351 CustomerReceipt.php:836
+#: CustomerAllocations.php:350 CustomerReceipt.php:836
 #: CustomerTransInquiry.php:114 OffersReceived.php:112
 #: PO_AuthorisationLevels.php:126 PO_AuthorisationLevels.php:210
 #: PO_AuthorisationLevels.php:216 PO_AuthoriseMyOrders.php:115
@@ -2862,7 +2862,7 @@ msgid "Bank Account Matching - Receipts"
 msgstr "Assortiment de compte bancaire - Reçus"
 
 #: BankMatching.php:26 PDFSuppTransListing.php:41 PaymentAllocations.php:31
-#: PaymentMethods.php:11
+#: PaymentMethods.php:11 SupplierInquiry.php:257
 msgid "Payments"
 msgstr "Paiements"
 
@@ -3045,7 +3045,7 @@ msgid "Ref"
 msgstr "Réf"
 
 #: BankMatching.php:284 ConfirmDispatch_Invoice.php:308 Credit_Invoice.php:301
-#: CustWhereAlloc.php:115 CustomerAllocations.php:379 CustomerReceipt.php:964
+#: CustWhereAlloc.php:115 CustomerAllocations.php:378 CustomerReceipt.php:964
 #: CustomerTransInquiry.php:113 GLJournalInquiry.php:85
 #: ImportBankTransAnalysis.php:208 ImportBankTransAnalysis.php:288
 #: PaymentAllocations.php:67 Payments.php:1060 Payments.php:1065
@@ -3183,8 +3183,8 @@ msgid "Add back unpresented cheques"
 msgstr "Rajouter les chèques non encaissés"
 
 #: BankReconciliation.php:219 BankReconciliation.php:296
-#: CustWhereAlloc.php:112 CustomerAllocations.php:347
-#: CustomerAllocations.php:377 CustomerInquiry.php:217
+#: CustWhereAlloc.php:112 CustomerAllocations.php:346
+#: CustomerAllocations.php:376 CustomerInquiry.php:217
 #: CustomerTransInquiry.php:105 EmailCustTrans.php:15 GLAccountInquiry.php:173
 #: ImportBankTrans.php:538 PrintCustTrans.php:511 PrintCustTrans.php:735
 #: PrintCustTrans.php:968 PrintCustTrans.php:1017
@@ -3192,7 +3192,7 @@ msgstr "Rajouter les chèques non encaissés"
 #: PrintCustTransPortrait.php:1023 PrintCustTransPortrait.php:1078
 #: StockMovements.php:98 SupplierAllocations.php:455
 #: SupplierAllocations.php:568 SupplierAllocations.php:643
-#: SupplierInquiry.php:210 SupplierTransInquiry.php:103 Z_CheckAllocs.php:63
+#: SupplierInquiry.php:211 SupplierTransInquiry.php:103 Z_CheckAllocs.php:63
 #: Z_CheckGLTransBalance.php:12 includes/PDFQuotationPageHeader.inc:17
 #: includes/PDFQuotationPortraitPageHeader.inc:86
 #: includes/PDFStatementPageHeader.inc:168
@@ -3209,7 +3209,7 @@ msgstr "Numéro"
 #: PaymentAllocations.php:64 PaymentAllocations.php:65 Payments.php:921
 #: ShiptsList.php:37 StockCounts.php:144 StockCounts.php:169
 #: StockCounts.php:216 StockLocMovements.php:95 StockMovements.php:103
-#: SupplierInquiry.php:211 Z_CheckAllocs.php:64
+#: SupplierInquiry.php:212 Z_CheckAllocs.php:64
 #: includes/PDFBankingSummaryPageHeader.inc:40
 #: includes/PDFCustTransListingPageHeader.inc:49
 #: includes/PDFPeriodStockTransListingPageHeader.inc:48
@@ -3794,7 +3794,7 @@ msgid "Confirm Dispatch and Invoice"
 msgstr "Confirmer l'expédition et la facturation"
 
 #: ConfirmDispatch_Invoice.php:279 Contracts.php:778 CustItem.php:144
-#: CustLoginSetup.php:32 CustomerAllocations.php:345 CustomerBranches.php:403
+#: CustLoginSetup.php:32 CustomerAllocations.php:344 CustomerBranches.php:403
 #: CustomerBranches.php:586 CustomerBranches.php:633 CustomerInquiry.php:132
 #: CustomerInquiry.php:133 CustomerPurchases.php:30 CustomerReceipt.php:966
 #: CustomerReceipt.php:1022 CustomerReceipt.php:1170
@@ -5916,7 +5916,7 @@ msgstr "Partie du numéro de téléphone Direction"
 msgid "Reset"
 msgstr "Effacer"
 
-#: Contracts.php:779 CustomerInquiry.php:219 CustomerTransInquiry.php:108
+#: Contracts.php:779 CustomerInquiry.php:220 CustomerTransInquiry.php:108
 #: Dashboard.php:669 FTP_RadioBeacon.php:52 PDFOrderStatus.php:294
 #: PDFOrdersInvoiced.php:293 PDFPriceList.php:390 PricesByCost.php:155
 #: Prices_Customer.php:263 Prices_Customer.php:337 PrintCustTrans.php:846
@@ -6751,10 +6751,10 @@ msgstr "Qté en Stock"
 msgid "Picked Up By"
 msgstr "Enlevé par"
 
-#: CounterSales.php:909 CustomerInquiry.php:220 CustomerTransInquiry.php:110
+#: CounterSales.php:909 CustomerInquiry.php:219 CustomerTransInquiry.php:110
 #: DeliveryDetails.php:1098 OrderDetails.php:125 PO_Header.php:1152
 #: PO_OrderDetails.php:156 RecurringSalesOrders.php:419 SpecialOrder.php:614
-#: SupplierCredit.php:602 SupplierInquiry.php:216 SupplierInvoice.php:950
+#: SupplierCredit.php:602 SupplierInquiry.php:213 SupplierInvoice.php:950
 #: SupplierTransInquiry.php:107 WorkOrderEntry.php:601
 #: Z_ImportChartOfAccounts.php:28 Z_ImportGLAccountGroups.php:26
 #: Z_ImportGLAccountSections.php:29 Z_ImportPartCodes.php:31
@@ -7578,7 +7578,7 @@ msgstr ""
 msgid "Ex Rate - ECB"
 msgstr "Taux de change - BCE"
 
-#: Currencies.php:302 CustomerTypes.php:6 Prices.php:226
+#: Currencies.php:302 CustomerTypes.php:5 Prices.php:226
 #: StockCategories.php:266 SupplierTypes.php:6 index.php:149
 msgid "Maintenance"
 msgstr "Gestion"
@@ -8236,7 +8236,7 @@ msgstr "Alloc"
 
 #: CustWhereAlloc.php:134 EmailCustTrans.php:12 SalesInquiry.php:1097
 #: SupplierCredit.php:1109 Z_CheckAllocs.php:85
-#: includes/DatabaseTranslations.php:26
+#: includes/DatabaseTranslations.php:27
 msgid "Credit Note"
 msgstr "Avoir"
 
@@ -8244,53 +8244,53 @@ msgstr "Avoir"
 #: PcAuthorizeExpenses.php:98 PcClaimExpensesFromTab.php:239
 #: PcClaimExpensesFromTab.php:414 PcReportTab.php:182 PcReportTab.php:337
 #: Z_CheckAllocs.php:87 Z_SalesIntegrityCheck.php:90
-#: Z_SalesIntegrityCheck.php:105 includes/DatabaseTranslations.php:27
+#: Z_SalesIntegrityCheck.php:105 includes/DatabaseTranslations.php:28
 msgid "Receipt"
 msgstr "Réception"
 
-#: CustWhereAlloc.php:156 CustomerAllocations.php:75
+#: CustWhereAlloc.php:156 CustomerAllocations.php:74
 #: SupplierAllocations.php:92
 msgid "Total allocated"
 msgstr "Total alloué"
 
-#: CustomerAllocations.php:14
+#: CustomerAllocations.php:11
 msgid "Customer Receipt"
 msgstr "Reçu client"
 
-#: CustomerAllocations.php:14 SupplierAllocations.php:24
+#: CustomerAllocations.php:11 SupplierAllocations.php:20
 msgid "Credit Note Allocations"
 msgstr "Allocations des avoirs"
 
-#: CustomerAllocations.php:29 SupplierAllocations.php:39
+#: CustomerAllocations.php:27 SupplierAllocations.php:35
 msgid "Allocations can not be processed again"
 msgstr "Les allocations peuvent pas être traitées à nouveau"
 
-#: CustomerAllocations.php:30 SupplierAllocations.php:39
+#: CustomerAllocations.php:28 SupplierAllocations.php:36
 msgid ""
 "If you hit refresh on this page after having just processed an allocation"
 msgstr ""
 "Si vous cliquez sur actualiser sur cette page juste après avoir transformé "
 "une allocation"
 
-#: CustomerAllocations.php:31
+#: CustomerAllocations.php:29
 msgid "try to use the navigation links provided rather than the back button"
 msgstr ""
 "essayez d'utiliser les liens de navigation fournis plutôt que le bouton de "
 "retour"
 
-#: CustomerAllocations.php:32
+#: CustomerAllocations.php:30
 msgid "to avoid this message in future"
 msgstr "Pour éviter ce message à l'avenir"
 
-#: CustomerAllocations.php:51
+#: CustomerAllocations.php:50
 msgid "Amount entered was negative"
 msgstr "Montant inscrit a été négative"
 
-#: CustomerAllocations.php:51
+#: CustomerAllocations.php:50
 msgid "Only positive amounts are allowed"
 msgstr "Seuls les montants positifs sont autorisés"
 
-#: CustomerAllocations.php:75
+#: CustomerAllocations.php:74
 msgid ""
 "Allocation could not be processed because the amount allocated is more than "
 "the"
@@ -8298,113 +8298,113 @@ msgstr ""
 "Allocation n'ont pu être traitées parce que le montant alloué est supérieur "
 "à la"
 
-#: CustomerAllocations.php:75 SupplierAllocations.php:92
+#: CustomerAllocations.php:74 SupplierAllocations.php:92
 msgid "being allocated"
 msgstr "être attribués"
 
-#: CustomerAllocations.php:75
+#: CustomerAllocations.php:74
 msgid "and the total amount of the"
 msgstr "et le montant total de la"
 
-#: CustomerAllocations.php:75
+#: CustomerAllocations.php:74
 msgid "was"
 msgstr "a été"
 
-#: CustomerAllocations.php:93
+#: CustomerAllocations.php:92
 msgid "Could not delete old allocation record"
 msgstr ""
 
-#: CustomerAllocations.php:111
+#: CustomerAllocations.php:110
 msgid "Could not change allocation record"
 msgstr ""
 
-#: CustomerAllocations.php:124
+#: CustomerAllocations.php:123
 msgid "Could not update difference on exchange"
 msgstr ""
 
-#: CustomerAllocations.php:140
+#: CustomerAllocations.php:139
 msgid "Could not update receipt or credit note"
 msgstr ""
 
-#: CustomerAllocations.php:169
+#: CustomerAllocations.php:168
 msgid "Could not update exchange difference in General Ledger"
 msgstr ""
 
-#: CustomerAllocations.php:190
+#: CustomerAllocations.php:189
 msgid "Could not update debtors control in General Ledger"
 msgstr ""
 
-#: CustomerAllocations.php:340
+#: CustomerAllocations.php:339
 msgid "Allocate Receipt"
 msgstr "Allouer reçu"
 
-#: CustomerAllocations.php:340 CustomerReceipt.php:580
+#: CustomerAllocations.php:339 CustomerReceipt.php:580
 msgid "Allocate Receipts"
 msgstr "Allouer reçu"
 
-#: CustomerAllocations.php:344 PDFRemittanceAdvice.php:307
+#: CustomerAllocations.php:343 PDFRemittanceAdvice.php:307
 #: SupplierAllocations.php:566 SupplierAllocations.php:641
 #: includes/PDFStatementPageHeader.inc:167
 msgid "Trans Type"
 msgstr "Type de trans"
 
-#: CustomerAllocations.php:346
+#: CustomerAllocations.php:345
 msgid "Cust No"
 msgstr "Client n°"
 
-#: CustomerAllocations.php:350 SupplierAllocations.php:571
+#: CustomerAllocations.php:349 SupplierAllocations.php:571
 #: SupplierAllocations.php:646
 msgid "To Alloc"
 msgstr "A Attribuer"
 
-#: CustomerAllocations.php:352 ReprintGRN.php:90
+#: CustomerAllocations.php:351 ReprintGRN.php:90
 #: includes/PDFWOPageHeader.inc:68
 msgid "Action"
 msgstr "Action"
 
-#: CustomerAllocations.php:371
+#: CustomerAllocations.php:370
 msgid "Amount in customer currency"
 msgstr "Montant dans la devise du client"
 
-#: CustomerAllocations.php:371 SupplierAllocations.php:443
+#: CustomerAllocations.php:370 SupplierAllocations.php:443
 msgid "converted into local currency at an exchange rate of"
 msgstr "convertis en monnaie locale au taux de change de"
 
-#: CustomerAllocations.php:376 CustomerAllocations.php:377
-#: CustomerAllocations.php:378 SupplierAllocations.php:455
+#: CustomerAllocations.php:375 CustomerAllocations.php:376
+#: CustomerAllocations.php:377 SupplierAllocations.php:455
 #: SupplierAllocations.php:456 includes/PDFLowGPPageHeader.inc:43
 #: includes/PDFStatementPageHeader.inc:178
 msgid "Trans"
 msgstr "Trans"
 
-#: CustomerAllocations.php:380 SupplierAllocations.php:459
+#: CustomerAllocations.php:379 SupplierAllocations.php:459
 msgid "Yet to"
 msgstr "encore à"
 
-#: CustomerAllocations.php:380 CustomerAllocations.php:515
-#: CustomerAllocations.php:563 CustomerReceipt.php:268 CustomerReceipt.php:580
+#: CustomerAllocations.php:379 CustomerAllocations.php:514
+#: CustomerAllocations.php:562 CustomerReceipt.php:268 CustomerReceipt.php:580
 #: SupplierAllocations.php:459 SupplierAllocations.php:595
 #: SupplierAllocations.php:671
 #, php-format
 msgid "Allocate"
 msgstr "Allouer"
 
-#: CustomerAllocations.php:381 SupplierAllocations.php:460
+#: CustomerAllocations.php:380 SupplierAllocations.php:460
 msgid "This"
 msgstr "Cette"
 
-#: CustomerAllocations.php:381 CustomerInquiry.php:271
-#: SupplierAllocations.php:460
+#: CustomerAllocations.php:380 CustomerInquiry.php:271
+#: SupplierAllocations.php:460 SupplierInquiry.php:263
 msgid "Allocation"
 msgstr "Attribution"
 
-#: CustomerAllocations.php:382
+#: CustomerAllocations.php:381
 msgid "Running"
 msgstr "Running"
 
-#: CustomerAllocations.php:382 CustomerAllocations.php:570
-#: CustomerAllocations.php:622 CustomerInquiry.php:224 Dashboard.php:58
-#: Dashboard.php:535 GLAccountInquiry.php:178 SupplierInquiry.php:215
+#: CustomerAllocations.php:381 CustomerAllocations.php:569
+#: CustomerAllocations.php:621 CustomerInquiry.php:224 Dashboard.php:58
+#: Dashboard.php:535 GLAccountInquiry.php:178 SupplierInquiry.php:216
 #: includes/PDFAgedDebtorsPageHeader.inc:49
 #: includes/PDFAgedSuppliersPageHeader.inc:35
 #: includes/PDFDebtorBalsPageHeader.inc:31
@@ -8413,43 +8413,43 @@ msgstr "Running"
 msgid "Balance"
 msgstr "Solde"
 
-#: CustomerAllocations.php:394
+#: CustomerAllocations.php:393
 msgid "Being allocated"
 msgstr "Être affecté"
 
-#: CustomerAllocations.php:416
+#: CustomerAllocations.php:415
 msgid ""
 "Check this box to allocate the entire amouunt of this transaction. Just "
 "enter the amount without ticking this check box for a partial allocation"
 msgstr ""
 
-#: CustomerAllocations.php:425
+#: CustomerAllocations.php:424
 msgid ""
 "Enter the amount of this transaction to be allocated. Nothing should be "
 "entered here if the entire transaction is to be allocated, use the check box"
 msgstr ""
 
-#: CustomerAllocations.php:435 SupplierAllocations.php:506
+#: CustomerAllocations.php:434 SupplierAllocations.php:506
 msgid "Total Allocated"
 msgstr "Total Allou"
 
-#: CustomerAllocations.php:439 SupplierAllocations.php:519
+#: CustomerAllocations.php:438 SupplierAllocations.php:519
 msgid "Recalculate Total To Allocate"
 msgstr "Total Recalculer Attribuer"
 
-#: CustomerAllocations.php:442 SupplierAllocations.php:511
+#: CustomerAllocations.php:441 SupplierAllocations.php:511
 msgid "Left to allocate"
 msgstr "Reste à allouer"
 
-#: CustomerAllocations.php:449 SupplierAllocations.php:520
+#: CustomerAllocations.php:448 SupplierAllocations.php:520
 msgid "Process Allocations"
 msgstr "Traitement des allocations"
 
-#: CustomerAllocations.php:492
+#: CustomerAllocations.php:491
 msgid "No outstanding receipts or credits to be allocated for this customer"
 msgstr "Pas de reçu ou de crédits en suspens à allouer à ce client"
 
-#: CustomerAllocations.php:617 SupplierAllocations.php:688
+#: CustomerAllocations.php:616 SupplierAllocations.php:688
 msgid "There are no allocations to be done"
 msgstr "Il n'y a aucune allocation à faire"
 
@@ -9043,7 +9043,7 @@ msgstr "Aucune transaction n'a été retourné par le SQL, car"
 msgid "There are no transactions to display since"
 msgstr "Il n'y a pas de transactions pour afficher depuis"
 
-#: CustomerInquiry.php:223 SupplierInquiry.php:214
+#: CustomerInquiry.php:223 SupplierInquiry.php:215
 #: Z_CheckAllocationsFrom.php:35 Z_CheckAllocationsFrom.php:60
 #: includes/PDFStatementPageHeader.inc:172
 msgid "Allocated"
@@ -9059,7 +9059,7 @@ msgstr "Plus d'info"
 msgid "Click to credit the invoice"
 msgstr "Cliquez au crédit de la facture"
 
-#: CustomerInquiry.php:270
+#: CustomerInquiry.php:270 SupplierInquiry.php:262
 msgid "Click to allocate funds"
 msgstr "Cliquez pour allouer des fonds"
 
@@ -9094,11 +9094,11 @@ msgstr "Cliquer pour un aperçu de l'avoir"
 msgid "Click to email the credit note"
 msgstr "Cliquer pour envoyer l'avoir par courriel"
 
-#: CustomerInquiry.php:294
+#: CustomerInquiry.php:294 SupplierInquiry.php:266
 msgid "Click to view the GL entries"
 msgstr ""
 
-#: CustomerInquiry.php:295
+#: CustomerInquiry.php:295 SupplierInquiry.php:267
 msgid "GL Entries"
 msgstr ""
 
@@ -9589,65 +9589,61 @@ msgstr "Transactions Show"
 msgid "Click to preview the credit"
 msgstr "Cliquez pour écouter un extrait du crédit"
 
-#: CustomerTypes.php:6 CustomerTypes.php:21
+#: CustomerTypes.php:5 CustomerTypes.php:20
 #: includes/MainMenuLinksArray.php:476
 msgid "Customer Types"
 msgstr "Types de clients"
 
-#: CustomerTypes.php:22
+#: CustomerTypes.php:21
 msgid "Customer Type Setup"
 msgstr "Type d'installation à la clientèle"
 
-#: CustomerTypes.php:23
+#: CustomerTypes.php:22
 msgid "Add/edit/delete Customer Types"
 msgstr "Ajouter / modifier / supprimer types de clients"
 
-#: CustomerTypes.php:37
+#: CustomerTypes.php:36
 msgid "The customer type name description must be 100 characters or less long"
 msgstr ""
 "La description du nom du client type doit être de 100 caractères ou moins "
 "long"
 
-#: CustomerTypes.php:45
+#: CustomerTypes.php:44
 msgid "The customer type name description must contain at least one character"
 msgstr ""
 "La description du nom du client type doit contenir au moins un caractère"
 
-#: CustomerTypes.php:58
+#: CustomerTypes.php:57
 msgid "You already have a customer type called"
 msgstr "Vous avez déjà un type de client appelé"
 
-#: CustomerTypes.php:69
+#: CustomerTypes.php:68 CustomerTypes.php:82
 msgid "The customer type"
 msgstr "Le type de client"
 
-#: CustomerTypes.php:83
-msgid "The customer type "
-msgstr "Le type de client "
-
-#: CustomerTypes.php:83 PcTypeTabs.php:77 SalesTypes.php:80
+#: CustomerTypes.php:82 PcTypeTabs.php:77 SalesTypes.php:80
 msgid " already exist."
 msgstr " existe déjà."
 
-#: CustomerTypes.php:93 CustomerTypes.php:168
+#: CustomerTypes.php:92 CustomerTypes.php:167
 msgid "Customer type"
 msgstr "Type de client"
 
-#: CustomerTypes.php:93 PO_Items.php:237 PcAssignCashToTab.php:115
+#: CustomerTypes.php:92 PO_Items.php:237 PcAssignCashToTab.php:115
 #: PcClaimExpensesFromTab.php:109 PcExpenses.php:127 PcExpensesTypeTab.php:79
 #: PcTabs.php:142 PcTypeTabs.php:88 SalesTypes.php:90 SelectSalesOrder.php:231
 #: SelectSalesOrder.php:392 SpecialOrder.php:480 SupplierTypes.php:77
 msgid "has been created"
 msgstr "a été créé"
 
-#: CustomerTypes.php:142
+#: CustomerTypes.php:141
 msgid ""
 "The number of transactions using this customer type could not be retrieved"
 msgstr ""
 "Le nombre de transactions en utilisant ce type de client n'a pas pu être "
 "trouvé"
 
-#: CustomerTypes.php:147
+#: CustomerTypes.php:146
 msgid ""
 "Cannot delete this type because customer transactions have been created "
 "using this type"
@@ -9655,11 +9651,11 @@ msgstr ""
 "Impossible de supprimer ce type parce que les transactions des clients ont "
 "été créés à l'aide de ce type"
 
-#: CustomerTypes.php:147
+#: CustomerTypes.php:146
 msgid "transactions using this type"
 msgstr "transactions au moyen de ce type"
 
-#: CustomerTypes.php:153
+#: CustomerTypes.php:152
 msgid ""
 "The number of transactions using this Type record could not be retrieved "
 "because"
@@ -9667,7 +9663,7 @@ msgstr ""
 "Le nombre de transactions en utilisant cette fiche Type n'a pas pu être "
 "récupérés en raison"
 
-#: CustomerTypes.php:157
+#: CustomerTypes.php:156
 msgid ""
 "Cannot delete this type because customers are currently set up to use this "
 "type"
@@ -9675,34 +9671,34 @@ msgstr ""
 "Impossible de supprimer ce type parce que les clients sont actuellement mis "
 "en place pour utiliser ce type"
 
-#: CustomerTypes.php:157
+#: CustomerTypes.php:156
 msgid "customers with this type code"
 msgstr "les clients avec ce type de code"
 
-#: CustomerTypes.php:165 SupplierTypes.php:130
+#: CustomerTypes.php:164 SupplierTypes.php:130
 msgid "The Type record could not be deleted because"
 msgstr "Le dossier type ne pouvait être supprimé car"
 
-#: CustomerTypes.php:189 CustomerTypes.php:253 SupplierTypes.php:153
+#: CustomerTypes.php:188 CustomerTypes.php:252 SupplierTypes.php:153
 #: SupplierTypes.php:220
 msgid "Type ID"
 msgstr "Type ID"
 
-#: CustomerTypes.php:190 CustomerTypes.php:264 SalesTypes.php:190
+#: CustomerTypes.php:189 CustomerTypes.php:263 SalesTypes.php:190
 #: SupplierTypes.php:154 SupplierTypes.php:229
 msgid "Type Name"
 msgstr "Nom Type"
 
-#: CustomerTypes.php:207
+#: CustomerTypes.php:206
 #, php-format
 msgid "Are you sure you wish to delete this Customer Type?"
 msgstr "Etes-vous sûr de vouloir supprimer ce type de client?"
 
-#: CustomerTypes.php:223 SupplierTypes.php:189
+#: CustomerTypes.php:222 SupplierTypes.php:189
 msgid "Show All Types Defined"
 msgstr "Afficher tous les types définis"
 
-#: CustomerTypes.php:265
+#: CustomerTypes.php:264
 msgid "The customer type name is required"
 msgstr ""
 
@@ -12413,7 +12409,7 @@ msgid "GRAND Total"
 msgstr "GRAND TOTAL"
 
 #: FixedAssetDepreciation.php:270 FixedAssetRegister.php:394
-#: includes/DatabaseTranslations.php:52
+#: includes/DatabaseTranslations.php:53
 msgid "Depreciation"
 msgstr "D'amortissement"
 
@@ -18508,7 +18504,7 @@ msgid "Email a Work Order"
 msgstr ""
 
 #: PDFFGLabel.php:202 PDFWOPrint.php:258 PDFWOPrint.php:498
-#: includes/DatabaseTranslations.php:48
+#: includes/DatabaseTranslations.php:49
 msgid "Work Order"
 msgstr ""
 
@@ -18733,7 +18729,7 @@ msgstr "Entrez la date jusqu'à laquelle les opérations doivent être inscrites
 
 #: PDFPeriodStockTransListing.php:42 PrintCustTrans.php:62
 #: PrintCustTransPortrait.php:61 SalesInquiry.php:1096
-#: includes/DatabaseTranslations.php:25
+#: includes/DatabaseTranslations.php:26
 msgid "Sales Invoice"
 msgstr ""
 
@@ -18742,23 +18738,23 @@ msgstr ""
 msgid "Sales Credit Note"
 msgstr "Ventes par avoir"
 
-#: PDFPeriodStockTransListing.php:44 includes/DatabaseTranslations.php:29
+#: PDFPeriodStockTransListing.php:44 includes/DatabaseTranslations.php:30
 msgid "Location Transfer"
 msgstr "Lieu de transfert"
 
-#: PDFPeriodStockTransListing.php:45 includes/DatabaseTranslations.php:30
+#: PDFPeriodStockTransListing.php:45 includes/DatabaseTranslations.php:31
 msgid "Stock Adjustment"
 msgstr "Rajustement des stocks"
 
-#: PDFPeriodStockTransListing.php:46 includes/DatabaseTranslations.php:37
+#: PDFPeriodStockTransListing.php:46 includes/DatabaseTranslations.php:38
 msgid "Purchase Order Delivery"
 msgstr "Livraison de commande"
 
-#: PDFPeriodStockTransListing.php:47 includes/DatabaseTranslations.php:38
+#: PDFPeriodStockTransListing.php:47 includes/DatabaseTranslations.php:39
 msgid "Work Order Receipt"
 msgstr "Réception de la commande de travail"
 
-#: PDFPeriodStockTransListing.php:48 includes/DatabaseTranslations.php:39
+#: PDFPeriodStockTransListing.php:48 includes/DatabaseTranslations.php:40
 msgid "Work Order Issue"
 msgstr "Issue bon de travail"
 
@@ -18855,7 +18851,7 @@ msgid "Enter Another Date"
 msgstr "Entrez une autre date"
 
 #: PDFPickingList.php:204 includes/PDFPickingListHeader.inc:12
-#: includes/DatabaseTranslations.php:32
+#: includes/DatabaseTranslations.php:33
 msgid "Picking List"
 msgstr "Reprenant la liste"
 
@@ -20038,7 +20034,7 @@ msgstr "Vous pouvez les autorisations d'installation"
 #: PO_PDFPurchOrder.php:202 PO_PDFPurchOrder.php:352
 #: PurchaseByPrefSupplier.php:295 SelectSalesOrder.php:231
 #: SelectSalesOrder.php:392 SpecialOrder.php:480
-#: includes/DatabaseTranslations.php:31
+#: includes/DatabaseTranslations.php:32
 msgid "Purchase Order"
 msgstr "Commande d'achat"
 
@@ -25649,7 +25645,7 @@ msgstr "Type d'ordre"
 
 #: SalesInquiry.php:1077 SelectCompletedOrder.php:68
 #: Z_SalesIntegrityCheck.php:126 includes/PDFSalesOrder_generic.inc:17
-#: includes/PDFSalesOrder_generic.inc:20 includes/DatabaseTranslations.php:41
+#: includes/PDFSalesOrder_generic.inc:20 includes/DatabaseTranslations.php:42
 msgid "Sales Order"
 msgstr "Commande"
 
@@ -32225,16 +32221,16 @@ msgstr ""
 msgid "No zero numeric"
 msgstr ""
 
-#: SupplierAllocations.php:24
+#: SupplierAllocations.php:20
 msgid "Supplier Payment"
 msgstr "Paiement des fournisseurs"
 
-#: SupplierAllocations.php:30 SupplierBalsAtPeriodEnd.php:116
+#: SupplierAllocations.php:29 SupplierBalsAtPeriodEnd.php:116
 #: SupplierContacts.php:21 includes/MainMenuLinksArray.php:139
 msgid "Supplier Allocations"
 msgstr "Attribution des fournisseurs"
 
-#: SupplierAllocations.php:39
+#: SupplierAllocations.php:37
 msgid ""
 "try to use the navigation links provided rather than the back button, to "
 "avoid this message in future"
@@ -32980,11 +32976,11 @@ msgid "The supplier details could not be retrieved by the SQL because"
 msgstr ""
 "Les détails avec le fournisseur n'a pas pu être récupéré par le SQL, car"
 
-#: SupplierInquiry.php:127 SupplierInquiry.php:227
+#: SupplierInquiry.php:127 SupplierInquiry.php:226
 msgid "Hold"
 msgstr "Hold"
 
-#: SupplierInquiry.php:131 SupplierInquiry.php:231 SupplierInquiry.php:285
+#: SupplierInquiry.php:131 SupplierInquiry.php:230 SupplierInquiry.php:294
 msgid "Release"
 msgstr "Communiqué"
 
@@ -32992,19 +32988,13 @@ msgstr "Communiqué"
 msgid "The Supplier Transactions could not be updated because"
 msgstr "Les transactions des fournisseurs n'ont pas pu être mis à jour car"
 
-#: SupplierInquiry.php:260 SupplierInquiry.php:330
+#: SupplierInquiry.php:256
+msgid "Click to view payments"
+msgstr ""
+
+#: SupplierInquiry.php:315
 msgid "View Payments"
 msgstr "Paiements Voir"
-
-#: SupplierInquiry.php:261 SupplierInquiry.php:292 SupplierInquiry.php:350
-#, php-format
-msgid "View GL Postings"
-msgstr "Commentaires Voir GL"
-
-#: SupplierInquiry.php:349 SupplierInquiry.php:375
-#, php-format
-msgid "View Allocations"
-msgstr "Allocations Voir"
 
 #: SupplierInvoice.php:16 SupplierInvoice.php:40
 msgid "Enter Supplier Invoice"
@@ -33263,7 +33253,7 @@ msgstr "Il ne peut pas être entré à nouveau"
 msgid "Shipment charge against"
 msgstr "frais d'expédition contre"
 
-#: SupplierInvoice.php:1163 includes/DatabaseTranslations.php:49
+#: SupplierInvoice.php:1163 includes/DatabaseTranslations.php:50
 msgid "Asset Addition"
 msgstr "Ajout d'actifs"
 
@@ -33485,7 +33475,7 @@ msgstr ""
 
 #: SupplierTenderCreate.php:728 SupplierTenders.php:86 SupplierTenders.php:164
 #: SupplierTenders.php:458 SupplierTenders.php:573
-#: includes/DatabaseTranslations.php:46
+#: includes/DatabaseTranslations.php:47
 msgid "Tenders"
 msgstr "Appels d'offres"
 
@@ -39450,7 +39440,7 @@ msgstr "Type de champ"
 msgid "Can field be null"
 msgstr "Peut-être nul sur le terrain"
 
-#: Z_DescribeTable.php:15 includes/DatabaseTranslations.php:58
+#: Z_DescribeTable.php:15 includes/DatabaseTranslations.php:59
 #: install/index.php:1041 reportwriter/languages/en_US/reports.php:65
 msgid "Default"
 msgstr "Par défaut"
@@ -39571,7 +39561,7 @@ msgstr "Envoyer fichier"
 msgid "Update if DebtorNo exists"
 msgstr ""
 
-#: Z_ImportFixedAssets.php:6 includes/DatabaseTranslations.php:53
+#: Z_ImportFixedAssets.php:6 includes/DatabaseTranslations.php:54
 msgid "Import Fixed Assets"
 msgstr "Importer des éléments fixes"
 
@@ -46348,79 +46338,79 @@ msgstr "Rand sud-africain"
 msgid "Zambian kwacha"
 msgstr "Kwacha zambien"
 
-#: includes/DatabaseTranslations.php:21
+#: includes/DatabaseTranslations.php:22
 msgid "Journal - GL"
 msgstr ""
 
-#: includes/DatabaseTranslations.php:22
+#: includes/DatabaseTranslations.php:23
 msgid "Payment - GL"
 msgstr ""
 
-#: includes/DatabaseTranslations.php:23
+#: includes/DatabaseTranslations.php:24
 msgid "Receipt - GL"
 msgstr ""
 
-#: includes/DatabaseTranslations.php:24
+#: includes/DatabaseTranslations.php:25
 msgid "Standing Journal"
 msgstr ""
 
-#: includes/DatabaseTranslations.php:28
+#: includes/DatabaseTranslations.php:29
 msgid "Journal - Debtors"
 msgstr ""
 
-#: includes/DatabaseTranslations.php:33
+#: includes/DatabaseTranslations.php:34
 msgid "Purchase Invoice"
 msgstr ""
 
-#: includes/DatabaseTranslations.php:34
+#: includes/DatabaseTranslations.php:35
 msgid "Debit Note"
 msgstr ""
 
-#: includes/DatabaseTranslations.php:35
+#: includes/DatabaseTranslations.php:36
 msgid "Creditors Payment"
 msgstr ""
 
-#: includes/DatabaseTranslations.php:36
+#: includes/DatabaseTranslations.php:37
 msgid "Creditors Journal"
 msgstr ""
 
-#: includes/DatabaseTranslations.php:40
+#: includes/DatabaseTranslations.php:41
 msgid "Work Order Variance"
 msgstr ""
 
-#: includes/DatabaseTranslations.php:42
+#: includes/DatabaseTranslations.php:43
 msgid "Shipment Close"
 msgstr ""
 
-#: includes/DatabaseTranslations.php:43
+#: includes/DatabaseTranslations.php:44
 msgid "Contract Close"
 msgstr ""
 
-#: includes/DatabaseTranslations.php:44
+#: includes/DatabaseTranslations.php:45
 msgid "Cost Update"
 msgstr ""
 
-#: includes/DatabaseTranslations.php:45
+#: includes/DatabaseTranslations.php:46
 msgid "Exchange Difference"
 msgstr ""
 
-#: includes/DatabaseTranslations.php:47
+#: includes/DatabaseTranslations.php:48
 msgid "Stock Requests"
 msgstr ""
 
-#: includes/DatabaseTranslations.php:50
+#: includes/DatabaseTranslations.php:51
 msgid "Asset Category Change"
 msgstr ""
 
-#: includes/DatabaseTranslations.php:51
+#: includes/DatabaseTranslations.php:52
 msgid "Delete w/down asset"
 msgstr ""
 
-#: includes/DatabaseTranslations.php:54
+#: includes/DatabaseTranslations.php:55
 msgid "Opening Balance"
 msgstr ""
 
-#: includes/DatabaseTranslations.php:55
+#: includes/DatabaseTranslations.php:56
 msgid "Auto Debtor Number"
 msgstr ""
 
