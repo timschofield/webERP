@@ -2,17 +2,13 @@
 /* $Id$ */
 
 /*	Please note that addTextWrap() prints a font-size-height further down than
-	addText() and other functions. Use addText() instead of addTextWrap() to 
+	addText() and other functions. Use addText() instead of addTextWrap() to
 	print left aligned elements.*/
 
-// $PageNumber is initialised in 0 by includes/PDFStarter.php.
-$PageNumber ++;// Increments $PageNumber before printing.
-// Only initiate a new page if its not the first:
-if ($FirstPage) {
-	$FirstPage = False;
-} else {
+if (!$FirstPage){ /* only initiate a new page if its not the first */
 	$pdf->newPage();
 }
+
 $YPos = $Page_Height-$Top_Margin;
 
 $pdf->addJpegFromFile($_SESSION['LogoFile'],$Page_Width/2 -120,$YPos-40,0,60);
@@ -43,14 +39,6 @@ $pdf->line($XPos, $YPos-5,$XPos+225, $YPos-5);
 $pdf->partEllipse($XPos+225, $YPos+5,270,360,10,10);
 /*Finally join up to the top right corner where started */
 $pdf->line($XPos+235, $YPos+5,$XPos+235, $YPos+100);
-/*// Draws a nice curved corner box around the billing details:
-$pdf->RoundRectangle(
-	$Left_Margin,// RoundRectangle $XPos.
-	$YPos+$FontSize+5,// RoundRectangle $YPos.
-	$Page_Width-$Left_Margin-$Right_Margin,// RoundRectangle $Width.
-	$YPos+$FontSize-$Bottom_Margin+5,// RoundRectangle $Height.
-	10,// RoundRectangle $RadiusX.
-	10);// RoundRectangle $RadiusY.*/
 
 $YPos = $Page_Height - $Top_Margin - 10;
 
