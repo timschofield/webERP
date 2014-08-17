@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.11.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-08-14 18:43-0600\n"
-"PO-Revision-Date: 2014-08-15 14:04-0600\n"
+"PO-Revision-Date: 2014-08-16 12:00-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -7332,7 +7332,7 @@ msgstr ""
 
 #: Credit_Invoice.php:404
 msgid "Are you sure you wish to delete this item from the credit?"
-msgstr ""
+msgstr "¿Está seguro de que quiere borrar este artículo del crédito?"
 
 #: Credit_Invoice.php:422
 msgid "Freight cost charged on invoice"
@@ -7543,11 +7543,11 @@ msgstr "Cancelar el costo de los productos para"
 
 #: Credit_Invoice.php:1592
 msgid "Credit note text"
-msgstr "Texto de nota de Crédito"
+msgstr "Texto de la nota de crédito"
 
 #: Credit_Invoice.php:1604
 msgid "Process Credit"
-msgstr "Procesar nota de Crédito"
+msgstr "Procesar crédito"
 
 #: Currencies.php:6 includes/MainMenuLinksArray.php:441
 msgid "Currencies Maintenance"
@@ -10138,7 +10138,7 @@ msgstr "Requerir línea de orden de compra del cliente en orden de venta"
 
 #: Customers.php:1101
 msgid "Contact Deleted"
-msgstr "Contacto Eliminado"
+msgstr "Contacto suprimido"
 
 #: Customers.php:1133
 msgid "Add Contact"
@@ -10155,7 +10155,7 @@ msgstr "Actualizar cliente"
 
 #: Customers.php:1195
 msgid "Delete Customer"
-msgstr "Eliminar cliente"
+msgstr "Suprimir cliente"
 
 #: DailyBankTransactions.php:6
 msgid "Bank Transactions Inquiry"
@@ -10245,7 +10245,7 @@ msgstr ""
 
 #: DailyBankTransactions.php:173 GLJournalInquiry.php:126
 msgid "Select Another Date"
-msgstr "Seleccione Otra Fecha"
+msgstr "Seleccione otra fecha"
 
 #: DailySalesInquiry.php:6 includes/MainMenuLinksArray.php:56
 msgid "Daily Sales Inquiry"
@@ -10261,7 +10261,7 @@ msgstr "Seleccione el mes para el que mostrar las ventas diarias"
 
 #: DailySalesInquiry.php:26
 msgid "Month to Show"
-msgstr "Meses a Mostrar"
+msgstr "Mes a mostrar"
 
 #: DailySalesInquiry.php:70
 msgid "Show Daily Sales For The Selected Month"
@@ -10385,7 +10385,7 @@ msgstr ""
 #: Dashboard.php:359 PrintCustTrans.php:811 PrintCustTransPortrait.php:857
 #: SalesInquiry.php:1087 SupplierInvoice.php:632
 msgid "Invoice Date"
-msgstr "Fecha Factura"
+msgstr "Fecha factura"
 
 #: Dashboard.php:361
 msgid "Amount Due"
@@ -10442,7 +10442,7 @@ msgstr "Fecha de pedido"
 #: Dashboard.php:672 FTP_RadioBeacon.php:55 SelectCompletedOrder.php:560
 #: SelectSalesOrder.php:701 SelectSalesOrder.php:718
 msgid "Req Del Date"
-msgstr "Fecha de Entrega Solicitada"
+msgstr "Fecha de entrega solicitada"
 
 #: Dashboard.php:673 FTP_RadioBeacon.php:56 PO_Header.php:881
 #: PO_Header.php:1134 SelectCompletedOrder.php:561 SelectSalesOrder.php:702

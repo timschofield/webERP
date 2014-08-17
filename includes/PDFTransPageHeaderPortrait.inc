@@ -1,80 +1,83 @@
 <?php
-
 /* $Id$ */
 
+/*	Please note that addTextWrap() prints a font-size-height further down than
+	addText() and other functions. Use addText() instead of addTextWrap() to 
+	print left aligned elements.*/
 
-if (!$FirstPage){ /* only initiate a new page if its not the first */
+// $PageNumber is initialised in 0 by includes/PDFStarter.php.
+$PageNumber ++;// Increments $PageNumber before printing.
+if ($PageNumber>1) {// Inserts a page break if it is not the first page.
 	$pdf->newPage();
 }
-
-$YPos = $Page_Height - $Top_Margin;
+/*// Only initiate a new page if its not the first:
+if ($FirstPage) {
+	$FirstPage = False;
+} else {
+	$pdf->newPage();*/
+}
+$YPos = $Page_Height-$Top_Margin;
 
 // Company Logo
 $pdf->addJpegFromFile($_SESSION['LogoFile'],$Page_Width/2 -118,$YPos-60,0,35);
 
 $FontSize =15;
 if ($InvOrCredit=='Invoice') {
-
-        $pdf->addText($Page_Width/2 - 60, $YPos, $FontSize, _('TAX INVOICE') . ' ');
+	$pdf->addText($Page_Width/2 - 60, $YPos, $FontSize, _('TAX INVOICE') . ' ');
 } else {
 	$pdf->addText($Page_Width/2 - 60, $YPos, $FontSize, _('TAX CREDIT NOTE') . ' ');
 }
 
-// Prints page number
+// Prints page number:
 $FontSize = 10;
 $YPos -= $FontSize; //Downs one line height mesure (addText position is from left-bottom).
-$pdf->addTextWrap($Page_Width-$Left_Margin-72, $YPos, 72, $FontSize, _('Page').' '.$PageNumber, 'right');
+$pdf->addTextWrap($Page_Width-$Right_Margin-100, $YPos, 100, $FontSize,
+	_('Page') . ' ' . $PageNumber, 'right');
 
 
 $XPos = $Page_Width - 265;
 $YPos -= 85;
-/*draw a nice curved corner box around the billing details */
-/*from the top right */
-$pdf->partEllipse($XPos+225,$YPos+67,0,90,10,10);
-/*line to the top left */
-$pdf->line($XPos+225, $YPos+77,$XPos, $YPos+77);
-/*Do top left corner */
-$pdf->partEllipse($XPos, $YPos+67,90,180,10,10);
-/*Do a line to the bottom left corner */
-$pdf->line($XPos-10, $YPos+67,$XPos-10, $YPos-10);
-/*Now do the bottom left corner 180 - 270 coming back west*/
-$pdf->partEllipse($XPos, $YPos-10,180,270,10,10);
-/*Now a line to the bottom right */
-$pdf->line($XPos, $YPos-20,$XPos+225, $YPos-20);
-/*Now do the bottom right corner */
-$pdf->partEllipse($XPos+225, $YPos-10,270,360,10,10);
-/*Finally join up to the top right corner where started */
-$pdf->line($XPos+235, $YPos-10,$XPos+235, $YPos+67);
+// Draws a nice curved corner box around the billing details:
+$pdf->RoundRectangle($XPos-10, $Page_Height-$Top_Margin-15, 245, 101, 10, 10);
+/*// Draws a nice curved corner box around the billing details:
+$pdf->RoundRectangle(
+	$Left_Margin,// RoundRectangle $XPos.
+	$YPos+$FontSize+5,// RoundRectangle $YPos.
+	$Page_Width-$Left_Margin-$Right_Margin,// RoundRectangle $Width.
+	$YPos+$FontSize-$Bottom_Margin+5,// RoundRectangle $Height.
+	10,// RoundRectangle $RadiusX.
+	10);// RoundRectangle $RadiusY.*/
 
+
+$XPos = $Page_Width-268;
 $YPos = $Page_Height - $Top_Margin - 10;
-
 $FontSize = 10;
 $LineHeight = 13;
-$LineCount = 1;
-$pdf->addText($Page_Width-268, $YPos-$LineCount*$LineHeight, $FontSize, _('Number'));
-$pdf->addText($Page_Width-180, $YPos-$LineCount*$LineHeight, $FontSize, $FromTransNo);
-$LineCount += 1;
-$pdf->addText($Page_Width-268, $YPos-$LineCount*$LineHeight, $FontSize, _('Customer Code'));
-$pdf->addText($Page_Width-180, $YPos-$LineCount*$LineHeight, $FontSize, $myrow['debtorno'] . ' ' . _('Branch') . ' ' . $myrow['branchcode']);
-$LineCount += 1;
-$pdf->addText($Page_Width-268, $YPos-$LineCount*$LineHeight, $FontSize, _('Date'));
-$pdf->addText($Page_Width-180, $YPos-$LineCount*$LineHeight, $FontSize, ConvertSQLDate($myrow['trandate']));
+
+$YPos -= $LineHeight;
+$pdf->addText($XPos, $YPos, $FontSize, _('Number'));
+$pdf->addText($XPos+88, $YPos, $FontSize, $FromTransNo);
+$YPos -= $LineHeight;
+$pdf->addText($XPos, $YPos, $FontSize, _('Customer Code'));
+$pdf->addText($XPos+88, $YPos, $FontSize, $myrow['debtorno'] . ' ' . _('Branch') . ' ' . $myrow['branchcode']);
+$YPos -= $LineHeight;
+$pdf->addText($XPos, $YPos, $FontSize, _('Date'));
+$pdf->addText($XPos+88, $YPos, $FontSize, ConvertSQLDate($myrow['trandate']));
 
 if ($InvOrCredit=='Invoice') {
-	$LineCount += 1;
-	$pdf->addText($Page_Width-268, $YPos-$LineCount*$LineHeight, $FontSize, _('Order No'));
-	$pdf->addText($Page_Width-180, $YPos-$LineCount*$LineHeight, $FontSize, $myrow['orderno']);
-	$LineCount += 1;
-	$pdf->addText($Page_Width-268, $YPos-$LineCount*$LineHeight, $FontSize, _('Order Date'));
-	$pdf->addText($Page_Width-180, $YPos-$LineCount*$LineHeight, $FontSize, ConvertSQLDate($myrow['orddate']));
-	$LineCount += 1;
-	$pdf->addText($Page_Width-268, $YPos-$LineCount*$LineHeight, $FontSize, _('Dispatch Detail'));
-	$pdf->addText($Page_Width-180, $YPos-$LineCount*$LineHeight, $FontSize, $myrow['shippername'] . '-' . $myrow['consignment']);
-	$LineCount += 1;
-	$pdf->addText($Page_Width-268, $YPos-$LineCount*$LineHeight, $FontSize, _('Dispatched From'));
-	$pdf->addText($Page_Width-180, $YPos-$LineCount*$LineHeight, $FontSize, $myrow['locationname']);
+	$YPos -= $LineHeight;
+	$pdf->addText($XPos, $YPos, $FontSize, _('Order No'));
+	$pdf->addText($XPos+88, $YPos, $FontSize, $myrow['orderno']);
+	$YPos -= $LineHeight;
+	$pdf->addText($XPos, $YPos, $FontSize, _('Order Date'));
+	$pdf->addText($XPos+88, $YPos, $FontSize, ConvertSQLDate($myrow['orddate']));
+	$YPos -= $LineHeight;
+	$pdf->addText($XPos, $YPos, $FontSize, _('Dispatch Detail'));
+	$pdf->addText($XPos+88, $YPos, $FontSize, $myrow['shippername'] . '-' . $myrow['consignment']);
+	$YPos -= $LineHeight;
+	$pdf->addText($XPos, $YPos, $FontSize, _('Dispatched From'));
+	$pdf->addText($XPos+88, $YPos, $FontSize, $myrow['locationname']);
 }
-
 /*End of the text in the right side box */
 
 /*Now print out company info at the top left */
@@ -147,7 +150,6 @@ if ($myrow['invaddrbranch']==0){
 	$pdf->addText($XPos, $YPos-$LineCount*$LineHeight, $FontSize, html_entity_decode($myrow['brpostaddr3']) . ' ' . html_entity_decode($myrow['brpostaddr4']) . ' ' . html_entity_decode($myrow['brpostaddr5']) . ' ' . html_entity_decode($myrow['brpostaddr6']));
 }
 
-//$XPos = $Page_Width/2;
 $XPos = $Page_Width - 265;
 $YPos = $Page_Height - $Top_Margin - 120;
 
@@ -157,8 +159,8 @@ $LineCount = 0;
 
 if ($InvOrCredit=='Invoice') {
 	$pdf->addText($XPos, $YPos-$LineCount*$LineHeight, $FontSize, _('Delivered To (check Dispatch Detail)') . ':');
-  $FontSize = 10;
-  $LineHeight = 13;
+	$FontSize = 10;
+	$LineHeight = 13;
 	$XPos +=20;
 	$LineCount += 1;
 // Before trying to call htmlspecialchars_decode, check that its supported, if not substitute a compatible version
@@ -203,58 +205,42 @@ if ($InvOrCredit=='Credit'){
 }
 
 $XPos = $Left_Margin;
-
 $YPos = $Page_Height - $Top_Margin - 190;
-$XPos = $Left_Margin;
+/*$XPos = $Left_Margin;*/
 $FontSize = 8;
 
 include($PathPrefix . 'includes/CurrenciesArray.php'); // To get the currency name from the currency code.
-$pdf->addText($Left_Margin, $YPos-8, $FontSize, _('All amounts stated in') . ': ' . $myrow['currcode'] . ' ' . $CurrencyName[$myrow['currcode']]);
+$pdf->addText($Left_Margin, $YPos-8, $FontSize, _('All amounts stated in') . ': ' . $myrow['currcode'] . ' - ' . $CurrencyName[$myrow['currcode']]);
+
+
 
 $BoxHeight = $Page_Height-282;
+// Draws a box with nice round corner for entering line items:
+$pdf->RoundRectangle($Left_Margin, $Bottom_Margin+$BoxHeight+10, $Page_Width-$Right_Margin-$Left_Margin, $BoxHeight+10, 10, 10);
 
-/*draw a box with nice round corner for entering line items */
-/*90 degree arc at top right of box 0 degrees starts a bottom */
-$pdf->partEllipse($Page_Width-$Right_Margin-10, $Bottom_Margin+$BoxHeight,0,90,10,10);
-/*line to the top left */
-$pdf->line($Page_Width-$Right_Margin-10, $Bottom_Margin+$BoxHeight+10,$Left_Margin+10, $Bottom_Margin+$BoxHeight+10);
-/*Dow top left corner */
-$pdf->partEllipse($Left_Margin+10, $Bottom_Margin+$BoxHeight,90,180,10,10);
-/*Do a line to the bottom left corner */
-$pdf->line($Left_Margin, $Bottom_Margin+$BoxHeight,$Left_Margin, $Bottom_Margin+10);
-/*Now do the bottom left corner 180 - 270 coming back west*/
-$pdf->partEllipse($Left_Margin+10, $Bottom_Margin+10,180,270,10,10);
-/*Now a line to the bottom right */
-$pdf->line($Left_Margin+10, $Bottom_Margin,$Page_Width-$Right_Margin-10, $Bottom_Margin);
-/*Now do the bottom right corner */
-$pdf->partEllipse($Page_Width-$Right_Margin-10, $Bottom_Margin+10,270,360,10,10);
-/*Finally join up to the top right corner where started */
-$pdf->line($Page_Width-$Right_Margin, $Bottom_Margin+10,$Page_Width-$Right_Margin, $Bottom_Margin+$BoxHeight);
-
-
-$YPos -= 35;
 /*Set up headings */
-$FontSize=10;
+$YPos -= 11;
+$FontSize = 10;
 $LineHeight = 12;
-$LineCount = 0;
 
-$pdf->addText($Left_Margin+2, ($YPos+$LineHeight)-$LineCount*$LineHeight, $FontSize, _('Cust. Tax Ref') . ':');
+$YPos -= $LineHeight;
+$pdf->addText($Left_Margin+2, $YPos, $FontSize, _('Cust. Tax Ref') . ':');
 /*Print a vertical line */
-$pdf->line($Left_Margin+178, $YPos+$LineHeight,$Left_Margin+178, $YPos-$LineHeight*2+4);
-$pdf->addText($Left_Margin+180, ($YPos+$LineHeight)-$LineCount*$LineHeight, $FontSize, _('Cust. Reference No.') . ':');
+$pdf->line($Left_Margin+178, $YPos,$Left_Margin+178, $YPos-$LineHeight*3+4);
+$pdf->addText($Left_Margin+180, $YPos, $FontSize, _('Cust. Reference No.') . ':');
 /*Print a vertical line */
-$pdf->line($Left_Margin+358, $YPos+$LineHeight,$Left_Margin+358, $YPos-$LineHeight*2+4);
-$pdf->addText($Left_Margin+360, ($YPos+$LineHeight)-$LineCount*$LineHeight, $FontSize, _('Sales Person') . ':');
-$LineCount += 1;
-$pdf->addText($Left_Margin+12, ($YPos+$LineHeight)-$LineCount*$LineHeight, $FontSize, $myrow['taxref']);
-if ($InvOrCredit=='Invoice'){
-	$pdf->addText($Left_Margin+190, ($YPos+$LineHeight)-$LineCount*$LineHeight, $FontSize, $myrow['customerref']);
+$pdf->line($Left_Margin+358, $YPos,$Left_Margin+358, $YPos-$LineHeight*3+4);
+$pdf->addText($Left_Margin+360, $YPos, $FontSize, _('Sales Person') . ':');
+
+$YPos -= $LineHeight;
+$pdf->addText($Left_Margin+12, $YPos, $FontSize, $myrow['taxref']);
+if ($InvOrCredit=='Invoice') {
+	$pdf->addText($Left_Margin+190, $YPos, $FontSize, $myrow['customerref']);
 }
-$pdf->addText($Left_Margin+370, ($YPos+$LineHeight)-$LineCount*$LineHeight, $FontSize, $myrow['salesmanname']);
-
-$YPos -= 20;
+$pdf->addText($Left_Margin+370, $YPos, $FontSize, $myrow['salesmanname']);
 
 /*draw a line */
+$YPos -= 20;
 $pdf->line($XPos, $YPos,$Page_Width-$Right_Margin, $YPos);
 
 $YPos -= 12;
@@ -269,9 +255,8 @@ $pdf->addText($Left_Margin+390, $YPos+12, $FontSize, _('UOM'));
 $pdf->addText($Left_Margin+420, $YPos+12, $FontSize, _('Disc.'));
 $pdf->addTextWrap($Page_Width-$Left_Margin-72, $YPos, 72, $FontSize, _('Price'), 'right');
 
-$YPos-=0;
-
 /*draw a line */
+$YPos-=0;
 $pdf->line($XPos, $YPos,$Page_Width-$Right_Margin, $YPos);
 
 $YPos -= ($line_height);

@@ -30,7 +30,14 @@
     <li>Updating the stock quantities for all lines of the invoice and the components of all assemblies included on the order.</li>
 </ul>
 
-<p>If the order is not to be invoiced to the customer or branch specified in the order, or pricing is to be changed then the order must be changed. These elements cannot be altered at the time of invoice, they must be altered in the order before it is confirmed for invoicing. Once an invoice is created it cannot be deleted or modified. The order is also updated with the invoice number that it was dispatched on.</p><!-- Help End: SelectSalesOrder -->
+<p>If the order is not to be invoiced to the customer or branch specified in the order, or pricing is to be changed then the order must be changed. These elements cannot be altered at the time of invoice, they must be altered in the order before it is confirmed for invoicing. Once an invoice is created it cannot be deleted or modified. The order is also updated with the invoice number that it was dispatched on.</p>
+
+<p>Fields:</p>
+<ul>
+<li><b>Invoice Text</b>: This is the comment text of the invoice. It goes after the items lines and before the footer (Subtotal, Freight, Tax, Total invoice). Later, it will be shown in the "<i>Customer Inquiry</i>" on the "<i>Comments</i>" column. Database field: debtortrans.invtext.</li>
+</ul>
+
+<!-- Help End: SelectSalesOrder -->
 
 <div class="floatright">
     <a class="minitext" href="#top">⬆ Top</a>
