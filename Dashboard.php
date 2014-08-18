@@ -1,5 +1,4 @@
 <?php
-
 /* $Id: Dashboard.php 6338 2013-09-28 05:10:46Z daintree $*/
 
 include('includes/session.inc');
@@ -296,7 +295,7 @@ if (in_array($DebtorSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset(
 					<td class="number" style="color:orange;">%s</td>
 					<td class="number" style="color:red;">%s</td>
 					<td class="number" style="color:red;">%s</td>',
-					$DetailTrans['typename'],
+					_($DetailTrans['typename']),
 					$DetailTrans['transno'],
 					$DisplayTranDate,
 					$DisplayDueDate,
@@ -483,7 +482,7 @@ if (in_array($PayeeSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($
 					<td>%s</td>
 					<td class="number"' . $DisplayFormat . '>%s</td>
 					<td' . $DisplayFormat . '>%s</td>',
-					$DetailTrans['typename'],
+					_($DetailTrans['typename']),
 					$DislayTranDate,
 					$PayNow,
 					locale_number_format($DetailTrans['balance'],$CurrDecimalPlaces),
@@ -524,7 +523,7 @@ if (in_array($PayeeSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($
 }  //PayeeSecurity
 if (in_array($CashSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($CashSecurity)) {
 	include('includes/GLPostings.inc');
-	echo '<br /><b>Bank and Credit Card Balances</b>
+	echo '<br /><b>' . _('Bank and Credit Card Balances') . '</b>
 			<table class="selection"><tbody>';
 	$FirstPeriodSelected = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);
 	$LastPeriodSelected = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);
@@ -651,7 +650,7 @@ if (in_array($CashSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($C
 } //CashSecurity
 
 if (in_array($OrderSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($OrderSecurity)) {
-	echo '<br /><b>Outstanding Orders</b>';
+	echo '<br /><b>' . _('Outstanding Orders') . '</b>';
 
 	echo '<table cellpadding="2" width="95%" class="selection">';
 	$RecentDate = Date(($_SESSION['DefaultDateFormat']), strtotime($RecentDate . ' - 1 days'));
