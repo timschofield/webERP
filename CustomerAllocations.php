@@ -7,13 +7,14 @@
 	3. No parameters to show all outstanding credits and receipts yet to be allocated.
 */
 
+include('includes/DefineCustAllocsClass.php');// Before includes/session.inc **********
+
 include('includes/session.inc');
 $Title = _('Customer Receipt') . '/' . _('Credit Note Allocations');
 $ViewTopic= 'ARTransactions';
 $BookMark = 'CustomerAllocations';
 include('includes/header.inc');
 
-include('includes/DefineCustAllocsClass.php');
 include('includes/SQL_CommonFunctions.inc');
 
 if ( isset($_POST['Cancel']) ) {
@@ -207,7 +208,7 @@ if (isset($_POST['UpdateDatabase'])) {
 }
 
 if (isset($_GET['AllocTrans'])) {
-	
+
 	if (isset($_SESSION['Alloc'])) {
 		unset($_SESSION['Alloc']->Allocs);
 		unset($_SESSION['Alloc']);
@@ -246,7 +247,7 @@ if (isset($_GET['AllocTrans'])) {
 	$_SESSION['Alloc']->DebtorNo		= $myrow['debtorno'];
 	$_SESSION['Alloc']->CustomerName	= $myrow['name'];
 	$_SESSION['Alloc']->TransType		= $myrow['type'];
-	$_SESSION['Alloc']->TransTypeName	= _($myrow['typename']);
+	$_SESSION['Alloc']->TransTypeName	= $myrow['typename'];//= _($myrow['typename']); **********
 	$_SESSION['Alloc']->TransNo		= $myrow['transno'];
 	$_SESSION['Alloc']->TransExRate	= $myrow['rate'];
 	$_SESSION['Alloc']->TransAmt		= $myrow['total'];
@@ -278,7 +279,7 @@ if (isset($_GET['AllocTrans'])) {
 
 	while ($myrow=DB_fetch_array($Result)) {
 		$_SESSION['Alloc']->add_to_AllocsAllocn ($myrow['id'],
-												_($myrow['typename']),
+												$myrow['typename'],//_($myrow['typename']), **********
 												$myrow['transno'],
 												ConvertSQLDate($myrow['trandate']),
 												0,
@@ -320,7 +321,7 @@ if (isset($_GET['AllocTrans'])) {
 	while ($myrow=DB_fetch_array($Result)) {
 		$DiffOnExchThisOne = ($myrow['amt']/$myrow['rate']) - ($myrow['amt']/$_SESSION['Alloc']->TransExRate);
 		$_SESSION['Alloc']->add_to_AllocsAllocn ($myrow['id'],
-												_($myrow['typename']),
+												$myrow['typename'],//_($myrow['typename']), **********
 												$myrow['transno'],
 												ConvertSQLDate($myrow['trandate']),
 												$myrow['amt'],
@@ -624,7 +625,6 @@ if (isset($_POST['AllocTrans'])) {
 	echo '</table>
 		<br />';
 }
-
 
 include('includes/footer.inc');
 
