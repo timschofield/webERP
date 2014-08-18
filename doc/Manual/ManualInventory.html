@@ -133,6 +133,7 @@
     <h3>Part Descriptions</h3>
 
     <p>A description of the stock item - can be up to 50 characters long. A description is required for each stock item. This description is used in the look up boxes provided each time the stock item is invoiced, credited or adjusted. There is also the facility to enter long descriptions for each part which show on the screens that customers could access to place orders. This field allows very long descriptions or even features and benefits to be described for the item. The intention for this field is that it could be used for producing a company catalogue or for online ordering by customers who may need more information about a product. It is only the description (short) that displays on invoices and credit notes.</p>
+
     <p>The description translations can be maintained within the same parameters above. The translations that can be maintained are set in the system configuration screen. Any number of translations can be maintained. These translations are used to print on customer invoices if the customer is set up to use one of the languages for which translations are maintained. If not translation is available then the fall back is to the default description.</p>
 
     <h3>Categories</h3>
@@ -324,7 +325,9 @@
 
     <p>Only transactions entered after the charge will be created at the new cost. Sales analysis will refer to the costs as at the time when the transactions are created.</p>
 
-    <p>There is a utility available from the Z_index.php page that allows the sales analysis for a specified period to be updated with the current costs. This utility takes the quantity sold and multiplies the current standard cost by the quantity to re-calculate the cost of each sales analysis record in the period selected - the sales analysis data is updated. This will mean that the general ledger costs will then differ to the sales analysis cost for the period since the general ledger postings are created at the time of invoicing/crediting. <!-- Help End: StockCostUpdate --></p><!-- Help Begin: SelectProduct -->
+    <p>There is a utility available from the Z_index.php page that allows the sales analysis for a specified period to be updated with the current costs. This utility takes the quantity sold and multiplies the current standard cost by the quantity to re-calculate the cost of each sales analysis record in the period selected - the sales analysis data is updated. This will mean that the general ledger costs will then differ to the sales analysis cost for the period since the general ledger postings are created at the time of invoicing/crediting. <!-- Help End: StockCostUpdate --></p>
+
+<!-- Help Begin: SelectProduct -->
 
     <div class="floatright">
         <a class="minitext" href="#top">⬆ Top</a>
@@ -445,70 +448,103 @@
 
     <p>This field declares the type of resource that the stock category represents and is one of Finished Goods, Raw Materials, Labour or Dummy Inventory. This field is used to distinguish labour type stock items from other components for the purposes of calculating work centre overhead in the cost roll up. It is also used for ordering stock reports to ensure raw materials and finished goods are grouped together. <!-- Help End: StockCategories --></p>
 
-    <p><!-- Help Begin: Locations --></p>
+    <p><!-- Help Begin: Inventory Locations Maintenance --></p>
 
     <div class="floatright">
         <a class="minitext" href="#top">⬆ Top</a>
     </div>
 
-    <h2>Inventory Location Maintenance</h2>
+	<h2><a id="Locations">Inventory Locations Maintenance</a></h2>
 
     <p>A table of locations is maintained which contains a location code of 5 characters and the location description (up to 20 characters). The description is the field used in lookups on invoicing and crediting. To keep the database as compact as possible it is the code which is stored against stock movement transactions. As many locations as required can be set up. When a new location is defined, location records for all items in the database are created. When a location is deleted, so too are all the item location records. However, a location record cannot be deleted if there are stock movements or stock held for any part in the location. Since the location represents the physical location from where goods/services are supplied it is important for determining the tax applicable on a sale. The governing tax authority must specified with the location record. It is used in the calculation of the applicable rate of tax in conjunction with the tax authority of the customer branch being delivered to and the tax level of the item being sold.</p>
 
-    <p>Note: Location codes cannot be modified retrospectively. Neither can they be deleted if there are stock movements, users (default location) or customer branch records set up to receive stock from the location. <!-- Help End: Locations --></p><!-- Help Begin: StockAdjustments -->
+    <p>Note: Location codes cannot be modified retrospectively. Neither can they be deleted if there are stock movements, users (default location) or customer branch records set up to receive stock from the location.</p>
 
+<!-- Help End: Inventory Locations Maintenance -->
+
+<!-- Help Begin: Inventory Location Authorised Users Maintenance -->
+    <div class="floatright">
+        <a class="minitext" href="#top">⬆ Top</a>
+    </div>
+
+	<h2><a id="LocationUsers">Inventory Location Authorised Users Maintenance</a></h2>
+
+	<p>.</p>
+
+<!-- Help End: Inventory Location Authorised Users Maintenance -->
+
+<!-- Help Begin: StockAdjustments -->
+    <div class="floatright">
+        <a class="minitext" href="#top">⬆ Top</a>
+    </div>
     <h2><a id="InventoryAdjustments">Inventory Adjustments</a></h2>
+
     <p>Inventory can be written on or off for individual stock items using this option. Corrections to physical stocks and deliveries of stock can be entered using this option. Adjustments can be entered by selecting the link on the SelectProduct.php page or directly from the menu under transactions. Using the second link, the item code must be known, there is no facility to select an item code from this page.</p>
 
     <p>If Stock GL integration is enabled from the company preferences page (under the setup tab), then the system creates the necessary journals in the general ledger to update the stock account and the profit and loss account stock adjustment account specified in the stock category record. (see Inventory Categories above and also see General Ledger Integration later)</p>
 
     <p>Note: Inventory Adjustments are not possible with kit set, assembly or dummy stock items since no stock record is maintained for these items.</p>
 
-    <p>Inventory adjustments for controlled items must select the batches/serial numbers being adjusted. <!-- Help End: StockAdjustments --></p><!-- Help Begin: StockTransfers -->
+    <p>Inventory adjustments for controlled items must select the batches/serial numbers being adjusted.</p>
 
-    <p>Bulk inventory transfers consisting of many parts can be set up. These allow a docket to be produced to be sent with the dispatch of the goods. The transfer is not actually effected until the transfer is received in by the receiving stock location. <!-- Help End: StockTransfers --></p>
-    <div class="floatright">
-        <a class="minitext" href="#top">? Top</a>
-    </div>
+<!-- Help End: StockAdjustments -->
 
-    <h2><a id="InventoryRequests">Internal Stock Requests</a></h2>
-
-    <p>Internal departments of an organisation to make requests for consumable items from a particular stock location.</p>
-    <p>Departments are created via the Inventory section of the setup module. The name of the department must be entered, and the userid of the person who will be responsible for authorising the requests from that department must be selected here.</p>
-  <p>Each user can be given permission to create internal stock requests for a particular department, or they can have permission to create requests for all departments.</p>
-  <p>Individual stock locations have a flag that can be set to allow or disallow internal stock requests to be fulfilled from that location.</p>
-  <p>Also each user role, can have specific stock categories assigned to it for which intyernal stock requests can be created. These are created in the Maintain Internal Stock Categories to User Roles section of the setup module.</p>
-
-  <ul>
-    <li>
-       <h3><a id="CreateRequest">Create a New Internal Stock Request</a></h3>
-      <p>An internal stock request is created in two parts. Firstly the header, which contains the Department that requires the items, the location that you wish the request to be fulfilled from, the date by which you require the items, and any narrative you wish to add to the request.</p>
-      <p>Secondly the items required are selected and the quantities required are entered.</p>
-      <p>Once you are happy that you have all the items and quantities enetered, submit the request for authorisation.</p>
-    </li>
-    <li>
-      <h3><a id="AuthoriseRequest">Authorise Internal Stock Requests</a></h3>
-
-      <p>When a user chooses this option they will see all unauthorised stock requests that they are allowed to authorise. No other requests will appear. By ticking the authorise checkbox, and clicking on the update button they will authorise this request to be fulfilled.</p>
-    </li>
-    <li>
-      <h3><a id="FulfilRequest">Fulfil Internal Stock Requests</a></h3>
-      <p>When the warehouse open this option for their own warehouse, they will see any internal stock requests that are awaiting fulfillment. They can either fulfil all or part of a request. If not all of the request is fulfilled, but the rest will not be, the request can be marked as completed. Also a GL tag can be chosen to tag that entry against.</p>
-    </li>
-  </ul>
 
 
     <div class="floatright">
         <a class="minitext" href="#top">⬆ Top</a>
     </div>
+	<h2><a id="InventoryRequests">Internal Stock Requests</a></h2>
 
+    <p>Internal departments of an organisation to make requests for consumable items from a particular stock location.</p>
+
+	<p>Departments are created via the Inventory section of the setup module. The name of the department must be entered, and the userid of the person who will be responsible for authorising the requests from that department must be selected here.</p>
+
+	<p>Each user can be given permission to create internal stock requests for a particular department, or they can have permission to create requests for all departments.</p>
+
+	<p>Individual stock locations have a flag that can be set to allow or disallow internal stock requests to be fulfilled from that location.</p>
+
+	<p>Also each user role, can have specific stock categories assigned to it for which intyernal stock requests can be created. These are created in the Maintain Internal Stock Categories to User Roles section of the setup module.</p>
+
+  <ul>
+    <li>
+       <h3><a id="CreateRequest">Create a New Internal Stock Request</a></h3>
+      <p>An internal stock request is created in two parts. Firstly the header, which contains the Department that requires the items, the location that you wish the request to be fulfilled from, the date by which you require the items, and any narrative you wish to add to the request.</p>
+
+      <p>Secondly the items required are selected and the quantities required are entered.</p>
+
+      <p>Once you are happy that you have all the items and quantities enetered, submit the request for authorisation.</p>
+
+    </li>
+    <li>
+      <h3><a id="AuthoriseRequest">Authorise Internal Stock Requests</a></h3>
+
+      <p>When a user chooses this option they will see all unauthorised stock requests that they are allowed to authorise. No other requests will appear. By ticking the authorise checkbox, and clicking on the update button they will authorise this request to be fulfilled.</p>
+
+    </li>
+    <li>
+      <h3><a id="FulfilRequest">Fulfil Internal Stock Requests</a></h3>
+      <p>When the warehouse open this option for their own warehouse, they will see any internal stock requests that are awaiting fulfillment. They can either fulfil all or part of a request. If not all of the request is fulfilled, but the rest will not be, the request can be marked as completed. Also a GL tag can be chosen to tag that entry against.</p>
+
+    </li>
+  </ul>
+
+
+<!-- Help Begin: StockTransfers -->
+    <div class="floatright">
+        <a class="minitext" href="#top">⬆ Top</a>
+    </div>
     <h2><a id="LocationTransfers">Inventory Location Transfers</a></h2>
 
     <p>Transfers of inventory between locations need to take stock off the sending location and increase the stock in the receiving location. This is effected in one transaction by entering a stock transfer. In the same way as adjustments these can be accessed either from the SelectProduct.php page which is linked to from every page on the top header banner or directly from the menu - inventory tab under the transactions section. All that is required is the location from and to, the date and the quantity being sent. If the business wishes to record inventory in transit an additional in transit location needs to be established and a transfer to the transit location performed when the stock is dispatched and a further location transfer from the transit location to the receiving location when the stock is received. Stock location transfers are shown on stock movement inquiries.</p>
 
     <p>Note: Inventory Location Transfers are not possible with kit set, assembly or dummy stock items since no stock record is maintained for these items.</p>
 
-    <p>Bulk inventory transfers consisting of many parts can be set up effective from 2.9. These allow a docket to be produced to be sent with the dispatch of the goods. The transfer is not actually effected until the transfer is received in by the receiving stock location. <!-- Help End: StockTransfers --></p>
+    <p>Bulk inventory transfers consisting of many parts can be set up. These allow a docket to be produced to be sent with the dispatch of the goods. The transfer is not actually effected until the transfer is received in by the receiving stock location.</p>
+
+<!-- Help End: StockTransfers -->
+
+
 
     <div class="floatright">
         <a class="minitext" href="#top">⬆ Top</a>
@@ -526,7 +562,9 @@
         <li>Inventory Usage</li>
     </ul>
 
-    <p>All stock inquiries are performed from the product selection form. Once a product has been selected the links to the various relevant inquiries will show.</p><!-- Help Begin: StockStatus -->
+    <p>All stock inquiries are performed from the product selection form. Once a product has been selected the links to the various relevant inquiries will show.</p>
+
+<!-- Help Begin: StockStatus -->
 
     <h3>Inventory Status inquiries</h3>
 
@@ -546,7 +584,9 @@
 
     <p>Note: Inventory movement inquiries are possible on dummy and assembly stock items. However, since dummy items are not physical stock items, no record of the amount of stock and the location of where held (there is none held) are maintained. The location inquiry will always be zero for a dummy/assembly and kit set items. When a dummy stock item, or an assembly or kit set item is selected the link to the stock status inquiry is not available.</p>
 
-    <p>If the stock movement was an invoice or a credit the customer and the price in the currency invoiced or credited will show. <!-- Help End: StockMovements --></p><!-- Help Begin: StockUsage -->
+    <p>If the stock movement was an invoice or a credit the customer and the price in the currency invoiced or credited will show. <!-- Help End: StockMovements --></p>
+
+<!-- Help Begin: StockUsage -->
 
     <h3>Inventory Usage inquiries</h3>
 
@@ -566,7 +606,9 @@
 
     <p>-0 0 1 * * root /usr/bin/wget <a href="http://localhost/web-erp/MailInventoryValuation.php">http://localhost/web-erp/MailInventoryValuation.php</a></p>
 
-    <p>since the page has no output - it would be pointless running it in a web browser although it would initiate another email to the defined recipients. <!-- Help End: InventoryValuation --></p><!-- Help Begin: InventoryPlanning -->
+    <p>since the page has no output - it would be pointless running it in a web browser although it would initiate another email to the defined recipients. <!-- Help End: InventoryValuation --></p>
+
+<!-- Help Begin: InventoryPlanning -->
 
     <h3><a id="PlanningReport">Inventory Planning Report</a></h3>
 
@@ -584,7 +626,9 @@
     </ul>
     <p>
 
-    <p>The Inventory Planning Reports are run from the Inventory tab of the main menu under the Inquiries and Reports section. <!-- Help End: InventoryPlanning --></p><!-- Help Begin: StockCheck -->
+    <p>The Inventory Planning Reports are run from the Inventory tab of the main menu under the Inquiries and Reports section. <!-- Help End: InventoryPlanning --></p>
+
+<!-- Help Begin: StockCheck -->
 
     <div class="floatright">
         <a class="minitext" href="#top">⬆ Top</a>
@@ -631,6 +675,7 @@
     <p>Once happy that the adjustments to be made are correct the report can be run again with the option to Report and Close the Inventory Comparison File and Process Adjustments as Necessary.</p>
 
     <p>There is no going back on this process - if you didn't mean to process these adjustments they must all be reversed manually. Be very sure when running the comparison in this mode.</p>
+
     
     <h4>Additional Notes on Stock Checks:</h4>
     
@@ -639,9 +684,11 @@
     <p>It doesn't matter how many times you enter the same item code all entries are added together for the same stock item to accumulate to a total and the comparison report shows each entry - and you can reference to an aisle/row etc and/or the count sheet/counter if you want to go back and double check a count and/or the input. There is no need to manually add stock of the same part counted in for example 12 different places throughout the warehouse (although such a warehouse might need a bit of reorganisation) as the system does this for you.</p>
 
     <p>When you create the stock check  it looks at the system quantity at the location being counted and stores that quantity - subsequent movements are ignored.  If you carry on selling then these will not be taken into account - you need to count at the time when you create the stock check. All deliveries should be entered in - selling must stop (there is just no other way to ensure an accurate count). Ideally stock checks should be done after hours. Once the count is complete for all the quantitities, selling can resume. There is no panic with the data entry as the stock take adjustments created are derived based on the stock at the time the stock check was created (and the stock counted). You can only count one location at a time.</p>
+
     
     <p>Creating a new stock check will over-write an existing stock check - so if you have entered counts and then create a new stock check it is possible to wipe out a lot of work - only create a new stock check once the previous one has been updated. You can run the comparison report without updating to see what adjustments would be created - and do any necessary double counts if need be. If need be additional quantities can be entered for items that were missed or negative quantities for errors where stock was over counted. The comparison can then be rerun. Finally when happy run the comparison report in update mode to complete the stock check.</p>
 
     <p>The only problem with doing the data input at your leisure subsequently is that any recheck will potentially be after the stock has moved by additional sales or arrivals of new stock. However, the stock check can be run again for those items that need a recount</p>
+
     <!-- Help End: StockCheck -->
 </div>
