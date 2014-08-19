@@ -47,14 +47,22 @@ if (isset($_SESSION['HTTPS_Only']) AND $_SESSION['HTTPS_Only']==1){
 
 
 function CryptPass( $Password ) {
-	global $CryptFunction;
-	if ( $CryptFunction == 'sha1' ) {
-		return sha1($Password);
-	} elseif ( $CryptFunction == 'md5' ) {
-		return md5($Password);
-	} else {
-		return $Password;
-	}
+    if (PHP_VERSION_ID < 50500) {
+        $salt = base64_encode(mcrypt_create_iv(22, MCRYPT_DEV_URANDOM));
+        $salt = str_replace('+', '.', $salt);
+        $hash = crypt($Password, '$2y$10$'.$salt.'$');
+    } else {
+        $hash = password_hash($Password,PASSWORD_DEFAULT);
+    }
+    return $hash;
+ }
+ 
+ function VerifyPass($Password,$Hash) {
+     if(PHP_VERSION_ID < 50500) {
+         return (crypt($Password,$Hash)==$Hash);
+     } else {
+         return password_verify($Password,$Hash);
+     }
  }
 
 // API wrapper for DB issues - no HTML output, AND remember any error message

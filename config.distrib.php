@@ -70,11 +70,6 @@ $MaximumExecutionTime =120;
 //this can be left commented out
 //$SessionSavePath = '/tmp';
 
-// which encryption function should be used
-//$CryptFunction = 'md5'; // MD5 Hash
-$CryptFunction = 'sha1'; // SHA1 Hash
-//$CryptFunction = ''; // Plain Text
-
 //Setting to 12 or 24 determines the format of the clock display at the end of all screens
 $DefaultClock = 12;
 //$DefaultClock = 24;

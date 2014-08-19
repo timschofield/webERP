@@ -9191,8 +9191,8 @@ INSERT INTO `workorders` VALUES (32,'TOR','2013-07-21','2013-06-21',32.5,0);
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('admin','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','','admin@weberp.org','MEL',8,1,'2014-02-08 15:26:35','','A4','1,1,1,1,1,1,1,1,1,1,1,',0,50,'fluid','en_GB.utf8',3,0);
-INSERT INTO `www_users` VALUES ('WEB0000017','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Phil Daintree','WEB0000017','','','+64(0)275567890','phil@logicworks.co.nz','TOR',7,0,NULL,'WEB0000017','A4','0,0,0,0,0,0,0,0,0,0,0',0,30,'silverwolf','en_GB.utf8',0,0);
+INSERT INTO `www_users` VALUES ('admin','$2y$10$dXQ1ehIVzIS8i9G3sK34ROkJCxHO.O0pRlgmRLj.YL2rYH5DF45Ri','Demonstration user','','','','','admin@weberp.org','MEL',8,1,'2014-02-08 15:26:35','','A4','1,1,1,1,1,1,1,1,1,1,1,',0,50,'fluid','en_GB.utf8',3,0);
+INSERT INTO `www_users` VALUES ('WEB0000017','$2y$10$dXQ1ehIVzIS8i9G3sK34ROkJCxHO.O0pRlgmRLj.YL2rYH5DF45Ri','Phil Daintree','WEB0000017','','','+64(0)275567890','phil@logicworks.co.nz','TOR',7,0,NULL,'WEB0000017','A4','0,0,0,0,0,0,0,0,0,0,0',0,30,'silverwolf','en_GB.utf8',0,0);
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

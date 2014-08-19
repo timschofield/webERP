@@ -99,7 +99,7 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 	$Theme = (isset($_SESSION['Theme'])) ? $_SESSION['Theme'] : 'gel';
 	switch ($rc) {
 	case  UL_OK; //user logged in successfully
-		include($PathPrefix . 'includes/LanguageSetup.php'); //set up the language of the user
+		include($PathPrefix . 'includes/LanguageSetup.php'); //set up the language
 		break;
 
 	case UL_SHOWLOGIN:
@@ -294,14 +294,22 @@ if (in_array($_SESSION['PageSecurityArray']['WWW_Users.php'], $_SESSION['Allowed
 	$debug = 0; //don't allow debug messages
 }
 function CryptPass( $Password ) {
-		global $CryptFunction;
-		if ( $CryptFunction == 'sha1' ) {
-			return sha1($Password);
-		} elseif ( $CryptFunction == 'md5' ) {
-			return md5($Password);
-	} else {
-			return $Password;
-		}
+    if (PHP_VERSION_ID < 50500) {
+        $salt = base64_encode(mcrypt_create_iv(22, MCRYPT_DEV_URANDOM));
+        $salt = str_replace('+', '.', $salt);
+        $hash = crypt($Password, '$2y$10$'.$salt.'$');
+    } else {
+        $hash = password_hash($Password,PASSWORD_DEFAULT);
+    }
+    return $hash;
+ }
+ 
+ function VerifyPass($Password,$Hash) {
+     if(PHP_VERSION_ID < 50500) {
+         return (crypt($Password,$Hash)==$Hash);
+     } else {
+         return password_verify($Password,$Hash);
+     }
  }
 
 

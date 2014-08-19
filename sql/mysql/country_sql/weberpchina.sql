@@ -4813,7 +4813,7 @@ CREATE TABLE IF NOT EXISTS `www_users` (
 -- Dumping data for table weberpcn.www_users: ~1 rows (approximately)
 /*!40000 ALTER TABLE `www_users` DISABLE KEYS */;
 INSERT INTO `www_users` (`userid`, `password`, `realname`, `customerid`, `supplierid`, `salesman`, `phone`, `email`, `defaultlocation`, `fullaccess`, `cancreatetender`, `lastvisitdate`, `branchcode`, `pagesize`, `modulesallowed`, `blocked`, `displayrecordsmax`, `theme`, `language`, `pdflanguage`, `department`) VALUES
-	('admin', 'f865b53623b121fd34ee5426c792e5c33af8c227', '张三', '', '', '', '', 'admin@weberp.org', 'MEL', 8, 1, '2013-11-18 07:50:02', '', 'A4', '1,1,1,1,1,1,1,1,1,1,1,', 0, 50, 'fluid', 'zh_CN.utf8', 2, 0);
+	('admin', '$2y$10$e7xelMwFyXZd.Ap5ssqDhutlfNIY3yvckOYFb9EP0vSGG.HkuCVQm', '张三', '', '', '', '', 'admin@weberp.org', 'MEL', 8, 1, '2013-11-18 07:50:02', '', 'A4', '1,1,1,1,1,1,1,1,1,1,1,', 0, 50, 'fluid', 'zh_CN.utf8', 2, 0);
 /*!40000 ALTER TABLE `www_users` ENABLE KEYS */;
 /*!40014 SET FOREIGN_KEY_CHECKS=1 */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
