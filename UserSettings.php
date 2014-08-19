@@ -2,11 +2,11 @@
 
 /* $Id$*/
 
-include('includes/session_views.inc');
+include('includes/session.inc');
 $Title = _('User Settings');
-include('includes/header_views.inc');
+include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="'.$MainView->getStyleLink() .'/images/user.png" title="' .
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/user.png" title="' .
 	_('User Settings') . '" alt="" />' . ' ' . _('User Settings') . '</p>';
 
 $PDFLanguages = array(_('Latin Western Languages - Times'),
@@ -90,58 +90,76 @@ if (isset($_POST['Modify'])) {
 	  // update the session variables to reflect user changes on-the-fly
 		$_SESSION['DisplayRecordsMax'] = $_POST['DisplayRecordsMax'];
 		$_SESSION['Theme'] = trim($_POST['Theme']); /*already set by session.inc but for completeness */
-        $_SESSION['Style'] = trim($_POST['Style']);
-		$Theme = $_SESSION['Style'];
+		$Theme = $_SESSION['Theme'];
 		$_SESSION['Language'] = trim($_POST['Language']);
 		$_SESSION['PDFLanguage'] = $_POST['PDFLanguage'];
 		include ('includes/LanguageSetup.php'); // After last changes in LanguageSetup.php, is it required to update?
 	}
 }
 
+echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+echo '<div>';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-$UserForm = $MainView->createForm();
-$UserForm->setAction(htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'));
-$UserForm->addHiddenControl('RealName',$_SESSION['UsersRealName']);
-//addControl($key,$tabindex,$type,$caption = null,$settings = null,$htmlclass = null,$row = null,$order = null,$dimensions = null)
-$UserForm->addControl(1,-1,'static',_('User ID') . ':',array('text' => $_SESSION['UserID']),null,1);
-$UserForm->addControl(2,-1,'static',_('User Name') . ':',array('text' => $_SESSION['UsersRealName']),null,1);
-
-if (!isset($_POST['DisplayRecordsMax']) OR $_POST['DisplayRecordsMax']=='') {
+If (!isset($_POST['DisplayRecordsMax']) OR $_POST['DisplayRecordsMax']=='') {
 
   $_POST['DisplayRecordsMax'] = $_SESSION['DefaultDisplayRecordsMax'];
 
 }
-//addControl($key,$tabindex,$type,$caption = null,$settings = null,$htmlclass = null,$row = null,$order = null,$dimensions = null)
-$UserForm->addControl(3,1,'text',_('Maximum Number of Records to Display') . ':',array( 'value' => $_POST['DisplayRecordsMax'],
-                                                                                        'name' => 'DisplayRecordsMax',
-                                                                                        'size' => 3,
-                                                                                        'maxlength' => 3,
-                                                                                        'required' => true),'integer');
-                                                                                        
-$UserForm->addControl(4,2,'select', _('Language') . ':',array('name' => 'Language'));
+
+echo '<table class="selection">
+		<tr>
+			<td>' . _('User ID') . ':</td>
+			<td>' . $_SESSION['UserID'] . '</td>
+		</tr>';
+
+echo '<tr>
+		<td>' . _('User Name') . ':</td>
+		<td>' . $_SESSION['UsersRealName'] . '
+		<input type="hidden" name="RealName" value="'.$_SESSION['UsersRealName'].'" /></td></tr>';
+
+echo '<tr>
+	<td>' . _('Maximum Number of Records to Display') . ':</td>
+	<td><input type="text" class="integer" required="required" title="'._('The input must be positive integer').'" name="DisplayRecordsMax" size="3" maxlength="3" value="' . $_POST['DisplayRecordsMax'] . '"  /></td>
+	</tr>';
+
+
+echo '<tr>
+	<td>' . _('Language') . ':</td>
+	<td><select name="Language">';
+
 if (!isset($_POST['Language'])){
 	$_POST['Language']=$_SESSION['Language'];
 }
-//addControlOption($key,$text,$value,$isSelected = null,$id = null)
+
 foreach ($LanguagesArray as $LanguageEntry => $LanguageName){
-                                                                                //is this language selected?
-    $UserForm->addControlOption(4,$LanguageName['LanguageName'],$LanguageEntry,((isset($_POST['Language']) AND $_POST['Language'] == $LanguageEntry) || (!isset($_POST['Language']) AND $LanguageEntry == $DefaultLanguage)));
+	if (isset($_POST['Language']) AND $_POST['Language'] == $LanguageEntry){
+		echo '<option selected="selected" value="' . $LanguageEntry . '">' . $LanguageName['LanguageName']  . '</option>';
+	} elseif (!isset($_POST['Language']) AND $LanguageEntry == $DefaultLanguage) {
+		echo '<option selected="selected" value="' . $LanguageEntry . '">' . $LanguageName['LanguageName']  . '</option>';
+	} else {
+		echo '<option value="' . $LanguageEntry . '">' . $LanguageName['LanguageName']  . '</option>';
+	}
 }
-//addControl($key,$tabindex,$type,$caption = null,$settings = null,$htmlclass = null,$row = null,$order = null,$dimensions = null)
-$UserForm->addControl(5,3,'select',_('Theme') . ':',array('name' => 'Theme', 'childselect' => 'StylesID'));
-$UserForm->addControl(6,4,'select',_('Styles') . ':',array('name' => 'Style', 'id' => 'StylesID', 'hasparent' => true));
-$allThemes = $MainView->getTemplates(true);
-$styleOptions = array();
-$i = 0;
-foreach ($allThemes as $aTheme) {
-    //addControlOption($key,$text,$value,$isSelected = null,$parentID = null,$id = null)
-    $UserForm->addControlOption(5,$aTheme['themename'],$aTheme['themefolder'],($MainView->getTheme() == 'themes/' . $aTheme['themefolder']),null,$i);
-    if (is_array($aTheme['styles'])) {
-        foreach($aTheme['styles'] as $key => $style) {
-            $UserForm->addControlOption(6,$style,$style,($MainView->getTheme() == 'themes/' . $aTheme['themefolder'] && $MainView->getStyle() == $style),$i);
-        }
-    }
-    $i++;
+echo '</select></td></tr>';
+
+echo '<tr>
+	<td>' . _('Theme') . ':</td>
+	<td><select name="Theme">';
+
+$ThemeDirectories = scandir('css/');
+
+
+foreach ($ThemeDirectories as $ThemeName) {
+
+	if (is_dir('css/' . $ThemeName) AND $ThemeName != '.' AND $ThemeName != '..' AND $ThemeName != '.svn'){
+
+		if ($_SESSION['Theme'] == $ThemeName){
+			echo '<option selected="selected" value="' . $ThemeName . '">' . $ThemeName . '</option>';
+		} else {
+			echo '<option value="' . $ThemeName . '">' . $ThemeName . '</option>';
+		}
+	}
 }
 
 if (!isset($_POST['PasswordCheck'])) {
@@ -150,46 +168,53 @@ if (!isset($_POST['PasswordCheck'])) {
 if (!isset($_POST['Password'])) {
 	$_POST['Password']='';
 }
+echo '</select></td></tr>
+	<tr>
+		<td>' . _('New Password') . ':</td>
+		<td><input type="password" name="Password" pattern="(?!^'.$_SESSION['UserID'].'$).{5,}" title="'._('Must be more than 5 characters and cannot be as same as userid').'" placeholder="'._('More than 5 characters').'" size="20" value="' .  $_POST['Password'] . '" /></td>
+	</tr>
+	<tr>
+		<td>' . _('Confirm Password') . ':</td>
+		<td><input type="password" name="PasswordCheck" pattern="(?!^'.$_SESSION['UserID'].'$).{5,}" title="'._('Must be more than 5 characters and cannot be as same as userid').'" placeholder="'._('More than 5 characters').'" size="20"  value="' . $_POST['PasswordCheck'] . '" /></td>
+	</tr>
+	<tr>
+		<td colspan="2" align="center"><i>' . _('If you leave the password boxes empty your password will not change') . '</i></td>
+	</tr>
+	<tr>
+		<td>' . _('Email') . ':</td>';
 
-$controlsettings['name'] = 'Password';
-$controlsettings['value'] = $_POST['Password'];
-$controlsettings['pattern'] = '(?!^'.$_SESSION['UserID'].'$).{5,}';
-$controlsettings['title'] = _('Must be more than 5 characters and cannot be as same as userid');
-$controlsettings['placeholder'] = _('More than 5 characters');
-$controlsettings['size'] ='20';
-
-//addControl($key,$tabindex,$type,$caption = null,$settings = null,$htmlclass = null,$row = null,$order = null,$dimensions = null)
-$UserForm->addControl(7,5,'password',_('New Password') . ':',$controlsettings);
-$controlsettings['name'] = 'PasswordCheck';
-$controlsettings['value'] = $_POST['PasswordCheck'];
-$UserForm->addControl(8,6,'password',_('Confirm Password') . ':',$controlsettings);
-$UserForm->addControl(9,-1,'content',null,array( 'align' => 'center',
-                                                 'text' => '<i>' . _('If you leave the password boxes empty your password will not change') . '</i>'
-                                                ));
 $sql = "SELECT email from www_users WHERE userid = '" . $_SESSION['UserID'] . "'";
 $result = DB_query($sql,$db);
 $myrow = DB_fetch_array($result);
 if(!isset($_POST['email'])){
 	$_POST['email'] = $myrow['email'];
 }
-                                                
-$UserForm->addControl(10,7,'email',   _('Email') . ':',array( 'name' => 'email',
-                                                            'size' => 40,
-                                                            'value' => $_POST['email']));
-                                                            
+
+echo '<td><input type="email" name="email" size="40" value="' . $_POST['email'] . '" /></td>
+	</tr>';
+
 if (!isset($_POST['PDFLanguage'])){
 	$_POST['PDFLanguage']=$_SESSION['PDFLanguage'];
 }
 
-$UserForm->addControl(11,8,'select',_('PDF Language Support') . ':',array('name' => 'PDFLanguage'));
+echo '<tr>
+		<td>' . _('PDF Language Support') . ': </td>
+		<td><select name="PDFLanguage">';
 
-foreach($PDFLanguages as $i => $Lang){
-    //addControlOption($key,$text,$value,$isSelected = null,$id = null)
-    $UserForm->addControlOption(11,$Lang,$i,($_POST['PDFLanguage']==$i));
+for($i=0;$i<count($PDFLanguages);$i++){
+	if ($_POST['PDFLanguage']==$i){
+		echo '<option selected="selected" value="' . $i .'">' . $PDFLanguages[$i] . '</option>';
+	} else {
+		echo '<option value="' . $i .'">' . $PDFLanguages[$i]. '</option>';
+	}
 }
+echo '</select></td>
+	</tr>
+	</table>
+	<br />
+	<div class="centre"><input type="submit" name="Modify" value="' . _('Modify') . '" /></div>
+    </div>
+	</form>';
 
-$UserForm->addControl(12,9,'submit',_('Modify'),array('name' => 'Modify',
-                                                      'value' => _('Modify')));
-$UserForm->display();
-include('includes/footer_views.inc');
+include('includes/footer.inc');
 ?>
