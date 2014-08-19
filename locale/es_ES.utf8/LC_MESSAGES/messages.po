@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.11.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-08-18 13:21-0600\n"
-"PO-Revision-Date: 2014-08-18 13:20-0600\n"
+"PO-Revision-Date: 2014-08-18 21:45-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -35615,7 +35615,7 @@ msgstr ""
 
 #: Tax.php:74
 msgid "Tax On Sales"
-msgstr "Impuesto en Ventas"
+msgstr "Impuesto en ventas"
 
 #: Tax.php:116
 msgid "Total Outputs"
@@ -35629,7 +35629,7 @@ msgstr ""
 
 #: Tax.php:179 Tax.php:266
 msgid "Tax On Purchases"
-msgstr "Impuestos en Compras"
+msgstr "Impuestos en compras"
 
 #: Tax.php:215
 msgid "Total Inputs"
