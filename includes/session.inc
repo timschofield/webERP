@@ -295,15 +295,15 @@ if (in_array($_SESSION['PageSecurityArray']['WWW_Users.php'], $_SESSION['Allowed
 }
 function CryptPass( $Password ) {
     if (PHP_VERSION_ID < 50500) {
-        $salt = base64_encode(mcrypt_create_iv(22, MCRYPT_DEV_URANDOM));
-        $salt = str_replace('+', '.', $salt);
-        $hash = crypt($Password, '$2y$10$'.$salt.'$');
+        $Salt = base64_encode(mcrypt_create_iv(22, MCRYPT_DEV_URANDOM));
+        $Salt = str_replace('+', '.', $Salt);
+        $Hash = crypt($Password, '$2y$10$' . $Salt . '$');
     } else {
-        $hash = password_hash($Password,PASSWORD_DEFAULT);
+        $Hash = password_hash($Password,PASSWORD_DEFAULT);
     }
-    return $hash;
+    return $Hash;
  }
- 
+
  function VerifyPass($Password,$Hash) {
      if(PHP_VERSION_ID < 50500) {
          return (crypt($Password,$Hash)==$Hash);
