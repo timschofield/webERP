@@ -1,5 +1,6 @@
 webERP Change Log
 
+26/08/14 RChacon: In PDFPriceList.php: Adds code comments, adds PageHeader() print for currabrev and categoryid, replaces addTextWarp-left-align with addText, replaces line-drawing a box with Rectangle(), adds 'Prices excluding tax' warning.
 15/08/14 RChacon: Fixes double line feed in PDFQuotationPortrait.php reported by Arwan Galaya. Uniforms code between PDFQuotation.php and PDFQuotationPortrait.php.
 14/08/14 RChacon: In CustomerInquiry.php and SupplierInquiry.php makes translatable the systypes.typename.
 14/08/14 RChacon: In SupplierInquiry.php: Reorganizes columns Date, Type, Number, Reference and Comments, and regroups table-datacel format-strings as in CustomerInquiry.php code.

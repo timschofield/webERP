@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: webERP 4.11.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-18 13:21-0600\n"
-"PO-Revision-Date: 2014-08-18 21:45-0600\n"
+"POT-Creation-Date: 2014-08-26 18:46-0600\n"
+"PO-Revision-Date: 2014-08-26 18:54-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -1116,7 +1116,7 @@ msgstr "No se pudo obtener mediante SQL el detalle del cliente porque"
 #: MailInventoryValuation.php:242 MailInventoryValuation.php:250
 #: OutstandingGRNs.php:49 OutstandingGRNs.php:62 PDFCustomerList.php:235
 #: PDFCustomerList.php:247 PDFFGLabel.php:217 PDFGLJournal.php:100
-#: PDFGrn.php:176 PDFLowGP.php:59 PDFLowGP.php:71 PDFPriceList.php:143
+#: PDFGrn.php:176 PDFLowGP.php:59 PDFLowGP.php:71 PDFPriceList.php:147
 #: PDFPrintLabel.php:45 PDFQALabel.php:116 PDFQuotation.php:276
 #: PDFQuotationPortrait.php:268 PDFRemittanceAdvice.php:83
 #: PDFSellThroughSupportClaim.php:74 PDFSellThroughSupportClaim.php:86
@@ -1277,7 +1277,7 @@ msgstr "Informe detallado"
 #: InventoryValuation.php:295 MRPPlannedPurchaseOrders.php:294
 #: MRPPlannedWorkOrders.php:348 MRPReschedules.php:153 MRPShortages.php:303
 #: OutstandingGRNs.php:277 PDFCustomerList.php:421 PDFLowGP.php:146
-#: PDFPriceList.php:326 PDFRemittanceAdvice.php:175
+#: PDFPriceList.php:340 PDFRemittanceAdvice.php:175
 #: PDFStockCheckComparison.php:371 PrintCustTrans.php:572
 #: PrintCustTransPortrait.php:614 ReorderLevel.php:259 StockDispatch.php:447
 #: SuppPriceList.php:263 SupplierBalsAtPeriodEnd.php:159 Tax.php:353
@@ -1472,7 +1472,7 @@ msgstr "Hasta la fecha"
 
 #: AuditTrail.php:53 PO_AuthorisationLevels.php:124
 #: PO_AuthorisationLevels.php:173 PO_AuthorisationLevels.php:176
-#: UserSettings.php:112 includes/UserLogin.php:135
+#: UserSettings.php:112 includes/UserLogin.php:173
 msgid "User ID"
 msgstr "ID de usuario"
 
@@ -1485,7 +1485,7 @@ msgstr "ID de usuario"
 #: InventoryQuantities.php:194 InventoryQuantities.php:196 MRP.php:599
 #: MRPReport.php:524 MRPReport.php:526 MRPReschedules.php:145
 #: NoSalesItems.php:22 NoSalesItems.php:50 NoSalesItems.php:70
-#: NoSalesItems.php:72 PDFPeriodStockTransListing.php:58 PDFPriceList.php:218
+#: NoSalesItems.php:72 PDFPeriodStockTransListing.php:58 PDFPriceList.php:225
 #: POReport.php:1586 PO_Items.php:1125 ReorderLevel.php:212
 #: ReorderLevel.php:214 ReorderLevel.php:244 ReorderLevel.php:246
 #: SalesGraph.php:102 SalesGraph.php:104 SalesGraph.php:124 SalesGraph.php:126
@@ -1703,7 +1703,7 @@ msgstr "Lista de Materiales de Cantidad Extendida para \t"
 #: GLAccountReport.php:327 InventoryPlanningPrefSupplier.php:58
 #: InventoryQuantities.php:234 MRPPlannedPurchaseOrders.php:320
 #: MRPPlannedWorkOrders.php:374 MRPReport.php:817 MRPReschedules.php:180
-#: MRPShortages.php:334 PDFOrderStatus.php:323 PDFPriceList.php:357
+#: MRPShortages.php:334 PDFOrderStatus.php:323 PDFPriceList.php:383
 #: PDFReceipt.php:34 PO_Header.php:845 PO_PDFPurchOrder.php:64
 #: PO_SelectOSPurchOrder.php:547 ReorderLevel.php:283 StockDispatch.php:477
 #: SuppPriceList.php:292 Tax.php:244 includes/PDFAgedDebtorsPageHeader.inc:34
@@ -1742,7 +1742,7 @@ msgstr "Impreso"
 #: InventoryPlanningPrefSupplier.php:58 InventoryQuantities.php:235
 #: MRPPlannedPurchaseOrders.php:321 MRPPlannedWorkOrders.php:375
 #: MRPReport.php:818 MRPReschedules.php:181 MRPShortages.php:335
-#: PDFPriceList.php:357 PDFReceipt.php:34 PDFRemittanceAdvice.php:218
+#: PDFPriceList.php:373 PDFReceipt.php:34 PDFRemittanceAdvice.php:218
 #: PrintCustOrder.php:175 PrintCustTrans.php:773 PrintCustTrans.php:982
 #: PrintCustTrans.php:1031 PrintCustTransPortrait.php:818
 #: PrintCustTransPortrait.php:1040 PrintCustTransPortrait.php:1096
@@ -3405,10 +3405,11 @@ msgid "Any Other"
 msgstr "Cualquier otro"
 
 #: COGSGLPostings.php:316 Customers.php:513 Customers.php:850
-#: EDIProcessOrders.php:386 PDFCustomerList.php:334 PDFPriceList.php:27
-#: PDFPriceList.php:140 PDFPriceList.php:270 PricesBasedOnMarkUp.php:226
-#: PricesByCost.php:268 SalesGLPostings.php:363 SelectOrderItems.php:697
-#: SuppPriceList.php:138 SuppPriceList.php:251
+#: EDIProcessOrders.php:386 PDFCustomerList.php:334 PDFPriceList.php:31
+#: PDFPriceList.php:144 PDFPriceList.php:284 PDFPriceList.php:378
+#: PDFPriceList.php:380 PricesBasedOnMarkUp.php:226 PricesByCost.php:268
+#: SalesGLPostings.php:363 SelectOrderItems.php:697 SuppPriceList.php:138
+#: SuppPriceList.php:251
 msgid "Price List"
 msgstr "Lista de precios"
 
@@ -3906,7 +3907,7 @@ msgstr "Factura importes que constan en"
 #: CounterReturns.php:1819 CounterSales.php:747 CounterSales.php:2431
 #: Credit_Invoice.php:291 DeliveryDetails.php:870 GoodsReceived.php:100
 #: InternalStockRequest.php:271 Labels.php:577 Labels.php:579 Labels.php:621
-#: OrderDetails.php:168 OutstandingGRNs.php:179 PDFPriceList.php:376
+#: OrderDetails.php:168 OutstandingGRNs.php:179 PDFPriceList.php:403
 #: PDFPrintLabel.php:64 PO_Items.php:715 PO_OrderDetails.php:186
 #: PrintCustTrans.php:896 PrintCustTrans.php:985 PrintCustTrans.php:1034
 #: PrintCustTransPortrait.php:947 PrintCustTransPortrait.php:1045
@@ -3935,7 +3936,7 @@ msgstr "Código de artículo"
 #: CounterSales.php:748 Credit_Invoice.php:292 DeliveryDetails.php:871
 #: DeliveryDetails.php:941 InternalStockRequest.php:158
 #: InternalStockRequest.php:272 Labels.php:582 OrderDetails.php:169
-#: PDFPriceList.php:380 PDFPrintLabel.php:65 PO_Items.php:792
+#: PDFPriceList.php:407 PDFPrintLabel.php:65 PO_Items.php:792
 #: PO_OrderDetails.php:187 PrintCustTrans.php:897 PrintCustTrans.php:986
 #: PrintCustTrans.php:1035 PrintCustTransPortrait.php:948
 #: PrintCustTransPortrait.php:1046 PrintCustTransPortrait.php:1102
@@ -3980,7 +3981,7 @@ msgstr "Esta nota de Entrega"
 #: DeliveryDetails.php:944 GoodsReceived.php:113 Labels.php:592 Labels.php:594
 #: Labels.php:624 OffersReceived.php:110 OffersReceived.php:218
 #: OffersReceived.php:278 OrderDetails.php:172 PDFOrdersInvoiced.php:378
-#: PDFPriceList.php:399 PDFPrintLabel.php:66 PO_AuthoriseMyOrders.php:116
+#: PDFPriceList.php:426 PDFPrintLabel.php:66 PO_AuthoriseMyOrders.php:116
 #: PriceMatrix.php:224 Prices.php:222 Prices.php:334 PricesByCost.php:253
 #: Prices_Customer.php:361 PrintCustTrans.php:900 PrintCustTrans.php:989
 #: PrintCustTrans.php:1038 PrintCustTransPortrait.php:951
@@ -5995,7 +5996,7 @@ msgstr "Empezar de nuevo"
 
 #: Contracts.php:779 CustomerInquiry.php:220 CustomerTransInquiry.php:108
 #: Dashboard.php:668 FTP_RadioBeacon.php:52 PDFOrderStatus.php:294
-#: PDFOrdersInvoiced.php:293 PDFPriceList.php:390 PricesByCost.php:155
+#: PDFOrdersInvoiced.php:293 PDFPriceList.php:417 PricesByCost.php:155
 #: Prices_Customer.php:263 Prices_Customer.php:337 PrintCustTrans.php:846
 #: PrintCustTransPortrait.php:892 SelectCompletedOrder.php:557
 #: SelectCreditItems.php:243 SelectCustomer.php:422 SelectOrderItems.php:595
@@ -6120,7 +6121,7 @@ msgstr ""
 #: Contracts.php:937 GLProfit_Loss.php:321 GLProfit_Loss.php:514
 #: GLProfit_Loss.php:816 GLProfit_Loss.php:1173 GLTagProfit_Loss.php:309
 #: GLTagProfit_Loss.php:447 GLTagProfit_Loss.php:686 GLTagProfit_Loss.php:885
-#: PDFPriceList.php:394 SalesAnalReptCols.php:31 SalesAnalReptCols.php:33
+#: PDFPriceList.php:421 SalesAnalReptCols.php:31 SalesAnalReptCols.php:33
 #: SalesByTypePeriodInquiry.php:362 SalesCategoryPeriodInquiry.php:169
 #: SalesGraph.php:192 SalesGraph.php:211 SalesGraph.php:274
 #: SelectProduct.php:170
@@ -8185,7 +8186,7 @@ msgstr "Introduzca una identificación de usuario para el acceso este cliente"
 
 #: CustLoginSetup.php:150 SMTPServer.php:114 SuppLoginSetup.php:133
 #: WWW_Users.php:468 includes/Login.php:99 includes/Login.php:100
-#: install/index.php:930 ../webSHOP/Checkout.php:302
+#: install/index.php:929 ../webSHOP/Checkout.php:302
 #: ../webSHOP/Register.php:600 ../webSHOP/includes/header.php:239
 msgid "Password"
 msgstr "Contraseña"
@@ -12187,7 +12188,7 @@ msgstr "¿Confirma que desea eliminar esta compañía financiera?"
 msgid "ID"
 msgstr "ID"
 
-#: Factors.php:287 install/index.php:1022
+#: Factors.php:287 install/index.php:1021
 #: reportwriter/languages/en_US/reports.php:216 ../webSHOP/Register.php:615
 msgid "Company Name"
 msgstr "Nombre de Empresa"
@@ -15804,12 +15805,12 @@ msgstr "No hay ningún artículo en el rango y la ubicación especificada"
 msgid "Inventory Planning Reporting"
 msgstr "Reporte de Planificación de Inventario"
 
-#: InventoryPlanning.php:400 InventoryValuation.php:238 PDFPriceList.php:288
+#: InventoryPlanning.php:400 InventoryValuation.php:238 PDFPriceList.php:302
 #: PDFPrintLabel.php:296 StockCheck.php:272
 msgid "From Inventory Category Code"
 msgstr "Desde el código de categoría de inventario"
 
-#: InventoryPlanning.php:412 InventoryValuation.php:254 PDFPriceList.php:291
+#: InventoryPlanning.php:412 InventoryValuation.php:254 PDFPriceList.php:305
 #: PDFPrintLabel.php:305 StockCheck.php:283
 msgid "To Inventory Category Code"
 msgstr "Hasta el código de categoría de inventario"
@@ -19032,123 +19033,124 @@ msgstr ""
 "Hubo un problema al obtener los detalles de línea de la orden para el Número "
 "de Orden"
 
-#: PDFPriceList.php:26
+#: PDFPriceList.php:30
 msgid "Price list by inventory category"
 msgstr ""
 
-#: PDFPriceList.php:33 PDFPriceList.php:315 PDFPriceList.php:361
+#: PDFPriceList.php:37 PDFPriceList.php:329 PDFPriceList.php:377
 msgid "Customer Special Prices Only"
 msgstr "Solamente Precios Especiales para clientes"
 
-#: PDFPriceList.php:36 PDFPriceList.php:47
+#: PDFPriceList.php:40 PDFPriceList.php:51
 msgid "Special price List - No Customer Selected"
 msgstr "Lista de Precios Especial - Sin cliente Seleccionado"
 
-#: PDFPriceList.php:41
+#: PDFPriceList.php:45
 msgid "The customer must first be selected from the select customer link"
 msgstr ""
 "Debe primero seleccionar el cliente desde el enlace seleccionar clientes"
 
-#: PDFPriceList.php:41
+#: PDFPriceList.php:45
 msgid "Re-run the price list once the customer has been selected"
 msgstr ""
 "Vuelva a efectuar la lista de precios una vez que haya seleccionado al "
 "cliente"
 
-#: PDFPriceList.php:42 PDFPriceList.php:52 PDFPriceList.php:154
+#: PDFPriceList.php:46 PDFPriceList.php:56 PDFPriceList.php:158
 #: PDFPrintLabel.php:54 PDFRemittanceAdvice.php:40 PricesByCost.php:224
 #: PricesByCost.php:230
 msgid "Back"
 msgstr "Regresar"
 
-#: PDFPriceList.php:51
+#: PDFPriceList.php:55
 msgid "The effective date must be entered in the format"
 msgstr "La fecha de vigencia se debe introducir en el formato"
 
-#: PDFPriceList.php:140
+#: PDFPriceList.php:144
 msgid "Problem Report...."
 msgstr "Informe de Problemas ..."
 
-#: PDFPriceList.php:142 SuppPriceList.php:140 Z_DataExport.php:71
+#: PDFPriceList.php:146 SuppPriceList.php:140 Z_DataExport.php:71
 msgid "The Price List could not be retrieved by the SQL because"
 msgstr "El SQL no pudo obtener la Lista de Precios porque"
 
-#: PDFPriceList.php:145 PDFPrintLabel.php:47
+#: PDFPriceList.php:149 PDFPrintLabel.php:47
 msgid "For debugging purposes the SQL used was:"
 msgstr "Para propósitos de depuración del SQL utilizado fue:"
 
-#: PDFPriceList.php:151
+#: PDFPriceList.php:155
 msgid "Print Price List Error"
 msgstr "Imprimir Errores en lista de precios"
 
-#: PDFPriceList.php:153
+#: PDFPriceList.php:157
 msgid ""
 "There were no price details to print out for the customer or category "
 "specified"
 msgstr ""
 "No hubo detalles de precios a imprimir para el cliente o categoría indicada"
 
-#: PDFPriceList.php:195 Prices.php:240 PricesByCost.php:205
+#: PDFPriceList.php:203 Prices.php:240 PricesByCost.php:205
 #: Prices_Customer.php:217 Prices_Customer.php:274
 msgid "No End Date"
-msgstr "No hay Fecha Final"
+msgstr "Sin fecha final"
 
-#: PDFPriceList.php:260
+#: PDFPriceList.php:274
 msgid "Price_List"
 msgstr "Lista_Precios"
 
-#: PDFPriceList.php:266
+#: PDFPriceList.php:280
 msgid "Price Listing"
 msgstr "Listado de precios"
 
-#: PDFPriceList.php:271
+#: PDFPriceList.php:285
 msgid "Print a price list by inventory category"
-msgstr "Imprimir una lista de precios"
+msgstr "Imprimir lista de precios por categoría de inventario"
 
-#: PDFPriceList.php:295 PDFPrintLabel.php:316 Z_DataExport.php:542
+#: PDFPriceList.php:309 PDFPrintLabel.php:316 Z_DataExport.php:542
 msgid "For Sales Type/Price List"
 msgstr "Para Ventas Lista Tipo/Precio"
 
-#: PDFPriceList.php:306
+#: PDFPriceList.php:320
 msgid "Show Gross Profit %"
 msgstr "Mostrar % Ganancias Brutas"
 
-#: PDFPriceList.php:308
+#: PDFPriceList.php:322
 msgid "Prices Only"
-msgstr "Sólo Precios"
+msgstr "Sólo precios"
 
-#: PDFPriceList.php:309
+#: PDFPriceList.php:323
 msgid "Show GP % too"
 msgstr "Muestre tambien el % de GB"
 
-#: PDFPriceList.php:313
+#: PDFPriceList.php:327
 msgid "Price Listing Type"
 msgstr "Tipo de listado de precios"
 
-#: PDFPriceList.php:314
+#: PDFPriceList.php:328
 msgid "Default Sales Type Prices"
 msgstr "Tipo de precios de venta por defecto"
 
-#: PDFPriceList.php:316
+#: PDFPriceList.php:330
 msgid "Full Description"
 msgstr "Descripción completa"
 
-#: PDFPriceList.php:320 PDFPriceList.php:362 PDFPriceList.php:364
-#: PDFPrintLabel.php:345
+#: PDFPriceList.php:334 PDFPriceList.php:388 PDFPrintLabel.php:345
 msgid "Effective As At"
-msgstr "Efectivo en"
+msgstr "Efectivo al"
 
-#: PDFPriceList.php:362
-msgid "Prices for Categories"
-msgstr "Precios por Categorías"
+#: PDFPriceList.php:387 StockClone.php:1087 Stocks.php:1397 Stocks.php:1404
+#: ../webSHOP/includes/Functions.php:127
+#: ../webSHOP/includes/ShowSalesCategoriesMenu.php:15
+msgid "Categories"
+msgstr "Categorías"
 
-#: PDFPriceList.php:364
-msgid "Prices For Categories"
-msgstr "Precios por categorías"
-
-#: PDFPriceList.php:384
+#: PDFPriceList.php:411
 msgid "Effective Date Range"
-msgstr "Rango de Fechas de Efectividad"
+msgstr "Rango de fechas efectivas"
+
+#: PDFPriceList.php:431
+msgid "Prices excluding tax"
+msgstr "Precios sin impuesto"
 
 #: PDFPrintLabel.php:44
 msgid "The Price Labels could not be retrieved by the SQL because"
@@ -22833,7 +22835,7 @@ msgstr "categoría"
 
 #: PricesByCost.php:144
 msgid "all Categories"
-msgstr "todas las Categorías"
+msgstr "todas las categorías"
 
 #: PricesByCost.php:147
 msgid "Items in"
@@ -30025,12 +30027,6 @@ msgstr "Un número entre"
 #: StockClone.php:1050 Stocks.php:1359
 msgid "is expected"
 msgstr "se espera"
-
-#: StockClone.php:1087 Stocks.php:1397 Stocks.php:1404
-#: ../webSHOP/includes/Functions.php:127
-#: ../webSHOP/includes/ShowSalesCategoriesMenu.php:15
-msgid "Categories"
-msgstr "Clases"
 
 #: StockCostUpdate.php:8
 msgid "Stock Cost Update"
@@ -39742,7 +39738,7 @@ msgid "Can field be null"
 msgstr "El Campo puede ser nulo"
 
 #: Z_DescribeTable.php:15 includes/DatabaseTranslations.php:59
-#: install/index.php:1041 reportwriter/languages/en_US/reports.php:65
+#: install/index.php:1040 reportwriter/languages/en_US/reports.php:65
 msgid "Default"
 msgstr "Predeterminado"
 
@@ -42028,7 +42024,7 @@ msgstr ""
 "en las siguientes funciones ya no son necesarios. Al llamar a estas "
 "funciones, deje los dos últimos parámetros fuera."
 
-#: api/api_xml-rpc.php:16 install/index.php:915
+#: api/api_xml-rpc.php:16 install/index.php:914
 msgid "Database Name"
 msgstr "Nombre de Base de Datos"
 
@@ -45051,11 +45047,11 @@ msgstr ""
 msgid "Security Permissions Problem"
 msgstr "Problema de Permisos de Seguridad"
 
-#: includes/session.inc:311 ../webSHOP/includes/session.php:147
+#: includes/session.inc:319 ../webSHOP/includes/session.php:147
 msgid "Error in form verification"
 msgstr ""
 
-#: includes/session.inc:313 ../webSHOP/includes/session.php:151
+#: includes/session.inc:321 ../webSHOP/includes/session.php:151
 msgid "This form was not submitted with a correct ID"
 msgstr "Este formulario no se presentó con una identificación correcta"
 
@@ -48022,23 +48018,23 @@ msgstr ""
 msgid "The SQL that failed was: "
 msgstr "El SQL que generó el error:"
 
-#: includes/UserLogin.php:48
+#: includes/UserLogin.php:47
 msgid "Could not retrieve user details on login because"
 msgstr "No se pudieron obtener datos de usuario al iniciar sesión debido a que"
 
-#: includes/UserLogin.php:134
+#: includes/UserLogin.php:172
 msgid "User access blocked"
 msgstr "Acceso del usuario bloqueado"
 
-#: includes/UserLogin.php:135
+#: includes/UserLogin.php:173
 msgid "has been blocked access at"
 msgstr "se sido bloqueado el acceso a"
 
-#: includes/UserLogin.php:136
+#: includes/UserLogin.php:174
 msgid "from IP"
 msgstr "Desde el IP"
 
-#: includes/UserLogin.php:136
+#: includes/UserLogin.php:174
 msgid "due to too many failed attempts."
 msgstr "debido a demasiados intentos fallidos."
 
@@ -48066,7 +48062,7 @@ msgid ""
 "\" etc"
 msgstr ""
 
-#: install/index.php:193 install/index.php:539
+#: install/index.php:193 install/index.php:538
 msgid "The database name should not be empty"
 msgstr ""
 
@@ -48123,143 +48119,143 @@ msgstr ""
 msgid "WebERP Demo Company"
 msgstr ""
 
-#: install/index.php:400
+#: install/index.php:399
 msgid "Cannot open the configuration file"
 msgstr ""
 
-#: install/index.php:404
+#: install/index.php:403
 msgid "Cannot write to the configuration file"
 msgstr ""
 
-#: install/index.php:415 install/index.php:420
+#: install/index.php:414 install/index.php:419
 msgid "Failed to connect the database, the error is "
 msgstr ""
 
-#: install/index.php:431 install/index.php:433 install/index.php:460
-#: install/index.php:462
+#: install/index.php:430 install/index.php:432 install/index.php:459
+#: install/index.php:461
 msgid "Failed to create database "
 msgstr ""
 
-#: install/index.php:441 install/index.php:443 install/index.php:474
-#: install/index.php:476
+#: install/index.php:440 install/index.php:442 install/index.php:473
+#: install/index.php:475
 msgid "Failed to create database weberpdemo and the error is  "
 msgstr ""
 
-#: install/index.php:514
+#: install/index.php:513
 msgid "The Host Name is illegal"
 msgstr ""
 
-#: install/index.php:521
+#: install/index.php:520
 msgid "The Host Name should not be empty"
 msgstr ""
 
-#: install/index.php:533
+#: install/index.php:532
 msgid ""
 "The database name should be lower case and not contains illegal characters "
 "such as \"/\\?%:|<>\""
 msgstr ""
 
-#: install/index.php:561
+#: install/index.php:560
 msgid "Please correct the displayed error first"
 msgstr ""
 
-#: install/index.php:575 install/index.php:985 install/index.php:1012
+#: install/index.php:574 install/index.php:984 install/index.php:1011
 msgid "webERP Installation Wizard"
 msgstr ""
 
-#: install/index.php:592
+#: install/index.php:591
 msgid ""
 "Please set Cookies allowed in your web brower, otherwise webERP cannot run "
 "properly"
 msgstr ""
 
-#: install/index.php:601
+#: install/index.php:600
 msgid ""
 "Illegal characters or data has been identified, please see your admistrator "
 "for help"
 msgstr ""
 
-#: install/index.php:609
+#: install/index.php:608
 msgid ""
 "Although webERP should work with PHP version 5.1 onwards, a PHP version "
 "greater than 5.2 is strongly recommended"
 msgstr ""
 
-#: install/index.php:616 install/index.php:621
+#: install/index.php:615 install/index.php:620
 msgid "The directory"
 msgstr ""
 
-#: install/index.php:616
+#: install/index.php:615
 msgid "must be writable by web server"
 msgstr ""
 
-#: install/index.php:626
+#: install/index.php:625
 msgid "The mbstring extension is not availble in your PHP"
 msgstr ""
 
-#: install/index.php:631
+#: install/index.php:630
 msgid "The libxml extension is not available in your PHP"
 msgstr ""
 
-#: install/index.php:637
+#: install/index.php:636
 msgid "There is no MySQL or MySQL extension available"
 msgstr ""
 
-#: install/index.php:643
+#: install/index.php:642
 msgid ""
 "The PHP MySQLI extension is recommend as MySQL extension has been deprecated "
 "since PHP 5.5"
 msgstr ""
 
-#: install/index.php:647
+#: install/index.php:646
 msgid ""
 "The MySQL extension has been deprecated since 5.5. You should install the "
 "MySQLI extension or downgrade you PHP version to  one prior to 5.5"
 msgstr ""
 
-#: install/index.php:652
+#: install/index.php:651
 msgid "The GD extension should be installed in your PHP configuration"
 msgstr ""
 
-#: install/index.php:750
+#: install/index.php:749
 msgid "Welcome to the webERP Installation Wizard"
 msgstr ""
 
-#: install/index.php:754
+#: install/index.php:753
 msgid "During installation you may see different status messages."
 msgstr ""
 
-#: install/index.php:755
+#: install/index.php:754
 msgid "When there is an error message you must correct the error to continue."
 msgstr ""
 
-#: install/index.php:756
+#: install/index.php:755
 msgid "If you see a warning message you should take notice before you proceed."
 msgstr ""
 
-#: install/index.php:757
+#: install/index.php:756
 msgid "If you are unsure of an option value, you may keep the default setting."
 msgstr ""
 
-#: install/index.php:764
+#: install/index.php:763
 msgid "Select your language"
 msgstr "Seleccione su idioma"
 
-#: install/index.php:767
+#: install/index.php:766
 msgid ""
 "The installer will try and guess your language from your browser, but may "
 "get it wrong. Please select you preferred language below."
 msgstr ""
 
-#: install/index.php:771
+#: install/index.php:770
 msgid "Language:"
 msgstr "Idioma"
 
-#: install/index.php:876 install/index.php:951
+#: install/index.php:875 install/index.php:950
 msgid "Next Step"
 msgstr ""
 
-#: install/index.php:882
+#: install/index.php:881
 msgid ""
 "webERP is an open source application licenced under GPL V2 and absolutely "
 "free to download.<br /> By installing webERP you acknowledge you have read "
@@ -48268,181 +48264,181 @@ msgid ""
 "information."
 msgstr ""
 
-#: install/index.php:901
+#: install/index.php:900
 msgid "Database settings"
 msgstr ""
 
-#: install/index.php:904
+#: install/index.php:903
 msgid "Please enter your MySQL Database information below."
 msgstr ""
 
-#: install/index.php:905 install/index.php:1018
+#: install/index.php:904 install/index.php:1017
 msgid "* Denotes required field"
 msgstr ""
 
-#: install/index.php:910
+#: install/index.php:909
 msgid "Host Name"
 msgstr ""
 
-#: install/index.php:911
+#: install/index.php:910
 msgid "Enter database host name"
 msgstr ""
 
-#: install/index.php:912
+#: install/index.php:911
 msgid "Commonly: localhost or 127.0.0.1"
 msgstr ""
 
-#: install/index.php:916
+#: install/index.php:915
 msgid "The database name"
 msgstr "El nombre de la base de datos"
 
-#: install/index.php:917
+#: install/index.php:916
 msgid "The database must have a valid name"
 msgstr "La base de datos debe tener un nombre válido"
 
-#: install/index.php:920
+#: install/index.php:919
 msgid "Database Prefix"
 msgstr "Prefijo de base de datos"
 
-#: install/index.php:921
+#: install/index.php:920
 msgid "Useful with shared hosting"
 msgstr ""
 
-#: install/index.php:922
+#: install/index.php:921
 msgid "Optional: in the form of prefix_"
 msgstr ""
 
-#: install/index.php:925
+#: install/index.php:924
 msgid "Database User Name"
 msgstr "Nombre de usuario de la base de datos"
 
-#: install/index.php:926
+#: install/index.php:925
 msgid "A valid database user name"
 msgstr "Un nombre de usuario la base de datos válido"
 
-#: install/index.php:927
+#: install/index.php:926
 msgid "Must be a user that has permission to create a database"
 msgstr ""
 
-#: install/index.php:931
+#: install/index.php:930
 msgid "mySQL user password"
 msgstr "Contraseña de usuario de MySQL"
 
-#: install/index.php:932
+#: install/index.php:931
 msgid "Enter the user password if one exists"
 msgstr ""
 
-#: install/index.php:964
+#: install/index.php:963
 msgid "Check Again"
 msgstr "Comprobar de nuevo"
 
-#: install/index.php:986
+#: install/index.php:985
 msgid "Failed to connect to the database. Please correct the following error:"
 msgstr ""
 
-#: install/index.php:1013
+#: install/index.php:1012
 msgid ""
 "Please enter the company name and please pay attention the company will be "
 "as same as the database name"
 msgstr ""
 
-#: install/index.php:1016
+#: install/index.php:1015
 msgid "Company Settings"
 msgstr "Configuración de la compañía"
 
-#: install/index.php:1024
+#: install/index.php:1023
 msgid ""
 "The name of your company should not contain characters such as |\\?%:<>\""
 msgstr ""
 
-#: install/index.php:1027
+#: install/index.php:1026
 msgid "Chart of Accounts"
 msgstr ""
 
-#: install/index.php:1045
+#: install/index.php:1044
 msgid ""
 "A starter Chart of Accounts (use default.sql if having empty db problems)"
 msgstr ""
 
-#: install/index.php:1048
+#: install/index.php:1047
 msgid "Time Zone"
 msgstr "Huso horario"
 
-#: install/index.php:1052
+#: install/index.php:1051
 msgid "Company logo file"
 msgstr "Archivo del logotipo de la compañía"
 
-#: install/index.php:1053
+#: install/index.php:1052
 msgid "A jpg file up to 10k, and not greater than 170px x 80px"
 msgstr ""
 
-#: install/index.php:1054
+#: install/index.php:1053
 msgid "jpg file to 10k, not greater than 170px x 80px"
 msgstr ""
 
-#: install/index.php:1059
+#: install/index.php:1058
 msgid "Installation option"
 msgstr ""
 
-#: install/index.php:1062
+#: install/index.php:1061
 msgid "Install the demo data?"
 msgstr ""
 
-#: install/index.php:1063
+#: install/index.php:1062
 msgid "WebERPDemo site and data will be installed"
 msgstr ""
 
-#: install/index.php:1068
+#: install/index.php:1067
 msgid "Administrator account settings"
 msgstr ""
 
-#: install/index.php:1072
+#: install/index.php:1071
 msgid "The default user name is 'admin' and it cannot be changed."
 msgstr ""
 
-#: install/index.php:1075
+#: install/index.php:1074
 msgid "The default password is 'weberp' which you can change below."
 msgstr ""
 
-#: install/index.php:1081
+#: install/index.php:1080
 msgid "webERP Admin Account"
 msgstr "Cuenta del administrador del webERP"
 
-#: install/index.php:1085
+#: install/index.php:1084
 msgid "Email address"
 msgstr "Dirección de correo electrónico"
 
-#: install/index.php:1087
+#: install/index.php:1086
 msgid "For example: admin@yourcompany.com"
 msgstr "Por ejemplo: administrador@suempresa.com"
 
-#: install/index.php:1090
+#: install/index.php:1089
 msgid "webERP Password"
 msgstr "Contraseña del webERP"
 
-#: install/index.php:1094
+#: install/index.php:1093
 msgid "Re-enter Password"
 msgstr "Reintroduzca la contraseña"
 
-#: install/index.php:1109
+#: install/index.php:1108
 msgid "Install"
 msgstr "Instalar"
 
-#: install/index.php:1132
+#: install/index.php:1131
 msgid "Failed to open the new sql file"
 msgstr "No se pudo abrir el nuevo archivo sql"
 
-#: install/index.php:1137
+#: install/index.php:1136
 msgid "Failed to populate the database "
 msgstr "No se pudo llenar la base de datos"
 
-#: install/index.php:1277
+#: install/index.php:1287
 msgid ""
 "Failed to update the email address and password of the administrator and the "
 "error is"
 msgstr ""
 
-#: install/index.php:1285
+#: install/index.php:1295
 msgid "Failed to update the company name and the erroris"
 msgstr ""
 
@@ -50534,6 +50530,12 @@ msgstr ""
 #: ../webSHOP/includes/session.php:137
 msgid "Bank Transfer"
 msgstr ""
+
+#~ msgid "Prices for Categories"
+#~ msgstr "Precios por Categorías"
+
+#~ msgid "Prices For Categories"
+#~ msgstr "Precios por categorías"
 
 #~ msgid "Maintenance Of Location Authorised Users"
 #~ msgstr "Mantenimiento de usuarios autorizados por ubicación"
