@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: webERP 4.11.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-18 13:21-0600\n"
-"PO-Revision-Date: 2014-08-18 13:55-0600\n"
+"POT-Creation-Date: 2014-08-27 22:51-0600\n"
+"PO-Revision-Date: 2014-08-27 22:58-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: French <none>\n"
 "Language: fr_FR\n"
@@ -412,7 +412,6 @@ msgstr "Oui"
 #: SystemParameters.php:1123 SystemParameters.php:1127 TaxGroups.php:312
 #: TaxGroups.php:315 TaxGroups.php:373 WWW_Users.php:504 WWW_Users.php:508
 #: WWW_Users.php:677 WWW_Users.php:681 includes/PDFLowGPPageHeader.inc:44
-#: includes/PDFTaxPageHeader.inc:35
 #: reportwriter/languages/en_US/reports.php:82
 msgid "No"
 msgstr "Non"
@@ -692,9 +691,8 @@ msgstr "Le contact a été supprimé"
 #: CustomerBranches.php:408 Customers.php:1119 Customers.php:1127
 #: ImportBankTransAnalysis.php:207 SalesPeople.php:200 SelectCustomer.php:609
 #: StockDispatch.php:275 StockDispatch.php:286 StockDispatch.php:297
-#: SuppTransGLAnalysis.php:108 SupplierContacts.php:152
-#: includes/PDFTaxPageHeader.inc:37 includes/InputSerialItemsFile.php:92
-#: includes/InputSerialItemsFile.php:144
+#: SuppTransGLAnalysis.php:108 SupplierContacts.php:152 Tax.php:411
+#: includes/InputSerialItemsFile.php:92 includes/InputSerialItemsFile.php:144
 msgid "Name"
 msgstr "Nom"
 
@@ -815,11 +813,10 @@ msgstr "Notes pour le client"
 #: StockDispatch.php:299 StockLocMovements.php:92 StockMovements.php:99
 #: StockSerialItemResearch.php:82 SupplierAllocations.php:456
 #: SupplierAllocations.php:569 SupplierAllocations.php:644
-#: SupplierInquiry.php:209 SupplierTransInquiry.php:105
+#: SupplierInquiry.php:209 SupplierTransInquiry.php:105 Tax.php:408
 #: includes/PDFQuotationPageHeader.inc:23
 #: includes/PDFQuotationPortraitPageHeader.inc:80
-#: includes/PDFStatementPageHeader.inc:169 includes/PDFTaxPageHeader.inc:36
-#: includes/PDFTransPageHeader.inc:51
+#: includes/PDFStatementPageHeader.inc:169 includes/PDFTransPageHeader.inc:51
 #: includes/PDFTransPageHeaderPortrait.inc:63
 #: reportwriter/languages/en_US/reports.php:64
 msgid "Date"
@@ -1039,7 +1036,7 @@ msgstr ""
 #: SuppContractChgs.php:107 SuppFixedAssetChgs.php:97 SuppShiptChgs.php:97
 #: SuppTransGLAnalysis.php:139 SupplierAllocations.php:458
 #: SupplierAllocations.php:570 SupplierAllocations.php:645
-#: SupplierCredit.php:407 SupplierInquiry.php:214
+#: SupplierCredit.php:407 SupplierInquiry.php:214 Tax.php:250
 #: Z_CheckDebtorsControl.php:149 api/api_debtortransactions.php:1271
 #: api/api_debtortransactions.php:1284 api/api_debtortransactions.php:1581
 #: includes/PDFQuotationPageHeader.inc:109
@@ -1125,7 +1122,7 @@ msgstr "Échec de la commande SQL d'affichage des informations client"
 #: MailInventoryValuation.php:242 MailInventoryValuation.php:250
 #: OutstandingGRNs.php:49 OutstandingGRNs.php:62 PDFCustomerList.php:235
 #: PDFCustomerList.php:247 PDFFGLabel.php:217 PDFGLJournal.php:100
-#: PDFGrn.php:176 PDFLowGP.php:59 PDFLowGP.php:71 PDFPriceList.php:143
+#: PDFGrn.php:176 PDFLowGP.php:59 PDFLowGP.php:71 PDFPriceList.php:147
 #: PDFPrintLabel.php:45 PDFQALabel.php:116 PDFQuotation.php:276
 #: PDFQuotationPortrait.php:268 PDFRemittanceAdvice.php:83
 #: PDFSellThroughSupportClaim.php:74 PDFSellThroughSupportClaim.php:86
@@ -1141,7 +1138,7 @@ msgstr "Échec de la commande SQL d'affichage des informations client"
 #: StockDispatch.php:128 StockDispatch.php:141 SuppPaymentRun.php:112
 #: SuppPaymentRun.php:122 SuppPaymentRun.php:186 SuppPaymentRun.php:217
 #: SuppPriceList.php:142 SupplierBalsAtPeriodEnd.php:54
-#: SupplierBalsAtPeriodEnd.php:65 Tax.php:64 Tax.php:169 Tax.php:278
+#: SupplierBalsAtPeriodEnd.php:65 Tax.php:57 Tax.php:171 Tax.php:310
 #: Z_DataExport.php:72 Z_DataExport.php:168 Z_DataExport.php:259
 #: Z_DataExport.php:308 Z_DataExport.php:347 Z_DataExport.php:383
 #: Z_DataExport.php:419 Z_DataExport.php:471 Z_poRebuildDefault.php:41
@@ -1281,10 +1278,10 @@ msgstr "Rapport détaillé"
 #: InventoryValuation.php:295 MRPPlannedPurchaseOrders.php:294
 #: MRPPlannedWorkOrders.php:348 MRPReschedules.php:153 MRPShortages.php:303
 #: OutstandingGRNs.php:277 PDFCustomerList.php:421 PDFLowGP.php:146
-#: PDFPriceList.php:326 PDFRemittanceAdvice.php:175
+#: PDFPriceList.php:340 PDFRemittanceAdvice.php:175
 #: PDFStockCheckComparison.php:371 PrintCustTrans.php:572
 #: PrintCustTransPortrait.php:614 ReorderLevel.php:259 StockDispatch.php:447
-#: SuppPriceList.php:263 SupplierBalsAtPeriodEnd.php:159 Tax.php:353
+#: SuppPriceList.php:263 SupplierBalsAtPeriodEnd.php:159 Tax.php:385
 msgid "Print PDF"
 msgstr "Imprimer en PDF"
 
@@ -1485,7 +1482,7 @@ msgstr "Jusqu'au"
 
 #: AuditTrail.php:53 PO_AuthorisationLevels.php:124
 #: PO_AuthorisationLevels.php:173 PO_AuthorisationLevels.php:176
-#: UserSettings.php:112 includes/UserLogin.php:135
+#: UserSettings.php:112 includes/UserLogin.php:173
 msgid "User ID"
 msgstr "Identifiant"
 
@@ -1498,7 +1495,7 @@ msgstr "Identifiant"
 #: InventoryQuantities.php:194 InventoryQuantities.php:196 MRP.php:599
 #: MRPReport.php:524 MRPReport.php:526 MRPReschedules.php:145
 #: NoSalesItems.php:22 NoSalesItems.php:50 NoSalesItems.php:70
-#: NoSalesItems.php:72 PDFPeriodStockTransListing.php:58 PDFPriceList.php:218
+#: NoSalesItems.php:72 PDFPeriodStockTransListing.php:58 PDFPriceList.php:225
 #: POReport.php:1586 PO_Items.php:1125 ReorderLevel.php:212
 #: ReorderLevel.php:214 ReorderLevel.php:244 ReorderLevel.php:246
 #: SalesGraph.php:102 SalesGraph.php:104 SalesGraph.php:124 SalesGraph.php:126
@@ -1554,11 +1551,10 @@ msgstr "Utilisateur"
 #: SalesByTypePeriodInquiry.php:356 SelectCustomer.php:424
 #: ShipmentCosting.php:536 ShipmentCosting.php:613 StockLocMovements.php:90
 #: StockMovements.php:97 SupplierAllocations.php:454 SupplierInquiry.php:210
-#: SupplierTransInquiry.php:20 SupplierTransInquiry.php:102
+#: SupplierTransInquiry.php:20 SupplierTransInquiry.php:102 Tax.php:409
 #: Z_CheckAllocationsFrom.php:32 Z_CheckAllocationsFrom.php:57
 #: Z_CheckAllocs.php:62 Z_CheckGLTransBalance.php:11
-#: includes/PDFTaxPageHeader.inc:34 includes/InputSerialItemsFile.php:94
-#: includes/InputSerialItemsFile.php:152
+#: includes/InputSerialItemsFile.php:94 includes/InputSerialItemsFile.php:152
 #: reportwriter/languages/en_US/reports.php:111
 msgid "Type"
 msgstr "Type"
@@ -1654,10 +1650,11 @@ msgstr ""
 #: SuppCreditGRNs.php:291 SuppCreditGRNs.php:292 SupplierCredit.php:318
 #: SupplierTenderCreate.php:435 SupplierTenderCreate.php:856
 #: SupplierTenders.php:124 SupplierTenders.php:327 SupplierTenders.php:531
-#: SupplierTenders.php:534 SupplierTenders.php:690 WOSerialNos.php:263
-#: WOSerialNos.php:269 WOSerialNos.php:303 WorkOrderReceive.php:956
-#: api/api_xml-rpc.php:2533 api/api_xml-rpc.php:2579 api/api_xml-rpc.php:2775
-#: includes/PDFBOMListingPageHeader.inc:44 includes/PDFDIFOTPageHeader.inc:42
+#: SupplierTenders.php:534 SupplierTenders.php:690 Tax.php:247
+#: WOSerialNos.php:263 WOSerialNos.php:269 WOSerialNos.php:303
+#: WorkOrderReceive.php:956 api/api_xml-rpc.php:2533 api/api_xml-rpc.php:2579
+#: api/api_xml-rpc.php:2775 includes/PDFBOMListingPageHeader.inc:44
+#: includes/PDFDIFOTPageHeader.inc:42
 #: includes/PDFDeliveryDifferencesPageHeader.inc:43
 #: includes/PDFInventoryValnPageHeader.inc:33
 #: includes/PDFInventoryValnPageHeader.inc:39
@@ -1719,10 +1716,10 @@ msgstr ""
 #: GLAccountReport.php:327 InventoryPlanningPrefSupplier.php:58
 #: InventoryQuantities.php:234 MRPPlannedPurchaseOrders.php:320
 #: MRPPlannedWorkOrders.php:374 MRPReport.php:817 MRPReschedules.php:180
-#: MRPShortages.php:334 PDFOrderStatus.php:323 PDFPriceList.php:357
+#: MRPShortages.php:334 PDFOrderStatus.php:323 PDFPriceList.php:384
 #: PDFReceipt.php:34 PO_Header.php:845 PO_PDFPurchOrder.php:64
 #: PO_SelectOSPurchOrder.php:547 ReorderLevel.php:283 StockDispatch.php:477
-#: SuppPriceList.php:292 Tax.php:244 includes/PDFAgedDebtorsPageHeader.inc:34
+#: SuppPriceList.php:292 includes/PDFAgedDebtorsPageHeader.inc:34
 #: includes/PDFAgedSuppliersPageHeader.inc:21
 #: includes/PDFBOMListingPageHeader.inc:26
 #: includes/PDFBalanceSheetPageHeader.inc:25
@@ -1747,7 +1744,7 @@ msgstr ""
 #: includes/PDFSupplierBalsPageHeader.inc:20
 #: includes/PDFTabReportHeader.inc:15
 #: includes/PDFTagProfitAndLossPageHeader.inc:29
-#: includes/PDFTaxPageHeader.inc:21 includes/PDFTopItemsHeader.inc:34
+#: includes/PDFTaxPageHeader.inc:27 includes/PDFTopItemsHeader.inc:34
 #: includes/PDFTrialBalancePageHeader.inc:18
 #: reportwriter/languages/en_US/reports.php:88
 msgid "Printed"
@@ -1758,12 +1755,12 @@ msgstr "Imprimé"
 #: InventoryPlanningPrefSupplier.php:58 InventoryQuantities.php:235
 #: MRPPlannedPurchaseOrders.php:321 MRPPlannedWorkOrders.php:375
 #: MRPReport.php:818 MRPReschedules.php:181 MRPShortages.php:335
-#: PDFPriceList.php:357 PDFReceipt.php:34 PDFRemittanceAdvice.php:218
+#: PDFPriceList.php:374 PDFReceipt.php:34 PDFRemittanceAdvice.php:218
 #: PrintCustOrder.php:175 PrintCustTrans.php:773 PrintCustTrans.php:982
 #: PrintCustTrans.php:1031 PrintCustTransPortrait.php:818
 #: PrintCustTransPortrait.php:1040 PrintCustTransPortrait.php:1096
 #: ReorderLevel.php:284 StockDispatch.php:478 SuppPriceList.php:293
-#: Tax.php:244 includes/PDFAgedDebtorsPageHeader.inc:34
+#: includes/PDFAgedDebtorsPageHeader.inc:34
 #: includes/PDFAgedSuppliersPageHeader.inc:21
 #: includes/PDFBOMListingPageHeader.inc:26
 #: includes/PDFBalanceSheetPageHeader.inc:26
@@ -2078,9 +2075,8 @@ msgstr "Échec de la commande SQL de recherche de pièces:"
 #: SuppPriceList.php:308 SupplierPriceList.php:270 SupplierPriceList.php:455
 #: SupplierTenderCreate.php:617 SupplierTenderCreate.php:852
 #: SupplierTenders.php:686 TopItems.php:166 WorkOrderEntry.php:732
-#: WorkOrderIssue.php:754 includes/PDFTaxPageHeader.inc:38
-#: includes/PDFTopItemsHeader.inc:49 includes/PO_PDFOrderPageHeader.inc:75
-#: ../webSHOP/ItemDetails.php:72
+#: WorkOrderIssue.php:754 includes/PDFTopItemsHeader.inc:49
+#: includes/PO_PDFOrderPageHeader.inc:75 ../webSHOP/ItemDetails.php:72
 msgid "Code"
 msgstr "Code"
 
@@ -3250,8 +3246,9 @@ msgstr "Ajouter les chèques non encaissés"
 #: PrintCustTransPortrait.php:1023 PrintCustTransPortrait.php:1078
 #: StockMovements.php:98 SupplierAllocations.php:455
 #: SupplierAllocations.php:568 SupplierAllocations.php:643
-#: SupplierInquiry.php:211 SupplierTransInquiry.php:103 Z_CheckAllocs.php:63
-#: Z_CheckGLTransBalance.php:12 includes/PDFQuotationPageHeader.inc:21
+#: SupplierInquiry.php:211 SupplierTransInquiry.php:103 Tax.php:410
+#: Z_CheckAllocs.php:63 Z_CheckGLTransBalance.php:12
+#: includes/PDFQuotationPageHeader.inc:21
 #: includes/PDFQuotationPortraitPageHeader.inc:78
 #: includes/PDFStatementPageHeader.inc:168
 #: includes/PDFStatementPageHeader.inc:179 includes/PDFTransPageHeader.inc:47
@@ -3267,7 +3264,7 @@ msgstr "Numéro"
 #: PaymentAllocations.php:64 PaymentAllocations.php:65 Payments.php:921
 #: ShiptsList.php:37 StockCounts.php:144 StockCounts.php:169
 #: StockCounts.php:216 StockLocMovements.php:95 StockMovements.php:103
-#: SupplierInquiry.php:212 Z_CheckAllocs.php:64
+#: SupplierInquiry.php:212 Tax.php:412 Z_CheckAllocs.php:64
 #: includes/PDFBankingSummaryPageHeader.inc:40
 #: includes/PDFCustTransListingPageHeader.inc:49
 #: includes/PDFPeriodStockTransListingPageHeader.inc:48
@@ -3428,10 +3425,11 @@ msgid "Any Other"
 msgstr "Autre"
 
 #: COGSGLPostings.php:316 Customers.php:513 Customers.php:850
-#: EDIProcessOrders.php:386 PDFCustomerList.php:334 PDFPriceList.php:27
-#: PDFPriceList.php:140 PDFPriceList.php:270 PricesBasedOnMarkUp.php:226
-#: PricesByCost.php:268 SalesGLPostings.php:363 SelectOrderItems.php:697
-#: SuppPriceList.php:138 SuppPriceList.php:251
+#: EDIProcessOrders.php:386 PDFCustomerList.php:334 PDFPriceList.php:31
+#: PDFPriceList.php:144 PDFPriceList.php:285 PDFPriceList.php:379
+#: PDFPriceList.php:381 PricesBasedOnMarkUp.php:226 PricesByCost.php:268
+#: SalesGLPostings.php:363 SelectOrderItems.php:697 SuppPriceList.php:138
+#: SuppPriceList.php:251
 msgid "Price List"
 msgstr "Tarif"
 
@@ -3918,7 +3916,7 @@ msgstr "Montant en"
 #: CounterReturns.php:1819 CounterSales.php:747 CounterSales.php:2431
 #: Credit_Invoice.php:291 DeliveryDetails.php:870 GoodsReceived.php:100
 #: InternalStockRequest.php:271 Labels.php:577 Labels.php:579 Labels.php:621
-#: OrderDetails.php:168 OutstandingGRNs.php:179 PDFPriceList.php:376
+#: OrderDetails.php:168 OutstandingGRNs.php:179 PDFPriceList.php:404
 #: PDFPrintLabel.php:64 PO_Items.php:715 PO_OrderDetails.php:186
 #: PrintCustTrans.php:896 PrintCustTrans.php:985 PrintCustTrans.php:1034
 #: PrintCustTransPortrait.php:947 PrintCustTransPortrait.php:1045
@@ -3948,7 +3946,7 @@ msgstr "Code article"
 #: CounterSales.php:748 Credit_Invoice.php:292 DeliveryDetails.php:871
 #: DeliveryDetails.php:941 InternalStockRequest.php:158
 #: InternalStockRequest.php:272 Labels.php:582 OrderDetails.php:169
-#: PDFPriceList.php:380 PDFPrintLabel.php:65 PO_Items.php:792
+#: PDFPriceList.php:408 PDFPrintLabel.php:65 PO_Items.php:792
 #: PO_OrderDetails.php:187 PrintCustTrans.php:897 PrintCustTrans.php:986
 #: PrintCustTrans.php:1035 PrintCustTransPortrait.php:948
 #: PrintCustTransPortrait.php:1046 PrintCustTransPortrait.php:1102
@@ -3995,7 +3993,7 @@ msgstr "Livraison"
 #: DeliveryDetails.php:944 GoodsReceived.php:113 Labels.php:592 Labels.php:594
 #: Labels.php:624 OffersReceived.php:110 OffersReceived.php:218
 #: OffersReceived.php:278 OrderDetails.php:172 PDFOrdersInvoiced.php:378
-#: PDFPriceList.php:399 PDFPrintLabel.php:66 PO_AuthoriseMyOrders.php:116
+#: PDFPriceList.php:427 PDFPrintLabel.php:66 PO_AuthoriseMyOrders.php:116
 #: PriceMatrix.php:224 Prices.php:222 Prices.php:334 PricesByCost.php:253
 #: Prices_Customer.php:361 PrintCustTrans.php:900 PrintCustTrans.php:989
 #: PrintCustTrans.php:1038 PrintCustTransPortrait.php:951
@@ -4048,7 +4046,7 @@ msgstr "% T.V.A."
 #: Credit_Invoice.php:300 Credit_Invoice.php:301 PrintCustTrans.php:423
 #: PrintCustTrans.php:1077 PrintCustTransPortrait.php:480
 #: PrintCustTransPortrait.php:1144 SelectCreditItems.php:694
-#: SelectCreditItems.php:695 includes/PDFTaxPageHeader.inc:40
+#: SelectCreditItems.php:695 Tax.php:249 Tax.php:414
 msgid "Tax"
 msgstr "T.V.A."
 
@@ -5983,7 +5981,7 @@ msgstr "Effacer"
 
 #: Contracts.php:779 CustomerInquiry.php:220 CustomerTransInquiry.php:108
 #: Dashboard.php:668 FTP_RadioBeacon.php:52 PDFOrderStatus.php:294
-#: PDFOrdersInvoiced.php:293 PDFPriceList.php:390 PricesByCost.php:155
+#: PDFOrdersInvoiced.php:293 PDFPriceList.php:418 PricesByCost.php:155
 #: Prices_Customer.php:263 Prices_Customer.php:337 PrintCustTrans.php:846
 #: PrintCustTransPortrait.php:892 SelectCompletedOrder.php:557
 #: SelectCreditItems.php:243 SelectCustomer.php:422 SelectOrderItems.php:595
@@ -6112,7 +6110,7 @@ msgstr ""
 #: Contracts.php:937 GLProfit_Loss.php:321 GLProfit_Loss.php:514
 #: GLProfit_Loss.php:816 GLProfit_Loss.php:1173 GLTagProfit_Loss.php:309
 #: GLTagProfit_Loss.php:447 GLTagProfit_Loss.php:686 GLTagProfit_Loss.php:885
-#: PDFPriceList.php:394 SalesAnalReptCols.php:31 SalesAnalReptCols.php:33
+#: PDFPriceList.php:422 SalesAnalReptCols.php:31 SalesAnalReptCols.php:33
 #: SalesByTypePeriodInquiry.php:362 SalesCategoryPeriodInquiry.php:169
 #: SalesGraph.php:192 SalesGraph.php:211 SalesGraph.php:274
 #: SelectProduct.php:170
@@ -6444,7 +6442,7 @@ msgstr "% GP"
 #: CounterReturns.php:674 CounterSales.php:757 PrintCustTrans.php:902
 #: PrintCustTrans.php:991 PrintCustTrans.php:1040
 #: PrintCustTransPortrait.php:953 PrintCustTransPortrait.php:1051
-#: PrintCustTransPortrait.php:1107 includes/PDFTaxPageHeader.inc:39
+#: PrintCustTransPortrait.php:1107 Tax.php:248 Tax.php:413
 msgid "Net"
 msgstr "Net"
 
@@ -8190,7 +8188,7 @@ msgstr ""
 
 #: CustLoginSetup.php:150 SMTPServer.php:114 SuppLoginSetup.php:133
 #: WWW_Users.php:468 includes/Login.php:99 includes/Login.php:100
-#: install/index.php:930 ../webSHOP/Checkout.php:302
+#: install/index.php:929 ../webSHOP/Checkout.php:302
 #: ../webSHOP/Register.php:600 ../webSHOP/includes/header.php:239
 msgid "Password"
 msgstr "Mot de passe"
@@ -11328,7 +11326,7 @@ msgstr "Détail"
 
 #: EDIMessageFormat.php:224 EDIMessageFormat.php:226 GLBalanceSheet.php:58
 #: GLProfit_Loss.php:107 GLTagProfit_Loss.php:120 POReport.php:1507
-#: SalesInquiry.php:1069 Tax.php:241
+#: SalesInquiry.php:1069 Tax.php:433
 msgid "Summary"
 msgstr "Résumé"
 
@@ -12281,7 +12279,7 @@ msgstr "Voulez-vous supprimer cette société d'affacturage?"
 msgid "ID"
 msgstr "ID"
 
-#: Factors.php:287 install/index.php:1022
+#: Factors.php:287 install/index.php:1021
 #: reportwriter/languages/en_US/reports.php:216 ../webSHOP/Register.php:615
 msgid "Company Name"
 msgstr "Nom de la société"
@@ -14342,7 +14340,8 @@ msgstr "Comptabilité générale Profit Perte enquête"
 msgid "Statement of Profit and Loss for the"
 msgstr "Le compte de profits et pertes pour la"
 
-#: GLProfit_Loss.php:611 GLTagProfit_Loss.php:529 Tax.php:27
+#: GLProfit_Loss.php:611 GLTagProfit_Loss.php:529 Tax.php:25
+#: includes/PDFTaxPageHeader.inc:31
 msgid "months to"
 msgstr "Mois a"
 
@@ -15924,12 +15923,12 @@ msgstr "Il n'y avait pas les éléments de la gamme et au lieu indiqués"
 msgid "Inventory Planning Reporting"
 msgstr "Rapport d'inventaire"
 
-#: InventoryPlanning.php:400 InventoryValuation.php:238 PDFPriceList.php:288
+#: InventoryPlanning.php:400 InventoryValuation.php:238 PDFPriceList.php:302
 #: PDFPrintLabel.php:296 StockCheck.php:272
 msgid "From Inventory Category Code"
 msgstr "Du code catégorie"
 
-#: InventoryPlanning.php:412 InventoryValuation.php:254 PDFPriceList.php:291
+#: InventoryPlanning.php:412 InventoryValuation.php:254 PDFPriceList.php:305
 #: PDFPrintLabel.php:305 StockCheck.php:283
 msgid "To Inventory Category Code"
 msgstr "Au code catégorie"
@@ -16090,7 +16089,7 @@ msgid "Two Weeks"
 msgstr "Deux semaines"
 
 #: InventoryPlanningPrefSupplier.php:511 InventoryPlanningPrefSupplier.php:513
-#: Tax.php:309
+#: Tax.php:342
 msgid "One Month"
 msgstr "Un mois"
 
@@ -16099,7 +16098,6 @@ msgid "Six Weeks"
 msgstr "Six semaines"
 
 #: InventoryPlanningPrefSupplier.php:521 InventoryPlanningPrefSupplier.php:523
-#: Tax.php:310
 msgid "Two Months"
 msgstr "Deux mois"
 
@@ -18552,7 +18550,8 @@ msgstr ""
 msgid "Customer transaction listing from"
 msgstr "liste des transactions des clients de"
 
-#: PDFCustTransListing.php:137 PDFSuppTransListing.php:131 index.php:94
+#: PDFCustTransListing.php:137 PDFSuppTransListing.php:131 Tax.php:246
+#: index.php:94
 msgid "Transactions"
 msgstr "Opérations"
 
@@ -19195,56 +19194,56 @@ msgstr ""
 "Il y avait un problème de récupération de la ligne de commande pour plus de "
 "détails numéro de commande"
 
-#: PDFPriceList.php:26
+#: PDFPriceList.php:30
 msgid "Price list by inventory category"
 msgstr ""
 
-#: PDFPriceList.php:33 PDFPriceList.php:315 PDFPriceList.php:361
+#: PDFPriceList.php:37 PDFPriceList.php:329 PDFPriceList.php:378
 msgid "Customer Special Prices Only"
 msgstr "Prix spécial à la clientèle seulement"
 
 # JDN
-#: PDFPriceList.php:36 PDFPriceList.php:47
+#: PDFPriceList.php:40 PDFPriceList.php:51
 msgid "Special price List - No Customer Selected"
 msgstr "Tarifs spécial - pas de client sélectionné"
 
-#: PDFPriceList.php:41
+#: PDFPriceList.php:45
 msgid "The customer must first be selected from the select customer link"
 msgstr ""
 "Le client doit d'abord être sélectionné à partir du lien \"sélectionner un "
 "client\""
 
-#: PDFPriceList.php:41
+#: PDFPriceList.php:45
 msgid "Re-run the price list once the customer has been selected"
 msgstr "Re-exécutez la liste des prix dès que le client a été sélectionné"
 
-#: PDFPriceList.php:42 PDFPriceList.php:52 PDFPriceList.php:154
+#: PDFPriceList.php:46 PDFPriceList.php:56 PDFPriceList.php:158
 #: PDFPrintLabel.php:54 PDFRemittanceAdvice.php:40 PricesByCost.php:224
 #: PricesByCost.php:230
 msgid "Back"
 msgstr "Retour"
 
-#: PDFPriceList.php:51
+#: PDFPriceList.php:55
 msgid "The effective date must be entered in the format"
 msgstr "La date d'effet doit être inscrite dans le format"
 
-#: PDFPriceList.php:140
+#: PDFPriceList.php:144
 msgid "Problem Report...."
 msgstr "Signaler un problème"
 
-#: PDFPriceList.php:142 SuppPriceList.php:140 Z_DataExport.php:71
+#: PDFPriceList.php:146 SuppPriceList.php:140 Z_DataExport.php:71
 msgid "The Price List could not be retrieved by the SQL because"
 msgstr "Le Prix ne pouvait pas être récupéré par le SQL, car"
 
-#: PDFPriceList.php:145 PDFPrintLabel.php:47
+#: PDFPriceList.php:149 PDFPrintLabel.php:47
 msgid "For debugging purposes the SQL used was:"
 msgstr "Échec de la commande SQL de débugage:"
 
-#: PDFPriceList.php:151
+#: PDFPriceList.php:155
 msgid "Print Price List Error"
 msgstr "Erreur d'impression Liste de prix"
 
-#: PDFPriceList.php:153
+#: PDFPriceList.php:157
 msgid ""
 "There were no price details to print out for the customer or category "
 "specified"
@@ -19252,72 +19251,71 @@ msgstr ""
 "Il n'y avait pas les détails de prix à imprimer pour le client ou catégorie "
 "spécifiée"
 
-#: PDFPriceList.php:195 Prices.php:240 PricesByCost.php:205
+#: PDFPriceList.php:203 Prices.php:240 PricesByCost.php:205
 #: Prices_Customer.php:217 Prices_Customer.php:274
 msgid "No End Date"
 msgstr "Aucune date de fin"
 
 # JDN
-#: PDFPriceList.php:260
+#: PDFPriceList.php:274
 msgid "Price_List"
 msgstr "Tarifs"
 
 # JDN
-#: PDFPriceList.php:266
+#: PDFPriceList.php:280
 msgid "Price Listing"
 msgstr "Tarifs"
 
-#: PDFPriceList.php:271
+#: PDFPriceList.php:285
 msgid "Print a price list by inventory category"
 msgstr ""
 
-#: PDFPriceList.php:295 PDFPrintLabel.php:316 Z_DataExport.php:542
+#: PDFPriceList.php:309 PDFPrintLabel.php:316 Z_DataExport.php:542
 msgid "For Sales Type/Price List"
 msgstr "Pour le type/prix de vente"
 
-#: PDFPriceList.php:306
+#: PDFPriceList.php:320
 msgid "Show Gross Profit %"
 msgstr "Afficher le pourcentage de la marge brute"
 
-#: PDFPriceList.php:308
+#: PDFPriceList.php:322
 msgid "Prices Only"
 msgstr "Prix seulement"
 
-#: PDFPriceList.php:309
+#: PDFPriceList.php:323
 msgid "Show GP % too"
 msgstr "Afficher aussi les % \"GP\""
 
-#: PDFPriceList.php:313
+#: PDFPriceList.php:327
 msgid "Price Listing Type"
 msgstr "Type de tarifs"
 
 # JDN
-#: PDFPriceList.php:314
+#: PDFPriceList.php:328
 msgid "Default Sales Type Prices"
 msgstr "Tarification par défaut"
 
-#: PDFPriceList.php:316
+#: PDFPriceList.php:330
 msgid "Full Description"
 msgstr "Description complète"
 
-#: PDFPriceList.php:320 PDFPriceList.php:362 PDFPriceList.php:364
-#: PDFPrintLabel.php:345
+#: PDFPriceList.php:334 PDFPriceList.php:389 PDFPrintLabel.php:345
 msgid "Effective As At"
 msgstr "Effectif"
 
-# JDN
-#: PDFPriceList.php:362
-msgid "Prices for Categories"
-msgstr "Tarifs de catégorie"
+#: PDFPriceList.php:388 StockClone.php:1087 Stocks.php:1397 Stocks.php:1404
+#: ../webSHOP/includes/Functions.php:127
+#: ../webSHOP/includes/ShowSalesCategoriesMenu.php:15
+msgid "Categories"
+msgstr "Catégories"
 
-# JDN
-#: PDFPriceList.php:364
-msgid "Prices For Categories"
-msgstr "Tarifs de catégorie"
-
-#: PDFPriceList.php:384
+#: PDFPriceList.php:412
 msgid "Effective Date Range"
 msgstr "Périodes en vigueur"
+
+#: PDFPriceList.php:432
+msgid "Prices excluding tax"
+msgstr ""
 
 #: PDFPrintLabel.php:44
 msgid "The Price Labels could not be retrieved by the SQL because"
@@ -24719,7 +24717,7 @@ msgstr "Impossible de récupérer le nom du fournisseur pour"
 
 #: ReverseGRN.php:31 SalesByTypePeriodInquiry.php:356
 #: SalesTopCustomersInquiry.php:218 SalesTopItemsInquiry.php:225
-#: SelectSalesOrder.php:403 includes/MainMenuLinksArray.php:22
+#: SelectSalesOrder.php:403 Tax.php:256 includes/MainMenuLinksArray.php:22
 msgid "Sales"
 msgstr "Ventes"
 
@@ -30395,12 +30393,6 @@ msgstr "Un nombre entre"
 msgid "is expected"
 msgstr "On s'attend"
 
-#: StockClone.php:1087 Stocks.php:1397 Stocks.php:1404
-#: ../webSHOP/includes/Functions.php:127
-#: ../webSHOP/includes/ShowSalesCategoriesMenu.php:15
-msgid "Categories"
-msgstr "Catégories"
-
 # JDN
 #: StockCostUpdate.php:8
 msgid "Stock Cost Update"
@@ -32635,9 +32627,8 @@ msgstr ""
 
 # JDN
 #: SuppPaymentRun.php:240 SupplierTypes.php:6 SupplierTypes.php:21
-#: SystemParameters.php:13 Tax.php:290 TaxAuthorities.php:10
-#: TaxAuthorityRates.php:16 TaxCategories.php:10
-#: includes/MainMenuLinksArray.php:477
+#: SystemParameters.php:13 TaxAuthorities.php:10 TaxAuthorityRates.php:16
+#: TaxCategories.php:10 includes/MainMenuLinksArray.php:477
 msgid "Supplier Types"
 msgstr "Types de fournisseur"
 
@@ -36012,27 +36003,23 @@ msgid ""
 "this selection, you can use the SMTP set in the setup section."
 msgstr ""
 
-#: Tax.php:17
+#: Tax.php:14
 msgid "Could not determine the last date of the period selected"
 msgstr "Impossible de déterminer la dernière date de la période sélectionnée"
 
-#: Tax.php:17
+#: Tax.php:14
 msgid "The sql returned the following error"
 msgstr "Le SQL a renvoyé l'erreur suivante"
 
-#: Tax.php:26
-msgid "Taxation Report"
-msgstr "Fiscalité Rapport"
+#: Tax.php:24 Tax.php:324 includes/PDFTaxPageHeader.inc:25
+msgid "Tax Report"
+msgstr ""
 
-#: Tax.php:27
-msgid "Tax Report for"
-msgstr "Rapport T.V.A."
-
-#: Tax.php:61 Tax.php:166 Tax.php:275
+#: Tax.php:54 Tax.php:168 Tax.php:307
 msgid "Taxation Reporting Error"
 msgstr "Error Reporting Fiscalité"
 
-#: Tax.php:63
+#: Tax.php:56
 msgid ""
 "The accounts receivable transaction details could not be retrieved because"
 msgstr "Impossible d'afficher les informations des transactions car"
@@ -36041,35 +36028,36 @@ msgstr "Impossible d'afficher les informations des transactions car"
 msgid "Tax On Sales"
 msgstr "T.V.A. sur les ventes"
 
-#: Tax.php:116
+#: Tax.php:107
 msgid "Total Outputs"
 msgstr "Total des résultats"
 
-#: Tax.php:168
+#: Tax.php:170
 msgid "The accounts payable transaction details could not be retrieved because"
 msgstr "Impossible d'afficher les informations des transactions car"
 
-#: Tax.php:179 Tax.php:266
+#: Tax.php:186
 msgid "Tax On Purchases"
 msgstr "T.V.A. sur les achats"
 
-#: Tax.php:215
+#: Tax.php:220
 msgid "Total Inputs"
 msgstr "Total des entrées"
 
-#: Tax.php:253
-msgid "Return Suggested Entries"
-msgstr "Afficher les écritures suggérées"
+#: Tax.php:269 includes/MainMenuLinksArray.php:24
+#: reportwriter/languages/en_US/reports.php:241
+#: ../webSHOP/CreditCardPayPalPro.php:90
+#: ../webSHOP/includes/ProcessPayPalPayment.php:8
+#: ../webSHOP/includes/ProcessPayPalPayment.php:10
+#: ../webSHOP/includes/ProcessPayPalPayment.php:45
+msgid "Purchases"
+msgstr "Achats"
 
-#: Tax.php:256
-msgid "Total Sales and Income (incl Tax)"
-msgstr "Total des ventes et du revenu (TTC)"
+#: Tax.php:285 Z_CheckDebtorsControl.php:77 Z_CheckGLTransBalance.php:14
+msgid "Difference"
+msgstr "Différence"
 
-#: Tax.php:261
-msgid "Tax On Liable Sales"
-msgstr "T.V.A. sur les ventes"
-
-#: Tax.php:270
+#: Tax.php:299
 msgid ""
 "Adjustments for Tax paid to Customs, FBT, entertainments etc must also be "
 "entered"
@@ -36077,7 +36065,7 @@ msgstr ""
 "Ajustements de la taxe payée à la douane, FBT, etc divertissements doivent "
 "aussi être indiqués"
 
-#: Tax.php:272
+#: Tax.php:302
 msgid ""
 "This information excludes Tax on journal entries/payments/receipts all Tax "
 "should be entered through AR/AP"
@@ -36085,47 +36073,63 @@ msgstr ""
 "Cette information ne comprend pas la taxe sur les entrées du journal / "
 "paiements / recettes fiscales devraient tous être entré par AR / AP"
 
-#: Tax.php:277
+#: Tax.php:309
 msgid "There are no tax entries to list"
 msgstr "Il n'y a pas d'impôt entrées à la liste"
 
-#: Tax.php:287
+#: Tax.php:319 Tax.php:324
 msgid "Tax Reporting"
 msgstr "Rapport T.V.A."
 
-#: Tax.php:298
+#: Tax.php:331
 msgid "Tax Authority To Report On:"
 msgstr "Administration fiscale à formuler sur:"
 
-#: Tax.php:307
+#: Tax.php:340
 msgid "Return Covering"
 msgstr ""
 
-#: Tax.php:311
-msgid "Quarter"
-msgstr "Trimestre"
+#: Tax.php:343
+msgid "2 Months"
+msgstr "2 mois"
 
-#: Tax.php:312
-msgid "Six Months"
-msgstr "Six mois"
+#: Tax.php:344
+msgid "3 Months"
+msgstr "3 mois"
 
-#: Tax.php:318
+#: Tax.php:345
+msgid "6 Months"
+msgstr "6 mois"
+
+#: Tax.php:346
+msgid "12 Months"
+msgstr "12 mois"
+
+#: Tax.php:347
+msgid "24 Months"
+msgstr "24 mois"
+
+#: Tax.php:348
+msgid "48 Months"
+msgstr "48 mois"
+
+#: Tax.php:353
 msgid "Return To"
 msgstr "Aller à"
 
-#: Tax.php:327
+#: Tax.php:362
 msgid "Could not retrieve the period data because"
 msgstr "Impossible de récupérer les données, car la période"
 
-#: Tax.php:342
+#: Tax.php:376
 msgid "Detail Or Summary Only"
 msgstr "Détaillé ou résumé uniquement"
 
-#: Tax.php:344
+#: Tax.php:378
 msgid "Detail and Summary"
 msgstr "Détails et résumé"
 
-#: Tax.php:345
+#: Tax.php:379
 msgid "Summary Only"
 msgstr "Résumé seulement"
 
@@ -39498,10 +39502,6 @@ msgstr "Solde \"C/F\" dans GL"
 msgid "Calculated"
 msgstr "Calculée"
 
-#: Z_CheckDebtorsControl.php:77 Z_CheckGLTransBalance.php:14
-msgid "Difference"
-msgstr "Différence"
-
 #: Z_CheckGLTransBalance.php:5
 msgid "Check Period Sales Ledger Control Account"
 msgstr ""
@@ -40161,7 +40161,7 @@ msgid "Can field be null"
 msgstr ""
 
 #: Z_DescribeTable.php:15 includes/DatabaseTranslations.php:59
-#: install/index.php:1041 reportwriter/languages/en_US/reports.php:65
+#: install/index.php:1040 reportwriter/languages/en_US/reports.php:65
 msgid "Default"
 msgstr "Par défaut"
 
@@ -42442,7 +42442,7 @@ msgstr ""
 "fonctions, laisser les deux derniers paramètres à zéro."
 
 # JDN
-#: api/api_xml-rpc.php:16 install/index.php:915
+#: api/api_xml-rpc.php:16 install/index.php:914
 msgid "Database Name"
 msgstr "Nom de la base de données"
 
@@ -45422,11 +45422,11 @@ msgstr ""
 msgid "Security Permissions Problem"
 msgstr "Problème de sécurité autorisations"
 
-#: includes/session.inc:311 ../webSHOP/includes/session.php:147
+#: includes/session.inc:319 ../webSHOP/includes/session.php:147
 msgid "Error in form verification"
 msgstr ""
 
-#: includes/session.inc:313 ../webSHOP/includes/session.php:151
+#: includes/session.inc:321 ../webSHOP/includes/session.php:151
 msgid "This form was not submitted with a correct ID"
 msgstr "L'identifiant passé à ce formulaire n'est pas correct"
 
@@ -47620,15 +47620,6 @@ msgstr ""
 msgid "Login"
 msgstr "Connexion"
 
-#: includes/MainMenuLinksArray.php:24
-#: reportwriter/languages/en_US/reports.php:241
-#: ../webSHOP/CreditCardPayPalPro.php:90
-#: ../webSHOP/includes/ProcessPayPalPayment.php:8
-#: ../webSHOP/includes/ProcessPayPalPayment.php:10
-#: ../webSHOP/includes/ProcessPayPalPayment.php:45
-msgid "Purchases"
-msgstr "Achats"
-
 # JDN
 #: includes/MainMenuLinksArray.php:34
 msgid "New Sales Order or Quotation"
@@ -48421,24 +48412,24 @@ msgstr ""
 msgid "The SQL that failed was: "
 msgstr "Échec de la commande SQL:"
 
-#: includes/UserLogin.php:48
+#: includes/UserLogin.php:47
 msgid "Could not retrieve user details on login because"
 msgstr ""
 "Impossible de récupérer des détails sur la connexion, car l'utilisateur"
 
-#: includes/UserLogin.php:134
+#: includes/UserLogin.php:172
 msgid "User access blocked"
 msgstr ""
 
-#: includes/UserLogin.php:135
+#: includes/UserLogin.php:173
 msgid "has been blocked access at"
 msgstr ""
 
-#: includes/UserLogin.php:136
+#: includes/UserLogin.php:174
 msgid "from IP"
 msgstr ""
 
-#: includes/UserLogin.php:136
+#: includes/UserLogin.php:174
 msgid "due to too many failed attempts."
 msgstr ""
 
@@ -48466,7 +48457,7 @@ msgid ""
 "\" etc"
 msgstr ""
 
-#: install/index.php:193 install/index.php:539
+#: install/index.php:193 install/index.php:538
 msgid "The database name should not be empty"
 msgstr ""
 
@@ -48523,143 +48514,143 @@ msgstr ""
 msgid "WebERP Demo Company"
 msgstr ""
 
-#: install/index.php:400
+#: install/index.php:399
 msgid "Cannot open the configuration file"
 msgstr ""
 
-#: install/index.php:404
+#: install/index.php:403
 msgid "Cannot write to the configuration file"
 msgstr ""
 
-#: install/index.php:415 install/index.php:420
+#: install/index.php:414 install/index.php:419
 msgid "Failed to connect the database, the error is "
 msgstr ""
 
-#: install/index.php:431 install/index.php:433 install/index.php:460
-#: install/index.php:462
+#: install/index.php:430 install/index.php:432 install/index.php:459
+#: install/index.php:461
 msgid "Failed to create database "
 msgstr ""
 
-#: install/index.php:441 install/index.php:443 install/index.php:474
-#: install/index.php:476
+#: install/index.php:440 install/index.php:442 install/index.php:473
+#: install/index.php:475
 msgid "Failed to create database weberpdemo and the error is  "
 msgstr ""
 
-#: install/index.php:514
+#: install/index.php:513
 msgid "The Host Name is illegal"
 msgstr ""
 
-#: install/index.php:521
+#: install/index.php:520
 msgid "The Host Name should not be empty"
 msgstr ""
 
-#: install/index.php:533
+#: install/index.php:532
 msgid ""
 "The database name should be lower case and not contains illegal characters "
 "such as \"/\\?%:|<>\""
 msgstr ""
 
-#: install/index.php:561
+#: install/index.php:560
 msgid "Please correct the displayed error first"
 msgstr ""
 
-#: install/index.php:575 install/index.php:985 install/index.php:1012
+#: install/index.php:574 install/index.php:984 install/index.php:1011
 msgid "webERP Installation Wizard"
 msgstr ""
 
-#: install/index.php:592
+#: install/index.php:591
 msgid ""
 "Please set Cookies allowed in your web brower, otherwise webERP cannot run "
 "properly"
 msgstr ""
 
-#: install/index.php:601
+#: install/index.php:600
 msgid ""
 "Illegal characters or data has been identified, please see your admistrator "
 "for help"
 msgstr ""
 
-#: install/index.php:609
+#: install/index.php:608
 msgid ""
 "Although webERP should work with PHP version 5.1 onwards, a PHP version "
 "greater than 5.2 is strongly recommended"
 msgstr ""
 
-#: install/index.php:616 install/index.php:621
+#: install/index.php:615 install/index.php:620
 msgid "The directory"
 msgstr ""
 
-#: install/index.php:616
+#: install/index.php:615
 msgid "must be writable by web server"
 msgstr ""
 
-#: install/index.php:626
+#: install/index.php:625
 msgid "The mbstring extension is not availble in your PHP"
 msgstr ""
 
-#: install/index.php:631
+#: install/index.php:630
 msgid "The libxml extension is not available in your PHP"
 msgstr ""
 
-#: install/index.php:637
+#: install/index.php:636
 msgid "There is no MySQL or MySQL extension available"
 msgstr ""
 
-#: install/index.php:643
+#: install/index.php:642
 msgid ""
 "The PHP MySQLI extension is recommend as MySQL extension has been deprecated "
 "since PHP 5.5"
 msgstr ""
 
-#: install/index.php:647
+#: install/index.php:646
 msgid ""
 "The MySQL extension has been deprecated since 5.5. You should install the "
 "MySQLI extension or downgrade you PHP version to  one prior to 5.5"
 msgstr ""
 
-#: install/index.php:652
+#: install/index.php:651
 msgid "The GD extension should be installed in your PHP configuration"
 msgstr ""
 
-#: install/index.php:750
+#: install/index.php:749
 msgid "Welcome to the webERP Installation Wizard"
 msgstr ""
 
-#: install/index.php:754
+#: install/index.php:753
 msgid "During installation you may see different status messages."
 msgstr ""
 
-#: install/index.php:755
+#: install/index.php:754
 msgid "When there is an error message you must correct the error to continue."
 msgstr ""
 
-#: install/index.php:756
+#: install/index.php:755
 msgid "If you see a warning message you should take notice before you proceed."
 msgstr ""
 
-#: install/index.php:757
+#: install/index.php:756
 msgid "If you are unsure of an option value, you may keep the default setting."
 msgstr ""
 
-#: install/index.php:764
+#: install/index.php:763
 msgid "Select your language"
 msgstr ""
 
-#: install/index.php:767
+#: install/index.php:766
 msgid ""
 "The installer will try and guess your language from your browser, but may "
 "get it wrong. Please select you preferred language below."
 msgstr ""
 
-#: install/index.php:771
+#: install/index.php:770
 msgid "Language:"
 msgstr ""
 
-#: install/index.php:876 install/index.php:951
+#: install/index.php:875 install/index.php:950
 msgid "Next Step"
 msgstr ""
 
-#: install/index.php:882
+#: install/index.php:881
 msgid ""
 "webERP is an open source application licenced under GPL V2 and absolutely "
 "free to download.<br /> By installing webERP you acknowledge you have read "
@@ -48668,184 +48659,184 @@ msgid ""
 "information."
 msgstr ""
 
-#: install/index.php:901
+#: install/index.php:900
 msgid "Database settings"
 msgstr ""
 
-#: install/index.php:904
+#: install/index.php:903
 msgid "Please enter your MySQL Database information below."
 msgstr ""
 
-#: install/index.php:905 install/index.php:1018
+#: install/index.php:904 install/index.php:1017
 msgid "* Denotes required field"
 msgstr ""
 
-#: install/index.php:910
+#: install/index.php:909
 msgid "Host Name"
 msgstr ""
 
-#: install/index.php:911
+#: install/index.php:910
 msgid "Enter database host name"
 msgstr ""
 
-#: install/index.php:912
+#: install/index.php:911
 msgid "Commonly: localhost or 127.0.0.1"
 msgstr ""
 
 # JDN
-#: install/index.php:916
+#: install/index.php:915
 msgid "The database name"
 msgstr ""
 
-#: install/index.php:917
+#: install/index.php:916
 msgid "The database must have a valid name"
 msgstr ""
 
 # JDN
-#: install/index.php:920
+#: install/index.php:919
 msgid "Database Prefix"
 msgstr ""
 
-#: install/index.php:921
+#: install/index.php:920
 msgid "Useful with shared hosting"
 msgstr ""
 
-#: install/index.php:922
+#: install/index.php:921
 msgid "Optional: in the form of prefix_"
 msgstr ""
 
 # JDN
-#: install/index.php:925
+#: install/index.php:924
 msgid "Database User Name"
 msgstr ""
 
-#: install/index.php:926
+#: install/index.php:925
 msgid "A valid database user name"
 msgstr ""
 
-#: install/index.php:927
+#: install/index.php:926
 msgid "Must be a user that has permission to create a database"
 msgstr ""
 
-#: install/index.php:931
+#: install/index.php:930
 msgid "mySQL user password"
 msgstr ""
 
-#: install/index.php:932
+#: install/index.php:931
 msgid "Enter the user password if one exists"
 msgstr ""
 
-#: install/index.php:964
+#: install/index.php:963
 msgid "Check Again"
 msgstr ""
 
-#: install/index.php:986
+#: install/index.php:985
 msgid "Failed to connect to the database. Please correct the following error:"
 msgstr ""
 
-#: install/index.php:1013
+#: install/index.php:1012
 msgid ""
 "Please enter the company name and please pay attention the company will be "
 "as same as the database name"
 msgstr ""
 
-#: install/index.php:1016
+#: install/index.php:1015
 msgid "Company Settings"
 msgstr ""
 
-#: install/index.php:1024
+#: install/index.php:1023
 msgid ""
 "The name of your company should not contain characters such as |\\?%:<>\""
 msgstr ""
 
-#: install/index.php:1027
+#: install/index.php:1026
 msgid "Chart of Accounts"
 msgstr ""
 
-#: install/index.php:1045
+#: install/index.php:1044
 msgid ""
 "A starter Chart of Accounts (use default.sql if having empty db problems)"
 msgstr ""
 
-#: install/index.php:1048
+#: install/index.php:1047
 msgid "Time Zone"
 msgstr ""
 
-#: install/index.php:1052
+#: install/index.php:1051
 msgid "Company logo file"
 msgstr ""
 
-#: install/index.php:1053
+#: install/index.php:1052
 msgid "A jpg file up to 10k, and not greater than 170px x 80px"
 msgstr ""
 
-#: install/index.php:1054
+#: install/index.php:1053
 msgid "jpg file to 10k, not greater than 170px x 80px"
 msgstr ""
 
-#: install/index.php:1059
+#: install/index.php:1058
 msgid "Installation option"
 msgstr ""
 
-#: install/index.php:1062
+#: install/index.php:1061
 msgid "Install the demo data?"
 msgstr ""
 
-#: install/index.php:1063
+#: install/index.php:1062
 msgid "WebERPDemo site and data will be installed"
 msgstr ""
 
-#: install/index.php:1068
+#: install/index.php:1067
 msgid "Administrator account settings"
 msgstr ""
 
-#: install/index.php:1072
+#: install/index.php:1071
 msgid "The default user name is 'admin' and it cannot be changed."
 msgstr ""
 
-#: install/index.php:1075
+#: install/index.php:1074
 msgid "The default password is 'weberp' which you can change below."
 msgstr ""
 
-#: install/index.php:1081
+#: install/index.php:1080
 msgid "webERP Admin Account"
 msgstr ""
 
-#: install/index.php:1085
+#: install/index.php:1084
 msgid "Email address"
 msgstr ""
 
-#: install/index.php:1087
+#: install/index.php:1086
 msgid "For example: admin@yourcompany.com"
 msgstr ""
 
-#: install/index.php:1090
+#: install/index.php:1089
 msgid "webERP Password"
 msgstr ""
 
-#: install/index.php:1094
+#: install/index.php:1093
 msgid "Re-enter Password"
 msgstr ""
 
-#: install/index.php:1109
+#: install/index.php:1108
 msgid "Install"
 msgstr ""
 
-#: install/index.php:1132
+#: install/index.php:1131
 msgid "Failed to open the new sql file"
 msgstr ""
 
-#: install/index.php:1137
+#: install/index.php:1136
 msgid "Failed to populate the database "
 msgstr ""
 
-#: install/index.php:1277
+#: install/index.php:1287
 msgid ""
 "Failed to update the email address and password of the administrator and the "
 "error is"
 msgstr ""
 
-#: install/index.php:1285
+#: install/index.php:1295
 msgid "Failed to update the company name and the erroris"
 msgstr ""
 
@@ -50937,6 +50928,3 @@ msgstr ""
 #: ../webSHOP/includes/session.php:137
 msgid "Bank Transfer"
 msgstr ""
-
-#~ msgid "Notes:"
-#~ msgstr "Notes:"

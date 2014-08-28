@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: webERP 4.11.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-26 18:46-0600\n"
-"PO-Revision-Date: 2014-08-26 18:54-0600\n"
+"POT-Creation-Date: 2014-08-27 22:51-0600\n"
+"PO-Revision-Date: 2014-08-27 22:55-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -405,7 +405,6 @@ msgstr "Sí"
 #: SystemParameters.php:1123 SystemParameters.php:1127 TaxGroups.php:312
 #: TaxGroups.php:315 TaxGroups.php:373 WWW_Users.php:504 WWW_Users.php:508
 #: WWW_Users.php:677 WWW_Users.php:681 includes/PDFLowGPPageHeader.inc:44
-#: includes/PDFTaxPageHeader.inc:35
 #: reportwriter/languages/en_US/reports.php:82
 msgid "No"
 msgstr "No"
@@ -683,9 +682,8 @@ msgstr "El registro del contacto ha sido eliminado"
 #: CustomerBranches.php:408 Customers.php:1119 Customers.php:1127
 #: ImportBankTransAnalysis.php:207 SalesPeople.php:200 SelectCustomer.php:609
 #: StockDispatch.php:275 StockDispatch.php:286 StockDispatch.php:297
-#: SuppTransGLAnalysis.php:108 SupplierContacts.php:152
-#: includes/PDFTaxPageHeader.inc:37 includes/InputSerialItemsFile.php:92
-#: includes/InputSerialItemsFile.php:144
+#: SuppTransGLAnalysis.php:108 SupplierContacts.php:152 Tax.php:411
+#: includes/InputSerialItemsFile.php:92 includes/InputSerialItemsFile.php:144
 msgid "Name"
 msgstr "Nombre"
 
@@ -806,11 +804,10 @@ msgstr "Anotaciones del cliente"
 #: StockDispatch.php:299 StockLocMovements.php:92 StockMovements.php:99
 #: StockSerialItemResearch.php:82 SupplierAllocations.php:456
 #: SupplierAllocations.php:569 SupplierAllocations.php:644
-#: SupplierInquiry.php:209 SupplierTransInquiry.php:105
+#: SupplierInquiry.php:209 SupplierTransInquiry.php:105 Tax.php:408
 #: includes/PDFQuotationPageHeader.inc:23
 #: includes/PDFQuotationPortraitPageHeader.inc:80
-#: includes/PDFStatementPageHeader.inc:169 includes/PDFTaxPageHeader.inc:36
-#: includes/PDFTransPageHeader.inc:51
+#: includes/PDFStatementPageHeader.inc:169 includes/PDFTransPageHeader.inc:51
 #: includes/PDFTransPageHeaderPortrait.inc:63
 #: reportwriter/languages/en_US/reports.php:64
 msgid "Date"
@@ -1030,7 +1027,7 @@ msgstr ""
 #: SuppContractChgs.php:107 SuppFixedAssetChgs.php:97 SuppShiptChgs.php:97
 #: SuppTransGLAnalysis.php:139 SupplierAllocations.php:458
 #: SupplierAllocations.php:570 SupplierAllocations.php:645
-#: SupplierCredit.php:407 SupplierInquiry.php:214
+#: SupplierCredit.php:407 SupplierInquiry.php:214 Tax.php:250
 #: Z_CheckDebtorsControl.php:149 api/api_debtortransactions.php:1271
 #: api/api_debtortransactions.php:1284 api/api_debtortransactions.php:1581
 #: includes/PDFQuotationPageHeader.inc:109
@@ -1132,7 +1129,7 @@ msgstr "No se pudo obtener mediante SQL el detalle del cliente porque"
 #: StockDispatch.php:128 StockDispatch.php:141 SuppPaymentRun.php:112
 #: SuppPaymentRun.php:122 SuppPaymentRun.php:186 SuppPaymentRun.php:217
 #: SuppPriceList.php:142 SupplierBalsAtPeriodEnd.php:54
-#: SupplierBalsAtPeriodEnd.php:65 Tax.php:64 Tax.php:169 Tax.php:278
+#: SupplierBalsAtPeriodEnd.php:65 Tax.php:57 Tax.php:171 Tax.php:310
 #: Z_DataExport.php:72 Z_DataExport.php:168 Z_DataExport.php:259
 #: Z_DataExport.php:308 Z_DataExport.php:347 Z_DataExport.php:383
 #: Z_DataExport.php:419 Z_DataExport.php:471 Z_poRebuildDefault.php:41
@@ -1280,7 +1277,7 @@ msgstr "Informe detallado"
 #: PDFPriceList.php:340 PDFRemittanceAdvice.php:175
 #: PDFStockCheckComparison.php:371 PrintCustTrans.php:572
 #: PrintCustTransPortrait.php:614 ReorderLevel.php:259 StockDispatch.php:447
-#: SuppPriceList.php:263 SupplierBalsAtPeriodEnd.php:159 Tax.php:353
+#: SuppPriceList.php:263 SupplierBalsAtPeriodEnd.php:159 Tax.php:385
 msgid "Print PDF"
 msgstr "Imprimir PDF"
 
@@ -1541,11 +1538,10 @@ msgstr "Usuario"
 #: SalesByTypePeriodInquiry.php:356 SelectCustomer.php:424
 #: ShipmentCosting.php:536 ShipmentCosting.php:613 StockLocMovements.php:90
 #: StockMovements.php:97 SupplierAllocations.php:454 SupplierInquiry.php:210
-#: SupplierTransInquiry.php:20 SupplierTransInquiry.php:102
+#: SupplierTransInquiry.php:20 SupplierTransInquiry.php:102 Tax.php:409
 #: Z_CheckAllocationsFrom.php:32 Z_CheckAllocationsFrom.php:57
 #: Z_CheckAllocs.php:62 Z_CheckGLTransBalance.php:11
-#: includes/PDFTaxPageHeader.inc:34 includes/InputSerialItemsFile.php:94
-#: includes/InputSerialItemsFile.php:152
+#: includes/InputSerialItemsFile.php:94 includes/InputSerialItemsFile.php:152
 #: reportwriter/languages/en_US/reports.php:111
 msgid "Type"
 msgstr "Tipo"
@@ -1640,10 +1636,11 @@ msgstr ""
 #: SuppCreditGRNs.php:291 SuppCreditGRNs.php:292 SupplierCredit.php:318
 #: SupplierTenderCreate.php:435 SupplierTenderCreate.php:856
 #: SupplierTenders.php:124 SupplierTenders.php:327 SupplierTenders.php:531
-#: SupplierTenders.php:534 SupplierTenders.php:690 WOSerialNos.php:263
-#: WOSerialNos.php:269 WOSerialNos.php:303 WorkOrderReceive.php:956
-#: api/api_xml-rpc.php:2533 api/api_xml-rpc.php:2579 api/api_xml-rpc.php:2775
-#: includes/PDFBOMListingPageHeader.inc:44 includes/PDFDIFOTPageHeader.inc:42
+#: SupplierTenders.php:534 SupplierTenders.php:690 Tax.php:247
+#: WOSerialNos.php:263 WOSerialNos.php:269 WOSerialNos.php:303
+#: WorkOrderReceive.php:956 api/api_xml-rpc.php:2533 api/api_xml-rpc.php:2579
+#: api/api_xml-rpc.php:2775 includes/PDFBOMListingPageHeader.inc:44
+#: includes/PDFDIFOTPageHeader.inc:42
 #: includes/PDFDeliveryDifferencesPageHeader.inc:43
 #: includes/PDFInventoryValnPageHeader.inc:33
 #: includes/PDFInventoryValnPageHeader.inc:39
@@ -1703,10 +1700,10 @@ msgstr "Lista de Materiales de Cantidad Extendida para \t"
 #: GLAccountReport.php:327 InventoryPlanningPrefSupplier.php:58
 #: InventoryQuantities.php:234 MRPPlannedPurchaseOrders.php:320
 #: MRPPlannedWorkOrders.php:374 MRPReport.php:817 MRPReschedules.php:180
-#: MRPShortages.php:334 PDFOrderStatus.php:323 PDFPriceList.php:383
+#: MRPShortages.php:334 PDFOrderStatus.php:323 PDFPriceList.php:384
 #: PDFReceipt.php:34 PO_Header.php:845 PO_PDFPurchOrder.php:64
 #: PO_SelectOSPurchOrder.php:547 ReorderLevel.php:283 StockDispatch.php:477
-#: SuppPriceList.php:292 Tax.php:244 includes/PDFAgedDebtorsPageHeader.inc:34
+#: SuppPriceList.php:292 includes/PDFAgedDebtorsPageHeader.inc:34
 #: includes/PDFAgedSuppliersPageHeader.inc:21
 #: includes/PDFBOMListingPageHeader.inc:26
 #: includes/PDFBalanceSheetPageHeader.inc:25
@@ -1731,7 +1728,7 @@ msgstr "Lista de Materiales de Cantidad Extendida para \t"
 #: includes/PDFSupplierBalsPageHeader.inc:20
 #: includes/PDFTabReportHeader.inc:15
 #: includes/PDFTagProfitAndLossPageHeader.inc:29
-#: includes/PDFTaxPageHeader.inc:21 includes/PDFTopItemsHeader.inc:34
+#: includes/PDFTaxPageHeader.inc:27 includes/PDFTopItemsHeader.inc:34
 #: includes/PDFTrialBalancePageHeader.inc:18
 #: reportwriter/languages/en_US/reports.php:88
 msgid "Printed"
@@ -1742,12 +1739,12 @@ msgstr "Impreso"
 #: InventoryPlanningPrefSupplier.php:58 InventoryQuantities.php:235
 #: MRPPlannedPurchaseOrders.php:321 MRPPlannedWorkOrders.php:375
 #: MRPReport.php:818 MRPReschedules.php:181 MRPShortages.php:335
-#: PDFPriceList.php:373 PDFReceipt.php:34 PDFRemittanceAdvice.php:218
+#: PDFPriceList.php:374 PDFReceipt.php:34 PDFRemittanceAdvice.php:218
 #: PrintCustOrder.php:175 PrintCustTrans.php:773 PrintCustTrans.php:982
 #: PrintCustTrans.php:1031 PrintCustTransPortrait.php:818
 #: PrintCustTransPortrait.php:1040 PrintCustTransPortrait.php:1096
 #: ReorderLevel.php:284 StockDispatch.php:478 SuppPriceList.php:293
-#: Tax.php:244 includes/PDFAgedDebtorsPageHeader.inc:34
+#: includes/PDFAgedDebtorsPageHeader.inc:34
 #: includes/PDFAgedSuppliersPageHeader.inc:21
 #: includes/PDFBOMListingPageHeader.inc:26
 #: includes/PDFBalanceSheetPageHeader.inc:26
@@ -2058,9 +2055,8 @@ msgstr "El SQL para encontrar las piezas seleccionadas falló con el mensaje"
 #: SuppPriceList.php:308 SupplierPriceList.php:270 SupplierPriceList.php:455
 #: SupplierTenderCreate.php:617 SupplierTenderCreate.php:852
 #: SupplierTenders.php:686 TopItems.php:166 WorkOrderEntry.php:732
-#: WorkOrderIssue.php:754 includes/PDFTaxPageHeader.inc:38
-#: includes/PDFTopItemsHeader.inc:49 includes/PO_PDFOrderPageHeader.inc:75
-#: ../webSHOP/ItemDetails.php:72
+#: WorkOrderIssue.php:754 includes/PDFTopItemsHeader.inc:49
+#: includes/PO_PDFOrderPageHeader.inc:75 ../webSHOP/ItemDetails.php:72
 msgid "Code"
 msgstr "Código"
 
@@ -3225,8 +3221,9 @@ msgstr "Sumar cheques no cobrados"
 #: PrintCustTransPortrait.php:1023 PrintCustTransPortrait.php:1078
 #: StockMovements.php:98 SupplierAllocations.php:455
 #: SupplierAllocations.php:568 SupplierAllocations.php:643
-#: SupplierInquiry.php:211 SupplierTransInquiry.php:103 Z_CheckAllocs.php:63
-#: Z_CheckGLTransBalance.php:12 includes/PDFQuotationPageHeader.inc:21
+#: SupplierInquiry.php:211 SupplierTransInquiry.php:103 Tax.php:410
+#: Z_CheckAllocs.php:63 Z_CheckGLTransBalance.php:12
+#: includes/PDFQuotationPageHeader.inc:21
 #: includes/PDFQuotationPortraitPageHeader.inc:78
 #: includes/PDFStatementPageHeader.inc:168
 #: includes/PDFStatementPageHeader.inc:179 includes/PDFTransPageHeader.inc:47
@@ -3242,7 +3239,7 @@ msgstr "Número"
 #: PaymentAllocations.php:64 PaymentAllocations.php:65 Payments.php:921
 #: ShiptsList.php:37 StockCounts.php:144 StockCounts.php:169
 #: StockCounts.php:216 StockLocMovements.php:95 StockMovements.php:103
-#: SupplierInquiry.php:212 Z_CheckAllocs.php:64
+#: SupplierInquiry.php:212 Tax.php:412 Z_CheckAllocs.php:64
 #: includes/PDFBankingSummaryPageHeader.inc:40
 #: includes/PDFCustTransListingPageHeader.inc:49
 #: includes/PDFPeriodStockTransListingPageHeader.inc:48
@@ -3406,8 +3403,8 @@ msgstr "Cualquier otro"
 
 #: COGSGLPostings.php:316 Customers.php:513 Customers.php:850
 #: EDIProcessOrders.php:386 PDFCustomerList.php:334 PDFPriceList.php:31
-#: PDFPriceList.php:144 PDFPriceList.php:284 PDFPriceList.php:378
-#: PDFPriceList.php:380 PricesBasedOnMarkUp.php:226 PricesByCost.php:268
+#: PDFPriceList.php:144 PDFPriceList.php:285 PDFPriceList.php:379
+#: PDFPriceList.php:381 PricesBasedOnMarkUp.php:226 PricesByCost.php:268
 #: SalesGLPostings.php:363 SelectOrderItems.php:697 SuppPriceList.php:138
 #: SuppPriceList.php:251
 msgid "Price List"
@@ -3907,7 +3904,7 @@ msgstr "Factura importes que constan en"
 #: CounterReturns.php:1819 CounterSales.php:747 CounterSales.php:2431
 #: Credit_Invoice.php:291 DeliveryDetails.php:870 GoodsReceived.php:100
 #: InternalStockRequest.php:271 Labels.php:577 Labels.php:579 Labels.php:621
-#: OrderDetails.php:168 OutstandingGRNs.php:179 PDFPriceList.php:403
+#: OrderDetails.php:168 OutstandingGRNs.php:179 PDFPriceList.php:404
 #: PDFPrintLabel.php:64 PO_Items.php:715 PO_OrderDetails.php:186
 #: PrintCustTrans.php:896 PrintCustTrans.php:985 PrintCustTrans.php:1034
 #: PrintCustTransPortrait.php:947 PrintCustTransPortrait.php:1045
@@ -3936,7 +3933,7 @@ msgstr "Código de artículo"
 #: CounterSales.php:748 Credit_Invoice.php:292 DeliveryDetails.php:871
 #: DeliveryDetails.php:941 InternalStockRequest.php:158
 #: InternalStockRequest.php:272 Labels.php:582 OrderDetails.php:169
-#: PDFPriceList.php:407 PDFPrintLabel.php:65 PO_Items.php:792
+#: PDFPriceList.php:408 PDFPrintLabel.php:65 PO_Items.php:792
 #: PO_OrderDetails.php:187 PrintCustTrans.php:897 PrintCustTrans.php:986
 #: PrintCustTrans.php:1035 PrintCustTransPortrait.php:948
 #: PrintCustTransPortrait.php:1046 PrintCustTransPortrait.php:1102
@@ -3981,7 +3978,7 @@ msgstr "Esta nota de Entrega"
 #: DeliveryDetails.php:944 GoodsReceived.php:113 Labels.php:592 Labels.php:594
 #: Labels.php:624 OffersReceived.php:110 OffersReceived.php:218
 #: OffersReceived.php:278 OrderDetails.php:172 PDFOrdersInvoiced.php:378
-#: PDFPriceList.php:426 PDFPrintLabel.php:66 PO_AuthoriseMyOrders.php:116
+#: PDFPriceList.php:427 PDFPrintLabel.php:66 PO_AuthoriseMyOrders.php:116
 #: PriceMatrix.php:224 Prices.php:222 Prices.php:334 PricesByCost.php:253
 #: Prices_Customer.php:361 PrintCustTrans.php:900 PrintCustTrans.php:989
 #: PrintCustTrans.php:1038 PrintCustTransPortrait.php:951
@@ -4033,7 +4030,7 @@ msgstr "Impuestos %"
 #: Credit_Invoice.php:300 Credit_Invoice.php:301 PrintCustTrans.php:423
 #: PrintCustTrans.php:1077 PrintCustTransPortrait.php:480
 #: PrintCustTransPortrait.php:1144 SelectCreditItems.php:694
-#: SelectCreditItems.php:695 includes/PDFTaxPageHeader.inc:40
+#: SelectCreditItems.php:695 Tax.php:249 Tax.php:414
 msgid "Tax"
 msgstr "Impuestos"
 
@@ -5996,7 +5993,7 @@ msgstr "Empezar de nuevo"
 
 #: Contracts.php:779 CustomerInquiry.php:220 CustomerTransInquiry.php:108
 #: Dashboard.php:668 FTP_RadioBeacon.php:52 PDFOrderStatus.php:294
-#: PDFOrdersInvoiced.php:293 PDFPriceList.php:417 PricesByCost.php:155
+#: PDFOrdersInvoiced.php:293 PDFPriceList.php:418 PricesByCost.php:155
 #: Prices_Customer.php:263 Prices_Customer.php:337 PrintCustTrans.php:846
 #: PrintCustTransPortrait.php:892 SelectCompletedOrder.php:557
 #: SelectCreditItems.php:243 SelectCustomer.php:422 SelectOrderItems.php:595
@@ -6121,7 +6118,7 @@ msgstr ""
 #: Contracts.php:937 GLProfit_Loss.php:321 GLProfit_Loss.php:514
 #: GLProfit_Loss.php:816 GLProfit_Loss.php:1173 GLTagProfit_Loss.php:309
 #: GLTagProfit_Loss.php:447 GLTagProfit_Loss.php:686 GLTagProfit_Loss.php:885
-#: PDFPriceList.php:421 SalesAnalReptCols.php:31 SalesAnalReptCols.php:33
+#: PDFPriceList.php:422 SalesAnalReptCols.php:31 SalesAnalReptCols.php:33
 #: SalesByTypePeriodInquiry.php:362 SalesCategoryPeriodInquiry.php:169
 #: SalesGraph.php:192 SalesGraph.php:211 SalesGraph.php:274
 #: SelectProduct.php:170
@@ -6445,7 +6442,7 @@ msgstr "% GB"
 #: CounterReturns.php:674 CounterSales.php:757 PrintCustTrans.php:902
 #: PrintCustTrans.php:991 PrintCustTrans.php:1040
 #: PrintCustTransPortrait.php:953 PrintCustTransPortrait.php:1051
-#: PrintCustTransPortrait.php:1107 includes/PDFTaxPageHeader.inc:39
+#: PrintCustTransPortrait.php:1107 Tax.php:248 Tax.php:413
 msgid "Net"
 msgstr "Neto"
 
@@ -11245,7 +11242,7 @@ msgstr "Detalle"
 
 #: EDIMessageFormat.php:224 EDIMessageFormat.php:226 GLBalanceSheet.php:58
 #: GLProfit_Loss.php:107 GLTagProfit_Loss.php:120 POReport.php:1507
-#: SalesInquiry.php:1069 Tax.php:241
+#: SalesInquiry.php:1069 Tax.php:433
 msgid "Summary"
 msgstr "Sumario"
 
@@ -14236,7 +14233,8 @@ msgstr "Consultar Ganancias y Pérdidas Contables"
 msgid "Statement of Profit and Loss for the"
 msgstr "Estado de Ganancias y Pérdidas para el"
 
-#: GLProfit_Loss.php:611 GLTagProfit_Loss.php:529 Tax.php:27
+#: GLProfit_Loss.php:611 GLTagProfit_Loss.php:529 Tax.php:25
+#: includes/PDFTaxPageHeader.inc:31
 msgid "months to"
 msgstr "meses hasta"
 
@@ -15972,16 +15970,15 @@ msgid "Two Weeks"
 msgstr "Dos Semanas"
 
 #: InventoryPlanningPrefSupplier.php:511 InventoryPlanningPrefSupplier.php:513
-#: Tax.php:309
+#: Tax.php:342
 msgid "One Month"
 msgstr "Un mes"
 
 #: InventoryPlanningPrefSupplier.php:516 InventoryPlanningPrefSupplier.php:518
 msgid "Six Weeks"
-msgstr "Seis Semanas"
+msgstr "Seis semanas"
 
 #: InventoryPlanningPrefSupplier.php:521 InventoryPlanningPrefSupplier.php:523
-#: Tax.php:310
 msgid "Two Months"
 msgstr "Dos meses"
 
@@ -18400,7 +18397,8 @@ msgstr "Por favor, intente de nuevo seleccionando una fecha diferente"
 msgid "Customer transaction listing from"
 msgstr "Lista de transacciones de cliente de"
 
-#: PDFCustTransListing.php:137 PDFSuppTransListing.php:131 index.php:94
+#: PDFCustTransListing.php:137 PDFSuppTransListing.php:131 Tax.php:246
+#: index.php:94
 msgid "Transactions"
 msgstr "Transacciones"
 
@@ -19037,7 +19035,7 @@ msgstr ""
 msgid "Price list by inventory category"
 msgstr ""
 
-#: PDFPriceList.php:37 PDFPriceList.php:329 PDFPriceList.php:377
+#: PDFPriceList.php:37 PDFPriceList.php:329 PDFPriceList.php:378
 msgid "Customer Special Prices Only"
 msgstr "Solamente Precios Especiales para clientes"
 
@@ -19134,21 +19132,21 @@ msgstr "Tipo de precios de venta por defecto"
 msgid "Full Description"
 msgstr "Descripción completa"
 
-#: PDFPriceList.php:334 PDFPriceList.php:388 PDFPrintLabel.php:345
+#: PDFPriceList.php:334 PDFPriceList.php:389 PDFPrintLabel.php:345
 msgid "Effective As At"
 msgstr "Efectivo al"
 
-#: PDFPriceList.php:387 StockClone.php:1087 Stocks.php:1397 Stocks.php:1404
+#: PDFPriceList.php:388 StockClone.php:1087 Stocks.php:1397 Stocks.php:1404
 #: ../webSHOP/includes/Functions.php:127
 #: ../webSHOP/includes/ShowSalesCategoriesMenu.php:15
 msgid "Categories"
 msgstr "Categorías"
 
-#: PDFPriceList.php:411
+#: PDFPriceList.php:412
 msgid "Effective Date Range"
 msgstr "Rango de fechas efectivas"
 
-#: PDFPriceList.php:431
+#: PDFPriceList.php:432
 msgid "Prices excluding tax"
 msgstr "Precios sin impuesto"
 
@@ -24503,7 +24501,7 @@ msgstr "No se pudo obtener el nombre de proveedor para"
 
 #: ReverseGRN.php:31 SalesByTypePeriodInquiry.php:356
 #: SalesTopCustomersInquiry.php:218 SalesTopItemsInquiry.php:225
-#: SelectSalesOrder.php:403 includes/MainMenuLinksArray.php:22
+#: SelectSalesOrder.php:403 Tax.php:256 includes/MainMenuLinksArray.php:22
 msgid "Sales"
 msgstr "Ventas"
 
@@ -32259,9 +32257,8 @@ msgstr ""
 "confirmar los cambios a la base de datos porque"
 
 #: SuppPaymentRun.php:240 SupplierTypes.php:6 SupplierTypes.php:21
-#: SystemParameters.php:13 Tax.php:290 TaxAuthorities.php:10
-#: TaxAuthorityRates.php:16 TaxCategories.php:10
-#: includes/MainMenuLinksArray.php:477
+#: SystemParameters.php:13 TaxAuthorities.php:10 TaxAuthorityRates.php:16
+#: TaxCategories.php:10 includes/MainMenuLinksArray.php:477
 msgid "Supplier Types"
 msgstr "Tipos de Proveedor"
 
@@ -35582,27 +35579,23 @@ msgstr ""
 "si escoge Sí en esta selección, puede utilizar el conjunto de SMTP en la "
 "sección de configuración."
 
-#: Tax.php:17
+#: Tax.php:14
 msgid "Could not determine the last date of the period selected"
 msgstr "No se puede determinar la última fecha del período seleccionado"
 
-#: Tax.php:17
+#: Tax.php:14
 msgid "The sql returned the following error"
 msgstr "El SQL devolvió el siguiente error"
 
-#: Tax.php:26
-msgid "Taxation Report"
-msgstr "Informe de Fiscalidad"
+#: Tax.php:24 Tax.php:324 includes/PDFTaxPageHeader.inc:25
+msgid "Tax Report"
+msgstr ""
 
-#: Tax.php:27
-msgid "Tax Report for"
-msgstr "Informe Fiscal de"
-
-#: Tax.php:61 Tax.php:166 Tax.php:275
+#: Tax.php:54 Tax.php:168 Tax.php:307
 msgid "Taxation Reporting Error"
 msgstr "Error en el Informe de Fiscalidad"
 
-#: Tax.php:63
+#: Tax.php:56
 msgid ""
 "The accounts receivable transaction details could not be retrieved because"
 msgstr ""
@@ -35613,37 +35606,38 @@ msgstr ""
 msgid "Tax On Sales"
 msgstr "Impuesto en ventas"
 
-#: Tax.php:116
+#: Tax.php:107
 msgid "Total Outputs"
 msgstr "Egresos Totales"
 
-#: Tax.php:168
+#: Tax.php:170
 msgid "The accounts payable transaction details could not be retrieved because"
 msgstr ""
 "No se pudieron obtener los detalles de la transacción en cuentas a pagar "
 "porque"
 
-#: Tax.php:179 Tax.php:266
+#: Tax.php:186
 msgid "Tax On Purchases"
 msgstr "Impuestos en compras"
 
-#: Tax.php:215
+#: Tax.php:220
 msgid "Total Inputs"
 msgstr "Ingresos Totales"
 
-#: Tax.php:253
-msgid "Return Suggested Entries"
-msgstr "Volver a los Comentarios Sugeridos"
+#: Tax.php:269 includes/MainMenuLinksArray.php:24
+#: reportwriter/languages/en_US/reports.php:241
+#: ../webSHOP/CreditCardPayPalPro.php:90
+#: ../webSHOP/includes/ProcessPayPalPayment.php:8
+#: ../webSHOP/includes/ProcessPayPalPayment.php:10
+#: ../webSHOP/includes/ProcessPayPalPayment.php:45
+msgid "Purchases"
+msgstr "Compras"
 
-#: Tax.php:256
-msgid "Total Sales and Income (incl Tax)"
-msgstr "Ventas Totales e Ingresos (impuestos incluidos)"
+#: Tax.php:285 Z_CheckDebtorsControl.php:77 Z_CheckGLTransBalance.php:14
+msgid "Difference"
+msgstr "Diferencia"
 
-#: Tax.php:261
-msgid "Tax On Liable Sales"
-msgstr "Impuestos sobre las Ventas Comprometidas"
-
-#: Tax.php:270
+#: Tax.php:299
 msgid ""
 "Adjustments for Tax paid to Customs, FBT, entertainments etc must also be "
 "entered"
@@ -35651,7 +35645,7 @@ msgstr ""
 "Deben introducirse los ajustes para los Impuestos pagados a Aduanas. "
 "entretenimientos, etc."
 
-#: Tax.php:272
+#: Tax.php:302
 msgid ""
 "This information excludes Tax on journal entries/payments/receipts all Tax "
 "should be entered through AR/AP"
@@ -35659,47 +35653,63 @@ msgstr ""
 "Esta información excluye Impuestos en asientos/pagos/ingresos del diario. "
 "Todos los Impuestos deberían ser entrados a través de Cuentas a Cobrar/Pagar"
 
-#: Tax.php:277
+#: Tax.php:309
 msgid "There are no tax entries to list"
 msgstr "No hay entradas de impuesto a la lista"
 
-#: Tax.php:287
+#: Tax.php:319 Tax.php:324
 msgid "Tax Reporting"
 msgstr "Informe impositivo"
 
-#: Tax.php:298
+#: Tax.php:331
 msgid "Tax Authority To Report On:"
 msgstr "Declarar a la Autoridad Fiscal:"
 
-#: Tax.php:307
+#: Tax.php:340
 msgid "Return Covering"
 msgstr "Regresar Cubierta"
 
-#: Tax.php:311
-msgid "Quarter"
-msgstr "Tres meses"
+#: Tax.php:343
+msgid "2 Months"
+msgstr "2 meses"
 
-#: Tax.php:312
-msgid "Six Months"
-msgstr "Seis meses"
+#: Tax.php:344
+msgid "3 Months"
+msgstr "3 meses"
 
-#: Tax.php:318
+#: Tax.php:345
+msgid "6 Months"
+msgstr "6 meses"
+
+#: Tax.php:346
+msgid "12 Months"
+msgstr "12 meses"
+
+#: Tax.php:347
+msgid "24 Months"
+msgstr "24 meses"
+
+#: Tax.php:348
+msgid "48 Months"
+msgstr "48 meses"
+
+#: Tax.php:353
 msgid "Return To"
 msgstr "Regresar A"
 
-#: Tax.php:327
+#: Tax.php:362
 msgid "Could not retrieve the period data because"
 msgstr "No se puede obtener el período de fechas porque"
 
-#: Tax.php:342
+#: Tax.php:376
 msgid "Detail Or Summary Only"
 msgstr "Detalle ó Sumario"
 
-#: Tax.php:344
+#: Tax.php:378
 msgid "Detail and Summary"
 msgstr "Detalle y Resumen"
 
-#: Tax.php:345
+#: Tax.php:379
 msgid "Summary Only"
 msgstr "Sólo Sumario"
 
@@ -39059,10 +39069,6 @@ msgstr "Balance Actual/Adelante en Contabilidad"
 #: Z_CheckDebtorsControl.php:76
 msgid "Calculated"
 msgstr "Calculado"
-
-#: Z_CheckDebtorsControl.php:77 Z_CheckGLTransBalance.php:14
-msgid "Difference"
-msgstr "Diferencia"
 
 #: Z_CheckGLTransBalance.php:5
 msgid "Check Period Sales Ledger Control Account"
@@ -47253,15 +47259,6 @@ msgstr ""
 msgid "Login"
 msgstr "Ingresar"
 
-#: includes/MainMenuLinksArray.php:24
-#: reportwriter/languages/en_US/reports.php:241
-#: ../webSHOP/CreditCardPayPalPro.php:90
-#: ../webSHOP/includes/ProcessPayPalPayment.php:8
-#: ../webSHOP/includes/ProcessPayPalPayment.php:10
-#: ../webSHOP/includes/ProcessPayPalPayment.php:45
-msgid "Purchases"
-msgstr "Compras"
-
 #: includes/MainMenuLinksArray.php:34
 msgid "New Sales Order or Quotation"
 msgstr "Nueva orden de venta o cotización"
@@ -50530,12 +50527,3 @@ msgstr ""
 #: ../webSHOP/includes/session.php:137
 msgid "Bank Transfer"
 msgstr ""
-
-#~ msgid "Prices for Categories"
-#~ msgstr "Precios por Categorías"
-
-#~ msgid "Prices For Categories"
-#~ msgstr "Precios por categorías"
-
-#~ msgid "Maintenance Of Location Authorised Users"
-#~ msgstr "Mantenimiento de usuarios autorizados por ubicación"

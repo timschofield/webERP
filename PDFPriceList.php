@@ -210,11 +210,11 @@ If (isset($_POST['PrintPDF'])
 			if ($PriceList['price']!=0) {
 				$DisplayGPPercent = locale_number_format((($PriceList['price']-$PriceList['standardcost'])*100/$PriceList['price']), 2) . '%';
 			}
-			/*$LeftOvers = */$pdf->addTextWrap($Page_Width-$Right_Margin-128, $YPos-$FontSize, 32, $FontSize,
+			$pdf->addTextWrap($Page_Width-$Right_Margin-128, $YPos-$FontSize, 32, $FontSize,
 				$DisplayGPPercent, 'right');
 		}
 		// Displays unit price:
-		/*$LeftOvers = */$pdf->addTextWrap($Page_Width-$Right_Margin-96, $YPos-$FontSize, 96, $FontSize,
+		$pdf->addTextWrap($Page_Width-$Right_Margin-96, $YPos-$FontSize, 96, $FontSize,
 			locale_number_format($PriceList['price'],$PriceList['decimalplaces']), 'right');
 
 		if ($_POST['CustomerSpecials']=='Customer Special Prices Only') {
@@ -281,8 +281,8 @@ If (isset($_POST['PrintPDF'])
 	$ViewTopic = 'SalesTypes';// Filename in ManualContents.php's TOC.
 	$BookMark = 'PDFPriceList';// Anchor's id in the manual's html document.
 	include('includes/header.inc');
-	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/customer.png" title="' . _('Price List') . '" alt="" />
-         ' . ' ' . _('Print a price list by inventory category') . '</p>';
+	echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/customer.png" title="' .
+		_('Price List') . '" />' . ' ' . _('Print a price list by inventory category') . '</p>';
 
 	if (!isset($_POST['FromCriteria']) or !isset($_POST['ToCriteria'])) {
 		/*if $FromCriteria is not set then show a form to allow input */
@@ -360,13 +360,13 @@ function PageHeader () {
 	global $SalesTypeName;
 	global $CustomerName;
 
-	$PageNumber++;
-	if ($PageNumber>1) {
+	$PageNumber ++;// Increments $PageNumber before printing.
+	if ($PageNumber>1) {// Inserts a page break if it is not the first page.
 		$pdf->newPage();
 	}
 
 	$YPos = $Page_Height-$Top_Margin;
-	$FontSizeExt = $FontSize;// To preserve the main font size.
+	$FontSizeLast = $FontSize;// To preserve the main font size.
 	$FontSize = 10;
 	$pdf->addText($Left_Margin, $YPos, $FontSize,
 		$_SESSION['CompanyRecord']['coyname']);// Company name.
@@ -434,6 +434,6 @@ function PageHeader () {
 
 /*	$YPos -= $FontSize;// Jumps additional line after the table headings.*/
 
-	$FontSize = $FontSizeExt;// Resets to the main font size.
+	$FontSize = $FontSizeLast;// Resets to the main font size.
 }
 ?>
