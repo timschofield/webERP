@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: webERP 4.11.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-27 22:51-0600\n"
-"PO-Revision-Date: 2014-08-27 22:55-0600\n"
+"POT-Creation-Date: 2014-08-28 08:46-0600\n"
+"PO-Revision-Date: 2014-08-28 09:16-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -11244,7 +11244,7 @@ msgstr "Detalle"
 #: GLProfit_Loss.php:107 GLTagProfit_Loss.php:120 POReport.php:1507
 #: SalesInquiry.php:1069 Tax.php:433
 msgid "Summary"
-msgstr "Sumario"
+msgstr "Resumen"
 
 #: EDIMessageFormat.php:240
 msgid "Line Text"
@@ -13785,7 +13785,7 @@ msgstr "Seleccionar la fecha del balance"
 
 #: GLBalanceSheet.php:56 GLProfit_Loss.php:105 GLTagProfit_Loss.php:118
 msgid "Detail Or Summary"
-msgstr "Detalle ó Sumario"
+msgstr "Detalle o resumen"
 
 #: GLBalanceSheet.php:57
 msgid "Selecting Summary will show on the totals at the account group level"
@@ -35589,7 +35589,7 @@ msgstr "El SQL devolvió el siguiente error"
 
 #: Tax.php:24 Tax.php:324 includes/PDFTaxPageHeader.inc:25
 msgid "Tax Report"
-msgstr ""
+msgstr "Informe de impuestos"
 
 #: Tax.php:54 Tax.php:168 Tax.php:307
 msgid "Taxation Reporting Error"
@@ -35608,7 +35608,7 @@ msgstr "Impuesto en ventas"
 
 #: Tax.php:107
 msgid "Total Outputs"
-msgstr "Egresos Totales"
+msgstr "Egresos totales"
 
 #: Tax.php:170
 msgid "The accounts payable transaction details could not be retrieved because"
@@ -35622,7 +35622,7 @@ msgstr "Impuestos en compras"
 
 #: Tax.php:220
 msgid "Total Inputs"
-msgstr "Ingresos Totales"
+msgstr "Ingresos totales"
 
 #: Tax.php:269 includes/MainMenuLinksArray.php:24
 #: reportwriter/languages/en_US/reports.php:241
@@ -35639,19 +35639,19 @@ msgstr "Diferencia"
 
 #: Tax.php:299
 msgid ""
-"Adjustments for Tax paid to Customs, FBT, entertainments etc must also be "
-"entered"
+"Adjustments for tax paid to Customs, FBT, entertainments, etc. must also be "
+"entered."
 msgstr ""
-"Deben introducirse los ajustes para los Impuestos pagados a Aduanas. "
-"entretenimientos, etc."
+"Ajustes por impuestos pagados a la Aduana, FBT, entretenimientos, etc. "
+"también se deben introducir."
 
 #: Tax.php:302
 msgid ""
-"This information excludes Tax on journal entries/payments/receipts all Tax "
-"should be entered through AR/AP"
+"This information excludes tax on journal entries/payments/receipts. All tax "
+"should be entered through AR/AP."
 msgstr ""
-"Esta información excluye Impuestos en asientos/pagos/ingresos del diario. "
-"Todos los Impuestos deberían ser entrados a través de Cuentas a Cobrar/Pagar"
+"Esta información excluye impuesto sobre entradas/pagos/recibos de Diarios. "
+"Todo impuesto debe ser introducido mediante CxC/CxP."
 
 #: Tax.php:309
 msgid "There are no tax entries to list"
@@ -35662,12 +35662,12 @@ msgid "Tax Reporting"
 msgstr "Informe impositivo"
 
 #: Tax.php:331
-msgid "Tax Authority To Report On:"
-msgstr "Declarar a la Autoridad Fiscal:"
+msgid "Tax Authority To Report On"
+msgstr "Declarar a la Autoridad Fiscal"
 
 #: Tax.php:340
 msgid "Return Covering"
-msgstr "Regresar Cubierta"
+msgstr "Período"
 
 #: Tax.php:343
 msgid "2 Months"
@@ -35695,7 +35695,7 @@ msgstr "48 meses"
 
 #: Tax.php:353
 msgid "Return To"
-msgstr "Regresar A"
+msgstr "Corte al"
 
 #: Tax.php:362
 msgid "Could not retrieve the period data because"
@@ -35703,15 +35703,15 @@ msgstr "No se puede obtener el período de fechas porque"
 
 #: Tax.php:376
 msgid "Detail Or Summary Only"
-msgstr "Detalle ó Sumario"
+msgstr "Solo detalle o resumen"
 
 #: Tax.php:378
 msgid "Detail and Summary"
-msgstr "Detalle y Resumen"
+msgstr "Detalle y resumen"
 
 #: Tax.php:379
 msgid "Summary Only"
-msgstr "Sólo Sumario"
+msgstr "Sólo resumen"
 
 #: TaxAuthorities.php:6 TaxAuthorityRates.php:134
 msgid "Tax Authorities"
@@ -35805,11 +35805,11 @@ msgstr "Cuenta de Pagos de Impuestos"
 
 #: TaxAuthorities.php:310
 msgid "Bank Name"
-msgstr "Nombre del Banco"
+msgstr "Nombre del banco"
 
 #: TaxAuthorities.php:311
 msgid "Not more than 40 chacraters"
-msgstr ""
+msgstr "No más de 40 caracteres"
 
 #: TaxAuthorities.php:314
 msgid "Bank Account Type"
@@ -35817,7 +35817,7 @@ msgstr "Tipo de cuenta bancaria"
 
 #: TaxAuthorities.php:315 TaxAuthorities.php:319
 msgid "No more than 20 characters"
-msgstr ""
+msgstr "No más de 20caracteres"
 
 #: TaxAuthorities.php:322
 msgid "Bank Swift No"
@@ -35825,7 +35825,7 @@ msgstr "Nº Swift del Banco"
 
 #: TaxAuthorities.php:323
 msgid "No more than 15 characters"
-msgstr ""
+msgstr "No más de 15 caracteres"
 
 #: TaxAuthorityRates.php:12
 msgid "Tax Rates"
@@ -35866,7 +35866,7 @@ msgstr "Tasa impositiva"
 #: TaxAuthorityRates.php:112
 #, php-format
 msgid "Input must be numeric"
-msgstr ""
+msgstr "La cantidad debe ser numérica"
 
 #: TaxAuthorityRates.php:126
 msgid "Update Rates"
@@ -50527,3 +50527,20 @@ msgstr ""
 #: ../webSHOP/includes/session.php:137
 msgid "Bank Transfer"
 msgstr ""
+
+#~ msgid "Tax Authority To Report On:"
+#~ msgstr "Declarar a la Autoridad Fiscal"
+
+#~ msgid ""
+#~ "Adjustments for Tax paid to Customs, FBT, entertainments etc must also be "
+#~ "entered"
+#~ msgstr ""
+#~ "Ajustes por impuestos pagados a la Aduana, FBT, entretenimientos, etc "
+#~ "también se deben introducir"
+
+#~ msgid ""
+#~ "This information excludes Tax on journal entries/payments/receipts all "
+#~ "Tax should be entered through AR/AP"
+#~ msgstr ""
+#~ "Esta información excluye impuesto sobre entradas/pagos/recibos de "
+#~ "Diarios. Todo impuesto debe ser introducido mediante CxC/CxP."

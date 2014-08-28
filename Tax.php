@@ -18,11 +18,11 @@ if(isset($_POST['TaxAuthority']) AND
 
 	$result = DB_query("SELECT description FROM taxauthorities WHERE taxid='" . $_POST['TaxAuthority'] . "'",$db);
 	$TaxAuthDescription = DB_fetch_row($result);
-	$TaxAuthorityName =  $TaxAuthDescription[0];
+	$TaxAuthorityName = $TaxAuthDescription[0];
 
 	include('includes/PDFStarter.php');
 	$pdf->addInfo('Title', _('Tax Report') . ': ' . $TaxAuthorityName);
-    $pdf->addInfo('Subject', $_POST['NoOfPeriods'] . ' ' . _('months to') . ' ' . $PeriodEnd);
+	$pdf->addInfo('Subject', $_POST['NoOfPeriods'] . ' ' . _('months to') . ' ' . $PeriodEnd);
 
 	/*Now get the invoices for the tax report */
 	/* The amounts of taxes are inserted into debtortranstaxes.taxamount in
@@ -42,11 +42,11 @@ if(isset($_POST['TaxAuthority']) AND
 			INNER JOIN debtorsmaster ON debtortrans.debtorno=debtorsmaster.debtorno
 			INNER JOIN systypes ON debtortrans.type=systypes.typeid
 			INNER JOIN debtortranstaxes ON debtortrans.id = debtortranstaxes.debtortransid
-			WHERE debtortrans.prd >= '" .($_POST['ToPeriod'] - $_POST['NoOfPeriods'] + 1) . "'
+			WHERE debtortrans.prd >= '" . ($_POST['ToPeriod'] - $_POST['NoOfPeriods'] + 1) . "'
 			AND debtortrans.prd <= '" . $_POST['ToPeriod'] . "'
 			AND (debtortrans.type=10 OR debtortrans.type=11)
 			AND debtortranstaxes.taxauthid = '" . $_POST['TaxAuthority'] . "'
-			ORDER BY debtortrans.trandate";// RChacon: ORDER BY debtortrans.recno ?
+			ORDER BY debtortrans.id";// Order by debtortrans record number (primary key).
 
 	$DebtorTransResult = DB_query($SQL,$db,'','',false,false); //don't trap errors in DB_query
 
@@ -62,7 +62,7 @@ if(isset($_POST['TaxAuthority']) AND
 		exit;
 	}
 
-    $SalesCount = 0;
+	$SalesCount = 0;
 	$SalesNet = 0;
 	$SalesTax = 0;
 	if($_POST['DetailOrSummary']=='Detail') {
@@ -90,7 +90,7 @@ if(isset($_POST['TaxAuthority']) AND
 				include('includes/PDFTaxPageHeader.inc');
 				PageHeaderDetail();
 			}
-	        $SalesCount ++;// Counts sales transactions.
+			$SalesCount ++;// Counts sales transactions.
 			$SalesNet += $DebtorTransRow['netamount'];// Accumulates sales net.
 			$SalesTax += $DebtorTransRow['tax'];// Accumulates sales tax.
 		} /*end listing while loop */
@@ -115,7 +115,7 @@ if(isset($_POST['TaxAuthority']) AND
 
 	} else {
 		while($DebtorTransRow = DB_fetch_array($DebtorTransResult,$db)) {
-	        $SalesCount ++;// Counts sales transactions.
+			$SalesCount ++;// Counts sales transactions.
 			$SalesNet += $DebtorTransRow['netamount'];// Accumulates sales net.
 			$SalesTax += $DebtorTransRow['tax'];// Accumulates sales tax.
 		} /*end listing while loop */
@@ -150,7 +150,7 @@ if(isset($_POST['TaxAuthority']) AND
 			supptrans.transno,
 			suppliers.suppname,
 			supptrans.suppreference,
-   			supptrans.ovamount/supptrans.rate AS netamount,
+			supptrans.ovamount/supptrans.rate AS netamount,
 			supptranstaxes.taxamount/supptrans.rate AS taxamt
 		FROM supptrans
 		INNER JOIN suppliers ON supptrans.supplierno=suppliers.supplierid
@@ -160,7 +160,7 @@ if(isset($_POST['TaxAuthority']) AND
 		AND supptrans.trandate <= '" . FormatDateForSQL($PeriodEnd) . "'
 		AND (supptrans.type=20 OR supptrans.type=21)
 		AND supptranstaxes.taxauthid = '" . $_POST['TaxAuthority'] . "'
-		ORDER BY supptrans.trandate";// ORDER BY supptrans.recno ?
+		ORDER BY supptrans.id";// Order by supptrans record number (primary key).
 
 	$SuppTransResult = DB_query($SQL,$db,'','',false,false); //doint trap errors in DB_query
 
@@ -176,7 +176,7 @@ if(isset($_POST['TaxAuthority']) AND
 		exit;
 	}
 
-    $PurchasesCount = 0;
+	$PurchasesCount = 0;
 	$PurchasesNet = 0;
 	$PurchasesTax = 0;
 	if($_POST['DetailOrSummary']=='Detail') {
@@ -203,7 +203,7 @@ if(isset($_POST['TaxAuthority']) AND
 				include('includes/PDFTaxPageHeader.inc');
 				PageHeaderDetail();
 			}
-	        $PurchasesCount ++;// Counts purchases transactions.
+			$PurchasesCount ++;// Counts purchases transactions.
 			$PurchasesNet += $SuppTransRow['netamount'];// Accumulates purchases net.
 			$PurchasesTax += $SuppTransRow['taxamt'];// Accumulates purchases tax.
 		} /*end listing while loop */
@@ -228,7 +228,7 @@ if(isset($_POST['TaxAuthority']) AND
 
 	} else {
 		while($SuppTransRow = DB_fetch_array($SuppTransResult,$db)) {
-	        $PurchasesCount ++;// Counts purchases transactions.
+			$PurchasesCount ++;// Counts purchases transactions.
 			$PurchasesNet += $SuppTransRow['netamount'];// Accumulates purchases net.
 			$PurchasesTax += $SuppTransRow['taxamt'];// Accumulates purchases tax.
 		} /*end listing while loop */
@@ -296,24 +296,24 @@ if(isset($_POST['TaxAuthority']) AND
 
 	$YPos -= $FontSize*4;// Jumps additional lines.
 
-	$pdf->addText($Left_Margin, $YPos, $FontSize, _('Adjustments for Tax paid to Customs, FBT, entertainments etc must also be entered'));
+	$pdf->addText($Left_Margin, $YPos, $FontSize, _('Adjustments for tax paid to Customs, FBT, entertainments, etc. must also be entered.'));
 	$YPos -= $FontSize;
 	$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos-$FontSize, $Page_Width-$Left_Margin-$Right_Margin, $FontSize,
-		_('This information excludes Tax on journal entries/payments/receipts all Tax should be entered through AR/AP'));
+		_('This information excludes tax on journal entries/payments/receipts. All tax should be entered through AR/AP.'));
 	$YPos -= $FontSize;
 	$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos-$FontSize, $Page_Width-$Left_Margin-$Right_Margin, $FontSize, $LeftOvers);
 
-   	if($SalesCount+$PurchasesCount == 0) {
+	if($SalesCount+$PurchasesCount == 0) {
 		$Title = _('Taxation Reporting Error');
 		include('includes/header.inc');
 		prnMsg(_('There are no tax entries to list'),'info');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		include('includes/footer.inc');
 		exit;
-    } else {
-    	$pdf->OutputD($_SESSION['DatabaseName'] . '_Tax_Report_' . Date('Y-m-d'));
-    }
-    $pdf->__destruct();
+	} else {
+		$pdf->OutputD($_SESSION['DatabaseName'] . '_Tax_Report_' . Date('Y-m-d'));
+	}
+	$pdf->__destruct();
 } else { /*The option to print PDF was not hit */
 
 	$Title =_('Tax Reporting');
@@ -324,11 +324,11 @@ if(isset($_POST['TaxAuthority']) AND
 		_('Tax Report') . '" />' . ' ' . _('Tax Reporting') . '</p>';
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-    echo '<div>';
-    echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<div>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">';
 
-	echo '<tr><td>' . _('Tax Authority To Report On:') . ':</td>
+	echo '<tr><td>' . _('Tax Authority To Report On') . ':</td>
 			<td><select name="TaxAuthority">';
 
 	$result = DB_query("SELECT taxid, description FROM taxauthorities",$db);
@@ -340,12 +340,12 @@ if(isset($_POST['TaxAuthority']) AND
 			<td>' . _('Return Covering') . ':</td>
 			<td><select name="NoOfPeriods">' .
 			'<option selected="selected" value="1">' . _('One Month') . '</option>' .
-			'<option value="2">' . _('2 Months')  . '</option>' .
+			'<option value="2">' . _('2 Months') . '</option>' .
 			'<option value="3">' . _('3 Months') . '</option>' .
-			'<option value="6">' . _('6 Months')  . '</option>' .
-			'<option value="12">' . _('12 Months')  . '</option>' .
-			'<option value="24">' . _('24 Months')  . '</option>' .
-			'<option value="48">' . _('48 Months')  . '</option>' .
+			'<option value="6">' . _('6 Months') . '</option>' .
+			'<option value="12">' . _('12 Months') . '</option>' .
+			'<option value="24">' . _('24 Months') . '</option>' .
+			'<option value="48">' . _('48 Months') . '</option>' .
 			'</select></td>
 		</tr>';
 
@@ -384,7 +384,7 @@ if(isset($_POST['TaxAuthority']) AND
 		<div class="centre">
 			<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
 		</div>
-        </div>
+		</div>
 		</form>';
 
 	include('includes/footer.inc');

@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: webERP 4.11.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-27 22:51-0600\n"
-"PO-Revision-Date: 2014-08-27 22:58-0600\n"
+"POT-Creation-Date: 2014-08-28 08:46-0600\n"
+"PO-Revision-Date: 2014-08-28 08:50-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: French <none>\n"
 "Language: fr_FR\n"
@@ -34829,23 +34829,23 @@ msgstr "Format date (défaut)"
 
 #: SystemParameters.php:372
 msgid "d/m/Y"
-msgstr ""
+msgstr "j/m/A"
 
 #: SystemParameters.php:373
 msgid "d.m.Y"
-msgstr ""
+msgstr "j.m.A"
 
 #: SystemParameters.php:374
 msgid "m/d/Y"
-msgstr ""
+msgstr "m/j/A"
 
 #: SystemParameters.php:375
 msgid "Y/m/d"
-msgstr ""
+msgstr "A/m/j"
 
 #: SystemParameters.php:376
 msgid "Y-m-d"
-msgstr ""
+msgstr "A-m-j"
 
 # JDN
 #: SystemParameters.php:378
@@ -34990,15 +34990,13 @@ msgstr "Redondance d'articles autorisée dans les commandes client"
 msgid "Order Entry allows Line Item Narrative"
 msgstr "Autoriser les commentaires"
 
-# JDN
 #: SystemParameters.php:441
 msgid "Allow Narrative Entry"
-msgstr "Oui"
+msgstr "Autoriser l'entrée Narrative"
 
-# JDN
 #: SystemParameters.php:442
 msgid "No Narrative Line"
-msgstr "Non"
+msgstr "Pas de ligne narrative"
 
 # JDN
 #: SystemParameters.php:444
@@ -35057,7 +35055,7 @@ msgstr ""
 
 #: SystemParameters.php:485
 msgid "Google"
-msgstr ""
+msgstr "Google"
 
 #: SystemParameters.php:487
 msgid "Specify the source to use for exchange rates"
@@ -36013,7 +36011,7 @@ msgstr "Le SQL a renvoyé l'erreur suivante"
 
 #: Tax.php:24 Tax.php:324 includes/PDFTaxPageHeader.inc:25
 msgid "Tax Report"
-msgstr ""
+msgstr "Rapport d'impôts"
 
 #: Tax.php:54 Tax.php:168 Tax.php:307
 msgid "Taxation Reporting Error"
@@ -36059,16 +36057,16 @@ msgstr "Différence"
 
 #: Tax.php:299
 msgid ""
-"Adjustments for Tax paid to Customs, FBT, entertainments etc must also be "
-"entered"
+"Adjustments for tax paid to Customs, FBT, entertainments, etc. must also be "
+"entered."
 msgstr ""
 "Ajustements de la taxe payée à la douane, FBT, etc divertissements doivent "
 "aussi être indiqués"
 
 #: Tax.php:302
 msgid ""
-"This information excludes Tax on journal entries/payments/receipts all Tax "
-"should be entered through AR/AP"
+"This information excludes tax on journal entries/payments/receipts. All tax "
+"should be entered through AR/AP."
 msgstr ""
 "Cette information ne comprend pas la taxe sur les entrées du journal / "
 "paiements / recettes fiscales devraient tous être entré par AR / AP"
@@ -36082,12 +36080,12 @@ msgid "Tax Reporting"
 msgstr "Rapport T.V.A."
 
 #: Tax.php:331
-msgid "Tax Authority To Report On:"
-msgstr "Administration fiscale à formuler sur:"
+msgid "Tax Authority To Report On"
+msgstr "Administration fiscale à formuler sur"
 
 #: Tax.php:340
 msgid "Return Covering"
-msgstr ""
+msgstr "Retour Couvrant"
 
 #: Tax.php:343
 msgid "2 Months"
@@ -36183,11 +36181,11 @@ msgstr "Commande SQL d'affichage des autorités fiscales"
 
 #: TaxAuthorities.php:148
 msgid "Input Tax"
-msgstr "Taxe"
+msgstr "Taxes reçues"
 
 #: TaxAuthorities.php:149
 msgid "Output Tax"
-msgstr ""
+msgstr "Taxes payées"
 
 #: TaxAuthorities.php:152
 msgid "Bank Act Type"
@@ -50928,3 +50926,20 @@ msgstr ""
 #: ../webSHOP/includes/session.php:137
 msgid "Bank Transfer"
 msgstr ""
+
+#~ msgid "Tax Authority To Report On:"
+#~ msgstr "Administration fiscale à formuler sur:"
+
+#~ msgid ""
+#~ "Adjustments for Tax paid to Customs, FBT, entertainments etc must also be "
+#~ "entered"
+#~ msgstr ""
+#~ "Ajustements de la taxe payée à la douane, FBT, etc divertissements "
+#~ "doivent aussi être indiqués"
+
+#~ msgid ""
+#~ "This information excludes Tax on journal entries/payments/receipts all "
+#~ "Tax should be entered through AR/AP"
+#~ msgstr ""
+#~ "Cette information ne comprend pas la taxe sur les entrées du journal / "
+#~ "paiements / recettes fiscales devraient tous être entré par AR / AP"
