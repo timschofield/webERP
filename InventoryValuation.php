@@ -206,7 +206,8 @@ if (isset($_POST['PrintPDF'])
 
 	$CSVListing = _('Category ID') .','. _('Category Description') .','. _('Stock ID') .','. _('Description') .','. _('Decimal Places') .','. _('Qty On Hand') .','. _('Units') .','. _('Unit Cost') .','. _('Total') . "\n";
 	while ($InventoryValn = DB_fetch_row($InventoryResult, $db)) {
-		$CSVListing .= implode(',', $InventoryValn) . "\n";
+		$CSVListing .= '"';
+		$CSVListing .= implode('","', $InventoryValn) . '"' . "\n";
 	}
 	header('Content-Encoding: UTF-8');
     header('Content-type: text/csv; charset=UTF-8');
