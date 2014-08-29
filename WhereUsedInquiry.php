@@ -50,13 +50,15 @@ echo '<input type="submit" name="ShowWhereUsed" value="' . _('Show Where Used') 
 if (isset($StockID)) {
 
 	$SQL = "SELECT bom.*,
-				stockmaster.description
+				stockmaster.description,
+				stockmaster.discontinued
 			FROM bom INNER JOIN stockmaster
 			ON bom.parent = stockmaster.stockid
 			INNER JOIN locationusers ON locationusers.loccode=bom.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 			WHERE component='" . $StockID . "'
-			AND bom.effectiveafter<='" . Date('Y-m-d') . "'
-			AND bom.effectiveto >='" . Date('Y-m-d') . "'";
+				AND bom.effectiveafter<='" . Date('Y-m-d') . "'
+				AND bom.effectiveto >='" . Date('Y-m-d') . "'
+			ORDER BY stockmaster.discontinued, bom.parent";
 
 	$ErrMsg = _('The parents for the selected part could not be retrieved because');;
 	$result = DB_query($SQL,$db,$ErrMsg);
@@ -67,6 +69,7 @@ if (isset($StockID)) {
 		echo '<table width="97%" class="selection">
 				<tr>
 					<th class="ascending">' . _('Used By') . '</th>
+					<th class="ascending">' . _('Status') . '</th>
 					<th class="ascending">' . _('Work Centre') . '</th>
 					<th class="ascending">' . _('Location') . '</th>
 					<th class="ascending">' . _('Quantity Required') . '</th>
@@ -83,8 +86,13 @@ if (isset($StockID)) {
 				echo '<tr class="OddTableRows">';;
 				$k=1;
 			}
-
+			if ($myrow['discontinued'] == 1){
+				$Status = _('Obsolete');
+			}else{
+				$Status = _('Current');
+			}
 			echo '<td><a target="_blank" href="' . $RootPath . '/BOMInquiry.php?StockID=' . $myrow['parent'] . '" alt="' . _('Show Bill Of Material') . '">' . $myrow['parent']. ' - ' . $myrow['description']. '</a></td>
+					<td>' . $Status. '</td>
 					<td>' . $myrow['workcentreadded']. '</td>
 					<td>' . $myrow['loccode']. '</td>
 					<td class="number">' . locale_number_format($myrow['quantity'],'Variable') . '</td>
