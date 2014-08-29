@@ -1,5 +1,5 @@
 webERP Change Log
-
+29/08/14 Exson: Fixed the StockLocStatus Serial Number link column shift problem.
 28/08/14 RChacon: In Tax.php: Fixes SQL select order-by from transaction-date to record-number (primary key). Minor improvements.
 28/08/14 Exson: Fixed the csv file aligned abnormal when there are commas in fields strings.
 28/08/14 RChacon: In Tax.php: Adds code comments, clean-up unneeded variables, simplies and reorder SQL select, reduces if() calls, replaces addTextWarp-left-align with addText, replaces line-drawing a box with Rectangle(), fixes start-date for 'Y/m/d' format, adds start-date for 'Y-m-d' format, adds a summary section for the report, adds ViewTopic and BookMark, adds more NoOfPeriods.
