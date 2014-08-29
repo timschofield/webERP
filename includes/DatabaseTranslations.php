@@ -55,6 +55,11 @@ $systypes_typename[49] = _('Import Fixed Assets');
 $systypes_typename[50] = _('Opening Balance');
 $systypes_typename[500] = _('Auto Debtor Number');
 
+// taxcategories.taxcatname:
+$taxcategories_taxcatname[4] = _('Exempt');
+$taxcategories_taxcatname[5] = _('Freight');
+$taxcategories_taxcatname[6] = _('Handling');
+
 // General purpose:
 $General_purpose = _('Default');
 

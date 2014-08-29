@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: webERP 4.11.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-28 08:46-0600\n"
-"PO-Revision-Date: 2014-08-28 09:16-0600\n"
+"POT-Creation-Date: 2014-08-29 11:25-0600\n"
+"PO-Revision-Date: 2014-08-29 11:35-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -911,7 +911,7 @@ msgid "as-of"
 msgstr ""
 
 #: AgedControlledInventory.php:12 InventoryQuantities.php:155
-#: InventoryValuation.php:230 Locations.php:394 Locations.php:455 MRP.php:530
+#: InventoryValuation.php:231 Locations.php:394 Locations.php:455 MRP.php:530
 #: MRPCalendar.php:21 MRPCreateDemands.php:196 MRPDemandTypes.php:17
 #: MRPDemands.php:27 MRPPlannedPurchaseOrders.php:265
 #: MRPPlannedWorkOrders.php:247 MRPPlannedWorkOrders.php:321
@@ -1259,11 +1259,11 @@ msgstr "Mostrar sólo los clientes comerciando en"
 msgid "Summary or detailed report"
 msgstr "Informe detallado o resumen"
 
-#: AgedDebtors.php:519 AgedSuppliers.php:320 InventoryValuation.php:288
+#: AgedDebtors.php:519 AgedSuppliers.php:320 InventoryValuation.php:289
 msgid "Summary Report"
 msgstr "Informe resumen"
 
-#: AgedDebtors.php:520 AgedSuppliers.php:321 InventoryValuation.php:289
+#: AgedDebtors.php:520 AgedSuppliers.php:321 InventoryValuation.php:290
 msgid "Detailed Report"
 msgstr "Informe detallado"
 
@@ -1271,7 +1271,7 @@ msgstr "Informe detallado"
 #: BOMIndented.php:277 BOMIndentedReverse.php:255 BOMListing.php:131
 #: DebtorsAtPeriodEnd.php:168 InventoryPlanning.php:460
 #: InventoryPlanningPrefSupplier.php:530 InventoryQuantities.php:210
-#: InventoryValuation.php:295 MRPPlannedPurchaseOrders.php:294
+#: InventoryValuation.php:296 MRPPlannedPurchaseOrders.php:294
 #: MRPPlannedWorkOrders.php:348 MRPReschedules.php:153 MRPShortages.php:303
 #: OutstandingGRNs.php:277 PDFCustomerList.php:421 PDFLowGP.php:146
 #: PDFPriceList.php:340 PDFRemittanceAdvice.php:175
@@ -1344,7 +1344,7 @@ msgstr "Todos los proveedores con saldos"
 msgid "For suppliers trading in"
 msgstr "Para proveedores de"
 
-#: AgedSuppliers.php:318 InventoryValuation.php:286
+#: AgedSuppliers.php:318 InventoryValuation.php:287
 msgid "Summary or Detailed Report"
 msgstr "Informe detallado o resumen"
 
@@ -2429,7 +2429,7 @@ msgstr "Secuencia"
 #: PDFOrdersInvoiced.php:296 ReorderLevel.php:290 ReorderLevel.php:299
 #: ReorderLevelLocation.php:164 StockCounts.php:214 StockReorderLevel.php:58
 #: StockSerialItemResearch.php:81 StockStatus.php:88 StockStatus.php:93
-#: SupplierTenderCreate.php:137 WhereUsedInquiry.php:71 WorkCentres.php:129
+#: SupplierTenderCreate.php:137 WhereUsedInquiry.php:74 WorkCentres.php:129
 #: WorkCentres.php:226 api/api_xml-rpc.php:2531 api/api_xml-rpc.php:2577
 #: api/api_xml-rpc.php:2773
 #: includes/PDFPeriodStockTransListingPageHeader.inc:51
@@ -2437,17 +2437,17 @@ msgstr "Secuencia"
 msgid "Location"
 msgstr "Ubicación"
 
-#: BOMs.php:564 WhereUsedInquiry.php:70 includes/MainMenuLinksArray.php:317
+#: BOMs.php:564 WhereUsedInquiry.php:73 includes/MainMenuLinksArray.php:317
 msgid "Work Centre"
 msgstr "Centro de Trabajo"
 
-#: BOMs.php:566 BOMs.php:770 WhereUsedInquiry.php:73
+#: BOMs.php:566 BOMs.php:770 WhereUsedInquiry.php:76
 #: includes/PDFBOMListingPageHeader.inc:40
 msgid "Effective After"
 msgstr "Vigente después de"
 
 #: BOMs.php:567 BOMs.php:774 PurchData.php:703 SellThroughSupport.php:267
-#: WhereUsedInquiry.php:74 includes/PDFBOMListingPageHeader.inc:41
+#: WhereUsedInquiry.php:77 includes/PDFBOMListingPageHeader.inc:41
 msgid "Effective To"
 msgstr "Vigente Para"
 
@@ -5539,7 +5539,7 @@ msgstr "Descripción de los Requisitos"
 
 #: ContractOtherReqts.php:159 InternalStockRequest.php:273
 #: InternalStockRequestAuthorisation.php:105 SelectWorkOrder.php:330
-#: WhereUsedInquiry.php:72 WorkOrderCosting.php:101
+#: WhereUsedInquiry.php:75 WorkOrderCosting.php:101
 msgid "Quantity Required"
 msgstr "Cantidad Requerida"
 
@@ -9096,7 +9096,8 @@ msgstr "Saldo total"
 #: CustomerInquiry.php:152 CustomerReceipt.php:1033 Dashboard.php:58
 #: PrintCustStatements.php:394 SalesPeople.php:206 Shipments.php:406
 #: StockClone.php:871 StockClone.php:873 Stocks.php:1180 Stocks.php:1182
-#: SupplierInquiry.php:145 includes/PDFAgedDebtorsPageHeader.inc:50
+#: SupplierInquiry.php:145 WhereUsedInquiry.php:92
+#: includes/PDFAgedDebtorsPageHeader.inc:50
 #: includes/PDFAgedSuppliersPageHeader.inc:36
 msgid "Current"
 msgstr "Actual"
@@ -15600,6 +15601,7 @@ msgstr "Estado del Stock"
 
 #: InternalStockRequest.php:584 SelectProduct.php:81 SelectProduct.php:805
 #: StockClone.php:876 StockClone.php:878 Stocks.php:1185 Stocks.php:1187
+#: WhereUsedInquiry.php:90
 msgid "Obsolete"
 msgstr "Obsoleto"
 
@@ -15803,23 +15805,23 @@ msgstr "No hay ningún artículo en el rango y la ubicación especificada"
 msgid "Inventory Planning Reporting"
 msgstr "Reporte de Planificación de Inventario"
 
-#: InventoryPlanning.php:400 InventoryValuation.php:238 PDFPriceList.php:302
+#: InventoryPlanning.php:400 InventoryValuation.php:239 PDFPriceList.php:302
 #: PDFPrintLabel.php:296 StockCheck.php:272
 msgid "From Inventory Category Code"
 msgstr "Desde el código de categoría de inventario"
 
-#: InventoryPlanning.php:412 InventoryValuation.php:254 PDFPriceList.php:305
+#: InventoryPlanning.php:412 InventoryValuation.php:255 PDFPriceList.php:305
 #: PDFPrintLabel.php:305 StockCheck.php:283
 msgid "To Inventory Category Code"
 msgstr "Hasta el código de categoría de inventario"
 
 #: InventoryPlanning.php:424 InventoryPlanningPrefSupplier.php:486
-#: InventoryValuation.php:267 StockCheck.php:295
+#: InventoryValuation.php:268 StockCheck.php:295
 msgid "For Inventory in Location"
 msgstr "Para inventario en ubicación"
 
 #: InventoryPlanning.php:430 InventoryPlanningPrefSupplier.php:492
-#: InventoryValuation.php:277 MRPCreateDemands.php:226 PDFDIFOT.php:68
+#: InventoryValuation.php:278 MRPCreateDemands.php:226 PDFDIFOT.php:68
 #: PDFDeliveryDifferences.php:64 PDFOrderStatus.php:63
 #: PDFOrdersInvoiced.php:66 StockUsage.php:87 StockUsage.php:89
 msgid "All Locations"
@@ -16068,11 +16070,11 @@ msgstr "Valor Gran Total"
 msgid "Category ID"
 msgstr "ID de categoría"
 
-#: InventoryValuation.php:222
+#: InventoryValuation.php:223
 msgid "Inventory Valuation Reporting"
 msgstr "Informe de Valoración del Inventario"
 
-#: InventoryValuation.php:296
+#: InventoryValuation.php:297
 msgid "Output to CSV"
 msgstr "Salida a CSV"
 
@@ -18842,7 +18844,7 @@ msgstr "Fecha Pedido"
 #: PDFOrderStatus.php:297 PO_AuthoriseMyOrders.php:63 PO_Header.php:829
 #: PO_OrderDetails.php:152 PO_SelectOSPurchOrder.php:521
 #: PO_SelectPurchOrder.php:440 SelectWorkOrder.php:324 SelectWorkOrder.php:360
-#: WorkOrderCosting.php:104 WorkOrderCosting.php:118
+#: WhereUsedInquiry.php:72 WorkOrderCosting.php:104 WorkOrderCosting.php:118
 #: includes/InputSerialItemsFile.php:160
 #, php-format
 msgid "Status"
@@ -23354,7 +23356,7 @@ msgstr "Sub Total"
 
 #: PrintCustTrans.php:420 PrintCustTrans.php:1075
 #: PrintCustTransPortrait.php:477 PrintCustTransPortrait.php:1142
-#: includes/DefineCartClass.php:377
+#: includes/DatabaseTranslations.php:60 includes/DefineCartClass.php:377
 msgid "Freight"
 msgstr "Flete"
 
@@ -30438,11 +30440,11 @@ msgstr "Punto de pedido"
 msgid "The quantity on order for this product to be received into"
 msgstr "La cantidad en pedidos de este producto a ser recibida en"
 
-#: StockLocStatus.php:296 StockLocStatus.php:328 StockStatus.php:269
+#: StockLocStatus.php:297 StockLocStatus.php:329 StockStatus.php:269
 msgid "Serial Numbers"
 msgstr "Numeros de Serie"
 
-#: StockLocStatus.php:298 StockLocStatus.php:330 StockStatus.php:271
+#: StockLocStatus.php:299 StockLocStatus.php:331 StockStatus.php:271
 #: WorkOrderEntry.php:634
 msgid "Batches"
 msgstr "Lotes"
@@ -37150,23 +37152,23 @@ msgstr ""
 msgid "Show Where Used"
 msgstr "Mostrar Dónde Usado"
 
-#: WhereUsedInquiry.php:61
+#: WhereUsedInquiry.php:63
 msgid "The parents for the selected part could not be retrieved because"
 msgstr "La base del código seleccionado no se puede obtener porque"
 
-#: WhereUsedInquiry.php:64
+#: WhereUsedInquiry.php:66
 msgid "The selected item"
 msgstr "El artículo seleccionado"
 
-#: WhereUsedInquiry.php:64
+#: WhereUsedInquiry.php:66
 msgid "is not used as a component of any other parts"
 msgstr "no se utiliza como un componente de cualquier otro código"
 
-#: WhereUsedInquiry.php:69
+#: WhereUsedInquiry.php:71
 msgid "Used By"
 msgstr "Usado Por"
 
-#: WhereUsedInquiry.php:87
+#: WhereUsedInquiry.php:94
 msgid "Show Bill Of Material"
 msgstr "Mostrar Lista de Materiales"
 
@@ -39743,7 +39745,7 @@ msgstr "Tipo del Campo"
 msgid "Can field be null"
 msgstr "El Campo puede ser nulo"
 
-#: Z_DescribeTable.php:15 includes/DatabaseTranslations.php:59
+#: Z_DescribeTable.php:15 includes/DatabaseTranslations.php:64
 #: install/index.php:1040 reportwriter/languages/en_US/reports.php:65
 msgid "Default"
 msgstr "Predeterminado"
@@ -46719,15 +46721,15 @@ msgstr "Kwacha zambiano"
 
 #: includes/DatabaseTranslations.php:22
 msgid "Journal - GL"
-msgstr ""
+msgstr "Diario contable"
 
 #: includes/DatabaseTranslations.php:23
 msgid "Payment - GL"
-msgstr ""
+msgstr "Pago contable"
 
 #: includes/DatabaseTranslations.php:24
 msgid "Receipt - GL"
-msgstr ""
+msgstr "Recibo contable"
 
 #: includes/DatabaseTranslations.php:25
 msgid "Standing Journal"
@@ -46755,23 +46757,23 @@ msgstr ""
 
 #: includes/DatabaseTranslations.php:41
 msgid "Work Order Variance"
-msgstr ""
+msgstr "Variación en orden de trabajo"
 
 #: includes/DatabaseTranslations.php:43
 msgid "Shipment Close"
-msgstr ""
+msgstr "Cierre de embarque"
 
 #: includes/DatabaseTranslations.php:44
 msgid "Contract Close"
-msgstr ""
+msgstr "Cierre de contrato"
 
 #: includes/DatabaseTranslations.php:45
 msgid "Cost Update"
-msgstr ""
+msgstr "Actualización de costo"
 
 #: includes/DatabaseTranslations.php:46
 msgid "Exchange Difference"
-msgstr ""
+msgstr "Diferencia cambiaria"
 
 #: includes/DatabaseTranslations.php:48
 msgid "Stock Requests"
@@ -46779,7 +46781,7 @@ msgstr ""
 
 #: includes/DatabaseTranslations.php:51
 msgid "Asset Category Change"
-msgstr ""
+msgstr "Cambio de categoría de activo"
 
 #: includes/DatabaseTranslations.php:52
 msgid "Delete w/down asset"
@@ -46787,11 +46789,19 @@ msgstr ""
 
 #: includes/DatabaseTranslations.php:55
 msgid "Opening Balance"
-msgstr ""
+msgstr "Saldo inicial"
 
 #: includes/DatabaseTranslations.php:56
 msgid "Auto Debtor Number"
 msgstr ""
+
+#: includes/DatabaseTranslations.php:59
+msgid "Exempt"
+msgstr "Exento"
+
+#: includes/DatabaseTranslations.php:61
+msgid "Handling"
+msgstr "Manejo"
 
 #: includes/DefineCartClass.php:173
 msgid "The order line for"

@@ -1,4 +1,6 @@
 webERP Change Log
+
+29/08/14 RChacon: In TaxAuthorityRates.php and TaxCategories.php: adds $ViewTopic and $BookMark; Uses gettext() to translate 'Exempt', 'Freight' and 'Handling'.
 29/08/14 Exson: Fixed the StockLocStatus Serial Number link column shift problem.
 28/08/14 RChacon: In Tax.php: Fixes SQL select order-by from transaction-date to record-number (primary key). Minor improvements.
 28/08/14 Exson: Fixed the csv file aligned abnormal when there are commas in fields strings.
