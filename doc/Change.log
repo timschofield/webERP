@@ -1,42 +1,43 @@
 webERP Change Log
 
-29/08/14 RChacon: In TaxAuthorityRates.php and TaxCategories.php: adds $ViewTopic and $BookMark; Uses gettext() to translate 'Exempt', 'Freight' and 'Handling'.
-29/08/14 Exson: Fixed the StockLocStatus Serial Number link column shift problem.
-28/08/14 RChacon: In Tax.php: Fixes SQL select order-by from transaction-date to record-number (primary key). Minor improvements.
-28/08/14 Exson: Fixed the csv file aligned abnormal when there are commas in fields strings.
-28/08/14 RChacon: In Tax.php: Adds code comments, clean-up unneeded variables, simplies and reorder SQL select, reduces if() calls, replaces addTextWarp-left-align with addText, replaces line-drawing a box with Rectangle(), fixes start-date for 'Y/m/d' format, adds start-date for 'Y-m-d' format, adds a summary section for the report, adds ViewTopic and BookMark, adds more NoOfPeriods.
-26/08/14 RChacon: In PDFPriceList.php: Adds code comments, adds PageHeader() print for currabrev and categoryid, replaces addTextWarp-left-align with addText, replaces line-drawing a box with Rectangle(), adds 'Prices excluding tax' warning.
-15/08/14 RChacon: Fixes double line feed in PDFQuotationPortrait.php reported by Arwan Galaya. Uniforms code between PDFQuotation.php and PDFQuotationPortrait.php.
-14/08/14 RChacon: In CustomerInquiry.php and SupplierInquiry.php makes translatable the systypes.typename.
-14/08/14 RChacon: In SupplierInquiry.php: Reorganizes columns Date, Type, Number, Reference and Comments, and regroups table-datacel format-strings as in CustomerInquiry.php code.
-13/08/14 kelo: SupplierBalsAtPeriodEnd.php fix calculation to take into account fx differences on after date transactions
-13/08/14 RChacon: includes/DatabaseTranslations.php used to store the fields of tables that are used from the database so that they can be translated in particular systypes for the types of transactions invoice credit note payment receipt etc. Can be extended for scripts and other tables where the data from the table is static and used to display
-13/08/14 RChacon: In CustomerInquiry.php: Adds class ascending and reorganizes columns Date, Type, Number and Reference; Regroups table-datacel format-strings, completes the datacel quantity by table-row; makes translatable the systypes.typename.
-12/08/14 RChacon: In SupplierInquiry.php: makes the field systypes.typename be translatable.
-12/08/14 RChacon: In Z_poRebuildDefault.php: extends title, improves comments, sets file to pot, updates $FilesToInclude, renames old pot file to bak extension. Minor improvements.
-08/08/14 Andrew Galuski: Add SQL and maintenance screens for Location based security. added new report aged controlled stock.  additional scripts to follow as time allows
+30/8/14 Phil: WorkOrderEntry.php didn't handle no item returned from search correctly - fixed.
+29/8/14 RChacon: In TaxAuthorityRates.php and TaxCategories.php: adds $ViewTopic and $BookMark; Uses gettext() to translate 'Exempt', 'Freight' and 'Handling'.
+29/8/14 Exson: Fixed the StockLocStatus Serial Number link column shift problem.
+28/8/14 RChacon: In Tax.php: Fixes SQL select order-by from transaction-date to record-number (primary key). Minor improvements.
+28/8/14 Exson: Fixed the csv file aligned abnormal when there are commas in fields strings.
+28/8/14 RChacon: In Tax.php: Adds code comments, clean-up unneeded variables, simplies and reorder SQL select, reduces if() calls, replaces addTextWarp-left-align with addText, replaces line-drawing a box with Rectangle(), fixes start-date for 'Y/m/d' format, adds start-date for 'Y-m-d' format, adds a summary section for the report, adds ViewTopic and BookMark, adds more NoOfPeriods.
+26/8/14 RChacon: In PDFPriceList.php: Adds code comments, adds PageHeader() print for currabrev and categoryid, replaces addTextWarp-left-align with addText, replaces line-drawing a box with Rectangle(), adds 'Prices excluding tax' warning.
+15/8/14 RChacon: Fixes double line feed in PDFQuotationPortrait.php reported by Arwan Galaya. Uniforms code between PDFQuotation.php and PDFQuotationPortrait.php.
+14/8/14 RChacon: In CustomerInquiry.php and SupplierInquiry.php makes translatable the systypes.typename.
+14/8/14 RChacon: In SupplierInquiry.php: Reorganizes columns Date, Type, Number, Reference and Comments, and regroups table-datacel format-strings as in CustomerInquiry.php code.
+13/8/14 kelo: SupplierBalsAtPeriodEnd.php fix calculation to take into account fx differences on after date transactions
+13/8/14 RChacon: includes/DatabaseTranslations.php used to store the fields of tables that are used from the database so that they can be translated in particular systypes for the types of transactions invoice credit note payment receipt etc. Can be extended for scripts and other tables where the data from the table is static and used to display
+13/8/14 RChacon: In CustomerInquiry.php: Adds class ascending and reorganizes columns Date, Type, Number and Reference; Regroups table-datacel format-strings, completes the datacel quantity by table-row; makes translatable the systypes.typename.
+12/8/14 RChacon: In SupplierInquiry.php: makes the field systypes.typename be translatable.
+12/8/14 RChacon: In Z_poRebuildDefault.php: extends title, improves comments, sets file to pot, updates $FilesToInclude, renames old pot file to bak extension. Minor improvements.
+08/8/14 Andrew Galuski: Add SQL and maintenance screens for Location based security. added new report aged controlled stock.  additional scripts to follow as time allows
 2/1/14 Tim: Change columns around on SelectWorkOrder.php
-31/07/14 RChacon: Corrects the bottom line of the rectangle. Adds comments (info for developers).
-29/07/14 RChacon: In PDFPriceList.php: Adds comments (info for developers), ViewTopic and BookMark, and currency name in locale language; deletes unused lines; reformats for legibility; adjusts column sizes to field sizes; improves printing of stockmaster.longdescription; improves code to reduce execution time (calculation out of loops); links right column positions to right margin; corrects IF for CustomerSpecials (deletes translation). In ManualSalesTypes.html: Adds help info about Print a price list by inventory category.
+31/7/14 RChacon: Corrects the bottom line of the rectangle. Adds comments (info for developers).
+29/7/14 RChacon: In PDFPriceList.php: Adds comments (info for developers), ViewTopic and BookMark, and currency name in locale language; deletes unused lines; reformats for legibility; adjusts column sizes to field sizes; improves printing of stockmaster.longdescription; improves code to reduce execution time (calculation out of loops); links right column positions to right margin; corrects IF for CustomerSpecials (deletes translation). In ManualSalesTypes.html: Adds help info about Print a price list by inventory category.
 27/7/14 Exson: Fixed the PO header lost initiator bugs when locations changed. Report by Akits from www.minghao.hk/bbs/.
 25/7/14 Phil: Allow dummy - labour stock type items to be added to purchase orders.
 17/7/14 RChacon: Adds ViewTopic and BookMark, adds bullet for class ascending columns, repositions columns Type and Trans, add class number to Trans, completes printf.
 16/7/14 Andrew Galuski: Add standard cost to stock movement record for stock adjustments
 03/07/14 Exson: Make status comments available in PO_OrderDetails.php to ensure that some important data such as grn reversing can be viewed. And add a return previous page link.
 27/06/14 RChacon: Add code-comments, $ViewTopic, $BookMark, page_title_text and code to update NewStockID if OldStockID and SelectedStockItem are the same in Z_ChangeStockCode.php. Add id to the "Change An Inventory Item Code" topic anchor in ManualSpecialUtilities.html.
-27/06/14 Exson: Make tel length in PO_Header.php is as same as field definition in sql.
-26/06/14 Exson: Fixed the bug that Select Customers search result inconsistence with Customer receipt search result in SelectCustomer.php.
-24/06/14 RChacon: Add $ViewTopic, $BookMark to Prices.php and minor improvements.
-23/06/14 Tim: Fixed the GL account validation pop up error in MiscFunctions.js.
-23/06/14 Exson: Fixed the bug that the sales order line's quantity will be update to zero but it show no change in appearance in SelectOrderItems.php.
-22/06/14 Tim: Replace now() with CURRENT_TIMESTAMP in MRP.php to get time stamp to meet ANSI standard.
-22/06/14 Exson: Fixed the mrp parameters runtime to datetime instead of date format since MRP running records need more precision.
-22/06/14 Benjamin (bpiltz2302) from web-ERP-users mail list report and provide the solution for MRP LevelNetting unusual exit bug. The details can be found here: http://weberp-accounting.1478800.n4.nabble.com/MRP-Error-LevelNetting-td4657425.html
-21/06/14 Exson: Add location check in StockAdjustments.php to prevent from users selecting controlled items based on one location but changed the location before submit it to server which make serial not exist check absolutely failed.
-17/06/14 Exson: Add Z_ImportDebtors.php into Utilities menu and scripts table.
-15/06/14 Akits from minghao.hk/bbs/ fixed the bugs that www_Users.php allowed modules does not matched the one displayed in index.php.
-11/06/2014 Exson: Fixed the exported csv files with wrong aligned fields due to comma as part of fields content.
-09/06/2014 Exson: Fixed the Delivery Date lossing bugs when change Warehouse. Reported by akits from minghao.hk(weberp) bbs.
+27/6/14 Exson: Make tel length in PO_Header.php is as same as field definition in sql.
+26/6/14 Exson: Fixed the bug that Select Customers search result inconsistence with Customer receipt search result in SelectCustomer.php.
+24/6/14 RChacon: Add $ViewTopic, $BookMark to Prices.php and minor improvements.
+23/6/14 Tim: Fixed the GL account validation pop up error in MiscFunctions.js.
+23/6/14 Exson: Fixed the bug that the sales order line's quantity will be update to zero but it show no change in appearance in SelectOrderItems.php.
+22/6/14 Tim: Replace now() with CURRENT_TIMESTAMP in MRP.php to get time stamp to meet ANSI standard.
+22/6/14 Exson: Fixed the mrp parameters runtime to datetime instead of date format since MRP running records need more precision.
+22/6/14 Benjamin (bpiltz2302) from web-ERP-users mail list report and provide the solution for MRP LevelNetting unusual exit bug. The details can be found here: http://weberp-accounting.1478800.n4.nabble.com/MRP-Error-LevelNetting-td4657425.html
+21/6/14 Exson: Add location check in StockAdjustments.php to prevent from users selecting controlled items based on one location but changed the location before submit it to server which make serial not exist check absolutely failed.
+17/6/14 Exson: Add Z_ImportDebtors.php into Utilities menu and scripts table.
+15/6/14 Akits from minghao.hk/bbs/ fixed the bugs that www_Users.php allowed modules does not matched the one displayed in index.php.
+11/6/2014 Exson: Fixed the exported csv files with wrong aligned fields due to comma as part of fields content.
+09/6/2014 Exson: Fixed the Delivery Date lossing bugs when change Warehouse. Reported by akits from minghao.hk(weberp) bbs.
 2/6/14 Phil: Added bom effectivity dates into work order creation cost calculations - as spotted by Andrew Galuski
 1/6/14 Phil: Fixed bug in POItems.php that resulted in an SQL error when the number of items from the search was zero after previous searches had returned records
 27/05/14 RChacon: Add page title text and icon to import scripts. Page title text = menu option.

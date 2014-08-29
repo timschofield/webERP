@@ -66,7 +66,7 @@ if (isset($SelectedWO) AND$SelectedWO!=''){
 } else {
 	// new
 	$_POST['WO'] = GetNextTransNo(40,$db);
-	$sql = "INSERT INTO workorders (wo,
+	$SQL = "INSERT INTO workorders (wo,
 									loccode,
 									requiredby,
 									startdate)
@@ -75,7 +75,7 @@ if (isset($SelectedWO) AND$SelectedWO!=''){
 									'" . $LocCode . "',
 									'" . $ReqDate . "',
 									'" . $StartDate. "')";
-	$InsWOResult = DB_query($sql,$db);
+	$InsWOResult = DB_query($SQL,$db);
 }
 
 
@@ -190,23 +190,28 @@ if (isset($_POST['Search']) OR isset($_POST['Prev']) OR isset($_POST['Next'])){
 						ORDER BY stockmaster.stockid";
 		  }
 	}
-	$sql=$SQL;
 
-	$sqlcount = substr($sql,strpos($sql,   "FROM"));
-	$sqlcount = substr($sqlcount,0, strpos($sqlcount,   "ORDER"));
-	$sqlcount = 'SELECT COUNT(*) '.$sqlcount;
-	$SearchResult = DB_query($sqlcount,$db,$ErrMsg,$DbgMsg);
+	$SQLCount = substr($SQL,strpos($SQL,   "FROM"));
+	$SQLCount = substr($SQLCount,0, strpos($SQLCount,   "ORDER"));
+	$SQLCount = 'SELECT COUNT(*) '.$SQLCount;
+	$SearchResult = DB_query($SQLCount,$db,$ErrMsg);
+
 	$myrow=DB_fetch_array($SearchResult);
 	DB_free_result($SearchResult);
 	unset($SearchResult);
 	$ListCount = $myrow[0];
-	$ListPageMax = ceil($ListCount / $_SESSION['DisplayRecordsMax'])-1;
+	if ($ListCount>0){
+		$ListPageMax = ceil($ListCount / $_SESSION['DisplayRecordsMax'])-1;
+	} else {
+		$ListPageMax =1;
+	}
+
 
 	if (isset($_POST['Next'])) {
-		$Offset = $_POST['currpage']+1;
+		$Offset = $_POST['CurrPage']+1;
 	}
 	if (isset($_POST['Prev'])) {
-		$Offset = $_POST['currpage']-1;
+		$Offset = $_POST['CurrPage']-1;
 	}
 	if (!isset($Offset)) {
 		$Offset=0;
@@ -217,10 +222,7 @@ if (isset($_POST['Search']) OR isset($_POST['Prev']) OR isset($_POST['Next'])){
 	if($Offset>$ListPageMax){
 		$Offset=$ListPageMax;
 	}
-	$sql = $sql . ' LIMIT ' . $_SESSION['DisplayRecordsMax'].' OFFSET ' . strval($_SESSION['DisplayRecordsMax']*$Offset);
-
-
-	$SQL=$sql;
+	$SQL = $SQL . ' LIMIT ' . $_SESSION['DisplayRecordsMax'].' OFFSET ' . strval($_SESSION['DisplayRecordsMax']*$Offset);
 
 
 	$ErrMsg = _('There is a problem selecting the part records to display because');
@@ -303,7 +305,7 @@ if (isset($NewItem) AND isset($_POST['WO'])){
 		$Result = DB_Txn_Begin($db);
 
 		// insert parent item info
-		$sql = "INSERT INTO woitems (wo,
+		$SQL = "INSERT INTO woitems (wo,
 									 stockid,
 									 qtyreqd,
 									 stdcost)
@@ -314,7 +316,7 @@ if (isset($NewItem) AND isset($_POST['WO'])){
 									 '" . $Cost . "'
 								)";
 		$ErrMsg = _('The work order item could not be added');
-		$result = DB_query($sql,$db,$ErrMsg);
+		$result = DB_query($SQL,$db,$ErrMsg);
 
 		//Recursively insert real component requirements - see includes/SQL_CommonFunctions.in for function WoRealRequirements
 		WoRealRequirements($db, $_POST['WO'], $_POST['StockLocation'], $NewItem);
@@ -355,16 +357,16 @@ if (isset($_POST['submit']) OR isset($_POST['Search'])) { //The update button ha
 		for ($i=1;$i<=$_POST['NumberOfOutputs'];$i++){
 				$QtyRecd+=$_POST['RecdQty'.$i];
 		}
-		unset($sql);
+		unset($SQL);
 
 		if ($QtyRecd==0){ //can only change factory location if Qty Recd is 0
-				$sql[] = "UPDATE workorders SET requiredby='" . $SQL_ReqDate . "',
+				$SQL[] = "UPDATE workorders SET requiredby='" . $SQL_ReqDate . "',
 												startdate='" . FormatDateForSQL($_POST['StartDate']) . "',
 												loccode='" . $_POST['StockLocation'] . "'
 											WHERE wo='" . $_POST['WO'] . "'";
 		} else {
 				prnMsg(_('The factory where this work order is made can only be updated if the quantity received on all output items is 0'),'warn');
-				$sql[] = "UPDATE workorders SET requiredby='" . $SQL_ReqDate . "',
+				$SQL[] = "UPDATE workorders SET requiredby='" . $SQL_ReqDate . "',
 												startdate='" . FormatDateForSQL($_POST['StartDate']) . "'
 											WHERE wo='" . $_POST['WO'] . "'";
 		}
@@ -376,7 +378,7 @@ if (isset($_POST['submit']) OR isset($_POST['Search'])) { //The update button ha
 			if (!isset($_POST['WOComments'.$i])) {
 				$_POST['WOComments'.$i]='';
 			}
-			$sql[] = "UPDATE woitems SET comments = '". $_POST['WOComments'.$i] ."'
+			$SQL[] = "UPDATE woitems SET comments = '". $_POST['WOComments'.$i] ."'
 										WHERE wo='" . $_POST['WO'] . "'
 										AND stockid='" . $_POST['OutputItem'.$i] . "'";
 			if (isset($_POST['QtyRecd'.$i]) AND $_POST['QtyRecd'.$i]>$_POST['OutputQty'.$i]){
@@ -399,13 +401,13 @@ if (isset($_POST['submit']) OR isset($_POST['Search'])) { //The update button ha
 				} else {
 					$Cost = $CostRow['cost'];
 				}
-				$sql[] = "UPDATE woitems SET qtyreqd =  '". $_POST['OutputQty' . $i] . "',
+				$SQL[] = "UPDATE woitems SET qtyreqd =  '". $_POST['OutputQty' . $i] . "',
 											 nextlotsnref = '". $_POST['NextLotSNRef'.$i] ."',
 											 stdcost ='" . $Cost . "'
 										WHERE wo='" . $_POST['WO'] . "'
 										AND stockid='" . $_POST['OutputItem'.$i] . "'";
   			} elseif (isset($_POST['HasWOSerialNos'.$i]) AND $_POST['HasWOSerialNos'.$i]==false) {
-				$sql[] = "UPDATE woitems SET qtyreqd =  '". $_POST['OutputQty' . $i] . "',
+				$SQL[] = "UPDATE woitems SET qtyreqd =  '". $_POST['OutputQty' . $i] . "',
 											 nextlotsnref = '". $_POST['NextLotSNRef'.$i] ."'
 										WHERE wo='" . $_POST['WO'] . "'
 										AND stockid='" . $_POST['OutputItem'.$i] . "'";
@@ -414,9 +416,9 @@ if (isset($_POST['submit']) OR isset($_POST['Search'])) { //The update button ha
 
 		//run the SQL from either of the above possibilites
 		$ErrMsg = _('The work order could not be added/updated');
-		foreach ($sql as $sql_stmt){
-		//	echo '<br />' . $sql_stmt;
-			$result = DB_query($sql_stmt,$db,$ErrMsg);
+		foreach ($SQL as $SQL_stmt){
+		//	echo '<br />' . $SQL_stmt;
+			$result = DB_query($SQL_stmt,$db,$ErrMsg);
 
 		}
 		if (!isset($_POST['Search'])) {
@@ -452,19 +454,19 @@ if (isset($_POST['submit']) OR isset($_POST['Search'])) { //The update button ha
 		$ErrMsg = _('The work order could not be deleted');
 		$DbgMsg = _('The SQL used to delete the work order was');
 		//delete the worequirements
-		$sql = "DELETE FROM worequirements WHERE wo='" . $_POST['WO'] . "'";
-		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
+		$SQL = "DELETE FROM worequirements WHERE wo='" . $_POST['WO'] . "'";
+		$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 		//delete the items on the work order
-		$sql = "DELETE FROM woitems WHERE wo='" . $_POST['WO'] . "'";
-		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
+		$SQL = "DELETE FROM woitems WHERE wo='" . $_POST['WO'] . "'";
+		$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 		//delete the controlled items defined in wip
-		$sql="DELETE FROM woserialnos WHERE wo='" . $_POST['WO'] . "'";
+		$SQL="DELETE FROM woserialnos WHERE wo='" . $_POST['WO'] . "'";
 		$ErrMsg=_('The work order serial numbers could not be deleted');
-		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
+		$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 		// delete the actual work order
-		$sql="DELETE FROM workorders WHERE wo='" . $_POST['WO'] . "'";
+		$SQL="DELETE FROM workorders WHERE wo='" . $_POST['WO'] . "'";
 		$ErrMsg=_('The work order could not be deleted');
-		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
+		$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
 		DB_Txn_Commit($db);
 		prnMsg(_('The work order has been cancelled'),'success');
@@ -490,7 +492,7 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 
 echo '<br /><table class="selection">';
 
-$sql="SELECT workorders.loccode,
+$SQL="SELECT workorders.loccode,
 			 requiredby,
 			 startdate,
 			 costissued,
@@ -500,7 +502,7 @@ $sql="SELECT workorders.loccode,
 		INNER JOIN locationusers ON locationusers.loccode=workorders.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
 		WHERE workorders.wo='" . $_POST['WO'] . "'";
 
-$WOResult = DB_query($sql,$db);
+$WOResult = DB_query($SQL,$db);
 if (DB_num_rows($WOResult)==1){
 
 	$myrow = DB_fetch_array($WOResult);
@@ -714,7 +716,7 @@ if (isset($SearchResult)) {
 
 	if (DB_num_rows($SearchResult)>1){
 
-		$PageBar = '<tr><td><input type="hidden" name="currpage" value="'.$Offset.'">';
+		$PageBar = '<tr><td><input type="hidden" name="CurrPage" value="'.$Offset.'">';
 		if($Offset>0)
 			$PageBar .= '<input type="submit" name="Prev" value="'._('Prev').'" />';
 		else
