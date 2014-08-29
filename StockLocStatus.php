@@ -271,6 +271,7 @@ if (isset($_POST['ShowStatus'])){
 					echo '<tr class="EvenTableRows">';
 					$k=1;
 				}
+				$tr = ($myrow['serialised'] or $myrow['controlled'])?'':'<tr>';
 				printf('<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?StockID=%s">%s</a></td>
     					<td>%s</td>
     					<td class="number">%s</td>
@@ -279,7 +280,7 @@ if (isset($_POST['ShowStatus'])){
     					<td class="number">%s</td>
     					<td class="number"><a target="_blank" href="' . $RootPath . '/SelectProduct.php?StockID=%s">%s</a></td>
     					<td class="number">%s</td>
-    					</tr>',
+    					' . $tr,
     					mb_strtoupper($myrow['stockid']),
     					mb_strtoupper($myrow['stockid']),
     					$myrow['description'],
