@@ -8,8 +8,8 @@ $BookMark = 'TaxAuthorityRates';// Anchor's id in the manual's html document.
 include('includes/header.inc');
 echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
 		'/images/maintenance.png" title="' .
-		_('Tax Rates') . '" />' . ' ' .
-		_('Tax Rates') . '</p>';
+		_('Tax Rates Maintenance') . '" />' . ' ' .
+		_('Tax Rates Maintenance') . '</p>';
 
 if(isset($_POST['TaxAuthority'])) {
 	$TaxAuthority = $_POST['TaxAuthority'];
@@ -106,25 +106,24 @@ if(DB_num_rows($TaxRatesResult)>0) {
 			$myrow['dispatchtaxprovince'] . '_' . $myrow['taxcatid'],
 			locale_number_format($myrow['taxrate']*100,2));
 	}// End of while loop.
-	echo '</table><br /><div class="centre">
+	echo '</table><br />
+		<div class="centre">
 		<input type="submit" name="UpdateRates" value="' . _('Update Rates') . '" />';
-//end if tax taxcatid/rates to show
+	//end if tax taxcatid/rates to show
 
 } else {
 	echo '<div class="centre">';
 	prnMsg(_('There are no tax rates to show - perhaps the dispatch tax province records have not yet been created?'),'warn');
-
 }
+echo '</div>';// Closes Submit or prnMsg division.
 
-echo '	<br />
-		<br />
-		<a href="' . $RootPath . '/TaxAuthorities.php">' . _('Tax Authorities') .  '</a><br />
-		<a href="' . $RootPath . '/TaxGroups.php">' . _('Tax Groupings') .  '</a><br />
-		<a href="' . $RootPath . '/TaxCategories.php">' . _('Tax Categories') .  '</a><br />
-		<a href="' . $RootPath . '/TaxProvinces.php">' . _('Dispatch Tax Provinces') .  '</a>
-	</div>
-	</div>
-	</form>';
+echo '<br />
+	<div class="centre">
+		<a href="' . $RootPath . '/TaxAuthorities.php">' . _('Tax Authorities Maintenance') .  '</a><br />
+		<a href="' . $RootPath . '/TaxGroups.php">' . _('Tax Group Maintenance') .  '</a><br />
+		<a href="' . $RootPath . '/TaxProvinces.php">' . _('Dispatch Tax Province Maintenance') .  '</a><br />
+		<a href="' . $RootPath . '/TaxCategories.php">' . _('Tax Category Maintenance') .  '</a>	
+	</div>';
 
-include( 'includes/footer.inc' );
+include('includes/footer.inc');
 ?>

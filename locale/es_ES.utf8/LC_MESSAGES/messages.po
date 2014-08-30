@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.11.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-08-29 11:25-0600\n"
-"PO-Revision-Date: 2014-08-29 11:35-0600\n"
+"PO-Revision-Date: 2014-08-30 16:53-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -8788,7 +8788,7 @@ msgstr "Numero de Fax"
 #: CustomerBranches.php:415 CustomerBranches.php:866 SupplierCredit.php:265
 #: Suppliers.php:840 Suppliers.php:1094 TaxGroups.php:173 TaxGroups.php:239
 msgid "Tax Group"
-msgstr "Grupo de Impuestos"
+msgstr "Grupo de impuestos"
 
 #: CustomerBranches.php:416
 msgid "Enabled?"
@@ -16527,7 +16527,7 @@ msgstr "Nombre  Localidad"
 
 #: Locations.php:400 Locations.php:620 TaxAuthorityRates.php:87
 msgid "Tax Province"
-msgstr "Jurisdicción Fiscal"
+msgstr "Jurisdicción fiscal"
 
 #: Locations.php:423
 #, php-format
@@ -35888,7 +35888,7 @@ msgstr "Agrupar Impuestos"
 
 #: TaxAuthorityRates.php:138 TaxCategories.php:6 TaxCategories.php:167
 msgid "Tax Categories"
-msgstr "Clases de Impuestos"
+msgstr "Clases de impuestos"
 
 #: TaxAuthorityRates.php:140 TaxProvinces.php:6
 msgid "Dispatch Tax Provinces"

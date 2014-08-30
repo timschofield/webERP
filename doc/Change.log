@@ -1,5 +1,6 @@
 webERP Change Log
 
+31/8/14 RChacon: Standardizes page_title_text to main-menu-option, standardizes bottom tax-menu, adds $ViewTopic and $BookMark, completes table header columns, formats data columns in Tax* scripts.
 30/8/14 RChacon: In TaxAuthorities.php, adds $ViewTopic and $BookMark, completes table headings, formats number columns to fix sort order, and minor improvements.
 30/8/14 Phil: WorkOrderEntry.php didn't handle no item returned from search correctly - fixed.
 29/8/14 RChacon: In TaxAuthorityRates.php and TaxCategories.php: adds $ViewTopic and $BookMark; Uses gettext() to translate 'Exempt', 'Freight' and 'Handling'.

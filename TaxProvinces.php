@@ -2,21 +2,21 @@
 /* $Id$*/
 
 include('includes/session.inc');
-
 $Title = _('Dispatch Tax Provinces');
-
+$ViewTopic = 'Tax';// Filename in ManualContents.php's TOC.
+$BookMark = 'TaxProvinces';// Anchor's id in the manual's html document.
 include('includes/header.inc');
+echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
+		'/images/maintenance.png" title="' .
+		_('Dispatch Tax Province Maintenance') . '" />' . ' ' .
+		_('Dispatch Tax Province Maintenance') . '</p>';
 
-echo '<p class="page_title_text">
-		<img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'
-	</p>';
-
-if ( isset($_GET['SelectedTaxProvince']) )
+if( isset($_GET['SelectedTaxProvince']) )
 	$SelectedTaxProvince = $_GET['SelectedTaxProvince'];
-elseif (isset($_POST['SelectedTaxProvince']))
+elseif(isset($_POST['SelectedTaxProvince']))
 	$SelectedTaxProvince = $_POST['SelectedTaxProvince'];
 
-if (isset($_POST['submit'])) {
+if(isset($_POST['submit'])) {
 
 	//initialise no input errors assumed initially before we test
 
@@ -27,16 +27,16 @@ if (isset($_POST['submit'])) {
 
 	//first off validate inputs sensible
 
-	if (ContainsIllegalCharacters($_POST['TaxProvinceName'])) {
+	if(ContainsIllegalCharacters($_POST['TaxProvinceName'])) {
 		$InputError = 1;
 		prnMsg( _('The tax province name cannot contain any of the illegal characters'),'error');
 	}
-	if (trim($_POST['TaxProvinceName']) == '') {
+	if(trim($_POST['TaxProvinceName']) == '') {
 		$InputError = 1;
 		prnMsg( _('The tax province name may not be empty'), 'error');
 	}
 
-	if ($_POST['SelectedTaxProvince']!='' AND $InputError !=1) {
+	if($_POST['SelectedTaxProvince']!='' AND $InputError !=1) {
 
 		/*SelectedTaxProvince could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
 		// Check the name does not clash
@@ -45,7 +45,7 @@ if (isset($_POST['submit'])) {
 				AND taxprovincename " . LIKE . " '" . $_POST['TaxProvinceName'] . "'";
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
-		if ( $myrow[0] > 0 ) {
+		if( $myrow[0] > 0 ) {
 			$InputError = 1;
 			prnMsg( _('The tax province cannot be renamed because another with the same name already exists.'),'error');
 		} else {
@@ -53,7 +53,7 @@ if (isset($_POST['submit'])) {
 			$sql = "SELECT taxprovincename FROM taxprovinces
 						WHERE taxprovinceid = '" . $SelectedTaxProvince . "'";
 			$result = DB_query($sql,$db);
-			if ( DB_num_rows($result) != 0 ) {
+			if( DB_num_rows($result) != 0 ) {
 				// This is probably the safest way there is
 				$myrow = DB_fetch_row($result);
 				$OldTaxProvinceName = $myrow[0];
@@ -62,7 +62,7 @@ if (isset($_POST['submit'])) {
 					WHERE taxprovincename ".LIKE." '".$OldTaxProvinceName."'";
 				$ErrMsg = _('Could not update tax province');
 				$result = DB_query($sql,$db, $ErrMsg);
-				if (!$result){
+				if(!$result) {
 					prnMsg(_('Tax province name changed'),'success');
 				}
 			} else {
@@ -70,14 +70,14 @@ if (isset($_POST['submit'])) {
 				prnMsg( _('The tax province no longer exists'),'error');
 			}
 		}
-	} elseif ($InputError !=1) {
+	} elseif($InputError !=1) {
 		/*SelectedTaxProvince is null cos no item selected on first time round so must be adding a record*/
 		$sql = "SELECT count(*) FROM taxprovinces
 				WHERE taxprovincename " .LIKE. " '".$_POST['TaxProvinceName'] ."'";
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
 
-		if ( $myrow[0] > 0 ) {
+		if( $myrow[0] > 0 ) {
 
 			$InputError = 1;
 			prnMsg( _('The tax province cannot be created because another with the same name already exists'),'error');
@@ -98,7 +98,7 @@ if (isset($_POST['submit'])) {
 			$result = DB_query($sql,$db, $ErrMsg);
 		}
 
-		if (!$result){
+		if(!$result) {
 			prnMsg(_('Errors were encountered adding this tax province'),'error');
 		} else {
 			prnMsg(_('New tax province added'),'success');
@@ -108,14 +108,14 @@ if (isset($_POST['submit'])) {
 	unset ($_POST['SelectedTaxProvince']);
 	unset ($_POST['TaxProvinceName']);
 
-} elseif (isset($_GET['delete'])) {
+} elseif(isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'stockmaster'
 	// Get the original name of the tax province the ID is just a secure way to find the tax province
 	$sql = "SELECT taxprovincename FROM taxprovinces
 		WHERE taxprovinceid = '" . $SelectedTaxProvince . "'";
 	$result = DB_query($sql,$db);
-	if ( DB_num_rows($result) == 0 ) {
+	if( DB_num_rows($result) == 0 ) {
 		// This is probably the safest way there is
 		prnMsg( _('Cannot delete this tax province because it no longer exists'),'warn');
 	} else {
@@ -124,7 +124,7 @@ if (isset($_POST['submit'])) {
 		$sql= "SELECT COUNT(*) FROM locations WHERE taxprovinceid = '" . $SelectedTaxProvince . "'";
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
-		if ($myrow[0]>0) {
+		if($myrow[0]>0) {
 			prnMsg( _('Cannot delete this tax province because at least one stock location is defined to be inside this province'),'warn');
 			echo '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('stock locations that refer to this tax province') . '</font>';
 		} else {
@@ -142,15 +142,15 @@ if (isset($_POST['submit'])) {
 	unset ($_POST['TaxProvinceName']);
 }
 
- if (!isset($SelectedTaxProvince)) {
+if(!isset($SelectedTaxProvince)) {
 
 /* An tax province could be posted when one has been edited and is being updated
-  or GOT when selected for modification
-  SelectedTaxProvince will exist because it was sent with the page in a GET .
-  If its the first time the page has been displayed with no parameters
-  then none of the above are true and the list of account groups will be displayed with
-  links to delete or edit each. These will call the same page again and allow update/input
-  or deletion of the records*/
+or GOT when selected for modification
+SelectedTaxProvince will exist because it was sent with the page in a GET .
+If its the first time the page has been displayed with no parameters
+then none of the above are true and the list of account groups will be displayed with
+links to delete or edit each. These will call the same page again and allow update/input
+or deletion of the records*/
 
 	$sql = "SELECT taxprovinceid,
 			taxprovincename
@@ -162,13 +162,14 @@ if (isset($_POST['submit'])) {
 
 	echo '<table class="selection">
 			<tr>
-				<th class="ascending">' . _('Tax Provinces') . '</th>
+				<th class="ascending">' . _('Tax Province') . '</th>
+				<th colspan="2">&nbsp;</th>
 			</tr>';
 
 	$k=0; //row colour counter
-	while ($myrow = DB_fetch_row($result)) {
+	while($myrow = DB_fetch_row($result)) {
 
-		if ($k==1){
+		if($k==1) {
 			echo '<tr class="EvenTableRows">';
 			$k=0;
 		} else {
@@ -186,20 +187,20 @@ if (isset($_POST['submit'])) {
 } //end of ifs and buts!
 
 
-if (isset($SelectedTaxProvince)) {
+if(isset($SelectedTaxProvince)) {
 	echo '<div class="centre">
 			<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Review Tax Provinces') . '</a>
 		</div>
-        <br />';
+<br />';
 }
 
-if (! isset($_GET['delete'])) {
+if(! isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '">';
-    echo '<div>';
+echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	if (isset($SelectedTaxProvince)) {
+	if(isset($SelectedTaxProvince)) {
 		//editing an existing section
 
 		$sql = "SELECT taxprovinceid,
@@ -208,7 +209,7 @@ if (! isset($_GET['delete'])) {
 				WHERE taxprovinceid='" . $SelectedTaxProvince . "'";
 
 		$result = DB_query($sql, $db);
-		if ( DB_num_rows($result) == 0 ) {
+		if( DB_num_rows($result) == 0 ) {
 			prnMsg( _('Could not retrieve the requested tax province, please try again.'),'warn');
 			unset($SelectedTaxProvince);
 		} else {
@@ -236,17 +237,15 @@ if (! isset($_GET['delete'])) {
 			</div>';
 
 	echo '</div>
-          </form>';
+</form>';
 
 } //end if record deleted no point displaying form to add record
 
-echo '<div class="centre">
-		<br />
-		<a href="' . $RootPath . '/TaxAuthorities.php">' . _('Edit/Review Tax Authorities') .  '</a>
-		<br />
-		<a href="' . $RootPath . '/TaxGroups.php">' . _('Edit/Review Tax Groupings') .  '</a>
-		<br />
-		<a href="' . $RootPath . '/TaxCategories.php">' . _('Edit/Review Tax Categories') .  '</a>
+echo '<br />
+	<div class="centre">
+		<a href="' . $RootPath . '/TaxAuthorities.php">' . _('Tax Authorities and Rates Maintenance') .  '</a><br />
+		<a href="' . $RootPath . '/TaxGroups.php">' . _('Tax Group Maintenance') .  '</a><br />
+		<a href="' . $RootPath . '/TaxCategories.php">' . _('Tax Category Maintenance') .  '</a>
 	</div>';
 
 include('includes/footer.inc');

@@ -8,8 +8,8 @@ $BookMark = 'TaxCategories';// Anchor's id in the manual's html document.
 include('includes/header.inc');
 echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
 		'/images/maintenance.png" title="' .
-		_('Tax Categories') . '" />' . ' ' .
-		_('Tax Categories') . '</p>';
+		_('Tax Category Maintenance') . '" />' . ' ' .
+		_('Tax Category Maintenance') . '</p>';
 
 if( isset($_GET['SelectedTaxCategory']) )
 	$SelectedTaxCategory = $_GET['SelectedTaxCategory'];
@@ -165,8 +165,8 @@ if(isset($_POST['submit'])) {
 
 	echo '<table class="selection">
 			<tr>
-				<th class="ascending">' . _('Tax Categories') . '</th>
-				<th colspan="2">' . _('Maintenance') . '</th>
+				<th class="ascending">' . _('Tax Category') . '</th>
+				<th colspan="2">&nbsp;</th>
 			</tr>';
 
 	$k = 0;// Row counter to determine background colour.
@@ -249,6 +249,13 @@ if(! isset($_GET['delete'])) {
 		</form>';
 
 } //end if record deleted no point displaying form to add record
+
+echo '<br />
+	<div class="centre">
+		<a href="' . $RootPath . '/TaxAuthorities.php">' . _('Tax Authorities and Rates Maintenance') .  '</a><br />
+		<a href="' . $RootPath . '/TaxGroups.php">' . _('Tax Group Maintenance') .  '</a><br />
+		<a href="' . $RootPath . '/TaxProvinces.php">' . _('Dispatch Tax Province Maintenance') .  '</a>
+	</div>';
 
 include('includes/footer.inc');
 ?>

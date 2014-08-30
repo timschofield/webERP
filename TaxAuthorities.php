@@ -8,8 +8,8 @@ $BookMark = 'TaxAuthorities';// Anchor's id in the manual's html document.
 include('includes/header.inc');
 echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
 		'/images/maintenance.png" title="' .
-		_('Tax Authorities') . '" />' . ' ' .
-		_('Tax Authorities') . '</p>';
+		_('Tax Authorities Maintenance') . '" />' . ' ' .
+		_('Tax Authorities Maintenance') . '</p>';
 
 if(isset($_POST['SelectedTaxAuthID'])) {
 	$SelectedTaxAuthID =$_POST['SelectedTaxAuthID'];
@@ -143,14 +143,14 @@ if(!isset($SelectedTaxAuthID)) {
 	echo '<table class="selection">
 			<tr>
 				<th class="ascending" >' . _('ID') . '</th>
-				<th class="ascending" >' . _('Description') . '</th>
+				<th class="ascending" >' . _('Tax Authority') . '</th>
 				<th class="ascending" >' . _('Input Tax') . '<br />' . _('GL Account') . '</th>
 				<th class="ascending" >' . _('Output Tax') . '<br />' . _('GL Account') . '</th>
 				<th class="ascending" >' . _('Bank') . '</th>
 				<th class="ascending" >' . _('Bank Account') . '</th>
 				<th class="ascending" >' . _('Bank Act Type') . '</th>
 				<th class="ascending" >' . _('Bank Swift') . '</th>
-				<th colspan="4">' . _('Maintenance') . '</th>
+				<th colspan="4">&nbsp;</th>
 			</tr>';
 	$k=0;
 	while($myrow = DB_fetch_row($result)) {
@@ -331,6 +331,12 @@ echo '<br />
 	</div>
 	</form>';
 
-include('includes/footer.inc');
+echo '<br />
+	<div class="centre">
+		<a href="' . $RootPath . '/TaxGroups.php">' . _('Tax Group Maintenance') .  '</a><br />
+		<a href="' . $RootPath . '/TaxProvinces.php">' . _('Dispatch Tax Province Maintenance') .  '</a><br />
+		<a href="' . $RootPath . '/TaxCategories.php">' . _('Tax Category Maintenance') .  '</a>	
+	</div>';
 
+include('includes/footer.inc');
 ?>
