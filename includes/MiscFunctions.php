@@ -1,5 +1,4 @@
 <?php
-
 /* $Id$*/
 
 /*  ******************************************  */
@@ -448,5 +447,16 @@ function ChangeFieldInTable($TableName, $FieldName, $OldValue, $NewValue, $db){
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 	echo ' ... ' . _('completed');
 }
+
+function TableRows($k) {
+	// Outputs a html's table row with class (Odd|Even).
+	if($k) {//Is it an even table row?
+		echo '<tr class="EvenTableRows">';
+		return False;
+	} else {
+		echo '<tr class="OddTableRows">';
+		return True;
+	}
+}// End function TableRows().
 
 ?>

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: webERP 4.11.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-29 11:25-0600\n"
-"PO-Revision-Date: 2014-08-30 16:53-0600\n"
+"POT-Creation-Date: 2014-08-30 17:19-0600\n"
+"PO-Revision-Date: 2014-08-30 17:36-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -76,7 +76,7 @@ msgstr "El nombre del grupo contable ya existe en la base de datos"
 msgid "The account group name cannot contain the character"
 msgstr "El nombre del grupo contable no puede contener el caracter"
 
-#: AccountGroups.php:87 Departments.php:30 TaxCategories.php:31
+#: AccountGroups.php:87 Departments.php:30 TaxCategories.php:32
 msgid "or the character"
 msgstr "o el caracter"
 
@@ -189,7 +189,7 @@ msgstr ""
 #: StockCategories.php:209 Stocks.php:738 Stocks.php:747 Stocks.php:755
 #: Stocks.php:763 Stocks.php:771 Stocks.php:779 Stocks.php:787 Stocks.php:795
 #: SupplierTypes.php:126 Suppliers.php:647 Suppliers.php:656 Suppliers.php:664
-#: TaxCategories.php:131 TaxGroups.php:132 TaxGroups.php:140
+#: TaxCategories.php:132 TaxGroups.php:134 TaxGroups.php:142
 #: TaxProvinces.php:129 UnitsOfMeasure.php:135 WWW_Access.php:86
 #: WorkCentres.php:89 WorkCentres.php:95
 msgid "There are"
@@ -285,11 +285,10 @@ msgstr "No se pudo obtener los grupos contables porque"
 #: SupplierPriceList.php:499 SupplierTenderCreate.php:556
 #: SupplierTenderCreate.php:664 SupplierTenders.php:322
 #: SupplierTenders.php:388 SupplierTransInquiry.php:10 Suppliers.php:305
-#: TaxGroups.php:15 TaxProvinces.php:11 TopItems.php:115 UnitsOfMeasure.php:10
-#: WWW_Access.php:11 WWW_Users.php:36 WhereUsedInquiry.php:18
-#: WorkCentres.php:111 WorkCentres.php:163 WorkOrderCosting.php:22
-#: WorkOrderEntry.php:11 WorkOrderIssue.php:22 WorkOrderReceive.php:31
-#: WorkOrderStatus.php:59 Z_BottomUpCosts.php:57
+#: TopItems.php:115 UnitsOfMeasure.php:10 WWW_Access.php:11 WWW_Users.php:36
+#: WhereUsedInquiry.php:18 WorkCentres.php:111 WorkCentres.php:163
+#: WorkOrderCosting.php:22 WorkOrderEntry.php:11 WorkOrderIssue.php:22
+#: WorkOrderReceive.php:31 WorkOrderStatus.php:59 Z_BottomUpCosts.php:57
 #: ../webSHOP/includes/header.php:251
 msgid "Search"
 msgstr "Buscar"
@@ -354,7 +353,7 @@ msgstr "Ganancias y Pérdidas"
 #: SystemParameters.php:1018 SystemParameters.php:1072
 #: SystemParameters.php:1084 SystemParameters.php:1086
 #: SystemParameters.php:1124 SystemParameters.php:1126 TaxGroups.php:311
-#: TaxGroups.php:314 TaxGroups.php:371 WWW_Users.php:505 WWW_Users.php:507
+#: TaxGroups.php:314 TaxGroups.php:365 WWW_Users.php:505 WWW_Users.php:507
 #: WWW_Users.php:678 WWW_Users.php:680
 #: reportwriter/languages/en_US/reports.php:114
 msgid "Yes"
@@ -403,7 +402,7 @@ msgstr "Sí"
 #: SystemParameters.php:1019 SystemParameters.php:1073
 #: SystemParameters.php:1083 SystemParameters.php:1087
 #: SystemParameters.php:1123 SystemParameters.php:1127 TaxGroups.php:312
-#: TaxGroups.php:315 TaxGroups.php:373 WWW_Users.php:504 WWW_Users.php:508
+#: TaxGroups.php:315 TaxGroups.php:367 WWW_Users.php:504 WWW_Users.php:508
 #: WWW_Users.php:677 WWW_Users.php:681 includes/PDFLowGPPageHeader.inc:44
 #: reportwriter/languages/en_US/reports.php:82
 msgid "No"
@@ -433,8 +432,8 @@ msgstr "No"
 #: SelectGLAccount.php:132 SellThroughSupport.php:298 Shippers.php:144
 #: StockCategories.php:289 SuppTransGLAnalysis.php:125
 #: SupplierContacts.php:165 SupplierTenderCreate.php:157 SupplierTypes.php:170
-#: TaxAuthorities.php:174 TaxCategories.php:182 TaxGroups.php:188
-#: TaxProvinces.php:180 UnitsOfMeasure.php:185 WWW_Access.php:126
+#: TaxAuthorities.php:174 TaxCategories.php:185 TaxGroups.php:191
+#: TaxProvinces.php:181 UnitsOfMeasure.php:185 WWW_Access.php:126
 #: WWW_Users.php:341 WorkCentres.php:142 includes/InputSerialItems.php:110
 #: includes/OutputSerialItems.php:20
 #: reportwriter/languages/en_US/reports.php:143
@@ -478,7 +477,7 @@ msgstr "¿Confirma que desea eliminar este grupo de cuenta?"
 #: SuppInvGRNs.php:147 SuppShiptChgs.php:90 SuppTransGLAnalysis.php:126
 #: SupplierContacts.php:166 SupplierTenderCreate.php:422
 #: SupplierTenderCreate.php:452 SupplierTypes.php:172 TaxAuthorities.php:175
-#: TaxCategories.php:183 TaxGroups.php:189 TaxProvinces.php:181
+#: TaxCategories.php:188 TaxGroups.php:192 TaxProvinces.php:182
 #: UnitsOfMeasure.php:186 WOSerialNos.php:327 WWW_Access.php:127
 #: WWW_Users.php:342 WorkCentres.php:143 includes/InputSerialItemsKeyed.php:60
 #: includes/OutputSerialItems.php:99
@@ -558,8 +557,8 @@ msgstr ""
 #: PriceMatrix.php:230 Prices_Customer.php:369 SalesAnalReptCols.php:552
 #: SalesAnalRepts.php:519 SalesGLPostings.php:425 SalesPeople.php:373
 #: Shippers.php:203 StockCategories.php:646 SuppLoginSetup.php:292
-#: SupplierContacts.php:284 TaxAuthorities.php:329 TaxCategories.php:241
-#: TaxProvinces.php:235 UnitsOfMeasure.php:241 WWW_Users.php:749
+#: SupplierContacts.php:284 TaxAuthorities.php:329 TaxCategories.php:246
+#: TaxProvinces.php:236 UnitsOfMeasure.php:241 WWW_Users.php:749
 #: WorkCentres.php:283
 msgid "Enter Information"
 msgstr "Guardar la Información"
@@ -973,11 +972,10 @@ msgstr "Existencia"
 #: SupplierPriceList.php:533 SupplierTenderCreate.php:434
 #: SupplierTenderCreate.php:695 SupplierTenderCreate.php:853
 #: SupplierTenders.php:326 SupplierTenders.php:421 SupplierTenders.php:687
-#: TaxAuthorities.php:147 TopItems.php:167 WorkCentres.php:128
-#: WorkOrderCosting.php:100 WorkOrderCosting.php:132 WorkOrderEntry.php:733
-#: WorkOrderIssue.php:755 Z_ItemsWithoutPicture.php:33
-#: api/api_xml-rpc.php:3489 includes/PDFGrnHeader.inc:29
-#: includes/PDFInventoryPlanPageHeader.inc:51
+#: TopItems.php:167 WorkCentres.php:128 WorkOrderCosting.php:100
+#: WorkOrderCosting.php:132 WorkOrderEntry.php:735 WorkOrderIssue.php:755
+#: Z_ItemsWithoutPicture.php:33 api/api_xml-rpc.php:3489
+#: includes/PDFGrnHeader.inc:29 includes/PDFInventoryPlanPageHeader.inc:51
 #: includes/PDFOstdgGRNsPageHeader.inc:38
 #: includes/PDFStockLocTransferHeader.inc:65
 #: includes/PDFStockTransferHeader.inc:36 includes/PDFTopItemsHeader.inc:50
@@ -1499,7 +1497,7 @@ msgstr "ID de usuario"
 #: SystemParameters.php:1035 SystemParameters.php:1041
 #: SystemParameters.php:1047 SystemParameters.php:1053
 #: SystemParameters.php:1059 TopItems.php:30 TopItems.php:46 TopItems.php:68
-#: TopItems.php:70 WorkOrderEntry.php:675 WorkOrderEntry.php:678
+#: TopItems.php:70 WorkOrderEntry.php:677 WorkOrderEntry.php:680
 #: WorkOrderIssue.php:710 WorkOrderIssue.php:713
 #: reportwriter/languages/en_US/reports.php:54
 msgid "All"
@@ -1942,13 +1940,13 @@ msgstr ""
 
 #: BOMInquiry.php:26 BOMs.php:883 MRPDemands.php:336
 #: PO_SelectOSPurchOrder.php:241 PO_SelectPurchOrder.php:190
-#: Shipt_Select.php:169 WorkOrderEntry.php:699 WorkOrderIssue.php:726
+#: Shipt_Select.php:169 WorkOrderEntry.php:701 WorkOrderIssue.php:726
 msgid "Enter text extracts in the"
 msgstr "Indicar una parte del texto de la"
 
 #: BOMInquiry.php:26 BOMs.php:883 MRPDemands.php:336
 #: PO_SelectOSPurchOrder.php:241 PO_SelectPurchOrder.php:190
-#: Shipt_Select.php:169 WorkOrderEntry.php:699 WorkOrderIssue.php:726
+#: Shipt_Select.php:169 WorkOrderEntry.php:701 WorkOrderIssue.php:726
 msgid "description"
 msgstr "descripción"
 
@@ -1969,14 +1967,14 @@ msgstr "descripción"
 #: SelectSupplier.php:231 SelectWorkOrder.php:202 SellThroughSupport.php:202
 #: Shipt_Select.php:174 SuppFixedAssetChgs.php:126 SupplierPriceList.php:49
 #: SupplierPriceList.php:406 SupplierTenderCreate.php:566
-#: SupplierTenderCreate.php:706 SupplierTenders.php:433 WorkOrderEntry.php:704
+#: SupplierTenderCreate.php:706 SupplierTenders.php:433 WorkOrderEntry.php:706
 #: WorkOrderIssue.php:731
 msgid "OR"
 msgstr "ó"
 
 #: BOMInquiry.php:29 BOMs.php:886 MRPDemands.php:339
 #: PO_SelectOSPurchOrder.php:245 PO_SelectPurchOrder.php:195
-#: Shipt_Select.php:174 WorkOrderEntry.php:704 WorkOrderIssue.php:731
+#: Shipt_Select.php:174 WorkOrderEntry.php:706 WorkOrderIssue.php:731
 msgid "Enter extract of the"
 msgstr "Introduzca una parte del"
 
@@ -1992,7 +1990,7 @@ msgstr "Introduzca una parte del"
 #: StockCounts.php:213 StockMovements.php:36 StockReorderLevel.php:51
 #: StockStatus.php:62 StockTransfers.php:48 StockTransfers.php:471
 #: StockUsage.php:64 SupplierPriceList.php:49 SupplierTenderCreate.php:706
-#: SupplierTenders.php:433 WorkOrderEntry.php:704 WorkOrderIssue.php:731
+#: SupplierTenders.php:433 WorkOrderEntry.php:706 WorkOrderIssue.php:731
 #: Z_ChangeStockCode.php:189 ../webSHOP/includes/PlaceOrder.php:235
 msgid "Stock Code"
 msgstr "Código de inventario"
@@ -2006,7 +2004,7 @@ msgstr "Código de inventario"
 #: SelectProduct.php:569 SelectSupplier.php:241 SelectSupplier.php:274
 #: SupplierPriceList.php:61 SupplierTenderCreate.php:572
 #: SupplierTenderCreate.php:611 SupplierTenderCreate.php:717
-#: SupplierTenders.php:445 WorkOrderEntry.php:710 WorkOrderIssue.php:738
+#: SupplierTenders.php:445 WorkOrderEntry.php:712 WorkOrderIssue.php:738
 msgid "Search Now"
 msgstr "Buscar ahora"
 
@@ -2054,7 +2052,7 @@ msgstr "El SQL para encontrar las piezas seleccionadas falló con el mensaje"
 #: Shipt_Select.php:190 SpecialOrder.php:149 StockCategories.php:256
 #: SuppPriceList.php:308 SupplierPriceList.php:270 SupplierPriceList.php:455
 #: SupplierTenderCreate.php:617 SupplierTenderCreate.php:852
-#: SupplierTenders.php:686 TopItems.php:166 WorkOrderEntry.php:732
+#: SupplierTenders.php:686 TopItems.php:166 WorkOrderEntry.php:734
 #: WorkOrderIssue.php:754 includes/PDFTopItemsHeader.inc:49
 #: includes/PO_PDFOrderPageHeader.inc:75 ../webSHOP/ItemDetails.php:72
 msgid "Code"
@@ -2074,7 +2072,7 @@ msgstr "Código"
 #: Shipments.php:402 Shipments.php:489 Shipt_Select.php:194
 #: StockLocTransferReceive.php:459 SupplierPriceList.php:272
 #: SupplierTenderCreate.php:854 SupplierTenders.php:688 TopItems.php:169
-#: WorkOrderCosting.php:102 WorkOrderEntry.php:734 WorkOrderIssue.php:756
+#: WorkOrderCosting.php:102 WorkOrderEntry.php:736 WorkOrderIssue.php:756
 #: WorkOrderIssue.php:826 includes/PDFInventoryValnPageHeader.inc:34
 #: includes/DefineLabelClass.php:21
 msgid "Units"
@@ -2238,7 +2236,7 @@ msgid "The effective to date field must be a date in the format"
 msgstr "El campo de fecha requerida debe ser una fecha con el formato"
 
 #: BOMs.php:257 StockAdjustments.php:165 StockTransfers.php:173
-#: WorkOrderEntry.php:338
+#: WorkOrderEntry.php:340
 msgid "The quantity entered must be numeric"
 msgstr "La cantidad introducida debe ser un número"
 
@@ -2709,7 +2707,7 @@ msgstr "Seleccionar usuario"
 msgid "Bank Accounts Maintenance"
 msgstr "Administrar cuentas bancarias"
 
-#: BankAccounts.php:12 TaxAuthorities.php:150
+#: BankAccounts.php:12 TaxAuthorities.php:149
 #: ../webSHOP/includes/Functions.php:755
 msgid "Bank"
 msgstr "Banco"
@@ -2933,7 +2931,7 @@ msgstr ""
 
 #: BankMatching.php:100 BankReconciliation.php:113 CounterReturns.php:829
 #: Currencies.php:218 CustomerReceipt.php:802 DailyBankTransactions.php:40
-#: PDFChequeListing.php:46 Payments.php:778 TaxAuthorities.php:151
+#: PDFChequeListing.php:46 Payments.php:778 TaxAuthorities.php:150
 #: TaxAuthorities.php:318
 msgid "Bank Account"
 msgstr "Cuenta bancaria"
@@ -3294,7 +3292,7 @@ msgstr ""
 
 #: BankReconciliation.php:366 CounterReturns.php:740 CounterSales.php:836
 #: Customers.php:1195 SelectOrderItems.php:1370 Stocks.php:1409
-#: WorkOrderCosting.php:570 WorkOrderEntry.php:661
+#: WorkOrderCosting.php:570 WorkOrderEntry.php:663
 msgid "Are You Sure?"
 msgstr "¿Está seguro?"
 
@@ -3388,7 +3386,7 @@ msgstr ""
 
 #: COGSGLPostings.php:200 CustomerReceipt.php:1091 Dashboard.php:532
 #: GLJournal.php:388 GLTransInquiry.php:44 Payments.php:1082
-#: SupplierTransInquiry.php:172 TaxAuthorities.php:148 TaxAuthorities.php:149
+#: SupplierTransInquiry.php:172 TaxAuthorities.php:147 TaxAuthorities.php:148
 msgid "GL Account"
 msgstr "Cuenta contable"
 
@@ -3706,7 +3704,7 @@ msgstr ""
 #: SMTPServer.php:122 SecurityTokens.php:97 SelectCreditItems.php:956
 #: SellThroughSupport.php:476 ShopParameters.php:610 StockCostUpdate.php:195
 #: StockReorderLevel.php:111 Stocks.php:1403 SystemParameters.php:1140
-#: TaxAuthorityRates.php:84 WOSerialNos.php:337 WorkOrderEntry.php:659
+#: WOSerialNos.php:337 WorkOrderEntry.php:661
 #: reportwriter/languages/en_US/reports.php:156
 msgid "Update"
 msgstr "Actualizar"
@@ -4018,7 +4016,8 @@ msgid "Excl Tax"
 msgstr "Sin impuesto"
 
 #: ConfirmDispatch_Invoice.php:306 Credit_Invoice.php:299
-#: SelectCreditItems.php:693 SupplierInvoice.php:607 TaxGroups.php:289
+#: SelectCreditItems.php:693 SupplierInvoice.php:607 TaxAuthorities.php:146
+#: TaxGroups.php:289
 msgid "Tax Authority"
 msgstr "Autoridad fiscal"
 
@@ -4363,7 +4362,7 @@ msgstr "El SQL utilizada para actualizar la compañía por defecto fue"
 #: SupplierInvoice.php:1543 SupplierInvoice.php:1561 SupplierInvoice.php:1589
 #: SupplierInvoice.php:1610 SupplierInvoice.php:1630 SupplierInvoice.php:1693
 #: SupplierInvoice.php:1725 SupplierInvoice.php:1796 SupplierInvoice.php:1826
-#: TaxAuthorities.php:140 WorkOrderCosting.php:375 WorkOrderCosting.php:396
+#: TaxAuthorities.php:139 WorkOrderCosting.php:375 WorkOrderCosting.php:396
 #: WorkOrderCosting.php:415 WorkOrderCosting.php:452 WorkOrderCosting.php:471
 #: WorkOrderCosting.php:494 WorkOrderCosting.php:513 WorkOrderIssue.php:181
 #: WorkOrderIssue.php:212 WorkOrderIssue.php:234 WorkOrderIssue.php:249
@@ -4483,7 +4482,7 @@ msgstr "ERROR CRÍTICO"
 #: SupplierInvoice.php:1533 SupplierInvoice.php:1543 SupplierInvoice.php:1561
 #: SupplierInvoice.php:1589 SupplierInvoice.php:1610 SupplierInvoice.php:1630
 #: SupplierInvoice.php:1693 SupplierInvoice.php:1725 SupplierInvoice.php:1796
-#: SupplierInvoice.php:1826 TaxAuthorities.php:140 WorkOrderCosting.php:375
+#: SupplierInvoice.php:1826 TaxAuthorities.php:139 WorkOrderCosting.php:375
 #: WorkOrderCosting.php:396 WorkOrderCosting.php:415 WorkOrderCosting.php:452
 #: WorkOrderCosting.php:471 WorkOrderCosting.php:494 WorkOrderCosting.php:513
 #: WorkOrderIssue.php:181 WorkOrderIssue.php:212 WorkOrderIssue.php:234
@@ -5053,7 +5052,7 @@ msgstr ""
 #: SupplierCredit.php:210 SupplierCredit.php:221 SupplierCredit.php:233
 #: SupplierCredit.php:243 SupplierCredit.php:253 SupplierInvoice.php:561
 #: SupplierInvoice.php:570 SupplierInvoice.php:578 SupplierInvoice.php:586
-#: SupplierInvoice.php:596 TaxAuthorityRates.php:22
+#: SupplierInvoice.php:596 TaxAuthorityRates.php:24
 #: includes/PDFSalesAnalysis.inc:547
 msgid "click here"
 msgstr "haga clic aquí"
@@ -5072,7 +5071,7 @@ msgstr "para continuar"
 #: ContractBOM.php:144 CounterReturns.php:324 CounterSales.php:352
 #: InternalStockRequest.php:500 PO_Items.php:1092 SelectCreditItems.php:390
 #: SelectOrderItems.php:781 SupplierTenderCreate.php:834
-#: SupplierTenders.php:667 WorkOrderEntry.php:226 WorkOrderIssue.php:486
+#: SupplierTenders.php:667 WorkOrderEntry.php:228 WorkOrderIssue.php:486
 msgid "There is a problem selecting the part records to display because"
 msgstr ""
 "Ha ocurrido un problema seleccionando el registro de códigos a mostrar porque"
@@ -5232,7 +5231,7 @@ msgstr "Imagen"
 #: SelectOrderItems.php:1468 SelectOrderItems.php:1653 SelectProduct.php:451
 #: StockClone.php:100 StockClone.php:710 StockClone.php:715 StockClone.php:720
 #: StockClone.php:724 Stocks.php:1025 Stocks.php:1029 Stocks.php:1033
-#: SupplierTenderCreate.php:878 SupplierTenders.php:714 WorkOrderEntry.php:751
+#: SupplierTenderCreate.php:878 SupplierTenders.php:714 WorkOrderEntry.php:753
 #: WorkOrderIssue.php:772 reportwriter/languages/en_US/reports.php:270
 #, php-format
 msgid "No Image"
@@ -6363,12 +6362,12 @@ msgid "Stock Category has been used in search"
 msgstr "La Categoría de Stock se usó en la búsqueda"
 
 #: CounterReturns.php:325 CounterSales.php:353 InternalStockRequest.php:501
-#: SelectOrderItems.php:782 WorkOrderEntry.php:227 WorkOrderIssue.php:487
+#: SelectOrderItems.php:782 WorkOrderEntry.php:229 WorkOrderIssue.php:487
 msgid "The SQL used to get the part selection was"
 msgstr "El SQL usado para obtener la selección de piezas fue"
 
 #: CounterReturns.php:329 CounterSales.php:357 InternalStockRequest.php:505
-#: SelectOrderItems.php:787 WorkOrderEntry.php:231 WorkOrderIssue.php:491
+#: SelectOrderItems.php:787 WorkOrderEntry.php:233 WorkOrderIssue.php:491
 msgid "There are no products available meeting the criteria specified"
 msgstr "No hay productos disponibles que correspondan al criterio especificado"
 
@@ -6653,7 +6652,7 @@ msgstr ""
 #: CounterReturns.php:1680 CounterReturns.php:1803 CounterSales.php:2288
 #: CounterSales.php:2411 InternalStockRequest.php:619
 #: InternalStockRequest.php:741 PO_Items.php:1172 PO_Items.php:1174
-#: WorkOrderEntry.php:719 WorkOrderEntry.php:721
+#: WorkOrderEntry.php:721 WorkOrderEntry.php:723
 msgid "Prev"
 msgstr "Anterior"
 
@@ -6668,7 +6667,7 @@ msgstr "Artículos devueltos"
 #: SelectCustomer.php:413 SelectCustomer.php:490 SelectOrderItems.php:1641
 #: SelectOrderItems.php:1767 SelectProduct.php:769 SelectSupplier.php:271
 #: SelectSupplier.php:337 SupplierPriceList.php:261
-#: SupplierTenderCreate.php:608 WorkOrderEntry.php:724 WorkOrderEntry.php:726
+#: SupplierTenderCreate.php:608 WorkOrderEntry.php:726 WorkOrderEntry.php:728
 msgid "Next"
 msgstr "Siguiente"
 
@@ -6846,7 +6845,7 @@ msgstr "Recogido Por"
 #: DeliveryDetails.php:1098 OrderDetails.php:125 PO_Header.php:1152
 #: PO_OrderDetails.php:156 RecurringSalesOrders.php:419 SpecialOrder.php:614
 #: SupplierCredit.php:602 SupplierInquiry.php:213 SupplierInvoice.php:950
-#: SupplierTransInquiry.php:107 WorkOrderEntry.php:601
+#: SupplierTransInquiry.php:107 WorkOrderEntry.php:603
 #: Z_ImportChartOfAccounts.php:28 Z_ImportGLAccountGroups.php:26
 #: Z_ImportGLAccountSections.php:29 Z_ImportPartCodes.php:31
 #: includes/PDFOrderPageHeader_generic.inc:58
@@ -6949,7 +6948,7 @@ msgstr ""
 "esto"
 
 #: CounterSales.php:1255 DeliveryDetails.php:531 DeliveryDetails.php:729
-#: WorkOrderEntry.php:316
+#: WorkOrderEntry.php:318
 msgid "The work order item could not be added"
 msgstr "No se pudo agregar el artículo de la orden de trabajo"
 
@@ -7743,7 +7742,7 @@ msgstr ""
 
 #: CustEDISetup.php:31 CustLoginSetup.php:51 Customers.php:67
 #: InternalStockCategoriesByRole.php:24 StockClone.php:148 Stocks.php:137
-#: SuppLoginSetup.php:51 TaxCategories.php:31 WWW_Users.php:73
+#: SuppLoginSetup.php:51 TaxCategories.php:32 WWW_Users.php:73
 #: WorkCentres.php:35 Z_ChangeBranchCode.php:28 Z_ImportDebtors.php:224
 #: Z_ImportDebtors.php:298 Z_ImportStocks.php:120
 msgid "or a space"
@@ -8071,7 +8070,7 @@ msgstr ""
 
 #: CustItem.php:455 MailingGroupMaintenance.php:250 PurchData.php:763
 #: SellThroughSupport.php:481 Shipments.php:523 StockAdjustments.php:485
-#: TaxGroups.php:400 WOSerialNos.php:275 WWW_Access.php:238
+#: TaxGroups.php:395 WOSerialNos.php:275 WWW_Access.php:238
 #: reportwriter/languages/en_US/reports.php:131
 #, php-format
 msgid "Add"
@@ -8786,7 +8785,7 @@ msgid "Fax No"
 msgstr "Numero de Fax"
 
 #: CustomerBranches.php:415 CustomerBranches.php:866 SupplierCredit.php:265
-#: Suppliers.php:840 Suppliers.php:1094 TaxGroups.php:173 TaxGroups.php:239
+#: Suppliers.php:840 Suppliers.php:1094 TaxGroups.php:175 TaxGroups.php:241
 msgid "Tax Group"
 msgstr "Grupo de impuestos"
 
@@ -12182,7 +12181,7 @@ msgstr "Eliminar la Compañía Financiera"
 msgid "Are you sure you wish to delete this factoring company?"
 msgstr "¿Confirma que desea eliminar esta compañía financiera?"
 
-#: Factors.php:286 TaxAuthorities.php:146
+#: Factors.php:286 TaxAuthorities.php:145
 msgid "ID"
 msgstr "ID"
 
@@ -12806,7 +12805,7 @@ msgstr "Tasa de depreciación"
 msgid "Asset Financial Summary"
 msgstr "Resumen Financiero de Activos"
 
-#: FixedAssetItems.php:597 WorkOrderEntry.php:595
+#: FixedAssetItems.php:597 WorkOrderEntry.php:597
 msgid "Accumulated Costs"
 msgstr "Costos acumulados"
 
@@ -15924,7 +15923,7 @@ msgstr "Tiempo de Espera"
 msgid "in months"
 msgstr "en meses"
 
-#: InventoryPlanningPrefSupplier.php:87 WorkOrderEntry.php:602
+#: InventoryPlanningPrefSupplier.php:87 WorkOrderEntry.php:604
 #: WorkOrderIssue.php:624 WorkOrderStatus.php:99
 msgid "Qty Required"
 msgstr "Cantidad requerida"
@@ -16525,7 +16524,8 @@ msgstr "Código Localidad"
 msgid "Location Name"
 msgstr "Nombre  Localidad"
 
-#: Locations.php:400 Locations.php:620 TaxAuthorityRates.php:87
+#: Locations.php:400 Locations.php:620 TaxAuthorityRates.php:82
+#: TaxProvinces.php:165
 msgid "Tax Province"
 msgstr "Jurisdicción fiscal"
 
@@ -17635,7 +17635,7 @@ msgid "Are you sure you wish to remove this user from this mail group?"
 msgstr "¿Está seguro que desea eliminar este usuario de este grupo de correo?"
 
 #: MailingGroupMaintenance.php:238 SalesCategories.php:536
-#: StockAdjustments.php:484 SupplierTenders.php:354 TaxGroups.php:380
+#: StockAdjustments.php:484 SupplierTenders.php:354 TaxGroups.php:376
 #: WWW_Access.php:223 reportwriter/languages/en_US/reports.php:153
 #, php-format
 msgid "Remove"
@@ -18181,7 +18181,7 @@ msgstr ""
 msgid "PO#"
 msgstr "OC#"
 
-#: OutstandingGRNs.php:180 WorkOrderEntry.php:603
+#: OutstandingGRNs.php:180 WorkOrderEntry.php:605
 #: includes/PDFStockLocTransferHeader.inc:67
 msgid "Qty Received"
 msgstr "Cant. Recibida"
@@ -21076,7 +21076,7 @@ msgstr ""
 #: PO_SelectOSPurchOrder.php:230 PO_SelectPurchOrder.php:181
 #: SelectCompletedOrder.php:467 SelectCreditItems.php:983
 #: SelectSalesOrder.php:527 SelectWorkOrder.php:189 Shipt_Select.php:158
-#: WorkOrderEntry.php:672 WorkOrderIssue.php:707
+#: WorkOrderEntry.php:674 WorkOrderIssue.php:707
 msgid "Select a stock category"
 msgstr "Seleccionar una clase de existencia"
 
@@ -22534,7 +22534,7 @@ msgid "Review Prices"
 msgstr "Revisar Precio"
 
 #: Prices.php:223 PricesByCost.php:156 Prices_Customer.php:354
-#: RecurringSalesOrders.php:428 SelectWorkOrder.php:333 WorkOrderEntry.php:581
+#: RecurringSalesOrders.php:428 SelectWorkOrder.php:333 WorkOrderEntry.php:583
 #: WorkOrderStatus.php:86
 msgid "Start Date"
 msgstr "Fecha Inicio"
@@ -26443,7 +26443,7 @@ msgid "There are no products available that match the criteria specified"
 msgstr ""
 "No hay productos disponibles que coincidan con el criterio especificado"
 
-#: SelectCreditItems.php:396 WorkOrderEntry.php:234 WorkOrderIssue.php:494
+#: SelectCreditItems.php:396 WorkOrderEntry.php:236 WorkOrderIssue.php:494
 msgid "The SQL statement used was"
 msgstr "El SQL usado fue"
 
@@ -30004,7 +30004,8 @@ msgstr "Perecedero"
 msgid "Decimal Places for display Quantity"
 msgstr "Decimales al mostrar cantidades"
 
-#: StockClone.php:964 Stocks.php:1273 TaxAuthorityRates.php:88
+#: StockClone.php:964 Stocks.php:1273 TaxAuthorityRates.php:83
+#: TaxCategories.php:168
 msgid "Tax Category"
 msgstr "Clase de impuesto"
 
@@ -30445,7 +30446,7 @@ msgid "Serial Numbers"
 msgstr "Numeros de Serie"
 
 #: StockLocStatus.php:299 StockLocStatus.php:331 StockStatus.php:271
-#: WorkOrderEntry.php:634
+#: WorkOrderEntry.php:636
 msgid "Batches"
 msgstr "Lotes"
 
@@ -31151,7 +31152,7 @@ msgstr "No son posibles transferencias de existencias"
 msgid "Enter another Transfer"
 msgstr "Introduzca otra Transferencia"
 
-#: StockTransfers.php:177 WorkOrderEntry.php:341
+#: StockTransfers.php:177 WorkOrderEntry.php:343
 msgid "The quantity entered must be a positive number greater than zero"
 msgstr "La cantidad entrada debe ser positiva y mayor que cero"
 
@@ -32259,8 +32260,7 @@ msgstr ""
 "confirmar los cambios a la base de datos porque"
 
 #: SuppPaymentRun.php:240 SupplierTypes.php:6 SupplierTypes.php:21
-#: SystemParameters.php:13 TaxAuthorities.php:10 TaxAuthorityRates.php:16
-#: TaxCategories.php:10 includes/MainMenuLinksArray.php:477
+#: SystemParameters.php:13 includes/MainMenuLinksArray.php:477
 msgid "Supplier Types"
 msgstr "Tipos de Proveedor"
 
@@ -33835,7 +33835,7 @@ msgstr "Procesar"
 msgid "Tender"
 msgstr "Licitación"
 
-#: SupplierTenders.php:533 WorkOrderCosting.php:70 WorkOrderEntry.php:590
+#: SupplierTenders.php:533 WorkOrderCosting.php:70 WorkOrderEntry.php:592
 #: WorkOrderIssue.php:550 WorkOrderReceive.php:819 WorkOrderStatus.php:72
 msgid "Required By"
 msgstr "Requerido por"
@@ -35715,31 +35715,35 @@ msgstr "Detalle y resumen"
 msgid "Summary Only"
 msgstr "Sólo resumen"
 
-#: TaxAuthorities.php:6 TaxAuthorityRates.php:134
+#: TaxAuthorities.php:5
 msgid "Tax Authorities"
-msgstr "Autoridades Fiscales"
+msgstr "Autoridades fiscales"
 
-#: TaxAuthorities.php:27
+#: TaxAuthorities.php:11 TaxAuthorities.php:12 TaxAuthorityRates.php:122
+msgid "Tax Authorities Maintenance"
+msgstr "Administrar autoridades fiscales"
+
+#: TaxAuthorities.php:26
 msgid "The tax type description may not be empty"
 msgstr "La descripción del tipo de impuesto no puede estar vacía"
 
-#: TaxAuthorities.php:46
+#: TaxAuthorities.php:45
 msgid "The update of this tax authority failed because"
 msgstr "No se pudo actualizar esta Autoridad Fiscal porque"
 
-#: TaxAuthorities.php:49
+#: TaxAuthorities.php:48
 msgid "The tax authority for record has been updated"
 msgstr "Se actualizó el registro de la Autoridad Fiscal"
 
-#: TaxAuthorities.php:73
+#: TaxAuthorities.php:72
 msgid "The addition of this tax authority failed because"
 msgstr "No se pudo añadir esta Autoridad Fiscal porque"
 
-#: TaxAuthorities.php:76
+#: TaxAuthorities.php:75
 msgid "The new tax authority record has been added to the database"
 msgstr "Se agregó un registro a la BD para la nueva Autoridad Fiscal"
 
-#: TaxAuthorities.php:116
+#: TaxAuthorities.php:115
 msgid ""
 "Cannot delete this tax authority because there are tax groups defined that "
 "use it"
@@ -35747,33 +35751,33 @@ msgstr ""
 "No se puede eliminar esta Autoridad Fiscal porque hay Grupos de Impuestos "
 "que la usan"
 
-#: TaxAuthorities.php:121
+#: TaxAuthorities.php:120
 msgid "The selected tax authority record has been deleted"
 msgstr "Se eliminó el registro de la Autoridad Fiscal seleccionada"
 
-#: TaxAuthorities.php:140
+#: TaxAuthorities.php:139
 msgid "The defined tax authorities could not be retrieved because"
 msgstr "No se pudo obtener las Autoridades Fiscales definidas porque"
 
-#: TaxAuthorities.php:141
+#: TaxAuthorities.php:140
 msgid "The following SQL to retrieve the tax authorities was used"
 msgstr "El SQL usado para obtener las Autoridades Fiscales es el siguiente:"
 
-#: TaxAuthorities.php:148
+#: TaxAuthorities.php:147
 msgid "Input Tax"
 msgstr "Impuestos Repercutidos"
 
-#: TaxAuthorities.php:149
+#: TaxAuthorities.php:148
 msgid "Output Tax"
 msgstr "Impuestos Soportados"
 
-#: TaxAuthorities.php:152
+#: TaxAuthorities.php:151
 msgid "Bank Act Type"
 msgstr "Tipo de cuenta bancaria"
 
-#: TaxAuthorities.php:153
+#: TaxAuthorities.php:152
 msgid "Bank Swift"
-msgstr "Swift del Banco"
+msgstr "Swift del banco"
 
 #: TaxAuthorities.php:175
 #, php-format
@@ -35783,7 +35787,7 @@ msgstr "¿Seguro que desea eliminar esta autoridad fiscal?"
 #: TaxAuthorities.php:176
 #, php-format
 msgid "Edit Rates"
-msgstr "Editar Tasas"
+msgstr "Editar tasas"
 
 #: TaxAuthorities.php:205
 msgid "Review all defined tax authority records"
@@ -35791,19 +35795,19 @@ msgstr "Revisar todos los registros de autoridades fiscales definidas"
 
 #: TaxAuthorities.php:258
 msgid "Tax Type Description"
-msgstr "Descripción del Tipo de Impuesto"
+msgstr "Descripción del tipo de impuesto"
 
 #: TaxAuthorities.php:259
 msgid "No illegal characters allowed and should not be blank"
-msgstr ""
+msgstr "No se permite caracteres no válidos y no deben estar en blanco"
 
 #: TaxAuthorities.php:262
 msgid "Input tax GL Account"
-msgstr "Cuenta de Cobros de Impuestos"
+msgstr "Cuenta contable para cobro de impuestos"
 
 #: TaxAuthorities.php:281
 msgid "Output tax GL Account"
-msgstr "Cuenta de Pagos de Impuestos"
+msgstr "Cuenta contable para pago de impuestos"
 
 #: TaxAuthorities.php:310
 msgid "Bank Name"
@@ -35829,9 +35833,31 @@ msgstr "Nº Swift del Banco"
 msgid "No more than 15 characters"
 msgstr "No más de 15 caracteres"
 
-#: TaxAuthorityRates.php:12
+#: TaxAuthorities.php:336 TaxAuthorityRates.php:123 TaxCategories.php:256
+#: TaxGroups.php:11 TaxGroups.php:12 TaxProvinces.php:247
+#: includes/MainMenuLinksArray.php:443
+msgid "Tax Group Maintenance"
+msgstr "Administrar grupos de impuestos"
+
+#: TaxAuthorities.php:337 TaxAuthorityRates.php:124 TaxCategories.php:257
+#: TaxGroups.php:412 TaxProvinces.php:11 TaxProvinces.php:12
+#: includes/MainMenuLinksArray.php:444
+msgid "Dispatch Tax Province Maintenance"
+msgstr "Administrar jurisdicciones fiscales"
+
+#: TaxAuthorities.php:338 TaxAuthorityRates.php:125 TaxCategories.php:11
+#: TaxCategories.php:12 TaxGroups.php:413 TaxProvinces.php:248
+#: includes/MainMenuLinksArray.php:445
+msgid "Tax Category Maintenance"
+msgstr "Administrar clases de impuestos"
+
+#: TaxAuthorityRates.php:5
 msgid "Tax Rates"
 msgstr "Tasas Impositivas"
+
+#: TaxAuthorityRates.php:11 TaxAuthorityRates.php:12
+msgid "Tax Rates Maintenance"
+msgstr "Administrar tasas impositivas"
 
 #: TaxAuthorityRates.php:22
 msgid ""
@@ -35841,40 +35867,36 @@ msgstr ""
 "Esta página sólo puede usarse después de seleccionar la autoridad tributaria "
 "para la que editar las tasas"
 
-#: TaxAuthorityRates.php:22
+#: TaxAuthorityRates.php:23
 msgid "Please select the Rates link from the tax authority page"
 msgstr "Por favor seleccione la tasa desde la página de la autoridad de rentas"
 
-#: TaxAuthorityRates.php:22
+#: TaxAuthorityRates.php:25
 msgid "to go to the Tax Authority page"
 msgstr "ir a la página de la autoridad de rentas"
 
-#: TaxAuthorityRates.php:45
+#: TaxAuthorityRates.php:46
 msgid "All rates updated successfully"
 msgstr "Se han actualizado las tasas correctamente"
 
-#: TaxAuthorityRates.php:84
-msgid "Rates"
-msgstr "Tasas"
-
-#: TaxAuthorityRates.php:87
+#: TaxAuthorityRates.php:82
 msgid "Deliveries From"
 msgstr "Entregas Desde"
 
-#: TaxAuthorityRates.php:89
+#: TaxAuthorityRates.php:84
 msgid "Tax Rate"
 msgstr "Tasa impositiva"
 
-#: TaxAuthorityRates.php:112
+#: TaxAuthorityRates.php:100
 #, php-format
 msgid "Input must be numeric"
 msgstr "La cantidad debe ser numérica"
 
-#: TaxAuthorityRates.php:126
+#: TaxAuthorityRates.php:111
 msgid "Update Rates"
 msgstr "Actualizar tasas"
 
-#: TaxAuthorityRates.php:129
+#: TaxAuthorityRates.php:116
 msgid ""
 "There are no tax rates to show - perhaps the dispatch tax province records "
 "have not yet been created?"
@@ -35882,27 +35904,19 @@ msgstr ""
 "No hay Tasas de Impuestos que mostrar, quizás los registros de jurisdicción "
 "fiscal desde donde despacha aún no han sido creados."
 
-#: TaxAuthorityRates.php:136
-msgid "Tax Groupings"
-msgstr "Agrupar Impuestos"
-
-#: TaxAuthorityRates.php:138 TaxCategories.php:6 TaxCategories.php:167
+#: TaxCategories.php:5
 msgid "Tax Categories"
 msgstr "Clases de impuestos"
 
-#: TaxAuthorityRates.php:140 TaxProvinces.php:6
-msgid "Dispatch Tax Provinces"
-msgstr "Jurisdicciones Fiscales"
-
-#: TaxCategories.php:31
+#: TaxCategories.php:32
 msgid "The tax category name cannot contain the character"
 msgstr "El nombre de la clase de impuesto no puede contener el carácter"
 
-#: TaxCategories.php:35
+#: TaxCategories.php:36
 msgid "The tax category name may not be empty"
 msgstr "El nombre de la clase de impuesto no puede estar vacío"
 
-#: TaxCategories.php:49
+#: TaxCategories.php:50
 msgid ""
 "The tax category cannot be renamed because another with the same name "
 "already exists."
@@ -35910,38 +35924,38 @@ msgstr ""
 "No es posible cambiar el nombre de la clase de impuesto porque existe otra "
 "con ese nombre"
 
-#: TaxCategories.php:63
+#: TaxCategories.php:64
 msgid "The tax category could not be updated"
 msgstr "No se pudo actualizar la clase de impuesto"
 
-#: TaxCategories.php:67
+#: TaxCategories.php:68
 msgid "The tax category no longer exists"
 msgstr "La categoría de impuestos ya no existe"
 
-#: TaxCategories.php:70
+#: TaxCategories.php:71
 msgid "Tax category name changed"
 msgstr "Cambiaron de el nombre de la categoría de impuesto"
 
-#: TaxCategories.php:79
+#: TaxCategories.php:80
 msgid ""
 "The tax category cannot be created because another with the same name "
 "already exists"
 msgstr ""
 "No se puede crear la clase de impuesto porque existe otra con ese nombre"
 
-#: TaxCategories.php:87
+#: TaxCategories.php:88
 msgid "The new tax category could not be added"
 msgstr "No se pudo crear la nueva clase de impuesto"
 
-#: TaxCategories.php:103
+#: TaxCategories.php:104
 msgid "New tax category added"
 msgstr "Se creó una Nueva Clase de Impuesto"
 
-#: TaxCategories.php:122
+#: TaxCategories.php:123
 msgid "Cannot delete this tax category because it no longer exists"
 msgstr "No se puede eliminar esta clase de impuesto porque no existe"
 
-#: TaxCategories.php:130
+#: TaxCategories.php:131
 msgid ""
 "Cannot delete this tax category because inventory items have been created "
 "using this tax category"
@@ -35949,100 +35963,105 @@ msgstr ""
 "No se puede eliminar esta categoría de impuestos porque los artículos del "
 "inventario han sido creados con esta categoría de impuestos"
 
-#: TaxCategories.php:131
+#: TaxCategories.php:132
 msgid "inventory items that refer to this tax category"
 msgstr "Artículos de Inventario con esta clase de Impuesto"
 
-#: TaxCategories.php:137
+#: TaxCategories.php:138
 msgid "tax category and any tax rates set for it have been deleted"
 msgstr ""
 "Se han eliminado la categoría de impuesto y cualquier tasa de impuestos "
 "fijada para este último"
 
-#: TaxCategories.php:162 TaxProvinces.php:160
+#: TaxCategories.php:163 TaxProvinces.php:160
 msgid "Could not get tax categories because"
 msgstr "No se pudo obtener las clases de impuestos porque"
 
-#: TaxCategories.php:183
+#: TaxCategories.php:187
 msgid "Are you sure you wish to delete this tax category?"
 msgstr "¿Seguro que desea eliminar esta categoría de impuestos?"
 
-#: TaxCategories.php:196
+#: TaxCategories.php:201
 msgid "Review Tax Categories"
 msgstr "Revisar Clases de Impuestos"
 
-#: TaxCategories.php:218
+#: TaxCategories.php:223
 msgid "Could not retrieve the requested tax category, please try again."
 msgstr ""
 "No se pudo obtener la clase de impuesto solicitada, por favor, pruebe de "
 "nuevo"
 
-#: TaxCategories.php:234
+#: TaxCategories.php:239
 msgid "Tax Category Name"
 msgstr "Nombre de la Clase de Impuesto"
 
-#: TaxCategories.php:235
+#: TaxCategories.php:240
 msgid "No more than 30 characters"
 msgstr ""
 
-#: TaxCategories.php:235
+#: TaxCategories.php:240
 msgid "No illegal characters allowed and cannot be blank"
 msgstr ""
 
-#: TaxGroups.php:6
+#: TaxCategories.php:255 TaxGroups.php:411 TaxProvinces.php:246
+#: includes/MainMenuLinksArray.php:442
+msgid "Tax Authorities and Rates Maintenance"
+msgstr "Administrar autoridades fiscales y tasas"
+
+#: TaxGroups.php:5
 msgid "Tax Groups"
 msgstr "Grupos de Impuestos"
 
-#: TaxGroups.php:27
+#: TaxGroups.php:30
 msgid "The Group description entered must be at least 4 characters long"
 msgstr "La descripción del Grupo debe tener al menos 4 caracteres"
 
-#: TaxGroups.php:37
+#: TaxGroups.php:40
 msgid "The update of the tax group description failed because"
 msgstr "Falló la actualización de este grupo de Impuestos porque"
 
-#: TaxGroups.php:38
+#: TaxGroups.php:41
 msgid "The tax group description was updated to"
 msgstr "La descripción del grupo de impuestos se actualizó a"
 
-#: TaxGroups.php:45
+#: TaxGroups.php:48
 msgid ""
 "A new tax group could not be added because a tax group already exists for"
 msgstr ""
 "No se pudo añadir un nuevo grupo de impuestos porque ya existe un grupo de "
 "impuestos para ello"
 
-#: TaxGroups.php:50
+#: TaxGroups.php:53
 msgid "The addition of the group failed because"
 msgstr "Falló la creación del grupo porque"
 
-#: TaxGroups.php:51
+#: TaxGroups.php:54
 msgid "Added the new tax group"
 msgstr "Añadido el nuevo grupo fiscal"
 
-#: TaxGroups.php:66
+#: TaxGroups.php:69
 msgid "The addition of the tax failed because"
 msgstr "No se pudo añadir el Impuesto porque"
 
-#: TaxGroups.php:67
+#: TaxGroups.php:70
 msgid "The tax was added."
 msgstr "Se agregó el Impuesto"
 
-#: TaxGroups.php:72
+#: TaxGroups.php:75
 msgid "The removal of this tax failed because"
 msgstr "No pudo quitarse este Impuesto porque"
 
-#: TaxGroups.php:73
+#: TaxGroups.php:76
 msgid "This tax was removed."
 msgstr "este impuesto fue eliminado."
 
-#: TaxGroups.php:89 TaxGroups.php:112
+#: TaxGroups.php:92 TaxGroups.php:115
 msgid "Could not get tax authorities in the selected tax group"
 msgstr ""
 "No se pudo obtener las Autoridades Fiscales del grupo de impuestos "
 "seleccionado"
 
-#: TaxGroups.php:117
+#: TaxGroups.php:120
 msgid ""
 "It is inappropriate to set tax on tax where the tax is the first in the "
 "calculation order. The system has changed it back to no tax on tax for this "
@@ -36052,7 +36071,7 @@ msgstr ""
 "primero en el orden de cálculo. El sistema lo ha cambiado a no impuesto "
 "sobre impuesto para esta autoridad fiscal."
 
-#: TaxGroups.php:131
+#: TaxGroups.php:133
 msgid ""
 "Cannot delete this tax group because some customer branches are setup using "
 "it"
@@ -36060,60 +36079,60 @@ msgstr ""
 "No se pudo eliminar este grupo de impuestos porque algunas Sucursales de "
 "clientes lo usan"
 
-#: TaxGroups.php:132
+#: TaxGroups.php:134
 msgid "customer branches referring to this tax group"
 msgstr "Sucursales de cliente que hacen referencia a este grupo de impuestos"
 
-#: TaxGroups.php:139
+#: TaxGroups.php:141
 msgid "Cannot delete this tax group because some suppliers are setup using it"
 msgstr ""
 "No se pudo eliminar este grupo de impuestos porque algunos proveedores lo "
 "usan"
 
-#: TaxGroups.php:140
+#: TaxGroups.php:142
 msgid "suppliers referring to this tax group"
 msgstr "proveedores referidos a este grupo de Impuestos"
 
-#: TaxGroups.php:149
+#: TaxGroups.php:151
 msgid "tax group has been deleted"
 msgstr "Se eliminó el grupo de impuestos"
 
-#: TaxGroups.php:167
+#: TaxGroups.php:169
 msgid "There are no tax groups configured."
 msgstr "No se han configurado grupos de impuestos"
 
-#: TaxGroups.php:172
+#: TaxGroups.php:174
 msgid "Group No"
 msgstr "Nº del Grupo"
 
-#: TaxGroups.php:189
+#: TaxGroups.php:192
 #, php-format
 msgid "Are you sure you wish to delete this tax group?"
 msgstr "¿Confirma que desea eliminar este grupo de impuestos?"
 
-#: TaxGroups.php:207
+#: TaxGroups.php:209
 msgid "Review Existing Groups"
 msgstr "Revisar Grupos Existentes"
 
-#: TaxGroups.php:220
+#: TaxGroups.php:222
 msgid "The selected tax group is no longer available."
 msgstr "El grupo de impuestos seleccionado ya no está disponible"
 
-#: TaxGroups.php:240
+#: TaxGroups.php:242
 msgid ""
 "The group name must be more 4 and less than 40 characters and cannot be left "
 "blank"
 msgstr ""
 
-#: TaxGroups.php:240
+#: TaxGroups.php:242
 msgid "4 to 40 legal characters"
 msgstr ""
 
-#: TaxGroups.php:241
+#: TaxGroups.php:243
 msgid "Enter Group"
 msgstr "Guardar/Cambiar Nombre"
 
-#: TaxGroups.php:286 TaxGroups.php:342
+#: TaxGroups.php:286 TaxGroups.php:339
 msgid "Calculation Order"
 msgstr "Orden de Cálculo"
 
@@ -36129,36 +36148,40 @@ msgstr ""
 msgid "Update Order"
 msgstr "Actualizar Pedidos"
 
-#: TaxGroups.php:335
+#: TaxGroups.php:332
 msgid "Assigned Taxes"
 msgstr "Impuestos Asignados"
 
-#: TaxGroups.php:337
+#: TaxGroups.php:334
 msgid "Available Taxes"
 msgstr "Impuestos Disponibles"
 
-#: TaxGroups.php:340 TaxGroups.php:345
+#: TaxGroups.php:337 TaxGroups.php:341
 msgid "Tax Auth ID"
 msgstr "ID de la Autoridad Fiscal"
 
-#: TaxGroups.php:341 TaxGroups.php:346
+#: TaxGroups.php:338 TaxGroups.php:342
 msgid "Tax Authority Name"
 msgstr "Nombre de la Autoridad Fiscal"
 
-#: TaxGroups.php:343
+#: TaxGroups.php:340
 msgid "Tax on Prior Tax(es)"
 msgstr "Impuesto sobre Impuesto/s Anterior/es"
 
-#: TaxGroups.php:352
+#: TaxGroups.php:347
 msgid "There are no tax authorities defined to allocate to this tax group"
 msgstr ""
 "No hay definidas Autoridades Fiscales para (a la que) asignar este grupo de "
 "impuestos"
 
-#: TaxGroups.php:380
+#: TaxGroups.php:376
 #, php-format
 msgid "Are you sure you wish to remove this tax authority from the group?"
 msgstr "¿Confirma que desea eliminar esta autoridad fiscal del grupo?"
+
+#: TaxProvinces.php:5
+msgid "Dispatch Tax Provinces"
+msgstr "Jurisdicciones Fiscales"
 
 #: TaxProvinces.php:32
 msgid "The tax province name cannot contain any of the illegal characters"
@@ -36242,43 +36265,27 @@ msgstr ""
 "La provincia de impuesto y cualquier tasa de impuestos fijada para este "
 "último se han eliminado"
 
-#: TaxProvinces.php:165
-msgid "Tax Provinces"
-msgstr "Jurisdicción Fiscal"
-
-#: TaxProvinces.php:191
+#: TaxProvinces.php:192
 msgid "Review Tax Provinces"
 msgstr "Revisar Jurisdicciones Fiscales"
 
-#: TaxProvinces.php:212
+#: TaxProvinces.php:213
 msgid "Could not retrieve the requested tax province, please try again."
 msgstr ""
 "No se pudo obtener la jurisdicción fiscal requerida, por favor, pruebe de "
 "nuevo."
 
-#: TaxProvinces.php:228
+#: TaxProvinces.php:229
 msgid "Tax Province Name"
 msgstr "Nombre de La Jurisdicción Fiscal"
 
-#: TaxProvinces.php:229
+#: TaxProvinces.php:230
 msgid "The tax province cannot be left blank and includes illegal characters"
 msgstr ""
 
-#: TaxProvinces.php:229
+#: TaxProvinces.php:230
 msgid "Within 30 legal characters"
 msgstr ""
-
-#: TaxProvinces.php:245
-msgid "Edit/Review Tax Authorities"
-msgstr "Editar/Revisar Autoridades Fiscales"
-
-#: TaxProvinces.php:247
-msgid "Edit/Review Tax Groupings"
-msgstr "Editar/Revisar Grupos de Impuestos"
-
-#: TaxProvinces.php:249
-msgid "Edit/Review Tax Categories"
-msgstr "Editar/Revisar Clases de Impuestos"
 
 #: TopItems.php:8
 msgid "Top Items Searching"
@@ -37490,11 +37497,11 @@ msgid ""
 "at this location"
 msgstr ""
 
-#: WorkOrderEntry.php:50 WorkOrderEntry.php:332 WorkOrderEntry.php:555
+#: WorkOrderEntry.php:50 WorkOrderEntry.php:334 WorkOrderEntry.php:557
 msgid "Select an existing work order"
 msgstr "Seleccionar una orden de trabajo existente"
 
-#: WorkOrderEntry.php:264
+#: WorkOrderEntry.php:266
 msgid ""
 "The item selected cannot be added to a work order because it is not a "
 "manufactured item"
@@ -37502,16 +37509,16 @@ msgstr ""
 "El artículo seleccionado no puede ser agregado a una orden de trabajo porque "
 "no es un artículo manufacturado"
 
-#: WorkOrderEntry.php:268
+#: WorkOrderEntry.php:270
 msgid "The item selected cannot be found in the database"
 msgstr "El artículo seleccionado no se puede encontrar en la base de datos"
 
-#: WorkOrderEntry.php:277
+#: WorkOrderEntry.php:279
 msgid "This item is already on the work order and cannot be added again"
 msgstr ""
 "Este artículo ya está en la orden de trabajo y no puede ser agregado otra vez"
 
-#: WorkOrderEntry.php:295 WorkOrderEntry.php:398
+#: WorkOrderEntry.php:297 WorkOrderEntry.php:400
 msgid ""
 "The cost of this item as accumulated from the sum of the component costs is "
 "nil. This could be because there is no bill of material set up ... you may "
@@ -37521,19 +37528,19 @@ msgstr ""
 "componentes es igual a cero. Esto podría ser porque no hay una lista de "
 "materiales creada ... puede que desee corroborar esto"
 
-#: WorkOrderEntry.php:331
+#: WorkOrderEntry.php:333
 msgid "Enter a new work order"
 msgstr "Introduzca una nueva orden de trabajo"
 
-#: WorkOrderEntry.php:333
+#: WorkOrderEntry.php:335
 msgid "Go to Costing"
 msgstr "Ir a cálculo de Costos"
 
-#: WorkOrderEntry.php:346
+#: WorkOrderEntry.php:348
 msgid "The required by date entered is in an invalid format"
 msgstr "La fecha de \"requerido\" por entrada está en un formato inválido"
 
-#: WorkOrderEntry.php:366
+#: WorkOrderEntry.php:368
 msgid ""
 "The factory where this work order is made can only be updated if the "
 "quantity received on all output items is 0"
@@ -37541,83 +37548,83 @@ msgstr ""
 "La fábrica donde se hizo esta orden de trabajo sólo puede ser actualizada si "
 "la cantidad recibida de todos los artículos de salida es 0"
 
-#: WorkOrderEntry.php:416
+#: WorkOrderEntry.php:418
 msgid "The work order could not be added/updated"
 msgstr "No se pudo agregar/actualizar la orden de trabajo"
 
-#: WorkOrderEntry.php:423
+#: WorkOrderEntry.php:425
 msgid "The work order has been updated"
 msgstr "La orden de trabajo ha sido actualizada"
 
-#: WorkOrderEntry.php:446
+#: WorkOrderEntry.php:448
 msgid ""
 "This work order cannot be deleted because it has issues or receipts related "
 "to it"
 msgstr ""
 "esta orden de trabajo no se puede eliminar porque tiene envíos o recibos"
 
-#: WorkOrderEntry.php:452 WorkOrderEntry.php:466
+#: WorkOrderEntry.php:454 WorkOrderEntry.php:468
 msgid "The work order could not be deleted"
 msgstr "No se pudo eliminar la orden de trabajo"
 
-#: WorkOrderEntry.php:453
+#: WorkOrderEntry.php:455
 msgid "The SQL used to delete the work order was"
 msgstr "El SQL usado para cancelar la orden de trabajo fue"
 
-#: WorkOrderEntry.php:462
+#: WorkOrderEntry.php:464
 msgid "The work order serial numbers could not be deleted"
 msgstr "No se pudo eliminar los números de serie de la orden de trabajo"
 
-#: WorkOrderEntry.php:470
+#: WorkOrderEntry.php:472
 msgid "The work order has been cancelled"
 msgstr "Se ha cancelado la orden de trabajo"
 
-#: WorkOrderEntry.php:473
+#: WorkOrderEntry.php:475
 msgid "Select an existing outstanding work order"
 msgstr "Seleccionar una Orden de Trabajo Pendiente"
 
-#: WorkOrderEntry.php:512
+#: WorkOrderEntry.php:514
 msgid "Could not get the work order items"
 msgstr "No se pudieron obtener los artículos de la orden de trabajo"
 
-#: WorkOrderEntry.php:554
+#: WorkOrderEntry.php:556
 msgid ""
 "Your location security settings do not allow you to Update this Work Order"
 msgstr ""
 
-#: WorkOrderEntry.php:563
+#: WorkOrderEntry.php:565
 msgid "Work Order Reference"
 msgstr "Referencia de la Orden de Trabajo"
 
-#: WorkOrderEntry.php:564
+#: WorkOrderEntry.php:566
 msgid "Factory Location"
 msgstr "Ubicación de la Fábrica"
 
-#: WorkOrderEntry.php:600
+#: WorkOrderEntry.php:602
 msgid "Output Item"
 msgstr "Artículo de Salida"
 
-#: WorkOrderEntry.php:604
+#: WorkOrderEntry.php:606
 msgid "Balance Remaining"
 msgstr "Saldo Excedente"
 
-#: WorkOrderEntry.php:605
+#: WorkOrderEntry.php:607
 msgid "Next Lot/SN Ref"
 msgstr "Próximo Lote/Serial"
 
-#: WorkOrderEntry.php:624
+#: WorkOrderEntry.php:626
 msgid "The input format must be positive numeric"
 msgstr ""
 
-#: WorkOrderEntry.php:632
+#: WorkOrderEntry.php:634
 msgid "S/Ns"
 msgstr "Seriales"
 
-#: WorkOrderEntry.php:661
+#: WorkOrderEntry.php:663
 msgid "Cancel This Work Order"
 msgstr "Cancelar esta Orden de Trabajo"
 
-#: WorkOrderEntry.php:768 WorkOrderIssue.php:790
+#: WorkOrderEntry.php:770 WorkOrderIssue.php:790
 #, php-format
 msgid "Add to Work Order"
 msgstr "Añadir a la Orden de Trabajo"
@@ -47759,22 +47766,6 @@ msgstr "Administrar permisos de acceso"
 msgid "Page Security Settings"
 msgstr "Configuración de la Página de Seguridad"
 
-#: includes/MainMenuLinksArray.php:442
-msgid "Tax Authorities and Rates Maintenance"
-msgstr "Administrar autoridades fiscales y tasas"
-
-#: includes/MainMenuLinksArray.php:443
-msgid "Tax Group Maintenance"
-msgstr "Administrar grupos de impuestos"
-
-#: includes/MainMenuLinksArray.php:444
-msgid "Dispatch Tax Province Maintenance"
-msgstr "Administrar jurisdicciones fiscales"
-
-#: includes/MainMenuLinksArray.php:445
-msgid "Tax Category Maintenance"
-msgstr "Administrar clases de impuestos"
-
 #: includes/MainMenuLinksArray.php:446
 msgid "List Periods Defined"
 msgstr "Lista de períodos definidos"
@@ -50537,6 +50528,24 @@ msgstr ""
 #: ../webSHOP/includes/session.php:137
 msgid "Bank Transfer"
 msgstr ""
+
+#~ msgid "Rates"
+#~ msgstr "Tasas"
+
+#~ msgid "Tax Groupings"
+#~ msgstr "Agrupar Impuestos"
+
+#~ msgid "Tax Provinces"
+#~ msgstr "Jurisdicción Fiscal"
+
+#~ msgid "Edit/Review Tax Authorities"
+#~ msgstr "Editar/Revisar Autoridades Fiscales"
+
+#~ msgid "Edit/Review Tax Groupings"
+#~ msgstr "Editar/Revisar Grupos de Impuestos"
+
+#~ msgid "Edit/Review Tax Categories"
+#~ msgstr "Editar/Revisar Clases de Impuestos"
 
 #~ msgid "Tax Authority To Report On:"
 #~ msgstr "Declarar a la Autoridad Fiscal"

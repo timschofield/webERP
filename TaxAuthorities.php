@@ -152,17 +152,9 @@ if(!isset($SelectedTaxAuthID)) {
 				<th class="ascending" >' . _('Bank Swift') . '</th>
 				<th colspan="4">&nbsp;</th>
 			</tr>';
-	$k=0;
+	$k = False;// Row counter to determine background colour.
 	while($myrow = DB_fetch_row($result)) {
-
-		if($k==1) {
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k++;
-		}
-
+		$k = TableRows($k);// Outputs html table row with class (Odd|Even).
 		printf('<td class="number">%s</td>
 				<td>%s</td>
 				<td class="number">%s</td>

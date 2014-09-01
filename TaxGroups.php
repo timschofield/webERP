@@ -176,16 +176,9 @@ if(!isset($SelectedGroup)) {
 					<th colspan="2" >&nbsp;</th>
 				</tr>';
 
-		$k=0; //row colour counter
+		$k = False;// Row counter to determine background colour.
 		while($myrow = DB_fetch_array($result)) {
-			if($k==1) {
-				echo '<tr class="EvenTableRows">';
-				$k=0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k=1;
-			}
-
+			$k = TableRows($k);// Outputs html table row with class (Odd|Even).
 			printf('<td class="number">%s</td>
 					<td>%s</td>
 					<td><a href="%s&amp;SelectedGroup=%s">' . _('Edit') . '</a></td>
@@ -290,20 +283,14 @@ if(isset($SelectedGroup)) {
 					<th>' . _('Order') . '</th>
 					<th>' . _('Tax on Prior Taxes') . '</th>
 				</tr>';
-		$k=0; //row colour counter
+		$k = False;// Row counter to determine background colour.
 		for ($i=1;$i < count($TaxAuthRow)+1;$i++) {
-			if($k==1) {
-				echo '<tr class="OddTableRows">';
-				$k=0;
-			} else {
-				echo '<tr class="EvenTableRows">';
-				$k=1;
-			}
 
 			if($TaxAuthRow[$i]['calculationorder']==0) {
 				$TaxAuthRow[$i]['calculationorder'] = $i;
 			}
 
+			$k = TableRows($k);// Outputs html table row with class (Odd|Even).
 			echo '<td>' . $TaxAuthRow[$i]['taxname'] . '</td>
 				<td><input type="text" class="integer" pattern="[1-4] {1}" title="'._('The input must be positive integer and less than 5').'" name="CalcOrder_' . $TaxAuthRow[$i]['taxauthid'] . '" value="' . $TaxAuthRow[$i]['calculationorder'] . '" size="2" maxlength="2" style="width: 100%" /></td>
 				<td><select name="TaxOnTax_' . $TaxAuthRow[$i]['taxauthid'] . '" style="width: 100%">';
@@ -348,25 +335,18 @@ if(isset($SelectedGroup)) {
 			'</div>';
 	}
 
-	$k=0; //row colour counter
+	$k = False;// Row counter to determine background colour.
 	while($AvailRow = DB_fetch_array($Result)) {
-		if($k==1) {
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k=1;
-		}
 
 		$TaxAuthUsedPointer = array_search($AvailRow['taxid'],$TaxAuthsUsed);
 
+		$k = TableRows($k);// Outputs html table row with class (Odd|Even).
 		if($TaxAuthUsedPointer) {
 			if($TaxAuthRow[$TaxAuthUsedPointer]['taxontax'] ==1) {
 				$TaxOnTax = _('Yes');
 			} else {
 				$TaxOnTax = _('No');
 			}
-
 			printf('
 				<td class="number">%s</td>
 				<td>%s</td>

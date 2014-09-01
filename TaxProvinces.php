@@ -166,17 +166,9 @@ or deletion of the records*/
 				<th colspan="2">&nbsp;</th>
 			</tr>';
 
-	$k=0; //row colour counter
+	$k = False;// Row counter to determine background colour.
 	while($myrow = DB_fetch_row($result)) {
-
-		if($k==1) {
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k++;
-		}
-
+		$k = TableRows($k);// Outputs html table row with class (Odd|Even).
 		echo '<td>' . $myrow[1] . '</td>
 				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedTaxProvince=' . $myrow[0] . '">' . _('Edit') . '</a></td>
 				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedTaxProvince=' . $myrow[0] . '&amp;delete=1">' . _('Delete')  . '</a></td>

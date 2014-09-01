@@ -82,17 +82,10 @@ if(DB_num_rows($TaxRatesResult)>0) {
 		<th class="ascending">' . _('Deliveries From') . '<br />' . _('Tax Province') . '</th>
 		<th class="ascending">' . _('Tax Category') . '</th>
 		<th class="ascending">' . _('Tax Rate') . '</th></tr>';
-	$j = 1;
-	$k = 0;// Row counter to determine background colour.
 
+	$k = False;// Row counter to determine background colour.
 	while($myrow = DB_fetch_array($TaxRatesResult)) {
-		if($k==1) {
-			echo '<tr class="EvenTableRows">';
-			$k = 0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k = 1;
-		}
+		$k = TableRows($k);// Outputs html table row with class (Odd|Even).
 		printf('
 			<td>%s</td>
 			<td>%s</td>
