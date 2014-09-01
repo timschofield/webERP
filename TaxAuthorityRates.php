@@ -54,10 +54,10 @@ $TaxAuthDetail = DB_query("SELECT description
 							FROM taxauthorities WHERE taxid='" . $TaxAuthority . "'",$db);
 $myrow = DB_fetch_row($TaxAuthDetail);
 
-echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-echo '<div>';
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<input type="hidden" name="TaxAuthority" value="' . $TaxAuthority . '" />';
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
+	<div>
+	<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+	<input type="hidden" name="TaxAuthority" value="' . $TaxAuthority . '" />';
 
 $TaxRatesResult = DB_query("SELECT taxauthrates.taxcatid,
 									taxcategories.taxcatname,
@@ -78,19 +78,26 @@ $TaxRatesResult = DB_query("SELECT taxauthrates.taxcatid,
 if(DB_num_rows($TaxRatesResult)>0) {
 	echo '<div class="centre"><h1>' . $myrow[0] . '</h1></div>';// TaxAuthorityRates table title.
 
-	echo '<table class="selection"><tr>
-		<th class="ascending">' . _('Deliveries From') . '<br />' . _('Tax Province') . '</th>
-		<th class="ascending">' . _('Tax Category') . '</th>
-		<th class="ascending">' . _('Tax Rate') . '</th></tr>';
+	echo '<table class="selection">
+		<tr>
+			<th class="ascending">' . _('Deliveries From') . '<br />' . _('Tax Province') . '</th>
+			<th class="ascending">' . _('Tax Category') . '</th>
+			<th class="ascending">' . _('Tax Rate') . '</th>
+		</tr>';
 
-	$k = False;// Row counter to determine background colour.
+	$j = 1;
 	while($myrow = DB_fetch_array($TaxRatesResult)) {
-		$k = TableRows($k);// Outputs html table row with class (Odd|Even).
-		printf('
-			<td>%s</td>
-			<td>%s</td>
-			<td><input class="number" maxlength="5" name="%s" required="required" size="5" title="' .
-				_('Input must be numeric') . '" type="text" value="%s" /></td></tr>',
+		if ($j==1) {
+		    echo '<tr class="OddTableRows">';
+		    $j=0;
+		} else {
+		    echo '<tr class="EvenTableRows">';
+		    $j++;
+		}
+		printf('<td>%s</td>
+				<td>%s</td>
+				<td><input class="number" maxlength="5" name="%s" required="required" size="5" title="' . _('Input must be numeric') . '" type="text" value="%s" /></td>
+				</tr>',
 			// Deliveries From:
 			$myrow['taxprovincename'],
 			// Tax Category:
@@ -115,7 +122,7 @@ echo '<br />
 		<a href="' . $RootPath . '/TaxAuthorities.php">' . _('Tax Authorities Maintenance') .  '</a><br />
 		<a href="' . $RootPath . '/TaxGroups.php">' . _('Tax Group Maintenance') .  '</a><br />
 		<a href="' . $RootPath . '/TaxProvinces.php">' . _('Dispatch Tax Province Maintenance') .  '</a><br />
-		<a href="' . $RootPath . '/TaxCategories.php">' . _('Tax Category Maintenance') .  '</a>	
+		<a href="' . $RootPath . '/TaxCategories.php">' . _('Tax Category Maintenance') .  '</a>
 	</div>';
 
 include('includes/footer.inc');

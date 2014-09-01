@@ -152,9 +152,15 @@ if(!isset($SelectedTaxAuthID)) {
 				<th class="ascending" >' . _('Bank Swift') . '</th>
 				<th colspan="4">&nbsp;</th>
 			</tr>';
-	$k = False;// Row counter to determine background colour.
+	$j = 1;
 	while($myrow = DB_fetch_row($result)) {
-		$k = TableRows($k);// Outputs html table row with class (Odd|Even).
+		if ($j==1) {
+		    echo '<tr class="OddTableRows">';
+		    $j=0;
+		} else {
+		    echo '<tr class="EvenTableRows">';
+		    $j++;
+		}
 		printf('<td class="number">%s</td>
 				<td>%s</td>
 				<td class="number">%s</td>
@@ -327,7 +333,7 @@ echo '<br />
 	<div class="centre">
 		<a href="' . $RootPath . '/TaxGroups.php">' . _('Tax Group Maintenance') .  '</a><br />
 		<a href="' . $RootPath . '/TaxProvinces.php">' . _('Dispatch Tax Province Maintenance') .  '</a><br />
-		<a href="' . $RootPath . '/TaxCategories.php">' . _('Tax Category Maintenance') .  '</a>	
+		<a href="' . $RootPath . '/TaxCategories.php">' . _('Tax Category Maintenance') .  '</a>
 	</div>';
 
 include('includes/footer.inc');

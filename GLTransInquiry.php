@@ -37,7 +37,7 @@ if( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 			'/images/magnifier.png" title="' .
 			_('General Ledger Transaction Inquiry') . '" />' . ' ' .
 			_('General Ledger Transaction Inquiry') . '</p>';
-			
+
 		echo '<table class="selection">'; //Main table
 		echo '<tr>
 				<th colspan="7"><h2><b>' . _($TransName) . ' ' . $_GET['TransNo'] . '</b></h2></th>
@@ -52,7 +52,7 @@ if( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 				<th>' . _('Posted') . '</th>
 			</tr>';
 
-		$SQL = "SELECT 
+		$SQL = "SELECT
 					gltrans.periodno,
 					gltrans.trandate,
 					gltrans.type,
@@ -64,7 +64,7 @@ if( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 					periods.lastdate_in_period
 				FROM gltrans INNER JOIN chartmaster
 				ON gltrans.account = chartmaster.accountcode
-				INNER JOIN periods 
+				INNER JOIN periods
 				ON periods.periodno=gltrans.periodno
 				WHERE gltrans.type= '" . $_GET['TypeID'] . "'
 				AND gltrans.typeno = '" . $_GET['TransNo'] . "'
@@ -75,7 +75,7 @@ if( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 		$CreditTotal = 0;
 		$DebitTotal = 0;
 		$AnalysisCompleted = 'Not Yet';
-		$k = False;// Row counter to determine background colour.
+		$j = 1;// Row counter to determine background colour.
 		while( $TransRow = DB_fetch_array($TransResult) ) {
 			$TranDate = ConvertSQLDate($TransRow['trandate']);
 			$DetailResult = false;
@@ -107,7 +107,7 @@ if( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 									WHERE debtortrans.type = '" . $TransRow['type'] . "'
 									AND debtortrans.transno = '" . $_GET['TransNo']. "'";
 					$DetailResult = DB_query($DetailSQL,$db);
-					
+
 			} elseif( $TransRow['account'] == $_SESSION['CompanyRecord']['creditorsact'] AND $AnalysisCompleted == 'Not Yet' ) {
 					$URL = $RootPath . '/SupplierInquiry.php?SupplierID=';
 					$FromDate = '&amp;FromDate=' . $TranDate;
@@ -122,7 +122,7 @@ if( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 									WHERE supptrans.type = '" . $TransRow['type'] . "'
 									AND supptrans.transno = '" . $_GET['TransNo'] . "'";
 					$DetailResult = DB_query($DetailSQL,$db);
-					
+
 			} else {
 					$URL = $RootPath . '/GLAccountInquiry.php?Account=' . $TransRow['account'];
 
@@ -130,7 +130,13 @@ if( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 						$TransRow['narrative'] = '&nbsp;';
 					}
 
-					$k = TableRows($k);// Outputs html table row with class (Odd|Even).
+					if ($j==1) {
+					    echo '<tr class="OddTableRows">';
+					    $j=0;
+					} else {
+					    echo '<tr class="EvenTableRows">';
+					    $j++;
+					}
 					echo '	<td>' . MonthAndYearFromSQLDate($TransRow['lastdate_in_period']) . '</td>
 							<td>' . $TranDate . '</td>
 							<td><a href="' . $URL . '">' . $TransRow['accountname'] . '</a></td>
@@ -142,7 +148,7 @@ if( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 			}
 
 			if($DetailResult AND $AnalysisCompleted == 'Not Yet') {
-				
+
 				while( $DetailRow = DB_fetch_array($DetailResult) ) {
 					if( $TransRow['amount'] > 0) {
 						if($TransRow['account'] == $_SESSION['CompanyRecord']['debtorsact']) {
@@ -161,11 +167,17 @@ if( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 							$Debit = '&nbsp;';
 						}
 					}
-	
-					$k = TableRows($k);// Outputs html table row with class (Odd|Even).
+
+					if ($j==1) {
+					    echo '<tr class="OddTableRows">';
+					    $j=0;
+					} else {
+					    echo '<tr class="EvenTableRows">';
+					    $j++;
+					}
 					echo '	<td>' . MonthAndYearFromSQLDate($TransRow['lastdate_in_period']) . '</td>
 							<td>' . $TranDate . '</td>
-							<td><a href="' . $URL . $DetailRow['otherpartycode'] . $FromDate . '">' . 
+							<td><a href="' . $URL . $DetailRow['otherpartycode'] . $FromDate . '">' .
 								$TransRow['accountname'] . ' - ' . $DetailRow['otherparty'] . '</a></td>
 							<td>' . $TransRow['narrative'] . '</td>
 							<td class="number">' . $Debit . '</td>
@@ -181,9 +193,9 @@ if( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 
 		echo '<tr style="background-color:#FFFFFF">
 				<td class="number" colspan="4"><b>' . _('Total') . '</b></td>
-				<td class="number"><b>' . 
+				<td class="number"><b>' .
 					locale_number_format(($DebitTotal),$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
-				<td class="number"><b>' . 
+				<td class="number"><b>' .
 					locale_number_format((-$CreditTotal),$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
 				<td>&nbsp;</td>
 			</tr>

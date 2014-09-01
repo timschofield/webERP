@@ -16,6 +16,9 @@ Function CalcFreightCost ($TotalValue,
 							$Currency,
 							$db){
 
+	$CalcFreightCost =9999999999;
+	$CalcBestShipper ='';
+	global $CountriesArray;
 
 	$ParameterError = FALSE;
 	if ((!isset($BrAdd2)) AND (!isset($BrAdd3)) AND (!isset($BrAdd4)) AND (!isset($BrAdd5)) AND (!isset($BrAddCountry))){
@@ -38,14 +41,14 @@ Function CalcFreightCost ($TotalValue,
 		return array ("NOT AVAILABLE", "NOT AVAILABLE");
 	}
 	// All parameters are OK, so we move ahead...
-	
+
 	// make an array of all the words that could be the name of the destination zone (city, state or ZIP)
 	$FindCity = array($BrAdd2, $BrAdd3, $BrAdd4, $BrAdd5);
 
 	$sql = "SELECT shipperid,
 				kgrate * " . $TotalWeight . " AS kgcost,
 				cubrate * " . $TotalVolume . " AS cubcost,
-				fixedprice, 
+				fixedprice,
 				minimumchg
 			FROM freightcosts
 			WHERE locationfrom = '" . $FromLocation . "'
@@ -64,13 +67,11 @@ Function CalcFreightCost ($TotalValue,
 		$sql .= " destination = '' OR";
 	}
 	$sql = mb_substr($sql, 0, mb_strrpos($sql,' OR')) . ')';
-	
+
 	$CalcFreightCostResult = DB_query($sql,$db);
 	if (DB_error_no($db) !=0) {
 		echo _('The freight calculation for the destination city cannot be performed because') . ' - ' . DB_error_msg($db) . ' - ' . $sql;
 	} elseif (DB_num_rows($CalcFreightCostResult)>0) {
-
-		$CalcFreightCost =9999999999;
 
 		while ($myrow = DB_fetch_array($CalcFreightCostResult)) {
 
@@ -120,7 +121,7 @@ Function CalcFreightCost ($TotalValue,
 			$CalcFreightCost *= $ExRate;
 		}
 	}
-	
+
 	return array ($CalcFreightCost, $CalcBestShipper);
 }
 ?>
