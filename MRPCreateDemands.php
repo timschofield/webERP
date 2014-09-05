@@ -68,6 +68,7 @@ if (isset($_POST['submit'])) {
 			AND orddate <='" . FormatDateForSQL($_POST['ToDate']) .  "'
 			" . $WhereLocation . "
 			" . $WhereCategory . "
+			AND stockmaster.discontinued = 0
 			AND salesorders.quotation=0
 			GROUP BY salesorderdetails.stkcode";
 	//echo "<br />$sql<br />";
