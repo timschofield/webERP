@@ -284,50 +284,51 @@ if (isset($_POST['submit'])) {
 									AND stockmaster.discontinued = 0";
 	$result = DB_query($sql,$db);
 
-	$sql = "INSERT INTO mrprequirements	(part,
-										 daterequired,
-										 quantity,
-										 mrpdemandtype,
-										 orderno,
-										 directdemand,
-										 whererequired)
-							   SELECT mrpdemands.stockid,
-									  mrpdemands.duedate,
-									  mrpdemands.quantity,
-									  mrpdemands.mrpdemandtype,
-									  mrpdemands.demandid,
-									  '1',
-									  mrpdemands.stockid
-								 FROM mrpdemands, stockmaster
-								 WHERE mrpdemands.stockid = stockmaster.stockid
-									AND stockmaster.discontinued = 0";
-	if ($_POST['UserMRPDemands'] == 'y') {
+	if ($_POST['UseMRPDemands'] == 'y') {
+		$sql = "INSERT INTO mrprequirements	(part,
+											 daterequired,
+											 quantity,
+											 mrpdemandtype,
+											 orderno,
+											 directdemand,
+											 whererequired)
+								   SELECT mrpdemands.stockid,
+										  mrpdemands.duedate,
+										  mrpdemands.quantity,
+										  mrpdemands.mrpdemandtype,
+										  mrpdemands.demandid,
+										  '1',
+										  mrpdemands.stockid
+									 FROM mrpdemands, stockmaster
+									 WHERE mrpdemands.stockid = stockmaster.stockid
+										AND stockmaster.discontinued = 0";
 		$result = DB_query($sql,$db);
 		prnMsg(_('Loading requirements based on mrpdemands'),'info');
 		flush();
 	}
-	$sql = "INSERT INTO mrprequirements	(part,
-										 daterequired,
-										 quantity,
-										 mrpdemandtype,
-										 orderno,
-										 directdemand,
-										 whererequired)
-							   SELECT locstock.stockid,
-									  '" . date('Y-m-d') . "',
-									  (locstock.reorderlevel - locstock.quantity) AS reordqty,
-									  'REORD',
-									  '1',
-									  '1',
-									  locstock.stockid
-								 FROM locstock, stockmaster
-								 WHERE stockmaster.stockid = locstock.stockid
-									AND stockmaster.discontinued = 0
-									AND reorderlevel > quantity";
-	$result = DB_query($sql,$db);
-	prnMsg(_('Loading requirements based on reorder level'),'info');
-	flush();
-
+	if ($_POST['UseRLDemands'] == 'y') {
+		$sql = "INSERT INTO mrprequirements	(part,
+											 daterequired,
+											 quantity,
+											 mrpdemandtype,
+											 orderno,
+											 directdemand,
+											 whererequired)
+								   SELECT locstock.stockid,
+										  '" . date('Y-m-d') . "',
+										  (locstock.reorderlevel - locstock.quantity) AS reordqty,
+										  'REORD',
+										  '1',
+										  '1',
+										  locstock.stockid
+									 FROM locstock, stockmaster
+									 WHERE stockmaster.stockid = locstock.stockid
+										AND stockmaster.discontinued = 0
+										AND reorderlevel > quantity";
+		$result = DB_query($sql,$db);
+		prnMsg(_('Loading requirements based on reorder level'),'info');
+		flush();
+	}
 
 	// In the following section, create mrpsupplies from open purchase orders,
 	// open work orders, and current quantity onhand from locstock
@@ -495,6 +496,7 @@ if (isset($_POST['submit'])) {
 						shrinkageflag varchar(5),
 						eoqflag varchar(5),
 						usemrpdemands varchar(5),
+						userldemands varchar(5),
 						leeway smallint) DEFAULT CHARSET=utf8";
 	$result = DB_query($sql,$db);
 	// Create entry for location field from $_POST['location'], which is an array
@@ -514,6 +516,7 @@ if (isset($_POST['submit'])) {
 									shrinkageflag,
 									eoqflag,
 									usemrpdemands,
+									userldemands,
 									leeway)
 									VALUES (CURRENT_TIMESTAMP,
 								'" . $locparm . "',
@@ -521,6 +524,7 @@ if (isset($_POST['submit'])) {
 								'" .  $_POST['ShrinkageFlag']  . "',
 								'" .  $_POST['EOQFlag']  . "',
 								'" .  $_POST['UseMRPDemands']  . "',
+								'" .  $_POST['UseRLDemands']  . "',
 								'" . filter_number_format($_POST['Leeway']) . "')";
 	$result = DB_query($sql,$db);
 
@@ -540,6 +544,10 @@ if (isset($_POST['submit'])) {
 		$UseMRPDemands = _('No');
 		if ($myrow['usemrpdemands'] == 'y') {
 			 $UseMRPDemands = _('Yes');
+		}
+		$UseRLDemands = _('No');
+		if ($myrow['userldemands'] == 'y') {
+			 $UseRLDemands = _('Yes');
 		}
 		$useeoq = _('No');
 		if ($myrow['eoqflag'] == 'y') {
@@ -570,7 +578,11 @@ if (isset($_POST['submit'])) {
 				</tr>
 				<tr>
 					<td>' . _('Use MRP Demands') . ':</td>
-					<td>' . $UserMRPDemands . '</td>
+					<td>' . $UseMRPDemands . '</td>
+				</tr>
+				<tr>
+					<td>' . _('Use Reorder Level Demands') . ':</td>
+					<td>' . $UseRLDemands . '</td>
 				</tr>
 				<tr>
 					<td>' . _('Use EOQ') . ':</td>
@@ -617,6 +629,10 @@ if (isset($_POST['submit'])) {
 		<tr>
 			<td>' ._('Use MRP Demands?') . ':</td>
 			<td><input type="checkbox" name="UseMRPDemands" value="y" checked="checked" /></td>
+		</tr>
+		<tr>
+			<td>' ._('Use Reorder Level Demands?') . ':</td>
+			<td><input type="checkbox" name="UseRLDemands" value="y" checked="checked" /></td>
 		</tr>
 		<tr>
 			<td>' ._('Use EOQ?') . ':</td>

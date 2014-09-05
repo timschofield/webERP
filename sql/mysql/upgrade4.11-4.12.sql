@@ -74,6 +74,8 @@ INSERT INTO locationusers (userid, loccode, canview, canupd)
 		ON www_users.userid = locationusers.userid
 		AND locations.loccode = locationusers.loccode
         WHERE locationusers.userid IS NULL;
+		
+ALTER TABLE  `mrpparameters` ADD  `userldemands` VARCHAR( 5 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'use RL requirements or not' AFTER  `usemrpdemands`;
 
 UPDATE config SET confvalue='4.12' WHERE confname='VersionNumber';
 
