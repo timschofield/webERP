@@ -72,6 +72,7 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level, $db) {
 		$sql = "SELECT bom.sequence,
 						bom.component,
 						stockmaster.description as itemdescription,
+						stockmaster.units,
 						locations.locationname,
 						locations.loccode,
 						workcentres.description as workcentrename,
@@ -149,6 +150,7 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level, $db) {
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
+					<td>%s</td>
 					<td class="number">%s</td>
 					<td><a href="%s&amp;Select=%s&amp;SelectedComponent=%s">' . _('Edit') . '</a></td>
 					<td>' . $DrillText . '</td>
@@ -161,6 +163,7 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level, $db) {
 					$myrow['locationname'],
 					$myrow['workcentrename'],
 					locale_number_format($myrow['quantity'],'Variable'),
+					$myrow['units'],
 					ConvertSQLDate($myrow['effectiveafter']),
 					ConvertSQLDate($myrow['effectiveto']),
 					$AutoIssue,
@@ -563,6 +566,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 						<th>' . _('Location') . '</th>
 						<th>' . _('Work Centre') . '</th>
 						<th>' . _('Quantity') . '</th>
+						<th>' . _('UOM') . '</th>
 						<th>' . _('Effective After') . '</th>
 						<th>' . _('Effective To') . '</th>
 						<th>' . _('Auto Issue') . '</th>
