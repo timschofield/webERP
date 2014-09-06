@@ -134,18 +134,18 @@ if(isset($_POST['Submit'])) {
 		$result = DB_query($sql, $db);
 
 		if($NewOrExisting == 'N') {
-			$sql = "INSERT INTO locstock (
-			            loccode,
-			            stockid,
-			            quantity,
-			            reorderlevel
-			        )
-		      SELECT loccode,
-					'".$NewStockID."' AS stockid,
-					0 AS quantity,
-					reorderlevel
-				FROM locstock
-				WHERE stockid='".$StockID."'";
+			$sql = "INSERT INTO locstock (loccode,
+								            stockid,
+								            quantity,
+								            reorderlevel,
+								            bin )
+				      SELECT loccode,
+							'".$NewStockID."' AS stockid,
+							0 AS quantity,
+							reorderlevel,
+							bin
+						FROM locstock
+						WHERE stockid='".$StockID."'";
 
 			$result = DB_query($sql, $db);
 		}
