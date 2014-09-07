@@ -77,6 +77,10 @@ INSERT INTO locationusers (userid, loccode, canview, canupd)
 		
 ALTER TABLE  `mrpparameters` ADD  `userldemands` VARCHAR( 5 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'use RL requirements or not' AFTER  `usemrpdemands`;
 
+INSERT INTO `scripts` ( `script` , `pagesecurity` , `description` ) VALUES ('WOCanBeProducedNow.php', '4', 'List of WO items that can be produced with available stock in location');
+INSERT INTO `scripts` ( `script` , `pagesecurity` , `description` ) VALUES ('PrintWOItemSlip.php', '4', 'PDF WO Item production Slip ');
+
+
 UPDATE config SET confvalue='4.12' WHERE confname='VersionNumber';
 
 
