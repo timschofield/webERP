@@ -281,7 +281,7 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 			}
 
 			echo '<td><a href="' . $RootPath . '/WorkOrderEntry.php?NewItem=' . $myrow['part'] . '&amp;ReqQty=' . $myrow['supplyquantity'] . '&amp;ReqDate=' . $myrow['duedate'] . '">' . _('Convert') . '</a></td>
-				<td>' . $myrow['part'] . ' <input type="hidden" name="' . $j . '_part" value="' . $myrow['part']. '" /></td>
+				<td>' . '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['part'] . '">' . $myrow['part'] . '</a>' .  '<input type="hidden" name="' . $j . '_part" value="' . $myrow['part']. '" /></td>
 				<td>' . $myrow['description'] . '</td>
 				<td>' . ConvertSQLDate($myrow['mrpdate']) . '</td>
 				<td>' . ConvertSQLDate($myrow['duedate']) . '</td>
