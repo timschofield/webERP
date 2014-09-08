@@ -220,9 +220,13 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 				<td>' . _('For Factory Location') . ':</td>
 				<td><select name="Location">';
 
-		$sql = "SELECT loccode,
-						locationname
-				FROM locations";
+		$sql = "SELECT locations.loccode,
+					locationname
+				FROM locations
+				INNER JOIN locationusers
+					ON locationusers.loccode=locations.loccode
+					AND locationusers.userid='" .  $_SESSION['UserID'] . "'
+					AND locationusers.canview=1";
 
 		$LocnResult=DB_query($sql,$db);
 
