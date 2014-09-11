@@ -14,13 +14,13 @@ include('includes/header.inc');
 
 // always figure out the SQL required from the inputs available
 
-if(!isset($_GET['CustomerID']) AND !isset($_SESSION['CustomerID'])){
+if(!isset($_GET['CustomerID']) AND !isset($_SESSION['CustomerID'])) {
 	prnMsg(_('To display the enquiry a customer must first be selected from the customer selection screen'),'info');
 	echo '<br /><div class="centre"><a href="'. $RootPath . '/SelectCustomer.php?' . SID . '">' . _('Select a Customer to Inquire On') . '</a><br /></div>';
 	include('includes/footer.inc');
 	exit;
 } else {
-	if (isset($_GET['CustomerID'])){
+	if (isset($_GET['CustomerID'])) {
 		$_SESSION['CustomerID'] = $_GET['CustomerID'];
 	}
 	$CustomerID = $_SESSION['CustomerID'];
@@ -106,7 +106,7 @@ $SQL .= " GROUP BY debtorsmaster.name,
 $ErrMsg = _('The customer details could not be retrieved by the SQL because');
 $CustomerResult = DB_query($SQL,$db,$ErrMsg);
 
-if (DB_num_rows($CustomerResult)==0){
+if (DB_num_rows($CustomerResult)==0) {
 
 	/*Because there is no balance - so just retrieve the header information about the customer - the choice is do one query to get the balance and transactions for those customers who have a balance and two queries for those who don't have a balance OR always do two queries - I opted for the former */
 
@@ -137,7 +137,7 @@ if (DB_num_rows($CustomerResult)==0){
 
 $CustomerRecord = DB_fetch_array($CustomerResult);
 
-if ($NIL_BALANCE==True){
+if ($NIL_BALANCE==True) {
 	$CustomerRecord['balance']=0;
 	$CustomerRecord['due']=0;
 	$CustomerRecord['overdue1']=0;
@@ -157,7 +157,7 @@ echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/c
 	_('Credit Status') . ': ' .
 		$CustomerRecord['reasondescription'] . '</p>';
 
-if ($CustomerRecord['dissallowinvoices']!=0){
+if ($CustomerRecord['dissallowinvoices']!=0) {
 	echo '<br /><font color="red" size="4"><b>' . _('ACCOUNT ON HOLD') . '</font></b><br />';
 }
 
@@ -251,9 +251,9 @@ if (DB_num_rows($TransResult)==0){
 echo '<table class="selection">';
 
 $tableheader = '<tr>
-					<th>' . _('Type') . '</th>
-					<th>' . _('Number') . '</th>
-					<th>' . _('Date') . '</th>
+					<th class="assending">' . _('Type') . '</th>
+					<th class="assending">' . _('Number') . '</th>
+					<th class="ascending">' . _('Date') . '</th>
 					<th>' . _('Branch') . '</th>
 					<th>' . _('Reference') . '</th>
 					<th>' . _('Comments') . '</th>
@@ -271,15 +271,15 @@ $tableheader = '<tr>
 echo $tableheader;
 
 $j = 1;
-$k=0; //row colour counter
+$k = 0;//row colour counter
 while ($myrow=DB_fetch_array($TransResult)) {
 
-	if ($k==1){
+	if ($k==1) {
 		echo '<tr class="EvenTableRows">';
-		$k=0;
+		$k = 0;
 	} else {
 		echo '<tr class="OddTableRows">';
-		$k=1;
+		$k = 1;
 	}
 
 	$FormatedTranDate = ConvertSQLDate($myrow['trandate']);
