@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.11.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-09-11 08:16-0600\n"
-"PO-Revision-Date: 2014-08-30 17:36-0600\n"
+"PO-Revision-Date: 2014-09-11 10:07-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -7944,7 +7944,7 @@ msgstr ""
 
 #: CustItem.php:145
 msgid "Customer Unit"
-msgstr ""
+msgstr "Unidad del cliente"
 
 #: CustItem.php:146 PurchData.php:274 SupplierPriceList.php:536
 msgid "Conversion Factor"
@@ -7952,11 +7952,11 @@ msgstr "Factor de Conversión (a nuestra Unidad de Medida) "
 
 #: CustItem.php:147 SelectOrderItems.php:1645
 msgid "Customer Item"
-msgstr ""
+msgstr "Artículo del cliente"
 
 #: CustItem.php:148
 msgid "Customer Description"
-msgstr ""
+msgstr "Descripción del cliente"
 
 #: CustItem.php:167
 #, php-format
@@ -8062,7 +8062,7 @@ msgstr "Nuestra Unidad de Medida"
 
 #: CustItem.php:425
 msgid "Customer Unit of Measure"
-msgstr ""
+msgstr "Unidad de medida del cliente"
 
 #: CustItem.php:434 PurchData.php:639
 msgid "Conversion Factor (to our UOM)"
@@ -8070,11 +8070,11 @@ msgstr "Factor de Conversión (a nuestras unidades)"
 
 #: CustItem.php:438
 msgid "Customer Stock Code"
-msgstr ""
+msgstr "Código de inventario del cliente"
 
 #: CustItem.php:442
 msgid "Customer Stock Description"
-msgstr ""
+msgstr "Descricpción de inventario del cliente"
 
 #: CustItem.php:455 MailingGroupMaintenance.php:250 PurchData.php:763
 #: SellThroughSupport.php:481 Shipments.php:523 StockAdjustments.php:485
@@ -8534,15 +8534,21 @@ msgstr "Asignándose"
 
 #: CustomerAllocations.php:416
 msgid ""
-"Check this box to allocate the entire amount of this transaction. Just "
-"enter the amount without ticking this check box for a partial allocation"
+"Check this box to allocate the entire amount of this transaction. Just enter "
+"the amount without ticking this check box for a partial allocation"
 msgstr ""
+"Marque esta casilla para asignar la totalidad del monto de esta transacción. "
+"Solo introduzca la cantidad sin marcar esta casilla para una asignación "
+"parcial"
 
 #: CustomerAllocations.php:425
 msgid ""
 "Enter the amount of this transaction to be allocated. Nothing should be "
 "entered here if the entire transaction is to be allocated, use the check box"
 msgstr ""
+"Ingrese el monto de esta transacción a ser asignado. Nada debe ser "
+"introducido aquí si toda la transacción es a ser asignada, para eso use la "
+"casilla"
 
 #: CustomerAllocations.php:435 SupplierAllocations.php:506
 msgid "Total Allocated"
@@ -9173,7 +9179,7 @@ msgstr "Más información"
 
 #: CustomerInquiry.php:305
 msgid "Credit "
-msgstr ""
+msgstr "Crédito"
 
 #: CustomerInquiry.php:305
 msgid "Click to credit the invoice"
@@ -9181,7 +9187,7 @@ msgstr "Haga clic para acreditar la factura"
 
 #: CustomerInquiry.php:307 CustomerInquiry.php:311
 msgid "HTML "
-msgstr ""
+msgstr "HTML"
 
 #: CustomerInquiry.php:307 CustomerTransInquiry.php:146
 #, php-format
@@ -9190,7 +9196,7 @@ msgstr "Haga clic para ver la factura"
 
 #: CustomerInquiry.php:308 CustomerInquiry.php:312
 msgid "PDF "
-msgstr ""
+msgstr "PDF"
 
 #: CustomerInquiry.php:308 CustomerInquiry.php:312 SelectSalesOrder.php:768
 #: SelectSalesOrder.php:795
@@ -9200,7 +9206,7 @@ msgstr "Haga clic para PDF"
 
 #: CustomerInquiry.php:309
 msgid "Email "
-msgstr ""
+msgstr "Correo-e"
 
 #: CustomerInquiry.php:309
 msgid "Click to email the invoice"
@@ -20804,7 +20810,7 @@ msgstr "Pedir un artículo fuera de inventario"
 
 #: PO_Items.php:1175 PO_Items.php:1251
 msgid "Order some"
-msgstr ""
+msgstr "Pedir algunos"
 
 #: PO_Items.php:1189
 msgid "Our Units"
@@ -23620,7 +23626,7 @@ msgstr ""
 
 #: PrintWOItemSlip.php:109
 msgid "Item Produced By"
-msgstr ""
+msgstr "Artículo producido por"
 
 #: PrintWOItemSlip.php:109
 msgid "Quality Control By"
@@ -23640,7 +23646,7 @@ msgstr ""
 
 #: PrintWOItemSlip.php:150 WOCanBeProducedNow.php:42
 msgid "WO"
-msgstr ""
+msgstr "Orden de trabajo"
 
 #: PrintWOItemSlip.php:168
 msgid "Component Code"
@@ -23652,7 +23658,7 @@ msgstr ""
 
 #: PrintWOItemSlip.php:171
 msgid "Qty Needed"
-msgstr ""
+msgstr "Cantidad necesaria"
 
 #: PrintWOItemSlip.php:173 WOCanBeProducedNow.php:51
 msgid "Shrinkage"
@@ -30821,11 +30827,11 @@ msgstr "Código de Inventario"
 
 #: StockLocTransferReceive.php:342
 msgid "Qty received"
-msgstr ""
+msgstr "Cantidad recibida"
 
 #: StockLocTransferReceive.php:343
 msgid "By user"
-msgstr ""
+msgstr "Por usuario"
 
 #: StockLocTransferReceive.php:344
 msgid "At"
@@ -32305,7 +32311,7 @@ msgstr ""
 
 #: SuppLoginSetup.php:146
 msgid "email address format"
-msgstr ""
+msgstr "formato de dirección de correo-e"
 
 #: SuppLoginSetup.php:181
 msgid ""
@@ -34064,7 +34070,7 @@ msgstr ""
 
 #: SupplierTypes.php:230
 msgid "less than 100 characters"
-msgstr ""
+msgstr "menos de 100 caracteres"
 
 #: Suppliers.php:18
 msgid "NZ account numbers must have 16 numeric characters in it"
@@ -34306,7 +34312,7 @@ msgstr ""
 
 #: Suppliers.php:695
 msgid "within 10 characters"
-msgstr ""
+msgstr "Hasta 10 caracteres"
 
 #: Suppliers.php:700
 msgid ""
@@ -34384,7 +34390,7 @@ msgstr "Compañía Financiera"
 
 #: Suppliers.php:809 TaxAuthorities.php:257
 msgid "Within 20 characters"
-msgstr ""
+msgstr "Hasta 20 caracteres"
 
 #: Suppliers.php:835 Suppliers.php:1083 Suppliers.php:1086
 msgid "Not Required"
@@ -34396,11 +34402,11 @@ msgstr "Inserte nuevo proveedor"
 
 #: Suppliers.php:954 Suppliers.php:958
 msgid "Within 40 characters"
-msgstr ""
+msgstr "Hasta 40 caracteres"
 
 #: Suppliers.php:962
 msgid "Witin 40 characters"
-msgstr ""
+msgstr "Hasta 40 caracteres"
 
 #: Suppliers.php:982 Suppliers.php:986
 msgid "Only digit blank ( ) and - allowed"
@@ -36112,11 +36118,11 @@ msgstr ""
 
 #: TaxCategories.php:237
 msgid "Tax Category Name"
-msgstr "Nombre de la Clase de Impuesto"
+msgstr "Nombre de la clase de impuesto"
 
 #: TaxCategories.php:238
 msgid "No more than 30 characters"
-msgstr ""
+msgstr "No más de 30 caracteres"
 
 #: TaxCategories.php:238
 msgid "No illegal characters allowed and cannot be blank"
@@ -36129,7 +36135,7 @@ msgstr "Administrar autoridades fiscales y tasas"
 
 #: TaxGroups.php:5
 msgid "Tax Groups"
-msgstr "Grupos de Impuestos"
+msgstr "Grupos de impuestos"
 
 #: TaxGroups.php:30
 msgid "The Group description entered must be at least 4 characters long"
@@ -36253,11 +36259,11 @@ msgstr "Guardar/Cambiar Nombre"
 
 #: TaxGroups.php:285 TaxGroups.php:338
 msgid "Calculation Order"
-msgstr "Orden de Cálculo"
+msgstr "Orden de cálculo"
 
 #: TaxGroups.php:290
 msgid "Tax on Prior Taxes"
-msgstr "Impuesto sobre Impuesto Anterior"
+msgstr "Impuesto sobre impuestos anteriores"
 
 #: TaxGroups.php:307
 msgid "The input must be positive integer and less than 5"
@@ -36396,7 +36402,7 @@ msgstr ""
 
 #: TaxProvinces.php:227
 msgid "Tax Province Name"
-msgstr "Nombre de La Jurisdicción Fiscal"
+msgstr "Nombre de la jurisdicción fiscal"
 
 #: TaxProvinces.php:228
 msgid "The tax province cannot be left blank and includes illegal characters"
@@ -47844,7 +47850,7 @@ msgstr "Centros de costo"
 
 #: includes/MainMenuLinksArray.php:378
 msgid "Bank Accounts"
-msgstr "Cuentas Bancarias"
+msgstr "Cuentas bancarias"
 
 #: includes/MainMenuLinksArray.php:389
 msgid "Add a new Asset"
@@ -50500,7 +50506,7 @@ msgstr ""
 
 #: ../webSHOP/includes/Functions.php:474
 msgid "web"
-msgstr ""
+msgstr "web"
 
 #: ../webSHOP/includes/Functions.php:487
 msgid "payment for order"
