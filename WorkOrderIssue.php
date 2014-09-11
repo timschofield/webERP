@@ -581,8 +581,12 @@ echo '<tr>
 		<td>';
 
 if (!isset($_POST['IssueItem'])){
-	$LocResult = DB_query("SELECT locations.loccode, locationname FROM locations
-								INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1",$db);
+	$LocResult = DB_query("SELECT locations.loccode,locationname 
+							FROM locations
+							INNER JOIN locationusers 
+								ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' 
+								AND locationusers.canupd=1
+							WHERE locations.usedforwo = 1",$db);
 
 	echo '<select name="FromLocation">';
 

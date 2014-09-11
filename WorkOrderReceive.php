@@ -847,7 +847,12 @@ echo '<table class="selection">
 if (!isset($_POST['IntoLocation'])){
 		$_POST['IntoLocation']=$WORow['loccode'];
 }
-$LocResult = DB_query("SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1",$db);
+$LocResult = DB_query("SELECT locations.loccode,locationname 
+						FROM locations
+						INNER JOIN locationusers 
+							ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' 
+							AND locationusers.canupd=1
+						WHERE locations.usedforwo = 1",$db);
 while ($LocRow = DB_fetch_array($LocResult)){
 	if ($_POST['IntoLocation'] ==$LocRow['loccode']){
 		echo '<option selected="selected" value="' . $LocRow['loccode'] .'">' . $LocRow['locationname'] . '</option>';
