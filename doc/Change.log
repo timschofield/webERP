@@ -1,4 +1,5 @@
 webERP Change Log
+11/09/14 RChacon: Adds gettext() to line 402 of CustomerAllocations.php. Reported by Harald.
 11/09/14 Exson: Code tidy up to make it meet coding guidance in CustomerInquiry.php.
 11/09/14: Exson: Fixed the prnMsg bug in CustomerReceipt.php and add an inquiry link in it and make a status selectable in Customer inquiry and removed those rowstring definition which caused printf parameters missing. 
 31/8/14 RChacon: In general: Replaces code to determine background colour with TableRows(). Adds comments to ManualNewScripts.html. Fixes manual.css format. In GLTransInquiry.php: Adds $ViewTopic and $BookMark and sorts columns, and minor improvements. Minor translation improvements.

@@ -7,7 +7,7 @@
 	3. No parameters to show all outstanding credits and receipts yet to be allocated.
 */
 
-include('includes/DefineCustAllocsClass.php');// Before includes/session.inc **********
+include('includes/DefineCustAllocsClass.php');// Before includes/session.inc *******
 
 include('includes/session.inc');
 $Title = _('Customer Receipt') . '/' . _('Credit Note Allocations');
@@ -399,7 +399,7 @@ if (isset($_POST['AllocTrans'])) {
 			$curTrans = "&nbsp;";
 		}
 
-		echo '<td>' . $AllocnItem->TransType . '</td>
+		echo '<td>' . _($AllocnItem->TransType) . '</td>
 			<td class="number">' . $AllocnItem->TypeNo . '</td>
 			<td>' . $AllocnItem->TransDate . '</td>
 			<td class="number">' . locale_number_format($AllocnItem->TransAmount,$_SESSION['Alloc']->CurrDecimalPlaces) . '</td>
@@ -413,7 +413,7 @@ if (isset($_POST['AllocTrans'])) {
 					</tr>';
 		} else {
 				echo '<td class="number"><input type="hidden" name="YetToAlloc' . $Counter . '" value="' . round($YetToAlloc,$_SESSION['Alloc']->CurrDecimalPlaces) . '" />';
-				echo '<input tabindex="' . $j .'" type="checkbox" title="' . _('Check this box to allocate the entire amouunt of this transaction. Just enter the amount without ticking this check box for a partial allocation') . '" name="All' .  $Counter . '"';
+				echo '<input tabindex="' . $j .'" type="checkbox" title="' . _('Check this box to allocate the entire amouunt of this transaction. Just enter the amount without ticking this check box for a partial allocation') . '" name="All' .  $Counter . '"';// NewText: _('Check this box to allocate the entire amount of this transaction. Just enter the amount without ticking this check box for a partial allocation')
 
 				if (ABS($AllocnItem->AllocAmt-$YetToAlloc) < 0.01) {
 						echo ' checked="checked" />';
