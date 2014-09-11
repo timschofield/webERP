@@ -413,7 +413,7 @@ if (isset($_POST['AllocTrans'])) {
 					</tr>';
 		} else {
 				echo '<td class="number"><input type="hidden" name="YetToAlloc' . $Counter . '" value="' . round($YetToAlloc,$_SESSION['Alloc']->CurrDecimalPlaces) . '" />';
-				echo '<input tabindex="' . $j .'" type="checkbox" title="' . _('Check this box to allocate the entire amouunt of this transaction. Just enter the amount without ticking this check box for a partial allocation') . '" name="All' .  $Counter . '"';// NewText: _('Check this box to allocate the entire amount of this transaction. Just enter the amount without ticking this check box for a partial allocation')
+				echo '<input tabindex="' . $j .'" type="checkbox" title="' . _('Check this box to allocate the entire amount of this transaction. Just enter the amount without ticking this check box for a partial allocation') . '" name="All' .  $Counter . '"';// NewText: _('Check this box to allocate the entire amount of this transaction. Just enter the amount without ticking this check box for a partial allocation')
 
 				if (ABS($AllocnItem->AllocAmt-$YetToAlloc) < 0.01) {
 						echo ' checked="checked" />';
