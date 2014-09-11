@@ -133,7 +133,11 @@ if (!isset($StockID)) {
 		echo _('Work Order number') . ': <input type="text" name="WO" autofocus="autofocus" maxlength="8" size="9" />&nbsp; ' . _('Processing at') . ':<select name="StockLocation"> ';
 
 		$sql = "SELECT locations.loccode, locationname FROM locations
-				INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
+				INNER JOIN locationusers 
+					ON locationusers.loccode=locations.loccode 
+					AND locationusers.userid='" .  $_SESSION['UserID'] . "' 
+					AND locationusers.canview=1
+				WHERE locations.usedforwo = 1";
 
 		$resultStkLocs = DB_query($sql,$db);
 

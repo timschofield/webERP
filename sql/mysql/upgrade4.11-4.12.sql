@@ -80,6 +80,7 @@ ALTER TABLE  `mrpparameters` ADD  `userldemands` VARCHAR( 5 ) CHARACTER SET utf8
 INSERT INTO `scripts` ( `script` , `pagesecurity` , `description` ) VALUES ('WOCanBeProducedNow.php', '4', 'List of WO items that can be produced with available stock in location');
 INSERT INTO `scripts` ( `script` , `pagesecurity` , `description` ) VALUES ('PrintWOItemSlip.php', '4', 'PDF WO Item production Slip ');
 
+ALTER TABLE  `locations` ADD  `usedforwo` TINYINT( 4 ) NOT NULL DEFAULT  '1' AFTER  `internalrequest`;
 
 UPDATE config SET confvalue='4.12' WHERE confname='VersionNumber';
 

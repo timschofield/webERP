@@ -113,7 +113,7 @@ if (isset($_POST['Search']) OR isset($_POST['Prev']) OR isset($_POST['Next'])){
 						INNER JOIN stockcategory
 							ON stockmaster.categoryid=stockcategory.categoryid
 						WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='M')
-							AND stockmaster.description " . LIKE . " '$SearchString'
+							AND stockmaster.description " . LIKE . " '" . $SearchString . "'
 							AND stockmaster.discontinued=0
 							AND mbflag='M'
 						ORDER BY stockmaster.stockid";
@@ -565,8 +565,12 @@ echo '<input type="hidden" name="WO" value="' .$_POST['WO'] . '" />';
 echo '<tr><td class="label">' . _('Work Order Reference') . ':</td><td>' . $_POST['WO'] . '</td></tr>';
 echo '<tr><td class="label">' . _('Factory Location') .':</td>
 	<td><select name="StockLocation" onChange="ReloadForm(form1.submit)">';
-$LocResult = DB_query("SELECT locations.loccode,locationname FROM locations
-							INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1",$db);
+$LocResult = DB_query("SELECT locations.loccode,locationname 
+						FROM locations
+						INNER JOIN locationusers 
+							ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' 
+							AND locationusers.canupd=1
+						WHERE locations.usedforwo = 1",$db);
 while ($LocRow = DB_fetch_array($LocResult)){
 	if ($_POST['StockLocation']==$LocRow['loccode']){
 		echo '<option selected="True" value="' . $LocRow['loccode'] .'">' . $LocRow['locationname'] . '</option>';

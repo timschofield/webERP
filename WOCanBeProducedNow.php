@@ -226,7 +226,8 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 				INNER JOIN locationusers
 					ON locationusers.loccode=locations.loccode
 					AND locationusers.userid='" .  $_SESSION['UserID'] . "'
-					AND locationusers.canview=1";
+					AND locationusers.canview=1
+				WHERE locations.usedforwo = 1";
 
 		$LocnResult=DB_query($sql,$db);
 
