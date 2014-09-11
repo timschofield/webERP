@@ -596,8 +596,10 @@ if (isset($_POST['Search'])){
 	if ($_POST['Keywords']==''
 		AND $_POST['CustCode']==''
 		AND $_POST['CustInvNo']=='') {
-
-		$msg=_('At least one Customer Name keyword OR an extract of a Customer Code must be entered for the search');
+			$SQL = "SELECT debtorsmaster.debtorno,
+						debtorsmaster.name
+					FROM debtorsmaster
+					WHERE debtorsmaster.currcode= '" . $_SESSION['ReceiptBatch']->Currency . "'";
 	} else {
 		if (mb_strlen($_POST['Keywords'])>0) {
 			//insert wildcard characters in spaces
@@ -623,7 +625,7 @@ if (isset($_POST['Search'])){
 					WHERE debtortrans.transno " . LIKE . " '%" . $_POST['CustInvNo'] . "%'
 					AND debtorsmaster.currcode= '" . $_SESSION['ReceiptBatch']->Currency . "'";
 		}
-
+	}
 		if ($_SESSION['SalesmanLogin'] != '') {
 			$SQL .= " AND EXISTS (
 						SELECT *
@@ -646,7 +648,7 @@ if (isset($_POST['Search'])){
 			prnMsg( _('No customer records contain the selected text') . ' - ' . _('please alter your search criteria and try again'),'info');
 		}
 
-	} //one of keywords or custcode was more than a zero length string
+	 //one of keywords or custcode was more than a zero length string
 } //end of if search
 
 if (isset($_POST['Select'])){
@@ -1034,6 +1036,7 @@ if (isset($_SESSION['CustomerRecord'])
 				<th width="20%">' . _('Now Due') . '</th>
 				<th width="20%">' . $_SESSION['PastDueDays1'] . '-' . $_SESSION['PastDueDays2'] . ' ' . _('Days Overdue') . '</th>
 				<th width="20%">' . _('Over') . ' ' . $_SESSION['PastDueDays2'] . ' ' . _('Days Overdue') . '</th>
+				<th width="20%">' . _('Customer Transaction Inquiry') . '</th>
 			</tr>';
 
 	echo '<tr>
@@ -1042,6 +1045,7 @@ if (isset($_SESSION['CustomerRecord'])
 		<td class="number">' . locale_number_format(($_SESSION['CustomerRecord']['due']-$_SESSION['CustomerRecord']['overdue1']),$_SESSION['CustomerRecord']['currdecimalplaces']) . '</td>
 		<td class="number">' . locale_number_format(($_SESSION['CustomerRecord']['overdue1']-$_SESSION['CustomerRecord']['overdue2']) ,$_SESSION['CustomerRecord']['currdecimalplaces']) . '</td>
 		<td class="number">' . locale_number_format($_SESSION['CustomerRecord']['overdue2'],$_SESSION['CustomerRecord']['currdecimalplaces']) . '</td>
+		<td><a href="CustomerInquiry.php?CustomerID=' . $_POST['CustomerID'] . '&Status=0" target="_blank">' . _('Inquiry') . '</td>
 		</tr>
 		</table>
 		<br />';
