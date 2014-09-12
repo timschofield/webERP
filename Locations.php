@@ -111,20 +111,6 @@ if (isset($_POST['submit'])) {
 			$_POST['Managed'] = 0;
 		}
 
-		/* Set the InternalRequest field to 1 if it is checked, otherwise 0 */
-		if($_POST['InternalRequest'] == 'Yes') {
-			$_POST['InternalRequest'] = 1;
-		} else {
-			$_POST['InternalRequest'] = 0;
-		}
-
-		/* Set the usedToWO field to 1 if it is checked, otherwise 0 */
-		if($_POST['UsedForWO'] == 'Yes') {
-			$_POST['UsedForWO'] = 1;
-		} else {
-			$_POST['UsedForWO'] = 0;
-		}
-
 		/*SelectedLocation is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new Location form */
 
 		$sql = "INSERT INTO locations (loccode,
@@ -666,7 +652,7 @@ if (!isset($_GET['delete'])) {
 	} else {
 		echo '<option value="0">' . _('No') . '</option>';
 	}
-	echo '</tr>';
+	echo '</select></td></tr>';
 
 	echo '<tr>
 			<td>' . _('Use for Work Order Productions?') . ':</td>
@@ -681,7 +667,7 @@ if (!isset($_GET['delete'])) {
 	} else {
 		echo '<option value="0">' . _('No') . '</option>';
 	}
-	echo '</tr>';
+	echo '</select></td></tr>';
 
 	/*
 	This functionality is not written yet ...
