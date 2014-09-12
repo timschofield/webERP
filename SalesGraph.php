@@ -299,7 +299,7 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 		exit;
 	}
 
-	$GraphArrays = array();
+	$GraphArray = array();
 	$i = 0;
 	while ($myrow = DB_fetch_array($SalesResult)){
 		$GraphArray[$i] = array(MonthAndYearFromSQLDate($myrow['lastdate_in_period']),$myrow['sales'],$myrow['budget']);
