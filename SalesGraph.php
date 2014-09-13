@@ -19,11 +19,12 @@ if (isset($_POST['FromPeriod']) AND isset($_POST['ToPeriod'])){
 		prnMsg(_('The selected period from is actually after the period to! Please re-select the reporting period'),'error');
 		$SelectADifferentPeriod =_('Select A Different Period');
 	}
+/*	There is no PHPlot reason to restrict the graph to 12 months...
 	if ($_POST['ToPeriod'] - $_POST['FromPeriod'] >12){
 		prnMsg(_('The selected period range is more than 12 months - only graphs for a period less than 12 months can be created'),'error');
 		$SelectADifferentPeriod= _('Select A Different Period');
 	}
-	if ((!isset($_POST['ValueFrom']) OR $_POST['ValueFrom']='' OR !isset($_POST['ValueTo']) OR $_POST['ValueTo']='') AND $_POST['GraphOn'] !='All'){
+*/	if ((!isset($_POST['ValueFrom']) OR $_POST['ValueFrom']='' OR !isset($_POST['ValueTo']) OR $_POST['ValueTo']='') AND $_POST['GraphOn'] !='All'){
 		prnMsg(_('For graphs including either a customer or item range - the range must be specified. Please enter the value from and the value to for the range'),'error');
 		$SelectADifferentPeriod= _('Select A Different Period');
 	}
@@ -285,6 +286,8 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 	$graph->SetShading(5);
 	$graph->SetDrawYGrid(TRUE);
 	$graph->SetDataType('text-data');
+	$graph->SetNumberFormat('.', ',');
+	$graph->SetPrecisionY($_SESSION['CompanyRecord']['decimalplaces']);
 
 	$SalesResult = DB_query($SQL, $db);
 	if (DB_error_no($db) !=0) {
