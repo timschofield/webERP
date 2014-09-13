@@ -4,9 +4,9 @@
 The script includes/DatabaseTranslations.php is a locale language file for the
 contents of the fields in the database. The purpose of this file is to translate
 the database fields that appears in screens and reports. This script is only
-used at the time that the system default language file is language file is
-rebuilt. Can be extended for scripts and other tables where the data from the
-table is static and used to display.
+used at the time that the system default language file is rebuilt. Can be
+extended for scripts and other tables where the data from the table is static
+and used to display.
 *******************************************************************************/
 
 // scripts.description:
