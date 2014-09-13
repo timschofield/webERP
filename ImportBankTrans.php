@@ -34,6 +34,9 @@ if (!isset($_FILES['ImportFile']) AND !isset($_SESSION['Statement'])) {
 	 //But check for the worst
     if ($_FILES['ImportFile']['size'] > (1024*1024)) { //File Size Check
 		prnMsg(_('The file size is over the maximum allowed. The maximum size allowed is 1 megabyte'),'warn');
+		prnMsg(_('The MT940 bank statement file cannot be imported and processed'),'error');
+        include('includes/footer.inc');
+        exit;
 		$ReadTheFile ='No';
 	}
 
@@ -42,11 +45,6 @@ if (!isset($_FILES['ImportFile']) AND !isset($_SESSION['Statement'])) {
 		$ReadTheFile ='No';
 	} */
 
-	if ($ReadTheFile=='No'){
-        prnMsg(_('The MT940 bank statement file cannot be imported and processed'),'error');
-        include('includes/footer.inc');
-        exit;
-	}
     $fp = fopen($_FILES['ImportFile']['tmp_name'], 'r');
 
     $TransactionLine = false;
@@ -57,91 +55,9 @@ if (!isset($_FILES['ImportFile']) AND !isset($_SESSION['Statement'])) {
 	$_SESSION['Statement']->FileName = $_FILES['ImportFile']['tmp_name'];
 
 	while ($LineText = fgets($fp)){ /* get each line of the order file */
-		/*
-		 * This block of code could be in an include and different includes included depending on which type of transaction file is being imported
-		 * */
+		include('includes/ImportBankTrans_MT940_SCB.php'); //for Siam Commercial Bank Thailand
+		//for ING Bank Netherlands include('includes/ImportBankTrans_MT940_ING.php');
 
-  		  if (substr($LineText,0,4)==':20:'){ //Timestamp of report MT940 generation
-  			$_SESSION['Statement']->ReportCreated = substr($LineText,4); //in format DDDHHMM where DDD is the number of day in year and HHMM is the time
-  			$TransactionLine = false;
-  		  }
-          if (substr($LineText,0,4)==':25:'){//The account number in IBAN format
-             $_SESSION['Statement']->AccountNumber = trim(substr($LineText,4));
-             $TransactionLine = false;
-          }
-          if (substr($LineText,0,5)==':28C:'){//The statement number
-             $_SESSION['Statement']->StatementNumber = trim(substr($LineText,5));
-             $TransactionLine = false;
-          }
-          if (substr($LineText,0,6)==':NS:22'){//The account owner name
-             $_SESSION['Statement']->AccountOwner = trim(substr($LineText,6));
-             $TransactionLine = false;
-          }
-          if (substr($LineText,0,6)==':NS:23'){//The account name
-             $_SESSION['Statement']->AccountName = trim(substr($LineText,6));
-             $TransactionLine = false;
-          }
-          if (substr($LineText,0,5)==':60F:'){//The account opening balance
-             $DebitOrCredit = substr($LineText,5,1); //D or C
-             $_SESSION['Statement']->OpeningDate = ConvertSQLDate('20' . substr($LineText,6,2) . '-' . substr($LineText,8,2) . '-' . substr($LineText,10,2));
-             $_SESSION['Statement']->CurrCode = substr($LineText,12,3);
-             if ($DebitOrCredit =='D'){
-                $_SESSION['Statement']->OpeningBalance = doubleval(str_replace(',','.',substr($LineText,15)));
-             } else {
-                $_SESSION['Statement']->OpeningBalance = doubleval('-' . str_replace(',','.',substr($LineText,15)));
-             }
-             $TransactionLine = false;
-          }
-          if (substr($LineText,0,4)==':61:'){//It's a transaction line
-				$TransactionLine = true;
-				$TransDate = ConvertSQLDate('20' . substr($LineText,4,2) . '-' . substr($LineText,6,2) . '-' . substr($LineText,8,2));
-				$DebitOrCredit = substr($LineText,10,1); //D or C or R
-				if ($DebitOrCredit =='R'){ //then it is a 2 character reversal
-					if (substr($LineText,10,2)=='RC'){
-						$DebitOrCredit ='D';
-					} else {
-						$DebitOrCredit ='C';
-					}
-					if ($DebitOrCredit =='D'){
-						$TransAmount = doubleval(str_replace(',','.',substr($LineText,12,-10)));
-					} else {
-						$TransAmount = doubleval('-' . str_replace(',','.',substr($LineText,12,-10)));
-					}
-				} else { // it will be either D or C
-					if ($DebitOrCredit =='D'){
-						$TransAmount = doubleval(str_replace(',','.',substr($LineText,11,-10)));
-					} else {
-						$TransAmount = doubleval('-' . str_replace(',','.',substr($LineText,11,-10)));
-					}
-				}
-				$i++;
-				$_SESSION['Trans'][$i] = new BankTrans($TransDate,$TransAmount) ;
-          }
-          if (substr($LineText,0,4)==':86:'){
-             if ($TransactionLine) {
-                $_SESSION['Trans'][$i]->Code = substr($LineText,4,3);
-                $_SESSION['Trans'][$i]->Description = substr($LineText,7);
-             }
-          }
-
-          if (substr($LineText,0,1)!=':' AND $TransactionLine){
-			  //then it is the continuation of an :86: line
-			  $_SESSION['Trans'][$i]->Description .= $LineText;
-		  }
-
-          if (substr($LineText,0,5)==':62F:'){
-             $DebitOrCredit = substr($LineText,5,1); //D or C
-             $_SESSION['Statement']->ClosingDate = ConvertSQLDate('20' . substr($LineText,6,2) . '-' . substr($LineText,8,2) . '-' . substr($LineText,10,2));
-             $CurrCode = substr($LineText,12,3);
-             if ($DebitOrCredit =='D'){
-                $_SESSION['Statement']->ClosingBalance = doubleval(str_replace(',','.',substr($LineText,15)));
-             } else {
-                $_SESSION['Statement']->ClosingBalance = doubleval('-' . str_replace(',','.',substr($LineText,15)));
-             }
-             $TransactionLine = false;
-          }
-          /* end of MT940 specific import code - that could be in an include if we get other file formats
-           * */
 	} /*end while get next line of message */
 
 	/* Look to match up the account for which transactions are being imported with a bank account in webERP */

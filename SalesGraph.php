@@ -161,19 +161,21 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 			<td>' . $_POST['SalesmanCode'] . '</td>
 		</tr>';
 
-	echo '<tr><td>' . _('Graph Type') . '</td>';
-	echo '<td><select name="GraphType">';
-	echo '<option value="bars">' . _('Bar Graph') . '</option>';
-	echo '<option value="stackedbars">' . _('Stacked Bar Graph') . '</option>';
-	echo '<option value="lines">' . _('Line Graph') . '</option>';
-	echo '<option value="linepoints">' . _('Line Point Graph') . '</option>';
-	echo '<option value="area">' . _('Area Graph') . '</option>';
-	echo '<option value="points">' . _('Points Graph') . '</option>';
-	echo '<option value="pie">' . _('Pie Graph') . '</option>';
-	echo '<option value="thinbarline">' . _('Thin Bar Line Graph') . '</option>';
-	echo '<option value="squared">' . _('Squared Graph') . '</option>';
-	echo '<option value="stackedarea">' . _('Stacked Area Graph') . '</option>';
-	echo '</select></td></tr>';
+	echo '<tr>
+			<td>' . _('Graph Type') . '</td
+			<td><select name="GraphType">
+				<option value="bars">' . _('Bar Graph') . '</option>
+				<option value="stackedbars">' . _('Stacked Bar Graph') . '</option>
+				<option value="lines">' . _('Line Graph') . '</option>
+				<option value="linepoints">' . _('Line Point Graph') . '</option>
+				<option value="area">' . _('Area Graph') . '</option>
+				<option value="points">' . _('Points Graph') . '</option>
+				<option value="pie">' . _('Pie Graph') . '</option>
+				<option value="thinbarline">' . _('Thin Bar Line Graph') . '</option>
+				<option value="squared">' . _('Squared Graph') . '</option>
+				<option value="stackedarea">' . _('Stacked Area Graph') . '</option>
+				</select></td>
+			</tr>';
 
 	if (!isset($_POST['ValueFrom'])){
 		$_POST['ValueFrom']='';
@@ -188,16 +190,17 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 	echo '<tr><td>' . _('From:') . ' <input type="text" name="ValueFrom" value="' . $_POST['ValueFrom'] . '" /></td>
 	 		<td>' . _('To:') . ' <input type="text" name="ValueTo" value="' . $_POST['ValueTo'] . '" /></td></tr>';
 
-	echo '<tr><td>' . _('Graph Value:') . '</td><td>
-			<input type="radio" name="GraphValue" value="Net" checked="checked" />' . _('Net Sales Value') . '<br />
-			<input type="radio" name="GraphValue" value="GP" />' . _('Gross Profit') . '<br />
-			<input type="radio" name="GraphValue" value="Quantity" />' . _('Quantity') . '</td></tr>';
-
-	echo '</table>';
-
-	echo '<br /><div class="centre"><input type="submit" name="ShowGraph" value="' . _('Show Sales Graph') .'" /></div>';
-    echo '</div>
-          </form>';
+	echo '<tr>
+			<td>' . _('Graph Value:') . '</td>
+			<td><input type="radio" name="GraphValue" value="Net" checked="checked" />' . _('Net Sales Value') . '<br />
+				<input type="radio" name="GraphValue" value="GP" />' . _('Gross Profit') . '<br />
+				<input type="radio" name="GraphValue" value="Quantity" />' . _('Quantity') . '</td>
+			</tr>
+			</table>
+		<br />
+			<div class="centre"><input type="submit" name="ShowGraph" value="' . _('Show Sales Graph') .'" /></div>
+		</div>
+        </form>';
 	include('includes/footer.inc');
 } else {
 
@@ -286,7 +289,7 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 	$graph->SetShading(5);
 	$graph->SetDrawYGrid(TRUE);
 	$graph->SetDataType('text-data');
-	$graph->SetNumberFormat('.', ',');
+	$graph->SetNumberFormat($DecimalPoint, $ThousandsSeparator);
 	$graph->SetPrecisionY($_SESSION['CompanyRecord']['decimalplaces']);
 
 	$SalesResult = DB_query($SQL, $db);
@@ -319,11 +322,10 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 	//Draw it
 	$graph->DrawGraph();
 	echo '<table class="selection">
-			<tr><td>';
-	echo '<p><img src="companies/' .$_SESSION['DatabaseName'] .  '/reports/salesgraph.png" alt="Sales Report Graph"></img></p>';
-	echo '</td>
-		</tr>
-		</table>';
+			<tr>
+				<td><p><img src="companies/' .$_SESSION['DatabaseName'] .  '/reports/salesgraph.png" alt="Sales Report Graph"></img></p></td>
+			</tr>
+		  </table>';
 	include('includes/footer.inc');
 }
 ?>
