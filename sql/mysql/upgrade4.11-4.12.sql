@@ -81,6 +81,7 @@ INSERT INTO `scripts` ( `script` , `pagesecurity` , `description` ) VALUES ('WOC
 INSERT INTO `scripts` ( `script` , `pagesecurity` , `description` ) VALUES ('PrintWOItemSlip.php', '4', 'PDF WO Item production Slip ');
 
 ALTER TABLE  `locations` ADD  `usedforwo` TINYINT( 4 ) NOT NULL DEFAULT  '1' AFTER  `internalrequest`;
+ALTER TABLE  `bankaccounts` ADD  `importformat` VARCHAR( 10 ) NOT NULL DEFAULT  '';
 
 UPDATE config SET confvalue='4.12' WHERE confname='VersionNumber';
 

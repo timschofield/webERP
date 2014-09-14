@@ -8,6 +8,7 @@ $Title = _('Import Bank Transactions');
 
 include ('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
+include('includes/CurrenciesArray.php');
 
 /*
 Read in the flat file one line at a time
@@ -15,9 +16,35 @@ parse the data in the line of text from the flat file to read the bank transacti
 */
 
 if (!isset($_FILES['ImportFile']) AND !isset($_SESSION['Statement'])) {
-    echo '<form name="ImportForm" enctype="multipart/form-data" method="post" action="' . $_SERVER['PHP_SELF'] . '">';
-    echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+
+	$sql = "SELECT 	bankaccountname,
+					bankaccountnumber,
+					currcode,
+					importformat
+			FROM bankaccounts WHERE importformat <>''";
+
+	$ErrMsg = _('The bank accounts set up could not be retrieved because');
+	$DbgMsg = _('The SQL used to retrieve the bank accounts was') . '<br />' . $sql;
+	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+	if (DB_num_rows($result) ==0){
+		prnMsg(_('There are no bank accounts defined that are set up to allow importation of bank statement transactions. First define the file format used by your bank for statement exports.'),'error');
+		echo '<br /><a href="BankAccounts.php>' . _('Setup Import Format for Bank Accounts') . '</a>';
+		include('includes/footer.inc');
+		exit;
+	}
+    echo '<form name="ImportForm" enctype="multipart/form-data" method="post" action="' . $_SERVER['PHP_SELF'] . '">
+		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 		<table>
+			<tr>
+				 <td>' .  _('Bank Account to Import Transaction For') . '</td>
+	             <td><select name="ImportFormat">';
+
+				while ($myrow = DB_fetch_array($result)) {
+					echo '<option value="' . $myrow['importformat'] . '">' . $myrow['bankaccountname'] . '</option>';
+				}
+
+	 echo       '</td>
+			 </tr>
 			 <tr>
 				 <td>' .  _('MT940 format Bank Statement File to import') . '</td>
 	             <td><input type="file" id="ImportFile" autofocus="autofocus" required="required" title="' . _('Select the file that contains the bank transactions in MT940 format') . '" name="ImportFile"></td>
@@ -33,7 +60,7 @@ if (!isset($_FILES['ImportFile']) AND !isset($_SESSION['Statement'])) {
 
 	 //But check for the worst
     if ($_FILES['ImportFile']['size'] > (1024*1024)) { //File Size Check
-		prnMsg(_('The file size is over the maximum allowed. The maximum size allowed is 1 megabyte'),'warn');
+		prnMsg(_('The file size is over the maximum allowed. The maximum size allowed is 1 megabyte. This file size is (bytes)') . ' ' . $_FILES['ImportFile']['size'],'warn');
 		prnMsg(_('The MT940 bank statement file cannot be imported and processed'),'error');
         include('includes/footer.inc');
         exit;
@@ -55,8 +82,14 @@ if (!isset($_FILES['ImportFile']) AND !isset($_SESSION['Statement'])) {
 	$_SESSION['Statement']->FileName = $_FILES['ImportFile']['tmp_name'];
 
 	while ($LineText = fgets($fp)){ /* get each line of the order file */
-		include('includes/ImportBankTrans_MT940_SCB.php'); //for Siam Commercial Bank Thailand
-		//for ING Bank Netherlands include('includes/ImportBankTrans_MT940_ING.php');
+
+		switch ($_POST['ImportFormat']) {
+			case 'MT940-SCB':
+				include('includes/ImportBankTrans_MT940_SCB.php'); //for Siam Commercial Bank Thailand
+				break;
+			case 'MT940-ING': //for ING Bank Netherlands
+				include('includes/ImportBankTrans_MT940_ING.php');
+		}
 
 	} /*end while get next line of message */
 

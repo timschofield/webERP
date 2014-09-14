@@ -88,7 +88,8 @@ if (isset($_POST['submit'])) {
 											bankaccountcode='" . $_POST['BankAccountCode'] . "',
 											bankaccountnumber='" . $_POST['BankAccountNumber'] . "',
 											bankaddress='" . $_POST['BankAddress'] . "',
-											invoice ='" . $_POST['DefAccount'] . "'
+											invoice ='" . $_POST['DefAccount'] . "',
+											importformat='" . $_POST['ImportFormat'] . "'
 										WHERE accountcode = '" . $SelectedBankAccount . "'";
 			prnMsg(_('Note that it is not possible to change the currency of the account once there are transactions against it'),'warn');
 	echo '<br />';
@@ -98,7 +99,8 @@ if (isset($_POST['submit'])) {
 											bankaccountnumber='" . $_POST['BankAccountNumber'] . "',
 											bankaddress='" . $_POST['BankAddress'] . "',
 											currcode ='" . $_POST['CurrCode'] . "',
-											invoice ='" . $_POST['DefAccount'] . "'
+											invoice ='" . $_POST['DefAccount'] . "',
+											importformat='" . $_POST['ImportFormat'] . "'
 										WHERE accountcode = '" . $SelectedBankAccount . "'";
 		}
 
@@ -113,14 +115,16 @@ if (isset($_POST['submit'])) {
 										bankaccountnumber,
 										bankaddress,
 										currcode,
-										invoice
+										invoice,
+										importformat
 									) VALUES ('" . $_POST['AccountCode'] . "',
 										'" . $_POST['BankAccountName'] . "',
 										'" . $_POST['BankAccountCode'] . "',
 										'" . $_POST['BankAccountNumber'] . "',
 										'" . $_POST['BankAddress'] . "',
 										'" . $_POST['CurrCode'] . "',
-										'" . $_POST['DefAccount'] . "' )";
+										'" . $_POST['DefAccount'] . "',
+										'" . $_POST['ImportFormat'] . "' )";
 		$msg = _('The new bank account has been entered');
 	}
 
@@ -178,7 +182,8 @@ if (!isset($SelectedBankAccount)) {
 					bankaccountnumber,
 					bankaddress,
 					currcode,
-					invoice
+					invoice,
+					importformat
 			FROM bankaccounts INNER JOIN chartmaster
 			ON bankaccounts.accountcode = chartmaster.accountcode";
 
@@ -193,6 +198,7 @@ if (!isset($SelectedBankAccount)) {
 				<th>' . _('Bank Account Code') . '</th>
 				<th>' . _('Bank Account Number') . '</th>
 				<th>' . _('Bank Address') . '</th>
+				<th>' . _('Import Format') . '</th>
 				<th>' . _('Currency') . '</th>
 				<th>' . _('Default for Invoices') . '</th>
 			</tr>';
@@ -213,7 +219,19 @@ if (!isset($SelectedBankAccount)) {
 		} elseif ($myrow['invoice']==2) {
 			$DefaultBankAccount=_('Currency Default');
 		}
+		switch ($myrow['importformat']) {
+			case 'MT940-ING':
+				$ImportFormat = 'ING MT940';
+				break;
+			case 'MT940-SCB':
+				$ImportFormat = 'SCB MT940';
+				break;
+			default:
+				$ImportFormat ='';
+		}
+
 		printf('<td>%s<br />%s</td>
+				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
@@ -229,6 +247,7 @@ if (!isset($SelectedBankAccount)) {
 			$myrow['bankaccountcode'],
 			$myrow['bankaccountnumber'],
 			$myrow['bankaddress'],
+			$ImportFormat,
 			$myrow['currcode'],
 			$DefaultBankAccount,
 			htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'),
@@ -323,7 +342,9 @@ if (!isset($_POST['BankAccountCode'])) {
 if (!isset($_POST['BankAddress'])) {
 	$_POST['BankAddress']='';
 }
-
+if (!isset($_POST['ImportFormat'])) {
+	$_POST['ImportFormat']='';
+}
 echo '<tr>
 		<td>' . _('Bank Account Name') . ': </td>
 		<td><input tabindex="2" ' . (in_array('AccountName',$Errors) ?  'class="inputerror"' : '' ) .' type="text" required="required" name="BankAccountName" value="' . $_POST['BankAccountName'] . '" size="40" maxlength="50" /></td>
@@ -341,8 +362,17 @@ echo '<tr>
 		<td><input tabindex="4" ' . (in_array('BankAddress',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="BankAddress" value="' . $_POST['BankAddress'] . '" size="40" maxlength="50" /></td>
 	</tr>
 	<tr>
+		<td>' . _('Transaction Import File Format') . ': </td>
+		<td><select tabindex="5" name="ImportFormat">
+			<option ' . ($_POST['ImportFormat']=='' ? 'selected="selected"' : '') . ' value="">' . _('N/A') . '</option>
+			<option ' . ($_POST['ImportFormat']=='MT940-SCB' ? 'selected="selected"' : '') . ' value="MT940-SCB">' . _('MT940 - Siam Comercial Bank Thailand') . '</option>
+			<option ' . ($_POST['ImportFormat']=='MT940-ING' ? 'selected="selected"' : '') . ' value="MT940-ING">' . _('MT940 - ING Bank Netherlands') . '</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
 		<td>' . _('Currency Of Account') . ': </td>
-		<td><select tabindex="5" name="CurrCode">';
+		<td><select tabindex="6" name="CurrCode">';
 
 if (!isset($_POST['CurrCode']) or $_POST['CurrCode']==''){
 	$_POST['CurrCode'] = $_SESSION['CompanyRecord']['currencydefault'];
@@ -364,7 +394,7 @@ echo '</tr>';
 
 echo '<tr>
 		<td>' . _('Default for Invoices') . ': </td>
-		<td><select tabindex="6" name="DefAccount">';
+		<td><select tabindex="8" name="DefAccount">';
 
 if (!isset($_POST['DefAccount']) OR $_POST['DefAccount']==''){
 	$_POST['DefAccount'] = $_SESSION['CompanyRecord']['currencydefault'];
@@ -393,11 +423,12 @@ if (isset($SelectedBankAccount)) {
 			<option value="0">' . _('No') . '</option>';
 }
 
-echo '</select></td>';
-
-echo '</tr></table><br />
-		<div class="centre"><input tabindex="7" type="submit" name="submit" value="'. _('Enter Information') .'" /></div>';
-echo '</div>';
-echo '</form>';
+echo '</select></td>
+		</tr>
+		</table>
+		<br />
+		<div class="centre"><input tabindex="9" type="submit" name="submit" value="'. _('Enter Information') .'" /></div>
+		</div>
+		</form>';
 include('includes/footer.inc');
 ?>

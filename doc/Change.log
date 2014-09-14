@@ -1,7 +1,8 @@
 webERP Change Log
+13/9/14 Phil: Added new MT940 - SCB - Siam Comercial Bank Thailand style - a bit different to ING's style. Modifications to BankAccounts.php to allow the transaction file format for imports. ImportBankTrans.php must now select the bank account to determine the file import format to use. It now uses an include for the file parsing so other formats can easily be accomodated with a new include.
 11/09/14 RChacon: Adds gettext() to line 402 of CustomerAllocations.php. Reported by Harald.
 11/09/14 Exson: Code tidy up to make it meet coding guidance in CustomerInquiry.php.
-11/09/14: Exson: Fixed the prnMsg bug in CustomerReceipt.php and add an inquiry link in it and make a status selectable in Customer inquiry and removed those rowstring definition which caused printf parameters missing. 
+11/09/14: Exson: Fixed the prnMsg bug in CustomerReceipt.php and add an inquiry link in it and make a status selectable in Customer inquiry and removed those rowstring definition which caused printf parameters missing.
 31/8/14 RChacon: In general: Replaces code to determine background colour with TableRows(). Adds comments to ManualNewScripts.html. Fixes manual.css format. In GLTransInquiry.php: Adds $ViewTopic and $BookMark and sorts columns, and minor improvements. Minor translation improvements.
 31/8/14 RChacon: Standardizes page_title_text to main-menu-option, standardizes bottom tax-menu, adds $ViewTopic and $BookMark, completes table header columns, formats data columns in Tax* scripts.
 30/8/14 RChacon: In TaxAuthorities.php, adds $ViewTopic and $BookMark, completes table headings, formats number columns to fix sort order, and minor improvements.

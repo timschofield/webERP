@@ -20,7 +20,7 @@ if (!isset($_SESSION['Trans'])){
 	echo '<br /><a href="' . $RootPath . '/ImportBankTrans.php">' . _('Import Bank Transactions') . '</a>';
 	include('includes/footer.inc');
 	exit;
-	/*It all stops here if there aint no bank transactions being imported i.e. $_SESSION['Trans'] has not been initiated 
+	/*It all stops here if there aint no bank transactions being imported i.e. $_SESSION['Trans'] has not been initiated
 	 * */
 }
 
@@ -76,7 +76,7 @@ if (isset($_POST['AddGLCodeToTrans']) AND $_POST['AddGLCodeToTrans'] == _('Enter
 		if (!is_numeric($_POST['Amount'])){
 			prnMsg( _('The amount entered is not numeric') . '. ' . _('This line cannot be added to the transaction'),'error');
 			$InputError = True;
-		} 
+		}
 	}
 
 	if ($InputError == False){
@@ -132,11 +132,11 @@ if ($_SESSION['Trans'][$TransID]->Amount<0){ //its a payment
 	echo '<tr>
 			<td>' . _('Payment to Supplier Account') . ':</td>
 			<td><select name="SupplierID" onChange="ReloadForm(form1.Update)">';
-	
-	$result = DB_query("SELECT supplierid, 
-								suppname 
-						FROM suppliers 
-						WHERE currcode='" . $_SESSION['Statement']->CurrCode . "' 
+
+	$result = DB_query("SELECT supplierid,
+								suppname
+						FROM suppliers
+						WHERE currcode='" . $_SESSION['Statement']->CurrCode . "'
 						ORDER BY suppname",$db);
 	if ($_SESSION['Trans'][$TransID]->SupplierID ==''){
 		echo '<option selected value="">' . _('GL Payment') . '</option>';
@@ -157,16 +157,16 @@ if ($_SESSION['Trans'][$TransID]->Amount<0){ //its a payment
 		$AllowGLAnalysis = true;
 	} else {
 		$AllowGLAnalysis = false;
-	} 
+	}
 	echo '</table>';
 } else { //its a receipt
 	echo '<tr>
 			<td>' . _('Receipt to Customer Account') . ':</td>
 			<td><select name="DebtorNo" onChange="ReloadForm(form1.Update)">';
-	
-	$result = DB_query("SELECT debtorno, 
-								name 
-						FROM debtorsmaster 
+
+	$result = DB_query("SELECT debtorno,
+								name
+						FROM debtorsmaster
 						WHERE currcode='" . $_SESSION['Statement']->CurrCode . "'
 						ORDER BY name",$db);
 	if ($_SESSION['Trans'][$TransID]->DebtorNo ==''){
@@ -188,7 +188,7 @@ if ($_SESSION['Trans'][$TransID]->Amount<0){ //its a payment
 		$AllowGLAnalysis = true;
 	} else {
 		$AllowGLAnalysis = false;
-	}	
+	}
 	echo '</table>';
 }
 
@@ -198,23 +198,22 @@ if ($AllowGLAnalysis==false){
 		$_SESSION['Trans'][$TransID]->Remove_GLEntry($GLAnalysisLine->ID);
 	}
 } else { /*Allow GL Analysis == true */
-	echo '</p><table cellpadding="2" class="selection">';
-	$TableHeader = '<tr>
-						<th colspan="5">' . _('General ledger Analysis') . '</th>
-					</tr>
-					<tr>
-						<th class="ascending">' . _('Account') . '</th>
-						<th class="ascending">' . _('Name') . '</th>
-						<th class="ascending">' . _('Amount') . '<br />' . _('in') . ' ' . $_SESSION['Statement']->CurrCode . '</th>
-						<th>' . _('Narrative') . '</th>
-						<th class="ascending">' . _('Tag') . '</th>
-					</tr>';
-	echo $TableHeader;
+	echo '</p><table cellpadding="2" class="selection">
+				<tr>
+					<th colspan="5">' . _('General ledger Analysis') . '</th>
+				</tr>
+				<tr>
+					<th class="ascending">' . _('Account') . '</th>
+					<th class="ascending">' . _('Name') . '</th>
+					<th class="ascending">' . _('Amount') . '<br />' . _('in') . ' ' . $_SESSION['Statement']->CurrCode . '</th>
+					<th>' . _('Narrative') . '</th>
+					<th class="ascending">' . _('Tag') . '</th>
+				</tr>';
 	$TotalGLValue=0;
 	$i=0;
-	
+
 	foreach ( $_SESSION['Trans'][$TransID]->GLEntries AS $EnteredGLCode){
-	
+
 		echo '<tr>
 			<td>' . $EnteredGLCode->GLCode . '</td>
 			<td>' . $EnteredGLCode->GLAccountName . '</td>
@@ -224,16 +223,10 @@ if ($AllowGLAnalysis==false){
 			<td><a href="' . $_SERVER['PHP_SELF'] . '?Edit=' . $EnteredGLCode->ID . '&amp;TransID=' . $TransID . '">' . _('Edit') . '</a></td>
 			<td><a href="' . $_SERVER['PHP_SELF'] . '?Delete=' . $EnteredGLCode->ID . '&amp;TransID=' . $TransID . '">' . _('Delete') . '</a></td>
 			</tr>';
-	
+
 		$TotalGLValue += $EnteredGLCode->Amount;
-	
-		$i++;
-		if ($i>15){
-			$i = 0;
-			echo $TableHeader;
-		}
 	}
-	
+
 	echo '<tr>
 			<td colspan="2" class="number">' . _('Total of GL Entries') . ':</td>
 			<td class="number">' . locale_number_format($TotalGLValue,$_SESSION['Statement']->CurrDecimalPlaces) . '</td>
@@ -243,7 +236,7 @@ if ($AllowGLAnalysis==false){
 			<td class="number">' . locale_number_format($_SESSION['Trans'][$TransID]->Amount,$_SESSION['Statement']->CurrDecimalPlaces) . '</td>
 		</tr>
 		<tr>';
-		
+
 	if (($_SESSION['Trans'][$TransID]->Amount - $TotalGLValue)!=0) {
 		echo '<td colspan="2" class="number">' . _('Yet To Enter') . ':</font></td>
 		<td class="number"><font size="4" color="red">' . locale_number_format($_SESSION['Trans'][$TransID]->Amount-$TotalGLValue,$_SESSION['Statement']->CurrDecimalPlaces) . '</td>';
@@ -261,12 +254,12 @@ if ($AllowGLAnalysis==false){
 	}
 	echo '<tr>
 			<td>' . _('Account Code') . ':</td>
-			<td><input type="text" name="GLCode" size="12" required="required" maxlength="11" value="' .  $_POST['GLCode'] . '"></td>
+			<td><input type="text" name="GLCode" size="12" maxlength="11" value="' .  $_POST['GLCode'] . '"></td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('Account Selection') . ':<br />(' . _('If you know the code enter it above') . '<br />' . _('otherwise select the account from the list') . ')</td>
 			<td><select name="AcctSelection">';
-	
+
 	$result = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode", $db);
 	echo '<option value=""></option>';
 	while ($myrow = DB_fetch_array($result)) {
@@ -277,7 +270,7 @@ if ($AllowGLAnalysis==false){
 		}
 		echo $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' - ' . $myrow['accountname'] . '</option>';
 	}
-	
+
 	echo '</select>
 		</td>
 		</tr>';
@@ -288,7 +281,7 @@ if ($AllowGLAnalysis==false){
 			<td>' . _('Amount') . ':</td>
 			<td><input type="text" class="number" name="Amount" required="required" size="12" maxlength="11" value="' .  locale_number_format($_POST['Amount'],$_SESSION['Statement']->CurrDecimalPlaces) . '"></td>
 		</tr>';
-	
+
 	if (!isset($_POST['Narrative'])) {
 		$_POST['Narrative']='';
 	}
@@ -296,16 +289,16 @@ if ($AllowGLAnalysis==false){
 		<td>' . _('Narrative') . ':</td>
 		<td><textarea name="Narrative" cols=40 rows=2>' .  $_POST['Narrative'] . '</textarea></td>
 		</tr>';
-		
+
 	//Select the tag
 	echo '<tr><td>' . _('Tag') . '</td>
 			<td><select name="GLTag">';
-	
+
 	$SQL = "SELECT tagref,
 					tagdescription
 			FROM tags
 			ORDER BY tagref";
-	
+
 	$result=DB_query($SQL,$db);
 	echo '<option value="0">0 - ' . _('None') . '</option>';
 	while ($myrow=DB_fetch_array($result)){
