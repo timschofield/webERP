@@ -1,4 +1,5 @@
 webERP Change Log
+15/09/14 Exson: fixed the date format errors in WorkOrderEntry.php. 
 13/9/14 Phil: Added new MT940 - SCB - Siam Comercial Bank Thailand style - a bit different to ING's style. Modifications to BankAccounts.php to allow the transaction file format for imports. ImportBankTrans.php must now select the bank account to determine the file import format to use. It now uses an include for the file parsing so other formats can easily be accomodated with a new include.
 11/09/14 RChacon: Adds gettext() to line 402 of CustomerAllocations.php. Reported by Harald.
 11/09/14 Exson: Code tidy up to make it meet coding guidance in CustomerInquiry.php.
