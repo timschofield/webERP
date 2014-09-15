@@ -11,7 +11,6 @@ echo '<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'
 	</p>';
 
-
 if (isset($_GET['WO'])) {
 	$SelectedWO = $_GET['WO'];
 } elseif (isset($_POST['WO'])){
@@ -21,7 +20,7 @@ if (isset($_GET['WO'])) {
 }
 
 if (isset($_GET['ReqDate'])){
-	$ReqDate = ConvertSQLDate($_GET['ReqDate']);
+	$ReqDate = $_GET['ReqDate'];
 } else {
 	$ReqDate=Date('Y-m-d');
 }
