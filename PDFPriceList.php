@@ -33,6 +33,11 @@ If (isset($_POST['PrintPDF'])
 	$FontSize=10;
 	$line_height=12;
 
+	if ($_POST['Currency'] != "All"){
+		$WhereCurrency = " AND prices.currabrev = '" . $_POST['Currency'] ."' ";
+	}else{
+		$WhereCurrency = "";
+	}
 	/*Now figure out the inventory data to report for the category range under review */
 	if ($_POST['CustomerSpecials']==_('Customer Special Prices Only')) {
 
@@ -96,7 +101,8 @@ If (isset($_POST['PrintPDF'])
 						AND stockmaster.categoryid <= '" . $_POST['ToCriteria'] . "'
 						AND prices.debtorno='" . $_SESSION['CustomerID'] . "'
 						AND prices.startdate<='" . FormatDateForSQL($_POST['EffectiveDate']) . "'
-						AND (prices.enddate='0000-00-00' OR prices.enddate >'" . FormatDateForSQL($_POST['EffectiveDate']) . "')
+						AND (prices.enddate='0000-00-00' OR prices.enddate >'" . FormatDateForSQL($_POST['EffectiveDate']) . "')" .
+						$WhereCurrency . "
 						ORDER BY prices.currabrev,
 							stockmaster.categoryid,
 							stockmaster.stockid,
@@ -131,7 +137,8 @@ If (isset($_POST['PrintPDF'])
     			AND stockmaster.categoryid <= '" . $_POST['ToCriteria'] . "'
     			AND prices.typeabbrev='" . $_POST['SalesType'] . "'
     			AND prices.startdate<='" . FormatDateForSQL($_POST['EffectiveDate']) . "'
-    			AND (prices.enddate='0000-00-00' OR prices.enddate>'" . FormatDateForSQL($_POST['EffectiveDate']) . "')
+    			AND (prices.enddate='0000-00-00' OR prices.enddate>'" . FormatDateForSQL($_POST['EffectiveDate']) . "')" .
+				$WhereCurrency . "
     			AND prices.debtorno=''
     			ORDER BY prices.currabrev,
     				stockmaster.categoryid,
@@ -313,6 +320,16 @@ If (isset($_POST['PrintPDF'])
 
 		while ($myrow=DB_fetch_array($SalesTypesResult)) {
 			echo '<option value="' . $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
+		}
+		echo '</select></td></tr>';
+
+		echo '<tr><td>' . _('For Currency').':</td>
+                  <td><select name="Currency">';
+		$sql = "SELECT currabrev, currency FROM currencies ORDER BY currency";
+		$CurrencyResult=DB_query($sql,$db);
+		echo '<option selected="selected" value="All">' . _('All')  . '</option>';
+		while ($myrow=DB_fetch_array($CurrencyResult)) {
+			echo '<option value="' . $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
 		}
 		echo '</select></td></tr>';
 
