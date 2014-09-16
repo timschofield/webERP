@@ -60,7 +60,7 @@ if (isset($_POST['Search'])){
 							SUM(locstock.quantity) as totalonhand
 					FROM stockmaster INNER JOIN locstock
 					ON stockmaster.stockid = locstock.stockid
-					WHERE stockmaster.description " . LIKE . " '$SearchString'
+					WHERE stockmaster.description " . LIKE . "'" . $SearchString . "'
 					AND (stockmaster.mbflag='M'
 						OR stockmaster.mbflag='K'
 						OR stockmaster.mbflag='A'
@@ -225,14 +225,14 @@ if (isset($StockID) and $StockID!=""){
 			printf('<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
-					<td class="number">%.2f</td>
-					<td class="number">%.2f</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
 					</tr>',
 					$ComponentLink,
 					$myrow['description'],
 					locale_number_format($myrow['quantity'],$myrow['decimalplaces']),
-					$myrow['standardcost'],
-					$myrow['componentcost']);
+					locale_number_format($myrow['standardcost'],$_SESSION['CompanyRecord']['decimalplaces'] + 2),
+					locale_number_format($myrow['componentcost'],$_SESSION['CompanyRecord']['decimalplaces'] + 2));
 
 			$TotalCost += $myrow['componentcost'];
 
