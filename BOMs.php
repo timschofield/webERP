@@ -706,7 +706,14 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 				<td><select tabindex="2" name="LocCode">';
 
 		DB_free_result($result);
-		$sql = "SELECT locationname, locations.loccode FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1";
+		$sql = "SELECT locationname, 
+					locations.loccode 
+				FROM locations 
+				INNER JOIN locationusers 
+					ON locationusers.loccode=locations.loccode 
+					AND locationusers.userid='" .  $_SESSION['UserID'] . "' 
+					AND locationusers.canupd=1
+				WHERE locations.usedforwo = 1";
 		$result = DB_query($sql,$db);
 
 		while ($myrow = DB_fetch_array($result)) {
