@@ -367,6 +367,7 @@ echo '<tr>
 			<option ' . ($_POST['ImportFormat']=='' ? 'selected="selected"' : '') . ' value="">' . _('N/A') . '</option>
 			<option ' . ($_POST['ImportFormat']=='MT940-SCB' ? 'selected="selected"' : '') . ' value="MT940-SCB">' . _('MT940 - Siam Comercial Bank Thailand') . '</option>
 			<option ' . ($_POST['ImportFormat']=='MT940-ING' ? 'selected="selected"' : '') . ' value="MT940-ING">' . _('MT940 - ING Bank Netherlands') . '</option>
+			<option ' . ($_POST['ImportFormat']=='GIFTS' ? 'selected="selected"' : '') . ' value="GIFTS">' . _('GIFTS - Bank of New Zealand') . '</option>
 			</select>
 		</td>
 	</tr>

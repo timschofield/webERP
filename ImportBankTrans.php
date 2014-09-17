@@ -89,10 +89,17 @@ if (!isset($_FILES['ImportFile']) AND !isset($_SESSION['Statement'])) {
 				break;
 			case 'MT940-ING': //for ING Bank Netherlands
 				include('includes/ImportBankTrans_MT940_ING.php');
+				break;
+			case 'GIFTS': //GIFTS for Bank of New Zealand
+				include('includes/ImportBankTrans_GIFTS.php');
+				break;
 		}
 
 	} /*end while get next line of message */
 
+	if (!isset($_SESSION['Statement']->CurrCode)){
+		$_SESSION['Statement']->CurrCode = $_SESSION['CompanyRecord']['currencydefault'];
+	}
 	/* Look to match up the account for which transactions are being imported with a bank account in webERP */
 	$sql = "SELECT accountcode,
 					bankaccountname,
@@ -472,6 +479,9 @@ if (isset($_POST['ProcessBankTrans'])){
 
 
 if (isset($_SESSION['Statement'])){
+
+	//print_r($_SESSION['Statement']);
+
 
 	echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post" >';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
