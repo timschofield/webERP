@@ -1,11 +1,12 @@
 <?php
-
 /* $Id$*/
 
 include('includes/session.inc');
-
 $Title = _('Payment Methods');
-
+/* Manual links before header.inc */
+/* RChacon: This is a topic to create.
+$ViewTopic = 'ARTransactions';// Filename in ManualContents.php's TOC.
+$BookMark = 'PaymentMethods';// Anchor's id in the manual's html document.*/
 include('includes/header.inc');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('Payments') .
@@ -182,11 +183,12 @@ if (isset($_POST['submit'])) {
 
 	echo '<table class="selection">
 		<tr>
-			<th>' . _('Payment Method') . '</th>
-			<th>' . _('Use For Payments') . '</th>
-			<th>' . _('Use For Receipts') . '</th>
-			<th>' . _('Use Pre-printed Stationery') . '</th>
-			<th>' . _('Open POS Cash Drawer for Sale') . '</th>
+			<th class="ascending">' . _('Payment Method') . '</th>
+			<th class="ascending">' . _('Use For Payments') . '</th>
+			<th class="ascending">' . _('Use For Receipts') . '</th>
+			<th class="ascending">' . _('Use Pre-printed Stationery') . '</th>
+			<th class="ascending">' . _('Open POS Cash Drawer for Sale') . '</th>
+			<th colspan="2">&nbsp;</th>
 		</tr>';
 
 	$k=0; //row colour counter
