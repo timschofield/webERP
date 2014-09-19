@@ -176,12 +176,9 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 
 	if ($Its_A_KitSet_Assembly_Or_Dummy == False){
 
-		$sql="SELECT SUM(purchorderdetails.quantityord*(CASE WHEN purchdata.conversionfactor IS NULL THEN 1 ELSE purchdata.conversionfactor END) -
-							purchorderdetails.quantityrecd*(CASE WHEN purchdata.conversionfactor IS NULL THEN 1 ELSE purchdata.conversionfactor END))
+		$sql="SELECT SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd)
 			FROM purchorders LEFT JOIN purchorderdetails
 			ON purchorders.orderno=purchorderdetails.orderno
-			LEFT JOIN purchdata ON purchorders.supplierno=purchdata.supplierno
-				AND purchorderdetails.itemcode=purchdata.stockid
 			WHERE purchorderdetails.itemcode='" . $StockID . "'
 			AND purchorders.intostocklocation='" . $myrow['loccode'] . "'
 			AND (purchorders.status<>'Cancelled'
