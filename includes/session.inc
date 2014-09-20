@@ -132,70 +132,6 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 }
 
 
-/*User is logged in so get configuration parameters  - save in session*/
-include($PathPrefix . 'includes/GetConfig.php');
-
-
-/*If the Code $Version - held in ConnectDB.inc is > than the Database VersionNumber held in config table then do upgrades */
-if (strcmp($Version,$_SESSION['VersionNumber'])>0 AND (basename($_SERVER['SCRIPT_NAME'])!='UpgradeDatabase.php')) {
-	header('Location: UpgradeDatabase.php');
-}
-
-if(isset($_SESSION['DB_Maintenance'])){
-	if ($_SESSION['DB_Maintenance']>0)  { //run the DB maintenance script
-		if (DateDiff(Date($_SESSION['DefaultDateFormat']),
-				ConvertSQLDate($_SESSION['DB_Maintenance_LastRun'])
-				,'d')	>= 	$_SESSION['DB_Maintenance']){
-
-			/*Do the DB maintenance routing for the DB_type selected */
-			DB_Maintenance($db);
-			$_SESSION['DB_Maintenance_LastRun'] = Date('Y-m-d');
-
-			/* Audit trail purge only runs if DB_Maintenance is enabled */
-			if (isset($_SESSION['MonthsAuditTrail'])){
-				 $sql = "DELETE FROM audittrail
-						WHERE  transactiondate <= '" . Date('Y-m-d', mktime(0,0,0, Date('m')-$_SESSION['MonthsAuditTrail'])) . "'";
-				$ErrMsg = _('There was a problem deleting expired audit-trail history');
-				$result = DB_query($sql,$db);
-			}
-		}
-	}
-}
-
-/*Check to see if currency rates need to be updated */
-if (isset($_SESSION['UpdateCurrencyRatesDaily'])){
-	if ($_SESSION['UpdateCurrencyRatesDaily']!=0)  {
-		/* Only run the update to currency rates if today is after the last update i.e. only runs once a day */
-		if (DateDiff(Date($_SESSION['DefaultDateFormat']),
-			ConvertSQLDate($_SESSION['UpdateCurrencyRatesDaily']),'d')> 0){
-
-			if ($_SESSION['ExchangeRateFeed']=='ECB') {
-				$CurrencyRates = GetECBCurrencyRates(); // gets rates from ECB see includes/MiscFunctions.php
-				/*Loop around the defined currencies and get the rate from ECB */
-				if ($CurrencyRates!=false) {
-					$CurrenciesResult = DB_query("SELECT currabrev FROM currencies",$db);
-					while ($CurrencyRow = DB_fetch_row($CurrenciesResult)){
-						if ($CurrencyRow[0]!=$_SESSION['CompanyRecord']['currencydefault']){
-
-							$UpdateCurrRateResult = DB_query("UPDATE currencies SET rate='" . GetCurrencyRate($CurrencyRow[0],$CurrencyRates) . "'
-																WHERE currabrev='" . $CurrencyRow[0] . "'",$db);
-						}
-					}
-				}
-			} else {
-				$CurrenciesResult = DB_query("SELECT currabrev FROM currencies",$db);
-				while ($CurrencyRow = DB_fetch_row($CurrenciesResult)){
-					if ($CurrencyRow[0]!=$_SESSION['CompanyRecord']['currencydefault']){
-						$UpdateCurrRateResult = DB_query("UPDATE currencies SET rate='" . google_currency_rate($CurrencyRow[0]) . "'
-															WHERE currabrev='" . $CurrencyRow[0] . "'",$db);
-					}
-				}
-			}
-			$_SESSION['UpdateCurrencyRatesDaily'] = Date('Y-m-d');
-			$UpdateConfigResult = DB_query("UPDATE config SET confvalue = '" . Date('Y-m-d') . "' WHERE confname='UpdateCurrencyRatesDaily'",$db);
-		}
-	}
-}
 
 If (isset($_POST['Theme']) AND ($_SESSION['UsersRealName'] == $_POST['RealName'])) {
 	$_SESSION['Theme'] = $_POST['Theme'];
@@ -204,33 +140,6 @@ If (isset($_POST['Theme']) AND ($_SESSION['UsersRealName'] == $_POST['RealName']
 	$Theme = $_SESSION['Theme'];
 }
 
-/* Set the logo if not yet set.
- * will be done only once per session and each time
- * we are not in session (i.e. before login)
- */
-if (empty($_SESSION['LogoFile'])) {
-	/* find a logo in companies/$CompanyDir
-	 * (nice side effect of function:
-	 * variables are local, so we will never
-	 * cause name clashes)
-	 */
-
-	function findLogoFile($CompanyDir, $PathPrefix) {
-		$result = null;
-		$dir = $PathPrefix . 'companies/' . $CompanyDir;
-		if (file_exists($dir . '/logo.png')) {
-			$result = 'companies/' . $CompanyDir . '/logo.png';
-		} elseif (file_exists($dir . '/logo.jpg')) {
-			$result = 'companies/' . $CompanyDir . '/logo.jpg';
-		}
-		return $result;
-	}
-
-	/* Find a logo in companies/<company of this session> */
-	if (!empty($_SESSION['DatabaseName'])) {
-		$_SESSION['LogoFile'] = findLogoFile($_SESSION['DatabaseName'], $PathPrefix);
-	}
-}
 
 if ($_SESSION['HTTPS_Only']==1){
 	if ($_SERVER['HTTPS']!='on'){

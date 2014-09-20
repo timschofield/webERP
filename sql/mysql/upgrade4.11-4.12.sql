@@ -82,6 +82,7 @@ INSERT INTO `scripts` ( `script` , `pagesecurity` , `description` ) VALUES ('Pri
 
 ALTER TABLE  `locations` ADD  `usedforwo` TINYINT( 4 ) NOT NULL DEFAULT  '1' AFTER  `internalrequest`;
 ALTER TABLE  `bankaccounts` ADD  `importformat` VARCHAR( 10 ) NOT NULL DEFAULT  '';
+ALTER TABLE  `audittrail` ADD INDEX (  `transactiondate` );
 
 UPDATE config SET confvalue='4.12' WHERE confname='VersionNumber';
 
