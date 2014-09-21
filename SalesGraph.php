@@ -91,7 +91,7 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 	}
 	echo '</select></td></tr>';
 
-	$AreasResult = DB_query("SELECT areacode, areadescription FROM areas",$db);
+	$AreasResult = DB_query("SELECT areacode, areadescription FROM areas ORDER BY areadescription",$db);
 
 	if (!isset($_POST['SalesArea'])){
 		$_POST['SalesArea']='';
@@ -113,7 +113,7 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 	}
 	echo '</select></td></tr>';
 
-	$CategoriesResult = DB_query("SELECT categoryid, categorydescription FROM stockcategory",$db);
+	$CategoriesResult = DB_query("SELECT categoryid, categorydescription FROM stockcategory ORDER BY categorydescription",$db);
 
 	if (!isset($_POST['CategoryID'])){
 		$_POST['CategoryID']='';
@@ -135,7 +135,7 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 	}
 	echo '</select></td></tr>';
 
-	$SalesFolkResult = DB_query("SELECT salesmancode, salesmanname FROM salesman",$db);
+	$SalesFolkResult = DB_query("SELECT salesmancode, salesmanname FROM salesman ORDER BY salesmanname",$db);
 
 	if (! isset($_POST['SalesmanCode'])){
  		$_POST['SalesmanCode'] = '';
@@ -162,7 +162,7 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 		</tr>';
 
 	echo '<tr>
-			<td>' . _('Graph Type') . '</td
+			<td>' . _('Graph Type') . '</td>
 			<td><select name="GraphType">
 				<option value="bars">' . _('Bar Graph') . '</option>
 				<option value="stackedbars">' . _('Stacked Bar Graph') . '</option>
