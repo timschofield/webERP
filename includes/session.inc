@@ -80,15 +80,14 @@ if (isset($_SESSION['DatabaseName'])){
 }
 
 include($PathPrefix . 'includes/LanguageSetup.php');
-
+$FirstLogin = False;
 if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true */
 
 	include $PathPrefix . 'includes/UserLogin.php';	/* Login checking and setup */
 
 	if (isset($_POST['UserNameEntryField']) AND isset($_POST['Password'])) {
 		$rc = userLogin($_POST['UserNameEntryField'], $_POST['Password'], $SysAdminEmail, $db);
-		header('Location: ' . $PathPrefix .'Dashboard.php');
-		exit;
+		$FirstLogin = true;
 	} elseif (empty($_SESSION['DatabaseName'])) {
 		$rc = UL_SHOWLOGIN;
 	} else {
@@ -195,17 +194,25 @@ if (!isset($AllowAnyone)){
 
 //$PageSecurity = 9 hard coded for supplier access Supplier access must have just 9 and 0 tokens
 if (in_array(9,$_SESSION['AllowedPageSecurityTokens']) AND count($_SESSION['AllowedPageSecurityTokens'])==2){
-	$SupplierLogin=1;
+	$SupplierLogin = 1;
+} else {
+	$SupplierLogin = 0; //false
 }
 if (in_array(1,$_SESSION['AllowedPageSecurityTokens']) AND count($_SESSION['AllowedPageSecurityTokens'])==2){
 	$CustomerLogin = 1;
+} else {
+	$CustomerLogin = 0;
 }
-
 if (in_array($_SESSION['PageSecurityArray']['WWW_Users.php'], $_SESSION['AllowedPageSecurityTokens'])) { /*System administrator login */
 	$debug = 1; //allow debug messages
 } else {
 	$debug = 0; //don't allow debug messages
 }
+if ($FirstLogin AND !$SupplierLogin AND !$CustomerLogin) {
+	header('Location: ' . $PathPrefix .'Dashboard.php');
+}
+
+
 function CryptPass( $Password ) {
     if (PHP_VERSION_ID < 50500) {
         $Salt = base64_encode(mcrypt_create_iv(22, MCRYPT_DEV_URANDOM));

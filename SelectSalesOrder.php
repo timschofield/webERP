@@ -763,32 +763,32 @@ if (isset($StockItemsResult)
 
 			 /*Check authority to create POs if user has authority then show the check boxes to select sales orders to place POs for otherwise don't provide this option */
 				if ($AuthRow['cancreate']==0 AND $myrow['poplaced']==0){ //cancreate==0 if the user can create POs and not already placed
-				printf('<td><a href="%s">%s</a></td>
-						<td><a href="%s">' . _('Invoice') . '</a></td>
-	 				<td><a target="_blank" href="%s">' . $PrintText . ' <img src="' .$RootPath.'/css/'.$Theme.'/images/pdf.png" title="' . _('Click for PDF') . '" alt="" /></a></td>
-	 				<td>%s</td>
-	 				<td>%s</td>
-	 				<td>%s</td>
-	 				<td>%s</td>
-	 				<td>%s</td>
-	 				<td>%s</td>
-	 				<td class="number">%s</td>
-	 				<td><input type="checkbox" name="PlacePO_%s" /><input type="hidden" name="OrderNo_PO_%s" value="%s" /></td>
-	 				</tr>',
-	 				$ModifyPage,
-	 				$myrow['orderno'],
+					printf('<td><a href="%s">%s</a></td>
+							<td><a href="%s">' . _('Invoice') . '</a></td>
+		 				<td><a target="_blank" href="%s">' . $PrintText . ' <img src="' .$RootPath.'/css/'.$Theme.'/images/pdf.png" title="' . _('Click for PDF') . '" alt="" /></a></td>
+		 				<td>%s</td>
+		 				<td>%s</td>
+		 				<td>%s</td>
+		 				<td>%s</td>
+		 				<td>%s</td>
+		 				<td>%s</td>
+		 				<td class="number">%s</td>
+		 				<td><input type="checkbox" name="PlacePO_%s" /><input type="hidden" name="OrderNo_PO_%s" value="%s" /></td>
+		 				</tr>',
+		 				$ModifyPage,
+		 				$myrow['orderno'],
 						$Confirm_Invoice,
-	 				$PrintDispatchNote,
-	 				$myrow['name'],
-	 				$myrow['brname'],
-	 				$myrow['customerref'],
-	 				$FormatedOrderDate,
-	 				$FormatedDelDate,
-	 				html_entity_decode($myrow['deliverto'],ENT_QUOTES,'UTF-8'),
-	 				$FormatedOrderValue,
-			   $i,
-			   $i,
-			   $myrow['orderno']);
+		 				$PrintDispatchNote,
+		 				$myrow['name'],
+		 				$myrow['brname'],
+		 				$myrow['customerref'],
+		 				$FormatedOrderDate,
+		 				$FormatedDelDate,
+		 				html_entity_decode($myrow['deliverto'],ENT_QUOTES,'UTF-8'),
+		 				$FormatedOrderValue,
+				   $i,
+				   $i,
+				   $myrow['orderno']);
 				} else {  /*User is not authorised to create POs so don't even show the option */
 					printf('<td><a href="%s">%s</a></td>
 							<td><a href="%s">' . _('Invoice') . '</a></td>

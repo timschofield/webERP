@@ -63,13 +63,16 @@ if (in_array($DebtorSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset(
 	echo $TableHeader;
 	$j = 1;
 	$k=0; //row colour counter
+	if (!isset($_POST['Salesman'])){
+		$_POST['Salesman']='';
+	}
 	if ($_SESSION['SalesmanLogin'] != '') {
 		$_POST['Salesman'] = $_SESSION['SalesmanLogin'];
 	}
 	if (trim($_POST['Salesman'])!=''){
 		$SalesLimit = " AND debtorsmaster.debtorno IN (SELECT DISTINCT debtorno FROM custbranch WHERE salesman = '".$_POST['Salesman']."') ";
 	} else {
-		$SalesLimit = "";
+		$SalesLimit = '';
 	}
 	$SQL = "SELECT debtorsmaster.debtorno,
 				debtorsmaster.name,
@@ -188,7 +191,8 @@ if (in_array($DebtorSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset(
 					<td class="number"><b>%s</b></td>
 					<td class="number" style="color:orange;"><b>%s</b></td>
 					<td class="number" style="color:red;"><b>%s</b></td>
-					<td class="number" style="color:red;"><b>%s</b></td>',
+					<td class="number" style="color:red;"><b>%s</b></td>
+					</tr>',
 					$AgedAnalysis['debtorno'] . ' - ' . $AgedAnalysis['name'],
 					'',
 					'',
@@ -197,9 +201,8 @@ if (in_array($DebtorSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset(
 					$DisplayCurrent,
 					$DisplayDue,
 					$DisplayOverdue1,
-					$DisplayOverdue2
-					);
-			echo '</tr>';
+					$DisplayOverdue2 );
+
 			$sql = "SELECT systypes.typename,
 						debtortrans.transno,
 						debtortrans.trandate,
@@ -346,23 +349,18 @@ if (in_array($DebtorSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset(
 } //DebtorSecurity
 
 if (in_array($PayeeSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($PayeeSecurity)) {
-	//$UpcomingDate = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m')+1,0 ,Date('y')));
-	$UpcomingDate = Date(($_SESSION['DefaultDateFormat']), strtotime($UpcomingDate . ' + 30 days'));
 
 	echo '<br /><b>' . _('Supplier Invoices Due within 1 Month') . '</b>
 			<table class="selection">
-				<tbody>';
+				<tbody>
+				<tr>
+					<th>' . _('Supplier') . '</th>
+					<th>' . _('Invoice Date') . '</th>
+					<th>' . _('Invoice') . '</th>
+					<th>' . _('Amount Due') . '</th>
+					<th>' . _('Due Date') . '</th>
+				</tr>';
 
-	$TableHeader = '<tr>
-						<th>' . _('Supplier') . '</th>
-						<th>' . _('Invoice Date') . '</th>
-						<th>' . _('Invoice') . '</th>
-						<th>' . _('Amount Due') . '</th>
-						<th>' . _('Due Date') . '</th>
-					</tr>';
-	echo $TableHeader;
-	$j = 1;
-	$k=0; //row colour counter
 	$sql = "SELECT suppliers.supplierid,
 					currencies.decimalplaces AS currdecimalplaces,
 					SUM(supptrans.ovamount + supptrans.ovgst - supptrans.alloc) AS balance
@@ -413,7 +411,7 @@ if (in_array($PayeeSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($
 				ON systypes.typeid = supptrans.type
 				WHERE supptrans.supplierno = '" . $SuppliersToPay['supplierid'] . "'
 				AND supptrans.ovamount + supptrans.ovgst - supptrans.alloc !=0
-				AND supptrans.duedate <='" . FormatDateForSQL($UpcomingDate) . "'
+				AND supptrans.duedate <='" . Date('Y-m-d', mktime(0,0,0, Date('n'),Date('j')+30,date('Y'))) . "'
 				AND supptrans.hold = 0
 				ORDER BY supptrans.supplierno,
 					supptrans.type,
@@ -433,6 +431,8 @@ if (in_array($PayeeSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($
 		unset($Allocs);
 		$Allocs = array();
 		$AllocCounter =0;
+		$AccumBalance =0;
+		$k=0; //row colour counter
 
 		while ($DetailTrans = DB_fetch_array($TransResult)){
 
@@ -491,15 +491,6 @@ if (in_array($PayeeSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($
 		} /*end while there are detail transactions to show */
 	} /* end while there are suppliers to retrieve transactions for */
 
-	/* if (DB_error_no($db) !=0) {
-		prnMsg(_('None of the payments will be processed. Unfortunately, there was a problem committing the changes to the database because') . ' - ' . DB_error_msg($db),'error');
-		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		if ($debug==1){
-			prnMsg(_('The SQL that failed was') . '<br />' . $SQL,'error');
-		}
-		include('includes/footer.inc');
-		exit;
-	} */
 	if ($k==1){
 		echo '<tr class="EvenTableRows">';
 		$k=0;
@@ -507,18 +498,13 @@ if (in_array($PayeeSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($
 		echo '<tr class="OddTableRows">';
 		$k=1;
 	}
-	printf('<td style="text-align:left"><b>%s</b></td>
-			<td>%s</td>
-			<td>%s</td>
-			<td class="number"><b>%s</b></td>
-			<td><b>%s</b></td>',
-			_('Grand Total Payments Due'),
-			'',
-			'',
-			locale_number_format($AccumBalance,$CurrDecimalPlaces),
-			'');
-	echo '</tr>';
-	echo '</tbody>
+	echo '<td style="text-align:left">' . _('Grand Total Payments Due') . '</td>
+			<td></td>
+			<td></td>
+			<td class="number"><b>' . locale_number_format($AccumBalance,$CurrDecimalPlaces) . '</b></td>
+			<td></td>
+		</tr>
+		</tbody>
 		</table>';
 }  //PayeeSecurity
 if (in_array($CashSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($CashSecurity)) {
@@ -528,14 +514,12 @@ if (in_array($CashSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($C
 	$FirstPeriodSelected = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);
 	$LastPeriodSelected = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);
 	$SelectedPeriod=$LastPeriodSelected;
-	$TableHeader = '<tr>
-						<th class="ascending">' . _('GL Account') . '</th>
-						<th class="ascending">' . _('Account Name') . '</th>
-						<th class="ascending">' . _('Balance') . '</th>
-					</tr>';
-	echo $TableHeader;
-	$j = 1;
-	$k=0; //row colour counter
+	echo '<tr>
+				<th class="ascending">' . _('GL Account') . '</th>
+				<th class="ascending">' . _('Account Name') . '</th>
+				<th class="ascending">' . _('Balance') . '</th>
+			</tr>';
+
 	$sql = "SELECT bankaccounts.accountcode,
 					bankaccounts.bankaccountcode,
 					chartmaster.accountname,
@@ -546,6 +530,8 @@ if (in_array($CashSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($C
 	$ErrMsg = _('The bank accounts set up could not be retrieved because');
 	$DbgMsg = _('The SQL used to retrieve the bank account details was') . '<br />' . $sql;
 	$result1 = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+
+	$k=0; //row colour counter
 
 	while ($myrow = DB_fetch_array($result1)) {
 		if ($k==1){
@@ -639,39 +625,29 @@ if (in_array($CashSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($C
 		$DisplayBalance=locale_number_format(($RunningTotal),$_SESSION['CompanyRecord']['decimalplaces']);
 		printf('<td>%s</td>
 				<td>%s</td>
-				<td class="number">%s</td>',
+				<td class="number">%s</td>
+				</tr>',
 				$myrow['accountcode'] . ' - ' . $myrow['accountname'],
 				$myrow['bankaccountname'],
 				$DisplayBalance);
-		echo '</tr>';
 	} //each bank account
 	echo '</tbody>
 		</table>';
 } //CashSecurity
 
 if (in_array($OrderSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($OrderSecurity)) {
-	echo '<br /><b>' . _('Outstanding Orders') . '</b>';
-
-	echo '<table cellpadding="2" width="95%" class="selection">';
-	$RecentDate = Date(($_SESSION['DefaultDateFormat']), strtotime($RecentDate . ' - 1 days'));
-	$TableHeader = '<tr>' .
-						/*
-						<th>' . _('Modify') . '</th>
-						*/
-						'<th>' . _('View Order') . '</th>' .
-						/*
-						<th>' . _('Invoice') . '</th>
-						<th>' . _('Dispatch Note') . '</th>
-						<th>' . _('Labels') . '</th>
-						*/
-						'<th>' . _('Customer') . '</th>
-						<th>' . _('Branch') . '</th>
-						<th>' . _('Cust Order') . ' #</th>
-						<th>' . _('Order Date') . '</th>
-						<th>' . _('Req Del Date') . '</th>
-						<th>' . _('Delivery To') . '</th>
-						<th>' . _('Order Total') . ' in ' . $_SESSION['CompanyRecord']['currencydefault'] . '</th>';
-	echo $TableHeader;
+	echo '<br /><b>' . _('Outstanding Orders') . '</b>
+			<table cellpadding="2" width="95%" class="selection">
+			<tr>
+				<th>' . _('View Order') . '</th>
+				<th>' . _('Customer') . '</th>
+				<th>' . _('Branch') . '</th>
+				<th>' . _('Cust Order') . ' #</th>
+				<th>' . _('Order Date') . '</th>
+				<th>' . _('Req Del Date') . '</th>
+				<th>' . _('Delivery To') . '</th>
+				<th>' . _('Order Total') . ' ' . _('in') . ' ' . $_SESSION['CompanyRecord']['currencydefault'] . '</th>
+			</tr>';
 
 	$SQL = "SELECT salesorders.orderno,
 						debtorsmaster.name,
@@ -708,16 +684,17 @@ if (in_array($OrderSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($
 
 	/*show a table of the orders returned by the SQL */
 	if (DB_num_rows($SalesOrdersResult)>0) {
-
-		$i = 1;
-        $j = 1;
 		$k=0; //row colour counter
 		$OrdersTotal =0;
+		$FontColor='';
 
 		while ($myrow=DB_fetch_array($SalesOrdersResult)) {
-			$FontColor='';
-			$FormatedOrderDate = ConvertSQLDate($myrow['orddate']);
-			if ($FormatedOrderDate >= $RecentDate) {
+
+			$OrderDate = ConvertSQLDate($myrow['orddate']);
+			$FormatedDelDate = ConvertSQLDate($myrow['deliverydate']);
+			$FormatedOrderValue = locale_number_format($myrow['ordervalue'],$_SESSION['CompanyRecord']['decimalplaces']);
+
+			if (DateDiff(Date($_SESSION['DefaultDateFormat']),$OrderDate,'d')>5) {
 				$FontColor=' style="color:green; font-weight:bold"';
 			}
 			if ($k==1){
@@ -728,39 +705,8 @@ if (in_array($OrderSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($
 				$k++;
 			}
 
-
-			$ModifyPage = $RootPath . '/SelectOrderItems.php?ModifyOrderNumber=' . $myrow['orderno'];
-			$Confirm_Invoice = $RootPath . '/ConfirmDispatch_Invoice.php?OrderNumber=' .$myrow['orderno'];
-
-			if ($_SESSION['PackNoteFormat']==1){ /*Laser printed A4 default */
-				$PrintDispatchNote = $RootPath . '/PrintCustOrder_generic.php?TransNo=' . $myrow['orderno'];
-			} else { /*pre-printed stationery default */
-				$PrintDispatchNote = $RootPath . '/PrintCustOrder.php?TransNo=' . $myrow['orderno'];
-			}
-			$PrintQuotation = $RootPath . '/PDFQuotation.php?QuotationNo=' . $myrow['orderno'];
-			$PrintQuotationPortrait = $RootPath . '/PDFQuotationPortrait.php?QuotationNo=' . $myrow['orderno'];
-			$FormatedDelDate = ConvertSQLDate($myrow['deliverydate']);
-			$FormatedOrderValue = locale_number_format($myrow['ordervalue'],$_SESSION['CompanyRecord']['decimalplaces']);
-			$PrintAck = $RootPath . '/PDFAck.php?AcknowledgementNo=' . $myrow['orderno'];
-
-			if ($myrow['printedpackingslip']==0) {
-				$PrintText = _('Print');
-			} else {
-				$PrintText = _('Reprint');
-			}
-
-			$PrintLabels = $RootPath . '/PDFShipLabel.php?Type=Sales&ORD=' . $myrow['orderno'] ;
-
-
-			printf(
-					/*<td><a href="%s">%s</a></td>*/
-					'<td><a href="%s" target="_blank">' . $myrow['orderno'] . '</a></td>' .
-					/*
-					<td><a href="%s">' . _('Invoice') . '</a></td>
-					<td><a target="_blank" href="%s">' . $PrintText . ' <img src="' .$RootPath.'/css/'.$Theme.'/images/pdf.png" title="' . _('Click for PDF') . '" alt="" /></a></td>
-					<td><a href="%s">' . _('Labels') . '</a></td>
-					*/
-					'<td' . $FontColor . '>%s</td>
+			printf(	'<td><a href="%s" target="_blank">' . $myrow['orderno'] . '</a></td>
+					<td' . $FontColor . '>%s</td>
 					<td' . $FontColor . '>%s</td>
 					<td' . $FontColor . '>%s</td>
 					<td' . $FontColor . '>%s</td>
@@ -768,35 +714,23 @@ if (in_array($OrderSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($
 					<td' . $FontColor . '>%s</td>
 					<td' . $FontColor . ' class="number">%s</td>
 					</tr>',
-					/*
-					$ModifyPage,
-					$myrow['orderno'],
-					*/
-					$PrintAck,
-					/*
-					$Confirm_Invoice,
-					$PrintDispatchNote,
-					$PrintLabels,
-					*/
+					$RootPath . '/OrderDetails.php?OrderNumber=' . $myrow['orderno'],
 					$myrow['name'],
 					$myrow['brname'],
 					$myrow['customerref'],
-					$FormatedOrderDate,
+					$OrderDate,
 					$FormatedDelDate,
 					html_entity_decode($myrow['deliverto'],ENT_QUOTES,'UTF-8'),
-					$FormatedOrderValue,
-					$i,
-					$i,
-					$myrow['orderno']);
-			$i++;
+					$FormatedOrderValue);
 			$OrdersTotal += $myrow['ordervalue'];
 		} //while
 
-		echo '<tfoot><tr><td colspan="6" class="number">';
-		echo '<b>' . _('Total Order(s) Value in');
-		echo ' ' . $_SESSION['CompanyRecord']['currencydefault'] . ' :</b></td>
-			<td class="number"><b>' . locale_number_format($OrdersTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
-			</tr></tfoot>
+		echo '<tfoot>
+				<tr>
+					<td colspan="7" class="number"><b>' . _('Total Order(s) Value in') . ' ' . $_SESSION['CompanyRecord']['currencydefault'] . ' :</b></td>
+					<td class="number"><b>' . locale_number_format($OrdersTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
+				</tr>
+			</tfoot>
 			</table>';
 	} //rows > 0
 } //OrderSecurity
