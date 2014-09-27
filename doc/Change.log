@@ -1,9 +1,10 @@
 webERP Change Log
 
+27/09/14 RChacon: Add ascending class to have sortable columns, complete table-heads and add documentation.
 21/9/14 Phil: Tidy up Dashboard to remove redundant code etc
 20/9/14 Phil: Move the DB Maintenance/GetConfig/Exchange rates update/audit trail purge inside UserLogin.php to ensure they do no add unecessary overhead to every page
 20/9/14 Bob Thomas: StockStatus incorrectly displaying quantity on order extended by conversion units
-11/09/14 RChacon: Add ascending class to PaymentMethods.php to have sortable columns.
+19/09/14 RChacon: Add ascending class to PaymentMethods.php to have sortable columns.
 17/9/14 Phil: Moved the audit log purge to occur if DB_Maintenance is set to run
 16/9/14 Phil: Added BNZ GIFTS format for bank account transaction imports
 15/09/14 Exson: fixed the date format errors in WorkOrderEntry.php.

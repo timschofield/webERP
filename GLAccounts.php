@@ -3,10 +3,9 @@
 
 include('includes/session.inc');
 $Title = _('Chart of Accounts Maintenance');
-
-$ViewTopic= 'GeneralLedger';
-$BookMark = 'GLAccounts';
-
+/* Manual links before header.inc */
+$ViewTopic= 'GeneralLedger';// Filename in ManualContents.php's TOC.
+$BookMark = 'GLAccounts';// Anchor's id in the manual's html document.
 include('includes/header.inc');
 
 if (isset($_POST['SelectedAccount'])){
@@ -15,8 +14,8 @@ if (isset($_POST['SelectedAccount'])){
 	$SelectedAccount = $_GET['SelectedAccount'];
 }
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' .
-		_('General Ledger Accounts') . '" alt="" />' . ' ' . $Title . '</p>';
+echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' .
+		_('General Ledger Accounts') . '" />' . ' ' . $Title . '</p>';
 
 if (isset($_POST['submit'])) {
 
@@ -292,10 +291,11 @@ or deletion of the records*/
 
 	echo '<br /><table class="selection">';
 	echo '<tr>
-			<th>' . _('Account Code') . '</th>
-			<th>' . _('Account Name') . '</th>
-			<th>' . _('Account Group') . '</th>
-			<th>' . _('P/L or B/S') . '</th>
+			<th class="ascending">' . _('Account Code') . '</th>
+			<th class="ascending">' . _('Account Name') . '</th>
+			<th class="ascending">' . _('Account Group') . '</th>
+			<th class="ascending">' . _('P/L or B/S') . '</th>
+			<th colspan="2">&nbsp;</th>
 		</tr>';
 
 	$k=0; //row colour counter

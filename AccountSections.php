@@ -1,14 +1,11 @@
 <?php
-
 /* $Id$*/
 
 include('includes/session.inc');
-
 $Title = _('Account Sections');
-
-$ViewTopic = 'GeneralLedger';
-$BookMark = 'AccountSections';
-
+/* Manual links before header.inc */
+$ViewTopic = 'GeneralLedger';// Filename in ManualContents.php's TOC.
+$BookMark = 'AccountSections';// Anchor's id in the manual's html document.
 include('includes/header.inc');
 
 // SOME TEST TO ENSURE THAT AT LEAST INCOME AND COST OF SALES ARE THERE
@@ -169,12 +166,13 @@ if (!isset($_GET['SelectedSectionID']) AND !isset($_POST['SelectedSectionID'])) 
 
 	$ErrMsg = _('Could not get account group sections because');
 	$result = DB_query($sql,$db,$ErrMsg);
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '<br /></p>';
+	echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" />' . ' ' . $Title . '</p><br />';
 
 	echo '<table class="selection">
 			<tr>
 				<th class="ascending">' . _('Section Number') . '</th>
 				<th class="ascending">' . _('Section Description') . '</th>
+				<th colspan="2">&nbsp;</th>
 			</tr>';
 
 	$k=0; //row colour counter

@@ -1,4 +1,5 @@
 <?php
+/* $Id$*/
 
 include('includes/session.inc');
 $Title = _('Customer Inquiry');
@@ -164,7 +165,7 @@ echo '<tr>
 	</tr>
 </table>';
 
-echo '<form onSubmit="return VerifyForm(this);" action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post" class="noPrint">
+echo '<div class="centre"><form onSubmit="return VerifyForm(this);" action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post" class="noPrint">
 		<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 echo _('Show all transactions after'), ':<input tabindex="1" type="text" required="required" class="date" alt="', $_SESSION['DefaultDateFormat'], '" id="datepicker" name="TransAfterDate" value="', $_POST['TransAfterDate'], '" minlength="0" maxlength="10" size="12" />';
 
@@ -187,7 +188,7 @@ if ($_POST['Status'] == '') {
 
 echo '</select>';
 echo '<input tabindex="3" type="submit" name="Refresh Inquiry" value="', _('Refresh Inquiry'), '" />
-	</form>';
+	</form></div>';
 
 $DateAfterCriteria = FormatDateForSQL($_POST['TransAfterDate']);
 
@@ -231,11 +232,11 @@ if (DB_num_rows($TransResult) == 0) {
 
 echo '<table class="selection">
 		<tr>
-			<th class="SortableColumn">', _('Type'), '</th>
-			<th class="SortableColumn">', _('Number'), '</th>
-			<th class="SortableColumn">', _('Date'), '</th>
+			<th class="ascending">', _('Type'), '</th>
+			<th class="ascending">', _('Number'), '</th>
+			<th class="ascending">', _('Date'), '</th>
 			<th>', _('Branch'), '</th>
-			<th class="SortableColumn">', _('Reference'), '</th>
+			<th class="ascending">', _('Reference'), '</th>
 			<th>', _('Comments'), '</th>
 			<th>', _('Order'), '</th>
 			<th>', _('Total'), '</th>
