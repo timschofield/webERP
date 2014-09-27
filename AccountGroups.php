@@ -1,14 +1,13 @@
 <?php
-
 /* $Id$*/
 
 include('includes/session.inc');
-
 $Title = _('Account Groups');
-$ViewTopic= 'GeneralLedger';
-$BookMark = 'AccountGroups';
-
+/* Manual links before header.inc */
+$ViewTopic= 'GeneralLedger';// Filename in ManualContents.php's TOC.
+$BookMark = 'AccountGroups';// Anchor's id in the manual's html document.*/
 include('includes/header.inc');
+
 include('includes/SQL_CommonFunctions.inc');
 
 
@@ -283,7 +282,7 @@ or deletion of the records*/
 	$DbgMsg = _('The sql that was used to retrieve the account group information was ');
 	$ErrMsg = _('Could not get account groups because');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '<br /></p>';
+	echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" />' . ' ' . $Title . '</p><br />';
 
 	echo '<table class="selection">
 			<tr>
@@ -292,6 +291,7 @@ or deletion of the records*/
 				<th class="ascending">' . _('Sequence In TB') . '</th>
 				<th class="ascending">' . _('Profit and Loss') . '</th>
 				<th class="ascending">' . _('Parent Group') . '</th>
+				<th colspan="2">&nbsp;</th>
 			</tr>';
 
 	$k=0; //row colour counter
