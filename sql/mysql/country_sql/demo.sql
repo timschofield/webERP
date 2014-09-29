@@ -2733,7 +2733,7 @@ CREATE TABLE `supplierdiscounts` (
   KEY `effectivefrom` (`effectivefrom`),
   KEY `effectiveto` (`effectiveto`),
   KEY `stockid` (`stockid`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

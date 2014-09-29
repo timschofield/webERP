@@ -4293,7 +4293,7 @@ CREATE TABLE IF NOT EXISTS `supplierdiscounts` (
   KEY `effectivefrom` (`effectivefrom`),
   KEY `effectiveto` (`effectiveto`),
   KEY `stockid` (`stockid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Dumping data for table weberpcn.supplierdiscounts: ~0 rows (approximately)
 /*!40000 ALTER TABLE `supplierdiscounts` DISABLE KEYS */;
