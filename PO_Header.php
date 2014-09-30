@@ -154,6 +154,9 @@ if ((isset($_POST['UpdateStatus']) AND $_POST['UpdateStatus'] != '')) {
 			if ($_POST['Status']=='Completed' OR $_POST['Status']=='Cancelled' OR $_POST['Status']=='Rejected') {
 				$SQL = "UPDATE purchorderdetails SET completed=1 WHERE orderno='" . $_SESSION['ExistingOrder'] . "'";
 				$UpdateResult =DB_query($SQL,$db,$ErrMsg);
+			} else {//To ensure that the purchorderdetails status is correct when it is recovered from a cancelled orders
+				$SQL = "UPDATE purchorderdetails SET completed=0 WHERE orderno='" . $_SESSION['ExistingOrder'] . "'";
+				$UpdateResult = DB_query($SQL,$db,$ErrMsg);
 			}
 		} //$OKToUpdateStatus == 1
 	} //end if there is actually a status change the class Status != the POST['Status']
