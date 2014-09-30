@@ -1,4 +1,5 @@
 webERP Change Log
+30/09/14 Exson: Fixed the purchase order details status to be right when the PO is recovered from Cancelled status. 
 29/09/14 Exson: Change charset from latin1 to utf8 for supplierdiscounts.
 27/09/14 RChacon: Add ascending class to have sortable columns, complete table-heads and add documentation.
 21/9/14 Phil: Tidy up Dashboard to remove redundant code etc
