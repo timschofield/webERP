@@ -33,9 +33,9 @@ if (substr($LineText,0,4)==':20:'){ //Timestamp of report MT940 generation
 			$ReadTheFile ='No';
 		}
 		 if ($DebitOrCredit =='D'){
-			$_SESSION['Statement']->OpeningBalance = doubleval(str_replace(',','.',substr($LineText,15)));
-		 } else {
 			$_SESSION['Statement']->OpeningBalance = doubleval('-' . str_replace(',','.',substr($LineText,15)));
+		 } else {
+			$_SESSION['Statement']->OpeningBalance = doubleval(str_replace(',','.',substr($LineText,15)));
 		 }
 		 $TransactionLine = false;
 	  }
@@ -53,9 +53,9 @@ if (substr($LineText,0,4)==':20:'){ //Timestamp of report MT940 generation
 				//Need to find end of value amount - find the , decimal point + 2 characters
 				$ValueEnd = strpos($LineText, ',', 12)+2;
 				if ($DebitOrCredit =='D'){
-					$TransAmount = doubleval(str_replace(',','.',substr($LineText,12,$ValueEnd)));
-				} else {
 					$TransAmount = doubleval('-' . str_replace(',','.',substr($LineText,12,$ValueEnd)));
+				} else {
+					$TransAmount = doubleval(str_replace(',','.',substr($LineText,12,$ValueEnd)));
 				}
 			} else { // it will be either D or C
 				if (!is_numeric(substr($LineText,15,1)) ){
@@ -67,9 +67,9 @@ if (substr($LineText,0,4)==':20:'){ //Timestamp of report MT940 generation
 				//Need to find end of value amount - find the , decimal point + 2 characters
 				$ValueEnd = strpos($LineText, ',', $ValueStart)+2;
 				if ($DebitOrCredit =='D'){
-					$TransAmount = doubleval(str_replace(',','.',substr($LineText,$ValueStart,$ValueEnd)));
-				} else {
 					$TransAmount = doubleval('-' . str_replace(',','.',substr($LineText,$ValueStart,$ValueEnd)));
+				} else {
+					$TransAmount = doubleval(str_replace(',','.',substr($LineText,$ValueStart,$ValueEnd)));
 				}
 			}
 
@@ -83,19 +83,19 @@ if (substr($LineText,0,4)==':20:'){ //Timestamp of report MT940 generation
 		 }
 	  }
 
-	  if (substr($LineText,0,1)!=':' AND $TransactionLine){
+	 /* if (substr($LineText,0,1)!=':' AND $TransactionLine){
 		  //then it is the continuation of an :86: line
-		  $_SESSION['Trans'][$i]->Description .= $LineText;
-	  }
+		$_SESSION['Trans'][$i]->Description .= $LineText;
+	  }*/
 
 	  if (substr($LineText,0,5)==':62F:'){
 		 $DebitOrCredit = substr($LineText,5,1); //D or C
 		 $_SESSION['Statement']->ClosingDate = ConvertSQLDate('20' . substr($LineText,6,2) . '-' . substr($LineText,8,2) . '-' . substr($LineText,10,2));
 		 $CurrCode = substr($LineText,12,3);
 		 if ($DebitOrCredit =='D'){
-			$_SESSION['Statement']->ClosingBalance = doubleval(str_replace(',','.',substr($LineText,15)));
-		 } else {
 			$_SESSION['Statement']->ClosingBalance = doubleval('-' . str_replace(',','.',substr($LineText,15)));
+		 } else {
+			$_SESSION['Statement']->ClosingBalance = doubleval(str_replace(',','.',substr($LineText,15)));
 		 }
 		 $TransactionLine = false;
 	  }

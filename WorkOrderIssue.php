@@ -564,6 +564,10 @@ if ($WORow['closed']==1){
 }
 DB_data_seek($WOResult,0);
 
+if (!isset($_POST['FromLocation'])){
+	$_POST['FromLocation']=$WORow['loccode'];
+}
+
 while($WORow = DB_fetch_array($WOResult)){
 
 	echo  '<tr>
@@ -581,18 +585,16 @@ echo '<tr>
 		<td>';
 
 if (!isset($_POST['IssueItem'])){
-	$LocResult = DB_query("SELECT locations.loccode,locationname 
+	$LocResult = DB_query("SELECT locations.loccode,locationname
 							FROM locations
-							INNER JOIN locationusers 
-								ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' 
+							INNER JOIN locationusers
+								ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "'
 								AND locationusers.canupd=1
 							WHERE locations.usedforwo = 1",$db);
 
 	echo '<select name="FromLocation">';
 
-	if (!isset($_POST['FromLocation'])){
-		$_POST['FromLocation']=$WORow['loccode'];
-	}
+
 
 	while ($LocRow = DB_fetch_array($LocResult)){
 		if ($_POST['FromLocation'] ==$LocRow['loccode']){
