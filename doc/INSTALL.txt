@@ -18,7 +18,7 @@ USE mydatabase;
 
 at the beginning of the script. Where mydatabase is the name of the company database that you are using in your webERP installation.
 
-It is recommended to use phpMyAdmin to run the upgrade script since you select the database to use using the web GUI and you can click on the import tab and select the upgrade script to run against the DB more easily. 
+It is recommended to use phpMyAdmin to run the upgrade script since you select the database to use using the web GUI and you can click on the import tab and select the upgrade script to run against the DB more easily.
 
 If you are running the upgrade script with the mysql command line client, after editing the script as described above the syntax to use is as follows:
 
@@ -27,16 +27,16 @@ mysql --user=weberp_db_user --password='some_pass' < /webERP/sql/mysql/upgradesc
 where weberp_db_user is the name of your mysql user and some_pass is the password for that user.
 
 
-If you have some modified scripts that you require these should be saved in a separate directory for the purposes of reworking against the new scripts. 
+If you have some modified scripts that you require these should be saved in a separate directory for the purposes of reworking against the new scripts.
 The old version scripts should be deleted and the new scripts extracted to the webERP installation directory under the web-server root directory. config.php will require modification for your database username and password and company specific details.
 
 
 
 ***************New Installations***************
 
-There is an automated Installation script to 
+There is an automated Installation script to
 
-Extract the webERP archive under your web-root directory (folder). Browse to the 
+Extract the webERP archive under your web-root directory (folder). Browse to the
 
 http://yourhost/webERP/
 
@@ -56,7 +56,7 @@ Pre-requisites:
 - A working PHP web server - v 5.0 or later is required (it no longer works with versions prior) PHP must have support for mysql databases (either mysql or mysqli), gd, gettext (for translations), libxml, mbstring and ftp
 - A working MySQL server (MySql version 4.1 or above - innodb tables MUST be enabled - check your my.cnf file to ensure innodb tables are enabled (normally under /etc/my.cnf or the mysql data directory - see the MySQL manual).
 
-Installing these components are well covered elsewhere - but if you need to install these components the recommended solution under windows would be to download and install apache2triad - http://apache2triad.net/ or under windows or *nix download and install XAMPP - http://www.apachefriends.org/en/xampp.html
+Installing these components are well covered elsewhere - but if you need to install these components the recommended solution under windows would be to download and install AMPPS see http://www.ampps.com/ or under windows. AMPPS also has a one click install option for webERP and a multitude of other PHP/MYSQL - LAMP stack web-applications. On *nix download and install XAMPP - https://www.apachefriends.org/index.html
 
 PHP must have the register globals configuration parameter set to off.  This is the default (now).  This flag can be set in the php.ini on the server.  If it can't be changed on the server's php.ini, it is possibe for apache web servers to alter the configuration using a file called .htaccess. A .htaccess file is included in the webERP directory that ensures the register_globals flag is set to off for those web-servers that support .htaccess files.
 
@@ -144,7 +144,7 @@ the webpages in .../webERP.
 
 2. Creating the Database
 
-MySQL version 4.1 or above is required 
+MySQL version 4.1 or above is required
 
 INNODB TABLES MUST BE ENABLED IN THE MYSQL SERVER.
 
@@ -198,7 +198,7 @@ Once you have confirmed that you are ready to create a database you are now read
 
 1. demo.sql  This has a minimal amount of demonstration data in a bogus company set up so that transactions can be tried to see how the system works.
 2. default.sql This script has only the basic data necessary to start a new company system off. If you wish to set up your company on webERP then this is the script to use. weberp-new.sql you will need to create a database first (using phpMyAdmin for example) or add the following sql commands to this script
-	CREATE DATABASE mycompanyname DEFAULT CHARACTER SET utf8 DEFAULT 
+	CREATE DATABASE mycompanyname DEFAULT CHARACTER SET utf8 DEFAULT
 		COLLATE utf8_unicode_ci;
 	USE mycompanyname
 
@@ -222,7 +222,7 @@ to .../webERP/mycompanyname (note that this is case sensitive).
 
 3. Editing config.php
 
-The webERP archive no longer comes with a config.php file. There is now a web-based installer that is activated when there is no config.php file. Simply browse to your webERP installation with the URL 
+The webERP archive no longer comes with a config.php file. There is now a web-based installer that is activated when there is no config.php file. Simply browse to your webERP installation with the URL
 
 http://yourdomain/webERP/ in your browser,
 
@@ -259,7 +259,7 @@ The contents of the config.php file appears as follows for reference purposes. T
 //DefaultLanguage
 $DefaultLanguage ='en_GB.utf8';
 
-// Whether to display the admin login and password or not 
+// Whether to display the admin login and password or not
 $AllowDemoMode = True;
 
 // Application version
@@ -341,7 +341,7 @@ Now the accounting starts....
 All the standing configuration data is defined from the system setup tab and each link should be reviewed to enter appropriate data for the business. The manual has a section on Getting Started which is essential reading before going live.
 
 
-Please try not to refer questions about PHP or database configuration 
+Please try not to refer questions about PHP or database configuration
 - check your PHP web server works by installing phpMyAdmin before referring any installation issues
 - check http://www.weberp.org for Installation FAQ
 

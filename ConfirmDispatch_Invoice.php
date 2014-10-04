@@ -245,7 +245,7 @@ set all the necessary session variables changed by the POST  */
 			foreach ($Itm->SerialItems as $SerialItem) { //calculate QtyDispatched from bundle quantities
 				$_SESSION['Items'.$identifier]->LineItems[$Itm->LineNumber]->QtyDispatched += $SerialItem->BundleQty;
 			}
-			//Preventing from dispatched more than ordered. Since it's controlled items, users must select the batch/lot again. 
+			//Preventing from dispatched more than ordered. Since it's controlled items, users must select the batch/lot again.
 			if($_SESSION['Items'.$identifier]->LineItems[$Itm->LineNumber]->QtyDispatched > ($_SESSION['Items'.$identifier]->LineItems[$Itm->LineNumber]->Quantity - $_SESSION['Items'.$identifier]->LineItems[$Itm->LineNumber]->QtyInv)){
 				prnMsg(_('Dispathed Quantity should not be more than order balanced quantity').'. '._('To dispatch quantity is').' '.$_SESSION['Items'.$identifier]->LineItems[$Itm->LineNumber]->QtyDispatched.' '._('And the order balance is ').' '.($_SESSION['Items'.$identifier]->LineItems[$Itm->LineNumber]->Quantity - $_SESSION['Items'.$identifier]->LineItems[$Itm->LineNumber]->QtyInv),'error');
 				include('includes/footer.inc');
@@ -561,12 +561,6 @@ $TaxTotal += $FreightTaxTotal;
 
 $DisplaySubTotal = locale_number_format(($_SESSION['Items'.$identifier]->total + filter_number_format($_POST['ChargeFreightCost'])),$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
 
-
-/* round the totals to avoid silly entries */
-$TaxTotal = round($TaxTotal,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
-$_SESSION['Items'.$identifier]->total = round($_SESSION['Items'.$identifier]->total,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
-$_POST['ChargeFreightCost'] = round(filter_number_format($_POST['ChargeFreightCost']),$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
-
 echo '<tr>
 	<td colspan="8" class="number">' . _('Invoice Totals'). '</td>
 	<td class="number"><hr /><b>' . $DisplaySubTotal . '</b><hr /></td>
@@ -574,6 +568,7 @@ echo '<tr>
 	<td class="number"><hr /><b>' . locale_number_format($TaxTotal,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</b><hr /></td>
 	<td class="number"><hr /><b>' . locale_number_format($TaxTotal+($_SESSION['Items'.$identifier]->total + $_POST['ChargeFreightCost']),$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</b><hr /></td>
 </tr>';
+
 
 if (! isset($_POST['DispatchDate']) OR  ! Is_Date($_POST['DispatchDate'])){
 	$DefaultDispatchDate = Date($_SESSION['DefaultDateFormat'],CalcEarliestDispatchDate());
@@ -1376,7 +1371,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 											'" . $PeriodNo . "',
 											'" . $SalesGLAccounts['salesglcode'] . "',
 											'" . $_SESSION['Items'.$identifier]->DebtorNo . " - " . $OrderLine->StockID . " x " . $OrderLine->QtyDispatched . " @ " . $OrderLine->Price . "',
-											'" . round((-$OrderLine->Price * $OrderLine->QtyDispatched/$_SESSION['CurrencyRate']),$_SESSION['CompanyRecord']['decimalplaces']) . "')";
+											'" . (-$OrderLine->Price * $OrderLine->QtyDispatched/$_SESSION['CurrencyRate']) . "')";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sales GL posting could not be inserted because');
 					$DbgMsg = '<br />' ._('The following SQL to insert the GLTrans record was used');
@@ -1398,7 +1393,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 													'" . $PeriodNo . "',
 													'" . $SalesGLAccounts['discountglcode'] . "',
 													'" . $_SESSION['Items'.$identifier]->DebtorNo . " - " . $OrderLine->StockID . " @ " . ($OrderLine->DiscountPercent * 100) . "%',
-													'" . round(($OrderLine->Price * $OrderLine->QtyDispatched * $OrderLine->DiscountPercent/$_SESSION['CurrencyRate']),$_SESSION['CompanyRecord']['decimalplaces']) . "')";
+													'" . ($OrderLine->Price * $OrderLine->QtyDispatched * $OrderLine->DiscountPercent/$_SESSION['CurrencyRate']) . "')";
 
 						$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sales discount GL posting could not be inserted because');
 						$DbgMsg = _('The following SQL to insert the GLTrans record was used');
@@ -1510,7 +1505,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 										'" . $PeriodNo . "',
 										'" . $DisposalRow['disposalact'] . "',
 										'" . $_SESSION['Items'.$identifier]->DebtorNo . " - " . $OrderLine->StockID .  ' ' . _('asset disposal proceeds') . "',
-										'" . round((-$OrderLine->Price * $OrderLine->QtyDispatched* (1 - $OrderLine->DiscountPercent)/$_SESSION['CurrencyRate']),$_SESSION['CompanyRecord']['decimalplaces']) . "')";
+										'" . (-$OrderLine->Price * $OrderLine->QtyDispatched* (1 - $OrderLine->DiscountPercent)/$_SESSION['CurrencyRate']) . "')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The disposal proceeds GL posting could not be inserted because');
 				$DbgMsg = '<br />' ._('The following SQL to insert the GLTrans record was used');
@@ -1576,7 +1571,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 										'" . $PeriodNo . "',
 										'" . $_SESSION['CompanyRecord']['debtorsact'] . "',
 										'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
-										'" . round((($_SESSION['Items'.$identifier]->total + $_SESSION['Items'.$identifier]->FreightCost + $TaxTotal)/$_SESSION['CurrencyRate']),$_SESSION['CompanyRecord']['decimalplaces']) . "')";
+										'" . (($_SESSION['Items'.$identifier]->total + $_SESSION['Items'.$identifier]->FreightCost + $TaxTotal)/$_SESSION['CurrencyRate']) . "')";
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The total debtor GL posting could not be inserted because');
 			$DbgMsg = _('The following SQL to insert the total debtors control GLTrans record was used');
@@ -1601,7 +1596,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 					'" . $PeriodNo . "',
 					'" . $_SESSION['CompanyRecord']['freightact'] . "',
 					'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
-					'" . round((-$_SESSION['Items'.$identifier]->FreightCost/$_SESSION['CurrencyRate']),$_SESSION['CompanyRecord']['decimalplaces']) . "')";
+					'" . (-$_SESSION['Items'.$identifier]->FreightCost/$_SESSION['CurrencyRate']) . "')";
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The freight GL posting could not be inserted because');
 			$DbgMsg = _('The following SQL to insert the GLTrans record was used');
@@ -1623,7 +1618,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 											'" . $PeriodNo . "',
 											'" . $TaxGLCodes[$TaxAuthID] . "',
 											'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
-											'" . round((-$TaxAmount/$_SESSION['CurrencyRate']),$_SESSION['CompanyRecord']['decimalplaces']) . "')";
+											'" . (-$TaxAmount/$_SESSION['CurrencyRate']) . "')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The tax GL posting could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
