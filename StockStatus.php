@@ -7,6 +7,7 @@ include('includes/session.inc');
 $Title = _('Stock Status');
 
 include('includes/header.inc');
+include ('includes/SQL_CommonFunctions.inc');
 
 if (isset($_GET['StockID'])){
 	$StockID = trim(mb_strtoupper($_GET['StockID']));
@@ -175,40 +176,10 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 	}
 
 	if ($Its_A_KitSet_Assembly_Or_Dummy == False){
-
-		$sql="SELECT SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd)
-			FROM purchorders LEFT JOIN purchorderdetails
-			ON purchorders.orderno=purchorderdetails.orderno
-			WHERE purchorderdetails.itemcode='" . $StockID . "'
-			AND purchorders.intostocklocation='" . $myrow['loccode'] . "'
-			AND (purchorders.status<>'Cancelled'
-			AND purchorders.status<>'Pending'
-			AND purchorders.status<>'Rejected'
-			AND purchorders.status<>'Completed')";
-		$ErrMsg = _('The quantity on order for this product to be received into') . ' ' . $myrow['loccode'] . ' ' . _('cannot be retrieved because');
-		$QOOResult = DB_query($sql,$db,$ErrMsg, $DbgMsg);
-
-		if (DB_num_rows($QOOResult)==1){
-			$QOORow = DB_fetch_row($QOOResult);
-			$QOO =  $QOORow[0];
-		} else {
-			$QOO = 0;
-		}
-
-		//Also the on work order quantities
-		$sql = "SELECT SUM(woitems.qtyreqd-woitems.qtyrecd) AS qtywo
-				FROM woitems INNER JOIN workorders
-				ON woitems.wo=workorders.wo
-				WHERE workorders.closed=0
-				AND workorders.loccode='" . $myrow['loccode'] . "'
-				AND woitems.stockid='" . $StockID . "'";
-		$ErrMsg = _('The quantity on work orders for this product to be received into') . ' ' . $myrow['loccode'] . ' ' . _('cannot be retrieved because');
-		$QOOResult = DB_query($sql,$db,$ErrMsg, $DbgMsg);
-
-		if (DB_num_rows($QOOResult)==1){
-			$QOORow = DB_fetch_row($QOOResult);
-			$QOO +=  $QOORow[0];
-		}
+		// Get the QOO due to Purchase orders for all locations. Function defined in SQL_CommonFunctions.inc
+		$QOO = GetQuantityOnOrderDueToPurchaseOrders($StockID, $myrow['loccode'], $db);
+		// Get the QOO dues to Work Orders for all locations. Function defined in SQL_CommonFunctions.inc
+		$QOO += GetQuantityOnOrderDueToWorkOrders($StockID, $myrow['loccode'], $db);
 
 		$InTransitSQL="SELECT SUM(shipqty-recqty) as intransit
 						FROM loctransfers

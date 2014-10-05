@@ -1724,38 +1724,10 @@ if (!isset($_POST['ProcessReturn'])){
 				  $DemandQty = 0;
 				}
 
-				// Find the quantity on purchase orders
-				$sql = "SELECT SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS QOO
-							 FROM purchorderdetails INNER JOIN purchorders
-							 ON purchorderdetails.orderno=purchorders.orderno
-							 WHERE purchorderdetails.completed=0
-							 AND purchorders.status <>'Cancelled'
-							 AND purchorders.status <>'Rejected'
-							AND purchorderdetails.itemcode='" . $myrow['stockid'] . "'";
-
-				$ErrMsg = _('The order details for this product cannot be retrieved because');
-				$PurchResult = DB_query($sql,$db,$ErrMsg);
-
-				$PurchRow = DB_fetch_row($PurchResult);
-				if ($PurchRow[0]!=null){
-					$PurchQty =  $PurchRow[0];
-				} else {
-					$PurchQty = 0;
-				}
-
-				// Find the quantity on works orders
-				$sql = "SELECT SUM(woitems.qtyreqd - woitems.qtyrecd) AS dedm
-						   FROM woitems
-						   WHERE stockid='" . $myrow['stockid'] ."'";
-				$ErrMsg = _('The order details for this product cannot be retrieved because');
-				$WoResult = DB_query($sql,$db,$ErrMsg);
-
-				$WoRow = DB_fetch_row($WoResult);
-				if ($WoRow[0]!=null){
-					$WoQty =  $WoRow[0];
-				} else {
-					$WoQty = 0;
-				}
+				// Get the QOO due to Purchase orders for all locations. Function defined in SQL_CommonFunctions.inc
+				$QOO= GetQuantityOnOrderDueToPurchaseOrders($myrow['stockid'], "", $db);
+				// Get the QOO dues to Work Orders for all locations. Function defined in SQL_CommonFunctions.inc
+				$QOO += GetQuantityOnOrderDueToWorkOrders($myrow['stockid'], "", $db);
 
 				if ($k==1){
 					echo '<tr class="EvenTableRows">';
@@ -1764,9 +1736,8 @@ if (!isset($_POST['ProcessReturn'])){
 					echo '<tr class="OddTableRows">';
 					$k=1;
 				}
-				$OnOrder = $PurchQty + $WoQty;
 
-				$Available = $QOH - $DemandQty + $OnOrder;
+				$Available = $QOH - $DemandQty + $QOO;
 
 				printf('<td>%s</td>
 						<td title="%s">%s</td>
@@ -1783,7 +1754,7 @@ if (!isset($_POST['ProcessReturn'])){
 						$myrow['units'],
 						locale_number_format($QOH, $myrow['decimalplaces']),
 						locale_number_format($DemandQty, $myrow['decimalplaces']),
-						locale_number_format($OnOrder, $myrow['decimalplaces']),
+						locale_number_format($QOO, $myrow['decimalplaces']),
 						locale_number_format($Available, $myrow['decimalplaces']),
 						$i,
 						$i,

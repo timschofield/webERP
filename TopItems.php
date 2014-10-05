@@ -7,6 +7,8 @@ config.php is in turn included in session.inc*/
 include ('includes/session.inc');
 $Title = _('Top Items Searching');
 include ('includes/header.inc');
+include ('includes/SQL_CommonFunctions.inc');
+
 //check if input already
 if (!(isset($_POST['Search']))) {
 
@@ -198,35 +200,11 @@ if (!(isset($_POST['Search']))) {
 								WHERE stockid = '" . DB_escape_string($myrow['stkcode']) . "'", $db);
 				$QOHRow = DB_fetch_row($QOHResult);
 				$QOH = $QOHRow[0];
-				$QOOSQL="SELECT SUM(purchorderdetails.quantityord -purchorderdetails.quantityrecd) AS QtyOnOrder
-							FROM purchorders INNER JOIN purchorderdetails
-							ON purchorders.orderno=purchorderdetails.orderno
-							INNER JOIN locationusers ON locationusers.loccode=purchorders.intostocklocation AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
-							WHERE purchorderdetails.itemcode='" . DB_escape_string($myrow['stkcode']) . "'
-							AND purchorderdetails.completed =0
-							AND purchorders.status<>'Cancelled'
-							AND purchorders.status<>'Pending'
-							AND purchorders.status<>'Rejected'";
-				$QOOResult = DB_query($QOOSQL, $db);
-				if (DB_num_rows($QOOResult) == 0) {
-					$QOO = 0;
-				} else {
-					$QOORow = DB_fetch_row($QOOResult);
-					$QOO = $QOORow[0];
-				}
-				//Also the on work order quantities
-				$sql = "SELECT SUM(woitems.qtyreqd-woitems.qtyrecd) AS qtywo
-						FROM woitems INNER JOIN workorders
-						ON woitems.wo=workorders.wo
-						INNER JOIN locationusers ON locationusers.loccode=workorders.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
-						WHERE workorders.closed=0
-						AND woitems.stockid='" . DB_escape_string($myrow['stkcode']) . "'";
-				$ErrMsg = _('The quantity on work orders for this product cannot be retrieved because');
-				$QOOResult = DB_query($sql, $db, $ErrMsg);
-				if (DB_num_rows($QOOResult) == 1) {
-					$QOORow = DB_fetch_row($QOOResult);
-					$QOO+= $QOORow[0];
-				}
+
+				// Get the QOO due to Purchase orders for all locations. Function defined in SQL_CommonFunctions.inc
+				$QOO = GetQuantityOnOrderDueToPurchaseOrders($myrow['stkcode'], "", $db);
+				// Get the QOO dues to Work Orders for all locations. Function defined in SQL_CommonFunctions.inc
+				$QOO += GetQuantityOnOrderDueToWorkOrders($myrow['stkcode'], "", $db);
 			break;
 		}
 	        if(is_numeric($QOH) and is_numeric($QOO)){

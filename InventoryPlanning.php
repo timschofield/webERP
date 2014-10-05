@@ -7,6 +7,8 @@ include('includes/session.inc');
 $ViewTopic= "Inventory";
 $BookMark = "PlanningReport";
 
+include ('includes/SQL_CommonFunctions.inc');
+
 if (isset($_POST['PrintPDF'])
 	and isset($_POST['FromCriteria'])
 	and mb_strlen($_POST['FromCriteria'])>=1
@@ -274,49 +276,19 @@ if (isset($_POST['PrintPDF'])
 	   		exit;
 		}
 
+		// Get the QOO due to Purchase orders for all locations. Function defined in SQL_CommonFunctions.inc
+		// Get the QOO dues to Work Orders for all locations. Function defined in SQL_CommonFunctions.inc
 		if ($_POST['Location']=='All'){
-			$SQL = "SELECT SUM(purchorderdetails.quantityord - purchorderdetails.quantityrecd) as qtyonorder
-						FROM purchorderdetails INNER JOIN purchorders
-						ON purchorderdetails.orderno = purchorders.orderno
-						INNER JOIN locationusers ON locationusers.loccode=purchorders.intostocklocation AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
-						WHERE  purchorderdetails.itemcode = '" . $InventoryPlan['stockid'] . "'
-						AND purchorderdetails.completed = 0
-						AND purchorders.status <> 'Cancelled'
-						AND purchorders.status <> 'Rejected'
-						AND purchorders.status <> 'Pending'
-						AND purchorders.status <> 'Completed'";
+			$QOO = GetQuantityOnOrderDueToPurchaseOrders($InventoryPlan['stockid'], "", $db);
+			$QOO += GetQuantityOnOrderDueToWorkOrders($InventoryPlan['stockid'], "", $db);
 		} else {
-			$SQL = "SELECT SUM(purchorderdetails.quantityord - purchorderdetails.quantityrecd) as qtyonorder
-						FROM purchorderdetails INNER JOIN purchorders
-						ON purchorderdetails.orderno = purchorders.orderno
-						INNER JOIN locationusers ON locationusers.loccode=purchorders.intostocklocation AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
-						WHERE purchorderdetails.itemcode = '" . $InventoryPlan['stockid'] . "'
-						AND purchorderdetails.completed = 0
-						AND purchorders.intostocklocation=  '" . $_POST['Location'] . "'
-						AND purchorders.status <> 'Cancelled'
-						AND purchorders.status <> 'Rejected'
-						AND purchorders.status <> 'Pending'
-						AND purchorders.status <> 'Completed'";
+			$QOO = GetQuantityOnOrderDueToPurchaseOrders($InventoryPlan['stockid'], $_POST['Location'], $db);
+			$QOO += GetQuantityOnOrderDueToWorkOrders($InventoryPlan['stockid'], $_POST['Location'], $db);
 		}
 
 		$DemandRow = DB_fetch_array($DemandResult);
 		$BOMDemandRow = DB_fetch_array($BOMDemandResult);
 		$TotalDemand = $DemandRow['qtydemand'] + $BOMDemandRow['dem'];
-
-		$OnOrdResult = DB_query($SQL,$db,'','',false,false);
-		if (DB_error_no($db) !=0) {
-	 		 $Title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
-	  		include('includes/header.inc');
-	   		prnMsg( _('The purchase order quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
-	   		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-	   		if ($debug==1){
-	      			echo '<br />' . $SQL;
-	   		}
-	   		include('includes/footer.inc');
-	   		exit;
-		}
-
-		$OnOrdRow = DB_fetch_array($OnOrdResult);
 
 		$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 110, $FontSize, $InventoryPlan['stockid'], 'left');
 		$LeftOvers = $pdf->addTextWrap(130, $YPos, 120,6,$InventoryPlan['description'],'left');
@@ -343,9 +315,9 @@ if (isset($_POST['PrintPDF'])
 		$LeftOvers = $pdf->addTextWrap(597, $YPos, 40,$FontSize,locale_number_format($InventoryPlan['qoh'],0),'right');
 		$LeftOvers = $pdf->addTextWrap(638, $YPos, 40,$FontSize,locale_number_format($TotalDemand,0),'right');
 
-		$LeftOvers = $pdf->addTextWrap(679, $YPos, 40,$FontSize,locale_number_format($OnOrdRow['qtyonorder'],0),'right');
+		$LeftOvers = $pdf->addTextWrap(679, $YPos, 40,$FontSize,locale_number_format($QOO,0),'right');
 
-		$SuggestedTopUpOrder = $IdealStockHolding - $InventoryPlan['qoh'] + $TotalDemand - $OnOrdRow['qtyonorder'];
+		$SuggestedTopUpOrder = $IdealStockHolding - $InventoryPlan['qoh'] + $TotalDemand - $QOO;
 		if ($SuggestedTopUpOrder <=0){
 			$LeftOvers = $pdf->addTextWrap(720, $YPos, 40,$FontSize,'   ','right');
 
