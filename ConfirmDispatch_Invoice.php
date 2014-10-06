@@ -1071,7 +1071,8 @@ invoices can have a zero amount but there must be a quantity to invoice */
 			} /* end of its an assembly */
 
 			// Insert stock movements - with unit cost
-			$LocalCurrencyPrice = round(($OrderLine->Price / $_SESSION['CurrencyRate']),$_SESSION['CompanyRecord']['decimalplaces']);
+			//$LocalCurrencyPrice = round(($OrderLine->Price / $_SESSION['CurrencyRate']),$_SESSION['CompanyRecord']['decimalplaces']); change decimalplaces to 5 to avoid price or lines total variance on invoice. And the decimal places should not be over 5 since the stockmoves table defined it as decimal(21,5) now.
+			$LocalCurrencyPrice = round(($OrderLine->Price / $_SESSION['CurrencyRate']),5);
 
 			if (empty($OrderLine->StandardCost)) {
 				$OrderLine->StandardCost=0;
