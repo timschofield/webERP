@@ -824,7 +824,7 @@ if (count($_SESSION['Items' . $identifier]->LineItems)>0){ /*only show return li
 	echo '</select></td></tr>';
 
 	$BankAccountsResult = DB_query("SELECT bankaccountname, accountcode FROM bankaccounts",$db);
-	
+
 	echo '<tr>
 			<td style="color:red">' . _('Bank Account') . ':</td>
 			<td><select name="BankAccount">';
@@ -1725,9 +1725,9 @@ if (!isset($_POST['ProcessReturn'])){
 				}
 
 				// Get the QOO due to Purchase orders for all locations. Function defined in SQL_CommonFunctions.inc
-				$QOO= GetQuantityOnOrderDueToPurchaseOrders($myrow['stockid'], "", $db);
+				$QOO= GetQuantityOnOrderDueToPurchaseOrders($myrow['stockid'], '');
 				// Get the QOO dues to Work Orders for all locations. Function defined in SQL_CommonFunctions.inc
-				$QOO += GetQuantityOnOrderDueToWorkOrders($myrow['stockid'], "", $db);
+				$QOO += GetQuantityOnOrderDueToWorkOrders($myrow['stockid'], '');
 
 				if ($k==1){
 					echo '<tr class="EvenTableRows">';

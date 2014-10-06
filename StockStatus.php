@@ -177,9 +177,9 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 
 	if ($Its_A_KitSet_Assembly_Or_Dummy == False){
 		// Get the QOO due to Purchase orders for all locations. Function defined in SQL_CommonFunctions.inc
-		$QOO = GetQuantityOnOrderDueToPurchaseOrders($StockID, $myrow['loccode'], $db);
+		$QOO = GetQuantityOnOrderDueToPurchaseOrders($StockID, $myrow['loccode']);
 		// Get the QOO dues to Work Orders for all locations. Function defined in SQL_CommonFunctions.inc
-		$QOO += GetQuantityOnOrderDueToWorkOrders($StockID, $myrow['loccode'], $db);
+		$QOO += GetQuantityOnOrderDueToWorkOrders($StockID, $myrow['loccode']);
 
 		$InTransitSQL="SELECT SUM(shipqty-recqty) as intransit
 						FROM loctransfers

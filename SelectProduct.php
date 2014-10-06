@@ -263,11 +263,11 @@ switch ($myrow['mbflag']) {
 						WHERE stockid = '" . $StockID . "'", $db);
 		$QOHRow = DB_fetch_row($QOHResult);
 		$QOH = locale_number_format($QOHRow[0], $myrow['decimalplaces']);
-		
+
 		// Get the QOO due to Purchase orders for all locations. Function defined in SQL_CommonFunctions.inc
-		$QOO = GetQuantityOnOrderDueToPurchaseOrders($StockID, "", $db);
+		$QOO = GetQuantityOnOrderDueToPurchaseOrders($StockID, '');
 		// Get the QOO dues to Work Orders for all locations. Function defined in SQL_CommonFunctions.inc
-		$QOO += GetQuantityOnOrderDueToWorkOrders($StockID, "", $db);
+		$QOO += GetQuantityOnOrderDueToWorkOrders($StockID, '');
 
 		$QOO = locale_number_format($QOO, $myrow['decimalplaces']);
 	break;

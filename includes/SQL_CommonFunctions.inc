@@ -276,8 +276,8 @@ function WoRealRequirements($db, $WO, $LocCode, $StockID, $Qty=1, $ParentID='') 
 			ON bom.component=stockmaster.stockid
 			WHERE bom.parent='" . $StockID . "'
 			AND bom.loccode ='" . $LocCode . "'
-			AND bom.effectiveafter<='" . Date('Y-m-d') . "' 
-			AND bom.effectiveto>='" . Date('Y-m-d') . "' 
+			AND bom.effectiveafter<='" . Date('Y-m-d') . "'
+			AND bom.effectiveto>='" . Date('Y-m-d') . "'
 			AND stockmaster.mbflag<>'G'
 			AND bom.component NOT IN (
 				SELECT stockid
@@ -373,7 +373,10 @@ function EnsureGLEntriesBalance ($TransType, $TransTypeNo, $db) {
 	If Location is empty, it returns the QOO for all locations
 	If location is NOT empty, returns the QOO for that specific location.
 */
-function GetQuantityOnOrderDueToPurchaseOrders($StockID, $Location, $db){
+function GetQuantityOnOrderDueToPurchaseOrders($StockID, $Location){
+
+	global $db;
+
 	if ($Location == ""){
 		// All locations to be considered
 		$WhereLocation = "";
@@ -385,12 +388,12 @@ function GetQuantityOnOrderDueToPurchaseOrders($StockID, $Location, $db){
 	}
 
 	$SQL="SELECT SUM(purchorderdetails.quantityord -purchorderdetails.quantityrecd) AS QtyOnOrder
-		FROM purchorders 
+		FROM purchorders
 			INNER JOIN purchorderdetails
 				ON purchorders.orderno=purchorderdetails.orderno
-			INNER JOIN locationusers 
-				ON locationusers.loccode=purchorders.intostocklocation 
-					AND locationusers.userid='" .  $_SESSION['UserID'] . "' 
+			INNER JOIN locationusers
+				ON locationusers.loccode=purchorders.intostocklocation
+					AND locationusers.userid='" .  $_SESSION['UserID'] . "'
 					AND locationusers.canview=1
 		WHERE purchorderdetails.itemcode='" . $StockID . "'
 			AND purchorderdetails.completed = 0
@@ -399,7 +402,7 @@ function GetQuantityOnOrderDueToPurchaseOrders($StockID, $Location, $db){
 			AND purchorders.status<>'Rejected'
 			AND purchorders.status<>'Completed'" .
 			$WhereLocation;
-			
+
 	$QOOResult = DB_query($SQL, $db, $ErrMsg);
 	if (DB_num_rows($QOOResult) == 0) {
 		$QOO = 0;
@@ -415,29 +418,32 @@ function GetQuantityOnOrderDueToPurchaseOrders($StockID, $Location, $db){
 	If Location is empty, it returns the QOO for all locations
 	If location is NOT empty, returns the QOO for that specific location.
 */
-function GetQuantityOnOrderDueToWorkOrders($StockID, $Location, $db){
-	if ($Location == ""){
+function GetQuantityOnOrderDueToWorkOrders($StockID, $Location){
+
+	global $db;
+
+	if ($Location == ''){
 		// All locations to be considered
-		$WhereLocation = "";
+		$WhereLocation = '';
 		$ErrMsg = _('The quantity on order due to work orders for') . ' ' . $StockID . ' ' . _('to be received into all locations cannot be retrieved because');
 	}else{
 		// Just 1 location to consider
 		$WhereLocation = " AND workorders.loccode='" . $Location . "'";
 		$ErrMsg = _('The quantity on order due to work orders for') . ' ' . $StockID . ' ' . _('to be received into') . ' ' . $Location . ' ' . _('cannot be retrieved because');
 	}
-	
+
 	$SQL="SELECT SUM(woitems.qtyreqd-woitems.qtyrecd) AS qtywo
-		FROM woitems 
+		FROM woitems
 			INNER JOIN workorders
 				ON woitems.wo=workorders.wo
-			INNER JOIN locationusers 
-				ON locationusers.loccode=workorders.loccode 
-					AND locationusers.userid='" .  $_SESSION['UserID'] . "' 
+			INNER JOIN locationusers
+				ON locationusers.loccode=workorders.loccode
+					AND locationusers.userid='" .  $_SESSION['UserID'] . "'
 					AND locationusers.canview=1
 		WHERE workorders.closed=0
 			AND woitems.stockid='" . $StockID . "'" .
 			$WhereLocation;
-			
+
 	$QOOResult = DB_query($SQL, $db, $ErrMsg);
 	if (DB_num_rows($QOOResult) == 0) {
 		$QOO = 0;

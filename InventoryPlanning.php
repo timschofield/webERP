@@ -279,11 +279,11 @@ if (isset($_POST['PrintPDF'])
 		// Get the QOO due to Purchase orders for all locations. Function defined in SQL_CommonFunctions.inc
 		// Get the QOO dues to Work Orders for all locations. Function defined in SQL_CommonFunctions.inc
 		if ($_POST['Location']=='All'){
-			$QOO = GetQuantityOnOrderDueToPurchaseOrders($InventoryPlan['stockid'], "", $db);
-			$QOO += GetQuantityOnOrderDueToWorkOrders($InventoryPlan['stockid'], "", $db);
+			$QOO = GetQuantityOnOrderDueToPurchaseOrders($InventoryPlan['stockid'], '');
+			$QOO += GetQuantityOnOrderDueToWorkOrders($InventoryPlan['stockid'], '');
 		} else {
-			$QOO = GetQuantityOnOrderDueToPurchaseOrders($InventoryPlan['stockid'], $_POST['Location'], $db);
-			$QOO += GetQuantityOnOrderDueToWorkOrders($InventoryPlan['stockid'], $_POST['Location'], $db);
+			$QOO = GetQuantityOnOrderDueToPurchaseOrders($InventoryPlan['stockid'], $_POST['Location']);
+			$QOO += GetQuantityOnOrderDueToWorkOrders($InventoryPlan['stockid'], $_POST['Location']);
 		}
 
 		$DemandRow = DB_fetch_array($DemandResult);

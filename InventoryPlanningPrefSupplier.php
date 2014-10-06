@@ -150,9 +150,9 @@ if (isset($_POST['PrintPDF'])){
 				suppliers.suppname,
 				purchdata.leadtime/30 AS monthsleadtime,
 				SUM(locstock.quantity) AS qoh
-			FROM locstock 
-				INNER JOIN locationusers 
-					ON locationusers.loccode=locstock.loccode 
+			FROM locstock
+				INNER JOIN locationusers
+					ON locationusers.loccode=locstock.loccode
 						AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1,
 				stockmaster,
 				purchdata,
@@ -224,9 +224,9 @@ if (isset($_POST['PrintPDF'])){
 					SUM(CASE WHEN prd='" . $Period_3 . "' THEN -qty ELSE 0 END) AS prd3,
 					SUM(CASE WHEN prd='" . $Period_4 . "' THEN -qty ELSE 0 END) AS prd4
 					FROM stockmoves
-					INNER JOIN locationusers 
-						ON locationusers.loccode=stockmoves.loccode 
-							AND locationusers.userid='" .  $_SESSION['UserID'] . "' 
+					INNER JOIN locationusers
+						ON locationusers.loccode=stockmoves.loccode
+							AND locationusers.userid='" .  $_SESSION['UserID'] . "'
 							AND locationusers.canview=1
 					WHERE stockid='" . $InventoryPlan['stockid'] . "'
 					AND (stockmoves.type=10 OR stockmoves.type=11)
@@ -312,11 +312,11 @@ if (isset($_POST['PrintPDF'])){
 		// Get the QOO due to Purchase orders for all locations. Function defined in SQL_CommonFunctions.inc
 		// Get the QOO dues to Work Orders for all locations. Function defined in SQL_CommonFunctions.inc
 		if ($_POST['Location']=='All'){
-			$QOO = GetQuantityOnOrderDueToPurchaseOrders($InventoryPlan['stockid'], "", $db);
-			$QOO += GetQuantityOnOrderDueToWorkOrders($InventoryPlan['stockid'], "", $db);
+			$QOO = GetQuantityOnOrderDueToPurchaseOrders($InventoryPlan['stockid'], '');
+			$QOO += GetQuantityOnOrderDueToWorkOrders($InventoryPlan['stockid'], '');
 		} else {
-			$QOO = GetQuantityOnOrderDueToPurchaseOrders($InventoryPlan['stockid'], $_POST['Location'], $db);
-			$QOO += GetQuantityOnOrderDueToWorkOrders($InventoryPlan['stockid'], $_POST['Location'], $db);
+			$QOO = GetQuantityOnOrderDueToPurchaseOrders($InventoryPlan['stockid'], $_POST['Location']);
+			$QOO += GetQuantityOnOrderDueToWorkOrders($InventoryPlan['stockid'], $_POST['Location']);
 		}
 
 		$DemandRow = DB_fetch_array($DemandResult);

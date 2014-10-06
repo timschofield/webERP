@@ -132,7 +132,7 @@ if (!(isset($_POST['Search']))) {
 					debtorsmaster.currcode,
 					fromstkloc,
 					stockmaster.decimalplaces
-			FROM 	salesorderdetails, salesorders INNER JOIN locationusers ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1, 
+			FROM 	salesorderdetails, salesorders INNER JOIN locationusers ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1,
 			debtorsmaster,stockmaster, currencies
 			WHERE 	salesorderdetails.orderno = salesorders.orderno
 					AND salesorderdetails.stkcode = stockmaster.stockid
@@ -202,9 +202,9 @@ if (!(isset($_POST['Search']))) {
 				$QOH = $QOHRow[0];
 
 				// Get the QOO due to Purchase orders for all locations. Function defined in SQL_CommonFunctions.inc
-				$QOO = GetQuantityOnOrderDueToPurchaseOrders($myrow['stkcode'], "", $db);
-				// Get the QOO dues to Work Orders for all locations. Function defined in SQL_CommonFunctions.inc
-				$QOO += GetQuantityOnOrderDueToWorkOrders($myrow['stkcode'], "", $db);
+				$QOO = GetQuantityOnOrderDueToPurchaseOrders($myrow['stkcode'], '');
+				// Get the QOO due to Work Orders for all locations. Function defined in SQL_CommonFunctions.inc
+				$QOO += GetQuantityOnOrderDueToWorkOrders($myrow['stkcode'], '');
 			break;
 		}
 	        if(is_numeric($QOH) and is_numeric($QOO)){

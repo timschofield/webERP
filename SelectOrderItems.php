@@ -326,7 +326,7 @@ if (isset($_POST['SearchCust'])
 					debtorsmaster.name
 				FROM custbranch
 				LEFT JOIN debtorsmaster
-				ON custbranch.debtorno=debtorsmaster.debtorno 
+				ON custbranch.debtorno=debtorsmaster.debtorno
 				WHERE custbranch.disabletrans=0 ";
 
 	if (($_POST['CustKeywords']=='') AND ($_POST['CustCode']=='')  AND ($_POST['CustPhone']=='')) {
@@ -339,7 +339,7 @@ if (isset($_POST['SearchCust'])
 		$SQL .= "AND custbranch.brname " . LIKE . " '%" . $SearchString . "%'
 				AND custbranch.branchcode " . LIKE . " '%" . mb_strtoupper(trim($_POST['CustCode'])) . "%'
 				AND custbranch.phoneno " . LIKE . " '%" . trim($_POST['CustPhone']) . "%'";
-	
+
 	} /*one of keywords or custcode was more than a zero length string */
 	if ($_SESSION['SalesmanLogin']!=''){
 		$SQL .= " AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'";
@@ -573,9 +573,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				<td>' . _('Part of the Branch Phone Number') . ':</td>
 				<td><input tabindex="3" type="text" name="CustPhone" size="15" maxlength="18" title="' . _('Enter a part of a customer\'s phone number that you wish to search for then click the Search Now button to find matching customers') . '"/></td>
 				</tr>
-				
+
 			</table>
-			
+
 			<div class="centre">
 				<input tabindex="4" type="submit" name="SearchCust" value="' . _('Search Now') . '" />
 				<input tabindex="5" type="submit" name="reset" value="' .  _('Reset') . '" />
@@ -706,13 +706,13 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			$RawMaterialSellable = '';
 		}
 		if(!empty($_POST['CustItemFlag'])){
-			$IncludeCustItem = " INNER JOIN custitem ON custitem.stockid=stockmaster.stockid 
+			$IncludeCustItem = " INNER JOIN custitem ON custitem.stockid=stockmaster.stockid
 								AND custitem.debtorno='" .  $_SESSION['Items'.$identifier]->DebtorNo . "'";
 		}else{
-			$IncludeCustItem = " LEFT OUTER JOIN custitem ON custitem.stockid=stockmaster.stockid 
+			$IncludeCustItem = " LEFT OUTER JOIN custitem ON custitem.stockid=stockmaster.stockid
 								AND custitem.debtorno='" .  $_SESSION['Items'.$identifier]->DebtorNo . "'";
 		}
-		
+
 		if ($_POST['Keywords']!='' AND $_POST['StockCode']=='') {
 			$msg='<div class="page_help_text">' . _('Order Item description has been used in search') . '.</div>';
 		} elseif ($_POST['StockCode']!='' AND $_POST['Keywords']=='') {
@@ -1495,9 +1495,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				  $DemandQty = 0;
 				}
 				// Get the QOO due to Purchase orders for all locations. Function defined in SQL_CommonFunctions.inc
-				$PurchQty = GetQuantityOnOrderDueToPurchaseOrders($myrow['stockid'], "", $db);
+				$PurchQty = GetQuantityOnOrderDueToPurchaseOrders($myrow['stockid'], '');
 				// Get the QOO dues to Work Orders for all locations. Function defined in SQL_CommonFunctions.inc
-				$WoQty = GetQuantityOnOrderDueToWorkOrders($myrow['stockid'], "", $db);
+				$WoQty = GetQuantityOnOrderDueToWorkOrders($myrow['stockid'], '');
 
 				if ($k==1){
 					echo '<tr class="EvenTableRows">';
@@ -1584,7 +1584,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	echo '" /></td>
 
 		<td><input type="checkbox" name="RawMaterialFlag" value="M" />'._('Raw material flag').'&nbsp;&nbsp;<br/><span class="dpTbl">'._('If checked, Raw material will be shown on search result').'</span> </td>
-		<td><input type="checkbox" name="CustItemFlag" value="C" />'._('Customer Item flag').'&nbsp;&nbsp;<br/><span class="dpTbl">'._('If checked, only items for this customer will show').'</span> </td>			
+		<td><input type="checkbox" name="CustItemFlag" value="C" />'._('Customer Item flag').'&nbsp;&nbsp;<br/><span class="dpTbl">'._('If checked, only items for this customer will show').'</span> </td>
 			</tr>';
 
 		echo '<tr>
@@ -1659,9 +1659,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				}
 
 				// Get the QOO due to Purchase orders for all locations. Function defined in SQL_CommonFunctions.inc
-				$PurchQty = GetQuantityOnOrderDueToPurchaseOrders($myrow['stockid'], "", $db);
+				$PurchQty = GetQuantityOnOrderDueToPurchaseOrders($myrow['stockid'], '');
 				// Get the QOO dues to Work Orders for all locations. Function defined in SQL_CommonFunctions.inc
-				$WoQty = GetQuantityOnOrderDueToWorkOrders($myrow['stockid'], "", $db);
+				$WoQty = GetQuantityOnOrderDueToWorkOrders($myrow['stockid'], '');
 
 				if ($k==1){
 					echo '<tr class="EvenTableRows">';
@@ -1820,7 +1820,7 @@ function GetCustBranchDetails($identifier) {
 					ON custbranch.defaultlocation=locations.loccode
 					WHERE custbranch.branchcode='" . $_SESSION['Items'.$identifier]->Branch . "'
 					AND custbranch.debtorno = '" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
-		
+
 		$ErrMsg = _('The customer branch record of the customer selected') . ': ' . $_SESSION['Items'.$identifier]->DebtorNo . ' ' . _('cannot be retrieved because');
 		$DbgMsg = _('SQL used to retrieve the branch details was') . ':';
 		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);

@@ -240,9 +240,9 @@ if (isset($_POST['ShowStatus'])){
 		}
 
 		// Get the QOO due to Purchase orders for all locations. Function defined in SQL_CommonFunctions.inc
-		$QOO = GetQuantityOnOrderDueToPurchaseOrders($StockID, $myrow['loccode'], $db);
+		$QOO = GetQuantityOnOrderDueToPurchaseOrders($StockID, $myrow['loccode']);
 		// Get the QOO dues to Work Orders for all locations. Function defined in SQL_CommonFunctions.inc
-		$QOO += GetQuantityOnOrderDueToWorkOrders($StockID, $myrow['loccode'], $db);
+		$QOO += GetQuantityOnOrderDueToWorkOrders($StockID, $myrow['loccode']);
 
 		if (($_POST['BelowReorderQuantity']=='Below' AND ($myrow['quantity']-$myrow['reorderlevel']-$DemandQty)<0)
 				OR $_POST['BelowReorderQuantity']=='All' OR $_POST['BelowReorderQuantity']=='NotZero'

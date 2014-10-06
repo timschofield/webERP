@@ -1184,9 +1184,9 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 				$QuantityAssemblyDemand = $AssemblyDemandRow[0];
 
 				// Get the QOO due to Purchase orders for all locations. Function defined in SQL_CommonFunctions.inc
-				$QuantityPurchOrders= GetQuantityOnOrderDueToPurchaseOrders($StockItem->StockID, "", $db);
+				$QuantityPurchOrders= GetQuantityOnOrderDueToPurchaseOrders($StockItem->StockID, '');
 				// Get the QOO dues to Work Orders for all locations. Function defined in SQL_CommonFunctions.inc
-				$QuantityWorkOrders = GetQuantityOnOrderDueToWorkOrders($StockItem->StockID, "", $db);
+				$QuantityWorkOrders = GetQuantityOnOrderDueToWorkOrders($StockItem->StockID, '');
 
 				//Now we have the data - do we need to make any more?
 				$ShortfallQuantity = $QOH-$QuantityDemand-$QuantityAssemblyDemand+$QuantityPurchOrders+$QuantityWorkOrders;
@@ -1278,7 +1278,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 					//Send email to the Factory Manager
 					if($_SESSION['SmtpSetting']==0){
 							mail($_SESSION['FactoryManagerEmail'],$EmailSubject,$FactoryManagerEmail);
-	
+
 					}else{
 							include('includes/htmlMimeMail.php');
 							$mail = new htmlMimeMail();
@@ -2137,9 +2137,9 @@ if (!isset($_POST['ProcessSale'])){
 				}
 
 				// Get the QOO due to Purchase orders for all locations. Function defined in SQL_CommonFunctions.inc
-				$QOO = GetQuantityOnOrderDueToPurchaseOrders($myrow['stockid'], "", $db);
-				// Get the QOO dues to Work Orders for all locations. Function defined in SQL_CommonFunctions.inc
-				$QOO += GetQuantityOnOrderDueToWorkOrders($myrow['stockid'], "", $db);
+				$QOO = GetQuantityOnOrderDueToPurchaseOrders($myrow['stockid'], '');
+				// Get the QOO due to Work Orders for all locations. Function defined in SQL_CommonFunctions.inc
+				$QOO += GetQuantityOnOrderDueToWorkOrders($myrow['stockid'], '');
 
 				if ($k==1){
 						echo '<tr class="EvenTableRows">';
@@ -2288,9 +2288,9 @@ if (!isset($_POST['ProcessSale'])){
 				}
 
 				// Get the QOO due to Purchase orders for all locations. Function defined in SQL_CommonFunctions.inc
-				$QOO = GetQuantityOnOrderDueToPurchaseOrders($myrow['stockid'], "", $db);
+				$QOO = GetQuantityOnOrderDueToPurchaseOrders($myrow['stockid'], '');
 				// Get the QOO dues to Work Orders for all locations. Function defined in SQL_CommonFunctions.inc
-				$QOO += GetQuantityOnOrderDueToWorkOrders($myrow['stockid'], "", $db);
+				$QOO += GetQuantityOnOrderDueToWorkOrders($myrow['stockid'], '');
 
 				if ($k==1){
 					echo '<tr class="EvenTableRows">';
