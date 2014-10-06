@@ -1,5 +1,6 @@
 webERP Change Log
 
+06/10/14 Exson: Fixed the prices or line total variance in invoice for foreign currencies.
 4/10/14 Andrew Galuski: defaulted factory location from WO record
 30/09/14 Exson: Fixed the purchase order details status to be right when the PO is recovered from Cancelled status.
 29/09/14 Exson: Change charset from latin1 to utf8 for supplierdiscounts.
