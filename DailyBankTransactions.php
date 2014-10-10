@@ -1,19 +1,14 @@
 <?php
-
 /* $Id: DailyBankTransactions.php 4556 2011-04-26 11:03:36Z daintree $ */
 
 include ('includes/session.inc');
 $Title = _('Bank Transactions Inquiry');
-
 $ViewTopic= 'GeneralLedger';
 $BookMark = 'DailyBankTransactions';
 
 include('includes/header.inc');
 
-echo '<p class="page_title_text">
-		<img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' .
-	 _('Search') . '" alt="" />' . ' ' . $Title.'
-	 </p>';
+echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/money_add.png" title="' . _('Search') . '" />' . ' ' . $Title . '</p>';
 
 if (!isset($_POST['Show'])) {
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
@@ -102,6 +97,7 @@ if (!isset($_POST['Show'])) {
 					banktrans.exrate,
 					banktrans.banktranstype,
 					banktrans.transdate,
+					banktrans.transno,
 					banktrans.ref,
 					bankaccounts.bankaccountname,
 					systypes.typename,
@@ -122,11 +118,12 @@ if (!isset($_POST['Show'])) {
 		$BankDetailRow = DB_fetch_array($BankResult);
 		echo '<table class="selection">
 				<tr>
-					<th colspan="9"><h3>' . _('Account Transactions For').' '.$BankDetailRow['bankaccountname'].' '._('Between').' '.$_POST['FromTransDate'] . ' ' . _('and') . ' ' . $_POST['ToTransDate'] . '</h3></th>
+					<th colspan="10"><h3>' . _('Account Transactions For').' '.$BankDetailRow['bankaccountname'].' '._('Between').' '.$_POST['FromTransDate'] . ' ' . _('and') . ' ' . $_POST['ToTransDate'] . '</h3></th>
 				</tr>
 				<tr>
 					<th>' . ('Date') . '</th>
 					<th>' . _('Transaction type') . '</th>
+					<th>' . _('Number') . '</th>
 					<th>' . _('Type') . '</th>
 					<th>' . _('Reference') . '</th>
 					<th>' . _('Amount in').' '.$BankDetailRow['currcode'] . '</th>
@@ -152,7 +149,8 @@ if (!isset($_POST['Show'])) {
 
 			echo '<tr>
 					<td>' .  ConvertSQLDate($myrow['transdate']) . '</td>
-					<td>' . $myrow['typename'] . '</td>
+					<td>' . _($myrow['typename']) . '</td>
+					<td class="number"><a href="' . $RootPath . '/GLTransInquiry.php?TypeID=' . $myrow['typeid'] . '&amp;TransNo=' . $myrow['transno'] . '">' . $myrow['transno'] . '</a></td>
 					<td>' . $myrow['banktranstype'] . '</td>
 					<td>' . $myrow['ref'] . '</td>
 					<td class="number">' . locale_number_format($myrow['amount'],$BankDetailRow['decimalplaces']) . '</td>
