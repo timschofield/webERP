@@ -55,7 +55,7 @@ if (isset($_GET['NewOrder'])){
 	$_SESSION['ExistingOrder' .$identifier]=0;
 	$_SESSION['Items'.$identifier] = new cart;
 
-	if (isset($CustomerLogin)){ //its a customer logon
+	if ($CustomerLogin==1){ //its a customer logon
 		$_SESSION['Items'.$identifier]->DebtorNo=$_SESSION['CustomerID'];
 		$_SESSION['Items'.$identifier]->BranchCode=$_SESSION['UserBranch'];
 		$SelectedCustomer = $_SESSION['CustomerID'];
