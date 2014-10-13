@@ -1,5 +1,5 @@
 webERP Change Log
-
+13/10/14: Exson: Fixed the bugs in pattern properties with extra blank which leads to the patterns checking failed for all fields. Report from webERP Chinese community QQ group DongDong. 
 09/10/14 RChacon: Add transaccion type name translation, transaccion type number and link to GL transaction inquiry in DailyBankTransactions.php.
 06/10/14 Exson: Fixed the prices or line total variance in invoice for foreign currencies.
 4/10/14 Andrew Galuski: defaulted factory location from WO record
