@@ -21,7 +21,6 @@ function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
 
 	global $debug;
 	global $PathPrefix;
-	global $Version;
 
 	if (!isset($_SESSION['AccessLevel']) OR $_SESSION['AccessLevel'] == '' OR
 		(isset($Name) AND $Name != '')) {
@@ -151,11 +150,6 @@ function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
 			/*User is logged in so get configuration parameters  - save in session*/
 			include($PathPrefix . 'includes/GetConfig.php');
 
-
-			/*If the Code $Version - held in ConnectDB.inc is > than the Database VersionNumber held in config table then do upgrades */
-			if (strcmp($Version,$_SESSION['VersionNumber'])>0 AND (basename($_SERVER['SCRIPT_NAME'])!='UpgradeDatabase.php')) {
-				header('Location: UpgradeDatabase.php');
-			}
 
 			if(isset($_SESSION['DB_Maintenance'])){
 				if ($_SESSION['DB_Maintenance']>0)  { //run the DB maintenance script

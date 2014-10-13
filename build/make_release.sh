@@ -3,7 +3,7 @@
 BASE_DIR=/var/www/webERP;
 OUTPUT_DIR=/home/phil/Documents/webERP;
 MYSQL_USER=root;
-MYSQL_PWD=woofwoof;
+MYSQL_PWD=a;
 
 cd $BASE_DIR;
 
@@ -50,7 +50,7 @@ msgfmt -o locale/en_US.utf8/LC_MESSAGES/messages.mo locale/en_US.utf8/LC_MESSAGE
 msgfmt -o locale/es_ES.utf8/LC_MESSAGES/messages.mo locale/es_ES.utf8/LC_MESSAGES/messages.po
 msgfmt -o locale/et_EE.utf8/LC_MESSAGES/messages.mo locale/et_EE.utf8/LC_MESSAGES/messages.po
 msgfmt -o locale/fa_IR.utf8/LC_MESSAGES/messages.mo locale/fa_IR.utf8/LC_MESSAGES/messages.po
-msgfmt -o locale/fr_FR.utf8/LC_MESSAGES/messages.mo  locale/fr_FR.utf8/LC_MESSAGES/messages.po 
+msgfmt -o locale/fr_FR.utf8/LC_MESSAGES/messages.mo  locale/fr_FR.utf8/LC_MESSAGES/messages.po
 msgfmt -o locale/hr_HR.utf8/LC_MESSAGES/messages.mo locale/hr_HR.utf8/LC_MESSAGES/messages.po
 msgfmt -o locale/hi_IN.utf8/LC_MESSAGES/messages.mo locale/hi_IN.utf8/LC_MESSAGES/messages.po
 msgfmt -o locale/hu_HU.utf8/LC_MESSAGES/messages.mo locale/hu_HU.utf8/LC_MESSAGES/messages.po
