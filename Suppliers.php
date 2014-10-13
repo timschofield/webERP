@@ -696,15 +696,15 @@ if (!isset($SupplierID)) {
 	}
 	echo '<tr>
 			<td>' . _('Supplier Name') . ':</td>
-			<td><input type="text" pattern="(?!^\s+$)[^<>+] {1,40}" required="required" title="'._('The supplier name should not be blank and should be less than 40 legal characters').'" name="SuppName" size="42" placeholder="'._('Within 40 legal characters').'" maxlength="40" /></td>
+			<td><input type="text" pattern="(?!^\s+$)[^<>+]{1,40}" required="required" title="'._('The supplier name should not be blank and should be less than 40 legal characters').'" name="SuppName" size="42" placeholder="'._('Within 40 legal characters').'" maxlength="40" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Address Line 1 (Street)') . ':</td>
-			<td><input type="text" pattern=". {1,40}" title="'._('The input should be less than 40 characters').'" placeholder="'._('Less than 40 characters').'" name="Address1" size="42" maxlength="40" /></td>
+			<td><input type="text" pattern=".{1,40}" title="'._('The input should be less than 40 characters').'" placeholder="'._('Less than 40 characters').'" name="Address1" size="42" maxlength="40" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Address Line 2 (Street)') . ':</td>
-			<td><input type="text" name="Address2" pattern=". {1,40}" title="'._('The input should be less than 40 characters').'" placeholder="'._('Less than 40 characters').'" size="42" maxlength="40" /></td>
+			<td><input type="text" name="Address2" pattern=".{1,40}" title="'._('The input should be less than 40 characters').'" placeholder="'._('Less than 40 characters').'" size="42" maxlength="40" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Address Line 3 (Suburb/City)') . ':</td>
@@ -734,11 +734,11 @@ if (!isset($SupplierID)) {
 		</tr>
 		<tr>
 			<td>' . _('Telephone') . ':</td>
-			<td><input type="tel" pattern="[\s\d+)(-] {1,40}" title="'._('The input should be phone number').'" placeholder="'._('only number + - ( and ) allowed').'" name="Phone" size="30" maxlength="40" /></td>
+			<td><input type="tel" pattern="[\s\d+)(-]{1,40}" title="'._('The input should be phone number').'" placeholder="'._('only number + - ( and ) allowed').'" name="Phone" size="30" maxlength="40" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Facsimile') . ':</td>
-			<td><input type="tel" pattern="[\s\d+)(-] {1,40}" title="'._('The input should be fax number').'" placeholder="'._('only number + - ( and ) allowed').'" name="Fax" size="30" maxlength="40" /></td>
+			<td><input type="tel" pattern="[\s\d+)(-]{1,40}" title="'._('The input should be fax number').'" placeholder="'._('only number + - ( and ) allowed').'" name="Fax" size="30" maxlength="40" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Email Address') . ':</td>
@@ -978,11 +978,11 @@ else {
 
 	echo '<tr>
 			<td>' . _('Telephone') . ':</td>
-			<td><input '.(in_array('Name',$Errors) ? 'class="inputerror"' : '').' type="tel" pattern="[\s\d+()-] {1,40}" placeholder="'._('Only digit blank ( ) and - allowed').'" name="Phone" value="' . $_POST['Phone'] . '" size="42" maxlength="40" /></td>
+			<td><input '.(in_array('Name',$Errors) ? 'class="inputerror"' : '').' type="tel" pattern="[\s\d+()-]{1,40}" placeholder="'._('Only digit blank ( ) and - allowed').'" name="Phone" value="' . $_POST['Phone'] . '" size="42" maxlength="40" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Facsimile') . ':</td>
-			<td><input '.(in_array('Name',$Errors) ? 'class="inputerror"' : '').' type="tel" pattern="[\s\d+()-] {1,40}" placeholder="'._('Only digit blank ( ) and - allowed').'" name="Fax" value="' . $_POST['Fax'] . '" size="42" maxlength="40" /></td>
+			<td><input '.(in_array('Name',$Errors) ? 'class="inputerror"' : '').' type="tel" pattern="[\s\d+()-]{1,40}" placeholder="'._('Only digit blank ( ) and - allowed').'" name="Fax" value="' . $_POST['Fax'] . '" size="42" maxlength="40" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Email Address') . ':</td>
