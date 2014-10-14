@@ -1,6 +1,6 @@
 webERP Change Log
 
-
+14/10/14 Jiro Akits: Update Chinese traditional translation.
 12/10/14 Version 4.11.5 release
 
 13/10/14: Exson: Fixed the bugs in pattern properties with extra blank which leads to the patterns checking failed for all fields. Report from webERP Chinese community QQ group DongDong.
