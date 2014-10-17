@@ -144,7 +144,9 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 							quantity,
 							discountpercent,
 							actualdispatchdate,
-							qtyinvoiced
+							qtyinvoiced,
+							itemdue,
+							poline
 						FROM salesorderdetails INNER JOIN stockmaster
 						ON salesorderdetails.stkcode = stockmaster.stockid
 						WHERE orderno ='" . $_GET['OrderNumber'] . "'";
@@ -165,6 +167,7 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 				<th colspan="9"><h3>' . _('Order Line Details For Order No').' '.$_GET['OrderNumber'] . '</h3></th>
 			</tr>
 			<tr>
+				<th>' . _('PO Line') . '</th>
 				<th>' . _('Item Code') . '</th>
 				<th>' . _('Item Description') . '</th>
 				<th>' . _('Quantity') . '</th>
@@ -173,7 +176,7 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 				<th>' . _('Discount') . '</th>
 				<th>' . _('Total') . '</th>
 				<th>' . _('Qty Del') . '</th>
-				<th>' . _('Last Del') . '</th>
+				<th>' . _('Last Del') . '/' . _('Due Date') . '</th>
 			</tr>';
 		$k=0;
 		while ($myrow=DB_fetch_array($LineItemsResult)) {
@@ -189,10 +192,11 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 			if ($myrow['qtyinvoiced']>0){
 				$DisplayActualDeliveryDate = ConvertSQLDate($myrow['actualdispatchdate']);
 			} else {
-		  		$DisplayActualDeliveryDate = _('N/A');
+		  		$DisplayActualDeliveryDate = '<span style="color:red;">' . ConvertSQLDate($myrow['itemdue']) . '</span>';
 			}
 
-			echo 	'<td>' . $myrow['stkcode'] . '</td>
+			echo 	'<td>' . $myrow['poline'] . '</td>
+				<td>' . $myrow['stkcode'] . '</td>
 				<td>' . $myrow['description'] . '</td>
 				<td class="number">' . $myrow['quantity'] . '</td>
 				<td>' . $myrow['units'] . '</td>
