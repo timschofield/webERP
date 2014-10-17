@@ -1,4 +1,5 @@
 webERP Change Log
+17/10/14 Exson: Add po line and due date result in OrderDetails.php.
 15/10/14 Exson: Fixed no receipt data displayed retrieved bugs for sales login in CustomerInquiry.php. 
 14/10/14 Jiro Akits: Update Chinese traditional translation.
 12/10/14 Version 4.11.5 release
