@@ -3241,7 +3241,7 @@ CREATE TABLE `www_users` (
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-10-13 21:09:28
+-- Dump completed on 2014-10-13 22:12:31
 -- MySQL dump 10.13  Distrib 5.5.38, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: weberpdemo
@@ -11856,7 +11856,7 @@ INSERT INTO `workorders` VALUES (36,'MEL','2014-08-30','2014-08-30',0,0,NULL);
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('admin','$2y$10$UFTZlhBzJAYzA1QPllfEwOeh2qIRvFqtXhAMEVNNKwxHGC/DIXHnC','Demonstration user','','','','','admin@weberp.org','MEL',8,1,'2014-10-13 21:08:52','','A4','1,1,1,1,1,1,1,1,1,1,1,',0,50,'xenos','en_GB.utf8',0,0);
+INSERT INTO `www_users` VALUES ('admin','$2y$10$UFTZlhBzJAYzA1QPllfEwOeh2qIRvFqtXhAMEVNNKwxHGC/DIXHnC','Demonstration user','','','','','admin@weberp.org','MEL',8,1,'2014-10-13 22:09:27','','A4','1,1,1,1,1,1,1,1,1,1,1,',0,50,'xenos','en_GB.utf8',0,0);
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -11864,5 +11864,5 @@ INSERT INTO `www_users` VALUES ('admin','$2y$10$UFTZlhBzJAYzA1QPllfEwOeh2qIRvFqt
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-10-13 21:09:29
+-- Dump completed on 2014-10-13 22:12:31
 SET FOREIGN_KEY_CHECKS = 1;

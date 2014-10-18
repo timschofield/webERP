@@ -3239,7 +3239,7 @@ CREATE TABLE `www_users` (
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-10-13 21:09:28
+-- Dump completed on 2014-10-13 22:12:31
 -- MySQL dump 10.13  Distrib 5.5.38, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: weberpdemo
@@ -6304,7 +6304,7 @@ INSERT INTO `taxprovinces` VALUES (1,'Default Tax province');
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('admin','$2y$10$UFTZlhBzJAYzA1QPllfEwOeh2qIRvFqtXhAMEVNNKwxHGC/DIXHnC','Demonstration user','','','','','admin@weberp.org','MEL',8,1,'2014-10-13 21:08:52','','A4','1,1,1,1,1,1,1,1,1,1,1,',0,50,'xenos','en_GB.utf8',0,0);
+INSERT INTO `www_users` VALUES ('admin','$2y$10$UFTZlhBzJAYzA1QPllfEwOeh2qIRvFqtXhAMEVNNKwxHGC/DIXHnC','Demonstration user','','','','','admin@weberp.org','MEL',8,1,'2014-10-13 22:09:27','','A4','1,1,1,1,1,1,1,1,1,1,1,',0,50,'xenos','en_GB.utf8',0,0);
 
 --
 -- Dumping data for table `edi_orders_segs`
@@ -7099,7 +7099,7 @@ INSERT INTO `accountsection` VALUES (50,'Financed By');
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-10-13 21:09:28
+-- Dump completed on 2014-10-13 22:12:31
 SET FOREIGN_KEY_CHECKS = 1;
 UPDATE systypes SET typeno=0;
 INSERT INTO shippers VALUES (1,'Default Shipper',0);

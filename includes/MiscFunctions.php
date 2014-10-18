@@ -406,7 +406,7 @@ function SendMailBySmtp(&$mail,$To) {
 	}else{//user only set it's name instead of fully mail address
 		if(strpos($_SESSION['SMTPSettings']['host'],'mail') !== false){
 			$SubStr = 'mail';
-		
+
 		}elseif(strpos($_SESSION['SMTPSettings']['host'],'smtp') !== false){
 			$SubStr = 'smtp';
 		}
@@ -426,13 +426,13 @@ function GetMailList($Recipients){
 	$ErrMsg = _('Failed to retrieve mail lists');
 	$result = DB_query($sql,$db,$ErrMsg);
 	if(DB_num_rows($result) != 0){
-		
+
 		//Create the string which meets the Recipients requirements
 		while($myrow = DB_fetch_array($result)){
 			$ToList[]= $myrow['realname'] . '<'.$myrow['email'].'>';
 
 		}
-	
+
 	}
 	return $ToList;
 }
@@ -448,15 +448,12 @@ function ChangeFieldInTable($TableName, $FieldName, $OldValue, $NewValue, $db){
 	echo ' ... ' . _('completed');
 }
 
-function TableRows($k) {
-	// Outputs a html's table row with class (Odd|Even).
-	if($k) {//Is it an even table row?
-		echo '<tr class="EvenTableRows">';
-		return False;
+function CheckMods($ScriptName) {
+	if (file_exists('mods' . $ScriptName)){
+		return '/mods' . $ScriptName;
 	} else {
-		echo '<tr class="OddTableRows">';
-		return True;
+		return $ScriptName;
 	}
-}// End function TableRows().
+}
 
 ?>
