@@ -1,0 +1,172 @@
+<h1><a id="Manufacturing">Manufacturing</a></h1>
+
+<h2>Overview</h2>
+
+<p>Manufacturing - simply the combination of items to make other items can be implemented effective from webERP version 3.06.</p>
+
+<p>It has been possible to build bills of material for manufactured items for some time but the functionality that allows the materials to be issued from stock and manufactured items received into stock was introduced with 3.06. This is the purpose of the work order.</p>Functionality to add labour items to work orders and post recovery amounts to a profit and loss account for issues of labour to a work order was added after 3.09 (Sept 2008).
+<p>Functionality to set up a master production schedule and explode bills of materials into the components required to manufacture this demand and calculate the required orders to be placed/rescheduled (MRP) was added by Mark Yeager in March 2009.
+<p>
+
+<p>Bills of material now allow components to be defined as "auto-issue". Components set up to auto-issue, automatically create the issue transactions against the work order based on the bill of material quantities on the entry of receipts of a finished item against the work order. This decreases the administration of work orders for those components with relatively low value and limited possibility for any usage variance. It is not recommended that this feature be used on components where the final requirement for it could vary with for example yield differences between work orders. Work orders take the value of components and materials issued and divide this total cost between the output items to arrive at a cost per unit for all output items. The process for performing this calculation is called "closing" the work order.</p>
+
+<p>Functionality to automatically create works orders for manufactured items at a default factory when a sales order is entered for which there is insufficient stock after all sales orders are delivered and outstanding works orders and purchase orders received. This functionality needs to be turned on as an option under configuration settings. The email address of the production manager who will receive an advice of the work order being created can also be defined in the configuration settings.</p>
+
+<p>In dealing with serial or batch controlled items there are two ways that the system can operate. Either the serial numbers or batches must be created at the time the work order is created or they are entered at the time they are completed. If they are created at the time the work order is set up there is an option enter remarks about each lot or serial number about the manufacture or quality check data. To have serial numbers (or batches) defined at the work order entry stage this needs to be set in the configuration settings.</p>
+
+<p>The sequence of events in manufacturing an item is as follows:</p>
+
+<ul>
+    <li>Enter a Work Order - selecting all the output items required to be included in the work order costing. To ensure accurate costing it is recommended that work orders be created for single items wherever possible. The quantity required of the item and the date the items are required to be completed by must also be specified. If the output item is a controlled item - either serialised or lot/batch controlled - then there is also an option to enter the next serial number or batch reference which will be retrieved when entering the manufactured items received. If the configuration is set to create serial numbers (or batches) up at the time of the work order entry then there is an option to create serial numbers automatically based on the next serial number for the item defined in the stock master - all that is required is the number of serial numbers to create.</li>
+
+    <li>Receive Items against the work order. When manufactured items are completed they can be 'received' against the work order. Auto-issue components are automatically issued. On the first receipt of manufactured items against a work order, the cost of the item is recalculated by rolling up the cost from the bill of material. A cost adjustment is performed if the cost changes. If serial numbers (or batches) have been defined at the time of the work order entry these will list for checking off the items being received as finished against the work order</li>
+
+    <li>Issue components and raw materials to the work order</li>
+
+    <li>Once all components and raw materials are issued to the work order and no more manufactured items can be received against the work order it can be closed. The closing process recalculates the cost of the items manufactured on the work order and if weighted average costing is used a cost update will be processed.</li>
+</ul>
+
+<div class="floatright">
+    <a class="minitext" href="#top">⬆ Top</a>
+</div>
+
+<h2>General Ledger Integration Issues</h2>
+
+<p>When the "Create GL entries for stock transactions (at standard cost)" option in the company preferences form is set to "Yes", then GL journals are created as a result of work order transactions. When a work order is created there is no GL impact. The ways the GL is impacted as a result of manufacturing processes are as follows:</p>
+
+<ul>
+    <li>Receiving Manufactured Items - the stock of finished goods - as per the stock category record of the item being manufactured is debited with the recaclulated (rolled up) cost of the item - as at the time of the first receipt against the work order and credited against the work in progress account of the item (from its stock category record). Subsequent receipts of manufactured stock against the work order are debited to the stock account at the same cost as the first entry. Also, auto-issue components that get issued at the time of the receipt of the manufactured item also create GL entries to debit the work in progress account of the manufactured item's stock category WIP account. The credit goes against the stock account of the component's stock category. For manufactued and purchased items this will be a balance sheet account. However, if the item belongs to a labour type stock category then it is possible to select a profit and loss "recovery account" and for the credit for the value of labour "issued" to the work order to go to this profit and loss account.</li>
+
+    <li>Issuing components to the work order - the same entries as for auto-issue components above. i.e. debit the manufactured output item's WIP account and credit the component item's stock account. Labour items can also be auto issue.</li>
+
+    <li>Closing the work order - compares the quantity of components issued against the bill of material at the time of the first receipt of the manufactured items - the volume differences are evaluated at the standard cost (as at the time of the first receipt of manufactured item) to come up with the usage variance posted to the debit or credit of the manufactured item's stock category record's usage variance account. Then the cost of the items issued to the work order are compared against the cost as at the time the first receipt of the manufactured item was entered - differences here are taken to the price variances account in the manufactured item's stock category record. It is the closing of the work order that ensures that the costs received from the work order in the form of manufacturing output equals the cost of the inputs - the various components and materials issued to the work order</li>
+</ul>
+
+<table border="1">
+    <tr>
+        <th>Event</th>
+
+        <th>Debit</th>
+
+        <th>Credit</th>
+    </tr>
+
+    <tr>
+        <td>Components issued to the work order</td>
+
+        <td>WIP a/ct from stock category of manufactured item</td>
+
+        <td>Stock account from the category of the component item</td>
+    </tr>
+
+    <tr>
+        <td>Labour issued to the work order (identical to any other component except that labour type categories have profit and loss accounts for their stock account)</td>
+
+        <td>WIP a/ct from stock category of manufactured item</td>
+
+        <td>Labour recovery account from category of the labour type item</td>
+    </tr>
+
+    <tr>
+        <td>A completed manufactured item is received against the work order</td>
+
+        <td>stock account from the category of the manufactured item</td>
+
+        <td>WIP from the category of the manufactured item</td>
+    </tr>
+
+    <tr>
+        <td>
+            Work order closed and the difference between the WIP debits and credits from the above transactions is compared and the balance is either
+
+            <ul>
+                <li>Standard costing - taken to material usage variance from the stock category of the manufactured item</li>
+
+                <li>Weighted average costing - if some of the manufactured stock remains on hand the variance is taken to the stock account from the category of the manufactured item. The cost of the manufactured item is updated with the recalculated WAC</li>
+            </ul>
+        </td>
+
+        <td>
+            WIP /
+            <p>Usage variance
+        </td>
+
+        <td>
+            WIP /
+            <p>Usage variance OR stock
+        </td>
+    </tr>
+</table>
+
+<div class="floatright">
+    <a class="minitext" href="#top">⬆ Top</a>
+</div>
+
+<h2>Work Order Entry</h2>
+
+<p>The Work Order is the medium for issuing components/raw materials to. A running total of the costs issued to the work order is maintained. Work orders can be created that have any number of output items. Output items are restricted to only "manufactured" items as defined in the item entry form. The work order tracks the quantity of the output items received against the work order and checks that no more than the work order quantity originally set up, with an allowance including the over-receive proportion as defined for purchase orders, is received.</p>
+
+<p>Setting up a work order is performed from the Manufacuting tab -&gt; transaction entry -&gt; Work Order Entry. The work order number is automatically maintained and defaulted for new work orders as is the start date defaulted to the date the work order was created. Other data required includes:</p>
+
+<ul>
+    <li>Factory location - this is the inventory location which is used to retrieve the bill of materials for the items being manufactured on the work order - it is possible to have different bills of material for the same item depending on the inventory location. This inventory location is also used as the default location where materials for the work order are issued from and the default location where manufactured items are received into. It is possible to modify this during the issuing and receive processes.</li>
+
+    <li>Required By - this is the date when the manufacturing must be completed by</li>
+</ul>
+
+<p>With the above information completed then the items to be manufactured on the work order need to be selected. Normally this should just be a single item but it is possible to have multiple outputs against a single work order which is useful for by-products or processes with several output products. There are search facilities in the work order entry screen - only items flagged as manufactured in the item definition screen (Stocks.php) will show for selection. For each item selected the quantity required defaults to the EOQ - (Economic Order Quantity) defined in the item definition (Stocks.php) screen. If no EOQ is defined for the item then the quantity defaults to 0 and must be entered manually. The quantity required can be over-ridden and changed at any stage. Things are a bit different if the configuration option to defined serial numbers and lots at the time of work order creation is set. The quantity on the work order is calculated based on the number of serial numbers created or the sum of the quantity required for each batches entered. It is not possible to create a duplicate of an existing batch or serial number for the same item. (It is possible to have the same serial number or batch for different items.)</p>
+
+<p>The quantity received of the item is maintained automatically against the work order items. The balance of the work order yet to be manufactured and received shows as "on order" in the stock status inquiry. Similarly the quantity required of components as extended by the bill of material for work order items is shown as quantity demanded against component items stock status inquiries.</p>
+<p>
+
+<div class="floatright">
+    <a class="minitext" href="#top">⬆ Top</a>
+</div>
+
+<h2>Closing Work Orders</h2>
+
+<p>The selection of work orders allows the costing to be viewed. The work order costing shows all the issues of materials and components against the work order as compared against the bill of material requirments - as they were when the first reciept of manufactured stock was received against the work order. The variances on the work order in terms of the usage of components and the expected cost of materials/components issued to the work order are displayed. Closing the work order takes these variances and if general ledger integration to inventory is enabled then journals are created to write back the work in progress balance. Of course if there are several manufactured output items on the work order then the variances are apportioned between the items based on the quantity of the item received multipled by the expected cost as a proportion of the total expected cost of all items received on the work order. The detail of how the postings created depends on whether weighted average costing is used or standard costing.</p>
+
+<ul>
+    <li><b>Standard Costing:</b> Under standard costing the entire variances are taken to the profit and loss account. The usage variance is taken to the general ledger account specified in the manufactured item's stock category record. The cost variance is taken to the item's purchase price variance account on the stock category record.</li>
+
+    <li><b>Weighted Average Costing:</b> If not all the stock manufactured on the work order remains on hand - perhaps some is sold - then the variance relating to the proportion that is left on hand is taken to the value of stock e.g. a negative variance increases the value of stock. A stock cost adjustment is also created (irrespective of whether the GL integration is enabled).</li>
+</ul>
+
+<p>Closing the work order also deletes any existing serial number/lots that were defined at the time the work order was entered (where this conifguration option is enabled) but the serial number has not been entered as received/finished.</p>
+
+<div class="floatright">
+    <a class="minitext" href="#top">⬆ Top</a>
+</div>
+
+<h2>Material Requirements Planning (MRP)</h2>
+
+<p>It is one thing to plan for purchasing where the item being sold is the item to be purchased. Things get more complicated when the item being sold is manufactured - each of the components in the bill of material need to be available before the item being sold can be manufactured. Where the components in turn are also manufactured then the complexity compounds - this is the material requirements planning calculations are for.</p>
+
+<p>The author of the MRP - Mark Yeager has also contributed a manual page for his scripts which is linked from the manual contents page. For the curious, here (in the developers own words) are the basic steps of the MRP calculations: First, create a levels table by examining the bom table and finding a level number for each part; for instance, a part with nothing under it in a bom structure is a level 0 part, a part with 7 levels of parts below it is level 7. Next, I create an mrpsupplies table and an mrprequirements table. Supplies are from the current quantity on hand, open purchase orders, and work orders. Requirements are from open sales orders, worequirements records for open work orders, parts below their reorder levels, and demands the users can enter in an mrpdemands table for sales forecasting. Then I read through the levels table, starting at the highest level, and net the supplies and requirements for every part. If there is not enough supply, an mrpplannedorder record is created, and, if that part has parts below it in the bom structure, a requirement record is created for those lower level parts based on the net requirement for the top level part times the quantity per assembly for the component, with a schedule date based on the lead time for the part.</p>
+
+<p>The MRP system uses certain order modifiers to inflate the requirement quantity. The EOQ from stockmaster is used, together with the item shrinkage factor and pan size.</p>
+
+<p>There are a few programs to use before running an MRP.</p>
+
+<h4>Prerequisites</h4>
+
+<p>Each item that requires a shrinkage factor or pan size to be set up must be defined in the stock item maintenance form all items need to have an EOQ (Economic Order Quantity - the most efficient or required order quantity) set up.</p>
+
+<p>Pansize : This modifier is sometimes called the order multiple. It allows you to create planned orders in even multiples. This is especially useful if you are required by your suppliers to place orders in specific lot sizes. It is also a useful modifier is you have established your own production run sizes. This modifier causes MRP to inflate the required order quantity to an even increment of the pansize value. As with all modifiers you do need to be careful with this modifier as its use could lead to excess inventories</p>
+
+<p>From the Setup Menu - MRPCalendar.php creates a calendar of valid dates for manufacturing. That way if the system schedules a planned work order for a part for a Friday and a component has a lead time of 5 days, the system will schedule the component for the preceding Friday rather than the preceding Sunday. To create the calendar, you enter a starting and ending date range and can opt to exclude Saturdays, Sundays, or any other day of the week. After the original creation, individual days can be set to be valid or invalid manufacturing days.</p>
+
+<p>It is important to remember that this is "infinite capacity" MRP - i.e. orders will be created based on the demand requirements without any constraints on the ability/capacity to manufacture the order... currently the system is only implemented to calculate and report orders required and further analysis is required to figure out how to manufacture the required orders.</p>
+
+<p>From the Setup Menu the demand types need to be defined - by default webERP sets up a single Forecast demand type - which should be adequete for many businesses without further additional demand types. However, the system has ability to add additional demand types (the script MRPDemandTypes.php maintains a table of user-defined types of demands; for instance, F for Forecast or S for sales or whatever the user wants to use.</p>
+
+<p>There are two programs for users to enter the demands.</p>
+
+<p>MRPDemands.php can be used to enter single demands at a time. There is also a List Selection button that will list all demands for a part, if a part is entered, or all demands for a demand type, if no part is entered; when the parts are displayed, there are buttons to Edit or Delete. The Delete Demand Type button deletes all of the particular demand that is selected.</p>
+
+<p>MRPCreateDemands.php can be used to generate a Master Production Schedule. The user selects a demand type, stock category, inventory location, and then enters a date range for sales orders to include. The program will generate demands beginning from the Start Date For Distribution for the number of periods – either weeks or months – that the user selects. Parts can be excluded based on their total sales quantity or total sales dollar. A multiplier can be used to increase the quantity; an example from my company is that we wanted to forecast for a year and a half, so rather than look at the last year and a half sales, we looked at the most recent 6 months and multiplied that times 3. An example of the distribution is if in a certain sales period a part had a quantity of 15 and the Distribution Period was months and the Numbre of Periods was 6, the first three months of records would have a quantity of 3 each and the last 3 would have a quantity of two. Dates are calculated based on the manufacturing calendar.</p>
+
+<p>MRP.php runs the MRP itself. It is a regenerative process that purges all of the old files and creates new ones. There is a selection to chose the location for inventory. Days Leeway can be entered, so purchase order and work order dates scheduled within the leeway of the calculated need date are considered valid; the system does not actually change the dates in the work orders or purchase orders, but there is a report of those orders that the MRP estimates should be changed. And there are check boxes to select if MRP Demands, eoq, pan size, and shrinkage factor should be used. The MRP runs pretty quickly. The system I am running it against is not as large as most long running systems, but, with about 3,000 parts, a few hundred open sales orders and purchase orders, a half a dozen demands for assemblies that go 7 levels deep and have close to a thousand parts, plus individual demands for a few hundred other parts, I run this on a 3 and a half year old iMac with 1 gig of memory and it takes less than a minute. I also tried it on my web host, which is in Chicago, while I’m in New Jersey about 30 miles west of New York, and it took less than 20 seconds.</p>
+
+<p>The MRP doesn’t change or create webERP purchase orders or work orders. I think it might be dangerous to do that automatically, without some sort of human oversight. In the 2.0 version, I might have some sort of screen that will bring up what I call MRP Planned Orders and allow users to generate purchase orders or work orders from them. Right now, there are several reports to show the results of the MRP. MRPReschedules.php shows those work orders and purchase orders that the system calculates should have their dates changed; if there is no requirement for the orders, a CANCEL message is displayed. MRPPlannedWorkOrders.php and MRPPlannedPurchaseOrders.php show orders that the MRP calculates should be created. The reports can be created showing every individual order needed and the source of its requirement, or the orders can be consolidated into weekly or monthly orders. MRPReport.php shows the supply and demand for individual parts. On the demand side, it shows the type of order that created the demand, the top level part for that demand, and the order number – in the case of user entered MRP demands, the order number is system generated. The supply side shows orders that make up the supply and in the case of Planned orders created by the MRP, it shows the type of demand the supply was planned to cover and the order number for that demand. Finally, there is MRPShortages.php that shows those parts that have a demand that is greater than the supply. The dollar total might be a little misleading because if there is a sales order for an assembly without enough supply to cover it, that will show up on the report, but so will all of the components that are needed to build the assembly. I haven’t quite decided if I should exclude the components or not. <!-- Help End: Manufacturing --></p>

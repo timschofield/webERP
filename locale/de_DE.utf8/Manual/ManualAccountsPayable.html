@@ -1,0 +1,250 @@
+<a name="AccountsPayable"><font size="+3"><b>Kreditorenbuchhaltung</b></font></a>
+<br /><br />
+<font size="+2"><b>Übersicht</b></font>
+<br /><br />
+Eine primäre Funktion des Systems ist es, die Beträge zu überwachen, die das Unternehmen seinen Lieferanten schuldet, das sowohl in der Hauswährung wie in der Fremdwährung des Lieferanten. Das System zeigt Rechnung für Rechnung die Kontensalden an und verliert nicht die Übersicht darüber, woraus sich die Salden zusammensetzen - es ist ein Offene-Posten-System. Wenn Zahlungen an die Lieferanten erfasst und den Rechnungspositionen zugeordnet werden, werden Kursdifferenzen berechnet und in das Hauptbuch gebucht, das natürlich nur, wenn in den Unternehmenseinstellungen im Register Einstellungen die Integration der Kreditorenbuchhaltung mit der Hauptbuchhaltung aktiviert ist.
+<br /><br />
+<font size="+2"><b>Merkmale der Kreditorenbuchhaltung</b></font>
+<br /><br />
+<ul>
+<li>Gerasterter Kreditorenbericht, der die Zahlungsbedingungen der Lieferanten berücksichtigt und eine detaillierte Auswertung der Fälligkeit der Rechnungen ermöglicht</li>
+<li>Vollständige Bildschirmauswertung über ein Kreditorenkonto mit Aufriss jeder einzelnen gebuchten Rechnung und Gutschrift. Auswertungen zu geleisten Zahlungen zeigen an wie die Zahlungen den Rechnungen zu geordnet sind und die zugerechneten Kursdifferenzen zu jeder Rechnungen in Fremdwährung.</li> 
+<li>Offene Posten - die vollständige Darlegung der offenen Salden wird unterstützt</li>
+<li>Rückwirkende Neuzuordnungen von Zahlungen und / oder Gutschriften mit Neuberechnung der Kursdifferenzen und der dazugehörenden Hauptbuchbuchungen</li>
+<li>Eine beliebige Anzahl von Kontaktadressen kann zu jedem Lieferanten gepflegt werden</li>
+<li>Voll integriert mit der Bestandsführung, wobei Wareneingänge aus Bestellungen für die Erfassung von Kreditorenrechnungen ausgewählt werden können.</li>
+<li>Volle Aufzeichnung der Preisdifferenzen zwischen den Wareneingängen zu Standardkosten des Bestandes und den berechneten Istkosten zum jeweiligen Umrechnungskurs und Buchung in das Hauptbuch.</li>
+<li>Kreditorenrechnungen und -gutschriften können direkt auf mehrere Hauptbuchkonten erfasst und die Beträge zum Erfassungszeitpunkt aufgeteilt werden.</li>
+<li>Rechnungen und Gutschriften können als Beschaffungskosten erfasst und auf die Kosten des Lagerbestandes aufsummiert werden</li>
+<li>Positionen der Wareneingänge können ebenso für die Berechnung ausgewählt werden wie Lagermaterialien. Die Einkaufspreisabweichung wird dann auf das in der Auftragsposition hinterlegte Hauptbuchkonto gebucht.</li> 
+<li>Zahlungsläufe legen Zahlungspositionen für alle Kreditoren mit fälligen Beträgen an. Es ist möglich, strittige Rechnungen von einer Aufnahme in einen Zahlunglauf zurückzuhalten und dennoch den Aufwand in das Hauptbuch zu buchen.</li>
+</ul>
+
+<!-- Help Begin: Suppliers -->
+
+<font size="+2"><b>Lieferanten (Kreditoren) anlegen</b></font>
+<br /><br />
+Aus dem Hauptmenü - Register Kreditoren klicken Sie unter Datenpflege auf "Lieferant anlegen". Die neu erfassten Angaben werden nur in die Datenbank weggeschrieben, wenn der Benutzer auf die Drucktaste  "Neuen Lieferanten speichern" klickt. Wenn der Benutzer auf einen anderen Bildschirm wechselt, ohne diese Taste zu klicken, sind alle Eingaben verloren.
+<br /><br />
+<font size="+1"><b>Lieferantennummer</b></font>
+<br /><br />
+Dieses Feld wird als eindeutiger Schlüssel für den Lieferanten verwendet (maximal 10 Zeichen, Buchstaben und Zahlen). Das erlaubt eine schnellere Suche nach einem bestimmten Lieferanten als die Volltextsuche im Lieferantennamen, zum anderen wird dadurch die Datenbank kleiner gehalten, dass in allen Kreditorenbuchungen, Bestellungen, Transporten und Lieferantenkontakten immer nur durch diesen Schlüssel verwiesen wird. 
+Die Lieferantennummer wird ebenso im Buchungstext der Wareneingangsbelege vermerkt. Das System wandelt eingegebene Buchstaben automatisch in Großbuchstaben um. Die Verwendung von einfachen (') und doppelten (") Anführungszeichen, + und &amp; sowie \ ist nicht erlaubt.
+<br /><br />
+Hinweis: Eine Kreditorennummer kann nachträglich geändert werden, aber wegen des großen Umfanges an Änderungen, die im System notwendig sind um alle die Warenbewegungen, Bestellungen, Lieferantenkontakte und Belege zu aktualisieren, könnte dies einen merklichen Rückgang der Systemleistung bedeuten. Die Möglichkeit, eine Lieferantennummer zu ändern ist deshalb im Werkzeugmenü Z_index.php enthalten, die URL muss manuell in den Browser eingegeben werden und steht nur dem Systemverwalter zur Verfügung. Solche Änderungen sollten nur in Zeiten ausgeführt werden, wenn keine anderen Benutzer am System arbeiten.
+<br /><br />
+<font size="+1"><b>Lieferantenname</b></font>
+<br /><br />
+Der Name des Lieferanten wird in großem Umfang von Suchfunktionen verwendet. Die Verwendung des vollen Namens und in ordentlicher Groß- und Kleinschreibung wird empfohlen. Der Name darf bis zu 40 Zeichen lang sein.
+<br /><br />
+<font size="+1"><b>Adresszeilen 1, 2, 3 und 4</b></font>
+<br /><br />
+Dies ist die Anschrift, an die Kontoauszüge und Zahlungsmitteilungen gesendet werden. Diese Felder können bis zu 40 Zeichen enthalten und sind optional.
+<br /><br />
+<font size="+1"><b>Lieferant seit</b></font>
+<br /><br />
+Der Vorschlagswert ist das aktuelle Datum am Ort des Webservers. Es handelt sich um ein rein nachrichtliches Feld und kann in extern zu entwickelnden Berichten mit ausgewertet werden. Jedes gültige Datumsformat, das in der config.php als DefaultDateFormat definiert ist, kann hier verwendet werden.
+<br /><br />
+<font size="+1"><b>Bankangaben, Bankreferenz</b></font>
+<br /><br />
+Diese Felder werden verwendet bei der Ausgabe der Zahlungsdatei an ein Bankzahlungssystem - diese Angaben erhält der Zahlungsempfänger als Zahlungsbezug auf seinem Bankauszug. Diese Felder können bis zu 12 Zeichen lang sein.
+<br /><br />
+<font size="+1"><b>Bankkontonummer</b></font>
+<br /><br />
+Dieses Feld wird für die Ausgabe einer Zahlungsdatei in ein Bankzahlungssystem verwendet. Die Bankkontonummer ist die Kontonummer, auf die der Betrag überwiesen wird, wenn der Zahlungslauf ausgeführt wird. Bankkontonummern können bis zu 16 Zeichen lang sein.
+<br /><br />
+<font size="+1"><b>Zahlungsbedingung</b></font>
+<br /><br />
+Die Zahlungsbedingungen sind die Konditionen, unter denen der Handel mit dem Lieferanten stattfindet. Die entsprechende Zahlungsbedingung kann aus einer Drop-Down-Liste ausgewählt werden. Wenn erforderlich, können aus dem Hauptmenü im Register Einstellungen unter Debitoren/Kreditoren neue Zahlungsbedingungen angelegt werden.
+<br /><br />
+Es gibt keine Beschränkungen, die Zahlungsbedingungen für einen Lieferanten zu einer beliebigen Zeit zu ändern. Das System ermittelt das Fälligkeitsdatum einer Rechnung zum Zeitpunkt der Rechnungserfassung auf der Basis der zu diesem Zeitpunkt dem Lieferanten zugeordneten Zahlungsbedingung. Das Fälligkeitsdatum kann manuell überschrieben werden, wenn spezielle Vereinbarungen zu einer bestimmten Rechnung das erfordern.
+<br /><br />
+<font size="+1"><b>Lieferantenwährung</b></font>
+<br /><br />
+Dies ist ein Mussfeld, welches die Währung festlegt, in der die Kreditorenrechnungen eingehen. Alle Rechnungen und Gutschriften, die für den Kreditor erfasst werden, verwenden diese Währung und die Umrechnungskurse werden von den in der Währungstabelle hinterlegten Wechselkursen vorgegeben, die im Hauptmenü Einstellungen unter Allgemeines bearbeitet werden.
+<br /><br />
+Hinweis: Beachten Sie, dass der Kurs im Beleg fortgeschrieben wird, und nicht in der Währung. Wenn ein Lieferant die Währung ändert, in der er die Rechnungen ausfertigt, ist es möglich, dass Zahlungen in der neuen Währung gegen Rechnungsbeträge in der alten Währung ausgezuffert werden, was zu hohen Kursdifferenzen führen kann. Es gibt dazu keine Fehlerprüfung und wenn ein solcher Fall einmal auftritt, sollte Vorsicht angewendet werden, damit Rechnungen in derselben Währung ausgeglichen werden, in der sie zunächst eingebucht wurden. Mit dem Umrechnungskurs zwischen der neuen und der alten Währung wird der äquivalente Betrag in der alten Währung ermittelt, für die Buchung wie für den Ausgleich.
+<br /><br />
+<font size="+1"><b>Zahlungsmitteilung</b></font>
+<br /><br />
+Wenn für den Lieferanten das Kennzeichen Zahlungsmitteilung erforderlich gesetzt ist, erstellt der Zahlungslauf ein Avis, aus dem die Rechnungen und Gutschriften ersichtlich sind, die bei dieser Zahlung zusammengefasst werden.
+<br /><br />
+Diese Funktion ist momentan noch nicht eingerichtet.
+<br /><br />
+<font size="+1"><b>Steuergruppe</b></font>
+<br /><br />
+Die Steuergruppe bestimmt die Steuern die der Lieferant an die Finanzbehörde abführt. Es ist dieses Feld in Kombination mit der Steuerregelung, welche die Prozentsätze von Steuern bestimmt, die in der automatischen Steuerberechnung bei Kreditorenrechnungen und -gutschriften berücksichtigt werden. Diese können bei der Rechnungserfassung erforderlichenfalls überschrieben werden.
+<br /><br />
+
+<!-- Help End: Suppliers -->
+
+<!-- Help Begin: SelectSupplier -->
+
+<font size="+2"><b>Lieferantensuche</b></font>
+<br /><br />
+Für die meisten Vorgänge, die sich auf einen bestimmten Lieferanten beziehen, muss dieser zuvor ausgewählt werden. Das betrifft sowohl alle Lieferantenauswertungen wie auch die Erfassung von Bestellungen, Eingangsrechnungen und Kreditorengutschriften. Es ist typisch für webERP, dass ein Kunde, ein Material oder ein Lieferant ausgewählt werden muss, bevor damit im jeweiligen Bereich gearbeitet wird. Aus diesem Grunde hat das Menü am oberen Bildschirmrand Hotkeys zu diesen Funktionen.
+<br />
+Um einen Lieferanten auszuwählen - von jedem Bildschirm aus - müssen Sie nur die ALT-Taste und die Ziffer 4 drücken. Wenn Sie den Internet Explorer verwenden, müssen Sie anschließend noch die Entertaste drücken.
+<br /><br />
+Im allgemeinen geht - wie auch bei den anderen Suchbildschirmen - die Einfügemarke direkt zur Lieferantennummer wo Sie einzelne oder Folgen von Zeichen aus der Lieferantennummer eingeben können. Haben Sie so viel eingegeben wie Sie wissen klichen Sie auf die Taste "Suchen", dadurch werden alle Lieferanten ausgewählt, in deren Lieferantennummer das (die) angegebene(n) Zeichen vorkommen.
+<br />
+Wenn nur ein Lieferant auf die Auswahl passt, wird dieser automatisch für die Arbeit damit ausgewählt. Wenn mehrere Lieferanten mit dem selben Suchbegriff existieren, werden zunächst ihre Angaben mit vollem Namen, Währung und Anschrift angezeigt. Über Auswahlknopf mit der Lieferantennummer wählen Sie dann den jeweiligen Lieferanten zum Bearbeiten aus.
+<br />
+Anstelle der Lieferantennummer ist die gleiche Vorgehensweise auch für den Lieferantennamen möglich, tippen Sie Ihre Angaben dazu in das in das Feld "Text im Feld Name".
+<br /><br />
+<!-- Help End: SelectSupplier -->
+
+
+<!-- Help Begin: SupplierContacts -->
+
+<font size="+2"><b>Lieferantenkontakte</b></font>
+<br /><br />
+Es kann eine beliebige Anzahl von Lieferantenkontakten für jeden Lieferanten definiert werden. Diese Einrichtung erlaubt es, dass Telefonnummern und Email-Adressen mehrerer Verkäufer beim Lieferanten bereitgehalten werden können. Bestellungen können direkt an eine beliebige der definierten Kontakt-Email-Adressen weitergeleitet werden.
+<br /><br />
+Wie bei fast allen Vorgängen, die mit einem bestimmten Lieferanten zu tun haben, muss zuerst die Lieferantennummer ausgewählt werden. Wenn ein Lieferant ausgewählt ist, zeigt das Menü alle die für die Arbeit mit dem Lieferanten verfügbaren Optionen an. Unter Kreditorenpflege wählen Sie Kontaktangaben ändern/löschen. Der Bildschirm zeigt die bereits für den Lieferanten definierten Kontaktangaben in einer Liste an. Jeder einzelne kann durch Klicken auf den Link Löschen in der rechten Spalte neben den Kontaktangaben entfernt werden. Vorhandene Angaben können nach dem Klicken auf den Link Bearbeiten geändert werden. Dabei werden die Angaben in die Eingabefelder übernommen und können dort abgeändert werden. Dieser Bildschirm erlaubt die Erfassung von:
+<br />
+<ul>
+<li>Name - bis zu 30 Zeichen</li>
+<li>Position - bis zu 30 Zeichen</li>
+<li>Telefon - bis zu 30 Zeichen</li>
+<li>Fax - bis zu 30 Zeichen</li>
+<li>Handy - bis zu 30 Zeichen</li>
+<li>Email - bis zu 55 Zeichen</li>
+</ul>
+Lieferantenkontakte sind ein geeigneter Platz, um die Ansprechpartner bei einem Lieferanten zu hinterlegen, damit andere im Unternehmen auch die Funktionen der einzelnen Personen beim Lieferanten kennen. Die Email-Adressen werden auch verwendet, wenn Sie Bestellungen an den Lieferanten mit Email versenden, die verwendete Email-Adresse kann aus der Liste der Kundenkontakte ausgewählt werden.
+<br />
+Zum gegenwärtigen Zeitpunkt ist es noch nicht notwendig, irgendwelche Details im Bildschirm Lieferanten-Kontakte einzugeben, wird aber empfohlen.
+<br /><br />
+
+<!-- Help End: SupplierContacts -->
+
+<!-- Help Begin: SupplierInvoices -->
+
+<font size="+2"><b>Kreditorenrechnungen erfassen</b></font>
+<br /><br />
+Die Erfassung von Eingangsrechnung verlangt, dass zuerst der Lieferant ausgewählt wird. Wenn ein Lieferant ausgewählt ist, erscheint im Menü unter Vorgänge Kreditorenrechnung erfassen. Der unten erläuterte Ablauf trifft in ähnlicher Weise auch für Kreditorengutschriften zu.
+In jedem Falle verlangt die Erfassung von Kreditorenrechnungen (und -Gutschriften):
+<ul>
+<li>das Rechnungsdatum</li>
+<li>den Rechnungsbezug</li>
+<li>den Umrechnungskurs</li>
+</ul>
+<font size="+1"><b>Rechnungsdatum</b></font>
+<br /><br />
+Das ist das Datum, aus dem webERP die Zugehörigkeit zur Buchungsperiode in der Buchhaltung für diesen Beleg bestimmt - für den Fall dass die Buchhaltungsschnittstelle aktiviert ist. Das ist auch der Tag, von dem aus - in Abhängigkeit von der Zahlungsbdingung des Lieferanten - die Frist bis zur Fälligkeit beginnt. Das Fälligkeitsdatum wiederum wird vom Zahlungslauf verwendet, um alle fälligen Beträge zusammenzufassen und aufzulisten. Das System verwendet diese Angaben, um eine Liste für die Erstellung von Überweisungen oder den Druck von Schecks zu erstellen.
+<br /><br />
+<font size="+1"><b>Rechnungsbezug</b></font>
+<br /><br />
+Das ist die Rechnungsnummer des Lieferanten oder ein entsprechendes Alpha-Kennzeichen, dass die Rechnung für den Lieferanten eindeutig kennzeichnet. webERP prüft, dass dieselbe Rechnungsnummer nicht schon einmal eingegeben wurde, das soll vermeiden, dass Sie Eingangsrechnungen mehrfach erfassen und möglicherweise zweimal bezahlen.
+<br /><br />
+<font size="+1"><b>Umrechnungskurs</b></font>
+<br /><br />
+Dieser Umrechnungskurs wird verwendet, um Rechnungsbeträge die in einer anderen Lieferantenwährung erfasst werden für die Hauptbuchhaltung in die Hauswährung des Unternehmens umzurechnen. Der Umrechnungskurs wird in der Rechnung gespeichert und dient zum Zeitpunkt der Zahlung zur Bestimmung der realisierten Kursdifferenzen. Beachten Sie, dass die Kursdifferenzen nur ermittelt werden, wenn die Zahlungen den Rechnungen zugeordnet werden. Wenn die Integration der Kreditorenbuchhaltung mit der Hauptbuchhaltung aktiv ist, werden für die Kursdifferenzen auch Hauptbuchbelege erzeugt.
+<br /><br />
+<font size="+1"><b>Buchungstext</b></font>
+<br /><br />
+Buchungstexte sind optional, sie erscheinen in der Lieferantenauswertung zur Rechnung.
+<br /><br />
+<font size="+1"><b>Verschiedene Arten von Rechnungspositionen</b></font>
+<br /><br />
+Abhängig von der Art der Rechnungspositionen und den eingekauften Waren gibt es unterschiedliche Möglichkeiten, wie die Rechnungsbeträge erfasst werden.
+<br />
+<ul>
+<li>Beträge für Lagermaterialien - diese werden gegen das Wareneingangskonto gebucht</li>
+<li>Beträge für sonstige Aufwendungen - diese werden gegen unterschiedlichen Aufwandskonten gebucht</li>
+<li>Beträge für Bezugsnebenkosten müssen auf alle Materialien der Lieferung aufgeteilt werden</li>
+</ul>
+Kreditorenrechungen können einzelne oder alle der angeführten Auswahlmöglichkeiten aufweisen.
+<br /><br />
+<font size="+1"><b>Erfassung der Rechnungsbeträge für Bestände</b></font>
+<br /><br />
+Alle Lagermaterialien müssen als Wareneingang zur Bestellung erfasst werden. Im Ergebnis wird ein Wareneingangsbeleg angelegt. Die eingegangenen Waren werden im webERP sowohl durch die Auswertung der Warenbewegungen als auch durch den Wareneingangsbeleg ausgewiesen. Wenn die Hauptbuchintegration aktiv ist, wird eine Habenbuchung auf dem Wareneingangsverrechnungskonto vorgenommen, das in den Unternehmenseinstellungen festgelegt ist, und der Bestand wird zu Standardkosten im Soll gebucht. Die Bestellauswertung zeigt zu den Bestellpositionen jeweils die eingegangenen Mengen an. Die Erfassung einer Eingangsrechnung für Lagermaterial erfordert, dass die Warenbewegungssätze für jedes Material den Rechnungspositionen zugeordnet werden. Für die Suche nach nicht berechneten Wareneingängen eines Lieferanten steht ein gesondertes Bild zur Verfügung. Dieses Bild kann direkt von der Erfassung einer Kreditorenrechnung aufgerufen werden.
+<br /><br />
+Die Liste der nicht berechneten Wareneingänge wird zusammen mit den bereits berechneten Mengen (von anderen Rechnungen) und dem Bestellpreis angezeigt. Der vom Lieferanten berechnete Istpreis sowie die vom Lieferanten berechnete Menge muss zum Wareneigang erfasst werden. Damit wird es möglich, den berechneten Betrag unmittelbar dem Wareneingang zuzuordnen. Schließlich werden, wenn die Rechnung verbucht wird, die Istkosten (zum Rechnungskurs in die Hauswährung umgerechnet) gegen den Wareneingang gebucht. Bei der Erfassung der Rechnung werden für alle Wareneingänge, die zum berechneten Betrag zuzuordnen sind, die Preisabweichungen berechnet und in das Hauptbuch gebucht (wenn die Hauptbuchintegration aktiv ist).
+<br /><br />
+Wenn die Hauptbuchintegration aktiv ist, werden die Beträge zu den Wareneingängen im Hauptbild der Rechnungserfassung summiert.
+<br /><br />
+<font size="+1"><b>Erfassung von Transportrechnungen</b></font>
+<br /><br />
+Transportrechnungen für Fracht, Zölle und Rollgeld muss, damit diese den Materialkosten zugerechnet werden können, zu den Transporten erfasst werden. Die Transporte fassen diese Kosten zunächst zusammen, bevor diese auf die Lieferpositionen aufgeteilt und die entsprechenden Preisabweichungen berechnet werden. 
+<br /><br />
+Wenn Beträge für das Lagermaterial und Beträge für die Lieferung anfallen, wird die Summe aus beidem als Rechnungssumme zusammengefasst.
+<br /><br />
+<font size="+1"><b>Erfassung von sonstigem Aufwand</b></font>
+<br /><br />
+Das Erfassungsbild unterscheidet sich in Abhängigkeit davon, ob die Hauptbuchintegration der Kreditorenbuchhaltung aktiv ist. Wenn die Hauptbuchintegration NICHT aktiv ist, gibt es lediglich ein Feld, in das Sie den Rechnungsgesamtbetrag eingeben. Wenn die Hauptbuchintegration aktiv ist, erscheint eine dritte Taste "Hauptbuchkontierung angeben". Die Summe der drei Eingabemöglichkeiten - Hauptbuchkontierungen, Transporte und zugeordnete Wareneingänge - wird als Rechnungsgesamtbetrag zusammengefasst, es gibt keine Gelegenheit, diese nochmals gesondert einzugeben.
+<br /><br />
+Wenn Sie auf die Taste "Hauptbuchkontierung angeben" klicken, wird ein weiterer Bildschirm geöffnet, der die Angabe des Hauptbuchkontos, des Buchungsbetrages für dieses Konto und eines Buchungstextes ermöglicht. Das Hauptbuchkonto kann entweder direkt angegeben oder aus einer Liste ausgewählt werden. Es ist auch möglich, negative Beträge einzugeben, die dann im Haben gebucht werden, so dass auch Erstattungen vielleicht für zurückgegebene Paletten oder Austauschteile mit der Rechnung erfasst werden können. Es gibt keine Begrenzung in der Anzahl der Rechnungspositionen.
+<br /><br />
+<font size="+1"><b>Vorsteuer</b></font>
+<br /><br />
+Die in einer Kreditorenrechnung enthaltene Steuer wird normalerweise automatisch auf der Basis der folgenden Regeln berechnet:
+<ul>
+<li>Die Steuergruppe des Lieferanten wird aus dem Lieferantenstammsatz ermittelt. Diese übergibt dem System den (die) zu berücksichtigenden Steuerschlüssel.</li>
+<li>Die Betriebsstätte des Benutzers, der die Rechnung erfasst, übergibt dem System die Information, welche Steuerregelung zu berücksichtigen ist.</li>
+<li>Das System enthält eine Tabelle mit den Steuerprozentsätzen die für die Steuerregelung und die Steuergruppe des Lieferanten in Frage kommen.</li>
+<li>Die Prozentsätze aus der oben genannten Regel werden auf den Rechnungsgesamtbetrag angewendet. Die Reihenfolge, in der Steuern auf vorangegangene Steuern ermittelt werden, werden aus den Steuergruppe des Lieferanten bestimmt.</li> 
+</ul>
+Wenn die automatische Berechnung nicht funktioniert, kann der Steuerbetrag noch manuell für jeden relevanten Steuerschlüssel eingegeben werden. Um die Steuern manuell anzugeben, gibt es ein Auswahlfeld mit den Alternativen automatisch und manuell, in welchem Sie "manuell" auswählen und dann "Steuer neu rechnen" drücken. Die Felder für die Prozentsätze verschwinden und Felder für die Steuerbeträge erscheinen für jeden Steuerschlüssel.
+<br /><br />
+<font size="+1"><b>Die Kreditorenrechnung verbuchen</b></font>
+<br /><br />
+Wenn Sie auf "Rechnung buchen" klicken, wird die Rechnung unmittelbar auf dem Kreditorenkonto verbucht, die erforderlichen Hauptbuchpositionen werden erstellt, die Wareneingangsbelege um die berechneten Mengen und gegebenenfalls um die Transportgebühren ergänzt. Rechnungen mit Nullbeträgen kann dass System nicht erfassen, das System prüft, dass zumindest Rechnungsbeträge vorhanden sind. Außerdem wird geprüft, dass Sie eine Rechnungsnummer und ein Datum eingeben. Wie bei jeder Buchungserfassung in webERP ist keine nachfolgende Bearbeitung nötig, weil mit dem Klicken dieser Taste alle Informationen vollständig übernommen werden.
+<br /><br />
+<font size="+1"><b>
+Hauptbuchbuchungen zu Einkaufsrechnungen</b></font>
+<br /><br />
+Dieser Abschnitt mag ein wenig komplex sein. Trotzdem ist das Verständnis dessen, was in der Hauptbuchhaltung geschieht gerade in Bezug auf die Positionen von Eingangsrechnungen im Hauptbuch notwendig, um zu verstehen, wie die verschiedenen Konten abzustimmen sind.
+<br /><br />
+Jede der drei Arten von Positionen in einer Kreditorenrechnung werden im Haptbuch auf unterschiedliche Weise gebucht:
+<ul>
+<li>Die Aufwandspositionen, um mit dem Einfachsten zu beginnen, sind die Nettobeträge die im Soll auf das ausgewählte Hauptbuchkonto gebucht werden.</li>
+<li>Transportaufwand - diese werden im Soll auf dem in den Unternehmenseinstellungen hinterlegten Wareneingangs-Verrechnungskonto gebucht. Der Grund dafür ist, dass die Transportaufwendungen sich auf die Anlieferung im Ganzen beziehen und auf die verschiedenen angelieferten Materialien aufgeteilt werden. Als solche führen sie zusammen mit den Aufwendungen für das Material zu den Gesamtkosten des Materials im Vergleich zu den Standardkosten odern dem gewichteten Durchschnitt. Wenn Anlieferungen abgeschlossen werden, berechnet das System die Gesamt-Preisabweichungen unter Verwendung der hier erfassten Transportkosten und den eingegebenen Rechnungsbeträgen für die Waren.</li>
+<li>Die Erfassung von Rechnungen zum angelieferten Bestand. webERP besteht auf die Zuordnung von Eingangsrechnungen zu Wareneingangsbelegen, die zum Zeitpunkt der Warenanlieferung zur Bestellung angelegt wurden. Der Grund ist, dass sichergestellt wird, dass die Lieferanten nicht über-beliefern und Rechnungen jeweils nur Wareneingängen erfasst werden können, damit das Unternehmen nicht für Waren bezahlt, die nie angeliefert wurden. Die Behandlung im Hauptbuch ist geringfügig unterschiedlich davon, ob die Waren gemeinsam mit anderen Waren zu einer Anlieferung (Transport) gehören, deren Kosten gesondert erfasst und aufgeteilt werden, oder nicht.
+    <ul>
+    <li>Wenn KEINE Transportkosten betroffen sind, wird der Einkaufspreis zu dem in der Rechnung angegebenen Währungsschlüssel und Kurs mit den Standardkosten oder dem Duchschnittkosten des Artikels zum Zeitpunkt des Wareneinganges verglichen. Als die Waren eingegangen sind, hat das System den Bestand im Soll zu Standard bzw. Durchschnittskosten gebucht und die Gegenbuchung im Haben auf dem in den Unternehmenseinstellungen hinterlegten Wareneingangs-Verrechnungskonto vorgenommen. Daher muss bei der Erfassung der Eingangsrechnung dieser Posten in der ursprüglichen Höhe ausgeglichen werden. Die Differenz zwischen diesem Wert und dem tatsächlichen Rechnungsbetrag umgerechnet zum Tageskurs (oder dem eingegebenen Umrechnungskurs) wird bei einer Bewertung zu Standardkosten in voller Höhe auf das in den Einstellungen der Warengruppe hinterlegte Preisabweichungskonto gebucht ODER bei Bewertung zu Durchschnittskosten auf das - wieder über die Warengruppe gefundene - Bestandskonto. Bei einer Bewertung zum gewichteten Durchschnitt ist dies auch der Auslöser dafür dass der Materialpreis geändert wird, indem diese Differenz durch den Gesamtlagerbestand des Artikels dividiert wird. Falls nur noch weniger als die berechnete Menge am Lager vorhanden ist, vielleicht wurden einige vor der Erfassung der Rechnung weiterverkauft, wird nur der auf die Lagermenge bezogene Anteil der Differenz auf dem Bestandskonto bebucht, der Unterschiedsbetrag auf dem Preisabweichungskonto. Es ist doch ziemlich komplex mit dem gewichteten Durchschnitt!</li>
+    <li>MIT Berücksichtigung von Transportkosten wird der Gesamtbetrag im Soll auf dem Wareneingangs-Verrechnungskonto gebucht. Abweichungen werden erst berechnet, wenn alle Transportkosten aus der Anlieferung erfasst wurden und der Benutzer die Anlieferung ausdrücklich "abschließt".</li>
+    </ul>
+</li>
+</ul>
+<!-- Help End: SupplierInvoices -->
+
+<!-- Help Start: SupplierPayments -->
+
+<br /><br />
+<font size="+2"><b>Kreditorenzahlungen</b></font>
+<br /><br />
+Die Erfassung von Kreditorenzahlungen erfordert zunächst die Auswahl eines Lieferanten. Wenn ein Lieferant ausgewählt ist, zeigt das Menü auch den Punkt "Zahlungsausgang erfassen". Als Zahlwährung wird die Währung des Lieferanten aus dem Lieferantenstammsatz angenommen. Diese Währung wird auf dem Bild angezeigt.
+<br /><br />
+In jedem Falle erfordert die Erfassung einer Kreditorenzahlung die Eingabe von:
+<ul>
+<li>dem Bankkonto, von dem die Zahlung erfolgt</LI>
+<li>dem Zahlungstag</LI>
+<li>einem Zahlungsbezug</LI>
+<li>dem Umrechnungskurs, zu dem die Währung des Kunden eingekauft wird,</LI>
+<li>dem Zahlbetrag in der Währung des Lieferanten.</LI>
+<li>dem Skontobetrag der gezogen wird in der Währung des Lieferanten.</LI>
+</ul>
+<font size="+1"><b>Auswahl des Bankkontos</b></font>
+<br /><br />
+Die eingerichteten Bankkonten stehen in einem Auswahlkästchen zur Auswahl bereit. webERP unterstützt keine Bankkonten in mehreren Währungen, so dass der Umrechnungskurs immer der Kaufkurs der Fremdwährung des Lieferanten gegenüber der Hauswährung des Unternehmens ist. Das ausgewählte Bankkonto bekommt die Buchung für die Zahlung, und wenn die Hauptbuchintegration aktiv ist, werden die Buchungen auch auf dem Hauptbuchkonto zu diesem Bankkonto vorgenommen. Bankkonten werden über Hauptmenü &rarr; Einstellungen &rarr; Allgemeines &rarr; Hausbank-Konten eingerichtet.
+<br /><br />
+<font size="+1"><b>Zahldatum</b></font>
+<br /><br />
+Das ist das Datum, über das webERP die Buchungsperiode für die Buchung in der Hauptbuchhaltung bestimmt - sollte die Hauptbuchintegration aktiviert sein. Dieses Datum wird in den Kreditorenauswertungen und der Liste der Bankbuchungen angezeigt.
+<br /><br />
+<font size="+1"><b>Buchungstext</b></font>
+<br /><br />
+Jeder Text bis zu einer Länge von 50 Zeichen
+<br /><br />
+<font size="+1"><b>Umrechnungskurs</b></font>
+<br /><br />
+Dieser Kurs wird verwendet, um den Betrag in der Währung des Lieferanten einzukaufen. Der Kurs wird in der Zahlung fortgeschrieben und bildet die Grundlage für die Berechnung der Kursdifferenzen gegenüber dem Kurs zum Zeitpunkt der Erfassung der Rechnung. Beachten Sie, dass die Kursdifferenzen erst berechnet werden, wenn die Rechnungen mit den Zahlungen ausgeglichen werden.
+<br /><br />
+<font size="+1"><b>Zahlbetrag</b></font>
+<br /><br />
+Das ist der Betrag in der Fremdwährung, der an den Lieferanten bezahlt wird. Die Hauptbuchpositionen (wenn die Integration aktiv ist) sind im Soll das Summenkonto für Verbindlichkeiten und im Haben das oben ausgewählte Bankkonto.
+<br /><br />
+<font size="+1"><b>Skontobetrag</b></font>
+<br /><br />
+Der Betrag in der Fremdwährung, den der Lieferant als Skonto gestattet. Wenn die Hauptbuchintegration aktiv ist, wird dieser Betrag auf das in den Unternehmenseinstellungen hinterlegte Skontoertragskonto gebucht.

@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=gb2312">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Win32)">
+	<META NAME="AUTHOR" CONTENT="Exson Qu">
+	<META NAME="CREATED" CONTENT="20110215;11091300">
+	<META NAME="CHANGEDBY" CONTENT="Exson Qu">
+	<META NAME="CHANGED" CONTENT="20110215;12000200">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin: 2cm }
+		P { margin-bottom: 0.21cm }
+		A:link { so-language: zxx }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="zh-CN" DIR="LTR">
+<P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=5 STYLE="font-size: 20pt"><B>价格与折扣</B></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><SPAN LANG="en-US"><B><BR></B></SPAN><SPAN LANG="en-US"><BR></SPAN></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=5 STYLE="font-size: 20pt"><B>概述</B></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=3><SPAN LANG="en-US"><BR><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>价格由销售类型和币种决定。当设置顾客账户时，适用于此顾客的销售类型就被定义了，同时定义的还有开发票给顾客时适用的货币。可以定义的销售类型数量是没有
+限制的，因此可以维护无穷数量的价格表。进一步的灵活性在于，需要的时候，可以针对顾客制定价格，通常情况下，价格可以针对顾客制定，但是也可以针对顾客
+的分公司制定价格。如果价格标记为仅仅适用于顾客的分公司，它将不会适用于销往此公司的其他销售。更大的灵活性在于折让可以通过折让矩阵定义（参见本文后
+述）。如果商品有额外折让，可以在输入订单时输入。用户也可以在输入订单时手动更改价格。销售分析记录允许根据销售类型进行报告，因此此分析会报告特定价
+格安排的销量。</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4 STYLE="font-size: 16pt"><B>价格生效日期</B></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=3><SPAN LANG="en-US"><BR></SPAN></FONT><FONT SIZE=4><SPAN LANG="en-US"><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>对于很多企业而言，价格变化的生效日期通常是在将来的某个时间开始生效，而这个信息会提前让顾客知道。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">webERP</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>在</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">2010</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>年新增了此功能。在输入价格的
+时候，必须指定生效日期。如果价格有效期希望是持续有效，那么就不必指定结束日期。任何以后输入的没有结束日期的价格均会取代以前的输入。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>如果输入的价格有结束日期，那么它将优先于没有结束日期的价格</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>也就是在输入的订单日期落在的价格有效期内。在决定要使用的价格时，会使用当前服务器的日期来与价格的日期范围进行比较。</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4 STYLE="font-size: 16pt"><B>维护价格</B></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=3><SPAN LANG="en-US"><BR><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>要维护价格，首先要选择商品。这可以通过在库存模块，选择商品来完成，或者从任何页面选择商品（物料</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">),</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>然后再</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">&quot;</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>变更或者删除商品或者商品价格&ldquo;来完成。进行上述选择后，要进行定价的商品就会出现，这时候有&rdquo;维护价格&ldquo;链接。价格页面此时会显示销售类型和为此商品定义的价格的所有货币。在此界面，可以删除或者修改已有的价格，也可以输入新价格。可以对于给定的销售类型和币种输入很多价格，设置不同生效和截止日期。通常情况下，价格的截止日期可以留空。可以随后输入没有截止日期的价格，这些价格会在生效日期开始时被使用。当输入价格的日期范围固定</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>这些价格将会优先于没有截止日期的默认价格。当新输入的价格有效期固定并且与以前输入的价格日期重合时，系统会自动调整价格的截止日期。前面输入的价格会被调整为截止日期为新价格的开始日期。这确保在给定的日期
+范围内，只会返回一个价格。</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=3><SPAN LANG="en-US"><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>要为指定的顾客或者顾客的分公司输入价格，必须首先选择顾客。（参加选择顾客）。然后到选择一个商品界面，在选择了一种商品后，会显示一个链接来维护特殊的价格
+&ldquo;为此顾客的特殊定价</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>顾客代码&rdquo;。
+点击此链接，</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">webERP</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>会显示销售类型对应的正常价格，所选顾客的货币，以及任何为此商品</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">/</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>顾客组合定义的特殊价格。如果没有定义特殊价格，此页面仅仅显示正常价格，以及此商品没有定义特殊价格的提示，并允许输入特殊价格。如果存在特殊价格，这些价格可以被删除或者变更。有很多分公司的顾客可以有为每个分公司设置特殊价格或者仅一个分公司有一个特殊价格，不同于顾客的特殊价格。只适用于一个分公司的价格不会用到其他分公司。同时，为此顾客账户设置了一个
+特殊价格但是没有指定分公司，那么此价格将适用于所有的分公司除非该分公司指定了特殊的价格。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=3><SPAN LANG="en-US"><BR><BR><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>价格可以在任何时间修改。然而，价格变更不会自动展开到该商品的将付运的销售订单，需要时这些订单必须手动修改。</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=5 STYLE="font-size: 20pt"><B>价格维护工具</B></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=3><SPAN LANG="en-US"><BR></SPAN></FONT></SPAN></FONT><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">webERP</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>提供了一个脚本，它提供了选项进行批量修改，从而避免了大量重复键入。这个脚本可以从主菜单的库存</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--&gt;</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>根据成本增加或者更新价格。使用此工具一定要当心，由于它会导致批量修改和插入新价格。因此此页需要系统管理员的权限。此脚本命名为：</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">PricesBasedOnMarkuUp.php,</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>它非常灵活并且可以对特殊的价格表和货币，基于以下条件，更新和插入新的默认的价格。</FONT></FONT></P>
+<UL>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>另一个价格表和一个涨幅</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>供应商采购成本和涨幅</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>系统成本和涨幅</FONT></FONT></P>
+	<P STYLE="margin-bottom: 0cm"></P>
+	<P STYLE="margin-bottom: 0cm"></P>
+	<P ALIGN=LEFT STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>如果使用另外的价格表，最近的默认价格将作为新价格基础，更新不会基于顾客特定的价格，也不会基于修改的价格，而会使用最近开始日期的价格作为计算新价格的基础。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US"><BR><BR></SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>此脚本允许您指定新价格的生效起止日期&mdash;如果截止日期没有指定，那么新价格会被默认为直到新的价格被输入前均有效。如果您已经运行了一次此脚本，并且希望改变使用的参数例如涨幅</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US">--</SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>假设指定了同样的开始和结束日期，系统将新前面脚本输入的价格而非创建很多新价格，。您只能指定当前日期以后的日期为价格生效日期。</FONT></FONT></P>
+</UL>
+<P><BR><BR>
+</P>
+<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=5 STYLE="font-size: 20pt"><B>打印价格表</B></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=3><SPAN LANG="en-US"><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>从主菜单，销售标签下面，查豹和报告栏，有打印价格列表的选项，它提供了灵活的选项。特殊的价格列表以及指定种类或者种类范围的价格列表可以打印为</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">pdf.</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>同样也可以打印有当前价格下毛利的价格表供内部参考。如果选择了顾客的话，也可以打印这些指定顾客的价格。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=3><SPAN LANG="en-US"><BR></SPAN></FONT></SPAN></FONT><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=5 STYLE="font-size: 20pt"><B>根据成本查看价格</B></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=3><SPAN LANG="en-US"><BR></SPAN></FONT></SPAN></FONT><BR><BR>
+</P>
+<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>可以查看基于成本比例的价格&mdash;例如，您可能希望看看价格小于</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">100%</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>成本（或者</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">1</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>倍的成本）</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>例如会导致损失的价格</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>这其实是个明智的想法！系统会显示符合条件的价格</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>查看毛利率少于</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">50%</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>的价格，此时使用</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">1.5</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>倍成本。您也可以查看高于某个倍数的价格。返回的价格可以方便地更新而不需要单独选择，这比手动查看有误的价格然后在正常维护价格界面维护价格方便很多。</FONT></FONT></P>
+<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>从主菜单</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US">--&gt;</SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>库存</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US">--&gt;</SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>根据成本查看或更新价格。您可以选择您要查看的库存种类或者不做任何选择根据默认查看所有种类。首先，您希望查看低于成本的价格</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US">--</SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>您也可以选择查看低于两倍的成本或者大于几倍成本的价格。您可以选择查看价格表和查看价格使用的货币。点击提交按钮后，系统会识别所有的符合指定条件的价格并且允许直接编辑这些价格。</FONT></FONT></P>
+<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US"><BR><BR></SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>当订单输入后，系统会自动读取部品的折扣种类和同一折扣种类中的部品的累积数量，并判断订单行是否满足折扣条件。如果输入的特殊折扣超过了折扣矩阵的计算率&mdash;更高手动输入的折扣率会代替系统计算的折扣率。然而，手动输入的折扣如果低于折扣矩阵计算的金额，</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US">webERP</SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>会将其提升为折扣矩阵计算出来的折扣率。</FONT></FONT></P>
+<P STYLE="margin-bottom: 0.5cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>设置折扣矩阵有两个要素：</FONT></FONT></P>
+<OL>
+	<LI><P STYLE="margin-bottom: 0.5cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>折扣种类
+	&ndash;
+	需要定义。单独的库存商品可以在库存细节表单更新或者在主菜单的设置模块有特殊的工具&mdash;位于库存设置部分。此界面允许输入库存代码并且在变更选定的折扣种类之前进行验证。</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0.5cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>折扣矩阵自身。在设置模块的应收部分有链接进行修改。对于每种类型</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US">/</SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>价格表，必须输入数量点和对应的折扣种类。</FONT></FONT></P>
+</OL>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+</BODY>
+</HTML>

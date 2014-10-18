@@ -1,0 +1,68 @@
+<br /><br />
+
+<!-- Help Begin: Shipments -->
+
+<a name="Shipments"><font size="+3"><b>Beschaffungskosten</b></font></a>
+<br /><br />
+Die Beschaffungskostenverwaltung ist für solche Situationen gedacht, wenn bedeutende Beschaffungskosten auf eingekaufte Waren anfallen und das Unternehmen die Istkosten dieser Waren nachweisen möchte. Viele kleinere Unternehmen machen solche Berechnungen mit einer Tabellenkalkulation außerhalb des integrierten Systems. Der Vorzug, dies innerhalb des Systems zu tun liegt darin, dass die Möglichkeit Zur Anpassung der Standardkosten besteht, und wenn die Kostenkalkulation abgeschlossen ist, die Preisabweichungen zu berechnen.
+<br /><br />
+Wenn Sie einen Lieferanten ausgewählt haben, erlaubt es das System, offene Bestellpositionen in einem Transport zusammenzufassen, diesem Transport wird eine Transportnummer zugeordnet. Wenn Sie diesem Transport einen erwarteten Tag der Ankunft (ETA) zuordnen, wird das Wunschlieferdatum der Bestellposition entsprechend geändert. Die Kosten die mit der Entladung und Zollabwickung der zusammen angelieferten Waren zusammenhängen, können in der Eingangsrechnung auf die Transportnummer kontiert werden. Frachtgebühren, Rollgelder von der Landestelle, Luftfracht, Auspacken, Standgelder usw. können als Kosten des Transportes erfasst werden. Die Auswertung der Transpaortkosten zeigt diese Kosten auf alle Positionen des Transportes aufgeteilt, anteilig im Verhältnis zum Einkaufswert der Waren. Die Istkosten des Transports werden zusammen mit den vorhandenen Standardkosten und der Abweichung dargestellt.
+<br /><br />
+<font size="+1"><b>Buchung der Beschaffungskosten im Hauptbuch</b></font>
+<br /><br />
+Die Beschaffungskosten werden beim Rechnungseingang auf das Wareneingangs-Verrechnungskonto gebucht. Wenn der Transport abgerechnet wird, werden die Beschaffungskosten bis zu den Standardkosten der Transportpositionen in den Bestand gebucht, der verbleibende Rest wird auf das Konto für Einkaufspreisabweichungen gebucht.
+<br /><br />
+Wenn die Möglichkeit genutzt wird, zum Zeitpunkt der Abrechnung des Transportes die Standardkosten neu zu bestimmen, wird die Differenz auf das in der Warengruppe hinterlegte Bestandsveränderungskonto gebucht.
+<br /><br />
+<font size="+1"><b>Transport anlegen</b></font>
+<br /><br />
+Wenn Sie den Lieferanten ausgewählt haben, der die Waren liefert und an den Sie die Bestellung ausgelöst haben, Wählen Sie (unter Kreditorenpflege) Transport anlegen. Jedesmal, wenn Sie die Seite aufrufen, ermittelt das System die nächste Transportnummer und zeigt diese an. Die Seite Transporte ermöglicht es, die Angaben für die Lieferung zu erfassen.
+<br /><br />
+<ul>
+<li>Der Name des Transportmittels (Schiffes), auf das die Waren geladen wurden</li>
+<li>Die Transportschein-Nummer, das könnte im Falle von Luftfracht der Hausluftfrachtbrief sein</li>
+</ul>
+Die Angaben oben sind nicht erforderlich, wenn sie unnötig erscheinen, aber können wichtige Angaben für die Sendungsverfolgung aufnehmen, wo sich die Waren gerade befinden und wenn Sie den Transporteur nach der erwarteten Ankunft fragen, werden Sie diese Angaben benötigen.
+<br /><br />
+Zusätzlich zu den Angaben oben muss der Erwartete Tag der Ankunft eingegeben werden.
+<br /><br />
+Es ist wichtig, dass Sie jetzt die Taste "Transportangaben speichern" drücken, andernfalls gehen die schon eingegebenen Angaben beim Hinzufügen der Bestellpositionen verloren.
+<br /><br />
+Wenn der Bildschirm Transport erfassen das erste Mal angezeigt wird, ist die Möglichkeit vorhanden, die Betriebsstätte auszuwählen, in der der Transport ankommen soll. Als Vorgabe wird die Betriebsstätte aus dem Benutzerstammsatz aber diese Angabe kann überschrieben werden, und wenn Sie auf Ändern klicken, zeigt dann auch die Bestellpositionen dieser neuen Betriebsstätte zugeordnet.
+<br /><br />
+Wenn eine Bestellposition als Bestandteil des Transportes ausgewählt wurde, lassen sich nur noch weitere Bestellpositionen zuordnen, die für die gleiche Betriebsstätte bestimmt sind. Die Betriebsstätte wird auf dem Bildschirm zur Information angezeigt.
+<br /><br />
+Die Betriebsstätte, in die der Transport geliefert werden soll, folgt der Bestellung. Es ist nicht möglich, Bestellpositionen für unterschiedliche Betriebsstätten in einen Transport zusammenzufassen. 
+<br /><br />
+Achtung: Es ist möglich, die Betriebsstätte einer Bestellung zu ändern, deren Positionen einem Transport zugeordnet sind, der für eine andere Betriebsstätte bestimmt ist. Wenn Sie das tun, könnte das zu Problemen führen.
+<br /><br />
+Die Bestellpositionen zu offenen Bestellungen, die noch nicht in Rechnung gestellt wurden und auch noch keinem Transport zugeordnet sind werden angezeigt. Wenn Sie auf den Link Hinzufügen drücken, wird die Position dem Transport hinzugefügt. Bei den Positionen des Transportes gibt es einen Link Entfernen. Mit diesem können die Bestellpositionen aus dem Transport entfernt werden (sie werden selbst nicht gelöscht).
+
+<!-- Help End: Shipments -->
+
+<br /><br />
+
+<!-- Help Begin: Shipt_Select -->
+
+<font size="+1"><b>Transportkalkulation</b></font>
+<br /><br />
+Die Kosten des Transportes werden zum Zeitpunkt des Rechnungseingangs fortgeschrieben. Wenn Sie eine Rechnung vom Spediteur erfassen, wird der Betrag und der Umrechnungskurs dem Transport zugebucht. Es ist wichtig, dass der Transport angelegt wird, bevor die Rechnung erfasst wird. Wenn von der Position bereits ein Teil berechnet wurde, kann die Bestellposition nicht mehr zum Transport hinzugefügt werden. Auch kann dann eine Position nicht mehr von einem Transport entfernt werden. Die Position muss storniert werden, bevor dies getan werden kann. Die Beschaffungskosten für die Wareneingänge werden unsichtbar im Hintergrund geführt.
+<br /><br />
+Die Frachtgebühren, Zölle, Rollgelder werden aus der bei der Erfassung der Rechnung des Spediteurs Transport an Verbindlichkeiten gebucht. Bei der Erfassung der Kreditorenrechnung haben Sie die Möglichkeit, diese zum Transport zu erfassen. Dort können Sie die Transportnummer (wenn sie bekannt ist) direkt eingeben oder andernfalls aus der Liste der offenen Transporte auswählen. 
+<br /><br />
+Die Auswahl der Transporte wird aus der Lieferantensuche heraus vorgenommen. Die für den Lieferanten definierten Transporte werden für die Betriebsstätte des Benutzers angezeigt. Die Betriebsstätte kann im Auswahlfeld geändert werden, um die Transporte in andere Betriebsstätten anzuzeigen. Standardmäßig werden nur offene Transporte angezeigt, es gibt aber die Option, mit der Sie die abgerechneten Transporte anzeigen können. Für jeden Transport werden das Transportmittel, die Nummer des Transportscheines und der Erwartete Tag der Ankunft angezeigt zusammen mit Links, über die Sie
+<br /><br />
+<ul>
+<li>Die Transportpositionen oder den Erwarteten Tag der Ankunft oder die Bezugsangaben ändern können</li>
+<li>Die Kalkulation der berechneten Beträge in Hauswährung zu jeder Materialposition zusammen mit anderen allgemeinen Frachtgebühren - je Kreditor und Rechnungsnummer - ansehen können</li>
+<li>Den Transport abrechnen können.</li>
+</ul>
+
+<!-- Help End: Shipt_Select -->
+
+<!-- Help Begin: ShipmentCosting -->
+
+<font size="+1"><b>Abrechnung eines Transportes</b></font>
+<br /><br />
+Über Transporte suchen finden sie bei allen offenen Transporten den Link zum Abschließen. Das Abschließen des Transportes mach es unmöglich, zusätzliche Beträge darauf zu buchen. Wenn die Hauptbuchintegration der Bestandsführung aktiv ist, so werden Hauptbuchbelege für die Preisabweichungen auf dem Abweichungskonto erzeugt und das Wareneingangsverrechnungskonto wird bebucht. Das Abrechnen des Transportes hat auch eine Option zum Ändern der Standardkosten. Als Vorgabe ist diese Option auf Ja gesetzt. Wiederum wenn die Bestandsführungsschnittstelle aktiv ist, werden die Preisabweichungen gebucht, wie wenn Sie eine Standardpreisänderung separat vornehmen.
+<!-- Help End: ShipmentCosting -->

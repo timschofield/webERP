@@ -1,0 +1,121 @@
+<h1><a id="Prices">Prices and Discounts</a></h1>
+
+<h2>Overview</h2>
+
+<p>Prices are held by Sales Type and Currency. When setting up a customer account the sales type applicable to the customer is defined as is the currency applicable to invoices to the customer. There is no limit to the number of sales types that can be defined and therefore no limit to the number of different price lists that can be maintained. Further flexibility is available in that where necessary prices specific to a customer can also be defined, normally pricing will be specific to a customer but the system also has the capability of making prices specific to a particular branch of a customer. If a price is flagged as specific to a branch it will not be used for all other sales of the item to the customer, the default price of the item will be used. Further flexibility in discounting is available through the discount matrix (see below). If an item has an additional discount this can be entered at the time of order. The user also has the ability to change the price manually at the time of order. Sales analysis records allow reporting on sales types, so the analysis will report the volume of business done under each set of special pricing arrangements.</p>
+
+<div class="floatright">
+    <a class="minitext" href="#top">⬆ Top</a>
+</div>
+
+<h2>Logic Outline</h2>
+
+<p>The sequence of the search for the price follows the logic below. If a price is returned from any of the checks then subsequent checks are not performed.</p>
+
+<ul>
+    <li>Check if there is a current (i.e. within the current date range using the effectivity dates of the price) special price for the customer and branch for the item in the currency of the customer</li>
+
+    <li>Check if there is a current special price for the customer (ignoring the customer branch selling to) for the item in the currency of the customer</li>
+
+    <li>Check if there is a current price set up against the customer's sales type (price list) - for the item in the currency of the customer</li>
+
+    <li>Check if there is a current price set up against the default sales type (price list) for the item in the currency of the customer</li>
+
+    <li>If no success getting a price from any of the above then report no prices set up for the item</li>
+</ul>
+
+<div class="floatright">
+    <a class="minitext" href="#top">⬆ Top</a>
+</div>
+
+<h2>Prices Effectivity Dates</h2>
+
+<p>In many businesses a change in price has to come into effect at some later date and be published to customers in advance of the price being effective. This functionality was introduced in 2010. The date that a price is to be effective from must be specified at the time of entry. If the price is expected to continue indefinitely then it is not necessary to specify an end date. Any subsequent prices entered without an end date will superseed previous entries with starting dates prior.</p>
+
+<p>If a price is entered with an end date then this takes precidence over prices with no end date - where the date of entry of an order falls within the date range for the price. It is the current server date that is used to compare against the date range in determining the price to use.</p>
+
+<div class="floatright">
+    <a class="minitext" href="#top">⬆ Top</a>
+</div>
+
+<h2>Maintaining Prices</h2>
+
+<p>To maintain pricing, first an item must be selected. This can be done from the link "Select an Item " on any page or from the inventory tab of the menu the link "Modify Or Delete An Inventory Item Or Item Pricing" allows for a part to be selected. Once selected the options available to work with the item are shown, there is a link to "Maintain Pricing". The pricing page displays, the sales type and the currency of all prices defined for the item. The existing prices can be deleted or modified from this screen and new prices can be entered. It is possible to enter many prices for a given sales type and currency with different effective from and to dates. Normally the date that the price should be effective to can be left blank. Subsequent entries of prices with no end date can be entered and these will be used after the start date of these prices. When entering prices for a fixed date range - this price will take precidence over the default price with no end date. The system automatically adjusts the end date of prices where a new price with a fixed date range is entered with an overlapping period to a previously entered price. The end date of the previous price is adjusted to be the day prior to the start date of the new price. This ensures that there can only be one price returned in a given date range.</p>
+
+<p>To enter prices for a specific customer and branch, the customer must first be selected. (See selecting customers). Going to the select an item page after having selected an item now shows an additional link to maintain the special pricing "Special Prices for customer - customer code". Clicking this link shows, the normal price for the sales type and currency of the customer selected and any special prices defined for this item/customer combination. If no special pricing is defined then the page shows only the normal price with a note that no special pricing is defined for this item and allows entry of the new special price. If a special price exists then it can be deleted or changed. A customer with many branches can have a special price for each branch or just a single branch having a special price beyond the special customer price. A special price applicable to only one branch will not apply to any of the other branches. Also, a special price set up for the customer account but with a blank branch field will apply to all branches unless there is a specific price set up for the branch.</p>
+
+<p>Prices can be amended at any time. However, changes to a price do not automatically cascade into sales orders for the item that are yet to be delivered, these orders would have to be changed manually as necessary.</p>
+
+<h2>Price Maintenance Utilities</h2>
+
+<p>There is a utility script that has some options for making bulk changes to pricing avoiding extensive re-keying. This script is accessed from the main menu under "Inventory-&gt;Add Or Update Prices Based On Cost". Great care should be taken with this facilities since bulk updates and inserts of new prices are performed as a result. System administrator permission is required to access this page accordingly. The script named PricesBasedOnMarkUp.php is quite flexible and can update/insert new default prices for a particular price list/currency based on any of:</p>
+
+<ul>
+    <li>another price list plus a markup</li>
+
+    <li>the supplier purchasing cost data plus a markup</li>
+
+    <li>the system cost plus a markup</li>
+</ul>
+
+<p>If using another price list the price used as the base for the new price will be the latest default price i.e. no customer speicifc prices will be used - nor updated - and the price with the most recent start date will be chosen as the basis for the calculation of the new price.</p>
+
+<p>The script allows you to specifiy when the new prices will be effective from and to - if the field for effective to is left blank then the new price is assumed to be effective until a later price is entered. If you have run this script once and wish to change the parameters to use say a different markup - the prices previously entered by the script can be updated rather than creating a lot of new prices, provided that the same start and end dates are specified. You can only specify price effective from dates for days after the current day.</p>
+
+<h2>Printing Price Lists</h2>
+
+<p>Flexible options exist for printing price lists from the main menu under the sales tab under inquiries and reports -&gt;Print Price Lists. Price lists for a particular price list and specific category or range of categories can be printed to pdf. It is also possible to print the price list with the current gross profitability of those prices displayed for internal use. Prices specific to particular customers can also be printed having selected the customer first.</p>
+
+<h2>Reviewing Prices Based on Cost</h2>
+
+<p>It is possible to review prices based on the proportion of cost that they represent - e.g. you may wish to review costs that are less than 100% of cost (or 1 times the cost) - i.e. prices that would result in a gross loss - a wise idea indeed! The prices meeting the criteria are displayed and available to be modified. You can specify any number of times the cost for the critiera - to look at the prices where the margin is less than 50% on cost the multiple would be 1.5 times cost. You can also look at prices where the price is more than a multiple of the cost. The prices returned can then be updated all in place without having to select them individually this is much more convenient than identifying the errant prices manually and then going in and selecting them individually in the normal price maintenace screen.</p>
+
+<p>From the main menu Inventory -&gt; View Or Update Prices Based On Costs. You can select the Inventory category you wish to review or leave the default - to view all categories. Initially it is assumed you wish to review prices less than cost - but you can elect to look at prices less than 2 x cost or greater than a multiple of the cost. You can select the price list to review and the currency of prices to review. On clicking submit the system identifies all the prices that meet the criteria specified and allows these prices to be edited directly.</p>
+
+<div class="floatright">
+    <a class="minitext" href="#top">⬆ Top</a>
+</div>
+
+<h2>Discount Matrix</h2>
+
+<p>The discount matrix allows discounts to be set for quantity breaks across a range of products. Eg a business selling pens may have red, blue, black etc but offer a discount for orders greater than 100 irrespective of colour - even though these are separate items.</p>
+
+<p>Items to have such discounting must be specified in the stock item details screen as belonging to the same Discount Category - this is a 2 character field in the stock master table. In the example above the item codes for blue, red and black pens should all be set to the same 2 character code. Be warned that if an item is set up as belonging to a discount category then any discounts calculated by the matrix will over-ride manually entered discounts.</p>
+
+<p>Customers to whom the discount structure should apply are specified by the sales type (the price list) field. The entry in the Discount Matrix table should refer to the sales type and the 2 character DiscountCategory of parts, the quantity above which the discount is to apply and the rate of discount applicable. Several entries in the discount matrix can be made at increasing discounts and volumes, for the same Discount Category and Sales Type.</p>
+
+<p>When an order is entered the system automatically reads the Discount Category of the parts and accumulates the quantities of like Discount Category parts to see if the order lines qualify for the discount. If special discount has been entered exceeding the discount matrix calculated rate - the higher manual entry over-rides the calculation. However, discount manually entered which is below the discount matrix calculation will be uplifted to the discount matrix rate.</p>
+
+<p>To set up the discount matrix there are two elements:</p>
+
+<ol>
+    <li>The discount categories - need to be defined. Individual stock items can be modified in the stock details form or a special facility is available under the set up tab of the main menu - under the inventory set up section. This screen allows stock codes to be entered and verified before changing to the selected discount category.</li>
+
+    <li>The discount matrix itself. This is modified from a link on the set up tab under accounts receivable set up. For each sales type/price list the quantity break and discount applicable must be entered.</li>
+</ol>
+ <div class="floatright">
+    <a class="minitext" href="#top">⬆ Top</a>
+</div>
+<h2>Sell Through Support</h2>
+
+<p>This is support from a supplier on selling through some of their products. The supplier (a manufacturer or wholesaler) agrees to provide a discount to the business for each unit that the business sells - either as a percentage or as an amount for each sale. The support typically lasts for only a set period so that the business can advertise to it's customers the availability of the discount and the business margin will be unaffected - as the discount is effectively passed on to the end customer. The discount may also be available only to some customers the supplier specifies.</p>
+
+<p>To administer this is tricky as it requires sales analysis reports to be written to extract the information and for customer services people to apply the discount only to those customers it applies to and only over the period for which it applies to. It could be set up with special pricing. However, this could make for very messy and busy prices table.</p>
+
+<p>webERP allows that sell through support be specified up front by entry of:</p>
+<ul>
+<li>1. The supplier providing the support</li>
+<li>2. The item for which the support applies to and</li>
+<li>3. The customers for which the support applies and</li>
+<li>4. The date range over which the support should apply.</li>
+</ul>
+<p>Having specified the sell through support webERP then automatically discounts the sales of the items for the customer/date range/item and a claim report can be generated for the sales of the item arriving at a total claim for the period of the report - listing all invoices/credits that the item was sold on.</p>
+
+<p>The webERP form allows a supplier to be selected, once a supplier is selected the current sell through support offered by this supplier is listed. Any one of the items that the supplier supplies to the business (from the purchasing data table) can then be selected, also the customer for which the support is provided is also available for selection - alternatively if the customer field is left blank then all customers is assumed. A date range over which the sell through support is to be provided can also be entered. It is possible to copy existing entries at a single click to modify a date range or the customer or the amount/percent of the support from the list of support currently offered by the supplier.</p>
+
+<p>For the sell through support to be calculated on sales the supplier purchasing data must be set up and the supplier must be the preferred one for the item being sold, for the support discount to be applied.</p>
+
+<div class="floatright">
+    <a class="minitext" href="#top">⬆ Top</a>
+</div>
+<!-- Help End: Prices -->

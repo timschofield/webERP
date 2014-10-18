@@ -1,0 +1,506 @@
+/*** 
+
+New "SilverWolf" Theme for WebERP
+
+by Hindra Joshua
+
+Based from the previous theme "SilverWolf"
+Credits to the original authors.
+
+NOTE:
+This CSS is not yet optimized. Some styles maybe 'redundant' or 'unused',
+but for the obvious one it will be cleaned up.
+To optimized the rest we should examined the whole codes! That would be for 
+the next project. :)
+
+***/
+
+
+body{
+	font-family:Arial, Verdana, Helvetica, sans-serif;
+	font-size:10pt;
+	background:url(images/stripe.png) white;
+	margin:0;
+	padding:5px;
+}
+
+a{
+	color:#5B5B68;
+	text-decoration:none;
+}
+a:hover{
+	color:#000;
+	text-decoration:underline;
+}
+form{
+}
+img{
+	border:none;
+	vertical-align:middle;
+}
+p.good{
+	font-weight:bold;
+	color:green;
+}
+p.bad{
+	font-weight:bold;
+	color:red;
+}
+p.page_title_text{ /* page title, used in many *.php */
+	background:gainsboro;
+	margin:10px auto;
+	padding:5px;
+	text-align:center;
+}
+table{
+	width:auto; /* automatic width */
+	max-width:90%;
+	margin:0 auto;
+	margin-bottom:10px;
+}
+table.selection{
+}
+th{
+	font-weight:normal;
+	background-color:#C3C3C3;
+	font-size:100%;
+	color:#300;
+	text-align:center;
+	vertical-align:middle;
+}
+th.number{
+	font-weight:normal;
+	background-color:#cccce5;
+	font-size:100%;
+	color:#300;
+	text-align:right;
+	vertical-align:middle;
+}
+th.ascending {
+  cursor: s-resize;
+}
+th.descending {
+  cursor: n-resize;
+}
+th:after {
+	content: "";
+	float: right;
+	margin-top: 7px;
+	visibility: hidden;
+}
+th.ascending:after {
+	border-width: 0 4px 4px;
+	border-style: solid;
+	border-color: #000 transparent;
+	visibility: visible;
+}
+th.descending:after {
+	border-bottom: none;
+	border-left: 4px solid transparent;
+	border-right: 4px solid transparent;
+	border-top: 4px solid #000;
+	visibility: visible;
+}
+td{
+	font-family:Arial, Verdana, Helvetica, sans-serif;
+	font-size:100%;
+	text-align:left;
+}
+td.select{
+	background-color:#eee;
+}
+td.number{
+	text-align:right;
+}
+.centre{
+	margin:0 auto 10px;
+	text-align:center;
+}
+
+input{
+	font-family:Arial, Verdana, Helvetica, sans-serif;
+	font-size:100%;
+	background-color:#e3e1e1;
+	border-width:1px;
+	border-bottom-color:gray;
+	border-bottom-style:solid;
+	border-top-color:gray;
+	border-top-style:solid;
+	border-left-color:gray;
+	border-left-style:solid;
+	border-right-color:gray;
+	border-right-style:solid;
+}
+input:hover{
+	font-family:Arial, Verdana, Helvetica, sans-serif;
+	font-size:100%;
+	background-color:#e3e5f5;
+	border-width:1px;
+	border-bottom-color:gray;
+	border-bottom-style:solid;
+	border-top-color:gray;
+	border-top-style:solid;
+	border-left-color:gray;
+	border-left-style:solid;
+	border-right-color:gray;
+	border-right-style:solid;
+}
+input.number{
+	text-align:right;
+}
+input.image{
+	border-width:0px;
+	background-color:transparent;
+}
+input.inputerror, input.error, select.error, select.selecterror, label.error {
+	color:red;
+	border: 2px solid red;
+}
+input:required, select:required, textarea:required {
+	background-color:lightyellow;
+}
+select{
+	font-family:Arial, Verdana, Helvetica, sans-serif;
+	font-size:100%;
+}
+.EvenTableRows{
+	background-color:#ccc;
+}
+.OddTableRows{
+	background-color:#eee;
+}
+
+div.error{
+	background-color:#fddbdb;
+	color:red;
+	border:1px solid red;
+	width:80%;
+	text-align:center;
+	margin:0 auto;
+}
+div.warn{
+	background-color:#f5dbfd;
+	color:maroon;
+	border:1px solid maroon;
+	width:80%;
+	text-align:center;
+	margin:0 auto;
+}
+div.success{
+	background-color:#b9ecb4;
+	color:#006400;/* darkgreen is not a w3c css valid color */
+	border:1px solid #006400;/* darkgreen is not a w3c css valid color */
+	width:80%;
+	text-align:center;
+	margin:0 auto;
+}
+div.info{
+	background-color:#c7ccf6;
+	color:navy;
+	border:1px solid navy;
+	width:80%;
+	text-align:center;
+	margin:0 auto;
+}
+div.page_help_text{ /* many */
+	background-color:#ccc;/* lightgray is not a w3c css valid color #ccc */
+	border:#a52a2a 1px solid;
+	border-radius: 5px;
+	padding-top:3px;/* 2px in merge */
+	padding-bottom:3px; /* 2px in merge */
+	padding-left:3px;   /* 10px in merge */
+	z-index:1;
+	width:50%; /* 80% in merge */
+	float:none;
+	visibility:visible;
+	margin:0 auto;
+	position:static;
+	font-family:Verdana, Arial, Helvetica;
+	font-weight:normal;
+	font-size:100%;
+	color:black;
+	text-align:center;
+}
+
+.dpTbl{
+	border:solid navy 1px;
+}
+.dpTD{
+	border:0;
+	width:20px;
+	background-color:#eee;
+	text-align:right;
+	cursor:pointer;
+}
+.dpDayHighlight{
+	border:0;
+	width:20px;
+	background-color:yellow;
+	text-align:right;
+	cursor:pointer;
+}
+.dpTDHover{
+	border:0;
+	width:20px;
+	background-color:#ccc;
+	text-align:right;
+	cursor:pointer;
+}
+
+.table1 {
+	width:90%;
+	background: #eee;
+	border: 0px 0px 2px 2px #222 solid;
+	background: #eee;
+	margin: 0 auto;
+}
+.tableheader{
+	font-weight:normal;
+	background-color:#cccce5;
+	color:#300;
+}
+.notavailable{ /* WorkOrderIssue.php, WorkOrderStatus.php  */
+	font-weight:lighter;/* light is not a w3c css valid font weight */
+	font-style:italic;
+	color:#555;
+}
+.label{ /*WorkOrderCosting.php, WorkOrderEntry.php, WorkOrderIssue.php, WorkOrderStatus.php */
+	font-weight:bold;
+	font-style:normal;
+	font-size:120%;
+	color:black;
+	background-color:#ccc;
+}
+.table_index {
+	background-color: #F1FFDD;
+}
+
+.header{ /* used in \includes\InputSerialItemsFile.php */
+	background-image:url("");
+	background-repeat:no-repeat;
+	background-attachment:fixed;
+	border:none;
+	margin:0px;
+	padding:0px;
+}
+input.inputerror{ /* many * .php */
+	background-color:#fddbdb;
+}
+textarea{
+	font-size:100%;
+	background-color:#e3e1e1;
+	border-width:1px;
+	border-bottom-color:gray;
+	border-bottom-style:solid;
+	border-top-color:gray;
+	border-top-style:solid;
+	border-left-color:gray;
+	border-left-style:solid;
+	border-right-color:gray;
+	border-right-style:solid;
+}
+select.selecterror{ /*AccountGroups.php, BankAccounts.php, BOMs.php, Stocks.php */
+	background-color:#fddbdb;
+}
+
+.OsRow{ /* PO_OrderDetails.php */
+	background-color:#234567;
+	color:white;
+}
+
+/*** CANVAS ***/
+
+#CanvasDiv{
+}
+
+/*** HEADER ***/
+
+#HeaderDiv{
+	overflow:hidden; /* REQUIRED:height according to items contained */
+	background:url(images/menu_bg_grey.png) repeat-x #cfcfcf;
+	color:gray;
+	padding:3px;
+	border:thin solid lightgray;
+}
+#HeaderWrapDiv{
+}
+
+/*** HEADER - APP INFO ***/
+
+#AppInfoDiv{
+	float:left; /* REQUIRED:to the left */
+}
+#AppInfoDiv img{
+	vertical-align:middle; /* center image and text vertically */
+}
+#AppInfoCompanyDiv{
+	display:table-cell; /* REQUIRED:as a cell */
+}
+#AppInfoUserDiv{
+	display:table-cell; /* REQUIRED:as a cell */
+}
+#AppInfoUserDiv a{
+	color:gray;
+}
+#AppInfoUserDiv a:hover{
+	color:black;
+	text-decoration:underline;
+}
+#AppInfoModuleDiv{
+}
+
+/*** HEADER - QUICK MENU ***/
+
+#QuickMenuDiv{
+	float:right; /* to the right side  */
+	margin-top:2px;
+}
+#QuickMenuDiv ul{
+	list-style:none; /* hide the bullets */
+}
+#QuickMenuDiv li{
+	display:inline; /* items are inline */
+}
+
+/*** links as buttons!!! clicking anywhere in the button will activate 
+ the link!!! ***HJ***/
+ 
+#QuickMenuDiv li a{
+	padding:9px; /* links as button */
+	border:thin outset lightgray; /* un-pressed state */
+}
+#QuickMenuDiv li a:hover{
+	padding:9px; /* links as button */
+	border:thin inset lightgray; /* pressed state */
+	text-decoration:none; /* no underline */
+	color:black;
+}
+
+/*** BODY ***/
+
+#BodyDiv{
+	clear:both; /* REQUIRED */
+	overflow:hidden; /* REQUIRED */
+	color:black;
+	background:whitesmoke;
+	padding-bottom:5px;
+	text-align:center;
+}
+
+
+/*** BODY - MAIN MENU ***/
+
+#MainMenuDiv{
+	float:left; /* REQUIRED:to the left side */
+	white-space:nowrap; /* don't break text */
+	text-align:center; 
+	width:12%;
+	margin-top:3px;
+}
+#MainMenuDiv ul{
+	padding:0; /* REQUIRED:remove extra gaps (ex-bullets) */
+	margin:0 3px 0 0;
+	border:thin outset silver;
+}
+#MainMenuDiv li{
+	list-style:none; /* REQUIRED */
+	padding:0; /* REQUIRED */
+}
+#MainMenuDiv li a,
+#MainMenuDiv li a:hover,
+#MainMenuDiv li a:active,
+#MainMenuDiv .main_menu_selected a,
+#MainMenuDiv .main_menu_selected a:hover{ /* common styles */
+	display:block; /* REQUIRED */
+	padding:3px;
+	border:thin outset silver;
+	color:black;
+	text-decoration:none;
+	background:silver;
+}
+#MainMenuDiv li a:hover{ /* link as button!!! pressed state */
+	border:thin inset silver;
+}
+#MainMenuDiv .main_menu_selected a,#MainMenuDiv .main_menu_selected a:hover{ /* the selected button */
+	border:thin inset silver;
+	background:dimgray;
+	color:white;
+}
+
+/*** BODY - SUB MENU ***/
+
+#SubMenuDiv{
+	display:table;
+	float:right;
+	overflow:hidden;
+	width:88%;
+	margin-top:3px;
+	text-align:left;
+}
+#SubMenuDiv ul{
+	list-style-type:none; /* REQUIRED:hide bullets */
+	padding:0; /* REQUIRED:remove extra gaps (ex-bullets) */
+	margin:0;
+	background:gainsboro;
+	border:thin outset gainsboro;
+	margin-left:3px;
+}
+#SubMenuDiv li{
+	list-style:none; /* REQUIRED:hide the bullets */
+	padding:2px;
+}
+.menu_group_headers{
+	background:silver;
+	outline:thin outset silver;
+	text-align:center;
+	color:black;
+}
+
+#TransactionsDiv,#InquiriesDiv,#MaintenanceDiv{
+	display:table-cell;
+}
+#InquiriesDiv div{ /* default div, used for custom report header */
+	background:silver;
+	color:black;
+	padding:2px;
+}
+.menu_group_item p{
+	color:#00f; /* This is the color for bullets, I like it to be the same as the anchor color, but it's up to you */
+	text-indent:-10px; /* this makes the bullet to appear as the li tag previously used */
+	margin:0 0 0 12px; /* One thing that I didnÃÂÃÂ´t like of the li was that it had no left margin applied */
+}
+
+/*** FOOTER ***/
+
+#FooterDiv{
+	clear:both; /* REQUIRED */
+	overflow:hidden;
+	color:gray;
+	background:url(images/menu_bg_grey.png) repeat-x #cfcfcf;
+	border:thin solid lightgray;
+}
+#FooterWrapDiv{
+	overflow:hidden;
+	padding:3px;
+}
+#FooterLogoDiv{
+	float:left;
+	background:white;
+	border-radius:8px 8px 8px 8px;
+	padding:3px;
+	margin-left:47%; /* to the center (approx) */
+}
+#FooterLogoDiv img{
+	vertical-align:middle;
+}
+#FooterVersionDiv{
+clear:both; /* below the logo */
+float:left;
+margin-left:47%; /* to the center (approx) */
+}
+#FooterTimeDiv{
+	float:right;
+	margin-top:-22px; /* go up to center */
+}
+
+/*** END ***/

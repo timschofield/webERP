@@ -1,0 +1,506 @@
+/*** 
+
+New "Fresh" Theme for WebERP
+
+by Hindra Joshua
+
+*** This a very clean professional-looking theme - handsome!
+
+Based from the previous theme "SilverWolf"
+Credits to the original authors.
+
+NOTE: 
+This CSS is not yet optimized. Some styles maybe 'redundant' or 'unused',
+but for the obvious one it will be cleaned up.
+To optimized the rest we should examined the whole codes! That would be for 
+the next project. :)
+
+***/
+
+body {
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size:10pt;
+	margin:0;
+	padding:0;
+}
+
+/*** default styles ***/
+a {
+	color:blue;
+	text-decoration:none;
+}
+a:hover {
+	color:blue;
+	text-decoration: underline;
+}
+
+img {
+	border:none;
+	vertical-align:middle;
+}
+p.page_title_text {
+	padding-top: 2px;
+	padding-bottom: 2px;
+	font-weight: bold;
+	color: black;
+	background-color: #C9D392;
+	width: 30%;
+	TEXT-ALIGN:center;
+	margin: 10px auto;
+}
+p.good { /***/
+    font-weight: bold;
+    color: green;
+}
+p.bad { /***/
+    font-weight: bold;
+    color:red;
+}
+table {
+  background-color: #ffffff;
+  margin: 0 auto;
+  width:100%
+}
+table.selection {
+}
+th {
+	font-weight: normal;
+	background-color: #777C59;
+	color: white;
+	text-align: center;
+}
+th.number {
+	text-align: right;
+	font-weight: normal;
+	background-color: #800000;
+	color: white;
+}
+th.ascending {
+  cursor: s-resize;
+}
+th.descending {
+  cursor: n-resize;
+}
+th:after {
+	content: "";
+	float: right;
+	margin-top: 7px;
+	visibility: hidden;
+}
+th.ascending:after {
+	border-width: 0 4px 4px;
+	border-style: solid;
+	border-color: #000 transparent;
+	visibility: visible;
+}
+th.descending:after {
+	border-bottom: none;
+	border-left: 4px solid transparent;
+	border-right: 4px solid transparent;
+	border-top: 4px solid #000;
+	visibility: visible;
+}
+td {
+	text-align: left;
+}
+td.select {
+	background-color:#eee;
+}
+td.number {
+	text-align: right;
+}
+div.centre { /* centering buttons / links */
+  margin: 0 auto;
+  text-align:center;
+}
+input {
+}
+input.number{
+	text-align: right;
+}
+input.image {
+	border-width:0px;
+	background-color: transparent;
+}
+input:hover{
+}
+select {
+	font-family: Arial, Verdana, Helvetica, sans-serif;;
+	font-size:12px;
+}
+input.inputerror, input.error, select.error, select.selecterror, label.error {
+	color:red;
+	border: 2px solid red;
+}
+input:required, select:required, textarea:required {
+	background-color:lightyellow;
+}
+textarea{
+}
+textarea:hover{
+}
+.EvenTableRows {
+	background-color: #72824D;
+}
+.OddTableRows {
+	background-color: #CAF17C;
+}
+
+div.error {
+	background-color:#fddbdb;
+	color: red;
+	border: 1px solid red;
+}
+div.warn {
+	background-color:#f5dbfd;
+	color: maroon;
+	border: 1px solid maroon;
+}
+div.success {
+	background-color:#b9ecb4;
+	color: darkgreen;
+	border: 1px solid darkgreen;
+}
+div.info {
+	background-color:#c7ccf6;
+	color: navy;
+	border: 0px solid navy;
+}
+DIV.page_help_text {
+	background: lightgrey url(images/help.png) top left no-repeat;
+	border: #a52a2a 1px solid;
+	padding-top:2px;
+	padding-bottom: 2px;
+	padding-left: 10px;
+	z-index: 1;
+	width: 80%;
+	float: none;
+	visibility: visible;
+	margin: 0 auto;
+	position: static;
+	font-weight: normal;
+	color: black;
+	text-align:center;
+}
+
+/*** calendar picker ***/
+#calendar{
+
+}
+.dpTbl {
+	border: solid navy 1px;
+}
+.dpTD {
+	border: 0;
+	width:20px;
+	background-color: #EEEEEE;
+	text-align:right;
+	cursor:pointer;
+}
+.dpDayHighlight {
+	border: 0;
+	width:20px;
+	background-color: yellow;
+	text-align:right;
+	cursor:pointer;
+}
+.dpTDHover {
+	border: 0;
+	width:20px;
+	background-color: #CCCCCC;
+	text-align:right;
+	cursor:pointer;
+}
+/*** /calendar picker ***/
+
+/* Table type is used for UI tables type 1 */
+.table1 {
+  width:90%;
+  background: #eee;
+  border: 0px 0px 2px 2px #222 solid;
+  margin: 0 auto;
+}
+/* Table type is used for UI tables type 2 */
+.table2 {
+  width:90%;
+  background: #eee;
+  border: 0px 0px 2px 2px #222 solid;
+  margin: 0 auto;
+}
+.tableheader {
+	font-weight: normal;
+	background-color: #777C59;
+	color: white;
+}
+.notavailable {
+	font-weight:lighter;
+	font-style:italic;
+	color:#555555;
+}
+.label {
+	font-weight:bold;
+	font-style:normal;
+	font-size:120%;
+	color:black;
+}
+.table_index {
+	background-color: #F1FFDD;
+}
+
+
+.header {
+	background-image: url("");
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	border: none;
+	margin: 0px;
+	padding: 0px;
+}
+input.inputerror {
+	background-color: #fddbdb;
+}
+textarea.texterror {
+	background-color: #fddbdb;
+}
+select.selecterror {
+	background-color: #fddbdb;
+}
+.OsRow {
+	background-color: #234567;
+	color: white;
+}
+
+/*li {
+	list-style-image: url(bullet.gif);
+}*/
+
+/*** CANVAS ***/
+
+#CanvasDiv{
+	background:#fff;
+	margin:0;
+}
+
+/*** HEADER ***/
+
+#HeaderDiv {
+	overflow:hidden; /* REQUIRED: height according to items contained */
+	color:black;
+	padding-left:3px;
+	background:#C9D392;
+}
+#HeaderWrapDiv{
+}
+
+/*** HEADER - APP INFO ***/
+
+#AppInfoDiv{
+	float:left; /* REQUIRED: to the left */
+}
+#AppInfoDiv img{
+	vertical-align:middle; /* center image and text vertically */
+}
+#AppInfoCompanyDiv{
+	display:table-cell; /* REQUIRED: as a cell */
+}
+#AppInfoUserDiv{
+	display:table-cell; /* REQUIRED: as a cell */
+}
+#AppInfoUserDiv a{
+	color:#5A5F00;
+}
+#AppInfoUserDiv a:hover{
+	color:black;
+	text-decoration:underline;
+}
+#AppInfoModuleDiv{
+}
+
+/*** HEADER - QUICK MENU ***/
+
+#QuickMenuDiv{
+	float:right; /* to the right side  */
+	margin-top:0.1em;
+}
+#QuickMenuDiv ul{
+	list-style:none; /* hide the bullets */
+}
+#QuickMenuDiv li{
+    display:inline; /* items are inline */
+}
+
+/*** links as buttons!!! clicking anywhere in the button will activate 
+     the link!!! ***HJ***/
+	 
+#QuickMenuDiv li a{
+	background:#B4BB86;
+    border:thin outset #5A5F00;
+    color:#5A5F00;
+    padding:8px;	
+}
+#QuickMenuDiv li a:hover{
+	background:#B4BB86;
+    border:thin inset #5A5F00;
+    color:black;
+    padding:8px;
+	text-decoration:none;
+}
+
+/*** BODY ***/
+
+#BodyDiv {
+	clear:both; /* REQUIRED */
+	overflow:hidden; /* REQUIRED */
+	color:black;
+	background:white;
+	padding:5px;
+	text-align:center;
+}
+#BodyDiv table {
+	width:auto; /* automatic width */
+	margin: 0 auto;
+	margin-bottom:10px;
+}
+#BodyDiv table.selection {
+background:#E0F3B1;
+    border:thin outset #E0F3B1;
+    padding:5px;
+}
+/*#BodyDiv .centre{
+	margin:0 auto 10px;
+    text-align:center;
+}*/
+
+/*** BODY - MAIN MENU ***/
+
+#MainMenuDiv{
+	float:left; /* REQUIRED: to the left side */
+	white-space:nowrap; /* don't break text */
+	text-align:center; 
+	width:11%;
+	background:#617C4F;
+}
+#MainMenuDiv ul{
+	list-style:none; /* REQUIRED: hide bullets */
+	padding:0; /* REQUIRED: remove extra gaps (ex-bullets) */
+	margin:0;
+}
+#MainMenuDiv li{
+	list-style:none; /* REQUIRED */
+	padding:0; /* REQUIRED */
+}
+#MainMenuDiv li a{ /* link as button!!! not-pressed state */
+	display:block; /* REQUIRED */
+	padding:3px;
+	border:thin outset #617C4F;
+	color:white;
+}
+#MainMenuDiv li a:hover{ /* link as button!!! pressed state */
+	text-decoration:none;
+	padding:3px;
+	border:thin inset #617C4F;
+	background:#5A5F00;	
+}
+#MainMenuDiv .main_menu_selected a{ /* the selected button */
+	border:thin inset #5A5F00;	
+	background:#5A5F00;
+	color:white;	
+}
+
+/*** BODY - SUB MENU ***/
+
+#SubMenuDiv{
+	display:table; /* display as table, sub menu will auto adjust width */
+	width:89%; /* main menu is 10% */
+	text-align:left;
+}
+#SubMenuDiv a:link, a:visited{
+	color:#5A5F00;
+	text-decoration:none;
+}
+#SubMenuDiv a:hover{
+	color:#5A5F00;
+	text-decoration:underline;
+}
+#SubMenuDiv ul{
+	list-style-type:none; /* REQUIRED: hide bullets */
+	padding:0; /* REQUIRED: remove extra gaps (ex-bullets) */
+	margin-left:3px;
+	margin-top:0;
+	margin-bottom:0;
+	border:thin outset #5A5F00;
+	background:#E0F3B1;	/* for custom reports */
+}
+#SubMenuDiv li{
+	/*list-style:none;*/ /* REQUIRED: hide the bullets */
+	padding:2px;
+	background:#E0F3B1;	
+}
+#SubMenuDiv li img{
+	vertical-align:middle; /* verticall align icon with the text */
+}
+#SubMenuDiv .menu_group_headers {
+	background:#C9D392;
+	outline:thin outset #5A5F00;
+	text-align:center;
+	color:black;
+}
+#TransactionsDiv{
+	display:table-cell;
+}
+#InquiriesDiv{
+	display:table-cell;
+}
+#InquiriesDiv div{ /* default div, used for custom report header */
+	background:#C9D392;
+	color:black;
+	padding:2px;
+	border:thin outset #5A5F00;
+}
+#InquiriesDiv body{
+	background:#eee;
+	color:red;
+	padding:2px;
+}
+#MaintenanceDiv{
+	display:table-cell;
+/*    float:left;*/
+/*    width:32.5%;
+	border:thin solid black;*/
+	
+}
+.menu_group_item p {
+	color: #00f; /* This is the color for bullets, I like it to be the same as the anchor color, but it's up to you */
+	text-indent: -10px; /* this makes the bullet to appear as the li tag previously used */
+	margin: 0 0 0 12px; /* One thing that I didnÃÂÃÂ´t like of the li was that it had no left margin applied */
+}
+
+/*** FOOTER ***/
+
+#FooterDiv{
+	clear:both; /* REQUIRED */
+    overflow:hidden;	
+    background:#C9D392;
+}
+#FooterWrapDiv{
+	overflow:hidden;
+	padding:3px;
+}
+#FooterLogoDiv{ 
+	float:right; /* right side */
+	background:white;
+    border-radius:8px;
+    padding:2px;
+}
+#FooterLogoDiv img {
+    vertical-align:middle;
+}
+#FooterVersionDiv{
+	float:left; /* left side */
+	margin-top:3px;
+}
+#FooterTimeDiv{
+	clear:left; /* below  */
+}
+
+/*** END ***/

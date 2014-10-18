@@ -1,0 +1,545 @@
+/*** 
+
+New "Gel" Theme for WebERP
+
+by Hindra Joshua
+
+Based from the previous theme "Gel"
+Credits to the original authors.
+
+NOTE: 
+This CSS is not yet optimized. Some styles maybe 'redundant' or 'unused',
+but for the obvious one it will be cleaned up.
+To optimized the rest we should examined the whole codes! That would be for 
+the next project. :)
+
+***/
+
+body {
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 10pt;
+	background-color: white;
+	margin:0;
+	padding:5px;
+}
+
+a {
+	font-weight: normal;
+	text-decoration: none;
+	color: blue;
+}
+a:hover {
+	color: blue;
+	text-decoration: underline;
+}
+img {
+	border:none;
+	vertical-align:middle;
+}
+.page_title_text {
+    padding-top: 2px;
+    padding-bottom: 2px;
+	font-weight: bold;
+	color: black;
+	text-align:center;
+}
+p.good {
+    font-weight: bold;
+    color: green;
+}
+p.bad {
+    font-weight: bold;
+    color:red;
+}
+table {
+  background-color: #eee;
+  border: 0px 0px 2px 2px #222 solid;
+  background: #eee;
+  width:100%;
+}
+table.selection {
+	background-color:#eee;
+	outline-style:solid;
+	outline-width:1px;
+}
+th {
+	font-weight: normal;
+	background-color: #ccc;
+	color: #330000;
+	text-align: center;
+}
+th.number {
+	text-align: right;
+	font-weight: normal;
+	background-color: #ccc;
+	color: #330000;
+}
+th.ascending {
+  cursor: s-resize;
+}
+th.descending {
+  cursor: n-resize;
+}
+th:after {
+	content: "";
+	float: right;
+	margin-top: 7px;
+	visibility: hidden;
+}
+th.ascending:after {
+	border-width: 0 4px 4px;
+	border-style: solid;
+	border-color: #000 transparent;
+	visibility: visible;
+}
+th.descending:after {
+	border-bottom: none;
+	border-left: 4px solid transparent;
+	border-right: 4px solid transparent;
+	border-top: 4px solid #000;
+	visibility: visible;
+}
+td {
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	text-align: left;
+}
+td.select {
+	background-color:#eee;
+}
+td.number {
+	text-align: right;
+}
+div.centre {
+  margin: 0 auto;
+  text-align:center;
+}
+input{
+  	background: url(images/input.png) #eee;
+	color:#000;
+	border: 0px 0px 1px 1px #000 dashed;
+}
+input:hover{
+	background: url(images/inputh.png) #eee;
+	color:#000;
+	border: 1px 1px 1px 1px #000 solid;
+}
+input.number{
+	text-align: right;
+}
+input.image {
+	border-width:0px;
+	background-color: transparent;
+}
+input.inputerror, input.error, select.error, select.selecterror, label.error {
+	color:red;
+	border: 2px solid red;
+}
+input:required, select:required, textarea:required {
+	background-color:lightyellow;
+}
+select {
+	background:#eee;
+	color:#111;
+}
+textarea{
+  	background: url(images/input.png) #eee;
+	color:#000;
+	border: 0px 0px 1px 1px #000 dashed;
+}
+textarea:hover{
+}
+.EvenTableRows {
+	background-color: #CCCCCC;
+}
+.OddTableRows {
+	background-color: #EEEEEE;
+}
+textarea{
+	background: url(images/inputtxt.png) #eee;
+	color:#000;
+	border: 0px 0px 1px 1px #000 dashed;
+	}
+textarea:hover{
+	background: url(images/inputhtxt.png) #eee;
+	color:#000;
+	border: 1px 1px 1px 1px #000 solid;
+}
+div.error { /*** is this used??? ***/
+	background-color:red;
+	color: white;
+	font-style: italic; 
+	font-weight:bold;
+	border: 3px solid red;
+}
+div.warn { 
+	background-color:#fa0;
+	color: black;
+	border: 1px solid black;
+}
+div.success { /*** is this used??? ***/
+	background-color:#b9ecb4;
+	color: #008000;
+	border: 1px solid #008000;
+}
+div.info { /* ??? */
+	background-color:#5d70f8;
+	color: white;
+	border: 1px solid white;
+}
+DIV.page_help_text {
+	background: lightgrey url(images/help.png) top left no-repeat;
+	border: #a52a2a 1px solid;
+	padding-top:2px;
+	padding-bottom: 2px;
+	padding-left: 10px;
+	z-index: 1;
+	width: 80%;
+	float: none;
+	visibility: visible;
+	margin: 0 auto;
+	position: static;
+    font-weight: normal;
+    color: black;
+	text-align:center;
+}
+DIV.system_check { /*** is this used???  */
+	border: #a52a2a 1px solid;
+	padding-left: 3px;
+	z-index: 1;
+	width: 40%;
+	float: none;
+	visibility: visible;
+	margin: 0 auto;
+	position: static;
+	background: lightgray;
+	padding-top: 1px;
+	padding-bottom: 1px;
+	font-weight: normal;
+	color: black;
+	text-align:left;
+}
+
+.dpTbl {
+	border: solid navy 1px;
+}
+.dpTD{
+	border:0;
+	width:20px;
+	background-color:#EEEEEE;
+	text-align:right;
+	cursor:pointer;
+}
+.dpDayHighlight{
+	border:0;
+	width:20px;
+	background-color:yellow;
+	text-align:right;
+	cursor:pointer;
+}
+.dpTDHover{
+	border:0;
+	width:20px;
+	background-color:#CCCCCC;
+	text-align:right;
+	cursor:pointer;
+}
+
+.table1 { /*** used ***/
+	width:90%;
+	background: #eee;
+	border: 1px solid #222;
+	margin: 0 auto;
+}
+.tableheader { /* used */
+	font-weight: normal;
+	background-color: #cccce5;
+	color: #330000;
+}
+.notavailable { /* used */
+	font-weight: normal;
+	font-style:italic;
+	color:#555555;
+}
+.label { /* used */
+	font-weight:bold;
+	font-style:normal;
+	font-size:120%;
+	color:black;
+	background-color:#cccccc;
+}
+.table_index { /* used */
+	background-color: #eee;
+}
+
+.header {
+	background-image: url("");
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	border: none;
+	margin: 0px;
+	padding: 0px;
+}
+input.inputerror { /* used */
+	background-color: #fddbdb;
+}
+textarea.texterror { /* used */
+	background-color: #fddbdb;
+}
+select.selecterror { /* used */
+	background-color: #fddbdb;
+}
+.OsRow { /* used */
+	background-color: #234567;
+	color: white;
+}
+li { /* ??? */
+	list-style-image: url(bullet.gif);
+}
+
+/*** CANVAS ***/
+
+#CanvasDiv{
+}
+
+/*** HEADER ***/
+
+#HeaderDiv {
+	overflow:hidden; /* REQUIRED: height according to items contained */
+	background: url(images/gelblue.png) repeat-x blue;
+	background-size:contain;
+	color:white;
+	padding:3px;
+	border:2px outset blue;
+	border-radius:20px;
+	padding:0 5px;
+}
+#HeaderWrapDiv{
+}
+
+/*** HEADER - APP INFO ***/
+
+#AppInfoDiv{
+	float:left; /* REQUIRED: to the left */
+}
+#AppInfoDiv img{
+	vertical-align:middle; /* center image and text vertically */
+}
+#AppInfoCompanyDiv{
+	display:table-cell; /* REQUIRED: as a cell */
+}
+#AppInfoUserDiv{
+	display:table-cell; /* REQUIRED: as a cell */
+}
+#AppInfoUserDiv a{
+	color:white;
+	font-weight:bold;
+	text-decoration:none;
+}
+#AppInfoUserDiv a:hover{
+	color:white;
+	font-weight:bold;
+	text-decoration:underline;
+}
+#AppInfoModuleDiv{
+	padding-left:24px;
+}
+
+/*** HEADER - QUICK MENU ***/
+
+#QuickMenuDiv{
+	float:right; /* to the right side  */
+	margin-top:2px;
+}
+#QuickMenuDiv ul{
+	list-style:none; /* hide the bullets */
+}
+#QuickMenuDiv li{
+    display:inline; /* items are inline */
+}
+
+/*** links as buttons!!! clicking anywhere in the button will activate 
+     the link!!! ***HJ***/
+	 
+#QuickMenuDiv li a{
+	padding:5px; /* links as button */
+	border:2px outset transparent; /* un-pressed state */
+	border-radius:15px;
+	color:white;
+	font-weight:bold;
+}
+#QuickMenuDiv li a:hover{
+	padding:5px; /* links as button */
+	border:2px inset steelblue; /* pressed state */
+	text-decoration:none; /* no underline */
+	color:whie;
+	border-radius:15px;	
+}
+
+/*** BODY ***/
+
+#BodyDiv {
+	clear:both; /* REQUIRED */
+	overflow:hidden; /* REQUIRED */
+	color:black;
+	background:whitesmoke;
+	text-align:center;
+}
+#BodyDiv table {
+	width:auto; /* automatic width */
+	margin: 0 auto;
+	margin-bottom:10px;
+}
+#BodyDiv .centre{
+	margin:0 auto 10px;
+    text-align:center;
+}
+
+/*** BODY - MAIN MENU ***/
+
+#MainMenuDiv{
+	float:left; /* REQUIRED: to the left side */
+	white-space:nowrap; /* don't break text */
+	text-align:center; 
+	width:11%;
+	background:url(images/gelbluev.png) repeat-y blue;
+	background-size:contain;
+	border:2px outset blue;
+	border-radius:20px;
+	margin-top:5px;
+	padding:3px;
+	
+}
+#MainMenuDiv ul{
+	list-style:none; /* REQUIRED: hide bullets */
+	padding:0; /* REQUIRED: remove extra gaps (ex-bullets) */
+	margin:0;
+}
+#MainMenuDiv li{
+	list-style:none; /* REQUIRED */
+	padding:0; /* REQUIRED */
+}
+#MainMenuDiv li a{ /* link as button!!! not-pressed state */
+	display:block; /* REQUIRED */
+	padding:3px;
+	border:2px outset transparent;
+	color:white;
+	font-weight:bold;
+	border-radius:15px;
+}
+#MainMenuDiv li a:hover{ /* link as button!!! pressed state */
+	text-decoration:none;
+	padding:3px;
+	border:2px inset steelblue;
+	background:none;	
+	border-radius:15px;
+}
+#MainMenuDiv .main_menu_selected a{ /* the selected button */
+	text-decoration:none;
+	padding:3px;
+	border:2px inset steelblue;
+	background:none;	
+	border-radius:15px;
+}
+
+/*** BODY - SUB MENU ***/
+
+#SubMenuDiv{
+	display:table;
+    margin-left:auto;
+    margin-right:auto;
+   	padding-top:5px;
+    width:87%;
+	text-align:left;
+}
+#SubMenuDiv ul{
+	list-style-type:none; /* REQUIRED: hide bullets */
+	padding:0; /* REQUIRED: remove extra gaps (ex-bullets) */
+	margin:0;	
+	border:thin solid black;
+	margin-left:3px;
+}
+#SubMenuDiv li{
+	list-style:none; /* REQUIRED: hide the bullets */
+	width:100%; /* REQUIRED: make item full width */
+	background:#eeeeee;
+}
+#SubMenuDiv li img{
+	vertical-align:middle; /* verticall align icon with the text */
+}
+#SubMenuDiv .menu_group_headers {
+	background:url(images/menu_bg_white.png) repeat-x silver;
+	text-align:center;
+	color:black;
+	padding-top:2px;
+	padding-bottom:2px;
+}
+#SubMenuDiv .menu_group_item p {
+	color: blue; /* This is the color for bullets, I like it to be the same as the anchor color, but it's up to you */
+	text-indent: -10px; /* this makes the bullet to appear as the li tag previously used */
+	margin: 0 0 0 12px; /* One thing that I didnÂ´t like of the li was that it had no left margin applied */
+}
+#SubMenuDiv a:link, a:visited{ /* links  */
+	color:blue;
+	text-decoration:none;
+}
+#SubMenuDiv a:hover{
+	color:blue;
+	text-decoration:underline;
+}
+#SubMenuDiv .menu_group_item { /* menu items */
+	padding-top:2px;
+	padding-bottom:2px;
+}
+#SubMenuDiv .menu_group_item:hover {
+	background:#bfd8ff;
+}
+#TransactionsDiv{
+	display:table-cell;	
+}
+#InquiriesDiv{
+	display:table-cell;		
+}
+#InquiriesDiv div{ /* default div, used for custom report header */
+	background:#dddddd;
+	color:black;
+	padding:2px;
+/*	border:thin outset silver;*/
+}
+#MaintenanceDiv{
+	display:table-cell;	
+}
+
+/*** FOOTER ***/
+
+#FooterDiv{
+	clear:both; /* REQUIRED */
+    overflow:hidden;	
+    color:gray;
+	background:url(images/bar.png) repeat-x lightgray;
+	border:thin solid lightgray;
+}
+#FooterWrapDiv{
+	overflow:hidden;
+	padding:3px;
+}
+#FooterLogoDiv{
+    float:left;
+	background:white;
+    border-radius:8px 8px 8px 8px;
+    padding:3px;
+	margin-left:47%; /* to the center (approx) */
+}
+#FooterLogoDiv img{
+	vertical-align:middle;
+}
+#FooterVersionDiv{
+	clear:both; /* below the logo */
+	float:left;
+    margin-left:47%; /* to the center (approx) */
+}
+#FooterTimeDiv{
+	float:right;
+    margin-top:-22px; /* go up to center */
+}
+
+/*** END ***/

@@ -1,0 +1,84 @@
+/***
+
+"Wood" Login theme for WebERP
+
+by Hindra Joshua
+
+***/
+
+
+/* $Id: login.css 4559 2011-05-01 09:45:18Z daintree $*/
+body {
+	background:url("images/desk.jpg") #663311;
+    color:black;
+    font:14px "Lucida Grande","Arial","Helvetica","Verdana","sans-serif";
+    text-align:center;
+}
+
+img{
+	vertical-align:middle;
+}
+
+#container {
+	background:url("images/wood.jpg") repeat scroll 0 0 #FFEEBB;
+    border:medium outset #FFEEBB;
+    border-radius:15px 15px 15px 15px;
+    box-shadow:5px 5px 6px;
+    margin-left:auto;
+    margin-right:auto;
+    margin-top:50px;
+    width:300px;
+    z-index:1000;
+}
+
+#login_logo {
+background:url("../webERP.gif") no-repeat scroll center center #FFFFFF;
+border:medium outset gray;
+border-radius:19px 19px 19px 19px;
+height:44px;
+margin:10% auto;
+padding:12px;
+width:190px;
+}
+/*input{
+	background:none repeat scroll 0 0 transparent;
+    border:thick outset #FFEEBB;
+    border-radius:15px 15px 15px 15px;
+    padding:10px;
+    vertical-align:middle;
+    width:50%;
+}
+
+input:hover {
+	background:none repeat scroll 0 0 transparent;
+    border:thick inset #FFEEBB;
+    border-radius:15px 15px 15px 15px;
+    padding:10px;
+    vertical-align:middle;
+    width:50%;
+}*/
+
+input.button {
+	background:none repeat scroll 0 0 transparent;
+    border:thick outset #FFEEBB;
+    border-radius:15px 15px 15px 15px;
+    padding:10px;
+    vertical-align:middle;
+    width:50%;
+	font-weight:bold;
+	box-shadow:3px 3px 4px;
+}
+
+input.button:hover {
+	background:none repeat scroll 0 0 transparent;
+    border:thick inset #FFEEBB;
+    border-radius:15px 15px 15px 15px;
+    padding:10px;
+    vertical-align:middle;
+    width:50%;
+	box-shadow:3px 3px 4px inset;	
+}
+
+#demo_text{
+	padding:10px;
+}

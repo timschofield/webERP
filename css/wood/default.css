@@ -1,0 +1,575 @@
+/*
+
+"Wood" Theme for WebERP
+
+v3, 2012-08-03
+
+by Hindra Joshua
+
+Changes:
+- Wood textures scaled down
+- Add shadow effects
+- Light color
+- Some fixes
+- Text links fix
+
+Notes:
+- You can remove desk.jpg and/or wood.jpg to get a new look without the textures!
+
+*/
+
+body{
+	font-family:Arial, Verdana, Helvetica, sans-serif;
+	font-size:10pt;
+	margin:10px;
+	background:url(images/desk.jpg) #631;
+}
+
+/* default styles */
+
+a{
+	color:blue;
+	text-decoration:none;
+}
+a:hover{
+	color:red;
+	text-decoration:underline;
+}
+
+img{ /* icon on page title, etc */
+	border:none;
+	vertical-align:middle;
+}
+
+p{
+}
+p.page_title_text { /* page title */
+	color:black;
+	font-weight:bold;
+	margin:5px auto;
+	padding:5px;
+	text-align:center;
+}
+p.good {
+	font-weight: bold;
+	color: green;
+}
+p.bad {
+	font-weight: bold;
+	color:red;
+}
+
+table{ /* most data display/input used tables */
+	background:none repeat scroll 0 0 white;
+	box-shadow:3px 3px 4px #663311;
+	text-align:center;
+	width:auto;
+	max-width:90%;
+	margin:5px auto;
+	padding:3px;
+}
+table .selection{ /* nested table for more complex data display/input */
+	background:#feb;
+	box-shadow:none;
+}
+th { /* table headers */
+	font-weight: normal;
+	font-size:100%;
+	background-color: #ffd980;
+	color: black;
+	text-align: center;
+}
+th.number {
+	text-align: right;
+	font-weight: normal;
+	background-color: #800000;
+	color: white;
+}
+th.ascending {
+  cursor: s-resize;
+}
+th.descending {
+  cursor: n-resize;
+}
+th:after {
+	content: "";
+	float: right;
+	margin-top: 7px;
+	visibility: hidden;
+}
+th.ascending:after {
+	border-width: 0 4px 4px;
+	border-style: solid;
+	border-color: #000 transparent;
+	visibility: visible;
+}
+th.descending:after {
+	border-bottom: none;
+	border-left: 4px solid transparent;
+	border-right: 4px solid transparent;
+	border-top: 4px solid #000;
+	visibility: visible;
+}
+td {
+	text-align: left;
+}
+td.select {
+	background-color:#ffb;
+}
+td.number {
+	text-align: right;
+}
+
+.centre{ /* used by buttons */
+	text-align:center;
+	margin:5px;
+}
+
+input { /* used for text box and buttons (buttons should have their own styles) */
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size:100%;
+}
+input.number{
+	text-align: right;
+}
+input.image {
+	border-width:0px;
+	background-color: transparent;
+}
+input:hover{
+	background:#fff791;
+}
+
+select { /* drop down */
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 100%;
+}
+select:hover { /* drop down */
+	background:#fff791;
+}
+input.inputerror, input.error, select.error, select.selecterror, label.error {
+	color:red;
+	border: 2px solid red;
+}
+input:required, select:required, textarea:required {
+	background-color:lightyellow;
+}
+textarea{
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 100%;
+}
+textarea:hover{
+	background:#fff791;
+}
+
+.EvenTableRows {
+	background-color: #f5e6c9;
+}
+.OddTableRows {
+	background-color: #f2fac0;
+}
+
+div{ /* some input/buttons need to be centered */
+}
+div.error {
+	background-color:#fddbdb;
+	color: red;
+	border: 1px solid red;
+	box-shadow:3px 3px 4px;
+	margin:0 auto 10px;
+	padding:10px;
+	width:80%;
+}
+div.warn {
+	background-color:#f5dbfd;
+	color: maroon;
+	border: 1px solid maroon;
+	box-shadow:3px 3px 4px;
+	margin:0 auto 10px;
+	padding:10px;
+	width:80%;
+}
+div.success {
+	background-color:#b9ecb4;
+	color: darkgreen;
+	border: 1px solid darkgreen;
+	box-shadow:3px 3px 4px;
+	margin:0 auto 10px;
+	padding:10px;
+	width:80%;
+}
+div.info {
+	background-color:#C7CCF6;
+	border:0 solid navy;
+	color:navy;
+	box-shadow:3px 3px 4px;
+	margin:0 auto 10px;
+	padding:10px;
+	width:80%;
+}
+DIV.page_help_text {
+	background: lightgrey url(images/help.png) top left no-repeat;
+	BORDER: #a52a2a 1px solid;
+	padding-top:2px;
+	padding-bottom: 2px;
+	PADDING-LEFT: 10px;
+	Z-INDEX: 1;
+	FLOAT: none;
+	VISIBILITY: visible;
+	POSITION: static;
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-weight: normal;
+	font-size: 100%;
+	color: black;
+	TEXT-ALIGN:center;
+	
+	box-shadow:3px 3px 4px;
+	margin:0 auto 10px;
+	padding:10px;
+	width:80%;
+}
+DIV.system_check { /* probably not used anywhere */
+	border: #a52a2a 1px solid;
+	z-index: 1;
+	float: none;
+	visibility: visible;
+	position: static;
+	background: lightgray;
+	font-family: arial, verdana, helvetica, sans-serif;
+	font-weight: normal;
+	font-size:100%;
+	color: black;
+	text-align:left;
+	box-shadow:3px 3px 4px;
+	margin:0 auto 10px;
+	padding:10px;
+	width:80%;
+}
+
+/* date picker */
+
+.dpTbl { /* date picker background */
+	border:thin solid black;
+	background:white;
+	box-shadow: 3px 3px 4px #000; /* shadow on modern browsers */
+}
+.dpTD {
+	border: 0;
+	width:20px;
+	background-color: #EEEEEE;
+	text-align:right;
+	cursor:pointer;
+}
+.dpDayHighlight {
+	border: 0;
+	width:20px;
+	background-color: yellow;
+	text-align:right;
+	cursor:pointer;
+}
+.dpTDHover {
+	border: 0;
+	width:20px;
+	background-color: #CCCCCC;
+	text-align:right;
+	cursor:pointer;
+}
+
+/* MISC */
+
+/* Table type is used for UI tables type 1 */
+.table1 {
+	width:90%;
+	background: #eee;
+	border: 0px 0px 2px 2px solid #222;
+	margin: 0 auto;
+}
+.tableheader {
+	font-weight: normal;
+	background-color: #777C59;
+	color: white;
+}
+.notavailable {
+	font-weight:lighter;
+	font-style:italic;
+	color:#555555;
+}
+.label {
+	font-weight:bold;
+	font-style:normal;
+	font-size:120%;
+	color:black;
+	background-color:#cccccc;
+}
+.table_index {
+	background-color: #F1FFDD;
+}
+/*li {
+list-style-image: url(bullet.gif);
+}*/
+
+.header{
+	background-image:url("");
+	background-repeat:no-repeat;
+	background-attachment:fixed;
+	border:none;
+	margin:0px;
+	padding:0px;
+}
+input.inputerror{
+	background-color:#fddbdb;
+}
+textarea.texterror{
+	background-color:#fddbdb;
+}
+select.selecterror{
+	background-color:#fddbdb;
+}
+.OsRow{
+	background-color:#234567;
+	color:white;
+}
+
+/* CANVAS */
+
+#CanvasDiv{
+	background:url(images/wood.jpg) #feb;
+	border:3px outset #feb;
+	border-radius:15px 15px 15px 15px;
+	padding:3px;
+	box-shadow: 5px 5px 6px #000; /* modern browser only! */
+}
+
+/* HEADER */
+
+#HeaderDiv{
+	color:black;
+	overflow:hidden;
+}
+#HeaderDiv a{
+	color: black;
+	font-weight: normal;
+	text-decoration: none;
+	border:2px outset #feb;
+	border-radius:10px;
+	padding:3px 5px;
+	box-shadow:2px 2px 3px black;
+	margin-right:2px;
+	background:none;
+}
+#HeaderDiv a:hover{
+	color: black;
+	font-weight: normal;
+	text-decoration: none;
+	border:2px outset #feb;
+	border-radius:10px;
+	padding:3px 5px;
+	color:red;
+	box-shadow:2px 2px 3px black;
+}
+#HeaderDiv a:active{
+	color: red;
+	text-decoration: none;
+	border:2px inset #feb;
+	border-radius:10px;
+	padding:3px 5px;
+	box-shadow:2px 2px 3px black inset;
+}
+
+#HeaderWrapDiv{
+}
+
+/* HEADER - APP INFO */
+
+#AppInfoDiv{
+	float:left; /* REQUIRED: to the left */
+}
+#AppInfoCompanyDiv{
+	display:table-cell; /* REQUIRED: as a cell */
+}
+#AppInfoUserDiv{
+	display:table-cell; /* REQUIRED: as a cell */
+	padding-left:5px;
+}
+#AppInfoModuleDiv{
+	font-weight:bold;
+	font-size:120%;
+	padding:3px;
+}
+
+/* HEADER - QUICK MENU */
+
+#QuickMenuDiv{
+	float:right; /* to the right side  */
+	margin-top:3px;
+}
+#QuickMenuDiv ul{
+	list-style:none; /* hide the bullets */
+}
+#QuickMenuDiv li{
+	display:inline; /* items are inline */
+}
+
+/* BODY */
+
+#BodyDiv {
+	clear:both;
+	overflow:hidden;
+	text-align:center; /* need to center some text/button on SelectSupplier.php */
+}
+#BodyWrapDiv{
+	color:black;
+}
+
+/* BODY - MAIN MENU */
+
+#MainMenuDiv{
+	float:left;
+	white-space:nowrap;
+	text-align:center; 
+	width:11%;
+}
+#MainMenuDiv ul{
+	margin:0 3px 0 0; 
+	padding:0;
+}
+#MainMenuDiv li{
+	list-style:none; /* REQUIRED */
+	padding:0; /* REQUIRED */
+}
+
+/* links as buttons */
+
+#MainMenuDiv li a,
+#MainMenuDiv li a:hover,
+#MainMenuDiv li a:active,
+#MainMenuDiv .main_menu_selected a,
+#MainMenuDiv .main_menu_selected a:hover{ /* common styles */
+display:block; /* REQUIRED */
+color:black;
+text-decoration:none;
+background:none;
+border:2px outset #feb;
+border-radius:10px;
+box-shadow:2px 2px 3px black;
+padding:3px;
+margin-top:2px;
+margin-bottom:2px;
+}
+#MainMenuDiv li a:hover{
+color:red;
+}
+#MainMenuDiv li a:active,
+#MainMenuDiv .main_menu_selected a:hover{ /* pressed */
+	color:red;
+	border:2px inset #feb;
+	box-shadow:2px 2px 3px black inset;
+}
+#MainMenuDiv .main_menu_selected a{ /* the selected button */
+	border:2px inset #feb;
+	box-shadow:2px 2px 3px black inset;
+}
+
+/* BODY - SUB MENU */
+
+#SubMenuDiv{
+	display:table; /* display as table, sub menu will auto adjust width */
+	text-align:left;
+	background:url(images/desk.jpg) #631;
+	border:3px inset #feb;
+	border-radius:15px;
+	box-shadow: 5px 5px 6px #000 inset; /* modern browser only! */
+	margin:0 auto;
+	padding:5px;
+	width:87%;
+}
+#SubMenuDiv ul{
+	background:url(images/wood.jpg) #feb;
+	border:3px outset #feb;
+	border-radius:10px;
+	box-shadow: 5px 5px 6px #000; /* shadow: modern browser only! */
+	padding:0; /* REQUIRED: remove extra gaps (ex-bullets) */
+	margin:5px;
+}
+#SubMenuDiv li{
+	list-style:none; /* REQUIRED: hide bullets */
+}
+
+.menu_group_headers {
+	background:url(images/desk.jpg) #631;
+	border:3px outset #631;
+	border-radius:10px 10px 0 0;
+	color:white;
+	font-weight:bold;
+	text-align:center;
+	padding:2px;
+	margin:-3px -3px 0;
+}
+
+.menu_group_item,.menu_group_item:hover{
+	color:black;
+	border:1px inset transparent;
+	border-radius:7px;
+	padding:2px;
+}
+.menu_group_item:hover{
+	border:1px inset #feb;
+	box-shadow:1px 1px 2px black inset;
+}
+.menu_group_item a{
+	color:black;
+	text-decoration:none;
+	text-align:left;
+}
+.menu_group_item a:hover{
+	color:red;
+	text-decoration:none;
+}
+
+.menu_group_item p {
+	color: red; /* This is the color for bullets, I like it to be the same as the anchor color, but it's up to you */
+	text-indent: -10px; /* this makes the bullet to appear as the li tag previously used */
+	margin: 0 0 0 12px;
+}
+
+#TransactionsDiv,#InquiriesDiv,#MaintenanceDiv{ 
+display:table-cell; 
+}
+#InquiriesDiv div{ /* header for standard reports/forms, custom reports */
+	background:url("images/desk.jpg") #631;
+	border:3px outset #663311;
+	color:white;
+	font-weight:bold;
+	margin:0 -3px;
+	padding:2px;
+}
+
+/* FOOTER */
+
+#FooterDiv{
+	clear:both;
+	color:black;
+	overflow:hidden;
+}
+#FooterWrapDiv{
+}
+#FooterLogoDiv{
+	background:white;
+	border:2px outset #feb;
+	border-radius:8px 8px 8px 8px;
+	float:left;
+	padding:3px;
+	margin-left:0px;
+	margin-top:3px;
+}
+#FooterVersionDiv{
+	float:left;
+	margin-left:10px;
+	margin-top:17px;
+}
+#FooterTimeDiv{
+	float:right;
+	margin-top:17px;
+}
+
+/* END */

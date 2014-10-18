@@ -1,0 +1,288 @@
+<br /><br />
+<a name="CreatingNewSystem"><font size="+3"><b>Ein neues System einrichten</b></font></a>
+<br /><br />
+<font size="+2"><b>Das Demosystem erproben</b></font>
+<br /><br />
+Das Demosystem hat bereits erfasste Spiel-Daten, so dass die Funktionen des Systems ausprobiert werden können, ohne dass alle Daten zunächst erst angelegt werden müssen. Sie brauchen nur die vorhandenen Funktionen auf der Grundlage der gebotenen Demo-Daten untersuchen. Es sind bereits eine Reihe von Grunddaten eingerichtet, die festlegen, wie das System funktioniert. Diese Grunddaten sind sowohl im Register Einstellungen im Hauptmenü als auch in der Datei config.php eingepflegt. Um mit dem Demosystem zu arbeiten, ist es nicht notwendig, diese zu ändern, die Angaben für die Datenbankverbindung sind in der Datei config.php gesichert. Diese Datei liegt im Hauptverzeichnis für die Skripte und enthält insbesondere die Verbindungsparameter für die Datenbank und die Art der Datenbank (gegenwärtig werden MySQL und PostgreSQL unterstützt). Außerdem sind einige Parameter für die Sitzungen und Fehlermeldungen in dieser Datei eingestellt, Sie können diese Einstellungen in den meisten Fällen einfach übernehmen.
+<br /><br />
+
+<!-- Help Begin: CompanyPreferences -->
+
+<font size="+2"><b>Einen Mandanten einrichten</b></font>
+<br /><br />
+<font size="+2"><b>Das Firmenlogo</b></font>
+<br /><br />
+Damit auf jedem Bildschirm das Firmenlogo dargestellt werden kann, muss es als .jpg-Datei logo.jpg im Verzeichnis companies/mandantenname/ albgelegt werden. webERP erlaubt unter einer Installation mit denselben Skripten mehrere Mandanten, deren Konfiguration in jeweils einer eigenen Datenbank abgelegt wird. Mit dem Namen des Mandanten existiert sowohl eine Datenbank als auch ein Unterverzeichnis unter dem Verzeichnis companies/. Für das Logo werden Leserechte für den Benutzer benötigt, unter dem der Webserver läuft (Apache unter Linux läuft normalerweise als "nobody"). Bei Windowsinstallationen ist das natürlich kein Thema.
+<br /><br />
+<font size="+2"><b>Der Kontenplan</b></font>
+<br /><br />
+Im System ist bereits ein Kontenplan eingerichtet. In den meisten Fällen wird ein  Unternehmen jedoch mit dem Kontenplan arbeiten wollen, den es schon immer verwendet hat. Die Pflege des Kontenplanes - das Hinzufügen neuer Konten und das Löschen der nicht mehr benötigten Konten - erfolgt aus dem Hauptmenü unter Hauptbuchhaltung. Das ist der Startpunkt beim Einrichten eines neuen Mandanten. Wenn die Funktionen zur Hauptbuchintegration eingesetzt werden sollen, ist das Einrichten des Kontenplanes notwendigerweise der erste Schritt. Wenn ein Hauptbuchkonto erst einmal bebucht ist, kann es nicht wieder gelöscht werden. 
+<br /><br />
+In der Hauptbuchhaltung gibt es eine Hierarchie Kontenbereich &rarr; Kontengruppe &rarr; Sachkonto. Die Sachkonten - der Kontenplan, die Kontengruppen und Kontenbereiche können aus dem Hauptmenü unter Hauptbuchhaltung &rarr; Einstellungen gepflegt werden. Es ist wichtig, den Kontenplan richtig einzustellen, bevor die ersten Buchungen vorgenommen werden, weil das Änderungen am Kontenplan erschwert. Sie können keine Konten löschen, wenn schon Buchungen darauf vorgenommen wurden.
+<br /><br />
+<font size="+2"><b>Unternehmenseinstellungen</b></font>
+<br /><br />
+Die Unternehmenseinstellungen müssen über Hauptmenü &rarr; Einstellungen &rarr; Allgemeines &rarr; Unternehmenseinstellungen korrekt eintgestellt werden. Die meisten dieser Parameter sind selbsterläuternd. Firmenname, Betriebsnummer, Postanschrift, Besucheranschrift usw., ebenso Telefonnummern und die Hauswährung. Wenn die Hauswährung noch nicht existiert, gehen Sie in die Währungspflege, wo Sie neue Währungen anlegen und die Kurse eintragen können. Achten Sie darauf, dass Sie für die Währung, die Sie als Hauswährung verwenden wollen, den Kurs 1 eintragen.
+<br /><br />
+Der Unternehmensstammsatz ist auch die Stelle, an der wichtige Sachkonten für automatische Buchungen hinterlegt sind:
+<br /><br />
+<ul>
+<li>Sammelkonto für Debitorenforderungen</li>
+<li>Sammelkonto für Kreditorenverbindlichkeiten</li>
+<li>Verrechnungskonto für Mitarbeiterzahlungen</li>
+<li>Verrechnungskonto Wareneingänge</li>
+<li>Verrechnungskonto Bilanzergebnis</li>
+<li>Konto für weiterberechnete Versandkosten</li>
+<li>das Konto für Kursdifferenzen</li>
+<li>das Konto für Kursdifferenzen aus Forderungen</li>
+<li>das Konto für Kursdifferenzen aus Verbindlichkeiten</li>
+<li>das Konto für Erträge aus erhaltenen Skonti</li>
+</ul>
+Der Unternehmensstammsatz enthält auch Einstellungen für die Integration:
+<ul>
+<li>Debitorenvorgänge im Hauptbuch mitbuchen</li>
+<li>Kreditorenvorgänge im Hauptbuch mitbuchen</li>
+<li>Lagerbestandsvorgänge im Hauptbuch mitbuchen (zu Standardkosten)</li>
+</ul>
+Beachten Sie bitte, dass es für die Bestandsvorgänge einen separaten Schalter gibt. Wenn die Hauptbuchintegration der Debitorenbuchhaltung gesetzt ist, wird beim Erstellen von Rechnungen und Gutschriften das Sachkonto für Forderungen mit bebucht, aber nicht die Konten für Herstellkosten des Umsatzes und Bestand. Dafür muss auch die Hauptbuchintegration der Bestandsvorgänge eingeschaltet sein.
+<br /><br />
+Für die Hauptbuchintegration der Erlösbuchungen werden die Konten pro Umsatzart, Vertriebsbereich und Warengruppe eingerichtet, das geschieht unter Hauptmenü &rarr; Einstellungen &rarr; Debitoren/Kreditoren &rarr; Kontenfindung Umsatzerlöse.
+<br /><br />
+Für die Hauptbuchintegration der Bestände müssen dann die Konten der Herstellkosten des Umsatzes ebenfalls pro Umsatzart, Vertriebsbereich und Warengruppe hinterlegt werden. Das geschieht unter Hauptmenü &rarr; Einstellungen &rarr; Debitoren/Kreditoren &rarr; Kontenfindung Herstellk. d. Umsatzes.
+<br /><br />
+Falls entsprechende Konten nicht eingetragen wurden, legt das System automatisch ein neues Hauptbuchkonto mit der Nummer 1 an, wenn ein solches Konto bei Ihnen erscheint, ist das ein deutlicher Hinweis darauf, dass die Kontenfindungen nicht ordentlich gepflegt wurden.
+<br /><br />
+<!-- Help End: CompanyPreferences -->
+
+<!-- Help Begin: SystemConfiguration -->
+<font size="+2"><b>Systemeinstellungen</b></font>
+<br /><br />
+Dieser Bereich kann über Hauptmenü &rarr; Einstellungen &rarr; Allgemeines &rarr; Systemeinstellungen aufgerufen werden. Die Erläuterungen an der Seite sollen dem Benutzer eine Vorstellung davon geben, wozu jeder Parameter gut ist.
+<br /><br />
+<table border=1 width=100%>
+<tr><th>Parameter</th><th>Beschreibung</th></tr>
+<tr><td>Vorgabe-Datumsformat (für die Eingabe und die Darstellung in Berichten)</td><td>Das übliche Datumsformat ist d/m/Y für Großbritannien/Australien/Neuseeland und m/d/Y für USA und Kanada</td></tr>
+<tr><td>Vorgabe-Layout für neue Benutzer</td><td>Das Vorgabe-Layout wird für neue Benutzer verwendet, die sich noch kein eigenes Layout ausgewählt haben</td></tr>
+<tr><th colspan=2>&nbsp;</th></tr>
+<tr><th colspan=2>Einstellungen für Debitoren/Kreditoren</th></tr>
+<tr><th>Parameter</th><th>Beschreibung</th></tr>
+<tr><td>Erste Überfälligkeitsfrist in Tagen</td><td>Debitoren- und Kreditorensalden werden nach diesen Tagen als überfällig angezeigt. Dieser Parameter wird in den gerasterten Debitoren- und Kreditorenauswertungen und -listen verwendet</td></tr>
+<tr><td>Zweite Überfälligkeitsfrist in Tagen</td><td>Wie oben, aber für die nächste Überfälligkeitsgrenze</td></tr>
+<tr><td>Vorgabe-Kreditlimit</td><td>Der Vorschlagswert wird verwendet, wenn neue Kundenstammsätze eingerichtet werden</td></tr>
+<tr><td>Kreditprüfung</td><td>Kreditlimits können bei der Auftragserfassung geprüft werden, um eine Warnmeldung auszugeben oder die Auftragserfassung zu stoppen, wenn der Kundensaldo oberhalb des angegebenen Limits ist</td></tr>
+<tr><td>Ausgleiche des letzten Monats auflisten</td><td>Diese Einstellungen betreffen die Angaben auf den Debitorenkontoauszügen. Wenn Ja eingestellt ist, werden die im Laufe des letzten Monats erfolgten Ausgleichsbuchungen von Zahlungseingängen und verrechneten Gutschriften mit dargestellt, bei Nein nur die offenen, noch nicht ausgeglichenen Rechnungen, Gutschriften und Zahlungen</td></tr>
+<tr><td>Eigentumsvorbehalt</td><td>Dieser Text erscheint auf Rechnungen und Gutschriften in kleiner Schrift. Normalerweise behält sich der Lieferant das Eigentumsrecht für noch nicht bezahlte Waren vor, als Schutz gegen Forderungsausfälle</td></tr>
+<tr><td>Zeilen der Schnellerfassungsmaske</td><td>Dieser Parameter bestimmt das Aussehen der Positionserfassung bei den Kundenaufträgen. Die Zahl der Zeilen kann jede Zahl zwischen 1 und 99 sein</td></tr>
+<tr><td>Format der Lieferscheine</td><td>Wählen Sie aus, wie die Lieferscheine üblicherweise ausgedruckt werden sollen</td></tr>
+<tr><td>Firmenangabenauf dem Lieferschein</td><td>Kundenniederlassungen können mit dem Merkmal eingerichtet werden, dass Lieferscheine nicht mit ausgedruckten Firmenangaben und -Logo versehen werden. Das ist nützlich für Firmen, die ihre Waren an die Kunden ihrer Kunden versenden und deshalb die Angabe der Herkunft der Waren unangepasst ist. Die hier eingerichtete Voreinstellung wird beim Anlegen einer Kundenniederlassung übernommen und kann dort überschrieben werden</td></tr>
+<tr><td>Geschäftsschluss</td><td>Aufträge, die nach diesem Zeitpunkt eingehen, werden üblicherweise erst am nächsten Tag beliefert. Das kann zum Zeitpunkt der Auftragserfassung überschrieben werden</td></tr>
+<tr><td>Verkauf von Artikeln mit 0 Kosten erlauben</td><td>Wenn dieser Parameter auf Nein gesetzt ist, kann nur solches Material bei der Auftragserfassung eingegeben werden, für das die Herstellkosten im System hinterlegt sind</td></tr>
+<tr><td>Nachweispflichtige Materialien müssen für Gutschrift existieren</td><td>Dieser Parameter bezieht sich auf den Umgang mit nachweispflichtigen Materialien. Wenn der Parameter auf Ja gesetzt ist, verhindert das System, dass Gutschriften für Seriennummernteile erstellt werden, die nicht früher nicht früher im Lager vorhanden waren</td></tr>
+<tr><td>Vorschlags-Preisliste</td><td>Diese Preisliste wird als letzte Rettung verwendet, wenn kein Preis in der speziellen Preisliste für den Kunden eingerichtet ist</td></tr>
+<tr><td>Übliche Versandart</td><td>Diese Versandart wird verwendet, wenn nicht eine spezielle Versandart vorher für die Kundenniederlassung festgelegt worden ist</td></tr>
+<tr><td>Versandkosten berechnen</td><td>Wenn dieser Parameter gesetzt ist, versucht das System auf der Basis von Volumen und Gewicht und den hinterlegten Tarifen für die einzelnen Versandarten zu berechnen. Die Ergebnisse dieser Berechnung sind nur sinnvoll, wenn die Angaben für Volumen und Gewicht in den einzelnen Materialien und die Versandkosten für die einzelnen Versandarten entsprechend gepflegt sind</td></tr>
+<tr><td>Versandkosten in Rechnung stellen bei Auftragswert unter</td><td>Dieser Parameter ist nur wirksam, wenn der Schalter Versandkosten berechnen auf Ja gestellt ist. Wenn der Wert 0 angegeben ist, werden immer Versandkosten extra berechnet. Für die Entscheidung wird der Gesamtauftragswert berücksichtigt</td></tr>
+<tr><td>Debitorennummern automatisch erzeugen</td><td>Wenn dieser Parameter auf automatisch gesetzt ist, werden die Kundennummern automatisch vergeben, als fortlaufende Nummer</td></tr>
+<tr><td>Vorgabe-Steuerkategorie</td><td>Das ist die Steuerkategorie, welche für Kreditorenrechnungen und für Steuern auf Frachtgebühren verwendet wird</td></tr>
+<tr><td>Steuerangaben-Bezeichnung</td><td>Dieser Parameter ist die Bezeichnung für das, was auf den steuerlich gültigen Rechnungen und Gutschriften über das Unternehmen ausgesagt wird, beispielsweise "Steuernummer" oder "Umsatzsteuer-ID"</td></tr>
+<tr><td>Land der Betriebstätigkeit</td><td>Dieser Parameter wird verwendet, wenn die Berechnung der Versandkosten eingeschaltet ist. Beachten Sie bitte, dass die Länderangaben aus der Währungstabelle kommen.</td></tr>
+<tr><td>Monate für Lagerverbrauch</td><td>In den Warenverbrauchsauswertungen wird ein Monatsdurchschnitt aus den letzten Monaten angezeigt. Wie viele Monate dabei berücksichtigt werden, wird hier eingestellt</td></tr>
+<tr><td>Berechnete Menge gegen Liefermenge prüfen</td><td>Damit wird festgelegt, ob bei der Erfassung von Kreditorenrechnungen eine Prüfung der eingangenen Mengen gegen die berechneten Mengen durchgeführt wird oder nicht</td></tr>
+<tr><td>Berechneten Preis gegen Bestellpreis prüfen</td><td>Damit wird festgelegt, ob bei der Erfassung von Kreditorenrechnungen eine Prüfung der berechneten Preise gegen die Bestellpreise durchgeführt wird oder nicht</td></tr>
+<tr><td>Rechnungseingangstoleranz</td><td>Wenn der in Rechnung gestellte Preis gegen den Bestellpreis geprüft wird, bestimmt dieser Parameter die Prozentzahl, um die der Rechnungsbetrag höher sein darf auf Grund des Preises</td></tr>
+<tr><td>Wareneingangstoleranz</td><td>Wenn die berechnete Menge gegen die Liefermenge geprüft wird, bestimmt dieser Parameter die Prozentzahl, um die der Rechnungsbetrag höher sein darf auf Grund der Lieferung</td></tr>
+<tr><td>Kundenauftrag erlaubt gleiches Material mehrfach</td><td>Wenn dieser Parameter auf Ja gesetzt ist, darf ein Kundenauftrag das gleiche Material in unterschiedlichen Positionen enthalten. Das ermöglicht es Lieferpläne mit unterschiedlichen Mengen zu unterschiedlichen Terminen zu erstellen.</td></tr>
+<tr><td>Bestellung erlaubt gleiches Material mehrfach</td><td>Wenn dieser Parameter auf Ja gesetzt ist, darf eine Bestellung das gleiche Material in unterschiedlichen Positionen enthalten. Das ermöglicht es Lieferpläne mit unterschiedlichen Mengen zu unterschiedlichen Terminen zu erstellen.</td></tr>
+<tr><th colspan=2>&nbsp;</th></tr>
+<tr><th colspan=2>Allgemeine Einstellungen</th></tr>
+<tr><th>Parameter</th><th>Beschreibung</th></tr>
+<tr><td>Geschäftsjahr endet mit dem Monat</td><td>Die Festlegung, mit welchem Monat das Geschäftsjahr endet, ermöglicht im System sinnvolle Vorschlagswerte für die Berichte der Hauptbuchhaltung</td></tr>
+<tr><td>Seitenlänge für Berichte (Anz. Zeilen)</td><td>&nbsp;</td></tr>
+<tr><td>Übliche Maximalzahl von anzuzeigenden Datensätzen</td><td>Wenn Seiten angezeigt werden, die mit Begrenzungen der Länge von Listen programmiert sind (wie Kunden-, Lieferanten- und Materialsuche) legt dieser Wert die übliche Anzahl von Datensätzen fest, die zurückgegeben werden. Dieser Wert kann individuell im Benutzerprofil überschrieben werden</td></tr>
+<tr><td>Maximale Größe in KB für hochzuladende Bilder</td><td>Für Materialien können Bilddateien auf den Server hochgeladen werden. Das System prüft vor dem Hochladen, dass die Dateigrößen (in KB) kleiner sind als der hier eingestellte Wert. Große Dateien machen das System langsam und sind problematisch für die Anzeige im Bild Materialstamm pflegen</td></tr>
+<tr><td>Verzeichnis in dem Bilder abgelegt werden</td><td>Das Verzeichnis, in dem alle Bilddateien abgelegt werden sollen. Bilddateien bekommen die Bezeichnung <i>Materialnummer</i>.jpg - es müssen alles jpg-Dateien sein und die Materialnummer ist Bestandteil des Dateinamens. Diese Benennung erfolgt automatisch beim Upload. Das System prüft, dass es sich um eine jpg-Datei handelt.</td></tr>
+<tr><td>Verzeichnis in dem die Berichte abgelegt werden</td><td>Das Verzeichnis in dem alle PDF-Berichtsdatein erstellt werden. Es wird dafür ein gesondertes Verzeichnis empfohlen</td></tr>
+<tr><td>Nur SSL-Verbindungen erlauben</td><td>Damit wird angewiesen, dass die Verbindung über das ssl-Protokoll erfolgt, d. h. die Daten werden zwischen Server und Frontend verschlüsselt übertragen</td></tr>
+<tr><td>Datenbankpflege beim Anmelden</td><td>Dieser Parameter wird von der Funktion DB_Maintenance verwendet, um in regelmäßigen Abständen Aufgaben der Datenbankpflege durchzuführen. Bei jeder Anmeldung eines Benutzers wird geprüft, ob das angegebene Intervall verstrichen ist</td></tr>
+<tr><td>Wiki-Anwendung</td><td>Mit dieser Funktion wird es möglich, dass webERP eine Verknüpfung zu einem Knowledge-Management-System des Unternehmens unter Nutzung einer Wiki-Anwendung anzeigt. Das ermöglicht den Autausch von wichtigen Unternehmensinformationen - über Kunden, Lieferanten und Produkte sowie die Einrichtung von Workflow-Menüs und/oder die Verlinkung mit Arbeitsablaufbeschreibungen</td></tr>
+ <!--New pages linked off these pages can be created - showing uploaded images or links to other files appropriate to the product/customer/supplier. The wiki would also make a good place to keep the company processes and policies documentation. Wacko wiki allows pages to be secured from alteration if necessary. An entire business knowlege base and intranet can be built up from the cumulative knowlege of the whole team. Since wacko wiki also allows creation of links to any other web pages particularly webERP pointers to specific information can be provided in the wiki that takes the reviewer of the wiki directly to the information in webERP or the webERP manual.  -->
+<tr><td>Wiki-Pfad</td><td>Der Pfad zur Wiki-Installation um die Basis der Wiki-URLs zu bilden, das sollte das Verzeichnis auf dem Webserver sein, in dem das Wiki installiert ist. Das Wiki muss auf dem selben Webserver installiert sein, wie webERP, aber nicht unterhalb im webERP-Baum, sondern neben webERP. Der Name des Web-Server-Verzeichnisses muss angegeben werden, damit Links auf die Wiki-Seiten durch webERP angelegt werden können. Momentan ist die Integration auf die Menüpunkte Lieferanten Produkte und Kunden beschränkt, jeweils nachdem ein Stammsatz ausgewählt wurde. Links werden nur angezeigt wenn der Schalter "Wiki-Anwendung" gesetzt ist. Falls die Wiki-Seite nicht existiert, werden Sie gefragt, ob Sie eine neue Seite anlegen möchten, andernfalls wird die Seite angezeigt.
+<br /><br />Das Produkt-Wiki könnte solche Informationen beinhalten:
+<ul>
+<li>Hinweise über Produktentwicklungen</li>
+<li>Bedienungsanleitungen</li>
+<li>Garantiehinweise</li>
+<li>Technische Informationen</li>
+</ul>
+Das Kundenwiki:
+<ul>
+<li>Angaben zu Kundenkontakten</li>
+<li>Kreditprobleme</li>
+<li>Anmerkungen zur Kundenbeziehung</li>
+<li>Hinweise zu Schlüsselkontakten</li>
+<li>Vertragsdokumente / Fachbegriffe</li>
+</ul>
+Das Lieferanten-Wiki:
+<ul>
+<li>Kompetenzträger</li>
+<li>Anmerkungen zur Geschäftsbeziehung</li>
+<li>Angelegenheiten zu Zahlungen</li>
+<li>Vertragsdokumente</li>
+</ul>
+Wikis sind ein Vorteil für ein verzweigtes Unternehmen, sie sind nicht sinnvoll für eine Fünf-Personen-Verwaltung, die sich das Büro teilen. Aus diesem Grunde ist das Wiki auch nicht im webERP-Paket integriert, es betrifft einfach nicht alle Unternehmen, die webERP einsetzen könnten.
+<a href="http://wackowiki.com/WackoDownload/InEnglish?v=xlv">Get Wacko Wiki</a>
+</td></tr></table>
+<br /><br />
+
+<!-- Help End: SystemConfiguration -->
+
+
+<!-- Help Begin: BaseInformation -->
+
+<font size="+2"><b>Erforderliche Grunddaten</b></font>
+<br /><br />
+Bevor Kunden angelegt werden können, müssen einige Grunddaten eingerichtet werden, alle diese Einstellungen werden im Hauptmenü unter Einstellungen &rarr; Allgemeines &rarr; Systemeinstellungen vorgenommen.
+<br /><br />
+<ul>
+<li>Währungen - die Währung des Kundenkontos</li>
+<li>Umsatzarten/Preislisten - Preise werden auf dieser Ebene eingerichtet. Die Umsatzart kombiniert mit der Währung des Kunden bestimmt, welche Preisliste angewendet wird. Jeder Kundenstammsatz muss auf eine Umsatzart verweisen.</li>
+<li>Kreditstatus - Dieses Kennzeichen ist als Markierung für die Kreditwürdigkeit des Kunden gedacht. Jeder Kundenstamm verweist auf eine Kreditstatus-Ausprägung. Einige Ausprägungen können so eingerichtet werden, dass eine Belieferung / Fakturierung verhindert wird.</li>
+<li>Zahlungsbedingungen - Es können so viele unterschiedliche Zahlungsbedingungen wie nötig angelegt werden. Jeder Kunde muss auf eine Zahlungsbedingung verweisen. Für das Anlegen der Zahlungsbedingungen ist eine gewisse Flexibilität vorgesehen. Es kann eine Anzahl von Tagen Zahlungsziel oder ein bestimmter Tag im Folgemonat angegeben werden. Die gerasterten Saldenlisten der Debitoren- und Kreditorenbuchhaltung berücksichtigen diese Zahlungsbedingungen.</li>
+<li>Steuergruppe - Dies sind die Gruppen von Steuerschlüsseln, die für diese Kunden zu berücksichtigen sind. Jede Kundenniederlassung muss sich auf eine Steuergruppe beziehen, und Verkäufe an diese Kunden werden in Abhängigkeit von der Steuergruppe, der Steuerregelung der Betriebsstätte und der Steuerkategorie der verkauften Waren automatisch berechnet. Das System der Steuerberechnung bietet eine große Flexibilität.</li>
+</ul>
+Wenn die oben genannten Einstellungen vorgenommen sind, könnte mit dem Erfassen der Kundenstammdaten begonnen werden.
+<br /><br />
+Die Kundenstammdaten bestehen aber aus zwei Teilen, den Stammdaten für den Kunden selbst und zusätzlich den Angaben für die Lieferanschriften, im Folgenden als Kundenniederlassungen bezeichnet. Auf diese Weise können auch Kunden mit vielen Filialen abgebildet werden. Bevor die Kundenniederlassungen angelegt werden können, müssen wiederum unter Hauptmenü &rarr; Einstellungen &rarr; Debitoren/Kreditoren wiederum einige Grundeinstellungen vorgenommen worden sein:
+<br /><br />
+<ul>
+<li>Vertriebsbereiche - Diese werden für das Vertriebscontrolling nach Bereichen verwendet. Wenn die Hauptbuchintegration aktiv ist, können die Umsatzerlöse nach Vertriebsbereichen auf unterschiedliche Konten gebucht werden. Jede Kundenniederlassung muss auf einen Vertriebsbereich verweisen. Wenn Sie keine besondere Unterscheidung wünschen, genügt es, wenn Sie nur einen einzigen Vertriebsbereich anlegen.</li>
+<li>Umsatzarten - Es können so viele Umsatzarten wie nötig eingerichtet werden. Es sollte in Gedanken behalten werden, dass die Preise der Waren pro Umsatzart (und Währung) gehalten werden. Die Umsatzart würde widerspiegeln, ob der Umsatz aus Verkauf an Endkunden, Wiederverkäufer, Großhändler, Barverkauf, Sonderumsätze usw.</li>
+<li>Die Niederlassungs-Stammsätze müssen auch auf einen verantwortlichen Verkäufer verweisen, der für die Kundenbeziehung und die Forderungen gegenüber der Niederlassung verantwortlich gemacht wird. Wenn eine Unterscheidung nach Verkäufern nicht erforderlich ist, müssen Sie dennoch wenigstens einen Verkäufer anlegen.</li>
+<li>Eine Betriebsstätte mit Lagerhaltung muss eingerichtet sein. Jeder Kundenniederlassung muss einem Lagerort für die Belieferung zugeordnet sein, der aus der Sicht der Frachtkosten am wirtschaftlichsten ist.</li>
+</ul>
+Wenn Sie diese Grundeinstellungen vorgenommen haben, kann die Sache mit dem Anlegen der Kundenstammdaten und Niederlassungen mit den Lieferanschriften beginnen.
+<br /><br />
+Datenbankanwendungen, Excel-Tabellen oder Exportdateien im CSV-Format können auch verwendet werden, diese Daten zu übernehmen. Wenn Sie MS Access verwenden, installieren Sie einen ODBC-Treiber für MySQL auf dem Rechner installiert, auf dem Sie Access installiert ist und binden die Tabellen DebtorsMaster und CustBranch in eine leere Access-Datenbank ein. Die CSV-Datei oder die Tabelle wird in die Access-Datenbank impeortiert und mit einer Aktualisierungsabfrage werden die Quellfelder auf die Tabellen DebtorsMaster und/oder CustBranch abgebildet. Zu einem Stammsatz in DebtorsMaster können viele Niederlassungssätze in CustBranch gehören. Diese Vorgehensweise ist in dem Sinne "gefährlich", dass Sie sicherstellen müssen, dass keine Kunden- oder Niederlassungssätze in den oben beschriebenen Grunddaten auf nicht existiernde Werte verweisen.
+<br /><br />
+<font size="+1"><b>Materialien einrichten</b></font>
+<br /><br />
+Bevor Materialstammsätze eingerichtet werden können, sind wiederum einige Grunddaten erforderlich.
+<br /><br />
+<ul>
+<li>Warengruppen - Das sind breit gefasste Überbegriffe, unter denen die Waren und Dienstleistungen eines Unternehmens eingeteilt werden. Der Materialbegriff ist in webERP weit gefasst, Rohmaterialien und Waren für den Verkauf fallen darunter, aber auch Dienstleistungen die das Unternehmen anbietet und Arbeitsleistungen, die in der Fertigung eingesetzt werden. In der Warengruppe sind alle zusätzlichen Informationen zusammengefasst, die für die Integration mit dem Hauptbuch erforderlich sind. Alle Materialien der gleichen Warengruppe werden so auf die selbe Weise im System verbucht. Die Warengruppen pflegen Sie unter Hauptmenü &rarr; Einstellungen &rarr; Bestandsführung.</li>
+<li>Maßeinheiten - Alle für die Materialien möglicherweise benötigten Maßeinheiten können unter Hauptmenü &rarr; Einstellungen &rarr; Bestandsführung gepflegt werden.</li>
+</ul>
+Für die Unterscheidung der verschiedenen Materialien ist die Materialart wichtig, diese dienen der Unterscheidung, welche Daten für ein Material erfasst werden müssen bzw. können. Es gibt die Unterscheidung Kaufteile, Eigenfertigung, Bestellsatz, Sammelmaterial und Dummymaterial. Letzteres bekommt keine Bestandsdaten und wird für Dienstleistungen und Arbeitsstunden verwendet. 
+<br /><br />
+<font size="+1"><b>Materialbestände einpflegen</b></font>
+<br /><br />
+Wenn die Informationen über die Bestandsmaterialien - und logischerweise zuvor die Grunddaten - alle erfasst wurden (zweckmäßigerweise alle im Voraus), müssen die Bestandssalden für jede lagernde Betriebsstätte mit dem Skript für Bestandskorrekturen unter Hauptmenü &rarr; Bestandsführung &rarr; Vorgänge erfasst werden.
+<br /><br />
+Die Integration der Bestandsführung mit der Hauptbuchhaltung muss zu diesem Zeitpunkt noch ausgeschaltet bleiben, die Bestände auf dem Materialbestandskonto durch werden später eine manuelle Buchung in der Hauptbuchhaltung gesetzt. Die Abstimmung mit dem Bestandsbewertungsbericht muss vorher nachweisen, dass die Standardkosten und Mengen für jedes einzelne Material und die Summe der Bestände für alle Lagerorte stimmen. 
+<br /><br />
+<font size="+1"><b>Problematik der Integration der Bestandsführung mit dem Hauptbuch</b></font>
+<br /><br />
+Wenn die Abstimmung der Bestandskonten im Finanzwesenmodul mit dem Materialbewerungsbericht übereinstimmt, kann der Schalter Lagerbestandsvorgänge im Hauptbuch mitbuchen wieder eingeschaltet werden. Warenbewegungen werden ab diesem Zeitpunkt automatisch in Hauptbuchbelegen dargestellt. Die Salden der Materialbestandskonten sollte dann immer mit dem im Materialbewertungsbericht übereinstimmen, vorausgesetzt, es werden keine manuellen Buchungen mehr auf diese Konten vorgenommen.
+<br /><br />
+Es ist wichtig, die beiden Ebenen zu verstehen, auf denen die Hauptbuchintegration verfügbar ist.
+<br /><br />
+Zum ersten erlaubt die Vertriebsintegration das Mitbuchen der Rechnungen, Gutschriften und Zahlungseingänge auf den Erlös- und Sammelkonten für Forderungen. Diese Ebene erstellt keine Buchungen für die Kosten des Umsatzes. Das System hat eine flexible Konfiguration der Konten, auf die Umsatzerlöse aus Rechnungen und Gutschriften gebucht werden.
+<br /><br />
+Zweitens erlaubt die Integration mit der Bestandsführung die automatische Erstellung von Buchungen auf den Konten für die Herstellkosten der verkauften Erzeugnisse und der Lagerbestände. Auch Wareneingänge aus Bestellungen und Materialentnahmen werden auf diese Weise im Hauptbuch mitgebucht.
+<br /><br />
+Es ist nicht notwendig, die Integration der Warenwirtschaft zum Hauptbuch zu verwenden, dennoch stellt eine Vollkostenrechnung zu Standardkosten mit voller Hauptbuchintegration das diskutierbar schnellste und informativste Finanzberichtensystem für Hersteller zur Verfügung.
+<br /><br />
+<font size="+1"><b>Problematik der Umsatz- / Debitoren-Integration mit dem Hauptbuch</b></font>
+<br /><br />
+Eine gewisse Flexibilität ist in der Art und Weise vorhanden, wie Verkaufstransaktionen in das Hauptbuch gebucht werden. Unterschiedliche Erlöskonten können in Abhängigkeit von jeder Kombination von Vertriebsbereich des Kunden, Umsatzart und der Warengruppe des verkauften Produktes. Ehe irgendwelche Verkäufe erfasst werden können, ist es wichtig, dass die notwendigen Kontenfindungen unter Hauptmenü &rarr; Einstellungen &rarr; Debitoren/Kreditoren für die Umsatzerlöse und ebenso für die Herstellkosten des Umsatzes ( die natürlich nur bebucht werden, wenn die Integration der Bestandsführung eingeschaltet ist) eingerichtet werden. Wenn letztere dann eingeschaltet wird, so ist es entscheidend, die Einstellungen für die Konten der Herstellkosten des Umsatzes richtig konfiguriert zu haben. 
+<br /><br />
+<font size="+1"><b>Steuern</b></font>
+<br /><br />
+Steuern müssen eingerichtet werden. Unter Hauptmenü &rarr; Einstellungen &rarr; Allgemeines finden Sie Steuergruppen pflegen, Steuerregelungen pflegen, Steuerkategorien pflegen und Steuerschlüssel und Prozentsätze pflegen. Bevor Sie die Kundenniederlassungen pflegen können, müssen Sie die Steuergruppe dazu angelegt haben - Die Steuergruppe gibt die Steuerschlüssel an, nach denen bei Verkäufen an diese Niederlassung Steuern abzuführen sind. In einer Steuergruppe kann eine beliebige Anzahl von Steuerschlüsseln enthalten sein. Die Steuerkategorie muss in der Einstellung des Materialstammes eingetragen werden. Bestimmte Materialien werden zu einem ermäßigten Steuersatz verkauft, und das wird über die Steuerkategorie hinterlegt. Es können so viele Steuerkategorien angelegt werden,wie benötigt. Weiter Informationen finden Sie im gesonderten Kapitel über Steuerberechnungen.
+<br /><br />
+<font size="+1"><b>Kundenstammdaten erfassen</b></font>
+<br /><br />
+Es können so viele Kundenniederlassungen wie nötig eingerichtet werden, es empfiehlt sich diese für alle Kundenkontakte zu verwenden, auch wenn die Niederlassung selbst keine Rechnungen bekommt. Deswegen werden alle Kontakte zu der jeweiligen Kundennummer geführt, zu der sie gehören. Jede Niederlassung wird einem Vertriebsbereich und einem Verkäufer zugeordnet. Die Vertriebsbereiche sind die zum Zwecke der Umsatzauswertung definierten Regionen. Sowohl Vertriebsbereiche als auch Verkäufer werden unter Hauptmenü &rarr; Einstellungen &rarr; Debitoren/Kreditoren eingerichtet.
+<br /><br />
+<font size="+1"><b>Kundensalden aufnehmen</b></font>
+<br /><br />
+Die Debitorenbuchhaltung ist eine Kontokorrentbuchhaltung, bei der jede einzelne Rechnung als offener Posten erfasst werden muss, um schließlich den Kontensaldo zu bilden. Das mag für ein Unternehmen, das zuvor mit Bestandskonten für die Debitoren gearbeitet hat, eine abschreckende Aufgabe sein. Die zusätzlichen Informationen, die ein solches System bietet, insbesondere geringerer Abstimmungsaufwand am Monatsende für Kunden, die den Überblicke verloren haben, wofür sie schon bezahlt haben, wird die am Anfang notwendige Arbeit mehr als kompensieren. Bei offenen Posten müssen eingehende Zahlungen den offenen Rechnungen zugeordnet werden, sie werden ausgeglichen bzw. ausgeziffert.
+<br /><br />
+Im Idealfall werden die Eröffungsbuchungen zu einem Monatsende eingegeben. Damit können die Eröffnungsbuchungen eindeutig einer Periode zugeordnet werden, in der keine normale Geschäftstätigkeit gebucht wird. Der erste Schritt ist, dass die Hauptbuchintegration ausgeschaltet wird, während die bereits vorhandenen offenen Posten erfasst werden, um zu verhindern, dass gleichzeitig Hauptbuchbelege gebucht werden. Es wird empfohlen, dass für den Monat vor der Inbetriebnahme Abstimmungen für alle Kunden im Altsystem erzeugt werden - wenn es ein Offene-Posten-System ist, wird ein Kontoauszug alle erforderlichen Informationen liefern. Alle offenen Rechnungen (und Gutschriften) müssen eingegeben werden, die zusammen den Kontensaldo ergeben, wobei derselbe Kurs verwendet wird, mit dem die Rechnung ursprünglich erfasst wurde. Es wird empfohlen, das originale Buchungsdatum zu verwenden und die ursprüngliche Rechnungsnummer irgendwo mit zu vermerken, damit eine Zuordnung des Vorganges erhalten bleibt.
+<br /><br />
+<font size="+1"><b>Das Sammelkonto für Debitorenforderungen</b></font>
+<br /><br />
+Es ist wichtig zu prüfen, dass die Salden über alle Kunden in der gerasterten Kundensaldenliste mit dem Saldo des Sammelkontos im Altsystem übereinstimmt, und zwar sowohl in der Hauswährung als auch in der Fremdwährung. Der Saldo im Hauptbuch (über alle Debitorenkonten) wird als manuelle Sachkontenbuchung erfasst, der Betrag muss dem Saldo auf der Kundensaldenliste übereinstimmen. Natürlich kann es passieren, dass bei Belegen in Fremdwährung abweichende Hauswährungsbeträge af Grund von Kursdifferenzen vorkommen weil der Kurs zum Zeitpunkt der Belegerfassung ein anderer war. Es gibt eine Möglichkeit, den Wert der Fremdwährungssalden zu dem Kurs anzuzeigen, der bei der Belegerfassung verwendet wurde, das ist das Skript Z_CurrencyDebtorBalances.php. Ein entsprechendes Werkzeug stehr auch für Kreditorensalden zur Verfügung. Bevor das System in Betrieb genommen wird, sollte Konto für Konto eine doppelte Prüfung erfolgen. Wenn dann endlich allen Debitorenkonten abgestimmt und die Forderungssalden im Hauptbuch gebucht sind, kann die Debitoren-Integration im Bild Unternehmenseinstellungen wieder eingestellt werden. Das System führt dann die Salden auf dem Sammelkonto für Debitorenforderungen immer automatisch auf der Summe der Debitorensalden fort.
+<br /><br />
+<font size="+1"><b>Bankkontensalden und Salden anderer Hauptbuchkonten</b></font>
+<br /><br />
+Das Hauptbuch ist die zentrale Stelle der Buchhaltung, deswegen ist ein Verständnis der Buchhaltungsbegriffe wichtig für das Begreifen, was notwendig ist, um webERP ordnungsgemäß einzurichten. Dies kann keine Abhandlung über allgemeine Buchführung sein, aber eine kurze Einführung ist notwendig.
+<br /><br />
+Das Hauptbuch besteht ähnlich wie das Debitorenbuch aus vielen Konten, aber die Anzahl der Konten im Hauptbuch ist nicht von der Anzahl der Kunden abhängig, sondern sie bilden die Werte ab, die das Unternehmen hat:
+<br />
+<ul>
+<li>an Beständen</li>
+<li>an Fahrzeugen und Ausrüstungen</li>
+<li>bei der Bank</li>
+<li>an Forderungen gegenüber den Kunden insgesamt</li>
+<li>an Verbindlichkeiten gegenüber allen Lieferanten</li>
+<li>an Darlehen oder Kapital der Anleger ... </li>
+</ul>
+Alle diese Konten werden in Form eine <i>Bilanz</i> aufgelistet, wobei der Wert des Unternehmens auf der Aktivseite dem Kapital und den Verbindlichkeiten auf der Passivseite entsprechen muss.
+<br /><br />
+Das Hauptbuch behält auch die Übersicht darüber, wie viele Aufwendungen angefallen sind und wieviel den Kunden als Umsatz berechnet wurde - unabhängig davon, ob die Bezahlungen dafür bereits erfolgt sind. Man muss einfach nur für eine Periode einen Blick auf diese Konten werfen, um den Erfolg des Unternehmens in diesem Zeitraum zu erkennen und die <i> Gewinn- und Verlustrechnung (GuV)</i> zu erstellen. Wenn man ein Unternehmen mit webERP abbildet, sind die Salden der Konten, die in der Bilanz dargestellt werden, diejenigen, die den Wert den Unternehmens ausmachen, diese werden daher als Bilanzkonten oder Bestandskonten bezeichnet, im Gegensatz zu den so genannten Erfolgskonten oder GuV-Konten.
+<br /><br />
+<b>Doppelte Buchführung</b>
+<br /><br />
+Wenn die Salden aller Konten des Hauptbuches zusammengerechnet werden, muss sich immer Null ergeben, das ist so, weil jede Buchung in das Hauptbuch aus zwei Seiten besteht, der Sollseite (ein positiver Betrag) und der Habenseite (ein gleich großer negativer Betrag). Beispiel: Wir geben 100 € für Benzin aus. Der Sollbetrag geht auf das Konto Fahrzeugkosten, der Habenbetrag auf das Konto Bank. Der Saldo des Bankkontos ist um 100 € gesunken, die kumulierten Fahrzeugkosten sind um 100 € angestiegen.
+<br /><br />
+Buchstäblich wird jede Buchung zweimal erfasst, einmal auf einem Konto auf dem der Wert erhöht und einmal auf einem Konto auf dem der Wert verringert wird. Deshalb erhält man immer, wenn man den Saldo über alle Konten des Hauptbuches summiert, den Wert Null. Wenn Buchhalter früher ihre Bücher geprüft haben, um sicher zu gehen, dass alle Buchungen korrekt aufgezeichnet wurden, addierten sie die Salden aller Konten in einer so genannten Probebilanz auf, um zu prüfen, ob die Bilanz tatsächlich aufgeht. Heute ist die Probebilanz aus dem Computer eine Saldenliste mit einer Kontrollsumme am Ende, die zeigt, dass der Computer ordentlich seine Arbeit gemacht hat.
+<br /><br />
+Als einfaches Beispiel soll eine Probebilanz mit ein paar Einträgen verdeutlichen:
+<br /><br />
+<table>
+<tr><td>Konto</td><td>Betrag</td></tr>
+<tr><td>Bankkonto</td><td align=right>1.000,00&nbsp;</td></tr>
+<tr><td>Debitorenforderungen</td><td align=right>5.000,00&nbsp;</td></tr>
+<tr><td>Kreditorenverbindlichkeiten</td><td align=right>2.000,00-</td></tr>
+<tr><td>Kraftfahrzeuge</td><td align=right>10,000.00&nbsp;</td></tr>
+<tr><td>Kapital</td><td align=right>3.000,00-</td></tr>
+<tr><td>Bilanzergebnis</td><td align=right>11.000,00-</td></tr>
+<tr><td></td><td><HR></td></tr>
+<tr><td>Prüfsumme</td><td align=right>0,00&nbsp;</td></tr>
+<tr><td></td><td><HR></td></tr>
+</table>
+<br /><br />     
+Das System hindert den Benutzer daran, die Hausbank-Konten direkt zu bebuchen. Die Bankkonten müssen zuerst einmal als solche definiert werden, das geschieht unter Hauptmenü &rarr; Einstellungen &rarr; Allgemeines.
+<br /><br />
+Es gibt jedoch in der Hauptbuchhaltung unter Vorgänge eine Funktion Zahlungseingänge, bei der es nicht erforderlich ist, vorher ein Debitorenkonto auszuwählen. Die Kontierung der Gegenbuchung kann manuell festgelegt werden. Das ist die Möglichkeit wie Hauptbuch-Zahlungseingänge eingegeben werden.
+<br /><br />
+Legen Sie einen neuen Zahlungseingang von 1.000,00 an, um den Eröffnungssaldo des Bankkontos korrekt einzustellen. Wenn diese Zahlung erfasst wird, muss der Benutzer das Sachkonto angeben, welches die Gegenbuchung aufnimmt. In normalen Fällen wäre das vielleicht aus dem Verkauf eines Fahrzeuges, bei dem das Gegenkonto Umsatzerlös und Zusätzlich Mehrwertsteuer wäre. Für die Eingabe der Eröffnungsbuchungen können die anderen Konten als Gegenkonto dienen.
+<br /><br />
+<table>
+<tr><td>Debitorenforderungen</td><td align=right>5.000,00&nbsp;</td></tr>
+<tr><td>Kreditorenverbindlichkeiten</td><td align=right>2.000,00-</td></tr>
+<tr><td>Kraftfahrzeuge</td><td align=right>10.000,00&nbsp;</td></tr>
+<tr><td>Darlehen</td><td align=right>3.000,00-</td></tr>
+<tr><td>Bilanzergebnis</td><td align=right>11.000,00-</td></tr>
+<tr><td>&nbsp;</td></tr>
+<tr><td>Summe Bankguthaben</td><td align=right>1.000,00&nbsp;</td></tr>
+</table>
+<br /><br />
+Dabei geben Sie für den Zahlungseingang wie oben -5.000,00 auf das Konto Debitorenforderungen ein, 2.000,00 Kreditorenverbindlichkeiten, -10.000,00 Kraftfahrzeuge, -3.000,00 Darlehen, -11.000,00 Bilanzergebnis ergibt zusammengenommen 1.000,00 Eingang auf dem Bankkonto. Es ist wichtig, dass der Eingang in den Monat vor der Aufnahme des aktiven Betriebes eingegeben wird. Auf diese Weise werden die Salden in die neue Periode korrekt als Übertrag übernommen.
+<br /><br />
+Wenn mehrere Bankkonten mit unterschiedlichen Sachkonten definiert sind, werden die Salden für jedes Konto auf diese Weise mit einem Zahlungseingang eingestellt (oder einem Zahlungsausgang, wenn das Konto überzogen ist). Eine andere Möglichkeit besteht darin, alle Eröffnungsbuchunen gegen ein Interimskonto zu buchen, wenn alle Buchungen richtig erfasst wurden, hat dieses Konto am Ende den Saldo 0.
+<br /><br />
+Es ist wichtig, dass die Salden der Sammelkonten für Debitorenforderungen und Kreditorenverbindlichkeiten mit der Summe der Nebenbücher in der Hauswährung übereinstimmen.
+<br /><br />
+<font size="+1"><b>Zum Schluss</b></font>
+<br />
+Wenn alle Buchungen vorgenommen wurden und die Zahlen abgestimmt sind, sollte das System erst einmal gesichert werden. Das MySQL-Werkzeug mysqldump ist eine Möglichkeit, mit der ein SQL-Skript erstellt wird, das die Datenbank in dem Zustand, wie sie zum Zeitpunkt der Skripterstellung war wiederhergestellt werden kann. Wenn keine Benutzer im System angemeldet sind, damit Sperrprobleme vermieden werden, und unter der Annahme das mysqldump im Pfad verfügbar ist, lautet der Befehl:
+<br /><br />
+Aus der Konsole, mit dem angelegten Benutzernamen und Passwort, als MySQL installiert wurde. 
+<br />
+<pre>#mysqldump -u username -p password --opt weberp &gt; /home/myhomedir/weberp_backup.sql</pre>
+<br />
+PostgreSQL hat ein vergleichbares Werkzeug.
+<!-- postgres has a similar utility -->
+<!-- Help End: BaseInformation -->

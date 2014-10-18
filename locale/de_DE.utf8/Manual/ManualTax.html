@@ -1,0 +1,43 @@
+<!-- Help Begin: TaxAuthorities -->
+
+<br /><br />
+<a name="Tax"><font size="+3"><b>Steuerberechnungen</b></font></a>
+<br /><br />
+<font size="+1"><b>Überblick</b></font>
+<br /><br />
+Viele Länder haben unterschiedliche Methoden für die Berechnung von wertabhängigen Steuern auf den Umsatz. Daher ist eine gewisse Flexibilität in der Konfiguration vorgesehen, wie diese automatischen Berechnungen durchgeführt werden und auf welche Hauptbuchkonten die entsprechenden Buchungen vorgenommen werden. Falls alles andere fehlschlägt, können immer noch die Steuersätze in jede Rechnungs- oder Gutschriftsposition eingegeben werden. Verschiedene unterschiedliche Steuersätze können einzeln auf jede einzelne Position angewendet werden und einige Sätze können compound on top von vorherigen Steuern berechnet werden. Die automatische Berechnung der Steuern funktioniert auf der Basis von:
+<br /><br />
+<ol>
+<li>Wo die Kunden-Niederlassung ist, die die Rechnung empfängt - Jede Kunden-Niederlassung ist zugehörig zu einer bestimmten Steuergruppe. Es ist die Steuergruppe, welche bestimmt was für Steuern auf den Umsatz angewendet werden.</li>
+<li>Was für ein Material zu berechnen ist - beispielsweise gibt es in vielen Ländern verminderte Steuersätze auf Artikel des Grundbedarfes - jedes Material ist zugehörig zu einer bestimmten "Steuerkategorie".</li>
+<li>Von wo aus die Materialien versandt werden, das heißt von welchem Lager aus. Die Steuerbehörden der meisten Länder verlangen, dass auf Lieferungen innerhalb des Landes Steuern berechnet werden - Mehrwertsteuer, Verkaufssteuer oder was immer. Der Ort, von dem Waren oder Dienstleistungen erbracht werden, hat eine Steuerregelung. Die Steuerregelung des Lagerortes bestimmt in Verbindung mit der Steuergruppe der Kundenniederlassung und der Steuerkategorie des Materials die anzuwendenden Steuersätze.</li>
+</ol>
+<font size="+1"><b>Steuern einrichten</b></font>
+<br /><br />
+<ul>
+<li>Alle Steuerstandorte, in denen Waren verkauft werden, müssen unter dem Register Einstellungen in der Tabelle der Steuerschlüssel eingerichtet werden. Der Stammsatz der Steuerschlüssel erfordert die Angabe der Steuerkonten, auf die die Umsatzsteuer und die Vorsteuer gebucht werden, und auch die Bezeichnung für den Steuerschlüssel,z.B.  UK Inland Revenue VAT, ATO - GST(Australia), NZ IRD - GST (New Zealand). Wenn es an einem Steuerstandort verschiedene Möglichkeiten gibt, nach denen Steuern festgelegt werden, dann ist es zweckmäßig, dafür einen weiteren Steuerschlüssel einzurichten. Ein Beispiel dafür sei die Niederlande, wo es neben einer Verkaufssteuer (drei unterschiedliche Prozentsätze) möglich ist, dass ein Kunde eine Ausnahmeregelung in Anspruch nimmt, bei der er die Steuern beim Kauf direkt an die Steuerbehörde abführt, wobei keine Umsatzsteuer beim Verkauf berechnet wird. In diesem Fall kann ein separater Steuerschlüssel eingerichtet werden -  "Customer Exempt - NL - GST".</li>
+<li>Jede Kundenniederlassung wird als einer bestimmten Steuergruppe zugehörig definiert. Der Steuerstandort ist die Stelle, die für das Eintreiben der Steuern zuständig ist. In vielen Bereichen gibt es mehrere solcher Stellen, z. B. gibt es in Kanada eine Bundesbehörde, die die Verkaufssteuer kassiert und das Bundesland, das die Provinz-Verkaufssteuer einsammelt. Eine Steuergruppe wird deshalb für eine oder mehrere Steuerschlüssel eingerichtet. Die Steuergruppe ist mit einem oder mehreren Steuerschlüsseln verknüpft, für die Steuern bei einem Verkauf an die Niederlassung des Kunden abzuführen sind. Es ist die Niederlassung, wohin die Waren geliefert werden, die bestimmt, wie die Steuern berechnet werden.</li>
+<li>Jedes lagernde Werk oder jedes Lager wird als einer Steuerregelung zugehörig definiert. Das wird im Formular der Werkspflege angegeben.</li>
+<li>Jedes Lagermaterial wird als Gegenstand einer bestimmten "Steuerkategorie". Die Steuerkategorie wird auf dem Bildschirm Lagermaterialpflege zugeordnet. Wenn die Steuerkategorie für jedes Material eingestellt wird, ist einige Überlegung nötig, wegen einer unterschiedlichen Besteuerung unter verschiedenen Steuerregelungen. Die meisten Steuerregelungen kennen unterschiedliche Steuersätze (steuerfrei, verminderter, normaler Steuersatz) wobei der normale Steuersatz in Australien 10%, in Neuseeland 12,5% beträgt</li>
+<li>Dann müssen die angewendeten Steuersätze definiert werden. Für jede Steuerregelung sind die Prozentsätze für jede Steuergruppe und Steuerkategorie zu pflegen. Es ist die Tabelle der Prozentsätze, die es dem System erlaubt, für jede Rechnungsposition den anzuwendenen Prozentsatz zu in Abhängigkeit von der Kundenniederlassung an die die Ware geliefert wird, dem Material selbst und der Betriebsstätte, aus dem das Material geliefert wird, zu ermitteln.</li>
+</ul>
+<b>Beispiel 1: Eine Verkaufssteuer innerhalb eines Steuerstandortes - Zwei Steuerkategorien</b>
+<br /><br />
+An den meisten Steuerstandorten gibt es nur zwei Steuersätze mit nehmen wir an 0% und 10%. Verkäufe an Exportkunden werden nicht besteuert, weil sie steuerbefreit sind. Wenn das Unternehmen nur innerhalb eines Landes tätig ist, ist die Sache ziemlich einfach. Waren, die steuerfrei gehandelt werden, werden im Stammsatz einer Steuerkategorie "nicht besteuert" zugeordnet, alle anderen werden im Stammsatz der Steuerkategorie "normal besteuert" zugeordnet. Zwei Steuerschlüssel werden eingerichtet einer für das Inland, der andere für Export. Eine Steuergruppe wird eingerichtet für inländische Kunden und eine für Exportkunden. Diese Steuergruppen werden jeweils in den Niederlassungsdaten der Kunden eingetragen. Die Betriebsstätte wird mit der Steuerregelung des Landes eingerichtet. Nun werden die Prozentsätze für den Steuerschlüssel Export auf 0% eingestellt, für den Steuerschlüssel Inland wird für die normal besteuerte Steuerkategorie 10%, für die nicht besteuerte 0% eingestellt.
+<br /><br />
+<b>Beispiel 2: Verkauf innerhalb eines Steuerstandortes - drei Steuersätze</b>
+<br /><br />
+Nehmen wir an: 0% für Nahrungsmittel, 5% für Kleidung, 10% für alle anderen Waren. Die Steuerkategorien "Nahrung", "Kleidung" und "Sonstige" werden eingerichtet und in den Stammdaten der Materialien hinterlegt.
+Ein Steuerschlüssel für den Steuerstandort wird eingerichtet und die Prozentsätze für die steuerbaren Lieferungen eingestellt: Nahrung: 0%, Kleidung: 5% und Sonstige: 10%.
+<br /><br />
+<b>Beispiel 3: Verkauf zwischen zwei Steuerstandorten - drei Steuersätze</b>
+<br /><br />
+Das Unternehmen hat eine Betriebsstätte A an einem Steuerstandort oder Bundesland mit einer Steuerbehörde (Steuerschlüssel A) wie im  Beispiel 1 oben mit zwei Steuersätzen und eine Betriebsstätte B an einem Steuerstandort (Steuerschlüssel B) wie im Beispiel 2 oben. Prozentsätze müssen für die Lieferungen von jeder Betriebsstätte zu jedem Steuerstandort des Kunden definiert werden. Dazu erhält jede Betriebsstätte einen Eintrag Steuerregelung, der den eigenen Steuerstandort angibt. In den meisten Fällen bleiben Exporte an einen anderen Steuerstandort (Steuerschlüssel) steuerfrei = 0%. Steuerschlüssel A bekommt für Lieferungen von der Betriebsstätte A für jede der drei Steuerkategorien einen Eintrag, auch wenn nur zwei angewendet werden, dann bekommen eben zwei den selben Prozentsatz. Für Lieferungen von der Betriebsstätte B liegen die Sätze vermutlich bei 0%. Für den Steuerschlüssel B sind die Verhältnisse umgekehrt, hier sind die Lieferungen von Betriebsstätte B steuerlich interessant. 
+<br /><br />
+Die verwendete Logik für die Bestimmung des anzuwendenden Prozentsatzes ist folgende:
+<br /><br />
+Die Steuerregelung des Werkes von dem geliefert wird, die Steuerkategorie aus dem Material und die Steuergruppe der Kunden-Niederlassung werden bestimmt. In Abhängigkeit von diesen drei Faktoren gibt die Tabelle TaxAuthLevels den Steuersatz zurück.
+<br /><br />
+Die Hauptbuchbuchungen bezüglich der berechneten Steuern werden in Übereinstimmung mit den in der Tabelle der Steuerregelungen hinterlegten Konten vorgenommen.
+
+<!-- Help End: TaxAuthorities -->

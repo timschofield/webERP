@@ -1,0 +1,70 @@
+/*
+ * manual.css used with the webERP manual
+ * http://web-erp.sourceforge.net
+ *
+ */
+body {
+	font-family: Trebuchet, 'Times New Roman', serif;
+	font-size:.95em;
+	margin:0;
+    padding:2em;
+}
+
+img {
+	border:none;
+}
+#pagetitle {
+    font-weight: bold;
+    font-size: 2.8em;
+    text-align:center;
+    color: #0033cc;
+}
+#manualpage{
+    margin: 10px;
+    margin-top:20px;
+}
+#toc {
+    padding:0;
+    margin:0;
+}
+h1, h2, h3, h4, h1 a, h2 a, h3 a, h4 a {
+    font-weight: bold;
+}
+h1 {
+    padding-top: 10px;
+    color: #0033cc;
+}
+h2 { }
+h3 { }
+h4 { }
+
+
+a {
+
+	text-decoration: none;
+	border-bottom: 1px dotted #0033cc;
+	padding:0;
+	margin:0;
+}
+
+a:hover {
+	background:#fff;
+	color: #0033cc;
+}
+.right {
+    text-align:right;
+}
+.floatright {
+    float:right;
+}
+.left {
+    text-align:left;
+}
+.minitext {
+    font-size: .8em;
+}
+li.toc {
+   color: #0033cc;
+   padding-top:10px;
+
+}

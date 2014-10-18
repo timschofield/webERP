@@ -1,0 +1,38 @@
+<br /><br />
+
+<!-- Help Begin: CustomerInquiry -->
+
+<a name="ARInquiries"><font size="+3"><b>Debitorenauswertungen</b></font></a>
+<br /><br />
+<font size="+2"><b>Kundenauswertungen</b></font>
+<br /><br />
+Komplette Drill-Down-Auswertungen sind vorhanden, damit alle Angaben der Belege ausgewertet werden können. Das System pflegt mehr Daten, als viele Systeme, vorrangig um die Verwendung von Sammel- oder Stapelbuchungen zu Gunsten der detaillierten Information zu jeder Buchung zu verringern. Die Auswertungen können die Konten-Historie für jeden Kunden anzeigen und von dieser Auswertung ist es möglich, die Einzelheiten zu jeder einzelnen Buchung anzuzeigen, von der Debitorenposition aus ist es möglich, sich die Positionen der Originalrechnung anzuzeigen und welche Zahlungseingänge zugeordnet sind. Die Originalrechnung oder -gutschrift kann direkt aus der Kundenabfrage angesehen werden und die Hauptbuch-Belege, die aus der Rechnung, Gutschrift oder dem Zahlungseingang entstanden sind, können ebenfalls untersucht werden.
+<br /><br />
+<font size="+1"><b>Auswertung des Debitorenkontos</b></font>
+<br /><br />
+Von jeder Seite aus klicken Sie im Menü auf den Link Kundensuche oder drücken Alt-2. Wenn Sie den Kunden ausgewählt haben, werden alle für den Kunden verfügbaren Links angezeigt. Unter ihnen finden Sie auch die Auswertung Kundenbelege.
+<br /><br />
+Üblicherweise werden in diesem Bild nur die Belege der letzten sechs Monate angezeigt. Dieser Zeitraum kann im System im Skript CustomerInquiry.php angepasst werden. Wenn nur gelegentlich länger zurückliegende Belege angezeigt werden sollen, kann das Datum im Feld "Alle Vorgänge anzeigen nach" beliebig geändert werden. Die Beträge werden in der im Kundenstamm hinterlegten Währung angezeigt. Die Anzeige der Forderungen erfolgt entsprechend der für den Kunden hinterlegten Zahlungsbedingungen gerastert.
+<br /><br />
+Für Rechnungen und Gutschriften wird in der Belegzeile rechts ein Vergrößerungsglas angezeigt. Ein Klick auf dieses Vergrößerungsglas öffnet ein neues Fenster, welches die Details der Rechnung oder Gutschrift anzeigt.
+<br /><br />
+Wenn die Integration zwischen Debitorenbuchhaltung und Hauptbuch eingeschaltet ist (siehe Unternehmenseinstellungen), dann erscheint daneben noch ein Link mit dem Wort Beleg. Dieser Link öffnet eine neue Seite mit den Positionen der Hauptbuchbuchung aus dieser Buchung.
+<br /><br />
+Wenn der Vorgang eine Gutschrift oder ein Zahlungseingang ist und der Benutzer die erforderlichen Zugriffsberechtigungen eines Buchhalters besitzt, wird ein Buchsymbol angezeigt. Mit Klick auf dieses Symbol erreicht der Benutzer die Seite für das  Zuordnen / Ausziffern der Gutschriften oder Zahlungseingänge, wenn eine Zuordnung bereits erfolgt ist, werden diese zusammen mit anderen Rechnungen, denen sie zugeordnet weren, könnten, angezeigt. Früher bereits ausgeglichene Rechnungen werden nicht mit angezeigt.
+<br /><br />
+Mehr (oder weniger) Historie kann angezeigt werden, indem man das Datum des Feldes "Alle Vorgänge anzeigen nach" ändert und dann die Auffrischen-Taste drückt. Der Saldo des Kontos setzt sich aus dem Saldo der offenen Posten zusammen. Die offenen Posten bestehen aus:
+<br /><br />
+<ul>
+<li>Für Rechnungen der Betrag der noch nicht mit Zahlungseingängen und Gutschriften ausgeglichen ist</li>
+<li>Für Zahlungseingänge der Betrag, der noch nicht einer Rechnung zugeordnet wurde.</li>
+</ul>
+<font size="+1"><b>Beleganzeige</b></font>
+<br /><br />
+Die Belegangaben können über einen von zwei Wegen aufgerufen werden:
+<br /><br />
+<ul>
+<li>Aus der Kundenanzeige klicken Sie auf das Vergrößerungsglas oder den Link mit der Bezeichnung Beleg</li>
+<li>Aus der Belegauswertung im Debitorenmenü klicken Sie auf das Vergrößerungsglas, um die aktuelle Rechnung oder Gutschrift anzuzeigen.</li>
+</ul> 
+
+<!-- Help End: CustomerInquiry -->

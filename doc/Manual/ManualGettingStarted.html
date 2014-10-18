@@ -1,0 +1,373 @@
+<h1><a id="GettingStarted">Getting Started</a></h1>
+
+<h2>Prerequisites</h2>
+
+<ul>
+    <li>PHP greater than 5.1. As PHP can be configured to run under most web-servers under all common operating systems, webERP is therefore operating system independent.</li>
+
+    <li>MySQL greater than version 4 with Innodb transactional tables support. Foreign key constraints are also required. These were added to Innodb in 2003. Innodb was introduced in 2001 to MySQL and has Oracle like functionality - row level locking and database transactions with similar speed. (The system could be used with Oracle or other database systems, with minimal modification.) An example configuration file, my.cnf, normally under /usr/local/mysql/var is available in the MyySQL documentation to show typical settings for the Innodb configuration. The expected size of the data is useful although Innodb can create an auto-extending data file and does so by default as of MySQL 4. All tables are defined as Innodb tables as of version 2.8.</li>
+
+    <li>A web server. Apache - the software serving most web pages - is recommended but most web servers are supported by PHP in various forms. The most popular choice on Windows will likely be MS IIS. Hiawatha or Nginx are also good choices.</li>
+
+    <li>If the web server is accessible over the Internet and not just over a LAN then encrypted communications are required. The openssl and mod-ssl modules for Apache can be easily used to ensure all data is transmitted in encrypted form. It is also wise to have the directories where webERP or your wiki installed as protected directories.</li>
+
+    <li>For using utf-8 pdf reports in languages other than english the adobe acrobat reader with fonts installed for the necessary locales is required. PDF reports are created used the TCPDF class making use of Adobe CIF fonts - this has the advantage that the pdf reports do not need to bundle with them the large utf-8 character set fonts that would otherwise be required.</li>
+</ul>
+
+<p>Using Apache with mod_ssl and openssl secure sockets makes sense where there is any data transmitted over the Internet and not just over a LAN. Getting PHP and MySQL installed are well covered elsewhere.</p>
+
+<p>There can be issues with installation of PHP appear to be:</p>
+
+<ol>
+    <li>Some Windows installations come with a setting for session.save_path= /tmp this is an inappropriate directory for Windows and should be changed to session.save_path=C:\temp or something more appropriate.</li>
+
+    <li>When the system is hosted on a multi-homed web server farm, the session needs a directory to be specified as a permanent directory otherwise alternative servers serving subsequent pages depending on the load at the time will not be able to find the session cookie. There is a config.php setting for $SessionSavePath which should be set appropriately for the web server host.</li>
+
+    <li>For a reason unknown some servers are unable to obtain the correct directory automatically using the line: $RootPath = dirname(htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8')); This will be evidenced by the system's inability to find the page links for the various system options. If this happens the $RootPath variable can be set to the root path of the scripts directly.</li>
+
+    <li>The php.ini setting for session.auto_start should be set to 0. Some rpm distributions come with this set to 1 which makes it impossible to use classes within php code. Classes are used extensively in the system and the system starts sessions whenever it needs them. It is safe to set this to 0.</li>
+
+</ol>
+
+<p>If integration with a company knowledge base is required then an installation of Wacko Wiki or Media Wiki is recommended. The wiki installation should be on the same web-server. This is entirely optional but is highly recommended as a way to share free form information across the business. <a href="hhttp://wackowiki.org/">Download Wacko Wiki</a></p>
+
+<p>The ftp library for PHP is only required for sending order files to a Radio Beacon ftp server for remote warehouse services.</p>
+
+<div class="floatright">
+    <a class="minitext" href="#top">⬆ Top</a>
+</div>
+
+<h2>Using the webERP Installer</h2>
+
+<p>A new installation of webERP requires the following to start:</p>
+    <ul>
+        <li>A functioning web server running a minimum of PHP version 5.1</li>
+        <li>A MySQL database server available either on the same machine or on the network</li>
+        <li>The web server is running under a user that is able to write to the webERP web directory</li>
+        <li>The database user must have privileges to create a database and tables</li>
+    </ul>
+<ol>
+    <li>Copy all of the downloaded webERP files to a directory under the web server's document root directory. At this point there should be no 'config.php' file in the webERP directory.</li>
+    <li>Enter the URL for the new webERP directory into your web browser, and the installer welcome screen will display:</li>
+
+    <li style="list-style: none; display: inline">
+        <p align="center"><img src="images/Installer_1.jpg"></p>
+    </li>
+
+    <li>The installer welcome screen provides information on the type of messages you might receive during installation. At this page, you must also select your preferred language from the drop down selection box. Click on Next Step to go to the next phase of installation.</li>
+    <li style="list-style: none; display: inline">
+        <p align="center"><img src="images/Installer_1a.jpg"></p>
+    </li>
+
+    <li>The installer checks that all the pre-requistes are met for an installation. You will note from the screen shot above that this installation does not have sufficient privileges to install webERP because the web server is unable to write to the webERP directory. <b>It is necessary to change the permissions on the directory where webERP is installed to ensure that the user that the web-server runs as is able to write a new configuration file to the web space.</b> Cpanel and Plesk have facilities to enable this change to the permissions. Any error messages displayed in red need to be resolved before the installation can proceed. Do not attempt to run the installer while red messages persist. Fix the error and then click on Check Again to restart from the prior step.</li>
+    <li style="list-style: none; display: inline">
+        <p align="center"><img src="images/Installer_2.jpg"></p>
+    </li>
+    <li>If your web server fulfills all requirements for the installation, clicking on Next Step will display the Database Settings screen. Many of the fields required will be populated correctly by default - but all entries should be reviewed to ensure that they are correct. The installer will not be able to determine the host (computer) where the mysql database server is installed and this must be entered. Help appears when you click into an input field.</li>
+
+    <li>The user name and the password to the mysql database server are also required. The mysql database user must have permission to create a database and tables. Once the required information is entered and checked, click on Next Screen to continue.</li>
+
+    <li style="list-style: none; display: inline">
+        <p align="center"><img src="images/Installer_3.jpg"></p>
+    </li>
+
+    <li>The next installer screen displays Company Settings, Options and Administrator Account settings. The name of the company entered in the installer screen will be used in the log in screen and in various reports and screens in your final webERP instsallation.</li>
+    <li>The Chart of Accounts will be loaded into your webERP installation as a set of starter accounts. T There is a larger file but this may result in errors as your mysql server must be able to handle larger packet sizes. Leave the default selection of 'weberp-new.sql' if in any doubt as it is smaller and should load with default mysql settings.</li>
+     <li>The logo for the business used on invoices and statments, orders etc. can be uploaded to the appropriate place on the web-server by selecting it on the installer screen. The logo should be a .jpg file and just a small image no more than 170 px accross and 80 pixels high.</li>
+    <li>The time-zone is important if your installation is to display the correct time on the local browsers in the country where the business is domiciled. e.g. it is possible to use a US web-server, and operate the business from France. If no entry was entered for the time-zone then the browser would display the time where the web-server was (in the USA) but it is more appropriate to display the time where the business operates from. It is possible to select from any of the PHP defined time-zones.</li>
+    <li>The Installation Option section enables you to choose to install the demo database in addition to your own Company database. This will provide you with a demo company loaded with some data to test with.</li>
+
+    <li>Finally the webERP user Administrator account option section enables you to input an email address and choose a new password for the default 'admin' account.</li>
+
+<li>Click on the INSTALL button to finalise installation. This might take a while as the installer will create required databases, create a special directory for your webERP install in the 'companies' directory, and writes out the webERP configuration file, config.php.  Wait until the login screen appears. You now have a fresh webERP installation from which to start the configuration of the company, see below.</li>
+<p> </p>
+
+<div class="floatright">
+    <a class="minitext" href="#top">⬆ Top</a>
+</div>
+
+<h2>Manual webERP Installation</h2>
+
+<p>A manual installation consists of the following five steps:</p>
+
+<ul>
+    <li>Copying all the PHP scripts and include files to a directory under the web server document root directory - as for the automatic installer option above</li>
+
+    <li>Creating the database and populating it with initial data</li>
+
+    <li>Editing config.php for the database connection information and any other requirements</li>
+
+    <li>Logging into the system for the first time</li>
+
+    <li>Setting system parameters</li>
+
+    <li>Setting up company specific information in the system</li>
+</ul>
+
+<h3>Copying the PHP Scripts</h3>
+
+<p>All files in the archive except the installation instructions in INSTALL.txt, weberp-demo.sql and weberp-new.sql should be copied to a directory under the web server DocumentRoot directory. This varies by distribution but:</p>
+
+<p>/srv/www/htdocs</p>
+
+<p>is the default Apache DocumentRoot directory under SuSE.</p>
+
+<p>Copy the archive to this directory and then extract the archive. The webERP directory will be created here (/srv/www/htdocs/webERP) and all scripts and other directories will be copied to that directory.</p>
+
+<h3>Creating the Database</h3>
+
+<p>webERP works only with MySQL or MariaDB database servers.</p>
+
+<p>You need to know the user name and password for the MySQL server. If you have not set these up the default is</p>
+
+<p>user root<br>
+password ""<br></p>
+
+<p>BUT ... you should NOT use this account. You should set up another user for your MySQL installation and change the root password to something other than "".</p>
+
+<p>All instructions for using MySQL refer to the command line client that comes with MySQL. To run this under Windows a DOS box must be opened. From XP or 2000 click Start, Run, enter "cmd" and click Run. The mysql.exe binary is located by default under C:\mysql\bin\mysql.exe. This would be the command line statement required to run the mysql client. The options discussed below should be appended as required.</p>
+
+<p>From the MySQL manual (edited):</p>
+
+<p>The MySQL root user is created as a superuser who can do anything. Connections must be made from the local host. NOTE: The initial root password is empty, so anyone can connect as root without a password and would have all privileges. Because your installation is initially wide open, one of the first things you should do is specify a password for the MySQL root user. You can do this as follows (note that you specify the password using the PASSWORD() function):</p>
+
+<p>You can, in MySQL Version 3.22 and above, use the SET PASSWORD statement:</p>
+
+<p>shell&gt; mysql -u root mysql<br>
+mysql&gt; SET PASSWORD FOR root=PASSWORD('new_password');"<br></p>
+
+<p>where 'new_password' is the new password you chose for the root user.<br></p>
+
+<p>Also from the MySQL manual (edited):<br>
+Also, if you have changed the root user password, you must specify it for the mysql commands below. You can add new users by issuing GRANT statements:</p>
+
+<p>shell&gt; mysql --user=root -p 'new_password' mysql<br>
+mysql&gt; GRANT ALL PRIVILEGES ON *.* TO weberp@localhost IDENTIFIED BY 'some_pass' WITH GRANT OPTION;"<br></p>
+
+<p>Where 'some_pass' is a password of your choice for the new user 'weberp'. Note that this user 'weberp' can only connect from the local machine so if the web server is on a different machine then the MySQL server you need to give privileges to connect from other computers. See the MySQL manual.</p>
+
+<p>Innodb tables must be enabled in the MySQL server. These tables allow database transactions which are a critical component of ERP software. Innodb tables require some parameters to be set up in my.cnf. There are some examples in the MySQL manual under table types - Innodb tables.</p>
+
+<p>If you have an account set up already in MySQL and Innodb tables enabled, then all you need to do is to run one of the sql scripts.</p>
+
+<p>Two scripts are provided under the webERP/sql/mysql directory (folder):</p>
+
+<ol>
+    <li>weberp-demo.sql This has a minimal amount of demonstration data with a bogus company set up so that transactions can be tried to see how the system works.</li>
+
+    <li>weberp-new.sql This script has only the basic data necessary to start a new company. If you wish to set up your company using the webERP software, then this is the script to use. This creates a webERP database and populates it with only the very basic starting data.</li>
+</ol>
+
+<p>The files weberp-demo.sql and web-erp-new.sql should be in the directory with all the PHP scripts. Change to the directory where the scripts are held or use the full path and enter:</p>
+
+<p>shell &gt; mysql --user=weberp --password='some_pass' &lt; path_to_web_server/webERP/sql/mysql/weberp-demo.sql</p>
+
+<p>or</p>
+
+<p>shell &gt; mysql --user=weberp --password='some_pass' &lt; path_to_web_server/webERP/sql/mysql/weberp-new.sql</p>
+
+<p>as required. Modify the user entered here as 'weberp' to the user you created in MySQL for the purpose, and modify the password stated here as 'some_pass' to the password appropriate for the user. Also modify the path_to_the_sql_script to the appropriate path - perhaps something like /srv/www/htdocs/webERP/.</p>
+
+<h3>Editing config.php</h3>
+
+<p>config.php contains a series of user defined variables that determine how the system behaves. Critically it contains the host (computer name), username and password of the database connection required to connect to the database server. There is also an option to chose which type of database server is to be used. Currently there are only options for mysql and mysqli. There is no going forward without this data.</p>
+
+<p>The default contents of the config.php file are as follows and must be edited in an editor of choice. Then, save config.php in the web directory where the scripts are located. Note, the system is continually evolving and may well have changed since this was written.</p>
+
+<p>The time-zone of the business should also be specified here using a statement like:</p>
+
+<p>putenv('Australia/Sydney');</p>
+
+<p>This ensures that the time-zone of the business is displayed on all browsers using the system irrespective of where the web-server is located (i.e. the timezone of the web-server)</p>
+<p>The CompanyList array is defined at the end of the config.php file and usually added by the installer, or a webERP utility script (Z_MakeNewCompany.php) that will create a new additional company and database setup for webERP. The CompanyList array contains a list of databases used with their associated Company Name. One of the functions is to allow Login to show the Companies available and obfuscate the database name for security reasons. This CompanyList array should be added as in the example below.</p>
+<pre>
+        // User configurable variables
+        //---------------------------------------------------
+
+        //DefaultLanguage to use for the login screen and the setup of new users
+        //The users' language selection will overrid
+        $DefaultLanguage ='en_GB.utf8';
+
+        // Whether to display the demo login and password or not on the login screen<br>        
+        $AllowDemoMode = false;
+
+        // email address of the system administrator
+        $SysAdminEmail = 'admin@mydomain.com';
+        
+        // webERP version
+        $Version = '3.04';
+
+        // The timezone of the business - this allows the possibility of having
+        // the web-server on a overseas machine but record local time
+        // this is not necessary if you have your own server locally
+        // putenv('TZ=Europe/London');
+        // putenv('Australia/Melbourne');
+        // putenv('Australia/Sydney');
+        // putenv('TZ=Pacific/Auckland');
+
+        // Connection information for the database
+        // $host is the computer ip address or name where the database is located
+        // assuming that the web server is also the sql server
+        $host = 'localhost';
+        $mysqlport=3306;
+        //The type of db server being used - currently only mysqli or mysql
+        //$DBType = 'mysql';
+        //$DBType = 'mysqli';
+
+        // sql user & password
+        $DBUser = 'weberp_db_user';
+        $DBPassword = 'weberp_db_pwd';
+
+        //It would probably be inappropriate to allow selection of the company in a hosted environment so this option can be turned off with this parameter
+        $AllowCompanySelectionBox = true;
+
+        //If $AllowCompanySelectionBox = false above then the $DefaultCompany string is entered in the login screen as a default
+        //otherwise the user is expected to know the name of the company to log into and a selection is required from the company selection box.
+        //The selection box is populated from the list of directories under the companies directory.
+        //These directories are created automatically each time a company is created from the Z_MakeNewCompany.php script
+        //This script also creates the company databases.
+        
+        $DefaultDatabase = 'weberpdemo';
+
+        //The maximum time that a login session can be idle before automatic logout<br>
+        //time is in seconds 3600 seconds in an hour
+        $SessionLifeTime = 3600;
+
+        //The maximum time that a script can execute for before the web-server should terminate it
+        $MaximumExecutionTime =120;
+
+        //The path to which session files should be stored in the server - useful for some multi-host web servers
+        //this can be left commented out
+        //$SessionSavePath = '/tmp';
+
+        // which encryption function should be used
+        //$CryptFunction = "md5"; // MD5 Hash
+        $CryptFunction = "sha1"; // SHA1 Hash
+        //$CryptFunction = ""; // Plain Text
+
+        //Setting to 12 or 24 determines the format of the clock display at the end of all screens
+        $DefaultClock = 12;
+        //$DefaultClock = 24
+
+        // END OF USER CONFIGURABLE VARIABLES
+
+        /*The $RootPath is used in most scripts to tell the script the installation details of the files.
+
+        NOTE: In some windows installation this command doesn't work and the administrator must set this to the path of the installation manually:
+        eg. if the files are under the web server root directory then rootpath =''; if they are under weberp then weberp is the rootpath - notice no additional slashes are necessary.
+        */
+
+        $RootPath = dirname(htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'));
+        if (isset($DirectoryLevelsDeep)){
+	       for ($i=0;$i<$DirectoryLevelsDeep;$i++){
+		      $RootPath = mb_substr($RootPath,0, strrpos($RootPath,'/'));
+	       }
+        }
+
+        if ($RootPath == "/" OR $RootPath == "\\") {
+	       $RootPath = "";
+        }
+        
+        //Report all errors except E_NOTICE This is the default value set in php.ini for most installations
+        //but just to be sure it is forced here turning on NOTICES destroys things
+
+        error_reporting (E_ALL & ~E_NOTICE);
+        
+        //Installed companies 
+        $CompanyList[0] = array('database'=>'weberptest' ,'company'=>'My Company' );
+        $CompanyList[1] = array('database'=>'weberpdemo' ,'company'=>'WebERP Demo Company' );
+        //End Installed companies-do not change this line
+        
+        /*Make sure there is nothing - not even spaces after this last ?&gt; */ ?&gt;
+        ============================================
+        end of config.php
+        ============================================
+</pre>
+<div class="floatright">
+    <a class="minitext" href="#top">⬆ Top</a>
+</div>
+<h2>Logging In For the First Time</h2>
+
+<p>Open a browser connected to the network upon which the web server is also connected. Enter the URL for the web server directory where webERP is installed. If the browser is on the same machine as the web server then perhaps:</p>
+
+<p>http://localhost/webERP/index.php<br></p>
+
+<p>enter user name 'demo'<br>
+enter password 'weberp'<br></p>
+
+<p>The quotation marks are not required. To set up additional users go to Main Menu &gt; Setup &gt; User Accounts. Users can change there own passwords at any time by clicking on their user name shown at the top left of the screen. For example: "webERP Demo: <i>administrator</i>". Be careful not to delete the demonstration user until a new System Administrator user has been set up. If there are no users defined the next time you try to login you won't be able to! In this situation the only way then to create a user to login with is to manually edit the SQL table WWW_Users to insert a user. If phpMyAdmin is installed on the web server as well then this can be achieved by adding a new record to WWW_Users.</p>
+
+<p>NB The importance of setting a password for the root user of MySQL, otherwise anyone could modify WWW_Users and gain access to private company information.</p>
+
+<div class="floatright">
+    <a class="minitext" href="#top">⬆ Top</a>
+</div>
+
+<h2>Adding New Companies</h2>
+
+<p>At this point having followed all the instructions above you should be able to log into the single company database you set up above. However, you may wish to add additional companies. If you system is set up such that the user account that is running your web-server is able to write to the webERP directory then it is possible to enter the URL:</p>
+
+<p>http://yourdomain/webERP/Z_MakeNewCompany.php</p>
+
+<p>This script allows you to set up any number of additional companies - a fresh database is set up as is the directory structure required under webERP/companies. Each time you get to the login prompt the list of companies shows and you must select the company you require.</p>
+
+<p>This script may not work because it requires that the web-server has write permission to the scripts directory, in which case you may need to fall back to the manual method described below.</p>
+
+<p>In the default install above you created a database called weberpdemo and there is a directory under webERP/companies also called weberpdemo. To make another company you need to copy this directory and all the sub-directories under it to a new directory under webERP/companies/. The name of this directory needs to be identical to the name of the new database created on the same mysql server. The utility script Z_MakeNewCompany.php automates the process.</p>
+
+<div class="floatright">
+    <a class="minitext" href="#top">⬆ Top</a>
+</div>
+
+<h2>Configuration Parameters</h2>
+
+<p>In versions prior to version 3.0, configuration parameters were stored under the config.php file which required manual editing of the system parameters. Since version 3.0 a new screen for System Parameters was developed that allows all the system wide configuration variables to be set. These are now stored in the database allowing for upgrades without then having to re-edit the config.php file. The system parameters screen is at Main Menu &gt; Setup &gt; <a href="../../SystemParameters.php" target="_blank">System Parameters</a>. Each of these settings should be reviewed in detail. Notes describing the function of each variable are shown along side it.</p>
+
+<p>There is additional information on installation in webERP/doc/INSTALL.txt</p>
+<div class="floatright">
+    <a class="minitext" href="#top">⬆ Top</a>
+</div>
+<h2>Themes and GUI Modification</h2>
+
+<p>Often what visually appeals to one does not appeal to another. Whilst accounting software is primarily about function - appearances do matter! Some flexibility is available with the colour scheme and font sizes of the GUI using cascading style sheets (css).</p>
+
+<p>The user interface can be modified by adopting one of the defined themes or making up a new theme. There are a number of choices for the theme to experiement with - these will only affect the display of the screens - colours/fonts etc.</p>
+
+<p>Each user can select their own preference from the user settings screen. This is revealed by clicking on their user name shown at the top left of the screen. For example: "webERP Demo: <i>Administrator</i>".</p>
+
+<p>To create a new theme copy the directory of one of the defined themes to a new name. The themes are held under the css directory of the distribution. There is a directory under the css directory for each theme. After copying the files to a new directory, say 'New_theme', they should be edited to reflect the look desired. New theme directories are revealed automatically on the user setting screen so users can select the customised theme.</p>
+
+<div class="floatright">
+    <a class="minitext" href="#top">⬆ Top</a>
+</div><!-- Help Begin: WWW_Users -->
+
+<h2><a id="UserMaintenance">Setting Up Users</a></h2>
+
+<p>Having logged in as user 'demo'. A new user should be defined whom has administrative privileges and the user 'demo' should be deleted. From the menu click on the 'Setup' tab and then click 'User Maintenance'. The users defined are displayed. User names must be 5 characters or more. Passwords entered must be 5 characters or more too. The password cannot also be the user name or contain the user name. It is not necessary to enter the full name telephone and other details. The access level selected is important as this determines the pages that the user can access. In any business where the employees are not also the owners it is advisable to split the functions between staff so that no user can complete an entire transaction. There are occasions in smaller businesses where this is impractical. However, the system has great flexibility to allow the user access to be finely defined. See the security schema section.</p>
+
+<p>As well as allowing the access to be restricted there is some flexibility about the links that are made available to a user. In the 'User Maintenance' screen the system administrator can define which tabs of the main menu are activated and available to the user.</p>
+
+<p>There is also the facility to set up customers with their own logon. This restricts them to inquiries on their account including invoice re-prints and to entering new sales orders. Customer logins do not allow any modification to the pricing. To do this the access level must be set to customer logon and the settings for customer logon in config.php must not be modified - i.e. $PageSecurity = 1 allowed only. In addition, the customer code and branch code applicable to the person logging on must be entered.</p>
+
+<div class="floatright">
+    <a class="minitext" href="#top">⬆ Top</a>
+</div>
+
+<h2>Internationalisation and Language Translations</h2>
+
+<p>As of webERP version 3.12 all translations of the user interface use utf-8 character encoding. Inspecting the character set that your browser is using (View-&gt;Character Encoding in Firefox) will show utf-8 (perhaps not the english manual). To use a language other than english the web-server must have a locale installed for that language using the utf-8 character set. For German this would be the locale called de_DE.utf8 - most locales follow a similar naming convention e.g. en_GB.utf8 for English - Great Britain with utf-8 characters. en_GB.utf8 is the default locale for webERP.</p>
+
+<p>Under the main webERP directory the locale directory contains the language specific data necessary for translations. By default there will only be one directory under locale for en_GB.utf8 - the default locale. Under the language_country.utf8 locale there is a further sub-directory for LC_MESSAGES - it is under this directory where the messages.po lives - this file contains a lits of all the strings used in the interface and their translation into the language of the locale. To use the translations the .po file needs to be "compiled" into a binary format for faster retrieval and this is what the messages.mo file is.</p>
+
+<p>webERP uses the gettext library of functions for using the data under the locale files to perform the translations. The gettext libraries need to be installed on the web-server together with the locales that you wish to translate into. In addition the web-server's PHP installation must have the gettext extension configured to use the gettext library functions. Pointing the browser at http://yourdomain/webERP/phpinfo.php will show the details of the PHP installation on your web-server and you should see the gettext extension available from this page.</p>
+
+<p>webERP distributes translations for all of the available languages bundled in the archive - which is why it is now over 20 Meg compressed.</p>
+
+<p>To change the language displayed for a specific user - the user clicks on their name as shown on every screen at the top of the page. This brings up their user settings.</p>
+
+<p align="center"><img src="images/UserSettings.jpg"></p>webERP looks at all the directories available under webERP/locale to see which languages are installed and provides a convenient way for users to select their preferred language. In addition to selecting the language it is also necessary to select the fonts required for pdf support in the selected language.
+<p>
+
+<p>PDFs are produced in utf-8 character set which has 4 bytes for each character. Unfortunately, the CID fonts used in PDFs only have 2 bytes so there is required to be some mapping of CID characters to utf-8 fonts to make everything work. In practise all this means is that the correct language needs also to be selected for the PDF language.</p>
+
+<p>If you are interested in contributing a language pack to webERP - which is always very much appreciated! There are instructions for how to proceed at http://www.weberp.org/wiki/HowToTranslate</p><!-- Help End: WWW_Users -->

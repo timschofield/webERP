@@ -1,0 +1,117 @@
+<h1><a id="Contracts">Contract Costing</a></h1>
+
+<h2>Overview</h2>
+
+<p>The Contracts module allows for construction of costings for specific customer projects where a bill of materials to be taken from inventory for the contract can be defined, together with a costed list of other requirements. By entering a gross profit percentage figure a price can then be arrived at to charge the customer. The contract can then be converted to a quotation. While the contract is at the quotation stage it is possible to modify the stock components and other requirements - the quotation will be updated with the new costing on commital. The quotation can then be resubmitted to the customer.</p>
+
+<p>When a contract is converted to a quotation the system actually creates a manuafactured inventory item with the name of the contract refence and with the description from the contract description.</p>
+
+<p>When (if) the quotation is accepted by the customer, the quotation can be converted to an order in the usual way by modifying the quotation flag from quotation to order. Committing this change then changes the status of the contract to ordered so that changes are no longer allowed. This process also creates a work order so that stock required for the contract can be issued to it. By using the work order issue functionality the stock is reduced and work in progress is increased.</p>
+
+<p>When supplier invoices (accounts payable) are entered there is the option to specify the contract that is to be charged with the cost. The cost of contract charges also goes to the work in progress account (as determined from the stock category record of the contract). Any number of contract charges can be entered against a supplier invoice (or credit note). In entering contract charges there is also the possibility of flagging whether or not the charge was orignially envisaged and costed into the contract or not. Contract charges records are created for each entry.</p>
+
+<p>The original contract costing can be compared against the actual charges against the contract, to see how much was made on the contract. When all charges are entered against the contract it needs the status of the contract to be changed to complete. This process closes the work order and compares the original contract cost against actual costs and takes the value not charged to cost of sales to the usage variances account (based on the stock category of the contract item) and clears the balance that would otherwise be left in work in progress.</p>
+
+<h3><a id="CreateContract">Creating a New Contract</a></h3>
+
+<p>From the contract tab of the main menu, select Create Contract. The first step is to select the customer for whom the contract is for.</p>
+
+<p>The contract requires a reference up to 20 characters - without spaces, slashes or inverted commas - that will be used for the contract code. It must be unique from other contracts and also from any existing inventory item codes already in the system. A description of the contract is also required. The description can be any length and is a text field but will be truncated in the stockmaster to X characters when the contract is converted to a quotation. The description in the contract record is retained.</p>
+
+<p>Each contract must also specify the category - the existing inventory categories are displayed to select from but new categories can be created. It is important to realise that the posting for the general ledger is performed based on the general ledger codes set up against the inventory category selected. e.g. charges against the contract will be posted to the work in progress account against this inventory category and the usage variance account of this category will be used for any difference between the contract total cost and the original costing.</p>
+
+<p>The gross profit percentage entered is the factor used based on the cost to arrive at the contract price.</p>
+
+<p>The date that the customer requires the contract to be completed is also specified in the contract. This propogates through to the quotation and order.</p>
+
+<p>If the contract is for a customer that is invoiced in a foriegn currency the currency exchange rate can also be specified - it is defaulted based on the current table of exchange rates at the time the contract is created.</p>
+
+<p>There are two buttons on the contract setup page that allow the stock required for the contract to be specified and the requirments that are not stock items to be recorded.</p>
+
+<p>Entering the bill of materials for the contract is done from a screen that shows a stock selection options - it is possible to choose by stock category or search for individual items by code or description. The list of items matching the criteria entered displays and the quantity of each item required should be entered in the box next to the item. There is no limit to how many items can be selected. Once all the items from stock have been selected there is a button that brings back the contract details (Back to Contract Header). The contract screen will now show the bill of materials as selected and the cost of each together with the quantity of each required extending to the total value of all stock items required for the contract.</p>
+
+<p>Entering the other requirements is more straightforward as a new screen allows entry of descriptions of the other items required, the quantity of the item and the cost per unit of the items. Again, a button to go back to the contract header allows the user to switch back to the contract definition screen which will now show the other requirements listed and extended to arrive at the total cost.</p>
+
+<p>The sum of the cost of the bill of materials together with the total cost of the other requirements is shown as the total contract cost. This cost is used together with the GP % entered to work out the total contract cost. The GP% is the % of the total contract price that is profit - so 1 minus the GP% is % of the total contract price that is the cost. The calculation is therefore - contract total cost divided by (1 - the GP%).</p>
+
+<h3>Selecting A Contract</h3>
+
+<p>From the Contracts tab of the main menu, Select Contract allows contracts for a specific customer to be selected, or contracts of a specific status. Contracts can have a status of:</p>
+
+<ul>
+    <li>Setup and defining requirements</li>
+
+    <li>Quoted - item has been created and sales quotation created based on contract costs</li>
+
+    <li>Ordered - customer has accepted the quotation and the quotation has been turned into an order. This releases the work order so that stock can be issued to the contract through the work order issue system</li>
+
+    <li>Closed - the contract has been completed and finished - the contract work order is closed so no more stock can be issued to it and no more charges can be made to it. through accounts payable</li>
+</ul>
+
+<p>The contracts meeting the criteria specified are displayed with links to perform actions depending on its status. If the contract is quoted already there is a link to select the quotation for printing. If the quotation is ordered then there is a link to issue items to the contract work order. In all cases a link to open the contract definition is available. However, the option to modify the contract definition is disabled once the contract has been ordered by the customer. The contract definition can be modified until the contract quotation is converted to an order. This is done in the ususal way - selecting the quotation then changing the quotation flag from quote to order. When the changes are committed the contract work order is created and the requirements for the work order from the contract bill of materials are copied to a normal manufacturing bill of materials. It is not necessary to venture into the manufacturing functionality of webERP as all this is handled within the contract. Only the work order issues screen which comes up directly from the link on the contract selection screen once the contract is converted to a sales order.</p>
+
+<p>When the contract has been ordered by the customer a link is available to show the actual contract cost in comparison to the originally estimated costs. This screen shows the originally costed components and the other requirements costed into the total contract cost on the left side of the screen. On the right the actual inventory issued to the contract and the actual other costs entered through the supplier invoice entry screen.</p>
+
+<h3><a id="AddToContract">Entering Contract Costs</a></h3>
+
+<p>The act of issuing stock items to the contract work order, puts the cost of those items as contract costs. Issues to contract work orders is the same as issuing stock to any other work order. See work orders/manufacturing manual. A link to enter the inventory issued against the contract is provided from the contract selection screen. The general ledger entries created when stock is issued to a contract work order are to debit the work in progress account (from the stock category record of the contract item) and credit stock (from the stock account of the stock category record of the item being issued).</p>
+
+<p>Other contract costs are entered at the time of entering AP invoices or credit notes. There is an option on this screen to enter against a contract - in a similar way to entry against a shipment. It is possible to enter a supplier invoice against any number of contracts. The amount of the supplier invoice (or credit note) that is entered against contracts is posted in the general ledger to work in progress. Contract charges records are also created referring to the supplier invoice. To reverse contract charges, supplier credit notes have the exact opposite entries to supplier invoices.</p>
+
+<h3>Closing Contracts</h3>
+
+<p>Open contracts continue to show on the contract selection screen until they are closed. When entering supplier invoices and credits they show in the drop down list as options for issuing costs against until they are closed. Open contracts also have entries created in the general ledger for work in progress for all the stock issued to them and other requirements charged against them through accounts payable. When the contract item is invoiced to the customer the stock is reduced by the costed amount of the contract and cost of sales is charged with this amount. This value may not actually be the final cost of the contract and the difference between the actual contract cost and the costed contract cost needs to be processed to usage variances in the general ledger, this is what closing the contract does.</p>
+
+<p>The process of closing the contract, compares the cost of the contract as invoiced to the customer against the costs issued to the contract (in work in progress) and creates a general ledger journal to the usage variance account (from the stock category record of the contract item). If the contract item is already invoiced to the customer and the contract work order as showing that the contract item has not yet been received against the work order then the work order receipt is processed. This receives a finished contract items against the contract work order. This process creates the general ledger postings to Debit the stock account (from the stock category record of the contract item) and credit the work in progress account. The amount of this journal is based on the original contract cost.</p>
+
+<p>At the end of the contract closing process, the contract work order has the contract item received against it and the work order is then closed. In addition the work in progress account is cleared so that all entries for issues of stock and other costs to the contract are contra'd by the receipt of the contract item and any variance posting.</p>
+
+<p>Using the contract closing option from the Contract Costing screen thus avoids any requirement to venture into the manufacturing module at all. Since, (if it has not been done through the manufacturing module - which is checked first) the finished contract item is received against the work order and the contract work order is closed. The status of the contract is also updated to closed.</p>
+
+<p>Once a contract is closed it is no longer possible to issue costs against it either in the form of inventory or other charges. However, it is still possible to inspect the original contract costing and the actual costs that were issued against it. This is done from the contract selection screen - where completed contracts can be specified - the link to the contract costing will show.</p>
+
+<h3>Contract Process Flow Summary</h3>
+
+<p>The process with contracts is as follows:</p>
+
+<ol>
+    <li>Discussion with customer</li>
+
+    <li>Create contract costing - with all requirements, both external costs and stock required</li>
+
+    <li>Produce the quotation for customer based on the contract costing created</li>
+
+    <li>If the quotation is accepted by the customer turn the quotation to a sales order - this initates the contract costing</li>
+
+    <li>Issue stock to the contract</li>
+
+    <li>Enter supplier invoices against the contract</li>
+
+    <li>When the contract has been delivered to the customer, recieve the contract item against the contract work order. If the contract is closed through the contract costing screen, this step happens automatically.</li>
+
+    <li>Invoice the contract item to the customer</li>
+
+    <li>Complete the contract costing - to take any variances and clear the work in progress account where the variances sit until the contract is closed</li>
+</ol>
+
+<h3>Contract Costing General Ledger Impact Summary</h3>
+
+<p>When cost is allocated from a supplier invoice, the cost is debited to the work in progress account of the stock category of the contract - credit to creditors control.</p>
+
+<p>When the contract item is received against the contract works order, the entry is :
+<br />
+DR stock<br />
+CR WIP<br />
+based on the stock category of the contract.</p>
+
+<p>When the contract item is sold then it is like selling any other item DR cost of sales - from the COGS GL posting table<br />
+CR stock - from the stock category of the contract item</p>
+
+<p>When you issue stock to a contract the entries are:<br />
+DR WIP - from the stock category of the contract item<br />
+CR stock - from the stock category of the issued items<br />
+
+<p>When you close a contract the variance against the consted contract is taken to account - the entries are:<br />
+DR/CR WIP of the stock category of the contract item - to clear WIP in relation to the<br />
+
+DR/CR usage variance of the stock category of the contract item</p><!-- Help End: Contracts -->

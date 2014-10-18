@@ -1,0 +1,57 @@
+<h1><a id="Tax">Tax Calculations</a></h1>
+
+<h2>Overview</h2>
+
+<p>Many countries and states have varying methods for the calculation of ad-valorem taxes on sales. There is some flexibility in the configuration of how these automatic calculations are made and to which general ledger accounts the postings are made to. If all else fails tax rates can be entered by line of the invoice or credit as necessary. Several different rates of tax can be applied to each line item individually and some rates can compound on top of previous taxes calculated. The automatic calculation of taxes works based on:</p>
+
+<ol>
+    <li>Where the branch is that is to invoiced - each branch is defined as belonging to a certain tax group. It is the tax group that determines the taxes that will apply to the sale.</li>
+
+    <li>What the item being invoiced is - e.g. In many states reduced rates of taxes apply to the more essential items for basic sustenance. - each item is defined as belonging to a certain "tax category"</li>
+
+    <li>From where the item is dispatched i.e. the warehouse from which the goods are picked. The tax legislation in most countries require that supplies made within the country attract tax - GST/VAT or whatever. The inventory location from where the goods or service is being provided has a tax province it is the tax province of the inventory location in conjunction with the tax group of the customer branch and the tax category of the item that determines the rates of tax applicable.</li>
+</ol>
+
+<div class="floatright">
+    <a class="minitext" href="#top">⬆ Top</a>
+</div>
+
+<h2>Setting up Taxes</h2>
+
+<ul>
+    <li>All the tax authorities under which goods are to be sold must be defined in the tax authorities table under the set up tab. The tax authority record requires the specification of the general ledger account codes where purchase tax is to be posted and where sales taxes are to be posted to, as well as a description as to what the tax authority is called. eg. UK Inland Revenue VAT, ATO - GST(Australia), NZ IRD - GST (New Zealand). If there are several ways in which taxes can be defined within a single authority then it is appropriate to set up another authority. One example might be the Netherlands where as well as charging tax (at 3 different levels) it is possible to dispatch goods to a customer in the Netherlands - from a warehouse in the Netherlands without adding tax to the invoice where the customer has an exemption arrangement and has agreed to pay the VAT on its purchases themselves directly to the Dutch revenue authority. In this circumstance a separate tax authority - customer exempt - NL - GST may be set up.</li>
+
+    <li>Each customer branch is defined as falling under a particular tax group. The tax authority is the state body responsible for the collection of taxes. In many areas there are several such bodies that collect tax eg. in Canada there is a Federal Authority that collects GST and the state that collects Provincial Sales Tax PST. A tax group is therefore made up of one or more tax authorities. The tax group is set up with one or more tax authorities for which tax is payable on sales to the customer branch. Note that the tax authority is not held against a particular charge account - customer account. It is the branch where the goods are delivered to which is important in determining how the tax calculations work.</li>
+
+    <li>Each stocking location or warehouse is also defined as within a particular taxprovince. This is specified from the locations maintenance form.</li>
+
+    <li>Each stock item is defined as being subject to tax at a particular "tax category". The tax category is set in the stock item maintenance screen. In setting the tax category for each item some thought is required as to the taxing of the item under different authorities. Most tax authorities have just two rates of tax applicable i.e. 0% and the normal tax rate eg. 10% for Australia, 12.5% New Zealand. However, in some authorities there may be several tiered rates - the Netherlands has three rates of tax. The categories setup must be based on the requirements of the tax authority (which the business requires goods to be sold within) with the most tax categories. The tax category entered against each stock item is entered against the stock master record. A look up selection box is provided showing all the tax categories defined.</li>
+
+    <li>The applicable rates of tax then need to be defined. A rate is required for supplies from each Stock Location Tax province to each of the defined Tax Authorities and Tax Categories. It is this table of rates that allows the system to determine the rate applicable to each line item invoiced, based on the branch to which the item is to be supplied, the item itself and the location from where the goods are delivered.</li>
+</ul>
+
+<div class="floatright">
+    <a class="minitext" href="#top">⬆ Top</a>
+</div>
+
+<h4>Single Tax on Sales within one Tax Authority Example - 2 Tax Categories:</h4>
+
+<p>In most tax authorities there are just two rates of tax 0% and some other rate lets say 10%. Sales to export customers will not be taxable as they are exempt. If the business simply operates in the one country, then things are very simple. Items that are zero rated have the stock master record modified to give them a tax category - for zero rated. All other taxable items have the default tax category - taxable supply. Two Tax Authorities are defined, the first the country in which it operates and the other called Export. A tax group is defined for export and one for Local Sales. Customer branch records must be set with the Tax Group of the Local Sales or Export. The location record of each of the warehouses is defined as being the country tax authority. Now the rates applicable to export tax authority will all be 0 for tax categories - Taxable Supply and Export. The rate of tax applicable to the country tax authority will be 10% for taxable supply and 0% for Zero Rated.</p>
+
+<h4>Sales only within one Tax Authority Example - 3 Tax Levels:</h4>
+
+<p>Maybe zero-rated for food and 5% on clothing and 10% on all other goods. The tax category of all food items should be set to say Zero Rated and the tax rate of all clothing items set to - Clothing - all other taxable items at the full rate set to a tax level of Taxable Supply. The tax rates for the country tax authority for taxable supply set to 10%, Zero Rated - 0% and Clothing - 3 5%.</p>
+
+<div class="floatright">
+    <a class="minitext" href="#top">⬆ Top</a>
+</div>
+
+<h4>Sales Within Two Tax Authorities Example - 3 Tax Levels:</h4>
+
+<p>The business has a warehouse in another country - (Tax Authority A) or state with a different revenue collection authority and one authority has two levels and the other has 3 levels (Tax Authority B) as in the two examples above. Rates need to be defined for deliveries from each warehouse to customer branches in each tax authority. In most cases the rate of tax applicable to exports will be 0% - exempt. Tax Authority A will have entries applicable to deliveries within Tax Authority A for each of the 3 tax levels (even though only 2 are applicable - the rate for level 3 will be the same as 1) and also for deliveries to Tax Authority B. Tax Authority B will have rates set up for each level for deliveries within Tax Authority B and also for deliveries to Tax Authority A - the later rates will most likely be 0%.</p>
+
+<p>The logic used in determining the rate to be used is as follows:</p>
+
+<p>The TaxAuthority of the warehouse the goods are delivered from, the TaxLevel of the item and the Tax Authority of the branch of the customer being delivered to are determined. Using all three of these factors the rate is returned from the TaxAuthLevels table.</p>
+
+<p>General ledger posting relating to the taxes calculated are made in accordance with the codes set up in the Tax Authority table. <!-- Help End: TaxAuthorities --></p>

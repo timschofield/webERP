@@ -1,0 +1,450 @@
+/***
+
+New Default Theme for WebERP
+
+***/
+
+body{
+	background-color:#ccd;
+	font-family:Arial, Verdana, Helvetica, sans-serif;
+	font-size:10pt;
+	margin:0;
+	padding:0;
+}
+
+a{
+	color:blue;
+	text-decoration:none;
+}
+a:hover{
+	color:blue;
+	text-decoration:underline;
+}
+
+img{
+	border:none;
+	vertical-align:middle;
+}
+
+.page_title_text{
+	padding:5px;
+	font-weight:bold;
+	color:black;
+	text-align:center;
+}
+p.good{
+	font-weight:bold;
+	color:green;
+}
+p.bad{
+	font-weight:bold;
+	color:red;
+}
+table{
+	margin:0 auto;
+	width:auto;
+	max-width:90%;
+	padding-bottom:5px;
+}
+table.selection{
+	padding-bottom:5px;
+}
+th{
+	font-weight:normal;
+	background-color:#B06161;
+	color:white;
+}
+th.ascending {
+  cursor: s-resize;
+}
+th.descending {
+  cursor: n-resize;
+}
+th:after {
+	content: "";
+	float: right;
+	margin-top: 7px;
+	visibility: hidden;
+}
+th.ascending:after {
+	border-width: 0 4px 4px;
+	border-style: solid;
+	border-color: #000 transparent;
+	visibility: visible;
+}
+th.descending:after {
+	border-bottom: none;
+	border-left: 4px solid transparent;
+	border-right: 4px solid transparent;
+	border-top: 4px solid #000;
+	visibility: visible;
+}
+th.number{
+	text-align:right;
+	font-weight:normal;
+	background-color:#B06161;
+	color:white;
+}
+td {
+	text-align:left;
+}
+td.centre{
+	text-align:center;
+}
+td.number{
+	text-align:right;
+}
+td.select{
+	background-color:#eee;
+}
+div.centre{
+	margin:0 auto;
+	text-align:center;
+	padding:5px;
+}
+input{
+	font-family:Arial, Verdana, Helvetica, sans-serif;
+}
+input.number{
+	text-align:right;
+}
+input.image{
+	border-width:0px;
+	background-color:transparent;
+}
+input:required, select:required, textarea:required {
+	background-color:lightyellow;
+}
+input:hover{
+}
+select{
+	font-family:Arial, Verdana, Helvetica, sans-serif;
+}
+textarea{
+	font-family:Arial, Verdana, Helvetica, sans-serif;
+}
+textarea:hover{
+}
+.EvenTableRows{
+	background-color:#CCCCCC;
+}
+.OddTableRows{
+	background-color:#EEEEEE;
+}
+div.error{
+	background-color:#fddbdb;
+	color:red;
+	border:1px solid red;
+}
+div.warn{
+background-color:#f5dbfd;
+color:maroon;
+border:1px solid maroon;
+}
+div.success{
+background-color:#b9ecb4;
+color:darkgreen;
+border:1px solid darkgreen;
+}
+div.info{
+	background-color:#c7ccf6;
+	color:navy;
+	border:1px solid navy;
+}
+DIV.page_help_text{
+	background:lightgrey url(images/help.png) top left no-repeat;
+	BORDER:#a52a2a 1px solid;
+	padding-top:2px;
+	padding-bottom:2px;
+	PADDING-LEFT:10px;
+	Z-INDEX:1;
+	width:80%;
+	FLOAT:none;
+	VISIBILITY:visible;
+	MARGIN:0 auto;
+	POSITION:static;
+	font-family:Arial, Verdana, Helvetica, sans-serif;
+	font-weight:normal;
+	color:black;
+	TEXT-ALIGN:center;
+}
+DIV.system_check{
+	BORDER:#a52a2a 1px solid;
+	PADDING-LEFT:3px;
+	Z-INDEX:1;
+	width:40%;
+	FLOAT:none;
+	VISIBILITY:visible;
+	MARGIN:0 auto;
+	POSITION:static;
+	background:lightgray;
+	font-family:Arial, Verdana, Helvetica, sans-serif;
+	padding-top:1px;
+	padding-bottom:1px;
+	font-weight:normal;
+	color:black;
+	TEXT-ALIGN:left;
+}
+
+.dpTbl { /* date picker background */
+	border:thin solid black;
+	background:white;
+	box-shadow: 3px 3px 4px #000; /* shadow on modern browsers */
+}
+.dpTD{
+	border:0;
+	width:20px;
+	background-color:#EEEEEE;
+	text-align:right;
+	cursor:pointer;
+}
+.dpDayHighlight{
+	border:0;
+	width:20px;
+	background-color:yellow;
+	text-align:right;
+	cursor:pointer;
+}
+.dpTDHover{
+	border:0;
+	width:20px;
+	background-color:#CCCCCC;
+	text-align:right;
+	cursor:pointer;
+}
+
+/* Table type is used for UI tables type 1 */
+.table1{
+	width:90%;
+	background:#eee;
+	border:0px 0px 2px 2px #222 solid;
+	margin:0 auto;
+}
+/* Table type is used for UI tables type 2 */
+/*.table2{
+width:90%;
+background:#eee;
+border:0px 0px 2px 2px #222 solid;
+margin:0 auto;
+}*/
+
+.tableheader{
+	font-weight:normal;
+	background-color:#800000;
+	color:white;
+}
+.notavailable{
+	font-weight:lighter;
+	font-style:italic;
+	color:#555555;
+}
+.label{
+	font-weight:bold;
+	font-style:normal;
+	font-size:120%;
+	color:black;
+	background-color:#cccccc;
+}
+.table_index{
+	background-color:#F1FFDD;
+}
+
+.header{
+	background-image:url("");
+	background-repeat:no-repeat;
+	background-attachment:fixed;
+	border:none;
+	margin:0px;
+	padding:0px;
+}
+input.inputerror, input.error, select.error, select.selecterror, label.error {
+	color:red;
+	border: 2px solid red;
+}
+
+textarea.texterror{
+	background-color:#fddbdb;
+}
+
+.OsRow{
+	background-color:#234567;
+	color:white;
+}
+
+/*** CANVAS ***/
+
+#CanvasDiv{
+	background:#588BB6;	
+}
+
+/*** HEADER ***/
+
+#HeaderDiv{
+	color:white;
+	/*background:#588BB6;*/
+	/*overflow:hidden;*/
+}
+#HeaderDiv a{
+	color:white;
+}
+#HeaderDiv a:hover{
+	text-decoration:underline;
+}
+#HeaderWrapDiv{
+}
+
+/*** HEADER - APP INFO ***/
+
+#AppInfoDiv{
+	float:left;
+	padding:0;
+}
+#AppInfoCompanyDiv,#AppInfoUserDiv{
+	display:table-cell;
+}
+#AppInfoModuleDiv{
+	font-weight:bold;
+	font-size:120%;
+	padding:3px;
+}
+
+/*** HEADER - QUICK MENU ***/
+
+#QuickMenuDiv{
+	float:right;
+	margin-top:2px;
+}
+#QuickMenuDiv ul{
+}
+#QuickMenuDiv li{
+	display:inline;
+	border-left:thin ridge #588BB6;
+	padding:14px 12px;
+}
+
+/*** BODY ***/
+
+#BodyDiv{
+	clear:both;
+}
+#BodyWrapDiv{
+	background:#CCCCCC;
+	/*border:thin solid #ccc;*/
+	clear:both;
+}
+
+/*** BODY - MAIN MENU ***/
+
+#MainMenuDiv{
+	float:left;
+	width:11%;
+	border:thin solid #000;
+	text-align:center;
+	white-space:nowrap;
+}
+#MainMenuDiv ul{
+	margin:0; 
+	padding:0;
+}
+#MainMenuDiv li{
+	list-style:none; 
+}
+
+#MainMenuDiv li a{
+	color:black;
+}
+#MainMenuDiv li a:hover{
+	color:black;
+	text-decoration:underline;
+}
+.main_menu_unselected{
+	background:#8EDE8D;
+	padding:2px;
+}
+.main_menu_unselected:hover{
+	background:white;
+}
+.main_menu_selected{
+	background-color:white;
+	padding:2px;
+}
+
+/*** BODY - SUB MENU ***/
+
+#SubMenuDiv{
+	display:table;
+	float:right;
+	overflow:hidden;
+	width:88.5%;
+}
+#SubMenuDiv ul{
+	margin:0;
+	padding:0;
+	background:#fff;
+	border:thin solid black;
+	margin-left:3px;
+}
+#SubMenuDiv li{
+	list-style:none;
+}
+#SubMenuDiv a{
+	color:blue;
+}
+#SubMenuDiv a:hover{
+	color:blue;
+	text-decoration:underline;
+}
+#TransactionsDiv,
+#InquiriesDiv,
+#MaintenanceDiv{
+	display:table-cell;
+}
+.menu_group_headers{
+	text-align:center;
+	color:black;
+	background:#eee;
+	border-bottom:thin solid black;
+}
+.menu_group_item{
+	background-color:white;
+	padding:2px;
+}
+.menu_group_item p{
+	color:#00f; /* This is the color for bullets, I like it to be the same as the anchor color, but it's up to you */
+	text-indent:-12px; /* this makes the bullet to appear as the li tag previously used */
+	margin:0 0 0 12px; /* One thing that I didnÂ´t like of the li was that it had no left margin applied */
+}
+#InquiriesDiv div{ /* header for standard reports/forms, custom reports */
+	border-top:thin solid black;
+	border-bottom:thin solid black;
+	background:#eee;
+	color:black;
+	padding:2px;
+}
+
+/*** FOOTER ***/
+
+#FooterDiv{
+	clear:both;
+	overflow:hidden;
+	color:#CCCCCC;
+	padding:3px 2px;
+}
+#FooterWrapDiv{
+
+}
+#FooterLogoDiv{
+	background:white;
+	border-radius:7px;
+	float:left;
+	padding:3px;
+}
+#FooterVersionDiv{
+	float:left;
+	margin-left:10px;
+	margin-top:15px;
+}
+#FooterTimeDiv{
+	float:right;
+	margin-top:15px;
+}

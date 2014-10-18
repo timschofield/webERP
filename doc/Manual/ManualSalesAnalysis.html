@@ -1,0 +1,218 @@
+<h1><a id="SalesAnalysis">Sales Analysis</a></h1>
+
+<p>There are several ways to analyse sales history. If a quick analysis is required there is some flexibility in the sales graph script that allows a pictorial representation of the sales against budget. It depends of course the level to which sales budgets are recorded as to whether the comparison against budgets will show anything useful. If a report of the actual numbers is required webERP has a sales report writer that allows sales reports to be created - the resulting report templates can be re-run or modified. These reports can output either a pdf or a csv file for reading into most spreadsheet applications.</p>
+
+<p>From the main menu under Accounts Receivable Reports and Inquiries options, "Sales Analysis Reports". A list of all previously defined sales reports shows with links to:</p>
+
+<ul>
+    <li>Modify the design of the report - the header</li>
+
+    <li>Modify the columns of the report</li>
+
+    <li>Run the report and create a PDF file</li>
+
+    <li>Run the report to create CSV - comma seperated values report that can be read by any spreadsheet application.</li>
+</ul>
+
+<p>Also from the bottom of this page it is possible to make up new reports to show most combinations of sales data. A seperate table of sales data is maintained by the system to enable these reports to be run as quickly as possible.</p>
+
+<p>A sales analysis report is made up of:</p>
+
+<ul>
+    <li>the report header defintion and</li>
+
+    <li>the report column definitions</li>
+</ul>
+
+<h2>Sales Analysis Report Headers</h2>
+
+<p>The first step in creating a report is to enter the report header information. This includes:</p>
+
+<ul>
+    <li>Report Heading - any combination of characters to describe the report.</li>
+
+    <li>Up to 4 levels of grouping and the criteria for each grouping.</li>
+</ul>Each grouping consists of a selection of one of:<br>
+<br>
+
+<ul>
+    <li>Sales Area</li>
+
+    <li>Product Code</li>
+
+    <li>Customer code - the actual charge account</li>
+
+    <li>Sales type (or price list)</li>
+
+    <li>Product type (or stock/inventory category)</li>
+
+    <li>Customer branch</li>
+
+    <li>Sales person</li>
+</ul>
+
+<p>The report groups on each level in sequence eg. A report with Group By 1 set to Product Code and Group By 2 set to Sales Area, would show the product code, then the areas underneath the product code where the item has been sold. Most often the more logical sequence might be to show the sales area as Group By 1 and the Product Code under the Group By 2 so that the sales of the product codes for each area appear together.</p>
+
+<p>Each Group By section requires a range to be specified. All criteria specified must refer to the coding as specified in the setup section of the relevant Grouping. Eg Sales Areas criteria must be entered as the area code - not the area description. The criteria from should be less than the criteria to otherwise the report will have no output.</p>
+
+<h3>Sales Analysis Report Columns</h3>
+
+<p>Having created a header for the report the columns can then be defined. Columns for existing reports can be modified at any time. From the main Sales Analysis Reports page - (Accounts Revceivable tab - Sales Analysis Reports) - there is a link on each report to "Define Columns". From this link the columns for the report selected are shown, together with a form to allow input of new columns. The following input is required for each column defined:</p>
+
+<ul>
+    <li>A column number between 1 and 10. This number determines where abouts across the page the column is printed -1 is the closest to the left of the page and 10 is the closest to the right of the page.</li>
+
+    <li>Two fields are available for line 1 and 2 of the column heading. Any text can be input to a maximum of 15 characters in each.</li>
+
+    <li>Whether the column is a calculation or not. The input required for calculated columns is different from normal data columns.</li>
+
+    <li>For normal data columns -a range of periods to show the data for is required. The period from and to must be specified as the period number. Since periods are maintained almost invisibly by the system, there is a link provided from this screen to show the periods defined. If a single month is required then the period from will be the same as the period to.</li>
+
+    <li>The data to show in the column can then be selected from: Quantity, Gross Value, Net Value (after discounts), Gross Profit, Cost and Discount.</li>
+
+    <li>Budgeted sales or actual sales.</li>
+</ul>
+
+<p>If the column is defined as being a calculation the range of periods are not required, neither is the selection of the type of data to show and the budget or actual. Changing the Calculation field to yes then hitting the enter information button, show the fields required for a calculation:</p>
+
+<ul>
+    <li>Numerator field - this the column number of the first parameter to the calculation- the numerator field is always required in a calculation.</li>
+
+    <li>Denominator field - this is the column number of the second parameter to the calculation if the calculation is to performed on two columns. If the operator of the calculation is to divide - then this column total will be on the bottom of the division calculation. If the calculation is to be done using a constant then this field can be left blank.</li>
+
+    <li>Calculation operator can be one of:
+
+        <ol>
+            <li>Numerator column divided by Denominator column</li>
+
+            <li>Numerator column divided by the constant</li>
+
+            <li>Numerator column multiplied by the constant</li>
+
+            <li>Numerator column plus the denominator column</li>
+
+            <li>Numerator column minus the denominator column</li>
+        </ol>
+    </li>
+
+    <li>Constant can be any number for use in the calculations</li>
+
+    <li>Format type allows the output of the calculation to be expressed as either a percentage or a number.</li>
+</ul>
+
+<p>Hitting the Enter Information button adds the column to the report definition. It should then show in the list of defined columns and a blank form for entering a new column definition. If a column is no longer required the list of column definitions shown has a link that allows it to be deleted.</p>
+
+<p></p>
+
+<p>The column number itself is a link to modify the definition of the column. The definition shows in the input form for alternation as necessary.</p>
+
+<p>Clicking the link to maintain report headers shows the list of defined reports for modification or running. To run the report simply click on the Make PDF Report link.</p>
+
+<p>These sales analysis reports have to look at a lot of information (and the reports are generated dynamically) as a result, they can take a minute or so to run on large databases. However, the design of the data has been done very carefully to ensure that reports generate dramatically faster than many such analysis engines.</p>
+
+<p>It may be worth an example to create a report to show the sales value and gross profit for each sales area and each salesman that sells in this area:</p>
+
+<p>Receivables -&gt;Inquiries & Reports -&gt; Sales Analysis Reports</p>
+
+<p>Under Define a New Report - Report Heading<br>
+Enter a heading "Sales By Area and Rep"<br></p>
+
+<p>Select Sales Area for "Group By 1" then enter 0 in the "From" box - since all sales area codes will be greater than 0 and then in the "To" box enter "ZZZZZ" - hopefully the sales area codes you have defined will fall between 0 and ZZZZZ - if you just want a single area then enter the area code you want in both the "From" and the "To" boxes.</p>
+
+<p>Select "Sales Person" for "Group By 2" then enter 0 in the "From" box - since all sales people codes will be greater than 0 and then in the "To" box enter "ZZZZZ" - hopefully the sales rep codes you have defined will fall between 0 and ZZZZZ - if you just want a single rep. then enter the rep code you want in both the "From" and the "To" boxes.</p>
+
+<p>Click on enter information to commit this report to the database.</p>
+
+<p>The list of reports will show with our new report "Sales By Area and Rep" - click on the link to define columns for this report.</p>
+
+<p>Enter column 1 in the column number<br>
+Heading 1 enter - "sales value" - this is the top row of the column heading<br>
+Heading 2 enter - "January 08" this is the second row of the column heading<br></p>
+
+<p>Now look up the period number that January 08 is in and enter the period number in both the "From period" and the "To period" if you wanted to show a range of periods sales value you could choose any range - where the to period is before the from period! Since we want the display the sales value for January we need to Select the "Net Sales Value" in the "Data to Show" select box - the column can contain any of the data selections in that box. The Gross Value option is the sales value before on invoice discounts are taken into account - in most circumstances you will want the net sales value.&lt;&lt;/p&gt;</p>
+
+<p>The budget or actual box needs to be changed from budget to actual. If you want to compare against budgeted amounts then the sales budgets need to be imported. (there is currently no user interface to enter budgeted manually).</p>
+
+<p>Click Enter information and the single column definition will show at the top of the page and new empty fields for adding a new column.</p>
+
+<p>To create another column for the gross margin for January - same as above - but entering as column 2 and changing the heading text from Sales Value to Gross Profit - same period range. This time select "Gross Profit" in the "Data To Show" and "Actual" for the Budget or Actual field. Click Enter Information again to accept the 2nd column - the two defined columns should show on screen.</p>
+
+<p>Now to run the report click on the "Maintain Report Headers" link and look down the list of defined reports to find the "Sales by Area and Rep" report and click on the link to "Make PDF Report" - the report will run and a pdf will be displayed...</p>
+
+<p>======= It may be worth an example to create a report to show the sales value and gross profit for each sales area and each salesman that sells in this area:</p>
+
+<p>Receivables -&gt;Inquiries & Reports -&gt; Sales Analysis Reports</p>
+
+<p>Under Define a New Report - Report Heading<br>
+Enter a heading "Sales By Area and Rep"<br></p>
+
+<p>Select Sales Area for "Group By 1" then enter 0 in the "From" box - since all sales area codes will be greater than 0 and then in the "To" box enter "ZZZZZ" - hopefully the sales area codes you have defined will fall between 0 and ZZZZZ - if you just want a single area then enter the area code you want in both the "From" and the "To" boxes.</p>
+
+<p>Select "Sales Person" for "Group By 2" then enter 0 in the "From" box - since all sales people codes will be greater than 0 and then in the "To" box enter "ZZZZZ" - hopefully the sales rep codes you have defined will fall between 0 and ZZZZZ - if you just want a single rep. then enter the rep code you want in both the "From" and the "To" boxes.</p>
+
+<p>Click on enter information to commit this report to the database.</p>
+
+<p>The list of reports will show with our new report "Sales By Area and Rep" - click on the link to define columns for this report.</p>
+
+<p>Enter column 1 in the column number<br>
+Heading 1 enter - "sales value" - this is the top row of the column heading<br>
+Heading 2 enter - "January 08" this is the second row of the column heading<br></p>
+
+<p>Now look up the period number that January 08 is in and enter the period number in both the "From period" and the "To period" if you wanted to show a range of periods sales value you could choose any range - where the to period is before the from period! Since we want the display the sales value for January we need to Select the "Net Sales Value" in the "Data to Show" select box - the column can contain any of the data selections in that box. The Gross Value option is the sales value before on invoice discounts are taken into account - in most circumstances you will want the net sales value.</p>
+
+<p>The budget or actual box needs to be changed from budget to actual. If you want to compare against budgeted amounts then the sales budgets need to be imported. (there is currently no user interface to enter budgeted manually).</p>
+
+<p>Click Enter information and the single column definition will show at the top of the page and new empty fields for adding a new column.</p>
+
+<p>To create another column for the gross margin for January - same as above - but entering as column 2 and changing the heading text from Sales Value to Gross Profit - same period range. This time select "Gross Profit" in the "Data To Show" and "Actual" for the Budget or Actual field. Click Enter Information again to accept the 2nd column - the two defined columns should show on screen.</p>
+
+<p>Now to run the report click on the "Maintain Report Headers" link and look down the list of defined reports to find the "Sales by Area and Rep" report and click on the link to "Make PDF Report" - the report will run and a pdf will be displayed...</p>
+
+<h4>Calculated Fields Example</h4>
+
+<p>To take an example where we have a column 1 that is the sales value in January 2008 and column 2 that was the sales value for January 2007 - we wish to have a 3rd column that shows the % of last year that this years sales represents.</p>
+
+<p>To define column 3: Enter the column number - 3 and the headings for the column - % Increase - On Last Year then select calculation - Yes then hit the Enter Information Button - the form now shows the "Numerator column #" field and the "Denominator column #" .</p>
+
+<p>This year's sales should be the numerator column - column 1 - enter 1 in this field. The denominator column 2.</p>The calculation type should be numerator divided by denominator. There are other options available also.
+<p>
+
+<p>The format for this calculation should be as a percentage.</p>
+
+<h4>Automating Sales Reports</h4>
+
+<p>Having created reports it is possible to email sales reports to defined recipients. A script called MailSalesReport.php is a template for doing this. There are no links to this script and no security level is set up for it. All that is required is to save this script to another file named anything with an extension of .php under the same directory as the other scripts.</p>
+
+<p>This script will need to be edited with the email addresses of the people to receive the report and the reportID - the system generated report number to be run. The lines to edit are:</p>
+
+<p>/*The Sales report to send */<br>
+$ReportID = 4;<br></p>
+
+<p>/*The people to receive the emailed report */<br>
+$Recipients = array('"Root" ','"some one else" ');<br></p>
+
+<p>The lines surrounded by /* and */ are comments.</p>
+
+<p>Once edited to the ReportID or choice and the Recipients all entered the file should be saved.</p>
+
+<p>To schedule the report to run an entry in crontab under a linux installation that would send the report at 0:0 each week day (assuming wget is installed in /usr/bin/wget and that the web server is on the same machine and the new script is called DailySalesReport.php) would be:</p>
+
+<p></p>
+
+<p># Scheduled email of a daily sales report</p>
+
+<p>0 0 * * 2-5 root /usr/bin/wget http://localhost/web-erp/DailySalesReport.php</p>
+
+<p>since the page has no output - it would be pointless running it in a web browser although it would initiate another email to the defined recipients.</p>
+
+<p>A similar template script is available called MailSalesReport_csv.php that mails the comma separated values file for a ReportID to the Recipients defined in the script in just the same way as MailSalesReport.php script above.</p>
+
+<p>A more elegant solution to automatic emailing of sales analysis reports is available using the report_runner.php script this script can be run from a shell or directly from cron and takes command line parameters. This has the advantage instead of hardcoding a number or scripts this script can be run with the paratmers below:</p>
+
+<p>-r reportnumber (the number of the webERP report)<br>
+-n reportname (the name you want to give the report)<br>
+-e emailaddress[;emailaddress;emailaddres...] (who you want to send it to)<br>
+[-t reporttext ] (some words you want to send with the report-optional)<br>
+[ -H weberpHOME] (the home directory for weberp - or edit the php file)</p>
+
+<p><!-- Help End: SalesAnalRepts --></p>

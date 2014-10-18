@@ -1,0 +1,18 @@
+
+<a id="Currencies"><h1>Currencies</h1></a>
+<p>
+Any number of currencies can be defined in webERP. Every currency that is transacted with either in sales (AR) or purchasing (AP) needs to be defined in the system. To define currencies go to the Setup tab -&gt; General -&gt; Currency Maintenance. Only a few fields are required to be completed for each currency defined:</p>
+
+<ul>
+    <li>The ISO 4217 code for the currency - this is the international standard 3 character code that is used worldwide to represent the currency. If the code entered exists then it is possible for webERP to retrieve exchange rates from either the European Central Bank or Oanda.com, if there is no rate maintained for the currency at the ECB. webERP is capable of updating exchange rates daily from the ECB if set to do so under Setup-&gt;Configuration -&gt;Auto Update Exchange Rates Daily. If this is set to yes, then when the first user logs in for the day the exchange rates are updated automatically. If it is set to no then exchange rates will only be updated if the user does so manually.</li>
+
+    <li>The name of the currency can be any description that describes the currency</li>
+
+    <li>The country of the currency can be entered</li>
+
+    <li>The name of 100th of a single unit of the currency can be entered. e.g. pence for GBP or cents for USD</li>
+
+    <li>The rate. This must be the number of the local currency that can be purchased with one of this currency.</li>
+</ul>
+<p>A utility is also provided which can produce a graph of the movement of any of the defined currencies against the functional currency
+</p><!-- Help End: Currencies -->

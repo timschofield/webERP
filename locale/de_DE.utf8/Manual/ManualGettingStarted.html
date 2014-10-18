@@ -1,0 +1,262 @@
+<br /><br />
+<a name="GettingStarted"><font size="+3"><b>Inbetriebnahme</b></font></a>
+<br /><br />
+<font size="+2"><b>Voraussetzungen</b></font>
+<br /><br />
+<ul>
+<li>PHP größer als 4.2. Weil PHP als CGI-Modul für dem MS Internet Information Server oder als Modul für Apache sowohl unter Windows als auch Unix/Linux zur Verfügung steht, kann man das System als betriebssystemunabhängig bezeichnen. Das System wurde sowohl unter Windows (NT und XP) als auch unter Linux getestet.</li>
+<li>MySQL größer als Version 4, mit der Transaktionsunterstützung von InnoDB, außerdem werden Fremdschlüssel-Beschränkungen gefordert, die seit 2003 zu InnoDB hinzugekommen sind. InnoDB wurde 2001 für MySQL eingeführt und bietet eine ähnliche Funktionalität wie ORACLE - Sperren auf Datensatzebene und Datenbanktransaktionen bei vergleichbarer Geschwindigkeit. (Das System könnte auch mit ORACLE oder anderen Datenbanksystemen eingesetzt werden, bei relativ geringfügigen Konfigurationen.) Eine Beispielkonfigurationsdatei my.cnf (normalerweise unter /usr/local/mysql/var) ist in der MySQL-Dokumentation enthalten, um die typischen Einstellungen für die InnoDB-Konfiguration zu zeigen. Die erwartete Größe für die Datendatei ist nützlich, wobei InnoDB eine selbsterweiternde Datendatei anlegen kann und dies seit MySQL 4 auch standardmäßig tut. Seit Version 2.8 sind alle Tabellen als InnoDB-Tabellen angelegt.</li>
+<li>Ein Webserver. Apache, die Software die nahezu 70% aller Webseiten ins Netz stellt, wird empfohlen, aber die meisten Webserver werden von PHP in verschiedener Weise unterstützt und die gängigste Wahl unter Windows ist sicherlich der Microsoft IIS.</li>
+<li>Wenn der Webserver im Internet erreichbar ist und nicht ausschließlich im internen Firmennetzwerk, werden verschlüsselte Verbindungen notwendig. Am einfachsten können die Module openssl und mod-ssl für Apache verwendet werden, um die Daten in verschlüsselter Form zu übertragen.</li>
+</ul>
+Die Nutzung des Apache mit mod_ssl und openssl Secure-Socket-Layer ist sinnvoll, wenn die Daten über das Internet übertragen werden und nicht nur im internen Firmen-LAN.<br />
+Sie bekommen PHP und MySQL an anderer Stelle mit sehr guter Anleitung, vergleichen Sie
+<!-- Using apache with mod_ssl and openssl secure sockets makes sense and where there is any data transmitted over the internet and not just over a LAN.
+
+Getting PHP and MySQL installed are well covered elsewhere - see the following links: -->
+<br /><br />
+<a href="http://logidac.com/apache/apache-install-rpm.phtml">http://logidac.com/apache/apache-install-rpm.phtml</a>
+<br /><br />
+<a href="http://www.linux-sottises.net/en_apache_install.php">http://www.linux-sottises.net/en_apache_install.php</a>
+<br /><br />
+Es ist wichtig, dass in der php.ini der Parameter session.autostart = 0 gesetzt ist. Einige rpm-Distributionen haben diesen Wert auf 1 gesetzt, mit dem Sie keine Klassen im PHP-Code verwenden können. Klassen werden aber im System weit verwendet und das System startet Sessions, wann immer sie benötigt werden - es ist sicher, diesen Parameter auf 0 zu setzen.
+<br /><br />
+Die Hauptprobleme bei der Installation von PHP scheinen zu sein:
+<ol>
+<li>Einige für Windows deklarierte Installationen kommen mit einer Einstellung für session.save_path = /tmp, das ist natürlich für ein Windows-Verzeichnis unangebracht und sollte auf C:\temp oder etwas passenderes geändert werden.</li>
+<li>Wenn das System bei Ihrem Provider auf einer Rechnergruppe gehostet wird, muss das als ein permanentes Verzeichnis angegeben werden, andernfalls finden von Seite zu Seite wechselnde Server die Anmeldeinformationen nicht. Es gibt in der config.php eine Einstellung $SessionSavePath, diese sollte in diesen Fällen entsprechend gesetzt werden.</li>
+<li>Aus unklaren Gründen sind manche Server nicht in der Lage, über $RootPath = dirname($_SERVER['PHP_SELF']); automatisch das korrekte Verzeichnis zu ermitteln. Das äußert sich darin, dass das System nicht in der Lage ist, die Seiten-Links für die unterschiedlichen Systemfunktionen zu finden. Wenn das geschieht, kann die Variable $RootPath direkt auf den Pfad gesetzt werden, in dem die Skripte liegen.</li>
+</ol>
+<br /><br />
+Das System könnte mit vielen anderen Datenbankservern genutzt werden, aber es ist auf MySQL entwickelt und getestet worden. Eine ConnectDB.inc-Datei für Postgres ist mit beigefügt und es gibt eine Einstellung in der config.php ($dbtype), die es dem Systemadministrator erlaubt, eine Postrgres-Datenbank zu verwenden, wenn ihm diese lieber ist. Unabhängige Benchmarks zeigen, dass MySQL für die allgemeinsten Datenbankaufgaben eines der schnellsten Systeme ist. Es ist insbesondere schnell beim Aufbau der Verbindungen, und weil es in der Natur des Web liegt, dass für jede Seite eine neue Verbindung erstellt wird, macht das MySQL für Web-Anwendungen besonders tauglich.
+<br /><br />
+Wenn die Integration mit einem Knowledge-Management-System gewünscht wird, ist die Installation von WackoWiki oder MediaWiki auf dem selben Webserver erforderlich. Dies ist völlig optional, wird aber als eine Möglichkeit, freizügig Informationen im Unternehmen auszutauschen, sehr empfohlen.  http://wackowiki.com/WackoDownload/InEnglish?v=xlv
+<br /><br />
+Die ftp-Bibliothek für PHP wird nur benötigt, falls Sie EDIFACT-Nachrichten per ftp-Upload versenden wollen, wie beispielsweise Auftragsdaten an ein "Radio Beacon"-Datenaustauschsystem.
+<br /><br />
+Angenommen, ein Webserver mit PHP-Funktion ist in Betrieb und ein MySQL-Server auf dem gleichen Server oder im Netzwerk verfügbar, besteht eine Neuinstallation aus den folgenden Schritten:
+<br /><br />
+<ul>
+<li>Kopieren aller PHP-Skripte und Include-Dateien in ein Verzeichnis unterhalb des Dokumenten-Wurzelverzeichnisses des Webservers</li>
+<li>Anlegen der Datenbank und dem Einspielen der Ausgangsdaten</li>
+<li>Bearbeiten der config.php mit Informationen zur Datenbankverbindung und anderen notwendigen Angaben</li>
+<li>erstmaliges Anmelden am System</li>
+<li>Einstellen der Systemparameter und</li>
+<li>Einstellen der Unternehmensangaben im System</li>
+</ul>
+<font size="+2"><b>Die PHP-Scripte kopieren</b></font>
+<br /><br />
+Alle Dateien des Archives werden in ein Verzeichnis unterhalb des Dokumenten-Wurzelverzeichnisses des Webservers entpackt. Dieses kann je nach Installation variieren:
+<br /><br />
+/usr/local/httpd/htdocs/
+<br /><br />
+ist das normale Apache-Rootverzeichnis  unter SuSE. Normalerweise ist das Apache-Dokumentenverzeichnis "htdocs" benannt
+<br /><br />
+Kopieren Sie das Archiv in dieses Verzeichnis und entpacken Sie dann das Archiv, das das weberp-Verzeichnis im Root-Verzeichnis anlegt und alle benötigten Dateien in diesem Verzeichnis ablegt.
+<br /><br />
+<font size="+2"><b>Die Datenbank anlegen</b></font>
+<br /><br />
+Diese Information unterstellt, dass Sie einen MySQL-Datenbankserver verwenden. Es ist zwar eine SQL-Dump-Datei für Postgres ebenso enthalten, diese Anleitung bezieht sich aber auf das für MySQL Nötige.
+<br /><br />
+Sie müssen den Benutzernamen und das Passwort für den MySQL-Server kennen. Wenn Sie selbst noch keine vergeben haben, ist der Standard
+<br /><br />
+Benutzer root
+<br />
+Passwort ""
+<br /><br />
+ACHTUNG: Sie sollten dieses Benutzerkonto nicht verwenden, sondern einen anderen Benutzer für die MySQL-Installation anlegen und auch ein Passwort vergeben.
+<br /><br />
+Alle Anleitungen hier beziehen sich auf die Kommandozeilen-Eingabe, die mit MySQL ausgeliefert wird. Wenn Sie das unter Windows ausführen, muss ein DOS-Fenster geöffnet werden (unter XP oder Win2K: Start, Ausführen..., cmd eingeben und Enter oder OK drücken). Die ausführbare Datei mysql.exe finden Sie normalerweise unter C:\mysql\bin\mysql.exe, die unten angegebenen Optionen sollten wie erforderlich angefügt werden.
+<br /><br />
+Aus dem MySQL-Handbuch (bearbeitet):
+<br /><br />
+Der MySQL-root-Benutzer wird als Superuser angelegt, der alles tun darf. Verbindungen müssen vom lokalen Host aus gemacht werden. HINWEIS: Das anfängliche root-Passwort ist leer, daher kann sich jeder als root ohne Passwort verbinden und hat alle Berechtigungen. Weil Ihre Installation anfangs weit offen ist, sollten Sie als eins der ersten Dinge ein Passwort für den MySQL-root-Benutzer anlegen. Das können Sie wie folgt tun (beachten Sie, dass das Passwort mit der PASSWORD()-Funktion angegeben wird):
+<br /><br />
+Ab MySQL-Version 3.22 können Sie das SET PASSWORD-Statement benutzen:
+<br /><br />
+shell&gt; mysql -u root mysql
+<br />
+mysql&gt; SET PASSWORD FOR root=PASSWORD('neues_passwort');
+<br /><br />
+
+wobei 'neues_passwort' das Passwort beschreibt, dass Sie sich für den Benutzer root ausgedacht haben.
+<br /><br />
+Auch aus dem MySQL-Handbuch (bearbeitet):
+<br /><br />
+ Sobald das root-Passwort gesetzt wurde, müssen Sie in der Folge immer das Passwort angeben, wenn Sie sich als root mit dem Server verbinden.  Sie fügen neue Benutzer mit GRANT-Statements hinzu:
+<!-- Also from the MySQL manual (edited):
+" Also, if you have changed the root user password, you must specify it for the mysql commands below.
+You can add new users by issuing GRANT statements: -->
+<br /><br />
+shell&gt; mysql --user=root -p 'new_password' mysql
+<br />
+mysql&gt; GRANT ALL PRIVILEGES ON *.* TO weberp@localhost IDENTIFIED BY 'ein_passwort' WITH GRANT OPTION;"
+<br /><br />
+wobei 'ein_passwort' das Passwort Ihrer Wahl für den neuen Benutzer 'weberp' ist. Beachten Sie, dass dieser Benutzer weberp nur vom lokalen Rechner an der Datenbank anmelden kann, so dass, wenn der Webserver auf einen anderen Rechner installiert ist, Sie Berechtigungen zum Anmelden vom einem anderen Computer vergeben müssen. Beachten Sie dazu das <a href="http://dev.mysql.com/doc/refman/4.0/de/adding-users.html?ff=nopfpls" target="_blank">MySQL-Handbuch</a>.
+<br /><br />
+InnoDB-Tabellen müssen für den MySQL-Server erlaubt sein. Diese Tabellen erlauben Datenbanktransaktionen, die eine kritische Komponente einer ERP-Software sind. Für InnoDB-Tabellen müssen eine Reihe von Parametern in der my.cnf eingestellt sein. Es gibt einige Beispiele dazu im MySQL-Handbuch unter Tabellentypen / <a href="http://dev.mysql.com/doc/refman/4.0/de/innodb-start.html" target="_blank">InnoDB-Tabellen</a>
+<br /><br />
+Wenn Sie ein Benutzerkonto in MySQL eingerichtet und InnoDB-Tabellen erlaubt haben, ist alles was Sie noch tun müssen, eines der SQL-Skripte auszuführen.
+<br /><br />
+Zwei SQL-Skripte werden mitgeliefert:
+<br /><br />
+<ol>
+<li>weberp-demo.sql Das sind einige Demo-Daten mit einer eingerichteten fiktiven Firma, so dass Sie Vorgänge ausprobieren können und sehen, wie das System funktioniert.</li>
+<li>weberp-new.sql Dieses Skript hat nur die notwendigen Grunddaten, um ein neues Unternehmenssystem anzufangen. Wenn Sie Ihre Firma in webERP einrichten wollen, dann ist dieses Skript zu verwenden. Es legt eine Datenbank 'weberp' an und füllt sie nur mit den nötigsten  Daten zum Anfangen.</li>
+</ol>
+<br />
+Die Dateien weberp-demo.sql und weberp-new.sql befinden sich im Unterverzeichnis ./sql/mysql. Wechseln Sie zuerst in das Verzeichnis, in dem die Skripte liegen und geben Sie ein:
+<br /><br />
+shell&gt; mysql --user=weberp --password='some_pass' &lt; /path_to_the_sql_script/weberp-demo.sql
+<br /><br />
+oder
+<br /><br />
+shell&gt; mysql --user=weberp --password='some_pass' &lt; /path_to_the_sql_script/weberp-new.sql
+<br /><br />
+wobei Sie den hier eingegebenen Benutzernamen weberp auf den Namen ändern, den Sie in MySQL angelegt haben und das Passwort, das hier mit 'ein_passwort' angegeben ist, durch das entsprechende Passwort für Ihren Benutzer ersetzen. Auch wird der pfad_zum_sql_skript durch etwas wie /usr/local/apache/htdocs/web-erp/sql/mysql/ ersetzt.
+<br /><br />
+<font size="+2"><b>Die Datei config.php bearbeiten</b></font>
+<br /><br />
+Die Datei config.php enthält eine Reihe von benutzerdefinierten Variablen, die festlegen, wie sich das System verhält. Kritisch ist, dass sie den Computernamen, Benutzernamen und Passwort der Datenbankverbindung enthält, die für die Verbindung mit dem Server erforderlich ist. Es gibt hier auch eine Option zu wählen, welche Art von Datenbankserver zu verwenden ist. Gegenwärtig gibt es hier nur die Optionen mysql und postgres. Es ist keine weitere Arbeit möglich, solange Sie nicht die Datei mit den Angaben versorgt haben.
+<br /><br />
+Der übliche Inhalt der Datei config.php folgt und muss mit einem Editor Ihrer Wahl bearbeitet und in dem Verzeichnis abgespeichert werden, in dem auch die Skripte befinden. Weil das System ständig weiterentwickelt wird, können sich auch einige Inhalte geändert haben, seitdem diese Anleitung geschrieben wurde.
+<br /><br />
+============================================<br />
+beginning of config.php<br />
+============================================<br />
+&lt;?php<br />
+<br />
+/* $Revision: 1.6 $<br />
+config.php<br />
+Web-ERP - http://weberp.sourceforge.net<br />
+by Logic Works Ltd<br />
+*/<br />
+<br />
+// User configurable variables<br />
+//---------------------------------------------------<br />
+<br />
+//DefaultLanguage to use for the login screen and the setup of new users - the users language selection will override<br />
+$DefaultLanguage ='en_GB';<br />
+<br />
+// Whether to display the demo login and password or not on the login screen<br />
+$AllowDemoMode = True;<br />
+<br />
+// webERP version<br />
+$Version = '3.04';<br />
+<br />
+// The timezone of the business - this allows the possibility of having<br />
+// the web-server on a overseas machine but record local time<br />
+// this is not necessary if you have your own server locally<br />
+// putenv('TZ=Europe/London');<br />
+// putenv('Australia/Melbourne');<br />
+// putenv('Australia/Sydney');<br />
+// putenv('TZ=Pacific/Auckland');<br />
+<br />
+// Connection information for the database<br />
+// $host is the computer ip address or name where the database is located<br />
+// assuming that the web server is also the sql server<br />
+$host = 'localhost';<br />
+<br />
+//The type of db server being used - currently only postgres or mysql<br />
+$DBType = 'mysql';<br />
+//$DBType = 'postgres';<br />
+//$DBType = 'mysql';<br />
+<br />
+// sql user &amp; password<br />
+$DBUser = 'weberp_db_user';<br />
+$DBPassword = 'weberp_db_pwd';<br />
+<br />
+//It would probably be inappropriate to allow selection of the company in a hosted environment so this option can be turned off with this parameter<br />
+$AllowCompanySelectionBox = true;<br />
+<br />
+//If $AllowCompanySelectionBox = false above then the $DefaultCompany string is entered in the login screen as a default - otherwise the user is expected to know the name of the company to log into.<br />
+$DefaultCompany = 'weberp';<br />
+<br />
+//The maximum time that a login session can be idle before automatic logout<br />
+//time is in seconds  3600 seconds in an hour<br />
+$SessionLifeTime = 3600;<br />
+<br />
+//The maximum time that a script can execute for before the web-server should terminate it<br />
+$MaximumExecutionTime =120;<br />
+<br />
+//The path to which session files should be stored in the server - useful for some multi-host web servers<br />
+//this can be left commented out<br />
+//$SessionSavePath = '/tmp';<br />
+<br />
+// which encryption function should be used<br />
+//$CryptFunction = "md5"; // MD5 Hash<br />
+$CryptFunction = "sha1"; // SHA1 Hash<br />
+//$CryptFunction = ""; // Plain Text<br />
+<br />
+<br />
+<br />
+// END OF USER CONFIGURABLE VARIABLES<br />
+<br />
+<br />
+<br />
+/*The $RootPath is used in most scripts to tell the script the installation details of the files.<br />
+<br />
+NOTE: In some windows installation this command doesn't work and the administrator must set this to the path of the installation manually:
+eg. if the files are under the web server root directory then rootpath =''; if they are under weberp then weberp is the rootpath - notice no additional slashes are necessary.<br />
+*/<br />
+<br />
+$RootPath = dirname($_SERVER['PHP_SELF']);<br />
+if ($RootPath == "/" OR $RootPath == "\\") {<br />
+	$RootPath = "";<br />
+}<br />
+//$RootPath = '/web-erp';<br />
+<br />
+/* Report all errors except E_NOTICE
+This is the default value set in php.ini for most installations but just to be sure it is forced here
+turning on NOTICES destroys things */<br />
+<br />
+error_reporting (E_ALL &amp; ~E_NOTICE);<br />
+<br />
+/*Make sure there is nothing - not even spaces after this last ?&gt; */
+?&gt;<br />
+============================================<br />
+end of config.php<br />
+============================================<br />
+<br />
+<br /><br />
+<font size="+2"><b>Erstmalige Anmeldung</b></font>
+<br /><br />
+Öffnen Sie ein Browserfenster, das mit dem Netzwerk verbunden ist, in dem auch der Webserver verbunden ist, geben Sie die URL für das Serververzeichnis ein, in dem webERP installiert ist. Wenn der Browser auf dem selben Rechner geöffnet wird, auf dem auch der Webserver läuft, dann vielleicht:
+<br /><br />
+http://localhost/web-erp/index.php
+<br /><br />
+
+Geben Sie den Benutzernamen 'demo' ein,
+<br />
+
+Passwort 'weberp'
+<br /><br />
+(die Anführungszeichen werden nicht benötigt). Sie können im Hauptmenü unter Einstellungen &rarr; Allgemeines weitere Benutzerstämme anlegen und das Passwort ändern. (Benutzer können ihr eigenes Passwort jederzeit ändern, indem sie auf ihren Benutzernamen links oben am Bildschirm klicken. Seien Sie vorsichtig, nicht bereits den demo-Benutzer zu löschen, solange Sie noch keinen neuen Systemadministrator angelegt haben. Wenn keine Benutzer angelegt sind, werden Sie das nächste mal, wenn Sie versuchen sich anzumelden, nicht dazu in der Lage sein.
+<br /><br />
+Es ist wichtig, für den MySQL-Benutzer root ein Passwort einzustellen, ansonsten könnte jeder die Tabelle WWW_Users ändern und sich Zugriff auf die internen Unternehmensdaten verschaffen.
+<br /><br />
+<font size="+2"><b>Konfigurationssparameter</b></font>
+<br /><br />
+In den Versionen vor 3.0 wurden die Konfigurationsparameter direkt in die Datei config.php eingetragen, wodurch diese manuell gepflegt werden mussten. Seit Version 3.0 sind diese in der Datenbank gespeichert und es gibt ein Bild Systemkonfiguration, über welches die systemweiten Einstellungen gepflegt werden. Dies erlaubt Versionsänderungen, ohne dass jedes mal neu die config.php bearbeitet werden muss. Sie erreichen das Bild Systemeinstellungen im Hauptmenü unter Einstellungen &rarr; Allgemeines. Jede dieser Einstellungen sollte genau geprüft werden, Hinweise an der Seite beschreiben die Wirkungsweise jeder Variablen.
+<br /><br />
+<font size="+2"><b>Layouts und GUI-Anpassungen</b></font>
+<br /><br />
+Oftmals spricht das optische Erscheinungsbild nicht jeden gleichermaßen an. Da es bei einer Rechnungswesen-Software zunächst einmal um die Funktionalität geht, spielt das Aussehen keine Rolle. Eine gewisse Flexibilität ist allerdings durch den Einsatz von Cascading-Style-Sheets (css) in Bezug auf Farbgestaltung und Schriftgrößen vorhanden.
+<br /><br />
+Die Benutzeroberfläche kann durch die Auswahl eines der vorhandenen vier Layouts ("silverwolf, "default", "professional" und "fresh") erzielt werden.
+<br /><br />
+Jeder Benutzer kann dabei seine eigene Auswahl im Bild Benutzereinstellungen vornehmen, dieses wird erreicht, indem auf den Benutzernamen links oben auf dem Bildschirm geklickt wird.
+<br /><br />
+Es können auch neue Layouts angelegt werden, zu diesem Zweck erstellt man zunächst eine Kopie des Vorlagelayouts unter einem neuen Namen. Die Layouts sind im Verzeichnis /css/ unter dem web-erp-Ordner abgelegt. Jedes Layout hat dort ein eigenes Unterverzeichnis. Nachdem man das Vorlageverzeichnis als - sagen wir 'Neues-Layout' kopiert hat, können die darin befindlichen Dateien default.css und login.css wie gewünscht angepasst werden. Die neuen Layout-Verzeichisse werden automatisch im Bildschirm Benutzereinstellungen zur Auswahl eingeblendet.
+<br /><br />
+
+<!-- Help Begin: WWW_Users -->
+
+<font size="+2"><b>Benutzer einrichten</b></font>
+<br /><br />
+Sie haben sich als Benutzer demo angemeldet. Zunächst sollte ein neuer Benutzer angelegt werden, der die Berechtigungen eines Systemverwalters erhält, und der Benutzer demo sollte gelöscht werden. Vom Hauptmenü wählen Sie Einstellungen &rarr; Allgemeines den Punkt Benutzerstammsätze aus. Die angelegten Benutzer werden in einer Liste angezeigt. Anmeldenamen müssen mindestens 5 Zeichen lang sein, die Länge ist auf 20 Zeichen begrenzt. Das Passwort muss ebenfalls mindestens 5 Zeichen umfassen und darf den Anmeldenamen nicht enthalten. Die Erfassung des vollen Namens, der Telefonnummer und anderer Angaben ist nicht notwendig. Die ausgewählte Zugriffsebene ist wichtig, weil sie bestlegt, auf welche Bildschirme der Benuzter zugreifen darf. In jedem Unternehmen, das dem Benutzer nicht selbst gehört, ist es üblich, sind die Verantwortlichkeiten unter dem Personal aufgeteilt, so dass grundsätzlich keiner einen Gesamtprozess allein bearbeitet. Bei kleineren Unternehmen mag so etwas unpraktisch sein, webERP ist flexibel genug, dass die Benutzerberechtigungen fein eingestellt werden können. Weitere Informationen finden Sie im Abschnitt Sicherheitskonzept.
+<br /><br />
+So wie der Zugriff auf Seiten beschränkt werden kann, gibt es auch eine gewisse Flexibilität zu den Menüfunktionen, die für den Benutzer verfügbar sind. Der Systemverwalter kann festlegen, welche Bereiche des Hauptmenüs für einen Benutzer aktiv und damit zugänglich sind.
+<br /><br />
+Es ist auch die Möglichkeit vorgesehen, dass Kunden ein eigenes Benutzerkonto eingerichtet bekommen. Sie sind dabei auf das Anzeigen ihres eigenen Debitorenkontos, den Nachdruck ihrer Rechnungen und die Eingaben neuer Kundenaufträge eingeschränkt. Kunden-Logins erlauben es nicht, dass die Preisgestaltung bei den Kundenaufträgen geändert werden kann. Damit das gewährleistet wird, muss die Zugriffsebene eines solchen Benutzers auf "Kundenlogin nur eigene Aufträge" (Customer Log On Only) gesetzt werden und die Sicherheitseinstellungen für diese Benutzerrolle dürfen nicht geändert werden, d. h. sie dürfen nur die Berechtigung 1 erhalten. Zusätzlich müssen die Kundennummer und die Nummer der Niederlassung im Stammsatz vermerkt werden.
+<!-- Help End: WWW_Users -->

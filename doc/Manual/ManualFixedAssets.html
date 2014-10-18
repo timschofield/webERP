@@ -1,0 +1,86 @@
+<h1><a id="FixedAssets">Fixed Assets Manager</a></h1>
+
+<div id="manualpage">
+    <h2><a id="FixedAssetOverview">Features Overview</a></h2>
+
+    <p>The Fixed Assets Manager module allows the recording of individual fixed assets into the database and integration back to the webERP General Ledger.</p>
+
+    <ul>
+        <li>Assets are assigned a unique id number.</li>
+
+        <li>Any number of fixed asset categories can be defined e.g. Plant, Equipment, Buildings etc. </li>
+
+        <li>Assets can be depreciated using either straight line or diminishing value depreciation methods.</li>
+
+        <li>Each asset can have it's own depreciation rate.</li>
+
+        <li>Any number of fixed asset locations can be defined. Assets can only belong to one location. </li>
+
+        <li>Assets can be listed by category and location so they can be readily identified in a fixed asset audit.</li>
+
+        <li>Depreciation calculation and posting run checks if it has been previously run, and defaults the run date to avoid duplicated depreciation runs.</li>
+
+        <li>A transaction log of depreciation, additions and disposals is maintained by the system.</li>
+
+        <li>Full fixed asset schedule of any date period range is possible.</li>
+
+        <li>Fixed asset general ledger posting is performed based on the GL accounts specified in any number of user defined, fixed asset categories.</li>
+
+        <li>Fixed asset maintenance tasks can be logged and assigned to an individual with a manager. These tasks can then be used to generate a maintenance schedules.</li>
+    </ul>
+    <div class="floatright">
+        <a class="minitext" href="#top">⬆ Top</a>
+    </div>
+    <h2><a id="CreatingAnAsset">Creating a New Fixed Asset</a></h2>
+
+    <p>The sequence of events in creating a new fixed asset is as follows:</p>
+
+    <ul>
+        <li><h3><a id="AssetCategories">Define Fixed Asset Categories</a></h3>Any number of fixed asset categories  are defined - from Fixed Asset Module -&gt; Fixed Asset Categories. These are the groupings of like assets e.g. Plant, IT equipment, Buildings, Land etc. The general ledger accounts for depreciation, fixed asset cost and accumulated depreciation are all defined for all assets of the same category at this level.</li>
+
+        <li><h3><a id="AssetLocations">Define Fixed Asset Locations</a></h3>Fixed asset locations must be defined. These can be in a hierarchical manner e.g. "Head Office" may have a sub-location of "Server Room".</li>
+
+        <li><h3><a id="AssetItems">Add Fixed Asset Items</a></h3>A fixed asset is created from the Fixed Assets module -&gt; Add Fixed Asset. This process allows the description and a long description to be recorded, together with the asset's serial number or barcode, the category of fixed asset it belongs to and it's location in the business. The depreciation method and rate is also specified. At this point there is no cost (nor accumulated depreciation)associated with the asset</li>
+
+        <li><h3>Purchase Orders For Fixed assets</h3>A purchase order is placed for the asset as a non-stock item. There is provision to enter the asset id of the asset into the purchase order. When the asset is received - the cost is posted to the general ledger account specified by the asset's category. It is also possible to add cost to existing assets in this way. Each cost added is recorded in the fixed asset transaction log so additions over a period can be identified easily.</li>
+
+        <li><h3><a id="AssetInvoices">Purchase an Item Directly With Supplier Invoice</a></h3>Instead of entering a purchase order with the asset specified directly it is possible to enter a purchase invoice directly allocating the charges to any number of fixed assets. The supplier invoice form allows entry against fixed assets directly. All assets created - but with no cost will show in a select box - any of these can be selected or if the asset id is known it can be entered manually. In this way it is possible to add to existing assets. Depreciation will calculate on the new total cost of the asset (or book value if DV depreciation is being used).</li>
+    </ul>
+    <div class="floatright">
+        <a class="minitext" href="#top">⬆ Top</a>
+    </div>
+    <h2><a id="AssetSelection">Selecting A Fixed Asset</a></h2>
+
+    <p>From the Main Menu -&gt; Assets Manager module tab -&gt; Select an Asset. There are options to select an asset category and asset location that results in display of assets for that selected category and location only. Alternatively, the asset code or any part of the description can be entered to display an asset. An asset can be selected from the resulting list by clicking on the required Asset Code button.</p>
+
+    <p> When an asset is selected, the details of the asset are displayed including the cost and accumulated depreciation with all entered transactions reflected. The cost and accumulated depreciation cannot be entered or altered manually. The asset cost is always be derived from the Accounts Payable module, and depreciation is automatically calculated. All other details of the asset can be modified as required when an asset is selected. These include description, serial number, barcode, category, location, depreciation type and rate.</p>
+
+    <h2><a id="AssetDepreciation">Fixed Asset Depreciation Run</a></h2>
+
+    <p>The depreciation run must be carried out monthly to create the general ledger journals for depreciation at the rates and depreciation methods defined for the assets. In addition to the general ledger journals a log of the depreciation transactions is also created. </p>
+    <p>The depreciation run checks the last month it was run, and defaults the date to run for the following month. In this way, every time the depreciation run is carried out it is self evident whether it has been run for the month under review or not. There is no functionality to reverse a depreciation run and this date check helps prevents duplicate runs.</p>
+
+    <h2><a id="AssetTransfer">Change Location of a Fixed Asset</a></h2>
+
+    <p>Assets can be transferred to a different location. This enables the company to keep track of the location of their assets. To do this select 'Change Asset Location' from the Transactions menu of the Asset Manager module. Then just select the new location of the asset and all reports will be updated with this new location.</p>
+
+
+    <h2>Fixed Asset Disposals</h2>
+
+    <p>To dispose of a fixed asset an invoice is raised for a fixed asset in the usual order entry screen. Instead of selecting a stock item, there is a button that allows a fixed asset to be selected. By selecting a fixed asset to be sold, the system creates a stock item for the fixed asset. When the sales order is confirmed for invoicing and if the debtors ledger is integrated into the general ledger then entries to dispose of the asset to the general ledger accounts defined in the fixed asset category of the asset are created. The fixed asset transaction is created for the disposal and the fixed asset updated to show the date it was disposed and the proceeds on the disposal.</p>
+
+    <h2><a id="AssetRegister">Fixed Asset Register</a></h2>
+
+    <p>The Fixed Asset Register screen requires the entry of a start date and an end date. The Fixed Asset Register output can produce a pdf report, comma separated values for importing into a spreadsheet (CSV), or html for display on screen. The Register shows, for any displayed asset, the cost brought forward at the start date, the total of any additions subsequent to the start date, the depreciation brought forward and the depreciation charged over the period, together with the carried forward cost, accumulated depreciation and net book value.</p><!-- Help End: Fixed Assets -->
+
+    <div class="floatright">
+        <a class="minitext" href="#top">⬆ Top</a>
+    </div>
+
+
+    <h2><a id="AssetMaintenance">Fixed Asset Maintenance</a></h2>
+
+    <p>Maintenance Task enables addition of maintenance tasks for any existing asset, with task description, person responsible, manager and days before due date. </p>
+    <p>The My Maintenance Schedule inquiry outputs a listing of all outstanding maintenance tasks in reverse due date order. From this Schedule tasks can also be marked as complete.</p>
+
+</div>

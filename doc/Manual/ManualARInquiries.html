@@ -1,0 +1,63 @@
+<!-- Help Begin: CustomerInquiry -->
+<a id="ARInquiries"><h1>Accounts Receivable Inquiries</h1></a>
+<h2>Customer Inquiries</h2>
+<p>
+Complete "drill down" inquiries are available to extract the full detail of transactions. The system maintains more data than many systems, preferring to minimise the use of consolidated or batch entries, in favour of the full detail of each transaction. The enquires can show the account history for a customer and from this inquiry it is possible to look at the details behind each transaction, from the detail of the transaction it is possible to look at the line items on the original invoice and which receipts paid the invoice. The original invoice or credit can be viewed directly from customer inquiries and the general ledger transactions that were created by the invoice, credit or receipt may also be inspected.</p>
+
+<h2><a id="CustomerInquiry">Customer Account Inquiries</a></h2>
+
+<p>From any page, click the "select customer" link. Having selected the customer all links applicable to the customer show. Among them the customer transactions inquiry.</p>
+
+<p>By default the inquiry screen shows only those transactions after a date six months ago. The default period can be modified by simple editing of the script CustomerInquiry.php. If transactions further back are required only occasionally and not by default - the date after which all transactions will show can be altered at will. When the screen opens the customer's account is shown in the currency of the customer. The aged analysis based on the customer's terms is displayed.</p>
+
+<p>If the transaction is an invoice or a credit note a magnifying glass icon shows on the same line as the transaction. A click on this magnifying glass then opens a new window showing the detail of the invoice or credit note.</p>
+
+<p>If the integration to the general ledger from accounts receivable - see the option to "Create GL entries for accounts receivable transactions" from the Company Preferences page under setup - then another link with the letters GL will show. This link shows a new page with the detail of the general ledger postings created by this transaction.</p>
+
+<p>If the transaction is a receipt or a credit note and the user has appropriate access privileges, a book icon shows. Clicking this icon takes the user to the page for allocating receipts and credits - if the receipt or credit is already allocated then the detail of how the receipt/credit was allocated is shown together with other invoices that could be used for allocating against. Invoices that have previously been allocated will not show.</p>
+
+<p>More (or less) history can be shown by changing the "Show all transactions after:</p>
+
+<p>" date - then clicking the refresh button. The balance on the customer's account should balance to the sum of the amounts outstanding. The amount outstanding is used to represent:</p>
+
+<ul>
+    <li>For Invoices, the amount which has not yet been settled by receipts or credit notes</li>
+    <li>For Receipts, the amount which has yet to be allocated (or matched off) against invoices.</li>
+</ul>
+<h3><a id="CustTransInquiry">Transaction Detail inquiries</a></h3>
+The detail of transactions can be inspected via one of two avenues:</p>
+
+<ul>
+    <li>From the Customer's Account inquiry - click on the magnifying glass or the GL link against the transaction required.</li>
+
+    <li>From the Transaction Enquires - from the Accounts Receivable tab, click on the magnifying glass to see the actual invoice or credit note.</li>
+</ul><!-- Help End: CustomerInquiry -->
+<!-- Help Begin: CustomerTransInquiry -->
+<h2><a id="ARTransInquiry">Customer Transaction Listing Options</a></h2>
+<p>
+This is accessed from the main menu, accounts receivable tab under the link "Transaction Inquiries".</p>
+<p>
+This inquiry allows transactions to be listed based on the selection of criteria on screen. The page allows listing of receipts, invoices or credit notes within any specified date range.</p>
++<p>
+This listing is shown on the screen and can of course be printed from the browser if necessary.
+<!-- Help End: CustomerTransInquiry -->
+ <!-- Help Begin: PrintCustTrans -->
+
+<h2><a id="WhereAllocated">Where Allocated Inquiry</a></h2>
+<p>To see how a particular transaction has been allocated, you should use the 'Where Allocated Inquiry' available from the Inquiry section of the Receivables module. The type of transaction can be selected, and then you should enter the number of the transaction you are interested in. This number can be found in the <a id="CustomerInquiry">Customer Account inquiries</a> screen. The resulting inquiry will show the details of any allocations made against this transaction. To print this inquiry, just click on the printer icon in the top right of the table. This inquiry is typically run directly from the customer account inquiry when looking into the allocations by clicking on the link to see how a transaction was paid.</p>
+
+<h2><a id="SalesGraph">Sales Report Graph</a></h2>
+<p>You can produce graphs (aka charts) of the companies sales data over different periods, and by sales area, sales person, and by stock category. You can create 10 different types of graph:
+<ul>
+	<li>Bar Graph</li>
+	<li>Stacked Bar Graph</li>
+	<li>Line Graph</li>
+	<li>Line Point Graph</li>
+	<li>Are Graph</li>
+	<li>Points Graph</li>
+	<li>Pie Graph</li>
+	<li>Thin Bar Line Graph</li>
+	<li>Squared Graph</li>
+	<li>Stacked Area Graph</li>
+</ul>
+</p>

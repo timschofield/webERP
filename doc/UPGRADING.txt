@@ -1,0 +1,94 @@
+UPGRADING FROM PREVIOUS VERSIONS OF WEBERP
+
+/* $Id: UPGRADING.txt 5797 2013-01-26 22:31:34Z daintree $*/
+
+SUMMARY
+
+Normally all that is required is to:
+1. Copy (backup) the existing scripts to a new directory under your web-server.
+2. Extract the new scripts from the webERP archive over the existing scripts - to overwrite the old scripts with the new scripts.
+3. Take a backup of your mysql webERP databases
+4. Log into each company in webERP and the automatic database upgrade script will run (assuming upgrade to a version post 4.01) on that company database. All companies in the installation need to be upgraded.
+
+AUTOMATIC DATABASE UPGRADE FROM VERSION 4.01
+
+From versions 4.01 database upgrades are now automatically processed if the version number of the code is different to the version number of the database. The first login will require the system administrator to allow the system to upgrade it's own database. A backup of the database prior to the running the upgrade is advisable and a link is provided to download a backup of the database. The new upgrade system will not be able to identify versions prior to 3.11 so it is necessary to select the version being upgraded from manaully. It can process database upgrades from version 3.00 onwards.
+
+The instructions to complete upgrades the old way are provided below if for some reason it becomes necessary:
+
+
+CONVERTING THE DATABASE MANUALY - THE DETAIL
+
+As each new version is released the new php scripts will use new database fields or changed field names. A a consequence, the new scripts will most likely not work unless the database structure has been converted to the new database structure. Normally the changes to the database between versions are small. However, between 2.9b and 3.0 the changes were significant and the upgrade script may take some time to run. It should not be run from a phpMyAdmin window since PHP will time out long before the upgrade script will have finished.
+
+It is important to make a copy of an sql dump of the database before attempting to run the upgrade script.
+
+An SQL script is provided for each version increment that changes the old database to the new structure retaining all the data from the old database. This script must be applied against the old database. In general the script is held under the sql directory. Under the sql directory there is a mysql directory containing the mysql specific SQL - Postgres was previously also supported up to version 3.05. The upgrade script is named:
+
+upgradeXX.XX-YY.YY.sql
+
+where XX.XX is the old version number and YY.YY is the new version number.
+
+No other users should be using the database. The upgrade script will need to be edited to use the name of the database that your webERP installation was created with - by default this is weberpdemo. If the default has not been changed then the following line (or modified for your database name) will need to be added to the upgrade script - right at the beginning:
+
+	use weberpdemo;
+
+A similar line will be required but substituting the name of the database that your installation uses where the default database name has been changed.
+
+Upgrading a mysql installation, the script should then be run through mysql from the command line:
+
+/usr/local/mysql/bin/mysql -u weberp_db_user -p weberp_db_pwd < path_to_upgraded_webERP_install/sql/mysql/upgradeXX.X-YY.Y.sql
+
+where:
+- the mysql client binary is under /usr/local/mysql/bin/mysql
+- the mysql user name is weberp_db_user
+- the mysql password for weberp_db_user is weberp_db_pwd
+- the path to the new webERP installation is path_to_upgraded_webERP_install
+- XX.XX is the old version number
+- YY.YY is the new version number
+
+The new php scripts should be copied into the webERP directory under the web-server root directory.
+
+
+NOTE ON UPGRADING TO VERSIONS POST 4.10
+
+From 4.10 the config.php variable nameing was changed to be consistent with the rest of the system:
+
+$dbType changed to $DBType
+$dbuser changed to $DBUser
+$dbpassword changed to $DBPassword
+$allow_demo_mode changed to $AllowDemoMode
+$rootpath changed to $RootPath
+
+The upgrade script should modify your existing config.php file automatically to change these variable names.
+
+NOTES ON UPGRADING TO VERSIONS POST 4.09
+
+A new css structure was released with 4.09 and upgraders will need to clear their cache for the new css to render correctly. This was reported by a user with Internet Explorer 9.
+
+NOTES ON UPGRADING FROM 3.11 to 4.x
+
+PHP 5 is now required because of the simpleXML module of PHP only comes with PHP 5+. This is used on the new XML definition of report formats.
+
+NOTES ON UPGRADING FROM 3.04 to 3.05
+
+3.05 now has Dave Premo's report writer scripts included in the distribution - additional tables are required for this functionality. Also, 3.05 allows for weighted average stock valuation - using the existing data fields and retaining integrated general ledger stock values. This requires cost information to be copied over into the grns table.
+The upgrade script Z_Upgrade_3.04-3.05.php applies all the additional tables to the database and does the data conversions required wihtout any manual intervention.
+
+NOTES ON UPGRADING FROM 3.01 to 3.02
+
+3.02 includes extensive changes to the tax schema in webERP and also allows for the same item on a sales order multiple times. This requires all existing sales orders to be updated with an appropriate number to avoid strange behaviour. A special script must be run to effect these changes after the SQL script has been run. The script Z_Upgrade_3.01-3.02.php must be opened in the browser to effect these changes.
+
+NOTES ON UPGRADING FROM 2.9B TO 3.0
+
+There are extensive changes to the database and the upgrade2.9b-3.0.sql may take some time to run depending on how much data there is in the system. A backup of the 2.9b database dump should be taken prior to attempting to run the upgrade script.
+
+IMPORTANT: Note that mysql version 4.1.8 or greater is required because from the mysql change log:
+	"Fix two hangs: FOREIGN KEY constraints treated table and database names as case-insensitive. RENAME TABLE t TO T would hang in an endless loop if t had a foreign key constraint defined on it. Fix also a hang over the dictionary mutex that would occur if one tried in ALTER TABLE or RENAME TABLE to create a foreign key constraint name that collided with another existing name. (Bug #3478)"
+
+IMPORTANT NOTE ON UPGRADING A 2.8 to 2.9
+
+Unfortunately I was over zealous with the foreign keys and made up one for StockID in ShipmentCharges
+this needs to be dropped but the name of this key is generated by Innodb so I cannot create a script to ditch it!!
+You will need to remove this yourself - otherwise you will not be able to create shipment charges.
+Using the new db scripts will of course generate dbs without this foreign key.

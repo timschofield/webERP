@@ -1,0 +1,273 @@
+<a id="AccountsPayable"><h1>Accounts Payable</h1></a>
+<h2>Overview</h2>
+<p>
+A primary function of the system is to track the amounts owed by the business to suppliers in both local and foreign currency. The system shows, invoice-by-invoice, the balance on the account and does not lose the detail of what makes the account up in a balance brought forward - it is an "open item" system. When payments made to suppliers are entered and allocated to invoices, the differences on exchange are calculated and posted to the general ledger - that is only if integration to the general ledger is enabled from the company preferences page under the setup tab.
+</p>
+<p>Note that in some countries the word "Vendor" is used instead of "Supplier" - please make allowances for this.</p>
+<h2>Features</h2>
+<ul>
+    <li>Suppliers aging report that takes into account the actual terms applicable to the supplier, and is supported by detailed inquiry of actual invoices due.</li>
+    <li>Full on-screen inquiry on a supplier's account, complete with a general ledger breakdown of how each invoice and debit note (Supplier credit note) was posted. Inquiries on payments made will show how a payment was allocated to invoices and the difference on exchange attributable to each invoice.</li>
+    <li>Open item - full analysis of the outstanding balance is maintained</li>
+    <li>Retrospective - de-allocation and re-allocation of payments and/or debit notes with re-calculation of differences on exchange and corresponding general ledger journals</li>
+    <li>Any number of supplier contacts can be maintained against the supplier</li>
+    <li>Fully integrated to stock - whereby purchase order receipts of stock can be selected for entry against a supplier invoice.</li>
+    <li>Full standard costing price variances between standard cost of stock received against the invoiced actual cost at invoiced exchange rate is recorded and posted to the general ledger</li>
+    <li>Purchase invoices and debit notes can be entered directly to multiple general ledger accounts with charges divided up at invoice entry time</li>
+    <li>Purchase invoices and debit notes can be entered as shipment costs - to accumulate against the cost of a shipment for costing of the stock items on the shipment</li>
+    <li>Nominal purchase order items received can be selected for invoicing in the same way as stock items. Purchase price variance from the order cost are taken to the general ledger account that the order item was coded to</li>
+    <li>Supplier payment run will create system entries to record payments for all suppliers with due amounts. Facilities allow for holding disputed invoices from being included in the payment run, but still recording costs in the general ledger.</li>
+</ul>
+<p>
+<img src="images/AccountsPayable.jpg"></p>
+
+<!-- Help Begin: Suppliers -->
+<div class="floatright"><a class="minitext" href="#top">⬆ Top</a></div>
+<h2><a id="NewSupplier">Entering Supplier (Vendors)</a></h2>
+<p>
+From the menu Payables tab, under Maintenance, click on "Add A New Supplier". The new details entered are only committed to the database as a new supplier once the user clicks on the button to "Insert New Supplier". If the user moves to another screen without clicking this button any entries are lost.</p>
+<h3>Supplier Code</h3>
+<p>
+This field is used as a unique identifier for the supplier (maximum of 10 characters of text - letters or numbers). This allows faster searches for suppliers - rather than the full text of the supplier name - and keeps the size of the database at a minimum since it is referenced on all supplier transactions, purchase orders, shipments and supplier contacts. It is also used in the narrative of purchase order receipts.The system will force this code to be in capitals and will not allow the use of spaces, the ampersand (&), * or hypen - or inverted commas (").</p>
+<p>
+Note: A supplier code can be altered retrospectively but because of the large scale of the changes required to the system to update stock movement transactions, purchase orders, supplier contacts and supplier transactions it could present a significant drain on resources. The option to change a supplier code is therefore in the utility menu Z_index.php - which must be entered as a manual URL and is only accessible by the system administrator. Such changes should only be undertaken when there are no other users on the system.</p>
+
+<h3>Supplier Name</h3>
+<p>
+The name of the supplier is used extensively in lookups. Proper capitalisation and use of the full name of the supplier is recommended. The maximum length of the name is 40 characters.</p>
+<p>
+<h3>Address Line 1, 2, 3 and 4</h3>
+<p>
+This is the address of where invoices and statements are to billed from. These fields will allow a maximum of 40 characters and are optional.</p>
+
+<h3>Supplier Since</h3>
+<p>
+This defaults to the current date - at the location of the web-server. This is purely a memo field for use in externally generated reports. Any valid date of the format defined in config.php for DefaultDateFormat can be entered.</p>
+
+<h3>Bank Particulars, Bank Reference</h3>
+<p>
+These fields are used in the export of a payments file to a bank software payments system - these are the fields that a supplier will see as references on direct credits into their bank accounts. These fields accept up to 12 characters.</p>
+
+<h3>Bank Account Number</h3>
+<p>
+This is used in the export of a payments file to a bank software payments system. The bank account number is the account number where the funds will be transferred to when a payment run is processed. Bank Account Number accepts up to 16 characters.</p>
+
+<h3>Payment Terms</h3>
+<p>
+The payment terms are the terms under which trade with the supplier takes place. The appropriate payment terms can be selected from the drop down list. If necessary, new payment terms can be defined separately from Setup tab of the main menu under the receivables/payables section.</p>
+<p>
+There are no restrictions on altering payment terms for a supplier at any time. The system records the due date for an invoice at the time of entry - the due date is defaulted based on the terms defined for the supplier at the time of entry. The due date can be overriden manually should a special arrangement on any particular invoice be required.</p>
+<p>
+<h3>Supplier's Currency</h3>
+<p>
+This is a compulsory field that identifies the currency in which the supplier invoices. All invoices and debit notes entered for the supplier will use this currency and the rate will be defaulted in transaction entry from the rates set up in the currency table - accessible from the Setup tab under General. The currency rates should be maintained at least monthly.</p>
+<p>
+Note: that the rate is recorded in the transaction not the currency. If a supplier changes the currency in which they are invoiced it is possible to allocate a new currency receipt against invoices (invoiced in the old currency) in which case the system will calculate large differences on exchange. Note: There is no error check on this and care should be taken, should this occur, to ensure invoices are matched off in the currency in which they were originally created - the cross rate between the new and old currency will provide an equivalent amount of the old currency for entry and allocation.</p>
+<p>
+<h3>Remittance Advice</h3>
+<p>
+If the supplier is flagged as requiring a remittance advice the payment run will create a report showing the make up of the invoices and debit notes being paid by the payment.</p>
+<p>
+This feature is not currently implemented.</p>
+
+<h3>Tax Group</h3>
+<p>
+The tax group determines the tax authorities to which the supplier reports and must collect taxes for. It is this field in conjunction with the inventory location record that determines the rates of tax used in the automatic calculation of tax on suppliers invoices and credits. These rates can be over-ridden at invoice entry time.</p>
+<p>
+<!-- Help End: Suppliers -->
+ <!-- Help Begin: SelectSupplier -->
+<div class="floatright"><a class="minitext" href="#top">⬆ Top</a></div>
+<h2><a id="SelectSupplier">Selecting Suppliers (Vendors)</a></h2>
+<p>
+With most operations to operate on a specific supplier, the supplier must first be selected. This applies to any supplier inquiry as well as entry of purchase orders or purchase invoices or debit notes. It is the convention of webERP to select the customer, item or supplier required before performing any function in these areas. For this reason the shortcut menu accross the top of every screen has links to each of these selection screens.<br>
+To select a supplier then - from any screen - click on Select Supplier, or press the ALT key and the number 4 key - in Internet Explorer one must press the Enter key also.</p>
+<p>
+In common with the other selection screens the focus automatically goes to the supplier code where any character or series of characters of the supplier code can be entered. Having entered as much of the supplier code as is known click the "Search Now" button - this will then retrieve all the suppliers with this extract of text that occurs anywhere in the supplier code field.<br>
+If only one supplier is returned it is automatically selected for operating on. However if several suppliers exist with the same extract within their code they will be listed with their full name, currency and address. A button showing the code for each of the suppliers allows selection of the supplier required.<br>
+Instead of using the supplier code - if some of the supplier name is known this can be entered in the first field - labelled "Text in the NAME:" - the same procedure is followed as for entry of an extract of the supplier code.</p>
+<p>
+<!-- Help End: SelectSupplier -->
+ <!-- Help Begin: SupplierContacts -->
+<div class="floatright"><a class="minitext" href="#top">⬆ Top</a></div>
+<h2><a id="SupplierContact">Supplier Contacts</a></h2>
+<p>
+Any number of supplier contacts can be defined. This facility allows for ready access to phone numbers and email addresses of all company suppliers. Purchase orders created can be emailed directly to any of the defined contacts email addresses.</p>
+<p>
+As with most operations to operate on a specific supplier, the supplier must first be selected. Once a supplier is selected the suppliers menu shows all the options available for operating on the supplier. Under maintenance click Modify/Delete Supplier Contact Details. The screen shows all the existing contacts already set up - any of these can be deleted by clicking the delete link to the right of their details. Existing details can be modified by clicking the edit link. The fields will be populated by the selected contacts details and available for modification. This screen allows entry of:<br>
+
+<ul>
+    <li>Contact Name - up to 30 characters</li>
+
+    <li>Position - up to 30 characters</li>
+
+    <li>Telephone Number - up to 30 characters</li>
+
+    <li>Facsimile Number - up to 30 characters</li>
+
+    <li>Mobile Number - up to 30 characters</li>
+
+    <li>Email Address - up to 55 characters</li>
+</ul>Supplier contacts entry provides a convenient place to store the key personnel at a supplier so others in the business know the functions of the individuals at the supplier. The email addresses are also used when sending supplier purchase orders - the actual contact to use is selectable from a list of supplier contacts.<br>
+It is not actually necessary to enter any details into the supplier contacts screen but advisable.</p>
+<p>
+<!-- Help End: SupplierContacts -->
+ <!-- Help Begin: SupplierInvoices -->
+ <div class="floatright"><a class="minitext" href="#top">⬆ Top</a></div>
+ <h2><a id="SupplierInvoice">Entering Supplier Invoices</a></h2>
+<p>
+As with all transactions in webERP the entity to be transacted with must first be selected i.e. a customer, item or supplier. Entering accounts payable transactions then requires the selection of a supplier first. Once a supplier is selected, the menu of options shows for the supplier among them "Enter an Invoice". The process below applies equally to entry of supplier credit notes as it does to entry of purchase invoices. In every case, entry of invoices and supplier credit notes (debit notes) requires entry of:
+
+<ul>
+    <li>Invoice Date</li>
+
+    <li>Invoice Reference</li>
+
+    <li>Invoice exchange rate</li>
+</ul>
+<h3>Invoice Date</h3>
+<p>
+This is the date from which webERP determines the accounting period to create the general ledger postings for the transaction - should AP general ledger interface be activated. It is also the date from which, in conjunction with the supplier's payment terms the due date of the invoice is determined. This is used by the payment run to get all amounts due to a supplier for payment collated and listed. The system will use the information in the payment run to prepare a listing for producing a file of direct credits or printing cheques.</p>
+
+<h3>Invoice Reference</h3>
+<p>
+This is the supplier's invoice number or alpha reference uniquely identifying the invoice for the supplier. webERP checks that the same supplier invoice reference is not entered previously and reports an error if it has - this is to prevent the duplicate entry of purchase invoices and potentially paying the supplier twice.</p>
+
+<h3>Invoice Exchange rate</h3>
+<p>
+This rate is used to convert the currency amounts entered on the invoice to the local currency and for the purposes of posting the invoice to the general ledger (in local currency) should the GL interface be active. This rate is recorded with the invoice and forms the basis of the calculation of differences on exchange against the rates entered against payments to the supplier. Note that differences on exchange are only calculated when the payments are allocated to the invoices. General ledger journals are created for differences on exchange also (if the AP-&gt;GL interface is active).</p>
+
+<h3>Comments</h3>
+<p>
+Comments are entirely optional. They appear in the supplier inquiry screen against the invoice.</p>
+
+<h3>Different Types Of Charges On A Purchase Invoice</h3>
+<p>
+Depending on the nature of the supplier's charge and the items purchased there are several choices as to how the amount of the invoice is entered.</p>
+
+<ul>
+    <li>Charges for stock items on purchase order items received - Entered against purchase orders</li>
+
+    <li>Charges for other expenses coded to different GL accounts</li>
+
+    <li>Charges for Shipments where the cost is to be split between all items on the shipment</li>
+
+    <li>Charges for contracts - where the amounts are charged out against a contract</li>
+
+    <li>Charges for the purchase of fixed assets</li>
+</ul>Supplier invoices (and credit notes) can be entered for any or all of the choices together.</p>
+
+<h3>Creditors GL Interface</h3>
+<p>
+If the GL interface to creditors is not set to yes in the company preferences screen then the total amount of the invoice can be entered directly. There is a check though to ensure that the total of the charges entered against purchase orders, shipments, contracts and gl is less than the total invoice amount entered directly. If the amount entered is less than the sum of the charges then a warning shows. However, if the GL interface is active the total of the charges against purchase orders, contracts, fixed assets, gl and shipments is accumulated into the main invoice entry screen amount of the invoice.</p>
+
+<h3>Entry of Charges for Stock/Inventory Items</h3>
+<p>
+All stock items must be received into stock against a purchase order. In the process a GRN (goods received note) entry created. Goods received will be evidenced in webERP by the stock movements inquiry showing the receipt of stock and also by the creation of a GRN against the supplier. If the general ledger interface is active a liability is posted to the GRN suspense account (defined in the company record) and the stock value is increased by the standard cost of the item at the time it is entered as received. The purchase order inquiry will also show the quantity received of the item (against the order). Entering a purchase invoice for stock items requires that the GRN records created for each item being charged for be matched off against the invoice. A special screen is available to search the GRNs outstanding for the supplier. This screen can be accessed directly from the invoice entry screen by clicking the button to enter against stock items.</p>
+<p>
+The list of all the outstanding GRNs is shown together with any quantity already invoiced (on other invoices) and the price at which the purchase order was entered. The actual (currency) price that the supplier charged should be entered and the number of the items being invoiced on this invoice should be entered against the GRN too. This allows the actual charge for the item to be recorded against the GRN. Ultimately when the invoice is posted the actual cost (as converted at the invoice exchange rate)is recorded against the stock movement inquiry. When the invoice is entered, any for all GRNs matched to invoice charges, the purchase price variance calculated and posted to the general ledger (if the GL interface is active).</p>
+
+<h3>Entry of Invoices for Shipment Charges</h3>
+<p>
+Shipment charges for freight, duty and cartage that the business wishes to cost into the purchase price of stock items must be entered against shipments. Shipments accumulate all these costs together before apportioning them to the items in the shipment and calculating the approriate purchase price variance. The button "Enter Against Shipments" shows a new screen that allows existing shipments to be selected and amounts (in currency of the supplier) entered against each shipment. If the shipment reference is already known it can be entered directly.</p>
+<p>
+If there are some charges that relate to stock items and some charges that relate to shipments then the total of both is accumulated into the invoice total.</p>
+
+<h3>Entry of General Ledger Charges</h3>
+<p>
+Purchase invoice entry looks a little different depending on whether the GL link to Account Payable is enabled or not (See Setup tab -&gt; Company Preferences). If the GL interface is NOT enabled then there is simply a field to enter the total amount of the invoice into. If the GL interface is enabled then a third button shows "Enter General Ledger Analysis" - the total of all the general ledger analysis, the shipment costs and the entries against GRNs is accumulated into the total invoice charge and there is no opportunity to enter an invoice total amount anywhere - it is derived as the total of all the defined charges on the invoice.</p>
+<p>
+Clicking on the button to "Enter General Ledger Analysis" opens a further screen that allows a general ledger code to be specified and an amount to be posted to this code and any narrative that is to appear in the GL against this charge. The general ledger code to charge can be selected from either the drop down box or entered directly. It is possible to enter negative amounts that would credit the general ledger account specified where there may be some rebate perhaps for returned pallets or part-exchange amount on the invoice. There is no limit to the number of general ledger accounts that the charge can be analysed against.</p>
+
+<h3>Purchase Invoice Tax</h3>
+<p>
+The tax due to a supplier on the entry of a supplier's invoice is (by default) calculated automatically according to the following rules:
+</p>
+<ul>
+    <li>The tax group of the supplier is determined from the supplier record. This tells the system the tax authority (ies) to which the supplier must collect tax (es) for.</li>
+
+    <li>The default location of the user entering the invoice tells the system the sort of taxes that are relevant for the location where the invoice is being keyed.</li>
+
+    <li>The system holds a table that holds the rates of tax due where the company is operating from the location of the user and the tax authorities relevant to the supplier</li>
+
+    <li>The rates determined from the above rules are applied against the invoice total. The order in which the taxes are calculated and calculations of tax on top of previous taxes are also determined based on the supplier's tax group.</li>
+</ul>If the automatic calculations above do not work out the tax amounts can be entered manually for each of the tax authorities relevant to the supplier. To enter tax manually, there is a selection box with a choice to calculate tax manually or automatically, select manual, then click on the "Change Tax Calculation Method" button - now the rates from the automatic calculation dissappear and input box(es) for the percentage(s) are available for each tax authority.</p>
+
+<h3>Committing A Purchase Invoice</h3>
+<p>
+Clicking on "Enter Invoice" immediately processes the invoice against the supplier's account, creates the necessary general ledger transactions, updates the GRNs and the purchase orders for quantities invoiced and creates shipment charges records as required. Zero charge purchase invoices cannot be entered - the system checks to ensure there are at least some charges on the invoice. It also checks to ensure a reference and date is entered. As with all transaction entry in webERP there is no subsequent processing required for all the information to be fully up to date it is all done at the time of clicking this button.</p>
+
+<h3>General Ledger Postings On Purchase Invoices</h3>
+<p>
+This section might be a little complex. However, understanding what is happening in the general ledger and implications of purchase invoice entries in the general ledger is necessary inorder to understand how to reconcile the various accounts.</p>
+<p>
+Each of the three types of entries in a purchase invoice are posted to the general ledger in different ways:
+</p>
+<ul>
+    <li>General Ledger Charges - starting with the easiest - the net amounts of these entries are posted to the debit of the general ledger account selected</li>
+
+    <li>Shipment Charges - these are posted to the debit of the goods received clearing account as defined in the company record. The rationale for this is that the shipment charges relate to the cost of the stock coming in on shipments and they will be apportioned between the various items on the shipment. As such they together with the invoices cost of the stock make up the total cost of the item for comparison to the standard or weighted average cost of the item. When shipments are closed the system calculates the total purchase price variances using shipment charges posted here - together with the invoices entered for the goods.</li>
+
+    <li>Entry of invoices against stock/inventory received. webERP insists on matching purchase invoices against goods received notes (GRNs) created at the time the stock is received against purchase orders. The reason is to ensure suppliers do not over-deliver and that invoices can only be entered against goods received and the business does not pay for items not received! The general ledger treatment is slightly different depending on whether the goods are on a shipment or not.
+
+        <ul>
+            <li>If NO shipment costing is involved then the purchase price at the currency/rate entered in the invoice is compared against the standard or average cost of the item at the time it was received. When the goods were received - the system enters a debit to stock at the standard/average cost and a credit to the goods received clearing account defined in the company record. So the entry of the invoice needs to clear this entry - by crediting the goods received clearing account at the standard/average cost at the time of receiving the item. The difference between this and the cost of the item as invoiced and converted at the days (or covered) exchange rate as entered on the invoice is taken to either the purchase price variance account - as defined in the stock category record under standard costing OR in the event that weighted average standard costing is used the variance is written back to the stock account - again from the stock category record. If weighted average costing is used this also triggers a stock cost update based on this variance divided by the total quantity still in stock. If there is less than the quantity being invoiced in stock still -perhaps some were sold before the purchase invoice was entered - then the variance relating to the quantity left is taken to the stock account and the balance is written off to the purchase price varaince account - hey I told you it was complex!</li>
+
+            <li>With Shipment costing - the total amount of the charge is posted to the debit of the goods received clearing account - variances are taken up only once all shipment charges are in and the user explicity "closes" the shipment</li>
+        </ul>
+    </li>
+</ul>
+<h3>Inventory Costing and GL Postings</h3>
+<p>
+The Outsanding Goods Received report shows the calculation of the cost of goods received but not yet invoiced. This calculation is done using the standard cost as it is this figure that is used for the posting to the GL at the time the goods are received. Note that the &quot;standard cost&quot; field is actually the weighted average cost if you are using the weighted average cost method. The standard cost should be reflective of the purchase cost in FX as converted to local currency plus all landing costs. The FX cost as converted to local currency will of course exclude any landing costs and obviously it will be different each time the currency rates of exchange are updated.</p>
+<p>
+Variances are only taken to the GL based on the comparison of the standard cost (at the time the goods were received) compared to what the purchase invoice at the rate used during the purchase invoice entry. If weighted average costing is used then actually the variance is taken to the value of inventory and the unit weighted average cost is updated to reflect the new value.</p>
+<p>
+Exchange differences subsequent i.e. when the purchase invoice is paid is taken to exchange differences and not against the cost of the items that were purchased.</p>
+<!-- Help End: SupplierInvoices -->
+<!-- Help Start: SupplierPayments -->
+</p>
+<div class="floatright"><a class="minitext" href="#top">⬆ Top</a></div>
+
+<h2><a id="SupplierPayments">Supplier Payments</a></h2>
+<p>
+Entering accounts payable transactions requires the selection of a supplier first. Once a supplier is selected, the menu of options shows for the supplier among them "Enter A Payment To The Supplier". The currency of the payment is deemed to be in the currency of the supplier - from the supplier record. This currency will show on the payment entry screen.</p>
+<p>
+In every case, entry of a supplier payment requires entry of:
+</p>
+<ul>
+    <li>Bank Account from which the payment is made</li>
+
+    <li>Date of the payment</li>
+
+    <li>Any Reference</li>
+
+    <li>Exchange rate at which the currency of the supplier is purchased</li>
+
+    <li>The amount of the payment - in the supplier's currency</li>
+
+    <li>The amount of the discount taken by the supplier (in the supplier's currency)</li>
+</ul>
+<h3>Bank Account Selection</h3>
+<p>
+The choice of bank accounts from which the payment is being made is shown in a select box. webERP does not support multi-currency bank accounts so the exchange rate will always be the rate to purchase the currency of the supplier against the business's functional currency. The bank account selected will have a record created for the payment and if the general ledger link is enabled the postings will be made from the general ledger code stored against this bank account. Bank accounts are defined from the Setup tab -&gt; Bank Accounts - under the General column of options.</p>
+
+<h3>Payment Date</h3>
+<p>
+This is the date from which webERP determines the accounting period to create the general ledger postings for the transaction - should AP general ledger interface be activated. This is the date that will show on supplier transaction inquiries and the bank account transaction listings.</p>
+
+<h3>Reference</h3></p>
+<p>
+Any text up to 50 characters long</p>
+
+<h3>Exchange rate</h3>
+<p>
+This rate is used to purchase the currency amount being paid to the supplier. This rate is recorded with the payment and forms the basis of the calculation of differences on exchange against the rates entered against invoices to the supplier. Note that differences on exchange are only calculated when payments are allocated to invoices.</p>
+
+<h3>Payment Amount</h3>
+<p>
+The amount in foreign currency being paid to the supplier. The general ledger entries made (if the link is enabled) debit the suppliers control account - specified in the company preferences record (Setup tab -&gt; Company Preferences) and credit the bank account selected above.</p>
+
+<h3>Discount Amount</h3>
+<p>
+The amount in foreign currency being allowed to the supplier as payment discount. General ledger entries are created (if the link is enabled) to the account specified for "Prompt Payment Discount" in the Company Preferences record. If discount is to posted some other way then it is better to create a dummy item for the discount given and enter credit notes for the dummy item with posting as defined in the Sales GL Interface setup.</p>
+

@@ -1,0 +1,193 @@
+<br /><br />
+
+<!-- Help Begin: SelectSalesOrder -->
+
+<a name="ARTransactions"><font size="+3"><b>Debitorenbuchungen</b></font></a>
+<br /><br />
+<font size="+2"><b>Fakturieren eines Kundenauftrages</b></font>
+<br /><br />
+<font size="+1"><b>Auftrag zum Fakturieren auswählen</b></font>
+<br /><br />
+Jede Fakturierung verlangt, dass zuvor der Kundenauftrag erfasst ist.
+<br /><br />
+Wählen Sie Hauptmenü &rarr; Aufträge &rarr; Vorgänge &rarr; Kundenaufträge ändern. Diese Seite zeigt alle offenen Kundenaufträge. Wenn die Auftragsnummer bekannt ist, können Sie diese auf dem Bild eingeben. Drücken Sie Aufträge/Angebote suchen und der Auftrag sollte darunter angezeigt werden, zusammen mit den Links zum Ändern, Rechnung erstellen und Lieferschein drucken. Drücken Sie den Link Rechnung, um den Auftrag zu fakturieren
+<br /><br />
+<font size="+1"><b>Erstellen der Faktura zum Kundenauftrag</b></font>
+<br /><br />
+Wenn Sie den Kundenauftrag zum Fakturieren ausgewählt haben, erscheinen die Positionen des Auftrages für die Bestätigung der gelieferten Mengen. Wenn die gelieferte Menge von der Auftragsmenge abweicht, wird die Differenz in der Tabelle OrderDeliveryDifferencesLog protokolliert, ein Bericht ist verfügbar, mit dem Aufträge angezeigt werden können, die nicht bei der ersten Lieferung voll beliefert wurden. Es gibt außerdem die Möglichkeit, Frachtkosten und den Steuersatz einzugeben, welcher normalerweise automatisch ermittelt wird. Das Lieferdatum wird abhängig von der Tageszeit und dem Geschäftsschluss in den Systemeinstellungen vorgeschlagen. Wenn die Uhrzeit nach dem eingestellten Geschäftsschluss liegt, ist es der Folgetag, ansonsten wird der heutige Tag vorgeschlagen. Wenn der Auftrag nicht vollständig beliefert wird, haben Sie zwei Möglichkeiten, mit den Differenzen zu verfahren:
+<br /><br />
+<ul>
+<li>die Differenz automatisch auf unerledigt setzen</li>
+<li>die nicht gelieferten Mengen stornieren.</li>
+</ul>
+Am Ende haben Sie noch die Möglichkeit, einen Buchungstext für die gesamte Rechnung zu erfassen. Durch Drücken der Taste "Rechnung verarbeiten" wird der Kundenauftrag wie angegeben geändert und alle Buchungen werden erzeugt, wenn die Integration mit der Hauptbuchhaltung aktiv ist (siehe Unternehmenseinstellungen) auch die Hauptbuchbelege. Solange Sie diese Taste nicht drücken, werden keine Änderungen fortgeschrieben und sie können die Rechnungserstellung einfach abbrechen, indem Sie irgendwann einfach auf eine andere Seite wechseln. Nach dem Drücken der Taste "Rechnung verarbeiten" geschieht folgendes:
+<br /><br />
+<ul>
+<li>Die Warenbewegungen für die einzelnen Auftragspositionen (oder für Sammelmatierialien die der Komponenten) werden von dem bei der Auftragserfassung eingegeben Lager gebucht.</li>
+<li>Der Rechnungsbeleg wird auf dem Debitorenkonto fortgeschrieben.</li>
+<li>Die Hauptbuchpositonen für Umsatzerlöse, Forderungen, Steuern usw. werden gebucht.</li>
+<li>Die gelieferten Mengen/Beträge und die Rechnungsnummer werden in den Kundenauftrag eingetragen.</li>
+<li>Die Summendaten der Ergebnisrechnung werden für die verkauften Materialien angelegt bzw. geändert</li>
+<li>Die Lagermengen für alle Rechnungspositionen bzw. Komponenten von in Rechnungspositionen enthaltenen Sammelmaterialien werden aktualisiert.</li>
+</ul>
+Wenn der Auftrag nicht an den Kunden oder seine Niederlassung fakturiert werden soll, oder Preise geändert werden sollen, so muss dies zuvor im Kundenauftrag geändert werden. Während der Lieferbestätigung/Fakturierung können diese Elemente nicht verändert werden, deswegen müssen die Änderungen vorher vorgenommen werden. Wenn eine Faktura angelegt ist, kann diese nicht mehr geändert oder gelöscht werden. Der Kundenauftrag weist außerdem die Rechnungsnummer nach, zu der er beliefert wurde.
+
+<!-- Help End: SelectSalesOrder -->
+
+<br /><br />
+
+<!-- Help Begin: SelectCreditItems -->
+
+<font size="+2"><b>Gutschriften</b></font>
+<br /><br />
+Gutschriften können auf zweierlei Weise angelegt werden:
+<br /><br />
+<ul>
+<li>Aus der Kundenauswertung. Wenn der Benutzer die erforderliche Berechtigungen besitzt, erscheint in der Belegliste ein Link, über den eine komplette Rechnung storniert werden kann. Wenn Sie auf diesen Link geklickt haben, gibt es noch die Möglichkeit, einzelne Positionen abzuwählen, wenn nur einzelne Positionen zurückzunehmen sind. Es erscheint die gleiche Seite wie beim manuellen Anlegen von Gutschriften, aber alle Positionen der Originalrechnung sind bereits erfasst.</li>
+<li>Über Hauptmenü &rarr; Debitoren &rarr; Vorgänge &rarr; Gutschrift anlegen.</li>
+</ul>
+<b>
+Wichtiger Hinweis
+<!-- Important Note: --></b>
+<br /><br />
+Die Gutschrift ist in webERP das Werkzeug zum Korrigieren falsch eingegebener Rechnungen. Deshalb muss Wert darauf gelegt werden, wenn schon eine Rechnung falsch fakturiert wurde, dann wenigstens die Gutschrift dazu passend anzuwenden. Wenn Sie einen geringen Betrag zu einer Materialposition gutschreiben, bedeutet das, dass das Material zurückgenommen wird und der Kunde nur einen geringen Betrag dafür zurückerstattet bekommt, anstelle des Ganzen. Das ist nicht die richtige Art und Weise, eine Zuvielberechnung zurückzunehmen. Im Normalfalle wird mit einer Gutschrift die Ware in das angegebene Lager zurückgenommen, die Materialbestände um die zurückgenommene Menge wieder erhöht. Um Fehler bei der Preisfestlegung zu korrigieren, muss eine Gutschrift für die Position mit dem fehlerhaften Betrag erstellt und eine neue Rechnung mit dem richtigen Preis erstellt werden. Das gewährleistet, dass sowohl die Bestände als auch die Umsätze und auch Steuern richtig berechnet und verbucht werden. Es gibt außerdem einen speziellen Grund der Gutschriften für Preiskorrekturen, die nicht gleichzeitig Kostenauswirkungen hat und mit der auch keine Warenbewegungen verbunden sind.
+<br /><br />
+Die Vorgehensweise für das manuelle Anlegen einer Gutschrift ist:
+<br /><br />
+<ul>
+<li>Wählen Sie den Kunden aus, der die Gutschrift erhalten soll.  Dafür stehen Suchfelder für den Kundennamen und die Kundennummer zur Verfügung.</li>
+<li>Wählen Sie die gutzuschreibenden Materialien und die zu verwendenden Preise aus, Sie haben die gleiche Schnellerfassungsliste wie beim Anlegen eines Kundenauftrages, wo Sie die Materialnummern und Mengen direkt eingeben. Die Preise werden automatisch aus den Angaben zur Umsatzart/Preisliste und Währung des Kunden bestimmt, wobei auch Kunden- und Niederlassungsspezifische Sonderpreise berücksichtigt werden. Wenn die Funktion für die Materialsuche verwendet wird, können Sie jedesmal, wenn Sie ein Material ausgewählt haben, auch die Menge festlegen.</li>
+<li>Wenn Sie alle Positionen ausgewählt haben, ist es möglich die gutzuschreibenden Positionen zu bearbeiten, indem Sie auf die Taste mit der Materialnummer klicken, um die Position zu übernehmen und dann die Mengen und Preise bearbeiten.</li>
+<li>die gutzuschreibenden Beträge für Frachten können direkt eingegeben werden (die Werte übernehmen Sie am besten über die Kundenauswertung aus der Originalrechnung.</li>
+<li>Der Steuerbetrag wird automatisch für die entsprechende Steuergruppe der Kundenniederlassung berechnet. Sie haben auch die Möglichkeit der manuellen Eingaben. Wenn Sie Manuell ausgewählt haben, müssen Sie noch auf Ändern klicken, damit Felder für Beträge eingabebereit werden.</li>
+<li>Der Vorschlagswert nimmt an, dass die in der Gutschrift angegebenen Waren an das Lager zurückgeliefert werden. Die Betriebsstätte dazu muss im Auswahlfeld ausgewählt werden.</li>
+<li>Wenn Waren nicht an das Lager zurückgebucht werden, weil sie beispielsweise kaputt gegangen sind, werden sie abgeschrieben, dazu wechseln Sie den Grund der Gutschrift und ein neues Auswahlfeld Herstellkosten abschreiben auf ermöglicht die Angabe des Hauptbuchkontos (wenn die Schnittstelle zur Hauptbuchhaltung aktiv ist, wenn nicht wird dieses Feld nicht angezeigt). In diesem Feld ist das passende Aufwandskonto anzugeben. Das Feld Retoure an den Versandort ist verschwunden, weil es hier nicht gebraucht wird. Eine dritte Option ist vorhanden, um Preiskorrekturen zu ermöglichen. Dieser Grund verbucht keine Warenbewegungen und die Änderungen an den Ergebnisrechnungssummen betreffen nur die Umsatzerlöse, nicht aber die Herstellkosten.</li>
+<li>In das Feld Buchungstext kann Text für die Gründe der Gutschrift/Stornierung eingegeben werden.</li>
+<li>Nachdem alle Mussfelder eingegeben wurden, drücken Sie die Taste "Gutschrift verbuchen", um die Gutschrift zu erstellen. Die angezeigte Nummer der Gutschrift bestätigt, dass die Verbuchung erfolgt ist.</li>
+</ul>
+
+<!-- Help End: SelectCreditItems -->
+
+<!-- Help Begin: CustomerReceipt -->
+
+<font size="+2"><b>Erfassung von Zahlungseingängen</b></font>
+<br /><br />
+Dieses System verfolgt als Offene-Posten-System die offenen Rechnungen und Gutschriften, im Unterschied zu Systemen, die die Salden vom Vormonat übertragen und die aktuellen Vorgänge addieren oder subrtrahieren. Erfahrung zeigen dass sich bei Saldenvortragssystemen häufig die Frage nach mehr Informationen ergibt, mit der unvermeidlichen Frage von den Kunden, woraus dieser Saldo gebildet wurde. Die Kontoauszüge, die in webERP erstellt werden, zeigen den vollständigen Nachweis der Außenstände auf der Basis der Rechnungen und Gutschriften, die noch zu begleichen sind, und die zusammengenommen den Saldo des Kundenkontos ergeben. Um die erforderlichen Informationen zu den ausstehenden Beträgen zur Verfügung zu stellen, müssen Rechnung für Rechnung sowie die Details der eingeganenen Zahlungen erfasst werden.
+<br /><br />
+Die von den Kunden empfangenen Zahlungen sind folglich in einen zweistufigen Prozeß zu erfassen:
+<br /><br />
+<ul>
+<li>Der Betrag der empfangenen Zahlung ist in der Fremdwährung des Kunden zusammen mit dem Umrechnungkurs zu erfassen, zu dem dieser in Hauswährung gebucht worden ist. Alle mögliche Details zum Zahlungseingang, wie das Datum, Zahlungsmethode und Zahlungsbezüge (irgendwelche Details für die Zuordnung der Zahlung zu den offenen Rechnungen, die von den Anfragen später zurückgerufen werden können), sind zu diesem Zeitpunkt einzutragen.</li>
+<li>Der Betrag in der Fremdwährung wird den Rechnungen (und vorhandenen Habenbuchungen) auf dem Kundenkonto zugeordnet. Anders ausgedrückt, werden die Rechnungen, für welche diese Zahlungen getätigt wurden, mit der Zahlung ausgeglichen.</li>
+</ul>
+Auch wenn nicht alle Details zum Zahlungsgrund zum Zeitpunkt des Bankverkehrs vorhanden sind, kann der Zahlungseingang zum Zeitpunkt 1 noch erfasst werden. Jedoch muß die Zuordnung erfolgt sein, bevor der Kontoauszug erzeugt wird, wenn dessen Aussage sinnvoll sein soll.
+<br /><br />
+Anmerkung: Kursdifferenzen werden erst errechnet, wenn der Zahlungseingang gegen die Rechnungen ausgeglichen wird.
+<br /><br />
+Die Zahlungseingänge in in der Hauptbuchhaltung können in der gleichen Weise wie die Zahlungseingänge der Debitoren erfasst werden.
+<br /><br />
+Die Erfassung der Zahlungseingänge erreichen Sie Hauptmenü &rarr; Debitoren &rarr; Vorgänge, ein weiterer Zugang besteht über die Hauptbuchhaltung.
+<br /><br />
+Zuerst werden die Kopfinformationen des Zahlungseingangsstapels angefordert, das Bankkonto - eins der vorher definierten Bankkonten (s. Einstellungen), das Buchungsdatum, die Währung und der Umrechnungskurs der Bankbuchung und der Zahlungsweg des Geldeinganges zusammen mit irgendeinem Buchungstext. Die Währung kann von den definierten Währungen vorgewählt werden (s. Einstellungen). Die Arten der Zahlungseingänge können auch ausgewählt werden - sie werden über Hauptmenü &rarr; Einstellungen &rarr; Debitoren/Kreditoren &rarr; Zahlungswege  definiert. Sobald diese Informationen eingetragen sind, müssen diese übernommen werden, bevor die Zahlungen des Stapels eingetragen werden können.
+<br /><br />
+<font size="+1"><b>Zahlungseingang - Debitor</b></font>
+<br /><br /> 
+Normalerweise werden, sobald der Kunde ausgewählt worden ist, die folgenden Informationen angezeigt:
+<br /><br />
+<ul>
+<li>Die anwendbaren Zahlungsbedingungen, damit die überfälligen Beträge vom Zuordnungsbildschirm leicht erfasst werden können ohne zurück gehen zu müssen, und eine Anfrage auszuführen.</li>
+<li>Der anwendbare Skontoprozentsatz. Der Benutzer kann diesen Prozentsatz dann verwenden, um den anwendbaren Skonto zu errechnen, abhängig davon, welcher Anteil der Zahlung sich auf Rechnungen innerhalb der Skontolinie bezieht.</li>
+<li>Die Währung, in der die Zahlung geleistet wird.</li>
+</ul>
+<font size="+1"><b>Zahlungseingang - Datum</b></font>
+<br /><br />
+Das Datum, zu dem die Zahlung empfangen und gebucht wurde.  Wenn ein Zahlungseingang nachträglich erfasst wird - oder Buchungen verschiedener Tage zusammen erfasst werden, sollte das Vorgabedatum (d.h. das Tagesdatum) mit dem Datum überschrieben werden, zu dem der Zahlungseingang ursprünglich empfangen wurde.  Dieses Datum wird auf dem Kontoauszug verwendet und der Kunde kann möglicherweise nicht in der Lage sein, die Zahlung nachzuvollziehen, wenn ein falsches Datum eingetragen wird. 
+<br /><br />
+Die Kundenkontoanfragen werden in der Datumsreihenfolge angezeigt, also wird das Konto nicht richtig dargestellt, wenn das eingegebene Datum nicht das Datum ist, an dem das Geld empfangen wurde.  Das Datum wird auch im angelegten Hauptbuchhaltungsbeleg benutzt. 
+used in the general ledger transaction created.
+<br /><br />
+<font size="+1"><b>Zahlungseingang - Währung und Umrechnungskurs</b></font>
+<br /><br />
+Die Vorauswahl des Kunden erklärt dem System automatisch, in welcher Währung der Zahlungseingang erwartet wird. Das Kundenkonto wird in der Währung geführt, die bei der Kundenstammdatenpflege ausgewählt wird.  
+<br /><br />
+Der richtige Umrechnungskurs, mit der die Bank die ausländische Währung in Hauswährung umgerechnet hat, muß eingegeben werden, das System zeigt die Berechnung der Hauswährung am unteren Bildschirmrand an. Der Zahlungseingang kann folglich erst gebucht werden, wenn der Betrag in der Inlandswährung bekannt ist.  Der genaue Umrechnungskurs für die Eingabe in dieses Feld wird bestimmt, indem der Betrag in der ausländischen Währung durch die Hauswährungsentsprechnung geteilt wird.
+<br /><br />
+Beispiel: Gebucht 1212 in Hauswährung, das waren 400 in der Fremdwährung des Kunden.
+<br /><br />
+Der Umrechnugskurs ist 400 / 1212 = 0,330033.
+<br /><br />
+Die Hauswährung, die durch das System errechnet wird sollte bestätigen, daß der eingetragene Umrechnungskurs korrekt ist. Die Hauptbuchintegration (wenn sie eingerichtet ist) erzeugt eine Sollbuchung auf dem Bankkonto für den Hauswährungbetrag, der am unteren Bildschirmrand gezeigt wird und verringert (Haben) das Debitorensammelkonto um den gleichen Betrag. Das System schlägt den Umrechnungskurs mit dem Wert vor, der für die Währung in der Währungtabelle hinterlegt wurde.  
+<br /><br />
+Wenn der Zahlungseingang mit den Rechnungen ausgeglichen wird, werden mögliche Unterschiede zwischen den Zahlbetrag in Hauswährung und dem Rechnungsbetrag in Hauswährung ermittelt und auf das in den Unternehmenseistellungen hinterlegte GuV-Konto gebucht, wenn die Hauptbuchintegration in den Unternehmenseinstellungen aktiviert ist	.
+<br /><br />
+<font size="+1"><b>Zahlungseingang - Zahlweg</b></font>
+<br /><br />
+Der Zahlungsweg wird im Zahlungseingang gespeichert und auf dem Kontoauszug des Kunden darstellt.  Ein Bankbuchungsbericht kann ausgeführt werden auf der Grundlage des Zahlungsweges, um die Bankbuchungen des Tages zusammenzufassen und so die Aufgabe des Sortierens der unterschiedlichen Beleg und die Zusammenstellung für die Bank zu automatisieren. 
+<br /><br />
+<font size="+1"><b>Zahlungseingang - Betrag</b></font>
+<br /><br />
+Der Betrag des Zahlungseinganges in der ausländischen Währung wird hier eingetragen. Der Betrag kann nicht 0 sein.  Es sind jedoch negative Beträge erlaubt (um falsche Zahlungseingänge zu stornieren). 
+<br /><br />
+ Anmerkung:  Es sollte besondere Vorsicht angewendet werden, wenn man die negativen Beträge zuordnet, um sicherzugehen, daß nur vorhergehende Ausgleiche aufgehoben werden. Es könnte zu merkwürdigen Ergebnissen führen, wenn Zuordnungen zu Rechnungen vorgenommen werden, die nicht vorher mit positiven Zahlungseingängen ausgeglichen wurden, obwohl natürlich die Systemintegrität erhalten bleibt. 
+<br /><br />
+<font size="+1"><b>Zahlungseingang - Skonto</b></font>
+<br /><br />
+Der Skontobetrag zu einem Zahlungseingang kann an dieser Stelle eingetragen werden und zusammen mit dem eingegangenen Betrag als eine Summe zugeordnet werden. Dieses ist nützlich, wenn ein Kunde entsprechend seinen Zahlungsbedingungen Skonto zieht und der eingegangene Betrag allein nicht ausreicht, um die gebuchte Forderung auszugleichen. Das System errechnet den Gesamtbetrag der Zahlung zuzüglich des Skontos, um den Sollbetrag der Rechnung zu erreichen.
+<br /><br />
+<font size="+1"><b>Zahlungseingang - Ausgleichen mit der Rechnung</b></font>
+<br /><br />
+Sobald alle notwendigen Angaben für den Zahlungseingang erfasst worden sind - den Kunden, den Kurs und den Betrag in der ausländischen Währung, der Zahlungseingang ist bereit für die Zuordnung der Rechnungen, für die die Zahlung bestimmt ist. 
+<br /><br />
+Dieses Konzept mag Unternehmen merkwürdig erscheinen, die vorher Kundenkonten auf der Basis Saldenvortrag verwendet haben. Das Ziel dieses Systems ist, die Frage von den Lippen des Kunden zu entfernen, woraus sich der Saldo zusammensetzt. Unter einem Saldenvortragssystem kann diese Frage schwer zu beantworten sein, da für das Konto immer nur Summen geführt werden, aber nicht welche der Rechnungen durch welche Zahlung bezahlt wurden. Dieses System benötigt jedoch ausdrückliche Anweisungen für jeden Zahlungseingang, welche Forderungen infolgedessen ausgeglichen werden sollten. 
+<br /><br />
+Über Hauptmenü &rarr; Debitoren &rarr; Vorgänge klicken Sie auf den Link "Zahlungseingang/Gutschrift zuordnen". 
+<br /><br />
+Diese Seite zeigt alle offenen Zahlungseingänge und Gutschriften, die noch zugeordnet werden müssen. Das Klicken auf die Links gegen diese Empfänge und Gutschriften führt den Benutzer zu den offenen Buchungen auf dem Kundenkonto, die für den Ausgleich vorgesehen sind. Dieser Schirm zeigt alle nicht ausgeglichenen Buchungen, aber nur Rechnungen sind für die Zuordnung der Zahlungseingänge oder Gutschriften verfügbar. 
+<br /><br />
+Beachten Sie, dass keine Zuordnung eines Zahlungseinganges zu einem anderen Zahlungseingang erlaubt ist.  Bei Bedarf können die negativen Zahlungseingänge benutzt werden, um einen Ausgleich mit Rechnungen und Habenbuchungen aufzuheben (obgleich dies nicht wünschenswert ist). Sobald sie erfasst sind, können die Zahlungseingänge nicht mehr gelöscht werden - (vom Standpunkt einer ordnungsgemäßen Buchführung sollte ein Löschen nicht wünschenswert sein). 
+<br /><br />
+Wenn der Gesamtbetrag des Zahlungseinganges nicht nicht mit den (zugeordneten) Rechnungen und Habenbuchungen aufgeht, fragt das System nach, um sicherzugehen, dass das auch beabsichtigt wurde. Anders als bei viele Systemen können Zuordnungen später jederzeit ergänzt oder korrigiert werden. 
+<br /><br />
+<font size="+1"><b>Kursdifferenzen</b></font>
+<br /><br />
+Der Prozess der Zuordnung der Zahlungseingänge zu den Rechnungen gibt dem System die Informationen, die notwendig sind um die Kursdifferenzen zu bestimmen, wenn der in Hauswährung umgerechnete Zahlungseingang zu einem anderen Wert führt als das Hauswährungsäquivalent der Rechnungen, mit der er ausgeglichen wird, es sei denn, der Zahlungseingang und die Rechnungen wurden zum selben Kurs umgerechnet. 
+<br /><br />
+Die Kursdifferenzen, die zum Zeitpunkt des Ausgleiches errechnet werden, können sobald der Ausgleich erfolgt ist über die Beleganzeige des Zahlungseinganges angezeigt werden. Anders als bei vielen Systemen können die Kursdifferenzen vollständig Buchung für Buchung zugerechnet werden.  Auswertungen zu den Belegpositionen der Zahlungseingänge zeigen die dem Zahlungseingang zuzurechnenden realisierten Kursdifferenzen. Weiterhin zeigt die Auswertung, welchen Rechnungen die Zahlung zugeordnet wurde, von wo die Kursdifferenzen gekommen sind. 
+<br /><br />
+Änderungen zu den Zuordnungen ändern natürlich die Kursdifferenzen.  Die Hauptbuchschnittstelle erzeugt jedesmal Buchungen für die Änderung der Kursdifferenzen wenn eine Zuordnung geändert wird.
+<br /><br />
+<font size="+1"><b>Zahlungseingänge verbuchen</b></font>
+<br /><br />
+Es können viele Zahlungseingänge von Kunden hintereinander erfasst werden oder gemischt mit anderen Geldeingängen eingegeben werden, z. B. für Maschinenverkäufe aus dem Anlagevermögen oder für die private Nutzung von Wirtschaftsgütern. Sobald alle Zahlungseingänge erfasst worden sind, kann die Verarbeitung stattfinden. Das System speichert nun die Daten, die für den Zahlungseingang bis zum Drücken dieser Taste zwischengespeichert wurden. 
+<br /><br />
+Die Verarbeitung gibt dem Stapel der Zahlungseingänge eine Nummer, fügt neue Zahlungseingangspositionen zum Debitorenkonto hinzu und aktualisiert den Stammsatz des Kunden mit dem Datum und dem Betrag der letzten Zahlung. Zusätzlich werden, wenn die Hauptbuchschnittstelle aktiv ist, die Belege zum Buchen des Zahlungseinganges auf das Bankkonto und das Verringern der Forderung auf dem Sammelkonto, das in den Unternehmenseinstellungen angegeben ist, erzeugt.  Hauptbuchbuchungen werden auch für den Skonto gegen das Sammelkonto für Forderungen erzeugt.  Alle erforderlichen Kontonummern müssen in die Unternehmenseinstellungen unter Hauptmenü &rarr; Einstellungen &rarr; Allgemeines und dem Bankkonto eingerichtet werden werden, die auf der gleichen Seite eingerichtet werden. 
+<br /><br />
+<font size="+1"><b>Liste der Zahlungseingänge</b></font>
+<br /><br />
+Nachdem die Verarbeitung durchgeführt wurde, wird ein Link zum Drucken des Stapels der erfassten Zahlungseingänge angezeigt.  Die Belegnummer wird auch berichtet. Die Auflistung zeigt die Informationen, die von Banken für die Verarbeitung eines Scheckstapels benötigt werden.  Diese Liste kann über Hauptmenü &rarr; Debitoren &rarr; Auswertungen jederzeit neugedruckt werden - Reports und Anfragen. 
+
+<!-- Help End: CustomerReceipt -->
+
+<br /><br />
+
+<!-- Help Begin: CustomerAllocations -->
+
+<font size="+2"><b>Habenbeträge dem Debitorenkonto zuordnen</b></font> 
+<br /><br />
+Diese Option steht zur Verfügung um Habenpositionen -  seien es Zahlungseingänge oder auch Gutschriften - den Sollpositonen aus den Rechnungen zuzuordnen. Bereits früher zugeordnete Habenpositionen stehen bei Bedarf für eine Änderung ihrer Zuordnung zur Verfügung. Es gibt zwei Möglichkeiten, diese Funktion auszuführen:
+<br /><br />
+<ul>
+<li>Aus dem Menü wählen Sie die Registerkarte und klicken auf den Link "Zahlungseingang/Gutschrift zuordnen".</li>
+<li>Von der Kundenauswertung gibt es einen Link zum Zuordnen von Kundenzahlungen oder -Gutschriften wenn der Benutzer die dafür erforderlichen Berechtigungen besitzt.</li>
+</ul>
+Wenn Sie die erste Methode verwenden, öffnet sich der Bildschirm mit nur denjenigen Zahlungseingängen, Gutschriften und Habenpositionen aus dem Hauptbuch, die noch einen offenen Betrag aufweisen. Wenn Sie hier viele Eingänge finden, die noch einen offenen Betrag aufweisen, ist das ein Zeichen dafür, dass Zahlungseingänge zugeordnet (ausgeglichen) werden. Damit Kontoauszüge für den Kunden sinnvoll werden, ist das Ausgleichen eine Notwendigkeit.
+<br /><br />
+Durch Doppelklicken auf einen Habenposten öffnen Sie ein Formular, in dem Sie die Zuordnung vornehmen können. Dieses Bild listet alle die Rechnungen und Hauptbuchpositionen auf, die auf dem Debitorenkonto offen sind. Bereits bezahlte Rechnungen erscheinen hier nicht mehr. Es werden jedoch alle zum ausgewählten Habenposten getroffenen Zuordnungen angezeigt. Wenn Sie aus der Kundenabfrage auf einen Habenposten klicken, erreichen Sie das gleiche Bild.
+<br /><br />
+Falls Sie versehentlich einen Posten bei einer früheren Zuordnung ausgeglichen haben, können Sie diesen Ausgleich zurücknehmen, wenn Sie den früheren, falsch zugeordneten Zahlungseingang auswählen. Dabei werden die mit der Zahlung verrechneten Posten und zusätzlich die noch offenen Posten angezeigt. Die zugeordneten Beträge können nach Belieben geändert werden. 
+<br /><br />
+Beachten Sie: Es ist ein komplexes Zusammenspiel im Hintergrund erforderlich, um die Abweichungen zu verbuchen, die aus Kursdifferenzen resultieren. Das System berechnet die Unterschiede zwischen der bereits erfolgten Zuordnung (oder dem Zeitpunkt der Rechnung, falls noch keine Zuordnung vorgenommen war) und erzeugt die erforderlichen Buchungen im Hauptbuch - wenn die Integrations-Option benutzt wird - um zu sichern, dass der Saldo des Forderungskontos im Hauptbuch mit der Summe der Debitorensalden in Übereinstimmung bleibt.
+<br /><br />
+Es empfiehlt sich, Hilfe zu suchen, falls in diesem Umfeld Änderungen am Programm nötig werden.
+
+<!-- Help End: CustomerAllocations -->

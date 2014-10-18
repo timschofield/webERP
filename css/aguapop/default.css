@@ -1,0 +1,485 @@
+/*
+
+New "AguaPop" Theme for WebERP
+
+v2, 2012-08-03
+
+by Hindra Joshua
+
+*/
+
+body {
+	font-family:Arial, Verdana, Helvetica, sans-serif;
+	font-size:10pt;
+	background: silver;  
+	margin:0;
+	padding:0;
+}
+
+/* default styles */
+
+a{
+	color:blue;
+	text-decoration:none;
+}
+a:hover{
+	color:red;
+	text-decoration:underline;
+}
+a:active{}
+
+img{ /* icon on page title, etc */
+	border:none;
+	vertical-align:middle;
+}
+
+p{ /* some text need to be centered */
+/*text-align:center;*/
+}
+p.page_title_text { /* page title */
+	color:black;
+	font-weight:bold;
+	margin:0 auto;
+	padding:5px;
+	text-align:center;
+}
+p.good {
+	font-weight: bold;
+	color: green;
+}
+p.bad {
+	font-weight: bold;
+	color:red;
+}
+
+
+table {
+	width:auto;
+	max-width:90%;
+	margin:5px auto;
+	padding-bottom:5px;
+}
+table.selection {
+	width:auto;
+	max-width:90%;
+/*padding-bottom:5px;*/
+}
+th {
+	background-color:skyblue;
+	color:black;
+	font-weight:normal;
+	padding:3px;
+}
+th.ascending {
+  cursor: s-resize;
+}
+th.descending {
+  cursor: n-resize;
+}
+th:after {
+	content: "";
+	float: right;
+	margin-top: 7px;
+	visibility: hidden;
+}
+th.ascending:after {
+	border-width: 0 4px 4px;
+	border-style: solid;
+	border-color: #000 transparent;
+	visibility: visible;
+}
+th.descending:after {
+	border-bottom: none;
+	border-left: 4px solid transparent;
+	border-right: 4px solid transparent;
+	border-top: 4px solid #000;
+	visibility: visible;
+}
+th.number {
+	text-align: right;
+	font-weight: normal;
+	background-color: skyblue;
+	color: white;
+}
+td {
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	text-align: left;
+}
+td.select {
+	background-color: whitesmoke;
+	padding:3px;
+}
+td.number {
+	text-align: right;
+}
+
+div.centre {
+	padding:5px;
+	text-align:center;
+}
+
+input { /*specifies the input field text characteristics*/
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-style: italic;
+}
+input.number{
+	text-align: right;
+}
+input.image {
+	border-width: 0px;
+	background-color: transparent;
+}
+input:hover{
+	background:#9ffffb;
+}
+select {
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+}
+input.inputerror, input.error, select.error, select.selecterror, label.error {
+	color:red;
+	border: 2px solid red;
+}
+input:required, select:required, textarea:required {
+	background-color:lightyellow;
+}
+select:hover { /* drop down */
+	background:#9ffffb;
+}
+
+textarea{
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+}
+textarea:hover{
+	background:#9ffffb;
+}
+
+.EvenTableRows {
+	background-color: gainsboro;
+}
+.OddTableRows {
+	background-color: whitesmoke;
+}
+
+div{ /* some input/buttons need to be centered */
+}
+div.error {
+	background-color: mistyrose;
+	width: 98%;
+	margin: 5px auto;
+	color: red;
+	border: 1px solid red;
+}
+div.warn {
+	background-color: pink;
+	width: 98%;
+	margin: 5px auto;
+	color: maroon;
+	border: 1px solid maroon;
+}
+div.success {
+	background-color: aquamarine;
+	width: 98%;
+	margin: 5px auto;
+	color: green;
+	border: 1px solid green;
+}
+div.info {
+	background-color: lightskyblue;
+	width: 98%;
+	margin: 5px auto;
+	color:navy;
+	border: 1px solid navy;
+}
+DIV.page_help_text {
+	background: lightgrey url(images/help.png) top left no-repeat;
+	border: maroon 1px solid;
+	padding-top:2px;
+	padding-bottom: 2px;
+	z-index: 1;
+	width: 80%;
+	float: none;
+	visibility: visible;
+	margin: 0 auto;
+	position: static;
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-weight: normal;
+	color: black;
+	text-align:center;
+	padding-left: 24px;
+	min-height:26px;
+}
+
+/* date picker */
+.dpTbl {
+	 border: solid navy 1px;
+	 background:white;
+}
+.dpTD {
+	border: 0;
+	width: 20px;
+	background-color: whitesmoke;
+	text-align: right;
+	cursor: pointer;
+}
+.dpDayHighlight {
+	border: 0;
+	width: 20px;
+	background-color: yellow;
+	text-align: right;
+	cursor: pointer;
+}
+.dpTDHover {
+	border: 0;
+	width: 20px;
+	background-color: gainsboro;
+	text-align: right;
+	cursor: pointer;
+}
+
+/* Table type is used for UI tables type 1 */
+.table1 {
+	width:90%;
+	background: whitesmoke;
+	border: 1px solid darkslategray;
+	margin: 0 auto;
+}
+.tableheader {
+	font-weight: normal;
+	background-color: skyblue;
+	color: white;
+}
+.notavailable {
+	font-weight: lighter;
+	font-style: italic;
+	color: gray;
+}
+.label {
+	font-weight: bold;
+	font-style: normal;
+	color: black;
+	background-color: gainsboro;
+}
+.table_index {
+	background-color: aliceblue;
+}
+li {
+/*list-style-image: url(bullet.gif);*/
+}
+
+/* CANVAS */
+
+#CanvasDiv { 
+	background:steelblue;
+	border-radius:20px;
+	box-shadow:3px 3px 4px #86C3D7 inset, -3px -3px 4px #383878 inset, 0 0 10px black;
+	margin:10px;
+}
+
+/* HEADER */
+
+#HeaderDiv {
+	overflow:hidden;
+	color:white;
+	padding:5px 10px 0;
+}
+#HeaderDiv a{
+	border-radius:10px;
+	color:white;
+	text-decoration:none;
+	padding:3px;
+}
+#HeaderDiv a:hover{
+	color:cyan;
+	border-radius:10px;
+	box-shadow:2px 2px 3px #86C3D7, -2px -2px 3px #383878;
+	padding:3px;
+}
+#HeaderWrapDiv{
+}
+
+/* HEADER - APP INFO */
+
+#AppInfoDiv{
+	float:left; /* REQUIRED: to the left */
+}
+#AppInfoCompanyDiv{
+	display:table-cell; /* REQUIRED: as a cell */
+}
+#AppInfoUserDiv{
+	display:table-cell; /* REQUIRED: as a cell */
+	padding-left:5px;
+}
+#AppInfoModuleDiv{
+	font-weight:bold;
+	padding:3px;
+}
+
+/* HEADER - QUICK MENU */
+
+#QuickMenuDiv{
+	float:right;
+	margin-top:7px;
+}
+#QuickMenuDiv ul{
+	list-style:none;
+	float:right;
+}
+#QuickMenuDiv ul li{
+	float: left;
+	display:inline;
+	margin: 0px 3px;
+}
+
+/* BODY */
+
+#BodyDiv {
+	clear:both;
+	overflow:hidden;
+	text-align:center; /* needed to center some buttons on SelectSupplier.php */
+}
+#BodyWrapDiv{
+	background:lightsteelblue;
+	box-shadow:2px 2px 3px inset;
+	margin:0 5px;
+}
+
+/* BODY - MAIN MENU */
+
+#MainMenuDiv{
+	float:left;
+	background:steelblue;
+	white-space:nowrap;
+	text-align:center;
+	padding-left:3px;
+	padding-top:3px;
+	width:11%;
+}
+#MainMenuDiv ul{
+	margin:0; 
+	padding:0;
+}
+#MainMenuDiv li{
+	list-style:none; 
+}
+#MainMenuDiv li a,
+#MainMenuDiv li a:hover,
+#MainMenuDiv .main_menu_selected a{
+	display:block; /* REQUIRED */
+	border-radius:10px;
+	color:white;
+	text-decoration:none;
+	padding:3px;
+	margin-bottom:5px;
+}
+#MainMenuDiv li a:hover{
+	color:cyan;
+	box-shadow:2px 2px 3px #86C3D7, -2px -2px 3px #383878;
+}
+#MainMenuDiv .main_menu_selected a{ /* the selected button */
+	box-shadow:2px 2px 3px #86C3D7, -2px -2px 3px #383878;
+}
+
+/* BODY - SUB MENU */
+
+#SubMenuDiv{
+	display:table; /* display as table, sub menu will auto adjust width */
+	float:right;
+	overflow: hidden;
+	margin-left:auto;
+	margin-right:auto;
+	width:88%; /* main menu is 10% */
+	text-align:left;
+}
+#SubMenuDiv ul{
+	margin:0;
+	padding:0;
+}
+#SubMenuDiv li{
+	list-style:none; /* REQUIRED: hide bullets */
+}
+#SubMenuDiv p{
+}
+
+#SubMenuDiv a{
+	color:black;
+	text-decoration:none;
+}
+#SubMenuDiv a:hover{
+	color:black;
+	text-decoration:underline;
+}
+
+.menu_group_headers {
+	background:steelblue;
+	border:2px outset white;
+	color:white;
+	font-weight:bold;
+	text-align:center;
+	padding:3px;
+}
+
+.menu_group_item {
+	padding:2px;
+	text-align:left; 
+}
+.menu_group_item:hover{
+	background:lightblue;
+	text-align:left; 
+}
+
+.menu_group_item p { /* bullet */
+	color: red; /* This is the color for bullets, I like it to be the same as the anchor color, but it's up to you */
+	text-indent: -10px; /* this makes the bullet to appear as the li tag previously used */
+	margin: 0 0 0 12px;
+	text-align:left; 
+}
+.menu_group_item a{
+	color:black;
+	text-decoration:none;
+}
+.menu_group_item a:hover{
+	color:red;
+	text-decoration:none;
+}
+
+#TransactionsDiv,#InquiriesDiv,#MaintenanceDiv{
+	background:whitesmoke;
+	border:2px solid steelblue;
+	display:table-cell; 
+}
+#InquiriesDiv div{ /* to center custom report/form header */
+	background:lightsteelblue;
+	font-weight:bold;
+	color:black;
+	padding:2px;
+}
+
+/*** FOOTER ***/
+
+#FooterDiv{
+	clear:both;
+	color:white;
+	height:53px;
+	padding:0;
+}
+#FooterWrapDiv{
+	padding:5px;
+}
+#FooterLogoDiv{
+	background:white;
+	border:2px outset steelblue;
+	border-radius:8px 8px 8px 8px;
+	float:left;
+	padding:3px;
+}
+#FooterVersionDiv{
+	float:left;
+	margin-left:10px;
+	margin-top:15px;
+}
+#FooterTimeDiv{
+	float:right;
+	margin-top:15px;
+}
+
+/**** END  ***/

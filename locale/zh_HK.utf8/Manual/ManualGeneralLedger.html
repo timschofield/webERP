@@ -1,0 +1,505 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=gb2312">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Win32)">
+	<META NAME="AUTHOR" CONTENT="Exson Qu">
+	<META NAME="CREATED" CONTENT="20110211;11074500">
+	<META NAME="CHANGEDBY" CONTENT="Exson Qu">
+	<META NAME="CHANGED" CONTENT="20110211;18093900">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin: 2cm }
+		P { margin-bottom: 0.21cm }
+		TD P { margin-bottom: 0cm }
+		TH P { margin-bottom: 0cm }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="zh-CN" DIR="LTR">
+<P STYLE="margin-bottom: 0.5cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=5 STYLE="font-size: 20pt"><B>总分类帐</B></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><SPAN LANG="en-US"><BR><BR></SPAN></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=5 STYLE="font-size: 20pt"><B>概述</B></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>总分类帐是会计中心，它是供应商（应付账户），客户
+（应收账户）以及库存等次级分类帐的中心。所有子分类帐的输入也会被表示在总分类帐的输入中。是</FONT><FONT SIZE=4><B>整合设置</B></FONT><FONT SIZE=4>决定子分类帐的输入是如何显示在总分类帐中，总分类帐中的大多数活动都会伴随应收，应付和库存管理的活动从子分类帐而自动产生。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>然而，</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT FACE="Arial, sans-serif"><FONT SIZE=4>webERP</FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>还提供了</FONT><FONT SIZE=4>一些设施来：
+</FONT></FONT>
+</P>
+<UL>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>向一个预先定义的银行账户输入总分类帐收款。
+	</FONT></FONT>
+	</P>
+</UL>
+<UL>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>向一个预先定义的银行账户输入输入总帐的付款。</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>在总帐之间进行转账（输入转账凭证）</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>银行账户除外。这些也可以设置为在下个会计期间（月）自动撤销，进一步而言，在后续的期间，凭证可以被过账到将来或者以前的任意期间</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>这个期间是由输入的日期决定的。</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>总分类帐活动查询，并且从这个查询的任何输入都可以发掘到产生这个输入的日记账。
+	</FONT></FONT>
+	</P>
+	<LI><P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>适用于当下或者历史中任何期末总分类帐试算平衡表的查询。</FONT></FONT></P>
+</UL>
+<P><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><B><BR></B></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=5 STYLE="font-size: 20pt"><B>会计科目组</B></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>会计科目组是总帐科目的父对象（对理解面向对象编程的人而言）。创建的子账户会遗传会计科目群的属性</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>例如如果它属于会计科目组中的资产负债表账户那么它就不会是一个损益账户，子账户会一起显示在试算平衡表中，按照会计科目组中指定的顺序。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>使用数字编码系统阻止了手动更改试算平衡表格式的能力，例如你不得不更改账户编码来更改如下的格式，例如</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR>10100
+motor expense Copenhagen <BR><BR>10110 motor expenses The Hague
+<BR><BR>10120 motor expense Amsterdam <BR><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>如果我们想调整格式，例如希望</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">Copenhagen
+expenses </SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>显示在一起，</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">The
+Hague</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>也会显示在一起等等。我们必须变更编码。而在</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">web-ERP</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>中，所有需要做的就是变更会计科目组。在第一种情况，我们将为</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US">motor
+expenses
+</SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>设置一个科目组，并且所有这些账户编码会被设置为属于这个科目组。我可通过调整试算平衡表栏中的顺序来决定会计科目组显示的位置。同一会计科目组中的所有账户会显示在一起。如果我们决定改变试算平衡表将</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">The
+hague expense</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>做为一个独立的成本组来显示，我们可以为</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">The
+Hague</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>销售成本创建一个会计科目组</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>或者无论如何，将</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">motor
+expenses the Hagues
+</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>账户号码</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">10110</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>变成改会计科目组的一分子。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>会计科目群组要求在试算平衡表中指定账户顺序并且这个账户是属于损益账户还是资产负债表账户。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>资产负债表账户是只关心在会计期末的余额。损益账户关心会计期间的变动。例如，对汽车费用，我们在月末中不怎么关心余额是多少，更关心在损益期间我们共花费了多少。然而，对应银行账户，我们希望知道目前我们有多少余额，而不是账户的变动。如前所述，账户被创立为会计科目组的一份子，他将遗传会计科目组的性质，例如，如果来自得会计科目组是资产负债表组，那么这个账户也应该是资产负债表账户。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR></SPAN></FONT></SPAN></FONT><BR><BR>
+</P>
+<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=5 STYLE="font-size: 20pt"><B>银行账户</B></FONT></FONT></P>
+<P><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>某些总帐可以定义为银行账户</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>可以定义任何需要数量的银行账户。在定义一个总帐账户为银行账户时，必须指定账户的货币单位。定义为银行账户的总分类帐户可以与银行的对账单核对（使用核对工具）</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>所有的收款和付款都以银行账户的货币显示，方便与对账单核对。使用收款或者付款输入银行账户，并且创建了一个总的收款或付款，这些被保留以便与银行的对账单核对。使用银行付款页面，总分类帐付款可以被分解到任何数量的其他总分类账户，但是对于银行账户只有一个输入。这个页面也允许创建付款给供应商的账户。类似的，使用收款输入页面，同时存入银行的来自顾客的一系列收款可以被
+一起存入一个银行账户。出现在对账单中只有一个这些收款的总数，这个银行账交易被创建，并且可以用来与银行的对账单核对存款。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><B>银行账户</B></FONT><FONT SIZE=4>可以在</FONT><FONT SIZE=4><B>银行账户维护</B></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><B>Bank
+Accounts
+Maintenance</B></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>的链接设置</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">.</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>有工具来输入账户名称，账户的货币，银行账户号码和银行地址（需要时），以及选择它所对应的总分类账。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US">webERP</SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>系统有链接用来编辑存在的银行账户记录和删除它们。然而，一旦定义为指向一个特殊的总分类帐代码，这个银行总分类帐的代码就不可能再变更。这是因为这个账户可能已经有输入。类似的，如果这个银行账户已经用来创建了交易，它就不可能被删除。银行账户的交易必须首先被删除（但是目前没有工具可以删除银行交易）。如果已经有交易发生，也不能改变银行的货币。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>一旦所有的收款和付款与银行的结算表符合，可以打印银行对账表，显示目前的总分类帐余额是如何与该账户的银行结算表
+相符。这个对账也提供了一个选项，用来对于不是使用目前业务的货币（本地货币），来设置银行账户，以处理汇率的差异。在总分类帐中，账户余额用本地货币维
+护，为了银行对账，它被转化为银行账户的货币，以货币表中的汇率计算（参考设置</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--&gt;</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>货币维护）</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>这个汇率可以被手动更改为当天的汇率并且账户余
+额的外币会转化</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>为了校正这个余额，汇率差异需要被记录。在与银行结算单对完收款和付款之后</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>银行结算的余额可以输入与系统的余额核对</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">-</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>会产生一个纠
+正输入来对汇率差异进行会计处理（过账）。过账到总分类帐被追溯为前个月的结束日期</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>因为系统假设对账发生在目前日期的几天或者几周之后。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=6 STYLE="font-size: 22pt"><B>银行账户付款</B></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>从总分类帐标签，交易下的第一个链接就是银行账户付款</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">Bank
+Account Payments</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>需要下列数据：</FONT></FONT></P>
+<UL>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>付款已出自（或将要出自）的银行账户。有个选项框允许从已经定义的银行账户的列表中选择银行账户。</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>付款的日期。这个非常重要，因为付款要记入的所属会计期间就是由这个日期决定的。系统会默&#35899;设置为今天的日期</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>这个必须被改变，当银行付款是以回溯方式输入（由近而远）的时候。</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>付款使用的货币。付给供应商的货款可能是以银行账户的货币，按照输入的汇率采购的外币</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>参见后面。</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>汇率</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>这是已经付款的货币和银行账户的货币的兑换率。如果付款的货币与银行账户的货币一样，那么这个比例应该为</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">1.</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>如果另外的货币是采购的，那采购时的比率需要在此输入。</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>报告汇率</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>这是银行账户中的货币和企业使用的定义在公司的参数（例如企业的报告货币）。如果银行账户的货币与企业的报告货币一致，那么这个参数就是</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">1&#8231;</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>只有在银行账户货币和企业的报告货币不一致时，才需要输入这项，如果一样，会自动设置为</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">1.</SPAN></FONT></SPAN></FONT></P>
+	<LI><P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>描述</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>适用于整个付款。描述适用于单个总分类帐的输入，并且可以分开输入。</FONT></FONT></P>
+</UL>
+<P><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>付款可以采用两种格式</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>或者是总分类帐的付款或者是对一个供应商的付款。总分类账的付款要求一个分析</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>这个付款如何过账到总分类帐。总分类账账户可以被
+被指定</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>直接按账户代码（如果账户代码已知）或者从选择框中选择。任何适用于此总分类帐的描述也可以输入</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>连同可以过账到所选</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">/</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>输入的账户的金额。付
+款总额作为所有输入的加总被计算。如果所有的输入总和为负数，那么这个作为负的付款输入</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>这个是允许的以改正数据输入错&#35974;。付款总是以付款是采用的货币
+输入</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>转换被系统处理来进行总账过账等。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=5 STYLE="font-size: 20pt"><B>总分类帐整合设置</B></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>银行账户是自
+动整合到总分类账中，并且不能在没有总分类帐的情况下单独存在。每项交易都记录在两个地方（复式记账），例如通过银行账户付款反应在银行账户，同时也会记
+录在所支付的费用账户中</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>例如，文具，燃料，娱乐，广告或者其他。一个输入作为借方记在左边，另一个作为贷方记在右边</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>当你查看计算平衡表时，
+借方应该与贷方一致，例如计算平衡</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>总分类帐余额的列表应该为总的借方余额等于总的贷方余额。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>对于销售（应收账户</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">AR)</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>和采购（应付账户）分类帐，总分类帐过账可以被关闭，方法是在公司参数屏幕设定它们的标志为
+</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">No.11.<BR><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>整合的总分类帐过账提供了一个从细目的活动来建立企业的会计科目的好方法。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>你可以在两种水平的整合中选择：</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR>1.</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>只是把进货</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">debtors</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>，</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">sales</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>销售整合总分类帐</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>这会对每笔销售创建总分类帐日记账如下：</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR>DR</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>借方进项统制账户</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>在公司参数屏幕定义</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR>CR
+</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>贷方
+销售账户</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>连同顾客销售地点，销售产品的库存种类和销售种类（价目表）一起定义。这对销售如何过账提供了很大的灵活性。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR>CR
+</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>贷记税收到</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">taxgl
+</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>账户，在税务局定义中（例如总分类帐中顾客分支机构所在的税务局的代码）。也允许只有一个总分类账代码，使用一个总分类账户，适用于所有的销售地点，库存种类和销售类型</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>参考后续销售总分类帐代码部分。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>对于贷记凭证刚好经历相反的过程。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>收到现金时：</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR>CR</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>贷记
+借项统制</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>在公司参数中定义
+</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">DR</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>借记
+银行账户</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>在银行账户设置中定义。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>也有总分类帐输入为折扣和汇率差异设置，在这个介绍中被忽略了。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>这个水平的整合确保了所有顾客账户（使用本地货币）的余额列表总是与总分类帐中的借方统制账户关联。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR>2.
+</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>把库存也整合到总分类账</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>对每次销售</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>对每项货物销售，以标准成本贷记</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">CR
+</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>存货价值</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>存货的总分类帐在存货种类记录中定义。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR>DR
+</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>借记
+货物销售成本 </FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">Cost
+of Goods Sales(COGS-</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>或者</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">COS)</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>使用同样的成本</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>货物销售成本的总分类账户</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">COGS
+GL</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>也有相似的灵活性，如同销售总分类帐描述的那样，在设置菜单
+</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">AR/PR</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>选项下定义。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>对于贷记凭证，发生相反的过程。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>这就使库存价值在总分类帐中被持续更新，并且总是与一标准成本计算的库存价值相等。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>这个水平的整合也有附加功能进行库存调整，库存运输和库存成本变更。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>对库存调整，调整的数量扩展为以标准成本计价的金额，被计入（</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">CR</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>）或者注销
+（</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">DR</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>）入</FONT><FONT SIZE=4><B>库存调整总分类帐</B></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><B>stock
+adjustment GL
+account</B></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>，这个账户由该货物的库存种类记录中指定。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>对入库</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>库存商品使用标准成本计价，并且输入为：</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR>DR
+</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>借记　库存标准成本</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">x</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>收到的数量</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>库存的账户在该货物的库存种类记录</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">stock
+category record</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>中定义</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">.<BR>CR
+</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>贷记
+</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">GRN</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>在途材料标准成本</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">X</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>收到的数量</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>这个账户在公司参数屏幕中指定。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>这两水准的总分类帐整合是：
+</FONT></FONT>
+</P>
+<UL>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>销售日记账过账一个贷方到销售总分类帐，一个借方到折扣账户，一个贷方到税收账户，一个贷方到运输收回账户，一个借方到进项账户。这个水准的整合也有用于销售贷记凭证的逆转处理程序。这个水平也触发存入现金到进项账户的总分类帐的日记账。借银行账户并且贷进项账户。</FONT></FONT></P>
+</UL>
+<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>库存日记账，它在销售成本帐中计入借方，并且在库存账户计入贷方</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>处理销售信用凭证时进行逆过程。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>总分类帐整合由公司参数页的设置标志决定。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=5 STYLE="font-size: 20pt"><B>销售日记账</B></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>这个水准整合的总分类帐由如下几种输入决定</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">.</SPAN></FONT></SPAN></FONT></P>
+<UL>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>被开发票</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">/</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>贷记的顾客的销售地区</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>被开发票</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">/</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>贷记的顾客的销售类型（价格表）</FONT></FONT></P>
+	<LI><P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>被开发票</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">/</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>贷记的顾客的货物的库存种类</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>系统维护一张销售总分类帐账户表，并且他可以从</FONT><FONT SIZE=4><B>设置</B></FONT><FONT SIZE=4>标签处变更</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">.</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>当脚本</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">ConfirmDispatch_Invoice.php</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>创建了一张发票时，系统用定义在</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">GetSalesTransGLCode.inc</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>中的功能查找合适的总分类账代码。默&#35899;情况下，这个功能使用如下的逻辑：
+	</FONT></FONT>
+	</P>
+</UL>
+<UL>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>如果在</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">SalesGLPostings</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>表中有一个在地区，销售种类和库存种类都相符的记录，系统会返回这个销售账户及适用的折扣账户。</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>如果有一个符合地区，销售种类和使用默&#35899;库存种类的账户，那么适用于这个记录的代码被返回。</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>然后如果有一个符合的销售种类，库存目录而地区为默&#35899;的记录的代码被返回。</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>然后如果有一个符合的库存目录，而销售种类和地区为默&#35899;的记录的代码被返回</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>最后。
+	</FONT></FONT>
+	</P>
+	<LI><P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>如果计完了上述的组合，而没有找到任何记录，那么总分类帐代码用于默&#35899;地区，销售种类，和默&#35899;的库存目录被使用</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>这个</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">GL</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>编码是</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">1</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>，如果</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">GL</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>编码</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">1</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>没有被定义，它会被创建。</FONT></FONT></P>
+</UL>
+<P><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>由于总分账户如何被决定的逻辑被定义到这个功能，将它变更到更适宜业务需要就相对简单。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>运输回收和进项统制账户在公司参数页面定义。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>税收账户是在适用于所开发票顾客对应的税务局定义中定义的。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=5 STYLE="font-size: 20pt"><B>库存日记账</B></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>用来过账销售交易的总分类
+账户，通过使用销售地区，被开发票</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">/</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>记贷方的顾客销售种类，被开发票</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">/</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>记贷方的库存商品目录而决定。总分类账户表被维护，并且可以从设置标签中的链接
+&ldquo;</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">COGS
+GL Interface Postings&quot; </SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>（销售成本
+总分类账过账界面）修改。适用于上述同样的逻辑，并且功能定义在同一个脚本</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">GetSalesTransGLCode.inc</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>中，它来查找合适的总分类帐代
+码</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">GL
+codes. </SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>由于总分类账驶入如何决定的逻辑定义在函数
+</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">GetCOGSGLAccount</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>，将它变更为适应业务变得相对简单。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>销售成本借出的账户由被销售出的产品参考号决定。这一货物的库存类目被回溯，适用于此库存科目的总分类帐代码被使用。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>用于库存调整的损益账户也被库存类目记录</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">stock
+category
+record</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>的参考号决定。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>处理采购货物的标准成本和它的实际的开开发票的成本差异被计入损益账户，这个账户也由库存科目记录</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">stock
+category record</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>决定。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR></SPAN></FONT><FONT SIZE=4><SPAN LANG="en-US"><B>EDI</B></SPAN></FONT><FONT SIZE=4><SPAN LANG="en-US">
+</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>电子数据交换</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR><BR>EDI
+</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>代表电子数据交换</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>交易伙伴之间交易信息的电子交换。对如何编码这种交易，有很多标准，最广泛使用的是</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">UN/EDIFACT</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>和它的衍生标准</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">EANCOM
+</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>补充条款。实际上，很多工业组织使用标准格式，仅仅有些许不同，有些行业内的企业使用行业标准，也只是些许不同。最终结果，标准只是一个框架，用来规定实
+际的信息的外观。在</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">webERP</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>中使用</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">EDI</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>，
+在发送信息和接收信息的表格中提供了一些灵活性。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">EDI
+</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>信息创建为没有特殊格式的文件，保存在</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">config.php</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>指定的路径中，作为</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">EDI</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>发出的信息。系统也保持发出的</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">EDI</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>信息的</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">log</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>日志文件。这个信息
+可以作为发给顾客提供电邮地址的电邮附件发出，或者通过</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">ftp</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>，顾客提供的</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">ftp</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>服务器地址</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>使用顾客提供的</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">ftp</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>用户名和密码。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR></SPAN></FONT><FONT SIZE=4><SPAN LANG="en-US"><B>EDI
+</B></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><B>设置</B></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>为使某个顾客的</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">EDI</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>交易生效，首先从</FONT><FONT SIZE=4><B>选择顾客</B></FONT><FONT SIZE=4>链接选择顾客，然后点击这个链接</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>顾客</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">EDI</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>配置</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">Customer
+EDI
+Configuration</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>。这个页面允许选择用于电子传递的交易种类，目前仅有发票</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">/</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>贷记凭证和订单可以使用。每项均须特别激活。每个顾客必须有他们的：</FONT></FONT></P>
+<UL>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>&#35933;别他们的</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">EDI</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>参考号</FONT></FONT></P>
+	<LI><P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>传输机制和发票、贷记凭信息要发往的地址</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>作为电子邮件的附件或者通过</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">ftp</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>（文件传输协&#35909;）。</FONT></FONT></P>
+</UL>
+<P><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>如果传输机制设置为</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">ftp--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>这必须编进</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">PHP--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>用标&#35933;</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">enable-ftp</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>，很多</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">windows
+PHP</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>安装有这个默&#35899;设置。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">ftp</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>服务器的用户名和密码的附加栏位也同样需要。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>要激活</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">EDI</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>要发送的发票的查询，脚本</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">EDISendInvoices.php</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>必须按计划运行</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>使用</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">cron</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>或者其他的计划系统</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>参考自动创建销售报告。通过调计输出，它也可以用工具
+</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">menu
+Z_index.php</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>来运行。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>要激活</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">EDI</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>要输入的订单的查询，脚本必须按计划运行</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>使用</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">cron</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>或者其他的计划系统</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=5 STYLE="font-size: 20pt"><B>发送</B></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=5 STYLE="font-size: 20pt"><SPAN LANG="en-US"><B>EDI</B></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=5 STYLE="font-size: 20pt"><B>发票</B></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR>EDI</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>信息是由必须出现在订单上的某些分项组成。由于顾客要求的</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">EDI</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>发票会在格式上有些微不同，精确的
+格式可以在表格
+</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">EDIMessageFormat</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>中定义。这张表中的栏目中的文字可以包括任何事先定义的</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">EDI</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>发票变量，这些变量用【&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+】定义，表明他们是作为变量出现可以用下列适当的值取代：</FONT></FONT></P>
+<TABLE WIDTH=643 BORDER=0 CELLPADDING=2 CELLSPACING=0>
+	<COL WIDTH=159>
+	<COL WIDTH=475>
+	<TR>
+		<TH COLSPAN=2 WIDTH=639>
+			<P><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">EDI
+			Invoice Detail Section EDI</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>发票&#35965;细部分</FONT></FONT></P>
+		</TH>
+	</TR>
+	<TR>
+		<TD WIDTH=159>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">EDITransNo
+			</SPAN></FONT></FONT>
+			</P>
+		</TD>
+		<TD WIDTH=475>
+			<P><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">The
+			unique EDI transaction number </SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>唯一的</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">EDI</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>交易号码</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=159>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">InvOrCrd
+			</SPAN></FONT></FONT>
+			</P>
+		</TD>
+		<TD WIDTH=475>
+			<P><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">Whether
+			the transaction is an invoice or a credit - the value of this
+			variable is an EANCOM defined number, 388 for a tax invoice and
+			381 for a credit
+			note<BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>交易是发票或者贷记项</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>这个变量的值是</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">EANCOM</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>定义的数字，</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">388</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>为税收发票，</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">381</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>为贷记凭证。</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=159>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">TransNo
+			</SPAN></FONT></FONT>
+			</P>
+		</TD>
+		<TD WIDTH=475>
+			<P><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">The
+			transaction number of invoice or credit</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>发票或者贷记凭证的交易号码</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=159>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">OrigOrDup
+			</SPAN></FONT></FONT>
+			</P>
+		</TD>
+		<TD WIDTH=475>
+			<P><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">Whether
+			the transaction is a duplicate or original sending the value of
+			this variable is an EANCOM defined number 7 for a duplicate and 9
+			for an original<BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>交换是一个复印件还是原价这个变量值在</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">EANCOM</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>定义为复印件为</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">7</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>，原价为</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">9.</SPAN></FONT></SPAN></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=159>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">TranDate
+			</SPAN></FONT></FONT>
+			</P>
+		</TD>
+		<TD WIDTH=475>
+			<P><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">The
+			transaction date in the format CCYYMMDD</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>交易日期格式为</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">CCYYMMDD</SPAN></FONT></SPAN></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=159>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">OrderNo
+			</SPAN></FONT></FONT>
+			</P>
+		</TD>
+		<TD WIDTH=475>
+			<P><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">The
+			original order number - only for invoices</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>原始的订单号码</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>仅仅用于发票</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=159>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">CustBranchCode
+			</SPAN></FONT></FONT>
+			</P>
+		</TD>
+		<TD WIDTH=475>
+			<P><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">The
+			customer's internal code for the branch </SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>对该分支机构，顾客的内部码</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=159>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">CompanyEDIReference
+			</SPAN></FONT></FONT>
+			</P>
+		</TD>
+		<TD WIDTH=475>
+			<P><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">The
+			customer's EDI reference code</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>顾客的</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">EDI</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>参考号码</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=159>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">BranchName
+			</SPAN></FONT></FONT>
+			</P>
+		</TD>
+		<TD WIDTH=475>
+			<P><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">The
+			branch name</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>分支机构名称</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=159>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">BranchStreet
+			</SPAN></FONT></FONT>
+			</P>
+		</TD>
+		<TD WIDTH=475>
+			<P>&nbsp; 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=159>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">BranchCity
+			</SPAN></FONT></FONT>
+			</P>
+		</TD>
+		<TD WIDTH=475>
+			<P>&nbsp; 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=159>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">BranchState
+			</SPAN></FONT></FONT>
+			</P>
+		</TD>
+		<TD WIDTH=475>
+			<P>&nbsp; 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=159>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">TaxAuthorityRef
+			</SPAN></FONT></FONT>
+			</P>
+		</TD>
+		<TD WIDTH=475>
+			<P><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">The
+			businesses Tax Authority reference number</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>业务税务局的参考号码</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=159>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">DatePaymentDue
+			</SPAN></FONT></FONT>
+			</P>
+		</TD>
+		<TD WIDTH=475>
+			<P><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">The
+			due date for this transaction</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>交易的期限</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=159>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">TaxTotal
+			</SPAN></FONT></FONT>
+			</P>
+		</TD>
+		<TD WIDTH=475>
+			<P><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">The
+			total amount of tax on the transaction</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>交易的税收总数</FONT></FONT></P>
+		</TD>
+	</TR>
+</TABLE>
+<TABLE WIDTH=643 BORDER=0 CELLPADDING=2 CELLSPACING=0>
+	<COL WIDTH=422>
+	<COL WIDTH=212>
+	<TR>
+		<TH WIDTH=422>
+			<P><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">EDI
+			Invoice Detail Section - for the lines on the transaction</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>适用于交易中的行</FONT></FONT></P>
+		</TH>
+		<TD WIDTH=212 VALIGN=TOP>
+			<P><BR>
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=422>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">LineNumber
+			</SPAN></FONT></FONT>
+			</P>
+		</TD>
+		<TD WIDTH=212>
+			<P>&nbsp; <FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>行号</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=422>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">StockID
+			</SPAN></FONT></FONT>
+			</P>
+		</TD>
+		<TD WIDTH=212>
+			<P><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">The
+			webERP item code</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>货物代码</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=422>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">CustStockID
+			</SPAN></FONT></FONT>
+			</P>
+		</TD>
+		<TD WIDTH=212>
+			<P><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">The
+			customer's internal code for the item<BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>顾客内部使用的货物代码</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=422>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">ItemDescription
+			</SPAN></FONT></FONT>
+			</P>
+		</TD>
+		<TD WIDTH=212>
+			<P>&nbsp; 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=422>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">QtyInvoiced
+			</SPAN></FONT></FONT>
+			</P>
+		</TD>
+		<TD WIDTH=212>
+			<P><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">Quantity
+			invoiced or credited<BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>开发票</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">/</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>贷记凭证的数量</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=422>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">LineTotalExclTax
+			</SPAN></FONT></FONT>
+			</P>
+		</TD>
+		<TD WIDTH=212>
+			<P><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">The
+			total for the line excluding tax<BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>不含税的此行的总数</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=422>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">UnitPrice
+			</SPAN></FONT></FONT>
+			</P>
+		</TD>
+		<TD WIDTH=212>
+			<P><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">Unit
+			price for the item</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>货物的单价</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=422>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">LineTaxAmount
+			</SPAN></FONT></FONT>
+			</P>
+		</TD>
+		<TD WIDTH=212>
+			<P><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">The
+			tax applicable to the line<BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>适用于此行的税</FONT></FONT></P>
+		</TD>
+	</TR>
+</TABLE>
+<TABLE WIDTH=643 BORDER=0 CELLPADDING=2 CELLSPACING=0>
+	<COL WIDTH=267>
+	<COL WIDTH=367>
+	<TR>
+		<TH WIDTH=267>
+			<P><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">EDI
+			Invoice Summary Section EDI</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>发票中总结部分&nbsp;
+			</FONT></FONT>
+			</P>
+		</TH>
+		<TD WIDTH=367 VALIGN=TOP>
+			<P><BR>
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=267>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">NoLines
+			</SPAN></FONT></FONT>
+			</P>
+		</TD>
+		<TD WIDTH=367>
+			<P><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">The
+			total number of lines on the invoice/credit</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>发票</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">/</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>贷记凭证的总行数</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=267>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">TotalAmountExclTax
+			</SPAN></FONT></FONT>
+			</P>
+		</TD>
+		<TD WIDTH=367>
+			<P><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">Total
+			amount of the transaction excluding tax</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>不含税的交易总额</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=267>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">TotalAmountInclTax
+			</SPAN></FONT></FONT>
+			</P>
+		</TD>
+		<TD WIDTH=367>
+			<P><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">Total
+			amount of the transaction including tax</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>含税的交易总额</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=267>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">NoSegments
+			</SPAN></FONT></FONT>
+			</P>
+		</TD>
+		<TD WIDTH=367>
+			<P><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">The
+			total number of segments in the transaction this is required as a
+			control check in the summary<BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>此项交易中的总的分项数量，这部分作为总结的控制检查点。</FONT></FONT></P>
+		</TD>
+	</TR>
+</TABLE>
+<P><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>因此有很大的灵活性决定这些信息如何定义。总结和头部的变量可以用到任何部分。细节部分的变量只可以应用到细节部分。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>很多顾客会要求&#35933;别开发票的货物运输到的分支机构，它是通过顾客的代码系统&#35933;别的。因此，确保顾客分支机构代码实际上对应于</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">webERP</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>的分支记录被输入是非常重要的。变量</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">CustBranchCode</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>被从分支机构的记录中取出，如果它没有被输入，那么</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">EDI</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>交易会失败。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>有些顾客会要求货物代码使用他们自己的代码而不是</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">webERP</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>中的代码。变量</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">CustStockID
+</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>从交叉参考表
+</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">EDIItemMapping</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>取出，这张表中包括了顾客可能购买的每种货物的交叉参考记录。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>创建</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">EDI</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>发票的脚本（</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">EDISendInvoices.php</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>）应该
+作为一项计划的任务在后台自动运行。它会首先得到一张包括所有应收到</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">EDI</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>发票（或者贷记凭证）顾客的表</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>在他们的</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">DebtorsMaster</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>记录中设
+定。脚本会&#35926;问每个顾客，按序返回还没有发出的发票或者贷记凭证。一个没有任何特殊格式的文件会被创建，它会对应所有的顾客发票和贷记凭证，并且使用发
+送，地址或者其他定义在顾客</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">EDI</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>设置页中（对应于</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">DebtorsMaster</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>纪录）的参数送给顾客。这有一个连接，确保脚本被手动运行</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>浏览器也会显
+示</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">EDI</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>信息的输出。
+</FONT></FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+</BODY>
+</HTML>

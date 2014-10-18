@@ -1,0 +1,551 @@
+/*** 
+
+New "Professional RTL" Theme for WebERP
+For Right-To-Left Languages
+
+by Hindra Joshua
+
+*** This a very clean professional-looking theme - handsome!
+
+Based from the previous theme "SilverWolf"
+Credits to the original authors.
+
+NOTE: 
+This CSS is not yet optimized. Some styles maybe 'redundant' or 'unused',
+but for the obvious one it will be cleaned up.
+To optimized the rest we should examined the whole codes! That would be for 
+the next project. :)
+
+***/
+
+body {
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 10px;
+	background-color: #ddd;
+	margin:0;
+	padding:0;
+	direction:rtl;
+}
+
+img {
+	border:none;
+	vertical-align:middle;
+}
+a {
+	color:blue;
+	text-decoration:none;
+}
+a:hover {
+	color:blue;
+	text-decoration:underline;
+}
+
+.centre { /* used */
+  margin: 0 auto;
+  text-align:center;
+}
+
+/*table detail items default format */
+td {
+	font-family: Arial, Verdana, Helvetica;
+	font-size: 10px;
+	text-align: left;
+}
+td.select {
+	background-color:#eee;
+}
+.dpTbl {
+	border: solid navy 1px;
+	background:white;
+}
+.dpTD {
+	border: 0;
+	width:20px;
+	background-color: #EEEEEE;
+	text-align:right;
+	cursor:pointer;
+}
+
+.dpDayHighlight {
+	border: 0;
+	width:20px;
+	background-color: yellow;
+	text-align:right;
+	cursor:pointer;
+}
+
+.dpTDHover {
+	border: 0;
+	width:20px;
+	background-color: #CCCCCC;
+	text-align:right;
+	cursor:pointer;
+}
+td.number {
+	text-align: right;
+}
+.EvenTableRows {
+	background-color: #CCCCCC;
+}
+.OddTableRows {
+	background-color: #EEEEEE;
+}
+
+th { /* table heading */
+	font-weight: normal;
+	font-size: 10px;
+	background-color: #cccce5;
+	color: #330000;
+	text-align: center;
+}
+th.number {
+	font-weight: normal;
+	font-size: 10px;
+	background-color: #cccce5;
+	color: #330000;
+	text-align: right;
+}
+th.ascending {
+  cursor: s-resize;
+}
+th.descending {
+  cursor: n-resize;
+}
+th:after {
+	content: "";
+	float: right;
+	margin-top: 7px;
+	visibility: hidden;
+}
+th.ascending:after {
+	border-width: 0 4px 4px;
+	border-style: solid;
+	border-color: #000 transparent;
+	visibility: visible;
+}
+th.descending:after {
+	border-bottom: none;
+	border-left: 4px solid transparent;
+	border-right: 4px solid transparent;
+	border-top: 4px solid #000;
+	visibility: visible;
+}
+div.error {
+	background-color:#fddbdb;
+	color: red;
+	border: 1px solid red;
+}
+
+div.warn {
+	background-color:#f5dbfd;
+	color: maroon;
+	border: 1px solid maroon;
+}
+div.success {
+	background-color:#b9ecb4;
+	color: darkgreen;
+	border: 1px solid darkgreen;
+}
+div.info {
+	background-color:#c7ccf6;
+	color: navy;
+	border: 1px solid navy;
+}
+
+/* input as button or text */
+/* NOTE: input for button should have different class, one for 'normal' and one for 'input button inside a table,
+which should have the same width as the column where it is located 
+e.g.: class input_button, input_column_button, input_text */
+input {
+	font-family: Arial, Verdana, Helvetica;
+	font-size: 10px;
+}
+input.number{
+	text-align: right;
+}
+input.image {
+	border-width:0px;
+	background-color: transparent;
+}
+input:hover{
+	background:lightblue;
+}
+input.big {
+	width: 100px;
+}
+input.small {
+	width: 50px;
+}
+input.inputerror, input.error, select.error, select.selecterror, label.error {
+	color:red;
+	border: 2px solid red;
+}
+input:required, select:required, textarea:required {
+	background-color:lightyellow;
+}
+/* for buttons ***HJ***/
+button{
+	font-size:10px;
+}
+button:hover{
+	background:lightblue;
+}
+
+/* dropdown box */
+
+select {
+	font-family: Arial, Verdana, Helvetica;
+	font-size: 10px;
+}
+select.selecterror {
+	background-color: #fddbdb;
+}
+select:hover{
+	background:lightblue;
+}
+
+p.good {
+    font-weight: bold;
+    color: green;
+}
+p.bad {
+    font-weight: bold;
+    color:red;
+}
+
+.header {
+	background-image: url("");
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	border: none;
+	margin: 0px;
+	padding: 0px;
+}
+
+textarea{ /* default style for textarre */
+	font-family: Arial, Verdana, Helvetica;
+	font-size: 10px;
+}
+textarea:hover{
+}
+
+/* Table type is used for UI tables type 1 */
+.table1 {
+  width:90%;
+  background: #eee;
+  border: 1px solid #222;
+  margin: 0 auto;
+}
+
+input.address3 {
+	text-transform: uppercase;
+}
+
+div.csv {
+        background:lightgray;
+        color: black;
+        border: 1px solid black;
+        PADDING-LEFT: 3px;
+        Z-INDEX: 1;
+        width: 50%;
+        FLOAT: none;
+        VISIBILITY: visible;
+        MARGIN: 0 auto;
+        POSITION: static;
+        font-family: Arial, Verdana, Helvetica;
+        padding-top: 1px;
+        padding-bottom: 1px;
+        font-weight: normal;
+        font-size: 10px;
+        TEXT-ALIGN:center;
+}
+
+.page_title_text { /* used */
+	font-family: Arial, Verdana, Helvetica;
+        padding-top: 2px;
+        padding-bottom: 2px;
+	font-weight: bold;
+	font-size: 10px;
+	color: black;
+	TEXT-ALIGN:center;
+}
+
+DIV.page_help_text {
+	background: lightgrey url(images/help.png) top left no-repeat;
+	BORDER: #a52a2a 1px solid;
+	padding-top:2px;
+        padding-bottom: 2px;
+	PADDING-LEFT: 10px;
+	Z-INDEX: 1;
+	width: 80%;
+	FLOAT: none;
+	VISIBILITY: visible;
+	MARGIN: 0 auto;
+	POSITION: static;
+	font-family: Arial, Verdana, Helvetica;
+        font-weight: normal;
+        font-size: 10px;
+        color: black;
+	TEXT-ALIGN:center;
+}
+
+.menu_group_item a {
+}
+.menu_group_items a:hover {
+	color: #0000aa;
+	text-decoration: underline;
+}
+
+
+
+textarea.texterror {
+	background-color: #fddbdb;
+}
+
+
+
+.tableheader {
+	font-weight: normal;
+	background-color: #cccce5;
+	color: #330000;
+}
+
+.notavailable {
+	font-weight:lighter;
+	font-style:italic;
+	color:#555555;
+}
+
+.label { /* used */
+	font-weight:bold;
+	font-style:normal;
+	font-size:12px;
+	color:black;
+	background-color:#cccccc;
+}
+
+.OsRow {
+	background-color: #234567;
+	color: white;
+}
+
+.table_index {
+	background-color: #F1FFDD;
+}
+
+li {
+	list-style-image: url(bullet.gif);
+}
+
+/*** CANVAS ***/
+
+#CanvasDiv{
+	background:#fff;
+	margin:5px;
+	border:thin inset #ddd;
+}
+
+/*** HEADER ***/
+
+#HeaderDiv {
+	overflow:hidden; /* REQUIRED: height according to items contained */
+	color:black;
+	padding-right:3px;
+}
+#HeaderWrapDiv{
+}
+
+/*** HEADER - APP INFO ***/
+
+#AppInfoDiv{
+	float:right; /* REQUIRED: to the RIGHT */
+}
+#AppInfoDiv img{
+	vertical-align:middle; /* center image and text vertically */
+}
+#AppInfoCompanyDiv{
+	display:table-cell; /* REQUIRED: as a cell */
+}
+#AppInfoUserDiv{
+	display:table-cell; /* REQUIRED: as a cell */
+}
+#AppInfoUserDiv a{
+	color:black;
+}
+#AppInfoUserDiv a:hover{
+	color:blue;
+	text-decoration:underline;
+}
+#AppInfoModuleDiv{
+}
+
+/*** HEADER - QUICK MENU ***/
+
+#QuickMenuDiv{
+	float:left; /* to the right side  */
+	margin-top:3px;
+}
+#QuickMenuDiv ul{
+	list-style:none; /* hide the bullets */
+}
+#QuickMenuDiv li{
+    display:inline; /* items are inline */
+	float:right; /* right to left */
+}
+
+/*** links as buttons!!! clicking anywhere in the button will activate 
+     the link!!! ***HJ***/
+	 
+#QuickMenuDiv li a{
+	padding:3px; /* links as button */
+	border:thin outset #ddd; /* un-pressed state */
+	background:#ddd;
+}
+#QuickMenuDiv li a:hover{
+	padding:3px; /* links as button */
+	border:thin inset #ddd; /* pressed state */
+	text-decoration:none; /* no underline */
+	color:blue;
+}
+
+/*** BODY ***/
+
+#BodyDiv {
+	clear:both; /* REQUIRED */
+	overflow:hidden; /* REQUIRED */
+	color:black;
+	background:white;
+	text-align:center;
+}
+#BodyDiv table {
+	width:auto; /* automatic width */
+	margin: 0 auto;
+	margin-bottom:10px;
+}
+#BodyDiv table.selection {
+	background:#eee;
+	padding:5px;
+	border:thin outset #eee;
+}
+/*#BodyDiv .centre{
+	margin:0 auto 10px;
+    text-align:center;
+}*/
+
+/*** BODY - MAIN MENU ***/
+
+#MainMenuDiv{
+	float:right; /* REQUIRED: to the RIGHT side */
+	white-space:nowrap; /* don't break text */
+	text-align:center; 
+	width:11%;
+	background:#ddd;
+}
+#MainMenuDiv ul{
+	list-style:none; /* REQUIRED: hide bullets */
+	padding:0; /* REQUIRED: remove extra gaps (ex-bullets) */
+	margin:0;
+}
+#MainMenuDiv li{
+	list-style:none; /* REQUIRED */
+	padding:0; /* REQUIRED */
+}
+#MainMenuDiv li a{ /* link as button!!! not-pressed state */
+	display:block; /* REQUIRED */
+	padding:3px;
+	border:thin outset #ddd;
+	color:blue;
+}
+#MainMenuDiv li a:hover{ /* link as button!!! pressed state */
+	text-decoration:none;
+	padding:3px;
+	border:thin inset #ddd;
+	background:#ddd;	
+}
+#MainMenuDiv .main_menu_selected a{ /* the selected button */
+	border:thin inset #ccc;	
+	background:#ccc;
+	color:blue;	
+	text-decoration:none;
+}
+
+/*** BODY - SUB MENU ***/
+
+#SubMenuDiv{
+	display:table; /* display as table, sub menu will auto adjust width */
+	width:89%; /* main menu is 10% */
+	text-align:left;
+}
+#SubMenuDiv ul{
+	list-style-type:none; /* REQUIRED: hide bullets */
+	padding:0; /* REQUIRED: remove extra gaps (ex-bullets) */
+	margin-top:0px;	
+	margin-left:3px;
+	border:thin outset #ddd;
+}
+#SubMenuDiv li{
+	/*list-style:none;*/ /* REQUIRED: hide the bullets */
+	background:#eee;
+	padding:2px;
+}
+#SubMenuDiv li img{
+	vertical-align:middle; /* verticall align icon with the text */
+}
+#SubMenuDiv .menu_group_headers {
+	background:#ddd;
+	outline:thin outset #ddd;
+	text-align:center;
+	color:black;
+}
+#TransactionsDiv{
+	display:table-cell;
+}
+#InquiriesDiv{
+	display:table-cell;
+}
+#InquiriesDiv div{ /* default div, used for custom report header */
+	background:#ddd;
+	color:black;
+	padding:2px;
+	border:thin outset #ddd;
+}
+#InquiriesDiv body{
+	background:#eee;
+	color:red;
+	padding:2px;
+}
+#MaintenanceDiv{
+	display:table-cell;
+/*    float:left;*/
+/*    width:32.5%;
+	border:thin solid black;*/
+	
+}
+.menu_group_item p {
+	color: #00f; /* This is the color for bullets, I like it to be the same as the anchor color, but it's up to you */
+	text-indent: 3px; /* this makes the bullet to appear as the li tag previously used */
+	margin:0px; /* One thing that I didnÃÂÃÂ´t like of the li was that it had no left margin applied */
+}
+
+/*** FOOTER ***/
+
+#FooterDiv{
+	clear:both; /* REQUIRED */
+    overflow:hidden;	
+    color:gray;
+}
+#FooterWrapDiv{
+	overflow:hidden;
+	padding:3px;
+}
+#FooterLogoDiv{ 
+	float:left; /* right side */
+}
+#FooterVersionDiv{
+	float:right; /* left side */
+}
+#FooterTimeDiv{
+	clear:right; /* below  */
+}
+
+/*** END ***/

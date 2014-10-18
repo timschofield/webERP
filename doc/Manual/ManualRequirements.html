@@ -1,0 +1,93 @@
+<h1><a id="Requirements">Requirements</a></h1>
+
+<h2>Hardware Requirements</h2>
+
+<p>There are many possible configurations that could run this application. The scale of the enterprise obviously will have a significant bearing on the final configuration.</p>
+
+<p>Each client connection to the web server and database engine will also consume RAM so the more connections the larger the RAM requirement. Similarly disk space required is a function of the volume of customers, suppliers and transactions. Suffice it to say that due to the efficiency of the components of the system the demands on the hardware are exceptionally light by client server application standards.</p>
+
+<p>As a guide, an installation for up to 50 simultaneous users could consist of the following: a Linux operating system, an Apache web server, an entry level server with 2Gig RAM and a 100 Megabit network card. This would provide more than adequate performance. A small NAS or SAN with disk redundancy would be preferred in larger installations. With multiple servers with with SMP, load balancing, a separate database server, and large amounts of RAM the limit on database size and the number can be scaled to the most demanding businesses.</p>
+
+<p>In practise most businesses will elect to outsource the hardware to a web-hosting company where dedicated servers can be rented for minimal cost. When using the hosting facilities of a 3rd party it is important to consider the infrastructure that the host has in place:</p>
+
+<ul>
+    <li>Backups - the business should always configure its own backup in any event</li>
+
+    <li>Hardware redundancy - ie failover spare servers, disks etc</li>
+
+    <li>The safety and protection of the hosts hardware</li>
+
+    <li>Backup power generation</li>
+
+    <li>Backup connectivity options of the host ie more than one connection to the internet is preferable</li>
+</ul>
+
+<div class="floatright">
+    <a class="minitext" href="#top">⬆ Top</a>
+</div>
+
+<h2>Software Requirements</h2>
+
+<p>If the business elects to have their own on-site web-server there are many software bundles that will provide the necessary infrastructure of:</p>
+
+<ul>
+    <li><a href="http://www.php.net">PHP</a> a versions later than 5.1</li>
+
+    <li><a href="http://www.mysql.com">MySQL</a> version 4.3 or above - innodb transaction compliant tables are required</li>
+</ul>
+
+<p>The latest binaries can be downloaded separately for both by following the above links but in a windows environment the <a href="http://apache2triad.net/">apache2triad bundle</a> provides all the software required and comes with a convenient installer.</p>
+
+<p>In a windows/linux/unix environment the <a href="http://www.apachefriends.org/en/xampp.html">XAMPP</a> also provides all the software required and is easy to install.</p>
+
+<p>Installing either of the above two server software bundles will provide all you need to get going. To get the latest and greatest revisions of the individual components you need:</p>
+
+<ul>
+    <li><a href="http://www.php.net/">PHP</a> Any version greater than 5.1 will work. PHP works on all operating systems so webERP is therefore operating system independent. If transfer of EDI orders is required the ftp extensions for PHP will be needed. If using translations the gettext extension for PHP is also required. The graphing functions also require the GD extension.</li>
+
+    <li><a href="http://www.mysql.com/">MySQL</a>-Max with Innodb transactional tables support. Innodb was introduced in 2001 to MySQL and has Oracle like functionality &#8211; with similar speed. MySQL later than version 4 has Innodb tables in by default. Since MySQL represents such good value for money it has been used. An example configuration file my.cnf normally under /usr/local/mysql/var is available in the mysql documentation to show typical settings for the Innodb configuration. The expected size of the data is useful although additional data files can be created retrospectively as necessary. Note that only the tables that require transaction support are defined as Innodb tables.</li>
+
+    <li>A web server. <a href="http://www.apache.org/">Apache</a> makes the most sense &#8211; but most web servers are supported by PHP in various forms.</li>
+
+    <li>If the web server is accessible over the Internet and not just over a LAN then encrypted communications are required. The openssl and mod-ssl modules for apache can be easily used to ensure all data is transmitted in encrypted form.</li>
+</ul>
+
+<p>The system could be used with many other database servers but it is tested and developed on MySQL. Independent benchmarks show that MySQL is one of the fastest for most common database tasks, particularly at establishing connections &#8211; since this is required for every page, MySQL is therefore ideally suited to the web environment. Using Apache with <a href="http://www.modssl.org/">mod_ssl</a> and <a href="http://www.openssl.org/">openssl</a> secure sockets makes sense where there is any data transmitted over the Internet and not just over a LAN.</p>
+
+<div class="floatright">
+    <a class="minitext" href="#top">⬆ Top</a>
+</div>
+
+<h2>Using webERP with a Wiki</h2>
+
+<p>Wikis are an unfortunate name for a marvellous business tool. They are a genre of software that allow user editing of a web-site. webERP defines the names for wiki pages and provides a structure for the information held on the wiki - where users can add their experiences and information about customer, products and suppliers. webERP links to a customer page - if the page does not exist then there is a prompt to create it - it is then up to the business how they implement the wiki into their business. Possible scenarios might be that the customer page contains links to:</p>
+
+<ul>
+    <li>Credit control History</li>
+
+    <li>Customer Service Inquiries Log</li>
+
+    <li>Sales call Log</li>
+</ul>
+
+<p>If an integrated wiki is enabled from</p>
+
+<p>Setup-&gt;General-&gt;Configuration Settings</p>
+
+<p>then select the wiki application to integrate with. webERP has links from the Selection menus for Items (SelectProduct.php), Customers (SelectCustomer.php) and Suppliers (SelectSupplier.php). Clicking on the link brings up the wiki if the page does not currently exist you will be able to create it - in future it will go directly to the page created.</p>
+
+<p>The webERP product link to the wiki might contain details about the development of the item, links to drawings, specification, warranty, instructions, competing products and competitor product details. Some thought about how the wiki is structured is required. The more this tool is used the more indispensible and value it will provide to the business as a single integrated business knowledge base.</p>
+
+<p>The <a href="http://wackowiki.org/Download">wacko wiki</a> is very lightweight and imposes minimal additional overhead on a web-server and is possibly one of the most functional and flexible wikis available.</p>
+
+<p>Simply install this on the same web server as your webERP install and provide the path to the wiki in Setup-&gt;General-&gt;Configuration Settings.</p>
+
+<p>You should make the wiki only visible to registered users - see the configuration pages of the wacko wiki - in particular the setting in config.inc.php for:</p>
+
+<ul>
+    <li>"default_read_acl" =&gt; "*" - this setting determines who can read the page by default "*" means anyone can read change this to "?" for only registered users</li>
+
+    <li>"default_comment_acl" =&gt; "*" - this determines who can comment on the page by default "*" allows anyone to comment on the page - change this to "?" for just registered users</li>
+
+    <li>"allow_registration" =&gt; "1" - change this to "0" to ensure that unuathorised people need to contact the system administrator to register</li>
+</ul>

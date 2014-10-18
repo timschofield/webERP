@@ -1,0 +1,153 @@
+<h1><a id="NewScripts">Developing New Scripts</a></h1>
+
+<h2>Directory Structure</h2>
+
+<p>The scripts that make up the system are seperated into several directories. However, the main bulk of the webERP scripts are in the top level directory.</p>
+
+<ul>
+    <li>The top level directory contains all the scripts that are called directly from links in the system. A fundamental design crieria was to avoid the casual and perhaps novice PHP programmer having to examine code in many different files to obtain an understanding of the logic.The developer will rarely need to look beyond the main root directory of the webERP scripts and the includes directory.</li>
+
+    <li>Scripts or portions of scripts that are included in one or more of the main scripts are held in the includes/ sub-directory. Many of these includes are used in a way similar to functions.</li>
+
+    <li>A number of sub-directories under the includes directory are worthy of note, in particular the php-plot directory contains the php-plot class (by Miguel de Benito Delgado and others - maintained as a separate project) which is the code used by webERP to create charts for sales analysis inquiries. The php-gettext class (by Danilo Segan) is used by webERP to attempt to translate using the files under the locale directories where php binary gettext libraries are not installed. In practise it is much better to have gettext libraries installed when operating webERP in a multi-language installation. Also, the TCPDF class which is a derivative of Olivier Plathey's FPDF class developed by Nicola Asuni that enables pdf files to be created by webERP using the utf-8 character set and CID fonts - this allows webERP to create lightweight pdf files where the fonts for all languages are bundled by adobe acrobat reader. Although this class is maintained as a separate project there have been some modifications to this class by Javier de Lorenzo-Cáceres that allow CID fonts to be mapped correctly. This class is a very large collection of files and it has been trimmed significantly for the webERP distribution excluding all the TCPDF documentation and examples.</li>
+
+    <li>The scripts to create the database are held under the sql directory. Underneath this directory there is currently only a mysql directory since only the mysql RDBMS is supported. Previously there was a pg directory for postgres sql scripts. Under the mysql subdirectory of the sql directory - are sql scripts created by mysqldump. There is a script to create a new installation with only minimal data to start a new system off - weberp-new.sql. There is also a script to make a demo system - weberp-demo.sql.</li>
+
+    <li>The locale directory contains all the different language translations installed. Only the en_GB.utf8 language is installed by default. Many other language packs can be downloaded and installed under this directory. Under the locale directory each of the languages must be under a directory name that matches to a locale installed on the web-server. Under this directory the LC_MESSAGES directory contains two files the messages.po - which contains the translations and a messages.mo that is compiled as a binary indexed file for looking up the translations as fast as possible using the gettext functionality for internationalisation of applications</li>
+
+    <li>Documentation is under the doc/ sub-directory where this manual is under the Manual subdirectory of the doc directory. Manuals specific to a given language/locale are under the locale/ and language sub-directory</li>
+
+    <li>The api directory contains all of the api scripts</li>
+
+    <li>The xmlrpc directory contains the XML-RPC client and server code required for the api - webERP uses a class created by G. Giunta for this purpose - the whole tree of this XML-RPC class</li>
+
+    <li>The Numbers directory contains the PEAR class for converting numbers to words - this code is used by the cheque writing code in webERP. The PEAR installation of the class is not required since PEAR adds a lot of overhead to PHP it is not required as a dependency to use webERP and so this code is bundled with webERP.</li>
+
+    <li>The install the directory is where the minimal installer scripts are held - these can be deleted if required after installation. Only when the file config.php does not exist - in a new installation will the scripts in this directory be used.</li>
+
+    <li>The flags directory contains small images of national flags appropriate to the ISO 4217 currency code abbreviations - each file is named by the ISO code .jpg these are displayed on the currencies form in webERP.</li>
+
+    <li>FPDI directory is an extension to the TCPDF pdf creation class that allows other pdf files to be concatenated onto pdfs created from the system - this class is created and maintained as a separate project by Setasign - Jan Slabon. webERP allows user selectable document(s) to be appended to invoices - this functionality requires this class and the files under this directory</li>
+
+    <li>Formatting style sheets are held under the css - see the themes section under getting started above. Under the css directory there is a directory tree for each of the themes that come with the distribution. To create a new theme simply copy one of the existing directory trees over to a new one under the css directory - it will automatically be able to be selected as a new theme by webERP.</li>
+
+    <li>The javascripts directory contains just one file that is included in the HEAD section of each webERP script and contains all the javascript used by webERP</li>
+
+    <li>the reportwriter directory contains the sql report writer used with webERP - this contribution from Dave Premo - the author of Phreebooks does not follow any of the conventions of the rest of webERP but adds important functionality to webERP. There is a whole other directory structure under the reportwriter directory and the code is more difficult to follow. Happily Dave wrote some good help to enable it to be used</li>
+</ul>
+
+<p>Construction of new scripts should make use of the following building blocks that are used throughout the system.</p>
+
+<div class="floatright">
+    <a class="minitext" href="#top">⬆ Top</a>
+</div>
+
+<h3>session.inc</h3>
+
+<p>This page must be included after the page has set the variable $PageSecurity to an appropriate integer (see the security schema section), session.inc has the following functons:</p>
+
+<ul>
+    <li>Establishes a session if none already exists and checks that an authorised user is logged in - if so it checks that the user is authorised for the specific page being called, based on the value of $PageSecurity.</li>
+
+    <li>It in turn includes the scripts:</li>
+
+    <li>config.php - this script contains the details required to connect to the datbase.</li>
+
+    <li>The GetConfig.php script ensures that all system variables defined and stored in the database are retrieved and available to the system as SESSION variables. The GetConfig.php reads the companies table in the database that contains just a single company record. It also reads the config table in the database - which contains all the system configuration parameters - these are stored in session variables to avoid round trips to the database with every page. The developer needs to study these parameters which are explained in the SystemParameters.php page from Setup --&gt; Configuration Settings</li>
+
+    <li>ConnectDB.inc - this script (which in turn include includes/ConnectDB_mysql.inc or includes/ConnectDB_mysqli.inc - historically includes/ConnectDB_Postgres.inc was also an option) initiates a connection to the database and contains all the database abstraction functions. When interacting with the database, only functions defined in this script are used, not the mysql specific functions, since a change in database would be otherwise be difficult to effect. By using this file, only the functions in this script need to be modified for any other database to be used.</li>
+
+    <li>LanguageSetup.php - this sets the locale and handles the fall-back to php-gettext if the local gettext libraries are not available on the web-server</li>
+</ul>
+
+<div class="floatright">
+    <a class="minitext" href="#top">⬆ Top</a>
+</div>
+
+<h3>header.inc</h3>
+
+<p>This file should be included after the variable $Title has been set to the name of the page. This file relies on config.php being already loaded, so session.inc (which in turn includes config.php) must be included before header.inc. The code in this script has the following functions:</p>
+
+<ul>
+    <li>Includes the javascript functions used in scripts from the file javascripts/MiscFunctions.js</li>
+
+    <li>Sets up the normal system banner with the links to the menu, item selection, customer and supplier selection pages.</li>
+
+    <li>Sets the style sheet used throughout the system - by referencing the theme directory to use for css</li>
+</ul>
+
+<div class="floatright">
+    <a class="minitext" href="#top">⬆ Top</a>
+</div>
+
+<h3>footer.inc</h3>
+
+<p>This file contains the small logo, company name and copyright notice with the closing "" tags.</p>
+
+<div class="floatright">
+    <a class="minitext" href="#top">⬆ Top</a>
+</div>
+
+<h3>config.php</h3>
+
+<p>The variables in config.php are available to all of tcripts that have included session.inc. There are not many now most of the configuration is stored in the database using the config table. However, the variables that give the software the information to connect to the database such as datbase user, password and host, together with the database type - dbtype - in fact only mysql is supported but there are two libraries that can be used the mysqli and the old mysql functions. There are a couple of other variables including the timezone, $RootPath which is the directory where the web server holds the system files. Also the php error_reporting code.</p>
+
+<p>Having started the page with session.inc and header.inc - and then finishing with footer.inc much of the work to ensure a consistent look and feel is already done.</p>
+
+<div class="floatright">
+    <a class="minitext" href="#top">⬆ Top</a>
+</div>
+
+<h3>PDFStarter.php</h3>
+
+<p>The only time when it is not appropriate to include session.inc or header.inc is when a pdf script is to be created. Here the file PDFStarter.php contains the initiation of the session and the check for proper user authentication and authorisation for the specific page using the $PageSecurity variable which must be defined before PDFStarter.php is included. Normally, config.php and ConnectDB.inc are included seperately (and before PDF_starter_ros.inc) in PDF scripts. PDF report scripts all make use of the FPDF class by Olivier Plathey but previously a differnt class was used so there is an extension to this which translates the calls to the old pdf class to the FPDF class. Probably better to write new scripts using the FPDF syntax.</p>
+
+<div class="floatright">
+    <a class="minitext" href="#top">⬆ Top</a>
+</div>
+
+<h3>Database Abstraction - ConnectDB.inc</h3>
+
+<p>Whilst the system has been developed using MySql it has always been envisaged that users should not be forced to use Mysql - in keeping with open source principles. For this reason all requests of the database are made via abstraction functions in ConnectDB.inc. This policy has been rigorously maintained and developing extensions to the system which do not conform to this scheme would destroy the portability currently available between databases. Instead of using the PHP database specific functions then the functions defined in ConnectDB_mysql.inc should be used</p>
+
+<ul>
+    <li>$DB_result_handle = DB_query(<i>$sql,$db,$ErrorMessage='',$DebugMesage='',$InsideATransaction=0</i>)</li>
+
+    <li>$NumberOfRowsReturned = DB_num_rows(<i>$DB_result_handle</i>)</li>
+
+    <li>$QueryResultNamedElementArray = DB_fetch_array(<i>$DB_result_handle</i>)</li>
+
+    <li>$QueryResultArray = DB_fetch_row(<i>$DB_result_handle</i>)</li>
+</ul>
+
+<p>The full list of functions should be reviewed from the file includes/ConnectDB_mysql.inc - which contains the mysql specific abstraction functions. Only these functions should be used in other scripts. Care has been taken to ensure that standards compliant SQL is used throughout, to ensure any database conversion issues are minimal. SQL specific to any RDBMS even mysql should be avoided in favour of generic standards compliant SQL. There are instances where mysql specific SQL has been used such as INTERVAL and SHOW TABLES - these are historical.</p>
+
+<div class="floatright">
+    <a class="minitext" href="#top">⬆ Top</a>
+</div>
+
+<h3>DateFunctions.inc</h3>
+
+<p>This script holds a number of functions for manipulating dates used throughout the system - these functions all depend upon the system configuration for SESSION['DefaultDateFormat']. Amongst the most useful:</p>
+
+<ul>
+    <li><i>DateDiff</i> - calculates the difference between two dates has parameters for the number of days, weeks or months.</li>
+
+    <li><i>FormatDateForSQL</i> converts a date in the format specified by $DefaultDateFormat in config.php to the format required for SQL - yyyy-mm-dd.</li>
+
+    <li><i>ConvertSQLDate</i> - Converts a date in SQL format yyyy-mm-dd to the date defined in config.php $DefaultDateFormat</li>
+
+    <li><i>GetPeriodNo</i> - Gets the period number for a given date by looking up the date in the period table - it creates new periods as necessary to ensure a valid period is returned.</li>
+</ul>
+
+<div class="floatright">
+    <a class="minitext" href="#top">⬆ Top</a>
+</div>
+
+<h3>SQL_CommonFuctions.inc</h3>
+
+<p>This script has some common functions used throughout the system - in particular:</p>
+
+<ul>
+    <li><i>GetNextTransNo</i> - that retrieves the next transaction number for a given transaction type - see the table systypes for a list of the valid transaction type codes.</li>
+</ul>

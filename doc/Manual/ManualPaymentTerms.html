@@ -1,0 +1,31 @@
+<h1><a id="PaymentTerms">Payment Terms</a></h1>
+
+<p>For each customer the payment terms which the business deals with them under must be specified. This provides the information required to monitor whether the account is due or not - ie for Overdue inquiries and reports. Also, the invoices, credit notes and statements, contain reference to these terms so he/she is continually reminded of these terms with every transaction as a matter of course.</p>
+
+<p>Payment terms can take one of two forms:</p>
+
+<ul>
+    <li>Due after a specified number of days after invoice.</li>
+
+    <li>Due on a day in the month following invoice</li>
+</ul>
+
+<p>The system allows the definition of a payment terms record either way.</p>
+
+<p>Note: The overdue report and inquiries use the estimated number of days to deliver in the branch record to determine when the customer received the goods, the payment terms are added to the day when delivery was effected.</p>
+
+<h2>Payment Terms Code</h2>
+
+<p>This is the code which is used by the system internally to reference the payment terms applicable to a customer. Alterations to this code will cascade through all the customers set up with the code being amended. If there are a lot of customers set up with this code it could take a moment to update all customers.</p>
+
+<p>It is a 2 character text field.</p>
+
+<h2>Payment Terms Description</h2>
+
+<p>This field (40 characters of text) shows on customers statements, invoices and lookups in the inquiries and selection forms. It should describe as succinctly as possible the payment terms.</p>
+
+<h2>Days Before Due / Day In Following Month When Due</h2>
+
+<p>Only one of these fields needs to be entered depending on the selection in the bullet options. If the terms are after a number of days, then the field expects the number of days after which the invoice becomes due. Alternatively, the day in the following month when the invoice will fall due (greater than or equal to 0 and less than or equal to 30). These figures are used to calculate whether or not an invoice is overdue for the overdue reports and inquiries.</p>
+
+<p>These fields expect a number - other characters are not accepted.</p>
