@@ -1,5 +1,5 @@
 <?php
-/* $Id: Login.php 6475 2013-12-04 17:56:10Z rchacon $*/
+/* $Id: Login.php 6592 2014-03-02 08:41:40Z daintree $*/
 
 // Display demo user name and password within login form if $AllowDemoMode is true
 //include ('LanguageSetup.php');

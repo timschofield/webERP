@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: PrintCustOrder_generic.php 6447 2013-11-28 15:11:08Z exsonqu $*/
+/* $Id: PrintCustOrder_generic.php 6805 2014-08-08 16:12:36Z agaluski $*/
 
 
 include('includes/session.inc');
@@ -67,6 +67,7 @@ $sql = "SELECT salesorders.debtorno,
 		ON salesorders.shipvia=shippers.shipper_id
 		INNER JOIN locations
 		ON salesorders.fromstkloc=locations.loccode
+		INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 		WHERE salesorders.orderno='" . $_GET['TransNo'] . "'";
 
 if ($_SESSION['SalesmanLogin'] != '') {

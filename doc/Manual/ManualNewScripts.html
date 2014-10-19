@@ -151,3 +151,22 @@
 <ul>
     <li><i>GetNextTransNo</i> - that retrieves the next transaction number for a given transaction type - see the table systypes for a list of the valid transaction type codes.</li>
 </ul>
+
+<div class="floatright">
+    <a class="minitext" href="#top">⬆ Top</a>
+</div>
+
+<h3>MiscFunctions.php</h3>
+
+<p>This script holds miscellaneous functions:</p>
+
+<ul>
+    <li><i>TableRows</i> - Outputs the table row html tag ("<i>&lt;tr&gt;</i>") with the class to format the table row ("<i>OddTableRows</i>" or "<i>EvenTableRows</i>") and returns the row  counter to determine background colour updated. It requires that the Row counter to determine background colour is initialised before using this function.<br />
+    Example:<br />
+    <code>
+	$k = False;// Row counter to determine background colour.<br />
+	...<br />
+	$k = TableRows($k);// Outputs html table row with class (Odd|Even).
+	</code>
+	</li>
+</ul>

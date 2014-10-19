@@ -6,7 +6,7 @@
 
 <p>Each client connection to the web server and database engine will also consume RAM so the more connections the larger the RAM requirement. Similarly disk space required is a function of the volume of customers, suppliers and transactions. Suffice it to say that due to the efficiency of the components of the system the demands on the hardware are exceptionally light by client server application standards.</p>
 
-<p>As a guide, an installation for up to 50 simultaneous users could consist of the following: a Linux operating system, an Apache web server, an entry level server with 2Gig RAM and a 100 Megabit network card. This would provide more than adequate performance. A small NAS or SAN with disk redundancy would be preferred in larger installations. With multiple servers with with SMP, load balancing, a separate database server, and large amounts of RAM the limit on database size and the number can be scaled to the most demanding businesses.</p>
+<p>As a guide, an installation for up to 50 simultaneous users could consist of the following: a Linux operating system, using nginx, lighthttpd, hiawatha or apache with even an entry level hardware server. This would provide more than adequate performance. A NAS or SAN with disk redundancy would be preferred in larger installations. With multiple servers with with SMP, load balancing, a separate database server, and large amounts of RAM the limit on database size and the number can be scaled to the most demanding enterprises.</p>
 
 <p>In practise most businesses will elect to outsource the hardware to a web-hosting company where dedicated servers can be rented for minimal cost. When using the hosting facilities of a 3rd party it is important to consider the infrastructure that the host has in place:</p>
 
@@ -15,7 +15,7 @@
 
     <li>Hardware redundancy - ie failover spare servers, disks etc</li>
 
-    <li>The safety and protection of the hosts hardware</li>
+    <li>The security and physical protection of the hosts hardware</li>
 
     <li>Backup power generation</li>
 
@@ -47,12 +47,12 @@
 
     <li><a href="http://www.mysql.com/">MySQL</a>-Max with Innodb transactional tables support. Innodb was introduced in 2001 to MySQL and has Oracle like functionality &#8211; with similar speed. MySQL later than version 4 has Innodb tables in by default. Since MySQL represents such good value for money it has been used. An example configuration file my.cnf normally under /usr/local/mysql/var is available in the mysql documentation to show typical settings for the Innodb configuration. The expected size of the data is useful although additional data files can be created retrospectively as necessary. Note that only the tables that require transaction support are defined as Innodb tables.</li>
 
-    <li>A web server. <a href="http://www.apache.org/">Apache</a> makes the most sense &#8211; but most web servers are supported by PHP in various forms.</li>
+    <li>A web server. webERP is tested with nginx, lighthttpd, hiawatha and <a href="http://www.apache.org/">Apache</a>, but most web servers are supported by PHP in various forms. PHP running in Fast CGI mode ensures that throughput and performance is optomised.</li>
 
-    <li>If the web server is accessible over the Internet and not just over a LAN then encrypted communications are required. The openssl and mod-ssl modules for apache can be easily used to ensure all data is transmitted in encrypted form.</li>
+    <li>If the web server is accessible over the Internet and not just over a LAN then encrypted communications are required. The openssl and mod-ssl modules for apache can be easily used to ensure all data is transmitted in encrypted form. Using https is strongly recommended.</li>
 </ul>
 
-<p>The system could be used with many other database servers but it is tested and developed on MySQL. Independent benchmarks show that MySQL is one of the fastest for most common database tasks, particularly at establishing connections &#8211; since this is required for every page, MySQL is therefore ideally suited to the web environment. Using Apache with <a href="http://www.modssl.org/">mod_ssl</a> and <a href="http://www.openssl.org/">openssl</a> secure sockets makes sense where there is any data transmitted over the Internet and not just over a LAN.</p>
+<p>The system could be used with many other database servers but it is tested and developed on MySQL. Independent benchmarks show that MySQL is one of the fastest for most common database tasks, particularly at establishing connections &#8211; since this is required for every page, MySQL is therefore ideally suited to the web environment.</p>
 
 <div class="floatright">
     <a class="minitext" href="#top">⬆ Top</a>

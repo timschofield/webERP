@@ -1,6 +1,6 @@
 <?php
-
-/* $Id: StockTransfers.php 6592 2014-03-02 08:41:40Z daintree $*/
+/* $Id: StockTransfers.php 6805 2014-08-08 16:12:36Z agaluski $*/
+/* Inventory Transfer - Item Dispatch */
 
 include('includes/DefineSerialItems.php');
 include('includes/DefineStockTransfers.php');
@@ -10,9 +10,8 @@ include('includes/session.inc');
 include('includes/KLEmails.php');
 
 $Title = _('Stock Transfers');
-/* webERP manual links before header.inc */
-$ViewTopic= "Inventory";
 $BookMark = "LocationTransfers";
+$ViewTopic = "Inventory";
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
@@ -507,7 +506,7 @@ echo '<tr>
 		<td>' . _('From Stock Location').':</td>
 		<td><select name="StockLocationFrom">';
 
-$sql = "SELECT loccode, locationname FROM locations";
+$sql = "SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1";
 $resultStkLocs = DB_query($sql,$db);
 while ($myrow=DB_fetch_array($resultStkLocs)){
 	if (isset($_SESSION['Transfer']->StockLocationFrom)){

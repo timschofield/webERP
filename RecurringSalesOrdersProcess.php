@@ -1,5 +1,5 @@
 <?php
-/* $Id: RecurringSalesOrdersProcess.php 5910 2013-05-10 13:55:28Z exsonqu $*/
+/* $Id: RecurringSalesOrdersProcess.php 6809 2014-08-12 19:16:00Z agaluski $*/
 
 /*need to allow this script to run from Cron or windows scheduler */
 $AllowAnyone = true;
@@ -60,7 +60,7 @@ $sql = "SELECT recurringsalesorders.recurrorderno,
 			custbranch.taxgroupid,
 			locations.contact,
 			locations.email
-		FROM recurringsalesorders,
+		FROM recurringsalesorders INNER JOIN locationusers ON locationusers.loccode=recurringsalesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1,
 			debtorsmaster,
 			custbranch,
 			salestypes,

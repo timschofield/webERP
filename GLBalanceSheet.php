@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: GLBalanceSheet.php 6310 2013-08-29 10:42:50Z daintree $*/
+/* $Id: GLBalanceSheet.php 6751 2014-06-13 01:09:20Z tehonu $*/
 
 /*Through deviousness and cunning, this system allows shows the balance sheets as at the end of any period selected - so first off need to show the input of criteria screen while the user is selecting the period end of the balance date meanwhile the system is posting any unposted transactions */
 

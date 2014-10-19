@@ -1,6 +1,6 @@
 <?php
 
- /* $Id: AgedDebtors.php 6503 2013-12-19 16:16:41Z exsonqu $ */
+ /* $Id: AgedDebtors.php 6592 2014-03-02 08:41:40Z daintree $ */
 
 include('includes/session.inc');
 

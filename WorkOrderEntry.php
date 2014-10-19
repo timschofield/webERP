@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: WorkOrderEntry.php 6887 2014-09-15 04:26:13Z tehonu $*/
+/* $Id: WorkOrderEntry.php 6888 2014-09-15 05:10:21Z exsonqu $*/
 
 include('includes/session.inc');
 $Title = _('Work Order Entry');
@@ -22,13 +22,13 @@ if (isset($_GET['WO'])) {
 if (isset($_GET['ReqDate'])){
 	$ReqDate = $_GET['ReqDate'];
 } else {
-	$ReqDate=Date('Y-m-d');
+	$ReqDate=Date($_SESSION['DefaultDateFormat']);
 }
 
 if (isset($_GET['StartDate'])){
 	$StartDate = ConvertSQLDate($_GET['StartDate']);
 } else {
-	$StartDate=Date('Y-m-d');
+	$StartDate=Date($_SESSION['DefaultDateFormat']);
 }
 
 if (isset($_GET['loccode'])){

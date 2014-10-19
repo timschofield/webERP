@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: ExchangeRateTrend.php 6501 2013-12-14 18:43:48Z rchacon $*/
+/* $Id: ExchangeRateTrend.php 6592 2014-03-02 08:41:40Z daintree $*/
 
 include('includes/session.inc');
 $Title = _('View Currency Trends');

@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: ReverseGRN.php 6310 2013-08-29 10:42:50Z daintree $*/
+/* $Id: ReverseGRN.php 6805 2014-08-08 16:12:36Z agaluski $*/
 
 include('includes/DefineSerialItems.php');
 include('includes/SQL_CommonFunctions.inc');
@@ -50,6 +50,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 			ON grns.podetailitem=purchorderdetails.podetailitem
 			INNER JOIN purchorders
 			ON purchorderdetails.orderno = purchorders.orderno
+			INNER JOIN locationusers ON locationusers.loccode=purchorders.intostocklocation AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
 			WHERE grnno='" . $_GET['GRNNo'] . "'";
 
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Could not get the details of the GRN selected for reversal because') . ' ';
@@ -133,7 +134,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 /*Now the purchorder header status in case it was completed  - now incomplete - just printed */
 	$SQL = "UPDATE purchorders
 			SET status = 'Printed',
-				stat_comment = CONCAT('" . Date($_SESSION['DefaultDateFormat']) . ' ' . _('GRN Reversed for') . ' '  . $GRN['itemdescription'] . ' ' . _('by') . ' ' . $_SESSION['UsersRealName'] . "<br />', stat_comment )
+				stat_comment = CONCAT('" . Date($_SESSION['DefaultDateFormat']) . ' ' . _('GRN Reversed for') . ' '  .  DB_escape_string(stripslashes($GRN['itemdescription'])) . ' ' . _('by') . ' ' . $_SESSION['UsersRealName'] . "<br />', stat_comment )
 			WHERE orderno = '" . $GRN['orderno'] . "'";
 
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The purchase order statusand status comment could not be changed because');
@@ -364,16 +365,19 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 
 		$sql = "SELECT grnno,
 						grnbatch,
-						itemcode,
-						itemdescription,
-						deliverydate,
+						grns.itemcode,
+						grns.itemdescription,
+						grns.deliverydate,
 						qtyrecd,
 						quantityinv,
 						qtyrecd-quantityinv AS qtytoreverse
 				FROM grns
+				INNER JOIN purchorderdetails ON purchorderdetails.podetailitem=grns.podetailitem
+				INNER JOIN purchorders on purchorders.orderno = purchorderdetails.orderno
+				INNER JOIN locationusers ON locationusers.loccode=purchorders.intostocklocation AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
 				WHERE grns.supplierid = '" . $_POST['SupplierID'] . "'
 				AND (grns.qtyrecd-grns.quantityinv) >0
-				AND deliverydate>='" . FormatDateForSQL($_POST['RecdAfterDate']) ."'";
+				AND grns.deliverydate>='" . FormatDateForSQL($_POST['RecdAfterDate']) ."'";
 
 		$ErrMsg = _('An error occurred in the attempt to get the outstanding GRNs for') . ' ' . $_POST['SuppName'] . '. ' . _('The message was') . ':';
   		$DbgMsg = _('The SQL that failed was') . ':';

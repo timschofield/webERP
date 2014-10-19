@@ -1,11 +1,14 @@
 <?php
-/* $Id: StockLocTransferReceive.php 6556 2014-02-02 09:13:54Z daintree $*/
+/* $Id: StockLocTransferReceive.php 6808 2014-08-11 21:27:11Z agaluski $*/
+/* Inventory Transfer - Receive */
 
 include('includes/DefineSerialItems.php');
 include('includes/DefineStockTransfers.php');
 
 include('includes/session.inc');
 $Title = _('Inventory Transfer') . ' - ' . _('Receiving');
+$BookMark = "LocationTransfers";
+$ViewTopic = "Inventory";
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
@@ -387,6 +390,7 @@ if(isset($_GET['Trf_ID'])){
 			ON loctransfers.shiploc=locations.loccode
 			INNER JOIN locations as reclocations
 			ON loctransfers.recloc = reclocations.loccode
+			INNER JOIN locationusers ON locationusers.loccode=reclocations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
 			INNER JOIN stockmaster
 			ON loctransfers.stockid=stockmaster.stockid
 			WHERE reference ='" . $_GET['Trf_ID'] . "' ORDER BY loctransfers.stockid";
@@ -533,7 +537,7 @@ if (isset($_SESSION['Transfer'])){
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	$LocResult = DB_query("SELECT locationname, loccode FROM locations ORDER BY locationname",$db);
+	$LocResult = DB_query("SELECT locationname, locations.loccode FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1 ORDER BY locationname",$db);
 
 	echo '<table class="selection">';
 	echo '<tr>

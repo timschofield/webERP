@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: geo_displaymap_suppliers.php 6565 2014-02-06 08:42:57Z daintree $*/
+/* $Id: geo_displaymap_suppliers.php 6592 2014-03-02 08:41:40Z daintree $*/
 
 $Title = _('Geocoded Supplier Report');
 

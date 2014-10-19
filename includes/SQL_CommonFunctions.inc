@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: SQL_CommonFunctions.inc 4973 2012-02-26 09:19:38Z tim_schofield $*/
+/* $Id: SQL_CommonFunctions.inc 6908 2014-10-06 05:13:27Z daintree $*/
 
 /* Common SQL Functions */
 
@@ -209,18 +209,20 @@ function ItemCostUpdateGL($db, $StockID, $NewCost, $OldCost, $QOH) {
 
 /* Calculates the material cost of a bill of materials, given parent code*/
 function BomMaterialCost($Parent, $db) {
-	$SQL = "SELECT materialcost from stockmaster where stockid='".$Parent."'";
+	$SQL = "SELECT materialcost FROM stockmaster WHERE stockid='" . $Parent . "'";
 	$result1 = DB_query($SQL,$db);
 	$MyRow1 = DB_fetch_row($result1);
 	$OldCost = $MyRow1[0];
-	$SQL = "SELECT sum(quantity) as qoh from locstock where stockid='".$Parent."'";
+	$SQL = "SELECT sum(quantity) as qoh from locstock where stockid='" . $Parent . "'";
 	$result1 = DB_query($SQL,$db);
 	$MyRow1 = DB_fetch_row($result1);
 	$QOH = $MyRow1[0];
 	$SQL = "SELECT Sum(stockmaster.materialcost*bom.quantity) AS SumOfmaterialcost
 	   					FROM bom LEFT JOIN stockmaster
-							 ON bom.component = stockmaster.stockid
-							 WHERE bom.parent='". $Parent . "'";
+						ON bom.component = stockmaster.stockid
+						WHERE bom.parent='". $Parent . "'
+						AND bom.effectiveafter<='" . Date('Y-m-d') . "'
+						AND bom.effectiveto>='" . Date('Y-m-d') . "'";
 	$result = DB_query($SQL,$db);
 	$MyRow = DB_fetch_row($result);
 	$MaterialCost = $MyRow[0];
@@ -274,6 +276,8 @@ function WoRealRequirements($db, $WO, $LocCode, $StockID, $Qty=1, $ParentID='') 
 			ON bom.component=stockmaster.stockid
 			WHERE bom.parent='" . $StockID . "'
 			AND bom.loccode ='" . $LocCode . "'
+			AND bom.effectiveafter<='" . Date('Y-m-d') . "'
+			AND bom.effectiveto>='" . Date('Y-m-d') . "'
 			AND stockmaster.mbflag<>'G'
 			AND bom.component NOT IN (
 				SELECT stockid
@@ -300,6 +304,8 @@ function WoRealRequirements($db, $WO, $LocCode, $StockID, $Qty=1, $ParentID='') 
 						ON bom.component=stockmaster.stockid
 						WHERE bom.parent='" . $StockID . "'
 						AND bom.loccode ='" . $LocCode . "'
+						AND bom.effectiveafter<='" . Date('Y-m-d') . "'
+						AND bom.effectiveto>='" . Date('Y-m-d') . "'
 						AND stockmaster.mbflag<>'G'
 						AND bom.component IN (
 							SELECT stockid
@@ -322,6 +328,8 @@ function WoRealRequirements($db, $WO, $LocCode, $StockID, $Qty=1, $ParentID='') 
 			ON bom.component=stockmaster.stockid
 			WHERE parent='" . $StockID . "'
 			AND loccode ='" . $LocCode . "'
+			AND bom.effectiveafter<='" . Date('Y-m-d') . "'
+			AND bom.effectiveto>='" . Date('Y-m-d') . "'
 			AND stockmaster.mbflag='G'";
 	$result = DB_query($sql, $db);
 	while ($MyRow=DB_fetch_array($result)) {
@@ -359,6 +367,91 @@ function EnsureGLEntriesBalance ($TransType, $TransTypeNo, $db) {
 
 		}
 	}
+}
+
+/* 	GetQuantityOnOrderDueToPurchaseOrders return the QOO for an item due to Purchase orders (not WO).
+	If Location is empty, it returns the QOO for all locations
+	If location is NOT empty, returns the QOO for that specific location.
+*/
+function GetQuantityOnOrderDueToPurchaseOrders($StockID, $Location){
+
+	global $db;
+
+	if ($Location == ""){
+		// All locations to be considered
+		$WhereLocation = "";
+		$ErrMsg = _('The quantity on order due to purchase orders for') . ' ' . $StockID . ' ' . _('to be received into all locations cannot be retrieved because');
+	}else{
+		// Just 1 location to consider
+		$WhereLocation = " AND purchorders.intostocklocation = '" . $Location . "'";
+		$ErrMsg = _('The quantity on order due to purchase orders for') . ' ' . $StockID . ' ' . _('to be received into') . ' ' . $Location . ' ' . _('cannot be retrieved because');
+	}
+
+	$SQL="SELECT SUM(purchorderdetails.quantityord -purchorderdetails.quantityrecd) AS QtyOnOrder
+		FROM purchorders
+			INNER JOIN purchorderdetails
+				ON purchorders.orderno=purchorderdetails.orderno
+			INNER JOIN locationusers
+				ON locationusers.loccode=purchorders.intostocklocation
+					AND locationusers.userid='" .  $_SESSION['UserID'] . "'
+					AND locationusers.canview=1
+		WHERE purchorderdetails.itemcode='" . $StockID . "'
+			AND purchorderdetails.completed = 0
+			AND purchorders.status<>'Cancelled'
+			AND purchorders.status<>'Pending'
+			AND purchorders.status<>'Rejected'
+			AND purchorders.status<>'Completed'" .
+			$WhereLocation;
+
+	$QOOResult = DB_query($SQL, $db, $ErrMsg);
+	if (DB_num_rows($QOOResult) == 0) {
+		$QOO = 0;
+	} else {
+		$QOORow = DB_fetch_row($QOOResult);
+		$QOO = $QOORow[0];
+	}
+	return $QOO;
+}
+
+
+/* 	GetQuantityOnOrderDueToWorkOrders return the QOO for an item due to Work orders (not PO).
+	If Location is empty, it returns the QOO for all locations
+	If location is NOT empty, returns the QOO for that specific location.
+*/
+function GetQuantityOnOrderDueToWorkOrders($StockID, $Location){
+
+	global $db;
+
+	if ($Location == ''){
+		// All locations to be considered
+		$WhereLocation = '';
+		$ErrMsg = _('The quantity on order due to work orders for') . ' ' . $StockID . ' ' . _('to be received into all locations cannot be retrieved because');
+	}else{
+		// Just 1 location to consider
+		$WhereLocation = " AND workorders.loccode='" . $Location . "'";
+		$ErrMsg = _('The quantity on order due to work orders for') . ' ' . $StockID . ' ' . _('to be received into') . ' ' . $Location . ' ' . _('cannot be retrieved because');
+	}
+
+	$SQL="SELECT SUM(woitems.qtyreqd-woitems.qtyrecd) AS qtywo
+		FROM woitems
+			INNER JOIN workorders
+				ON woitems.wo=workorders.wo
+			INNER JOIN locationusers
+				ON locationusers.loccode=workorders.loccode
+					AND locationusers.userid='" .  $_SESSION['UserID'] . "'
+					AND locationusers.canview=1
+		WHERE workorders.closed=0
+			AND woitems.stockid='" . $StockID . "'" .
+			$WhereLocation;
+
+	$QOOResult = DB_query($SQL, $db, $ErrMsg);
+	if (DB_num_rows($QOOResult) == 0) {
+		$QOO = 0;
+	} else {
+		$QOORow = DB_fetch_row($QOOResult);
+		$QOO = $QOORow[0];
+	}
+	return $QOO;
 }
 
 ?>

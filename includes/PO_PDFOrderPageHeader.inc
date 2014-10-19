@@ -1,5 +1,5 @@
 <?php
-/* $Id: PO_PDFOrderPageHeader.inc 6540 2014-01-15 02:18:07Z rchacon $*/
+/* $Id: PO_PDFOrderPageHeader.inc 6758 2014-06-17 09:50:35Z daintree $*/
 /*
 	R & OS PHP-PDF class code to set up a new page
 	a new page is implicit on the establishment of a new pdf object so
@@ -12,7 +12,7 @@ $pdf->addJpegFromFile($_SESSION['LogoFile'],$Left_Margin+$FormDesign->logo->x,$P
 $pdf->addText($FormDesign->OrderNumber->x,$Page_Height- $FormDesign->OrderNumber->y,$FormDesign->OrderNumber->FontSize, _('Purchase Order Number'). ' ' . $OrderNo);
 if ($ViewingOnly!=0) {
 	$pdf->addText($FormDesign->ViewingOnly->x,$Page_Height - $FormDesign->ViewingOnly->y,$FormDesign->ViewingOnly->FontSize, _('FOR VIEWING ONLY') . ', ' . _('DO NOT SEND TO SUPPLIER') );
-	$pdf->addText($FormDesign->ViewingOnly->x,$Page_Height - $FormDesign->ViewingOnly->y-$line_height,$FormDesign->ViewingOnly->FontSize, _('SUPPLIERS') . ' - ' . _('THIS IS NOT AN ORDER') );
+	$pdf->addText($FormDesign->ViewingOnly->x,$Page_Height - $FormDesign->ViewingOnly->y-$line_height,$FormDesign->ViewingOnly->FontSize, _('SUPPLIERS') . ' - ' . _('THIS IS NOT AN ORDER'));
 }
 $pdf->addText($FormDesign->PageNumber->x,$Page_Height - $FormDesign->PageNumber->y, $FormDesign->PageNumber->FontSize, _('Page') . ': ' .$PageNumber);
 /*Now print out the company Tax authority reference */

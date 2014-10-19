@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: UserSettings.php 6519 2013-12-26 18:45:22Z rchacon $*/
+/* $Id: UserSettings.php 6833 2014-08-19 11:53:15Z serakfalcon $*/
 
 include('includes/session.inc');
 $Title = _('User Settings');

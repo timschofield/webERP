@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: PDFStockTransfer.php 6549 2014-01-24 20:32:31Z daintree $*/
+/* $Id: PDFStockTransfer.php 6812 2014-08-13 18:14:57Z agaluski $*/
 
 /* This script is superseded by the PDFStockLocTransfer.php which produces a multiple item stock transfer listing - this was for the old individual stock transfers where there is just single items being transferred */
 
@@ -35,6 +35,24 @@ if (!isset($_GET['TransferNo'])){
 			</div>
             </div>
 			</form>';
+
+		echo '<form method="post" action="' . $RootPath . '/PDFShipLabel.php">';
+		echo '<div>';
+		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+		echo '<input type="hidden" name="Type" value="Transfer" />';
+		echo '<table>
+				<tr>
+					<td>' . _('Transfer docket to reprint Shipping Labels') . '</td>
+					<td><input type="text" class="number" size="10" name="ORD" /></td>
+				</tr>
+			</table>';
+		echo '<br />
+			<div class="centre">
+				<input type="submit" name="Print" value="' . _('Print Shipping Labels') .'" />
+			</div>';
+		echo '</div>
+			</form>';
+
 		include('includes/footer.inc');
 		exit();
 	}
@@ -63,6 +81,7 @@ $sql="SELECT stockmoves.stockid,
 		ON stockmoves.stockid=stockmaster.stockid
 		INNER JOIN locations
 		ON stockmoves.loccode=locations.loccode
+		INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 		WHERE transno='".$_GET['TransferNo']."'
 		AND qty < 0
 		AND type=16";
@@ -86,10 +105,7 @@ while ($myrow=DB_fetch_array($result)) {
 	$Description=$myrow['description'];
 
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+1,$YPos-10,300-$Left_Margin,$FontSize, $StockID);
-	/*resmoart mods*/
-	/*$LeftOvers = $pdf->addTextWrap($Left_Margin+75,$YPos-10,300-$Left_Margin,$FontSize-2, $Description);*/
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+75,$YPos-10,300-$Left_Margin,$FontSize, $Description);
-	/*resmart ends*/
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos-10,300-$Left_Margin,$FontSize, $From);
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+350,$YPos-10,300-$Left_Margin,$FontSize, $To);
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+475,$YPos-10,300-$Left_Margin,$FontSize, $Quantity);
@@ -99,7 +115,7 @@ while ($myrow=DB_fetch_array($result)) {
 	if ($YPos < $Bottom_Margin + $line_height){
 	   include('includes/PDFStockTransferHeader.inc');
 	}
-	/*resmart mods*/
+
 	$SQL = "SELECT stockmaster.controlled
 			FROM stockmaster WHERE stockid ='" . $StockID . "'";
 	$CheckControlledResult = DB_query($SQL,$db,'<br />' . _('Could not determine if the item was controlled or not because') . ' ');
@@ -131,7 +147,7 @@ while ($myrow=DB_fetch_array($result)) {
 			include('includes/PDFStockTransferHeader.inc');
 		} //controlled item*/
 	}
-	/*resmart ends*/	
+
 }
 $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos-70,300-$Left_Margin,$FontSize, _('Date of transfer: ').$Date);
 

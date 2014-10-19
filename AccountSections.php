@@ -1,14 +1,11 @@
 <?php
-
-/* $Id: AccountSections.php 6312 2013-08-30 21:08:37Z daintree $*/
+/* $Id: AccountSections.php 6900 2014-09-27 17:06:42Z rchacon $*/
 
 include('includes/session.inc');
-
 $Title = _('Account Sections');
-
-$ViewTopic = 'GeneralLedger';
-$BookMark = 'AccountSections';
-
+/* Manual links before header.inc */
+$ViewTopic = 'GeneralLedger';// Filename in ManualContents.php's TOC.
+$BookMark = 'AccountSections';// Anchor's id in the manual's html document.
 include('includes/header.inc');
 
 // SOME TEST TO ENSURE THAT AT LEAST INCOME AND COST OF SALES ARE THERE
@@ -169,12 +166,13 @@ if (!isset($_GET['SelectedSectionID']) AND !isset($_POST['SelectedSectionID'])) 
 
 	$ErrMsg = _('Could not get account group sections because');
 	$result = DB_query($sql,$db,$ErrMsg);
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '<br /></p>';
+	echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" />' . ' ' . $Title . '</p><br />';
 
 	echo '<table class="selection">
 			<tr>
 				<th class="ascending">' . _('Section Number') . '</th>
 				<th class="ascending">' . _('Section Description') . '</th>
+				<th colspan="2">&nbsp;</th>
 			</tr>';
 
 	$k=0; //row colour counter
@@ -188,8 +186,9 @@ if (!isset($_GET['SelectedSectionID']) AND !isset($_POST['SelectedSectionID'])) 
 			$k++;
 		}
 
-		echo '<td>' . $myrow['sectionid'] . '</td><td>' . $myrow['sectionname'] . '</td>';
-		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?SelectedSectionID=' . urlencode($myrow['sectionid']), ENT_QUOTES, 'UTF-8') . '">' . _('Edit') . '</a></td>';
+		echo '<td class="number">' . $myrow['sectionid'] . '</td>
+				<td>' . $myrow['sectionname'] . '</td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?SelectedSectionID=' . urlencode($myrow['sectionid']), ENT_QUOTES, 'UTF-8') . '">' . _('Edit') . '</a></td>';
 		if ( $myrow['sectionid'] == '1' or $myrow['sectionid'] == '2' ) {
 			echo '<td><b>' . _('Restricted') . '</b></td>';
 		} else {

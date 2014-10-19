@@ -1,5 +1,5 @@
 <?php
-/* $Id: PDFPriceList.php 6847 2014-08-28 05:26:07Z rchacon $*/
+/* $Id: PDFPriceList.php 6892 2014-09-16 07:27:40Z tehonu $*/
 /*	Script to print a price list by inventory category */
 /*	Output column sizes:
 		* stockmaster.stockid, varchar(20), len = 20chr

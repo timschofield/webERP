@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: GLTrialBalance.php 6547 2014-01-24 08:52:53Z daintree $*/
+/* $Id: GLTrialBalance.php 6592 2014-03-02 08:41:40Z daintree $*/
 
 /*Through deviousness AND cunning, this system allows trial balances for any date range that recalcuates the p & l balances
 and shows the balance sheets as at the end of the period selected - so first off need to show the input of criteria screen

@@ -1,33 +1,25 @@
 <?php
-/* $Id: GetPrice.inc 6505 2013-12-21 09:44:25Z exsonqu $*/
-function GetPrice ($StockID, $DebtorNo, $BranchCode, $db, $ReportZeroPrice=1){
-
+/* $Id: GetPrice.inc 6714 2014-05-17 03:09:03Z daintree $*/
+function GetPrice ($StockID, $DebtorNo, $BranchCode, $OrderLineQty=1, $ReportZeroPrice=1){
+	global $db;
 	$Price = 0;
-	//get the price from price matrix
-	$sql = "SELECT pricematrix.price FROM pricematrix,debtorsmaster 
-				WHERE debtorsmaster.salestype=pricematrix.salestype
-				AND debtorsmaster.debtorno = '".$DebtorNo."'
-				AND pricematrix.stockid = '".$StockID."'";
-	$ErrorMsg = _('Failed to retrieve price from price matrix');
-	$result = DB_query($sql,$db,$ErrMsg);
-	if (DB_num_rows($result) == 0){
 
-		/*Search by branch and customer for a date specified price */
-		$sql="SELECT prices.price
-				FROM prices,
-					debtorsmaster
-				WHERE debtorsmaster.salestype=prices.typeabbrev
-				AND debtorsmaster.debtorno='" . $DebtorNo . "'
-				AND prices.stockid = '" . $StockID . "'
-				AND prices.currabrev = debtorsmaster.currcode
-				AND prices.debtorno=debtorsmaster.debtorno
-				AND prices.branchcode='" . $BranchCode . "'
-				AND prices.startdate <='" . Date('Y-m-d') . "'
-				AND prices.enddate >='" . Date('Y-m-d') . "'";
+	/*Search by branch and customer for a date specified price */
+	$sql="SELECT prices.price
+			FROM prices,
+				debtorsmaster
+			WHERE debtorsmaster.salestype=prices.typeabbrev
+			AND debtorsmaster.debtorno='" . $DebtorNo . "'
+			AND prices.stockid = '" . $StockID . "'
+			AND prices.currabrev = debtorsmaster.currcode
+			AND prices.debtorno=debtorsmaster.debtorno
+			AND prices.branchcode='" . $BranchCode . "'
+			AND prices.startdate <='" . Date('Y-m-d') . "'
+			AND prices.enddate >='" . Date('Y-m-d') . "'";
 
-				$ErrMsg =  _('There is a problem in retrieving the pricing information for part') . ' ' . $StockID  . ' ' . _('and for Customer') . ' ' . $DebtorNo .  ' ' . _('the error message returned by the SQL server was');
-				$result = DB_query($sql, $db,$ErrMsg);
-	}
+	$ErrMsg =  _('There is a problem in retrieving the pricing information for part') . ' ' . $StockID  . ' ' . _('and for Customer') . ' ' . $DebtorNo .  ' ' . _('the error message returned by the SQL server was');
+	$result = DB_query($sql, $db,$ErrMsg);
+
 	if (DB_num_rows($result)==0){
 		/*Need to try same specific search but for a default price with a zero end date */
 		$sql="SELECT prices.price,
@@ -60,7 +52,6 @@ function GetPrice ($StockID, $DebtorNo, $BranchCode, $db, $ReportZeroPrice=1){
 					AND prices.branchcode=''
 					AND prices.startdate <='" . Date('Y-m-d') . "'
 					AND prices.enddate >='" . Date('Y-m-d') . "'";
-
 
 			$result = DB_query($sql,$db,$ErrMsg);
 			if (DB_num_rows($result)==0){
@@ -149,6 +140,20 @@ function GetPrice ($StockID, $DebtorNo, $BranchCode, $db, $ReportZeroPrice=1){
 								$result = DB_query($sql, $db,$ErrMsg);
 
 								if (DB_num_rows($result)==0){
+									/* Now check the price matrix */
+									$sql = "SELECT max(pricematrix.price) FROM pricematrix,
+															debtorsmaster
+												WHERE pricematrix.stockid = '" . $StockID . "'
+												AND pricematrix.currabrev = debtorsmaster.currcode
+												AND pricematrix.salestype = debtorsmaster.salestype
+												AND pricematrix.quantitybreak >= '" . $OrderLineQty . "'
+												AND pricematrix.startdate <= '" . Date('Y-m-d') . "' 
+												AND pricematrix.enddate >='" . Date('Y-m-d') . "'";
+									$ErrMsg = _('There is an error to retrieve price from price matrix for stock') . ' ' . $StockID . ' ' . _('and the error message returned by SQL server is ');
+									$result = DB_query($sql,$db,$ErrMsg);
+									$MaxPriceRow = DB_fetch_row($result);
+								}
+								if ($MaxPriceRow[0]==NULL){	
 									/*Not even a price set up in the default price list so return 0 */
 									if ($ReportZeroPrice ==1){
 										prnMsg(_('There are no prices set up for') . ' ' . $StockID,'warn');
@@ -165,8 +170,12 @@ function GetPrice ($StockID, $DebtorNo, $BranchCode, $db, $ReportZeroPrice=1){
 
 	if (DB_num_rows($result)!=0){
 		/*There is a price from one of the above so return that */
-
 		$myrow=DB_fetch_row($result);
+		echo 'price = ' . $myrow[0];
+
+		echo $sql;
+
+		
 		Return $myrow[0];
 	} else {
 		Return 0;

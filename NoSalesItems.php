@@ -20,8 +20,10 @@ echo '<div class="centre"><p class="page_title_text"><img src="' . $RootPath . '
 			 <td>:</td>
 			 <td><select name="Location[]" multiple="multiple">
 				<option value="All" selected="selected">' . _('All') . '</option>';;
-	$sql = "SELECT 	loccode,locationname
-			FROM 	locations ORDER BY locationname";
+	$sql = "SELECT 	locations.loccode,locationname
+			FROM 	locations 
+			INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
+			ORDER BY locationname";
 	$locationresult = DB_query($sql, $db);
 	$i=0;
 	while ($myrow = DB_fetch_array($locationresult)) {
@@ -104,23 +106,27 @@ echo '<div class="centre"><p class="page_title_text"><img src="' . $RootPath . '
 					stockmaster.description,
 					stockmaster.units
 				FROM 	stockmaster,locstock
+				INNER JOIN locationusers ON locationusers.loccode=locstock.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 				WHERE 	stockmaster.stockid = locstock.stockid ".
 						$WhereStockCat . "
 					AND (locstock.quantity > 0)
 					AND NOT EXISTS (
 							SELECT *
 							FROM 	salesorderdetails, salesorders
+							INNER JOIN locationusers ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 							WHERE 	stockmaster.stockid = salesorderdetails.stkcode
 									AND (salesorderdetails.orderno = salesorders.orderno)
 									AND salesorderdetails.actualdispatchdate > '" . $FromDate . "')
 					AND NOT EXISTS (
 							SELECT *
 							FROM 	stockmoves
+							INNER JOIN locationusers ON locationusers.loccode=stockmoves.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 							WHERE 	stockmoves.stockid = stockmaster.stockid
 									AND stockmoves.trandate >= '" . $FromDate . "')
 					AND EXISTS (
 							SELECT *
 							FROM 	stockmoves
+							INNER JOIN locationusers ON locationusers.loccode=stockmoves.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 							WHERE 	stockmoves.stockid = stockmaster.stockid
 									AND stockmoves.trandate < '" . $FromDate . "'
 									AND stockmoves.qty >0)
@@ -148,6 +154,7 @@ echo '<div class="centre"><p class="page_title_text"><img src="' . $RootPath . '
 						locstock.quantity,
 						locations.locationname
 				FROM 	stockmaster,locstock,locations
+				INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 				WHERE 	stockmaster.stockid = locstock.stockid
 						AND (locstock.loccode = locations.loccode)".
 						$WhereLocation .
@@ -205,7 +212,9 @@ echo '<div class="centre"><p class="page_title_text"><img src="' . $RootPath . '
 		}
 		$QOHResult = DB_query("SELECT sum(quantity)
 				FROM locstock
-				WHERE stockid = '" . $myrow['stockid'] . "'", $db);
+				INNER JOIN locationusers ON locationusers.loccode=locstock.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
+				WHERE stockid = '" . $myrow['stockid'] . "'" .
+				$WhereLocation , $db);
 		$QOHRow = DB_fetch_row($QOHResult);
 		$QOH = $QOHRow[0];
 

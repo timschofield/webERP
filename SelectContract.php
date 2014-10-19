@@ -86,6 +86,7 @@ if (isset($_POST['ContractRef']) AND $_POST['ContractRef'] !='') {
 					   requireddate
 				FROM contracts INNER JOIN debtorsmaster
 				ON contracts.debtorno = debtorsmaster.debtorno
+				INNER JOIN locationusers ON locationusers.loccode=contracts.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 				WHERE contractref " . LIKE . " '%" .  $_POST['ContractRef'] ."%'";
 
 } else { //contractref not selected
@@ -104,6 +105,7 @@ if (isset($_POST['ContractRef']) AND $_POST['ContractRef'] !='') {
 					   requireddate
 				FROM contracts INNER JOIN debtorsmaster
 				ON contracts.debtorno = debtorsmaster.debtorno
+				INNER JOIN locationusers ON locationusers.loccode=contracts.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 				WHERE debtorno='". $_POST['SelectedCustomer'] ."'";
 		if ($_POST['Status']!=4){
 			$SQL .= " AND status='" . $_POST['Status'] . "'";
@@ -121,7 +123,8 @@ if (isset($_POST['ContractRef']) AND $_POST['ContractRef'] !='') {
 					   customerref,
 					   requireddate
 				FROM contracts INNER JOIN debtorsmaster
-				ON contracts.debtorno = debtorsmaster.debtorno";
+				ON contracts.debtorno = debtorsmaster.debtorno
+				INNER JOIN locationusers ON locationusers.loccode=contracts.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
 		if ($_POST['Status']!=4){
 			$SQL .= " AND status='" . $_POST['Status'] . "'";
 		}

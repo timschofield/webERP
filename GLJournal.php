@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: GLJournal.php 6310 2013-08-29 10:42:50Z daintree $*/
+/* $Id: GLJournal.php 6798 2014-07-30 10:09:15Z daintree $*/
 
 include('includes/DefineJournalClass.php');
 
@@ -310,7 +310,7 @@ $SQL = "SELECT tagref,
 $result=DB_query($SQL,$db);
 echo '<option value="0">0 - ' . _('None') . '</option>';
 while ($myrow=DB_fetch_array($result)){
-	if (isset($_POST['tag']) and $_POST['tag']==$myrow['tagref']){
+	if (isset($_POST['tag']) AND $_POST['tag']==$myrow['tagref']){
 		echo '<option selected="selected" value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription'] . '</option>';
 	} else {
 		echo '<option value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription'] . '</option>';
@@ -322,7 +322,7 @@ echo '</select></td>';
 if (!isset($_POST['GLManualCode'])) {
 	$_POST['GLManualCode']='';
 }
-echo '<td><input class="number" type="text" autofocus="autofocus" name="GLManualCode" maxlength="12" size="12" onchange="inArray(this.value, GLCode.options,'.	"'".'The account code '."'".'+ this.value+ '."'".' doesnt exist'."'".')" value="'. $_POST['GLManualCode'] .'"  /></td>';
+echo '<td><input type="text" autofocus="autofocus" name="GLManualCode" maxlength="12" size="12" onchange="inArray(this.value, GLCode.options,'.	"'".'The account code '."'".'+ this.value+ '."'".' doesnt exist'."'".')" value="'. $_POST['GLManualCode'] .'"  /></td>';
 
 $sql="SELECT accountcode,
 			accountname
@@ -330,10 +330,11 @@ $sql="SELECT accountcode,
 		ORDER BY accountcode";
 
 $result=DB_query($sql, $db);
-echo '<td><select name="GLCode" onchange="return assignComboToInput(this,'.'GLManualCode'.')">';
-echo '<option value="">' . _('Select a general ledger account code') . '</option>';
+echo '<td>
+	<select name="GLCode" onchange="return assignComboToInput(this,'.'GLManualCode'.')">
+		<option value="">' . _('Select a general ledger account code') . '</option>';
 while ($myrow=DB_fetch_array($result)){
-	if (isset($_POST['tag']) and $_POST['tag']==$myrow['accountcode']){
+	if (isset($_POST['GLCode']) AND $_POST['GLCode']==$myrow['accountcode']){
 		echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'].' - ' .htmlspecialchars($myrow['accountname'], ENT_QUOTES,'UTF-8', false) . '</option>';
 	} else {
 		echo '<option value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'].' - ' .htmlspecialchars($myrow['accountname'], ENT_QUOTES,'UTF-8', false)  . '</option>';

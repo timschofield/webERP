@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: DeliveryDetails.php 6457 2013-11-29 14:20:40Z turbopt $ */
+/* $Id: DeliveryDetails.php 6812 2014-08-13 18:14:57Z agaluski $ */
 
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
@@ -617,14 +617,14 @@ if (isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.
 			/*link to print the quotation */
 			echo '<br /><table class="selection">
 					<tr>
-						<td><img src="'.$RootPath.'/css/'.$Theme.'/images/reports.png" title="' . _('Order') . '" alt=""></td>
-						<td>' . ' ' . '<a href="' . $RootPath . '/PDFQuotation.php?identifier='.$identifier . '&amp;QuotationNo=' . $OrderNo . '">' .  _('Print Quotation (Landscape)')  . '</a></td>
+						<td><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Order') . '" alt=""></td>
+						<td>' . ' ' . '<a href="' . $RootPath . '/PDFQuotation.php?identifier='.$identifier . '&amp;QuotationNo=' . $OrderNo . '" target="_blank">' .  _('Print Quotation (Landscape)')  . '</a></td>
 					</tr>
 					</table>';
 			echo '<br /><table class="selection">
 					<tr>
-						<td><img src="'.$RootPath.'/css/'.$Theme.'/images/reports.png" title="' . _('Order') . '" alt="" /></td>
-						<td>' . ' ' . '<a href="' . $RootPath . '/PDFQuotationPortrait.php?identifier='.$identifier . '&amp;QuotationNo=' . $OrderNo . '">' .  _('Print Quotation (Portrait)')  . '</a></td>
+						<td><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Order') . '" alt="" /></td>
+						<td>' . ' ' . '<a href="' . $RootPath . '/PDFQuotationPortrait.php?identifier='.$identifier . '&amp;QuotationNo=' . $OrderNo . '" target="_blank">' .  _('Print Quotation (Portrait)')  . '</a></td>
 					</tr>
 					</table>';
 		}
@@ -803,14 +803,14 @@ if (isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.
 		/*link to print the quotation */
 		echo '<br /><table class="selection">
 				<tr>
-					<td><img src="'.$RootPath.'/css/'.$Theme.'/images/reports.png" title="' . _('Order') . '" alt=""></td>
-					<td>' . ' ' . '<a href="' . $RootPath . '/PDFQuotation.php?identifier='.$identifier . '&amp;QuotationNo=' . $_SESSION['ExistingOrder'.$identifier] . '">' .  _('Print Quotation (Landscape)')  . '</a></td>
+					<td><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Order') . '" alt=""></td>
+					<td>' . ' ' . '<a href="' . $RootPath . '/PDFQuotation.php?identifier='.$identifier . '&amp;QuotationNo=' . $_SESSION['ExistingOrder'.$identifier] . '" target="_blank">' .  _('Print Quotation (Landscape)')  . '</a></td>
 				</tr>
 				</table>';
 		echo '<br /><table class="selection">
 				<tr>
-					<td><img src="'.$RootPath.'/css/'.$Theme.'/images/reports.png" title="' . _('Order') . '" alt="" /></td>
-					<td>' . ' ' . '<a href="' . $RootPath . '/PDFQuotationPortrait.php?identifier='.$identifier . '&amp;QuotationNo=' . $_SESSION['ExistingOrder'.$identifier] . '">' .  _('Print Quotation (Portrait)')  . '</a></td>
+					<td><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Order') . '" alt="" /></td>
+					<td>' . ' ' . '<a href="' . $RootPath . '/PDFQuotationPortrait.php?identifier='.$identifier . '&amp;QuotationNo=' . $_SESSION['ExistingOrder'.$identifier] . '" target="_blank">' .  _('Print Quotation (Portrait)')  . '</a></td>
 				</tr>
 				</table>';
 	}else{
@@ -1008,8 +1008,8 @@ if ($_SESSION['Items'.$identifier]->Location=='' OR !isset($_SESSION['Items'.$id
 
 $ErrMsg = _('The stock locations could not be retrieved');
 $DbgMsg = _('SQL used to retrieve the stock locations was') . ':';
-$StkLocsResult = DB_query("SELECT locationname,loccode
-							FROM locations",$db, $ErrMsg, $DbgMsg);
+$StkLocsResult = DB_query("SELECT locationname,locations.loccode
+							FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1",$db, $ErrMsg, $DbgMsg);
 
 while ($myrow=DB_fetch_array($StkLocsResult)){
 	if ($_SESSION['Items'.$identifier]->Location==$myrow['loccode']){

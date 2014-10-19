@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: BOMIndentedReverse.php 6310 2013-08-29 10:42:50Z daintree $*/
+/* $Id: BOMIndentedReverse.php 6805 2014-08-08 16:12:36Z agaluski $*/
 
 // BOMIndented.php - Reverse Indented Bill of Materials - From lowest level component to top level
 // assembly
@@ -169,6 +169,7 @@ if (isset($_POST['PrintPDF'])) {
                    stockmaster.mbflag
               FROM tempbom INNER JOIN stockmaster
               ON tempbom.parent = stockmaster.stockid
+			  INNER JOIN locationusers ON locationusers.loccode=tempbom.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
               ORDER BY sortpart";
 	$result = DB_query($sql,$db);
 

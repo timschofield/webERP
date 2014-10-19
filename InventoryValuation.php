@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: InventoryValuation.php 6536 2014-01-13 05:31:11Z daintree $ */
+/* $Id: InventoryValuation.php 6848 2014-08-28 15:15:31Z exsonqu $ */
 
 include('includes/session.inc');
 if ((isset($_POST['PrintPDF']) OR isset($_POST['CSV']))
@@ -23,6 +23,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['CSV']))
 				FROM stockmaster,
 					stockcategory,
 					locstock
+				INNER JOIN locationusers ON locationusers.loccode=locstock.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 				WHERE stockmaster.stockid=locstock.stockid
 				AND stockmaster.categoryid=stockcategory.categoryid
 				GROUP BY stockmaster.categoryid,
@@ -53,6 +54,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['CSV']))
 				FROM stockmaster,
 					stockcategory,
 					locstock
+				INNER JOIN locationusers ON locationusers.loccode=locstock.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 				WHERE stockmaster.stockid=locstock.stockid
 				AND stockmaster.categoryid=stockcategory.categoryid
 				AND locstock.quantity!=0
@@ -204,7 +206,8 @@ if (isset($_POST['PrintPDF'])
 
 	$CSVListing = _('Category ID') .','. _('Category Description') .','. _('Stock ID') .','. _('Description') .','. _('Decimal Places') .','. _('Qty On Hand') .','. _('Units') .','. _('Unit Cost') .','. _('Total') . "\n";
 	while ($InventoryValn = DB_fetch_row($InventoryResult, $db)) {
-		$CSVListing .= implode(',', $InventoryValn) . "\n";
+		$CSVListing .= '"';
+		$CSVListing .= implode('","', $InventoryValn) . '"' . "\n";
 	}
 	header('Content-Encoding: UTF-8');
     header('Content-type: text/csv; charset=UTF-8');
@@ -265,9 +268,10 @@ if (isset($_POST['PrintPDF'])
 				<td>' . _('For Inventory in Location') . ':</td>
 				<td><select name="Location">';
 
-		$sql = "SELECT loccode,
+		$sql = "SELECT locations.loccode,
 						locationname
-				FROM locations";
+				FROM locations
+				INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
 
 		$LocnResult=DB_query($sql,$db);
 

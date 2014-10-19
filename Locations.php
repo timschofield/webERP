@@ -1,5 +1,5 @@
 <?php
-/* $Id: Locations.php 6875 2014-09-11 09:34:57Z tehonu $*/
+/* $Id: Locations.php 6880 2014-09-12 00:40:01Z tehonu $*/
 
 include('includes/session.inc');
 $Title = _('Location Maintenance');

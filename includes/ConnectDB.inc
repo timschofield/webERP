@@ -1,10 +1,10 @@
 <?php
-/* $Id: ConnectDB.inc 6556 2014-02-02 09:13:54Z daintree $*/
+/* $Id: ConnectDB.inc 6914 2014-10-13 08:56:08Z daintree $*/
 /* $Version is compared against the value for config.confvalue WHERE confname=VersionNumber in the database
  * this value is saved in the $_SESSION['Versionumber'] when includes/GetConfig.php is run
  * if  VersionNumber is < $Version  then the DB update script is run */
 
-$Version='4.11.3'; //must update manually every time there is a DB change
+$Version='4.11.5'; //must update manually every time there is a DB change
 
 require_once ($PathPrefix .'includes/MiscFunctions.php');
 if (!isset($_SESSION['DatabaseName'])){ //need to get the database name from the file structure

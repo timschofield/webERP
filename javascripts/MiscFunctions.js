@@ -10,6 +10,7 @@ function rTN(event){
 	else if (event) k=event.which;
 	else return true;
 	kC=String.fromCharCode(k);
+	if (k==13) return false;
 	if ((k==null) || (k==0) || (k==8) || (k==9) || (k==13) || (k==27)) return true;
 	else if ((("0123456789.,- ").indexOf(kC)>-1)) return true;
 	else return false;
@@ -20,7 +21,7 @@ function rTI(event){
 	else return true;
 	kC=String.fromCharCode(k);
 	if ((k==null) || (k==0) || (k==8) || (k==9) || (k==13) || (k==27)) return true;
-	else if ((("0123456789").indexOf(kC)>-1)) return true;
+	else if ((("0123456789-").indexOf(kC)>-1)) return true;
 	else return false;
 }
 function rLocaleNumber(){
@@ -60,7 +61,7 @@ function assignComboToInput(c,i){
 }
 function inArray(v,tA,m){
 	for (i=0;i<tA.length;i++) {
-		if (v==tA[i].value) {
+		if (v.value==tA[i].value) {
 			return true;
 		}
 	}
@@ -68,19 +69,36 @@ function inArray(v,tA,m){
 	return false;
 }
 function isDate(dS,dF){
-	var mA=dS.match(/^(\d{1,2})(\/|-|.)(\d{1,2})(\/|-|.)(\d{4})$/);
+	switch (dF) {
+		case "d/m/Y":
+		case "d.m.Y":
+		case "m/d/Y":
+		var mA=dS.match(/^(\d{1,2})(\/|-|.)(\d{1,2})(\/|-|.)(\d{4})$/);
+		break;
+		case "Y/m/d":
+		case "Y-m-d":
+		var mA=dS.match(/^(\d{4})(\/|-|.)(\d{1,2})(\/|-|.)(\d{1,2})$/);
+		break;
+	}
+
 	if (mA==null){
 		alert("Please enter the date in the format "+dF);
 		return false;
 	}
-	if (dF=="d/m/Y"){
+	if (dF=="d/m/Y"||dF=="d.m.Y"){
 		d=mA[1];
 		m=mA[3];
-	}else{
-		d=mA[3];
+		y=mA[5];
+	}else if(dF=='m/d/Y'){
 		m=mA[1];
+		d=mA[3];
+		y=mA[5];
+	}else{
+		d=mA[5];
+		m=mA[3];
+		y=mA[1];
 	}
-	y=mA[5];
+	
 	if (m<1 || m>12){
 		alert("Month must be between 1 and 12");
 		return false;

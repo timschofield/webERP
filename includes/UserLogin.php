@@ -1,7 +1,7 @@
 <?php
 
 /*  Performs login checks and $_SESSION initialisation */
-/* $Id: UserLogin.php 6547 2014-01-24 08:52:53Z daintree $*/
+/* $Id: UserLogin.php 6914 2014-10-13 08:56:08Z daintree $*/
 
 define('UL_OK',  0);		/* User verified, session initialised */
 define('UL_NOTVALID', 1);	/* User/password do not agree */
@@ -20,6 +20,7 @@ define('UL_MAINTENANCE', 5);
 function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
 
 	global $debug;
+	global $PathPrefix;
 
 	if (!isset($_SESSION['AccessLevel']) OR $_SESSION['AccessLevel'] == '' OR
 		(isset($Name) AND $Name != '')) {
@@ -41,16 +42,54 @@ function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
 		}
 		/* The SQL to get the user info must use the * syntax because the field name could change between versions if the fields are specifed directly then the sql fails and the db upgrade will fail */
 		$sql = "SELECT *
-				FROM www_users
-				WHERE www_users.userid='" . $Name . "'
-				AND (www_users.password='" . CryptPass($Password) . "'
-				OR  www_users.password='" . $Password . "')";
+			FROM www_users
+			WHERE www_users.userid='" . $Name . "'";
+
 		$ErrMsg = _('Could not retrieve user details on login because');
 		$debug =1;
+        $PasswordVerified = false;
 		$Auth_Result = DB_query($sql, $db,$ErrMsg);
-		// Populate session variables with data base results
+
 		if (DB_num_rows($Auth_Result) > 0) {
 			$myrow = DB_fetch_array($Auth_Result);
+			if (VerifyPass($Password,$myrow['password'])) {
+				$PasswordVerified = true;
+			} elseif (isset($GLOBALS['CryptFunction'])) {
+				/*if the password stored in the DB was compiled the old way,
+				 * the previous comparison will fail,
+				 * try again with the old hashing algorithm,
+				 * then re-hash the password using the new algorithm.
+				 * The next version should not have $CryptFunction any more for new installs.
+				 */
+				switch ($GLOBALS['CryptFunction']) {
+					case 'sha1':
+						if ($myrow['password'] == sha1($Password)) {
+							$PasswordVerified = true;
+						}
+						break;
+					case 'md5':
+						if ($myrow['password'] == md5($Password)) {
+							$PasswordVerified = true;
+						}
+						break;
+					default:
+						if ($myrow['password'] == $Password) {
+							$PasswordVerified = true;
+						}
+				}
+				if ($PasswordVerified) {
+					$sql = "UPDATE www_users SET password = '" . CryptPass($Password) . "'"
+							. " WHERE userid = '" . $Name . "';";
+					DB_query($sql,$db);
+				}
+
+			}
+		}
+
+
+		// Populate session variables with data base results
+		if ($PasswordVerified) {
+
 			if ($myrow['blocked']==1){
 			//the account is blocked
 				return  UL_BLOCKED;
@@ -106,14 +145,88 @@ function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
 					$i++;
 				}
 			}
-			// check if only maintenance users can access webERP
-			$sql = "SELECT confvalue FROM config WHERE confname = 'DB_Maintenance'";
-			$Maintenance_Result = DB_query($sql, $db);
-			if (DB_num_rows($Maintenance_Result)==0){
+
+
+			/*User is logged in so get configuration parameters  - save in session*/
+			include($PathPrefix . 'includes/GetConfig.php');
+
+
+			if(isset($_SESSION['DB_Maintenance'])){
+				if ($_SESSION['DB_Maintenance']>0)  { //run the DB maintenance script
+					if (DateDiff(Date($_SESSION['DefaultDateFormat']),
+							ConvertSQLDate($_SESSION['DB_Maintenance_LastRun'])
+							,'d')	>= 	$_SESSION['DB_Maintenance']){
+
+						/*Do the DB maintenance routing for the DB_type selected */
+						DB_Maintenance($db);
+						$_SESSION['DB_Maintenance_LastRun'] = Date('Y-m-d');
+
+						/* Audit trail purge only runs if DB_Maintenance is enabled */
+						if (isset($_SESSION['MonthsAuditTrail'])){
+							 $sql = "DELETE FROM audittrail
+									WHERE  transactiondate <= '" . Date('Y-m-d', mktime(0,0,0, Date('m')-$_SESSION['MonthsAuditTrail'])) . "'";
+							$ErrMsg = _('There was a problem deleting expired audit-trail history');
+							$result = DB_query($sql,$db);
+						}
+					}
+				}
+			}
+
+			/*Check to see if currency rates need to be updated */
+			if (isset($_SESSION['UpdateCurrencyRatesDaily'])){
+				if ($_SESSION['UpdateCurrencyRatesDaily']!=0)  {
+					/* Only run the update to currency rates if today is after the last update i.e. only runs once a day */
+					if (DateDiff(Date($_SESSION['DefaultDateFormat']),
+						ConvertSQLDate($_SESSION['UpdateCurrencyRatesDaily']),'d')> 0){
+
+						if ($_SESSION['ExchangeRateFeed']=='ECB') {
+							$CurrencyRates = GetECBCurrencyRates(); // gets rates from ECB see includes/MiscFunctions.php
+							/*Loop around the defined currencies and get the rate from ECB */
+							if ($CurrencyRates!=false) {
+								$CurrenciesResult = DB_query("SELECT currabrev FROM currencies",$db);
+								while ($CurrencyRow = DB_fetch_row($CurrenciesResult)){
+									if ($CurrencyRow[0]!=$_SESSION['CompanyRecord']['currencydefault']){
+
+										$UpdateCurrRateResult = DB_query("UPDATE currencies SET rate='" . GetCurrencyRate($CurrencyRow[0],$CurrencyRates) . "'
+																			WHERE currabrev='" . $CurrencyRow[0] . "'",$db);
+									}
+								}
+							}
+						} else {
+							$CurrenciesResult = DB_query("SELECT currabrev FROM currencies",$db);
+							while ($CurrencyRow = DB_fetch_row($CurrenciesResult)){
+								if ($CurrencyRow[0]!=$_SESSION['CompanyRecord']['currencydefault']){
+									$UpdateCurrRateResult = DB_query("UPDATE currencies SET rate='" . google_currency_rate($CurrencyRow[0]) . "'
+																		WHERE currabrev='" . $CurrencyRow[0] . "'",$db);
+								}
+							}
+						}
+						$_SESSION['UpdateCurrencyRatesDaily'] = Date('Y-m-d');
+						$UpdateConfigResult = DB_query("UPDATE config SET confvalue = '" . Date('Y-m-d') . "' WHERE confname='UpdateCurrencyRatesDaily'",$db);
+					}
+				}
+			}
+
+
+			/* Set the logo if not yet set.
+			 * will be done only once per session and each time
+			 * we are not in session (i.e. before login)
+			 */
+			if (empty($_SESSION['LogoFile'])) {
+				/* find a logo in companies/CompanyDir */
+				if (file_exists($PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/logo.png')) {
+					$_SESSION['LogoFile'] = 'companies/' .  $_SESSION['DatabaseName'] . '/logo.png';
+				} elseif (file_exists($PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/logo.jpg')) {
+					$_SESSION['LogoFile'] = 'companies/' .  $_SESSION['DatabaseName'] . '/logo.jpg';
+				}
+			}
+
+
+			if(!isset($_SESSION['DB_Maintenance'])){
 				return  UL_CONFIGERR;
 			} else {
-				$myMaintenanceRow = DB_fetch_row($Maintenance_Result);
-				if (($myMaintenanceRow[0] == -1) AND ($UserIsSysAdmin == FALSE)){
+
+				if ($_SESSION['DB_Maintenance']==-1 AND !in_array(15, $_SESSION['AllowedPageSecurityTokens'])){
 					// the configuration setting has been set to -1 ==> Allow SysAdmin Access Only
 					// the user is NOT a SysAdmin
 					return  UL_MAINTENANCE;
@@ -137,7 +250,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
 					if($_SESSION['SmtpSetting']==0){
 							mail($SysAdminEmail,$EmailSubject,$EmailText);
 
-					}else{
+					} else{
 							include('includes/htmlMimeMail.php');
 							$mail = new htmlMimeMail();
 							$mail->setSubject($EmailSubject);

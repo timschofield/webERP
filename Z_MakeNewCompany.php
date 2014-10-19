@@ -1,5 +1,5 @@
 <?php
-/* $Id: Z_MakeNewCompany.php 6375 2013-10-30 10:11:31Z exsonqu $*/
+/* $Id: Z_MakeNewCompany.php 6680 2014-04-08 08:27:07Z daintree $*/
 
 
 include ('includes/session.inc');
@@ -138,6 +138,9 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 			copy ('./companies/' . $_SESSION['DatabaseName'] . '/FormDesigns/GoodsReceived.xml', './companies/' .$_POST['NewDatabase']  . '/FormDesigns/GoodsReceived.xml');
 			copy ('./companies/' . $_SESSION['DatabaseName'] . '/FormDesigns/PickingList.xml', './companies/' .$_POST['NewDatabase']  . '/FormDesigns/PickingList.xml');
 			copy ('./companies/' . $_SESSION['DatabaseName'] . '/FormDesigns/PurchaseOrder.xml', './companies/' .$_POST['NewDatabase']  . '/FormDesigns/PurchaseOrder.xml');
+			copy ('./companies/' . $_SESSION['DatabaseName'] . '/FormDesigns/FGLabel.xml', './companies/' . $_POST['NewDatabase'] . '/FormDesigns/FGLabel.xml');
+			copy ('./companies/' . $_SESSION['DatabaseName'] . '/FormDesigns/WOPaperwork.xml', './companies/' . $_POST['NewDatabase'] . '/FormDesigns/WOPaperwork.xml');
+			copy ('./companies/' . $_SESSION['DatabaseName'] . '/FormDesigns/QALabel.xml', './companies/' . $_POST['NewDatabase'] . '/FormDesigns/QALabel.xml');
 
 			/*OK Now upload the logo */
 			if ($UploadTheLogo=='Yes'){

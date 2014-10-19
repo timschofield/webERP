@@ -1,5 +1,5 @@
 <?php
-/* $Id: session.inc 6338 2013-09-28 05:10:46Z daintree $*/
+/* $Id: session.inc 6914 2014-10-13 08:56:08Z daintree $*/
 
 if (!isset($PathPrefix)) {
 	$PathPrefix='';
@@ -80,14 +80,14 @@ if (isset($_SESSION['DatabaseName'])){
 }
 
 include($PathPrefix . 'includes/LanguageSetup.php');
-
-
+$FirstLogin = False;
 if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true */
 
 	include $PathPrefix . 'includes/UserLogin.php';	/* Login checking and setup */
 
 	if (isset($_POST['UserNameEntryField']) AND isset($_POST['Password'])) {
 		$rc = userLogin($_POST['UserNameEntryField'], $_POST['Password'], $SysAdminEmail, $db);
+		$FirstLogin = true;
 	} elseif (empty($_SESSION['DatabaseName'])) {
 		$rc = UL_SHOWLOGIN;
 	} else {
@@ -136,144 +136,19 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 	header('Location: index.php');
 }
 
-
-/*User is logged in so get configuration parameters  - save in session*/
-include($PathPrefix . 'includes/GetConfig.php');
-
-
 /*If the Code $Version - held in ConnectDB.inc is > than the Database VersionNumber held in config table then do upgrades */
 if (strcmp($Version,$_SESSION['VersionNumber'])>0 AND (basename($_SERVER['SCRIPT_NAME'])!='UpgradeDatabase.php')) {
 	header('Location: UpgradeDatabase.php');
 }
-if(isset($_SESSION['DB_Maintenance'])){ 
-	if ($_SESSION['DB_Maintenance']>0)  { //run the DB maintenance script
-		if (DateDiff(Date($_SESSION['DefaultDateFormat']),
-				ConvertSQLDate($_SESSION['DB_Maintenance_LastRun'])
-				,'d')	>= 	$_SESSION['DB_Maintenance']){
 
-			/*Do the DB maintenance routing for the DB_type selected */
-			DB_Maintenance($db);
-			$_SESSION['DB_Maintenance_LastRun'] = Date('Y-m-d');
-		}
-	}
-}
-
-/* RICARD KL Modification to run daily cheks at DB 
-COMMENTED as now run by CRON JOB
-if(isset($_SESSION['KL_DailyChecks_LastRun'])){
-	if (DateDiff(Date($_SESSION['DefaultDateFormat']),
-			ConvertSQLDate($_SESSION['KL_DailyChecks_LastRun']),'d') >= 1){
-
-		include($PathPrefix . 'KLDailyChecks.php');
-		KL_DailyChecks($RootPath, $db);
-		$_SESSION['KL_DailyChecks_LastRun'] = Date('Y-m-d');
-	}
-}
-RICARD KL END Modification to run daily cheks at DB */
-
-//purge the audit trail if necessary
-if (isset($_SESSION['MonthsAuditTrail'])){ 
-	 $sql = "DELETE FROM audittrail
-			WHERE  transactiondate <= '" . Date('Y-m-d', mktime(0,0,0, Date('m')-$_SESSION['MonthsAuditTrail'])) . "'";
-	$ErrMsg = _('There was a problem deleting expired audit-trail history');
-	$result = DB_query($sql,$db);
-}
-/*Check to see if currency rates need to be updated */
-if (isset($_SESSION['UpdateCurrencyRatesDaily'])){
-	if ($_SESSION['UpdateCurrencyRatesDaily']!=0)  {
-		if (DateDiff(Date($_SESSION['DefaultDateFormat']),
-			ConvertSQLDate($_SESSION['UpdateCurrencyRatesDaily']),'d')> 0){
-
-			if ($_SESSION['ExchangeRateFeed']=='ECB') {
-				$CurrencyRates = GetECBCurrencyRates(); // gets rates from ECB see includes/MiscFunctions.php
-				/*Loop around the defined currencies and get the rate from ECB */
-				if ($CurrencyRates!=false) {
-					$CurrenciesResult = DB_query("SELECT currabrev FROM currencies",$db);
-					while ($CurrencyRow = DB_fetch_row($CurrenciesResult)){
-						if ($CurrencyRow[0]!=$_SESSION['CompanyRecord']['currencydefault']){
-
-							$UpdateCurrRateResult = DB_query("UPDATE currencies SET rate='" . GetCurrencyRate($CurrencyRow[0],$CurrencyRates) . "'
-																WHERE currabrev='" . $CurrencyRow[0] . "'",$db);
-						}
-					}
-				}
-			} else {
-				$CurrenciesResult = DB_query("SELECT currabrev FROM currencies",$db);
-				while ($CurrencyRow = DB_fetch_row($CurrenciesResult)){
-					if ($CurrencyRow[0]!=$_SESSION['CompanyRecord']['currencydefault']){
-						$UpdateCurrRateResult = DB_query("UPDATE currencies SET rate='" . google_currency_rate($CurrencyRow[0]) . "'
-															WHERE currabrev='" . $CurrencyRow[0] . "'",$db);
-					}
-				}
-			}
-			$_SESSION['UpdateCurrencyRatesDaily'] = Date('Y-m-d');
-			$UpdateConfigResult = DB_query("UPDATE config SET confvalue = '" . Date('Y-m-d') . "' WHERE confname='UpdateCurrencyRatesDaily'",$db);
-		}
-	}
-}
 
 If (isset($_POST['Theme']) AND ($_SESSION['UsersRealName'] == $_POST['RealName'])) {
 	$_SESSION['Theme'] = $_POST['Theme'];
 	$Theme = $_POST['Theme'];
-} elseif (!isset($_SESSION['Theme'])) {
-	$Theme = $_SESSION['DefaultTheme'];
-	$_SESSION['Theme'] = $_SESSION['DefaultTheme'];
-
 } else {
 	$Theme = $_SESSION['Theme'];
 }
 
-/* Set the logo if not yet set.
- * will be done only once per session and each time
- * we are not in session (i.e. before login)
- */
-if (empty($_SESSION['LogoFile'])) {
-	/* find a logo in companies/$CompanyDir
-	 * (nice side effect of function:
-	 * variables are local, so we will never
-	 * cause name clashes)
-	 */
-
-	function findLogoFile($CompanyDir, $PathPrefix) {
-		$dir = $PathPrefix.'companies/' . $CompanyDir . '/';
-		$DirHandle = dir($dir);
-		while ($DirEntry = $DirHandle->read() ){
-			if ($DirEntry != '.' AND $DirEntry !='..'){
-				$InCompanyDir[] = $DirEntry; //make an array of all files under company directory
-			}
-		} //loop through list of files in the company directory
-		if ($InCompanyDir !== FALSE) {
-			foreach($InCompanyDir as $logofilename) {
-				if (strncasecmp($logofilename,'logo.png',8) === 0 AND
-					is_readable($dir . $logofilename) AND
-					is_file($dir . $logofilename)) {
-					$logo = $logofilename;
-					break;
-				}
-			}
-			if (!isset($logo)) {
-				foreach($InCompanyDir as $logofilename) {
-					if (strncasecmp($logofilename,'logo.jpg',8) === 0 AND
-						is_readable($dir . $logofilename) AND
-						is_file($dir . $logofilename)) {
-						$logo = $logofilename;
-						break;
-					}
-				}
-			}
-			if (empty($logo)) {
-				return null;
-			} else {
-				return 'companies/' .$CompanyDir .'/'. $logo;
-			}
-		} //end listing of files under company directory is not empty
-	}
-
-	/* Find a logo in companies/<company of this session> */
-	if (!empty($_SESSION['DatabaseName'])) {
-		$_SESSION['LogoFile'] = findLogoFile($_SESSION['DatabaseName'], $PathPrefix);
-	}
-}
 
 if ($_SESSION['HTTPS_Only']==1){
 	if ($_SERVER['HTTPS']!='on'){
@@ -311,15 +186,15 @@ if (!isset($AllowAnyone)){
 		$Title = _('Security Permissions Problem');
 		include($PathPrefix . 'includes/header.inc');
 		echo '<tr>
-			<td class="menu_group_items">
-				<table width="100%" class="table_index">
-					<tr><td class="menu_group_item">';
-		echo '<b><font style="size:+1; text-align:center;">' . _('The security settings on your account do not permit you to access this function') . '</font></b>';
-
-		echo '</td>
-			</tr>
-			</table>
-			</td>
+				<td class="menu_group_items">
+					<table width="100%" class="table_index">
+						<tr>
+							<td class="menu_group_item">
+								<b><font style="size:+1; text-align:center;">' . _('The security settings on your account do not permit you to access this function') . '</font></b>
+							</td>
+						</tr>
+					</table>
+				</td>
 			</tr>';
 
 		include($PathPrefix . 'includes/footer.inc');
@@ -329,26 +204,42 @@ if (!isset($AllowAnyone)){
 
 //$PageSecurity = 9 hard coded for supplier access Supplier access must have just 9 and 0 tokens
 if (in_array(9,$_SESSION['AllowedPageSecurityTokens']) AND count($_SESSION['AllowedPageSecurityTokens'])==2){
-	$SupplierLogin=1;
+	$SupplierLogin = 1;
+} else {
+	$SupplierLogin = 0; //false
 }
 if (in_array(1,$_SESSION['AllowedPageSecurityTokens']) AND count($_SESSION['AllowedPageSecurityTokens'])==2){
 	$CustomerLogin = 1;
+} else {
+	$CustomerLogin = 0;
 }
-
 if (in_array($_SESSION['PageSecurityArray']['WWW_Users.php'], $_SESSION['AllowedPageSecurityTokens'])) { /*System administrator login */
 	$debug = 1; //allow debug messages
 } else {
 	$debug = 0; //don't allow debug messages
 }
+if ($FirstLogin AND !$SupplierLogin AND !$CustomerLogin) {
+	header('Location: ' . $PathPrefix .'Dashboard.php');
+}
+
+
 function CryptPass( $Password ) {
-		global $CryptFunction;
-		if ( $CryptFunction == 'sha1' ) {
-			return sha1($Password);
-		} elseif ( $CryptFunction == 'md5' ) {
-			return md5($Password);
-	} else {
-			return $Password;
-		}
+    if (PHP_VERSION_ID < 50500) {
+        $Salt = base64_encode(mcrypt_create_iv(22, MCRYPT_DEV_URANDOM));
+        $Salt = str_replace('+', '.', $Salt);
+        $Hash = crypt($Password, '$2y$10$' . $Salt . '$');
+    } else {
+        $Hash = password_hash($Password,PASSWORD_DEFAULT);
+    }
+    return $Hash;
+ }
+
+ function VerifyPass($Password,$Hash) {
+     if(PHP_VERSION_ID < 50500) {
+         return (crypt($Password,$Hash)==$Hash);
+     } else {
+         return password_verify($Password,$Hash);
+     }
  }
 
 
@@ -362,5 +253,4 @@ if (sizeof($_POST) > 0 AND !isset($AllowAnyone)) {
 		exit;
 	}
 }
-
 ?>

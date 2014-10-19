@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: BankMatching.php 6563 2014-02-06 00:22:48Z icedlava $*/
+/* $Id: BankMatching.php 6592 2014-03-02 08:41:40Z daintree $*/
 
 include('includes/session.inc');
 $Title = _('Bank Account Matching');

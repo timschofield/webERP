@@ -47,7 +47,8 @@ $SQL = "SELECT stockmoves.stockid,
 		INNER JOIN systypes
 			ON stockmoves.type=systypes.typeid
 		INNER JOIN locations
-			ON stockmoves.loccode=locations.loccode";
+			ON stockmoves.loccode=locations.loccode
+		INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
 
 $SQLWhere=" WHERE stockmoves.debtorno='" . $DebtorNo . "'";
 

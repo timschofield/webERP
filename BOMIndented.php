@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: BOMIndented.php 6338 2013-09-28 05:10:46Z daintree $*/
+/* $Id: BOMIndented.php 6805 2014-08-08 16:12:36Z agaluski $*/
 
 // BOMIndented.php - Indented Bill of Materials
 
@@ -75,6 +75,7 @@ if (isset($_POST['PrintPDF'])) {
 					 bom.effectiveto,
 					 bom.quantity
 			  FROM bom
+			  INNER JOIN locationusers ON locationusers.loccode=bom.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 			  WHERE bom.parent ='" . $_POST['Part'] . "'
 			  AND bom.effectiveto >= '" . date('Y-m-d') . "'
 			  AND bom.effectiveafter <= '" . date('Y-m-d') . "'";
@@ -108,6 +109,7 @@ if (isset($_POST['PrintPDF'])) {
 						 bom.effectiveto,
 						 bom.quantity
 				 FROM bom, passbom
+				 INNER JOIN locationusers ON locationusers.loccode=loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 				 WHERE bom.parent = passbom.part
 				  AND bom.effectiveto >= '" . date('Y-m-d') . "' AND bom.effectiveafter <= '" . date('Y-m-d') . "'";
 			$result = DB_query($sql,$db);

@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: CustLoginSetup.php 6310 2013-08-29 10:42:50Z daintree $*/
+/* $Id: CustLoginSetup.php 6636 2014-03-25 08:30:00Z daintree $*/
 
 include('includes/session.inc');
 $Title = _('Customer Login Configuration');
@@ -242,7 +242,7 @@ while (false != ($ThemeName = $ThemeDirectory->read())){
 
 		if (isset($_POST['Theme']) and $_POST['Theme'] == $ThemeName){
 			echo '<option selected="selected" value="' . $ThemeName . '">' . $ThemeName  . '</option>';
-		} else if (!isset($_POST['Theme']) and ($_SESSION['DefaultTheme']==$ThemeName)) {
+		} else if (!isset($_POST['Theme']) and ($Theme==$ThemeName)) {
 			echo '<option selected="selected" value="' . $ThemeName . '">' . $ThemeName  . '</option>';
 		} else {
 			echo '<option value="' . $ThemeName . '">' . $ThemeName  . '</option>';

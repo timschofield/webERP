@@ -1,37 +1,35 @@
 <?php
+/*	$Id: CustomerAllocations.php 6878 2014-09-11 15:03:03Z rchacon $*/
 
-/* $Id: CustomerAllocations.php 6503 2013-12-19 16:16:41Z exsonqu $*/
-
-/*
-Call this page with:
+/*	Call this page with:
 	1. A TransID to show the make up and to modify existing allocations.
 	2. A DebtorNo to show all outstanding receipts or credits yet to be allocated.
 	3. No parameters to show all outstanding credits and receipts yet to be allocated.
 */
 
-include('includes/DefineCustAllocsClass.php');
+include('includes/DefineCustAllocsClass.php');// Before includes/session.inc *******
+
 include('includes/session.inc');
 $Title = _('Customer Receipt') . '/' . _('Credit Note Allocations');
-
 $ViewTopic= 'ARTransactions';
 $BookMark = 'CustomerAllocations';
-
 include('includes/header.inc');
+
 include('includes/SQL_CommonFunctions.inc');
 
 if ( isset($_POST['Cancel']) ) {
-	unset($_POST['UpdateDatabase']);
-	unset($_POST['RefreshAllocTotal']);
 	unset($_POST['AllocTrans']);
 }
 
 if (isset($_POST['UpdateDatabase']) OR isset($_POST['RefreshAllocTotal'])) {
 
 	if (!isset($_SESSION['Alloc'])) {
-		prnMsg(_('Allocations can not be processed again') . '. ' .
-			_('If you hit refresh on this page after having just processed an allocation') . ', ' .
-			_('try to use the navigation links provided rather than the back button') . ', ' .
-			_('to avoid this message in future'),'info');
+		prnMsg(
+			_('Allocations can not be processed again') . '. ' .
+				_('If you hit refresh on this page after having just processed an allocation') . ', ' .
+				_('try to use the navigation links provided rather than the back button') . ', ' .
+				_('to avoid this message in future'),
+			'info');
 		include('includes/footer.inc');
 		exit;
 	}
@@ -40,7 +38,7 @@ if (isset($_POST['UpdateDatabase']) OR isset($_POST['RefreshAllocTotal'])) {
 	$TotalAllocated = 0;
 	$TotalDiffOnExch = 0;
 
-	for ($AllocCounter=0;$AllocCounter < $_POST['TotalNumberOfAllocs']; $AllocCounter++) {
+	for ($AllocCounter=0; $AllocCounter < $_POST['TotalNumberOfAllocs']; $AllocCounter++) {
 	// loop through amounts allocated using AllocnItm->ID for each record
 
 		if (isset($_POST['Amt' . $AllocCounter])) {
@@ -210,7 +208,7 @@ if (isset($_POST['UpdateDatabase'])) {
 }
 
 if (isset($_GET['AllocTrans'])) {
-	
+
 	if (isset($_SESSION['Alloc'])) {
 		unset($_SESSION['Alloc']->Allocs);
 		unset($_SESSION['Alloc']);
@@ -249,7 +247,7 @@ if (isset($_GET['AllocTrans'])) {
 	$_SESSION['Alloc']->DebtorNo		= $myrow['debtorno'];
 	$_SESSION['Alloc']->CustomerName	= $myrow['name'];
 	$_SESSION['Alloc']->TransType		= $myrow['type'];
-	$_SESSION['Alloc']->TransTypeName	= $myrow['typename'];
+	$_SESSION['Alloc']->TransTypeName	= $myrow['typename'];//= _($myrow['typename']); **********
 	$_SESSION['Alloc']->TransNo		= $myrow['transno'];
 	$_SESSION['Alloc']->TransExRate	= $myrow['rate'];
 	$_SESSION['Alloc']->TransAmt		= $myrow['total'];
@@ -281,7 +279,7 @@ if (isset($_GET['AllocTrans'])) {
 
 	while ($myrow=DB_fetch_array($Result)) {
 		$_SESSION['Alloc']->add_to_AllocsAllocn ($myrow['id'],
-												$myrow['typename'],
+												$myrow['typename'],//_($myrow['typename']), **********
 												$myrow['transno'],
 												ConvertSQLDate($myrow['trandate']),
 												0,
@@ -323,7 +321,7 @@ if (isset($_GET['AllocTrans'])) {
 	while ($myrow=DB_fetch_array($Result)) {
 		$DiffOnExchThisOne = ($myrow['amt']/$myrow['rate']) - ($myrow['amt']/$_SESSION['Alloc']->TransExRate);
 		$_SESSION['Alloc']->add_to_AllocsAllocn ($myrow['id'],
-												$myrow['typename'],
+												$myrow['typename'],//_($myrow['typename']), **********
 												$myrow['transno'],
 												ConvertSQLDate($myrow['trandate']),
 												$myrow['amt'],
@@ -401,9 +399,9 @@ if (isset($_POST['AllocTrans'])) {
 			$curTrans = "&nbsp;";
 		}
 
-		echo '<td>' . $AllocnItem->TransType . '</td>
-			<td>' . $AllocnItem->TypeNo . '</td>
-			<td class="number">' . $AllocnItem->TransDate . '</td>
+		echo '<td>' . _($AllocnItem->TransType) . '</td>
+			<td class="number">' . $AllocnItem->TypeNo . '</td>
+			<td>' . $AllocnItem->TransDate . '</td>
 			<td class="number">' . locale_number_format($AllocnItem->TransAmount,$_SESSION['Alloc']->CurrDecimalPlaces) . '</td>
 			<td class="number">' . locale_number_format($YetToAlloc,$_SESSION['Alloc']->CurrDecimalPlaces) . '</td>';
 		$j++;
@@ -415,7 +413,7 @@ if (isset($_POST['AllocTrans'])) {
 					</tr>';
 		} else {
 				echo '<td class="number"><input type="hidden" name="YetToAlloc' . $Counter . '" value="' . round($YetToAlloc,$_SESSION['Alloc']->CurrDecimalPlaces) . '" />';
-				echo '<input tabindex="' . $j .'" type="checkbox" title="' . _('Check this box to allocate the entire amouunt of this transaction. Just enter the amount without ticking this check box for a partial allocation') . '" name="All' .  $Counter . '"';
+				echo '<input tabindex="' . $j .'" type="checkbox" title="' . _('Check this box to allocate the entire amount of this transaction. Just enter the amount without ticking this check box for a partial allocation') . '" name="All' .  $Counter . '"';// NewText: _('Check this box to allocate the entire amount of this transaction. Just enter the amount without ticking this check box for a partial allocation')
 
 				if (ABS($AllocnItem->AllocAmt-$YetToAlloc) < 0.01) {
 						echo ' checked="checked" />';
@@ -506,7 +504,7 @@ if (isset($_POST['AllocTrans'])) {
 			echo  '<tr class="OddTableRows">';;
 			$k++;
 		}
-		echo '<td>' . $myrow['typename']  . '</td>
+		echo '<td>' . _($myrow['typename']) . '</td>
 				<td>' . $myrow['name'] . '</td>
 				<td>' . $myrow['debtorno'] . '</td>
 				<td>' . $myrow['transno'] . '</td>
@@ -599,7 +597,7 @@ if (isset($_POST['AllocTrans'])) {
 			$k++;
 		}
 
-		echo '<td>' . $myrow['typename']  . '</td>
+		echo '<td>' . _($myrow['typename']) . '</td>
 			<td>' . $myrow['name'] . '</td>
 			<td>' . $myrow['debtorno'] . '</td>
 			<td>' . $myrow['transno'] . '</td>
@@ -627,7 +625,6 @@ if (isset($_POST['AllocTrans'])) {
 	echo '</table>
 		<br />';
 }
-
 
 include('includes/footer.inc');
 

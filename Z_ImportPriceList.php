@@ -3,6 +3,10 @@
 include('includes/session.inc');
 $Title = _('Import Sales Price List');
 include('includes/header.inc');
+echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme . 
+		'/images/maintenance.png" title="' . 
+		_('Import Price List from CSV file') . '" />' . ' ' . 
+		_('Import Price List from CSV file') . '</p>';
 
 $FieldHeadings = array(
 	'StockID',			//  0 'STOCKID',
@@ -10,8 +14,6 @@ $FieldHeadings = array(
 	'CurrencyCode',		//  2 'Currency Code',
 	'Price'				//  3 'Price'
 );
-
-echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . $Title . '" alt="' . $Title . '" />' . ' ' . $Title . '</p>';
 
 if (isset($_FILES['PriceListFile']) and $_FILES['PriceListFile']['name']) { //start file processing
 	//check file info

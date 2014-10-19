@@ -1,5 +1,5 @@
 <?php
-/* $Id: StockDispatch.php 5819 2013-02-22 03:49:55Z tehonu $*/
+/* $Id: StockDispatch.php 6808 2014-08-11 21:27:11Z agaluski $*/
 
 // StockDispatch.php - Report of parts with overstock at one location that can be transferred
 // to another location to cover shortage based on reorder level. Creates loctransfer records
@@ -238,7 +238,7 @@ if (isset($_POST['PrintPDF'])) {
 				$pdf->addTextWrap(510,$YPos,40,$FontSize,'_________','right',0,$fill);
 				if($template=='fullprices'){
 					// looking for price info  
-					$DefaultPrice = GetPrice($myrow['stockid'], $ToCustomer, $ToBranch, $db, false);
+					$DefaultPrice = GetPrice($myrow['stockid'],$ToCustomer, $ToBranch, $ShipQty, false);
 					if ($myrow['discountcategory'] != "")
 					{
 						$DiscountLine = ' -> ' . _('Discount Category') . ':' . $myrow['discountcategory'];
@@ -340,9 +340,10 @@ if (isset($_POST['PrintPDF'])) {
 	echo '<div>
 		  <br />';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	$sql = "SELECT loccode,
+	$sql = "SELECT locations.loccode,
 			locationname
-		FROM locations";
+		FROM locations 
+		INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1";
 	$resultStkLocs = DB_query($sql,$db);
 	if (!isset($_POST['FromLocation'])) {
 		$_POST['FromLocation']=$DefaultLocation;

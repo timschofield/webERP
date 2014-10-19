@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: WOSerialNos.php 6541 2014-01-15 06:28:12Z daintree $*/
+/* $Id: WOSerialNos.php 6592 2014-03-02 08:41:40Z daintree $*/
 
 /*This page shows the serial numbers created for a works order
  * - creating automatically from the last serial number counter in the stockmaster or by manual entry
@@ -184,7 +184,7 @@ if (isset($_POST['UpdateItems'])){
 				prnMsg($_POST['OldReference' .$i] . ': ' , _('The new batch or serial number reference has not been entered - a reference is required'),'error');
 				$InputError=true;
 			}
-			if (!is_numeric($_POST['Quantity' . $i])){
+			if (!is_numeric(filter_number_format($_POST['Quantity' . $i]))){
 				prnMsg(_('The quantity for the batch must be numeric'),'error');
 				$InputError=true;
 			}
@@ -347,5 +347,4 @@ echo '</div>
       </form>';
 
 include('includes/footer.inc');
-
 ?>

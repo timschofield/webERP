@@ -154,6 +154,9 @@ if ((isset($_POST['UpdateStatus']) AND $_POST['UpdateStatus'] != '')) {
 			if ($_POST['Status']=='Completed' OR $_POST['Status']=='Cancelled' OR $_POST['Status']=='Rejected') {
 				$SQL = "UPDATE purchorderdetails SET completed=1 WHERE orderno='" . $_SESSION['ExistingOrder'] . "'";
 				$UpdateResult =DB_query($SQL,$db,$ErrMsg);
+			} else {//To ensure that the purchorderdetails status is correct when it is recovered from a cancelled orders
+				$SQL = "UPDATE purchorderdetails SET completed=0 WHERE orderno='" . $_SESSION['ExistingOrder'] . "'";
+				$UpdateResult = DB_query($SQL,$db,$ErrMsg);
 			}
 		} //$OKToUpdateStatus == 1
 	} //end if there is actually a status change the class Status != the POST['Status']
@@ -382,7 +385,9 @@ if ((!isset($_POST['SearchSuppliers']) or $_POST['SearchSuppliers'] == '') AND (
 	$_POST['SuppDelAdd4'] = $_SESSION['PO' . $identifier]->SuppDelAdd4;
 	$_POST['SuppDelAdd5'] = $_SESSION['PO' . $identifier]->SuppDelAdd5;
 	$_POST['SuppDelAdd6'] = $_SESSION['PO' . $identifier]->SuppDelAdd6;
-	$_POST['DeliveryDate'] = $_SESSION['PO' . $identifier]->DeliveryDate;
+	if(!isset($_POST['DeliveryDate'])){
+		$_POST['DeliveryDate'] = $_SESSION['PO' . $identifier]->DeliveryDate;
+	}
 
 }
 
@@ -765,6 +770,9 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 		$_POST['InitiatorName'] = $_SESSION['UsersRealName'];
 		$_POST['Requisition'] = '';
 	}
+	if (!isset($_POST['InitiatorName'])){
+		$_POST['InitiatorName'] = $_SESSION['UsersRealName'];
+	}
 
 	echo '<tr>
 			<td>' . _('Initiated By') . ':</td>
@@ -884,9 +892,9 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 				<td>' . _('Warehouse') . ':</td>
 				<td><select required="required" name="StkLocation" onchange="ReloadForm(form1.LookupDeliveryAddress)">';
 
-	$sql = "SELECT loccode,
+	$sql = "SELECT locations.loccode,
 					locationname
-			FROM locations";
+			FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1";
 	$LocnResult = DB_query($sql, $db);
 
 	while ($LocnRow = DB_fetch_array($LocnResult)) {
@@ -1155,7 +1163,7 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 	echo ':</h3></th>
 			</tr>
 			<tr>
-				<td colspan="4"><textarea name="Comments" style="width:100%" rows="5" cols="200">' . $_POST['Comments'] . '</textarea></td>
+				<td colspan="4"><textarea name="Comments" style="width:100%" rows="5" cols="200">' . stripcslashes($_POST['Comments']) . '</textarea></td>
 			</tr>
 			</table>
 			<br />';

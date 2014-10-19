@@ -4,7 +4,7 @@
  *
  * Script to duplicate BoMs.
  */
-/* $Id: CopyBOM.php 6310 2013-08-29 10:42:50Z daintree $*/
+/* $Id: CopyBOM.php 6865 2014-09-06 03:14:43Z daintree $*/
 
 include('includes/session.inc');
 
@@ -121,6 +121,7 @@ if(isset($_POST['Submit'])) {
 
 		$sql = "INSERT INTO bom
 					SELECT '".$NewStockID."' AS parent,
+					        sequence,
 							component,
 							workcentreadded,
 							loccode,
@@ -133,13 +134,18 @@ if(isset($_POST['Submit'])) {
 		$result = DB_query($sql, $db);
 
 		if($NewOrExisting == 'N') {
-			$sql = "INSERT INTO locstock
-		      SELECT loccode,
-					'".$NewStockID."' AS stockid,
-					0 AS quantity,
-					reorderlevel
-				FROM locstock
-				WHERE stockid='".$StockID."'";
+			$sql = "INSERT INTO locstock (loccode,
+								            stockid,
+								            quantity,
+								            reorderlevel,
+								            bin )
+				      SELECT loccode,
+							'".$NewStockID."' AS stockid,
+							0 AS quantity,
+							reorderlevel,
+							bin
+						FROM locstock
+						WHERE stockid='".$StockID."'";
 
 			$result = DB_query($sql, $db);
 		}

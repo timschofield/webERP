@@ -20,7 +20,7 @@ if (isset($_POST['submit'])) {
 	ie the page has called itself with some user input */
 
 	//first off validate inputs sensible
-	 
+
 	if ($InputError !=1){
 
 		$SQL = array();
@@ -78,7 +78,7 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['ShopAllowSurcharges'] != $_POST['X_ShopAllowSurcharges'] ) {
 			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopAllowSurcharges']."' WHERE confname = 'ShopAllowSurcharges'";
 		}
-		
+
 		if ($_SESSION['ShopAllowCreditCards'] != $_POST['X_ShopAllowCreditCards'] ) {
 			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopAllowCreditCards']."' WHERE confname = 'ShopAllowCreditCards'";
 		}
@@ -88,7 +88,7 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['ShopAllowBankTransfer'] != $_POST['X_ShopAllowBankTransfer'] ) {
 			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopAllowBankTransfer']."' WHERE confname = 'ShopAllowBankTransfer'";
 		}
-		
+
 		if ($_SESSION['ShopPayPalSurcharge'] != $_POST['X_ShopPayPalSurcharge'] ) {
 			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopPayPalSurcharge']."' WHERE confname = 'ShopPayPalSurcharge'";
 		}
@@ -148,11 +148,11 @@ if (isset($_POST['submit'])) {
 			if ($_SESSION['ShopPayFlowMerchant'] != $_POST['X_ShopPayFlowMerchant'] ) {
 				$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopPayFlowMerchant']."' WHERE confname = 'ShopPayFlowMerchant'";
 			}
-			
+
 			if ($_SESSION['ShopMode'] != $_POST['X_ShopMode'] ) {
 				$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopMode']."' WHERE confname = 'ShopMode'";
 			}
-			
+
 			if ($_SESSION['ShopSwipeHQMerchantID'] != $_POST['X_ShopSwipeHQMerchantID'] ) {
 				$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopSwipeHQMerchantID']."' WHERE confname = 'ShopSwipeHQMerchantID'";
 			}
@@ -163,13 +163,13 @@ if (isset($_POST['submit'])) {
 			else { //always ensure test mode and PayFlow for demo site
 				$SQL[] = "UPDATE config SET confvalue = 'test' WHERE confname = 'ShopMode'";
 				$SQL[] = "UPDATE config SET confvalue = 'PayPalPro' WHERE confname = 'ShopCreditCardGateway'";
-			
+
 		}
 		$ErrMsg =  _('The shop configuration could not be updated because');
 		$DbgMsg = _('The SQL that failed was:');
 
 		if (sizeof($SQL) > 0 ) {
-			
+
 			$result = DB_Txn_Begin($db);
 			foreach ($SQL as $SqlLine) {
 				$result = DB_query($SqlLine,$db,$ErrMsg,$DbgMsg,true);
@@ -213,7 +213,7 @@ echo '<tr>
 		}
 		echo '</select></td>
 		<td>' . _('Must change this to live mode when the shop is activie. No PayPal or credit card transactions will be processed in test mode') . '</td>
-	</tr>';	
+	</tr>';
 //Shop Name
 echo '<tr>
 		<td>' . _('Shop Name') . ':</td>
@@ -234,7 +234,7 @@ echo '<tr>
 		<td><input type="email" name="X_ShopManagerEmail" required="required" size="50" maxlength="50" value="' . $_SESSION['ShopManagerEmail'] . '" /></td>
 		<td>' . _('Enter the email address of the webSHOP manager.') . '</td>
 	</tr>';
-	
+
 // Shop Customer
 echo '<tr>
 		<td>' . _('Default Web Shop Customer Acount') . ':</td>
@@ -309,7 +309,7 @@ if ($_SESSION['ShopShowQOHColumn'] == '1') {
 echo '</select></td>
 		<td>' . _('Shows / Hides the QOH column Select Hide if you do not want webSHOP visitors to know how many stock do you currently hold.') . '</td>
 	</tr>';
-	
+
 if (mb_strlen($_SESSION['ShopStockLocations'])>1){
 	$Locations = explode(',',$_SESSION['ShopStockLocations']);
 } else {
@@ -328,8 +328,8 @@ while ($LocRow = DB_fetch_array($LocResult)){
 }
 echo '</select></td>
 		<td>' . _('Select one or more stock locations (warehouses) that webSHOP should consider stock for the purposes of displaying the on hand quantity for customer information') . '</td>
-	</tr>';	
-	
+	</tr>';
+
 echo '<tr>
 		<td>' . _('Allow Payment Surcharges') . ':</td>
 		<td><select name="X_ShopAllowSurcharges">';
@@ -383,7 +383,7 @@ echo '</select></td>
 echo '<tr>
 		<th colspan="3">' . _('Bank Transfer Settings') . '</th></tr>';
 echo $TableHeader;
-	
+
 echo '<tr>
 		<td>' . _('Allow Bank Transfer Payment') . ':</td>
 		<td><select name="X_ShopAllowBankTransfer">';
@@ -405,7 +405,7 @@ echo '<tr>
 
 echo '<tr><th colspan="3">' . _('Paypal Settings') . '</th></tr>';
 echo $TableHeader;
-	
+
 echo '<tr>
 		<td>' . _('Allow PayPal Payment') . ':</td>
 		<td><select name="X_ShopAllowPayPal">';
@@ -483,11 +483,11 @@ if ($AllowDemoMode){
 			<td><input type="text" size="80" maxlength="100" name="X_ShopPayPalSignature" value="' . $_SESSION['ShopPayPalSignature'] . '" /></td>
 			<td>' . _('The PayPal merchant account signature for Pay Pal Express Checkout') . '</td>
 		</tr>';
-}	
-	
+}
+
 echo '<tr><th colspan="3">' . _('Credit Card Processing Settings') . '</th></tr>';
-echo $TableHeader;	
-	
+echo $TableHeader;
+
 echo '<tr>
 		<td>' . _('Allow Credit Card Payments') . ':</td>
 		<td><select name="X_ShopAllowCreditCards">';
@@ -561,39 +561,39 @@ if ($AllowDemoMode){
 	echo '<tr>
 			<td>' . _('PayPal Pro User') . ':</td>
 			<td><input type="text" class="noSpecialChars"  size="40" maxlength="40" name="X_ShopPayPalProUser" value="' . $_SESSION['ShopPayPalProUser'] . '" /></td>
-			<td>' . _('The PayPal Pro Merchant User account for credit card payment available in only USA and Canada') . '</td>
+			<td>' . _('The') . '<a href="https://www.paypal.com/us/webapps/mpp/paypal-payments-pro">' . _('PayPal Pro') .'</a> ' .  _('Merchant User account for credit card payment available in only USA and Canada') .  '</td>
 		</tr>';
-	
+
 	echo '<tr>
 			<td>' . _('PayPal Pro Password') . ':</td>
 			<td><input type="text" size="20" maxlength="20" name="X_ShopPayPalProPassword" value="' . $_SESSION['ShopPayPalProPassword'] . '" /></td>
-			<td>' . _('The PayPal Pro Merchant account password for credit card payment available in only USA and Canada') . '</td>
+			<td>' . _('The') . '<a href="https://www.paypal.com/us/webapps/mpp/paypal-payments-pro">' . _('PayPal Pro') .'</a> ' . _('Merchant account password for credit card payment available in only USA and Canada') . '</td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('PayPal Pro Signature') . ':</td>
 			<td><input type="text" size="80" maxlength="80" name="X_ShopPayPalProSignature" value="' . $_SESSION['ShopPayPalProSignature'] . '" /></td>
-			<td>' . _('The PayPal Pro merchant account signature for credit card payment available in only USA and Canada') . '</td>
+			<td>' . _('The') . '<a href="https://www.paypal.com/us/webapps/mpp/paypal-payments-pro">' . _('PayPal Pro') . '</a> ' ._('merchant account signature for credit card payment available in only USA and Canada') . '</td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('Pay Flow Pro User') . ':</td>
 			<td><input type="text" class="noSpecialChars"  size="40" maxlength="40" name="X_ShopPayFlowUser" value="' . $_SESSION['ShopPayFlowUser'] . '" /></td>
-			<td>' . _('The') . ' <a href="https://www.paypal.com/webapps/mpp/payflow-payment-gateway">PayFlow Pro</a> ' . _('Merchant User account') . '</td>
+			<td>' . _('The') . ' <a href="https://www.paypal.com/us/webapps/mpp/payflow-payment-gateway">PayFlow Pro</a> ' . _('Merchant User account') . '</td>
 		</tr>';
-	
+
 	echo '<tr>
 			<td>' . _('Pay Flow Pro Password') . ':</td>
 			<td><input type="text" size="20" maxlength="20" name="X_ShopPayFlowPassword" value="' . $_SESSION['ShopPayFlowPassword'] . '" /></td>
-			<td>' . _('The') . ' <a href="https://www.paypal.com/webapps/mpp/payflow-payment-gateway">PayFlow Pro</a> ' . _('Merchant account password') . '</td>
+			<td>' . _('The') . ' <a href="https://www.paypal.com/us/webapps/mpp/payflow-payment-gateway">PayFlow Pro</a> ' . _('Merchant account password') . '</td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('Pay Flow Pro Vendor') . ':</td>
 			<td><input type="text" class="noSpecialChars" size="20" maxlength="20" name="X_ShopPayFlowVendor" value="' . $_SESSION['ShopPayFlowVendor'] . '" /></td>
-			<td>' . _('The') . ' <a href="https://www.paypal.com/webapps/mpp/payflow-payment-gateway">PayFlow Pro</a> ' . _('vendor') . '</td>
+			<td>' . _('The') . ' <a href="https://www.paypal.com/us/webapps/mpp/payflow-payment-gateway">PayFlow Pro</a> ' . _('vendor') . '</td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('Pay Flow Pro Merchant') . ':</td>
 			<td><input type="text" size="20" maxlength="20" name="X_ShopPayFlowMerchant" value="' . $_SESSION['ShopPayFlowMerchant'] . '" /></td>
-			<td>' . _('The') . ' <a href="https://www.paypal.com/webapps/mpp/payflow-payment-gateway">PayFlow Pro</a> ' . _('merchant') . '</td>
+			<td>' . _('The') . ' <a href="https://www.paypal.com/us/webapps/mpp/payflow-payment-gateway">PayFlow Pro</a> ' . _('merchant') . '</td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('SwipeHQ Merchant ID') . ':</td>

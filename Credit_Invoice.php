@@ -1,5 +1,5 @@
 <?php
-/* $Id: Credit_Invoice.php 6541 2014-01-15 06:28:12Z daintree $*/
+/* $Id: Credit_Invoice.php 6812 2014-08-13 18:14:57Z agaluski $*/
 
 /*Functions to get the GL codes to post the transaction to */
 include('includes/GetSalesTransGLCodes.inc');
@@ -71,6 +71,7 @@ if (!isset($_GET['InvoiceNumber']) AND !$_SESSION['ProcessingCredit']) {
 							AND stockmoves.type=debtortrans.type
 							INNER JOIN locations ON
 							stockmoves.loccode = locations.loccode
+							INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
 							WHERE debtortrans.transno = '" . intval($_GET['InvoiceNumber']) . "'
 							AND stockmoves.type=10";
 
@@ -1124,6 +1125,10 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 			}
 
 /*Insert Sales Analysis records */
+			$SalesValue = 0;
+			if ($_SESSION['CurrencyRate']>0){
+				$SalesValue = $CreditLine->Price * $CreditLine->QtyDispatched / $_SESSION['CurrencyRate'];
+			}
 
 			$SQL="SELECT COUNT(*),
 						stkcategory,
@@ -1157,7 +1162,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 				if ($_POST['CreditType']=='ReverseOverCharge'){
 
 					$SQL = "UPDATE salesanalysis
-							SET amt=amt-" . $CreditLine->Price * $CreditLine->QtyDispatched / $_SESSION['CurrencyRate'] . ",
+							SET amt=amt-" . $SalesValue . ",
 							disc=disc-" . ($CreditLine->DiscountPercent * $CreditLine->Price * $CreditLine->QtyDispatched / $_SESSION['CurrencyRate']) . "
 							WHERE salesanalysis.area='" . $myrow[2] . "'
 							AND salesanalysis.salesperson='" . $_SESSION['CreditItems' . $identifier]->SalesPerson . "'
@@ -1172,10 +1177,10 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 				} else {
 
 					$SQL = "UPDATE salesanalysis
-							SET amt=amt-" . $CreditLine->Price * $CreditLine->QtyDispatched / $_SESSION['CurrencyRate'] . ",
+							SET amt=amt-" . $SalesValue . ",
 							cost=cost-" . $CreditLine->StandardCost * $CreditLine->QtyDispatched . ",
 							qty=qty-" . $CreditLine->QtyDispatched . ",
-							disc=disc-" . $CreditLine->DiscountPercent * $CreditLine->Price * $CreditLine->QtyDispatched / $_SESSION['CurrencyRate'] . "
+							disc=disc-" . $CreditLine->DiscountPercent * $SalesValue . "
 							WHERE salesanalysis.area='" . $myrow[2] . "'
 							AND salesanalysis.salesperson='" . $_SESSION['CreditItems' . $identifier]->SalesPerson . "'
 							AND typeabbrev ='" . $_SESSION['CreditItems' . $identifier]->DefaultSalesType . "'
@@ -1209,7 +1214,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 							'" . $_SESSION['CreditItems' . $identifier]->DebtorNo . "',
 							'" . $_SESSION['CreditItems' . $identifier]->Branch . "',
 							0,
-							'" . -$CreditLine->DiscountPercent * $CreditLine->Price * $CreditLine->QtyDispatched / $_SESSION['CurrencyRate'] . "',
+							'" . -$CreditLine->DiscountPercent * $SalesValue . "',
 							'" . $CreditLine->StockID . "',
 							custbranch.area,
 							1,
@@ -1237,12 +1242,12 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 								stkcategory)
 						SELECT '" . $_SESSION['CreditItems' . $identifier]->DefaultSalesType . "',
 							'" . $PeriodNo . "',
-							'" . -$CreditLine->Price * $CreditLine->QtyDispatched / $_SESSION['CurrencyRate'] . "',
+							'" . -$SalesValue . "',
 							'" . -$CreditLine->StandardCost * $CreditLine->QtyDispatched . "',
 							'" . $_SESSION['CreditItems' . $identifier]->DebtorNo . "',
 							'" . $_SESSION['CreditItems' . $identifier]->Branch . "',
 							'" . -$CreditLine->QtyDispatched . "',
-							'" . -$CreditLine->DiscountPercent * $CreditLine->Price * $CreditLine->QtyDispatched / $_SESSION['CurrencyRate'] . "',
+							'" . -$CreditLine->DiscountPercent * $SalesValue . "',
 							'" . $CreditLine->StockID . "',
 							custbranch.area,
 							1,
@@ -1516,7 +1521,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 				<td>' . _('Goods returned to location') . '</td>
 				<td><select tabindex="'.$j.'" name="Location">';
 
-		$SQL="SELECT loccode, locationname FROM locations";
+		$SQL="SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1";
 		$Result = DB_query($SQL,$db);
 
 		if (!isset($_POST['Location'])){

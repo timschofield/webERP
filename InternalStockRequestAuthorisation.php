@@ -52,6 +52,7 @@ $sql="SELECT stockrequest.dispatchid,
 			ON stockrequest.departmentid=departments.departmentid
 		INNER JOIN locations
 			ON stockrequest.loccode=locations.loccode
+		INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
 		INNER JOIN www_users
 			ON www_users.userid=departments.authoriser
 		WHERE stockrequest.authorised=0

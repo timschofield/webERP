@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: CustomerReceipt.php 6592 2014-03-02 08:41:40Z daintree $ */
+/* $Id: CustomerReceipt.php 6870 2014-09-11 02:07:02Z exsonqu $ */
 
 include('includes/DefineReceiptClass.php');
 include('includes/session.inc');
@@ -132,9 +132,9 @@ if (!isset($_GET['Delete']) AND isset($_SESSION['ReceiptBatch'])){
 		$myrow = DB_fetch_array($result);
 		$SuggestedFunctionalExRate = $myrow['rate'];
 		$_SESSION['ReceiptBatch']->CurrDecimalPlaces = $myrow['decimalplaces'];
-		
+
 	} //end else account currency != functional currency
-	
+
 	if ($_POST['Currency']==$_SESSION['ReceiptBatch']->AccountCurrency){
 		$_SESSION['ReceiptBatch']->ExRate = 1; //ex rate between receipt currency and account currency
 		$SuggestedExRate=1;
@@ -146,7 +146,7 @@ if (!isset($_GET['Delete']) AND isset($_SESSION['ReceiptBatch'])){
 		/*Calculate cross rate to suggest appropriate exchange rate between receipt currency and account currency */
 		$SuggestedExRate = $TableExRate/$SuggestedFunctionalExRate;
 	}
-	
+
 	$_SESSION['ReceiptBatch']->BankTransRef = $_POST['BankTransRef'];
 	$_SESSION['ReceiptBatch']->Narrative = $_POST['BatchNarrative'];
 
@@ -269,9 +269,8 @@ if (isset($_POST['CommitBatch'])){
 		<p class="page_title_text">
 			<img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . _('Allocate') . '" alt="" />' . ' ' . _('Summary of Receipt Batch').'
 		</p>
-		<br />';
-
-	echo '<table class="selection">
+		<br />
+		<table class="selection">
 			<tr>
 				<th>' . _('Batch Number') . '</th>
 				<th>' . _('Date Banked') . '</th>
@@ -414,7 +413,7 @@ if (isset($_POST['CommitBatch'])){
 			$BatchDebtorTotal += (($ReceiptItem->Discount + $ReceiptItem->Amount)/$_SESSION['ReceiptBatch']->ExRate/$_SESSION['ReceiptBatch']->FunctionalExRate);
 			/*Create a DebtorTrans entry for each customer deposit */
 
-			/*The rate of exchange required here is the rate between the functional (home) currency and the customer receipt currency 
+			/*The rate of exchange required here is the rate between the functional (home) currency and the customer receipt currency
 			 * We have the exchange rate between the bank account and the functional home currency  $_SESSION['ReceiptBatch']->ExRate
 			 * and the exchange rate betwen the currency being paid and the bank account */
 
@@ -601,8 +600,10 @@ if (isset($_POST['Search'])){
 	if ($_POST['Keywords']==''
 		AND $_POST['CustCode']==''
 		AND $_POST['CustInvNo']=='') {
-
-		$msg=_('At least one Customer Name keyword OR an extract of a Customer Code must be entered for the search');
+			$SQL = "SELECT debtorsmaster.debtorno,
+						debtorsmaster.name
+					FROM debtorsmaster
+					WHERE debtorsmaster.currcode= '" . $_SESSION['ReceiptBatch']->Currency . "'";
 	} else {
 		if (mb_strlen($_POST['Keywords'])>0) {
 			//insert wildcard characters in spaces
@@ -628,7 +629,7 @@ if (isset($_POST['Search'])){
 					WHERE debtortrans.transno " . LIKE . " '%" . $_POST['CustInvNo'] . "%'
 					AND debtorsmaster.currcode= '" . $_SESSION['ReceiptBatch']->Currency . "'";
 		}
-	
+	}
 		if ($_SESSION['SalesmanLogin'] != '') {
 			$SQL .= " AND EXISTS (
 						SELECT *
@@ -651,7 +652,7 @@ if (isset($_POST['Search'])){
 			prnMsg( _('No customer records contain the selected text') . ' - ' . _('please alter your search criteria and try again'),'info');
 		}
 
-	} //one of keywords or custcode was more than a zero length string
+	 //one of keywords or custcode was more than a zero length string
 } //end of if search
 
 if (isset($_POST['Select'])){
@@ -783,7 +784,7 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 $SQL = "SELECT bankaccountname,
 				bankaccounts.accountcode,
 				bankaccounts.currcode
-		FROM bankaccounts 
+		FROM bankaccounts
 		INNER JOIN chartmaster
 			ON bankaccounts.accountcode=chartmaster.accountcode
 		INNER JOIN bankaccountusers
@@ -912,7 +913,7 @@ echo '<tr>
 		<td><select tabindex="6" name="ReceiptType">';
 
 include('includes/GetPaymentMethods.php');
-/* The array ReceiptTypes is defined from the setup tab of the main menu under 
+/* The array ReceiptTypes is defined from the setup tab of the main menu under
 payment methods - the array is populated from the include file GetPaymentMethods.php */
 
 foreach ($ReceiptTypes as $RcptType) {
@@ -1039,6 +1040,7 @@ if (isset($_SESSION['CustomerRecord'])
 				<th width="20%">' . _('Now Due') . '</th>
 				<th width="20%">' . $_SESSION['PastDueDays1'] . '-' . $_SESSION['PastDueDays2'] . ' ' . _('Days Overdue') . '</th>
 				<th width="20%">' . _('Over') . ' ' . $_SESSION['PastDueDays2'] . ' ' . _('Days Overdue') . '</th>
+				<th width="20%">' . _('Customer Transaction Inquiry') . '</th>
 			</tr>';
 
 	echo '<tr>
@@ -1047,6 +1049,7 @@ if (isset($_SESSION['CustomerRecord'])
 		<td class="number">' . locale_number_format(($_SESSION['CustomerRecord']['due']-$_SESSION['CustomerRecord']['overdue1']),$_SESSION['CustomerRecord']['currdecimalplaces']) . '</td>
 		<td class="number">' . locale_number_format(($_SESSION['CustomerRecord']['overdue1']-$_SESSION['CustomerRecord']['overdue2']) ,$_SESSION['CustomerRecord']['currdecimalplaces']) . '</td>
 		<td class="number">' . locale_number_format($_SESSION['CustomerRecord']['overdue2'],$_SESSION['CustomerRecord']['currdecimalplaces']) . '</td>
+		<td><a href="CustomerInquiry.php?CustomerID=' . $_POST['CustomerID'] . '&Status=0" target="_blank">' . _('Inquiry') . '</td>
 		</tr>
 		</table>
 		<br />';

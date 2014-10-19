@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: PrintCustTrans.php 6310 2013-08-29 10:42:50Z daintree $ */
+/* $Id: PrintCustTrans.php 6809 2014-08-12 19:16:00Z agaluski $ */
 
 include('includes/session.inc');
 
@@ -149,6 +149,8 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 						ON custbranch.salesman=salesman.salesmancode
 						INNER JOIN locations
 						ON salesorders.fromstkloc=locations.loccode
+						INNER JOIN locationusers 
+						ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 						INNER JOIN paymentterms
 						ON debtorsmaster.paymentterms=paymentterms.termsindicator
 						INNER JOIN currencies
@@ -647,6 +649,8 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 							ON custbranch.salesman=salesman.salesmancode
 							INNER JOIN locations
 							ON salesorders.fromstkloc=locations.loccode
+							INNER JOIN locationusers 
+							ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 							INNER JOIN paymentterms
 							ON debtorsmaster.paymentterms=paymentterms.termsindicator
 							INNER JOIN currencies

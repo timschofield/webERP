@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: InputSerialItemsExisting.php 6512 2013-12-23 06:46:46Z exsonqu $*/
+/* $Id: InputSerialItemsExisting.php 6805 2014-08-08 16:12:36Z agaluski $*/
 
 /**
 If the User has selected Keyed Entry, show them this special select list...
@@ -11,8 +11,9 @@ if ($_POST['EntryType'] == 'KEYED'){
         /*Also a multi select box for adding bundles to the dispatch without keying */
      $sql = "SELECT serialno, quantity
 			FROM stockserialitems
+			INNER JOIN locationusers ON locationusers.loccode=stockserialitems.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
 			WHERE stockid='" . $StockID . "'
-			AND loccode ='" . $LocationOut."'
+			AND stockserialitems.loccode ='" . $LocationOut."'
 			AND quantity > 0";
 
 	$ErrMsg = '<br />' .  _('Could not retrieve the items for'). ' ' . $StockID;

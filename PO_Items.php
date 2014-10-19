@@ -9,6 +9,7 @@ include('includes/SQL_CommonFunctions.inc');
  * and authorisation level check
  */
 include('includes/session.inc');
+
 $Title = _('Purchase Order Items');
 
 $identifier=$_GET['identifier'];
@@ -50,8 +51,8 @@ if (isset($_POST['UpdateLines']) OR isset($_POST['Commit'])) {
 			} else { //ok to update the PO object variables
 				$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->Price = filter_number_format($_POST['SuppPrice'.$POLine->LineNo])/$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->ConversionFactor;
 			}
-			$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->ReqDelDate=$_POST['ReqDelDate'.$POLine->LineNo];
-            $_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->ItemDescription =$_POST['ItemDescription'.$POLine->LineNo];
+			$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->ReqDelDate = $_POST['ReqDelDate'.$POLine->LineNo];
+            $_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->ItemDescription = $_POST['ItemDescription'.$POLine->LineNo];
 		}
 	}
 }
@@ -633,15 +634,10 @@ if (isset($_POST['NewItem'])
 						}
 						$PurchPrice = ($PurchRow['price']*(1-$ItemDiscountPercent) - $ItemDiscountAmount)/$PurchRow['conversionfactor'];
 						$ConversionFactor = $PurchRow['conversionfactor'];
-						if ($PurchRow['suppliers_partno']!= $ItemCode){   //only show supplier's part code if not the same as our item code
-      						   $SupplierDescription = $PurchRow['suppliers_partno'] .' - ';
-			                        } else {
-                                                   $SupplierDescription = '';
-                                                }
 						if (mb_strlen($PurchRow['supplierdescription'])>2){
-							$SupplierDescription .= $PurchRow['supplierdescription'];
+							$SupplierDescription = $PurchRow['supplierdescription'];
 						} else {
-							$SupplierDescription .= $ItemRow['description'];
+							$SupplierDescription = $ItemRow['description'];
 						}
 						$SuppliersUnitOfMeasure = $PurchRow['suppliersuom'];
 						$SuppliersPartNo = $PurchRow['suppliers_partno'];
@@ -851,7 +847,7 @@ if (isset($_POST['NonStockOrder'])) {
 }
 
 /* Now show the stock item selection search stuff below */
-if (isset($_POST['Search'])||isset($_POST['Prev'])||isset($_POST['Next'])){  /*ie seach for stock items */
+if (isset($_POST['Search']) OR isset($_POST['Prev']) OR isset($_POST['Next'])){  /*ie seach for stock items */
 
 	if ($_POST['Keywords'] AND $_POST['StockCode']) {
 		prnMsg( _('Stock description keywords have been used in preference to the Stock code extract entered'), 'info' );
@@ -869,15 +865,14 @@ if (isset($_POST['Search'])||isset($_POST['Prev'])||isset($_POST['Next'])){  /*i
 						ON stockmaster.categoryid=stockcategory.categoryid
 						INNER JOIN purchdata
 						ON stockmaster.stockid=purchdata.stockid
-						WHERE stockmaster.mbflag<>'D'
+						WHERE (stockmaster.mbflag<>'D' OR stockcategory.stocktype='L')
 						AND stockmaster.mbflag<>'K'
 						AND stockmaster.mbflag<>'A'
 						AND stockmaster.mbflag<>'G'
 						AND stockmaster.discontinued<>1
 						AND purchdata.supplierno='" . $_SESSION['PO'.$identifier]->SupplierID . "'
 						AND stockmaster.description " . LIKE . " '" . $SearchString ."'
-						ORDER BY stockmaster.stockid
-						";
+						ORDER BY stockmaster.stockid ";
 			} else { // not just supplier purchdata items
 
 				$sql = "SELECT stockmaster.stockid,
@@ -885,14 +880,13 @@ if (isset($_POST['Search'])||isset($_POST['Prev'])||isset($_POST['Next'])){  /*i
 							stockmaster.units
 					FROM stockmaster INNER JOIN stockcategory
 					ON stockmaster.categoryid=stockcategory.categoryid
-					WHERE stockmaster.mbflag<>'D'
+					WHERE (stockmaster.mbflag<>'D' OR stockcategory.stocktype='L')
 					AND stockmaster.mbflag<>'K'
 					AND stockmaster.mbflag<>'A'
 					AND stockmaster.mbflag<>'G'
 					AND stockmaster.discontinued<>1
 					AND stockmaster.description " . LIKE . " '" . $SearchString ."'
-					ORDER BY stockmaster.stockid
-					";
+					ORDER BY stockmaster.stockid ";
 			}
 		} else { //for a specific stock category
 			if ($_POST['SupplierItemsOnly']=='on'){
@@ -903,7 +897,7 @@ if (isset($_POST['Search'])||isset($_POST['Prev'])||isset($_POST['Next'])){  /*i
 						ON stockmaster.categoryid=stockcategory.categoryid
 						INNER JOIN purchdata
 						ON stockmaster.stockid=purchdata.stockid
-						WHERE stockmaster.mbflag<>'D'
+						WHERE (stockmaster.mbflag<>'D' OR stockcategory.stocktype='L')
 						AND stockmaster.mbflag<>'A'
 						AND stockmaster.mbflag<>'K'
 						AND stockmaster.mbflag<>'G'
@@ -911,23 +905,21 @@ if (isset($_POST['Search'])||isset($_POST['Prev'])||isset($_POST['Next'])){  /*i
 						AND stockmaster.discontinued<>1
 						AND stockmaster.description " . LIKE . " '". $SearchString ."'
 						AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-						ORDER BY stockmaster.stockid
-						";
+						ORDER BY stockmaster.stockid ";
 			} else {
 				$sql = "SELECT stockmaster.stockid,
 								stockmaster.description,
 								stockmaster.units
 						FROM stockmaster INNER JOIN stockcategory
 						ON stockmaster.categoryid=stockcategory.categoryid
-						WHERE stockmaster.mbflag<>'D'
+						WHERE (stockmaster.mbflag<>'D' OR stockcategory.stocktype='L')
 						AND stockmaster.mbflag<>'A'
 						AND stockmaster.mbflag<>'K'
 						AND stockmaster.mbflag<>'G'
 						AND stockmaster.discontinued<>1
 						AND stockmaster.description " . LIKE . " '". $SearchString ."'
 						AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-						ORDER BY stockmaster.stockid
-						";
+						ORDER BY stockmaster.stockid ";
 			}
 		}
 
@@ -944,29 +936,27 @@ if (isset($_POST['Search'])||isset($_POST['Prev'])||isset($_POST['Next'])){  /*i
 						ON stockmaster.categoryid=stockcategory.categoryid
 						INNER JOIN purchdata
 						ON stockmaster.stockid=purchdata.stockid
-						WHERE stockmaster.mbflag<>'D'
+						WHERE (stockmaster.mbflag<>'D' OR stockcategory.stocktype='L')
 						AND stockmaster.mbflag<>'K'
 						AND stockmaster.mbflag<>'A'
 						AND stockmaster.mbflag<>'G'
 						AND purchdata.supplierno='" . $_SESSION['PO'.$identifier]->SupplierID . "'
 						AND stockmaster.discontinued<>1
 						AND stockmaster.stockid " . LIKE . " '" . $_POST['StockCode'] . "'
-						ORDER BY stockmaster.stockid
-						";
+						ORDER BY stockmaster.stockid ";
 			} else {
 				$sql = "SELECT stockmaster.stockid,
 							stockmaster.description,
 							stockmaster.units
 					FROM stockmaster INNER JOIN stockcategory
 					ON stockmaster.categoryid=stockcategory.categoryid
-					WHERE stockmaster.mbflag<>'D'
+					WHERE (stockmaster.mbflag<>'D' OR stockcategory.stocktype='L')
 					AND stockmaster.mbflag<>'A'
 					AND stockmaster.mbflag<>'K'
 					AND stockmaster.mbflag<>'G'
 					AND stockmaster.discontinued<>1
 					AND stockmaster.stockid " . LIKE . " '" . $_POST['StockCode'] . "'
-					ORDER BY stockmaster.stockid
-					";
+					ORDER BY stockmaster.stockid ";
 			}
 		} else { //for a specific stock category and LIKE stock code
 			if ($_POST['SupplierItemsOnly']=='on'){
@@ -977,7 +967,7 @@ if (isset($_POST['Search'])||isset($_POST['Prev'])||isset($_POST['Next'])){  /*i
 						ON stockmaster.categoryid=stockcategory.categoryid
 						INNER JOIN purchdata
 						ON stockmaster.stockid=purchdata.stockid
-						WHERE stockmaster.mbflag<>'D'
+						WHERE (stockmaster.mbflag<>'D' OR stockcategory.stocktype='L')
 						AND stockmaster.mbflag<>'A'
 						AND stockmaster.mbflag<>'K'
 						AND stockmaster.mbflag<>'G'
@@ -985,23 +975,21 @@ if (isset($_POST['Search'])||isset($_POST['Prev'])||isset($_POST['Next'])){  /*i
 						and stockmaster.discontinued<>1
 						AND stockmaster.stockid " . LIKE  . " '" . $_POST['StockCode'] . "'
 						AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-						ORDER BY stockmaster.stockid
-						";
+						ORDER BY stockmaster.stockid ";
 			} else {
 				$sql = "SELECT stockmaster.stockid,
 							stockmaster.description,
 							stockmaster.units
 					FROM stockmaster INNER JOIN stockcategory
 					ON stockmaster.categoryid=stockcategory.categoryid
-					WHERE stockmaster.mbflag<>'D'
+					WHERE (stockmaster.mbflag<>'D' OR stockcategory.stocktype='L')
 					AND stockmaster.mbflag<>'A'
 					AND stockmaster.mbflag<>'K'
 					AND stockmaster.mbflag<>'G'
 					and stockmaster.discontinued<>1
 					AND stockmaster.stockid " . LIKE  . " '" . $_POST['StockCode'] . "'
 					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-					ORDER BY stockmaster.stockid
-					";
+					ORDER BY stockmaster.stockid ";
 			}
 		}
 
@@ -1015,27 +1003,25 @@ if (isset($_POST['Search'])||isset($_POST['Prev'])||isset($_POST['Next'])){  /*i
 						ON stockmaster.categoryid=stockcategory.categoryid
 						INNER JOIN purchdata
 						ON stockmaster.stockid=purchdata.stockid
-						WHERE stockmaster.mbflag<>'D'
+						WHERE (stockmaster.mbflag<>'D' OR stockcategory.stocktype='L')
 						AND stockmaster.mbflag<>'A'
 						AND stockmaster.mbflag<>'K'
 						AND stockmaster.mbflag<>'G'
 						AND purchdata.supplierno='" . $_SESSION['PO'.$identifier]->SupplierID . "'
 						AND stockmaster.discontinued<>1
-						ORDER BY stockmaster.stockid
-						";
+						ORDER BY stockmaster.stockid ";
 			} else {
 				$sql = "SELECT stockmaster.stockid,
 							stockmaster.description,
 							stockmaster.units
 					FROM stockmaster INNER JOIN stockcategory
 					ON stockmaster.categoryid=stockcategory.categoryid
-					WHERE stockmaster.mbflag<>'D'
+					WHERE (stockmaster.mbflag<>'D' OR stockcategory.stocktype='L')
 					AND stockmaster.mbflag<>'A'
 					AND stockmaster.mbflag<>'K'
 					AND stockmaster.mbflag<>'G'
 					AND stockmaster.discontinued<>1
-					ORDER BY stockmaster.stockid
-					";
+					ORDER BY stockmaster.stockid ";
 			}
 		} else { // for a specific stock category
 			if ($_POST['SupplierItemsOnly']=='on'){
@@ -1046,43 +1032,43 @@ if (isset($_POST['Search'])||isset($_POST['Prev'])||isset($_POST['Next'])){  /*i
 						ON stockmaster.categoryid=stockcategory.categoryid
 						INNER JOIN purchdata
 						ON stockmaster.stockid=purchdata.stockid
-						WHERE stockmaster.mbflag<>'D'
+						WHERE (stockmaster.mbflag<>'D' OR stockcategory.stocktype='L')
 						AND stockmaster.mbflag<>'A'
 						AND stockmaster.mbflag<>'K'
 						AND stockmaster.mbflag<>'G'
 						AND purchdata.supplierno='" . $_SESSION['PO'.$identifier]->SupplierID . "'
 						AND stockmaster.discontinued<>1
 						AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-						ORDER BY stockmaster.stockid
-						";
+						ORDER BY stockmaster.stockid ";
 			} else {
 				$sql = "SELECT stockmaster.stockid,
 							stockmaster.description,
 							stockmaster.units
 					FROM stockmaster INNER JOIN stockcategory
 					ON stockmaster.categoryid=stockcategory.categoryid
-					WHERE stockmaster.mbflag<>'D'
+					WHERE (stockmaster.mbflag<>'D' OR stockcategory.stocktype='L')
 					AND stockmaster.mbflag<>'A'
 					AND stockmaster.mbflag<>'K'
 					AND stockmaster.mbflag<>'G'
 					AND stockmaster.discontinued<>1
 					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-					ORDER BY stockmaster.stockid
-					";
+					ORDER BY stockmaster.stockid ";
 			}
 		}
 	}
-	
-	$sqlcount = substr($sql,strpos($sql,   "FROM"));
-	$sqlcount = substr($sqlcount,0, strpos($sqlcount,   "ORDER"));
-	$sqlcount = 'SELECT COUNT(*) '.$sqlcount;
-	$SearchResult = DB_query($sqlcount,$db,$ErrMsg,$DbgMsg);
+
+	$SQLCount = substr($sql,strpos($sql,   "FROM"));
+	$SQLCount = substr($SQLCount,0, strpos($SQLCount,   "ORDER"));
+	$SQLCount = 'SELECT COUNT(*) '.$SQLCount;
+	$SearchResult = DB_query($SQLCount,$db,$ErrMsg,$DbgMsg);
 	$myrow=DB_fetch_array($SearchResult);
 	DB_free_result($SearchResult);
 	unset($SearchResult);
 	$ListCount = $myrow[0];
 	$ListPageMax = ceil($ListCount / $_SESSION['DisplayRecordsMax'])-1;
-	
+	if ($ListPageMax < 0) {
+		$ListPageMax = 0;
+	}
 	if (isset($_POST['Next'])) {
 		$Offset = $_POST['currpage']+1;
 	}
@@ -1090,11 +1076,15 @@ if (isset($_POST['Search'])||isset($_POST['Prev'])||isset($_POST['Next'])){  /*i
 		$Offset = $_POST['currpage']-1;
 	}
 	if (!isset($Offset)) {
-		$Offset=0;
+		$Offset = 0;
 	}
-	if($Offset<0)$Offset=0;
-	if($Offset>$ListPageMax)$Offset=$ListPageMax;
-	
+	if($Offset < 0){
+		$Offset = 0;
+	}
+	if($Offset > $ListPageMax) {
+		$Offset = $ListPageMax;
+	}
+
 	$sql = $sql . "LIMIT " . $_SESSION['DisplayRecordsMax']." OFFSET " . strval($_SESSION['DisplayRecordsMax']*$Offset);
 
 
@@ -1119,8 +1109,7 @@ if (!isset($_GET['Edit'])) {
 	$sql="SELECT categoryid,
 				categorydescription
 			FROM stockcategory
-			WHERE stocktype<>'L'
-			AND stocktype<>'D'
+			WHERE stocktype<>'D'
 			ORDER BY categorydescription";
 	$ErrMsg = _('The supplier category details could not be retrieved because');
 	$DbgMsg = _('The SQL used to retrieve the category details but failed was');
@@ -1131,9 +1120,9 @@ if (!isset($_GET['Edit'])) {
 				<th colspan="3"><h3>' .  _('Search For Stock Items') . ':</h3></th>';
 
 	echo '</tr>
-			<tr><td>' . _('Item Category') . ': <select name="StockCat">';
+			<tr><td>' . _('Item Category') . ': <select name="StockCat">
 
-	echo '<option selected="selected" value="All">' . _('All') . '</option>';
+			<option selected="selected" value="All">' . _('All') . '</option>';
 
 	while ($myrow1 = DB_fetch_array($result1)) {
 		if (isset($_POST['StockCat']) and $_POST['StockCat']==$myrow1['categoryid']){
@@ -1189,7 +1178,7 @@ if (isset($SearchResult)) {
 	else
 		$PageBar .= '<input type="submit" name="Next" value="'._('Next').'" disabled="disabled"/>';
 	$PageBar .= '</td></tr>';
-	
+
 
 
 	echo '<table cellpadding="1" class="selection">';
@@ -1254,6 +1243,7 @@ if (isset($SearchResult)) {
 		$PartsDisplayed++;
 #end of page full new headings if
 	}
+
 	echo $PageBar;
 #end of while loop
 	echo '</table>';

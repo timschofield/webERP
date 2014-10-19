@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: config.distrib.php 6170 2013-08-03 09:09:45Z icedlava $ */
+/* $Id: config.distrib.php 6832 2014-08-19 11:44:16Z serakfalcon $ */
 
 // User configurable variables
 //---------------------------------------------------
@@ -51,6 +51,8 @@ $DBPassword = 'weberp_db_pwd';
 //	'ShowInputBox'
 //	'Hide'
 
+
+//$AllowCompanySelectionBox = 'ShowInputBox';
 $AllowCompanySelectionBox = 'ShowSelectionBox';
 
 //If $AllowCompanySelectionBox is not 'ShowSelectionBox' above then the $DefaultDatabase string is used to determined the default Company
@@ -67,11 +69,6 @@ $MaximumExecutionTime =120;
 //The path to which session files should be stored in the server - useful for some multi-host web servers
 //this can be left commented out
 //$SessionSavePath = '/tmp';
-
-// which encryption function should be used
-//$CryptFunction = 'md5'; // MD5 Hash
-$CryptFunction = 'sha1'; // SHA1 Hash
-//$CryptFunction = ''; // Plain Text
 
 //Setting to 12 or 24 determines the format of the clock display at the end of all screens
 $DefaultClock = 12;
@@ -104,7 +101,7 @@ if ($RootPath == "/" OR $RootPath == "\\") {
 //This is the default value set in php.ini for most installations
 //but just to be sure it is forced here
 //turning on NOTICES destroys things */
-error_reporting (E_ALL && ~E_NOTICE);
+error_reporting(E_ALL && ~E_NOTICE && E_WARNING);
 /* For Development Use */
 //error_reporting (-1);
 

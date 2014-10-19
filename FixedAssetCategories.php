@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: FixedAssetCategories.php 6338 2013-09-28 05:10:46Z daintree $*/
+/* $Id: FixedAssetCategories.php 6592 2014-03-02 08:41:40Z daintree $*/
 
 include('includes/session.inc');
 
@@ -313,7 +313,7 @@ echo '</select></td>
 
 DB_data_seek($PnLAccountsResult,0);
 echo '<tr>
-		<td>' .  _('Profit or Loss on Disposal GL Code:') . '</td>
+		<td>' .  _('Profit or Loss on Disposal GL Code') . ':</td>
 		<td><select name="DisposalAct" required="required" title="' . _('Select the general ledger account where the profit or loss on disposal on assets of this category should be posted to. Only profit and loss accounts can be selected') . '" >';
 while ($myrow = DB_fetch_array($PnLAccountsResult)) {
 	if (isset($_POST['DisposalAct']) and $myrow['accountcode']==$_POST['DisposalAct']) {

@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: PDFStockNegatives.php 5784 2012-12-29 04:00:43Z daintree $*/
+/* $Id: PDFStockNegatives.php 6805 2014-08-08 16:12:36Z agaluski $*/
 
 include('includes/session.inc');
 
@@ -26,6 +26,7 @@ $sql = "SELECT stockmaster.stockid,
         ON stockmaster.stockid=locstock.stockid
         INNER JOIN locations
         ON locstock.loccode = locations.loccode
+		INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
         WHERE locstock.quantity < 0
         ORDER BY locstock.loccode,
 			stockmaster.categoryid,

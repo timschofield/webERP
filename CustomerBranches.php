@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: CustomerBranches.php 6548 2014-01-24 09:27:46Z daintree $*/
+/* $Id: CustomerBranches.php 6812 2014-08-13 18:14:57Z agaluski $*/
 
 include('includes/session.inc');
 $Title = _('Customer Branches');
@@ -799,7 +799,7 @@ if (!isset($_GET['delete'])) {
 		</tr>';
 	DB_data_seek($result,0);
 
-	$SQL = "SELECT loccode, locationname FROM locations";
+	$SQL = "SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1";
 	$result = DB_query($SQL,$db);
 
 	if (DB_num_rows($result)==0){

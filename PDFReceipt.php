@@ -1,5 +1,5 @@
 <?php
-/* $Id: PDFReceipt.php 6526 2014-01-03 15:13:22Z rchacon $*/
+/* $Id: PDFReceipt.php 6592 2014-03-02 08:41:40Z daintree $*/
 
 include('includes/session.inc');
 

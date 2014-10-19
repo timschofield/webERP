@@ -1,13 +1,15 @@
 <?php
+/* $Id: PDFTransPageHeaderPortrait.inc 6826 2014-08-17 21:53:13Z rchacon $ */
 
-/* $Id: PDFTransPageHeaderPortrait.inc 6494 2013-12-11 20:33:46Z rchacon $ */
-
+/*	Please note that addTextWrap() prints a font-size-height further down than
+	addText() and other functions. Use addText() instead of addTextWrap() to
+	print left aligned elements.*/
 
 if (!$FirstPage){ /* only initiate a new page if its not the first */
 	$pdf->newPage();
 }
 
-$YPos = $Page_Height - $Top_Margin;
+$YPos = $Page_Height-$Top_Margin;
 
 // Company Logo
 $pdf->addJpegFromFile($_SESSION['LogoFile'],$Page_Width/2 -118,$YPos-60,0,35);
@@ -15,20 +17,21 @@ $pdf->addJpegFromFile($_SESSION['LogoFile'],$Page_Width/2 -118,$YPos-60,0,35);
 $FontSize =15;
 if ($InvOrCredit=='Invoice') {
 
-        $pdf->addText($Page_Width/2 - 60, $YPos, $FontSize, _('TAX INVOICE') . ' ');
+	$pdf->addText($Page_Width/2 - 60, $YPos, $FontSize, _('TAX INVOICE') . ' ');
 } else {
 	$pdf->addText($Page_Width/2 - 60, $YPos, $FontSize, _('TAX CREDIT NOTE') . ' ');
 }
 
-// Prints page number
+// Prints page number:
 $FontSize = 10;
 $YPos -= $FontSize; //Downs one line height mesure (addText position is from left-bottom).
-$pdf->addTextWrap($Page_Width-$Left_Margin-72, $YPos, 72, $FontSize, _('Page').' '.$PageNumber, 'right');
+$pdf->addTextWrap($Page_Width-$Left_Margin-72, $YPos, 72, $FontSize,
+	_('Page').' '.$PageNumber, 'right');
 
 
 $XPos = $Page_Width - 265;
 $YPos -= 85;
-/*draw a nice curved corner box around the billing details */
+// Draws a nice curved corner box around the billing details:
 /*from the top right */
 $pdf->partEllipse($XPos+225,$YPos+67,0,90,10,10);
 /*line to the top left */
@@ -147,7 +150,6 @@ if ($myrow['invaddrbranch']==0){
 	$pdf->addText($XPos, $YPos-$LineCount*$LineHeight, $FontSize, html_entity_decode($myrow['brpostaddr3']) . ' ' . html_entity_decode($myrow['brpostaddr4']) . ' ' . html_entity_decode($myrow['brpostaddr5']) . ' ' . html_entity_decode($myrow['brpostaddr6']));
 }
 
-//$XPos = $Page_Width/2;
 $XPos = $Page_Width - 265;
 $YPos = $Page_Height - $Top_Margin - 120;
 
@@ -157,9 +159,9 @@ $LineCount = 0;
 
 if ($InvOrCredit=='Invoice') {
 	$pdf->addText($XPos, $YPos-$LineCount*$LineHeight, $FontSize, _('Delivered To (check Dispatch Detail)') . ':');
-  $FontSize = 10;
-  $LineHeight = 13;
-	$XPos +=20;
+	$FontSize = 10;
+	$LineHeight = 13;
+	$XPos += 20;
 	$LineCount += 1;
 // Before trying to call htmlspecialchars_decode, check that its supported, if not substitute a compatible version
 if (!function_exists('htmlspecialchars_decode')) {
@@ -213,7 +215,7 @@ $pdf->addText($Left_Margin, $YPos-8, $FontSize, _('All amounts stated in') . ': 
 
 $BoxHeight = $Page_Height-282;
 
-/*draw a box with nice round corner for entering line items */
+// Draws a box with nice round corner for entering line items:
 /*90 degree arc at top right of box 0 degrees starts a bottom */
 $pdf->partEllipse($Page_Width-$Right_Margin-10, $Bottom_Margin+$BoxHeight,0,90,10,10);
 /*line to the top left */
