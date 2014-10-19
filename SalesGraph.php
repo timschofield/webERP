@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: SalesGraph.php 6310 2013-08-29 10:42:50Z daintree $*/
+/* $Id: SalesGraph.php 6898 2014-09-21 10:07:59Z tehonu $*/
 
 include('includes/session.inc');
 include('includes/phplot/phplot.php');
@@ -19,11 +19,12 @@ if (isset($_POST['FromPeriod']) AND isset($_POST['ToPeriod'])){
 		prnMsg(_('The selected period from is actually after the period to! Please re-select the reporting period'),'error');
 		$SelectADifferentPeriod =_('Select A Different Period');
 	}
+/*	There is no PHPlot reason to restrict the graph to 12 months...
 	if ($_POST['ToPeriod'] - $_POST['FromPeriod'] >12){
 		prnMsg(_('The selected period range is more than 12 months - only graphs for a period less than 12 months can be created'),'error');
 		$SelectADifferentPeriod= _('Select A Different Period');
 	}
-	if ((!isset($_POST['ValueFrom']) OR $_POST['ValueFrom']='' OR !isset($_POST['ValueTo']) OR $_POST['ValueTo']='') AND $_POST['GraphOn'] !='All'){
+*/	if ((!isset($_POST['ValueFrom']) OR $_POST['ValueFrom']='' OR !isset($_POST['ValueTo']) OR $_POST['ValueTo']='') AND $_POST['GraphOn'] !='All'){
 		prnMsg(_('For graphs including either a customer or item range - the range must be specified. Please enter the value from and the value to for the range'),'error');
 		$SelectADifferentPeriod= _('Select A Different Period');
 	}
@@ -90,7 +91,7 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 	}
 	echo '</select></td></tr>';
 
-	$AreasResult = DB_query("SELECT areacode, areadescription FROM areas",$db);
+	$AreasResult = DB_query("SELECT areacode, areadescription FROM areas ORDER BY areadescription",$db);
 
 	if (!isset($_POST['SalesArea'])){
 		$_POST['SalesArea']='';
@@ -112,7 +113,7 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 	}
 	echo '</select></td></tr>';
 
-	$CategoriesResult = DB_query("SELECT categoryid, categorydescription FROM stockcategory",$db);
+	$CategoriesResult = DB_query("SELECT categoryid, categorydescription FROM stockcategory ORDER BY categorydescription",$db);
 
 	if (!isset($_POST['CategoryID'])){
 		$_POST['CategoryID']='';
@@ -134,7 +135,7 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 	}
 	echo '</select></td></tr>';
 
-	$SalesFolkResult = DB_query("SELECT salesmancode, salesmanname FROM salesman",$db);
+	$SalesFolkResult = DB_query("SELECT salesmancode, salesmanname FROM salesman ORDER BY salesmanname",$db);
 
 	if (! isset($_POST['SalesmanCode'])){
  		$_POST['SalesmanCode'] = '';
@@ -160,19 +161,21 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 			<td>' . $_POST['SalesmanCode'] . '</td>
 		</tr>';
 
-	echo '<tr><td>' . _('Graph Type') . '</td>';
-	echo '<td><select name="GraphType">';
-	echo '<option value="bars">' . _('Bar Graph') . '</option>';
-	echo '<option value="stackedbars">' . _('Stacked Bar Graph') . '</option>';
-	echo '<option value="lines">' . _('Line Graph') . '</option>';
-	echo '<option value="linepoints">' . _('Line Point Graph') . '</option>';
-	echo '<option value="area">' . _('Area Graph') . '</option>';
-	echo '<option value="points">' . _('Points Graph') . '</option>';
-	echo '<option value="pie">' . _('Pie Graph') . '</option>';
-	echo '<option value="thinbarline">' . _('Thin Bar Line Graph') . '</option>';
-	echo '<option value="squared">' . _('Squared Graph') . '</option>';
-	echo '<option value="stackedarea">' . _('Stacked Area Graph') . '</option>';
-	echo '</select></td></tr>';
+	echo '<tr>
+			<td>' . _('Graph Type') . '</td>
+			<td><select name="GraphType">
+				<option value="bars">' . _('Bar Graph') . '</option>
+				<option value="stackedbars">' . _('Stacked Bar Graph') . '</option>
+				<option value="lines">' . _('Line Graph') . '</option>
+				<option value="linepoints">' . _('Line Point Graph') . '</option>
+				<option value="area">' . _('Area Graph') . '</option>
+				<option value="points">' . _('Points Graph') . '</option>
+				<option value="pie">' . _('Pie Graph') . '</option>
+				<option value="thinbarline">' . _('Thin Bar Line Graph') . '</option>
+				<option value="squared">' . _('Squared Graph') . '</option>
+				<option value="stackedarea">' . _('Stacked Area Graph') . '</option>
+				</select></td>
+			</tr>';
 
 	if (!isset($_POST['ValueFrom'])){
 		$_POST['ValueFrom']='';
@@ -187,16 +190,17 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 	echo '<tr><td>' . _('From:') . ' <input type="text" name="ValueFrom" value="' . $_POST['ValueFrom'] . '" /></td>
 	 		<td>' . _('To:') . ' <input type="text" name="ValueTo" value="' . $_POST['ValueTo'] . '" /></td></tr>';
 
-	echo '<tr><td>' . _('Graph Value:') . '</td><td>
-			<input type="radio" name="GraphValue" value="Net" checked="checked" />' . _('Net Sales Value') . '<br />
-			<input type="radio" name="GraphValue" value="GP" />' . _('Gross Profit') . '<br />
-			<input type="radio" name="GraphValue" value="Quantity" />' . _('Quantity') . '</td></tr>';
-
-	echo '</table>';
-
-	echo '<br /><div class="centre"><input type="submit" name="ShowGraph" value="' . _('Show Sales Graph') .'" /></div>';
-    echo '</div>
-          </form>';
+	echo '<tr>
+			<td>' . _('Graph Value:') . '</td>
+			<td><input type="radio" name="GraphValue" value="Net" checked="checked" />' . _('Net Sales Value') . '<br />
+				<input type="radio" name="GraphValue" value="GP" />' . _('Gross Profit') . '<br />
+				<input type="radio" name="GraphValue" value="Quantity" />' . _('Quantity') . '</td>
+			</tr>
+			</table>
+		<br />
+			<div class="centre"><input type="submit" name="ShowGraph" value="' . _('Show Sales Graph') .'" /></div>
+		</div>
+        </form>';
 	include('includes/footer.inc');
 } else {
 
@@ -277,6 +281,7 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 	}
 	$graph->SetXTickPos('none');
 	$graph->SetXTickLabelPos('none');
+	$graph->SetXLabelAngle(90);
 	$graph->SetBackgroundColor('white');
 	$graph->SetTitleColor('blue');
 	$graph->SetFileFormat('png');
@@ -285,6 +290,8 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 	$graph->SetShading(5);
 	$graph->SetDrawYGrid(TRUE);
 	$graph->SetDataType('text-data');
+	$graph->SetNumberFormat($DecimalPoint, $ThousandsSeparator);
+	$graph->SetPrecisionY($_SESSION['CompanyRecord']['decimalplaces']);
 
 	$SalesResult = DB_query($SQL, $db);
 	if (DB_error_no($db) !=0) {
@@ -294,12 +301,13 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 		exit;
 	}
 	if (DB_num_rows($SalesResult)==0){
+prnMsg($SQL);
 		prnMsg(_('There is not sales data for the criteria entered to graph'),'info');
 		include('includes/footer.inc');
 		exit;
 	}
 
-	$GraphArrays = array();
+	$GraphArray = array();
 	$i = 0;
 	while ($myrow = DB_fetch_array($SalesResult)){
 		$GraphArray[$i] = array(MonthAndYearFromSQLDate($myrow['lastdate_in_period']),$myrow['sales'],$myrow['budget']);
@@ -316,11 +324,10 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 	//Draw it
 	$graph->DrawGraph();
 	echo '<table class="selection">
-			<tr><td>';
-	echo '<p><img src="companies/' .$_SESSION['DatabaseName'] .  '/reports/salesgraph.png" alt="Sales Report Graph"></img></p>';
-	echo '</td>
-		</tr>
-		</table>';
+			<tr>
+				<td><p><img src="companies/' .$_SESSION['DatabaseName'] .  '/reports/salesgraph.png" alt="Sales Report Graph"></img></p></td>
+			</tr>
+		  </table>';
 	include('includes/footer.inc');
 }
 ?>

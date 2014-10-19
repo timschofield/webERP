@@ -45,8 +45,8 @@ if($_SESSION['SalesmanLogin'] != '') {
 	echo '</td>';
 }else{
 	echo '<td><select tabindex="2" name="Salesperson">';
-
-	$SalespeopleResult = DB_query("SELECT salesmancode, salesmanname FROM salesman",$db);
+// KL RICARD Filter by Current = 1
+	$SalespeopleResult = DB_query("SELECT salesmancode, salesmanname FROM salesman WHERE current = 1",$db);
 	if (!isset($_POST['Salesperson'])){
 		$_POST['Salesperson'] = 'All';
 		echo '<option selected="selected" value="All">' . _('All') . '</option>';
@@ -87,23 +87,23 @@ if (mb_strlen($Date_Array[2])>4) {
 
 $StartDateSQL =  date('Y-m-d', mktime(0,0,0, (int)$Date_Array[1],1,(int)$Date_Array[0]));
 
+/* KL RICARD Change the SQl to use salesorders table to filter by SPG correctly*/
 $sql = "SELECT 	trandate,
 				SUM(price*(1-discountpercent)* (-qty)) as salesvalue,
 				SUM(CASE WHEN mbflag='A' THEN 0 ELSE (standardcost * -qty) END) as cost
 			FROM stockmoves
 			INNER JOIN stockmaster
 			ON stockmoves.stockid=stockmaster.stockid
-			INNER JOIN custbranch
-			ON stockmoves.debtorno=custbranch.debtorno
-				AND stockmoves.branchcode=custbranch.branchcode
+			INNER JOIN salesorders
+			ON stockmoves.reference=salesorders.orderno
 			WHERE (stockmoves.type=10 or stockmoves.type=11)
 			AND trandate>='" . $StartDateSQL . "'
 			AND trandate<='" . $EndDateSQL . "'";
 
 if ($_SESSION['SalesmanLogin'] != '') {
-	$SQL .= " AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'";
+	$SQL .= " AND salesorders.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 }elseif ($_POST['Salesperson']!='All') {
-	$sql .= " AND custbranch.salesman='" . $_POST['Salesperson'] . "'";
+	$sql .= " AND salesorders.salesperson='" . $_POST['Salesperson'] . "'";
 }
 
 $sql .= " GROUP BY stockmoves.trandate ORDER BY stockmoves.trandate";
@@ -193,7 +193,9 @@ if ($CumulativeTotalSales !=0){
 	$AverageDailySales = 0;
 }
 
-echo '<th colspan="7">' . _('Total Sales for month') . ': ' . locale_number_format($CumulativeTotalSales,0) . ' ' . _('GP%') . ': ' . locale_number_format($AverageGPPercent,1) . '% ' . _('Avg Daily Sales') . ': ' . locale_number_format($AverageDailySales,0) . '</th></tr>';
+//echo '<th colspan="7">' . _('Total Sales for month') . ': ' . locale_number_format($CumulativeTotalSales,0) . ' ' . _('GP%') . ': ' . locale_number_format($AverageGPPercent,1) . '% ' . _('Avg Daily Sales') . ': ' . locale_number_format($AverageDailySales,0) . '</th></tr>';
+// KL RICARD No one needs to know the GP% :-)
+echo '<th colspan="7">' . _('Total Sales for month') . ': ' . locale_number_format($CumulativeTotalSales,0) . ' ' . _('Avg Daily Sales') . ': ' . locale_number_format($AverageDailySales,0) . '</th></tr>';
 
 echo '</table>';
 

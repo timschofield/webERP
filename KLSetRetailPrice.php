@@ -1,0 +1,24 @@
+<?php
+
+include ('includes/session.inc');
+$Title = _('Kapal-Laut. Set Retail Price');
+include('includes/header.inc');
+include('includes/KLDefines.php');
+include('includes/KLBoards.php');
+include('includes/KLPrices.php');
+
+echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' .
+				_('retail Price') . '" alt="" />' . ' ' . _('KL Set Initial Retail and Wholesale Prices for').' ' . $_GET['Item']. '.</p>';
+
+if (!isset($_GET['Item']) or !isset($_GET['NewPrice'])){
+	echo '<br />';
+	prnMsg( _('This page must be given the item code and its new Retail price.'), 'error');
+	include('includes/footer.inc');
+	exit;
+}
+
+UpdateTablePrice($_GET['Item'], $_GET['NewPrice'],$db);
+
+include('includes/footer.inc');
+
+?>

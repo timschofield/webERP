@@ -1,5 +1,5 @@
 <?php
-/* $Id: SelectOrderItems.php 6549 2014-01-24 20:32:31Z daintree $*/
+/* $Id: SelectOrderItems.php 6592 2014-03-02 08:41:40Z daintree $*/
 
 include('includes/DefineCartClass.php');
 
@@ -1132,7 +1132,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					//Attempt to default the due date to something sensible?
 					$_POST['ItemDue_' . $OrderLine->LineNumber] = DateAdd (Date($_SESSION['DefaultDateFormat']),'d', $_SESSION['Items'.$identifier]->DeliveryDays);
 				}
-				if ($Quantity<0 OR $Price <0 OR $DiscountPercentage >100 OR $DiscountPercentage <0){
+				if ($Quantity<0 OR $DiscountPercentage >100 OR $DiscountPercentage <0){ // KL RICARD: Removed Price < 0 
 					prnMsg(_('The item could not be updated because you are attempting to set the quantity ordered to less than 0 or the price less than 0 or the discount more than 100% or less than 0%'),'warn');
 				} elseif($_SESSION['Items'.$identifier]->Some_Already_Delivered($OrderLine->LineNumber)!=0 AND $_SESSION['Items'.$identifier]->LineItems[$OrderLine->LineNumber]->Price != $Price) {
 					prnMsg(_('The item you attempting to modify the price for has already had some quantity invoiced at the old price the items unit price cannot be modified retrospectively'),'warn');

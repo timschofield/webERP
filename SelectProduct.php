@@ -1,5 +1,5 @@
 <?php
-/* $Id: SelectProduct.php 6519 2013-12-26 18:45:22Z rchacon $*/
+/* $Id: SelectProduct.php 6700 2014-04-29 12:54:54Z exsonqu $*/
 
 $PricesSecurity = 12;//don't show pricing info unless security token 12 available to user
 $SuppliersSecurity = 9; //don't show supplier purchasing info unless security token 9 available to user
@@ -487,6 +487,7 @@ if ($Its_A_Kitset_Assembly_Or_Dummy == False) {
 	echo '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $StockID . '">' . _('Maintain Reorder Levels') . '</a><br />';
 	echo '<a href="' . $RootPath . '/StockCostUpdate.php?StockID=' . $StockID . '">' . _('Maintain Standard Cost') . '</a><br />';
 	echo '<a href="' . $RootPath . '/PurchData.php?StockID=' . $StockID . '">' . _('Maintain Purchasing Data') . '</a><br />';
+	echo '<a href="' . $RootPath . '/CustItem.php?StockID=' . $StockID . '">' . _('Maintain Customer Item Data') . '</a><br />';
 }
 if ($Its_A_Labour_Item == True) {
 	echo '<a href="' . $RootPath . '/StockCostUpdate.php?StockID=' . $StockID . '">' . _('Maintain Standard Cost') . '</a><br />';
@@ -500,6 +501,8 @@ if (!$Its_A_Kitset) {
 	}
 	echo '<a href="' . $RootPath . '/DiscountCategories.php?StockID=' . $StockID . '">' . _('Maintain Discount Category') . '</a><br />';
     echo '<a href="' . $RootPath . '/StockClone.php?OldStockID=' . $StockID . '">' . _('Clone This Item') . '</a><br />';
+	echo '<a href="' . $RootPath . '/RelatedItemsUpdate.php?Item=' . $StockID . '">' . _('Maintain Related Items') . '</a><br />';
+	echo '<a href="' . $RootPath . '/PriceMatrix.php?StockID=' . $StockID . '">' . _('Maintain Price Matrix') . '</a><br />';
 }
 echo '</td></tr></table>';
 } else {

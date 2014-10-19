@@ -1,0 +1,68 @@
+[30-Sep-2014 16:09:09 Asia/Singapore] PHP Fatal error:  Call to undefined function DB_query() in /home4/kurakura/public_html/bumibiru.com/weberp/includes/GetConfig.php on line 10
+[30-Sep-2014 18:30:22 Asia/Singapore] PHP Fatal error:  Call to undefined function DB_query() in /home4/kurakura/public_html/bumibiru.com/weberp/includes/GetConfig.php on line 10
+[30-Sep-2014 20:56:24 Asia/Singapore] PHP Fatal error:  Call to undefined function DB_query() in /home4/kurakura/public_html/bumibiru.com/weberp/includes/GetConfig.php on line 10
+[30-Sep-2014 21:27:34 Asia/Singapore] PHP Fatal error:  Call to undefined function DB_query() in /home4/kurakura/public_html/bumibiru.com/weberp/includes/GetConfig.php on line 10
+[30-Sep-2014 21:30:59 Asia/Singapore] PHP Fatal error:  Call to undefined function DB_query() in /home4/kurakura/public_html/bumibiru.com/weberp/includes/GetConfig.php on line 10
+[01-Oct-2014 13:28:51 Asia/Singapore] PHP Fatal error:  Call to undefined function DB_query() in /home4/kurakura/public_html/bumibiru.com/weberp/includes/GetConfig.php on line 10
+[01-Oct-2014 15:03:36 Asia/Singapore] PHP Fatal error:  Call to undefined function DB_query() in /home4/kurakura/public_html/bumibiru.com/weberp/includes/GetConfig.php on line 10
+[02-Oct-2014 09:43:01 Asia/Singapore] PHP Fatal error:  Call to undefined function DB_query() in /home4/kurakura/public_html/bumibiru.com/weberp/includes/GetConfig.php on line 10
+[02-Oct-2014 10:00:36 Asia/Singapore] PHP Fatal error:  Call to undefined function DB_query() in /home4/kurakura/public_html/bumibiru.com/weberp/includes/GetConfig.php on line 10
+[02-Oct-2014 10:19:57 Asia/Singapore] PHP Catchable fatal error:  Object of class DateTime could not be converted to string in /home4/kurakura/public_html/bumibiru.com/weberp/KLControlBoard.php on line 568
+[02-Oct-2014 11:58:11 Asia/Singapore] PHP Fatal error:  Call to undefined function DB_query() in /home4/kurakura/public_html/bumibiru.com/weberp/includes/GetConfig.php on line 10
+[02-Oct-2014 12:45:41 Asia/Singapore] PHP Fatal error:  Call to undefined function DB_query() in /home4/kurakura/public_html/bumibiru.com/weberp/includes/GetConfig.php on line 10
+[02-Oct-2014 13:21:18 Asia/Singapore] PHP Fatal error:  Call to undefined function DB_query() in /home4/kurakura/public_html/bumibiru.com/weberp/includes/GetConfig.php on line 10
+[02-Oct-2014 14:01:33 Asia/Singapore] PHP Fatal error:  Call to undefined function DB_query() in /home4/kurakura/public_html/bumibiru.com/weberp/includes/GetConfig.php on line 10
+[02-Oct-2014 15:25:29 Asia/Singapore] PHP Fatal error:  Call to undefined function DB_query() in /home4/kurakura/public_html/bumibiru.com/weberp/includes/GetConfig.php on line 10
+[03-Oct-2014 10:40:12 Asia/Singapore] PHP Strict Standards:  Only variables should be passed by reference in /home4/kurakura/public_html/bumibiru.com/weberp/KLControlBoard.php on line 570
+[03-Oct-2014 12:06:24 Asia/Singapore] PHP Fatal error:  Call to undefined function DB_query() in /home4/kurakura/public_html/bumibiru.com/weberp/includes/GetConfig.php on line 10
+[03-Oct-2014 13:34:07 Asia/Singapore] PHP Fatal error:  Call to undefined function DB_query() in /home4/kurakura/public_html/bumibiru.com/weberp/includes/GetConfig.php on line 10
+[03-Oct-2014 15:01:08 Asia/Singapore] PHP Fatal error:  Call to undefined function DB_query() in /home4/kurakura/public_html/bumibiru.com/weberp/includes/GetConfig.php on line 10
+[03-Oct-2014 15:09:03 Asia/Singapore] PHP Fatal error:  Call to undefined function DB_query() in /home4/kurakura/public_html/bumibiru.com/weberp/includes/GetConfig.php on line 10
+[03-Oct-2014 15:33:53 Asia/Singapore] PHP Fatal error:  Call to undefined function DB_query() in /home4/kurakura/public_html/bumibiru.com/weberp/includes/GetConfig.php on line 10
+[03-Oct-2014 16:58:12 Asia/Singapore] PHP Fatal error:  Call to undefined function DB_query() in /home4/kurakura/public_html/bumibiru.com/weberp/includes/GetConfig.php on line 10
+[03-Oct-2014 18:03:15 Asia/Singapore] PHP Fatal error:  Call to undefined function DB_query() in /home4/kurakura/public_html/bumibiru.com/weberp/includes/GetConfig.php on line 10
+[03-Oct-2014 21:31:39 Asia/Singapore] PHP Fatal error:  Call to undefined function DB_query() in /home4/kurakura/public_html/bumibiru.com/weberp/includes/GetConfig.php on line 10
+[04-Oct-2014 12:25:06 Asia/Singapore] PHP Fatal error:  Call to undefined function DB_query() in /home4/kurakura/public_html/bumibiru.com/weberp/includes/GetConfig.php on line 10
+[04-Oct-2014 20:54:50 Asia/Singapore] PHP Fatal error:  Call to undefined function DB_query() in /home4/kurakura/public_html/bumibiru.com/weberp/includes/GetConfig.php on line 10
+[04-Oct-2014 21:28:50 Asia/Singapore] PHP Fatal error:  Call to undefined function DB_query() in /home4/kurakura/public_html/bumibiru.com/weberp/includes/GetConfig.php on line 10
+[05-Oct-2014 15:35:51 Asia/Singapore] PHP Fatal error:  Call to undefined function DB_query() in /home4/kurakura/public_html/bumibiru.com/weberp/includes/GetConfig.php on line 10
+[05-Oct-2014 16:58:37 Asia/Singapore] PHP Fatal error:  Call to undefined function DB_query() in /home4/kurakura/public_html/bumibiru.com/weberp/includes/GetConfig.php on line 10
+[05-Oct-2014 21:26:19 Asia/Singapore] PHP Fatal error:  Call to undefined function DB_query() in /home4/kurakura/public_html/bumibiru.com/weberp/includes/GetConfig.php on line 10
+[06-Oct-2014 14:14:04 Asia/Singapore] PHP Fatal error:  Call to undefined function DB_query() in /home4/kurakura/public_html/bumibiru.com/weberp/includes/GetConfig.php on line 10
+[06-Oct-2014 18:00:13 Asia/Singapore] PHP Fatal error:  Call to undefined function DB_query() in /home4/kurakura/public_html/bumibiru.com/weberp/includes/GetConfig.php on line 10
+[06-Oct-2014 18:07:47 Asia/Singapore] PHP Fatal error:  Call to undefined function DB_query() in /home4/kurakura/public_html/bumibiru.com/weberp/includes/GetConfig.php on line 10
+[06-Oct-2014 20:55:11 Asia/Singapore] PHP Fatal error:  Call to undefined function DB_query() in /home4/kurakura/public_html/bumibiru.com/weberp/includes/GetConfig.php on line 10
+[07-Oct-2014 13:03:38 Asia/Singapore] PHP Fatal error:  Call to undefined function DB_query() in /home4/kurakura/public_html/bumibiru.com/weberp/includes/GetConfig.php on line 10
+[07-Oct-2014 15:35:31 Asia/Singapore] PHP Fatal error:  Call to undefined function DB_query() in /home4/kurakura/public_html/bumibiru.com/weberp/includes/GetConfig.php on line 10
+[07-Oct-2014 21:21:55 Asia/Singapore] PHP Fatal error:  Call to undefined function DB_query() in /home4/kurakura/public_html/bumibiru.com/weberp/includes/GetConfig.php on line 10
+[08-Oct-2014 15:12:45 Asia/Singapore] PHP Fatal error:  Call to undefined function DB_query() in /home4/kurakura/public_html/bumibiru.com/weberp/includes/GetConfig.php on line 10
+[08-Oct-2014 17:44:37 Asia/Singapore] PHP Fatal error:  Call to undefined function DB_query() in /home4/kurakura/public_html/bumibiru.com/weberp/includes/GetConfig.php on line 10
+[08-Oct-2014 18:05:40 Asia/Singapore] PHP Fatal error:  Call to undefined function DB_query() in /home4/kurakura/public_html/bumibiru.com/weberp/includes/GetConfig.php on line 10
+[08-Oct-2014 20:54:16 Asia/Singapore] PHP Fatal error:  Call to undefined function DB_query() in /home4/kurakura/public_html/bumibiru.com/weberp/includes/GetConfig.php on line 10
+[09-Oct-2014 16:04:39 Asia/Singapore] PHP Fatal error:  Call to undefined function DB_query() in /home4/kurakura/public_html/bumibiru.com/weberp/includes/GetConfig.php on line 10
+[09-Oct-2014 17:19:35 Asia/Singapore] PHP Fatal error:  Call to undefined function DB_query() in /home4/kurakura/public_html/bumibiru.com/weberp/includes/GetConfig.php on line 10
+[09-Oct-2014 21:31:14 Asia/Singapore] PHP Fatal error:  Call to undefined function DB_query() in /home4/kurakura/public_html/bumibiru.com/weberp/includes/GetConfig.php on line 10
+[10-Oct-2014 13:07:21 Asia/Singapore] PHP Fatal error:  Call to undefined function DB_query() in /home4/kurakura/public_html/bumibiru.com/weberp/includes/GetConfig.php on line 10
+[10-Oct-2014 02:16:25 America/Chicago] PHP Warning:  imagecreatefrompng(/webERPsmall.png): failed to open stream: No such file or directory in /home4/kurakura/public_html/bumibiru.com/weberp/GetStockImage.php on line 227
+[10-Oct-2014 02:16:25 America/Chicago] PHP Warning:  imagecolorallocate() expects parameter 1 to be resource, boolean given in /home4/kurakura/public_html/bumibiru.com/weberp/GetStockImage.php on line 236
+[10-Oct-2014 02:16:25 America/Chicago] PHP Warning:  imagecolorallocate() expects parameter 1 to be resource, boolean given in /home4/kurakura/public_html/bumibiru.com/weberp/GetStockImage.php on line 248
+[10-Oct-2014 02:16:25 America/Chicago] PHP Warning:  imagesx() expects parameter 1 to be resource, boolean given in /home4/kurakura/public_html/bumibiru.com/weberp/GetStockImage.php on line 254
+[10-Oct-2014 02:16:25 America/Chicago] PHP Warning:  imagesy() expects parameter 1 to be resource, boolean given in /home4/kurakura/public_html/bumibiru.com/weberp/GetStockImage.php on line 255
+[10-Oct-2014 02:16:25 America/Chicago] PHP Warning:  Division by zero in /home4/kurakura/public_html/bumibiru.com/weberp/GetStockImage.php on line 261
+[10-Oct-2014 02:16:25 America/Chicago] PHP Warning:  Division by zero in /home4/kurakura/public_html/bumibiru.com/weberp/GetStockImage.php on line 261
+[10-Oct-2014 02:16:25 America/Chicago] PHP Warning:  imagecreatetruecolor(): Invalid image dimensions in /home4/kurakura/public_html/bumibiru.com/weberp/GetStockImage.php on line 270
+[10-Oct-2014 02:16:25 America/Chicago] PHP Warning:  imagealphablending() expects parameter 1 to be resource, boolean given in /home4/kurakura/public_html/bumibiru.com/weberp/GetStockImage.php on line 271
+[10-Oct-2014 02:16:25 America/Chicago] PHP Warning:  imagecopyresampled() expects parameter 1 to be resource, boolean given in /home4/kurakura/public_html/bumibiru.com/weberp/GetStockImage.php on line 272
+[10-Oct-2014 02:16:25 America/Chicago] PHP Warning:  imagedestroy() expects parameter 1 to be resource, boolean given in /home4/kurakura/public_html/bumibiru.com/weberp/GetStockImage.php on line 273
+[10-Oct-2014 02:16:25 America/Chicago] PHP Warning:  imagecolorallocate() expects parameter 1 to be resource, boolean given in /home4/kurakura/public_html/bumibiru.com/weberp/GetStockImage.php on line 279
+[10-Oct-2014 02:16:25 America/Chicago] PHP Warning:  imagecolorallocate() expects parameter 1 to be resource, boolean given in /home4/kurakura/public_html/bumibiru.com/weberp/GetStockImage.php on line 286
+[10-Oct-2014 02:16:25 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/kurakura/public_html/bumibiru.com/weberp/GetStockImage.php:227) in /home4/kurakura/public_html/bumibiru.com/weberp/GetStockImage.php on line 344
+[10-Oct-2014 02:16:25 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/kurakura/public_html/bumibiru.com/weberp/GetStockImage.php:227) in /home4/kurakura/public_html/bumibiru.com/weberp/GetStockImage.php on line 345
+[10-Oct-2014 02:16:25 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/kurakura/public_html/bumibiru.com/weberp/GetStockImage.php:227) in /home4/kurakura/public_html/bumibiru.com/weberp/GetStockImage.php on line 346
+[10-Oct-2014 02:16:25 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/kurakura/public_html/bumibiru.com/weberp/GetStockImage.php:227) in /home4/kurakura/public_html/bumibiru.com/weberp/GetStockImage.php on line 347
+[10-Oct-2014 02:16:25 America/Chicago] PHP Warning:  imagepng() expects parameter 1 to be resource, boolean given in /home4/kurakura/public_html/bumibiru.com/weberp/GetStockImage.php on line 352
+[10-Oct-2014 02:16:25 America/Chicago] PHP Warning:  imagedestroy() expects parameter 1 to be resource, boolean given in /home4/kurakura/public_html/bumibiru.com/weberp/GetStockImage.php on line 354
+[10-Oct-2014 15:59:46 Asia/Singapore] PHP Fatal error:  Call to undefined function DB_query() in /home4/kurakura/public_html/bumibiru.com/weberp/includes/GetConfig.php on line 10
+[10-Oct-2014 16:15:05 Asia/Singapore] PHP Fatal error:  Call to undefined function DB_query() in /home4/kurakura/public_html/bumibiru.com/weberp/includes/GetConfig.php on line 10
+[10-Oct-2014 16:41:24 Asia/Singapore] PHP Fatal error:  Call to undefined function DB_query() in /home4/kurakura/public_html/bumibiru.com/weberp/includes/GetConfig.php on line 10
+[10-Oct-2014 17:22:32 Asia/Singapore] PHP Fatal error:  Call to undefined function DB_query() in /home4/kurakura/public_html/bumibiru.com/weberp/includes/GetConfig.php on line 10

@@ -14,9 +14,10 @@ and an array of the receipients */
 /*The Sales report to send */
 $_GET['ReportID'] = 2;
 $AllowAnyone = true;
+$DatabaseName = 'kurakura_klerp';
 include('includes/session.inc');
 /*The company database to use */
-$DatabaseName = $_SESSION['DatabaseName'];
+
 /*The people to receive the emailed report */
 $Recipients = GetMailList('SalesAnalysisReportRecipients');
 if (sizeOf($Recipients) == 0) {

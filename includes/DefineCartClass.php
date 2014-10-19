@@ -105,10 +105,10 @@ Class Cart {
 							$identifier=0){
 
 		if (isset($StockID) AND $StockID!="" AND $Qty>0 AND isset($Qty)){
-
-			if ($Price<0){ /*madness check - use a credit note to give money away!*/
-				$Price=0;
-			}
+// KL RICARD Comment next 3 lines to allow use of promotional vouchers in online shop
+//			if ($Price<0){ /*madness check - use a credit note to give money away!*/
+//				$Price=0;
+//			}
 
 			if ($LineNumber==-1){
 				$LineNumber = $this->LineCounter;

@@ -110,6 +110,11 @@ if (isset($_POST['ProcessGLAccountCode'])){
 
 		ChangeFieldInTable("workcentres", "overheadrecoveryact", $_POST['OldAccountCode'], $_POST['NewAccountCode'], $db);
 
+		// KL tables
+		ChangeFieldInTable("chartmasterCV", "accountcode", $_POST['OldAccountCode'], $_POST['NewAccountCode'], $db);
+		ChangeFieldInTable("chartmasterPT", "accountcode", $_POST['OldAccountCode'], $_POST['NewAccountCode'], $db);
+		ChangeFieldInTable("chartmasterM", "accountcode", $_POST['OldAccountCode'], $_POST['NewAccountCode'], $db);
+		
 		DB_ReinstateForeignKeys($db);
 
 		$result = DB_Txn_Commit($db);

@@ -36,12 +36,17 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 	}else{
 		$Sequence="locstock.stockid";
 	}
+	
+	/* KL RICARD: Add 3 fields kl* to query */
 
 	$sql="SELECT locstock.stockid,
 				description,
 				reorderlevel,
 				bin,
 				quantity,
+				stockmaster.klchangingprice,
+				stockmaster.klmovingdiscount,
+				stockmaster.klmovingoutlet,
 				decimalplaces
 			FROM locstock INNER JOIN stockmaster
 			ON locstock.stockid = stockmaster.stockid
@@ -66,6 +71,7 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
     echo '<table>';
+ 	/* KL RICARD: Add Notes field */
     echo '<tr>
             <th>' . _('Code') . '</th>
             <th>' . _('Description') . '</th>
@@ -74,6 +80,7 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
             <th>' . _('On Hand')  . '<br />' ._('At Location') . '</th>
             <th>' . _('Reorder Level') . '</th>
             <th>' . _('Bin Location') . '</th>
+            <th>' . _('Notes') . '</th>
         </tr>';
 
 	$i=1;
@@ -114,6 +121,17 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 		$TotQtyResult = DB_query($SqlOH,$db);
 		$TotQtyRow = DB_fetch_array($TotQtyResult);
 
+		/*	KL RICARD Fill the $Notes variable*/
+		if	   ($myrow['klchangingprice']){
+			$Notes = "Changing price";
+		}elseif($myrow['klmovingdiscount']){
+			$Notes = "Moving to discount";
+		}elseif($myrow['klmovingoutlet']){
+			$Notes = "Moving to outlet";
+		}else{
+			$Notes = "";
+		}
+
 		echo $myrow['stockid'] . '</td>
 			<td>' . $myrow['description'] . '</td>
 			<td class="number">' . locale_number_format($SalesRow['qtyinvoiced'],$myrow['decimalplaces']) . '</td>
@@ -122,11 +140,12 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 			<td><input type="text" class="number" name="ReorderLevel' . $i .'" maxlength="10" size="10" value="'. locale_number_format($myrow['reorderlevel'],0) .'" />
 				<input type="hidden" name="StockID' . $i . '" value="' . $myrow['stockid'] . '" /></td>
 			<td><input type="text" name="BinLocation' . $i .'" maxlength="10" size="10" value="'. $myrow['bin'] .'" /></td>
+			<td>'.$Notes.'</td>
 			</tr> ';
 		$i++;
 	} //end of looping
 	echo'<tr>
-			<td style="text-align:center" colspan="7">
+			<td style="text-align:center" colspan="8">
 				<input type="submit" name="submit" value="' . _('Update') . '" />
 			</td>
 		</tr>

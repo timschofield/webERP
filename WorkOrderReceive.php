@@ -1,5 +1,5 @@
 <?php
-/* $Id: WorkOrderReceive.php 6310 2013-08-29 10:42:50Z daintree $*/
+/* $Id: WorkOrderReceive.php 6805 2014-08-08 16:12:36Z agaluski $*/
 
 include('includes/session.inc');
 $Title = _('Receive Work Order');
@@ -63,6 +63,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 								 stockmaster.serialised,
 								 stockmaster.decimalplaces,
 								 stockmaster.units,
+								 stockmaster.perishable,
 								 woitems.qtyreqd,
 								 woitems.qtyrecd,
 								 woitems.stdcost,
@@ -76,6 +77,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 							ON woitems.stockid=stockmaster.stockid
 							INNER JOIN stockcategory
 							ON stockmaster.categoryid=stockcategory.categoryid
+							INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
 							WHERE woitems.stockid='" . $_POST['StockID'] . "'
 							AND workorders.wo='".$_POST['WO'] . "'",
 							$db,
@@ -112,6 +114,13 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 				}
 			}
 		} //end of lot/batch control
+
+		if (!empty($_POST['ExpiryDate'])){
+			if(!is_date($_POST['ExpiryDate'])){
+				$InputError = true;
+				prnMsg(_('The Expiry Date should be in date format'),'error');
+			}
+		}
 	} else { //not controlled - an easy one!
 		if (!is_numeric(filter_number_format($_POST['Qty']))){
 			$InputError=true;
@@ -500,7 +509,8 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 								$QualityText ='';
 							}
 
-							$SQL = "INSERT INTO stockserialitems (stockid,
+							if(empty($_POST['ExpiryDate'])){
+									$SQL = "INSERT INTO stockserialitems (stockid,
 																	loccode,
 																	serialno,
 																	quantity,
@@ -510,6 +520,22 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 													'" . $_POST['SerialNo' . $i] . "',
 													1,
 													'" . $QualityText . "')";
+							}else{// Store expiry date for perishable product
+
+								$SQL = "INSERT INTO stockserialitems(stockid,
+																	loccode,
+																	serialno,
+																	quantity,
+																	qualitytext,
+																	expirationdate)
+											VALUES ('" . $_POST['StockID'] . "',
+												'" . $_POST['IntoLocation'] . "',
+												'" . $_POST['SerialNo' . $i] . "',
+												1,
+												'" . $QualityText . "',
+												'" . FormatDateForSQL($_POST['ExpiryDate']) . "')";
+							}
+
 							$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be inserted because');
 							$DbgMsg =  _('The following SQL to insert the serial stock item records was used');
 							$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
@@ -570,7 +596,8 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 										AND loccode = '" . $_POST['IntoLocation'] . "'
 										AND serialno = '" . $_POST['BatchRef' .$i] . "'";
 						} else {
-							$SQL = "INSERT INTO stockserialitems (stockid,
+							if(empty($_POST['ExpiryDate'])){
+								$SQL = "INSERT INTO stockserialitems (stockid,
 																loccode,
 																serialno,
 																quantity,
@@ -580,6 +607,23 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 												'" . $_POST['BatchRef' . $i] . "',
 												'" . filter_number_format($_POST['Qty'.$i]) . "',
 												'" . $_POST['QualityText'] . "')";
+
+
+							}else{	//If it's a perishable product, add expiry date
+
+								$SQL = "INSERT INTO stockserialitems (stockid,
+																loccode,
+																serialno,
+																quantity,
+																qualitytext,
+																expirationdate)
+										VALUES ('" . $_POST['StockID'] . "',
+												'" . $_POST['IntoLocation'] . "',
+												'" . $_POST['BatchRef' . $i] . "',
+												'" . filter_number_format($_POST['Qty'.$i]) . "',
+												'" . $_POST['QualityText'] . "',
+												'" . FormatDateForSQL($_POST['ExpiryDate']) . "')";
+							}
 						}
 						$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be inserted because');
 						$DbgMsg =  _('The following SQL to insert the serial stock item records was used');
@@ -727,6 +771,7 @@ $WOResult = DB_query("SELECT workorders.loccode,
 							 stockmaster.serialised,
 							 stockmaster.decimalplaces,
 							 stockmaster.units,
+							 stockmaster.perishable,
 							 woitems.qtyreqd,
 							 woitems.qtyrecd,
 							 woitems.stdcost,
@@ -737,6 +782,7 @@ $WOResult = DB_query("SELECT workorders.loccode,
 					ON workorders.wo=woitems.wo
 					INNER JOIN stockmaster
 					ON woitems.stockid=stockmaster.stockid
+					INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
 					WHERE woitems.stockid='" . $_POST['StockID'] . "' AND workorders.wo='".$_POST['WO'] . "'",
 					$db,
 					$ErrMsg);
@@ -785,15 +831,28 @@ echo '<table class="selection">
 		</tr>
 		 <tr>
 			<td>' . _('Date Received') . ':</td>
-		 	<td>' . Date($_SESSION['DefaultDateFormat']) . '</td>
-			<td>' . _('Received Into') . ':</td>
+			<td>' . Date($_SESSION['DefaultDateFormat']) . '</td>';
+		//add expiry date for perishable product
+		if($WORow['perishable']==1){
+			echo '<td>' . _('Expiry Date') . ':<td>
+			      <td><input type="text" name="ExpiryDate" class="date" alt="'.$_SESSION['DefaultDateFormat'].'"
+				         required  />
+			      </td>';
+		}
+
+		echo '<td>' . _('Received Into') . ':</td>
 			<td><select name="IntoLocation">';
 
 
 if (!isset($_POST['IntoLocation'])){
 		$_POST['IntoLocation']=$WORow['loccode'];
 }
-$LocResult = DB_query("SELECT loccode, locationname FROM locations",$db);
+$LocResult = DB_query("SELECT locations.loccode,locationname 
+						FROM locations
+						INNER JOIN locationusers 
+							ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' 
+							AND locationusers.canupd=1
+						WHERE locations.usedforwo = 1",$db);
 while ($LocRow = DB_fetch_array($LocResult)){
 	if ($_POST['IntoLocation'] ==$LocRow['loccode']){
 		echo '<option selected="selected" value="' . $LocRow['loccode'] .'">' . $LocRow['locationname'] . '</option>';

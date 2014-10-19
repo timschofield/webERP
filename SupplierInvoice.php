@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: SupplierInvoice.php 6310 2013-08-29 10:42:50Z daintree $ */
+/* $Id: SupplierInvoice.php 6750 2014-06-12 18:46:41Z rchacon $ */
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing
@@ -35,10 +35,9 @@ if (!isset($_SESSION['SuppTrans']->SupplierName)) {
 } else {
 	$SupplierName=$_SESSION['SuppTrans']->SupplierName;
 }
-
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('Supplier Invoice') . '" alt="" />
-     ' . ' ' . _('Enter Supplier Invoice:') . ' ' . $SupplierName;
-echo '</p>';
+echo '<p class="page_title_text"><img alt="" src="'.$RootPath . '/css/' . $Theme . 
+	'/images/transactions.png" title="' . _('Supplier Invoice') . '" />' . ' ' . 
+	_('Enter Supplier Invoice') . ': ' . $SupplierName . '</p>';
 if (isset($_GET['SupplierID']) AND $_GET['SupplierID']!=''){
 
  /*It must be a new invoice entry - clear any existing invoice details from the SuppTrans object and initiate a newy*/
@@ -1294,7 +1293,7 @@ then do the updates and inserts to process the invoice entered */
 															'" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('GRN') . ' ' . $EnteredGRN->GRNNo .  ' - ' . $EnteredGRN->ItemCode . ' x ' . ($EnteredGRN->This_QuantityInv -$TotalQuantityOnHand) . ' x  ' . _('price var of') . ' ' . round(($EnteredGRN->ChgPrice / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit,2)  . "',
 															'" . $WriteOffToVariances . "')";
 
-									$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added for the price variance of the stock item because');
+									$ErrMsg = _('CRITICAL ERROR 1') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added for the price variance of the stock item because'). $SQL;
 									$DbgMsg = _('The following SQL to insert the GL transaction was used');
 
 
@@ -1320,7 +1319,7 @@ then do the updates and inserts to process the invoice entered */
 													 round(($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit,$_SESSION['CompanyRecord']['decimalplaces'])  . "',
 													'" . ($PurchPriceVar - $WriteOffToVariances) . "')";
 
-								$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added for the price variance of the stock item because');
+								$ErrMsg = _('CRITICAL ERROR 2') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added for the price variance of the stock item because'). $SQL;
 								$DbgMsg = _('The following SQL to insert the GL transaction was used');
 
 								$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
@@ -1342,7 +1341,7 @@ then do the updates and inserts to process the invoice entered */
 														'" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('GRN') . ' ' . $EnteredGRN->GRNNo . ' - ' . $EnteredGRN->ItemCode . ' x ' . $EnteredGRN->This_QuantityInv . ' x  ' . _('price var of') . ' ' . round(($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit,2)  .  "',
 														'" . $PurchPriceVar . "')";
 
-								$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added for the price variance of the stock item because');
+								$ErrMsg = _('CRITICAL ERROR 3') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added for the price variance of the stock item because'). $SQL;
 								$DbgMsg = _('The following SQL to insert the GL transaction was used');
 								$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
 							}
@@ -1379,7 +1378,7 @@ then do the updates and inserts to process the invoice entered */
 											'" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('GRN') . ' ' . $EnteredGRN->GRNNo . ' - ' .  $EnteredGRN->ItemDescription . ' x ' . $EnteredGRN->This_QuantityInv . ' x  ' . _('price var') . ' ' . locale_number_format(($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit,$_SESSION['SuppTrans']->CurrDecimalPlaces) . "',
 											'" . $PurchPriceVar . "')";
 
-							$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added for the price variance of the stock item because');
+							$ErrMsg = _('CRITICAL ERROR 4') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added for the price variance of the stock item because') . $SQL;
 
 							$DbgMsg = _('The following SQL to insert the GL transaction was used');
 							$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);

@@ -95,7 +95,13 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 	}
 
 	/*  Need to set the theme to make login screen nice */
-	$Theme = (isset($_SESSION['Theme'])) ? $_SESSION['Theme'] : 'gel';
+	/* RICARD KL Set up the login theme for regular and test webERP */
+	if (strpos($_SERVER['PHP_SELF'],"TEST")){
+		$Theme = (isset($_SESSION['Theme'])) ? $_SESSION['Theme'] : 'gel'; 
+	}else{
+		$Theme = (isset($_SESSION['Theme'])) ? $_SESSION['Theme'] : 'default'; 
+	}
+	/* RICARD KL END MODIFICATION Set up the login theme for regular and test webERP */
 	switch ($rc) {
 	case  UL_OK; //user logged in successfully
 		include($PathPrefix . 'includes/LanguageSetup.php'); //set up the language
@@ -151,6 +157,20 @@ if(isset($_SESSION['DB_Maintenance'])){
 		}
 	}
 }
+
+/* RICARD KL Modification to run daily cheks at DB 
+COMMENTED as now run by CRON JOB
+if(isset($_SESSION['KL_DailyChecks_LastRun'])){
+	if (DateDiff(Date($_SESSION['DefaultDateFormat']),
+			ConvertSQLDate($_SESSION['KL_DailyChecks_LastRun']),'d') >= 1){
+
+		include($PathPrefix . 'KLDailyChecks.php');
+		KL_DailyChecks($RootPath, $db);
+		$_SESSION['KL_DailyChecks_LastRun'] = Date('Y-m-d');
+	}
+}
+RICARD KL END Modification to run daily cheks at DB */
+
 //purge the audit trail if necessary
 if (isset($_SESSION['MonthsAuditTrail'])){ 
 	 $sql = "DELETE FROM audittrail

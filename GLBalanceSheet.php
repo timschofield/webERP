@@ -569,7 +569,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 
 
 		if ($_POST['Detail']=='Detailed'){
-			if (isset($_POST['ShowZeroBalances']) OR (!isset($_POST['ShowZeroBalances']) AND ($AccountBalance <> 0 OR $LYAccountBalance <> 0))){
+			if (isset($_POST['ShowZeroBalances']) OR (!isset($_POST['ShowZeroBalances']) AND (round($AccountBalance,$_SESSION['CompanyRecord']['decimalplaces']) <> 0 OR round($LYAccountBalance,$_SESSION['CompanyRecord']['decimalplaces']) <> 0))){
 	  			if ($k==1){
 	  				echo '<tr class="OddTableRows">';
 	  				$k=0;

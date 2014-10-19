@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: CustomerReceipt.php 6566 2014-02-08 04:12:08Z daintree $ */
+/* $Id: CustomerReceipt.php 6592 2014-03-02 08:41:40Z daintree $ */
 
 include('includes/DefineReceiptClass.php');
 include('includes/session.inc');
@@ -201,7 +201,8 @@ if (isset($_POST['Process'])){ //user hit submit a new entry to the receipt batc
 													$_POST['GLCode'],
 													$_POST['PayeeBankDetail'],
 													$_POST['CustomerName'],
-													$_POST['tag']);
+													$_POST['tag'],
+													$_POST['OrderPaid']);
 			/*Make sure the same receipt is not double processed by a page refresh */
 			$Cancel = 1;
 		}
@@ -216,6 +217,7 @@ if (isset($Cancel)){
 	unset($_POST['Discount']);
 	unset($_POST['Narrative']);
 	unset($_POST['PayeeBankDetail']);
+	unset($_POST['OrderPaid']);
 }
 
 
@@ -422,6 +424,7 @@ if (isset($_POST['CommitBatch'])){
 											branchcode,
 											trandate,
 											inputdate,
+											order_,
 											prd,
 											reference,
 											tpe,
@@ -437,6 +440,7 @@ if (isset($_POST['CommitBatch'])){
 						'',
 						'" . FormatDateForSQL($_SESSION['ReceiptBatch']->DateBanked) . "',
 						'" . date('Y-m-d H-i-s') . "',
+						'" . $ReceiptItem->OrderPaid . "',
 						'" . $PeriodNo . "',
 						'" . $_SESSION['ReceiptBatch']->ReceiptType  . ' ' . $ReceiptItem->PayeeBankDetail . "',
 						'',
@@ -1129,6 +1133,9 @@ if (((isset($_SESSION['CustomerRecord'])
 	if (!isset($_POST['PayeeBankDetail'])) {
 		$_POST['PayeeBankDetail']='';
 	}
+	if (!isset($_POST['OrderPaid'])) {
+		$_POST['OrderPaid']='';
+	}
 	if (!isset($_POST['Narrative'])) {
 		$_POST['Narrative']='';
 	}
@@ -1149,6 +1156,10 @@ if (((isset($_SESSION['CustomerRecord'])
 	echo '<tr>
 			<td>' . _('Payee Bank Details') . ':</td>
 			<td><input tabindex="12" type="text" name="PayeeBankDetail" maxlength="22" size="20" value="' . $_POST['PayeeBankDetail'] . '" /></td>
+		</tr>
+		<tr>
+			<td>' . _('webERP Order (Online ONLY!)') . ':</td>
+			<td><input tabindex="13" type="text" name="OrderPaid" maxlength="22" size="20" value="' . $_POST['OrderPaid'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Narrative') . ':</td>

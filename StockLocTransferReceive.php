@@ -331,7 +331,10 @@ if(isset($_POST['ProcessTransfer'])){
 				$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('Unable to set the quantity received to the quantity shipped to cancel the balance on this transfer line');
 				$Result = DB_query($sql, $db, $ErrMsg, $DbgMsg, true);
 				// send an email to the inventory manager about this cancellation (as can lead to employee fraud)
-				if ($_SESSION['InventoryManagerEmail']!=''){
+				// KL RICARD NEVER SEND THIS EMAIL
+				if (FALSE){
+//				if ($_SESSION['InventoryManagerEmail']!=''){
+// END KL RICARD MODIF
 					$ConfirmationText = _('Cancelled balance of transfer'). ': ' . $_SESSION['Transfer']->TrfID .
 										"\r\n" . _('From Location') . ': ' . $_SESSION['Transfer']->StockLocationFrom .
 										"\r\n" . _('To Location') . ': ' . $_SESSION['Transfer']->StockLocationTo .

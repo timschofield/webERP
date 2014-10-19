@@ -1,5 +1,5 @@
 <?php
-/* $Id$ */
+/* $Id: StockClone.php 6669 2014-04-05 23:31:54Z rchacon $ */
 
 include('includes/session.inc');
 $Title = _('Clone Item');
@@ -27,7 +27,7 @@ if (isset($_GET['OldStockID']) || isset($_POST['OldStockID']) ){ //we are clonin
     prnMsg(_('To use this script it must be called with the Stock ID of the item to be cloned passed in as $OldStockID. Please use the Clone This Item option in the Items Menu.'),'error');
 }
 
-$ItemDescriptionLanguages = explode(',',$_SESSION['ItemDescriptionLanguages']);
+$ItemDescriptionLanguagesArray = explode(',',$_SESSION['ItemDescriptionLanguages']);
 
 if (isset($_POST['StockID']) && !empty($_POST['StockID']) && !isset($_POST['UpdateCategories'])) {
 	$sql = "SELECT COUNT(stockid)
@@ -198,6 +198,26 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'NetWeight';
 		$i++;
 	}
+// KL RICARD: Add length, Width, Height and Units_dimension
+	if (filter_number_format($_POST['length'])<0) {
+		$InputError = 1;
+		prnMsg(_('The length of the item must be a positive number'),'error');
+		$Errors[$i] = 'length';
+		$i++;
+	}
+	if (filter_number_format($_POST['Width'])<0) {
+		$InputError = 1;
+		prnMsg(_('The width of the item must be a positive number'),'error');
+		$Errors[$i] = 'Width';
+		$i++;
+	}
+	if (filter_number_format($_POST['Height'])<0) {
+		$InputError = 1;
+		prnMsg(_('The height of the item must be a positive number'),'error');
+		$Errors[$i] = 'Height';
+		$i++;
+	}
+// END KL RICARD
 	if (!is_numeric(filter_number_format($_POST['EOQ']))) {
 		$InputError = 1;
 		prnMsg(_('The economic order quantity must be numeric'),'error');
@@ -273,12 +293,18 @@ if (isset($_POST['submit'])) {
 				//exit;
 			} else {
     			DB_Txn_Begin($db);
+				// Added fields lastcategoryupdate, length, width, height and unitsdimension
 				$sql = "INSERT INTO stockmaster (stockid,
 												description,
 												longdescription,
 												categoryid,
+												lastcategoryupdate,
 												units,
 												mbflag,
+												length,
+												width,
+												height,
+												unitsdimension,
 												eoq,
 												discontinued,
 												controlled,
@@ -297,8 +323,13 @@ if (isset($_POST['submit'])) {
 								'" . $_POST['Description'] . "',
 								'" . $_POST['LongDescription'] . "',
 								'" . $_POST['CategoryID'] . "',
+								'" . $_POST['lastcategoryupdate'] . "',
 								'" . $_POST['Units'] . "',
 								'" . $_POST['MBFlag'] . "',
+								'" . filter_number_format($_POST['length']) . "',
+								'" . filter_number_format($_POST['Width']) . "',
+								'" . filter_number_format($_POST['Height']) . "',
+								'" . $_POST['UnitsDimension']. "',
 								'" . filter_number_format($_POST['EOQ']) . "',
 								'" . $_POST['Discontinued'] . "',
 								'" . $_POST['Controlled'] . "',
@@ -322,7 +353,7 @@ if (isset($_POST['submit'])) {
 					$ErrMsg = _('Could not update the language description because');
 					$DbgMsg = _('The SQL that was used to update the language description and failed was');
 					if (count($ItemDescriptionLanguages)>0){
-						foreach ($ItemDescriptionLanguages as $DescriptionLanguage) {
+						foreach ($ItemDescriptionLanguagesArray as $DescriptionLanguage) {
 							if ($DescriptionLanguage!=''){
 								$result = DB_query("INSERT INTO stockdescriptiontranslations VALUES('" . $_POST['StockID'] . "','" . $DescriptionLanguage . "', '" . $_POST['Description_' . str_replace('.','_',$DescriptionLanguage)] . "')",$db,$ErrMsg,$DbgMsg,true);
 							}
@@ -473,21 +504,11 @@ if (isset($_POST['submit'])) {
                     //What about cost data?
                     //get any existing cost data
                     $sql = "SELECT materialcost,
-                                        labourcost,
-                                        overheadcost,
-                                        mbflag,
-                                        sum(quantity) as totalqoh
-                                FROM stockmaster INNER JOIN locstock
-                                ON stockmaster.stockid=locstock.stockid
-                                WHERE stockmaster.stockid='".$_POST['OldStockID']."'
-                                GROUP BY description,
-                                        units,
-                                        lastcost,
-                                        actualcost,
-                                        materialcost,
-                                        labourcost,
-                                        overheadcost,
-                                        mbflag";
+									labourcost,
+									overheadcost,
+									lastcost
+							FROM stockmaster 
+							WHERE stockmaster.stockid='".$_POST['OldStockID']."'";
                         $ErrMsg = _('The entered item code does not exist');
                         $OldResult = DB_query($sql,$db,$ErrMsg);
                         $OldRow = DB_fetch_array($OldResult);
@@ -507,7 +528,7 @@ if (isset($_POST['submit'])) {
 
                     //finish up
 					if (DB_error_no($db) ==0) {
-						prnMsg( _('New Cloned Item') .' ' . '<a href="SelectProduct.php?StockID=' . $_POST['StockID'] . '">' . $_POST['StockID'] . '</a> '. _('has been added to the database') .
+						prnMsg( _('New cloned item') .' ' . '<a href="SelectProduct.php?StockID=' . $_POST['StockID'] . '">' . $_POST['StockID'] . '</a> '. _('has been added to the database') .
 							'<br />' . _('We also attempted to setup item purchase data and pricing.'));
 
                             if ($NoPricingData==1)
@@ -530,7 +551,10 @@ if (isset($_POST['submit'])) {
 						unset($_POST['LongDescription']);
 						unset($_POST['EOQ']);
                         // Leave Category ID set for ease of batch entry
-                        //unset($_POST['CategoryID']);
+// KL RICARD: Next Line Commented on original version. Uncommented by Ricard
+						unset($_POST['CategoryID']);
+						unset($_POST['lastcategoryupdate']);
+
 						unset($_POST['Units']);
 						unset($_POST['MBFlag']);
 						unset($_POST['Discontinued']);
@@ -540,6 +564,12 @@ if (isset($_POST['submit'])) {
 						unset($_POST['Volume']);
 						unset($_POST['GrossWeight']);
 						unset($_POST['NetWeight']);
+// KL RICARD Added lines for new fields
+						unset($_POST['length']);
+						unset($_POST['Width']);
+						unset($_POST['Height']);
+						unset($_POST['UnitsDimension']);
+// KL RICARD END Added lines for new fields
 						unset($_POST['BarCode']);
 						unset($_POST['ReorderLevel']);
 						unset($_POST['DiscountCategory']);
@@ -548,7 +578,7 @@ if (isset($_POST['submit'])) {
 						unset($_POST['Pansize']);
 						unset($_POST['StockID']);
 						//unset($_POST['OldStockID']);
-						foreach ($ItemDescriptionLanguages as $DescriptionLanguage) {
+						foreach ($ItemDescriptionLanguagesArray as $DescriptionLanguage) {
 						unset($_POST['Description_' . str_replace('.','_',$DescriptionLanguage)]);
 						 $_POST['New']   = 1; //do not show input form again
 						}
@@ -591,12 +621,13 @@ if ($_POST['StockID'] == '' || ($_POST['StockID'] == $_POST['OldStockID']) || is
 
 }
 if ( (!isset($_POST['UpdateCategories']) AND ($InputError!=1))  OR $_POST['New']== 1 ) { // Must be modifying an existing item and no changes made yet
-
+// Added the lastcategoryupdate field
     $selectedStockID = $_POST['OldStockID'];
 	$sql = "SELECT stockid,
 					description,
 					longdescription,
 					categoryid,
+					lastcategoryupdate,
 					units,
 					mbflag,
 					discontinued,
@@ -624,6 +655,9 @@ if ( (!isset($_POST['UpdateCategories']) AND ($InputError!=1))  OR $_POST['New']
 	$_POST['Description'] = $myrow['description'];
 	$_POST['EOQ']  = $myrow['eoq'];
 	$_POST['CategoryID']  = $myrow['categoryid'];
+// Added the lastcategoryupdate field
+	$_POST['lastcategoryupdate']  = $myrow['lastcategoryupdate'];
+
 	$_POST['Units']  = $myrow['units'];
 	$_POST['MBFlag']  = $myrow['mbflag'];
 	$_POST['Discontinued']  = $myrow['discontinued'];
@@ -633,6 +667,10 @@ if ( (!isset($_POST['UpdateCategories']) AND ($InputError!=1))  OR $_POST['New']
 	$_POST['Volume']  = $myrow['volume'];
 	$_POST['GrossWeight']  = $myrow['grossweight'];
 	$_POST['NetWeight']  = $myrow['netweight'];
+	$_POST['length']  = $myrow['length'];
+	$_POST['Width']  = $myrow['width'];
+	$_POST['Height']  = $myrow['height'];
+	$_POST['UnitsDimension']  = $myrow['unitsdimension'];
 	$_POST['BarCode']  = $myrow['barcode'];
 	$_POST['DiscountCategory']  = $myrow['discountcategory'];
 	$_POST['TaxCat'] = $myrow['taxcatid'];
@@ -642,7 +680,7 @@ if ( (!isset($_POST['UpdateCategories']) AND ($InputError!=1))  OR $_POST['New']
 	$_POST['ShrinkFactor'] = $myrow['shrinkfactor'];
 
 	$sql = "SELECT descriptiontranslation, language_id FROM stockdescriptiontranslations WHERE stockid='" . $selectedStockID . "' AND (";
-	foreach ($ItemDescriptionLanguages as $DescriptionLanguage) {
+	foreach ($ItemDescriptionLanguagesArray as $DescriptionLanguage) {
 		$sql .= "language_id='" . $DescriptionLanguage ."' OR ";
 	}
 	$sql = mb_substr($sql,0,mb_strlen($sql)-3) . ')';
@@ -664,7 +702,7 @@ if ( (!isset($_POST['UpdateCategories']) AND ($InputError!=1))  OR $_POST['New']
             <td><input ' . (in_array('Description',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="Description" size="52" maxlength="50" value="' . $Description . '" /></td>
         </tr>';
 
-    foreach ($ItemDescriptionLanguages as $DescriptionLanguage) {
+    foreach ($ItemDescriptionLanguagesArray as $DescriptionLanguage) {
         if ($DescriptionLanguage!=''){
             //unfortunately cannot have points in POST variables so have to mess with the language id
             $PostVariableName = 'Description_' . str_replace('.','_',$DescriptionLanguage);
@@ -757,6 +795,12 @@ if ( (!isset($_POST['UpdateCategories']) AND ($InputError!=1))  OR $_POST['New']
     if (!isset($_POST['CategoryID'])) {
         $_POST['CategoryID']=$Category;
     }
+	// KL RICARD
+
+	if (!isset($_POST['lastcategoryupdate']) OR $_POST['lastcategoryupdate']==''){
+		$_POST['lastcategoryupdate']='0000-00-00';
+	}
+	// END KL RICARD
 
     echo '</select><a target="_blank" href="'. $RootPath . '/StockCategories.php">' . _('Add or Modify Stock Categories') . '</a></td>
         </tr>';
@@ -774,6 +818,20 @@ if ( (!isset($_POST['UpdateCategories']) AND ($InputError!=1))  OR $_POST['New']
     if (!isset($_POST['NetWeight']) OR $_POST['NetWeight']==''){
         $_POST['NetWeight']=0;
     }
+	// KL RICARD
+	if (!isset($_POST['length']) OR $_POST['length']==''){
+		$_POST['length']=0;
+	}
+	if (!isset($_POST['Width']) OR $_POST['Width']==''){
+		$_POST['Width']=0;
+	}
+	if (!isset($_POST['Height']) OR $_POST['Height']==''){
+		$_POST['Height']=0;
+	}
+	if (!isset($_POST['UnitsDimension']) OR $_POST['UnitsDimension']==''){
+		$_POST['UnitsDimension']='mm';
+	}
+	// KL RICARD END
     if (!isset($_POST['Controlled']) OR $_POST['Controlled']==''){
         $_POST['Controlled']=0;
     }
@@ -798,6 +856,10 @@ if ( (!isset($_POST['UpdateCategories']) AND ($InputError!=1))  OR $_POST['New']
 
 
     echo '<tr>
+            <td>' . _('Date last category') . ':</td>
+            <td><input ' . (in_array('lastcategoryupdate',$Errors) ?  'class="inputerror"' : '' ) .'   type="text" class="number" name="lastcategoryupdate" size="12" maxlength="10" value="' . $_POST['lastcategoryupdate'] . '" /></td></tr>';
+
+	echo '<tr>
             <td>' . _('Economic Order Quantity') . ':</td>
             <td><input ' . (in_array('EOQ',$Errors) ?  'class="inputerror"' : '' ) .'   type="text" class="number" name="EOQ" size="12" maxlength="10" value="' . locale_number_format($_POST['EOQ'],'Variable') . '" /></td></tr>';
 
@@ -814,7 +876,37 @@ if ( (!isset($_POST['UpdateCategories']) AND ($InputError!=1))  OR $_POST['New']
             <td>' . _('Net Weight (KGs)') . ':</td><td><input ' . (in_array('NetWeight',$Errors) ?  'class="inputerror"' : '' ) .'   type="text" class="number" name="NetWeight" size="12" maxlength="10" value="' . locale_number_format($_POST['NetWeight'],'Variable') . '" /></td>
         </tr>';
 
-        echo '<tr>
+	// KL RICARD DIMENSION FIELDS	
+	echo '<tr>
+			<td>' . _('Units of Dimension') . ':</td>
+			<td><select ' . (in_array('Description',$Errors) ?  'class="selecterror"' : '' ) .'  name="UnitsDimension">';
+
+	$sql = "SELECT unitname FROM unitsofdimension ORDER by unitname";
+	$UODResult = DB_query($sql,$db);
+
+	if (!isset($_POST['UnitsDimension'])) {
+		$UODrow['unitname']=_('mm');
+	}
+	while( $UODrow = DB_fetch_array($UODResult) ) {
+		 if (isset($_POST['UnitsDimension']) AND $_POST['UnitsDimension']==$UODrow['unitname']){
+			echo '<option selected="selected" value="' . $UODrow['unitname'] . '">' . $UODrow['unitname'] . '</option>';
+		 } else {
+			echo '<option value="' . $UODrow['unitname'] . '">' . $UODrow['unitname']  . '</option>';
+		 }
+	}
+		
+	echo '<tr>
+			<td>' . _('length') . ':</td><td><input ' . (in_array('length',$Errors) ?  'class="inputerror"' : '' ) .'   type="text" class="number" name="length" size="12" maxlength="11" value="' . locale_number_format($_POST['length'],0) . '" />' . ' '. $_POST['UnitsDimension'] . '</td>
+		</tr>';
+	echo '<tr>
+			<td>' . _('Width') . ':</td><td><input ' . (in_array('Width',$Errors) ?  'class="inputerror"' : '' ) .'   type="text" class="number" name="Width" size="12" maxlength="11" value="' . locale_number_format($_POST['Width'],0) . '" />' . ' '. $_POST['UnitsDimension'] . '</td>
+		</tr>';
+	echo '<tr>
+			<td>' . _('Height') . ':</td><td><input ' . (in_array('Height',$Errors) ?  'class="inputerror"' : '' ) .'   type="text" class="number" name="Height" size="12" maxlength="11" value="' . locale_number_format($_POST['Height'],0) . '" />' . ' '. $_POST['UnitsDimension'] . '</td>
+		</tr>';
+
+	// KL RICARD DIMENSION FIELDS	END
+    echo '<tr>
             <td>' . _('Units of Measure') . ':</td>
             <td><select ' . (in_array('Description',$Errors) ?  'class="selecterror"' : '' ) .'  name="Units">';
 
@@ -1005,6 +1097,10 @@ if ( (!isset($_POST['UpdateCategories']) AND ($InputError!=1))  OR $_POST['New']
 
     if (!isset($_POST['CategoryID'])) {
         $_POST['CategoryID'] = '';
+    }
+
+    if (!isset($_POST['lastcategoryupdate'])) {
+        $_POST['lastcategoryupdate'] = '';
     }
 
     $sql = "SELECT stkcatpropid,

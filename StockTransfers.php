@@ -1,11 +1,14 @@
 <?php
 
-/* $Id: StockTransfers.php 6542 2014-01-16 06:12:51Z exsonqu $*/
+/* $Id: StockTransfers.php 6592 2014-03-02 08:41:40Z daintree $*/
 
 include('includes/DefineSerialItems.php');
 include('includes/DefineStockTransfers.php');
 
 include('includes/session.inc');
+
+include('includes/KLEmails.php');
+
 $Title = _('Stock Transfers');
 /* webERP manual links before header.inc */
 $ViewTopic= "Inventory";
@@ -444,6 +447,12 @@ if ( isset($_POST['EnterTransfer']) ){
 		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The location stock record could not be updated because');
 		$DbgMsg = _('The following SQL to update the location stock record was used');
 		$Result = DB_query($SQL,$db,$ErrMsg, $DbgMsg, true);
+
+		/* KL RICARD Send emails to team if transfer from / to special location */
+		if ($_SESSION['Transfer']->StockLocationTo == 'SERDE'){
+			KLSendEmail("ItemTransferredToSpecialLocation", "Silent", $_SESSION['Transfer']->TransferItem[0]->StockID, $_SESSION['Transfer']->TransferItem[0]->Quantity, $_SESSION['Transfer']->StockLocationFrom, $_SESSION['Transfer']->StockLocationTo);
+		}
+		/* KL RICARD End modification */
 
 		$Result = DB_Txn_Commit($db);
 

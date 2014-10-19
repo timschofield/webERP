@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: Z_ChangeStockCode.php 6067 2013-07-10 02:04:22Z tehonu $*/
+/* $Id: Z_ChangeStockCode.php 5982 2013-05-23 04:22:02Z tehonu $*/
 
 include ('includes/session.inc');
 $Title = _('UTILITY PAGE Change A Stock Code');
@@ -42,6 +42,7 @@ if (isset($_POST['ProcessStockChange'])){
 
 	if ($InputError ==0){ // no input errors
 		$result = DB_Txn_Begin($db);
+/* RICARD KL: Added lastcategoryupdate and kl*** fields, and 4 dimension fields */	
 		echo '<br />' . _('Adding the new stock master record');
 		$sql = "INSERT INTO stockmaster (stockid,
 										categoryid,
@@ -68,7 +69,15 @@ if (isset($_POST['ProcessStockChange'])){
 										pansize,
 										netweight,
 										perishable,
-										nextserialno)
+										nextserialno,
+										lastcategoryupdate,
+										length,
+										width,
+										height,
+										unitsdimension,
+										klchangingprice,
+										klmovingdiscount,
+										klmovingoutlet)
 				SELECT '" . $_POST['NewStockID'] . "',
 					categoryid,
 					description,
@@ -94,7 +103,15 @@ if (isset($_POST['ProcessStockChange'])){
 					pansize,
 					netweight,
 					perishable,
-					nextserialno
+					nextserialno,
+					lastcategoryupdate,
+					length,
+					width,
+					height,
+					unitsdimension,
+					klchangingprice,
+					klmovingdiscount,
+					klmovingoutlet
 				FROM stockmaster
 				WHERE stockid='" . $_POST['OldStockID'] . "'";
 
@@ -164,6 +181,23 @@ if (isset($_POST['ProcessStockChange'])){
 		ChangeFieldInTable("offers", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
 		ChangeFieldInTable("tenderitems", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
 
+		/* KL TABLES */
+		ChangeFieldInTable("kladjustrl", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
+		ChangeFieldInTable("klchangeprice", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
+		ChangeFieldInTable("klfreeexchanges", "itemfrom", $_POST['OldStockID'], $_POST['NewStockID'], $db);
+		ChangeFieldInTable("klfreeexchanges", "itemto", $_POST['OldStockID'], $_POST['NewStockID'], $db);
+		ChangeFieldInTable("klmovetodiscount", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
+		ChangeFieldInTable("klmovetooutlet", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
+		ChangeFieldInTable("relateditems", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
+		ChangeFieldInTable("relateditems", "related", $_POST['OldStockID'], $_POST['NewStockID'], $db);
+
+		include ('includes/OpenCartConnectDB.php');
+		ChangeFieldInOpenCartTable( $oc_tableprefix."product", "model", $_POST['OldStockID'], $_POST['NewStockID'], $db_oc);
+		ChangeFieldInOpenCartTable( $oc_tableprefix."product", "sku", $_POST['OldStockID'], $_POST['NewStockID'], $db_oc);
+		ChangeFieldInOpenCartTable( $oc_tableprefix."product", "mpn", $_POST['OldStockID'], $_POST['NewStockID'], $db_oc);
+		
+		/* END OF KL TABLES */
+		
 		DB_ReinstateForeignKeys($db);
 
 		$result = DB_Txn_Commit($db);
@@ -199,5 +233,17 @@ echo '<br />
 	</form>';
 
 include('includes/footer.inc');
+
+function ChangeFieldInOpenCartTable($TableName, $FieldName, $OldValue, $NewValue, $db_oc){
+	/* Used in Z_ scripts to change one field across the table.
+	*/
+	echo '<br />' . _('Changing OPENCART') . ' ' . $TableName . ' ' . _('records');
+	$sql = "UPDATE " . $TableName . " SET " . $FieldName . " ='" . $NewValue . "' WHERE " . $FieldName . "='" . $OldValue . "'";
+	$DbgMsg = _('The SQL statement that failed was');
+	$ErrMsg = _('The SQL to update' . ' ' . $TableName . ' ' . _('records failed'));
+	$result = DB_query($sql,$db_oc,$ErrMsg,$DbgMsg,true);
+	echo ' ... ' . _('completed');
+}
+
 
 ?>

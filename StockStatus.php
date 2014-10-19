@@ -1,7 +1,7 @@
 <?php
 
-/* $Id: StockStatus.php 6338 2013-09-28 05:10:46Z daintree $*/
-
+/* $Id: StockStatus.php 6895 2014-09-19 20:25:01Z daintree $*/
+$PricesSecurity = 12;//don't show pricing info unless security token 12 available to user
 include('includes/session.inc');
 
 $Title = _('Stock Status');
@@ -68,9 +68,11 @@ $sql = "SELECT locstock.loccode,
 				locstock.quantity,
 				locstock.reorderlevel,
 				locstock.bin,
-				locations.managed
+				locations.managed,
+				canupd
 		FROM locstock INNER JOIN locations
 		ON locstock.loccode=locations.loccode
+		INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 		WHERE locstock.stockid = '" . $StockID . "'
 		ORDER BY locations.locationname";
 
@@ -174,12 +176,9 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 
 	if ($Its_A_KitSet_Assembly_Or_Dummy == False){
 
-		$sql="SELECT SUM(purchorderdetails.quantityord*(CASE WHEN purchdata.conversionfactor IS NULL THEN 1 ELSE purchdata.conversionfactor END) -
-							purchorderdetails.quantityrecd*(CASE WHEN purchdata.conversionfactor IS NULL THEN 1 ELSE purchdata.conversionfactor END))
+		$sql="SELECT SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd)
 			FROM purchorders LEFT JOIN purchorderdetails
 			ON purchorders.orderno=purchorderdetails.orderno
-			LEFT JOIN purchdata ON purchorders.supplierno=purchdata.supplierno
-				AND purchorderdetails.itemcode=purchdata.stockid
 			WHERE purchorderdetails.itemcode='" . $StockID . "'
 			AND purchorders.intostocklocation='" . $myrow['loccode'] . "'
 			AND (purchorders.status<>'Cancelled'
@@ -195,7 +194,6 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 		} else {
 			$QOO = 0;
 		}
-
 		//Also the on work order quantities
 		$sql = "SELECT SUM(woitems.qtyreqd-woitems.qtyrecd) AS qtywo
 				FROM woitems INNER JOIN workorders
@@ -240,9 +238,13 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 		} else {
 			$Available = $myrow['quantity'] - $DemandQty;
 		}
-
-		echo '<td>' . $myrow['locationname'] . '</td>
-			  <td><input type="text" name="BinLocation' . $myrow['loccode'] . '" value="' . $myrow['bin'] . '" maxlength="10" size="11" onchange="ReloadForm(UpdateBinLocations)"/></td>';
+		if ($myrow['canupd']==1) {
+			echo '<td>' . $myrow['locationname'] . '</td>
+				<td><input type="text" name="BinLocation' . $myrow['loccode'] . '" value="' . $myrow['bin'] . '" maxlength="10" size="11" onchange="ReloadForm(UpdateBinLocations)"/></td>';
+		} else {
+			echo '<td>' . $myrow['locationname'] . '</td>
+				<td> ' . $myrow['bin'] . '</td>';
+		}
 
 		printf('<td class="number">%s</td>
 				<td class="number">%s</td>
