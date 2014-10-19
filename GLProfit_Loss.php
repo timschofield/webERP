@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: GLProfit_Loss.php 6555 2014-01-31 22:37:33Z daintree $*/
+/* $Id: GLProfit_Loss.php 6592 2014-03-02 08:41:40Z daintree $*/
 
 include ('includes/session.inc');
 $Title = _('Profit and Loss');

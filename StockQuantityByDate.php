@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: StockQuantityByDate.php 5785 2012-12-29 04:47:42Z daintree $ */
+/* $Id: StockQuantityByDate.php 6805 2014-08-08 16:12:36Z agaluski $ */
 
 include('includes/session.inc');
 $Title = _('Stock On Hand By Date');
@@ -37,7 +37,8 @@ while ($myrow=DB_fetch_array($resultStkLocs)){
 }
 echo '</select></td>';
 
-$sql = "SELECT loccode, locationname FROM locations";
+$sql = "SELECT locations.loccode, locationname FROM locations
+			INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
 $resultStkLocs = DB_query($sql, $db);
 
 echo '<td>' . _('For Stock Location') . ':</td>

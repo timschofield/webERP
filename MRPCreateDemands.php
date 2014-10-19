@@ -1,5 +1,5 @@
 <?php
-/* $Id: MRPCreateDemands.php 6310 2013-08-29 10:42:50Z daintree $*/
+/* $Id: MRPCreateDemands.php 6863 2014-09-05 01:17:11Z tehonu $*/
 // MRPCreateDemands.php - Create mrpdemands based on sales order history
 
 include('includes/session.inc');
@@ -61,12 +61,14 @@ if (isset($_POST['submit'])) {
 				  SUM(salesorderdetails.quantity * salesorderdetails.unitprice ) AS totextqty
 			FROM salesorders INNER JOIN salesorderdetails
 				 ON salesorders.orderno = salesorderdetails.orderno
+			INNER JOIN locationusers ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
 			INNER JOIN stockmaster
 				 ON salesorderdetails.stkcode = stockmaster.stockid
 			WHERE orddate >='" . FormatDateForSQL($_POST['FromDate']) ."'
 			AND orddate <='" . FormatDateForSQL($_POST['ToDate']) .  "'
 			" . $WhereLocation . "
 			" . $WhereCategory . "
+			AND stockmaster.discontinued = 0
 			AND salesorders.quotation=0
 			GROUP BY salesorderdetails.stkcode";
 	//echo "<br />$sql<br />";
@@ -224,9 +226,9 @@ echo '<tr><td>' . _('Inventory Location') . ':</td>
 		<td><select name="Location">';
 echo '<option selected="selected" value="All">' . _('All Locations') . '</option>';
 
-$result= DB_query("SELECT loccode,
+$result= DB_query("SELECT locations.loccode,
 						   locationname
-					FROM locations",$db);
+					FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1",$db);
 while ($myrow=DB_fetch_array($result)){
 	echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 }

@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: Customers.php 6548 2014-01-24 09:27:46Z daintree $ */
+/* $Id: Customers.php 6600 2014-03-05 02:22:10Z icedlava $ */
 
 include('includes/session.inc');
 include('includes/CurrenciesArray.php'); // To get the currency name from the currency code.
@@ -328,7 +328,7 @@ if (isset($_POST['submit'])) {
 
 					$result = DB_query($SQL,$db);
 					$myrow = DB_fetch_row($result);
-	
+
 					if ($myrow[0]>0) {
 						prnMsg(_('Cannot delete this customer because contracts have been created that refer to it') . '. ' . _('Purge old contracts first'),'warn');
 						echo '<br />' . _('There are') . ' ' . $myrow[0] . ' '._('contracts referring to this customer');
@@ -421,7 +421,7 @@ if (!isset($DebtorNo)) {
 	$result=DB_query($sql, $db);
 	$myrow=DB_fetch_row($result);
 	if ($myrow[0]==0) {
-		prnMsg( _('In order to create a new customer you must first set up at least one sales type/price list') . '<br />' . 
+		prnMsg( _('In order to create a new customer you must first set up at least one sales type/price list') . '<br />' .
 			_('Click').' ' . '<a target="_blank" href="' . $RootPath . '/SalesTypes.php">' . _('here').' ' . '</a>' . _('to set up your price lists'),'warning') . '<br />';
 		$SetupErrors += 1;
 	}
@@ -430,7 +430,7 @@ if (!isset($DebtorNo)) {
 	$result=DB_query($sql, $db);
 	$myrow=DB_fetch_row($result);
 	if ($myrow[0]==0) {
-		prnMsg( _('In order to create a new customer you must first set up at least one customer type') . '<br />' . 
+		prnMsg( _('In order to create a new customer you must first set up at least one customer type') . '<br />' .
 			_('Click').' ' . '<a target="_blank" href="' . $RootPath . '/CustomerTypes.php">' . _('here').' ' . '</a>' . _('to set up your customer types'),'warning');
 		$SetupErrors += 1;
 	}
@@ -791,20 +791,10 @@ if (!isset($DebtorNo)) {
 			<tr>
 				<td>' . _('Address Line 5 (Postal Code)') . ':</td>
 				<td>' . $_POST['Address5'] . '</td>
-			</tr>';
-		echo '<tr>
+			</tr>
+			<tr>
 				<td>' . _('Country') . ':</td>
-				<td><select name="Address6">';
-		foreach ($CountriesArray as $CountryEntry => $CountryName){
-			if (isset($_POST['Address6']) AND (strtoupper($_POST['Address6']) == strtoupper($CountryName))){
-				echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName  . '</option>';
-			}elseif (!isset($_POST['Address6']) AND $CountryName == "") {
-				echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName  . '</option>';
-			} else {
-				echo '<option value="' . $CountryName . '">' . $CountryName  . '</option>';
-			}
-		}
-		echo '</select></td>
+				<td>' . $_POST['Address6'] . '</td>
 			</tr>';
 	} else {
 		echo '<tr>
@@ -1021,23 +1011,35 @@ if (!isset($DebtorNo)) {
 		echo '</select></td>
 			</tr>';
 	}
-	echo '<tr>
-			<td>' . _('Language') . ':</td>
-			<td><select name="LanguageID" required="required">';
 
-	if (!isset($_POST['LanguageID']) OR $_POST['LanguageID']==''){
-		$_POST['LanguageID']=$_SESSION['Language'];
-	}
+    if (!isset($_POST['LanguageID']) OR $_POST['LanguageID']==''){
+        $_POST['LanguageID']=$_SESSION['Language'];
+    }
 
-	foreach ($LanguagesArray as $LanguageCode => $LanguageName){
-		if ($_POST['LanguageID'] == $LanguageCode){
-			echo '<option selected="selected" value="' . $LanguageCode . '">' . $LanguageName['LanguageName']  . '</option>';
-		} else {
-			echo '<option value="' . $LanguageCode . '">' . $LanguageName['LanguageName']  . '</option>';
-		}
-	}
-	echo '</select></td>
-			</tr>';
+	if (isset($_GET['Modify'])) {
+        echo '<tr>
+                <td>' . _('Language') . ':</td>';
+        foreach ($LanguagesArray as $LanguageCode => $LanguageName){
+            if ($_POST['LanguageID'] == $LanguageCode){
+                echo '<td>' . $LanguageName['LanguageName'];
+            }
+        }
+        echo '</td>
+        </tr>';
+	} else {
+        echo '<tr>
+                <td>' . _('Language') . ':</td>
+                <td><select name="LanguageID" required="required">';
+        foreach ($LanguagesArray as $LanguageCode => $LanguageName){
+            if ($_POST['LanguageID'] == $LanguageCode){
+                echo '<option selected="selected" value="' . $LanguageCode . '">' . $LanguageName['LanguageName']  . '</option>';
+            } else {
+                echo '<option value="' . $LanguageCode . '">' . $LanguageName['LanguageName']  . '</option>';
+            }
+        }
+        echo '</select></td>
+        </tr>';
+    }
 	echo '<tr>
 			<td>' . _('Require Customer PO Line on SO') . ':</td>';
 	if (isset($_GET['Modify'])) {

@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: GLAccountInquiry.php 6499 2013-12-14 13:50:20Z rchacon $*/
+/* $Id: GLAccountInquiry.php 6592 2014-03-02 08:41:40Z daintree $*/
 
 include ('includes/session.inc');
 $Title = _('General Ledger Account Inquiry');

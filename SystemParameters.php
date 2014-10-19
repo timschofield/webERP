@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: SystemParameters.php 6498 2013-12-14 13:39:51Z rchacon $*/
+/* $Id: SystemParameters.php 6743 2014-06-02 03:40:49Z daintree $*/
 
 include('includes/session.inc');
 
@@ -108,9 +108,6 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['DefaultDateFormat'] != $_POST['X_DefaultDateFormat'] ) {
 			$sql[] = "UPDATE config SET confvalue = '".$_POST['X_DefaultDateFormat']."' WHERE confname = 'DefaultDateFormat'";
 		}
-		if ($_SESSION['DefaultTheme'] != $_POST['X_DefaultTheme'] ) {
-			$sql[] = "UPDATE config SET confvalue = '".$_POST['X_DefaultTheme']."' WHERE confname = 'DefaultTheme'";
-		}
 		if ($_SESSION['PastDueDays1'] != $_POST['X_PastDueDays1'] ) {
 			$sql[] = "UPDATE config SET confvalue = '".$_POST['X_PastDueDays1']."' WHERE confname = 'PastDueDays1'";
 		}
@@ -215,6 +212,9 @@ if (isset($_POST['submit'])) {
 		}
 		if ($_SESSION['AutoDebtorNo'] != $_POST['X_AutoDebtorNo'] ) {
 			$sql[] = "UPDATE config SET confvalue = '". ($_POST['X_AutoDebtorNo'])."' WHERE confname = 'AutoDebtorNo'";
+		}
+		if ($_SESSION['AutoSupplierNo'] != $_POST['X_AutoSupplierNo'] ) {
+			$sql[] = "UPDATE config SET confvalue = '". ($_POST['X_AutoSupplierNo'])."' WHERE confname = 'AutoSupplierNo'";
 		}
 		if ($_SESSION['HTTPS_Only'] != $_POST['X_HTTPS_Only'] ) {
 			$sql[] = "UPDATE config SET confvalue = '". ($_POST['X_HTTPS_Only'])."' WHERE confname = 'HTTPS_Only'";
@@ -376,22 +376,6 @@ echo '<tr style="outline: 1px solid"><td>' . _('Default Date Format') . ':</td>
 	<option '.(($_SESSION['DefaultDateFormat']=='Y-m-d')?'selected="selected" ':'').'value="Y-m-d">' . _('Y-m-d') . '</option>
 	</select></td>
 	<td>' . _('The default date format for entry of dates and display.') . '</td></tr>';
-
-// DefaultTheme
-echo '<tr style="outline: 1px solid"><td>' . _('New Users Default Theme') . ':</td>
-	 <td><select name="X_DefaultTheme">';
-$ThemeDirectory = dir('css/');
-while (false != ($ThemeName = $ThemeDirectory->read())){
-	if (is_dir("css/$ThemeName") AND $ThemeName != '.' AND $ThemeName != '..' AND $ThemeName != '.svn'){
-		if ($_SESSION['DefaultTheme'] == $ThemeName) {
-			echo '<option selected="selected" value="' . $ThemeName . '">' . $ThemeName . '</option>';
-		} else {
-			echo '<option value="' . $ThemeName . '">' . $ThemeName . '</option>';
-		}
-	}
-}
-echo '</select></td>
-	<td>' . _('The default theme is used for new users who have not yet defined the display colour scheme theme of their choice') . '</td></tr>';
 
 echo '<tr><th colspan="3">' . _('Accounts Receivable/Payable Settings') . '</th></tr>';
 
@@ -626,6 +610,21 @@ if ($_SESSION['AutoDebtorNo']==0) {
 echo '</select></td>
 	<td>' . _('Set to Automatic - customer codes are automatically created - as a sequential number')  . '</td></tr>';
 
+echo '<tr style="outline: 1px solid"><td>' . _('Create Supplier Codes Automatically') . ':</td>
+	<td><select name="X_AutoSupplierNo">';
+
+if ($_SESSION['AutoSupplierNo']==0) {
+	echo '<option selected="selected" value="0">' . _('Manual Entry') . '</option>';
+	echo '<option value="1">' . _('Automatic') . '</option>';
+} else {
+	echo '<option selected="selected" value="1">' . _('Automatic') . '</option>';
+	echo '<option value="0">' . _('Manual Entry') . '</option>';
+}
+echo '</select></td>
+	<td>' . _('Set to Automatic - Supplier codes are automatically created - as a sequential number')  . '</td></tr>';
+
+	
+	
 //==HJ== drop down list for tax category
 $sql = "SELECT taxcatid, taxcatname FROM taxcategories ORDER BY taxcatname";
 $ErrMsg = _('Could not load tax categories table');
@@ -906,7 +905,7 @@ $WikiApplications = array( _('Disabled'),
 echo '<tr style="outline: 1px solid"><td>' . _('Wiki application') . ':</td>
 	<td><select name="X_WikiApp">';
 for ($i=0; $i < sizeof($WikiApplications); $i++ ) {
-	echo '<option '.($_SESSION['WikiApp'] == $WikiApplications[$i] ? 'selected="selected" ' : '').'value="'.$WikiApplications[$i].'">' . $WikiApplications[$i]  . '</option>';
+	echo '<option '.($_SESSION['WikiApp'] == $i ? 'selected="selected" ' : '').'value="'. $i .'">' . $WikiApplications[$i]  . '</option>';
 }
 echo '</select></td>
 	<td>' . _('This feature makes webERP show links to a free form company knowledge base using a wiki. This allows sharing of important company information - about customers, suppliers and products and the set up of work flow menus and/or company procedures documentation')  . '</td></tr>';
@@ -1070,9 +1069,9 @@ echo '<tr style="outline: 1px solid"><td>' . _('Path to log files') . ':</td>
 //DefineControlledOnWOEntry
 echo '<tr style="outline: 1px solid"><td>' . _('Controlled Items Defined At Work Order Entry') . ':</td>
 	<td><select name="X_DefineControlledOnWOEntry">
-	<option '.($_SESSION['DefineControlledOnWOEntry']?'selected="selected" ':'').'value="1">' . _('Yes') . '</option>
-	<option '.(!$_SESSION['DefineControlledOnWOEntry']?'selected="selected" ':'').'value="0">' . _('No') . '</option>
-	</select></td>
+		<option '.($_SESSION['DefineControlledOnWOEntry']?'selected="selected" ':'').'value="1">' . _('Yes') . '</option>
+		<option '.(!$_SESSION['DefineControlledOnWOEntry']?'selected="selected" ':'').'value="0">' . _('No') . '</option>
+		</select></td>
 	<td>' . _('When set to yes, controlled items are defined at the time of the work order creation. Otherwise controlled items (serial numbers and batch/roll/lot references) are entered at the time the finished items are received against the work order') . '</td></tr>';
 
 //AutoCreateWOs

@@ -1,14 +1,13 @@
 <?php
-
-/* $Id: AccountGroups.php 6338 2013-09-28 05:10:46Z daintree $*/
+/* $Id: AccountGroups.php 6899 2014-09-27 14:45:09Z rchacon $*/
 
 include('includes/session.inc');
-
 $Title = _('Account Groups');
-$ViewTopic= 'GeneralLedger';
-$BookMark = 'AccountGroups';
-
+/* Manual links before header.inc */
+$ViewTopic= 'GeneralLedger';// Filename in ManualContents.php's TOC.
+$BookMark = 'AccountGroups';// Anchor's id in the manual's html document.*/
 include('includes/header.inc');
+
 include('includes/SQL_CommonFunctions.inc');
 
 
@@ -227,7 +226,7 @@ if (isset($_POST['submit'])) {
 		$GroupResult = DB_query($sql, $db,$ErrMsg,$DbgMsg);
 		while ($GroupRow = DB_fetch_array($GroupResult) ) {
 
-			if (isset($_POST['ParentGroupName']) AND $_POST['ParentGroupName']==$RroupRow['groupname']) {
+			if (isset($_POST['ParentGroupName']) AND $_POST['ParentGroupName']==$GroupRow['groupname']) {
 				echo '<option selected="selected" value="'.htmlentities($GroupRow['groupname'], ENT_QUOTES,'UTF-8').'">' .htmlentities($GroupRow['groupname'], ENT_QUOTES,'UTF-8'). '</option>';
 			} else {
 				echo '<option value="'.htmlentities($GroupRow['groupname'], ENT_QUOTES,'UTF-8').'">' .htmlentities($GroupRow['groupname'], ENT_QUOTES,'UTF-8') . '</option>';
@@ -283,7 +282,7 @@ or deletion of the records*/
 	$DbgMsg = _('The sql that was used to retrieve the account group information was ');
 	$ErrMsg = _('Could not get account groups because');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '<br /></p>';
+	echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" />' . ' ' . $Title . '</p><br />';
 
 	echo '<table class="selection">
 			<tr>
@@ -292,6 +291,7 @@ or deletion of the records*/
 				<th class="ascending">' . _('Sequence In TB') . '</th>
 				<th class="ascending">' . _('Profit and Loss') . '</th>
 				<th class="ascending">' . _('Parent Group') . '</th>
+				<th colspan="2">&nbsp;</th>
 			</tr>';
 
 	$k=0; //row colour counter
@@ -319,7 +319,7 @@ or deletion of the records*/
 
 		echo '<td>' . htmlspecialchars($myrow['groupname'], ENT_QUOTES,'UTF-8') . '</td>
 			<td>' . $myrow['sectionname'] . '</td>
-			<td>' . $myrow['sequenceintb'] . '</td>
+			<td class="number">' . $myrow['sequenceintb'] . '</td>
 			<td>' . $PandLText . '</td>
 			<td>' . $myrow['parentgroupname'] . '</td>';
 		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?SelectedAccountGroup=' . urlencode($myrow['groupname']), ENT_QUOTES,'UTF-8') . '">' . _('Edit') . '</a></td>';

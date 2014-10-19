@@ -1,5 +1,5 @@
 <?php
-/* $Id: SelectRecurringSalesOrder.php 5785 2012-12-29 04:47:42Z daintree $*/
+/* $Id: SelectRecurringSalesOrder.php 6809 2014-08-12 19:16:00Z agaluski $*/
 
 include('includes/session.inc');
 $Title = _('Search Recurring Sales Orders');
@@ -20,7 +20,7 @@ echo '<table class="selection">
 			<td>' . _('Select recurring order templates for delivery from:') . ' </td>
 			<td>' . '<select name="StockLocation">';
 
-$sql = "SELECT loccode, locationname FROM locations";
+$sql = "SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
 
 $resultStkLocs = DB_query($sql,$db);
 

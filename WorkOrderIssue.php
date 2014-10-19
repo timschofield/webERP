@@ -1,5 +1,5 @@
 <?php
-/* $Id: WorkOrderIssue.php 6310 2013-08-29 10:42:50Z daintree $*/
+/* $Id: WorkOrderIssue.php 6905 2014-10-03 21:28:56Z daintree $*/
 
 include('includes/session.inc');
 $Title = _('Issue Materials To Work Order');
@@ -28,7 +28,7 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 
 if (!isset($_POST['WO']) OR !isset($_POST['StockID'])) {
 	/* This page can only be called with a work order number for issuing stock to*/
-	echo '<div class="centre"><a href="' . $RootPath . '/SelectWorkOrder.php">' . 
+	echo '<div class="centre"><a href="' . $RootPath . '/SelectWorkOrder.php">' .
 		_('Select a work order to issue materials to') . '</a></div>';
 	prnMsg(_('This page can only be opened if a work order has been selected. Please select a work order to issue materials to first'),'info');
 	include ('includes/footer.inc');
@@ -89,6 +89,26 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 					$InputError=1;
 				} else {
 					$QuantityIssued += filter_number_format($_POST['Qty'.$i]);
+
+					if ($_SESSION['ProhibitNegativeStock']==1 and  $_POST['BatchRef'.$i] > "") {
+						$SQL = "SELECT quantity from stockserialitems WHERE (stockid= '" . $_POST['IssueItem'] . "')
+										AND (loccode = '" . $_POST['FromLocation'] . "')
+										AND (serialno = '" . $_POST['BatchRef'.$i] . "')";
+						$Result = DB_query($SQL,$db);
+						//$CheckLot = DB_fetch_array($Result);
+						if (DB_num_rows($Result)==0){
+							$InputError = true;
+							prnMsg(_('This issue cannot be processed because the system parameter is set to prohibit negative stock and this batch does not exist'),'error');
+						}
+						else {
+							$CheckLotRow = DB_fetch_row($Result);
+							if ($CheckLotRow[0]<$_POST['Qty'.$i]){
+								$InputError = true;
+								prnMsg(_('This issue cannot be processed because the system parameter is set to prohibit negative stock and this issue would result in this batch going into negative. Please correct the stock first before attempting another issue'),'error');
+							}
+						}
+					}
+
 				} //end if the qty field is numeric
 			} // end if the qty field is entered
 		}//end for the 15 fields available for batch/lot entry
@@ -111,6 +131,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 	if ($_SESSION['ProhibitNegativeStock']==1
 			AND ($IssueItemRow['mbflag']=='M' OR $IssueItemRow['mbflag']=='B')){
 											//don't need to check labour or dummy items
+
 		$SQL = "SELECT quantity FROM locstock
 				WHERE stockid ='" . $_POST['IssueItem'] . "'
 				AND loccode ='" . $_POST['FromLocation'] . "'";
@@ -120,7 +141,6 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 			$InputError = true;
 			prnMsg(_('This issue cannot be processed because the system parameter is set to prohibit negative stock and this issue would result in stock going into negative. Please correct the stock first before attempting another issue'),'error');
 		}
-
 	}
 
 	if ($InputError==false){
@@ -132,7 +152,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 		/*Now Get the next WO Issue transaction type 28 - function in SQL_CommonFunctions*/
 		$WOIssueNo = GetNextTransNo(28, $db);
 
-		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
+		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']), $db); //backdate
 		$SQLIssuedDate = FormatDateForSQL($_POST['IssuedDate']);
 		$StockGLCode = GetStockGLCode($_POST['IssueItem'],$db);
 
@@ -280,7 +300,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 									VALUES ('" . $StkMoveNo . "',
 											'" . $_POST['IssueItem'] . "',
 											'" . $_POST['BatchRef'.$i]  . "',
-											'" . filter_number_format($_POST['Qty'.$i])  . "')";
+											'" . filter_number_format($_POST['Qty'.$i])*-1  . "')";
 						$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock movement record could not be inserted because');
 						$DbgMsg = _('The following SQL to insert the serial stock movement records was used');
 						$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
@@ -463,8 +483,6 @@ if (isset($_POST['Search'])){
 		  }
 	}
 
-	$SQL = $SQL . " LIMIT " . $_SESSION['DisplayRecordsMax'];
-
 	$ErrMsg = _('There is a problem selecting the part records to display because');
 	$DbgMsg = _('The SQL used to get the part selection was');
 	$SearchResult = DB_query($SQL,$db,$ErrMsg, $DbgMsg);
@@ -546,6 +564,10 @@ if ($WORow['closed']==1){
 }
 DB_data_seek($WOResult,0);
 
+if (!isset($_POST['FromLocation'])){
+	$_POST['FromLocation']=$WORow['loccode'];
+}
+
 while($WORow = DB_fetch_array($WOResult)){
 
 	echo  '<tr>
@@ -563,13 +585,16 @@ echo '<tr>
 		<td>';
 
 if (!isset($_POST['IssueItem'])){
-	$LocResult = DB_query("SELECT loccode, locationname FROM locations",$db);
+	$LocResult = DB_query("SELECT locations.loccode,locationname
+							FROM locations
+							INNER JOIN locationusers
+								ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "'
+								AND locationusers.canupd=1
+							WHERE locations.usedforwo = 1",$db);
 
 	echo '<select name="FromLocation">';
 
-	if (!isset($_POST['FromLocation'])){
-		$_POST['FromLocation']=$WORow['loccode'];
-	}
+
 
 	while ($LocRow = DB_fetch_array($LocResult)){
 		if ($_POST['FromLocation'] ==$LocRow['loccode']){
@@ -622,7 +647,13 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 											stockmaster.decimalplaces,
 											autoissue",
 									$db);
+	$IssuedAlreadyResult = DB_query("SELECT stockid, SUM(-qty) as total FROM stockmoves
+										WHERE stockmoves.type=28
+										AND reference='" . $_POST['WO'] . "' GROUP BY stockid",$db);
+	while($myrow = DB_fetch_array($IssuedAlreadyResult)){
+		$IssuedMaterials[$myrow['stockid']] = $myrow['total'];
 
+	}
 	while ($RequirementsRow = DB_fetch_array($RequirmentsResult)){
 		if ($RequirementsRow['autoissue']==0){
 			echo '<tr>
@@ -633,17 +664,40 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 					<td class="notavailable">' . _('Auto Issue') . '</td>
 					<td class="notavailable">' .$RequirementsRow['stockid'] . ' - ' . $RequirementsRow['description']  . '</td>';
 		}
-		$IssuedAlreadyResult = DB_query("SELECT SUM(-qty) FROM stockmoves
-											WHERE stockmoves.type=28
-											AND stockid='" . $RequirementsRow['stockid'] . "'
-											AND reference='" . $_POST['WO'] . "'",
-										$db);
-		$IssuedAlreadyRow = DB_fetch_row($IssuedAlreadyResult);
+		if (isset($IssuedMaterials[$RequirementsRow['stockid']])){
+			$IssuedAlreadyRow = $IssuedMaterials[$RequirementsRow['stockid']];
+			unset($IssuedMaterials[$RequirementsRow['stockid']]);
+		} else {
+			$IssuedAlreadyRow = 0;
+		}
 
 		echo '<td class="number">' . locale_number_format($RequirementsRow['quantityrequired'],$RequirementsRow['decimalplaces']) . '</td>
-			<td class="number">' . locale_number_format($IssuedAlreadyRow[0],$RequirementsRow['decimalplaces']) . '</td>
+			<td class="number">' . locale_number_format($IssuedAlreadyRow,$RequirementsRow['decimalplaces']) . '</td>
 		</tr>';
 	}
+	/* now to deal with those addtional issues of items not in BOM */
+	if (count($IssuedMaterials)>0){
+		$IssuedStocks = implode("','",array_keys($IssuedMaterials));
+		$sql = "SELECT  stockid,
+				description,
+				decimalplaces
+			FROM stockmaster
+			WHERE stockid in ('" . $IssuedStocks . "')";
+		$ErrMsg = _('Failed to retrieve the item data');
+		$result = DB_query($sql,$db,$ErrMsg);
+		while($myrow = DB_fetch_array($result)){
+			echo '<tr>
+					<td><input type="submit" name="IssueItem" value="' . $myrow['stockid'] . '" /></td>
+					<td>' . $myrow['stockid'] . ' - ' . $myrow['description'] . '</td>
+					<td class="number">0</td>
+					<td class="number">' . locale_number_format($IssuedMaterials[$myrow['stockid']],$myrow['decimalplaces']) . '</td>
+				</tr>';
+
+		}
+
+}
+
+
 
 	echo '</table>
 		<br />';

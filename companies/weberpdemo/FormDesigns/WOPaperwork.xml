@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form name="Work Order Paperwork">
+	<PaperSize name="Paper size">Letter</PaperSize>
+	<LineHeight name="Line height">12</LineHeight>
+	<logo type="image" name="Logo" id="Logo">
+		<x>-5</x>
+		<y>75</y>
+		<width>0</width>
+		<height>35</height>
+	</logo>
+	<OrderNumber type="SimpleText" name="Order Number" id="OrderNumber">
+		<FontSize>15</FontSize>
+		<x>341</x>
+		<y>46</y>
+	</OrderNumber>
+	<PageNumber type="SimpleText" name="Page number" id="PageNumber">
+		<FontSize>10</FontSize>
+		<x>530</x>
+		<y>30</y>
+	</PageNumber>
+	<CompanyName type="SimpleText" name="Company name" id="CompanyName">
+		<FontSize>10</FontSize>
+		<x>40</x>
+		<y>92</y>
+	</CompanyName>
+	<CompanyAddress type="ElementArray" name="Company address">
+		<Line1 type="SimpleText" name="Line 1" id="CompanyAddress1">
+			<FontSize>10</FontSize>
+			<x>40</x>
+			<y>102</y>
+		</Line1>
+		<Line2 type="SimpleText" name="Line 2" id="CompanyAddress2">
+			<FontSize>10</FontSize>
+			<x>40</x>
+			<y>112</y>
+		</Line2>
+		<Line3 type="SimpleText" name="Line 3" id="CompanyAddress3">
+			<FontSize>10</FontSize>
+			<x>40</x>
+			<y>122</y>
+		</Line3>
+		<Line4 type="SimpleText" name="Line 4" id="CompanyAddress4">
+			<FontSize>10</FontSize>
+			<x>0</x>
+			<y>0</y>
+		</Line4>
+		<Line5 type="SimpleText" name="Line 5" id="CompanyAddress5">
+			<FontSize>10</FontSize>
+			<x>0</x>
+			<y>0</y>
+		</Line5>
+	</CompanyAddress>
+	<CompanyPhone type="SimpleText" name="Company phone number" id="CompanyPhone">
+		<FontSize>10</FontSize>
+		<x>40</x>
+		<y>132</y>
+	</CompanyPhone>
+	<CompanyFax type="SimpleText" name="Company fax number" id="CompanyFax">
+		<FontSize>10</FontSize>
+		<x>40</x>
+		<y>142</y>
+	</CompanyFax>
+	<CompanyEmail type="SimpleText" name="Company email address" id="CompanyEmail">
+		<FontSize>10</FontSize>
+		<x>40</x>
+		<y>152</y>
+	</CompanyEmail>
+	<FactoryAddress type="ElementArray" name="Factory address">
+		<Caption type="SimpleText" name="Caption" id="FactoryAddressCaption">
+			<FontSize>12</FontSize>
+			<x>300</x>
+			<y>92</y>
+		</Caption>
+		<Name type="SimpleText" name="Factory Name" id="Name">
+			<FontSize>12</FontSize>
+			<x>300</x>
+			<y>104</y>
+		</Name>
+		<Line1 type="SimpleText" name="Line 1" id="FactoryAddress1">
+			<FontSize>12</FontSize>
+			<x>300</x>
+			<y>116</y>
+		</Line1>
+		<Line2 type="SimpleText" name="Line 2" id="FactoryAddress2">
+			<FontSize>12</FontSize>
+			<x>300</x>
+			<y>128</y>
+		</Line2>
+		<Line3 type="SimpleText" name="Line 3" id="FactoryAddress3">
+			<FontSize>12</FontSize>
+			<x>300</x>
+			<y>140</y>
+		</Line3>
+		<Line4 type="SimpleText" name="Line 4" id="FactoryAddress4">
+			<FontSize>12</FontSize>
+			<x>0</x>
+			<y>0</y>
+		</Line4>
+		<Line5 type="SimpleText" name="Line 5" id="FactoryAddress5">
+			<FontSize>12</FontSize>
+			<x>300</x>
+			<y>152</y>
+		</Line5>
+		<WorkCenter type="SimpleText" name="WorkCenter" id="WorkCenter">
+			<FontSize>12</FontSize>
+			<x>300</x>
+			<y>152</y>
+		</WorkCenter>
+	</FactoryAddress>
+	<WOAddressBox type="CurvedRectangle" name="WO Header Box" id="WOAddressBox">
+		<x>40</x>
+		<y>87</y>
+		<width>540</width>
+		<height>80</height>
+		<radius>12</radius>
+	</WOAddressBox>
+	<WOHeaderBox type="CurvedRectangle" name="WO Header Box" id="WOHeaderBox">
+		<x>40</x>
+		<y>175</y>
+		<width>540</width>
+		<height>77</height>
+		<radius>12</radius>
+	</WOHeaderBox>
+	<ItemNumberLab type="SimpleText" name="Item Number Lab" id="ItemNumberLab">
+		<FontSize>12</FontSize>
+		<x>41</x>
+		<y>176</y>
+	</ItemNumberLab>
+	<ItemDescLab type="SimpleText" name="Item Description Lab" id="ItemDescLab">
+		<FontSize>12</FontSize>
+		<x>41</x>
+		<y>188</y>
+	</ItemDescLab>
+	<RequiredDateLab type="SimpleText" name="Required date Lab" id="RequiredDateLab">
+		<FontSize>12</FontSize>
+		<x>41</x>
+		<y>212</y>
+	</RequiredDateLab>
+	<LotLab type="SimpleText" name="Start date Lab" id="LotLab">
+		<FontSize>12</FontSize>
+		<x>41</x>
+		<y>200</y>
+	</LotLab>
+	<RequiredQtyLab type="SimpleText" name="Required Qty Lab" id="RequiredQtyLab">
+		<FontSize>12</FontSize>
+		<x>440</x>
+		<y>176</y>
+	</RequiredQtyLab>
+	<ReceivedQtyLab type="SimpleText" name="Received Qty Lab" id="ReceivedQtyLab">
+		<FontSize>12</FontSize>
+		<x>440</x>
+		<y>188</y>
+	</ReceivedQtyLab>
+	<PackageQtyLab type="SimpleText" name="Package Qty Lab" id="PackageQtyLab">
+		<FontSize>12</FontSize>
+		<x>440</x>
+		<y>200</y>
+	</PackageQtyLab>
+	<HeaderLine name="Line Above Footer" id="HeaderLine" type="Line">
+		<startx>40</startx>
+		<starty>192</starty>
+		<endx>580</endx>
+		<endy>192</endy>
+	</HeaderLine>
+	<ItemNumber type="SimpleText" name="Item Number" id="ItemNumber">
+		<FontSize>12</FontSize>
+		<x>141</x>
+		<y>176</y>
+	</ItemNumber>
+	<ItemDesc type="SimpleText" name="Item Description" id="ItemDesc">
+		<FontSize>12</FontSize>
+		<x>141</x>
+		<y>188</y>
+	</ItemDesc>
+	<RequiredDate type="SimpleText" name="Required date" id="RequiredDate">
+		<FontSize>12</FontSize>
+		<x>141</x>
+		<y>212</y>
+	</RequiredDate>
+	<Lot type="SimpleText" name="Lot" id="Lot">
+		<FontSize>12</FontSize>
+		<x>141</x>
+		<y>200</y>
+	</Lot>
+	<RequiredQty type="SimpleText" name="Required Qty" id="RequiredQty">
+		<FontSize>12</FontSize>
+		<x>500</x>
+		<y>188</y>
+		<Length>68</Length>
+	</RequiredQty>
+	<ReceivedQty type="SimpleText" name="Received Qty" id="ReceivedQty">
+		<FontSize>12</FontSize>
+		<x>500</x>
+		<y>200</y>
+		<Length>68</Length>
+	</ReceivedQty>
+	<PackageQty type="SimpleText" name="Package Qty" id="PackageQty">
+		<FontSize>12</FontSize>
+		<x>500</x>
+		<y>212</y>
+		<Length>68</Length>
+	</PackageQty>
+	<Comments type="MultiLineText" name="Comments" id="Comments">
+		<FontSize>10</FontSize>
+		<Length>540</Length>
+		<x>41</x>
+		<y>668</y>
+	</Comments>
+	<MatReqTitle type="SimpleText" name="Material Requirements Title" id="MatReqTitle">
+		<FontSize>12</FontSize>
+		<x>40</x>
+		<y>268</y>
+	</MatReqTitle>
+	<HeaderRectangle type="Rectangle" name="Header rectangle" id="HeaderRectangle">
+		<x>40</x>
+		<y>284</y>
+		<width>540</width>
+		<height>20</height>
+	</HeaderRectangle>
+	<Headings type="ElementArray" name="Column headings">
+		<Column1 type="SimpleText" name="Heading 1" id="Heading1">
+			<FontSize>10</FontSize>
+			<x>41</x>
+			<y>288</y>
+		</Column1>
+		<Column2 type="SimpleText" name="Heading 2" id="Heading2">
+			<FontSize>10</FontSize>
+			<x>115</x>
+			<y>288</y>
+		</Column2>
+		<Column3 type="SimpleText" name="Heading 3" id="Heading3">
+			<FontSize>10</FontSize>
+			<x>180</x>
+			<y>288</y>
+		</Column3>
+		<Column4 type="SimpleText" name="Heading 4" id="Heading4">
+			<FontSize>10</FontSize>
+			<x>370</x>
+			<y>288</y>
+		</Column4>
+		<Column5 type="SimpleText" name="Heading 5" id="Heading5">
+			<FontSize>10</FontSize>
+			<x>500</x>
+			<y>288</y>
+		</Column5>
+	</Headings>
+	<DataRectangle type="Rectangle" name="Data rectangle" id="DataRectangle">
+		<x>40</x>
+		<y>308</y>
+		<width>540</width>
+		<height>340</height>
+	</DataRectangle>
+	<Data type="ElementArray" name="Column Data">
+		<y type="StartLine" name="Y co-ordinate of first data line" id="DataStartLine">318</y>
+		<Column1 type="DataText" name="Column 1" id="Data1">
+			<FontSize>10</FontSize>
+			<x>41</x>
+			<Length>74</Length>
+		</Column1>
+		<Column2 type="DataText" name="Column 2" id="Data2">
+			<FontSize>10</FontSize>
+			<x>115</x>
+			<Length>85</Length>
+		</Column2>
+		<Column3 type="DataText" name="Column 3" id="Data3">
+			<FontSize>10</FontSize>
+			<x>180</x>
+			<Length>190</Length>
+		</Column3>
+		<Column4 type="DataText" name="Column 4" id="Data4">
+			<FontSize>10</FontSize>
+			<x>370</x>
+			<Length>64</Length>
+		</Column4>
+		<Column5 type="DataText" name="Column 5" id="Data5">
+			<FontSize>10</FontSize>
+			<x>500</x>
+			<Length>50</Length>
+		</Column5>
+	</Data>
+	<SignedBy type="SimpleText" name="Signed By" id="SignedBy">
+		<FontSize>12</FontSize>
+		<x>45</x>
+		<y>755</y>
+		<Length></Length>
+	</SignedBy>
+	<SignedDate type="MultiLineText" name="Signed Date" id="SignedDate">
+		<FontSize>12</FontSize>
+		<x>350</x>
+		<y>755</y>
+		<Length>800</Length>
+	</SignedDate>
+</form>

@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: MRPPlannedWorkOrders.php 6310 2013-08-29 10:42:50Z daintree $*/
+/* $Id: MRPPlannedWorkOrders.php 6869 2014-09-08 02:05:18Z tehonu $*/
 
 // MRPPlannedWorkOrders.php - Report of manufactured parts that MRP has determined should have
 // work orders created for them
@@ -281,7 +281,7 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 			}
 
 			echo '<td><a href="' . $RootPath . '/WorkOrderEntry.php?NewItem=' . $myrow['part'] . '&amp;ReqQty=' . $myrow['supplyquantity'] . '&amp;ReqDate=' . $myrow['duedate'] . '">' . _('Convert') . '</a></td>
-				<td>' . $myrow['part'] . ' <input type="hidden" name="' . $j . '_part" value="' . $myrow['part']. '" /></td>
+				<td>' . '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['part'] . '">' . $myrow['part'] . '</a>' .  '<input type="hidden" name="' . $j . '_part" value="' . $myrow['part']. '" /></td>
 				<td>' . $myrow['description'] . '</td>
 				<td>' . ConvertSQLDate($myrow['mrpdate']) . '</td>
 				<td>' . ConvertSQLDate($myrow['duedate']) . '</td>

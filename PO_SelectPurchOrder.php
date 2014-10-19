@@ -1,5 +1,5 @@
 <?php
-/* $Id: PO_SelectPurchOrder.php 6287 2013-08-22 07:47:44Z daintree $*/
+/* $Id: PO_SelectPurchOrder.php 6812 2014-08-13 18:14:57Z agaluski $*/
 
 include ('includes/session.inc');
 $Title = _('Search Purchase Orders');
@@ -116,7 +116,7 @@ if (!isset($OrderNumber) or $OrderNumber == "") {
 		echo _('For the part') . ':<b>' . $SelectedStockItem . '</b> ' . _('and') . ' <input type="hidden" name="SelectedStockItem" value="' . $SelectedStockItem . '" />';
 	}
 	echo _('Order Number') . ': <input class="integer" name="OrderNumber" autofocus="autofocus" maxlength="8" size="9" /> ' . _('Into Stock Location') . ':<select name="StockLocation"> ';
-	$sql = "SELECT loccode, locationname FROM locations";
+	$sql = "SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
 	$resultStkLocs = DB_query($sql, $db);
 	while ($myrow = DB_fetch_array($resultStkLocs)) {
 		if (isset($_POST['StockLocation'])) {

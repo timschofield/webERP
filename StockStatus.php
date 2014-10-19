@@ -1,12 +1,13 @@
 <?php
 
-/* $Id: StockStatus.php 6338 2013-09-28 05:10:46Z daintree $*/
-
+/* $Id: StockStatus.php 6908 2014-10-06 05:13:27Z daintree $*/
+$PricesSecurity = 12;//don't show pricing info unless security token 12 available to user
 include('includes/session.inc');
 
 $Title = _('Stock Status');
 
 include('includes/header.inc');
+include ('includes/SQL_CommonFunctions.inc');
 
 if (isset($_GET['StockID'])){
 	$StockID = trim(mb_strtoupper($_GET['StockID']));
@@ -68,9 +69,11 @@ $sql = "SELECT locstock.loccode,
 				locstock.quantity,
 				locstock.reorderlevel,
 				locstock.bin,
-				locations.managed
+				locations.managed,
+				canupd
 		FROM locstock INNER JOIN locations
 		ON locstock.loccode=locations.loccode
+		INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 		WHERE locstock.stockid = '" . $StockID . "'
 		ORDER BY locations.locationname";
 
@@ -173,43 +176,10 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 	}
 
 	if ($Its_A_KitSet_Assembly_Or_Dummy == False){
-
-		$sql="SELECT SUM(purchorderdetails.quantityord*(CASE WHEN purchdata.conversionfactor IS NULL THEN 1 ELSE purchdata.conversionfactor END) -
-							purchorderdetails.quantityrecd*(CASE WHEN purchdata.conversionfactor IS NULL THEN 1 ELSE purchdata.conversionfactor END))
-			FROM purchorders LEFT JOIN purchorderdetails
-			ON purchorders.orderno=purchorderdetails.orderno
-			LEFT JOIN purchdata ON purchorders.supplierno=purchdata.supplierno
-				AND purchorderdetails.itemcode=purchdata.stockid
-			WHERE purchorderdetails.itemcode='" . $StockID . "'
-			AND purchorders.intostocklocation='" . $myrow['loccode'] . "'
-			AND (purchorders.status<>'Cancelled'
-			AND purchorders.status<>'Pending'
-			AND purchorders.status<>'Rejected'
-			AND purchorders.status<>'Completed')";
-		$ErrMsg = _('The quantity on order for this product to be received into') . ' ' . $myrow['loccode'] . ' ' . _('cannot be retrieved because');
-		$QOOResult = DB_query($sql,$db,$ErrMsg, $DbgMsg);
-
-		if (DB_num_rows($QOOResult)==1){
-			$QOORow = DB_fetch_row($QOOResult);
-			$QOO =  $QOORow[0];
-		} else {
-			$QOO = 0;
-		}
-
-		//Also the on work order quantities
-		$sql = "SELECT SUM(woitems.qtyreqd-woitems.qtyrecd) AS qtywo
-				FROM woitems INNER JOIN workorders
-				ON woitems.wo=workorders.wo
-				WHERE workorders.closed=0
-				AND workorders.loccode='" . $myrow['loccode'] . "'
-				AND woitems.stockid='" . $StockID . "'";
-		$ErrMsg = _('The quantity on work orders for this product to be received into') . ' ' . $myrow['loccode'] . ' ' . _('cannot be retrieved because');
-		$QOOResult = DB_query($sql,$db,$ErrMsg, $DbgMsg);
-
-		if (DB_num_rows($QOOResult)==1){
-			$QOORow = DB_fetch_row($QOOResult);
-			$QOO +=  $QOORow[0];
-		}
+		// Get the QOO due to Purchase orders for all locations. Function defined in SQL_CommonFunctions.inc
+		$QOO = GetQuantityOnOrderDueToPurchaseOrders($StockID, $myrow['loccode']);
+		// Get the QOO dues to Work Orders for all locations. Function defined in SQL_CommonFunctions.inc
+		$QOO += GetQuantityOnOrderDueToWorkOrders($StockID, $myrow['loccode']);
 
 		$InTransitSQL="SELECT SUM(shipqty-recqty) as intransit
 						FROM loctransfers
@@ -240,9 +210,13 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 		} else {
 			$Available = $myrow['quantity'] - $DemandQty;
 		}
-
-		echo '<td>' . $myrow['locationname'] . '</td>
-			  <td><input type="text" name="BinLocation' . $myrow['loccode'] . '" value="' . $myrow['bin'] . '" maxlength="10" size="11" onchange="ReloadForm(UpdateBinLocations)"/></td>';
+		if ($myrow['canupd']==1) {
+			echo '<td>' . $myrow['locationname'] . '</td>
+				<td><input type="text" name="BinLocation' . $myrow['loccode'] . '" value="' . $myrow['bin'] . '" maxlength="10" size="11" onchange="ReloadForm(UpdateBinLocations)"/></td>';
+		} else {
+			echo '<td>' . $myrow['locationname'] . '</td>
+				<td> ' . $myrow['bin'] . '</td>';
+		}
 
 		printf('<td class="number">%s</td>
 				<td class="number">%s</td>

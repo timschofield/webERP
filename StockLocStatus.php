@@ -1,12 +1,13 @@
 <?php
 
-/* $Id: StockLocStatus.php 6033 2013-06-24 07:36:26Z daintree $*/
+/* $Id: StockLocStatus.php 6908 2014-10-06 05:13:27Z daintree $*/
 
 include('includes/session.inc');
 
 $Title = _('All Stock Status By Location/Category');
 
 include('includes/header.inc');
+include ('includes/SQL_CommonFunctions.inc');
 
 if (isset($_GET['StockID'])){
 	$StockID = trim(mb_strtoupper($_GET['StockID']));
@@ -14,14 +15,14 @@ if (isset($_GET['StockID'])){
 	$StockID = trim(mb_strtoupper($_POST['StockID']));
 }
 
-
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-$sql = "SELECT loccode,
+$sql = "SELECT locations.loccode,
     	       locationname
-    	FROM locations";
+    	FROM locations
+		INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
 $resultStkLocs = DB_query($sql,$db);
 
 echo '<p class="page_title_text">
@@ -178,7 +179,6 @@ if (isset($_POST['ShowStatus'])){
     					<th>' . _('On Order') . '</th>
 					</tr>';
 	echo $TableHeader;
-	$j = 1;
 	$k=0; //row colour counter
 
 	while ($myrow=DB_fetch_array($LocStockResult)) {
@@ -239,24 +239,10 @@ if (isset($_POST['ShowStatus'])){
 			$DemandQty += $DemandRow[0];
 		}
 
-
-		$sql = "SELECT SUM(purchorderdetails.quantityord - purchorderdetails.quantityrecd) AS qoo
-				FROM purchorderdetails
-				INNER JOIN purchorders
-					ON purchorderdetails.orderno=purchorders.orderno
-				WHERE purchorders.intostocklocation='" . $myrow['loccode'] . "'
-				AND purchorderdetails.itemcode='" . $StockID . "'
-				AND (purchorders.status = 'Authorised' OR purchorders.status='Printed')";
-
-		$ErrMsg = _('The quantity on order for this product to be received into') . ' ' . $myrow['loccode'] . ' ' . _('cannot be retrieved because');
-		$QOOResult = DB_query($sql,$db,$ErrMsg);
-
-		if (DB_num_rows($QOOResult)==1){
-			$QOORow = DB_fetch_row($QOOResult);
-			$QOO =  $QOORow[0];
-		} else {
-			$QOO = 0;
-		}
+		// Get the QOO due to Purchase orders for all locations. Function defined in SQL_CommonFunctions.inc
+		$QOO = GetQuantityOnOrderDueToPurchaseOrders($StockID, $myrow['loccode']);
+		// Get the QOO dues to Work Orders for all locations. Function defined in SQL_CommonFunctions.inc
+		$QOO += GetQuantityOnOrderDueToWorkOrders($StockID, $myrow['loccode']);
 
 		if (($_POST['BelowReorderQuantity']=='Below' AND ($myrow['quantity']-$myrow['reorderlevel']-$DemandQty)<0)
 				OR $_POST['BelowReorderQuantity']=='All' OR $_POST['BelowReorderQuantity']=='NotZero'
@@ -271,6 +257,7 @@ if (isset($_POST['ShowStatus'])){
 					echo '<tr class="EvenTableRows">';
 					$k=1;
 				}
+				$tr = ($myrow['serialised'] or $myrow['controlled'])?'':'<tr>';
 				printf('<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?StockID=%s">%s</a></td>
     					<td>%s</td>
     					<td class="number">%s</td>
@@ -279,7 +266,7 @@ if (isset($_POST['ShowStatus'])){
     					<td class="number">%s</td>
     					<td class="number"><a target="_blank" href="' . $RootPath . '/SelectProduct.php?StockID=%s">%s</a></td>
     					<td class="number">%s</td>
-    					</tr>',
+    					' . $tr,
     					mb_strtoupper($myrow['stockid']),
     					mb_strtoupper($myrow['stockid']),
     					$myrow['description'],

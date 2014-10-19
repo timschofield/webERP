@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: FreightCosts.php 6310 2013-08-29 10:42:50Z daintree $*/
+/* $Id: FreightCosts.php 6812 2014-08-13 18:14:57Z agaluski $*/
 
 include('includes/session.inc');
 $Title = _('Freight Costs Maintenance');
@@ -46,9 +46,9 @@ if (!isset($LocationFrom) OR !isset($ShipperID)) {
 				<td>' . _('Select the warehouse') . ' (' . _('ship from location') . ')</td>
 				<td><select name="LocationFrom">';
 
-	$sql = "SELECT loccode,
+	$sql = "SELECT locations.loccode,
 					locationname
-			FROM locations";
+			FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1";
 	$LocationResults = DB_query($sql,$db);
 
 	while ($myrow = DB_fetch_array($LocationResults)){

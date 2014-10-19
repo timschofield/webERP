@@ -1,5 +1,5 @@
 <?php
-/* $Id: SuppPaymentRun.php 6519 2013-12-26 18:45:22Z rchacon $*/
+/* $Id: SuppPaymentRun.php 6592 2014-03-02 08:41:40Z daintree $*/
 
 Class Allocation {
 	Var $TransID;

@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: PO_PDFPurchOrder.php 6146 2013-07-26 02:33:44Z icedlava $*/
+/* $Id: PO_PDFPurchOrder.php 6805 2014-08-08 16:12:36Z agaluski $*/
 
 include('includes/session.inc');
 include('includes/SQL_CommonFunctions.inc');
@@ -108,6 +108,7 @@ if (isset($OrderNo) AND $OrderNo != '' AND $OrderNo > 0 AND $OrderNo != 'Preview
 					ON suppliers.currcode=currencies.currabrev
 				INNER JOIN www_users
 					ON purchorders.initiator=www_users.userid
+				INNER JOIN locationusers ON locationusers.loccode=purchorders.intostocklocation AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 				WHERE purchorders.orderno='" . $OrderNo . "'";
 	$result = DB_query($sql, $db, $ErrMsg);
 	if (DB_num_rows($result) == 0) {
@@ -258,12 +259,16 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 			} else {
 				$DisplayLineTotal = '----';
 			}
-			$Desc = /*- DELETED: $POLine['suppliers_partno'] . " " . -*/ $POLine['itemdescription'];	/*- suppliers_partno is duplicated inside itemdescription -*/
-
+			/* If the supplier item code is set then use this to display on the PO rather than the businesses item code */
+			if (mb_strlen($POLine['suppliers_partno'])>0){
+				$ItemCode = $POLine['suppliers_partno'];
+			} else {
+				$ItemCode = $POLine['itemcode'];
+			}
 			$OrderTotal += ($POLine['unitprice'] * $POLine['quantityord']);
 
-			$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column1->x, $YPos, $FormDesign->Data->Column1->Length, $FormDesign->Data->Column1->FontSize, $POLine['itemcode'], 'left');
-			$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column2->x, $YPos, $FormDesign->Data->Column2->Length, $FormDesign->Data->Column2->FontSize, $Desc, 'left');
+			$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column1->x, $YPos, $FormDesign->Data->Column1->Length, $FormDesign->Data->Column1->FontSize, $ItemCode, 'left');
+			$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column2->x, $YPos, $FormDesign->Data->Column2->Length, $FormDesign->Data->Column2->FontSize, $POLine['itemdescription'], 'left');
 			while (mb_strlen($LeftOvers) > 1) {
 				$YPos -= $line_height;
 				if ($YPos - $line_height <= $Bottom_Margin) {

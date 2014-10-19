@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: WWW_Users.php 6467 2013-12-02 03:19:37Z exsonqu $*/
+/* $Id: WWW_Users.php 6807 2014-08-11 14:12:30Z agaluski $*/
 
 if (isset($_POST['UserID']) AND isset($_POST['ID'])){
 	if ($_POST['UserID'] == $_POST['ID']) {
@@ -11,8 +11,8 @@ include('includes/session.inc');
 
 $ModuleList = array(_('Orders'),
 					_('Receivables'),
-					_('Payables'),
 					_('Purchasing'),
+					_('Payables'),
 					_('Inventory'),
 					_('Manufacturing'),
 					_('General Ledger'),
@@ -87,7 +87,7 @@ if (isset($_POST['submit'])) {
 		prnMsg(_('The demonstration user called demo cannot be modified.'),'error');
 		$InputError = 1;
 	}
-	
+
 	if (!isset($SelectedUser)){
 		/* check to ensure the user id is not already entered */
 		$result = DB_query("SELECT userid FROM www_users WHERE userid='" . $_POST['UserID'] . "'",$db);
@@ -162,6 +162,20 @@ if (isset($_POST['submit'])) {
 
 		prnMsg( _('The selected user record has been updated'), 'success' );
 	} elseif ($InputError !=1) {
+
+		$LocationSql = "INSERT INTO locationusers (loccode,
+													userid,
+													canview,
+													canupd
+												) VALUES (
+													'" . $_POST['DefaultLocation'] . "',
+													'" . $_POST['UserID'] . "',
+													1,
+													1
+												)";
+		$ErrMsg = _('The default user locations could not be processed because');
+		$DbgMsg = _('The SQL that was used to update the user locations and failed was');
+		$Result = DB_query($LocationSql, $ErrMsg, $DbgMsg);
 
 		$sql = "INSERT INTO www_users (userid,
 						realname,
@@ -622,7 +636,7 @@ foreach ($ThemeDirectories as $ThemeName) {
 
 		if (isset($_POST['Theme']) AND $_POST['Theme'] == $ThemeName){
 			echo '<option selected="selected" value="' . $ThemeName . '">' . $ThemeName  . '</option>';
-		} else if (!isset($_POST['Theme']) AND ($_SESSION['DefaultTheme']==$ThemeName)) {
+		} else if (!isset($_POST['Theme']) AND ($Theme==$ThemeName)) {
 			echo '<option selected="selected" value="' . $ThemeName . '">' . $ThemeName  . '</option>';
 		} else {
 			echo '<option value="' . $ThemeName . '">' . $ThemeName . '</option>';

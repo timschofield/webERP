@@ -1,6 +1,5 @@
 <?php
-
-/* $Id: CustomerTypes.php 6288 2013-08-24 00:18:10Z daintree $*/
+/* $Id: CustomerTypes.php 6817 2014-08-14 14:40:22Z rchacon $*/
 
 include('includes/session.inc');
 $Title = _('Customer Types') . ' / ' . _('Maintenance');
@@ -80,7 +79,7 @@ if (isset($_POST['submit'])) {
 
 		if ( $checkrow[0] > 0 ) {
 			$InputError = 1;
-			prnMsg( _('The customer type ') . $_POST['typeid'] . _(' already exist.'),'error');
+			prnMsg( _('The customer type') . ' ' . $_POST['typeid'] . _(' already exist.'),'error');
 		} else {
 
 			// Add new record on submit

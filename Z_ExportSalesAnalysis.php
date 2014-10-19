@@ -1,15 +1,18 @@
 <?php
 /* $Id: Z_ExportSalesAnalysis.php 5785 2012-12-29 04:47:42Z daintree $*/
 
+/* Creates the csv files necessary for Phocas sales analysis and sends to an ftp server*/
+
 /*Config */
 
 $FTP_Server = 'someftpserver.com';
 $FTP_User = 'someuser';
 $FTP_Password = '';
 
-
 $AllowAnyone=true;
 $PageSecurity=15;
+$_POST['CompanyNameField']= 'yourdatabase';
+
 include ('includes/session.inc');
 $Title = _('Create and send sales analysis files');
 include ('includes/header.inc');
@@ -74,7 +77,7 @@ if ($fp==FALSE){
 }
 fputs($fp, '"Customer Code", "Customer Name", "Branch Code", "Branch Name", "Price List", "Sales Area", "Salesman"'  . "\n");
 While ($myrow = DB_fetch_row($result)){
-	$line = stripcomma($myrow[0]) . ', ' . stripcomma($myrow[1]). ', ' . stripcomma($myrow[2]) . ', ' . stripcomma($myrow[3]) . ', ' . stripcomma($myrow[4])  . ', ' . stripcomma($myrow[5] . ', ' . stripcomma($myrow[6]));
+	$line = stripcomma($myrow[0]) . ', ' . stripcomma($myrow[1]). ', ' . stripcomma($myrow[2]) . ', ' . stripcomma($myrow[3]) . ', ' . stripcomma($myrow[4])  . ', ' . stripcomma($myrow[5]) . ', ' . stripcomma($myrow[6]);
 	//fputs($fp,"\xEF\xBB\xBF" . $line . "\n");
 	fputs($fp, $line . "\n");
 }
@@ -92,8 +95,8 @@ $sql = "SELECT 	stockmoves.debtorno,
 				stockid,
 				trandate,
 				-qty, 
-				price*(1-discountpercent),
-				standardcost,
+				-price*(1-discountpercent)*qty,
+				-standardcost*qty,
 				transno
 			FROM stockmoves
 			INNER JOIN custbranch
@@ -116,7 +119,7 @@ if ($fp==FALSE){
 	include('includes/footer.inc');
 	exit;
 }
-fputs($fp,'"Customer Code", "Branch Code", "Item Code", "Date", "Quantity", "Price", "Cost", "Inv/Credit Number"'  . "\n");
+fputs($fp,'"Customer Code", "Branch Code", "Item Code", "Date", "Quantity", "Line Value", "Line Cost", "Inv/Credit Number"'  . "\n");
 While ($myrow = DB_fetch_row($result)){
 	$line = stripcomma($myrow[0]) . ', ' . stripcomma($myrow[1]) . ', ' . stripcomma($myrow[2]) . ', ' . stripcomma($myrow[3]) . ', ' . stripcomma($myrow[4]) . ', ' . stripcomma($myrow[5]) . ', ' . stripcomma($myrow[6]) . ', ' . stripcomma($myrow[7]);
 	//fputs($fp,"\xEF\xBB\xBF" . $line . "\n");

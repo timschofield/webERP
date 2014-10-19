@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: StockAdjustments.php 6520 2013-12-27 03:42:39Z exsonqu $*/
+/* $Id: StockAdjustments.php 6805 2014-08-08 16:12:36Z agaluski $*/
 
 include('includes/DefineStockAdjustment.php');
 include('includes/DefineSerialItems.php');
@@ -78,7 +78,7 @@ if (isset($_POST['Narrative'])){
 	$_SESSION['Adjustment' . $identifier]->Narrative = $_POST['Narrative'];
 }
 
-$sql = "SELECT loccode, locationname FROM locations";
+$sql = "SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1";
 $resultStkLocs = DB_query($sql,$db);
 $LocationList=array();
 while ($myrow=DB_fetch_array($resultStkLocs)){
@@ -86,6 +86,9 @@ while ($myrow=DB_fetch_array($resultStkLocs)){
 }
 
 if (isset($_POST['StockLocation'])){
+	if($_SESSION['Adjustment' . $identifier]->StockLocation != $_POST['StockLocation']){/* User has changed the stock location, so the serial no must be validated again */
+		$_SESSION['Adjustment' . $identifier]->SerialItems = array();
+	}
 	$_SESSION['Adjustment' . $identifier]->StockLocation = $_POST['StockLocation'];
 }else{
 	if(empty($_SESSION['Adjustment' . $identifier]->StockLocation)){
@@ -105,6 +108,9 @@ if (isset($_POST['Quantity'])){
 }
 if($_POST['Quantity'] != 0){//To prevent from serilised quantity changing to zero
 	$_SESSION['Adjustment' . $identifier]->Quantity = filter_number_format($_POST['Quantity']);
+	if(count($_SESSION['Adjustment' . $identifier]->SerialItems) == 0 AND $_SESSION['Adjustment' . $identifier]->Controlled == 1 ){/* There is no quantity available for controlled items */
+		$_SESSION['Adjustment' . $identifier]->Quantity = 0;
+	}
 }
 if(isset($_GET['OldIdentifier'])){
 	$_SESSION['Adjustment'.$identifier]->StockLocation=$_SESSION['Adjustment'.$_GET['OldIdentifier']]->StockLocation;
@@ -158,6 +164,9 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 	} elseif (!is_numeric($_SESSION['Adjustment' . $identifier]->Quantity)){
 		prnMsg( _('The quantity entered must be numeric'),'error');
 		$InputError = true;
+	} elseif(strlen(substr(strrchr($_SESSION['Adjustment'.$identifier]->Quantity, "."), 1))>$_SESSION['Adjustment' . $identifier]->DecimalPlaces){
+		prnMsg(_('The decimal places input is more than the decimals of this item defined,the defined decimal places is ').' '.$_SESSION['Adjustment' . $identifier]->DecimalPlaces.' '._('and the input decimal places is ').' '.strlen(substr(strrchr($_SESSION['Adjustment'.$identifier]->Quantity, "."), 1)),'error');
+		$InputError = true;
 	} elseif ($_SESSION['Adjustment' . $identifier]->Quantity==0){
 		prnMsg( _('The quantity entered cannot be zero') . '. ' . _('There would be no adjustment to make'),'error');
 		$InputError = true;
@@ -201,7 +210,6 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 			// There must actually be some error this should never happen
 			$QtyOnHandPrior = 0;
 		}
-
 		$SQL = "INSERT INTO stockmoves (stockid,
 										type,
 										transno,
@@ -210,9 +218,9 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 										prd,
 										reference,
 										qty,
-										newqoh)
-									VALUES (
-										'" . $_SESSION['Adjustment' . $identifier]->StockID . "',
+										newqoh,
+										standardcost)
+									VALUES ('" . $_SESSION['Adjustment' . $identifier]->StockID . "',
 										17,
 										'" . $AdjustmentNumber . "',
 										'" . $_SESSION['Adjustment' . $identifier]->StockLocation . "',
@@ -220,9 +228,8 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 										'" . $PeriodNo . "',
 										'" . $_SESSION['Adjustment' . $identifier]->Narrative ."',
 										'" . $_SESSION['Adjustment' . $identifier]->Quantity . "',
-										'" . ($QtyOnHandPrior + $_SESSION['Adjustment' . $identifier]->Quantity) . "'
-									)";
-
+										'" . ($QtyOnHandPrior + $_SESSION['Adjustment' . $identifier]->Quantity) . "',
+										'" . $_SESSION['Adjustment' . $identifier]->StandardCost . "')";
 
 		$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock movement record cannot be inserted because');
 		$DbgMsg =  _('The following SQL to insert the stock movement record was used');
@@ -374,7 +381,7 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 				$mail->setText($ConfirmationText);
 				$result = SendmailBySmtp($mail,array($_SESSION['InventoryManagerEmail']));
 			}
-			
+
 		}
 		$StockID = $_SESSION['Adjustment' . $identifier]->StockID;
 		unset ($_SESSION['Adjustment' . $identifier]);

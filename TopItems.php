@@ -1,12 +1,14 @@
 <?php
 
-/* $Id: TopItems.php 6495 2013-12-11 23:05:30Z rchacon $*/
+/* $Id: TopItems.php 6908 2014-10-06 05:13:27Z daintree $*/
 
 /* Session started in session.inc for password checking and authorisation level check
 config.php is in turn included in session.inc*/
 include ('includes/session.inc');
 $Title = _('Top Items Searching');
 include ('includes/header.inc');
+include ('includes/SQL_CommonFunctions.inc');
+
 //check if input already
 if (!(isset($_POST['Search']))) {
 
@@ -22,9 +24,10 @@ if (!(isset($_POST['Search']))) {
 			<td style="width:150px">' . _('Select Location') . '  </td>
 			<td>:</td>
 			<td><select name="Location">';
-	$sql = "SELECT loccode,
+	$sql = "SELECT locations.loccode,
 					locationname
-			FROM locations";
+			FROM locations
+			INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
 	$result = DB_query($sql, $db);
 	echo '<option value="All">' . _('All') . '</option>';
 	while ($myrow = DB_fetch_array($result)) {
@@ -127,8 +130,10 @@ if (!(isset($_POST['Search']))) {
 					stockmaster.mbflag,
 					currencies.rate,
 					debtorsmaster.currcode,
+					fromstkloc,
 					stockmaster.decimalplaces
-			FROM 	salesorderdetails, salesorders, debtorsmaster,stockmaster, currencies
+			FROM 	salesorderdetails, salesorders INNER JOIN locationusers ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1,
+			debtorsmaster,stockmaster, currencies
 			WHERE 	salesorderdetails.orderno = salesorders.orderno
 					AND salesorderdetails.stkcode = stockmaster.stockid
 					AND salesorders.debtorno = debtorsmaster.debtorno
@@ -191,36 +196,15 @@ if (!(isset($_POST['Search']))) {
 			case 'B':
 				$QOHResult = DB_query("SELECT sum(quantity)
 								FROM locstock
+								INNER JOIN locationusers ON locationusers.loccode=locstock.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 								WHERE stockid = '" . DB_escape_string($myrow['stkcode']) . "'", $db);
 				$QOHRow = DB_fetch_row($QOHResult);
 				$QOH = $QOHRow[0];
-				$QOOSQL="SELECT SUM(purchorderdetails.quantityord -purchorderdetails.quantityrecd) AS QtyOnOrder
-							FROM purchorders INNER JOIN purchorderdetails
-							ON purchorders.orderno=purchorderdetails.orderno
-							WHERE purchorderdetails.itemcode='" . DB_escape_string($myrow['stkcode']) . "'
-							AND purchorderdetails.completed =0
-							AND purchorders.status<>'Cancelled'
-							AND purchorders.status<>'Pending'
-							AND purchorders.status<>'Rejected'";
-				$QOOResult = DB_query($QOOSQL, $db);
-				if (DB_num_rows($QOOResult) == 0) {
-					$QOO = 0;
-				} else {
-					$QOORow = DB_fetch_row($QOOResult);
-					$QOO = $QOORow[0];
-				}
-				//Also the on work order quantities
-				$sql = "SELECT SUM(woitems.qtyreqd-woitems.qtyrecd) AS qtywo
-						FROM woitems INNER JOIN workorders
-						ON woitems.wo=workorders.wo
-						WHERE workorders.closed=0
-						AND woitems.stockid='" . DB_escape_string($myrow['stkcode']) . "'";
-				$ErrMsg = _('The quantity on work orders for this product cannot be retrieved because');
-				$QOOResult = DB_query($sql, $db, $ErrMsg);
-				if (DB_num_rows($QOOResult) == 1) {
-					$QOORow = DB_fetch_row($QOOResult);
-					$QOO+= $QOORow[0];
-				}
+
+				// Get the QOO due to Purchase orders for all locations. Function defined in SQL_CommonFunctions.inc
+				$QOO = GetQuantityOnOrderDueToPurchaseOrders($myrow['stkcode'], '');
+				// Get the QOO due to Work Orders for all locations. Function defined in SQL_CommonFunctions.inc
+				$QOO += GetQuantityOnOrderDueToWorkOrders($myrow['stkcode'], '');
 			break;
 		}
 	        if(is_numeric($QOH) and is_numeric($QOO)){

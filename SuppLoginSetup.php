@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: SuppLoginSetup.php 6310 2013-08-29 10:42:50Z daintree $*/
+/* $Id: SuppLoginSetup.php 6808 2014-08-11 21:27:11Z agaluski $*/
 
 include('includes/session.inc');
 $Title = _('Supplier Login Configuration');
@@ -187,7 +187,7 @@ if (!$FoundTheSupplierRole){
 echo '<tr><td>' . _('Default Location') . ':</td>
 	<td><select name="DefaultLocation">';
 
-$sql = "SELECT loccode, locationname FROM locations";
+$sql = "SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1";
 $result = DB_query($sql,$db);
 
 while ($myrow=DB_fetch_array($result)){
@@ -260,7 +260,7 @@ while (false != ($ThemeName = $ThemeDirectory->read())){
 
 		if (isset($_POST['Theme']) and $_POST['Theme'] == $ThemeName){
 			echo '<option selected="selected" value="' . $ThemeName . '">' . $ThemeName . '</option>';
-		} else if (!isset($_POST['Theme']) and ($_SESSION['DefaultTheme']==$ThemeName)) {
+		} else if (!isset($_POST['Theme']) and ($Theme==$ThemeName)) {
 			echo '<option selected="selected" value="' . $ThemeName . '">' . $ThemeName . '</option>';
 		} else {
 			echo '<option value="' . $ThemeName . '">' . $ThemeName . '</option>';

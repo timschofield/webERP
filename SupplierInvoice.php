@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: SupplierInvoice.php 6310 2013-08-29 10:42:50Z daintree $ */
+/* $Id: SupplierInvoice.php 6750 2014-06-12 18:46:41Z rchacon $ */
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing
@@ -35,10 +35,9 @@ if (!isset($_SESSION['SuppTrans']->SupplierName)) {
 } else {
 	$SupplierName=$_SESSION['SuppTrans']->SupplierName;
 }
-
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('Supplier Invoice') . '" alt="" />
-     ' . ' ' . _('Enter Supplier Invoice:') . ' ' . $SupplierName;
-echo '</p>';
+echo '<p class="page_title_text"><img alt="" src="'.$RootPath . '/css/' . $Theme . 
+	'/images/transactions.png" title="' . _('Supplier Invoice') . '" />' . ' ' . 
+	_('Enter Supplier Invoice') . ': ' . $SupplierName . '</p>';
 if (isset($_GET['SupplierID']) AND $_GET['SupplierID']!=''){
 
  /*It must be a new invoice entry - clear any existing invoice details from the SuppTrans object and initiate a newy*/

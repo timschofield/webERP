@@ -1,5 +1,5 @@
 <?php
-/* $Id: DefineSuppTransClass.php 6438 2013-11-26 09:01:14Z daintree $*/
+/* $Id: DefineSuppTransClass.php 6592 2014-03-02 08:41:40Z daintree $*/
 /* Definition of the Supplier Transactions class to hold all the information for an accounts payable invoice or credit note
 */
 
@@ -514,5 +514,4 @@ Class Tax {
 		$this->TaxGLCode = $TaxGLCode;
 	}
 }
-
 ?>

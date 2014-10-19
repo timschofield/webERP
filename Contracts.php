@@ -867,7 +867,7 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 
 	echo '</select><a target="_blank" href="'. $RootPath . '/StockCategories.php">' . _('Add or Modify Contract Categories') . '</a></td></tr>';
 
-	$sql = "SELECT loccode, locationname FROM locations";
+	$sql = "SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1";
 	$ErrMsg = _('The stock locations could not be retrieved because');
 	$DbgMsg = _('The SQL used to retrieve stock locations and failed was');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
@@ -884,7 +884,7 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 	}
 
 	echo '</select></td></tr>';
-	$sql = "SELECT code, description FROM workcentres";
+	$sql = "SELECT code, description FROM workcentres INNER JOIN locationusers ON locationusers.loccode=workcentres.location AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1";
 	$result = DB_query($sql,$db);
 
 	if (DB_num_rows($result)==0){

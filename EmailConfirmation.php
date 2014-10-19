@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: EmailConfirmation.php 6310 2013-08-29 10:42:50Z daintree $*/
+/* $Id: EmailConfirmation.php 6812 2014-08-13 18:14:57Z agaluski $*/
 
 include('includes/session.inc');
 include('includes/SQL_CommonFunctions.inc');
@@ -66,7 +66,8 @@ $sql = "SELECT salesorders.debtorno,
 				salesorders.datepackingslipprinted,
 				locations.locationname,
 				salesorders.deliverydate
-			FROM salesorders,
+			FROM salesorders
+			INNER JOIN locationusers ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1,
 				debtorsmaster,
 				shippers,
 				locations

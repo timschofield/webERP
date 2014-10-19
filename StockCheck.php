@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: StockCheck.php 6310 2013-08-29 10:42:50Z daintree $*/
+/* $Id: StockCheck.php 6808 2014-08-11 21:27:11Z agaluski $*/
 
 include('includes/session.inc');
 
@@ -294,7 +294,9 @@ If (isset($_POST['PrintPDF'])
 		echo '<tr>
 				<td>' . _('For Inventory in Location') . ':</td>
 				<td><select name="Location">';
-		$sql = "SELECT loccode, locationname FROM locations ORDER BY locationname";
+		$sql = "SELECT locations.loccode, locationname FROM locations 
+				INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
+				ORDER BY locationname";
 		$LocnResult=DB_query($sql,$db);
 
 		while ($myrow=DB_fetch_array($LocnResult)){

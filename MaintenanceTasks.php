@@ -194,7 +194,7 @@ echo '<tr>
 	</tr>';
 
 echo '<tr>
-		<td>' . _('Responsible').':</td>
+		<td>' . _('Responsible') . ':</td>
 		<td><select required="required" name="UserResponsible">';
 $UserSQL="SELECT userid FROM www_users";
 $UserResult=DB_query($UserSQL,$db);

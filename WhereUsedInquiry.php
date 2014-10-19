@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: WhereUsedInquiry.php 6312 2013-08-30 21:08:37Z daintree $*/
+/* $Id: WhereUsedInquiry.php 6854 2014-08-29 07:15:02Z tehonu $*/
 
 include('includes/session.inc');
 $Title = _('Where Used Inquiry');
@@ -38,9 +38,9 @@ echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($StockID)) {
-	echo _('Enter an Item Code') . ': <input type="text" required="required" pattern="[^ +%-]{1,}" title="'._('Illegal characters and blank is not allowed').'" name="StockID" autofocus="autofocus" size="21" maxlength="20" value="' . $StockID . '" placeholder="'._('No illegal characters allowed').'" />';
+	echo _('Enter an Item Code') . ': <input type="text" required="required" data-type="no-illegal-chars" title="'._('Illegal characters and blank is not allowed').'" name="StockID" autofocus="autofocus" size="21" maxlength="20" value="' . $StockID . '" placeholder="'._('No illegal characters allowed').'" />';
 } else {
-	echo _('Enter an Item Code') . ': <input type="text" required="required" pattern="[^ +%-]{1,}"  title="'._('Illegal characters and blank is not allowed').'" name="StockID" autofocus="autofocus" size="21" maxlength="20" placeholder="'._('No illegal characters allowed').'" />';
+	echo _('Enter an Item Code') . ': <input type="text" required="required" data-type="no-illegal-chars"  title="'._('Illegal characters and blank is not allowed').'" name="StockID" autofocus="autofocus" size="21" maxlength="20" placeholder="'._('No illegal characters allowed').'" />';
 }
 
 echo '<input type="submit" name="ShowWhereUsed" value="' . _('Show Where Used') . '" />
@@ -50,12 +50,15 @@ echo '<input type="submit" name="ShowWhereUsed" value="' . _('Show Where Used') 
 if (isset($StockID)) {
 
 	$SQL = "SELECT bom.*,
-				stockmaster.description
+				stockmaster.description,
+				stockmaster.discontinued
 			FROM bom INNER JOIN stockmaster
 			ON bom.parent = stockmaster.stockid
+			INNER JOIN locationusers ON locationusers.loccode=bom.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 			WHERE component='" . $StockID . "'
-			AND bom.effectiveafter<='" . Date('Y-m-d') . "'
-			AND bom.effectiveto >='" . Date('Y-m-d') . "'";
+				AND bom.effectiveafter<='" . Date('Y-m-d') . "'
+				AND bom.effectiveto >='" . Date('Y-m-d') . "'
+			ORDER BY stockmaster.discontinued, bom.parent";
 
 	$ErrMsg = _('The parents for the selected part could not be retrieved because');;
 	$result = DB_query($SQL,$db,$ErrMsg);
@@ -66,6 +69,7 @@ if (isset($StockID)) {
 		echo '<table width="97%" class="selection">
 				<tr>
 					<th class="ascending">' . _('Used By') . '</th>
+					<th class="ascending">' . _('Status') . '</th>
 					<th class="ascending">' . _('Work Centre') . '</th>
 					<th class="ascending">' . _('Location') . '</th>
 					<th class="ascending">' . _('Quantity Required') . '</th>
@@ -82,8 +86,13 @@ if (isset($StockID)) {
 				echo '<tr class="OddTableRows">';;
 				$k=1;
 			}
-
+			if ($myrow['discontinued'] == 1){
+				$Status = _('Obsolete');
+			}else{
+				$Status = _('Current');
+			}
 			echo '<td><a target="_blank" href="' . $RootPath . '/BOMInquiry.php?StockID=' . $myrow['parent'] . '" alt="' . _('Show Bill Of Material') . '">' . $myrow['parent']. ' - ' . $myrow['description']. '</a></td>
+					<td>' . $Status. '</td>
 					<td>' . $myrow['workcentreadded']. '</td>
 					<td>' . $myrow['loccode']. '</td>
 					<td class="number">' . locale_number_format($myrow['quantity'],'Variable') . '</td>

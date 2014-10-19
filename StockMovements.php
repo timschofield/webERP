@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: StockMovements.php 5785 2012-12-29 04:47:42Z daintree $*/
+/* $Id: StockMovements.php 6808 2014-08-11 21:27:11Z agaluski $*/
 
 include('includes/session.inc');
 $Title = _('Stock Movements');
@@ -37,7 +37,8 @@ echo '<tr><th colspan="10">' . _('Stock Code') . ':<input type="text" name="Stoc
 
 echo '  ' . _('From Stock Location') . ':<select name="StockLocation"> ';
 
-$sql = "SELECT loccode, locationname FROM locations";
+$sql = "SELECT locations.loccode, locationname FROM locations
+		INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
 $resultStkLocs = DB_query($sql,$db);
 
 while ($myrow=DB_fetch_array($resultStkLocs)){

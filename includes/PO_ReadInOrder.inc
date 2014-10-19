@@ -1,5 +1,5 @@
 <?php
-/* $Id: PO_ReadInOrder.inc 5768 2012-12-20 08:38:22Z daintree $*/
+/* $Id: PO_ReadInOrder.inc 6805 2014-08-08 16:12:36Z agaluski $*/
 /*PO_ReadInOrder.inc is used by the modify existing order code in PO_Header.php and also by GoodsReceived.php */
 
 	if (isset($_SESSION['PO'.$identifier])){
@@ -53,6 +53,7 @@
 								currencies.decimalplaces
 							FROM purchorders
 							INNER JOIN locations ON purchorders.intostocklocation=locations.loccode
+							INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
 							INNER JOIN suppliers ON purchorders.supplierno = suppliers.supplierid
 							INNER JOIN currencies ON suppliers.currcode=currencies.currabrev
 							WHERE purchorders.orderno = '" . $_GET['ModifyOrderNumber'] . "'";

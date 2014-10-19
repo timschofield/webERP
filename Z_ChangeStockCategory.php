@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: Z_ChangeStockCategory.php 6125 2013-07-21 12:43:50Z tehonu $ */
+/* $Id: Z_ChangeStockCategory.php 6706 2014-05-06 01:38:05Z tehonu $ */
 
 include ('includes/session.inc');
 $Title = _('UTILITY PAGE Change A Stock Category');
@@ -20,13 +20,13 @@ if (isset($_POST['ProcessStockChange'])) {
 	}
 
 	if (ContainsIllegalCharacters($_POST['NewStockCategory'])) {
-		prnMsg(_('The new stock code to change the old code to contains illegal characters - no changes will be made'), 'error');
+		prnMsg(_('The new stock category to change the old code to contains illegal characters - no changes will be made'), 'error');
 		include ('includes/footer.inc');
 		exit;
 	}
 
 	if ($_POST['NewStockCategory'] == '') {
-		prnMsg(_('The new stock code to change the old code to must be entered as well'), 'error');
+		prnMsg(_('The new stock category to change the old code to must be entered as well'), 'error');
 		include ('includes/footer.inc');
 		exit;
 	}
@@ -47,6 +47,7 @@ if (isset($_POST['ProcessStockChange'])) {
 					stocktype,
 					stockact,
 					adjglact,
+					issueglact,
 					purchpricevaract,
 					materialuseagevarac,
 					defaulttaxcatid,
@@ -56,6 +57,7 @@ if (isset($_POST['ProcessStockChange'])) {
 					stocktype,
 					stockact,
 					adjglact,
+					issueglact,
 					purchpricevaract,
 					materialuseagevarac,
 					defaulttaxcatid,
@@ -77,19 +79,26 @@ if (isset($_POST['ProcessStockChange'])) {
 	$result = DB_query($sql, $db, $ErrMsg, $DbgMsg, true);
 	echo ' ... ' . _('completed');
 	echo '<br />' . _('Changing sales analysis records');
-	$sql = "UPDATE salesanalysis SET stkcategory='" . $_POST['NewStockID'] . "' WHERE stkcategory='" . $_POST['OldStockCategory'] . "'";
+	$sql = "UPDATE salesanalysis SET stkcategory='" . $_POST['NewStockCategory'] . "' WHERE stkcategory='" . $_POST['OldStockCategory'] . "'";
 	$ErrMsg = _('The SQL to update Sales Analysis records failed');
 	$result = DB_query($sql, $db, $ErrMsg, $DbgMsg, true);
 	echo ' ... ' . _('completed');
+
+	echo '<br />' . _('Changing internal stock category roles records');
+	$sql = "UPDATE internalstockcatrole SET categoryid='" . $_POST['NewStockCategory'] . "' WHERE categoryid='" . $_POST['OldStockCategory'] . "'";
+	$ErrMsg = _('The SQL to update internal stock category role records failed');
+	$result = DB_query($sql, $db, $ErrMsg, $DbgMsg, true);
+	echo ' ... ' . _('completed');
+	
 	$sql = 'SET FOREIGN_KEY_CHECKS=1';
 	$result = DB_query($sql, $db, $ErrMsg, $DbgMsg, true);
 	$result = DB_Txn_Commit($db);
 	echo '<br />' . _('Deleting the old stock category record');
 	$sql = "DELETE FROM stockcategory WHERE categoryid='" . $_POST['OldStockCategory'] . "'";
 	$ErrMsg = _('The SQL to delete the old stock category record failed');
-	$result = DB_query($sql, $db, $ErrMsg, $DbgMsg, true);
+	$result = DB_query($sql, $db, $ErrMsg, $DbgMsg);
 	echo ' ... ' . _('completed');
-	echo '<p>' . _('Stock Code') . ': ' . $_POST['OldStockCategory'] . ' ' . _('was successfully changed to') . ' : ' . $_POST['NewStockCategory'];
+	echo '<p>' . _('Stock Category') . ': ' . $_POST['OldStockCategory'] . ' ' . _('was successfully changed to') . ' : ' . $_POST['NewStockCategory'];
 }
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
@@ -99,11 +108,11 @@ echo '<br />
 	<table>
 		<tr>
 			<td>' . _('Existing Inventory Category Code') . ':</td>
-			<td><input type="text" name="OldStockCategory" size="20" maxlength="20" /></td>
+			<td><input type="text" data-type="no-illegal-chars" name="OldStockCategory"  title="' . _('Enter up to six alphanumeric characters or underscore as a code for this stock category') . '" size="7" maxlength="6" /></td>
 		</tr>
 		<tr>
 			<td>' . _('New Inventory Category Code') . ':</td>
-			<td><input type="text" name="NewStockCategory" size="20" maxlength="20" /></td>
+			<td><input type="text" data-type="no-illegal-chars"  title="' . _('Enter up to six alphanumeric characters or underscore as a code for this stock category') . '" name="NewStockCategory" size="7" maxlength="6" /></td>
 		</tr>
 	</table>
 

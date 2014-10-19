@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: geocode_genxml_customers.php 6565 2014-02-06 08:42:57Z daintree $*/
+/* $Id: geocode_genxml_customers.php 6592 2014-03-02 08:41:40Z daintree $*/
 //$PageSecurity = 3;
 $Title = _('Geocode Generate XML');
 
@@ -39,5 +39,4 @@ while ($myrow = DB_fetch_array($result)){
 
 // End XML file
 echo '</markers>';
-
 ?>

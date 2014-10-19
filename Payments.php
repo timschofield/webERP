@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: Payments.php 6566 2014-02-08 04:12:08Z daintree $*/
+/* $Id: Payments.php 6592 2014-03-02 08:41:40Z daintree $*/
 
 include('includes/DefinePaymentClass.php');
 include('includes/session.inc');

@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: PDFStockLocTransfer.php 6310 2013-08-29 10:42:50Z daintree $*/
+/* $Id: PDFStockLocTransfer.php 6808 2014-08-11 21:27:11Z agaluski $*/
 include('includes/session.inc');
 $Title = _('Stock Location Transfer Docket Error');
 
@@ -30,6 +30,24 @@ if (!isset($_GET['TransferNo'])){
           </div>';
     echo '</div>
           </form>';
+
+	echo '<form method="post" action="' . $RootPath . '/PDFShipLabel.php">';
+    echo '<div>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<input type="hidden" name="Type" value="Transfer" />';
+	echo '<table>
+			<tr>
+				<td>' . _('Transfer docket to reprint Shipping Labels') . '</td>
+				<td><input type="text" class="number" size="10" name="ORD" /></td>
+			</tr>
+		</table>';
+	echo '<br />
+          <div class="centre">
+			<input type="submit" name="Print" value="' . _('Print Shipping Labels') .'" />
+          </div>';
+    echo '</div>
+          </form>';
+
 	include ('includes/footer.inc');
 	exit;
 }
@@ -57,6 +75,8 @@ $sql = "SELECT loctransfers.reference,
 		INNER JOIN stockmaster ON loctransfers.stockid=stockmaster.stockid
 		INNER JOIN locations ON loctransfers.shiploc=locations.loccode
 		INNER JOIN locations AS locationsrec ON loctransfers.recloc = locationsrec.loccode
+		INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
+		INNER JOIN locationusers as locationusersrec ON locationusersrec.loccode=locationsrec.loccode AND locationusersrec.userid='" .  $_SESSION['UserID'] . "' AND locationusersrec.canview=1
 		WHERE loctransfers.reference='" . $_GET['TransferNo'] . "'";
 
 $result = DB_query($sql,$db, $ErrMsg, $DbgMsg);

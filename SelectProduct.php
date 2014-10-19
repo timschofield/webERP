@@ -1,5 +1,5 @@
 <?php
-/* $Id: SelectProduct.php 6519 2013-12-26 18:45:22Z rchacon $*/
+/* $Id: SelectProduct.php 6908 2014-10-06 05:13:27Z daintree $*/
 
 $PricesSecurity = 12;//don't show pricing info unless security token 12 available to user
 $SuppliersSecurity = 9; //don't show supplier purchasing info unless security token 9 available to user
@@ -11,6 +11,7 @@ $ViewTopic= 'Inventory';
 $BookMark = 'SelectingInventory';
 
 include ('includes/header.inc');
+include ('includes/SQL_CommonFunctions.inc');
 
 if (isset($_GET['StockID'])) {
 	//The page is called with a StockID
@@ -262,33 +263,12 @@ switch ($myrow['mbflag']) {
 						WHERE stockid = '" . $StockID . "'", $db);
 		$QOHRow = DB_fetch_row($QOHResult);
 		$QOH = locale_number_format($QOHRow[0], $myrow['decimalplaces']);
-		$QOOSQL="SELECT SUM(purchorderdetails.quantityord -purchorderdetails.quantityrecd) AS QtyOnOrder
-					FROM purchorders INNER JOIN purchorderdetails
-					ON purchorders.orderno=purchorderdetails.orderno
-					WHERE purchorderdetails.itemcode='" . $StockID . "'
-					AND purchorderdetails.completed =0
-					AND purchorders.status<>'Cancelled'
-					AND purchorders.status<>'Pending'
-					AND purchorders.status<>'Rejected'";
-		$QOOResult = DB_query($QOOSQL, $db);
-		if (DB_num_rows($QOOResult) == 0) {
-			$QOO = 0;
-		} else {
-			$QOORow = DB_fetch_row($QOOResult);
-			$QOO = $QOORow[0];
-		}
-		//Also the on work order quantities
-		$sql = "SELECT SUM(woitems.qtyreqd-woitems.qtyrecd) AS qtywo
-				FROM woitems INNER JOIN workorders
-				ON woitems.wo=workorders.wo
-				WHERE workorders.closed=0
-				AND woitems.stockid='" . $StockID . "'";
-		$ErrMsg = _('The quantity on work orders for this product cannot be retrieved because');
-		$QOOResult = DB_query($sql, $db, $ErrMsg);
-		if (DB_num_rows($QOOResult) == 1) {
-			$QOORow = DB_fetch_row($QOOResult);
-			$QOO+= $QOORow[0];
-		}
+
+		// Get the QOO due to Purchase orders for all locations. Function defined in SQL_CommonFunctions.inc
+		$QOO = GetQuantityOnOrderDueToPurchaseOrders($StockID, '');
+		// Get the QOO dues to Work Orders for all locations. Function defined in SQL_CommonFunctions.inc
+		$QOO += GetQuantityOnOrderDueToWorkOrders($StockID, '');
+
 		$QOO = locale_number_format($QOO, $myrow['decimalplaces']);
 	break;
 }
@@ -296,6 +276,7 @@ $Demand = 0;
 $DemResult = DB_query("SELECT SUM(salesorderdetails.quantity-salesorderdetails.qtyinvoiced) AS dem
 						FROM salesorderdetails INNER JOIN salesorders
 						ON salesorders.orderno = salesorderdetails.orderno
+						INNER JOIN locationusers ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 						WHERE salesorderdetails.completed=0
 						AND salesorders.quotation=0
 						AND salesorderdetails.stkcode='" . $StockID . "'", $db);
@@ -306,6 +287,7 @@ $DemAsComponentResult = DB_query("SELECT  SUM((salesorderdetails.quantity-saleso
 									ON salesorders.orderno = salesorderdetails.orderno
 									INNER JOIN bom ON salesorderdetails.stkcode=bom.parent
 									INNER JOIN stockmaster ON stockmaster.stockid=bom.parent
+									INNER JOIN locationusers ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 									WHERE salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0
 									AND bom.component='" . $StockID . "'
 									AND stockmaster.mbflag='A'
@@ -319,6 +301,7 @@ $sql = "SELECT SUM(qtypu*(woitems.qtyreqd - woitems.qtyrecd)) AS woqtydemo
 		INNER JOIN workorders
 		ON woitems.wo=workorders.wo
 		AND woitems.wo=worequirements.wo
+		INNER JOIN locationusers ON locationusers.loccode=workorders.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 		WHERE  worequirements.stockid='" . $StockID . "'
 		AND workorders.closed=0";
 $ErrMsg = _('The workorder component demand for this product cannot be retrieved because');
@@ -487,6 +470,7 @@ if ($Its_A_Kitset_Assembly_Or_Dummy == False) {
 	echo '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $StockID . '">' . _('Maintain Reorder Levels') . '</a><br />';
 	echo '<a href="' . $RootPath . '/StockCostUpdate.php?StockID=' . $StockID . '">' . _('Maintain Standard Cost') . '</a><br />';
 	echo '<a href="' . $RootPath . '/PurchData.php?StockID=' . $StockID . '">' . _('Maintain Purchasing Data') . '</a><br />';
+	echo '<a href="' . $RootPath . '/CustItem.php?StockID=' . $StockID . '">' . _('Maintain Customer Item Data') . '</a><br />';
 }
 if ($Its_A_Labour_Item == True) {
 	echo '<a href="' . $RootPath . '/StockCostUpdate.php?StockID=' . $StockID . '">' . _('Maintain Standard Cost') . '</a><br />';
@@ -500,6 +484,8 @@ if (!$Its_A_Kitset) {
 	}
 	echo '<a href="' . $RootPath . '/DiscountCategories.php?StockID=' . $StockID . '">' . _('Maintain Discount Category') . '</a><br />';
     echo '<a href="' . $RootPath . '/StockClone.php?OldStockID=' . $StockID . '">' . _('Clone This Item') . '</a><br />';
+	echo '<a href="' . $RootPath . '/RelatedItemsUpdate.php?Item=' . $StockID . '">' . _('Maintain Related Items') . '</a><br />';
+	echo '<a href="' . $RootPath . '/PriceMatrix.php?StockID=' . $StockID . '">' . _('Maintain Price Matrix') . '</a><br />';
 }
 echo '</td></tr></table>';
 } else {

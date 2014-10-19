@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: SelectOrderItems_IntoCart.inc 6067 2013-07-10 02:04:22Z tehonu $*/
+/* $Id: SelectOrderItems_IntoCart.inc 6713 2014-05-17 02:53:54Z daintree $*/
 
 /*SelectOrderItems_IntoCart.inc
 
@@ -109,7 +109,7 @@ if ($AlreadyOnThisOrder!=1){
 				$Discount = 0;
 			}
 
-			$Price = GetPrice($NewItem, $_SESSION['Items'.$identifier]->DebtorNo,$_SESSION['Items'.$identifier]->Branch, $db);
+			$Price = GetPrice($NewItem, $_SESSION['Items'.$identifier]->DebtorNo,$_SESSION['Items'.$identifier]->Branch, $NewItemQty);
 
 			/* Need to check for sell through support deals */
 			

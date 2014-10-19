@@ -1,5 +1,5 @@
 <?php
-/* $Id: StockUsageGraph.php 5784 2012-12-29 04:00:43Z daintree $*/
+/* $Id: StockUsageGraph.php 6805 2014-08-08 16:12:36Z agaluski $*/
 
 include('includes/session.inc');
 $result = DB_query("SELECT description FROM stockmaster WHERE stockid='" . trim(mb_strtoupper($_GET['StockID'])) . "'",$db);
@@ -24,6 +24,7 @@ if($_GET['StockLocation']=='All'){
 			SUM(-stockmoves.qty) AS qtyused
 		FROM stockmoves INNER JOIN periods
 			ON stockmoves.prd=periods.periodno
+		INNER JOIN locationusers ON locationusers.loccode=stockmoves.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 		WHERE (stockmoves.type=10 OR stockmoves.type=11 OR stockmoves.type=28)
 		AND stockmoves.hidemovt=0
 		AND stockmoves.stockid = '" . trim(mb_strtoupper($_GET['StockID'])) . "'
@@ -36,6 +37,7 @@ if($_GET['StockLocation']=='All'){
 			SUM(-stockmoves.qty) AS qtyused
 		FROM stockmoves INNER JOIN periods
 			ON stockmoves.prd=periods.periodno
+		INNER JOIN locationusers ON locationusers.loccode=stockmoves.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 		WHERE (stockmoves.type=10 Or stockmoves.type=11 OR stockmoves.type=28)
 		AND stockmoves.hidemovt=0
 		AND stockmoves.loccode='" . $_GET['StockLocation'] . "'

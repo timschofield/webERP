@@ -1,5 +1,5 @@
 <?php
-/* $Id: index.php 6559 2014-02-03 09:06:53Z exsonqu $*/
+/* $Id: index.php 6834 2014-08-19 13:53:15Z serakfalcon $*/
 	ini_set('max_execution_time', "600");
 	session_name('weberp_installation');
 	session_start();
@@ -372,7 +372,6 @@ if(!extension_loaded('mbstring')){
 			}
 			$msg .= "\$SessionLifeTime = 3600;\n";
 			$msg .= "\$MaximumExecutionTime = 120;\n";
-			$msg .= "\$CryptFunction = 'sha1';\n";
 			$msg .= "\$DefaultClock = 12;\n";
 			$msg .= "\$RootPath = dirname(htmlspecialchars(\$_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'));\n";
 			$msg .= "if (isset(\$DirectoryLevelsDeep)){\n";
@@ -384,7 +383,7 @@ if(!extension_loaded('mbstring')){
 			$msg .= "if (\$RootPath == '/' OR \$RootPath == '\\\') {\n";
 			$msg .= "	\$RootPath = '';\n";
 			$msg .= "}\n";
-			$msg .= "error_reporting (E_ALL & ~E_NOTICE);\n";
+			$msg .= "error_reporting(E_ALL && ~E_NOTICE && ~E_WARNING);\n";
 			$msg .=  "//Installed companies \n";
 			foreach ($CompanyList as $k=>$compinfo)
 			{
@@ -774,12 +773,12 @@ function Installation($DefaultLanguage)
                 if(substr($DefaultLanguage,0,2) !='en'){//ensure that the bilingual only display when the language is not english
                     foreach($LanguagesArray as $Key => $Language1){//since we only use the first 2 characters to separate the language, there are some
                                             //chance that different locale but use same first 2 letters.
-                        if(!isset($SelectedKey) and substr($DefaultLanugage,0,2) == substr($Key,0,2)){
+                        if(!isset($SelectedKey) and substr($DefaultLanguage,0,2) == substr($Key,0,2)){
                             $SelectedKey = $Key;
-                            echo '<option value="'.$Key.'" selected="selected">' . $Language1['LanguageName'].$Language1['WindowsLocale'] . '</option>';
+                            echo '<option value="'.$Key.'" selected="selected">' . $Language1['LanguageName'].' - '.$Language1['WindowsLocale'] . '</option>';
                         }
                         if(!isset($SelectedKey) or (isset($SelectedKey) and $Key != $SelectedKey)){
-                            echo '<option value="'.$Key.'" >' . $Language1['LanguageName'].$Language1['WindowsLocale'] . '</option>';
+                            echo '<option value="'.$Key.'" >' . $Language1['LanguageName'].' - '.$Language1['WindowsLocale'] . '</option>';
                         }
                     }
                 }else{
@@ -1252,6 +1251,17 @@ function PopulateSQLDataBySQL($File,$db,$DBType,$NewDB=false,$DemoDB='weberpdemo
 
 }
 
+function CryptPass( $Password ) {
+    if (PHP_VERSION_ID < 50500) {
+        $salt = base64_encode(mcrypt_create_iv(22, MCRYPT_DEV_URANDOM));
+        $salt = str_replace('+', '.', $salt);
+        $hash = crypt($Password, '$2y$10$'.$salt.'$');
+    } else {
+        $hash = password_hash($Password,PASSWORD_DEFAULT);
+    }
+    return $hash;
+ }
+
 //@para $db the database connection
 //@para $DatabaseName the database to update
 //@para $DBConnectType if it is mysql extention or not
@@ -1267,7 +1277,7 @@ function DBUpdate($db,$DatabaseName,$DBConnectType,$AdminPasswd,$AdminEmail,$Adm
 	$Result = (!$MysqlExt) ? mysqli_select_db($db,$DatabaseName):mysql_select_db($DatabaseName,$db);
 
 	$sql = "UPDATE www_users
-				SET password = '".sha1($AdminPasswd)."',
+				SET password = '".CryptPass($AdminPasswd)."',
 					email = '".$AdminEmail."',
 				        language = '".$AdminLanguage."'
 				WHERE userid = 'admin'";

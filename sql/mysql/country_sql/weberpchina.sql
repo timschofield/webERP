@@ -4032,11 +4032,7 @@ CREATE TABLE IF NOT EXISTS `stockitemproperties` (
   KEY `value` (`value`),
   KEY `stkcatpropid` (`stkcatpropid`),
   CONSTRAINT `stockitemproperties_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`),
-  CONSTRAINT `stockitemproperties_ibfk_2` FOREIGN KEY (`stkcatpropid`) REFERENCES `stockcatproperties` (`stkcatpropid`),
-  CONSTRAINT `stockitemproperties_ibfk_3` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`),
-  CONSTRAINT `stockitemproperties_ibfk_4` FOREIGN KEY (`stkcatpropid`) REFERENCES `stockcatproperties` (`stkcatpropid`),
-  CONSTRAINT `stockitemproperties_ibfk_5` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`),
-  CONSTRAINT `stockitemproperties_ibfk_6` FOREIGN KEY (`stkcatpropid`) REFERENCES `stockcatproperties` (`stkcatpropid`)
+  CONSTRAINT `stockitemproperties_ibfk_2` FOREIGN KEY (`stkcatpropid`) REFERENCES `stockcatproperties` (`stkcatpropid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Dumping data for table weberpcn.stockitemproperties: ~0 rows (approximately)
@@ -4146,9 +4142,7 @@ CREATE TABLE IF NOT EXISTS `stockmovestaxes` (
   KEY `taxauthid` (`taxauthid`),
   KEY `calculationorder` (`taxcalculationorder`),
   CONSTRAINT `stockmovestaxes_ibfk_1` FOREIGN KEY (`taxauthid`) REFERENCES `taxauthorities` (`taxid`),
-  CONSTRAINT `stockmovestaxes_ibfk_2` FOREIGN KEY (`stkmoveno`) REFERENCES `stockmoves` (`stkmoveno`),
-  CONSTRAINT `stockmovestaxes_ibfk_3` FOREIGN KEY (`stkmoveno`) REFERENCES `stockmoves` (`stkmoveno`),
-  CONSTRAINT `stockmovestaxes_ibfk_4` FOREIGN KEY (`stkmoveno`) REFERENCES `stockmoves` (`stkmoveno`)
+  CONSTRAINT `stockmovestaxes_ibfk_2` FOREIGN KEY (`stkmoveno`) REFERENCES `stockmoves` (`stkmoveno`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Dumping data for table weberpcn.stockmovestaxes: ~0 rows (approximately)
@@ -4172,9 +4166,7 @@ CREATE TABLE IF NOT EXISTS `stockrequest` (
   KEY `loccode_2` (`loccode`),
   KEY `departmentid_2` (`departmentid`),
   CONSTRAINT `stockrequest_ibfk_1` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`),
-  CONSTRAINT `stockrequest_ibfk_2` FOREIGN KEY (`departmentid`) REFERENCES `departments` (`departmentid`),
-  CONSTRAINT `stockrequest_ibfk_3` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`),
-  CONSTRAINT `stockrequest_ibfk_4` FOREIGN KEY (`departmentid`) REFERENCES `departments` (`departmentid`)
+  CONSTRAINT `stockrequest_ibfk_2` FOREIGN KEY (`departmentid`) REFERENCES `departments` (`departmentid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 
@@ -4195,9 +4187,7 @@ CREATE TABLE IF NOT EXISTS `stockrequestitems` (
   KEY `dispatchid_2` (`dispatchid`),
   KEY `stockid_2` (`stockid`),
   CONSTRAINT `stockrequestitems_ibfk_1` FOREIGN KEY (`dispatchid`) REFERENCES `stockrequest` (`dispatchid`),
-  CONSTRAINT `stockrequestitems_ibfk_2` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`),
-  CONSTRAINT `stockrequestitems_ibfk_3` FOREIGN KEY (`dispatchid`) REFERENCES `stockrequest` (`dispatchid`),
-  CONSTRAINT `stockrequestitems_ibfk_4` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`)
+  CONSTRAINT `stockrequestitems_ibfk_2` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -4303,7 +4293,7 @@ CREATE TABLE IF NOT EXISTS `supplierdiscounts` (
   KEY `effectivefrom` (`effectivefrom`),
   KEY `effectiveto` (`effectiveto`),
   KEY `stockid` (`stockid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Dumping data for table weberpcn.supplierdiscounts: ~0 rows (approximately)
 /*!40000 ALTER TABLE `supplierdiscounts` DISABLE KEYS */;
@@ -4823,7 +4813,7 @@ CREATE TABLE IF NOT EXISTS `www_users` (
 -- Dumping data for table weberpcn.www_users: ~1 rows (approximately)
 /*!40000 ALTER TABLE `www_users` DISABLE KEYS */;
 INSERT INTO `www_users` (`userid`, `password`, `realname`, `customerid`, `supplierid`, `salesman`, `phone`, `email`, `defaultlocation`, `fullaccess`, `cancreatetender`, `lastvisitdate`, `branchcode`, `pagesize`, `modulesallowed`, `blocked`, `displayrecordsmax`, `theme`, `language`, `pdflanguage`, `department`) VALUES
-	('admin', 'f865b53623b121fd34ee5426c792e5c33af8c227', '张三', '', '', '', '', 'admin@weberp.org', 'MEL', 8, 1, '2013-11-18 07:50:02', '', 'A4', '1,1,1,1,1,1,1,1,1,1,1,', 0, 50, 'fluid', 'zh_CN.utf8', 2, 0);
+	('admin', '$2y$10$e7xelMwFyXZd.Ap5ssqDhutlfNIY3yvckOYFb9EP0vSGG.HkuCVQm', '张三', '', '', '', '', 'admin@weberp.org', 'MEL', 8, 1, '2013-11-18 07:50:02', '', 'A4', '1,1,1,1,1,1,1,1,1,1,1,', 0, 50, 'fluid', 'zh_CN.utf8', 2, 0);
 /*!40000 ALTER TABLE `www_users` ENABLE KEYS */;
 /*!40014 SET FOREIGN_KEY_CHECKS=1 */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

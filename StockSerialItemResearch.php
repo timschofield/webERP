@@ -1,5 +1,5 @@
 <?php
-/* $Id: StockSerialItemResearch.php 6310 2013-08-29 10:42:50Z daintree $*/
+/* $Id: StockSerialItemResearch.php 6805 2014-08-08 16:12:36Z agaluski $*/
 
 include('includes/session.inc');
 $Title = _('Serial Item Research');
@@ -61,6 +61,7 @@ if ($SerialNo!='') {
 				ON sm.type=st.typeid
 			INNER JOIN locations l
 				on sm.loccode = l.loccode
+			INNER JOIN locationusers ON locationusers.loccode=l.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 			WHERE ssi.serialno " . LIKE . " '" . $SerialNo . "'
 			ORDER BY stkmoveno";
 

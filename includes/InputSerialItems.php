@@ -1,5 +1,5 @@
 <?php
-/* $Id: InputSerialItems.php 6310 2013-08-29 10:42:50Z daintree $*/
+/* $Id: InputSerialItems.php 6667 2014-04-05 14:07:41Z exsonqu $*/
 /*Input Serial Items - used for inputing serial numbers or batch/roll/bundle references
 for controlled items - used in:
 - ConfirmDispatchControlledInvoice.php
@@ -8,7 +8,15 @@ for controlled items - used in:
 - StockTransfers.php
 - CreditItemsControlled.php
 */
-
+//bring up perishable variable here otherwise we cannot get it in Add_SerialItems.php
+$sql = "SELECT perishable,
+		decimalplaces
+		FROM stockmaster
+		WHERE stockid='".$StockID."'";
+$result = DB_query($sql, $db);
+$myrow = DB_fetch_array($result);
+$Perishable = $myrow['perishable'];
+$DecimalPlaces = $myrow['decimalplaces'];
 include ('includes/Add_SerialItems.php');
 
 /*Setup the Data Entry Types */
@@ -105,12 +113,7 @@ $RemoveLink = '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UT
 			<br />
 			</div>';
 
-$sql="SELECT perishable
-		FROM stockmaster
-		WHERE stockid='".$StockID."'";
-$result=DB_query($sql, $db);
-$myrow=DB_fetch_array($result);
-$Perishable=$myrow['perishable'];
+
 if ($LineItem->Serialised==1){
 	if ($Perishable==0) {
 		$TableHeader .= '<tr>

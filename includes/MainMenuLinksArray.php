@@ -195,9 +195,9 @@ $MenuItems['PO']['Maintenance']['Caption'] = array(_('Maintain Supplier Price Li
 $MenuItems['PO']['Maintenance']['URL'] = array('/SupplierPriceList.php');
 
 $MenuItems['stock']['Transactions']['Caption'] = array(	_('Receive Purchase Orders'),
-														_('Bulk Inventory Transfer') . ' - ' . _('Dispatch'),
-														_('Bulk Inventory Transfer') . ' - ' . _('Receive'),
-														_('Inventory Location Transfers'),
+														_('Inventory Location Transfers'),	//"Inventory Transfer - Item Dispatch"
+														_('Bulk Inventory Transfer') . ' - ' . _('Dispatch'),	//"Inventory Transfer - Bulk Dispatch"
+														_('Bulk Inventory Transfer') . ' - ' . _('Receive'),	//"Inventory Transfer - Receive"
 														_('Inventory Adjustments'),
 														_('Reverse Goods Received'),
 														_('Enter Stock Counts'),
@@ -206,9 +206,9 @@ $MenuItems['stock']['Transactions']['Caption'] = array(	_('Receive Purchase Orde
 														_('Fulfill Internal Stock Requests'));
 
 $MenuItems['stock']['Transactions']['URL'] = array(	'/PO_SelectOSPurchOrder.php',
+													'/StockTransfers.php?New=Yes',
 													'/StockLocTransfer.php',
 													'/StockLocTransferReceive.php',
-													'/StockTransfers.php?New=Yes',
 													'/StockAdjustments.php?NewAdjustment=Yes',
 													'/ReverseGRN.php',
 													'/StockCounts.php',
@@ -237,7 +237,8 @@ $MenuItems['stock']['Reports']['Caption'] = array(	_('Serial Item Research Tool'
 													_('Historical Stock Quantity By Location/Category'),
 													_('List Negative Stocks'),
 													_('Period Stock Transaction Listing'),
-													_('Stock Transfer Note'));
+													_('Stock Transfer Note'),
+													_('Aged Controlled Stock Report'));
 
 $MenuItems['stock']['Reports']['URL'] = array(	'/StockSerialItemResearch.php',
 												'/PDFPrintLabel.php',
@@ -260,7 +261,8 @@ $MenuItems['stock']['Reports']['URL'] = array(	'/StockSerialItemResearch.php',
 												'/StockQuantityByDate.php',
 												'/PDFStockNegatives.php',
 												'/PDFPeriodStockTransListing.php',
-												'/PDFStockTransfer.php');
+												'/PDFStockTransfer.php',
+												'/AgedControlledInventory.php');
 
 $MenuItems['stock']['Maintenance']['Caption'] = array(	_('Add A New Item'),
 														_('Select An Item'),
@@ -292,6 +294,7 @@ $MenuItems['manuf']['Reports']['Caption'] = array(	_('Select A Work Order'),
 													_('List Components Required'),
 													_('List Materials Not Used Anywhere'),
 													_('Indented Where Used Listing'),
+													_('WO Items ready to produce'),
 													_('MRP'),
 													_('MRP Shortages'),
 													_('MRP Suggested Purchase Orders'),
@@ -306,6 +309,7 @@ $MenuItems['manuf']['Reports']['URL'] = array(	'/SelectWorkOrder.php',
 												'/BOMExtendedQty.php',
 												'/MaterialsNotUsed.php',
 												'/BOMIndentedReverse.php',
+												'/WOCanBeProducedNow.php',
 												'/MRPReport.php',
 												'/MRPShortages.php',
 												'/MRPPlannedPurchaseOrders.php',
@@ -400,9 +404,9 @@ $MenuItems['FA']['Reports']['URL'] = array(	'/FixedAssetRegister.php',
 											'/MaintenanceUserSchedule.php',
 											'/MaintenanceReminders.php');
 
-$MenuItems['FA']['Maintenance']['Caption'] = array(	_('Asset Categories Maintenance'),
+$MenuItems['FA']['Maintenance']['Caption'] = array(	_('Fixed Asset Category Maintenance'),
 													_('Add or Maintain Asset Locations'),
-													_('Maintenance Tasks'));
+													_('Fixed Asset Maintenance Tasks'));
 
 $MenuItems['FA']['Maintenance']['URL'] = array(	'/FixedAssetCategories.php',
 												'/FixedAssetLocations.php',
@@ -483,8 +487,7 @@ $MenuItems['system']['Reports']['Caption'] = array(	_('Sales Types'),
 													_('Sales GL Interface Postings'),
 													_('COGS GL Interface Postings'),
 													_('Freight Costs Maintenance'),
-													_('Discount Matrix'),
-													_('Price Matrix'));
+													_('Discount Matrix'));
 
 $MenuItems['system']['Reports']['URL'] = array(	'/SalesTypes.php',
 												'/CustomerTypes.php',
@@ -499,11 +502,11 @@ $MenuItems['system']['Reports']['URL'] = array(	'/SalesTypes.php',
 												'/SalesGLPostings.php',
 												'/COGSGLPostings.php',
 												'/FreightCosts.php',
-												'/DiscountMatrix.php',
-												'/PriceMatrix.php');
+												'/DiscountMatrix.php');
 
 $MenuItems['system']['Maintenance']['Caption'] = array(	_('Inventory Categories Maintenance'),
 														_('Inventory Locations Maintenance'),
+														_('Inventory Location Authorised Users Maintenance'),
 														_('Discount Category Maintenance'),
 														_('Units of Measure'),
 														_('MRP Available Production Days'),
@@ -514,6 +517,7 @@ $MenuItems['system']['Maintenance']['Caption'] = array(	_('Inventory Categories 
 
 $MenuItems['system']['Maintenance']['URL'] = array(	'/StockCategories.php',
 													'/Locations.php',
+													'/LocationUsers.php',
 													'/DiscountCategories.php',
 													'/UnitsOfMeasure.php',
 													'/MRPCalendar.php',
@@ -522,10 +526,10 @@ $MenuItems['system']['Maintenance']['URL'] = array(	'/StockCategories.php',
 													'/InternalStockCategoriesByRole.php',
 													'/Labels.php');
 
-$MenuItems['Utilities']['Transactions']['Caption'] = array(	_('Import GL Payments Receipts Or Journals From CSV'),
-															_('Change A Customer Code'),
+$MenuItems['Utilities']['Transactions']['Caption'] = array(	_('Change A Customer Code'),
 															_('Change A Customer Branch Code'),
 															_('Change A Supplier Code'),
+															_('Change A Stock Category Code'),
 															_('Change An Inventory Item Code'),
 															_('Change A GL Account Code'),
 															_('Change A Location Code'),
@@ -535,10 +539,10 @@ $MenuItems['Utilities']['Transactions']['Caption'] = array(	_('Import GL Payment
 															_('Reverse all supplier payments on a specified date'),
 															_('Update sales analysis with latest customer data'));
 
-$MenuItems['Utilities']['Transactions']['URL'] = array(	'/Z_ImportGLTransactions.php',
-														'/Z_ChangeCustomerCode.php',
+$MenuItems['Utilities']['Transactions']['URL'] = array(	'/Z_ChangeCustomerCode.php',
 														'/Z_ChangeBranchCode.php',
 														'/Z_ChangeSupplierCode.php',
+														'/Z_ChangeStockCategory.php',
 														'/Z_ChangeStockCode.php',
 														'/Z_ChangeGLAccountCode.php',
 														'/Z_ChangeLocationCode.php',
@@ -561,22 +565,26 @@ $MenuItems['Utilities']['Reports']['URL'] = array(	'/Z_CurrencyDebtorsBalances.p
 $MenuItems['Utilities']['Maintenance']['Caption'] = array(	_('Maintain Language Files'),
 															_('Make New Company'),
 															_('Data Export Options'),
-															_('Import Stock Items from .csv'),
+															_('Import Customers from .csv file'),
+															_('Import Stock Items from .csv file'),
+															_('Import Price List from .csv file'),
 															_('Import Fixed Assets from .csv file'),
+															_('Import GL Payments Receipts Or Journals From .csv file'),
 															_('Create new company template SQL file and submit to webERP'),
 															_('Re-calculate brought forward amounts in GL'),
 															_('Re-Post all GL transactions from a specified period'),
-															_('Purge all old prices'),
-															_('Import Price List from CSV file'));
+															_('Purge all old prices'));
 
 $MenuItems['Utilities']['Maintenance']['URL'] = array(	'/Z_poAdmin.php',
 														'/Z_MakeNewCompany.php',
 														'/Z_DataExport.php',
+														'/Z_ImportDebtors.php',
 														'/Z_ImportStocks.php',
+														'/Z_ImportPriceList.php',
 														'/Z_ImportFixedAssets.php',
+														'/Z_ImportGLTransactions.php',
 														'/Z_CreateCompanyTemplateFile.php',
 														'/Z_UpdateChartDetailsBFwd.php',
 														'/Z_RePostGLFromPeriod.php',
-														'/Z_DeleteOldPrices.php',
-														'/Z_ImportPriceList.php');
+														'/Z_DeleteOldPrices.php');
 ?>

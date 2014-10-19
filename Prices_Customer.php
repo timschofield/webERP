@@ -1,5 +1,5 @@
 <?php
-/* $Id: Prices_Customer.php 6310 2013-08-29 10:42:50Z daintree $*/
+/* $Id: Prices_Customer.php 6675 2014-04-07 08:57:25Z exsonqu $*/
 
 include('includes/session.inc');
 
@@ -89,18 +89,24 @@ if (isset($_POST['submit'])) {
 		$InputError =1;
 		$msg = _('The date this price is to take effect from must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'];
 	}
-	if (! Is_Date($_POST['EndDate']) AND $_POST['EndDate']!=''){ //EndDate can also be blank for default prices
-		$InputError =1;
-		$msg = _('The date this price is be in effect to must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'];
+	if ($_POST['EndDate']!='0000-00-00'){
+		if (! Is_Date($_POST['EndDate']) AND $_POST['EndDate']!=''){ //EndDate can also be blank for default prices
+			$InputError =1;
+			$msg = _('The date this price is be in effect to must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'];
+		}
+		if (Date1GreaterThanDate2($_POST['StartDate'],$_POST['EndDate']) AND $_POST['EndDate']!=''){
+			$InputError =1;
+			$msg = _('The end date is expected to be after the start date, enter an end date after the start date for this price');
+		}
+		if (Date1GreaterThanDate2(Date($_SESSION['DefaultDateFormat']),$_POST['EndDate']) AND $_POST['EndDate']!=''){
+			$InputError =1;
+			$msg = _('The end date is expected to be after today. There is no point entering a new price where the effective date is before today!');
+		}
+		if (trim($_POST['EndDate'])==''){
+			$_POST['EndDate'] = '0000-00-00';
+		}
 	}
-	if (Date1GreaterThanDate2($_POST['StartDate'],$_POST['EndDate']) AND $_POST['EndDate']!=''){
-		$InputError =1;
-		$msg = _('The end date is expected to be after the start date, enter an end date after the start date for this price');
-	}
-	if (Date1GreaterThanDate2(Date($_SESSION['DefaultDateFormat']),$_POST['EndDate']) AND $_POST['EndDate']!=''){
-		$InputError =1;
-		$msg = _('The end date is expected to be after today. There is no point entering a new price where the effective date is before today!');
-	}
+
 
 	if ((isset($_POST['Editing']) AND $_POST['Editing']=='Yes') AND mb_strlen($Item)>1 AND $InputError !=1) {
 

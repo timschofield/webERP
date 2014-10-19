@@ -1,6 +1,5 @@
 <?php
-
-/* $Id: MiscFunctions.php 6537 2014-01-14 06:59:12Z daintree $*/
+/* $Id: MiscFunctions.php 6859 2014-09-01 00:00:37Z rchacon $*/
 
 /*  ******************************************  */
 /** STANDARD MESSAGE HANDLING & FORMATTING **/
@@ -449,5 +448,15 @@ function ChangeFieldInTable($TableName, $FieldName, $OldValue, $NewValue, $db){
 	echo ' ... ' . _('completed');
 }
 
+function TableRows($k) {
+	// Outputs a html's table row with class (Odd|Even).
+	if($k) {//Is it an even table row?
+		echo '<tr class="EvenTableRows">';
+		return False;
+	} else {
+		echo '<tr class="OddTableRows">';
+		return True;
+	}
+}// End function TableRows().
 
 ?>

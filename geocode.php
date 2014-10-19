@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: geocode.php 6565 2014-02-06 08:42:57Z daintree $*/
+/* $Id: geocode.php 6592 2014-03-02 08:41:40Z daintree $*/
 //$PageSecurity = 3;
 $Title = _('Geocode Generate');
 

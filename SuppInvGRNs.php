@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: SuppInvGRNs.php 6537 2014-01-14 06:59:12Z daintree $*/
+/* $Id: SuppInvGRNs.php 6592 2014-03-02 08:41:40Z daintree $*/
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing and also

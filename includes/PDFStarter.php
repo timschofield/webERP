@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: PDFStarter.php 6436 2013-11-25 12:45:32Z rchacon $ */
+/* $Id: PDFStarter.php 6806 2014-08-09 04:37:02Z daintree $ */
 
 /*	-------------------------------------------------------------------------------------
 	November 2009. Moving from FPDF to TCPDF.
@@ -160,8 +160,28 @@ switch ($PaperSize) {
 		$Left_Margin = 36; // Half inch = 72/2
 		$Right_Margin = 36; // Half inch = 72/2
 		break;
+
+	case 'A6_Landscape':
+		$DocumentPaper = 'A6';
+		$DocumentOrientation ='L';
+		$Page_Width=417;
+		$Page_Height=295;
+		$Top_Margin=10;
+		$Bottom_Margin=10;
+		$Left_Margin=10;
+		$Right_Margin=10;
+		break;
+
 	default:
-		$DocumentOrientation = 'L';
+		$DocumentPaper = 'LETTER';
+		$DocumentOrientation ='L';
+
+		$Page_Width = 792; // 72 * 11 inch
+		$Page_Height = 612; // 72 * 8.5 inch
+		$Top_Margin = 36; // Half inch = 72/2
+		$Bottom_Margin = 36; // Half inch = 72/2
+		$Left_Margin = 36; // Half inch = 72/2
+		$Right_Margin = 36; // Half inch = 72/2
 		break;
 }
 
@@ -169,18 +189,18 @@ switch ($PaperSize) {
 //	$PageSize = array(0,0,$Page_Width,$Page_Height);
 //	$pdf = new Cpdf($PageSize);
 $pdf = new Cpdf($DocumentOrientation, 'pt', $DocumentPaper);
-$pdf->addInfo('Creator', 'WebERP http://www.weberp.org');
+$pdf->addInfo('Creator', 'webERP http://www.weberp.org');
 $pdf->addInfo('Author', 'WebERP ' . $Version);
 
 /* Javier: I have brought this piece from the pdf class constructor to get it closer to the admin/user,
 	I corrected it to match TCPDF, but it still needs check, after which,
 	I think it should be moved to each report to provide flexible Document Header and Margins in a per-report basis. */
 
-	$pdf->SetPrintHeader(false);	// Javier: I added this must be called before Add Page
-	$pdf->setAutoPageBreak(0);
-	$pdf->setPrintFooter(false);
-	$pdf->AddPage();
-	$pdf->cMargin = 0;
+$pdf->SetPrintHeader(false);	// Javier: I added this must be called before Add Page
+$pdf->setAutoPageBreak(0);
+$pdf->setPrintFooter(false);
+$pdf->AddPage();
+$pdf->cMargin = 0;
 /* END Brought from class.pdf.php constructor */
 
 ?>

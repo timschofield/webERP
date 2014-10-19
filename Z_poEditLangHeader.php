@@ -1,21 +1,23 @@
 <?php
-
-/* $Id: Z_poEditLangHeader.php 6310 2013-08-29 10:42:50Z daintree $ */
+/* $Id: Z_poEditLangHeader.php 6772 2014-06-22 21:30:22Z rchacon $ */
 
 /* Steve Kitchen */
 
 //$PageSecurity = 15;
 
 include ('includes/session.inc');
-
-$Title = _('Edit Header');
-
+$Title = _('Edit Header');// _('Edit a Language File Header')
+$ViewTopic = "SpecialUtilities";
+$BookMark = "Z_poEditLangHeader";// Anchor's id in the manual's html document.
 include('includes/header.inc');
+echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme . 
+		'/images/maintenance.png" title="' . 
+		_('Edit a Language File Header') . '" />' . ' ' . 
+		_('Edit a Language File Header') . '</p>';
 
-/* Your webserver user MUST have read/write access to here,
-	otherwise you'll be wasting your time */
+/* Your webserver user MUST have read/write access to here,	otherwise you'll be wasting your time */
 
-echo "<br />&nbsp;<a href='" . $RootPath . "/Z_poAdmin.php'>" . _('Back to the translation menu') . "</a>";
+echo '<br />&nbsp;<a href="' . $RootPath . '/Z_poAdmin.php">' . _('Back to the translation menu') . '</a>';
 echo '<br /><br />&nbsp;' . _('Utility to edit a language file header');
 echo '<br />&nbsp;' . _('Current language is') . ' ' . $_SESSION['Language'];
 

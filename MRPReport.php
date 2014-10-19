@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: MRPReport.php 6310 2013-08-29 10:42:50Z daintree $*/
+/* $Id: MRPReport.php 6708 2014-05-14 15:40:27Z exsonqu $*/
 
 // MRPReport.php - Shows supply and demand for a part as determined by MRP
 
@@ -422,7 +422,7 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 
 	// Details for Demand/Supply Sections
 	$i = 0;
-	while ((isset($Supplies[$i]) AND mb_strlen($Supplies[$i]['part'])) > 1
+	while ((isset($Supplies[$i]) AND mb_strlen($Supplies[$i]['part']) > 1)
 			OR (isset($Requirements[$i]) AND mb_strlen($Requirements[$i]['part']) > 1)){
 
 		$YPos -=$line_height;

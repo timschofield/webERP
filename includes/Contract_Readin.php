@@ -24,6 +24,7 @@ $ContractHeaderSQL = "SELECT contractdescription,
 						INNER JOIN custbranch
 						ON debtorsmaster.debtorno=custbranch.debtorno
 						AND contracts.branchcode=custbranch.branchcode
+						INNER JOIN locationusers ON locationusers.loccode=contracts.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
 						WHERE contractref= '" . $ContractRef . "'";
 
 $ErrMsg =  _('The contract cannot be retrieved because');

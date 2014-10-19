@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: SelectWorkOrder.php 6310 2013-08-29 10:42:50Z daintree $*/
+/* $Id: SelectWorkOrder.php 6875 2014-09-11 09:34:57Z tehonu $*/
 
 include('includes/session.inc');
 $Title = _('Search Work Orders');
@@ -132,7 +132,12 @@ if (!isset($StockID)) {
 		}
 		echo _('Work Order number') . ': <input type="text" name="WO" autofocus="autofocus" maxlength="8" size="9" />&nbsp; ' . _('Processing at') . ':<select name="StockLocation"> ';
 
-		$sql = "SELECT loccode, locationname FROM locations";
+		$sql = "SELECT locations.loccode, locationname FROM locations
+				INNER JOIN locationusers 
+					ON locationusers.loccode=locations.loccode 
+					AND locationusers.userid='" .  $_SESSION['UserID'] . "' 
+					AND locationusers.canview=1
+				WHERE locations.usedforwo = 1";
 
 		$resultStkLocs = DB_query($sql,$db);
 
@@ -265,6 +270,7 @@ if (!isset($StockID)) {
 						FROM workorders
 						INNER JOIN woitems ON workorders.wo=woitems.wo
 						INNER JOIN stockmaster ON woitems.stockid=stockmaster.stockid
+						INNER JOIN locationusers ON locationusers.loccode=workorders.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 						WHERE workorders.closed='" . $ClosedOrOpen . "'
 						AND workorders.wo='". $SelectedWO ."'
 						ORDER BY workorders.wo,
@@ -284,6 +290,7 @@ if (!isset($StockID)) {
 							FROM workorders
 							INNER JOIN woitems ON workorders.wo=woitems.wo
 							INNER JOIN stockmaster ON woitems.stockid=stockmaster.stockid
+							INNER JOIN locationusers ON locationusers.loccode=workorders.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 							WHERE workorders.closed='" . $ClosedOrOpen . "'
 							AND woitems.stockid='". $SelectedStockItem ."'
 							AND workorders.loccode='" . $_POST['StockLocation'] . "'
@@ -300,6 +307,7 @@ if (!isset($StockID)) {
 									workorders.startdate
 							FROM workorders
 							INNER JOIN woitems ON workorders.wo=woitems.wo
+							INNER JOIN locationusers ON locationusers.loccode=workorders.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 							INNER JOIN stockmaster ON woitems.stockid=stockmaster.stockid
 							WHERE workorders.closed='" . $ClosedOrOpen . "'
 							AND workorders.loccode='" . $_POST['StockLocation'] . "'
@@ -318,9 +326,10 @@ if (!isset($StockID)) {
 				<tr>
 					<th>' . _('Modify') . '</th>
 					<th class="ascending">' . _('Status') . '</th>
-					<th>' . _('Receive') . '</th>
 					<th>' . _('Issue To') . '</th>
+					<th>' . _('Receive') . '</th>
 					<th>' . _('Costing') . '</th>
+					<th>' . _('Paperwork') . '</th>
 					<th class="ascending">' . _('Item') . '</th>
 					<th class="ascending">' . _('Quantity Required') . '</th>
 					<th class="ascending">' . _('Quantity Received') . '</th>
@@ -345,6 +354,7 @@ if (!isset($StockID)) {
 			$Receive_WO = $RootPath . '/WorkOrderReceive.php?WO=' .$myrow['wo'] . '&amp;StockID=' . $myrow['stockid'];
 			$Issue_WO = $RootPath . '/WorkOrderIssue.php?WO=' .$myrow['wo'] . '&amp;StockID=' . $myrow['stockid'];
 			$Costing_WO =$RootPath . '/WorkOrderCosting.php?WO=' .$myrow['wo'];
+			$Printing_WO =$RootPath . '/PDFWOPrint.php?WO=' .$myrow['wo'] . '&amp;StockID=' . $myrow['stockid'];
 
 			$FormatedRequiredByDate = ConvertSQLDate($myrow['requiredby']);
 			$FormatedStartDate = ConvertSQLDate($myrow['startdate']);
@@ -352,9 +362,10 @@ if (!isset($StockID)) {
 
 			printf('<td><a href="%s">%s</a></td>
 					<td><a href="%s">' . _('Status') . '</a></td>
-					<td><a href="%s">' . _('Receive') . '</a></td>
 					<td><a href="%s">' . _('Issue To') . '</a></td>
+					<td><a href="%s">' . _('Receive') . '</a></td>
 					<td><a href="%s">' . _('Costing') . '</a></td>
+					<td><a href="%s">' . _('Print W/O') . '</a></td>
 					<td>%s - %s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -365,9 +376,10 @@ if (!isset($StockID)) {
 					$ModifyPage,
 					$myrow['wo'],
 					$Status_WO,
-					$Receive_WO,
 					$Issue_WO,
+					$Receive_WO,
 					$Costing_WO,
+					$Printing_WO,
 					$myrow['stockid'],
 					$myrow['description'],
 					locale_number_format($myrow['qtyreqd'],$myrow['decimalplaces']),

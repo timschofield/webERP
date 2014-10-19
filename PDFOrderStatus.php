@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: PDFOrderStatus.php 6458 2013-11-30 11:54:03Z exsonqu $*/
+/* $Id: PDFOrderStatus.php 6812 2014-08-13 18:14:57Z agaluski $*/
 
 include ('includes/session.inc');
 include('includes/SQL_CommonFunctions.inc');
@@ -62,7 +62,7 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
 			<td><select name="Location">
 				<option selected="selected" value="All">' . _('All Locations') . '</option>';
 
-	$result= DB_query("SELECT loccode, locationname FROM locations",$db);
+	$result= DB_query("SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1",$db);
 	while ($myrow=DB_fetch_array($result)){
 		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 	}
@@ -127,6 +127,7 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 				 AND custbranch.branchcode=salesorders.branchcode
 				 INNER JOIN locations
 				 ON salesorders.fromstkloc=locations.loccode
+				 INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 			 WHERE salesorders.orddate >='" . FormatDateForSQL($_POST['FromDate']) . "'
 				  AND salesorders.orddate <='" . FormatDateForSQL($_POST['ToDate']) . "'
 			 AND salesorders.quotation=0";
@@ -162,6 +163,7 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 				 AND custbranch.branchcode=salesorders.branchcode
 				 INNER JOIN locations
 				 ON salesorders.fromstkloc=locations.loccode
+				 INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 			 WHERE stockmaster.categoryid ='" . $_POST['CategoryID'] . "'
 				  AND orddate >='" . FormatDateForSQL($_POST['FromDate']) . "'
 				  AND orddate <='" . FormatDateForSQL($_POST['ToDate']) . "'
@@ -199,6 +201,7 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 				 AND custbranch.branchcode=salesorders.branchcode
 				 INNER JOIN locations
 				 ON salesorders.fromstkloc=locations.loccode
+				 INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 			 WHERE salesorders.fromstkloc ='" . $_POST['Location'] . "'
 				  AND salesorders.orddate >='" . FormatDateForSQL($_POST['FromDate']) . "'
 				  AND salesorders.orddate <='" . FormatDateForSQL($_POST['ToDate']) . "'
@@ -237,6 +240,7 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 				 AND custbranch.branchcode=salesorders.branchcode
 				 INNER JOIN locations
 				 ON salesorders.fromstkloc=locations.loccode
+				 INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 			 WHERE stockmaster.categoryid ='" . $_POST['CategoryID'] . "'
 				  AND salesorders.fromstkloc ='" . $_POST['Location'] . "'
 				  AND salesorders.orddate >='" . FormatDateForSQL($_POST['FromDate']) . "'
@@ -246,6 +250,10 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 
 if ($_POST['BackOrders']=='Yes'){
 		$sql .= " AND salesorderdetails.quantity-salesorderdetails.qtyinvoiced >0";
+}
+//Add salesman role control 
+if ($_SESSION['SalesmanLogin'] != '') {
+		$sql .= " AND salesorders.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 }
 
 $sql .= " ORDER BY salesorders.orderno";

@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: PO_SelectOSPurchOrder.php 6547 2014-01-24 08:52:53Z daintree $*/
+/* $Id: PO_SelectOSPurchOrder.php 6812 2014-08-13 18:14:57Z agaluski $*/
 
 $PricesSecurity = 12;
 
@@ -64,7 +64,7 @@ if (isset($_POST['SearchParts'])) {
 	if (isset($_POST['Keywords']) AND isset($_POST['StockCode'])) {
 		echo '<div class="page_help_text">' . _('Stock description keywords have been used in preference to the Stock code extract entered') . '.</div>';
 	}
-	If ($_POST['Keywords']) {
+	if ($_POST['Keywords']) {
 		//insert wildcard characters in spaces
 		$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
 
@@ -77,6 +77,8 @@ if (isset($_POST['SearchParts'])) {
 					ON stockmaster.stockid = locstock.stockid
 					INNER JOIN purchorderdetails
 						ON stockmaster.stockid=purchorderdetails.itemcode
+					INNER JOIN purchorders on purchorders.orderno=purchorderdetails.orderno
+					INNER JOIN locationusers ON locationusers.loccode=purchorders.intostocklocation AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 				WHERE purchorderdetails.completed=0
 				AND stockmaster.description " . LIKE . " '" . $SearchString . "'
 				AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
@@ -97,6 +99,8 @@ if (isset($_POST['SearchParts'])) {
 				ON stockmaster.stockid = locstock.stockid
 				INNER JOIN purchorderdetails
 				ON stockmaster.stockid=purchorderdetails.itemcode
+				INNER JOIN purchorders on purchorders.orderno=purchorderdetails.orderno
+				INNER JOIN locationusers ON locationusers.loccode=purchorders.intostocklocation AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 				WHERE purchorderdetails.completed=0
 				AND stockmaster.stockid " . LIKE . " '%" . $_POST['StockCode'] . "%'
 				AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
@@ -115,6 +119,8 @@ if (isset($_POST['SearchParts'])) {
 				ON stockmaster.stockid = locstock.stockid
 				INNER JOIN purchorderdetails
 				ON stockmaster.stockid=purchorderdetails.itemcode
+				INNER JOIN purchorders on purchorders.orderno=purchorderdetails.orderno
+				INNER JOIN locationusers ON locationusers.loccode=purchorders.intostocklocation AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 				WHERE purchorderdetails.completed=0
 				AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
 				GROUP BY stockmaster.stockid,
@@ -158,7 +164,8 @@ if (!isset($OrderNumber) or $OrderNumber == '') {
 		$DateTo = FormatDateForSQL($_POST['DateTo']);
 	}
 
-	$sql = "SELECT loccode, locationname FROM locations";
+	$sql = "SELECT locations.loccode, locationname FROM locations
+				INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
 	$resultStkLocs = DB_query($sql, $db);
 	while ($myrow = DB_fetch_array($resultStkLocs)) {
 		if (isset($_POST['StockLocation'])) {
@@ -258,7 +265,7 @@ if (isset($StockItemsResult)) {
 			<th class="ascending">' . _('Orders') . '<br />' . _('Outstanding') . '</th>
 			<th class="ascending">' . _('Units') . '</th>
 		</tr>';
-		
+
 	$k = 0; //row colour counter
 
 	while ($myrow = DB_fetch_array($StockItemsResult)) {
@@ -320,8 +327,8 @@ else {
 				INNER JOIN currencies
 				ON suppliers.currcode=currencies.currabrev
 				WHERE purchorderdetails.completed=0
-				AND orddate>='" . FormatDateForSQL($_POST['DateFrom']) . "'
-				AND orddate<='" . FormatDateForSQL($_POST['DateTo']) . "'
+				AND orddate>='" . $DateFrom . "'
+				AND orddate<='" . $DateTo . "'
 				AND purchorders.orderno='" . $OrderNumber . "'
 				GROUP BY purchorders.orderno ASC,
 					suppliers.suppname,
@@ -357,9 +364,10 @@ else {
 						ON  purchorders.supplierno = suppliers.supplierid
 						INNER JOIN currencies
 						ON suppliers.currcode=currencies.currabrev
+						INNER JOIN locationusers ON locationusers.loccode=purchorders.intostocklocation AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 						WHERE purchorderdetails.completed=0
-						AND orddate>='" . FormatDateForSQL($_POST['DateFrom']) . "'
-						AND orddate<='" . FormatDateForSQL($_POST['DateTo']) . "'
+						AND orddate>='" . $DateFrom . "'
+						AND orddate<='" . $DateTo . "'
 						AND purchorderdetails.itemcode='" . $SelectedStockItem . "'
 						AND purchorders.supplierno='" . $SelectedSupplier . "'
 						AND purchorders.intostocklocation = '" . $_POST['StockLocation'] . "'
@@ -393,9 +401,10 @@ else {
 						ON  purchorders.supplierno = suppliers.supplierid
 						INNER JOIN currencies
 						ON suppliers.currcode=currencies.currabrev
+						INNER JOIN locationusers ON locationusers.loccode=purchorders.intostocklocation AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 						WHERE purchorderdetails.completed=0
-						AND orddate>='" . FormatDateForSQL($_POST['DateFrom']) . "'
-						AND orddate<='" . FormatDateForSQL($_POST['DateTo']) . "'
+						AND orddate>='" . $DateFrom . "'
+						AND orddate<='" . $DateTo . "'
 						AND purchorders.supplierno='" . $SelectedSupplier . "'
 						AND purchorders.intostocklocation = '" . $_POST['StockLocation'] . "'
 						" . $StatusCriteria . "
@@ -434,9 +443,10 @@ else {
 						ON  purchorders.supplierno = suppliers.supplierid
 						INNER JOIN currencies
 						ON suppliers.currcode=currencies.currabrev
+						INNER JOIN locationusers ON locationusers.loccode=purchorders.intostocklocation AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 						WHERE purchorderdetails.completed=0
-						AND orddate>='" . FormatDateForSQL($_POST['DateFrom']) . "'
-						AND orddate<='" . FormatDateForSQL($_POST['DateTo']) . "'
+						AND orddate>='" . $DateFrom . "'
+						AND orddate<='" . $DateTo . "'
 						AND purchorderdetails.itemcode='" . $SelectedStockItem . "'
 						AND purchorders.intostocklocation = '" . $_POST['StockLocation'] . "'
 						" . $StatusCriteria . "
@@ -469,9 +479,10 @@ else {
 						ON  purchorders.supplierno = suppliers.supplierid
 						INNER JOIN currencies
 						ON suppliers.currcode=currencies.currabrev
+						INNER JOIN locationusers ON locationusers.loccode=purchorders.intostocklocation AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 						WHERE purchorderdetails.completed=0
-						AND orddate>='" . FormatDateForSQL($_POST['DateFrom']) . "'
-						AND orddate<='" . FormatDateForSQL($_POST['DateTo']) . "'
+						AND orddate>='" . $DateFrom . "'
+						AND orddate<='" . $DateTo . "'
 						AND purchorders.intostocklocation = '" . $_POST['StockLocation'] . "'
 						" . $StatusCriteria . "
 						GROUP BY purchorders.orderno ASC,
