@@ -263,23 +263,23 @@
 	</Data>
 	<DeliveryAddressBox type="CurvedRectangle" name="Delivery Address Box" id="DeliveryAddressBox">
 		<x>40</x>
-		<y>32</y>
-		<width>190</width>
-		<height>90</height>
+		<y>22</y>
+		<width>180</width>
+		<height>70</height>
 		<radius>10</radius>
 	</DeliveryAddressBox>
 	<CustomerAddressBox type="CurvedRectangle" name="Customer Address Box" id="CustomerAddressBox">
 		<x>40</x>
-		<y>126</y>
-		<width>210</width>
-		<height>100</height>
+		<y>116</y>
+		<width>200</width>
+		<height>80</height>
 		<radius>10</radius>
 	</CustomerAddressBox>
 	<DataBox type="CurvedRectangle" name="Data Box" id="DataBox">
 		<x>20</x>
-		<y>236</y>
-		<width>802</width>
-		<height>370</height>
+		<y>226</y>
+		<width>792</width>
+		<height>350</height>
 		<radius>10</radius>
 	</DataBox>
 	<LineBelowColumns type="Line" name="Line Below Columns" id="LineBelowColumns">

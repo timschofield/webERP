@@ -196,28 +196,25 @@ if (DB_num_rows($result) != 0){
 		if ($WebsiteCategory < 0){
 			$WebsiteDescription = 'ITEM EXCLUDED';
 		}
-		// No pertany a cap SALES CATEGORY o NO tenim picture
-//		if (($WebsiteDescription == '') OR ($WebsiteDescription == 'NO_PICTURE')){
-			$k = StartEvenOrOddRow($k);
-			printf('<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					</tr>', 
-					$i, 
-					$myrow['stockid'], 
-					$myrow['description'], 
-					$myrow['categoryid'], 
-					$Weight, 
-					$Volume, 
-					$WebsiteDescription,
-					$FeaturedText
-					);
-//		}
+		$k = StartEvenOrOddRow($k);
+		printf('<td class="number">%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				</tr>', 
+				$i, 
+				$myrow['stockid'], 
+				$myrow['description'], 
+				$myrow['categoryid'], 
+				$Weight, 
+				$Volume, 
+				$WebsiteDescription,
+				$FeaturedText
+				);
 		$i++;
 	}
 	echo '</table>

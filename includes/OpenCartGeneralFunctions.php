@@ -763,7 +763,7 @@ function MaintainUrlAlias($SEOQuery, $SEOKeyword, $db_oc, $oc_tableprefix){
 	// search if we already have it
 	$SQL = "SELECT url_alias_id
 			FROM " . $oc_tableprefix . "url_alias
-			WHERE query = '" . $$SEOQuery . "'";
+			WHERE query = '" . $SEOQuery . "'";
 	$ErrMsg =_('Could not get the UrlAlias in Opencart because');
 	$result = DB_query($SQL,$db_oc,$ErrMsg);
 	if(DB_num_rows($result) != 0){

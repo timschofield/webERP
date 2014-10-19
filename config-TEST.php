@@ -38,8 +38,8 @@ $dbType = 'mysqli';
 
 
 // sql user & password
-$dbuser = 'kurakura_tstuser';
-$dbpassword = 'tu.47.puta.22.madre';
+$dbuser = 'kurakura_kl90001';
+$dbpassword = 'po.69.lahi';
 
 // It would probably be inappropraite to allow selection of the company in a hosted envionment so this option can be switched to 'ShowInputBox' or 'Hide'
 // depending if you allow the user to select the name of the company or must use the default one described at $DefaultCompany

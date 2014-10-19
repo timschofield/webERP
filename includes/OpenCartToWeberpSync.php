@@ -122,9 +122,9 @@ function SyncOrderInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tabl
 			}
 			/* FIELD MATCHING */
 			$CustomerCode = GetWeberpCustomerIdFromCurrency($myrow['currency_code'], $db);
-			$CustomerName = $myrow['customerfirstname'] . ' ' . $myrow['customerlastname'];
-			$PaymentName = $myrow['paymentfirstname'] . ' ' . $myrow['paymentlastname'];
-			$ShippingName = $myrow['shippingfirstname'] . ' ' . $myrow['shippinglastname'];
+			$CustomerName = CapitalizeName($myrow['customerfirstname'] . ' ' . $myrow['customerlastname']);
+			$PaymentName = CapitalizeName($myrow['paymentfirstname'] . ' ' . $myrow['paymentlastname']);
+			$ShippingName = CapitalizeName($myrow['shippingfirstname'] . ' ' . $myrow['shippinglastname']);
 			$SalesType = OPENCART_DEFAULT_CUSTOMER_SALES_TYPE;
 			$DefaultShipVia = GetWeberpShippingMethod($myrow['shipping_method']);
 			$Quotation = 1; // is NOT a firm order until we check the payments

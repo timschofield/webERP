@@ -21,23 +21,23 @@ function webERP_in_test(){
 			FUNCTIONS RELATED TO P.O.S. AT SHOPS
 *************************************************************************************************/
 function KapalLautRetailAreaSelection($Debtor, $PaymentMethod, $db){
-	$Area = "RE";	
 	if($PaymentMethod == PAYMENT_BY_CASH){
 		// Cash
-		// Needs to be splitted into Cash CV and Cash normal
+		// Needs to be splitted into Cash PT and Cash normal
 		// We produce a random number between 0 and 100, to separate them.
 		$CashDraw = mt_rand(1,10000)/100;
 		if ($CashDraw <= PERCENTAGE_SALES_CASH_TO_PT){
-			// PERCENTAGE_SALES_CASH_TO_PT% of cash invoices go to CV
-			$Area = $Area . "C";
+			// PERCENTAGE_SALES_CASH_TO_PT% of cash invoices go to PT
+			$Area = "REC";
 		}else{
 			// 100 - PERCENTAGE_SALES_CASH_TO_PT% of cash invoices go cash others
-			$Area = $Area . "Z";
+			$Area = "REZ";
 		}
 	}elseif($PaymentMethod == PAYMENT_BY_CREDITCARD){
 		// Credit Card
-		$Area = $Area . "R";
+		$Area = "RER";
 	}else{
+		$Area = "";	
 		prnMsg(_('Error calculating customer area from payment method. Seek help from the administrator.'),'error');
 		include('includes/footer.inc');
 		exit;
@@ -278,6 +278,54 @@ function AdjustPackagingMovement($StockId, $QtyDelivered, $InvoiceNo, $PeriodNo,
 			$DbgMsg = _('The following SQL to insert the GLTrans record was used');
 			$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 		} /* end of if GL and stock integrated and standard cost !=0 */
+	}
+}
+
+function RecordRetailCustomerInformation($OrderNo, $FirstName, $LastName, $Country, $DateOfBirth, $Email, $Sex, $db){
+	// If some field is filled, record it.
+	// For some reason, Country = 0 if empty
+	if (Is_date($DateOfBirth)){
+		$DateOfBirth = FormatDateForSQL($DateOfBirth);
+	}else{
+		$DateOfBirth = '0000-00-00';
+	}
+	if (($Country != '0') 
+		OR ($DateOfBirth != '0000-00-00') 
+		OR ($Email != '') 
+		OR ($Sex != '')){ 
+
+		$FirstName = CapitalizeName($FirstName);
+		$LastName = CapitalizeName($LastName);
+		$Email = mb_strtolower($Email);
+		$Today  = FormatDateForSQL(Date($_SESSION['DefaultDateFormat']));
+
+		if (($DateOfBirth != '') AND ($DateOfBirth != '0000-00-00') AND ($Today > $DateOfBirth)){
+			$Age = date_diff(date_create($DateOfBirth), date_create($Today))->y; 
+		}else{
+			$Age = 0;
+		}
+
+		$SQL = "INSERT INTO klretailcustomers (orderno,
+												firstname,
+												lastname,
+												country,
+												date_of_birth,
+												age,
+												email,
+												sex
+												)
+						VALUES (" . $OrderNo . ",
+							'" . $FirstName . "',
+							'" . $LastName . "',
+							'" . $Country . "',
+							'" . $DateOfBirth . "',
+							'" . $Age . "',
+							'" . $Email . "',
+							'" . $Sex . "')";
+
+		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The Retail Customer Info could not be inserted because');
+		$DbgMsg = _('The following SQL to insert the retail customer data was used');
+		$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 	}
 }
 

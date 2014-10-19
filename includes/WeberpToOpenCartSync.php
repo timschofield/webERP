@@ -112,6 +112,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 	$SQL = "SELECT stockmaster.stockid,
 				stockmaster.description,
 				stockmaster.longdescription,
+				stockmaster.discontinued,
 				stockmaster.grossweight,
 				stockmaster.length,
 				stockmaster.width,
@@ -179,9 +180,17 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 			$Subtract = 1;
 			$Minimum = 1;
 			$SortOrder = 1;
-			if ($Quantity > 0){
-				$Status = 1;
+			if ($myrow['discontinued'] == 0){
+				/* It's a current item */
+				if ($Quantity > 0){
+					/* It's current and we have stock available, should be available in website */
+					$Status = 1;
+				}else{
+					/* It's current but we don't have stock available, should not be available in website */
+					$Status = 0;
+				}
 			}else{
+				/* It's an obsolete item, not available in website */
 				$Status = 0;
 			}
 			$Viewed = 0;
@@ -215,6 +224,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 								sku = '" . $SKU . "',
 								mpn = '" . $MPN . "',
 								image = '" . $Image . "',
+								status = '" . $Status . "',
 								gpf_status = '" . $GPFStatus . "',
 								google_product_category = '" . $GoogleProductCategory . "',
 								brand = '" . $GoogleBrand . "',

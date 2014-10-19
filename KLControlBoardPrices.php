@@ -1,6 +1,6 @@
 <?php
-define("VERSIONFILE", "3.10"); 
-define("NUMBER_OF_TESTS", 81); 
+define("VERSIONFILE", "3.11"); 
+define("NUMBER_OF_TESTS", 93); 
 
 /* Session started in session.inc for password checking and authorisation level check
 config.php is in turn included in session.inc*/
@@ -21,7 +21,6 @@ $begintime = time_start();
 
 $periodnow=GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
 
-
 /***************************************************************************************
 * RETAIL PRICE         
 ***************************************************************************************/
@@ -36,6 +35,10 @@ if (($_SESSION['UserID'] == "Ricard")
 	ItemsWithoutRetailPrice("FASHIO", 5.00, $RootPath, $db);
 	ItemsWithoutRetailPrice("ACCESO", 5.00, $RootPath, $db);
 	ItemsWithoutRetailPrice("CONSIG", 1.60, $RootPath, $db);
+	ItemsWithoutRetailPrice("NOPOAC", 5.00, $RootPath, $db);
+	ItemsWithoutRetailPrice("NOPOFJ", 5.00, $RootPath, $db);
+	ItemsWithoutRetailPrice("NOPOSI", 4.25, $RootPath, $db);
+	ItemsWithoutRetailPrice("NOPOSS", 4.25, $RootPath, $db);
 }
 
 if (($_SESSION['UserID'] == "Ricard") 
@@ -71,9 +74,17 @@ if (($_SESSION['UserID'] == "Ricard")
 	PriceBelowStandard("CONSIG", 1.60, 0.03,  1, $RootPath, $db);
 	PriceBelowStandard("CONSIG", 1.60, 0.20,  1, $RootPath, $db);
 
+	PriceBelowStandard("NOPOAC", 5.00, 0.05, 10, $RootPath, $db);
+	PriceBelowStandard("NOPOAC", 5.00, 0.20,  5, $RootPath, $db);
+	PriceBelowStandard("NOPOFJ", 5.00, 0.05, 10, $RootPath, $db);
+	PriceBelowStandard("NOPOFJ", 5.00, 0.20,  5, $RootPath, $db);
+	PriceBelowStandard("NOPOSI", 4.25, 0.05, 10, $RootPath, $db);
+	PriceBelowStandard("NOPOSI", 4.25, 0.20,  5, $RootPath, $db);
+	PriceBelowStandard("NOPOSS", 4.25, 0.05, 10, $RootPath, $db);
+	PriceBelowStandard("NOPOSS", 4.25, 0.20,  5, $RootPath, $db);
+
 	ItemsWith20501231($RootPath, $db);
 }
-
 
 if (($_SESSION['UserID'] == "Ricard") 
 	OR ($_SESSION['UserID'] == "Laia")){
