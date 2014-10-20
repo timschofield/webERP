@@ -1,6 +1,5 @@
 webERP Change Log
 
-18/10/14 Phil: Setup a mods folder inside webERP folder structure for modified scripts. New function in MiscFunctions.php CheckMods() looks for a modified script first before using the normal script for those links that use the CheckMods() function
 17/10/14 RChacon: Remove translation of tax category 'Freight' inside database.
 17/10/14 Exson: Add po line and due date result in OrderDetails.php.
 15/10/14 Exson: Fixed no receipt data displayed retrieved bugs for sales login in CustomerInquiry.php.

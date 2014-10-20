@@ -448,12 +448,4 @@ function ChangeFieldInTable($TableName, $FieldName, $OldValue, $NewValue, $db){
 	echo ' ... ' . _('completed');
 }
 
-function CheckMods($ScriptName) {
-	if (file_exists('mods' . $ScriptName)){
-		return '/mods' . $ScriptName;
-	} else {
-		return $ScriptName;
-	}
-}
-
 ?>
