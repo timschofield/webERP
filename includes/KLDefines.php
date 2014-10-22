@@ -90,7 +90,7 @@ define("ACCOUNT_BANK_MANDIRI_IDR", "111121100PT"); // number of account for Bank
 define("ACCOUNT_COMISSION_CREDITCARD", "700211300PT"); // number of account used to charge the bank comission
 
 /* Defines about WebStore */
-define('RATE_IDRUSD_FOR_RETAIL_WEBSTORE',11500);
+define('RATE_IDRUSD_FOR_RETAIL_WEBSTORE',12000);
 define("ONLINE_PRICE_LIST", 'RT');
 
 /* Defines about weight in KG*/
@@ -159,5 +159,12 @@ define('PENDANTS_ON_SPECIAL',55);
 define('NECKLACES_ON_SPECIAL',56);
 define('ANKLETS_ON_SPECIAL',60);
 define('TOERINGS_ON_SPECIAL',59);
+
+define('CLASSIC_JEWELLERY',61);
+define('CLASSIC_RINGS',62);
+define('CLASSIC_BRACELETS',63);
+define('CLASSIC_EARRINGS',64);
+define('CLASSIC_PENDANTS',65);
+define('CLASSIC_NECKLACES',66);
 
 ?>

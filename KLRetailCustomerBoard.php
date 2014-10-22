@@ -4,16 +4,13 @@ define("NUMBER_OF_TESTS", 28);
 
 include ('includes/session.inc');
 $Title = _('Kapal-Laut Retail Customer Analysis '. VERSIONFILE);
-include ('includes/header.inc');
+include('includes/header.inc');
 include('includes/KLCountriesForRetail.php');
 include('includes/KLGeneralFunctions.php');
 
 $begintime = time_start();
 
-if ($_SESSION['UserID'] == "Ricard"
-	OR $_SESSION['UserID'] == "Laia"
-	OR $_SESSION['UserID'] == "Ike1"
-	OR $_SESSION['UserID'] == "Juliette"){
+if ($_SESSION['UserID'] == "Ricard"){
 	RetailCustomerAnalysisBySex(1, "ALL", $db);
 	RetailCustomerAnalysisBySex(30, "ALL", $db);
 
@@ -365,30 +362,33 @@ function RetailCustomerAnalysisByAge($NumDays, $ListShops, $CountriesForRetail, 
 	$NumberSales = $myrow[0];
 
 	// Get the total of cases 
-	$SQL = "SELECT COUNT(klretailcustomers.country)
+	$SQL = "SELECT COUNT(klretailcustomers.age)
 			FROM klretailcustomers, salesorders
 			WHERE klretailcustomers.orderno = salesorders.orderno
 				AND salesorders.orddate >= '". $StartDate . "'
 				AND salesorders.orddate <= '". $Yesterday . "'
-				AND klretailcustomers.date_of_birth != '0000-00-00'".
+				AND klretailcustomers.age != 0".
 				$WhereListShops;
 	$result = DB_query($SQL, $db);
 	$myrow = DB_fetch_array($result);
 	$NumberCases = $myrow[0];
 	
-	// Get the result of customers per DOB 
-	$SQL = "SELECT klretailcustomers.date_of_birth, COUNT(klretailcustomers.date_of_birth) AS numberofcustomers
+	// Get the result of customers per Age 
+	$SQL = "SELECT klretailcustomers.age, COUNT(klretailcustomers.age) AS numberofcustomers
 			FROM klretailcustomers, salesorders
 			WHERE klretailcustomers.orderno = salesorders.orderno
 				AND salesorders.orddate >= '". $StartDate . "'
 				AND salesorders.orddate <= '". $Yesterday . "'
-				AND klretailcustomers.date_of_birth != '0000-00-00'".
+				AND klretailcustomers.age != 0".
 				$WhereListShops ."
-			GROUP BY (klretailcustomers.date_of_birth)
-			ORDER BY COUNT(klretailcustomers.date_of_birth) DESC";
-	$result = DB_query($SQL, $db);
+			GROUP BY klretailcustomers.age
+			ORDER BY klretailcustomers.age ASC";
+
 prnMsg($SQL);	
+	$result = DB_query($SQL, $db);
+prnMsg($result);	
 	if (DB_num_rows($result) != 0){
+prnMsg('IN!');	
 		if ($ListShops == 'ALL'){
 			echo '<p class="page_title_text" align="center"><strong>' . _('Retail Customers By Age during the last ') . locale_number_format($NumDays,0) . ' days</strong></p>';
 		}else{
@@ -429,7 +429,7 @@ prnMsg($SQL);
 				<td class="number">%s</td>
 				<td class="number">%s</td>
 				</tr>', 
-				$myrow['date_of_birth'],
+				$myrow['age'],
 				locale_number_format($myrow['numberofcustomers'],0),
 				locale_number_format(($myrow['numberofcustomers']/$NumberCases)*100,1).'%'
 				);

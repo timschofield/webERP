@@ -1,6 +1,6 @@
 <?php
 
-define("VERSIONFILE", "1.05"); 
+define("VERSIONFILE", "1.06"); 
 
 /* Session started in session.inc for password checking and authorisation level check
 config.php is in turn included in session.inc*/
@@ -17,8 +17,9 @@ $UpdateDB = TRUE;
 $begintime = time_start();
 
 // Delete the current classification
-/* 
+ 
 // Not any more,,, we just add the items not in webSHOP
+/*
 if($UpdateDB){
 	prnMsg("Updating webERP DB...");
 
@@ -148,45 +149,46 @@ if (DB_num_rows($result) != 0){
 				$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
 				$ItemsAdded++;
 			}else{
-				// NO està a descompte, llavors pot estar a QUALSEVOL altre categoria
 				// Mirar si pertany a super categoria SILVER
 				$WebsiteCategory = WebsiteCategorySilverJewellery($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
 				if ($WebsiteCategory > 0){
 					InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $FeaturedAsTopSales, $UpdateDB, $db);
 					$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
 					$ItemsAdded++;
-				}
-
-				// Mirar si pertany a super categoria FASHION JEWELLERY
-				$WebsiteCategory = WebsiteCategoryFashionJewellery($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
-				if ($WebsiteCategory > 0){
-					InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $FeaturedAsTopSales, $UpdateDB, $db);
-					$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
-					$ItemsAdded++;
-				}
-
-				// Mirar si pertany a super categoria STAINLESS STEEL
-				$WebsiteCategory = WebsiteCategoryStainlessSteel($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
-				if ($WebsiteCategory > 0){
-					InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $FeaturedAsTopSales, $UpdateDB, $db);
-					$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
-					$ItemsAdded++;
-				}
-
-				// Mirar si pertany a super categoria LEATHER
-				$WebsiteCategory = WebsiteCategoryLeatherJewellery($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
-				if ($WebsiteCategory > 0){
-					InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $FeaturedAsTopSales, $UpdateDB, $db);
-					$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
-					$ItemsAdded++;
-				}
-
-				// Mirar si pertany a super categoria BAGS
-				$WebsiteCategory = WebsiteCategoryBags($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
-				if ($WebsiteCategory > 0){
-					InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $FeaturedAsTopSales, $UpdateDB, $db);
-					$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
-					$ItemsAdded++;
+				}else{
+					// Mirar si pertany a super categoria FASHION JEWELLERY
+					$WebsiteCategory = WebsiteCategoryFashionJewellery($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
+					if ($WebsiteCategory > 0){
+						InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $FeaturedAsTopSales, $UpdateDB, $db);
+						$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
+						$ItemsAdded++;
+					}else{
+						// Mirar si pertany a super categoria STAINLESS STEEL
+						$WebsiteCategory = WebsiteCategoryStainlessSteel($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
+						if ($WebsiteCategory > 0){
+							InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $FeaturedAsTopSales, $UpdateDB, $db);
+							$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
+							$ItemsAdded++;
+						}else{
+							// Mirar si pertany a super categoria LEATHER RICARD DESACTIVATED 20/10/2014
+							// $WebsiteCategory = WebsiteCategoryLeatherJewellery($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
+							// Mirar si pertany a super categoria CLASSIC
+							$WebsiteCategory = WebsiteCategoryClassic($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
+							if ($WebsiteCategory > 0){
+								InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $FeaturedAsTopSales, $UpdateDB, $db);
+								$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
+								$ItemsAdded++;
+							}else{
+								// Mirar si pertany a super categoria BAGS
+								$WebsiteCategory = WebsiteCategoryBags($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
+								if ($WebsiteCategory > 0){
+									InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $FeaturedAsTopSales, $UpdateDB, $db);
+									$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
+									$ItemsAdded++;
+								}
+							}
+						}
+					}
 				}
 			}
 		}else{
@@ -287,9 +289,12 @@ function WebsiteCategorySilverJewellery($StockId, $Description, $Long, $Category
 	$WebCat = 0;
 	
 	//('SILVER_JEWELLERY',5);
-	if (($Category == "SILVER") OR ($Category == "TESTSI") OR ($Category == "NOPOSI")) { 
-		// if belongs to one of the silver categories
-		$WebCat = SILVER_JEWELLERY;	
+	if (($Category == "SILVER") OR ($Category == "TESTSI") OR ($Category == "NOPOSI"))	{ 
+		// if belongs to one of the silver categories 
+		if (WebsiteCategoryClassic($StockId, $Description, $Long, $Category) == 0){
+			// AND is NOT a classic category
+			$WebCat = SILVER_JEWELLERY;	
+		}
 	}
 
 	// filter some false positives
@@ -326,8 +331,7 @@ function WebsiteCategoryFashionJewellery($StockId, $Description, $Long, $Categor
 	$WebCat = 0;
 	
 	//(('FASHION_JEWELLERY',14);
-	if ((($Category == "FASHIO") OR ($Category == "TESTFJ") OR ($Category == "NOPOFJ")) 
-		AND (mb_stristr($Description, "leather") == FALSE))  { 
+	if (($Category == "FASHIO") OR ($Category == "TESTFJ") OR ($Category == "NOPOFJ"))  { 
 		// if belongs to one of the FJ categories BUT it does not have leather
 		$WebCat = FASHION_JEWELLERY;	
 	}
@@ -441,6 +445,39 @@ function WebsiteCategoryBags($StockId, $Description, $Long, $Category){
 
 	return $WebCat; 
 }
+
+function WebsiteCategoryClassic($StockId, $Description, $Long, $Category){
+	$WebCat = 0;
+	
+	//(('CLASSIC_JEWELLERY',61);
+	if ((substr($StockId, 0,4) == "BEPU") OR (substr($StockId, 0,4) == "PSPU")) { 
+		$WebCat = CLASSIC_JEWELLERY;	
+	}
+
+	// filter some false positives
+	if (ItemExcludedFromWebsite($StockId, $Category)){
+		$WebCat = ITEM_EXCLUDED_FROM_WEBSITE;
+	}
+
+	// define subcategory
+	if (($WebCat == CLASSIC_JEWELLERY) AND isRing($StockId)){
+		$WebCat = CLASSIC_RINGS;	
+	}
+	if (($WebCat == CLASSIC_JEWELLERY) AND isEarring($StockId)){
+		$WebCat = CLASSIC_EARRINGS;	
+	}
+	if (($WebCat == CLASSIC_JEWELLERY) AND isBracelet($StockId)){
+		$WebCat = CLASSIC_BRACELETS;	
+	}
+	if (($WebCat == CLASSIC_JEWELLERY) AND isNecklace($StockId)){
+		$WebCat = CLASSIC_NECKLACES;	
+	}
+	if (($WebCat == CLASSIC_JEWELLERY) AND isPendant($StockId)){
+		$WebCat = CLASSIC_PENDANTS;	
+	}	
+	return $WebCat; 
+}
+
 
 function WebsiteCategoryDiscount($StockId, $Description, $Long, $Category){
 	$WebCat = 0;

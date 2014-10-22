@@ -8,7 +8,7 @@ define("WEBERP_DISCOUNTS_IN_OPENCART_TABLE", 'product_special');
 define("OPENCART_OUTLET_CATEGORIES", '51,52,53,54,55,56,59,60');
 define("WEBERP_OUTLET_CATEGORIES", '51,52,53,54,55,56,59,60');
 
-define("WEBERP_CATEGORIES_FOR_GOOGLE_PRODUCT_FEED", '31,32,33,34,36,37,50,38,35,43,44,45,46,47,48,51,52,53,54,55,56,40,41,49,42,39');
+define("WEBERP_CATEGORIES_FOR_GOOGLE_PRODUCT_FEED", '31,32,33,34,36,37,50,38,35,43,44,45,46,47,48,51,52,53,54,55,56,40,41,49,42,39,61,62,63,64,65,66');
 
 define("GOOGLE_BRAND", 'Kapal-Laut. Your Essential Jewellery');
 define("GOOGLE_GENDER", 'Female');
@@ -17,7 +17,6 @@ define("GOOGLE_CONDITION", 'New');
 define("GOOGLE_OOS_STATUS", 'Available for Order');
 define("GOOGLE_IDENTIFIER", 'TRUE');
 
-
 /*	From webERP to OpenCart */
 define("PATH_OPENCART_IMAGES", 'data/KL/part_pics/');
 define("ABSOLUTE_PATH_OPENCART_IMAGES", '/home4/kurakura/public_html/kapal-laut.com/image/data/KL/part_pics/');
@@ -25,7 +24,6 @@ define("ABSOLUTE_PATH_OPENCART_IMAGES", '/home4/kurakura/public_html/kapal-laut.
 define("PATH_OPENCART_BASE", 'http://www.kapal-laut.com');
 define("ROUTE_TO_PRODUCT", 'index.php?route=product/product&');
 define("REDIRECT_RESPONSE_CODE", 301);
-
 
 /* From OpenCart to webERP CUSTOMERS */
 
@@ -44,7 +42,6 @@ define("OPENCART_DEFAULT_AREA_INDONESIA", 'OWB');
 define("OPENCART_DEFAULT_CURRENCY", 'USD');
 define("OPENCART_DEFAULT_LOCATION", 'TOKWS');
 
-
 define("SHIPMENT01_OPENCART_TEXT", 'EMS'); 
 define("SHIPMENT01_WEBERP_CODE", 5); 
 define("SHIPMENT02_OPENCART_TEXT", 'JNE-OKE'); 
@@ -53,8 +50,6 @@ define("SHIPMENT03_OPENCART_TEXT", 'JNE-YES');
 define("SHIPMENT03_WEBERP_CODE", 7); 
 
 define("OPENCART_DEFAULT_SHIPVIA", 5); 
-
-
 
 define("OPENCART_ONLINE_COUPON_CODE", 'VIP-ONLINE-10%');
 define("OPENCART_ONLINE_ORDER_DISCOUNT_CODE", 'DISCOUNT-10%');

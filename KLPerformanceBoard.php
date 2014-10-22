@@ -40,22 +40,26 @@ SPGPerformanceByShop("RETAILMF", 30, 60, 90, $db);
 SPGPerformanceByShop("RETAILPU", 30, 60, 90, $db);
 SPGPerformanceByShop("RETAILJC", 30, 60, 90, $db);
 
-
-
 if ($_SESSION['UserID'] == "Ricard"){
 	YearDifferenceSales("SPG", 30, $db);
 	YearDifferenceSales("SPG", 90, $db);
 }
 
 if ($_SESSION['UserID'] == "Ricard"){
-	AverageCustomerBehaviour("Shop", 15, $db);
+	AverageCustomerBehaviourByValueInvoice("Shop", 15, $db);
 }
 
-AverageCustomerBehaviour("Shop", 30, $db);
+AverageCustomerBehaviourByValueInvoice("Shop", 30, $db);
 
 if ($_SESSION['UserID'] == "Ricard"){
-	AverageCustomerBehaviour("Shop", 90, $db);
-	AverageCustomerBehaviour("Shop", 365, $db);
+	AverageCustomerBehaviourByValueInvoice("Shop", 90, $db);
+	AverageCustomerBehaviourByValueInvoice("Shop", 365, $db);
+}
+
+if (($_SESSION['UserID'] == "Ricard") 
+	OR ($_SESSION['UserID'] == "Laia")){
+	GeneralCustomerBehaviour(30, $db);
+	GeneralCustomerBehaviour(90, $db);
 }
 
 if ($_SESSION['UserID'] == "Ricard"){
@@ -114,7 +118,7 @@ include ('includes/footer.inc');
 /******************************************************************************************************/
 /*      FUNCTIONS ASSOCIATED
 /******************************************************************************************************/
-function AverageCustomerBehaviour($typereport, $NumDaysA, $db){
+function AverageCustomerBehaviourByValueInvoice($typereport, $NumDaysA, $db){
 /* EXPLAIN SQL 2014-05-21	*/
 	$YesterdayA  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
 	$StartDateA = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA-1));
@@ -253,13 +257,7 @@ function AverageCustomerBehaviour($typereport, $NumDaysA, $db){
 		$k = 0; //row colour counter
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			if ($k == 1) {
-				echo '<tr class="EvenTableRows">';
-				$k = 0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k = 1;
-			}
+			$k = StartEvenOrOddRow($k);
 
 			if ($typereport == "Shop"){
 				$Code = $myrow['debtorno'];
@@ -329,22 +327,150 @@ function AverageCustomerBehaviour($typereport, $NumDaysA, $db){
 				"",
 				"",
 				"TOTAL",
-				locale_number_format($SumInvoiceSum/$SumInvoiceCount,0), 
-				locale_number_format($SumInvoiceCount/$NumDaysA,1),
-				locale_number_format($SumInvoice01/$SumInvoiceCount*100,1).'%', 
-				locale_number_format($SumInvoice02/$SumInvoiceCount*100,1).'%', 
-				locale_number_format($SumInvoice03/$SumInvoiceCount*100,1).'%', 
-				locale_number_format($SumInvoice04/$SumInvoiceCount*100,1).'%', 
-				locale_number_format($SumInvoice05/$SumInvoiceCount*100,1).'%', 
-				locale_number_format($SumInvoice06/$SumInvoiceCount*100,1).'%', 
-				locale_number_format($SumInvoice07/$SumInvoiceCount*100,1).'%', 
-				locale_number_format($SumInvoice08/$SumInvoiceCount*100,1).'%', 
-				locale_number_format($SumInvoice09/$SumInvoiceCount*100,1).'%'
+				locale_number_format_zero_blank($SumInvoiceSum/$SumInvoiceCount,0), 
+				locale_number_format_zero_blank($SumInvoiceCount/$NumDaysA,1),
+				locale_number_format_zero_blank($SumInvoice01/$SumInvoiceCount*100,1).'%', 
+				locale_number_format_zero_blank($SumInvoice02/$SumInvoiceCount*100,1).'%', 
+				locale_number_format_zero_blank($SumInvoice03/$SumInvoiceCount*100,1).'%', 
+				locale_number_format_zero_blank($SumInvoice04/$SumInvoiceCount*100,1).'%', 
+				locale_number_format_zero_blank($SumInvoice05/$SumInvoiceCount*100,1).'%', 
+				locale_number_format_zero_blank($SumInvoice06/$SumInvoiceCount*100,1).'%', 
+				locale_number_format_zero_blank($SumInvoice07/$SumInvoiceCount*100,1).'%', 
+				locale_number_format_zero_blank($SumInvoice08/$SumInvoiceCount*100,1).'%', 
+				locale_number_format_zero_blank($SumInvoice09/$SumInvoiceCount*100,1).'%'
 				);
 		echo '</table>
 				</div>';
 	}
 }
+
+function GeneralCustomerBehaviour($NumDaysA, $db){
+	$YesterdayA  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
+	$StartDateA = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA-1));
+	$YesterdayB  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1-365));
+	$StartDateB = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA-1-365));
+
+	$SQL = "SELECT debtorno,
+				name,
+				(SELECT SUM(salesorderdetails.qtyinvoiced)
+					FROM salesorders, salesorderdetails
+					WHERE salesorders.orddate >=  '" . $StartDateA . "'
+						AND salesorders.orddate <= '" . $YesterdayA . "'
+						AND salesorders.debtorno = debtorsmaster.debtorno
+						AND salesorderdetails.orderno = salesorders.orderno
+					GROUP BY salesorders.debtorno) AS itemcount,
+				(SELECT SUM(salesorders.klpaidcash + salesorders.klpaidcreditcard + klreturnedgoods)
+					FROM salesorders
+					WHERE salesorders.orddate >=  '" . $StartDateA . "'
+						AND salesorders.orddate <= '" . $YesterdayA . "'
+						AND salesorders.debtorno = debtorsmaster.debtorno
+					GROUP BY salesorders.debtorno) AS invoicesum,
+				(SELECT COUNT(DISTINCT(salesorders.orderno))
+					FROM salesorders
+					WHERE salesorders.orddate >=  '" . $StartDateA . "'
+						AND salesorders.orddate <= '" . $YesterdayA . "'
+						AND salesorders.debtorno = debtorsmaster.debtorno
+					GROUP BY salesorders.debtorno) AS invoicecount,
+				(SELECT SUM(salesorderdetails.qtyinvoiced)
+					FROM salesorders, salesorderdetails
+					WHERE salesorders.orddate >=  '" . $StartDateB . "'
+						AND salesorders.orddate <= '" . $YesterdayB . "'
+						AND salesorders.debtorno = debtorsmaster.debtorno
+						AND salesorderdetails.orderno = salesorders.orderno
+					GROUP BY salesorders.debtorno) AS itemcount_lastyear,
+				(SELECT SUM(salesorders.klpaidcash + salesorders.klpaidcreditcard + klreturnedgoods)
+					FROM salesorders
+					WHERE salesorders.orddate >=  '" . $StartDateB . "'
+						AND salesorders.orddate <= '" . $YesterdayB . "'
+						AND salesorders.debtorno = debtorsmaster.debtorno
+					GROUP BY salesorders.debtorno) AS invoicesum_lastyear,
+				(SELECT COUNT(DISTINCT(salesorders.orderno))
+					FROM salesorders
+					WHERE salesorders.orddate >=  '" . $StartDateB . "'
+						AND salesorders.orddate <= '" . $YesterdayB . "'
+						AND salesorders.debtorno = debtorsmaster.debtorno
+					GROUP BY salesorders.debtorno) AS invoicecount_lastyear
+			FROM debtorsmaster
+			WHERE debtorsmaster.typeid = 2
+			ORDER BY (SELECT COUNT(DISTINCT(salesorders.orderno))
+					FROM salesorders
+					WHERE salesorders.orddate >=  '" . $StartDateA . "'
+						AND salesorders.orddate <= '" . $YesterdayA . "'
+						AND salesorders.debtorno = debtorsmaster.debtorno
+					GROUP BY salesorders.debtorno) DESC";
+	
+						
+	$result = DB_query($SQL, $db);
+	if (DB_num_rows($result) != 0){
+		echo '<p class="page_title_text" align="center"><strong>' . "General Customer Behaviour by shop during the last " . $NumDaysA . " days.".'</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th colspan="3"></th>
+							<th colspan="5">' . 'This year'. '</th>
+							<th colspan="5">' . 'Last year'. '</th>
+						</tr>';
+		echo $TableHeader;
+		$TableHeader = '<tr>
+							<th>' . _('#') . '</th>
+							<th>' . _('Shop') . '</th>
+							<th>' . _('Name') . '</th>
+							<th>' . 'IDR/Invoice'. '</th>
+							<th>' . 'IDR/Piece'. '</th>
+							<th>' . '# Invoice/Day'. '</th>
+							<th>' . '# Pcs/Day'. '</th>
+							<th>' . '# Pcs/Inv'. '</th>
+							<th>' . 'IDR/Invoice'. '</th>
+							<th>' . 'IDR/Piece'. '</th>
+							<th>' . '# Invoice/Day'. '</th>
+							<th>' . '# Pcs/Day'. '</th>
+							<th>' . '# Pcs/Inv'. '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		while ($myrow = DB_fetch_array($result)) {
+			$k = StartEvenOrOddRow($k);
+
+			$Code = $myrow['debtorno'];
+			$Name = $myrow['name'];
+			
+			printf('<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					$i,
+					$Code,
+					$Name,
+					locale_number_format_zero_blank($myrow['invoicesum']/$myrow['invoicecount'],0), 
+					locale_number_format_zero_blank($myrow['invoicesum']/$myrow['itemcount'],0), 
+					locale_number_format_zero_blank($myrow['invoicecount']/$NumDaysA,1),
+					locale_number_format_zero_blank($myrow['itemcount']/$NumDaysA,1),
+					locale_number_format_zero_blank($myrow['itemcount']/$myrow['invoicecount'],1),
+					locale_number_format_zero_blank($myrow['invoicesum_lastyear']/$myrow['invoicecount_lastyear'],0), 
+					locale_number_format_zero_blank($myrow['invoicesum_lastyear']/$myrow['itemcount_lastyear'],0), 
+					locale_number_format_zero_blank($myrow['invoicecount_lastyear']/$NumDaysA,1),
+					locale_number_format_zero_blank($myrow['itemcount_lastyear']/$NumDaysA,1),
+					locale_number_format_zero_blank($myrow['itemcount_lastyear']/$myrow['invoicecount_lastyear'],1)
+					);
+			$i++;
+		}
+		echo '</table>
+				</div>';
+	}
+}
+
+
 
 function YearDifferenceSales($typereport, $NumDaysA, $db){
 
@@ -428,13 +554,7 @@ function YearDifferenceSales($typereport, $NumDaysA, $db){
 		$k = 0; //row colour counter
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			if ($k == 1) {
-				echo '<tr class="EvenTableRows">';
-				$k = 0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k = 1;
-			}
+			$k = StartEvenOrOddRow($k);
 
 			if ($typereport == "Shop"){
 				$Code = $myrow['debtorno'];
@@ -692,13 +812,7 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 		$k = 0; //row colour counter
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			if ($k == 1) {
-				echo '<tr class="EvenTableRows">';
-				$k = 0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k = 1;
-			}
+			$k = StartEvenOrOddRow($k);
 			
 			$target = "";
 			if ($typereport == "Shop"){
@@ -899,13 +1013,7 @@ function SPGPerformanceByShop($Shop, $NumDaysA, $NumDaysB, $NumDaysC, $db){
 		echo $TableHeader;
 		$k = 0; //row colour counter
 		while ($myrow = DB_fetch_array($result)) {
-			if ($k == 1) {
-				echo '<tr class="EvenTableRows">';
-				$k = 0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k = 1;
-			}
+			$k = StartEvenOrOddRow($k);
 			
 			printf('<td>%s</td>
 					<td>%s</td>
@@ -991,13 +1099,7 @@ function RetailTypePayments($typereport, $maxdays, $db){
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
 			if ($myrow['totalshop'] != 0){
-				if ($k == 1) {
-					echo '<tr class="EvenTableRows">';
-					$k = 0;
-				} else {
-					echo '<tr class="OddTableRows">';
-					$k = 1;
-				}
+				$k = StartEvenOrOddRow($k);
 				
 				$percentcash = locale_number_format(($myrow['cashshop']/$myrow['totalshop'])*100,1);
 				$percentcredit = locale_number_format(($myrow['creditshop']/$myrow['totalshop'])*100,1);
@@ -1087,13 +1189,7 @@ function PettyCashStatus($currency, $db){
 		$i = 1;
 		$total = 0;
 		while ($myrow = DB_fetch_array($result)) {
-			if ($k == 1) {
-				echo '<tr class="EvenTableRows">';
-				$k = 0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k = 1;
-			}
+			$k = StartEvenOrOddRow($k);
 			printf('<td class="number">%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
