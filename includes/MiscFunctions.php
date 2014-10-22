@@ -1,5 +1,5 @@
 <?php
-/* $Id: MiscFunctions.php 6924 2014-10-18 02:03:22Z daintree $*/
+/* $Id: MiscFunctions.php 6926 2014-10-20 04:31:55Z daintree $*/
 
 /*  ******************************************  */
 /** STANDARD MESSAGE HANDLING & FORMATTING **/
@@ -446,14 +446,6 @@ function ChangeFieldInTable($TableName, $FieldName, $OldValue, $NewValue, $db){
 	$ErrMsg = _('The SQL to update' . ' ' . $TableName . ' ' . _('records failed'));
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 	echo ' ... ' . _('completed');
-}
-
-function CheckMods($ScriptName) {
-	if (file_exists('mods' . $ScriptName)){
-		return '/mods' . $ScriptName;
-	} else {
-		return $ScriptName;
-	}
 }
 
 ?>
