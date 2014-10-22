@@ -171,9 +171,6 @@ function GetPrice ($StockID, $DebtorNo, $BranchCode, $OrderLineQty=1, $ReportZer
 	if (DB_num_rows($result)!=0){
 		/*There is a price from one of the above so return that */
 		$myrow=DB_fetch_row($result);
-		echo 'price = ' . $myrow[0];
-
-		echo $sql;
 
 		
 		Return $myrow[0];
