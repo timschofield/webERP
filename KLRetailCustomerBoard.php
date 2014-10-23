@@ -1,41 +1,46 @@
 <?php
-define("VERSIONFILE", "1.01"); 
+define("VERSIONFILE", "1.10"); 
 define("NUMBER_OF_TESTS", 28); 
 
 include ('includes/session.inc');
 $Title = _('Kapal-Laut Retail Customer Analysis '. VERSIONFILE);
 include('includes/header.inc');
+include('includes/KLDefines.php');
 include('includes/KLCountriesForRetail.php');
 include('includes/KLGeneralFunctions.php');
 
 $begintime = time_start();
 
 if ($_SESSION['UserID'] == "Ricard"){
-	RetailCustomerAnalysisBySex(1, "ALL", $db);
 	RetailCustomerAnalysisBySex(30, "ALL", $db);
 
-	RetailCustomerAnalysisByCountry(1, "ALL", $CountriesForRetail, $db);
-	RetailCustomerAnalysisByCountry(30, "ALL", $CountriesForRetail, $db);
-	RetailCustomerAnalysisByCountry(1, "'TOK66','TOKSE','TOKOB'", $CountriesForRetail, $db);
-	RetailCustomerAnalysisByCountry(30, "'TOK66','TOKSE','TOKOB'", $CountriesForRetail, $db);
-	RetailCustomerAnalysisByCountry(1, "'TOKKS','TOKBW'", $CountriesForRetail, $db);
-	RetailCustomerAnalysisByCountry(30, "'TOKKS','TOKBW'", $CountriesForRetail, $db);
-	RetailCustomerAnalysisByCountry(1, "'TOKJC'", $CountriesForRetail, $db);
-	RetailCustomerAnalysisByCountry(30, "'TOKJC'", $CountriesForRetail, $db);
-	RetailCustomerAnalysisByCountry(1, "'TOKSA','TOKSS','TOKSU'", $CountriesForRetail, $db);
-	RetailCustomerAnalysisByCountry(30, "'TOKSA','TOKSS','TOKSU'", $CountriesForRetail, $db);
-	RetailCustomerAnalysisByCountry(1, "'TOKUB','TOKPU','TOKMF'", $CountriesForRetail, $db);
-	RetailCustomerAnalysisByCountry(30, "'TOKUB','TOKPU','TOKMF'", $CountriesForRetail, $db);
+//	RetailCustomerAnalysisByCountry(7, "ALL", 3, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(30, "ALL", 5, $CountriesForRetail, $db);
+//	RetailCustomerAnalysisByCountry(7, "'TOK66','TOKSE','TOKOB'", 3, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(30, "'TOK66','TOKSE','TOKOB'", 5, $CountriesForRetail, $db);
+//	RetailCustomerAnalysisByCountry(7, "'TOKKS','TOKBW'", 3, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(30, "'TOKKS','TOKBW'", 5, $CountriesForRetail, $db);
+//	RetailCustomerAnalysisByCountry(7, "'TOKJC'", 3, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(30, "'TOKJC'", 5, $CountriesForRetail, $db);
+//	RetailCustomerAnalysisByCountry(7, "'TOKSA','TOKSS','TOKSU'", 3, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(30, "'TOKSA','TOKSS','TOKSU'", 5, $CountriesForRetail, $db);
+//	RetailCustomerAnalysisByCountry(7, "'TOKUB','TOKPU','TOKMF'", 3, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(30, "'TOKUB','TOKPU','TOKMF'", 5, $CountriesForRetail, $db);
 
 	RetailCustomerAnalysisByAge(30, "ALL", $db);
+	RetailCustomerAnalysisByAge(30, "'TOK66','TOKSE','TOKOB'", $db);
+	RetailCustomerAnalysisByAge(30, "'TOKKS','TOKBW'", $db);
+	RetailCustomerAnalysisByAge(30, "'TOKJC'", $db);
+	RetailCustomerAnalysisByAge(30, "'TOKSA','TOKSS','TOKSU'", $db);
+	RetailCustomerAnalysisByAge(30, "'TOKUB','TOKPU','TOKMF'", $db);
 	
-	EmailHarvested(1, "ALL", $db);
+//	EmailHarvested(1, "ALL", $db);
 	EmailHarvested(30, "ALL", $db);
-	EmailHarvested(1, "'TOK66','TOKSE','TOKOB'", $db);
-	EmailHarvested(1, "'TOKKS','TOKBW'", $db);
-	EmailHarvested(1, "'TOKJC'", $db);
-	EmailHarvested(1, "'TOKSA','TOKSS','TOKSU'", $db);
-	EmailHarvested(1, "'TOKUB','TOKPU','TOKMF'", $db);
+//	EmailHarvested(1, "'TOK66','TOKSE','TOKOB'", $db);
+//	EmailHarvested(1, "'TOKKS','TOKBW'", $db);
+//	EmailHarvested(1, "'TOKJC'", $db);
+//	EmailHarvested(1, "'TOKSA','TOKSS','TOKSU'", $db);
+//	EmailHarvested(1, "'TOKUB','TOKPU','TOKMF'", $db);
 	
 }
 
@@ -44,12 +49,12 @@ if ($_SESSION['UserID'] == "Laia"
 	OR $_SESSION['UserID'] == "Juliette"){
 	RetailCustomerAnalysisBySex(30, "ALL", $db);
 
-	RetailCustomerAnalysisByCountry(30, "ALL", $CountriesForRetail, $db);
-	RetailCustomerAnalysisByCountry(30, "'TOK66','TOKSE','TOKOB'", $CountriesForRetail, $db);
-	RetailCustomerAnalysisByCountry(30, "'TOKKS','TOKBW'", $CountriesForRetail, $db);
-	RetailCustomerAnalysisByCountry(30, "'TOKJC'", $CountriesForRetail, $db);
-	RetailCustomerAnalysisByCountry(30, "'TOKSA','TOKSS','TOKSU'", $CountriesForRetail, $db);
-	RetailCustomerAnalysisByCountry(30, "'TOKUB','TOKPU','TOKMF'", $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(30, "ALL", 5, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(30, "'TOK66','TOKSE','TOKOB'", 5, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(30, "'TOKKS','TOKBW'", 5, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(30, "'TOKJC'", 5, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(30, "'TOKSA','TOKSS','TOKSU'", 5, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(30, "'TOKUB','TOKPU','TOKMF'", 5, $CountriesForRetail, $db);
 
 	EmailHarvested(30, "ALL", $db);
 
@@ -170,7 +175,7 @@ function RetailCustomerAnalysisBySex($NumDays, $ListShops, $db){
 			
 }
 
-function RetailCustomerAnalysisByCountry($NumDays, $ListShops, $CountriesForRetail, $db){
+function RetailCustomerAnalysisByCountry($NumDays, $ListShops, $MinimCustomersToShow, $CountriesForRetail, $db){
 	$Yesterday  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
 	$StartDate  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
 
@@ -249,18 +254,33 @@ function RetailCustomerAnalysisByCountry($NumDays, $ListShops, $CountriesForReta
 				locale_number_format($NumberCases,0),
 				locale_number_format(($NumberCases/$NumberSales)*100,1).'%'
 				);
-				
+
+		$TotalOtherCountries = 0;	
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
+			if ($myrow['numberofcustomers'] > $MinimCustomersToShow){
+				$k = StartEvenOrOddRow($k);
+				printf('<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					$CountriesForRetail[$myrow['country']],
+					locale_number_format($myrow['numberofcustomers'],0),
+					locale_number_format(($myrow['numberofcustomers']/$NumberCases)*100,1).'%'
+					);
+			}else{
+				$TotalOtherCountries += $myrow['numberofcustomers'];
+			}
+		
+		}
+		if($TotalOtherCountries > 0){
 			printf('<td>%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>
 				</tr>', 
-				$CountriesForRetail[$myrow['country']],
-				locale_number_format($myrow['numberofcustomers'],0),
-				locale_number_format(($myrow['numberofcustomers']/$NumberCases)*100,1).'%'
+				'Other Countries',
+				locale_number_format($TotalOtherCountries,0),
+				locale_number_format(($TotalOtherCountries/$NumberCases)*100,1).'%'
 				);
-		
 		}
 		echo '</table>
 			</div>
@@ -373,71 +393,226 @@ function RetailCustomerAnalysisByAge($NumDays, $ListShops, $CountriesForRetail, 
 	$myrow = DB_fetch_array($result);
 	$NumberCases = $myrow[0];
 	
-	// Get the result of customers per Age 
-	$SQL = "SELECT klretailcustomers.age, COUNT(klretailcustomers.age) AS numberofcustomers
+	// Get the cases for AGE_STEP_01
+	$SQL = "SELECT COUNT(klretailcustomers.age)
 			FROM klretailcustomers, salesorders
 			WHERE klretailcustomers.orderno = salesorders.orderno
 				AND salesorders.orddate >= '". $StartDate . "'
 				AND salesorders.orddate <= '". $Yesterday . "'
-				AND klretailcustomers.age != 0".
-				$WhereListShops ."
-			GROUP BY klretailcustomers.age
-			ORDER BY klretailcustomers.age ASC";
-
-prnMsg($SQL);	
+				AND klretailcustomers.age != 0
+				AND klretailcustomers.age <= ". AGE_STEP_01 .
+				$WhereListShops;
 	$result = DB_query($SQL, $db);
-prnMsg($result);	
-	if (DB_num_rows($result) != 0){
-prnMsg('IN!');	
-		if ($ListShops == 'ALL'){
-			echo '<p class="page_title_text" align="center"><strong>' . _('Retail Customers By Age during the last ') . locale_number_format($NumDays,0) . ' days</strong></p>';
-		}else{
-			echo '<p class="page_title_text" align="center"><strong>' . _('Retail Customers By Age during the last ') . locale_number_format($NumDays,0) . ' days in shop ' . $ListShops . '</strong></p>';
-		}
-		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th>' . _('Value') . '</th>
-							<th>' . _('Cases') . '</th>
-							<th>' . '%' . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
-		$k = StartEvenOrOddRow($k);
-		printf('<td>%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				'Total Sales',
-				locale_number_format($NumberSales,0),
-				''
-				);
+	$myrow = DB_fetch_array($result);
+	$NumberCases01 = $myrow[0];
 
-		$k = StartEvenOrOddRow($k);
-		printf('<td>%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				'Total Cases',
-				locale_number_format($NumberCases,0),
-				locale_number_format(($NumberCases/$NumberSales)*100,1).'%'
-				);
-				
-		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
-			printf('<td>%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				$myrow['age'],
-				locale_number_format($myrow['numberofcustomers'],0),
-				locale_number_format(($myrow['numberofcustomers']/$NumberCases)*100,1).'%'
-				);
-		}
-		echo '</table>
-			</div>
-			</form>';
+	// Get the cases for AGE_STEP_02
+	$SQL = "SELECT COUNT(klretailcustomers.age)
+			FROM klretailcustomers, salesorders
+			WHERE klretailcustomers.orderno = salesorders.orderno
+				AND salesorders.orddate >= '". $StartDate . "'
+				AND salesorders.orddate <= '". $Yesterday . "'
+				AND klretailcustomers.age > ". AGE_STEP_01 . "
+				AND klretailcustomers.age <= ". AGE_STEP_02 .
+				$WhereListShops;
+	$result = DB_query($SQL, $db);
+	$myrow = DB_fetch_array($result);
+	$NumberCases02 = $myrow[0];
+
+	// Get the cases for AGE_STEP_03
+	$SQL = "SELECT COUNT(klretailcustomers.age)
+			FROM klretailcustomers, salesorders
+			WHERE klretailcustomers.orderno = salesorders.orderno
+				AND salesorders.orddate >= '". $StartDate . "'
+				AND salesorders.orddate <= '". $Yesterday . "'
+				AND klretailcustomers.age > ". AGE_STEP_02 . "
+				AND klretailcustomers.age <= ". AGE_STEP_03 .
+				$WhereListShops;
+	$result = DB_query($SQL, $db);
+	$myrow = DB_fetch_array($result);
+	$NumberCases03 = $myrow[0];
+
+	// Get the cases for AGE_STEP_04
+	$SQL = "SELECT COUNT(klretailcustomers.age)
+			FROM klretailcustomers, salesorders
+			WHERE klretailcustomers.orderno = salesorders.orderno
+				AND salesorders.orddate >= '". $StartDate . "'
+				AND salesorders.orddate <= '". $Yesterday . "'
+				AND klretailcustomers.age > ". AGE_STEP_03 . "
+				AND klretailcustomers.age <= ". AGE_STEP_04 .
+				$WhereListShops;
+	$result = DB_query($SQL, $db);
+	$myrow = DB_fetch_array($result);
+	$NumberCases04 = $myrow[0];
+
+	// Get the cases for AGE_STEP_05
+	$SQL = "SELECT COUNT(klretailcustomers.age)
+			FROM klretailcustomers, salesorders
+			WHERE klretailcustomers.orderno = salesorders.orderno
+				AND salesorders.orddate >= '". $StartDate . "'
+				AND salesorders.orddate <= '". $Yesterday . "'
+				AND klretailcustomers.age > ". AGE_STEP_04 . "
+				AND klretailcustomers.age <= ". AGE_STEP_05 .
+				$WhereListShops;
+	$result = DB_query($SQL, $db);
+	$myrow = DB_fetch_array($result);
+	$NumberCases05 = $myrow[0];
+	
+	// Get the cases for AGE_STEP_06
+	$SQL = "SELECT COUNT(klretailcustomers.age)
+			FROM klretailcustomers, salesorders
+			WHERE klretailcustomers.orderno = salesorders.orderno
+				AND salesorders.orddate >= '". $StartDate . "'
+				AND salesorders.orddate <= '". $Yesterday . "'
+				AND klretailcustomers.age > ". AGE_STEP_05 . "
+				AND klretailcustomers.age <= ". AGE_STEP_06 .
+				$WhereListShops;
+	$result = DB_query($SQL, $db);
+	$myrow = DB_fetch_array($result);
+	$NumberCases06 = $myrow[0];
+	
+	// Get the cases for AGE_STEP_07
+	$SQL = "SELECT COUNT(klretailcustomers.age)
+			FROM klretailcustomers, salesorders
+			WHERE klretailcustomers.orderno = salesorders.orderno
+				AND salesorders.orddate >= '". $StartDate . "'
+				AND salesorders.orddate <= '". $Yesterday . "'
+				AND klretailcustomers.age > ". AGE_STEP_06 . "
+				AND klretailcustomers.age <= ". AGE_STEP_07 .
+				$WhereListShops;
+	$result = DB_query($SQL, $db);
+	$myrow = DB_fetch_array($result);
+	$NumberCases07 = $myrow[0];
+
+	// Get the cases for over AGE_STEP_07
+	$SQL = "SELECT COUNT(klretailcustomers.age)
+			FROM klretailcustomers, salesorders
+			WHERE klretailcustomers.orderno = salesorders.orderno
+				AND salesorders.orddate >= '". $StartDate . "'
+				AND salesorders.orddate <= '". $Yesterday . "'
+				AND klretailcustomers.age > ". AGE_STEP_07 .
+				$WhereListShops;
+	$result = DB_query($SQL, $db);
+	$myrow = DB_fetch_array($result);
+	$NumberCases08 = $myrow[0];
+	
+	if ($ListShops == 'ALL'){
+		echo '<p class="page_title_text" align="center"><strong>' . _('Retail Customers By Age during the last ') . locale_number_format($NumDays,0) . ' days</strong></p>';
+	}else{
+		echo '<p class="page_title_text" align="center"><strong>' . _('Retail Customers By Age during the last ') . locale_number_format($NumDays,0) . ' days in shop ' . $ListShops . '</strong></p>';
 	}
+	echo '<div>';
+	echo '<table class="selection">';
+	$TableHeader = '<tr>
+						<th>' . _('Value') . '</th>
+						<th>' . _('Cases') . '</th>
+						<th>' . '%' . '</th>
+					</tr>';
+	echo $TableHeader;
+	$k = 0; //row colour counter
+	$k = StartEvenOrOddRow($k);
+	printf('<td>%s</td>
+			<td class="number">%s</td>
+			<td class="number">%s</td>
+			</tr>', 
+			'Total Sales',
+			locale_number_format($NumberSales,0),
+			''
+			);
+
+	$k = StartEvenOrOddRow($k);
+	printf('<td>%s</td>
+			<td class="number">%s</td>
+			<td class="number">%s</td>
+			</tr>', 
+			'Total Cases',
+			locale_number_format($NumberCases,0),
+			locale_number_format(($NumberCases/$NumberSales)*100,1).'%'
+			);
+			
+	$k = StartEvenOrOddRow($k);
+	printf('<td>%s</td>
+			<td class="number">%s</td>
+			<td class="number">%s</td>
+			</tr>', 
+			'-'. AGE_STEP_01,
+			locale_number_format($NumberCases01,0),
+			locale_number_format(($NumberCases01/$NumberCases)*100,1).'%'
+			);
+
+	$k = StartEvenOrOddRow($k);
+	printf('<td>%s</td>
+			<td class="number">%s</td>
+			<td class="number">%s</td>
+			</tr>', 
+			AGE_STEP_01 . '-'. AGE_STEP_02,
+			locale_number_format($NumberCases02,0),
+			locale_number_format(($NumberCases02/$NumberCases)*100,1).'%'
+			);
+
+	$k = StartEvenOrOddRow($k);
+	printf('<td>%s</td>
+			<td class="number">%s</td>
+			<td class="number">%s</td>
+			</tr>', 
+			AGE_STEP_02 . '-'. AGE_STEP_03,
+			locale_number_format($NumberCases03,0),
+			locale_number_format(($NumberCases03/$NumberCases)*100,1).'%'
+			);
+
+	$k = StartEvenOrOddRow($k);
+	printf('<td>%s</td>
+			<td class="number">%s</td>
+			<td class="number">%s</td>
+			</tr>', 
+			AGE_STEP_03 . '-'. AGE_STEP_04,
+			locale_number_format($NumberCases04,0),
+			locale_number_format(($NumberCases04/$NumberCases)*100,1).'%'
+			);
+
+	$k = StartEvenOrOddRow($k);
+	printf('<td>%s</td>
+			<td class="number">%s</td>
+			<td class="number">%s</td>
+			</tr>', 
+			AGE_STEP_04 . '-'. AGE_STEP_05,
+			locale_number_format($NumberCases05,0),
+			locale_number_format(($NumberCases05/$NumberCases)*100,1).'%'
+			);
+
+	$k = StartEvenOrOddRow($k);
+	printf('<td>%s</td>
+			<td class="number">%s</td>
+			<td class="number">%s</td>
+			</tr>', 
+			AGE_STEP_05 . '-'. AGE_STEP_06,
+			locale_number_format($NumberCases06,0),
+			locale_number_format(($NumberCases06/$NumberCases)*100,1).'%'
+			);
+
+	$k = StartEvenOrOddRow($k);
+	printf('<td>%s</td>
+			<td class="number">%s</td>
+			<td class="number">%s</td>
+			</tr>', 
+			AGE_STEP_06 . '-'. AGE_STEP_07,
+			locale_number_format($NumberCases07,0),
+			locale_number_format(($NumberCases07/$NumberCases)*100,1).'%'
+			);
+
+	$k = StartEvenOrOddRow($k);
+	printf('<td>%s</td>
+			<td class="number">%s</td>
+			<td class="number">%s</td>
+			</tr>', 
+			AGE_STEP_07 . '+',
+			locale_number_format($NumberCases08,0),
+			locale_number_format(($NumberCases08/$NumberCases)*100,1).'%'
+			);
+
+	echo '</table>
+		</div>
+		</form>';
 }
 
 ?>

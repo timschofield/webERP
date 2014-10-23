@@ -24,6 +24,15 @@ define("AVERAGE_INVOICE_VALUE_06", 1000000);
 define("AVERAGE_INVOICE_VALUE_07", 1500000);
 define("AVERAGE_INVOICE_VALUE_08", 2000000);
 
+/* Defines about age of customers */
+define("AGE_STEP_01",  17);
+define("AGE_STEP_02",  24);
+define("AGE_STEP_03",  34);
+define("AGE_STEP_04",  44);
+define("AGE_STEP_05",  54);
+define("AGE_STEP_06",  64);
+define("AGE_STEP_07",  74);
+
 /* Defines about categories */
 define("LIST_STOCK_CATEGORIES_IN_KL_SHOPS_NOT_FOR_SALE", "('SHDISP', 'SHCONS', 'SHPACK')");
 
