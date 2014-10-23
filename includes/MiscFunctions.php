@@ -1,5 +1,5 @@
 <?php
-/* $Id: MiscFunctions.php 6926 2014-10-20 04:31:55Z daintree $*/
+/* $Id: MiscFunctions.php 6931 2014-10-23 14:04:25Z tehonu $*/
 
 /*  ******************************************  */
 /** STANDARD MESSAGE HANDLING & FORMATTING **/
@@ -20,7 +20,7 @@ function reverse_escape($str) {
 function getMsg($Msg,$Type='info',$Prefix=''){
 	$Colour='';
 	if (isset($_SESSION['LogSeverity']) and $_SESSION['LogSeverity']>0) {
-		$LogFile=fopen($_SESSION['LogPath'].'/webERP-test.log', 'a');
+		$LogFile=fopen($_SESSION['LogPath'].'/webERP.log', 'a');
 	}
 	switch($Type){
 		case 'error':
