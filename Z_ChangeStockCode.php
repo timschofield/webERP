@@ -1,4 +1,9 @@
 <?php
+/**************************************************************************************
+KL RICARD MODIFICATIONS:
+- change the stock code also in KL tables using this field in webERP and OpenCart
+***************************************************************************************/
+
 /*	$Id: Z_ChangeStockCode.php 6784 2014-06-27 17:32:13Z rchacon $*/
 /*	This script is an utility to change an inventory item code. */
 /*	It uses function ChangeFieldInTable($TableName, $FieldName, $OldValue, 
@@ -194,7 +199,7 @@ if (isset($_POST['ProcessStockChange'])){
 		ChangeFieldInTable("offers", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
 		ChangeFieldInTable("tenderitems", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
 
-		/* KL TABLES */
+		/* KL RICARD TABLES */
 		ChangeFieldInTable("kladjustrl", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
 		ChangeFieldInTable("klchangeprice", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
 		ChangeFieldInTable("klfreeexchanges", "itemfrom", $_POST['OldStockID'], $_POST['NewStockID'], $db);

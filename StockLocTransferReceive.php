@@ -1,4 +1,9 @@
 <?php
+/**************************************************************************************
+KL RICARD MODIFICATIONS:
+- do not send email to inventory manager.
+***************************************************************************************/
+
 /* $Id: StockLocTransferReceive.php 6808 2014-08-11 21:27:11Z agaluski $*/
 /* Inventory Transfer - Receive */
 
@@ -335,9 +340,7 @@ if(isset($_POST['ProcessTransfer'])){
 				$Result = DB_query($sql, $db, $ErrMsg, $DbgMsg, true);
 				// send an email to the inventory manager about this cancellation (as can lead to employee fraud)
 				// KL RICARD NEVER SEND THIS EMAIL
-				if (FALSE){
-//				if ($_SESSION['InventoryManagerEmail']!=''){
-// END KL RICARD MODIF
+/*				if ($_SESSION['InventoryManagerEmail']!=''){
 					$ConfirmationText = _('Cancelled balance of transfer'). ': ' . $_SESSION['Transfer']->TrfID .
 										"\r\n" . _('From Location') . ': ' . $_SESSION['Transfer']->StockLocationFrom .
 										"\r\n" . _('To Location') . ': ' . $_SESSION['Transfer']->StockLocationTo .
@@ -356,6 +359,7 @@ if(isset($_POST['ProcessTransfer'])){
 						$result = SendmailBySmtp($mail,array($_SESSION['InventoryManagerEmail']));
 					}
 				}
+*/
 			}
 			$i++;
 		} /*end of foreach TransferItem */

@@ -1,4 +1,8 @@
 <?php
+/**************************************************************************************
+KL RICARD MODIFICATIONS:
+- change the account code also in KL tables using this field
+***************************************************************************************/
 
 /*Script to change the GL account code in all webERP */
 
@@ -110,7 +114,7 @@ if (isset($_POST['ProcessGLAccountCode'])){
 
 		ChangeFieldInTable("workcentres", "overheadrecoveryact", $_POST['OldAccountCode'], $_POST['NewAccountCode'], $db);
 
-		// KL tables
+		// KL RICARD tables
 		ChangeFieldInTable("chartmasterCV", "accountcode", $_POST['OldAccountCode'], $_POST['NewAccountCode'], $db);
 		ChangeFieldInTable("chartmasterPT", "accountcode", $_POST['OldAccountCode'], $_POST['NewAccountCode'], $db);
 		ChangeFieldInTable("chartmasterM", "accountcode", $_POST['OldAccountCode'], $_POST['NewAccountCode'], $db);

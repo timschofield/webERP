@@ -1,4 +1,8 @@
 <?php
+/*****************************************************************************************
+KL RICARD MODIFICATIONS:
+- Added 4 fields. 3 KL fields from stockmaster to calculate and show notes (KL status of the item)
+*****************************************************************************************/
 
 /* $Id: ReorderLevelLocation.php 6809 2014-08-12 19:16:00Z agaluski $*/
 

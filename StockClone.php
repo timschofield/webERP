@@ -1,4 +1,9 @@
 <?php
+/**************************************************************************************
+KL RICARD MODIFICATIONS:
+- management of the extra KL fileds in stockmaster
+***************************************************************************************/
+
 /* $Id: StockClone.php 6669 2014-04-05 23:31:54Z rchacon $ */
 
 include('includes/session.inc');

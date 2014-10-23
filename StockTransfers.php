@@ -1,4 +1,9 @@
 <?php
+/**************************************************************************************
+KL RICARD MODIFICATIONS:
+- send email if destination = location SERDE (to be destroyed)
+***************************************************************************************/
+
 /* $Id: StockTransfers.php 6805 2014-08-08 16:12:36Z agaluski $*/
 /* Inventory Transfer - Item Dispatch */
 

@@ -1,4 +1,9 @@
 <?php
+/**************************************************************************************
+KL RICARD MODIFICATIONS:
+- remove condition price > 0 to allow the sale of promotional items at price = 0
+***************************************************************************************/
+
 /* $Id: SelectOrderItems.php 6915 2014-10-13 09:11:10Z daintree $*/
 
 include('includes/DefineCartClass.php');

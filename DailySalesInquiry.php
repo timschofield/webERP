@@ -1,5 +1,8 @@
 <?php
-
+/**************************************************************************************
+KL RICARD MODIFICATIONS:
+- Added filter current = 1 in select for salesman
+***************************************************************************************/
 /* $Id: DailySalesInquiry.php 6458 2013-11-30 11:54:03Z exsonqu $*/
 
 include('includes/session.inc');

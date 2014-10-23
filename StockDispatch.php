@@ -1,4 +1,10 @@
 <?php
+/**************************************************************************************
+KL RICARD MODIFICATIONS:
+- not use items from categories SHCONS, SHPACK
+- send email if destination = location SERDE (to be destroyed)
+***************************************************************************************/
+
 /* $Id: StockDispatch.php 6808 2014-08-11 21:27:11Z agaluski $*/
 
 // StockDispatch.php - Report of parts with overstock at one location that can be transferred
