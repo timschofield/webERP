@@ -1,5 +1,5 @@
 <?php
-/* $Id: SalesTypes.php 6310 2013-08-29 10:42:50Z daintree $*/
+/* $Id: SalesTypes.php 6929 2014-10-22 09:07:03Z exsonqu $*/
 
 include('includes/session.inc');
 $Title = _('Sales Types') . ' / ' . _('Price List Maintenance');
@@ -181,7 +181,7 @@ then none of the above are true and the list of sales types will be displayed wi
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
-	$sql = "SELECT * FROM salestypes";
+	$sql = "SELECT * FROM salestypes ORDER BY typeabbrev";
 	$result = DB_query($sql,$db);
 
 	echo '<table class="selection">';
