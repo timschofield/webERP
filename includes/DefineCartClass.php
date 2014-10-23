@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: DefineCartClass.php 6612 2014-03-17 15:12:41Z rchacon $*/
+/* $Id: DefineCartClass.php 6924 2014-10-18 02:03:22Z daintree $*/
 
 /* Definition of the cart class
 this class can hold all the information for:
@@ -374,7 +374,7 @@ Class Cart {
 		/*Gets the Taxes and rates applicable to the freight based on the tax group of the branch combined with the tax category for this particular freight
 		and SESSION['FreightTaxCategory'] the taxprovince of the dispatch location */
 
-		$sql = "SELECT taxcatid FROM taxcategories WHERE taxcatname='" . _('Freight') . "'";// To allow translations of tax category "Freight".
+		$sql = "SELECT taxcatid FROM taxcategories WHERE taxcatname='Freight'";// This tax category is hardcoded inside the database.
 		$TaxCatQuery = DB_query($sql, $db);
 
 		if ($TaxCatRow = DB_fetch_array($TaxCatQuery)) {
@@ -490,7 +490,11 @@ Class LineDetails {
 		if ($Controlled==1){
 			$this->QtyDispatched = 0;
 		} else {
-			$this->QtyDispatched = $Qty - $QtyInvoiced;
+			if ($_SESSION['InvoiceQuantityDefault']==1){
+				$this->QtyDispatched = $Qty - $QtyInvoiced;
+			} else {
+				$this->QtyDispathced = 0;
+			}
 		}
 		$this->QOHatLoc = $QOHatLoc;
 		$this->MBflag = $MBflag;
