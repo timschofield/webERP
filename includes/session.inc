@@ -2,6 +2,7 @@
 /*****************************************************************************************
 KL RICARD MODIFICATIONS:
 - Set up the login theme for regular and test webERP
+- Commented out the standard call to Dashboard
 *****************************************************************************************/
 
 /* $Id: session.inc 6914 2014-10-13 08:56:08Z daintree $*/
@@ -223,10 +224,11 @@ if (in_array($_SESSION['PageSecurityArray']['WWW_Users.php'], $_SESSION['Allowed
 } else {
 	$debug = 0; //don't allow debug messages
 }
-if ($FirstLogin AND !$SupplierLogin AND !$CustomerLogin) {
-	header('Location: ' . $PathPrefix .'Dashboard.php');
-}
-
+// KL RICARD: Commented as KL does not need Dashboard, already have all KL Boards 
+//if ($FirstLogin AND !$SupplierLogin AND !$CustomerLogin) {
+//	header('Location: ' . $PathPrefix .'Dashboard.php');
+//}
+// END KL RICARD Mod
 
 function CryptPass( $Password ) {
     if (PHP_VERSION_ID < 50500) {
