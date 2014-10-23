@@ -1,4 +1,10 @@
 <?php
+/**************************************************************************************
+KL RICARD MODIFICATIONS:
+- Added field OrderPaid to allow the registration of the orderno. Only useful for online orders.
+- Linked to CustomerReceipt.php mod
+***************************************************************************************/
+
 /* $Id: DefineReceiptClass.php 5827 2013-03-21 07:25:57Z daintree $*/
 
 /* definition of the ReceiptBatch class */
