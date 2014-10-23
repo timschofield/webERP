@@ -7,7 +7,7 @@ UPDATE  `config` SET  `confvalue` =  'companies/kurakura_klerp_test/logs' WHERE 
 UPDATE  `config` SET  `confvalue` =  'TEST SHOP' WHERE  `confname` =  'ShopName';
 UPDATE  `config` SET  `confvalue` =  'TEST SHOP' WHERE  `confname` =  'ShopTitle';
 
-UPDATE  `config` SET  `confvalue` =  '' WHERE  `confname` =  'InvemtoryManagerEmail';
+UPDATE  `config` SET  `confvalue` =  '' WHERE  `confname` =  'InventoryManagerEmail';
 UPDATE  `config` SET  `confvalue` =  '' WHERE  `confname` =  'FactoryManagerEmail';
 UPDATE  `config` SET  `confvalue` =  '' WHERE  `confname` =  'PurchasingManagerEmail';
 
