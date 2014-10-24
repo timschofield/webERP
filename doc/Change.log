@@ -1,4 +1,6 @@
 webERP Change Log
+
+24/10/14 Exson: Correct Chinese currency code in weberpchina.sql
 22/10/14 Exson: Add Order by in SalesTypes.php. 
 22/10/14 Exson: Remove debug info in GetPrice.inc. Reported by Jiro Akits.
 17/10/14 RChacon: Remove translation of tax category 'Freight' inside database.
