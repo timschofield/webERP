@@ -238,7 +238,7 @@ if(!isset($_POST['GroupName'])) {
 	$_POST['GroupName']='';
 }
 echo '<tr><td>' . _('Tax Group') . ':</td>
-		<td><input pattern="(?!^ +$)[^><+-] {4,}" title="'._('The group name must be more 4 and less than 40 characters and cannot be left blank').'" placeholder="'._('4 to 40 legal characters').'" type="text" name="GroupName" size="40" maxlength="40" value="' . $_POST['GroupName'] . '" /></td>';
+		<td><input pattern="(?!^ +$)[^><+-]{4,}" title="'._('The group name must be more 4 and less than 40 characters and cannot be left blank').'" placeholder="'._('4 to 40 legal characters').'" type="text" name="GroupName" size="40" maxlength="40" value="' . $_POST['GroupName'] . '" /></td>';
 echo '<td><input type="submit" name="submit" value="' . _('Enter Group') . '" /></td>
 	</tr>
     </table>
