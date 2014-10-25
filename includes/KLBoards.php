@@ -4775,7 +4775,7 @@ function OpenCartItemsWithoutPicture($RootPath, $db, $db_oc, $oc_tableprefix){
 			FROM " . $oc_tableprefix . "product
 			WHERE " . $oc_tableprefix . "product.status = 1
 			ORDER BY " . $oc_tableprefix . "product.model";
-	$result = DB_query($SQL, $db_oc);
+	$result = DB_query_oc($SQL);
 	$showHeader = TRUE;
 
 	if (DB_num_rows($result) != 0){

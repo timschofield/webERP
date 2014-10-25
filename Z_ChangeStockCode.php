@@ -264,7 +264,7 @@ function ChangeFieldInOpenCartTable($TableName, $FieldName, $OldValue, $NewValue
 	$sql = "UPDATE " . $TableName . " SET " . $FieldName . " ='" . $NewValue . "' WHERE " . $FieldName . "='" . $OldValue . "'";
 	$DbgMsg = _('The SQL statement that failed was');
 	$ErrMsg = _('The SQL to update' . ' ' . $TableName . ' ' . _('records failed'));
-	$result = DB_query($sql,$db_oc,$ErrMsg,$DbgMsg,true);
+	$result = DB_query_oc($sql,$ErrMsg,$DbgMsg,true);
 	echo ' ... ' . _('completed');
 }
 
