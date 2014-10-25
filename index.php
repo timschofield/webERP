@@ -1,4 +1,6 @@
 <?php
+/* $Id$*/
+
 $PageSecurity=0;
 
 include('includes/session.inc');

@@ -2,11 +2,11 @@
 /* $Id$*/
 
 include('includes/session.inc');
+
 $Title = _('Account Groups');
-/* Manual links before header.inc */
 $ViewTopic= 'GeneralLedger';// Filename in ManualContents.php's TOC.
-$BookMark = 'AccountGroups';// Anchor's id in the manual's html document.*/
-include('includes/header.inc');
+$BookMark = 'AccountGroups';// Anchor's id in the manual's html document.
+include('includes/header.inc');// Manual links before header.inc.
 
 include('includes/SQL_CommonFunctions.inc');
 
