@@ -588,7 +588,15 @@
 			if ($data === null)
 			{
 				// workaround for a known bug in php ver. 5.2.2 that broke $HTTP_RAW_POST_DATA
-                $data = file_get_contents('php://input');
+				$ver = phpversion();
+				if ($ver[0] >= 5)
+				{
+					$data = file_get_contents('php://input');
+				}
+				else
+				{
+					$data = isset($GLOBALS['HTTP_RAW_POST_DATA']) ? $GLOBALS['HTTP_RAW_POST_DATA'] : '';
+				}
 			}
 			$raw_data = $data;
 

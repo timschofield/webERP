@@ -226,7 +226,6 @@
 
 	// set to TRUE to enable encoding of php NULL values to <EX:NIL/> instead of <NIL/>
 	$GLOBALS['xmlrpc_null_apache_encoding']=false;
-    $GLOBALS['xmlrpc_null_apache_encoding_ns']='http://ws.apache.org/xmlrpc/namespaces/extensions';
 
 	// used to store state during parsing
 	// quick explanation of components:
@@ -1063,10 +1062,7 @@
 			if ($compmethod == 'any')
 				$this->accepted_compression = array('gzip', 'deflate');
 			else
-				if ($compmethod == false )
-					$this->accepted_compression = array();
-				else
-					$this->accepted_compression = array($compmethod);
+				$this->accepted_compression = array($compmethod);
 		}
 
 		/**
@@ -1346,12 +1342,9 @@
 				$cookieheader = 'Cookie:' . $version . substr($cookieheader, 0, -1) . "\r\n";
 			}
 
-			// omit port if 80
-			$port = ($port == 80) ? '' : (':' . $port);
-
 			$op= 'POST ' . $uri. " HTTP/1.0\r\n" .
 				'User-Agent: ' . $this->user_agent . "\r\n" .
-				'Host: '. $server . $port . "\r\n" .
+				'Host: '. $server . ':' . $port . "\r\n" .
 				$credentials .
 				$proxy_credentials .
 				$accepted_encoding .
@@ -1674,14 +1667,7 @@
 			{
 				print "<PRE>\n---CURL INFO---\n";
 				foreach(curl_getinfo($curl) as $name => $val)
-				{
-					if (is_array($val))
-					{
-						$val = implode("\n", $val);
-					}
-					print $name . ': ' . htmlentities($val) . "\n";
-				}
-
+					 print $name . ': ' . htmlentities($val). "\n";
 				print "---END---\n</PRE>";
 			}
 
@@ -2053,14 +2039,7 @@
 				$this->content_type = 'text/xml; charset=' . $charset_encoding;
 			else
 				$this->content_type = 'text/xml';
-			if ($GLOBALS['xmlrpc_null_apache_encoding'])
-			{
-				$result = "<methodResponse xmlns:ex=\"".$GLOBALS['xmlrpc_null_apache_encoding_ns']."\">\n";
-			}
-			else
-			{
 			$result = "<methodResponse>\n";
-			}
 			if($this->errno)
 			{
 				// G. Giunta 2005/2/13: let non-ASCII response messages be tolerated by clients

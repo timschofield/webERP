@@ -442,7 +442,7 @@ CREATE TABLE IF NOT EXISTS `companies` (
 -- Dumping data for table weberpcn.companies: ~1 rows (approximately)
 /*!40000 ALTER TABLE `companies` DISABLE KEYS */;
 INSERT INTO `companies` (`coycode`, `coyname`, `gstno`, `companynumber`, `regoffice1`, `regoffice2`, `regoffice3`, `regoffice4`, `regoffice5`, `regoffice6`, `telephone`, `fax`, `email`, `currencydefault`, `debtorsact`, `pytdiscountact`, `creditorsact`, `payrollact`, `grnact`, `exchangediffact`, `purchasesexchangediffact`, `retainedearnings`, `gllink_debtors`, `gllink_creditors`, `gllink_stock`, `freightact`) VALUES
-	(1, 'webERP演示公司', 'not entered yet', '', '123 Web Way', 'PO Box 123', 'Queen Street', 'Melbourne', 'Victoria 3043', 'Australia', '+61 3 4567 8901', '+61 3 4567 8902', 'weberp@weberpdemo.com', 'cny', '1122', '660407', '2202', '2211', '220201', '660304', '660304', '4103', 1, 1, 1, '660409');
+	(1, 'webERP演示公司', 'not entered yet', '', '123 Web Way', 'PO Box 123', 'Queen Street', 'Melbourne', 'Victoria 3043', 'Australia', '+61 3 4567 8901', '+61 3 4567 8902', 'weberp@weberpdemo.com', 'CNY', '1122', '660407', '2202', '2211', '220201', '660304', '660304', '4103', 1, 1, 1, '660409');
 /*!40000 ALTER TABLE `companies` ENABLE KEYS */;
 
 
@@ -697,7 +697,7 @@ CREATE TABLE IF NOT EXISTS `currencies` (
 INSERT INTO `currencies` (`currency`, `currabrev`, `country`, `hundredsname`, `decimalplaces`, `rate`, `webcart`) VALUES
 	('Australian Dollars', 'AUD', 'Australia', 'cents', 2, 1, 1),
 	('Swiss Francs', 'CHF', 'Swizerland', 'centimes', 2, 1, 1),
-	('人民币', 'cny', '中国', '分', 2, 1, 1),
+	('人民币', 'CNY', '中国', '分', 2, 1, 1),
 	('Euro', 'EUR', 'Euroland', 'cents', 2, 0.44, 1),
 	('Pounds', 'GBP', 'England', 'Pence', 2, 0.8, 1),
 	('US Dollars', 'USD', 'United States', 'Cents', 2, 0.85, 1);
