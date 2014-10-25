@@ -181,13 +181,13 @@ then none of the above are true and the list of sales types will be displayed wi
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
-	$sql = "SELECT * FROM salestypes ORDER BY typeabbrev";
+	$sql = "SELECT typeabbrev,sales_type FROM salestypes ORDER BY typeabbrev";
 	$result = DB_query($sql,$db);
 
 	echo '<table class="selection">';
 	echo '<tr>
-		<th>' . _('Type Code') . '</th>
-		<th>' . _('Type Name') . '</th>
+		<th class="ascending">' . _('Type Code') . '</th>
+		<th class="ascending">' . _('Type Name') . '</th>
 		</tr>';
 
 $k=0; //row colour counter
