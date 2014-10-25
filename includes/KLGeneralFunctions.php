@@ -38,6 +38,10 @@ function isRing($stockid){
 	return (substr($stockid, 2,2) == "AN");
 }
 
+function isSlimRing($stockid){
+	return (substr($stockid, 0,4) == "JSAN");
+}
+
 function isToeRing($stockid){
 	return (substr($stockid, 2,2) == "TR");
 }

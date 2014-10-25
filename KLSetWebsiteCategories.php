@@ -1,6 +1,6 @@
 <?php
 
-define("VERSIONFILE", "1.06"); 
+define("VERSIONFILE", "1.07"); 
 
 /* Session started in session.inc for password checking and authorisation level check
 config.php is in turn included in session.inc*/
@@ -304,7 +304,12 @@ function WebsiteCategorySilverJewellery($StockId, $Description, $Long, $Category
 	
 	// define subcategory
 	if (($WebCat == SILVER_JEWELLERY) AND isRing($StockId)){
-		$WebCat = SILVER_RINGS;	
+		if (isSlimRing($StockId)){
+			$WebCat = SILVER_SLIMRINGS;
+		}
+		else{
+			$WebCat = SILVER_RINGS;	
+		}
 	}
 	if (($WebCat == SILVER_JEWELLERY) AND isToeRing($StockId)){
 		$WebCat = SILVER_TOERINGS;	
