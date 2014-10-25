@@ -1,5 +1,5 @@
 webERP Change Log
-
+25/10/14 Exson: Add sorting feature for tables to meet different needs.
 24/10/14 Exson: Fixed the extra blank in pattern in TaxGroups.php which leads to input failure.
 24/10/14 Exson: Correct Chinese currency code in weberpchina.sql
 22/10/14 Exson: Add Order by in SalesTypes.php. 
