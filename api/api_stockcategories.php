@@ -13,7 +13,7 @@
 		$Searchsql = "SELECT count(categoryid)
 				      FROM stockcategory
 				      WHERE categoryid='".$StockCategory."'";
-		$SearchResult=DB_query($Searchsql, $db);
+		$SearchResult=DB_query($Searchsql);
 		$answer = DB_fetch_array($SearchResult);
 		if ($answer[0]>0) {
 			$Errors[$i] = StockCategoryAlreadyExists;
@@ -222,7 +222,7 @@
 			return $Errors;
 		}
 		$sql = "SELECT categoryid FROM stockcategory";
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		$i=0;
 		while ($myrow=DB_fetch_array($result)) {
 			$StockCategoryList[$i]=$myrow[0];

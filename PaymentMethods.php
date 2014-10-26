@@ -54,7 +54,7 @@ if (isset($_POST['submit'])) {
 		$sql = "SELECT count(*) FROM paymentmethods
 				WHERE paymentid <> '" . $SelectedPaymentID ."'
 				AND paymentname ".LIKE." '" . $_POST['MethodName'] . "'";
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 		$myrow = DB_fetch_row($result);
 		if ( $myrow[0] > 0 ) {
 			$InputError = 1;
@@ -64,7 +64,7 @@ if (isset($_POST['submit'])) {
 
 			$sql = "SELECT paymentname FROM paymentmethods
 					WHERE paymentid = '" . $SelectedPaymentID . "'";
-			$result = DB_query($sql,$db);
+			$result = DB_query($sql);
 			if ( DB_num_rows($result) != 0 ) {
 				$myrow = DB_fetch_row($result);
 				$OldName = $myrow[0];
@@ -87,7 +87,7 @@ if (isset($_POST['submit'])) {
 		/*SelectedPaymentID is null cos no item selected on first time round so must be adding a record*/
 		$sql = "SELECT count(*) FROM paymentmethods
 				WHERE paymentname LIKE'".$_POST['MethodName'] ."'";
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 		$myrow = DB_fetch_row($result);
 		if ( $myrow[0] > 0 ) {
 			$InputError = 1;
@@ -109,7 +109,7 @@ if (isset($_POST['submit'])) {
 	}
 
 	if ($InputError!=1){
-		$result = DB_query($sql,$db, $ErrMsg);
+		$result = DB_query($sql, $ErrMsg);
 		prnMsg($msg,'success');
 		echo '<br />';
 	}
@@ -127,7 +127,7 @@ if (isset($_POST['submit'])) {
 	// Get the original name of the payment method the ID is just a secure way to find the payment method
 	$sql = "SELECT paymentname FROM paymentmethods
 			WHERE paymentid = '" . $SelectedPaymentID . "'";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 	if ( DB_num_rows($result) == 0 ) {
 		// This is probably the safest way there is
 		prnMsg( _('Cannot delete this payment method because it no longer exist'),'warn');
@@ -136,14 +136,14 @@ if (isset($_POST['submit'])) {
 		$OldMeasureName = $myrow[0];
 		$sql= "SELECT COUNT(*) FROM banktrans
 				WHERE banktranstype LIKE '" . $OldMeasureName . "'";
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0]>0) {
 			prnMsg( _('Cannot delete this payment method because bank transactions have been created using this payment method'),'warn');
 			echo '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('bank transactions that refer to this payment method') . '</font>';
 		} else {
 			$sql="DELETE FROM paymentmethods WHERE paymentname " . LIKE  . " '" . $OldMeasureName . "'";
-			$result = DB_query($sql,$db);
+			$result = DB_query($sql);
 			prnMsg( $OldMeasureName . ' ' . _('payment method has been deleted') . '!','success');
 			echo '<br />';
 		} //end if not used
@@ -179,7 +179,7 @@ if (isset($_POST['submit'])) {
 			ORDER BY paymentid";
 
 	$ErrMsg = _('Could not get payment methods because');
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 
 	echo '<table class="selection">
 		<tr>
@@ -239,7 +239,7 @@ if (! isset($_GET['delete'])) {
 				FROM paymentmethods
 				WHERE paymentid='" . $SelectedPaymentID . "'";
 
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		if ( DB_num_rows($result) == 0 ) {
 			prnMsg( _('Could not retrieve the requested payment method, please try again.'),'warn');
 			unset($SelectedPaymentID);

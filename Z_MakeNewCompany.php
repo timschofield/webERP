@@ -64,7 +64,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 			if ($_POST['CreateDB']==TRUE){
 				/* Need to read in the sql script and process the queries to initate a new DB */
 
-				$result = DB_query('CREATE DATABASE ' . $_POST['NewDatabase'],$db);
+				$result = DB_query('CREATE DATABASE ' . $_POST['NewDatabase']);
 
 				if ($DBType=='postgres'){
 
@@ -117,7 +117,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 						}
 						if (mb_strpos($SQLScriptFile[$i],';')>0 AND ! $InAFunction){
 							$SQL = mb_substr($SQL,0,mb_strlen($SQL)-1);
-							$result = DB_query($SQL, $db, $ErrMsg);
+							$result = DB_query($SQL, $ErrMsg);
 							$SQL='';
 						}
 
@@ -192,18 +192,18 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 		unset ($_SESSION['CreditItems']);
 
 		$SQL ="UPDATE config SET confvalue='companies/" . $_POST['NewDatabase'] . "/EDI__Sent' WHERE confname='EDI_MsgSent'";
-		$result = DB_query($SQL,$db);
+		$result = DB_query($SQL);
 		$SQL ="UPDATE config SET confvalue='companies/" . $_POST['NewDatabase'] . "/EDI_Incoming_Orders' WHERE confname='EDI_Incoming_Orders'";
-		$result = DB_query($SQL,$db);
+		$result = DB_query($SQL);
 		$SQL ="UPDATE config SET confvalue='companies/" . $_POST['NewDatabase'] . "/part_pics' WHERE confname='part_pics_dir'";
-		$result = DB_query($SQL,$db);
+		$result = DB_query($SQL);
 		$SQL ="UPDATE config SET confvalue='companies/" . $_POST['NewDatabase'] . "/reports' WHERE confname='reports_dir'";
-		$result = DB_query($SQL,$db);
+		$result = DB_query($SQL);
 		$SQL ="UPDATE config SET confvalue='companies/" . $_POST['NewDatabase'] . "/EDI_Pending' WHERE confname='EDI_MsgPending'";
-		$result = DB_query($SQL,$db);
+		$result = DB_query($SQL);
 		//add new company
         $SQL = "UPDATE companies SET coyname='".$_POST['NewCompany']."' where coycode = 1";
-        $result = DB_query($SQL,$db);
+        $result = DB_query($SQL);
 
 		$ForceConfigReload=true;
 		include('includes/GetConfig.php');

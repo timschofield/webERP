@@ -31,7 +31,7 @@ If ((isset($_POST['PrintPDF']))
 			AND suppliers.remittance=1
 			ORDER BY supplierno";
 
-	$SuppliersResult = DB_query($sql,$db);
+	$SuppliersResult = DB_query($sql);
 	if (DB_num_rows($SuppliersResult)==0){
 		//then there aint awt to print
 		$Title = _('Print Remittance Advices Error');
@@ -75,7 +75,7 @@ If ((isset($_POST['PrintPDF']))
 						 supptrans.transno";
 
 
-		$TransResult = DB_query($sql,$db,'','',false,false);
+		$TransResult = DB_query($sql,'','',false,false);
 		if (DB_error_no($db) !=0) {
 			$Title = _('Remittance Advice Problem Report');
 			include('includes/header.inc');

@@ -24,7 +24,7 @@ echo '<div class="centre"><p class="page_title_text"><img src="' . $RootPath . '
 			FROM 	locations 
 			INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 			ORDER BY locationname";
-	$locationresult = DB_query($sql, $db);
+	$locationresult = DB_query($sql);
 	$i=0;
 	while ($myrow = DB_fetch_array($locationresult)) {
 		if(isset($_POST['Location'][$i]) AND $myrow['loccode'] == $_POST['Location'][$i]){
@@ -46,7 +46,7 @@ echo '<div class="centre"><p class="page_title_text"><img src="' . $RootPath . '
 	$sql = "SELECT typename,
 					typeid
 				FROM debtortype";
-	$result = DB_query($sql, $db);
+	$result = DB_query($sql);
 	echo '<option value="All">' . _('All') . '</option>';
 	while ($myrow = DB_fetch_array($result)) {
 		echo '<option value="' . $myrow['typeid'] . '">' . $myrow['typename'] . '</option>';
@@ -58,7 +58,7 @@ echo '<div class="centre"><p class="page_title_text"><img src="' . $RootPath . '
 	$SQL="SELECT categoryid,categorydescription
 			FROM stockcategory
 			ORDER BY categorydescription";
-	$result1 = DB_query($SQL,$db);
+	$result1 = DB_query($SQL);
 	echo '<tr>
 			<td width="150">' . _('In Stock Category') . ' </td>
 			<td>:</td>
@@ -182,7 +182,7 @@ echo '<div class="centre"><p class="page_title_text"><img src="' . $RootPath . '
 										AND stockmoves.qty >0)
 				ORDER BY stockmaster.stockid";
 	}
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	echo '<p class="page_title_text" align="center"><strong>' . _('No Sales Items') . '</strong></p>';
 	echo '<form action="PDFNoSalesItems.php"  method="GET">
 		<table class="selection">';

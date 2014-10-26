@@ -176,7 +176,7 @@ if (isset($_POST['PrintPDF'])){
 				ORDER BY purchdata.supplierno,
 				stockmaster.stockid";
 	}
-	$InventoryResult = DB_query($SQL, $db, '', '', false, false);
+	$InventoryResult = DB_query($SQL, '', '', false, false);
 	$ListCount = DB_num_rows($InventoryResult);
 
 	if (DB_error_no($db) !=0) {
@@ -235,7 +235,7 @@ if (isset($_POST['PrintPDF'])){
    		   $SQL .= "	AND stockmoves.loccode ='" . $_POST['Location'] . "'";
 		}
 
-		$SalesResult=DB_query($SQL,$db,'','',FALSE,FALSE);
+		$SalesResult=DB_query($SQL,'','',FALSE,FALSE);
 
 		if (DB_error_no($db) !=0) {
 	 		 $Title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
@@ -262,7 +262,7 @@ if (isset($_POST['PrintPDF'])){
 			$SQL .= " AND salesorders.fromstkloc ='" . $_POST['Location'] . "'";
 		}
 
-		$DemandResult = DB_query($SQL, $db, '', '', false, false);
+		$DemandResult = DB_query($SQL, '', '', false, false);
 
 		if (DB_error_no($db) !=0) {
 	 		 $Title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
@@ -295,7 +295,7 @@ if (isset($_POST['PrintPDF'])){
 			$SQL .= " AND salesorders.fromstkloc ='" . $_POST['Location'] . "'";
 		}
 
-		$BOMDemandResult = DB_query($SQL,$db,'','',false,false);
+		$BOMDemandResult = DB_query($SQL,'','',false,false);
 
 		if (DB_error_no($db) !=0) {
 	 		$Title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
@@ -394,7 +394,7 @@ if (isset($_POST['PrintPDF'])){
 			<td><select name="Location">';
 	$sql = "SELECT locations.loccode, locationname FROM locations
 			INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
-	$LocnResult=DB_query($sql,$db);
+	$LocnResult=DB_query($sql);
 
 	echo '<option value="All">' . _('All Locations') . '</option>';
 

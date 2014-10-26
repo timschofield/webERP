@@ -24,7 +24,7 @@ if (isset($_POST['PrintPDF'])) {
 					categorydescription
 				FROM stockcategory
 				WHERE categoryid='" . $_POST['StockCat'] . "'";
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 		$myrow = DB_fetch_row($result);
 		$CategoryDescription = $myrow[1];
 	}
@@ -54,7 +54,7 @@ if (isset($_POST['PrintPDF'])) {
 				AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M') " .
 				$WhereCategory . " ORDER BY locstock.loccode,locstock.stockid";
 
-	$result = DB_query($sql,$db,'','',false,true);
+	$result = DB_query($sql,'','',false,true);
 
 	if (DB_error_no($db) !=0) {
 	  $Title = _('Reorder Level') . ' - ' . _('Problem Report');
@@ -89,7 +89,7 @@ if (isset($_POST['PrintPDF'])) {
 								AND purchorders.status !='Pending'
 								AND purchorderdetails.itemcode='".$myrow['stockid']."'
 								      AND purchorders.intostocklocation='".$myrow['loccode']."'";
-		$OnOrderResult = DB_query($OnOrderSQL, $db);
+		$OnOrderResult = DB_query($OnOrderSQL);
 		$OnOrderRow = DB_fetch_array($OnOrderResult);
 		// Parameters for addTextWrap are defined in /includes/class.pdf.php
 		// 1) X position 2) Y position 3) Width
@@ -118,7 +118,7 @@ if (isset($_POST['PrintPDF'])) {
 									AND purchorders.status != 'Pending'
 								      AND purchorderdetails.itemcode='".$myrow['stockid']."'
 								      AND purchorders.intostocklocation='".$myrow['loccode']."'";
-		$OnOrderResult = DB_query($OnOrderSQL, $db);
+		$OnOrderResult = DB_query($OnOrderSQL);
 		$OnOrderRow = DB_fetch_array($OnOrderResult);
 
 		// Print if stock for part in other locations
@@ -132,7 +132,7 @@ if (isset($_POST['PrintPDF'])) {
 						 AND locstock.stockid = stockmaster.stockid
 						 AND locstock.stockid ='" . $myrow['stockid'] .
 						 "' AND locstock.loccode !='" . $myrow['loccode'] . "'";
-		$OtherResult = DB_query($sql2,$db,'','',false,true);
+		$OtherResult = DB_query($sql2,'','',false,true);
 		while ($myrow2 = DB_fetch_array($OtherResult,$db)){
 			$YPos -=$line_height;
 
@@ -149,7 +149,7 @@ if (isset($_POST['PrintPDF'])) {
 									AND purchorders.status !='Pending'
 							      	      AND purchorderdetails.itemcode='".$myrow['stockid']."'
 								      AND purchorders.intostocklocation='".$myrow2['loccode']."'";
-			$OnOrderResult = DB_query($OnOrderSQL, $db);
+			$OnOrderResult = DB_query($OnOrderSQL);
 			$OnOrderRow = DB_fetch_array($OnOrderResult);
 
 			$pdf->addTextWrap(410,$YPos,60,$FontSize,$myrow2['loccode'],'left',0,$fill);
@@ -200,7 +200,7 @@ if (isset($_POST['PrintPDF'])) {
 	$sql = "SELECT locations.loccode,
 			locationname
 		FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
-	$resultStkLocs = DB_query($sql,$db);
+	$resultStkLocs = DB_query($sql);
 	echo '<table class="selection">
 			<tr>
 				<td>' . _('From Stock Location') . ':</td>
@@ -223,7 +223,7 @@ if (isset($_POST['PrintPDF'])) {
 	echo '</select></td></tr>';
 
 	$SQL="SELECT categoryid, categorydescription FROM stockcategory WHERE stocktype<>'A' ORDER BY categorydescription";
-	$result1 = DB_query($SQL,$db);
+	$result1 = DB_query($SQL);
 	if (DB_num_rows($result1)==0){
 		echo '</td></tr>
 			</table>

@@ -19,7 +19,7 @@ $sql = "SELECT debtorno,
 		FROM debtorsmaster INNER JOIN paymentterms ON debtorsmaster.paymentterms=paymentterms.termsindicator
 		WHERE ediinvoices=1";
 
-$EDIInvCusts = DB_query($sql,$db);
+$EDIInvCusts = DB_query($sql);
 
 if (DB_num_rows($EDIInvCusts)==0){
 	exit;
@@ -55,7 +55,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 				AND debtortrans.debtorno='" . $CustDetails['debtorno'] . "'";
 
 	$ErrMsg = _('There was a problem retrieving the customer transactions because');
-	$TransHeaders = DB_query($sql,$db,$ErrMsg);
+	$TransHeaders = DB_query($sql,$ErrMsg);
 
 
 	if (DB_num_rows($TransHeaders)==0){
@@ -103,7 +103,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
                 WHERE partnercode='" . $CustDetails['debtorno'] . "'
                 AND messagetype='INVOIC' ORDER BY sequenceno";
 		$ErrMsg =  _('An error occurred in getting the EDI format template for') . ' ' . $CustDetails['debtorno'] . ' ' . _('because');
-		$MessageLinesResult = DB_query($sql, $db,$ErrMsg);
+		$MessageLinesResult = DB_query($sql,$ErrMsg);
 
 
 		if (DB_num_rows($MessageLinesResult)>0){
@@ -164,7 +164,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 								AND stockmoves.type=11 and stockmoves.transno='" . $TransNo . "'
 								AND stockmoves.show_on_inv_crds=1";
 					}
-					$TransLinesResult = DB_query($sql,$db);
+					$TransLinesResult = DB_query($sql);
 
 					$LineNumber = 0;
 					while ($TransLines = DB_fetch_array($TransLinesResult)){
@@ -178,7 +178,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 								AND partnercode ='" . $CustDetails['debtorno'] . "'
 								AND stockid='" . $TransLines['stockid'] . "'";
 
-						$CustStkResult = DB_query($sql,$db);
+						$CustStkResult = DB_query($sql);
 						if (DB_num_rows($CustStkResult)==1){
 							$CustStkIDRow = DB_fetch_row($CustStkResult);
 							$CustStockID = $CustStkIDRow[0];
@@ -207,7 +207,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 				}
 			} /*end while there are message lines to parse and substitute vbles for */
 			fclose($fp); /*close the file at the end of each transaction */
-			//DB_query("UPDATE DebtorTrans SET EDISent=1 WHERE ID=" . $TransDetails['ID'],$db);
+			//DB_query("UPDATE DebtorTrans SET EDISent=1 WHERE ID=" . $TransDetails['ID']);
 			/*Now send the file using the customer transport */
 			if ($CustDetails['editransport']=='email'){
 

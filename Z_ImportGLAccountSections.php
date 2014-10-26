@@ -9,7 +9,7 @@ include('api/api_errorcodes.php');
 
 $webERPUser = $_SESSION['UserID'];
 $sql="SELECT password FROM www_users WHERE userid='" . $webERPUser ."'";
-$result=DB_query($sql, $db);
+$result=DB_query($sql);
 $myrow=DB_fetch_array($result);
 $weberppassword = $myrow[0];
 

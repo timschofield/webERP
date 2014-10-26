@@ -34,7 +34,7 @@ $SQL = "SELECT categoryid,
 				categorydescription
 			FROM fixedassetcategories
 			ORDER BY categorydescription";
-$result = DB_query($SQL, $db);
+$result = DB_query($SQL);
 if (DB_num_rows($result) == 0) {
 	echo '<p><font size="4" color="red">' . _('Problem Report') . ':</font><br />' . _('There are no asset categories currently defined please use the link below to set them up');
 	echo '<br /><a href="' . $RootPath . '/FixedAssetCategories.php">' . _('Define Asset Categories') . '</a>';
@@ -89,7 +89,7 @@ if ($_POST['AssetLocation']=='ALL'){
 } else {
 	echo '<option value="ALL">' . _('Any asset location') . '</option>';
 }
-$result = DB_query("SELECT locationid, locationdescription FROM fixedassetlocations",$db);
+$result = DB_query("SELECT locationid, locationdescription FROM fixedassetlocations");
 
 while ($myrow = DB_fetch_array($result)) {
 	if ($myrow['locationid'] == $_POST['AssetLocation']) {
@@ -206,7 +206,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 
 	$ErrMsg = _('No assets were returned by the SQL because');
 	$DbgMsg = _('The SQL that returned an error was');
-	$SearchResult = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
+	$SearchResult = DB_query($SQL, $ErrMsg, $DbgMsg);
 
 	if (DB_num_rows($SearchResult) == 0) {
 		prnMsg(_('No assets were returned by this search please re-enter alternative criteria to try again'), 'info');

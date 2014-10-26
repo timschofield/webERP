@@ -95,7 +95,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 
 		//first off check if the item already exists
 		$sql = "SELECT COUNT(stockid) FROM stockmaster WHERE stockid='".$StockID."'";
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 		$testrow = DB_fetch_row($result);
 		if ($testrow[0] != 0) {
 			$InputError = 1;
@@ -229,7 +229,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 
 			$ErrMsg =  _('The item could not be added because');
 			$DbgMsg = _('The SQL that was used to add the item failed was');
-			$result = DB_query($sql,$db, $ErrMsg, $DbgMsg);
+			$result = DB_query($sql, $ErrMsg, $DbgMsg);
 
 			if (DB_error_no($db) ==0) { //the insert of the new code worked so bang in the stock location records too
 
@@ -241,7 +241,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 
 				$ErrMsg =  _('The locations for the item') . ' ' . $StockID .  ' ' . _('could not be added because');
 				$DbgMsg = _('NB Locations records can be added by opening the utility page') . ' <i>Z_MakeStockLocns.php</i> ' . _('The SQL that was used to add the location records that failed was');
-				$InsResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+				$InsResult = DB_query($sql,$ErrMsg,$DbgMsg);
 
 				if (DB_error_no($db) ==0) {
 					prnMsg( _('New Item') .' ' . $StockID  . ' '. _('has been added to the transaction'),'info');

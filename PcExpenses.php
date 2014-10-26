@@ -104,7 +104,7 @@ if (isset($_POST['submit'])) {
 			     FROM pcexpenses
 			     WHERE codeexpense = '" . $_POST['CodeExpense'] . "'";
 
-		$checkresult = DB_query($checkSql,$db);
+		$checkresult = DB_query($checkSql);
 		$checkrow = DB_fetch_row($checkresult);
 
 		if ( $checkrow[0] > 0 ) {
@@ -127,7 +127,7 @@ if (isset($_POST['submit'])) {
 			$msg = _('Expense ') . ' ' . $_POST['CodeExpense'] .  ' ' . _('has been created');
 			$checkSql = "SELECT count(codeexpense)
 						FROM pcexpenses";
-			$result = DB_query($checkSql, $db);
+			$result = DB_query($checkSql);
 			$row = DB_fetch_row($result);
 
 		}
@@ -135,7 +135,7 @@ if (isset($_POST['submit'])) {
 
 	if ( $InputError !=1) {
 	//run the SQL from either of the above possibilites
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 		prnMsg($msg,'success');
 		echo '<br />';
 		unset($SelectedExpense);
@@ -154,7 +154,7 @@ if (isset($_POST['submit'])) {
 	       WHERE codeexpense='" . $SelectedExpense . "'";
 
 	$ErrMsg = _('The number of type of tabs using this expense code could not be retrieved');
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {
@@ -165,7 +165,7 @@ if (isset($_POST['submit'])) {
 			$sql="DELETE FROM pcexpenses
                   WHERE codeexpense='" . $SelectedExpense . "'";
 			$ErrMsg = _('The expense type record could not be deleted because');
-			$result = DB_query($sql,$db,$ErrMsg);
+			$result = DB_query($sql,$ErrMsg);
 			prnMsg(_('Expense type') .  ' ' . $SelectedExpense  . ' ' . _('has been deleted') ,'success');
 			echo '<br />';
 			unset ($SelectedExpense);
@@ -182,7 +182,7 @@ or deletion of the records*/
 
 	$sql = "SELECT *
 			FROM pcexpenses";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 
 	echo '<table class="selection">';
 	echo '<tr>
@@ -208,14 +208,14 @@ or deletion of the records*/
 					FROM chartmaster
 					WHERE accountcode='". $myrow[2] . "'";
 
-		$ResultDes = DB_query($sqldesc,$db);
+		$ResultDes = DB_query($sqldesc);
 		$Description=DB_fetch_array($ResultDes);
 
 		$SqlDescTag="SELECT tagdescription
 					FROM tags
 					WHERE tagref='". $myrow[3] . "'";
 
-		$ResultDesTag = DB_query($SqlDescTag,$db);
+		$ResultDesTag = DB_query($SqlDescTag);
 		$DescriptionTag=DB_fetch_array($ResultDesTag);
 
 		printf('<td>%s</td>
@@ -260,7 +260,7 @@ if (! isset($_GET['delete'])) {
 		        FROM pcexpenses
 		        WHERE codeexpense='" . $SelectedExpense . "'";
 
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		$myrow = DB_fetch_array($result);
 
 		$_POST['CodeExpense'] = $myrow['codeexpense'];
@@ -306,7 +306,7 @@ if (! isset($_GET['delete'])) {
 				accountname
 			FROM chartmaster
 			ORDER BY accountcode";
-	$result = DB_query($SQL,$db);
+	$result = DB_query($SQL);
 	echo '<option value="">' . _('Not Yet Selected') . '</option>';
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['GLAccount']) and $myrow['accountcode']==$_POST['GLAccount']) {
@@ -330,7 +330,7 @@ if (! isset($_GET['delete'])) {
 			FROM tags
 			ORDER BY tagref";
 
-	$result=DB_query($SQL,$db);
+	$result=DB_query($SQL);
 	echo '<option value="0">0 - ' . _('None') . '</option>';
 	while ($myrow=DB_fetch_array($result)){
 		if (isset($_POST['Tag']) and $_POST['Tag']==$myrow['tagref']){

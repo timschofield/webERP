@@ -18,7 +18,7 @@ if( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 				FROM systypes
 				WHERE typeid = '" . $_GET['TypeID'] . "'";
 
-	$TypeResult = DB_query($typeSQL,$db);
+	$TypeResult = DB_query($typeSQL);
 
 	if( DB_num_rows($TypeResult) == 0 ) {
 			prnMsg(_('No transaction of this type with id') . ' ' . $_GET['TypeID'],'error');
@@ -69,7 +69,7 @@ if( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 				WHERE gltrans.type= '" . $_GET['TypeID'] . "'
 				AND gltrans.typeno = '" . $_GET['TransNo'] . "'
 				ORDER BY gltrans.counterindex";
-		$TransResult = DB_query($SQL,$db);
+		$TransResult = DB_query($SQL);
 
 		$Posted = _('Yes');
 		$CreditTotal = 0;
@@ -106,7 +106,7 @@ if( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 									ON debtortrans.debtorno = debtorsmaster.debtorno
 									WHERE debtortrans.type = '" . $TransRow['type'] . "'
 									AND debtortrans.transno = '" . $_GET['TransNo']. "'";
-					$DetailResult = DB_query($DetailSQL,$db);
+					$DetailResult = DB_query($DetailSQL);
 
 			} elseif( $TransRow['account'] == $_SESSION['CompanyRecord']['creditorsact'] AND $AnalysisCompleted == 'Not Yet' ) {
 					$URL = $RootPath . '/SupplierInquiry.php?SupplierID=';
@@ -121,7 +121,7 @@ if( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 									ON supptrans.supplierno = suppliers.supplierid
 									WHERE supptrans.type = '" . $TransRow['type'] . "'
 									AND supptrans.transno = '" . $_GET['TransNo'] . "'";
-					$DetailResult = DB_query($DetailSQL,$db);
+					$DetailResult = DB_query($DetailSQL);
 
 			} else {
 					$URL = $RootPath . '/GLAccountInquiry.php?Account=' . $TransRow['account'];

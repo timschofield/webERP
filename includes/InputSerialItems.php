@@ -13,7 +13,7 @@ $sql = "SELECT perishable,
 		decimalplaces
 		FROM stockmaster
 		WHERE stockid='".$StockID."'";
-$result = DB_query($sql, $db);
+$result = DB_query($sql);
 $myrow = DB_fetch_array($result);
 $Perishable = $myrow['perishable'];
 $DecimalPlaces = $myrow['decimalplaces'];

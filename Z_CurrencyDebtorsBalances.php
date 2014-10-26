@@ -17,7 +17,7 @@ $sql = "SELECT SUM(ovamount+ovgst+ovdiscount+ovfreight-alloc) AS currencybalance
 	ON debtorsmaster.currcode=currencies.currabrev
 	WHERE (ovamount+ovgst+ovdiscount+ovfreight-alloc)<>0 GROUP BY currcode";
 
-$result = DB_query($sql,$db);
+$result = DB_query($sql);
 
 
 $LocalTotal =0;

@@ -62,19 +62,19 @@ function RetrieveReports() {
 		$sql= "SELECT id, reportname FROM ".DBReports."
 			WHERE defaultreport='1' AND reporttype='rpt' AND groupname='".$key."'
 			ORDER BY reportname";
-		$Result=DB_query($sql,$db,'','',false,true);
+		$Result=DB_query($sql,'','',false,true);
 		while ($Temp = DB_fetch_array($Result)) $OutputString .= '<input type="radio" name="ReportID" value="'.$Temp['id'].'">'.$Temp['reportname'].'<br />';
 		$sql= "SELECT id, reportname FROM ".DBReports."
 			WHERE defaultreport='0' AND reporttype='rpt' AND groupname='".$key."'
 			ORDER BY reportname";
-		$Result=DB_query($sql,$db,'','',false,true);
+		$Result=DB_query($sql,'','',false,true);
 		if (DB_num_rows($Result)>0) $OutputString .= '<u>'.RPT_CUSTRPT.'</u><br />';
 		while ($Temp = DB_fetch_array($Result)) $OutputString .= '<input type="radio" name="ReportID" value="'.$Temp['id'].'">'.$Temp['reportname'].'<br />';
 		$OutputString .= '</td>'.chr(10).'<td width="250" valign="top">';
 		$sql= "SELECT id, groupname, reportname FROM ".DBReports."
 			WHERE defaultreport='1' AND reporttype='frm'
 			ORDER BY groupname, reportname";
-		$Result=DB_query($sql,$db,'','',false,true);
+		$Result=DB_query($sql,'','',false,true);
 		$FormList = '';
 		while ($Temp = DB_fetch_array($Result)) $FormList[] = $Temp;
 		foreach ($FormGroups as $index=>$value) {
@@ -100,7 +100,7 @@ function RetrieveFields($EntryType) {
 	$sql= "SELECT *	FROM ".DBRptFields."
 		WHERE reportid = ".$ReportID." AND entrytype = '".$EntryType."'
 		ORDER BY seqnum";
-	$Result=DB_query($sql,$db,'','',false,true);
+	$Result=DB_query($sql,'','',false,true);
 	if (DB_num_rows($Result)>0) {
 		while ($FieldValues = DB_fetch_array($Result)) {
 			$FieldListings['lists'][] = $FieldValues;
@@ -183,7 +183,7 @@ function UpdatePageFields($ReportID) {
 				col20width = ".$_POST['Col20Width'];
 	}
 	$sql .=" WHERE id =".$ReportID.";";
-	$Result=DB_query($sql,$db,'','',false,true);
+	$Result=DB_query($sql,'','',false,true);
 	return true;
 }
 
@@ -196,7 +196,7 @@ function UpdateCritFields($ReportID, $DateString) {
 		displaydesc = '".$DateString."',
 		params = '".$_POST['DefDate']."'
 		WHERE reportid = ".$ReportID." AND entrytype = 'dateselect';";
-	$Result=DB_query($sql,$db,'','',false,true);
+	$Result=DB_query($sql,'','',false,true);
 	if ($Type<>'frm') { // then write specifics for a report
 		// write the truncate long descriptions choice
 		$sql = "UPDATE ".DBRptFields." SET
@@ -205,7 +205,7 @@ function UpdateCritFields($ReportID, $DateString) {
 			params = '".$_POST['TruncLongDesc']."',
 			displaydesc = ''
 			WHERE reportid = ".$ReportID." AND entrytype = 'trunclong';";
-		$Result=DB_query($sql,$db,'','',false,true);
+		$Result=DB_query($sql,'','',false,true);
 	} else { // it's a form update the page break info
 		// write the form page break fieldname
 		$sql = "UPDATE ".DBRptFields." SET
@@ -216,7 +216,7 @@ function UpdateCritFields($ReportID, $DateString) {
 			params = '',
 			displaydesc = ''
 			WHERE reportid = ".$ReportID." AND entrytype = 'grouplist';";
-		$Result=DB_query($sql,$db,'','',false,true);
+		$Result=DB_query($sql,'','',false,true);
 	}
 	return true;
 }
@@ -235,7 +235,7 @@ function UpdateDBFields($ReportID) {
     for ($i=0;$i<6;$i++) {
 	  	if (isset($_POST['Table'.$i]) and $_POST['Table'.$i]) {
 			$sql = "SHOW TABLES WHERE Tables_in_".$_SESSION['DatabaseName']."='".$_POST['Table'.$i]."'";
-			$Result=DB_query($sql,$db,'','',false,false);
+			$Result=DB_query($sql,'','',false,false);
 			if (DB_num_rows($Result)==0) return false;
 		}
 		// if we have a row, sql was valid
@@ -253,7 +253,7 @@ function UpdateDBFields($ReportID) {
 			table6 = '".DB_escape_string($_POST['Table6'])."',
 			table6criteria = '".DB_escape_string($_POST['Table6Criteria'])."'
 		WHERE id =".$ReportID.";";
-	$Result=DB_query($sql,$db,'','',false,true);
+	$Result=DB_query($sql,'','',false,true);
 	return true;
 }
 
@@ -270,7 +270,7 @@ function UpdateSequence($EntryType) {
 	// Only update params if not a form (cannot update params once initially set)
 	if ($Type<>'frm') $sql .= ", params = '".$Params."' ";
 	$sql .= "WHERE reportid = ".$ReportID." AND entrytype = '".$EntryType."' AND seqnum = ".$_POST['SeqNum'].";";
-	$Result=DB_query($sql,$db,'','',false,true);
+	$Result=DB_query($sql,'','',false,true);
 	return true;
 }
 
@@ -279,16 +279,16 @@ function ChangeSequence($SeqNum, $EntryType, $UpDown) {
 	// find the id of the row to move
 	$sql = "SELECT id FROM ".DBRptFields."
 		WHERE reportid = ".$ReportID." AND entrytype = '".$EntryType."' AND seqnum = ".$SeqNum.";";
-	$Result=DB_query($sql,$db,'','',false,true);
+	$Result=DB_query($sql,'','',false,true);
 	$myrow = DB_fetch_row($Result);
 	$OrigID = $myrow[0];
 	if ($UpDown=='up') $NewSeqNum = $SeqNum-1; else $NewSeqNum = $SeqNum+1;
 	// first move affected sequence to seqnum, then seqnum to new position
 	$sql = "UPDATE ".DBRptFields." SET seqnum='".$SeqNum."'
 		WHERE reportid = ".$ReportID." AND entrytype = '".$EntryType."' AND seqnum = ".$NewSeqNum.";";
-	$Result=DB_query($sql,$db,'','',false,true);
+	$Result=DB_query($sql,'','',false,true);
 	$sql = "UPDATE ".DBRptFields." SET seqnum='".$NewSeqNum."' WHERE id = ".$OrigID.";";
-	$Result=DB_query($sql,$db,'','',false,true);
+	$Result=DB_query($sql,'','',false,true);
 	return true;
 }
 
@@ -300,14 +300,14 @@ function InsertSequence($SeqNum, $EntryType) {
 	$sql = "SELECT id FROM ".DBRptFields."
 		WHERE reportid = ".$ReportID." AND entrytype = '".$EntryType."'
 		ORDER BY seqnum;";
-	$Result=DB_query($sql,$db,'','',false,true);
+	$Result=DB_query($sql,'','',false,true);
 	while ($FieldID = DB_fetch_array($Result)) { $IDList[] = $FieldID['id']; }
 	$NumRows = DB_num_rows($Result);
 	if (!$IDList OR ($NumRows < $SeqNum)) { $SeqNum = DB_num_rows($Result) + 1;	}
 	if ($SeqNum <= $NumRows) { // shift the fields down to make a sequence hole
 		for ($j=$SeqNum-1; $j<$NumRows; $j++) {
 			$sql = "UPDATE ".DBRptFields." SET seqnum = ".($j+2)." WHERE id=".$IDList[$j].";";
-			$Result=DB_query($sql,$db,'','',false,true);
+			$Result=DB_query($sql,'','',false,true);
 		}
 	}
 	if (!isset($_POST['Visible'])) $Visible = '0'; else $Visible = $_POST['Visible'];
@@ -324,7 +324,7 @@ function InsertSequence($SeqNum, $EntryType) {
 			(reportid, entrytype, seqnum, fieldname, displaydesc, visible, columnbreak, params)
 		VALUES (".$ReportID.",'".$EntryType."',".$SeqNum.",'".DB_escape_string($_POST['FieldName'])."',
 			'".DB_escape_string($_POST['DisplayDesc'])."','".$Visible."','".$ColumnBreak."','".$Params."');";
-	$Result=DB_query($sql,$db,'','',false,true);
+	$Result=DB_query($sql,'','',false,true);
 	return $SeqNum;
 }
 
@@ -334,18 +334,18 @@ function DeleteSequence($SeqNum, $EntryType) {
 	//  delete the sequence number from the list
 	$sql = "DELETE FROM ".DBRptFields."
 		WHERE reportid = ".$ReportID." AND entrytype = '".$EntryType."' AND seqnum = ".$SeqNum.";";
-	$Result=DB_query($sql,$db,'','',false,true);
+	$Result=DB_query($sql,'','',false,true);
 	// read in the remaining sequences and re-number
 	$sql = "SELECT id FROM ".DBRptFields."
 		WHERE reportid = ".$ReportID." AND entrytype = '".$EntryType."'
 		ORDER BY seqnum;";
-	$Result=DB_query($sql,$db,'','',false,true);
+	$Result=DB_query($sql,'','',false,true);
 	while ($FieldID = DB_fetch_array($Result)) { $IDList[] = $FieldID['id']; }
 	$NumRows = DB_num_rows($Result);
 	if ($NumRows >= $SeqNum) {	// then not at end of list re-number sequences
 		for ($j=$SeqNum-1; $j<$NumRows; $j++) {
 			$sql = "UPDATE ".DBRptFields." SET seqnum = ".($j+1)." WHERE id=".$IDList[$j].";";
-			$Result=DB_query($sql,$db,'','',false,true);
+			$Result=DB_query($sql,'','',false,true);
 		}
 	}
 	return true;
@@ -438,7 +438,7 @@ function ValidateField($ReportID, $FieldName, $Description) {
 			table5, table5criteria,
 			table6, table6criteria
 		FROM ".DBReports." WHERE id='".$ReportID."'";
-	$Result=DB_query($sql,$db,'','',false,true);
+	$Result=DB_query($sql,'','',false,true);
 	$Prefs = DB_fetch_assoc($Result);
 	// Check for a non-blank entry in the field description or fieldname
 	if (mb_strlen($FieldName)<1 OR mb_strlen($Description)<1) return false;
@@ -450,7 +450,7 @@ function ValidateField($ReportID, $FieldName, $Description) {
 	if ($Prefs['table5']) $strTable .= ' INNER JOIN '.$Prefs['table5']. ' ON '.$Prefs['table5criteria'];
 	if ($Prefs['table6']) $strTable .= ' INNER JOIN '.$Prefs['table6']. ' ON '.$Prefs['table6criteria'];
 	$sql = "SELECT ".$FieldName." FROM ".$strTable." LIMIT 1";
-	$Result=DB_query($sql,$db,'','',false,false);
+	$Result=DB_query($sql,'','',false,false);
 	// Try to fetch one row, if we have a row, sql was valid
 	if (DB_num_rows($Result)<1) return false; else return true;
 }
@@ -556,7 +556,7 @@ function ExportReport($ReportID) {
 	$CSVOutput .= 'version:1.0'.$crlf;
 	// Fetch the core report data from table reports
 	$sql = "SELECT * FROM ".DBReports." WHERE id = ".$ReportID.";";
-	$Result=DB_query($sql,$db,'','',false,true);
+	$Result=DB_query($sql,'','',false,true);
 	$myrow = DB_fetch_assoc($Result);
 	// Fetch the language dependent db entries
 	$ReportName = $myrow['reportname'];
@@ -574,7 +574,7 @@ function ExportReport($ReportID) {
 	// Now add the report fields
 	$CSVOutput .= $crlf.'/* Report Field Description Information: */'.$crlf;
 	$sql = "SELECT * FROM ".DBRptFields." WHERE reportid = ".$ReportID." ORDER BY entrytype, seqnum;";
-	$Result=DB_query($sql,$db,'','',false,true);
+	$Result=DB_query($sql,'','',false,true);
 	$i=0;
 	while ($FieldRows = DB_fetch_assoc($Result)) {
 		if ($FieldRows['entrytype']<>'dateselect' AND $FieldRows['entrytype']<>'trunclong') {
@@ -648,7 +648,7 @@ function ImportReport($RptName) {
 	// check for valid file, duplicate report name
 	if ($RptName=='') $RptName = $ReportName; // then no report was entered use reportname from file
 	$sql= "SELECT id FROM ".DBReports." WHERE reportname='".DB_escape_string($RptName)."';";
-	$Result=DB_query($sql,$db,'','',false,true);
+	$Result=DB_query($sql,'','',false,true);
 	if (DB_num_rows($Result)>0) { // the report name already exists, error
 		$Rtn['result'] = 'error';
 		$Rtn['message'] = RPT_REPDUP;
@@ -659,7 +659,7 @@ function ImportReport($RptName) {
 	foreach ($arrSQL as $sql) { // find the main reports sql statement, language and execute it
 		if (mb_strpos($sql,'ReportData:')===0) {
 			$sql="INSERT INTO ".DBReports." SET ".mb_substr(trim($sql),11);
-			$Result=DB_query($sql,$db,'','',false,true);
+			$Result=DB_query($sql,'','',false,true);
 			$ValidReportSQL = true;
 		}
 	}
@@ -676,7 +676,7 @@ function ImportReport($RptName) {
 			title1desc = '".$Title1Desc."',
 			title2desc = '".$Title2Desc."'
 		WHERE id = ".$ReportID.";";
-	$Result=DB_query($sql,$db,'','',false,true);
+	$Result=DB_query($sql,'','',false,true);
 	foreach ($arrSQL as $sql) { // fetch the translations for the field descriptions
 		if (mb_strpos($sql,'FieldDesc')===0) { // then it's a field description, find the index and save
 			$sql = trim($sql);
@@ -689,14 +689,14 @@ function ImportReport($RptName) {
 			$sql = trim($sql);
 			$FldIndex = mb_substr($sql,9,mb_strpos($sql,':')-9);
 			$sql="INSERT INTO ".DBRptFields." SET ".mb_substr($sql,mb_strpos($sql,':')+1);
-			$Result=DB_query($sql,$db,'','',false,true);
+			$Result=DB_query($sql,'','',false,true);
 			$FieldID = DB_Last_Insert_ID($db,DBRptFields, 'id');
 			if ($FieldID<>0) { // A field was successfully written update the report id
 				if (isset($Language[$FldIndex])) $DispSQL = "displaydesc='".$Language[$FldIndex]."', ";
 					else $DispSQL = '';
 				$tsql = "UPDATE ".DBRptFields." SET ".$DispSQL." reportid='".$ReportID."'
 					WHERE id=".$FieldID.";";
-				$Result=DB_query($tsql,$db,'','',false,true);
+				$Result=DB_query($tsql,'','',false,true);
 			}
 		}
 	}
@@ -708,7 +708,7 @@ function ImportReport($RptName) {
 function CreateTableList($ReportID,$Table) {
 	global $db;
 	$sql = "SELECT table".$Table." FROM ".DBReports." WHERE id='".$ReportID."'";
-	$Result=DB_query($sql,$db,'','',false,true);
+	$Result=DB_query($sql,'','',false,true);
 	$myrow = DB_fetch_row($Result);
 
 	$TableList = '';
@@ -727,7 +727,7 @@ function CreateLinkList($ReportID,$Table) {
 	global $db;
 	$sql = "SELECT table1, table2, table3, table4, table5, table6
 		FROM ".DBReports." WHERE id='".$ReportID."'";
-	$Result=DB_query($sql,$db,'','',false,true);
+	$Result=DB_query($sql,'','',false,true);
 	$myrow = DB_fetch_row($Result);
 	$LinkList = ''; $j = 0;
 
@@ -735,7 +735,7 @@ function CreateLinkList($ReportID,$Table) {
 	for ($i = 0; $i < $Table; $i++) {
 		$comments = '';
 		$sql = "SELECT table1, table2 FROM reportlinks WHERE table1 = '" . $myrow[$i] . "'";
-		$Result=DB_query($sql,$db,'','',false,true);
+		$Result=DB_query($sql,'','',false,true);
 		while($mytable=DB_fetch_row($Result)) {
 			if ($myrow[$Table]) {
 				if ($myrow[$Table] == $mytable[1]){
@@ -768,7 +768,7 @@ function CreateLinkEqList($ReportID,$Table) {
 		table5, table5criteria,
 		table6, table6criteria
 		FROM ".DBReports." WHERE id='".$ReportID."'";
-	$Result=DB_query($sql,$db,'','',false,true);
+	$Result=DB_query($sql,'','',false,true);
 	$myrow = DB_fetch_row($Result);
 	$LinkEqList = ''; $j = 0;
 
@@ -776,7 +776,7 @@ function CreateLinkEqList($ReportID,$Table) {
 	for ($i = 0; $i < $Table; $i++) {
 		$comments = '';
 		$sql = "SELECT table1, table2, equation FROM reportlinks WHERE table1 = '" . $myrow[$i] . "'";
-		$Result=DB_query($sql,$db,'','',false,true);
+		$Result=DB_query($sql,'','',false,true);
 		while($mytable=DB_fetch_row($Result)) {
 			if ($myrow[$Table+3]) {
 				if ($myrow[$Table+3] == $mytable[2]){
@@ -807,7 +807,7 @@ function CreateFieldList($ReportID,$FName,$Type) {
 	} else { // pull from user selected tables for this report
 		$sql = "SELECT table1, table2, table3, table4, table5, table6
 			FROM " . DBReports . " WHERE id='" . $ReportID . "'";
-		$Result=DB_query($sql,$db,'','',false,true);
+		$Result=DB_query($sql,'','',false,true);
 		$myrow = DB_fetch_row($Result);
 	}
 	$FieldList = '';

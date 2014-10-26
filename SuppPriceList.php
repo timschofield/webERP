@@ -26,7 +26,7 @@ if (isset($_POST['PrintPDF'])) {
 				FROM suppliers INNER JOIN currencies
 				ON suppliers.currcode=currencies.currabrev
 				WHERE supplierid='" . $_POST['supplier'] . "'";
-	$resultsup = DB_query($sqlsup,$db);
+	$resultsup = DB_query($sqlsup);
 	$RowSup = DB_fetch_array($resultsup);
 	$SupplierName=$RowSup['suppname'];
 	$CurrCode =$RowSup['currcode'];
@@ -38,7 +38,7 @@ if (isset($_POST['PrintPDF'])) {
 				FROM `stockcategory`
 				WHERE categoryid ='" . $_POST['category'] . "'";
 
-		$resultcat = DB_query($sqlcat,$db);
+		$resultcat = DB_query($sqlcat);
 		$RowCat = DB_fetch_row($resultcat);
 		$Categoryname=$RowCat['0'];
 	} else {
@@ -132,7 +132,7 @@ if (isset($_POST['PrintPDF'])) {
 			}
 		}
 	}
-	$result = DB_query($sql,$db,'','',false,true);
+	$result = DB_query($sql,'','',false,true);
 
 	if (DB_error_no($db) !=0) {
 		$Title = _('Price List') . ' - ' . _('Problem Report');
@@ -216,7 +216,7 @@ if (isset($_POST['PrintPDF'])) {
     echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	$sql = "SELECT supplierid,suppname FROM `suppliers`";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 	echo '<table class="selection">
 			<tr>
 				<td>' . _('Supplier') . ':</td>
@@ -232,7 +232,7 @@ if (isset($_POST['PrintPDF'])) {
 		</tr>';
 
 	$sql="SELECT categoryid, categorydescription FROM stockcategory";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 	echo '<tr>
 			<td>' . _('Category') . ':</td>
 			<td><select name="category"> ';

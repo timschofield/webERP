@@ -33,7 +33,7 @@ $sql = "SELECT stockmaster.stockid,
 			stockmaster.stockid,
 			stockmaster.decimalplaces";
 
-$result = DB_query($sql,$db, $ErrMsg, $DbgMsg);
+$result = DB_query($sql, $ErrMsg, $DbgMsg);
 
 If (DB_num_rows($result)==0){
 	include ('includes/header.inc');

@@ -1,4 +1,7 @@
 webERP Change Log
+
+
+27/10/14 Phil: Removed all $db in DB_query() calls as now a global
 25/10/14 Exson: Add sorting feature for tables to meet different needs.
 24/10/14 Exson: Fixed the extra blank in pattern in TaxGroups.php which leads to input failure.
 24/10/14 Exson: Correct Chinese currency code in weberpchina.sql

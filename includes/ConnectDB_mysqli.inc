@@ -15,7 +15,7 @@ if (!isset($mysqlport)){
 global $db;	// Make sure it IS global, regardless of our context
 
 $db = mysqli_connect($host , $DBUser, $DBPassword,$_SESSION['DatabaseName'], $mysqlport);
-//$result=DB_query('SET sql_mode = ANSI', $db);
+//$result=DB_query('SET sql_mode = ANSI');
 
 
 //this statement sets the charset to be used for sending data to and from the db server
@@ -57,7 +57,6 @@ if (isset($DatabaseName)) {
 //DB wrapper functions to change only once for whole application
 
 function DB_query ($SQL,
-					$Conn='',
 					$ErrorMessage='',
 					$DebugMessage= '',
 					$Transaction=false,
@@ -183,7 +182,7 @@ function DB_escape_string($String){
 
 function DB_show_tables($Conn=''){
 	global $db;
-	$Result = DB_query('SHOW TABLES',$db);
+	$Result = DB_query('SHOW TABLES');
 	Return $Result;
 }
 

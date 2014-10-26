@@ -89,7 +89,7 @@ If (isset($PrintPDF)
 					bankaccounts.bankaccountcode
 				FROM bankaccounts
 				WHERE bankaccounts.invoice = '1'";
-		$result=DB_query($sql,$db,'','',false,false);
+		$result=DB_query($sql,'','',false,false);
 		if (DB_error_no($db)!=1) {
 			if (DB_num_rows($result)==1){
 				$myrow = DB_fetch_array($result);
@@ -238,7 +238,7 @@ If (isset($PrintPDF)
 			}
 		}
 
-	   $result=DB_query($sql,$db,'','',false,false);
+	   $result=DB_query($sql,'','',false,false);
 
 	   if (DB_error_no($db)!=0) {
 
@@ -298,7 +298,7 @@ If (isset($PrintPDF)
 					AND stockmoves.show_on_inv_crds=1";
 			} // end else
 
-		$result=DB_query($sql,$db);
+		$result=DB_query($sql);
 		if (DB_error_no($db)!=0) {
 			$Title = _('Transaction Print Error Report');
 			include ('includes/header.inc');
@@ -616,14 +616,14 @@ If (isset($PrintPDF)
 
 		$sql = "SELECT typeno FROM systypes WHERE typeid=10";
 
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 		$myrow = DB_fetch_row($result);
 
 		echo '<div class="page_help_text"><b>' . _('The last invoice created was number') . ' ' . $myrow[0] . '</b><br />' . _('If only a single invoice is required') . ', ' . _('enter the invoice number to print in the Start transaction number to print field and leave the End transaction number to print field blank') . '. ' . _('Only use the end invoice to print field if you wish to print a sequential range of invoices') . '';
 
 		$sql = "SELECT typeno FROM systypes WHERE typeid='11'";
 
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 		$myrow = DB_fetch_row($result);
 
 		echo '<br /><b>' . _('The last credit note created was number') . ' ' . $myrow[0] . '</b><br />' . _('A sequential range can be printed using the same method as for invoices above') . '. ' . _('A single credit note can be printed by only entering a start transaction number') . '</div>';
@@ -741,7 +741,7 @@ If (isset($PrintPDF)
 
 			}
 
-			$result=DB_query($sql,$db);
+			$result=DB_query($sql);
 			if (DB_num_rows($result)==0 OR DB_error_no($db)!=0) {
 				echo '<p>' . _('There was a problem retrieving the invoice or credit note details for note number') . ' ' . $InvoiceToPrint . ' ' . _('from the database') . '. ' . _('To print an invoice, the sales order record, the customer transaction record and the branch record for the customer must not have been purged') . '. ' . _('To print a credit note only requires the customer, transaction, salesman and branch records be available');
 				if ($debug==1){
@@ -932,7 +932,7 @@ If (isset($PrintPDF)
 				echo '<hr />';
 				echo '<div class="centre"><h4>' . _('All amounts stated in') . ' ' . $myrow['currcode'] . '</h4></div>';
 
-				$result=DB_query($sql,$db);
+				$result=DB_query($sql);
 				if (DB_error_no($db)!=0) {
 					echo '<br />' . _('There was a problem retrieving the invoice or credit note stock movement details for invoice number') . ' ' . $FromTransNo . ' ' . _('from the database');
 					if ($debug==1){

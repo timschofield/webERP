@@ -45,7 +45,7 @@ If (isset($_POST['PrintPDF'])
 				currencies.currency,
 				currencies.decimalplaces";
 
-	$SupplierResult = DB_query($SQL,$db);
+	$SupplierResult = DB_query($SQL);
 
 	if (DB_error_no($db) !=0) {
 		$Title = _('Supplier Balances - Problem Report');
@@ -145,7 +145,7 @@ If (isset($_POST['PrintPDF'])
 			ORDER BY periodno DESC";
 
 	$ErrMsg = _('Could not retrieve period data because');
-	$Periods = DB_query($sql,$db,$ErrMsg);
+	$Periods = DB_query($sql,$ErrMsg);
 
 	while ($myrow = DB_fetch_array($Periods,$db)){
 		echo '<option value="' . $myrow['lastdate_in_period'] . '" selected="selected" >' . MonthAndYearFromSQLDate($myrow['lastdate_in_period'],'M',-1) . '</option>';

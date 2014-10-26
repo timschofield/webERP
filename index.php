@@ -191,7 +191,7 @@ be generated, one for standard reports and the other for custom reports.
 			FROM reports
 			ORDER BY groupname,
 					reportname";
-	$Result=DB_query($sql,$db,'','',false,true);
+	$Result=DB_query($sql,'','',false,true);
 	$ReportList = '';
 	while ($Temp = DB_fetch_array($Result)) $ReportList[] = $Temp;
 

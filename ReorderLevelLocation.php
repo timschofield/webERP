@@ -20,7 +20,7 @@ if (isset($_POST['submit'])){
 											bin = '" . strtoupper($_POST['BinLocation'.$i]) . "' 
 						WHERE loccode = '" . $_POST['StockLocation'] . "'
 						AND stockid = '" . $_POST['StockID' . $i] . "'";
-			$Result = DB_query($SQLUpdate,$db);
+			$Result = DB_query($SQLUpdate);
 		}
 	}
 }
@@ -52,13 +52,13 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 			AND stockmaster.discontinued = 0
 			ORDER BY '" . $Sequence . "' ASC";
 
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 
 	$SqlLoc="SELECT locationname
 		   FROM locations
 		   WHERE loccode='".$_POST['StockLocation']."'";
 
-	$ResultLocation = DB_query($SqlLoc,$db);
+	$ResultLocation = DB_query($SqlLoc);
 	$Location=DB_fetch_array($ResultLocation);
 
 	echo'<p class="page_title_text"><strong>' . _('Location : ') . '' . $Location['locationname'] . ' </strong></p>';
@@ -104,7 +104,7 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 				AND loccode='" . $_POST['StockLocation'] ."'
 				AND trandate >= '" . FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-filter_number_format($_POST['NumberOfDays']))) . "'";
 
-		$ResultInvQty = DB_query($SqlInv,$db);
+		$ResultInvQty = DB_query($SqlInv);
 		$SalesRow=DB_fetch_array($ResultInvQty);
 
 
@@ -114,7 +114,7 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 				FROM locstock
 				INNER JOIN locationusers ON locationusers.loccode=locstock.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 				WHERE stockid='" . $myrow['stockid'] . "'";
-		$TotQtyResult = DB_query($SqlOH,$db);
+		$TotQtyResult = DB_query($SqlOH);
 		$TotQtyRow = DB_fetch_array($TotQtyResult);
 
 		echo $myrow['stockid'] . '</td>
@@ -158,7 +158,7 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 	$sql = "SELECT locations.loccode,
 				   locationname
 		    FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
-	$resultStkLocs = DB_query($sql,$db);
+	$resultStkLocs = DB_query($sql);
 	echo '<table class="selection">
 			<tr>
 				<td>' . _('Location') . ':</td>
@@ -174,7 +174,7 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 			FROM stockcategory
 			ORDER BY categorydescription";
 
-	$result1 = DB_query($SQL,$db);
+	$result1 = DB_query($SQL);
 
 	echo '<tr><td>' . _('Category') . ':</td>
 				<td><select name="StockCat">';

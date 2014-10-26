@@ -62,7 +62,7 @@ if (isset($_POST['submit']) ) {
 	}
 
 	if ($InputError !=1) {
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 
 		echo '<br />';
 		prnMsg($msg, 'success');
@@ -78,7 +78,7 @@ if (isset($_POST['submit']) ) {
 	$sql="DELETE FROM debtortypenotes
 			WHERE noteid='".$Id."'
 			AND typeid='".$DebtorType."'";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 
 	echo '<br />';
 	prnMsg( _('The contact group note record has been deleted'), 'success');
@@ -89,7 +89,7 @@ if (isset($_POST['submit']) ) {
 
 if (!isset($Id)) {
 	$SQLname="SELECT typename from debtortype where typeid='".$DebtorType."'";
-	$result = DB_query($SQLname,$db);
+	$result = DB_query($SQLname);
 	$myrow = DB_fetch_array($result);
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/customer.png" title="' . _('Search') . '" alt="" />'  . _('Notes for Customer Type').': <b>' .$myrow['typename'] . '</b></p>
 		<br />';
@@ -103,7 +103,7 @@ if (!isset($Id)) {
 				FROM debtortypenotes
 				WHERE typeid='".$DebtorType."'
 				ORDER BY date DESC";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 			//echo '<br />' . $sql;
 
 	echo '<table class="selection">';
@@ -170,7 +170,7 @@ if (!isset($_GET['delete'])) {
 				WHERE noteid=".$Id."
 					AND typeid='".$DebtorType."'";
 
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 				//echo '<br />' . $sql;
 
 		$myrow = DB_fetch_array($result);

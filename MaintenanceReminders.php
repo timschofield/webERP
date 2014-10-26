@@ -18,7 +18,7 @@ $sql="SELECT 	description,
 		WHERE ADDDATE(lastcompleted,frequencydays-10)> CURDATE()
 		ORDER BY userresponsible";
 
-$result = DB_query($sql,$db);
+$result = DB_query($sql);
 $LastUserResponsible = '';
 
 while ($myrow = DB_fetch_array($result)){
@@ -59,7 +59,7 @@ $sql="SELECT 	description,
 		WHERE ADDDATE(lastcompleted,frequencydays)> CURDATE()
 		ORDER BY manager";
 
-$result = DB_query($sql,$db);
+$result = DB_query($sql);
 $LastManager = '';
 while ($myrow = DB_fetch_array($result)){
 	if (!isset(${'Mail' . $myrow['userresponsible']})) {

@@ -13,7 +13,7 @@
 			return $Errors;
 		}
 		$sql = 'SELECT shipper_id FROM shippers';
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		$i=0;
 		while ($myrow=DB_fetch_array($result)) {
 			$ShipperList[$i]=$myrow[0];
@@ -35,7 +35,7 @@
 			return $Errors;
 		}
 		$sql = "SELECT * FROM shippers WHERE shipper_id='" . $Shipper."'";
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		return DB_fetch_array($result);
 	}
 ?>

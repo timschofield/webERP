@@ -24,7 +24,7 @@ $sql="SELECT name
 		FROM debtorsmaster
 		WHERE debtorno='".$_SESSION['CustomerID']."'";
 
-$result=DB_query($sql, $db);
+$result=DB_query($sql);
 $myrow=DB_fetch_array($result);
 $CustomerName=$myrow['name'];
 
@@ -71,7 +71,7 @@ if (isset($_POST['submit'])) {
 
 		$ErrMsg = _('The check on validity of the customer code and branch failed because');
 		$DbgMsg = _('The SQL that was used to check the customer code and branch was');
-		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+		$result = DB_query($sql,$ErrMsg,$DbgMsg);
 
 		if (DB_num_rows($result)==0){
 			prnMsg(_('The entered Branch Code is not valid for the entered Customer Code'),'error');
@@ -114,7 +114,7 @@ if (isset($_POST['submit'])) {
 
 			$ErrMsg = _('The user could not be added because');
 			$DbgMsg = _('The SQL that was used to insert the new user and failed was');
-			$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+			$result = DB_query($sql,$ErrMsg,$DbgMsg);
 			prnMsg( _('A new customer login has been created'), 'success' );
 			include('includes/footer.inc');
 			exit;
@@ -168,7 +168,7 @@ echo '<tr>
 			<td><select name="BranchCode">';
 
 $sql = "SELECT branchcode FROM custbranch WHERE debtorno = '" . $_SESSION['CustomerID'] . "'";
-$result = DB_query($sql,$db);
+$result = DB_query($sql);
 
 while ($myrow=DB_fetch_array($result)){
 

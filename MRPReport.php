@@ -29,7 +29,7 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 			WHERE part = '" . $_POST['Part'] ."'
 			ORDER BY daterequired,whererequired";
 
-	$result = DB_query($sql,$db,'','',False,False);
+	$result = DB_query($sql,'','',False,False);
 	if (DB_error_no($db) !=0) {
 		$errors = 1;
 		$holddb = $db;
@@ -80,7 +80,7 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 			 FROM mrpsupplies
 			 WHERE part = '" . $_POST['Part'] . "'
 			 ORDER BY mrpdate";
-	$result = DB_query($sql,$db,'','',false,true);
+	$result = DB_query($sql,'','',false,true);
 	if (DB_error_no($db) !=0) {
 		$errors = 1;
 		$holddb = $db;
@@ -114,7 +114,7 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 				   TRUNCATE(((TO_DAYS(duedate) - TO_DAYS(CURRENT_DATE)) / 7),0) AS weekindex,
 				   TO_DAYS(duedate) - TO_DAYS(CURRENT_DATE) AS datediff
 				FROM mrpplannedorders WHERE part = '" . $_POST['Part'] . "' ORDER BY mrpdate";
-	$result = DB_query($sql,$db,'','',false,true);
+	$result = DB_query($sql,'','',false,true);
 	if (DB_error_no($db) !=0) {
 		$errors = 1;
 		$holddb = $db;
@@ -174,7 +174,7 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 			LEFT JOIN stockmaster
 			ON levels.part = stockmaster.stockid
 			WHERE part = '" . $_POST['Part'] . "'";
-	$result = DB_query($sql,$db,'','',false,true);
+	$result = DB_query($sql,'','',false,true);
 	$myrow=DB_fetch_array($result);
 	$pdf->addTextWrap($Left_Margin,$YPos,35,$FontSize,_('Part:'),'');
 	$pdf->addTextWrap(70,$YPos,100,$FontSize,$myrow['part'],'');
@@ -503,7 +503,7 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 					categorydescription
 			FROM stockcategory
 			ORDER BY categorydescription";
-	$result1 = DB_query($SQL, $db);
+	$result1 = DB_query($SQL);
 	if (DB_num_rows($result1) == 0) {
 		echo '<p class="bad">' . _('Problem Report') . ':<br />' . _('There are no stock categories currently defined please use the link below to set them up');
 		echo '<br /><a href="' . $RootPath . '/StockCategories.php">' . _('Define Stock Categories') . '</a>';
@@ -693,7 +693,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 	}
 	$ErrMsg = _('No stock items were returned by the SQL because');
 	$DbgMsg = _('The SQL that returned an error was');
-	$searchresult = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
+	$searchresult = DB_query($SQL, $ErrMsg, $DbgMsg);
 	if (DB_num_rows($searchresult) == 0) {
 		prnMsg(_('No stock items were returned by this search please re-enter alternative criteria to try again'), 'info');
 	}

@@ -87,7 +87,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 				AND pcashdetails.date >= DATE_SUB(CURDATE(), INTERVAL '".$Days."' DAY)
 			ORDER BY pcashdetails.date, pcashdetails.counterindex ASC";
 
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 
 	echo '<tr>
 		<th>' . _('Date') . '</th>
@@ -129,7 +129,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 									tag
 								FROM pcexpenses
 								WHERE codeexpense = '".$myrow['codeexpense']."'";
-				$ResultAccExp = DB_query($SQLAccExp,$db);
+				$ResultAccExp = DB_query($SQLAccExp);
 				$myrowAccExp = DB_fetch_array($ResultAccExp);
 				$AccountTo = $myrowAccExp['glaccount'];
 				$TagTo = $myrowAccExp['tag'];
@@ -223,7 +223,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 										)";
 				$ErrMsg = _('Cannot insert a bank transaction because');
 				$DbgMsg =  _('Cannot insert a bank transaction with the SQL');
-				$resultBank = DB_query($SQLBank,$db,$ErrMsg,$DbgMsg,true);
+				$resultBank = DB_query($SQLBank,$ErrMsg,$DbgMsg,true);
 
 			}
 
@@ -231,7 +231,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 					SET authorized = '".Date('Y-m-d')."',
 					posted = 1
 					WHERE counterindex = '".$myrow['counterindex']."'";
-			$resultupdate = DB_query($sql,$db, '', '', true);
+			$resultupdate = DB_query($sql, '', '', true);
 			DB_Txn_Commit($db);
 		}
 
@@ -275,7 +275,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 			FROM pcashdetails
 			WHERE tabcode='".$SelectedTabs."'";
 
-	$ResultAmount = DB_query($sqlamount,$db);
+	$ResultAmount = DB_query($sqlamount);
 	$Amount=DB_fetch_array($ResultAmount);
 
 	if (!isset($Amount['0'])) {
@@ -308,7 +308,7 @@ echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_
 		FROM pctabs
 		WHERE authorizer='" . $_SESSION['UserID'] . "'";
 
-	$result = DB_query($SQL,$db);
+	$result = DB_query($SQL);
 
 echo '<tr>
 		<td>' . _('Authorise expenses to Petty Cash Tab') . ':</td>

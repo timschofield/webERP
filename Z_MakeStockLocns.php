@@ -18,7 +18,7 @@ $sql = "INSERT INTO locstock (stockid, loccode)
                 WHERE locstock.stockid IS NULL";
 
 $ErrMsg = _('The items/locations that need stock location records created cannot be retrieved because');
-$Result = DB_query($sql,$db,$ErrMsg);
+$Result = DB_query($sql,$ErrMsg);
 
 echo '<p />';
 prnMsg(_('Any stock items that may not have had stock location records have now been given new location stock records'),'info');

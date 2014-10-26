@@ -205,7 +205,7 @@ if (isset($_POST['ShowSales'])){
 	}
 
 	$ErrMsg = _('The sales data could not be retrieved because') . ' - ' . DB_error_msg($db);
-	$SalesResult = DB_query($sql,$db,$ErrMsg);
+	$SalesResult = DB_query($sql,$ErrMsg);
 
 
 	echo '<table cellpadding="2" class="selection">

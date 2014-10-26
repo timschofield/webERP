@@ -23,7 +23,7 @@ $sql = "SELECT locations.loccode,
     	       locationname
     	FROM locations
 		INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
-$resultStkLocs = DB_query($sql,$db);
+$resultStkLocs = DB_query($sql);
 
 echo '<p class="page_title_text">
          <img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'
@@ -54,7 +54,7 @@ $SQL="SELECT categoryid,
 				categorydescription
 		FROM stockcategory
 		ORDER BY categorydescription";
-$result1 = DB_query($SQL,$db);
+$result1 = DB_query($SQL);
 if (DB_num_rows($result1)==0){
 	echo '</table><p>';
 	prnMsg(_('There are no stock categories currently defined please use the link below to set them up'),'warn');
@@ -163,7 +163,7 @@ if (isset($_POST['ShowStatus'])){
 
 	$ErrMsg =  _('The stock held at each location cannot be retrieved because');
 	$DbgMsg = _('The SQL that failed was');
-	$LocStockResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
+	$LocStockResult = DB_query($sql, $ErrMsg, $DbgMsg);
 
 	echo '<br />
          <table cellpadding="5" cellspacing="4" class="selection">';
@@ -194,7 +194,7 @@ if (isset($_POST['ShowStatus'])){
         			AND salesorders.quotation=0";
 
 		$ErrMsg = _('The demand for this product from') . ' ' . $myrow['loccode'] . ' ' . _('cannot be retrieved because');
-		$DemandResult = DB_query($sql,$db,$ErrMsg);
+		$DemandResult = DB_query($sql,$ErrMsg);
 
 		if (DB_num_rows($DemandResult)==1){
 			$DemandRow = DB_fetch_row($DemandResult);
@@ -218,7 +218,7 @@ if (isset($_POST['ShowStatus'])){
 				AND salesorders.quotation=0";
 
 		$ErrMsg = _('The demand for this product from') . ' ' . $myrow['loccode'] . ' ' . _('cannot be retrieved because');
-		$DemandResult = DB_query($sql,$db, $ErrMsg);
+		$DemandResult = DB_query($sql, $ErrMsg);
 
 		if (DB_num_rows($DemandResult)==1){
 			$DemandRow = DB_fetch_row($DemandResult);
@@ -232,7 +232,7 @@ if (isset($_POST['ShowStatus'])){
 				WHERE workorders.closed=0
 				AND   bom.component = '". $StockID . "'
 				AND   workorders.loccode='". $myrow['loccode'] ."'";
-		$DemandResult = DB_query($sql,$db, $ErrMsg);
+		$DemandResult = DB_query($sql, $ErrMsg);
 
 		if (DB_num_rows($DemandResult)==1){
 			$DemandRow = DB_fetch_row($DemandResult);

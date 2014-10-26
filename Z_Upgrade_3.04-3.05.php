@@ -51,7 +51,7 @@ if ($_POST['DoUpgrade'] == _('Perform Upgrade')){
 			}
 			if (mb_strpos($SQLScriptFile[$i],';')>0 AND ! $InAFunction){
 				$SQL = mb_substr($SQL,0,mb_strlen($SQL)-1);
-				$result = DB_query($SQL, $db, $ErrMsg);
+				$result = DB_query($SQL, $ErrMsg);
 				$SQL='';
 			}
 
@@ -63,7 +63,7 @@ if ($_POST['DoUpgrade'] == _('Perform Upgrade')){
 
 	prnMsg(_('Upgrade script to put cost information against GRN records from purchorderdetails records .... please wait'),'info');
 
-	$TestAlreadyDoneResult = DB_query('SELECT * FROM grns WHERE stdcostunit<>0',$db);
+	$TestAlreadyDoneResult = DB_query('SELECT * FROM grns WHERE stdcostunit<>0');
 	if (DB_num_rows($TestAlreadyDoneResult)>0){
 		prnMsg(_('The upgrade script appears to have been run already successfully - there is no need to re-run it'),'info');
 		include('includes/footer.inc');
@@ -71,7 +71,7 @@ if ($_POST['DoUpgrade'] == _('Perform Upgrade')){
 	}
 
 
-	$UpdateGRNCosts = DB_query('UPDATE grns INNER JOIN purchorderdetails ON grns.podetailitem=purchorderdetails.podetailitem SET grns.stdcostunit = purchorderdetails.stdcostunit', $db);
+	$UpdateGRNCosts = DB_query('UPDATE grns INNER JOIN purchorderdetails ON grns.podetailitem=purchorderdetails.podetailitem SET grns.stdcostunit = purchorderdetails.stdcostunit');
 
 
 	prnMsg(_('The GRN records have been updated with cost information from purchorderdetails successfully'),'success');

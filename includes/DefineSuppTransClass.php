@@ -70,7 +70,7 @@ Class SuppTrans {
 			ORDER BY taxgrouptaxes.calculationorder";
 
 		$ErrMsg = _('The taxes and rates for this item could not be retrieved because');
-		$GetTaxRatesResult = DB_query($SQL,$db,$ErrMsg);
+		$GetTaxRatesResult = DB_query($SQL,$ErrMsg);
 
 		while ($myrow = DB_fetch_array($GetTaxRatesResult)){
 
@@ -424,7 +424,7 @@ Class GLCodes {
 		$this->Narrative = $Narrative;
 		$this->Tag = $Tag;
 
-		$TagResult=DB_query("SELECT tagdescription from tags where tagref='" . $Tag . "'", $db);
+		$TagResult=DB_query("SELECT tagdescription from tags where tagref='" . $Tag . "'");
 		$TagMyrow=DB_fetch_array($TagResult);
 		if ($Tag==0) {
 			$this->TagName=_('None');

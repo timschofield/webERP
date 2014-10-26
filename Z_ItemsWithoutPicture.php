@@ -14,7 +14,7 @@ $SQL = "SELECT stockmaster.stockid,
 			AND stockmaster.discontinued = 0
 			AND stockcategory.stocktype != 'D'
 		ORDER BY stockcategory.categorydescription, stockmaster.stockid";
-$result = DB_query($SQL, $db);
+$result = DB_query($SQL);
 $PrintHeader = TRUE;
 
 if (DB_num_rows($result) != 0){

@@ -30,7 +30,7 @@ $sql = "SELECT gltrans.type,
 		periodno
 	HAVING ABS(SUM(amount))>0.01";
 
-$OutOfWackResult = DB_query($sql,$db);
+$OutOfWackResult = DB_query($sql);
 
 
 $RowCounter =0;

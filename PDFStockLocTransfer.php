@@ -79,7 +79,7 @@ $sql = "SELECT loctransfers.reference,
 		INNER JOIN locationusers as locationusersrec ON locationusersrec.loccode=locationsrec.loccode AND locationusersrec.userid='" .  $_SESSION['UserID'] . "' AND locationusersrec.canview=1
 		WHERE loctransfers.reference='" . $_GET['TransferNo'] . "'";
 
-$result = DB_query($sql,$db, $ErrMsg, $DbgMsg);
+$result = DB_query($sql, $ErrMsg, $DbgMsg);
 
 If (DB_num_rows($result)==0){
 

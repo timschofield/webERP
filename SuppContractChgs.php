@@ -141,7 +141,7 @@ $sql = "SELECT contractref, name
 		ON contracts.debtorno=debtorsmaster.debtorno
 		WHERE status=2"; //only show customer ordered contracts not quotes or contracts that are finished with
 
-$result = DB_query($sql, $db);
+$result = DB_query($sql);
 
 while ($myrow = DB_fetch_array($result)) {
 	if (isset($_POST['ContractSelection']) and $myrow['contractref']==$_POST['ContractSelection']) {

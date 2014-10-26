@@ -26,7 +26,7 @@ if ( isset($_GET['CurrencyToShow']) ){
 	echo '<table>'; // First column
 
 	$SQL = "SELECT currabrev FROM currencies";
-	$result=DB_query($SQL,$db);
+	$result=DB_query($SQL);
 	include('includes/CurrenciesArray.php'); // To get the currency name from the currency code.
 
 	// CurrencyToShow Currency Picker

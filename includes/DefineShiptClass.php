@@ -53,7 +53,7 @@ Class Shipment {
 		$sql = "UPDATE purchorderdetails SET shiptref = '" . $this->ShiptRef . "'
 			WHERE podetailitem = '" . $PODetailItem . "'";
 		$ErrMsg = _('There was an error updating the purchase order detail record to make it part of shipment') . ' ' . $this->ShiptRef . ' ' . _('the error reported was');
-		$result = DB_query($sql, $db, $ErrMsg);
+		$result = DB_query($sql, $ErrMsg);
 
 		Return 1;
 	}
@@ -65,7 +65,7 @@ Class Shipment {
 
 			unset($this->LineItems[$PODetailItem]);
 			$sql = "UPDATE purchorderdetails SET shiptref = 0 WHERE podetailitem='" . $PODetailItem . "'";
-			$Result = DB_query($sql,$db);
+			$Result = DB_query($sql);
 		} else {
 			prnMsg(_('This shipment line has a quantity invoiced and already charged to the shipment - it cannot now be removed'),'warn');
 		}

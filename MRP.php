@@ -16,22 +16,22 @@ if (isset($_POST['submit'])) {
 	echo '<br />'  ._('Start time') . ': ' . date('h:i:s') . '<br />';
 	echo '<br />' . _('Initialising tables .....') . '<br />';
 	flush();
-	$result = DB_query("DROP TABLE IF EXISTS tempbom",$db);
-	$result = DB_query("DROP TABLE IF EXISTS passbom",$db);
-	$result = DB_query("DROP TABLE IF EXISTS passbom2",$db);
-	$result = DB_query("DROP TABLE IF EXISTS bomlevels",$db);
-	$result = DB_query("DROP TABLE IF EXISTS levels",$db);
+	$result = DB_query("DROP TABLE IF EXISTS tempbom");
+	$result = DB_query("DROP TABLE IF EXISTS passbom");
+	$result = DB_query("DROP TABLE IF EXISTS passbom2");
+	$result = DB_query("DROP TABLE IF EXISTS bomlevels");
+	$result = DB_query("DROP TABLE IF EXISTS levels");
 
 	$sql = "CREATE TEMPORARY TABLE passbom (part char(20),
 											sortpart text) DEFAULT CHARSET=utf8";
 	$ErrMsg = _('The SQL to create passbom failed with the message');
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 
 	$sql = "CREATE TEMPORARY TABLE tempbom (parent char(20),
 											component char(20),
 											sortpart text,
 											level int) DEFAULT CHARSET=utf8";
-	$result = DB_query($sql,$db,_('Create of tempbom failed because'));
+	$result = DB_query($sql,_('Create of tempbom failed because'));
 	// To create levels, first, find parts in bom that are top level assemblies.
 	// Do this by doing a LEFT JOIN from bom to bom (as bom2), linking
 	// bom.PARENT to bom2.COMPONENT and using WHERE bom2.COMPONENT IS NULL
@@ -48,7 +48,7 @@ if (isset($_POST['submit'])) {
 							  FROM bom LEFT JOIN bom as bom2
 							  ON bom.parent = bom2.component
 					  WHERE bom2.component IS NULL";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 
 	$lctr = 2;
 	// $lctr is the level counter
@@ -58,7 +58,7 @@ if (isset($_POST['submit'])) {
 					 '". $lctr. "' as level
 					 FROM bom LEFT JOIN bom as bom2 ON bom.parent = bom2.component
 			  WHERE bom2.component IS NULL";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 	//echo "<br />sql is $sql<br />";
 	// This while routine finds the other levels as long as $compctr - the
 	// component counter - finds there are more components that are used as
@@ -73,28 +73,28 @@ if (isset($_POST['submit'])) {
 			 CONCAT(passbom.sortpart,'%',bom.component) AS sortpart,
 			 '" .$lctr . "' as level
 			 FROM bom,passbom WHERE bom.parent = passbom.part";
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 
-		$result = DB_query("DROP TABLE IF EXISTS passbom2",$db);
-		$result = DB_query("ALTER TABLE passbom RENAME AS passbom2",$db);
-		$result = DB_query("DROP TABLE IF EXISTS passbom",$db);
+		$result = DB_query("DROP TABLE IF EXISTS passbom2");
+		$result = DB_query("ALTER TABLE passbom RENAME AS passbom2");
+		$result = DB_query("DROP TABLE IF EXISTS passbom");
 
 		$sql = "CREATE TEMPORARY TABLE passbom (part char(20),
 												sortpart text) DEFAULT CHARSET=utf8";
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 
 		$sql = "INSERT INTO passbom (part, sortpart)
 				   SELECT bom.component AS part,
 						  CONCAT(passbom2.sortpart,'%',bom.component) AS sortpart
 						  FROM bom,passbom2
 				   WHERE bom.parent = passbom2.part";
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 
 
 		$sql = "SELECT COUNT(*) FROM bom
 						INNER JOIN passbom ON bom.parent = passbom.part
 						GROUP BY bom.parent";
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 
 		$myrow = DB_fetch_row($result);
 		$compctr = $myrow[0];
@@ -106,7 +106,7 @@ if (isset($_POST['submit'])) {
 	$sql = "CREATE TEMPORARY TABLE bomlevels (
 									part char(20),
 									level int) DEFAULT CHARSET=utf8";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 
 	// Read tempbom and split sortpart into separate parts. For each separate part, calculate level as
 	// the sortpart level minus the position in the @parts array of the part. For example, the first
@@ -114,7 +114,7 @@ if (isset($_POST['submit'])) {
 	// and last part in sortpart would have a level code of zero, meaning it has no components
 
 	$sql = "SELECT * FROM tempbom";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 	while ($myrow=DB_fetch_array($result)) {
 			$Parts = explode('%',$myrow['sortpart']);
 			$Level = $myrow['level'];
@@ -123,7 +123,7 @@ if (isset($_POST['submit'])) {
 			   $ctr++;
 			   $newlevel = $Level - $ctr;
 			   $sql = "INSERT INTO bomlevels (part, level) VALUES('" . $Part . "','" . $newlevel . "')";
-			   $result2 = DB_query($sql,$db);
+			   $result2 = DB_query($sql);
 			} // End of foreach
 	}  //end of while loop
 
@@ -138,7 +138,7 @@ if (isset($_POST['submit'])) {
 							pansize double NOT NULL default '0',
 							shrinkfactor double NOT NULL default '0',
 							eoq double NOT NULL default '0') DEFAULT CHARSET=utf8";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 	$sql = "INSERT INTO levels (part,
 							level,
 							leadtime,
@@ -157,9 +157,9 @@ if (isset($_POST['submit'])) {
 					  pansize,
 					  shrinkfactor,
 					  stockmaster.eoq";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 	$sql = "ALTER TABLE levels ADD INDEX part(part)";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 
 	// Create levels records with level of zero for all parts in stockmaster that
 	// are not in bom
@@ -179,7 +179,7 @@ if (isset($_POST['submit'])) {
 			FROM stockmaster
 			LEFT JOIN levels ON stockmaster.stockid = levels.part
 			WHERE levels.part IS NULL";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 
 	// Update leadtime in levels from purchdata. Do it twice so can make sure leadtime from preferred
 	// vendor is used
@@ -187,32 +187,32 @@ if (isset($_POST['submit'])) {
 					SET levels.leadtime = purchdata.leadtime
 					WHERE levels.part = purchdata.stockid
 					AND purchdata.leadtime > 0";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 	$sql = "UPDATE levels,purchdata
 						SET levels.leadtime = purchdata.leadtime
 					WHERE levels.part = purchdata.stockid
 					AND purchdata.preferred = 1
 					AND purchdata.leadtime > 0";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 
 	prnMsg(_('Levels table has been created'),'info');
 	flush();
 
 	// Get rid if temporary tables
 	$sql = "DROP TABLE IF EXISTS tempbom";
-	//$result = DB_query($sql,$db);
+	//$result = DB_query($sql);
 	$sql = "DROP TABLE IF EXISTS passbom";
-	//$result = DB_query($sql,$db);
+	//$result = DB_query($sql);
 	$sql = "DROP TABLE IF EXISTS passbom2";
-	//$result = DB_query($sql,$db);
+	//$result = DB_query($sql);
 	$sql = "DROP TABLE IF EXISTS bomlevels";
-	//$result = DB_query($sql,$db);
+	//$result = DB_query($sql);
 
 	// In the following section, create mrprequirements from open sales orders and
 	// mrpdemands
 	prnMsg(_('Creating requirements table'),'info');
 	flush();
-	$result = DB_query("DROP TABLE IF EXISTS mrprequirements",$db);
+	$result = DB_query("DROP TABLE IF EXISTS mrprequirements");
 	// directdemand is 1 if demand is directly for this part, is 0 if created because have netted
 	// out supply and demands for a top level part and determined there is still a net
 	// requirement left and have to pass that down to the BOM parts using the
@@ -227,7 +227,7 @@ if (isset($_POST['submit'])) {
 											whererequired char(20),
 											KEY part (part)
 															) DEFAULT CHARSET=utf8";
-	$result = DB_query($sql,$db,_('Create of mrprequirements failed because'));
+	$result = DB_query($sql,_('Create of mrprequirements failed because'));
 
 	prnMsg(_('Loading requirements from sales orders'),'info');
 	flush();
@@ -253,7 +253,7 @@ if (isset($_POST['submit'])) {
 							  AND (quantity - qtyinvoiced) > 0
 							  AND salesorderdetails.completed = 0
 							  AND salesorders.quotation = 0";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 
 	prnMsg(_('Loading requirements from work orders'),'info');
 	flush();
@@ -282,7 +282,7 @@ if (isset($_POST['submit'])) {
 										ON woitems.stockid = stockmaster.stockid
 								WHERE workorders.closed=0
 									AND stockmaster.discontinued = 0";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 
 	if ($_POST['UseMRPDemands'] == 'y') {
 		$sql = "INSERT INTO mrprequirements	(part,
@@ -302,7 +302,7 @@ if (isset($_POST['submit'])) {
 									 FROM mrpdemands, stockmaster
 									 WHERE mrpdemands.stockid = stockmaster.stockid
 										AND stockmaster.discontinued = 0";
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 		prnMsg(_('Loading requirements based on mrpdemands'),'info');
 		flush();
 	}
@@ -325,7 +325,7 @@ if (isset($_POST['submit'])) {
 									 WHERE stockmaster.stockid = locstock.stockid
 										AND stockmaster.discontinued = 0
 										AND reorderlevel > quantity";
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 		prnMsg(_('Loading requirements based on reorder level'),'info');
 		flush();
 	}
@@ -334,7 +334,7 @@ if (isset($_POST['submit'])) {
 	// open work orders, and current quantity onhand from locstock
 	prnMsg(_('Creating supplies table'),'info');
 	flush();
-	$result = DB_query("DROP TABLE IF EXISTS mrpsupplies",$db);
+	$result = DB_query("DROP TABLE IF EXISTS mrpsupplies");
 	// updateflag is set to 1 in UpdateSupplies if change date when matching requirements to
 	// supplies. Actually only change update flag in the array created from mrpsupplies
 	$sql = "CREATE TABLE mrpsupplies (	id int(11) NOT NULL auto_increment,
@@ -346,7 +346,7 @@ if (isset($_POST['submit'])) {
 										mrpdate date,
 										updateflag smallint(6),
 										PRIMARY KEY (id)) DEFAULT CHARSET=utf8";
-	$result = DB_query($sql,$db,_('Create of mrpsupplies failed because'));
+	$result = DB_query($sql,_('Create of mrpsupplies failed because'));
 
 	prnMsg(_('Loading supplies from purchase orders'),'info');
 	flush();
@@ -374,7 +374,7 @@ if (isset($_POST['submit'])) {
 							AND purchorders.status != 'Completed'
 							AND(quantityord - quantityrecd) > 0
 							AND purchorderdetails.completed = 0";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 
 	prnMsg(_('Loading supplies from inventory on hand'),'info');
 	flush();
@@ -415,7 +415,7 @@ if (isset($_POST['submit'])) {
 							  WHERE quantity > 0 " .
 							  $WhereLocation .
 						  "GROUP BY stockid";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 
 	prnMsg(_('Loading supplies from work orders'),'info');
 	flush();
@@ -438,17 +438,17 @@ if (isset($_POST['submit'])) {
 							  FROM woitems INNER JOIN workorders
 								ON woitems.wo=workorders.wo
 								WHERE workorders.closed=0";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 
 	$sql = "ALTER TABLE mrpsupplies ADD INDEX part(part)";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 
 	// Create mrpplannedorders table to create a record for any unmet requirments
 	// In the following section, create mrpsupplies from open purchase orders,
 	// open work orders, and current quantity onhand from locstock
 	prnMsg(_('Creating planned orders table'),'info');
 	flush();
-	$result = DB_query("DROP TABLE IF EXISTS mrpplannedorders",$db);
+	$result = DB_query("DROP TABLE IF EXISTS mrpplannedorders");
 	$sql = "CREATE TABLE mrpplannedorders (id int(11) NOT NULL auto_increment,
 											part char(20),
 											duedate date,
@@ -458,11 +458,11 @@ if (isset($_POST['submit'])) {
 											mrpdate date,
 											updateflag smallint(6),
 											PRIMARY KEY (id)) DEFAULT CHARSET=utf8";
-	$result = DB_query($sql,$db,_('Create of mrpplannedorders failed because'));
+	$result = DB_query($sql,_('Create of mrpplannedorders failed because'));
 
 	// Find the highest and lowest level number
 	$sql = "SELECT MAX(level),MIN(level) from levels";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 
 	$myrow = DB_fetch_row($result);
 	$MaxLevel = $myrow[0];
@@ -479,7 +479,7 @@ if (isset($_POST['submit'])) {
 
 		prnMsg('------ ' . _('Processing level') .' ' . $Level . ' ------','info');
 		flush();
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 		while ($myrow=DB_fetch_array($result)) {
 			LevelNetting($db,$myrow['part'],$myrow['eoq'],$myrow['pansize'],$myrow['shrinkfactor'], $myrow['leadtime']);
 		}  //end of while loop
@@ -488,7 +488,7 @@ if (isset($_POST['submit'])) {
 
 	// Create mrpparameters table
 	$sql = "DROP TABLE IF EXISTS mrpparameters";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 	$sql = "CREATE TABLE mrpparameters  (
 						runtime datetime,
 						location varchar(50),
@@ -498,7 +498,7 @@ if (isset($_POST['submit'])) {
 						usemrpdemands varchar(5),
 						userldemands varchar(5),
 						leeway smallint) DEFAULT CHARSET=utf8";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 	// Create entry for location field from $_POST['location'], which is an array
 	// since multiple locations can be selected
 	$commactr = 0;
@@ -526,7 +526,7 @@ if (isset($_POST['submit'])) {
 								'" .  $_POST['UseMRPDemands']  . "',
 								'" .  $_POST['UseRLDemands']  . "',
 								'" . filter_number_format($_POST['Leeway']) . "')";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 
 } else { // End of if submit isset
 	// Display form if submit has not been hit
@@ -535,7 +535,7 @@ if (isset($_POST['submit'])) {
 
 	// Display parameters from last run
 	$sql = "SELECT * FROM mrpparameters";
-	$result = DB_query($sql,$db,'','',false,false);
+	$result = DB_query($sql,'','',false,false);
 	if (DB_error_no($db)==0){
 
 		$myrow = DB_fetch_array($result);
@@ -612,7 +612,7 @@ if (isset($_POST['submit'])) {
 	 $sql = "SELECT loccode,
 				locationname
 			   FROM locations";
-	$Result = DB_query($sql,$db);
+	$Result = DB_query($sql);
 	while ($myrow = DB_fetch_array($Result)) {
 		echo '<option value="';
 		echo $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
@@ -666,13 +666,13 @@ function LevelNetting(&$db,$Part,$eoq,$PanSize,$ShrinkFactor,$LeadTime) {
 
 		// Get decimal places from stockmaster for rounding of shrinkage factor
 	$sql = "SELECT decimalplaces FROM stockmaster WHERE stockid = '" . $Part . "'";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 	$myrow=DB_fetch_row($result);
 	$DecimalPlaces = $myrow[0];
 
 	// Load mrprequirements into $Requirements array
 	$sql = "SELECT * FROM mrprequirements WHERE part = '" .$Part. "' ORDER BY daterequired";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 	$Requirements = array();
 	$i = 0;
 	while ($myrow=DB_fetch_array($result)) {
@@ -682,7 +682,7 @@ function LevelNetting(&$db,$Part,$eoq,$PanSize,$ShrinkFactor,$LeadTime) {
 
 	// Load mrpsupplies into $Supplies array
 	$sql = "SELECT * FROM mrpsupplies WHERE part = '" . $Part. "' ORDER BY duedate";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 	$Supplies = array();
 	$i = 0;
 	while ($myrow=DB_fetch_array($result)) {
@@ -722,7 +722,7 @@ function LevelNetting(&$db,$Part,$eoq,$PanSize,$ShrinkFactor,$LeadTime) {
 			if ($DateDiff > abs(filter_number_format($_POST['Leeway']))) {
 				$sql = "UPDATE mrpsupplies SET mrpdate = '" . $Requirements[$reqi]['daterequired'] .
 				   "' WHERE id = '" . $Supplies[$supi]['id'] . "' AND duedate = mrpdate";
-				$result = DB_query($sql,$db);
+				$result = DB_query($sql);
 			}
 			if ($TotalRequirement > $TotalSupply) {
 				$TotalRequirement -= $TotalSupply;
@@ -819,7 +819,7 @@ function LevelNetting(&$db,$Part,$eoq,$PanSize,$ShrinkFactor,$LeadTime) {
 						  WHERE mrpcalendar.calendardate = '".$PartRequiredDate."'
 							AND cal2.manufacturingflag='1'
 							GROUP BY cal2.calendardate";
-				$ResultDate = DB_query($CalendarSQL,$db);
+				$ResultDate = DB_query($CalendarSQL);
 				$myrowdate = DB_fetch_array($ResultDate);
 				if($myrowdate[0]>0){
 					$NewDate = $myrowdate[1];
@@ -855,12 +855,12 @@ function LevelNetting(&$db,$Part,$eoq,$PanSize,$ShrinkFactor,$LeadTime) {
 												'0')";
 
 
-			$result = DB_query($sql,$db);
+			$result = DB_query($sql);
 			// If part has lower level components, create requirements for them
 			$sql = "SELECT COUNT(*) FROM bom
 					  WHERE parent ='" . $Requirement['part'] . "'
 					  GROUP BY parent";
-			$result = DB_query($sql,$db);
+			$result = DB_query($sql);
 			$myrow = DB_fetch_row($result);
 			if ($myrow[0] > 0) {
 				CreateLowerLevelRequirement($db,$Requirement['part'],$NewDate,
@@ -878,7 +878,7 @@ function LevelNetting(&$db,$Part,$eoq,$PanSize,$ShrinkFactor,$LeadTime) {
 			$id = $supply['id'];
 			$sql = "UPDATE mrpsupplies SET mrpdate ='2050-12-31' WHERE id = '".$id."'
 					  AND ordertype <> 'QOH'";
-			$result = DB_query($sql,$db);
+			$result = DB_query($sql);
 		}
 	}
 
@@ -902,7 +902,7 @@ function CreateLowerLevelRequirement(&$db,
 			WHERE bom.parent = '".$TopPart."'
 		 AND effectiveafter <= '" . date('Y-m-d') . "'
 		 AND effectiveto >= '" . date('Y-m-d') . "'";
-	$ResultBOM = DB_query($sql,$db);
+	$ResultBOM = DB_query($sql);
 	while ($myrow=DB_fetch_array($ResultBOM)) {
 		// Calculate required date by subtracting leadtime from top part's required date
 		$LeadTime = $myrow['leadtime'];
@@ -927,7 +927,7 @@ function CreateLowerLevelRequirement(&$db,
 					  '".$TopOrderNo."',
 					  '0',
 					  '".$WhereRequired."')";
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 	}  //end of while loop
 
 }  // End of CreateLowerLevelRequirement

@@ -13,7 +13,7 @@
 			return $Errors;
 		}
 		$sql = 'SELECT taxgroupid FROM taxgroups';
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		$i=0;
 		while ($myrow=DB_fetch_array($result)) {
 			$TaxgroupList[$i]=$myrow[0];
@@ -35,7 +35,7 @@
 			return $Errors;
 		}
 		$sql = "SELECT * FROM taxgroups WHERE taxgroupid='".$taxgroup."'";
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		return DB_fetch_array($result);
 	}
 
@@ -52,7 +52,7 @@
 			return $Errors;
 		}
 		$sql = "SELECT taxgroupid, taxauthid, calculationorder, taxontax FROM taxgrouptaxes WHERE taxgroupid='".$TaxGroup."'";
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		$i=0;
 		$Answer = array();
 		while ($myrow=DB_fetch_array($result)){
@@ -78,7 +78,7 @@
 			return $Errors;
 		}
 		$sql = 'SELECT taxid FROM taxauthorities';
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		$i=0;
 		while ($myrow=DB_fetch_array($result)) {
 			$TaxAuthList[$i]=$myrow[0];
@@ -100,7 +100,7 @@
 			return $Errors;
 		}
 		$sql = "SELECT * FROM taxauthorities WHERE taxid='".$TaxAuthority."'";
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		return DB_fetch_array($result);
 	}
 
@@ -117,7 +117,7 @@
 			return $Errors;
 		}
 		$sql = "SELECT taxcatid, dispatchtaxprovince, taxrate FROM taxauthrates WHERE taxauthority='".$TaxAuthority."'";
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		$i=0;
 		$Answer = array();
 		while ($myrow=DB_fetch_array($result)){

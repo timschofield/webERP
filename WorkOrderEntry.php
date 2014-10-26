@@ -74,7 +74,7 @@ if (isset($SelectedWO) AND$SelectedWO!=''){
 									'" . $LocCode . "',
 									'" . $ReqDate . "',
 									'" . $StartDate. "')";
-	$InsWOResult = DB_query($SQL,$db);
+	$InsWOResult = DB_query($SQL);
 }
 
 
@@ -193,7 +193,7 @@ if (isset($_POST['Search']) OR isset($_POST['Prev']) OR isset($_POST['Next'])){
 	$SQLCount = substr($SQL,strpos($SQL,   "FROM"));
 	$SQLCount = substr($SQLCount,0, strpos($SQLCount,   "ORDER"));
 	$SQLCount = 'SELECT COUNT(*) '.$SQLCount;
-	$SearchResult = DB_query($SQLCount,$db,$ErrMsg);
+	$SearchResult = DB_query($SQLCount,$ErrMsg);
 
 	$myrow=DB_fetch_array($SearchResult);
 	DB_free_result($SearchResult);
@@ -226,7 +226,7 @@ if (isset($_POST['Search']) OR isset($_POST['Prev']) OR isset($_POST['Next'])){
 
 	$ErrMsg = _('There is a problem selecting the part records to display because');
 	$DbgMsg = _('The SQL used to get the part selection was');
-	$SearchResult = DB_query($SQL,$db,$ErrMsg, $DbgMsg);
+	$SearchResult = DB_query($SQL,$ErrMsg, $DbgMsg);
 
 	if (DB_num_rows($SearchResult)==0 ){
 		prnMsg (_('There are no products available meeting the criteria specified'),'info');
@@ -315,7 +315,7 @@ if (isset($NewItem) AND isset($_POST['WO'])){
 									 '" . $Cost . "'
 								)";
 		$ErrMsg = _('The work order item could not be added');
-		$result = DB_query($SQL,$db,$ErrMsg);
+		$result = DB_query($SQL,$ErrMsg);
 
 		//Recursively insert real component requirements - see includes/SQL_CommonFunctions.in for function WoRealRequirements
 		WoRealRequirements($db, $_POST['WO'], $_POST['StockLocation'], $NewItem);
@@ -417,7 +417,7 @@ if (isset($_POST['submit']) OR isset($_POST['Search'])) { //The update button ha
 		$ErrMsg = _('The work order could not be added/updated');
 		foreach ($SQL as $SQL_stmt){
 		//	echo '<br />' . $SQL_stmt;
-			$result = DB_query($SQL_stmt,$db,$ErrMsg);
+			$result = DB_query($SQL_stmt,$ErrMsg);
 
 		}
 		if (!isset($_POST['Search'])) {
@@ -454,18 +454,18 @@ if (isset($_POST['submit']) OR isset($_POST['Search'])) { //The update button ha
 		$DbgMsg = _('The SQL used to delete the work order was');
 		//delete the worequirements
 		$SQL = "DELETE FROM worequirements WHERE wo='" . $_POST['WO'] . "'";
-		$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 		//delete the items on the work order
 		$SQL = "DELETE FROM woitems WHERE wo='" . $_POST['WO'] . "'";
-		$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 		//delete the controlled items defined in wip
 		$SQL="DELETE FROM woserialnos WHERE wo='" . $_POST['WO'] . "'";
 		$ErrMsg=_('The work order serial numbers could not be deleted');
-		$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 		// delete the actual work order
 		$SQL="DELETE FROM workorders WHERE wo='" . $_POST['WO'] . "'";
 		$ErrMsg=_('The work order could not be deleted');
-		$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 		DB_Txn_Commit($db);
 		prnMsg(_('The work order has been cancelled'),'success');
@@ -501,7 +501,7 @@ $SQL="SELECT workorders.loccode,
 		INNER JOIN locationusers ON locationusers.loccode=workorders.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
 		WHERE workorders.wo='" . $_POST['WO'] . "'";
 
-$WOResult = DB_query($SQL,$db);
+$WOResult = DB_query($SQL);
 if (DB_num_rows($WOResult)==1){
 
 	$myrow = DB_fetch_array($WOResult);
@@ -542,7 +542,7 @@ if (DB_num_rows($WOResult)==1){
 				}
 		  		$_POST['Controlled'.$i] =$WOItem['controlled'];
 		  		$_POST['Serialised'.$i] =$WOItem['serialised'];
-		  		$HasWOSerialNosResult = DB_query("SELECT wo FROM woserialnos WHERE wo='" . $_POST['WO'] . "'",$db);
+		  		$HasWOSerialNosResult = DB_query("SELECT wo FROM woserialnos WHERE wo='" . $_POST['WO'] . "'");
 		  		if (DB_num_rows($HasWOSerialNosResult)>0){
 		  		   $_POST['HasWOSerialNos']=true;
 		  		} else {
@@ -672,7 +672,7 @@ $SQL="SELECT categoryid,
 		FROM stockcategory
 		WHERE stocktype='F' OR stocktype='M'
 		ORDER BY categorydescription";
-	$result1 = DB_query($SQL,$db);
+	$result1 = DB_query($SQL);
 
 echo '<table class="selection"><tr><td>' . _('Select a stock category') . ':<select name="StockCat">';
 

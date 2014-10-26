@@ -44,7 +44,7 @@ if (isset($_POST['submit'])) {
 				AND stkcat='" . $_POST['StkCat'] . "'
 				AND salestype='" . $_POST['SalesType'] . "'";
 
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0] == 0) {
 			$sql = "INSERT INTO salesglpostings (
@@ -68,7 +68,7 @@ if (isset($_POST['submit'])) {
 	}
 	//run the SQL from either of the above possibilites
 
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 
 	if ($InputError==false){
 		prnMsg($msg,'success');
@@ -85,7 +85,7 @@ if (isset($_POST['submit'])) {
 
 	$sql="DELETE FROM salesglpostings WHERE id='".$SelectedSalesPostingID."'";
 
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 
 	prnMsg( _('Sales posting record has been deleted'),'success');
 }
@@ -107,7 +107,7 @@ if (!isset($SelectedSalesPostingID)) {
 					salesglpostings.stkcat,
 					salesglpostings.salestype";
 
-	$result = DB_query($SQL,$db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result)>0){
 		$ShowLivePostingRecords = false;
 		prnMsg (_('The following posting records that do not have valid general ledger code specified - these records must be amended.'),'error');
@@ -154,13 +154,13 @@ if (!isset($SelectedSalesPostingID)) {
 			salesglpostings.salestype
 			FROM salesglpostings";
 
-	$result = DB_query($SQL,$db);
+	$result = DB_query($SQL);
 
 	if (DB_num_rows($result)==0){
 		/* there is no default set up so need to check that account 1 is not already used */
 		/* First Check if we have at least a group_ caled Sales */
 		$SQL = "SELECT groupname FROM accountgroups WHERE groupname = 'Sales'";
-		$result = DB_query($SQL,$db);
+		$result = DB_query($SQL);
 		if (DB_num_rows($result)==0){
 			/* The required group does not seem to exist so we create it */
 			$SQL = "INSERT INTO accountgroups (
@@ -174,10 +174,10 @@ if (!isset($SelectedSalesPostingID)) {
 					1,
 					10)";
 
-			$result = DB_query($SQL,$db);
+			$result = DB_query($SQL);
 		}
 		$SQL = "SELECT accountcode FROM chartmaster WHERE accountcode ='1'";
-		$result = DB_query($SQL,$db);
+		$result = DB_query($SQL);
 		if (DB_num_rows($result)==0){
 		/* account number 1 is not used, so insert a new account */
 			$SQL = "INSERT INTO chartmaster (
@@ -189,7 +189,7 @@ if (!isset($SelectedSalesPostingID)) {
 						'Default Sales/Discounts',
 						'Sales'
 						)";
-			$result = DB_query($SQL,$db);
+			$result = DB_query($SQL);
 		}
 
 		$SQL = "INSERT INTO salesglpostings (
@@ -203,7 +203,7 @@ if (!isset($SelectedSalesPostingID)) {
 					'AN',
 					1,
 					1)";
-		$result = DB_query($SQL,$db);
+		$result = DB_query($SQL);
 
 	}
 	if ($ShowLivePostingRecords){
@@ -223,7 +223,7 @@ if (!isset($SelectedSalesPostingID)) {
 					salesglpostings.stkcat,
 					salesglpostings.salestype";
 
-		$result = DB_query($SQL,$db);
+		$result = DB_query($SQL);
 
 		echo '<table class="selection">
 			<tr>
@@ -291,7 +291,7 @@ if (!isset($_GET['delete'])) {
 			FROM salesglpostings
 			WHERE salesglpostings.id='".$SelectedSalesPostingID."'";
 
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		$myrow = DB_fetch_array($result);
 
 		$_POST['SalesGLCode']= $myrow['salesglcode'];
@@ -308,7 +308,7 @@ if (!isset($_GET['delete'])) {
 
 	$SQL = "SELECT areacode,
 			areadescription FROM areas";
-	$result = DB_query($SQL,$db);
+	$result = DB_query($SQL);
 
 	echo '<br /><table class="selection">
 		<tr>
@@ -329,7 +329,7 @@ if (!isset($_GET['delete'])) {
 	DB_free_result($result);
 
 	$SQL = "SELECT categoryid, categorydescription FROM stockcategory";
-	$result = DB_query($SQL,$db);
+	$result = DB_query($SQL);
 
 	echo '</select></td></tr>';
 
@@ -357,7 +357,7 @@ if (!isset($_GET['delete'])) {
 	$SQL = "SELECT typeabbrev,
 					sales_type
 			FROM salestypes";
-	$result = DB_query($SQL,$db);
+	$result = DB_query($SQL);
 
 
 	echo '<tr><td>' . _('Sales Type') . ' / ' . _('Price List') . ':</td>
@@ -390,7 +390,7 @@ if (!isset($_GET['delete'])) {
 		ORDER BY accountgroups.sequenceintb,
 			chartmaster.accountcode";
 
-	$result = DB_query($SQL,$db);
+	$result = DB_query($SQL);
 
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['SalesGLCode']) and $myrow['accountcode']==$_POST['SalesGLCode']) {

@@ -13,7 +13,7 @@
 			return $Errors;
 		}
 		$sql = "SELECT typeabbrev FROM salestypes";
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		$i=0;
 		while ($myrow=DB_fetch_array($result)) {
 			$SalesTypeList[$i]=$myrow[0];
@@ -39,7 +39,7 @@
 		$Errors = VerifySalesType($salestype, sizeof($Errors), $Errors, $db);
 		if (sizeof($Errors)==0) {
 			$sql = "SELECT * FROM salestypes WHERE typeabbrev='".$salestype."'";
-			$result = DB_query($sql, $db);
+			$result = DB_query($sql);
 			$Errors[0]=0;
 			$Errors[1]=DB_fetch_array($result);
 			return $Errors;

@@ -157,7 +157,7 @@ if (isset($_POST['Update'])
 
 		$ErrMsg = _('The customer branch record of the customer selected') . ': ' . $_SESSION['Items'.$identifier]->CustomerName . ' ' . _('cannot be retrieved because');
 		$DbgMsg = _('SQL used to retrieve the branch details was') . ':';
-		$result =DB_query($sql,$db,$ErrMsg,$DbgMsg);
+		$result =DB_query($sql,$ErrMsg,$DbgMsg);
 		if (DB_num_rows($result)==0){
 
 			prnMsg(_('The branch details for branch code') . ': ' . $_SESSION['Items'.$identifier]->Branch . ' ' . _('against customer code') . ': ' . $_POST['Select'] . ' ' . _('could not be retrieved') . '. ' . _('Check the set up of the customer and branch'),'error');
@@ -238,7 +238,7 @@ if (isset($_POST['Update'])
 						WHERE shipper_id='" . $_SESSION['Default_Shipper']."'";
 			$ErrMsg = _('There was a problem testing for the default shipper');
 			$DbgMsg = _('SQL used to test for the default shipper') . ':';
-			$TestShipperExists = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+			$TestShipperExists = DB_query($sql,$ErrMsg,$DbgMsg);
 
 			if (DB_num_rows($TestShipperExists)==1){
 
@@ -248,7 +248,7 @@ if (isset($_POST['Update'])
 
 				$sql = "SELECT shipper_id
 							FROM shippers";
-				$TestShipperExists = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+				$TestShipperExists = DB_query($sql,$ErrMsg,$DbgMsg);
 
 				if (DB_num_rows($TestShipperExists)>=1){
 					$ShipperReturned = DB_fetch_row($TestShipperExists);
@@ -305,7 +305,7 @@ If (isset($_POST['ProcessOrder'])) {
 
 		$ErrMsg = _('The customer terms cannot be determined') . '. ' . _('This order cannot be processed because');
 		$DbgMsg = _('SQL used to find the customer terms') . ':';
-		$TermsResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+		$TermsResult = DB_query($sql,$ErrMsg,$DbgMsg);
 
 
 		$myrow = DB_fetch_array($TermsResult);
@@ -392,7 +392,7 @@ if (isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.
 								)";
 
 	$ErrMsg = _('The order cannot be added because');
-	$InsertQryResult = DB_query($HeaderSQL,$db,$ErrMsg);
+	$InsertQryResult = DB_query($HeaderSQL,$ErrMsg);
 
 
 	$StartOf_LineItemsSQL = "INSERT INTO salesorderdetails (
@@ -421,7 +421,7 @@ if (isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.
 					'" . FormatDateForSQL($StockItem->ItemDue) . "'
 				)";
 		$ErrMsg = _('Unable to add the sales order line');
-		$Ins_LineItemResult = DB_query($LineItemsSQL,$db,$ErrMsg,$DbgMsg,true);
+		$Ins_LineItemResult = DB_query($LineItemsSQL,$ErrMsg,$DbgMsg,true);
 
 		/*Now check to see if the item is manufactured
 		 * 			and AutoCreateWOs is on
@@ -434,7 +434,7 @@ if (isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.
 			echo '<br />';
 
 			//now get the data required to test to see if we need to make a new WO
-			$QOHResult = DB_query("SELECT SUM(quantity) FROM locstock WHERE stockid='" . $StockItem->StockID . "'",$db);
+			$QOHResult = DB_query("SELECT SUM(quantity) FROM locstock WHERE stockid='" . $StockItem->StockID . "'");
 			$QOHRow = DB_fetch_row($QOHResult);
 			$QOH = $QOHRow[0];
 
@@ -444,7 +444,7 @@ if (isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.
 					WHERE salesorderdetails.stkcode = '" . $StockItem->StockID . "'
 					AND salesorderdetails.completed = 0
 					AND salesorders.quotation=0";
-			$DemandResult = DB_query($SQL,$db);
+			$DemandResult = DB_query($SQL);
 			$DemandRow = DB_fetch_row($DemandResult);
 			$QuantityDemand = $DemandRow[0];
 
@@ -458,7 +458,7 @@ if (isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.
 					AND salesorders.quotation=0
 					AND stockmaster.mbflag='A'
 					AND salesorderdetails.completed=0";
-			$AssemblyDemandResult = DB_query($SQL,$db);
+			$AssemblyDemandResult = DB_query($SQL);
 			$AssemblyDemandRow = DB_fetch_row($AssemblyDemandResult);
 			$QuantityAssemblyDemand = $AssemblyDemandRow[0];
 
@@ -468,7 +468,7 @@ if (isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.
 					WHERE purchorderdetails.orderno = purchorders.orderno
 					AND purchorderdetails.itemcode = '" . $StockItem->StockID . "'
 					AND purchorderdetails.completed = 0";
-			$PurchOrdersResult = DB_query($SQL,$db);
+			$PurchOrdersResult = DB_query($SQL);
 			$PurchOrdersRow = DB_fetch_row($PurchOrdersResult);
 			$QuantityPurchOrders = $PurchOrdersRow[0];
 
@@ -478,7 +478,7 @@ if (isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.
 					WHERE woitems.stockid = '" . $StockItem->StockID . "'
 					AND woitems.qtyreqd > woitems.qtyrecd
 					AND workorders.closed = 0";
-			$WorkOrdersResult = DB_query($SQL,$db);
+			$WorkOrdersResult = DB_query($SQL);
 			$WorkOrdersRow = DB_fetch_row($WorkOrdersResult);
 			$QuantityWorkOrders = $WorkOrdersRow[0];
 
@@ -529,7 +529,7 @@ if (isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.
 										 '" . $WOQuantity . "',
 										 '" . $Cost . "')";
 				$ErrMsg = _('The work order item could not be added');
-				$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
+				$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
 
 				//Recursively insert real component requirements - see includes/SQL_CommonFunctions.in for function WoRealRequirements
 				WoRealRequirements($db, $WONo, $_SESSION['DefaultFactoryLocation'], $StockItem->StockID);
@@ -558,13 +558,13 @@ if (isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.
 															'" . $StockItem->StockID . "',
 															'" . ($StockItem->NextSerialNo + $i) . "')";
 								$ErrMsg = _('The serial number for the work order item could not be added');
-								$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
+								$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
 								$FactoryManagerEmail .= "\n" . ($StockItem->NextSerialNo + $i);
 							}
 						} //end loop around creation of woserialnos
 						$NewNextSerialNo = ($StockItem->NextSerialNo + $WOQuantity +1);
 						$ErrMsg = _('Could not update the new next serial number for the item');
-						$UpdateNextSerialNoResult = DB_query("UPDATE stockmaster SET nextserialno='" . $NewNextSerialNo . "' WHERE stockid='" . $StockItem->StockID . "'",$db,$ErrMsg,$DbgMsg,true);
+						$UpdateNextSerialNoResult = DB_query("UPDATE stockmaster SET nextserialno='" . $NewNextSerialNo . "' WHERE stockid='" . $StockItem->StockID . "'",$ErrMsg,$DbgMsg,true);
 				} // end if the item is serialised and nextserialno is set
 
 				$EmailSubject = _('New Work Order Number') . ' ' . $WONo . ' ' . _('for') . ' ' . $StockItem->StockID . ' x ' . $WOQuantity;
@@ -727,7 +727,7 @@ if (isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.
 									 '1',
 									 '" . $Cost . "')";
 			$ErrMsg = _('The work order item could not be added');
-			$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
+			$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
 
 			//Recursively insert real component requirements - see includes/SQL_CommonFunctions.in for function WoRealRequirements
 			WoRealRequirements($db, $WONo, $_SESSION['Items'.$identifier]->Location, $ContractRow['contractref']);
@@ -764,7 +764,7 @@ if (isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.
 
 	$DbgMsg = _('The SQL that was used to update the order and failed was');
 	$ErrMsg = _('The order cannot be updated because');
-	$InsertQryResult = DB_query($HeaderSQL,$db,$ErrMsg,$DbgMsg,true);
+	$InsertQryResult = DB_query($HeaderSQL,$ErrMsg,$DbgMsg,true);
 
 
 	foreach ($_SESSION['Items'.$identifier]->LineItems as $StockItem) {
@@ -788,7 +788,7 @@ if (isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.
 
 		$DbgMsg = _('The SQL that was used to modify the order line and failed was');
 		$ErrMsg = _('The updated order line cannot be modified because');
-		$Upd_LineItemResult = DB_query($LineItemsSQL,$db,$ErrMsg,$DbgMsg,true);
+		$Upd_LineItemResult = DB_query($LineItemsSQL,$ErrMsg,$DbgMsg,true);
 
 	} /* updated line items into sales order details */
 
@@ -1109,7 +1109,7 @@ echo'	<tr>
 		echo '<tr>
 				<td>' . _('Sales person'). ':</td>
 				<td><select name="SalesPerson">';
-		$SalesPeopleResult = DB_query("SELECT salesmancode, salesmanname FROM salesman WHERE current=1",$db);
+		$SalesPeopleResult = DB_query("SELECT salesmancode, salesmanname FROM salesman WHERE current=1");
 		if (!isset($_POST['SalesPerson']) AND $_SESSION['SalesmanLogin']!=NULL ){
 			$_SESSION['Items'.$identifier]->SalesPerson = $_SESSION['SalesmanLogin'];
 		}
@@ -1173,7 +1173,7 @@ echo'	<tr>
 		$DbgMsg = _('SQL used to retrieve the shipper details was') . ':';
 
 		$sql = "SELECT shipper_id, shippername FROM shippers";
-		$ShipperResults = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+		$ShipperResults = DB_query($sql,$ErrMsg,$DbgMsg);
 		while ($myrow=DB_fetch_array($ShipperResults)){
 			if ($myrow['shipper_id']==$_POST['ShipVia']){
 					echo '<option selected="selected" value="' . $myrow['shipper_id'] . '">' . $myrow['shippername'] . '</option>';

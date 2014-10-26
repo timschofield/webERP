@@ -60,7 +60,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 
 	//Get the exchange rate to use between the transaction currency and the functional currency
 	$sql = "SELECT rate FROM currencies WHERE currabrev='" . $_POST['Currency'] . "'";
-	$result = DB_query($sql, $db);
+	$result = DB_query($sql);
 	$myrow = DB_fetch_array($result);
 	$ExRate = $myrow['rate'];
 
@@ -91,7 +91,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 
 		//first off check that the account code actually exists
 		$sql = "SELECT COUNT(accountcode) FROM chartmaster WHERE accountcode='" . $myrow[1] . "'";
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 		$TestRow = DB_fetch_row($result);
 		if ($TestRow[0] == 0) {
 			$InputError = 1;
@@ -107,7 +107,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		//Then check that the tag ref is either zero, or exists in the tags table
 		if ($myrow[5] != 0) {
 			$sql = "SELECT COUNT(tagref) FROM tags WHERE tagref='" . $myrow[5] . "'";
-			$result = DB_query($sql,$db);
+			$result = DB_query($sql);
 			$TestRow = DB_fetch_row($result);
 			if ($TestRow[0] == 0) {
 				$InputError = 1;
@@ -150,7 +150,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 										'" . $myrow[5] . "'
 									)";
 
-			$result = DB_query($sql,$db);
+			$result = DB_query($sql);
 
 			if ($_POST['TransactionType'] != 0 AND IsBankAccount($myrow[1])) {
 
@@ -161,7 +161,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 							ON currencies.currabrev=bankaccounts.currcode
 						WHERE bankaccounts.accountcode='" . $myrow[1] . "'";
 						
-				$result = DB_query($sql, $db);
+				$result = DB_query($sql);
 				$MyRateRow = DB_fetch_array($result);
 				$FuncExRate = $MyRateRow['rate'];
 				$sql = "INSERT INTO banktrans (transno,
@@ -188,7 +188,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 												'" . round($myrow[3], 2) . "',
 												'" . $_POST['Currency'] . "'
 											)";
-				$result = DB_query($sql,$db);
+				$result = DB_query($sql);
 			}
 			$PreviousPeriod = $Period;
 			$TransactionTotal = $TransactionTotal + $myrow[3];
@@ -241,7 +241,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 
 	echo _('Select Currency') . ':&nbsp;<select name="Currency">';
 	$SQL = "SELECT currency, currabrev, rate FROM currencies";
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) == 0) {
 		echo '</select>';
 		prnMsg(_('No currencies are defined yet') . '. ' . _('Receipts cannot be entered until a currency is defined'), 'warn');
@@ -269,7 +269,7 @@ function IsBankAccount($Account) {
 	global $db;
 
 	$sql ="SELECT accountcode FROM bankaccounts WHERE accountcode='" . $Account . "'";
-	$result = DB_query($sql, $db);
+	$result = DB_query($sql);
 	if (DB_num_rows($result)==0) {
 		return false;
 	} else {

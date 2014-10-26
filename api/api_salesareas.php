@@ -6,7 +6,7 @@
 		$Searchsql = "SELECT COUNT(areacode)
 					 FROM areas
 					  WHERE areacode='".$AreaCode."'";
-		$SearchResult=DB_query($Searchsql, $db);
+		$SearchResult=DB_query($Searchsql);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] > 0) {
 			$Errors[$i] = AreaCodeNotSetup;
@@ -26,7 +26,7 @@
 			return $Errors;
 		}
 		$sql = 'SELECT areacode FROM areas';
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		$i=0;
 		while ($myrow=DB_fetch_array($result)) {
 			$SalesAreaList[$i]=$myrow[0];
@@ -48,7 +48,7 @@
 			return $Errors;
 		}
 		$sql = 'SELECT * FROM areas WHERE areacode="'.$area.'"';
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		if (DB_num_rows($result)==0) {
 			$Errors[0]=NoSuchArea;
 			return $Errors;
@@ -106,7 +106,7 @@
 			return $Errors;
 		}
 		$sql = "SELECT * FROM areas WHERE areadescription='" . $AreaName . "'";
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		if (DB_num_rows($result)==0) {
 			$Errors[0]=NoSuchArea;
 			return $Errors;

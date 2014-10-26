@@ -30,7 +30,7 @@ if (isset($_POST['submit'])) {
 
 	$sql="SELECT count(geocodeid)
 			FROM geocode_param WHERE geocodeid='".$_POST['GeoCodeID']."'";
-	$result=DB_query($sql, $db);
+	$result=DB_query($sql);
 	$myrow=DB_fetch_row($result);
 
 	if ($myrow[0]!=0 and !isset($SelectedParam)) {
@@ -100,14 +100,14 @@ if (isset($_POST['submit'])) {
 		unset ($_POST['GeoCode_Key']);
 	}
 	//run the SQL from either of the above possibilites
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 	if ($msg != '') {
 		prnMsg($msg,'success');
 	}
 } elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
 $sql = "DELETE FROM geocode_param WHERE geocodeid = '" . $_GET['delete'] . "' LIMIT 1";
-$result = DB_query($sql,$db);
+$result = DB_query($sql);
 	prnMsg( _('Geocode deleted'), 'success' );
 	//end if status code used in customer or supplier accounts
 	unset ($_GET['delete']);
@@ -130,7 +130,7 @@ or deletion of the records*/
 					map_width,
 					map_host
 			FROM geocode_param";
-	$result = DB_query($sql, $db);
+	$result = DB_query($sql);
 
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Geocode Setup') . '" alt="" />' . 
 			_('Setup configuration for Geocoding of Customers and Suppliers')  . '</p>';
@@ -214,7 +214,7 @@ if (!isset($_GET['delete'])) {
 				FROM geocode_param
 				WHERE geocodeid='" . $SelectedParam . "'";
 
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		$myrow = DB_fetch_array($result);
 
 		$_POST['GeoCodeID'] = $myrow['geocodeid'];

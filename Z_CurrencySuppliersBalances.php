@@ -16,7 +16,7 @@ $sql = "SELECT SUM(ovamount+ovgst-alloc) AS currencybalance,
 		WHERE (ovamount+ovgst-alloc)<>0
 		GROUP BY currcode";
 
-$result = DB_query($sql,$db);
+$result = DB_query($sql);
 
 $LocalTotal =0;
 

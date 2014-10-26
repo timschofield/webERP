@@ -313,7 +313,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 
 		if ($InputError !=1){
 			$sql="SELECT 1 FROM debtorsmaster WHERE debtorno='".$_POST['DebtorNo']."' LIMIT 1";
-			$result=DB_query($sql,$db);
+			$result=DB_query($sql);
 			$DebtorExists=(DB_num_rows($result)>0);
 			if ($DebtorExists AND $_POST['UpdateIfExists']!=1) {
 				$UpdatedNum++;
@@ -326,7 +326,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 					$sql = "SELECT 1
 							  FROM debtortrans
 							where debtorno = '" . $_POST['DebtorNo'] . "' LIMIT 1";
-					$result = DB_query($sql,$db);
+					$result = DB_query($sql);
 					
 					$curr=false;
 					if (DB_num_rows($result) == 0) {
@@ -335,7 +335,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 						$CurrSQL = "SELECT currcode
 							FROM debtorsmaster
 							where debtorno = '" . $_POST['DebtorNo'] . "'";
-						$CurrResult = DB_query($CurrSQL,$db);
+						$CurrResult = DB_query($CurrSQL);
 						$CurrRow = DB_fetch_array($CurrResult);
 						$OldCurrency = $CurrRow[0];
 						if ($OldCurrency != $_POST['CurrCode']) {
@@ -371,7 +371,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 						  WHERE debtorno = '" . $_POST['DebtorNo'] . "'";
 
 					$ErrMsg = _('The customer could not be updated because');
-					$result = DB_query($sql,$db,$ErrMsg);
+					$result = DB_query($sql,$ErrMsg);
 
 				} else { //insert
 					$InsertNum++;
@@ -422,7 +422,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 							'" . $_POST['LanguageID'] . "')";
 
 					$ErrMsg = _('This customer could not be added because');
-					$result = DB_query($sql,$db,$ErrMsg);
+					$result = DB_query($sql,$ErrMsg);
 				}
 			}
 
@@ -477,7 +477,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 				     FROM custbranch
            			 WHERE debtorno='".$_POST['DebtorNo']."' AND
 				           branchcode='".$_POST['BranchCode']."' LIMIT 1";
-				$result=DB_query($sql, $db);
+				$result=DB_query($sql);
 				$BranchExists=(DB_num_rows($result)>0);
 				if ($BranchExists AND $_POST['UpdateIfExists']!=1) {
 					//do nothing
@@ -591,7 +591,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 					//run the SQL from either of the above possibilites
 
 					$ErrMsg = _('The branch record could not be inserted or updated because');
-					$result = DB_query($sql,$db, $ErrMsg);
+					$result = DB_query($sql, $ErrMsg);
 
 
 					if (DB_error_no($db) ==0) {

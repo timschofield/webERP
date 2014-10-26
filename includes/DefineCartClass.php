@@ -313,7 +313,7 @@ Class Cart {
 				ORDER BY taxcalculationorder";
 
 		$ErrMsg = _('The taxes and rates for this item could not be retrieved because');
-		$GetTaxRatesResult = DB_query($sql,$db,$ErrMsg);
+		$GetTaxRatesResult = DB_query($sql,$ErrMsg);
 
 		while ($myrow = DB_fetch_array($GetTaxRatesResult)){
 
@@ -349,7 +349,7 @@ Class Cart {
 			ORDER BY taxgrouptaxes.calculationorder";
 
 		$ErrMsg = _('The taxes and rates for this item could not be retrieved because');
-		$GetTaxRatesResult = DB_query($SQL,$db,$ErrMsg);
+		$GetTaxRatesResult = DB_query($SQL,$ErrMsg);
 		unset($this->LineItems[$LineNumber]->Taxes);
 		if (DB_num_rows($GetTaxRatesResult)==0){
 			prnMsg(_('It appears that taxes are not defined correctly for this customer tax group') ,'error');
@@ -375,7 +375,7 @@ Class Cart {
 		and SESSION['FreightTaxCategory'] the taxprovince of the dispatch location */
 
 		$sql = "SELECT taxcatid FROM taxcategories WHERE taxcatname='Freight'";// This tax category is hardcoded inside the database.
-		$TaxCatQuery = DB_query($sql, $db);
+		$TaxCatQuery = DB_query($sql);
 
 		if ($TaxCatRow = DB_fetch_array($TaxCatQuery)) {
 		  $TaxCatID = $TaxCatRow['taxcatid'];
@@ -400,7 +400,7 @@ Class Cart {
 				ORDER BY taxgrouptaxes.calculationorder";
 
 		$ErrMsg = _('The taxes and rates for this item could not be retrieved because');
-		$GetTaxRatesResult = DB_query($SQL,$db,$ErrMsg);
+		$GetTaxRatesResult = DB_query($SQL,$ErrMsg);
 
 		while ($myrow = DB_fetch_array($GetTaxRatesResult)){
 

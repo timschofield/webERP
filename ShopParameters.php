@@ -172,7 +172,7 @@ if (isset($_POST['submit'])) {
 
 			$result = DB_Txn_Begin($db);
 			foreach ($SQL as $SqlLine) {
-				$result = DB_query($SqlLine,$db,$ErrMsg,$DbgMsg,true);
+				$result = DB_query($SqlLine,$ErrMsg,$DbgMsg,true);
 			}
 			$result = DB_Txn_Commit($db);
 			prnMsg( _('Shop configuration updated'),'success');
@@ -318,7 +318,7 @@ if (mb_strlen($_SESSION['ShopStockLocations'])>1){
 echo '<tr>
 		<td>' . _('Stock Locations') . ':</td>
 		<td><select name="X_ShopStockLocations[]" size="5" multiple="multiple" >';
-$LocResult = DB_query("SELECT loccode, locationname FROM locations",$db);
+$LocResult = DB_query("SELECT loccode, locationname FROM locations");
 while ($LocRow = DB_fetch_array($LocResult)){
 	if (in_array($LocRow['loccode'],$Locations)){
 		echo '<option selected="selected" value="' . $LocRow['loccode'] . '">' . $LocRow['locationname']  . '</option>';
@@ -344,7 +344,7 @@ echo '</select></td>
 		<td>' . _('Add surcharges for different payment methods.') . '</td>
 	</tr>';
 
-$DummyItemsResult = DB_query("SELECT stockid, description FROM stockmaster WHERE mbflag='D'",$db);
+$DummyItemsResult = DB_query("SELECT stockid, description FROM stockmaster WHERE mbflag='D'");
 echo '<tr>
 		<td>' . _('Surcharges Stock Item') . ':</td>
 		<td><select name="X_ShopSurchargeStockID">';
@@ -423,7 +423,7 @@ echo '</select></td>
 echo '<tr>
 		<td>' . _('Pay Pal Bank Account') . ':</td>
 		<td><select name="X_ShopPayPalBankAccount">';
-$BankAccountsResult = DB_query("SELECT accountcode, bankaccountname FROM bankaccounts",$db);
+$BankAccountsResult = DB_query("SELECT accountcode, bankaccountname FROM bankaccounts");
 while ($BankAccountRow = DB_fetch_array($BankAccountsResult)){
 	if ($_SESSION['ShopPayPalBankAccount'] ==$BankAccountRow['accountcode']) {
 		echo '<option selected="selected" value="' . $BankAccountRow['accountcode'] . '">' . $BankAccountRow['bankaccountname'] . '</option>';

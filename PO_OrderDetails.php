@@ -20,7 +20,7 @@ if (isset($_GET['FromGRNNo'])){
 			WHERE grns.grnno='" . $_GET['FromGRNNo'] ."'";
 
 	$ErrMsg = _('The search of the GRNs was unsuccessful') . ' - ' . _('the SQL statement returned the error');
-	$OrderResult = DB_query($SQL, $db, $ErrMsg);
+	$OrderResult = DB_query($SQL, $ErrMsg);
 
 	$OrderRow = DB_fetch_row($OrderResult);
 	$_GET['OrderNo'] = $OrderRow[0];
@@ -60,7 +60,7 @@ $OrderHeaderSQL = "SELECT purchorders.*,
 					ON purchorders.initiator=www_users.userid
 					WHERE purchorders.orderno = '" . $_GET['OrderNo'] ."'";
 
-$GetOrdHdrResult = DB_query($OrderHeaderSQL,$db, $ErrMsg);
+$GetOrdHdrResult = DB_query($OrderHeaderSQL, $ErrMsg);
 
 if (DB_num_rows($GetOrdHdrResult)!=1) {
 	echo '<br /><br />';
@@ -175,7 +175,7 @@ $LineItemsSQL = "SELECT purchorderdetails.*,
 				WHERE purchorderdetails.orderno = '" . $_GET['OrderNo'] ."'
 				ORDER BY itemcode";	/*- ADDED: Sort by our item code -*/
 
-$LineItemsResult = DB_query($LineItemsSQL,$db, $ErrMsg);
+$LineItemsResult = DB_query($LineItemsSQL, $ErrMsg);
 
 
 echo '<table class="selection" cellpadding="0">

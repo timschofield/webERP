@@ -65,7 +65,7 @@ if ( isset($_POST['submit']) ) {
 	}
 
 	if ($InputError !=1) {
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 				//echo '<br />' . $sql;
 
 		echo '<br />';
@@ -85,7 +85,7 @@ if ( isset($_POST['submit']) ) {
 	$sql="DELETE FROM custnotes
 			WHERE noteid='".$Id."'
 			AND debtorno='".$DebtorNo."'";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 
 	echo '<br />';
 	prnMsg( _('The contact note record has been deleted'), 'success');
@@ -96,7 +96,7 @@ if ( isset($_POST['submit']) ) {
 if (!isset($Id)) {
 	$SQLname="SELECT * FROM debtorsmaster
 				WHERE debtorno='".$DebtorNo."'";
-	$Result = DB_query($SQLname,$db);
+	$Result = DB_query($SQLname);
 	$row = DB_fetch_array($Result);
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . _('Notes for Customer').': <b>' .$row['name'] . '</b></p>
 		<br />';
@@ -110,7 +110,7 @@ if (!isset($Id)) {
 				FROM custnotes
 				WHERE debtorno='".$DebtorNo."'
 				ORDER BY date DESC";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 
 	echo '<table class="selection">
 		<tr>
@@ -178,7 +178,7 @@ if (!isset($_GET['delete'])) {
 					WHERE noteid='".$Id."'
 						AND debtorno='".$DebtorNo."'";
 
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 
 		$myrow = DB_fetch_array($result);
 

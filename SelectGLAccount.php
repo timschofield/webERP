@@ -56,7 +56,7 @@ if (isset($_POST['Search'])){
 					ORDER BY chartmaster.accountcode";
 		}
 		if (isset($SQL) and $SQL!=''){
-			$result = DB_query($SQL, $db);
+			$result = DB_query($SQL);
 		}
 } //end of if search
 
@@ -83,7 +83,7 @@ if (!isset($AccountID)) {
 						FROM chartmaster
 						ORDER BY accountcode";
 
-	$ResultSelection=DB_query($SQLAccountSelect, $db);
+	$ResultSelection=DB_query($SQLAccountSelect);
 	echo '<td><select name="GLCode">';
 	echo '<option value="">' . _('Select an Account Code') . '</option>';
 	while ($MyRowSelection=DB_fetch_array($ResultSelection)){

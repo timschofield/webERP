@@ -39,7 +39,7 @@ $SQL = "SELECT categoryid,
 				categorydescription
 		FROM stockcategory
 		ORDER BY categorydescription";
-$result1 = DB_query($SQL, $db);
+$result1 = DB_query($SQL);
 if (DB_num_rows($result1) == 0) {
 	echo '<p class="bad">' . _('Problem Report') . ':<br />' . _('There are no stock categories currently defined please use the link below to set them up') . '</p>';
 	echo '<br /><a href="' . $RootPath . '/StockCategories.php">' . _('Define Stock Categories') . '</a>';
@@ -210,7 +210,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 				WHERE categoryid ='" . $myrow['categoryid'] . "'
 				AND reqatsalesorder =0
 				ORDER BY stkcatpropid";
-	$PropertiesResult = DB_query($sql, $db);
+	$PropertiesResult = DB_query($sql);
 	$PropertyCounter = 0;
 	$PropertyWidth = array();
 	while ($PropertyRow = DB_fetch_array($PropertiesResult)) {
@@ -305,7 +305,7 @@ $sql = "SELECT SUM(qtypu*(woitems.qtyreqd - woitems.qtyrecd)) AS woqtydemo
 		WHERE  worequirements.stockid='" . $StockID . "'
 		AND workorders.closed=0";
 $ErrMsg = _('The workorder component demand for this product cannot be retrieved because');
-$DemandResult = DB_query($sql, $db, $ErrMsg);
+$DemandResult = DB_query($sql, $ErrMsg);
 if (DB_num_rows($DemandResult) == 1) {
 	$DemandRow = DB_fetch_row($DemandResult);
 	$Demand+= $DemandRow[0];
@@ -700,7 +700,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 	}
 	$ErrMsg = _('No stock items were returned by the SQL because');
 	$DbgMsg = _('The SQL that returned an error was');
-	$SearchResult = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
+	$SearchResult = DB_query($SQL, $ErrMsg, $DbgMsg);
 	if (DB_num_rows($SearchResult) == 0) {
 		prnMsg(_('No stock items were returned by this search please re-enter alternative criteria to try again'), 'info');
 	}

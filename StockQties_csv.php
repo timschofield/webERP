@@ -18,7 +18,7 @@ $ErrMsg = _('The SQL to get the stock quantities failed with the message');
 $sql = "SELECT stockid, SUM(quantity) FROM locstock
 			INNER JOIN locationusers ON locationusers.loccode=locstock.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 			GROUP BY stockid HAVING SUM(quantity)<>0";
-$result = DB_query($sql, $db, $ErrMsg);
+$result = DB_query($sql, $ErrMsg);
 
 if (!file_exists($_SESSION['reports_dir'])){
 	$Result = mkdir('./' . $_SESSION['reports_dir']);

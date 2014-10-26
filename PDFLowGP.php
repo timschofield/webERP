@@ -50,7 +50,7 @@ if (isset($_POST['PrintPDF'])) {
 				AND ((stockmoves.price*(1-stockmoves.discountpercent)) - (stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost))/(stockmoves.price*(1-stockmoves.discountpercent)) <=" . $_POST['GPMin']/100 . "
 				ORDER BY stockmaster.stockid";
 
-	$LowGPSalesResult = DB_query($SQL,$db,'','',false,false);
+	$LowGPSalesResult = DB_query($SQL,'','',false,false);
 
 	if (DB_error_no($db) !=0) {
 

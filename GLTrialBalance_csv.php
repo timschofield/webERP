@@ -50,7 +50,7 @@ $SQL = "SELECT accountgroups.groupname,
 			accountgroups.groupname,
 			chartdetails.accountcode";
 
-$AccountsResult = DB_query($SQL,$db);
+$AccountsResult = DB_query($SQL);
 
 while ($myrow=DB_fetch_array($AccountsResult)) {
 

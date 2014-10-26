@@ -72,7 +72,7 @@ $sql = "SELECT serialno,
 
 
 $ErrMsg = _('The serial numbers/batches held cannot be retrieved because');
-$LocStockResult = DB_query($sql, $db, $ErrMsg);
+$LocStockResult = DB_query($sql, $ErrMsg);
 
 echo '<table class="selection">';
 

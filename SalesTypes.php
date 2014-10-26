@@ -72,7 +72,7 @@ if (isset($_POST['submit'])) {
 			     FROM salestypes
 			     WHERE typeabbrev = '" . $_POST['TypeAbbrev'] . "'";
 
-		$CheckResult = DB_query($checkSql,$db);
+		$CheckResult = DB_query($checkSql);
 		$CheckRow = DB_fetch_row($CheckResult);
 
 		if ( $CheckRow[0] > 0 ) {
@@ -90,7 +90,7 @@ if (isset($_POST['submit'])) {
 			$msg = _('Customer/sales/pricelist type') . ' ' . $_POST['Sales_Type'] .  ' ' . _('has been created');
 			$checkSql = "SELECT count(typeabbrev)
 						FROM salestypes";
-			$result = DB_query($checkSql, $db);
+			$result = DB_query($checkSql);
 			$row = DB_fetch_row($result);
 
 		}
@@ -98,13 +98,13 @@ if (isset($_POST['submit'])) {
 
 	if ( $InputError !=1) {
 	//run the SQL from either of the above possibilites
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 
 	// Check the default price list exists
 		$checkSql = "SELECT count(*)
 			     FROM salestypes
 			     WHERE typeabbrev = '" . $_SESSION['DefaultPriceList'] . "'";
-		$CheckResult = DB_query($checkSql,$db);
+		$CheckResult = DB_query($checkSql);
 		$CheckRow = DB_fetch_row($CheckResult);
 
 	// If it doesnt then update config with newly created one.
@@ -112,7 +112,7 @@ if (isset($_POST['submit'])) {
 			$sql = "UPDATE config
 					SET confvalue='".$_POST['TypeAbbrev']."'
 					WHERE confname='DefaultPriceList'";
-			$result = DB_query($sql,$db);
+			$result = DB_query($sql);
 			$_SESSION['DefaultPriceList'] = $_POST['TypeAbbrev'];
 		}
 
@@ -133,7 +133,7 @@ if (isset($_POST['submit'])) {
 	       WHERE debtortrans.tpe='".$SelectedType."'";
 
 	$ErrMsg = _('The number of transactions using this customer/sales/pricelist type could not be retrieved');
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {
@@ -144,7 +144,7 @@ if (isset($_POST['submit'])) {
 		$sql = "SELECT COUNT(*) FROM debtorsmaster WHERE salestype='".$SelectedType."'";
 
 		$ErrMsg = _('The number of transactions using this Sales Type record could not be retrieved because');
-		$result = DB_query($sql,$db,$ErrMsg);
+		$result = DB_query($sql,$ErrMsg);
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0]>0) {
 			prnMsg (_('Cannot delete this sale type because customers are currently set up to use this sales type') . '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('customers with this sales type code'));
@@ -152,12 +152,12 @@ if (isset($_POST['submit'])) {
 
 			$sql="DELETE FROM salestypes WHERE typeabbrev='" . $SelectedType . "'";
 			$ErrMsg = _('The Sales Type record could not be deleted because');
-			$result = DB_query($sql,$db,$ErrMsg);
+			$result = DB_query($sql,$ErrMsg);
 			prnMsg(_('Sales type') . ' / ' . _('price list') . ' ' . $SelectedType  . ' ' . _('has been deleted') ,'success');
 
 			$sql ="DELETE FROM prices WHERE prices.typeabbrev='" . $SelectedType . "'";
 			$ErrMsg =  _('The Sales Type prices could not be deleted because');
-			$result = DB_query($sql,$db,$ErrMsg);
+			$result = DB_query($sql,$ErrMsg);
 
 			prnMsg(' ...  ' . _('and any prices for this sales type / price list were also deleted'),'success');
 			unset ($SelectedType);
@@ -182,7 +182,7 @@ links to delete or edit each. These will call the same page again and allow upda
 or deletion of the records*/
 
 	$sql = "SELECT typeabbrev,sales_type FROM salestypes ORDER BY typeabbrev";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 
 	echo '<table class="selection">';
 	echo '<tr>
@@ -237,7 +237,7 @@ if (! isset($_GET['delete'])) {
 		        FROM salestypes
 		        WHERE typeabbrev='" . $SelectedType . "'";
 
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		$myrow = DB_fetch_array($result);
 
 		$_POST['TypeAbbrev'] = $myrow['typeabbrev'];

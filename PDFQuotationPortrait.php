@@ -75,7 +75,7 @@ $sql = "SELECT salesorders.customerref,
 			WHERE salesorders.quotation=1
 			AND salesorders.orderno='" . $_GET['QuotationNo'] ."'";
 
-$result=DB_query($sql,$db, $ErrMsg);
+$result=DB_query($sql, $ErrMsg);
 
 //If there are no rows, there's a problem.
 if (DB_num_rows($result)==0){
@@ -137,7 +137,7 @@ $sql = "SELECT salesorderdetails.stkcode,
 		ON salesorderdetails.stkcode=stockmaster.stockid
 	WHERE salesorderdetails.orderno='" . $_GET['QuotationNo'] . "'";
 
-$result=DB_query($sql,$db, $ErrMsg);
+$result=DB_query($sql, $ErrMsg);
 
 $ListCount = 0;
 
@@ -174,7 +174,7 @@ if (DB_num_rows($result)>0){
 				FROM taxgrouptaxes INNER JOIN custbranch
 				ON taxgrouptaxes.taxgroupid=custbranch.taxgroupid
 				WHERE custbranch.branchcode='" .$Branch ."'";
-		$result3=DB_query($sql3,$db, $ErrMsg);
+		$result3=DB_query($sql3, $ErrMsg);
 		while ($myrow3=DB_fetch_array($result3)){
 			$TaxAuth = $myrow3['taxauthid'];
 		}
@@ -183,7 +183,7 @@ if (DB_num_rows($result)>0){
 				WHERE dispatchtaxprovince='" .$TaxProv ."'
 				AND taxcatid='" .$TaxCat ."'
 				AND taxauthority='" .$TaxAuth ."'";
-		$result4=DB_query($sql4,$db, $ErrMsg);
+		$result4=DB_query($sql4, $ErrMsg);
 		while ($myrow4=DB_fetch_array($result4)){
 			$TaxClass = 100 * $myrow4['taxrate'];
 		}

@@ -12,7 +12,7 @@
 			return $Errors;
 		}
 		$sql = "SELECT currencydefault FROM companies WHERE coycode=1";
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		$answer=DB_fetch_array($result);
 		$ReturnValue[0]=0;
 		$ReturnValue[1]=$answer;
@@ -30,7 +30,7 @@
 			return $Errors;
 		}
 		$sql = "SELECT confvalue FROM config WHERE confname='DefaultPriceList'";
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		$answer=DB_fetch_array($result);
 		$ReturnValue[0]=0;
 		$ReturnValue[1]=$answer;
@@ -48,7 +48,7 @@
 			return $Errors;
 		}
 		$sql = "SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		$answer=DB_fetch_array($result);
 		$ReturnValue[0]=0;
 		$ReturnValue[1]=$answer;
@@ -65,7 +65,7 @@
 			return $Errors;
 		}
 		$sql = "SELECT confvalue FROM config WHERE confname='reports_dir'";
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		$answer=DB_fetch_array($result);
 		$ReturnValue[0]=0;
 		$ReturnValue[1]=$answer;
@@ -82,7 +82,7 @@
 			return $Errors;
 		}
 		$sql = "select defaultlocation from www_users where userid='".$user."'";
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		$answer=DB_fetch_array($result);
 		$ReturnValue[0]=0;
 		$ReturnValue[1]=$answer;
@@ -100,7 +100,7 @@
 			return $Errors;
 		}
 		$sql = "SELECT confvalue from config WHERE confname='Default_Shipper'";
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		$answer=DB_fetch_array($result);
 		$ReturnValue[0]=0;
 		$ReturnValue[1]=$answer;

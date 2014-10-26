@@ -26,7 +26,7 @@ if ($_SESSION['SalesmanLogin'] != '') {
 	$ViewAllowed = false;
 	$sql = "SELECT salesman FROM custbranch WHERE debtorno = '" . $CustomerID . "'";
 	$ErrMsg = _('Failed to retrieve sales data');
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 	if(DB_num_rows($result)>0) {
 		while($myrow = DB_fetch_array($result)) {
 			if ($_SESSION['SalesmanLogin'] == $myrow['salesman']){

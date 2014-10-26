@@ -12,11 +12,11 @@ if(isset($_POST['TaxAuthority']) AND
 			FROM periods
 			WHERE periodno='" . $_POST['ToPeriod'] . "'";
 	$ErrMsg = _('Could not determine the last date of the period selected') . '. ' . _('The sql returned the following error');
-	$PeriodEndResult = DB_query($sql,$db,$ErrMsg);
+	$PeriodEndResult = DB_query($sql,$ErrMsg);
 	$PeriodEndRow = DB_fetch_row($PeriodEndResult);
 	$PeriodEnd = ConvertSQLDate($PeriodEndRow[0]);
 
-	$result = DB_query("SELECT description FROM taxauthorities WHERE taxid='" . $_POST['TaxAuthority'] . "'",$db);
+	$result = DB_query("SELECT description FROM taxauthorities WHERE taxid='" . $_POST['TaxAuthority'] . "'");
 	$TaxAuthDescription = DB_fetch_row($result);
 	$TaxAuthorityName = $TaxAuthDescription[0];
 
@@ -48,7 +48,7 @@ if(isset($_POST['TaxAuthority']) AND
 			AND debtortranstaxes.taxauthid = '" . $_POST['TaxAuthority'] . "'
 			ORDER BY debtortrans.id";// Order by debtortrans record number (primary key).
 
-	$DebtorTransResult = DB_query($SQL,$db,'','',false,false); //don't trap errors in DB_query
+	$DebtorTransResult = DB_query($SQL,'','',false,false); //don't trap errors in DB_query
 
 	if(DB_error_no($db) !=0) {
 		$Title = _('Taxation Reporting Error');
@@ -162,7 +162,7 @@ if(isset($_POST['TaxAuthority']) AND
 		AND supptranstaxes.taxauthid = '" . $_POST['TaxAuthority'] . "'
 		ORDER BY supptrans.id";// Order by supptrans record number (primary key).
 
-	$SuppTransResult = DB_query($SQL,$db,'','',false,false); //doint trap errors in DB_query
+	$SuppTransResult = DB_query($SQL,'','',false,false); //doint trap errors in DB_query
 
 	if(DB_error_no($db) !=0) {
 		$Title = _('Taxation Reporting Error');
@@ -331,7 +331,7 @@ if(isset($_POST['TaxAuthority']) AND
 	echo '<tr><td>' . _('Tax Authority To Report On') . ':</td>
 			<td><select name="TaxAuthority">';
 
-	$result = DB_query("SELECT taxid, description FROM taxauthorities",$db);
+	$result = DB_query("SELECT taxid, description FROM taxauthorities");
 	while($myrow = DB_fetch_array($result)) {
 		echo '<option value="' . $myrow['taxid'] . '">' . $myrow['description'] . '</option>';
 	}
@@ -360,7 +360,7 @@ if(isset($_POST['TaxAuthority']) AND
 		FROM periods";
 
 	$ErrMsg = _('Could not retrieve the period data because');
-	$Periods = DB_query($sql,$db,$ErrMsg);
+	$Periods = DB_query($sql,$ErrMsg);
 
 	while($myrow = DB_fetch_array($Periods,$db)) {
 		if($myrow['periodno']==$DefaultPeriod) {

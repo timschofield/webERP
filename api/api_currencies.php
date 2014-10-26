@@ -13,7 +13,7 @@
 			return $Errors;
 		}
 		$sql = 'SELECT currabrev FROM currencies';
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		$i=0;
 		while ($myrow=DB_fetch_array($result)) {
 			$CurrencyList[$i]=$myrow[0];
@@ -35,7 +35,7 @@
 			return $Errors;
 		}
 		$sql = "SELECT * FROM currencies WHERE currabrev='".$currency."'";
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		return DB_fetch_array($result);
 	}
 

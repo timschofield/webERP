@@ -15,7 +15,7 @@
 		$Searchsql = "SELECT count(loccode)
 						FROM locations
 						WHERE loccode='".$LocationCode."'";
-		$SearchResult=DB_query($Searchsql, $db);
+		$SearchResult=DB_query($Searchsql);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] != 0) {
 			$Errors[$i] = LocationCodeAlreadyExists;
@@ -28,7 +28,7 @@
 		$Searchsql = "SELECT count(loccode)
 						FROM locations
 						WHERE loccode='".$LocationCode."'";
-		$SearchResult=DB_query($Searchsql, $db);
+		$SearchResult=DB_query($Searchsql);
 		$answer = DB_fetch_array($SearchResult);
 		if ($answer[0]==0) {
 			$Errors[$i] = LocationCodeDoesntExist;
@@ -49,7 +49,7 @@
 		$Searchsql = "SELECT COUNT(taxprovinceid)
 						FROM taxprovinces
 						WHERE taxprovinceid='".$TaxProvinceId."'";
-		$SearchResult=DB_query($Searchsql, $db);
+		$SearchResult=DB_query($Searchsql);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] == 0) {
 			$Errors[$i] = TaxProvinceIdNotSetup;
@@ -70,7 +70,7 @@
 			return $Errors;
 		}
 		$sql = "SELECT loccode FROM locations";
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		$i=0;
 		while ($myrow=DB_fetch_array($result)) {
 			$LocationList[$i]=$myrow[0];
@@ -92,7 +92,7 @@
 			return $Errors;
 		}
 		$sql = "SELECT * FROM locations WHERE loccode='".$location."'";
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		return DB_fetch_array($result);
 	}
 

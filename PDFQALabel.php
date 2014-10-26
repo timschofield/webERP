@@ -42,7 +42,7 @@ if ($GRNNo == 'Preview'){
 			ON grns.itemcode=stockmaster.stockid
 			WHERE grnbatch='". $GRNNo ."'";
 
-	$GRNResult=DB_query($sql, $db);
+	$GRNResult=DB_query($sql);
 	$NoOfGRNs = DB_num_rows($GRNResult);
 	if($NoOfGRNs>0) { //there are GRNs to print
 
@@ -50,7 +50,7 @@ if ($GRNNo == 'Preview'){
 				FROM grns INNER JOIN suppliers
 				ON grns.supplierid=suppliers.supplierid
 				WHERE grnbatch='". $GRNNo ."'";
-		$SuppResult = DB_query($sql,$db,_('Could not get the supplier of the selected GRN'));
+		$SuppResult = DB_query($sql,_('Could not get the supplier of the selected GRN'));
 		$SuppRow = DB_fetch_array($SuppResult);
 	}
 } // get data to print
@@ -63,7 +63,7 @@ if ($NoOfGRNs >0){
 		$DeliveryDate = ConvertSQLDate($myrow['deliverydate']);				
 		$SQL = "SELECT stockmaster.controlled
 			    FROM stockmaster WHERE stockid ='" . $myrow['itemcode'] . "'";
-		$CheckControlledResult = DB_query($SQL,$db,'<br />' . _('Could not determine if the item was controlled or not because') . ' ');
+		$CheckControlledResult = DB_query($SQL,'<br />' . _('Could not determine if the item was controlled or not because') . ' ');
 		$ControlledRow = DB_fetch_row($CheckControlledResult);
 		
 		if ($ControlledRow[0]==1) { /*Then its a controlled item */
@@ -73,7 +73,7 @@ if ($NoOfGRNs >0){
 					WHERE stockmoves.stockid='" . $myrow['itemcode'] . "'
 					AND stockmoves.type =25
 					AND stockmoves.transno='" . $GRNNo . "'";
-			$GetStockMoveResult = DB_query($SQL,$db,_('Could not retrieve the stock movement reference number which is required in order to retrieve details of the serial items that came in with this GRN'));
+			$GetStockMoveResult = DB_query($SQL,_('Could not retrieve the stock movement reference number which is required in order to retrieve details of the serial items that came in with this GRN'));
 			while ($SerialStockMoves = DB_fetch_array($GetStockMoveResult)){
 				if ($PageNumber>1){
 					$pdf->newPage();

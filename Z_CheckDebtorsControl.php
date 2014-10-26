@@ -26,7 +26,7 @@ include('includes/header.inc');
 	if ( !isset($_POST['ToPeriod']) OR $_POST['ToPeriod']=='' )
 	{
 			$SQL = "SELECT Max(periodno) FROM periods";
-			$prdResult = DB_query($SQL,$db);
+			$prdResult = DB_query($SQL);
 			$MaxPrdrow = DB_fetch_row($prdResult);
 			DB_free_result($prdResult);
 			$DefaultToPeriod = $MaxPrdrow[0];
@@ -42,7 +42,7 @@ include('includes/header.inc');
 					<td><select name="ToPeriod">';
 
 	$SQL = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno";
-	$perResult = DB_query($SQL,$db);
+	$perResult = DB_query($SQL);
 
 	while ( $perRow=DB_fetch_array($perResult) ) {
 		$FromSelected = ( $perRow['periodno'] == $DefaultFromPeriod ) ? 'selected="selected"' : '';
@@ -87,7 +87,7 @@ include('includes/header.inc');
 				FROM chartdetails
 				WHERE period = " . $CurPeriod . "
 				AND accountcode=" . $_SESSION['CompanyRecord']['debtorsact'];
-			$dtResult = DB_query($SQL,$db);
+			$dtResult = DB_query($SQL);
 			$dtRow = DB_fetch_array($dtResult);
 			DB_free_result($dtResult);
 
@@ -108,7 +108,7 @@ include('includes/header.inc');
 					FROM debtortrans
 					WHERE prd = '" . $CurPeriod . "'
 					AND (type=10 OR type=11)";
-			$invResult = DB_query($SQL,$db);
+			$invResult = DB_query($SQL);
 			$invRow = DB_fetch_array($invResult);
 			DB_free_result($invResult);
 
@@ -120,7 +120,7 @@ include('includes/header.inc');
 					FROM debtortrans
 					WHERE prd = '" . $CurPeriod . "'
 					AND type=12";
-			$recResult = DB_query($SQL,$db);
+			$recResult = DB_query($SQL);
 			$recRow = DB_fetch_array($recResult);
 			DB_free_result($recResult);
 

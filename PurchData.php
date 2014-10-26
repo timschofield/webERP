@@ -41,7 +41,7 @@ if (isset($_POST['StockUOM'])) {
 
 /*Deleting a supplier purchasing discount */
 if (isset($_GET['DeleteDiscountID'])){
-	$Result = DB_query("DELETE FROM supplierdiscounts WHERE id='" . intval($_GET['DeleteDiscountID']) . "'", $db);
+	$Result = DB_query("DELETE FROM supplierdiscounts WHERE id='" . intval($_GET['DeleteDiscountID']) . "'");
 	prnMsg(_('Deleted the supplier discount record'),'success');
 }
 
@@ -112,7 +112,7 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
 							'" . $_POST['Preferred'] . "')";
         $ErrMsg = _('The supplier purchasing details could not be added to the database because');
         $DbgMsg = _('The SQL that failed was');
-        $AddResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
+        $AddResult = DB_query($sql, $ErrMsg, $DbgMsg);
         prnMsg(_('This supplier purchasing data has been added to the database'), 'success');
     }
     if ($InputError == 0 AND isset($_POST['UpdateRecord'])) {
@@ -130,7 +130,7 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
 							AND purchdata.effectivefrom='" . $_POST['WasEffectiveFrom'] . "'";
         $ErrMsg = _('The supplier purchasing details could not be updated because');
         $DbgMsg = _('The SQL that failed was');
-        $UpdResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
+        $UpdResult = DB_query($sql, $ErrMsg, $DbgMsg);
         prnMsg(_('Supplier purchasing data has been updated'), 'success');
 
 		/*Now need to validate supplier purchasing discount records  and update/insert as necessary */
@@ -157,7 +157,7 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
 													effectivefrom = '" . FormatDateForSQL($_POST['DiscountEffectiveFrom' . $i]) . "',
 													effectiveto = '" . FormatDateForSQL($_POST['DiscountEffectiveTo' . $i]) . "'
 						WHERE id = " . intval($_POST['DiscountID' . $i]);
-				$UpdResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
+				$UpdResult = DB_query($sql, $ErrMsg, $DbgMsg);
 			}
 		} /*end loop through all supplier discounts */
 		
@@ -190,7 +190,7 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
 								'" . FormatDateForSQL($_POST['DiscountEffectiveTo']) . "')";
 			$ErrMsg = _('Could not insert a new supplier discount entry because');
 			$DbgMsg = _('The SQL used to insert the supplier discount entry that failed was');
-			$InsertResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
+			$InsertResult = DB_query($sql, $ErrMsg, $DbgMsg);
 			prnMsg(_('A new supplier purchasing discount record was entered successfully'),'success');
 		}
         
@@ -228,7 +228,7 @@ if (isset($_GET['Delete'])) {
 	   				AND purchdata.stockid='" . $StockID . "'
 	   				AND purchdata.effectivefrom='" . $EffectiveFrom . "'";
     $ErrMsg = _('The supplier purchasing details could not be deleted because');
-    $DelResult = DB_query($sql, $db, $ErrMsg);
+    $DelResult = DB_query($sql, $ErrMsg);
     prnMsg(_('This purchasing data record has been successfully deleted'), 'success');
     unset($SupplierID);
 }
@@ -236,7 +236,7 @@ if (isset($_GET['Delete'])) {
 
 if ($Edit == false) {
 
-	$ItemResult = DB_query("SELECT description FROM stockmaster WHERE stockid='" . $StockID . "'",$db);
+	$ItemResult = DB_query("SELECT description FROM stockmaster WHERE stockid='" . $StockID . "'");
 	$DescriptionRow = DB_fetch_array($ItemResult);
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . ' ' . _('For Stock Code') . ' - ' . $StockID . ' - ' . $DescriptionRow['description'] . '</p><br />';
 	
@@ -260,7 +260,7 @@ if ($Edit == false) {
 			WHERE purchdata.stockid = '" . $StockID . "'
 			ORDER BY purchdata.effectivefrom DESC";
     $ErrMsg = _('The supplier purchasing details for the selected part could not be retrieved because');
-    $PurchDataResult = DB_query($sql, $db, $ErrMsg);
+    $PurchDataResult = DB_query($sql, $ErrMsg);
     if (DB_num_rows($PurchDataResult) == 0 and $StockID != '') {
 		prnMsg(_('There is no purchasing data set up for the part selected'), 'info');
 		$NoPurchasingData=1;
@@ -358,7 +358,7 @@ if (isset($SupplierID) AND $SupplierID != '' AND !isset($_POST['SearchSupplier']
 			WHERE supplierid='".$SupplierID."'";
     $ErrMsg = _('The supplier details for the selected supplier could not be retrieved because');
     $DbgMsg = _('The SQL that failed was');
-    $SuppSelResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
+    $SuppSelResult = DB_query($sql, $ErrMsg, $DbgMsg);
     if (DB_num_rows($SuppSelResult) == 1) {
         $myrow = DB_fetch_array($SuppSelResult);
         $SuppName = $myrow['suppname'];
@@ -396,7 +396,7 @@ if (isset($SupplierID) AND $SupplierID != '' AND !isset($_POST['SearchSupplier']
 }
 
 if ($Edit == true) {
-	$ItemResult = DB_query("SELECT description FROM stockmaster WHERE stockid='" . $StockID . "'",$db);
+	$ItemResult = DB_query("SELECT description FROM stockmaster WHERE stockid='" . $StockID . "'");
 	$DescriptionRow = DB_fetch_array($ItemResult);
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . ' ' . _('For Stock Code') . ' - ' . $StockID . ' - ' . $DescriptionRow['description'] . '</p><br />';
 }
@@ -435,7 +435,7 @@ if (isset($_POST['SearchSupplier'])) {
     } //one of keywords or SupplierCode was more than a zero length string
     $ErrMsg = _('The suppliers matching the criteria entered could not be retrieved because');
     $DbgMsg = _('The SQL to retrieve supplier details that failed was');
-    $SuppliersResult = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
+    $SuppliersResult = DB_query($SQL, $ErrMsg, $DbgMsg);
 } //end of if search
 
 if (isset($SuppliersResult)) {
@@ -537,7 +537,7 @@ if (!isset($SuppliersResult)) {
 				AND purchdata.effectivefrom='" . $EffectiveFrom . "'";
 		
 		$ErrMsg = _('The supplier purchasing details for the selected supplier and item could not be retrieved because');
-		$EditResult = DB_query($sql, $db, $ErrMsg);
+		$EditResult = DB_query($sql, $ErrMsg);
 		$myrow = DB_fetch_array($EditResult);
 		$SuppName = $myrow['suppname'];
 		$UPriceDecimalPlaces = max($myrow['currdecimalplaces'],$_SESSION['StandardCostDecimalPlaces']);
@@ -692,7 +692,7 @@ if (!isset($SuppliersResult)) {
 
 		$ErrMsg = _('The supplier discounts could not be retrieved because');
 		$DbgMsg = _('The SQL to retrieve supplier discounts for this item that failed was');
-		$DiscountsResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
+		$DiscountsResult = DB_query($sql, $ErrMsg, $DbgMsg);
 		
 		echo '<table cellpadding="2" colspan="7" class="selection">
 				<tr>

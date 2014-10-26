@@ -124,7 +124,7 @@ if (isset($_POST['submit'])) {
 	}
 	if ($InputError !=1){
 		//run the SQL from either of the above possibilites
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 		prnMsg($msg,'success');
 		unset($SelectedTerms);
 		unset($_POST['DaysOrFoll']);
@@ -139,14 +139,14 @@ if (isset($_POST['submit'])) {
 // PREVENT DELETES IF DEPENDENT RECORDS IN DebtorsMaster
 
 	$sql= "SELECT COUNT(*) FROM debtorsmaster WHERE debtorsmaster.paymentterms = '" . $SelectedTerms . "'";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0] > 0) {
 		prnMsg( _('Cannot delete this payment term because customer accounts have been created referring to this term'),'warn');
 		echo '<br /> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('customer accounts that refer to this payment term');
 	} else {
 		$sql= "SELECT COUNT(*) FROM suppliers WHERE suppliers.paymentterms = '" . $SelectedTerms . "'";
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0] > 0) {
 			prnMsg( _('Cannot delete this payment term because supplier accounts have been created referring to this term'),'warn');
@@ -155,7 +155,7 @@ if (isset($_POST['submit'])) {
 			//only delete if used in neither customer or supplier accounts
 
 			$sql="DELETE FROM paymentterms WHERE termsindicator='" . $SelectedTerms . "'";
-			$result = DB_query($sql,$db);
+			$result = DB_query($sql);
 			prnMsg( _('The payment term definition record has been deleted') . '!','success');
 		}
 	}
@@ -171,7 +171,7 @@ links to delete or edit each. These will call the same page again and allow upda
 or deletion of the records*/
 
 	$sql = "SELECT termsindicator, terms, daysbeforedue, dayinfollowingmonth FROM paymentterms";
-	$result = DB_query($sql, $db);
+	$result = DB_query($sql);
 
 	echo '<table class="selection">';
 	echo '<tr>
@@ -240,7 +240,7 @@ if (!isset($_GET['delete'])) {
 					FROM paymentterms
 					WHERE termsindicator='" . $SelectedTerms . "'";
 
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		$myrow = DB_fetch_array($result);
 
 		$_POST['TermsIndicator'] = $myrow['termsindicator'];

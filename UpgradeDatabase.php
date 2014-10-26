@@ -226,7 +226,7 @@ if (isset($_POST['DoUpgrade'])){
 				}
 				if (mb_strpos($SQLEntries[$i],';')>0 AND ! $InAFunction){
 					$sql = mb_substr($sql,0,mb_strlen($sql)-1);
-					$result = DB_query($sql, $db, '','', false, false);
+					$result = DB_query($sql, '','', false, false);
 					echo '<tr><td>' . $sql . '</td>';
 					switch (DB_error_no($db)) {
 						case 0:

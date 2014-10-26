@@ -166,7 +166,7 @@ if (isset($_POST['SelectedLabelID'])){
 } elseif(isset($_GET['SelectedLabelID'])){
 	$SelectedLabelID =$_GET['SelectedLabelID'];
 	if (isset($_GET['DeleteField'])){ //then process any deleted fields
-		$result = DB_query("DELETE FROM labelfields WHERE labelfieldid='" . $_GET['DeleteField'] . "'",$db);
+		$result = DB_query("DELETE FROM labelfields WHERE labelfieldid='" . $_GET['DeleteField'] . "'");
 	}
 }
 
@@ -209,7 +209,7 @@ if (isset($_POST['submit'])) {
 				WHERE labelid = '" . $SelectedLabelID . "'";
 
 		$ErrMsg = _('The update of this label template failed because');
-		$result = DB_query($sql,$db,$ErrMsg);
+		$result = DB_query($sql,$ErrMsg);
 
 		$Message = _('The label template has been updated');
 
@@ -237,7 +237,7 @@ if (isset($_POST['submit'])) {
 					'" . $_POST['PageHeight'] . "')";
 
 		$ErrMsg = _('The addition of this label failed because');
-		$result = DB_query($sql,$db,$ErrMsg);
+		$result = DB_query($sql,$ErrMsg);
 		$Message = _('The new label template has been added to the database');
 	}
 
@@ -260,8 +260,8 @@ if (isset($_POST['submit'])) {
 //the link to delete a selected record was clicked instead of the submit button
 
 	/*Cascade deletes in labelfields */
-	$result = DB_query("DELETE FROM labelfields WHERE labelid= '" . $SelectedLabelID . "'",$db);
-	$result = DB_query("DELETE FROM labels WHERE labelid= '" . $SelectedLabelID . "'",$db);
+	$result = DB_query("DELETE FROM labelfields WHERE labelid= '" . $SelectedLabelID . "'");
+	$result = DB_query("DELETE FROM labels WHERE labelid= '" . $SelectedLabelID . "'");
 	prnMsg(_('The selected label template has been deleted'),'success');
 	unset ($SelectedLabelID);
 }
@@ -284,7 +284,7 @@ if (!isset($SelectedLabelID)) {
 
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The defined label templates could not be retrieved because');
 	$DbgMsg = _('The following SQL to retrieve the label templates was used');
-	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+	$result = DB_query($sql,$ErrMsg,$DbgMsg);
 
 	if (DB_num_rows($result)>0){
 		echo '<table class="selection">
@@ -408,7 +408,7 @@ if (isset($SelectedLabelID)) {
 			FROM labels
 			WHERE labelid='" . $SelectedLabelID . "'";
 
-	$result = DB_query($sql, $db);
+	$result = DB_query($sql);
 	$myrow = DB_fetch_array($result);
 
 	$_POST['PageWidth']	= $myrow['pagewidth'];
@@ -546,7 +546,7 @@ if (isset($SelectedLabelID)) {
 			WHERE labelid = '" . $SelectedLabelID . "'
 			ORDER BY vpos DESC";
 	$ErrMsg = _('Could not get the label fields because');
-	$result = DB_query($SQL,$db,$ErrMsg);
+	$result = DB_query($SQL,$ErrMsg);
 	$i=0;
 	echo '<table class="selection">
 				<tr>

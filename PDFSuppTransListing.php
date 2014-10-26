@@ -74,7 +74,7 @@ $sql= "SELECT type,
 		WHERE type='" . $_POST['TransType'] . "'
 		AND trandate='" . FormatDateForSQL($_POST['Date']) . "'";
 
-$result=DB_query($sql,$db,'','',false,false);
+$result=DB_query($sql,'','',false,false);
 
 if (DB_error_no($db)!=0){
 	$Title = _('Payment Listing');

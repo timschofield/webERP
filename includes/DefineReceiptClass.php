@@ -70,7 +70,7 @@ Class Receipt {
 		$this->PayeeBankDetail=$PayeeBankDetail;
 		$this->ID = $id;
 		$this->tag = $Tag;
-		$result = DB_query("SELECT tagdescription FROM tags WHERE tagref='" . $Tag . "'",$db);
+		$result = DB_query("SELECT tagdescription FROM tags WHERE tagref='" . $Tag . "'");
 		if (DB_num_rows($result)==1){
 			$TagRow = DB_fetch_array($result);
 			$this->TagName = $TagRow['tagdescription'];

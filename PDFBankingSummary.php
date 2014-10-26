@@ -26,7 +26,7 @@ if (!isset($_POST['BatchNo'])){
 		FROM banktrans
 		WHERE type=12
 		ORDER BY transno DESC";
-	$result=DB_query($sql, $db);
+	$result=DB_query($sql);
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
     echo '<div>';
@@ -72,7 +72,7 @@ if (isset($_POST['BatchNo']) and $_POST['BatchNo']!='') {
 
 	$ErrMsg = _('An error occurred getting the header information about the receipt batch number') . ' ' . $_POST['BatchNo'];
 	$DbgMsg = _('The SQL used to get the receipt header information that failed was');
-	$Result=DB_query($SQL,$db,$ErrMsg,$DbgMsg);
+	$Result=DB_query($SQL,$ErrMsg,$DbgMsg);
 
 	if (DB_num_rows($Result) == 0){
 		$Title = _('Create PDF Print-out For A Batch Of Receipts');
@@ -102,7 +102,7 @@ if (isset($_POST['BatchNo']) and $_POST['BatchNo']!='') {
 		WHERE debtortrans.transno='" . $_POST['BatchNo'] . "'
 		AND debtortrans.type=12";
 
-	$CustRecs=DB_query($SQL,$db,'','',false,false);
+	$CustRecs=DB_query($SQL,'','',false,false);
 	if (DB_error_no($db)!=0){
 		$Title = _('Create PDF Print-out For A Batch Of Receipts');
 		include ('includes/header.inc');
@@ -121,7 +121,7 @@ if (isset($_POST['BatchNo']) and $_POST['BatchNo']!='') {
 		AND gltrans.account !='" . $myrow['bankact'] . "'
 		AND gltrans.account !='" . $_SESSION['CompanyRecord']['debtorsact'] . "'";
 
-	$GLRecs=DB_query($SQL,$db,'','',false,false);
+	$GLRecs=DB_query($SQL,'','',false,false);
 	if (DB_error_no($db)!=0){
 		$Title = _('Create PDF Print-out For A Batch Of Receipts');
 		include ('includes/header.inc');

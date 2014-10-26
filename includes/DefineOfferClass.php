@@ -29,7 +29,7 @@ Class Offer {
 					currcode
 				FROM suppliers
 				WHERE supplierid='" . $this->SupplierID . "'";
-		$result=DB_query($sql, $db);
+		$result=DB_query($sql);
 		$myrow=DB_fetch_array($result);
 		$this->SupplierName = $myrow['suppname'];
 		$this->EmailAddress = $myrow['email'];
@@ -91,7 +91,7 @@ Class Offer {
 								'".$this->CurrCode."')";
 					$ErrMsg =  _('The suppliers offer could not be inserted into the database because');
 					$DbgMsg = _('The SQL statement used to insert the suppliers offer record and failed was');
-					$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
+					$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
 					if (DB_error_no($db)==0) {
 						prnMsg( _('The offer for').' '.$LineItems->StockID.' '._('has been inserted into the database'), 'success');
 						$this->OfferMailText .= $LineItems->Quantity. ' ' .$LineItems->Units.' '._('of').' '.$LineItems->StockID.' '._('at a price of').
@@ -113,7 +113,7 @@ Class Offer {
 					WHERE offerid='".$LineItem->LineNo . "'";
 				$ErrMsg =  _('The suppliers offer could not be updated on the database because');
 				$DbgMsg = _('The SQL statement used to update the suppliers offer record and failed was');
-				$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
+				$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
 				if (DB_error_no($db)==0) {
 					prnMsg( _('The offer for').' '.$LineItem->StockID.' '._('has been updated in the database'), 'success');
 					$this->OfferMailText .= $LineItem->Quantity.' '.$LineItem->Units.' '._('of').' '.$LineItem->StockID.' '._('at a price of').
@@ -127,7 +127,7 @@ Class Offer {
 					$sql = "DELETE from offers WHERE offerid='" . $LineItem->LineNo . "'";
 					$ErrMsg = _('The supplier offer could not be deleted on the database because');
 					$DbgMsg = _('The SQL statement used to delete the suppliers offer record are failed was');
-					$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
+					$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
 					if (DB_error_no($db) == 0) {
 						prnMsg(_('The offer for').' '.$LineItem->StockID.' ' ._('has been deleted in the database'), 'info');
 						$this->OfferMailText .= $LineItem->Quantity.' '.$LineItem->Units.' '._('of').' ' .$LineItem->StockID.' '

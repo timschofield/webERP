@@ -34,7 +34,7 @@ if (isset($_POST['Submit'])) {
 		FROM purchorderauth
 		WHERE userid='" . $_POST['UserID'] . "'
 		AND currabrev='" . $_POST['CurrCode'] . "'";
-	$result=DB_query($sql, $db);
+	$result=DB_query($sql);
 	$myrow=DB_fetch_array($result);
 	if ($myrow[0]==0) {
 		$sql="INSERT INTO purchorderauth ( userid,
@@ -48,7 +48,7 @@ if (isset($_POST['Submit'])) {
 						'".$OffHold."',
 						'" . filter_number_format($_POST['AuthLevel'])."')";
 	$ErrMsg = _('The authentication details cannot be inserted because');
-	$Result=DB_query($sql,$db,$ErrMsg);
+	$Result=DB_query($sql,$ErrMsg);
 	} else {
 		prnMsg(_('There already exists an entry for this user/currency combination'), 'error');
 		echo '<br />';
@@ -74,7 +74,7 @@ if (isset($_POST['Update'])) {
 			AND currabrev='".$_POST['CurrCode']."'";
 
 	$ErrMsg = _('The authentication details cannot be updated because');
-	$Result=DB_query($sql,$db,$ErrMsg);
+	$Result=DB_query($sql,$ErrMsg);
 }
 
 if (isset($_GET['Delete'])) {
@@ -83,7 +83,7 @@ if (isset($_GET['Delete'])) {
 		AND currabrev='".$_GET['Currency']."'";
 
 	$ErrMsg = _('The authentication details cannot be deleted because');
-	$Result=DB_query($sql,$db,$ErrMsg);
+	$Result=DB_query($sql,$ErrMsg);
 }
 
 if (isset($_GET['Edit'])) {
@@ -94,7 +94,7 @@ if (isset($_GET['Edit'])) {
 			WHERE userid='".$_GET['UserID']."'
 			AND currabrev='".$_GET['Currency']."'";
 	$ErrMsg = _('The authentication details cannot be retrieved because');
-	$result=DB_query($sql,$db,$ErrMsg);
+	$result=DB_query($sql,$ErrMsg);
 	$myrow=DB_fetch_array($result);
 	$UserID=$_GET['UserID'];
 	$Currency=$_GET['Currency'];
@@ -117,7 +117,7 @@ $sql="SELECT purchorderauth.userid,
 		ON purchorderauth.currabrev=currencies.currabrev";
 
 $ErrMsg = _('The authentication details cannot be retrieved because');
-$Result=DB_query($sql,$db,$ErrMsg);
+$Result=DB_query($sql,$ErrMsg);
 
 echo '<table class="selection">
      <tr>
@@ -175,7 +175,7 @@ if (isset($_GET['Edit'])) {
 } else {
 	echo '<tr><td>' . _('User ID') . '</td><td><select name="UserID">';
 	$usersql="SELECT userid FROM www_users";
-	$userresult=DB_query($usersql,$db);
+	$userresult=DB_query($usersql);
 	while ($myrow=DB_fetch_array($userresult)) {
 		if ($myrow['userid']==$UserID) {
 			echo '<option selected="selected" value="'.$myrow['userid'].'">' . $myrow['userid'] . '</option>';
@@ -197,7 +197,7 @@ if (isset($_GET['Edit'])) {
 			WHERE userid='".$_GET['UserID']."'
 			AND purchorderauth.currabrev='".$_GET['Currency']."'";
 	$ErrMsg = _('The authentication details cannot be retrieved because');
-	$result=DB_query($sql,$db,$ErrMsg);
+	$result=DB_query($sql,$ErrMsg);
 	$myrow=DB_fetch_array($result);
 	$UserID=$_GET['UserID'];
 	$Currency=$_GET['Currency'];
@@ -216,7 +216,7 @@ if (isset($_GET['Edit'])) {
 			<td>' . _('Currency') . '</td>
 			<td><select name="CurrCode">';
 	$currencysql="SELECT currabrev,currency FROM currencies";
-	$currencyresult=DB_query($currencysql,$db);
+	$currencyresult=DB_query($currencysql);
 	while ($myrow=DB_fetch_array($currencyresult)) {
 		if ($myrow['currabrev']==$Currency) {
 			echo '<option selected="selected" value="'.$myrow['currabrev'].'">' . $myrow['currency'] . '</option>';

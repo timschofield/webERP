@@ -6,7 +6,7 @@
 		$Searchsql = "SELECT count(wo)
 				FROM workorders
 				WHERE wo='".$WorkOrder."'";
-		$SearchResult=DB_query($Searchsql, $db);
+		$SearchResult=DB_query($Searchsql);
 		$answer = DB_fetch_array($SearchResult);
 		if ($answer[0]==0) {
 			$Errors[$i] = WorkOrderDoesntExist;
@@ -19,7 +19,7 @@
 		$Searchsql = "SELECT COUNT(loccode)
 					 FROM locations
 					  WHERE loccode='" . $location . "'";
-		$SearchResult=DB_query($Searchsql, $db);
+		$SearchResult=DB_query($Searchsql);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] == 0) {
 			$Errors[$i] = LocationCodeNotSetup;
@@ -45,7 +45,7 @@
 
 	function VerifyRequiredByDate($RequiredByDate, $i, $Errors, $db) {
 		$sql="SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
-		$result=DB_query($sql, $db);
+		$result=DB_query($sql);
 		$myrow=DB_fetch_array($result);
 		$DateFormat=$myrow[0];
 		if (mb_strstr('/',$PeriodEnd)) {
@@ -78,7 +78,7 @@
 
 	function VerifyStartDate($StartDate, $i, $Errors, $db) {
 		$sql="SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
-		$result=DB_query($sql, $db);
+		$result=DB_query($sql);
 		$myrow=DB_fetch_array($result);
 		$DateFormat=$myrow[0];
 		if (mb_strstr('/',$PeriodEnd)) {
@@ -146,7 +146,7 @@
 
 	function VerifyBatch($batch, $stockid, $location, $i, $Errors, $db) {
 		$sql="SELECT controlled, serialised FROM stockmaster WHERE stockid='".$stockid."'";
-		$result=DB_query($sql, $db);
+		$result=DB_query($sql);
 		$myrow=DB_fetch_row($result);
 		if ($myrow[0]!=1) {
 			$Errors[$i] = ItemNotControlled;
@@ -159,7 +159,7 @@
               WHERE stockid='".$stockid. "'
               AND loccode='".$location."'
               AND serialno='".$batch."'";
-		$result=DB_query($sql, $db);
+		$result=DB_query($sql);
 		if (DB_num_rows($result)==0) {
 			$Errors[$i] = BatchNumberDoesntExist;
 			return $Errors;
@@ -348,12 +348,12 @@
 			$costsql = "UPDATE workorders SET costissued=costissued+".$cost." WHERE wo='".$WONumber . "'";
 
 			DB_Txn_Begin($db);
-			DB_query($stockmovesql, $db);
-			DB_query($locstocksql, $db);
-			DB_query($glupdatesql1, $db);
-			DB_query($glupdatesql2, $db);
-			DB_query($systypessql, $db);
-			DB_query($costsql, $db);
+			DB_query($stockmovesql);
+			DB_query($locstocksql);
+			DB_query($glupdatesql1);
+			DB_query($glupdatesql2);
+			DB_query($systypessql);
+			DB_query($costsql);
 			if ($Batch!='') {
 				DB_Query($batchsql, $db);
 			}
@@ -450,11 +450,11 @@
                                                '".$StockID.' x '.$Quantity.' @ '.$cost."')";
 			$systypessql = "UPDATE systypes set typeno='".$TransactionNo."' where typeid=26";
 			DB_Txn_Begin($db);
-			DB_query($stockmovesql, $db);
-			DB_query($locstocksql, $db);
-			DB_query($glupdatesql1, $db);
-			DB_query($glupdatesql2, $db);
-			DB_query($systypessql, $db);
+			DB_query($stockmovesql);
+			DB_query($locstocksql);
+			DB_query($glupdatesql1);
+			DB_query($glupdatesql2);
+			DB_query($systypessql);
 			DB_Txn_Commit($db);
 			if (DB_error_no($db) != 0) {
 				$Errors[0] = DatabaseUpdateFailed;

@@ -68,7 +68,7 @@ Function CalcFreightCost ($TotalValue,
 	}
 	$sql = mb_substr($sql, 0, mb_strrpos($sql,' OR')) . ')';
 
-	$CalcFreightCostResult = DB_query($sql,$db);
+	$CalcFreightCostResult = DB_query($sql);
 	if (DB_error_no($db) !=0) {
 		echo _('The freight calculation for the destination city cannot be performed because') . ' - ' . DB_error_msg($db) . ' - ' . $sql;
 	} elseif (DB_num_rows($CalcFreightCostResult)>0) {
@@ -110,7 +110,7 @@ Function CalcFreightCost ($TotalValue,
 	}
 
 	if ($Currency != $_SESSION['CompanyRecord']['currencydefault']){
-		$ExRateResult = DB_query("SELECT rate FROM currencies WHERE currabrev='" . $Currency . "'",$db);
+		$ExRateResult = DB_query("SELECT rate FROM currencies WHERE currabrev='" . $Currency . "'");
 		if (DB_num_rows($ExRateResult)>0){
 			$ExRateRow = DB_fetch_row($ExRateResult);
 			$ExRate = $ExRateRow[0];

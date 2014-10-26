@@ -29,7 +29,7 @@ if (!isset($_SESSION['CustomerType'])) { //initialise if not already done
 if ($_SESSION['geocode_integration'] == 1 AND $_SESSION['CustomerID'] != "") {
 	$sql = "SELECT * FROM geocode_param WHERE 1";
 	$ErrMsg = _('An error occurred in retrieving the information');
-	$result = DB_query($sql, $db, $ErrMsg);
+	$result = DB_query($sql, $ErrMsg);
 	$myrow = DB_fetch_array($result);
 	$sql = "SELECT debtorsmaster.debtorno,
 					debtorsmaster.name,
@@ -42,7 +42,7 @@ if ($_SESSION['geocode_integration'] == 1 AND $_SESSION['CustomerID'] != "") {
 				WHERE debtorsmaster.debtorno = '" . $_SESSION['CustomerID'] . "'
 				ORDER BY debtorsmaster.debtorno";
 	$ErrMsg = _('An error occurred in retrieving the information');
-	$result2 = DB_query($sql, $db, $ErrMsg);
+	$result2 = DB_query($sql, $ErrMsg);
 	$myrow2 = DB_fetch_array($result2);
 	$Lattitude = $myrow2['lat'];
 	$Longitude = $myrow2['lng'];
@@ -154,7 +154,7 @@ if (isset($_POST['Search']) OR isset($_POST['CSV']) OR isset($_POST['Go']) OR is
 	$SQL .= " ORDER BY debtorsmaster.name";
 	$ErrMsg = _('The searched customer records requested cannot be retrieved because');
 
-	$result = DB_query($SQL, $db, $ErrMsg);
+	$result = DB_query($SQL, $ErrMsg);
 	if (DB_num_rows($result) == 1) {
 		$myrow = DB_fetch_array($result);
 		$_SESSION['CustomerID'] = $myrow['debtorno'];
@@ -200,7 +200,7 @@ if ($_SESSION['CustomerID'] != '' AND !isset($_POST['Search']) AND !isset($_POST
 			AND custbranch.branchcode='" . $_SESSION['BranchCode'] . "'";
 	}
 	$ErrMsg = _('The customer name requested cannot be retrieved because');
-	$result = DB_query($SQL, $db, $ErrMsg);
+	$result = DB_query($SQL, $ErrMsg);
 	if ($myrow = DB_fetch_array($result)) {
 		$CustomerName = htmlspecialchars($myrow['name'], ENT_QUOTES, 'UTF-8', false);
 		$PhoneNo = $myrow['phoneno'];
@@ -305,7 +305,7 @@ echo '<tr>
 		<td>';
 if (isset($_POST['CustType'])) {
 	// Show Customer Type drop down list
-	$result2 = DB_query("SELECT typeid, typename FROM debtortype ORDER BY typename", $db);
+	$result2 = DB_query("SELECT typeid, typename FROM debtortype ORDER BY typename");
 	// Error if no customer types setup
 	if (DB_num_rows($result2) == 0) {
 		$DataError = 1;
@@ -328,7 +328,7 @@ if (isset($_POST['CustType'])) {
 	}
 } else { //CustType is not set
 	// No option selected="selected" yet, so show Customer Type drop down list
-	$result2 = DB_query("SELECT typeid, typename FROM debtortype ORDER BY typename", $db);
+	$result2 = DB_query("SELECT typeid, typename FROM debtortype ORDER BY typename");
 	// Error if no customer types setup
 	if (DB_num_rows($result2) == 0) {
 		$DataError = 1;
@@ -349,7 +349,7 @@ if (isset($_POST['CustType'])) {
 /* Option to select a sales area */
 echo '<td><b>' . _('OR') . '</b></td>
 		<td>' . _('Choose an Area') . ':</td><td>';
-$result2 = DB_query("SELECT areacode, areadescription FROM areas", $db);
+$result2 = DB_query("SELECT areacode, areadescription FROM areas");
 // Error if no sales areas setup
 if (DB_num_rows($result2) == 0) {
 	$DataError = 1;
@@ -528,7 +528,7 @@ if (isset($_SESSION['CustomerID']) AND $_SESSION['CustomerID'] != '') {
 					ON debtorsmaster.typeid = debtortype.typeid
 					WHERE debtorsmaster.debtorno = '" . $_SESSION['CustomerID'] . "'";
 			$ErrMsg = _('An error occurred in retrieving the information');
-			$result = DB_query($sql, $db, $ErrMsg);
+			$result = DB_query($sql, $ErrMsg);
 			$myrow = DB_fetch_array($result);
 			$CustomerType = $myrow['typeid'];
 			$CustomerTypeName = $myrow['typename'];
@@ -545,14 +545,14 @@ if (isset($_SESSION['CustomerID']) AND $_SESSION['CustomerID'] != '') {
 					FROM debtorsmaster INNER JOIN currencies
 					ON debtorsmaster.currcode=currencies.currabrev
 					WHERE debtorsmaster.debtorno ='" . $_SESSION['CustomerID'] . "'";
-			$DataResult = DB_query($SQL, $db);
+			$DataResult = DB_query($SQL);
 			$myrow = DB_fetch_array($DataResult);
 			// Select some more data about the customer
 			$SQL = "SELECT sum(ovamount+ovgst) as total
 					FROM debtortrans
 					WHERE debtorno = '" . $_SESSION['CustomerID'] . "'
 					AND type !=12";
-			$Total1Result = DB_query($SQL, $db);
+			$Total1Result = DB_query($SQL);
 			$row = DB_fetch_array($Total1Result);
 			echo '<table width="45%" cellpadding="4">';
 			echo '<tr><th style="width:33%" colspan="3">' . _('Customer Data') . '</th></tr>';
@@ -601,7 +601,7 @@ if (isset($_SESSION['CustomerID']) AND $_SESSION['CustomerID'] != '') {
 		$sql = "SELECT * FROM custcontacts
 				WHERE debtorno='" . $_SESSION['CustomerID'] . "'
 				ORDER BY contid";
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		if (DB_num_rows($result) <> 0) {
 			echo '<br /><div class="centre"><img src="' . $RootPath . '/css/' . $Theme . '/images/group_add.png" title="' . _('Customer Contacts') . '" alt="" />' . ' ' . _('Customer Contacts') . '</div>';
 			echo '<br /><table width="45%">';
@@ -651,7 +651,7 @@ if (isset($_SESSION['CustomerID']) AND $_SESSION['CustomerID'] != '') {
 				FROM custnotes
 				WHERE debtorno='" . $_SESSION['CustomerID'] . "'
 				ORDER BY date DESC";
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		if (DB_num_rows($result) <> 0) {
 			echo '<br /><div class="centre"><img src="' . $RootPath . '/css/' . $Theme . '/images/note_add.png" title="' . _('Customer Notes') . '" alt="" />' . ' ' . _('Customer Notes') . '</div><br />';
 			echo '<table width="45%">';
@@ -693,7 +693,7 @@ if (isset($_SESSION['CustomerID']) AND $_SESSION['CustomerID'] != '') {
 		$sql = "SELECT * FROM debtortypenotes
 				WHERE typeid='" . $CustomerType . "'
 				ORDER BY date DESC";
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		if (DB_num_rows($result) <> 0) {
 			echo '<br /><div class="centre"><img src="' . $RootPath . '/css/' . $Theme . '/images/folder_add.png" title="' . _('Customer Type (Group) Notes') . '" alt="" />' . ' ' . _('Customer Type (Group) Notes for:' . '<b> ' . $CustomerTypeName . '</b>') . '</div><br />';
 			echo '<table width="45%">';

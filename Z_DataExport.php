@@ -35,7 +35,7 @@ function NULLToPrice( &$Field ) {
 if ( isset($_POST['pricelist']) ) {
 
 		$SQL = "SELECT sales_type FROM salestypes WHERE typeabbrev='" . $_POST['SalesType'] . "'";
-		$SalesTypeResult = DB_query($SQL,$db);
+		$SalesTypeResult = DB_query($SQL);
 		$SalesTypeRow = DB_fetch_row($SalesTypeResult);
 		$SalesTypeName = $SalesTypeRow[0];
 
@@ -63,7 +63,7 @@ if ( isset($_POST['pricelist']) ) {
 			ORDER BY prices.currabrev,
 				stockmaster.categoryid,
 				stockmaster.stockid";
-	$PricesResult = DB_query($SQL,$db,'','',false,false);
+	$PricesResult = DB_query($SQL,'','',false,false);
 
 	if (DB_error_no($db) !=0) {
 		$Title = _('Price List Export Problem ....');
@@ -96,7 +96,7 @@ if ( isset($_POST['pricelist']) ) {
 			WHERE stockid = '".$PriceList['stockid']."'
 			AND loccode = '".$_POST['Location']."'
 			ORDER BY stkmoveno DESC LIMIT 1";
-		$resultQty = DB_query($sqlQty, $db, $ErrMsg);
+		$resultQty = DB_query($sqlQty, $ErrMsg);
 		if ( $resultQty ) {
 			if( DB_num_rows($resultQty) > 0 ) {
 				$Row = DB_fetch_row($resultQty);
@@ -159,7 +159,7 @@ if ( isset($_POST['pricelist']) ) {
 		WHERE debtorsmaster.debtorno=custbranch.debtorno
 		AND ((defaultlocation = '".$_POST['Location']."') OR (defaultlocation = '') OR (defaultlocation IS NULL))";
 
-	$CustResult = DB_query($SQL,$db,'','',false,false);
+	$CustResult = DB_query($SQL,'','',false,false);
 
 	if (DB_error_no($db) !=0) {
 		$Title = _('Customer List Export Problem ....');
@@ -250,7 +250,7 @@ if ( isset($_POST['pricelist']) ) {
 			commissionrate2
 		FROM salesman";
 
-	$SalesManResult = DB_query($SQL,$db,'','',false,false);
+	$SalesManResult = DB_query($SQL,'','',false,false);
 
 	if (DB_error_no($db) !=0) {
 		$Title = _('Salesman List Export Problem ....');
@@ -299,7 +299,7 @@ if ( isset($_POST['pricelist']) ) {
 	$SQL = "SELECT stockid
 		FROM stockmaster
 		ORDER BY stockid";
-	$ImageResult = DB_query($SQL,$db,'','',false,false);
+	$ImageResult = DB_query($SQL,'','',false,false);
 
 	if (DB_error_no($db) !=0) {
 		$Title = _('Security Token List Export Problem ....');
@@ -338,7 +338,7 @@ if ( isset($_POST['pricelist']) ) {
 			tokenname
 		FROM securitytokens";
 
-	$SecTokenResult = DB_query($SQL,$db,'','',false,false);
+	$SecTokenResult = DB_query($SQL,'','',false,false);
 
 	if (DB_error_no($db) !=0) {
 		$Title = _('Security Token List Export Problem ....');
@@ -374,7 +374,7 @@ if ( isset($_POST['pricelist']) ) {
 			secrolename
 		FROM securityroles";
 
-	$SecRoleResult = DB_query($SQL,$db,'','',false,false);
+	$SecRoleResult = DB_query($SQL,'','',false,false);
 
 	if (DB_error_no($db) !=0) {
 		$Title = _('Security Role List Export Problem ....');
@@ -410,7 +410,7 @@ if ( isset($_POST['pricelist']) ) {
 			tokenid
 		FROM securitygroups";
 
-	$SecGroupResult = DB_query($SQL,$db,'','',false,false);
+	$SecGroupResult = DB_query($SQL,'','',false,false);
 
 	if (DB_error_no($db) !=0) {
 		$Title = _('Security Group List Export Problem ....');
@@ -462,7 +462,7 @@ if ( isset($_POST['pricelist']) ) {
 		WHERE (customerid <> '') OR
 			(NOT customerid IS NULL)";
 
-	$SecUserResult = DB_query($SQL,$db,'','',false,false);
+	$SecUserResult = DB_query($SQL,'','',false,false);
 
 	if (DB_error_no($db) !=0) {
 		$Title = _('Security User List Export Problem ....');
@@ -538,7 +538,7 @@ if ( isset($_POST['pricelist']) ) {
 	echo '<table>';
 	echo '<tr><th colspan="2">' . _('Price List Export') . '</th></tr>';
 	$sql = 'SELECT sales_type, typeabbrev FROM salestypes';
-	$SalesTypesResult=DB_query($sql,$db);
+	$SalesTypesResult=DB_query($sql);
 	echo '<tr><td>' . _('For Sales Type/Price List') . ':</td>';
 	echo '<td><select name="SalesType">';
 	while ($myrow=DB_fetch_array($SalesTypesResult)){
@@ -547,7 +547,7 @@ if ( isset($_POST['pricelist']) ) {
 	echo '</select></td></tr>';
 
 	$sql = 'SELECT loccode, locationname FROM locations';
-	$SalesTypesResult=DB_query($sql,$db);
+	$SalesTypesResult=DB_query($sql);
 	echo '<tr><td>' . _('For Location') . ':</td>';
 	echo '<td><select name="Location">';
 	while ($myrow=DB_fetch_array($SalesTypesResult)){
@@ -571,7 +571,7 @@ if ( isset($_POST['pricelist']) ) {
 	echo '<tr><th colspan="2">' . _('Customer List Export') . '</th></tr>';
 
 	$sql = 'SELECT loccode, locationname FROM locations';
-	$SalesTypesResult=DB_query($sql,$db);
+	$SalesTypesResult=DB_query($sql);
 	echo '<tr><td>' . _('For Location') . ':</td>';
 	echo '<td><select name="Location">';
 	while ($myrow=DB_fetch_array($SalesTypesResult)){

@@ -137,7 +137,7 @@ if (isset($_GET['ModifyOrderNumber'])
 						WHERE salesorders.orderno = '" . $_GET['ModifyOrderNumber'] . "'";
 
 	$ErrMsg =  _('The order cannot be retrieved because');
-	$GetOrdHdrResult = DB_query($OrderHeaderSQL,$db,$ErrMsg);
+	$GetOrdHdrResult = DB_query($OrderHeaderSQL,$ErrMsg);
 
 	if (DB_num_rows($GetOrdHdrResult)==1) {
 
@@ -188,7 +188,7 @@ if (isset($_GET['ModifyOrderNumber'])
 
 		//Get The exchange rate used for GPPercent calculations on adding or amending items
 		if ($_SESSION['Items'.$identifier]->DefaultCurrency != $_SESSION['CompanyRecord']['currencydefault']){
-			$ExRateResult = DB_query("SELECT rate FROM currencies WHERE currabrev='" . $_SESSION['Items'.$identifier]->DefaultCurrency . "'",$db);
+			$ExRateResult = DB_query("SELECT rate FROM currencies WHERE currabrev='" . $_SESSION['Items'.$identifier]->DefaultCurrency . "'");
 			if (DB_num_rows($ExRateResult)>0){
 				$ExRateRow = DB_fetch_row($ExRateResult);
 				$ExRate = $ExRateRow[0];
@@ -233,7 +233,7 @@ if (isset($_GET['ModifyOrderNumber'])
 								ORDER BY salesorderdetails.orderlineno";
 
 		$ErrMsg = _('The line items of the order cannot be retrieved because');
-		$LineItemsResult = DB_query($LineItemsSQL,$db,$ErrMsg);
+		$LineItemsResult = DB_query($LineItemsSQL,$ErrMsg);
 		if (DB_num_rows($LineItemsResult)>0) {
 
 			while ($myrow=DB_fetch_array($LineItemsResult)) {
@@ -348,7 +348,7 @@ if (isset($_POST['SearchCust'])
 					custbranch.branchcode";
 
 	$ErrMsg = _('The searched customer records requested cannot be retrieved because');
-	$result_CustSelect = DB_query($SQL,$db,$ErrMsg);
+	$result_CustSelect = DB_query($SQL,$ErrMsg);
 
 	if (DB_num_rows($result_CustSelect)==1){
 		$myrow=DB_fetch_array($result_CustSelect);
@@ -403,7 +403,7 @@ if (isset($SelectedCustomer)) {
 
 	$ErrMsg = _('The details of the customer selected') . ': ' .  $_SESSION['Items'.$identifier]->DebtorNo . ' ' . _('cannot be retrieved because');
 	$DbgMsg = _('The SQL used to retrieve the customer details and failed was') . ':';
-	$result =DB_query($sql,$db,$ErrMsg,$DbgMsg);
+	$result =DB_query($sql,$ErrMsg,$DbgMsg);
 
 	$myrow = DB_fetch_array($result);
 	if ($myrow[1] != 1){
@@ -506,7 +506,7 @@ if (isset($SelectedCustomer)) {
 
 	$ErrMsg = _('The details for the customer selected') . ': ' .$_SESSION['Items'.$identifier]->DebtorNo . ' ' . _('cannot be retrieved because');
 	$DbgMsg = _('SQL used to retrieve the customer details was') . ':<br />' . $sql;
-	$result =DB_query($sql,$db,$ErrMsg,$DbgMsg);
+	$result =DB_query($sql,$ErrMsg,$DbgMsg);
 
 	$myrow = DB_fetch_array($result);
 	if ($myrow[1] == 0){
@@ -642,7 +642,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					WHERE orderno='" . $_SESSION['ExistingOrder' . $identifier] . "'
 					AND qtyinvoiced>0";
 
-			$InvQties = DB_query($sql,$db);
+			$InvQties = DB_query($sql);
 
 			if (DB_num_rows($InvQties)>0){
 
@@ -657,11 +657,11 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 				$SQL = "DELETE FROM salesorderdetails WHERE salesorderdetails.orderno ='" . $_SESSION['ExistingOrder' . $identifier] . "'";
 				$ErrMsg =_('The order detail lines could not be deleted because');
-				$DelResult=DB_query($SQL,$db,$ErrMsg);
+				$DelResult=DB_query($SQL,$ErrMsg);
 
 				$SQL = "DELETE FROM salesorders WHERE salesorders.orderno='" . $_SESSION['ExistingOrder' . $identifier] . "'";
 				$ErrMsg = _('The order header could not be deleted because');
-				$DelResult=DB_query($SQL,$db,$ErrMsg);
+				$DelResult=DB_query($SQL,$ErrMsg);
 
 				$_SESSION['ExistingOrder' . $identifier]=0;
 			}
@@ -781,7 +781,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		$ErrMsg = _('There is a problem selecting the part records to display because');
 		$DbgMsg = _('The SQL used to get the part selection was');
 
-		$SearchResult = DB_query($SQL,$db,$ErrMsg, $DbgMsg);
+		$SearchResult = DB_query($SQL,$ErrMsg, $DbgMsg);
 
 		if (DB_num_rows($SearchResult)==0 ){
 			prnMsg (_('There are no products available meeting the criteria specified'),'info');
@@ -804,7 +804,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 //Get The exchange rate used for GPPercent calculations on adding or amending items
 	if ($_SESSION['Items'.$identifier]->DefaultCurrency != $_SESSION['CompanyRecord']['currencydefault']){
-		$ExRateResult = DB_query("SELECT rate FROM currencies WHERE currabrev='" . $_SESSION['Items'.$identifier]->DefaultCurrency . "'",$db);
+		$ExRateResult = DB_query("SELECT rate FROM currencies WHERE currabrev='" . $_SESSION['Items'.$identifier]->DefaultCurrency . "'");
 		if (DB_num_rows($ExRateResult)>0){
 			$ExRateRow = DB_fetch_row($ExRateResult);
 			$ExRate = $ExRateRow[0];
@@ -870,7 +870,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 			$ErrMsg = _('Could not determine if the part being ordered was a kitset or not because');
 			$DbgMsg = _('The sql that was used to determine if the part being ordered was a kitset or not was ');
-			$KitResult = DB_query($sql, $db,$ErrMsg,$DbgMsg);
+			$KitResult = DB_query($sql,$ErrMsg,$DbgMsg);
 
 
 			if (DB_num_rows($KitResult)==0){
@@ -885,7 +885,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 							AND bom.effectiveafter < '" . Date('Y-m-d') . "'";
 
 					$ErrMsg =  _('Could not retrieve kitset components from the database because') . ' ';
-					$KitResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+					$KitResult = DB_query($sql,$ErrMsg,$DbgMsg);
 
 					$ParentQty = $NewItemQty;
 					while ($KitParts = DB_fetch_array($KitResult,$db)){
@@ -923,7 +923,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			$AssetRow = DB_fetch_array($AssetDetailsResult);
 
 			/* Check that the stock category for disposal "ASSETS" is defined already */
-			$AssetCategoryResult = DB_query("SELECT categoryid FROM stockcategory WHERE categoryid='ASSETS'",$db);
+			$AssetCategoryResult = DB_query("SELECT categoryid FROM stockcategory WHERE categoryid='ASSETS'");
 			if (DB_num_rows($AssetCategoryResult)==0){
 				/*Although asset GL posting will come from the asset category - we should set the GL codes to something sensible
 				 * based on the category of the asset under review at the moment - this may well change for any other assets sold subsequentely */
@@ -1157,7 +1157,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 		$ErrMsg =  _('Could not determine if the part being ordered was a kitset or not because');
 
-		$KitResult = DB_query($sql, $db,$ErrMsg);
+		$KitResult = DB_query($sql,$ErrMsg);
 
 		$NewItemQty = 1; /*By Default */
 		$Discount = 0; /*By default - can change later or discount category override */
@@ -1172,7 +1172,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 						AND bom.effectiveafter < '" . Date('Y-m-d') . "'";
 
 				$ErrMsg = _('Could not retrieve kitset components from the database because');
-				$KitResult = DB_query($sql,$db,$ErrMsg);
+				$KitResult = DB_query($sql,$ErrMsg);
 
 				$ParentQty = $NewItemQty;
 				while ($KitParts = DB_fetch_array($KitResult,$db)){
@@ -1206,7 +1206,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 				$ErrMsg =  _('Could not determine if the part being ordered was a kitset or not because');
 
-				$KitResult = DB_query($sql, $db,$ErrMsg);
+				$KitResult = DB_query($sql,$ErrMsg);
 
 				//$NewItemQty = 1; /*By Default */
 				$Discount = 0; /*By default - can change later or discount category override */
@@ -1221,7 +1221,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 								AND bom.effectiveafter < '" . Date('Y-m-d') . "'";
 
 						$ErrMsg = _('Could not retrieve kitset components from the database because');
-						$KitResult = DB_query($sql,$db,$ErrMsg);
+						$KitResult = DB_query($sql,$ErrMsg);
 
 						$ParentQty = $NewItemQty;
 						while ($KitParts = DB_fetch_array($KitResult,$db)){
@@ -1439,7 +1439,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					ORDER BY salesqty DESC
 					LIMIT " . $_SESSION['FrequentlyOrderedItems'];
 
-			$result2 = DB_query($SQL,$db);
+			$result2 = DB_query($SQL);
 			echo '<p class="page_title_text">
 					<img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' .
 					' ' . _('Frequently Ordered Items') .
@@ -1471,7 +1471,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 							FROM locstock
 							WHERE stockid='" .$myrow['stockid'] . "'
 							AND loccode = '" . $_SESSION['Items'.$identifier]->Location . "'";
-				$QOHResult =  DB_query($QOHSQL,$db);
+				$QOHResult =  DB_query($QOHSQL);
 				$QOHRow = DB_fetch_array($QOHResult);
 				$QOH = $QOHRow['qoh'];
 
@@ -1486,7 +1486,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 				$ErrMsg = _('The demand for this product from') . ' ' . $_SESSION['Items'.$identifier]->Location . ' ' .
 					 _('cannot be retrieved because');
-				$DemandResult = DB_query($sql,$db,$ErrMsg);
+				$DemandResult = DB_query($sql,$ErrMsg);
 
 				$DemandRow = DB_fetch_row($DemandResult);
 				if ($DemandRow[0] != null){
@@ -1560,7 +1560,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				WHERE stocktype='F' OR stocktype='D' OR stocktype='L'
 				ORDER BY categorydescription";
 
-		$result1 = DB_query($SQL,$db);
+		$result1 = DB_query($SQL);
 		while ($myrow1 = DB_fetch_array($result1)) {
 			if ($_POST['StockCat']==$myrow1['categoryid']){
 				echo '<option selected="selected" value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
@@ -1635,7 +1635,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 							   ON locstock.stockid = stockmaster.stockid
 							   WHERE locstock.stockid='" .$myrow['stockid'] . "' AND
 							   loccode = '" . $_SESSION['Items'.$identifier]->Location . "'";
-				$QOHResult =  DB_query($QOHSQL,$db);
+				$QOHResult =  DB_query($QOHSQL);
 				$QOHRow = DB_fetch_array($QOHResult);
 				$QOH = $QOHRow['qoh'];
 
@@ -1649,7 +1649,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 						 AND salesorderdetails.stkcode='" . $myrow['stockid'] . "'";
 
 				$ErrMsg = _('The demand for this product from') . ' ' . $_SESSION['Items'.$identifier]->Location . ' ' . _('cannot be retrieved because');
-				$DemandResult = DB_query($sql,$db,$ErrMsg);
+				$DemandResult = DB_query($sql,$ErrMsg);
 
 				$DemandRow = DB_fetch_row($DemandResult);
 				if ($DemandRow[0] != null){
@@ -1764,7 +1764,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			echo '<tr>
 					<td>' . _('Asset to Dispose Of') . ':</td>
 					<td><select name="AssetToDisposeOf">';
-			$AssetsResult = DB_query("SELECT assetid, description FROM fixedassets WHERE disposaldate='0000-00-00'",$db);
+			$AssetsResult = DB_query("SELECT assetid, description FROM fixedassets WHERE disposaldate='0000-00-00'");
 			echo '<option selected="selected" value="NoAssetSelected">' . _('Select Asset To Dispose of From the List Below') . '</option>';
 			while ($AssetRow = DB_fetch_array($AssetsResult)){
 				echo '<option value="' . $AssetRow['assetid'] . '">' . $AssetRow['assetid'] . ' - ' . $AssetRow['description'] . '</option>';
@@ -1823,7 +1823,7 @@ function GetCustBranchDetails($identifier) {
 
 		$ErrMsg = _('The customer branch record of the customer selected') . ': ' . $_SESSION['Items'.$identifier]->DebtorNo . ' ' . _('cannot be retrieved because');
 		$DbgMsg = _('SQL used to retrieve the branch details was') . ':';
-		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+		$result = DB_query($sql,$ErrMsg,$DbgMsg);
 		return $result;
 }
 ?>

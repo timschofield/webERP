@@ -38,7 +38,7 @@ If the order processed ok then move the file to processed and go on to next file
 
 
 $sql = "SELECT id, segtag, maxoccur, seggroup FROM edi_orders_segs";
-$OrderSeg = DB_query($sql,$db);
+$OrderSeg = DB_query($sql);
 $i=0;
 $Seg = array();
 
@@ -414,7 +414,7 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $RootPath . '/' . $_SESSI
 						/*Look up the EAN Code given $NAD[1] for the buyer */
 						if ($NAD_C082[2] ==9){
 						/*if NAD_C082[2] must = 9 then NAD_C082[0] is the EAN Intnat Article Numbering Assocn code of the customer - look up the customer by EDIReference*/
-							$InvoiceeResult = DB_query("SELECT debtorno FROM debtorsmaster WHERE edireference='" . $NAD_C082[0] . "' AND ediorders=1",$db);
+							$InvoiceeResult = DB_query("SELECT debtorno FROM debtorsmaster WHERE edireference='" . $NAD_C082[0] . "' AND ediorders=1");
 							if (DB_num_rows($InvoiceeResult)!=1){
 								$EmailText .= "\n" . _('The Buyer reference was specified as an EAN International Article Numbering Association code') . '. ' . _('Unfortunately the field EDIReference of any of the customers currently set up to receive EDI orders does not match with the code') . ' ' . $NAD_C082[0] . ' ' . _('used in this message') . '. ' . _('So that is the end of the road for this message');
 								$TryNextFile = True; /* Look for other EDI msgs */
@@ -521,7 +521,7 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $RootPath . '/' . $_SESSI
 		if ($TryNextFile==True){ /*had to abort this message */
 			/* send the email to the sysadmin  - get email address from users*/
 
-			$Result = DB_query("SELECT realname, email FROM www_users WHERE fullaccess=7 AND email <>''",$db);
+			$Result = DB_query("SELECT realname, email FROM www_users WHERE fullaccess=7 AND email <>''");
 			if (DB_num_rows($Result)==0){ /*There are no sysadmins with email address specified */
 
 				$Recipients = array("'phil' <phil@localhost>");

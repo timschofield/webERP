@@ -22,7 +22,7 @@ if(isset($_POST['Enter'])){ //user has input a new value
 	if($InputError == 0){
 		$sql = "INSERT INTO mailgroups (groupname) VALUES ('".$MailGroup."')";
 		$ErrMsg = _('Failed to add new mail group');
-		$result = DB_query($sql,$db,$ErrMsg);
+		$result = DB_query($sql,$ErrMsg);
 		GetMailGroup();
 
 	}
@@ -55,7 +55,7 @@ if(isset($_GET['Add']) and isset($_GET['UserId'])){
 	$sql = "INSERT INTO mailgroupdetails (groupname, userid) VALUES ('".$GroupName."',
 									'".$UserId."')";
 	$ErrMsg = _('Failed to add users to mail group');
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 	GetUsers($GroupId, $GroupName);
 }
 
@@ -65,7 +65,7 @@ if(isset($_GET['Delete'])){
 		$id = (int)$_GET['Id'];
 		$sql = "DELETE FROM mailgroups WHERE id = '".$id."'";
 		$ErrMsg = _('Failed to delete the mail group which id is '.$id);
-		$result = DB_query($sql,$db,$ErrMsg);
+		$result = DB_query($sql,$ErrMsg);
 		GetMailGroup();
 	}else{
 		prnMsg(_('The group id must be numeric'),'error');
@@ -130,7 +130,7 @@ if(isset($_GET['Remove'])){
 	}
 	$sql = "DELETE FROM mailgroupdetails WHERE userid = '".$UserId."' AND groupname = '".$GroupName."'";
 	$ErrMsg = 'Failed to delete the userid '.$UserId.' from group '.$GroupName;
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 	GetUsers($GroupId,$GroupName);
 
 
@@ -165,7 +165,7 @@ global $db;
 //GET the mailing group data if there are any
 $sql = "SELECT groupname, id FROM mailgroups ORDER BY groupname";
 $ErrMsg = _('Failed to retrieve mail groups information');
-$result = DB_query($sql,$db,$ErrMsg);
+$result = DB_query($sql,$ErrMsg);
 if(DB_num_rows($result) != 0){
 ?>
 	<table class="selection">
@@ -191,7 +191,7 @@ function GetUsers ($GroupId,$GroupName) {
 	global $db;
 	$sql = "SELECT userid FROM mailgroups INNER JOIN mailgroupdetails ON mailgroups.groupname=mailgroupdetails.groupname WHERE mailgroups.id = '".$GroupId."'";
 	$ErrMsg = _('Failed to retrieve userid');
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 	
 		$UsersAssigned = array();
 	if(DB_num_rows($result) != 0){
@@ -204,7 +204,7 @@ function GetUsers ($GroupId,$GroupName) {
 		
 	$sql = "SELECT userid, realname, email FROM www_users ORDER BY realname";
 	$ErrMsg = _('Failed to retrieve user information');
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 	if(DB_num_rows($result) != 0){
 	
 ?>

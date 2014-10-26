@@ -24,7 +24,7 @@ If (isset($_POST['PrintPDF'])) {
 					categorydescription
 				FROM stockcategory
 				WHERE categoryid='" . $_POST['StockCat'] . "' ";
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 		$myrow = DB_fetch_row($result);
 		$CatDescription = $myrow[1];
 	}
@@ -78,7 +78,7 @@ If (isset($_POST['PrintPDF'])) {
 	}
 
 
-	$result = DB_query($sql,$db,'','',false,true);
+	$result = DB_query($sql,'','',false,true);
 
 	if (DB_error_no($db) !=0) {
 	  $Title = _('Inventory Quantities') . ' - ' . _('Problem Report');
@@ -174,7 +174,7 @@ echo '<div class="page_help_text">' . _('Use this report to display the quantity
 				categorydescription
 			FROM stockcategory
 			ORDER BY categorydescription";
-	$result1 = DB_query($SQL,$db);
+	$result1 = DB_query($SQL);
 	if (DB_num_rows($result1)==0){
 		echo '</table>
 			<p />';

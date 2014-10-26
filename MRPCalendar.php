@@ -75,7 +75,7 @@ function submit(&$db,&$ChangeDate)  //####SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUB
 	 }
 
 	$sql = "DROP TABLE IF EXISTS mrpcalendar";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 
 	$sql = "CREATE TABLE mrpcalendar (
 				calendardate date NOT NULL,
@@ -84,7 +84,7 @@ function submit(&$db,&$ChangeDate)  //####SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUB
 				INDEX (daynumber),
 				PRIMARY KEY (calendardate)) DEFAULT CHARSET=utf8";
 	$ErrMsg = _('The SQL to create passbom failed with the message');
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 
 	$i = 0;
 
@@ -115,7 +115,7 @@ function submit(&$db,&$ChangeDate)  //####SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUB
 				 VALUES ('" . $DateAdd . "',
 						'1',
 						'" . $ManuFlag . "')";
-		$result = DB_query($sql,$db,$ErrMsg);
+		$result = DB_query($sql,$ErrMsg);
 	}
 
 	// Update daynumber. Set it so non-manufacturing days will have the same daynumber as a valid
@@ -124,7 +124,7 @@ function submit(&$db,&$ChangeDate)  //####SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUB
 	$DayNumber = 1;
 	$sql = "SELECT * FROM mrpcalendar
 			ORDER BY calendardate";
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 	while ($myrow = DB_fetch_array($result)) {
 		   if ($myrow['manufacturingflag'] == "1") {
 			   $DayNumber++;
@@ -132,7 +132,7 @@ function submit(&$db,&$ChangeDate)  //####SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUB
 		   $CalDate = $myrow['calendardate'];
 		   $sql = "UPDATE mrpcalendar SET daynumber = '" . $DayNumber . "'
 					WHERE calendardate = '" . $CalDate . "'";
-		   $resultupdate = DB_query($sql,$db,$ErrMsg);
+		   $resultupdate = DB_query($sql,$ErrMsg);
 	}
 	prnMsg(_('The MRP Calendar has been created'),'success');
 	ShowInputForm($db,$ChangeDate);
@@ -150,7 +150,7 @@ function update(&$db,&$ChangeDate)  //####UPDATE_UPDATE_UPDATE_UPDATE_UPDATE_UPD
 	$sql="SELECT COUNT(*) FROM mrpcalendar
 		  WHERE calendardate='$CalDate'
 		  GROUP BY calendardate";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0] < 1  ||  !Is_Date($ChangeDate))  {
 		$InputError = 1;
@@ -163,7 +163,7 @@ function update(&$db,&$ChangeDate)  //####UPDATE_UPDATE_UPDATE_UPDATE_UPDATE_UPD
 	 }
 
 	$sql="SELECT mrpcalendar.* FROM mrpcalendar WHERE calendardate='$CalDate'";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 	$myrow = DB_fetch_row($result);
 	$newmanufacturingflag = 0;
 	if ($myrow[2] == 0) {
@@ -172,7 +172,7 @@ function update(&$db,&$ChangeDate)  //####UPDATE_UPDATE_UPDATE_UPDATE_UPDATE_UPD
 	$sql = "UPDATE mrpcalendar SET manufacturingflag = '".$newmanufacturingflag."'
 			WHERE calendardate = '".$CalDate."'";
 	$ErrMsg = _('Cannot update the MRP Calendar');
-	$resultupdate = DB_query($sql,$db,$ErrMsg);
+	$resultupdate = DB_query($sql,$ErrMsg);
 	prnMsg(_('The MRP calendar record for') . ' ' . $ChangeDate  . ' ' . _('has been updated'),'success');
 	unset ($ChangeDate);
 	ShowInputForm($db,$ChangeDate);
@@ -183,7 +183,7 @@ function update(&$db,&$ChangeDate)  //####UPDATE_UPDATE_UPDATE_UPDATE_UPDATE_UPD
 	// subtract the leadtime from the daynumber, and find the valid manufacturing day with that daynumber.
 	$DayNumber = 1;
 	$sql = "SELECT * FROM mrpcalendar ORDER BY calendardate";
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 	while ($myrow = DB_fetch_array($result)) {
 		   if ($myrow['manufacturingflag'] == '1') {
 			   $DayNumber++;
@@ -191,7 +191,7 @@ function update(&$db,&$ChangeDate)  //####UPDATE_UPDATE_UPDATE_UPDATE_UPDATE_UPD
 		   $CalDate = $myrow['calendardate'];
 		   $sql = "UPDATE mrpcalendar SET daynumber = '" . $DayNumber . "'
 					WHERE calendardate = '" . $CalDate . "'";
-		   $resultupdate = DB_query($sql,$db,$ErrMsg);
+		   $resultupdate = DB_query($sql,$ErrMsg);
 	} // End of while
 
 } // End of function update()
@@ -211,7 +211,7 @@ function ShowDays(&$db)  {//####LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_
 			AND calendardate <='" . $ToDate . "'";
 
 	$ErrMsg = _('The SQL to find the parts selected failed with the message');
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 
 	echo '<br />
 		<table class="selection">

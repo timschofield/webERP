@@ -8,7 +8,7 @@
 include('includes/session.inc');
 
 $sql="SHOW TABLES WHERE Tables_in_" . $_SESSION['DatabaseName'] . "='mrprequirements'";
-$result=DB_query($sql,$db);
+$result=DB_query($sql);
 if (DB_num_rows($result)==0) {
 	$Title=_('MRP error');
 	include('includes/header.inc');
@@ -100,7 +100,7 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 						 computedcost
 				ORDER BY mrpplannedorders.part,yearmonth";
 	}
-	$result = DB_query($sql,$db,'','',false,true);
+	$result = DB_query($sql,'','',false,true);
 
 	if (DB_error_no($db) !=0) {
 	  $Title = _('MRP Planned Work Orders') . ' - ' . _('Problem Report');

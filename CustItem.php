@@ -71,7 +71,7 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Deb
 							'" . $_POST['cust_part'] . "')";
         $ErrMsg = _('The customer Item details could not be added to the database because');
         $DbgMsg = _('The SQL that failed was');
-        $AddResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
+        $AddResult = DB_query($sql, $ErrMsg, $DbgMsg);
         prnMsg(_('This customer data has been added to the database'), 'success');
 		unset($debtorsmasterResult);
     }
@@ -84,7 +84,7 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Deb
 							AND custitem.debtorno='" . $DebtorNo . "'";
         $ErrMsg = _('The customer details could not be updated because');
         $DbgMsg = _('The SQL that failed was');
-        $UpdResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
+        $UpdResult = DB_query($sql, $ErrMsg, $DbgMsg);
         prnMsg(_('customer data has been updated'), 'success');
         unset($Edit);
 		unset($debtorsmasterResult);
@@ -107,7 +107,7 @@ if (isset($_GET['Delete'])) {
 	   				WHERE custitem.debtorno='" . $DebtorNo . "'
 	   				AND custitem.stockid='" . $StockID . "'";
     $ErrMsg = _('The customer details could not be deleted because');
-    $DelResult = DB_query($sql, $db, $ErrMsg);
+    $DelResult = DB_query($sql, $ErrMsg);
     prnMsg(_('This customer data record has been successfully deleted'), 'success');
     unset($DebtorNo);
 }
@@ -115,7 +115,7 @@ if (isset($_GET['Delete'])) {
 
 if ($Edit == false) {
 
-	$ItemResult = DB_query("SELECT description FROM stockmaster WHERE stockid='" . $StockID . "'",$db);
+	$ItemResult = DB_query("SELECT description FROM stockmaster WHERE stockid='" . $StockID . "'");
 	$DescriptionRow = DB_fetch_array($ItemResult);
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . ' ' . _('For Stock Code') . ' - ' . $StockID . ' - ' . $DescriptionRow['description'] . '</p><br />';
 	
@@ -133,7 +133,7 @@ if ($Edit == false) {
 				ON debtorsmaster.currcode=currencies.currabrev
 			WHERE custitem.stockid = '" . $StockID . "'";
     $ErrMsg = _('The customer details for the selected part could not be retrieved because');
-    $custitemResult = DB_query($sql, $db, $ErrMsg);
+    $custitemResult = DB_query($sql, $ErrMsg);
     if (DB_num_rows($custitemResult) == 0 and $StockID != '') {
 		prnMsg(_('There is no customer data set up for the part selected'), 'info');
 		$NoCustItemData=1;
@@ -195,7 +195,7 @@ if (isset($DebtorNo) AND $DebtorNo != '' AND !isset($_POST['Searchcustomer'])) {
 			WHERE DebtorNo='".$DebtorNo."'";
     $ErrMsg = _('The customer details for the selected customer could not be retrieved because');
     $DbgMsg = _('The SQL that failed was');
-    $SuppSelResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
+    $SuppSelResult = DB_query($sql, $ErrMsg, $DbgMsg);
     if (DB_num_rows($SuppSelResult) == 1) {
         $myrow = DB_fetch_array($SuppSelResult);
         $name = $myrow['name'];
@@ -233,7 +233,7 @@ if (isset($DebtorNo) AND $DebtorNo != '' AND !isset($_POST['Searchcustomer'])) {
 }
 
 if ($Edit == true) {
-	$ItemResult = DB_query("SELECT description FROM stockmaster WHERE stockid='" . $StockID . "'",$db);
+	$ItemResult = DB_query("SELECT description FROM stockmaster WHERE stockid='" . $StockID . "'");
 	$DescriptionRow = DB_fetch_array($ItemResult);
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . ' ' . _('For Stock Code') . ' - ' . $StockID . ' - ' . $DescriptionRow['description'] . '</p><br />';
 }
@@ -272,7 +272,7 @@ if (isset($_POST['Searchcustomer'])) {
     } //one of keywords or cust_part was more than a zero length string
     $ErrMsg = _('The cuswtomer matching the criteria entered could not be retrieved because');
     $DbgMsg = _('The SQL to retrieve customer details that failed was');
-    $debtorsmasterResult = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
+    $debtorsmasterResult = DB_query($SQL, $ErrMsg, $DbgMsg);
 } //end of if search
 if (isset($debtorsmasterResult) AND DB_num_rows($debtorsmasterResult) > 0) {
 	if (isset($StockID)) {
@@ -359,7 +359,7 @@ if (!isset($debtorsmasterResult)) {
 				AND custitem.stockid='" . $StockID . "'";
 		
 		$ErrMsg = _('The customer purchasing details for the selected customer and item could not be retrieved because');
-		$EditResult = DB_query($sql, $db, $ErrMsg);
+		$EditResult = DB_query($sql, $ErrMsg);
 		$myrow = DB_fetch_array($EditResult);
 		$name = $myrow['name'];
 				

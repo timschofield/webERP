@@ -18,7 +18,7 @@ function GetPrice ($StockID, $DebtorNo, $BranchCode, $OrderLineQty=1, $ReportZer
 			AND prices.enddate >='" . Date('Y-m-d') . "'";
 
 	$ErrMsg =  _('There is a problem in retrieving the pricing information for part') . ' ' . $StockID  . ' ' . _('and for Customer') . ' ' . $DebtorNo .  ' ' . _('the error message returned by the SQL server was');
-	$result = DB_query($sql, $db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 
 	if (DB_num_rows($result)==0){
 		/*Need to try same specific search but for a default price with a zero end date */
@@ -36,7 +36,7 @@ function GetPrice ($StockID, $DebtorNo, $BranchCode, $OrderLineQty=1, $ReportZer
 				AND prices.enddate ='0000-00-00'
 				ORDER BY prices.startdate DESC";
 
-		$result = DB_query($sql, $db,$ErrMsg);
+		$result = DB_query($sql,$ErrMsg);
 
 		if (DB_num_rows($result)==0){
 
@@ -53,7 +53,7 @@ function GetPrice ($StockID, $DebtorNo, $BranchCode, $OrderLineQty=1, $ReportZer
 					AND prices.startdate <='" . Date('Y-m-d') . "'
 					AND prices.enddate >='" . Date('Y-m-d') . "'";
 
-			$result = DB_query($sql,$db,$ErrMsg);
+			$result = DB_query($sql,$ErrMsg);
 			if (DB_num_rows($result)==0){
 				//if no specific price between the dates maybe there is a default price with no end date specified
 				$sql = "SELECT prices.price,
@@ -70,7 +70,7 @@ function GetPrice ($StockID, $DebtorNo, $BranchCode, $OrderLineQty=1, $ReportZer
 						AND prices.enddate >='0000-00-00'
 						ORDER BY prices.startdate DESC";
 
-				$result = DB_query($sql,$db,$ErrMsg);
+				$result = DB_query($sql,$ErrMsg);
 
 				if (DB_num_rows($result)==0){
 
@@ -86,7 +86,7 @@ function GetPrice ($StockID, $DebtorNo, $BranchCode, $OrderLineQty=1, $ReportZer
 							AND prices.startdate <='" . Date('Y-m-d') . "'
 							AND prices.enddate >='" . Date('Y-m-d') . "'";
 
-					$result = DB_query($sql,$db,$ErrMsg);
+					$result = DB_query($sql,$ErrMsg);
 
 					if (DB_num_rows($result)==0){
 						/*No special customer specific pricing use the customers normal price list but look for default price with 0000-00-00 end date*/
@@ -103,7 +103,7 @@ function GetPrice ($StockID, $DebtorNo, $BranchCode, $OrderLineQty=1, $ReportZer
 								AND prices.enddate ='0000-00-00'
 								ORDER BY prices.startdate DESC";
 
-						$result = DB_query($sql,$db,$ErrMsg);
+						$result = DB_query($sql,$ErrMsg);
 
 						if (DB_num_rows($result)==0){
 
@@ -119,7 +119,7 @@ function GetPrice ($StockID, $DebtorNo, $BranchCode, $OrderLineQty=1, $ReportZer
 									AND prices.startdate <='" . Date('Y-m-d') . "'
 									AND prices.enddate >='" . Date('Y-m-d') . "'";;
 
-							$result = DB_query($sql, $db,$ErrMsg);
+							$result = DB_query($sql,$ErrMsg);
 
 							if (DB_num_rows($result)==0){
 
@@ -137,7 +137,7 @@ function GetPrice ($StockID, $DebtorNo, $BranchCode, $OrderLineQty=1, $ReportZer
 										AND prices.enddate ='0000-00-00'
 										ORDER BY prices.startdate DESC";
 
-								$result = DB_query($sql, $db,$ErrMsg);
+								$result = DB_query($sql,$ErrMsg);
 
 								if (DB_num_rows($result)==0){
 									/* Now check the price matrix */
@@ -150,7 +150,7 @@ function GetPrice ($StockID, $DebtorNo, $BranchCode, $OrderLineQty=1, $ReportZer
 												AND pricematrix.startdate <= '" . Date('Y-m-d') . "' 
 												AND pricematrix.enddate >='" . Date('Y-m-d') . "'";
 									$ErrMsg = _('There is an error to retrieve price from price matrix for stock') . ' ' . $StockID . ' ' . _('and the error message returned by SQL server is ');
-									$result = DB_query($sql,$db,$ErrMsg);
+									$result = DB_query($sql,$ErrMsg);
 									$MaxPriceRow = DB_fetch_row($result);
 								}
 								if ($MaxPriceRow[0]==NULL){	

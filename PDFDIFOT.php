@@ -50,7 +50,7 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 				<td>';
 
 	 $sql = "SELECT categorydescription, categoryid FROM stockcategory WHERE stocktype<>'D' AND stocktype<>'L'";
-	 $result = DB_query($sql,$db);
+	 $result = DB_query($sql);
 
 
 	 echo '<select name="CategoryID">';
@@ -67,7 +67,7 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 			<td><select name="Location">
 				<option selected="selected" value="All">' . _('All Locations') . '</option>';
 
-	$result= DB_query("SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1",$db);
+	$result= DB_query("SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1");
 	while ($myrow=DB_fetch_array($result)){
 		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 	}
@@ -184,7 +184,7 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 
 }
 
-$Result=DB_query($sql,$db,'','',false,false); //dont error check - see below
+$Result=DB_query($sql,'','',false,false); //dont error check - see below
 
 if (DB_error_no($db)!=0){
 	$Title = _('DIFOT Report Error');
@@ -294,7 +294,7 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 
 }
 $ErrMsg = _('Could not retrieve the count of sales order lines in the period under review');
-$result = DB_query($sql,$db,$ErrMsg);
+$result = DB_query($sql,$ErrMsg);
 
 
 $myrow=DB_fetch_row($result);

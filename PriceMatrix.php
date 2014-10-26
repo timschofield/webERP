@@ -63,7 +63,7 @@ if (isset($_POST['submit'])) {
 		        AND salestype='".$_POST['TypeAbbrev']."'
 			AND currabrev='".$_POST['currabrev']."'
 			AND quantitybreak='".$_POST['quantitybreak']."'";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]!=0 AND !isset($_POST['OldTypeAbbrev']) AND !isset($_POST['OldCurrAbrev'])){
 		prnMsg(_('This price has already been entered. To change it you should edit it'),'warn');
@@ -88,7 +88,7 @@ if (isset($_POST['submit'])) {
 				AND quantitybreak='" . filter_number_format($_POST['OldQuantityBreak']) . "'";
 
 		$ErrMsg = _('Could not be update the existing prices');
-		$result = DB_query($sql,$db,$ErrMsg);
+		$result = DB_query($sql,$ErrMsg);
 
 		ReSequenceEffectiveDates ($StockID, $_POST['SalesType'],$_POST['CurrAbrev'],$_POST['QuantityBreak'],$db);
 
@@ -113,7 +113,7 @@ if (isset($_POST['submit'])) {
 						'" . $SQLStartDate . "',
 						'" . $SQLEndDate . "')";
 		$ErrMsg = _('Failed to insert price data');
-		$result = DB_query($sql,$db,$ErrMsg);
+		$result = DB_query($sql,$ErrMsg);
 		prnMsg( _('The price matrix record has been added'),'success');
 		echo '<br />';
 		unset($_POST['StockID']);
@@ -137,7 +137,7 @@ if (isset($_POST['submit'])) {
 		AND startdate='" . $_GET['StartDate'] . "'
 		AND enddate='" . $_GET['EndDate'] . "'";
 	$ErrMsg = _('Failed to delete price data');
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 	prnMsg( _('The price matrix record has been deleted'),'success');
 	echo '<br />';
 }
@@ -160,7 +160,7 @@ if (isset($_GET['Edit'])){
        	$_POST['QuantityBreak'] = $_GET['QuantityBreak'];
 }	
 $SQL = "SELECT currabrev FROM currencies";
-$result = DB_query($SQL,$db);
+$result = DB_query($SQL);
 require_once('includes/CurrenciesArray.php');
 echo '<table class="selection">';
 echo '<tr><td>' . _('Currency') . ':</td>
@@ -179,7 +179,7 @@ $sql = "SELECT typeabbrev,
 		sales_type
 		FROM salestypes";
 
-$result = DB_query($sql, $db);
+$result = DB_query($sql);
 
 echo '<tr><td>' . _('Customer Price List') . ' (' . _('Sales Type') . '):</td><td>';
 
@@ -251,7 +251,7 @@ $sql = "SELECT sales_type,
 			stockid,
 			quantitybreak";
 
-$result = DB_query($sql,$db);
+$result = DB_query($sql);
 
 echo '<table class="selection">';
 echo '<tr>
@@ -350,7 +350,7 @@ function ReSequenceEffectiveDates ($Item, $PriceList, $CurrAbbrev, $QuantityBrea
 				AND salestype='" . $PriceList . "'
 				AND quantitybreak='".$QuantityBreak."'
 				ORDER BY startdate, enddate";
-		$result = DB_query($SQL,$db);
+		$result = DB_query($SQL);
 
 		while ($myrow = DB_fetch_array($result)){
 			if (isset($NextStartDate)){
@@ -366,7 +366,7 @@ function ReSequenceEffectiveDates ($Item, $PriceList, $CurrAbbrev, $QuantityBrea
 										AND startdate ='" . $StartDate . "'
 										AND enddate = '" . $EndDate . "'
 										AND quantitybreak ='" . $QuantityBreak . "'";
-						$UpdateResult = DB_query($SQL,$db);
+						$UpdateResult = DB_query($SQL);
 					}
 				} //end of if startdate  after NextStartDate - we have a new NextStartDate
 			} //end of if set NextStartDate

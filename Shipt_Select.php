@@ -99,7 +99,7 @@ if (isset($_POST['SearchParts'])) {
 						stockmaster.units";
 
 	$ErrMsg = _('No Stock Items were returned from the database because'). ' - '. DB_error_msg($db);
-	$StockItemsResult = DB_query($SQL,$db, $ErrMsg);
+	$StockItemsResult = DB_query($SQL, $ErrMsg);
 
 }
 
@@ -108,7 +108,7 @@ if (!isset($ShiptRef) or $ShiptRef==""){
 	echo _('Shipment Number'). ': <input type="text" name="ShiptRef" maxlength="10" size="10" /> '.
 		_('Into Stock Location').' :<select name="StockLocation"> ';
 	$sql = "SELECT loccode, locationname FROM locations";
-	$resultStkLocs = DB_query($sql,$db);
+	$resultStkLocs = DB_query($sql);
 	while ($myrow=DB_fetch_array($resultStkLocs)){
 		if (isset($_POST['StockLocation'])){
 			if ($myrow['loccode'] == $_POST['StockLocation']){
@@ -148,7 +148,7 @@ $SQL="SELECT categoryid,
 	FROM stockcategory
 	WHERE stocktype<>'D'
 	ORDER BY categorydescription";
-$result1 = DB_query($SQL,$db);
+$result1 = DB_query($SQL);
 
 echo '<table class="selection">';
 echo '<tr>
@@ -282,7 +282,7 @@ Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand 
 	} //end not order number selected
 
 	$ErrMsg = _('No shipments were returned by the SQL because');
-	$ShipmentsResult = DB_query($SQL,$db,$ErrMsg);
+	$ShipmentsResult = DB_query($SQL,$ErrMsg);
 
 
 	if (DB_num_rows($ShipmentsResult)>0){

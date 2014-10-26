@@ -40,7 +40,7 @@ if (isset($_POST['PrintPDF'])) {
 	// from location
 	$ErrMsg = _('Could not retrieve location name from the database');
 	$sqlfrom="SELECT locationname FROM `locations` WHERE loccode='" . $_POST['FromLocation'] . "'";
-	$result = DB_query($sqlfrom,$db,$ErrMsg);
+	$result = DB_query($sqlfrom,$ErrMsg);
 	$Row = DB_fetch_row($result);
 	$FromLocation=$Row['0'];
 
@@ -50,7 +50,7 @@ if (isset($_POST['PrintPDF'])) {
 					cashsalebranch
 			FROM `locations` 
 			WHERE loccode='" . $_POST['ToLocation'] . "'";
-	$resultto = DB_query($sqlto,$db,$ErrMsg);
+	$resultto = DB_query($sqlto,$ErrMsg);
 	$RowTo = DB_fetch_row($resultto);
 	$ToLocation=$RowTo['0'];
 	$ToCustomer=$RowTo['1'];
@@ -63,7 +63,7 @@ if (isset($_POST['PrintPDF'])) {
 				FROM debtorsmaster, currencies
 				WHERE debtorsmaster.currcode = currencies.currabrev 
 					AND debtorsmaster.debtorno ='" . $ToCustomer . "'";
-		$ResultPrices = DB_query($SqlPrices,$db,$ErrMsg);
+		$ResultPrices = DB_query($SqlPrices,$ErrMsg);
 		$RowPrices = DB_fetch_row($ResultPrices);
 		$ToCurrency=$RowPrices['0'];
 		$ToPriceList=$RowPrices['1'];
@@ -74,7 +74,7 @@ if (isset($_POST['PrintPDF'])) {
 	// more than one category
 	if ($_POST['StockCat'] != 'All') {
 		$CategorySQL="SELECT categorydescription FROM stockcategory WHERE categoryid='".$_POST['StockCat']."'";
-		$CategoryResult=DB_query($CategorySQL, $db);
+		$CategoryResult=DB_query($CategorySQL);
 		$CategoryRow=DB_fetch_array($CategoryResult);
 		$CategoryDescription=$CategoryRow['categorydescription'];
 		$WhereCategory = " AND stockmaster.categoryid ='" . $_POST['StockCat'] . "' ";
@@ -118,7 +118,7 @@ if (isset($_POST['PrintPDF'])) {
 			AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M') " .
 			$WhereCategory . " ORDER BY locstock.loccode,locstock.stockid";
 
-	$result = DB_query($sql,$db,'','',false,true);
+	$result = DB_query($sql,'','',false,true);
 
 	if (DB_error_no($db) !=0) {
 		$Title = _('Stock Dispatch - Problem Report');
@@ -157,7 +157,7 @@ if (isset($_POST['PrintPDF'])) {
 							WHERE stockid='" . $myrow['stockid'] . "'
 								AND shiploc='".$_POST['FromLocation']."'
 								AND shipqty>recqty";
-			$InTransitResult=DB_query($InTransitSQL, $db);
+			$InTransitResult=DB_query($InTransitSQL);
 			$InTransitRow=DB_fetch_array($InTransitResult);
 			$InTransitQuantityAtFrom=$InTransitRow['intransit'];
 		}
@@ -171,7 +171,7 @@ if (isset($_POST['PrintPDF'])) {
 						WHERE stockid='" . $myrow['stockid'] . "'
 							AND recloc='".$_POST['ToLocation']."'
 							AND shipqty>recqty";
-		$InTransitResult=DB_query($InTransitSQL, $db);
+		$InTransitResult=DB_query($InTransitSQL);
 		$InTransitRow=DB_fetch_array($InTransitResult);
 		$InTransitQuantityAtTo=$InTransitRow['intransit'];
 
@@ -266,7 +266,7 @@ if (isset($_POST['PrintPDF'])) {
 												'" . $_POST['ToLocation'] . "')";
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('Unable to enter Location Transfer record for'). ' '.$myrow['stockid'];
 			if ($_POST['ReportType'] == 'Batch') {
-				$resultLocShip = DB_query($sql2,$db, $ErrMsg);
+				$resultLocShip = DB_query($sql2, $ErrMsg);
 			}
 		}
 	} /*end while loop  */
@@ -323,7 +323,7 @@ if (isset($_POST['PrintPDF'])) {
 										. _('Use Bulk Inventory Transfer - Receive to process the batch') . '</div>';
 
 	$sql = "SELECT defaultlocation FROM www_users WHERE userid='".$_SESSION['UserID']."'";
-	$result = DB_query($sql, $db);
+	$result = DB_query($sql);
 	$myrow = DB_fetch_array($result);
 	$DefaultLocation = $myrow['defaultlocation'];
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
@@ -334,7 +334,7 @@ if (isset($_POST['PrintPDF'])) {
 			locationname
 		FROM locations 
 		INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1";
-	$resultStkLocs = DB_query($sql,$db);
+	$resultStkLocs = DB_query($sql);
 	if (!isset($_POST['FromLocation'])) {
 		$_POST['FromLocation']=$DefaultLocation;
 	}
@@ -373,7 +373,7 @@ if (isset($_POST['PrintPDF'])) {
 		</tr>';
 
 	$SQL="SELECT categoryid, categorydescription FROM stockcategory ORDER BY categorydescription";
-	$result1 = DB_query($SQL,$db);
+	$result1 = DB_query($SQL);
 	if (DB_num_rows($result1)==0){
 		echo '</table>';
 		prnMsg(_('There are no stock categories currently defined please use the link below to set them up'),'warn');

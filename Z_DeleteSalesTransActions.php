@@ -14,7 +14,7 @@ if (isset($_POST['ProcessDeletions'])){
 
 		$sql = "TRUNCATE TABLE salesanalysis";
 		$ErrMsg = _('The SQL to delete Sales Analysis records failed because');
-		$Result = DB_query($sql,$db,$ErrMsg);
+		$Result = DB_query($sql,$ErrMsg);
 	}
 	if ($_POST['DebtorTrans']=='on'){
 
@@ -22,12 +22,12 @@ if (isset($_POST['ProcessDeletions'])){
 
 		$ErrMsg = _('The SQL to delete customer transaction records failed because');
 
-		$Result = DB_query("TRUNCATE TABLE custallocns",$db,$ErrMsg);
-		$Result = DB_query("DELETE FROM debtortranstaxes",$db,$ErrMsg);
-		$Result = DB_query("DELETE FROM debtortrans",$db,$ErrMsg);
-		$Result = DB_query("DELETE FROM stockserialmoves",$db,$ErrMsg);
-		$Result = DB_query("DELETE FROM stockmovestaxes" ,$db,$ErrMsg);
-		$Result = DB_query("DELETE FROM stockmoves WHERE type=10 OR type=11",$db,$ErrMsg);
+		$Result = DB_query("TRUNCATE TABLE custallocns",$ErrMsg);
+		$Result = DB_query("DELETE FROM debtortranstaxes",$ErrMsg);
+		$Result = DB_query("DELETE FROM debtortrans",$ErrMsg);
+		$Result = DB_query("DELETE FROM stockserialmoves",$ErrMsg);
+		$Result = DB_query("DELETE FROM stockmovestaxes" ,$ErrMsg);
+		$Result = DB_query("DELETE FROM stockmoves WHERE type=10 OR type=11",$ErrMsg);
 
 		$ErrMsg = _('The SQL to update the transaction numbers for all sales transactions because');
 		$sql = "UPDATE systypes SET typeno =0
@@ -35,7 +35,7 @@ if (isset($_POST['ProcessDeletions'])){
 						OR typeid=11
 						OR typeid=15
 						OR typeid=12";
-		$Result = DB_query($sql,$db,$ErrMsg);
+		$Result = DB_query($sql,$ErrMsg);
 
 	}
 	if ($_POST['SalesOrders']=='on'){
@@ -43,28 +43,28 @@ if (isset($_POST['ProcessDeletions'])){
 		prnMsg(_('Deleting all sales order records'),'info');
 
 		$ErrMsg = _('The SQL to delete sales order detail records failed because');
-		$Result = DB_query('DELETE FROM salesorderdetails',$db);
+		$Result = DB_query('DELETE FROM salesorderdetails');
 
-		$Result = DB_query('DELETE FROM orderdeliverydifferenceslog',$db);
+		$Result = DB_query('DELETE FROM orderdeliverydifferenceslog');
 
 		$ErrMsg = _('The SQL to delete sales order header records failed because');
-		$Result = DB_query('DELETE FROM salesorders',$db,$ErrMsg);
+		$Result = DB_query('DELETE FROM salesorders',$ErrMsg);
 
 
 		$sql = 'UPDATE systypes SET typeno =0 WHERE typeid =30';
 		$ErrMsg = _('The SQL to update the transaction number of sales orders has failed') . ', ' . _('the SQL statement was');
-		$Result = DB_query($sql,$db,$ErrMsg);
+		$Result = DB_query($sql,$ErrMsg);
 
 	}
 	if ($_POST['ZeroStock']=='on'){
 
 		prnMsg (_('Making stock for all parts and locations nil'),'info');
 		$ErrMsg = _('The SQL to make all stocks zero failed because');
-		$result = DB_query("TRUNCATE TABLE stockserialmoves",$db,$ErrMsg);
-		$result = DB_query("TRUNCATE TABLE stockserialitems",$db,$ErrMsg);
-		$result = DB_query("TRUNCATE TABLE stockmovestaxes",$db,$ErrMsg);
-		$result = DB_query("DELETE FROM stockmoves",$db,$ErrMsg);
-		$result = DB_query("UPDATE locstock SET quantity=0",$db,$ErrMsg);
+		$result = DB_query("TRUNCATE TABLE stockserialmoves",$ErrMsg);
+		$result = DB_query("TRUNCATE TABLE stockserialitems",$ErrMsg);
+		$result = DB_query("TRUNCATE TABLE stockmovestaxes",$ErrMsg);
+		$result = DB_query("DELETE FROM stockmoves",$ErrMsg);
+		$result = DB_query("UPDATE locstock SET quantity=0",$ErrMsg);
 
 	}
 	if ($_POST['ZeroSalesOrders']=='on'){
@@ -73,7 +73,7 @@ if (isset($_POST['ProcessDeletions'])){
 
 		$sql = "UPDATE salesorderdetails SET qtyinvoiced=0, completed=0";
 		$ErrMsg =_('The SQL to un-invoice all sales orders failed');
-		$Result = DB_query($sql,$db,$ErrMsg);
+		$Result = DB_query($sql,$ErrMsg);
 
 	}
 	if ($_POST['SalesGL']=='on'){
@@ -81,7 +81,7 @@ if (isset($_POST['ProcessDeletions'])){
 		prnMsg(_('Deleting all sales related GL Transactions'),'info');
 		$sql = "DELETE FROM gltrans WHERE type>=10 AND type <=15";
 		$ErrMsg = _('The SQL to delete sales related GL Transactions failed');
-		$Result = DB_query($sql,$db,$ErrMsg);
+		$Result = DB_query($sql,$ErrMsg);
 	}
 
 	if ($_POST['StockGL']=='on'){
@@ -90,7 +90,7 @@ if (isset($_POST['ProcessDeletions'])){
 
 		$sql = "DELETE FROM gltrans WHERE type=25 OR type=17 OR type=26 OR type=28";
 		$ErrMsg = _('The SQL to delete stock related GL Transactions failed');
-		$Result = DB_query($sql,$db,$ErrMsg);
+		$Result = DB_query($sql,$ErrMsg);
 
 	}
 	if ($_POST['ZeroPurchOrders']=='on'){
@@ -99,7 +99,7 @@ if (isset($_POST['ProcessDeletions'])){
 
 		$sql = 'UPDATE purchorderdetails SET quantityrecd=0, completed=0';
 		$ErrMsg = _('The SQL to zero quantity received for all purchase orders line items and uncompleted all purchase order line items because');
-		$Result = DB_query($sql,$db,$ErrMsg);
+		$Result = DB_query($sql,$ErrMsg);
 
 	}
 	if ($_POST['GRNs']=='on'){
@@ -107,23 +107,23 @@ if (isset($_POST['ProcessDeletions'])){
 		prnMsg(_('Deleting all GRN records'),'info');
 
 		$ErrMsg = _('The SQL to delete Sales Analysis records failed because');
-		$Result = DB_query("DELETE FROM grns",$db,$ErrMsg);
+		$Result = DB_query("DELETE FROM grns",$ErrMsg);
 
 		$ErrMsg = _('The SQL to update the transaction number of stock receipts has failed because');
-		$Result = DB_query("UPDATE systypes SET typeid =1 WHERE typeno =25",$db,$ErrMsg);
+		$Result = DB_query("UPDATE systypes SET typeid =1 WHERE typeno =25",$ErrMsg);
 	}
 	if ($_POST['PurchOrders']=='on'){
 
 		prnMsg(_('Deleting all Purchase Orders'),'info');
 
 		$ErrMsg = _('The SQL to delete all purchase order details failed, the SQL statement was');
-		$Result = DB_query("DELETE FROM purchorderdetails",$db,$ErrMsg);
+		$Result = DB_query("DELETE FROM purchorderdetails",$ErrMsg);
 
 		$ErrMsg = _('The SQL to delete all purchase orders failed because');
-		$Result = DB_query("DELETE FROM purchorders",$db,$ErrMsg);
+		$Result = DB_query("DELETE FROM purchorders",$ErrMsg);
 
 		$ErrMsg = _('The SQL to update the transaction number of stock receipts has failed because');
-		$Result = DB_query("UPDATE systypes SET typeno=0 WHERE typeid =18",$db,$ErrMsg);
+		$Result = DB_query("UPDATE systypes SET typeno=0 WHERE typeid =18",$ErrMsg);
 
 	}
 

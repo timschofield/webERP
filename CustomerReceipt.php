@@ -64,7 +64,7 @@ if (!isset($_GET['Delete']) AND isset($_SESSION['ReceiptBatch'])){
 			WHERE accountcode='" . $_POST['BankAccount']."'";
 
 	$ErrMsg =_('The bank account name cannot be retrieved because');
-	$result= DB_query($SQL,$db,$ErrMsg);
+	$result= DB_query($SQL,$ErrMsg);
 
 	if (DB_num_rows($result)==1){
 		$myrow = DB_fetch_array($result);
@@ -128,7 +128,7 @@ if (!isset($_GET['Delete']) AND isset($_SESSION['ReceiptBatch'])){
 		*/
 
 		/*Get suggested FunctionalExRate between the bank account currency and the home (functional) currency */
-		$result = DB_query("SELECT rate, decimalplaces FROM currencies WHERE currabrev='" . $_SESSION['ReceiptBatch']->AccountCurrency . "'",$db);
+		$result = DB_query("SELECT rate, decimalplaces FROM currencies WHERE currabrev='" . $_SESSION['ReceiptBatch']->AccountCurrency . "'");
 		$myrow = DB_fetch_array($result);
 		$SuggestedFunctionalExRate = $myrow['rate'];
 		$_SESSION['ReceiptBatch']->CurrDecimalPlaces = $myrow['decimalplaces'];
@@ -140,7 +140,7 @@ if (!isset($_GET['Delete']) AND isset($_SESSION['ReceiptBatch'])){
 		$SuggestedExRate=1;
 	} elseif(isset($_POST['Currency'])) {
 		/*Get the exchange rate between the functional currency and the receipt currency*/
-		$result = DB_query("SELECT rate FROM currencies WHERE currabrev='" . $_SESSION['ReceiptBatch']->Currency . "'",$db);
+		$result = DB_query("SELECT rate FROM currencies WHERE currabrev='" . $_SESSION['ReceiptBatch']->Currency . "'");
 		$myrow = DB_fetch_array($result);
 		$TableExRate = $myrow['rate']; //this is the rate of exchange between the functional currency and the receipt currency
 		/*Calculate cross rate to suggest appropriate exchange rate between receipt currency and account currency */
@@ -245,7 +245,7 @@ if (isset($_POST['CommitBatch'])){
 
 	/*Make an array of the defined bank accounts */
 	$SQL = "SELECT accountcode FROM bankaccounts";
-	$result = DB_query($SQL,$db);
+	$result = DB_query($SQL);
 	$BankAccounts = array();
 	$i=0;
 	while ($Act = DB_fetch_row($result)){
@@ -288,7 +288,7 @@ if (isset($_POST['CommitBatch'])){
 		}
 
 		$SQL = "SELECT accountname FROM chartmaster WHERE accountcode='" . $ReceiptItem->GLCode . "'";
-		$Result=DB_query($SQL,$db);
+		$Result=DB_query($SQL);
 		$myrow=DB_fetch_array($Result);
 
 		echo '<td>' . $_SESSION['ReceiptBatch']->BatchNo . '</td>
@@ -324,7 +324,7 @@ if (isset($_POST['CommitBatch'])){
 					)";
 				$ErrMsg = _('Cannot insert a GL entry for the receipt because');
 				$DbgMsg = _('The SQL that failed to insert the receipt GL entry was');
-				$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 			}
 
 			/*check to see if this is a GL posting to another bank account (or the same one)
@@ -339,7 +339,7 @@ if (isset($_POST['CommitBatch'])){
 							FROM bankaccounts INNER JOIN currencies
 							ON bankaccounts.currcode = currencies.currabrev
 							WHERE accountcode='" . $ReceiptItem->GLCode."'";
-				$TrfFromAccountResult = DB_query($SQL,$db);
+				$TrfFromAccountResult = DB_query($SQL);
 				$TrfFromBankRow = DB_fetch_array($TrfFromAccountResult) ;
 				$TrfFromBankCurrCode = $TrfFromBankRow['currcode'];
 				$TrfFromBankExRate = $TrfFromBankRow['rate'];
@@ -403,7 +403,7 @@ if (isset($_POST['CommitBatch'])){
 
 				$DbgMsg = _('The SQL that failed to insert the bank transaction was');
 				$ErrMsg = _('Cannot insert a bank transaction using the SQL');
-				$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 			} //end if an item is a transfer between bank accounts
 
 		} else { //its not a GL item - its a customer receipt then
@@ -447,7 +447,7 @@ if (isset($_POST['CommitBatch'])){
 					)";
 			$DbgMsg = _('The SQL that failed to insert the customer receipt transaction was');
 			$ErrMsg = _('Cannot insert a receipt transaction against the customer because') ;
-			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 			$SQL = "UPDATE debtorsmaster
 						SET lastpaiddate = '" . FormatDateForSQL($_SESSION['ReceiptBatch']->DateBanked) . "',
@@ -456,7 +456,7 @@ if (isset($_POST['CommitBatch'])){
 
 			$DbgMsg = _('The SQL that failed to update the date of the last payment received was');
 			$ErrMsg = _('Cannot update the customer record for the date of the last payment received because');
-			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 		} //end of if its a customer receipt
 		$BatchDiscount += ($ReceiptItem->Discount/$_SESSION['ReceiptBatch']->ExRate/$_SESSION['ReceiptBatch']->FunctionalExRate);
@@ -491,7 +491,7 @@ if (isset($_POST['CommitBatch'])){
 		)";
 	$DbgMsg = _('The SQL that failed to insert the bank account transaction was');
 	$ErrMsg = _('Cannot insert a bank transaction');
-	$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 
 	if ($_SESSION['CompanyRecord']['gllink_debtors']==1){ /* then enter GLTrans records for discount, bank and debtors */
@@ -516,7 +516,7 @@ if (isset($_POST['CommitBatch'])){
 				)";
 			$DbgMsg = _('The SQL that failed to insert the GL transaction fro the bank account debit was');
 			$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
-			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 
 		}
@@ -540,7 +540,7 @@ if (isset($_POST['CommitBatch'])){
 							)";
 			$DbgMsg = _('The SQL that failed to insert the GL transaction for the debtors account credit was');
 			$ErrMsg = _('Cannot insert a GL transaction for the debtors account credit');
-			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 		} //end if there are some customer deposits in this batch
 
@@ -564,7 +564,7 @@ if (isset($_POST['CommitBatch'])){
 							)";
 			$DbgMsg = _('The SQL that failed to insert the GL transaction for the payment discount debit was');
 			$ErrMsg = _('Cannot insert a GL transaction for the payment discount debit');
-			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 		} //end if there is some discount
 		EnsureGLEntriesBalance(12,$_SESSION['ReceiptBatch']->BatchNo,$db);
 	} //end if there is GL work to be done - ie config is to link to GL
@@ -634,7 +634,7 @@ if (isset($_POST['Search'])){
 							AND custbranch.salesperson='" . $_SESSION['SalesmanLogin'] . "')";
 		}
 
-		$CustomerSearchResult = DB_query($SQL,$db,'','',false,false);
+		$CustomerSearchResult = DB_query($SQL,'','',false,false);
 		if (DB_error_no($db) !=0) {
 			prnMsg(_('The searched customer records requested cannot be retrieved because') . ' - ' . DB_error_msg($db),'error');
 			if ($debug==1){
@@ -724,7 +724,7 @@ customer record returned by the search - this record is then auto selected */
 
 	$ErrMsg = _('The customer details could not be retrieved because');
 	$DbgMsg = _('The SQL that failed was');
-	$CustomerResult = DB_query($SQL,$db,$ErrMsg, $DbgMsg);
+	$CustomerResult = DB_query($SQL,$ErrMsg, $DbgMsg);
 
 	if (DB_num_rows($CustomerResult)==0){
 
@@ -752,7 +752,7 @@ customer record returned by the search - this record is then auto selected */
 
 		$ErrMsg = _('The customer details could not be retrieved because');
 		$DbgMsg = _('The SQL that failed was');
-		$CustomerResult = DB_query($SQL,$db,$ErrMsg, $DbgMsg);
+		$CustomerResult = DB_query($SQL,$ErrMsg, $DbgMsg);
 
 	} else {
 		$NIL_BALANCE = False;
@@ -790,7 +790,7 @@ $SQL = "SELECT bankaccountname,
 
 $ErrMsg = _('The bank accounts could not be retrieved because');
 $DbgMsg = _('The SQL used to retrieve the bank accounts was');
-$AccountsResults = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
+$AccountsResults = DB_query($SQL,$ErrMsg,$DbgMsg);
 
 if (isset($_POST['GLEntry'])) {
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('Bank Account Receipts Entry') . '" alt="" />' . ' ' . _('Bank Account Receipts Entry') . '</p>';
@@ -843,7 +843,7 @@ if (!isset($_SESSION['ReceiptBatch']->Currency)){
 }
 
 $SQL = "SELECT currency, currabrev, rate FROM currencies";
-$result=DB_query($SQL,$db);
+$result=DB_query($SQL);
 if (DB_num_rows($result)==0){
 	echo '</select></td></tr>';
 	prnMsg(_('No currencies are defined yet') . '. ' . _('Receipts cannot be entered until a currency is defined'),'warn');
@@ -976,7 +976,7 @@ if (isset($_SESSION['ReceiptBatch'])){
 	foreach ($_SESSION['ReceiptBatch']->Items as $ReceiptItem) {
 
 		$SQL = "SELECT accountname FROM chartmaster WHERE accountcode='" . $ReceiptItem->GLCode . "'";
-		$Result=DB_query($SQL,$db);
+		$Result=DB_query($SQL);
 		$myrow=DB_fetch_array($Result);
 
 		echo '<tr>
@@ -1077,7 +1077,7 @@ if (isset($_POST['GLEntry']) AND isset($_SESSION['ReceiptBatch'])){
 					FROM tags
 					ORDER BY tagref";
 
-	$result=DB_query($SQL,$db);
+	$result=DB_query($SQL);
 	echo '<option value="0"></option>';
 	while ($myrow=DB_fetch_array($result)){
 		if (isset($_POST['tag']) AND $_POST['tag']==$myrow['tagref']){
@@ -1096,7 +1096,7 @@ if (isset($_POST['GLEntry']) AND isset($_SESSION['ReceiptBatch'])){
 			<td><select tabindex="8" name="GLCode">';
 
 	$SQL = "SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode";
-	$result=DB_query($SQL,$db);
+	$result=DB_query($SQL);
 	if (DB_num_rows($result)==0){
 		echo '</select>' . _('No General ledger accounts have been set up yet') . ' - ' . _('receipts cannot be entered against GL accounts until the GL accounts are set up') . '</td>
 			</tr>';

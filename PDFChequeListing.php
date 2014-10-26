@@ -46,7 +46,7 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
 	 echo '<tr><td>' . _('Bank Account') . '</td><td>';
 
 	 $sql = "SELECT bankaccountname, accountcode FROM bankaccounts";
-	 $result = DB_query($sql,$db);
+	 $result = DB_query($sql);
 
 
 	 echo '<select name="BankAccount">';
@@ -84,7 +84,7 @@ $sql = "SELECT bankaccountname,
 		FROM bankaccounts INNER JOIN currencies
 		ON bankaccounts.currcode=currencies.currabrev
 		WHERE accountcode = '" .$_POST['BankAccount'] . "'";
-$BankActResult = DB_query($sql,$db);
+$BankActResult = DB_query($sql);
 $myrow = DB_fetch_array($BankActResult);
 $BankAccountName = $myrow['bankaccountname'];
 $BankCurrDecimalPlaces = $myrow['bankcurrdecimalplaces'];
@@ -101,7 +101,7 @@ $sql= "SELECT amount,
 		AND transdate >='" . FormatDateForSQL($_POST['FromDate']) . "'
 		AND transdate <='" . FormatDateForSQL($_POST['ToDate']) . "'";
 	
-$Result=DB_query($sql,$db,'','',false,false);
+$Result=DB_query($sql,'','',false,false);
 if (DB_error_no($db)!=0){
 	$Title = _('Payment Listing');
 	include('includes/header.inc');
@@ -144,7 +144,7 @@ while ($myrow=DB_fetch_array($Result)){
 			WHERE gltrans.typeno ='" . $myrow['transno'] . "'
 			AND gltrans.type='" . $myrow['type'] . "'";
 
-	$GLTransResult = DB_query($sql,$db,'','',false,false);
+	$GLTransResult = DB_query($sql,'','',false,false);
 	if (DB_error_no($db)!=0){
 		$Title = _('Payment Listing');
 		include('includes/header.inc');

@@ -111,7 +111,7 @@ if (isset($_POST['submit'])) {
 
 	if ( $InputError !=1) {
 		//run the SQL from either of the above possibilites
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 		prnMsg($msg,'success');
 
 		unset($_POST['SelectedExpense']);
@@ -126,7 +126,7 @@ if (isset($_POST['submit'])) {
 	$sql="DELETE FROM pcashdetails
 			WHERE counterindex='".$SelectedIndex."'";
 	$ErrMsg = _('Petty Cash Expense record could not be deleted because');
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 	prnMsg(_('Petty cash Expense record') .  ' ' . $SelectedTabs  . ' ' . _('has been deleted') ,'success');
 
 	unset($_GET['delete']);
@@ -153,7 +153,7 @@ if (!isset($SelectedTabs)){
 		FROM pctabs
 		WHERE usercode='" . $_SESSION['UserID'] . "'";
 
-	$result = DB_query($SQL,$db);
+	$result = DB_query($SQL);
 	echo '<option value="">' . _('Not Yet Selected') . '</option>';
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['SelectTabs']) and $myrow['tabcode']==$_POST['SelectTabs']) {
@@ -206,7 +206,7 @@ if (!isset($SelectedTabs)){
 					FROM currencies,pctabs
 					WHERE currencies.currabrev = pctabs.currency
 						AND tabcode='" . $SelectedTabs . "'";
-		$result = DB_query($SqlDecimalPlaces,$db);
+		$result = DB_query($SqlDecimalPlaces);
 		$myrow=DB_fetch_array($result);
 		$CurrDecimalPlaces = $myrow['decimalplaces'];
 
@@ -228,7 +228,7 @@ if (!isset($SelectedTabs)){
 					AND date >=DATE_SUB(CURDATE(), INTERVAL ".$Days." DAY)
 				ORDER BY date, counterindex ASC";
 
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 
 		echo '<tr>
 				<th>' . _('Date Of Expense') . '</th>
@@ -254,7 +254,7 @@ if (!isset($SelectedTabs)){
 						FROM pcexpenses
 						WHERE codeexpense='". $myrow['3'] . "'";
 
-			$ResultDes = DB_query($sqldes,$db);
+			$ResultDes = DB_query($sqldes);
 			$Description=DB_fetch_array($ResultDes);
 
 			if (!isset($Description['0'])){
@@ -308,7 +308,7 @@ if (!isset($SelectedTabs)){
 					FROM pcashdetails
 					WHERE tabcode='".$SelectedTabs."'";
 
-		$ResultAmount = DB_query($sqlAmount,$db);
+		$ResultAmount = DB_query($sqlAmount);
 		$Amount=DB_fetch_array($ResultAmount);
 
 		if (!isset($Amount['0'])) {
@@ -335,7 +335,7 @@ if (!isset($SelectedTabs)){
 				FROM pcashdetails
 				WHERE counterindex='".$SelectedIndex."'";
 
-			$result = DB_query($sql, $db);
+			$result = DB_query($sql);
 			$myrow = DB_fetch_array($result);
 
 			$_POST['Date'] = ConvertSQLDate($myrow['date']);
@@ -373,7 +373,7 @@ if (!isset($SelectedTabs)){
 				AND pctabs.tabcode = '".$SelectedTabs."'
 			ORDER BY pcexpenses.codeexpense ASC";
 
-		$result = DB_query($SQL,$db);
+		$result = DB_query($SQL);
 		echo '<option value="">' . _('Not Yet Selected') . '</option>';
 		while ($myrow = DB_fetch_array($result)) {
 			if (isset($_POST['SelectedExpense']) and $myrow['codeexpense']==$_POST['SelectedExpense']) {

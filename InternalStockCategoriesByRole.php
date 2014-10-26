@@ -64,7 +64,7 @@ if (isset($_POST['submit'])) {
 			     WHERE secroleid= '" .  $_POST['SelectedRole'] . "'
 				 AND categoryid = '" .  $_POST['SelectedCategory'] . "'";
 
-		$checkresult = DB_query($checkSql,$db);
+		$checkresult = DB_query($checkSql);
 		$checkrow = DB_fetch_row($checkresult);
 
 		if ( $checkrow[0] >0) {
@@ -80,14 +80,14 @@ if (isset($_POST['submit'])) {
 			$msg = _('Stock Category:') . ' ' . $_POST['SelectedCategory'].' '._('has been allowed to user role') .' '. $_POST['SelectedRole'] .  ' ' . _('as internal');
 			$checkSql = "SELECT count(secroleid)
 							FROM securityroles";
-			$result = DB_query($checkSql, $db);
+			$result = DB_query($checkSql);
 			$row = DB_fetch_row($result);
 		}
 	}
 
 	if ( $InputError !=1) {
 	//run the SQL from either of the above possibilites
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 		prnMsg($msg,'success');
 		unset($_POST['SelectedCategory']);
 	}
@@ -98,7 +98,7 @@ if (isset($_POST['submit'])) {
 		AND categoryid='".$SelectedType."'";
 
 	$ErrMsg = _('The Stock Category by Role record could not be deleted because');
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 	prnMsg(_('Internal Stock Category').' '. $SelectedType .' '. _('for user role').' '. $SelectedRole .' '. _('has been deleted') ,'success');
 	unset($_GET['delete']);
 }
@@ -116,7 +116,7 @@ if (!isset($SelectedRole)){
 					secrolename
 			FROM securityroles";
 
-	$result = DB_query($SQL,$db);
+	$result = DB_query($SQL);
 	echo '<option value="">' . _('Not Yet Selected') . '</option>';
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($SelectedRole) AND $myrow['secroleid']==$SelectedRole) {
@@ -158,7 +158,7 @@ if (isset($_POST['process'])OR isset($SelectedRole)) {
 			WHERE internalstockcatrole.secroleid='".$SelectedRole."'
 			ORDER BY internalstockcatrole.categoryid ASC";
 
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 
 	echo '<br />
 			<table class="selection">';
@@ -204,7 +204,7 @@ while ($myrow = DB_fetch_array($result)) {
 						categorydescription
 				FROM stockcategory";
 
-		$result = DB_query($SQL,$db);
+		$result = DB_query($SQL);
 		if (!isset($_POST['SelectedCategory'])){
 			echo '<option selected="selected" value="">' . _('Not Yet Selected') . '</option>';
 		}

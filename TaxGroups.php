@@ -81,7 +81,7 @@ if(isset($_POST['submit']) OR isset($_GET['remove']) OR isset($_GET['add']) ) {
 	}
 	// Need to exec the query
 	if(isset($sql) AND $InputError != 1 ) {
-		$result = DB_query($sql,$db,$ErrMsg);
+		$result = DB_query($sql,$ErrMsg);
 		if( $result ) {
 			prnMsg( $SuccessMsg,'success');
 		}
@@ -89,7 +89,7 @@ if(isset($_POST['submit']) OR isset($_GET['remove']) OR isset($_GET['add']) ) {
 } elseif(isset($_POST['UpdateOrder'])) {
 	//A calculation order update
 	$sql = "SELECT taxauthid FROM taxgrouptaxes WHERE taxgroupid='" . $SelectedGroup . "'";
-	$Result = DB_query($sql,$db,_('Could not get tax authorities in the selected tax group'));
+	$Result = DB_query($sql,_('Could not get tax authorities in the selected tax group'));
 
 	while($myrow=DB_fetch_row($Result)) {
 
@@ -101,7 +101,7 @@ if(isset($_POST['submit']) OR isset($_GET['remove']) OR isset($_GET['add']) ) {
 				WHERE taxgroupid='" . $SelectedGroup . "'
 				AND taxauthid='" . $myrow[0] . "'";
 
-			$result = DB_query($sql,$db);
+			$result = DB_query($sql);
 		}
 	}
 
@@ -112,7 +112,7 @@ if(isset($_POST['submit']) OR isset($_GET['remove']) OR isset($_GET['add']) ) {
 			WHERE taxgroupid='" . $SelectedGroup . "'
 			ORDER BY calculationorder";
 
-	$Result = DB_query($sql,$db,_('Could not get tax authorities in the selected tax group'));
+	$Result = DB_query($sql,_('Could not get tax authorities in the selected tax group'));
 
 	if(DB_num_rows($Result)>0) {
 		$myrow=DB_fetch_array($Result);
@@ -127,7 +127,7 @@ if(isset($_POST['submit']) OR isset($_GET['remove']) OR isset($_GET['add']) ) {
 } elseif(isset($_GET['Delete'])) {
 	/* PREVENT DELETES IF DEPENDENT RECORDS IN 'custbranch, suppliers */
 	$sql= "SELECT COUNT(*) FROM custbranch WHERE taxgroupid='" . $_GET['SelectedGroup'] . "'";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 	$myrow = DB_fetch_row($result);
 	if($myrow[0]>0) {
 		prnMsg( _('Cannot delete this tax group because some customer branches are setup using it'),'warn');
@@ -135,7 +135,7 @@ if(isset($_POST['submit']) OR isset($_GET['remove']) OR isset($_GET['add']) ) {
 	} else {
 		$sql= "SELECT COUNT(*) FROM suppliers
 				WHERE taxgroupid='" . $_GET['SelectedGroup'] . "'";
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 		$myrow = DB_fetch_row($result);
 		if($myrow[0]>0) {
 			prnMsg( _('Cannot delete this tax group because some suppliers are setup using it'),'warn');
@@ -144,10 +144,10 @@ if(isset($_POST['submit']) OR isset($_GET['remove']) OR isset($_GET['add']) ) {
 
 			$sql="DELETE FROM taxgrouptaxes
 					WHERE taxgroupid='" . $_GET['SelectedGroup'] . "'";
-			$result = DB_query($sql,$db);
+			$result = DB_query($sql);
 			$sql="DELETE FROM taxgroups
 					WHERE taxgroupid='" . $_GET['SelectedGroup'] . "'";
-			$result = DB_query($sql,$db);
+			$result = DB_query($sql);
 			prnMsg( $_GET['GroupID'] . ' ' . _('tax group has been deleted') . '!','success');
 		}
 	} //end if taxgroup used in other tables
@@ -162,7 +162,7 @@ if(!isset($SelectedGroup)) {
 	$sql = "SELECT taxgroupid,
 					taxgroupdescription
 			FROM taxgroups";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 
 	if( DB_num_rows($result) == 0 ) {
 		echo '<div class="centre">';
@@ -216,7 +216,7 @@ if(isset($SelectedGroup)) {
 					taxgroupdescription
 			FROM taxgroups
 			WHERE taxgroupid='" . $SelectedGroup . "'";
-	$result = DB_query($sql, $db);
+	$result = DB_query($sql);
 	if( DB_num_rows($result) == 0 ) {
 		prnMsg( _('The selected tax group is no longer available.'),'warn');
 	} else {
@@ -261,10 +261,10 @@ if(isset($SelectedGroup)) {
 			WHERE taxgroupid='". $SelectedGroup . "'
 			ORDER BY calculationorder";
 
-	$Result = DB_query($sql, $db);
+	$Result = DB_query($sql);
 
 	/*Make an array of the used tax authorities in calculation order */
-	$UsedResult = DB_query($sqlUsed, $db);
+	$UsedResult = DB_query($sqlUsed);
 	$TaxAuthsUsed = array(); //this array just holds the taxauthid of all authorities in the group
 	$TaxAuthRow = array(); //this array holds all the details of the tax authorities in the group
 	$i=1;

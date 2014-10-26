@@ -104,7 +104,7 @@ if (isset($_POST['SearchParts'])) {
 	}
 	$ErrMsg = _('No stock items were returned by the SQL because');
 	$DbgMsg = _('The SQL used to retrieve the searched parts was');
-	$StockItemsResult = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
+	$StockItemsResult = DB_query($SQL, $ErrMsg, $DbgMsg);
 }
 /* Not appropriate really to restrict search by date since user may miss older
 * ouststanding orders
@@ -117,7 +117,7 @@ if (!isset($OrderNumber) or $OrderNumber == "") {
 	}
 	echo _('Order Number') . ': <input class="integer" name="OrderNumber" autofocus="autofocus" maxlength="8" size="9" /> ' . _('Into Stock Location') . ':<select name="StockLocation"> ';
 	$sql = "SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
-	$resultStkLocs = DB_query($sql, $db);
+	$resultStkLocs = DB_query($sql);
 	while ($myrow = DB_fetch_array($resultStkLocs)) {
 		if (isset($_POST['StockLocation'])) {
 			if ($myrow['loccode'] == $_POST['StockLocation']) {
@@ -170,7 +170,7 @@ $SQL = "SELECT categoryid,
 			categorydescription
 		FROM stockcategory
 		ORDER BY categorydescription";
-$result1 = DB_query($SQL, $db);
+$result1 = DB_query($SQL);
 echo '<br />
 		<br />
 		<table class="selection">
@@ -423,7 +423,7 @@ else {
 
 	} //end not order number selected
 	$ErrMsg = _('No orders were returned by the SQL because');
-	$PurchOrdersResult = DB_query($SQL, $db, $ErrMsg);
+	$PurchOrdersResult = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($PurchOrdersResult) > 0) {
 		/*show a table of the orders returned by the SQL */

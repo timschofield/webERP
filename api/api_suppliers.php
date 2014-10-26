@@ -10,7 +10,7 @@
 		$Searchsql = "SELECT count(supplierid)
   				      FROM suppliers
 				      WHERE supplierid='".$SupplierNumber."'";
-		$SearchResult=DB_query($Searchsql, $db);
+		$SearchResult=DB_query($Searchsql);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] != 0) {
 			$Errors[$i] = SupplierNoAlreadyExists;
@@ -27,7 +27,7 @@
 		$Searchsql = "SELECT count(supplierid)
 				      FROM suppliers
 				      WHERE supplierid='".$SupplierNumber."'";
-		$SearchResult=DB_query($Searchsql, $db);
+		$SearchResult=DB_query($Searchsql);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] == 0) {
 			$Errors[$i] = SupplierNoDoesntExists;
@@ -48,7 +48,7 @@
  * target webERP company */
 	function VerifySupplierSinceDate($suppliersincedate, $i, $Errors, $db) {
 		$sql="SELECT confvalue FROM config where confname='DefaultDateFormat'";
-		$result=DB_query($sql, $db);
+		$result=DB_query($sql);
 		$myrow=DB_fetch_array($result);
 		$DateFormat=$myrow[0];
 		if (mb_strstr('/',$PeriodEnd)) {
@@ -112,7 +112,7 @@
 		$Searchsql = "SELECT COUNT(id)
 					 FROM factorcompanies
 					  WHERE id='".$factorco."'";
-		$SearchResult=DB_query($Searchsql, $db);
+		$SearchResult=DB_query($Searchsql);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] == 0) {
 			$Errors[$i] = FactorCompanyNotSetup;

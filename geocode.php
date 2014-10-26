@@ -10,7 +10,7 @@ include ('includes/header.inc');
 
 $sql = "SELECT * FROM geocode_param WHERE 1";
 $ErrMsg = _('An error occurred in retrieving the information');
-$resultgeo = DB_query($sql, $db, $ErrMsg);
+$resultgeo = DB_query($sql, $ErrMsg);
 $row = DB_fetch_array($resultgeo);
 
 $api_key = $row['geocode_key'];
@@ -28,12 +28,12 @@ echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/m
 // select all the customer branches
 $sql = "SELECT * FROM custbranch WHERE 1";
 $ErrMsg = _('An error occurred in retrieving the information');
-$result = DB_query($sql, $db, $ErrMsg);
+$result = DB_query($sql, $ErrMsg);
 
 // select all the suppliers
 $sql = "SELECT * FROM suppliers WHERE 1";
 $ErrMsg = _('An error occurred in retrieving the information');
-$result2 = DB_query($sql, $db, $ErrMsg);
+$result2 = DB_query($sql, $ErrMsg);
 
 // Initialize delay in geocode speed
 $delay = 0;
@@ -77,7 +77,7 @@ while ($row = DB_fetch_array($result)) {
              ($id),
              ($debtorno));
 
-      $update_result = DB_query($query,$db);
+      $update_result = DB_query($query);
 
       if ($update_result==1) {
       echo '<br />'. 'Address: ' . $address . ' updated to geocode.';
@@ -127,7 +127,7 @@ while ($row2 = DB_fetch_array($result2)) {
              ($lng),
              ($id));
 
-      $update_result = DB_query($query,$db);
+      $update_result = DB_query($query);
  
       if ($update_result==1) {
       echo '<br />' . 'Address: ' . $address . ' updated to geocode.';

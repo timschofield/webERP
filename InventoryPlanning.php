@@ -99,7 +99,7 @@ if (isset($_POST['PrintPDF'])
 					stockmaster.stockid";
 
 	}
-	$InventoryResult = DB_query($SQL, $db, '', '', false, false);
+	$InventoryResult = DB_query($SQL, '', '', false, false);
 
 	if (DB_error_no($db) !=0) {
 	  $Title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
@@ -176,7 +176,7 @@ if (isset($_POST['PrintPDF'])
 					AND stockmoves.hidemovt=0";
 		}
 
-		$SalesResult = DB_query($SQL,$db,'','', false, false);
+		$SalesResult = DB_query($SQL,'','', false, false);
 
 		if (DB_error_no($db) !=0) {
 	 		 $Title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
@@ -212,7 +212,7 @@ if (isset($_POST['PrintPDF'])
 				AND salesorders.quotation=0";
 		}
 
-		$DemandResult = DB_query($SQL, $db, '', '', false , false);
+		$DemandResult = DB_query($SQL, '', '', false , false);
 		$ListCount = DB_num_rows($DemandResult);
 
 		if (DB_error_no($db) !=0) {
@@ -262,7 +262,7 @@ if (isset($_POST['PrintPDF'])
 				AND salesorders.quotation=0";
 		}
 
-		$BOMDemandResult = DB_query($SQL,$db,'','',false,false);
+		$BOMDemandResult = DB_query($SQL,'','',false,false);
 
 		if (DB_error_no($db) !=0) {
 	 		$Title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
@@ -373,7 +373,7 @@ if (isset($_POST['PrintPDF'])
 				<td><select name="FromCriteria">';
 
 		$sql="SELECT categoryid, categorydescription FROM stockcategory ORDER BY categorydescription";
-		$CatResult= DB_query($sql,$db);
+		$CatResult= DB_query($sql);
 		while ($myrow = DB_fetch_array($CatResult)){
 			echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription'] . ' - ' . $myrow['categoryid'] . '</option>';
 		}
@@ -397,7 +397,7 @@ if (isset($_POST['PrintPDF'])
 				<td><select name="Location">';
 
 		$sql = "SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
-		$LocnResult=DB_query($sql,$db);
+		$LocnResult=DB_query($sql);
 
 		echo '<option value="All">' . _('All Locations') . '</option>';
 

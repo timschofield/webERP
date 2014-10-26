@@ -40,7 +40,7 @@ $SOH_DateFields = array ('orddate',
  * target webERP company */
 	function VerifyOrderDate($orddate, $i, $Errors, $db) {
 		$sql="SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
-		$result=api_DB_query($sql, $db);
+		$result=api_DB_query($sql);
 		$myrow=DB_fetch_array($result);
 		$DateFormat=$myrow[0];
 		if (mb_strstr($orddate,"/")) {
@@ -76,7 +76,7 @@ $SOH_DateFields = array ('orddate',
 		$Searchsql = "SELECT COUNT(typeabbrev)
 					 FROM salestypes
 					 WHERE typeabbrev='" . $ordertype."'";
-		$SearchResult=api_DB_query($Searchsql, $db);
+		$SearchResult=api_DB_query($Searchsql);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] == 0) {
 			$Errors[$i] = SalesTypeNotSetup;
@@ -105,7 +105,7 @@ $SOH_DateFields = array ('orddate',
 		$Searchsql = "SELECT COUNT(loccode)
 					 FROM locations
 					  WHERE loccode='". $FromStockLocn."'";
-		$SearchResult=api_DB_query($Searchsql, $db);
+		$SearchResult=api_DB_query($Searchsql);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] == 0) {
 			$Errors[$i] = LocationCodeNotSetup;
@@ -118,7 +118,7 @@ $SOH_DateFields = array ('orddate',
  * target webERP company */
 	function VerifyDeliveryDate($DeliveryDate, $i, $Errors, $db) {
 		$sql="SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
-		$result=api_DB_query($sql, $db);
+		$result=api_DB_query($sql);
 		$myrow=DB_fetch_array($result);
 		$DateFormat=$myrow[0];
 		if (mb_strstr($DeliveryDate,'/')) {
@@ -162,7 +162,7 @@ $SOH_DateFields = array ('orddate',
 		$linesql = "SELECT MAX(orderlineno)
 					FROM salesorderdetails
 					 WHERE orderno='" . $OrderNo . "'";
-		$lineresult = api_DB_query($linesql, $db);
+		$lineresult = api_DB_query($linesql);
 		if ($myrow=DB_fetch_row($lineresult)) {
 			return $myrow[0] + 1;
 		} else {
@@ -175,7 +175,7 @@ $SOH_DateFields = array ('orddate',
 		$Searchsql = "SELECT COUNT(orderno)
 					 FROM salesorders
 					  WHERE orderno='".$OrderNo."'";
-		$SearchResult=api_DB_query($Searchsql, $db);
+		$SearchResult=api_DB_query($Searchsql);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] == 0) {
 			$Errors[$i] = OrderHeaderNotSetup;
@@ -228,7 +228,7 @@ $SOH_DateFields = array ('orddate',
  * target webERP company */
 	function VerifyItemDueDate($ItemDue, $i, $Errors, $db) {
 		$sql="SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
-		$result=api_DB_query($sql, $db);
+		$result=api_DB_query($sql);
 		$myrow=DB_fetch_array($result);
 		$DateFormat=$myrow[0];
 		if (mb_strstr($ItemDue,'/')) {
@@ -686,14 +686,14 @@ $SOH_DateFields = array ('orddate',
 							ON debtorsmaster.currcode=currencies.currabrev
 							WHERE salesorders.orderno = '" . $OrderNo . "'";
 
-		$OrderHeaderResult = api_DB_query($OrderHeaderSQL,$db);
+		$OrderHeaderResult = api_DB_query($OrderHeaderSQL);
 		if (DB_error_no($db) != 0) {
 			$Errors[] = NoReadOrder;
 		}
 
 		$OrderHeader = DB_fetch_array($OrderHeaderResult);
 
-		$TaxProvResult = api_DB_query("SELECT taxprovinceid FROM locations WHERE loccode='" . $OrderHeader['fromstkloc'] ."'",$db);
+		$TaxProvResult = api_DB_query("SELECT taxprovinceid FROM locations WHERE loccode='" . $OrderHeader['fromstkloc'] ."'");
 		if (DB_error_no($db) != 0) {
 			$Errors[] = NoTaxProvince;
 		}
@@ -712,7 +712,7 @@ $SOH_DateFields = array ('orddate',
 						WHERE orderno ='" . $OrderNo . "'
 						AND completed=0";
 
-		$LineItemsResult = api_DB_query($LineItemsSQL,$db);
+		$LineItemsResult = api_DB_query($LineItemsSQL);
 		if (DB_error_no($db) != 0 OR DB_num_rows($LineItemsResult)==0) {
 			$Errors[] = NoReadOrderLines;
 			return $Errors;
@@ -754,7 +754,7 @@ $SOH_DateFields = array ('orddate',
 					AND taxauthrates.taxcatid = '" . $OrderLineRow['taxcatid'] . "'
 					ORDER BY taxgrouptaxes.calculationorder";
 
-			$GetTaxRatesResult = api_DB_query($SQL,$db);
+			$GetTaxRatesResult = api_DB_query($SQL);
 
 			if (DB_error_no($db) != 0) {
 				$Errors[] = TaxRatesFailed;
@@ -800,7 +800,7 @@ $SOH_DateFields = array ('orddate',
 					WHERE orderno = '" . $OrderNo . "'
 					AND stkcode = '" . $OrderLineRow['stkcode'] . "'";
 
-			$Result = api_DB_query($SQL,$db,'','',true);
+			$Result = api_DB_query($SQL,'','',true);
 
 
 			if ($OrderLineRow['mbflag']=='B' OR $OrderLineRow['mbflag']=='M') {
@@ -812,7 +812,7 @@ $SOH_DateFields = array ('orddate',
 						FROM locstock
 						WHERE locstock.stockid='" . $OrderLineRow['stkcode'] . "'
 						AND loccode= '" . $OrderHeader['fromstkloc'] . "'";
-				$Result = api_DB_query($SQL, $db);
+				$Result = api_DB_query($SQL);
 
 				if (DB_num_rows($Result)==1){
 					$LocQtyRow = DB_fetch_row($Result);
@@ -826,7 +826,7 @@ $SOH_DateFields = array ('orddate',
 						SET quantity = locstock.quantity - " . $OrderLineRow['quantity'] . "
 						WHERE locstock.stockid = '" . $OrderLineRow['stkcode'] . "'
 						AND loccode = '" . $OrderHeader['fromstkloc'] . "'";
-				$Result = api_DB_query($SQL,$db,'','',true);
+				$Result = api_DB_query($SQL,'','',true);
 
 				$SQL = "INSERT INTO stockmoves (stockid,
 												type,
@@ -857,7 +857,7 @@ $SOH_DateFields = array ('orddate',
 								'" . $StandardCost . "',
 								'" . ($QtyOnHandPrior - $OrderLineRow['quantity']) . "' )";
 
-				$Result = api_DB_query($SQL,$db,'','',true);
+				$Result = api_DB_query($SQL,'','',true);
 
 			} else if ($OrderLineRow['mbflag']=='A'){ /* its an assembly */
 				/*Need to get the BOM for this part and make
@@ -873,7 +873,7 @@ $SOH_DateFields = array ('orddate',
 							AND bom.effectiveto >= '" . Date('Y-m-d') . "'
 							AND bom.effectiveafter < '" . Date('Y-m-d') . "'";
 
-				$AssResult = api_DB_query($SQL,$db);
+				$AssResult = api_DB_query($SQL);
 
 				while ($AssParts = DB_fetch_array($AssResult,$db)){
 
@@ -885,7 +885,7 @@ $SOH_DateFields = array ('orddate',
 							WHERE locstock.stockid='" . $AssParts['component'] . "'
 							AND loccode= '" . $OrderHeader['fromstkloc'] . "'";
 
-					$Result = api_DB_query($SQL,$db);
+					$Result = api_DB_query($SQL);
 					if (DB_num_rows($Result)==1){
 						$LocQtyRow = DB_fetch_row($Result);
 	                  	$QtyOnHandPrior = $LocQtyRow[0];
@@ -923,14 +923,14 @@ $SOH_DateFields = array ('orddate',
 												 0,
 												 '" . ($QtyOnHandPrior - $AssParts['quantity'] * $OrderLineRow['quantity']) . "'	)";
 
-					$Result = DB_query($SQL,$db,'','',true);
+					$Result = DB_query($SQL,'','',true);
 
 					$SQL = "UPDATE locstock
 							SET quantity = locstock.quantity - " . ($AssParts['quantity'] * $OrderLineRow['quantity']) . "
 							WHERE locstock.stockid = '" . $AssParts['component'] . "'
 							AND loccode = '" . $OrderHeader['fromlocstk'] . "'";
 
-					$Result = DB_query($SQL,$db,'','',true);
+					$Result = DB_query($SQL,'','',true);
 				} /* end of assembly explosion and updates */
 			} /* end of its an assembly */
 
@@ -967,7 +967,7 @@ $SOH_DateFields = array ('orddate',
 								'" . $StandardCost . "',
 								'0' )";
 
-				$Result = api_DB_query($SQL,$db,'','',true);
+				$Result = api_DB_query($SQL,'','',true);
 			}
 			/*Get the ID of the StockMove... */
 			$StkMoveNo = DB_Last_Insert_ID($db,'stockmoves','stkmoveno');
@@ -985,7 +985,7 @@ $SOH_DateFields = array ('orddate',
 							'" . $Tax['TaxCalculationOrder'] . "',
 							'" . $Tax['TaxOnTax'] . "')";
 
-				$Result = DB_query($SQL,$db,'','',true);
+				$Result = DB_query($SQL,'','',true);
 			}
 
 			/*Insert Sales Analysis records */
@@ -1025,7 +1025,7 @@ $SOH_DateFields = array ('orddate',
 
 			$ErrMsg = _('The count of existing Sales analysis records could not run because');
 			$DbgMsg = _('SQL to count the no of sales analysis records');
-			$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+			$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 			$myrow = DB_fetch_row($Result);
 
@@ -1080,7 +1080,7 @@ $SOH_DateFields = array ('orddate',
 
 			}
 
-			$Result = api_DB_query($SQL,$db,'','',true);
+			$Result = api_DB_query($SQL,'','',true);
 
 			if ($CompanyRecord['gllink_stock']==1 AND $StandardCost !=0){
 
@@ -1101,7 +1101,7 @@ $SOH_DateFields = array ('orddate',
 										'" . $OrderHeader['debtorno'] . " - " . $OrderLineRow['stkcode'] . " x " . $OrderLineRow['quantity'] . " @ " . $StandardCost . "',
 										'" . ($StandardCost * $OrderLineRow['quantity']) . "')";
 
-				$Result = api_DB_query($SQL,$db,'','',true);
+				$Result = api_DB_query($SQL,'','',true);
 
 /*now the stock entry - this is set to the cost act in the case of a fixed asset disposal */
 				$StockGLCode = GetStockGLCode($OrderLineRow['stkcode'],$db);
@@ -1121,7 +1121,7 @@ $SOH_DateFields = array ('orddate',
 										'" . $OrderHeader['debtorno'] . " - " . $OrderLineRow['stkcode'] . " x " . $OrderLineRow['quantity'] . " @ " . $StandardCost . "',
 										'" . (-$StandardCost * $OrderLineRow['quantity']) . "')";
 
-				$Result = api_DB_query($SQL,$db,'','',true);
+				$Result = api_DB_query($SQL,'','',true);
 
 			} /* end of if GL and stock integrated and standard cost !=0  and not an asset */
 
@@ -1145,7 +1145,7 @@ $SOH_DateFields = array ('orddate',
 						'" . $OrderHeader['debtorno'] . " - " . $OrderLineRow['stkcode'] . " x " . $OrderLineRow['quantity'] . " @ " . $OrderLineRow['unitprice'] . "',
 						'" . -$OrderLineRow['unitprice'] * $OrderLineRow['quantity']/$OrderHeader['rate'] . "'
 					)";
-				$Result = api_DB_query($SQL,$db,'','',true);
+				$Result = api_DB_query($SQL,'','',true);
 
 				if ($OrderLineRow['discountpercent'] !=0){
 
@@ -1164,7 +1164,7 @@ $SOH_DateFields = array ('orddate',
 								'" . $OrderHeader['debtorno'] . " - " . $OrderLineRow['stkcode'] . " @ " . ($OrderLineRow['discountpercent'] * 100) . "%',
 								'" . ($OrderLineRow['unitprice'] * $OrderLineRow['quantity'] * $OrderLineRow['discountpercent']/$OrderHeader['rate']) . "')";
 
-					$Result = DB_query($SQL,$db,'','',true);
+					$Result = DB_query($SQL,'','',true);
 				} /*end of if discount !=0 */
 
 			} /*end of if sales integrated with gl */
@@ -1196,7 +1196,7 @@ $SOH_DateFields = array ('orddate',
 											'" . $OrderHeader['debtorno'] . "-" . $Tax['TaxAuthDescription'] . "',
 											'" . -$Tax['FXAmount']/$OrderHeader['rate'] . "' )";
 
-					$Result = api_DB_query($SQL,$db,'','',true);
+					$Result = api_DB_query($SQL,'','',true);
 				}
 			}
 
@@ -1217,7 +1217,7 @@ $SOH_DateFields = array ('orddate',
 										'" . $OrderHeader['debtorno'] . "',
 										'" . $TotalInvLocalCurr . "')";
 
-				$Result = api_DB_query($SQL,$db,'','',true);
+				$Result = api_DB_query($SQL,'','',true);
 			}
 			EnsureGLEntriesBalance(10,$InvoiceNo,$db);
 
@@ -1225,7 +1225,7 @@ $SOH_DateFields = array ('orddate',
 
 	/*Update order header for invoice charged on */
 		$SQL = "UPDATE salesorders SET comments = CONCAT(comments,' Inv ','" . $InvoiceNo . "') WHERE orderno= '" . $OrderNo . "'";
-		$Result = api_DB_query($SQL,$db,'','',true);
+		$Result = api_DB_query($SQL,'','',true);
 
 	/*Now insert the DebtorTrans */
 
@@ -1261,7 +1261,7 @@ $SOH_DateFields = array ('orddate',
 										'" . $OrderHeader['shipvia'] . "',
 										'" . $OrderHeader['salesman'] . "')"; 
 
-		$Result = api_DB_query($SQL,$db,'','',true);
+		$Result = api_DB_query($SQL,'','',true);
 
 		$DebtorTransID = DB_Last_Insert_ID($db,'debtortrans','id');
 
@@ -1274,7 +1274,7 @@ $SOH_DateFields = array ('orddate',
 								VALUES ('" . $DebtorTransID . "',
 										'" . $TaxAuthID . "',
 										'" . $Tax['FXAmount']/$OrderHeader['rate'] . "')";
-			$Result = api_DB_query($SQL,$db,'','',true);
+			$Result = api_DB_query($SQL,'','',true);
 		}
 
 		if (sizeof($Errors)==0) {
@@ -1294,12 +1294,12 @@ $SOH_DateFields = array ('orddate',
 		$TransDate = time(); //The current date to find the period for
 		/* Find the unix timestamp of the last period end date in periods table */
 		$sql = "SELECT MAX(lastdate_in_period), MAX(periodno) from periods";
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		$myrow=DB_fetch_row($result);
 
 		if (is_null($myrow[0])){
-			$InsertFirstPeriodResult = api_DB_query("INSERT INTO periods VALUES (0,'" . Date('Y-m-d',mktime(0,0,0,Date('m')+1,0,Date('Y'))) . "')",$db);
-			$InsertFirstPeriodResult = api_DB_query("INSERT INTO periods VALUES (1,'" . Date('Y-m-d',mktime(0,0,0,Date('m')+2,0,Date('Y'))) . "')",$db);
+			$InsertFirstPeriodResult = api_DB_query("INSERT INTO periods VALUES (0,'" . Date('Y-m-d',mktime(0,0,0,Date('m')+1,0,Date('Y'))) . "')");
+			$InsertFirstPeriodResult = api_DB_query("INSERT INTO periods VALUES (1,'" . Date('Y-m-d',mktime(0,0,0,Date('m')+2,0,Date('Y'))) . "')");
 			$LastPeriod=1;
 			$LastPeriodEnd = mktime(0,0,0,Date('m')+2,0,Date('Y'));
 		} else {
@@ -1309,7 +1309,7 @@ $SOH_DateFields = array ('orddate',
 		}
 		/* Find the unix timestamp of the first period end date in periods table */
 		$sql = "SELECT MIN(lastdate_in_period), MIN(periodno) from periods";
-		$result = api_DB_query($sql, $db);
+		$result = api_DB_query($sql);
 		$myrow=DB_fetch_row($result);
 		$Date_Array = explode('-', $myrow[0]);
 		$FirstPeriodEnd = mktime(0,0,0,$Date_Array[1],0,(int)$Date_Array[0]);
@@ -1348,7 +1348,7 @@ $SOH_DateFields = array ('orddate',
 		} else if (!PeriodExists(mktime(0,0,0,Date('m',$TransDate)+1,Date('d',$TransDate),Date('Y',$TransDate)), $db)) {
 			/* Make sure the following months period exists */
 			$sql = "SELECT MAX(lastdate_in_period), MAX(periodno) from periods";
-			$result = DB_query($sql, $db);
+			$result = DB_query($sql);
 			$myrow=DB_fetch_row($result);
 			$Date_Array = explode('-', $myrow[0]);
 			$LastPeriodEnd = mktime(0,0,0,$Date_Array[1]+2,0,(int)$Date_Array[0]);
@@ -1365,7 +1365,7 @@ $SOH_DateFields = array ('orddate',
 						AND lastdate_in_period >= '" . Date('Y-m-d', $TransDate) . "'";
 
 		$ErrMsg = _('An error occurred in retrieving the period number');
-		$GetPrdResult = DB_query($GetPrdSQL,$db,$ErrMsg);
+		$GetPrdResult = DB_query($GetPrdSQL,$ErrMsg);
 		$myrow = DB_fetch_row($GetPrdResult);
 
 		return $myrow[0];

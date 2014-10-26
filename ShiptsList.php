@@ -23,7 +23,7 @@ $SQL = "SELECT shiptref,
 	FROM shipments
 	WHERE supplierid='" . $_GET['SupplierID'] . "'";
 $ErrMsg = _('No shipments were returned from the database because'). ' - '. DB_error_msg($db);
-$ShiptsResult = DB_query($SQL,$db, $ErrMsg);
+$ShiptsResult = DB_query($SQL, $ErrMsg);
 
 if (DB_num_rows($ShiptsResult)==0){
        prnMsg(_('There are no open shipments currently set up for').' ' . $_GET['SupplierName'],'warn');

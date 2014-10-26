@@ -169,7 +169,7 @@ if (isset($_POST['submit'])) {
 								)";
 				$ErrMsg = _('Cannot insert a GL entry for the change of asset category because');
 				$DbgMsg = _('The SQL that failed to insert the cost GL Trans record was');
-				$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 				//debit cost for the new category
 				$SQL = "INSERT INTO gltrans (type,
@@ -189,7 +189,7 @@ if (isset($_POST['submit'])) {
 								)";
 				$ErrMsg = _('Cannot insert a GL entry for the change of asset category because');
 				$DbgMsg = _('The SQL that failed to insert the cost GL Trans record was');
-				$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 				if ($OldDetails['accumdepn']!=0) {
 					//debit accumdepn for the old category
 					$SQL = "INSERT INTO gltrans (type,
@@ -209,7 +209,7 @@ if (isset($_POST['submit'])) {
 									)";
 					$ErrMsg = _('Cannot insert a GL entry for the change of asset category because');
 					$DbgMsg = _('The SQL that failed to insert the cost GL Trans record was');
-					$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+					$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 					//credit accum depn for the new category
 					$SQL = "INSERT INTO gltrans (type,
@@ -229,7 +229,7 @@ if (isset($_POST['submit'])) {
 									)";
 					$ErrMsg = _('Cannot insert a GL entry for the change of asset category because');
 					$DbgMsg = _('The SQL that failed to insert the cost GL Trans record was');
-					$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+					$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 				} /*end if there was accumulated depreciation for the asset */
 			} /* end if there is a change in asset category */
 			$sql = "UPDATE fixedassets
@@ -245,7 +245,7 @@ if (isset($_POST['submit'])) {
 
 			$ErrMsg = _('The asset could not be updated because');
 			$DbgMsg = _('The SQL that was used to update the asset and failed was');
-			$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+			$result = DB_query($sql,$ErrMsg,$DbgMsg);
 
 			prnMsg( _('Asset') . ' ' . $AssetID . ' ' . _('has been updated'), 'success');
 			echo '<br />';
@@ -269,7 +269,7 @@ if (isset($_POST['submit'])) {
 							'" . $_POST['SerialNo'] . "' )";
 			$ErrMsg =  _('The asset could not be added because');
 			$DbgMsg = _('The SQL that was used to add the asset failed was');
-			$result = DB_query($sql,$db, $ErrMsg, $DbgMsg);
+			$result = DB_query($sql, $ErrMsg, $DbgMsg);
 
 			if (DB_error_no($db) ==0) {
 				$NewAssetID = DB_Last_Insert_ID($db,'fixedassets', 'assetid');
@@ -304,12 +304,12 @@ if (isset($_POST['submit'])) {
 		$CancelDelete =1; //cannot delete assets where NBV is not 0
 		prnMsg(_('The asset still has a net book value - only assets with a zero net book value can be deleted'),'error');
 	}
-	$result = DB_query("SELECT * FROM fixedassettrans WHERE assetid='" . $AssetID . "'",$db);
+	$result = DB_query("SELECT * FROM fixedassettrans WHERE assetid='" . $AssetID . "'");
 	if (DB_num_rows($result) > 0){
 		$CancelDelete =1; /*cannot delete assets with transactions */
 		prnMsg(_('The asset has transactions associated with it. The asset can only be deleted when the fixed asset transactions are purged, otherwise the integrity of fixed asset reports may be compromised'),'error');
 	}
-	$result = DB_query("SELECT * FROM purchorderdetails WHERE assetid='" . $AssetID . "'",$db);
+	$result = DB_query("SELECT * FROM purchorderdetails WHERE assetid='" . $AssetID . "'");
 	if (DB_num_rows($result) > 0){
 		$CancelDelete =1; /*cannot delete assets where there is a purchase order set up for it */
 		prnMsg(_('There is a purchase order set up for this asset. The purchase order line must be deleted first'),'error');
@@ -339,7 +339,7 @@ if (isset($_POST['submit'])) {
 							)";
 			$ErrMsg = _('Cannot insert a GL entry for the deletion of the asset because');
 			$DbgMsg = _('The SQL that failed to insert the cost GL Trans record was');
-			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 			//debit accumdepn for the depreciation removed on deletion of this asset
 			$SQL = "INSERT INTO gltrans (type,
@@ -359,12 +359,12 @@ if (isset($_POST['submit'])) {
 							)";
 			$ErrMsg = _('Cannot insert a GL entry for the reversal of accumulated depreciation on deletion of the asset because');
 			$DbgMsg = _('The SQL that failed to insert the cost GL Trans record was');
-			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 		} //end if cost > 0
 
 		$sql="DELETE FROM fixedassets WHERE assetid='" . $AssetID . "'";
-		$result=DB_query($sql,$db, _('Could not delete the asset record'),'',true);
+		$result=DB_query($sql, _('Could not delete the asset record'),'',true);
 
 		$result = DB_Txn_Commit($db);
 
@@ -425,7 +425,7 @@ if (!isset($AssetID) OR $AssetID=='') {
 			FROM fixedassets
 			WHERE assetid ='" . $AssetID . "'";
 
-	$result = DB_query($sql, $db);
+	$result = DB_query($sql);
 	$AssetRow = DB_fetch_array($result);
 
 	$_POST['LongDescription'] = $AssetRow['longdescription'];
@@ -516,7 +516,7 @@ echo '<tr>
 $sql = "SELECT categoryid, categorydescription FROM fixedassetcategories";
 $ErrMsg = _('The asset categories could not be retrieved because');
 $DbgMsg = _('The SQL used to retrieve stock categories and failed was');
-$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+$result = DB_query($sql,$ErrMsg,$DbgMsg);
 
 while ($myrow=DB_fetch_array($result)){
 	if (!isset($_POST['AssetCategoryID']) or $myrow['categoryid']==$_POST['AssetCategoryID']){
@@ -541,7 +541,7 @@ if (isset($AssetRow) AND ($AssetRow['datepurchased']!='0000-00-00' AND $AssetRow
 $sql = "SELECT locationid, locationdescription FROM fixedassetlocations";
 $ErrMsg = _('The asset locations could not be retrieved because');
 $DbgMsg = _('The SQL used to retrieve asset locations and failed was');
-$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+$result = DB_query($sql,$ErrMsg,$DbgMsg);
 
 echo '<tr>
 		<td>' . _('Asset Location') . ':</td>

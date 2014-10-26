@@ -18,7 +18,7 @@ if (!isset($_POST['Show'])) {
 	echo '<tr><th colspan="3">' . _('Selection Criteria') . '</th></tr>';
 
 	$sql = "SELECT typeno FROM systypes WHERE typeid=0";
-	$result = DB_query($sql, $db);
+	$result = DB_query($sql);
 	$myrow = DB_fetch_array($result);
 	$MaxJournalNumberUsed = $myrow['typeno'];
 
@@ -30,7 +30,7 @@ if (!isset($_POST['Show'])) {
 
 	$sql = "SELECT MIN(trandate) AS fromdate,
 					MAX(trandate) AS todate FROM gltrans WHERE type=0";
-	$result = DB_query($sql, $db);
+	$result = DB_query($sql);
 	$myrow = DB_fetch_array($result);
 	if (isset($myrow['fromdate']) and $myrow['fromdate'] != '') {
 		$FromDate = $myrow['fromdate'];
@@ -71,7 +71,7 @@ if (!isset($_POST['Show'])) {
 				AND gltrans.typeno<='" . $_POST['NumberTo'] . "'
 			ORDER BY gltrans.typeno";
 
-	$result = DB_query($sql, $db);
+	$result = DB_query($sql);
 	if (DB_num_rows($result)==0) {
 		prnMsg(_('There are no transactions for this account in the date range selected'), 'info');
 	} else {

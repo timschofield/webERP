@@ -67,7 +67,7 @@ If (isset($_POST['PrintPDF'])
 				debtorsmaster.salestype
 				FROM debtorsmaster
 				WHERE debtorno = '" . $_SESSION['CustomerID'] . "'";
-		$CustNameResult = DB_query($SQL,$db);
+		$CustNameResult = DB_query($SQL);
 		$CustNameRow = DB_fetch_row($CustNameResult);
 		$CustomerName = $CustNameRow[0];
 		$SalesType = $CustNameRow[1];
@@ -111,7 +111,7 @@ If (isset($_POST['PrintPDF'])
 	} else { /* the sales type list only */
 
 		$SQL = "SELECT sales_type FROM salestypes WHERE typeabbrev='" . $_POST['SalesType'] . "'";
-		$SalesTypeResult = DB_query($SQL,$db);
+		$SalesTypeResult = DB_query($SQL);
 		$SalesTypeRow = DB_fetch_row($SalesTypeResult);
 		$SalesTypeName = $SalesTypeRow[0];
 
@@ -145,7 +145,7 @@ If (isset($_POST['PrintPDF'])
     				stockmaster.stockid,
     				prices.startdate";
 	}
-	$PricesResult = DB_query($SQL,$db,'','',false,false);
+	$PricesResult = DB_query($SQL,'','',false,false);
 
 	if (DB_error_no($db) !=0) {
 		$Title = _('Price List') . ' - ' . _('Problem Report....');
@@ -300,7 +300,7 @@ If (isset($_POST['PrintPDF'])
         echo '<table class="selection">';
 
 		$sql='SELECT categoryid, categorydescription FROM stockcategory ORDER BY categoryid';
-		$CatResult= DB_query($sql,$db);
+		$CatResult= DB_query($sql);
 		$SelectCat='';
 		While ($myrow = DB_fetch_array($CatResult)) {
 			$SelectCat .= "<option value='" . $myrow['categoryid'] . "'>" . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'] . '</option>';
@@ -316,7 +316,7 @@ If (isset($_POST['PrintPDF'])
 		echo '<tr><td>' . _('For Sales Type/Price List').':</td>
                   <td><select name="SalesType">';
 		$sql = "SELECT sales_type, typeabbrev FROM salestypes";
-		$SalesTypesResult=DB_query($sql,$db);
+		$SalesTypesResult=DB_query($sql);
 
 		while ($myrow=DB_fetch_array($SalesTypesResult)) {
 			echo '<option value="' . $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
@@ -326,7 +326,7 @@ If (isset($_POST['PrintPDF'])
 		echo '<tr><td>' . _('For Currency').':</td>
                   <td><select name="Currency">';
 		$sql = "SELECT currabrev, currency FROM currencies ORDER BY currency";
-		$CurrencyResult=DB_query($sql,$db);
+		$CurrencyResult=DB_query($sql);
 		echo '<option selected="selected" value="All">' . _('All')  . '</option>';
 		while ($myrow=DB_fetch_array($CurrencyResult)) {
 			echo '<option value="' . $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';

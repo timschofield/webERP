@@ -20,7 +20,7 @@ if (isset($_POST['PrintPDF'])
 	/*Get the date of the last day in the period selected */
 
 	$SQL = "SELECT lastdate_in_period FROM periods WHERE periodno = '" . $_POST['PeriodEnd']."'";
-	$PeriodEndResult = DB_query($SQL,$db,_('Could not get the date of the last day in the period selected'));
+	$PeriodEndResult = DB_query($SQL,_('Could not get the date of the last day in the period selected'));
 	$PeriodRow = DB_fetch_row($PeriodEndResult);
 	$PeriodEndDate = ConvertSQLDate($PeriodRow[0]);
 
@@ -51,7 +51,7 @@ if (isset($_POST['PrintPDF'])
 				currencies.currency,
 				currencies.decimalplaces";
 
-	$CustomerResult = DB_query($SQL,$db,'','',false,false);
+	$CustomerResult = DB_query($SQL,'','',false,false);
 
 	if (DB_error_no($db) !=0) {
 		$Title = _('Customer Balances') . ' - ' . _('Problem Report');
@@ -151,7 +151,7 @@ if (isset($_POST['PrintPDF'])
 				<td><select tabindex="3" name="PeriodEnd">';
 
 		$sql = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC";
-		$Periods = DB_query($sql,$db,_('Could not retrieve period data because'),_('The SQL that failed to get the period data was'));
+		$Periods = DB_query($sql,_('Could not retrieve period data because'),_('The SQL that failed to get the period data was'));
 
 		while ($myrow = DB_fetch_array($Periods,$db)){
 

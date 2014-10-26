@@ -98,7 +98,7 @@ if (isset($_POST['submit'])) {
 							'". $_POST['UserLanguage'] ."')";
 		$ErrMsg = _('The user could not be added because');
 		$DbgMsg = _('The SQL that was used to insert the new user and failed was');
-		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+		$result = DB_query($sql,$ErrMsg,$DbgMsg);
 		prnMsg( _('A new supplier login has been created'), 'success' );
 		include('includes/footer.inc');
 		exit;
@@ -156,7 +156,7 @@ echo '<tr>
 //- Only one entry in securitygroups AND the tokenid of this entry == 9
 
 //First get all available security role ID's'
-$RolesResult = DB_query("SELECT secroleid FROM securityroles", $db);
+$RolesResult = DB_query("SELECT secroleid FROM securityroles");
 $FoundTheSupplierRole = false;
 while ($myroles = DB_fetch_array($RolesResult)){
 	//Now look to find the tokens for the role - we just wnat the role that has just one token i.e. token 9
@@ -188,7 +188,7 @@ echo '<tr><td>' . _('Default Location') . ':</td>
 	<td><select name="DefaultLocation">';
 
 $sql = "SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1";
-$result = DB_query($sql,$db);
+$result = DB_query($sql);
 
 while ($myrow=DB_fetch_array($result)){
 

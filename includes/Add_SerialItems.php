@@ -159,7 +159,7 @@ if ( isset($_POST['AddSequence']) AND $_POST['AddSequence']!='') {
 		if ($LineItem->Serialised == 1){
 			$sql .= " AND quantity = ".$Qty;
 		}
-		$SeqItems = DB_query($sql,$db);
+		$SeqItems = DB_query($sql);
 
 		while ($myrow=DB_fetch_array($SeqItems)) {
 			$LineItem->SerialItems[$myrow['serialno']] = new SerialItem ($myrow['serialno'], ($InOutModifier>0?1:-1) );

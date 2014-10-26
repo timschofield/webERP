@@ -52,7 +52,7 @@ if (isset($_GET['SelectedShipment'])){
 							WHERE shipments.shiptref = '" . $_GET['SelectedShipment'] . "'";
 
        $ErrMsg = _('Shipment').' '. $_GET['SelectedShipment'] . ' ' . _('cannot be retrieved because a database error occurred');
-       $GetShiptHdrResult = DB_query($ShipmentHeaderSQL,$db, $ErrMsg);
+       $GetShiptHdrResult = DB_query($ShipmentHeaderSQL, $ErrMsg);
 
        if (DB_num_rows($GetShiptHdrResult)==0) {
 		prnMsg ( _('Unable to locate Shipment') . ' '. $_GET['SelectedShipment'] . ' ' . _('in the database'), 'error');
@@ -100,7 +100,7 @@ if (isset($_GET['SelectedShipment'])){
 								ON purchorderdetails.orderno=purchorders.orderno
 							WHERE purchorderdetails.shiptref='" . $_GET['SelectedShipment'] . "'";
 	      $ErrMsg = _('The lines on the shipment cannot be retrieved because'). ' - ' . DB_error_msg($db);
-              $LineItemsResult = DB_query($LineItemsSQL,$db, $ErrMsg);
+              $LineItemsResult = DB_query($LineItemsSQL, $ErrMsg);
 
         if (DB_num_rows($GetShiptHdrResult)==0) {
                 prnMsg ( _('Unable to locate lines for Shipment') . ' '. $_GET['SelectedShipment'] . ' ' . _('in the database'), 'error');
@@ -153,7 +153,7 @@ if (!isset($_SESSION['Shipment'])){
 		WHERE supplierid='" . $_SESSION['SupplierID'] . "'";
 
 	$ErrMsg = _('The supplier details for the shipment could not be retrieved because');
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 	$myrow = DB_fetch_array($result);
 
 	$_SESSION['Shipment']->SupplierID = $_SESSION['SupplierID'];
@@ -201,7 +201,7 @@ if (isset($_POST['Update'])
 	if ($InputError == 0 AND (count($_SESSION['Shipment']->LineItems) > 0 OR isset($_GET['Add']))){
 
 		$sql = "SELECT shiptref FROM shipments WHERE shiptref =" . $_SESSION['Shipment']->ShiptRef;
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 		if (DB_num_rows($result)==1){
 			$sql = "UPDATE shipments SET vessel='" . $_SESSION['Shipment']->Vessel . "',
 										voyageref='".  $_SESSION['Shipment']->VoyageRef . "',
@@ -223,7 +223,7 @@ if (isset($_POST['Update'])
 
 		}
 		/*now update or insert as necessary */
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 
 		/*now check that the delivery date of all PODetails are the same as the ETA as the shipment */
 		foreach ($_SESSION['Shipment']->LineItems as $LnItm) {
@@ -234,7 +234,7 @@ if (isset($_POST['Update'])
 						SET deliverydate ='" . $_SESSION['Shipment']->ETA . "'
 						WHERE podetailitem='" . $LnItm->PODetailItem . "'";
 
-				$result = DB_query($sql,$db);
+				$result = DB_query($sql);
 
 				$_SESSION['Shipment']->LineItems[$LnItm->PODetailItem]->DelDate = $_SESSION['Shipment']->ETA;
 			}
@@ -265,7 +265,7 @@ if (isset($_GET['Add'])
 			ON purchorderdetails.itemcode=stockmaster.stockid
 			WHERE purchorderdetails.podetailitem='" . $_GET['Add'] . "'";
 
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 	$myrow = DB_fetch_array($result);
 
 /*The variable StdCostUnit gets set when the item is first received and stored for all future transactions with this purchase order line - subsequent changes to the standard cost will not therefore stuff up variances resulting from the line which may have several entries in GL for each delivery drop if it has already been set from a delivery then use it otherwise use the current system standard */
@@ -337,7 +337,7 @@ if (count($_SESSION['Shipment']->LineItems)>0){
 				FROM purchorders INNER JOIN purchorderdetails
 				ON purchorders.orderno=purchorderdetails.orderno AND podetailitem = '" . key($_SESSION['Shipment']->LineItems) . "'";
 
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 		$myrow = DB_fetch_row($result);
 
 		$_SESSION['Shipment']->StockLocation = $myrow[0];
@@ -356,7 +356,7 @@ if (!isset($_SESSION['Shipment']->StockLocation)){
 
 	$sql = "SELECT loccode, locationname FROM locations";
 
-	$resultStkLocs = DB_query($sql,$db);
+	$resultStkLocs = DB_query($sql);
 
 	while ($myrow=DB_fetch_array($resultStkLocs)){
 
@@ -381,7 +381,7 @@ if (!isset($_SESSION['Shipment']->StockLocation)){
 
 } else {
 	$sql = "SELECT locationname FROM locations WHERE loccode='" . $_SESSION['Shipment']->StockLocation . "'";
-	$resultStkLocs = DB_query($sql,$db);
+	$resultStkLocs = DB_query($sql);
 	$myrow=DB_fetch_array($resultStkLocs);
 	echo '<input type="hidden" name="StockLocation" value="'.$_SESSION['Shipment']->StockLocation.'" />';
  	echo $myrow['locationname'];
@@ -473,7 +473,7 @@ $sql = "SELECT purchorderdetails.podetailitem,
 			AND purchorderdetails.shiptref=0
 			AND purchorders.intostocklocation='" . $_POST['StockLocation'] . "'";
 
-$result = DB_query($sql,$db);
+$result = DB_query($sql);
 
 if (DB_num_rows($result)>0){
 

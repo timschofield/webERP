@@ -59,7 +59,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 			HAVING SUM(supptrans.ovamount + supptrans.ovgst - supptrans.alloc) > 0
 			ORDER BY suppliers.supplierid";
 
-	$SuppliersResult = DB_query($sql,$db);
+	$SuppliersResult = DB_query($sql);
 
 	$SupplierID ='';
 	$TotalPayments = 0;
@@ -104,7 +104,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 					supptrans.type,
 					supptrans.transno";
 
-		$TransResult = DB_query($sql,$db,'','',false,false);
+		$TransResult = DB_query($sql,'','',false,false);
 		if (DB_error_no($db) !=0) {
 			$Title = _('Payment Run - Problem Report');
 			include('includes/header.inc');
@@ -178,7 +178,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 							WHERE type = '" . $DetailTrans['type'] . "'
 							AND transno = '" . $DetailTrans['transno'] . "'";
 
-				$ProcessResult = DB_query($SQL,$db,'','',false,false);
+				$ProcessResult = DB_query($SQL,'','',false,false);
 				if (DB_error_no($db) !=0) {
 					$Title = _('Payment Processing - Problem Report') . '.... ';
 					include('includes/header.inc');
@@ -276,7 +276,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 			<td><select name="Currency">';
 
 	$sql = "SELECT currency, currabrev FROM currencies";
-	$result=DB_query($sql,$db);
+	$result=DB_query($sql);
 
 	while ($myrow=DB_fetch_array($result)){
 	if ($myrow['currabrev'] == $_SESSION['CompanyRecord']['currencydefault']){
@@ -311,7 +311,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 
 	$SQL = "SELECT bankaccountname, accountcode FROM bankaccounts";
 
-	$AccountsResults = DB_query($SQL,$db,'','',false,false);
+	$AccountsResults = DB_query($SQL,'','',false,false);
 
 	if (DB_error_no($db) !=0) {
 		 echo '<br />' . _('The bank accounts could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db);

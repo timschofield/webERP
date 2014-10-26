@@ -13,7 +13,7 @@
 			return $Errors;
 		}
 		$sql = 'SELECT salesmancode FROM salesman';
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		$i=0;
 		while ($myrow=DB_fetch_array($result)) {
 			$SalesmanList[$i]=$myrow[0];
@@ -35,7 +35,7 @@
 			return $Errors;
 		}
 		$sql = "SELECT * FROM salesman WHERE salesmancode='".$salesman."'";
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		if (DB_num_rows($result)==0) {
 			$Errors[0]=NoSuchSalesMan;
 			return $Errors;
@@ -90,7 +90,7 @@
 			return $Errors;
 		}
 		$sql = "SELECT * FROM salesman WHERE salesmanname='".$SalesmanName."'";
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		if (DB_num_rows($result)==0) {
 			$Errors[0]=NoSuchSalesMan;
 			return $Errors;

@@ -49,7 +49,7 @@ $OrderHeaderSQL = "SELECT salesorders.debtorno,
 
 $ErrMsg =  _('The order cannot be retrieved because');
 $DbgMsg = _('The SQL that failed to get the order header was');
-$GetOrdHdrResult = DB_query($OrderHeaderSQL,$db, $ErrMsg, $DbgMsg);
+$GetOrdHdrResult = DB_query($OrderHeaderSQL, $ErrMsg, $DbgMsg);
 
 if (DB_num_rows($GetOrdHdrResult)==1) {
 	echo '<p class="page_title_text">
@@ -153,7 +153,7 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 
 	$ErrMsg =  _('The line items of the order cannot be retrieved because');
 	$DbgMsg =  _('The SQL used to retrieve the line items, that failed was');
-	$LineItemsResult = DB_query($LineItemsSQL,$db, $ErrMsg, $DbgMsg);
+	$LineItemsResult = DB_query($LineItemsSQL, $ErrMsg, $DbgMsg);
 
 	if (DB_num_rows($LineItemsResult)>0) {
 

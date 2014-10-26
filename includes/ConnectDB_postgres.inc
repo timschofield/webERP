@@ -36,7 +36,6 @@ require_once ($PathPrefix .'includes/MiscFunctions.php');
 //DB wrapper functions to change only once for whole application
 
 function DB_query ($SQL,
-				&$Conn,
 				$ErrorMessage='',
 				$DebugMessage= '',
 				$Transaction=false,
@@ -45,7 +44,7 @@ function DB_query ($SQL,
 	global $debug;
 	global $PathPrefix;
 
-	$result = pg_query($Conn, $SQL);
+	$result = pg_query($db, $SQL);
 	if ($DebugMessage == '') {
 		$DebugMessage = _('The SQL that failed was:');
 	}
@@ -60,7 +59,7 @@ function DB_query ($SQL,
 		}
 		if ($Transaction){
 			$SQL = 'rollback';
-			$Result = DB_query($SQL,$Conn);
+			$Result = DB_query($SQL);
 			if (DB_error_no($Conn) !=0){
 				prnMsg('<br />' .   _('Error Rolling Back Transaction!!'), '', _('DB DEBUG:') );
 			}

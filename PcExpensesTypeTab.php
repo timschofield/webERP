@@ -63,7 +63,7 @@ if (isset($_POST['submit'])) {
 			     WHERE typetabcode= '" .  $_POST['SelectedTab'] . "'
 				 AND codeexpense = '" .  $_POST['SelectedExpense'] . "'";
 
-		$checkresult = DB_query($checkSql,$db);
+		$checkresult = DB_query($checkSql);
 		$checkrow = DB_fetch_row($checkresult);
 
 		if ( $checkrow[0] >0) {
@@ -79,14 +79,14 @@ if (isset($_POST['submit'])) {
 			$msg = _('Expense code:') . ' ' . $_POST['SelectedExpense'].' '._('for Type of Tab:') .' '. $_POST['SelectedTab'] .  ' ' . _('has been created');
 			$checkSql = "SELECT count(typetabcode)
 							FROM pctypetabs";
-			$result = DB_query($checkSql, $db);
+			$result = DB_query($checkSql);
 			$row = DB_fetch_row($result);
 		}
 	}
 
 	if ( $InputError !=1) {
 	//run the SQL from either of the above possibilites
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 		prnMsg($msg,'success');
 		unset($_POST['SelectedExpense']);
 	}
@@ -97,7 +97,7 @@ if (isset($_POST['submit'])) {
 		AND codeexpense='".$SelectedType."'";
 
 	$ErrMsg = _('The Tab Type record could not be deleted because');
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 	prnMsg(_('Expense code').' '. $SelectedType .' '. _('for type of tab').' '. $SelectedTab .' '. _('has been deleted') ,'success');
 	unset($_GET['delete']);
 }
@@ -119,7 +119,7 @@ or deletion of the records*/
 					typetabdescription
 			FROM pctypetabs";
 
-	$result = DB_query($SQL,$db);
+	$result = DB_query($SQL);
 	echo '<option value="">' . _('Not Yet Selected') . '</option>';
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($SelectedTab) and $myrow['typetabcode']==$SelectedTab) {
@@ -161,7 +161,7 @@ if (isset($_POST['process'])OR isset($SelectedTab)) {
 			WHERE pctabexpenses.typetabcode='".$SelectedTab."'
 			ORDER BY pctabexpenses.codeexpense ASC";
 
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 
 	echo '<br />
 			<table class="selection">';
@@ -207,7 +207,7 @@ while ($myrow = DB_fetch_array($result)) {
 						description
 				FROM pcexpenses";
 
-		$result = DB_query($SQL,$db);
+		$result = DB_query($SQL);
 		if (!isset($_POST['SelectedExpense'])){
 			echo '<option selected="selected" value="">' . _('Not Yet Selected') . '</option>';
 		}

@@ -10,7 +10,7 @@
 		$Searchsql = "SELECT count(debtorno)
   				     FROM debtorsmaster
 				     WHERE debtorno='".$DebtorNumber."'";
-		$SearchResult=DB_query($Searchsql, $db);
+		$SearchResult=DB_query($Searchsql);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] != 0) {
 			$Errors[$i] = DebtorNoAlreadyExists;
@@ -23,7 +23,7 @@
 		$Searchsql = "SELECT count(debtorno)
 				     FROM debtorsmaster
 				     WHERE debtorno='".$DebtorNumber."'";
-		$SearchResult=DB_query($Searchsql, $db);
+		$SearchResult=DB_query($Searchsql);
 		$answer = DB_fetch_array($SearchResult);
 		if ($answer[0]==0) {
 			$Errors[$i] = DebtorDoesntExist;
@@ -52,7 +52,7 @@
 		$Searchsql = "SELECT COUNT(currabrev)
 					  FROM currencies
 					  WHERE currabrev='".$CurrCode."'";
-		$SearchResult=DB_query($Searchsql, $db);
+		$SearchResult=DB_query($Searchsql);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] == 0) {
 			$Errors[$i] = CurrencyCodeNotSetup;
@@ -65,7 +65,7 @@
 		$Searchsql = "SELECT COUNT(typeabbrev)
 					 FROM salestypes
 					  WHERE typeabbrev='".$SalesType."'";
-		$SearchResult=DB_query($Searchsql, $db);
+		$SearchResult=DB_query($Searchsql);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] == 0) {
 			$Errors[$i] = SalesTypeNotSetup;
@@ -86,7 +86,7 @@
 		$Searchsql = "SELECT COUNT(reasoncode)
 					 FROM holdreasons
 					  WHERE reasoncode='".$HoldReason."'";
-		$SearchResult=DB_query($Searchsql, $db);
+		$SearchResult=DB_query($Searchsql);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] == 0) {
 			$Errors[$i] = HoldReasonNotSetup;
@@ -99,7 +99,7 @@
 		$Searchsql = "SELECT COUNT(termsindicator)
 					 FROM paymentterms
 					  WHERE termsindicator='".$PaymentTerms."'";
-		$SearchResult=DB_query($Searchsql, $db);
+		$SearchResult=DB_query($Searchsql);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] == 0) {
 			$Errors[$i] = PaymentTermsNotSetup;
@@ -233,7 +233,7 @@
 		$Searchsql = "SELECT COUNT(typeid)
 					 FROM debtortype
 					  WHERE typeid='".$debtortype."'";
-		$SearchResult=DB_query($Searchsql, $db);
+		$SearchResult=DB_query($Searchsql);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] == 0) {
 			$Errors[$i] = CustomerTypeNotSetup;
@@ -263,7 +263,7 @@
 		}
 		$autonumbersql="SELECT confvalue FROM config
 						 WHERE confname='AutoDebtorNo'";
-		$autonumberresult=DB_query($autonumbersql, $db);
+		$autonumberresult=DB_query($autonumbersql);
 		$autonumber=DB_fetch_row($autonumberresult);
 		if ($autonumber[0]==0) {
 			$Errors=VerifyDebtorNo($CustomerDetails['debtorno'], sizeof($Errors), $Errors, $db);

@@ -479,7 +479,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$Suppli
 		} // End of if ($_POST['ReportType']
 		//echo "<br/>$sql<br/>";
 		$ErrMsg = _('The SQL to find the parts selected failed with the message');
-		$result = DB_query($sql,$db,$ErrMsg);
+		$result = DB_query($sql,$ErrMsg);
 		$ctr = 0;
 		$TotalQty = 0;
 		$TotalExtCost = 0;
@@ -1254,7 +1254,7 @@ function submitcsv(&$db,
 		} // End of if ($_POST['ReportType']
 		//echo "<br/>$sql<br/>";
 		$ErrMsg = _('The SQL to find the parts selected failed with the message');
-		$result = DB_query($sql,$db,$ErrMsg);
+		$result = DB_query($sql,$ErrMsg);
 		$ctr = 0;
 		$TotalQty = 0;
 		$TotalExtCost = 0;
@@ -1593,7 +1593,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 			<td>' . _('Stock Categories') . ':</td>
 			<td><select name="Category">';
 	$sql="SELECT categoryid, categorydescription FROM stockcategory";
-	$CategoryResult= DB_query($sql,$db);
+	$CategoryResult= DB_query($sql);
 	echo '<option selected="selected" value="All">' . _('All Categories') . '</option>';
 	While ($myrow = DB_fetch_array($CategoryResult)){
 		echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription'] . '</option>';

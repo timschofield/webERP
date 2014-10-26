@@ -20,7 +20,7 @@ echo '<table class="selection">
 
 $sql = "SELECT locations.loccode, locationname FROM locations
 			INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
-$resultStkLocs = DB_query($sql,$db);
+$resultStkLocs = DB_query($sql);
 while ($myrow=DB_fetch_array($resultStkLocs)){
 	if (isset($_POST['StockLocation']) AND $_POST['StockLocation']!='All'){
 		if ($myrow['loccode'] == $_POST['StockLocation']){
@@ -82,7 +82,7 @@ $sql = "SELECT stockmoves.stockid,
         	ORDER BY stkmoveno DESC";
 
 $ErrMsg = _('The stock movements for the selected criteria could not be retrieved because');
-$MovtsResult = DB_query($sql, $db,$ErrMsg);
+$MovtsResult = DB_query($sql,$ErrMsg);
 
 echo '<table cellpadding="5" cellspacing="4 "class="selection">';
 $tableheader = '<tr>

@@ -17,7 +17,7 @@ echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/g
 
 
 if (isset($_GET['Complete'])) {
-	$result = DB_query("UPDATE fixedassettasks SET lastcompleted='" . Date('Y-m-d') . "' WHERE taskid='" . $_GET['TaskID'] . "'",$db);
+	$result = DB_query("UPDATE fixedassettasks SET lastcompleted='" . Date('Y-m-d') . "' WHERE taskid='" . $_GET['TaskID'] . "'");
 }
 
 
@@ -41,7 +41,7 @@ $sql="SELECT taskid,
 		ORDER BY ADDDATE(lastcompleted,frequencydays) DESC";
 
 $ErrMsg = _('The maintenance schedule cannot be retrieved because');
-$Result=DB_query($sql,$db,$ErrMsg);
+$Result=DB_query($sql,$ErrMsg);
 
 echo '<table class="selection">
      <tr>
@@ -58,7 +58,7 @@ echo '<table class="selection">
 while ($myrow=DB_fetch_array($Result)) {
 
 	if ($myrow['manager']!=''){
-		$ManagerResult = DB_query("SELECT realname FROM www_users WHERE userid='" . $myrow['manager'] . "'",$db);
+		$ManagerResult = DB_query("SELECT realname FROM www_users WHERE userid='" . $myrow['manager'] . "'");
 		$ManagerRow = DB_fetch_array($ManagerResult);
 		$ManagerName = $ManagerRow['realname'];
 	} else {

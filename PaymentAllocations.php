@@ -51,7 +51,7 @@ $SQL= "SELECT supptrans.supplierno,
 								AND supptrans.id = suppallocs.transid_allocto)";
 
 
-$Result = DB_query($SQL, $db);
+$Result = DB_query($SQL);
 if (DB_num_rows($Result) == 0){
 	prnMsg(_('There may be a problem retrieving the information. No data is returned'),'warn');
 	echo '<br /><a href ="javascript:history.back()">' . _('Go back') . '</a>';

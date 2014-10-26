@@ -45,7 +45,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 					lastdate_in_period
 			FROM periods
 			ORDER BY periodno DESC";
-	$Periods = DB_query($sql,$db);
+	$Periods = DB_query($sql);
 
 
 	while ($myrow=DB_fetch_array($Periods,$db)){
@@ -69,7 +69,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 	if (!isset($_POST['ToPeriod']) OR $_POST['ToPeriod']==''){
 		$LastDate = date('Y-m-d',mktime(0,0,0,Date('m')+1,0,Date('Y')));
 		$sql = "SELECT periodno FROM periods where lastdate_in_period = '" . $LastDate . "'";
-		$MaxPrd = DB_query($sql,$db);
+		$MaxPrd = DB_query($sql);
 		$MaxPrdrow = DB_fetch_row($MaxPrd);
 		$DefaultToPeriod = (int) ($MaxPrdrow[0]);
 
@@ -102,7 +102,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 				FROM tags
 				ORDER BY tagref";
 
-	$result=DB_query($SQL,$db);
+	$result=DB_query($SQL);
 	echo '<option value="0">0 - ' . _('None') . '</option>';
 	while ($myrow=DB_fetch_array($result)){
     	if (isset($_POST['tag']) and $_POST['tag']==$myrow['tagref']){
@@ -138,7 +138,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 } else if (isset($_POST['PrintPDF'])) {
 
 	$tagsql="SELECT tagdescription FROM tags WHERE tagref='".$_POST['tag']."'";
-	$tagresult=DB_query($tagsql, $db);
+	$tagresult=DB_query($tagsql);
 	$tagrow=DB_fetch_array($tagresult);
 	$Tag=$tagrow['tagdescription'];
 	include('includes/PDFStarter.php');
@@ -160,7 +160,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 	$sql = "SELECT lastdate_in_period
 			FROM periods
 			WHERE periodno='" . $_POST['ToPeriod'] . "'";
-	$PrdResult = DB_query($sql, $db);
+	$PrdResult = DB_query($sql);
 	$myrow = DB_fetch_row($PrdResult);
 	$PeriodToDate = MonthAndYearFromSQLDate($myrow[0]);
 
@@ -188,7 +188,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 					accountgroups.groupname,
 					gltrans.account";
 
-	$AccountsResult = DB_query($SQL,$db);
+	$AccountsResult = DB_query($SQL);
 
 	if (DB_error_no($db) != 0) {
 		$Title = _('Income and Expenditure') . ' - ' . _('Problem Report') . '....';
@@ -484,7 +484,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 	$sql = "SELECT lastdate_in_period
 			FROM periods
 			WHERE periodno='" . $_POST['ToPeriod'] . "'";
-	$PrdResult = DB_query($sql, $db);
+	$PrdResult = DB_query($sql);
 	$myrow = DB_fetch_row($PrdResult);
 	$PeriodToDate = MonthAndYearFromSQLDate($myrow[0]);
 
@@ -512,9 +512,9 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 					gltrans.account";
 
 
-	$AccountsResult = DB_query($SQL,$db,_('No general ledger accounts were returned by the SQL because'),_('The SQL that failed was'));
+	$AccountsResult = DB_query($SQL,_('No general ledger accounts were returned by the SQL because'),_('The SQL that failed was'));
 	$sql="SELECT tagdescription FROM tags WHERE tagref='".$_POST['tag'] . "'";
-	$result=DB_query($sql, $db);
+	$result=DB_query($sql);
 	$myrow=DB_fetch_row($result);
 
 	/*show a table of the accounts info returned by the SQL

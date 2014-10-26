@@ -35,7 +35,7 @@ echo '<table>
 	         <td>' . _('Selected Accounts') . ':</td>
 	         <td><select name="Account[]" size="12" multiple="multiple">';
 $sql = "SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode";
-$AccountsResult = DB_query($sql,$db);
+$AccountsResult = DB_query($sql);
 $i=0;
 while ($myrow=DB_fetch_array($AccountsResult,$db)){
 	if(isset($_POST['Account'][$i]) AND $myrow['accountcode'] == $_POST['Account'][$i]){
@@ -50,7 +50,7 @@ echo '</select></td>';
 echo '<td>' . _('For Period range').':</td>
 		<td><select name="Period[]" size="12" multiple="multiple">';
 $sql = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC";
-$Periods = DB_query($sql,$db);
+$Periods = DB_query($sql);
 $id=0;
 
 while ($myrow=DB_fetch_array($Periods,$db)){
@@ -71,7 +71,7 @@ $SQL = "SELECT tagref,
 		FROM tags
 		ORDER BY tagref";
 
-$result=DB_query($SQL,$db);
+$result=DB_query($SQL);
 echo '<option value="0">0 - ' . _('All tags') . '</option>';
 while ($myrow=DB_fetch_array($result)){
 	if (isset($_POST['tag']) and $_POST['tag']==$myrow['tagref']){
@@ -124,7 +124,7 @@ if (isset($_POST['MakeCSV'])){
 							    FROM accountgroups
 							    INNER JOIN chartmaster ON accountgroups.groupname=chartmaster.group_
 							    WHERE chartmaster.accountcode='" . $SelectedAccount . "'";
-		$result = DB_query($SQL,$db);
+		$result = DB_query($SQL);
 		$AccountDetailRow = DB_fetch_row($result);
 		$AccountName = $AccountDetailRow[1];
 		if ($AccountDetailRow[1]==1){
@@ -173,7 +173,7 @@ if (isset($_POST['MakeCSV'])){
 		}
 
 		$ErrMsg = _('The transactions for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved because') ;
-		$TransResult = DB_query($sql,$db,$ErrMsg);
+		$TransResult = DB_query($sql,$ErrMsg);
 
 		fwrite($fp, $SelectedAccount . ' - ' . $AccountName . ' ' . _('for period'). ' ' . $FirstPeriodSelected . ' ' . _('to') . ' ' . $LastPeriodSelected . "\n");
 		if ($PandLAccount==True) {
@@ -187,7 +187,7 @@ if (isset($_POST['MakeCSV'])){
 				AND chartdetails.period='" . $FirstPeriodSelected . "'";
 
 			$ErrMsg = _('The chart details for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved');
-			$ChartDetailsResult = DB_query($sql,$db,$ErrMsg);
+			$ChartDetailsResult = DB_query($sql,$ErrMsg);
 			$ChartDetailRow = DB_fetch_array($ChartDetailsResult);
 
 			$RunningTotal =$ChartDetailRow['bfwd'];
@@ -216,7 +216,7 @@ if (isset($_POST['MakeCSV'])){
 							AND chartdetails.period='" . $PeriodNo . "'";
 
 					$ErrMsg = _('The chart details for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved');
-					$ChartDetailsResult = DB_query($sql,$db,$ErrMsg);
+					$ChartDetailsResult = DB_query($sql,$ErrMsg);
 					$ChartDetailRow = DB_fetch_array($ChartDetailsResult);
 					if ($PeriodTotal < 0) {
 						fwrite($fp, $SelectedAccount . ', ' . $PeriodNo . ', ' . _('Period Total') . ',,,,' . -$PeriodTotal. "\n");
@@ -234,7 +234,7 @@ if (isset($_POST['MakeCSV'])){
 			$FormatedTranDate = ConvertSQLDate($myrow['trandate']);
 
 			$tagsql="SELECT tagdescription FROM tags WHERE tagref='".$myrow['tag'] . "'";
-			$tagresult=DB_query($tagsql,$db);
+			$tagresult=DB_query($tagsql);
 			$tagrow = DB_fetch_array($tagresult);
 			if ($myrow['amount']<0){
 				fwrite($fp, $SelectedAccount . ',' . $myrow['periodno'] . ', ' . $myrow['typename'] . ',' . $myrow['typeno'] . ',' . $FormatedTranDate . ',,' . -$myrow['amount'] . ',' . $myrow['narrative'] . ',' . $tagrow['tagdescription']. "\n");

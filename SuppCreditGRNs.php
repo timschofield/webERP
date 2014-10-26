@@ -161,7 +161,7 @@ $SQL = "SELECT grnno,
 		WHERE grns.supplierid ='" . $_SESSION['SuppTrans']->SupplierID . "'
 		AND grns.deliverydate >= '" . FormatDateForSQL($_POST['Show_Since']) . "'
 		ORDER BY grns.grnno";
-$GRNResults = DB_query($SQL,$db);
+$GRNResults = DB_query($SQL);
 
 if (DB_num_rows($GRNResults)==0){
 	prnMsg(_('There are no goods received records for') . ' ' . $_SESSION['SuppTrans']->SupplierName . ' ' . _('since') . ' ' . $_POST['Show_Since'] . '<br /> ' . _('To enter a credit against goods received') . ', ' . _('the goods must first be received using the link below to select purchase orders to receive'),'info');
@@ -277,7 +277,7 @@ if (DB_num_rows($GRNResults)>0){
 				LEFT JOIN stockmaster ON purchorderdetails.itemcode=stockmaster.stockid
 				WHERE grns.grnno='" .$_POST['GRNNo'] . "'";
 
-		$GRNEntryResult = DB_query($SQL,$db);
+		$GRNEntryResult = DB_query($SQL);
 		$myrow = DB_fetch_array($GRNEntryResult);
 
 		echo '<br />

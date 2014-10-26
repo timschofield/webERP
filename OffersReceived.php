@@ -14,7 +14,7 @@ if (isset($_POST['supplierid'])) {
 				paymentterms
 			FROM suppliers
 			WHERE supplierid='" . $_POST['supplierid'] . "'";
-	$result = DB_query($sql, $db);
+	$result = DB_query($sql);
 	$myrow=DB_fetch_array($result);
 	$SupplierName=$myrow['suppname'];
 	$Email=$myrow['email'];
@@ -34,7 +34,7 @@ if (!isset($_POST['supplierid'])) {
 		WHERE purchorderauth.userid='" . $_SESSION['UserID'] . "'
 		AND offers.expirydate>'" . date('Y-m-d') . "'
 		AND purchorderauth.cancreate=0";
-	$result=DB_query($sql, $db);
+	$result=DB_query($sql);
 	if (DB_num_rows($result)==0) {
 		prnMsg(_('There are no offers outstanding that you are authorised to deal with'), 'information');
 	} else {
@@ -90,7 +90,7 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 			AND offers.expirydate>='" . date('Y-m-d') . "'
 			AND offers.supplierid='" . $_POST['supplierid'] . "'
 			ORDER BY offerid";
-	$result=DB_query($sql, $db);
+	$result=DB_query($sql);
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
     echo '<div>';
@@ -176,7 +176,7 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 		$MailText.=_('The following offers you made have been accepted')."\n";
 		$MailText.=_('An official order will be sent to you in due course')."\n\n";
 		$sql="SELECT rate FROM currencies where currabrev='" . $CurrCode ."'";
-		$result=DB_query($sql, $db);
+		$result=DB_query($sql);
 		$myrow=DB_fetch_array($result);
 		$Rate=$myrow['rate'];
 		$OrderNo =  GetNextTransNo(18, $db);
@@ -202,7 +202,7 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 					'"._('Pending')."',
 					'"._('Automatically generated from tendering system')."',
 					'" . $PaymentTerms."')";
-		DB_query($sql, $db);
+		DB_query($sql);
 		foreach ($Accepts as $AcceptID) {
 			$sql="SELECT offers.quantity,
 							offers.price,
@@ -213,7 +213,7 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 						LEFT JOIN stockmaster
 							ON offers.stockid=stockmaster.stockid
 						WHERE offerid='" . $AcceptID."'";
-			$result= DB_query($sql, $db);
+			$result= DB_query($sql);
 			$myrow=DB_fetch_array($result);
 			$MailText.=$myrow['description'] . "\t"._('Quantity').' ' . $myrow['quantity'] . "\t"._('Price').' '.
 					locale_number_format($myrow['price'])."\n";
@@ -233,9 +233,9 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 											'" . $myrow['price'] . "',
 											'" . $myrow['quantity'] . "',
 											'" . $myrow['uom'] . "')";
-			$result=DB_query($sql, $db);
+			$result=DB_query($sql);
 			$sql="DELETE FROM offers WHERE offerid='" . $AcceptID."'";
-			$result=DB_query($sql, $db);
+			$result=DB_query($sql);
 		}
 		$mail = new htmlMimeMail();
 		$mail->setSubject(_('Your offer to').' ' . $_SESSION['CompanyRecord']['coyname'].' ' . _('has been accepted'));
@@ -273,11 +273,11 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 						LEFT JOIN stockmaster
 							ON offers.stockid=stockmaster.stockid
 						WHERE offerid='" . $RejectID."'";
-			$result= DB_query($sql, $db);
+			$result= DB_query($sql);
 			$myrow=DB_fetch_array($result);
 			$MailText .= $myrow['description'] . "\t" . _('Quantity') . ' ' . $myrow['quantity'] . "\t" . _('Price') . ' ' . locale_number_format($myrow['price'])."\n";
 			$sql="DELETE FROM offers WHERE offerid='" . $RejectID . "'";
-			$result=DB_query($sql, $db);
+			$result=DB_query($sql);
 		}
 		$mail = new htmlMimeMail();
 		$mail->setSubject(_('Your offer to').' ' . $_SESSION['CompanyRecord']['coyname'].' ' . _('has been rejected'));

@@ -30,7 +30,7 @@ if (!isset($_SESSION['JournalDetail'])){
 	a receipt or a payment transaction to ensure a bank trans is available for matching off vs statements */
 
 	$SQL = "SELECT accountcode FROM bankaccounts";
-	$result = DB_query($SQL,$db);
+	$result = DB_query($SQL);
 	$i=0;
 	while ($Act = DB_fetch_row($result)){
 		$_SESSION['JournalDetail']->BankAccounts[$i]= $Act[0];
@@ -85,7 +85,7 @@ if (isset($_POST['CommitBatch']) AND $_POST['CommitBatch']==_('Accept and Proces
 					)";
 		$ErrMsg = _('Cannot insert a GL entry for the journal line because');
 		$DbgMsg = _('The SQL that failed to insert the GL Trans record was');
-		$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 		if ($_POST['JournalType']=='Reversing'){
 			$SQL = "INSERT INTO gltrans (type,
@@ -108,7 +108,7 @@ if (isset($_POST['CommitBatch']) AND $_POST['CommitBatch']==_('Accept and Proces
 
 			$ErrMsg =_('Cannot insert a GL entry for the reversing journal because');
 			$DbgMsg = _('The SQL that failed to insert the GL Trans record was');
-			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 		}
 	}
 
@@ -168,7 +168,7 @@ if (isset($_POST['CommitBatch']) AND $_POST['CommitBatch']==_('Accept and Proces
 			$SQL = "SELECT accountname
 				FROM chartmaster
 				WHERE accountcode='" . $_POST['GLManualCode'] . "'";
-			$Result=DB_query($SQL,$db);
+			$Result=DB_query($SQL);
 
 			if (DB_num_rows($Result)==0){
 				prnMsg(_('The manual GL code entered does not exist in the database') . ' - ' . _('so this GL analysis item could not be added'),'warn');
@@ -213,7 +213,7 @@ if (isset($_POST['CommitBatch']) AND $_POST['CommitBatch']==_('Accept and Proces
 				$_POST['GLAmount']=0;
 			}
 			$SQL = "SELECT accountname FROM chartmaster WHERE accountcode='" . $_POST['GLCode'] . "'";
-			$Result=DB_query($SQL,$db);
+			$Result=DB_query($SQL);
 			$myrow=DB_fetch_array($Result);
 			$_SESSION['JournalDetail']->add_to_glanalysis(filter_number_format($_POST['GLAmount']),
 															$_POST['GLNarrative'],
@@ -307,7 +307,7 @@ $SQL = "SELECT tagref,
 		FROM tags
 		ORDER BY tagref";
 
-$result=DB_query($SQL,$db);
+$result=DB_query($SQL);
 echo '<option value="0">0 - ' . _('None') . '</option>';
 while ($myrow=DB_fetch_array($result)){
 	if (isset($_POST['tag']) AND $_POST['tag']==$myrow['tagref']){
@@ -329,7 +329,7 @@ $sql="SELECT accountcode,
 		FROM chartmaster
 		ORDER BY accountcode";
 
-$result=DB_query($sql, $db);
+$result=DB_query($sql);
 echo '<td>
 	<select name="GLCode" onchange="return assignComboToInput(this,'.'GLManualCode'.')">
 		<option value="">' . _('Select a general ledger account code') . '</option>';
@@ -406,7 +406,7 @@ foreach ($_SESSION['JournalDetail']->GLEntries as $JournalItem) {
 	$sql="SELECT tagdescription
 			FROM tags
 			WHERE tagref='".$JournalItem->tag . "'";
-	$result=DB_query($sql, $db);
+	$result=DB_query($sql);
 	$myrow=DB_fetch_row($result);
 	if ($JournalItem->tag==0) {
 		$TagDescription=_('None');

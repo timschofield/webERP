@@ -70,7 +70,7 @@ if (isset($_POST['submit']) OR isset($_GET['remove']) OR isset($_GET['add']) ) {
 	}
 	// Need to exec the query
 	if (isset($sql) AND $InputError != 1 ) {
-		$result = DB_query($sql,$db,$ErrMsg);
+		$result = DB_query($sql,$ErrMsg);
 		if( $result ) {
 			prnMsg( $ResMsg,'success');
 		}
@@ -79,16 +79,16 @@ if (isset($_POST['submit']) OR isset($_GET['remove']) OR isset($_GET['add']) ) {
 	//the Security heading wants to be deleted but some checks need to be performed fist
 	// PREVENT DELETES IF DEPENDENT RECORDS IN 'www_users'
 	$sql= "SELECT COUNT(*) FROM www_users WHERE fullaccess='" . $_GET['SelectedRole'] . "'";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {
 		prnMsg( _('Cannot delete this role because user accounts are setup using it'),'warn');
 		echo '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('user accounts that have this security role setting') . '</font>';
 	} else {
 		$sql="DELETE FROM securitygroups WHERE secroleid='" . $_GET['SelectedRole'] . "'";
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 		$sql="DELETE FROM securityroles WHERE secroleid='" . $_GET['SelectedRole'] . "'";
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 		prnMsg( $_GET['SecRoleName'] . ' ' . _('security role has been deleted') . '!','success');
 
 	} //end if account group used in GL accounts
@@ -104,7 +104,7 @@ if (!isset($SelectedRole)) {
 			secrolename
 		FROM securityroles
 		ORDER BY secrolename";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 
 	echo '<table class="selection">';
 	echo '<tr><th>' . _('Role') . '</th></tr>';
@@ -149,7 +149,7 @@ if (isset($SelectedRole)) {
 			secrolename
 		FROM securityroles
 		WHERE secroleid='" . $SelectedRole . "'";
-	$result = DB_query($sql, $db);
+	$result = DB_query($sql);
 	if ( DB_num_rows($result) == 0 ) {
 		prnMsg( _('The selected role is no longer available.'),'warn');
 	} else {
@@ -187,10 +187,10 @@ if (isset($SelectedRole)) {
 
 	$sqlUsed = "SELECT tokenid FROM securitygroups WHERE secroleid='". $SelectedRole . "'";
 
-	$Result = DB_query($sql, $db);
+	$Result = DB_query($sql);
 
 	/*Make an array of the used tokens */
-	$UsedResult = DB_query($sqlUsed, $db);
+	$UsedResult = DB_query($sqlUsed);
 	$TokensUsed = array();
 	$i=0;
 	while ($myrow=DB_fetch_row($UsedResult)){

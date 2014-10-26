@@ -36,7 +36,7 @@ If (isset($_POST['PrintPDF'])
 			ORDER BY bom.parent,
 					bom.component";
 
-	$BOMResult = DB_query($SQL,$db,'','',false,false); //dont do error trapping inside DB_query
+	$BOMResult = DB_query($SQL,'','',false,false); //dont do error trapping inside DB_query
 
 	if (DB_error_no($db) !=0) {
 	   $Title = _('Bill of Materials Listing') . ' - ' . _('Problem Report');
@@ -73,7 +73,7 @@ If (isset($_POST['PrintPDF'])
 				$YPos -=$line_height;
 			}
 			$SQL = "SELECT description FROM stockmaster WHERE stockmaster.stockid = '" . $BOMList['parent'] . "'";
-			$ParentResult = DB_query($SQL,$db);
+			$ParentResult = DB_query($SQL);
 			$ParentRow = DB_fetch_row($ParentResult);
 			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,400-$Left_Margin,$FontSize,$BOMList['parent'] . ' - ' . $ParentRow[0],'left');
 			$ParentPart = $BOMList['parent'];

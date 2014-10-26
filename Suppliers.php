@@ -322,7 +322,7 @@ if (isset($_POST['submit'])) {
 
 	//first off validate inputs sensible
 	$sql="SELECT COUNT(supplierid) FROM suppliers WHERE supplierid='".$SupplierID."'";
-	$result=DB_query($sql,$db);
+	$result=DB_query($sql);
 	$myrow=DB_fetch_row($result);
 	if ($myrow[0]>0 and isset($_POST['New'])) {
 		$InputError = 1;
@@ -412,7 +412,7 @@ if (isset($_POST['submit'])) {
 			// Get the lat/long from our geocoding host
 			$sql = "SELECT * FROM geocode_param WHERE 1";
 			$ErrMsg = _('An error occurred in retrieving the information');
-			$resultgeo = DB_query($sql, $db, $ErrMsg);
+			$resultgeo = DB_query($sql, $ErrMsg);
 			$row = DB_fetch_array($resultgeo);
 			$api_key = $row['geocode_key'];
 			$map_host = $row['map_host'];
@@ -458,13 +458,13 @@ if (isset($_POST['submit'])) {
 			$supptranssql = "SELECT supplierno
 							FROM supptrans
 							WHERE supplierno='".$SupplierID ."'";
-			$suppresult = DB_query($supptranssql, $db);
+			$suppresult = DB_query($supptranssql);
 			$supptrans = DB_num_rows($suppresult);
 
 			$suppcurrssql = "SELECT currcode
 							FROM suppliers
 							WHERE supplierid='".$SupplierID ."'";
-			$currresult = DB_query($suppcurrssql, $db);
+			$currresult = DB_query($suppcurrssql);
 			$suppcurr = DB_fetch_row($currresult);
 
 			if ($supptrans == 0) {
@@ -526,7 +526,7 @@ if (isset($_POST['submit'])) {
 			$ErrMsg = _('The supplier could not be updated because');
 			$DbgMsg = _('The SQL that was used to update the supplier but failed was');
 			// echo $sql;
-			$result = DB_query($sql, $db, $ErrMsg, $DbgMsg);
+			$result = DB_query($sql, $ErrMsg, $DbgMsg);
 
 			prnMsg(_('The supplier master record for') . ' ' . $SupplierID . ' ' . _('has been updated'),'success');
 
@@ -589,7 +589,7 @@ if (isset($_POST['submit'])) {
 			$ErrMsg = _('The supplier') . ' ' . $_POST['SuppName'] . ' ' . _('could not be added because');
 			$DbgMsg = _('The SQL that was used to insert the supplier but failed was');
 
-			$result = DB_query($sql, $db, $ErrMsg, $DbgMsg);
+			$result = DB_query($sql, $ErrMsg, $DbgMsg);
 
 			prnMsg(_('A new supplier for') . ' ' . $_POST['SuppName'] . ' ' . _('has been added to the database'),'success');
 
@@ -638,7 +638,7 @@ if (isset($_POST['submit'])) {
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'SuppTrans' , PurchOrders, SupplierContacts
 
 	$sql= "SELECT COUNT(*) FROM supptrans WHERE supplierno='" . $SupplierID . "'";
-	$result = DB_query($sql, $db);
+	$result = DB_query($sql);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0] > 0) {
 		$CancelDelete = 1;
@@ -647,7 +647,7 @@ if (isset($_POST['submit'])) {
 
 	} else {
 		$sql= "SELECT COUNT(*) FROM purchorders WHERE supplierno='" . $SupplierID . "'";
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0] > 0) {
 			$CancelDelete = 1;
@@ -655,7 +655,7 @@ if (isset($_POST['submit'])) {
 			echo '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('orders against this supplier');
 		} else {
 			$sql= "SELECT COUNT(*) FROM suppliercontacts WHERE supplierid='" . $SupplierID . "'";
-			$result = DB_query($sql, $db);
+			$result = DB_query($sql);
 			$myrow = DB_fetch_row($result);
 			if ($myrow[0] > 0) {
 				$CancelDelete = 1;
@@ -668,7 +668,7 @@ if (isset($_POST['submit'])) {
 	}
 	if ($CancelDelete == 0) {
 		$sql="DELETE FROM suppliers WHERE supplierid='" . $SupplierID . "'";
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		prnMsg(_('Supplier record for') . ' ' . $SupplierID . ' ' . _('has been deleted'),'success');
 		unset($SupplierID);
 		unset($_SESSION['SupplierID']);
@@ -751,7 +751,7 @@ if (!isset($SupplierID)) {
 		<tr>
 			<td>' . _('Supplier Type') . ':</td>
 			<td><select name="SupplierType">';
-	$result=DB_query("SELECT typeid, typename FROM suppliertype", $db);
+	$result=DB_query("SELECT typeid, typename FROM suppliertype");
 	while ($myrow = DB_fetch_array($result)) {
 		echo '<option value="' . $myrow['typeid'] . '">' . $myrow['typename'] . '</option>';
 	} //end while loop
@@ -775,7 +775,7 @@ if (!isset($SupplierID)) {
 			<td>' . _('Bank Account No') . ':</td>
 			<td><input type="text" placeholder="'._('Less than 30 characters').'" name="BankAct" size="31" maxlength="30" /></td></tr>';
 
-	$result=DB_query("SELECT terms, termsindicator FROM paymentterms", $db);
+	$result=DB_query("SELECT terms, termsindicator FROM paymentterms");
 
 	echo '<tr>
 			<td>' . _('Payment Terms') . ':</td>
@@ -787,7 +787,7 @@ if (!isset($SupplierID)) {
 	DB_data_seek($result, 0);
 	echo '</select></td></tr>';
 
-	$result=DB_query("SELECT id, coyname FROM factorcompanies", $db);
+	$result=DB_query("SELECT id, coyname FROM factorcompanies");
 
 	echo '<tr>
 			<td>' . _('Factor Company') . ':</td>
@@ -807,9 +807,9 @@ if (!isset($SupplierID)) {
 			<td>' . _('Tax Reference') . ':</td>
 			<td><input type="text" name="TaxRef" placehoder="'._('Within 20 characters').'" size="21" maxlength="20" /></td></tr>';
 
-	$result=DB_query("SELECT currency, currabrev FROM currencies", $db);
+	$result=DB_query("SELECT currency, currabrev FROM currencies");
 	if (!isset($_POST['CurrCode'])) {
-		$CurrResult = DB_query("SELECT currencydefault FROM companies WHERE coycode=1", $db);
+		$CurrResult = DB_query("SELECT currencydefault FROM companies WHERE coycode=1");
 		$myrow = DB_fetch_row($CurrResult);
 		$_POST['CurrCode'] = $myrow[0];
 	}
@@ -842,7 +842,7 @@ if (!isset($SupplierID)) {
 	DB_data_seek($result, 0);
 
 	$sql = "SELECT taxgroupid, taxgroupdescription FROM taxgroups";
-	$result = DB_query($sql, $db);
+	$result = DB_query($sql);
 
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['TaxGroup']) and $_POST['TaxGroup'] == $myrow['taxgroupid']) {
@@ -897,7 +897,7 @@ else {
 			FROM suppliers
 			WHERE supplierid = '" . $SupplierID . "'";
 
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		$myrow = DB_fetch_array($result);
 
 		$_POST['SuppName'] = stripcslashes($myrow['suppname']);
@@ -995,7 +995,7 @@ else {
 		<tr>
 			<td>' . _('Supplier Type') . ':</td>
 			<td><select name="SupplierType">';
-	$result=DB_query("SELECT typeid, typename FROM suppliertype", $db);
+	$result=DB_query("SELECT typeid, typename FROM suppliertype");
 	while ($myrow = DB_fetch_array($result)) {
 		if ($_POST['SupplierType']==$myrow['typeid']) {
 			echo '<option selected="selected" value="'. $myrow['typeid'] . '">' . $myrow['typename'] . '</option>';
@@ -1022,7 +1022,7 @@ else {
 			<td><input type="text" name="BankAct" size="31" maxlength="30" value="' . $_POST['BankAct'] . '" /></td>
 		</tr>';
 
-	$result=DB_query("SELECT terms, termsindicator FROM paymentterms", $db);
+	$result=DB_query("SELECT terms, termsindicator FROM paymentterms");
 
 	echo '<tr>
 			<td>' . _('Payment Terms') . ':</td>
@@ -1038,7 +1038,7 @@ else {
 	DB_data_seek($result, 0);
 	echo '</select></td></tr>';
 
-	$result=DB_query("SELECT id, coyname FROM factorcompanies", $db);
+	$result=DB_query("SELECT id, coyname FROM factorcompanies");
 
 	echo '<tr>
 			<td>' . _('Factor Company') . ':</td>
@@ -1058,7 +1058,7 @@ else {
 			<td><input type="text" name="TaxRef" size="21" maxlength="20" value="' . $_POST['TaxRef'] .'" /></td>
 		</tr>';
 
-	$result=DB_query("SELECT currency, currabrev FROM currencies", $db);
+	$result=DB_query("SELECT currency, currabrev FROM currencies");
 
 	echo '<tr>
 			<td>' . _('Supplier Currency') . ':</td>
@@ -1096,7 +1096,7 @@ else {
 	DB_data_seek($result, 0);
 
 	$sql = "SELECT taxgroupid, taxgroupdescription FROM taxgroups";
-	$result = DB_query($sql, $db);
+	$result = DB_query($sql);
 
 	while ($myrow = DB_fetch_array($result)) {
 		if ($myrow['taxgroupid'] == $_POST['TaxGroup']) {

@@ -78,7 +78,7 @@ if (isset($_POST['submit'])) {
 				WHERE custbranch.debtorno='" . $_SESSION['CustomerID'] . "'
 				AND custbranch.branchcode='" . $_POST['Branch'] . "'";
 
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 		if (DB_num_rows($result) ==0){
 			$InputError =1;
 			$msg = _('The branch code entered is not currently defined');
@@ -150,7 +150,7 @@ if (isset($_POST['submit'])) {
 	}
 	//run the SQL from either of the above possibilites
 	if ($InputError!=1){
-		$result = DB_query($sql,$db,'','',false,false);
+		$result = DB_query($sql,'','',false,false);
 		if (DB_error_no($db)!=0){
 		   If ($msg==_('Price Updated')){
 				$msg = _('The price could not be updated because') . ' - ' . DB_error_msg($db);
@@ -179,7 +179,7 @@ if (isset($_POST['submit'])) {
 			AND prices.startdate='" . $_GET['StartDate'] . "'
 			AND prices.enddate='" . $_GET['EndDate'] . "'";
 
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 	prnMsg( _('This price has been deleted') . '!','success');
 }
 
@@ -203,7 +203,7 @@ $sql = "SELECT prices.price,
 
 $ErrMsg = _('Could not retrieve the normal prices set up because');
 $DbgMsg = _('The SQL used to retrieve these records was');
-$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+$result = DB_query($sql,$ErrMsg,$DbgMsg);
 
 echo '<table><tr><td valign="top">';
 echo '<table class="selection">';
@@ -250,7 +250,7 @@ $sql = "SELECT prices.price,
 
 $ErrMsg = _('Could not retrieve the special prices set up because');
 $DbgMsg = _('The SQL used to retrieve these records was');
-$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+$result = DB_query($sql,$ErrMsg,$DbgMsg);
 
 echo '<table class="selection">';
 
@@ -330,7 +330,7 @@ $sql = "SELECT branchcode,
 				brname
 		FROM custbranch
 		WHERE debtorno='" . $_SESSION['CustomerID'] . "'";
-$result = DB_query($sql, $db);
+$result = DB_query($sql);
 
 echo '<table class="selection">
 		<tr>
@@ -394,7 +394,7 @@ function ReSequenceEffectiveDates ($Item, $PriceList, $CurrAbbrev, $CustomerID, 
 					startdate,
 					enddate";
 
-	$result = DB_query($SQL,$db);
+	$result = DB_query($SQL);
 
 	unset($BranchCode);
 
@@ -419,7 +419,7 @@ function ReSequenceEffectiveDates ($Item, $PriceList, $CurrAbbrev, $CustomerID, 
 									AND enddate = '" . $EndDate . "'
 									AND debtorno ='" . $CustomerID . "'
 									AND branchcode='" . $BranchCode . "'";
-					$UpdateResult = DB_query($SQL,$db);
+					$UpdateResult = DB_query($SQL);
 				}
 			} //end of if startdate  after NextStartDate - we have a new NextStartDate
 		} //end of if set NextStartDate
@@ -443,7 +443,7 @@ function ReSequenceEffectiveDates ($Item, $PriceList, $CurrAbbrev, $CustomerID, 
 				AND branchcode=''
 				AND enddate ='0000-00-00'
 				ORDER BY startdate";
-	$result = DB_query($SQL,$db);
+	$result = DB_query($SQL);
 
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($OldStartDate)){
@@ -458,7 +458,7 @@ function ReSequenceEffectiveDates ($Item, $PriceList, $CurrAbbrev, $CustomerID, 
 						AND branchcode=''
 						AND enddate = '0000-00-00'
 						AND debtorno =''";
-			$UpdateResult = DB_query($SQL,$db);
+			$UpdateResult = DB_query($SQL);
 		}
 		$OldStartDate = $myrow['startdate'];
 	} // end of loop around duplicate no end date prices

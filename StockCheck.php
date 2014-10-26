@@ -20,7 +20,7 @@ If (isset($_POST['PrintPDF'])
 /*First off do the stock check file stuff */
 	if ($_POST['MakeStkChkData']=='New'){
 		$sql = "TRUNCATE TABLE stockcheckfreeze";
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 		$sql = "INSERT INTO stockcheckfreeze (stockid,
 										  loccode,
 										  qoh,
@@ -38,7 +38,7 @@ If (isset($_POST['PrintPDF'])
 					   stockmaster.mbflag!='K' AND
 					   stockmaster.mbflag!='D'";
 
-		$result = DB_query($sql, $db,'','',false,false);
+		$result = DB_query($sql,'','',false,false);
 		if (DB_error_no($db) !=0) {
 			$Title = _('Stock Count Sheets - Problem Report');
 			include('includes/header.inc');
@@ -60,7 +60,7 @@ If (isset($_POST['PrintPDF'])
 				AND stockmaster.categoryid<='" . $_POST['ToCriteria'] . "'
 				AND stockcheckfreeze.loccode='" . $_POST['Location'] . "'";
 
-		$result = DB_query($sql,$db,'','',false,false);
+		$result = DB_query($sql,'','',false,false);
 		if (DB_error_no($db) !=0) {
 			$Title = _('Stock Freeze') . ' - ' . _('Problem Report') . '.... ';
 			include('includes/header.inc');
@@ -91,7 +91,7 @@ If (isset($_POST['PrintPDF'])
 				AND stockmaster.mbflag!='G'
 				AND stockmaster.mbflag!='D'";
 
-		$result = DB_query($sql, $db,'','',false,false);
+		$result = DB_query($sql,'','',false,false);
 		if (DB_error_no($db) !=0) {
 			$Title = _('Stock Freeze - Problem Report');
 			include('includes/header.inc');
@@ -133,7 +133,7 @@ If (isset($_POST['PrintPDF'])
 
 	$SQL .=  " ORDER BY stockmaster.categoryid, stockmaster.stockid";
 
-	$InventoryResult = DB_query($SQL,$db,'','',false,false);
+	$InventoryResult = DB_query($SQL,'','',false,false);
 
 	if (DB_error_no($db) !=0) {
 		$Title = _('Stock Sheets') . ' - ' . _('Problem Report') . '.... ';
@@ -186,7 +186,7 @@ If (isset($_POST['PrintPDF'])
 			   		AND salesorderdetails.completed = 0
 			   		AND salesorders.quotation=0";
 
-			$DemandResult = DB_query($SQL,$db,'','',false, false);
+			$DemandResult = DB_query($SQL,'','',false, false);
 
 			if (DB_error_no($db) !=0) {
 	 			$Title = _('Stock Check Sheets - Problem Report');
@@ -217,7 +217,7 @@ If (isset($_POST['PrintPDF'])
 						   AND stockmaster.mbflag='A'
 						   AND salesorders.quotation=0";
 
-			$DemandResult = DB_query($sql,$db,'','',false,false);
+			$DemandResult = DB_query($sql,'','',false,false);
 			if (DB_error_no($db) !=0) {
 				prnMsg(_('The demand for this product from') . ' ' . $myrow['loccode'] . ' ' . _('cannot be retrieved because') . ' - ' . DB_error_msg($db),'error');
 				if ($debug==1){
@@ -273,7 +273,7 @@ If (isset($_POST['PrintPDF'])
 					<td><select name="FromCriteria">';
 
 		$sql="SELECT categoryid, categorydescription FROM stockcategory ORDER BY categorydescription";
-		$CatResult= DB_query($sql,$db);
+		$CatResult= DB_query($sql);
 		While ($myrow = DB_fetch_array($CatResult)){
 			echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription'] . ' - ' . $myrow['categoryid'] . '</option>';
 		}
@@ -297,7 +297,7 @@ If (isset($_POST['PrintPDF'])
 		$sql = "SELECT locations.loccode, locationname FROM locations 
 				INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
 				ORDER BY locationname";
-		$LocnResult=DB_query($sql,$db);
+		$LocnResult=DB_query($sql);
 
 		while ($myrow=DB_fetch_array($LocnResult)){
 				  echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';

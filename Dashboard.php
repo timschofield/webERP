@@ -14,7 +14,7 @@ $sql = "SELECT pagesecurity
 		WHERE scripts.script = 'AgedDebtors.php'";
 $ErrMsg = _('The security for Aging Debtors cannot be retrieved because');
 $DbgMsg = _('The SQL that was used and failed was');
-$Security1Result = DB_query($sql, $db, $ErrMsg, $DbgMsg);
+$Security1Result = DB_query($sql, $ErrMsg, $DbgMsg);
 $MyUserRow = DB_fetch_array($Security1Result);
 $DebtorSecurity = $MyUserRow['pagesecurity'];
 
@@ -23,7 +23,7 @@ $sql = "SELECT pagesecurity
 		WHERE scripts.script = 'SuppPaymentRun.php'";
 $ErrMsg = _('The security for upcoming payments cannot be retrieved because');
 $DbgMsg = _('The SQL that was used and failed was');
-$Security2Result = DB_query($sql, $db, $ErrMsg, $DbgMsg);
+$Security2Result = DB_query($sql, $ErrMsg, $DbgMsg);
 $MyUserRow = DB_fetch_array($Security2Result);
 $PayeeSecurity = $MyUserRow['pagesecurity'];
 
@@ -32,7 +32,7 @@ $sql = "SELECT pagesecurity
 		WHERE scripts.script = 'GLAccountInquiry.php'";
 $ErrMsg = _('The security for G/L Accounts cannot be retrieved because');
 $DbgMsg = _('The SQL that was used and failed was');
-$Security2Result = DB_query($sql, $db, $ErrMsg, $DbgMsg);
+$Security2Result = DB_query($sql, $ErrMsg, $DbgMsg);
 $MyUserRow = DB_fetch_array($Security2Result);
 $CashSecurity = $MyUserRow['pagesecurity'];
 
@@ -41,7 +41,7 @@ $sql = "SELECT pagesecurity
 		WHERE scripts.script = 'SelectSalesOrder.php'";
 $ErrMsg = _('The security for Aging Debtors cannot be retrieved because');
 $DbgMsg = _('The SQL that was used and failed was');
-$Security1Result = DB_query($sql, $db, $ErrMsg, $DbgMsg);
+$Security1Result = DB_query($sql, $ErrMsg, $DbgMsg);
 $MyUserRow = DB_fetch_array($Security1Result);
 $OrderSecurity = $MyUserRow['pagesecurity'];
 
@@ -139,7 +139,7 @@ if (in_array($DebtorSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset(
 					holdreasons.reasondescription
 				HAVING
 					ROUND(ABS(SUM(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc)),currencies.decimalplaces) > 0";
-	$CustomerResult = DB_query($SQL,$db,'','',False,False); /*dont trap errors handled below*/
+	$CustomerResult = DB_query($SQL,'','',False,False); /*dont trap errors handled below*/
 
 	if (DB_error_no($db) !=0) {
 		prnMsg(_('The customer details could not be retrieved by the SQL because') . ' ' . DB_error_msg($db),'error');
@@ -251,7 +251,7 @@ if (in_array($DebtorSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset(
 				$sql .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 			}
 
-			$DetailResult = DB_query($sql,$db,'','',False,False);
+			$DetailResult = DB_query($sql,'','',False,False);
 			if (DB_error_no($db) !=0) {
 				prnMsg(_('The details of outstanding transactions for customer') . ' - ' . $AgedAnalysis['debtorno'] . ' ' . _('could not be retrieved because') . ' - ' . DB_error_msg($db),'error');
 				echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
@@ -379,7 +379,7 @@ if (in_array($PayeeSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($
 			HAVING SUM(supptrans.ovamount + supptrans.ovgst - supptrans.alloc) <> 0
 			ORDER BY suppliers.supplierid";
 
-	$SuppliersResult = DB_query($sql,$db);
+	$SuppliersResult = DB_query($sql);
 
 	$SupplierID ='';
 	$TotalPayments = 0;
@@ -417,7 +417,7 @@ if (in_array($PayeeSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($
 					supptrans.type,
 					supptrans.transno";
 
-		$TransResult = DB_query($sql,$db,'','',false,false);
+		$TransResult = DB_query($sql,'','',false,false);
 		if (DB_error_no($db) !=0) {
 			prnMsg(_('The details of supplier invoices due could not be retrieved because') . ' - ' . DB_error_msg($db),'error');
 			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
@@ -529,7 +529,7 @@ if (in_array($CashSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($C
 
 	$ErrMsg = _('The bank accounts set up could not be retrieved because');
 	$DbgMsg = _('The SQL used to retrieve the bank account details was') . '<br />' . $sql;
-	$result1 = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+	$result1 = DB_query($sql,$ErrMsg,$DbgMsg);
 
 	$k=0; //row colour counter
 
@@ -572,7 +572,7 @@ if (in_array($CashSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($C
 					AND periodno>='" . $FirstPeriodSelected . "'
 					AND periodno<='" . $LastPeriodSelected . "'
 					ORDER BY periodno, gltrans.trandate, counterindex";
-		$TransResult = DB_query($sql,$db,$ErrMsg);
+		$TransResult = DB_query($sql,$ErrMsg);
 		if ($PandLAccount==True) {
 			$RunningTotal = 0;
 		} else {
@@ -585,7 +585,7 @@ if (in_array($CashSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($C
 					AND chartdetails.period='" . $FirstPeriodSelected . "'";
 
 			$ErrMsg = _('The chart details for account') . ' ' . $myrow['accountcode'] . ' ' . _('could not be retrieved');
-			$ChartDetailsResult = DB_query($sql,$db,$ErrMsg);
+			$ChartDetailsResult = DB_query($sql,$ErrMsg);
 			$ChartDetailRow = DB_fetch_array($ChartDetailsResult);
 			$RunningTotal =$ChartDetailRow['bfwd'];
 		}
@@ -604,7 +604,7 @@ if (in_array($CashSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($C
 						AND chartdetails.period='" . $PeriodNo . "'";
 
 					$ErrMsg = _('The chart details for account') . ' ' . $myrow['accountcode'] . ' ' . _('could not be retrieved');
-					$ChartDetailsResult = DB_query($sql,$db,$ErrMsg);
+					$ChartDetailsResult = DB_query($sql,$ErrMsg);
 					$ChartDetailRow = DB_fetch_array($ChartDetailsResult);
 					if ($PeriodTotal < 0 ){ //its a credit balance b/fwd
 						if ($PandLAccount==True) {
@@ -680,7 +680,7 @@ if (in_array($OrderSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($
 						salesorders.printedpackingslip
 					ORDER BY salesorders.orddate DESC, salesorders.orderno";
 	$ErrMsg = _('No orders or quotations were returned by the SQL because');
-	$SalesOrdersResult = DB_query($SQL,$db,$ErrMsg);
+	$SalesOrdersResult = DB_query($SQL,$ErrMsg);
 
 	/*show a table of the orders returned by the SQL */
 	if (DB_num_rows($SalesOrdersResult)>0) {

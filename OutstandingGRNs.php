@@ -40,7 +40,7 @@ if (isset($_POST['FromCriteria'])
 				ORDER BY supplierid,
 					grnno";
 
-	$GRNsResult = DB_query($SQL,$db,'','',false,false);
+	$GRNsResult = DB_query($SQL,'','',false,false);
 
 	if (DB_error_no($db) !=0) {
 	  $Title = _('Outstanding GRN Valuation') . ' - ' . _('Problem Report');

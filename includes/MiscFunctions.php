@@ -424,7 +424,7 @@ function GetMailList($Recipients){
 	$ToList = array();
 	$sql = "SELECT email,realname FROM mailgroupdetails INNER JOIN www_users ON www_users.userid=mailgroupdetails.userid WHERE mailgroupdetails.groupname='".$Recipients."'";
 	$ErrMsg = _('Failed to retrieve mail lists');
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 	if(DB_num_rows($result) != 0){
 
 		//Create the string which meets the Recipients requirements
@@ -444,7 +444,7 @@ function ChangeFieldInTable($TableName, $FieldName, $OldValue, $NewValue, $db){
 	$sql = "UPDATE " . $TableName . " SET " . $FieldName . " ='" . $NewValue . "' WHERE " . $FieldName . "='" . $OldValue . "'";
 	$DbgMsg = _('The SQL statement that failed was');
 	$ErrMsg = _('The SQL to update' . ' ' . $TableName . ' ' . _('records failed'));
-	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
+	$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
 	echo ' ... ' . _('completed');
 }
 

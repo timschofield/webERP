@@ -93,7 +93,7 @@ if (isset($_POST['Search'])){
 		}
 
 		$ErrMsg = _('The SQL to find the parts selected failed with the message');
-		$result = DB_query($sql,$db,$ErrMsg);
+		$result = DB_query($sql,$ErrMsg);
 
 	} //one of keywords or StockCode was more than a zero length string
 } //end of if search
@@ -178,7 +178,7 @@ if (isset($StockID) and $StockID!=""){
 			 OR bom.effectiveto='0000-00-00')";
 			 
 	$ErrMsg = _('The bill of material could not be retrieved because');
-	$BOMResult = DB_query ($sql,$db,$ErrMsg);
+	$BOMResult = DB_query ($sql,$ErrMsg);
 
 	if (DB_num_rows($BOMResult)==0){
 		prnMsg(_('The bill of material for this part is not set up') . ' - ' . _('there are no components defined for it'),'warn');

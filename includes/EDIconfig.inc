@@ -49,7 +49,7 @@ $sql = "SELECT section,
 	AND messagetype='" . $MessageType . "'
 	ORDER BY sequenceno";
 
-$MessageLinesResult = DB_query($sql, $db);
+$MessageLinesResult = DB_query($sql);
 
 $fp = fopen( $EDI_Pending . '/EDI_' . $MessageType . '_' . $EDITrans , 'w');
 

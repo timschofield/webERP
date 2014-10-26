@@ -58,7 +58,7 @@ if ((! isset($_POST['FromPeriod'])
 				FROM periods
 				WHERE lastdate_in_period < '" . $NextYear . "'
 				ORDER BY periodno DESC";
-	$Periods = DB_query($sql,$db);
+	$Periods = DB_query($sql);
 
 
 	while ($myrow=DB_fetch_array($Periods,$db)){
@@ -128,7 +128,7 @@ if ((! isset($_POST['FromPeriod'])
 	$sql = "SELECT lastdate_in_period
 			FROM periods
 			WHERE periodno='" . $_POST['ToPeriod'] . "'";
-	$PrdResult = DB_query($sql, $db);
+	$PrdResult = DB_query($sql);
 	$myrow = DB_fetch_row($PrdResult);
 	$PeriodToDate = MonthAndYearFromSQLDate($myrow[0]);
 
@@ -158,7 +158,7 @@ if ((! isset($_POST['FromPeriod'])
 			accountgroups.groupname,
 			chartdetails.accountcode";
 
-	$AccountsResult = DB_query($SQL,$db);
+	$AccountsResult = DB_query($SQL);
 	if (DB_error_no($db) !=0) {
 		$Title = _('Trial Balance') . ' - ' . _('Problem Report') . '....';
 		$ViewTopic = 'GeneralLedger';
@@ -402,7 +402,7 @@ if ((! isset($_POST['FromPeriod'])
 	$sql = "SELECT lastdate_in_period
 			FROM periods
 			WHERE periodno='" . $_POST['ToPeriod'] . "'";
-	$PrdResult = DB_query($sql, $db);
+	$PrdResult = DB_query($sql);
 	$myrow = DB_fetch_row($PrdResult);
 	$PeriodToDate = MonthAndYearFromSQLDate($myrow[0]);
 

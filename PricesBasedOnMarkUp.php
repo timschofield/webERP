@@ -15,7 +15,7 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 
 $SQL = 'SELECT sales_type, typeabbrev FROM salestypes';
 
-$PricesResult = DB_query($SQL,$db);
+$PricesResult = DB_query($SQL);
 
 echo '<br /><table class="selection">
              <tr>
@@ -38,7 +38,7 @@ echo '</select></td></tr>';
 
 $SQL = "SELECT currency, currabrev FROM currencies";
 
-$result = DB_query($SQL,$db);
+$result = DB_query($SQL);
 
 echo '<tr>
 		<td>' . _('Select the price list currency to update') . ':</td>
@@ -107,7 +107,7 @@ $sql = "SELECT categoryid, categorydescription FROM stockcategory ORDER BY categ
 
 $ErrMsg = _('The stock categories could not be retrieved because');
 $DbgMsg = _('The SQL used to retrieve stock categories and failed was');
-$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+$result = DB_query($sql,$ErrMsg,$DbgMsg);
 
 while ($myrow=DB_fetch_array($result)){
 	if (isset($_POST['StkCatFrom']) and $myrow['categoryid']==$_POST['StkCatFrom']){
@@ -248,11 +248,11 @@ if (isset($_POST['UpdatePrices'])){
 				FROM stockmaster
 				WHERE categoryid>='" . $_POST['StkCatFrom'] . "'
 				AND categoryid <='" . $_POST['StkCatTo'] . "'";
-		$PartsResult = DB_query($sql,$db);
+		$PartsResult = DB_query($sql);
 
 		$IncrementPercentage = filter_number_format($_POST['IncreasePercent']/100);
 
-		$CurrenciesResult = DB_query("SELECT rate FROM currencies WHERE currabrev='" . $_POST['CurrCode'] . "'",$db);
+		$CurrenciesResult = DB_query("SELECT rate FROM currencies WHERE currabrev='" . $_POST['CurrCode'] . "'");
 		$CurrencyRow = DB_fetch_row($CurrenciesResult);
 		$CurrencyRate = $CurrencyRow[0];
 
@@ -267,7 +267,7 @@ if (isset($_POST['UpdatePrices'])){
 								ON suppliers.currcode=currencies.currabrev
 							WHERE purchdata.preferred=1 AND purchdata.stockid='" . $myrow['stockid'] ."'";
 				$ErrMsg = _('Could not get the supplier purchasing information for a preferred supplier for the item') . ' ' . $myrow['stockid'];
-				$PrefSuppResult = DB_query($sql,$db,$ErrMsg);
+				$PrefSuppResult = DB_query($sql,$ErrMsg);
 				if (DB_num_rows($PrefSuppResult)==0){
 					prnMsg(_('There is no preferred supplier data for the item') . ' ' . $myrow['stockid'] . ' ' . _('prices will not be updated for this item'),'warn');
 					$Cost = 0;
@@ -289,7 +289,7 @@ if (isset($_POST['UpdatePrices'])){
 								AND stockid='" . $myrow['stockid'] . "'
 							ORDER BY startdate DESC";
 				$ErrMsg = _('Could not get the base price for the item') . ' ' . $myrow['stockid'] . _('from the price list') . ' ' . $_POST['BasePriceList'];
-				$BasePriceResult = DB_query($sql,$db,$ErrMsg);
+				$BasePriceResult = DB_query($sql,$ErrMsg);
 				if (DB_num_rows($BasePriceResult)==0){
 					prnMsg(_('There is no default price defined in the base price list for the item') . ' ' . $myrow['stockid'] . ' ' . _('prices will not be updated for this item'),'warn');
 					$Cost = 0;
@@ -338,7 +338,7 @@ if (isset($_POST['UpdatePrices'])){
 												AND enddate ='" . $CurrentPriceRow['enddate'] . "'
 												AND stockid='" . $myrow['stockid'] . "'";
 					$ErrMsg =_('Error updating prices for') . ' ' . $myrow['stockid'] . ' ' . _('because');
-					$result = DB_query($UpdateSQL,$db,$ErrMsg);
+					$result = DB_query($UpdateSQL,$ErrMsg);
 
 				}
 				$sql = "INSERT INTO prices (stockid,
@@ -354,7 +354,7 @@ if (isset($_POST['UpdatePrices'])){
 										'" . $SQLEndDate . "',
 								 		'" . filter_number_format($RoundedPrice) . "')";
 				$ErrMsg =_('Error inserting new price for') . ' ' . $myrow['stockid'] . ' ' . _('because');
-				$result = DB_query($sql,$db,$ErrMsg);
+				$result = DB_query($sql,$ErrMsg);
 				prnMsg(_('Inserting new price for') . ' ' . $myrow['stockid'] . ' ' . _('to') . ' ' . $RoundedPrice,'info');
 
 			}// end if cost > 0

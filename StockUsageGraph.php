@@ -2,7 +2,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$result = DB_query("SELECT description FROM stockmaster WHERE stockid='" . trim(mb_strtoupper($_GET['StockID'])) . "'",$db);
+$result = DB_query("SELECT description FROM stockmaster WHERE stockid='" . trim(mb_strtoupper($_GET['StockID'])) . "'");
 $myrow = DB_fetch_row($result);
 
 include('includes/phplot/phplot.php');
@@ -46,7 +46,7 @@ if($_GET['StockLocation']=='All'){
 			periods.lastdate_in_period
 		ORDER BY periodno  LIMIT 24";
 }
-$MovtsResult = DB_query($sql, $db);
+$MovtsResult = DB_query($sql);
 if (DB_error_no($db) !=0) {
 	$Title = _('Stock Usage Graph Problem');
 	include ('includes/header.inc');

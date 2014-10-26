@@ -337,11 +337,11 @@ if (isset($_POST['submit'])) {
 		if (sizeof($sql) > 1 ) {
 			$result = DB_Txn_Begin($db);
 			foreach ($sql as $line) {
-				$result = DB_query($line,$db,$ErrMsg);
+				$result = DB_query($line,$ErrMsg);
 			}
 			$result = DB_Txn_Commit($db);
 		} elseif(sizeof($sql)==1) {
-			$result = DB_query($sql,$db,$ErrMsg);
+			$result = DB_query($sql,$ErrMsg);
 		}
 
 		prnMsg( _('System configuration updated'),'success');
@@ -565,7 +565,7 @@ echo '<tr style="outline: 1px solid"><td>' . _('Controlled Items Must Exist For 
 // DefaultPriceList
 $sql = "SELECT typeabbrev, sales_type FROM salestypes ORDER BY sales_type";
 $ErrMsg = _('Could not load price lists');
-$result = DB_query($sql,$db,$ErrMsg);
+$result = DB_query($sql,$ErrMsg);
 echo '<tr style="outline: 1px solid"><td>' . _('Default Price List') . ':</td>';
 echo '<td><select name="X_DefaultPriceList">';
 if( DB_num_rows($result) == 0 ) {
@@ -581,7 +581,7 @@ echo '</select></td>
 // Default_Shipper
 $sql = "SELECT shipper_id, shippername FROM shippers ORDER BY shippername";
 $ErrMsg = _('Could not load shippers');
-$result = DB_query($sql,$db,$ErrMsg);
+$result = DB_query($sql,$ErrMsg);
 echo '<tr style="outline: 1px solid"><td>' . _('Default Shipper') . ':</td>';
 echo '<td><select name="X_Default_Shipper">';
 if( DB_num_rows($result) == 0 ) {
@@ -640,7 +640,7 @@ echo '</select></td>
 //==HJ== drop down list for tax category
 $sql = "SELECT taxcatid, taxcatname FROM taxcategories ORDER BY taxcatname";
 $ErrMsg = _('Could not load tax categories table');
-$result = DB_query($sql,$db,$ErrMsg);
+$result = DB_query($sql,$ErrMsg);
 echo '<tr style="outline: 1px solid"><td>' . _('Default Tax Category') . ':</td>';
 echo '<td><select name="X_DefaultTaxCategory">';
 if( DB_num_rows($result) == 0 ) {
@@ -793,7 +793,7 @@ $sql = "SELECT confvalue
 		WHERE confname ='numberOfMonthMustBeShown'";
 
 $ErrMsg = _('Could not load the Number Of Month Must be Shown');
-$result = DB_query($sql,$db,$ErrMsg);
+$result = DB_query($sql,$ErrMsg);
 $row = DB_fetch_array($result);
 $_SESSION['NumberOfMonthMustBeShown'] = $row['confvalue'];
 
@@ -980,7 +980,7 @@ echo '<tr style="outline: 1px solid">
 
 $sql = "SELECT lastdate_in_period FROM periods ORDER BY periodno DESC";
 $ErrMsg = _('Could not load periods table');
-$result = DB_query($sql,$db,$ErrMsg);
+$result = DB_query($sql,$ErrMsg);
 if ($_SESSION['ProhibitPostingsBefore']=='' OR $_SESSION['ProhibitPostingsBefore']=='1900-01-01' OR !isset($_SESSION['ProhibitPostingsBefore'])){
 	echo '<option selected="selected" value="1900-01-01">' . ConvertSQLDate('1900-01-01') . '</option>';
 }
@@ -1105,7 +1105,7 @@ echo '<tr style="outline: 1px solid"><td>' . _('Default Factory Location') . ':<
 
 $sql = "SELECT loccode,locationname FROM locations";
 $ErrMsg = _('Could not load locations table');
-$result = DB_query($sql,$db,$ErrMsg);
+$result = DB_query($sql,$ErrMsg);
 while ($LocationRow = DB_fetch_array($result)){
 	if ($_SESSION['DefaultFactoryLocation']==$LocationRow['loccode']){
 		echo  '<option selected="selected" value="' . $LocationRow['loccode'] . '">' . $LocationRow['locationname'] . '</option>';

@@ -189,7 +189,7 @@ $SQL = "SELECT grnbatch,
 		WHERE grns.supplierid ='" . $_SESSION['SuppTrans']->SupplierID . "'
 		AND grns.qtyrecd - grns.quantityinv > 0
 		ORDER BY grns.grnno";
-$GRNResults = DB_query($SQL,$db);
+$GRNResults = DB_query($SQL);
 
 if (DB_num_rows($GRNResults)==0){
 	prnMsg(_('There are no outstanding goods received from') . ' ' . $_SESSION['SuppTrans']->SupplierName . ' ' . _('that have not been invoiced by them') . '<br />' . _('The goods must first be received using the link below to select purchase orders to receive'),'warn');

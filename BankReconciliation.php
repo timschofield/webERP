@@ -41,7 +41,7 @@ if (isset($_POST['PostExchangeDifference']) AND is_numeric(filter_number_format(
 				WHERE bankaccounts.accountcode = '" . $_POST['BankAccount']."'";
 
 		$ErrMsg = _('Could not retrieve the exchange rate for the selected bank account');
-		$CurrencyResult = DB_query($SQL,$db);
+		$CurrencyResult = DB_query($SQL);
 		$CurrencyRow =  DB_fetch_array($CurrencyResult);
 
 		$CalculatedBalance = filter_number_format($_POST['DoExchangeDifference']);
@@ -74,7 +74,7 @@ if (isset($_POST['PostExchangeDifference']) AND is_numeric(filter_number_format(
 
 		$ErrMsg = _('Cannot insert a GL entry for the exchange difference because');
 		$DbgMsg = _('The SQL that failed to insert the exchange difference GL entry was');
-		$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 		$SQL = "INSERT INTO gltrans (type,
 									typeno,
 									trandate,
@@ -90,7 +90,7 @@ if (isset($_POST['PostExchangeDifference']) AND is_numeric(filter_number_format(
 									'" . $CurrencyRow['bankaccountname'] . ' ' . _('reconciliation on') . ' ' . Date($_SESSION['DefaultDateFormat']) . "',
 									'" . (-$ExchangeDifference) . "')";
 
-		$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 		$result = DB_Txn_Commit($db);
 		prnMsg(_('Exchange difference of') . ' ' . locale_number_format($ExchangeDifference,$_SESSION['CompanyRecord']['decimalplaces']) . ' ' . _('has been posted'),'success');
@@ -108,7 +108,7 @@ $SQL = "SELECT bankaccounts.accountcode,
 
 $ErrMsg = _('The bank accounts could not be retrieved by the SQL because');
 $DbgMsg = _('The SQL used to retrieve the bank accounts was');
-$AccountsResults = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
+$AccountsResults = DB_query($SQL,$ErrMsg,$DbgMsg);
 
 echo '<tr><td>' . _('Bank Account') . ':</td>
 		<td><select tabindex="1" name="BankAccount">';
@@ -152,7 +152,7 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 	$sql = "SELECT MAX(period)
 			FROM chartdetails
 			WHERE accountcode='" . $_POST['BankAccount']."'";
-	$PrdResult = DB_query($sql, $db);
+	$PrdResult = DB_query($sql);
 	$myrow = DB_fetch_row($PrdResult);
 	$LastPeriod = $myrow[0];
 
@@ -162,7 +162,7 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 			AND accountcode='" . $_POST['BankAccount']."'";
 
 	$ErrMsg = _('The bank account balance could not be returned by the SQL because');
-	$BalanceResult = DB_query($SQL,$db,$ErrMsg);
+	$BalanceResult = DB_query($SQL,$ErrMsg);
 
 	$myrow = DB_fetch_row($BalanceResult);
 	$Balance = $myrow[0];
@@ -176,7 +176,7 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 			ON bankaccounts.currcode=currencies.currabrev
 			WHERE bankaccounts.accountcode = '" . $_POST['BankAccount']."'";
 	$ErrMsg = _('Could not retrieve the currency and exchange rate for the selected bank account');
-	$CurrencyResult = DB_query($SQL,$db);
+	$CurrencyResult = DB_query($SQL);
 	$CurrencyRow =  DB_fetch_array($CurrencyResult);
 
 
@@ -207,7 +207,7 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 	echo '<tr><td><br /></td></tr>'; /*Bang in a blank line */
 
 	$ErrMsg = _('The unpresented cheques could not be retrieved by the SQL because');
-	$UPChequesResult = DB_query($SQL, $db, $ErrMsg);
+	$UPChequesResult = DB_query($SQL, $ErrMsg);
 
 	echo '<tr>
 			<td colspan="6"><b>' . _('Add back unpresented cheques') . ':</b></td>
@@ -286,7 +286,7 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 
 	$ErrMsg = _('The uncleared deposits could not be retrieved by the SQL because');
 
-	$UPChequesResult = DB_query($SQL,$db,$ErrMsg);
+	$UPChequesResult = DB_query($SQL,$ErrMsg);
 
 	echo '<tr><td colspan="6"><b>' . _('Less deposits not cleared') . ':</b></td></tr>';
 

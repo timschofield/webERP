@@ -53,7 +53,7 @@ if ($_GET['Action'] == 'Enter'){
 
 				$ErrMsg = _('Could not determine if the part being ordered was a kitset or not because');
 				$DbgMsg = _('The sql that was used to determine if the part being ordered was a kitset or not was ');
-				$KitResult = DB_query($sql, $db,$ErrMsg,$DbgMsg);
+				$KitResult = DB_query($sql,$ErrMsg,$DbgMsg);
 				$myrow=DB_fetch_array($KitResult);
 
 				$_POST[$StockID] = strtoupper($myrow['stockid']);
@@ -64,7 +64,7 @@ if ($_GET['Action'] == 'Enter'){
 					$InputError=True;
 				}
 			$SQL = "SELECT stockid FROM stockcheckfreeze WHERE stockid='" . $_POST[$StockID] . "'";
-				$result = DB_query($SQL,$db);
+				$result = DB_query($SQL);
 				if (DB_num_rows($result)==0){
 					prnMsg( _('The stock code entered on line') . ' ' . $i . ' ' . _('is not a part code that has been added to the stock check file') . ' - ' . _('the code entered was') . ' ' . $_POST[$StockID] . '. ' . _('This line will have to be re-entered'),'warn');
 					$InputError = True;
@@ -82,7 +82,7 @@ if ($_GET['Action'] == 'Enter'){
 									'" . $_POST[$Reference] . "')";
 
 					$ErrMsg = _('The stock count line number') . ' ' . $i . ' ' . _('could not be entered because');
-					$EnterResult = DB_query($sql, $db,$ErrMsg);
+					$EnterResult = DB_query($sql,$ErrMsg);
 				}
 			}
 		} // end of loop
@@ -106,7 +106,7 @@ if ($_GET['Action'] == 'Enter'){
 				<th colspan="3">' ._('Stock Check Counts at Location') . ':<select name="Location">';
 		$sql = "SELECT locations.loccode, locationname FROM locations
 				INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1";
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 
 		while ($myrow=DB_fetch_array($result)){
 
@@ -131,7 +131,7 @@ if ($_GET['Action'] == 'Enter'){
 
 		if (isset($_POST['EnterByCat'])){
 
-			$StkCatResult = DB_query("SELECT categorydescription FROM stockcategory WHERE categoryid='" . $_POST['StkCat'] . "'",$db);
+			$StkCatResult = DB_query("SELECT categorydescription FROM stockcategory WHERE categoryid='" . $_POST['StkCat'] . "'");
 			$StkCatRow = DB_fetch_row($StkCatResult);
 
 			echo '<tr>
@@ -196,7 +196,7 @@ if ($_GET['Action'] == 'Enter'){
 			if ($val == 'on'){
 				$sql = "DELETE FROM stockcounts WHERE id='".$id."'";
 				$ErrMsg = _('Failed to delete StockCount ID #').' '.$i;
-				$EnterResult = DB_query($sql, $db,$ErrMsg);
+				$EnterResult = DB_query($sql,$ErrMsg);
 				prnMsg( _('Deleted Id #') . ' ' . $id, 'success');
 			}
 		}
@@ -206,7 +206,7 @@ if ($_GET['Action'] == 'Enter'){
 	$SQL = "select stockcounts.*,
 					canupd from stockcounts
 					INNER JOIN locationusers ON locationusers.loccode=stockcounts.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	echo '<input type="hidden" name="Action" value="View" />';
 	echo '<table cellpadding="2" class="selection">';
 	echo '<tr>

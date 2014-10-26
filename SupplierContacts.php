@@ -97,7 +97,7 @@ if (isset($_POST['submit'])) {
 		$ErrMsg = _('The supplier contact could not be inserted or updated because');
 		$DbgMsg = _('The SQL that was used but failed was');
 
-		$result = DB_query($sql, $db, $ErrMsg, $DbgMsg);
+		$result = DB_query($sql, $ErrMsg, $DbgMsg);
 
 		prnMsg($msg,'success');
 
@@ -118,7 +118,7 @@ if (isset($_POST['submit'])) {
 	$ErrMsg = _('The supplier contact could not be deleted because');
 	$DbgMsg = _('The SQL that was used but failed was');
 
-	$result = DB_query($sql,$db, $ErrMsg, $DbgMsg);
+	$result = DB_query($sql, $ErrMsg, $DbgMsg);
 
 	echo '<br />' . _('Supplier contact has been deleted') . '<p />';
 
@@ -137,7 +137,7 @@ if (!isset($SelectedContact)){
 				WHERE suppliercontacts.supplierid=suppliers.supplierid
 				AND suppliercontacts.supplierid = '".$SupplierID."'";
 
-	$result = DB_query($sql, $db);
+	$result = DB_query($sql);
 
 	if (DB_num_rows($result)>0){
 
@@ -213,7 +213,7 @@ if (! isset($_GET['delete'])) {
 					WHERE contact='" . $SelectedContact . "'
 					AND supplierid='" . $SupplierID . "'";
 
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		$myrow = DB_fetch_array($result);
 
 		$_POST['Contact']  = $myrow['contact'];

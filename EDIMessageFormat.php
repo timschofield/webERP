@@ -41,7 +41,7 @@ if (isset($_POST['NewEDIInvMsg'])){
 			AND messagetype='INVOIC'";
 
 	$ErrMsg = _('There was an error inserting the default template invoice message records for') . ' ' . $PartnerCode . ' ' . _('because');
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 }
 
 $InputError = 0;
@@ -58,7 +58,7 @@ if ($InputError !=1 AND isset($_POST['update'])) {
 				sequenceno='" . $_POST['SequenceNo'] . "',
 				linetext='" . $_POST['LineText'] . "'
 			WHERE id = '" . $SelectedMessageLine . "'";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 	$msg = _('Message line updated');
 	unset ($SelectedMessageLine);
 
@@ -81,7 +81,7 @@ if ($InputError !=1 AND isset($_POST['update'])) {
 				)";
 		$msg = _('Message line added');
 	//run the SQL from either of the above possibilites
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 	unset ($SelectedMessageLine);
 
 } elseif (isset($_GET['delete'])) {
@@ -89,7 +89,7 @@ if ($InputError !=1 AND isset($_POST['update'])) {
 
 
 	$sql="DELETE FROM edimessageformat WHERE id='" . $_GET['delete']."'";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 	$msg=_('The selected message line has been deleted');
 
 }
@@ -121,7 +121,7 @@ or deletion of the records*/
 			AND messagetype='" . $MessageType . "'
 			ORDER BY sequenceno";
 
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 
 	echo '<table class="selection">';
 	echo '<tr><th colspan="5"><h3>' . _('Definition of') . ' ' . $MessageType . ' ' . _('for') . ' ' . $PartnerCode . '</h3></th></tr>';
@@ -182,7 +182,7 @@ if (isset($SelectedMessageLine)) {
 		FROM edimessageformat
 		WHERE id='" . $SelectedMessageLine . "'";
 
-	$result = DB_query($sql, $db);
+	$result = DB_query($sql);
 	$myrow = DB_fetch_array($result);
 
 	$_POST['Section']  = $myrow['section'];

@@ -41,7 +41,7 @@ if(isset($_POST['UpdateRates'])) {
 						WHERE taxcatid = '" . $myrow['taxcatid'] . "'
 						AND dispatchtaxprovince = '" . $myrow['dispatchtaxprovince'] . "'
 						AND taxauthority = '" . $TaxAuthority . "'";
-		DB_query($sql,$db);
+		DB_query($sql);
 	}
 	prnMsg(_('All rates updated successfully'),'info');
 }

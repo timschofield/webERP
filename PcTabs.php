@@ -110,7 +110,7 @@ if (isset($_POST['Submit'])) {
 					 FROM pctabs
 					 WHERE tabcode = '" . $_POST['TabCode'] . "'";
 
-		$CheckResult = DB_query($checkSql,$db);
+		$CheckResult = DB_query($checkSql);
 		$CheckRow = DB_fetch_row($CheckResult);
 
 		if ( $CheckRow[0] > 0 ) {
@@ -146,7 +146,7 @@ if (isset($_POST['Submit'])) {
 
 	if ( $InputError !=1) {
 	//run the SQL from either of the above possibilites
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 		prnMsg($msg,'success');
 		unset($SelectedTab);
 		unset($_POST['SelectUser']);
@@ -164,7 +164,7 @@ if (isset($_POST['Submit'])) {
 
 			$sql="DELETE FROM pctabs WHERE tabcode='".$SelectedTab."'";
 			$ErrMsg = _('The Tab record could not be deleted because');
-			$result = DB_query($sql,$db,$ErrMsg);
+			$result = DB_query($sql,$ErrMsg);
 			prnMsg(_('The Petty Cash Tab') .  ' ' . $SelectedTab  . ' ' . _('has been deleted') ,'success');
 			unset ($SelectedTab);
 			unset($_GET['delete']);
@@ -198,7 +198,7 @@ or deletion of the records*/
 				INNER JOIN chartmaster AS chartmaster2 ON
 				pctabs.glaccountpcash = chartmaster2.accountcode
 				ORDER BY tabcode";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 	if (DB_num_rows($result)>0){
 		echo '<br /><table class="selection">';
 		echo '<tr>
@@ -270,7 +270,7 @@ if (!isset($_GET['delete'])) {
 		$sql = "SELECT * FROM pctabs
 				WHERE tabcode='".$SelectedTab."'";
 
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		$myrow = DB_fetch_array($result);
 
 		$_POST['TabCode'] = $myrow['tabcode'];
@@ -311,7 +311,7 @@ if (!isset($_GET['delete'])) {
 					realname
 			FROM www_users ORDER BY userid";
 
-	$result = DB_query($SQL,$db);
+	$result = DB_query($SQL);
 
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['SelectUser']) and $myrow['userid']==$_POST['SelectUser']) {
@@ -336,7 +336,7 @@ if (!isset($_GET['delete'])) {
 			FROM pctypetabs
 			ORDER BY typetabcode";
 
-	$result = DB_query($SQL,$db);
+	$result = DB_query($SQL);
 
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['SelectTabs']) and $myrow['typetabcode']==$_POST['SelectTabs']) {
@@ -357,7 +357,7 @@ if (!isset($_GET['delete'])) {
 
 	$SQL = "SELECT currency, currabrev FROM currencies";
 
-	$result = DB_query($SQL,$db);
+	$result = DB_query($SQL);
 
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['SelectCurrency']) and $myrow['currabrev']==$_POST['SelectCurrency']) {
@@ -390,7 +390,7 @@ if (!isset($_GET['delete'])) {
 			FROM www_users
 			ORDER BY userid";
 
-	$result = DB_query($SQL,$db);
+	$result = DB_query($SQL);
 
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['SelectAssigner']) and $myrow['userid']==$_POST['SelectAssigner']) {
@@ -415,7 +415,7 @@ if (!isset($_GET['delete'])) {
 			FROM www_users
 			ORDER BY userid";
 
-	$result = DB_query($SQL,$db);
+	$result = DB_query($SQL);
 
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['SelectAuthoriser']) and $myrow['userid']==$_POST['SelectAuthoriser']) {
@@ -441,7 +441,7 @@ if (!isset($_GET['delete'])) {
 			ON chartmaster.accountcode = bankaccounts.accountcode
 			ORDER BY chartmaster.accountcode";
 
-	$result = DB_query($SQL,$db);
+	$result = DB_query($SQL);
 
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['GLAccountCash']) and $myrow['accountcode']==$_POST['GLAccountCash']) {
@@ -465,7 +465,7 @@ if (!isset($_GET['delete'])) {
 			FROM chartmaster
 			ORDER BY accountcode";
 
-	$result = DB_query($SQL,$db);
+	$result = DB_query($SQL);
 
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['GLAccountPcashTab']) and $myrow['accountcode']==$_POST['GLAccountPcashTab']) {

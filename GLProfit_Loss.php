@@ -53,7 +53,7 @@ if ((!isset($_POST['FromPeriod'])
 					lastdate_in_period
 			FROM periods
 			ORDER BY periodno DESC";
-	$Periods = DB_query($sql,$db);
+	$Periods = DB_query($sql);
 
 
 	while ($myrow=DB_fetch_array($Periods,$db)){
@@ -77,7 +77,7 @@ if ((!isset($_POST['FromPeriod'])
 	if (!isset($_POST['ToPeriod']) OR $_POST['ToPeriod']==''){
 		$LastDate = date('Y-m-d',mktime(0,0,0,Date('m')+1,0,Date('Y')));
 		$sql = "SELECT periodno FROM periods where lastdate_in_period = '" . $LastDate . "'";
-		$MaxPrd = DB_query($sql,$db);
+		$MaxPrd = DB_query($sql);
 		$MaxPrdrow = DB_fetch_row($MaxPrd);
 		$DefaultToPeriod = (int) ($MaxPrdrow[0]);
 
@@ -148,7 +148,7 @@ if ((!isset($_POST['FromPeriod'])
 	}
 
 	$sql = "SELECT lastdate_in_period FROM periods WHERE periodno='" . $_POST['ToPeriod'] . "'";
-	$PrdResult = DB_query($sql, $db);
+	$PrdResult = DB_query($sql);
 	$myrow = DB_fetch_row($PrdResult);
 	$PeriodToDate = MonthAndYearFromSQLDate($myrow[0]);
 
@@ -179,7 +179,7 @@ if ((!isset($_POST['FromPeriod'])
 					accountgroups.groupname,
 					chartdetails.accountcode";
 
-	$AccountsResult = DB_query($SQL,$db);
+	$AccountsResult = DB_query($SQL);
 
 	if (DB_error_no($db) != 0) {
 		$Title = _('Profit and Loss') . ' - ' . _('Problem Report') . '....';
@@ -577,7 +577,7 @@ if ((!isset($_POST['FromPeriod'])
 	}
 
 	$sql = "SELECT lastdate_in_period FROM periods WHERE periodno='" . $_POST['ToPeriod'] . "'";
-	$PrdResult = DB_query($sql, $db);
+	$PrdResult = DB_query($sql);
 	$myrow = DB_fetch_row($PrdResult);
 	$PeriodToDate = MonthAndYearFromSQLDate($myrow[0]);
 
@@ -606,7 +606,7 @@ if ((!isset($_POST['FromPeriod'])
 					accountgroups.groupname,
 					chartdetails.accountcode";
 
-	$AccountsResult = DB_query($SQL,$db,_('No general ledger accounts were returned by the SQL because'),_('The SQL that failed was'));
+	$AccountsResult = DB_query($SQL,_('No general ledger accounts were returned by the SQL because'),_('The SQL that failed was'));
 
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('General Ledger Profit Loss Inquiry') . '" alt="" />' . ' ' . _('Statement of Profit and Loss for the') . ' ' . $NumberOfMonths . ' ' . _('months to') . ' and including ' . $PeriodToDate . '</p>';
 

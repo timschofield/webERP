@@ -24,7 +24,7 @@ $sql = "SELECT debtortrans.type,
 		currencies.decimalplaces
 	HAVING SUM(custallocns.amt) < -alloc";
 
-$result =DB_query($sql,$db);
+$result =DB_query($sql);
 
 if (DB_num_rows($result)>0){
 	echo '<table>

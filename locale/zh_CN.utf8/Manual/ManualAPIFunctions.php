@@ -20,7 +20,7 @@ echo '<body>';
 
 $weberpuser = $_SESSION['UserID'];
 $sql="SELECT password FROM www_users WHERE userid='" . $weberpuser."'";
-$result=DB_query($sql, $db);
+$result=DB_query($sql);
 $myrow=DB_fetch_array($result);
 $weberppassword = $myrow[0];
 

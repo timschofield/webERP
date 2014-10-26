@@ -261,7 +261,7 @@ if (isset($_POST['PrintPDF'])
 					debtortrans.ovdiscount -
 					debtortrans.alloc)) >0.005";
 	}
-	$CustomerResult = DB_query($SQL,$db,'','',False,False); /*dont trap errors handled below*/
+	$CustomerResult = DB_query($SQL,'','',False,False); /*dont trap errors handled below*/
 
 	if (DB_error_no($db) !=0) {
 		$Title = _('Aged Customer Account Analysis') . ' - ' . _('Problem Report') . '.... ';
@@ -364,7 +364,7 @@ if (isset($_POST['PrintPDF'])
 				$sql .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 			}
 
-			$DetailResult = DB_query($sql,$db,'','',False,False); /*Dont trap errors */
+			$DetailResult = DB_query($sql,'','',False,False); /*Dont trap errors */
 			if (DB_error_no($db) !=0) {
 				$Title = _('Aged Customer Account Analysis') . ' - ' . _('Problem Report') . '....';
 				include('includes/header.inc');
@@ -489,7 +489,7 @@ if (isset($_POST['PrintPDF'])
 
 			$sql = "SELECT salesmancode, salesmanname FROM salesman";
 
-			$result=DB_query($sql,$db);
+			$result=DB_query($sql);
 			echo '<option value="">' . _('All Sales people') . '</option>';
 			while ($myrow=DB_fetch_array($result)){
 					echo '<option value="' . $myrow['salesmancode'] . '">' . $myrow['salesmanname'] . '</option>';
@@ -503,7 +503,7 @@ if (isset($_POST['PrintPDF'])
 
 		$sql = "SELECT currency, currabrev FROM currencies";
 
-		$result=DB_query($sql,$db);
+		$result=DB_query($sql);
 		while ($myrow=DB_fetch_array($result)){
 			  if ($myrow['currabrev'] == $_SESSION['CompanyRecord']['currencydefault']){
 				echo '<option selected="selected" value="' . $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';

@@ -65,7 +65,7 @@ if (isset($_POST['PrintPDF'])) {
 				ORDER BY sellthroughsupport.supplierno,
 					stockmaster.stockid";
 
-	$ClaimsResult = DB_query($SQL,$db,'','',false,false);
+	$ClaimsResult = DB_query($SQL,'','',false,false);
 
 	if (DB_error_no($db) !=0) {
 

@@ -102,7 +102,7 @@ if (isset($_POST['PrintPDF'])
 
 	}
 
-	$SupplierResult = DB_query($SQL,$db,'','',False,False); /*dont trap errors */
+	$SupplierResult = DB_query($SQL,'','',False,False); /*dont trap errors */
 
 	if (DB_error_no($db) !=0) {
 		$Title = _('Aged Supplier Account Analysis') . ' - ' . _('Problem Report') ;
@@ -190,7 +190,7 @@ if (isset($_POST['PrintPDF'])
 							AND supptrans.settled = 0
 							AND supptrans.supplierno = '" . $AgedAnalysis["supplierid"] . "'";
 
-			$DetailResult = DB_query($sql,$db,'','',False,False); /*dont trap errors - trapped below*/
+			$DetailResult = DB_query($sql,'','',False,False); /*dont trap errors - trapped below*/
 			if (DB_error_no($db) !=0) {
 			$Title = _('Aged Supplier Account Analysis - Problem Report');
 			include('includes/header.inc');
@@ -303,7 +303,7 @@ if (isset($_POST['PrintPDF'])
 				<td><select tabindex="4" name="Currency">';
 
 		$sql = "SELECT currency, currabrev FROM currencies";
-		$result=DB_query($sql,$db);
+		$result=DB_query($sql);
 
 		while ($myrow=DB_fetch_array($result)){
 			if ($myrow['currabrev'] == $_SESSION['CompanyRecord']['currencydefault']){

@@ -112,7 +112,7 @@ if ($Location=='All'){
 				stockmaster.stockid";
 
 }
-$InventoryResult = DB_query($SQL,$db,'','',false,true);
+$InventoryResult = DB_query($SQL,'','',false,true);
 $ListCount = DB_num_rows($InventoryResult);
 
 if (DB_error_no($db) !=0) {

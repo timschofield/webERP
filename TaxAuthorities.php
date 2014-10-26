@@ -43,7 +43,7 @@ if(isset($_POST['submit'])) {
 				WHERE taxid = '" . $SelectedTaxAuthID . "'";
 
 		$ErrMsg = _('The update of this tax authority failed because');
-		$result = DB_query($sql,$db,$ErrMsg);
+		$result = DB_query($sql,$ErrMsg);
 
 		$msg = _('The tax authority for record has been updated');
 
@@ -70,7 +70,7 @@ if(isset($_POST['submit'])) {
 				)";
 
 		$Errmsg = _('The addition of this tax authority failed because');
-		$result = DB_query($sql,$db,$ErrMsg);
+		$result = DB_query($sql,$ErrMsg);
 
 		$msg = _('The new tax authority record has been added to the database');
 
@@ -88,7 +88,7 @@ if(isset($_POST['submit'])) {
 				FROM taxprovinces,
 					taxcategories";
 
-			$InsertResult = DB_query($sql,$db);
+			$InsertResult = DB_query($sql);
 	}
 	//run the SQL from either of the above possibilites
 	if(isset($InputError) and $InputError !=1) {
@@ -109,14 +109,14 @@ if(isset($_POST['submit'])) {
 			FROM taxgrouptaxes
 		WHERE taxauthid='" . $SelectedTaxAuthID . "'";
 
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 	$myrow = DB_fetch_row($result);
 	if($myrow[0]>0) {
 		prnmsg(_('Cannot delete this tax authority because there are tax groups defined that use it'),'warn');
 	} else {
 		/*Cascade deletes in TaxAuthLevels */
-		$result = DB_query("DELETE FROM taxauthrates WHERE taxauthority= '" . $SelectedTaxAuthID . "'",$db);
-		$result = DB_query("DELETE FROM taxauthorities WHERE taxid= '" . $SelectedTaxAuthID . "'",$db);
+		$result = DB_query("DELETE FROM taxauthrates WHERE taxauthority= '" . $SelectedTaxAuthID . "'");
+		$result = DB_query("DELETE FROM taxauthorities WHERE taxid= '" . $SelectedTaxAuthID . "'");
 		prnMsg(_('The selected tax authority record has been deleted'),'success');
 		unset ($SelectedTaxAuthID);
 	} // end of related records testing
@@ -138,7 +138,7 @@ if(!isset($SelectedTaxAuthID)) {
 
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The defined tax authorities could not be retrieved because');
 	$DbgMsg = _('The following SQL to retrieve the tax authorities was used');
-	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+	$result = DB_query($sql,$ErrMsg,$DbgMsg);
 
 	echo '<table class="selection">
 			<tr>
@@ -223,7 +223,7 @@ if(isset($SelectedTaxAuthID)) {
 			FROM taxauthorities
 			WHERE taxid='" . $SelectedTaxAuthID . "'";
 
-	$result = DB_query($sql, $db);
+	$result = DB_query($sql);
 	$myrow = DB_fetch_array($result);
 
 	$_POST['TaxGLCode']	= $myrow['taxglcode'];
@@ -246,7 +246,7 @@ $SQL = "SELECT accountcode,
 		ON chartmaster.group_=accountgroups.groupname
 		WHERE accountgroups.pandl=0
 		ORDER BY accountcode";
-$result = DB_query($SQL,$db);
+$result = DB_query($SQL);
 
 if(!isset($_POST['Description'])) {
 	$_POST['Description']='';

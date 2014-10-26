@@ -18,7 +18,7 @@ function GetRptLinks($GroupID) {
 		$sql= "SELECT id, reportname FROM reports
 			WHERE defaultreport='".$Def."' AND groupname='".$GroupID."'
 			ORDER BY reportname";
-		$Result=DB_query($sql,$db,'','',false,true);
+		$Result=DB_query($sql,'','',false,true);
 		if (DB_num_rows($Result)>0) {
 			while ($Temp = DB_fetch_array($Result)) {
 				$RptLinks .= '<tr><td class="menu_group_item">';

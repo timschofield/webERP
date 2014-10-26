@@ -146,7 +146,7 @@ echo '<table cellpadding="2" class="selection">
 						description,
 							decimalplaces
 				FROM stockmaster WHERE stockid IN ('".$AdditionalStocks."')";
-		$RequirementsResult = DB_query($RequirementsSQL,$db);
+		$RequirementsResult = DB_query($RequirementsSQL);
 			$AdditionalStocks = array();
 			while($myrow = DB_fetch_array($RequirementsResult)){
 				$AdditionalStocks[$myrow['stockid']]['description'] = $myrow['description'];

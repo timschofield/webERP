@@ -16,15 +16,15 @@ if (isset($_POST['PrintPDF'])) {
 	$PageNumber=1;
 	$line_height=12;
 
-	$result = DB_query("DROP TABLE IF EXISTS tempbom",$db);
-	$result = DB_query("DROP TABLE IF EXISTS passbom",$db);
-	$result = DB_query("DROP TABLE IF EXISTS passbom2",$db);
+	$result = DB_query("DROP TABLE IF EXISTS tempbom");
+	$result = DB_query("DROP TABLE IF EXISTS passbom");
+	$result = DB_query("DROP TABLE IF EXISTS passbom2");
 	$sql = "CREATE TEMPORARY TABLE passbom (
 				part char(20),
 				sortpart text) DEFAULT CHARSET=utf8";
 
 	$ErrMsg = _('The SQL to create passbom failed with the message');
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 
 	$sql = "CREATE TEMPORARY TABLE tempbom (
 				parent char(20),
@@ -36,7 +36,7 @@ if (isset($_POST['PrintPDF'])) {
 				effectiveafter date,
 				effectiveto date,
 				quantity double) DEFAULT CHARSET=utf8";
-	$result = DB_query($sql,$db,_('Create of tempbom failed because'));
+	$result = DB_query($sql,_('Create of tempbom failed because'));
 	// First, find first level of components below requested assembly
 	// Put those first level parts in passbom, use COMPONENT in passbom
 	// to link to PARENT in bom to find next lower level and accumulate
@@ -50,7 +50,7 @@ if (isset($_POST['PrintPDF'])) {
 			  WHERE bom.component ='" . $_POST['Part'] . "'
 			  AND bom.effectiveto >= '" . date('Y-m-d') . "'
 			  AND bom.effectiveafter <= '" . date('Y-m-d') . "'";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 
 	$LevelCounter = 2;
 	// $LevelCounter is the level counter
@@ -77,7 +77,7 @@ if (isset($_POST['PrintPDF'])) {
 			  WHERE bom.component ='" . $_POST['Part'] . "'
 			  AND bom.effectiveto >= '" . date('Y-m-d') . "'
 			  AND bom.effectiveafter <= '" . date('Y-m-d') . "'";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 
 	// This while routine finds the other levels as long as $ComponentCounter - the
 	// component counter finds there are more components that are used as
@@ -108,17 +108,17 @@ if (isset($_POST['PrintPDF'])) {
 				WHERE bom.component = passbom.part
 				AND bom.effectiveto >= '" . date('Y-m-d') . "'
 				AND bom.effectiveafter <= '" . date('Y-m-d') . "'";
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 
-		$result = DB_query("DROP TABLE IF EXISTS passbom2",$db);
+		$result = DB_query("DROP TABLE IF EXISTS passbom2");
 
-		$result = DB_query("ALTER TABLE passbom RENAME AS passbom2",$db);
-		$result = DB_query("DROP TABLE IF EXISTS passbom",$db);
+		$result = DB_query("ALTER TABLE passbom RENAME AS passbom2");
+		$result = DB_query("DROP TABLE IF EXISTS passbom");
 
 		$sql = "CREATE TEMPORARY TABLE passbom (
 						part char(20),
 						sortpart text) DEFAULT CHARSET=utf8";
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 
 
 		$sql = "INSERT INTO passbom (part, sortpart)
@@ -128,8 +128,8 @@ if (isset($_POST['PrintPDF'])) {
 				   WHERE bom.component = passbom2.part
 					AND bom.effectiveto >= '" . date('Y-m-d') . "'
 					AND bom.effectiveafter <= '" . date('Y-m-d') . "'";
-		$result = DB_query($sql,$db);
-		$result = DB_query("SELECT COUNT(*) FROM bom,passbom WHERE bom.component = passbom.part",$db);
+		$result = DB_query($sql);
+		$result = DB_query("SELECT COUNT(*) FROM bom,passbom WHERE bom.component = passbom.part");
 
 		$myrow = DB_fetch_row($result);
 		$ComponentCounter = $myrow[0];
@@ -154,7 +154,7 @@ if (isset($_POST['PrintPDF'])) {
                    stockmaster.description
               FROM stockmaster
               WHERE stockid = '" . $_POST['Part'] . "'";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 	$myrow = DB_fetch_array($result,$db);
 	$Assembly = $_POST['Part'];
 	$AssemblyDesc = $myrow['description'];
@@ -171,7 +171,7 @@ if (isset($_POST['PrintPDF'])) {
               ON tempbom.parent = stockmaster.stockid
 			  INNER JOIN locationusers ON locationusers.loccode=tempbom.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
               ORDER BY sortpart";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 
     $ListCount = DB_num_rows($result);
 

@@ -16,16 +16,16 @@ if (isset($_POST['PrintPDF'])) {
 	$line_height=12;
 
 	$sql = "DROP TABLE IF EXISTS tempbom";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 	$sql = "DROP TABLE IF EXISTS passbom";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 	$sql = "DROP TABLE IF EXISTS passbom2";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 	$sql = "CREATE TEMPORARY TABLE passbom (
 				part char(20),
 				sortpart text) DEFAULT CHARSET=utf8";
 	$ErrMsg = _('The SQL to create passbom failed with the message');
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 
 	$sql = "CREATE TEMPORARY TABLE tempbom (
 				parent char(20),
@@ -37,7 +37,7 @@ if (isset($_POST['PrintPDF'])) {
 				effectiveafter date,
 				effectiveto date,
 				quantity double) DEFAULT CHARSET=utf8";
-	$result = DB_query($sql,$db,_('Create of tempbom failed because'));
+	$result = DB_query($sql,_('Create of tempbom failed because'));
 	// First, find first level of components below requested assembly
 	// Put those first level parts in passbom, use COMPONENT in passbom
 	// to link to PARENT in bom to find next lower level and accumulate
@@ -51,7 +51,7 @@ if (isset($_POST['PrintPDF'])) {
 			  WHERE bom.parent ='" . $_POST['Part'] . "'
 			  AND bom.effectiveto >= '" . date('Y-m-d') . "'
 			  AND bom.effectiveafter <= '" . date('Y-m-d') . "'";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 
 	$LevelCounter = 2;
 	// $LevelCounter is the level counter
@@ -79,7 +79,7 @@ if (isset($_POST['PrintPDF'])) {
 			  WHERE bom.parent ='" . $_POST['Part'] . "'
 			  AND bom.effectiveto >= '" . date('Y-m-d') . "'
 			  AND bom.effectiveafter <= '" . date('Y-m-d') . "'";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 	//echo "<br />sql is $sql<br />";
 	// This while routine finds the other levels as long as $ComponentCounter - the
 	// component counter - finds there are more components that are used as
@@ -112,21 +112,21 @@ if (isset($_POST['PrintPDF'])) {
 				 INNER JOIN locationusers ON locationusers.loccode=loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 				 WHERE bom.parent = passbom.part
 				  AND bom.effectiveto >= '" . date('Y-m-d') . "' AND bom.effectiveafter <= '" . date('Y-m-d') . "'";
-			$result = DB_query($sql,$db);
+			$result = DB_query($sql);
 
 			$sql = "DROP TABLE IF EXISTS passbom2";
-			$result = DB_query($sql,$db);
+			$result = DB_query($sql);
 
 			$sql = "ALTER TABLE passbom RENAME AS passbom2";
-			$result = DB_query($sql,$db);
+			$result = DB_query($sql);
 
 			$sql = "DROP TABLE IF EXISTS passbom";
-			$result = DB_query($sql,$db);
+			$result = DB_query($sql);
 
 			$sql = "CREATE TEMPORARY TABLE passbom (
 								part char(20),
 								sortpart text) DEFAULT CHARSET=utf8";
-			$result = DB_query($sql,$db);
+			$result = DB_query($sql);
 
 
 			$sql = "INSERT INTO passbom (part, sortpart)
@@ -136,11 +136,11 @@ if (isset($_POST['PrintPDF'])) {
 					   WHERE bom.parent = passbom2.part
 						AND bom.effectiveto >= '" . date('Y-m-d') . "'
 						AND bom.effectiveafter <= '" . date('Y-m-d') . "'";
-			$result = DB_query($sql,$db);
+			$result = DB_query($sql);
 
 
 			$sql = "SELECT COUNT(*) FROM bom,passbom WHERE bom.parent = passbom.part";
-			$result = DB_query($sql,$db);
+			$result = DB_query($sql);
 
 			$myrow = DB_fetch_row($result);
 			$ComponentCounter = $myrow[0];
@@ -165,7 +165,7 @@ if (isset($_POST['PrintPDF'])) {
                    stockmaster.description
               FROM stockmaster
               WHERE stockid = " . "'" . $_POST['Part'] . "'";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 	$myrow = DB_fetch_array($result,$db);
 	$assembly = $_POST['Part'];
 	$assemblydesc = $myrow['description'];
@@ -180,7 +180,7 @@ if (isset($_POST['PrintPDF'])) {
 			FROM tempbom,stockmaster
 			WHERE tempbom.component = stockmaster.stockid
 			ORDER BY sortpart";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 
 	// $fill is used to alternate between lines with transparent and painted background
 	$fill = false;

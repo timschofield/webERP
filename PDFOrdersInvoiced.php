@@ -50,7 +50,7 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 			<td>';
 
 	$sql = "SELECT categorydescription, categoryid FROM stockcategory WHERE stocktype<>'D' AND stocktype<>'L'";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 
 	echo '<select required="required" name="CategoryID">';
 	echo '<option selected="selected" value="All">' . _('Over All Categories') . '</option>';
@@ -65,7 +65,7 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 			<td><select required="required" name="Location">
 				<option selected="selected" value="All">' . _('All Locations') . '</option>';
 
-	$result= DB_query("SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1",$db);
+	$result= DB_query("SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1");
 	while ($myrow=DB_fetch_array($result)){
 		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 	}
@@ -246,7 +246,7 @@ $sql .= " GROUP BY salesorders.orderno,
 					stockmaster.decimalplaces
 			ORDER BY salesorders.orderno";
 
-$Result=DB_query($sql,$db,'','',false,false); //dont trap errors here
+$Result=DB_query($sql,'','',false,false); //dont trap errors here
 
 if (DB_error_no($db)!=0){
 	include('includes/header.inc');
@@ -371,7 +371,7 @@ while ($myrow=DB_fetch_array($Result)){
 				WHERE debtortrans.order_ ='" . $OrderNo . "'
 				AND stockmoves.stockid ='" . $myrow['stkcode'] . "'";
 
-	$InvoicesResult =DB_query($sql,$db);
+	$InvoicesResult =DB_query($sql);
 	if (DB_num_rows($InvoicesResult)>0){
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+150,$YPos,90,$FontSize,_('Transaction Number'), 'center');
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+240,$YPos,60,$FontSize,_('Quantity'), 'center');

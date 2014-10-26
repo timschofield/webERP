@@ -50,7 +50,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 				'" . -$AccumDiffOnExch . "',
 				'" . -$AccumBalance . "')";
 
-	$ProcessResult = DB_query($SQL,$db,'','',false,false);
+	$ProcessResult = DB_query($SQL,'','',false,false);
 	if (DB_error_no($db) !=0) {
 		$Title = _('Payment Processing - Problem Report');
 		include('header.inc');
@@ -81,7 +81,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 						'" . $PaymentTransID . "',
 						'" . $AllocTrans->TransID . "')";
 
-		$ProcessResult = DB_query($SQL,$db);
+		$ProcessResult = DB_query($SQL);
 		if (DB_error_no($db) !=0) {
 			$Title = _('Payment Processing - Problem Report') . '.... ';
 			include('header.inc');
@@ -110,7 +110,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 				'" . FormatDateForSQL($_POST['AmountsDueBy']) . "',
 				'" . $_POST['PaytType'] . "',
 				" .  -$AccumBalance . ")";
-	$ProcessResult = DB_query($SQL,$db,'','',false,false);
+	$ProcessResult = DB_query($SQL,'','',false,false);
 	if (DB_error_no($db) !=0) {
 		$Title = _('Payment Processing - Problem Report');
 		include('header.inc');
@@ -147,7 +147,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 					'" . $SupplierID . " - " . $SupplierName . ' ' . _('payment run on') . ' ' . Date($_SESSION['DefaultDateFormat']) . ' - ' . $PaytReference . "',
 					'" . (-$AccumBalance/ filter_number_format($_POST['ExRate'])) . "')";
 
-		$ProcessResult = DB_query($SQL,$db,'','',false,false);
+		$ProcessResult = DB_query($SQL,'','',false,false);
 		if (DB_error_no($db) !=0) {
 			$Title = _('Payment Processing') . ' - ' . _('Problem Report') . '.... ';
 			include('header.inc');
@@ -179,7 +179,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 					'" . $SupplierID . ' - ' . $SupplierName . ' ' . _('payment run on') . ' ' . Date($_SESSION['DefaultDateFormat']) . ' - ' . $PaytReference . "',
 					'" . ($AccumBalance/ filter_number_format($_POST['ExRate'])  + $AccumDiffOnExch) . "')";
 
-		$ProcessResult = DB_query($SQL,$db,'','',false,false);
+		$ProcessResult = DB_query($SQL,'','',false,false);
 		if (DB_error_no($db) !=0) {
 			$Title = _('Payment Processing - Problem Report');
 			include('header.inc');
@@ -210,7 +210,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 							'" . $SupplierID . ' - ' . $SupplierName . ' ' . _('payment run on') . ' ' . Date($_SESSION['DefaultDateFormat']) . " - " . $PaytReference . "',
 							'" . (-$AccumDiffOnExch) . "')";
 
-			$ProcessResult = DB_query($SQL,$db,'','',false,false);
+			$ProcessResult = DB_query($SQL,'','',false,false);
 			if (DB_error_no($db) !=0) {
 				$Title = _('Payment Processing - Problem Report');
 				include('header.inc');

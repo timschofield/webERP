@@ -6,7 +6,7 @@
 		$Searchsql = "SELECT count(accountcode)
 				FROM chartmaster
 				WHERE accountcode='".$AccountCode."'";
-		$SearchResult=DB_query($Searchsql, $db);
+		$SearchResult=DB_query($Searchsql);
 		$answer = DB_fetch_array($SearchResult);
 		if ($answer[0]>0) {
 			$Errors[$i] = GLAccountCodeAlreadyExists;
@@ -19,7 +19,7 @@
 		$Searchsql = "SELECT count(accountcode)
 				FROM chartmaster
 				WHERE accountcode='".$AccountCode."'";
-		$SearchResult=DB_query($Searchsql, $db);
+		$SearchResult=DB_query($Searchsql);
 		$answer = DB_fetch_array($SearchResult);
 		if ($answer[0]==0) {
 			$Errors[$i] = GLAccountCodeDoesntExists;
@@ -40,7 +40,7 @@
 		$Searchsql = "SELECT count(groupname)
 				FROM accountgroups
 				WHERE groupname='".$AccountGroup."'";
-		$SearchResult=DB_query($Searchsql, $db);
+		$SearchResult=DB_query($Searchsql);
 		$answer = DB_fetch_array($SearchResult);
 		if ($answer[0]==0) {
 			$Errors[$i] = AccountGroupDoesntExist;
@@ -78,7 +78,7 @@
 				SELECT ' . $AccountDetails['accountcode'] . ',
 					periodno
 				FROM periods';
-			$result = DB_query($sql,$db,'','','',false);
+			$result = DB_query($sql,'','','',false);
 			if (DB_error_no($db) != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
@@ -105,7 +105,7 @@
 				FROM chartmaster INNER JOIN accountgroups
 				ON chartmaster.group_=accountgroups.groupname
 				ORDER BY accountcode';
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		$i=0;
 		while ($myrow=DB_fetch_array($result)) {
 			$GLAccountList[$i]['accountcode']=$myrow[0];
@@ -129,7 +129,7 @@
 			return $Errors;
 		}
 		$sql = "SELECT * FROM chartmaster WHERE accountcode='".$AccountCode."'";
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		return DB_fetch_array($result);
 	}
 

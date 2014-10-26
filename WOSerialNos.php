@@ -95,7 +95,7 @@ if (isset($_POST['AddControlledItems'])){
 			}
 			$NextSerialNo = $NextItemNumber + 1;
 			$ErrMsg = _('Unable to add the serial numbers requested');
-			$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
+			$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
 			// update the nextserialno in the stockmaster for the item
 			$result = DB_query("UPDATE stockmaster
 								SET nextserialno='" . $NextSerialNo . "'
@@ -150,7 +150,7 @@ if (isset($_POST['AddControlledItems'])){
 											 '" . $_POST['Reference'] . "')";
 
 				$ErrMsg = _('Unable to add the batch or serial number requested');
-				$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
+				$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
 
 				DB_Txn_Commit($db);
 			}
@@ -221,7 +221,7 @@ if (isset($_POST['UpdateItems'])){
 	if (sizeof($sql)>0){
 		$result = DB_Txn_Begin($db);
 		foreach ($sql as $SQLStatement){
-				$result = DB_query($SQLStatement,$db,$ErrMsg,$DbgMsg,true);
+				$result = DB_query($SQLStatement,$ErrMsg,$DbgMsg,true);
 		}
 		$result = DB_query("UPDATE woitems SET qtyreqd = '" . $WOQuantityTotal . "'
 							WHERE wo = '" .$WO . "'
@@ -285,7 +285,7 @@ $sql = "SELECT serialno,
 		AND stockid='" . $StockID . "'";
 
 $ErrMsg = _('Could not get the work order serial/batch items');
-$WOSerialNoResult = DB_query($sql,$db,$ErrMsg);
+$WOSerialNoResult = DB_query($sql,$ErrMsg);
 
 if (DB_num_rows($WOSerialNoResult)==0){
 	prnMsg(_('There are no serial items or batches yet defined for this work order item. Create new items first'),'info');

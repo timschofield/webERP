@@ -20,15 +20,15 @@ if (isset($_POST['PrintPDF'])) {
 		$_POST['Quantity'] = 1;
 	}
 
-	$result = DB_query("DROP TABLE IF EXISTS tempbom",$db);
-	$result = DB_query("DROP TABLE IF EXISTS passbom",$db);
-	$result = DB_query("DROP TABLE IF EXISTS passbom2",$db);
+	$result = DB_query("DROP TABLE IF EXISTS tempbom");
+	$result = DB_query("DROP TABLE IF EXISTS passbom");
+	$result = DB_query("DROP TABLE IF EXISTS passbom2");
 	$sql = "CREATE TEMPORARY TABLE passbom (
 				part char(20),
 				extendedqpa double,
 				sortpart text) DEFAULT CHARSET=utf8";
 	$ErrMsg = _('The SQL to create passbom failed with the message');
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 
 	$sql = "CREATE TEMPORARY TABLE tempbom (
 				parent char(20),
@@ -40,7 +40,7 @@ if (isset($_POST['PrintPDF'])) {
 				effectiveafter date,
 				effectiveto date,
 				quantity double) DEFAULT CHARSET=utf8";
-	$result = DB_query($sql,$db,_('Create of tempbom failed because'));
+	$result = DB_query($sql,_('Create of tempbom failed because'));
 	// First, find first level of components below requested assembly
 	// Put those first level parts in passbom, use COMPONENT in passbom
 	// to link to PARENT in bom to find next lower level and accumulate
@@ -55,7 +55,7 @@ if (isset($_POST['PrintPDF'])) {
 			  WHERE bom.parent ='" . $_POST['Part'] . "'
 			  AND bom.effectiveto >= '" . date('Y-m-d') . "'
 			  AND bom.effectiveafter <= '" . date('Y-m-d') . "'";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 
 	$LevelCounter = 2;
 	// $LevelCounter is the level counter
@@ -82,7 +82,7 @@ if (isset($_POST['PrintPDF'])) {
 			WHERE bom.parent ='" . $_POST['Part'] . "'
 			AND bom.effectiveto >= '" . date('Y-m-d') . "'
 			AND bom.effectiveafter <= '" . date('Y-m-d') . "'";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 	//echo "<br />sql is $sql<br />";
 	// This while routine finds the other levels as long as $ComponentCounter - the
 	// component counter finds there are more components that are used as
@@ -114,16 +114,16 @@ if (isset($_POST['PrintPDF'])) {
 			 WHERE bom.parent = passbom.part
 			  AND bom.effectiveto >= '" . date('Y-m-d') . "'
 			  AND bom.effectiveafter <= '" . date('Y-m-d') . "'";
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 
-		$result = DB_query("DROP TABLE IF EXISTS passbom2",$db);
-		$result = DB_query("ALTER TABLE passbom RENAME AS passbom2",$db);
-		$result = DB_query("DROP TABLE IF EXISTS passbom",$db);
+		$result = DB_query("DROP TABLE IF EXISTS passbom2");
+		$result = DB_query("ALTER TABLE passbom RENAME AS passbom2");
+		$result = DB_query("DROP TABLE IF EXISTS passbom");
 
 		$sql = "CREATE TEMPORARY TABLE passbom (part char(20),
 												extendedqpa decimal(10,3),
 												sortpart text) DEFAULT CHARSET=utf8";
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 
 		$sql = "INSERT INTO passbom (part,
 									extendedqpa,
@@ -136,14 +136,14 @@ if (isset($_POST['PrintPDF'])) {
 									ON bom.parent = passbom2.part
 									WHERE bom.effectiveto >= '" . date('Y-m-d') . "'
 									AND bom.effectiveafter <= '" . date('Y-m-d') . "'";
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 
 		$sql = "SELECT COUNT(bom.parent) AS components
 					FROM bom
 					INNER JOIN passbom
 					ON bom.parent = passbom.part
 					GROUP BY passbom.part";
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 
 		$myrow = DB_fetch_array($result);
 		$ComponentCounter = $myrow['components'];
@@ -200,7 +200,7 @@ if (isset($_POST['PrintPDF'])) {
 					   stockmaster.description,
 					   stockmaster.decimalplaces,
 					   stockmaster.mbflag";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 	$ListCount = DB_num_rows($result);
 	while ($myrow = DB_fetch_array($result,$db)){
 

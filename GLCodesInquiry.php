@@ -16,7 +16,7 @@ $SQL = "SELECT group_,
 				accountcode";
 
 $ErrMsg = _('No general ledger accounts were returned by the SQL because');
-$AccountsResult = DB_query($SQL,$db,$ErrMsg);
+$AccountsResult = DB_query($SQL,$ErrMsg);
 
 /*show a table of the orders returned by the SQL */
 

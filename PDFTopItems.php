@@ -87,7 +87,7 @@ if (($_GET['Location'] == 'All') AND ($_GET['Customers'] == 'All')) {
 		}
 	}
 }
-$result = DB_query($SQL, $db);
+$result = DB_query($SQL);
 if (DB_num_rows($result)>0){
 	$YPos = $YPos - 6;
 	while ($myrow = DB_fetch_array($result)) {
@@ -96,7 +96,7 @@ if (DB_num_rows($result)>0){
 					FROM locstock
 					INNER JOIN locationusers ON locationusers.loccode=locstock.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 					WHERE stockid='" . DB_escape_string($myrow['stkcode']) . "'";
-		$oh = DB_query($sqloh, $db);
+		$oh = DB_query($sqloh);
 		$ohRow = DB_fetch_row($oh);
 		$LeftOvers = $pdf->addTextWrap($Left_Margin + 1, $YPos, 80, $FontSize, $myrow['stkcode']);
 		$LeftOvers = $pdf->addTextWrap($Left_Margin + 100, $YPos, 100, $FontSize, $myrow['description']);

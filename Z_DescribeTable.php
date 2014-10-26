@@ -6,7 +6,7 @@ $Title = _('Database table details');
 include('includes/header.inc');
 
 $sql='DESCRIBE '.$_GET['table'];
-$result=DB_query($sql, $db);
+$result=DB_query($sql);
 
 echo '<table><tr>';
 echo '<th>' . _('Field name') . '</th>';

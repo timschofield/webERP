@@ -20,7 +20,7 @@ asort($StockTypeName);
 // BEGIN: Tax Category Name array.
 $TaxCategoryName = array();
 $Query = "SELECT taxcatid, taxcatname FROM taxcategories ORDER BY taxcatname";
-$Result = DB_query($Query, $db);
+$Result = DB_query($Query);
 while ($Row = DB_fetch_array($Result)) {
 	$TaxCategoryName[$Row['taxcatid']] = $Row['taxcatname'];
 }
@@ -38,9 +38,9 @@ if (isset($_GET['DeleteProperty'])){
 
 	$ErrMsg = _('Could not delete the property') . ' ' . $_GET['DeleteProperty'] . ' ' . _('because');
 	$sql = "DELETE FROM stockitemproperties WHERE stkcatpropid='" . $_GET['DeleteProperty'] . "'";
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 	$sql = "DELETE FROM stockcatproperties WHERE stkcatpropid='" . $_GET['DeleteProperty'] . "'";
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 	prnMsg(_('Deleted the property') . ' ' . $_GET['DeleteProperty'],'success');
 }
 
@@ -100,7 +100,7 @@ if (isset($_POST['submit'])) {
 									 WHERE
 									 categoryid = '" . $SelectedCategory. "'";
 		$ErrMsg = _('Could not update the stock category') . $_POST['CategoryDescription'] . _('because');
-		$result = DB_query($sql,$db,$ErrMsg);
+		$result = DB_query($sql,$ErrMsg);
 
 		if ($_POST['PropertyCounter']==0 and $_POST['PropLabel0']!='') {
 			$_POST['PropertyCounter']=0;
@@ -136,7 +136,7 @@ if (isset($_POST['submit'])) {
 													'" . $_POST['PropNumeric' .$i] . "',
 													" . $_POST['PropReqSO' .$i] . ')';
 				$ErrMsg = _('Could not insert a new category property for') . $_POST['PropLabel' . $i];
-				$result = DB_query($sql,$db,$ErrMsg);
+				$result = DB_query($sql,$ErrMsg);
 			} elseif ($_POST['PropID' .$i] !='NewProperty') { //we could be amending existing properties
 				$sql = "UPDATE stockcatproperties SET label ='" . $_POST['PropLabel' . $i] . "',
 													  controltype = " . $_POST['PropControlType' . $i] . ",
@@ -147,7 +147,7 @@ if (isset($_POST['submit'])) {
 													  reqatsalesorder = " . $_POST['PropReqSO' .$i] . "
 												WHERE stkcatpropid =" . $_POST['PropID' .$i];
 				$ErrMsg = _('Updated the stock category property for') . ' ' . $_POST['PropLabel' . $i];
-				$result = DB_query($sql,$db,$ErrMsg);
+				$result = DB_query($sql,$ErrMsg);
 			}
 
 		} //end of loop round properties
@@ -180,7 +180,7 @@ if (isset($_POST['submit'])) {
 											$_POST['MaterialUseageVarAc'] . "','" .
 											$_POST['WIPAct'] . "')";
 		$ErrMsg = _('Could not insert the new stock category') . $_POST['CategoryDescription'] . _('because');
-		$result = DB_query($sql,$db,$ErrMsg);
+		$result = DB_query($sql,$ErrMsg);
 		prnMsg(_('A new stock category record has been added for') . ' ' . $_POST['CategoryDescription'],'success');
 
 	}
@@ -202,7 +202,7 @@ if (isset($_POST['submit'])) {
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'StockMaster'
 
 	$sql= "SELECT stockid FROM stockmaster WHERE stockmaster.categoryid='" . $SelectedCategory . "'";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 
 	if (DB_num_rows($result)>0) {
 		prnMsg(_('Cannot delete this stock category because stock items have been created using this stock category') .
@@ -210,19 +210,19 @@ if (isset($_POST['submit'])) {
 
 	} else {
 		$sql = "SELECT stkcat FROM salesglpostings WHERE stkcat='" . $SelectedCategory . "'";
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 
 		if (DB_num_rows($result)>0) {
 			prnMsg(_('Cannot delete this stock category because it is used by the sales') . ' - ' . _('GL posting interface') . '. ' . _('Delete any records in the Sales GL Interface set up using this stock category first'),'warn');
 		} else {
 			$sql = "SELECT stkcat FROM cogsglpostings WHERE stkcat='" . $SelectedCategory . "'";
-			$result = DB_query($sql,$db);
+			$result = DB_query($sql);
 
 			if (DB_num_rows($result)>0) {
 				prnMsg(_('Cannot delete this stock category because it is used by the cost of sales') . ' - ' . _('GL posting interface') . '. ' . _('Delete any records in the Cost of Sales GL Interface set up using this stock category first'),'warn');
 			} else {
 				$sql="DELETE FROM stockcategory WHERE categoryid='" . $SelectedCategory . "'";
-				$result = DB_query($sql,$db);
+				$result = DB_query($sql);
 				prnMsg(_('The stock category') . ' ' . $SelectedCategory . ' ' . _('has been deleted') . ' !','success');
 				unset ($SelectedCategory);
 			}
@@ -248,7 +248,7 @@ or deletion of the records*/
 					materialuseagevarac,
 					wipact
 				FROM stockcategory";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 
 	echo '<br />
 		<table class="selection">
@@ -338,7 +338,7 @@ if (isset($SelectedCategory)) {
 					FROM stockcategory
 					WHERE categoryid='" . $SelectedCategory . "'";
 
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		$myrow = DB_fetch_array($result);
 
 		$_POST['CategoryID'] = $myrow['categoryid'];
@@ -380,7 +380,7 @@ $sql = "SELECT accountcode,
 			WHERE accountgroups.pandl=0
 			ORDER BY accountcode";
 
-$BSAccountsResult = DB_query($sql,$db);
+$BSAccountsResult = DB_query($sql);
 
 $sql = "SELECT accountcode,
 				accountname
@@ -390,7 +390,7 @@ $sql = "SELECT accountcode,
 			WHERE accountgroups.pandl=1
 			ORDER BY accountcode";
 
-$PnLAccountsResult = DB_query($sql,$db);
+$PnLAccountsResult = DB_query($sql);
 
 // Category Description input.
 if (!isset($_POST['CategoryDescription'])) {
@@ -556,7 +556,7 @@ if (isset($SelectedCategory)) {
 			   WHERE categoryid='" . $SelectedCategory . "'
 			   ORDER BY stkcatpropid";
 
-	$result = DB_query($sql, $db);
+	$result = DB_query($sql);
 
 /*		echo '<br />Number of rows returned by the sql = ' . DB_num_rows($result) .
 			'<br />The SQL was:<br />' . $sql;

@@ -38,7 +38,7 @@ if (isset($_POST['submit'])) {
 					WHERE debtorno='" . $_POST['CashSaleCustomer'] . "'
 					AND branchcode='" . $_POST['CashSaleBranch'] . "'";
 
-			$result = DB_query($sql,$db);
+			$result = DB_query($sql);
 			if (DB_num_rows($result)==0){
 				$InputError = 1;
 				prnMsg(_('The cash sale customer for this location must be defined with both a valid customer code and a valid branch code for this customer'),'error');
@@ -78,7 +78,7 @@ if (isset($_POST['submit'])) {
 		$ErrMsg = _('An error occurred updating the') . ' ' . $SelectedLocation . ' ' . _('location record because');
 		$DbgMsg = _('The SQL used to update the location record was');
 
-		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+		$result = DB_query($sql,$ErrMsg,$DbgMsg);
 
 		prnMsg( _('The location record has been updated'),'success');
 		unset($_POST['LocCode']);
@@ -152,7 +152,7 @@ if (isset($_POST['submit'])) {
 
 		$ErrMsg =  _('An error occurred inserting the new location record because');
 		$DbgMsg =  _('The SQL used to insert the location record was');
-		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+		$result = DB_query($sql,$ErrMsg,$DbgMsg);
 
 		prnMsg( _('The new location record has been added'),'success');
 
@@ -171,7 +171,7 @@ if (isset($_POST['submit'])) {
 
 		$ErrMsg =  _('An error occurred inserting the new location stock records for all pre-existing parts because');
 		$DbgMsg =  _('The SQL used to insert the new stock location records was');
-		$result = DB_query($sql,$db,$ErrMsg, $DbgMsg);
+		$result = DB_query($sql,$ErrMsg, $DbgMsg);
 		prnMsg ('........ ' . _('and new stock locations inserted for all existing stock items for the new location'), 'success');
 
 	/* Also need to add locationuser records for all existing users*/
@@ -188,7 +188,7 @@ if (isset($_POST['submit'])) {
 				AND  locations.loccode='". $_POST['LocCode'] . "';";
 
 		$ErrMsg = _('The users/locations that need user location records created cannot be retrieved because');
-		$Result = DB_query($sql,$db,$ErrMsg);
+		$Result = DB_query($sql,$ErrMsg);
 		prnMsg(_('Existing users have been authorized for this location'),'success');
 
 		unset($_POST['LocCode']);
@@ -216,21 +216,21 @@ if (isset($_POST['submit'])) {
 
 	/* Go through the tax authorities for all Locations deleting or adding TaxAuthRates records as necessary */
 
-	$result = DB_query("SELECT COUNT(taxid) FROM taxauthorities",$db);
+	$result = DB_query("SELECT COUNT(taxid) FROM taxauthorities");
 	$NoTaxAuths =DB_fetch_row($result);
 
-	$DispTaxProvincesResult = DB_query("SELECT taxprovinceid FROM locations",$db);
-	$TaxCatsResult = DB_query("SELECT taxcatid FROM taxcategories",$db);
+	$DispTaxProvincesResult = DB_query("SELECT taxprovinceid FROM locations");
+	$TaxCatsResult = DB_query("SELECT taxcatid FROM taxcategories");
 	if (DB_num_rows($TaxCatsResult) > 0 ) { // This will only work if there are levels else we get an error on seek.
 
 		while ($myrow=DB_fetch_row($DispTaxProvincesResult)){
 			/*Check to see there are TaxAuthRates records set up for this TaxProvince */
-			$NoTaxRates = DB_query("SELECT taxauthority FROM taxauthrates WHERE dispatchtaxprovince='" . $myrow[0] . "'", $db);
+			$NoTaxRates = DB_query("SELECT taxauthority FROM taxauthrates WHERE dispatchtaxprovince='" . $myrow[0] . "'");
 
 			if (DB_num_rows($NoTaxRates) < $NoTaxAuths[0]){
 
 				/*First off delete any tax authoritylevels already existing */
-				$DelTaxAuths = DB_query("DELETE FROM taxauthrates WHERE dispatchtaxprovince='" . $myrow[0] . "'",$db);
+				$DelTaxAuths = DB_query("DELETE FROM taxauthrates WHERE dispatchtaxprovince='" . $myrow[0] . "'");
 
 				/*Now add the new TaxAuthRates required */
 				while ($CatRow = DB_fetch_row($TaxCatsResult)){
@@ -242,7 +242,7 @@ if (isset($_POST['submit'])) {
 								'" . $CatRow[0] . "'
 							FROM taxauthorities";
 
-					$InsTaxAuthRates = DB_query($sql,$db);
+					$InsTaxAuthRates = DB_query($sql);
 				}
 				DB_data_seek($TaxCatsResult,0);
 			}
@@ -257,7 +257,7 @@ if (isset($_POST['submit'])) {
 
 // PREVENT DELETES IF DEPENDENT RECORDS
 	$sql= "SELECT COUNT(*) FROM salesorders WHERE fromstkloc='". $SelectedLocation . "'";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {
 		$CancelDelete = 1;
@@ -265,7 +265,7 @@ if (isset($_POST['submit'])) {
 		echo  _('There are') . ' ' . $myrow[0] . ' ' . _('sales orders with this Location code');
 	} else {
 		$sql= "SELECT COUNT(*) FROM stockmoves WHERE stockmoves.loccode='" . $SelectedLocation . "'";
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0]>0) {
 			$CancelDelete = 1;
@@ -276,7 +276,7 @@ if (isset($_POST['submit'])) {
 			$sql= "SELECT COUNT(*) FROM locstock
 					WHERE locstock.loccode='". $SelectedLocation . "'
 					AND locstock.quantity !=0";
-			$result = DB_query($sql,$db);
+			$result = DB_query($sql);
 			$myrow = DB_fetch_row($result);
 			if ($myrow[0]>0) {
 				$CancelDelete = 1;
@@ -285,7 +285,7 @@ if (isset($_POST['submit'])) {
 			} else {
 				$sql= "SELECT COUNT(*) FROM www_users
 						WHERE www_users.defaultlocation='" . $SelectedLocation . "'";
-				$result = DB_query($sql,$db);
+				$result = DB_query($sql);
 				$myrow = DB_fetch_row($result);
 				if ($myrow[0]>0) {
 					$CancelDelete = 1;
@@ -294,7 +294,7 @@ if (isset($_POST['submit'])) {
 				} else {
 					$sql= "SELECT COUNT(*) FROM bom
 							WHERE bom.loccode='" . $SelectedLocation . "'";
-					$result = DB_query($sql,$db);
+					$result = DB_query($sql);
 					$myrow = DB_fetch_row($result);
 					if ($myrow[0]>0) {
 						$CancelDelete = 1;
@@ -303,7 +303,7 @@ if (isset($_POST['submit'])) {
 					} else {
 						$sql= "SELECT COUNT(*) FROM workcentres
 								WHERE workcentres.location='" . $SelectedLocation . "'";
-						$result = DB_query($sql,$db);
+						$result = DB_query($sql);
 						$myrow = DB_fetch_row($result);
 						if ($myrow[0]>0) {
 							$CancelDelete = 1;
@@ -312,7 +312,7 @@ if (isset($_POST['submit'])) {
 						} else {
 							$sql= "SELECT COUNT(*) FROM workorders
 									WHERE workorders.loccode='" . $SelectedLocation . "'";
-							$result = DB_query($sql,$db);
+							$result = DB_query($sql);
 							$myrow = DB_fetch_row($result);
 							if ($myrow[0]>0) {
 								$CancelDelete = 1;
@@ -321,7 +321,7 @@ if (isset($_POST['submit'])) {
 							} else {
 								$sql= "SELECT COUNT(*) FROM custbranch
 										WHERE custbranch.defaultlocation='" . $SelectedLocation . "'";
-								$result = DB_query($sql,$db);
+								$result = DB_query($sql);
 								$myrow = DB_fetch_row($result);
 								if ($myrow[0]>0) {
 									$CancelDelete = 1;
@@ -329,7 +329,7 @@ if (isset($_POST['submit'])) {
 									echo '<br /> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('branches set up to use this location by default');
 								} else {
 									$sql= "SELECT COUNT(*) FROM purchorders WHERE intostocklocation='" . $SelectedLocation . "'";
-									$result = DB_query($sql,$db);
+									$result = DB_query($sql);
 									$myrow = DB_fetch_row($result);
 									if ($myrow[0]>0) {
 										$CancelDelete = 1;
@@ -359,9 +359,9 @@ if (isset($_POST['submit'])) {
 								WHERE dispatchtaxprovince='" . $TaxProvinceRow[0] . "'",$db);
 		}
 
-		$result= DB_query("DELETE FROM locstock WHERE loccode ='" . $SelectedLocation . "'",$db);
-		$result = DB_query("DELETE FROM locationusers WHERE loccode='" . $SelectedLocation . "'",$db);
-		$result = DB_query("DELETE FROM locations WHERE loccode='" . $SelectedLocation . "'",$db);
+		$result= DB_query("DELETE FROM locstock WHERE loccode ='" . $SelectedLocation . "'");
+		$result = DB_query("DELETE FROM locationusers WHERE loccode='" . $SelectedLocation . "'");
+		$result = DB_query("DELETE FROM locations WHERE loccode='" . $SelectedLocation . "'");
 
 		prnMsg( _('Location') . ' ' . $SelectedLocation . ' ' . _('has been deleted') . '!', 'success');
 		unset ($SelectedLocation);
@@ -383,7 +383,7 @@ or deletion of the records*/
 				managed
 			FROM locations INNER JOIN taxprovinces
 			ON locations.taxprovinceid=taxprovinces.taxprovinceid";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 
 	if (DB_num_rows($result)==0){
 		prnMsg (_('There are no locations that match up with a tax province record to display. Check that tax provinces are set up for all dispatch locations'),'error');
@@ -473,7 +473,7 @@ if (!isset($_GET['delete'])) {
 				FROM locations
 				WHERE loccode='" . $SelectedLocation . "'";
 
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		$myrow = DB_fetch_array($result);
 
 		$_POST['LocCode'] = $myrow['loccode'];
@@ -620,7 +620,7 @@ if (!isset($_GET['delete'])) {
 			<td>' .  _('Tax Province') . ':' . '</td>
 			<td><select name="TaxProvince">';
 
-	$TaxProvinceResult = DB_query("SELECT taxprovinceid, taxprovincename FROM taxprovinces",$db);
+	$TaxProvinceResult = DB_query("SELECT taxprovinceid, taxprovincename FROM taxprovinces");
 	while ($myrow=DB_fetch_array($TaxProvinceResult)){
 		if ($_POST['TaxProvince']==$myrow['taxprovinceid']){
 			echo '<option selected="selected" value="' . $myrow['taxprovinceid'] . '">' . $myrow['taxprovincename'] . '</option>';

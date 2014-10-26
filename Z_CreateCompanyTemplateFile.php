@@ -81,7 +81,7 @@ if (isset($_POST['CreateTemplate'])){
                                           '" . $GroupRow['parentgroupname'] . "');\n";
           }
 
-		  $ChartResult = DB_query("SELECT accountcode, accountname, group_ FROM chartmaster",$db);
+		  $ChartResult = DB_query("SELECT accountcode, accountname, group_ FROM chartmaster");
           $i=0;
           while ($ChartRow = DB_fetch_array($ChartResult)){
                 if ($_POST['IncludeAccount_' .$i]=='on'){
@@ -231,7 +231,7 @@ prnMsg(_('Warning: All selected accounts will be exported - please de-select the
 echo '<table>';
  /*Show the chart of accounts to be exported for deslection of company specific ones */
 
-$ChartResult = DB_query("SELECT accountcode, accountname, group_ FROM chartmaster",$db);
+$ChartResult = DB_query("SELECT accountcode, accountname, group_ FROM chartmaster");
 
 $TableHeadings = '<tr><th>' . _('Account Code') . '</th>
 					<th>' . _('Account Name') . '</th></tr>';

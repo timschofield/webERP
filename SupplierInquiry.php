@@ -77,7 +77,7 @@ $SQL = "SELECT suppliers.suppname,
 $ErrMsg = _('The supplier details could not be retrieved by the SQL because');
 $DbgMsg = _('The SQL that failed was');
 
-$SupplierResult = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
+$SupplierResult = DB_query($SQL, $ErrMsg, $DbgMsg);
 
 if (DB_num_rows($SupplierResult) == 0) {
 
@@ -99,7 +99,7 @@ if (DB_num_rows($SupplierResult) == 0) {
 	$ErrMsg = _('The supplier details could not be retrieved by the SQL because');
 	$DbgMsg = _('The SQL that failed was');
 
-	$SupplierResult = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
+	$SupplierResult = DB_query($SQL, $ErrMsg, $DbgMsg);
 
 } else {
 	$NIL_BALANCE = False;
@@ -136,7 +136,7 @@ if (isset($_GET['HoldType']) AND isset($_GET['HoldTrans'])) {
 
 	$ErrMsg = _('The Supplier Transactions could not be updated because');
 	$DbgMsg = _('The SQL that failed was');
-	$UpdateResult = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
+	$UpdateResult = DB_query($SQL, $ErrMsg, $DbgMsg);
 
 }
 
@@ -193,7 +193,7 @@ $SQL = "SELECT supptrans.id,
 $ErrMsg = _('No transactions were returned by the SQL because');
 $DbgMsg = _('The SQL that failed was');
 
-$TransResult = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
+$TransResult = DB_query($SQL, $ErrMsg, $DbgMsg);
 
 if (DB_num_rows($TransResult) == 0) {
 	echo '<br /><div class="centre">' . _('There are no transactions to display since') . ' ' . $_POST['TransAfterDate'];
@@ -284,7 +284,7 @@ while ($myrow=DB_fetch_array($TransResult)) {
 							FROM purchorderauth
 							WHERE userid='" . $_SESSION['UserID'] . "'
 							AND currabrev='" . $SupplierRecord['currcode']."'";
-				$AuthResult=DB_query($AuthSQL, $db);
+				$AuthResult=DB_query($AuthSQL);
 				$AuthRow=DB_fetch_array($AuthResult);
 
 				printf($BaseTD8);

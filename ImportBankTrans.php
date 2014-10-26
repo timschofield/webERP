@@ -25,7 +25,7 @@ if (!isset($_FILES['ImportFile']) AND !isset($_SESSION['Statement'])) {
 
 	$ErrMsg = _('The bank accounts set up could not be retrieved because');
 	$DbgMsg = _('The SQL used to retrieve the bank accounts was') . '<br />' . $sql;
-	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+	$result = DB_query($sql,$ErrMsg,$DbgMsg);
 	if (DB_num_rows($result) ==0){
 		prnMsg(_('There are no bank accounts defined that are set up to allow importation of bank statement transactions. First define the file format used by your bank for statement exports.'),'error');
 		echo '<br /><a href="BankAccounts.php>' . _('Setup Import Format for Bank Accounts') . '</a>';
@@ -112,7 +112,7 @@ if (!isset($_FILES['ImportFile']) AND !isset($_SESSION['Statement'])) {
 
 	$ErrMsg = _('Could not retrieve bank accounts that match with the statement being imported');
 
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 	if (DB_num_rows($result)==0){ //but check for the worst!
 		//there is no bank account set up for the bank account being imported
 		prnMsg(_('The account') . ' ' . $_SESSION['Statement']->AccountNumber . ' ' . _('is not defined as a bank account of the business. No imports can be processed'), 'warn');
@@ -130,7 +130,7 @@ if (!isset($_FILES['ImportFile']) AND !isset($_SESSION['Statement'])) {
 					WHERE transdate='" . FormatDateForSQL($_SESSION['Trans'][$i]->ValueDate) . "'
 					AND amount='" . $_SESSION['Trans'][$i]->Amount . "'
 					AND bankact='" . $_SESSION['Statement']->BankGLAccount . "'";
-			$result = DB_query($SQL,$db,_('There was a problem identifying a matching bank transaction'));
+			$result = DB_query($SQL,_('There was a problem identifying a matching bank transaction'));
 			if (DB_num_rows($result)>0){
 				$myrow = DB_fetch_array($result);
 				$_SESSION['Trans'][$i]->BankTransID = $myrow['banktransid'];

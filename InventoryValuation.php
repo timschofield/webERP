@@ -64,7 +64,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['CSV']))
 				ORDER BY stockcategory.categorydescription,
 					stockmaster.stockid";
 	}
-	$InventoryResult = DB_query($SQL,$db,'','',false,true);
+	$InventoryResult = DB_query($SQL,'','',false,true);
 
 	if (DB_error_no($db) !=0) {
 	  $Title = _('Inventory Valuation') . ' - ' . _('Problem Report');
@@ -244,7 +244,7 @@ if (isset($_POST['PrintPDF'])
 				FROM stockcategory
 				ORDER BY categorydescription";
 
-		$CatResult= DB_query($sql,$db);
+		$CatResult= DB_query($sql);
 		While ($myrow = DB_fetch_array($CatResult)){
 			echo '<option value="' . $myrow['categorydescription'] . '">' . $myrow['categorydescription'] . ' - ' . $myrow['categoryid'] . '</option>';
 		}
@@ -273,7 +273,7 @@ if (isset($_POST['PrintPDF'])
 				FROM locations
 				INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
 
-		$LocnResult=DB_query($sql,$db);
+		$LocnResult=DB_query($sql);
 
 		echo '<option value="All">' . _('All Locations') . '</option>';
 

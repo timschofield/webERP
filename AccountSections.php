@@ -10,25 +10,25 @@ include('includes/header.inc');
 
 // SOME TEST TO ENSURE THAT AT LEAST INCOME AND COST OF SALES ARE THERE
 	$sql= "SELECT sectionid FROM accountsection WHERE sectionid=1";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 
 	if( DB_num_rows($result) == 0 ) {
 		$sql = "INSERT INTO accountsection (sectionid,
 											sectionname)
 									VALUES (1,
 											'Income')";
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 	}
 
 	$sql= "SELECT sectionid FROM accountsection WHERE sectionid=2";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 
 	if( DB_num_rows($result) == 0 ) {
 		$sql = "INSERT INTO accountsection (sectionid,
 											sectionname)
 									VALUES (2,
 											'Cost Of Sales')";
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 	}
 // DONE WITH MINIMUM TESTS
 
@@ -54,7 +54,7 @@ if (isset($_POST['submit'])) {
 		$sql="SELECT sectionid
 					FROM accountsection
 					WHERE sectionid='".$_POST['SectionID']."'";
-		$result=DB_query($sql, $db);
+		$result=DB_query($sql);
 
 		if ((DB_num_rows($result)!=0 AND !isset($_POST['SelectedSectionID']))) {
 			$InputError = 1;
@@ -110,7 +110,7 @@ if (isset($_POST['submit'])) {
 
 	if ($InputError!=1){
 		//run the SQL from either of the above possibilites
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 		prnMsg($msg,'success');
 		unset ($_POST['SelectedSectionID']);
 		unset ($_POST['SectionID']);
@@ -122,7 +122,7 @@ if (isset($_POST['submit'])) {
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'accountgroups'
 	$sql= "SELECT COUNT(sectioninaccounts) AS sections FROM accountgroups WHERE sectioninaccounts='" . $_GET['SelectedSectionID'] . "'";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 	$myrow = DB_fetch_array($result);
 	if ($myrow['sections']>0) {
 		prnMsg( _('Cannot delete this account section because general ledger accounts groups have been created using this section'),'warn');
@@ -133,12 +133,12 @@ if (isset($_POST['submit'])) {
 	} else {
 		//Fetch section name
 		$sql = "SELECT sectionname FROM accountsection WHERE sectionid='".$_GET['SelectedSectionID'] . "'";
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 		$myrow = DB_fetch_array($result);
 		$SectionName = $myrow['sectionname'];
 
 		$sql="DELETE FROM accountsection WHERE sectionid='" . $_GET['SelectedSectionID'] . "'";
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 		prnMsg( $SectionName . ' ' . _('section has been deleted') . '!','success');
 
 	} //end if account group used in GL accounts
@@ -165,7 +165,7 @@ if (!isset($_GET['SelectedSectionID']) AND !isset($_POST['SelectedSectionID'])) 
 		ORDER BY sectionid";
 
 	$ErrMsg = _('Could not get account group sections because');
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 	echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" />' . ' ' . $Title . '</p><br />';
 
 	echo '<table class="selection">
@@ -218,7 +218,7 @@ if (! isset($_GET['delete'])) {
 			FROM accountsection
 			WHERE sectionid='" . $_GET['SelectedSectionID'] ."'";
 
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		if ( DB_num_rows($result) == 0 ) {
 			prnMsg( _('Could not retrieve the requested section please try again.'),'warn');
 			unset($_GET['SelectedSectionID']);

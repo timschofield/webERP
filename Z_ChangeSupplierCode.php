@@ -81,20 +81,20 @@ function ProcessSupplier($oldCode, $newCode) {
 
 	$DbgMsg =_('The SQL that failed was');
 	$ErrMsg = _('The SQL to insert the new suppliers master record failed') . ', ' . _('the SQL statement was');
-	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
+	$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
 
 	foreach ($table_key as $table=>$key) {
 		prnMsg(_('Changing').' '. $table.' ' . _('records'),'info');
 		$sql = "UPDATE " . $table . " SET $key='" . $newCode . "' WHERE $key='" . $oldCode . "'";
 		$ErrMsg = _('The SQL to update') . ' ' . $table . ' ' . _('records failed');
-		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
+		$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
 	}
 
 	prnMsg(_('Deleting the supplier code from the suppliers master table'),'info');
 	$sql = "DELETE FROM suppliers WHERE supplierid='" . $oldCode . "'";
 
 	$ErrMsg = _('The SQL to delete the old supplier record failed');
-	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
+	$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
 
 	$result = DB_Txn_Commit($db);
 }
