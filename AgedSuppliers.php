@@ -104,7 +104,7 @@ if (isset($_POST['PrintPDF'])
 
 	$SupplierResult = DB_query($SQL,'','',False,False); /*dont trap errors */
 
-	if (DB_error_no($db) !=0) {
+	if (DB_error_no() !=0) {
 		$Title = _('Aged Supplier Account Analysis') . ' - ' . _('Problem Report') ;
 		include('includes/header.inc');
 		prnMsg(_('The Supplier details could not be retrieved by the SQL because') .  ' ' . DB_error_msg($db),'error');
@@ -191,7 +191,7 @@ if (isset($_POST['PrintPDF'])
 							AND supptrans.supplierno = '" . $AgedAnalysis["supplierid"] . "'";
 
 			$DetailResult = DB_query($sql,'','',False,False); /*dont trap errors - trapped below*/
-			if (DB_error_no($db) !=0) {
+			if (DB_error_no() !=0) {
 			$Title = _('Aged Supplier Account Analysis - Problem Report');
 			include('includes/header.inc');
 			prnMsg(_('The details of outstanding transactions for Supplier') . ' - ' . $AgedAnalysis['supplierid'] . ' ' . _('could not be retrieved because') . ' - ' . DB_error_msg($db),'error');

@@ -317,7 +317,7 @@ if (isset($_POST['submit'])) {
 				$ErrMsg =  _('The item could not be added because');
 				$DbgMsg = _('The SQL that was used to add the item failed was');
 				$result = DB_query($sql, $ErrMsg, $DbgMsg,'',true);
-				if (DB_error_no($db) ==0) {
+				if (DB_error_no() ==0) {
 					//now insert the language descriptions
 					$ErrMsg = _('Could not update the language description because');
 					$DbgMsg = _('The SQL that was used to update the language description and failed was');
@@ -498,7 +498,7 @@ if (isset($_POST['submit'])) {
 		                $Result = DB_Txn_Commit($db);
 
                     //finish up
-					if (DB_error_no($db) ==0) {
+					if (DB_error_no() ==0) {
 						prnMsg( _('New cloned Item') .' ' . '<a href="SelectProduct.php?StockID=' . $_POST['StockID'] . '">' . $_POST['StockID'] . '</a> '. _('has been added to the database') .
 							'<br />' . _('We also attempted to setup item purchase data and pricing.'));
 

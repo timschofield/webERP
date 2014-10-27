@@ -90,7 +90,7 @@ If (isset($PrintPDF)
 				FROM bankaccounts
 				WHERE bankaccounts.invoice = '1'";
 		$result=DB_query($sql,'','',false,false);
-		if (DB_error_no($db)!=1) {
+		if (DB_error_no()!=1) {
 			if (DB_num_rows($result)==1){
 				$myrow = DB_fetch_array($result);
 				$DefaultBankAccountNumber = _('Account:') .' ' .$myrow['bankaccountnumber'];
@@ -240,7 +240,7 @@ If (isset($PrintPDF)
 
 	   $result=DB_query($sql,'','',false,false);
 
-	   if (DB_error_no($db)!=0) {
+	   if (DB_error_no()!=0) {
 
 			$Title = _('Transaction Print Error Report');
 			include ('includes/header.inc');
@@ -299,7 +299,7 @@ If (isset($PrintPDF)
 			} // end else
 
 		$result=DB_query($sql);
-		if (DB_error_no($db)!=0) {
+		if (DB_error_no()!=0) {
 			$Title = _('Transaction Print Error Report');
 			include ('includes/header.inc');
 			echo '<br />' . _('There was a problem retrieving the invoice or credit note stock movement details for invoice number') . ' ' . $FromTransNo . ' ' . _('from the database');
@@ -742,7 +742,7 @@ If (isset($PrintPDF)
 			}
 
 			$result=DB_query($sql);
-			if (DB_num_rows($result)==0 OR DB_error_no($db)!=0) {
+			if (DB_num_rows($result)==0 OR DB_error_no()!=0) {
 				echo '<p>' . _('There was a problem retrieving the invoice or credit note details for note number') . ' ' . $InvoiceToPrint . ' ' . _('from the database') . '. ' . _('To print an invoice, the sales order record, the customer transaction record and the branch record for the customer must not have been purged') . '. ' . _('To print a credit note only requires the customer, transaction, salesman and branch records be available');
 				if ($debug==1){
 					prnMsg( _('The SQL used to get this information that failed was') . '<br />' . $sql,'warn');
@@ -933,7 +933,7 @@ If (isset($PrintPDF)
 				echo '<div class="centre"><h4>' . _('All amounts stated in') . ' ' . $myrow['currcode'] . '</h4></div>';
 
 				$result=DB_query($sql);
-				if (DB_error_no($db)!=0) {
+				if (DB_error_no()!=0) {
 					echo '<br />' . _('There was a problem retrieving the invoice or credit note stock movement details for invoice number') . ' ' . $FromTransNo . ' ' . _('from the database');
 					if ($debug==1){
 						 echo '<br />' . _('The SQL used to get this information that failed was') . '<br />' . $sql;

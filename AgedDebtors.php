@@ -263,7 +263,7 @@ if (isset($_POST['PrintPDF'])
 	}
 	$CustomerResult = DB_query($SQL,'','',False,False); /*dont trap errors handled below*/
 
-	if (DB_error_no($db) !=0) {
+	if (DB_error_no() !=0) {
 		$Title = _('Aged Customer Account Analysis') . ' - ' . _('Problem Report') . '.... ';
 		include('includes/header.inc');
 		prnMsg(_('The customer details could not be retrieved by the SQL because') . ' ' . DB_error_msg($db),'error');
@@ -365,7 +365,7 @@ if (isset($_POST['PrintPDF'])
 			}
 
 			$DetailResult = DB_query($sql,'','',False,False); /*Dont trap errors */
-			if (DB_error_no($db) !=0) {
+			if (DB_error_no() !=0) {
 				$Title = _('Aged Customer Account Analysis') . ' - ' . _('Problem Report') . '....';
 				include('includes/header.inc');
 				prnMsg(_('The details of outstanding transactions for customer') . ' - ' . $AgedAnalysis['debtorno'] . ' ' . _('could not be retrieved because') . ' - ' . DB_error_msg($db),'error');

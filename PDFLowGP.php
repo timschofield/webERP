@@ -52,7 +52,7 @@ if (isset($_POST['PrintPDF'])) {
 
 	$LowGPSalesResult = DB_query($SQL,'','',false,false);
 
-	if (DB_error_no($db) !=0) {
+	if (DB_error_no() !=0) {
 
 	  include('includes/header.inc');
 		prnMsg(_('The low GP items could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');

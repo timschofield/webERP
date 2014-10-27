@@ -372,7 +372,7 @@
 			$stockresult = DB_Query($stocksql, $db);
 			$locresult = DB_Query($locsql, $db);
 			DB_Txn_Commit($db);
-			if (DB_error_no($db) != 0) {
+			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
 				$Errors[0]=0;
@@ -484,8 +484,8 @@
 		$sql = mb_substr($sql,0,-2)." WHERE stockid='".$StockItemDetails['stockid']."'";
 		if (sizeof($Errors)==0) {
 			$result = DB_Query($sql, $db);
-			echo DB_error_no($db);
-			if (DB_error_no($db) != 0) {
+			echo DB_error_no();
+			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
 				$Errors[0]=0;
@@ -853,7 +853,7 @@
 		DB_query($glupdatesql2);
 		DB_query($systypessql);
 		DB_Txn_Commit($db);
-		if (DB_error_no($db) != 0) {
+		if (DB_error_no() != 0) {
 			$Errors[0] = DatabaseUpdateFailed;
 			return $Errors;
 		} else {

@@ -420,7 +420,7 @@ if (isset($_POST['SearchParts']) AND $_POST['SearchParts']!=''){
 
 	$SalesOrdersResult = DB_query($SQL);
 
-	if (DB_error_no($db) !=0) {
+	if (DB_error_no() !=0) {
 		prnMsg( _('No orders were returned by the SQL because') . ' ' . DB_error_msg($db), 'info');
 		echo '<br /> ' . $SQL;
 	}

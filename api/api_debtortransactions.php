@@ -296,7 +296,7 @@ function ConvertToSQLDate($DateEntry) {
 										WHERE coycode=1");
 
 		$CompanyRecord = DB_fetch_array($ReadCoyResult);
-		if (DB_error_no($db) != 0) {
+		if (DB_error_no() != 0) {
 			$Errors[] = NoCompanyRecord;
 		}
 
@@ -308,7 +308,7 @@ function ConvertToSQLDate($DateEntry) {
 							WHERE debtorno = '" . $Receipt['debtorno'] . "'";
 
 		$CurrResult = api_DB_query($CustCurrencySQL);
-		if (DB_error_no($db) != 0) {
+		if (DB_error_no() != 0) {
 			$Errors[] = DebtorDoesntExist;
 		}
 
@@ -321,7 +321,7 @@ function ConvertToSQLDate($DateEntry) {
 					ON bankaccounts.currcode = currencies.currabrev
 					WHERE accountcode='" . $Receipt['bankaccount'] ."'";
 		$BankActResult = api_DB_query($SQL);
-		if (DB_error_no($db) != 0) {
+		if (DB_error_no() != 0) {
 			$Errors[] = InvalidBankAccount;
 		}
 
@@ -515,7 +515,7 @@ function ConvertToSQLDate($DateEntry) {
 										WHERE coycode=1");
 
 		$CompanyRecord = DB_fetch_array($ReadCoyResult);
-		if (DB_error_no($db) != 0) {
+		if (DB_error_no() != 0) {
 			$Errors[] = NoCompanyRecord;
 		}
 
@@ -533,14 +533,14 @@ function ConvertToSQLDate($DateEntry) {
 							AND custbranch.branchcode='" . $Header['branchcode'] . "'";
 
 		$HeaderResult = api_DB_query($HeaderSQL);
-		if (DB_error_no($db) != 0) {
+		if (DB_error_no() != 0) {
 			$Errors[] = NoReadCustomerBranch;
 		}
 
 		$CN_Header = DB_fetch_array($HeaderResult);
 
 		$TaxProvResult = api_DB_query("SELECT taxprovinceid FROM locations WHERE loccode='" . $Header['fromstkloc'] ."'");
-		if (DB_error_no($db) != 0) {
+		if (DB_error_no() != 0) {
 			$Errors[] = NoTaxProvince;
 		}
 		$myrow = DB_fetch_row($TaxProvResult);
@@ -567,7 +567,7 @@ function ConvertToSQLDate($DateEntry) {
 						WHERE stockid ='" . $CN_Line['stockid'] . "'";
 
 			$LineResult = api_DB_query($LineSQL);
-			if (DB_error_no($db) != 0 OR DB_num_rows($LineResult)==0) {
+			if (DB_error_no() != 0 OR DB_num_rows($LineResult)==0) {
 				$Errors[] = NoReadItem;
 				return $Errors;
 			}
@@ -597,7 +597,7 @@ function ConvertToSQLDate($DateEntry) {
 
 			$GetTaxRatesResult = api_DB_query($SQL);
 
-			if (DB_error_no($db) != 0) {
+			if (DB_error_no() != 0) {
 				$Errors[] = TaxRatesFailed;
 			}
 
@@ -1288,7 +1288,7 @@ function ConvertToSQLDate($DateEntry) {
 											1)";
 			$result = api_DB_query($sql);
 			$result= DB_Txn_Commit($db);
-			if (DB_error_no($db) != 0) {
+			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
 				$Errors[0]=0;
@@ -1584,7 +1584,7 @@ function ConvertToSQLDate($DateEntry) {
 											'" . $CreditDetails['jobref'] ."')";
 			$result = DB_query($sql);
 			$result= DB_Txn_Commit($db);
-			if (DB_error_no($db) != 0) {
+			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
 				$Errors[0]=0;

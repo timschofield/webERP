@@ -38,7 +38,7 @@ If (isset($_POST['PrintPDF'])
 
 	$BOMResult = DB_query($SQL,'','',false,false); //dont do error trapping inside DB_query
 
-	if (DB_error_no($db) !=0) {
+	if (DB_error_no() !=0) {
 	   $Title = _('Bill of Materials Listing') . ' - ' . _('Problem Report');
 	   include('includes/header.inc');
 	   prnMsg(_('The Bill of Material listing could not be retrieved by the SQL because'),'error');

@@ -151,7 +151,7 @@ if (isset($_POST['PrintPDF'])) {
 			   " ORDER BY '" . $_POST['Sort'] . "'";
 	$result = DB_query($sql,'','',false,true);
 
-	if (DB_error_no($db) !=0) {
+	if (DB_error_no() !=0) {
 	  $Title = _('MRP Shortages and Excesses') . ' - ' . _('Problem Report');
 	  include('includes/header.inc');
 	   prnMsg( _('The MRP shortages and excesses could not be retrieved by the SQL because') . ' '  . DB_error_msg($db),'error');

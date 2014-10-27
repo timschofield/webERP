@@ -79,7 +79,7 @@
 					periodno
 				FROM periods';
 			$result = DB_query($sql,'','','',false);
-			if (DB_error_no($db) != 0) {
+			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
 				$Errors[0]=0;

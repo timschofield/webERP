@@ -76,7 +76,7 @@ $sql= "SELECT type,
 
 $result=DB_query($sql,'','',false,false);
 
-if (DB_error_no($db)!=0){
+if (DB_error_no()!=0){
 	$Title = _('Payment Listing');
 	include('includes/header.inc');
 	prnMsg(_('An error occurred getting the payments'),'error');

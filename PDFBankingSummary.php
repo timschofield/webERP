@@ -103,7 +103,7 @@ if (isset($_POST['BatchNo']) and $_POST['BatchNo']!='') {
 		AND debtortrans.type=12";
 
 	$CustRecs=DB_query($SQL,'','',false,false);
-	if (DB_error_no($db)!=0){
+	if (DB_error_no()!=0){
 		$Title = _('Create PDF Print-out For A Batch Of Receipts');
 		include ('includes/header.inc');
 	   	prnMsg(_('An error occurred getting the customer receipts for batch number') . ' ' . $_POST['BatchNo'],'error');
@@ -122,7 +122,7 @@ if (isset($_POST['BatchNo']) and $_POST['BatchNo']!='') {
 		AND gltrans.account !='" . $_SESSION['CompanyRecord']['debtorsact'] . "'";
 
 	$GLRecs=DB_query($SQL,'','',false,false);
-	if (DB_error_no($db)!=0){
+	if (DB_error_no()!=0){
 		$Title = _('Create PDF Print-out For A Batch Of Receipts');
 		include ('includes/header.inc');
 		prnMsg(_('An error occurred getting the GL receipts for batch number') . ' ' . $_POST['BatchNo'],'error');

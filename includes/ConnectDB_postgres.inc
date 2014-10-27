@@ -105,8 +105,8 @@ function DB_affected_rows (&$ResultIndex){
 	return pg_affected_rows($ResultIndex);
 }
 
-function DB_error_no (&$Conn){
-	return DB_error_msg($Conn) == ""?0:-1;
+function DB_error_no(){
+	return DB_error_msg($db) == ""?0:-1;
 }
 
 function DB_error_msg(&$Conn){

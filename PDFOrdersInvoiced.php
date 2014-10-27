@@ -248,7 +248,7 @@ $sql .= " GROUP BY salesorders.orderno,
 
 $Result=DB_query($sql,'','',false,false); //dont trap errors here
 
-if (DB_error_no($db)!=0){
+if (DB_error_no()!=0){
 	include('includes/header.inc');
 	prnMsg(_('An error occurred getting the orders details'),'',_('Database Error'));
 	if ($debug==1){

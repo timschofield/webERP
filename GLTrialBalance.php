@@ -159,7 +159,7 @@ if ((! isset($_POST['FromPeriod'])
 			chartdetails.accountcode";
 
 	$AccountsResult = DB_query($SQL);
-	if (DB_error_no($db) !=0) {
+	if (DB_error_no() !=0) {
 		$Title = _('Trial Balance') . ' - ' . _('Problem Report') . '....';
 		$ViewTopic = 'GeneralLedger';
 		$BookMark = 'TrialBalance';

@@ -471,7 +471,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		}
 
 		if ($InputError !=1){
-			if (DB_error_no($db) ==0) { 
+			if (DB_error_no() ==0) { 
 
 				$sql = "SELECT 1
 				     FROM custbranch
@@ -594,7 +594,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 					$result = DB_query($sql, $ErrMsg);
 
 
-					if (DB_error_no($db) ==0) {
+					if (DB_error_no() ==0) {
 						prnMsg( _('New Item') .' ' . $StockID  . ' '. _('has been added to the transaction'),'info');
 					} else { //location insert failed so set some useful error info
 						$InputError = 1;

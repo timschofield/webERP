@@ -88,7 +88,7 @@
 			DB_Txn_Begin($db);
 			$result = DB_Query($sql, $db);
 			DB_Txn_Commit($db);
-			if (DB_error_no($db) != 0) {
+			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
 				$Errors[0]=0;
@@ -136,8 +136,8 @@
 								AND supplierno='" . $PurchDataDetails['supplierno'] ."'";
 		if (sizeof($Errors)==0) {
 			$result = DB_Query($sql, $db);
-			echo DB_error_no($db);
-			if (DB_error_no($db) != 0) {
+			echo DB_error_no();
+			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
 				$Errors[0]=0;

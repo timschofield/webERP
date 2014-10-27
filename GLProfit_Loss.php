@@ -181,7 +181,7 @@ if ((!isset($_POST['FromPeriod'])
 
 	$AccountsResult = DB_query($SQL);
 
-	if (DB_error_no($db) != 0) {
+	if (DB_error_no() != 0) {
 		$Title = _('Profit and Loss') . ' - ' . _('Problem Report') . '....';
 		include('includes/header.inc');
 		prnMsg( _('No general ledger accounts were returned by the SQL because') . ' - ' . DB_error_msg($db) );

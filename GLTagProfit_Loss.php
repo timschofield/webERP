@@ -190,7 +190,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 
 	$AccountsResult = DB_query($SQL);
 
-	if (DB_error_no($db) != 0) {
+	if (DB_error_no() != 0) {
 		$Title = _('Income and Expenditure') . ' - ' . _('Problem Report') . '....';
 		include('includes/header.inc');
 		prnMsg( _('No general ledger accounts were returned by the SQL because') . ' - ' . DB_error_msg($db) );

@@ -451,7 +451,7 @@ if (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 		$ErrMsg =  _('The account details for') . ' ' . $_POST['GLCode'] . ' ' . _('could not be retrieved because');
 		$DbgMsg =  _('The SQL used to retrieve the details of the account, but failed was');
 		$GLValidResult = DB_query($sql,$ErrMsg,$DbgMsg,false,false);
-		if (DB_error_no($db) !=0) {
+		if (DB_error_no() !=0) {
 			$AllowUpdate = false;
 			prnMsg( _('The validation process for the GL Code entered could not be executed because') . ' ' . DB_error_msg($db), 'error');
 			if ($debug==1){

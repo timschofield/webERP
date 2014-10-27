@@ -57,7 +57,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 			FROM bankaccounts
 			WHERE bankaccounts.invoice = '1'";
 	$result=DB_query($sql,'','',false,false);
-	if (DB_error_no($db)!=1) {
+	if (DB_error_no()!=1) {
 		if (DB_num_rows($result)==1){
 			$myrow = DB_fetch_array($result);
 			$DefaultBankAccountNumber = $myrow['bankaccountnumber'];

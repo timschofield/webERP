@@ -82,7 +82,7 @@
 			$sql = "INSERT INTO accountgroups ('" .mb_substr($FieldNames,0,-2) . "')
 					VALUES ('" . mb_substr($FieldValues,0,-2) . "' ) ";
 			$result = DB_Query($sql, $db);
-			if (DB_error_no($db) != 0) {
+			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
 				$Errors[0]=0;

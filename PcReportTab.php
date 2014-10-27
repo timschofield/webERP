@@ -97,7 +97,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 
 	$TabDetail = DB_query($SQL);
 
-	if (DB_error_no($db)!=0){
+	if (DB_error_no()!=0){
 		include('includes/header.inc');
 		prnMsg(_('An error occurred getting the orders details'),'',_('Database Error'));
 		if ($debug==1){

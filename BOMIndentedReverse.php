@@ -136,7 +136,7 @@ if (isset($_POST['PrintPDF'])) {
 
 	} // End of while $ComponentCounter > 0
 
-	if (DB_error_no($db) !=0) {
+	if (DB_error_no() !=0) {
 	  $Title = _('Indented BOM Listing') . ' - ' . _('Problem Report');
 	  include('includes/header.inc');
 	   prnMsg( _('The Indented BOM Listing could not be retrieved by the SQL because') . ' '  . DB_error_msg($db),'error');

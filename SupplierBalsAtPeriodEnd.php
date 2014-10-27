@@ -47,7 +47,7 @@ If (isset($_POST['PrintPDF'])
 
 	$SupplierResult = DB_query($SQL);
 
-	if (DB_error_no($db) !=0) {
+	if (DB_error_no() !=0) {
 		$Title = _('Supplier Balances - Problem Report');
 		include('includes/header.inc');
 		prnMsg(_('The Supplier details could not be retrieved by the SQL because') . ' ' . DB_error_msg($db),'error');

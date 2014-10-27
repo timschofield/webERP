@@ -67,7 +67,7 @@
 				VALUES ('" . mb_substr($FieldValues,0,-2) . "') ";
 		if (sizeof($Errors)==0) {
 			$result = DB_Query($sql, $db);
-			if (DB_error_no($db) != 0) {
+			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
 				$Errors[0]=0;
@@ -108,8 +108,8 @@
 		$sql = mb_substr($sql,0,-2)." WHERE categoryid='" . $CategoryDetails['categoryid'] . "'";
 		if (sizeof($Errors)==0) {
 			$result = DB_Query($sql, $db);
-			echo DB_error_no($db);
-			if (DB_error_no($db) != 0) {
+			echo DB_error_no();
+			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
 				$Errors[0]=0;

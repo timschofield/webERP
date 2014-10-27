@@ -41,7 +41,7 @@ if (isset($_POST['PrintPDF'])) {
 			  ORDER BY mrpsupplies.part";
 	$result = DB_query($sql,'','',false,true);
 
-	if (DB_error_no($db) !=0) {
+	if (DB_error_no() !=0) {
 	  $Title = _('MRP Reschedules') . ' - ' . _('Problem Report');
 	  include('includes/header.inc');
 	   prnMsg( _('The MRP reschedules could not be retrieved by the SQL because') . ' '  . DB_error_msg($db),'error');

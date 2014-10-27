@@ -255,7 +255,7 @@ if (isset($_POST['submit'])) {
 		$result = DB_query($SQL, $ErrMsg);
 	}
 
-	if (DB_error_no($db) ==0 AND $InputError==0) {
+	if (DB_error_no() ==0 AND $InputError==0) {
 		prnMsg($msg,'success');
 		unset($_POST['BranchCode']);
 		unset($_POST['BrName']);
@@ -355,7 +355,7 @@ if (isset($_POST['submit'])) {
 							}
 							$ErrMsg = _('The branch record could not be deleted') . ' - ' . _('the SQL server returned the following message');
 							$result = DB_query($SQL,$ErrMsg);
-							if (DB_error_no($db)==0){
+							if (DB_error_no()==0){
 								prnMsg(_('Branch Deleted'),'success');
 							}
 						}

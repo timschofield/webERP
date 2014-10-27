@@ -122,19 +122,19 @@ if (isset($_POST['ProcessStockChange'])){
 		//check if MRP tables exist before assuming
 		$sql = "SELECT * FROM mrpparameters";
 		$result = DB_query($sql, '', '', false, false);
-		if (DB_error_no($db) == 0) {
+		if (DB_error_no() == 0) {
 			$result = DB_query("SELECT COUNT(*) FROM mrpplannedorders",'','',false,false);
-			if (DB_error_no($db)==0) {
+			if (DB_error_no()==0) {
 				ChangeFieldInTable("mrpplannedorders", "part", $_POST['OldStockID'], $_POST['NewStockID'], $db);
 			}
 	
 			$result = DB_query("SELECT * FROM mrprequirements" ,'','',false,false);
-			if (DB_error_no($db)==0){
+			if (DB_error_no()==0){
 				ChangeFieldInTable("mrprequirements", "part", $_POST['OldStockID'], $_POST['NewStockID'], $db);
 			}
 			
 			$result = DB_query("SELECT * FROM mrpsupplies" ,'','',false,false);
-			if (DB_error_no($db)==0){
+			if (DB_error_no()==0){
 				ChangeFieldInTable("mrpsupplies", "part", $_POST['OldStockID'], $_POST['NewStockID'], $db);
 			}
 		}

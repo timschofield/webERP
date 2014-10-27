@@ -635,7 +635,7 @@ if (isset($_POST['Search'])){
 		}
 
 		$CustomerSearchResult = DB_query($SQL,'','',false,false);
-		if (DB_error_no($db) !=0) {
+		if (DB_error_no() !=0) {
 			prnMsg(_('The searched customer records requested cannot be retrieved because') . ' - ' . DB_error_msg($db),'error');
 			if ($debug==1){
 				prnMsg(_('SQL used to retrieve the customer details was') . '<br />' . $sql,'error');

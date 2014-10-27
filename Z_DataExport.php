@@ -65,7 +65,7 @@ if ( isset($_POST['pricelist']) ) {
 				stockmaster.stockid";
 	$PricesResult = DB_query($SQL,'','',false,false);
 
-	if (DB_error_no($db) !=0) {
+	if (DB_error_no() !=0) {
 		$Title = _('Price List Export Problem ....');
 		include('includes/header.inc');
 		prnMsg( _('The Price List could not be retrieved by the SQL because'). ' - ' . DB_error_msg($db), 'error');
@@ -161,7 +161,7 @@ if ( isset($_POST['pricelist']) ) {
 
 	$CustResult = DB_query($SQL,'','',false,false);
 
-	if (DB_error_no($db) !=0) {
+	if (DB_error_no() !=0) {
 		$Title = _('Customer List Export Problem ....');
 		include('includes/header.inc');
 		prnMsg( _('The Customer List could not be retrieved by the SQL because'). ' - ' . DB_error_msg($db), 'error');
@@ -252,7 +252,7 @@ if ( isset($_POST['pricelist']) ) {
 
 	$SalesManResult = DB_query($SQL,'','',false,false);
 
-	if (DB_error_no($db) !=0) {
+	if (DB_error_no() !=0) {
 		$Title = _('Salesman List Export Problem ....');
 		include('includes/header.inc');
 		prnMsg( _('The Salesman List could not be retrieved by the SQL because'). ' - ' . DB_error_msg($db), 'error');
@@ -301,7 +301,7 @@ if ( isset($_POST['pricelist']) ) {
 		ORDER BY stockid";
 	$ImageResult = DB_query($SQL,'','',false,false);
 
-	if (DB_error_no($db) !=0) {
+	if (DB_error_no() !=0) {
 		$Title = _('Security Token List Export Problem ....');
 		include('includes/header.inc');
 		prnMsg( _('The Image List could not be retrieved by the SQL because'). ' - ' . DB_error_msg($db), 'error');
@@ -340,7 +340,7 @@ if ( isset($_POST['pricelist']) ) {
 
 	$SecTokenResult = DB_query($SQL,'','',false,false);
 
-	if (DB_error_no($db) !=0) {
+	if (DB_error_no() !=0) {
 		$Title = _('Security Token List Export Problem ....');
 		include('includes/header.inc');
 		prnMsg( _('The Security Token List could not be retrieved by the SQL because'). ' - ' . DB_error_msg($db), 'error');
@@ -376,7 +376,7 @@ if ( isset($_POST['pricelist']) ) {
 
 	$SecRoleResult = DB_query($SQL,'','',false,false);
 
-	if (DB_error_no($db) !=0) {
+	if (DB_error_no() !=0) {
 		$Title = _('Security Role List Export Problem ....');
 		include('includes/header.inc');
 		prnMsg( _('The Security Role List could not be retrieved by the SQL because'). ' - ' . DB_error_msg($db), 'error');
@@ -412,7 +412,7 @@ if ( isset($_POST['pricelist']) ) {
 
 	$SecGroupResult = DB_query($SQL,'','',false,false);
 
-	if (DB_error_no($db) !=0) {
+	if (DB_error_no() !=0) {
 		$Title = _('Security Group List Export Problem ....');
 		include('includes/header.inc');
 		prnMsg( _('The Security Group List could not be retrieved by the SQL because'). ' - ' . DB_error_msg($db), 'error');
@@ -464,7 +464,7 @@ if ( isset($_POST['pricelist']) ) {
 
 	$SecUserResult = DB_query($SQL,'','',false,false);
 
-	if (DB_error_no($db) !=0) {
+	if (DB_error_no() !=0) {
 		$Title = _('Security User List Export Problem ....');
 		include('includes/header.inc');
 		prnMsg( _('The Security User List could not be retrieved by the SQL because'). ' - ' . DB_error_msg($db), 'error');

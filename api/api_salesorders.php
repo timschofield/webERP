@@ -351,7 +351,7 @@ $SOH_DateFields = array ('orddate',
 
 			$result = api_DB_Query($sql);
 
-			if (DB_error_no($db) != 0) {
+			if (DB_error_no() != 0) {
 				//$Errors[0] = DatabaseUpdateFailed;
 				$Errors[0] = $sql;
 			} else {
@@ -448,8 +448,8 @@ $SOH_DateFields = array ('orddate',
 		$sql = mb_substr($sql,0,-2). " WHERE orderno='" . $OrderHeader['orderno']. "'";
 		if (sizeof($Errors)==0) {
 			$result = api_DB_Query($sql);
-			echo DB_error_no($db);
-			if (DB_error_no($db) != 0) {
+			echo DB_error_no();
+			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
 				$Errors[0]=0;
@@ -515,7 +515,7 @@ $SOH_DateFields = array ('orddate',
 
 		if (sizeof($Errors)==0) {
 			$result = api_DB_Query($sql);
-			if (DB_error_no($db) != 0) {
+			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
 				$Errors[0]=0;
@@ -575,8 +575,8 @@ $SOH_DateFields = array ('orddate',
 				//exit;
 		if (sizeof($Errors)==0) {
 			$result = api_DB_Query($sql);
-			echo DB_error_no($db);
-			if (DB_error_no($db) != 0) {
+			echo DB_error_no();
+			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
 				$Errors[0]=0;
@@ -657,7 +657,7 @@ $SOH_DateFields = array ('orddate',
 										WHERE coycode=1");
 
 		$CompanyRecord = DB_fetch_array($ReadCoyResult);
-		if (DB_error_no($db) != 0) {
+		if (DB_error_no() != 0) {
 			$Errors[] = NoCompanyRecord;
 		}
 
@@ -687,14 +687,14 @@ $SOH_DateFields = array ('orddate',
 							WHERE salesorders.orderno = '" . $OrderNo . "'";
 
 		$OrderHeaderResult = api_DB_query($OrderHeaderSQL);
-		if (DB_error_no($db) != 0) {
+		if (DB_error_no() != 0) {
 			$Errors[] = NoReadOrder;
 		}
 
 		$OrderHeader = DB_fetch_array($OrderHeaderResult);
 
 		$TaxProvResult = api_DB_query("SELECT taxprovinceid FROM locations WHERE loccode='" . $OrderHeader['fromstkloc'] ."'");
-		if (DB_error_no($db) != 0) {
+		if (DB_error_no() != 0) {
 			$Errors[] = NoTaxProvince;
 		}
 		$myrow = DB_fetch_row($TaxProvResult);
@@ -713,7 +713,7 @@ $SOH_DateFields = array ('orddate',
 						AND completed=0";
 
 		$LineItemsResult = api_DB_query($LineItemsSQL);
-		if (DB_error_no($db) != 0 OR DB_num_rows($LineItemsResult)==0) {
+		if (DB_error_no() != 0 OR DB_num_rows($LineItemsResult)==0) {
 			$Errors[] = NoReadOrderLines;
 			return $Errors;
 		}
@@ -756,7 +756,7 @@ $SOH_DateFields = array ('orddate',
 
 			$GetTaxRatesResult = api_DB_query($SQL);
 
-			if (DB_error_no($db) != 0) {
+			if (DB_error_no() != 0) {
 				$Errors[] = TaxRatesFailed;
 			}
 			$LineTaxAmount = 0;

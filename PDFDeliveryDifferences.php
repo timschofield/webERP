@@ -187,7 +187,7 @@ if ($_SESSION['SalesmanLogin'] != '') {
 
 $Result=DB_query($sql,'','',false,false); //dont error check - see below
 
-if (DB_error_no($db)!=0){
+if (DB_error_no()!=0){
 	$Title = _('Delivery Differences Log Report Error');
 	include('includes/header.inc');
 	prnMsg( _('An error occurred getting the variances between deliveries and orders'),'error');

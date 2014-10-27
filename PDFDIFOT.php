@@ -186,7 +186,7 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 
 $Result=DB_query($sql,'','',false,false); //dont error check - see below
 
-if (DB_error_no($db)!=0){
+if (DB_error_no()!=0){
 	$Title = _('DIFOT Report Error');
 	include('includes/header.inc');
 	prnMsg( _('An error occurred getting the days between delivery requested and actual invoice'),'error');

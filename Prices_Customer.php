@@ -151,7 +151,7 @@ if (isset($_POST['submit'])) {
 	//run the SQL from either of the above possibilites
 	if ($InputError!=1){
 		$result = DB_query($sql,'','',false,false);
-		if (DB_error_no($db)!=0){
+		if (DB_error_no()!=0){
 		   If ($msg==_('Price Updated')){
 				$msg = _('The price could not be updated because') . ' - ' . DB_error_msg($db);
 			} else {

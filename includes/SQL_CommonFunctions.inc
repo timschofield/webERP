@@ -241,7 +241,7 @@ function UpdateCost($db, $Item) {
 		$MaterialCost = BomMaterialCost($NewParent, $db);
 		$SQL = "UPDATE stockmaster SET materialcost=" . $MaterialCost . " WHERE stockid='" . $NewParent . "'";
 		$result1 = DB_query($SQL);
-		if (DB_error_no($db)!=0) {
+		if (DB_error_no()!=0) {
 			return 1;
 		}
 		UpdateCost($db, $NewParent);

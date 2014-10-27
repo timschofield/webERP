@@ -248,7 +248,7 @@
 			$itemresult = DB_Query($itemsql, $db);
 			$systyperesult = DB_Query($systypessql, $db);
 			DB_Txn_Commit($db);
-			if (DB_error_no($db) != 0) {
+			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
 				$Errors[0]=0;
@@ -358,7 +358,7 @@
 				DB_Query($batchsql, $db);
 			}
 			DB_Txn_Commit($db);
-			if (DB_error_no($db) != 0) {
+			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 				return $Errors;
 			} else {
@@ -456,7 +456,7 @@
 			DB_query($glupdatesql2);
 			DB_query($systypessql);
 			DB_Txn_Commit($db);
-			if (DB_error_no($db) != 0) {
+			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
 				$Errors[0] = 0;

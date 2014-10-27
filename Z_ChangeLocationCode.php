@@ -143,7 +143,7 @@ if (isset($_POST['ProcessLocationChange'])){
 		//check if MRP tables exist before assuming
 
 		$result = DB_query("SELECT COUNT(*) FROM mrpparameters",'','',false,false);
-		if (DB_error_no($db)==0) {
+		if (DB_error_no()==0) {
 			echo '<br />' . _('Changing MRP parameters information');
 			$sql = "UPDATE mrpparameters SET location='" . $_POST['NewLocationID'] . "' WHERE location='" . $_POST['OldLocationID'] . "'";
 			$ErrMsg = _('The SQL to update the mrpparameters records failed');

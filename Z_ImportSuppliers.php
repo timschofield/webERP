@@ -307,7 +307,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 				$result = DB_query($sql, $ErrMsg, $DbgMsg);
 
 			}
-			if (DB_error_no($db) ==0) {
+			if (DB_error_no() ==0) {
 
 			} else { //location insert failed so set some useful error info
 				$InputError = 1;

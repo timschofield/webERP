@@ -28,7 +28,7 @@ if(isset($ForceConfigReload) AND $ForceConfigReload==true OR !isset($_SESSION['C
 	/*Load the pagesecurity settings from the database */
 	$sql="SELECT script, pagesecurity FROM scripts";
 	$result=DB_query($sql,'','',false,false);
-	if (DB_error_no($db)!=0){
+	if (DB_error_no()!=0){
 		/* the table may not exist with the pagesecurity field in it if it is an older webERP database
 		 * divert to the db upgrade if the VersionNumber is not in the config table
 		 * */
@@ -43,7 +43,7 @@ if(isset($ForceConfigReload) AND $ForceConfigReload==true OR !isset($_SESSION['C
 	 check the decimalplaces field exists in currencies - this was added in 4.0 but is required in 4.04 as it is used everywhere as the default decimal places to show on all home currency amounts
 	*/
 	$result = DB_query("SELECT decimalplaces FROM currencies",'','',false,false);
-	if (DB_error_no($db)!=0) { //then decimalplaces not already a field in currencies
+	if (DB_error_no()!=0) { //then decimalplaces not already a field in currencies
 		$result = DB_query("ALTER TABLE `currencies`
 							ADD COLUMN `decimalplaces` tinyint(3) NOT NULL DEFAULT 2 AFTER `hundredsname`",$db);
 	}
@@ -101,7 +101,7 @@ if(isset($ForceConfigReload) AND $ForceConfigReload==true OR !isset($_SESSION['C
 				auth
 			FROM emailsettings";
 	$result=DB_query($sql,'','',false,false);
-	if (DB_error_no($db)==0) {
+	if (DB_error_no()==0) {
 		/*test to ensure that the emailsettings table exists!!
 		 * if it doesn't exist then we are into an UpgradeDatabase scenario anyway
 		*/

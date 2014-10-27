@@ -96,7 +96,7 @@ $sql = "SELECT SUM(value)
 
 $ErrMsg = _('Shipment') . ' ' . $_GET['SelectedShipment'] . ' ' . _('Item costs cannot be retrieved from the database');
 $GetShiptCostsResult = DB_query($sql);
-if (DB_error_no($db) !=0 OR DB_num_rows($GetShiptCostsResult)==0) {
+if (DB_error_no() !=0 OR DB_num_rows($GetShiptCostsResult)==0) {
 	echo '<br />';
 	prnMsg ( _('No Item Cost Records exist for Shipment') . ' ' . $_GET['SelectedShipment'] . ' ' . _('in the database'), 'error');
 	include ('includes/footer.inc');

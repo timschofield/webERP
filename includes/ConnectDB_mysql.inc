@@ -66,7 +66,7 @@ function DB_query ($SQL,
 		$DebugMessage = _('The SQL that failed was');
 	}
 
-	if (DB_error_no($db) != 0 AND $TrapErrors==true){
+	if (DB_error_no() != 0 AND $TrapErrors==true){
 		if ($TrapErrors){
 			require_once($PathPrefix . 'includes/header.inc');
 		}
@@ -77,7 +77,7 @@ function DB_query ($SQL,
 		if ($Transaction){
 			$SQL = 'rollback';
 			$Result = DB_query($SQL);
-			if (DB_error_no($db) !=0){
+			if (DB_error_no() !=0){
 				prnMsg(_('Error Rolling Back Transaction'), '', _('Database Rollback Error') );
 			}
 		}
@@ -85,7 +85,7 @@ function DB_query ($SQL,
 			include($PathPrefix . 'includes/footer.inc');
 			exit;
 		}
-	} elseif (isset($_SESSION['MonthsAuditTrail']) and (DB_error_no($db)==0 AND $_SESSION['MonthsAuditTrail']>0)){
+	} elseif (isset($_SESSION['MonthsAuditTrail']) and (DB_error_no()==0 AND $_SESSION['MonthsAuditTrail']>0)){
 
 		$SQLArray = explode(' ', $SQL);
 
@@ -139,17 +139,17 @@ function DB_free_result (&$ResultIndex){
 function DB_num_rows (&$ResultIndex){
 	return mysql_num_rows($ResultIndex);
 }
-// Added by MGT
+
 function DB_affected_rows(&$ResultIndex){
 	return mysql_affected_rows($ResultIndex);
 }
 
-function DB_error_no (&$Conn=''){
+function DB_error_no(){
 	global $db;
 	return mysql_errno($db);
 }
 
-function DB_error_msg(&$Conn=''){
+function DB_error_msg(){
 	global $db;
 	return mysql_error($db);
 }

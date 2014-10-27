@@ -30,7 +30,7 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 			ORDER BY daterequired,whererequired";
 
 	$result = DB_query($sql,'','',False,False);
-	if (DB_error_no($db) !=0) {
+	if (DB_error_no() !=0) {
 		$errors = 1;
 		$holddb = $db;
 		$Title = _('Print MRP Report Error');
@@ -81,7 +81,7 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 			 WHERE part = '" . $_POST['Part'] . "'
 			 ORDER BY mrpdate";
 	$result = DB_query($sql,'','',false,true);
-	if (DB_error_no($db) !=0) {
+	if (DB_error_no() !=0) {
 		$errors = 1;
 		$holddb = $db;
 	}
@@ -115,7 +115,7 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 				   TO_DAYS(duedate) - TO_DAYS(CURRENT_DATE) AS datediff
 				FROM mrpplannedorders WHERE part = '" . $_POST['Part'] . "' ORDER BY mrpdate";
 	$result = DB_query($sql,'','',false,true);
-	if (DB_error_no($db) !=0) {
+	if (DB_error_no() !=0) {
 		$errors = 1;
 		$holddb = $db;
 	}

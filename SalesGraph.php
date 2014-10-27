@@ -294,7 +294,7 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 	$graph->SetPrecisionY($_SESSION['CompanyRecord']['decimalplaces']);
 
 	$SalesResult = DB_query($SQL);
-	if (DB_error_no($db) !=0) {
+	if (DB_error_no() !=0) {
 
 		prnMsg(_('The sales graph data for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg($db),'error');
 		include('includes/footer.inc');

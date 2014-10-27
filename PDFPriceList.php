@@ -147,7 +147,7 @@ If (isset($_POST['PrintPDF'])
 	}
 	$PricesResult = DB_query($SQL,'','',false,false);
 
-	if (DB_error_no($db) !=0) {
+	if (DB_error_no() !=0) {
 		$Title = _('Price List') . ' - ' . _('Problem Report....');
 		include('includes/header.inc');
 		prnMsg( _('The Price List could not be retrieved by the SQL because'). ' - ' . DB_error_msg($db), 'error');

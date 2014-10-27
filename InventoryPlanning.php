@@ -101,7 +101,7 @@ if (isset($_POST['PrintPDF'])
 	}
 	$InventoryResult = DB_query($SQL, '', '', false, false);
 
-	if (DB_error_no($db) !=0) {
+	if (DB_error_no() !=0) {
 	  $Title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
 	  include('includes/header.inc');
 	   prnMsg(_('The inventory quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
@@ -178,7 +178,7 @@ if (isset($_POST['PrintPDF'])
 
 		$SalesResult = DB_query($SQL,'','', false, false);
 
-		if (DB_error_no($db) !=0) {
+		if (DB_error_no() !=0) {
 	 		 $Title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
 	  		include('includes/header.inc');
 	   		prnMsg( _('The sales quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
@@ -215,7 +215,7 @@ if (isset($_POST['PrintPDF'])
 		$DemandResult = DB_query($SQL, '', '', false , false);
 		$ListCount = DB_num_rows($DemandResult);
 
-		if (DB_error_no($db) !=0) {
+		if (DB_error_no() !=0) {
 	 		$Title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
 	  		include('includes/header.inc');
 	   		prnMsg( _('The sales order demand quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
@@ -264,7 +264,7 @@ if (isset($_POST['PrintPDF'])
 
 		$BOMDemandResult = DB_query($SQL,'','',false,false);
 
-		if (DB_error_no($db) !=0) {
+		if (DB_error_no() !=0) {
 	 		$Title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
 	  		include('includes/header.inc');
 	   		prnMsg( _('The sales order demand quantities from parent assemblies could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');

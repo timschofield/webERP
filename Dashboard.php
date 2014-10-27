@@ -141,7 +141,7 @@ if (in_array($DebtorSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset(
 					ROUND(ABS(SUM(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc)),currencies.decimalplaces) > 0";
 	$CustomerResult = DB_query($SQL,'','',False,False); /*dont trap errors handled below*/
 
-	if (DB_error_no($db) !=0) {
+	if (DB_error_no() !=0) {
 		prnMsg(_('The customer details could not be retrieved by the SQL because') . ' ' . DB_error_msg($db),'error');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		if ($debug==1){
@@ -252,7 +252,7 @@ if (in_array($DebtorSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset(
 			}
 
 			$DetailResult = DB_query($sql,'','',False,False);
-			if (DB_error_no($db) !=0) {
+			if (DB_error_no() !=0) {
 				prnMsg(_('The details of outstanding transactions for customer') . ' - ' . $AgedAnalysis['debtorno'] . ' ' . _('could not be retrieved because') . ' - ' . DB_error_msg($db),'error');
 				echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 				if ($debug==1){
@@ -418,7 +418,7 @@ if (in_array($PayeeSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($
 					supptrans.transno";
 
 		$TransResult = DB_query($sql,'','',false,false);
-		if (DB_error_no($db) !=0) {
+		if (DB_error_no() !=0) {
 			prnMsg(_('The details of supplier invoices due could not be retrieved because') . ' - ' . DB_error_msg($db),'error');
 			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 			if ($debug==1){

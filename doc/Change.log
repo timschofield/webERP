@@ -1,11 +1,11 @@
 webERP Change Log
 
-
+27/10/14 Phil: Removed the $db parameter from all DB_error_no($db) calls - $db is now global
 27/10/14 Phil: Removed all $db in DB_query() calls as now a global
 25/10/14 Exson: Add sorting feature for tables to meet different needs.
 24/10/14 Exson: Fixed the extra blank in pattern in TaxGroups.php which leads to input failure.
 24/10/14 Exson: Correct Chinese currency code in weberpchina.sql
-22/10/14 Exson: Add Order by in SalesTypes.php. 
+22/10/14 Exson: Add Order by in SalesTypes.php.
 22/10/14 Exson: Remove debug info in GetPrice.inc. Reported by Jiro Akits.
 17/10/14 RChacon: Remove translation of tax category 'Freight' inside database.
 17/10/14 Exson: Add po line and due date result in OrderDetails.php.

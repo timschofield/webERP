@@ -216,7 +216,7 @@ if ($_FILES['SelectedAssetFile']['name']) { //start file processing
 			$DbgMsg = _('The SQL that was used to add the asset and failed was');
 			$result = DB_query($sql, $ErrMsg, $DbgMsg);
 
-			if (DB_error_no($db) ==0) { //the insert of the new code worked so bang in the fixedassettrans records too
+			if (DB_error_no() ==0) { //the insert of the new code worked so bang in the fixedassettrans records too
 
 
 				$AssetID = DB_Last_Insert_ID($db, 'fixedassets','assetid');
@@ -262,7 +262,7 @@ if ($_FILES['SelectedAssetFile']['name']) { //start file processing
 				$DbgMsg = _('The SQL that was used to add the fixedasset trans record that failed was');
 				$InsResult = DB_query($sql,$ErrMsg,$DbgMsg);
 
-				if (DB_error_no($db) ==0) {
+				if (DB_error_no() ==0) {
 					prnMsg( _('Inserted the new asset:') . ' ' . $Description,'info');
 				}
 			}

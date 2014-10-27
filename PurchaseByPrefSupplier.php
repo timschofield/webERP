@@ -395,7 +395,7 @@ if (isset($_POST['Supplier']) AND isset($_POST['ShowItems']) AND $_POST['Supplie
 	$ItemsResult = DB_query($SQL, '', '', false, false);
 	$ListCount = DB_num_rows($ItemsResult);
 
-	if (DB_error_no($db) !=0) {
+	if (DB_error_no() !=0) {
 		$Title = _('Supplier Ordering') . ' - ' . _('Problem Report') . '....';
 		include('includes/header.inc');
 		prnMsg(_('The supplier inventory quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
@@ -443,7 +443,7 @@ if (isset($_POST['Supplier']) AND isset($_POST['ShowItems']) AND $_POST['Supplie
 					AND (type=10 OR type=11)"; 
 			$SalesResult=DB_query($SQL,'','',FALSE,FALSE);
 	
-			if (DB_error_no($db) !=0) {
+			if (DB_error_no() !=0) {
 		 		$Title = _('Preferred supplier purchasing') . ' - ' . _('Problem Report') . '....';
 		  		include('includes/header.inc');
 		   		prnMsg( _('The sales quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
@@ -467,7 +467,7 @@ if (isset($_POST['Supplier']) AND isset($_POST['ShowItems']) AND $_POST['Supplie
 			$DemandResult = DB_query($SQL, '', '', false, false);
 	
 	
-			if (DB_error_no($db) !=0) {
+			if (DB_error_no() !=0) {
 		 		$Title = _('Preferred supplier purchasing') . ' - ' . _('Problem Report') . '....';
 		  		include('includes/header.inc');
 		   		prnMsg( _('The sales order demand quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
@@ -496,7 +496,7 @@ if (isset($_POST['Supplier']) AND isset($_POST['ShowItems']) AND $_POST['Supplie
 			
 			$BOMDemandResult = DB_query($SQL,'','',false,false);
 	
-			if (DB_error_no($db) !=0) {
+			if (DB_error_no() !=0) {
 		 		$Title = _('Preferred supplier purchasing') . ' - ' . _('Problem Report') . '....';
 		  		include('includes/header.inc');
 		   		prnMsg( _('The sales order demand quantities from parent assemblies could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
@@ -527,7 +527,7 @@ if (isset($_POST['Supplier']) AND isset($_POST['ShowItems']) AND $_POST['Supplie
 			$TotalDemand = $DemandRow['qtydemand'] + $BOMDemandRow['dem'];
 	
 			$OnOrdResult = DB_query($SQL, '', '', false, false);
-			if (DB_error_no($db) !=0) {
+			if (DB_error_no() !=0) {
 		 		$Title = _('Preferred supplier purchasing') . ' - ' . _('Problem Report') . '....';
 		  		include('includes/header.inc');
 		   		prnMsg( _('The purchase order quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');

@@ -349,7 +349,7 @@
 		  'VALUES ('.mb_substr($FieldValues,0,-2).') ';
 		if (sizeof($Errors)==0) {
 			$result = DB_Query($sql, $db);
-			if (DB_error_no($db) != 0) {
+			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
 				$Errors[0]=0;
@@ -472,7 +472,7 @@
                                    AND branchcode='".$BranchDetails['branchcode']."'";
 		if (sizeof($Errors)==0) {
 			$result = DB_Query($sql, $db);
-			if (DB_error_no($db) != 0) {
+			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
 				$Errors[0]=0;
@@ -498,7 +498,7 @@
 		$sql = "SELECT branchcode FROM custbranch
                 WHERE debtorno = '" . $DebtorNumber . "'";
 		$result = api_DB_query($sql);
-		if (DB_error_no($db) != 0)
+		if (DB_error_no() != 0)
 			$Errors[0] = DatabaseUpdateFailed;
 		else {
 			$Errors[0] = 0;	    // Signal data may follow.
@@ -528,7 +528,7 @@
                      WHERE debtorno='".$DebtorNumber."'
                      AND branchcode='".$BranchCode."'";
 		$result = api_DB_Query($sql, $db);
-		if (DB_error_no($db) != 0 ) {
+		if (DB_error_no() != 0 ) {
 			$Errors[0] = DatabaseUpdateFailed;
 		} else {
 			$Errors[0] = 0;

@@ -104,7 +104,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 		WHERE accountgroups.pandl=1";
 
 	$AccumProfitResult = DB_query($SQL);
-	if (DB_error_no($db) !=0) {
+	if (DB_error_no() !=0) {
 		$Title = _('Balance Sheet') . ' - ' . _('Problem Report') . '....';
 		include('includes/header.inc');
 		prnMsg( _('The accumulated profits brought forward could not be calculated by the SQL because') . ' - ' . DB_error_msg($db) );
@@ -143,7 +143,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 
 	$AccountsResult = DB_query($SQL);
 
-	if (DB_error_no($db) !=0) {
+	if (DB_error_no() !=0) {
 		$Title = _('Balance Sheet') . ' - ' . _('Problem Report') . '....';
 		include('includes/header.inc');
 		prnMsg( _('No general ledger accounts were returned by the SQL because') . ' - ' . DB_error_msg($db) );

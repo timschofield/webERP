@@ -76,7 +76,7 @@ If ((isset($_POST['PrintPDF']))
 
 
 		$TransResult = DB_query($sql,'','',false,false);
-		if (DB_error_no($db) !=0) {
+		if (DB_error_no() !=0) {
 			$Title = _('Remittance Advice Problem Report');
 			include('includes/header.inc');
 			prnMsg(_('The details of the payment to the supplier could not be retrieved because') . ' - ' . DB_error_msg($db),'error');

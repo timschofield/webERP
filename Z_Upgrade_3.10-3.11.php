@@ -54,7 +54,7 @@ if ($_POST['DoUpgrade'] == _('Perform Upgrade')){
 			if (mb_strpos($SQLScriptFile[$i],';')>0 AND ! $InAFunction){
 				$sql = mb_substr($sql,0,mb_strlen($sql)-1);
 				$result = DB_query($sql, $ErrMsg, $DBMsg, false, false);
-				switch (DB_error_no($db)) {
+				switch (DB_error_no()) {
 					case 0:
 						echo '<tr><td>' . $comment . '</td><td style="background-color:green">' . _('Success') . '</td></tr>';
 						break;
@@ -80,7 +80,7 @@ if ($_POST['DoUpgrade'] == _('Perform Upgrade')){
 						break;
 					default:
 						echo '<tr><td>' . $comment . '</td><td style="background-color:red">' . _('Failure').' - '.
-							_('Error number').' - '.DB_error_no($db)  . '</td></tr>';
+							_('Error number').' - '.DB_error_no()  . '</td></tr>';
 						break;
 				}
 				unset($sql);

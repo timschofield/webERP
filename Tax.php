@@ -50,7 +50,7 @@ if(isset($_POST['TaxAuthority']) AND
 
 	$DebtorTransResult = DB_query($SQL,'','',false,false); //don't trap errors in DB_query
 
-	if(DB_error_no($db) !=0) {
+	if(DB_error_no() !=0) {
 		$Title = _('Taxation Reporting Error');
 		include('includes/header.inc');
 		prnMsg(_('The accounts receivable transaction details could not be retrieved because') . ' ' . DB_error_msg($db),'error');
@@ -164,7 +164,7 @@ if(isset($_POST['TaxAuthority']) AND
 
 	$SuppTransResult = DB_query($SQL,'','',false,false); //doint trap errors in DB_query
 
-	if(DB_error_no($db) !=0) {
+	if(DB_error_no() !=0) {
 		$Title = _('Taxation Reporting Error');
 		include('includes/header.inc');
 		echo _('The accounts payable transaction details could not be retrieved because') . ' ' . DB_error_msg($db);

@@ -42,7 +42,7 @@ if (isset($_POST['FromCriteria'])
 
 	$GRNsResult = DB_query($SQL,'','',false,false);
 
-	if (DB_error_no($db) !=0) {
+	if (DB_error_no() !=0) {
 	  $Title = _('Outstanding GRN Valuation') . ' - ' . _('Problem Report');
 	  include('includes/header.inc');
 	  prnMsg(_('The outstanding GRNs valuation details could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');

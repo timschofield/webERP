@@ -29,7 +29,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 						stockcheckfreeze.stockid";
 
 		$StockChecks = DB_query($sql,'','',false,false);
-		if (DB_error_no($db) !=0) {
+		if (DB_error_no() !=0) {
 			$Title = _('Stock Freeze') . ' - ' . _('Problem Report') . '....';
 			include('includes/header.inc');
 			echo '<br />';
@@ -55,7 +55,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 					AND stockcounts.loccode='" . $myrow['loccode'] . "'";
 
 			$StockCounts = DB_query($sql);
-			if (DB_error_no($db) !=0) {
+			if (DB_error_no() !=0) {
 				$Title = _('Stock Count Comparison') . ' - ' . _('Problem Report') . '....';
 				include('includes/header.inc');
 				echo '<br />';
@@ -261,7 +261,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 
 		$Counts = DB_query($SQL,'','',false,false);
 
-		if (DB_error_no($db) !=0) {
+		if (DB_error_no() !=0) {
 	 		$Title = _('Inventory Comparison') . ' - ' . _('Problem Report') . '.... ';
 	  		include('includes/header.inc');
 	   		echo '<br />';

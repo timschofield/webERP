@@ -228,7 +228,7 @@ if (isset($_POST['PrintPDF'])){
 
 	$CustomersResult = DB_query($SQL);
 
-	if (DB_error_no($db) !=0) {
+	if (DB_error_no() !=0) {
 	  $Title = _('Customer List') . ' - ' . _('Problem Report') . '....';
 	  include('includes/header.inc');
 	   prnMsg( _('The customer List could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db) );

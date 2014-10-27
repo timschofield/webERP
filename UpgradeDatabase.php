@@ -228,7 +228,7 @@ if (isset($_POST['DoUpgrade'])){
 					$sql = mb_substr($sql,0,mb_strlen($sql)-1);
 					$result = DB_query($sql, '','', false, false);
 					echo '<tr><td>' . $sql . '</td>';
-					switch (DB_error_no($db)) {
+					switch (DB_error_no()) {
 						case 0:
 							echo '<td style="background-color:green">' . _('Success') . '</td></tr>';
 							break;
@@ -260,7 +260,7 @@ if (isset($_POST['DoUpgrade'])){
 							echo '<td style="background-color:yellow">' . _('Note').' - '. _('Index already dropped previously') . '</td></tr>';
 							break;
 						default:
-							echo '<td style="background-color:red">' . _('Failure').' - '. 	_('Error number').' - '.DB_error_no($db) .' ' . DB_error_msg($db) . '</td></tr>';
+							echo '<td style="background-color:red">' . _('Failure').' - '. 	_('Error number').' - '.DB_error_no() .' ' . DB_error_msg() . '</td></tr>';
 							break;
 					}
 					$sql='';

@@ -154,12 +154,12 @@ function DB_affected_rows(&$ResultIndex){
 
 }
 
-function DB_error_no ($Conn=''){
+function DB_error_no(){
 	global $db;
 	return mysqli_errno($db);
 }
 
-function DB_error_msg($Conn=''){
+function DB_error_msg(){
 	global $db;
 	return mysqli_error($db);
 }
