@@ -658,16 +658,16 @@ function RetailCustomerDataQualitySPG($NumDays, $db){
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('SPG') . '</th>
-							<th>' . _('Name') . '</th>
-							<th>' . _('# Sales') . '</th>
-							<th>' . _('% Data') . '</th>
-							<th>' . _('% First') . '</th>
-							<th>' . _('% Last') . '</th>
-							<th>' . _('% Country') . '</th>
-							<th>' . _('% DOB') . '</th>
-							<th>' . _('% Email') . '</th>
-							<th>' . _('% Sex') . '</th>
+							<th class="ascending">' . _('SPG') . '</th>
+							<th class="ascending">' . _('Name') . '</th>
+							<th class="ascending">' . _('# Sales') . '</th>
+							<th class="ascending">' . _('% Data') . '</th>
+							<th class="ascending">' . _('% First') . '</th>
+							<th class="ascending">' . _('% Last') . '</th>
+							<th class="ascending">' . _('% Country') . '</th>
+							<th class="ascending">' . _('% DOB') . '</th>
+							<th class="ascending">' . _('% Email') . '</th>
+							<th class="ascending">' . _('% Sex') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
