@@ -12,20 +12,22 @@ include('includes/KLGeneralFunctions.php');
 $begintime = time_start();
 
 if ($_SESSION['UserID'] == "Ricard"){
+
+	RetailCustomerDataQualitySPG(15, $db);
 	RetailCustomerAnalysisBySex(30, "ALL", $db);
 
 //	RetailCustomerAnalysisByCountry(7, "ALL", 3, $CountriesForRetail, $db);
 	RetailCustomerAnalysisByCountry(30, "ALL", 5, $CountriesForRetail, $db);
 //	RetailCustomerAnalysisByCountry(7, "'TOK66','TOKSE','TOKOB'", 3, $CountriesForRetail, $db);
-	RetailCustomerAnalysisByCountry(30, "'TOK66','TOKSE','TOKOB'", 5, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(30, "'TOK66','TOKSE','TOKOB'", 3, $CountriesForRetail, $db);
 //	RetailCustomerAnalysisByCountry(7, "'TOKKS','TOKBW'", 3, $CountriesForRetail, $db);
-	RetailCustomerAnalysisByCountry(30, "'TOKKS','TOKBW'", 5, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(30, "'TOKKS','TOKBW'", 3, $CountriesForRetail, $db);
 //	RetailCustomerAnalysisByCountry(7, "'TOKJC'", 3, $CountriesForRetail, $db);
-	RetailCustomerAnalysisByCountry(30, "'TOKJC'", 5, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(30, "'TOKJC'", 3, $CountriesForRetail, $db);
 //	RetailCustomerAnalysisByCountry(7, "'TOKSA','TOKSS','TOKSU'", 3, $CountriesForRetail, $db);
-	RetailCustomerAnalysisByCountry(30, "'TOKSA','TOKSS','TOKSU'", 5, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(30, "'TOKSA','TOKSS','TOKSU'", 3, $CountriesForRetail, $db);
 //	RetailCustomerAnalysisByCountry(7, "'TOKUB','TOKPU','TOKMF'", 3, $CountriesForRetail, $db);
-	RetailCustomerAnalysisByCountry(30, "'TOKUB','TOKPU','TOKMF'", 5, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(30, "'TOKUB','TOKPU','TOKMF'", 3, $CountriesForRetail, $db);
 
 	RetailCustomerAnalysisByAge(30, "ALL", $db);
 	RetailCustomerAnalysisByAge(30, "'TOK66','TOKSE','TOKOB'", $db);
@@ -47,14 +49,23 @@ if ($_SESSION['UserID'] == "Ricard"){
 if ($_SESSION['UserID'] == "Laia"
 	OR $_SESSION['UserID'] == "Ike1"
 	OR $_SESSION['UserID'] == "Juliette"){
+	RetailCustomerDataQualitySPG(30, $db);
+
 	RetailCustomerAnalysisBySex(30, "ALL", $db);
 
 	RetailCustomerAnalysisByCountry(30, "ALL", 5, $CountriesForRetail, $db);
-	RetailCustomerAnalysisByCountry(30, "'TOK66','TOKSE','TOKOB'", 5, $CountriesForRetail, $db);
-	RetailCustomerAnalysisByCountry(30, "'TOKKS','TOKBW'", 5, $CountriesForRetail, $db);
-	RetailCustomerAnalysisByCountry(30, "'TOKJC'", 5, $CountriesForRetail, $db);
-	RetailCustomerAnalysisByCountry(30, "'TOKSA','TOKSS','TOKSU'", 5, $CountriesForRetail, $db);
-	RetailCustomerAnalysisByCountry(30, "'TOKUB','TOKPU','TOKMF'", 5, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(30, "'TOK66','TOKSE','TOKOB'", 3, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(30, "'TOKKS','TOKBW'", 3, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(30, "'TOKJC'", 3, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(30, "'TOKSA','TOKSS','TOKSU'", 3, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(30, "'TOKUB','TOKPU','TOKMF'", 3, $CountriesForRetail, $db);
+
+	RetailCustomerAnalysisByAge(30, "ALL", $db);
+	RetailCustomerAnalysisByAge(30, "'TOK66','TOKSE','TOKOB'", $db);
+	RetailCustomerAnalysisByAge(30, "'TOKKS','TOKBW'", $db);
+	RetailCustomerAnalysisByAge(30, "'TOKJC'", $db);
+	RetailCustomerAnalysisByAge(30, "'TOKSA','TOKSS','TOKSU'", $db);
+	RetailCustomerAnalysisByAge(30, "'TOKUB','TOKPU','TOKMF'", $db);
 
 	EmailHarvested(30, "ALL", $db);
 
@@ -614,5 +625,84 @@ function RetailCustomerAnalysisByAge($NumDays, $ListShops, $CountriesForRetail, 
 		</div>
 		</form>';
 }
+
+function RetailCustomerDataQualitySPG($NumDays, $db){
+	$Yesterday  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
+	$StartDate  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
+
+	$SQL = "SELECT salesorders.salesperson,
+				salesman.salesmanname,
+				(SELECT COUNT(*)
+					FROM salesorders AS so2
+					WHERE so2.orddate >= '". $StartDate ."'
+						AND so2.orddate <= '". $Yesterday ."'
+						AND so2.salesperson = salesorders.salesperson) AS totalorders,
+				COUNT(klretailcustomers.orderno) AS harvested,
+				SUM(CASE klretailcustomers.firstname WHEN '' then 0 else 1 END) AS firstnames, 
+				SUM(CASE klretailcustomers.lastname WHEN '' then 0 else 1 END) AS lastnames, 
+				SUM(CASE klretailcustomers.country WHEN '0' then 0 else 1 END) AS countries, 
+				SUM(CASE klretailcustomers.date_of_birth WHEN '0000-00-00' then 0 else 1 END) AS date_of_births, 
+				SUM(CASE klretailcustomers.email WHEN '' then 0 else 1 END) AS emails, 
+				SUM(CASE klretailcustomers.sex WHEN '' then 0 else 1 END) AS sexs
+			FROM klretailcustomers, salesorders, salesman
+			WHERE salesorders.orderno = klretailcustomers.orderno
+				AND salesman.salesmancode = salesorders.salesperson
+				AND salesorders.orddate >= '". $StartDate ."'
+				AND salesorders.orddate <= '". $Yesterday ."'
+			GROUP BY salesorders.salesperson
+			ORDER BY salesorders.salesperson";
+	$result = DB_query($SQL, $db);
+	
+	if (DB_num_rows($result) != 0){
+		echo '<p class="page_title_text" align="center"><strong>' . _('Quality data Retail Customer by SPG during the last ') . locale_number_format($NumDays,0) . ' days</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th>' . _('SPG') . '</th>
+							<th>' . _('Name') . '</th>
+							<th>' . _('# Sales') . '</th>
+							<th>' . _('% Data') . '</th>
+							<th>' . _('% First') . '</th>
+							<th>' . _('% Last') . '</th>
+							<th>' . _('% Country') . '</th>
+							<th>' . _('% DOB') . '</th>
+							<th>' . _('% Email') . '</th>
+							<th>' . _('% Sex') . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+
+		while ($myrow = DB_fetch_array($result)) {
+			$k = StartEvenOrOddRow($k);
+			printf('<td>%s</td>
+				<td>%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				$myrow['salesperson'],
+				$myrow['salesmanname'],
+				locale_number_format($myrow['totalorders'],0),
+				locale_number_format(($myrow['harvested']/$myrow['totalorders'])*100,0).'%',
+				locale_number_format(($myrow['firstnames']/$myrow['harvested'])*100,0).'%',
+				locale_number_format(($myrow['lastnames']/$myrow['harvested'])*100,0).'%',
+				locale_number_format(($myrow['countries']/$myrow['harvested'])*100,0).'%',
+				locale_number_format(($myrow['date_of_births']/$myrow['harvested'])*100,0).'%',
+				locale_number_format(($myrow['emails']/$myrow['harvested'])*100,0).'%',
+				locale_number_format(($myrow['sexs']/$myrow['harvested'])*100,0).'%'
+				);
+		}
+		echo '</table>
+			</div>
+			</form>';
+	}
+}
+
+
 
 ?>
