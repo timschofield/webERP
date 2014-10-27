@@ -53,7 +53,7 @@ if(isset($_POST['TaxAuthority']) AND
 	if(DB_error_no() !=0) {
 		$Title = _('Taxation Reporting Error');
 		include('includes/header.inc');
-		prnMsg(_('The accounts receivable transaction details could not be retrieved because') . ' ' . DB_error_msg($db),'error');
+		prnMsg(_('The accounts receivable transaction details could not be retrieved because') . ' ' . DB_error_msg(),'error');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		if($debug==1) {
 			echo '<br />' . $SQL;
@@ -167,7 +167,7 @@ if(isset($_POST['TaxAuthority']) AND
 	if(DB_error_no() !=0) {
 		$Title = _('Taxation Reporting Error');
 		include('includes/header.inc');
-		echo _('The accounts payable transaction details could not be retrieved because') . ' ' . DB_error_msg($db);
+		echo _('The accounts payable transaction details could not be retrieved because') . ' ' . DB_error_msg();
 		echo '<br /><a href="' . $RootPath . '/index.php?">' . _('Back to the menu') . '</a>';
 		if($debug==1) {
 			echo '<br />' . $SQL;

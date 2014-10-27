@@ -33,7 +33,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 			$Title = _('Stock Freeze') . ' - ' . _('Problem Report') . '....';
 			include('includes/header.inc');
 			echo '<br />';
-			prnMsg( _('The inventory check file could not be retrieved because'). ' - ' . DB_error_msg($db),'error');
+			prnMsg( _('The inventory check file could not be retrieved because'). ' - ' . DB_error_msg(),'error');
 			echo '<br /><a href="' .$RootPath .'/index.php">' .  _('Back to the menu') . '</a>';
 			if ($debug==1){
 	      			echo '<br />' . $sql;
@@ -59,7 +59,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 				$Title = _('Stock Count Comparison') . ' - ' . _('Problem Report') . '....';
 				include('includes/header.inc');
 				echo '<br />';
-				prnMsg( _('The inventory counts file could not be retrieved because'). ' - ' . DB_error_msg($db). 'error');
+				prnMsg( _('The inventory counts file could not be retrieved because'). ' - ' . DB_error_msg(). 'error');
 				echo '<br /><a href="' .$RootPath .'/index.php">' .  _('Back to the menu') . '</a>';
 				if ($debug==1){
 					echo '<br />' .  $sql;
@@ -265,7 +265,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 	 		$Title = _('Inventory Comparison') . ' - ' . _('Problem Report') . '.... ';
 	  		include('includes/header.inc');
 	   		echo '<br />';
-			prnMsg( _('The inventory counts could not be retrieved by the SQL because').' - ' . DB_error_msg($db), 'error');
+			prnMsg( _('The inventory counts could not be retrieved by the SQL because').' - ' . DB_error_msg(), 'error');
 	   		echo '<br /><a href="' .$RootPath .'/index.php">' .  _('Back to the menu'). '</a>';
 	   		if ($debug==1){
 	      			echo '<br />' .  $SQL;

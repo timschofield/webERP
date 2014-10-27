@@ -68,7 +68,7 @@ if ( isset($_POST['pricelist']) ) {
 	if (DB_error_no() !=0) {
 		$Title = _('Price List Export Problem ....');
 		include('includes/header.inc');
-		prnMsg( _('The Price List could not be retrieved by the SQL because'). ' - ' . DB_error_msg($db), 'error');
+		prnMsg( _('The Price List could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
 		echo '<br /><a href="' .$RootPath .'/index.php?' . SID . '">' .   _('Back to the menu'). '</a>';
 		if ($debug==1){
 			echo '<br />' .  $SQL;
@@ -164,7 +164,7 @@ if ( isset($_POST['pricelist']) ) {
 	if (DB_error_no() !=0) {
 		$Title = _('Customer List Export Problem ....');
 		include('includes/header.inc');
-		prnMsg( _('The Customer List could not be retrieved by the SQL because'). ' - ' . DB_error_msg($db), 'error');
+		prnMsg( _('The Customer List could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
 		echo '<br /><a href="' .$RootPath .'/index.php">' .   _('Back to the menu'). '</a>';
 		if ($debug==1){
 			echo '<br />' .  $SQL;
@@ -255,7 +255,7 @@ if ( isset($_POST['pricelist']) ) {
 	if (DB_error_no() !=0) {
 		$Title = _('Salesman List Export Problem ....');
 		include('includes/header.inc');
-		prnMsg( _('The Salesman List could not be retrieved by the SQL because'). ' - ' . DB_error_msg($db), 'error');
+		prnMsg( _('The Salesman List could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
 		echo '<br /><a href="' .$RootPath .'/index.php">' .   _('Back to the menu'). '</a>';
 		if ($debug==1){
 			echo '<br />' .  $SQL;
@@ -304,7 +304,7 @@ if ( isset($_POST['pricelist']) ) {
 	if (DB_error_no() !=0) {
 		$Title = _('Security Token List Export Problem ....');
 		include('includes/header.inc');
-		prnMsg( _('The Image List could not be retrieved by the SQL because'). ' - ' . DB_error_msg($db), 'error');
+		prnMsg( _('The Image List could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
 		echo '<br /><a href="' .$RootPath .'/index.php">' .   _('Back to the menu'). '</a>';
 		if ($debug==1){
 			echo '<br />' .  $SQL;
@@ -343,7 +343,7 @@ if ( isset($_POST['pricelist']) ) {
 	if (DB_error_no() !=0) {
 		$Title = _('Security Token List Export Problem ....');
 		include('includes/header.inc');
-		prnMsg( _('The Security Token List could not be retrieved by the SQL because'). ' - ' . DB_error_msg($db), 'error');
+		prnMsg( _('The Security Token List could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
 		echo '<br /><a href="' .$RootPath .'/index.php?' . SID . '">' .   _('Back to the menu'). '</a>';
 		if ($debug==1){
 			echo '<br />' .  $SQL;
@@ -379,7 +379,7 @@ if ( isset($_POST['pricelist']) ) {
 	if (DB_error_no() !=0) {
 		$Title = _('Security Role List Export Problem ....');
 		include('includes/header.inc');
-		prnMsg( _('The Security Role List could not be retrieved by the SQL because'). ' - ' . DB_error_msg($db), 'error');
+		prnMsg( _('The Security Role List could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
 		echo '<br /><a href="' .$RootPath .'/index.php">' .   _('Back to the menu'). '</a>';
 		if ($debug==1){
 			echo '<br />' .  $SQL;
@@ -415,7 +415,7 @@ if ( isset($_POST['pricelist']) ) {
 	if (DB_error_no() !=0) {
 		$Title = _('Security Group List Export Problem ....');
 		include('includes/header.inc');
-		prnMsg( _('The Security Group List could not be retrieved by the SQL because'). ' - ' . DB_error_msg($db), 'error');
+		prnMsg( _('The Security Group List could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
 		echo '<br /><a href="' .$RootPath .'/index.php?' . SID . '">' .   _('Back to the menu'). '</a>';
 		if ($debug==1){
 			echo '<br />' .  $SQL;
@@ -467,7 +467,7 @@ if ( isset($_POST['pricelist']) ) {
 	if (DB_error_no() !=0) {
 		$Title = _('Security User List Export Problem ....');
 		include('includes/header.inc');
-		prnMsg( _('The Security User List could not be retrieved by the SQL because'). ' - ' . DB_error_msg($db), 'error');
+		prnMsg( _('The Security User List could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
 		echo '<br /><a href="' .$RootPath .'/index.php">' .   _('Back to the menu'). '</a>';
 		if ($debug==1){
 			echo '<br />' .  $SQL;

@@ -453,7 +453,7 @@ if (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 		$GLValidResult = DB_query($sql,$ErrMsg,$DbgMsg,false,false);
 		if (DB_error_no() !=0) {
 			$AllowUpdate = false;
-			prnMsg( _('The validation process for the GL Code entered could not be executed because') . ' ' . DB_error_msg($db), 'error');
+			prnMsg( _('The validation process for the GL Code entered could not be executed because') . ' ' . DB_error_msg(), 'error');
 			if ($debug==1){
 				prnMsg (_('The SQL used to validate the code entered was') . ' ' . $sql,'error');
 			}

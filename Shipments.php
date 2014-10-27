@@ -99,7 +99,7 @@ if (isset($_GET['SelectedShipment'])){
 							INNER JOIN purchorders
 								ON purchorderdetails.orderno=purchorders.orderno
 							WHERE purchorderdetails.shiptref='" . $_GET['SelectedShipment'] . "'";
-	      $ErrMsg = _('The lines on the shipment cannot be retrieved because'). ' - ' . DB_error_msg($db);
+	      $ErrMsg = _('The lines on the shipment cannot be retrieved because'). ' - ' . DB_error_msg();
               $LineItemsResult = DB_query($LineItemsSQL, $ErrMsg);
 
         if (DB_num_rows($GetShiptHdrResult)==0) {

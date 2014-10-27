@@ -53,7 +53,7 @@ function DB_query ($SQL,
 		if ($TrapErrors){
 			require_once($PathPrefix . 'includes/header.inc');
 		}
-		prnMsg($ErrorMessage . '<BR>' . DB_error_msg($Conn),'error', _('DB ERROR:'));
+		prnMsg($ErrorMessage . '<BR>' . DB_error_msg(),'error', _('DB ERROR:'));
 		if ($debug==1){
 			echo '<BR>' . $DebugMessage. "<BR>$SQL<BR>";
 		}
@@ -106,11 +106,11 @@ function DB_affected_rows (&$ResultIndex){
 }
 
 function DB_error_no(){
-	return DB_error_msg($db) == ""?0:-1;
+	return DB_error_msg() == ""?0:-1;
 }
 
-function DB_error_msg(&$Conn){
-	return pg_last_error($Conn);
+function DB_error_msg(){
+	return pg_last_error($db);
 }
 
 function DB_Last_Insert_ID(&$Conn, $table, $fieldname) {

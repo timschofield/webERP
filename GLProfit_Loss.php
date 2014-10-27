@@ -184,7 +184,7 @@ if ((!isset($_POST['FromPeriod'])
 	if (DB_error_no() != 0) {
 		$Title = _('Profit and Loss') . ' - ' . _('Problem Report') . '....';
 		include('includes/header.inc');
-		prnMsg( _('No general ledger accounts were returned by the SQL because') . ' - ' . DB_error_msg($db) );
+		prnMsg( _('No general ledger accounts were returned by the SQL because') . ' - ' . DB_error_msg() );
 		echo '<br /><a href="' .$RootPath .'/index.php">' .  _('Back to the menu'). '</a>';
 		if ($debug == 1){
 			echo '<br />' .  $SQL;

@@ -45,7 +45,7 @@ if (isset($_POST['FromCriteria'])
 	if (DB_error_no() !=0) {
 	  $Title = _('Outstanding GRN Valuation') . ' - ' . _('Problem Report');
 	  include('includes/header.inc');
-	  prnMsg(_('The outstanding GRNs valuation details could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
+	  prnMsg(_('The outstanding GRNs valuation details could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
 	   echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 		/*
 	   if ($debug==1){

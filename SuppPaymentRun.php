@@ -108,7 +108,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 		if (DB_error_no() !=0) {
 			$Title = _('Payment Run - Problem Report');
 			include('includes/header.inc');
-			prnMsg(_('The details of supplier invoices due could not be retrieved because') . ' - ' . DB_error_msg($db),'error');
+			prnMsg(_('The details of supplier invoices due could not be retrieved because') . ' - ' . DB_error_msg(),'error');
 			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 			if ($debug==1){
 				echo '<br />' . _('The SQL that failed was') . ' ' . $sql;
@@ -182,7 +182,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 				if (DB_error_no() !=0) {
 					$Title = _('Payment Processing - Problem Report') . '.... ';
 					include('includes/header.inc');
-					prnMsg(_('None of the payments will be processed since updates to the transaction records for') . ' ' .$SupplierName . ' ' . _('could not be processed because') . ' - ' . DB_error_msg($db),'error');
+					prnMsg(_('None of the payments will be processed since updates to the transaction records for') . ' ' .$SupplierName . ' ' . _('could not be processed because') . ' - ' . DB_error_msg(),'error');
 					echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 					if ($debug==1){
 						echo '<br />' . _('The SQL that failed was') . $SQL;
@@ -213,7 +213,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 		if (DB_error_no() !=0) {
 			$Title = _('Payment Processing - Problem Report') . '.... ';
 			include('includes/header.inc');
-			prnMsg(_('None of the payments will be processed. Unfortunately, there was a problem committing the changes to the database because') . ' - ' . DB_error_msg($db),'error');
+			prnMsg(_('None of the payments will be processed. Unfortunately, there was a problem committing the changes to the database because') . ' - ' . DB_error_msg(),'error');
 			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 			if ($debug==1){
 				prnMsg(_('The SQL that failed was') . '<br />' . $SQL,'error');
@@ -314,7 +314,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 	$AccountsResults = DB_query($SQL,'','',false,false);
 
 	if (DB_error_no() !=0) {
-		 echo '<br />' . _('The bank accounts could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db);
+		 echo '<br />' . _('The bank accounts could not be retrieved by the SQL because') . ' - ' . DB_error_msg();
 		 if ($debug==1){
 			echo '<br />' . _('The SQL used to retrieve the bank accounts was') . ':<br />' . $SQL;
 		 }

@@ -22,7 +22,7 @@ $SQL = "SELECT shiptref,
 		eta
 	FROM shipments
 	WHERE supplierid='" . $_GET['SupplierID'] . "'";
-$ErrMsg = _('No shipments were returned from the database because'). ' - '. DB_error_msg($db);
+$ErrMsg = _('No shipments were returned from the database because'). ' - '. DB_error_msg();
 $ShiptsResult = DB_query($SQL, $ErrMsg);
 
 if (DB_num_rows($ShiptsResult)==0){

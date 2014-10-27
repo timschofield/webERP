@@ -93,7 +93,7 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 	}
 	$sql .=  " ORDER BY id";
 
-   $ErrMsg = _('The customer transactions for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg($db);
+   $ErrMsg = _('The customer transactions for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg();
    $DbgMsg =  _('The SQL that failed was');
    $TransResult = DB_query($sql,$ErrMsg,$DbgMsg);
 

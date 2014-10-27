@@ -41,7 +41,7 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 	$LabelsResult = DB_query($SQL,'','',false,false);
 
 	if (DB_error_no() !=0) {
-		prnMsg( _('The Price Labels could not be retrieved by the SQL because'). ' - ' . DB_error_msg($db), 'error');
+		prnMsg( _('The Price Labels could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
 		echo '<br /><a href="' .$RootPath .'/index.php">' .   _('Back to the menu'). '</a>';
 		if ($debug==1){
 			prnMsg(_('For debugging purposes the SQL used was:') . $SQL,'error');

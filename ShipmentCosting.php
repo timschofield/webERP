@@ -429,7 +429,7 @@ if (DB_num_rows($LineItemsResult) > 0) {
 											'" . _('Shipment of') . ' ' . $myrow['itemcode'] . " " . _('cost was') . ' ' . $StdCostUnit . ' ' . _('changed to') . ' ' . locale_number_format($ItemShipmentCost,$_SESSION['CompanyRecord']['decimalplaces']) . ' x ' . _('QOH of') . ' ' . $QOH . "',
 											" . -$ValueOfChange . ")";
 
-						   $ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL credit for the shipment stock cost adjustment posting could not be inserted because'). ' ' . DB_error_msg($db);
+						   $ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL credit for the shipment stock cost adjustment posting could not be inserted because'). ' ' . DB_error_msg();
 
 						   $Result = DB_query($SQL, $ErrMsg,'',TRUE);
 
@@ -448,7 +448,7 @@ if (DB_num_rows($LineItemsResult) > 0) {
 									'" . _('Shipment of') . ' ' . $myrow['itemcode'] .  ' ' . _('cost was') . ' ' . $StdCostUnit . ' ' . _('changed to') . ' ' . locale_number_format($ItemShipmentCost,$_SESSION['CompanyRecord']['decimalplaces']) . ' x ' . _('QOH of') . ' ' . $QOH . "',
 									" . $ValueOfChange . ")";
 
-						   $ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL debit for stock cost adjustment posting could not be inserted because') .' '. DB_error_msg($db);
+						   $ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL debit for stock cost adjustment posting could not be inserted because') .' '. DB_error_msg();
 
 						   $Result = DB_query($SQL, $ErrMsg,'',TRUE);
 
@@ -462,7 +462,7 @@ if (DB_num_rows($LineItemsResult) > 0) {
 												lastcostupdate='" . Date('Y-m-d') . "'
 										WHERE stockid='" . $myrow['itemcode'] . "'";
 
-					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The shipment cost details for the stock item could not be updated because'). ': ' . DB_error_msg($db);
+					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The shipment cost details for the stock item could not be updated because'). ': ' . DB_error_msg();
 
 					$result = DB_query($sql, $ErrMsg,'',TRUE);
 

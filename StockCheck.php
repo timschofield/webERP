@@ -42,7 +42,7 @@ If (isset($_POST['PrintPDF'])
 		if (DB_error_no() !=0) {
 			$Title = _('Stock Count Sheets - Problem Report');
 			include('includes/header.inc');
-			prnMsg(_('The inventory quantities could not be added to the freeze file because') . ' ' . DB_error_msg($db),'error');
+			prnMsg(_('The inventory quantities could not be added to the freeze file because') . ' ' . DB_error_msg(),'error');
 			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 			if ($debug==1){
 		  			echo '<br />' . $sql;
@@ -64,7 +64,7 @@ If (isset($_POST['PrintPDF'])
 		if (DB_error_no() !=0) {
 			$Title = _('Stock Freeze') . ' - ' . _('Problem Report') . '.... ';
 			include('includes/header.inc');
-			prnMsg(_('The old quantities could not be deleted from the freeze file because') . ' ' . DB_error_msg($db),'error');
+			prnMsg(_('The old quantities could not be deleted from the freeze file because') . ' ' . DB_error_msg(),'error');
 			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 			if ($debug==1){
 		  			echo '<br />' . $sql;
@@ -95,7 +95,7 @@ If (isset($_POST['PrintPDF'])
 		if (DB_error_no() !=0) {
 			$Title = _('Stock Freeze - Problem Report');
 			include('includes/header.inc');
-			prnMsg(_('The inventory quantities could not be added to the freeze file because') . ' ' . DB_error_msg($db),'error');
+			prnMsg(_('The inventory quantities could not be added to the freeze file because') . ' ' . DB_error_msg(),'error');
 			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 			if ($debug==1){
 		  			echo '<br />' . $sql;
@@ -138,7 +138,7 @@ If (isset($_POST['PrintPDF'])
 	if (DB_error_no() !=0) {
 		$Title = _('Stock Sheets') . ' - ' . _('Problem Report') . '.... ';
 		include('includes/header.inc');
-		prnMsg( _('The inventory quantities could not be retrieved by the SQL because') . ' ' . DB_error_msg($db),'error');
+		prnMsg( _('The inventory quantities could not be retrieved by the SQL because') . ' ' . DB_error_msg(),'error');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		if ($debug==1){
 		  	echo '<br />' . $SQL;
@@ -191,7 +191,7 @@ If (isset($_POST['PrintPDF'])
 			if (DB_error_no() !=0) {
 	 			$Title = _('Stock Check Sheets - Problem Report');
 		  		include('includes/header.inc');
-		   		prnMsg( _('The sales order demand quantities could not be retrieved by the SQL because') . ' ' . DB_error_msg($db), 'error');
+		   		prnMsg( _('The sales order demand quantities could not be retrieved by the SQL because') . ' ' . DB_error_msg(), 'error');
 	   			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 	   			if ($debug==1){
 		  				echo '<br />' . $SQL;
@@ -219,7 +219,7 @@ If (isset($_POST['PrintPDF'])
 
 			$DemandResult = DB_query($sql,'','',false,false);
 			if (DB_error_no() !=0) {
-				prnMsg(_('The demand for this product from') . ' ' . $myrow['loccode'] . ' ' . _('cannot be retrieved because') . ' - ' . DB_error_msg($db),'error');
+				prnMsg(_('The demand for this product from') . ' ' . $myrow['loccode'] . ' ' . _('cannot be retrieved because') . ' - ' . DB_error_msg(),'error');
 				if ($debug==1){
 		   			echo '<br />' . _('The SQL that failed was') . ' ' . $sql;
 				}

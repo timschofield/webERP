@@ -118,7 +118,7 @@ $ListCount = DB_num_rows($InventoryResult);
 if (DB_error_no() !=0) {
 	$Title = _('Inventory Valuation') . ' - ' . _('Problem Report');
 	include('includes/header.inc');
-	echo _('The inventory valuation could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db);
+	echo _('The inventory valuation could not be retrieved by the SQL because') . ' - ' . DB_error_msg();
 	echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 	if ($debug==1){
 		echo '<br />' . $SQL;

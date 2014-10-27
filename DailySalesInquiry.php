@@ -107,7 +107,7 @@ if ($_SESSION['SalesmanLogin'] != '') {
 }
 
 $sql .= " GROUP BY stockmoves.trandate ORDER BY stockmoves.trandate";
-$ErrMsg = _('The sales data could not be retrieved because') . ' - ' . DB_error_msg($db);
+$ErrMsg = _('The sales data could not be retrieved because') . ' - ' . DB_error_msg();
 $SalesResult = DB_query($sql,$ErrMsg);
 
 echo '<table class="selection">

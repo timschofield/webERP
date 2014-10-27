@@ -153,9 +153,9 @@ if (isset($_POST['submit'])) {
 		$result = DB_query($sql,'','',false,false);
 		if (DB_error_no()!=0){
 		   If ($msg==_('Price Updated')){
-				$msg = _('The price could not be updated because') . ' - ' . DB_error_msg($db);
+				$msg = _('The price could not be updated because') . ' - ' . DB_error_msg();
 			} else {
-				$msg = _('The price could not be added because') . ' - ' . DB_error_msg($db);
+				$msg = _('The price could not be added because') . ' - ' . DB_error_msg();
 			}
 		}else {
 			ReSequenceEffectiveDates ($Item, $SalesType, $CurrCode, $_SESSION['CustomerID'], $db);

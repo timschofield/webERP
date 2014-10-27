@@ -251,7 +251,7 @@ if (isset($_POST['DoUpgrade'])){
 							echo '<td style="background-color:yellow">' . _('Note').' - '. _('Entry has already been done') . '</td></tr>';
 							break;
 						case 1064:
-							echo '<td style="background-color:red">' . _('Note').' - '.  _('SQL syntax error. The SQL error message is'). ' ' . DB_error_msg($db) . '</td></tr>';
+							echo '<td style="background-color:red">' . _('Note').' - '.  _('SQL syntax error. The SQL error message is'). ' ' . DB_error_msg() . '</td></tr>';
 							break;
 						case 1068:
 							echo '<td style="background-color:yellow">' . _('Note').' - '. _('Primary key already exists') . '</td></tr>';

@@ -193,7 +193,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 	if (DB_error_no() != 0) {
 		$Title = _('Income and Expenditure') . ' - ' . _('Problem Report') . '....';
 		include('includes/header.inc');
-		prnMsg( _('No general ledger accounts were returned by the SQL because') . ' - ' . DB_error_msg($db) );
+		prnMsg( _('No general ledger accounts were returned by the SQL because') . ' - ' . DB_error_msg() );
 		echo '<br />
 				<a href="' .$RootPath .'/index.php">' .  _('Back to the menu'). '</a>';
 		if ($debug == 1){

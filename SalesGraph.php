@@ -296,7 +296,7 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 	$SalesResult = DB_query($SQL);
 	if (DB_error_no() !=0) {
 
-		prnMsg(_('The sales graph data for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg($db),'error');
+		prnMsg(_('The sales graph data for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg(),'error');
 		include('includes/footer.inc');
 		exit;
 	}

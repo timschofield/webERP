@@ -70,7 +70,7 @@ if (isset($_POST['PrintPDF'])) {
 	if (DB_error_no() !=0) {
 
 	  include('includes/header.inc');
-		prnMsg(_('The sell through support items to claim could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
+		prnMsg(_('The sell through support items to claim could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
 		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 		if ($debug==1){
 		  echo '<br />' . $SQL;

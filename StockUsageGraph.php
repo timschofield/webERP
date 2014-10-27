@@ -50,7 +50,7 @@ $MovtsResult = DB_query($sql);
 if (DB_error_no() !=0) {
 	$Title = _('Stock Usage Graph Problem');
 	include ('includes/header.inc');
-	echo _('The stock usage for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg($db);
+	echo _('The stock usage for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg();
 	if ($debug==1){
 	echo '<br />' . _('The SQL that failed was') . $sql;
 	}

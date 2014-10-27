@@ -79,7 +79,7 @@ If ((isset($_POST['PrintPDF']))
 		if (DB_error_no() !=0) {
 			$Title = _('Remittance Advice Problem Report');
 			include('includes/header.inc');
-			prnMsg(_('The details of the payment to the supplier could not be retrieved because') . ' - ' . DB_error_msg($db),'error');
+			prnMsg(_('The details of the payment to the supplier could not be retrieved because') . ' - ' . DB_error_msg(),'error');
 			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 			if ($debug==1){
 				echo '<br />' . _('The SQL that failed was') . ' ' . $sql;

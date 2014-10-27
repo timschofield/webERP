@@ -155,7 +155,7 @@ if (isset($_POST['ShowSales'])){
 			GROUP BY stockmaster.categoryid
 			ORDER BY netsalesvalue DESC";
 
-	$ErrMsg = _('The sales data could not be retrieved because') . ' - ' . DB_error_msg($db);
+	$ErrMsg = _('The sales data could not be retrieved because') . ' - ' . DB_error_msg();
 	$SalesResult = DB_query($sql,$ErrMsg);
 
 	echo '<table cellpadding="2" class="selection">';

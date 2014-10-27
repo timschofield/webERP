@@ -98,7 +98,7 @@ if (isset($_POST['SearchParts'])) {
 						stockmaster.decimalplaces,
 						stockmaster.units";
 
-	$ErrMsg = _('No Stock Items were returned from the database because'). ' - '. DB_error_msg($db);
+	$ErrMsg = _('No Stock Items were returned from the database because'). ' - '. DB_error_msg();
 	$StockItemsResult = DB_query($SQL, $ErrMsg);
 
 }
