@@ -114,7 +114,7 @@ function DoSetup()
 				    ,'d')	> 	$_SESSION['DB_Maintenance']){
 
 			    /*Do the DB maintenance routing for the DB_type selected */
-			    DB_Maintenance($db);
+			    DB_Maintenance();
 			    //purge the audit trail if necessary
 			    if (isset($_SESSION['MonthsAuditTrail'])){
 				     $sql = "DELETE FROM audittrail

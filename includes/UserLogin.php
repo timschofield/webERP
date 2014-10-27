@@ -158,7 +158,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
 							,'d')	>= 	$_SESSION['DB_Maintenance']){
 
 						/*Do the DB maintenance routing for the DB_type selected */
-						DB_Maintenance($db);
+						DB_Maintenance();
 						$_SESSION['DB_Maintenance_LastRun'] = Date('Y-m-d');
 
 						/* Audit trail purge only runs if DB_Maintenance is enabled */

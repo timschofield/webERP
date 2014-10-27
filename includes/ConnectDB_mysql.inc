@@ -184,7 +184,7 @@ function interval( $val, $Inter ){
 		return "\n".'interval ' . $val . ' '. $Inter."\n";
 }
 
-function DB_Maintenance($Conn=''){
+function DB_Maintenance(){
 
 	prnMsg(_('The system has just run the regular database administration and optimisation routine.'),'info');
 	$TablesResult = DB_query('SHOW TABLES');
@@ -198,25 +198,25 @@ function DB_Maintenance($Conn=''){
 }
 
 
-function DB_Txn_Begin($Conn=''){
-	mysql_query("SET autocommit=0");
-	mysql_query("START TRANSACTION");
+function DB_Txn_Begin(){
+	mysql_query("SET autocommit=0",$db);
+	mysql_query("START TRANSACTION",$db);
 }
 
-function DB_Txn_Commit($Conn=''){
-	mysql_query("COMMIT");
-	mysql_query("SET autocommit=1");
+function DB_Txn_Commit(){
+	mysql_query("COMMIT",$db);
+	mysql_query("SET autocommit=1",$db);
 }
 
-function DB_Txn_Rollback($Conn=''){
-    mysql_query("ROLLBACK");
+function DB_Txn_Rollback(){
+    mysql_query("ROLLBACK",$db);
 }
 
-function DB_IgnoreForeignKeys($Conn=''){
-	mysql_query("SET FOREIGN_KEY_CHECKS=0");
+function DB_IgnoreForeignKeys(){
+	mysql_query("SET FOREIGN_KEY_CHECKS=0",$db);
 }
-function DB_ReinstateForeignKeys($Conn=''){
-	mysql_query("SET FOREIGN_KEY_CHECKS=1");
+function DB_ReinstateForeignKeys(){
+	mysql_query("SET FOREIGN_KEY_CHECKS=1",$db);
 }
 
 ?>

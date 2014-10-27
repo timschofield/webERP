@@ -49,7 +49,7 @@ if (isset($_POST['ProcessLocationChange'])){
 
 	if ($InputError ==0){ // no input errors
 		$result = DB_Txn_Begin();
-		DB_IgnoreForeignKeys($db);
+		DB_IgnoreForeignKeys();
 
 		echo '<br />' . _('Adding the new location record');
 		$sql = "INSERT INTO locations (loccode,
@@ -223,7 +223,7 @@ if (isset($_POST['ProcessLocationChange'])){
 		$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
 		echo ' ... ' . _('completed');
 
-		DB_ReinstateForeignKeys($db);
+		DB_ReinstateForeignKeys();
 
 		$result = DB_Txn_Commit();
 

@@ -1,5 +1,7 @@
 webERP Change Log
 
+27/10/14 Phil: Removed the $db parameter from all DB_Txn_Begin($db) DB_Txn_Commit($db) DB_Txn_Rollback($db)calls - $db is now global
+27/10/14 Phil: Removed the $db parameter from all DB_Maintenance($db) calls - $db is now global
 27/10/14 Phil: Removed the $db parameter from all DB_error_msg($db) calls - $db is now global
 27/10/14 Phil: Removed the $db parameter from all DB_error_no($db) calls - $db is now global
 27/10/14 Phil: Removed all $db in DB_query() calls as now a global

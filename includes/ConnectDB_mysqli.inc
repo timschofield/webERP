@@ -196,7 +196,7 @@ function interval( $val, $Inter ){
 		return "\n".'interval ' . $val . ' '. $Inter."\n";
 }
 
-function DB_Maintenance($Conn=''){
+function DB_Maintenance(){
 
 	prnMsg(_('The system has just run the regular database administration and optimisation routine.'),'info');
 
@@ -210,27 +210,27 @@ function DB_Maintenance($Conn=''){
 				WHERE confname='DB_Maintenance_LastRun'");
 }
 
-function DB_Txn_Begin($Conn=''){
+function DB_Txn_Begin(){
 	global $db;
 	mysqli_query($db,'SET autocommit=0');
 	mysqli_query($db,'START TRANSACTION');
 }
 
-function DB_Txn_Commit($Conn=''){
+function DB_Txn_Commit(){
 	global $db;
 	mysqli_query($db,'COMMIT');
 	mysqli_query($db,'SET autocommit=1');
 }
 
-function DB_Txn_Rollback($Conn=''){
+function DB_Txn_Rollback(){
 	global $db;
 	mysqli_query($db,'ROLLBACK');
 }
-function DB_IgnoreForeignKeys($Conn=''){
+function DB_IgnoreForeignKeys(){
 	global $db;
 	mysqli_query($db,'SET FOREIGN_KEY_CHECKS=0');
 }
-function DB_ReinstateForeignKeys($Conn=''){
+function DB_ReinstateForeignKeys(){
 	global $db;
 	mysqli_query($db, 'SET FOREIGN_KEY_CHECKS=1');
 }

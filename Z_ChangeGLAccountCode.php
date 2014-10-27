@@ -57,7 +57,7 @@ if (isset($_POST['ProcessGLAccountCode'])){
 		$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
 		echo ' ... ' . _('completed');
 
-		DB_IgnoreForeignKeys($db);
+		DB_IgnoreForeignKeys();
 
 		ChangeFieldInTable("bankaccounts", "accountcode", $_POST['OldAccountCode'], $_POST['NewAccountCode'], $db);
 
@@ -110,7 +110,7 @@ if (isset($_POST['ProcessGLAccountCode'])){
 
 		ChangeFieldInTable("workcentres", "overheadrecoveryact", $_POST['OldAccountCode'], $_POST['NewAccountCode'], $db);
 
-		DB_ReinstateForeignKeys($db);
+		DB_ReinstateForeignKeys();
 
 		$result = DB_Txn_Commit();
 

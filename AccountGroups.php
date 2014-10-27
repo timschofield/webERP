@@ -143,7 +143,7 @@ if (isset($_POST['submit'])) {
 		/*SelectedAccountGroup could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
 		if ($_POST['SelectedAccountGroup']!==$_POST['GroupName']) {
 
-			DB_IgnoreForeignKeys($db);
+			DB_IgnoreForeignKeys();
 
 			$sql = "UPDATE chartmaster
 					SET group_='" . $_POST['GroupName'] . "'
@@ -159,7 +159,7 @@ if (isset($_POST['submit'])) {
 
 			$result = DB_query($sql, $ErrMsg, $DbgMsg);
 
-			DB_ReinstateForeignKeys($db);
+			DB_ReinstateForeignKeys();
 		}
 
 		$sql = "UPDATE accountgroups SET groupname='" . $_POST['GroupName'] . "',

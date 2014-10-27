@@ -203,7 +203,7 @@ if (isset($_POST['ProcessCustomerChange'])){
 	$ErrMsg = _('The SQL to update contract header records failed');
 	$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
 
-	$result = DB_IgnoreForeignKeys($db);
+	$result = DB_IgnoreForeignKeys();
 
 	prnMsg(_('Deleting the old customer branch records from the CustBranch table'),'info');
 	$sql = "DELETE FROM custbranch WHERE debtorno='" . $_POST['OldDebtorNo'] . "'";
@@ -219,7 +219,7 @@ if (isset($_POST['ProcessCustomerChange'])){
 
 
 	$result = DB_Txn_Commit();
-	$result = DB_ReinstateForeignKeys($db);
+	$result = DB_ReinstateForeignKeys();
 
 }
 

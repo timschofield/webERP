@@ -139,7 +139,7 @@ function DB_show_fields($TableName,&$Conn){
 		Return $Result;
 	}
 }
-function DB_Maintenance($Conn){
+function DB_Maintenance(){
 
 	prnMsg(_('The system has just run the regular database administration and optimisation routine'),'info');
 

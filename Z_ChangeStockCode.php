@@ -51,7 +51,7 @@ if (isset($_POST['ProcessStockChange'])){
 
 	if ($InputError ==0){ // no input errors
 
-		DB_IgnoreForeignKeys($db);
+		DB_IgnoreForeignKeys();
 		$result = DB_Txn_Begin();
 		echo '<br />' . _('Adding the new stock master record');
 		$sql = "INSERT INTO stockmaster (stockid,
@@ -177,7 +177,7 @@ if (isset($_POST['ProcessStockChange'])){
 		ChangeFieldInTable("offers", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
 		ChangeFieldInTable("tenderitems", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
 
-		DB_ReinstateForeignKeys($db);
+		DB_ReinstateForeignKeys();
 
 		$result = DB_Txn_Commit();
 
