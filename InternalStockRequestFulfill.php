@@ -42,7 +42,7 @@ if (isset($_POST['UpdateAll'])) {
 			$PeriodNo = GetPeriod (Date($_SESSION['DefaultDateFormat']), $db);
 			$SQLAdjustmentDate = FormatDateForSQL(Date($_SESSION['DefaultDateFormat']));
 
-			$Result = DB_Txn_Begin($db);
+			$Result = DB_Txn_Begin();
 
 			// Need to get the current location quantity will need it later for the stock movement
 			$SQL="SELECT locstock.quantity
@@ -166,7 +166,7 @@ if (isset($_POST['UpdateAll'])) {
 					$Result = DB_query($SQL, $ErrMsg, $DbgMsg,true);
 				}
 
-				$Result = DB_Txn_Commit($db);
+				$Result = DB_Txn_Commit();
 
 				$ConfirmationText = _('An internal stock request for'). ' ' . $StockID . ' ' . _('has been fulfilled from location').' ' . $Location .' '. _('for a quantity of') . ' ' . locale_number_format($Quantity, $DecimalPlaces ) ;
 				prnMsg( $ConfirmationText,'success');

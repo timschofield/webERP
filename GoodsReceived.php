@@ -386,7 +386,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 
 /* *********************** BEGIN SQL TRANSACTIONS *********************** */
 
-	$Result = DB_Txn_Begin($db);
+	$Result = DB_Txn_Begin();
 /*Now Get the next GRN - function in SQL_CommonFunctions*/
 	$GRN = GetNextTransNo(25, $db);
 
@@ -730,7 +730,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 		EnsureGLEntriesBalance(25, $GRN,$db);
 	}
 
-	$Result = DB_Txn_Commit($db);
+	$Result = DB_Txn_Commit();
 	$PONo = $_SESSION['PO'.$identifier]->OrderNo;
 	unset($_SESSION['PO'.$identifier]->LineItems);
 	unset($_SESSION['PO'.$identifier]);

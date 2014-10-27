@@ -53,7 +53,7 @@ if (isset($_POST['PostExchangeDifference']) AND is_numeric(filter_number_format(
 		/*Post the exchange difference to the last day of the month prior to current date*/
 		$PostingDate = Date($_SESSION['DefaultDateFormat'],mktime(0,0,0, Date('m'), 0,Date('Y')));
 		$PeriodNo = GetPeriod($PostingDate,$db);
-		$result = DB_Txn_Begin($db);
+		$result = DB_Txn_Begin();
 
 //yet to code the journal
 
@@ -92,7 +92,7 @@ if (isset($_POST['PostExchangeDifference']) AND is_numeric(filter_number_format(
 
 		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
-		$result = DB_Txn_Commit($db);
+		$result = DB_Txn_Commit();
 		prnMsg(_('Exchange difference of') . ' ' . locale_number_format($ExchangeDifference,$_SESSION['CompanyRecord']['decimalplaces']) . ' ' . _('has been posted'),'success');
 	} //end if the bank statement balance was numeric
 }

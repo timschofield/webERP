@@ -255,7 +255,7 @@ if (isset($_POST['CommitBatch'])){
 
 	$_SESSION['ReceiptBatch']->BatchNo = GetNextTransNo(12,$db);
 	/*Start a transaction to do the whole lot inside */
-	$result = DB_Txn_Begin($db);
+	$result = DB_Txn_Begin();
 
 	$BatchReceiptsTotal = 0; //in functional currency
 	$BatchDiscount = 0; //in functional currency
@@ -572,7 +572,7 @@ if (isset($_POST['CommitBatch'])){
 
 	$ErrMsg = _('Cannot commit the changes');
 	$DbgMsg = _('The SQL that failed was');
-	$result = DB_Txn_Commit($db);
+	$result = DB_Txn_Commit();
 	echo '<br />';
 	prnMsg( _('Receipt batch') . ' ' . $_SESSION['ReceiptBatch']->BatchNo . ' ' . _('has been successfully entered into the database'),'success');
 

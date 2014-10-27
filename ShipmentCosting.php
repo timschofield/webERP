@@ -136,7 +136,7 @@ if (DB_num_rows($LineItemsResult) > 0) {
 
 	if (isset($_POST['Close'])){
 	/*Set up a transaction to buffer all updates or none */
-		$result = DB_Txn_Begin($db);
+		$result = DB_Txn_Begin();
 		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
 	}
 
@@ -697,7 +697,7 @@ if ( isset($_POST['Close']) ){ /* OK do the shipment close journals */
 							TRUE);
 
 	$result = DB_query("UPDATE shipments SET closed=1 WHERE shiptref='" .$_GET['SelectedShipment']. "'",_('Could not update the shipment to closed'),'',TRUE);
-	$result = DB_Txn_Commit($db);
+	$result = DB_Txn_Commit();
 
 	echo '<br /><br />';
 	prnMsg( _('Shipment'). ' ' . $_GET['SelectedShipment'] . ' ' . _('has been closed') );

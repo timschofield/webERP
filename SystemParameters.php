@@ -335,11 +335,11 @@ if (isset($_POST['submit'])) {
 		}
 		$ErrMsg =  _('The system configuration could not be updated because');
 		if (sizeof($sql) > 1 ) {
-			$result = DB_Txn_Begin($db);
+			$result = DB_Txn_Begin();
 			foreach ($sql as $line) {
 				$result = DB_query($line,$ErrMsg);
 			}
-			$result = DB_Txn_Commit($db);
+			$result = DB_Txn_Commit();
 		} elseif(sizeof($sql)==1) {
 			$result = DB_query($sql,$ErrMsg);
 		}

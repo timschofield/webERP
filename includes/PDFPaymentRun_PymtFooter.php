@@ -60,7 +60,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 		if ($debug==1){
 			prnMsg(_('The SQL that failed was') . ' ' . $SQL,'error');
 		}
-		$ProcessResult = DB_Txn_Rollback($db);
+		$ProcessResult = DB_Txn_Rollback();
 		include('footer.inc');
 		exit;
 	}
@@ -90,7 +90,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 			if ($debug==1){
 				prnMsg(_('The SQL that failed was') . $SQL,'error');
 			}
-			$ProcessResult = DB_Txn_Rollback($db);
+			$ProcessResult = DB_Txn_Rollback();
 			include('footer.inc');
 			exit;
 		}
@@ -120,7 +120,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 		if ($debug==1){
 			prnMsg(_('The SQL that failed was') . ' ' . $SQL,'error');
 		}
-		$ProcessResult = DB_Txn_Rollback($db);
+		$ProcessResult = DB_Txn_Rollback();
 		include('footer.inc');
 		exit;
 	}
@@ -157,7 +157,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 			if ($debug==1){
 				prnMsg(_('The SQL that failed was') . ':<br />' . $SQL, 'error');
 			}
-			$ProcessResult = DB_Txn_Rollback($db);
+			$ProcessResult = DB_Txn_Rollback();
 			include('footer.inc');
 			exit;
 		}
@@ -188,7 +188,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 			if ($debug==1){
 				prnMsg(_('The SQL that failed was') . ':<BR>' . $SQL,'error');
 			}
-			$ProcessResult = DB_Txn_Rollback($db);
+			$ProcessResult = DB_Txn_Rollback();
 			include('footer.inc');
 			exit;
 		}
@@ -219,7 +219,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 				if ($debug==1){
 					prnMsg(_('The SQL that failed was: ') . '<br />' . $SQL,'error');
 				}
-				$ProcessResult = DB_Txn_Rollback($db);
+				$ProcessResult = DB_Txn_Rollback();
 				include('footer.inc');
 				exit;
 			}

@@ -342,7 +342,7 @@ function ConvertToSQLDate($DateEntry) {
 		$ReceiptExRate = $CustCurrRow['rate']/$BankActRow['rate'];
 		$FunctionalExRate = $BankActRow['rate'];
 
-		DB_Txn_Begin($db);
+		DB_Txn_Begin();
 
 		$ReceiptNo = GetNextTransNo(12,$db);
 		$PeriodNo = GetCurrentPeriod($db);
@@ -463,11 +463,11 @@ function ConvertToSQLDate($DateEntry) {
 
 
 		if (sizeof($Errors)==0) {
-			$Result = DB_Txn_Commit($db);
+			$Result = DB_Txn_Commit();
 			$Errors[0]=0;
 			$Errors[1]=$ReceiptNo;
 		} else {
-			$Result = DB_Txn_Rollback($db);
+			$Result = DB_Txn_Rollback();
 		}
 		return $Errors;
 	}
@@ -547,7 +547,7 @@ function ConvertToSQLDate($DateEntry) {
 		$DispTaxProvinceID = $myrow[0];
 
 	/*Start an SQL transaction */
-		$result = DB_Txn_Begin($db);
+		$result = DB_Txn_Begin();
 	/*Now Get the next credit note number - function in SQL_CommonFunctions*/
 		$CreditNoteNo = GetNextTransNo(11, $db);
 		$PeriodNo = GetCurrentPeriod($db);
@@ -1160,11 +1160,11 @@ function ConvertToSQLDate($DateEntry) {
 		}
 
 		if (sizeof($Errors)==0) {
-			$Result = DB_Txn_Commit($db);
+			$Result = DB_Txn_Commit();
 			$Errors[0]=0;
 			$Errors[1]=$CreditNoteNo;
 		} else {
-			$Result = DB_Txn_Rollback($db);
+			$Result = DB_Txn_Rollback();
 		}
 		return $Errors;
 	} /*End of CreateCreditNote method */
@@ -1253,7 +1253,7 @@ function ConvertToSQLDate($DateEntry) {
 			$FieldValues.='"'.$value.'", ';
 		}
 		if (sizeof($Errors)==0) {
-			$result = DB_Txn_Begin($db);
+			$result = DB_Txn_Begin();
 			$sql = "INSERT INTO debtortrans (" . mb_substr($FieldNames,0,-2) .")
 									VALUES ('" . mb_substr($FieldValues,0,-2) ."') ";
 			$result = DB_query($sql);
@@ -1287,7 +1287,7 @@ function ConvertToSQLDate($DateEntry) {
 											'" . $InvoiceDetails['jobref'] . "',
 											1)";
 			$result = api_DB_query($sql);
-			$result= DB_Txn_Commit($db);
+			$result= DB_Txn_Commit();
 			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
@@ -1369,7 +1369,7 @@ function ConvertToSQLDate($DateEntry) {
 					$AllocateAmount = $OSInvRow['outstanding'];
 				}
 
-				DB_Txn_Begin($db);
+				DB_Txn_Begin();
 				/*Now insert the allocation records */
 				$SQL = "INSERT INTO custallocns (amt,
 												datealloc,
@@ -1419,7 +1419,7 @@ function ConvertToSQLDate($DateEntry) {
 			}
 			$LeftToAllocate = $LeftToAllocRow['lefttoalloc'];
 
-			DB_Txn_Begin($db);
+			DB_Txn_Begin();
 			/* there could be several receipts to allocate against ... loop through until $LefToAllocate is exhausted */
 			while ($OSCreditRow = DB_fetch_array($Result)){
 
@@ -1457,10 +1457,10 @@ function ConvertToSQLDate($DateEntry) {
 			} //end loop around potential positive receipts not fully allocated already
 		}
 		if (sizeof($Errors)==0) {
-			$Result = DB_Txn_Commit($db);
+			$Result = DB_Txn_Commit();
 			$Errors[0]=0;
 		} else {
-			$Result = DB_Txn_Rollback($db);
+			$Result = DB_Txn_Rollback();
 		}
 		return $Errors;
 
@@ -1551,7 +1551,7 @@ function ConvertToSQLDate($DateEntry) {
 			$FieldValues.='"'.$value.'", ';
 		}
 		if (sizeof($Errors)==0) {
-			$result = DB_Txn_Begin($db);
+			$result = DB_Txn_Begin();
 			$sql = "INSERT INTO debtortrans (" . mb_substr($FieldNames,0,-2) . ")
 						VALUES ('".mb_substr($FieldValues,0,-2) ."') ";
 			$result = DB_query($sql);
@@ -1583,7 +1583,7 @@ function ConvertToSQLDate($DateEntry) {
 											0,
 											'" . $CreditDetails['jobref'] ."')";
 			$result = DB_query($sql);
-			$result= DB_Txn_Commit($db);
+			$result= DB_Txn_Commit();
 			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {

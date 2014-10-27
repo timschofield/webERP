@@ -65,7 +65,7 @@ if(isset($_POST['ProcessTransfer'])){
 
 		foreach ($_SESSION['Transfer']->TransferItem AS $TrfLine) {
 			if ($TrfLine->Quantity >=0){
-				$Result = DB_Txn_Begin($db);
+				$Result = DB_Txn_Begin();
 
 				/* Need to get the current location quantity will need it later for the stock movement */
 				$SQL="SELECT locstock.quantity
@@ -358,7 +358,7 @@ if(isset($_POST['ProcessTransfer'])){
 		} /*end of foreach TransferItem */
 
 		$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Unable to COMMIT the Stock Transfer transaction');
-		DB_Txn_Commit($db);
+		DB_Txn_Commit();
 
 		unset($_SESSION['Transfer']->LineItem);
 		unset($_SESSION['Transfer']);

@@ -190,7 +190,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 	if ($InputError==false){
 /************************ BEGIN SQL TRANSACTIONS ************************/
 
-		$Result = DB_Txn_Begin($db);
+		$Result = DB_Txn_Begin();
 		/*Now Get the next WOReceipt transaction type 26 - function in SQL_CommonFunctions*/
 		$WOReceiptNo = GetNextTransNo(26, $db);
 
@@ -731,7 +731,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 									true);
 
 
-		$Result = DB_Txn_Commit($db);
+		$Result = DB_Txn_Commit();
 
 		prnMsg(_('The receipt of') . ' ' . $QuantityReceived . ' ' . $WORow['units'] . ' ' . _('of')  . ' ' . $_POST['StockID'] . ' - ' . $WORow['description'] . ' ' . _('against work order') . ' '. $_POST['WO'] . ' ' . _('has been processed'),'info');
 		echo '<a href="' . $RootPath . '/SelectWorkOrder.php">' . _('Select a different work order for receiving finished stock against'). '</a>';

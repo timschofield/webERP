@@ -52,7 +52,7 @@ if (isset($_POST['ProcessStockChange'])){
 	if ($InputError ==0){ // no input errors
 
 		DB_IgnoreForeignKeys($db);
-		$result = DB_Txn_Begin($db);
+		$result = DB_Txn_Begin();
 		echo '<br />' . _('Adding the new stock master record');
 		$sql = "INSERT INTO stockmaster (stockid,
 										categoryid,
@@ -179,7 +179,7 @@ if (isset($_POST['ProcessStockChange'])){
 
 		DB_ReinstateForeignKeys($db);
 
-		$result = DB_Txn_Commit($db);
+		$result = DB_Txn_Commit();
 
 		echo '<br />' . _('Deleting the old stock master record');
 		$sql = "DELETE FROM stockmaster WHERE stockid='" . $_POST['OldStockID'] . "'";

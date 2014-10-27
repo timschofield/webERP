@@ -189,7 +189,7 @@ if(isset($_POST['Submit']) AND $InputError==False){
 
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('Unable to BEGIN Location Transfer transaction');
 
-	DB_Txn_Begin($db);
+	DB_Txn_Begin();
 
 	for ($i=0;$i < $_POST['LinesCounter'];$i++){
 
@@ -216,7 +216,7 @@ if(isset($_POST['Submit']) AND $InputError==False){
 		}
 	}
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('Unable to COMMIT Location Transfer transaction');
-	DB_Txn_Commit($db);
+	DB_Txn_Commit();
 
 	prnMsg( _('The inventory transfer records have been created successfully'),'success');
 	echo '<p><a href="'.$RootPath.'/PDFStockLocTransfer.php?TransferNo=' . $_POST['Trf_ID'] . '">' .  _('Print the Transfer Docket'). '</a></p>';

@@ -60,7 +60,7 @@ foreach ($_POST as $key => $value) {
 }
 
 if (isset($_POST['Submit'])) {
-	DB_Txn_Begin($db);
+	DB_Txn_Begin();
 	$InputError=0;
 	if ($_SESSION['Request']->Department=='') {
 		prnMsg( _('You must select a Department for the request'), 'error');
@@ -127,7 +127,7 @@ if (isset($_POST['Submit'])) {
 		}
 
 	}
-	DB_Txn_Commit($db);
+	DB_Txn_Commit();
 	prnMsg( _('The internal stock request has been entered and now needs to be authorised'), 'success');
 	echo '<br /><div class="centre"><a href="'. htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?New=Yes">' . _('Create another request') . '</a></div>';
 	include('includes/footer.inc');

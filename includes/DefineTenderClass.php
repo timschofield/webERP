@@ -147,7 +147,7 @@ Class Tender {
 										'" . $LineItem->Units . "')";
 			}
 		}
-		DB_Txn_Begin($db);
+		DB_Txn_Begin();
 		$result=DB_query($HeaderSQL, '', '', True);
 		foreach ($SuppliersSQL as $sql) {
 			$result=DB_query($sql, '', '', True);
@@ -155,7 +155,7 @@ Class Tender {
 		foreach ($ItemsSQL as $sql) {
 			$result=DB_query($sql, '', '', True);
 		}
-		DB_Txn_Commit($db);
+		DB_Txn_Commit();
 	}
 
 	function add_item_to_tender(	$LineNo,

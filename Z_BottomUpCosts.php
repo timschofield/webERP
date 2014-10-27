@@ -38,9 +38,9 @@ if (isset($Run)) { //start bom processing
 
 	if ($inputerror == 1) { //exited loop with errors so rollback
 		prnMsg(_('Failed on item') . ' ' . $item['component']. ' ' . _('Cost update has been rolled back'),'error');
-		DB_Txn_Rollback($db);
+		DB_Txn_Rollback();
 	} else { //all good so commit data transaction
-		DB_Txn_Commit($db);
+		DB_Txn_Commit();
 		prnMsg( _('All cost updates committed to the database.'),'success');
 	}
 

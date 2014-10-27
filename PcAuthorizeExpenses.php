@@ -141,7 +141,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 			//build narrative
 			$Narrative= _('PettyCash') . ' - '. $myrow['tabcode'] . ' - ' . $myrow['codeexpense'] . ' - ' . DB_escape_string($myrow['notes']) . ' - ' . $myrow['receipt'];
 			//insert to gltrans
-			DB_Txn_Begin($db);
+			DB_Txn_Begin();
 
 			$sqlFrom="INSERT INTO `gltrans` (`counterindex`,
 											`type`,
@@ -232,7 +232,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 					posted = 1
 					WHERE counterindex = '".$myrow['counterindex']."'";
 			$resultupdate = DB_query($sql, '', '', true);
-			DB_Txn_Commit($db);
+			DB_Txn_Commit();
 		}
 
 		if ($k==1){

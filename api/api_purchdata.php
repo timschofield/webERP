@@ -85,9 +85,9 @@
 		if (sizeof($Errors)==0) {
 			$sql = "INSERT INTO purchdata (".mb_substr($FieldNames,0,-2).")
 					VALUES ('" . mb_substr($FieldValues,0,-2). "') ";
-			DB_Txn_Begin($db);
+			DB_Txn_Begin();
 			$result = DB_Query($sql, $db);
-			DB_Txn_Commit($db);
+			DB_Txn_Commit();
 			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {

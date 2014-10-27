@@ -272,7 +272,7 @@ if (isset($_POST['submit'])) {
 				$Errors[$i] = 'DuplicateStockID';
 				//exit;
 			} else {
-    			DB_Txn_Begin($db);
+    			DB_Txn_Begin();
 				$sql = "INSERT INTO stockmaster (stockid,
 												description,
 												longdescription,
@@ -367,7 +367,7 @@ if (isset($_POST['submit'])) {
 					$ErrMsg =  _('The locations for the item') . ' ' . $_POST['StockID'] .  ' ' . _('could not be added because');
 					$DbgMsg = _('NB Locations records can be added by opening the utility page') . ' <i>Z_MakeStockLocns.php</i> ' . _('The SQL that was used to add the location records that failed was');
 					$InsResult = DB_query($sql,$ErrMsg,$DbgMsg);
-                    DB_Txn_Commit($db);
+                    DB_Txn_Commit();
                     //check for any purchase data
                     $sql = "SELECT purchdata.supplierno,
                                 suppliers.suppname,
@@ -485,7 +485,7 @@ if (isset($_POST['submit'])) {
                         $OldRow = DB_fetch_array($OldResult);
 
                     //now update cloned item costs
-                        $Result = DB_Txn_Begin($db);
+                        $Result = DB_Txn_Begin();
                         $SQL = "UPDATE stockmaster SET	materialcost='" . $OldRow['materialcost'] . "',
 										labourcost     ='" . $OldRow['labourcost'] . "',
 										overheadcost   ='" . $OldRow['overheadcost'] . "',
@@ -495,7 +495,7 @@ if (isset($_POST['submit'])) {
                         $ErrMsg = _('The cost details for the cloned stock item could not be updated because');
 		                $DbgMsg = _('The SQL that failed was');
 		                $Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-		                $Result = DB_Txn_Commit($db);
+		                $Result = DB_Txn_Commit();
 
                     //finish up
 					if (DB_error_no() ==0) {

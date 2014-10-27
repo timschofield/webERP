@@ -298,7 +298,7 @@ if (isset($NewItem) AND isset($_POST['WO'])){
 			$EOQ=1;
 		}
 
-		$Result = DB_Txn_Begin($db);
+		$Result = DB_Txn_Begin();
 
 		// insert parent item info
 		$SQL = "INSERT INTO woitems (wo,
@@ -317,7 +317,7 @@ if (isset($NewItem) AND isset($_POST['WO'])){
 		//Recursively insert real component requirements - see includes/SQL_CommonFunctions.in for function WoRealRequirements
 		WoRealRequirements($db, $_POST['WO'], $_POST['StockLocation'], $NewItem);
 
-		$result = DB_Txn_Commit($db);
+		$result = DB_Txn_Commit();
 
 		unset($NewItem);
 	} //end if there were no input errors
@@ -445,7 +445,7 @@ if (isset($_POST['submit']) OR isset($_POST['Search'])) { //The update button ha
 	}
 
 	if ($CancelDelete==false) { //ie all tests proved ok to delete
-		DB_Txn_Begin($db);
+		DB_Txn_Begin();
 		$ErrMsg = _('The work order could not be deleted');
 		$DbgMsg = _('The SQL used to delete the work order was');
 		//delete the worequirements
@@ -463,7 +463,7 @@ if (isset($_POST['submit']) OR isset($_POST['Search'])) { //The update button ha
 		$ErrMsg=_('The work order could not be deleted');
 		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
-		DB_Txn_Commit($db);
+		DB_Txn_Commit();
 		prnMsg(_('The work order has been cancelled'),'success');
 
 

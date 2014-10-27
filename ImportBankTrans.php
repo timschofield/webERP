@@ -161,7 +161,7 @@ if (isset($_POST['ProcessBankTrans'])){
 		*/
 
 		for($i=1;$i<=count($_SESSION['Trans']);$i++){
-			DB_Txn_Begin($db);
+			DB_Txn_Begin();
 			if ($_SESSION['Trans'][$i]->DebtorNo!='' OR
 				$_SESSION['Trans'][$i]->SupplierID!='' OR
 				$_SESSION['Trans'][$i]->GLTotal == $_SESSION['Trans'][$i]->Amount){
@@ -452,7 +452,7 @@ if (isset($_POST['ProcessBankTrans'])){
 								_('The SQL that failed to insert the bank transaction was'),
 								true);
 			}
-			DB_Txn_Commit($db); // complete this bank transactions posting
+			DB_Txn_Commit(); // complete this bank transactions posting
 		} //end loop around the transactions
 		echo '<p />';
 		prnMsg(_('Completed the importing of analysed bank transactions'),'info');

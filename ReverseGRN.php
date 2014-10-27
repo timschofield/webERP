@@ -115,7 +115,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 
 /*Start an SQL transaction */
 
-	$Result = DB_Txn_Begin($db);
+	$Result = DB_Txn_Begin();
 
 	$PeriodNo = GetPeriod(ConvertSQLDate($GRN['deliverydate']), $db);
 
@@ -332,7 +332,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 	 } /* end of if GL and stock integrated*/
 
 
-	$Result = DB_Txn_Commit($db);
+	$Result = DB_Txn_Commit();
 
 	echo '<br />' . _('GRN number') . ' ' . $_GET['GRNNo'] . ' ' . _('for') . ' ' . $QtyToReverse . ' x ' . $GRN['itemcode'] . ' - ' . $GRN['itemdescription'] . ' ' . _('has been reversed') . '<br />';
 	unset($_GET['GRNNo']);  // to ensure it cant be done again!!

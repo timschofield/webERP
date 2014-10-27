@@ -319,7 +319,7 @@ If (isset($_POST['Close'])) {
 	$TotalVariance = $TotalUsageVar + $TotalCostVar;
 	$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
 	$WOCloseNo = GetNextTransNo(29, $db);
-	$TransResult = DB_Txn_Begin($db);
+	$TransResult = DB_Txn_Begin();
 
 	while ($WORow = DB_fetch_array($WOItemsResult)){
 		if ($TotalStdValueRecd==0){
@@ -522,7 +522,7 @@ If (isset($_POST['Close'])) {
 									_('Could not delete the predefined work order serial numbers'),
 									_('The SQL used to delete the predefined serial numbers was:'),
 									true);
-	$TransResult = DB_Txn_Commit($db);
+	$TransResult = DB_Txn_Commit();
 	if ($_SESSION['CompanyRecord']['gllink_stock']==1){
 		if ($_SESSION['WeightedAverageCosting']==1){
 			prnMsg(_('The item cost as calculated from the work order has been applied against the weighted average cost and the necessary GL journals created to update stock as a result of closing this work order'),'success');

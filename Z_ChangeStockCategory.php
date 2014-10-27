@@ -40,7 +40,7 @@ if (isset($_POST['ProcessStockChange'])) {
 		include ('includes/footer.inc');
 		exit;
 	}
-	$result = DB_Txn_Begin($db);
+	$result = DB_Txn_Begin();
 	echo '<br />' . _('Adding the new stock Category record');
 	$sql = "INSERT INTO stockcategory (categoryid,
 					categorydescription,
@@ -92,7 +92,7 @@ if (isset($_POST['ProcessStockChange'])) {
 	
 	$sql = 'SET FOREIGN_KEY_CHECKS=1';
 	$result = DB_query($sql, $ErrMsg, $DbgMsg, true);
-	$result = DB_Txn_Commit($db);
+	$result = DB_Txn_Commit();
 	echo '<br />' . _('Deleting the old stock category record');
 	$sql = "DELETE FROM stockcategory WHERE categoryid='" . $_POST['OldStockCategory'] . "'";
 	$ErrMsg = _('The SQL to delete the old stock category record failed');

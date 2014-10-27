@@ -319,7 +319,7 @@ if (isset($_POST['CommitBatch'])){
 
 		//Start a transaction to do the whole lot inside
 
-		$result = DB_Txn_Begin($db);
+		$result = DB_Txn_Begin();
 
 
 		if ($_SESSION['PaymentDetail' . $identifier]->SupplierID=='') {
@@ -589,7 +589,7 @@ if (isset($_POST['CommitBatch'])){
 		$DbgMsg = _('Cannot insert a bank transaction using the SQL');
 		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
-		DB_Txn_Commit($db);
+		DB_Txn_Commit();
 		prnMsg(_('Payment') . ' ' . $TransNo . ' ' . _('has been successfully entered'),'success');
 
 		$LastSupplier = ($_SESSION['PaymentDetail' . $identifier]->SupplierID);

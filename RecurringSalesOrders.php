@@ -189,7 +189,7 @@ if (isset($_POST['DeleteRecurringOrder'])){
 	exit;
 }
 If (isset($_POST['Process'])) {
-	$Result = DB_Txn_Begin($db);
+	$Result = DB_Txn_Begin();
 	$InputErrors =0;
 	If (!Is_Date($_POST['StartDate'])){
 		$InputErrors =1;
@@ -290,7 +290,7 @@ If (isset($_POST['Process'])) {
 
 			} /* inserted line items into sales order details */
 
-			$result = DB_Txn_Commit($db);
+			$result = DB_Txn_Commit();
 			prnmsg(_('The new recurring order template has been added'),'success');
 
 		} else { /* must be updating an existing recurring order */

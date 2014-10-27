@@ -226,9 +226,9 @@ function BomMaterialCost($Parent, $db) {
 	$result = DB_query($SQL);
 	$MyRow = DB_fetch_row($result);
 	$MaterialCost = $MyRow[0];
-	$Result = DB_Txn_Begin($db);
+	$Result = DB_Txn_Begin();
 	ItemCostUpdateGL($db, $Parent, $MaterialCost, $OldCost, $QOH);
-	$Result = DB_Txn_Commit($db);
+	$Result = DB_Txn_Commit();
 	return $MaterialCost;
 }
 

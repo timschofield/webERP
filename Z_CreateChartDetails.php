@@ -60,7 +60,7 @@ if(DB_num_rows($ChartDetailsNotSetUpResult)>0){
 			ORDER BY period";
 		$ChartDetails = DB_query($sql);
 
-		DB_Txn_Begin($db);
+		DB_Txn_Begin();
 		$BFwd = '';
 		$BFwdBudget ='';
 		$CFwd=0;
@@ -81,7 +81,7 @@ if(DB_num_rows($ChartDetailsNotSetUpResult)>0){
 			}
 		}
 
-		DB_Txn_Commit($db);
+		DB_Txn_Commit();
 
 		DB_free_result($ChartDetailsCFwd);
 	}

@@ -394,7 +394,7 @@ if (isset($_POST['submit'])) {
 
 			if ($InputError == 0){
 
-				DB_Txn_Begin($db);
+				DB_Txn_Begin();
 
 				$sql = "UPDATE stockmaster
 						SET longdescription='" . $_POST['LongDescription'] . "',
@@ -564,7 +564,7 @@ if (isset($_POST['submit'])) {
 						$result = DB_query($SQL, $ErrMsg, $DbgMsg,true);
 					}
 				} /* end if the stock category changed and forced a change in WIP account */
-				DB_Txn_Commit($db);
+				DB_Txn_Commit();
 				prnMsg( _('Stock Item') . ' ' . $StockID . ' ' . _('has been updated'), 'success');
 				echo '<br />';
 			}
@@ -581,7 +581,7 @@ if (isset($_POST['submit'])) {
 				$Errors[$i] = 'StockID';
 				$i++;
 			} else {
-				DB_Txn_Begin($db);
+				DB_Txn_Begin();
 				$sql = "INSERT INTO stockmaster (stockid,
 												description,
 												longdescription,
@@ -675,7 +675,7 @@ if (isset($_POST['submit'])) {
 					$ErrMsg =  _('The locations for the item') . ' ' . $StockID .  ' ' . _('could not be added because');
 					$DbgMsg = _('NB Locations records can be added by opening the utility page') . ' <i>Z_MakeStockLocns.php</i> ' . _('The SQL that was used to add the location records that failed was');
 					$InsResult = DB_query($sql,$ErrMsg,$DbgMsg,true);
-					DB_Txn_Commit($db);
+					DB_Txn_Commit();
 					if (DB_error_no() ==0) {
 						prnMsg( _('New Item') .' ' . '<a href="SelectProduct.php?StockID=' . $StockID . '">' . $StockID . '</a> '. _('has been added to the database') .
 							'<br />' . _('NB: The item cost and pricing must also be setup') .
@@ -799,7 +799,7 @@ if (isset($_POST['submit'])) {
 
 	}
 	if ($CancelDelete==0) {
-		$result = DB_Txn_Begin($db);
+		$result = DB_Txn_Begin();
 
 			/*Deletes LocStock records*/
 			$sql ="DELETE FROM locstock WHERE stockid='".$StockID."'";
@@ -822,7 +822,7 @@ if (isset($_POST['submit'])) {
 			$sql="DELETE FROM stockmaster WHERE stockid='".$StockID."'";
 			$result=DB_query($sql, _('Could not delete the item record'),'',true);
 
-		$result = DB_Txn_Commit($db);
+		$result = DB_Txn_Commit();
 
 		prnMsg(_('Deleted the stock master record for') . ' ' . $StockID . '....' .
 		'<br />. . ' . _('and all the location stock records set up for the part') .

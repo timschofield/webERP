@@ -90,7 +90,7 @@ if (isset($_POST['Submit'])) {
 	if ($InputError!=1){
 		//run the SQL from either of the above possibilites
 		if (is_array($sql)) {
-			$result = DB_Txn_Begin($db);
+			$result = DB_Txn_Begin();
 			$tmpErr = _('Could not update unit of measure');
 			$tmpDbg = _('The sql that failed was') . ':';
 			foreach ($sql as $stmt ) {
@@ -101,9 +101,9 @@ if (isset($_POST['Submit'])) {
 				}
 			}
 			if ($InputError!=1){
-				$result = DB_Txn_Commit($db);
+				$result = DB_Txn_Commit();
 			} else {
-				$result = DB_Txn_Rollback($db);
+				$result = DB_Txn_Rollback();
 			}
 		} else {
 			$result = DB_query($sql);

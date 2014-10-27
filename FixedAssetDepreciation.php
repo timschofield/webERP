@@ -80,7 +80,7 @@ if (Date1GreaterThanDate2($_POST['ProcessDate'],Date($_SESSION['DefaultDateForma
 	$InputError =true;
 }
 if (isset($_POST['CommitDepreciation']) AND $InputError==false){
-	$result = DB_Txn_Begin($db);
+	$result = DB_Txn_Begin();
 	$TransNo = GetNextTransNo(44, $db);
 	$PeriodNo = GetPeriod($_POST['ProcessDate'],$db);
 }
@@ -266,7 +266,7 @@ echo '</table>
 		<br />';
 
 if (isset($_POST['CommitDepreciation']) AND $InputError==false){
-	$result = DB_Txn_Commit($db);
+	$result = DB_Txn_Commit();
 	prnMsg(_('Depreciation') . ' ' . $TransNo . ' ' . _('has been successfully entered'),'success');
 	unset($_POST['ProcessDate']);
 	echo '<br /><a href="index.php">' ._('Return to main menu') . '</a>';

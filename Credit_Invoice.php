@@ -538,7 +538,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 /*Start an SQL transaction */
 
 
-	$Result = DB_Txn_Begin($db);
+	$Result = DB_Txn_Begin();
 
 	$DefaultDispatchDate= FormatDateForSQL($DefaultDispatchDate);
 
@@ -1472,7 +1472,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 
 	} /*end of if Sales and GL integrated */
 
-	$Result = DB_Txn_Commit($db);
+	$Result = DB_Txn_Commit();
 
 	unset($_SESSION['CreditItems' . $identifier]->LineItems);
 	unset($_SESSION['CreditItems' . $identifier]);

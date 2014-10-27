@@ -1125,7 +1125,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 	 $PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
 
 /*Start an SQL transaction */
-	 DB_Txn_Begin($db);
+	 DB_Txn_Begin();
 
 
 /*Now insert the Credit Note into the DebtorTrans table allocations will have to be done seperately*/
@@ -1988,7 +1988,7 @@ then debit the expense account the stock is to written off to */
 
 	} /*end of if Sales and GL integrated */
 
-	DB_Txn_Commit($db);
+	DB_Txn_Commit();
 
 	 unset($_SESSION['CreditItems'.$identifier]->LineItems);
 	 unset($_SESSION['CreditItems'.$identifier]);

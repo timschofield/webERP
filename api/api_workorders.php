@@ -243,11 +243,11 @@
 			$itemsql = 'INSERT INTO woitems ('.mb_substr($ItemFieldNames,0,-2).') '.
 				'VALUES ('.mb_substr($ItemFieldValues,0,-2).') ';
 			$systypessql = 'UPDATE systypes set typeno='.GetNextTransactionNo(40, $db).' where typeid=40';
-			DB_Txn_Begin($db);
+			DB_Txn_Begin();
 			$woresult = DB_Query($wosql, $db);
 			$itemresult = DB_Query($itemsql, $db);
 			$systyperesult = DB_Query($systypessql, $db);
-			DB_Txn_Commit($db);
+			DB_Txn_Commit();
 			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
@@ -347,7 +347,7 @@
                               AND loccode='".$Location."' AND serialno='".$Batch."'";
 			$costsql = "UPDATE workorders SET costissued=costissued+".$cost." WHERE wo='".$WONumber . "'";
 
-			DB_Txn_Begin($db);
+			DB_Txn_Begin();
 			DB_query($stockmovesql);
 			DB_query($locstocksql);
 			DB_query($glupdatesql1);
@@ -357,7 +357,7 @@
 			if ($Batch!='') {
 				DB_Query($batchsql, $db);
 			}
-			DB_Txn_Commit($db);
+			DB_Txn_Commit();
 			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 				return $Errors;
@@ -449,13 +449,13 @@
                                                '".$stockact.','.$cost*-$Quantity. "',
                                                '".$StockID.' x '.$Quantity.' @ '.$cost."')";
 			$systypessql = "UPDATE systypes set typeno='".$TransactionNo."' where typeid=26";
-			DB_Txn_Begin($db);
+			DB_Txn_Begin();
 			DB_query($stockmovesql);
 			DB_query($locstocksql);
 			DB_query($glupdatesql1);
 			DB_query($glupdatesql2);
 			DB_query($systypessql);
-			DB_Txn_Commit($db);
+			DB_Txn_Commit();
 			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {

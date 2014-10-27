@@ -368,10 +368,10 @@
 		  		'VALUES ('.mb_substr($FieldValues,0,-2).') ';
 			$locsql = "INSERT INTO locstock (loccode,stockid)
 				SELECT locations.loccode,'" . $StockItemDetails['stockid'] . "' FROM locations";
-			DB_Txn_Begin($db);
+			DB_Txn_Begin();
 			$stockresult = DB_Query($stocksql, $db);
 			$locresult = DB_Query($locsql, $db);
-			DB_Txn_Commit($db);
+			DB_Txn_Commit();
 			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
@@ -846,13 +846,13 @@
                         '" .$StockID.' x '.$Quantity.' @ '.$itemdetails['materialcost']."')";
 		$systypessql = "UPDATE systypes set typeno='".GetNextTransactionNo(17, $db)."' where typeid='17'";
 
-		DB_Txn_Begin($db);
+		DB_Txn_Begin();
 		DB_query($stockmovesql);
 		DB_query($locstocksql);
 		DB_query($glupdatesql1);
 		DB_query($glupdatesql2);
 		DB_query($systypessql);
-		DB_Txn_Commit($db);
+		DB_Txn_Commit();
 		if (DB_error_no() != 0) {
 			$Errors[0] = DatabaseUpdateFailed;
 			return $Errors;

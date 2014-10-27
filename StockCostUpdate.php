@@ -64,7 +64,7 @@ if (isset($_POST['UpdateData'])){
 		prnMsg (_('The entered item code does not exist'),'error',_('Non-existent Item'));
 	} elseif ($OldCost != $NewCost){
 
-		$Result = DB_Txn_Begin($db);
+		$Result = DB_Txn_Begin();
 		ItemCostUpdateGL($db, $StockID, $NewCost, $OldCost, $_POST['QOH']);
 
 		$SQL = "UPDATE stockmaster SET	materialcost='" . filter_number_format($_POST['MaterialCost']) . "',
@@ -78,7 +78,7 @@ if (isset($_POST['UpdateData'])){
 		$DbgMsg = _('The SQL that failed was');
 		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
-		$Result = DB_Txn_Commit($db);
+		$Result = DB_Txn_Commit();
 		UpdateCost($db, $StockID); //Update any affected BOMs
 
 	}

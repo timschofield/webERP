@@ -68,7 +68,7 @@ if ($_FILES['SelectedAssetFile']['name']) { //start file processing
 	}
 
 	//start database transaction
-	DB_Txn_Begin($db);
+	DB_Txn_Begin();
 
 	//loop through file rows
 	$Row = 1;
@@ -272,9 +272,9 @@ if ($_FILES['SelectedAssetFile']['name']) { //start file processing
 
 	if ($InputError == 1) { //exited loop with errors so rollback
 		prnMsg(_('Failed on row '. $Row. '. Batch import has been rolled back.'),'error');
-		DB_Txn_Rollback($db);
+		DB_Txn_Rollback();
 	} else { //all good so commit data transaction
-		DB_Txn_Commit($db);
+		DB_Txn_Commit();
 		prnMsg( _('Batch Import of') .' ' . $_FILES['SelectedAssetFile']['name']  . ' '. _('has been completed. All assets in the file have been committed to the database.'),'success');
 	}
 

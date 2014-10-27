@@ -750,7 +750,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 
 /*Start an SQL transaction */
 
-	DB_Txn_Begin($db);
+	DB_Txn_Begin();
 
 	if ($DefaultShipVia != $_SESSION['Items'.$identifier]->ShipVia){
 		$SQL = "UPDATE custbranch
@@ -1630,7 +1630,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 		EnsureGLEntriesBalance(10,$InvoiceNo,$db);
 	} /*end of if Sales and GL integrated */
 
-	DB_Txn_Commit($db);
+	DB_Txn_Commit();
 // *************************************************************************
 //   E N D   O F   I N V O I C E   S Q L   P R O C E S S I N G
 // *************************************************************************

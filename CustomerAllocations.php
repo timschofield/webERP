@@ -83,7 +83,7 @@ if (isset($_POST['UpdateDatabase'])) {
 		//========[ START TRANSACTION ]===========
 		//
 		$Error = '';
-		$Result= DB_Txn_Begin($db);
+		$Result= DB_Txn_Begin();
 		$AllAllocations = 0;
 		foreach ($_SESSION['Alloc']->Allocs as $AllocnItem) {
 			if ($AllocnItem->PrevAllocRecordID != 'NA') {
@@ -197,9 +197,9 @@ if (isset($_POST['UpdateDatabase'])) {
 		//========[ COMMIT TRANSACTION ]===========
 		//
 		if (empty($Error) ) {
-				$Result = DB_Txn_Commit($db);
+				$Result = DB_Txn_Commit();
 		} else {
-				$Result = DB_Txn_Rollback($db);
+				$Result = DB_Txn_Rollback();
 				prnMsg($Error,'error');
 		}
 		unset($_SESSION['Alloc']);

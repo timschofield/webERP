@@ -189,7 +189,7 @@ if ( isset($_POST['EnterTransfer']) ){
 		$PeriodNo = GetPeriod (Date($_SESSION['DefaultDateFormat']), $db);
 		$SQLTransferDate = FormatDateForSQL(Date($_SESSION['DefaultDateFormat']));
 
-		$Result = DB_Txn_Begin($db);
+		$Result = DB_Txn_Begin();
 
 		// Need to get the current location quantity will need it later for the stock movement
 		$SQL="SELECT locstock.quantity
@@ -443,7 +443,7 @@ if ( isset($_POST['EnterTransfer']) ){
 		$DbgMsg = _('The following SQL to update the location stock record was used');
 		$Result = DB_query($SQL,$ErrMsg, $DbgMsg, true);
 
-		$Result = DB_Txn_Commit($db);
+		$Result = DB_Txn_Commit();
 
 		prnMsg(_('An inventory transfer of').' ' . $_SESSION['Transfer']->TransferItem[0]->StockID . ' - ' . $_SESSION['Transfer']->TransferItem[0]->ItemDescription . ' '. _('has been created from').' ' . $_SESSION['Transfer']->StockLocationFrom . ' '. _('to') . ' ' . $_SESSION['Transfer']->StockLocationTo . ' '._('for a quantity of').' ' . $_SESSION['Transfer']->TransferItem[0]->Quantity,'success');
 		echo '<br /><a href="PDFStockTransfer.php?TransferNo='.$TransferNumber.'">' . _('Print Transfer Note') . '</a>';

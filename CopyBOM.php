@@ -30,7 +30,7 @@ if(isset($_POST['Submit'])) {
 		$NewStockID = $_POST['ExStockID'];
 	}
 	if ($InputError==0){
-		$result = DB_Txn_Begin($db);
+		$result = DB_Txn_Begin();
 
 		if($NewOrExisting == 'N') {
 	      /* duplicate rows into stockmaster */
@@ -150,7 +150,7 @@ if(isset($_POST['Submit'])) {
 			$result = DB_query($sql);
 		}
 
-		$result = DB_Txn_Commit($db);
+		$result = DB_Txn_Commit();
 
 		UpdateCost($db, $NewStockID);
 

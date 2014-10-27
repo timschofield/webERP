@@ -667,7 +667,7 @@ then do the updates and inserts to process the credit note entered */
 
 	/*Start an SQL transaction */
 
-		DB_Txn_Begin($db);
+		DB_Txn_Begin();
 
 		/*Get the next transaction number for internal purposes and the period to post GL transactions in based on the credit note date*/
 
@@ -1324,7 +1324,7 @@ then do the updates and inserts to process the credit note entered */
 			$Result = DB_query($SQL,$ErrMsg, $DbgMsg, true);
 		} //end of non-gl fixed asset stuff
 
-		DB_Txn_Commit($db);
+		DB_Txn_Commit();
 
 		prnMsg(_('Supplier credit note number') . ' ' . $CreditNoteNo . ' ' . _('has been processed'),'success');
 		echo '<br /><div class="centre"><a href="' . $RootPath . '/SupplierCredit.php?&SupplierID=' .$_SESSION['SuppTrans']->SupplierID . '">' . _('Enter another Credit Note for this Supplier') . '</a></div>';

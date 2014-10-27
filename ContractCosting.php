@@ -238,7 +238,7 @@ if (isset($_POST['CloseContract']) AND $_SESSION['Contract'.$identifier]->Status
 	$ContractCloseNo = GetNextTransNo( 32  ,$db);
 	$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
 
-	DB_Txn_Begin($db);
+	DB_Txn_Begin();
 
 	$SQL = "INSERT INTO gltrans (type,
 								typeno,
@@ -432,7 +432,7 @@ if (isset($_POST['CloseContract']) AND $_SESSION['Contract'.$identifier]->Status
 		}//end if there was a row returned from the woitems query
 	} //end if the work order was still open (so end of closing it and processing receipt if necessary)
 
-	DB_Txn_Commit($db);
+	DB_Txn_Commit();
 
 	$_SESSION['Contract'.$identifier]->Status=3;
 	prnMsg(_('The contract has been closed. No further charges can be posted against this contract.'),'success');

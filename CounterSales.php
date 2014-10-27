@@ -1069,7 +1069,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 	// *************************************************************************
 	//   S T A R T   O F   I N V O I C E   S Q L   P R O C E S S I N G
 	// *************************************************************************
-		$result = DB_Txn_Begin($db);
+		$result = DB_Txn_Begin();
 	/*First add the order to the database - it only exists in the session currently! */
 		$OrderNo = GetNextTransNo(30, $db);
 		$InvoiceNo = GetNextTransNo(10, $db);
@@ -2034,7 +2034,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 		} //end if $_POST['AmountPaid']!= 0
 
-		DB_Txn_Commit($db);
+		DB_Txn_Commit();
 	// *************************************************************************
 	//   E N D   O F   I N V O I C E   S Q L   P R O C E S S I N G
 	// *************************************************************************

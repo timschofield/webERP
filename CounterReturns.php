@@ -903,7 +903,7 @@ if (isset($_POST['ProcessReturn']) AND $_POST['ProcessReturn'] != ''){
 	// *************************************************************************
 	//   S T A R T   O F   C R E D I T  N O T E   S Q L   P R O C E S S I N G
 	// *************************************************************************
-		$result = DB_Txn_Begin($db);
+		$result = DB_Txn_Begin();
 
 	/*Now Get the next invoice number - GetNextTransNo() function in SQL_CommonFunctions
 	 * GetPeriod() in includes/DateFunctions.inc */
@@ -1585,7 +1585,7 @@ if (isset($_POST['ProcessReturn']) AND $_POST['ProcessReturn'] != ''){
 			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 		} //end if $_POST['AmountPaid']!= 0
 
-		DB_Txn_Commit($db);
+		DB_Txn_Commit();
 	// *************************************************************************
 	//   E N D   O F   C R E D I T  N O T E   S Q L   P R O C E S S I N G
 	// *************************************************************************

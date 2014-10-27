@@ -65,7 +65,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 	$ExRate = $myrow['rate'];
 
 	//start database transaction
-	DB_Txn_Begin($db);
+	DB_Txn_Begin();
 
 	//Total for transactions must come back to zero
 	$TransactionTotal = 0;
@@ -208,9 +208,9 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 
 	if ($InputError == 1) { //exited loop with errors so rollback
 		prnMsg(_('Failed on row') . ' ' . $Row. '. ' . _('Batch import has been rolled back'),'error');
-		DB_Txn_Rollback($db);
+		DB_Txn_Rollback();
 	} else { //all good so commit data transaction
-		DB_Txn_Commit($db);
+		DB_Txn_Commit();
 		prnMsg( _('Batch Import of') .' ' . $FileName  . ' '. _('has been completed. All transactions committed to the database'),'success');
 	}
 

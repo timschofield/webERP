@@ -53,7 +53,7 @@ if (isset($_POST['AddControlledItems'])){
 		if (!is_numeric(filter_number_format($_POST['NumberToAdd']))){
 			prnMsg(_('The quantity of controlled items to add was not numeric - a number is expected'),'error');
 		} else {
-			DB_Txn_Begin($db);
+			DB_Txn_Begin();
 			/*Process the additional controlled items into woserialnos and update the quantity on the work order order in woitems*/
 
 			$InputError = false;
@@ -106,7 +106,7 @@ if (isset($_POST['AddControlledItems'])){
 								$ErrMsg,
 								$DbgMsg,
 								true);
-			DB_Txn_Commit($db);
+			DB_Txn_Commit();
 		}
 	} // end Adding a number of serial numbers automatically
 	  else { //adding just an individual entry
@@ -135,7 +135,7 @@ if (isset($_POST['AddControlledItems'])){
 				prnMsg(_('The serial number or batch reference must be unique to the item. The serial number/batch entered already exists'),'error');
 			}
 			if (!$InputError){
-				DB_Txn_Begin($db);
+				DB_Txn_Begin();
 				$ErrMsg = _('Could not add a new serial number/batch');
 				$result = DB_query("UPDATE woitems
 									SET qtyreqd=qtyreqd+" . filter_number_format($_POST['Quantity']) . "
@@ -158,7 +158,7 @@ if (isset($_POST['AddControlledItems'])){
 				$ErrMsg = _('Unable to add the batch or serial number requested');
 				$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
 
-				DB_Txn_Commit($db);
+				DB_Txn_Commit();
 			}
 	}
 }
@@ -224,7 +224,7 @@ if (isset($_POST['UpdateItems'])){
 	}//end loop around all serial numbers/batches
 	$ErrMsg = _('Could not update serial/batches on the work order');
 	if (sizeof($sql)>0){
-		$result = DB_Txn_Begin($db);
+		$result = DB_Txn_Begin();
 		foreach ($sql as $SQLStatement){
 				$result = DB_query($SQLStatement,$ErrMsg,$DbgMsg,true);
 		}
@@ -234,7 +234,7 @@ if (isset($_POST['UpdateItems'])){
 							$ErrMsg,
 							$DbgMsg,
 							true);
-		$result = DB_Txn_Commit($db);
+		$result = DB_Txn_Commit();
 	}
 
 }

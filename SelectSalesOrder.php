@@ -231,11 +231,11 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 					if ($SupplierID !=''){ //then we have just added a purchase order
 						echo '<br />';
 						prnMsg(_('Purchase Order') . ' ' . $PO_OrderNo . ' ' . _('on') . ' ' . $SupplierID . ' ' . _('has been created'),'success');
-						DB_Txn_Commit($db);
+						DB_Txn_Commit();
 					}
 
 		      /*Starting a new purchase order with a different supplier */
-					$result = DB_Txn_Begin($db);
+					$result = DB_Txn_Begin();
 
 					$PO_OrderNo =  GetNextTransNo(18, $db); //get the next PO number
 
@@ -394,7 +394,7 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 			if ($SupplierID !=''){ //then we have just added a purchase order irrespective of autoauthorise status
 				echo '<br />';
 				prnMsg(_('Purchase Order') . ' ' . $PO_OrderNo . ' ' . _('on') . ' ' . $SupplierID . ' ' . _('has been created'),'success');
-				DB_Txn_Commit($db);
+				DB_Txn_Commit();
 			}
 			$result = DB_query("UPDATE salesorders SET poplaced=1 WHERE " . $OrdersToPlacePOFor);
 		}/*There were items that had purchasing data set up to create POs for */

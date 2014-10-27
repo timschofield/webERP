@@ -60,7 +60,7 @@ function ProcessSupplier($oldCode, $newCode) {
 		return;
 	}
 
-	$result = DB_Txn_Begin($db);
+	$result = DB_Txn_Begin();
 
 	prnMsg(_('Inserting the new supplier record'),'info');
 	$sql = "INSERT INTO suppliers (`supplierid`,
@@ -96,7 +96,7 @@ function ProcessSupplier($oldCode, $newCode) {
 	$ErrMsg = _('The SQL to delete the old supplier record failed');
 	$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
 
-	$result = DB_Txn_Commit($db);
+	$result = DB_Txn_Commit();
 }
 
 function checkSupplierExist($codeSupplier) {

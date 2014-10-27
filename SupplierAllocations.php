@@ -103,7 +103,7 @@ if (isset($_POST['UpdateDatabase'])){
 	/* actions to take having checked that the input is sensible
 	1st set up a transaction on this thread*/
 
-		DB_Txn_Begin($db);
+		DB_Txn_Begin();
 
 		foreach ($_SESSION['Alloc']->Allocs as $AllocnItem) {
 
@@ -246,7 +246,7 @@ if (isset($_POST['UpdateDatabase'])){
 
 	 /* OK Commit the transaction */
 
-		DB_Txn_Commit($db);
+		DB_Txn_Commit();
 
 	/*finally delete the session variables holding all the previous data */
 

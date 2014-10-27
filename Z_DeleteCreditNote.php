@@ -53,7 +53,7 @@ While ($myrow = DB_fetch_array($Result)){
 prnMsg(_('The number of stock movements to be deleted is') . ': ' . DB_num_rows($Result),'info');
 
 
-$Result = DB_Txn_Begin($db); /* commence a database transaction */
+$Result = DB_Txn_Begin(); /* commence a database transaction */
 
 /*Now delete the custallocns */
 
@@ -145,7 +145,7 @@ $ErrMsg = _('SQL to delete the gl transaction records failed with the message');
 $Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 prnMsg(_('Deleted the credit note general ledger transactions').'info');
 
-$result = DB_Txn_Commit($db);
+$result = DB_Txn_Commit();
 prnMsg(_('Credit note number') . ' ' . $_GET['CreditNoteNo'] . ' ' . _('has been completely deleted') . '. ' . _('To ensure the integrity of the general ledger transactions must be reposted from the period the credit note was created'),'info');
 
 include('includes/footer.inc');
