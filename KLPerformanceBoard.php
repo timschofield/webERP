@@ -238,20 +238,20 @@ function AverageCustomerBehaviourByValueInvoice($typereport, $NumDaysA, $db){
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . $typereport . '</th>
-							<th>' . _('Name') . '</th>
-							<th>' . 'IDR/Invoice.'. '</th>
-							<th>' . '# Invoice/Day'. '</th>
-							<th>' . '<='. locale_number_format(AVERAGE_INVOICE_VALUE_01,0) . '</th>
-							<th>' . '<='. locale_number_format(AVERAGE_INVOICE_VALUE_02,0) . '</th>
-							<th>' . '<='. locale_number_format(AVERAGE_INVOICE_VALUE_03,0) . '</th>
-							<th>' . '<='. locale_number_format(AVERAGE_INVOICE_VALUE_04,0) . '</th>
-							<th>' . '<='. locale_number_format(AVERAGE_INVOICE_VALUE_05,0) . '</th>
-							<th>' . '<='. locale_number_format(AVERAGE_INVOICE_VALUE_06,0) . '</th>
-							<th>' . '<='. locale_number_format(AVERAGE_INVOICE_VALUE_07,0) . '</th>
-							<th>' . '<='. locale_number_format(AVERAGE_INVOICE_VALUE_08,0) . '</th>
-							<th>' . '>'. locale_number_format(AVERAGE_INVOICE_VALUE_08,0) . '</th>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . $typereport . '</th>
+							<th class="ascending">' . _('Name') . '</th>
+							<th class="ascending">' . 'IDR/Invoice.'. '</th>
+							<th class="ascending">' . '# Invoice/Day'. '</th>
+							<th class="ascending">' . '<='. locale_number_format(AVERAGE_INVOICE_VALUE_01,0) . '</th>
+							<th class="ascending">' . '<='. locale_number_format(AVERAGE_INVOICE_VALUE_02,0) . '</th>
+							<th class="ascending">' . '<='. locale_number_format(AVERAGE_INVOICE_VALUE_03,0) . '</th>
+							<th class="ascending">' . '<='. locale_number_format(AVERAGE_INVOICE_VALUE_04,0) . '</th>
+							<th class="ascending">' . '<='. locale_number_format(AVERAGE_INVOICE_VALUE_05,0) . '</th>
+							<th class="ascending">' . '<='. locale_number_format(AVERAGE_INVOICE_VALUE_06,0) . '</th>
+							<th class="ascending">' . '<='. locale_number_format(AVERAGE_INVOICE_VALUE_07,0) . '</th>
+							<th class="ascending">' . '<='. locale_number_format(AVERAGE_INVOICE_VALUE_08,0) . '</th>
+							<th class="ascending">' . '>'. locale_number_format(AVERAGE_INVOICE_VALUE_08,0) . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -543,12 +543,12 @@ function YearDifferenceSales($typereport, $NumDaysA, $db){
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . $typereport . '</th>
-							<th>' . _('Name') . '</th>
-							<th>' . $NumDaysA . _(' Days This Year') . '</th>
-							<th>' . $NumDaysA . _(' Days Last Year') . '</th>
-							<th>' . _('Trend') . '</th>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . $typereport . '</th>
+							<th class="ascending">' . _('Name') . '</th>
+							<th class="ascending">' . $NumDaysA . _(' Days This Year') . '</th>
+							<th class="ascending">' . $NumDaysA . _(' Days Last Year') . '</th>
+							<th class="ascending">' . _('Trend') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -795,18 +795,18 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . $typereport . '</th>
-							<th>' . _('Name') . '</th>
-							<th>' . $NumDaysA . _(' days') . '</th>
-							<th>' . $NumDaysB . _(' days') . '</th>
-							<th>' . $NumDaysC . _(' days') . '</th>
-							<th>' . $NumDaysD . _(' days') . '</th>
-							<th>' . $NumDaysE . _(' days') . '</th>
-							<th>' . $NumDaysF . _(' days') . '</th>
-							<th>' . _('Trend') . '</th>
-							<th>' . 'Forecast '. $NumDaysC . _(' days') . '</th>
-							<th>' . $TitleTarget . '</th>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . $typereport . '</th>
+							<th class="ascending">' . _('Name') . '</th>
+							<th class="ascending">' . $NumDaysA . _(' days') . '</th>
+							<th class="ascending">' . $NumDaysB . _(' days') . '</th>
+							<th class="ascending">' . $NumDaysC . _(' days') . '</th>
+							<th class="ascending">' . $NumDaysD . _(' days') . '</th>
+							<th class="ascending">' . $NumDaysE . _(' days') . '</th>
+							<th class="ascending">' . $NumDaysF . _(' days') . '</th>
+							<th class="ascending">' . _('Trend') . '</th>
+							<th class="ascending">' . 'Forecast '. $NumDaysC . _(' days') . '</th>
+							<th class="ascending">' . $TitleTarget . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -1087,12 +1087,12 @@ function RetailTypePayments($typereport, $maxdays, $db){
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . $typereport . '</th>
-							<th>' . _('Name') . '</th>
-							<th>' . _('% Cash') . '</th>
-							<th>' . _('% Credit') . '</th>
-							<th>' . _('% Returns') . '</th>
-							<th>' . _('% Vouchers') . '</th>
+							<th class="ascending">' . $typereport . '</th>
+							<th class="ascending">' . _('Name') . '</th>
+							<th class="ascending">' . _('% Cash') . '</th>
+							<th class="ascending">' . _('% Credit') . '</th>
+							<th class="ascending">' . _('% Returns') . '</th>
+							<th class="ascending">' . _('% Vouchers') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -1180,9 +1180,9 @@ function PettyCashStatus($currency, $db){
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . _('PC Tab Code') . '</th>
-							<th>' . _('Amount') . '</th>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('PC Tab Code') . '</th>
+							<th class="ascending">' . _('Amount') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter

@@ -45,10 +45,10 @@ function SPGBelowMinimumSales($Shop, $NumDaysA, $MinimumSales,$db){
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . _('Code') . '</th>
-							<th>' . _('Name') . '</th>
-							<th>' . _('Sales ') . locale_number_format($NumDaysA,0) . _(' days') . '</th>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Name') . '</th>
+							<th class="ascending">' . _('Sales ') . locale_number_format($NumDaysA,0) . _(' days') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -105,9 +105,9 @@ function SPGNotReportingSalesInDays($maxdays, $db){
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' .  _('SPG') . '</th>
-							<th>' . _('Name') . '</th>
-							<th>' . _('Last Sale') . '</th>
+							<th class="ascending">' .  _('SPG') . '</th>
+							<th class="ascending">' . _('Name') . '</th>
+							<th class="ascending">' . _('Last Sale') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -153,9 +153,9 @@ function UsersNotLoggingIn($maxdays, $db){
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' .  _('User ID') . '</th>
-							<th>' . _('Name') . '</th>
-							<th>' . _('Last Login') . '</th>
+							<th class="ascending">' .  _('User ID') . '</th>
+							<th class="ascending">' . _('Name') . '</th>
+							<th class="ascending">' . _('Last Login') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -196,11 +196,11 @@ function TransfersDelayed($maxdays, $RootPath, $db){
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . _('Transfer') . '</th>
-							<th>' . _('Date') . '</th>
-							<th>' . _('From') . '</th>
-							<th>' . _('To') . '</th>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Transfer') . '</th>
+							<th class="ascending">' . _('Date') . '</th>
+							<th class="ascending">' . _('From') . '</th>
+							<th class="ascending">' . _('To') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -381,16 +381,16 @@ function FinishedStockDistribution($kind, $byreport, $db){
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . $Titleheader . '</th>
-							<th>' . _('QOH Pcs') . '</th>
-							<th>' . _('RL Pcs') . '</th>
-							<th>' . _('% Pcs') . '</th>
-							<th>' . _('QOH Models') . '</th>
-							<th>' . _('RL Models') . '</th>
-							<th>' . _('% Models') . '</th>
-							<th>' . _('QOH Pcs/Model') . '</th>
-							<th>' . _('RL Pcs/Model') . '</th>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . $Titleheader . '</th>
+							<th class="ascending">' . _('QOH Pcs') . '</th>
+							<th class="ascending">' . _('RL Pcs') . '</th>
+							<th class="ascending">' . _('% Pcs') . '</th>
+							<th class="ascending">' . _('QOH Models') . '</th>
+							<th class="ascending">' . _('RL Models') . '</th>
+							<th class="ascending">' . _('% Models') . '</th>
+							<th class="ascending">' . _('QOH Pcs/Model') . '</th>
+							<th class="ascending">' . _('RL Pcs/Model') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -562,14 +562,14 @@ function ActiveTransfersByLocation($RootPath, $db){
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . _('Shop') . '</th>
-							<th>' . _('Transfer OUT') . '</th>
-							<th>' . _('Transfer IN') . '</th>
-							<th>' . _('Transfer Total') . '</th>
-							<th>' . _('Pcs OUT') . '</th>
-							<th>' . _('Pcs IN') . '</th>
-							<th>' . _('Pcs Total') . '</th>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Shop') . '</th>
+							<th class="ascending">' . _('Transfer OUT') . '</th>
+							<th class="ascending">' . _('Transfer IN') . '</th>
+							<th class="ascending">' . _('Transfer Total') . '</th>
+							<th class="ascending">' . _('Pcs OUT') . '</th>
+							<th class="ascending">' . _('Pcs IN') . '</th>
+							<th class="ascending">' . _('Pcs Total') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -646,12 +646,12 @@ function ActiveTransferStatus($RootPath, $db){
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . _('Date') . '</th>
-							<th>' . _('Transfer') . '</th>
-							<th>' . _('From') . '</th>
-							<th>' . _('To') . '</th>
-							<th>' . _('Qty') . '</th>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Date') . '</th>
+							<th class="ascending">' . _('Transfer') . '</th>
+							<th class="ascending">' . _('From') . '</th>
+							<th class="ascending">' . _('To') . '</th>
+							<th class="ascending">' . _('Qty') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -723,12 +723,12 @@ function RecentlyClosedTransferStatus($maxdays, $RootPath, $db){
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . _('Date') . '</th>
-							<th>' . _('Transfer') . '</th>
-							<th>' . _('From') . '</th>
-							<th>' . _('To') . '</th>
-							<th>' . _('Qty') . '</th>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Date') . '</th>
+							<th class="ascending">' . _('Transfer') . '</th>
+							<th class="ascending">' . _('From') . '</th>
+							<th class="ascending">' . _('To') . '</th>
+							<th class="ascending">' . _('Qty') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -787,9 +787,9 @@ function ListPriorityLocations($db){
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('Location') . '</th>
-							<th>' . _('Priority Normal') . '</th>
-							<th>' . _('Priority Discount') . '</th>
+							<th class="ascending">' . _('Location') . '</th>
+							<th class="ascending">' . _('Priority Normal') . '</th>
+							<th class="ascending">' . _('Priority Discount') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -836,11 +836,11 @@ function CheckNegativeStock($RootPath, $db){
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . _('Code') . '</th>
-							<th>' . _('Description') . '</th>
-							<th>' . _('Location') . '</th>
-							<th>' . _('Quantity') . '</th>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Description') . '</th>
+							<th class="ascending">' . _('Location') . '</th>
+							<th class="ascending">' . _('Quantity') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -894,13 +894,13 @@ function ItemsInKLProcessAndRLNotZero($RootPath, $db){
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . _('Code') . '</th>
-							<th>' . _('Location') . '</th>
-							<th>' . _('RL') . '</th>
-							<th>' . _('ChangingPrice') . '</th>
-							<th>' . _('MoveToDiscount') . '</th>
-							<th>' . _('MoveToObsolete') . '</th>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Location') . '</th>
+							<th class="ascending">' . _('RL') . '</th>
+							<th class="ascending">' . _('ChangingPrice') . '</th>
+							<th class="ascending">' . _('MoveToDiscount') . '</th>
+							<th class="ascending">' . _('MoveToObsolete') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -961,9 +961,9 @@ function FlaggedAsObsoleteButStockAvailable($RootPath, $db){
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . _('Code') . '</th>
-							<th>' . _('Description') . '</th>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Description') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -1010,12 +1010,12 @@ function ItemsWithoutWeightOrVolume($RootPath, $db){
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . _('Code') . '</th>
-							<th>' . _('Description') . '</th>
-							<th>' . _('Net Weight Kg') . '</th>
-							<th>' . _('Gross Weight Kg') . '</th>
-							<th>' . _('Volume m3') . '</th>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Description') . '</th>
+							<th class="ascending">' . _('Net Weight Kg') . '</th>
+							<th class="ascending">' . _('Gross Weight Kg') . '</th>
+							<th class="ascending">' . _('Volume m3') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -1064,10 +1064,10 @@ function ItemsWithoutStandardCost($RootPath, $db){
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . _('Code') . '</th>
-							<th>' . _('Description') . '</th>
-							<th>' . _('QOH') . '</th>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Description') . '</th>
+							<th class="ascending">' . _('QOH') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -1116,11 +1116,11 @@ function ItemsWithoutRetailPrice($stockcat, $factorRetail, $RootPath, $db){
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . _('Code') . '</th>
-							<th>' . _('Description') . '</th>
-							<th>' . _('Std Cost') . '</th>
-							<th>' . _('Recommended Retail') . '</th>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Description') . '</th>
+							<th class="ascending">' . _('Std Cost') . '</th>
+							<th class="ascending">' . _('Recommended Retail') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -1208,12 +1208,12 @@ function OutstandingOrders($customertype, $ordertype, $RootPath, $db){
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . _('Order') . '</th>
-							<th>' . _('Customer') . '</th>
-							<th>' . _('Name') . '</th>
-							<th>' . _('Order Date') . '</th>
-							<th>' . _('Total Value') . '</th>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Order') . '</th>
+							<th class="ascending">' . _('Customer') . '</th>
+							<th class="ascending">' . _('Name') . '</th>
+							<th class="ascending">' . _('Order Date') . '</th>
+							<th class="ascending">' . _('Total Value') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -1293,18 +1293,18 @@ function OnlineOrdersFollowUp($numDays, $RootPath, $db){
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . _('webERP Order') . '</th>
-							<th>' . _('Shop Online Order') . '</th>
-							<th>' . _('Customer') . '</th>
-							<th>' . _('Name') . '</th>
-							<th>' . _('Order Date') . '</th>
-							<th>' . _('Order Value') . '</th>
-							<th>' . _('Currency') . '</th>
-							<th>' . _('Payment Confirmation Sent On') . '</th>
-							<th>' . _('Tracking Number') . '</th>
-							<th>' . _('Tracking Confirmation Sent On') . '</th>
-							<th>' . _('Thank You Sent On') . '</th>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('webERP Order') . '</th>
+							<th class="ascending">' . _('Shop Online Order') . '</th>
+							<th class="ascending">' . _('Customer') . '</th>
+							<th class="ascending">' . _('Name') . '</th>
+							<th class="ascending">' . _('Order Date') . '</th>
+							<th class="ascending">' . _('Order Value') . '</th>
+							<th class="ascending">' . _('Currency') . '</th>
+							<th class="ascending">' . _('Payment Confirmation Sent On') . '</th>
+							<th class="ascending">' . _('Tracking Number') . '</th>
+							<th class="ascending">' . _('Tracking Confirmation Sent On') . '</th>
+							<th class="ascending">' . _('Thank You Sent On') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -1408,14 +1408,14 @@ function OnlineQuotationsFollowUp($RootPath, $db){
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . _('Order') . '</th>
-							<th>' . _('Customer') . '</th>
-							<th>' . _('Name') . '</th>
-							<th>' . _('Order Date') . '</th>
-							<th>' . _('Order Value') . '</th>
-							<th>' . _('Currency') . '</th>
-							<th>' . _('Reminder Bank Transfer Sent On') . '</th>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Order') . '</th>
+							<th class="ascending">' . _('Customer') . '</th>
+							<th class="ascending">' . _('Name') . '</th>
+							<th class="ascending">' . _('Order Date') . '</th>
+							<th class="ascending">' . _('Order Value') . '</th>
+							<th class="ascending">' . _('Currency') . '</th>
+							<th class="ascending">' . _('Reminder Bank Transfer Sent On') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -1492,14 +1492,14 @@ function OldOnlineQuotations($NumDays, $RootPath, $db){
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . _('Order') . '</th>
-							<th>' . _('Customer') . '</th>
-							<th>' . _('Name') . '</th>
-							<th>' . _('Order Date') . '</th>
-							<th>' . _('Order Value') . '</th>
-							<th>' . _('Currency') . '</th>
-							<th>' . _('Reminder Bank Transfer Sent On') . '</th>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Order') . '</th>
+							<th class="ascending">' . _('Customer') . '</th>
+							<th class="ascending">' . _('Name') . '</th>
+							<th class="ascending">' . _('Order Date') . '</th>
+							<th class="ascending">' . _('Order Value') . '</th>
+							<th class="ascending">' . _('Currency') . '</th>
+							<th class="ascending">' . _('Reminder Bank Transfer Sent On') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -1562,13 +1562,13 @@ function OnlineCustomersNoOrderPlaced($RootPath, $db){
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . _('Customer') . '</th>
-							<th>' . _('Name') . '</th>
-							<th>' . _('Country') . '</th>
-							<th>' . _('Currency ') . '</th>
-							<th>' . _('Registered on') . '</th>
-							<th>' . _('Send Email') . '</th>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Customer') . '</th>
+							<th class="ascending">' . _('Name') . '</th>
+							<th class="ascending">' . _('Country') . '</th>
+							<th class="ascending">' . _('Currency ') . '</th>
+							<th class="ascending">' . _('Registered on') . '</th>
+							<th class="ascending">' . _('Send Email') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -1628,15 +1628,15 @@ function OnlineItemsOnProcess($RootPath, $db){
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . _('Order') . '</th>
-							<th>' . _('Customer') . '</th>
-							<th>' . _('Name') . '</th>
-							<th>' . _('Order Date') . '</th>
-							<th>' . _('Item Code') . '</th>
-							<th>' . _('Quantity') . '</th>
-							<th>' . _('RL at Toko Online') . '</th>
-							<th>' . _('QOH at Toko Online') . '</th>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Order') . '</th>
+							<th class="ascending">' . _('Customer') . '</th>
+							<th class="ascending">' . _('Name') . '</th>
+							<th class="ascending">' . _('Order Date') . '</th>
+							<th class="ascending">' . _('Item Code') . '</th>
+							<th class="ascending">' . _('Quantity') . '</th>
+							<th class="ascending">' . _('RL at Toko Online') . '</th>
+							<th class="ascending">' . _('QOH at Toko Online') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -1735,13 +1735,13 @@ function WrongGiftItem($stockid, $customertype, $ErrorType, $OrderValue, $numDay
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . _('webERP Order') . '</th>
-							<th>' . _('Yellow Order') . '</th>
-							<th>' . _('Customer') . '</th>
-							<th>' . _('SPG') . '</th>
-							<th>' . _('Order Date') . '</th>
-							<th>' . _('Total Value') . '</th>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('webERP Order') . '</th>
+							<th class="ascending">' . _('Yellow Order') . '</th>
+							<th class="ascending">' . _('Customer') . '</th>
+							<th class="ascending">' . _('SPG') . '</th>
+							<th class="ascending">' . _('Order Date') . '</th>
+							<th class="ascending">' . _('Total Value') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -1789,10 +1789,10 @@ function PettyCashToBeAuthorized($db){
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . _('PC Tab Code') . '</th>
-							<th>' . _('Amount') . '</th>
-							<th>' . _('Currency') . '</th>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('PC Tab Code') . '</th>
+							<th class="ascending">' . _('Amount') . '</th>
+							<th class="ascending">' . _('Currency') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -1834,10 +1834,10 @@ function PettyCashBalance($db){
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . _('PC Tab Code') . '</th>
-							<th>' . _('Amount') . '</th>
-							<th>' . _('Currency') . '</th>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('PC Tab Code') . '</th>
+							<th class="ascending">' . _('Amount') . '</th>
+							<th class="ascending">' . _('Currency') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -1931,11 +1931,11 @@ No pending transfer regarding this item
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . _('Code') . '</th>
-							<th>' . _('Category') . '</th>
-							<th>' . _('Description') . '</th>
-							<th>' . _('QOH Kantor') . '</th>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Category') . '</th>
+							<th class="ascending">' . _('Description') . '</th>
+							<th class="ascending">' . _('QOH Kantor') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -2006,11 +2006,11 @@ No pending transfer regarding this item
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . _('Code') . '</th>
-							<th>' . _('Category') . '</th>
-							<th>' . _('Description') . '</th>
-							<th>' . _('QOH Kantor') . '</th>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Category') . '</th>
+							<th class="ascending">' . _('Description') . '</th>
+							<th class="ascending">' . _('QOH Kantor') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -2098,11 +2098,11 @@ function ItemsInCategoryWithStockKantorButReorderLevelTokoZero($CategoryId, $Roo
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . _('Code') . '</th>
-							<th>' . _('Category') . '</th>
-							<th>' . _('Description') . '</th>
-							<th>' . _('QOH Kantor') . '</th>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Category') . '</th>
+							<th class="ascending">' . _('Description') . '</th>
+							<th class="ascending">' . _('QOH Kantor') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -2155,12 +2155,12 @@ function ComponentsToObsolete($ShowOnlyTotal, $ShowLimit, $RootPath, $db){
 			echo '<div>';
 			echo '<table class="selection">';
 			$TableHeader = '<tr>
-								<th>' . _('#') . '</th>
-								<th>' . _('Code') . '</th>
-								<th>' . _('Description') . '</th>
-								<th>' . _('QOH') . '</th>
-								<th>' . _('UOM') . '</th>
-								<th>' . _('Stock value') . '</th>
+								<th class="ascending">' . _('#') . '</th>
+								<th class="ascending">' . _('Code') . '</th>
+								<th class="ascending">' . _('Description') . '</th>
+								<th class="ascending">' . _('QOH') . '</th>
+								<th class="ascending">' . _('UOM') . '</th>
+								<th class="ascending">' . _('Stock value') . '</th>
 							</tr>';
 			echo $TableHeader;
 		}
@@ -2367,9 +2367,9 @@ function ItemsShouldBeInWebsite($db){
 					echo '<div>';
 					echo '<table class="selection">';
 					$TableHeader = '<tr>
-										<th>' . _('#') . '</th>
-										<th>' . _('Code') . '</th>
-										<th>' . _('Description') . '</th>
+										<th class="ascending">' . _('#') . '</th>
+										<th class="ascending">' . _('Code') . '</th>
+										<th class="ascending">' . _('Description') . '</th>
 									</tr>';
 					echo $TableHeader;
 					$k = 0; //row colour counter
@@ -2433,20 +2433,20 @@ function OvestockAtShops($kind, $RootPath, $db){
 		if($kind == "OVERSTOCK"){			
 			echo '<p class="page_title_text" align="center"><strong>' . _('Overstock of items at shops') . '</strong></p>';
 			$TableHeader = '<tr>
-								<th>' . _('#') . '</th>
-								<th>' . _('Shop') . '</th>
-								<th>' . _('Code') . '</th>
-								<th>' . _('Description') . '</th>
-								<th>' . _('Overstock') . '</th>
+								<th class="ascending">' . _('#') . '</th>
+								<th class="ascending">' . _('Shop') . '</th>
+								<th class="ascending">' . _('Code') . '</th>
+								<th class="ascending">' . _('Description') . '</th>
+								<th class="ascending">' . _('Overstock') . '</th>
 							</tr>';
 		}else{
 			echo '<p class="page_title_text" align="center"><strong>' . _('Items needed at shops. (No overstock - No transfer)') . '</strong></p>';
 			$TableHeader = '<tr>
-								<th>' . _('#') . '</th>
-								<th>' . _('Shop') . '</th>
-								<th>' . _('Code') . '</th>
-								<th>' . _('Description') . '</th>
-								<th>' . _('Need') . '</th>
+								<th class="ascending">' . _('#') . '</th>
+								<th class="ascending">' . _('Shop') . '</th>
+								<th class="ascending">' . _('Code') . '</th>
+								<th class="ascending">' . _('Description') . '</th>
+								<th class="ascending">' . _('Need') . '</th>
 							</tr>';
 		}
 		echo '<div>';
@@ -2491,10 +2491,10 @@ function OvestockAtSamples($maxallowedsamples, $RootPath, $db){
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Overstock of samples') . '</strong></p>';
 		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . _('Code') . '</th>
-							<th>' . _('Description') . '</th>
-							<th>' . _('Qty of samples') . '</th>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Description') . '</th>
+							<th class="ascending">' . _('Qty of samples') . '</th>
 						</tr>';
 		echo '<div>';
 		echo '<table class="selection">';
@@ -2539,10 +2539,10 @@ function SamplesNotLongerNeeded($RootPath, $db){
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Samples Not Longer Needed (No More Buy, Discount, Outlet)') . '</strong></p>';
 		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . _('Code') . '</th>
-							<th>' . _('Description') . '</th>
-							<th>' . _('Qty of samples') . '</th>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Description') . '</th>
+							<th class="ascending">' . _('Qty of samples') . '</th>
 						</tr>';
 		echo '<div>';
 		echo '<table class="selection">';
@@ -2625,11 +2625,11 @@ function ItemsOnSpecialRequest($RootPath, $db){
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . _('Code') . '</th>
-							<th>' . _('Description') . '</th>
-							<th>' . _('Quantity') . '</th>
-							<th>' . _('Reorder Level') . '</th>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Description') . '</th>
+							<th class="ascending">' . _('Quantity') . '</th>
+							<th class="ascending">' . _('Reorder Level') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -2692,12 +2692,12 @@ function DiscountedItemsOnWrongShops($Category, $RootPath, $db){
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . _('Code') . '</th>
-							<th>' . _('Description') . '</th>
-							<th>' . _('Shop') . '</th>
-							<th>' . _('Quantity') . '</th>
-							<th>' . _('Reorder Level') . '</th>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Description') . '</th>
+							<th class="ascending">' . _('Shop') . '</th>
+							<th class="ascending">' . _('Quantity') . '</th>
+							<th class="ascending">' . _('Reorder Level') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -2749,12 +2749,12 @@ function OutletItemsOnKLShops($RootPath, $db){
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . _('Code') . '</th>
-							<th>' . _('Description') . '</th>
-							<th>' . _('Shop') . '</th>
-							<th>' . _('Quantity') . '</th>
-							<th>' . _('Reorder Level') . '</th>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Description') . '</th>
+							<th class="ascending">' . _('Shop') . '</th>
+							<th class="ascending">' . _('Quantity') . '</th>
+							<th class="ascending">' . _('Reorder Level') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -2796,9 +2796,9 @@ function DiscountedItemsWithWrongDiscount($Category, $DiscountCode, $RootPath, $
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . _('Code') . '</th>
-							<th>' . _('Description') . '</th>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Description') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -2836,9 +2836,9 @@ function NotDiscountedItemsWithDiscount($RootPath, $db){
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . _('Code') . '</th>
-							<th>' . _('Description') . '</th>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Description') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -2880,10 +2880,10 @@ function OldPurchasingOrdersStillActive($maxdays, $RootPath, $db){
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . _('PO') . '</th>
-							<th>' . _('Date') . '</th>
-							<th>' . _('Supplier') . '</th>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('PO') . '</th>
+							<th class="ascending">' . _('Date') . '</th>
+							<th class="ascending">' . _('Supplier') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -2958,11 +2958,11 @@ function PurchasingOrdersDeliveryControl($reason, $maxdays, $RootPath, $db){
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . _('PO') . '</th>
-							<th>' . _('Order Date') . '</th>
-							<th>' . _('Delivery Date') . '</th>
-							<th>' . _('Supplier') . '</th>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('PO') . '</th>
+							<th class="ascending">' . _('Order Date') . '</th>
+							<th class="ascending">' . _('Delivery Date') . '</th>
+							<th class="ascending">' . _('Supplier') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -3049,14 +3049,14 @@ function PerformanceItemsInCategory($ReportType, $CategoryId, $maxdays, $percent
 		}echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . _('Date') . '</th>
-							<th>' . _('Code') . '</th>
-							<th>' . _('Description') . '</th>
-							<th>' . _('Total Qty') . '</th>
-							<th>' . _('QOH') . '</th>
-							<th>' . _('Sold Qty') . '</th>
-							<th>' . _('% Sold') . '</th>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Date') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Description') . '</th>
+							<th class="ascending">' . _('Total Qty') . '</th>
+							<th class="ascending">' . _('QOH') . '</th>
+							<th class="ascending">' . _('Sold Qty') . '</th>
+							<th class="ascending">' . _('% Sold') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -3120,9 +3120,9 @@ function SplittedpaymentsBySPG($maxdays, $maxsplitted, $db){
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' .  _('SPG') . '</th>
-							<th>' . _('Splitted') . '</th>
-							<th>' . _('Amount') . '</th>
+							<th class="ascending">' .  _('SPG') . '</th>
+							<th class="ascending">' . _('Splitted') . '</th>
+							<th class="ascending">' . _('Amount') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -3199,13 +3199,13 @@ function ItemsNotTopSalesInShop($starttopitems, $endtopitems, $maxdays, $codesho
 					echo '<div>';
 					echo '<table class="selection">';
 					$TableHeader = '<tr>
-										<th>' . _('#') . '</th>
-										<th>' . _('Code') . '</th>
-										<th>' . _('Description') . '</th>
-										<th>' . _('Category') . '</th>
-										<th>' . _('QOH Total') . '</th>
-										<th>' . _('RL') . '</th>
-										<th>' . _('QOH') . '</th>
+										<th class="ascending">' . _('#') . '</th>
+										<th class="ascending">' . _('Code') . '</th>
+										<th class="ascending">' . _('Description') . '</th>
+										<th class="ascending">' . _('Category') . '</th>
+										<th class="ascending">' . _('QOH Total') . '</th>
+										<th class="ascending">' . _('RL') . '</th>
+										<th class="ascending">' . _('QOH') . '</th>
 									</tr>';
 					echo $TableHeader;
 					$showHeader = FALSE;
@@ -3295,13 +3295,13 @@ function TopSalesNotInEnoughShops($starttopitems, $endtopitems, $maxdays, $minsh
 					echo '<div>';
 					echo '<table class="selection">';
 					$TableHeader = '<tr>
-										<th>' . _('#') . '</th>
-										<th>' . _('Code') . '</th>
-										<th>' . _('Description') . '</th>
-										<th>' . _('Category') . '</th>
-										<th>' . _('Sold ') . $maxdays . ' days' . '</th>
-										<th>' . _('QOH') . '</th>
-										<th>' . _('# Toko') . '</th>
+										<th class="ascending">' . _('#') . '</th>
+										<th class="ascending">' . _('Code') . '</th>
+										<th class="ascending">' . _('Description') . '</th>
+										<th class="ascending">' . _('Category') . '</th>
+										<th class="ascending">' . _('Sold ') . $maxdays . ' days' . '</th>
+										<th class="ascending">' . _('QOH') . '</th>
+										<th class="ascending">' . _('# Toko') . '</th>
 									</tr>';
 					echo $TableHeader;
 					$showHeader = FALSE;
@@ -3368,12 +3368,12 @@ function GoodsJustArrived($kind, $location, $numdays, $RootPath, $db){
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . _('Date') . '</th>
-							<th>' . _('Code') . '</th>
-							<th>' . _('Description') . '</th>
-							<th>' . _('Received') . '</th>
-							<th>' . _('QOH') . '</th>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Date') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Description') . '</th>
+							<th class="ascending">' . _('Received') . '</th>
+							<th class="ascending">' . _('QOH') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -3431,12 +3431,12 @@ function GoodsJustTransferred($locationfrom, $locationto, $numdays, $qohmax, $Ro
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . _('Date') . '</th>
-							<th>' . _('Code') . '</th>
-							<th>' . _('Description') . '</th>
-							<th>' . _('Transferred') . '</th>
-							<th>' . _('QOH') . '</th>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Date') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Description') . '</th>
+							<th class="ascending">' . _('Transferred') . '</th>
+							<th class="ascending">' . _('QOH') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -3527,11 +3527,11 @@ function ActiveItemsNoSales($maxdays, $group, $RootPath, $db){
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . _('Code') . '</th>
-							<th>' . _('Description') . '</th>
-							<th>' . _('Category') . '</th>
-							<th>' . _('QOH') . '</th>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Description') . '</th>
+							<th class="ascending">' . _('Category') . '</th>
+							<th class="ascending">' . _('QOH') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -3620,15 +3620,15 @@ function InsuficientStockForTopSalesItems($StockCat, $StockCatDescription, $Days
 					echo '<div>';
 					echo '<table class="selection">';
 					$TableHeader = '<tr>
-										<th>' . _('#') . '</th>
-										<th>' . _('Code') . '</th>
-										<th>' . _('Description') . '</th>
-										<th>' . _('Sales ') . $DaysTopSales . '</th>
-										<th>' . _('Forecast ') . $DaysMinimumStock . '</th>
-										<th>' . _('QOH') . '</th>
-										<th>' . _('QOO') . '</th>
-										<th>' . _('QOW') . '</th>
-										<th>' . _('Needed') . '</th>
+										<th class="ascending">' . _('#') . '</th>
+										<th class="ascending">' . _('Code') . '</th>
+										<th class="ascending">' . _('Description') . '</th>
+										<th class="ascending">' . _('Sales ') . $DaysTopSales . '</th>
+										<th class="ascending">' . _('Forecast ') . $DaysMinimumStock . '</th>
+										<th class="ascending">' . _('QOH') . '</th>
+										<th class="ascending">' . _('QOO') . '</th>
+										<th class="ascending">' . _('QOW') . '</th>
+										<th class="ascending">' . _('Needed') . '</th>
 									</tr>';
 					echo $TableHeader;
 					$showHeader = FALSE;
@@ -3714,17 +3714,17 @@ function PriceBelowStandard($Stockcat, $Factor, $Tolerance, $MinQoh, $RootPath, 
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . _('Code') . '</th>
-							<th>' . _('Description') . '</th>
-							<th>' . _('TopSales') . '</th>
-							<th>' . _('QOH') . '</th>
-							<th>' . _('Std Cost') . '</th>
-							<th>' . _('Current Price') . '</th>
-							<th>' . _('Minimum Price') . '</th>
-							<th>' . _('Recommended Retail') . '</th>
-							<th>' . _('% Increase') . '</th>
-							<th>' . _('Income Increase') . '</th>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Description') . '</th>
+							<th class="ascending">' . _('TopSales') . '</th>
+							<th class="ascending">' . _('QOH') . '</th>
+							<th class="ascending">' . _('Std Cost') . '</th>
+							<th class="ascending">' . _('Current Price') . '</th>
+							<th class="ascending">' . _('Minimum Price') . '</th>
+							<th class="ascending">' . _('Recommended Retail') . '</th>
+							<th class="ascending">' . _('% Increase') . '</th>
+							<th class="ascending">' . _('Income Increase') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -3810,14 +3810,14 @@ function PriceWrongRounding($RootPath, $db){
 					echo '<div>';
 					echo '<table class="selection">';
 					$TableHeader = '<tr>
-										<th>' . _('#') . '</th>
-										<th>' . _('Code') . '</th>
-										<th>' . _('Description') . '</th>
-										<th>' . _('Top Sales') . '</th>
-										<th>' . _('QOH') . '</th>
-										<th>' . _('Rounded Down') . '</th>
-										<th>' . _('Current Price') . '</th>
-										<th>' . _('Rounded Up') . '</th>
+										<th class="ascending">' . _('#') . '</th>
+										<th class="ascending">' . _('Code') . '</th>
+										<th class="ascending">' . _('Description') . '</th>
+										<th class="ascending">' . _('Top Sales') . '</th>
+										<th class="ascending">' . _('QOH') . '</th>
+										<th class="ascending">' . _('Rounded Down') . '</th>
+										<th class="ascending">' . _('Current Price') . '</th>
+										<th class="ascending">' . _('Rounded Up') . '</th>
 									</tr>';
 					echo $TableHeader;
 					$ShowHeader = FALSE;
@@ -3908,18 +3908,18 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $Tolerance, $MinQo
 					echo '<div>';
 					echo '<table class="selection">';
 					$TableHeader = '<tr>
-										<th>' . _('#') . '</th>
-										<th>' . _('Code') . '</th>
-										<th>' . _('Description') . '</th>
-										<th>' . _('TopSales') . '</th>
-										<th>' . _('QOH') . '</th>
-										<th>' . _('Std Cost') . '</th>
-										<th>' . _('Minimum Price') . '</th>
-										<th>' . _('Current Price') . '</th>
-										<th>' . _('Optimum Price') . '</th>
-										<th>' . _('Recommended Retail') . '</th>
-										<th>' . _('% Decrease') . '</th>
-										<th>' . _('Income Decrease') . '</th>
+										<th class="ascending">' . _('#') . '</th>
+										<th class="ascending">' . _('Code') . '</th>
+										<th class="ascending">' . _('Description') . '</th>
+										<th class="ascending">' . _('TopSales') . '</th>
+										<th class="ascending">' . _('QOH') . '</th>
+										<th class="ascending">' . _('Std Cost') . '</th>
+										<th class="ascending">' . _('Minimum Price') . '</th>
+										<th class="ascending">' . _('Current Price') . '</th>
+										<th class="ascending">' . _('Optimum Price') . '</th>
+										<th class="ascending">' . _('Recommended Retail') . '</th>
+										<th class="ascending">' . _('% Decrease') . '</th>
+										<th class="ascending">' . _('Income Decrease') . '</th>
 									</tr>';
 					echo $TableHeader;
 					$ShowHeader = FALSE;
@@ -4020,18 +4020,18 @@ function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $Tolerance, $MinQoh, $
 					echo '<div>';
 					echo '<table class="selection">';
 					$TableHeader = '<tr>
-										<th>' . _('#') . '</th>
-										<th>' . _('Code') . '</th>
-										<th>' . _('Description') . '</th>
-										<th>' . _('TopSales') . '</th>
-										<th>' . _('QOH') . '</th>
-										<th>' . _('Std Cost') . '</th>
-										<th>' . _('Minimum Price') . '</th>
-										<th>' . _('Current Price') . '</th>
-										<th>' . _('Optimum Price') . '</th>
-										<th>' . _('Recommended Retail') . '</th>
-										<th>' . _('% Increase') . '</th>
-										<th>' . _('Income Increase') . '</th>
+										<th class="ascending">' . _('#') . '</th>
+										<th class="ascending">' . _('Code') . '</th>
+										<th class="ascending">' . _('Description') . '</th>
+										<th class="ascending">' . _('TopSales') . '</th>
+										<th class="ascending">' . _('QOH') . '</th>
+										<th class="ascending">' . _('Std Cost') . '</th>
+										<th class="ascending">' . _('Minimum Price') . '</th>
+										<th class="ascending">' . _('Current Price') . '</th>
+										<th class="ascending">' . _('Optimum Price') . '</th>
+										<th class="ascending">' . _('Recommended Retail') . '</th>
+										<th class="ascending">' . _('% Increase') . '</th>
+										<th class="ascending">' . _('Income Increase') . '</th>
 									</tr>';
 					echo $TableHeader;
 					$ShowHeader = FALSE;
@@ -4126,36 +4126,36 @@ function WrongStandardCost($Country, $StockCat, $StdFactor, $Tolerance, $ShowOnl
 		echo '<table class="selection">';
 		if ($ShowOnly){
 			$TableHeader = '<tr>
-								<th>' . _('#') . '</th>
-								<th>' . _('Code') . '</th>
-								<th>' . _('Description') . '</th>
-								<th>' . _('Supplier') . '</th>
-								<th>' . _('From') . '</th>
-								<th>' . _('Price') . '</th>
-								<th>' . _('Currency') . '</th>
-								<th>' . _('Rate') . '</th>
-								<th>' . _('Supplier UOM') . '</th>
-								<th>' . _('UOM Factor') . '</th>
-								<th>' . _('Date Std Cost') . '</th>
-								<th>' . _('Std Cost IDR') . '</th>
+								<th class="ascending">' . _('#') . '</th>
+								<th class="ascending">' . _('Code') . '</th>
+								<th class="ascending">' . _('Description') . '</th>
+								<th class="ascending">' . _('Supplier') . '</th>
+								<th class="ascending">' . _('From') . '</th>
+								<th class="ascending">' . _('Price') . '</th>
+								<th class="ascending">' . _('Currency') . '</th>
+								<th class="ascending">' . _('Rate') . '</th>
+								<th class="ascending">' . _('Supplier UOM') . '</th>
+								<th class="ascending">' . _('UOM Factor') . '</th>
+								<th class="ascending">' . _('Date Std Cost') . '</th>
+								<th class="ascending">' . _('Std Cost IDR') . '</th>
 							</tr>';
 		}else{
 			$TableHeader = '<tr>
-								<th>' . _('#') . '</th>
-								<th>' . _('Code') . '</th>
-								<th>' . _('Description') . '</th>
-								<th>' . _('Supplier') . '</th>
-								<th>' . _('From') . '</th>
-								<th>' . _('Price') . '</th>
-								<th>' . _('Currency') . '</th>
-								<th>' . _('Rate') . '</th>
-								<th>' . _('Supplier UOM') . '</th>
-								<th>' . _('UOM Factor') . '</th>
-								<th>' . _('Date Std Cost') . '</th>
-								<th>' . _('Std Cost IDR') . '</th>
-								<th>' . _('KL UOM') . '</th>
-								<th>' . _('Real Std Cost') . '</th>
-								<th>' . _('% Dif') . '</th>
+								<th class="ascending">' . _('#') . '</th>
+								<th class="ascending">' . _('Code') . '</th>
+								<th class="ascending">' . _('Description') . '</th>
+								<th class="ascending">' . _('Supplier') . '</th>
+								<th class="ascending">' . _('From') . '</th>
+								<th class="ascending">' . _('Price') . '</th>
+								<th class="ascending">' . _('Currency') . '</th>
+								<th class="ascending">' . _('Rate') . '</th>
+								<th class="ascending">' . _('Supplier UOM') . '</th>
+								<th class="ascending">' . _('UOM Factor') . '</th>
+								<th class="ascending">' . _('Date Std Cost') . '</th>
+								<th class="ascending">' . _('Std Cost IDR') . '</th>
+								<th class="ascending">' . _('KL UOM') . '</th>
+								<th class="ascending">' . _('Real Std Cost') . '</th>
+								<th class="ascending">' . _('% Dif') . '</th>
 							</tr>';
 		}
 		echo $TableHeader;
@@ -4276,11 +4276,11 @@ function ItemsWithStockLocationButNoStockAvailable($Location, $NameLocation, $Mi
 					echo '<div>';
 					echo '<table class="selection">';
 					$TableHeader = '<tr>
-										<th>' . _('#') . '</th>
-										<th>' . _('Code') . '</th>
-										<th>' . _('TopSale#') . '</th>
-										<th>' . _('Qty ') . $Location . '</th>
-										<th>' . _('QOH Available') . '</th>
+										<th class="ascending">' . _('#') . '</th>
+										<th class="ascending">' . _('Code') . '</th>
+										<th class="ascending">' . _('TopSale#') . '</th>
+										<th class="ascending">' . _('Qty ') . $Location . '</th>
+										<th class="ascending">' . _('QOH Available') . '</th>
 									</tr>';
 					echo $TableHeader;
 					$showHeader = FALSE;
@@ -4339,11 +4339,11 @@ function WrongItemsOnPurchaseOrders($RootPath, $db){
 					echo '<div>';
 					echo '<table class="selection">';
 					$TableHeader = '<tr>
-										<th>' . _('#') . '</th>
-										<th>' . _('PO') . '</th>
-										<th>' . _('Code') . '</th>
-										<th>' . _('Description') . '</th>
-										<th>' . _('QOO') . '</th>
+										<th class="ascending">' . _('#') . '</th>
+										<th class="ascending">' . _('PO') . '</th>
+										<th class="ascending">' . _('Code') . '</th>
+										<th class="ascending">' . _('Description') . '</th>
+										<th class="ascending">' . _('QOO') . '</th>
 									</tr>';
 					echo $TableHeader;
 					$showHeader = FALSE;
@@ -4404,11 +4404,11 @@ function InsuficientStockForItems($ItemCode, $ItemDescription, $MinimumStock, $O
 					echo '<div>';
 					echo '<table class="selection">';
 					$TableHeader = '<tr>
-										<th>' . _('#') . '</th>
-										<th>' . _('Code') . '</th>
-										<th>' . _('Description') . '</th>
-										<th>' . _('QOH') . '</th>
-										<th>' . _('Needed') . '</th>
+										<th class="ascending">' . _('#') . '</th>
+										<th class="ascending">' . _('Code') . '</th>
+										<th class="ascending">' . _('Description') . '</th>
+										<th class="ascending">' . _('QOH') . '</th>
+										<th class="ascending">' . _('Needed') . '</th>
 									</tr>';
 					echo $TableHeader;
 					$showHeader = FALSE;
@@ -4478,11 +4478,11 @@ function GoodSellingItemsInCategory($CategoryId, $days, $minsales, $RootPath, $d
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . _('Code') . '</th>
-							<th>' . _('Description') . '</th>
-							<th>' . _('QOH') . '</th>
-							<th>' . _('Sold '). $days . ' Days' . '</th>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Description') . '</th>
+							<th class="ascending">' . _('QOH') . '</th>
+							<th class="ascending">' . _('Sold '). $days . ' Days' . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -4525,8 +4525,8 @@ function ObsoleteComponentsInActiveBOM($RootPath, $db){
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('BOM of') . '</th>
-							<th>' . _('Component') . '</th>
+							<th class="ascending">' . _('BOM of') . '</th>
+							<th class="ascending">' . _('Component') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -4582,12 +4582,12 @@ function GoodsToBeProduced($CategoryComponent, $RootPath, $db){
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . _('Code') . '</th>
-							<th>' . _('Description') . '</th>
-							<th>' . _('QOH') . '</th>
-							<th>' . _('UOM') . '</th>
-							<th>' . _('Stock value') . '</th>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Description') . '</th>
+							<th class="ascending">' . _('QOH') . '</th>
+							<th class="ascending">' . _('UOM') . '</th>
+							<th class="ascending">' . _('Stock value') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -4674,13 +4674,13 @@ function ConsumablesGoodsNotEnoughStock($DaysUsage, $DaysMinStock, $DaysStockPur
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . _('Code') . '</th>
-							<th>' . _('Description') . '</th>
-							<th>' . _('QOH Kantor') . '</th>
-							<th>' . _('Used ') . $DaysUsage . ' days'. '</th>
-							<th>' . _('Urgent Needed') . '</th>
-							<th>' . _('Recommended Purchase') . '</th>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Description') . '</th>
+							<th class="ascending">' . _('QOH Kantor') . '</th>
+							<th class="ascending">' . _('Used ') . $DaysUsage . ' days'. '</th>
+							<th class="ascending">' . _('Urgent Needed') . '</th>
+							<th class="ascending">' . _('Recommended Purchase') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -4739,10 +4739,10 @@ function ActiveItemsWithoutPicture($RootPath, $db){
 					$k = 0; //row colour counter
 					$i = 1;
 					$TableHeader = '<tr>
-									<th>' . '#' . '</th>
-									<th>' . _('Category') . '</th>
-									<th>' . _('Item Code') . '</th>
-									<th>' . _('Description') . '</th>
+									<th class="ascending">' . '#' . '</th>
+									<th class="ascending">' . _('Category') . '</th>
+									<th class="ascending">' . _('Item Code') . '</th>
+									<th class="ascending">' . _('Description') . '</th>
 									</tr>';
 					echo $TableHeader;
 					$showHeader = FALSE;
@@ -4788,8 +4788,8 @@ function OpenCartItemsWithoutPicture($RootPath, $db, $db_oc, $oc_tableprefix){
 					$k = 0; //row colour counter
 					$i = 1;
 					$TableHeader = '<tr>
-									<th>' . '#' . '</th>
-									<th>' . _('Item Code') . '</th>
+									<th class="ascending">' . '#' . '</th>
+									<th class="ascending">' . _('Item Code') . '</th>
 									</tr>';
 					echo $TableHeader;
 					$showHeader = FALSE;
@@ -4844,7 +4844,7 @@ function ImagesShouldNotBeInOpencartCatalog($RootPath, $db, $db_oc, $oc_tablepre
 				echo '<div>';
 				echo '<table class="selection">';
 				$TableHeader = '<tr>
-									<th>' . _('File') . '</th>
+									<th class="ascending">' . _('File') . '</th>
 								</tr>';
 				echo $TableHeader;
 				$ShowHeader = FALSE;
@@ -4898,7 +4898,7 @@ function ImagesWithoutProduct($RootPath, $db){
 				echo '<div>';
 				echo '<table class="selection">';
 				$TableHeader = '<tr>
-									<th>' . _('File') . '</th>
+									<th class="ascending">' . _('File') . '</th>
 								</tr>';
 				echo $TableHeader;
 				$ShowHeader = FALSE;
@@ -4967,18 +4967,18 @@ function ItemsChangingPriceDelayed($NumDays, $RootPath, $db){
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . _('Code') . '</th>
-							<th>' . _('Description') . '</th>
-							<th>' . _('Start Date') . '</th>
-							<th>' . _('QOH KL Shops') . '</th>
-							<th>' . _('QOH Consignment') . '</th>
-							<th>' . _('Transit From Kantor') . '</th>
-							<th>' . _('Transit To Kantor') . '</th>
-							<th>' . _('QOH Kantor') . '</th>
-							<th>' . _('QOH Others') . '</th>
-							<th>' . _('QOH Total') . '</th>
-							<th>' . _('New Retail Price') . '</th>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Description') . '</th>
+							<th class="ascending">' . _('Start Date') . '</th>
+							<th class="ascending">' . _('QOH KL Shops') . '</th>
+							<th class="ascending">' . _('QOH Consignment') . '</th>
+							<th class="ascending">' . _('Transit From Kantor') . '</th>
+							<th class="ascending">' . _('Transit To Kantor') . '</th>
+							<th class="ascending">' . _('QOH Kantor') . '</th>
+							<th class="ascending">' . _('QOH Others') . '</th>
+							<th class="ascending">' . _('QOH Total') . '</th>
+							<th class="ascending">' . _('New Retail Price') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -5072,18 +5072,18 @@ function ItemsMovingToDiscountDelayed($NumDays, $RootPath, $db){
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . _('Code') . '</th>
-							<th>' . _('Description') . '</th>
-							<th>' . _('Start Date') . '</th>
-							<th>' . _('QOH KL Shops') . '</th>
-							<th>' . _('QOH Consignment') . '</th>
-							<th>' . _('Transit From Kantor') . '</th>
-							<th>' . _('Transit To Kantor') . '</th>
-							<th>' . _('QOH Kantor') . '</th>
-							<th>' . _('QOH Others') . '</th>
-							<th>' . _('QOH Total') . '</th>
-							<th>' . _('Discount Code') . '</th>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Description') . '</th>
+							<th class="ascending">' . _('Start Date') . '</th>
+							<th class="ascending">' . _('QOH KL Shops') . '</th>
+							<th class="ascending">' . _('QOH Consignment') . '</th>
+							<th class="ascending">' . _('Transit From Kantor') . '</th>
+							<th class="ascending">' . _('Transit To Kantor') . '</th>
+							<th class="ascending">' . _('QOH Kantor') . '</th>
+							<th class="ascending">' . _('QOH Others') . '</th>
+							<th class="ascending">' . _('QOH Total') . '</th>
+							<th class="ascending">' . _('Discount Code') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -5175,18 +5175,18 @@ function ItemsMovingToOutletDelayed($NumDays, $RootPath, $db){
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . _('Code') . '</th>
-							<th>' . _('Description') . '</th>
-							<th>' . _('Start Date') . '</th>
-							<th>' . _('QOH KL Shops') . '</th>
-							<th>' . _('QOH Consignment') . '</th>
-							<th>' . _('Transit From Kantor') . '</th>
-							<th>' . _('Transit To Kantor') . '</th>
-							<th>' . _('QOH Kantor') . '</th>
-							<th>' . _('QOH Others') . '</th>
-							<th>' . _('QOH Total') . '</th>
-							<th>' . _('Discount Code') . '</th>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Description') . '</th>
+							<th class="ascending">' . _('Start Date') . '</th>
+							<th class="ascending">' . _('QOH KL Shops') . '</th>
+							<th class="ascending">' . _('QOH Consignment') . '</th>
+							<th class="ascending">' . _('Transit From Kantor') . '</th>
+							<th class="ascending">' . _('Transit To Kantor') . '</th>
+							<th class="ascending">' . _('QOH Kantor') . '</th>
+							<th class="ascending">' . _('QOH Others') . '</th>
+							<th class="ascending">' . _('QOH Total') . '</th>
+							<th class="ascending">' . _('Discount Code') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -5287,13 +5287,13 @@ function NewCustomers($NumDays, $RootPath, $db){
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . _('Customer') . '</th>
-							<th>' . _('Name') . '</th>
-							<th>' . _('Country') . '</th>
-							<th>' . _('Currency ') . '</th>
-							<th>' . _('Registered on') . '</th>
-							<th>' . _('Type') . '</th>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Customer') . '</th>
+							<th class="ascending">' . _('Name') . '</th>
+							<th class="ascending">' . _('Country') . '</th>
+							<th class="ascending">' . _('Currency ') . '</th>
+							<th class="ascending">' . _('Registered on') . '</th>
+							<th class="ascending">' . _('Type') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -5380,12 +5380,12 @@ function ItemsNoSalesInLocation($location, $maxdays, $QOHAvailable, $RootPath, $
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . _('Code') . '</th>
-							<th>' . _('Description') . '</th>
-							<th>' . _('Category') . '</th>
-							<th>' . _('QOH ') . $location . '</th>
-							<th>' . _('QOH Shops+Kantor') . '</th>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Description') . '</th>
+							<th class="ascending">' . _('Category') . '</th>
+							<th class="ascending">' . _('QOH ') . $location . '</th>
+							<th class="ascending">' . _('QOH Shops+Kantor') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -5687,36 +5687,36 @@ Updated 3 index in loctransfers
 										<th>' . _('') . '</th>
 									</tr>';
 					$TableHeader = $TableHeader . '<tr>
-										<th>' . _('KL Shop') . '</th>
-										<th>' . _('Needs') . '</th>
-										<th>' . _('Transit') . '</th>
-										<th>' . _('To Ship') . '</th>
-										<th>' . _('Needs') . '</th>
-										<th>' . _('Transit') . '</th>
-										<th>' . _('To Ship') . '</th>
-										<th>' . _('Needs') . '</th>
-										<th>' . _('Transit') . '</th>
-										<th>' . _('To Ship') . '</th>
-										<th>' . _('Needs') . '</th>
-										<th>' . _('Transit') . '</th>
-										<th>' . _('To Ship') . '</th>
-										<th>' . _('Needs') . '</th>
-										<th>' . _('Transit') . '</th>
-										<th>' . _('To Ship') . '</th>
-										<th>' . _('Needs') . '</th>
-										<th>' . _('Transit') . '</th>
-										<th>' . _('To Ship') . '</th>
-										<th>' . _('Needs') . '</th>
-										<th>' . _('Transit') . '</th>
-										<th>' . _('To Ship') . '</th>
-										<th>' . _('Needs') . '</th>
-										<th>' . _('Transit') . '</th>
-										<th>' . _('To Ship') . '</th>
-										<th>' . _('Needs') . '</th>
-										<th>' . _('Transit') . '</th>
-										<th>' . _('To Ship') . '</th>
-										<th>' . _('Last Email') . '</th>
-										<th>' . _('Action') . '</th>
+										<th class="ascending">' . _('KL Shop') . '</th>
+										<th class="ascending">' . _('Needs') . '</th>
+										<th class="ascending">' . _('Transit') . '</th>
+										<th class="ascending">' . _('To Ship') . '</th>
+										<th class="ascending">' . _('Needs') . '</th>
+										<th class="ascending">' . _('Transit') . '</th>
+										<th class="ascending">' . _('To Ship') . '</th>
+										<th class="ascending">' . _('Needs') . '</th>
+										<th class="ascending">' . _('Transit') . '</th>
+										<th class="ascending">' . _('To Ship') . '</th>
+										<th class="ascending">' . _('Needs') . '</th>
+										<th class="ascending">' . _('Transit') . '</th>
+										<th class="ascending">' . _('To Ship') . '</th>
+										<th class="ascending">' . _('Needs') . '</th>
+										<th class="ascending">' . _('Transit') . '</th>
+										<th class="ascending">' . _('To Ship') . '</th>
+										<th class="ascending">' . _('Needs') . '</th>
+										<th class="ascending">' . _('Transit') . '</th>
+										<th class="ascending">' . _('To Ship') . '</th>
+										<th class="ascending">' . _('Needs') . '</th>
+										<th class="ascending">' . _('Transit') . '</th>
+										<th class="ascending">' . _('To Ship') . '</th>
+										<th class="ascending">' . _('Needs') . '</th>
+										<th class="ascending">' . _('Transit') . '</th>
+										<th class="ascending">' . _('To Ship') . '</th>
+										<th class="ascending">' . _('Needs') . '</th>
+										<th class="ascending">' . _('Transit') . '</th>
+										<th class="ascending">' . _('To Ship') . '</th>
+										<th class="ascending">' . _('Last Email') . '</th>
+										<th class="ascending">' . _('Action') . '</th>
 									</tr>';
 					echo $TableHeader;
 					$showHeader = FALSE;
@@ -5993,36 +5993,36 @@ function PackagingStatus($RootPath, $db){
 									<th colspan="3">' . _('ShoppingBag S') . '</th>
 								</tr>';
 				$TableHeader = $TableHeader . '<tr>
-									<th>' . _('KL Shop') . '</th>
-									<th>' . _('Days RL') . '</th>
-									<th>' . _('Factor') . '</th>
-									<th>' . _('QOH') . '</th>
-									<th>' . _('Transit') . '</th>
-									<th>' . _('RL') . '</th>
-									<th>' . _('QOH') . '</th>
-									<th>' . _('Transit') . '</th>
-									<th>' . _('RL') . '</th>
-									<th>' . _('QOH') . '</th>
-									<th>' . _('Transit') . '</th>
-									<th>' . _('RL') . '</th>
-									<th>' . _('QOH') . '</th>
-									<th>' . _('Transit') . '</th>
-									<th>' . _('RL') . '</th>
-									<th>' . _('QOH') . '</th>
-									<th>' . _('Transit') . '</th>
-									<th>' . _('RL') . '</th>
-									<th>' . _('QOH') . '</th>
-									<th>' . _('Transit') . '</th>
-									<th>' . _('RL') . '</th>
-									<th>' . _('QOH') . '</th>
-									<th>' . _('Transit') . '</th>
-									<th>' . _('RL') . '</th>
-									<th>' . _('QOH') . '</th>
-									<th>' . _('Transit') . '</th>
-									<th>' . _('RL') . '</th>
-									<th>' . _('QOH') . '</th>
-									<th>' . _('Transit') . '</th>
-									<th>' . _('RL') . '</th>
+									<th class="ascending">' . _('KL Shop') . '</th>
+									<th class="ascending">' . _('Days RL') . '</th>
+									<th class="ascending">' . _('Factor') . '</th>
+									<th class="ascending">' . _('QOH') . '</th>
+									<th class="ascending">' . _('Transit') . '</th>
+									<th class="ascending">' . _('RL') . '</th>
+									<th class="ascending">' . _('QOH') . '</th>
+									<th class="ascending">' . _('Transit') . '</th>
+									<th class="ascending">' . _('RL') . '</th>
+									<th class="ascending">' . _('QOH') . '</th>
+									<th class="ascending">' . _('Transit') . '</th>
+									<th class="ascending">' . _('RL') . '</th>
+									<th class="ascending">' . _('QOH') . '</th>
+									<th class="ascending">' . _('Transit') . '</th>
+									<th class="ascending">' . _('RL') . '</th>
+									<th class="ascending">' . _('QOH') . '</th>
+									<th class="ascending">' . _('Transit') . '</th>
+									<th class="ascending">' . _('RL') . '</th>
+									<th class="ascending">' . _('QOH') . '</th>
+									<th class="ascending">' . _('Transit') . '</th>
+									<th class="ascending">' . _('RL') . '</th>
+									<th class="ascending">' . _('QOH') . '</th>
+									<th class="ascending">' . _('Transit') . '</th>
+									<th class="ascending">' . _('RL') . '</th>
+									<th class="ascending">' . _('QOH') . '</th>
+									<th class="ascending">' . _('Transit') . '</th>
+									<th class="ascending">' . _('RL') . '</th>
+									<th class="ascending">' . _('QOH') . '</th>
+									<th class="ascending">' . _('Transit') . '</th>
+									<th class="ascending">' . _('RL') . '</th>
 								</tr>';
 				echo $TableHeader;
 				$showHeader = FALSE;
@@ -6240,34 +6240,34 @@ function PackagingUsage($NumDays, $RootPath, $db){
 									<th colspan="3">' . _('ShoppingBag S') . '</th>
 								</tr>';
 				$TableHeader = $TableHeader . '<tr>
-									<th>' . _('KL Shop') . '</th>
-									<th>' . _('QOH') . '</th>
-									<th>' . _('Use ') . $NumDays . ' d</th>
-									<th>' . _('Days Stock') . '</th>
-									<th>' . _('QOH') . '</th>
-									<th>' . _('Use ') . $NumDays . ' d</th>
-									<th>' . _('Days Stock') . '</th>
-									<th>' . _('QOH') . '</th>
-									<th>' . _('Use ') . $NumDays . ' d</th>
-									<th>' . _('Days Stock') . '</th>
-									<th>' . _('QOH') . '</th>
-									<th>' . _('Use ') . $NumDays . ' d</th>
-									<th>' . _('Days Stock') . '</th>
-									<th>' . _('QOH') . '</th>
-									<th>' . _('Use ') . $NumDays . ' d</th>
-									<th>' . _('Days Stock') . '</th>
-									<th>' . _('QOH') . '</th>
-									<th>' . _('Use ') . $NumDays . ' d</th>
-									<th>' . _('Days Stock') . '</th>
-									<th>' . _('QOH') . '</th>
-									<th>' . _('Use ') . $NumDays . ' d</th>
-									<th>' . _('Days Stock') . '</th>
-									<th>' . _('QOH') . '</th>
-									<th>' . _('Use ') . $NumDays . ' d</th>
-									<th>' . _('Days Stock') . '</th>
-									<th>' . _('QOH') . '</th>
-									<th>' . _('Use ') . $NumDays . ' d</th>
-									<th>' . _('Days Stock') . '</th>
+									<th class="ascending">' . _('KL Shop') . '</th>
+									<th class="ascending">' . _('QOH') . '</th>
+									<th class="ascending">' . _('Use ') . $NumDays . ' d</th>
+									<th class="ascending">' . _('Days Stock') . '</th>
+									<th class="ascending">' . _('QOH') . '</th>
+									<th class="ascending">' . _('Use ') . $NumDays . ' d</th>
+									<th class="ascending">' . _('Days Stock') . '</th>
+									<th class="ascending">' . _('QOH') . '</th>
+									<th class="ascending">' . _('Use ') . $NumDays . ' d</th>
+									<th class="ascending">' . _('Days Stock') . '</th>
+									<th class="ascending">' . _('QOH') . '</th>
+									<th class="ascending">' . _('Use ') . $NumDays . ' d</th>
+									<th class="ascending">' . _('Days Stock') . '</th>
+									<th class="ascending">' . _('QOH') . '</th>
+									<th class="ascending">' . _('Use ') . $NumDays . ' d</th>
+									<th class="ascending">' . _('Days Stock') . '</th>
+									<th class="ascending">' . _('QOH') . '</th>
+									<th class="ascending">' . _('Use ') . $NumDays . ' d</th>
+									<th class="ascending">' . _('Days Stock') . '</th>
+									<th class="ascending">' . _('QOH') . '</th>
+									<th class="ascending">' . _('Use ') . $NumDays . ' d</th>
+									<th class="ascending">' . _('Days Stock') . '</th>
+									<th class="ascending">' . _('QOH') . '</th>
+									<th class="ascending">' . _('Use ') . $NumDays . ' d</th>
+									<th class="ascending">' . _('Days Stock') . '</th>
+									<th class="ascending">' . _('QOH') . '</th>
+									<th class="ascending">' . _('Use ') . $NumDays . ' d</th>
+									<th class="ascending">' . _('Days Stock') . '</th>
 								</tr>';
 				echo $TableHeader;
 				$showHeader = FALSE;
@@ -6448,11 +6448,11 @@ id	select_type	table	type	possible_keys	key	key_len	ref	rows	Extra
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . _('Code') . '</th>
-							<th>' . _('Description') . '</th>
-							<th>' . _('Shop') . '</th>
-							<th>' . _('Quantity') . '</th>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Description') . '</th>
+							<th class="ascending">' . _('Shop') . '</th>
+							<th class="ascending">' . _('Quantity') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -6567,16 +6567,16 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 					echo '<div>';
 					echo '<table class="selection">';
 					$TableHeader = '<tr>
-										<th>' . _('#') . '</th>
-										<th>' . _('Code') . '</th>
-										<th>' . _('Description') . '</th>
-										<th>' . _('Forecast ') . $DaysProduction . ' days</th>
-										<th>' . _('Forecast ') . $DaysMinimumStock . ' days</th>
-										<th>' . _('QOH Total') . '</th>
-										<th>' . _('Days QOH') . '</th>
-										<th>' . _('Pending QOO') . '</th>
-										<th>' . _('Days QOH+QOO') . '</th>
-										<th>' . _('Optimum Order') . '</th>
+										<th class="ascending">' . _('#') . '</th>
+										<th class="ascending">' . _('Code') . '</th>
+										<th class="ascending">' . _('Description') . '</th>
+										<th class="ascending">' . _('Forecast ') . $DaysProduction . ' days</th>
+										<th class="ascending">' . _('Forecast ') . $DaysMinimumStock . ' days</th>
+										<th class="ascending">' . _('QOH Total') . '</th>
+										<th class="ascending">' . _('Days QOH') . '</th>
+										<th class="ascending">' . _('Pending QOO') . '</th>
+										<th class="ascending">' . _('Days QOH+QOO') . '</th>
+										<th class="ascending">' . _('Optimum Order') . '</th>
 									</tr>';
 					echo $TableHeader;
 					$showHeader = FALSE;
@@ -6654,14 +6654,14 @@ id	select_type	table		type	possible_keys		key			key_len	ref									rows	Extra
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . _('Code') . '</th>
-							<th>' . _('Supplier') . '</th>
-							<th>' . _('Date') . '</th>
-							<th>' . _('Supplier Part #') . '</th>
-							<th>' . _('Supplier Description') . '</th>
-							<th>' . _('UOM') . '</th>
-							<th>' . _('Leadtime') . '</th>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Supplier') . '</th>
+							<th class="ascending">' . _('Date') . '</th>
+							<th class="ascending">' . _('Supplier Part #') . '</th>
+							<th class="ascending">' . _('Supplier Description') . '</th>
+							<th class="ascending">' . _('UOM') . '</th>
+							<th class="ascending">' . _('Leadtime') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
