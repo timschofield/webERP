@@ -61,7 +61,7 @@ if (isset($_GET['PONumber']) AND $_GET['PONumber']<=0 AND !isset($_SESSION['PO'.
 }
 
 if ($_SESSION['PO'.$identifier]->Status != 'Printed') {
-	prnMsg( _('Purchase orders must have a status of Printed before they can be received').'.<br />' . 
+	prnMsg( _('Purchase orders must have a status of Printed before they can be received').'.<br />' .
 		_('Order number') . ' ' . $_GET['PONumber'] . ' ' . _('has a status of') . ' ' . _($_SESSION['PO'.$identifier]->Status), 'warn');
 	include('includes/footer.inc');
 	exit;
@@ -194,10 +194,10 @@ maxlength="10" size="10" value="' . locale_number_format(round($LnItm->ReceiveQt
 
 		if ($LnItm->Controlled == 1) {
 			if ($LnItm->Serialised==1){
-				echo '<td><a href="GoodsReceivedControlled.php?identifier=' . $identifier . '&amp;LineNo=' . $LnItm->LineNo . '">' . 
+				echo '<td><a href="GoodsReceivedControlled.php?identifier=' . $identifier . '&amp;LineNo=' . $LnItm->LineNo . '">' .
 					_('Enter Serial Nos'). '</a></td>';
 			} else {
-				echo '<td><a href="GoodsReceivedControlled.php?identifier=' . $identifier . '&amp;LineNo=' . $LnItm->LineNo . '">' . 
+				echo '<td><a href="GoodsReceivedControlled.php?identifier=' . $identifier . '&amp;LineNo=' . $LnItm->LineNo . '">' .
 					_('Enter Batches'). '</a></td>';
 			}
 		}
@@ -306,7 +306,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 	$LineNo=1;
 	if(DB_num_rows($Result)==0){//Those goods must have been received by another user. So should destroy the session data and show warning to users
 		prnMsg(_('This order has been changed or invoiced since this delivery was started to be actioned').' . '._('Processing halted'),'error');
-		echo '<div class="centre"><a href="' . $RootPath . '/PO_SelectOSPurchOrder.php">' . 
+		echo '<div class="centre"><a href="' . $RootPath . '/PO_SelectOSPurchOrder.php">' .
 			_('Select a different purchase order for receiving goods against') . '</a></div>';
 		unset($_SESSION['PO'.$identifier]->LineItems);
 		unset($_SESSION['PO'.$identifier]);
@@ -368,7 +368,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 					</tr>
 					</table>';
 			}
-			echo '<div class="centre"><a href="' . $RootPath . '/PO_SelectOSPurchOrder.php">' . 
+			echo '<div class="centre"><a href="' . $RootPath . '/PO_SelectOSPurchOrder.php">' .
 				_('Select a different purchase order for receiving goods against') . '</a></div>';
 			echo '<div class="centre"><a href="' . $RootPath . '/GoodsReceived.php?PONumber=' . $_SESSION['PO'.$identifier]->OrderNo . '">' .  _('Re-read the updated purchase order for receiving goods against'). '</a></div>';
 			unset($_SESSION['PO'.$identifier]->LineItems);
@@ -618,7 +618,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 													FROM fixedassets
 													INNER JOIN fixedassetcategories
 													ON fixedassets.assetcategoryid=fixedassetcategories.categoryid
-													WHERE assetid='" . $OrderLine->AssetID . "'",$db);
+													WHERE assetid='" . $OrderLine->AssetID . "'");
 				if (DB_num_rows($CheckAssetExistsResult)==1){ //then work with the assetid provided
 
 					/*Need to add a fixedassettrans for the cost of the asset being received */
@@ -748,7 +748,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 			<br />
 			<br />
 			<a href="' . $RootPath . '/PO_SelectOSPurchOrder.php">' . _('Select a different purchase order for receiving goods against'). '</a>
-		</div>'; 
+		</div>';
 /*end of process goods received entry */
     echo '</div>';
     echo '</form>';

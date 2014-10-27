@@ -34,7 +34,7 @@ if (isset($_POST['AddContractChgToInvoice'])){
 	} else{
 		$result = DB_query("SELECT contractref FROM contracts
 							WHERE status=2
-							AND contractref='" . $_POST['ContractRef'] . "'",$db);
+							AND contractref='" . $_POST['ContractRef'] . "'");
 		if (DB_num_rows($result)==0){
 			prnMsg(_('The contract reference entered does not exist as a customer ordered contract. This contract cannot be charged to'),'error');
 			$InputError =true;

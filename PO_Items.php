@@ -478,7 +478,7 @@ if (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 										FROM fixedassets
 										INNER JOIN fixedassetcategories
 										ON fixedassets.assetcategoryid=fixedassetcategories.categoryid
-										WHERE assetid='" . $_POST['AssetID'] . "'",$db);
+										WHERE assetid='" . $_POST['AssetID'] . "'");
 		if (DB_num_rows($ValidAssetResult)==0){ // then the asset id entered doesn't exist
 			$AllowUpdate = false;
 			prnMsg(_('An asset code was entered but it does not yet exist. Only pre-existing asset ids can be entered when ordering a fixed asset'),'error');
@@ -811,8 +811,7 @@ if (isset($_POST['NonStockOrder'])) {
 									description,
 									datepurchased
 								FROM fixedassets
-								ORDER BY assetid DESC",
-							$db);
+								ORDER BY assetid DESC");
 	echo '<option selected="selected" value="Not an Asset">' . _('Not an Asset') . '</option>';
 	while ($AssetRow = DB_fetch_array($AssetsResult)){
 		if ($AssetRow['datepurchased']=='0000-00-00'){

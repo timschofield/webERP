@@ -35,8 +35,8 @@ if (!isset($_SESSION['SuppTrans']->SupplierName)) {
 } else {
 	$SupplierName=$_SESSION['SuppTrans']->SupplierName;
 }
-echo '<p class="page_title_text"><img alt="" src="'.$RootPath . '/css/' . $Theme . 
-	'/images/transactions.png" title="' . _('Supplier Invoice') . '" />' . ' ' . 
+echo '<p class="page_title_text"><img alt="" src="'.$RootPath . '/css/' . $Theme .
+	'/images/transactions.png" title="' . _('Supplier Invoice') . '" />' . ' ' .
 	_('Enter Supplier Invoice') . ': ' . $SupplierName . '</p>';
 if (isset($_GET['SupplierID']) AND $_GET['SupplierID']!=''){
 
@@ -102,7 +102,7 @@ if (isset($_GET['SupplierID']) AND $_GET['SupplierID']!=''){
 
 	$LocalTaxProvinceResult = DB_query("SELECT taxprovinceid
 								FROM locations
-								WHERE loccode = '" . $_SESSION['UserStockLocation'] . "'", $db);
+								WHERE loccode = '" . $_SESSION['UserStockLocation'] . "'");
 
 	if(DB_num_rows($LocalTaxProvinceResult)==0){
 		prnMsg(_('The tax province associated with your user account has not been set up in this database. Tax calculations are based on the tax group of the supplier and the tax province of the user entering the invoice. The system administrator should redefine your account with a valid default stocking location and this location should refer to a valid tax province'),'error');
@@ -319,7 +319,7 @@ if (isset($_GET['ReceivePO']) AND $_GET['ReceivePO']!=''){
 															FROM fixedassets
 															INNER JOIN fixedassetcategories
 															ON fixedassets.assetcategoryid=fixedassetcategories.categoryid
-															WHERE assetid='" . $OrderLine->AssetID . "'",$db);
+															WHERE assetid='" . $OrderLine->AssetID . "'";
 						if (DB_num_rows($CheckAssetExistsResult)==1){ //then work with the assetid provided
 
 							/*Need to add a fixedassettrans for the cost of the asset being received */
@@ -1177,7 +1177,7 @@ then do the updates and inserts to process the invoice entered */
 				$result = DB_query("SELECT wipact FROM stockcategory
 									INNER JOIN stockmaster ON
 									stockcategory.categoryid=stockmaster.categoryid
-									WHERE stockmaster.stockid='" . $Contract->ContractRef . "'",$db);
+									WHERE stockmaster.stockid='" . $Contract->ContractRef . "'");
 				$WIPRow = DB_fetch_row($result);
 				$WIPAccount = $WIPRow[0];
 				$SQL = "INSERT INTO gltrans (type,
@@ -1356,7 +1356,7 @@ then do the updates and inserts to process the invoice entered */
 								$result = DB_query("SELECT costact
 													FROM fixedassets INNER JOIN fixedassetcategories
 													ON fixedassets.assetcategoryid= fixedassetcategories.categoryid
-													WHERE assetid='" . $EnteredGRN->AssetID . "'",$db);
+													WHERE assetid='" . $EnteredGRN->AssetID . "'");
 								if (DB_num_rows($result)!=0){ // the asset exists
 									$AssetRow = DB_fetch_array($result);
 									$GLCode = $AssetRow['costact'];
@@ -1580,8 +1580,7 @@ then do the updates and inserts to process the invoice entered */
 						/*Get the location that the stock was booked into */
 						$result = DB_query("SELECT intostocklocation
 											FROM purchorders
-											WHERE orderno='" . $EnteredGRN->PONo . "'",
-											$db);
+											WHERE orderno='" . $EnteredGRN->PONo . "'");
 						$LocRow = DB_fetch_array($result);
 						$LocCode = $LocRow['intostocklocation'];
 
@@ -1642,8 +1641,7 @@ then do the updates and inserts to process the invoice entered */
 																FROM salesanalysis
 																WHERE salesanalysis.stockid = '" . $EnteredGRN->ItemCode . "'
 																AND salesanalysis.budgetoractual=1
-																AND periodno='" . $PeriodAllocated . "'",
-																$db);
+																AND periodno='" . $PeriodAllocated . "'");
 									if (DB_num_rows($SalesAnalResult)>0){
 										while ($SalesAnalRow = DB_fetch_array($SalesAnalResult) AND $QuantityVarianceAllocated >0){
 											if ($SalesAnalRow['qty']<=$QuantityVarianceAllocated){
@@ -1664,7 +1662,9 @@ then do the updates and inserts to process the invoice entered */
 																			AND salesperson='" . $SalesAnalRow['salesperson'] . "'
 																			AND stkcategory='" . $SalesAnalRow['stkcategory'] . "'
 																			AND budgetoractual=1",
-																			$db,$ErrMsg,$DbgMsg,True);
+																			$ErrMsg,
+																			$DbgMsg,
+																			True);
 										}
 									} //end if there were sales in that period
 									$PeriodAllocated--; //decrement the period
@@ -1688,8 +1688,7 @@ then do the updates and inserts to process the invoice entered */
 													AND qty < 0
 													AND stockid='" . $EnteredGRN->ItemCode . "'
 													AND trandate>='" . FormatDateForSQL(DateAdd($_SESSION['SuppTrans']->TranDate,'m',-6)) . "'
-													ORDER BY stkmoveno DESC",
-													$db);
+													ORDER BY stkmoveno DESC");
 								$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock movements for invoices cannot be updated for the cost variances on this purchase invoice');
 								$QuantityVarianceAllocated = $EnteredGRN->This_QuantityInv;
 								while ($StkMoveRow = DB_fetch_array($result) AND $QuantityVarianceAllocated >0){
@@ -1698,7 +1697,9 @@ then do the updates and inserts to process the invoice entered */
 											$result = DB_query("UPDATE stockmoves
 																SET standardcost = '" . $ActualCost . "'
 																WHERE stkmoveno = '" . $StkMoveRow['stkmoveno'] . "'",
-																$db,$ErrMsg,$DbgMsg,True);
+																$ErrMsg,
+																$DbgMsg,
+																True);
 										}
 									} else { //Only $QuantityVarianceAllocated left to allocate so need need to apportion cost using weighted average
 										if ($StkMoveRow['type']==10) { //its a sales invoice
@@ -1708,7 +1709,9 @@ then do the updates and inserts to process the invoice entered */
 											$UpdStkMovesResult = DB_query("UPDATE stockmoves
 																SET standardcost = '" . $WACost . "'
 																WHERE stkmoveno = '" . $StkMoveRow['stkmoveno'] . "'",
-																$db,$ErrMsg,$DbgMsg,True);
+																$ErrMsg,
+																$DbgMsg,
+																True);
 										}
 									}
 									$QuantityVarianceAllocated+=$StkMoveRow['qty'];
@@ -1860,7 +1863,7 @@ then do the updates and inserts to process the invoice entered */
 			/*Now update the asset cost in fixedassets table */
 			$result = DB_query("SELECT datepurchased
 								FROM fixedassets
-								WHERE assetid='" . $AssetAddition->AssetID . "'",$db);
+								WHERE assetid='" . $AssetAddition->AssetID . "'");
 			$AssetRow = DB_fetch_array($result);
 
 			$SQL = "UPDATE fixedassets SET cost = cost + " . ($AssetAddition->Amount  / $_SESSION['SuppTrans']->ExRate) ;

@@ -137,7 +137,7 @@ if ($_SESSION['Trans'][$TransID]->Amount<0){ //its a payment
 								suppname
 						FROM suppliers
 						WHERE currcode='" . $_SESSION['Statement']->CurrCode . "'
-						ORDER BY suppname",$db);
+						ORDER BY suppname");
 	if ($_SESSION['Trans'][$TransID]->SupplierID ==''){
 		echo '<option selected value="">' . _('GL Payment') . '</option>';
 	} else {
@@ -168,7 +168,7 @@ if ($_SESSION['Trans'][$TransID]->Amount<0){ //its a payment
 								name
 						FROM debtorsmaster
 						WHERE currcode='" . $_SESSION['Statement']->CurrCode . "'
-						ORDER BY name",$db);
+						ORDER BY name");
 	if ($_SESSION['Trans'][$TransID]->DebtorNo ==''){
 		echo '<option selected value="">' . _('GL Receipt') . '</option>';
 	} else {

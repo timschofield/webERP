@@ -137,16 +137,16 @@ if (isset($_POST['submit'])) {
 										accumdepnact
 								FROM fixedassets INNER JOIN fixedassetcategories
 								ON fixedassets.assetcategoryid=fixedassetcategories.categoryid
-								WHERE assetid='" . $AssetID . "'",$db);
+								WHERE assetid='" . $AssetID . "'");
 			$OldDetails = DB_fetch_array($result);
 			if ($OldDetails['assetcategoryid'] !=$_POST['AssetCategoryID']  AND $OldDetails['cost']!=0){
 
-				$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']),$db);
+				$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 				/* Get the new account codes for the new asset category */
 				$result = DB_query("SELECT costact,
 											accumdepnact
 									FROM fixedassetcategories
-									WHERE categoryid='" . $_POST['AssetCategoryID'] . "'",$db);
+									WHERE categoryid='" . $_POST['AssetCategoryID'] . "'");
 				$NewAccounts = DB_fetch_array($result);
 
 				$TransNo = GetNextTransNo( 42, $db); /* transaction type is asset category change */
@@ -297,7 +297,7 @@ if (isset($_POST['submit'])) {
 								costact
 						FROM fixedassets INNER JOIN fixedassetcategories
 						ON fixedassets.assetcategoryid=fixedassetcategories.categoryid
-						WHERE assetid='" . $AssetID . "'", $db);
+						WHERE assetid='" . $AssetID . "'");
 	$AssetRow = DB_fetch_array($result);
 	$NBV = $AssetRow['cost'] -$AssetRow['accumdepn'];
 	if ($NBV!=0) {
@@ -614,7 +614,7 @@ if (isset($AssetRow)){
 			<td>' . _('P/L after disposal') . ':</td>
 			<td class="number">' . locale_number_format(-$AssetRow['cost']+$AssetRow['accumdepn']+$AssetRow['disposalproceeds'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 		</tr>';
-	
+
 	}else{
 		echo'<tr>
 			<td>' . _('Net Book Value') . ':</td>
@@ -628,7 +628,7 @@ if (isset($AssetRow)){
 					ON fixedassettrans.periodno=periods.periodno
 					WHERE transtype=44
 					GROUP BY periods.lastdate_in_period
-					ORDER BY periods.lastdate_in_period DESC",$db);
+					ORDER BY periods.lastdate_in_period DESC");
 
 	$LastDepnRun = DB_fetch_row($result);
 	if(DB_num_rows($result)==0){

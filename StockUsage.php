@@ -34,7 +34,7 @@ $result = DB_query("SELECT description,
 						mbflag,
 						decimalplaces
 					FROM stockmaster
-					WHERE stockid='".$StockID."'",$db);
+					WHERE stockid='".$StockID."'");
 $myrow = DB_fetch_row($result);
 
 $DecimalPlaces = $myrow[3];

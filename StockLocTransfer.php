@@ -78,8 +78,7 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 					$result = DB_query("SELECT quantity
 										FROM locstock
 										WHERE stockid='" . $StockID . "'
-										AND loccode='".$_POST['FromStockLocation']."'",
-										$db);
+										AND loccode='".$_POST['FromStockLocation']."'");
 					$CheckStockRow = DB_fetch_array($result);
 					if (($CheckStockRow['quantity']-$InTransitQuantity) < $Quantity){
 						$InputError = True;
@@ -146,8 +145,7 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 						$result = DB_query("SELECT quantity
 											FROM locstock
 											WHERE stockid='" . $_POST['StockID' . $i] . "'
-											AND loccode='".$_POST['FromStockLocation']."'",
-											$db);
+											AND loccode='".$_POST['FromStockLocation']."'");
 
 						$myrow = DB_fetch_array($result);
 						if (($myrow['quantity']-$InTransitQuantity) < filter_number_format($_POST['StockQTY' . $i])){
@@ -199,7 +197,7 @@ if(isset($_POST['Submit']) AND $InputError==False){
 			$DecimalsSql = "SELECT decimalplaces
 							FROM stockmaster
 							WHERE stockid='" . $_POST['StockID' . $i] . "'";
-			$DecimalResult = DB_Query($DecimalsSql, $db);
+			$DecimalResult = DB_query($DecimalsSql);
 			$DecimalRow = DB_fetch_array($DecimalResult);
 			$sql = "INSERT INTO loctransfers (reference,
 								stockid,

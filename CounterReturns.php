@@ -1495,7 +1495,7 @@ if (isset($_POST['ProcessReturn']) AND $_POST['ProcessReturn'] != ''){
 			$result = DB_query("SELECT rate FROM currencies
 								INNER JOIN bankaccounts
 								ON currencies.currabrev=bankaccounts.currcode
-								WHERE bankaccounts.accountcode='" . $_POST['BankAccount'] . "'",$db);
+								WHERE bankaccounts.accountcode='" . $_POST['BankAccount'] . "'");
 			$myrow = DB_fetch_row($result);
 			$BankAccountExRate = $myrow[0];
 

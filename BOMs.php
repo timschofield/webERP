@@ -17,7 +17,9 @@ function display_children($Parent, $Level, &$BOMTree) {
 	// retrive all children of parent
 	$c_result = DB_query("SELECT parent,
 								component
-						FROM bom WHERE parent='" . $Parent. "' ORDER BY sequence ASC" ,$db);
+						FROM bom
+						WHERE parent='" . $Parent. "'
+						ORDER BY sequence ASC");
 	if (DB_num_rows($c_result) > 0) {
 
 		while ($row = DB_fetch_array($c_result)) {
@@ -465,7 +467,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
      echo '<table class="selection">';
 	 echo '<tr><td><div class="centre">' . _('Manufactured parent items').' : ';
 	 while ($myrow = DB_fetch_array($result)){
-	 	   echo (($ix)?', ':'') . '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Select='.$myrow['parent'].'">' . 
+	 	   echo (($ix)?', ':'') . '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Select='.$myrow['parent'].'">' .
 			$myrow['description'].'&nbsp;('.$myrow['parent'].')</a>';
 			$ix++;
 	 } //end while loop
@@ -489,7 +491,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		echo '<tr><td><div class="centre">' . _('Assembly parent items').' : ';
 	 	$ix = 0;
 	 	while ($myrow = DB_fetch_array($result)){
-	 	   echo (($ix)?', ':'') . '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Select='.$myrow['parent'].'">' . 
+	 	   echo (($ix)?', ':'') . '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Select='.$myrow['parent'].'">' .
 			$myrow['description'].'&nbsp;('.$myrow['parent'].')</a>';
 			$ix++;
 	 	} //end while loop
@@ -514,7 +516,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		echo '<tr><td><div class="centre">' . _('Kit sets').' : ';
 	 	$ix = 0;
 	 	while ($myrow = DB_fetch_array($result)){
-	 	   echo (($ix)?', ':'') . '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Select='.$myrow['parent'].'">' . 
+	 	   echo (($ix)?', ':'') . '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Select='.$myrow['parent'].'">' .
 			$myrow['description'].'&nbsp;('.$myrow['parent'].')</a>';
 			$ix++;
 	 	} //end while loop
@@ -700,18 +702,18 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
                 <td>' . _('Sequence in BOM') . ':</td>
                 <td><input type="text" class="integer" required="required" size="5" name="Sequence" value="' . $_POST['Sequence'] . '" /></td>
             </tr>';
-		
+
 		echo '<tr>
 				<td>' . _('Location') . ': </td>
 				<td><select tabindex="2" name="LocCode">';
 
 		DB_free_result($result);
-		$sql = "SELECT locationname, 
-					locations.loccode 
-				FROM locations 
-				INNER JOIN locationusers 
-					ON locationusers.loccode=locations.loccode 
-					AND locationusers.userid='" .  $_SESSION['UserID'] . "' 
+		$sql = "SELECT locationname,
+					locations.loccode
+				FROM locations
+				INNER JOIN locationusers
+					ON locationusers.loccode=locations.loccode
+					AND locationusers.userid='" .  $_SESSION['UserID'] . "'
 					AND locationusers.canupd=1
 				WHERE locations.usedforwo = 1";
 		$result = DB_query($sql);

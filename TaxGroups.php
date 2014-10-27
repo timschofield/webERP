@@ -43,7 +43,7 @@ if(isset($_POST['submit']) OR isset($_GET['remove']) OR isset($_GET['add']) ) {
 
 			$result = DB_query("SELECT taxgroupid
 								FROM taxgroups
-								WHERE taxgroupdescription='" . $_POST['GroupName'] . "'",$db);
+								WHERE taxgroupdescription='" . $_POST['GroupName'] . "'");
 			if(DB_num_rows($result)==1) {
 				prnMsg( _('A new tax group could not be added because a tax group already exists for') . ' ' . $_POST['GroupName'],'warn');
 				unset($sql);
@@ -120,7 +120,7 @@ if(isset($_POST['submit']) OR isset($_GET['remove']) OR isset($_GET['add']) ) {
 			prnMsg(_('It is inappropriate to set tax on tax where the tax is the first in the calculation order. The system has changed it back to no tax on tax for this tax authority'),'warning');
 			$Result = DB_query("UPDATE taxgrouptaxes SET taxontax=0
 								WHERE taxgroupid='" . $SelectedGroup . "'
-								AND taxauthid='" . $myrow['taxauthid'] . "'",$db);
+								AND taxauthid='" . $myrow['taxauthid'] . "'");
 		}
 	}
 

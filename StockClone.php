@@ -266,7 +266,7 @@ if (isset($_POST['submit'])) {
 			//but lets be really sure here
 			$result = DB_query("SELECT stockid
 								FROM stockmaster
-								WHERE stockid='" . $_POST['StockID'] ."'",$db);
+								WHERE stockid='" . $_POST['StockID'] ."'");
 			if (DB_num_rows($result)==1){
 				prnMsg(_('The stock code entered is already in the database - duplicate stock codes are prohibited by the system. Try choosing an alternative stock code'),'error');
 				$Errors[$i] = 'DuplicateStockID';
@@ -351,7 +351,9 @@ if (isset($_POST['submit'])) {
 													VALUES ('" . $_POST['StockID'] . "',
 														'" . $_POST['PropID' . $i] . "',
 														'" . $_POST['PropValue' . $i] . "')",
-								$db,$ErrMsg,$DbgMsg,true);
+										$ErrMsg,
+										$DbgMsg,
+										true);
 					} //end of loop around properties defined for the category
 
 					//Add data to locstock
@@ -476,7 +478,7 @@ if (isset($_POST['submit'])) {
 									labourcost,
 									overheadcost,
 									lastcost
-							FROM stockmaster 
+							FROM stockmaster
 							WHERE stockmaster.stockid='".$_POST['OldStockID']."'";
                         $ErrMsg = _('The entered item code does not exist');
                         $OldResult = DB_query($sql,$ErrMsg);
@@ -1026,8 +1028,7 @@ if ( (!isset($_POST['UpdateCategories']) AND ($InputError!=1))  OR $_POST['New']
                 $PropValResult = DB_query("SELECT value FROM
                                             stockitemproperties
                                             WHERE stockid='" . $_POST['StockID'] . "'
-                                            AND stkcatpropid ='" . $PropertyRow['stkcatpropid']."'",
-                                        $db);
+                                            AND stkcatpropid ='" . $PropertyRow['stkcatpropid']."'");
                 $PropValRow = DB_fetch_row($PropValResult);
                 $PropertyValue = $PropValRow[0];
             } else {

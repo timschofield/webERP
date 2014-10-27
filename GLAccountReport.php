@@ -42,7 +42,7 @@ if (isset($_POST['RunReport'])){
 								accountgroups.pandl
 							FROM accountgroups
 							INNER JOIN chartmaster ON accountgroups.groupname=chartmaster.group_
-							WHERE chartmaster.accountcode='" . $SelectedAccount . "'",$db);
+							WHERE chartmaster.accountcode='" . $SelectedAccount . "'");
 		$AccountDetailRow = DB_fetch_row($result);
 		$AccountName = $AccountDetailRow[0];
 		if ($AccountDetailRow[1]==1){
@@ -238,7 +238,7 @@ if (isset($_POST['RunReport'])){
 	$sql = "SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode";
 	$AccountsResult = DB_query($sql);
 	$i=0;
-	while ($myrow=DB_fetch_array($AccountsResult,$db)){
+	while ($myrow=DB_fetch_array($AccountsResult)){
 		if(isset($_POST['Account'][$i]) AND $myrow['accountcode'] == $_POST['Account'][$i]){
 			echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' ' . $myrow['accountname'] . '</option>';
 			$i++;
@@ -254,7 +254,7 @@ if (isset($_POST['RunReport'])){
 	$Periods = DB_query($sql);
 	$id=0;
 
-	while ($myrow=DB_fetch_array($Periods,$db)){
+	while ($myrow=DB_fetch_array($Periods)){
 		if (isset($SelectedPeriod[$id]) and $myrow['periodno'] == $SelectedPeriod[$id]){
 			echo '<option selected="selected" value="' . $myrow['periodno'] . '">' . _(MonthAndYearFromSQLDate($myrow['lastdate_in_period'])) . '</option>';
 			$id++;

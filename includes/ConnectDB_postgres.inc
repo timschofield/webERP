@@ -114,7 +114,7 @@ function DB_error_msg(&$Conn){
 }
 
 function DB_Last_Insert_ID(&$Conn, $table, $fieldname) {
-	$tempres = DB_query ("SELECT currval('".$table."_".$fieldname."_seq') FROM ".$table,$Conn);
+	$tempres = DB_query ("SELECT currval('".$table."_".$fieldname."_seq') FROM ".$table);
 	$Res = pg_fetch_result( $tempres, 0, 0 );
 	DB_free_result($tempres);
 	return $Res;
@@ -129,13 +129,13 @@ function INTERVAL( $val, $Inter ) {
 	return "\n(CAST( (" . $val . ") as text ) || ' ". $Inter ."')::interval\n";
 }
 function DB_show_tables (&$Conn){
-	$Result =DB_query("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'",$Conn);
+	$Result =DB_query("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'");
 	Return $Result;
 }
 function DB_show_fields($TableName,&$Conn){
-	$Result = DB_query("SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_name='" . $TableName . "'",$Conn);
+	$Result = DB_query("SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_name='" . $TableName . "'");
 	if (DB_num_rows($Result)==1){
-		$Result = DB_query("SELECT column_name FROM information_schema.columns WHERE table_name ='$TableName'",$Conn);
+		$Result = DB_query("SELECT column_name FROM information_schema.columns WHERE table_name ='$TableName'");
 		Return $Result;
 	}
 }
@@ -143,12 +143,11 @@ function DB_Maintenance($Conn){
 
 	prnMsg(_('The system has just run the regular database administration and optimisation routine'),'info');
 
-	$Result = DB_query('VACUUM ANALYZE',$Conn);
+	$Result = DB_query('VACUUM ANALYZE');
 
 	$Result = DB_query("UPDATE config
 				SET confvalue='" . Date('Y-m-d') . "'
-				WHERE confname='DB_Maintenance_LastRun'",
-				$Conn);
+				WHERE confname='DB_Maintenance_LastRun'");
 }
 
 ?>

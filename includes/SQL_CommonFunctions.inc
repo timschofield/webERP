@@ -344,8 +344,7 @@ function EnsureGLEntriesBalance ($TransType, $TransTypeNo, $db) {
 	$result = DB_query("SELECT SUM(amount)
 						FROM gltrans
 						WHERE type = '" . $TransType . "'
-						AND typeno = '" . $TransTypeNo . "'",
-						$db);
+						AND typeno = '" . $TransTypeNo . "'");
 	$myrow = DB_fetch_row($result);
 	$Difference = $myrow[0];
 	if (abs($Difference)!=0){
@@ -357,13 +356,11 @@ function EnsureGLEntriesBalance ($TransType, $TransTypeNo, $db) {
 								FROM gltrans
 								WHERE type = '" . $TransType . "'
 								AND typeno = '" . $TransTypeNo . "'
-								GROUP BY counterindex",
-								$db);
+								GROUP BY counterindex");
 			$myrow = DB_fetch_array($result);
 			$TransToAmend = $myrow['counterindex'];
 			$result = DB_query("UPDATE gltrans SET amount = amount - " . $Difference . "
-								WHERE counterindex = '" . $TransToAmend . "'",
-								$db);
+								WHERE counterindex = '" . $TransToAmend . "'");
 
 		}
 	}

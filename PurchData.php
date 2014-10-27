@@ -160,7 +160,7 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
 				$UpdResult = DB_query($sql, $ErrMsg, $DbgMsg);
 			}
 		} /*end loop through all supplier discounts */
-		
+
 		/*Now check to see if a new Supplier Discount has been entered */
 		if (mb_strlen($_POST['DiscountNarrative'])==0 OR $_POST['DiscountNarrative']==''){
 			/* A new discount entry has not been entered */
@@ -193,9 +193,9 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
 			$InsertResult = DB_query($sql, $ErrMsg, $DbgMsg);
 			prnMsg(_('A new supplier purchasing discount record was entered successfully'),'success');
 		}
-        
+
     }
-    
+
     if ($InputError == 0 AND isset($_POST['AddRecord'])) {
 	/*  insert took place and need to clear the form  */
         unset($SupplierID);
@@ -218,7 +218,7 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
 			unset($_POST['DiscountEffectiveTo' . $i]);
 		}
 		unset($_POST['NumberOfDiscounts']);
-		
+
     }
 }
 
@@ -239,7 +239,7 @@ if ($Edit == false) {
 	$ItemResult = DB_query("SELECT description FROM stockmaster WHERE stockid='" . $StockID . "'");
 	$DescriptionRow = DB_fetch_array($ItemResult);
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . ' ' . _('For Stock Code') . ' - ' . $StockID . ' - ' . $DescriptionRow['description'] . '</p><br />';
-	
+
     $sql = "SELECT purchdata.supplierno,
 				suppliers.suppname,
 				purchdata.price,
@@ -265,7 +265,7 @@ if ($Edit == false) {
 		prnMsg(_('There is no purchasing data set up for the part selected'), 'info');
 		$NoPurchasingData=1;
     } else if ($StockID != '') {
-		
+
         echo '<table cellpadding="2" class="selection">';
         $TableHeader = '<tr>
 							<th class="ascending">' . _('Supplier') . '</th>
@@ -348,7 +348,7 @@ if ($Edit == false) {
 
 if (isset($SupplierID) AND $SupplierID != '' AND !isset($_POST['SearchSupplier'])) {
 	/*NOT EDITING AN EXISTING BUT SUPPLIER selected OR ENTERED*/
-	
+
     $sql = "SELECT suppliers.suppname,
 					suppliers.currcode,
 					currencies.decimalplaces AS currdecimalplaces
@@ -444,7 +444,7 @@ if (isset($SuppliersResult)) {
 								stockmaster.units,
 								stockmaster.mbflag
 						FROM stockmaster
-						WHERE stockmaster.stockid='".$StockID."'", $db);
+						WHERE stockmaster.stockid='".$StockID."'");
 		$myrow = DB_fetch_row($result);
 		$StockUOM = $myrow[1];
 		if (DB_num_rows($result) == 1) {
@@ -535,7 +535,7 @@ if (!isset($SuppliersResult)) {
 				WHERE purchdata.supplierno='" . $SupplierID . "'
 				AND purchdata.stockid='" . $StockID . "'
 				AND purchdata.effectivefrom='" . $EffectiveFrom . "'";
-		
+
 		$ErrMsg = _('The supplier purchasing details for the selected supplier and item could not be retrieved because');
 		$EditResult = DB_query($sql, $ErrMsg);
 		$myrow = DB_fetch_array($EditResult);
@@ -553,7 +553,7 @@ if (!isset($SuppliersResult)) {
 		$_POST['SuppliersUOM'] = $myrow['suppliersuom'];
 		$_POST['SupplierDescription'] = $myrow['supplierdescription'];
 		$_POST['LeadTime'] = locale_number_format($myrow['leadtime'],'Variable');
-	
+
 		$_POST['ConversionFactor'] = locale_number_format($myrow['conversionfactor'],'Variable');
 		$_POST['Preferred'] = $myrow['preferred'];
 		$_POST['MinOrderQty'] = locale_number_format($myrow['minorderqty'],'Variable');
@@ -662,7 +662,7 @@ if (!isset($SuppliersResult)) {
 		<tr>
 			<td>' . _('Preferred Supplier') . ':</td>
 			<td><select name="Preferred">';
-			
+
 	if ($_POST['Preferred'] == 1) {
 		echo '<option selected="selected" value="1">' . _('Yes') . '</option>
 				<option value="0">' . _('No')  . '</option>';
@@ -675,10 +675,10 @@ if (!isset($SuppliersResult)) {
 		</table>
 		<br />
 		<div class="centre">';
-		
+
 	if ($Edit == true) {
 		/* A supplier purchase price is being edited - also show the discounts applicable to the supplier  for update/deletion*/
-		
+
 		/*List the discount records for this supplier */
 		$sql = "SELECT id,
 						discountnarrative,
@@ -693,7 +693,7 @@ if (!isset($SuppliersResult)) {
 		$ErrMsg = _('The supplier discounts could not be retrieved because');
 		$DbgMsg = _('The SQL to retrieve supplier discounts for this item that failed was');
 		$DiscountsResult = DB_query($sql, $ErrMsg, $DbgMsg);
-		
+
 		echo '<table cellpadding="2" colspan="7" class="selection">
 				<tr>
 					<th class="ascending">' . _('Discount Name') . '</th>
@@ -737,14 +737,14 @@ if (!isset($SuppliersResult)) {
 					$StockID,
 					$EffectiveFrom,
 					$SupplierID);
-	
+
 			$i++;
 		}//end of while loop
-	
+
 		echo '<input type="hidden" name="NumberOfDiscounts" value="' . $i . '" />';
-		
+
 		$DefaultEndDate =  Date($_SESSION['DefaultDateFormat'], mktime(0,0,0,Date('m')+1,0,Date('y')));
-    
+
 	    echo '<tr>
 				<td><input type="text" name="DiscountNarrative" value="" maxlength="20" size="20" /></td>
 				<td><input type="text" class="number" name="DiscountAmount" value="0" maxlength="10" size="11" /></td>
@@ -754,10 +754,10 @@ if (!isset($SuppliersResult)) {
 			</tr>
 			</table>
 			<br/>';
-		
+
 		echo '<input type="submit" name="UpdateRecord" value="' . _('Update') . '" />';
 		echo '<input type="hidden" name="Edit" value="1" />';
-		
+
 		/*end if there is a supplier purchasing price being updated */
 	} else {
 		echo '<input type="submit" name="AddRecord" value="' . _('Add') . '" />';
@@ -765,7 +765,7 @@ if (!isset($SuppliersResult)) {
 
 	echo '</div>
 		<div class="centre">';
-		
+
 	if (isset($StockLocation) AND isset($StockID) AND mb_strlen($StockID) != 0) {
 		echo '<br /><a href="' . $RootPath . '/StockStatus.php?StockID=' . $StockID . '">' . _('Show Stock Status') . '</a>';
 		echo '<br /><a href="' . $RootPath . '/StockMovements.php?StockID=' . $StockID . '&StockLocation=' . $StockLocation . '">' . _('Show Stock Movements') . '</a>';

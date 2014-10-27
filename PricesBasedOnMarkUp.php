@@ -326,7 +326,7 @@ if (isset($_POST['UpdatePrices'])){
 													AND currabrev='" . $_POST['CurrCode'] . "'
 													AND startdate <='" . Date('Y-m-d') . "'
 													AND (enddate>='" . Date('Y-m-d') . "' OR enddate='0000-00-00')
-													AND stockid='" . $myrow['stockid'] . "'",$db);
+													AND stockid='" . $myrow['stockid'] . "'");
 				if (DB_num_rows($CurrentPriceResult)==1){
 					$DayPriorToNewPrice = DateAdd($_POST['PriceStartDate'],'d',-1);
 					$CurrentPriceRow = DB_fetch_array($CurrentPriceResult);

@@ -21,7 +21,7 @@ echo '<div class="centre"><p class="page_title_text"><img src="' . $RootPath . '
 			 <td><select name="Location[]" multiple="multiple">
 				<option value="All" selected="selected">' . _('All') . '</option>';;
 	$sql = "SELECT 	locations.loccode,locationname
-			FROM 	locations 
+			FROM 	locations
 			INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 			ORDER BY locationname";
 	$locationresult = DB_query($sql);
@@ -214,7 +214,7 @@ echo '<div class="centre"><p class="page_title_text"><img src="' . $RootPath . '
 				FROM locstock
 				INNER JOIN locationusers ON locationusers.loccode=locstock.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 				WHERE stockid = '" . $myrow['stockid'] . "'" .
-				$WhereLocation , $db);
+				$WhereLocation);
 		$QOHRow = DB_fetch_row($QOHResult);
 		$QOH = $QOHRow[0];
 

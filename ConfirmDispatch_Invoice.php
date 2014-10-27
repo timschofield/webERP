@@ -948,7 +948,8 @@ invoices can have a zero amount but there must be a quantity to invoice */
 			 need the MBFlag later too so save it to $MBFlag */
 			$Result = DB_query("SELECT mbflag
 								FROM stockmaster
-								WHERE stockid = '" . $OrderLine->StockID . "'",$db, _('Cannot retrieve the mbflag'));
+								WHERE stockid = '" . $OrderLine->StockID . "'",
+								 _('Cannot retrieve the mbflag'));
 
 			$myrow = DB_fetch_row($Result);
 			$MBFlag = $myrow[0];
@@ -1000,7 +1001,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 				$DbgMsg = _('The SQL that failed was');
 				$AssResult = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
-				while ($AssParts = DB_fetch_array($AssResult,$db)){
+				while ($AssParts = DB_fetch_array($AssResult)){
 
 					$StandardCost += ($AssParts['standard'] * $AssParts['quantity']) ;
 					/* Need to get the current location quantity

@@ -349,7 +349,7 @@ $SOH_DateFields = array ('orddate',
 					VALUES (" . mb_substr($FieldValues,0,-2). ")";
 		if (sizeof($Errors)==0) {
 
-			$result = api_DB_Query($sql, $db);
+			$result = api_DB_Query($sql);
 
 			if (DB_error_no($db) != 0) {
 				//$Errors[0] = DatabaseUpdateFailed;
@@ -447,7 +447,7 @@ $SOH_DateFields = array ('orddate',
 		}
 		$sql = mb_substr($sql,0,-2). " WHERE orderno='" . $OrderHeader['orderno']. "'";
 		if (sizeof($Errors)==0) {
-			$result = api_DB_Query($sql, $db);
+			$result = api_DB_Query($sql);
 			echo DB_error_no($db);
 			if (DB_error_no($db) != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
@@ -514,7 +514,7 @@ $SOH_DateFields = array ('orddate',
 			VALUES (" . mb_substr($FieldValues,0,-2) . ")";
 
 		if (sizeof($Errors)==0) {
-			$result = api_DB_Query($sql, $db);
+			$result = api_DB_Query($sql);
 			if (DB_error_no($db) != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
@@ -574,7 +574,7 @@ $SOH_DateFields = array ('orddate',
 				//echo $sql;
 				//exit;
 		if (sizeof($Errors)==0) {
-			$result = api_DB_Query($sql, $db);
+			$result = api_DB_Query($sql);
 			echo DB_error_no($db);
 			if (DB_error_no($db) != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
@@ -601,7 +601,7 @@ $SOH_DateFields = array ('orddate',
 			return $Errors;
 		}
 		$sql="SELECT * FROM salesorders WHERE orderno='".$OrderNo."'";
-		$result = api_DB_Query($sql, $db);
+		$result = api_DB_Query($sql);
 		if (sizeof($Errors)==0) {
 			return DB_fetch_array($result);
 		} else {
@@ -626,7 +626,7 @@ $SOH_DateFields = array ('orddate',
 			return $Errors;
 		}
 		$sql="SELECT * FROM salesorderdetails WHERE orderno='" . $OrderNo . "'";
-		$result = api_DB_Query($sql, $db);
+		$result = api_DB_query($sql);
 		if (sizeof($Errors)==0) {
 			return DB_fetch_array($result);
 		} else {
@@ -654,7 +654,7 @@ $SOH_DateFields = array ('orddate',
 												gllink_debtors,
 												gllink_stock
 										FROM companies
-										WHERE coycode=1",$db);
+										WHERE coycode=1");
 
 		$CompanyRecord = DB_fetch_array($ReadCoyResult);
 		if (DB_error_no($db) != 0) {
@@ -1259,7 +1259,7 @@ $SOH_DateFields = array ('orddate',
 										'" . $TotalFXTax . "',
 										'" . $OrderHeader['rate'] . "',
 										'" . $OrderHeader['shipvia'] . "',
-										'" . $OrderHeader['salesman'] . "')"; 
+										'" . $OrderHeader['salesman'] . "')";
 
 		$Result = api_DB_query($SQL,'','',true);
 

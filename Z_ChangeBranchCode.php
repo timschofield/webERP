@@ -12,7 +12,7 @@ if (isset($_POST['ProcessCustomerChange'])){
 							branchcode
 						FROM custbranch
 						WHERE debtorno='" . $_POST['DebtorNo'] . "'
-						AND branchcode='" . $_POST['OldBranchCode'] . "'",$db);
+						AND branchcode='" . $_POST['OldBranchCode'] . "'");
 	if (DB_num_rows($result)==0){
 		prnMsg (_('The customer branch code') . ': ' . $_POST['DebtorNo'] . ' - ' . $_POST['OldBranchCode'] . ' ' . _('does not currently exist as a customer branch code in the system'),'error');
 		include('includes/footer.inc');

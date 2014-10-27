@@ -49,7 +49,7 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Deb
 		$InputError = 1;
 		prnMsg(_('There is no stock item set up enter the stock code or select a stock item using the search page'), 'error');
 	}
-	
+
 	if (!is_numeric(filter_number_format($_POST['ConversionFactor']))) {
 		$InputError = 1;
 		unset($_POST['ConversionFactor']);
@@ -90,7 +90,7 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Deb
 		unset($debtorsmasterResult);
 		unset($DebtorNo);
     }
-    
+
     if ($InputError == 0 AND isset($_POST['AddRecord'])) {
 	/*  insert took place and need to clear the form  */
         unset($DebtorNo);
@@ -98,7 +98,7 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Deb
         unset($_POST['ConversionFactor']);
         unset($_POST['cust_description']);
         unset($_POST['cust_part']);
-        
+
     }
 }
 
@@ -118,7 +118,7 @@ if ($Edit == false) {
 	$ItemResult = DB_query("SELECT description FROM stockmaster WHERE stockid='" . $StockID . "'");
 	$DescriptionRow = DB_fetch_array($ItemResult);
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . ' ' . _('For Stock Code') . ' - ' . $StockID . ' - ' . $DescriptionRow['description'] . '</p><br />';
-	
+
     $sql = "SELECT custitem.debtorno,
 				debtorsmaster.name,
 				debtorsmaster.currcode,
@@ -138,7 +138,7 @@ if ($Edit == false) {
 		prnMsg(_('There is no customer data set up for the part selected'), 'info');
 		$NoCustItemData=1;
     } else if ($StockID != '') {
-		
+
         echo '<table cellpadding="2" class="selection">';
         $TableHeader = '<tr>
 							<th class="ascending">' . _('Customer') . '</th>
@@ -185,7 +185,7 @@ if ($Edit == false) {
 
 if (isset($DebtorNo) AND $DebtorNo != '' AND !isset($_POST['Searchcustomer'])) {
 	/*NOT EDITING AN EXISTING BUT customer selected OR ENTERED*/
-	
+
     $sql = "SELECT debtorsmaster.name,
 					debtorsmaster.currcode,
 					currencies.decimalplaces AS currdecimalplaces
@@ -280,7 +280,7 @@ if (isset($debtorsmasterResult) AND DB_num_rows($debtorsmasterResult) > 0) {
 								stockmaster.units,
 								stockmaster.mbflag
 						FROM stockmaster
-						WHERE stockmaster.stockid='".$StockID."'", $db);
+						WHERE stockmaster.stockid='".$StockID."'");
 		$myrow = DB_fetch_row($result);
 		$StockUOM = $myrow[1];
 		if (DB_num_rows($result) <> 1) {
@@ -357,12 +357,12 @@ if (!isset($debtorsmasterResult)) {
 					ON debtorsmaster.currcode = currencies.currabrev
 				WHERE custitem.debtorno='" . $DebtorNo . "'
 				AND custitem.stockid='" . $StockID . "'";
-		
+
 		$ErrMsg = _('The customer purchasing details for the selected customer and item could not be retrieved because');
 		$EditResult = DB_query($sql, $ErrMsg);
 		$myrow = DB_fetch_array($EditResult);
 		$name = $myrow['name'];
-				
+
 		$CurrCode = $myrow['currcode'];
 		$CurrDecimalPlaces = $myrow['currdecimalplaces'];
 		$_POST['customersUOM'] = $myrow['customersUOM'];
@@ -401,7 +401,7 @@ if (!isset($debtorsmasterResult)) {
 	if (!isset($CurrCode)) {
 		$CurrCode = '';
 	}
-	
+
 	if (!isset($_POST['customersUOM'])) {
 		$_POST['customersUOM'] = '';
 	}
@@ -443,11 +443,11 @@ if (!isset($debtorsmasterResult)) {
 			<td><input type="text" name="cust_description" maxlength="30" size="30" value="' . $_POST['cust_description'] . '" /></td>
 		</tr>';
 
-	
+
 	echo '</table>
 		<br />
 		<div class="centre">';
-		
+
 	if ($Edit == true) {
 		echo '<input type="submit" name="UpdateRecord" value="' . _('Update') . '" />';
 		echo '<input type="hidden" name="Edit" value="1" />';
@@ -457,7 +457,7 @@ if (!isset($debtorsmasterResult)) {
 
 	echo '</div>
 		<div class="centre">';
-		
+
 	if (isset($StockLocation) AND isset($StockID) AND mb_strlen($StockID) != 0) {
 		echo '<br /><a href="' . $RootPath . '/StockStatus.php?StockID=' . $StockID . '">' . _('Show Stock Status') . '</a>';
 		echo '<br /><a href="' . $RootPath . '/StockMovements.php?StockID=' . $StockID . '&StockLocation=' . $StockLocation . '">' . _('Show Stock Movements') . '</a>';

@@ -80,7 +80,6 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 							INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
 							WHERE woitems.stockid='" . $_POST['StockID'] . "'
 							AND workorders.wo='".$_POST['WO'] . "'",
-							$db,
 							$ErrMsg);
 
 	if (DB_num_rows($WOResult)==0){
@@ -210,8 +209,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 									FROM stockmaster INNER JOIN bom
 									ON stockmaster.stockid=bom.component
 									WHERE bom.parent='" . $_POST['StockID'] . "'
-									AND bom.loccode='" . $WORow['loccode'] . "'",
-									$db);
+									AND bom.loccode='" . $WORow['loccode'] . "'");
 			$CostRow = DB_fetch_row($CostResult);
 			if (is_null($CostRow[0]) OR $CostRow[0]==0){
 					$Cost =0;
@@ -221,8 +219,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 			//Need to refresh the worequirments with the bom components now incase they changed
 			$DelWORequirements = DB_query("DELETE FROM worequirements
 											WHERE wo='" . $_POST['WO'] . "'
-											AND parentstockid='" . $_POST['StockID'] . "'",
-											$db);
+											AND parentstockid='" . $_POST['StockID'] . "'");
 
 			//Recursively insert real component requirements
 			WoRealRequirements($db, $_POST['WO'], $WORow['loccode'], $_POST['StockID']);
@@ -316,8 +313,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 										  ON stockmaster.categoryid=stockcategory.categoryid
 										  WHERE wo='" . $_POST['WO'] . "'
 										  AND parentstockid='" .$_POST['StockID'] . "'
-										  AND autoissue=1",
-										  $db);
+										  AND autoissue=1");
 
 		$WOIssueNo = GetNextTransNo(28,$db);
 		while ($AutoIssueCompRow = DB_fetch_array($AutoIssueCompsResult)){
@@ -330,8 +326,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 				$CompQOHResult = DB_query("SELECT locstock.quantity
 											FROM locstock
 											WHERE locstock.stockid='" . $AutoIssueCompRow['stockid'] . "'
-											AND loccode= '" . $WORow['loccode'] . "'",
-											$db);
+											AND loccode= '" . $WORow['loccode'] . "'");
 				if (DB_num_rows($CompQOHResult)==1){
 							$LocQtyRow = DB_fetch_row($CompQOHResult);
 							$NewQtyOnHand = $LocQtyRow[0] - ($AutoIssueCompRow['qtypu'] * $QuantityReceived);
@@ -731,7 +726,9 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 										nextlotsnref='" . $LastRef . "'
 									WHERE wo='" . $_POST['WO'] . "'
 									AND stockid='" . $_POST['StockID'] . "'",
-									$db,$ErrMsg,$DbgMsg,true);
+									$ErrMsg,
+									$DbgMsg,
+									true);
 
 
 		$Result = DB_Txn_Commit($db);
@@ -784,7 +781,6 @@ $WOResult = DB_query("SELECT workorders.loccode,
 					ON woitems.stockid=stockmaster.stockid
 					INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
 					WHERE woitems.stockid='" . $_POST['StockID'] . "' AND workorders.wo='".$_POST['WO'] . "'",
-					$db,
 					$ErrMsg);
 
 if (DB_num_rows($WOResult)==0){
@@ -847,12 +843,12 @@ echo '<table class="selection">
 if (!isset($_POST['IntoLocation'])){
 		$_POST['IntoLocation']=$WORow['loccode'];
 }
-$LocResult = DB_query("SELECT locations.loccode,locationname 
+$LocResult = DB_query("SELECT locations.loccode,locationname
 						FROM locations
-						INNER JOIN locationusers 
-							ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' 
+						INNER JOIN locationusers
+							ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "'
 							AND locationusers.canupd=1
-						WHERE locations.usedforwo = 1",$db);
+						WHERE locations.usedforwo = 1");
 while ($LocRow = DB_fetch_array($LocResult)){
 	if ($_POST['IntoLocation'] ==$LocRow['loccode']){
 		echo '<option selected="selected" value="' . $LocRow['loccode'] .'">' . $LocRow['locationname'] . '</option>';
@@ -895,7 +891,7 @@ if($WORow['controlled']==1){ //controlled
 			$WOSNResult = DB_query("SELECT serialno, qualitytext
 									FROM woserialnos
 									WHERE wo='" . $_POST['WO'] . "'
-									AND stockid='" . $_POST['StockID'] . "'",$db);
+									AND stockid='" . $_POST['StockID'] . "'");
 			if (DB_num_rows($WOSNResult)==0){
 				echo '<th colspan="5">' . _('No serial numbers defined yet') . '</th></tr>';
 			} else {
@@ -947,7 +943,7 @@ if($WORow['controlled']==1){ //controlled
 											qualitytext
 									FROM woserialnos
 									WHERE wo='" . $_POST['WO'] . "'
-									AND stockid='" . $_POST['StockID'] . "'",$db);
+									AND stockid='" . $_POST['StockID'] . "'");
 			if (DB_num_rows($WOSNResult)==0){
 				echo '<th colspan="5">' . _('No batches/lots defined yet') . '</th>
 					</tr>';

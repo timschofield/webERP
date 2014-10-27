@@ -404,7 +404,7 @@ if (DB_num_rows($LineItemsResult) > 0) {
 
 					$QOHResult = DB_query("SELECT SUM(quantity)
 											FROM locstock
-											WHERE stockid ='" . $myrow['itemcode'] . "'",$db);
+											WHERE stockid ='" . $myrow['itemcode'] . "'");
 					$QOHRow = DB_fetch_row($QOHResult);
 					$QOH=$QOHRow[0];
 
@@ -692,7 +692,6 @@ if ( isset($_POST['Close']) ){ /* OK do the shipment close journals */
 								   SET quantityord=quantityrecd,
 									   completed=1
 							WHERE shiptref = '" . $_GET['SelectedShipment'] ."'",
-							$db,
 							_('Could not complete the purchase order lines on this shipment'),
 							'',
 							TRUE);

@@ -141,8 +141,7 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 								topmargin*" . $PtsPerMM . " as label_topmargin,
 								leftmargin*" . $PtsPerMM . " as label_leftmargin
 						FROM labels
-						WHERE labelid='" . $_POST['LabelID'] . "'",
-						$db);
+						WHERE labelid='" . $_POST['LabelID'] . "'");
 	$LabelDimensions = DB_fetch_array($result);
 
 	$result = DB_query("SELECT fieldvalue,
@@ -151,8 +150,7 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 								fontsize,
 								barcode
 						FROM labelfields
-						WHERE labelid = '" . $_POST['LabelID'] . "'",
-						$db);
+						WHERE labelid = '" . $_POST['LabelID'] . "'");
 	$LabelFields = array();
 	$i=0;
 	while ($LabelFieldRow = DB_fetch_array($result)){

@@ -458,7 +458,7 @@ if (!isset($SelectedStockItem)) {
 	$result1 = DB_query("SELECT categoryid,
 							categorydescription
 						FROM stockcategory
-						ORDER BY categorydescription",$db);
+						ORDER BY categorydescription");
 
    echo '<br />';
    echo '<div class="page_help_text">' . _('To search for sales orders for a specific part use the part selection facilities below') . '</div>';

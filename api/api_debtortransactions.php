@@ -293,7 +293,7 @@ function ConvertToSQLDate($DateEntry) {
 											pytdiscountact,
 											gllink_debtors
 										FROM companies
-										WHERE coycode=1",$db);
+										WHERE coycode=1");
 
 		$CompanyRecord = DB_fetch_array($ReadCoyResult);
 		if (DB_error_no($db) != 0) {
@@ -512,7 +512,7 @@ function ConvertToSQLDate($DateEntry) {
 												gllink_debtors,
 												gllink_stock
 										FROM companies
-										WHERE coycode=1",$db);
+										WHERE coycode=1");
 
 		$CompanyRecord = DB_fetch_array($ReadCoyResult);
 		if (DB_error_no($db) != 0) {
@@ -1256,9 +1256,9 @@ function ConvertToSQLDate($DateEntry) {
 			$result = DB_Txn_Begin($db);
 			$sql = "INSERT INTO debtortrans (" . mb_substr($FieldNames,0,-2) .")
 									VALUES ('" . mb_substr($FieldValues,0,-2) ."') ";
-			$result = DB_Query($sql, $db);
+			$result = DB_query($sql);
 			$sql = "UPDATE systypes SET typeno='" . GetNextTransactionNo(10, $db) . "' WHERE typeid=10";
-			$result = DB_Query($sql, $db);
+			$result = DB_query($sql);
 			$SalesGLCode=GetSalesGLCode($SalesArea, $PartCode, $db);
 			$DebtorsGLCode=GetDebtorsGLCode($db);
 			$sql="INSERT INTO gltrans VALUES(null,
@@ -1273,7 +1273,7 @@ function ConvertToSQLDate($DateEntry) {
 											0,
 											'" . $InvoiceDetails['jobref'] . "',
 											1)";
-			$result = api_DB_Query($sql, $db);
+			$result = api_DB_query($sql);
 			$sql="INSERT INTO gltrans VALUES(null,
 											10,
 											'" . GetNextTransactionNo(10, $db) . "',
@@ -1286,7 +1286,7 @@ function ConvertToSQLDate($DateEntry) {
 											0,
 											'" . $InvoiceDetails['jobref'] . "',
 											1)";
-			$result = api_DB_Query($sql, $db);
+			$result = api_DB_query($sql);
 			$result= DB_Txn_Commit($db);
 			if (DB_error_no($db) != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
@@ -1554,9 +1554,9 @@ function ConvertToSQLDate($DateEntry) {
 			$result = DB_Txn_Begin($db);
 			$sql = "INSERT INTO debtortrans (" . mb_substr($FieldNames,0,-2) . ")
 						VALUES ('".mb_substr($FieldValues,0,-2) ."') ";
-			$result = DB_Query($sql, $db);
+			$result = DB_query($sql);
 			$sql = "UPDATE systypes SET typeno='" . GetNextTransactionNo(11, $db) ."' WHERE typeid=10";
-			$result = DB_Query($sql, $db);
+			$result = DB_query($sql);
 			$SalesGLCode=GetSalesGLCode($SalesArea, $PartCode, $db);
 			$DebtorsGLCode=GetDebtorsGLCode($db);
 			$sql="INSERT INTO gltrans VALUES(null,
@@ -1570,7 +1570,7 @@ function ConvertToSQLDate($DateEntry) {
 											'" . $CreditDetails['ovamount'] . "',
 											0,
 											'" . $CreditDetails['jobref'] ."')";
-			$result = DB_Query($sql, $db);
+			$result = DB_query($sql);
 			$sql="INSERT INTO gltrans VALUES(null,
 											10,
 											'" . GetNextTransactionNo(11, $db) . "',
@@ -1582,7 +1582,7 @@ function ConvertToSQLDate($DateEntry) {
 											'" .(-intval($CreditDetails['ovamount'])) . "',
 											0,
 											'" . $CreditDetails['jobref'] ."')";
-			$result = DB_Query($sql, $db);
+			$result = DB_query($sql);
 			$result= DB_Txn_Commit($db);
 			if (DB_error_no($db) != 0) {
 				$Errors[0] = DatabaseUpdateFailed;

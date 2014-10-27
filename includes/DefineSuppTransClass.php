@@ -465,7 +465,7 @@ Class Asset {
 									fixedassetcategories.costact
 							FROM fixedassets INNER JOIN fixedassetcategories
 							ON fixedassets.assetcategoryid=fixedassetcategories.categoryid
-							WHERE assetid='" . $AssetID . "'",$db);
+							WHERE assetid='" . $AssetID . "'");
 		$AssetRow = DB_fetch_array($result);
 		$this->Description = $AssetRow['description'];
 		$this->CostAct = $AssetRow['costact'];

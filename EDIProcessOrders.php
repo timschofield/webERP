@@ -468,7 +468,7 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $RootPath . '/' . $_SESSI
 														defaultlocation,
 														phoneno,
 														email
-												FROM custbranch INNER JOIN debtorsmaster ON custbranch.debtorno = custbranch.debtorno WHERE custbranchcode='" . $NAD_C082[0] . "' AND custbranch.debtorno='" . $Order->DebtorNo . "' AND debtorsmaster.ediorders=1",$db);
+												FROM custbranch INNER JOIN debtorsmaster ON custbranch.debtorno = custbranch.debtorno WHERE custbranchcode='" . $NAD_C082[0] . "' AND custbranch.debtorno='" . $Order->DebtorNo . "' AND debtorsmaster.ediorders=1");
 						if (DB_num_rows($BranchResult)!=1){
 							$EmailText .= "\n" . _('The Store number was specified as') . ' ' . $NAD_C082[0] . ' ' . _('Unfortunately there are either no branches of customer code') . ' ' . $Order->DebtorNo . ' ' ._('or several that match this store number') . '. ' . _('This order could not be processed further');
 							$TryNextFile = True; /* Look for other EDI msgs */

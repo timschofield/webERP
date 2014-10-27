@@ -545,7 +545,7 @@ if (in_array($CashSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($C
 		$result = DB_query("SELECT pandl
 						FROM accountgroups
 						INNER JOIN chartmaster ON accountgroups.groupname=chartmaster.group_
-						WHERE chartmaster.accountcode='" . $myrow['accountcode'] ."'",$db);
+						WHERE chartmaster.accountcode='" . $myrow['accountcode'] ."'");
 		$PandLRow = DB_fetch_row($result);
 		if ($PandLRow[0]==1){
 			$PandLAccount = True;

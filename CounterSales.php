@@ -463,7 +463,7 @@ if ($_SESSION['Items'.$identifier]->DefaultCurrency != $_SESSION['CompanyRecord'
 				$KitResult = DB_query($sql,$ErrMsg,$DbgMsg);
 
 				$ParentQty = $NewItemQty;
-				while ($KitParts = DB_fetch_array($KitResult,$db)) {
+				while ($KitParts = DB_fetch_array($KitResult)) {
 					$NewItem = $KitParts['component'];
 					$NewItemQty = $KitParts['quantity'] * $ParentQty;
 					$NewPOLine = 0;
@@ -574,7 +574,7 @@ if (isset($_POST['Recalculate'])) {
 				$KitResult = DB_query($sql,$ErrMsg);
 
 				$ParentQty = $NewItemQty;
-				while ($KitParts = DB_fetch_array($KitResult,$db)){
+				while ($KitParts = DB_fetch_array($KitResult)){
 					$NewItem = $KitParts['component'];
 					$NewItemQty = $KitParts['quantity'] * $ParentQty;
 					$NewPOLine = 0;
@@ -624,7 +624,7 @@ Now figure out if the item is a kit set - the field MBFlag='K'
 			$KitResult = DB_query($sql,$ErrMsg);
 
 			$ParentQty = $NewItemQty;
-			while ($KitParts = DB_fetch_array($KitResult,$db)){
+			while ($KitParts = DB_fetch_array($KitResult)){
 				$NewItem = $KitParts['component'];
 				$NewItemQty = $KitParts['quantity'] * $ParentQty;
 				$NewPOLine = 0;
@@ -676,7 +676,7 @@ if (isset($NewItemArray) AND isset($_POST['SelectingOrderItems'])){
 					$KitResult = DB_query($sql,$ErrMsg);
 
 					$ParentQty = $NewItemQty;
-					while ($KitParts = DB_fetch_array($KitResult,$db)){
+					while ($KitParts = DB_fetch_array($KitResult)){
 						$NewItem = $KitParts['component'];
 						$NewItemQty = $KitParts['quantity'] * $ParentQty;
 						$NewItemDue = date($_SESSION['DefaultDateFormat']);
@@ -715,7 +715,7 @@ foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine) {
 							FROM discountmatrix
 							WHERE salestype='" .  $_SESSION['Items'.$identifier]->DefaultSalesType . "'
 							AND discountcategory ='" . $OrderLine->DiscCat . "'
-							AND quantitybreak <= '" . $QuantityOfDiscCat ."'",$db);
+							AND quantitybreak <= '" . $QuantityOfDiscCat ."'");
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0]==NULL){
 			$DiscountMatrixRate = 0;
@@ -1209,14 +1209,15 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 											'" . $_SESSION['DefaultFactoryLocation'] . "',
 											'" . Date('Y-m-d') . "',
 											'" . Date('Y-m-d'). "')",
-											$db,$ErrMsg,$DbgMsg,true);
+											$ErrMsg,
+											$DbgMsg,
+											true);
 					//Need to get the latest BOM to roll up cost
 					$CostResult = DB_query("SELECT SUM((materialcost+labourcost+overheadcost)*bom.quantity) AS cost
 																	FROM stockmaster INNER JOIN bom
 																	ON stockmaster.stockid=bom.component
 																	WHERE bom.parent='" . $StockItem->StockID . "'
-																	AND bom.loccode='" . $_SESSION['DefaultFactoryLocation'] . "'",
-																$db);
+																	AND bom.loccode='" . $_SESSION['DefaultFactoryLocation'] . "'");
 					$CostRow = DB_fetch_row($CostResult);
 					if (is_null($CostRow[0]) OR $CostRow[0]==0){
 						$Cost =0;
@@ -1252,7 +1253,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 
 							$result = DB_query("SELECT serialno FROM stockserialitems
 													WHERE serialno='" . ($StockItem->NextSerialNo + $i) . "'
-													AND stockid='" . $StockItem->StockID ."'",$db);
+													AND stockid='" . $StockItem->StockID ."'");
 							if (DB_num_rows($result)!=0){
 								$WOQuantity++;
 								prnMsg(($StockItem->NextSerialNo + $i) . ': ' . _('This automatically generated serial number already exists - it cannot be added to the work order'),'error');
@@ -1424,7 +1425,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 				$DbgMsg = _('The SQL that failed was');
 				$AssResult = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
-				while ($AssParts = DB_fetch_array($AssResult,$db)){
+				while ($AssParts = DB_fetch_array($AssResult)){
 
 					$StandardCost += ($AssParts['standard'] * $AssParts['quantity']) ;
 					/* Need to get the current location quantity
@@ -1932,7 +1933,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 			$result = DB_query("SELECT rate FROM currencies
 								INNER JOIN bankaccounts
 								ON currencies.currabrev=bankaccounts.currcode
-								WHERE bankaccounts.accountcode='" . $_POST['BankAccount'] . "'",$db);
+								WHERE bankaccounts.accountcode='" . $_POST['BankAccount'] . "'");
 			$myrow = DB_fetch_row($result);
 			$BankAccountExRate = $myrow[0];
 

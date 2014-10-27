@@ -288,15 +288,13 @@ if (isset($_POST['CloseContract']) AND $_SESSION['Contract'.$identifier]->Status
 /*Check if the contract work order is still open */
 	$CheckIfWOOpenResult = DB_query("SELECT closed
 									FROM workorders
-									WHERE wo='" . $_SESSION['Contract'.$identifier]->WO . "'",
-									$db);
+									WHERE wo='" . $_SESSION['Contract'.$identifier]->WO . "'");
 	$CheckWORow=DB_fetch_row($CheckIfWOOpenResult);
 	if ($CheckWORow[0]==0){
 		//then close the work order
 		$CloseWOResult =DB_query("UPDATE workorders
 									SET closed=1
 									WHERE wo='" . $_SESSION['Contract'.$identifier]->WO . "'",
-									$db,
 									_('Could not update the work order to closed because:'),
 									_('The SQL used to close the work order was:'),
 									true);
@@ -309,8 +307,7 @@ if (isset($_POST['CloseContract']) AND $_SESSION['Contract'.$identifier]->Status
 
 		$result =DB_query("SELECT qtyrecd FROM woitems
 							WHERE stockid='" . $_SESSION['Contract'.$identifier]->ContractRef . "'
-							AND wo='" . $_SESSION['Contract'.$identifier]->WO . "'",
-						$db);
+							AND wo='" . $_SESSION['Contract'.$identifier]->WO . "'");
 		if (DB_num_rows($result)==1) {
 			$myrow=DB_fetch_row($result);
 			if ($myrow[0]==0){ //then the contract wo has not been received (it will only ever be for 1 item)
@@ -428,7 +425,9 @@ if (isset($_POST['CloseContract']) AND $_SESSION['Contract'.$identifier]->Status
 										SET qtyrecd=qtyrecd+1
 										WHERE wo='" . $_SESSION['Contract'.$identifier]->WO . "'
 										AND stockid='" . $_SESSION['Contract'.$identifier]->ContractRef . "'",
-										$db,$ErrMsg,$DbgMsg,true);
+										$ErrMsg,
+										$DbgMsg,
+										true);
 			}//end if the contract wo was not received - work order item received/processed above if not
 		}//end if there was a row returned from the woitems query
 	} //end if the work order was still open (so end of closing it and processing receipt if necessary)

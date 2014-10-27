@@ -169,7 +169,6 @@ Class Cart {
 														" . FormatDateForSQL($ItemDue) . "',
 														" . $POLine . ")";
 				$result = DB_query($sql,
-							$db ,
 							_('The order line for') . ' ' . mb_strtoupper($StockID) . ' ' ._('could not be inserted'));
 			}
 
@@ -208,9 +207,8 @@ Class Cart {
 															itemdue = '" . FormatDateForSQL($ItemDue) . "',
 															poline = '" . $POLine . "'
 								WHERE orderno=" . $_SESSION['ExistingOrder'.$identifier] . "
-								AND orderlineno=" . $UpdateLineNumber
-													, $db
-				, _('The order line number') . ' ' . $UpdateLineNumber .  ' ' . _('could not be updated'));
+								AND orderlineno=" . $UpdateLineNumber,
+								 _('The order line number') . ' ' . $UpdateLineNumber .  ' ' . _('could not be updated'));
 		}
 	}
 
@@ -227,7 +225,6 @@ Class Cart {
 				$result = DB_query("DELETE FROM salesorderdetails
 									WHERE orderno='" . $_SESSION['ExistingOrder' . $identifier] . "'
 									AND orderlineno='" . $LineNumber . "'",
-									$db,
 									_('The order line could not be deleted because')
 									);
 				prnMsg( _('Deleted Line Number'). ' ' . $LineNumber . ' ' . _('from existing Order Number').' ' . $_SESSION['ExistingOrder' . $identifier], 'success');
@@ -237,7 +234,6 @@ Class Cart {
 																completed=1
 									WHERE orderno='" . $_SESSION['ExistingOrder' . $identifier] ."'
 									AND orderlineno='" . $LineNumber . "'" ,
-									$db,
 								   _('The order line could not be updated as completed because')
 								   );
 				prnMsg(_('Removed Remaining Quantity and set Line Number '). ' ' . $LineNumber . ' ' . _('as Completed for existing Order Number').' ' . $_SESSION['ExistingOrder'], 'success');

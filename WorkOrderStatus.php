@@ -41,7 +41,6 @@ $WOResult = DB_query("SELECT workorders.loccode,
 						INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 						WHERE woitems.stockid='" . $StockID . "'
 						AND woitems.wo ='" . $SelectedWO . "'",
-						$db,
 						$ErrMsg);
 
 if (DB_num_rows($WOResult)==0){
@@ -108,14 +107,13 @@ echo '<table cellpadding="2" class="selection">
 									FROM worequirements INNER JOIN stockmaster
 									ON worequirements.stockid=stockmaster.stockid
 									WHERE wo='" . $SelectedWO . "'
-									AND worequirements.parentstockid='" . $StockID . "'",
-									$db);
+									AND worequirements.parentstockid='" . $StockID . "'");
 		$IssuedAlreadyResult = DB_query("SELECT stockid,
 						SUM(-qty) AS total
 					FROM stockmoves
 					WHERE stockmoves.type=28
 					AND reference='".$SelectedWO."'
-					GROUP BY stockid",$db);
+					GROUP BY stockid");
 	while ($IssuedRow = DB_fetch_array($IssuedAlreadyResult)){
 		$IssuedAlreadyRow[$IssuedRow['stockid']] = $IssuedRow['total'];
 	}

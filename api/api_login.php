@@ -141,7 +141,7 @@ function DoSetup()
 				    if ($CurrencyRow[0]!=$_SESSION['CompanyRecord']['currencydefault']){
 					    $UpdateCurrRateResult = DB_query("UPDATE currencies SET
 											    rate='" . GetCurrencyRate ($CurrencyRow[0],$CurrencyRates) . "'
-											    WHERE currabrev='" . $CurrencyRow[0] . "'",$db);
+											    WHERE currabrev='" . $CurrencyRow[0] . "'");
 				    }
 			    }
 			    $_SESSION['UpdateCurrencyRatesDaily'] = Date('Y-m-d');

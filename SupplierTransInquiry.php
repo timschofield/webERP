@@ -156,7 +156,6 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 									ON gltrans.account=chartmaster.accountcode
 									WHERE type='" . $myrow['type'] . "'
 									AND typeno='" . $myrow['transno'] . "'",
-									$db,
 									_('Could not retrieve the GL transactions for this AP transaction'));
 
 		if (DB_num_rows($GLTransResult)==0){

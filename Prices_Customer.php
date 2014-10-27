@@ -9,7 +9,7 @@ $result = DB_query("SELECT debtorsmaster.name,
 							currencies.decimalplaces AS currdecimalplaces
 					 FROM debtorsmaster INNER JOIN currencies
 					 ON debtorsmaster.currcode=currencies.currabrev
-					 WHERE debtorsmaster.debtorno='" . $_SESSION['CustomerID'] . "'",$db);
+					 WHERE debtorsmaster.debtorno='" . $_SESSION['CustomerID'] . "'");
 $myrow = DB_fetch_array($result);
 
 $Title = _('Special Prices for') . ' '. htmlspecialchars($myrow['name'], ENT_QUOTES, 'UTF-8');
@@ -43,7 +43,7 @@ $CurrDecimalPlaces = $myrow['currdecimalplaces'];
 $result = DB_query("SELECT stockmaster.description,
 							stockmaster.mbflag
 					FROM stockmaster
-					WHERE stockmaster.stockid='" . $Item . "'",$db);
+					WHERE stockmaster.stockid='" . $Item . "'");
 
 $myrow = DB_fetch_row($result);
 if (DB_num_rows($result)==0){

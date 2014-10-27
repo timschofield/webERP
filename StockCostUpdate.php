@@ -112,7 +112,8 @@ $result = DB_query("SELECT description,
 							overheadcost,
 							mbflag,
 							stocktype",
-						$db,$ErrMsg,$DbgMsg);
+							$ErrMsg,
+							$DbgMsg);
 
 
 $myrow = DB_fetch_array($result);

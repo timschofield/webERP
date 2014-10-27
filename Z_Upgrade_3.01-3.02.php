@@ -33,7 +33,7 @@ while ($SalesOrderDetails = DB_fetch_array($SalesOrdersResult)) {
 	DB_query('UPDATE salesorderdetails
 		SET orderlineno=' . $LineNo . '
 		WHERE orderno=' . $OrderNo . "
-		AND stkcode='" . $SalesOrderDetails['stkcode'] ."'", $db);
+		AND stkcode='" . $SalesOrderDetails['stkcode'] ."'");
 
 }
 

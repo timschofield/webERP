@@ -64,8 +64,7 @@ Class Contract {
 		global $db;
 		$result = DB_query("DELETE FROM contractbom
 											WHERE contractref='" . $this->ContractRef . "'
-											AND stockid='" . $this->ContractBOM[$ContractComponent_ID]->StockID . "'",
-											$db);
+											AND stockid='" . $this->ContractBOM[$ContractComponent_ID]->StockID . "'");
 		unset($this->ContractBOM[$ContractComponent_ID]);
 	}
 

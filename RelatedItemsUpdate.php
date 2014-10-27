@@ -28,7 +28,7 @@ echo '<a href="' . $RootPath . '/SelectProduct.php">' . _('Back to Items') . '</
 
 $result = DB_query("SELECT stockmaster.description
 					FROM stockmaster
-					WHERE stockmaster.stockid='".$Item."'",$db);
+					WHERE stockmaster.stockid='".$Item."'");
 $myrow = DB_fetch_row($result);
 
 if (DB_num_rows($result)==0){
@@ -56,9 +56,9 @@ if (isset($_POST['submit'])) {
 	$result_related = DB_query("SELECT stockmaster.description,
 							stockmaster.mbflag
 					FROM stockmaster
-					WHERE stockmaster.stockid='".$_POST['Related']."'",$db);
+					WHERE stockmaster.stockid='".$_POST['Related']."'");
 	$myrow_related = DB_fetch_row($result_related);
-	
+
 	if (DB_num_rows($result_related)==0){
 		prnMsg( _('The part code entered as related item does not exist in the database') . ': ' . $_POST['Related'] .  _('Only valid parts can be related items'),'error');
 		$InputError=1;
@@ -80,7 +80,7 @@ if (isset($_POST['submit'])) {
 		prnMsg( _('An item can not be related to itself') , 'warn');
 		$InputError =1;
 	}
-	
+
 	if ($InputError !=1) {
 		$sql = "INSERT INTO relateditems (stockid,
 									related)
@@ -128,7 +128,7 @@ if (isset($_POST['submit'])) {
 
 //Always do this stuff
 
-$sql = "SELECT stockmaster.stockid, 
+$sql = "SELECT stockmaster.stockid,
 			stockmaster.description
 		FROM stockmaster, relateditems
 		WHERE stockmaster.stockid = relateditems.related

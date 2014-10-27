@@ -113,7 +113,7 @@ if (isset($_GET['SupplierID']) and $_GET['SupplierID']!=''){
 
 	$LocalTaxProvinceResult = DB_query("SELECT taxprovinceid
 										FROM locations
-										WHERE loccode = '" . $_SESSION['UserStockLocation'] . "'", $db);
+										WHERE loccode = '" . $_SESSION['UserStockLocation'] . "'");
 
 	if(DB_num_rows($LocalTaxProvinceResult)==0){
 		prnMsg(_('The tax province associated with your user account has not been set up in this database. Tax calculations are based on the tax group of the supplier and the tax province of the user entering the invoice. The system administrator should redefine your account with a valid default stocking location and this location should refer to a valid tax province'),'error');
@@ -793,7 +793,7 @@ then do the updates and inserts to process the credit note entered */
 				$result = DB_query("SELECT wipact FROM stockcategory
 									INNER JOIN stockmaster
 									ON stockcategory.categoryid=stockmaster.categoryid
-									WHERE stockmaster.stockid='" . $Contract->ContractRef . "'",$db);
+									WHERE stockmaster.stockid='" . $Contract->ContractRef . "'");
 				$WIPRow = DB_fetch_row($result);
 				$WIPAccount = $WIPRow[0];
 
@@ -1007,7 +1007,7 @@ then do the updates and inserts to process the credit note entered */
 								$result = DB_query("SELECT costact
 													FROM fixedassets INNER JOIN fixedassetcategories
 													ON fixedassets.assetcategoryid= fixedassetcategories.categoryid
-													WHERE assetid='" . $EnteredGRN->AssetID . "'",$db);
+													WHERE assetid='" . $EnteredGRN->AssetID . "'");
 								$AssetRow = DB_fetch_array($result);
 								$GLCode = $AssetRow['costact'];
 							} //the item was an asset

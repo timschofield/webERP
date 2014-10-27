@@ -1096,8 +1096,7 @@ if (!isset($DebtorNo)) {
 		/*Process this first before showing remaining contacts */
 		$resultupcc = DB_query("DELETE FROM custcontacts
 								WHERE debtorno='".$DebtorNo."'
-								AND contid='".$ID."'",
-								$db);
+								AND contid='".$ID."'");
 		prnMsg(_('Contact Deleted'),'success');
 	}
 

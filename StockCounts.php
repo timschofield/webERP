@@ -95,7 +95,7 @@ if ($_GET['Action'] == 'Enter'){
 						FROM stockcategory INNER JOIN stockmaster
 							ON stockcategory.categoryid=stockmaster.categoryid
 							INNER JOIN stockcheckfreeze
-							ON stockmaster.stockid=stockcheckfreeze.stockid",$db);
+							ON stockmaster.stockid=stockcheckfreeze.stockid");
 
 	if (DB_num_rows($CatsResult) ==0) {
 		prnMsg(_('The stock check sheets must be run first to create the stock check. Only once these are created can the stock counts be entered. Currently there is no stock check to enter counts for'),'error');
@@ -147,8 +147,8 @@ if ($_GET['Action'] == 'Enter'){
 												description
 										FROM stockcheckfreeze INNER JOIN stockmaster
 										ON stockcheckfreeze.stockid=stockmaster.stockid
-										WHERE categoryid='" . $_POST['StkCat'] . "' AND loccode = '" . $_POST['Location'] . "' 
-										ORDER BY stockcheckfreeze.stockid",$db);
+										WHERE categoryid='" . $_POST['StkCat'] . "' AND loccode = '" . $_POST['Location'] . "'
+										ORDER BY stockcheckfreeze.stockid");
 
 			$RowCount=1;
 			while ($StkRow = DB_fetch_array($StkItemsResult)) {
@@ -222,9 +222,9 @@ if ($_GET['Action'] == 'Enter'){
 			<td>'.$myrow['qtycounted'].'</td>
 			<td>'.$myrow['reference'].'</td>
 			<td>';
-		if ($myrow['canupd']==1) {	
+		if ($myrow['canupd']==1) {
 			echo '<input type="checkbox" name="DEL[' . $myrow['id'] . ']" maxlength="20" size="20" />';
-			
+
 		}
 		echo '</td></tr>';
 

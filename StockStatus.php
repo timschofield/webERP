@@ -33,7 +33,6 @@ $result = DB_query("SELECT description,
 						   controlled
 					FROM stockmaster
 					WHERE stockid='".$StockID."'",
-					$db,
 					_('Could not retrieve the requested item'),
 					_('The SQL used to retrieve the items was'));
 

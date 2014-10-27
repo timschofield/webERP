@@ -256,7 +256,7 @@ echo '<span style="float:left"><a href="' . $RootPath . '/PO_SelectOSPurchOrder.
 
 if (isset($_GET['ModifyOrderNumber'])) {
 	include('includes/PO_ReadInOrder.inc');
-} 
+}
 
 
 if (!isset($_SESSION['PO' . $identifier])) {
@@ -1129,7 +1129,7 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 
 	$result = DB_query("SELECT loccode,
 							locationname
-						FROM locations WHERE loccode='" . $_SESSION['PO' . $identifier]->Port . "'", $db);
+						FROM locations WHERE loccode='" . $_SESSION['PO' . $identifier]->Port . "'");
 	$myrow = DB_fetch_array($result);
 	$_POST['Port'] = $myrow['locationname'];
 

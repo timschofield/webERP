@@ -255,8 +255,7 @@ $result=DB_query("SELECT accountcode,
 					FROM chartmaster INNER JOIN accountgroups
 					ON chartmaster.group_=accountgroups.groupname
 					WHERE accountgroups.pandl=0
-					ORDER BY chartmaster.accountcode",
-				$db);
+					ORDER BY chartmaster.accountcode");
 
 echo '<tr>
 		<td>' . _('Debtors Control GL Account') . ':</td>
@@ -351,8 +350,7 @@ $result=DB_query("SELECT accountcode,
 					FROM chartmaster INNER JOIN accountgroups
 					ON chartmaster.group_=accountgroups.groupname
 					WHERE accountgroups.pandl=1
-					ORDER BY chartmaster.accountcode",
-				$db);
+					ORDER BY chartmaster.accountcode");
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($_POST['FreightAct']==$myrow[0]){

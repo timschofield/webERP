@@ -109,8 +109,7 @@ if ($NewTransfer){
 							perishable,
 							decimalplaces
 						FROM stockmaster
-						WHERE stockid='" . trim(mb_strtoupper($_POST['StockID'])) . "'",
-						$db);
+						WHERE stockid='" . trim(mb_strtoupper($_POST['StockID'])) . "'");
 
 	if (DB_num_rows($result) == 0){
 		prnMsg( _('Unable to locate Stock Code').' '.mb_strtoupper($_POST['StockID']), 'error' );

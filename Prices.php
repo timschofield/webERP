@@ -6,9 +6,9 @@ $Title = _('Item Prices');
 $ViewTopic = 'Prices';
 /*$BookMark = '';// Anchor's id in the manual's html document.*/
 include('includes/header.inc');
-echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme . 
-		'/images/money_add.png" title="' . 
-		_('Search') . '" />' . ' ' . 
+echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
+		'/images/money_add.png" title="' .
+		_('Search') . '" />' . ' ' .
 		$Title . '</p>';
 
 echo '<a href="' . $RootPath . '/SelectProduct.php">' . _('Back to Items') . '</a><br />';
@@ -35,7 +35,7 @@ if (!isset($_POST['CurrAbrev'])) {
 $result = DB_query("SELECT stockmaster.description,
 							stockmaster.mbflag
 					FROM stockmaster
-					WHERE stockmaster.stockid='".$Item."'",$db);
+					WHERE stockmaster.stockid='".$Item."'");
 $myrow = DB_fetch_row($result);
 
 if (DB_num_rows($result)==0) {
@@ -182,7 +182,7 @@ if (isset($_POST['submit'])) {
 
 //Always do this stuff
 
-$sql = "SELECT 
+$sql = "SELECT
 		currencies.currency,
         salestypes.sales_type,
 		prices.price,

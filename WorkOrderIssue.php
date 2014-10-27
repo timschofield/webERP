@@ -63,7 +63,6 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 							ON stockmaster.categoryid=stockcategory.categoryid
 							WHERE woitems.stockid='" . $_POST['StockID'] . "'
 							AND woitems.wo='" . $_POST['WO'] . "'",
-							$db,
 							$ErrMsg);
 
 	if (DB_num_rows($WOResult)==0){
@@ -365,7 +364,9 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 		$UpdateWOResult =DB_query("UPDATE workorders
 									SET costissued=costissued+" . ($QuantityIssued*$IssueItemRow['cost']) . "
 									WHERE wo='" . $_POST['WO'] . "'",
-									$db,$ErrMsg,$DbgMsg,true);
+									$ErrMsg,
+									$DbgMsg,
+									true);
 
 
 		$Result = DB_Txn_Commit($db);
@@ -524,7 +525,6 @@ $WOResult = DB_query("SELECT workorders.loccode,
 						INNER JOIN stockmaster
 						ON woitems.stockid=stockmaster.stockid
 						WHERE woitems.wo ='" . $_POST['WO'] . "'",
-						$db,
 						$ErrMsg);
 
 if (DB_num_rows($WOResult)==0){
@@ -590,7 +590,7 @@ if (!isset($_POST['IssueItem'])){
 							INNER JOIN locationusers
 								ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "'
 								AND locationusers.canupd=1
-							WHERE locations.usedforwo = 1",$db);
+							WHERE locations.usedforwo = 1");
 
 	echo '<select name="FromLocation">';
 
@@ -607,8 +607,7 @@ if (!isset($_POST['IssueItem'])){
 } else {
 	$LocResult = DB_query("SELECT loccode, locationname
 						FROM locations
-						WHERE loccode='" . $_POST['FromLocation'] . "'",
-				$db);
+						WHERE loccode='" . $_POST['FromLocation'] . "'");
 	$LocRow = DB_fetch_array($LocResult);
 	echo '<input type="hidden" name="FromLocation" value="' . $_POST['FromLocation'] . '" />';
 	echo $LocRow['locationname'];
@@ -645,11 +644,10 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 									GROUP BY worequirements.stockid,
 											stockmaster.description,
 											stockmaster.decimalplaces,
-											autoissue",
-									$db);
+											autoissue");
 	$IssuedAlreadyResult = DB_query("SELECT stockid, SUM(-qty) as total FROM stockmoves
 										WHERE stockmoves.type=28
-										AND reference='" . $_POST['WO'] . "' GROUP BY stockid",$db);
+										AND reference='" . $_POST['WO'] . "' GROUP BY stockid");
 	while($myrow = DB_fetch_array($IssuedAlreadyResult)){
 		$IssuedMaterials[$myrow['stockid']] = $myrow['total'];
 
@@ -850,7 +848,7 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 										WHERE stockid='" . $_POST['IssueItem'] . "'
 										AND loccode='" . $_POST['FromLocation'] . "'
 										AND quantity > 0",
-						$db,_('Could not retrieve the serial numbers available at the location specified because'));
+										_('Could not retrieve the serial numbers available at the location specified because'));
 			if (DB_num_rows($SerialNoResult)==0){
 				echo '<tr>
 						<td>' . _('There are no serial numbers at this location to issue') . '</td>

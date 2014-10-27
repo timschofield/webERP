@@ -28,13 +28,13 @@ if (isset($_POST['UpdateAll'])) {
  						WHERE dispatchid='" . $CancelItems[0] . "'
  						AND dispatchitemsid='" . $CancelItems[1] . "'";
  			$result = DB_query($sql);
- 			$result = DB_Query("SELECT stockid FROM stockrequestitems WHERE completed=0 AND dispatchid='" . $CancelItems[0] . "'",$db);
+ 			$result = DB_query("SELECT stockid FROM stockrequestitems WHERE completed=0 AND dispatchid='" . $CancelItems[0] . "'");
  			if (DB_num_rows($result) ==0){
 				$result = DB_query("UPDATE stockrequest
 									SET authorised='1'
-									WHERE dispatchid='" . $CancelItems[0] . "'",$db);
+									WHERE dispatchid='" . $CancelItems[0] . "'");
 			}
-		
+
  		}
 	}
 }

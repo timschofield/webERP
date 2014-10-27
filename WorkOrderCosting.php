@@ -28,7 +28,7 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 
 if (!isset($SelectedWO)) {
 	/* This page can only be called with a work order number */
-	echo '<div class="centre><a href="' . $RootPath . '/SelectWorkOrder.php">' . 
+	echo '<div class="centre><a href="' . $RootPath . '/SelectWorkOrder.php">' .
 		_('Select a work order') . '</a></div>';
 	prnMsg(_('This page can only be opened if a work order has been selected.'),'info');
 	include ('includes/footer.inc');
@@ -50,7 +50,6 @@ $WOResult = DB_query("SELECT workorders.loccode,
 						ON workorders.loccode=locations.loccode
 						INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
 						WHERE workorders.wo='" . $_POST['WO'] . "'",
-						$db,
 						$ErrMsg);
 
 if (DB_num_rows($WOResult)==0){
@@ -91,7 +90,6 @@ $WOItemsResult = DB_query("SELECT woitems.stockid,
 							INNER JOIN stockcategory
 							ON stockmaster.categoryid=stockcategory.categoryid
 							WHERE woitems.wo='". $_POST['WO'] . "'",
-							$db,
 							$ErrMsg);
 
 echo  '<table class="selection">
@@ -153,7 +151,7 @@ $RequirementsResult = DB_query("SELECT worequirements.stockid,
 								GROUP BY worequirements.stockid,
 										stockmaster.description,
 										stockmaster.decimalplaces,
-										worequirements.stdcost", $db);
+										worequirements.stdcost");
 
 $k=0;
 $TotalUsageVar =0;
@@ -183,7 +181,6 @@ while ($RequirementsRow = DB_fetch_array($RequirementsResult)){
 								WHERE stockmoves.type=28
 								AND stockmoves.reference = '" . $_POST['WO'] . "'
 								AND stockmoves.stockid = '" . $RequirementsRow['stockid'] . "'",
-								$db,
 								_('Could not retrieve the issues of the item because:'));
 	$IssueQty =0;
 	$IssueCost=0;
@@ -341,8 +338,7 @@ If (isset($_POST['Close'])) {
 
 			$TotOnHandResult =DB_query("SELECT SUM(quantity)
 										FROM locstock
-										WHERE stockid='" . $WORow['stockid'] . "'",
-										$db);
+										WHERE stockid='" . $WORow['stockid'] . "'");
 			$TotOnHandRow = DB_fetch_row($TotOnHandResult);
 			$TotalOnHand = $TotOnHandRow[0];
 
@@ -519,15 +515,13 @@ If (isset($_POST['Close'])) {
 	} // end loop around the items on the work order
 
 	$CloseWOResult =DB_query("UPDATE workorders SET closed=1, closecomments = '". $_POST['CloseComments'] ."' WHERE wo='" .$_POST['WO'] . "'",
-				$db,
-				_('Could not update the work order to closed because:'),
-				_('The SQL used to close the work order was:'),
-				true);
+							_('Could not update the work order to closed because:'),
+							_('The SQL used to close the work order was:'),
+							true);
 	$DeleteAnyWOSerialNos = DB_query("DELETE FROM woserialnos WHERE wo='" . $_POST['WO'] . "'",
-										$db,
-										_('Could not delete the predefined work order serial numbers'),
-										_('The SQL used to delete the predefined serial numbers was:'),
-										true);
+									_('Could not delete the predefined work order serial numbers'),
+									_('The SQL used to delete the predefined serial numbers was:'),
+									true);
 	$TransResult = DB_Txn_Commit($db);
 	if ($_SESSION['CompanyRecord']['gllink_stock']==1){
 		if ($_SESSION['WeightedAverageCosting']==1){
@@ -556,7 +550,7 @@ if ($WorkOrderRow['closed']==0){
 
 echo 	'<tr>
 			<td colspan="9">
-			
+
 				<div class="centre">
 					<textarea ' . $ReadOnly . ' style="width:100%" rows="5" cols="80" name="CloseComments" >' . $_POST['CloseComments'] . '</textarea>
 				</div>

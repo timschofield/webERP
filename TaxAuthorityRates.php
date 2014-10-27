@@ -32,8 +32,7 @@ if(isset($_POST['UpdateRates'])) {
 										taxauthrates.taxrate,
 										taxauthrates.dispatchtaxprovince
 								FROM taxauthrates
-								WHERE taxauthrates.taxauthority='" . $TaxAuthority . "'",
-								$db);
+								WHERE taxauthrates.taxauthority='" . $TaxAuthority . "'");
 
 	while($myrow=DB_fetch_array($TaxRatesResult)) {
 
@@ -51,7 +50,7 @@ if(isset($_POST['UpdateRates'])) {
 /*Display updated rates*/
 
 $TaxAuthDetail = DB_query("SELECT description
-							FROM taxauthorities WHERE taxid='" . $TaxAuthority . "'",$db);
+							FROM taxauthorities WHERE taxid='" . $TaxAuthority . "'");
 $myrow = DB_fetch_row($TaxAuthDetail);
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
@@ -72,8 +71,7 @@ $TaxRatesResult = DB_query("SELECT taxauthrates.taxcatid,
 							ON taxauthrates.taxcatid=taxcategories.taxcatid
 							WHERE taxauthrates.taxauthority='" . $TaxAuthority . "'
 							ORDER BY taxauthrates.dispatchtaxprovince,
-							taxauthrates.taxcatid",
-							$db);
+							taxauthrates.taxcatid");
 
 if(DB_num_rows($TaxRatesResult)>0) {
 	echo '<div class="centre"><h1>' . $myrow[0] . '</h1></div>';// TaxAuthorityRates table title.

@@ -202,8 +202,7 @@ if ($InputError !=1
 									currcode
 							FROM bankaccounts INNER JOIN currencies
 							ON bankaccounts.currcode=currencies.currabrev
-							WHERE accountcode='" . $_POST['BankAccount'] . "'",
-							$db);
+							WHERE accountcode='" . $_POST['BankAccount'] . "'");
 	$BankRow = DB_fetch_array($BankResult);
 	$CurrDecimalPlaces = $BankRow['decimalplaces'];
 	$CurrCode = $BankRow['currcode'];

@@ -18,7 +18,7 @@ $result = DB_query("SELECT periods.lastdate_in_period,
 					ON fixedassettrans.periodno=periods.periodno
 					WHERE transtype=44
 					GROUP BY periods.lastdate_in_period
-					ORDER BY periods.lastdate_in_period DESC",$db);
+					ORDER BY periods.lastdate_in_period DESC");
 
 $LastDepnRun = DB_fetch_row($result);
 

@@ -25,7 +25,7 @@ function Create_POS_Data_Full ($POSDebtorNo, $POSBranchCode, $PathPrefix, $db) {
 	}
 	$CurrCode = $CustomerRow['currcode'];
 	$SalesType = $CustomerRow['salestype'];
-	
+
 
 	$FileHandle = fopen($PathPrefix . $ReportDir . '/POS.sql','w');
 
@@ -147,7 +147,7 @@ function Create_POS_Data_Full ($POSDebtorNo, $POSBranchCode, $PathPrefix, $db) {
 							GROUP BY prices.stockid,
 									prices.typeabbrev,
 									prices.currabrev,
-									prices.debtorno",$db);
+									prices.debtorno");
 	while ($myrow = DB_fetch_array($result)) {
 		fwrite($FileHandle,"INSERT INTO prices VALUES ('" . SQLite_Escape($myrow['stockid']) . "', '" . SQLite_Escape($myrow['typeabbrev']) . "', '" . SQLite_Escape($myrow['currabrev']) . "', '" . SQLite_Escape($myrow['debtorno']) . "', '" . $myrow['lowestprice'] . "', '');\n");
 	}
@@ -157,7 +157,7 @@ function Create_POS_Data_Full ($POSDebtorNo, $POSBranchCode, $PathPrefix, $db) {
 	while ($myrow = DB_fetch_array($result)) {
 		  fwrite($FileHandle,"INSERT INTO discountmatrix VALUES ('" . SQLite_Escape($myrow['salestype']) . "', '" . SQLite_Escape($myrow['discountcategory']) . "', '" . $myrow['quantitybreak'] . "', '" . $myrow['discountrate'] . "');\n");
 	}
-	
+
 	fwrite($FileHandle,"DELETE FROM debtorsmaster;\n");
 	$result = DB_query("SELECT debtorno, name, currcode, salestype, holdreason, paymentterms, discount, creditlimit, discountcode FROM debtorsmaster WHERE currcode='". $CurrCode . "'");
 	while ($myrow = DB_fetch_array($result)) {

@@ -41,7 +41,7 @@ $LocResult = DB_query("SELECT locations.loccode FROM locations
 						INNER JOIN locationusers ON locationusers.loccode=locations.loccode
 						AND locationusers.userid='" .  $_SESSION['UserID'] . "'
 						AND locationusers.canupd=1
-						WHERE locations.loccode='" . $LocCode . "'", $db);
+						WHERE locations.loccode='" . $LocCode . "'");
 $LocRow = DB_fetch_array($LocResult);
 
 if (is_null($LocRow['loccode']) OR $LocRow['loccode']==''){
@@ -249,8 +249,7 @@ if (isset($NewItem) AND isset($_POST['WO'])){
 										eoq,
 										controlled
 									FROM stockmaster
-									WHERE stockid='" . $NewItem . "'",
-								$db);
+									WHERE stockid='" . $NewItem . "'");
 	if (DB_num_rows($CheckItemResult)==1){
 		$CheckItemRow = DB_fetch_array($CheckItemResult);
 		if ($CheckItemRow['controlled']==1 AND $_SESSION['DefineControlledOnWOEntry']==1){ //need to add serial nos or batches to determine quantity
@@ -272,8 +271,7 @@ if (isset($NewItem) AND isset($_POST['WO'])){
 	$CheckItemResult = DB_query("SELECT stockid
 									FROM woitems
 									WHERE stockid='" . $NewItem . "'
-										AND wo='" .$_POST['WO'] . "'",
-									$db);
+										AND wo='" .$_POST['WO'] . "'");
 	if (DB_num_rows($CheckItemResult)==1){
 		prnMsg(_('This item is already on the work order and cannot be added again'),'warn');
 		$InputError=true;
@@ -288,8 +286,7 @@ if (isset($NewItem) AND isset($_POST['WO'])){
 									WHERE bom.parent='" . $NewItem . "'
 										AND bom.loccode='" . $_POST['StockLocation'] . "'
 										AND bom.effectiveafter<='" . Date('Y-m-d') . "'
-										AND bom.effectiveto>='" . Date('Y-m-d') . "'",
-							 $db);
+										AND bom.effectiveto>='" . Date('Y-m-d') . "'");
 		$CostRow = DB_fetch_array($CostResult);
 		if (is_null($CostRow['cost']) OR $CostRow['cost']==0){
 				$Cost =0;
@@ -391,8 +388,7 @@ if (isset($_POST['submit']) OR isset($_POST['Search'])) { //The update button ha
 												WHERE bom.parent='" . $_POST['OutputItem'.$i] . "'
 												AND bom.loccode='" . $_POST['StockLocation'] . "'
 												AND bom.effectiveafter<='" . Date('Y-m-d') . "'
-												AND bom.effectiveto>='" . Date('Y-m-d') . "'",
-										$db);
+												AND bom.effectiveto>='" . Date('Y-m-d') . "'");
 				$CostRow = DB_fetch_array($CostResult);
 				if (is_null($CostRow['cost'])){
 					$Cost =0;
@@ -442,7 +438,7 @@ if (isset($_POST['submit']) OR isset($_POST['Search'])) { //The update button ha
 	$HasTransResult = DB_query("SELECT transno
 									FROM stockmoves
 								WHERE (stockmoves.type= 26 OR stockmoves.type=28)
-								AND reference " . LIKE  . " '%" . $_POST['WO'] . "%'",$db);
+								AND reference " . LIKE  . " '%" . $_POST['WO'] . "%'");
 	if (DB_num_rows($HasTransResult)>0){
 		prnMsg(_('This work order cannot be deleted because it has issues or receipts related to it'),'error');
 		$CancelDelete=true;
@@ -524,7 +520,8 @@ if (DB_num_rows($WOResult)==1){
 										woitems.comments
 								FROM woitems INNER JOIN stockmaster
 								ON woitems.stockid=stockmaster.stockid
-								WHERE wo='" .$_POST['WO'] . "'",$db,$ErrMsg);
+								WHERE wo='" .$_POST['WO'] . "'",
+								$ErrMsg);
 
 	$NumberOfOutputs=DB_num_rows($WOItemsResult);
 	$i=1;
@@ -564,12 +561,12 @@ echo '<input type="hidden" name="WO" value="' .$_POST['WO'] . '" />';
 echo '<tr><td class="label">' . _('Work Order Reference') . ':</td><td>' . $_POST['WO'] . '</td></tr>';
 echo '<tr><td class="label">' . _('Factory Location') .':</td>
 	<td><select name="StockLocation" onChange="ReloadForm(form1.submit)">';
-$LocResult = DB_query("SELECT locations.loccode,locationname 
+$LocResult = DB_query("SELECT locations.loccode,locationname
 						FROM locations
-						INNER JOIN locationusers 
-							ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' 
+						INNER JOIN locationusers
+							ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "'
 							AND locationusers.canupd=1
-						WHERE locations.usedforwo = 1",$db);
+						WHERE locations.usedforwo = 1");
 while ($LocRow = DB_fetch_array($LocResult)){
 	if ($_POST['StockLocation']==$LocRow['loccode']){
 		echo '<option selected="True" value="' . $LocRow['loccode'] .'">' . $LocRow['locationname'] . '</option>';

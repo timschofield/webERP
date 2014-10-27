@@ -128,8 +128,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 					WHERE tabcode='".$SelectedTabs."'
 					AND date<'".$SQL_FromDate."'";
 
-	$TabBalance = DB_query($SqlBalance,
-							$db);
+	$TabBalance = DB_query($SqlBalance);
 
 	$Balance=DB_fetch_array($TabBalance);
 
@@ -251,9 +250,8 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 			WHERE tabcode='".$SelectedTabs."'";
 
 	$TabResult = DB_query($SqlTabs,
-				$db,
-				 _('No Petty Cash Tabs were returned by the SQL because'),
-				 _('The SQL that failed was:'));
+						 _('No Petty Cash Tabs were returned by the SQL because'),
+						 _('The SQL that failed was:'));
 
 	$Tabs=DB_fetch_array($TabResult);
 
@@ -267,7 +265,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 
 	echo '<tr><td>' . _('User') . '</td>
 				<td>:</td>
-				<td>' . ''.$Tabs['usercode'] . '</td>' . 
+				<td>' . ''.$Tabs['usercode'] . '</td>' .
 				'<td>' . _('To') . '</td><td>:</td><td>' .
 			''.$_POST['ToDate'] . '</td></tr>';
 
@@ -324,19 +322,18 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 			ORDER BY date, counterindex Asc";
 
 	$TabDetail = DB_query($SQL,
-				$db,
-				 _('No Petty Cash movements for this tab were returned by the SQL because'),
-				 _('The SQL that failed was:'));
+						_('No Petty Cash movements for this tab were returned by the SQL because'),
+						_('The SQL that failed was:'));
 
-	echo '<br /><table class="selection">';
-	echo '<tr>
-		<th>' . _('Date Of Expense') . '</th>
-		<th>' . _('Expense Description') . '</th>
-		<th>' . _('Amount') . '</th>
-		<th>' . _('Notes') . '</th>
-		<th>' . _('Receipt') . '</th>
-		<th>' . _('Date Authorised') . '</th>
-	</tr>';
+	echo '<br /><table class="selection">
+		<tr>
+			<th>' . _('Date Of Expense') . '</th>
+			<th>' . _('Expense Description') . '</th>
+			<th>' . _('Amount') . '</th>
+			<th>' . _('Notes') . '</th>
+			<th>' . _('Receipt') . '</th>
+			<th>' . _('Date Authorised') . '</th>
+		</tr>';
 
 	$j = 1;
 	$k=0; //row colour counter

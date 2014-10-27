@@ -101,8 +101,7 @@ function ProcessSupplier($oldCode, $newCode) {
 
 function checkSupplierExist($codeSupplier) {
 	global $db;
-	$result=DB_query("SELECT supplierid FROM suppliers WHERE supplierid='" .
-			$codeSupplier . "'",$db);
+	$result=DB_query("SELECT supplierid FROM suppliers WHERE supplierid='" . $codeSupplier . "'");
 	if (DB_num_rows($result)==0) return false;
 	return true;
 }

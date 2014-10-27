@@ -53,7 +53,7 @@ if ($NewAdjustment==true){
 							materialcost+labourcost+overheadcost AS totalcost,
 							units
 						FROM stockmaster
-						WHERE stockid='" . $_SESSION['Adjustment' . $identifier]->StockID . "'",$db);
+						WHERE stockid='" . $_SESSION['Adjustment' . $identifier]->StockID . "'");
 	$myrow = DB_fetch_array($result);
 	$_SESSION['Adjustment' . $identifier]->ItemDescription = $myrow['description'];
 	$_SESSION['Adjustment' . $identifier]->Controlled = $myrow['controlled'];

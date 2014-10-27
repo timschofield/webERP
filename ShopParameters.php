@@ -444,7 +444,7 @@ $AccountsResult = DB_query("SELECT accountcode,
 					FROM chartmaster INNER JOIN accountgroups
 					ON chartmaster.group_=accountgroups.groupname
 					WHERE accountgroups.pandl=1
-					ORDER BY chartmaster.accountcode",$db);
+					ORDER BY chartmaster.accountcode");
 while ($AccountRow = DB_fetch_array($AccountsResult)){
 	if ($_SESSION['ShopPayPalCommissionAccount'] == $AccountRow['accountcode']) {
 		echo '<option selected="selected" value="' . $AccountRow['accountcode'] . '">' . $AccountRow['accountname'] . '</option>';

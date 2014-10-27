@@ -33,7 +33,7 @@ if (isset($_POST['submit']) and !isset($_POST['SubmitCategory'])) {
 						FROM stockmaster
 						WHERE mbflag <>'K'
 						AND mbflag<>'D'
-						AND stockid='" . mb_strtoupper($_POST['StockID']) . "'",$db);
+						AND stockid='" . mb_strtoupper($_POST['StockID']) . "'");
 	if (DB_num_rows($result)==0){
 		$InputError = 1;
 		prnMsg(_('The stock item entered must be set up as either a manufactured or purchased or assembly item'),'warn');

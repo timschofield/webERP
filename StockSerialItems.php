@@ -32,7 +32,6 @@ $result = DB_query("SELECT description,
 							perishable
 						FROM stockmaster
 						WHERE stockid='".$StockID."'",
-						$db,
 						_('Could not retrieve the requested item because'));
 
 $myrow = DB_fetch_array($result);
@@ -55,7 +54,6 @@ $result = DB_query("SELECT locationname
 						FROM locations
 						INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 						WHERE locations.loccode='" . $_GET['Location'] . "'",
-						$db,
 						_('Could not retrieve the stock location of the item because'),
 						_('The SQL used to lookup the location was'));
 

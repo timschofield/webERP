@@ -149,7 +149,7 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 						ON custbranch.salesman=salesman.salesmancode
 						INNER JOIN locations
 						ON salesorders.fromstkloc=locations.loccode
-						INNER JOIN locationusers 
+						INNER JOIN locationusers
 						ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 						INNER JOIN paymentterms
 						ON debtorsmaster.paymentterms=paymentterms.termsindicator
@@ -232,12 +232,12 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 		if (DB_num_rows($result)==1) {
 			$myrow = DB_fetch_array($result);
 			$ExchRate = $myrow['rate'];
-			
+
 			//Change the language to the customer's language
 			$_SESSION['Language'] = $myrow['language_id'];
 			include('includes/LanguageSetup.php');
 
-			
+
 			if ($InvOrCredit=='Invoice') {
 
 				$sql = "SELECT stockmoves.stockid,
@@ -274,7 +274,7 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 
 			$result=DB_query($sql);
 			if (DB_error_no($db)!=0 OR DB_num_rows($result)==0) {
-			
+
 				$Title = _('Transaction Print Error Report');
 				include ('includes/header.inc');
 				echo '<br />' . _('There was a problem retrieving the invoice or credit note stock movement details for invoice number') . ' ' . $FromTransNo . ' ' . _('from the database');
@@ -307,8 +307,8 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 					$TranslationResult = DB_query("SELECT descriptiontranslation
 													FROM stockdescriptiontranslations
 													WHERE stockid='" . $myrow2['stockid'] . "'
-													AND language_id='" . $myrow['language_id'] ."'",$db);
-					
+													AND language_id='" . $myrow['language_id'] ."'");
+
 					if (DB_num_rows($TranslationResult)==1){ //there is a translation
 						$TranslationRow = DB_fetch_array($TranslationResult);
 						$LeftOvers = $pdf->addTextWrap($Left_Margin+100,$YPos,251,$FontSize,$TranslationRow['descriptiontranslation']);
@@ -447,16 +447,14 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 												bankaccountcode
 										FROM bankaccounts
 										WHERE invoice=2
-										AND currcode='" . $myrow['currcode'] . "'",
-										$db);
+										AND currcode='" . $myrow['currcode'] . "'");
 				if (DB_num_rows($BankResult)==0){
 					/* If no currency default check the fall back default */
 					$BankResult = DB_query("SELECT bankaddress,
 												bankaccountnumber,
 												bankaccountcode
 											FROM bankaccounts
-											WHERE invoice=1",
-											$db);
+											WHERE invoice=1");
 					if (DB_num_rows($BankResult)==0){
 						$PrintBankDetails = false;
 					}
@@ -649,7 +647,7 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 							ON custbranch.salesman=salesman.salesmancode
 							INNER JOIN locations
 							ON salesorders.fromstkloc=locations.loccode
-							INNER JOIN locationusers 
+							INNER JOIN locationusers
 							ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 							INNER JOIN paymentterms
 							ON debtorsmaster.paymentterms=paymentterms.termsindicator

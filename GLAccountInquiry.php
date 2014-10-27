@@ -119,7 +119,7 @@ if (isset($_POST['Show'])){
 	$result = DB_query("SELECT pandl
 				FROM accountgroups
 				INNER JOIN chartmaster ON accountgroups.groupname=chartmaster.group_
-				WHERE chartmaster.accountcode='" . $SelectedAccount ."'",$db);
+				WHERE chartmaster.accountcode='" . $SelectedAccount ."'");
 	$PandLRow = DB_fetch_row($result);
 	if ($PandLRow[0]==1){
 		$PandLAccount = True;
@@ -152,7 +152,7 @@ if (isset($_POST['Show'])){
 	if ($_POST['tag']!=0) {
  		$sql = $sql . " AND tag='" . $_POST['tag'] . "'";
 	}
-			
+
 	$sql = $sql . " ORDER BY periodno, gltrans.trandate, counterindex";
 
 	$namesql = "SELECT accountname FROM chartmaster WHERE accountcode='" . $SelectedAccount . "'";

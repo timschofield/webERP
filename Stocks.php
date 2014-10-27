@@ -288,8 +288,7 @@ if (isset($_POST['submit'])) {
 			$result = DB_query("SELECT stockact,
 										wipact
 								FROM stockcategory
-								WHERE categoryid='" . $_POST['CategoryID'] . "'",
-								$db);
+								WHERE categoryid='" . $_POST['CategoryID'] . "'");
 			$NewStockActRow = DB_fetch_array($result);
 			$NewStockAct = $NewStockActRow['stockact'];
 			$NewWIPAct = $NewStockActRow['wipact'];
@@ -438,7 +437,7 @@ if (isset($_POST['submit'])) {
 					foreach ($ItemDescriptionLanguagesArray as $LanguageId) {
 						$DescriptionTranslation = $_POST['Description_' . str_replace('.', '_', $LanguageId)];
 							//WARNING: It DOES NOT update if database row DOES NOT exist.
-							$sql = "UPDATE stockdescriptiontranslations " . 
+							$sql = "UPDATE stockdescriptiontranslations " .
 									"SET descriptiontranslation='" . $DescriptionTranslation . "' " .
 									"WHERE stockid='" . $StockID . "' AND (language_id='" . $LanguageId. "')";
 							$result = DB_query($sql, $ErrMsg, $DbgMsg, true);
@@ -448,9 +447,7 @@ if (isset($_POST['submit'])) {
 				}
 
 				//delete any properties for the item no longer relevant with the change of category
-				$result = DB_query("DELETE FROM stockitemproperties
-									WHERE stockid ='" . $StockID . "'",
-									$db,$ErrMsg,$DbgMsg,true);
+				$result = DB_query("DELETE FROM stockitemproperties WHERE stockid ='" . $StockID . "'",$ErrMsg, $DbgMsg, true);
 
 				//now insert any item properties
 				for ($i=0;$i<$_POST['PropertyCounter'];$i++){
@@ -473,7 +470,7 @@ if (isset($_POST['submit'])) {
 														VALUES ('" . $StockID . "',
 																'" . $_POST['PropID' . $i] . "',
 																'" . $_POST['PropValue' . $i] . "')",
-										$db,$ErrMsg,$DbgMsg,true);
+										$ErrMsg,$DbgMsg,true);
 				} //end of loop around properties defined for the category
 
 				if ($OldStockAccount != $NewStockAct AND $_SESSION['CompanyRecord']['gllink_stock']==1) {
@@ -526,7 +523,6 @@ if (isset($_POST['submit'])) {
 												WHERE stockmaster.stockid='". $StockID . "'
 												AND workorders.closed=0
 												GROUP BY workorders.costissued",
-												$db,
 												_('Error retrieving value of finished goods received and cost issued against work orders for this item'));
 					$WIPValue = 0;
 					while ($WIPRow=DB_fetch_array($WOCostsResult)){
@@ -577,8 +573,8 @@ if (isset($_POST['submit'])) {
 			//but lets be really sure here
 			$result = DB_query("SELECT stockid
 								FROM stockmaster
-								WHERE stockid='" . $StockID ."'",$db);
-			
+								WHERE stockid='" . $StockID ."'");
+
 			if (DB_num_rows($result)==1){
 				prnMsg(_('The stock code entered is actually already in the database - duplicate stock codes are prohibited by the system. Try choosing an alternative stock code'),'error');
 				$InputError = 1;
@@ -665,7 +661,7 @@ if (isset($_POST['submit'])) {
 													VALUES ('" . $StockID . "',
 														'" . $_POST['PropID' . $i] . "',
 														'" . $_POST['PropValue' . $i] . "')",
-								$db,$ErrMsg,$DbgMsg,true);
+								$ErrMsg,$DbgMsg,true);
 					} //end of loop around properties defined for the category
 
 					//Add data to locstock
@@ -1335,8 +1331,7 @@ while ($PropertyRow=DB_fetch_array($PropertiesResult)){
 		$PropValResult = DB_query("SELECT value FROM
 									stockitemproperties
 									WHERE stockid='" . $StockID . "'
-									AND stkcatpropid ='" . $PropertyRow['stkcatpropid']."'",
-								$db);
+									AND stkcatpropid ='" . $PropertyRow['stkcatpropid']."'");
 		$PropValRow = DB_fetch_row($PropValResult);
 		$PropertyValue = $PropValRow[0];
 	} else {

@@ -433,10 +433,7 @@ if ((! isset($_POST['FromPeriod'])
 			chartdetails.accountcode";
 
 
-	$AccountsResult = DB_query($SQL,
-				$db,
-				 _('No general ledger accounts were returned by the SQL because'),
-				 _('The SQL that failed was:'));
+	$AccountsResult = DB_query($SQL, _('No general ledger accounts were returned by the SQL because'), _('The SQL that failed was:'));
 
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' .
 		_('Trial Balance') . '" alt="" />' . ' ' . _('Trial Balance Report') . '</p>';

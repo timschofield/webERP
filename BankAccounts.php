@@ -380,7 +380,7 @@ if (!isset($_POST['CurrCode']) or $_POST['CurrCode']==''){
 }
 $result = DB_query("SELECT currabrev,
 							currency
-					FROM currencies",$db);
+					FROM currencies");
 
 while ($myrow = DB_fetch_array($result)) {
 	if ($myrow['currabrev']==$_POST['CurrCode']) {

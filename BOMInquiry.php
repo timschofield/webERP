@@ -157,8 +157,7 @@ if (isset($StockID) and $StockID!=""){
 								labourcost,
 								overheadcost
 						FROM stockmaster
-						WHERE stockid='" . $StockID  . "'",
-						$db);
+						WHERE stockid='" . $StockID  . "'");
 	$myrow = DB_fetch_array($result);
 	$ParentLabourCost = $myrow['labourcost'];
 	$ParentOverheadCost = $myrow['overheadcost'];
@@ -174,9 +173,9 @@ if (isset($StockID) and $StockID!=""){
 			ON bom.component = stockmaster.stockid
 			WHERE bom.parent = '" . $StockID . "'
 			AND bom.effectiveafter < '" . Date('Y-m-d') . "'
-			AND (bom.effectiveto > '" . Date('Y-m-d') . "' 
+			AND (bom.effectiveto > '" . Date('Y-m-d') . "'
 			 OR bom.effectiveto='0000-00-00')";
-			 
+
 	$ErrMsg = _('The bill of material could not be retrieved because');
 	$BOMResult = DB_query ($sql,$ErrMsg);
 

@@ -503,14 +503,15 @@ if (isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.
 										'" . $_SESSION['DefaultFactoryLocation'] . "',
 										'" . Date('Y-m-d') . "',
 										'" . Date('Y-m-d'). "')",
-										$db,$ErrMsg,$DbgMsg,true);
+										$ErrMsg,
+										$DbgMsg,
+										true);
 				//Need to get the latest BOM to roll up cost
 				$CostResult = DB_query("SELECT SUM((materialcost+labourcost+overheadcost)*bom.quantity) AS cost
 													FROM stockmaster INNER JOIN bom
 													ON stockmaster.stockid=bom.component
 													WHERE bom.parent='" . $StockItem->StockID . "'
-													AND bom.loccode='" . $_SESSION['DefaultFactoryLocation'] . "'",
-										$db);
+													AND bom.loccode='" . $_SESSION['DefaultFactoryLocation'] . "'");
 				$CostRow = DB_fetch_row($CostResult);
 				if (is_null($CostRow[0]) OR $CostRow[0]==0){
 					$Cost =0;
@@ -546,7 +547,7 @@ if (isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.
 
 							$result = DB_query("SELECT serialno FROM stockserialitems
 												WHERE serialno='" . ($StockItem->NextSerialNo + $i) . "'
-												AND stockid='" . $StockItem->StockID ."'",$db);
+												AND stockid='" . $StockItem->StockID ."'");
 							if (DB_num_rows($result)!=0){
 								$WOQuantity++;
 								prnMsg(($StockItem->NextSerialNo + $i) . ': ' . _('This automatically generated serial number already exists - it cannot be added to the work order'),'error');
@@ -659,7 +660,7 @@ if (isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.
 		$ContractResult = DB_query("SELECT contractref,
 											requireddate
 									FROM contracts WHERE orderno='" .  $_SESSION['ExistingOrder'.$identifier] ."'
-									AND status=1",$db);
+									AND status=1");
 		if (DB_num_rows($ContractResult)==1){ //then it is a contract quotation being changed to an order
 			$ContractRow = DB_fetch_array($ContractResult);
 			$WONo = GetNextTransNo(40,$db);
@@ -667,7 +668,10 @@ if (isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.
 			$DbgMsg = _('The SQL that failed to update the contract status was');
 			$UpdContractResult=DB_query("UPDATE contracts SET status=2,
 															wo='" . $WONo . "'
-										WHERE orderno='" .$_SESSION['ExistingOrder'.$identifier] . "'", $db,$ErrMsg,$DbgMsg,true);
+										WHERE orderno='" .$_SESSION['ExistingOrder'.$identifier] . "'",
+										$ErrMsg,
+										$DbgMsg,
+										true);
 			$ErrMsg = _('Could not insert the contract bill of materials');
 			$InsContractBOM = DB_query("INSERT INTO bom (parent,
 														 component,
@@ -684,7 +688,9 @@ if (isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.
 													'2099-12-31',
 													quantity
 											FROM contractbom
-											WHERE contractref='" . $ContractRow['contractref'] . "'",$db,$ErrMsg,$DbgMsg);
+											WHERE contractref='" . $ContractRow['contractref'] . "'",
+											$ErrMsg,
+											$DbgMsg);
 
 			$ErrMsg = _('Unable to insert a new work order for the sales order item');
 			$InsWOResult = DB_query("INSERT INTO workorders (wo,
@@ -695,13 +701,13 @@ if (isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.
 													'" . $_SESSION['Items'.$identifier]->Location ."',
 													'" . $ContractRow['requireddate'] . "',
 													'" . Date('Y-m-d'). "')",
-													$db,$ErrMsg,$DbgMsg);
+										$ErrMsg,
+										$DbgMsg);
 			//Need to get the latest BOM to roll up cost but also add the contract other requirements
 			$CostResult = DB_query("SELECT SUM((materialcost+labourcost+overheadcost)*contractbom.quantity) AS cost
 									FROM stockmaster INNER JOIN contractbom
 									ON stockmaster.stockid=contractbom.stockid
-									WHERE contractbom.contractref='" .  $ContractRow['contractref'] . "'",
-									$db);
+									WHERE contractbom.contractref='" .  $ContractRow['contractref'] . "'");
 			$CostRow = DB_fetch_row($CostResult);
 			if (is_null($CostRow[0]) OR $CostRow[0]==0){
 				$Cost =0;
@@ -711,8 +717,7 @@ if (isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.
 			}
 			$CostResult = DB_query("SELECT SUM(costperunit*quantity) AS cost
 									FROM contractreqts
-									WHERE contractreqts.contractref='" .  $ContractRow['contractref'] . "'",
-									$db);
+									WHERE contractreqts.contractref='" .  $ContractRow['contractref'] . "'");
 			$CostRow = DB_fetch_row($CostResult);
 			//add other requirements cost to cost of contract BOM
 			$Cost += $CostRow[0];
@@ -1009,7 +1014,9 @@ if ($_SESSION['Items'.$identifier]->Location=='' OR !isset($_SESSION['Items'.$id
 $ErrMsg = _('The stock locations could not be retrieved');
 $DbgMsg = _('SQL used to retrieve the stock locations was') . ':';
 $StkLocsResult = DB_query("SELECT locationname,locations.loccode
-							FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1",$db, $ErrMsg, $DbgMsg);
+							FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1",
+						$ErrMsg,
+						$DbgMsg);
 
 while ($myrow=DB_fetch_array($StkLocsResult)){
 	if ($_SESSION['Items'.$identifier]->Location==$myrow['loccode']){

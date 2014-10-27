@@ -211,7 +211,9 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 												   status='Authorised',
 												   stat_comment='" . $StatusComment . "'
 												WHERE orderno='" . $PO_OrderNo . "'",
-												$db,$ErrMsg,$DbgMsg,true);
+												$ErrMsg,
+												$DbgMsg,
+												true);
 						} else { // no authority to authorise this order
 							if (DB_num_rows($AuthResult) ==0){
 								$AuthMessage = _('Your authority to approve purchase orders in') . ' ' .$SuppRow['currcode'] . ' ' . _('has not yet been set up') . '<br />';
@@ -375,7 +377,9 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 															status='Authorised',
 															stat_comment='" . $StatusComment . "'
 												 WHERE orderno='" . $PO_OrderNo . "'",
-												$db,$ErrMsg,$DbgMsg,true);
+												$ErrMsg,
+												$DbgMsg,
+												true);
 				} else { // no authority to authorise this order
 					if (DB_num_rows($AuthResult) ==0){
 						$AuthMessage = _('Your authority to approve purchase orders in') . ' ' .$SuppRow['currcode'] . ' ' . _('has not yet been set up') . '<br />';

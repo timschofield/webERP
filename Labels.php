@@ -136,8 +136,7 @@ if (isset($_POST['SelectedLabelID'])){
 														hpos='" . $_POST['HPos' . $i] . "',
 														fontsize='" . $_POST['FontSize' . $i] . "',
 														barcode='" . $_POST['Barcode' . $i] . "'
-								WHERE labelfieldid='" . $_POST['LabelFieldID' . $i] . "'",
-								$db);
+								WHERE labelfieldid='" . $_POST['LabelFieldID' . $i] . "'");
 			} else {
 				prnMsg (_('Entries for Vertical Position, Horizontal Position, and Font Size must be integers.'),'error');
 			}
@@ -160,8 +159,7 @@ if (isset($_POST['SelectedLabelID'])){
 									'" . $_POST['VPos'] . "',
 									'" . $_POST['HPos'] . "',
 									'" . $_POST['FontSize'] . "',
-									'" . $_POST['Barcode'] . "')",
-							$db);
+									'" . $_POST['Barcode'] . "')");
 	}
 } elseif(isset($_GET['SelectedLabelID'])){
 	$SelectedLabelID =$_GET['SelectedLabelID'];

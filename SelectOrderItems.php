@@ -888,7 +888,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					$KitResult = DB_query($sql,$ErrMsg,$DbgMsg);
 
 					$ParentQty = $NewItemQty;
-					while ($KitParts = DB_fetch_array($KitResult,$db)){
+					while ($KitParts = DB_fetch_array($KitResult)){
 						$NewItem = $KitParts['component'];
 						$NewItemQty = $KitParts['quantity'] * $ParentQty;
 						$NewPOLine = 0;
@@ -919,7 +919,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 													fixedassets.cost-fixedassets.accumdepn AS nbv
 											FROM fixedassetcategories INNER JOIN fixedassets
 											ON fixedassetcategories.categoryid=fixedassets.assetcategoryid
-											WHERE fixedassets.assetid='" . $_POST['AssetToDisposeOf'] . "'",$db);
+											WHERE fixedassets.assetid='" . $_POST['AssetToDisposeOf'] . "'");
 			$AssetRow = DB_fetch_array($AssetDetailsResult);
 
 			/* Check that the stock category for disposal "ASSETS" is defined already */
@@ -934,22 +934,20 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 																				stockact)
 														VALUES ('ASSETS',
 																'" . _('Asset Disposals') . "',
-																'" . $AssetRow['costact'] . "')",$db);
+																'" . $AssetRow['costact'] . "')");
 			}
 
 			/*First check to see that it doesn't exist already assets are of the format "ASSET-" . $AssetID
 			 */
 			 $TestAssetExistsAlreadyResult = DB_query("SELECT stockid
 														FROM stockmaster
-														WHERE stockid ='ASSET-" . $_POST['AssetToDisposeOf']  . "'",
-														$db);
+														WHERE stockid ='ASSET-" . $_POST['AssetToDisposeOf']  . "'");
 			 $j=0;
 			while (DB_num_rows($TestAssetExistsAlreadyResult)==1) { //then it exists already ... bum
 				$j++;
 				$TestAssetExistsAlreadyResult = DB_query("SELECT stockid
 														FROM stockmaster
-														WHERE stockid ='ASSET-" . $_POST['AssetToDisposeOf']  . '-' . $j . "'",
-														$db);
+														WHERE stockid ='ASSET-" . $_POST['AssetToDisposeOf']  . '-' . $j . "'");
 			}
 			if ($j>0){
 				$AssetStockID = 'ASSET-' . $_POST['AssetToDisposeOf']  . '-' . $j;
@@ -979,12 +977,12 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 												'0',
 												'0',
 												'" . $_SESSION['DefaultTaxCategory'] . "',
-												'". $NBV . "')" , $db);
+												'". $NBV . "')");
 			/*not forgetting the location records too */
 			$InsertStkLocRecsResult = DB_query("INSERT INTO locstock (loccode,
 																	stockid)
 												SELECT loccode, '" . $AssetStockID . "'
-												FROM locations",$db);
+												FROM locations");
 			/*Now the asset has been added to the stock master we can add it to the sales order */
 			$NewItemDue = date($_SESSION['DefaultDateFormat']);
 			if (isset($_POST['POLine'])){
@@ -1122,7 +1120,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 									FROM discountmatrix
 									WHERE salestype='" .  $_SESSION['Items'.$identifier]->DefaultSalesType . "'
 									AND discountcategory ='" . $OrderLine->DiscCat . "'
-									AND quantitybreak <= '" . $QuantityOfDiscCat ."'",$db);
+									AND quantitybreak <= '" . $QuantityOfDiscCat ."'");
 				$myrow = DB_fetch_row($result);
 				if ($myrow[0]==NULL){
 					$DiscountMatrixRate = 0;
@@ -1175,7 +1173,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				$KitResult = DB_query($sql,$ErrMsg);
 
 				$ParentQty = $NewItemQty;
-				while ($KitParts = DB_fetch_array($KitResult,$db)){
+				while ($KitParts = DB_fetch_array($KitResult)){
 					$NewItem = $KitParts['component'];
 					$NewItemQty = $KitParts['quantity'] * $ParentQty;
 					$NewPOLine = 0;
@@ -1224,7 +1222,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 						$KitResult = DB_query($sql,$ErrMsg);
 
 						$ParentQty = $NewItemQty;
-						while ($KitParts = DB_fetch_array($KitResult,$db)){
+						while ($KitParts = DB_fetch_array($KitResult)){
 							$NewItem = $KitParts['component'];
 							$NewItemQty = $KitParts['quantity'] * $ParentQty;
 							$NewItemDue = date($_SESSION['DefaultDateFormat']);
@@ -1261,7 +1259,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 								FROM discountmatrix
 								WHERE salestype='" .  $_SESSION['Items'.$identifier]->DefaultSalesType . "'
 								AND discountcategory ='" . $OrderLine->DiscCat . "'
-								AND quantitybreak <= '" . $QuantityOfDiscCat . "'",$db);
+								AND quantitybreak <= '" . $QuantityOfDiscCat . "'");
 			$myrow = DB_fetch_row($result);
 			if ($myrow[0] == NULL){
 				$DiscountMatrixRate = 0;

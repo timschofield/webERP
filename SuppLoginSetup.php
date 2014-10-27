@@ -162,8 +162,7 @@ while ($myroles = DB_fetch_array($RolesResult)){
 	//Now look to find the tokens for the role - we just wnat the role that has just one token i.e. token 9
 	$TokensResult = DB_query("SELECT tokenid
 								FROM securitygroups
-								WHERE secroleid = '" . $myroles['secroleid'] ."'",
-								$db);
+								WHERE secroleid = '" . $myroles['secroleid'] ."'");
 
 	while ($mytoken = DB_fetch_row($TokensResult)) {
 		if ($mytoken[0]==9){

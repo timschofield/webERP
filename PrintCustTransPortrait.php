@@ -169,7 +169,7 @@ If (isset($PrintPDF)
 						ON custbranch.salesman=salesman.salesmancode
 						INNER JOIN locations
 						ON salesorders.fromstkloc=locations.loccode
-						INNER JOIN locationusers 
+						INNER JOIN locationusers
 						ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 						INNER JOIN paymentterms
 						ON debtorsmaster.paymentterms=paymentterms.termsindicator
@@ -335,8 +335,8 @@ If (isset($PrintPDF)
 				$TranslationResult = DB_query("SELECT descriptiontranslation
 												FROM stockdescriptiontranslations
 												WHERE stockid='" . $myrow2['stockid'] . "'
-												AND language_id='" . $myrow['language_id'] ."'",$db);
-				
+												AND language_id='" . $myrow['language_id'] ."'");
+
 				if (DB_num_rows($TranslationResult)==1){ //there is a translation
 					$TranslationRow = DB_fetch_array($TranslationResult);
 					$LeftOvers = $pdf->addTextWrap($Left_Margin+80,$YPos,186,$FontSize,$TranslationRow['descriptiontranslation']);
@@ -360,7 +360,7 @@ If (isset($PrintPDF)
 					$GetControlMovts = DB_query("SELECT moveqty,
 														serialno
 												 FROM stockserialmoves
-												 WHERE stockmoveno='" . $myrow2['stkmoveno'] . "'",$db);
+												 WHERE stockmoveno='" . $myrow2['stkmoveno'] . "'");
 
 					if ($myrow2['serialised']==1){
 						while ($ControlledMovtRow = DB_fetch_array($GetControlMovts)){
@@ -548,7 +548,7 @@ If (isset($PrintPDF)
 	//Change the language back to the user's language
 	$_SESSION['Language'] = $UserLanguage;
 	include('includes/LanguageSetup.php');
-	
+
 } else { /*The option to print PDF was not hit */
 
 	$Title=_('Select Invoices/Credit Notes To Print');
@@ -690,7 +690,7 @@ If (isset($PrintPDF)
 						ON custbranch.salesman=salesman.salesmancode
 						INNER JOIN locations
 						ON salesorders.fromstkloc=locations.loccode
-						INNER JOIN locationusers 
+						INNER JOIN locationusers
 						ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 						INNER JOIN paymentterms
 						ON debtorsmaster.paymentterms=paymentterms.termsindicator

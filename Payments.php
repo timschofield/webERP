@@ -138,7 +138,6 @@ if (isset($_POST['BankAccount']) AND $_POST['BankAccount']!=''){
 						FROM bankaccounts INNER JOIN currencies
 						ON bankaccounts.currcode = currencies.currabrev
 						WHERE accountcode ='" . $_POST['BankAccount'] . "'",
-						$db,
 						$ErrMsg);
 
 	$myrow = DB_fetch_array($result);

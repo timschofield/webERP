@@ -348,15 +348,15 @@ if (isset($_POST['submit'])) {
 
 		/* need to figure out if this location is the only one in the same tax province */
 		$result = DB_query("SELECT taxprovinceid FROM locations
-							WHERE loccode='" . $SelectedLocation . "'",$db);
+							WHERE loccode='" . $SelectedLocation . "'");
 		$TaxProvinceRow = DB_fetch_row($result);
 		$result = DB_query("SELECT COUNT(taxprovinceid) FROM locations
-							WHERE taxprovinceid='" .$TaxProvinceRow[0] . "'",$db);
+							WHERE taxprovinceid='" .$TaxProvinceRow[0] . "'");
 		$TaxProvinceCount = DB_fetch_row($result);
 		if ($TaxProvinceCount[0]==1){
 		/* if its the only location in this tax authority then delete the appropriate records in TaxAuthLevels */
 			$result = DB_query("DELETE FROM taxauthrates
-								WHERE dispatchtaxprovince='" . $TaxProvinceRow[0] . "'",$db);
+								WHERE dispatchtaxprovince='" . $TaxProvinceRow[0] . "'");
 		}
 
 		$result= DB_query("DELETE FROM locstock WHERE loccode ='" . $SelectedLocation . "'");

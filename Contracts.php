@@ -21,7 +21,7 @@ foreach ($_POST as $FormVariableName=>$FormVariableValue) {
 		$_POST['SelectedCustomer']=$_POST['SelectedCustomer'.$Index];
 		$_POST['SelectedBranch']=$_POST['SelectedBranch'.$Index];
 	}
-} 
+}
 $ViewTopic= 'Contracts';
 $BookMark = 'CreateContract';
 
@@ -283,7 +283,7 @@ if (isset($_POST['CommitContract']) OR isset($_POST['CreateQuotation'])){
 											VALUES ('" . $_SESSION['Contract'.$identifier]->LocCode . "',
 													'" . $_SESSION['Contract'.$identifier]->LocCode . "',
 													'" . _('Default for') . ' ' . $_SESSION['Contract'.$identifier]->LocCode . "',
-													'1')",$db);
+													'1')");
 			$WorkCentre = $_SESSION['Contract'.$identifier]->LocCode;
 		}
 		/*The above is a bit of a hack to get a default workcentre for a location based on the users default location*/
