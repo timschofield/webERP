@@ -1,4 +1,9 @@
 <?php
+/**************************************************************************************
+KL RICARD MODIFICATIONS:
+- Added function KLShowOldPrices() showing old retail prices in sepparate table.
+***************************************************************************************/
+
 /* $Id: Prices.php 6778 2014-06-24 20:33:25Z rchacon $*/
 
 include('includes/session.inc');
@@ -341,12 +346,13 @@ echo '<tr><td>' . _('Price') . ':</td>
      </td></tr>
 </table>
 <br /><div class="centre">
-<input type="submit" name="submit" value="' . _('Enter') . '/' . _('Amend Price') . '" />
-</div>';
-
-
+<input type="submit" name="submit" value="' . _('Enter') . '/' . _('Amend Price') . '" />';
+echo '</div>';
+// KL RICARD
+KLShowOldPrices($Item);
+// END KL RICARD
 echo '</div>
-      </form>';
+	  </form>';
 include('includes/footer.inc');
 
 
@@ -426,5 +432,51 @@ function ReSequenceEffectiveDates ($Item, $PriceList, $CurrAbbrev, $db) {
 		} // end of loop around duplicate no end date prices
 
 } // end function ReSequenceEffectiveDates
+
+function KLShowOldPrices($Item){
+	$sql = "SELECT kloldprices.price,
+				kloldprices.startdate,
+				kloldprices.enddate
+		FROM kloldprices
+		WHERE kloldprices.stockid='".$Item."'
+		AND kloldprices.debtorno=''
+			AND typeabbrev = 'RT' 
+			AND currabrev = 'IDR'
+		ORDER BY kloldprices.startdate DESC";
+	$result = DB_query($sql,$db);
+	if (DB_num_rows($result) > 0) {
+		echo '<p class="page_title_text" align="center"><strong>' . _('Old Kapal-Laut Retail Prices in IDR') .'</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th class="ascending">' . _('Start Date') . '</th>
+							<th class="ascending">' . _('End Date') . '</th>
+							<th class="ascending">' . _('Price IDR') . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		while ($myrow = DB_fetch_array($result)) {
+			if ($k==1){
+				echo '<tr class="EvenTableRows">';
+				$k=0;
+			} else {
+				echo '<tr class="OddTableRows">';
+				$k=1;
+			}
+			printf('<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					ConvertSQLDate($myrow['startdate']),
+					ConvertSQLDate($myrow['enddate']),
+					locale_number_format($myrow['price'],0)
+					);
+
+		}
+		echo '</table>
+				</div>';
+	}
+}
 
 ?>
