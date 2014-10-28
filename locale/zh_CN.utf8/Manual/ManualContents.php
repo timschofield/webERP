@@ -27,7 +27,7 @@ include('ManualHeader.html');
 ?>
 	<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'); ?>" method="POST">
 <?php
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+//echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
      ((isset($_POST['Submit'])) AND (isset($_POST['SelectTableOfContents'])))) {
