@@ -13,6 +13,7 @@ $begintime = time_start();
 
 if ($_SESSION['UserID'] == "Ricard"){
 
+	RetailCustomerDataQualitySPG( 3, $db);
 	RetailCustomerDataQualitySPG(15, $db);
 	RetailCustomerAnalysisBySex(30, "ALL", $db);
 
