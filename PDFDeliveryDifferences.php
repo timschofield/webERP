@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: PDFDeliveryDifferences.php 6812 2014-08-13 18:14:57Z agaluski $*/
+/* $Id: PDFDeliveryDifferences.php 6943 2014-10-27 07:06:42Z daintree $*/
 
 include ('includes/session.inc');
 include('includes/SQL_CommonFunctions.inc');
@@ -46,7 +46,7 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 			WHERE stocktype<>'D'
 			AND stocktype<>'L'";
 
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 
 
 	 echo '<select name="CategoryID">
@@ -63,7 +63,7 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 			<td><select name="Location">
 				<option selected="selected" value="All">' . _('All Locations')  . '</option>';
 
-	$result= DB_query("SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1",$db);
+	$result= DB_query("SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1");
 	while ($myrow=DB_fetch_array($result)){
 		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname']  . '</option>';
 	}
@@ -185,9 +185,9 @@ if ($_SESSION['SalesmanLogin'] != '') {
 	$sql .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 }
 
-$Result=DB_query($sql,$db,'','',false,false); //dont error check - see below
+$Result=DB_query($sql,'','',false,false); //dont error check - see below
 
-if (DB_error_no($db)!=0){
+if (DB_error_no()!=0){
 	$Title = _('Delivery Differences Log Report Error');
 	include('includes/header.inc');
 	prnMsg( _('An error occurred getting the variances between deliveries and orders'),'error');
@@ -294,7 +294,7 @@ if ($_SESSION['SalesmanLogin'] != '') {
 }
 
 $ErrMsg = _('Could not retrieve the count of sales order lines in the period under review');
-$result = DB_query($sql,$db,$ErrMsg);
+$result = DB_query($sql,$ErrMsg);
 
 
 $myrow=DB_fetch_row($result);

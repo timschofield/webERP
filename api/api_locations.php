@@ -1,5 +1,5 @@
 <?php
-/* $Id: api_locations.php 5768 2012-12-20 08:38:22Z daintree $*/
+/* $Id: api_locations.php 6943 2014-10-27 07:06:42Z daintree $*/
 
 /*List all revisions
 //revision 1.2
@@ -15,7 +15,7 @@
 		$Searchsql = "SELECT count(loccode)
 						FROM locations
 						WHERE loccode='".$LocationCode."'";
-		$SearchResult=DB_query($Searchsql, $db);
+		$SearchResult=DB_query($Searchsql);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] != 0) {
 			$Errors[$i] = LocationCodeAlreadyExists;
@@ -28,7 +28,7 @@
 		$Searchsql = "SELECT count(loccode)
 						FROM locations
 						WHERE loccode='".$LocationCode."'";
-		$SearchResult=DB_query($Searchsql, $db);
+		$SearchResult=DB_query($Searchsql);
 		$answer = DB_fetch_array($SearchResult);
 		if ($answer[0]==0) {
 			$Errors[$i] = LocationCodeDoesntExist;
@@ -49,7 +49,7 @@
 		$Searchsql = "SELECT COUNT(taxprovinceid)
 						FROM taxprovinces
 						WHERE taxprovinceid='".$TaxProvinceId."'";
-		$SearchResult=DB_query($Searchsql, $db);
+		$SearchResult=DB_query($Searchsql);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] == 0) {
 			$Errors[$i] = TaxProvinceIdNotSetup;
@@ -70,7 +70,7 @@
 			return $Errors;
 		}
 		$sql = "SELECT loccode FROM locations";
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		$i=0;
 		while ($myrow=DB_fetch_array($result)) {
 			$LocationList[$i]=$myrow[0];
@@ -92,7 +92,7 @@
 			return $Errors;
 		}
 		$sql = "SELECT * FROM locations WHERE loccode='".$location."'";
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		return DB_fetch_array($result);
 	}
 
@@ -153,7 +153,7 @@
 						VALUES ('" . mb_substr($FieldValues,0,-2) . "') ";
 
 			$result = DB_Query($sql, $db);
-			if (DB_error_no($db) != 0) {
+			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
 				$Errors[0]=0;
@@ -215,7 +215,7 @@
 		$sql = mb_substr($sql,0,-2)." WHERE loccode='".$Location['loccode']."'";
 		if (sizeof($Errors)==0) {
 			$result = DB_Query($sql, $db);
-			if (DB_error_no($db) != 0) {
+			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
 				$Errors[0]=0;

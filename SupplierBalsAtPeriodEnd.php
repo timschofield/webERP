@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: SupplierBalsAtPeriodEnd.php 6816 2014-08-14 09:12:29Z daintree $*/
+/* $Id: SupplierBalsAtPeriodEnd.php 6944 2014-10-27 07:15:34Z daintree $*/
 
 include('includes/session.inc');
 
@@ -45,12 +45,12 @@ If (isset($_POST['PrintPDF'])
 				currencies.currency,
 				currencies.decimalplaces";
 
-	$SupplierResult = DB_query($SQL,$db);
+	$SupplierResult = DB_query($SQL);
 
-	if (DB_error_no($db) !=0) {
+	if (DB_error_no() !=0) {
 		$Title = _('Supplier Balances - Problem Report');
 		include('includes/header.inc');
-		prnMsg(_('The Supplier details could not be retrieved by the SQL because') . ' ' . DB_error_msg($db),'error');
+		prnMsg(_('The Supplier details could not be retrieved by the SQL because') . ' ' . DB_error_msg(),'error');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		if ($debug==1){
 			echo '<br />' . $SQL;
@@ -145,7 +145,7 @@ If (isset($_POST['PrintPDF'])
 			ORDER BY periodno DESC";
 
 	$ErrMsg = _('Could not retrieve period data because');
-	$Periods = DB_query($sql,$db,$ErrMsg);
+	$Periods = DB_query($sql,$ErrMsg);
 
 	while ($myrow = DB_fetch_array($Periods,$db)){
 		echo '<option value="' . $myrow['lastdate_in_period'] . '" selected="selected" >' . MonthAndYearFromSQLDate($myrow['lastdate_in_period'],'M',-1) . '</option>';

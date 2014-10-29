@@ -1,12 +1,12 @@
 <?php
-/* $Id: api_glgroups.php 5768 2012-12-20 08:38:22Z daintree $*/
+/* $Id: api_glgroups.php 6943 2014-10-27 07:06:42Z daintree $*/
 
 /* Check that the account group doesn't already exist'*/
 	function VerifyAccountGroup($AccountGroup, $i, $Errors, $db) {
 		$Searchsql = "SELECT count(groupname)
 				FROM accountgroups
 				WHERE groupname='".$AccountGroup."'";
-		$SearchResult=DB_query($Searchsql, $db);
+		$SearchResult=DB_query($Searchsql);
 		$answer = DB_fetch_array($SearchResult);
 		if ($answer[0]>0) {
 			$Errors[$i] = GLAccountGroupAlreadyExists;
@@ -19,7 +19,7 @@
 		$Searchsql = "SELECT count(sectionid)
 				FROM accountsection
 				WHERE sectionid='".$AccountSection."'";
-		$SearchResult=DB_query($Searchsql, $db);
+		$SearchResult=DB_query($Searchsql);
 		$answer = DB_fetch_array($SearchResult);
 		if ($answer[0]==0) {
 			$Errors[$i] = GLAccountSectionDoesntExist;
@@ -48,7 +48,7 @@
 		$Searchsql = "SELECT count(groupname)
 				FROM accountgroups
 				WHERE groupname='".$AccountGroup."'";
-		$SearchResult=DB_query($Searchsql, $db);
+		$SearchResult=DB_query($Searchsql);
 		$answer = DB_fetch_array($SearchResult);
 		if ($answer[0]==0 and $AccountGroup!='') {
 			$Errors[$i] = AccountGroupDoesntExist;
@@ -82,7 +82,7 @@
 			$sql = "INSERT INTO accountgroups ('" .mb_substr($FieldNames,0,-2) . "')
 					VALUES ('" . mb_substr($FieldValues,0,-2) . "' ) ";
 			$result = DB_Query($sql, $db);
-			if (DB_error_no($db) != 0) {
+			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
 				$Errors[0]=0;

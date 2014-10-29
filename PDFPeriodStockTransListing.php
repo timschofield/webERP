@@ -50,7 +50,7 @@ if (!isset($_POST['FromDate'])){
 		</tr>';
 
 	$sql = "SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
-	$resultStkLocs = DB_query($sql, $db);
+	$resultStkLocs = DB_query($sql);
 
 	echo '<tr>
 			<td>' . _('For Stock Location') . ':</td>
@@ -131,9 +131,9 @@ if ($_POST['StockLocation']=='All') {
 			AND date_format(trandate, '%Y-%m-%d')<='".FormatDateForSQL($_POST['ToDate'])."'
 			AND stockmoves.loccode='" . $_POST['StockLocation'] . "'";
 }
-$result=DB_query($sql,$db,'','',false,false);
+$result=DB_query($sql,'','',false,false);
 
-if (DB_error_no($db)!=0){
+if (DB_error_no()!=0){
 	$Title = _('Transaction Listing');
 	include('includes/header.inc');
 	prnMsg(_('An error occurred getting the transactions'),'error');

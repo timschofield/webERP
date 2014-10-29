@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: EmailCustTrans.php 6310 2013-08-29 10:42:50Z daintree $*/
+/* $Id: EmailCustTrans.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 include ('includes/session.inc');
 include ('includes/SQL_CommonFunctions.inc');
@@ -52,7 +52,7 @@ $SQL = "SELECT email
 		AND debtortrans.transno='" .$_GET['FromTransNo'] . "'";
 
 $ErrMsg = _('There was a problem retrieving the contact details for the customer');
-$ContactResult=DB_query($SQL,$db,$ErrMsg);
+$ContactResult=DB_query($SQL,$ErrMsg);
 
 if (DB_num_rows($ContactResult)>0){
 	$EmailAddrRow = DB_fetch_row($ContactResult);

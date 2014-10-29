@@ -1,12 +1,12 @@
 <?php
-/* $Id: api_branches.php 5768 2012-12-20 08:38:22Z daintree $*/
+/* $Id: api_branches.php 6943 2014-10-27 07:06:42Z daintree $*/
 
 /* Check that the debtor number exists*/
 	function VerifyBranchDebtorExists($DebtorNumber, $i, $Errors, $db) {
 		$Searchsql = "SELECT count(debtorno)
 				FROM debtorsmaster
 				WHERE debtorno='".$DebtorNumber."'";
-		$SearchResult=api_DB_query($Searchsql, $db);
+		$SearchResult=api_DB_query($Searchsql);
 		$answer = DB_fetch_array($SearchResult);
 		if ($answer[0]==0) {
 			$Errors[$i] = DebtorDoesntExist;
@@ -24,7 +24,7 @@
 				     FROM custbranch
            			 WHERE debtorno='".$DebtorNumber."' AND
 				           branchcode='".$BranchNumber."'";
-		$SearchResult=api_DB_query($Searchsql, $db);
+		$SearchResult=api_DB_query($Searchsql);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] != 0) {
 			$Errors[$i] = BranchNoAlreadyExists;
@@ -41,7 +41,7 @@
 				     FROM custbranch
 				     WHERE debtorno='".$DebtorNumber."'
                      AND branchcode='".$BranchNumber."'";
-		$SearchResult=api_DB_query($Searchsql, $db);
+		$SearchResult=api_DB_query($Searchsql);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] == 0) {
 			$Errors[$i] = BranchNoDoesntExist;
@@ -95,7 +95,7 @@
 		$Searchsql = "SELECT COUNT(areacode)
 					  FROM areas
 					  WHERE areacode='".$AreaCode."'";
-		$SearchResult=api_DB_query($Searchsql, $db);
+		$SearchResult=api_DB_query($Searchsql);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] == 0) {
 			$Errors[$i] = AreaCodeNotSetup;
@@ -108,7 +108,7 @@
 		$Searchsql = "SELECT COUNT(salesmancode)
 					  FROM salesman
 					  WHERE salesmancode='".$SalesmanCode."'";
-		$SearchResult=api_DB_query($Searchsql, $db);
+		$SearchResult=api_DB_query($Searchsql);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] == 0) {
 			$Errors[$i] = SalesmanCodeNotSetup;
@@ -169,7 +169,7 @@
 		$Searchsql = "SELECT COUNT(loccode)
 					  FROM locations
 					  WHERE loccode='".$DefaultLocation."'";
-		$SearchResult=api_DB_query($Searchsql, $db);
+		$SearchResult=api_DB_query($Searchsql);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] == 0) {
 			$Errors[$i] = LocationCodeNotSetup;
@@ -182,7 +182,7 @@
 		$Searchsql = "SELECT COUNT(taxgroupid)
 					  FROM taxgroups
 					  WHERE taxgroupid='".$TaxGroupId."'";
-		$SearchResult=api_DB_query($Searchsql, $db);
+		$SearchResult=api_DB_query($Searchsql);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] == 0) {
 			$Errors[$i] = TaxGroupIdNotSetup;
@@ -195,7 +195,7 @@
 		$Searchsql = "SELECT COUNT(shipper_id)
 					 FROM shippers
 					  WHERE shipper_id='".$DefaultShipVia."'";
-		$SearchResult=api_DB_query($Searchsql, $db);
+		$SearchResult=api_DB_query($Searchsql);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] == 0) {
 			$Errors[$i] = ShipperNotSetup;
@@ -349,7 +349,7 @@
 		  'VALUES ('.mb_substr($FieldValues,0,-2).') ';
 		if (sizeof($Errors)==0) {
 			$result = DB_Query($sql, $db);
-			if (DB_error_no($db) != 0) {
+			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
 				$Errors[0]=0;
@@ -472,7 +472,7 @@
                                    AND branchcode='".$BranchDetails['branchcode']."'";
 		if (sizeof($Errors)==0) {
 			$result = DB_Query($sql, $db);
-			if (DB_error_no($db) != 0) {
+			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
 				$Errors[0]=0;
@@ -497,8 +497,8 @@
 		}
 		$sql = "SELECT branchcode FROM custbranch
                 WHERE debtorno = '" . $DebtorNumber . "'";
-		$result = api_DB_query($sql, $db);
-		if (DB_error_no($db) != 0)
+		$result = api_DB_query($sql);
+		if (DB_error_no() != 0)
 			$Errors[0] = DatabaseUpdateFailed;
 		else {
 			$Errors[0] = 0;	    // Signal data may follow.
@@ -528,7 +528,7 @@
                      WHERE debtorno='".$DebtorNumber."'
                      AND branchcode='".$BranchCode."'";
 		$result = api_DB_Query($sql, $db);
-		if (DB_error_no($db) != 0 ) {
+		if (DB_error_no() != 0 ) {
 			$Errors[0] = DatabaseUpdateFailed;
 		} else {
 			$Errors[0] = 0;

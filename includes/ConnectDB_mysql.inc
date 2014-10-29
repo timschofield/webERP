@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: ConnectDB_mysql.inc 6748 2014-06-12 06:07:43Z daintree $ */
+/* $Id: ConnectDB_mysql.inc 6946 2014-10-27 07:30:11Z daintree $ */
 
 define ('LIKE','LIKE');
 
@@ -50,7 +50,6 @@ require_once ($PathPrefix .'includes/MiscFunctions.php');
 //DB wrapper functions to change only once for whole application
 
 function DB_query ($SQL,
-		$Conn='',
 		$ErrorMessage='',
 		$DebugMessage= '',
 		$Transaction=false,
@@ -67,18 +66,18 @@ function DB_query ($SQL,
 		$DebugMessage = _('The SQL that failed was');
 	}
 
-	if (DB_error_no($db) != 0 AND $TrapErrors==true){
+	if (DB_error_no() != 0 AND $TrapErrors==true){
 		if ($TrapErrors){
 			require_once($PathPrefix . 'includes/header.inc');
 		}
-		prnMsg($ErrorMessage . '<br />' . DB_error_msg($db),'error', _('Database Error'));
+		prnMsg($ErrorMessage . '<br />' . DB_error_msg(),'error', _('Database Error'));
 		if ($debug==1){
 			prnMsg($DebugMessage. '<br />' . $SQL . '<br />','error',_('Database SQL Failure'));
 			}
 		if ($Transaction){
 			$SQL = 'rollback';
-			$Result = DB_query($SQL,$db);
-			if (DB_error_no($db) !=0){
+			$Result = DB_query($SQL);
+			if (DB_error_no() !=0){
 				prnMsg(_('Error Rolling Back Transaction'), '', _('Database Rollback Error') );
 			}
 		}
@@ -86,7 +85,7 @@ function DB_query ($SQL,
 			include($PathPrefix . 'includes/footer.inc');
 			exit;
 		}
-	} elseif (isset($_SESSION['MonthsAuditTrail']) and (DB_error_no($db)==0 AND $_SESSION['MonthsAuditTrail']>0)){
+	} elseif (isset($_SESSION['MonthsAuditTrail']) and (DB_error_no()==0 AND $_SESSION['MonthsAuditTrail']>0)){
 
 		$SQLArray = explode(' ', $SQL);
 
@@ -140,17 +139,17 @@ function DB_free_result (&$ResultIndex){
 function DB_num_rows (&$ResultIndex){
 	return mysql_num_rows($ResultIndex);
 }
-// Added by MGT
+
 function DB_affected_rows(&$ResultIndex){
 	return mysql_affected_rows($ResultIndex);
 }
 
-function DB_error_no (&$Conn=''){
+function DB_error_no(){
 	global $db;
 	return mysql_errno($db);
 }
 
-function DB_error_msg(&$Conn=''){
+function DB_error_msg(){
 	global $db;
 	return mysql_error($db);
 }
@@ -185,7 +184,7 @@ function interval( $val, $Inter ){
 		return "\n".'interval ' . $val . ' '. $Inter."\n";
 }
 
-function DB_Maintenance($Conn=''){
+function DB_Maintenance(){
 
 	prnMsg(_('The system has just run the regular database administration and optimisation routine.'),'info');
 	$TablesResult = DB_query('SHOW TABLES');
@@ -199,25 +198,25 @@ function DB_Maintenance($Conn=''){
 }
 
 
-function DB_Txn_Begin($Conn=''){
-	mysql_query("SET autocommit=0");
-	mysql_query("START TRANSACTION");
+function DB_Txn_Begin(){
+	mysql_query("SET autocommit=0",$db);
+	mysql_query("START TRANSACTION",$db);
 }
 
-function DB_Txn_Commit($Conn=''){
-	mysql_query("COMMIT");
-	mysql_query("SET autocommit=1");
+function DB_Txn_Commit(){
+	mysql_query("COMMIT",$db);
+	mysql_query("SET autocommit=1",$db);
 }
 
-function DB_Txn_Rollback($Conn=''){
-    mysql_query("ROLLBACK");
+function DB_Txn_Rollback(){
+    mysql_query("ROLLBACK",$db);
 }
 
-function DB_IgnoreForeignKeys($Conn=''){
-	mysql_query("SET FOREIGN_KEY_CHECKS=0");
+function DB_IgnoreForeignKeys(){
+	mysql_query("SET FOREIGN_KEY_CHECKS=0",$db);
 }
-function DB_ReinstateForeignKeys($Conn=''){
-	mysql_query("SET FOREIGN_KEY_CHECKS=1");
+function DB_ReinstateForeignKeys(){
+	mysql_query("SET FOREIGN_KEY_CHECKS=1",$db);
 }
 
 ?>

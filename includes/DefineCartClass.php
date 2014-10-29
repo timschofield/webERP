@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: DefineCartClass.php 6924 2014-10-18 02:03:22Z daintree $*/
+/* $Id: DefineCartClass.php 6942 2014-10-27 02:48:29Z daintree $*/
 
 /* Definition of the cart class
 this class can hold all the information for:
@@ -169,7 +169,6 @@ Class Cart {
 														" . FormatDateForSQL($ItemDue) . "',
 														" . $POLine . ")";
 				$result = DB_query($sql,
-							$db ,
 							_('The order line for') . ' ' . mb_strtoupper($StockID) . ' ' ._('could not be inserted'));
 			}
 
@@ -208,9 +207,8 @@ Class Cart {
 															itemdue = '" . FormatDateForSQL($ItemDue) . "',
 															poline = '" . $POLine . "'
 								WHERE orderno=" . $_SESSION['ExistingOrder'.$identifier] . "
-								AND orderlineno=" . $UpdateLineNumber
-													, $db
-				, _('The order line number') . ' ' . $UpdateLineNumber .  ' ' . _('could not be updated'));
+								AND orderlineno=" . $UpdateLineNumber,
+								 _('The order line number') . ' ' . $UpdateLineNumber .  ' ' . _('could not be updated'));
 		}
 	}
 
@@ -227,7 +225,6 @@ Class Cart {
 				$result = DB_query("DELETE FROM salesorderdetails
 									WHERE orderno='" . $_SESSION['ExistingOrder' . $identifier] . "'
 									AND orderlineno='" . $LineNumber . "'",
-									$db,
 									_('The order line could not be deleted because')
 									);
 				prnMsg( _('Deleted Line Number'). ' ' . $LineNumber . ' ' . _('from existing Order Number').' ' . $_SESSION['ExistingOrder' . $identifier], 'success');
@@ -237,7 +234,6 @@ Class Cart {
 																completed=1
 									WHERE orderno='" . $_SESSION['ExistingOrder' . $identifier] ."'
 									AND orderlineno='" . $LineNumber . "'" ,
-									$db,
 								   _('The order line could not be updated as completed because')
 								   );
 				prnMsg(_('Removed Remaining Quantity and set Line Number '). ' ' . $LineNumber . ' ' . _('as Completed for existing Order Number').' ' . $_SESSION['ExistingOrder'], 'success');
@@ -313,7 +309,7 @@ Class Cart {
 				ORDER BY taxcalculationorder";
 
 		$ErrMsg = _('The taxes and rates for this item could not be retrieved because');
-		$GetTaxRatesResult = DB_query($sql,$db,$ErrMsg);
+		$GetTaxRatesResult = DB_query($sql,$ErrMsg);
 
 		while ($myrow = DB_fetch_array($GetTaxRatesResult)){
 
@@ -349,7 +345,7 @@ Class Cart {
 			ORDER BY taxgrouptaxes.calculationorder";
 
 		$ErrMsg = _('The taxes and rates for this item could not be retrieved because');
-		$GetTaxRatesResult = DB_query($SQL,$db,$ErrMsg);
+		$GetTaxRatesResult = DB_query($SQL,$ErrMsg);
 		unset($this->LineItems[$LineNumber]->Taxes);
 		if (DB_num_rows($GetTaxRatesResult)==0){
 			prnMsg(_('It appears that taxes are not defined correctly for this customer tax group') ,'error');
@@ -375,7 +371,7 @@ Class Cart {
 		and SESSION['FreightTaxCategory'] the taxprovince of the dispatch location */
 
 		$sql = "SELECT taxcatid FROM taxcategories WHERE taxcatname='Freight'";// This tax category is hardcoded inside the database.
-		$TaxCatQuery = DB_query($sql, $db);
+		$TaxCatQuery = DB_query($sql);
 
 		if ($TaxCatRow = DB_fetch_array($TaxCatQuery)) {
 		  $TaxCatID = $TaxCatRow['taxcatid'];
@@ -400,7 +396,7 @@ Class Cart {
 				ORDER BY taxgrouptaxes.calculationorder";
 
 		$ErrMsg = _('The taxes and rates for this item could not be retrieved because');
-		$GetTaxRatesResult = DB_query($SQL,$db,$ErrMsg);
+		$GetTaxRatesResult = DB_query($SQL,$ErrMsg);
 
 		while ($myrow = DB_fetch_array($GetTaxRatesResult)){
 

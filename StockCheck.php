@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: StockCheck.php 6808 2014-08-11 21:27:11Z agaluski $*/
+/* $Id: StockCheck.php 6944 2014-10-27 07:15:34Z daintree $*/
 
 include('includes/session.inc');
 
@@ -20,7 +20,7 @@ If (isset($_POST['PrintPDF'])
 /*First off do the stock check file stuff */
 	if ($_POST['MakeStkChkData']=='New'){
 		$sql = "TRUNCATE TABLE stockcheckfreeze";
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 		$sql = "INSERT INTO stockcheckfreeze (stockid,
 										  loccode,
 										  qoh,
@@ -38,11 +38,11 @@ If (isset($_POST['PrintPDF'])
 					   stockmaster.mbflag!='K' AND
 					   stockmaster.mbflag!='D'";
 
-		$result = DB_query($sql, $db,'','',false,false);
-		if (DB_error_no($db) !=0) {
+		$result = DB_query($sql,'','',false,false);
+		if (DB_error_no() !=0) {
 			$Title = _('Stock Count Sheets - Problem Report');
 			include('includes/header.inc');
-			prnMsg(_('The inventory quantities could not be added to the freeze file because') . ' ' . DB_error_msg($db),'error');
+			prnMsg(_('The inventory quantities could not be added to the freeze file because') . ' ' . DB_error_msg(),'error');
 			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 			if ($debug==1){
 		  			echo '<br />' . $sql;
@@ -60,11 +60,11 @@ If (isset($_POST['PrintPDF'])
 				AND stockmaster.categoryid<='" . $_POST['ToCriteria'] . "'
 				AND stockcheckfreeze.loccode='" . $_POST['Location'] . "'";
 
-		$result = DB_query($sql,$db,'','',false,false);
-		if (DB_error_no($db) !=0) {
+		$result = DB_query($sql,'','',false,false);
+		if (DB_error_no() !=0) {
 			$Title = _('Stock Freeze') . ' - ' . _('Problem Report') . '.... ';
 			include('includes/header.inc');
-			prnMsg(_('The old quantities could not be deleted from the freeze file because') . ' ' . DB_error_msg($db),'error');
+			prnMsg(_('The old quantities could not be deleted from the freeze file because') . ' ' . DB_error_msg(),'error');
 			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 			if ($debug==1){
 		  			echo '<br />' . $sql;
@@ -91,11 +91,11 @@ If (isset($_POST['PrintPDF'])
 				AND stockmaster.mbflag!='G'
 				AND stockmaster.mbflag!='D'";
 
-		$result = DB_query($sql, $db,'','',false,false);
-		if (DB_error_no($db) !=0) {
+		$result = DB_query($sql,'','',false,false);
+		if (DB_error_no() !=0) {
 			$Title = _('Stock Freeze - Problem Report');
 			include('includes/header.inc');
-			prnMsg(_('The inventory quantities could not be added to the freeze file because') . ' ' . DB_error_msg($db),'error');
+			prnMsg(_('The inventory quantities could not be added to the freeze file because') . ' ' . DB_error_msg(),'error');
 			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 			if ($debug==1){
 		  			echo '<br />' . $sql;
@@ -133,12 +133,12 @@ If (isset($_POST['PrintPDF'])
 
 	$SQL .=  " ORDER BY stockmaster.categoryid, stockmaster.stockid";
 
-	$InventoryResult = DB_query($SQL,$db,'','',false,false);
+	$InventoryResult = DB_query($SQL,'','',false,false);
 
-	if (DB_error_no($db) !=0) {
+	if (DB_error_no() !=0) {
 		$Title = _('Stock Sheets') . ' - ' . _('Problem Report') . '.... ';
 		include('includes/header.inc');
-		prnMsg( _('The inventory quantities could not be retrieved by the SQL because') . ' ' . DB_error_msg($db),'error');
+		prnMsg( _('The inventory quantities could not be retrieved by the SQL because') . ' ' . DB_error_msg(),'error');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		if ($debug==1){
 		  	echo '<br />' . $SQL;
@@ -186,12 +186,12 @@ If (isset($_POST['PrintPDF'])
 			   		AND salesorderdetails.completed = 0
 			   		AND salesorders.quotation=0";
 
-			$DemandResult = DB_query($SQL,$db,'','',false, false);
+			$DemandResult = DB_query($SQL,'','',false, false);
 
-			if (DB_error_no($db) !=0) {
+			if (DB_error_no() !=0) {
 	 			$Title = _('Stock Check Sheets - Problem Report');
 		  		include('includes/header.inc');
-		   		prnMsg( _('The sales order demand quantities could not be retrieved by the SQL because') . ' ' . DB_error_msg($db), 'error');
+		   		prnMsg( _('The sales order demand quantities could not be retrieved by the SQL because') . ' ' . DB_error_msg(), 'error');
 	   			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 	   			if ($debug==1){
 		  				echo '<br />' . $SQL;
@@ -217,9 +217,9 @@ If (isset($_POST['PrintPDF'])
 						   AND stockmaster.mbflag='A'
 						   AND salesorders.quotation=0";
 
-			$DemandResult = DB_query($sql,$db,'','',false,false);
-			if (DB_error_no($db) !=0) {
-				prnMsg(_('The demand for this product from') . ' ' . $myrow['loccode'] . ' ' . _('cannot be retrieved because') . ' - ' . DB_error_msg($db),'error');
+			$DemandResult = DB_query($sql,'','',false,false);
+			if (DB_error_no() !=0) {
+				prnMsg(_('The demand for this product from') . ' ' . $myrow['loccode'] . ' ' . _('cannot be retrieved because') . ' - ' . DB_error_msg(),'error');
 				if ($debug==1){
 		   			echo '<br />' . _('The SQL that failed was') . ' ' . $sql;
 				}
@@ -273,7 +273,7 @@ If (isset($_POST['PrintPDF'])
 					<td><select name="FromCriteria">';
 
 		$sql="SELECT categoryid, categorydescription FROM stockcategory ORDER BY categorydescription";
-		$CatResult= DB_query($sql,$db);
+		$CatResult= DB_query($sql);
 		While ($myrow = DB_fetch_array($CatResult)){
 			echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription'] . ' - ' . $myrow['categoryid'] . '</option>';
 		}
@@ -297,7 +297,7 @@ If (isset($_POST['PrintPDF'])
 		$sql = "SELECT locations.loccode, locationname FROM locations 
 				INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
 				ORDER BY locationname";
-		$LocnResult=DB_query($sql,$db);
+		$LocnResult=DB_query($sql);
 
 		while ($myrow=DB_fetch_array($LocnResult)){
 				  echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';

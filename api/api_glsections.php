@@ -1,12 +1,12 @@
 <?php
-/* $Id: api_glsections.php 5768 2012-12-20 08:38:22Z daintree $*/
+/* $Id: api_glsections.php 6943 2014-10-27 07:06:42Z daintree $*/
 
 /* Check that the account section doesn't already exist'*/
 	function VerifyAccountSection($AccountSection, $i, $Errors, $db) {
 		$Searchsql = "SELECT count(sectionid)
 				FROM accountsection
 				WHERE sectionid='".$AccountSection."'";
-		$SearchResult=DB_query($Searchsql, $db);
+		$SearchResult=DB_query($Searchsql);
 		$answer = DB_fetch_array($SearchResult);
 		if ($answer[0]>0) {
 			$Errors[$i] = GLAccountSectionAlreadyExists;
@@ -46,7 +46,7 @@
 			$sql = "INSERT INTO accountsection ('" . mb_substr($FieldNames,0,-2) . "')
 					VALUES ('" . mb_substr($FieldValues,0,-2) . "')";
 			$result = DB_Query($sql, $db);
-			if (DB_error_no($db) != 0) {
+			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
 				$Errors[0]=0;

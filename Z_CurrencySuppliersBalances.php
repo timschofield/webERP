@@ -1,5 +1,5 @@
 <?php
-/* $Id: Z_CurrencySuppliersBalances.php 5857 2013-04-27 22:19:01Z daintree $*/
+/* $Id: Z_CurrencySuppliersBalances.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 include('includes/session.inc');
 $Title=_('Currency Supplier Balances');
@@ -16,7 +16,7 @@ $sql = "SELECT SUM(ovamount+ovgst-alloc) AS currencybalance,
 		WHERE (ovamount+ovgst-alloc)<>0
 		GROUP BY currcode";
 
-$result = DB_query($sql,$db);
+$result = DB_query($sql);
 
 $LocalTotal =0;
 

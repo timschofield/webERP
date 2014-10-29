@@ -1,5 +1,5 @@
 <?php
-/* $Id: DefineSerialItems.php 6647 2014-03-28 11:26:41Z exsonqu $*/
+/* $Id: DefineSerialItems.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 function ValidBundleRef ($StockID, $LocCode, $BundleRef){
 	global $db;
@@ -9,7 +9,7 @@ function ValidBundleRef ($StockID, $LocCode, $BundleRef){
 				WHERE stockid='" . $StockID . "'
 				AND loccode ='" . $LocCode . "'
 				AND serialno='" . $BundleRef . "'";
-	$Result = DB_query($SQL, $db);
+	$Result = DB_query($SQL);
 	if (DB_num_rows($Result)==0){
 		return 0;
 	} else {
@@ -25,7 +25,7 @@ function GetExpiryDate ($StockID, $LocCode, $BundleRef){
 				WHERE stockid = '" . $StockID . "'
 				AND loccode = '" . $LocCode . "'
 				AND serialno = '" . $BundleRef . "'";
-	$Result = DB_query($SQL,$db);
+	$Result = DB_query($SQL);
 	if (DB_num_rows($Result)==0){
 		return '0000-00-00';
 	} else {

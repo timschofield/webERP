@@ -1,5 +1,5 @@
 <?php
-/* $Id: Z_ImportGLAccountGroups.php 6310 2013-08-29 10:42:50Z daintree $*/
+/* $Id: Z_ImportGLAccountGroups.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 include('includes/session.inc');
 $Title = _('Import Chart of Accounts');
@@ -9,7 +9,7 @@ include('api/api_errorcodes.php');
 
 $weberpuser = $_SESSION['UserID'];
 $sql="SELECT password FROM www_users WHERE userid='" . $weberpuser . "'";
-$result=DB_query($sql, $db);
+$result=DB_query($sql);
 $myrow=DB_fetch_array($result);
 $weberppassword = $myrow[0];
 

@@ -1,12 +1,12 @@
 <?php
-/* $Id: Z_DescribeTable.php 6310 2013-08-29 10:42:50Z daintree $*/
+/* $Id: Z_DescribeTable.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 include('includes/session.inc');
 $Title = _('Database table details');
 include('includes/header.inc');
 
 $sql='DESCRIBE '.$_GET['table'];
-$result=DB_query($sql, $db);
+$result=DB_query($sql);
 
 echo '<table><tr>';
 echo '<th>' . _('Field name') . '</th>';

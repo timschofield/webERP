@@ -1,5 +1,5 @@
 <?php
-/* $Id: SelectProduct.php 6908 2014-10-06 05:13:27Z daintree $*/
+/* $Id: SelectProduct.php 6942 2014-10-27 02:48:29Z daintree $*/
 
 $PricesSecurity = 12;//don't show pricing info unless security token 12 available to user
 $SuppliersSecurity = 9; //don't show supplier purchasing info unless security token 9 available to user
@@ -39,7 +39,7 @@ $SQL = "SELECT categoryid,
 				categorydescription
 		FROM stockcategory
 		ORDER BY categorydescription";
-$result1 = DB_query($SQL, $db);
+$result1 = DB_query($SQL);
 if (DB_num_rows($result1) == 0) {
 	echo '<p class="bad">' . _('Problem Report') . ':<br />' . _('There are no stock categories currently defined please use the link below to set them up') . '</p>';
 	echo '<br /><a href="' . $RootPath . '/StockCategories.php">' . _('Define Stock Categories') . '</a>';
@@ -72,7 +72,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 								stockmaster.categoryid
 						FROM stockmaster INNER JOIN stockcategory
 						ON stockmaster.categoryid=stockcategory.categoryid
-						WHERE stockid='" . $StockID . "'", $db);
+						WHERE stockid='" . $StockID . "'");
 	$myrow = DB_fetch_array($result);
 	$Its_A_Kitset_Assembly_Or_Dummy = false;
 	$Its_A_Dummy = false;
@@ -147,14 +147,14 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 								AND debtorno=''
 								AND branchcode=''
 								AND startdate <= '". Date('Y-m-d') ."' AND ( enddate >= '" . Date('Y-m-d') . "' OR enddate = '0000-00-00')
-								AND stockid='" . $StockID . "'", $db);
+								AND stockid='" . $StockID . "'");
 		if ($myrow['mbflag'] == 'K' OR $myrow['mbflag'] == 'A') {
 			$CostResult = DB_query("SELECT SUM(bom.quantity * (stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost)) AS cost
 									FROM bom INNER JOIN stockmaster
 									ON bom.component=stockmaster.stockid
 									WHERE bom.parent='" . $StockID . "'
 									AND bom.effectiveto > '" . Date('Y-m-d') . "'
-									AND bom.effectiveafter < '" . Date('Y-m-d') . "'", $db);
+									AND bom.effectiveafter < '" . Date('Y-m-d') . "'");
 			$CostRow = DB_fetch_row($CostResult);
 			$Cost = $CostRow[0];
 		} else {
@@ -186,8 +186,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 									WHERE bom.parent = '" . $StockID . "'
 									AND bom.effectiveafter < '" . Date('Y-m-d') . "'
 									AND (bom.effectiveto > '" . Date('Y-m-d') . "'
-									OR bom.effectiveto='0000-00-00')",
-									 $db);
+									OR bom.effectiveto='0000-00-00')");
 			$CostRow = DB_fetch_row($CostResult);
 			$Cost = $CostRow[0];
 		} else {
@@ -210,14 +209,14 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 				WHERE categoryid ='" . $myrow['categoryid'] . "'
 				AND reqatsalesorder =0
 				ORDER BY stkcatpropid";
-	$PropertiesResult = DB_query($sql, $db);
+	$PropertiesResult = DB_query($sql);
 	$PropertyCounter = 0;
 	$PropertyWidth = array();
 	while ($PropertyRow = DB_fetch_array($PropertiesResult)) {
 		$PropValResult = DB_query("SELECT value
 									FROM stockitemproperties
 									WHERE stockid='" . $StockID . "'
-									AND stkcatpropid ='" . $PropertyRow['stkcatpropid']."'", $db);
+									AND stkcatpropid ='" . $PropertyRow['stkcatpropid']."'");
 		$PropValRow = DB_fetch_row($PropValResult);
 		if (DB_num_rows($PropValResult)==0){
 			$PropertyValue = _('Not Set');
@@ -260,7 +259,7 @@ switch ($myrow['mbflag']) {
 	case 'B':
 		$QOHResult = DB_query("SELECT sum(quantity)
 						FROM locstock
-						WHERE stockid = '" . $StockID . "'", $db);
+						WHERE stockid = '" . $StockID . "'");
 		$QOHRow = DB_fetch_row($QOHResult);
 		$QOH = locale_number_format($QOHRow[0], $myrow['decimalplaces']);
 
@@ -279,7 +278,7 @@ $DemResult = DB_query("SELECT SUM(salesorderdetails.quantity-salesorderdetails.q
 						INNER JOIN locationusers ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 						WHERE salesorderdetails.completed=0
 						AND salesorders.quotation=0
-						AND salesorderdetails.stkcode='" . $StockID . "'", $db);
+						AND salesorderdetails.stkcode='" . $StockID . "'");
 $DemRow = DB_fetch_row($DemResult);
 $Demand = $DemRow[0];
 $DemAsComponentResult = DB_query("SELECT  SUM((salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*bom.quantity) AS dem
@@ -291,7 +290,7 @@ $DemAsComponentResult = DB_query("SELECT  SUM((salesorderdetails.quantity-saleso
 									WHERE salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0
 									AND bom.component='" . $StockID . "'
 									AND stockmaster.mbflag='A'
-									AND salesorders.quotation=0", $db);
+									AND salesorders.quotation=0");
 $DemAsComponentRow = DB_fetch_row($DemAsComponentResult);
 $Demand+= $DemAsComponentRow[0];
 //Also the demand for the item as a component of works orders
@@ -305,7 +304,7 @@ $sql = "SELECT SUM(qtypu*(woitems.qtyreqd - woitems.qtyrecd)) AS woqtydemo
 		WHERE  worequirements.stockid='" . $StockID . "'
 		AND workorders.closed=0";
 $ErrMsg = _('The workorder component demand for this product cannot be retrieved because');
-$DemandResult = DB_query($sql, $db, $ErrMsg);
+$DemandResult = DB_query($sql, $ErrMsg);
 if (DB_num_rows($DemandResult) == 1) {
 	$DemandRow = DB_fetch_row($DemandResult);
 	$Demand+= $DemandRow[0];
@@ -351,7 +350,7 @@ if (($myrow['mbflag'] == 'B' OR ($myrow['mbflag'] == 'M'))
 								INNER JOIN currencies
 								ON suppliers.currcode=currencies.currabrev
 								WHERE purchdata.stockid = '" . $StockID . "'
-							ORDER BY purchdata.preferred DESC, purchdata.effectivefrom DESC", $db);
+							ORDER BY purchdata.preferred DESC, purchdata.effectivefrom DESC");
 	while ($SuppRow = DB_fetch_array($SuppResult)) {
 		echo '<tr><td class="select">' . $SuppRow['suppname'] . '</td>
 					<td class="select">' . locale_number_format($SuppRow['price'] / $SuppRow['conversionfactor'], $SuppRow['decimalplaces']) . '</td>
@@ -445,7 +444,7 @@ if ($Its_A_Kitset_Assembly_Or_Dummy == false) {
 									FROM purchdata INNER JOIN suppliers
 									ON purchdata.supplierno=suppliers.supplierid
 									WHERE purchdata.stockid='" . $StockID . "'
-									ORDER BY purchdata.effectivefrom DESC", $db);
+									ORDER BY purchdata.effectivefrom DESC");
 		$LastSupplierShown = "";
 		while ($SuppRow = DB_fetch_array($SuppResult)) {
 			if ($LastSupplierShown != $SuppRow['supplierid']){
@@ -700,7 +699,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 	}
 	$ErrMsg = _('No stock items were returned by the SQL because');
 	$DbgMsg = _('The SQL that returned an error was');
-	$SearchResult = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
+	$SearchResult = DB_query($SQL, $ErrMsg, $DbgMsg);
 	if (DB_num_rows($SearchResult) == 0) {
 		prnMsg(_('No stock items were returned by this search please re-enter alternative criteria to try again'), 'info');
 	}

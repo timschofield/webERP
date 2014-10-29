@@ -1,5 +1,5 @@
 <?php
-/* $Id: api_purchdata.php 5768 2012-12-20 08:38:22Z daintree $*/
+/* $Id: api_purchdata.php 6945 2014-10-27 07:20:48Z daintree $*/
 
 	function VerifyPurchDataLineExists($SupplierID, $StockID, $i, $Errors, $db) {
 		if (VerifyStockCodeExists($StockID, $i, $Errors, $db)!=0 and
@@ -85,10 +85,10 @@
 		if (sizeof($Errors)==0) {
 			$sql = "INSERT INTO purchdata (".mb_substr($FieldNames,0,-2).")
 					VALUES ('" . mb_substr($FieldValues,0,-2). "') ";
-			DB_Txn_Begin($db);
+			DB_Txn_Begin();
 			$result = DB_Query($sql, $db);
-			DB_Txn_Commit($db);
-			if (DB_error_no($db) != 0) {
+			DB_Txn_Commit();
+			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
 				$Errors[0]=0;
@@ -136,8 +136,8 @@
 								AND supplierno='" . $PurchDataDetails['supplierno'] ."'";
 		if (sizeof($Errors)==0) {
 			$result = DB_Query($sql, $db);
-			echo DB_error_no($db);
-			if (DB_error_no($db) != 0) {
+			echo DB_error_no();
+			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
 				$Errors[0]=0;

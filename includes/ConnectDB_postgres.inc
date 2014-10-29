@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: ConnectDB_postgres.inc 6310 2013-08-29 10:42:50Z daintree $ */
+/* $Id: ConnectDB_postgres.inc 6946 2014-10-27 07:30:11Z daintree $ */
 
 define ('LIKE','ILIKE');
 /* $PgConnStr = $PgConnStr = "host=".$host." dbname=".$_SESSION['DatabaseName']; */
@@ -36,7 +36,6 @@ require_once ($PathPrefix .'includes/MiscFunctions.php');
 //DB wrapper functions to change only once for whole application
 
 function DB_query ($SQL,
-				&$Conn,
 				$ErrorMessage='',
 				$DebugMessage= '',
 				$Transaction=false,
@@ -45,7 +44,7 @@ function DB_query ($SQL,
 	global $debug;
 	global $PathPrefix;
 
-	$result = pg_query($Conn, $SQL);
+	$result = pg_query($db, $SQL);
 	if ($DebugMessage == '') {
 		$DebugMessage = _('The SQL that failed was:');
 	}
@@ -54,13 +53,13 @@ function DB_query ($SQL,
 		if ($TrapErrors){
 			require_once($PathPrefix . 'includes/header.inc');
 		}
-		prnMsg($ErrorMessage . '<BR>' . DB_error_msg($Conn),'error', _('DB ERROR:'));
+		prnMsg($ErrorMessage . '<BR>' . DB_error_msg(),'error', _('DB ERROR:'));
 		if ($debug==1){
 			echo '<BR>' . $DebugMessage. "<BR>$SQL<BR>";
 		}
 		if ($Transaction){
 			$SQL = 'rollback';
-			$Result = DB_query($SQL,$Conn);
+			$Result = DB_query($SQL);
 			if (DB_error_no($Conn) !=0){
 				prnMsg('<br />' .   _('Error Rolling Back Transaction!!'), '', _('DB DEBUG:') );
 			}
@@ -106,16 +105,16 @@ function DB_affected_rows (&$ResultIndex){
 	return pg_affected_rows($ResultIndex);
 }
 
-function DB_error_no (&$Conn){
-	return DB_error_msg($Conn) == ""?0:-1;
+function DB_error_no(){
+	return DB_error_msg() == ""?0:-1;
 }
 
-function DB_error_msg(&$Conn){
-	return pg_last_error($Conn);
+function DB_error_msg(){
+	return pg_last_error($db);
 }
 
 function DB_Last_Insert_ID(&$Conn, $table, $fieldname) {
-	$tempres = DB_query ("SELECT currval('".$table."_".$fieldname."_seq') FROM ".$table,$Conn);
+	$tempres = DB_query ("SELECT currval('".$table."_".$fieldname."_seq') FROM ".$table);
 	$Res = pg_fetch_result( $tempres, 0, 0 );
 	DB_free_result($tempres);
 	return $Res;
@@ -130,26 +129,25 @@ function INTERVAL( $val, $Inter ) {
 	return "\n(CAST( (" . $val . ") as text ) || ' ". $Inter ."')::interval\n";
 }
 function DB_show_tables (&$Conn){
-	$Result =DB_query("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'",$Conn);
+	$Result =DB_query("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'");
 	Return $Result;
 }
 function DB_show_fields($TableName,&$Conn){
-	$Result = DB_query("SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_name='" . $TableName . "'",$Conn);
+	$Result = DB_query("SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_name='" . $TableName . "'");
 	if (DB_num_rows($Result)==1){
-		$Result = DB_query("SELECT column_name FROM information_schema.columns WHERE table_name ='$TableName'",$Conn);
+		$Result = DB_query("SELECT column_name FROM information_schema.columns WHERE table_name ='$TableName'");
 		Return $Result;
 	}
 }
-function DB_Maintenance($Conn){
+function DB_Maintenance(){
 
 	prnMsg(_('The system has just run the regular database administration and optimisation routine'),'info');
 
-	$Result = DB_query('VACUUM ANALYZE',$Conn);
+	$Result = DB_query('VACUUM ANALYZE');
 
 	$Result = DB_query("UPDATE config
 				SET confvalue='" . Date('Y-m-d') . "'
-				WHERE confname='DB_Maintenance_LastRun'",
-				$Conn);
+				WHERE confname='DB_Maintenance_LastRun'");
 }
 
 ?>

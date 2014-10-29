@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: InventoryQuantities.php 5785 2012-12-29 04:47:42Z daintree $ */
+/* $Id: InventoryQuantities.php 6944 2014-10-27 07:15:34Z daintree $ */
 
 // InventoryQuantities.php - Report of parts with quantity. Sorts by part and shows
 // all locations where there are quantities of the part
@@ -24,7 +24,7 @@ If (isset($_POST['PrintPDF'])) {
 					categorydescription
 				FROM stockcategory
 				WHERE categoryid='" . $_POST['StockCat'] . "' ";
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 		$myrow = DB_fetch_row($result);
 		$CatDescription = $myrow[1];
 	}
@@ -78,12 +78,12 @@ If (isset($_POST['PrintPDF'])) {
 	}
 
 
-	$result = DB_query($sql,$db,'','',false,true);
+	$result = DB_query($sql,'','',false,true);
 
-	if (DB_error_no($db) !=0) {
+	if (DB_error_no() !=0) {
 	  $Title = _('Inventory Quantities') . ' - ' . _('Problem Report');
 	  include('includes/header.inc');
-	   prnMsg( _('The Inventory Quantity report could not be retrieved by the SQL because') . ' '  . DB_error_msg($db),'error');
+	   prnMsg( _('The Inventory Quantity report could not be retrieved by the SQL because') . ' '  . DB_error_msg(),'error');
 	   echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 	   if ($debug==1){
 	      echo '<br />' . $sql;
@@ -174,7 +174,7 @@ echo '<div class="page_help_text">' . _('Use this report to display the quantity
 				categorydescription
 			FROM stockcategory
 			ORDER BY categorydescription";
-	$result1 = DB_query($SQL,$db);
+	$result1 = DB_query($SQL);
 	if (DB_num_rows($result1)==0){
 		echo '</table>
 			<p />';

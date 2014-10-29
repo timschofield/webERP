@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: StockUsage.php 6805 2014-08-08 16:12:36Z agaluski $*/
+/* $Id: StockUsage.php 6944 2014-10-27 07:15:34Z daintree $*/
 
 include('includes/session.inc');
 
@@ -34,7 +34,7 @@ $result = DB_query("SELECT description,
 						mbflag,
 						decimalplaces
 					FROM stockmaster
-					WHERE stockid='".$StockID."'",$db);
+					WHERE stockid='".$StockID."'");
 $myrow = DB_fetch_row($result);
 
 $DecimalPlaces = $myrow[3];
@@ -67,7 +67,7 @@ echo _('From Stock Location') . ':<select name="StockLocation">';
 
 $sql = "SELECT locations.loccode, locationname FROM locations
 			INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
-$resultStkLocs = DB_query($sql,$db);
+$resultStkLocs = DB_query($sql);
 while ($myrow=DB_fetch_array($resultStkLocs)){
 	if (isset($_POST['StockLocation'])){
 		if ($myrow['loccode'] == $_POST['StockLocation']){
@@ -135,9 +135,9 @@ if (isset($_POST['ShowUsage'])){
 				ORDER BY periodno DESC LIMIT " . $_SESSION['NumberOfPeriodsOfStockUsage'];
 
 	}
-	$MovtsResult = DB_query($sql, $db);
-	if (DB_error_no($db) !=0) {
-		echo _('The stock usage for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg($db);
+	$MovtsResult = DB_query($sql);
+	if (DB_error_no() !=0) {
+		echo _('The stock usage for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg();
 		if ($debug==1){
 		echo '<br />' . _('The SQL that failed was') . $sql;
 		}

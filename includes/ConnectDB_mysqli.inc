@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: ConnectDB_mysqli.inc 6806 2014-08-09 04:37:02Z daintree $ */
+/* $Id: ConnectDB_mysqli.inc 6946 2014-10-27 07:30:11Z daintree $ */
 
 /* PeterMoulding.com
 20071102 Change from mysql to mysqli;
@@ -15,7 +15,7 @@ if (!isset($mysqlport)){
 global $db;	// Make sure it IS global, regardless of our context
 
 $db = mysqli_connect($host , $DBUser, $DBPassword,$_SESSION['DatabaseName'], $mysqlport);
-//$result=DB_query('SET sql_mode = ANSI', $db);
+//$result=DB_query('SET sql_mode = ANSI');
 
 
 //this statement sets the charset to be used for sending data to and from the db server
@@ -57,7 +57,6 @@ if (isset($DatabaseName)) {
 //DB wrapper functions to change only once for whole application
 
 function DB_query ($SQL,
-					$Conn='',
 					$ErrorMessage='',
 					$DebugMessage= '',
 					$Transaction=false,
@@ -155,12 +154,12 @@ function DB_affected_rows(&$ResultIndex){
 
 }
 
-function DB_error_no ($Conn=''){
+function DB_error_no(){
 	global $db;
 	return mysqli_errno($db);
 }
 
-function DB_error_msg($Conn=''){
+function DB_error_msg(){
 	global $db;
 	return mysqli_error($db);
 }
@@ -183,7 +182,7 @@ function DB_escape_string($String){
 
 function DB_show_tables($Conn=''){
 	global $db;
-	$Result = DB_query('SHOW TABLES',$db);
+	$Result = DB_query('SHOW TABLES');
 	Return $Result;
 }
 
@@ -197,7 +196,7 @@ function interval( $val, $Inter ){
 		return "\n".'interval ' . $val . ' '. $Inter."\n";
 }
 
-function DB_Maintenance($Conn=''){
+function DB_Maintenance(){
 
 	prnMsg(_('The system has just run the regular database administration and optimisation routine.'),'info');
 
@@ -211,27 +210,27 @@ function DB_Maintenance($Conn=''){
 				WHERE confname='DB_Maintenance_LastRun'");
 }
 
-function DB_Txn_Begin($Conn=''){
+function DB_Txn_Begin(){
 	global $db;
 	mysqli_query($db,'SET autocommit=0');
 	mysqli_query($db,'START TRANSACTION');
 }
 
-function DB_Txn_Commit($Conn=''){
+function DB_Txn_Commit(){
 	global $db;
 	mysqli_query($db,'COMMIT');
 	mysqli_query($db,'SET autocommit=1');
 }
 
-function DB_Txn_Rollback($Conn=''){
+function DB_Txn_Rollback(){
 	global $db;
 	mysqli_query($db,'ROLLBACK');
 }
-function DB_IgnoreForeignKeys($Conn=''){
+function DB_IgnoreForeignKeys(){
 	global $db;
 	mysqli_query($db,'SET FOREIGN_KEY_CHECKS=0');
 }
-function DB_ReinstateForeignKeys($Conn=''){
+function DB_ReinstateForeignKeys(){
 	global $db;
 	mysqli_query($db, 'SET FOREIGN_KEY_CHECKS=1');
 }

@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: MRPPlannedPurchaseOrders.php 6310 2013-08-29 10:42:50Z daintree $*/
+/* $Id: MRPPlannedPurchaseOrders.php 6944 2014-10-27 07:15:34Z daintree $*/
 // MRPPlannedPurchaseOrders.php - Report of purchase parts that MRP has determined should have
 // purchase orders created for them
 
@@ -9,7 +9,7 @@ include('includes/session.inc');
 //Maybe not ANSI SQL??
 $sql="SHOW TABLES WHERE Tables_in_" . $_SESSION['DatabaseName'] . "='mrprequirements'";
 
-$result=DB_query($sql,$db);
+$result=DB_query($sql);
 if (DB_num_rows($result)==0) {
 	$Title=_('MRP error');
 	include('includes/header.inc');
@@ -108,12 +108,12 @@ if (isset($_POST['PrintPDF'])) {
 					   computedcost
 				ORDER BY mrpplannedorders.part,yearmonth ";
 	}
-	$result = DB_query($sql,$db,'','',false,true);
+	$result = DB_query($sql,'','',false,true);
 
-	if (DB_error_no($db) !=0) {
+	if (DB_error_no() !=0) {
 	  $Title = _('MRP Planned Purchase Orders') . ' - ' . _('Problem Report');
 	  include('includes/header.inc');
-	   prnMsg( _('The MRP planned purchase orders could not be retrieved by the SQL because') . ' '  . DB_error_msg($db),'error');
+	   prnMsg( _('The MRP planned purchase orders could not be retrieved by the SQL because') . ' '  . DB_error_msg(),'error');
 	   echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 	   if ($debug==1){
 		  echo '<br />' . $sql;
@@ -361,7 +361,7 @@ function GetPartInfo(&$db,$part) {
 			ON purchorders.orderno = purchorderdetails.orderno
 			WHERE purchorderdetails.itemcode = '" . $part ."'
 			ORDER BY orddate DESC LIMIT 1";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 	if (DB_num_rows($result)>0) {
 		$myrow = DB_fetch_array($result,$db);
 		$PartInfo[] = ConvertSQLDate($myrow['maxdate']);
@@ -369,14 +369,14 @@ function GetPartInfo(&$db,$part) {
 		$sql = "SELECT supplierno
 				FROM purchorders
 				WHERE purchorders.orderno = '" .$OrderNo. "'";
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 		$myrow = DB_fetch_array($result,$db);
 		$PartInfo[] = $myrow['supplierno'];
 		$sql = "SELECT supplierno
 				FROM purchdata
 				WHERE stockid = '" . $part . "'
 				AND preferred='1'";
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 		$myrow = DB_fetch_array($result,$db);
 		$PartInfo[] = $myrow['supplierno'];
 		return $PartInfo;

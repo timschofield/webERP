@@ -1,5 +1,5 @@
 <?php
-/* $Id: PDFTopItemsHeader.inc 5768 2012-12-20 08:38:22Z daintree $*/
+/* $Id: PDFTopItemsHeader.inc 6941 2014-10-26 23:18:08Z daintree $*/
 /*PDF page header for Top Items report */
 if ($PageNumber>1){
 	$pdf->newPage();
@@ -15,7 +15,7 @@ if ($_GET['Customers']!='All'){
 		  FROM `debtortype`
 		  WHERE typeid='".$_GET['Customers']."'";
 
-	$result = DB_query($SQL,$db);
+	$result = DB_query($SQL);
 	$myrow=DB_fetch_array($result);
 	$Customers=$myrow["0"];
 }else{

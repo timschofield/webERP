@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: Z_DeleteCreditNote.php 5784 2012-12-29 04:00:43Z daintree $*/
+/* $Id: Z_DeleteCreditNote.php 6945 2014-10-27 07:20:48Z daintree $*/
 
 /* Script to delete a credit note - it expects and credit note number to delete
 not included on any menu for obvious reasons
@@ -25,7 +25,7 @@ if (!isset($_GET['CreditNoteNo'])){
 $SQL = "SELECT order_, id
 		FROM debtortrans
 		WHERE transno='" . $_GET['CreditNoteNo'] . "' AND type='11'";
-$Result = DB_query($SQL, $db);
+$Result = DB_query($SQL);
 
 $myrow = DB_fetch_row($Result);
 $OrderNo = $myrow[0];
@@ -41,7 +41,7 @@ $SQL = "SELECT stockid,
 				qty
 			FROM stockmoves
 			WHERE transno ='" .$_GET['CreditNoteNo'] . "' AND type='11'";
-$Result = DB_query($SQL,$db);
+$Result = DB_query($SQL);
 
 $i=0;
 
@@ -53,7 +53,7 @@ While ($myrow = DB_fetch_array($Result)){
 prnMsg(_('The number of stock movements to be deleted is') . ': ' . DB_num_rows($Result),'info');
 
 
-$Result = DB_Txn_Begin($db); /* commence a database transaction */
+$Result = DB_Txn_Begin(); /* commence a database transaction */
 
 /*Now delete the custallocns */
 
@@ -62,7 +62,7 @@ $SQL = "DELETE custallocns FROM custallocns
 
 $DbgMsg = _('The SQL that failed was');
 $ErrMsg = _('The custallocns record could not be deleted') . ' - ' . _('the sql server returned the following error');
-$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 prnMsg(_('The custallocns record has been deleted'),'info');
 
@@ -72,7 +72,7 @@ $SQL = "DELETE debtortranstaxes FROM debtortranstaxes
                WHERE debtortransid ='" . $IDDebtorTrans . "'";
 $DbgMsg = _('The SQL that failed was');
 $ErrMsg = _('The debtortranstaxes record could not be deleted') . ' - ' . _('the sql server returned the following error');
-$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 prnMsg(_('The debtortranstaxes record has been deleted'),'info');
 
@@ -81,7 +81,7 @@ $SQL = "DELETE FROM debtortrans
                WHERE transno ='" . $_GET['CreditNoteNo'] . "' AND Type=11";
 $DbgMsg = _('The SQL that failed was');
 $ErrMsg = _('A problem was encountered trying to delete the Debtor transaction record');
-$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 /*Now reverse updated SalesOrderDetails for the quantities credited */
 
@@ -92,7 +92,7 @@ foreach ($StockMovement as $CreditLine) {
                        AND stkcode = '" . $CreditLine['stockid'] . "'";
 
 	$ErrMsg =_('A problem was encountered attempting to reverse the update the sales order detail record') . ' - ' . _('the SQL server returned the following error message');
-	$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg, true);
+	$Result = DB_query($SQL,$ErrMsg,$DbgMsg, true);
 
 /*reverse the update to LocStock */
 
@@ -102,7 +102,7 @@ foreach ($StockMovement as $CreditLine) {
 
 	$ErrMsg = _('SQL to reverse update to the location stock records failed with the error');
 
-	$Result = DB_query($SQL, $db,$ErrMsg,$DbgMsg, true);
+	$Result = DB_query($SQL,$ErrMsg,$DbgMsg, true);
 
 /*Delete Sales Analysis records
  * This is unreliable as the salesanalysis record contains totals for the item cust custbranch periodno */
@@ -115,7 +115,7 @@ foreach ($StockMovement as $CreditLine) {
 
 	$ErrMsg = _('The SQL to delete the sales analysis records with the message');
 
-	$Result = DB_query($SQL, $db,$ErrMsg,$DbgMsg,true);
+	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 }
 
 /* Delete the stock movements  */
@@ -124,7 +124,7 @@ $SQL = "DELETE stockmovestaxes.* FROM stockmovestaxes INNER JOIN stockmoves
                WHERE stockmoves.type=11 AND stockmoves.transno = '" . $_GET['CreditNoteNo'] . "'";
 
 $ErrMsg = _('SQL to delete the stock movement tax records failed with the message');
-$Result = DB_query($SQL, $db,$ErrMsg,$DbgMsg,true);
+$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 prnMsg(_('Deleted the credit note stock move taxes').'info');
 echo '<br /><br />';
 
@@ -133,7 +133,7 @@ $SQL = "DELETE FROM stockmoves
                WHERE type=11 AND transno = '" . $_GET['CreditNoteNo'] . "'";
 
 $ErrMsg = _('SQL to delete the stock movement record failed with the message');
-$Result = DB_query($SQL, $db,$ErrMsg,$DbgMsg,true);
+$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 prnMsg(_('Deleted the credit note stock movements').'info');
 echo '<br /><br />';
 
@@ -142,10 +142,10 @@ echo '<br /><br />';
 
 $SQL = "DELETE FROM gltrans WHERE type=11 AND typeno= '" . $_GET['CreditNoteNo'] . "'";
 $ErrMsg = _('SQL to delete the gl transaction records failed with the message');
-$Result = DB_query($SQL, $db,$ErrMsg,$DbgMsg,true);
+$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 prnMsg(_('Deleted the credit note general ledger transactions').'info');
 
-$result = DB_Txn_Commit($db);
+$result = DB_Txn_Commit();
 prnMsg(_('Credit note number') . ' ' . $_GET['CreditNoteNo'] . ' ' . _('has been completely deleted') . '. ' . _('To ensure the integrity of the general ledger transactions must be reposted from the period the credit note was created'),'info');
 
 include('includes/footer.inc');

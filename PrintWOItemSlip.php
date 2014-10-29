@@ -36,7 +36,7 @@ if (isset($WO) AND isset($StockId) AND $WO!=''){
 				AND woitems.stockid = '" . $StockId . "' ";
 
 	$ErrMsg = _('The SQL to find the details of the item to produce failed');
-	$resultItems = DB_query($sql,$db,$ErrMsg);
+	$resultItems = DB_query($sql,$ErrMsg);
 	
 	if (DB_num_rows($resultItems) != 0){
 		include('includes/PDFStarter.php');
@@ -77,7 +77,7 @@ if (isset($WO) AND isset($StockId) AND $WO!=''){
 						 OR bom.effectiveto='0000-00-00')";
 					 
 			$ErrMsg = _('The bill of material could not be retrieved because');
-			$BOMResult = DB_query ($sqlBOM,$db,$ErrMsg);
+			$BOMResult = DB_query ($sqlBOM,$ErrMsg);
 			while ($myComponent = DB_fetch_array($BOMResult)) {
 
 				$ComponentNeeded = $myComponent['bomqty'] * $QtyPending;

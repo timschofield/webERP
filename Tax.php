@@ -1,5 +1,5 @@
 <?php
-/* $Id: Tax.php 6849 2014-08-28 15:24:35Z rchacon $*/
+/* $Id: Tax.php 6944 2014-10-27 07:15:34Z daintree $*/
 
 include('includes/session.inc');
 
@@ -12,11 +12,11 @@ if(isset($_POST['TaxAuthority']) AND
 			FROM periods
 			WHERE periodno='" . $_POST['ToPeriod'] . "'";
 	$ErrMsg = _('Could not determine the last date of the period selected') . '. ' . _('The sql returned the following error');
-	$PeriodEndResult = DB_query($sql,$db,$ErrMsg);
+	$PeriodEndResult = DB_query($sql,$ErrMsg);
 	$PeriodEndRow = DB_fetch_row($PeriodEndResult);
 	$PeriodEnd = ConvertSQLDate($PeriodEndRow[0]);
 
-	$result = DB_query("SELECT description FROM taxauthorities WHERE taxid='" . $_POST['TaxAuthority'] . "'",$db);
+	$result = DB_query("SELECT description FROM taxauthorities WHERE taxid='" . $_POST['TaxAuthority'] . "'");
 	$TaxAuthDescription = DB_fetch_row($result);
 	$TaxAuthorityName = $TaxAuthDescription[0];
 
@@ -48,12 +48,12 @@ if(isset($_POST['TaxAuthority']) AND
 			AND debtortranstaxes.taxauthid = '" . $_POST['TaxAuthority'] . "'
 			ORDER BY debtortrans.id";// Order by debtortrans record number (primary key).
 
-	$DebtorTransResult = DB_query($SQL,$db,'','',false,false); //don't trap errors in DB_query
+	$DebtorTransResult = DB_query($SQL,'','',false,false); //don't trap errors in DB_query
 
-	if(DB_error_no($db) !=0) {
+	if(DB_error_no() !=0) {
 		$Title = _('Taxation Reporting Error');
 		include('includes/header.inc');
-		prnMsg(_('The accounts receivable transaction details could not be retrieved because') . ' ' . DB_error_msg($db),'error');
+		prnMsg(_('The accounts receivable transaction details could not be retrieved because') . ' ' . DB_error_msg(),'error');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		if($debug==1) {
 			echo '<br />' . $SQL;
@@ -162,12 +162,12 @@ if(isset($_POST['TaxAuthority']) AND
 		AND supptranstaxes.taxauthid = '" . $_POST['TaxAuthority'] . "'
 		ORDER BY supptrans.id";// Order by supptrans record number (primary key).
 
-	$SuppTransResult = DB_query($SQL,$db,'','',false,false); //doint trap errors in DB_query
+	$SuppTransResult = DB_query($SQL,'','',false,false); //doint trap errors in DB_query
 
-	if(DB_error_no($db) !=0) {
+	if(DB_error_no() !=0) {
 		$Title = _('Taxation Reporting Error');
 		include('includes/header.inc');
-		echo _('The accounts payable transaction details could not be retrieved because') . ' ' . DB_error_msg($db);
+		echo _('The accounts payable transaction details could not be retrieved because') . ' ' . DB_error_msg();
 		echo '<br /><a href="' . $RootPath . '/index.php?">' . _('Back to the menu') . '</a>';
 		if($debug==1) {
 			echo '<br />' . $SQL;
@@ -331,7 +331,7 @@ if(isset($_POST['TaxAuthority']) AND
 	echo '<tr><td>' . _('Tax Authority To Report On') . ':</td>
 			<td><select name="TaxAuthority">';
 
-	$result = DB_query("SELECT taxid, description FROM taxauthorities",$db);
+	$result = DB_query("SELECT taxid, description FROM taxauthorities");
 	while($myrow = DB_fetch_array($result)) {
 		echo '<option value="' . $myrow['taxid'] . '">' . $myrow['description'] . '</option>';
 	}
@@ -360,7 +360,7 @@ if(isset($_POST['TaxAuthority']) AND
 		FROM periods";
 
 	$ErrMsg = _('Could not retrieve the period data because');
-	$Periods = DB_query($sql,$db,$ErrMsg);
+	$Periods = DB_query($sql,$ErrMsg);
 
 	while($myrow = DB_fetch_array($Periods,$db)) {
 		if($myrow['periodno']==$DefaultPeriod) {

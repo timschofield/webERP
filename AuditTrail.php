@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: AuditTrail.php 6310 2013-08-29 10:42:50Z daintree $ */
+/* $Id: AuditTrail.php 6941 2014-10-26 23:18:08Z daintree $ */
 
 include('includes/session.inc');
 
@@ -32,7 +32,7 @@ if (isset($_POST['ContainingText'])){
 $TableResult = DB_show_tables($db);
 
 // Get list of users
-$UserResult = DB_query("SELECT userid FROM www_users ORDER BY userid",$db);
+$UserResult = DB_query("SELECT userid FROM www_users ORDER BY userid");
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<div>';
@@ -168,7 +168,7 @@ if (isset($_POST['View'])) {
 			WHERE userid='".$_POST['SelectedUser']."'
 			AND transactiondate BETWEEN '".$FromDate."' AND '".$ToDate."'" . $ContainingText;
 	}
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 
 	echo '<table border="0" width="98%" class="selection">
 		<tr>

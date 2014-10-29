@@ -8,7 +8,7 @@ include('includes/header.inc');
 if (isset($_POST['ClearSupplierBackOrders'])) {
 	$SQL = "UPDATE purchorderdetails INNER JOIN purchorders ON purchorderdetails.orderno=purchorders.orderno SET purchorderdetails.quantityord=purchorderdetails.quantityrecd, purchorderdetails.completed=1 WHERE quantityrecd >0 AND supplierno>= '" . $_POST['FromSupplierNo'] . "' AND supplierno <= '" . $_POST['ToSupplierNo'] . "'";
 	echo $SQL;
-	$result = DB_query($SQL,$db);
+	$result = DB_query($SQL);
 	
 }
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';

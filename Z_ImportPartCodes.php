@@ -1,5 +1,5 @@
 <?php
-/* $Id: Z_ImportPartCodes.php 6310 2013-08-29 10:42:50Z daintree $*/
+/* $Id: Z_ImportPartCodes.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 
 include('includes/session.inc');
@@ -10,7 +10,7 @@ include('api/api_errorcodes.php');
 
 $webERPUser = $_SESSION['UserID'];
 $sql="SELECT password FROM www_users WHERE userid='" . $webERPUser."'";
-$result=DB_query($sql, $db);
+$result=DB_query($sql);
 $myrow=DB_fetch_array($result);
 $weberppassword = $myrow[0];
 
@@ -70,7 +70,7 @@ if (isset($_POST['update'])) {
 	fclose ($fp);
 } else {
 	$sql = "select * from locations";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 	if (DB_num_rows($result)==0) {
 		prnMsg( _('No locations have been set up. At least one location should be set up first'), "error");
 	} else {

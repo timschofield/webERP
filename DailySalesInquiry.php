@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: DailySalesInquiry.php 6458 2013-11-30 11:54:03Z exsonqu $*/
+/* $Id: DailySalesInquiry.php 6944 2014-10-27 07:15:34Z daintree $*/
 
 include('includes/session.inc');
 $Title = _('Daily Sales Inquiry');
@@ -16,7 +16,7 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 
 if (!isset($_POST['MonthToShow'])){
 	$_POST['MonthToShow'] = GetPeriod(Date($_SESSION['DefaultDateFormat']),$db);
-	$Result = DB_query("SELECT lastdate_in_period FROM periods WHERE periodno='" . $_POST['MonthToShow'] . "'",$db);
+	$Result = DB_query("SELECT lastdate_in_period FROM periods WHERE periodno='" . $_POST['MonthToShow'] . "'");
 	$myrow = DB_fetch_array($Result);
 	$EndDateSQL = $myrow['lastdate_in_period'];
 }
@@ -26,7 +26,7 @@ echo '<table class="selection">
 		<td>' . _('Month to Show') . ':</td>
 		<td><select tabindex="1" name="MonthToShow">';
 
-$PeriodsResult = DB_query("SELECT periodno, lastdate_in_period FROM periods",$db);
+$PeriodsResult = DB_query("SELECT periodno, lastdate_in_period FROM periods");
 
 while ($PeriodRow = DB_fetch_array($PeriodsResult)){
 	if ($_POST['MonthToShow']==$PeriodRow['periodno']) {
@@ -46,7 +46,7 @@ if($_SESSION['SalesmanLogin'] != '') {
 }else{
 	echo '<td><select tabindex="2" name="Salesperson">';
 
-	$SalespeopleResult = DB_query("SELECT salesmancode, salesmanname FROM salesman",$db);
+	$SalespeopleResult = DB_query("SELECT salesmancode, salesmanname FROM salesman");
 	if (!isset($_POST['Salesperson'])){
 		$_POST['Salesperson'] = 'All';
 		echo '<option selected="selected" value="All">' . _('All') . '</option>';
@@ -107,8 +107,8 @@ if ($_SESSION['SalesmanLogin'] != '') {
 }
 
 $sql .= " GROUP BY stockmoves.trandate ORDER BY stockmoves.trandate";
-$ErrMsg = _('The sales data could not be retrieved because') . ' - ' . DB_error_msg($db);
-$SalesResult = DB_query($sql, $db,$ErrMsg);
+$ErrMsg = _('The sales data could not be retrieved because') . ' - ' . DB_error_msg();
+$SalesResult = DB_query($sql,$ErrMsg);
 
 echo '<table class="selection">
 	<tr>

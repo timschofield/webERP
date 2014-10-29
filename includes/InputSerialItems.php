@@ -1,5 +1,5 @@
 <?php
-/* $Id: InputSerialItems.php 6667 2014-04-05 14:07:41Z exsonqu $*/
+/* $Id: InputSerialItems.php 6941 2014-10-26 23:18:08Z daintree $*/
 /*Input Serial Items - used for inputing serial numbers or batch/roll/bundle references
 for controlled items - used in:
 - ConfirmDispatchControlledInvoice.php
@@ -13,7 +13,7 @@ $sql = "SELECT perishable,
 		decimalplaces
 		FROM stockmaster
 		WHERE stockid='".$StockID."'";
-$result = DB_query($sql, $db);
+$result = DB_query($sql);
 $myrow = DB_fetch_array($result);
 $Perishable = $myrow['perishable'];
 $DecimalPlaces = $myrow['decimalplaces'];

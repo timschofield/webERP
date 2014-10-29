@@ -1,5 +1,5 @@
 <?php
-/* $Id: api_stockcategories.php 5768 2012-12-20 08:38:22Z daintree $*/
+/* $Id: api_stockcategories.php 6943 2014-10-27 07:06:42Z daintree $*/
 
 	function VerifyCategoryID($CategoryID, $i, $Errors) {
 		if (mb_strlen($CategoryID)>6 or $CategoryID=='') {
@@ -13,7 +13,7 @@
 		$Searchsql = "SELECT count(categoryid)
 				      FROM stockcategory
 				      WHERE categoryid='".$StockCategory."'";
-		$SearchResult=DB_query($Searchsql, $db);
+		$SearchResult=DB_query($Searchsql);
 		$answer = DB_fetch_array($SearchResult);
 		if ($answer[0]>0) {
 			$Errors[$i] = StockCategoryAlreadyExists;
@@ -67,7 +67,7 @@
 				VALUES ('" . mb_substr($FieldValues,0,-2) . "') ";
 		if (sizeof($Errors)==0) {
 			$result = DB_Query($sql, $db);
-			if (DB_error_no($db) != 0) {
+			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
 				$Errors[0]=0;
@@ -108,8 +108,8 @@
 		$sql = mb_substr($sql,0,-2)." WHERE categoryid='" . $CategoryDetails['categoryid'] . "'";
 		if (sizeof($Errors)==0) {
 			$result = DB_Query($sql, $db);
-			echo DB_error_no($db);
-			if (DB_error_no($db) != 0) {
+			echo DB_error_no();
+			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
 				$Errors[0]=0;
@@ -222,7 +222,7 @@
 			return $Errors;
 		}
 		$sql = "SELECT categoryid FROM stockcategory";
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		$i=0;
 		while ($myrow=DB_fetch_array($result)) {
 			$StockCategoryList[$i]=$myrow[0];

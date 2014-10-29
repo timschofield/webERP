@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: WhereUsedInquiry.php 6854 2014-08-29 07:15:02Z tehonu $*/
+/* $Id: WhereUsedInquiry.php 6942 2014-10-27 02:48:29Z daintree $*/
 
 include('includes/session.inc');
 $Title = _('Where Used Inquiry');
@@ -22,7 +22,7 @@ if (isset($StockID)){
 								units,
 								mbflag
 						FROM stockmaster
-						WHERE stockid='".$StockID."'",$db);
+						WHERE stockid='".$StockID."'");
 	$myrow = DB_fetch_row($result);
 	if (DB_num_rows($result)==0){
 		prnMsg(_('The item code entered') . ' - ' . $StockID . ' ' . _('is not set up as an item in the system') . '. ' . _('Re-enter a valid item code or select from the Select Item link above'),'error');
@@ -61,7 +61,7 @@ if (isset($StockID)) {
 			ORDER BY stockmaster.discontinued, bom.parent";
 
 	$ErrMsg = _('The parents for the selected part could not be retrieved because');;
-	$result = DB_query($SQL,$db,$ErrMsg);
+	$result = DB_query($SQL,$ErrMsg);
 	if (DB_num_rows($result)==0){
 		prnMsg(_('The selected item') . ' ' . $StockID . ' ' . _('is not used as a component of any other parts'),'error');
 	} else {

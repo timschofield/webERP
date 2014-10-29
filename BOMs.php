@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: BOMs.php 6890 2014-09-16 00:12:22Z tehonu $*/
+/* $Id: BOMs.php 6942 2014-10-27 02:48:29Z daintree $*/
 
 include('includes/session.inc');
 
@@ -17,7 +17,9 @@ function display_children($Parent, $Level, &$BOMTree) {
 	// retrive all children of parent
 	$c_result = DB_query("SELECT parent,
 								component
-						FROM bom WHERE parent='" . $Parent. "' ORDER BY sequence ASC" ,$db);
+						FROM bom
+						WHERE parent='" . $Parent. "'
+						ORDER BY sequence ASC");
 	if (DB_num_rows($c_result) > 0) {
 
 		while ($row = DB_fetch_array($c_result)) {
@@ -49,7 +51,7 @@ ie the BOM is recursive otherwise false ie 0 */
 	$sql = "SELECT component FROM bom WHERE parent='".$ComponentToCheck."'";
 	$ErrMsg = _('An error occurred in retrieving the components of the BOM during the check for recursion');
 	$DbgMsg = _('The SQL that was used to retrieve the components of the BOM and that failed in the process was');
-	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+	$result = DB_query($sql,$ErrMsg,$DbgMsg);
 
 	if (DB_num_rows($result)!=0) {
 		while ($myrow=DB_fetch_array($result)){
@@ -100,7 +102,7 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level, $db) {
 
 		$ErrMsg = _('Could not retrieve the BOM components because');
 		$DbgMsg = _('The SQL used to retrieve the components was');
-		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+		$result = DB_query($sql,$ErrMsg,$DbgMsg);
 
 		//echo $TableHeader;
 		$RowCounter =0;
@@ -277,7 +279,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		}
 		if($_POST['AutoIssue']==1 AND isset($_POST['Component'])){
 			$sql = "SELECT controlled FROM stockmaster WHERE stockid='" . $_POST['Component'] . "'";
-			$CheckControlledResult = DB_query($sql,$db);
+			$CheckControlledResult = DB_query($sql);
 			$CheckControlledRow = DB_fetch_row($CheckControlledResult);
 			if ($CheckControlledRow[0]==1){
 				prnMsg(_('Only non-serialised or non-lot controlled items can be set to auto issue. These items require the lot/serial numbers of items issued to the works orders to be specified so autoissue is not an option. Auto issue has been automatically set to off for this component'),'warn');
@@ -308,7 +310,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			$ErrMsg =  _('Could not update this BOM component because');
 			$DbgMsg =  _('The SQL used to update the component was');
 
-			$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+			$result = DB_query($sql,$ErrMsg,$DbgMsg);
 			$msg = _('Details for') . ' - ' . $SelectedComponent . ' ' . _('have been updated') . '.';
 			UpdateCost($db, $SelectedComponent);
 
@@ -331,7 +333,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 				$ErrMsg =  _('An error occurred in checking the component is not already on the BOM');
 				$DbgMsg =  _('The SQL that was used to check the component was not already on the BOM and that failed in the process was');
 
-				$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+				$result = DB_query($sql,$ErrMsg,$DbgMsg);
 
 				if (DB_num_rows($result)==0) {
 
@@ -357,7 +359,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 					$ErrMsg = _('Could not insert the BOM component because');
 					$DbgMsg = _('The SQL used to insert the component was');
 
-					$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+					$result = DB_query($sql,$ErrMsg,$DbgMsg);
 
 					UpdateCost($db, $_POST['Component']);
 					$msg = _('A new component part') . ' ' . $_POST['Component'] . ' ' . _('has been added to the bill of material for part') . ' - ' . $SelectedParent . '.';
@@ -389,12 +391,12 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 		$ErrMsg = _('Could not delete this BOM components because');
 		$DbgMsg = _('The SQL used to delete the BOM was');
-		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+		$result = DB_query($sql,$ErrMsg,$DbgMsg);
 
 		$ComponentSQL = "SELECT component
 							FROM bom
 							WHERE parent='" . $SelectedParent ."'";
-		$ComponentResult = DB_query($ComponentSQL,$db);
+		$ComponentResult = DB_query($ComponentSQL);
 		$ComponentArray = DB_fetch_row($ComponentResult);
 		UpdateCost($db, $ComponentArray[0]);
 
@@ -423,7 +425,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 	$ErrMsg = _('Could not retrieve the description of the parent part because');
 	$DbgMsg = _('The SQL used to retrieve description of the parent part was');
-	$result=DB_query($sql,$db,$ErrMsg,$DbgMsg);
+	$result=DB_query($sql,$ErrMsg,$DbgMsg);
 
 	$myrow=DB_fetch_row($result);
 
@@ -459,13 +461,13 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 	$ErrMsg = _('Could not retrieve the description of the parent part because');
 	$DbgMsg = _('The SQL used to retrieve description of the parent part was');
-	$result=DB_query($sql,$db,$ErrMsg,$DbgMsg);
+	$result=DB_query($sql,$ErrMsg,$DbgMsg);
 	$ix = 0;
 	if( DB_num_rows($result) > 0 ) {
      echo '<table class="selection">';
 	 echo '<tr><td><div class="centre">' . _('Manufactured parent items').' : ';
 	 while ($myrow = DB_fetch_array($result)){
-	 	   echo (($ix)?', ':'') . '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Select='.$myrow['parent'].'">' . 
+	 	   echo (($ix)?', ':'') . '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Select='.$myrow['parent'].'">' .
 			$myrow['description'].'&nbsp;('.$myrow['parent'].')</a>';
 			$ix++;
 	 } //end while loop
@@ -483,13 +485,13 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 	$ErrMsg = _('Could not retrieve the description of the parent part because');
 	$DbgMsg = _('The SQL used to retrieve description of the parent part was');
-	$result=DB_query($sql,$db,$ErrMsg,$DbgMsg);
+	$result=DB_query($sql,$ErrMsg,$DbgMsg);
 	if( DB_num_rows($result) > 0 ) {
         echo '<table class="selection">';
 		echo '<tr><td><div class="centre">' . _('Assembly parent items').' : ';
 	 	$ix = 0;
 	 	while ($myrow = DB_fetch_array($result)){
-	 	   echo (($ix)?', ':'') . '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Select='.$myrow['parent'].'">' . 
+	 	   echo (($ix)?', ':'') . '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Select='.$myrow['parent'].'">' .
 			$myrow['description'].'&nbsp;('.$myrow['parent'].')</a>';
 			$ix++;
 	 	} //end while loop
@@ -508,13 +510,13 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 	$ErrMsg = _('Could not retrieve the description of the parent part because');
 	$DbgMsg = _('The SQL used to retrieve description of the parent part was');
-	$result=DB_query($sql,$db,$ErrMsg,$DbgMsg);
+	$result=DB_query($sql,$ErrMsg,$DbgMsg);
 	if( DB_num_rows($result) > 0 ) {
         echo '<table class="selection">';
 		echo '<tr><td><div class="centre">' . _('Kit sets').' : ';
 	 	$ix = 0;
 	 	while ($myrow = DB_fetch_array($result)){
-	 	   echo (($ix)?', ':'') . '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Select='.$myrow['parent'].'">' . 
+	 	   echo (($ix)?', ':'') . '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Select='.$myrow['parent'].'">' .
 			$myrow['description'].'&nbsp;('.$myrow['parent'].')</a>';
 			$ix++;
 	 	} //end while loop
@@ -532,7 +534,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 	$ErrMsg = _('Could not retrieve the description of the parent part because');
 	$DbgMsg = _('The SQL used to retrieve description of the parent part was');
-	$result=DB_query($sql,$db,$ErrMsg,$DbgMsg);
+	$result=DB_query($sql,$ErrMsg,$DbgMsg);
 	if( DB_num_rows($result) > 0 ) {
 		echo '<table class="selection">
 				<tr>
@@ -619,7 +621,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 					WHERE parent='".$SelectedParent."'
 					AND component='".$SelectedComponent."'";
 
-			$result = DB_query($sql, $db);
+			$result = DB_query($sql);
 			$myrow = DB_fetch_array($result);
 
 			$_POST['Sequence'] = $myrow['sequence'];
@@ -686,7 +688,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 			$ErrMsg = _('Could not retrieve the list of potential components because');
 			$DbgMsg = _('The SQL used to retrieve the list of potential components part was');
-			$result = DB_query($sql,$db,$ErrMsg, $DbgMsg);
+			$result = DB_query($sql,$ErrMsg, $DbgMsg);
 
 
 			while ($myrow = DB_fetch_array($result)) {
@@ -700,21 +702,21 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
                 <td>' . _('Sequence in BOM') . ':</td>
                 <td><input type="text" class="integer" required="required" size="5" name="Sequence" value="' . $_POST['Sequence'] . '" /></td>
             </tr>';
-		
+
 		echo '<tr>
 				<td>' . _('Location') . ': </td>
 				<td><select tabindex="2" name="LocCode">';
 
 		DB_free_result($result);
-		$sql = "SELECT locationname, 
-					locations.loccode 
-				FROM locations 
-				INNER JOIN locationusers 
-					ON locationusers.loccode=locations.loccode 
-					AND locationusers.userid='" .  $_SESSION['UserID'] . "' 
+		$sql = "SELECT locationname,
+					locations.loccode
+				FROM locations
+				INNER JOIN locationusers
+					ON locationusers.loccode=locations.loccode
+					AND locationusers.userid='" .  $_SESSION['UserID'] . "'
 					AND locationusers.canupd=1
 				WHERE locations.usedforwo = 1";
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 
 		while ($myrow = DB_fetch_array($result)) {
 			if (isset($_POST['LocCode']) AND $myrow['loccode']==$_POST['LocCode']) {
@@ -734,7 +736,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 				<td>' . _('Work Centre Added') . ': </td><td>';
 
 		$sql = "SELECT code, description FROM workcentres INNER JOIN locationusers ON locationusers.loccode=workcentres.location AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1";
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 
 		if (DB_num_rows($result)==0){
 			prnMsg( _('There are no work centres set up yet') . '. ' . _('Please use the link below to set up work centres') . '.','warn');
@@ -878,7 +880,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		}
 
 		$ErrMsg = _('The SQL to find the parts selected failed with the message');
-		$result = DB_query($sql,$db,$ErrMsg);
+		$result = DB_query($sql,$ErrMsg);
 
 	} //one of keywords or StockCode was more than a zero length string
 } //end of if search

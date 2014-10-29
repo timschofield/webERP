@@ -30,7 +30,7 @@ $sql = "SELECT stockserialitems.stockid,
 			ORDER BY trandate";
 
 $ErrMsg =  _('The stock held could not be retrieved because');
-$LocStockResult = DB_query($sql, $db, $ErrMsg);
+$LocStockResult = DB_query($sql, $ErrMsg);
 $NumRows = DB_num_rows($LocStockResult, $db);
 
 $j = 1;

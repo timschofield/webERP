@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: DebtorsAtPeriodEnd.php 6338 2013-09-28 05:10:46Z daintree $*/
+/* $Id: DebtorsAtPeriodEnd.php 6944 2014-10-27 07:15:34Z daintree $*/
 
 include('includes/session.inc');
 
@@ -20,7 +20,7 @@ if (isset($_POST['PrintPDF'])
 	/*Get the date of the last day in the period selected */
 
 	$SQL = "SELECT lastdate_in_period FROM periods WHERE periodno = '" . $_POST['PeriodEnd']."'";
-	$PeriodEndResult = DB_query($SQL,$db,_('Could not get the date of the last day in the period selected'));
+	$PeriodEndResult = DB_query($SQL,_('Could not get the date of the last day in the period selected'));
 	$PeriodRow = DB_fetch_row($PeriodEndResult);
 	$PeriodEndDate = ConvertSQLDate($PeriodRow[0]);
 
@@ -51,12 +51,12 @@ if (isset($_POST['PrintPDF'])
 				currencies.currency,
 				currencies.decimalplaces";
 
-	$CustomerResult = DB_query($SQL,$db,'','',false,false);
+	$CustomerResult = DB_query($SQL,'','',false,false);
 
-	if (DB_error_no($db) !=0) {
+	if (DB_error_no() !=0) {
 		$Title = _('Customer Balances') . ' - ' . _('Problem Report');
 		include('includes/header.inc');
-		prnMsg(_('The customer details could not be retrieved by the SQL because') . DB_error_msg($db),'error');
+		prnMsg(_('The customer details could not be retrieved by the SQL because') . DB_error_msg(),'error');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		if ($debug==1){
 			echo '<br />' . $SQL;
@@ -151,7 +151,7 @@ if (isset($_POST['PrintPDF'])
 				<td><select tabindex="3" name="PeriodEnd">';
 
 		$sql = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC";
-		$Periods = DB_query($sql,$db,_('Could not retrieve period data because'),_('The SQL that failed to get the period data was'));
+		$Periods = DB_query($sql,_('Could not retrieve period data because'),_('The SQL that failed to get the period data was'));
 
 		while ($myrow = DB_fetch_array($Periods,$db)){
 

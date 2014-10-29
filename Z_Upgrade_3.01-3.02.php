@@ -1,5 +1,5 @@
 <?php
-/* $Id: Z_Upgrade_3.01-3.02.php 5784 2012-12-29 04:00:43Z daintree $*/
+/* $Id: Z_Upgrade_3.01-3.02.php 6942 2014-10-27 02:48:29Z daintree $*/
 
 //$PageSecurity = 15;
 include('includes/session.inc');
@@ -8,7 +8,7 @@ include('includes/header.inc');
 
 prnMsg(_('Upgrade script to number salesorderdetails records as required by version 3.02 .... please wait'),'info');
 
-$TestAlreadyDoneResult = DB_query('SELECT * FROM salesorderdetails WHERE orderlineno>=1',$db);
+$TestAlreadyDoneResult = DB_query('SELECT * FROM salesorderdetails WHERE orderlineno>=1');
 if (DB_num_rows($TestAlreadyDoneResult)>0){
 	prnMsg(_('The upgrade script appears to have been run already successfully - there is no need to re-run it'),'info');
 	include('includes/footer.inc');
@@ -19,7 +19,7 @@ if (DB_num_rows($TestAlreadyDoneResult)>0){
 $lineno = 1;
 $orderno = 0;
 
-$SalesOrdersResult = DB_query('SELECT orderno, stkcode FROM salesorderdetails ORDER BY orderno', $db);
+$SalesOrdersResult = DB_query('SELECT orderno, stkcode FROM salesorderdetails ORDER BY orderno');
 
 while ($SalesOrderDetails = DB_fetch_array($SalesOrdersResult)) {
 
@@ -33,11 +33,11 @@ while ($SalesOrderDetails = DB_fetch_array($SalesOrdersResult)) {
 	DB_query('UPDATE salesorderdetails
 		SET orderlineno=' . $LineNo . '
 		WHERE orderno=' . $OrderNo . "
-		AND stkcode='" . $SalesOrderDetails['stkcode'] ."'", $db);
+		AND stkcode='" . $SalesOrderDetails['stkcode'] ."'");
 
 }
 
-DB_query( 'ALTER TABLE salesorderdetails ADD CONSTRAINT salesorderdetails_pk primary key(orderno, orderlineno)',$db);
+DB_query( 'ALTER TABLE salesorderdetails ADD CONSTRAINT salesorderdetails_pk primary key(orderno, orderlineno)');
 
 prnMsg(_('The sales orderdetails lines have been numbered appropriately for version 3.02'),'success');
 include('includes/footer.inc');

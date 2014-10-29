@@ -1,5 +1,5 @@
 <?php
-/* $Id: api_salestypes.php 5768 2012-12-20 08:38:22Z daintree $*/
+/* $Id: api_salestypes.php 6943 2014-10-27 07:06:42Z daintree $*/
 
 /* This function returns a list of the sales type abbreviations
  * currently setup on webERP
@@ -13,7 +13,7 @@
 			return $Errors;
 		}
 		$sql = "SELECT typeabbrev FROM salestypes";
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		$i=0;
 		while ($myrow=DB_fetch_array($result)) {
 			$SalesTypeList[$i]=$myrow[0];
@@ -39,7 +39,7 @@
 		$Errors = VerifySalesType($salestype, sizeof($Errors), $Errors, $db);
 		if (sizeof($Errors)==0) {
 			$sql = "SELECT * FROM salestypes WHERE typeabbrev='".$salestype."'";
-			$result = DB_query($sql, $db);
+			$result = DB_query($sql);
 			$Errors[0]=0;
 			$Errors[1]=DB_fetch_array($result);
 			return $Errors;
@@ -70,7 +70,7 @@
 				VALUES ('" . mb_substr($FieldValues,0,-2) . "') ";
 		if (sizeof($Errors)==0) {
 			$result = DB_Query($sql, $db);
-			if (DB_error_no($db) != 0) {
+			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
 				$Errors[0]=0;

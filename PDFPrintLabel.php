@@ -38,10 +38,10 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 				stockmaster.stockid,
 				prices.startdate";
 
-	$LabelsResult = DB_query($SQL,$db,'','',false,false);
+	$LabelsResult = DB_query($SQL,'','',false,false);
 
-	if (DB_error_no($db) !=0) {
-		prnMsg( _('The Price Labels could not be retrieved by the SQL because'). ' - ' . DB_error_msg($db), 'error');
+	if (DB_error_no() !=0) {
+		prnMsg( _('The Price Labels could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
 		echo '<br /><a href="' .$RootPath .'/index.php">' .   _('Back to the menu'). '</a>';
 		if ($debug==1){
 			prnMsg(_('For debugging purposes the SQL used was:') . $SQL,'error');
@@ -141,8 +141,7 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 								topmargin*" . $PtsPerMM . " as label_topmargin,
 								leftmargin*" . $PtsPerMM . " as label_leftmargin
 						FROM labels
-						WHERE labelid='" . $_POST['LabelID'] . "'",
-						$db);
+						WHERE labelid='" . $_POST['LabelID'] . "'");
 	$LabelDimensions = DB_fetch_array($result);
 
 	$result = DB_query("SELECT fieldvalue,
@@ -151,8 +150,7 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 								fontsize,
 								barcode
 						FROM labelfields
-						WHERE labelid = '" . $_POST['LabelID'] . "'",
-						$db);
+						WHERE labelid = '" . $_POST['LabelID'] . "'");
 	$LabelFields = array();
 	$i=0;
 	while ($LabelFieldRow = DB_fetch_array($result)){
@@ -286,7 +284,7 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 					<td>' . _('Label to print') . ':</td>
 					<td><select required="required" autofocus="autofocus" name="LabelID">';
 
-		$LabelResult = DB_query("SELECT labelid, description FROM labels",$db);
+		$LabelResult = DB_query("SELECT labelid, description FROM labels");
 		while ($LabelRow = DB_fetch_array($LabelResult)){
 			echo '<option value="' . $LabelRow['labelid'] . '">' . $LabelRow['description'] . '</option>';
 		}
@@ -296,7 +294,7 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 				<td>' .  _('From Inventory Category Code') .':</td>
 				<td><select name="FromCriteria">';
 
-		$CatResult= DB_query("SELECT categoryid, categorydescription FROM stockcategory ORDER BY categoryid",$db);
+		$CatResult= DB_query("SELECT categoryid, categorydescription FROM stockcategory ORDER BY categoryid");
 		while ($myrow = DB_fetch_array($CatResult)){
 			echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'] . '</option>';
 		}
@@ -316,7 +314,7 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 		echo '<tr><td>' . _('For Sales Type/Price List').':</td>
                   <td><select name="SalesType">';
 		$sql = "SELECT sales_type, typeabbrev FROM salestypes";
-		$SalesTypesResult=DB_query($sql,$db);
+		$SalesTypesResult=DB_query($sql);
 
 		while ($myrow=DB_fetch_array($SalesTypesResult)){
 			if ($_SESSION['DefaultPriceList']==$myrow['typeabbrev']){
@@ -330,7 +328,7 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 		echo '<tr><td>' . _('For Currency').':</td>
                   <td><select name="Currency">';
 		$sql = "SELECT currabrev, country, currency FROM currencies";
-		$CurrenciesResult=DB_query($sql,$db);
+		$CurrenciesResult=DB_query($sql);
 
 		while ($myrow=DB_fetch_array($CurrenciesResult)){
 			if ($_SESSION['CompanyRecord']['currencydefault']==$myrow['currabrev']){

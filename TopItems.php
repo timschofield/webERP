@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: TopItems.php 6908 2014-10-06 05:13:27Z daintree $*/
+/* $Id: TopItems.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 /* Session started in session.inc for password checking and authorisation level check
 config.php is in turn included in session.inc*/
@@ -28,7 +28,7 @@ if (!(isset($_POST['Search']))) {
 					locationname
 			FROM locations
 			INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
-	$result = DB_query($sql, $db);
+	$result = DB_query($sql);
 	echo '<option value="All">' . _('All') . '</option>';
 	while ($myrow = DB_fetch_array($result)) {
 		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['loccode'] . ' - ' . $myrow['locationname'] . '</option>';
@@ -44,7 +44,7 @@ if (!(isset($_POST['Search']))) {
 	$sql = "SELECT typename,
 					typeid
 				FROM debtortype";
-	$result = DB_query($sql, $db);
+	$result = DB_query($sql);
 	echo '<option value="All">' . _('All') . '</option>';
 	while ($myrow = DB_fetch_array($result)) {
 		echo '<option value="' . $myrow['typeid'] . '">' . $myrow['typename'] . '</option>';
@@ -57,7 +57,7 @@ if (!(isset($_POST['Search']))) {
 					categorydescription
 			FROM stockcategory
 			ORDER BY categorydescription";
-	$result1 = DB_query($SQL,$db);
+	$result1 = DB_query($SQL);
 
 	echo '<tr>
 			<td style="width:150px">' . _('In Stock Category') . ' </td>
@@ -156,7 +156,7 @@ if (!(isset($_POST['Search']))) {
 					ORDER BY `" . $_POST['Sequence'] . "` DESC
 					LIMIT " . filter_number_format($_POST['NumberOfTopItems']);
 
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 
 	echo '<p class="page_title_text" align="center"><strong>' . _('Top Sales Items List') . '</strong></p>';
 	echo '<form action="PDFTopItems.php"  method="GET">';

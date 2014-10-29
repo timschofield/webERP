@@ -1,5 +1,5 @@
 <?php
-/* $Id: Z_MakeStockLocns.php 5784 2012-12-29 04:00:43Z daintree $*/
+/* $Id: Z_MakeStockLocns.php 6941 2014-10-26 23:18:08Z daintree $*/
 /* Script to make stock locations for all parts that do not have stock location records set up*/
 
 include ('includes/session.inc');
@@ -18,7 +18,7 @@ $sql = "INSERT INTO locstock (stockid, loccode)
                 WHERE locstock.stockid IS NULL";
 
 $ErrMsg = _('The items/locations that need stock location records created cannot be retrieved because');
-$Result = DB_query($sql,$db,$ErrMsg);
+$Result = DB_query($sql,$ErrMsg);
 
 echo '<p />';
 prnMsg(_('Any stock items that may not have had stock location records have now been given new location stock records'),'info');

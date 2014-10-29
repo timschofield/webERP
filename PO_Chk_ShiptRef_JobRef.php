@@ -1,6 +1,6 @@
 <?php
 /* $Revision: 1.7 $ */
-/* $Id: PO_Chk_ShiptRef_JobRef.php 5768 2012-12-20 08:38:22Z daintree $*/
+/* $Id: PO_Chk_ShiptRef_JobRef.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 /*Code to check that ShiptRef and Contract or JobRef entered are valid entries
 This is used by the UpdateLine button when a purchase order line item is updated and
@@ -11,7 +11,7 @@ by the EnterLine button when a new purchase order line item is entered
 
               	/*Check for existance of Shipment Selected */
               $sql = "SELECT COUNT(*) FROM shipments WHERE shiptref ='".  $_POST['ShiptRef'] . "' AND closed =0";
-                     $ShiptResult = DB_query($sql,$db,'','',false,false);
+                     $ShiptResult = DB_query($sql,'','',false,false);
                      if (DB_error_no!=0 OR DB_num_rows($ShiptResult)==0){
                              $AllowUpdate = False;
                              prnMsg(_('The update could not be processed') . '<br />' . _('There was some snag in retrieving the shipment reference entered') . ' - ' . _('see the listing of open shipments to ensure a valid shipment reference is entered'),'error');
@@ -27,7 +27,7 @@ by the EnterLine button when a new purchase order line item is entered
               if (($_POST['JobRef']!='' AND $_POST['JobRef']!='0') OR !isset($_POST['JobRef'])) {  //Dont bother with this lot if there was not Contract selected
 
               $sql = "SELECT COUNT(*) FROM contracts WHERE contractref ='".  $_POST['JobRef'] . "'";
-                     $JobResult = DB_query($sql,$db);
+                     $JobResult = DB_query($sql);
                      if (DB_error_no!=0 OR DB_num_rows($JobResult)==0){
                              $AllowUpdate = False;
                              prnMsg(_('The update could not be processed') . '<br />' . _('There was a problem retrieving the contract reference entered') . ' - ' . _('see the listing of contracts to ensure a valid contract reference is entered'),'error');

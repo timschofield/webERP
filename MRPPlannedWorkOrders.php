@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: MRPPlannedWorkOrders.php 6869 2014-09-08 02:05:18Z tehonu $*/
+/* $Id: MRPPlannedWorkOrders.php 6944 2014-10-27 07:15:34Z daintree $*/
 
 // MRPPlannedWorkOrders.php - Report of manufactured parts that MRP has determined should have
 // work orders created for them
@@ -8,7 +8,7 @@
 include('includes/session.inc');
 
 $sql="SHOW TABLES WHERE Tables_in_" . $_SESSION['DatabaseName'] . "='mrprequirements'";
-$result=DB_query($sql,$db);
+$result=DB_query($sql);
 if (DB_num_rows($result)==0) {
 	$Title=_('MRP error');
 	include('includes/header.inc');
@@ -100,12 +100,12 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 						 computedcost
 				ORDER BY mrpplannedorders.part,yearmonth";
 	}
-	$result = DB_query($sql,$db,'','',false,true);
+	$result = DB_query($sql,'','',false,true);
 
-	if (DB_error_no($db) !=0) {
+	if (DB_error_no() !=0) {
 	  $Title = _('MRP Planned Work Orders') . ' - ' . _('Problem Report');
 	  include('includes/header.inc');
-	   prnMsg( _('The MRP planned work orders could not be retrieved by the SQL because') . ' '  . DB_error_msg($db),'error');
+	   prnMsg( _('The MRP planned work orders could not be retrieved by the SQL because') . ' '  . DB_error_msg(),'error');
 	   echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 	   if ($debug==1){
 		  echo '<br />' . $sql;

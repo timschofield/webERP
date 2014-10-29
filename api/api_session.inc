@@ -1,5 +1,5 @@
 <?php
-/* $Id: api_session.inc 6832 2014-08-19 11:44:16Z serakfalcon $*/
+/* $Id: api_session.inc 6944 2014-10-27 07:15:34Z daintree $*/
 
 if (!isset($PathPrefix)) {
 	$PathPrefix='';
@@ -66,15 +66,15 @@ function CryptPass( $Password ) {
  }
 
 // API wrapper for DB issues - no HTML output, AND remember any error message
-function api_DB_query( $sql, $db, $EMsg= '', $DMsg= '', $Transaction='', $TrapErrors=false )
+function api_DB_query( $sql, $EMsg= '', $DMsg= '', $Transaction='', $TrapErrors=false )
 {
     //  Basically we have disabled the error reporting from the standard
     //  query function,  and will remember any error message in the session
     //  data.
 
-    $result = DB_query($sql, $db, $EMsg, $DMsg, $Transaction, $TrapErrors);
-    if (DB_error_no($db) != 0) {
-		$_SESSION['db_err_msg'] = "SQL: " . $sql . "\nDB error message: " . DB_error_msg($db) . "\n";
+    $result = DB_query($sql, $EMsg, $DMsg, $Transaction, $TrapErrors);
+    if (DB_error_no() != 0) {
+		$_SESSION['db_err_msg'] = "SQL: " . $sql . "\nDB error message: " . DB_error_msg() . "\n";
     } else {
 		$_SESSION['db_err_msg'] = '';
 	}

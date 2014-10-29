@@ -1,5 +1,5 @@
 <?php
-/* $Id: Z_CheckGLTransBalance.php 5784 2012-12-29 04:00:43Z daintree $*/
+/* $Id: Z_CheckGLTransBalance.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 include('includes/session.inc');
 $Title=_('Check Period Sales Ledger Control Account');
@@ -30,7 +30,7 @@ $sql = "SELECT gltrans.type,
 		periodno
 	HAVING ABS(SUM(amount))>0.01";
 
-$OutOfWackResult = DB_query($sql,$db);
+$OutOfWackResult = DB_query($sql);
 
 
 $RowCounter =0;

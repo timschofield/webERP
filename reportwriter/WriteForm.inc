@@ -306,7 +306,7 @@ function BuildPDF($ReportID, $Prefs) {
 	$sql = "SELECT seqnum, params FROM ".DBRptFields."
 		WHERE reportid=".$ReportID." AND entrytype='fieldlist' AND visible=1
 		ORDER BY seqnum";
-	$Result=DB_query($sql,$db,'','',false,true);
+	$Result=DB_query($sql,'','',false,true);
 	while ($FieldValues = DB_fetch_assoc($Result)) {
 		$FieldValues['params'] = unserialize($FieldValues['params']);
 		$FieldListings[] = $FieldValues;
@@ -468,7 +468,7 @@ function BuildPDF($ReportID, $Prefs) {
 	if ($sqlCrit) $sql .=' WHERE '.$sqlCrit;
 	$sql .=" GROUP BY ".$PageBreakField;
 	// execute sql to see if we have data
-	$Result=DB_query($sql,$db,'','',false,true);
+	$Result=DB_query($sql,'','',false,true);
 	if (DB_num_rows($Result)==0) {
 		$usrMsg['message'] = RPT_NOROWS;
 		$usrMsg['level'] = 'error';
@@ -493,7 +493,7 @@ function BuildPDF($ReportID, $Prefs) {
 	if ($strTxtBlk<>'') { // then we have data, fill in TextField value with data
 		$strTxtBlk = mb_substr($strTxtBlk,0,-2);
 		$sql = "SELECT ".$strTxtBlk." FROM ".CompanyDataBase." LIMIT 1;";
-		$Result=DB_query($sql,$db,'','',false,true);
+		$Result=DB_query($sql,'','',false,true);
 		$CoyData = DB_fetch_row($Result);
 		$i=0;
 		foreach ($FieldListings as $key=>$SingleObject) {
@@ -515,7 +515,7 @@ function BuildPDF($ReportID, $Prefs) {
 			foreach ($SingleObject['params']['Seq'] as $OneField) $strTxtBlk .= $OneField['TblField'].', ';
 			$strTxtBlk = mb_substr($strTxtBlk,0,-2);
 			$sql = "SELECT ".$strTxtBlk." FROM ".CompanyDataBase." LIMIT 1;";
-			$Result=DB_query($sql,$db,'','',false,true);
+			$Result=DB_query($sql,'','',false,true);
 			$TxtBlkValues = DB_fetch_row($Result);
 			$TextField = '';
 			foreach($TxtBlkValues as $t=>$Temp) $TextField .= $Temp.AddSep($SingleObject['params']['Seq'][$t]['Processing']);
@@ -529,7 +529,7 @@ function BuildPDF($ReportID, $Prefs) {
 		if ($sqlCrit) $TrailingSQL=" FROM ".$sqlTable." WHERE ".$sqlCrit." AND ".$PageBreakField."='".$Fvalue."'";
 			else $TrailingSQL =" FROM ".$sqlTable." WHERE ".$PageBreakField."='".$Fvalue."'";
 		$sql = "SELECT " . $strField . $TrailingSQL;
-		$Result=DB_query($sql,$db,'','',false,true);
+		$Result=DB_query($sql,'','',false,true);
 		$FieldValues = DB_fetch_row($Result);
 		// Build the text block strings
 		foreach ($FieldListings as $key=>$SingleObject) {
@@ -543,7 +543,7 @@ function BuildPDF($ReportID, $Prefs) {
 				foreach ($SingleObject['params']['Seq'] as $OneField) $strTxtBlk .= $OneField['TblField'].', ';
 				$strTxtBlk = mb_substr($strTxtBlk,0,-2);
 				$sql = "SELECT ".$strTxtBlk.$TrailingSQL;
-				$Result=DB_query($sql,$db,'','',false,true);
+				$Result=DB_query($sql,'','',false,true);
 				$TxtBlkValues = DB_fetch_row($Result);
 				$TextField = '';
 				foreach($TxtBlkValues as $t=>$Temp) $TextField .= $Temp.AddSep($SingleObject['params']['Seq'][$t]['Processing']);
@@ -575,7 +575,7 @@ function BuildPDF($ReportID, $Prefs) {
 				$tblField = mb_substr($tblField,0,-2); // remove the last two chars (comma and space)
 				$SingleObject['params']['Data'][] = $tblHeading; // set the first data element to the headings
 				$sql = "SELECT ".$tblField.$TrailingSQL;
-				$Result=DB_query($sql,$db,'','',false,true);
+				$Result=DB_query($sql,'','',false,true);
 				while ($Temp = DB_fetch_assoc($Result)) $SingleObject['params']['Data'][] = $Temp;
 				$pdf->FormTable($SingleObject['params']);
 			}
@@ -591,7 +591,7 @@ function BuildPDF($ReportID, $Prefs) {
 				$ttlField = '';
 				foreach ($SingleObject['params']['Seq'] as $Temp) $ttlField .= $Temp.'+';
 				$sql = "SELECT SUM(".mb_substr($ttlField,0,-1).")".$TrailingSQL;
-				$Result=DB_query($sql,$db,'','',false,true);
+				$Result=DB_query($sql,'','',false,true);
 				$Temp = DB_fetch_row($Result);
 				$FieldListings[$key]['params']['TextField'] = $Temp[0];
 			}

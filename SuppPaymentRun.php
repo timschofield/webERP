@@ -1,5 +1,5 @@
 <?php
-/* $Id: SuppPaymentRun.php 6592 2014-03-02 08:41:40Z daintree $*/
+/* $Id: SuppPaymentRun.php 6945 2014-10-27 07:20:48Z daintree $*/
 
 Class Allocation {
 	Var $TransID;
@@ -59,7 +59,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 			HAVING SUM(supptrans.ovamount + supptrans.ovgst - supptrans.alloc) > 0
 			ORDER BY suppliers.supplierid";
 
-	$SuppliersResult = DB_query($sql,$db);
+	$SuppliersResult = DB_query($sql);
 
 	$SupplierID ='';
 	$TotalPayments = 0;
@@ -67,7 +67,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 
 
 	if (isset($_POST['PrintPDFAndProcess'])){
-		$ProcessResult = DB_Txn_Begin($db);
+		$ProcessResult = DB_Txn_Begin();
 	}
 
 	while ($SuppliersToPay = DB_fetch_array($SuppliersResult)){
@@ -104,11 +104,11 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 					supptrans.type,
 					supptrans.transno";
 
-		$TransResult = DB_query($sql,$db,'','',false,false);
-		if (DB_error_no($db) !=0) {
+		$TransResult = DB_query($sql,'','',false,false);
+		if (DB_error_no() !=0) {
 			$Title = _('Payment Run - Problem Report');
 			include('includes/header.inc');
-			prnMsg(_('The details of supplier invoices due could not be retrieved because') . ' - ' . DB_error_msg($db),'error');
+			prnMsg(_('The details of supplier invoices due could not be retrieved because') . ' - ' . DB_error_msg(),'error');
 			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 			if ($debug==1){
 				echo '<br />' . _('The SQL that failed was') . ' ' . $sql;
@@ -178,16 +178,16 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 							WHERE type = '" . $DetailTrans['type'] . "'
 							AND transno = '" . $DetailTrans['transno'] . "'";
 
-				$ProcessResult = DB_query($SQL,$db,'','',false,false);
-				if (DB_error_no($db) !=0) {
+				$ProcessResult = DB_query($SQL,'','',false,false);
+				if (DB_error_no() !=0) {
 					$Title = _('Payment Processing - Problem Report') . '.... ';
 					include('includes/header.inc');
-					prnMsg(_('None of the payments will be processed since updates to the transaction records for') . ' ' .$SupplierName . ' ' . _('could not be processed because') . ' - ' . DB_error_msg($db),'error');
+					prnMsg(_('None of the payments will be processed since updates to the transaction records for') . ' ' .$SupplierName . ' ' . _('could not be processed because') . ' - ' . DB_error_msg(),'error');
 					echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 					if ($debug==1){
 						echo '<br />' . _('The SQL that failed was') . $SQL;
 					}
-					$ProcessResult = DB_Txn_Rollback($db);
+					$ProcessResult = DB_Txn_Rollback();
 					include('includes/footer.inc');
 					exit;
 				}
@@ -208,17 +208,17 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 		/*All the payment processing is in the below file */
 		include('includes/PDFPaymentRun_PymtFooter.php');
 
-		$ProcessResult = DB_Txn_Commit($db);
+		$ProcessResult = DB_Txn_Commit();
 
-		if (DB_error_no($db) !=0) {
+		if (DB_error_no() !=0) {
 			$Title = _('Payment Processing - Problem Report') . '.... ';
 			include('includes/header.inc');
-			prnMsg(_('None of the payments will be processed. Unfortunately, there was a problem committing the changes to the database because') . ' - ' . DB_error_msg($db),'error');
+			prnMsg(_('None of the payments will be processed. Unfortunately, there was a problem committing the changes to the database because') . ' - ' . DB_error_msg(),'error');
 			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 			if ($debug==1){
 				prnMsg(_('The SQL that failed was') . '<br />' . $SQL,'error');
 			}
-			$ProcessResult = DB_Txn_Rollback($db);
+			$ProcessResult = DB_Txn_Rollback();
 			include('includes/footer.inc');
 			exit;
 		}
@@ -276,7 +276,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 			<td><select name="Currency">';
 
 	$sql = "SELECT currency, currabrev FROM currencies";
-	$result=DB_query($sql,$db);
+	$result=DB_query($sql);
 
 	while ($myrow=DB_fetch_array($result)){
 	if ($myrow['currabrev'] == $_SESSION['CompanyRecord']['currencydefault']){
@@ -311,10 +311,10 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 
 	$SQL = "SELECT bankaccountname, accountcode FROM bankaccounts";
 
-	$AccountsResults = DB_query($SQL,$db,'','',false,false);
+	$AccountsResults = DB_query($SQL,'','',false,false);
 
-	if (DB_error_no($db) !=0) {
-		 echo '<br />' . _('The bank accounts could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db);
+	if (DB_error_no() !=0) {
+		 echo '<br />' . _('The bank accounts could not be retrieved by the SQL because') . ' - ' . DB_error_msg();
 		 if ($debug==1){
 			echo '<br />' . _('The SQL used to retrieve the bank accounts was') . ':<br />' . $SQL;
 		 }

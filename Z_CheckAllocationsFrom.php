@@ -1,5 +1,5 @@
 <?php
-/* $Id: Z_CheckAllocationsFrom.php 5784 2012-12-29 04:00:43Z daintree $*/
+/* $Id: Z_CheckAllocationsFrom.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 include ('includes/session.inc');
 $Title = _('Identify Allocation Stuff Ups');
@@ -24,7 +24,7 @@ $sql = "SELECT debtortrans.type,
 		currencies.decimalplaces
 	HAVING SUM(custallocns.amt) < -alloc";
 
-$result =DB_query($sql,$db);
+$result =DB_query($sql);
 
 if (DB_num_rows($result)>0){
 	echo '<table>

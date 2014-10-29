@@ -1,5 +1,5 @@
 <?php
-/*	$Id: CustomerAllocations.php 6878 2014-09-11 15:03:03Z rchacon $*/
+/*	$Id: CustomerAllocations.php 6945 2014-10-27 07:20:48Z daintree $*/
 
 /*	Call this page with:
 	1. A TransID to show the make up and to modify existing allocations.
@@ -83,13 +83,13 @@ if (isset($_POST['UpdateDatabase'])) {
 		//========[ START TRANSACTION ]===========
 		//
 		$Error = '';
-		$Result= DB_Txn_Begin($db);
+		$Result= DB_Txn_Begin();
 		$AllAllocations = 0;
 		foreach ($_SESSION['Alloc']->Allocs as $AllocnItem) {
 			if ($AllocnItem->PrevAllocRecordID != 'NA') {
 			// original allocation has changed so delete the old allocation record
 				$SQL = "DELETE FROM custallocns WHERE id = '" . $AllocnItem->PrevAllocRecordID . "'";
-				if( !$Result = DB_query($SQL,$db) ) {
+				if( !$Result = DB_query($SQL) ) {
 					$Error = _('Could not delete old allocation record');
 				}
 			 }
@@ -107,7 +107,7 @@ if (isset($_POST['UpdateDatabase'])) {
 							'" . $_SESSION['Alloc']->AllocTrans . "',
 							'" . $AllocnItem->ID . "'
 						)";
-				if( !$Result = DB_query($SQL,$db) ) {
+				if( !$Result = DB_query($SQL) ) {
 					$Error = _('Could not change allocation record');
 				}
 			}
@@ -120,7 +120,7 @@ if (isset($_POST['UpdateDatabase'])) {
 					alloc = '" . $NewAllocTotal . "',
 					settled = '" . $Settled . "'
 					WHERE id = '" . $AllocnItem->ID."'";
-			if( !$Result = DB_query($SQL,$db) ) {
+			if( !$Result = DB_query($SQL) ) {
 				$Error = _('Could not update difference on exchange');
 			}
 		}
@@ -136,7 +136,7 @@ if (isset($_POST['UpdateDatabase'])) {
 				settled='" . $Settled . "'
 				WHERE id = '" . $_POST['AllocTrans']."'";
 
-		if( !$Result = DB_query($SQL,$db) ) {
+		if( !$Result = DB_query($SQL) ) {
 			$Error = _('Could not update receipt or credit note');
 		}
 
@@ -165,7 +165,7 @@ if (isset($_POST['UpdateDatabase'])) {
 								'',
 								'" . $MovtInDiffOnExch . "'
 							)";
-				if( !$Result = DB_query($SQL,$db) ) {
+				if( !$Result = DB_query($SQL) ) {
 					$Error = _('Could not update exchange difference in General Ledger');
 				}
 
@@ -186,7 +186,7 @@ if (isset($_POST['UpdateDatabase'])) {
 							'',
 							'" . -$MovtInDiffOnExch . "'
 						)";
-				if( !$Result = DB_query($SQL,$db) ) {
+				if( !$Result = DB_query($SQL) ) {
 					$Error = _('Could not update debtors control in General Ledger');
 				}
 			}
@@ -197,9 +197,9 @@ if (isset($_POST['UpdateDatabase'])) {
 		//========[ COMMIT TRANSACTION ]===========
 		//
 		if (empty($Error) ) {
-				$Result = DB_Txn_Commit($db);
+				$Result = DB_Txn_Commit();
 		} else {
-				$Result = DB_Txn_Rollback($db);
+				$Result = DB_Txn_Rollback();
 				prnMsg($Error,'error');
 		}
 		unset($_SESSION['Alloc']);
@@ -240,7 +240,7 @@ if (isset($_GET['AllocTrans'])) {
 		$SQL .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 	}
 
-	$Result = DB_query($SQL,$db);
+	$Result = DB_query($SQL);
 	$myrow = DB_fetch_array($Result);
 
 	$_SESSION['Alloc']->AllocTrans	= $_POST['AllocTrans'];
@@ -275,7 +275,7 @@ if (isset($_GET['AllocTrans'])) {
 
 	$SQL .= " ORDER BY debtortrans.trandate";
 
-	$Result = DB_query($SQL,$db);
+	$Result = DB_query($SQL);
 
 	while ($myrow=DB_fetch_array($Result)) {
 		$_SESSION['Alloc']->add_to_AllocsAllocn ($myrow['id'],
@@ -316,7 +316,7 @@ if (isset($_GET['AllocTrans'])) {
 
 	$SQL .= " ORDER BY debtortrans.trandate";
 
-	$Result=DB_query($SQL,$db);
+	$Result=DB_query($SQL);
 
 	while ($myrow=DB_fetch_array($Result)) {
 		$DiffOnExchThisOne = ($myrow['amt']/$myrow['rate']) - ($myrow['amt']/$_SESSION['Alloc']->TransExRate);
@@ -486,7 +486,7 @@ if (isset($_POST['AllocTrans'])) {
 
 	$SQL .= " ORDER BY debtortrans.id";
 
-	$result = DB_query($SQL,$db);
+	$result = DB_query($SQL);
 
 	if (DB_num_rows($result)==0) {
 		prnMsg(_('No outstanding receipts or credits to be allocated for this customer'),'info');
@@ -550,7 +550,7 @@ if (isset($_POST['AllocTrans'])) {
 
 	$SQL .= " ORDER BY debtorsmaster.name";
 
-	$result = DB_query($SQL,$db);
+	$result = DB_query($SQL);
 	$NoOfUnallocatedTrans = DB_num_rows($result);
 	$CurrentTransaction = 1;
 	$CurrentDebtor = '';
@@ -578,7 +578,7 @@ if (isset($_POST['AllocTrans'])) {
 						FROM debtortrans
 						WHERE (type=12 OR type=11)
 						AND debtorno='" . $myrow['debtorno'] . "'";
-			$BalResult = DB_query($BalSQL,$db);
+			$BalResult = DB_query($BalSQL);
 			$BalRow = DB_fetch_array($BalResult);
 			$Balance = $BalRow['total'];
 		}

@@ -18,7 +18,7 @@ $result = DB_query("SELECT periods.lastdate_in_period,
 					ON fixedassettrans.periodno=periods.periodno
 					WHERE transtype=44
 					GROUP BY periods.lastdate_in_period
-					ORDER BY periods.lastdate_in_period DESC",$db);
+					ORDER BY periods.lastdate_in_period DESC");
 
 $LastDepnRun = DB_fetch_row($result);
 
@@ -72,7 +72,7 @@ $sql="SELECT fixedassets.assetid,
 			fixedassetcategories.categorydescription
 		ORDER BY assetcategoryid, assetid";
 
-$AssetsResult=DB_query($sql, $db);
+$AssetsResult=DB_query($sql);
 
 $InputError = false; //always hope for the best
 if (Date1GreaterThanDate2($_POST['ProcessDate'],Date($_SESSION['DefaultDateFormat']))){
@@ -80,7 +80,7 @@ if (Date1GreaterThanDate2($_POST['ProcessDate'],Date($_SESSION['DefaultDateForma
 	$InputError =true;
 }
 if (isset($_POST['CommitDepreciation']) AND $InputError==false){
-	$result = DB_Txn_Begin($db);
+	$result = DB_Txn_Begin();
 	$TransNo = GetNextTransNo(44, $db);
 	$PeriodNo = GetPeriod($_POST['ProcessDate'],$db);
 }
@@ -197,7 +197,7 @@ while ($AssetRow=DB_fetch_array($AssetsResult)) {
 
 		$ErrMsg = _('Cannot insert a depreciation GL entry for the depreciation because');
 		$DbgMsg = _('The SQL that failed to insert the GL Trans record was');
-		$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 		$SQL = "INSERT INTO gltrans (type,
 									typeno,
@@ -213,7 +213,7 @@ while ($AssetRow=DB_fetch_array($AssetsResult)) {
 								'" . $AssetRow['accumdepnact'] . "',
 								'" . _('Monthly depreciation for asset') . ' ' . $AssetRow['assetid'] . "',
 								'" . -$NewDepreciation ."')";
-		$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 		//insert the fixedassettrans record
 		$SQL = "INSERT INTO fixedassettrans (assetid,
@@ -234,14 +234,14 @@ while ($AssetRow=DB_fetch_array($AssetsResult)) {
 											'" . $NewDepreciation . "')";
 		$ErrMsg = _('Cannot insert a fixed asset transaction entry for the depreciation because');
 		$DbgMsg = _('The SQL that failed to insert the fixed asset transaction record was');
-		$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 		/*now update the accum depn in fixedassets */
 		$SQL = "UPDATE fixedassets SET accumdepn = accumdepn + " . $NewDepreciation  . "
 				WHERE assetid = '" . $AssetRow['assetid'] . "'";
 		$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE. The fixed asset accumulated depreciation could not be updated:');
 		$DbgMsg = _('The following SQL was used to attempt the update the accumulated depreciation of the asset was:');
-		$Result = DB_query($SQL,$db,$ErrMsg, $DbgMsg, true);
+		$Result = DB_query($SQL,$ErrMsg, $DbgMsg, true);
 	} //end if Committing the depreciation to DB
 } //end loop around the assets to calculate depreciation for
 echo '<tr>
@@ -266,7 +266,7 @@ echo '</table>
 		<br />';
 
 if (isset($_POST['CommitDepreciation']) AND $InputError==false){
-	$result = DB_Txn_Commit($db);
+	$result = DB_Txn_Commit();
 	prnMsg(_('Depreciation') . ' ' . $TransNo . ' ' . _('has been successfully entered'),'success');
 	unset($_POST['ProcessDate']);
 	echo '<br /><a href="index.php">' ._('Return to main menu') . '</a>';

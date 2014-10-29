@@ -1,5 +1,5 @@
 <?php
-/* $Id: Z_ImportStocks.php 6738 2014-05-31 00:35:26Z rchacon $*/
+/* $Id: Z_ImportStocks.php 6945 2014-10-27 07:20:48Z daintree $*/
 
 include('includes/session.inc');
 $Title = _('Import Items');
@@ -72,7 +72,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 	}
 
 	//start database transaction
-	DB_Txn_Begin($db);
+	DB_Txn_Begin();
 
 	//loop through file rows
 	$row = 1;
@@ -95,7 +95,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 
 		//first off check if the item already exists
 		$sql = "SELECT COUNT(stockid) FROM stockmaster WHERE stockid='".$StockID."'";
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 		$testrow = DB_fetch_row($result);
 		if ($testrow[0] != 0) {
 			$InputError = 1;
@@ -229,9 +229,9 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 
 			$ErrMsg =  _('The item could not be added because');
 			$DbgMsg = _('The SQL that was used to add the item failed was');
-			$result = DB_query($sql,$db, $ErrMsg, $DbgMsg);
+			$result = DB_query($sql, $ErrMsg, $DbgMsg);
 
-			if (DB_error_no($db) ==0) { //the insert of the new code worked so bang in the stock location records too
+			if (DB_error_no() ==0) { //the insert of the new code worked so bang in the stock location records too
 
 				$sql = "INSERT INTO locstock (loccode,
 												stockid)
@@ -241,9 +241,9 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 
 				$ErrMsg =  _('The locations for the item') . ' ' . $StockID .  ' ' . _('could not be added because');
 				$DbgMsg = _('NB Locations records can be added by opening the utility page') . ' <i>Z_MakeStockLocns.php</i> ' . _('The SQL that was used to add the location records that failed was');
-				$InsResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+				$InsResult = DB_query($sql,$ErrMsg,$DbgMsg);
 
-				if (DB_error_no($db) ==0) {
+				if (DB_error_no() ==0) {
 					prnMsg( _('New Item') .' ' . $StockID  . ' '. _('has been added to the transaction'),'info');
 				} else { //location insert failed so set some useful error info
 					$InputError = 1;
@@ -267,9 +267,9 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 
 	if ($InputError == 1) { //exited loop with errors so rollback
 		prnMsg(_('Failed on row '. $row. '. Batch import has been rolled back.'),'error');
-		DB_Txn_Rollback($db);
+		DB_Txn_Rollback();
 	} else { //all good so commit data transaction
-		DB_Txn_Commit($db);
+		DB_Txn_Commit();
 		prnMsg( _('Batch Import of') .' ' . $FileName  . ' '. _('has been completed. All transactions committed to the database.'),'success');
 	}
 

@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: geo_displaymap_suppliers.php 6592 2014-03-02 08:41:40Z daintree $*/
+/* $Id: geo_displaymap_suppliers.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 $Title = _('Geocoded Supplier Report');
 
@@ -10,7 +10,7 @@ include('includes/SQL_CommonFunctions.inc');
 
 $sql="SELECT * FROM geocode_param WHERE 1";
 $ErrMsg = _('An error occurred in retrieving the currency information');
-$result = DB_query($sql, $db, $ErrMsg);
+$result = DB_query($sql, $ErrMsg);
 $myrow = DB_fetch_array($result);
 
 $Api_Key = $myrow['geocode_key'];

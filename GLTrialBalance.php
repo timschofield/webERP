@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: GLTrialBalance.php 6592 2014-03-02 08:41:40Z daintree $*/
+/* $Id: GLTrialBalance.php 6944 2014-10-27 07:15:34Z daintree $*/
 
 /*Through deviousness AND cunning, this system allows trial balances for any date range that recalcuates the p & l balances
 and shows the balance sheets as at the end of the period selected - so first off need to show the input of criteria screen
@@ -58,7 +58,7 @@ if ((! isset($_POST['FromPeriod'])
 				FROM periods
 				WHERE lastdate_in_period < '" . $NextYear . "'
 				ORDER BY periodno DESC";
-	$Periods = DB_query($sql,$db);
+	$Periods = DB_query($sql);
 
 
 	while ($myrow=DB_fetch_array($Periods,$db)){
@@ -128,7 +128,7 @@ if ((! isset($_POST['FromPeriod'])
 	$sql = "SELECT lastdate_in_period
 			FROM periods
 			WHERE periodno='" . $_POST['ToPeriod'] . "'";
-	$PrdResult = DB_query($sql, $db);
+	$PrdResult = DB_query($sql);
 	$myrow = DB_fetch_row($PrdResult);
 	$PeriodToDate = MonthAndYearFromSQLDate($myrow[0]);
 
@@ -158,13 +158,13 @@ if ((! isset($_POST['FromPeriod'])
 			accountgroups.groupname,
 			chartdetails.accountcode";
 
-	$AccountsResult = DB_query($SQL,$db);
-	if (DB_error_no($db) !=0) {
+	$AccountsResult = DB_query($SQL);
+	if (DB_error_no() !=0) {
 		$Title = _('Trial Balance') . ' - ' . _('Problem Report') . '....';
 		$ViewTopic = 'GeneralLedger';
 		$BookMark = 'TrialBalance';
 		include('includes/header.inc');
-		prnMsg( _('No general ledger accounts were returned by the SQL because') . ' - ' . DB_error_msg($db) );
+		prnMsg( _('No general ledger accounts were returned by the SQL because') . ' - ' . DB_error_msg() );
 		echo '<br /><a href="' .$RootPath .'/index.php">' .  _('Back to the menu'). '</a>';
 		if ($debug==1){
 			echo '<br />' .  $SQL;
@@ -402,7 +402,7 @@ if ((! isset($_POST['FromPeriod'])
 	$sql = "SELECT lastdate_in_period
 			FROM periods
 			WHERE periodno='" . $_POST['ToPeriod'] . "'";
-	$PrdResult = DB_query($sql, $db);
+	$PrdResult = DB_query($sql);
 	$myrow = DB_fetch_row($PrdResult);
 	$PeriodToDate = MonthAndYearFromSQLDate($myrow[0]);
 
@@ -433,10 +433,7 @@ if ((! isset($_POST['FromPeriod'])
 			chartdetails.accountcode";
 
 
-	$AccountsResult = DB_query($SQL,
-				$db,
-				 _('No general ledger accounts were returned by the SQL because'),
-				 _('The SQL that failed was:'));
+	$AccountsResult = DB_query($SQL, _('No general ledger accounts were returned by the SQL because'), _('The SQL that failed was:'));
 
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' .
 		_('Trial Balance') . '" alt="" />' . ' ' . _('Trial Balance Report') . '</p>';

@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: ExchangeRateTrend.php 6592 2014-03-02 08:41:40Z daintree $*/
+/* $Id: ExchangeRateTrend.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 include('includes/session.inc');
 $Title = _('View Currency Trends');
@@ -26,7 +26,7 @@ if ( isset($_GET['CurrencyToShow']) ){
 	echo '<table>'; // First column
 
 	$SQL = "SELECT currabrev FROM currencies";
-	$result=DB_query($SQL,$db);
+	$result=DB_query($SQL);
 	include('includes/CurrenciesArray.php'); // To get the currency name from the currency code.
 
 	// CurrencyToShow Currency Picker

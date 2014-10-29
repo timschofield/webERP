@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: PeriodsInquiry.php 5785 2012-12-29 04:47:42Z daintree $*/
+/* $Id: PeriodsInquiry.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 include ('includes/session.inc');
 
@@ -14,7 +14,7 @@ $SQL = "SELECT periodno ,
 		ORDER BY periodno";
 
 $ErrMsg =  _('No periods were returned by the SQL because');
-$PeriodsResult = DB_query($SQL,$db,$ErrMsg);
+$PeriodsResult = DB_query($SQL,$ErrMsg);
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' '
 		. $Title . '</p>';

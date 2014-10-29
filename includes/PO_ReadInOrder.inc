@@ -1,5 +1,5 @@
 <?php
-/* $Id: PO_ReadInOrder.inc 6805 2014-08-08 16:12:36Z agaluski $*/
+/* $Id: PO_ReadInOrder.inc 6941 2014-10-26 23:18:08Z daintree $*/
 /*PO_ReadInOrder.inc is used by the modify existing order code in PO_Header.php and also by GoodsReceived.php */
 
 	if (isset($_SESSION['PO'.$identifier])){
@@ -60,7 +60,7 @@
 
 	   $ErrMsg =  _('The order cannot be retrieved because');
 	   $DbgMsg =  _('The SQL statement that was used and failed was');
-	   $GetOrdHdrResult = DB_query($OrderHeaderSQL,$db,$ErrMsg,$DbgMsg);
+	   $GetOrdHdrResult = DB_query($OrderHeaderSQL,$ErrMsg,$DbgMsg);
 
 	if (DB_num_rows($GetOrdHdrResult)==1 and !isset($_SESSION['PO'.$identifier]->OrderNo )) {
 
@@ -118,7 +118,7 @@
 							ORDER BY suppliers.supplierid";
 
 			$ErrMsg = _('The searched supplier records requested cannot be retrieved because');
-			$result_SuppSelect = DB_query($SupplierSQL,$db,$ErrMsg);
+			$result_SuppSelect = DB_query($SupplierSQL,$ErrMsg);
 
 			if (DB_num_rows($result_SuppSelect)==1){
 				$myrow=DB_fetch_array($result_SuppSelect);
@@ -165,7 +165,7 @@
 
 			$ErrMsg =  _('The lines on the purchase order cannot be retrieved because');
 			$DbgMsg =  _('The SQL statement that was used to retrieve the purchase order lines was');
-			$LineItemsResult = DB_query($LineItemsSQL,$db,$ErrMsg,$DbgMsg);
+			$LineItemsResult = DB_query($LineItemsSQL,$ErrMsg,$DbgMsg);
 
 		  if (DB_num_rows($LineItemsResult) > 0) {
 

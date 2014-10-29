@@ -1,5 +1,5 @@
 <?php
-/* $Id: Z_Upgrade_3.05-3.06.php 5784 2012-12-29 04:00:43Z daintree $*/
+/* $Id: Z_Upgrade_3.05-3.06.php 6941 2014-10-26 23:18:08Z daintree $*/
 //$PageSecurity = 15;
 include('includes/session.inc');
 $Title = _('Upgrade webERP 3.06 - 3.07');
@@ -43,7 +43,7 @@ if ($_POST['DoUpgrade'] == _('Perform Upgrade')){
 			}
 			if (mb_strpos($SQLScriptFile[$i],';')>0 AND ! $InAFunction){
 				$SQL = mb_substr($SQL,0,mb_strlen($SQL)-1);
-				$result = DB_query($SQL, $db, $ErrMsg);
+				$result = DB_query($SQL, $ErrMsg);
 				$SQL='';
 			}
 

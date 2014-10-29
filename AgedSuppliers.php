@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: AgedSuppliers.php 6310 2013-08-29 10:42:50Z daintree $*/
+/* $Id: AgedSuppliers.php 6944 2014-10-27 07:15:34Z daintree $*/
 
 include('includes/session.inc');
 
@@ -102,12 +102,12 @@ if (isset($_POST['PrintPDF'])
 
 	}
 
-	$SupplierResult = DB_query($SQL,$db,'','',False,False); /*dont trap errors */
+	$SupplierResult = DB_query($SQL,'','',False,False); /*dont trap errors */
 
-	if (DB_error_no($db) !=0) {
+	if (DB_error_no() !=0) {
 		$Title = _('Aged Supplier Account Analysis') . ' - ' . _('Problem Report') ;
 		include('includes/header.inc');
-		prnMsg(_('The Supplier details could not be retrieved by the SQL because') .  ' ' . DB_error_msg($db),'error');
+		prnMsg(_('The Supplier details could not be retrieved by the SQL because') .  ' ' . DB_error_msg(),'error');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		if ($debug==1){
 			echo '<br />' . $SQL;
@@ -190,11 +190,11 @@ if (isset($_POST['PrintPDF'])
 							AND supptrans.settled = 0
 							AND supptrans.supplierno = '" . $AgedAnalysis["supplierid"] . "'";
 
-			$DetailResult = DB_query($sql,$db,'','',False,False); /*dont trap errors - trapped below*/
-			if (DB_error_no($db) !=0) {
+			$DetailResult = DB_query($sql,'','',False,False); /*dont trap errors - trapped below*/
+			if (DB_error_no() !=0) {
 			$Title = _('Aged Supplier Account Analysis - Problem Report');
 			include('includes/header.inc');
-			prnMsg(_('The details of outstanding transactions for Supplier') . ' - ' . $AgedAnalysis['supplierid'] . ' ' . _('could not be retrieved because') . ' - ' . DB_error_msg($db),'error');
+			prnMsg(_('The details of outstanding transactions for Supplier') . ' - ' . $AgedAnalysis['supplierid'] . ' ' . _('could not be retrieved because') . ' - ' . DB_error_msg(),'error');
 			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 			if ($debug==1){
 			   echo '<br />' . _('The SQL that failed was') . '<br />' . $sql;
@@ -303,7 +303,7 @@ if (isset($_POST['PrintPDF'])
 				<td><select tabindex="4" name="Currency">';
 
 		$sql = "SELECT currency, currabrev FROM currencies";
-		$result=DB_query($sql,$db);
+		$result=DB_query($sql);
 
 		while ($myrow=DB_fetch_array($result)){
 			if ($myrow['currabrev'] == $_SESSION['CompanyRecord']['currencydefault']){

@@ -1,4 +1,6 @@
 <?php
+/* $Id: index.php 6941 2014-10-26 23:18:08Z daintree $*/
+
 $PageSecurity=0;
 
 include('includes/session.inc');
@@ -189,7 +191,7 @@ be generated, one for standard reports and the other for custom reports.
 			FROM reports
 			ORDER BY groupname,
 					reportname";
-	$Result=DB_query($sql,$db,'','',false,true);
+	$Result=DB_query($sql,'','',false,true);
 	$ReportList = '';
 	while ($Temp = DB_fetch_array($Result)) $ReportList[] = $Temp;
 

@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: PDFStockTransfer.php 6812 2014-08-13 18:14:57Z agaluski $*/
+/* $Id: PDFStockTransfer.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 /* This script is superseded by the PDFStockLocTransfer.php which produces a multiple item stock transfer listing - this was for the old individual stock transfers where there is just single items being transferred */
 
@@ -86,7 +86,7 @@ $sql="SELECT stockmoves.stockid,
 		AND qty < 0
 		AND type=16";
 
-$result=DB_query($sql, $db);
+$result=DB_query($sql);
 if (DB_num_rows($result) == 0){
 	$Title = _('Print Stock Transfer - Error');
 	include ('includes/header.inc');
@@ -118,7 +118,7 @@ while ($myrow=DB_fetch_array($result)) {
 
 	$SQL = "SELECT stockmaster.controlled
 			FROM stockmaster WHERE stockid ='" . $StockID . "'";
-	$CheckControlledResult = DB_query($SQL,$db,'<br />' . _('Could not determine if the item was controlled or not because') . ' ');
+	$CheckControlledResult = DB_query($SQL,'<br />' . _('Could not determine if the item was controlled or not because') . ' ');
 	$ControlledRow = DB_fetch_row($CheckControlledResult);
 	
 	if ($ControlledRow[0]==1) { /*Then its a controlled item */
@@ -130,7 +130,7 @@ while ($myrow=DB_fetch_array($result)) {
 				AND stockmoves.type =16
 				AND qty > 0
 				AND stockmoves.transno='" .$_GET['TransferNo']. "'";
-		$GetStockMoveResult = DB_query($SQL,$db,_('Could not retrieve the stock movement reference number which is required in order to retrieve details of the serial items that came in with this GRN'));
+		$GetStockMoveResult = DB_query($SQL,_('Could not retrieve the stock movement reference number which is required in order to retrieve details of the serial items that came in with this GRN'));
 		while ($SerialStockMoves = DB_fetch_array($GetStockMoveResult)){
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+40,$YPos-10,300-$Left_Margin,$FontSize, _('Lot/Serial:'));
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+75,$YPos-10,300-$Left_Margin,$FontSize, $SerialStockMoves['serialno']);

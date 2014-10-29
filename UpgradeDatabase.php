@@ -191,7 +191,7 @@ if (isset($_POST['DoUpgrade'])){
 		prnMsg(_('Only mysql upgrades are performed seamlessly at this time. Your database will need to be manually updated'),'info');
 	}
 
-	$result = DB_IgnoreForeignKeys($db);
+	$result = DB_IgnoreForeignKeys();
 
 	foreach ($SQLScripts AS $SQLScriptFile) {
 
@@ -226,9 +226,9 @@ if (isset($_POST['DoUpgrade'])){
 				}
 				if (mb_strpos($SQLEntries[$i],';')>0 AND ! $InAFunction){
 					$sql = mb_substr($sql,0,mb_strlen($sql)-1);
-					$result = DB_query($sql, $db, '','', false, false);
+					$result = DB_query($sql, '','', false, false);
 					echo '<tr><td>' . $sql . '</td>';
-					switch (DB_error_no($db)) {
+					switch (DB_error_no()) {
 						case 0:
 							echo '<td style="background-color:green">' . _('Success') . '</td></tr>';
 							break;
@@ -251,7 +251,7 @@ if (isset($_POST['DoUpgrade'])){
 							echo '<td style="background-color:yellow">' . _('Note').' - '. _('Entry has already been done') . '</td></tr>';
 							break;
 						case 1064:
-							echo '<td style="background-color:red">' . _('Note').' - '.  _('SQL syntax error. The SQL error message is'). ' ' . DB_error_msg($db) . '</td></tr>';
+							echo '<td style="background-color:red">' . _('Note').' - '.  _('SQL syntax error. The SQL error message is'). ' ' . DB_error_msg() . '</td></tr>';
 							break;
 						case 1068:
 							echo '<td style="background-color:yellow">' . _('Note').' - '. _('Primary key already exists') . '</td></tr>';
@@ -260,7 +260,7 @@ if (isset($_POST['DoUpgrade'])){
 							echo '<td style="background-color:yellow">' . _('Note').' - '. _('Index already dropped previously') . '</td></tr>';
 							break;
 						default:
-							echo '<td style="background-color:red">' . _('Failure').' - '. 	_('Error number').' - '.DB_error_no($db) .' ' . DB_error_msg($db) . '</td></tr>';
+							echo '<td style="background-color:red">' . _('Failure').' - '. 	_('Error number').' - '.DB_error_no() .' ' . DB_error_msg() . '</td></tr>';
 							break;
 					}
 					$sql='';
@@ -269,7 +269,7 @@ if (isset($_POST['DoUpgrade'])){
 		} //end of for loop around the lines of the sql script
 	echo '</table>';
 	} //end of loop around SQLScripts  apply
-	$result =DB_ReinstateForeignKeys($db);
+	$result =DB_ReinstateForeignKeys();
 	/*Now get the modified VersionNumber and script pagesecurities */
 	$ForceConfigReload=true;
 	include('includes/GetConfig.php');

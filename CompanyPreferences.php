@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: CompanyPreferences.php 6494 2013-12-11 20:33:46Z rchacon $*/
+/* $Id: CompanyPreferences.php 6942 2014-10-27 02:48:29Z daintree $*/
 
 include('includes/session.inc');
 
@@ -71,21 +71,21 @@ if (isset($_POST['submit'])) {
 								WHERE coycode=1";
 
 			$ErrMsg =  _('The company preferences could not be updated because');
-			$result = DB_query($sql,$db,$ErrMsg);
+			$result = DB_query($sql,$ErrMsg);
 			prnMsg( _('Company preferences updated'),'success');
 
 			/* Alter the exchange rates in the currencies table */
 
 			/* Get default currency rate */
 			$sql="SELECT rate from currencies WHERE currabrev='" . $_POST['CurrencyDefault'] . "'";
-			$result = DB_query($sql,$db);
+			$result = DB_query($sql);
 			$myrow = DB_fetch_row($result);
 			$NewCurrencyRate=$myrow[0];
 
 			/* Set new rates */
 			$sql="UPDATE currencies SET rate=rate/" . $NewCurrencyRate;
 			$ErrMsg =  _('Could not update the currency rates');
-			$result = DB_query($sql,$db,$ErrMsg);
+			$result = DB_query($sql,$ErrMsg);
 
 			/* End of update currencies */
 
@@ -137,7 +137,7 @@ if ($InputError != 1) {
 				WHERE coycode=1";
 
 	$ErrMsg =  _('The company preferences could not be retrieved because');
-	$result = DB_query($sql, $db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 
 
 	$myrow = DB_fetch_array($result);
@@ -230,7 +230,7 @@ echo '<tr>
 	</tr>';
 
 
-$result=DB_query("SELECT currabrev, currency FROM currencies",$db);
+$result=DB_query("SELECT currabrev, currency FROM currencies");
 include('includes/CurrenciesArray.php'); // To get the currency name from the currency code.
 
 echo '<tr>
@@ -255,8 +255,7 @@ $result=DB_query("SELECT accountcode,
 					FROM chartmaster INNER JOIN accountgroups
 					ON chartmaster.group_=accountgroups.groupname
 					WHERE accountgroups.pandl=0
-					ORDER BY chartmaster.accountcode",
-				$db);
+					ORDER BY chartmaster.accountcode");
 
 echo '<tr>
 		<td>' . _('Debtors Control GL Account') . ':</td>
@@ -351,8 +350,7 @@ $result=DB_query("SELECT accountcode,
 					FROM chartmaster INNER JOIN accountgroups
 					ON chartmaster.group_=accountgroups.groupname
 					WHERE accountgroups.pandl=1
-					ORDER BY chartmaster.accountcode",
-				$db);
+					ORDER BY chartmaster.accountcode");
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($_POST['FreightAct']==$myrow[0]){

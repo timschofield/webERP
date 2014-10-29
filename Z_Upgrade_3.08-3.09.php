@@ -1,5 +1,5 @@
 <?php
-/* $Id: Z_Upgrade_3.08-3.09.php 5784 2012-12-29 04:00:43Z daintree $*/
+/* $Id: Z_Upgrade_3.08-3.09.php 6941 2014-10-26 23:18:08Z daintree $*/
 //$PageSecurity = 15;
 include('includes/session.inc');
 $Title = _('Upgrade webERP 3.08 - 3.09');
@@ -43,7 +43,7 @@ if ($_POST['DoUpgrade'] == _('Perform Upgrade')){
 			}
 			if (mb_strpos($SQLScriptFile[$i],';')>0 AND ! $InAFunction){
 				$SQL = mb_substr($SQL,0,mb_strlen($SQL)-1);
-				$result = DB_query($SQL, $db, $ErrMsg);
+				$result = DB_query($SQL, $ErrMsg);
 				$SQL='';
 			}
 
@@ -51,7 +51,7 @@ if ($_POST['DoUpgrade'] == _('Perform Upgrade')){
 	} //end of for loop around the lines of the sql script
 
 	/*Now run the data conversions required. */
-	$result = DB_query("UPDATE bankaccounts SET currcode='" . $_SESSION['CompanyRecord']['currencydefault'] . "'",$db);
+	$result = DB_query("UPDATE bankaccounts SET currcode='" . $_SESSION['CompanyRecord']['currencydefault'] . "'");
 
 } /*Dont do upgrade */
 

@@ -27,7 +27,7 @@ if (isset($_POST['StockSearch'])) {
 				categorydescription
 			FROM stockcategory
 			ORDER BY categorydescription";
-	$result1 = DB_query($SQL, $db);
+	$result1 = DB_query($SQL);
 	while ($myrow1 = DB_fetch_array($result1)) {
 		if ($myrow1['categoryid'] == $_POST['StockCat']) {
 			echo '<option selected="True" value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
@@ -212,7 +212,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 	}
 	$ErrMsg = _('No stock items were returned by the SQL because');
 	$DbgMsg = _('The SQL that returned an error was');
-	$searchresult = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
+	$searchresult = DB_query($SQL, $ErrMsg, $DbgMsg);
 	if (DB_num_rows($searchresult) == 0) {
 		prnMsg(_('No stock items were returned by this search please re-enter alternative criteria to try again'), 'info');
 	}
@@ -316,7 +316,7 @@ foreach ($_POST as $key=>$value) {
 			$Preferred=1;
 			$PreferredSQL="UPDATE purchdata SET preferred=0
 									WHERE stockid='" . $StockID . "'";
-			$PreferredResult=DB_query($PreferredSQL, $db);
+			$PreferredResult=DB_query($PreferredSQL);
 		} else {
 			$Preferred=0;
 		}
@@ -334,7 +334,7 @@ foreach ($_POST as $key=>$value) {
 									minorderqty='" . $MinOrderQty . "'
 								WHERE supplierno='" . $_POST['SupplierID'] . "'
 								AND stockid='" . $StockID . "'";
-		$result=DB_query($sql, $db);
+		$result=DB_query($sql);
 	}
 	if (mb_substr($key,0,6)=='Insert') {
 		if (isset($_POST['Preferred0'])) {
@@ -366,7 +366,7 @@ foreach ($_POST as $key=>$value) {
 									'" . $_POST['SupplierPartNo0'] . "',
 									'" . $_POST['MinOrderQty0'] . "'
 								)";
-		$result=DB_query($sql, $db);
+		$result=DB_query($sql);
 	}
 }
 
@@ -380,7 +380,7 @@ if (isset($SupplierID) AND $SupplierID != '' AND !isset($_POST['SearchSupplier']
 	$sql = "SELECT suppliers.suppname, suppliers.currcode FROM suppliers WHERE supplierid='".$SupplierID."'";
 	$ErrMsg = _('The supplier details for the selected supplier could not be retrieved because');
 	$DbgMsg = _('The SQL that failed was');
-	$SuppSelResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
+	$SuppSelResult = DB_query($sql, $ErrMsg, $DbgMsg);
 	if (DB_num_rows($SuppSelResult) == 1) {
 		$myrow = DB_fetch_array($SuppSelResult);
 		$SuppName = $myrow['suppname'];
@@ -442,7 +442,7 @@ if (isset($_POST['SearchSupplier'])) {
 	} //one of keywords or SupplierCode was more than a zero length string
 	$ErrMsg = _('The suppliers matching the criteria entered could not be retrieved because');
 	$DbgMsg = _('The SQL to retrieve supplier details that failed was');
-	$SuppliersResult = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
+	$SuppliersResult = DB_query($SQL, $ErrMsg, $DbgMsg);
 } //end of if search
 
 if (isset($SuppliersResult)) {
@@ -517,12 +517,12 @@ if (isset($_POST['SupplierID'])) {
 			WHERE supplierno='".$_POST['SupplierID']."'
 			ORDER BY purchdata.stockid, effectivefrom DESC";
 
-	$result=DB_query($SQL, $db);
+	$result=DB_query($SQL);
 
 	$UOMSQL = "SELECT unitid,
 						unitname
 					FROM unitsofmeasure";
-	$UOMResult = DB_query($UOMSQL, $db);
+	$UOMResult = DB_query($UOMSQL);
 	echo '<input type="hidden" value="' . $_POST['SupplierID'] . '" name="SupplierID" />';
 	echo '<table class="selection">';
 	echo '<tr><th colspan="8" style="text-align: left"><h3>' . _('Supplier purchasing data for') . ' ' . $_POST['SupplierID'] . '</h3></th>';
@@ -544,7 +544,7 @@ if (isset($_POST['SupplierID'])) {
 
 	if (isset($_POST['Select'])) {
 		$StockSQL="SELECT description, units FROM stockmaster WHERE stockid='" . $_POST['Select'] . "'";
-		$StockResult=DB_query($StockSQL, $db);
+		$StockResult=DB_query($StockSQL);
 		$StockRow=DB_fetch_array($StockResult);
 		echo '<tr bgcolor="#847F7F">
 				<td><input type="hidden" value="' . $_POST['Select'] . '" name="StockID0" />' . $_POST['Select'] . '</td>

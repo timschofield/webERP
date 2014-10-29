@@ -1,5 +1,5 @@
 <?php
-/* $Id: EDIconfig.inc 5768 2012-12-20 08:38:22Z daintree $*/
+/* $Id: EDIconfig.inc 6941 2014-10-26 23:18:08Z daintree $*/
 
 /*EDI configuration variables definition */
 
@@ -49,7 +49,7 @@ $sql = "SELECT section,
 	AND messagetype='" . $MessageType . "'
 	ORDER BY sequenceno";
 
-$MessageLinesResult = DB_query($sql, $db);
+$MessageLinesResult = DB_query($sql);
 
 $fp = fopen( $EDI_Pending . '/EDI_' . $MessageType . '_' . $EDITrans , 'w');
 

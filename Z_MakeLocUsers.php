@@ -20,7 +20,7 @@ $sql = "INSERT INTO locationusers (userid, loccode, canview, canupd)
         WHERE locationusers.userid IS NULL;";
 
 $ErrMsg = _('The users/locations that need user location records created cannot be retrieved because');
-$Result = DB_query($sql,$db,$ErrMsg);
+$Result = DB_query($sql,$ErrMsg);
 
 echo '<p />';
 prnMsg(_('Any users that may not have had user location records have now been given new location user records'),'info');

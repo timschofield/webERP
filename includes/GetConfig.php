@@ -1,13 +1,13 @@
 <?php
 // Systems can temporarily force a reload by setting the variable
 // $ForceConfigReload to true
-/* $Id: GetConfig.php 5785 2012-12-29 04:47:42Z daintree $*/
+/* $Id: GetConfig.php 6943 2014-10-27 07:06:42Z daintree $*/
 
 if(isset($ForceConfigReload) AND $ForceConfigReload==true OR !isset($_SESSION['CompanyDefaultsLoaded'])) {
 	global  $db;		// It is global, we may not be.
 	$sql = "SELECT confname, confvalue FROM config";
 	$ErrMsg = _('Could not get the configuration parameters from the database because');
-	$ConfigResult = DB_query($sql,$db,$ErrMsg);
+	$ConfigResult = DB_query($sql,$ErrMsg);
 	while( $myrow = DB_fetch_array($ConfigResult) ) {
 		if (is_numeric($myrow['confvalue']) AND $myrow['confname']!='DefaultPriceList' AND $myrow['confname']!='VersionNumber'){
 			//the variable name is given by $myrow[0]
@@ -27,8 +27,8 @@ if(isset($ForceConfigReload) AND $ForceConfigReload==true OR !isset($_SESSION['C
 
 	/*Load the pagesecurity settings from the database */
 	$sql="SELECT script, pagesecurity FROM scripts";
-	$result=DB_query($sql, $db,'','',false,false);
-	if (DB_error_no($db)!=0){
+	$result=DB_query($sql,'','',false,false);
+	if (DB_error_no()!=0){
 		/* the table may not exist with the pagesecurity field in it if it is an older webERP database
 		 * divert to the db upgrade if the VersionNumber is not in the config table
 		 * */
@@ -42,8 +42,8 @@ if(isset($ForceConfigReload) AND $ForceConfigReload==true OR !isset($_SESSION['C
 	/*
 	 check the decimalplaces field exists in currencies - this was added in 4.0 but is required in 4.04 as it is used everywhere as the default decimal places to show on all home currency amounts
 	*/
-	$result = DB_query("SELECT decimalplaces FROM currencies",$db,'','',false,false);
-	if (DB_error_no($db)!=0) { //then decimalplaces not already a field in currencies
+	$result = DB_query("SELECT decimalplaces FROM currencies",'','',false,false);
+	if (DB_error_no()!=0) { //then decimalplaces not already a field in currencies
 		$result = DB_query("ALTER TABLE `currencies`
 							ADD COLUMN `decimalplaces` tinyint(3) NOT NULL DEFAULT 2 AFTER `hundredsname`",$db);
 	}
@@ -79,7 +79,7 @@ if(isset($ForceConfigReload) AND $ForceConfigReload==true OR !isset($_SESSION['C
 				WHERE coycode=1";
 
 	$ErrMsg = _('An error occurred accessing the database to retrieve the company information');
-	$ReadCoyResult = DB_query($sql,$db,$ErrMsg);
+	$ReadCoyResult = DB_query($sql,$ErrMsg);
 
 	if (DB_num_rows($ReadCoyResult)==0) {
       		echo '<br /><b>';
@@ -100,8 +100,8 @@ if(isset($ForceConfigReload) AND $ForceConfigReload==true OR !isset($_SESSION['C
 				timeout,
 				auth
 			FROM emailsettings";
-	$result=DB_query($sql, $db,'','',false,false);
-	if (DB_error_no($db)==0) {
+	$result=DB_query($sql,'','',false,false);
+	if (DB_error_no()==0) {
 		/*test to ensure that the emailsettings table exists!!
 		 * if it doesn't exist then we are into an UpgradeDatabase scenario anyway
 		*/

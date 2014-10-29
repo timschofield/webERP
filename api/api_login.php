@@ -1,5 +1,5 @@
 <?php
-/* $Id: api_login.php 5991 2013-05-28 03:51:49Z tehonu $*/
+/* $Id: api_login.php 6946 2014-10-27 07:30:11Z daintree $*/
 //  Validates user and sets up $_SESSION environment for API users.
 function  LoginAPI($databasename, $user, $password) {
 	global  $PathPrefix;		// For included files
@@ -114,13 +114,13 @@ function DoSetup()
 				    ,'d')	> 	$_SESSION['DB_Maintenance']){
 
 			    /*Do the DB maintenance routing for the DB_type selected */
-			    DB_Maintenance($db);
+			    DB_Maintenance();
 			    //purge the audit trail if necessary
 			    if (isset($_SESSION['MonthsAuditTrail'])){
 				     $sql = "DELETE FROM audittrail
 						    WHERE  transactiondate <= '" . Date('Y-m-d', mktime(0,0,0, Date('m')-$_SESSION['MonthsAuditTrail'])) . "'";
 				    $ErrMsg = _('There was a problem deleting expired audit-trail history');
-				    $result = DB_query($sql,$db);
+				    $result = DB_query($sql);
 			    }
 			    $_SESSION['DB_Maintenance_LastRun'] = Date('Y-m-d');
 		    }
@@ -136,16 +136,16 @@ function DoSetup()
 
 			    $CurrencyRates = GetECBCurrencyRates(); // gets rates from ECB see includes/MiscFunctions.php
 			    /*Loop around the defined currencies and get the rate from ECB */
-			    $CurrenciesResult = DB_query('SELECT currabrev FROM currencies',$db);
+			    $CurrenciesResult = DB_query('SELECT currabrev FROM currencies');
 			    while ($CurrencyRow = DB_fetch_row($CurrenciesResult)){
 				    if ($CurrencyRow[0]!=$_SESSION['CompanyRecord']['currencydefault']){
 					    $UpdateCurrRateResult = DB_query("UPDATE currencies SET
 											    rate='" . GetCurrencyRate ($CurrencyRow[0],$CurrencyRates) . "'
-											    WHERE currabrev='" . $CurrencyRow[0] . "'",$db);
+											    WHERE currabrev='" . $CurrencyRow[0] . "'");
 				    }
 			    }
 			    $_SESSION['UpdateCurrencyRatesDaily'] = Date('Y-m-d');
-			    $UpdateConfigResult = DB_query("UPDATE config SET confvalue = '" . Date('Y-m-d') . "' WHERE confname='UpdateCurrencyRatesDaily'",$db);
+			    $UpdateConfigResult = DB_query("UPDATE config SET confvalue = '" . Date('Y-m-d') . "' WHERE confname='UpdateCurrencyRatesDaily'");
 		    }
 	    }
     }

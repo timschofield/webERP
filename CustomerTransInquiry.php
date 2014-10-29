@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: CustomerTransInquiry.php 6112 2013-07-19 10:07:00Z daintree $*/
+/* $Id: CustomerTransInquiry.php 6944 2014-10-27 07:15:34Z daintree $*/
 
 include('includes/session.inc');
 $Title = _('Customer Transactions Inquiry');
@@ -31,7 +31,7 @@ $sql = "SELECT typeid,
 		WHERE typeid >= 10
 		AND typeid <= 14";
 
-$resultTypes = DB_query($sql,$db);
+$resultTypes = DB_query($sql);
 
 echo '<option value="All">' . _('All') . '</option>';
 while ($myrow=DB_fetch_array($resultTypes)){
@@ -93,9 +93,9 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 	}
 	$sql .=  " ORDER BY id";
 
-   $ErrMsg = _('The customer transactions for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg($db);
+   $ErrMsg = _('The customer transactions for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg();
    $DbgMsg =  _('The SQL that failed was');
-   $TransResult = DB_query($sql, $db,$ErrMsg,$DbgMsg);
+   $TransResult = DB_query($sql,$ErrMsg,$DbgMsg);
 
    echo '<br />
 		<table class="selection">';
