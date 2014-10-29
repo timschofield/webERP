@@ -258,6 +258,9 @@ if (isset($_POST['submit'])) {
 		if (DB_num_rows($result)!=0) {
 			prnMsg(_('Cannot delete user as entries already exist in the audit trail'), 'warn');
 		} else {
+			$sql="DELETE FROM locationusers WHERE userid='" . $SelectedUser . "'";
+			$ErrMsg = _('The Location - User could not be deleted because');;
+			$result = DB_query($sql,$ErrMsg);
 
 			$sql="DELETE FROM www_users WHERE userid='" . $SelectedUser . "'";
 			$ErrMsg = _('The User could not be deleted because');;
