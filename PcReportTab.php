@@ -120,7 +120,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	$SqlTabs = "SELECT * FROM pctabs
 			WHERE tabcode='".$SelectedTabs."'";
 
-	$TabResult = DB_query($SqlTabs,	$db, _('No Petty Cash tabs were returned by the SQL because'), _('The SQL that failed was:'));
+	$TabResult = DB_query($SqlTabs, _('No Petty Cash tabs were returned by the SQL because'), _('The SQL that failed was:'));
 
 	$Tabs=DB_fetch_array($TabResult);
 

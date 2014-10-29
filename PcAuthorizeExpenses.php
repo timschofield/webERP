@@ -168,7 +168,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 											'',
 											'" . $TagTo ."')";
 
-			$ResultFrom = DB_Query($sqlFrom, $db, '', '', true);
+			$ResultFrom = DB_Query($sqlFrom,'', '', true);
 
 			$sqlTo="INSERT INTO `gltrans` (`counterindex`,
 										`type`,
@@ -195,7 +195,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 										'',
 										'" . $TagTo ."')";
 
-			$ResultTo = DB_Query($sqlTo, $db, '', '', true);
+			$ResultTo = DB_query($sqlTo,'', '', true);
 
 			if ($myrow['codeexpense'] == 'ASSIGNCASH'){
 			// if it's a cash assignation we need to updated banktrans table as well.
