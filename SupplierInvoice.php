@@ -319,7 +319,7 @@ if (isset($_GET['ReceivePO']) AND $_GET['ReceivePO']!=''){
 															FROM fixedassets
 															INNER JOIN fixedassetcategories
 															ON fixedassets.assetcategoryid=fixedassetcategories.categoryid
-															WHERE assetid='" . $OrderLine->AssetID . "'";
+															WHERE assetid='" . $OrderLine->AssetID . "'");
 						if (DB_num_rows($CheckAssetExistsResult)==1){ //then work with the assetid provided
 
 							/*Need to add a fixedassettrans for the cost of the asset being received */
