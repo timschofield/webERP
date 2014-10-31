@@ -1,5 +1,12 @@
 <?php
-
+/*****************************************************************************************
+KL RICARD MODIFICATIONS:
+- Deleted the Default page size parameters, as it messed up with Print Label functions, 
+needing to set up their own page sizes.
+- Commited also to SVN Commit 6955. 
+- Commited as KL file in case Phil rolls back my commit.
+- This KL file mod should be reversed if Phil accepts the commit long time. 
+*****************************************************************************************/
 /* $Id: PDFStarter.php 6806 2014-08-09 04:37:02Z daintree $ */
 
 /*	-------------------------------------------------------------------------------------
@@ -173,15 +180,7 @@ switch ($PaperSize) {
 		break;
 
 	default:
-		$DocumentPaper = 'LETTER';
 		$DocumentOrientation ='L';
-
-		$Page_Width = 792; // 72 * 11 inch
-		$Page_Height = 612; // 72 * 8.5 inch
-		$Top_Margin = 36; // Half inch = 72/2
-		$Bottom_Margin = 36; // Half inch = 72/2
-		$Left_Margin = 36; // Half inch = 72/2
-		$Right_Margin = 36; // Half inch = 72/2
 		break;
 }
 
