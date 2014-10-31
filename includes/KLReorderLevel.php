@@ -6,8 +6,8 @@ function DailyReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db){
 	OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db); // Updates RL for online orders
 
 	SetRLForTopSalesItems(   1, 100, 60,  60, 999999, 4, $ShowMessages, $updateDB, $RootPath, $db);
-	SetRLForTopSalesItems(   1, 100, 60,  40,     60, 3, $ShowMessages, $updateDB, $RootPath, $db);
-	SetRLForTopSalesItems(   1, 100, 60,  20,     40, 2, $ShowMessages, $updateDB, $RootPath, $db);
+	SetRLForTopSalesItems(   1, 100, 60,  45,     60, 3, $ShowMessages, $updateDB, $RootPath, $db);
+	SetRLForTopSalesItems(   1, 100, 60,  30,     45, 2, $ShowMessages, $updateDB, $RootPath, $db);
 	SetRLForTopSalesItems( 101, 250, 60,  30, 999999, 2, $ShowMessages, $updateDB, $RootPath, $db);
 
 	RebalancingBetweenShops(60, $ShowMessages, $updateDB, $RootPath, $db);
@@ -21,12 +21,13 @@ function DailyReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db){
 	AdjustNoSales("TOKMF", 180, 0, 400, 60, $ShowMessages, $updateDB, $RootPath, $db);
 	AdjustNoSales("TOKSE", 180, 0, 400, 60, $ShowMessages, $updateDB, $RootPath, $db);
 */
-	AdjustNoSales("WABOM", 270, 0, 200, 60, $ShowMessages, $updateDB, $RootPath, $db);
+	AdjustNoSales("WABOM", 180, 0, 250, 60, $ShowMessages, $updateDB, $RootPath, $db);
+	AdjustNoSales("WHAYA", 180, 0, 250, 60, $ShowMessages, $updateDB, $RootPath, $db);
+	AdjustNoSales("WHINT", 180, 0, 250, 60, $ShowMessages, $updateDB, $RootPath, $db);
 
-
-	SetRLForLowSalesHighRL( 30, 5, 4, 50, $ShowMessages, $updateDB, $RootPath, $db);
-	SetRLForLowSalesHighRL( 45, 4, 3, 40, $ShowMessages, $updateDB, $RootPath, $db);
-	SetRLForLowSalesHighRL( 60, 3, 2, 40, $ShowMessages, $updateDB, $RootPath, $db);
+	SetRLForLowSalesHighRL( 30, 5, 4, 60, $ShowMessages, $updateDB, $RootPath, $db);
+	SetRLForLowSalesHighRL( 45, 4, 3, 45, $ShowMessages, $updateDB, $RootPath, $db);
+	SetRLForLowSalesHighRL( 60, 3, 2, 30, $ShowMessages, $updateDB, $RootPath, $db);
 
 	SetRLZeroForNotAvailableItems($ShowMessages, $updateDB, $RootPath, $db);
 

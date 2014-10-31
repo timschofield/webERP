@@ -221,9 +221,9 @@ if (($_SESSION['UserID'] == "Laia")
 	OR ($_SESSION['UserID'] == "Dita")
 	OR ($_SESSION['UserID'] == "Karolin")){
 	
-	ItemsWithStockLocationButNoStockAvailable("WABOM", "WaterBom", 12, 600, $RootPath, $db);
-	ItemsWithStockLocationButNoStockAvailable("WHAYA", "Ayana", 12, 600, $RootPath, $db);
-	ItemsWithStockLocationButNoStockAvailable("WHINT", "InterContinental", 12, 600, $RootPath, $db);
+	ItemsWithStockLocationButNoStockAvailable("WABOM", "WaterBom", 15, 600, $RootPath, $db);
+	ItemsWithStockLocationButNoStockAvailable("WHAYA", "Ayana", 15, 600, $RootPath, $db);
+	ItemsWithStockLocationButNoStockAvailable("WHINT", "InterContinental", 15, 600, $RootPath, $db);
 }
 
 if (($_SESSION['UserID'] == "Laia")
@@ -256,9 +256,9 @@ if ($_SESSION['UserID'] == "Laia"){
 	GoodsJustTransferred("WHOLE", "KANTO", 2, 20, $RootPath, $db);
 	GoodsJustTransferred("WHSHE", "KANTO", 2, 20, $RootPath, $db);
 	
-	InsuficientStockForTopSalesItems("SILVER", "10-Silver",30, 100, 70, $RootPath, $db);
-	InsuficientStockForTopSalesItems("STAINL", "20-Stainless Steel", 30, 100, 70, $RootPath, $db);
-	InsuficientStockForTopSalesItems("FASHIO", "30-Fashion Jewellery", 30, 100, 70, $RootPath, $db);
+	InsuficientStockForTopSalesItems("SILVER", "10-Silver",30, 100, 60, $RootPath, $db);
+	InsuficientStockForTopSalesItems("STAINL", "20-Stainless Steel", 30, 100, 60, $RootPath, $db);
+	InsuficientStockForTopSalesItems("FASHIO", "30-Fashion Jewellery", 30, 100, 60, $RootPath, $db);
 	InsuficientStockForTopSalesItems("ACCESO", "40-Accessories", 30, 100, 60, $RootPath, $db);
 	InsuficientStockForTopSalesItems("CONSIG", "50-Consignment", 30, 100, 30, $RootPath, $db);
 
@@ -275,6 +275,7 @@ if ($_SESSION['UserID'] == "Laia"){
 	ItemsWithStockKantorButReorderLevelTokoZero($RootPath, $db);
 
 	ItemsWithStockKantorButRLZeroAt("ALL", "TOKSA", $RootPath, $db);
+	ItemsWithStockKantorButRLZeroAt("ALL", "TOKSS", $RootPath, $db);
 	ItemsWithStockKantorButRLZeroAt("ALL", "TOKMF", $RootPath, $db);
 	ItemsWithStockKantorButRLZeroAt("ALL", "TOKPU", $RootPath, $db);
 
@@ -288,7 +289,7 @@ if (($_SESSION['UserID'] == "Ike1")
 	OR ($_SESSION['UserID'] == "Laia")
 	OR ($_SESSION['UserID'] == "Cicik")){
 
-	ConsumablesGoodsNotEnoughStock(60, 30, 75, $RootPath, $db);
+	ConsumablesGoodsNotEnoughStock(50, 25, 75, $RootPath, $db);
 }
 
 if (($_SESSION['UserID'] == "Laia")
@@ -366,17 +367,17 @@ if (($_SESSION['UserID'] == "Ricard")
 ***************************************************************************************/
 if ($_SESSION['UserID'] == "Laia"){
 
-	GoodSellingItemsInCategory("TESTSI", 15, 5, $RootPath, $db);
-	GoodSellingItemsInCategory("TESTSS", 15, 5, $RootPath, $db);
-	GoodSellingItemsInCategory("TESTFJ", 15, 5, $RootPath, $db);
-	GoodSellingItemsInCategory("TESTAC", 15, 5, $RootPath, $db);
+	GoodSellingItemsInCategory("TESTSI", 15, 6, $RootPath, $db);
+	GoodSellingItemsInCategory("TESTSS", 15, 6, $RootPath, $db);
+	GoodSellingItemsInCategory("TESTFJ", 15, 6, $RootPath, $db);
+	GoodSellingItemsInCategory("TESTAC", 15, 6, $RootPath, $db);
 
-	GoodSellingItemsInCategory("NOPOSI", 15, 3, $RootPath, $db);
-	GoodSellingItemsInCategory("NOPOSS", 15, 3, $RootPath, $db);
-	GoodSellingItemsInCategory("NOPOFJ", 15, 3, $RootPath, $db);
-	GoodSellingItemsInCategory("NOPOAC", 15, 3, $RootPath, $db);
+	GoodSellingItemsInCategory("NOPOSI", 15, 4, $RootPath, $db);
+	GoodSellingItemsInCategory("NOPOSS", 15, 4, $RootPath, $db);
+	GoodSellingItemsInCategory("NOPOFJ", 15, 4, $RootPath, $db);
+	GoodSellingItemsInCategory("NOPOAC", 15, 4, $RootPath, $db);
 
-	ActiveItemsNoSales( 45, "ACTIVE", $RootPath, $db);
+	ActiveItemsNoSales( 40, "ACTIVE", $RootPath, $db);
 
 	ActiveItemsNoSales( 45, "NOPOSI", $RootPath, $db);
 	ActiveItemsNoSales( 45, "NOPOSS", $RootPath, $db);
@@ -386,61 +387,62 @@ if ($_SESSION['UserID'] == "Laia"){
 	ActiveItemsNoSales( 45, "DISCOU", $RootPath, $db);
 	ActiveItemsNoSales(365, "OUTLET", $RootPath, $db);
 
-	TopSalesNotInEnoughShops(  1, 300, 60, 9, "ACTIVE", $RootPath, $db);
-	TopSalesNotInEnoughShops(300, 350, 60, 8, "ACTIVE", $RootPath, $db);
-	TopSalesNotInEnoughShops(350, 500, 60, 7, "ACTIVE", $RootPath, $db);
+	TopSalesNotInEnoughShops(  1, 300, 60, 12, "ACTIVE", $RootPath, $db);
+	TopSalesNotInEnoughShops(300, 350, 60, 10, "ACTIVE", $RootPath, $db);
+	TopSalesNotInEnoughShops(350, 500, 60,  8, "ACTIVE", $RootPath, $db);
 //	TopSalesNotInEnoughShops(  1,  50, 60, 3, "DISCOU", $RootPath, $db);
 
-	ItemsNotTopSalesInShop(1, 400, 60, "TOK66", "ACTIVE", $RootPath, $db);
-	ItemsNotTopSalesInShop(1, 400, 60, "TOKSE", "ACTIVE", $RootPath, $db);
-	ItemsNotTopSalesInShop(1, 400, 60, "TOKOB", "ACTIVE", $RootPath, $db);
+	ItemsNotTopSalesInShop(1, 500, 60, "TOK66", "ACTIVE", $RootPath, $db);
+	ItemsNotTopSalesInShop(1, 500, 60, "TOKSE", "ACTIVE", $RootPath, $db);
+	ItemsNotTopSalesInShop(1, 500, 60, "TOKOB", "ACTIVE", $RootPath, $db);
 
-	ItemsNotTopSalesInShop(1, 400, 60, "TOKKS", "ACTIVE", $RootPath, $db);
-	ItemsNotTopSalesInShop(1, 400, 60, "TOKBW", "ACTIVE", $RootPath, $db);
+	ItemsNotTopSalesInShop(1, 500, 60, "TOKKS", "ACTIVE", $RootPath, $db);
+	ItemsNotTopSalesInShop(1, 500, 60, "TOKBW", "ACTIVE", $RootPath, $db);
 
-	ItemsNotTopSalesInShop(1, 400, 60, "TOKJC", "ACTIVE", $RootPath, $db);
+	ItemsNotTopSalesInShop(1, 500, 60, "TOKJC", "ACTIVE", $RootPath, $db);
 
-	ItemsNotTopSalesInShop(1, 400, 60, "TOKUB", "ACTIVE", $RootPath, $db);
-	ItemsNotTopSalesInShop(1, 400, 60, "TOKMF", "ACTIVE", $RootPath, $db);
-	ItemsNotTopSalesInShop(1, 400, 60, "TOKPU", "ACTIVE", $RootPath, $db);
+	ItemsNotTopSalesInShop(1, 500, 60, "TOKUB", "ACTIVE", $RootPath, $db);
+	ItemsNotTopSalesInShop(1, 500, 60, "TOKMF", "ACTIVE", $RootPath, $db);
+	ItemsNotTopSalesInShop(1, 500, 60, "TOKPU", "ACTIVE", $RootPath, $db);
 
-	ItemsNotTopSalesInShop(1, 400, 60, "TOKSA", "ACTIVE", $RootPath, $db);
-	ItemsNotTopSalesInShop(1, 400, 60, "TOKSU", "ACTIVE", $RootPath, $db);
+	ItemsNotTopSalesInShop(1, 500, 60, "TOKSA", "ACTIVE", $RootPath, $db);
+	ItemsNotTopSalesInShop(1, 500, 60, "TOKSU", "ACTIVE", $RootPath, $db);
+	ItemsNotTopSalesInShop(1, 500, 60, "TOKSS", "ACTIVE", $RootPath, $db);
 
 	PerformanceItemsInCategory("GOOD", "TESTSI", 15,  30, "VERY GOOD", $RootPath, $db);
-	PerformanceItemsInCategory("GOOD", "TESTSI", 30,  40, "GOOD", $RootPath, $db);
-	PerformanceItemsInCategory("BAD",  "TESTSI", 50,  25, "BAD", $RootPath, $db);
-	PerformanceItemsInCategory("BAD",  "TESTSI", 80, 100, "LONG TIME TESTING", $RootPath, $db);
-	PerformanceItemsInCategory("GOOD", "TESTSI", 80, 100, "TEST FINISHED", $RootPath, $db);
+	PerformanceItemsInCategory("GOOD", "TESTSI", 30,  45, "GOOD", $RootPath, $db);
+	PerformanceItemsInCategory("BAD",  "TESTSI", 50,  30, "BAD", $RootPath, $db);
+	PerformanceItemsInCategory("BAD",  "TESTSI", 75, 100, "LONG TIME TESTING", $RootPath, $db);
+	PerformanceItemsInCategory("GOOD", "TESTSI", 75, 100, "TEST FINISHED", $RootPath, $db);
 
 	PerformanceItemsInCategory("GOOD", "TESTSS", 15,  30, "VERY GOOD", $RootPath, $db);
-	PerformanceItemsInCategory("GOOD", "TESTSS", 30,  40, "GOOD", $RootPath, $db);
-	PerformanceItemsInCategory("BAD",  "TESTSS", 50,  25, "BAD", $RootPath, $db);
-	PerformanceItemsInCategory("BAD",  "TESTSS", 80, 100, "LONG TIME TESTING", $RootPath, $db);
-	PerformanceItemsInCategory("GOOD", "TESTSS", 80, 100, "TEST FINISHED", $RootPath, $db);
+	PerformanceItemsInCategory("GOOD", "TESTSS", 30,  45, "GOOD", $RootPath, $db);
+	PerformanceItemsInCategory("BAD",  "TESTSS", 50,  30, "BAD", $RootPath, $db);
+	PerformanceItemsInCategory("BAD",  "TESTSS", 75, 100, "LONG TIME TESTING", $RootPath, $db);
+	PerformanceItemsInCategory("GOOD", "TESTSS", 75, 100, "TEST FINISHED", $RootPath, $db);
 
 	PerformanceItemsInCategory("GOOD", "TESTFJ", 15,  30, "VERY GOOD", $RootPath, $db);
-	PerformanceItemsInCategory("GOOD", "TESTFJ", 30,  40, "GOOD", $RootPath, $db);
-	PerformanceItemsInCategory("BAD",  "TESTFJ", 50,  25, "BAD", $RootPath, $db);
-	PerformanceItemsInCategory("BAD",  "TESTFJ", 80, 100, "LONG TIME TESTING", $RootPath, $db);
-	PerformanceItemsInCategory("GOOD", "TESTFJ", 80, 100, "TEST FINISHED", $RootPath, $db);
+	PerformanceItemsInCategory("GOOD", "TESTFJ", 30,  45, "GOOD", $RootPath, $db);
+	PerformanceItemsInCategory("BAD",  "TESTFJ", 50,  30, "BAD", $RootPath, $db);
+	PerformanceItemsInCategory("BAD",  "TESTFJ", 75, 100, "LONG TIME TESTING", $RootPath, $db);
+	PerformanceItemsInCategory("GOOD", "TESTFJ", 75, 100, "TEST FINISHED", $RootPath, $db);
 
 	PerformanceItemsInCategory("GOOD", "TESTAC", 15,  30, "VERY GOOD", $RootPath, $db);
-	PerformanceItemsInCategory("GOOD", "TESTAC", 30,  40, "GOOD", $RootPath, $db);
-	PerformanceItemsInCategory("BAD",  "TESTAC", 50,  25, "BAD", $RootPath, $db);
-	PerformanceItemsInCategory("BAD",  "TESTAC", 80, 100, "LONG TIME TESTING", $RootPath, $db);
-	PerformanceItemsInCategory("GOOD", "TESTAC", 80, 100, "TEST FINISHED", $RootPath, $db);
+	PerformanceItemsInCategory("GOOD", "TESTAC", 30,  45, "GOOD", $RootPath, $db);
+	PerformanceItemsInCategory("BAD",  "TESTAC", 50,  30, "BAD", $RootPath, $db);
+	PerformanceItemsInCategory("BAD",  "TESTAC", 75, 100, "LONG TIME TESTING", $RootPath, $db);
+	PerformanceItemsInCategory("GOOD", "TESTAC", 75, 100, "TEST FINISHED", $RootPath, $db);
 
-	PerformanceItemsInCategory("BAD",  "NOPOSI", 80,  50, "MOVE TO DISCOUNT", $RootPath, $db);
+	PerformanceItemsInCategory("BAD",  "NOPOSI", 75,  50, "MOVE TO DISCOUNT", $RootPath, $db);
 	PerformanceItemsInCategory("BAD",  "NOPOSI",100, 100, "MOVE TO DISCOUNT", $RootPath, $db);
 
-	PerformanceItemsInCategory("BAD",  "NOPOSS", 80,  50, "MOVE TO DISCOUNT", $RootPath, $db);
+	PerformanceItemsInCategory("BAD",  "NOPOSS", 75,  50, "MOVE TO DISCOUNT", $RootPath, $db);
 	PerformanceItemsInCategory("BAD",  "NOPOSS",100, 100, "MOVE TO DISCOUNT", $RootPath, $db);
 
-	PerformanceItemsInCategory("BAD",  "NOPOFJ", 80,  50, "MOVE TO DISCOUNT", $RootPath, $db);
+	PerformanceItemsInCategory("BAD",  "NOPOFJ", 75,  50, "MOVE TO DISCOUNT", $RootPath, $db);
 	PerformanceItemsInCategory("BAD",  "NOPOFJ",100, 100, "MOVE TO DISCOUNT", $RootPath, $db);
 
-	PerformanceItemsInCategory("BAD",  "NOPOAC", 80,  50, "MOVE TO DISCOUNT", $RootPath, $db);
+	PerformanceItemsInCategory("BAD",  "NOPOAC", 75,  50, "MOVE TO DISCOUNT", $RootPath, $db);
 	PerformanceItemsInCategory("BAD",  "NOPOAC",100, 100, "MOVE TO DISCOUNT", $RootPath, $db);
 
 	PerformanceItemsInCategory("BAD",  "DISCOU",120, 100, "MOVE TO OUTLET", $RootPath, $db);
