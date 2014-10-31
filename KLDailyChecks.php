@@ -20,7 +20,7 @@ function KL_DailyChecks($Group, $RootPath, $db, $EmailText= ''){
 	if ($Group == "01"){
 		$EmailText = KL_DailyMaintenanceDatabase(FALSE, $db, $EmailText);
 	}elseif ($Group == "02"){
-		DailyReorderLevelAdjustments(FALSE, TRUE, $RootPath, $db); // Updates RL 
+		$EmailText = DailyReorderLevelAdjustments(FALSE, TRUE, $RootPath, $db, $EmailText); // Updates RL 
 	}elseif ($Group == "03"){
 		KL_DailyEmailsToStaff($db);
 	}elseif ($Group == "04"){

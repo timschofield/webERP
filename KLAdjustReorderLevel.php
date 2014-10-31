@@ -20,8 +20,9 @@ ListPriorityLocations($db);
 //$updateDB = false;
 $updateDB = true;
 $ShowMessages = true;
+$EmailText = '';
 
-DailyReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db);
+DailyReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 
 prnMsg("Performed ". NUMBER_OF_TESTS . " RL adjustement strategies",'success');
 time_finish($begintime);

@@ -1,7 +1,6 @@
 <?php
 
-
-function DailyReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db){
+function DailyReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db, $EmailText){
 
 	OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db); // Updates RL for online orders
 
@@ -31,8 +30,9 @@ function DailyReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db){
 
 	SetRLZeroForNotAvailableItems($ShowMessages, $updateDB, $RootPath, $db);
 
-	AdjustPackaging(30, 150, $ShowMessages, $updateDB, $RootPath, $db);
+	$EmailText = AdjustPackaging(30, 150, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 	
+	return $EmailText;
 }
 
 function AdjustNoSales($location, $maxdays, $maxmanualchanges, $topitems, $topitemsdays, $ShowMessages, $updateDB, $RootPath, $db){
@@ -1059,10 +1059,15 @@ function OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db)
 			prnMsg(_('No webSHOP orders to be processed at this time.'),'info');
 		}
 	}
-
 }
 
-function AdjustPackaging($DaysSales, $LongDaysSales, $ShowMessages, $updateDB, $RootPath, $db){
+function AdjustPackaging($DaysSales, $LongDaysSales, $ShowMessages, $updateDB, $RootPath, $db, $EmailText){
+	if ($EmailText!=''){
+		$EmailText = $EmailText . "\n\n" . "Function AdjustPackaging" . "\n\n" .
+					"DaysSales = " . $DaysSales . " " .	"LongDaysSales = " . $LongDaysSales . " " .
+					"RootPath = " . $RootPath . "\n" .
+					"List Shops Using Packaging Control = " . LIST_SHOPS_USING_PACKAGING_CONTROL . "\n\n" ;
+	}
 	$Shops = ListToArray(LIST_SHOPS_USING_PACKAGING_CONTROL,",");
 	$CountShops = count($Shops);
 	$iShop = 0;
@@ -1073,56 +1078,60 @@ function AdjustPackaging($DaysSales, $LongDaysSales, $ShowMessages, $updateDB, $
 	while ($iShop < $CountShops -1 ){ // take out the lst PACKA location
 		$iItem = 0;
 		while ($iItem < $CountItem){
-			AdjustPackagingItemByShop($Items[$iItem], $Shops[$iShop], $DaysSales, $LongDaysSales, $ShowMessages, $updateDB, $RootPath, $db);
+			$EmailText = AdjustPackagingItemByShop($Items[$iItem], $Shops[$iShop], $DaysSales, $LongDaysSales, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 			$iItem++;
 		}
 		$iShop++;
 	}
+	return $EmailText;
 }
 
-function AdjustPackagingItemByShop($Item, $Shop, $DaysSales, $LongDaysSales, $ShowMessages, $updateDB, $RootPath, $db){
+function AdjustPackagingItemByShop($Item, $Shop, $DaysSales, $LongDaysSales, $ShowMessages, $updateDB, $RootPath, $db, $EmailText){
 
 	$RLMinim = MINIMUM_REORDER_LEVEL_FOR_PACKAGING_AT_SHOP;
 
 	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -$DaysSales));
 	$LongDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -$LongDaysSales));
-	
-	if ($FieldName != 'ERROR'){
-		$SQL = "SELECT 	locations.locationname,
-						locations.rldaysforpackaging,
-						(SELECT SUM(packagingused.qty)
-							FROM packagingused
-							WHERE packagingused.fromlocation = locations.loccode
-								AND packagingused.stockid = '" . $Item . "'
-								AND packagingused.date >= '". $FromDate ."') AS sales,
-						(SELECT SUM(packagingused.qty)
-							FROM packagingused
-							WHERE packagingused.fromlocation = locations.loccode
-								AND packagingused.stockid = '" . $Item . "'
-								AND packagingused.date >= '". $LongDate ."') AS longsales,
-						(SELECT locstock.reorderlevel
-							FROM locstock
-							WHERE locstock.loccode = locations.loccode
-								AND locstock.stockid = '" . $Item . "') AS rl
-				FROM locations
-				WHERE locations.loccode = '" . $Shop . "'";
-		$result = DB_query($SQL, $db);
-		if (DB_num_rows($result) != 0){
-			$myrow = DB_fetch_array($result);
-			// New RL is the daily needs x number of days to keep as RL
-			$ShortRL = round($myrow['sales'] / $DaysSales * $myrow['rldaysforpackaging'],0);
-			$LongRL  = round($myrow['longsales'] / $LongDaysSales * $myrow['rldaysforpackaging'],0);
-			$NewRL = max($ShortRL, $LongRL, $RLMinim);
-			$OldRL = $myrow['rl'];
-			if ($NewRL != $OldRL){
-				if ($ShowMessages){
-					$text = $Shop . ' ' . $Item . ' Used ' . $DaysSales . ' days = ' . $myrow['sales']  . ' Used ' . $LongDaysSales . ' days = ' . $myrow['longsales'] . ' Old RL = ' . $OldRL . ' New RL = ' . $NewRL;
-					echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
-				}
-				SetReorderLevel("PackagingOptimization", $Item,$Shop, $OldRL, $NewRL, $updateDB, $db);
+
+	$SQL = "SELECT 	locations.locationname,
+					locations.rldaysforpackaging,
+					(SELECT SUM(packagingused.qty)
+						FROM packagingused
+						WHERE packagingused.fromlocation = locations.loccode
+							AND packagingused.stockid = '" . $Item . "'
+							AND packagingused.date >= '". $FromDate ."') AS sales,
+					(SELECT SUM(packagingused.qty)
+						FROM packagingused
+						WHERE packagingused.fromlocation = locations.loccode
+							AND packagingused.stockid = '" . $Item . "'
+							AND packagingused.date >= '". $LongDate ."') AS longsales,
+					(SELECT locstock.reorderlevel
+						FROM locstock
+						WHERE locstock.loccode = locations.loccode
+							AND locstock.stockid = '" . $Item . "') AS rl
+			FROM locations
+			WHERE locations.loccode = '" . $Shop . "'";
+	$result = DB_query($SQL, $db);
+	if (DB_num_rows($result) != 0){
+		$myrow = DB_fetch_array($result);
+		// New RL is the daily needs x number of days to keep as RL
+		$ShortRL = round($myrow['sales'] / $DaysSales * $myrow['rldaysforpackaging'],0);
+		$LongRL  = round($myrow['longsales'] / $LongDaysSales * $myrow['rldaysforpackaging'],0);
+		$NewRL = max($ShortRL, $LongRL, $RLMinim);
+		$OldRL = $myrow['rl'];
+		if ($NewRL != $OldRL){
+			$text = $Shop . ' ' . $Item . ' Used ' . $DaysSales . ' days = ' . $myrow['sales']  . ' Used ' . $LongDaysSales . ' days = ' . $myrow['longsales'] . ' Old RL = ' . $OldRL . ' New RL = ' . $NewRL;
+			if ($ShowMessages){
+				echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
 			}
+			if ($EmailText!=''){
+				$EmailText = $EmailText . "FromDate = " . $FromDate . " LongDate = " . $LongDate . " RLDays = " . $myrow['rldaysforpackaging'] . " " .
+							$text . "\n";
+			}
+			SetReorderLevel("PackagingOptimization", $Item,$Shop, $OldRL, $NewRL, $updateDB, $db);
 		}
 	}
+	return $EmailText;
 }
 
 ?>
