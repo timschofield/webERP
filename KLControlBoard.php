@@ -335,7 +335,7 @@ if (($_SESSION['UserID'] == "Ricard")
 }
 
 if (($_SESSION['UserID'] == "Ricard")){
-	PackagingToBeRefilled($RootPath, $db);
+	PackagingToBeRefilled(false, $RootPath, $db);
 }
 
 

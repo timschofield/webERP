@@ -5414,13 +5414,18 @@ function ItemsNoSalesInLocation($location, $maxdays, $QOHAvailable, $RootPath, $
 	}
 }
 
-function PackagingToBeRefilled($RootPath, $db){
+function PackagingToBeRefilled($ShowAll, $RootPath, $db){
 /* EXPLAIN SQL 2014-05-20
 Updated 3 index in loctransfers
 */
 
 	$TableResult = array();
-
+	if ($ShowAll){
+		$OrderBy = " ORDER BY locations.locationname";
+	}else{
+		$OrderBy = " ORDER BY locations.klemaillastpackacgingtransfer";
+	}
+	
 	$SQL = "SELECT locations.loccode,
 					locations.locationname,
 					locations.rlfactorforpackaging,
@@ -5543,8 +5548,8 @@ Updated 3 index in loctransfers
 							AND loctransfers.shipqty != loctransfers.recqty
 							AND loctransfers.stockid = 'PKSB02-S') AS ot_shopping_s
 			FROM locations
-			WHERE locations.loccode IN " . LIST_ACTIVE_KL_SHOPS_BALI . "
-			ORDER BY locations.klemaillastpackacgingtransfer";
+			WHERE locations.loccode IN " . LIST_ACTIVE_KL_SHOPS_BALI . 
+			$OrderBy;
 
 	$result = DB_query($SQL, $db);
 	$showHeader = TRUE;
@@ -5666,8 +5671,9 @@ Updated 3 index in loctransfers
 
 		while ($i <= $numshops) {
 			
-			if ($TableResult[$i]['show']) {
+			if ($ShowAll OR ($TableResult[$i]['show'])) {
 				// IF we are SHORT of any packaging material in that shop...
+				// Or we show All the shops 
 				if($showHeader){
 					echo '<p class="page_title_text" align="center"><strong>' . 'Shops needing Packaging Transfers (Do not forget to create transfer in webERP)' . '</strong></p>';
 					echo '<div>';
