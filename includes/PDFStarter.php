@@ -173,15 +173,7 @@ switch ($PaperSize) {
 		break;
 
 	default:
-		$DocumentPaper = 'LETTER';
 		$DocumentOrientation ='L';
-
-		$Page_Width = 792; // 72 * 11 inch
-		$Page_Height = 612; // 72 * 8.5 inch
-		$Top_Margin = 36; // Half inch = 72/2
-		$Bottom_Margin = 36; // Half inch = 72/2
-		$Left_Margin = 36; // Half inch = 72/2
-		$Right_Margin = 36; // Half inch = 72/2
 		break;
 }
 
