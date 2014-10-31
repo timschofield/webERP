@@ -49,21 +49,6 @@ if (isset($_POST['submit'])) {
 		prnMsg(_('The salesperson name must be thirty characters or less long'),'error');
 		$Errors[$i] = 'SalesmanName';
 		$i++;
-	} elseif (mb_strlen($_POST['SManTel']) > 20) {
-		$InputError = 1;
-		prnMsg(_('The salesperson telephone number must be twenty characters or less long'),'error');
-
-	} elseif (mb_strlen($_POST['SManFax']) > 20) {
-		$InputError = 1;
-		prnMsg(_('The salesperson telephone number must be twenty characters or less long'),'error');
-
-	} elseif (!is_numeric(filter_number_format($_POST['CommissionRate1']))
-			OR !is_numeric(filter_number_format($_POST['CommissionRate2']))) {
-		$InputError = 1;
-		prnMsg(_('The commission rates must be a floating point number'),'error');
-	} elseif (!is_numeric(filter_number_format($_POST['Breakpoint']))) {
-		$InputError = 1;
-		prnMsg(_('The breakpoint should be a floating point number'),'error');
 	}
 
 	if (!isset($_POST['SManTel'])){
