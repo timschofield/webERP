@@ -1066,7 +1066,8 @@ function AdjustPackaging($DaysSales, $LongDaysSales, $ShowMessages, $updateDB, $
 		$EmailText = $EmailText . "\n\n" . "Function AdjustPackaging" . "\n\n" .
 					"DaysSales = " . $DaysSales . " " .	"LongDaysSales = " . $LongDaysSales . " " .
 					"RootPath = " . $RootPath . "\n" .
-					"List Shops Using Packaging Control = " . LIST_SHOPS_USING_PACKAGING_CONTROL . "\n\n" ;
+					"List Shops Using Packaging Control = " . LIST_SHOPS_USING_PACKAGING_CONTROL . "\n" .
+					"List Items Using Packaging Control = " . LIST_ITEMS_USING_PACKAGING_CONTROL . "\n\n" ;
 	}
 	$Shops = ListToArray(LIST_SHOPS_USING_PACKAGING_CONTROL,",");
 	$CountShops = count($Shops);
@@ -1092,6 +1093,14 @@ function AdjustPackagingItemByShop($Item, $Shop, $DaysSales, $LongDaysSales, $Sh
 
 	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -$DaysSales));
 	$LongDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -$LongDaysSales));
+
+	if ($EmailText!=''){
+		$EmailText = $EmailText . "function AdjustPackagingItemByShop " . 
+								"Item = " . $Item . " Shop = " . $Shop . 
+								" _SESSION['DefaultDateFormat'] = " . $_SESSION['DefaultDateFormat'] . 
+								" Date( _SESSION['DefaultDateFormat']) = " . Date($_SESSION['DefaultDateFormat']) . 
+								" FromDate = " . $FromDate . " LongDate = " . $LongDate . "\n";
+	}
 
 	$SQL = "SELECT 	locations.locationname,
 					locations.rldaysforpackaging,
