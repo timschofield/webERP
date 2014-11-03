@@ -2,7 +2,7 @@
 
 include('CronJobStart.php');
 include('config.php');
-include('includes/session.inc');
+include('includes/session_cronjob.inc');
 
 include('KLDailyChecks.php');
 
