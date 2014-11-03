@@ -1,5 +1,6 @@
 webERP Change Log
 
+3/11/14 Exson: Make Dashboard.php workable in php which version is lower than 5.3. Report by Craig Craven.
 28/10/14 Exson: Add Chinese Yuan to default.sql to prevent wrong Chinese Yuan input which leads lots of problem. Advised by Thumb.
 28/10/14 Exson: Fixed the variable undefined bug in simplify Chinese manual in Manual/ManualContents.php. Reported by webERP Chinese community QQ group chengdu-belief.
 27/10/14 Phil: Removed the $db parameter from all DB_Txn_Begin($db) DB_Txn_Commit($db) DB_Txn_Rollback($db)calls - $db is now global
