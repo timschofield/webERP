@@ -1095,11 +1095,7 @@ function AdjustPackagingItemByShop($Item, $Shop, $DaysSales, $LongDaysSales, $Sh
 	$LongDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -$LongDaysSales));
 
 	if ($EmailText!=''){
-		$EmailText = $EmailText . "function AdjustPackagingItemByShop " . 
-								"Item = " . $Item . " Shop = " . $Shop . 
-								" _SESSION['DefaultDateFormat'] = " . $_SESSION['DefaultDateFormat'] . 
-								" Date( _SESSION['DefaultDateFormat']) = " . Date($_SESSION['DefaultDateFormat']) . 
-								" FromDate = " . $FromDate . " LongDate = " . $LongDate . "\n";
+		$EmailText = $EmailText . " Shop = " . $Shop . "Item = " . $Item . "\n";
 	}
 
 	$SQL = "SELECT 	locations.locationname,
