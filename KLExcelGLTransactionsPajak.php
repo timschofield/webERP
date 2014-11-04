@@ -1,12 +1,9 @@
 <?php
 
 include('includes/session.inc');
-$Title = _('Excel file with GL Transactions');
-include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
-/** Include PHPExcel */
-require_once ('/Classes/PHPExcel.php');
+require_once ('Classes/PHPExcel.php');
 
 if (!isset($_POST['FromDate'])){
 	$_POST['FromDate'] = Date($_SESSION['DefaultDateFormat']);
@@ -38,122 +35,102 @@ function submit(&$db, $FromDate, $ToDate) {
 		prnMsg(_('Invalid To Date'),'error');
 	}
 
-	$WhereFrom 	= " AND trandate >= '". FormatDateForSQL($FromDate) ."'";
-	$WhereTo 	= " AND trandate <= '". FormatDateForSQL($ToDate) ."'";
-	$OrderBy		= " ORDER BY accountgroups.groupname ASC, gltrans.account ASC, gltrans.trandate ASC";
-	
-	$sql = "SELECT accountgroups.groupname AS 'Group',
-				gltrans.account AS 'AccountCode', 
-				chartmaster.accountname AS 'AccountName', 
-				gltrans.trandate AS 'Date', 
-				ROUND(gltrans.amount,0) AS 'Amount', 
-				gltrans.narrative AS 'Description',
-				tags.tagdescription AS 'Tag'
-			FROM gltrans, 
-				chartmaster, 
-				accountgroups, 
-				tags
-			WHERE gltrans.account = chartmaster.accountcode
-				AND chartmaster.group_ = accountgroups.groupname
-				AND gltrans.tag = tags.tagref
-				AND (accountgroups.pandl = 1)".
-				$WhereFrom .
-				$WhereTo .
-				$OrderBy
-			;
-	
-//	echo "<br/>".$sql."<br/>";
-	
-	$ErrMsg = _('The SQL to find the KL GL Transactions ');
-	$result = DB_query($sql,$db,$ErrMsg);
-	if (DB_num_rows($result) != 0){
+	if ($InputError == 0){
+		$WhereFrom 	= " AND trandate >= '". FormatDateForSQL($FromDate) ."'";
+		$WhereTo 	= " AND trandate <= '". FormatDateForSQL($ToDate) ."'";
+		$OrderBy		= " ORDER BY accountgroups.groupname ASC, gltrans.account ASC, gltrans.trandate ASC";
+		
+		$sql = "SELECT accountgroups.groupname AS 'Group',
+					gltrans.account AS 'AccountCode', 
+					chartmasterPT.accountname AS 'AccountName', 
+					gltrans.trandate AS 'Date', 
+					ROUND(gltrans.amount,0) AS 'Amount', 
+					gltrans.narrative AS 'Description'
+				FROM gltrans, 
+					chartmasterPT, 
+					accountgroups
+				WHERE gltrans.account = chartmasterPT.accountcode
+					AND chartmasterPT.group_ = accountgroups.groupname
+					AND (accountgroups.pandl = 1)".
+					$WhereFrom .
+					$WhereTo .
+					$OrderBy
+				;
+		
+		$ErrMsg = _('The SQL to find the KL GL Transactions ');
+		$result = DB_query($sql,$db,$ErrMsg);
+		if (DB_num_rows($result) != 0){
 
-	// Create new PHPExcel object
-		$objPHPExcel = new PHPExcel();
+			// Create new PHPExcel object
+			$objPHPExcel = new PHPExcel();
 
-		// Set document properties
-		$objPHPExcel->getProperties()->setCreator("TEST")
-									 ->setLastModifiedBy("webERP")
-									 ->setTitle("TEST GL Transactions")
-									 ->setSubject("TEST GL Transactions")
-									 ->setDescription("TEST GL Transactions")
-									 ->setKeywords("")
-									 ->setCategory("");
+			// Set document properties
+			$objPHPExcel->getProperties()->setCreator("webERP")
+										 ->setLastModifiedBy("webERP")
+										 ->setTitle("GL Transactions")
+										 ->setSubject("GL Transactions")
+										 ->setDescription("GL Transactions")
+										 ->setKeywords("")
+										 ->setCategory("");
+		
+			// Add title data
+			$objPHPExcel->setActiveSheetIndex(0);
+			$objPHPExcel->getActiveSheet()->setCellValue('A1', 'Group');
+			$objPHPExcel->getActiveSheet()->setCellValue('B1', 'Account Code');
+			$objPHPExcel->getActiveSheet()->setCellValue('C1', 'Account Name');
+			$objPHPExcel->getActiveSheet()->setCellValue('D1', 'Date');
+			$objPHPExcel->getActiveSheet()->setCellValue('E1', 'Amount');
+			$objPHPExcel->getActiveSheet()->setCellValue('F1', 'Description');
 
-	
-		// Add title data
-		$objPHPExcel->setActiveSheetIndex(0)
-					->setCellValue('A1', 'Group')
-					->setCellValue('B1', 'Account Code')
-					->setCellValue('C1', 'Account Name')
-					->setCellValue('D1', 'Date')
-					->setCellValue('E1', 'Amount')
-					->setCellValue('F1', 'Description')
-					->setCellValue('G1', 'Tag');
-	
-		echo '<p class="page_title_text" align="center"><strong>' . "GL Transactions from: " . $FromDate . ' to ' . $ToDate . '</strong></p>';
-		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '
-						<tr>
-							<th>' . _('Account Code') . '</th>
-							<th>' . _('Date') . '</th>
-							<th>' . _('Amount') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
-		$i = 1;
-
-		while ($myrow = DB_fetch_array($result)) {
-			if ($k == 1) {
-				echo '<tr class="EvenTableRows">';
-				$k = 0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k = 1;
+			// Add data
+			$i = 2;
+			while ($myrow = DB_fetch_array($result)) {
+				$objPHPExcel->setActiveSheetIndex(0);
+				$objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $myrow['Group']);
+				$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, $myrow['AccountCode']);
+				$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, $myrow['AccountName']);
+				$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, ConvertSQLDate($myrow['Date']));
+				$objPHPExcel->getActiveSheet()->setCellValue('E'.$i, round($myrow['Amount'],0));
+				$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, $myrow['Description']);
+				$i++;
 			}
-			printf('<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					$myrow['AccountCode'], 
-					ConvertSQLDate($myrow['Date']),
-					locale_number_format($myrow['Amount'],0)
-					);
-			$i++;
+			
+			// Freeze panes
+			$objPHPExcel->getActiveSheet()->freezePane('A2');
+		
+			// Auto Size columns
+			foreach(range('A','F') as $columnID) {
+				$objPHPExcel->getActiveSheet()->getColumnDimension($columnID)
+					->setAutoSize(true);
+			}
+			
+			// Rename worksheet
+			$objPHPExcel->getActiveSheet()->setTitle('GL Transactions');
+
+			// Set active sheet index to the first sheet, so Excel opens this as the first sheet
+			$objPHPExcel->setActiveSheetIndex(0);
+
+			// Redirect output to a client’s web browser (Excel2007)
+			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+			$File = 'PTBumiBiru-GL-' . FormatDateForSQL($FromDate). '-' . FormatDateForSQL($ToDate) . '.xlsx';
+			header('Content-Disposition: attachment;filename="' . $File . '"');
+			header('Cache-Control: max-age=0');
+			// If you're serving to IE 9, then the following may be needed
+			header('Cache-Control: max-age=1');
+
+			// If you're serving to IE over SSL, then the following may be needed
+			header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+			header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
+			header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+			header ('Pragma: public'); // HTTP/1.0
+
+			$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+			$objWriter->save('php://output');
+
+		}else{
+			prnMsg('No GL transactions for the period: ' . $FromDate . ' to ' . $ToDate);
 		}
-		echo '</table>
-				</div>';
-
-		// Rename worksheet
-		$objPHPExcel->getActiveSheet()->setTitle('GL Transactions');
-
-
-		// Set active sheet index to the first sheet, so Excel opens this as the first sheet
-		$objPHPExcel->setActiveSheetIndex(0);
-
-
-		// Redirect output to a client’s web browser (Excel5)
-		header('Content-Type: application/vnd.ms-excel');
-		header('Content-Disposition: attachment;filename="01simple.xls"');
-		header('Cache-Control: max-age=0');
-		// If you're serving to IE 9, then the following may be needed
-		header('Cache-Control: max-age=1');
-
-		// If you're serving to IE over SSL, then the following may be needed
-		header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
-		header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
-		header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
-		header ('Pragma: public'); // HTTP/1.0
-
-		$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-		$objWriter->save('php://output');
-
-
-	}else{
-		prnMsg('No GL tranaactions for the period: ' . $FromDate . ' to ' . $ToDate);
 	}
-	
 } // End of function submit()
 
 
@@ -161,12 +138,17 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 {
 // Display form fields. This function is called the first time
 // the page is called.
+	$Title = _('Excel file with GL Transactions');
+	include('includes/header.inc');
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
           <div>
-			<br/>
 			<br/>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+
+	echo '<p class="page_title_text">
+			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('GL Transactions for PT. Bumi Biru (Excel File)') . '" alt="" />' . ' ' . _('GL Transactions for PT. Bumi Biru (Excel File)') . '
+		</p>';
 
 	echo '<table>';
 
@@ -177,20 +159,20 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" size="10" maxlength="10" value="' . $_POST['ToDate'] . '" /></td>
 		</tr>';
 
+	echo '</table>
+		<table>';
 
-  echo '<tr><td>&nbsp;</td></tr>
-		<tr><td>&nbsp;</td></tr>
-		<tr><td>&nbsp;</td></tr>
+	echo '<tr><td>&nbsp;</td></tr>
 		<tr>
 			<td>&nbsp;</td>
-			<td><input type="submit" name="submit" value="' . _('Create Excel File') . '" /></td>
+			<td><input type="submit" name="submit" value="' . _('Create Excel File with GL Transactions') . '" /></td>
 		</tr>
 		</table>
-	<br />';
-   echo '</div>
+		<br />';
+	echo '</div>
          </form>';
+	include('includes/footer.inc');
 
 } // End of function display()
 
-include('includes/footer.inc');
 ?>
