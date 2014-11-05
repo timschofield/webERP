@@ -97,14 +97,14 @@ If (isset($_POST['PrintPDF'])
 						ON prices.debtorno=custbranch.debtorno
 						AND prices.branchcode=custbranch.branchcode
 						WHERE prices.typeabbrev = '" . $SalesType . "'
-						AND stockmaster.categoryid >= '" . $_POST['FromCriteria'] . "'
-						AND stockmaster.categoryid <= '" . $_POST['ToCriteria'] . "'
+						AND stockcategory.categorydescription >= '" . $_POST['FromCriteria'] . "'
+						AND stockcategory.categorydescription <= '" . $_POST['ToCriteria'] . "'
 						AND prices.debtorno='" . $_SESSION['CustomerID'] . "'
 						AND prices.startdate<='" . FormatDateForSQL($_POST['EffectiveDate']) . "'
 						AND (prices.enddate='0000-00-00' OR prices.enddate >'" . FormatDateForSQL($_POST['EffectiveDate']) . "')" .
 						$WhereCurrency . "
 						ORDER BY prices.currabrev,
-							stockmaster.categoryid,
+							stockcategory.categorydescription,
 							stockmaster.stockid,
 							prices.startdate";
 
@@ -133,15 +133,15 @@ If (isset($_POST['PrintPDF'])
     				ON stockmaster.stockid=prices.stockid
 				INNER JOIN currencies
 					ON prices.currabrev=currencies.currabrev
-                WHERE stockmaster.categoryid >= '" . $_POST['FromCriteria'] . "'
-    			AND stockmaster.categoryid <= '" . $_POST['ToCriteria'] . "'
+                WHERE stockcategory.categorydescription >= '" . $_POST['FromCriteria'] . "'
+    			AND stockcategory.categorydescription <= '" . $_POST['ToCriteria'] . "'
     			AND prices.typeabbrev='" . $_POST['SalesType'] . "'
     			AND prices.startdate<='" . FormatDateForSQL($_POST['EffectiveDate']) . "'
     			AND (prices.enddate='0000-00-00' OR prices.enddate>'" . FormatDateForSQL($_POST['EffectiveDate']) . "')" .
 				$WhereCurrency . "
     			AND prices.debtorno=''
     			ORDER BY prices.currabrev,
-    				stockmaster.categoryid,
+    				stockcategory.categorydescription,
     				stockmaster.stockid,
     				prices.startdate";
 	}
@@ -299,17 +299,17 @@ If (isset($_POST['PrintPDF'])
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
         echo '<table class="selection">';
 
-		$sql='SELECT categoryid, categorydescription FROM stockcategory ORDER BY categoryid';
+		$sql='SELECT categoryid, categorydescription FROM stockcategory ORDER BY categorydescription';
 		$CatResult= DB_query($sql,$db);
 		$SelectCat='';
 		While ($myrow = DB_fetch_array($CatResult)) {
-			$SelectCat .= "<option value='" . $myrow['categoryid'] . "'>" . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'] . '</option>';
+			$SelectCat .= "<option value='" . $myrow['categorydescription'] . "'>" . $myrow['categorydescription'] . '</option>';
 		}
 		$SelectCat .= '</select></td></tr>';
-		echo '<tr><td>' .  _('From Inventory Category Code') . ':</td>
+		echo '<tr><td>' .  _('From Inventory Category') . ':</td>
                   <td><select name="FromCriteria">';
 		echo $SelectCat;
-		echo '<tr><td>' . _('To Inventory Category Code') . ':</td>
+		echo '<tr><td>' . _('To Inventory Category') . ':</td>
                   <td><select name="ToCriteria">';
 		echo $SelectCat;
 
