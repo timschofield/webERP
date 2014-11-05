@@ -88,7 +88,7 @@ if ($_SESSION['UserID'] == "Ricard"){
 if (($_SESSION['UserID'] == "Ricard") 
 	OR ($_SESSION['UserID'] == "Ike1")
 	OR ($_SESSION['UserID'] == "Laia")){
-	InsuficientStockForShopPackaging( 'SHPACK', 21, 100, 30, true, $RootPath, $db);
+	InsuficientStockForShopPackaging( 'SHPACK', 21, 90, 30, true, $RootPath, $db);
 	InsuficientStockForShopPackaging( 'ZAPON', 21, 60, 30, true, $RootPath, $db);
 }
 

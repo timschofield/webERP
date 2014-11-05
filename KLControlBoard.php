@@ -103,7 +103,7 @@ if (($_SESSION['UserID'] == "Ricard")){
 
 if (($_SESSION['UserID'] == "Laia")
 	OR ($_SESSION['UserID'] == "RiaResti")
-	OR ($_SESSION['UserID'] == "Karolin")
+	OR ($_SESSION['UserID'] == "Silo")
 	OR ($_SESSION['UserID'] == "Dita")
 	OR ($_SESSION['UserID'] == "Ike1")){
 	
@@ -115,7 +115,7 @@ if (($_SESSION['UserID'] == "Laia")
 
 if (($_SESSION['UserID'] == "RiaResti")
 	OR ($_SESSION['UserID'] == "Dita")
-	OR ($_SESSION['UserID'] == "Karolin")){
+	OR ($_SESSION['UserID'] == "Silo")){
 
 	ItemsChangingPriceDelayed(4, $RootPath, $db);
 	ItemsMovingToDiscountDelayed(4, $RootPath, $db);
@@ -138,7 +138,7 @@ if (($_SESSION['UserID'] == "Ricard")
 	OR ($_SESSION['UserID'] == "Cicik") 
 	OR ($_SESSION['UserID'] == "RiaResti")
 	OR ($_SESSION['UserID'] == "Dita")
-	OR ($_SESSION['UserID'] == "Karolin")){
+	OR ($_SESSION['UserID'] == "Silo")){
 	
 	DiscountedItemsOnWrongShops("DISCOU", $RootPath, $db);
 	DiscountedItemsOnWrongShops("OUTLET", $RootPath, $db);
@@ -150,7 +150,7 @@ if (($_SESSION['UserID'] == "Ricard")
 	OR ($_SESSION['UserID'] == "Cicik") 
 	OR ($_SESSION['UserID'] == "RiaResti")
 	OR ($_SESSION['UserID'] == "Dita")
-	OR ($_SESSION['UserID'] == "Karolin")){
+	OR ($_SESSION['UserID'] == "Silo")){
 	
 	DiscountedItemsWithWrongDiscount("DISCOU", "50", $RootPath, $db);
 //	DiscountedItemsWithWrongDiscount("OUTLET", "80", $RootPath, $db);
@@ -219,7 +219,7 @@ if (($_SESSION['UserID'] == "Laia")
 	OR ($_SESSION['UserID'] == "Ike1")
 	OR ($_SESSION['UserID'] == "RiaResti")
 	OR ($_SESSION['UserID'] == "Dita")
-	OR ($_SESSION['UserID'] == "Karolin")){
+	OR ($_SESSION['UserID'] == "Silo")){
 	
 	ItemsWithStockLocationButNoStockAvailable("WABOM", "WaterBom", 15, 600, $RootPath, $db);
 	ItemsWithStockLocationButNoStockAvailable("WHAYA", "Ayana", 15, 600, $RootPath, $db);
@@ -340,11 +340,11 @@ if (($_SESSION['UserID'] == "Ricard")){
 
 
 if (($_SESSION['UserID'] == "Ricard")){
-	InsuficientStockForShopPackaging('SHPACK', 21, 100, 30, false, $RootPath, $db);
+	InsuficientStockForShopPackaging('SHPACK', 21, 90, 30, false, $RootPath, $db);
 }
 
 if (($_SESSION['UserID'] == "Cicik")){
-	InsuficientStockForShopPackaging('SHPACK', 21, 100, 30, true, $RootPath, $db);
+	InsuficientStockForShopPackaging('SHPACK', 21, 90, 30, true, $RootPath, $db);
 }
 
 
@@ -357,7 +357,7 @@ if (($_SESSION['UserID'] == "Ricard")
 	OR ($_SESSION['UserID'] == "Ike1")
 	OR ($_SESSION['UserID'] == "Cicik") 
 	OR ($_SESSION['UserID'] == "RiaResti")
-	OR ($_SESSION['UserID'] == "Karolin")
+	OR ($_SESSION['UserID'] == "Silo")
 	OR ($_SESSION['UserID'] == "Dita")){
 	
 	CheckNegativeStock($RootPath, $db);
@@ -511,7 +511,7 @@ if (($_SESSION['UserID'] == "Ricard")){
 if (($_SESSION['UserID'] == "Ricard") 
 	OR ($_SESSION['UserID'] == "Ike1")
 	OR ($_SESSION['UserID'] == "RiaResti")
-	OR ($_SESSION['UserID'] == "Karolin")
+	OR ($_SESSION['UserID'] == "Silo")
 	OR ($_SESSION['UserID'] == "Dita")){ 
 	OutstandingOrders("Online", "Order", $RootPath, $db);
 }
@@ -534,7 +534,7 @@ if ($_SESSION['UserID'] == "Ricard"){
 }
 
 if (($_SESSION['UserID'] == "RiaResti")
-	OR ($_SESSION['UserID'] == "Karolin")
+	OR ($_SESSION['UserID'] == "Silo")
 	OR ($_SESSION['UserID'] == "Dita")){ 
 	TransfersDelayed(3, $RootPath, $db);
 }
