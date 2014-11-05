@@ -244,7 +244,6 @@ $MenuItems['stock']['Transactions']['URL'] = array(	'/PO_SelectOSPurchOrder.php'
 													'/StockLocTransferReceive.php',
 													'/KLStockLocTransferReceive.php',
 													'/KLFillUpShopPackaging.php',
-													'/StockTransfers.php?New=Yes',
 													'/StockAdjustments.php?NewAdjustment=Yes',
 													'/ReverseGRN.php',
 													'/StockCounts.php',
