@@ -117,7 +117,7 @@ if (isset($_POST['PrintPDF'])) {
 
 	$Category = '';
 
-	$CurrentPeriod = GetPeriod(Date($_SESSION['DefaultDateFormat']));
+	$CurrentPeriod = GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
 	$Period_1 = $CurrentPeriod -1;
 	$Period_2 = $CurrentPeriod -2;
 	$Period_3 = $CurrentPeriod -3;
