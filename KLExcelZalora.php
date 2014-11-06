@@ -62,7 +62,7 @@ function submit(&$db, &$db_oc, $oc_tableprefix, $FromPrice, $ToPrice) {
 				ORDER BY " . $oc_tableprefix . "product.model";
 		
 		$ErrMsg = _('The SQL to find the OpenCart Products to export to Zalora');
-		$result = DB_query($sql,$db_oc,$ErrMsg);
+		$result = DB_query_oc($sql,$ErrMsg);
 		if (DB_num_rows($result) != 0){
 
 			// Create new PHPExcel object
