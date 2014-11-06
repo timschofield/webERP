@@ -9,11 +9,7 @@ $BookMark = "PlanningReport";
 
 include ('includes/SQL_CommonFunctions.inc');
 
-if (isset($_POST['PrintPDF'])
-	and isset($_POST['FromCriteria'])
-	and mb_strlen($_POST['FromCriteria'])>=1
-	and isset($_POST['ToCriteria'])
-	and mb_strlen($_POST['ToCriteria'])>=1) {
+if (isset($_POST['PrintPDF'])) {
 
 	include ('includes/class.pdf.php');
 
@@ -69,8 +65,7 @@ if (isset($_POST['PrintPDF'])
 					AND stockmaster.discontinued = 0
 					AND stockmaster.categoryid=stockcategory.categoryid
 					AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M')
-					AND stockmaster.categoryid >= '" . $_POST['FromCriteria'] . "'
-					AND stockmaster.categoryid <= '" . $_POST['ToCriteria'] . "'
+					AND stockmaster.categoryid IN ('". implode("','",$_POST['Categories'])."')
 					GROUP BY stockmaster.categoryid,
 						stockmaster.description,
 						stockcategory.categorydescription,
@@ -90,9 +85,8 @@ if (isset($_POST['PrintPDF'])
 					stockcategory
 				WHERE locstock.stockid=stockmaster.stockid
 				AND stockmaster.discontinued = 0
-				AND stockmaster.categoryid >= '" . $_POST['FromCriteria'] . "'
+				AND stockmaster.categoryid IN ('". implode("','",$_POST['Categories'])."')
 				AND stockmaster.categoryid=stockcategory.categoryid
-				AND stockmaster.categoryid <= '" . $_POST['ToCriteria'] . "'
 				AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M')
 				AND locstock.loccode = '" . $_POST['Location'] . "'
 				ORDER BY stockmaster.categoryid,
@@ -123,14 +117,14 @@ if (isset($_POST['PrintPDF'])
 
 	$Category = '';
 
-	$CurrentPeriod = GetPeriod(Date($_SESSION['DefaultDateFormat']),$db);
+	$CurrentPeriod = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 	$Period_1 = $CurrentPeriod -1;
 	$Period_2 = $CurrentPeriod -2;
 	$Period_3 = $CurrentPeriod -3;
 	$Period_4 = $CurrentPeriod -4;
 	$Period_5 = $CurrentPeriod -5;
 
-	while ($InventoryPlan = DB_fetch_array($InventoryResult,$db)){
+	while ($InventoryPlan = DB_fetch_array($InventoryResult)){
 
 		if ($Category!=$InventoryPlan['categoryid']){
 			$FontSize=10;
@@ -359,81 +353,71 @@ if (isset($_POST['PrintPDF'])
 	echo '<p class="page_title_text">
 			<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
-	if (empty($_POST['FromCriteria']) or empty($_POST['ToCriteria'])) {
 
-	/*if $FromCriteria is not set then show a form to allow input	*/
-
-		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-        echo '<div>';
-        echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-		echo '<table class="selection">';
-
-		echo '<tr>
-				<td>' . _('From Inventory Category Code') . ':</td>
-				<td><select name="FromCriteria">';
-
-		$sql="SELECT categoryid, categorydescription FROM stockcategory ORDER BY categorydescription";
-		$CatResult= DB_query($sql);
-		while ($myrow = DB_fetch_array($CatResult)){
-			echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription'] . ' - ' . $myrow['categoryid'] . '</option>';
-		}
-		echo '</select>
-			</td>
-			 </tr>
-			 <tr>
-				<td>' . _('To Inventory Category Code') . ':</td>
-				<td><select name="ToCriteria">';
-
-					/*Set the index for the categories result set back to 0 */
-		DB_data_seek($CatResult,0);
-
-		while ($myrow = DB_fetch_array($CatResult)){
-			echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription'] . ' - ' . $myrow['categoryid'] . '</option>';
-		}
-		echo '</select></td>
-			</tr>
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+	echo '<div>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<table class="selection">
 			<tr>
-				<td>' . _('For Inventory in Location') . ':</td>
-				<td><select name="Location">';
-
-		$sql = "SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
-		$LocnResult=DB_query($sql);
-
-		echo '<option value="All">' . _('All Locations') . '</option>';
-
-		while ($myrow=DB_fetch_array($LocnResult)){
-			echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+				<td>' . _('Select Inventory Categories') . ':</td>
+				<td><select autofocus="autofocus" required="required" minlength="1" size="12" name="Categories[]"multiple="multiple">';
+	$SQL = 'SELECT categoryid, categorydescription 
+			FROM stockcategory 
+			ORDER BY categorydescription';
+	$CatResult = DB_query($SQL);
+	while ($MyRow = DB_fetch_array($CatResult)) {
+		if (isset($_POST['Categories']) AND in_array($MyRow['categoryid'], $_POST['Categories'])) {
+			echo '<option selected="selected" value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] .'</option>';
+		} else {
+			echo '<option value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
 		}
-		echo '</select>
-				</td>
-			</tr>';
-
-		echo '<tr>
-				<td>' . _('Stock Planning') . ':</td>
-				<td><select name="NumberMonthsHolding">
-					<option selected="selected" value="1">' . _('One Month MAX')  . '</option>
-					<option value="1.5">' . _('One Month and a half MAX')  . '</option>
-					<option value="2">' . _('Two Months MAX')  . '</option>
-					<option value="2.5">' . _('Two Month and a half MAX')  . '</option>
-					<option value="3">' . _('Three Months MAX')  . '</option>
-					<option value="4">' . _('Four Months MAX')  . '</option>
-					<option value="11">' . _('One Month AVG')  . '</option>
-					<option value="11.5">' . _('One Month and a half AVG')  . '</option>
-					<option value="12">' . _('Two Months AVG')  . '</option>
-					<option value="12.5">' . _('Two Month and a half AVG')  . '</option>
-					<option value="13">' . _('Three Months AVG')  . '</option>
-					<option value="14">' . _('Four Months AVG')  . '</option>
-					</select>
-				</td>
-		</tr>
-		</table>
-		<br />
-		<div class="centre">
-			<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
-		</div>
-        </div>
-		</form>';
 	}
+	echo '</select>
+			</td>
+		</tr>';
+	
+	echo '<tr>
+			<td>' . _('For Inventory in Location') . ':</td>
+			<td><select name="Location">';
+
+	$sql = "SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
+	$LocnResult=DB_query($sql);
+
+	echo '<option value="All">' . _('All Locations') . '</option>';
+
+	while ($myrow=DB_fetch_array($LocnResult)){
+		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+	}
+	echo '</select>
+			</td>
+		</tr>';
+
+	echo '<tr>
+			<td>' . _('Stock Planning') . ':</td>
+			<td><select name="NumberMonthsHolding">
+				<option selected="selected" value="1">' . _('One Month MAX')  . '</option>
+				<option value="1.5">' . _('One Month and a half MAX')  . '</option>
+				<option value="2">' . _('Two Months MAX')  . '</option>
+				<option value="2.5">' . _('Two Month and a half MAX')  . '</option>
+				<option value="3">' . _('Three Months MAX')  . '</option>
+				<option value="4">' . _('Four Months MAX')  . '</option>
+				<option value="11">' . _('One Month AVG')  . '</option>
+				<option value="11.5">' . _('One Month and a half AVG')  . '</option>
+				<option value="12">' . _('Two Months AVG')  . '</option>
+				<option value="12.5">' . _('Two Month and a half AVG')  . '</option>
+				<option value="13">' . _('Three Months AVG')  . '</option>
+				<option value="14">' . _('Four Months AVG')  . '</option>
+				</select>
+			</td>
+	</tr>
+	</table>
+	<br />
+	<div class="centre">
+		<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
+	</div>
+	</div>
+	</form>';
+
 	include('includes/footer.inc');
 
 } /*end of else not PrintPDF */

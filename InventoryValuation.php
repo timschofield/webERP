@@ -3,11 +3,7 @@
 /* $Id$ */
 
 include('includes/session.inc');
-if ((isset($_POST['PrintPDF']) OR isset($_POST['CSV']))
-	AND isset($_POST['FromCriteria'])
-	AND mb_strlen($_POST['FromCriteria'])>=1
-	AND isset($_POST['ToCriteria'])
-	AND mb_strlen($_POST['ToCriteria'])>=1){
+if (isset($_POST['PrintPDF']) OR isset($_POST['CSV'])){
 
 /*Now figure out the inventory data to report for the category range under review */
 	if ($_POST['Location']=='All'){
@@ -37,8 +33,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['CSV']))
 					stockmaster.stockid,
 					stockmaster.description
 				HAVING SUM(locstock.quantity)!=0
-				AND stockcategory.categorydescription >= '" . $_POST['FromCriteria'] . "'
-				AND stockcategory.categorydescription <= '" . $_POST['ToCriteria'] . "'
+				AND stockmaster.categoryid IN ('". implode("','",$_POST['Categories'])."')
 				ORDER BY stockcategory.categorydescription,
 					stockmaster.stockid";
 	} else {
@@ -58,8 +53,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['CSV']))
 				WHERE stockmaster.stockid=locstock.stockid
 				AND stockmaster.categoryid=stockcategory.categoryid
 				AND locstock.quantity!=0
-				AND stockcategory.categorydescription >= '" . $_POST['FromCriteria'] . "'
-				AND stockcategory.categorydescription <= '" . $_POST['ToCriteria'] . "'
+				AND stockmaster.categoryid IN ('". implode("','",$_POST['Categories'])."')
 				AND locstock.loccode = '" . $_POST['Location'] . "'
 				ORDER BY stockcategory.categorydescription,
 					stockmaster.stockid";
@@ -79,11 +73,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['CSV']))
 	}
 }
 
-if (isset($_POST['PrintPDF'])
-	AND isset($_POST['FromCriteria'])
-	AND mb_strlen($_POST['FromCriteria'])>=1
-	AND isset($_POST['ToCriteria'])
-	AND mb_strlen($_POST['ToCriteria'])>=1){
+if (isset($_POST['PrintPDF'])){
 
 	include('includes/PDFStarter.php');
 
@@ -111,7 +101,7 @@ if (isset($_POST['PrintPDF'])
 	$CatTot_Val=0;
 	$CatTot_Qty=0;
 
-	while ($InventoryValn = DB_fetch_array($InventoryResult,$db)){
+	while ($InventoryValn = DB_fetch_array($InventoryResult)){
 
 		if ($Category!=$InventoryValn['categoryid']){
 			$FontSize=10;
@@ -205,7 +195,7 @@ if (isset($_POST['PrintPDF'])
 } elseif (isset($_POST['CSV'])) {
 
 	$CSVListing = _('Category ID') .','. _('Category Description') .','. _('Stock ID') .','. _('Description') .','. _('Decimal Places') .','. _('Qty On Hand') .','. _('Units') .','. _('Unit Cost') .','. _('Total') . "\n";
-	while ($InventoryValn = DB_fetch_row($InventoryResult, $db)) {
+	while ($InventoryValn = DB_fetch_row($InventoryResult)) {
 		$CSVListing .= '"';
 		$CSVListing .= implode('","', $InventoryValn) . '"' . "\n";
 	}
@@ -223,82 +213,68 @@ if (isset($_POST['PrintPDF'])
 	$Title=_('Inventory Valuation Reporting');
 	include('includes/header.inc');
 
+	echo '<p class="page_title_text">
+			<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . $Title . '
+		</p>';
 
-	if (empty($_POST['FromCriteria']) OR empty($_POST['ToCriteria'])) {
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
+		  <div>
+		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	/*if $FromCriteria is not set then show a form to allow input	*/
-		echo '<p class="page_title_text">
-				<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . $Title . '
-			</p>';
-
-		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-              <div>
-            <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-			<table class="selection">
+		echo '<table class="selection">
 			<tr>
-				<td>' . _('From Inventory Category Code') . ':</td>
-				<td><select name="FromCriteria">';
-
-		$sql="SELECT categoryid,
-					categorydescription
-				FROM stockcategory
-				ORDER BY categorydescription";
-
-		$CatResult= DB_query($sql);
-		While ($myrow = DB_fetch_array($CatResult)){
-			echo '<option value="' . $myrow['categorydescription'] . '">' . $myrow['categorydescription'] . ' - ' . $myrow['categoryid'] . '</option>';
+				<td>' . _('Select Inventory Categories') . ':</td>
+				<td><select autofocus="autofocus" required="required" minlength="1" size="12" name="Categories[]"multiple="multiple">';
+	$SQL = 'SELECT categoryid, categorydescription 
+			FROM stockcategory 
+			ORDER BY categorydescription';
+	$CatResult = DB_query($SQL);
+	while ($MyRow = DB_fetch_array($CatResult)) {
+		if (isset($_POST['Categories']) AND in_array($MyRow['categoryid'], $_POST['Categories'])) {
+			echo '<option selected="selected" value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] .'</option>';
+		} else {
+			echo '<option value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
 		}
-		echo '</select></td>
-			</tr>';
-
-		echo '<tr>
-				<td>' . _('To Inventory Category Code') . ':</td>
-				<td><select name="ToCriteria">';
-
-		/*Set the index for the categories result set back to 0 */
-		DB_data_seek($CatResult,0);
-
-		While ($myrow = DB_fetch_array($CatResult)){
-			echo '<option value="' . $myrow['categorydescription'] . '">' . $myrow['categorydescription'] . ' - ' . $myrow['categoryid'] . '</option>';
-		}
-		echo '</select></td>
-			</tr>';
-
-		echo '<tr>
-				<td>' . _('For Inventory in Location') . ':</td>
-				<td><select name="Location">';
-
-		$sql = "SELECT locations.loccode,
-						locationname
-				FROM locations
-				INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
-
-		$LocnResult=DB_query($sql);
-
-		echo '<option value="All">' . _('All Locations') . '</option>';
-
-		while ($myrow=DB_fetch_array($LocnResult)){
-			echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
-		}
-		echo '</select></td>
-			</tr>';
-
-		echo '<tr>
-				<td>' . _('Summary or Detailed Report') . ':</td>
-				<td><select name="DetailedReport">
-					<option selected="selected" value="No">' . _('Summary Report') . '</option>
-					<option value="Yes">' . _('Detailed Report') . '</option>
-					</select></td>
-			</tr>
-			</table>
-			<br />
-			<div class="centre">
-				<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
-				<input type="submit" name="CSV" value="' . _('Output to CSV') . '" />
-			</div>';
-        echo '</div>
-              </form>';
 	}
+	echo '</select>
+			</td>
+		</tr>';
+
+	echo '<tr>
+			<td>' . _('For Inventory in Location') . ':</td>
+			<td><select name="Location">';
+
+	$sql = "SELECT locations.loccode,
+					locationname
+			FROM locations
+			INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
+
+	$LocnResult=DB_query($sql);
+
+	echo '<option value="All">' . _('All Locations') . '</option>';
+
+	while ($myrow=DB_fetch_array($LocnResult)){
+		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+	}
+	echo '</select></td>
+		</tr>';
+
+	echo '<tr>
+			<td>' . _('Summary or Detailed Report') . ':</td>
+			<td><select name="DetailedReport">
+				<option selected="selected" value="No">' . _('Summary Report') . '</option>
+				<option value="Yes">' . _('Detailed Report') . '</option>
+				</select></td>
+		</tr>
+		</table>
+		<br />
+		<div class="centre">
+			<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
+			<input type="submit" name="CSV" value="' . _('Output to CSV') . '" />
+		</div>';
+	echo '</div>
+		  </form>';
+
 	include('includes/footer.inc');
 
 } /*end of else not PrintPDF */

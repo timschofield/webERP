@@ -284,79 +284,75 @@ If (isset($_POST['PrintPDF'])) {
 	echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/customer.png" title="' .
 		_('Price List') . '" />' . ' ' . _('Print a price list by inventory category') . '</p>';
 
-	if (!isset($_POST['FromCriteria']) or !isset($_POST['ToCriteria'])) {
-		/*if $FromCriteria is not set then show a form to allow input */
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+	echo '<div>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-        echo '<div>';
-		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-        echo '<table class="selection">';
-
-		echo '<table class="selection">
-                <tr>
-                    <td>' . _('Select Inventory Categories') . ':</td>
-                    <td><select autofocus="autofocus" required="required" minlength="1" size="12" name="Categories[]"multiple="multiple">';
-        $SQL = 'SELECT categoryid, categorydescription 
-				FROM stockcategory 
-				ORDER BY categorydescription';
-        $CatResult = DB_query($SQL);
-        while ($MyRow = DB_fetch_array($CatResult)) {
-            if (isset($_POST['Categories']) AND in_array($MyRow['categoryid'], $_POST['Categories'])) {
-                echo '<option selected="selected" value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] .'</option>';
-            } else {
-                echo '<option value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
-            }
-        }
-        echo '</select>
-                </td>
-            </tr>';
-
-		echo '<tr><td>' . _('For Sales Type/Price List').':</td>
-                  <td><select name="SalesType">';
-		$sql = "SELECT sales_type, typeabbrev FROM salestypes";
-		$SalesTypesResult=DB_query($sql);
-
-		while ($myrow=DB_fetch_array($SalesTypesResult)) {
-			echo '<option value="' . $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
-		}
-		echo '</select></td></tr>';
-
-		echo '<tr><td>' . _('For Currency').':</td>
-                  <td><select name="Currency">';
-		$sql = "SELECT currabrev, currency FROM currencies ORDER BY currency";
-		$CurrencyResult=DB_query($sql);
-		echo '<option selected="selected" value="All">' . _('All')  . '</option>';
-		while ($myrow=DB_fetch_array($CurrencyResult)) {
-			echo '<option value="' . $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
-		}
-		echo '</select></td></tr>';
-
-		echo '<tr>
-				<td>' . _('Show Gross Profit %') . ':</td>
-				<td><select name="ShowGPPercentages">
-					<option selected="selected" value="No">' .  _('Prices Only') . '</option>
-					<option value="Yes">' .  _('Show GP % too') . '</option>
-					</select></td>
-			</tr>
+	echo '<table class="selection">
 			<tr>
-				<td>' . _('Price Listing Type'). ':</td><td><select name="CustomerSpecials">
-					<option selected="selected" value="Sales Type Prices">' .  _('Default Sales Type Prices') . '</option>
-					<option value="Customer Special Prices Only">' .  _('Customer Special Prices Only') . '</option>
-					<option value="Full Description">' .  _('Full Description') . '</option>
-					</select></td>
-			</tr>
-			<tr>
-				<td>' . _('Effective As At') . ':</td>
-				<td><input type="text" required="required" size="11" class="date"	alt="' . $_SESSION['DefaultDateFormat'] . '" name="EffectiveDate" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
-			</tr>
-			</table>
-			<br />
-			<div class="centre">
-				<input type="submit" name="PrintPDF" value="'. _('Print PDF'). '" />
-			</div>
-			</div>
-		</form>';
+				<td>' . _('Select Inventory Categories') . ':</td>
+				<td><select autofocus="autofocus" required="required" minlength="1" size="12" name="Categories[]"multiple="multiple">';
+	$SQL = 'SELECT categoryid, categorydescription 
+			FROM stockcategory 
+			ORDER BY categorydescription';
+	$CatResult = DB_query($SQL);
+	while ($MyRow = DB_fetch_array($CatResult)) {
+		if (isset($_POST['Categories']) AND in_array($MyRow['categoryid'], $_POST['Categories'])) {
+			echo '<option selected="selected" value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] .'</option>';
+		} else {
+			echo '<option value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
+		}
 	}
+	echo '</select>
+			</td>
+		</tr>';
+
+	echo '<tr><td>' . _('For Sales Type/Price List').':</td>
+			  <td><select name="SalesType">';
+	$sql = "SELECT sales_type, typeabbrev FROM salestypes";
+	$SalesTypesResult=DB_query($sql);
+
+	while ($myrow=DB_fetch_array($SalesTypesResult)) {
+		echo '<option value="' . $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
+	}
+	echo '</select></td></tr>';
+
+	echo '<tr><td>' . _('For Currency').':</td>
+			  <td><select name="Currency">';
+	$sql = "SELECT currabrev, currency FROM currencies ORDER BY currency";
+	$CurrencyResult=DB_query($sql);
+	echo '<option selected="selected" value="All">' . _('All')  . '</option>';
+	while ($myrow=DB_fetch_array($CurrencyResult)) {
+		echo '<option value="' . $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
+	}
+	echo '</select></td></tr>';
+
+	echo '<tr>
+			<td>' . _('Show Gross Profit %') . ':</td>
+			<td><select name="ShowGPPercentages">
+				<option selected="selected" value="No">' .  _('Prices Only') . '</option>
+				<option value="Yes">' .  _('Show GP % too') . '</option>
+				</select></td>
+		</tr>
+		<tr>
+			<td>' . _('Price Listing Type'). ':</td><td><select name="CustomerSpecials">
+				<option selected="selected" value="Sales Type Prices">' .  _('Default Sales Type Prices') . '</option>
+				<option value="Customer Special Prices Only">' .  _('Customer Special Prices Only') . '</option>
+				<option value="Full Description">' .  _('Full Description') . '</option>
+				</select></td>
+		</tr>
+		<tr>
+			<td>' . _('Effective As At') . ':</td>
+			<td><input type="text" required="required" size="11" class="date"	alt="' . $_SESSION['DefaultDateFormat'] . '" name="EffectiveDate" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
+		</tr>
+		</table>
+		<br />
+		<div class="centre">
+			<input type="submit" name="PrintPDF" value="'. _('Print PDF'). '" />
+		</div>
+		</div>
+	</form>';
+
 	include('includes/footer.inc');
 } /*end of else not PrintPDF */
 
