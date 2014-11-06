@@ -1,6 +1,6 @@
 <?php
 
-define("VERSIONFILE", "1.07"); 
+define("VERSIONFILE", "1.08"); 
 
 /* Session started in session.inc for password checking and authorisation level check
 config.php is in turn included in session.inc*/
@@ -372,11 +372,7 @@ function WebsiteCategoryStainlessSteel($StockId, $Description, $Long, $Category)
 	if (($Category == "STAINL") OR ($Category == "TESTSS") OR ($Category == "NOPOSS")) { 
 		// if belongs to one of the SS categories
 		$WebCat = STAINLESS_STEEL_JEWELLERY;	
-	}elseif(substr($StockId, 0,6) == "ALCL05"){
-		$WebCat = STAINLESS_STEEL_JEWELLERY;	
-	}else{
 	}
-
 	// filter some false positives
 	if (ItemExcludedFromWebsite($StockId, $Category)){
 		$WebCat = ITEM_EXCLUDED_FROM_WEBSITE;
@@ -455,7 +451,9 @@ function WebsiteCategoryClassic($StockId, $Description, $Long, $Category){
 	$WebCat = 0;
 	
 	//(('CLASSIC_JEWELLERY',61);
-	if ((substr($StockId, 0,4) == "BEPU") OR (substr($StockId, 0,4) == "PSPU")) { 
+	if ((substr($StockId, 0,4) == "BEPU") 
+		OR (substr($StockId, 0,4) == "PSPU")
+		OR (substr($StockId, 0,4) == "ALCL")) { 
 		$WebCat = CLASSIC_JEWELLERY;	
 	}
 
