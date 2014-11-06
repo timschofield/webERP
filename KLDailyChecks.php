@@ -22,7 +22,7 @@ function KL_DailyChecks($Group, $RootPath, $db, $EmailText= ''){
 	}elseif ($Group == "02"){
 		$EmailText = DailyReorderLevelAdjustments(FALSE, TRUE, $RootPath, $db, $EmailText); // Updates RL 
 	}elseif ($Group == "03"){
-		KL_DailyEmailsToStaff($db);
+		$EmailText = KL_DailyEmailsToStaff($db, $EmailText);
 	}elseif ($Group == "04"){
 		$EmailText = WeberpToOpenCartDailySync(FALSE, $db, $db_oc, $oc_tableprefix, $EmailText);
 		$EmailText = OpenCartToWeberpSync(FALSE, $db, $db_oc, $oc_tableprefix, $EmailText);
@@ -89,10 +89,11 @@ function KL_DailyMaintenanceDatabase($ShowMessages, $db, $EmailText = ''){
 	return $EmailText;
 }
 
-function KL_DailyEmailsToStaff($db){
-	SendEmailChangePriceReadyForStep02($db);
-	SendEmailMoveToDiscountReadyForStep02($db);
-	SendEmailMoveToOutletReadyForStep02($db);
+function KL_DailyEmailsToStaff($db, $EmailText){
+	$EmailText = SendEmailChangePriceReadyForStep02($db, $EmailText);
+	$EmailText = SendEmailMoveToDiscountReadyForStep02($db, $EmailText);
+	$EmailText = SendEmailMoveToOutletReadyForStep02($db, $EmailText);
+	return $EmailText;
 }
 
 function KL_DailyOptimizationDatabase($ShowMessages, $db, $EmailText = ''){
