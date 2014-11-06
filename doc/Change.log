@@ -1,5 +1,6 @@
 webERP Change Log
 
+06/11/14 Exson: Add code change for table custitem and pricematrix in Z_ChangeStockCode.php.
 3/11/14 Exson: Make Dashboard.php workable in php which version is lower than 5.3. Report by Craig Craven.
 28/10/14 Exson: Add Chinese Yuan to default.sql to prevent wrong Chinese Yuan input which leads lots of problem. Advised by Thumb.
 28/10/14 Exson: Fixed the variable undefined bug in simplify Chinese manual in Manual/ManualContents.php. Reported by webERP Chinese community QQ group chengdu-belief.
