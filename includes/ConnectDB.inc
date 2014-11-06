@@ -9,7 +9,7 @@ $Version='4.11.5'; //must update manually every time there is a DB change
 require_once ($PathPrefix .'includes/MiscFunctions.php');
 if (!isset($_SESSION['DatabaseName'])){ //need to get the database name from the file structure
 	if (isset($_POST['CompanyNameField'])){
-	    if (isset($CompanyList) && is_array($CompanyList)) {
+	    if (isset($CompanyList) AND is_array($CompanyList)) {
             foreach ($CompanyList as $CompanyEntryKey => $CompanyEntry){
                if (is_dir('./companies/'. $CompanyEntry['database']) AND ($CompanyEntryKey == $_POST['CompanyNameField']) ) {
                    $_SESSION['DatabaseName'] = $CompanyEntry['database'];
@@ -45,15 +45,11 @@ if (!isset($_SESSION['DatabaseName'])){ //need to get the database name from the
                 prnMsg(_('The company name abbreviation entered at login must also have a company directory defined. See your system administrator'),'error');
             }
         } // end provision for old setup
-
+		include_once ($PathPrefix . 'includes/ConnectDB_' . $DBType . '.inc');
 	} elseif (isset($DatabaseName)) { /* Scripts that do not require a login must have the $DatabaseName variable set in hard code */
 		$_SESSION['DatabaseName'] = $DatabaseName;
 		$_SESSION['CompanyName']= $DatabaseName;
 		include_once ($PathPrefix . 'includes/ConnectDB_' . $DBType . '.inc');
 	}
-
-} else {
- 	include_once($PathPrefix .'includes/ConnectDB_' . $DBType . '.inc');
 }
-
 ?>

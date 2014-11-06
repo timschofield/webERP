@@ -924,7 +924,7 @@ function CalcEarliestDispatchDate (){
 	$EarliestDispatch = time();
 	/* If the hour is after Dispatch Cut Off Time default dispatch date to tomorrow */
 	$EarliestDispatch = (Date('H')>=$_SESSION['DispatchCutOffTime'])?($EarliestDispatch+24*60*60):$EarliestDispatch;
-	
+
 	if ((Date('w',$EarliestDispatch)==0) AND ($_SESSION['WorkingDaysWeek'] != '7')){
 
 /*if today is a sunday AND the company does NOT work 7 days a week, the dispatch date must be tomorrow (Monday) or after */

@@ -42,8 +42,8 @@ function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
 		}
 		/* The SQL to get the user info must use the * syntax because the field name could change between versions if the fields are specifed directly then the sql fails and the db upgrade will fail */
 		$sql = "SELECT *
-			FROM www_users
-			WHERE www_users.userid='" . $Name . "'";
+				FROM www_users
+				WHERE www_users.userid='" . $Name . "'";
 
 		$ErrMsg = _('Could not retrieve user details on login because');
 		$debug =1;
@@ -110,6 +110,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
 			$_SESSION['SalesmanLogin'] = $myrow['salesman'];
 			$_SESSION['CanCreateTender'] = $myrow['cancreatetender'];
 			$_SESSION['AllowedDepartment'] = $myrow['department'];
+			$_SESSION['ShowDashboard'] = $myrow['dashboard'];
 
 			if (isset($myrow['pdflanguage'])) {
 				$_SESSION['PDFLanguage'] = $myrow['pdflanguage'];

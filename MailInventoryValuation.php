@@ -17,6 +17,7 @@ $_POST['Location'] = $Location; /* so PDFInventoryValnPageHeader.inc works too *
 include('includes/session.inc');
 include ('includes/class.pdf.php');
 $Recipients = GetMailList('InventoryValuationRecipients');
+
 if (sizeOf($Recipients) == 0) {
 	$Title = _('Inventory Valuation') . ' - ' . _('Problem Report');
       	include('includes/header.inc');
@@ -242,7 +243,7 @@ if ($ListCount == 0) {
 			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 			include('includes/footer.inc');
 			exit;
-	
+
 	}else{
 			$Title = _('Print Inventory Valuation Error');
 			include('includes/header.inc');
@@ -250,8 +251,8 @@ if ($ListCount == 0) {
 			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 			include('includes/footer.inc');
 			exit;
-	
+
 	}
-	
+
 }
 ?>
