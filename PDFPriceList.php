@@ -16,11 +16,7 @@
 
 include('includes/session.inc');
 
-If (isset($_POST['PrintPDF'])
-	AND isset($_POST['FromCriteria'])
-	AND mb_strlen($_POST['FromCriteria'])>=1
-	AND isset($_POST['ToCriteria'])
-	AND mb_strlen($_POST['ToCriteria'])>=1) {
+If (isset($_POST['PrintPDF'])) {
 
 /*	if ($_POST['CustomerSpecials']=='Customer Special Prices Only') {
 		// To do: For special prices, change from portrait to landscape orientation.
@@ -71,7 +67,6 @@ If (isset($_POST['PrintPDF'])
 		$CustNameRow = DB_fetch_row($CustNameResult);
 		$CustomerName = $CustNameRow[0];
 		$SalesType = $CustNameRow[1];
-
 		$SQL = "SELECT prices.typeabbrev,
   						prices.stockid,
   						stockmaster.description,
@@ -97,8 +92,7 @@ If (isset($_POST['PrintPDF'])
 						ON prices.debtorno=custbranch.debtorno
 						AND prices.branchcode=custbranch.branchcode
 						WHERE prices.typeabbrev = '" . $SalesType . "'
-						AND stockcategory.categorydescription >= '" . $_POST['FromCriteria'] . "'
-						AND stockcategory.categorydescription <= '" . $_POST['ToCriteria'] . "'
+						AND stockmaster.categoryid IN ('". implode("','",$_POST['Categories'])."')
 						AND prices.debtorno='" . $_SESSION['CustomerID'] . "'
 						AND prices.startdate<='" . FormatDateForSQL($_POST['EffectiveDate']) . "'
 						AND (prices.enddate='0000-00-00' OR prices.enddate >'" . FormatDateForSQL($_POST['EffectiveDate']) . "')" .
@@ -133,9 +127,8 @@ If (isset($_POST['PrintPDF'])
     				ON stockmaster.stockid=prices.stockid
 				INNER JOIN currencies
 					ON prices.currabrev=currencies.currabrev
-                WHERE stockcategory.categorydescription >= '" . $_POST['FromCriteria'] . "'
-    			AND stockcategory.categorydescription <= '" . $_POST['ToCriteria'] . "'
-    			AND prices.typeabbrev='" . $_POST['SalesType'] . "'
+                WHERE stockmaster.categoryid IN ('". implode("','",$_POST['Categories'])."')
+				AND prices.typeabbrev='" . $_POST['SalesType'] . "'
     			AND prices.startdate<='" . FormatDateForSQL($_POST['EffectiveDate']) . "'
     			AND (prices.enddate='0000-00-00' OR prices.enddate>'" . FormatDateForSQL($_POST['EffectiveDate']) . "')" .
 				$WhereCurrency . "
@@ -299,19 +292,24 @@ If (isset($_POST['PrintPDF'])
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
         echo '<table class="selection">';
 
-		$sql='SELECT categoryid, categorydescription FROM stockcategory ORDER BY categorydescription';
-		$CatResult= DB_query($sql);
-		$SelectCat='';
-		While ($myrow = DB_fetch_array($CatResult)) {
-			$SelectCat .= "<option value='" . $myrow['categorydescription'] . "'>" . $myrow['categorydescription'] . '</option>';
-		}
-		$SelectCat .= '</select></td></tr>';
-		echo '<tr><td>' .  _('From Inventory Category') . ':</td>
-                  <td><select name="FromCriteria">';
-		echo $SelectCat;
-		echo '<tr><td>' . _('To Inventory Category') . ':</td>
-                  <td><select name="ToCriteria">';
-		echo $SelectCat;
+		echo '<table class="selection">
+                <tr>
+                    <td>' . _('Select Inventory Categories') . ':</td>
+                    <td><select autofocus="autofocus" required="required" minlength="1" size="12" name="Categories[]"multiple="multiple">';
+        $SQL = 'SELECT categoryid, categorydescription 
+				FROM stockcategory 
+				ORDER BY categorydescription';
+        $CatResult = DB_query($SQL);
+        while ($MyRow = DB_fetch_array($CatResult)) {
+            if (isset($_POST['Categories']) AND in_array($MyRow['categoryid'], $_POST['Categories'])) {
+                echo '<option selected="selected" value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] .'</option>';
+            } else {
+                echo '<option value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
+            }
+        }
+        echo '</select>
+                </td>
+            </tr>';
 
 		echo '<tr><td>' . _('For Sales Type/Price List').':</td>
                   <td><select name="SalesType">';
