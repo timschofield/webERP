@@ -327,8 +327,6 @@ else {
 				INNER JOIN currencies
 				ON suppliers.currcode=currencies.currabrev
 				WHERE purchorderdetails.completed=0
-				AND orddate>='" . $DateFrom . "'
-				AND orddate<='" . $DateTo . "'
 				AND purchorders.orderno='" . $OrderNumber . "'
 				GROUP BY purchorders.orderno ASC,
 					suppliers.suppname,
