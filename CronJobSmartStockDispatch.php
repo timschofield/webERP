@@ -48,20 +48,6 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 
 	$EmailText = $EmailText .  "\n" . "Smart Stock Dispatch from " . $FromLocCode . " to " . $ToLocCode . " Strategy " . $Strategy . "\n";
 
-	include('includes/PDFStarter.php');
-
-	$pdf->addInfo('Title',_('KL Stock Dispatch Report'));
-	$pdf->addInfo('Subject',_('Items to dispatch to another location to cover reorder level'));
-	$FontSize=9;
-	$PageNumber=1;
-	$line_height=19;
-	$Xpos = $Left_Margin+1;
-
-	// Create Transfer Number
-	if(!isset($Trf_ID) and $ReportType == 'Batch') {
-		$Trf_ID = GetNextTransNo(16,$db);
-	}
-
 	// from location
 	$ErrMsg = _('Could not retrieve location name from the database');
 	$sqlfrom="SELECT locationname FROM `locations` WHERE loccode='" . $FromLocCode . "'";
@@ -141,6 +127,21 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 		$EmailText = $EmailText . "Smart Stock Dispatch ERROR " .  _('The stock dispatch did not have any items to list') . "\n";
 	}else{
 		// OK, let's create the PDF
+
+		include('includes/PDFStarter.php');
+
+		$pdf->addInfo('Title',_('KL Stock Dispatch Report'));
+		$pdf->addInfo('Subject',_('Items to dispatch to another location to cover reorder level'));
+		$FontSize=9;
+		$PageNumber=1;
+		$line_height=19;
+		$Xpos = $Left_Margin+1;
+
+		// Create Transfer Number
+		if(!isset($Trf_ID) and $ReportType == 'Batch') {
+			$Trf_ID = GetNextTransNo(16,$db);
+		}
+
 		PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
 					$Page_Width,$Right_Margin,$Trf_ID,$FromLocation,$ToLocation,$CategoryDescription);
 
@@ -308,6 +309,7 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 		}else{
 			$EmailText = $EmailText .   "Email FAILED " . $FileName . "\n";
 		}
+		sleep(5);
 	}
 	return $EmailText;
 }
