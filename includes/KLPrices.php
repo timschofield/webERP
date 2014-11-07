@@ -352,7 +352,7 @@ function ItemsWith20501231($RootPath, $db){
 	}
 }
 
-function SendEmailChangePriceReadyForStep02($db){
+function SendEmailChangePriceReadyForStep02($db, $EmailText){
 	$SQL = "SELECT stockmaster.stockid, 
 				stockmaster.description,
 				(SELECT sum(quantity)
@@ -377,16 +377,23 @@ function SendEmailChangePriceReadyForStep02($db){
 				
 	$result = DB_query($SQL, $db);
 	if (DB_num_rows($result) != 0){
+		if ($EmailText !=''){
+			$EmailText = $EmailText . "\n"; 
+		}
 		while ($myrow = DB_fetch_array($result)) {
 			if (($myrow['qohkantor'] + $myrow['qohotherlocs']) == $myrow['qohtotal']){
 				// Send Email
 				KLSendEmail("ItemReadyChangePriceStep02", "Silent", $myrow['stockid'], $myrow['description'],$myrow['qohtotal']);
+				if ($EmailText !=''){
+					$EmailText = $EmailText . _('Item Ready for Price Change Step 02 = '). $myrow['stockid'] . " QOH = " . $myrow['qohtotal'] . "\n"; 
+				}
 			}
 		}
 	}
+	return $EmailText;
 }
 
-function SendEmailMoveToDiscountReadyForStep02($db){
+function SendEmailMoveToDiscountReadyForStep02($db, $EmailText){
 	$SQL = "SELECT stockmaster.stockid, 
 				stockmaster.description,
 				(SELECT sum(quantity)
@@ -411,16 +418,23 @@ function SendEmailMoveToDiscountReadyForStep02($db){
 				
 	$result = DB_query($SQL, $db);
 	if (DB_num_rows($result) != 0){
+		if ($EmailText !=''){
+			$EmailText = $EmailText . "\n"; 
+		}
 		while ($myrow = DB_fetch_array($result)) {
 			if (($myrow['qohkantor'] + $myrow['qohotherlocs']) == $myrow['qohtotal']){
 				// Send Email
 				KLSendEmail("ItemReadyMoveToDiscountStep02", "Silent", $myrow['stockid'], $myrow['description'],$myrow['qohtotal']);
+				if ($EmailText !=''){
+					$EmailText = $EmailText . _('Item Ready Move To Discount Step 02 = '). $myrow['stockid'] . " QOH = " . $myrow['qohtotal'] . "\n"; 
+				}
 			}
 		}
 	}
+	return $EmailText;
 }
 
-function SendEmailMoveToOutletReadyForStep02($db){
+function SendEmailMoveToOutletReadyForStep02($db, $EmailText){
 	$SQL = "SELECT stockmaster.stockid, 
 				stockmaster.description,
 				(SELECT sum(quantity)
@@ -445,13 +459,20 @@ function SendEmailMoveToOutletReadyForStep02($db){
 				
 	$result = DB_query($SQL, $db);
 	if (DB_num_rows($result) != 0){
+		if ($EmailText !=''){
+			$EmailText = $EmailText . "\n"; 
+		}
 		while ($myrow = DB_fetch_array($result)) {
 			if (($myrow['qohkantor'] + $myrow['qohotherlocs']) == $myrow['qohtotal']){
 				// Send Email
 				KLSendEmail("ItemReadyMoveTooutletStep02", "Silent", $myrow['stockid'], $myrow['description'],$myrow['qohtotal']);
+				if ($EmailText !=''){
+					$EmailText = $EmailText . _('Item Ready Move To Outlet Step 02 = '). $myrow['stockid'] . " QOH = " . $myrow['qohtotal'] . "\n"; 
+				}
 			}
 		}
 	}
+	return $EmailText;
 }
 
 ?>
