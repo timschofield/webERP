@@ -14,9 +14,10 @@ $EmailText  = "KL webERP: Smart Stock Dispatch " . "\n";
 $ReportType = "ReportOnly"; // ONLY FOR TESTS
 $DispatchPercent = 0;
 $_SESSION['DefaultPageSize'] = 'A4';
+$DaysSalesForOrder = 2;
 
 /* Selection of shops with smart dispatch from / to KANTO, sorted by priority and sales of the last X days */
-$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-7));
+$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$DaysSalesForOrder));
 
 $SQL = "SELECT locations.loccode
 		FROM locations
@@ -27,7 +28,7 @@ $SQL = "SELECT locations.loccode
 			WHERE salesorderdetails.orderno = salesorders.orderno
 				AND salesorderdetails.completed = 1
 				AND salesorders.orddate >= '". $StartDate . "'
-				AND salesorders.fromstkloc = locations.loccode)";
+				AND salesorders.fromstkloc = locations.loccode) DESC";
 $result = DB_query($SQL, $db);
 if (DB_num_rows($result) != 0){
 	while ($myrow = DB_fetch_array($result)) {
@@ -39,7 +40,7 @@ if (DB_num_rows($result) != 0){
 }
 
 $EmailAddress = "webmaster@kapal-laut.com";
-$EmailSubject  = "KL webERP: Stock Dispatch CRON JOB";
+$EmailSubject  = "KL webERP CRON JOB: Daily Stock Dispatch";
 SendEmailFromCron($EmailAddress, $EmailSubject, $EmailText, '');
 
 /****************************************************************************************/
@@ -287,20 +288,25 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 		/*Print out the grand totals */
 
 		$FileName = 'Transfer-' . Date('Y-m-d') .  '-' . $FromLocCode . '-' . $ToLocCode . '.pdf';
+		$Subject  = 'Transfer-' . Date('Y-m-d') .  '-' . $FromLocCode . '-' . $ToLocCode;
+		$Text = 'Please prepare this transfer ASAP';
+		$Text = $Text . "\n---\r\n"; // \r is needed for signature separating
+		$Text = $Text . 'Email sent by webERP KL CRON JOB at '.date('d/M/Y H:i:s').'';
+		
 		$pdf->Output($_SESSION['reports_dir'] . '/' . $FileName, 'F');
 		$pdf-> __destruct();
 
 		$mail = new htmlMimeMail();
-//		$attachment = $mail->getFile($_SESSION['reports_dir'] . '/' . $FileName);
-		$mail->setText('Email text');
-		$mail->setSubject('Email subject');
-//		$mail->addAttachment($attachment, $FileName, 'application/pdf');
-		$mail->setFrom('ricard@kapal-laut.com');
-		$result = $mail->send('info@kapal-laut.com');
+		$attachment = $mail->getFile($_SESSION['reports_dir'] . '/' . $FileName);
+		$mail->setText($Text);
+		$mail->setSubject($Subject);
+		$mail->addAttachment($attachment, $FileName, 'application/pdf');
+		$mail->setFrom('webmaster@kapal-laut.com', 'webERP Cron Job');
+		$result = $mail->send(array('kl-shoptransfers@kapal-laut.com'));
 		if($result){
-			$EmailText = $EmailText .   " Email Sent " . $FileName . "\n";
+			$EmailText = $EmailText .   "Email Sent " . $FileName . "\n";
 		}else{
-			$EmailText = $EmailText .   " Email FAILED " . $FileName . "\n";
+			$EmailText = $EmailText .   "Email FAILED " . $FileName . "\n";
 		}
 	}
 	return $EmailText;
@@ -323,25 +329,27 @@ function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Ma
 	$pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,$_SESSION['CompanyRecord']['coyname']);
 	$YPos -=$line_height;
 
-	$pdf->addTextWrap($Left_Margin,$YPos,150,$FontSize,_('Stock Dispatch ') . $ReportType);
+	$pdf->addTextWrap($Left_Margin,$YPos,150,$FontSize,_('Shop Transfer'));
+	$pdf->setFont('','B');
 	$pdf->addTextWrap(200,$YPos,30,$FontSize,_('From :'));
 	$pdf->addTextWrap(230,$YPos,200,$FontSize,$FromLocation);
+	$pdf->setFont('','');
 
 	$pdf->addTextWrap($Page_Width-$Right_Margin-150,$YPos,160,$FontSize,_('Printed') . ': ' .
 		 Date($_SESSION['DefaultDateFormat']) . '   ' . _('Page') . ' ' . $PageNumber,'left');
 	$YPos -= $line_height;
-	$pdf->addTextWrap($Left_Margin,$YPos,50,$FontSize,_('Transfer No.'));
+	$pdf->addTextWrap($Left_Margin,$YPos,50,$FontSize,_('Transfer'));
 	$pdf->addTextWrap(95,$YPos,50,$FontSize,$Trf_ID);
 	$pdf->setFont('','B');
 	$pdf->addTextWrap(200,$YPos,30,$FontSize,_('To :'));
 	$pdf->addTextWrap(230,$YPos,200,$FontSize,$ToLocation);
 	$pdf->setFont('','');
 	$YPos -= $line_height;
-	$pdf->addTextWrap($Left_Margin,$YPos,50,$FontSize,_('Category'));
-	$pdf->addTextWrap(160,$YPos,150,$FontSize,$CategoryDescription,'left');
+	$pdf->addTextWrap($Left_Margin,$YPos,50,$FontSize,'');
+	$pdf->addTextWrap(160,$YPos,150,$FontSize,'','left');
 	$YPos -= $line_height;
-	$pdf->addTextWrap($Left_Margin,$YPos,50,$FontSize,_('Over transfer'));
-	$pdf->addTextWrap(95,$YPos,50,$FontSize,$DispatchPercent . "%");
+	$pdf->addTextWrap($Left_Margin,$YPos,50,$FontSize,'');
+	$pdf->addTextWrap(95,$YPos,50,$FontSize,'');
 	if ($Strategy == 'OverFrom') {
 		$pdf->addTextWrap(200,$YPos,200,$FontSize,_('Overstock items at '). $FromLocation);
 	}else{
@@ -351,7 +359,7 @@ function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Ma
 	/*set up the headings */
 	$Xpos = $Left_Margin+1;
 
-	$pdf->addTextWrap(50,$YPos,100,$FontSize,_('Part Number'), 'left');
+	$pdf->addTextWrap(50,$YPos,100,$FontSize,_('Item Code'), 'left');
 	$pdf->addTextWrap(135,$YPos,170,$FontSize,_('Image/Description'), 'left');
 	$pdf->addTextWrap(360,$YPos,40,$FontSize,_('From'), 'right');
 	$pdf->addTextWrap(405,$YPos,40,$FontSize,_('To'), 'right');
