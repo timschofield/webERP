@@ -161,6 +161,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 			<td><input type="text" name="FromPrice" size="20" maxlength="20" value="' . $_POST['FromPrice'] . '" /></td>
 			<td>' . _('To') . ':</td>
 			<td><input type="text" name="ToPrice" size="20" maxlength="20" value="' . $_POST['ToPrice'] . '" /></td>
+			<td>' . _('IDR') . ':</td>
 		</tr>';
 
 	echo '</table>
