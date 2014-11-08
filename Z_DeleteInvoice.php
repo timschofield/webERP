@@ -118,7 +118,7 @@ prnMsg(_('The debtor transaction record has been deleted'),'info');
 
 foreach ($StockMovement as $OrderLine) {
 
-	$SQL = "UPDATE salesorderdetails SET qtyinvoiced = qtyinvoiced - " . $OrderLine['qty'] . ",
+	$SQL = "UPDATE salesorderdetails SET qtyinvoiced = qtyinvoiced + " . $OrderLine['qty'] . ",
                                              completed = 0
                                 WHERE orderno = '" . $ProcessingOrder . "'
                                 AND stkcode = '" . $OrderLine['stockid'] . "'";
