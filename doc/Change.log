@@ -1,5 +1,6 @@
 webERP Change Log
 
+9/11/14: Tim: fix to javascript function to sort numbers including formatted numbers with commas.
 8/11/14: Alessandro Saporetti: Fixed the bug that the wrong invoiced quantity result in Z_DeleteInvoice.php.
 7/11/14 Exson: Remove date range from sql when users input the PO number in PO_SelectOSPurchOrder.php.
 06/11/14 Exson: Add code change for table custitem and pricematrix in Z_ChangeStockCode.php.

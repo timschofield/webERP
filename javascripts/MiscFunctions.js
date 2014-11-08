@@ -289,7 +289,7 @@ function SortSelect() {
 		function(a,b) {
 			if (direction=="a") {
 				if (columnClass=="number") {
-					return parseFloat(e[columnNumber].replace(/[,.]/g, '')) - parseFloat(t[columnNumber].replace(/[,.]/g, '')
+					return parseFloat(a[columnNumber].replace(/[,.]/g, '')) - parseFloat(b[columnNumber].replace(/[,.]/g, ''));
 				} else if (columnClass=="date") {
 					da=new Date(a[columnNumber]);
 					db=new Date(b[columnNumber]);
@@ -299,7 +299,7 @@ function SortSelect() {
 				}
 			} else {
 				if (columnClass=="number") {
-					return parseFloat(e[columnNumber].replace(/[,.]/g, '')) - parseFloat(t[columnNumber].replace(/[,.]/g, '')
+					return parseFloat(b[columnNumber].replace(/[,.]/g, '')) - parseFloat(a[columnNumber].replace(/[,.]/g, ''));
 				} else if (columnClass=="date") {
 					da=new Date(a[columnNumber]);
 					db=new Date(b[columnNumber]);
@@ -341,15 +341,13 @@ function initial(){
 		if (ds[i].className=="number") ds[i].onkeypress=rTN;
 		if (ds[i].className=="integer") ds[i].onkeypress=rTI;
 		if (ds[i].className=="number"){
-
-				ds[i].origonchange=ds[i].onchange;
-				ds[i].newonchange=rLocaleNumber;
-				ds[i].onchange=function(){
-					if(this.origonchange)
-						this.origonchange();
-					this.newonchange();
-				};
-
+			ds[i].origonchange=ds[i].onchange;
+			ds[i].newonchange=rLocaleNumber;
+			ds[i].onchange=function(){
+				if(this.origonchange)
+					this.origonchange();
+				this.newonchange();
+			};
 		}
 	}
 	var ds=document.getElementsByTagName("th");
