@@ -44,13 +44,13 @@ function rLocaleNumber(){
 			break;
 		default:
 			alert('something is wrong with your language setting');
-			
+
 
 	}
 	if(patt.test(this.value)){
 		this.setCustomValidity('');
 		return true;
-		
+
 	}else{
 		this.setCustomValidity('The number format is wrong');
 		return false;
@@ -98,7 +98,7 @@ function isDate(dS,dF){
 		m=mA[3];
 		y=mA[1];
 	}
-	
+
 	if (m<1 || m>12){
 		alert("Month must be between 1 and 12");
 		return false;
@@ -289,7 +289,7 @@ function SortSelect() {
 		function(a,b) {
 			if (direction=="a") {
 				if (columnClass=="number") {
-					return parseFloat(a[columnNumber])-parseFloat(b[columnNumber]);
+					return parseFloat(e[columnNumber].replace(/[,.]/g, '')) - parseFloat(t[columnNumber].replace(/[,.]/g, '')
 				} else if (columnClass=="date") {
 					da=new Date(a[columnNumber]);
 					db=new Date(b[columnNumber]);
@@ -299,7 +299,7 @@ function SortSelect() {
 				}
 			} else {
 				if (columnClass=="number") {
-					return parseFloat(b[columnNumber])-parseFloat(a[columnNumber]);
+					return parseFloat(e[columnNumber].replace(/[,.]/g, '')) - parseFloat(t[columnNumber].replace(/[,.]/g, '')
 				} else if (columnClass=="date") {
 					da=new Date(a[columnNumber]);
 					db=new Date(b[columnNumber]);
@@ -341,7 +341,7 @@ function initial(){
 		if (ds[i].className=="number") ds[i].onkeypress=rTN;
 		if (ds[i].className=="integer") ds[i].onkeypress=rTI;
 		if (ds[i].className=="number"){
-		
+
 				ds[i].origonchange=ds[i].onchange;
 				ds[i].newonchange=rLocaleNumber;
 				ds[i].onchange=function(){
@@ -349,7 +349,7 @@ function initial(){
 						this.origonchange();
 					this.newonchange();
 				};
-		
+
 		}
 	}
 	var ds=document.getElementsByTagName("th");
