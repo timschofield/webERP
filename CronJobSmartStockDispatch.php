@@ -10,8 +10,9 @@ include('includes/GetPrice.inc');
 $EmailText  = "KL webERP: Smart Stock Dispatch " . "\n"; 
 
 /* Parameters */
-// $ReportType = "Batch"; // ONLY FOR REAL ENVIRONMENT
-$ReportType = "ReportOnly"; // ONLY FOR TESTS
+$ReportType = "Batch"; // ONLY FOR REAL ENVIRONMENT
+//$ReportType = "ReportOnly"; // ONLY FOR TESTS
+
 $DispatchPercent = 0;
 $_SESSION['DefaultPageSize'] = 'A4';
 $DaysSalesForOrder = 2;
@@ -40,13 +41,13 @@ if (DB_num_rows($result) != 0){
 }
 
 $EmailAddress = "webmaster@kapal-laut.com";
-$EmailSubject  = "KL webERP CRON JOB: Daily Stock Dispatch";
+$EmailSubject  = "KL webERP Cron Job: Daily Stock Dispatch";
 SendEmailFromCron($EmailAddress, $EmailSubject, $EmailText, '');
 
 /****************************************************************************************/
 function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $DispatchPercent, $RootPath, $db, $EmailText){
 
-	$EmailText = $EmailText .  "\n" . "Smart Stock Dispatch from " . $FromLocCode . " to " . $ToLocCode . " Strategy " . $Strategy . "\n";
+	$EmailText = $EmailText .  "\n" . "Smart Stock Dispatch from " . $FromLocCode . " to " . $ToLocCode . "\n" . "Strategy " . $Strategy . "\n";
 
 	// from location
 	$ErrMsg = _('Could not retrieve location name from the database');
@@ -124,7 +125,7 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 		$EmailText = $EmailText . "Smart Stock Dispatch ERROR " .  _('The Stock Dispatch report could not be retrieved by the SQL because') . ' '  . DB_error_msg($db) . "\n";
 		$EmailText = $EmailText . "SQL = " .  $sql . "\n";
 	}elseif (DB_num_rows($result) ==0) {
-		$EmailText = $EmailText . "Smart Stock Dispatch ERROR " .  _('The stock dispatch did not have any items to list') . "\n";
+		$EmailText = $EmailText . "No Items for this transfer" . "\n";
 	}else{
 		// OK, let's create the PDF
 
@@ -140,6 +141,7 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 		// Create Transfer Number
 		if(!isset($Trf_ID) and $ReportType == 'Batch') {
 			$Trf_ID = GetNextTransNo(16,$db);
+			$EmailText = $EmailText . "Transfer # " . $Trf_ID . "\n";
 		}
 
 		PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
@@ -247,6 +249,8 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 				if ($ReportType == 'Batch') {
 					$resultLocShip = DB_query($sql2,$db, $ErrMsg);
 				}
+				$EmailText = $EmailText . str_pad($ShipQty, 3, " ") . " x " . $myrow['stockid'] . "\n";
+
 			}
 		} /*end while loop  */
 		//add prepared by
@@ -288,8 +292,8 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 		}
 		/*Print out the grand totals */
 
-		$FileName = 'Transfer-' . Date('Y-m-d') .  '-' . $FromLocCode . '-' . $ToLocCode . '.pdf';
 		$Subject  = 'Transfer-' . Date('Y-m-d') .  '-' . $FromLocCode . '-' . $ToLocCode;
+		$FileName = $Subject . '.pdf';
 		$Text = 'Please prepare this transfer ASAP';
 		$Text = $Text . "\n---\r\n"; // \r is needed for signature separating
 		$Text = $Text . 'Email sent by webERP KL CRON JOB at '.date('d/M/Y H:i:s').'';
@@ -305,11 +309,11 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 		$mail->setFrom('webmaster@kapal-laut.com', 'webERP Cron Job');
 		$result = $mail->send(array('kl-shoptransfers@kapal-laut.com'));
 		if($result){
-			$EmailText = $EmailText .   "Email Sent " . $FileName . "\n";
+			$EmailText = $EmailText . date('d/M/Y H:i:s') . " Email Sent " . $FileName . "\n";
 		}else{
-			$EmailText = $EmailText .   "Email FAILED " . $FileName . "\n";
+			$EmailText = $EmailText . date('d/M/Y H:i:s') . " Email FAILED " . $FileName . "\n";
 		}
-		sleep(5);
+		sleep(2);
 	}
 	return $EmailText;
 }

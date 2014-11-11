@@ -1063,11 +1063,11 @@ function OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db)
 
 function AdjustPackaging($DaysSales, $LongDaysSales, $ShowMessages, $updateDB, $RootPath, $db, $EmailText){
 	if ($EmailText!=''){
-		$EmailText = $EmailText . "\n\n" . "Function AdjustPackaging" . "\n\n" .
+		$EmailText = $EmailText . "\n\n" . "Adjust Packaging" . "\n\n" .
 					"DaysSales = " . $DaysSales . " " .	"LongDaysSales = " . $LongDaysSales . " " .
 					"RootPath = " . $RootPath . "\n" .
-					"List Shops Using Packaging Control = " . LIST_SHOPS_USING_PACKAGING_CONTROL . "\n" .
-					"List Items Using Packaging Control = " . LIST_ITEMS_USING_PACKAGING_CONTROL . "\n\n" ;
+					"List Shops Using Packaging Control = " . CleanListToPrint(LIST_SHOPS_USING_PACKAGING_CONTROL) . "\n" .
+					"List Items Using Packaging Control = " . CleanListToPrint(LIST_ITEMS_USING_PACKAGING_CONTROL) . "\n\n" ;
 	}
 	$Shops = ListToArray(LIST_SHOPS_USING_PACKAGING_CONTROL,",");
 	$CountShops = count($Shops);
@@ -1093,10 +1093,6 @@ function AdjustPackagingItemByShop($Item, $Shop, $DaysSales, $LongDaysSales, $Sh
 
 	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -$DaysSales));
 	$LongDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -$LongDaysSales));
-
-	if ($EmailText!=''){
-		$EmailText = $EmailText . " Shop = " . $Shop . "Item = " . $Item . "\n";
-	}
 
 	$SQL = "SELECT 	locations.locationname,
 					locations.rldaysforpackaging,
@@ -1130,8 +1126,7 @@ function AdjustPackagingItemByShop($Item, $Shop, $DaysSales, $LongDaysSales, $Sh
 				echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
 			}
 			if ($EmailText!=''){
-				$EmailText = $EmailText . "FromDate = " . $FromDate . " LongDate = " . $LongDate . " RLDays = " . $myrow['rldaysforpackaging'] . " " .
-							$text . "\n";
+				$EmailText = $EmailText . $text . "\n";
 			}
 			SetReorderLevel("PackagingOptimization", $Item,$Shop, $OldRL, $NewRL, $updateDB, $db);
 		}

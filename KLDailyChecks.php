@@ -452,4 +452,10 @@ function BlockInactiveUsers($access, $maxdays, $ShowMessages, $db){
 	if ($ShowMessages) prnMsg("Blocked inactive users","info");
 }
 
+function CleanListToPrint($List){
+	$ToClean = array("'", "(", ")");
+	$List = str_replace($ToClean, "", $List);
+	return $List;
+}
+
 ?>
