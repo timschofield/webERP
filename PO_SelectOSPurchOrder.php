@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: PO_SelectOSPurchOrder.php 6941 2014-10-26 23:18:08Z daintree $*/
+/* $Id: PO_SelectOSPurchOrder.php 6967 2014-11-07 09:39:42Z exsonqu $*/
 
 $PricesSecurity = 12;
 
@@ -327,8 +327,6 @@ else {
 				INNER JOIN currencies
 				ON suppliers.currcode=currencies.currabrev
 				WHERE purchorderdetails.completed=0
-				AND orddate>='" . $DateFrom . "'
-				AND orddate<='" . $DateTo . "'
 				AND purchorders.orderno='" . $OrderNumber . "'
 				GROUP BY purchorders.orderno ASC,
 					suppliers.suppname,

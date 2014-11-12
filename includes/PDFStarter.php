@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: PDFStarter.php 6806 2014-08-09 04:37:02Z daintree $ */
+/* $Id: PDFStarter.php 6955 2014-10-31 02:23:19Z tehonu $ */
 
 /*	-------------------------------------------------------------------------------------
 	November 2009. Moving from FPDF to TCPDF.
@@ -173,15 +173,7 @@ switch ($PaperSize) {
 		break;
 
 	default:
-		$DocumentPaper = 'LETTER';
 		$DocumentOrientation ='L';
-
-		$Page_Width = 792; // 72 * 11 inch
-		$Page_Height = 612; // 72 * 8.5 inch
-		$Top_Margin = 36; // Half inch = 72/2
-		$Bottom_Margin = 36; // Half inch = 72/2
-		$Left_Margin = 36; // Half inch = 72/2
-		$Right_Margin = 36; // Half inch = 72/2
 		break;
 }
 

@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: Z_DeleteInvoice.php 6945 2014-10-27 07:20:48Z daintree $*/
+/* $Id: Z_DeleteInvoice.php 6969 2014-11-08 00:42:31Z exsonqu $*/
 
 /* Script to delete an invoice expects and invoice number to delete
 not included on any menu for obvious reasons
@@ -118,7 +118,7 @@ prnMsg(_('The debtor transaction record has been deleted'),'info');
 
 foreach ($StockMovement as $OrderLine) {
 
-	$SQL = "UPDATE salesorderdetails SET qtyinvoiced = qtyinvoiced - " . $OrderLine['qty'] . ",
+	$SQL = "UPDATE salesorderdetails SET qtyinvoiced = qtyinvoiced + " . $OrderLine['qty'] . ",
                                              completed = 0
                                 WHERE orderno = '" . $ProcessingOrder . "'
                                 AND stkcode = '" . $OrderLine['stockid'] . "'";

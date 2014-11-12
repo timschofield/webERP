@@ -1,5 +1,5 @@
 <?php
-/*	$Id: Z_ChangeStockCode.php 6946 2014-10-27 07:30:11Z daintree $*/
+/*	$Id: Z_ChangeStockCode.php 6964 2014-11-06 08:40:30Z exsonqu $*/
 /*	This script is an utility to change an inventory item code. */
 /*	It uses function ChangeFieldInTable($TableName, $FieldName, $OldValue, 
 	$NewValue, $db) from .../includes/MiscFunctions.php.*/
@@ -153,6 +153,8 @@ if (isset($_POST['ProcessStockChange'])){
 		ChangeFieldInTable("bom", "parent", $_POST['OldStockID'], $_POST['NewStockID'], $db);
 		ChangeFieldInTable("stockrequestitems", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
 		ChangeFieldInTable("stockdescriptiontranslations", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);// Updates the translated item titles (StockTitles)
+		ChangeFieldInTable("custitem", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
+		ChangeFieldInTable("pricematrix", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
 /*		ChangeFieldInTable("Stockdescriptions", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);// Updates the translated item descriptions (StockDescriptions)*/
 
 		echo '<br />' . _('Changing any image files');

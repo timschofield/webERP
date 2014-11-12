@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: SupplierInvoice.php 6945 2014-10-27 07:20:48Z daintree $ */
+/* $Id: SupplierInvoice.php 6953 2014-10-30 01:37:37Z turbopt $ */
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing
@@ -319,7 +319,7 @@ if (isset($_GET['ReceivePO']) AND $_GET['ReceivePO']!=''){
 															FROM fixedassets
 															INNER JOIN fixedassetcategories
 															ON fixedassets.assetcategoryid=fixedassetcategories.categoryid
-															WHERE assetid='" . $OrderLine->AssetID . "'";
+															WHERE assetid='" . $OrderLine->AssetID . "'");
 						if (DB_num_rows($CheckAssetExistsResult)==1){ //then work with the assetid provided
 
 							/*Need to add a fixedassettrans for the cost of the asset being received */

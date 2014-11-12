@@ -1,7 +1,7 @@
 <?php
 
 /*  Performs login checks and $_SESSION initialisation */
-/* $Id: UserLogin.php 6946 2014-10-27 07:30:11Z daintree $*/
+/* $Id: UserLogin.php 6966 2014-11-06 09:15:09Z daintree $*/
 
 define('UL_OK',  0);		/* User verified, session initialised */
 define('UL_NOTVALID', 1);	/* User/password do not agree */
@@ -42,8 +42,8 @@ function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
 		}
 		/* The SQL to get the user info must use the * syntax because the field name could change between versions if the fields are specifed directly then the sql fails and the db upgrade will fail */
 		$sql = "SELECT *
-			FROM www_users
-			WHERE www_users.userid='" . $Name . "'";
+				FROM www_users
+				WHERE www_users.userid='" . $Name . "'";
 
 		$ErrMsg = _('Could not retrieve user details on login because');
 		$debug =1;
@@ -110,6 +110,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
 			$_SESSION['SalesmanLogin'] = $myrow['salesman'];
 			$_SESSION['CanCreateTender'] = $myrow['cancreatetender'];
 			$_SESSION['AllowedDepartment'] = $myrow['department'];
+			$_SESSION['ShowDashboard'] = $myrow['dashboard'];
 
 			if (isset($myrow['pdflanguage'])) {
 				$_SESSION['PDFLanguage'] = $myrow['pdflanguage'];

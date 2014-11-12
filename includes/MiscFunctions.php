@@ -1,5 +1,5 @@
 <?php
-/* $Id: MiscFunctions.php 6941 2014-10-26 23:18:08Z daintree $*/
+/* $Id: MiscFunctions.php 6966 2014-11-06 09:15:09Z daintree $*/
 
 /*  ******************************************  */
 /** STANDARD MESSAGE HANDLING & FORMATTING **/
@@ -419,10 +419,12 @@ function SendMailBySmtp(&$mail,$To) {
 	return $result;
 }
 
-function GetMailList($Recipients){
-	global $db;
+function GetMailList($MailGroup){
 	$ToList = array();
-	$sql = "SELECT email,realname FROM mailgroupdetails INNER JOIN www_users ON www_users.userid=mailgroupdetails.userid WHERE mailgroupdetails.groupname='".$Recipients."'";
+	$sql = "SELECT email,realname
+			FROM mailgroupdetails INNER JOIN www_users
+			ON www_users.userid=mailgroupdetails.userid
+			WHERE mailgroupdetails.groupname='" . $MailGroup . "'";
 	$ErrMsg = _('Failed to retrieve mail lists');
 	$result = DB_query($sql,$ErrMsg);
 	if(DB_num_rows($result) != 0){

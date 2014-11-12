@@ -273,15 +273,29 @@ if (in_array($DebtorSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset(
 
 				if ($DetailTrans['daysbeforedue'] > 0) {
 					$AddDays=$DetailTrans['daysbeforedue'] . ' days';
-					$DisplayDueDate = date_add(date_create($DetailTrans['trandate']), date_interval_create_from_date_string($AddDays));
+					if (function_exists(date_add)) {
+						$DisplayDueDate = date_add(date_create($DetailTrans['trandate']), date_interval_create_from_date_string($AddDays));
+					} else {
+				 		$DisplayDueDate = strtotime($AddDays,strtotime($DetailTrans['trandate']));
+					}
+
 				} else {
 					$AddDays=(intval($DetailTrans['dayinfollowingmonth']) - 1) . ' days';
-					$DisplayDueDate= date_create($DetailTrans['trandate']);
-					$DisplayDueDate->modify('first day of next month');
-					$DisplayDueDate=date_add($DisplayDueDate, date_interval_create_from_date_string($AddDays));
+					if (function_exists(date_add)){
+						$DisplayDueDate = date_create($DetailTrans['trandate']);
+						$DisplayDueDate->modify('first day of next month');
+						$DisplayDueDate = date_add($DisplayDueDate, date_interval_create_from_date_string($AddDays));
+					} else {
+						$DisplayDueDate = strtotime('first day of next month',strtotime($DetailTrans['trandate']));
+						$DisplayDueDate = strtotime($DisplayDueDate,strtotime($AddDays));
+					}
 
 				}
-				$DisplayDueDate=date_format($DisplayDueDate,$_SESSION['DefaultDateFormat']);
+				if (function_exists(date_add)) {
+					$DisplayDueDate=date_format($DisplayDueDate,$_SESSION['DefaultDateFormat']);
+				} else {
+					$DisplayDueDate = Date($_SESSION['DefaultDateFormat'],$DisplayDueDate);
+				}
 				if ($k==1){
 					echo '<tr class="EvenTableRows">';
 					$k=0;

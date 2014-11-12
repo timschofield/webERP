@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: WWW_Users.php 6941 2014-10-26 23:18:08Z daintree $*/
+/* $Id: WWW_Users.php 6952 2014-10-29 15:15:29Z tehonu $*/
 
 if (isset($_POST['UserID']) AND isset($_POST['ID'])){
 	if ($_POST['UserID'] == $_POST['ID']) {
@@ -258,6 +258,9 @@ if (isset($_POST['submit'])) {
 		if (DB_num_rows($result)!=0) {
 			prnMsg(_('Cannot delete user as entries already exist in the audit trail'), 'warn');
 		} else {
+			$sql="DELETE FROM locationusers WHERE userid='" . $SelectedUser . "'";
+			$ErrMsg = _('The Location - User could not be deleted because');;
+			$result = DB_query($sql,$ErrMsg);
 
 			$sql="DELETE FROM www_users WHERE userid='" . $SelectedUser . "'";
 			$ErrMsg = _('The User could not be deleted because');;
