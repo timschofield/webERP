@@ -267,7 +267,7 @@ if (isset($_POST['submit'])) {
 										 whererequired)
 							   SELECT worequirements.stockid,
 									workorders.requiredby,
-									qtypu*(woitems.qtyreqd - woitems.qtyrecd) AS netqty,
+									qtypu*(woitems.qtyreqd - woitems.qtyrecd)+stockmoves.qty AS netqty,
 									'WO',
 									woitems.wo,
 									'1',
@@ -280,8 +280,10 @@ if (isset($_POST['submit'])) {
 									  AND woitems.wo=worequirements.wo
 									  INNER JOIN stockmaster
 										ON woitems.stockid = stockmaster.stockid
+										INNER JOIN stockmoves ON stockmoves.stockid = stockmaster.stockid AND stockmoves.transno=woitems.wo AND type=38
 								WHERE workorders.closed=0
-									AND stockmaster.discontinued = 0";
+								AND stockmaster.discontinued = 0
+								AND qtypu*(woitems.qtyreqd - woitems.qtyrecd)+stockmoves.qty>0";
 	$result = DB_query($sql);
 
 	if ($_POST['UseMRPDemands'] == 'y') {
@@ -324,7 +326,7 @@ if (isset($_POST['submit'])) {
 									 FROM locstock, stockmaster
 									 WHERE stockmaster.stockid = locstock.stockid
 										AND stockmaster.discontinued = 0
-										AND reorderlevel > quantity";
+										AND reorderlevel - quantity > 0";
 		$result = DB_query($sql);
 		prnMsg(_('Loading requirements based on reorder level'),'info');
 		flush();
@@ -437,7 +439,8 @@ if (isset($_POST['submit'])) {
 								  0
 							  FROM woitems INNER JOIN workorders
 								ON woitems.wo=workorders.wo
-								WHERE workorders.closed=0";
+								WHERE workorders.closed=0
+								AND (woitems.qtyreqd-woitems.qtyrecd) > 0";
 	$result = DB_query($sql);
 
 	$sql = "ALTER TABLE mrpsupplies ADD INDEX part(part)";
@@ -699,21 +702,9 @@ function LevelNetting(&$db,$Part,$eoq,$PanSize,$ShrinkFactor,$LeadTime) {
 	$TotalSupply = 0;
 
 	if ($RequirementCount > 0 && $SupplyCount > 0) {
-		$TotalRequirement = 0;
-		foreach ($Requirements as $Req) {
-			$TotalRequirement += $Req['quantity'];
-		}
-		$TotalSupply = 0;
-		foreach ($Supplies as $Sup) {
-			$TotalSupply += $Sup['supplyquantity'];
-		}
-		$init_totals_for_first_run = 1;
+			$TotalRequirement += $Requirements[$reqi]['quantity'];
+			$TotalSupply += $Supplies[$supi]['supplyquantity'];
 		while ($TotalRequirement > 0 && $TotalSupply > 0) {
-			if($init_totals_for_first_run){
-					$TotalRequirement = $Requirements[$reqi]['quantity'];
-					$TotalSupply = $Supplies[$supi]['supplyquantity'];
-					$init_totals_for_first_run = 0;
-			}
 			$Supplies[$supi]['updateflag'] = 1;
 			// ******** Put leeway calculation in here ********
 			$DueDate = ConvertSQLDate($Supplies[$supi]['duedate']);
@@ -752,7 +743,9 @@ function LevelNetting(&$db,$Part,$eoq,$PanSize,$ShrinkFactor,$LeadTime) {
 					$TotalRequirement += $Requirements[$reqi]['quantity'];
 				}
 				$TotalRequirement -= $TotalSupply;
-				$Requirements[$reqi]['quantity'] -= $TotalSupply;
+				if(isset($Requirements[$reqi]['quantity'])){
+					$Requirements[$reqi]['quantity'] -= $TotalSupply;
+				}
 				$TotalSupply = 0;
 				$Supplies[$supi]['supplyquantity'] = 0;
 				$supi++;
