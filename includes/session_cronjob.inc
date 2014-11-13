@@ -152,7 +152,7 @@ if(isset($_SESSION['DB_Maintenance'])){
 				,'d')	>= 	$_SESSION['DB_Maintenance']){
 
 			/*Do the DB maintenance routing for the DB_type selected */
-			DB_Maintenance($db);
+			DB_Maintenance();
 			$_SESSION['DB_Maintenance_LastRun'] = Date('Y-m-d');
 		}
 	}
