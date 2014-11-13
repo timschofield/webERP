@@ -1,6 +1,6 @@
 <?php
 
- /* $Id: AgedDebtors.php 6592 2014-03-02 08:41:40Z daintree $ */
+ /* $Id: AgedDebtors.php 6944 2014-10-27 07:15:34Z daintree $ */
 
 include('includes/session.inc');
 
@@ -261,12 +261,12 @@ if (isset($_POST['PrintPDF'])
 					debtortrans.ovdiscount -
 					debtortrans.alloc)) >0.005";
 	}
-	$CustomerResult = DB_query($SQL,$db,'','',False,False); /*dont trap errors handled below*/
+	$CustomerResult = DB_query($SQL,'','',False,False); /*dont trap errors handled below*/
 
-	if (DB_error_no($db) !=0) {
+	if (DB_error_no() !=0) {
 		$Title = _('Aged Customer Account Analysis') . ' - ' . _('Problem Report') . '.... ';
 		include('includes/header.inc');
-		prnMsg(_('The customer details could not be retrieved by the SQL because') . ' ' . DB_error_msg($db),'error');
+		prnMsg(_('The customer details could not be retrieved by the SQL because') . ' ' . DB_error_msg(),'error');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		if ($debug==1){
 			echo '<br />' . $SQL;
@@ -364,11 +364,11 @@ if (isset($_POST['PrintPDF'])
 				$sql .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 			}
 
-			$DetailResult = DB_query($sql,$db,'','',False,False); /*Dont trap errors */
-			if (DB_error_no($db) !=0) {
+			$DetailResult = DB_query($sql,'','',False,False); /*Dont trap errors */
+			if (DB_error_no() !=0) {
 				$Title = _('Aged Customer Account Analysis') . ' - ' . _('Problem Report') . '....';
 				include('includes/header.inc');
-				prnMsg(_('The details of outstanding transactions for customer') . ' - ' . $AgedAnalysis['debtorno'] . ' ' . _('could not be retrieved because') . ' - ' . DB_error_msg($db),'error');
+				prnMsg(_('The details of outstanding transactions for customer') . ' - ' . $AgedAnalysis['debtorno'] . ' ' . _('could not be retrieved because') . ' - ' . DB_error_msg(),'error');
 				echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 				if ($debug==1){
 					echo '<br />' . _('The SQL that failed was') . '<br />' . $sql;
@@ -489,7 +489,7 @@ if (isset($_POST['PrintPDF'])
 
 			$sql = "SELECT salesmancode, salesmanname FROM salesman";
 
-			$result=DB_query($sql,$db);
+			$result=DB_query($sql);
 			echo '<option value="">' . _('All Sales people') . '</option>';
 			while ($myrow=DB_fetch_array($result)){
 					echo '<option value="' . $myrow['salesmancode'] . '">' . $myrow['salesmanname'] . '</option>';
@@ -503,7 +503,7 @@ if (isset($_POST['PrintPDF'])
 
 		$sql = "SELECT currency, currabrev FROM currencies";
 
-		$result=DB_query($sql,$db);
+		$result=DB_query($sql);
 		while ($myrow=DB_fetch_array($result)){
 			  if ($myrow['currabrev'] == $_SESSION['CompanyRecord']['currencydefault']){
 				echo '<option selected="selected" value="' . $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';

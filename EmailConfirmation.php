@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: EmailConfirmation.php 6812 2014-08-13 18:14:57Z agaluski $*/
+/* $Id: EmailConfirmation.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 include('includes/session.inc');
 include('includes/SQL_CommonFunctions.inc');
@@ -76,7 +76,7 @@ $sql = "SELECT salesorders.debtorno,
 			AND salesorders.fromstkloc=locations.loccode
 			AND salesorders.orderno='" . $_GET['TransNo'] . "'";
 
-$result=DB_query($sql,$db, $ErrMsg);
+$result=DB_query($sql, $ErrMsg);
 
 //If there are no rows, there's a problem.
 if (DB_num_rows($result)==0){
@@ -234,7 +234,7 @@ if($_GET['POLine'] == 1){
 			ON salesorderdetails.stkcode=stockmaster.stockid
 		WHERE salesorderdetails.orderno=" . $_GET['TransNo'] . "
 		ORDER BY poline";
-	$result=DB_query($sql,$db, $ErrMsg);
+	$result=DB_query($sql, $ErrMsg);
 	$i=0;
 	if (DB_num_rows($result)>0){
 

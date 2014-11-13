@@ -1,5 +1,5 @@
 <?php
-/* $Id: PDFPriceList.php 6892 2014-09-16 07:27:40Z tehonu $*/
+/* $Id: PDFPriceList.php 6962 2014-11-06 02:59:12Z tehonu $*/
 /*	Script to print a price list by inventory category */
 /*	Output column sizes:
 		* stockmaster.stockid, varchar(20), len = 20chr
@@ -63,7 +63,7 @@ If (isset($_POST['PrintPDF'])) {
 				debtorsmaster.salestype
 				FROM debtorsmaster
 				WHERE debtorno = '" . $_SESSION['CustomerID'] . "'";
-		$CustNameResult = DB_query($SQL,$db);
+		$CustNameResult = DB_query($SQL);
 		$CustNameRow = DB_fetch_row($CustNameResult);
 		$CustomerName = $CustNameRow[0];
 		$SalesType = $CustNameRow[1];
@@ -105,7 +105,7 @@ If (isset($_POST['PrintPDF'])) {
 	} else { /* the sales type list only */
 
 		$SQL = "SELECT sales_type FROM salestypes WHERE typeabbrev='" . $_POST['SalesType'] . "'";
-		$SalesTypeResult = DB_query($SQL,$db);
+		$SalesTypeResult = DB_query($SQL);
 		$SalesTypeRow = DB_fetch_row($SalesTypeResult);
 		$SalesTypeName = $SalesTypeRow[0];
 
@@ -138,12 +138,12 @@ If (isset($_POST['PrintPDF'])) {
     				stockmaster.stockid,
     				prices.startdate";
 	}
-	$PricesResult = DB_query($SQL,$db,'','',false,false);
+	$PricesResult = DB_query($SQL,'','',false,false);
 
-	if (DB_error_no($db) !=0) {
+	if (DB_error_no() !=0) {
 		$Title = _('Price List') . ' - ' . _('Problem Report....');
 		include('includes/header.inc');
-		prnMsg( _('The Price List could not be retrieved by the SQL because'). ' - ' . DB_error_msg($db), 'error');
+		prnMsg( _('The Price List could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
 		echo '<br /><a href="' .$RootPath .'/index.php">' .   _('Back to the menu'). '</a>';
 		if ($debug==1) {
 			prnMsg(_('For debugging purposes the SQL used was:') . $SQL,'error');
@@ -166,7 +166,7 @@ If (isset($_POST['PrintPDF'])) {
 	$Category = '';
 	$CatTot_Val=0;
 
-	While ($PriceList = DB_fetch_array($PricesResult,$db)) {
+	While ($PriceList = DB_fetch_array($PricesResult)) {
 
 		if ($CurrCode != $PriceList['currabrev']) {
 			$FontSize = 10;
@@ -310,7 +310,7 @@ If (isset($_POST['PrintPDF'])) {
 	echo '<tr><td>' . _('For Sales Type/Price List').':</td>
 			  <td><select name="SalesType">';
 	$sql = "SELECT sales_type, typeabbrev FROM salestypes";
-	$SalesTypesResult=DB_query($sql,$db);
+	$SalesTypesResult=DB_query($sql);
 
 	while ($myrow=DB_fetch_array($SalesTypesResult)) {
 		echo '<option value="' . $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
@@ -320,7 +320,7 @@ If (isset($_POST['PrintPDF'])) {
 	echo '<tr><td>' . _('For Currency').':</td>
 			  <td><select name="Currency">';
 	$sql = "SELECT currabrev, currency FROM currencies ORDER BY currency";
-	$CurrencyResult=DB_query($sql,$db);
+	$CurrencyResult=DB_query($sql);
 	echo '<option selected="selected" value="All">' . _('All')  . '</option>';
 	while ($myrow=DB_fetch_array($CurrencyResult)) {
 		echo '<option value="' . $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';

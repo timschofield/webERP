@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: PrintCustOrder.php 6812 2014-08-13 18:14:57Z agaluski $ */
+/* $Id: PrintCustOrder.php 6941 2014-10-26 23:18:08Z daintree $ */
 
 include('includes/session.inc');
 include('includes/class.pdf.php');
@@ -74,7 +74,7 @@ if ($_SESSION['SalesmanLogin'] != '') {
 	$sql .= " AND salesorders.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 }
 
-$result=DB_query($sql,$db, $ErrMsg);
+$result=DB_query($sql, $ErrMsg);
 
 //If there are no rows, there's a problem.
 if (DB_num_rows($result)==0){
@@ -143,7 +143,7 @@ $sql = "SELECT salesorderdetails.stkcode,
 		FROM salesorderdetails INNER JOIN stockmaster
 			ON salesorderdetails.stkcode=stockmaster.stockid
 		 WHERE salesorderdetails.orderno='" . $_GET['TransNo'] . "'";
-$result=DB_query($sql, $db, $ErrMsg);
+$result=DB_query($sql, $ErrMsg);
 
 if (DB_num_rows($result)>0){
 /*Yes there are line items to start the ball rolling with a page header */
@@ -229,7 +229,7 @@ if (DB_num_rows($result)>0){
 	$sql = "UPDATE salesorders SET printedpackingslip=1,
 									datepackingslipprinted='" . Date('Y-m-d') . "'
 			WHERE salesorders.orderno='" . $_GET['TransNo'] . "'";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 } else {
 	$Title = _('Print Packing Slip Error');
 	include('includes/header.inc');

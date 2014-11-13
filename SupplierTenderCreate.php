@@ -38,7 +38,7 @@ if (isset($_GET['Edit']) and $_SESSION['CanCreateTender']==0) {
 
 if (isset($_POST['Close'])) {
 	$SQL = "UPDATE tenders SET closed=1 WHERE tenderid='" . $_SESSION['tender'.$identifier]->TenderId . "'";
-	$Result = DB_query($SQL, $db);
+	$Result = DB_query($SQL);
 	$_GET['Edit'] = 'Yes';
 	unset($_SESSION['tender'.$identifier]);
 }
@@ -59,7 +59,7 @@ if (isset($_GET['ID'])) {
 				FROM tenders
 				INNER JOIN locationusers ON locationusers.loccode=tenders.location AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 				WHERE tenderid='" . $_GET['ID'] . "'";
-	$result=DB_query($sql, $db);
+	$result=DB_query($sql);
 	$myrow=DB_fetch_array($result);
 	if (isset($_SESSION['tender'.$identifier])) {
 		unset($_SESSION['tender'.$identifier]);
@@ -83,7 +83,7 @@ if (isset($_GET['ID'])) {
 				LEFT JOIN suppliers
 					ON tendersuppliers.supplierid=suppliers.supplierid
 				WHERE tenderid='" . $_GET['ID'] . "'";
-	$result=DB_query($sql, $db);
+	$result=DB_query($sql);
 	while ($myrow=DB_fetch_array($result)) {
 		$_SESSION['tender'.$identifier]->add_supplier_to_tender($myrow['supplierid'],
 																$myrow['suppname'],
@@ -100,7 +100,7 @@ if (isset($_GET['ID'])) {
 				LEFT JOIN stockmaster
 					ON tenderitems.stockid=stockmaster.stockid
 				WHERE tenderid='" . $_GET['ID'] . "'";
-	$result=DB_query($sql, $db);
+	$result=DB_query($sql);
 	while ($myrow=DB_fetch_array($result)) {
 		$_SESSION['tender'.$identifier]->add_item_to_tender($_SESSION['tender'.$identifier]->LinesOnTender,
 															$myrow['stockid'],
@@ -130,7 +130,7 @@ if (isset($_GET['Edit'])) {
 				INNER JOIN locationusers ON locationusers.loccode=tenders.location AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
 				WHERE closed=0
 					AND requiredbydate > '" . Date('Y-m-d') . "'";
-	$result=DB_query($sql, $db);
+	$result=DB_query($sql);
 	echo '<table class="selection">';
 	echo '<tr>
 			<th>' . _('Tender ID') . '</th>
@@ -194,7 +194,7 @@ if (isset($_POST['SelectedSupplier'])) {
 					email
 				FROM suppliers
 				WHERE supplierid='" . $_POST['SelectedSupplier'] . "'";
-	$result = DB_query($sql, $db);
+	$result = DB_query($sql);
 	$myrow = DB_fetch_array($result);
 	if (mb_strlen($myrow['email'])>0) {
 		$_SESSION['tender'.$identifier]->add_supplier_to_tender($_POST['SelectedSupplier'],
@@ -217,7 +217,7 @@ if (isset($_POST['NewItem']) and !isset($_POST['Refresh'])) {
 							decimalplaces
 						FROM stockmaster
 						WHERE stockid='".$StockID."'";
-			$result=DB_query($sql, $db);
+			$result=DB_query($sql);
 			$myrow=DB_fetch_array($result);
 			$_SESSION['tender'.$identifier]->add_item_to_tender($_SESSION['tender'.$identifier]->LinesOnTender,
 																$StockID,
@@ -273,7 +273,7 @@ if (!isset($_SESSION['tender'.$identifier])
 					INNER JOIN locationusers ON locationusers.loccode=.locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
 					WHERE locations.loccode='" . $_POST['StkLocation'] . "'";
 
-		$LocnAddrResult = DB_query($sql,$db);
+		$LocnAddrResult = DB_query($sql);
 		if (DB_num_rows($LocnAddrResult)==1){
 			$LocnRow = DB_fetch_array($LocnAddrResult);
 			$_POST['DelAdd1'] = $LocnRow['deladd1'];
@@ -316,7 +316,7 @@ if (!isset($_SESSION['tender'.$identifier])
 					INNER JOIN locationusers ON locationusers.loccode=.locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
 					WHERE loccode='" . $_POST['StkLocation'] . "'";
 
-		$LocnAddrResult = DB_query($sql,$db);
+		$LocnAddrResult = DB_query($sql);
 		if (DB_num_rows($LocnAddrResult)==1){
 			$LocnRow = DB_fetch_array($LocnAddrResult);
 			$_POST['DelAdd1'] = $LocnRow['deladd1'];
@@ -347,7 +347,7 @@ if (!isset($_SESSION['tender'.$identifier])
 					locationname
 				FROM locations
 				INNER JOIN locationusers ON locationusers.loccode=.locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1";
-	$LocnResult = DB_query($sql,$db);
+	$LocnResult = DB_query($sql);
 
 	while ($LocnRow=DB_fetch_array($LocnResult)){
 		if ((isset($_SESSION['tender'.$identifier]->Location) and $_SESSION['tender'.$identifier]->Location == $LocnRow['loccode'])){
@@ -529,7 +529,7 @@ if (isset($_POST['SearchSupplier']) or isset($_POST['Go'])
 						ORDER BY supplierid";
 		}
 	} //one of keywords or SupplierCode was more than a zero length string
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) == 1) {
 		$myrow = DB_fetch_array($result);
 		$SingleSupplierReturned = $myrow['supplierid'];
@@ -666,7 +666,7 @@ if (isset($_POST['Items'])) {
 				categorydescription
 			FROM stockcategory
 			ORDER BY categorydescription";
-	$result = DB_query($sql, $db);
+	$result = DB_query($sql);
 	if (DB_num_rows($result) == 0) {
 		echo '<br /><p class="bad">' . _('Problem Report') . ':</p><br />' .
 			_('There are no stock categories currently defined please use the link below to set them up');
@@ -833,7 +833,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 
 	$ErrMsg = _('There is a problem selecting the part records to display because');
 	$DbgMsg = _('The SQL statement that failed was');
-	$SearchResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+	$SearchResult = DB_query($sql,$ErrMsg,$DbgMsg);
 
 	if (DB_num_rows($SearchResult)==0 and $debug==1){
 		prnMsg( _('There are no products to display matching the criteria provided'),'warn');

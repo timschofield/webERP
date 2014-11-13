@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: PDFOrderStatus.php 6812 2014-08-13 18:14:57Z agaluski $*/
+/* $Id: PDFOrderStatus.php 6943 2014-10-27 07:06:42Z daintree $*/
 
 include ('includes/session.inc');
 include('includes/SQL_CommonFunctions.inc');
@@ -46,7 +46,7 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
 			<td>';
 
 	$sql = "SELECT categorydescription, categoryid FROM stockcategory WHERE stocktype<>'D' AND stocktype<>'L'";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 
 
 	echo '<select required="required" name="CategoryID">
@@ -62,7 +62,7 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
 			<td><select name="Location">
 				<option selected="selected" value="All">' . _('All Locations') . '</option>';
 
-	$result= DB_query("SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1",$db);
+	$result= DB_query("SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1");
 	while ($myrow=DB_fetch_array($result)){
 		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 	}
@@ -258,9 +258,9 @@ if ($_SESSION['SalesmanLogin'] != '') {
 
 $sql .= " ORDER BY salesorders.orderno";
 
-$Result=DB_query($sql,$db,'','',false,false); //dont trap errors here
+$Result=DB_query($sql,'','',false,false); //dont trap errors here
 
-if (DB_error_no($db)!=0){
+if (DB_error_no()!=0){
 	include('includes/header.inc');
 	echo '<br />' . _('An error occurred getting the orders details');
 	if ($debug==1){

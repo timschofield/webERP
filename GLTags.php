@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: GLTags.php 6310 2013-08-29 10:42:50Z daintree $*/
+/* $Id: GLTags.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 include('includes/session.inc');
 $Title = _('Maintain General Ledger Tags');
@@ -19,7 +19,7 @@ if (isset($_GET['SelectedTag'])) {
 		if (DB_num_rows($Result)>0){
 			prnMsg(_('This tag cannot be deleted since there are already general ledger transactions created using it.'),'error');
 		} else	{
-			$Result = DB_query("DELETE FROM tags WHERE tagref='" . $_GET['SelectedTag'] . "'",$db);
+			$Result = DB_query("DELETE FROM tags WHERE tagref='" . $_GET['SelectedTag'] . "'");
 			prnMsg(_('The selected tag has been deleted'),'success');
 		}
 		$Description='';
@@ -29,7 +29,7 @@ if (isset($_GET['SelectedTag'])) {
 				FROM tags
 				WHERE tagref='".$_GET['SelectedTag']."'";
 
-		$result= DB_query($sql,$db);
+		$result= DB_query($sql);
 		$myrow = DB_fetch_array($result,$db);
 		$ref=$myrow['tagref'];
 		$Description = $myrow['tagdescription'];
@@ -41,13 +41,13 @@ if (isset($_GET['SelectedTag'])) {
 
 if (isset($_POST['submit'])) {
 	$sql = "INSERT INTO tags values(NULL, '" . $_POST['Description'] . "')";
-	$result= DB_query($sql,$db);
+	$result= DB_query($sql);
 }
 
 if (isset($_POST['update'])) {
 	$sql = "UPDATE tags SET tagdescription='" . $_POST['Description'] . "'
 		WHERE tagref='".$_POST['reference']."'";
-	$result= DB_query($sql,$db);
+	$result= DB_query($sql);
 }
 echo '<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' .
@@ -87,7 +87,7 @@ $sql="SELECT tagref,
 		FROM tags
 		ORDER BY tagref";
 
-$result= DB_query($sql,$db);
+$result= DB_query($sql);
 
 while ($myrow = DB_fetch_array($result,$db)){
 	echo '<tr>

@@ -31,7 +31,7 @@ function submit(&$db, $RootPath, $Location) {
 			;
 	
 	$ErrMsg = _('The SQL to find the WO items to produce ');
-	$resultItems = DB_query($sql,$db,$ErrMsg);
+	$resultItems = DB_query($sql,$ErrMsg);
 	if (DB_num_rows($resultItems) != 0){
 	
 		echo '<p class="page_title_text" align="center"><strong>' . "Items in WO to be produced now in " . $Location . " with available stock" . '</strong></p>';
@@ -110,7 +110,7 @@ function submit(&$db, $RootPath, $Location) {
 						 OR bom.effectiveto='0000-00-00')";
 					 
 			$ErrMsg = _('The bill of material could not be retrieved because');
-			$BOMResult = DB_query ($sqlBOM,$db,$ErrMsg);
+			$BOMResult = DB_query ($sqlBOM,$ErrMsg);
 			$ItemCanBeproduced = TRUE;
 			
 			while ($myComponent = DB_fetch_array($BOMResult)) {
@@ -229,7 +229,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 					AND locationusers.canview=1
 				WHERE locations.usedforwo = 1";
 
-		$LocnResult=DB_query($sql,$db);
+		$LocnResult=DB_query($sql);
 
 		while ($myrow=DB_fetch_array($LocnResult)){
 			echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';

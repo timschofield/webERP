@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: SuppInvGRNs.php 6592 2014-03-02 08:41:40Z daintree $*/
+/* $Id: SuppInvGRNs.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing and also
@@ -189,7 +189,7 @@ $SQL = "SELECT grnbatch,
 		WHERE grns.supplierid ='" . $_SESSION['SuppTrans']->SupplierID . "'
 		AND grns.qtyrecd - grns.quantityinv > 0
 		ORDER BY grns.grnno";
-$GRNResults = DB_query($SQL,$db);
+$GRNResults = DB_query($SQL);
 
 if (DB_num_rows($GRNResults)==0){
 	prnMsg(_('There are no outstanding goods received from') . ' ' . $_SESSION['SuppTrans']->SupplierName . ' ' . _('that have not been invoiced by them') . '<br />' . _('The goods must first be received using the link below to select purchase orders to receive'),'warn');

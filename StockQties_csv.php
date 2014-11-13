@@ -1,5 +1,5 @@
 <?php
-/* $Id: StockQties_csv.php 6805 2014-08-08 16:12:36Z agaluski $*/
+/* $Id: StockQties_csv.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 include ('includes/session.inc');
 $Title = _('Produce Stock Quantities CSV');
@@ -18,7 +18,7 @@ $ErrMsg = _('The SQL to get the stock quantities failed with the message');
 $sql = "SELECT stockid, SUM(quantity) FROM locstock
 			INNER JOIN locationusers ON locationusers.loccode=locstock.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 			GROUP BY stockid HAVING SUM(quantity)<>0";
-$result = DB_query($sql, $db, $ErrMsg);
+$result = DB_query($sql, $ErrMsg);
 
 if (!file_exists($_SESSION['reports_dir'])){
 	$Result = mkdir('./' . $_SESSION['reports_dir']);

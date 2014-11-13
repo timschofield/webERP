@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: GLCodesInquiry.php 6112 2013-07-19 10:07:00Z daintree $*/
+/* $Id: GLCodesInquiry.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 include ('includes/session.inc');
 
@@ -16,7 +16,7 @@ $SQL = "SELECT group_,
 				accountcode";
 
 $ErrMsg = _('No general ledger accounts were returned by the SQL because');
-$AccountsResult = DB_query($SQL,$db,$ErrMsg);
+$AccountsResult = DB_query($SQL,$ErrMsg);
 
 /*show a table of the orders returned by the SQL */
 

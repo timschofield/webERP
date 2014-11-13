@@ -1,5 +1,5 @@
 <?php
-/* $Id: GetPaymentMethods.php 5768 2012-12-20 08:38:22Z daintree $*/
+/* $Id: GetPaymentMethods.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 $PaytTypes    = array();
 $ReceiptTypes = array();
@@ -10,7 +10,7 @@ $sql = 'SELECT paymentname,
 			FROM paymentmethods
 			ORDER by paymentname';
 
-$PMResult = DB_query($sql,$db);
+$PMResult = DB_query($sql);
 while( $PMrow = DB_fetch_array($PMResult) ) {
 	if ($PMrow['paymenttype']==1) {
 		$PaytTypes[] = $PMrow['paymentname'];

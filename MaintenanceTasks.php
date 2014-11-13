@@ -31,7 +31,7 @@ if (isset($_POST['Submit'])) {
 								'" . $_POST['Manager'] . "',
 								'" . Date('Y-m-d') . "' )";
 		$ErrMsg = _('The authentication details cannot be inserted because');
-		$Result=DB_query($sql,$db,$ErrMsg);
+		$Result=DB_query($sql,$ErrMsg);
 		unset($_POST['AssetID']);
 		unset($_POST['TaskDescription']);
 		unset($_POST['FrequencyDays']);
@@ -53,7 +53,7 @@ if (isset($_POST['Update'])) {
 				WHERE taskid='".$_POST['TaskID']."'";
 
 		$ErrMsg = _('The task details cannot be updated because');
-		$Result=DB_query($sql,$db,$ErrMsg);
+		$Result=DB_query($sql,$ErrMsg);
 		unset($_POST['AssetID']);
 		unset($_POST['TaskDescription']);
 		unset($_POST['FrequencyDays']);
@@ -67,7 +67,7 @@ if (isset($_GET['Delete'])) {
 		WHERE taskid='".$_GET['TaskID']."'";
 
 	$ErrMsg = _('The maintenance task cannot be deleted because');
-	$Result=DB_query($sql,$db,$ErrMsg);
+	$Result=DB_query($sql,$ErrMsg);
 }
 
 $sql="SELECT taskid,
@@ -86,7 +86,7 @@ $sql="SELECT taskid,
 		ON fixedassettasks.userresponsible=www_users.userid";
 
 $ErrMsg = _('The maintenance task details cannot be retrieved because');
-$Result=DB_query($sql,$db,$ErrMsg);
+$Result=DB_query($sql,$ErrMsg);
 
 echo '<table class="selection">
      <tr>
@@ -101,7 +101,7 @@ echo '<table class="selection">
 while ($myrow=DB_fetch_array($Result)) {
 
 	if ($myrow['manager']!=''){
-		$ManagerResult = DB_query("SELECT realname FROM www_users WHERE userid='" . $myrow['manager'] . "'",$db);
+		$ManagerResult = DB_query("SELECT realname FROM www_users WHERE userid='" . $myrow['manager'] . "'");
 		$ManagerRow = DB_fetch_array($ManagerResult);
 		$ManagerName = $ManagerRow['realname'];
 	} else {
@@ -143,7 +143,7 @@ if (isset($_GET['Edit'])) {
 			FROM fixedassettasks
 			WHERE taskid='".$_GET['TaskID']."'";
 	$ErrMsg = _('The maintenance task details cannot be retrieved because');
-	$result=DB_query($sql,$db,$ErrMsg);
+	$result=DB_query($sql,$ErrMsg);
 	$myrow=DB_fetch_array($result);
 	$_POST['TaskDescription'] = $myrow['taskdescription'];
 	$_POST['FrequencyDays'] = $myrow['frequencydays'];
@@ -172,7 +172,7 @@ echo '<tr>
 		<td>' . _('Asset to Maintain').':</td>
 		<td><select required="required" name="AssetID">';
 $AssetSQL="SELECT assetid, description FROM fixedassets";
-$AssetResult=DB_query($AssetSQL,$db);
+$AssetResult=DB_query($AssetSQL);
 while ($myrow=DB_fetch_array($AssetResult)) {
 	if ($myrow['assetid']==$_POST['AssetID']) {
 		echo '<option selected="selected" value="'.$myrow['assetid'].'">' . $myrow['assetid'] . ' - ' . $myrow['description']  . '</option>';
@@ -197,7 +197,7 @@ echo '<tr>
 		<td>' . _('Responsible') . ':</td>
 		<td><select required="required" name="UserResponsible">';
 $UserSQL="SELECT userid FROM www_users";
-$UserResult=DB_query($UserSQL,$db);
+$UserResult=DB_query($UserSQL);
 while ($myrow=DB_fetch_array($UserResult)) {
 	if ($myrow['userid']==$_POST['UserResponsible']) {
 		echo '<option selected="selected" value="'.$myrow['userid'].'">' . $myrow['userid'] . '</option>';
@@ -217,7 +217,7 @@ if ($_POST['Manager']==''){
 	echo '<option value="">' . _('No Manager') . '</option>';
 }
 $ManagerSQL="SELECT userid FROM www_users";
-$ManagerResult=DB_query($UserSQL,$db);
+$ManagerResult=DB_query($UserSQL);
 while ($myrow=DB_fetch_array($ManagerResult)) {
 	if ($myrow['userid']==$_POST['Manager']) {
 		echo '<option selected="selected" value="'.$myrow['userid'].'">' . $myrow['userid'] . '</option>';

@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: SupplierTransInquiry.php 5785 2012-12-29 04:47:42Z daintree $*/
+/* $Id: SupplierTransInquiry.php 6944 2014-10-27 07:15:34Z daintree $*/
 
 include('includes/session.inc');
 $Title = _('Supplier Transactions Inquiry');
@@ -26,7 +26,7 @@ $sql = "SELECT typeid,
 		WHERE typeid >= 20
 		AND typeid <= 23";
 
-$resultTypes = DB_query($sql,$db);
+$resultTypes = DB_query($sql);
 
 echo '<option value="All">' ._('All') . '</option>';
 while ($myrow=DB_fetch_array($resultTypes)){
@@ -92,8 +92,8 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 	}
 	$sql .=  " ORDER BY id";
 
-   $TransResult = DB_query($sql, $db);
-   $ErrMsg = _('The supplier transactions for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg($db);
+   $TransResult = DB_query($sql);
+   $ErrMsg = _('The supplier transactions for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg();
    $DbgMsg =  _('The SQL that failed was');
 
    echo '<table class="selection">';
@@ -156,7 +156,6 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 									ON gltrans.account=chartmaster.accountcode
 									WHERE type='" . $myrow['type'] . "'
 									AND typeno='" . $myrow['transno'] . "'",
-									$db,
 									_('Could not retrieve the GL transactions for this AP transaction'));
 
 		if (DB_num_rows($GLTransResult)==0){

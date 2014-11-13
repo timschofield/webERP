@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: ShiptsList.php 6310 2013-08-29 10:42:50Z daintree $*/
+/* $Id: ShiptsList.php 6944 2014-10-27 07:15:34Z daintree $*/
 
 //$PageSecurity = 2;
 include ('includes/session.inc');
@@ -22,8 +22,8 @@ $SQL = "SELECT shiptref,
 		eta
 	FROM shipments
 	WHERE supplierid='" . $_GET['SupplierID'] . "'";
-$ErrMsg = _('No shipments were returned from the database because'). ' - '. DB_error_msg($db);
-$ShiptsResult = DB_query($SQL,$db, $ErrMsg);
+$ErrMsg = _('No shipments were returned from the database because'). ' - '. DB_error_msg();
+$ShiptsResult = DB_query($SQL, $ErrMsg);
 
 if (DB_num_rows($ShiptsResult)==0){
        prnMsg(_('There are no open shipments currently set up for').' ' . $_GET['SupplierName'],'warn');

@@ -1,5 +1,5 @@
 <?php
-/* $Id: WorkOrderStatus.php 6805 2014-08-08 16:12:36Z agaluski $*/
+/* $Id: WorkOrderStatus.php 6942 2014-10-27 02:48:29Z daintree $*/
 
 include('includes/session.inc');
 $Title = _('Work Order Status Inquiry');
@@ -41,7 +41,6 @@ $WOResult = DB_query("SELECT workorders.loccode,
 						INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 						WHERE woitems.stockid='" . $StockID . "'
 						AND woitems.wo ='" . $SelectedWO . "'",
-						$db,
 						$ErrMsg);
 
 if (DB_num_rows($WOResult)==0){
@@ -108,14 +107,13 @@ echo '<table cellpadding="2" class="selection">
 									FROM worequirements INNER JOIN stockmaster
 									ON worequirements.stockid=stockmaster.stockid
 									WHERE wo='" . $SelectedWO . "'
-									AND worequirements.parentstockid='" . $StockID . "'",
-									$db);
+									AND worequirements.parentstockid='" . $StockID . "'");
 		$IssuedAlreadyResult = DB_query("SELECT stockid,
 						SUM(-qty) AS total
 					FROM stockmoves
 					WHERE stockmoves.type=28
 					AND reference='".$SelectedWO."'
-					GROUP BY stockid",$db);
+					GROUP BY stockid");
 	while ($IssuedRow = DB_fetch_array($IssuedAlreadyResult)){
 		$IssuedAlreadyRow[$IssuedRow['stockid']] = $IssuedRow['total'];
 	}
@@ -146,7 +144,7 @@ echo '<table cellpadding="2" class="selection">
 						description,
 							decimalplaces
 				FROM stockmaster WHERE stockid IN ('".$AdditionalStocks."')";
-		$RequirementsResult = DB_query($RequirementsSQL,$db);
+		$RequirementsResult = DB_query($RequirementsSQL);
 			$AdditionalStocks = array();
 			while($myrow = DB_fetch_array($RequirementsResult)){
 				$AdditionalStocks[$myrow['stockid']]['description'] = $myrow['description'];

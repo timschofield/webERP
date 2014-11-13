@@ -1,5 +1,5 @@
 <?php
-/* $Id: PDFRemittanceAdvice.php 6310 2013-08-29 10:42:50Z daintree $*/
+/* $Id: PDFRemittanceAdvice.php 6944 2014-10-27 07:15:34Z daintree $*/
 
 include('includes/session.inc');
 
@@ -31,7 +31,7 @@ If ((isset($_POST['PrintPDF']))
 			AND suppliers.remittance=1
 			ORDER BY supplierno";
 
-	$SuppliersResult = DB_query($sql,$db);
+	$SuppliersResult = DB_query($sql);
 	if (DB_num_rows($SuppliersResult)==0){
 		//then there aint awt to print
 		$Title = _('Print Remittance Advices Error');
@@ -75,11 +75,11 @@ If ((isset($_POST['PrintPDF']))
 						 supptrans.transno";
 
 
-		$TransResult = DB_query($sql,$db,'','',false,false);
-		if (DB_error_no($db) !=0) {
+		$TransResult = DB_query($sql,'','',false,false);
+		if (DB_error_no() !=0) {
 			$Title = _('Remittance Advice Problem Report');
 			include('includes/header.inc');
-			prnMsg(_('The details of the payment to the supplier could not be retrieved because') . ' - ' . DB_error_msg($db),'error');
+			prnMsg(_('The details of the payment to the supplier could not be retrieved because') . ' - ' . DB_error_msg(),'error');
 			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 			if ($debug==1){
 				echo '<br />' . _('The SQL that failed was') . ' ' . $sql;

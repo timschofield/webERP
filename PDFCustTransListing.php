@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: PDFCustTransListing.php 5820 2013-02-24 04:28:04Z daintree $*/
+/* $Id: PDFCustTransListing.php 6943 2014-10-27 07:06:42Z daintree $*/
 
 include('includes/SQL_CommonFunctions.inc');
 include ('includes/session.inc');
@@ -76,9 +76,9 @@ $sql= "SELECT type,
 		WHERE type='" . $_POST['TransType'] . "'
 		AND date_format(inputdate, '%Y-%m-%d')='".FormatDateForSQL($_POST['Date'])."'";
 
-$result=DB_query($sql,$db,'','',false,false);
+$result=DB_query($sql,'','',false,false);
 
-if (DB_error_no($db)!=0){
+if (DB_error_no()!=0){
 	$Title = _('Payment Listing');
 	include('includes/header.inc');
 	prnMsg(_('An error occurred getting the transactions'),'error');
@@ -111,7 +111,7 @@ include ('includes/PDFCustTransListingPageHeader.inc');
 while ($myrow=DB_fetch_array($result)){
 
 	$sql="SELECT name FROM debtorsmaster WHERE debtorno='" . $myrow['debtorno'] . "'";
-	$CustomerResult=DB_query($sql, $db);
+	$CustomerResult=DB_query($sql);
 	$CustomerRow=DB_fetch_array($CustomerResult);
 
 	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,160,$FontSize,$CustomerRow['name'], 'left');

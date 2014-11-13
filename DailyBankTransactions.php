@@ -29,7 +29,7 @@ if (!isset($_POST['Show'])) {
 
 	$ErrMsg = _('The bank accounts could not be retrieved because');
 	$DbgMsg = _('The SQL used to retrieve the bank accounts was');
-	$AccountsResults = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
+	$AccountsResults = DB_query($SQL,$ErrMsg,$DbgMsg);
 
 	echo '<tr>
 			<td>' . _('Bank Account') . ':</td>
@@ -87,7 +87,7 @@ if (!isset($_POST['Show'])) {
 			INNER JOIN currencies
 				ON bankaccounts.currcode = currencies.currabrev
 			WHERE bankaccounts.accountcode='" . $_POST['BankAccount'] . "'";
-	$BankResult = DB_query($SQL,$db,_('Could not retrieve the bank account details'));
+	$BankResult = DB_query($SQL,_('Could not retrieve the bank account details'));
 
 
 	$sql="SELECT 	banktrans.currcode,
@@ -111,7 +111,7 @@ if (!isset($_POST['Show'])) {
 					AND transdate>='" . FormatDateForSQL($_POST['FromTransDate']) . "'
 					AND transdate<='" . FormatDateForSQL($_POST['ToTransDate']) . "'
 				ORDER BY banktrans.transdate";
-	$result = DB_query($sql, $db);
+	$result = DB_query($sql);
 	if (DB_num_rows($result)==0) {
 		prnMsg(_('There are no transactions for this account in the date range selected'), 'info');
 	} else {

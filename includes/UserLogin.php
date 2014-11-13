@@ -1,7 +1,7 @@
 <?php
 
 /*  Performs login checks and $_SESSION initialisation */
-/* $Id: UserLogin.php 6914 2014-10-13 08:56:08Z daintree $*/
+/* $Id: UserLogin.php 6966 2014-11-06 09:15:09Z daintree $*/
 
 define('UL_OK',  0);		/* User verified, session initialised */
 define('UL_NOTVALID', 1);	/* User/password do not agree */
@@ -42,13 +42,13 @@ function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
 		}
 		/* The SQL to get the user info must use the * syntax because the field name could change between versions if the fields are specifed directly then the sql fails and the db upgrade will fail */
 		$sql = "SELECT *
-			FROM www_users
-			WHERE www_users.userid='" . $Name . "'";
+				FROM www_users
+				WHERE www_users.userid='" . $Name . "'";
 
 		$ErrMsg = _('Could not retrieve user details on login because');
 		$debug =1;
         $PasswordVerified = false;
-		$Auth_Result = DB_query($sql, $db,$ErrMsg);
+		$Auth_Result = DB_query($sql,$ErrMsg);
 
 		if (DB_num_rows($Auth_Result) > 0) {
 			$myrow = DB_fetch_array($Auth_Result);
@@ -80,7 +80,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
 				if ($PasswordVerified) {
 					$sql = "UPDATE www_users SET password = '" . CryptPass($Password) . "'"
 							. " WHERE userid = '" . $Name . "';";
-					DB_query($sql,$db);
+					DB_query($sql);
 				}
 
 			}
@@ -110,6 +110,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
 			$_SESSION['SalesmanLogin'] = $myrow['salesman'];
 			$_SESSION['CanCreateTender'] = $myrow['cancreatetender'];
 			$_SESSION['AllowedDepartment'] = $myrow['department'];
+			$_SESSION['ShowDashboard'] = $myrow['dashboard'];
 
 			if (isset($myrow['pdflanguage'])) {
 				$_SESSION['PDFLanguage'] = $myrow['pdflanguage'];
@@ -125,12 +126,12 @@ function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
 
 			$sql = "UPDATE www_users SET lastvisitdate='". date('Y-m-d H:i:s') ."'
 							WHERE www_users.userid='" . $Name . "'";
-			$Auth_Result = DB_query($sql, $db);
+			$Auth_Result = DB_query($sql);
 			/*get the security tokens that the user has access to */
 			$sql = "SELECT tokenid
 					FROM securitygroups
 					WHERE secroleid =  '" . $_SESSION['AccessLevel'] . "'";
-			$Sec_Result = DB_query($sql, $db);
+			$Sec_Result = DB_query($sql);
 			$_SESSION['AllowedPageSecurityTokens'] = array();
 			if (DB_num_rows($Sec_Result)==0){
 				return  UL_CONFIGERR;
@@ -158,7 +159,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
 							,'d')	>= 	$_SESSION['DB_Maintenance']){
 
 						/*Do the DB maintenance routing for the DB_type selected */
-						DB_Maintenance($db);
+						DB_Maintenance();
 						$_SESSION['DB_Maintenance_LastRun'] = Date('Y-m-d');
 
 						/* Audit trail purge only runs if DB_Maintenance is enabled */
@@ -166,7 +167,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
 							 $sql = "DELETE FROM audittrail
 									WHERE  transactiondate <= '" . Date('Y-m-d', mktime(0,0,0, Date('m')-$_SESSION['MonthsAuditTrail'])) . "'";
 							$ErrMsg = _('There was a problem deleting expired audit-trail history');
-							$result = DB_query($sql,$db);
+							$result = DB_query($sql);
 						}
 					}
 				}
@@ -183,7 +184,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
 							$CurrencyRates = GetECBCurrencyRates(); // gets rates from ECB see includes/MiscFunctions.php
 							/*Loop around the defined currencies and get the rate from ECB */
 							if ($CurrencyRates!=false) {
-								$CurrenciesResult = DB_query("SELECT currabrev FROM currencies",$db);
+								$CurrenciesResult = DB_query("SELECT currabrev FROM currencies");
 								while ($CurrencyRow = DB_fetch_row($CurrenciesResult)){
 									if ($CurrencyRow[0]!=$_SESSION['CompanyRecord']['currencydefault']){
 
@@ -193,7 +194,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
 								}
 							}
 						} else {
-							$CurrenciesResult = DB_query("SELECT currabrev FROM currencies",$db);
+							$CurrenciesResult = DB_query("SELECT currabrev FROM currencies");
 							while ($CurrencyRow = DB_fetch_row($CurrenciesResult)){
 								if ($CurrencyRow[0]!=$_SESSION['CompanyRecord']['currencydefault']){
 									$UpdateCurrRateResult = DB_query("UPDATE currencies SET rate='" . google_currency_rate($CurrencyRow[0]) . "'
@@ -202,7 +203,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
 							}
 						}
 						$_SESSION['UpdateCurrencyRatesDaily'] = Date('Y-m-d');
-						$UpdateConfigResult = DB_query("UPDATE config SET confvalue = '" . Date('Y-m-d') . "' WHERE confname='UpdateCurrencyRatesDaily'",$db);
+						$UpdateConfigResult = DB_query("UPDATE config SET confvalue = '" . Date('Y-m-d') . "' WHERE confname='UpdateCurrencyRatesDaily'");
 					}
 				}
 			}
@@ -241,7 +242,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
 				$sql = "UPDATE www_users
 							SET blocked=1
 							WHERE www_users.userid='" . $Name . "'";
-				$Auth_Result = DB_query($sql, $db);
+				$Auth_Result = DB_query($sql);
 
 				if ($SysAdminEmail != ''){
 					$EmailSubject = _('User access blocked'). ' ' . $Name ;

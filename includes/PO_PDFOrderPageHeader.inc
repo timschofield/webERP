@@ -1,5 +1,5 @@
 <?php
-/* $Id: PO_PDFOrderPageHeader.inc 6758 2014-06-17 09:50:35Z daintree $*/
+/* $Id: PO_PDFOrderPageHeader.inc 6941 2014-10-26 23:18:08Z daintree $*/
 /*
 	R & OS PHP-PDF class code to set up a new page
 	a new page is implicit on the establishment of a new pdf object so
@@ -55,7 +55,7 @@ $pdf->addText($FormDesign->Initiator->x,$Page_Height - $FormDesign->Initiator->y
  * If it is a preview then just insert dummy data */
 if ($OrderNo != 'Preview') {
 	$sql="SELECT terms FROM paymentterms where termsindicator='".$POHeader['paymentterms']."'";
-	$termsresult=DB_query($sql, $db);
+	$termsresult=DB_query($sql);
 	$myrow=DB_fetch_array($termsresult);
 	$pdf->addText($FormDesign->PaymentTerms->x,$Page_Height - $FormDesign->PaymentTerms->y, $FormDesign->PaymentTerms->FontSize, _('Payment Terms').': '.$myrow['terms']);
 } else {

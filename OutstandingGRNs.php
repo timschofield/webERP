@@ -1,6 +1,6 @@
 <?php
 
-/*$Id: OutstandingGRNs.php 6338 2013-09-28 05:10:46Z daintree $ */
+/*$Id: OutstandingGRNs.php 6944 2014-10-27 07:15:34Z daintree $ */
 
 include('includes/session.inc');
 
@@ -40,12 +40,12 @@ if (isset($_POST['FromCriteria'])
 				ORDER BY supplierid,
 					grnno";
 
-	$GRNsResult = DB_query($SQL,$db,'','',false,false);
+	$GRNsResult = DB_query($SQL,'','',false,false);
 
-	if (DB_error_no($db) !=0) {
+	if (DB_error_no() !=0) {
 	  $Title = _('Outstanding GRN Valuation') . ' - ' . _('Problem Report');
 	  include('includes/header.inc');
-	  prnMsg(_('The outstanding GRNs valuation details could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
+	  prnMsg(_('The outstanding GRNs valuation details could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
 	   echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 		/*
 	   if ($debug==1){

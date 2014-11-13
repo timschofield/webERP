@@ -1,6 +1,6 @@
 <?php
 
-/*$Id: MRPReschedules.php 6310 2013-08-29 10:42:50Z daintree $ */
+/*$Id: MRPReschedules.php 6944 2014-10-27 07:15:34Z daintree $ */
 
 // MRPReschedules.php - Report of purchase orders and work orders that MRP determines should be
 // rescheduled.
@@ -8,7 +8,7 @@
 include('includes/session.inc');
 
 $sql="SHOW TABLES WHERE Tables_in_" . $_SESSION['DatabaseName'] . "='mrprequirements'";
-$result=DB_query($sql,$db);
+$result=DB_query($sql);
 if (DB_num_rows($result)==0) {
 	$Title='MRP error';
 	include('includes/header.inc');
@@ -39,12 +39,12 @@ if (isset($_POST['PrintPDF'])) {
 			  WHERE mrpsupplies.part = stockmaster.stockid AND duedate <> mrpdate
 				 $selecttype
 			  ORDER BY mrpsupplies.part";
-	$result = DB_query($sql,$db,'','',false,true);
+	$result = DB_query($sql,'','',false,true);
 
-	if (DB_error_no($db) !=0) {
+	if (DB_error_no() !=0) {
 	  $Title = _('MRP Reschedules') . ' - ' . _('Problem Report');
 	  include('includes/header.inc');
-	   prnMsg( _('The MRP reschedules could not be retrieved by the SQL because') . ' '  . DB_error_msg($db),'error');
+	   prnMsg( _('The MRP reschedules could not be retrieved by the SQL because') . ' '  . DB_error_msg(),'error');
 	   echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 	   if ($debug==1){
 		  echo '<br />' . $sql;

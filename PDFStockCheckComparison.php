@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: PDFStockCheckComparison.php 6592 2014-03-02 08:41:40Z daintree $*/
+/* $Id: PDFStockCheckComparison.php 6945 2014-10-27 07:20:48Z daintree $*/
 
 include('includes/session.inc');
 
@@ -28,12 +28,12 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 				ORDER BY stockcheckfreeze.loccode,
 						stockcheckfreeze.stockid";
 
-		$StockChecks = DB_query($sql, $db,'','',false,false);
-		if (DB_error_no($db) !=0) {
+		$StockChecks = DB_query($sql,'','',false,false);
+		if (DB_error_no() !=0) {
 			$Title = _('Stock Freeze') . ' - ' . _('Problem Report') . '....';
 			include('includes/header.inc');
 			echo '<br />';
-			prnMsg( _('The inventory check file could not be retrieved because'). ' - ' . DB_error_msg($db),'error');
+			prnMsg( _('The inventory check file could not be retrieved because'). ' - ' . DB_error_msg(),'error');
 			echo '<br /><a href="' .$RootPath .'/index.php">' .  _('Back to the menu') . '</a>';
 			if ($debug==1){
 	      			echo '<br />' . $sql;
@@ -54,12 +54,12 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 					WHERE stockcounts.stockid='" . $myrow['stockid'] . "'
 					AND stockcounts.loccode='" . $myrow['loccode'] . "'";
 
-			$StockCounts = DB_query($sql, $db);
-			if (DB_error_no($db) !=0) {
+			$StockCounts = DB_query($sql);
+			if (DB_error_no() !=0) {
 				$Title = _('Stock Count Comparison') . ' - ' . _('Problem Report') . '....';
 				include('includes/header.inc');
 				echo '<br />';
-				prnMsg( _('The inventory counts file could not be retrieved because'). ' - ' . DB_error_msg($db). 'error');
+				prnMsg( _('The inventory counts file could not be retrieved because'). ' - ' . DB_error_msg(). 'error');
 				echo '<br /><a href="' .$RootPath .'/index.php">' .  _('Back to the menu') . '</a>';
 				if ($debug==1){
 					echo '<br />' .  $sql;
@@ -68,7 +68,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 				exit;
 			}
 
-			$StkCountResult = DB_query($sql,$db);
+			$StkCountResult = DB_query($sql);
 			$StkCountRow = DB_fetch_array($StkCountResult);
 
 			$StockQtyDifference = $StkCountRow['totcounted'] - $myrow['qoh'];
@@ -79,7 +79,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 
 			if ($StockQtyDifference !=0){ // only adjust stock if there is an adjustment to make!!
 
-				DB_Txn_Begin($db);
+				DB_Txn_Begin();
 
 				// Need to get the current location quantity will need it later for the stock movement
 				$SQL="SELECT locstock.quantity
@@ -87,7 +87,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 					WHERE locstock.stockid='" . $myrow['stockid'] . "'
 					AND loccode= '" . $myrow['loccode'] . "'";
 
-				$Result = DB_query($SQL, $db);
+				$Result = DB_query($SQL);
 				if (DB_num_rows($Result)==1){
 					$LocQtyRow = DB_fetch_row($Result);
 					$QtyOnHandPrior = $LocQtyRow[0];
@@ -118,7 +118,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock movement record cannot be inserted because');
 				$DbgMsg = _('The following SQL to insert the stock movement record was used');
-				$Result = DB_query($SQL,$db, $ErrMsg, $DbgMsg, true);
+				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 
 				$SQL = "UPDATE locstock
 						SET quantity = quantity + '" . $StockQtyDifference . "'
@@ -126,7 +126,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 						AND loccode='" . $myrow['loccode'] . "'";
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The location stock record could not be updated because');
 				$DbgMsg = _('The following SQL to update the stock record was used');
-				$Result = DB_query($SQL,$db, $ErrMsg, $DbgMsg, true);
+				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 
 				if ($_SESSION['CompanyRecord']['gllink_stock']==1 AND $myrow['standardcost'] > 0){
 
@@ -148,7 +148,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 								'" .  $StockGLCodes['adjglact'] . "',
 								'" . ($myrow['standardcost'] * -($StockQtyDifference)) . "',
 								'" . $myrow['stockid'] . " x " . $StockQtyDifference . " @ " . $myrow['standardcost'] . " - " . _('Inventory Check') . "')";
-					$Result = DB_query($SQL,$db, $ErrMsg, $DbgMsg, true);
+					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction entries could not be added because');
 					$DbgMsg = _('The following SQL to insert the GL entries was used');
@@ -167,11 +167,11 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 								'" .  $StockGLCodes['stockact'] . "',
 								'" . $myrow['standardcost'] * $StockQtyDifference . "',
                                 '" . $myrow['stockid'] . " x " . $StockQtyDifference . " @ " . $myrow['standardcost'] . " - " . _('Inventory Check') . "')";
-					$Result = DB_query($SQL,$db, $ErrMsg, $DbgMsg, true);
+					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 
 				} //END INSERT GL TRANS
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Unable to COMMIT transaction while adjusting stock in StockCheckAdjustmet report');
-				DB_Txn_Commit($db);
+				DB_Txn_Commit();
 
 			} // end if $StockQtyDifference !=0
 
@@ -203,7 +203,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 				stockmaster.categoryid,
 				stockcheckfreeze.stockid";
 
-	$CheckedItems = DB_query($sql,$db, $ErrMsg, $DbgMsg);
+	$CheckedItems = DB_query($sql, $ErrMsg, $DbgMsg);
 
 	if (DB_num_rows($CheckedItems)==0){
 		$Title= _('Inventory Comparison Comparison Report');
@@ -259,13 +259,13 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 				WHERE loccode ='" . $Location . "'
 				AND stockid = '" . $CheckItemRow['stockid'] . "'";
 
-		$Counts = DB_query($SQL,$db,'','',false,false);
+		$Counts = DB_query($SQL,'','',false,false);
 
-		if (DB_error_no($db) !=0) {
+		if (DB_error_no() !=0) {
 	 		$Title = _('Inventory Comparison') . ' - ' . _('Problem Report') . '.... ';
 	  		include('includes/header.inc');
 	   		echo '<br />';
-			prnMsg( _('The inventory counts could not be retrieved by the SQL because').' - ' . DB_error_msg($db), 'error');
+			prnMsg( _('The inventory counts could not be retrieved by the SQL because').' - ' . DB_error_msg(), 'error');
 	   		echo '<br /><a href="' .$RootPath .'/index.php">' .  _('Back to the menu'). '</a>';
 	   		if ($debug==1){
 	      			echo '<br />' .  $SQL;
@@ -325,10 +325,10 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 	if ($_POST['ReportOrClose']=='ReportAndClose'){
 		//need to print the report first before this but don't risk re-adjusting all the stock!!
 		$sql = "TRUNCATE TABLE stockcheckfreeze";
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 
 		$sql = "TRUNCATE TABLE stockcounts";
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 	}
 
 } else { /*The option to print PDF was not hit */

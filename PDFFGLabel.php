@@ -143,7 +143,7 @@ if ($NoOfLabels >0){
 				stockmaster.units
 			    FROM stockmaster WHERE stockid ='" . $myrow['itemcode'] . "'";
 			//echo $SQL;
-			$CheckControlledResult = DB_query($SQL,$db,'<br />' . _('Could not determine if the item was controlled or not because') . ' ');
+			$CheckControlledResult = DB_query($SQL,'<br />' . _('Could not determine if the item was controlled or not because') . ' ');
 			$ControlledRow = DB_fetch_row($CheckControlledResult);
 			//var_dump($ControlledRow);
 		}

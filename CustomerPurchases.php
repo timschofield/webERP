@@ -23,7 +23,7 @@ $SQL = "SELECT debtorsmaster.name,
 		WHERE debtorsmaster.debtorno = '" . $DebtorNo . "'";
 
 $ErrMsg = _('The customer details could not be retrieved by the SQL because');
-$CustomerResult = DB_query($SQL, $db, $ErrMsg);
+$CustomerResult = DB_query($SQL, $ErrMsg);
 $CustomerRecord = DB_fetch_array($CustomerResult);
 
 echo '<p class="page_title_text">
@@ -61,7 +61,7 @@ if ($_SESSION['SalesmanLogin'] != '') {
 $SQL .= $SQLWhere . " ORDER BY trandate DESC";
 
 $ErrMsg = _('The stock movement details could not be retrieved by the SQL because');
-$StockMovesResult = DB_query($SQL, $db, $ErrMsg);
+$StockMovesResult = DB_query($SQL, $ErrMsg);
 
 if (DB_num_rows($StockMovesResult) == 0) {
 	echo '<br />';

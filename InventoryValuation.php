@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: InventoryValuation.php 6848 2014-08-28 15:15:31Z exsonqu $ */
+/* $Id: InventoryValuation.php 6962 2014-11-06 02:59:12Z tehonu $ */
 
 include('includes/session.inc');
 if (isset($_POST['PrintPDF']) OR isset($_POST['CSV'])){
@@ -58,12 +58,12 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['CSV'])){
 				ORDER BY stockcategory.categorydescription,
 					stockmaster.stockid";
 	}
-	$InventoryResult = DB_query($SQL,$db,'','',false,true);
+	$InventoryResult = DB_query($SQL,'','',false,true);
 
-	if (DB_error_no($db) !=0) {
+	if (DB_error_no() !=0) {
 	  $Title = _('Inventory Valuation') . ' - ' . _('Problem Report');
 	  include('includes/header.inc');
-	   prnMsg( _('The inventory valuation could not be retrieved by the SQL because') . ' '  . DB_error_msg($db),'error');
+	   prnMsg( _('The inventory valuation could not be retrieved by the SQL because') . ' '  . DB_error_msg(),'error');
 	   echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 	   if ($debug==1){
 		  echo '<br />' . $SQL;
@@ -101,7 +101,7 @@ if (isset($_POST['PrintPDF'])){
 	$CatTot_Val=0;
 	$CatTot_Qty=0;
 
-	while ($InventoryValn = DB_fetch_array($InventoryResult,$db)){
+	while ($InventoryValn = DB_fetch_array($InventoryResult)){
 
 		if ($Category!=$InventoryValn['categoryid']){
 			$FontSize=10;
@@ -195,7 +195,7 @@ if (isset($_POST['PrintPDF'])){
 } elseif (isset($_POST['CSV'])) {
 
 	$CSVListing = _('Category ID') .','. _('Category Description') .','. _('Stock ID') .','. _('Description') .','. _('Decimal Places') .','. _('Qty On Hand') .','. _('Units') .','. _('Unit Cost') .','. _('Total') . "\n";
-	while ($InventoryValn = DB_fetch_row($InventoryResult, $db)) {
+	while ($InventoryValn = DB_fetch_row($InventoryResult)) {
 		$CSVListing .= '"';
 		$CSVListing .= implode('","', $InventoryValn) . '"' . "\n";
 	}
@@ -249,7 +249,7 @@ if (isset($_POST['PrintPDF'])){
 			FROM locations
 			INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
 
-	$LocnResult=DB_query($sql,$db);
+	$LocnResult=DB_query($sql);
 
 	echo '<option value="All">' . _('All Locations') . '</option>';
 

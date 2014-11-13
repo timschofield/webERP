@@ -1,6 +1,5 @@
 <?php
-
-/* $Id: Prices.php 6778 2014-06-24 20:33:25Z rchacon $*/
+/* $Id: Prices.php 6942 2014-10-27 02:48:29Z daintree $*/
 
 /**************************************************************************************
 KL RICARD MODIFICATIONS:
@@ -12,9 +11,9 @@ $Title = _('Item Prices');
 $ViewTopic = 'Prices';
 /*$BookMark = '';// Anchor's id in the manual's html document.*/
 include('includes/header.inc');
-echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme . 
-		'/images/money_add.png" title="' . 
-		_('Search') . '" />' . ' ' . 
+echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
+		'/images/money_add.png" title="' .
+		_('Search') . '" />' . ' ' .
 		$Title . '</p>';
 
 echo '<a href="' . $RootPath . '/SelectProduct.php">' . _('Back to Items') . '</a><br />';
@@ -41,7 +40,7 @@ if (!isset($_POST['CurrAbrev'])) {
 $result = DB_query("SELECT stockmaster.description,
 							stockmaster.mbflag
 					FROM stockmaster
-					WHERE stockmaster.stockid='".$Item."'",$db);
+					WHERE stockmaster.stockid='".$Item."'");
 $myrow = DB_fetch_row($result);
 
 if (DB_num_rows($result)==0) {
@@ -109,7 +108,7 @@ if (isset($_POST['submit'])) {
 			AND prices.typeabbrev='" . $_POST['TypeAbbrev'] . "'
 			AND prices.currabrev='" . $_POST['CurrAbrev'] . "'";
 
-	$result = DB_query($sql, $db);
+	$result = DB_query($sql);
 	$myrow = DB_fetch_row($result);
 
 	if ($myrow[0]!=0 AND !isset($_POST['OldTypeAbbrev']) AND !isset($_POST['OldCurrAbrev'])) {
@@ -137,7 +136,7 @@ if (isset($_POST['submit'])) {
 				AND prices.debtorno=''";
 
 		$ErrMsg = _('Could not be update the existing prices');
-		$result = DB_query($sql,$db,$ErrMsg);
+		$result = DB_query($sql,$ErrMsg);
 
 		ReSequenceEffectiveDates ($Item, $_POST['TypeAbbrev'], $_POST['CurrAbrev'], $db) ;
 
@@ -160,7 +159,7 @@ if (isset($_POST['submit'])) {
 								'" . $SQLEndDate. "',
 								'" . filter_number_format($_POST['Price']) . "')";
 		$ErrMsg = _('The new price could not be added');
-		$result = DB_query($sql,$db,$ErrMsg);
+		$result = DB_query($sql,$ErrMsg);
 
 		ReSequenceEffectiveDates ($Item, $_POST['TypeAbbrev'], $_POST['CurrAbrev'], $db) ;
 		prnMsg(_('The new price has been inserted'),'success');
@@ -181,14 +180,14 @@ if (isset($_POST['submit'])) {
 			AND  prices.enddate = '" . $_GET['EndDate'] . "'
 			AND prices.debtorno=''";
 	$ErrMsg = _('Could not delete this price');
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 	prnMsg( _('The selected price has been deleted'),'success');
 
 }
 
 //Always do this stuff
 
-$sql = "SELECT 
+$sql = "SELECT
 		currencies.currency,
         salestypes.sales_type,
 		prices.price,
@@ -209,7 +208,7 @@ $sql = "SELECT
 		prices.typeabbrev,
 		prices.startdate";
 
-$result = DB_query($sql,$db);
+$result = DB_query($sql);
 require_once('includes/CurrenciesArray.php');
 if (DB_num_rows($result) > 0) {
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
@@ -291,7 +290,7 @@ if (isset($_GET['Edit'])){
 }
 
 $SQL = "SELECT currabrev FROM currencies";
-$result = DB_query($SQL,$db);
+$result = DB_query($SQL);
 
 echo '<br /><table class="selection">';
 echo '<tr><th colspan="5"><h3>' . $Item . ' - ' . $PartDescription . '</h3></th></tr>';
@@ -313,7 +312,7 @@ echo '<tr>
 			<td><select name="TypeAbbrev">';
 
 $SQL = "SELECT typeabbrev, sales_type FROM salestypes";
-$result = DB_query($SQL,$db);
+$result = DB_query($SQL);
 
 while ($myrow = DB_fetch_array($result)) {
 	echo '<option ';
@@ -375,7 +374,7 @@ function ReSequenceEffectiveDates ($Item, $PriceList, $CurrAbbrev, $db) {
 				AND typeabbrev='" . $PriceList . "'
 				AND enddate <>'0000-00-00'
 				ORDER BY startdate, enddate";
-		$result = DB_query($SQL,$db);
+		$result = DB_query($SQL);
 
 		while ($myrow = DB_fetch_array($result)){
 			if (isset($NextStartDate)){
@@ -391,7 +390,7 @@ function ReSequenceEffectiveDates ($Item, $PriceList, $CurrAbbrev, $db) {
 										AND startdate ='" . $StartDate . "'
 										AND enddate = '" . $EndDate . "'
 										AND debtorno =''";
-						$UpdateResult = DB_query($SQL,$db);
+						$UpdateResult = DB_query($SQL);
 					}
 				} //end of if startdate  after NextStartDate - we have a new NextStartDate
 			} //end of if set NextStartDate
@@ -414,7 +413,7 @@ function ReSequenceEffectiveDates ($Item, $PriceList, $CurrAbbrev, $db) {
 					AND typeabbrev='" . $PriceList . "'
 					AND enddate ='0000-00-00'
 					ORDER BY startdate";
-		$result = DB_query($SQL,$db);
+		$result = DB_query($SQL);
 
 		while ($myrow = DB_fetch_array($result)) {
 			if (isset($OldStartDate)){
@@ -427,7 +426,7 @@ function ReSequenceEffectiveDates ($Item, $PriceList, $CurrAbbrev, $db) {
 							AND startdate ='" . $OldStartDate . "'
 							AND enddate = '0000-00-00'
 							AND debtorno =''";
-				$UpdateResult = DB_query($SQL,$db);
+				$UpdateResult = DB_query($SQL);
 			}
 			$OldStartDate = $myrow['startdate'];
 		} // end of loop around duplicate no end date prices

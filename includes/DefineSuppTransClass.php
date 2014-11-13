@@ -1,5 +1,5 @@
 <?php
-/* $Id: DefineSuppTransClass.php 6592 2014-03-02 08:41:40Z daintree $*/
+/* $Id: DefineSuppTransClass.php 6942 2014-10-27 02:48:29Z daintree $*/
 /* Definition of the Supplier Transactions class to hold all the information for an accounts payable invoice or credit note
 */
 
@@ -70,7 +70,7 @@ Class SuppTrans {
 			ORDER BY taxgrouptaxes.calculationorder";
 
 		$ErrMsg = _('The taxes and rates for this item could not be retrieved because');
-		$GetTaxRatesResult = DB_query($SQL,$db,$ErrMsg);
+		$GetTaxRatesResult = DB_query($SQL,$ErrMsg);
 
 		while ($myrow = DB_fetch_array($GetTaxRatesResult)){
 
@@ -424,7 +424,7 @@ Class GLCodes {
 		$this->Narrative = $Narrative;
 		$this->Tag = $Tag;
 
-		$TagResult=DB_query("SELECT tagdescription from tags where tagref='" . $Tag . "'", $db);
+		$TagResult=DB_query("SELECT tagdescription from tags where tagref='" . $Tag . "'");
 		$TagMyrow=DB_fetch_array($TagResult);
 		if ($Tag==0) {
 			$this->TagName=_('None');
@@ -465,7 +465,7 @@ Class Asset {
 									fixedassetcategories.costact
 							FROM fixedassets INNER JOIN fixedassetcategories
 							ON fixedassets.assetcategoryid=fixedassetcategories.categoryid
-							WHERE assetid='" . $AssetID . "'",$db);
+							WHERE assetid='" . $AssetID . "'");
 		$AssetRow = DB_fetch_array($result);
 		$this->Description = $AssetRow['description'];
 		$this->CostAct = $AssetRow['costact'];

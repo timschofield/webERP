@@ -46,7 +46,7 @@ if ($JournalNo=='Preview') {
 				ON gltrans.tag=tags.tagref
 			WHERE gltrans.type='0'
 				AND gltrans.typeno='" . $JournalNo . "'";
-	$result=DB_query($sql, $db);
+	$result=DB_query($sql);
 	$LineCount = DB_num_rows($result); // UldisN
 	$myrow=DB_fetch_array($result);
 	$JournalDate=$myrow['trandate'];

@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: PrintCustTransPortrait.php 6809 2014-08-12 19:16:00Z agaluski $ */
+/* $Id: PrintCustTransPortrait.php 6943 2014-10-27 07:06:42Z daintree $ */
 
 include('includes/session.inc');
 
@@ -89,8 +89,8 @@ If (isset($PrintPDF)
 					bankaccounts.bankaccountcode
 				FROM bankaccounts
 				WHERE bankaccounts.invoice = '1'";
-		$result=DB_query($sql,$db,'','',false,false);
-		if (DB_error_no($db)!=1) {
+		$result=DB_query($sql,'','',false,false);
+		if (DB_error_no()!=1) {
 			if (DB_num_rows($result)==1){
 				$myrow = DB_fetch_array($result);
 				$DefaultBankAccountNumber = _('Account:') .' ' .$myrow['bankaccountnumber'];
@@ -169,7 +169,7 @@ If (isset($PrintPDF)
 						ON custbranch.salesman=salesman.salesmancode
 						INNER JOIN locations
 						ON salesorders.fromstkloc=locations.loccode
-						INNER JOIN locationusers 
+						INNER JOIN locationusers
 						ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 						INNER JOIN paymentterms
 						ON debtorsmaster.paymentterms=paymentterms.termsindicator
@@ -238,9 +238,9 @@ If (isset($PrintPDF)
 			}
 		}
 
-	   $result=DB_query($sql,$db,'','',false,false);
+	   $result=DB_query($sql,'','',false,false);
 
-	   if (DB_error_no($db)!=0) {
+	   if (DB_error_no()!=0) {
 
 			$Title = _('Transaction Print Error Report');
 			include ('includes/header.inc');
@@ -298,8 +298,8 @@ If (isset($PrintPDF)
 					AND stockmoves.show_on_inv_crds=1";
 			} // end else
 
-		$result=DB_query($sql,$db);
-		if (DB_error_no($db)!=0) {
+		$result=DB_query($sql);
+		if (DB_error_no()!=0) {
 			$Title = _('Transaction Print Error Report');
 			include ('includes/header.inc');
 			echo '<br />' . _('There was a problem retrieving the invoice or credit note stock movement details for invoice number') . ' ' . $FromTransNo . ' ' . _('from the database');
@@ -335,8 +335,8 @@ If (isset($PrintPDF)
 				$TranslationResult = DB_query("SELECT descriptiontranslation
 												FROM stockdescriptiontranslations
 												WHERE stockid='" . $myrow2['stockid'] . "'
-												AND language_id='" . $myrow['language_id'] ."'",$db);
-				
+												AND language_id='" . $myrow['language_id'] ."'");
+
 				if (DB_num_rows($TranslationResult)==1){ //there is a translation
 					$TranslationRow = DB_fetch_array($TranslationResult);
 					$LeftOvers = $pdf->addTextWrap($Left_Margin+80,$YPos,186,$FontSize,$TranslationRow['descriptiontranslation']);
@@ -360,7 +360,7 @@ If (isset($PrintPDF)
 					$GetControlMovts = DB_query("SELECT moveqty,
 														serialno
 												 FROM stockserialmoves
-												 WHERE stockmoveno='" . $myrow2['stkmoveno'] . "'",$db);
+												 WHERE stockmoveno='" . $myrow2['stkmoveno'] . "'");
 
 					if ($myrow2['serialised']==1){
 						while ($ControlledMovtRow = DB_fetch_array($GetControlMovts)){
@@ -548,7 +548,7 @@ If (isset($PrintPDF)
 	//Change the language back to the user's language
 	$_SESSION['Language'] = $UserLanguage;
 	include('includes/LanguageSetup.php');
-	
+
 } else { /*The option to print PDF was not hit */
 
 	$Title=_('Select Invoices/Credit Notes To Print');
@@ -616,14 +616,14 @@ If (isset($PrintPDF)
 
 		$sql = "SELECT typeno FROM systypes WHERE typeid=10";
 
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 		$myrow = DB_fetch_row($result);
 
 		echo '<div class="page_help_text"><b>' . _('The last invoice created was number') . ' ' . $myrow[0] . '</b><br />' . _('If only a single invoice is required') . ', ' . _('enter the invoice number to print in the Start transaction number to print field and leave the End transaction number to print field blank') . '. ' . _('Only use the end invoice to print field if you wish to print a sequential range of invoices') . '';
 
 		$sql = "SELECT typeno FROM systypes WHERE typeid='11'";
 
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql);
 		$myrow = DB_fetch_row($result);
 
 		echo '<br /><b>' . _('The last credit note created was number') . ' ' . $myrow[0] . '</b><br />' . _('A sequential range can be printed using the same method as for invoices above') . '. ' . _('A single credit note can be printed by only entering a start transaction number') . '</div>';
@@ -690,7 +690,7 @@ If (isset($PrintPDF)
 						ON custbranch.salesman=salesman.salesmancode
 						INNER JOIN locations
 						ON salesorders.fromstkloc=locations.loccode
-						INNER JOIN locationusers 
+						INNER JOIN locationusers
 						ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 						INNER JOIN paymentterms
 						ON debtorsmaster.paymentterms=paymentterms.termsindicator
@@ -741,8 +741,8 @@ If (isset($PrintPDF)
 
 			}
 
-			$result=DB_query($sql,$db);
-			if (DB_num_rows($result)==0 OR DB_error_no($db)!=0) {
+			$result=DB_query($sql);
+			if (DB_num_rows($result)==0 OR DB_error_no()!=0) {
 				echo '<p>' . _('There was a problem retrieving the invoice or credit note details for note number') . ' ' . $InvoiceToPrint . ' ' . _('from the database') . '. ' . _('To print an invoice, the sales order record, the customer transaction record and the branch record for the customer must not have been purged') . '. ' . _('To print a credit note only requires the customer, transaction, salesman and branch records be available');
 				if ($debug==1){
 					prnMsg( _('The SQL used to get this information that failed was') . '<br />' . $sql,'warn');
@@ -932,8 +932,8 @@ If (isset($PrintPDF)
 				echo '<hr />';
 				echo '<div class="centre"><h4>' . _('All amounts stated in') . ' ' . $myrow['currcode'] . '</h4></div>';
 
-				$result=DB_query($sql,$db);
-				if (DB_error_no($db)!=0) {
+				$result=DB_query($sql);
+				if (DB_error_no()!=0) {
 					echo '<br />' . _('There was a problem retrieving the invoice or credit note stock movement details for invoice number') . ' ' . $FromTransNo . ' ' . _('from the database');
 					if ($debug==1){
 						 echo '<br />' . _('The SQL used to get this information that failed was') . '<br />' . $sql;

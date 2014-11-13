@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: InventoryPlanningPrefSupplier.php 6908 2014-10-06 05:13:27Z daintree $ */
+/* $Id: InventoryPlanningPrefSupplier.php 6944 2014-10-27 07:15:34Z daintree $ */
 
 function standard_deviation($Data){
 	$Total = 0;
@@ -176,13 +176,13 @@ if (isset($_POST['PrintPDF'])){
 				ORDER BY purchdata.supplierno,
 				stockmaster.stockid";
 	}
-	$InventoryResult = DB_query($SQL, $db, '', '', false, false);
+	$InventoryResult = DB_query($SQL, '', '', false, false);
 	$ListCount = DB_num_rows($InventoryResult);
 
-	if (DB_error_no($db) !=0) {
+	if (DB_error_no() !=0) {
 	  $Title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
 	  include('includes/header.inc');
-	   prnMsg(_('The inventory quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
+	   prnMsg(_('The inventory quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
 	   echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 	   if ($debug==1){
 	      echo '<br />' . $SQL;
@@ -235,12 +235,12 @@ if (isset($_POST['PrintPDF'])){
    		   $SQL .= "	AND stockmoves.loccode ='" . $_POST['Location'] . "'";
 		}
 
-		$SalesResult=DB_query($SQL,$db,'','',FALSE,FALSE);
+		$SalesResult=DB_query($SQL,'','',FALSE,FALSE);
 
-		if (DB_error_no($db) !=0) {
+		if (DB_error_no() !=0) {
 	 		 $Title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
 	  		include('includes/header.inc');
-	   		prnMsg( _('The sales quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
+	   		prnMsg( _('The sales quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
 	   		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 	   		if ($debug==1){
 	      			echo '<br />' .  $SQL;
@@ -262,12 +262,12 @@ if (isset($_POST['PrintPDF'])){
 			$SQL .= " AND salesorders.fromstkloc ='" . $_POST['Location'] . "'";
 		}
 
-		$DemandResult = DB_query($SQL, $db, '', '', false, false);
+		$DemandResult = DB_query($SQL, '', '', false, false);
 
-		if (DB_error_no($db) !=0) {
+		if (DB_error_no() !=0) {
 	 		 $Title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
 	  		include('includes/header.inc');
-	   		prnMsg( _('The sales order demand quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
+	   		prnMsg( _('The sales order demand quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
 	   		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 	   		if ($debug==1){
 	      			echo '<br />' . $SQL;
@@ -295,12 +295,12 @@ if (isset($_POST['PrintPDF'])){
 			$SQL .= " AND salesorders.fromstkloc ='" . $_POST['Location'] . "'";
 		}
 
-		$BOMDemandResult = DB_query($SQL,$db,'','',false,false);
+		$BOMDemandResult = DB_query($SQL,'','',false,false);
 
-		if (DB_error_no($db) !=0) {
+		if (DB_error_no() !=0) {
 	 		$Title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
 	  		include('includes/header.inc');
-	   		prnMsg( _('The sales order demand quantities from parent assemblies could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
+	   		prnMsg( _('The sales order demand quantities from parent assemblies could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
 	   		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 	   		if ($debug==1){
 	      			echo '<br />' . $SQL;
@@ -394,7 +394,7 @@ if (isset($_POST['PrintPDF'])){
 			<td><select name="Location">';
 	$sql = "SELECT locations.loccode, locationname FROM locations
 			INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
-	$LocnResult=DB_query($sql,$db);
+	$LocnResult=DB_query($sql);
 
 	echo '<option value="All">' . _('All Locations') . '</option>';
 

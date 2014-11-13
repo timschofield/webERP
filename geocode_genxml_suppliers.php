@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: geocode_genxml_suppliers.php 6565 2014-02-06 08:42:57Z daintree $*/
+/* $Id: geocode_genxml_suppliers.php 6941 2014-10-26 23:18:08Z daintree $*/
 //$PageSecurity = 3;
 $Title = _('Geocode Generate XML');
 
@@ -19,7 +19,7 @@ return $xmlStr;
 
 $sql = "SELECT * FROM suppliers WHERE 1";
 $ErrMsg = _('An error occurred in retrieving the information');;
-$result = DB_query($sql, $db, $ErrMsg);
+$result = DB_query($sql, $ErrMsg);
 
 header("Content-type: text/xml");
 

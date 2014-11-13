@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: PO_PDFPurchOrder.php 6805 2014-08-08 16:12:36Z agaluski $*/
+/* $Id: PO_PDFPurchOrder.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 /*****************************************************************************************
 KL RICARD MODIFICATIONS:
@@ -115,7 +115,7 @@ if (isset($OrderNo) AND $OrderNo != '' AND $OrderNo > 0 AND $OrderNo != 'Preview
 					ON purchorders.initiator=www_users.userid
 				INNER JOIN locationusers ON locationusers.loccode=purchorders.intostocklocation AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 				WHERE purchorders.orderno='" . $OrderNo . "'";
-	$result = DB_query($sql, $db, $ErrMsg);
+	$result = DB_query($sql, $ErrMsg);
 	if (DB_num_rows($result) == 0) {
 		/*There is no order header returned */
 		$Title = _('Print Purchase Order Error');
@@ -225,7 +225,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 					ON purchorderdetails.itemcode=stockmaster.stockid
 				WHERE orderno ='" . $OrderNo . "'
 				ORDER BY itemcode";	/*- ADDED: Sort by our item code -*/
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 	}
 	if ($OrderNo == 'Preview' or DB_num_rows($result) > 0) {
 		/*Yes there are line items to start the ball rolling with a page header */
@@ -374,7 +374,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 										status = 'Printed',
 										stat_comment = '" . htmlspecialchars($StatusComment, ENT_QUOTES, 'UTF-8') . "'
 				WHERE purchorders.orderno = '" . $OrderNo . "'";
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 	}
 	include('includes/footer.inc');
 } //isset($MakePDFThenDisplayIt) OR isset($MakePDFThenEmailIt)
@@ -432,7 +432,7 @@ else {
 				FROM suppliercontacts INNER JOIN purchorders
 				ON suppliercontacts.supplierid=purchorders.supplierno
 				WHERE purchorders.orderno='" . $OrderNo . "'";
-		$ContactsResult = DB_query($SQL, $db, $ErrMsg);
+		$ContactsResult = DB_query($SQL, $ErrMsg);
 		if (DB_num_rows($ContactsResult) > 0) {
 			echo '<tr><td>' . _('Email to') . ':</td><td><select name="EmailTo">';
 			while ($ContactDetails = DB_fetch_array($ContactsResult)) {

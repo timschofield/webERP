@@ -1,5 +1,5 @@
 <?php
-/* $Id: CustomerInquiry.php 6918 2014-10-15 08:27:33Z exsonqu $*/
+/* $Id: CustomerInquiry.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 include('includes/session.inc');
 $Title = _('Customer Inquiry');
@@ -26,7 +26,7 @@ if ($_SESSION['SalesmanLogin'] != '') {
 	$ViewAllowed = false;
 	$sql = "SELECT salesman FROM custbranch WHERE debtorno = '" . $CustomerID . "'";
 	$ErrMsg = _('Failed to retrieve sales data');
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 	if(DB_num_rows($result)>0) {
 		while($myrow = DB_fetch_array($result)) {
 			if ($_SESSION['SalesmanLogin'] == $myrow['salesman']){

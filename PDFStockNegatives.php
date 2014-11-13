@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: PDFStockNegatives.php 6805 2014-08-08 16:12:36Z agaluski $*/
+/* $Id: PDFStockNegatives.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 include('includes/session.inc');
 
@@ -33,7 +33,7 @@ $sql = "SELECT stockmaster.stockid,
 			stockmaster.stockid,
 			stockmaster.decimalplaces";
 
-$result = DB_query($sql,$db, $ErrMsg, $DbgMsg);
+$result = DB_query($sql, $ErrMsg, $DbgMsg);
 
 If (DB_num_rows($result)==0){
 	include ('includes/header.inc');

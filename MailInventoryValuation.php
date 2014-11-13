@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: MailInventoryValuation.php 6011 2013-06-11 07:43:53Z daintree $ */
+/* $Id: MailInventoryValuation.php 6966 2014-11-06 09:15:09Z daintree $ */
 
 $AllowAnyone = true;
 
@@ -17,6 +17,7 @@ $_POST['Location'] = $Location; /* so PDFInventoryValnPageHeader.inc works too *
 include('includes/session.inc');
 include ('includes/class.pdf.php');
 $Recipients = GetMailList('InventoryValuationRecipients');
+
 if (sizeOf($Recipients) == 0) {
 	$Title = _('Inventory Valuation') . ' - ' . _('Problem Report');
       	include('includes/header.inc');
@@ -112,13 +113,13 @@ if ($Location=='All'){
 				stockmaster.stockid";
 
 }
-$InventoryResult = DB_query($SQL,$db,'','',false,true);
+$InventoryResult = DB_query($SQL,'','',false,true);
 $ListCount = DB_num_rows($InventoryResult);
 
-if (DB_error_no($db) !=0) {
+if (DB_error_no() !=0) {
 	$Title = _('Inventory Valuation') . ' - ' . _('Problem Report');
 	include('includes/header.inc');
-	echo _('The inventory valuation could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db);
+	echo _('The inventory valuation could not be retrieved by the SQL because') . ' - ' . DB_error_msg();
 	echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 	if ($debug==1){
 		echo '<br />' . $SQL;
@@ -242,7 +243,7 @@ if ($ListCount == 0) {
 			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 			include('includes/footer.inc');
 			exit;
-	
+
 	}else{
 			$Title = _('Print Inventory Valuation Error');
 			include('includes/header.inc');
@@ -250,8 +251,8 @@ if ($ListCount == 0) {
 			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 			include('includes/footer.inc');
 			exit;
-	
+
 	}
-	
+
 }
 ?>

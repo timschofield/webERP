@@ -1,5 +1,5 @@
 <?php
-/* $Id: Z_Upgrade_3.10-3.11.php 6310 2013-08-29 10:42:50Z daintree $*/
+/* $Id: Z_Upgrade_3.10-3.11.php 6943 2014-10-27 07:06:42Z daintree $*/
 //$PageSecurity = 15;
 include('includes/session.inc');
 $Title = _('Upgrade webERP 3.10 - 3.11');
@@ -53,8 +53,8 @@ if ($_POST['DoUpgrade'] == _('Perform Upgrade')){
 			}
 			if (mb_strpos($SQLScriptFile[$i],';')>0 AND ! $InAFunction){
 				$sql = mb_substr($sql,0,mb_strlen($sql)-1);
-				$result = DB_query($sql, $db, $ErrMsg, $DBMsg, false, false);
-				switch (DB_error_no($db)) {
+				$result = DB_query($sql, $ErrMsg, $DBMsg, false, false);
+				switch (DB_error_no()) {
 					case 0:
 						echo '<tr><td>' . $comment . '</td><td style="background-color:green">' . _('Success') . '</td></tr>';
 						break;
@@ -80,7 +80,7 @@ if ($_POST['DoUpgrade'] == _('Perform Upgrade')){
 						break;
 					default:
 						echo '<tr><td>' . $comment . '</td><td style="background-color:red">' . _('Failure').' - '.
-							_('Error number').' - '.DB_error_no($db)  . '</td></tr>';
+							_('Error number').' - '.DB_error_no()  . '</td></tr>';
 						break;
 				}
 				unset($sql);

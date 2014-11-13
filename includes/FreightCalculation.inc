@@ -1,5 +1,5 @@
 <?php
-/* $Id: FreightCalculation.inc 6860 2014-09-01 09:43:08Z daintree $*/
+/* $Id: FreightCalculation.inc 6944 2014-10-27 07:15:34Z daintree $*/
 /*Function to calculate the freight cost.
 Freight cost is determined by looking for a match of destination city from the Address2 and Address3 fields then looking through the freight company rates for the total KGs and Cubic meters  to figure out the least cost shipping company. */
 
@@ -68,9 +68,9 @@ Function CalcFreightCost ($TotalValue,
 	}
 	$sql = mb_substr($sql, 0, mb_strrpos($sql,' OR')) . ')';
 
-	$CalcFreightCostResult = DB_query($sql,$db);
-	if (DB_error_no($db) !=0) {
-		echo _('The freight calculation for the destination city cannot be performed because') . ' - ' . DB_error_msg($db) . ' - ' . $sql;
+	$CalcFreightCostResult = DB_query($sql);
+	if (DB_error_no() !=0) {
+		echo _('The freight calculation for the destination city cannot be performed because') . ' - ' . DB_error_msg() . ' - ' . $sql;
 	} elseif (DB_num_rows($CalcFreightCostResult)>0) {
 
 		while ($myrow = DB_fetch_array($CalcFreightCostResult)) {
@@ -110,7 +110,7 @@ Function CalcFreightCost ($TotalValue,
 	}
 
 	if ($Currency != $_SESSION['CompanyRecord']['currencydefault']){
-		$ExRateResult = DB_query("SELECT rate FROM currencies WHERE currabrev='" . $Currency . "'",$db);
+		$ExRateResult = DB_query("SELECT rate FROM currencies WHERE currabrev='" . $Currency . "'");
 		if (DB_num_rows($ExRateResult)>0){
 			$ExRateRow = DB_fetch_row($ExRateResult);
 			$ExRate = $ExRateRow[0];

@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: PDFSuppTransListing.php 6310 2013-08-29 10:42:50Z daintree $*/
+/* $Id: PDFSuppTransListing.php 6943 2014-10-27 07:06:42Z daintree $*/
 
 include('includes/SQL_CommonFunctions.inc');
 include ('includes/session.inc');
@@ -74,9 +74,9 @@ $sql= "SELECT type,
 		WHERE type='" . $_POST['TransType'] . "'
 		AND trandate='" . FormatDateForSQL($_POST['Date']) . "'";
 
-$result=DB_query($sql,$db,'','',false,false);
+$result=DB_query($sql,'','',false,false);
 
-if (DB_error_no($db)!=0){
+if (DB_error_no()!=0){
 	$Title = _('Payment Listing');
 	include('includes/header.inc');
 	prnMsg(_('An error occurred getting the payments'),'error');

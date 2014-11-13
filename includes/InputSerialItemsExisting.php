@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: InputSerialItemsExisting.php 6805 2014-08-08 16:12:36Z agaluski $*/
+/* $Id: InputSerialItemsExisting.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 /**
 If the User has selected Keyed Entry, show them this special select list...
@@ -17,7 +17,7 @@ if ($_POST['EntryType'] == 'KEYED'){
 			AND quantity > 0";
 
 	$ErrMsg = '<br />' .  _('Could not retrieve the items for'). ' ' . $StockID;
-    $Bundles = DB_query($sql,$db, $ErrMsg );
+    $Bundles = DB_query($sql, $ErrMsg );
 	echo '<table class="selection"><tr>';
 	if (DB_num_rows($Bundles)>0){
 		$AllSerials=array();

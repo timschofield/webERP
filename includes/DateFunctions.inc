@@ -1,5 +1,5 @@
 <?php
-/* $Id: DateFunctions.inc 6569 2014-02-12 03:04:26Z exsonqu $*/
+/* $Id: DateFunctions.inc 6966 2014-11-06 09:15:09Z daintree $*/
 
 /*
 date validation and parsing functions
@@ -924,7 +924,7 @@ function CalcEarliestDispatchDate (){
 	$EarliestDispatch = time();
 	/* If the hour is after Dispatch Cut Off Time default dispatch date to tomorrow */
 	$EarliestDispatch = (Date('H')>=$_SESSION['DispatchCutOffTime'])?($EarliestDispatch+24*60*60):$EarliestDispatch;
-	
+
 	if ((Date('w',$EarliestDispatch)==0) AND ($_SESSION['WorkingDaysWeek'] != '7')){
 
 /*if today is a sunday AND the company does NOT work 7 days a week, the dispatch date must be tomorrow (Monday) or after */
@@ -951,7 +951,7 @@ function CreatePeriod($PeriodNo, $PeriodEnd, &$db) {
 													'" . $PeriodNo . "',
 													'" . Date('Y-m-d', $PeriodEnd) . "')";
 				$ErrMsg = _('An error occurred in adding a new period number');
-				$GetPrdResult = DB_query($GetPrdSQL, $db, $ErrMsg);
+				$GetPrdResult = DB_query($GetPrdSQL, $ErrMsg);
 
 }
 
@@ -963,7 +963,7 @@ function PeriodExists($TransDate, &$db) {
 	$GetPrdSQL = "SELECT periodno FROM periods WHERE lastdate_in_period < '" . Date('Y/m/d', $MonthAfterTransDate) . "' AND lastdate_in_period >= '" . Date('Y/m/d', $TransDate) . "'";
 
 	$ErrMsg = _('An error occurred in retrieving the period number');
-	$GetPrdResult = DB_query($GetPrdSQL,$db,$ErrMsg);
+	$GetPrdResult = DB_query($GetPrdSQL,$ErrMsg);
 
 	if (DB_num_rows($GetPrdResult)==0) {
 		return false;
@@ -1004,12 +1004,12 @@ function GetPeriod ($TransDate, &$db, $UseProhibit=true) {
 	}
 	/* Find the unix timestamp of the last period end date in periods table */
 	$sql = "SELECT MAX(lastdate_in_period), MAX(periodno) from periods";
-	$result = DB_query($sql, $db);
+	$result = DB_query($sql);
 	$myrow=DB_fetch_row($result);
 
 	if (is_null($myrow[0])){ //then no periods are currently defined - so set a couple up starting at 0
-		$InsertFirstPeriodResult = DB_query("INSERT INTO periods VALUES (0,'" . Date('Y-m-d',mktime(0,0,0,Date('m')+1,0,Date('Y'))) . "')",$db,_('Could not insert first period'));
-		$InsertFirstPeriodResult = DB_query("INSERT INTO periods VALUES (1,'" . Date('Y-m-d',mktime(0,0,0,Date('m')+2,0,Date('Y'))) . "')",$db,_('Could not insert second period'));
+		$InsertFirstPeriodResult = DB_query("INSERT INTO periods VALUES (0,'" . Date('Y-m-d',mktime(0,0,0,Date('m')+1,0,Date('Y'))) . "')",_('Could not insert first period'));
+		$InsertFirstPeriodResult = DB_query("INSERT INTO periods VALUES (1,'" . Date('Y-m-d',mktime(0,0,0,Date('m')+2,0,Date('Y'))) . "')",_('Could not insert second period'));
 		$LastPeriod=1;
 		$LastPeriodEnd = mktime(0,0,0,Date('m')+2,0,Date('Y'));
 	} else {
@@ -1019,7 +1019,7 @@ function GetPeriod ($TransDate, &$db, $UseProhibit=true) {
 	}
 	/* Find the unix timestamp of the first period end date in periods table */
 	$sql = "SELECT MIN(lastdate_in_period), MIN(periodno) from periods";
-	$result = DB_query($sql, $db);
+	$result = DB_query($sql);
 	$myrow=DB_fetch_row($result);
 	$Date_Array = explode('-', $myrow[0]);
 	$FirstPeriodEnd = mktime(0,0,0,$Date_Array[1],0,(int)$Date_Array[0]);
@@ -1059,7 +1059,7 @@ function GetPeriod ($TransDate, &$db, $UseProhibit=true) {
 	} else if (!PeriodExists(mktime(0,0,0,Date('m',$TransDate)+1,Date('d',$TransDate),Date('Y',$TransDate)), $db)) {
 		/* Make sure the following months period exists */
 		$sql = "SELECT MAX(lastdate_in_period), MAX(periodno) from periods";
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		$myrow=DB_fetch_row($result);
 		$Date_Array = explode('-', $myrow[0]);
 		$LastPeriodEnd = mktime(0,0,0,$Date_Array[1]+2,0,(int)$Date_Array[0]);
@@ -1076,7 +1076,7 @@ function GetPeriod ($TransDate, &$db, $UseProhibit=true) {
 					AND lastdate_in_period >= '" . Date('Y-m-d', $TransDate) . "'";
 
 	$ErrMsg = _('An error occurred in retrieving the period number');
-	$GetPrdResult = DB_query($GetPrdSQL,$db,$ErrMsg);
+	$GetPrdResult = DB_query($GetPrdSQL,$ErrMsg);
 	$myrow = DB_fetch_row($GetPrdResult);
 
 	return $myrow[0];

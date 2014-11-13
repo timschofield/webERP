@@ -1,8 +1,8 @@
 <?php
-/* $Id: StockUsageGraph.php 6805 2014-08-08 16:12:36Z agaluski $*/
+/* $Id: StockUsageGraph.php 6944 2014-10-27 07:15:34Z daintree $*/
 
 include('includes/session.inc');
-$result = DB_query("SELECT description FROM stockmaster WHERE stockid='" . trim(mb_strtoupper($_GET['StockID'])) . "'",$db);
+$result = DB_query("SELECT description FROM stockmaster WHERE stockid='" . trim(mb_strtoupper($_GET['StockID'])) . "'");
 $myrow = DB_fetch_row($result);
 
 include('includes/phplot/phplot.php');
@@ -46,11 +46,11 @@ if($_GET['StockLocation']=='All'){
 			periods.lastdate_in_period
 		ORDER BY periodno  LIMIT 24";
 }
-$MovtsResult = DB_query($sql, $db);
-if (DB_error_no($db) !=0) {
+$MovtsResult = DB_query($sql);
+if (DB_error_no() !=0) {
 	$Title = _('Stock Usage Graph Problem');
 	include ('includes/header.inc');
-	echo _('The stock usage for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg($db);
+	echo _('The stock usage for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg();
 	if ($debug==1){
 	echo '<br />' . _('The SQL that failed was') . $sql;
 	}

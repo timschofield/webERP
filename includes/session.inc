@@ -1,6 +1,5 @@
 <?php
-
-/* $Id: session.inc 6914 2014-10-13 08:56:08Z daintree $*/
+/* $Id: session.inc 6966 2014-11-06 09:15:09Z daintree $*/
 
 /*****************************************************************************************
 KL RICARD MODIFICATIONS:
@@ -11,7 +10,6 @@ KL RICARD MODIFICATIONS:
 if (!isset($PathPrefix)) {
 	$PathPrefix='';
 }
-
 
 if (!file_exists($PathPrefix . 'config.php')){
 	$RootPath = dirname(htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'));
@@ -88,8 +86,16 @@ if (isset($_SESSION['DatabaseName'])){
 
 include($PathPrefix . 'includes/LanguageSetup.php');
 $FirstLogin = False;
-if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true */
 
+if(basename($_SERVER['SCRIPT_NAME'])=='Logout.php'){
+	header('Location: index.php');
+} elseif (isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true */
+	$_SESSION['AllowedPageSecurityTokens'] = array();
+	$_SESSION['DatabaseName'] = $DefaultDatabase;
+	$_SESSION['CompanyName'] = $DefaultDatabase;
+	include_once ($PathPrefix . 'includes/ConnectDB_' . $DBType . '.inc');
+	include($PathPrefix . 'includes/GetConfig.php');
+} else {
 	include $PathPrefix . 'includes/UserLogin.php';	/* Login checking and setup */
 
 	if (isset($_POST['UserNameEntryField']) AND isset($_POST['Password'])) {
@@ -138,9 +144,6 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 		die(include($PathPrefix . 'includes/Login.php'));
 
 	}
-} /* only do security checks if AllowAnyone is not true */
- elseif(basename($_SERVER['SCRIPT_NAME'])=='Logout.php'){
-	header('Location: index.php');
 }
 
 /*If the Code $Version - held in ConnectDB.inc is > than the Database VersionNumber held in config table then do upgrades */
@@ -152,8 +155,11 @@ if (strcmp($Version,$_SESSION['VersionNumber'])>0 AND (basename($_SERVER['SCRIPT
 If (isset($_POST['Theme']) AND ($_SESSION['UsersRealName'] == $_POST['RealName'])) {
 	$_SESSION['Theme'] = $_POST['Theme'];
 	$Theme = $_POST['Theme'];
-} else {
+} elseif (isset($_SESSION['Theme'])) {
 	$Theme = $_SESSION['Theme'];
+} else {
+	$Theme = 'xenos';
+	$_SESSION['Theme'] = 'xenos';
 }
 
 
@@ -225,11 +231,15 @@ if (in_array($_SESSION['PageSecurityArray']['WWW_Users.php'], $_SESSION['Allowed
 } else {
 	$debug = 0; //don't allow debug messages
 }
+
 // KL RICARD: Commented as KL does not need Dashboard, already have all KL Boards 
-//if ($FirstLogin AND !$SupplierLogin AND !$CustomerLogin) {
+//if ($FirstLogin AND !$SupplierLogin AND !$CustomerLogin AND $_SESSION['ShowDashboard']==1) {
 //	header('Location: ' . $PathPrefix .'Dashboard.php');
 //}
 // END KL RICARD Mod
+
+
+//if ($FirstLogin AND !$SupplierLogin AND !$CustomerLogin) {
 
 function CryptPass( $Password ) {
     if (PHP_VERSION_ID < 50500) {

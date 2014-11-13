@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: BOMListing.php 6805 2014-08-08 16:12:36Z agaluski $*/
+/* $Id: BOMListing.php 6943 2014-10-27 07:06:42Z daintree $*/
 
 include('includes/session.inc');
 
@@ -36,9 +36,9 @@ If (isset($_POST['PrintPDF'])
 			ORDER BY bom.parent,
 					bom.component";
 
-	$BOMResult = DB_query($SQL,$db,'','',false,false); //dont do error trapping inside DB_query
+	$BOMResult = DB_query($SQL,'','',false,false); //dont do error trapping inside DB_query
 
-	if (DB_error_no($db) !=0) {
+	if (DB_error_no() !=0) {
 	   $Title = _('Bill of Materials Listing') . ' - ' . _('Problem Report');
 	   include('includes/header.inc');
 	   prnMsg(_('The Bill of Material listing could not be retrieved by the SQL because'),'error');
@@ -73,7 +73,7 @@ If (isset($_POST['PrintPDF'])
 				$YPos -=$line_height;
 			}
 			$SQL = "SELECT description FROM stockmaster WHERE stockmaster.stockid = '" . $BOMList['parent'] . "'";
-			$ParentResult = DB_query($SQL,$db);
+			$ParentResult = DB_query($SQL);
 			$ParentRow = DB_fetch_row($ParentResult);
 			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,400-$Left_Margin,$FontSize,$BOMList['parent'] . ' - ' . $ParentRow[0],'left');
 			$ParentPart = $BOMList['parent'];

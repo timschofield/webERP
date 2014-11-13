@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: GLTrialBalance_csv.php 6592 2014-03-02 08:41:40Z daintree $*/
+/* $Id: GLTrialBalance_csv.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 /*Through deviousness and cunning, this system allows trial balances for any date range that recalcuates the p & l balances
 and shows the balance sheets as at the end of the period selected - so first off need to show the input of criteria screen
@@ -50,7 +50,7 @@ $SQL = "SELECT accountgroups.groupname,
 			accountgroups.groupname,
 			chartdetails.accountcode";
 
-$AccountsResult = DB_query($SQL,$db);
+$AccountsResult = DB_query($SQL);
 
 while ($myrow=DB_fetch_array($AccountsResult)) {
 

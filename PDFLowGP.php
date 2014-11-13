@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: PDFLowGP.php 6165 2013-07-30 10:30:51Z daintree $*/
+/* $Id: PDFLowGP.php 6944 2014-10-27 07:15:34Z daintree $*/
 
 include('includes/session.inc');
 
@@ -50,12 +50,12 @@ if (isset($_POST['PrintPDF'])) {
 				AND ((stockmoves.price*(1-stockmoves.discountpercent)) - (stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost))/(stockmoves.price*(1-stockmoves.discountpercent)) <=" . $_POST['GPMin']/100 . "
 				ORDER BY stockmaster.stockid";
 
-	$LowGPSalesResult = DB_query($SQL,$db,'','',false,false);
+	$LowGPSalesResult = DB_query($SQL,'','',false,false);
 
-	if (DB_error_no($db) !=0) {
+	if (DB_error_no() !=0) {
 
 	  include('includes/header.inc');
-		prnMsg(_('The low GP items could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
+		prnMsg(_('The low GP items could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
 		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 		if ($debug==1){
 		  echo '<br />' . $SQL;

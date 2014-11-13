@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: WorkOrderEntry.php 6888 2014-09-15 05:10:21Z exsonqu $*/
+/* $Id: WorkOrderEntry.php 6945 2014-10-27 07:20:48Z daintree $*/
 
 include('includes/session.inc');
 $Title = _('Work Order Entry');
@@ -41,7 +41,7 @@ $LocResult = DB_query("SELECT locations.loccode FROM locations
 						INNER JOIN locationusers ON locationusers.loccode=locations.loccode
 						AND locationusers.userid='" .  $_SESSION['UserID'] . "'
 						AND locationusers.canupd=1
-						WHERE locations.loccode='" . $LocCode . "'", $db);
+						WHERE locations.loccode='" . $LocCode . "'");
 $LocRow = DB_fetch_array($LocResult);
 
 if (is_null($LocRow['loccode']) OR $LocRow['loccode']==''){
@@ -74,7 +74,7 @@ if (isset($SelectedWO) AND$SelectedWO!=''){
 									'" . $LocCode . "',
 									'" . $ReqDate . "',
 									'" . $StartDate. "')";
-	$InsWOResult = DB_query($SQL,$db);
+	$InsWOResult = DB_query($SQL);
 }
 
 
@@ -193,7 +193,7 @@ if (isset($_POST['Search']) OR isset($_POST['Prev']) OR isset($_POST['Next'])){
 	$SQLCount = substr($SQL,strpos($SQL,   "FROM"));
 	$SQLCount = substr($SQLCount,0, strpos($SQLCount,   "ORDER"));
 	$SQLCount = 'SELECT COUNT(*) '.$SQLCount;
-	$SearchResult = DB_query($SQLCount,$db,$ErrMsg);
+	$SearchResult = DB_query($SQLCount,$ErrMsg);
 
 	$myrow=DB_fetch_array($SearchResult);
 	DB_free_result($SearchResult);
@@ -226,7 +226,7 @@ if (isset($_POST['Search']) OR isset($_POST['Prev']) OR isset($_POST['Next'])){
 
 	$ErrMsg = _('There is a problem selecting the part records to display because');
 	$DbgMsg = _('The SQL used to get the part selection was');
-	$SearchResult = DB_query($SQL,$db,$ErrMsg, $DbgMsg);
+	$SearchResult = DB_query($SQL,$ErrMsg, $DbgMsg);
 
 	if (DB_num_rows($SearchResult)==0 ){
 		prnMsg (_('There are no products available meeting the criteria specified'),'info');
@@ -249,8 +249,7 @@ if (isset($NewItem) AND isset($_POST['WO'])){
 										eoq,
 										controlled
 									FROM stockmaster
-									WHERE stockid='" . $NewItem . "'",
-								$db);
+									WHERE stockid='" . $NewItem . "'");
 	if (DB_num_rows($CheckItemResult)==1){
 		$CheckItemRow = DB_fetch_array($CheckItemResult);
 		if ($CheckItemRow['controlled']==1 AND $_SESSION['DefineControlledOnWOEntry']==1){ //need to add serial nos or batches to determine quantity
@@ -272,8 +271,7 @@ if (isset($NewItem) AND isset($_POST['WO'])){
 	$CheckItemResult = DB_query("SELECT stockid
 									FROM woitems
 									WHERE stockid='" . $NewItem . "'
-										AND wo='" .$_POST['WO'] . "'",
-									$db);
+										AND wo='" .$_POST['WO'] . "'");
 	if (DB_num_rows($CheckItemResult)==1){
 		prnMsg(_('This item is already on the work order and cannot be added again'),'warn');
 		$InputError=true;
@@ -288,8 +286,7 @@ if (isset($NewItem) AND isset($_POST['WO'])){
 									WHERE bom.parent='" . $NewItem . "'
 										AND bom.loccode='" . $_POST['StockLocation'] . "'
 										AND bom.effectiveafter<='" . Date('Y-m-d') . "'
-										AND bom.effectiveto>='" . Date('Y-m-d') . "'",
-							 $db);
+										AND bom.effectiveto>='" . Date('Y-m-d') . "'");
 		$CostRow = DB_fetch_array($CostResult);
 		if (is_null($CostRow['cost']) OR $CostRow['cost']==0){
 				$Cost =0;
@@ -301,7 +298,7 @@ if (isset($NewItem) AND isset($_POST['WO'])){
 			$EOQ=1;
 		}
 
-		$Result = DB_Txn_Begin($db);
+		$Result = DB_Txn_Begin();
 
 		// insert parent item info
 		$SQL = "INSERT INTO woitems (wo,
@@ -315,12 +312,12 @@ if (isset($NewItem) AND isset($_POST['WO'])){
 									 '" . $Cost . "'
 								)";
 		$ErrMsg = _('The work order item could not be added');
-		$result = DB_query($SQL,$db,$ErrMsg);
+		$result = DB_query($SQL,$ErrMsg);
 
 		//Recursively insert real component requirements - see includes/SQL_CommonFunctions.in for function WoRealRequirements
 		WoRealRequirements($db, $_POST['WO'], $_POST['StockLocation'], $NewItem);
 
-		$result = DB_Txn_Commit($db);
+		$result = DB_Txn_Commit();
 
 		unset($NewItem);
 	} //end if there were no input errors
@@ -391,8 +388,7 @@ if (isset($_POST['submit']) OR isset($_POST['Search'])) { //The update button ha
 												WHERE bom.parent='" . $_POST['OutputItem'.$i] . "'
 												AND bom.loccode='" . $_POST['StockLocation'] . "'
 												AND bom.effectiveafter<='" . Date('Y-m-d') . "'
-												AND bom.effectiveto>='" . Date('Y-m-d') . "'",
-										$db);
+												AND bom.effectiveto>='" . Date('Y-m-d') . "'");
 				$CostRow = DB_fetch_array($CostResult);
 				if (is_null($CostRow['cost'])){
 					$Cost =0;
@@ -417,7 +413,7 @@ if (isset($_POST['submit']) OR isset($_POST['Search'])) { //The update button ha
 		$ErrMsg = _('The work order could not be added/updated');
 		foreach ($SQL as $SQL_stmt){
 		//	echo '<br />' . $SQL_stmt;
-			$result = DB_query($SQL_stmt,$db,$ErrMsg);
+			$result = DB_query($SQL_stmt,$ErrMsg);
 
 		}
 		if (!isset($_POST['Search'])) {
@@ -442,32 +438,32 @@ if (isset($_POST['submit']) OR isset($_POST['Search'])) { //The update button ha
 	$HasTransResult = DB_query("SELECT transno
 									FROM stockmoves
 								WHERE (stockmoves.type= 26 OR stockmoves.type=28)
-								AND reference " . LIKE  . " '%" . $_POST['WO'] . "%'",$db);
+								AND reference " . LIKE  . " '%" . $_POST['WO'] . "%'");
 	if (DB_num_rows($HasTransResult)>0){
 		prnMsg(_('This work order cannot be deleted because it has issues or receipts related to it'),'error');
 		$CancelDelete=true;
 	}
 
 	if ($CancelDelete==false) { //ie all tests proved ok to delete
-		DB_Txn_Begin($db);
+		DB_Txn_Begin();
 		$ErrMsg = _('The work order could not be deleted');
 		$DbgMsg = _('The SQL used to delete the work order was');
 		//delete the worequirements
 		$SQL = "DELETE FROM worequirements WHERE wo='" . $_POST['WO'] . "'";
-		$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 		//delete the items on the work order
 		$SQL = "DELETE FROM woitems WHERE wo='" . $_POST['WO'] . "'";
-		$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 		//delete the controlled items defined in wip
 		$SQL="DELETE FROM woserialnos WHERE wo='" . $_POST['WO'] . "'";
 		$ErrMsg=_('The work order serial numbers could not be deleted');
-		$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 		// delete the actual work order
 		$SQL="DELETE FROM workorders WHERE wo='" . $_POST['WO'] . "'";
 		$ErrMsg=_('The work order could not be deleted');
-		$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
-		DB_Txn_Commit($db);
+		DB_Txn_Commit();
 		prnMsg(_('The work order has been cancelled'),'success');
 
 
@@ -501,7 +497,7 @@ $SQL="SELECT workorders.loccode,
 		INNER JOIN locationusers ON locationusers.loccode=workorders.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
 		WHERE workorders.wo='" . $_POST['WO'] . "'";
 
-$WOResult = DB_query($SQL,$db);
+$WOResult = DB_query($SQL);
 if (DB_num_rows($WOResult)==1){
 
 	$myrow = DB_fetch_array($WOResult);
@@ -524,7 +520,8 @@ if (DB_num_rows($WOResult)==1){
 										woitems.comments
 								FROM woitems INNER JOIN stockmaster
 								ON woitems.stockid=stockmaster.stockid
-								WHERE wo='" .$_POST['WO'] . "'",$db,$ErrMsg);
+								WHERE wo='" .$_POST['WO'] . "'",
+								$ErrMsg);
 
 	$NumberOfOutputs=DB_num_rows($WOItemsResult);
 	$i=1;
@@ -542,7 +539,7 @@ if (DB_num_rows($WOResult)==1){
 				}
 		  		$_POST['Controlled'.$i] =$WOItem['controlled'];
 		  		$_POST['Serialised'.$i] =$WOItem['serialised'];
-		  		$HasWOSerialNosResult = DB_query("SELECT wo FROM woserialnos WHERE wo='" . $_POST['WO'] . "'",$db);
+		  		$HasWOSerialNosResult = DB_query("SELECT wo FROM woserialnos WHERE wo='" . $_POST['WO'] . "'");
 		  		if (DB_num_rows($HasWOSerialNosResult)>0){
 		  		   $_POST['HasWOSerialNos']=true;
 		  		} else {
@@ -564,12 +561,12 @@ echo '<input type="hidden" name="WO" value="' .$_POST['WO'] . '" />';
 echo '<tr><td class="label">' . _('Work Order Reference') . ':</td><td>' . $_POST['WO'] . '</td></tr>';
 echo '<tr><td class="label">' . _('Factory Location') .':</td>
 	<td><select name="StockLocation" onChange="ReloadForm(form1.submit)">';
-$LocResult = DB_query("SELECT locations.loccode,locationname 
+$LocResult = DB_query("SELECT locations.loccode,locationname
 						FROM locations
-						INNER JOIN locationusers 
-							ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' 
+						INNER JOIN locationusers
+							ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "'
 							AND locationusers.canupd=1
-						WHERE locations.usedforwo = 1",$db);
+						WHERE locations.usedforwo = 1");
 while ($LocRow = DB_fetch_array($LocResult)){
 	if ($_POST['StockLocation']==$LocRow['loccode']){
 		echo '<option selected="True" value="' . $LocRow['loccode'] .'">' . $LocRow['locationname'] . '</option>';
@@ -672,7 +669,7 @@ $SQL="SELECT categoryid,
 		FROM stockcategory
 		WHERE stocktype='F' OR stocktype='M'
 		ORDER BY categorydescription";
-	$result1 = DB_query($SQL,$db);
+	$result1 = DB_query($SQL);
 
 echo '<table class="selection"><tr><td>' . _('Select a stock category') . ':<select name="StockCat">';
 

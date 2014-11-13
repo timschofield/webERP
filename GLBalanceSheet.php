@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: GLBalanceSheet.php 6751 2014-06-13 01:09:20Z tehonu $*/
+/* $Id: GLBalanceSheet.php 6944 2014-10-27 07:15:34Z daintree $*/
 
 /*Through deviousness and cunning, this system allows shows the balance sheets as at the end of any period selected - so first off need to show the input of criteria screen while the user is selecting the period end of the balance date meanwhile the system is posting any unposted transactions */
 
@@ -35,12 +35,12 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 
 	$periodno=GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
 	$sql = "SELECT lastdate_in_period FROM periods WHERE periodno='".$periodno . "'";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 	$myrow=DB_fetch_array($result, $db);
 	$lastdate_in_period=$myrow[0];
 
 	$sql = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC";
-	$Periods = DB_query($sql,$db);
+	$Periods = DB_query($sql);
 
 	while ($myrow=DB_fetch_array($Periods,$db)){
 		if( $myrow['periodno']== $periodno){
@@ -90,7 +90,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 	$RetainedEarningsAct = $_SESSION['CompanyRecord']['retainedearnings'];
 
 	$sql = "SELECT lastdate_in_period FROM periods WHERE periodno='" . $_POST['BalancePeriodEnd'] . "'";
-	$PrdResult = DB_query($sql, $db);
+	$PrdResult = DB_query($sql);
 	$myrow = DB_fetch_row($PrdResult);
 	$BalanceDate = ConvertSQLDate($myrow[0]);
 
@@ -103,11 +103,11 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 		ON chartmaster.accountcode= chartdetails.accountcode
 		WHERE accountgroups.pandl=1";
 
-	$AccumProfitResult = DB_query($SQL,$db);
-	if (DB_error_no($db) !=0) {
+	$AccumProfitResult = DB_query($SQL);
+	if (DB_error_no() !=0) {
 		$Title = _('Balance Sheet') . ' - ' . _('Problem Report') . '....';
 		include('includes/header.inc');
-		prnMsg( _('The accumulated profits brought forward could not be calculated by the SQL because') . ' - ' . DB_error_msg($db) );
+		prnMsg( _('The accumulated profits brought forward could not be calculated by the SQL because') . ' - ' . DB_error_msg() );
 		echo '<br />
 				<a href="' .$RootPath .'/index.php">' .  _('Back to the menu'). '</a>';
 		if ($debug==1){
@@ -141,12 +141,12 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 			accountgroups.groupname,
 			chartdetails.accountcode";
 
-	$AccountsResult = DB_query($SQL,$db);
+	$AccountsResult = DB_query($SQL);
 
-	if (DB_error_no($db) !=0) {
+	if (DB_error_no() !=0) {
 		$Title = _('Balance Sheet') . ' - ' . _('Problem Report') . '....';
 		include('includes/header.inc');
-		prnMsg( _('No general ledger accounts were returned by the SQL because') . ' - ' . DB_error_msg($db) );
+		prnMsg( _('No general ledger accounts were returned by the SQL because') . ' - ' . DB_error_msg() );
 		echo '<br /><a href="' .$RootPath .'/index.php">' .  _('Back to the menu'). '</a>';
 		if ($debug==1){
 			echo '<br />' .  $SQL;
@@ -344,7 +344,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 	$RetainedEarningsAct = $_SESSION['CompanyRecord']['retainedearnings'];
 
 	$sql = "SELECT lastdate_in_period FROM periods WHERE periodno='" . $_POST['BalancePeriodEnd'] . "'";
-	$PrdResult = DB_query($sql, $db);
+	$PrdResult = DB_query($sql);
 	$myrow = DB_fetch_row($PrdResult);
 	$BalanceDate = ConvertSQLDate($myrow[0]);
 
@@ -357,7 +357,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 		ON chartmaster.accountcode= chartdetails.accountcode
 		WHERE accountgroups.pandl=1";
 
-	$AccumProfitResult = DB_query($SQL,$db,_('The accumulated profits brought forward could not be calculated by the SQL because'));
+	$AccumProfitResult = DB_query($SQL,_('The accumulated profits brought forward could not be calculated by the SQL because'));
 
 	$AccumProfitRow = DB_fetch_array($AccumProfitResult); /*should only be one row returned */
 
@@ -383,7 +383,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 			accountgroups.groupname,
 			chartdetails.accountcode";
 
-	$AccountsResult = DB_query($SQL,$db,_('No general ledger accounts were returned by the SQL because'));
+	$AccountsResult = DB_query($SQL,_('No general ledger accounts were returned by the SQL because'));
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/preview.gif" title="' . _('Search') . '" alt="" /> ' . _('HTML View') . '</p>';
 
 	echo '<div class="invoice">

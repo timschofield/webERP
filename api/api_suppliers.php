@@ -1,5 +1,5 @@
 <?php
-/* $Id: api_suppliers.php 4627 2011-07-08 10:30:40Z daintree $*/
+/* $Id: api_suppliers.php 6943 2014-10-27 07:06:42Z daintree $*/
 
 /* Verify that the supplier number is valid, and doesn't already
    exist.*/
@@ -10,7 +10,7 @@
 		$Searchsql = "SELECT count(supplierid)
   				      FROM suppliers
 				      WHERE supplierid='".$SupplierNumber."'";
-		$SearchResult=DB_query($Searchsql, $db);
+		$SearchResult=DB_query($Searchsql);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] != 0) {
 			$Errors[$i] = SupplierNoAlreadyExists;
@@ -27,7 +27,7 @@
 		$Searchsql = "SELECT count(supplierid)
 				      FROM suppliers
 				      WHERE supplierid='".$SupplierNumber."'";
-		$SearchResult=DB_query($Searchsql, $db);
+		$SearchResult=DB_query($Searchsql);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] == 0) {
 			$Errors[$i] = SupplierNoDoesntExists;
@@ -48,7 +48,7 @@
  * target webERP company */
 	function VerifySupplierSinceDate($suppliersincedate, $i, $Errors, $db) {
 		$sql="SELECT confvalue FROM config where confname='DefaultDateFormat'";
-		$result=DB_query($sql, $db);
+		$result=DB_query($sql);
 		$myrow=DB_fetch_array($result);
 		$DateFormat=$myrow[0];
 		if (mb_strstr('/',$PeriodEnd)) {
@@ -112,7 +112,7 @@
 		$Searchsql = "SELECT COUNT(id)
 					 FROM factorcompanies
 					  WHERE id='".$factorco."'";
-		$SearchResult=DB_query($Searchsql, $db);
+		$SearchResult=DB_query($Searchsql);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] == 0) {
 			$Errors[$i] = FactorCompanyNotSetup;
@@ -207,7 +207,7 @@
 		  'VALUES ('.mb_substr($FieldValues,0,-2).') ';
 		if (sizeof($Errors)==0) {
 			$result = DB_Query($sql, $db);
-			if (DB_error_no($db) != 0) {
+			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
 				$Errors[0]=0;
@@ -295,8 +295,8 @@
 		$sql = mb_substr($sql,0,-2)." WHERE supplierid='".$SupplierDetails['supplierid']."'";
 		if (sizeof($Errors)==0) {
 			$result = DB_Query($sql, $db);
-			echo DB_error_no($db);
-			if (DB_error_no($db) != 0) {
+			echo DB_error_no();
+			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
 				$Errors[0]=0;

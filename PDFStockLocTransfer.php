@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: PDFStockLocTransfer.php 6808 2014-08-11 21:27:11Z agaluski $*/
+/* $Id: PDFStockLocTransfer.php 6941 2014-10-26 23:18:08Z daintree $*/
 include('includes/session.inc');
 $Title = _('Stock Location Transfer Docket Error');
 
@@ -79,7 +79,7 @@ $sql = "SELECT loctransfers.reference,
 		INNER JOIN locationusers as locationusersrec ON locationusersrec.loccode=locationsrec.loccode AND locationusersrec.userid='" .  $_SESSION['UserID'] . "' AND locationusersrec.canview=1
 		WHERE loctransfers.reference='" . $_GET['TransferNo'] . "'";
 
-$result = DB_query($sql,$db, $ErrMsg, $DbgMsg);
+$result = DB_query($sql, $ErrMsg, $DbgMsg);
 
 If (DB_num_rows($result)==0){
 

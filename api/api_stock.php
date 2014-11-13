@@ -5,7 +5,7 @@
 		$Searchsql = "SELECT count(stockid)
     				  FROM stockmaster
 	    			  WHERE stockid='".$StockCode."'";
-		$SearchResult=DB_query($Searchsql, $db);
+		$SearchResult=DB_query($Searchsql);
 		$answer = DB_fetch_array($SearchResult);
 		if ($answer[0]>0) {
 			$Errors[$i] = StockCodeAlreadyExists;
@@ -18,7 +18,7 @@
 		$Searchsql = "SELECT count(stockid)
 				      FROM stockmaster
 				      WHERE stockid='".$StockCode."'";
-		$SearchResult=DB_query($Searchsql, $db);
+		$SearchResult=DB_query($Searchsql);
 		$answer = DB_fetch_array($SearchResult);
 		if ($answer[0]==0) {
 			$Errors[$i] = StockCodeDoesntExist;
@@ -31,7 +31,7 @@
 		$Searchsql = "SELECT count(categoryid)
 				      FROM stockcategory
 				      WHERE categoryid='".$StockCategory."'";
-		$SearchResult=DB_query($Searchsql, $db);
+		$SearchResult=DB_query($Searchsql);
 		$answer = DB_fetch_array($SearchResult);
 		if ($answer[0]==0) {
 			$Errors[$i] = StockCategoryDoesntExist;
@@ -76,7 +76,7 @@
  * target webERP company */
 	function VerifyLastCurCostDate($CurCostDate, $i, $Errors, $db) {
 		$sql="SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
-		$result=DB_query($sql, $db);
+		$result=DB_query($sql);
 		$myrow=DB_fetch_array($result);
 		$DateFormat=$myrow[0];
 		if (mb_strstr('/',$PeriodEnd)) {
@@ -216,7 +216,7 @@
 		$Searchsql = "SELECT count(taxcatid)
 				      FROM taxcategories
 				      WHERE taxcatid='".$TaxCat."'";
-		$SearchResult=DB_query($Searchsql, $db);
+		$SearchResult=DB_query($Searchsql);
 		$answer = DB_fetch_array($SearchResult);
 		if ($answer[0]==0) {
 			$Errors[$i] = TaxCategoriesDoesntExist;
@@ -368,11 +368,11 @@
 		  		'VALUES ('.mb_substr($FieldValues,0,-2).') ';
 			$locsql = "INSERT INTO locstock (loccode,stockid)
 				SELECT locations.loccode,'" . $StockItemDetails['stockid'] . "' FROM locations";
-			DB_Txn_Begin($db);
+			DB_Txn_Begin();
 			$stockresult = DB_Query($stocksql, $db);
 			$locresult = DB_Query($locsql, $db);
-			DB_Txn_Commit($db);
-			if (DB_error_no($db) != 0) {
+			DB_Txn_Commit();
+			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
 				$Errors[0]=0;
@@ -484,8 +484,8 @@
 		$sql = mb_substr($sql,0,-2)." WHERE stockid='".$StockItemDetails['stockid']."'";
 		if (sizeof($Errors)==0) {
 			$result = DB_Query($sql, $db);
-			echo DB_error_no($db);
-			if (DB_error_no($db) != 0) {
+			echo DB_error_no();
+			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
 				$Errors[0]=0;
@@ -563,7 +563,7 @@
 		$sql="SELECT quantity,
                      loccode
                FROM locstock WHERE stockid='" . $StockID."'";
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		if (sizeof($Errors)==0) {
 			$i=0;
 			while ($myrow=DB_fetch_array($result)) {
@@ -846,14 +846,14 @@
                         '" .$StockID.' x '.$Quantity.' @ '.$itemdetails['materialcost']."')";
 		$systypessql = "UPDATE systypes set typeno='".GetNextTransactionNo(17, $db)."' where typeid='17'";
 
-		DB_Txn_Begin($db);
-		DB_query($stockmovesql, $db);
-		DB_query($locstocksql, $db);
-		DB_query($glupdatesql1, $db);
-		DB_query($glupdatesql2, $db);
-		DB_query($systypessql, $db);
-		DB_Txn_Commit($db);
-		if (DB_error_no($db) != 0) {
+		DB_Txn_Begin();
+		DB_query($stockmovesql);
+		DB_query($locstocksql);
+		DB_query($glupdatesql1);
+		DB_query($glupdatesql2);
+		DB_query($systypessql);
+		DB_Txn_Commit();
+		if (DB_error_no() != 0) {
 			$Errors[0] = DatabaseUpdateFailed;
 			return $Errors;
 		} else {

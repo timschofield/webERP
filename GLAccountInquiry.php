@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: GLAccountInquiry.php 6592 2014-03-02 08:41:40Z daintree $*/
+/* $Id: GLAccountInquiry.php 6942 2014-10-27 02:48:29Z daintree $*/
 
 include ('includes/session.inc');
 $Title = _('General Ledger Account Inquiry');
@@ -49,7 +49,7 @@ echo '<table class="selection">
 			<td><select name="Account">';
 
 $sql = "SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode";
-$Account = DB_query($sql,$db);
+$Account = DB_query($sql);
 while ($myrow=DB_fetch_array($Account,$db)){
 	if($myrow['accountcode'] == $SelectedAccount){
 		echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' ' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</option>';
@@ -70,7 +70,7 @@ $SQL = "SELECT tagref,
 		FROM tags
 		ORDER BY tagref";
 
-$result=DB_query($SQL,$db);
+$result=DB_query($SQL);
 echo '<option value="0">0 - '._('All tags') . '</option>';
 
 while ($myrow=DB_fetch_array($result)){
@@ -88,7 +88,7 @@ echo '<tr>
 		<td><select name="Period[]" size="12" multiple="multiple">';
 
 $sql = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC";
-$Periods = DB_query($sql,$db);
+$Periods = DB_query($sql);
 while ($myrow=DB_fetch_array($Periods,$db)){
 	if (isset($FirstPeriodSelected) AND $myrow['periodno'] >= $FirstPeriodSelected AND $myrow['periodno'] <= $LastPeriodSelected) {
 		echo '<option selected="selected" value="' . $myrow['periodno'] . '">' . _(MonthAndYearFromSQLDate($myrow['lastdate_in_period'])) . '</option>';
@@ -119,7 +119,7 @@ if (isset($_POST['Show'])){
 	$result = DB_query("SELECT pandl
 				FROM accountgroups
 				INNER JOIN chartmaster ON accountgroups.groupname=chartmaster.group_
-				WHERE chartmaster.accountcode='" . $SelectedAccount ."'",$db);
+				WHERE chartmaster.accountcode='" . $SelectedAccount ."'");
 	$PandLRow = DB_fetch_row($result);
 	if ($PandLRow[0]==1){
 		$PandLAccount = True;
@@ -152,15 +152,15 @@ if (isset($_POST['Show'])){
 	if ($_POST['tag']!=0) {
  		$sql = $sql . " AND tag='" . $_POST['tag'] . "'";
 	}
-			
+
 	$sql = $sql . " ORDER BY periodno, gltrans.trandate, counterindex";
 
 	$namesql = "SELECT accountname FROM chartmaster WHERE accountcode='" . $SelectedAccount . "'";
-	$nameresult = DB_query($namesql, $db);
+	$nameresult = DB_query($namesql);
 	$namerow=DB_fetch_array($nameresult);
 	$SelectedAccountName=$namerow['accountname'];
 	$ErrMsg = _('The transactions for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved because') ;
-	$TransResult = DB_query($sql,$db,$ErrMsg);
+	$TransResult = DB_query($sql,$ErrMsg);
 
 	echo '<br />
 		<table class="selection">
@@ -193,7 +193,7 @@ if (isset($_POST['Show'])){
 				AND chartdetails.period='" . $FirstPeriodSelected . "'";
 
 		$ErrMsg = _('The chart details for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved');
-		$ChartDetailsResult = DB_query($sql,$db,$ErrMsg);
+		$ChartDetailsResult = DB_query($sql,$ErrMsg);
 		$ChartDetailRow = DB_fetch_array($ChartDetailsResult);
 
 		$RunningTotal =$ChartDetailRow['bfwd'];
@@ -231,7 +231,7 @@ if (isset($_POST['Show'])){
 					AND chartdetails.period='" . $PeriodNo . "'";
 
 				$ErrMsg = _('The chart details for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved');
-				$ChartDetailsResult = DB_query($sql,$db,$ErrMsg);
+				$ChartDetailsResult = DB_query($sql,$ErrMsg);
 				$ChartDetailRow = DB_fetch_array($ChartDetailsResult);
 
 				echo '<tr>

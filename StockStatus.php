@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: StockStatus.php 6908 2014-10-06 05:13:27Z daintree $*/
+/* $Id: StockStatus.php 6942 2014-10-27 02:48:29Z daintree $*/
 $PricesSecurity = 12;//don't show pricing info unless security token 12 available to user
 include('includes/session.inc');
 
@@ -21,7 +21,7 @@ if (isset($_POST['UpdateBinLocations'])){
 	foreach ($_POST as $PostVariableName => $Bin) {
 		if (mb_substr($PostVariableName,0,11) == 'BinLocation') {
 			$sql = "UPDATE locstock SET bin='" . strtoupper($Bin) . "' WHERE loccode='" . mb_substr($PostVariableName,11) . "' AND stockid='" . $StockID . "'";
-			$result = DB_query($sql, $db);
+			$result = DB_query($sql);
 		}
 	}
 }
@@ -33,7 +33,6 @@ $result = DB_query("SELECT description,
 						   controlled
 					FROM stockmaster
 					WHERE stockid='".$StockID."'",
-					$db,
 					_('Could not retrieve the requested item'),
 					_('The SQL used to retrieve the items was'));
 
@@ -79,7 +78,7 @@ $sql = "SELECT locstock.loccode,
 
 $ErrMsg = _('The stock held at each location cannot be retrieved because');
 $DbgMsg = _('The SQL that was used to update the stock item and failed was');
-$LocStockResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
+$LocStockResult = DB_query($sql, $ErrMsg, $DbgMsg);
 
 echo '<br />
 		<table class="selection"><tbody>';
@@ -124,7 +123,7 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 			AND salesorderdetails.stkcode='" . $StockID . "'";
 
 	$ErrMsg = _('The demand for this product from') . ' ' . $myrow['loccode'] . ' ' . _('cannot be retrieved because');
-	$DemandResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+	$DemandResult = DB_query($sql,$ErrMsg,$DbgMsg);
 
 	if (DB_num_rows($DemandResult)==1){
 	  $DemandRow = DB_fetch_row($DemandResult);
@@ -148,7 +147,7 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 			AND salesorders.quotation=0";
 
 	$ErrMsg = _('The demand for this product from') . ' ' . $myrow['loccode'] . ' ' . _('cannot be retrieved because');
-	$DemandResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+	$DemandResult = DB_query($sql,$ErrMsg,$DbgMsg);
 
 	if (DB_num_rows($DemandResult)==1){
 		$DemandRow = DB_fetch_row($DemandResult);
@@ -168,7 +167,7 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 			AND workorders.closed=0";
 
 	$ErrMsg = _('The workorder component demand for this product from') . ' ' . $myrow['loccode'] . ' ' . _('cannot be retrieved because');
-	$DemandResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+	$DemandResult = DB_query($sql,$ErrMsg,$DbgMsg);
 
 	if (DB_num_rows($DemandResult)==1){
 		$DemandRow = DB_fetch_row($DemandResult);
@@ -185,7 +184,7 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 						FROM loctransfers
 						WHERE stockid='" . $StockID . "'
 							AND shiploc='".$myrow['loccode']."'";
-		$InTransitResult=DB_query($InTransitSQL, $db);
+		$InTransitResult=DB_query($InTransitSQL);
 		$InTransitRow=DB_fetch_array($InTransitResult);
 		if ($InTransitRow['intransit']!='') {
 			$InTransitQuantityOut=-$InTransitRow['intransit'];
@@ -197,7 +196,7 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 						FROM loctransfers
 						WHERE stockid='" . $StockID . "'
 							AND recloc='".$myrow['loccode']."'";
-		$InTransitResult=DB_query($InTransitSQL, $db);
+		$InTransitResult=DB_query($InTransitSQL);
 		$InTransitRow=DB_fetch_array($InTransitResult);
 		if ($InTransitRow['intransit']!='') {
 			$InTransitQuantityIn=-$InTransitRow['intransit'];
@@ -285,7 +284,7 @@ if ($DebtorNo) { /* display recent pricing history for this debtor and this stoc
 	$ErrMsg = _('The stock movements for the selected criteria could not be retrieved because') . ' - ';
 	$DbgMsg = _('The SQL that failed was');
 
-	$MovtsResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
+	$MovtsResult = DB_query($sql, $ErrMsg, $DbgMsg);
 
 	$k=1;
 	while ($myrow=DB_fetch_array($MovtsResult)) {

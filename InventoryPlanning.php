@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: InventoryPlanning.php 6908 2014-10-06 05:13:27Z daintree $ */
+/* $Id: InventoryPlanning.php 6963 2014-11-06 03:06:03Z tehonu $ */
 
 include('includes/session.inc');
 /* webERP manual links before header.inc */
@@ -93,12 +93,12 @@ if (isset($_POST['PrintPDF'])) {
 					stockmaster.stockid";
 
 	}
-	$InventoryResult = DB_query($SQL, $db, '', '', false, false);
+	$InventoryResult = DB_query($SQL, '', '', false, false);
 
-	if (DB_error_no($db) !=0) {
+	if (DB_error_no() !=0) {
 	  $Title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
 	  include('includes/header.inc');
-	   prnMsg(_('The inventory quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
+	   prnMsg(_('The inventory quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
 	   echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 	   if ($debug==1){
 	      echo '<br />' . $SQL;
@@ -117,14 +117,14 @@ if (isset($_POST['PrintPDF'])) {
 
 	$Category = '';
 
-	$CurrentPeriod = GetPeriod(Date($_SESSION['DefaultDateFormat']),$db);
+	$CurrentPeriod = GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
 	$Period_1 = $CurrentPeriod -1;
 	$Period_2 = $CurrentPeriod -2;
 	$Period_3 = $CurrentPeriod -3;
 	$Period_4 = $CurrentPeriod -4;
 	$Period_5 = $CurrentPeriod -5;
 
-	while ($InventoryPlan = DB_fetch_array($InventoryResult,$db)){
+	while ($InventoryPlan = DB_fetch_array($InventoryResult)){
 
 		if ($Category!=$InventoryPlan['categoryid']){
 			$FontSize=10;
@@ -170,12 +170,12 @@ if (isset($_POST['PrintPDF'])) {
 					AND stockmoves.hidemovt=0";
 		}
 
-		$SalesResult = DB_query($SQL,$db,'','', false, false);
+		$SalesResult = DB_query($SQL,'','', false, false);
 
-		if (DB_error_no($db) !=0) {
+		if (DB_error_no() !=0) {
 	 		 $Title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
 	  		include('includes/header.inc');
-	   		prnMsg( _('The sales quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
+	   		prnMsg( _('The sales quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
 	   		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 	   		if ($debug==1){
 	      		echo '<br />' .$SQL;
@@ -206,13 +206,13 @@ if (isset($_POST['PrintPDF'])) {
 				AND salesorders.quotation=0";
 		}
 
-		$DemandResult = DB_query($SQL, $db, '', '', false , false);
+		$DemandResult = DB_query($SQL, '', '', false , false);
 		$ListCount = DB_num_rows($DemandResult);
 
-		if (DB_error_no($db) !=0) {
+		if (DB_error_no() !=0) {
 	 		$Title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
 	  		include('includes/header.inc');
-	   		prnMsg( _('The sales order demand quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
+	   		prnMsg( _('The sales order demand quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
 	   		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 	   		if ($debug==1){
 	      			echo '<br />' . $SQL;
@@ -256,12 +256,12 @@ if (isset($_POST['PrintPDF'])) {
 				AND salesorders.quotation=0";
 		}
 
-		$BOMDemandResult = DB_query($SQL,$db,'','',false,false);
+		$BOMDemandResult = DB_query($SQL,'','',false,false);
 
-		if (DB_error_no($db) !=0) {
+		if (DB_error_no() !=0) {
 	 		$Title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
 	  		include('includes/header.inc');
-	   		prnMsg( _('The sales order demand quantities from parent assemblies could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
+	   		prnMsg( _('The sales order demand quantities from parent assemblies could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
 	   		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 	   		if ($debug==1){
 	      			echo '<br />' . $SQL;
@@ -381,7 +381,7 @@ if (isset($_POST['PrintPDF'])) {
 			<td><select name="Location">';
 
 	$sql = "SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
-	$LocnResult=DB_query($sql,$db);
+	$LocnResult=DB_query($sql);
 
 	echo '<option value="All">' . _('All Locations') . '</option>';
 

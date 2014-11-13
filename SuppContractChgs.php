@@ -34,7 +34,7 @@ if (isset($_POST['AddContractChgToInvoice'])){
 	} else{
 		$result = DB_query("SELECT contractref FROM contracts
 							WHERE status=2
-							AND contractref='" . $_POST['ContractRef'] . "'",$db);
+							AND contractref='" . $_POST['ContractRef'] . "'");
 		if (DB_num_rows($result)==0){
 			prnMsg(_('The contract reference entered does not exist as a customer ordered contract. This contract cannot be charged to'),'error');
 			$InputError =true;
@@ -141,7 +141,7 @@ $sql = "SELECT contractref, name
 		ON contracts.debtorno=debtorsmaster.debtorno
 		WHERE status=2"; //only show customer ordered contracts not quotes or contracts that are finished with
 
-$result = DB_query($sql, $db);
+$result = DB_query($sql);
 
 while ($myrow = DB_fetch_array($result)) {
 	if (isset($_POST['ContractSelection']) and $myrow['contractref']==$_POST['ContractSelection']) {

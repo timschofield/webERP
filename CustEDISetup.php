@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: CustEDISetup.php 6310 2013-08-29 10:42:50Z daintree $*/
+/* $Id: CustEDISetup.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 include('includes/session.inc');
 $Title = _('Customer EDI Set Up');
@@ -62,7 +62,7 @@ if (isset($_POST['submit'])) {
 			WHERE debtorno = '" . $_SESSION['CustomerID'] . "'";
 
 		$ErrMsg = _('The customer EDI setup data could not be updated because');
-		$result = DB_query($sql,$db,$ErrMsg);
+		$result = DB_query($sql,$ErrMsg);
 		prnMsg(_('Customer EDI configuration updated'),'success');
 	} else {
 		prnMsg(_('Customer EDI configuration failed'),'error');
@@ -87,7 +87,7 @@ $sql = "SELECT debtorno,
 	WHERE debtorno = '" . $_SESSION['CustomerID'] . "'";
 
 $ErrMsg = _('The customer EDI configuration details could not be retrieved because');
-$result = DB_query($sql, $db,$ErrMsg);
+$result = DB_query($sql,$ErrMsg);
 
 $myrow = DB_fetch_array($result);
 

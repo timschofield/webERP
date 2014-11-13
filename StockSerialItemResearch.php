@@ -1,5 +1,5 @@
 <?php
-/* $Id: StockSerialItemResearch.php 6805 2014-08-08 16:12:36Z agaluski $*/
+/* $Id: StockSerialItemResearch.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 include('includes/session.inc');
 $Title = _('Serial Item Research');
@@ -65,7 +65,7 @@ if ($SerialNo!='') {
 			WHERE ssi.serialno " . LIKE . " '" . $SerialNo . "'
 			ORDER BY stkmoveno";
 
-	$result = DB_query($SQL,$db);
+	$result = DB_query($SQL);
 
 	if (DB_num_rows($result) == 0){
 		prnMsg( _('No History found for Serial Number'). ': <b>' . $SerialNo . '</b>' , 'warn');

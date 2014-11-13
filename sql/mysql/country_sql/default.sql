@@ -3455,6 +3455,7 @@ INSERT INTO `currencies` VALUES ('Euro','EUR','Euroland','cents',2,0.789,1);
 INSERT INTO `currencies` VALUES ('Pounds','GBP','England','Pence',2,0.6217,0);
 INSERT INTO `currencies` VALUES ('Kenyian Shillings','KES','Kenya','none',0,89.15,0);
 INSERT INTO `currencies` VALUES ('US Dollars','USD','United States','Cents',2,1,1);
+INSERT INTO `currencies` VALUES ('Chinese Yuan','CNY','China','Cents',2,6.1141,0);
 
 --
 -- Dumping data for table `holdreasons`

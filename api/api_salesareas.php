@@ -1,12 +1,12 @@
 <?php
-/* $Id: api_salesareas.php 5768 2012-12-20 08:38:22Z daintree $*/
+/* $Id: api_salesareas.php 6943 2014-10-27 07:06:42Z daintree $*/
 
 /* Check that the area code is set up in the weberp database */
 	function VerifyAreaCodeDoesntExist($AreaCode , $i, $Errors, $db) {
 		$Searchsql = "SELECT COUNT(areacode)
 					 FROM areas
 					  WHERE areacode='".$AreaCode."'";
-		$SearchResult=DB_query($Searchsql, $db);
+		$SearchResult=DB_query($Searchsql);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] > 0) {
 			$Errors[$i] = AreaCodeNotSetup;
@@ -26,7 +26,7 @@
 			return $Errors;
 		}
 		$sql = 'SELECT areacode FROM areas';
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		$i=0;
 		while ($myrow=DB_fetch_array($result)) {
 			$SalesAreaList[$i]=$myrow[0];
@@ -48,7 +48,7 @@
 			return $Errors;
 		}
 		$sql = 'SELECT * FROM areas WHERE areacode="'.$area.'"';
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		if (DB_num_rows($result)==0) {
 			$Errors[0]=NoSuchArea;
 			return $Errors;
@@ -84,7 +84,7 @@
 				VALUES ('" .mb_substr($FieldValues,0,-2) . "') ";
 		if (sizeof($Errors)==0) {
 			$result = DB_Query($sql, $db);
-			if (DB_error_no($db) != 0) {
+			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
 				$Errors[0]=0;
@@ -106,7 +106,7 @@
 			return $Errors;
 		}
 		$sql = "SELECT * FROM areas WHERE areadescription='" . $AreaName . "'";
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		if (DB_num_rows($result)==0) {
 			$Errors[0]=NoSuchArea;
 			return $Errors;

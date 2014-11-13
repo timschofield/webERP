@@ -1,5 +1,5 @@
 <?php
-/* $Id: SelectGLAccount.php 6310 2013-08-29 10:42:50Z daintree $*/
+/* $Id: SelectGLAccount.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 include('includes/session.inc');
 
@@ -56,7 +56,7 @@ if (isset($_POST['Search'])){
 					ORDER BY chartmaster.accountcode";
 		}
 		if (isset($SQL) and $SQL!=''){
-			$result = DB_query($SQL, $db);
+			$result = DB_query($SQL);
 		}
 } //end of if search
 
@@ -83,7 +83,7 @@ if (!isset($AccountID)) {
 						FROM chartmaster
 						ORDER BY accountcode";
 
-	$ResultSelection=DB_query($SQLAccountSelect, $db);
+	$ResultSelection=DB_query($SQLAccountSelect);
 	echo '<td><select name="GLCode">';
 	echo '<option value="">' . _('Select an Account Code') . '</option>';
 	while ($MyRowSelection=DB_fetch_array($ResultSelection)){

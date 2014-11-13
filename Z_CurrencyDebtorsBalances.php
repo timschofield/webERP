@@ -1,5 +1,5 @@
 <?php
-/* $Id: Z_CurrencyDebtorsBalances.php 5784 2012-12-29 04:00:43Z daintree $*/
+/* $Id: Z_CurrencyDebtorsBalances.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 include('includes/session.inc');
 $Title=_('Currency Debtor Balances');
@@ -17,7 +17,7 @@ $sql = "SELECT SUM(ovamount+ovgst+ovdiscount+ovfreight-alloc) AS currencybalance
 	ON debtorsmaster.currcode=currencies.currabrev
 	WHERE (ovamount+ovgst+ovdiscount+ovfreight-alloc)<>0 GROUP BY currcode";
 
-$result = DB_query($sql,$db);
+$result = DB_query($sql);
 
 
 $LocalTotal =0;

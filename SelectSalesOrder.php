@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: SelectSalesOrder.php 6897 2014-09-21 05:07:16Z daintree $*/
+/* $Id: SelectSalesOrder.php 6945 2014-10-27 07:20:48Z daintree $*/
 
 include('includes/session.inc');
 $Title = _('Search Outstanding Sales Orders');
@@ -79,7 +79,7 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 					 purchdata.stockid";
 
 		$ErrMsg = _('Unable to retrieve the items on the selected orders for creating purchase orders for');
-		$ItemResult = DB_query($sql,$db,$ErrMsg);
+		$ItemResult = DB_query($sql,$ErrMsg);
 
 		$ItemArray = array();
 
@@ -131,7 +131,7 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 				ORDER BY purchdata.supplierno,
 					 purchdata.stockid";
 		$ErrMsg = _('Unable to retrieve the items on the selected orders for creating purchase orders for');
-		$ItemResult = DB_query($sql,$db,$ErrMsg);
+		$ItemResult = DB_query($sql,$ErrMsg);
 
 		/* add any assembly item components from salesorders to the ItemArray */
 		while ($myrow = DB_fetch_array($ItemResult)){
@@ -173,7 +173,7 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 						INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
 						WHERE loccode = '" .$_SESSION['UserStockLocation']  . "'";
 			$ErrMsg = _('The delivery address for the order could not be obtained from the user default stock location');
-			$DelAddResult = DB_query($sql, $db,$ErrMsg);
+			$DelAddResult = DB_query($sql,$ErrMsg);
 			$DelAddRow = DB_fetch_array($DelAddResult);
 
 			$SupplierID = '';
@@ -197,7 +197,7 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 								    WHERE userid='" . $_SESSION['UserID'] . "'
 									AND currabrev='" . $SuppRow['currcode'] . "'";
 
-						$AuthResult=DB_query($AuthSQL,$db);
+						$AuthResult=DB_query($AuthSQL);
 						$AuthRow=DB_fetch_array($AuthResult);
 						if ($AuthRow['authlevel']=''){
 							$AuthRow['authlevel'] = 0;
@@ -211,7 +211,9 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 												   status='Authorised',
 												   stat_comment='" . $StatusComment . "'
 												WHERE orderno='" . $PO_OrderNo . "'",
-												$db,$ErrMsg,$DbgMsg,true);
+												$ErrMsg,
+												$DbgMsg,
+												true);
 						} else { // no authority to authorise this order
 							if (DB_num_rows($AuthResult) ==0){
 								$AuthMessage = _('Your authority to approve purchase orders in') . ' ' .$SuppRow['currcode'] . ' ' . _('has not yet been set up') . '<br />';
@@ -229,11 +231,11 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 					if ($SupplierID !=''){ //then we have just added a purchase order
 						echo '<br />';
 						prnMsg(_('Purchase Order') . ' ' . $PO_OrderNo . ' ' . _('on') . ' ' . $SupplierID . ' ' . _('has been created'),'success');
-						DB_Txn_Commit($db);
+						DB_Txn_Commit();
 					}
 
 		      /*Starting a new purchase order with a different supplier */
-					$result = DB_Txn_Begin($db);
+					$result = DB_Txn_Begin();
 
 					$PO_OrderNo =  GetNextTransNo(18, $db); //get the next PO number
 
@@ -255,7 +257,7 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 						    WHERE supplierid='" . $SupplierID . "'";
 
 					$ErrMsg = _('Could not get the supplier information for the order');
-					$SuppResult = DB_query($sql, $db, $ErrMsg);
+					$SuppResult = DB_query($sql, $ErrMsg);
 					$SuppRow = DB_fetch_array($SuppResult);
 
 					$StatusComment=date($_SESSION['DefaultDateFormat']).' - ' . _('Order Created by') . ' ' . $UserDetails . ' - '._('Auto created from sales orders')  . '<br />';
@@ -319,7 +321,7 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 
 					$ErrMsg =  _('The purchase order header record could not be inserted into the database because');
 					$DbgMsg = _('The SQL statement used to insert the purchase order header record and failed was');
-					$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
+					$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
 				} //end if it's a new supplier and PO to create
 
 				/*reminder we are in a loop of the total of each item to place a purchase order for based on a selection of sales orders */
@@ -347,7 +349,7 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 				$ErrMsg =_('One of the purchase order detail records could not be inserted into the database because');
 				$DbgMsg =_('The SQL statement used to insert the purchase order detail record and failed was');
 
-				$result =DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
+				$result =DB_query($sql,$ErrMsg,$DbgMsg,true);
 				$Order_Value  += ($ItemRow['price']*$ItemRow['orderqty']);
 			} /* end of the loop round the items on the sales order  that we wish to place purchase orders for */
 
@@ -361,7 +363,7 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 							WHERE userid='".$_SESSION['UserID']."'
 							AND currabrev='".$SuppRow['currcode']."'";
 
-				$AuthResult=DB_query($AuthSQL,$db);
+				$AuthResult=DB_query($AuthSQL);
 				$AuthRow=DB_fetch_array($AuthResult);
 				if ($AuthRow['authlevel']=''){
 				      $AuthRow['authlevel'] = 0;
@@ -375,7 +377,9 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 															status='Authorised',
 															stat_comment='" . $StatusComment . "'
 												 WHERE orderno='" . $PO_OrderNo . "'",
-												$db,$ErrMsg,$DbgMsg,true);
+												$ErrMsg,
+												$DbgMsg,
+												true);
 				} else { // no authority to authorise this order
 					if (DB_num_rows($AuthResult) ==0){
 						$AuthMessage = _('Your authority to approve purchase orders in') . ' ' .$SuppRow['currcode'] . ' ' . _('has not yet been set up') . '<br />';
@@ -390,9 +394,9 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 			if ($SupplierID !=''){ //then we have just added a purchase order irrespective of autoauthorise status
 				echo '<br />';
 				prnMsg(_('Purchase Order') . ' ' . $PO_OrderNo . ' ' . _('on') . ' ' . $SupplierID . ' ' . _('has been created'),'success');
-				DB_Txn_Commit($db);
+				DB_Txn_Commit();
 			}
-			$result = DB_query("UPDATE salesorders SET poplaced=1 WHERE " . $OrdersToPlacePOFor,$db);
+			$result = DB_query("UPDATE salesorders SET poplaced=1 WHERE " . $OrdersToPlacePOFor);
 		}/*There were items that had purchasing data set up to create POs for */
 	} /* there were sales orders checked to place POs for */
 }/*end of purchase order creation code */
@@ -473,7 +477,7 @@ if (!isset($StockID)) {
 
 		$sql = "SELECT locations.loccode, locationname, canview FROM locations
 					INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
-		$resultStkLocs = DB_query($sql,$db);
+		$resultStkLocs = DB_query($sql);
 
 		while ($myrow=DB_fetch_array($resultStkLocs)){
 			if (isset($_POST['StockLocation'])){
@@ -516,7 +520,7 @@ if (!isset($StockID)) {
 		FROM stockcategory
 		ORDER BY categorydescription";
 
-	$result1 = DB_query($SQL,$db);
+	$result1 = DB_query($SQL);
 
 	echo '<br />
 		<table class="selection">
@@ -672,7 +676,7 @@ if (isset($StockItemsResult)
 	} //end not order number selected
 
 	$ErrMsg = _('No orders or quotations were returned by the SQL because');
-	$SalesOrdersResult = DB_query($SQL,$db,$ErrMsg);
+	$SalesOrdersResult = DB_query($SQL,$ErrMsg);
 
 	/*show a table of the orders returned by the SQL */
 	if (DB_num_rows($SalesOrdersResult)>0) {
@@ -683,7 +687,7 @@ if (isset($StockItemsResult)
 					WHERE userid='". $_SESSION['UserID'] . "'";
 
 		/*we don't know what currency these orders might be in but if no authority at all then don't show option*/
-		$AuthResult=DB_query($AuthSQL,$db);
+		$AuthResult=DB_query($AuthSQL);
 
 		$AuthRow=DB_fetch_array($AuthResult);
 
@@ -907,7 +911,7 @@ function GetSearchItems ($SQLConstraint='') {
 
 	$ErrMsg =  _('No stock items were returned by the SQL because');
 	$DbgMsg = _('The SQL used to retrieve the searched parts was');
-	$StockItemsResult = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
+	$StockItemsResult = DB_query($SQL,$ErrMsg,$DbgMsg);
 	return $StockItemsResult;
 
 }

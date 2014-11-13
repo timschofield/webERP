@@ -1,5 +1,5 @@
 <?php
-/* $Id: RecurringSalesOrders.php 6310 2013-08-29 10:42:50Z daintree $*/
+/* $Id: RecurringSalesOrders.php 6945 2014-10-27 07:20:48Z daintree $*/
 /* This is where the details specific to the recurring order are entered and the template committed to the database once the Process button is hit */
 
 include('includes/DefineCartClass.php');
@@ -74,7 +74,7 @@ if (isset($_GET['NewRecurringOrder'])){
 								WHERE recurringsalesorders.recurrorderno = '" . $_GET['ModifyRecurringSalesOrder'] . "'";
 
 		$ErrMsg =  _('The order cannot be retrieved because');
-		$GetOrdHdrResult = DB_query($OrderHeaderSQL,$db,$ErrMsg);
+		$GetOrdHdrResult = DB_query($OrderHeaderSQL,$ErrMsg);
 
 		if (DB_num_rows($GetOrdHdrResult)==1) {
 
@@ -133,7 +133,7 @@ if (isset($_GET['NewRecurringOrder'])){
 									AND recurrsalesorderdetails.recurrorderno ='" . $_GET['ModifyRecurringSalesOrder'] . "'";
 
 			$ErrMsg = _('The line items of the order cannot be retrieved because');
-			$LineItemsResult = DB_query($LineItemsSQL,$db,$ErrMsg);
+			$LineItemsResult = DB_query($LineItemsSQL,$ErrMsg);
 			if (DB_num_rows($LineItemsResult)>0) {
 
 				while ($myrow=DB_fetch_array($LineItemsResult)) {
@@ -173,11 +173,11 @@ if ((!isset($_SESSION['Items'.$identifier]) OR $_SESSION['Items'.$identifier]->I
 if (isset($_POST['DeleteRecurringOrder'])){
 	$sql = "DELETE FROM recurrsalesorderdetails WHERE recurrorderno='" . $_POST['ExistingRecurrOrderNo'] . "'";
 	$ErrMsg = _('Could not delete recurring sales order lines for the recurring order template') . ' ' . $_POST['ExistingRecurrOrderNo'];
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 
 	$sql = "DELETE FROM recurringsalesorders WHERE recurrorderno='" . $_POST['ExistingRecurrOrderNo'] . "'";
 	$ErrMsg = _('Could not delete the recurring sales order template number') . ' ' . $_POST['ExistingRecurrOrderNo'];
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 
 	prnMsg(_('Successfully deleted recurring sales order template number') . ' ' . $_POST['ExistingRecurrOrderNo'],'success');
 
@@ -189,7 +189,7 @@ if (isset($_POST['DeleteRecurringOrder'])){
 	exit;
 }
 If (isset($_POST['Process'])) {
-	$Result = DB_Txn_Begin($db);
+	$Result = DB_Txn_Begin();
 	$InputErrors =0;
 	If (!Is_Date($_POST['StartDate'])){
 		$InputErrors =1;
@@ -265,7 +265,7 @@ If (isset($_POST['Process'])) {
 
 			$ErrMsg = _('The recurring order cannot be added because');
 			$DbgMsg = _('The SQL that failed was');
-			$InsertQryResult = DB_query($HeaderSQL,$db,$ErrMsg,$DbgMsg,true);
+			$InsertQryResult = DB_query($HeaderSQL,$ErrMsg,$DbgMsg,true);
 
 			$RecurrOrderNo = DB_Last_Insert_ID($db,'recurringsalesorders','recurrorderno');
 			echo 'xxx'.$RecurrOrderNo;
@@ -286,11 +286,11 @@ If (isset($_POST['Process'])) {
 								'" . filter_number_format($StockItem->Quantity) . "',
 								'" . filter_number_format($StockItem->DiscountPercent) . "',
 								'" . $StockItem->Narrative . "')";
-				$Ins_LineItemResult = DB_query($LineItemsSQL,$db,$ErrMsg,$DbgMsg,true);
+				$Ins_LineItemResult = DB_query($LineItemsSQL,$ErrMsg,$DbgMsg,true);
 
 			} /* inserted line items into sales order details */
 
-			$result = DB_Txn_Commit($db);
+			$result = DB_Txn_Commit();
 			prnmsg(_('The new recurring order template has been added'),'success');
 
 		} else { /* must be updating an existing recurring order */
@@ -301,7 +301,7 @@ If (isset($_POST['Process'])) {
 					WHERE recurrorderno = '" . $_POST['ExistingRecurrOrderNo'] . "'";
 
 			$ErrMsg = _('The recurring order cannot be updated because');
-			$UpdateQryResult = DB_query($HeaderSQL,$db,$ErrMsg);
+			$UpdateQryResult = DB_query($HeaderSQL,$ErrMsg);
 			prnmsg(_('The recurring order template has been updated'),'success');
 		}
 

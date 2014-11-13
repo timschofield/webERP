@@ -66,7 +66,7 @@ if (isset($_POST['AddGLCodeToTrans']) AND $_POST['AddGLCodeToTrans'] == _('Enter
 					accountname
 				FROM chartmaster
 				WHERE accountcode='" . $_POST['GLCode'] . "'";
-	$result = DB_query($sql, $db);
+	$result = DB_query($sql);
 	if (DB_num_rows($result) == 0 AND $_POST['GLCode'] != ''){
 		prnMsg(_('The account code entered is not a valid code') . '. ' . _('This line cannot be added to the transaction') . '.<br />' . _('You can use the selection box to select the account you want'),'error');
 		$InputError = True;
@@ -137,7 +137,7 @@ if ($_SESSION['Trans'][$TransID]->Amount<0){ //its a payment
 								suppname
 						FROM suppliers
 						WHERE currcode='" . $_SESSION['Statement']->CurrCode . "'
-						ORDER BY suppname",$db);
+						ORDER BY suppname");
 	if ($_SESSION['Trans'][$TransID]->SupplierID ==''){
 		echo '<option selected value="">' . _('GL Payment') . '</option>';
 	} else {
@@ -168,7 +168,7 @@ if ($_SESSION['Trans'][$TransID]->Amount<0){ //its a payment
 								name
 						FROM debtorsmaster
 						WHERE currcode='" . $_SESSION['Statement']->CurrCode . "'
-						ORDER BY name",$db);
+						ORDER BY name");
 	if ($_SESSION['Trans'][$TransID]->DebtorNo ==''){
 		echo '<option selected value="">' . _('GL Receipt') . '</option>';
 	} else {
@@ -260,7 +260,7 @@ if ($AllowGLAnalysis==false){
 			<td>' . _('Account Selection') . ':<br />(' . _('If you know the code enter it above') . '<br />' . _('otherwise select the account from the list') . ')</td>
 			<td><select name="AcctSelection">';
 
-	$result = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode", $db);
+	$result = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
 	echo '<option value=""></option>';
 	while ($myrow = DB_fetch_array($result)) {
 		if ($myrow['accountcode'] == $_POST['AcctSelection']) {
@@ -299,7 +299,7 @@ if ($AllowGLAnalysis==false){
 			FROM tags
 			ORDER BY tagref";
 
-	$result=DB_query($SQL,$db);
+	$result=DB_query($SQL);
 	echo '<option value="0">0 - ' . _('None') . '</option>';
 	while ($myrow=DB_fetch_array($result)){
 		if (isset($_POST['tag']) and $_POST['tag']==$myrow['tagref']){

@@ -1,5 +1,5 @@
 <?php
-/* $Id: Add_SerialItems.php 6677 2014-04-07 10:38:49Z exsonqu $*/
+/* $Id: Add_SerialItems.php 6941 2014-10-26 23:18:08Z daintree $*/
 /*ProcessSerialItems.php takes the posted variables and adds to the SerialItems array
  in either the cartclass->LineItems->SerialItems or the POClass->LineItems->SerialItems */
 
@@ -159,7 +159,7 @@ if ( isset($_POST['AddSequence']) AND $_POST['AddSequence']!='') {
 		if ($LineItem->Serialised == 1){
 			$sql .= " AND quantity = ".$Qty;
 		}
-		$SeqItems = DB_query($sql,$db);
+		$SeqItems = DB_query($sql);
 
 		while ($myrow=DB_fetch_array($SeqItems)) {
 			$LineItem->SerialItems[$myrow['serialno']] = new SerialItem ($myrow['serialno'], ($InOutModifier>0?1:-1) );
