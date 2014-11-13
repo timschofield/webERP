@@ -1,11 +1,12 @@
 <?php
+
+/* $Id: session.inc 6914 2014-10-13 08:56:08Z daintree $*/
+
 /*****************************************************************************************
 KL RICARD MODIFICATIONS:
 - Set up the login theme for regular and test webERP
 - Commented out the standard call to Dashboard
 *****************************************************************************************/
-
-/* $Id: session.inc 6914 2014-10-13 08:56:08Z daintree $*/
 
 if (!isset($PathPrefix)) {
 	$PathPrefix='';

@@ -1,9 +1,11 @@
 <?php
+
+/* $Id: MainMenuLinksArray.php 6190 2013-08-12 02:12:02Z rchacon $*/
+
 /*****************************************************************************************
 KL RICARD MODIFICATIONS:
 - Added entries for all KL scripts
 *****************************************************************************************/
-/* $Id: MainMenuLinksArray.php 6190 2013-08-12 02:12:02Z rchacon $*/
 
 /* webERP menus with Captions and URLs. */
 

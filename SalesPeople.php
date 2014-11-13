@@ -1,9 +1,11 @@
 <?php
+
+/* $Id: SalesPeople.php 6310 2013-08-29 10:42:50Z daintree $*/
+
 /*****************************************************************************************
 KL RICARD MODIFICATIONS:
 - Simplified fields not used in KL (or anyway in webERP)
 *****************************************************************************************/
-/* $Id: SalesPeople.php 6310 2013-08-29 10:42:50Z daintree $*/
 
 include('includes/session.inc');
 $Title = _('SPG Maintenance');

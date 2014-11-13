@@ -1,10 +1,12 @@
 <?php
+
+/* $Id: StockLocTransfer.php 6808 2014-08-11 21:27:11Z agaluski $*/
+
 /**************************************************************************************
 KL RICARD MODIFICATIONS:
 - send email if destination = location SERDE (to be destroyed)
 ***************************************************************************************/
 
-/* $Id: StockLocTransfer.php 6808 2014-08-11 21:27:11Z agaluski $*/
 /* Inventory Transfer - Bulk Dispatch */
 
 include('includes/session.inc');

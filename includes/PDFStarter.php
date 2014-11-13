@@ -1,4 +1,7 @@
 <?php
+
+/* $Id: PDFStarter.php 6806 2014-08-09 04:37:02Z daintree $ */
+
 /*****************************************************************************************
 KL RICARD MODIFICATIONS:
 - Deleted the Default page size parameters, as it messed up with Print Label functions, 
@@ -7,7 +10,6 @@ needing to set up their own page sizes.
 - Commited as KL file in case Phil rolls back my commit.
 - This KL file mod should be reversed if Phil accepts the commit long time. 
 *****************************************************************************************/
-/* $Id: PDFStarter.php 6806 2014-08-09 04:37:02Z daintree $ */
 
 /*	-------------------------------------------------------------------------------------
 	November 2009. Moving from FPDF to TCPDF.

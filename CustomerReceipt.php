@@ -1,12 +1,13 @@
 <?php
+
+/* $Id: CustomerReceipt.php 6870 2014-09-11 02:07:02Z exsonqu $ */
+
 /**************************************************************************************
 KL RICARD MODIFICATIONS:
 - Added field OrderPaid to allow the registration of the orderno. Only useful for online orders.
 - Temporary solution. Better use a dedicated script for this functionality: Payment by bank transfer of online
 customers. It needs to take shipment into account as well (currently it doesn't.
 ***************************************************************************************/
-
-/* $Id: CustomerReceipt.php 6870 2014-09-11 02:07:02Z exsonqu $ */
 
 include('includes/DefineReceiptClass.php');
 include('includes/session.inc');

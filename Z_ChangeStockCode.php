@@ -1,13 +1,14 @@
 <?php
-/**************************************************************************************
-KL RICARD MODIFICATIONS:
-- change the stock code also in KL tables using this field in webERP and OpenCart
-***************************************************************************************/
 
 /*	$Id: Z_ChangeStockCode.php 6784 2014-06-27 17:32:13Z rchacon $*/
 /*	This script is an utility to change an inventory item code. */
 /*	It uses function ChangeFieldInTable($TableName, $FieldName, $OldValue, 
 	$NewValue, $db) from .../includes/MiscFunctions.php.*/
+
+/**************************************************************************************
+KL RICARD MODIFICATIONS:
+- change the stock code also in KL tables using this field in webERP and OpenCart
+***************************************************************************************/
 
 include ('includes/session.inc');
 $Title = _('UTILITY PAGE Change A Stock Code');// _('Change An Inventory Item Code')

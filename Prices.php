@@ -1,10 +1,11 @@
 <?php
+
+/* $Id: Prices.php 6778 2014-06-24 20:33:25Z rchacon $*/
+
 /**************************************************************************************
 KL RICARD MODIFICATIONS:
 - Added function KLShowOldPrices() showing old retail prices in sepparate table.
 ***************************************************************************************/
-
-/* $Id: Prices.php 6778 2014-06-24 20:33:25Z rchacon $*/
 
 include('includes/session.inc');
 $Title = _('Item Prices');
