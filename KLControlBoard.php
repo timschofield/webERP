@@ -21,7 +21,32 @@ include ('includes/WeberpOpenCartDefines.php');
 /* Do the pending GL Postings to get the latest financial control reports*/
 include ('includes/GLPostings.inc');
 
+/* ASSIGN users to groups */
+
+if (($_SESSION['UserID'] == "Silo")
+	OR ($_SESSION['UserID'] == "Dini")
+	OR ($_SESSION['UserID'] == "Tari")
+	OR ($_SESSION['UserID'] == "RiaResti")){
+	$ShopSupportTeam = TRUE;
+}else{
+	$ShopSupportTeam = FALSE;
+}
+
+if (($_SESSION['UserID'] == "RiaResti")){
+	$ShopSupportManager = TRUE;
+}else{
+	$ShopSupportManager = FALSE;
+}
+
+if (($_SESSION['UserID'] == "Juliette")){
+	$SalesTrainer = TRUE;
+}else{
+	$SalesTrainer = FALSE;
+}
+
+
 $begintime = time_start();
+
 
 $periodnow=GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
 
@@ -40,7 +65,7 @@ if ($_SESSION['UserID'] == "Ricard"){
 
 if (($_SESSION['UserID'] == "Ricard") 
 	OR ($_SESSION['UserID'] == "Laia")
-	OR ($_SESSION['UserID'] == "Juliette")
+	OR $SalesTrainer
 	OR ($_SESSION['UserID'] == "Ike1")){
 	SPGNotReportingSalesInDays(2, $db);
 }
@@ -102,9 +127,7 @@ if (($_SESSION['UserID'] == "Ricard")){
 */
 
 if (($_SESSION['UserID'] == "Laia")
-	OR ($_SESSION['UserID'] == "RiaResti")
-	OR ($_SESSION['UserID'] == "Silo")
-	OR ($_SESSION['UserID'] == "Dita")
+	OR $ShopSupportTeam
 	OR ($_SESSION['UserID'] == "Ike1")){
 	
 	over_or_below_limit("Items changing price or moving category", "OVER", 50, $RootPath, $db);
@@ -113,9 +136,7 @@ if (($_SESSION['UserID'] == "Laia")
 	over_or_below_limit("Items moving to outlet", "OVER", 0, $RootPath, $db);
 }
 
-if (($_SESSION['UserID'] == "RiaResti")
-	OR ($_SESSION['UserID'] == "Dita")
-	OR ($_SESSION['UserID'] == "Silo")){
+if ($ShopSupportTeam){
 
 	ItemsChangingPriceDelayed(4, $RootPath, $db);
 	ItemsMovingToDiscountDelayed(4, $RootPath, $db);
@@ -134,11 +155,9 @@ if (($_SESSION['UserID'] == "Ricard")
 if (($_SESSION['UserID'] == "Ricard") 
 	OR ($_SESSION['UserID'] == "Laia")
 	OR ($_SESSION['UserID'] == "Ike1")
-	OR ($_SESSION['UserID'] == "Juliette") 
+	OR $SalesTrainer
 	OR ($_SESSION['UserID'] == "Cicik") 
-	OR ($_SESSION['UserID'] == "RiaResti")
-	OR ($_SESSION['UserID'] == "Dita")
-	OR ($_SESSION['UserID'] == "Silo")){
+	OR $ShopSupportTeam){
 	
 	DiscountedItemsOnWrongShops("DISCOU", $RootPath, $db);
 	DiscountedItemsOnWrongShops("OUTLET", $RootPath, $db);
@@ -148,9 +167,7 @@ if (($_SESSION['UserID'] == "Ricard")
 	OR ($_SESSION['UserID'] == "Laia")
 	OR ($_SESSION['UserID'] == "Ike1")
 	OR ($_SESSION['UserID'] == "Cicik") 
-	OR ($_SESSION['UserID'] == "RiaResti")
-	OR ($_SESSION['UserID'] == "Dita")
-	OR ($_SESSION['UserID'] == "Silo")){
+	OR $ShopSupportTeam){
 	
 	DiscountedItemsWithWrongDiscount("DISCOU", "50", $RootPath, $db);
 //	DiscountedItemsWithWrongDiscount("OUTLET", "80", $RootPath, $db);
@@ -217,9 +234,7 @@ if ($_SESSION['UserID'] == "Ricard"){
 ***************************************************************************************/
 if (($_SESSION['UserID'] == "Laia")
 	OR ($_SESSION['UserID'] == "Ike1")
-	OR ($_SESSION['UserID'] == "RiaResti")
-	OR ($_SESSION['UserID'] == "Dita")
-	OR ($_SESSION['UserID'] == "Silo")){
+	OR $ShopSupportTeam){
 	
 	ItemsWithStockLocationButNoStockAvailable("WABOM", "WaterBom", 15, 600, $RootPath, $db);
 	ItemsWithStockLocationButNoStockAvailable("WHAYA", "Ayana", 15, 600, $RootPath, $db);
@@ -356,9 +371,7 @@ if (($_SESSION['UserID'] == "Ricard")
 if (($_SESSION['UserID'] == "Ricard") 
 	OR ($_SESSION['UserID'] == "Ike1")
 	OR ($_SESSION['UserID'] == "Cicik") 
-	OR ($_SESSION['UserID'] == "RiaResti")
-	OR ($_SESSION['UserID'] == "Silo")
-	OR ($_SESSION['UserID'] == "Dita")){
+	OR $ShopSupportTeam){
 	
 	CheckNegativeStock($RootPath, $db);
 }
@@ -493,7 +506,7 @@ if (($_SESSION['UserID'] == "Ricard")
 
 if (($_SESSION['UserID'] == "Ricard") 
 	OR ($_SESSION['UserID'] == "Ike1")
-	OR ($_SESSION['UserID'] == "RiaResti")){ 
+	OR $ShopSupportManager){ 
 	OutstandingOrders("Consignment", "Order", $RootPath, $db);
 	OutstandingOrders("Consignment", "Quotation", $RootPath, $db);
 }
@@ -510,9 +523,7 @@ if (($_SESSION['UserID'] == "Ricard")){
 
 if (($_SESSION['UserID'] == "Ricard") 
 	OR ($_SESSION['UserID'] == "Ike1")
-	OR ($_SESSION['UserID'] == "RiaResti")
-	OR ($_SESSION['UserID'] == "Silo")
-	OR ($_SESSION['UserID'] == "Dita")){ 
+	OR $ShopSupportTeam){ 
 	OutstandingOrders("Online", "Order", $RootPath, $db);
 }
 
@@ -533,9 +544,7 @@ if ($_SESSION['UserID'] == "Ricard"){
 	UsersNotLoggingIn(120, $db);
 }
 
-if (($_SESSION['UserID'] == "RiaResti")
-	OR ($_SESSION['UserID'] == "Silo")
-	OR ($_SESSION['UserID'] == "Dita")){ 
+if ($ShopSupportTeam){ 
 	TransfersDelayed(3, $RootPath, $db);
 }
 
