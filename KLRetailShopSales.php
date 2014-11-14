@@ -231,7 +231,7 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 
 //Get The exchange rate used for GPPercent calculations on adding or amending items
 if ($_SESSION['Items'.$identifier]->DefaultCurrency != $_SESSION['CompanyRecord']['currencydefault']){
-	$ExRateResult = DB_query("SELECT rate FROM currencies WHERE currabrev='" . $_SESSION['Items'.$identifier]->DefaultCurrency . "'",$db);
+	$ExRateResult = DB_query("SELECT rate FROM currencies WHERE currabrev='" . $_SESSION['Items'.$identifier]->DefaultCurrency . "'");
 	if (DB_num_rows($ExRateResult)>0){
 		$ExRateRow = DB_fetch_row($ExRateResult);
 		$ExRate = $ExRateRow[0];
@@ -955,7 +955,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 
 		$DbgMsg = _('Trouble inserting the sales order header. The SQL that failed was');
 		$ErrMsg = _('The order cannot be added because');
-		$InsertQryResult = DB_query($HeaderSQL,$db,$ErrMsg,$DbgMsg,true);
+		$InsertQryResult = DB_query($HeaderSQL,$ErrMsg,$DbgMsg,true);
 		
 		$StartOf_LineItemsSQL = "INSERT INTO salesorderdetails (orderlineno,
 																orderno,
@@ -987,7 +987,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 											1)";
 
 			$ErrMsg = _('Unable to add the sales order line');
-			$Ins_LineItemResult = DB_query($LineItemsSQL,$db,$ErrMsg,$DbgMsg,true);
+			$Ins_LineItemResult = DB_query($LineItemsSQL,$ErrMsg,$DbgMsg,true);
 
 		} /* end inserted line items into sales order details */
 
@@ -1072,7 +1072,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 		foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine) {
 			 /* Update location stock records if not a dummy stock item
 			 need the MBFlag later too so save it to $MBFlag */
-			$Result = DB_query("SELECT mbflag FROM stockmaster WHERE stockid = '" . $OrderLine->StockID . "'",$db);
+			$Result = DB_query("SELECT mbflag FROM stockmaster WHERE stockid = '" . $OrderLine->StockID . "'");
 			$myrow = DB_fetch_row($Result);
 			$MBFlag = $myrow[0];
 			if ($MBFlag=='B' OR $MBFlag=='M') {

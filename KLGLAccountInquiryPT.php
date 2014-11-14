@@ -140,7 +140,7 @@ if (isset($_POST['Show'])){
 	}
 
 	$namesql = "SELECT accountname FROM chartmaster WHERE accountcode='" . $SelectedAccount . "'";
-	$nameresult = DB_query($namesql, $db);
+	$nameresult = DB_query($namesql);
 	$namerow=DB_fetch_array($nameresult);
 	$SelectedAccountName=$namerow['accountname'];
 	$ErrMsg = _('The transactions for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved because') ;
@@ -267,7 +267,7 @@ if (isset($_POST['Show'])){
 		$URL_to_TransDetail = $RootPath . '/GLTransInquiry.php?' . SID . '&amp;TypeID=' . $myrow['type'] . '&amp;TransNo=' . $myrow['typeno'];
 
 		$tagsql="SELECT tagdescription FROM tags WHERE tagref='".$myrow['tag'] . "'";
-		$tagresult=DB_query($tagsql,$db);
+		$tagresult=DB_query($tagsql);
 		$tagrow = DB_fetch_array($tagresult);
 		if ($tagrow['tagdescription']=='') {
 			$tagrow['tagdescription']=_('None');

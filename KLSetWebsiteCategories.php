@@ -240,7 +240,7 @@ function InsertWebsiteSalesCategory($Stockid, $WebsiteCategory, $Featured, $Upda
 				FROM salescatprod
 				WHERE salescatprod.stockid = '" . $Stockid . "'
 					AND salescatprod.salescatid = '" . $WebsiteCategory . "'";	
-		$result = DB_query($SQLCheck, $db);
+		$result = DB_query($SQLCheck);
 		if(DB_num_rows($result) == 0){
 			$sql = "INSERT INTO salescatprod (
 						salescatid ,
@@ -524,7 +524,7 @@ function FindWebsiteDescription($WebsiteCategory, $db){
 	$SQLCat = "SELECT salescat.salescatname
 			FROM salescat
 			WHERE salescat.salescatid = '". $WebsiteCategory . "'";
-	$resultCat = DB_query($SQLCat, $db);
+	$resultCat = DB_query($SQLCat);
 	while ($myrowCat = DB_fetch_array($resultCat)) {
 		$WebsiteDescription = $WebsiteCategory . ' -> ' . $myrowCat['salescatname'];
 	}

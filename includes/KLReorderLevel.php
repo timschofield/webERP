@@ -308,7 +308,7 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 														AND salesorders.orddate >= '". $StartDate . "'
 														AND salesorders.fromstkloc = locstock.loccode) DESC";
 														
-					$resultdistribution = DB_query($SQLDistribution, $db);
+					$resultdistribution = DB_query($SQLDistribution);
 					$LocationsToDistribute = DB_num_rows($resultdistribution);
 					if ($LocationsToDistribute != 0){
 						while ($mydistribution = DB_fetch_array($resultdistribution)) {
@@ -611,7 +611,7 @@ to the shops with RL > 0.
 									AND locstock.loccode LIKE 'TOK%'
 									AND locstock.loccode != 'TOKWS'
 									AND locstock.reorderlevel > 0";
-				$resultdistribution = DB_query($SQLDistribution, $db);
+				$resultdistribution = DB_query($SQLDistribution);
 				$LocationsToDistribute = DB_num_rows($resultdistribution);
 				if ($LocationsToDistribute != 0){
 					if ($k == 1) {
@@ -710,7 +710,7 @@ function SetRLForLowSalesItems( $starttopitems, $endtopitems, $daystopitems, $Ne
 								WHERE locstock.stockid = '" . $myrow['stockid'] . "'
 								AND locstock.loccode LIKE 'TOK%'
 								AND locstock.reorderlevel > 0";
-			$resultdistribution = DB_query($SQLDistribution, $db);
+			$resultdistribution = DB_query($SQLDistribution);
 			$LocationsToDistribute = DB_num_rows($resultdistribution);
 			if ($LocationsToDistribute != 0){
 				if ($k == 1) {
@@ -989,7 +989,7 @@ function OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db)
 		$RLSQL = "UPDATE locstock
 					SET reorderlevel = 0 
 					WHERE reorderlevel > 0 AND loccode = 'TOKWS'";
-		$Result = DB_query($RLSQL,$db,$ErrMsg,$DbgMsg,true);		
+		$Result = DB_query($RLSQL,$ErrMsg,$DbgMsg,true);		
 		if ($ShowMessages){
 			prnMsg(_('Reset all RL=0 for shop online location TOKWS.'),'info');
 		}

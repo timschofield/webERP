@@ -40,7 +40,7 @@ DB_free_result($OldResult);
 $OldCost = $OldRow['materialcost'] + $OldRow['labourcost'] + $OldRow['overheadcost'];
 $NewCost = $_GET['NewCost'];
 
-$result = DB_query("SELECT * FROM stockmaster WHERE stockid='" . $_GET['StockId'] . "'",$db);
+$result = DB_query("SELECT * FROM stockmaster WHERE stockid='" . $_GET['StockId'] . "'");
 $myrow = DB_fetch_row($result);
 if (DB_num_rows($result)==0) {
 	prnMsg (_('The entered item code does not exist'),'error',_('Non-existent Item'));

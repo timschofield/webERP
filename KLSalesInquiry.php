@@ -1185,7 +1185,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 			<td>' . _('Stock Categories') . ':</td>
 			<td><select name="Category">';
 
-	$CategoryResult= DB_query("SELECT categoryid, categorydescription FROM stockcategory",$db);
+	$CategoryResult= DB_query("SELECT categoryid, categorydescription FROM stockcategory");
 	echo '<option selected="selected" value="All">' . _('All Categories')  . '</option>';
 	While ($myrow = DB_fetch_array($CategoryResult)){
 		echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription']  . '</option>';
@@ -1207,7 +1207,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 	// Use name='Areas[]' multiple - if want to create an array for Areas and allow multiple selections
 	echo '<tr><td>' . _('For Sales Areas') . ':</td>
 				<td><select name="Area">';
-	$AreasResult= DB_query("SELECT areacode, areadescription FROM areas",$db);
+	$AreasResult= DB_query("SELECT areacode, areadescription FROM areas");
 	echo '<option selected="selected" value="All">' . _('All Areas')  . '</option>';
 	While ($myrow = DB_fetch_array($AreasResult)){
 		echo '<option value="' . $myrow['areacode'] . '">' . $myrow['areadescription']  . '</option>';

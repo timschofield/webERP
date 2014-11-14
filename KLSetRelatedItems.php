@@ -47,14 +47,14 @@ if (DB_num_rows($result) != 0){
 							AND stockmaster.discontinued = 0
 							AND stockmaster.stockid != '" . $myrow['stockid'] . "'
 						ORDER BY stockmaster.stockid";
-		$resultrelated = DB_query($SQLRelated, $db);
+		$resultrelated = DB_query($SQLRelated);
 		
 		while ($myrelated = DB_fetch_array($resultrelated)) {
 			$SQLExists = "SELECT *
 							FROM relateditems
 							WHERE relateditems.stockid = '" . $myrow['stockid'] . "'
 								AND relateditems.related = '" . $myrelated['stockid'] . "'";
-			$resultExists = DB_query($SQLExists, $db);
+			$resultExists = DB_query($SQLExists);
 			
 			if (DB_num_rows($resultExists) == 0){
 				$sqlinsert = "INSERT INTO relateditems (
@@ -64,7 +64,7 @@ if (DB_num_rows($result) != 0){
 							'" . $myrow['stockid'] . "',
 							'" . $myrelated['stockid'] . "')";
 				$ErrMsg =_('Could not insert the related ietms because');
-				$resultinsert = DB_query($sqlinsert,$db,$ErrMsg);
+				$resultinsert = DB_query($sqlinsert,$ErrMsg);
 
 				$i++;
 				$k = StartEvenOrOddRow($k);

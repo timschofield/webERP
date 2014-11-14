@@ -103,7 +103,7 @@ if (isset($_POST['submit'])) {
 
 	if (!isset($SelectedUser)){
 		/* check to ensure the user id is not already entered */
-		$result = DB_query("SELECT userid FROM www_users WHERE userid='" . $_POST['UserID'] . "'",$db);
+		$result = DB_query("SELECT userid FROM www_users WHERE userid='" . $_POST['UserID'] . "'");
 		if (DB_num_rows($result)==1){
 			$InputError =1;
 			prnMsg(_('The user ID') . ' ' . $_POST['UserID'] . ' ' . _('already exists and cannot be used again'),'error');

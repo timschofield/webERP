@@ -508,7 +508,7 @@ if (isset($_SESSION['Transfer'])){
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	$LocResult = DB_query("SELECT locationname, loccode FROM locations ORDER BY locationname",$db);
+	$LocResult = DB_query("SELECT locationname, loccode FROM locations ORDER BY locationname");
 
 	echo '<table class="selection">';
 	echo '<tr>
@@ -542,7 +542,7 @@ if (isset($_SESSION['Transfer'])){
 	$TrfResult = DB_query($sql);
 	if (DB_num_rows($TrfResult)>0){
 		$LocSql = "SELECT locationname FROM locations WHERE loccode='" . $_POST['RecLocation'] . "'";
-		$LocResult = DB_query($LocSql,$db);
+		$LocResult = DB_query($LocSql);
 		$LocRow = DB_fetch_array($LocResult);
 		echo '<table class="selection">';
 		echo '<tr><th colspan="4"><h3>'._('Pending Transfers Into').' '.$LocRow['locationname'].'</h3></th></tr>';
