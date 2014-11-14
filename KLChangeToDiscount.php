@@ -30,7 +30,7 @@ if ($_GET['Action'] == "New"){
 	exit;
 }
 
-DB_Txn_Begin($db);
+DB_Txn_Begin();
 
 UpdateDiscountCategory($_GET['Item'], "DISCOU", $_GET['Discount'],$db);
 
@@ -40,7 +40,7 @@ if ($_GET['Action'] == "Change"){
 	KLSendEmail("PrintDiscountPriceTags", "Silent", $_GET['Item'], $_GET['Discount']);
 }
 
-DB_Txn_Commit($db);
+DB_Txn_Commit();
 
 include('includes/footer.inc');
 

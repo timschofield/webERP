@@ -10,7 +10,7 @@ $Today = date('Y-m-d');
 $Yesterday  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
 
 
-DB_Txn_Begin($db);
+DB_Txn_Begin();
 
 /* 1st: Set enddate for ALL current USD prices to yesterday */
 $sql = "UPDATE prices 
@@ -92,7 +92,7 @@ if (DB_num_rows($result) != 0){
 			</div>';
 }
 
-DB_Txn_Commit($db);
+DB_Txn_Commit();
 
 include('includes/footer.inc');
 

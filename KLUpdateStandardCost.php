@@ -46,7 +46,7 @@ if (DB_num_rows($result)==0) {
 	prnMsg (_('The entered item code does not exist'),'error',_('Non-existent Item'));
 } elseif ($OldCost != $NewCost){
 
-	$Result = DB_Txn_Begin($db);
+	$Result = DB_Txn_Begin();
 	ItemCostUpdateGL($db, $_GET['StockId'], $NewCost, $OldCost, $OldRow['totalqoh']);
 
 	$SQL = "UPDATE stockmaster SET	materialcost='" . $NewCost . "',
@@ -60,7 +60,7 @@ if (DB_num_rows($result)==0) {
 	$DbgMsg = _('The SQL that failed was');
 	$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
-	$Result = DB_Txn_Commit($db);
+	$Result = DB_Txn_Commit();
 	UpdateCost($db, $_GET['StockId']); //Update any affected BOMs
 	prnMsg (_('Standard Cost of ') . $_GET['StockId'] . ' changed from ' . locale_number_format($OldCost,0) . ' to ' . locale_number_format($NewCost,0),'success');
 }

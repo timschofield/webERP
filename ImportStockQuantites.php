@@ -120,7 +120,7 @@ if ($_FILES['userfile']['name']) { //start file processing
 
 	$result = DB_query("SELECT stockid, SUM(quantity) as totalquantity FROM tempitemqty GROUP BY stockid",$db);
 	
-	DB_Txn_Begin($db);
+	DB_Txn_Begin();
 	
 	while ($myrow = DB_fetch_array($result)){ //loop through the item totals from the csv
 
@@ -207,7 +207,7 @@ if ($_FILES['userfile']['name']) { //start file processing
 	
 				} //END INSERT GL TRANS
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Unable to COMMIT transaction while adjusting stock in StockCheckAdjustmet report');
-				DB_Txn_Commit($db);
+				DB_Txn_Commit();
 	
 			} // end if $StockQtyDifference !=0
 

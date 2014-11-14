@@ -19,7 +19,7 @@ if (!isset($_GET['Item']) or !isset($_GET['NewPrice'])){
 	exit;
 }
 
-DB_Txn_Begin($db);
+DB_Txn_Begin();
 
 $sql = "INSERT INTO klchangeprice 
 				(stockid,
@@ -40,7 +40,7 @@ SetRLZeroAtPointOfSales($_GET['Item'], $db);
 SetChangePriceFlag(1, $_GET['Item'], $db);
 KLSendEmail("ChangePriceStarted", "Silent", $_GET['Item']);
 
-DB_Txn_Commit($db);
+DB_Txn_Commit();
 
 include('includes/footer.inc');
 

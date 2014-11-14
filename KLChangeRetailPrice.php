@@ -30,7 +30,7 @@ if ($_GET['Action'] == "New"){
 	exit;
 }
 
-DB_Txn_Begin($db);
+DB_Txn_Begin();
 
 UpdateTablePrice($_GET['Item'], $_GET['NewPrice'],$db);
 if ($_GET['Action'] == "Change"){
@@ -39,7 +39,7 @@ if ($_GET['Action'] == "Change"){
 	KLSendEmail("PrintNewPriceTags", "Silent", $_GET['Item']);
 }
 
-DB_Txn_Commit($db);
+DB_Txn_Commit();
 
 include('includes/footer.inc');
 

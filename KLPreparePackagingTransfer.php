@@ -24,7 +24,7 @@ KLSendEmail("SendPackagingToShop", "ShortConfirmation", $_GET['Name'], $_GET['Bo
 																	   $_GET['ShoppingM'],
 																	   $_GET['ShoppingS']);
 
-DB_Txn_Begin($db);
+DB_Txn_Begin();
 
 $sql = "UPDATE locations 
 		SET klemaillastpackacgingtransfer = '" . Date('Y-m-d') . "'
@@ -33,7 +33,7 @@ $ErrMsg =_('Could not update the date of the last packaging transfer reminder be
 $result = DB_query($sql,$db,$ErrMsg);
 prnMsg("Updated date of email for packaging transfer to shop to today");
 
-DB_Txn_Commit($db);
+DB_Txn_Commit();
 
 include('includes/footer.inc');
 

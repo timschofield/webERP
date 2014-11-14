@@ -88,7 +88,7 @@ if (isset($_POST['submit'])) {
 	}
 
 	if ($InputError !=1) {
-		DB_Txn_Begin($db);
+		DB_Txn_Begin();
 		$Now = Date('Y-m-d H-i-s');
 		
 		$sql = "INSERT INTO klfreeexchanges
@@ -218,7 +218,7 @@ if (isset($_POST['submit'])) {
 		
 		KLSendEmail("TaliExchange", "Silent", $_POST['ItemFrom'], $_POST['ItemTo'], $_SESSION['UserID'], $_SESSION['UserStockLocation'], $_POST['InvoiceNumber']);
 
-		DB_Txn_Commit($db);
+		DB_Txn_Commit();
 
 		unset($SelectedExchange);
 		unset($_POST['ItemFrom']);

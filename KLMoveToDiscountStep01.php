@@ -108,7 +108,7 @@ if (isset($_POST['submit'])) {
 	}
 	if ($InputError !=1) {
 		//run the SQL from either of the above possibilites
-		DB_Txn_Begin($db);
+		DB_Txn_Begin();
 
 		$ErrMsg = _('The insert or update of the KL Move Item To Discount Step 01 failed because');
 		$DbgMsg = _('The SQL that was used and failed was');
@@ -132,7 +132,7 @@ if (isset($_POST['submit'])) {
 			KLSendEmail("MoveToDiscountFromConsignment", "Silent", $_POST['Stockid']);
 		}
 
-		DB_Txn_Commit($db);
+		DB_Txn_Commit();
 
 		unset($SelectedMovement);
 		unset($_POST['Stockid']);
