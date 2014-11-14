@@ -245,7 +245,7 @@ if (($_SESSION['UserID'] == "Laia")
 	OR ($_SESSION['UserID'] == "Ike1")
 	OR ($_SESSION['UserID'] == "Cicik")){
 
-	InsuficientStockForItems("TM-", "Tali Mie", 20, 40, $RootPath, $db);
+	InsuficientStockForItems("SILVER", "TM-", "Tali Mie", 20, 40, $RootPath, $db);
 }
 
 if (($_SESSION['UserID'] == "Laia")

@@ -4372,7 +4372,13 @@ function WrongItemsOnPurchaseOrders($RootPath, $db){
 	}
 }
 
-function InsuficientStockForItems($ItemCode, $ItemDescription, $MinimumStock, $OptimalStock, $RootPath, $db){
+function InsuficientStockForItems($Category, $ItemCode, $ItemDescription, $MinimumStock, $OptimalStock, $RootPath, $db){
+
+	if($Category == "ALL"){
+		$SQLCategory = " ";
+	}else{
+		$SQLCategory = " AND stockmaster.categoryid = '" . $Category . "' ";
+	}
 /* EXPLAIN SQL 2014-05-21 */	
 	$SQL = "SELECT 	stockmaster.stockid,
 					stockmaster.description,
@@ -4383,7 +4389,8 @@ function InsuficientStockForItems($ItemCode, $ItemDescription, $MinimumStock, $O
 							OR loccode = 'KANTO')) AS qoh
 			FROM stockmaster
 			WHERE stockmaster.stockid LIKE '" . $ItemCode . "%'
-				AND stockmaster.discontinued = 0
+				AND stockmaster.discontinued = 0".
+				$SQLCategory . "
 				AND (SELECT SUM(locstock.quantity)
 						FROM locstock
 						WHERE locstock.stockid = stockmaster.stockid
