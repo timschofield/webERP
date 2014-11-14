@@ -1,5 +1,5 @@
 webERP Change Log
-
+14/11/2014 Tim: The systypes should be 28 instead of 38 for work order issued in MRP.php.
 13/11/Exson: Fixed bugs that issued materials not be calculated in demand for work orders and over received are ignored in level netting and negative inventory are not considered in REORDER level management in MRP.php which leads to wrong MRP results.
 9/11/14: Tim: fix to javascript function to sort numbers including formatted numbers with commas.
 8/11/14: Alessandro Saporetti: Fixed the bug that the wrong invoiced quantity result in Z_DeleteInvoice.php.
