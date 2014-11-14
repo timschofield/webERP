@@ -90,7 +90,7 @@ if (isset($_POST['PrintPDF'])) {
 
 	$result = DB_query($sql,$db,'','',false,true);
 
-	if (DB_error_no($db) !=0) {
+	if (DB_error_no() !=0) {
 		$title = _('Stock Dispatch - Problem Report');
 		include('includes/header.inc');
 		prnMsg( _('The Stock Dispatch report could not be retrieved by the SQL because') . ' '  . DB_error_msg(),'error');

@@ -121,7 +121,7 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 
 	$result = DB_query($sql,$db,'','',false,true);
 
-	if (DB_error_no($db) !=0) {
+	if (DB_error_no() !=0) {
 		$EmailText = $EmailText . "Smart Stock Dispatch ERROR " .  _('The Stock Dispatch report could not be retrieved by the SQL because') . ' '  . DB_error_msg() . "\n";
 		$EmailText = $EmailText . "SQL = " .  $sql . "\n";
 	}elseif (DB_num_rows($result) ==0) {
