@@ -1,11 +1,10 @@
 <?php
 
-/* $Id: MRP.php 6973 2014-11-13 02:04:00Z exsonqu $*/
+/* $Id: MRP.php 6977 2014-11-14 02:56:58Z exsonqu $*/
 
 include('includes/session.inc');
 $Title = _('Run MRP Calculation');
 include('includes/header.inc');
-
 if (isset($_POST['submit'])) {
 
 	if (!isset($_POST['Leeway']) OR !is_numeric(filter_number_format($_POST['Leeway']))) {
@@ -280,7 +279,7 @@ if (isset($_POST['submit'])) {
 									  AND woitems.wo=worequirements.wo
 									  INNER JOIN stockmaster
 										ON woitems.stockid = stockmaster.stockid
-										INNER JOIN stockmoves ON stockmoves.stockid = stockmaster.stockid AND stockmoves.transno=woitems.wo AND type=38
+										LEFT JOIN stockmoves ON (stockmoves.stockid = worequirements.stockid AND stockmoves.reference=woitems.wo AND type=28)
 								WHERE workorders.closed=0
 								AND stockmaster.discontinued = 0
 								AND qtypu*(woitems.qtyreqd - woitems.qtyrecd)+stockmoves.qty>0";
@@ -692,7 +691,6 @@ function LevelNetting(&$db,$Part,$eoq,$PanSize,$ShrinkFactor,$LeadTime) {
 			array_push($Supplies,$myrow);
 			$i++;
 	}  //end of while loop
-
 	// Go through all requirements and check if have supplies to cover them
 	$RequirementCount = count($Requirements);
 	$SupplyCount = count($Supplies);
