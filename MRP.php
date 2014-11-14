@@ -280,7 +280,7 @@ if (isset($_POST['submit'])) {
 									  AND woitems.wo=worequirements.wo
 									  INNER JOIN stockmaster
 										ON woitems.stockid = stockmaster.stockid
-										INNER JOIN stockmoves ON stockmoves.stockid = stockmaster.stockid AND stockmoves.transno=woitems.wo AND type=38
+										INNER JOIN stockmoves ON stockmoves.stockid = stockmaster.stockid AND stockmoves.transno=woitems.wo AND type=28
 								WHERE workorders.closed=0
 								AND stockmaster.discontinued = 0
 								AND qtypu*(woitems.qtyreqd - woitems.qtyrecd)+stockmoves.qty>0";
