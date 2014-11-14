@@ -37,7 +37,7 @@ if (isset($_POST['submit'])) {
 								categoryid, 
 								discontinued 
 						FROM stockmaster 
-						WHERE stockid='" . $_POST['Stockid'] . "'",$db);
+						WHERE stockid='" . $_POST['Stockid'] . "'");
 	$myrow = DB_fetch_array($result);
 	if (DB_num_rows($result)==0) {
 		prnMsg( _('The entered item code does not exist'),'error');

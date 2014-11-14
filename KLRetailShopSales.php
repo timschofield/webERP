@@ -450,7 +450,7 @@ foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine) {
 			            FROM discountmatrix
 				    WHERE salestype='" .  $_SESSION['Items'.$identifier]->DefaultSalesType . "'
 				    AND discountcategory ='" . $OrderLine->DiscCat . "'
-				    AND quantitybreak <='" . $QuantityOfDiscCat . "'",$db);
+				    AND quantitybreak <='" . $QuantityOfDiscCat . "'");
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0]!=0){ /* need to update the lines affected */
 			foreach ($_SESSION['Items'.$identifier]->LineItems as $StkItems_2) {
@@ -1740,7 +1740,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 			//First get the account currency that it has been banked into
 			$result = DB_query("SELECT rate FROM currencies
 													INNER JOIN bankaccounts ON currencies.currabrev=bankaccounts.currcode
-													WHERE bankaccounts.accountcode='" . $BankAccountCash . "'",$db);
+													WHERE bankaccounts.accountcode='" . $BankAccountCash . "'");
 			$myrow = DB_fetch_row($result);
 			$BankAccountExRate = $myrow[0];
 
@@ -1833,7 +1833,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 			//First get the account currency that it has been banked into
 			$result = DB_query("SELECT rate FROM currencies
 								INNER JOIN bankaccounts ON currencies.currabrev=bankaccounts.currcode
-								WHERE bankaccounts.accountcode='" . $BankAccountCreditCard . "'",$db);
+								WHERE bankaccounts.accountcode='" . $BankAccountCreditCard . "'");
 			$myrow = DB_fetch_row($result);
 			$BankAccountExRate = $myrow[0];
 
@@ -1927,7 +1927,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 			//First get the account currency that it has been banked into
 			$result = DB_query("SELECT rate FROM currencies
 								INNER JOIN bankaccounts ON currencies.currabrev=bankaccounts.currcode
-								WHERE bankaccounts.accountcode='" . $BankAccountCreditCard . "'",$db);
+								WHERE bankaccounts.accountcode='" . $BankAccountCreditCard . "'");
 			$myrow = DB_fetch_row($result);
 			$BankAccountExRate = $myrow[0];
 
@@ -2021,7 +2021,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 			//First get the account currency that it has been banked into
 			$result = DB_query("SELECT rate FROM currencies
 								INNER JOIN bankaccounts ON currencies.currabrev=bankaccounts.currcode
-								WHERE bankaccounts.accountcode='" . $BankAccountCreditCard . "'",$db);
+								WHERE bankaccounts.accountcode='" . $BankAccountCreditCard . "'");
 			$myrow = DB_fetch_row($result);
 			$BankAccountExRate = $myrow[0];
 

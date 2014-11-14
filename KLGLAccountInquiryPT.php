@@ -92,7 +92,7 @@ if (isset($_POST['Show'])){
 	$result = DB_query("SELECT pandl
 				FROM accountgroups
 				INNER JOIN chartmaster ON accountgroups.groupname=chartmaster.group_
-				WHERE chartmaster.accountcode='" . $SelectedAccount ."'",$db);
+				WHERE chartmaster.accountcode='" . $SelectedAccount ."'");
 	$PandLRow = DB_fetch_row($result);
 	if ($PandLRow[0]==1){
 		$PandLAccount = True;
