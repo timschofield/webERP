@@ -57,8 +57,8 @@ $Result = DB_Txn_Begin(); /* commence a database transaction */
 
 /*Now delete the custallocns */
 
-$SQL = "DELETE custallocns FROM custallocns
-        WHERE transid_allocto ='" . $IDDebtorTrans . "'";
+$SQL = "DELETE FROM custallocns
+        WHERE transid_allocfrom ='" . $IDDebtorTrans . "'";
 
 $DbgMsg = _('The SQL that failed was');
 $ErrMsg = _('The custallocns record could not be deleted') . ' - ' . _('the sql server returned the following error');
