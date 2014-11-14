@@ -26,7 +26,7 @@ if (isset($_GET['ReqDate'])){
 }
 
 if (isset($_GET['StartDate'])){
-	$StartDate = ConvertSQLDate($_GET['StartDate']);
+	$StartDate = $_GET['StartDate'];
 } else {
 	$StartDate=Date($_SESSION['DefaultDateFormat']);
 }
