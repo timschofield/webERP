@@ -101,7 +101,7 @@ if (!isset($_SESSION['Items'.$identifier])){
 					taxprovinceid
 		 FROM locations
 		 WHERE loccode='" . $_SESSION['UserStockLocation'] ."'";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 	if (DB_num_rows($result)==0) {
 		prnMsg(_('Your user account does not have a valid default inventory location set up. Please see the system administrator to modify your user account.'),'error');
 		include('includes/footer.inc');
@@ -140,7 +140,7 @@ if (!isset($_SESSION['Items'.$identifier])){
 
 		$ErrMsg = _('The details of the customer selected') . ': ' .  $_SESSION['Items'.$identifier]->DebtorNo . ' ' . _('cannot be retrieved because');
 		$DbgMsg = _('The SQL used to retrieve the customer details and failed was') . ':';
-		$result =DB_query($sql,$db,$ErrMsg,$DbgMsg);
+		$result =DB_query($sql,$ErrMsg,$DbgMsg);
 
 		$myrow = DB_fetch_array($result);
 		if ($myrow['dissallowinvoices'] != 1){
@@ -170,7 +170,7 @@ if (!isset($_SESSION['Items'.$identifier])){
 				AND custbranch.debtorno = '" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
             $ErrMsg = _('The customer branch record of the customer selected') . ': ' . $_SESSION['Items'.$identifier]->Branch . ' ' . _('cannot be retrieved because');
 			$DbgMsg = _('SQL used to retrieve the branch details was') . ':';
-			$result =DB_query($sql,$db,$ErrMsg,$DbgMsg);
+			$result =DB_query($sql,$ErrMsg,$DbgMsg);
 
 			if (DB_num_rows($result)==0){
 
@@ -289,7 +289,7 @@ if ($_SESSION['Items'.$identifier]->DefaultCurrency != $_SESSION['CompanyRecord'
 
 		$ErrMsg = _('Could not determine if the part being ordered was a kitset or not because');
 		$DbgMsg = _('The sql that was used to determine if the part being ordered was a kitset or not was ');
-		$KitResult = DB_query($sql, $db,$ErrMsg,$DbgMsg);
+		$KitResult = DB_query($sql,$ErrMsg,$DbgMsg);
 
 		if (DB_num_rows($KitResult)==0){
 			prnMsg( _('The item code') . ' ' . $NewItem . ' ' . _('could not be retrieved from the database and has not been added to the order'),'warn');
@@ -365,7 +365,7 @@ if (isset($_POST['Recalculate'])) {
 
 		$ErrMsg = _('Could not determine if the part being ordered was a kitset or not because');
 		$DbgMsg = _('The sql that was used to determine if the part being ordered was a kitset or not was ');
-		$KitResult = DB_query($sql, $db,$ErrMsg,$DbgMsg);
+		$KitResult = DB_query($sql,$ErrMsg,$DbgMsg);
 		if ($myrow=DB_fetch_array($KitResult)){
 				$NewItemDue = date($_SESSION['DefaultDateFormat']);
 				$NewPOLine = 0;
@@ -387,7 +387,7 @@ Now figure out if the item is a kit set - the field MBFlag='K'
 
 	$ErrMsg =  _('Could not determine if the part being ordered was a kitset or not because');
 
-	$KitResult = DB_query($sql, $db,$ErrMsg);
+	$KitResult = DB_query($sql,$ErrMsg);
 
 	$NewItemQty = 1; /*By Default */
 	$Discount = 0; /*By default - can change later or discount category override */
@@ -414,7 +414,7 @@ if (isset($NewItemArray) and isset($_POST['OrderItems'])){
 
 			$ErrMsg =  _('Could not determine if the part being ordered was a kitset or not because');
 
-			$KitResult = DB_query($sql, $db,$ErrMsg);
+			$KitResult = DB_query($sql,$ErrMsg);
 
 			//$NewItemQty = 1; /*By Default */
 			$Discount = 0; /*By default - can change later or discount category override */
@@ -853,7 +853,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 					AND locstock.loccode='" . $_SESSION['Items'.$identifier]->Location . "'";
 
 			$ErrMsg = _('Could not retrieve the quantity left at the location once this order is invoiced (for the purposes of checking that stock will not go negative because)');
-			$Result = DB_query($SQL,$db,$ErrMsg);
+			$Result = DB_query($SQL,$ErrMsg);
 			$CheckNegRow = DB_fetch_array($Result);
 			if ($CheckNegRow['quantity'] < $OrderLine->Quantity){
 				prnMsg( _('Invoicing the selected order would result in negative stock. The system parameters are set to prohibit negative stocks from occurring. This invoice cannot be created until the stock on hand is corrected.'),'error',$OrderLine->StockID . ' ' . $CheckNegRow['description'] . ' - ' . _('Negative Stock Prohibited'));
@@ -1049,7 +1049,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 
 		$ErrMsg =_('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The debtor transaction record could not be inserted because');
 		$DbgMsg = _('The following SQL to insert the debtor transaction record was used');
-	 	$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+	 	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 		$DebtorTransID = DB_Last_Insert_ID($db,'debtortrans','id');
 
@@ -1065,7 +1065,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 
 			$ErrMsg =_('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The debtor transaction taxes records could not be inserted because');
 			$DbgMsg = _('The following SQL to insert the debtor transaction taxes record was used');
-	 		$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+	 		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 		}
 
 		//Loop around each item on the sale and process each in turn
@@ -1085,7 +1085,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 								WHERE locstock.stockid='" . $OrderLine->StockID . "'
 								AND loccode= '" . $_SESSION['Items'.$identifier]->Location . "'";
 				$ErrMsg = _('WARNING') . ': ' . _('Could not retrieve current location stock');
-				$Result = DB_query($SQL, $db, $ErrMsg);
+				$Result = DB_query($SQL, $ErrMsg);
 
 				if (DB_num_rows($Result)==1){
 					$LocQtyRow = DB_fetch_row($Result);
@@ -1102,7 +1102,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('Location stock record could not be updated because');
 				$DbgMsg = _('The following SQL to update the location stock record was used');
-				$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 			}
 			
@@ -1146,7 +1146,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 											'" . DB_escape_string($OrderLine->Narrative) . "' )";
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('Stock movement records could not be inserted because');
 			$DbgMsg = _('The following SQL to insert the stock movement records was used');
-			$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+			$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 		/*Get the ID of the StockMove... */
 			$StkMoveNo = DB_Last_Insert_ID($db,'stockmoves','stkmoveno');
@@ -1167,7 +1167,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('Taxes and rates applicable to this invoice line item could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the stock movement tax detail records was used');
-				$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 			} //end for each tax for the line
 
 		/*Insert Sales Analysis records */
@@ -1207,7 +1207,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 
 			$ErrMsg = _('The count of existing Sales analysis records could not run because');
 			$DbgMsg = _('SQL to count the no of sales analysis records');
-			$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+			$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 			$myrow = DB_fetch_row($Result);
 
@@ -1265,7 +1265,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 
 			$ErrMsg = _('Sales analysis record could not be added or updated because');
 			$DbgMsg = _('The following SQL to insert the sales analysis record was used');
-			$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+			$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 			/* If GLLink_Stock then insert GLTrans to credit stock and debit cost of sales at standard cost*/
 
@@ -1302,7 +1302,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The cost of COGSGLAccount GL posting could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
-				$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 				
 				// Compensation COGS for PT sales
 				if($Compensation != 0){
@@ -1325,7 +1325,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The compensation of PT sales could not be inserted because');
 					$DbgMsg = _('The following SQL to insert the GLTrans record was used');
-					$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+					$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 				}
 
 		/*now the stock entry*/
@@ -1350,7 +1350,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The stock side of the cost of sales StockGLCode GL posting could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
-				$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 			} /* end of if GL and stock integrated and standard cost !=0 */
 
 			if ($_SESSION['CompanyRecord']['gllink_debtors']==1 AND $OrderLine->Price !=0){
@@ -1377,7 +1377,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The sales SalesGLAccounts GL posting could not be inserted because');
 				$DbgMsg = '<br />' ._('The following SQL to insert the GLTrans record was used');
-				$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 				if ($OrderLine->DiscountPercent !=0){
 
@@ -1401,7 +1401,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The sales discount GL posting could not be inserted because');
 					$DbgMsg = _('The following SQL to insert the GLTrans record was used');
-					$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+					$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 				} /*end of if discount !=0 */
 			} /*end of if sales integrated with debtors */
 		} /*end of OrderLine loop */
@@ -1428,7 +1428,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The total debtor GL posting could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the total debtors control GLTrans record was used');
-				$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 			}
 
 			foreach ( $_SESSION['Items'.$identifier]->TaxTotals as $TaxAuthID => $TaxAmount){
@@ -1452,7 +1452,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The tax GL posting could not be inserted because');
 					$DbgMsg = _('The following SQL to insert the GLTrans record was used');
-					$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+					$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 				}
 			}
 			/*Also if GL is linked to debtors need to process the debit to bank and credit to debtors for the payment */
@@ -1482,7 +1482,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 
 				$DbgMsg = _('The SQL that failed to insert the GL transaction for the bank account debit was');
 				$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
-				$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 				/* Now Credit Debtors account with receipt */
 				$SQL="INSERT INTO gltrans ( type,
@@ -1504,7 +1504,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 
 				$DbgMsg = _('The SQL that failed to insert the GL transaction for the debtors account credit was');
 				$ErrMsg = _('Cannot insert a GL transaction for the debtors account credit');
-				$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 			}//amount paid cash was not zero
 			
 			if ($_POST['AmountPaidCCDanamon']!=0){
@@ -1536,7 +1536,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 						'" . $Tag . "')";
 				$DbgMsg = _('The SQL that failed to insert the NET GL transaction for the bank account debit was');
 				$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
-				$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 				// RICARD: la resta (COMISSION_CC_DANAMON)/100 va a la compte ACCOUNT_COMISSION_CREDITCARD per comissió de CC
 				$SQL="INSERT INTO gltrans (type,
@@ -1557,7 +1557,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 						'" . $Tag . "')";
 				$DbgMsg = _('The SQL that failed to insert the bank Comission GL transaction for the bank account debit was');
 				$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
-				$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 				/* Now Credit Debtors account with receipt */
 				$SQL="INSERT INTO gltrans ( type,
@@ -1578,7 +1578,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 					'" . $Tag . "')";
 				$DbgMsg = _('The SQL that failed to insert the GL transaction for the debtors account credit was');
 				$ErrMsg = _('Cannot insert a GL transaction for the debtors account credit');
-				$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 			}//amount paid Credit Card DANAMON  was not zero
 
 			if ($_POST['AmountPaidAmexDanamon']!=0){
@@ -1610,7 +1610,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 						'" . $Tag . "')";
 				$DbgMsg = _('The SQL that failed to insert the NET GL transaction for the bank account debit was');
 				$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
-				$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 				// RICARD: la resta (COMISSION_AMEX_DANAMON)/100 va a la compte ACCOUNT_COMISSION_CREDITCARD per comissió de CC
 				$GLACCOUNT_COMISSION_CREDITCARD = ACCOUNT_COMISSION_CREDITCARD;
@@ -1632,7 +1632,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 						'" . $Tag . "')";
 				$DbgMsg = _('The SQL that failed to insert the bank Comission GL transaction for the bank account debit was');
 				$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
-				$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 				/* Now Credit Debtors account with receipt */
 				$SQL="INSERT INTO gltrans ( type,
@@ -1653,7 +1653,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 					'" . $Tag . "')";
 				$DbgMsg = _('The SQL that failed to insert the GL transaction for the debtors account credit was');
 				$ErrMsg = _('Cannot insert a GL transaction for the debtors account credit');
-				$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 			}//amount paid American Express was not zero
 
 			if ($_POST['AmountPaidCCMandiri']!=0){
@@ -1685,7 +1685,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 						'" . $Tag . "')";
 				$DbgMsg = _('The SQL that failed to insert the NET GL transaction for the bank account debit was');
 				$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
-				$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 				// RICARD: la resta (COMISSION_CC_MANDIRI)/100 va a la compte ACCOUNT_COMISSION_CREDITCARD per comissió de CC
 				$SQL="INSERT INTO gltrans (type,
@@ -1706,7 +1706,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 						'" . $Tag . "')";
 				$DbgMsg = _('The SQL that failed to insert the bank Comission GL transaction for the bank account debit was');
 				$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
-				$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 				/* Now Credit Debtors account with receipt */
 				$SQL="INSERT INTO gltrans ( type,
@@ -1727,7 +1727,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 					'" . $Tag . "')";
 				$DbgMsg = _('The SQL that failed to insert the GL transaction for the debtors account credit was');
 				$ErrMsg = _('Cannot insert a GL transaction for the debtors account credit');
-				$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 			}//amount paid Credit Card MANDIRI was not zero
 
 		} /*end of if Sales and GL integrated */
@@ -1769,7 +1769,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 
 			$DbgMsg = _('The SQL that failed to insert the bank account transaction was');
 			$ErrMsg = _('Cannot insert a bank transaction');
-			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 			//insert a new debtortrans for the receipt
 
@@ -1797,7 +1797,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 						'" . $Area . _(' WI: ') . $InvoiceNo . _(' YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' SPG: '). $_SESSION['SalesmanLogin'] . ' ' . $_SESSION['Items'.$identifier]->Location . " CASH')";
 			$DbgMsg = _('The SQL that failed to insert the customer receipt transaction was');
 			$ErrMsg = _('Cannot insert a receipt transaction against the customer because') ;
-			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 			$ReceiptDebtorTransID = DB_Last_Insert_ID($db,'debtortrans','id');
 
@@ -1807,7 +1807,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 
 			$DbgMsg = _('The SQL that failed to update the date of the last payment received was');
 			$ErrMsg = _('Cannot update the customer record for the date of the last payment received because');
-			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 			//and finally add the allocation record between receipt and invoice
 
@@ -1821,7 +1821,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 											 '" . $DebtorTransID . "')";
 			$DbgMsg = _('The SQL that failed to insert the allocation of the receipt to the invoice was');
 			$ErrMsg = _('Cannot insert the customer allocation of the receipt to the invoice because');
-			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 		} //end if $_POST['AmountPaidCash']!= 0
 		
 		if ($_POST['AmountPaidCCDanamon']!=0){
@@ -1863,7 +1863,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 
 			$DbgMsg = _('The SQL that failed to insert the bank account transaction was');
 			$ErrMsg = _('Cannot insert a bank transaction');
-			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 			//insert a new debtortrans for the receipt
 
@@ -1891,7 +1891,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 						'" . $Area . _(' WI: ') . $InvoiceNo . _(' YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' SPG: '). $_SESSION['SalesmanLogin'] . ' ' . $_SESSION['Items'.$identifier]->Location . " CC')";
 			$DbgMsg = _('The SQL that failed to insert the customer receipt transaction was');
 			$ErrMsg = _('Cannot insert a receipt transaction against the customer because') ;
-			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 			$ReceiptDebtorTransID = DB_Last_Insert_ID($db,'debtortrans','id');
 
@@ -1901,7 +1901,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 
 			$DbgMsg = _('The SQL that failed to update the date of the last payment received was');
 			$ErrMsg = _('Cannot update the customer record for the date of the last payment received because');
-			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 			//and finally add the allocation record between receipt and invoice
 
@@ -1915,7 +1915,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 											 '" . $DebtorTransID . "')";
 			$DbgMsg = _('The SQL that failed to insert the allocation of the receipt to the invoice was');
 			$ErrMsg = _('Cannot insert the customer allocation of the receipt to the invoice because');
-			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 		} //end if $_POST['AmountPaidCCDanamon']!= 0
 
 		if ($_POST['AmountPaidAmexDanamon']!=0){
@@ -1957,7 +1957,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 
 			$DbgMsg = _('The SQL that failed to insert the bank account transaction was');
 			$ErrMsg = _('Cannot insert a bank transaction');
-			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 			//insert a new debtortrans for the receipt
 
@@ -1985,7 +1985,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 						'" . $Area . _(' WI: ') . $InvoiceNo . _(' YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' SPG: '). $_SESSION['SalesmanLogin'] . ' ' . $_SESSION['Items'.$identifier]->Location . " AMEX')";
 			$DbgMsg = _('The SQL that failed to insert the customer receipt transaction was');
 			$ErrMsg = _('Cannot insert a receipt transaction against the customer because') ;
-			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 			$ReceiptDebtorTransID = DB_Last_Insert_ID($db,'debtortrans','id');
 
@@ -1995,7 +1995,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 
 			$DbgMsg = _('The SQL that failed to update the date of the last payment received was');
 			$ErrMsg = _('Cannot update the customer record for the date of the last payment received because');
-			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 			//and finally add the allocation record between receipt and invoice
 
@@ -2009,7 +2009,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 											 '" . $DebtorTransID . "')";
 			$DbgMsg = _('The SQL that failed to insert the allocation of the receipt to the invoice was');
 			$ErrMsg = _('Cannot insert the customer allocation of the receipt to the invoice because');
-			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 		} //end if $_POST['AmountPaidAmexDanamon']!= 0
 
 		if ($_POST['AmountPaidCCMandiri']!=0){
@@ -2051,7 +2051,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 
 			$DbgMsg = _('The SQL that failed to insert the bank account transaction was');
 			$ErrMsg = _('Cannot insert a bank transaction');
-			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 			//insert a new debtortrans for the receipt
 
@@ -2079,7 +2079,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 						'" . $Area . _(' WI: ') . $InvoiceNo . _(' YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' SPG: '). $_SESSION['SalesmanLogin'] . ' ' . $_SESSION['Items'.$identifier]->Location . " CC')";
 			$DbgMsg = _('The SQL that failed to insert the customer receipt transaction was');
 			$ErrMsg = _('Cannot insert a receipt transaction against the customer because') ;
-			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 			$ReceiptDebtorTransID = DB_Last_Insert_ID($db,'debtortrans','id');
 
@@ -2089,7 +2089,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 
 			$DbgMsg = _('The SQL that failed to update the date of the last payment received was');
 			$ErrMsg = _('Cannot update the customer record for the date of the last payment received because');
-			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 			//and finally add the allocation record between receipt and invoice
 
@@ -2103,7 +2103,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 											 '" . $DebtorTransID . "')";
 			$DbgMsg = _('The SQL that failed to insert the allocation of the receipt to the invoice was');
 			$ErrMsg = _('Cannot insert the customer allocation of the receipt to the invoice because');
-			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 		} //end if $_POST['AmountPaidCCMandiri']!= 0
 
 		/* Account for the Packaging */

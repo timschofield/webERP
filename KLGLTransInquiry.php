@@ -64,7 +64,7 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 					WHERE gltrans.type= '" . $_GET['TypeID'] . "'
 					AND gltrans.typeno = '" . $_GET['TransNo'] . "'
 					ORDER BY gltrans.counterindex";
-		$TransResult = DB_query($SQL,$db);
+		$TransResult = DB_query($SQL);
 
 		$Posted = _('Yes');
 		$CreditTotal = 0;

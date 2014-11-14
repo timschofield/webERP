@@ -50,7 +50,7 @@ include('includes/KLPrices.php');
 			FROM stockmaster, klchangeprice					
 			WHERE stockmaster.stockid = klchangeprice.stockid
 				AND klchangeprice.endprocessdate = '0000-00-00'";
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Items ready to change Retail Price in KL kantor') . '</strong></p>';
 		echo '<div>';

@@ -44,7 +44,7 @@ if ($StockID != ''){
 
 	$ErrMsg = _('The stock held at each location cannot be retrieved because');
 	$DbgMsg = _('The SQL that was used to update the stock item and failed was');
-	$LocStockResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
+	$LocStockResult = DB_query($sql, $ErrMsg, $DbgMsg);
 
 	$TableHeader = '<tr>
 						<th class="ascending">' . _('Location') . '</th>
@@ -70,7 +70,7 @@ if ($StockID != ''){
 						FROM loctransfers
 						WHERE stockid LIKE '" . $StockID . "%'
 							AND shiploc='".$myrow['loccode']."'";
-		$InTransitResult=DB_query($InTransitSQL, $db);
+		$InTransitResult=DB_query($InTransitSQL);
 		$InTransitRow=DB_fetch_array($InTransitResult);
 		if ($InTransitRow['intransit']!='') {
 			$InTransitQuantityOut=-$InTransitRow['intransit'];
@@ -82,7 +82,7 @@ if ($StockID != ''){
 						FROM loctransfers
 						WHERE stockid LIKE '" . $StockID . "%'
 							AND recloc='".$myrow['loccode']."'";
-		$InTransitResult=DB_query($InTransitSQL, $db);
+		$InTransitResult=DB_query($InTransitSQL);
 		$InTransitRow=DB_fetch_array($InTransitResult);
 		if ($InTransitRow['intransit']!='') {
 			$InTransitQuantityIn=-$InTransitRow['intransit'];

@@ -1201,7 +1201,7 @@ echo '<tr>
 		<td><select ' . (in_array('Description',$Errors) ?  'class="selecterror"' : '' ) .'  name="UnitsDimension">';
 
 $sql = "SELECT unitname FROM unitsofdimension ORDER by unitname";
-$UODResult = DB_query($sql,$db);
+$UODResult = DB_query($sql);
 
 if (!isset($_POST['UnitsDimension'])) {
 	$UODrow['unitname']=_('mm');

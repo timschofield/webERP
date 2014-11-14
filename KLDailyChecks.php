@@ -100,7 +100,7 @@ function KL_DailyOptimizationDatabase($ShowMessages, $db, $EmailText = ''){
 	$NumberDay = substr(Date('Y-m-d'),-1); // Get the last digit of the date, so we split optimization over 10 days
 	
 	$ErrMsg ='Could not OPTIMIZE tables because';
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 	if ($NumberDay == 1){
 		$sql = "OPTIMIZE TABLE  `accountgroups` ,
 								`accountsection` ,
@@ -272,7 +272,7 @@ function KL_DailyOptimizationDatabase($ShowMessages, $db, $EmailText = ''){
 								`www_users_webshop`";
 	}
 	
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 	if ($EmailText !=''){
 		$EmailText = $EmailText . _('The system has just run the daily Kapal-Laut optimization. Day = '). $NumberDay . "\n\n" . $sql . "\n\n"; 
 	}else{
@@ -285,12 +285,12 @@ function KL_DailyOptimizationDatabase($ShowMessages, $db, $EmailText = ''){
 function PurgeOldPrices($ShowMessages, $db){
 	$sql = "INSERT INTO kloldprices (SELECT * FROM prices WHERE enddate != '0000-00-00')";
 	$ErrMsg ='Could not insert table kloldprices because';
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 	if ($ShowMessages) prnMsg("Old prices inserted into kloldprices table.","info");
 
 	$sql = "DELETE FROM prices WHERE enddate != '0000-00-00'";
 	$ErrMsg ='Could not clean table prices because';
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 	if ($ShowMessages) prnMsg("Old prices deleted from prices table.","info");
 }
 
@@ -300,7 +300,7 @@ function PurgeKLTable($TableName,$DateField, $ShowMessages, $db){
 				WHERE  " . $DateField . " <= '" . Date('Y-m-d', mktime(0,0,0, Date('m')-$_SESSION['MonthsAuditTrail'])) . "'
 					AND " . $DateField .  " != '0000-00-00'";
 		$ErrMsg ='Could not purge table ' . $TableName . ' because';
-		$result = DB_query($sql,$db,$ErrMsg);
+		$result = DB_query($sql,$ErrMsg);
 		if ($ShowMessages) prnMsg("Table " . $TableName . " purged.","info");
 	}
 }
@@ -311,7 +311,7 @@ function CleanDiscountForObsoleteItems($ShowMessages, $db){
 			WHERE discontinued = 1
 				AND discountcategory != ''";
 	$ErrMsg =_('Could not clean discount category for obsolete items  because');
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 	if ($ShowMessages) prnMsg("Discount Category cleaned for obsolete items.","info");
 }
 
@@ -324,7 +324,7 @@ function SetObsoleteForCategoryWithoutStock($category, $ShowMessages, $db){
 					FROM locstock
 					WHERE stockmaster.stockid = locstock.stockid) = 0";
 	$ErrMsg =_('Could not update items without stock because');
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 	if ($ShowMessages) prnMsg("Items " . $category . " with QOH = 0 flagged as obsolete.","info");
 }
 
@@ -336,7 +336,7 @@ function SetRLZeroForObsolete($ShowMessages, $db){
 						WHERE stockmaster.stockid = locstock.stockid
 						AND stockmaster.discontinued = 1)";
 	$ErrMsg =_('Could not set RL = 0 for obsolete items because');
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 	if ($ShowMessages) prnMsg("RL updated to zero for obsolete items.","info");
 }
 
@@ -345,7 +345,7 @@ function SetRLZeroForLocations($ShowMessages, $db){
 			SET reorderlevel = 0
 			WHERE loccode IN " . LIST_LOCATIONS_WITH_RL_ALWAYS_ZERO;
 	$ErrMsg =_('Could not set RL = 0 for location list because');
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 	if ($ShowMessages) prnMsg("RL updated to zero for location list.","info");
 }
 
@@ -359,7 +359,7 @@ function SetEndDatePriceToObsolete($ShowMessages, $db){
 				AND (enddate > '"  . date('Y-m-d') ."'
 				  OR enddate = '0000-00-00')";
 	$ErrMsg =_('Could not set end date to today for obsolete items because');
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 	if ($ShowMessages) prnMsg("Prices End Date updated to today for obsolete items.","info");
 }
 			
@@ -369,7 +369,7 @@ function CleanInternalRequestsWithoutItems($ShowMessages, $db){
 								FROM stockrequestitems
 								WHERE stockrequest.dispatchid = stockrequestitems.dispatchid )";
 	$ErrMsg =_('Could not delete empty internal requests because');
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 	if ($ShowMessages) prnMsg("Empty Internal Requests removed from DB.","info");
 }			
 
@@ -379,7 +379,7 @@ function CleanObsoleteFromWebsite($ShowMessages, $db){
 							WHERE discontinued = 1
 							AND stockmaster.stockid = salescatprod.stockid)";
 	$ErrMsg =_('Could not delete obsolete items from sales category for website because');
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 	if ($ShowMessages) prnMsg("Obsolete items removed from website list.","info");
 }
 	
@@ -388,14 +388,14 @@ function CleanWrongPrices($ShowMessages, $db){
 			WHERE startdate > enddate
 			AND enddate != '0000-00-00'";
 	$ErrMsg =_('Could not delete wrong prices because');
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 	if ($ShowMessages) prnMsg("Wrong prices removed from DB","info");
 
 	$sql = "UPDATE prices
 			SET enddate = '0000-00-00'
 			WHERE enddate = '2050-12-31'";
 	$ErrMsg =_('Could not delete wrong prices because');
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 	if ($ShowMessages) prnMsg("Set end date 0000-00-00 to prices from DB","info");
 }
 
@@ -406,7 +406,7 @@ function CleanOldDoubleReceivedGoods($NumDays, $ShowMessages, $db){
 			WHERE recdate <= '" . $StartDate. "'
 				AND recqty = 2 * shipqty";
 	$ErrMsg =_('Could not fix double received goods in shops because');
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 	if ($ShowMessages) prnMsg("Clean old double received goods in transfers","info");
 }
 
@@ -422,7 +422,7 @@ function SetStatusCompleteToFinishedOldPurchaseOrders($maxdays, $ShowMessages, $
 						WHERE purchorderdetails.orderno = purchorders.orderno
 						AND completed = 0)";
 	$ErrMsg =_('Could not update old finshed POs to complete because');
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 	if ($ShowMessages) prnMsg("Set status to Completed to Finished Purchase Orders older than " . $maxdays . " days.","info");
 }		
 
@@ -431,7 +431,7 @@ function AuthorizeAllInternalStockRequest($ShowMessages, $db){
 					SET authorised='1'
 					WHERE authorised !='1'";
 	$ErrMsg =_('Could not authorize all internal stock requests because');
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 	if ($ShowMessages) prnMsg("All pending Internal Stock Requests authorised automatically","info");
 }
 
@@ -448,7 +448,7 @@ function BlockInactiveUsers($access, $maxdays, $ShowMessages, $db){
 				AND blocked = '0'
 				AND userid <> 'TestUser'";
 	$ErrMsg =_('Could not block inactive users because');
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 	if ($ShowMessages) prnMsg("Blocked inactive users","info");
 }
 

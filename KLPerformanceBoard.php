@@ -232,7 +232,7 @@ function AverageCustomerBehaviourByValueInvoice($typereport, $NumDaysA, $db){
 	$SumInvoice08    = 0;
 	$SumInvoice09    = 0;
 						
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Average value of invoice by ') . $typereport . " during the last " . $NumDaysA . " days.".'</strong></p>';
 		echo '<div>';
@@ -400,7 +400,7 @@ function GeneralCustomerBehaviour($NumDaysA, $db){
 					GROUP BY salesorders.debtorno) DESC";
 	
 						
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . "General Customer Behaviour by shop during the last " . $NumDaysA . " days.".'</strong></p>';
 		echo '<div>';
@@ -537,7 +537,7 @@ function YearDifferenceSales($typereport, $NumDaysA, $db){
 	}
 	
 						
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Difference sales for ') . $typereport . " during the last " . $NumDaysA . " days and same period last year".'</strong></p>';
 		echo '<div>';
@@ -775,7 +775,7 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 	}
 	
 						
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		if ($Year == "LastYear"){
 			echo '<p class="page_title_text" align="center"><strong>' . _('LAST YEAR Average Daily sales by ') . $typereport . " during the last " . $NumDaysA . ", ". $NumDaysB . ", ". $NumDaysC . ", ". $NumDaysD . ", ". $NumDaysE . ", ". $NumDaysF . " days. Sorted by " . $NumDaysSort ." days. Trend by " . $NumDaysD . " days.".'</strong></p>';
@@ -987,7 +987,7 @@ function SPGPerformanceByShop($Shop, $NumDaysA, $NumDaysB, $NumDaysC, $db){
 			ORDER BY salesman.salesmancode";
 	
 						
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('SPG Performance in ') . $Shop . " during the last " . $NumDaysA . " days and ". ($NumDaysB - $NumDaysA) . " previous days". '</strong></p>';
 		echo '<div>';
@@ -1081,7 +1081,7 @@ function RetailTypePayments($typereport, $maxdays, $db){
 			ORDER BY salesorders.salesperson";
 	}
 	
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Distribution Cash / Credit Card during the last ') . $maxdays . _(' days by ') .$typereport .'</strong></p>';
 		echo '<div>';
@@ -1174,7 +1174,7 @@ function PettyCashStatus($currency, $db){
 			HAVING ( SUM(pcashdetails.amount) <= -0.01
 					OR SUM(pcashdetails.amount) >= 0.01)";
 
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Petty Cash Authorized Status for '). $currency . ' accounts'  . '</strong></p>';
 		echo '<div>';

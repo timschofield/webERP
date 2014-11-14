@@ -37,7 +37,7 @@ $sql = "SELECT secroleid,
 		WHERE secroleid = 17 OR secroleid = 22
 		ORDER BY secrolename";
 
-$Sec_Result = DB_query($sql, $db);
+$Sec_Result = DB_query($sql);
 $SecurityRoles = array();
 // Now load it into an a ray using Key/Value pairs
 while( $Sec_row = DB_fetch_row($Sec_Result) ) {
@@ -60,7 +60,7 @@ if (isset($_POST['submit'])) {
 					locationname
 			FROM locations 
 			WHERE loccode = '".$_POST['DefaultLocation']."'";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 	while ($myrow=DB_fetch_array($result)){
 		$CustomerID = $myrow['cashsalecustomer'];
 		$BranchCode = $myrow['cashsalecustomer'];
@@ -70,7 +70,7 @@ if (isset($_POST['submit'])) {
 	$sql = "SELECT salesmanname
 			FROM salesman 
 			WHERE salesmancode = '".$_POST['Salesman']."'";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 	while ($myrow=DB_fetch_array($result)){
 		$SalesmanName = $myrow['salesmanname'];
 	}
@@ -201,7 +201,7 @@ if (isset($_POST['submit'])) {
 		//run the SQL from either of the above possibilites
 		$ErrMsg = _('The user alterations could not be processed because');
 		$DbgMsg = _('The SQL that was used to update the user and failed was');
-		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+		$result = DB_query($sql,$ErrMsg,$DbgMsg);
 
 		unset($_POST['UserID']);
 		unset($_POST['Salesman']);
@@ -221,7 +221,7 @@ if (isset($_POST['submit'])) {
 		prnMsg(_('The demonstration user called demo cannot be deleted'),'error');
 	} else {
 		$sql="SELECT userid FROM audittrail where userid='" . $SelectedUser ."'";
-		$result=DB_query($sql, $db);
+		$result=DB_query($sql);
 		if (DB_num_rows($result)!=0) {
 			prnMsg(_('Cannot delete user as entries already exist in the audit trail'), 'warn');
 		} else {
@@ -231,7 +231,7 @@ if (isset($_POST['submit'])) {
 
 			$sql="DELETE FROM www_users WHERE userid='" . $SelectedUser . "'";
 			$ErrMsg = _('The User could not be deleted because');;
-			$result = DB_query($sql,$db,$ErrMsg);
+			$result = DB_query($sql,$ErrMsg);
 			prnMsg(_('User Deleted'),'info');
 		}
 		unset($SelectedUser);
@@ -267,7 +267,7 @@ if (!isset($SelectedUser)) {
 					AND (fullaccess = 17 OR fullaccess = 22)
 				ORDER BY salesman, defaultlocation";
 	// Only SPG (17) or SPG-Support	(22)	
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 
 	echo '<table class="selection">';
 	echo '<tr>
@@ -362,7 +362,7 @@ if (isset($SelectedUser)) {
 		FROM www_users
 		WHERE userid='" . $SelectedUser . "'";
 
-	$result = DB_query($sql, $db);
+	$result = DB_query($sql);
 	$myrow = DB_fetch_array($result);
 
 	$_POST['UserID'] = $myrow['userid'];
@@ -383,7 +383,7 @@ echo '<tr>
 		<td><select name="Salesman">';
 
 $sql = "SELECT salesmancode, salesmanname FROM salesman WHERE current = 1 ORDER BY salesmancode";
-$result = DB_query($sql,$db);
+$result = DB_query($sql);
 if ((isset($_POST['Salesman']) AND $_POST['Salesman']=='') OR !isset($_POST['Salesman'])){
 	echo '<option selected="selected" value=""></option>';
 } else {
@@ -410,7 +410,7 @@ $sql = "SELECT loccode,
 		FROM locations 
 		WHERE loccode LIKE 'TOK%' 
 		ORDER BY locationname";
-$result = DB_query($sql,$db);
+$result = DB_query($sql);
 if ((isset($_POST['DefaultLocation']) AND $_POST['DefaultLocation']=='') OR !isset($_POST['DefaultLocation'])){
 	echo '<option selected="selected" value=""></option>';
 } else {
@@ -438,7 +438,7 @@ $sql="SELECT departmentid,
 		WHERE departmentid <> 1
 		ORDER BY description";
 
-$result=DB_query($sql, $db);
+$result=DB_query($sql);
 echo '<td><select name="Department">';
 if ((isset($_POST['Department']) AND $_POST['Department']=='0') OR !isset($_POST['Department'])){
 	echo '<option selected="selected" value="0"></option>';

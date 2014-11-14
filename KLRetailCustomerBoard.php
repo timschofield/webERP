@@ -98,7 +98,7 @@ function RetailCustomerAnalysisBySex($NumDays, $ListShops, $db){
 			WHERE salesorders.orddate >= '". $StartDate . "'
 				AND salesorders.orddate <= '". $Yesterday . "'".
 				$WhereListShops;
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	$myrow = DB_fetch_array($result);
 	$NumberSales = $myrow[0];
 	
@@ -110,7 +110,7 @@ function RetailCustomerAnalysisBySex($NumDays, $ListShops, $db){
 				AND salesorders.orddate <= '". $Yesterday . "'
 				AND klretailcustomers.sex = 'F'".
 				$WhereListShops;
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	$myrow = DB_fetch_array($result);
 	$NumberFemales = $myrow[0];
 
@@ -122,7 +122,7 @@ function RetailCustomerAnalysisBySex($NumDays, $ListShops, $db){
 				AND salesorders.orddate <= '". $Yesterday . "'
 				AND klretailcustomers.sex = 'M'".
 				$WhereListShops;;
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	$myrow = DB_fetch_array($result);
 	$NumberMales = $myrow[0];
 
@@ -203,7 +203,7 @@ function RetailCustomerAnalysisByCountry($NumDays, $ListShops, $MinimCustomersTo
 			WHERE salesorders.orddate >= '". $StartDate . "'
 				AND salesorders.orddate <= '". $Yesterday . "'".
 				$WhereListShops;
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	$myrow = DB_fetch_array($result);
 	$NumberSales = $myrow[0];
 
@@ -215,7 +215,7 @@ function RetailCustomerAnalysisByCountry($NumDays, $ListShops, $MinimCustomersTo
 				AND salesorders.orddate <= '". $Yesterday . "'
 				AND klretailcustomers.country != '0'".
 				$WhereListShops;
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	$myrow = DB_fetch_array($result);
 	$NumberCases = $myrow[0];
 	
@@ -230,7 +230,7 @@ function RetailCustomerAnalysisByCountry($NumDays, $ListShops, $MinimCustomersTo
 			GROUP BY klretailcustomers.country 
 			ORDER BY COUNT(klretailcustomers.country) DESC,
 				klretailcustomers.country ASC"	;
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	
 	if (DB_num_rows($result) != 0){
 		if ($ListShops == 'ALL'){
@@ -316,7 +316,7 @@ function EmailHarvested($NumDays, $ListShops, $db){
 			WHERE salesorders.orddate >= '". $StartDate . "'
 				AND salesorders.orddate <= '". $Yesterday . "'".
 				$WhereListShops;
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	$myrow = DB_fetch_array($result);
 	$NumberSales = $myrow[0];
 	
@@ -328,7 +328,7 @@ function EmailHarvested($NumDays, $ListShops, $db){
 				AND salesorders.orddate <= '". $Yesterday . "'
 				AND klretailcustomers.email != ''".
 				$WhereListShops;
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	$myrow = DB_fetch_array($result);
 	$NumberEmails = $myrow[0];
 
@@ -389,7 +389,7 @@ function RetailCustomerAnalysisByAge($NumDays, $ListShops, $CountriesForRetail, 
 			WHERE salesorders.orddate >= '". $StartDate . "'
 				AND salesorders.orddate <= '". $Yesterday . "'".
 				$WhereListShops;
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	$myrow = DB_fetch_array($result);
 	$NumberSales = $myrow[0];
 
@@ -401,7 +401,7 @@ function RetailCustomerAnalysisByAge($NumDays, $ListShops, $CountriesForRetail, 
 				AND salesorders.orddate <= '". $Yesterday . "'
 				AND klretailcustomers.age != 0".
 				$WhereListShops;
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	$myrow = DB_fetch_array($result);
 	$NumberCases = $myrow[0];
 	
@@ -414,7 +414,7 @@ function RetailCustomerAnalysisByAge($NumDays, $ListShops, $CountriesForRetail, 
 				AND klretailcustomers.age != 0
 				AND klretailcustomers.age <= ". AGE_STEP_01 .
 				$WhereListShops;
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	$myrow = DB_fetch_array($result);
 	$NumberCases01 = $myrow[0];
 
@@ -427,7 +427,7 @@ function RetailCustomerAnalysisByAge($NumDays, $ListShops, $CountriesForRetail, 
 				AND klretailcustomers.age > ". AGE_STEP_01 . "
 				AND klretailcustomers.age <= ". AGE_STEP_02 .
 				$WhereListShops;
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	$myrow = DB_fetch_array($result);
 	$NumberCases02 = $myrow[0];
 
@@ -440,7 +440,7 @@ function RetailCustomerAnalysisByAge($NumDays, $ListShops, $CountriesForRetail, 
 				AND klretailcustomers.age > ". AGE_STEP_02 . "
 				AND klretailcustomers.age <= ". AGE_STEP_03 .
 				$WhereListShops;
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	$myrow = DB_fetch_array($result);
 	$NumberCases03 = $myrow[0];
 
@@ -453,7 +453,7 @@ function RetailCustomerAnalysisByAge($NumDays, $ListShops, $CountriesForRetail, 
 				AND klretailcustomers.age > ". AGE_STEP_03 . "
 				AND klretailcustomers.age <= ". AGE_STEP_04 .
 				$WhereListShops;
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	$myrow = DB_fetch_array($result);
 	$NumberCases04 = $myrow[0];
 
@@ -466,7 +466,7 @@ function RetailCustomerAnalysisByAge($NumDays, $ListShops, $CountriesForRetail, 
 				AND klretailcustomers.age > ". AGE_STEP_04 . "
 				AND klretailcustomers.age <= ". AGE_STEP_05 .
 				$WhereListShops;
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	$myrow = DB_fetch_array($result);
 	$NumberCases05 = $myrow[0];
 	
@@ -479,7 +479,7 @@ function RetailCustomerAnalysisByAge($NumDays, $ListShops, $CountriesForRetail, 
 				AND klretailcustomers.age > ". AGE_STEP_05 . "
 				AND klretailcustomers.age <= ". AGE_STEP_06 .
 				$WhereListShops;
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	$myrow = DB_fetch_array($result);
 	$NumberCases06 = $myrow[0];
 	
@@ -492,7 +492,7 @@ function RetailCustomerAnalysisByAge($NumDays, $ListShops, $CountriesForRetail, 
 				AND klretailcustomers.age > ". AGE_STEP_06 . "
 				AND klretailcustomers.age <= ". AGE_STEP_07 .
 				$WhereListShops;
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	$myrow = DB_fetch_array($result);
 	$NumberCases07 = $myrow[0];
 
@@ -504,7 +504,7 @@ function RetailCustomerAnalysisByAge($NumDays, $ListShops, $CountriesForRetail, 
 				AND salesorders.orddate <= '". $Yesterday . "'
 				AND klretailcustomers.age > ". AGE_STEP_07 .
 				$WhereListShops;
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	$myrow = DB_fetch_array($result);
 	$NumberCases08 = $myrow[0];
 	
@@ -652,7 +652,7 @@ function RetailCustomerDataQualitySPG($NumDays, $db){
 				AND salesorders.orddate <= '". $Yesterday ."'
 			GROUP BY salesorders.salesperson
 			ORDER BY salesorders.salesperson";
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Quality data Retail Customer by SPG during the last ') . locale_number_format($NumDays,0) . ' days</strong></p>';

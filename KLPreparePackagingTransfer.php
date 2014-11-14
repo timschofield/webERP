@@ -30,7 +30,7 @@ $sql = "UPDATE locations
 		SET klemaillastpackacgingtransfer = '" . Date('Y-m-d') . "'
 		WHERE loccode =	'" . $_GET['Shop'] . "'";
 $ErrMsg =_('Could not update the date of the last packaging transfer reminder because');
-$result = DB_query($sql,$db,$ErrMsg);
+$result = DB_query($sql,$ErrMsg);
 prnMsg("Updated date of email for packaging transfer to shop to today");
 
 DB_Txn_Commit();

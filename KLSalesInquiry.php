@@ -763,7 +763,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 		} // End of if ($_POST['ReportType']
 		//echo "<br/>$sql<br/>";
 		$ErrMsg = _('The SQL to find the parts selected failed with the message');
-		$result = DB_query($sql,$db,$ErrMsg);
+		$result = DB_query($sql,$ErrMsg);
 		$ctr = 0;
 		echo '<pre>';
 		$TotalQty = 0;
@@ -1197,7 +1197,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 			<td>' . _('For Sales Person') . ':</td>
 			<td><select name="Salesman">';
 	$sql="SELECT salesmancode, salesmanname FROM salesman";
-	$SalesmanResult= DB_query($sql,$db);
+	$SalesmanResult= DB_query($sql);
 	echo '<option selected="selected" value="All">' . _('All Salesmen')  . '</option>';
 	While ($myrow = DB_fetch_array($SalesmanResult)){
 		echo '<option value="' . $myrow['salesmancode'] . '">' . $myrow['salesmanname']  . '</option>';
@@ -1278,7 +1278,7 @@ function TempStockmoves(&$db) {
 
 	$sql = "CREATE TEMPORARY TABLE tempstockmoves LIKE stockmoves";
 	$ErrMsg = _('The SQL to the create temp stock moves table failed with the message');
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 
 	$sql = "INSERT tempstockmoves
 	          SELECT * FROM stockmoves
@@ -1286,7 +1286,7 @@ function TempStockmoves(&$db) {
 	          AND stockmoves.trandate >='" . $FromDate .
 			  "' AND stockmoves.trandate <='" . $ToDate . "'";
 	$ErrMsg = _('The SQL to insert temporary stockmoves records failed with the message');
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 
 	$sql = "UPDATE tempstockmoves, stockmoves
 	          SET tempstockmoves.reference = stockmoves.reference
@@ -1295,7 +1295,7 @@ function TempStockmoves(&$db) {
                 AND tempstockmoves.stockid = stockmoves.stockid
                 AND stockmoves.type ='10'";
 	$ErrMsg = _('The SQL to update tempstockmoves failed with the message');
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 
 
 } // End of function TempStockmoves

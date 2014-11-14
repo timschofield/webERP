@@ -33,7 +33,7 @@ $sql = "SELECT materialcost,
 				overheadcost,
 				mbflag";
 $ErrMsg = _('The entered item code does not exist');
-$OldResult = DB_query($sql,$db,$ErrMsg);
+$OldResult = DB_query($sql,$ErrMsg);
 $OldRow = DB_fetch_array($OldResult);
 DB_free_result($OldResult);
 
@@ -58,7 +58,7 @@ if (DB_num_rows($result)==0) {
 
 	$ErrMsg = _('The cost details for the stock item could not be updated because');
 	$DbgMsg = _('The SQL that failed was');
-	$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 	$Result = DB_Txn_Commit();
 	UpdateCost($db, $_GET['StockId']); //Update any affected BOMs

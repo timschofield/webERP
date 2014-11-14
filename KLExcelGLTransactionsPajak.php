@@ -58,7 +58,7 @@ function submit(&$db, $FromDate, $ToDate) {
 				;
 		
 		$ErrMsg = _('The SQL to find the KL GL Transactions ');
-		$result = DB_query($sql,$db,$ErrMsg);
+		$result = DB_query($sql,$ErrMsg);
 		if (DB_num_rows($result) != 0){
 
 			// Create new PHPExcel object

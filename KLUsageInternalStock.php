@@ -75,7 +75,7 @@ $SQL = "SELECT stockmaster.stockid,
 		WHERE stockmaster.categoryid IN('SHCONS')
 			AND stockmaster.discontinued = 0 
 		ORDER BY stockmaster.stockid";
-$result = DB_query($SQL, $db);
+$result = DB_query($SQL);
 
 echo '<p class="page_title_text" align="center"><strong>' . _('Usage of Internal Stock - Shop Consumables during the last ') . $NumberOfDays . ' days' . '</strong></p>';
 echo '<table class="selection">';

@@ -17,14 +17,14 @@ $begintime = time_start();
 
 // let's start from an emprty table
 /*$SQL = "TRUNCATE relateditems";
-$result = DB_query($SQL, $db);
+$result = DB_query($SQL);
 */
 // Select items and classify them
 $SQL = "SELECT DISTINCT(stockmaster.stockid)
 		FROM stockmaster, salescatprod
 		WHERE stockmaster.stockid = salescatprod.stockid
 		ORDER BY stockmaster.stockid";
-$result = DB_query($SQL, $db);
+$result = DB_query($SQL);
 if (DB_num_rows($result) != 0){
 	echo '<p class="page_title_text" align="center"><strong>' . _('Find Related Items For Website') . '</strong></p>';
 	echo '<div>';

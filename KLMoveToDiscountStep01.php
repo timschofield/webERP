@@ -112,7 +112,7 @@ if (isset($_POST['submit'])) {
 
 		$ErrMsg = _('The insert or update of the KL Move Item To Discount Step 01 failed because');
 		$DbgMsg = _('The SQL that was used and failed was');
-		$result = DB_query($sql,$db,$ErrMsg, $DbgMsg);
+		$result = DB_query($sql,$ErrMsg, $DbgMsg);
 		prnMsg($msg , 'success');
 
 		SetRLZeroAtPointOfSales($_POST['Stockid'], $db);
@@ -125,7 +125,7 @@ if (isset($_POST['submit'])) {
 				FROM locstock
 				WHERE stockid ='". $_POST['Stockid'] ."' 
 					AND loccode IN " . LIST_CONSIGNMENT_LOCATIONS ;
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		$myrow = DB_fetch_array($result);
 		if ($myrow[0] != 0){
 			// send the email as there is some stock in consignment
@@ -144,13 +144,13 @@ if (isset($_POST['submit'])) {
 	$sql = "SELECT stockid
 			FROM klmovetodiscount
 			WHERE countermovediscount='".$SelectedMovement."'";
-	$result = DB_query($sql, $db);
+	$result = DB_query($sql);
 	$myrow = DB_fetch_array($result);
 	SetMoveDiscountFlag(0,$myrow['stockid'], $db);
 
 	$sql="DELETE FROM klmovetodiscount WHERE countermovediscount='". $SelectedMovement."'";
 	$ErrMsg = _('The Move Item To Discount Step 01 could not be deleted because');
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 
 	prnMsg(_('KL Move Item To Discount Step 01') . ' ' . $SelectedMovement . ' ' . _('has been deleted from the database'),'success');
 
@@ -172,7 +172,7 @@ or deletion of the records*/
 				startprocessdate
 			FROM klmovetodiscount
 			WHERE endprocessdate = '0000-00-00'";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 
 	echo '<table class="selection">';
 	echo '<tr>
@@ -231,7 +231,7 @@ if (! isset($_GET['delete'])) {
 				FROM klmovetodiscount
 				WHERE countermovediscount='".$SelectedMovement."'";
 
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		$myrow = DB_fetch_array($result);
 
 		$_POST['Stockid'] = $myrow['stockid'];

@@ -35,7 +35,7 @@ if (isset($_POST['PrintPDF'])){
 	$SQL = $SQL . "	AND locstock.loccode = '" . $_POST['Location'] . "'
 			ORDER BY stockmaster.stockid";
 	
-	$InventoryResult = DB_query($SQL,$db,'','',false,true);
+	$InventoryResult = DB_query($SQL,'','',false,true);
 
 	if (DB_error_no() !=0) {
 	  $Title = _('KL Inventory At Shops') . ' - ' . _('Problem Report');
@@ -117,7 +117,7 @@ if (isset($_POST['PrintPDF'])){
 						locationname
 				FROM locations";
 
-		$LocnResult=DB_query($sql,$db);
+		$LocnResult=DB_query($sql);
 
 		while ($myrow=DB_fetch_array($LocnResult)){
 			echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
@@ -130,7 +130,7 @@ if (isset($_POST['PrintPDF'])){
 			<td><select name="Category">';
 
 		$sql = "SELECT categoryid, categorydescription FROM stockcategory ORDER BY categorydescription";
-		$CatResult=DB_query($sql,$db);
+		$CatResult=DB_query($sql);
 
 		echo '<option value="All">' . _('All Stock Categories') . '</option>';
 

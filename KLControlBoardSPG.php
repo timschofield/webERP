@@ -74,7 +74,7 @@ function AverageSPGSales($SPG, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $db){
 			WHERE salesman.salesmancode = '" . $SPG . "'";
 	
 						
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Average Daily sales by SPG during the last ') . $NumDaysA . ", ". $NumDaysB . ", ". $NumDaysC . ", ". $NumDaysD . " days.".'</strong></p>';
 		echo '<div>';
@@ -173,7 +173,7 @@ function SPGTypePayments($SPG, $maxdays, $db){
 			AND orddate >= '". $StartDate. "'
 			AND salesorders.debtorno LIKE 'RETAIL%'";
 	
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Distribution Cash / Credit Card during the last ') . $maxdays . _(' days by SPG') .'</strong></p>';
 		echo '<div>';
@@ -248,7 +248,7 @@ function lastSalesSPG($spg, $numsales, $db){
 			ORDER BY salesorders.orderno DESC
 			LIMIT 0, ".$numsales;
 	
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . $numsales . ' last sales for SPG ' . $spg . '</strong></p>';
 		echo '<div>';

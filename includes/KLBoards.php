@@ -39,7 +39,7 @@ function SPGBelowMinimumSales($Shop, $NumDaysA, $MinimumSales,$db){
 						AND salesorders.salesperson = salesman.salesmancode) ASC";
 //prnMsg($SQL);
 	
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('SPG with daily sales below minimum of ') . locale_number_format($MinimumSales,0) . "/day during the last " . $NumDaysA . " days in ". $Shop .'</strong></p>';
 		echo '<div>';
@@ -99,7 +99,7 @@ function SPGNotReportingSalesInDays($maxdays, $db){
 							AND salesorders.salesperson = salesman.salesmancode)
 		ORDER BY salesman.salesmancode";
 //	prnMsg($SQL);			
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('SPG with more than ') . $maxdays . _(' days not reporting ANY sales.') .'</strong></p>';
 		echo '<div>';
@@ -147,7 +147,7 @@ function UsersNotLoggingIn($maxdays, $db){
 				AND userid NOT LIKE '999%'
 				AND userid <> 'TestUser'";
 			
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Regular webERP users not logging in for more than ') . $maxdays . _(' days.') .'</strong></p>';
 		echo '<div>';
@@ -190,7 +190,7 @@ function TransfersDelayed($maxdays, $RootPath, $db){
 			WHERE  recqty < shipqty
 				AND shipdate <= '". $StartDate ."'
 			ORDER BY reference";
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Transfers delayed more than ') . $maxdays . _(' days ') . '</strong></p>';
 		echo '<div>';
@@ -237,7 +237,7 @@ function isTopSalesItem($stockid, $topitems, $topitemsdays, $db){
 			GROUP BY salesorderdetails.stkcode
 			ORDER BY SUM(salesorderdetails.qtyinvoiced) DESC
 			LIMIT " . $topitems;
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	$istopsales = false;
 	if (DB_num_rows($result) != 0){
 		while (($myrow = DB_fetch_array($result)) AND (!$istopsales)) {
@@ -257,7 +257,7 @@ function positionTopSalesItem($stockid, $topitems, $topitemsdays, $db){
 			GROUP BY salesorderdetails.stkcode
 			ORDER BY SUM(salesorderdetails.qtyinvoiced) DESC
 			LIMIT " . $topitems;
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	$position = 1;
 	if (DB_num_rows($result) != 0){
 		while (($myrow = DB_fetch_array($result)) AND (!$istopsales)) {
@@ -280,7 +280,7 @@ function SalesOfItemByLocation($stockid, $location, $maxdays, $db){
 				AND salesorders.orddate >= '". $StartDate . "'
 				AND salesorders.fromstkloc = '". $location . "'
 				AND salesorderdetails.stkcode LIKE '". $stockid . "%'";
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		$myrow = DB_fetch_array($result);
 		$sales = $myrow['sales'];
@@ -357,7 +357,7 @@ function FinishedStockDistribution($kind, $byreport, $db){
 		return false;
 	}
 						
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		if ($kind == "FORSALE"){			
 			$Titletext = "Finished Stock FOR SALE Distribution by "; 
@@ -480,7 +480,7 @@ function FinishedStockDistribution($kind, $byreport, $db){
 						AND stockcategory.categoryid = m2.categoryid
 						AND stockcategory.stocktype = 'F'
 						AND l2.quantity != 0";
-			$result1 = DB_query($SQL, $db);
+			$result1 = DB_query($SQL);
 			if (DB_num_rows($result1) != 0){
 				while ($myrow1 = DB_fetch_array($result1)) {
 					$totalModels = locale_number_format($myrow1['realmodels'],0);
@@ -556,7 +556,7 @@ function ActiveTransfersByLocation($RootPath, $db){
 				FROM loctransfers
 				WHERE  recqty < shipqty
 					AND (loctransfers.shiploc = locations.loccode OR loctransfers.recloc = locations.loccode)) DESC";
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Pending Goods to be transferred by shop') . '</strong></p>';
 		echo '<div>';
@@ -640,7 +640,7 @@ function ActiveTransferStatus($RootPath, $db){
 			WHERE  recqty < shipqty
 			GROUP BY reference
 			ORDER BY shipdate ASC, reference ASC";
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('List of Active Transfers') . '</strong></p>';
 		echo '<div>';
@@ -713,7 +713,7 @@ function RecentlyClosedTransferStatus($maxdays, $RootPath, $db){
 			GROUP BY reference
 			ORDER BY recdate ASC, reference ASC";
 			
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		if ($maxdays == 1){
 			echo '<p class="page_title_text" align="center"><strong>' . _('List of Transfers Closed today ') . ' </strong></p>';
@@ -781,7 +781,7 @@ function ListPriorityLocations($db){
 		FROM locations
 		WHERE (loccode LIKE 'TOK%')
 		ORDER BY locationname ASC";
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Priority Assigned to Shops. 1-Maximum 10-Minimum') . '</strong></p>';
 		echo '<div>';
@@ -830,7 +830,7 @@ function CheckNegativeStock($RootPath, $db){
 				stockmaster.categoryid, 
 				stockmaster.stockid,
 				stockmaster.decimalplaces";
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Items with Negative Stock') . '</strong></p>';
 		echo '<div>';
@@ -888,7 +888,7 @@ function ItemsInKLProcessAndRLNotZero($RootPath, $db){
 					OR stockmaster.klchangingprice != 0 ) 			
 			ORDER BY stockmaster.stockid,
 					locstock.loccode";
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Items with in KL process and RL not zero') . '</strong></p>';
 		echo '<div>';
@@ -955,7 +955,7 @@ function FlaggedAsObsoleteButStockAvailable($RootPath, $db){
 				AND (SELECT SUM(quantity)
 					FROM locstock
 					WHERE stockmaster.stockid = locstock.stockid) > 0";
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Obsolete Items with available Stock') . '</strong></p>';
 		echo '<div>';
@@ -1004,7 +1004,7 @@ function ItemsWithoutWeightOrVolume($RootPath, $db){
 					OR stockmaster.grossweight <= stockmaster.netweight)
 			ORDER BY stockmaster.stockid";
 
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('WebShop items with no gross weight, no volume or Net > Gross Weight') . '</strong></p>';
 		echo '<div>';
@@ -1058,7 +1058,7 @@ function ItemsWithoutStandardCost($RootPath, $db){
 				AND discontinued = 0";
 // EXPLAIN SQL 2014-05-31
 //	prnMsg($SQL);
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Items without standard cost') . '</strong></p>';
 		echo '<div>';
@@ -1110,7 +1110,7 @@ function ItemsWithoutRetailPrice($stockcat, $factorRetail, $RootPath, $db){
 									AND prices.currabrev = '". CURRENCY_CODE ."'
 									AND prices.startdate <= '". $today. "' 
 									AND (prices.enddate >= '". $today. "' OR prices.enddate = '0000-00-00'))";
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Items without active retail price') . '</strong></p>';
 		echo '<div>';
@@ -1202,7 +1202,7 @@ function OutstandingOrders($customertype, $ordertype, $RootPath, $db){
 				debtorsmaster.name,
 				salesorders.orddate
 			ORDER BY salesorders.orderno";
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . $Titletext . '</strong></p>';
 		echo '<div>';
@@ -1287,7 +1287,7 @@ function OnlineOrdersFollowUp($numDays, $RootPath, $db){
 				salesorders.orddate
 			ORDER BY salesorders.orderno";			
 
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . $Titletext . '</strong></p>';
 		echo '<div>';
@@ -1402,7 +1402,7 @@ function OnlineQuotationsFollowUp($RootPath, $db){
 				salesorders.orddate
 			ORDER BY salesorders.orderno";			
 
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . $Titletext . '</strong></p>';
 		echo '<div>';
@@ -1486,7 +1486,7 @@ function OldOnlineQuotations($NumDays, $RootPath, $db){
 				salesorders.orddate
 			ORDER BY salesorders.orderno";			
 
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . $Titletext . '</strong></p>';
 		echo '<div>';
@@ -1556,7 +1556,7 @@ function OnlineCustomersNoOrderPlaced($RootPath, $db){
 				AND debtorsmaster.debtorno != 'WEBSHOP'
 			ORDER BY debtorsmaster.debtorno";
 
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Online Customers registered but no order placed.') . '</strong></p>';
 		echo '<div>';
@@ -1621,7 +1621,7 @@ function OnlineItemsOnProcess($RootPath, $db){
 				AND locstock.loccode = 'TOKWS'
 				AND salesorderdetails.completed= 0
 			ORDER BY salesorders.orderno, salesorderdetails.stkcode";
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . "Items on process for Online Orders" . '</strong></p>';
@@ -1729,7 +1729,7 @@ function WrongGiftItem($stockid, $customertype, $ErrorType, $OrderValue, $numDay
 								WHERE salesorders.orderno = so2.orderno 
 								AND so2.stkcode LIKE '" . $stockid . "' )". 
 			" ORDER BY salesorders.orderno";
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . $Titletext . '</strong></p>';
 		echo '<div>';
@@ -1783,7 +1783,7 @@ function PettyCashToBeAuthorized($db){
 				AND pctabs.authorizer = '". $_SESSION['UserID'] ."'
 			GROUP BY pcashdetails.tabcode";
 
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Petty Cash Expenses to be Authorized') . '</strong></p>';
 		echo '<div>';
@@ -1828,7 +1828,7 @@ function PettyCashBalance($db){
 			HAVING ( SUM(pcashdetails.amount) < -0.01
 					OR SUM(pcashdetails.amount) > pctabs.tablimit)";
 
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Petty Cash Balance Too Low or Too High') . '</strong></p>';
 		echo '<div>';
@@ -1925,7 +1925,7 @@ No pending transfer regarding this item
 							AND loctransfers.stockid =  stockmaster.stockid)
 			ORDER BY stockid";
 
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . $StockCat . _(' Items with stock available (but NO changing price, No moving category) at Kantor but RL zero at ') . $Location . "." .$MessageDiscount . $MessageOutlet . '</strong></p>';
 		echo '<div>';
@@ -2000,7 +2000,7 @@ No pending transfer regarding this item
 				AND stockmaster.categoryid NOT IN('SHDISP', 'SHCONS', 'OUTLET')
 			ORDER BY stockid";
 
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Items with stock available (but NO changing price) at Kantor but RL zero for all toko KL (Excluding OUTLET)') . '</strong></p>';
 		echo '<div>';
@@ -2085,7 +2085,7 @@ function ItemsInCategoryWithStockKantorButReorderLevelTokoZero($CategoryId, $Roo
 				AND stockmaster.categoryid = '" . $CategoryId . "'
 			ORDER BY stockid";
 
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		if (ItemInList($CategoryId, LIST_STOCK_CATEGORIES_OUTLET)){
 			echo '<p class="page_title_text" align="center"><strong>' . $CategoryId ._(' Items with stock available at Kantor but RL zero for ') . LIST_SHOPS_WITH_OUTLET . '</strong></p>';
@@ -2147,7 +2147,7 @@ function ComponentsToObsolete($ShowOnlyTotal, $ShowLimit, $RootPath, $db){
 						AND bom.component = stC.stockid 
 						AND s.stockid = bom.component
 						AND stP.discontinued = 0)";
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	$totalcost = 0;
 	if (DB_num_rows($result) != 0){
 		if (!$ShowOnlyTotal){
@@ -2219,7 +2219,7 @@ function BalanceAccountControl($account, $min, $max, $period, $db){
 				AND chartdetails.accountcode = '" . $account . "'
 				AND chartdetails.period = ". $period . "";
 				
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	$myrow = DB_fetch_array($result);
 	
 	if ($myrow['saldo'] < $min){
@@ -2239,7 +2239,7 @@ function GoodsReceivedNotInvoicedControl($period, $db){
 				AND chartdetails.period = ". $period . "";
 // EXPLAIN SQL 2014-05-31 OK!
 //prnMsg($SQL);
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	$myrow = DB_fetch_array($result);
 	
 	$ValueAtBalance = -$myrow['saldo'];
@@ -2250,7 +2250,7 @@ function GoodsReceivedNotInvoicedControl($period, $db){
 // EXPLAIN SQL 2014-05-31
 // NOT OK. All 10.000 rows each time
 // prnMsg($SQL);	
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	$myrow = DB_fetch_array($result);
 
 	$GoodsValue = $myrow[0];
@@ -2266,7 +2266,7 @@ function CustomersDebtControl($AcceptedDifference, $period, $db){
 			FROM chartdetails
 			WHERE chartdetails.accountcode = '111311100'
 				AND chartdetails.period = ". $period . "";
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	$myrow = DB_fetch_array($result);
 	
 	$ValueAtBalance = $myrow['saldo'];
@@ -2284,7 +2284,7 @@ function CustomersDebtControl($AcceptedDifference, $period, $db){
 				AND debtorsmaster.holdreason = holdreasons.reasoncode
 				AND debtorsmaster.debtorno = debtortrans.debtorno
 				AND debtorsmaster.currcode = 'IDR' ";
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	$myrow = DB_fetch_array($result);
 	$DebtValueIDR = $myrow[0];
 
@@ -2301,7 +2301,7 @@ function CustomersDebtControl($AcceptedDifference, $period, $db){
 				AND debtorsmaster.holdreason = holdreasons.reasoncode
 				AND debtorsmaster.debtorno = debtortrans.debtorno
 				AND debtorsmaster.currcode = 'USD' ";
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	$myrow = DB_fetch_array($result);
 	$DebtValueUSD = $myrow[0];
 
@@ -2318,7 +2318,7 @@ function CustomersDebtControl($AcceptedDifference, $period, $db){
 				AND debtorsmaster.holdreason = holdreasons.reasoncode
 				AND debtorsmaster.debtorno = debtortrans.debtorno
 				AND debtorsmaster.currcode = 'AUD' ";
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	$myrow = DB_fetch_array($result);
 	$DebtValueAUD = $myrow[0];
 
@@ -2335,7 +2335,7 @@ function CustomersDebtControl($AcceptedDifference, $period, $db){
 				AND debtorsmaster.holdreason = holdreasons.reasoncode
 				AND debtorsmaster.debtorno = debtortrans.debtorno
 				AND debtorsmaster.currcode = 'EUR' ";
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	$myrow = DB_fetch_array($result);
 	$DebtValueEUR = $myrow[0];	
 	
@@ -2357,7 +2357,7 @@ function ItemsShouldBeInWebsite($db){
 				AND NOT EXISTS (SELECT *
 								FROM salescatprod
 								WHERE salescatprod.stockid = stockmaster.stockid)";
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	$showHeader = TRUE;
 	if (DB_num_rows($result) != 0){
 		while ($myrow = DB_fetch_array($result)) {
@@ -2428,7 +2428,7 @@ function OvestockAtShops($kind, $RootPath, $db){
 											AND loctransfers.stockid =  locstock.stockid)
 				ORDER BY locstock.loccode, stockmaster.categoryid, locstock.stockid";
 	}
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		if($kind == "OVERSTOCK"){			
 			echo '<p class="page_title_text" align="center"><strong>' . _('Overstock of items at shops') . '</strong></p>';
@@ -2487,7 +2487,7 @@ function OvestockAtSamples($maxallowedsamples, $RootPath, $db){
 				AND quantity > '". $maxallowedsamples."'
 			ORDER BY locstock.stockid";
 
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Overstock of samples') . '</strong></p>';
 		$TableHeader = '<tr>
@@ -2535,7 +2535,7 @@ function SamplesNotLongerNeeded($RootPath, $db){
 				AND quantity > 0
 			ORDER BY locstock.stockid";
 
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Samples Not Longer Needed (No More Buy, Discount, Outlet)') . '</strong></p>';
 		$TableHeader = '<tr>
@@ -2587,7 +2587,7 @@ function ValueStockLocation($location, $minpcs, $maxpcs, $minvalue, $maxvalue, $
 				AND locstock.quantity!=0
 				AND locstock.loccode = '" . $location . "'";
 				
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	$myrow = DB_fetch_array($result);
 	
 	if ($myrow['qtyonhand'] < $minpcs){
@@ -2619,7 +2619,7 @@ function ItemsOnSpecialRequest($RootPath, $db){
 				AND (locstock.quantity > 0 
 					OR locstock.reorderlevel > 0)
 			ORDER BY stockmaster.stockid";
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Items on Special Kantor Request') . '</strong></p>';
 		echo '<div>';
@@ -2686,7 +2686,7 @@ function DiscountedItemsOnWrongShops($Category, $RootPath, $db){
 			ORDER BY stockmaster.stockid";
 // EXPLAIN SQL 2014-05-31
 //	prnMsg($SQL);
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . $Message . '</strong></p>';
 		echo '<div>';
@@ -2743,7 +2743,7 @@ function OutletItemsOnKLShops($RootPath, $db){
 						WHERE  recqty < shipqty
 							AND loctransfers.stockid =  stockmaster.stockid)
 			ORDER BY stockmaster.stockid";
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Outlet items on KL shops') . '</strong></p>';
 		echo '<div>';
@@ -2790,7 +2790,7 @@ function DiscountedItemsWithWrongDiscount($Category, $DiscountCode, $RootPath, $
 				AND discountcategory !=  '". $DiscountCode ."'
 				AND discontinued = 0";
 				
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . $Category . _(' items with wrong discount (Not ') . $DiscountCode. '%)</strong></p>';
 		echo '<div>';
@@ -2830,7 +2830,7 @@ function NotDiscountedItemsWithDiscount($RootPath, $db){
 				AND categoryid NOT IN " . LIST_STOCK_CATEGORIES_OUTLET ."
 				AND discountcategory !=  ''
 				AND discontinued = 0";
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Not Discounted items with discount') . '</strong></p>';
 		echo '<div>';
@@ -2874,7 +2874,7 @@ function OldPurchasingOrdersStillActive($maxdays, $RootPath, $db){
 						WHERE purchorderdetails.orderno = purchorders.orderno
 						AND completed = 0)
 			ORDER BY orderno";
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Purchase Orders older than ') . $maxdays . _(' days and still not closed') . '</strong></p>';
 		echo '<div>';
@@ -2948,7 +2948,7 @@ function PurchasingOrdersDeliveryControl($reason, $maxdays, $RootPath, $db){
 				suppliers.currcode,
 				currencies.decimalplaces";
 	
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		if ($reason == "Delayed"){
 			echo '<p class="page_title_text" align="center"><strong>' . _('Purchase Orders with delivery date expired') . '</strong></p>';
@@ -3040,7 +3040,7 @@ function PerformanceItemsInCategory($ReportType, $CategoryId, $maxdays, $percent
 	}
 	$SQL = $SQL . " ORDER BY stockmaster.lastcategoryupdate ASC, stockmaster.stockid ASC";
 	
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		if ($ReportType == "GOOD"){
 			echo '<p class="page_title_text" align="center"><strong>' . _('Items in category ') . $CategoryId . " for less than " . $maxdays . " days with more than " . $percentsales . "% of sold stock (" . $TextTitle . " Items)." . ' </strong></p>';
@@ -3114,7 +3114,7 @@ function SplittedpaymentsBySPG($maxdays, $maxsplitted, $db){
 		HAVING COUNT(klpaidcash + klpaidcreditcard) > '" . $maxsplitted . "'
 		ORDER BY salesperson";
 //	prnMsg($SQL);			
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('SPG with more than ') . $maxsplitted . _(' splitted payments during the last ') . $maxdays . _(' days.') .'</strong></p>';
 		echo '<div>';
@@ -3179,7 +3179,7 @@ function ItemsNotTopSalesInShop($starttopitems, $endtopitems, $maxdays, $codesho
 			GROUP BY salesorderdetails.stkcode
 			ORDER BY totalinvoiced DESC
 			LIMIT " . ($endtopitems - 1) . ", 99999999";			
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	$showHeader = TRUE;
 	if (DB_num_rows($result) != 0){
 		$k = 0; //row colour counter
@@ -3275,7 +3275,7 @@ function TopSalesNotInEnoughShops($starttopitems, $endtopitems, $maxdays, $minsh
 			GROUP BY salesorderdetails.stkcode
 			ORDER BY totalinvoiced DESC
 			LIMIT " . ($starttopitems - 1) . "," . ($endtopitems - $starttopitems + 1);			
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	$showHeader = TRUE;
 	if (DB_num_rows($result) != 0){
 		$k = 0; //row colour counter
@@ -3358,7 +3358,7 @@ function GoodsJustArrived($kind, $location, $numdays, $RootPath, $db){
 				AND stockmoves.trandate >'" . $StartDate . "'
 				ORDER BY stockmoves.trandate DESC, 
 						stockmoves.stockid";
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		if ($kind == "PO"){
 			echo '<p class="page_title_text" align="center"><strong>' . $kind . _(' Finished Goods just arrived at ') . $location . ' during the last '. $numdays . ' days'. '</strong></p>';
@@ -3425,7 +3425,7 @@ function GoodsJustTransferred($locationfrom, $locationto, $numdays, $qohmax, $Ro
 				ORDER BY loctransfers.recdate DESC, 
 						loctransfers.stockid";
 						
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _(' Finished Goods just transferred from ') . $locationfrom  . ' to '. $locationto . ' during the last '. $numdays . ' days and QOH <= '. $qohmax . '.</strong></p>';
 		echo '<div>';
@@ -3514,7 +3514,7 @@ function ActiveItemsNoSales($maxdays, $group, $RootPath, $db){
 			GROUP BY stockmaster.stockid
 			ORDER BY stockmaster.stockid";
 	
-	$result = DB_query($SQL, $db);		
+	$result = DB_query($SQL);		
 	
 	if (DB_num_rows($result) != 0){
 		if ($group == "DISCOU"){
@@ -3567,7 +3567,7 @@ function InsuficientStockForTopSalesItems($StockCat, $StockCatDescription, $Days
 						WHERE m2.stockid = l2.stockid
 							AND m2.categoryid = '" . $StockCat ."'
 						AND l2.quantity != 0) ";
-	$resultTI = DB_query($SQL, $db);		
+	$resultTI = DB_query($SQL);		
 	$myrowTI = DB_fetch_array($resultTI);
 	$NumberOfTopItems = ceil($myrowTI[0]/100*$PercentageOfTopItems);
 	
@@ -3606,7 +3606,7 @@ function InsuficientStockForTopSalesItems($StockCat, $StockCatDescription, $Days
 			ORDER BY totalinvoiced DESC
 			LIMIT " . $NumberOfTopItems;
 	
-	$result = DB_query($SQL, $db);		
+	$result = DB_query($SQL);		
 	$showHeader = TRUE;
 	if (DB_num_rows($result) != 0){
 		$k = 0; //row colour counter
@@ -3708,7 +3708,7 @@ function PriceBelowStandard($Stockcat, $Factor, $Tolerance, $MinQoh, $RootPath, 
 						AND prices.currabrev = '". CURRENCY_CODE ."'
 						AND prices.startdate > '". $today. "')";
 
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . $Stockcat . _(' Items with retail price below minimum. ') . $Factor . _(' x standard cost. Tolerance -') . locale_number_format($Tolerance * 100,0) . '%. QOH >= ' .  locale_number_format($MinQoh,0). '</strong></p>';
 		echo '<div>';
@@ -3795,7 +3795,7 @@ function PriceWrongRounding($RootPath, $db){
 				AND stockmaster.klmovingoutlet = 0
 			ORDER BY stockmaster.stockid";
 
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		$k = 0; //row colour counter
 		$i = 1;
@@ -3895,7 +3895,7 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $Tolerance, $MinQo
 						AND (prices.enddate >= '". $today. "' OR prices.enddate = '0000-00-00')
 					LIMIT 1) > ((stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) * ". $FactorMax ." / ". $FactorTolerance ."))";
 
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	$ShowHeader = TRUE;
 	if (DB_num_rows($result) != 0){
 		$k = 0; //row colour counter
@@ -4007,7 +4007,7 @@ function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $Tolerance, $MinQoh, $
 						AND (prices.enddate >= '". $today. "' OR prices.enddate = '0000-00-00')
 					LIMIT 1) < ((stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) * ". $FactorMax ." / ". $FactorTolerance ."))";
 
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	$ShowHeader = TRUE;
 	if (DB_num_rows($result) != 0){
 		$k = 0; //row colour counter
@@ -4119,7 +4119,7 @@ function WrongStandardCost($Country, $StockCat, $StdFactor, $Tolerance, $ShowOnl
 			ORDER BY stockmaster.stockid";
 // EXPLAIN SQL 2014-05-31
 // prnMsg($SQL);
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . $StockCat . ' Items from ' . $Country . _(' with wrong Standard Cost') .  ' ---> Cost Factor = ' . locale_number_format($StdFactor, 2) . ' ---> Tolerance = '. locale_number_format($Tolerance * 100, 2) .'%</strong></p>';
 		echo '<div>';
@@ -4263,7 +4263,7 @@ function ItemsWithStockLocationButNoStockAvailable($Location, $NameLocation, $Mi
 							OR l2.loccode = 'KANTO')
 					) <= " . $MinAvailable;
 
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	$showHeader = TRUE;
 	if (DB_num_rows($result) != 0){
 		$k = 0; //row colour counter
@@ -4327,7 +4327,7 @@ function WrongItemsOnPurchaseOrders($RootPath, $db){
 			ORDER BY purchorderdetails.orderno,
 					purchorderdetails.itemcode";
 
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	$showHeader = TRUE;
 	if (DB_num_rows($result) != 0){
 		$k = 0; //row colour counter
@@ -4391,7 +4391,7 @@ function InsuficientStockForItems($ItemCode, $ItemDescription, $MinimumStock, $O
 							OR loccode = 'KANTO')) < " . $MinimumStock . "
 			ORDER BY stockmaster.stockid";
 	
-	$result = DB_query($SQL, $db);		
+	$result = DB_query($SQL);		
 	$showHeader = TRUE;
 	if (DB_num_rows($result) != 0){
 		$k = 0; //row colour counter
@@ -4472,7 +4472,7 @@ function GoodSellingItemsInCategory($CategoryId, $days, $minsales, $RootPath, $d
 						AND salesorders.orddate >= '". $StartDate ."') >= ". $minsales .")
 			ORDER BY stockmaster.stockid ASC";
 	
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Items in category ') . $CategoryId . " with more than " . $minsales . " pcs sold in the last " . $days . " days.(GOOD ITEMS)" . ' </strong></p>';
 		echo '<div>';
@@ -4519,7 +4519,7 @@ function ObsoleteComponentsInActiveBOM($RootPath, $db){
 				AND stP.discontinued = 0
 				AND stC.discontinued = 1";
 
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Active BOM with obsolete components') . '</strong></p>';
 		echo '<div>';
@@ -4576,7 +4576,7 @@ function GoodsToBeProduced($CategoryComponent, $RootPath, $db){
 					AND s.stockid = bom.component
 					AND stP.discontinued = 0)";
 
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Components '). $CategoryComponent . _(' ready to WO in kantor') . '</strong></p>';
 		echo '<div>';
@@ -4668,7 +4668,7 @@ function ConsumablesGoodsNotEnoughStock($DaysUsage, $DaysMinStock, $DaysStockPur
 							AND purchorderdetails.completed = 0)
 		ORDER BY stockmaster.stockid";
 
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Consumables with stock ready for less than ') . $DaysMinStock . ' days and NO active PO.' . '</strong></p>';
 		echo '<div>';
@@ -4726,7 +4726,7 @@ function ActiveItemsWithoutPicture($RootPath, $db){
 			AND stockcategory.stocktype = 'F'
 			AND stockmaster.categoryid NOT IN ('SHCONS','SHDISP','OUTLET','DISCOU','ZAPRO','ZZZZZZ')
 		ORDER BY stockcategory.categorydescription, stockmaster.stockid";
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	$showHeader = TRUE;
 
 	if (DB_num_rows($result) != 0){
@@ -4891,7 +4891,7 @@ function ImagesWithoutProduct($RootPath, $db){
 		$SQL = "SELECT stockid
 			FROM stockmaster
 			WHERE stockmaster.stockid = '" . $StockId . "'";
-		$result = DB_query($SQL, $db);
+		$result = DB_query($SQL);
 		if (DB_num_rows($result) == 0){
 			if ($ShowHeader){
 				echo '<p class="page_title_text" align="center"><strong>' . _('Images without product in webERP') .'</strong></p>';
@@ -4961,7 +4961,7 @@ function ItemsChangingPriceDelayed($NumDays, $RootPath, $db){
 			WHERE stockmaster.stockid = klchangeprice.stockid
 				AND klchangeprice.endprocessdate = '0000-00-00'
 				AND klchangeprice.startprocessdate <= '". $StartDate ."'";
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Items delayed in Change Price Procedure for more than '). $NumDays . ' days. </strong></p>';
 		echo '<div>';
@@ -5066,7 +5066,7 @@ function ItemsMovingToDiscountDelayed($NumDays, $RootPath, $db){
 			WHERE stockmaster.stockid = klmovetodiscount.stockid
 				AND klmovetodiscount.endprocessdate = '0000-00-00'
 				AND klmovetodiscount.startprocessdate <= '". $StartDate ."'";
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Items delayed in Move To Discount Procedure for more than '). $NumDays . ' days. </strong></p>';
 		echo '<div>';
@@ -5169,7 +5169,7 @@ function ItemsMovingToOutletDelayed($NumDays, $RootPath, $db){
 			WHERE stockmaster.stockid = klmovetooutlet.stockid
 				AND klmovetooutlet.endprocessdate = '0000-00-00'
 				AND klmovetooutlet.startprocessdate <= '". $StartDate ."'";
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Items delayed in Move To Outlet Procedure for more than '). $NumDays . ' days. </strong></p>';
 		echo '<div>';
@@ -5249,7 +5249,7 @@ function over_or_below_limit($Request, $Sign, $Limit, $RootPath, $db){
 					OR stockmaster.klmovingoutlet != 0";
 	}
 	
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	$myrow = DB_fetch_array($result);
 	
 	if ($Sign == "OVER"){
@@ -5281,7 +5281,7 @@ function NewCustomers($NumDays, $RootPath, $db){
 				AND debtorsmaster.clientsince > '".$StartDate."'
 			ORDER BY debtorsmaster.clientsince";
 
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('New customers registered during the last ') . $NumDays . ' days.' . '</strong></p>';
 		echo '<div>';
@@ -5373,7 +5373,7 @@ function ItemsNoSalesInLocation($location, $maxdays, $QOHAvailable, $RootPath, $
 										AND stockmoves.qty >0) 
 					ORDER BY stockmaster.stockid";
 	
-	$result = DB_query($SQL, $db);		
+	$result = DB_query($SQL);		
 	
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Items with NO sales on last ') . $maxdays . ' days in ' . $location . ' with stock <= ' . $QOHAvailable . ' at shops or kantor</strong></p>';
@@ -5551,7 +5551,7 @@ Updated 3 index in loctransfers
 			WHERE locations.loccode IN " . LIST_ACTIVE_KL_SHOPS_BALI . 
 			$OrderBy;
 
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	$showHeader = TRUE;
 	$numshops = 0;
 	if (DB_num_rows($result) != 0){
@@ -5974,7 +5974,7 @@ function PackagingStatus($RootPath, $db){
 				OR locations.loccode = 'PACKA'
 			ORDER BY locations.loccode";
 
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	$showHeader = TRUE;
 	$i = 1;
 	if (DB_num_rows($result) != 0){
@@ -6201,7 +6201,7 @@ function PackagingUsage($NumDays, $RootPath, $db){
 				OR locations.loccode = 'PACKA'
 			ORDER BY locations.loccode";
 
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	$showHeader = TRUE;
 	$i = 1;
 	
@@ -6448,7 +6448,7 @@ id	select_type	table	type	possible_keys	key	key_len	ref	rows	Extra
 				AND ( locstock.quantity > 0 OR locstock.reorderlevel > 0 )
 			ORDER BY stockmaster.stockid";
 
-			$result = DB_query($SQL, $db);
+			$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>Packaging items in wrong locations (must be transferred to another location)</strong></p>';
 		echo '<div>';
@@ -6530,7 +6530,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 			WHERE categoryid = '". $Category ."'
 			ORDER BY stockid";
 	
-	$result = DB_query($SQL, $db);		
+	$result = DB_query($SQL);		
 	$showHeader = TRUE;
 	if (DB_num_rows($result) != 0){
 		$k = 0; //row colour counter
@@ -6654,7 +6654,7 @@ id	select_type	table		type	possible_keys		key			key_len	ref									rows	Extra
 					purchdata.leadtime
 			ORDER BY purchdata.stockid, latesteffectivefrom DESC";
 
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>Items without full purchasing data</strong></p>';
 		echo '<div>';

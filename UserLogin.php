@@ -43,7 +43,7 @@ function userLogin($Name, $Password, $db) {
 				OR  www_users.password='" . $Password . "')";
 		$ErrMsg = _('Could not retrieve user details on login because');
 		$debug =1;
-		$Auth_Result = DB_query($sql, $db,$ErrMsg);
+		$Auth_Result = DB_query($sql,$ErrMsg);
 		// Populate session variables with data base results
 		if (DB_num_rows($Auth_Result) > 0) {
 			$myrow = DB_fetch_array($Auth_Result);
@@ -85,11 +85,11 @@ prnMsg("USER:". $_SESSION['UserID']);
 
 			$sql = "UPDATE www_users SET lastvisitdate='". date('Y-m-d H:i:s') ."'
 							WHERE www_users.userid='" . $Name . "'";
-			$Auth_Result = DB_query($sql, $db);
+			$Auth_Result = DB_query($sql);
 			/*get the security tokens that the user has access to */
 			$sql = "SELECT tokenid FROM securitygroups
 							WHERE secroleid =  '" . $_SESSION['AccessLevel'] . "'";
-			$Sec_Result = DB_query($sql, $db);
+			$Sec_Result = DB_query($sql);
 			$_SESSION['AllowedPageSecurityTokens'] = array();
 			if (DB_num_rows($Sec_Result)==0){
 				return  UL_CONFIGERR;
@@ -110,7 +110,7 @@ prnMsg("USER:". $_SESSION['UserID']);
 				$sql = "UPDATE www_users
 							SET blocked=1
 							WHERE www_users.userid='" . $Name . "'";
-				$Auth_Result = DB_query($sql, $db);
+				$Auth_Result = DB_query($sql);
 				return  UL_BLOCKED;
 			}
 			return  UL_NOTVALID;

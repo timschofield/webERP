@@ -217,7 +217,7 @@ if ($_GET['EmailType']=='NoOrderPlaced'){
 
 
 $ErrMsg = _('There was a problem retrieving the order header details for Order Number') . ' ' . $_GET['TransNo'] . ' ' . _('from the database');
-$result=DB_query($sql,$db, $ErrMsg);
+$result=DB_query($sql, $ErrMsg);
 
 //If there are no rows, there's a problem.
 if (DB_num_rows($result)==0){
@@ -531,7 +531,7 @@ if (($_GET['EmailType']=='PaymentConfirmation')
 			ON salesorderdetails.stkcode=stockmaster.stockid
 		WHERE salesorderdetails.orderno=" . $_GET['TransNo'] . "
 		ORDER BY poline";
-	$result=DB_query($sql,$db, $ErrMsg);
+	$result=DB_query($sql, $ErrMsg);
 	$CartTotalValue  = 0;
 	$CartTotalWeight = 0;
 	$CartTotalVolume = 0;
@@ -652,7 +652,7 @@ if ($_GET['EmailType']=='NoOrderPlaced'){
 			SET klemailnowebshoporder = '" . Date('Y-m-d') . "'
 			WHERE debtorno =	'" . $_GET['TransNo'] . "'";
 	$ErrMsg =_('Could not update the customers KL email no order placed date because');
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 	prnMsg("Updated date of sending remind of no webshop order placed to today");
 }
 
@@ -661,7 +661,7 @@ if ($_GET['EmailType']=='RemindBankTransfer'){
 			SET klemailremindbanktransfer = '" . Date('Y-m-d') . "'
 			WHERE orderno =	'" . $_GET['TransNo'] . "'";
 	$ErrMsg =_('Could not update the sales order KL email remind bank transfer date because');
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 	prnMsg("Updated date of sending remind bank transfer to online customer to today");
 }
 
@@ -685,7 +685,7 @@ if ($_GET['EmailType']=='PaymentConfirmation'){
 			SET klemailpaymentconfirm = '" . Date('Y-m-d') . "'
 			WHERE orderno =	'" . $_GET['TransNo'] . "'";
 	$ErrMsg =_('Could not update the sales order KL email payment confirmation date because');
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 	prnMsg("Updated date of sending remind bank transfer to online customer to today");
 }
 
@@ -702,7 +702,7 @@ if ($_GET['EmailType']=='TrackingConfirmation'){
 			SET klemailtrackingconfirm = '" . Date('Y-m-d') . "'
 			WHERE orderno =	'" . $_GET['TransNo'] . "'";
 	$ErrMsg =_('Could not update the sales order KL email remind bank transfer date because');
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 	prnMsg("Updated date of sending remind bank transfer to online customer to today");
 }
 
@@ -711,7 +711,7 @@ if ($_GET['EmailType']=='ThankYouOrder'){
 			SET klemailthankyouorder = '" . Date('Y-m-d') . "'
 			WHERE orderno =	'" . $_GET['TransNo'] . "'";
 	$ErrMsg =_('Could not update the sales order KL email thank you date because');
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 	prnMsg("Updated date of sending thank you! to online customer to today");
 }
 

@@ -176,7 +176,7 @@ if (isset($_SESSION['MonthsAuditTrail'])){
 	 $sql = "DELETE FROM audittrail
 			WHERE  transactiondate <= '" . Date('Y-m-d', mktime(0,0,0, Date('m')-$_SESSION['MonthsAuditTrail'])) . "'";
 	$ErrMsg = _('There was a problem deleting expired audit-trail history');
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 }
 /*Check to see if currency rates need to be updated */
 if (isset($_SESSION['UpdateCurrencyRatesDaily'])){

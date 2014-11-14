@@ -443,7 +443,7 @@ function KLShowOldPrices($Item){
 			AND typeabbrev = 'RT' 
 			AND currabrev = 'IDR'
 		ORDER BY kloldprices.startdate DESC";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 	if (DB_num_rows($result) > 0) {
 		echo '<p class="page_title_text" align="center"><strong>' . _('Old Kapal-Laut Retail Prices in IDR') .'</strong></p>';
 		echo '<div>';

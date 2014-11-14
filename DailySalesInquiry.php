@@ -51,7 +51,7 @@ if($_SESSION['SalesmanLogin'] != '') {
 }else{
 	echo '<td><select tabindex="2" name="Salesperson">';
 // KL RICARD Filter by Current = 1
-	$SalespeopleResult = DB_query("SELECT salesmancode, salesmanname FROM salesman WHERE current = 1",$db);
+	$SalespeopleResult = DB_query("SELECT salesmancode, salesmanname FROM salesman WHERE current = 1");
 	if (!isset($_POST['Salesperson'])){
 		$_POST['Salesperson'] = 'All';
 		echo '<option selected="selected" value="All">' . _('All') . '</option>';

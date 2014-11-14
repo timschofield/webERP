@@ -50,7 +50,7 @@ include('includes/KLPrices.php');
 			FROM stockmaster, klmovetooutlet					
 			WHERE stockmaster.stockid = klmovetooutlet.stockid
 				AND klmovetooutlet.endprocessdate = '0000-00-00'";
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Items ready to be moved to Outlet in KL kantor') . '</strong></p>';
 		echo '<div>';

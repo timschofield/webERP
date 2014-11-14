@@ -25,7 +25,7 @@ $SQL = "SELECT grns.supplierid,
 		ORDER BY grns.supplierid,
 			purchorderdetails.orderno,
 			grns.itemcode";
-$result = DB_query($SQL, $db);
+$result = DB_query($SQL);
 
 if (DB_num_rows($result) != 0){
 	echo '<p class="page_title_text" align="center"><strong>' . _('Goods Received but not invoiced Yet') . '</strong></p>';

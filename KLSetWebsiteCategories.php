@@ -25,7 +25,7 @@ if($UpdateDB){
 
 	$sql = "TRUNCATE salescatprod";
 	$ErrMsg =_('Could not truncate the salescatprod table because');
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 }else{
 	prnMsg("NOT updating webERP DB. Only for test purposes. Set $UpdateDB = TRUE");
 }
@@ -54,7 +54,7 @@ $SQL = "SELECT stockmaster.stockid,
 								AND salescatprod.salescatid NOT IN (" . WEBERP_OUTLET_CATEGORIES. ")))
 					AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_DISCOUNT . "))
 		ORDER BY stockmaster.stockid";
-$result = DB_query($SQL, $db);
+$result = DB_query($SQL);
 if (DB_num_rows($result) != 0){
 	echo '<p class="page_title_text" align="center"><strong>' . _('Items To Classify for Website Categories') . '</strong></p>';
 	echo '<div>';
@@ -233,7 +233,7 @@ function InsertWebsiteSalesCategory($Stockid, $WebsiteCategory, $Featured, $Upda
 					WHERE salescatid = '" . $WebsiteCategory . "' 
 						AND stockid ='" .  $Stockid . "'";
 		$ErrMsg =_('Could not delete the previous website category for the item because');
-		$result = DB_query($sql,$db,$ErrMsg);
+		$result = DB_query($sql,$ErrMsg);
 // Comment or uncomment end 
 
 		$SQLCheck = "SELECT *
@@ -251,7 +251,7 @@ function InsertWebsiteSalesCategory($Stockid, $WebsiteCategory, $Featured, $Upda
 						'" . $Stockid . "',
 						'" . $Featured . "')";
 			$ErrMsg =_('Could not insert the website category for the item because');
-			$result = DB_query($sql,$db,$ErrMsg);
+			$result = DB_query($sql,$ErrMsg);
 		}
 	}
 }
@@ -261,7 +261,7 @@ function DeleteWebsiteSalesCategories($Stockid, $UpdateDB, $db){
 		$sql =	"DELETE FROM salescatprod 
 					WHERE stockid ='" .  $Stockid . "'";
 		$ErrMsg =_('Could not delete the previous website category for the item because');
-		$result = DB_query($sql,$db,$ErrMsg);
+		$result = DB_query($sql,$ErrMsg);
 	}
 }
 
@@ -271,7 +271,7 @@ function UpdateWeight($Stockid, $Weight, $UpdateDB, $db){
 				SET grossweight = " . $Weight . "
 				WHERE stockid =	'" . $Stockid . "'";
 		$ErrMsg =_('Could not update the item weight because');
-		$result = DB_query($sql,$db,$ErrMsg);
+		$result = DB_query($sql,$ErrMsg);
 	}
 }
 
@@ -281,7 +281,7 @@ function UpdateVolume($Stockid, $Volume, $UpdateDB, $db){
 				SET volume = " . $Volume . "
 				WHERE stockid =	'" . $Stockid . "'";
 		$ErrMsg =_('Could not update the item volume because');
-		$result = DB_query($sql,$db,$ErrMsg);
+		$result = DB_query($sql,$ErrMsg);
 	}
 }
 

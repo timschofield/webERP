@@ -106,7 +106,7 @@ if (isset($_POST['submit'])) {
 		$msg = _('KL Tali Exchange') . ' ' . $_POST['ItemFrom'] . ' --> ' . $_POST['ItemTo'] . ' ' . _('has been created');
 		$ErrMsg = _('The insert of the KL tali exchange failed because');
 		$DbgMsg = _('The SQL that was used and failed was');
-		$result = DB_query($sql,$db,$ErrMsg, $DbgMsg);
+		$result = DB_query($sql,$ErrMsg, $DbgMsg);
 		prnMsg($msg , 'success');
 
 		$AdjustmentNumber = GetNextTransNo(17,$db);
@@ -120,7 +120,7 @@ if (isset($_POST['submit'])) {
 			FROM locstock
 			WHERE locstock.stockid='" . $_POST['ItemFrom'] . "'
 			AND loccode= '" . $_SESSION['UserStockLocation'] . "'";
-		$Result = DB_query($SQL, $db);
+		$Result = DB_query($SQL);
 		if (DB_num_rows($Result)==1){
 			$LocQtyRow = DB_fetch_row($Result);
 			$QtyOnHandPrior = $LocQtyRow[0];
@@ -153,7 +153,7 @@ if (isset($_POST['submit'])) {
 
 		$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock movement record cannot be inserted because');
 		$DbgMsg =  _('The following SQL to insert the stock movement record was used');
-		$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
+		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 
 		$SQL = "UPDATE locstock SET quantity = quantity + 1
 				WHERE stockid='" . $_POST['ItemFrom'] . "'
@@ -162,7 +162,7 @@ if (isset($_POST['submit'])) {
 		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' ._('The location stock record could not be updated because');
 		$DbgMsg = _('The following SQL to update the stock record was used');
 
-		$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
+		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 
 		// PROCESS THE ITEM TO (GIVEN TO CUSTOMER)
 
@@ -171,7 +171,7 @@ if (isset($_POST['submit'])) {
 			FROM locstock
 			WHERE locstock.stockid='" . $_POST['ItemTo'] . "'
 			AND loccode= '" . $_SESSION['UserStockLocation'] . "'";
-		$Result = DB_query($SQL, $db);
+		$Result = DB_query($SQL);
 		if (DB_num_rows($Result)==1){
 			$LocQtyRow = DB_fetch_row($Result);
 			$QtyOnHandPrior = $LocQtyRow[0];
@@ -204,7 +204,7 @@ if (isset($_POST['submit'])) {
 
 		$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock movement record cannot be inserted because');
 		$DbgMsg =  _('The following SQL to insert the stock movement record was used');
-		$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
+		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 
 		$SQL = "UPDATE locstock SET quantity = quantity - 1
 				WHERE stockid='" . $_POST['ItemTo'] . "'
@@ -213,7 +213,7 @@ if (isset($_POST['submit'])) {
 		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' ._('The location stock record could not be updated because');
 		$DbgMsg = _('The following SQL to update the stock record was used');
 
-		$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
+		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 
 		
 		KLSendEmail("TaliExchange", "Silent", $_POST['ItemFrom'], $_POST['ItemTo'], $_SESSION['UserID'], $_SESSION['UserStockLocation'], $_POST['InvoiceNumber']);
@@ -245,7 +245,7 @@ or deletion of the records*/
 			ORDER BY counterexchange DESC
 			LIMIT 0, 10";
 			
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 
 	echo '<table class="selection">';
 	echo '<tr>
@@ -310,7 +310,7 @@ if (! isset($_GET['delete'])) {
 		FROM stockmaster
 		WHERE discontinued = 0
 			AND stockid LIKE 'TM-%'";
-	$TaliResult= DB_query($sql,$db);
+	$TaliResult= DB_query($sql);
 	echo '<option selected="selected" value="">' . _('Select Tali Model')  . '</option>';
 
 	While ($myrow = DB_fetch_array($TaliResult)){
@@ -325,7 +325,7 @@ if (! isset($_GET['delete'])) {
 		FROM stockmaster
 		WHERE discontinued = 0
 			AND stockid LIKE 'TM-%'";
-	$TaliResult= DB_query($sql,$db);
+	$TaliResult= DB_query($sql);
 	echo '<option selected="selected" value="">' . _('Select Tali Model')  . '</option>';
 	While ($myrow = DB_fetch_array($TaliResult)){
 		echo '<option value="' . $myrow['stockid'] . '">' . $myrow['stockid']  . '</option>';

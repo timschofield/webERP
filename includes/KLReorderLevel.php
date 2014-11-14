@@ -78,7 +78,7 @@ function AdjustNoSales($location, $maxdays, $maxmanualchanges, $topitems, $topit
 										AND stockmoves.qty >0) 
 					ORDER BY stockmaster.stockid";
 	
-	$result = DB_query($SQL, $db);		
+	$result = DB_query($SQL);		
 	
 	if (DB_num_rows($result) != 0){
 		if ($ShowMessages){
@@ -176,7 +176,7 @@ function isReorderLevelManuallyChanged($stockid, $loccode, $maxmanualchanges, $d
 			AND querystring LIKE '%locstock%reorderlevel%' 
 		ORDER BY transactiondate DESC
 		LIMIT 1";
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		$myrow = DB_fetch_array($result);
 		$lastdate = $myrow['transactiondate'];
@@ -231,7 +231,7 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 						WHERE  recqty < shipqty
 							AND loctransfers.stockid =  stockmaster.stockid)
 			ORDER BY stockmaster.stockid";
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		if ($ShowMessages){
 			echo '<p class="page_title_text" align="center"><strong>' . _('Rebalancing between shops (Stock available at kantor = 0)') . '</strong></p>';
@@ -415,7 +415,7 @@ function WorstLocationForItem($stockid, $stockcat, $kind, $maxdays, $db){
 							AND salesorders.orddate >= '". $StartDate . "'
 							AND salesorders.fromstkloc = locstock.loccode
 							AND salesorderdetails.stkcode = '". $stockid . "') ASC";
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		$myrow = DB_fetch_array($result);
 		$location = $myrow['loccode'];
@@ -440,7 +440,7 @@ function LocationOrderForItem($stockid, $order, $maxdays, $db){
 							AND salesorders.fromstkloc = locstock.loccode
 							AND salesorderdetails.stkcode = '". $stockid . "') DESC
 			LIMIT ". $order . ", 1";
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		$myrow = DB_fetch_array($result);
 		$location = $myrow['loccode'];
@@ -461,7 +461,7 @@ function QtyAvailable($stockid, $location, $db){
 	}else{
 		$SQL = $SQL . " AND locstock.loccode = '". $location . "'"; 
 	}
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		$myrow = DB_fetch_array($result);
 		$qty = $myrow['total'];
@@ -476,7 +476,7 @@ function ActiveLocationsForItem($stockid, $db){
 			FROM locstock
 			WHERE locstock.stockid = '" . $stockid . "'
 				AND locstock.reorderlevel > 0";
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		$myrow = DB_fetch_array($result);
 		$qty = $myrow['total'];
@@ -510,7 +510,7 @@ function SetRLZeroForNotAvailableItems($ShowMessages, $updateDB, $RootPath, $db)
 									OR locstock.loccode = 'KANTO'))
 			GROUP BY locstock.stockid
 			HAVING SUM(locstock.quantity) = 0";
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		if ($ShowMessages){
 			echo '<p class="page_title_text" align="center"><strong>' . 'Set RL = 0 for items with NO stock available at shops or kantor. </strong></p>';
@@ -595,7 +595,7 @@ to the shops with RL > 0.
 			ORDER BY totalinvoiced DESC
 			LIMIT " . ($starttopitems - 1) . "," . ($endtopitems - $starttopitems + 1);			
 
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		$showHeader = true;
 		$k = 0; //row colour counter
@@ -698,7 +698,7 @@ function SetRLForLowSalesItems( $starttopitems, $endtopitems, $daystopitems, $Ne
 			ORDER BY totalinvoiced DESC
 			LIMIT " . ($starttopitems - 1) . "," . ($endtopitems - $starttopitems + 1);			
 
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		$showHeader = true;
 		$k = 0; //row colour counter
@@ -823,7 +823,7 @@ function SetRLForLowSalesHighRL($maxdays, $oldRL, $maxRL, $minavailablestock, $S
 										AND stockmoves.qty >0) 
 			ORDER BY stockmaster.stockid";
 	
-	$result = DB_query($SQL, $db);		
+	$result = DB_query($SQL);		
 	
 	if (DB_num_rows($result) != 0){
 		if ($ShowMessages){
@@ -957,7 +957,7 @@ function SetReorderLevel($reason, $stockid, $loccode, $oldRL, $newRL, $updateDB,
 							AND loccode = '". $loccode ."'";
 			}
 			$ErrMsg =_('Could not update reorder level because');
-			$result = DB_query($sql,$db,$ErrMsg);
+			$result = DB_query($sql,$ErrMsg);
 			// insert bthe change in the KLAdjustRL table (acting as a log of these automatic changes)
 			$sql = "INSERT INTO kladjustrl 
 						(adjustdate,
@@ -975,7 +975,7 @@ function SetReorderLevel($reason, $stockid, $loccode, $oldRL, $newRL, $updateDB,
 						'". $newRL ."')";		
 		$ErrMsg =_('Could not insert the KLAdjustRL Log');
 		$DbgMsg = _('The following SQL to insert the request header record was used');
-		$Result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
+		$Result = DB_query($sql,$ErrMsg,$DbgMsg,true);
 
 		}
 	}
@@ -1008,7 +1008,7 @@ function OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db)
 			GROUP BY salesorderdetails.stkcode
 			ORDER BY salesorderdetails.stkcode";
 				
-	$result = DB_query($SQL, $db);		
+	$result = DB_query($SQL);		
 	
 	if (DB_num_rows($result) != 0){
 		if ($ShowMessages){
@@ -1112,7 +1112,7 @@ function AdjustPackagingItemByShop($Item, $Shop, $DaysSales, $LongDaysSales, $Sh
 							AND locstock.stockid = '" . $Item . "') AS rl
 			FROM locations
 			WHERE locations.loccode = '" . $Shop . "'";
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		$myrow = DB_fetch_array($result);
 		// New RL is the daily needs x number of days to keep as RL

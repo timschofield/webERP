@@ -30,7 +30,7 @@ $SQL = "SELECT locations.loccode
 				AND salesorderdetails.completed = 1
 				AND salesorders.orddate >= '". $StartDate . "'
 				AND salesorders.fromstkloc = locations.loccode) DESC";
-$result = DB_query($SQL, $db);
+$result = DB_query($SQL);
 if (DB_num_rows($result) != 0){
 	while ($myrow = DB_fetch_array($result)) {
 		// From KANTO to Shop, send the items needed to fill the RL
@@ -52,7 +52,7 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 	// from location
 	$ErrMsg = _('Could not retrieve location name from the database');
 	$sqlfrom="SELECT locationname FROM `locations` WHERE loccode='" . $FromLocCode . "'";
-	$result = DB_query($sqlfrom,$db,$ErrMsg);
+	$result = DB_query($sqlfrom,$ErrMsg);
 	$Row = DB_fetch_row($result);
 	$FromLocation=$Row['0'];
 
@@ -62,7 +62,7 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 					cashsalebranch
 			FROM `locations` 
 			WHERE loccode='" . $ToLocCode . "'";
-	$resultto = DB_query($sqlto,$db,$ErrMsg);
+	$resultto = DB_query($sqlto,$ErrMsg);
 	$RowTo = DB_fetch_row($resultto);
 	$ToLocation=$RowTo['0'];
 	$ToCustomer=$RowTo['1'];
@@ -74,7 +74,7 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 			FROM debtorsmaster, currencies
 			WHERE debtorsmaster.currcode = currencies.currabrev 
 				AND debtorsmaster.debtorno ='" . $ToCustomer . "'";
-	$ResultPrices = DB_query($SqlPrices,$db,$ErrMsg);
+	$ResultPrices = DB_query($SqlPrices,$ErrMsg);
 	$RowPrices = DB_fetch_row($ResultPrices);
 	$ToCurrency=$RowPrices['0'];
 	$ToPriceList=$RowPrices['1'];
@@ -119,7 +119,7 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 			AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M') " .
 			$WhereCategory . " ORDER BY locstock.loccode,locstock.stockid";
 
-	$result = DB_query($sql,$db,'','',false,true);
+	$result = DB_query($sql,'','',false,true);
 
 	if (DB_error_no() !=0) {
 		$EmailText = $EmailText . "Smart Stock Dispatch ERROR " .  _('The Stock Dispatch report could not be retrieved by the SQL because') . ' '  . DB_error_msg() . "\n";
@@ -158,7 +158,7 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 								WHERE stockid='" . $myrow['stockid'] . "'
 									AND shiploc='".$FromLocCode."'
 									AND shipqty>recqty";
-				$InTransitResult=DB_query($InTransitSQL, $db);
+				$InTransitResult=DB_query($InTransitSQL);
 				$InTransitRow=DB_fetch_array($InTransitResult);
 				$InTransitQuantityAtFrom=$InTransitRow['intransit'];
 			}
@@ -172,7 +172,7 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 							WHERE stockid='" . $myrow['stockid'] . "'
 								AND recloc='".$ToLocCode."'
 								AND shipqty>recqty";
-			$InTransitResult=DB_query($InTransitSQL, $db);
+			$InTransitResult=DB_query($InTransitSQL);
 			$InTransitRow=DB_fetch_array($InTransitResult);
 			$InTransitQuantityAtTo=$InTransitRow['intransit'];
 
@@ -247,7 +247,7 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 													'" . $ToLocCode . "')";
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('Unable to enter Location Transfer record for'). ' '.$myrow['stockid'];
 				if ($ReportType == 'Batch') {
-					$resultLocShip = DB_query($sql2,$db, $ErrMsg);
+					$resultLocShip = DB_query($sql2, $ErrMsg);
 				}
 				$EmailText = $EmailText . str_pad($ShipQty, 3, " ") . " x " . $myrow['stockid'] . "\n";
 

@@ -213,7 +213,7 @@ function selCategory(&$categ) {
 
 function selectTable($sql, &$currentKey) {
 	global $db;
-	$result = DB_query($sql, $db);
+	$result = DB_query($sql);
 	while ($myrow=DB_fetch_row($result)) {
 		if (empty($currentKey))
 			$currentKey=$myrow[0];
@@ -327,7 +327,7 @@ function getStockItems($CategoryID, $CurrCode, $SalesType, $EffectiveDate, $Stoc
 			AND prices.debtorno=''
 			WHERE " . $WhereClause;
 
-	return DB_query($sql, $db);
+	return DB_query($sql);
 }
 
 function getStockData($StockID, $Currency, $salesType, $EffectiveDate) {
@@ -511,7 +511,7 @@ function printStockid($itemData, $labelDim, $dataParams, $Currency, $row, $col) 
 function getDecimalPlaces($Currency) {
 	global $db;
 	$sql="SELECT decimalplaces FROM currencies WHERE currabrev='$Currency'";
-	$result = DB_query($sql, $db);
+	$result = DB_query($sql);
 	if (!DB_num_rows($result))
 		abortMsg(_('Couldnt get the currency data'));
 	$myrow=DB_fetch_row($result);

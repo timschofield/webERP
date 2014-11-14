@@ -18,7 +18,7 @@ $sql = "UPDATE prices
 		WHERE currabrev ='USD'
 		AND  (enddate > '" . $Yesterday . "' OR enddate = '0000-00-00') ";
 $ErrMsg = _('Could not update the price because');
-$result = DB_query($sql,$db,$ErrMsg);
+$result = DB_query($sql,$ErrMsg);
 prnMsg (_('Set end date for ALL current USD prices to yesterday'),'success');
 
 /* Then, select all Retail prices in IDR active as these are the base to calculate all the other prices, including the USD prices */
@@ -30,7 +30,7 @@ $SQL = "SELECT stockid,
 			AND prices.startdate <= '". $Today. "' 
 			AND (prices.enddate >= '". $Today. "' OR prices.enddate = '0000-00-00')";
 
-$result = DB_query($SQL, $db);
+$result = DB_query($SQL);
 
 if (DB_num_rows($result) != 0){
 	echo '<p class="page_title_text" align="center"><strong>' . _('Prices in USD to be updated at rate ') . locale_number_format(RATE_IDRUSD_FOR_RETAIL_WEBSTORE,0) . '</strong></p>';

@@ -33,7 +33,7 @@ $sql = "INSERT INTO klchangeprice
 $msg = _('KL Retail Price Change Step 01 record for') . ' ' . $_GET['Item'] . ' ' . _('has been created');
 $ErrMsg = _('The insert or update of the KL Retail Price Change Step 01 failed because');
 $DbgMsg = _('The SQL that was used and failed was');
-$result = DB_query($sql,$db,$ErrMsg, $DbgMsg);
+$result = DB_query($sql,$ErrMsg, $DbgMsg);
 prnMsg($msg , 'success');
 
 SetRLZeroAtPointOfSales($_GET['Item'], $db);

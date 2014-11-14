@@ -20,7 +20,7 @@ if (!(isset($_POST['Search']))) {
 					locationname
 			FROM locations
 			ORDER BY locationname";
-	$result1 = DB_query($SQL,$db);
+	$result1 = DB_query($SQL);
 
 	echo '<tr>
 			<td style="width:100 px">' . _('Available AT') . ' </td>
@@ -43,7 +43,7 @@ if (!(isset($_POST['Search']))) {
 			FROM locations
 			WHERE loccode LIKE 'TOK%'
 			ORDER BY locationname";
-	$result1 = DB_query($SQL,$db);
+	$result1 = DB_query($SQL);
 
 	echo '<tr>
 			<td style="width:100 px">' . _('But NOT Available At') . ' </td>
@@ -121,7 +121,7 @@ if (!(isset($_POST['Search']))) {
 */			
 			
 			
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	
 	echo '<p class="page_title_text" align="center"><strong>' . _('Items with Stock Available at ') . $_POST['FromLoc'] . _(' but RL = 0 in Shop ') . $_POST['Shop'] . '</strong></p>';
 	echo '<table class="selection">';

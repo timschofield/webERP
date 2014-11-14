@@ -40,7 +40,7 @@ if (isset($_POST['submit'])) {
 				WHERE accountcode ='" . $SelectedAccount . "'";
 
 		$ErrMsg = _('Could not update the account because');
-		$result = DB_query($sql,$db,$ErrMsg);
+		$result = DB_query($sql,$ErrMsg);
 		prnMsg (_('The general ledger account has been updated'),'success');
 	} elseif ($InputError !=1) {
 
@@ -53,7 +53,7 @@ if (isset($_POST['submit'])) {
 					VALUES ('" . $_POST['AccountCode'] . "',
 							'" . $_POST['AccountName'] . "',
 							'" . $_POST['Group'] . "')";
-		$result = DB_query($sql,$db,$ErrMsg);
+		$result = DB_query($sql,$ErrMsg);
 
 		prnMsg(_('The new general ledger account has been added'),'success');
 	}
@@ -66,7 +66,7 @@ if (isset($_POST['submit'])) {
 } elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
 	$sql="DELETE FROM chartmasterM WHERE accountcode= '" . $SelectedAccount ."'";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 	prnMsg( _('Account') . ' ' . $SelectedAccount . ' ' . _('has been deleted'),'succes');
 }
 
@@ -80,7 +80,7 @@ if (!isset($_GET['delete'])) {
 
 		$sql = "SELECT accountcode, accountname, group_ FROM chartmasterM WHERE accountcode='" . $SelectedAccount ."'";
 
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		$myrow = DB_fetch_array($result);
 
 		$_POST['AccountCode'] = $myrow['accountcode'];
@@ -103,7 +103,7 @@ if (!isset($_GET['delete'])) {
 	echo '<tr><td>' . _('Account Name') . ':</td><td><input type="Text" size="51" maxlength="50" name="AccountName" value="' . $_POST['AccountName'] . '" /></td></tr>';
 
 	$sql = 'SELECT groupname FROM accountgroups ORDER BY sequenceintb';
-	$result = DB_query($sql, $db);
+	$result = DB_query($sql);
 
 	echo '<tr><td>' . _('Account Group') . ':</td><td><select name=Group>';
 
@@ -148,7 +148,7 @@ or deletion of the records*/
 
 	$ErrMsg = _('The chart accounts could not be retrieved because');
 
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql,$ErrMsg);
 
 	echo '<br /><table class="selection">';
 	echo '<tr>

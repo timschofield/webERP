@@ -33,7 +33,7 @@ $DefaultPeriodDate = Date ('Y-m-d', Mktime(0,0,0,Date('m'),0,Date('Y')));
 /*Show a form to allow input of criteria for TB to show */
 echo '<table class="selection"><tr><td>'._('Account').':</td><td><select name="Account">';
 $sql = "SELECT accountcode, accountname FROM chartmasterM ORDER BY accountcode";
-$Account = DB_query($sql,$db);
+$Account = DB_query($sql);
 while ($myrow=DB_fetch_array($Account,$db)){
 	if($myrow['accountcode'] == $SelectedAccount){
 		echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' ' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</option>';
@@ -51,7 +51,7 @@ $SQL = "SELECT tagref,
 		FROM tags
 		ORDER BY tagref";
 
-$result=DB_query($SQL,$db);
+$result=DB_query($SQL);
 echo '<option value="0">0 - '._('All tags') . '</option>';
 while ($myrow=DB_fetch_array($result)){
 	if (isset($_POST['tag']) and $_POST['tag']==$myrow['tagref']){
@@ -64,7 +64,7 @@ echo '</select></td></tr>';
 // End select tag
 echo '<tr> <td>'._('For Period range').':</td><td><select name="Period[]" size="12" multiple="multiple">';
 $sql = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC";
-$Periods = DB_query($sql,$db);
+$Periods = DB_query($sql);
 $id=0;
 while ($myrow=DB_fetch_array($Periods,$db)){
 	if(isset($SelectedPeriod[$id]) and $myrow['periodno'] == $SelectedPeriod[$id]){
@@ -144,7 +144,7 @@ if (isset($_POST['Show'])){
 	$namerow=DB_fetch_array($nameresult);
 	$SelectedAccountName=$namerow['accountname'];
 	$ErrMsg = _('The transactions for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved because') ;
-	$TransResult = DB_query($sql,$db,$ErrMsg);
+	$TransResult = DB_query($sql,$ErrMsg);
 
 	echo '<br /><table class="selection">';
 
@@ -174,7 +174,7 @@ if (isset($_POST['Show'])){
 					AND chartdetails.period='" . $FirstPeriodSelected . "'";
 
 				$ErrMsg = _('The chart details for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved');
-				$ChartDetailsResult = DB_query($sql,$db,$ErrMsg);
+				$ChartDetailsResult = DB_query($sql,$ErrMsg);
 				$ChartDetailRow = DB_fetch_array($ChartDetailsResult);
 				// --------------------
 
@@ -213,7 +213,7 @@ if (isset($_POST['Show'])){
 					AND chartdetails.period='" . $PeriodNo . "'";
 
 				$ErrMsg = _('The chart details for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved');
-				$ChartDetailsResult = DB_query($sql,$db,$ErrMsg);
+				$ChartDetailsResult = DB_query($sql,$ErrMsg);
 				$ChartDetailRow = DB_fetch_array($ChartDetailsResult);
 
 				echo '<tr style="background-color:#FDFEEF">

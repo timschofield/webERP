@@ -24,7 +24,7 @@ if (!(isset($_POST['Search']))) {
 					categorydescription
 			FROM stockcategory
 			ORDER BY categorydescription";
-	$result1 = DB_query($SQL,$db);
+	$result1 = DB_query($SQL);
 
 	echo '<tr>
 			<td style="width:150px">' . _('In Stock Category') . ' </td>
@@ -164,7 +164,7 @@ if (!(isset($_POST['Search']))) {
 									AND salesorders.orddate >= '". $FromDate . "'
 									AND salesorderdetails.stkcode = stockmaster.stockid) DESC ";
 	}
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL);
 	
 	echo '<p class="page_title_text" align="center"><strong>' . _('Reorder Level Distribution by Location') . '</strong></p>';
 	echo '<form action="PDFTopItems.php"  method="GET">';
