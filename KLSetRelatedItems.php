@@ -39,8 +39,12 @@ if (DB_num_rows($result) != 0){
 	$i = 0;
 	while ($myrow = DB_fetch_array($result)) {
 		
-		$CodePreffix = substr($myrow['stockid'], 0,6);
-		
+		if (substr($myrow['stockid'], 0,4) == "DRAR"){
+			$CodePreffix = substr($myrow['stockid'], 0,4);
+		}else{
+			$CodePreffix = substr($myrow['stockid'], 0,6);
+		}
+
 		$SQLRelated = "SELECT stockmaster.stockid
 						FROM stockmaster
 						WHERE stockmaster.stockid LIKE '" . $CodePreffix. "%'
@@ -63,7 +67,7 @@ if (DB_num_rows($result) != 0){
 						VALUES (
 							'" . $myrow['stockid'] . "',
 							'" . $myrelated['stockid'] . "')";
-				$ErrMsg =_('Could not insert the related ietms because');
+				$ErrMsg =_('Could not insert the related items because');
 				$resultinsert = DB_query($sqlinsert,$ErrMsg);
 
 				$i++;
