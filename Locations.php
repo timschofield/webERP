@@ -393,9 +393,9 @@ or deletion of the records*/
 
 	echo '<table class="selection">';
 	echo '<tr>
-			<th>' . _('Location Code') . '</th>
-			<th>' . _('Location Name') . '</th>
-			<th>' . _('Tax Province') . '</th>
+			<th class="ascending">' . _('Location Code') . '</th>
+			<th class="ascending">' . _('Location Name') . '</th>
+			<th class="ascending">' . _('Tax Province') . '</th>
 		</tr>';
 
 $k=0; //row colour counter
