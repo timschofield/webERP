@@ -16,13 +16,13 @@
 	allocated
 */
 
+include('includes/DefineSuppAllocsClass.php');
 include('includes/session.inc');
 $Title = _('Supplier Payment') . '/' . _('Credit Note Allocations');
 $ViewTopic = 'ARTransactions';// Filename in ManualContents.php's TOC./* RChacon: To do ManualAPInquiries.html from ManualARInquiries.html */
 $BookMark = 'SupplierAllocations';// Anchor's id in the manual's html document.
 include('includes/header.inc');
 
-include('includes/DefineSuppAllocsClass.php');
 include('includes/SQL_CommonFunctions.inc');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' .
