@@ -285,7 +285,7 @@ if (isset($_POST['submit'])) {
 									  INNER JOIN stockmaster
 										ON woitems.stockid = stockmaster.stockid
 										LEFT JOIN stockmoves ON (stockmoves.stockid = worequirements.stockid AND stockmoves.reference=woitems.wo AND type=28)
-								GROUP BY workorders.wo,worequirements.stockid,workorders.requiredby,woitems.qtyreqd,woitems.qtyrecd,worequirements.qtypu,woitems.wo,worequirements.stockid,workorders.closed,stockmaster.discontinued,stockmoves.reference,workorders.closed
+								GROUP BY workorders.wo,worequirements.stockid,workorders.requiredby,woitems.qtyreqd,worequirements.qtypu,woitems.wo,worequirements.stockid,workorders.closed,stockmaster.discontinued,stockmoves.reference,workorders.closed
 								HAVING workorders.closed=0
 								AND stockmaster.discontinued = 0
 								AND netqty > 0";
