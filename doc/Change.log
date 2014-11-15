@@ -1,5 +1,6 @@
 webERP Change Log
 
+15/11/14 Exson: Fixed the NULL bug for no issued materials for WO and make multiple times material issues correctly in MRP.php.
 14/11/14 Exson: Fixed the foreign key constrained failure bug in Z_DeleteCreditNote.php.
 14/11/14 Exson: Fixed the bug in MRP.php that wo requirement not counting demand for work orders without issuing items. Thanks for Tim's reminder. 
 14/11/2014 Tim: The systypes should be 28 instead of 38 for work order issued in MRP.php.
