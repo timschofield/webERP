@@ -9,7 +9,7 @@ include('KLDailyChecks.php');
 # GRAB THE VARIABLES FROM THE URL
 $Group = $_GET['p'];
 
-$EmailText  = "KL webERP: Daily CRON JOB " . $Group . "\n"; 
+$EmailText  = "KL webERP Cron Job: Daily Tasks Group " . $Group . "\n"; 
 
 $EmailText  = KL_DailyChecks($Group, $RootPath, $db, $EmailText);
 

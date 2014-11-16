@@ -1121,12 +1121,25 @@ function AdjustPackagingItemByShop($Item, $Shop, $DaysSales, $LongDaysSales, $Sh
 		$NewRL = max($ShortRL, $LongRL, $RLMinim);
 		$OldRL = $myrow['rl'];
 		if ($NewRL != $OldRL){
-			$text = $Shop . ' ' . $Item . ' Used ' . $DaysSales . ' days = ' . $myrow['sales']  . ' Used ' . $LongDaysSales . ' days = ' . $myrow['longsales'] . ' Old RL = ' . $OldRL . ' New RL = ' . $NewRL;
 			if ($ShowMessages){
+				$text = $Shop . ' ' . $Item .  
+					' Old RL = ' . $OldRL . 
+					' Used ' . $DaysSales . ' days = ' . $myrow['sales'] . 
+					' Used ' . $LongDaysSales . ' days = ' . $myrow['longsales'] .
+					' RL for ' . $DaysSales . ' days = ' . $ShortRL . 
+					' RL for ' . $LongDaysSales . ' days = ' . $LongRL . 
+					' New RL = ' . $NewRL;
 				echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
 			}
 			if ($EmailText!=''){
-				$EmailText = $EmailText . $text . "\n";
+				$text = $Shop . ' ' . $Item . "\n" . 
+					' Old RL = ' . $OldRL . "\n" . 
+					' Used ' . $DaysSales . ' days = ' . $myrow['sales'] . "\n" . 
+					' Used ' . $LongDaysSales . ' days = ' . $myrow['longsales'] . "\n" . 
+					' RL for ' . $DaysSales . ' days = ' . $ShortRL . "\n" . 
+					' RL for ' . $LongDaysSales . ' days = ' . $LongRL . "\n" . 
+					' New RL = ' . $NewRL . "\n";
+				$EmailText = $EmailText . $text;
 			}
 			SetReorderLevel("PackagingOptimization", $Item,$Shop, $OldRL, $NewRL, $updateDB, $db);
 		}
