@@ -1,5 +1,5 @@
 <?php
-/* $Id: Locations.php 6942 2014-10-27 02:48:29Z daintree $*/
+/* $Id: Locations.php 6982 2014-11-15 01:11:29Z tehonu $*/
 
 include('includes/session.inc');
 $Title = _('Location Maintenance');

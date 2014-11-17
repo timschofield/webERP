@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: ConfirmDispatch_Invoice.php 6945 2014-10-27 07:20:48Z daintree $*/
+/* $Id: ConfirmDispatch_Invoice.php 6990 2014-11-17 06:44:46Z exsonqu $*/
 
 /* Session started in session.inc for password checking and authorisation level check */
 include('includes/DefineCartClass.php');
@@ -1627,8 +1627,9 @@ invoices can have a zero amount but there must be a quantity to invoice */
 				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 			}
 		}
-		EnsureGLEntriesBalance(10,$InvoiceNo,$db);
 	} /*end of if Sales and GL integrated */
+	EnsureGLEntriesBalance(10,$InvoiceNo,$db);
+	
 
 	DB_Txn_Commit();
 // *************************************************************************

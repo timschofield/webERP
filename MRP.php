@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: MRP.php 6977 2014-11-14 02:56:58Z exsonqu $*/
+/* $Id: MRP.php 6986 2014-11-15 09:19:14Z exsonqu $*/
 
 include('includes/session.inc');
 $Title = _('Run MRP Calculation');
@@ -266,7 +266,12 @@ if (isset($_POST['submit'])) {
 										 whererequired)
 							   SELECT worequirements.stockid,
 									workorders.requiredby,
-									qtypu*(woitems.qtyreqd - woitems.qtyrecd)+stockmoves.qty AS netqty,
+									(qtypu*woitems.qtyreqd +
+									SUM(CASE WHEN stockmoves.qty IS NOT NULL
+										THEN stockmoves.qty
+										ELSE 0
+										END))						
+									AS netqty,
 									'WO',
 									woitems.wo,
 									'1',
@@ -280,9 +285,10 @@ if (isset($_POST['submit'])) {
 									  INNER JOIN stockmaster
 										ON woitems.stockid = stockmaster.stockid
 										LEFT JOIN stockmoves ON (stockmoves.stockid = worequirements.stockid AND stockmoves.reference=woitems.wo AND type=28)
-								WHERE workorders.closed=0
+								GROUP BY workorders.wo,worequirements.stockid,workorders.requiredby,woitems.qtyreqd,worequirements.qtypu,woitems.wo,worequirements.stockid,workorders.closed,stockmaster.discontinued,stockmoves.reference,workorders.closed
+								HAVING workorders.closed=0
 								AND stockmaster.discontinued = 0
-								AND qtypu*(woitems.qtyreqd - woitems.qtyrecd)+stockmoves.qty>0";
+								AND netqty > 0";
 	$result = DB_query($sql);
 
 	if ($_POST['UseMRPDemands'] == 'y') {
