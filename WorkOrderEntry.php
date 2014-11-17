@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: WorkOrderEntry.php 6945 2014-10-27 07:20:48Z daintree $*/
+/* $Id: WorkOrderEntry.php 6979 2014-11-14 09:10:13Z tehonu $*/
 
 include('includes/session.inc');
 $Title = _('Work Order Entry');
@@ -26,7 +26,7 @@ if (isset($_GET['ReqDate'])){
 }
 
 if (isset($_GET['StartDate'])){
-	$StartDate = ConvertSQLDate($_GET['StartDate']);
+	$StartDate = $_GET['StartDate'];
 } else {
 	$StartDate=Date($_SESSION['DefaultDateFormat']);
 }

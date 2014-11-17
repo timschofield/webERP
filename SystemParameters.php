@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: SystemParameters.php 6945 2014-10-27 07:20:48Z daintree $*/
+/* $Id: SystemParameters.php 6988 2014-11-17 04:08:15Z exsonqu $*/
 
 include('includes/session.inc');
 
@@ -510,7 +510,7 @@ echo '<tr style="outline: 1px solid"><td>' . _('Invoice Orientation') . ':</td>
 
 //Default Invoice Quantity
 echo '<tr style="outline: 1px solid"><td>' . _('Invoice Quantity Default') . ':</td>
-	<td><select name="X_InvoicePortraitFormat">
+	<td><select name="X_InvoiceQuantityDefault">
 	<option '.($_SESSION['InvoiceQuantityDefault']=='0'?'selected="selected" ':'').'value="0">' . _('0') . '</option>
 	<option '.($_SESSION['InvoiceQuantityDefault']=='1'?'selected="selected" ':'').'value="1">' . _('Outstanding') . '</option>
 	</select></td>

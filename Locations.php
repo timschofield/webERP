@@ -1,5 +1,5 @@
 <?php
-/* $Id: Locations.php 6942 2014-10-27 02:48:29Z daintree $*/
+/* $Id: Locations.php 6982 2014-11-15 01:11:29Z tehonu $*/
 
 include('includes/session.inc');
 $Title = _('Location Maintenance');
@@ -393,9 +393,9 @@ or deletion of the records*/
 
 	echo '<table class="selection">';
 	echo '<tr>
-			<th>' . _('Location Code') . '</th>
-			<th>' . _('Location Name') . '</th>
-			<th>' . _('Tax Province') . '</th>
+			<th class="ascending">' . _('Location Code') . '</th>
+			<th class="ascending">' . _('Location Name') . '</th>
+			<th class="ascending">' . _('Tax Province') . '</th>
 		</tr>';
 
 $k=0; //row colour counter
