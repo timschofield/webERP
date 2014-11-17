@@ -75,7 +75,6 @@ function isTali($stockid){
 		OR (substr($stockid, 0,4) == "TA15"));
 }
 
-
 function isFamily($stockid, $Family){
 	return (substr($stockid, 0,2) == $Family);
 }
