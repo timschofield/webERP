@@ -1,5 +1,6 @@
 webERP Change Log
 
+17/11/14 Exson: Fixed InvoiceQuantityDefault parameters failed to save in SystemParameters.php. Reported by Richard.
 15/11/14: Exson: Remove qtyrecd in work orders requirements calculation from group by in MRP.php.
 15/11/14 Exson: Fixed the NULL bug for no issued materials for WO and make multiple times material issues correctly in MRP.php.
 14/11/14 Exson: Fixed the foreign key constrained failure bug in Z_DeleteCreditNote.php.
