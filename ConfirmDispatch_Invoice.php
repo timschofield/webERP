@@ -1627,8 +1627,9 @@ invoices can have a zero amount but there must be a quantity to invoice */
 				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 			}
 		}
-		EnsureGLEntriesBalance(10,$InvoiceNo,$db);
 	} /*end of if Sales and GL integrated */
+	EnsureGLEntriesBalance(10,$InvoiceNo,$db);
+	
 
 	DB_Txn_Commit();
 // *************************************************************************
