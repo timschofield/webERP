@@ -20,7 +20,8 @@ $DaysSalesForOrder = 2;
 /* Selection of shops with smart dispatch from / to KANTO, sorted by priority and sales of the last X days */
 $StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$DaysSalesForOrder));
 
-$SQL = "SELECT locations.loccode
+$SQL = "SELECT locations.loccode,
+				locations.smartdispatchmaxmodels
 		FROM locations
 		WHERE locations.smartdispatchfrom = 'KANTO'
 		ORDER BY locations.priority ASC,
@@ -34,9 +35,9 @@ $result = DB_query($SQL);
 if (DB_num_rows($result) != 0){
 	while ($myrow = DB_fetch_array($result)) {
 		// From KANTO to Shop, send the items needed to fill the RL
-		$EmailText  = KLStockDispatch('KANTO', $myrow['loccode'], "All", $ReportType, $DispatchPercent, $RootPath, $db, $EmailText);
+		$EmailText  = KLStockDispatch('KANTO', $myrow['loccode'], "All", $ReportType, $DispatchPercent, $myrow['smartdispatchmaxmodels'], $RootPath, $db, $EmailText);
 		// From Shop to KANTO, return the overstock
-		$EmailText  = KLStockDispatch($myrow['loccode'], 'KANTO', "OverFrom", $ReportType, $DispatchPercent, $RootPath, $db, $EmailText);
+		$EmailText  = KLStockDispatch($myrow['loccode'], 'KANTO', "OverFrom", $ReportType, $DispatchPercent, $myrow['smartdispatchmaxmodels'], $RootPath, $db, $EmailText);
 	}
 }
 
@@ -45,7 +46,7 @@ $EmailSubject  = "KL webERP Cron Job: Daily Stock Dispatch";
 SendEmailFromCron($EmailAddress, $EmailSubject, $EmailText, '');
 
 /****************************************************************************************/
-function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $DispatchPercent, $RootPath, $db, $EmailText){
+function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $DispatchPercent, $MaxModelsPerDispatch, $RootPath, $db, $EmailText){
 
 	$EmailText = $EmailText .  "\n" . "Smart Stock Dispatch from " . $FromLocCode . " to " . $ToLocCode . "\n" . "Strategy " . $Strategy . "\n";
 
@@ -149,7 +150,8 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 
 		$FontSize=8;
 		$Now = Date('Y-m-d H-i-s');
-		while ($myrow = DB_fetch_array($result,$db)){
+		$NumModelsInThisStockDispatch = 0;
+		while (($myrow = DB_fetch_array($result,$db)) AND ($NumModelsInThisStockDispatch < $MaxModelsPerDispatch)){
 			// Check if there is any stock in transit already sent from FROM LOCATION
 			$InTransitQuantityAtFrom = 0;
 			if ($_SESSION['ProhibitNegativeStock']==1){
@@ -198,6 +200,7 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 			}
 
 			if ($ShipQty>0) {
+				$NumModelsInThisStockDispatch++;
 				$YPos -=(2 * $line_height);
 				// Parameters for addTextWrap are defined in /includes/class.pdf.php
 				// 1) X position 2) Y position 3) Width
@@ -253,6 +256,14 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 
 			}
 		} /*end while loop  */
+
+		// if we reached the maximum of models allowed per dispatch, we warn the user
+		if ($NumModelsInThisStockDispatch == $MaxModelsPerDispatch){
+			$YPos -=(2 * $line_height);
+			$WarningMaxModels = "Reached the maximum of " . $MaxModelsPerDispatch . " models per transfer.";
+			$pdf->addTextWrap(50,$YPos,500,9,$WarningMaxModels, 'left');
+			$EmailText = $EmailText . $WarningMaxModels . "\n";
+		}
 		//add prepared by
 		$pdf->addTextWrap(50,$YPos-50,100,9,_('Prepared By :'), 'left');
 		$pdf->addTextWrap(50,$YPos-70,100,$FontSize,_('Name'), 'left');
@@ -307,7 +318,12 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 		$mail->setSubject($Subject);
 		$mail->addAttachment($attachment, $FileName, 'application/pdf');
 		$mail->setFrom('webmaster@kapal-laut.com', 'webERP Cron Job');
-		$result = $mail->send(array('kl-shoptransfers@kapal-laut.com'));
+		// if we are preparing real transfers (Batch), send to team, otherwise send to test user.
+		if ($ReportType == 'Batch'){
+			$result = $mail->send(array('kl-shopsupport@kapal-laut.com'));
+		}else{
+			$result = $mail->send(array('ricard@kapal-laut.com'));
+		}
 		if($result){
 			$EmailText = $EmailText . date('d/M/Y H:i:s') . " Email Sent " . $FileName . "\n";
 		}else{
