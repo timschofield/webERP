@@ -12,8 +12,15 @@ and an array of the receipients */
 
 /*The following three variables need to be modified for the report - the company database to use and the receipients */
 /*The Sales report to send */
+
+/*****************************************************************************************
+KL RICARD MODIFICATIONS:
+- Change of AllowAnyone by AllowCronJobToBeRun to minimize risk of intrusions
+*****************************************************************************************/
+
+
 $_GET['ReportID'] = 2;
-$AllowAnyone = true;
+$AllowCronJobToBeRun = true;
 $DatabaseName = 'kurakura_klerp';
 include('includes/session.inc');
 /*The company database to use */

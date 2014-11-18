@@ -2,7 +2,13 @@
 /* $Id: RecurringSalesOrdersProcess.php 6945 2014-10-27 07:20:48Z daintree $*/
 
 /*need to allow this script to run from Cron or windows scheduler */
-$AllowAnyone = true;
+
+/*****************************************************************************************
+KL RICARD MODIFICATIONS:
+- Change of AllowAnyone by AllowCronJobToBeRun to minimize risk of intrusions
+*****************************************************************************************/
+
+$AllowCronJobToBeRun = true;
 
 /* Get this puppy to run from cron (cd webERP && php -f RecurringSalesOrdersProcess.php "weberpdemo") or direct URL (RecurringSalesOrdersProcess.php?Database=weberpdemo) */
 if (isset($_GET['Database'])) {

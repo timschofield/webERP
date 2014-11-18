@@ -1,7 +1,13 @@
 <?php
 /* Prepares an script to be used as a cron job
 */
-$AllowAnyone = true;
+
+/************************************************************************************
+KL RICARD MODIFICATIONS:
+ Change of AllowAnyone by AllowCronJobToBeRun to minimize risk of intrusions
+*************************************************************************************/
+
+$AllowCronJobToBeRun = true;
 $DatabaseName = 'kurakura_klerp';
 
 /*************************************************************************************************************************/ 	

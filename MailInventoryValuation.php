@@ -2,7 +2,12 @@
 
 /* $Id: MailInventoryValuation.php 6966 2014-11-06 09:15:09Z daintree $ */
 
-$AllowAnyone = true;
+/*****************************************************************************************
+KL RICARD MODIFICATIONS:
+- Change of AllowAnyone by AllowCronJobToBeRun to minimize risk of intrusions
+*****************************************************************************************/
+
+$AllowCronJobToBeRun = true;
 
 $FromCriteria ='1'; /*Category From */
 $ToCriteria ='zzzzzzzz'; /*Category To */

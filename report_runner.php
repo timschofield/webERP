@@ -20,6 +20,11 @@
 //$weberp_home=/srv/www/htdocs/weberp
 /* $Id: report_runner.php 5912 2013-05-10 14:37:31Z exsonqu $*/
 
+/*****************************************************************************************
+KL RICARD MODIFICATIONS:
+- Change of AllowAnyone by AllowCronJobToBeRun to minimize risk of intrusions
+*****************************************************************************************/
+
 $usage="USAGE\n".$argv[0].":\n".
        "     -r reportnumber (the number of the weberp report)\n".
        "     -n reportname   (the name you want to give the report)\n".
@@ -92,7 +97,7 @@ for ($i=0;$i<count($Recipients); $i++) {
 	$Recipient[$i]="<".$Recipient[$i].">";
 }
 
-$AllowAnyone = true;
+$AllowCronJobToBeRun = true;
 include('includes/session.inc');
 
 include ('includes/ConstructSQLForUserDefinedSalesReport.inc');

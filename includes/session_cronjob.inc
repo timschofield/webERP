@@ -1,6 +1,12 @@
 <?php
 /* $Id: session.inc 6338 2013-09-28 05:10:46Z daintree $*/
 
+/*****************************************************************************************
+KL RICARD MODIFICATIONS:
+- Change of AllowAnyone by AllowCronJobToBeRun to minimize risk of intrusions
+*****************************************************************************************/
+
+
 if (!isset($PathPrefix)) {
 	$PathPrefix='';
 }
@@ -82,7 +88,7 @@ if (isset($_SESSION['DatabaseName'])){
 include($PathPrefix . 'includes/LanguageSetup.php');
 
 
-if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true */
+if (!isset($AllowCronJobToBeRun)){ /* only do security checks if AllowCronJobToBeRun is not true */
 
 	include $PathPrefix . 'includes/UserLogin.php';	/* Login checking and setup */
 
@@ -131,7 +137,7 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 		die(include($PathPrefix . 'includes/Login.php'));
 
 	}
-} /* only do security checks if AllowAnyone is not true */
+} /* only do security checks if AllowCronJobToBeRun is not true */
  elseif(basename($_SERVER['SCRIPT_NAME'])=='Logout.php'){
 	header('Location: index.php');
 }
@@ -288,7 +294,7 @@ if ($_SESSION['HTTPS_Only']==1){
 // arrays defining access for each group of users. These definitions can be modified by a system admin under setup
 
 
-if (!is_array($_SESSION['AllowedPageSecurityTokens']) AND !isset($AllowAnyone)) {
+if (!is_array($_SESSION['AllowedPageSecurityTokens']) AND !isset($AllowCronJobToBeRun)) {
 	$Title = _('Account Error Report');
 	include($PathPrefix . 'includes/header.inc');
 	echo '<br /><br /><br />';
@@ -306,7 +312,7 @@ if (!isset($PageSecurity)){
 }
 
 
-if (!isset($AllowAnyone)){
+if (!isset($AllowCronJobToBeRun)){
 	if ((!in_array($PageSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($PageSecurity))) {
 		$Title = _('Security Permissions Problem');
 		include($PathPrefix . 'includes/header.inc');
@@ -352,7 +358,7 @@ function CryptPass( $Password ) {
  }
 
 
-if (sizeof($_POST) > 0 AND !isset($AllowAnyone)) {
+if (sizeof($_POST) > 0 AND !isset($AllowCronJobToBeRun)) {
 	/*Security check to ensure that the form submitted is originally sourced from webERP with the FormID = $_SESSION['FormID'] - which is set before the first login*/
 	if (!isset($_POST['FormID']) OR ($_POST['FormID'] != $_SESSION['FormID'])) {
 		$Title = _('Error in form verification');

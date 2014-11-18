@@ -13,13 +13,17 @@ and an array of the receipients and the company database to use*/
 /*The Sales report to send */
 $ReportID = 4;
 
+/*****************************************************************************************
+KL RICARD MODIFICATIONS:
+- Change of AllowAnyone by AllowCronJobToBeRun to minimize risk of intrusions
+*****************************************************************************************/
 
 
 
 
 /* ----------------------------------------------------------------------------------------------*/
 
-$AllowAnyone = true;
+$AllowCronJobToBeRun = true;
 include('includes/session.inc');
 /*The company database to use */
 $DatabaseName = $_SESSION['DatabaseName'];
