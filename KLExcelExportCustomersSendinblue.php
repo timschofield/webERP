@@ -1,0 +1,237 @@
+<?php
+require_once ('Classes/PHPExcel.php');
+
+include('includes/session.inc');
+include('includes/SQL_CommonFunctions.inc');
+include('includes/KLDefines.php');
+include('includes/KLGeneralFunctions.php');
+include('includes/KLCountriesForRetail.php');
+include('includes/WeberpOpenCartDefines.php');
+include('includes/OpenCartGeneralFunctions.php');
+include('includes/OpenCartConnectDB.php');
+
+if (!isset($_POST['FromDate'])){
+	$sql = "SELECT 	salesorders.orddate
+			FROM klretailcustomers, salesorders
+			WHERE klretailcustomers.orderno = salesorders.orderno
+				AND klretailcustomers.email != ''
+				AND klretailcustomers.exported = 'N'
+			ORDER BY salesorders.orddate ASC";
+	$result = DB_query($sql,$ErrMsg);
+	if (DB_num_rows($result) != 0){
+		// get the first date only
+		$myrow = DB_fetch_array($result);
+		$_POST['FromDate'] = ConvertSQLDate($myrow['orddate']);
+	}else{
+		$_POST['FromDate'] = Date($_SESSION['DefaultDateFormat']);
+	}
+}
+if (!isset($_POST['ToDate'])){
+	$_POST['ToDate'] = Date($_SESSION['DefaultDateFormat']);
+}
+
+if (isset($_POST['submit'])) {
+    submit($db, $CountriesForRetail, $_POST['MarkExported'], $_POST['FromDate'], $_POST['ToDate']);
+} else {
+    display($db);
+}
+
+//####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
+function submit(&$db, $CountriesForRetail, $MarkExported, $FromDate, $ToDate) {
+
+	//initialise no input errors
+	$InputError = 0;
+
+	//first off validate inputs sensible
+	if (!Is_Date($_POST['FromDate'])) {
+		$InputError = 1;
+		prnMsg(_('Invalid From Date'),'error');
+	}
+	if (!Is_Date($_POST['ToDate'])) {
+		$InputError = 1;
+		prnMsg(_('Invalid To Date'),'error');
+	}
+	if ($_POST['ToDate'] < $_POST['FromDate']) {
+		$InputError = 1;
+		prnMsg(_('Date To has to be greater than From Date'),'error');
+	}
+
+	if ($InputError == 0){
+		$FromDate = FormatDateForSQL($_POST['FromDate']);
+		$ToDate = FormatDateForSQL($_POST['ToDate']);
+		
+		$sql = "SELECT 	klretailcustomers.email,
+						klretailcustomers.firstname,
+						klretailcustomers.lastname,
+						klretailcustomers.country,
+						klretailcustomers.date_of_birth,
+						klretailcustomers.age,
+						klretailcustomers.sex,
+						(SELECT COUNT(*)
+						FROM salesorderdetails
+						WHERE salesorderdetails.orderno = klretailcustomers.orderno
+							AND salesorderdetails.stkcode = 'ONLINE-VIP-PACK') AS vipcards
+				FROM klretailcustomers, salesorders
+				WHERE klretailcustomers.orderno = salesorders.orderno
+					AND klretailcustomers.email != ''
+					AND klretailcustomers.exported = 'N'
+					AND salesorders.orddate >= '" . $FromDate . "'
+					AND salesorders.orddate <= '" . $ToDate . "'
+				ORDER BY klretailcustomers.orderno";
+		
+		$ErrMsg = _('The SQL to find the Retail Customer Data to export to Sendinblue');
+		$result = DB_query($sql,$ErrMsg);
+		if (DB_num_rows($result) != 0){
+			$TxResult = DB_Txn_Begin();
+
+		// Create new PHPExcel object
+			$objPHPExcel = new PHPExcel();
+
+			// Set document properties
+			$objPHPExcel->getProperties()->setCreator("webERP")
+										 ->setLastModifiedBy("webERP")
+										 ->setTitle("Sendinblue Customers")
+										 ->setSubject("Sendinblue Customers")
+										 ->setDescription("Sendinblue Customers")
+										 ->setKeywords("")
+										 ->setCategory("");
+		
+			// Add title data
+			$objPHPExcel->setActiveSheetIndex(0);
+			$objPHPExcel->getActiveSheet()->setCellValue('A1', 'EMAIL');
+			$objPHPExcel->getActiveSheet()->setCellValue('B1', 'FIRST_NAME');
+			$objPHPExcel->getActiveSheet()->setCellValue('C1', 'FAMILY_NAME');
+			$objPHPExcel->getActiveSheet()->setCellValue('D1', 'COUNTRY');
+			$objPHPExcel->getActiveSheet()->setCellValue('E1', 'AGE_AT_PURCHASE_DATE');
+			$objPHPExcel->getActiveSheet()->setCellValue('F1', 'DATE_OF_BIRTH');
+			$objPHPExcel->getActiveSheet()->setCellValue('G1', 'HAS_VIP_CARD');
+			$objPHPExcel->getActiveSheet()->setCellValue('H1', 'SEX');
+
+			// Add data
+			$i = 2;
+			while ($myrow = DB_fetch_array($result)) {
+				$objPHPExcel->setActiveSheetIndex(0);
+				$objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $myrow['email']);
+				$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, CapitalizeName($myrow['firstname']));
+				$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, CapitalizeName($myrow['lastname']));
+				$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, $CountriesForRetail[$myrow['country']]);
+				if ($myrow['age'] != '0'){
+					$objPHPExcel->getActiveSheet()->setCellValue('E'.$i, $myrow['age']);
+				}
+				if ($myrow['date_of_birth'] != '0000-00-00'){
+					$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, $myrow['date_of_birth']);
+				}
+				if ($myrow['vipcards'] == 0){
+					$objPHPExcel->getActiveSheet()->setCellValue('G'.$i, 'N');
+				}else{
+				$objPHPExcel->getActiveSheet()->setCellValue('G'.$i, 'Y');
+				}
+				$objPHPExcel->getActiveSheet()->setCellValue('H'.$i, $myrow['sex']);
+				$i++;
+			}
+			
+			// Freeze panes
+			$objPHPExcel->getActiveSheet()->freezePane('A2');
+		
+			// Auto Size columns
+			foreach(range('A','F') as $columnID) {
+				$objPHPExcel->getActiveSheet()->getColumnDimension($columnID)
+					->setAutoSize(true);
+			}
+			
+			// Rename worksheet
+			$objPHPExcel->getActiveSheet()->setTitle('Retail Customer');
+
+			// Set active sheet index to the first sheet, so Excel opens this as the first sheet
+			$objPHPExcel->setActiveSheetIndex(0);
+
+			// Redirect output to a client’s web browser (Excel2007)
+			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+			$File = 'KL-Sendinblue-' . Date('Y-m-d'). '.xlsx';
+			header('Content-Disposition: attachment;filename="' . $File . '"');
+			header('Cache-Control: max-age=0');
+			// If you're serving to IE 9, then the following may be needed
+			header('Cache-Control: max-age=1');
+
+			// If you're serving to IE over SSL, then the following may be needed
+			header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+			header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
+			header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+			header ('Pragma: public'); // HTTP/1.0
+
+			$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+			$objWriter->save('php://output');
+
+			if ($MarkExported == "Y"){
+				$sql = "UPDATE klretailcustomers 
+						SET exported = 'Y' 
+						WHERE exported = 'N' 
+							AND EXISTS (SELECT *
+										FROM salesorders
+										WHERE salesorders.orderno = klretailcustomers.orderno
+											AND salesorders.orddate >= '" . $FromDate . "'
+											AND salesorders.orddate <= '" . $ToDate . "')";
+				$resultUpdate = DB_query($sql,'','',true);
+			}
+			DB_Txn_Commit();
+
+		}else{
+			$Title = _('Excel file for Sendinblue: Export Retail Customer');
+			include('includes/header.inc');
+			prnMsg('No Retail Customer Data to export to Sendinblue');
+			include('includes/footer.inc');
+		}
+	}
+} // End of function submit()
+
+
+function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
+{
+// Display form fields. This function is called the first time
+// the page is called.
+	$Title = _('Excel file for Sendinblue: Export Retail Customer');
+
+	include('includes/header.inc');
+
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
+          <div>
+			<br/>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+
+	echo '<p class="page_title_text">
+			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Excel file for Sendinblue: Export Retail Customer') . '" alt="" />' . ' ' . _('Excel file for Sendinblue: Export Retail Customer') . '
+		</p>';
+
+	echo '<table>';
+
+	echo '<tr>
+			<td>' . _('From:') . ':</td>
+			<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="FromDate" size="10" maxlength="10" value="' . $_POST['FromDate'] . '" /></td>
+			<td>' . _('To') . ':</td>
+			<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="ToDate" size="10" maxlength="10" value="' . $_POST['ToDate'] . '" /></td>
+		</tr>';
+	echo '<tr><td>' . _('Mark as Exported?') . ':</td>
+			<td><select name="MarkExported">
+				<option selected="selected" value="N">' . _('No') . '</option>
+				<option value="Y">' . _('Yes') . '</option>
+				</select>
+			</td>
+		</tr>';
+
+	echo '</table>
+		<table>';
+
+	echo '<tr><td>&nbsp;</td></tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td><input type="submit" name="submit" value="' . _('Create Excel File for Sendinblue') . '" /></td>
+		</tr>
+		</table>
+		<br />';
+	echo '</div>
+         </form>';
+	include('includes/footer.inc');
+
+} // End of function display()
+
+?>
