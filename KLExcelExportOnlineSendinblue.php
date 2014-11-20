@@ -12,10 +12,9 @@ include('includes/OpenCartConnectDB.php');
 
 if (!isset($_POST['FromDate'])){
 	$sql = "SELECT 	salesorders.orddate
-			FROM klretailcustomers, salesorders
-			WHERE klretailcustomers.orderno = salesorders.orderno
-				AND klretailcustomers.email != ''
-				AND klretailcustomers.exported = 'N'
+			FROM salesorders
+			WHERE salesorders.contactemail != ''
+				AND salesorders.klexported = 'N'
 			ORDER BY salesorders.orddate ASC";
 	$result = DB_query($sql,$ErrMsg);
 	if (DB_num_rows($result) != 0){
@@ -53,39 +52,47 @@ function submit(&$db, $CountriesForRetail, $MarkExported, $FromDate, $ToDate) {
 	}
 	if (FormatDateForSQL($_POST['ToDate']) < FormatDateForSQL($_POST['FromDate'])) {
 		$InputError = 1;
-		prnMsg(_('Date To has to be greater than From Date'),'error');
+		prnMsg(_('Date To has to be greater than From Date') . " From: " . $_POST['FromDate'] . " To: " . $_POST['ToDate'],'error');
 	}
 
 	if ($InputError == 0){
 		$FromDate = FormatDateForSQL($_POST['FromDate']);
 		$ToDate = FormatDateForSQL($_POST['ToDate']);
 		
-		$sql = "SELECT 	klretailcustomers.email,
-						klretailcustomers.firstname,
-						klretailcustomers.lastname,
-						klretailcustomers.country,
-						klretailcustomers.date_of_birth,
-						klretailcustomers.age,
-						klretailcustomers.sex,
+		$sql = "SELECT 	salesorders.contactemail AS email,
+						salesorders.deliverto AS firstname,
+						salesorders.deladd6 AS country,
 						salesorders.orddate,
-						(salesorders.klpaidcash + salesorders.klpaidcreditcard + salesorders.klreturnedgoods + klvouchers) AS purchase_value,
+						(SELECT SUM(qtyinvoiced*unitprice)
+						FROM salesorderdetails
+						WHERE salesorderdetails.orderno = salesorders.orderno
+							AND salesorderdetails.stkcode != 'ONLINE-VIP-PACK') AS purchase_value,
 						(SELECT SUM(qtyinvoiced)
 						FROM salesorderdetails
-						WHERE salesorderdetails.orderno = klretailcustomers.orderno
+						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.stkcode != 'ONLINE-VIP-PACK') AS purchase_items,
 						(SELECT COUNT(*)
 						FROM salesorderdetails
-						WHERE salesorderdetails.orderno = klretailcustomers.orderno
-							AND salesorderdetails.stkcode = 'ONLINE-VIP-PACK') AS vipcards
-				FROM klretailcustomers, salesorders
-				WHERE klretailcustomers.orderno = salesorders.orderno
-					AND klretailcustomers.email != ''
-					AND klretailcustomers.exported = 'N'
+						WHERE salesorderdetails.orderno = salesorders.orderno
+							AND salesorderdetails.stkcode = 'ONLINE-VIP-PACK') AS vipcards,
+						debtorsmaster.currcode,
+						currencies.rate
+				FROM salesorders, debtorsmaster, currencies
+				WHERE  salesorders.debtorno = debtorsmaster.debtorno
+					AND debtorsmaster.currcode = currencies.currabrev
+					AND salesorders.contactemail != ''
+					AND salesorders.debtorno NOT LIKE 'RETAIL%'
+					AND salesorders.klexported = 'N'
 					AND salesorders.orddate >= '" . $FromDate . "'
 					AND salesorders.orddate <= '" . $ToDate . "'
-				ORDER BY klretailcustomers.orderno";
-		
-		$ErrMsg = _('The SQL to find the Retail Customer Data to export to Sendinblue');
+				ORDER BY salesorders.debtorno, salesorders.orderno";
+
+//					AND salesorders.debtorno LIKE 'WEB%'
+//	can be changed by 					AND salesorders.debtorno NOT LIKE 'RETAIL%'
+// to include all wholesale customers as well :-)
+
+				
+		$ErrMsg = _('The SQL to find the Online Customer Data to export to Sendinblue');
 		$result = DB_query($sql,$ErrMsg);
 		if (DB_num_rows($result) != 0){
 			$TxResult = DB_Txn_Begin();
@@ -96,9 +103,9 @@ function submit(&$db, $CountriesForRetail, $MarkExported, $FromDate, $ToDate) {
 			// Set document properties
 			$objPHPExcel->getProperties()->setCreator("webERP")
 										 ->setLastModifiedBy("webERP")
-										 ->setTitle("Sendinblue Customers")
-										 ->setSubject("Sendinblue Customers")
-										 ->setDescription("Sendinblue Customers")
+										 ->setTitle("Sendinblue Online Customers")
+										 ->setSubject("Sendinblue Online Customers")
+										 ->setDescription("Sendinblue Online Customers")
 										 ->setKeywords("")
 										 ->setCategory("");
 		
@@ -118,36 +125,30 @@ function submit(&$db, $CountriesForRetail, $MarkExported, $FromDate, $ToDate) {
 
 			// Add data
 			$i = 2;
+			$PreviousEmail = "";
 			while ($myrow = DB_fetch_array($result)) {
-				$objPHPExcel->setActiveSheetIndex(0);
-				$objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $myrow['email']);
-				$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, CapitalizeName($myrow['lastname']));
-				$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, CapitalizeName($myrow['firstname']));
-				$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, $CountriesForRetail[$myrow['country']]);
-				$objPHPExcel->getActiveSheet()->setCellValue('E'.$i, $myrow['sex']);
-				
-				if ($myrow['date_of_birth'] != '0000-00-00'){
-					$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, $myrow['date_of_birth']);
-				}
-				
-				if ($myrow['age'] != '0'){
-					$objPHPExcel->getActiveSheet()->setCellValue('G'.$i, $myrow['age']);
-				}
-				
-				if ($myrow['vipcards'] == 0){
-					$objPHPExcel->getActiveSheet()->setCellValue('H'.$i, 'N');
-				}else{
-					$objPHPExcel->getActiveSheet()->setCellValue('H'.$i, 'Y');
-				}
-				
-				if ($myrow['orddate'] != '0000-00-00'){
-					$objPHPExcel->getActiveSheet()->setCellValue('I'.$i, $myrow['orddate']);
-				}
+				if ($PreviousEmail != $myrow['email']){
+					$objPHPExcel->setActiveSheetIndex(0);
+					$objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $myrow['email']);
+					$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, CapitalizeName($myrow['firstname']));
+					$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, $myrow['country']);
+					
+					if ($myrow['vipcards'] == 0){
+						$objPHPExcel->getActiveSheet()->setCellValue('H'.$i, 'N');
+					}else{
+						$objPHPExcel->getActiveSheet()->setCellValue('H'.$i, 'Y');
+					}
+					
+					if ($myrow['orddate'] != '0000-00-00'){
+						$objPHPExcel->getActiveSheet()->setCellValue('I'.$i, $myrow['orddate']);
+					}
 
-				$objPHPExcel->getActiveSheet()->setCellValue('J'.$i, $myrow['purchase_items']);
-				$objPHPExcel->getActiveSheet()->setCellValue('K'.$i, $myrow['purchase_value']);
-				
-				$i++;
+					$objPHPExcel->getActiveSheet()->setCellValue('J'.$i, $myrow['purchase_items']);
+					$objPHPExcel->getActiveSheet()->setCellValue('K'.$i, round($myrow['purchase_value'] / $myrow['rate']));
+					
+					$i++;
+					$PreviousEmail = $myrow['email'];
+				}
 			}
 			
 			// Freeze panes
@@ -167,7 +168,7 @@ function submit(&$db, $CountriesForRetail, $MarkExported, $FromDate, $ToDate) {
 
 			// Redirect output to a client’s web browser (Excel2007)
 			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-			$File = 'KL-RetailCustomers-' . Date('Y-m-d'). '.xlsx';
+			$File = 'KL-OnlineCustomers-' . Date('Y-m-d'). '.xlsx';
 			header('Content-Disposition: attachment;filename="' . $File . '"');
 			header('Cache-Control: max-age=0');
 			// If you're serving to IE 9, then the following may be needed
@@ -183,22 +184,19 @@ function submit(&$db, $CountriesForRetail, $MarkExported, $FromDate, $ToDate) {
 			$objWriter->save('php://output');
 
 			if ($MarkExported == "Y"){
-				$sql = "UPDATE klretailcustomers 
-						SET exported = 'Y' 
-						WHERE exported = 'N' 
-							AND EXISTS (SELECT *
-										FROM salesorders
-										WHERE salesorders.orderno = klretailcustomers.orderno
-											AND salesorders.orddate >= '" . $FromDate . "'
-											AND salesorders.orddate <= '" . $ToDate . "')";
+				$sql = "UPDATE salesorders 
+						SET klexported = 'Y' 
+						WHERE klexported = 'N' 
+							AND salesorders.orddate >= '" . $FromDate . "'
+							AND salesorders.orddate <= '" . $ToDate . "')";
 				$resultUpdate = DB_query($sql,'','',true);
 			}
 			DB_Txn_Commit();
 
 		}else{
-			$Title = _('Excel file for Sendinblue: Export Retail Customer');
+			$Title = _('Excel file for Sendinblue: Export Online Customers');
 			include('includes/header.inc');
-			prnMsg('No Retail Customer Data to export to Sendinblue');
+			prnMsg('No Online Customer Data to export to Sendinblue');
 			include('includes/footer.inc');
 		}
 	}
@@ -209,7 +207,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 {
 // Display form fields. This function is called the first time
 // the page is called.
-	$Title = _('Excel file for Sendinblue: Export Retail Customer');
+	$Title = _('Excel file for Sendinblue: Export Online Customers');
 
 	include('includes/header.inc');
 
@@ -219,7 +217,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<p class="page_title_text">
-			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Excel file for Sendinblue: Export Retail Customer') . '" alt="" />' . ' ' . _('Excel file for Sendinblue: Export Retail Customer') . '
+			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Excel file for Sendinblue: Export Online Customer') . '" alt="" />' . ' ' . _('Excel file for Sendinblue: Export Online Customer') . '
 		</p>';
 
 	echo '<table>';
