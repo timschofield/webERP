@@ -151,6 +151,7 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 		$FontSize=8;
 		$Now = Date('Y-m-d H-i-s');
 		$NumModelsInThisStockDispatch = 0;
+		$NumPcsInThisStockDispatch = 0;
 		while (($myrow = DB_fetch_array($result,$db)) AND ($NumModelsInThisStockDispatch < $MaxModelsPerDispatch)){
 			// Check if there is any stock in transit already sent from FROM LOCATION
 			$InTransitQuantityAtFrom = 0;
@@ -201,6 +202,7 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 
 			if ($ShipQty>0) {
 				$NumModelsInThisStockDispatch++;
+				$NumPcsInThisStockDispatch = $NumPcsInThisStockDispatch + $ShipQty;
 				$YPos -=(2 * $line_height);
 				// Parameters for addTextWrap are defined in /includes/class.pdf.php
 				// 1) X position 2) Y position 3) Width
@@ -264,6 +266,10 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 			$pdf->addTextWrap(50,$YPos,500,9,$WarningMaxModels, 'left');
 			$EmailText = $EmailText . $WarningMaxModels . "\n";
 		}
+		
+		$EmailText = $EmailText . "# Models in this transfer = " . locale_number_format($NumModelsInThisStockDispatch,0) . "\n" . 
+								  "# Pieces in this transfer = " . locale_number_format($NumPcsInThisStockDispatch,0) . "\n";
+		
 		//add prepared by
 		$pdf->addTextWrap(50,$YPos-50,100,9,_('Prepared By :'), 'left');
 		$pdf->addTextWrap(50,$YPos-70,100,$FontSize,_('Name'), 'left');
