@@ -1,5 +1,6 @@
 webERP Change Log
 
+20/11/14 Exson: Fixed the pop up error when input account no in Payments.php by align the js function with applying it. The fixes are mismatched before. Hope it's the last time. 
 17/11/14 Thumb: Move EnsureGLBalance() to the right place in ConfirmDispatch_Invoice.php to ensure that the whole transaction are checked instead of only one type of it checked. 
 17/11/14 Exson: Fixed InvoiceQuantityDefault parameters failed to save in SystemParameters.php. Reported by Richard.
 15/11/14: Exson: Remove qtyrecd in work orders requirements calculation from group by in MRP.php.
