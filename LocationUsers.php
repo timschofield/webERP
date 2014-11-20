@@ -224,7 +224,11 @@ if (isset($_POST['process']) or isset($SelectedLocation)) {
 
 		$Result = DB_query("SELECT userid,
 									realname
-							FROM www_users");
+							FROM www_users
+							WHERE NOT EXISTS (SELECT locationusers.userid
+											FROM locationusers
+											WHERE locationusers.loccode='" . $SelectedLocation . "'
+												AND locationusers.userid=www_users.userid)");
 
 		if (!isset($_POST['SelectedUser'])) {
 			echo '<option selected="selected" value="">' . _('Not Yet Selected') . '</option>';
