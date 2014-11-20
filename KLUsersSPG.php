@@ -156,6 +156,22 @@ if (isset($_POST['submit'])) {
 		$ErrMsg = _('The default user locations could not be processed because');
 		$DbgMsg = _('The SQL that was used to update the user locations and failed was');
 		$Result = DB_query($LocationSql, $ErrMsg, $DbgMsg);
+
+		// Give SPG rights ALSO to KANTO location (needed for internal requests)
+		$LocationSql = "INSERT INTO locationusers (loccode,
+													userid,
+													canview,
+													canupd
+												) VALUES (
+													'KANTO',
+													'" . $_POST['UserID'] . "',
+													1,
+													1
+												)";
+		$Result = DB_query($LocationSql, $ErrMsg, $DbgMsg);
+
+
+
 		$sql = "INSERT INTO www_users (userid,
 						realname,
 						customerid,
