@@ -1,5 +1,5 @@
 webERP Change Log
-
+20/11/14 Exson: Add GRN numbers to select grns screen in SuppInvGRNs.php.
 20/11/14 Exson: Fixed the pop up error when input account no in Payments.php by align the js function with applying it. The fixes are mismatched before. Hope it's the last time. 
 17/11/14 Thumb: Move EnsureGLBalance() to the right place in ConfirmDispatch_Invoice.php to ensure that the whole transaction are checked instead of only one type of it checked. 
 17/11/14 Exson: Fixed InvoiceQuantityDefault parameters failed to save in SystemParameters.php. Reported by Richard.
