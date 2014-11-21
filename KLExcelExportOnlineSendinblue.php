@@ -15,6 +15,7 @@ if (!isset($_POST['FromDate'])){
 			FROM salesorders
 			WHERE salesorders.contactemail != ''
 				AND salesorders.klexported = 'N'
+				AND salesorders.debtorno NOT LIKE 'RETAIL%' 
 			ORDER BY salesorders.orddate ASC";
 	$result = DB_query($sql,$ErrMsg);
 	if (DB_num_rows($result) != 0){
@@ -30,13 +31,13 @@ if (!isset($_POST['ToDate'])){
 }
 
 if (isset($_POST['submit'])) {
-    submit($db, $CountriesForRetail, $_POST['MarkExported'], $_POST['FromDate'], $_POST['ToDate']);
+    submit($db, $CountriesForRetail, $_POST['TypeCustomers'], $_POST['MarkExported'], $_POST['FromDate'], $_POST['ToDate']);
 } else {
     display($db);
 }
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit(&$db, $CountriesForRetail, $MarkExported, $FromDate, $ToDate) {
+function submit(&$db, $CountriesForRetail, $TypeCustomers, $MarkExported, $FromDate, $ToDate) {
 
 	//initialise no input errors
 	$InputError = 0;
@@ -58,6 +59,12 @@ function submit(&$db, $CountriesForRetail, $MarkExported, $FromDate, $ToDate) {
 	if ($InputError == 0){
 		$FromDate = FormatDateForSQL($_POST['FromDate']);
 		$ToDate = FormatDateForSQL($_POST['ToDate']);
+		
+		if ($TypeCustomers == "WEB"){
+			$SqlCustomers = " AND salesorders.debtorno LIKE 'WEB%'";
+		}else{
+			$SqlCustomers = " AND salesorders.debtorno NOT LIKE 'WEB%'";
+		}
 		
 		$sql = "SELECT 	salesorders.contactemail AS email,
 						salesorders.deliverto AS firstname,
@@ -81,31 +88,27 @@ function submit(&$db, $CountriesForRetail, $MarkExported, $FromDate, $ToDate) {
 				WHERE  salesorders.debtorno = debtorsmaster.debtorno
 					AND debtorsmaster.currcode = currencies.currabrev
 					AND salesorders.contactemail != ''
-					AND salesorders.debtorno NOT LIKE 'RETAIL%'
+					AND salesorders.debtorno NOT LIKE 'RETAIL%' " . 
+					$SqlCustomers . "
 					AND salesorders.klexported = 'N'
 					AND salesorders.orddate >= '" . $FromDate . "'
 					AND salesorders.orddate <= '" . $ToDate . "'
 				ORDER BY salesorders.debtorno, salesorders.orderno";
-
-//					AND salesorders.debtorno LIKE 'WEB%'
-//	can be changed by 					AND salesorders.debtorno NOT LIKE 'RETAIL%'
-// to include all wholesale customers as well :-)
-
 				
-		$ErrMsg = _('The SQL to find the Online Customer Data to export to Sendinblue');
+		$ErrMsg = _('The SQL to find the webERP Customer Data to export to Sendinblue');
 		$result = DB_query($sql,$ErrMsg);
 		if (DB_num_rows($result) != 0){
 			$TxResult = DB_Txn_Begin();
 
-		// Create new PHPExcel object
+			// Create new PHPExcel object
 			$objPHPExcel = new PHPExcel();
 
 			// Set document properties
 			$objPHPExcel->getProperties()->setCreator("webERP")
 										 ->setLastModifiedBy("webERP")
-										 ->setTitle("Sendinblue Online Customers")
-										 ->setSubject("Sendinblue Online Customers")
-										 ->setDescription("Sendinblue Online Customers")
+										 ->setTitle("Sendinblue webERP Customers")
+										 ->setSubject("Sendinblue webERP Customers")
+										 ->setDescription("Sendinblue webERP Customers")
 										 ->setKeywords("")
 										 ->setCategory("");
 		
@@ -168,7 +171,7 @@ function submit(&$db, $CountriesForRetail, $MarkExported, $FromDate, $ToDate) {
 
 			// Redirect output to a client’s web browser (Excel2007)
 			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-			$File = 'KL-OnlineCustomers-' . Date('Y-m-d'). '.xlsx';
+			$File = 'KL-webERPCustomers-' . Date('Y-m-d'). '.xlsx';
 			header('Content-Disposition: attachment;filename="' . $File . '"');
 			header('Cache-Control: max-age=0');
 			// If you're serving to IE 9, then the following may be needed
@@ -188,15 +191,17 @@ function submit(&$db, $CountriesForRetail, $MarkExported, $FromDate, $ToDate) {
 						SET klexported = 'Y' 
 						WHERE klexported = 'N' 
 							AND salesorders.orddate >= '" . $FromDate . "'
-							AND salesorders.orddate <= '" . $ToDate . "')";
+							AND salesorders.orddate <= '" . $ToDate . "'
+							AND salesorders.debtorno NOT LIKE 'RETAIL%' " . 
+							$SqlCustomers;
 				$resultUpdate = DB_query($sql,'','',true);
 			}
 			DB_Txn_Commit();
 
 		}else{
-			$Title = _('Excel file for Sendinblue: Export Online Customers');
+			$Title = _('Excel file for Sendinblue: Export webERP Customers');
 			include('includes/header.inc');
-			prnMsg('No Online Customer Data to export to Sendinblue');
+			prnMsg('No webERP Customer Data to export to Sendinblue');
 			include('includes/footer.inc');
 		}
 	}
@@ -207,7 +212,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 {
 // Display form fields. This function is called the first time
 // the page is called.
-	$Title = _('Excel file for Sendinblue: Export Online Customers');
+	$Title = _('Excel file for Sendinblue: Export webERP Customers');
 
 	include('includes/header.inc');
 
@@ -217,16 +222,23 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<p class="page_title_text">
-			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Excel file for Sendinblue: Export Online Customer') . '" alt="" />' . ' ' . _('Excel file for Sendinblue: Export Online Customer') . '
+			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Excel file for Sendinblue: Export webERP Customer') . '" alt="" />' . ' ' . _('Excel file for Sendinblue: Export webERP Customer') . '
 		</p>';
 
 	echo '<table>';
 
 	echo '<tr>
-			<td>' . _('From:') . ':</td>
+			<td>' . _('From') . ':</td>
 			<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="FromDate" size="10" maxlength="10" value="' . $_POST['FromDate'] . '" /></td>
 			<td>' . _('To') . ':</td>
 			<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="ToDate" size="10" maxlength="10" value="' . $_POST['ToDate'] . '" /></td>
+		</tr>';
+	echo '<tr><td>' . _('Type of Customers?') . ':</td>
+			<td><select name="TypeCustomers">
+				<option selected="selected" value="WEB">' . _('Online Only') . '</option>
+				<option value="OTHERS">' . _('Others') . '</option>
+				</select>
+			</td>
 		</tr>';
 	echo '<tr><td>' . _('Mark as Exported?') . ':</td>
 			<td><select name="MarkExported">
