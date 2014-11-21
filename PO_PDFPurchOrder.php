@@ -267,9 +267,8 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 // RICARD KL MODIFICATION 
 			if (mb_strlen($POLine['suppliers_partno'])>0){
 				$Desc = $POLine['suppliers_partno'] . ' ' . $POLine['itemdescription'];
-//				$Desc = $POLine['itemdescription'] . ' ' .  $POLine['suppliers_partno'];
-//				$Desc = $POLine['itemdescription'];
 			} else {
+				$Desc = $POLine['itemdescription'];
 			}
 			$ItemCode = $POLine['itemcode'];
 			$OrderTotal += ($POLine['unitprice'] * $POLine['quantityord']);
