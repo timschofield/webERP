@@ -14,7 +14,7 @@ $EmailText  = "KL webERP Cron Job: Daily Tasks Group " . $Group . "\n";
 $EmailText  = KL_DailyChecks($Group, $RootPath, $db, $EmailText);
 
 $EmailAddress = "webmaster@kapal-laut.com";
-$EmailSubject  = "KL webERP: Daily CRON JOB " . $Group ; 
+$EmailSubject  = "KL webERP Cron Job: Daily Tasks " . $Group ; 
 SendEmailFromCron($EmailAddress, $EmailSubject, $EmailText, '');
 
 ?>

@@ -2,12 +2,12 @@
 
 function DailyReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db, $EmailText){
 
-	OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db); // Updates RL for online orders
+	$EmailText = OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db, $EmailText); // Updates RL for online orders
 
-	SetRLForTopSalesItems(   1, 100, 60,  60, 999999, 4, $ShowMessages, $updateDB, $RootPath, $db);
-	SetRLForTopSalesItems(   1, 100, 60,  45,     60, 3, $ShowMessages, $updateDB, $RootPath, $db);
-	SetRLForTopSalesItems(   1, 100, 60,  30,     45, 2, $ShowMessages, $updateDB, $RootPath, $db);
-	SetRLForTopSalesItems( 101, 250, 60,  30, 999999, 2, $ShowMessages, $updateDB, $RootPath, $db);
+	$EmailText = SetRLForTopSalesItems(   1, 100, 60,  60, 999999, 4, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+	$EmailText = SetRLForTopSalesItems(   1, 100, 60,  45,     60, 3, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+	$EmailText = SetRLForTopSalesItems(   1, 100, 60,  30,     45, 2, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+	$EmailText = SetRLForTopSalesItems( 101, 250, 60,  30, 999999, 2, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 
 	RebalancingBetweenShops(60, $ShowMessages, $updateDB, $RootPath, $db);
 
@@ -554,7 +554,7 @@ function SetRLZeroForNotAvailableItems($ShowMessages, $updateDB, $RootPath, $db)
 	}
 }
 
-function SetRLForTopSalesItems( $starttopitems, $endtopitems, $daystopitems, $minstockavailable, $maxstockavailable, $NewRL, $ShowMessages, $updateDB, $RootPath, $db){
+function SetRLForTopSalesItems( $starttopitems, $endtopitems, $daystopitems, $minstockavailable, $maxstockavailable, $NewRL, $ShowMessages, $updateDB, $RootPath, $db, $EmailText){
 
 /* function SetRLForTopSalesItems Increases RL for good selling items with enough stock.
 Sets Reorder Level to $NewRL 
@@ -573,6 +573,10 @@ to the shops with RL > 0.
 19/04/2013 modification: Change the condition of "not changing price" to the new flag
 24/07/2013 modification: Do not increase RL for toko online
 */	
+	if ($EmailText!=''){
+		$EmailText = $EmailText . "\n" . "SetRLForTopSalesItems" . "\n\n";
+	}
+
 	$Today = FormatDateForSQL(Date($_SESSION['DefaultDateFormat']));
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$daystopitems));
 	
@@ -665,6 +669,9 @@ to the shops with RL > 0.
 									locale_number_format($CurrentNewRL,0)
 									);
 							}
+							if ($EmailText!=''){
+								$EmailText = $EmailText . $myrow['stockid'] . " @ " . $mydistribution['loccode'] . " Old RL = " . $mydistribution['oldrl'] .  " New RL = " . $CurrentNewRL . "\n";
+							}
 						}
 					}
 				}
@@ -678,6 +685,7 @@ to the shops with RL > 0.
 			}
 		}
 	}
+	return $EmailText;
 }
 
 function SetRLForLowSalesItems( $starttopitems, $endtopitems, $daystopitems, $NewRL, $ShowMessages, $updateDB, $RootPath, $db){
@@ -982,7 +990,11 @@ function SetReorderLevel($reason, $stockid, $loccode, $oldRL, $newRL, $updateDB,
 }
 
 
-function OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db){
+function OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db, $EmailText){
+
+	if ($EmailText!=''){
+		$EmailText = $EmailText . "\n" . "OnlineReorderLevelAdjustments" . "\n\n";
+	}
 	
 	// set all RL=0 for toko online
 	if($updateDB){
@@ -992,6 +1004,9 @@ function OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db)
 		$Result = DB_query($RLSQL,$ErrMsg,$DbgMsg,true);		
 		if ($ShowMessages){
 			prnMsg(_('Reset all RL=0 for shop online location TOKWS.'),'info');
+		}
+		if ($EmailText!=''){
+			$EmailText = $EmailText . "Reset all RL=0 for shop online location TOKWS" . "\n";
 		}
 	}
 // adjust RL for toko online as needed
@@ -1049,6 +1064,9 @@ function OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db)
 						);
 				$i++;
 			}
+			if ($EmailText!=''){
+				$EmailText = $EmailText . $myrow['stkcode'] . " QOH = " . $myrow['totalqty'] .  " RL = " . $myrow['reorderlevel'] . "\n";
+			}
 		}
 		if ($ShowMessages){
 			echo '</table>
@@ -1058,12 +1076,16 @@ function OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db)
 		if ($ShowMessages){
 			prnMsg(_('No webSHOP orders to be processed at this time.'),'info');
 		}
+		if ($EmailText!=''){
+			$EmailText = $EmailText . "No webSHOP orders to be processed at this time" . "\n";
+		}
 	}
+	return $EmailText;
 }
 
 function AdjustPackaging($DaysSales, $LongDaysSales, $ShowMessages, $updateDB, $RootPath, $db, $EmailText){
 	if ($EmailText!=''){
-		$EmailText = $EmailText . "\n\n" . "Adjust Packaging" . "\n\n" .
+		$EmailText = $EmailText . "\n" . "Adjust Packaging" . "\n\n" .
 					"DaysSales = " . $DaysSales . " " .	"LongDaysSales = " . $LongDaysSales . " " .
 					"RootPath = " . $RootPath . "\n" .
 					"List Shops Using Packaging Control = " . CleanListToPrint(LIST_SHOPS_USING_PACKAGING_CONTROL) . "\n" .
