@@ -19,7 +19,7 @@ include('includes/SQL_CommonFunctions.inc');
 
 if (isset($_GET['DebtorNo'])) {
 	// Page called with customer code
-	
+
 	$SQL = "SELECT debtortrans.id,
 				debtortrans.transno,
 				systypes.typename,
@@ -53,7 +53,7 @@ if (isset($_GET['DebtorNo'])) {
 	}
 	 echo '<table class="selection">';
 	echo $TableHeader;
-	
+
 	while ($myrow = DB_fetch_array($result)) {
 		unset($_SESSION['Alloc']->Allocs);
 		unset($_SESSION['Alloc']);
@@ -215,7 +215,7 @@ function ProcessAllocation() {
 									'" . $_SESSION['CompanyRecord']['debtorsact'] . "',
 									'',
 									'" . -$MovtInDiffOnExch . "')";
-									
+
 				if( !$Result = DB_query($SQL) ) {
 					$Error = _('Could not update debtors control in General Ledger');
 				}
@@ -236,16 +236,5 @@ function ProcessAllocation() {
 		unset($_POST['AllocTrans']);
 	}
 }
-
-?>
-ocTrans']);
-	}
-}
-
-?>
-
-}
-
-?>
 
 ?>
