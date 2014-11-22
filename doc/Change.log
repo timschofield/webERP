@@ -1,5 +1,6 @@
 webERP Change Log
 
+22/11/14 Exson: Fix the qualitytext does not have default value for strict sql mode in Credit_Invoice.php.
 22/11/14 Phil: Z_DeleteOldPrices.php now removes all old prices where there is a later start for a price with no end date
 22/11/14 Phil: Added new script CustomerBalancesMovement.php to show customer activity debits and credits and the movement of their balances over a specified date range
 22/11/14 Phil: Added new script Z_UpdateItemCosts.php that allows a csv import of items and costs and updates the standard cost based on imported data
