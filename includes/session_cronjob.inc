@@ -3,23 +3,15 @@
 
 /*****************************************************************************************
 KL RICARD MODIFICATIONS:
+- Script based on session.inc but simplified to used with cron jobs
 - Change of AllowAnyone by AllowCronJobToBeRun to minimize risk of intrusions
+- Added $_SESSION['UserID'] = "CronJobKL";
 *****************************************************************************************/
-
 
 if (!isset($PathPrefix)) {
 	$PathPrefix='';
 }
 
-
-if (!file_exists($PathPrefix . 'config.php')){
-	$RootPath = dirname(htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'));
-	if ($RootPath == '/' OR $RootPath == "\\") {
-		$RootPath = '';
-	}
-	header('Location:' . $RootPath . '/install/index.php');
-	exit;
-}
 include($PathPrefix . 'config.php');
 
 if (isset($dbuser)) {
@@ -48,9 +40,7 @@ session_start();
 include($PathPrefix . 'includes/ConnectDB.inc');
 include($PathPrefix . 'includes/DateFunctions.inc');
 
-if (!isset($_SESSION['AttemptsCounter']) OR $AllowDemoMode==true){
-	$_SESSION['AttemptsCounter'] = 0;
-}
+$_SESSION['AttemptsCounter'] = 0;
 
 /* iterate through all elements of the $_POST array and DB_escape_string them
 to limit possibility for SQL injection attacks and cross scripting attacks
@@ -87,135 +77,16 @@ if (isset($_SESSION['DatabaseName'])){
 
 include($PathPrefix . 'includes/LanguageSetup.php');
 
-
 if (!isset($AllowCronJobToBeRun)){ /* only do security checks if AllowCronJobToBeRun is not true */
-
-	include $PathPrefix . 'includes/UserLogin.php';	/* Login checking and setup */
-
-	if (isset($_POST['UserNameEntryField']) AND isset($_POST['Password'])) {
-		$rc = userLogin($_POST['UserNameEntryField'], $_POST['Password'], $SysAdminEmail, $db);
-	} elseif (empty($_SESSION['DatabaseName'])) {
-		$rc = UL_SHOWLOGIN;
-	} else {
-		$rc = UL_OK;
-	}
-
-	/*  Need to set the theme to make login screen nice */
-	/* RICARD KL Set up the login theme for regular and test webERP */
-	if (strpos($_SERVER['PHP_SELF'],"TEST")){
-		$Theme = (isset($_SESSION['Theme'])) ? $_SESSION['Theme'] : 'gel'; 
-	}else{
-		$Theme = (isset($_SESSION['Theme'])) ? $_SESSION['Theme'] : 'default'; 
-	}
-	/* RICARD KL END MODIFICATION Set up the login theme for regular and test webERP */
-	switch ($rc) {
-	case  UL_OK; //user logged in successfully
-		include($PathPrefix . 'includes/LanguageSetup.php'); //set up the language
-		break;
-
-	case UL_SHOWLOGIN:
-		include($PathPrefix . 'includes/Login.php');
 		exit;
-
-	case UL_BLOCKED:
-		die(include($PathPrefix . 'includes/FailedLogin.php'));
-
-	case  UL_CONFIGERR:
-		$Title = _('Account Error Report');
-		include($PathPrefix . 'includes/header.inc');
-		echo '<br /><br /><br />';
-		prnMsg(_('Your user role does not have any access defined for webERP. There is an error in the security setup for this user account'),'error');
-		include($PathPrefix . 'includes/footer.inc');
-			exit;
-
-	case  UL_NOTVALID:
-		$demo_text = '<font size="3" color="red"><b>' .  _('incorrect password') . '</b></font><br /><b>' . _('The user/password combination') . '<br />' . _('is not a valid user of the system') . '</b>';
-		die(include($PathPrefix . 'includes/Login.php'));
-
-	case  UL_MAINTENANCE:
-		$demo_text = '<font size="3" color="red"><b>' .  _('system maintenance') . '</b></font><br /><b>' . _('webERP is not available right now') . '<br />' . _('during maintenance of the system') . '</b>';
-		die(include($PathPrefix . 'includes/Login.php'));
-
-	}
 } /* only do security checks if AllowCronJobToBeRun is not true */
- elseif(basename($_SERVER['SCRIPT_NAME'])=='Logout.php'){
-	header('Location: index.php');
-}
-
 
 /*User is logged in so get configuration parameters  - save in session*/
 include($PathPrefix . 'includes/GetConfig.php');
 
-
 /*If the Code $Version - held in ConnectDB.inc is > than the Database VersionNumber held in config table then do upgrades */
 if (strcmp($Version,$_SESSION['VersionNumber'])>0 AND (basename($_SERVER['SCRIPT_NAME'])!='UpgradeDatabase.php')) {
 	header('Location: UpgradeDatabase.php');
-}
-if(isset($_SESSION['DB_Maintenance'])){ 
-	if ($_SESSION['DB_Maintenance']>0)  { //run the DB maintenance script
-		if (DateDiff(Date($_SESSION['DefaultDateFormat']),
-				ConvertSQLDate($_SESSION['DB_Maintenance_LastRun'])
-				,'d')	>= 	$_SESSION['DB_Maintenance']){
-
-			/*Do the DB maintenance routing for the DB_type selected */
-			DB_Maintenance();
-			$_SESSION['DB_Maintenance_LastRun'] = Date('Y-m-d');
-		}
-	}
-}
-
-/* RICARD KL Modification to run daily cheks at DB 
-COMMENTED as now run by CRON JOB
-if(isset($_SESSION['KL_DailyChecks_LastRun'])){
-	if (DateDiff(Date($_SESSION['DefaultDateFormat']),
-			ConvertSQLDate($_SESSION['KL_DailyChecks_LastRun']),'d') >= 1){
-
-		include($PathPrefix . 'KLDailyChecks.php');
-		KL_DailyChecks($RootPath, $db);
-		$_SESSION['KL_DailyChecks_LastRun'] = Date('Y-m-d');
-	}
-}
-RICARD KL END Modification to run daily cheks at DB */
-
-//purge the audit trail if necessary
-if (isset($_SESSION['MonthsAuditTrail'])){ 
-	 $sql = "DELETE FROM audittrail
-			WHERE  transactiondate <= '" . Date('Y-m-d', mktime(0,0,0, Date('m')-$_SESSION['MonthsAuditTrail'])) . "'";
-	$ErrMsg = _('There was a problem deleting expired audit-trail history');
-	$result = DB_query($sql);
-}
-/*Check to see if currency rates need to be updated */
-if (isset($_SESSION['UpdateCurrencyRatesDaily'])){
-	if ($_SESSION['UpdateCurrencyRatesDaily']!=0)  {
-		if (DateDiff(Date($_SESSION['DefaultDateFormat']),
-			ConvertSQLDate($_SESSION['UpdateCurrencyRatesDaily']),'d')> 0){
-
-			if ($_SESSION['ExchangeRateFeed']=='ECB') {
-				$CurrencyRates = GetECBCurrencyRates(); // gets rates from ECB see includes/MiscFunctions.php
-				/*Loop around the defined currencies and get the rate from ECB */
-				if ($CurrencyRates!=false) {
-					$CurrenciesResult = DB_query("SELECT currabrev FROM currencies");
-					while ($CurrencyRow = DB_fetch_row($CurrenciesResult)){
-						if ($CurrencyRow[0]!=$_SESSION['CompanyRecord']['currencydefault']){
-
-							$UpdateCurrRateResult = DB_query("UPDATE currencies SET rate='" . GetCurrencyRate($CurrencyRow[0],$CurrencyRates) . "'
-																WHERE currabrev='" . $CurrencyRow[0] . "'");
-						}
-					}
-				}
-			} else {
-				$CurrenciesResult = DB_query("SELECT currabrev FROM currencies");
-				while ($CurrencyRow = DB_fetch_row($CurrenciesResult)){
-					if ($CurrencyRow[0]!=$_SESSION['CompanyRecord']['currencydefault']){
-						$UpdateCurrRateResult = DB_query("UPDATE currencies SET rate='" . google_currency_rate($CurrencyRow[0]) . "'
-															WHERE currabrev='" . $CurrencyRow[0] . "'");
-					}
-				}
-			}
-			$_SESSION['UpdateCurrencyRatesDaily'] = Date('Y-m-d');
-			$UpdateConfigResult = DB_query("UPDATE config SET confvalue = '" . Date('Y-m-d') . "' WHERE confname='UpdateCurrencyRatesDaily'");
-		}
-	}
 }
 
 If (isset($_POST['Theme']) AND ($_SESSION['UsersRealName'] == $_POST['RealName'])) {
@@ -333,13 +204,6 @@ if (!isset($AllowCronJobToBeRun)){
 	}
 }
 
-//$PageSecurity = 9 hard coded for supplier access Supplier access must have just 9 and 0 tokens
-if (in_array(9,$_SESSION['AllowedPageSecurityTokens']) AND count($_SESSION['AllowedPageSecurityTokens'])==2){
-	$SupplierLogin=1;
-}
-if (in_array(1,$_SESSION['AllowedPageSecurityTokens']) AND count($_SESSION['AllowedPageSecurityTokens'])==2){
-	$CustomerLogin = 1;
-}
 
 if (in_array($_SESSION['PageSecurityArray']['WWW_Users.php'], $_SESSION['AllowedPageSecurityTokens'])) { /*System administrator login */
 	$debug = 1; //allow debug messages
@@ -368,5 +232,7 @@ if (sizeof($_POST) > 0 AND !isset($AllowCronJobToBeRun)) {
 		exit;
 	}
 }
+
+$_SESSION['UserID'] = "CronJobKL";
 
 ?>
