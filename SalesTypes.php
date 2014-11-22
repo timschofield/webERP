@@ -184,10 +184,10 @@ or deletion of the records*/
 	$sql = "SELECT typeabbrev,sales_type FROM salestypes ORDER BY typeabbrev";
 	$result = DB_query($sql);
 
-	echo '<table class="selection">';
-	echo '<tr>
-		<th class="ascending">' . _('Type Code') . '</th>
-		<th class="ascending">' . _('Type Name') . '</th>
+	echo '<table class="selection">
+		<tr>
+				<th class="ascending">' . _('Type Code') . '</th>
+				<th class="ascending">' . _('Type Name') . '</th>
 		</tr>';
 
 $k=0; //row colour counter
@@ -218,19 +218,21 @@ while ($myrow = DB_fetch_row($result)) {
 //end of ifs and buts!
 if (isset($SelectedType)) {
 
-	echo '<br /><div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'">' . _('Show All Sales Types Defined') . '</a></div>';
+	echo '<br />
+			<div class="centre">
+				<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'">' . _('Show All Sales Types Defined') . '</a>
+			</div>';
 }
 if (! isset($_GET['delete'])) {
 
-	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" >';
-    echo '<div>';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<br />';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" >
+		<div>
+		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+		<br />';
 
 
 	// The user wish to EDIT an existing type
-	if ( isset($SelectedType) AND $SelectedType!='' )
-	{
+	if ( isset($SelectedType) AND $SelectedType!='' ) {
 
 		$sql = "SELECT typeabbrev,
 			       sales_type
@@ -243,37 +245,42 @@ if (! isset($_GET['delete'])) {
 		$_POST['TypeAbbrev'] = $myrow['typeabbrev'];
 		$_POST['Sales_Type']  = $myrow['sales_type'];
 
-		echo '<input type="hidden" name="SelectedType" value="' . $SelectedType . '" />';
-		echo '<input type="hidden" name="TypeAbbrev" value="' . $_POST['TypeAbbrev'] . '" />';
-		echo '<table class="selection">';
-		echo '<tr><th colspan="4"><b>' . _('Sales Type/Price List Setup') . '</b></th></tr>';
-		echo '<tr><td>' . _('Type Code') . ':</td><td>';
-
-		// We dont allow the user to change an existing type code
-
-		echo $_POST['TypeAbbrev'] . '</td></tr>';
+		echo '<input type="hidden" name="SelectedType" value="' . $SelectedType . '" />
+			<input type="hidden" name="TypeAbbrev" value="' . $_POST['TypeAbbrev'] . '" />
+			<table class="selection">
+			<tr>
+				<th colspan="4"><b>' . _('Sales Type/Price List Setup') . '</b></th>
+			</tr>
+			<tr>
+				<td>' . _('Type Code') . ':</td>
+				<td>' . $_POST['TypeAbbrev'] . '</td>
+			</tr>';
 
 	} else 	{
 
 		// This is a new type so the user may volunteer a type code
 
-		echo '<table class="selection">';
-		echo '<tr><th colspan="4"><b>' . _('Sales Type/Price List Setup') . '</b></th></tr>';
-		echo '<tr><td>' . _('Type Code') . ':</td>
-				<td><input type="text" ' . (in_array('SalesType',$Errors) ? 'class="inputerror"' : '' ) .' size="3" maxlength="2" name="TypeAbbrev" /></td></tr>';
+		echo '<table class="selection">
+				<tr>
+					<th colspan="4"><b>' . _('Sales Type/Price List Setup') . '</b></th>
+				</tr>
+				<tr>
+					<td>' . _('Type Code') . ':</td>
+					<td><input type="text" ' . (in_array('SalesType',$Errors) ? 'class="inputerror"' : '' ) .' size="3" maxlength="2" name="TypeAbbrev" /></td>
+				</tr>';
 	}
 
 	if (!isset($_POST['Sales_Type'])) {
 		$_POST['Sales_Type']='';
 	}
-	echo '<tr><td>' . _('Sales Type Name') . ':</td>
-			<td><input type="text" name="Sales_Type" value="' . $_POST['Sales_Type'] . '" /></td></tr>';
+	echo '<tr>
+			<td>' . _('Sales Type Name') . ':</td>
+			<td><input type="text" name="Sales_Type" value="' . $_POST['Sales_Type'] . '" /></td>
+		</tr>
+		</table>'; // close main table
 
-   	echo '</table>'; // close main table
-
-	echo '<br /><div class="centre"><input type="submit" name="submit" value="' . _('Accept') . '" /><input type="submit" name="Cancel" value="' . _('Cancel') . '" /></div>';
-
-	echo '</div>
+	echo '<br /><div class="centre"><input type="submit" name="submit" value="' . _('Accept') . '" /><input type="submit" name="Cancel" value="' . _('Cancel') . '" /></div>
+			</div>
           </form>';
 
 } // end if user wish to delete
