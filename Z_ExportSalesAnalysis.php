@@ -94,7 +94,7 @@ $sql = "SELECT 	stockmoves.debtorno,
 				stockmoves.branchcode,
 				stockid,
 				trandate,
-				-qty, 
+				-qty,
 				-price*(1-discountpercent)*qty,
 				-standardcost*qty,
 				transno
@@ -129,16 +129,16 @@ While ($myrow = DB_fetch_row($result)){
 fclose($fp);
 
 // set up basic ftp connection
-$conn_id = ftp_connect($FTP_Server); 
+$conn_id = ftp_connect($FTP_Server);
 
 // login with username and password
-$login_result = ftp_login($conn_id, $FTP_User, $FTP_Password); 
+$login_result = ftp_login($conn_id, $FTP_User, $FTP_Password);
 
 // check connection
-if ((!$conn_id) || (!$login_result)) { 
+if ((!$conn_id) || (!$login_result)) {
     echo "FTP connection has failed!";
-    echo "Attempted to connect to $FTP_Server  with user $FTP_User"; 
-    exit; 
+    echo "Attempted to connect to $FTP_Server  with user $FTP_User";
+    exit;
 } else {
     echo "Connected to ftp_server";
 }
@@ -146,20 +146,18 @@ if ((!$conn_id) || (!$login_result)) {
 // upload the files
 $upload = ftp_put($conn_id, '/' . Date('Y-m-d') .'_Sales.csv', $SalesFileName, FTP_BINARY);
 $upload = ftp_put($conn_id, '/' . Date('Y-m-d') .'_Items.csv', $ItemsFileName, FTP_BINARY);
-$upload = ftp_put($conn_id, '/' . Date('Y-m-d') .'_Customers.csv', $CustomersFileName, FTP_BINARY); 
+$upload = ftp_put($conn_id, '/' . Date('Y-m-d') .'_Customers.csv', $CustomersFileName, FTP_BINARY);
 
 // check upload status
-if (!$upload) { 
+if (!$upload) {
     echo "FTP upload has failed!";
 } else {
     echo "Uploaded $source_file to $ftp_server as $destination_file";
 }
 
-// close the FTP stream 
-ftp_close($conn_id); 
+// close the FTP stream
+ftp_close($conn_id);
 
 include('includes/footer.inc');
-
-?>oter.inc');
 
 ?>
