@@ -45,7 +45,6 @@ if ($_SESSION['SalesmanLogin'] != '') {
 	}
 }
 
-		
 
 if (isset($_GET['Status'])) {
 	if (is_numeric($_GET['Status'])) {
@@ -323,7 +322,7 @@ while ($MyRow = DB_fetch_array($TransResult)) {
 					</td>
 					<td>
 						<a href="', $RootPath, '/GLTransInquiry.php?TypeID=', $MyRow['type'], '&amp;TransNo=', $MyRow['transno'], '">', _('View GL Entries'), '
-							<img src="', $RootPath, '/css/', $Theme, '/images/gl.png" title="', _('View the GL Entries'), '" alt="" />
+							<img src="', $RootPath, '/css/', $Theme, '/images/gl.png" title="', _('View GL Entries'), '" alt="" />
 						</a>
 					</td>
 				</tr>';
@@ -441,7 +440,7 @@ while ($MyRow = DB_fetch_array($TransResult)) {
 					</td>
 					<td>
 						<a href="', $RootPath, '/GLTransInquiry.php?TypeID=', $MyRow['type'], '&amp;TransNo=', $MyRow['transno'], '">' . _('View GL Entries') . '
-							<img src="', $RootPath, '/css/', $Theme, '/images/gl.png" title="', _('View the GL Entries'), '" alt="" />
+							<img src="', $RootPath, '/css/', $Theme, '/images/gl.png" title="', _('View GL Entries'), '" alt="" />
 						</a>
 					</td>
 				</tr>';
@@ -511,7 +510,7 @@ while ($MyRow = DB_fetch_array($TransResult)) {
 					<td></td>
 					<td>
 						<a href="', $RootPath, '/GLTransInquiry.php?TypeID=', $MyRow['type'], '&amp;TransNo=', $MyRow['transno'], '">', _('View GL Entries'), '
-							<img src="', $RootPath, '/css/', $Theme, '/images/gl.png" title="', _('View the GL Entries'), '" alt="" />
+							<img src="', $RootPath, '/css/', $Theme, '/images/gl.png" title="', _('View GL Entries'), '" alt="" />
 						</a>
 					</td>
 				</tr>';
@@ -565,7 +564,7 @@ while ($MyRow = DB_fetch_array($TransResult)) {
 					<td></td>
 					<td>
 						<a href="', $RootPath, '/GLTransInquiry.php?TypeID=', $MyRow['type'], '&amp;TransNo=', $MyRow['transno'], '">' . _('View GL Entries') . '
-						<img src="', $RootPath, '/css/', $Theme, '/images/gl.png" title="', _('View the GL Entries'), '" alt="" />
+						<img src="', $RootPath, '/css/', $Theme, '/images/gl.png" title="', _('View GL Entries'), '" alt="" />
 					</a>
 					</td>
 				</tr>';
@@ -614,7 +613,7 @@ while ($MyRow = DB_fetch_array($TransResult)) {
 					<td></td>
 					<td>
 						<a href="', $RootPath, '/GLTransInquiry.php?TypeID=', $MyRow['type'], '&amp;TransNo=', $MyRow['transno'], '">', _('View GL Entries'), '
-							<img src="', $RootPath, '/css/', $Theme, '/images/gl.png" title="', _('View the GL Entries'), '" alt="" />
+							<img src="', $RootPath, '/css/', $Theme, '/images/gl.png" title="', _('View GL Entries'), '" alt="" />
 						</a>
 					</td>
 				</tr>';
