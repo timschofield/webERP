@@ -49,7 +49,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 
 	$FirstStatement = True;
 
-	
+
 	// check if the user has set a default bank account for invoices, if not leave it blank
 	$sql = "SELECT bankaccounts.invoice,
 				bankaccounts.bankaccountnumber,
@@ -124,7 +124,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 					ON debtortrans.type=systypes.typeid
 				WHERE debtortrans.debtorno='" . $StmtHeader['debtorno'] . "'
 				AND debtortrans.settled=0";
-	
+
 		if ($_SESSION['SalesmanLogin'] != '') {
 			$sql .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 		}
@@ -198,7 +198,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 
 						$FontSize=9;
 
-						$LeftOvers = $pdf->addTextWrap($Left_Margin+1,$YPos,60,$FontSize,$myrow['typename'], 'left');
+						$LeftOvers = $pdf->addTextWrap($Left_Margin+1,$YPos,60,$FontSize, _($myrow['typename']), 'left');
 						$LeftOvers = $pdf->addTextWrap($Left_Margin+110,$YPos,50,$FontSize,$myrow['transno'], 'left');
 						$LeftOvers = $pdf->addTextWrap($Left_Margin+211,$YPos,50,$FontSize,ConvertSQLDate($myrow['trandate']), 'left');
 
@@ -248,7 +248,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 				$DisplayOutstanding = locale_number_format($myrow['ostdg'],$StmtHeader['currdecimalplaces']);
 
 				$FontSize=9;
-				$LeftOvers = $pdf->addTextWrap($Left_Margin+1,$YPos,60,$FontSize,$myrow['typename'], 'left');
+				$LeftOvers = $pdf->addTextWrap($Left_Margin+1,$YPos,60,$FontSize, _($myrow['typename']), 'left');
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+110,$YPos,50,$FontSize,$myrow['transno'], 'left');
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+211,$YPos,50,$FontSize,ConvertSQLDate($myrow['trandate']), 'left');
 
@@ -266,7 +266,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 
 				/*Now show also in the remittance advice sectin */
 				$FontSize=8;
-				$LeftOvers = $pdf->addTextWrap($Perforation+10,$YPos,30,$FontSize,$myrow['typename'], 'left');
+				$LeftOvers = $pdf->addTextWrap($Perforation+10,$YPos,30,$FontSize, _($myrow['typename']), 'left');
 				$LeftOvers = $pdf->addTextWrap($Perforation+75,$YPos,30,$FontSize,$myrow['transno'], 'left');
 				$LeftOvers = $pdf->addTextWrap($Perforation+90,$YPos,60,$FontSize,$DisplayOutstanding, 'right');
 
@@ -420,7 +420,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 			/* Show the bank account details */
 			$pdf->addText($Perforation-250, $Bottom_Margin+32, $FontSize, _('Please make payments to our account:') . ' ' . $DefaultBankAccountNumber);
 			$pdf->addText($Perforation-250, $Bottom_Margin+32-$line_height, $FontSize, _('Quoting your account reference') . ' ' . $StmtHeader['debtorno'] );
-			
+
 			/*also show the total due in the remittance section */
 			if ($AgedAnalysis['balance']>0){ /*No point showing a negative balance for payment! */
 					$FontSize=8;
