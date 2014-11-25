@@ -97,6 +97,8 @@ if (DB_num_rows($result) != 0){
 				$Weight = STANDARD_BEAD_WEIGHT;
 			}elseif (isEarring($myrow['stockid'])){
 				$Weight = STANDARD_EARRING_WEIGHT;
+			}elseif (isEarcuff($myrow['stockid'])){
+				$Weight = STANDARD_EARRING_WEIGHT;
 			}elseif (isBracelet($myrow['stockid'])){
 				$Weight = STANDARD_BRACELET_WEIGHT;
 			}elseif (isAnklet($myrow['stockid'])){
@@ -122,6 +124,8 @@ if (DB_num_rows($result) != 0){
 			}elseif (isBead($myrow['stockid'])){
 				$Volume = STANDARD_BEAD_VOLUME;
 			}elseif (isEarring($myrow['stockid'])){
+				$Volume = STANDARD_EARRING_VOLUME;
+			}elseif (isEarcuff($myrow['stockid'])){
 				$Volume = STANDARD_EARRING_VOLUME;
 			}elseif (isBracelet($myrow['stockid'])){
 				$Volume = STANDARD_BRACELET_VOLUME;
@@ -349,6 +353,9 @@ function WebsiteCategorySilverJewellery($StockId, $Description, $Long, $Category
 	if (($WebCat == SILVER_JEWELLERY) AND isEarring($StockId)){
 		$WebCat = SILVER_EARRINGS;	
 	}
+	if (($WebCat == SILVER_JEWELLERY) AND isEarcuff($StockId)){
+		$WebCat = SILVER_EARCUFFS;	
+	}
 	if (($WebCat == SILVER_JEWELLERY) AND isBracelet($StockId)){
 		$WebCat = SILVER_BRACELETS;	
 	}
@@ -385,6 +392,9 @@ function WebsiteCategoryFashionJewellery($StockId, $Description, $Long, $Categor
 	if (($WebCat == FASHION_JEWELLERY) AND isEarring($StockId)){
 		$WebCat = FASHION_JEWELLERY_EARRINGS;	
 	}
+	if (($WebCat == FASHION_JEWELLERY) AND isEarcuff($StockId)){
+		$WebCat = FASHION_JEWELLERY_EARCUFFS;	
+	}
 	if (($WebCat == FASHION_JEWELLERY) AND isBracelet($StockId)){
 		$WebCat = FASHION_JEWELLERY_BRACELETS;	
 	}
@@ -416,6 +426,9 @@ function WebsiteCategoryStainlessSteel($StockId, $Description, $Long, $Category)
 	}
 	if (($WebCat == STAINLESS_STEEL_JEWELLERY) AND isEarring($StockId)){
 		$WebCat = STAINLESS_STEEL_EARRINGS;	
+	}
+	if (($WebCat == STAINLESS_STEEL_JEWELLERY) AND isEarcuff($StockId)){
+		$WebCat = STAINLESS_STEEL_EARCUFFS;	
 	}
 	if (($WebCat == STAINLESS_STEEL_JEWELLERY) AND isBracelet($StockId)){
 		$WebCat = STAINLESS_STEEL_BRACELETS;	
@@ -449,6 +462,9 @@ function WebsiteCategoryLeatherJewellery($StockId, $Description, $Long, $Categor
 	}
 	if (($WebCat == LEATHER_JEWELLERY) AND isEarring($StockId)){
 		$WebCat = LEATHER_EARRINGS;	
+	}
+	if (($WebCat == LEATHER_JEWELLERY) AND isEarcuff($StockId)){
+		$WebCat = LEATHER_EARCUFF;	
 	}
 	if (($WebCat == LEATHER_JEWELLERY) AND isBracelet($StockId)){
 		$WebCat = LEATHER_BRACELETS;	
@@ -501,6 +517,9 @@ function WebsiteCategoryClassic($StockId, $Description, $Long, $Category){
 	if (($WebCat == CLASSIC_JEWELLERY) AND isEarring($StockId)){
 		$WebCat = CLASSIC_EARRINGS;	
 	}
+	if (($WebCat == CLASSIC_JEWELLERY) AND isEarcuff($StockId)){
+		$WebCat = CLASSIC_EARCUFFS;	
+	}
 	if (($WebCat == CLASSIC_JEWELLERY) AND isBracelet($StockId)){
 		$WebCat = CLASSIC_BRACELETS;	
 	}
@@ -532,6 +551,9 @@ function WebsiteCategoryDiscount($StockId, $Description, $Long, $Category){
 	}
 	if (($WebCat == JEWELLERY_ON_SPECIAL) AND isEarring($StockId)){
 		$WebCat = EARRINGS_ON_SPECIAL;	
+	}
+	if (($WebCat == JEWELLERY_ON_SPECIAL) AND isEarcuff($StockId)){
+		$WebCat = EARCUFFS_ON_SPECIAL;	
 	}
 	if (($WebCat == JEWELLERY_ON_SPECIAL) AND isBracelet($StockId)){
 		$WebCat = BRACELETS_ON_SPECIAL;	

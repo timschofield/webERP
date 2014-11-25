@@ -66,6 +66,10 @@ function isEarring($stockid){
 	return (substr($stockid, 2,2) == "AR");
 }
 
+function isEarcuff($stockid){
+	return (substr($stockid, 2,2) == "CF");
+}
+
 function isPlasticBag($stockid){
 	return (substr($stockid, 0,4) == "BAPL");
 }
