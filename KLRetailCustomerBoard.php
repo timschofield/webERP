@@ -72,7 +72,6 @@ if ($_SESSION['UserID'] == "Laia"
 
 }
 
-
 prnMsg("Performed ". NUMBER_OF_TESTS . " Retail Customers Analysis",'success');
 time_finish($begintime);
 
@@ -371,7 +370,6 @@ function EmailHarvested($NumDays, $ListShops, $db){
 		</form>';
 			
 }
-
 
 function RetailCustomerAnalysisByAge($NumDays, $ListShops, $CountriesForRetail, $db){
 	$Yesterday  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
@@ -703,7 +701,5 @@ function RetailCustomerDataQualitySPG($NumDays, $db){
 			</form>';
 	}
 }
-
-
 
 ?>

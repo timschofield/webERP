@@ -2828,6 +2828,7 @@ function NotDiscountedItemsWithDiscount($RootPath, $db){
 			WHERE   categoryid NOT IN " . LIST_STOCK_CATEGORIES_PROMOTIONAL_ITEMS ."
 				AND categoryid NOT IN " . LIST_STOCK_CATEGORIES_DISCOUNT ."
 				AND categoryid NOT IN " . LIST_STOCK_CATEGORIES_OUTLET ."
+				AND categoryid NOT IN " . LIST_STOCK_CATEGORIES_OLD ."
 				AND discountcategory !=  ''
 				AND discontinued = 0";
 	$result = DB_query($SQL);
