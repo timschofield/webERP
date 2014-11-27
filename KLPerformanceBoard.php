@@ -481,6 +481,10 @@ function YearDifferenceSales($typereport, $NumDaysA, $db){
 
 	$TotalDateA = 0;
 	$TotalDateB = 0;
+	$TotalBothYearsDateA = 0;
+	$TotalBothYearsDateB = 0;
+	$TotalNewDateA = 0;
+	$TotalOldDateB = 0;
 
 	if ($typereport == "Shop"){
 		$SQL = "SELECT debtorno,
@@ -587,19 +591,84 @@ function YearDifferenceSales($typereport, $NumDaysA, $db){
 					locale_number_format($myrow['salesB'],0), 
 					$trend
 					);
+
+			if (($myrow['salesA'] > 0) AND ($myrow['salesB'] > 0)){
+				$TotalBothYearsDateA = $TotalBothYearsDateA +($myrow['salesA']);
+				$TotalBothYearsDateB = $TotalBothYearsDateB +($myrow['salesB']);
+			}
+			if (($myrow['salesA'] > 0) AND ($myrow['salesB'] == 0)){
+				$TotalNewDateA = $TotalNewDateA +($myrow['salesA']);
+			}
+			if (($myrow['salesA'] == 0) AND ($myrow['salesB'] > 0)){
+				$TotalOldDateB = $TotalOldDateB +($myrow['salesB']);
+			}
 			$TotalDateA = $TotalDateA +($myrow['salesA']);
 			$TotalDateB = $TotalDateB +($myrow['salesB']);
 			$i++;
 		}
-		$percent = (($TotalDateA)-($TotalDateB))/($TotalDateB) * 100;
-		$trend = " ";
-		if ($percent > 0){
-			$trend = "Improving ". locale_number_format($percent,0) . "%";
-		}
-		if ($percent < 0){
-			$trend = "Degrading ". locale_number_format($percent,0) . "%";
-		}
-	if ($typereport == "Shop"){
+		if ($typereport == "Shop"){
+			$percent = (($TotalBothYearsDateA)-($TotalBothYearsDateB))/($TotalBothYearsDateB) * 100;
+			$trend = " ";
+			if ($percent > 0){
+				$trend = "Improving ". locale_number_format($percent,0) . "%";
+			}
+			if ($percent < 0){
+				$trend = "Degrading ". locale_number_format($percent,0) . "%";
+			}
+			$k = StartEvenOrOddRow($k);
+			printf('<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					</tr>', 
+					"",
+					"",
+					"EXISTING SHOPS",
+					locale_number_format($TotalBothYearsDateA,0), 
+					locale_number_format($TotalBothYearsDateB,0), 
+					$trend
+					);
+			$k = StartEvenOrOddRow($k);
+			printf('<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					</tr>', 
+					"",
+					"",
+					"NEW SHOPS",
+					locale_number_format($TotalNewDateA,0), 
+					"", 
+					""
+					);
+			$k = StartEvenOrOddRow($k);
+			printf('<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					</tr>', 
+					"",
+					"",
+					"CLOSED SHOPS",
+					"", 
+					locale_number_format($TotalOldDateB,0), 
+					""
+					);
+			$percent = (($TotalDateA)-($TotalDateB))/($TotalDateB) * 100;
+			$trend = " ";
+			if ($percent > 0){
+				$trend = "Improving ". locale_number_format($percent,0) . "%";
+			}
+			if ($percent < 0){
+				$trend = "Degrading ". locale_number_format($percent,0) . "%";
+			}
+			$k = StartEvenOrOddRow($k);
 			printf('<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
