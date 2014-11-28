@@ -541,7 +541,8 @@ if ($_SESSION['UserID'] == "Ricard"){
 //	ImagesShouldNotBeInOpencartCatalog($RootPath, $db, $db_oc, $oc_tableprefix);
 	ItemsWithoutWeightOrVolume($RootPath, $db);
 	ItemsShouldBeInWebsite($db);
-	UsersNotLoggingIn(120, $db);
+	UsersNotLoggingIn(60, "ALL_EXCEPT_SPGSUPPORT", $db);
+	UsersNotLoggingIn(90, "SPGSUPPORT", $db);
 }
 
 if ($ShopSupportTeam){ 

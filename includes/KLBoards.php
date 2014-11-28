@@ -135,9 +135,15 @@ function SPGNotReportingSalesInDays($maxdays, $db){
 	}
 }
 
-function UsersNotLoggingIn($maxdays, $db){
+function UsersNotLoggingIn($maxdays, $type, $db){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays-1)) ;
-				
+	
+	if ($type=='SPGSUPPORT'){
+		$WhereType = " AND fullaccess = 22";
+	}else{
+		$WhereType = " AND fullaccess != 22";
+	}
+	
 	$SQL = "SELECT userid,
 				realname,
 				lastvisitdate
@@ -145,11 +151,15 @@ function UsersNotLoggingIn($maxdays, $db){
 			WHERE lastvisitdate IS NOT NULL
 				AND DATE(lastvisitdate) < '" . $StartDate . "'
 				AND userid NOT LIKE '999%'
-				AND userid <> 'TestUser'";
+				AND userid <> 'TestUser'" . $WhereType;
 			
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Regular webERP users not logging in for more than ') . $maxdays . _(' days.') .'</strong></p>';
+		if ($type=='SPGSUPPORT'){
+			echo '<p class="page_title_text" align="center"><strong>' . _('SPG Support webERP users not logging in for more than ') . $maxdays . _(' days.') .'</strong></p>';
+		}else{
+			echo '<p class="page_title_text" align="center"><strong>' . _('Regular webERP users not logging in for more than ') . $maxdays . _(' days.') .'</strong></p>';
+		}
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
