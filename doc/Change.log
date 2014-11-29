@@ -1,5 +1,6 @@
 webERP Change Log
 
+29/11/14 RChacon: Add Pan Size explanation (thanks to Tim Schofield and Pak Ricard).
 24/11/14 RChacon: In PrintCustStatements.php, make translatable the currency name and the transaction type.
 24/11/14 RChacon: Spanish translation improvements. Merging "View GL Entries" and "View the GL Entries".
 22/11/14 Exson: Fix the qualitytext does not have default value for strict sql mode in Credit_Invoice.php.

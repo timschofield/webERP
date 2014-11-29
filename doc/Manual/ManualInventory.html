@@ -126,7 +126,7 @@
     </ul>Entry of the base information is done from the menu, select the inventory tab and click "Add a New Inventory Item".
     <p>
 
-    <h3>ItemCode</h3>
+    <h3>Item Code</h3>
 
     <p>A stock code is required for each stock item, this can be any combination of characters up to 20 characters long. The coding structure of stock items should be considered, to ensure that like stock items appear together. Internally the system looks at the code to order stock items in the various look up tables. A systematic approach to naming stock items can save a lot of time later. However, good facilities are available to search. Under supplier purchasing data it is also possible to record the supplier's part number against an item.</p>
 
@@ -138,15 +138,11 @@
 
     <p>The description translations can be maintained within the same parameters above. The translations that can be maintained are set in the system configuration screen. Any number of translations can be maintained. These translations are used to print on customer invoices if the customer is set up to use one of the languages for which translations are maintained. If not translation is available then the fall back is to the default description.</p>
 
-    <h3>Categories</h3>
+    <h3>Category</h3>
 
     <p>These categories need to be set up first - from the System Setup tab of the menu. In selecting the stock category, be aware that the system uses the category information for analysis and summary reporting as well as identifying accounts for standard cost general ledger integration, if this option is enabled. There is a link to create new stock categories from the stock item entry page.</p>
 
     <p>A stock category is required for all stock items. The stock category is a text field which groups like stock items together. In selecting stock it is often useful to restrict the search to just the category required. A stock category select box shows on the Select Product screen for this purpose.</p>
-
-    <h3>Unit of Measurement</h3>
-
-    <p>This field describes how the stock is to be maintained and is self-explanatory. It is a compulsory field. The selection list is maintained in config.php as an array variable. To add or delete other units of measurement the array variable called $InventoryUnits defined in config.php must be edited by the system administrator.</p>
 
     <h3>Economic Order Quantity</h3>
 
@@ -156,13 +152,19 @@
 
     <p>This field is required for freight calculations. It records the volume of the one of the item as packaged for dispatch. See the section on freight calculations.</p>
 
-    <h3>Packaged Weight</h3>
+    <h3>Packaged Gross Weight</h3>
 
     <p>This field is required for freight calculations. It records the weight of the one of the item as packaged for dispatch. The freight calculation takes the higher of the freight costs based on the total weight of the order and the total volume of the order. Most freight companies use a conversion and charge the higher of the two. See the section on freight calculations.</p>
+
+    <!--h3>Net Weight</h3>
+
+    <p>...</p-->
 
     <h3>Units of Measure</h3>
 
     <p>This field describes how the stock is to be maintained and is self-explanatory. It is a compulsory field, and as such, some values are defined at the time of installation. System administrators may define additional values or modify existing ones via the 'Units of Measure' link found under 'Inventory Setup' on the main 'Setup' page.</p>
+
+    <p>The selection list is maintained in config.php as an array variable. To add or delete other units of measurement the array variable called $InventoryUnits defined in config.php must be edited by the system administrator.</p>
 
     <h3>Current or Obsolete</h3>
 
@@ -240,6 +242,14 @@
 
     <p>Serialised is a special case of controlled where the batch size is always one. The system will prompt for the serial number of each item of stock being received and stock records will be maintained for all serial numbers separately. Serialised does not have any effect if controlled is not set.</p>
 
+    <!--h3>Perishable</h3>
+
+    <p>...</p-->
+
+    <h3>Decimal Places for display Quantity</h3>
+
+    <p>Some items of stock require a number of decimal places to be retained and displayed, others do not require any. This field is used throughout the system for invoices, orders and all places where the item quantity is displayed.</p>
+
     <h3>Bar Code</h3>
 
     <p>This field is the unique identifying bar code for this item, typically containing the EAN bar code for the item. This field is used in identifying the item in EANCOM edi messages.</p>
@@ -250,11 +260,24 @@
 
     <p>The discount category is a 2 character field and there is no error checking on entries.</p>
 
-    <h3>Decimal Places</h3>
+    <h3>Tax Category</h3>
 
-    <p>Some items of stock require a number of decimal places to be retained and displayed, others do not require any. This field is used throughout the system for invoices, orders and all places where the item quantity is displayed.
+    <!--p>...</p-->
 
-    <h3>Item Properties</h3><!-- Help End: Stocks -->
+    <p>Tax categories are defined by system administrators in Main Menu > Setup > General Setup Options > Tax Category Maintenance.</p>
+
+    <h3>Pan Size</h3>
+
+    <p>This modifier is sometimes called the order multiple. It allows you to create planned orders in even multiples. This is especially useful if you are required by your suppliers to place orders in specific lot sizes. It is also a useful modifier is you have established your own production run sizes. This modifier causes MRP to inflate the required order quantity to an even increment of the pansize value. As with all modifiers you do need to be careful with this modifier as its use could lead to excess inventories.</p>
+
+	<p>In other words if it is most efficient to manufacture an item in batches of 10 then the pan size would be 10, and MRP would calculate demand in batches of 10, so would inflate a demand of 17 to 20.</p>
+
+    <!--h3>Shrinkage Factor</h3>
+
+    <p>Percentage by which an output falls short of the estimated or planned output.</p-->
+
+    <h3>Item Properties</h3>
+<!-- Help End: Stocks -->
     <!-- Help Begin: StockCostUpdate -->
 
     <div class="floatright">
