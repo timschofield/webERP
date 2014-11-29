@@ -120,13 +120,13 @@ function submit(&$db, $CountriesForRetail, $MarkExported, $FromDate, $ToDate) {
 			$i = 2;
 			while ($myrow = DB_fetch_array($result)) {
 				$objPHPExcel->setActiveSheetIndex(0);
-				$objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $myrow['email']);
+				$objPHPExcel->getActiveSheet()->setCellValue('A'.$i, ReviseEmailAddress($myrow['email']));
 				$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, CapitalizeName($myrow['lastname']));
 				$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, CapitalizeName($myrow['firstname']));
 				$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, $CountriesForRetail[$myrow['country']]);
 				$objPHPExcel->getActiveSheet()->setCellValue('E'.$i, $myrow['sex']);
 				
-				if ($myrow['date_of_birth'] != '0000-00-00'){
+				if (($myrow['date_of_birth'] != '0000-00-00') AND ($myrow['date_of_birth'] < Date('Y-m-d'))){
 					$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, $myrow['date_of_birth']);
 				}
 				

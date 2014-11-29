@@ -132,6 +132,7 @@ function submit(&$db, $CountriesForRetail, $TypeCustomers, $MarkExported, $FromD
 			while ($myrow = DB_fetch_array($result)) {
 				if ($PreviousEmail != $myrow['email']){
 					$objPHPExcel->setActiveSheetIndex(0);
+
 					$objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $myrow['email']);
 					$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, CapitalizeName($myrow['firstname']));
 					$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, $myrow['country']);

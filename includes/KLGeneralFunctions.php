@@ -162,4 +162,23 @@ function CapitalizeName($string){
 	return $string; 
 }
 
+function ReviseEmailAddress($email){
+	$email = strtolower(trim($email));
+	$atposition = strpos($email,'@');
+	$domain = substr($email,$atposition+1);
+	$sql = "SELECT fixeddomain
+			FROM klrevisedemaildomains
+			WHERE wrongdomain = '" . $domain . "'";
+	$result = DB_query($sql);
+	if (DB_num_rows($result) != 0){
+		$myrow = DB_fetch_array($result);
+		$revisedemail = substr($email,0,$atposition+1).$myrow['fixeddomain'] ;
+	}else{
+		// seems OK. At least we can't detect an error
+		$revisedemail = $email;
+	}
+	return $revisedemail; 
+}
+
+
 ?>
