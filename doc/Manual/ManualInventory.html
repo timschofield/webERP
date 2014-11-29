@@ -138,11 +138,14 @@
 
     <p>The description translations can be maintained within the same parameters above. The translations that can be maintained are set in the system configuration screen. Any number of translations can be maintained. These translations are used to print on customer invoices if the customer is set up to use one of the languages for which translations are maintained. If not translation is available then the fall back is to the default description.</p>
 
-    <!--h3>Image File</h3>
+    <h3>Image File</h3>
 
-    <p>...</p--><!--Restrictions (.jpg)-->
+	<!--Restrictions (.jpg)-->
 
 	<!--Suggested content: Where is it used? (e.g. scripts, formulas, etc.)-->
+
+    <p>Picture files of items can be uploaded to the server. The system will check that files uploaded are less than defined maxum size (in KB) before they will be allowed to be uploaded. Large pictures will make the system slow and will be difficult to view in the stock maintenance screen.</p>
+    <p>Maximum Size in KB of uploaded images are defined by system administrators in <i><u>Main Menu</u></i> &gt; <i><u>Setup</u></i> &gt; <i>General Setup Options</i> &gt; <i><u>System Parameters</u></i> &gt; <i>General Settings</i>.</p>
 
     <h3>Category</h3>
 
@@ -280,7 +283,7 @@
 
     <h3>Pan Size</h3>
 
-    <p>This modifier is sometimes called the order multiple. It is minimum packing quantity. It allows you to create planned orders in even multiples. This is especially useful if you are required by your suppliers to place orders in specific lot sizes. It is also a useful modifier is you have established your own production run sizes. This modifier causes MRP to inflate the required order quantity to an even increment of the pansize value. As with all modifiers you do need to be careful with this modifier as its use could lead to excess inventories.</p>
+    <p>This modifier is sometimes called the order multiple. It is the minimum packing quantity. It allows you to create planned orders in even multiples. This is especially useful if you are required by your suppliers to place orders in specific lot sizes. It is also a useful modifier is you have established your own production run sizes. This modifier causes MRP to inflate the required order quantity to an even increment of the pansize value. As with all modifiers you do need to be careful with this modifier as its use could lead to excess inventories.</p>
 
 	<p>In other words if it is most efficient to manufacture an item in batches of 10 then the pan size would be 10, and MRP would calculate demand in batches of 10, so would inflate a demand of 17 to 20. For instance, we purchase some chemical materials which is 25 kg/pack. The pansize means you have to purchase at least one pack each time.</p>
 
