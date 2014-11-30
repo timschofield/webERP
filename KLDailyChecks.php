@@ -84,6 +84,7 @@ function KL_DailyMaintenanceDatabase($ShowMessages, $db, $EmailText = ''){
 	PurgeKLTable("klchangeprice","endprocessdate", $ShowMessages, $db);
 	PurgeKLTable("klmovetodiscount","endprocessdate", $ShowMessages, $db);
 	PurgeKLTable("klmovetooutlet","endprocessdate", $ShowMessages, $db);
+	PurgeAuditTrailTable($ShowMessages, $db);
 	$EmailText = KL_DailyOptimizationDatabase($ShowMessages, $db, $EmailText);
 
 	return $EmailText;
@@ -457,5 +458,14 @@ function CleanListToPrint($List){
 	$List = str_replace($ToClean, "", $List);
 	return $List;
 }
+
+function PurgeAuditTrailTable($ShowMessages, $db){
+	 $sql = "DELETE FROM audittrail
+			WHERE  transactiondate <= '" . Date('Y-m-d', mktime(0,0,0, Date('m')-$_SESSION['MonthsAuditTrail'])) . "'";
+	$result = DB_query($sql);
+	if ($ShowMessages) prnMsg("Purge old Audit Trail table","info");
+}
+
+
 
 ?>
