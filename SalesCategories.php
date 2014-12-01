@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: SalesCategories.php 6941 2014-10-26 23:18:08Z daintree $ */
+/* $Id: SalesCategories.php 7007 2014-11-25 05:14:06Z tehonu $ */
 
 include('includes/session.inc');
 
@@ -341,7 +341,7 @@ echo '<table class="selection">
 		</tr>
 		<tr>
 			<td>' . _('Category Name') . ':</td>
-			<td><input type="text" name="SalesCatName" size="20" maxlength="20" value="' . $_POST['SalesCatName'] . '" /></td>
+			<td><input type="text" name="SalesCatName" size="20" maxlength="50" value="' . $_POST['SalesCatName'] . '" /></td>
 		</tr>';
 
 echo '<tr>

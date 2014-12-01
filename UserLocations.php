@@ -2,38 +2,38 @@
 /* $Id: LocationUsers.php 6806 2013-09-28 05:10:46Z daintree $*/
 
 include('includes/session.inc');
-$Title = _('Inventory Location Authorised Users Maintenance');
+$Title = _('User Authorised Inventory Locations Maintenance');
 $ViewTopic = 'Inventory';// Filename in ManualContents.php's TOC.
 $BookMark = 'LocationUsers';// Anchor's id in the manual's html document.
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/money_add.png" title="' . _('Location Authorised Users') . '" alt="" />' . ' ' . $Title . '</p>';
-
-if (isset($_POST['SelectedUser'])) {
-	$SelectedUser = mb_strtoupper($_POST['SelectedUser']);
-} elseif (isset($_GET['SelectedUser'])) {
-	$SelectedUser = mb_strtoupper($_GET['SelectedUser']);
-} else {
-	$SelectedUser = '';
-}
+echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/money_add.png" title="' . _('User Authorised Locations') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (isset($_POST['SelectedLocation'])) {
 	$SelectedLocation = mb_strtoupper($_POST['SelectedLocation']);
 } elseif (isset($_GET['SelectedLocation'])) {
 	$SelectedLocation = mb_strtoupper($_GET['SelectedLocation']);
+} else {
+	$SelectedLocation = '';
+}
+
+if (isset($_POST['SelectedUser'])) {
+	$SelectedUser = mb_strtoupper($_POST['SelectedUser']);
+} elseif (isset($_GET['SelectedUser'])) {
+	$SelectedUser = mb_strtoupper($_GET['SelectedUser']);
 }
 
 if (isset($_POST['Cancel'])) {
-	unset($SelectedLocation);
 	unset($SelectedUser);
+	unset($SelectedLocation);
 }
 
 if (isset($_POST['Process'])) {
-	if ($_POST['SelectedLocation'] == '') {
-		prnMsg(_('You have not selected any Location'), 'error');
+	if ($_POST['SelectedUser'] == '') {
+		prnMsg(_('You have not selected any User'), 'error');
 		echo '<br />';
-		unset($SelectedLocation);
-		unset($_POST['SelectedLocation']);
+		unset($SelectedUser);
+		unset($_POST['SelectedUser']);
 	}
 }
 
@@ -41,11 +41,11 @@ if (isset($_POST['submit'])) {
 
 	$InputError = 0;
 
-	if ($_POST['SelectedUser'] == '') {
+	if ($_POST['SelectedLocation'] == '') {
 		$InputError = 1;
-		prnMsg(_('You have not selected an user to be authorised to use this Location'), 'error');
+		prnMsg(_('You have not selected an inventory location to be authorised for this user'), 'error');
 		echo '<br />';
-		unset($SelectedLocation);
+		unset($SelectedUser);
 	}
 
 	if ($InputError != 1) {
@@ -62,7 +62,7 @@ if (isset($_POST['submit'])) {
 
 		if ($CheckRow[0] > 0) {
 			$InputError = 1;
-			prnMsg(_('The user') . ' ' . $_POST['SelectedUser'] . ' ' . _('is already authorised to use this location'), 'error');
+			prnMsg(_('The location') . ' ' . $_POST['SelectedLocation'] . ' ' . _('is already authorised for this user'), 'error');
 		} else {
 			// Add new record on submit
 			$SQL = "INSERT INTO locationusers (loccode,
@@ -77,7 +77,7 @@ if (isset($_POST['submit'])) {
 			$msg = _('User') . ': ' . $_POST['SelectedUser'] . ' ' . _('authority to use the') . ' ' . $_POST['SelectedLocation'] . ' ' . _('location has been changed');
 			$Result = DB_query($SQL);
 			prnMsg($msg, 'success');
-			unset($_POST['SelectedUser']);
+			unset($_POST['SelectedLocation']);
 		}
 	}
 } elseif (isset($_GET['delete'])) {
@@ -101,29 +101,30 @@ if (isset($_POST['submit'])) {
 	unset($_GET['ToggleUpdate']);
 }
 
-if (!isset($SelectedLocation)) {
+if (!isset($SelectedUser)) {
 
-	/* It could still be the second time the page has been run and a record has been selected for modification - SelectedUser will exist because it was sent with the new call. If its the first time the page has been displayed with no parameters
+	/* It could still be the second time the page has been run and a record has been selected for modification - SelectedLocation will exist because it was sent with the new call. If its the first time the page has been displayed with no parameters
 	then none of the above are true. These will call the same page again and allow update/input or deletion of the records*/
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 			<table class="selection">
 			<tr>
-				<td>' . _('Select Location') . ':</td>
-				<td><select name="SelectedLocation">';
+				<td>' . _('Select User') . ':</td>
+				<td><select name="SelectedUser">';
 
-	$Result = DB_query("SELECT loccode,
-								locationname
-						FROM locations");
+	$Result = DB_query("SELECT userid,
+								realname
+						FROM www_users
+						ORDER BY userid");
 
 	echo '<option value="">' . _('Not Yet Selected') . '</option>';
 	while ($MyRow = DB_fetch_array($Result)) {
-		if (isset($SelectedLocation) and $MyRow['loccode'] == $SelectedLocation) {
+		if (isset($SelectedUser) and $MyRow['userid'] == $SelectedUser) {
 			echo '<option selected="selected" value="';
 		} else {
 			echo '<option value="';
 		}
-		echo $MyRow['loccode'] . '">' . $MyRow['loccode'] . ' - ' . $MyRow['locationname'] . '</option>';
+		echo $MyRow['userid'] . '">' . $MyRow['userid'] . ' - ' . $MyRow['realname'] . '</option>';
 
 	} //end while loop
 
@@ -142,37 +143,37 @@ if (!isset($SelectedLocation)) {
 }
 
 //end of ifs and buts!
-if (isset($_POST['process']) or isset($SelectedLocation)) {
-	$SQLName = "SELECT locationname
-			FROM locations
-			WHERE loccode='" . $SelectedLocation . "'";
+if (isset($_POST['process']) or isset($SelectedUser)) {
+	$SQLName = "SELECT realname
+			FROM www_users
+			WHERE userid='" . $SelectedUser . "'";
 	$Result = DB_query($SQLName);
 	$MyRow = DB_fetch_array($Result);
-	$SelectedLocationName = $MyRow['locationname'];
+	$SelectedUserName = $MyRow['realname'];
 
-	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . _('Authorised users for') . ' ' . $SelectedLocationName . ' ' . _('Location') . '</a></div>
+	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . _('Authorised inventory locations for') . ' ' . $SelectedUserName . '</a></div>
 		<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-		<input type="hidden" name="SelectedLocation" value="' . $SelectedLocation . '" />';
+		<input type="hidden" name="SelectedUser" value="' . $SelectedUser . '" />';
 
-	$SQL = "SELECT locationusers.userid,
+	$SQL = "SELECT locationusers.loccode,
 					canview,
 					canupd,
-					www_users.realname
-			FROM locationusers INNER JOIN www_users
-			ON locationusers.userid=www_users.userid
-			WHERE locationusers.loccode='" . $SelectedLocation . "'
-			ORDER BY locationusers.userid ASC";
+					locations.locationname
+			FROM locationusers INNER JOIN locations
+			ON locationusers.loccode=locations.loccode
+			WHERE locationusers.userid='" . $SelectedUser . "'
+			ORDER BY locations.locationname ASC";
 
 	$Result = DB_query($SQL);
 
 	echo '<table class="selection">';
 	echo '<tr>
-			<th colspan="6"><h3>' . _('Authorised users for Location') . ': ' . $SelectedLocationName . '</h3></th>
+			<th colspan="6"><h3>' . _('Authorised Inventory Locations for User') . ': ' . $SelectedUserName . '</h3></th>
 		</tr>';
 	echo '<tr>
-			<th>' . _('User Code') . '</th>
-			<th>' . _('User Name') . '</th>
+			<th>' . _('Code') . '</th>
+			<th>' . _('Name') . '</th>
 			<th>' . _('View') . '</th>
 			<th>' . _('Update') . '</th>
 		</tr>';
@@ -189,9 +190,9 @@ if (isset($_POST['process']) or isset($SelectedLocation)) {
 		}
 
 		if ($MyRow['canupd'] == 1) {
-			$ToggleText = '<td><a href="%s?SelectedUser=%s&amp;ToggleUpdate=0&amp;SelectedLocation=' . $SelectedLocation . '" onclick="return confirm(\'' . _('Are you sure you wish to remove Update for this user?') . '\');">' . _('Remove Update') . '</a></td>';
+			$ToggleText = '<td><a href="%s?SelectedLocation=%s&amp;ToggleUpdate=0&amp;SelectedUser=' . $SelectedUser . '" onclick="return confirm(\'' . _('Are you sure you wish to remove Update for this location?') . '\');">' . _('Remove Update') . '</a></td>';
 		} else {
-			$ToggleText = '<td><a href="%s?SelectedUser=%s&amp;ToggleUpdate=1&amp;SelectedLocation=' . $SelectedLocation . '" onclick="return confirm(\'' . _('Are you sure you wish to add Update for this user?') . '\');">' . _('Add Update') . '</a></td>';
+			$ToggleText = '<td><a href="%s?SelectedLocation=%s&amp;ToggleUpdate=1&amp;SelectedUser=' . $SelectedUser . '" onclick="return confirm(\'' . _('Are you sure you wish to add Update for this location?') . '\');">' . _('Add Update') . '</a></td>';
 		}
 
 		printf('<td>%s</td>
@@ -199,16 +200,16 @@ if (isset($_POST['process']) or isset($SelectedLocation)) {
 				<td>%s</td>
 				<td>%s</td>' .
 				$ToggleText . '
-				<td><a href="%s?SelectedUser=%s&amp;delete=yes&amp;SelectedLocation=' . $SelectedLocation . '" onclick="return confirm(\'' . _('Are you sure you wish to un-authorise this user?') . '\');">' . _('Un-authorise') . '</a></td>
+				<td><a href="%s?SelectedLocation=%s&amp;delete=yes&amp;SelectedUser=' . $SelectedUser . '" onclick="return confirm(\'' . _('Are you sure you wish to un-authorise this location?') . '\');">' . _('Un-authorise') . '</a></td>
 				</tr>',
-				$MyRow['userid'],
-				$MyRow['realname'],
+				$MyRow['loccode'],
+				$MyRow['locationname'],
 				$MyRow['canview'],
 				$MyRow['canupd'],
 				htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'),
-				$MyRow['userid'],
+				$MyRow['loccode'],
 				htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'),
-				$MyRow['userid']);
+				$MyRow['loccode']);
 	}
 	//END WHILE LIST LOOP
 	echo '</table>';
@@ -219,27 +220,28 @@ if (isset($_POST['process']) or isset($SelectedLocation)) {
 		echo '<table  class="selection">'; //Main table
 
 		echo '<tr>
-				<td>' . _('Select User') . ':</td>
-				<td><select name="SelectedUser">';
+				<td>' . _('Select Location') . ':</td>
+				<td><select name="SelectedLocation">';
 
-		$Result = DB_query("SELECT userid,
-									realname
-							FROM www_users
-							WHERE NOT EXISTS (SELECT locationusers.userid
+		$Result = DB_query("SELECT loccode,
+									locationname
+							FROM locations
+							WHERE NOT EXISTS (SELECT locationusers.loccode
 											FROM locationusers
-											WHERE locationusers.loccode='" . $SelectedLocation . "'
-												AND locationusers.userid=www_users.userid)");
+											WHERE locationusers.userid='" . $SelectedUser . "'
+												AND locationusers.loccode=locations.loccode)
+							ORDER BY locationname");
 
-		if (!isset($_POST['SelectedUser'])) {
+		if (!isset($_POST['SelectedLocation'])) {
 			echo '<option selected="selected" value="">' . _('Not Yet Selected') . '</option>';
 		}
 		while ($MyRow = DB_fetch_array($Result)) {
-			if (isset($_POST['SelectedUser']) and $MyRow['userid'] == $_POST['SelectedUser']) {
+			if (isset($_POST['SelectedLocation']) and $MyRow['loccode'] == $_POST['SelectedLocation']) {
 				echo '<option selected="selected" value="';
 			} else {
 				echo '<option value="';
 			}
-			echo $MyRow['userid'] . '">' . $MyRow['userid'] . ' - ' . $MyRow['realname'] . '</option>';
+			echo $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 
 		} //end while loop
 

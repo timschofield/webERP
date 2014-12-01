@@ -110,7 +110,8 @@ $MenuItems['AR']['Reports']['Caption'] = array(	_('Where Allocated Inquiry'),
 												_('Customer Listing By Area/Salesperson'),
 												_('Sales Graphs'),
 												_('List Daily Transactions'),
-												_('Customer Transaction Inquiries')	);
+												_('Customer Transaction Inquiries'),
+												_('Customer Activity and Balances'));
 
 if ($_SESSION['InvoicePortraitFormat']==0){
 	$PrintInvoicesOrCreditNotesScript = '/PrintCustTrans.php';
@@ -128,7 +129,8 @@ $MenuItems['AR']['Reports']['URL'] = array(	'/CustWhereAlloc.php',
 											'/PDFCustomerList.php',
 											'/SalesGraph.php',
 											'/PDFCustTransListing.php',
-											'/CustomerTransInquiry.php');
+											'/CustomerTransInquiry.php',
+											'/CustomerBalancesMovement.php' );
 
 $MenuItems['AR']['Maintenance']['Caption'] = array(	_('Add Customer'),
 													_('Select Customer'));
@@ -507,6 +509,7 @@ $MenuItems['system']['Reports']['URL'] = array(	'/SalesTypes.php',
 $MenuItems['system']['Maintenance']['Caption'] = array(	_('Inventory Categories Maintenance'),
 														_('Inventory Locations Maintenance'),
 														_('Inventory Location Authorised Users Maintenance'),
+														_('User Authorised Inventory Locations Maintenance'),
 														_('Discount Category Maintenance'),
 														_('Units of Measure'),
 														_('MRP Available Production Days'),
@@ -518,6 +521,7 @@ $MenuItems['system']['Maintenance']['Caption'] = array(	_('Inventory Categories 
 $MenuItems['system']['Maintenance']['URL'] = array(	'/StockCategories.php',
 													'/Locations.php',
 													'/LocationUsers.php',
+													'/UserLocations.php',
 													'/DiscountCategories.php',
 													'/UnitsOfMeasure.php',
 													'/MRPCalendar.php',

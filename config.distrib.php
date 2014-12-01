@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: config.distrib.php 6832 2014-08-19 11:44:16Z serakfalcon $ */
+/* $Id: config.distrib.php 7011 2014-12-01 07:08:55Z daintree $ */
 
 // User configurable variables
 //---------------------------------------------------
@@ -51,7 +51,7 @@ $DBPassword = 'weberp_db_pwd';
 //	'ShowInputBox'
 //	'Hide'
 
-
+//$AllowCompanySelectionBox = 'Hide';
 //$AllowCompanySelectionBox = 'ShowInputBox';
 $AllowCompanySelectionBox = 'ShowSelectionBox';
 

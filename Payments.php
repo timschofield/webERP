@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: Payments.php 6945 2014-10-27 07:20:48Z daintree $*/
+/* $Id: Payments.php 6994 2014-11-20 11:38:52Z exsonqu $*/
 
 include('includes/DefinePaymentClass.php');
 include('includes/session.inc');
@@ -967,12 +967,12 @@ if ($_SESSION['CompanyRecord']['gllink_creditors']==1 AND $_SESSION['PaymentDeta
 	if (isset($_POST['GLManualCode'])) {
 		echo '<tr>
 				<td>' . _('Enter GL Account Manually') . ':</td>
-				<td><input type="text" name="GLManualCode" maxlength="12" size="12" onchange="return inArray(this.value, GLCode.options,\'' . _('The account code') . ' \' + this.value + \' ' . _('doesnt exist') . '\')" value="'. $_POST['GLManualCode'] .'"   /></td>
+				<td><input type="text" name="GLManualCode" maxlength="12" size="12" onchange="return inArray(this, GLCode.options,\'' . _('The account code') . ' \' + this.value + \' ' . _('doesnt exist') . '\')" value="'. $_POST['GLManualCode'] .'"   /></td>
 			</tr>';
 	} else {
 		echo '<tr>
 				<td>' . _('Enter GL Account Manually') . ':</td>
-				<td><input type="text" name="GLManualCode" maxlength="12" size="12" onchange="return inArray(this.value, GLCode.options,\'' . _('The account code') . ' \' + this.value + \' ' . _('doesnt exist') . '\')" /></td>
+				<td><input type="text" name="GLManualCode" maxlength="12" size="12" onchange="return inArray(this, GLCode.options,\'' . _('The account code') . ' \' + this.value + \' ' . _('doesnt exist') . '\')" /></td>
 			</tr>';
 	}
 

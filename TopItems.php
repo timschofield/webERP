@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: TopItems.php 6941 2014-10-26 23:18:08Z daintree $*/
+/* $Id: TopItems.php 7003 2014-11-24 02:12:27Z tehonu $*/
 
 /* Session started in session.inc for password checking and authorisation level check
 config.php is in turn included in session.inc*/
@@ -27,11 +27,11 @@ if (!(isset($_POST['Search']))) {
 	$sql = "SELECT locations.loccode,
 					locationname
 			FROM locations
-			INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
+			INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1 ORDER BY locations.locationname";
 	$result = DB_query($sql);
 	echo '<option value="All">' . _('All') . '</option>';
 	while ($myrow = DB_fetch_array($result)) {
-		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['loccode'] . ' - ' . $myrow['locationname'] . '</option>';
+		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 	}
 	echo '</select></td>
 		</tr>';
@@ -43,7 +43,8 @@ if (!(isset($_POST['Search']))) {
 
 	$sql = "SELECT typename,
 					typeid
-				FROM debtortype";
+			FROM debtortype
+			ORDER BY typename";
 	$result = DB_query($sql);
 	echo '<option value="All">' . _('All') . '</option>';
 	while ($myrow = DB_fetch_array($result)) {

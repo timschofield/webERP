@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: SuppInvGRNs.php 6941 2014-10-26 23:18:08Z daintree $*/
+/* $Id: SuppInvGRNs.php 6996 2014-11-20 12:36:52Z exsonqu $*/
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing and also
@@ -252,6 +252,7 @@ if (!isset($_GET['Modify'])){
 					<tr>
 						<th class="ascending">' . _('Select') . '</th>
 						<th class="ascending">' . _('Sequence') . ' #</th>
+						<th class="ascending">' . _('GRN Number') . '</th>
 						<th class="ascending">' . _('Order') . '</th>
 						<th class="ascending">' . _('Item Code') . '</th>
 						<th class="ascending">' . _('Description') . '</th>
@@ -283,6 +284,7 @@ if (!isset($_GET['Modify'])){
 					<td><input type="checkbox" name="GRNNo_' . $GRNTmp->GRNNo . '" /></td>';
 		}
 		echo '<td>' . $GRNTmp->GRNNo . '</td>
+			<td>' . $GRNTmp->GRNBatchNo . '</td>
 			<td>' . $GRNTmp->PONo . '</td>
 			<td>' . $GRNTmp->ItemCode . '</td>
 			<td>' . $GRNTmp->ItemDescription . '</td>

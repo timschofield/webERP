@@ -126,27 +126,32 @@
     </ul>Entry of the base information is done from the menu, select the inventory tab and click "Add a New Inventory Item".
     <p>
 
-    <h3>ItemCode</h3>
+    <h3>Item Code</h3>
 
     <p>A stock code is required for each stock item, this can be any combination of characters up to 20 characters long. The coding structure of stock items should be considered, to ensure that like stock items appear together. Internally the system looks at the code to order stock items in the various look up tables. A systematic approach to naming stock items can save a lot of time later. However, good facilities are available to search. Under supplier purchasing data it is also possible to record the supplier's part number against an item.</p>
 
     <p>There is a script that allows for stock codes to be modified retrospectively, the script goes through all the tables necessary, location stocks, bills of material, order details, purchase order details, sales analysis etc to ensure that all history for the new part code follows the change. The script together with all utility scripts is available from Z_index.php (there are no links to this utility menu - due to the dangerous nature of some of the utilities) The stock code change script itself is named, Z_ChangeStockCode.php.</p>
 
-    <h3>Part Descriptions</h3>
+    <h3>Part Descriptions</h3><!--Part Description (short)--><!--Part Description (long)-->
 
     <p>A description of the stock item - can be up to 50 characters long. A description is required for each stock item. This description is used in the look up boxes provided each time the stock item is invoiced, credited or adjusted. There is also the facility to enter long descriptions for each part which show on the screens that customers could access to place orders. This field allows very long descriptions or even features and benefits to be described for the item. The intention for this field is that it could be used for producing a company catalogue or for online ordering by customers who may need more information about a product. It is only the description (short) that displays on invoices and credit notes.</p>
 
     <p>The description translations can be maintained within the same parameters above. The translations that can be maintained are set in the system configuration screen. Any number of translations can be maintained. These translations are used to print on customer invoices if the customer is set up to use one of the languages for which translations are maintained. If not translation is available then the fall back is to the default description.</p>
 
-    <h3>Categories</h3>
+    <h3>Image File</h3>
+
+	<!--Restrictions (.jpg)-->
+
+	<!--Suggested content: Where is it used? (e.g. scripts, formulas, etc.)-->
+
+    <p>Picture files of items can be uploaded to the server. The system will check that files uploaded are less than defined maxum size (in KB) before they will be allowed to be uploaded. Large pictures will make the system slow and will be difficult to view in the stock maintenance screen.</p>
+    <p>Maximum Size in KB of uploaded images are defined by system administrators in <i><u>Main Menu</u></i> &gt; <i><u>Setup</u></i> &gt; <i>General Setup Options</i> &gt; <i><u>System Parameters</u></i> &gt; <i>General Settings</i>.</p>
+
+    <h3>Category</h3>
 
     <p>These categories need to be set up first - from the System Setup tab of the menu. In selecting the stock category, be aware that the system uses the category information for analysis and summary reporting as well as identifying accounts for standard cost general ledger integration, if this option is enabled. There is a link to create new stock categories from the stock item entry page.</p>
 
     <p>A stock category is required for all stock items. The stock category is a text field which groups like stock items together. In selecting stock it is often useful to restrict the search to just the category required. A stock category select box shows on the Select Product screen for this purpose.</p>
-
-    <h3>Unit of Measurement</h3>
-
-    <p>This field describes how the stock is to be maintained and is self-explanatory. It is a compulsory field. The selection list is maintained in config.php as an array variable. To add or delete other units of measurement the array variable called $InventoryUnits defined in config.php must be edited by the system administrator.</p>
 
     <h3>Economic Order Quantity</h3>
 
@@ -154,19 +159,23 @@
 
     <h3>Packaged Volume</h3>
 
-    <p>This field is required for freight calculations. It records the volume of the one of the item as packaged for dispatch. See the section on freight calculations.</p>
+    <p>This field is required for freight calculations. It records the volume of the one of the item as packaged for dispatch. The freight calculation takes the higher of the freight costs based on the total weight of the order and the total volume of the order. Most freight companies use a conversion and charge the higher of the two. See the section on freight calculations.</p><!--Suggestion: add a link to the freight calculations section.-->
 
-    <h3>Packaged Weight</h3>
+    <h3>Packaged Gross Weight</h3><!--Suggestion: standardise from "Packaged Gross Weight" to "Packaged Weight"-->
 
-    <p>This field is required for freight calculations. It records the weight of the one of the item as packaged for dispatch. The freight calculation takes the higher of the freight costs based on the total weight of the order and the total volume of the order. Most freight companies use a conversion and charge the higher of the two. See the section on freight calculations.</p>
+    <p>This field is required for freight calculations. It records the weight of the one of the item as packaged for dispatch. The freight calculation takes the higher of the freight costs based on the total weight of the order and the total volume of the order. Most freight companies use a conversion and charge the higher of the two. See the section on freight calculations.</p><!--Suggestion: add a link to the freight calculations section.-->
+
+    <h3>Net Weight</h3><!--Question: Is it "net content"? (e.g. net kilograms, net litres, etc.)-->
+
+    <p>The weight of the one of the item without the weight of its packaging.</p>
+
+	<!--Suggested content: Where is it used? (e.g. scripts, formulas, etc.)-->
 
     <h3>Units of Measure</h3>
 
     <p>This field describes how the stock is to be maintained and is self-explanatory. It is a compulsory field, and as such, some values are defined at the time of installation. System administrators may define additional values or modify existing ones via the 'Units of Measure' link found under 'Inventory Setup' on the main 'Setup' page.</p>
 
-    <h3>Current or Obsolete</h3>
-
-    <p>If this field is set to obsolete, this indicates that the stock item is no longer used. However, there may be a stock history on invoices and credit notes which are required. The stock item master record is therefore still required. (Deletion is not allowed while stock movements or Sales analysis records exist for the part) However, it will not appear on searches for invoicing, stock items, in addition the item will be flagged as discontinued in stock reports.</p>
+    <p>The selection list is maintained in config.php as an array variable. To add or delete other units of measurement the array variable called $InventoryUnits defined in config.php must be edited by the system administrator.</p>
 
     <h3>Make Or Buy</h3>
 
@@ -232,13 +241,27 @@
 
     <p>Once the component fields have been entered hitting the enter information button adds the component to the BOM there and then. When the BOM is complete just navigate to the main menu of other link to the next task. Be careful not to click enter information button on the default component by mistake - the component must be selected from the list first.</p>
 
-    <h3>Controlled</h3>
+    <h3>Current or Obsolete</h3>
+
+    <p>If this field is set to obsolete, this indicates that the stock item is no longer used. However, there may be a stock history on invoices and credit notes which are required. The stock item master record is therefore still required. (Deletion is not allowed while stock movements or Sales analysis records exist for the part) However, it will not appear on searches for invoicing, stock items, in addition the item will be flagged as discontinued in stock reports.</p>
+
+    <h3>Controlled</h3><!--Batch, Serial or Lot Control-->
 
     <p>This field denotes whether the item is to have lot control on it. Lot control is known by several terms including, batch control, bundle control, roll control. In short it allows a reference for each batch of the item to be entered at the time of delivery, transfer, stock check, invoicing etc. When booking in controlled items the batch references and the quantities in each batch must be entered. Many quality control systems that require traceability of raw materials need this functionality to establish what batch of raw material was used in a given work order. Or what roll of cloth was sold to a given customer. Other industries call their lots of product by different names a melt, a cut, a run etc. Every time a transaction involving a controlled item is created, the system will accumulate the quantity from a separate form for selecting the batches (Lot/roll/melt/work order/serial numbers).</p>
 
     <h3>Serialised</h3>
 
     <p>Serialised is a special case of controlled where the batch size is always one. The system will prompt for the serial number of each item of stock being received and stock records will be maintained for all serial numbers separately. Serialised does not have any effect if controlled is not set.</p>
+
+    <!--h3>Perishable</h3>
+
+    <!--Suggested content: Definition of Perishable.-->
+
+	<!--Suggested content: Where is it used? (e.g. scripts, formulas, etc.)-->
+
+    <h3>Decimal Places for display Quantity</h3>
+
+    <p>Some items of stock require a number of decimal places to be retained and displayed, others do not require any. This field is used throughout the system for invoices, orders and all places where the item quantity is displayed.</p>
 
     <h3>Bar Code</h3>
 
@@ -250,12 +273,30 @@
 
     <p>The discount category is a 2 character field and there is no error checking on entries.</p>
 
-    <h3>Decimal Places</h3>
+    <h3>Tax Category</h3>
 
-    <p>Some items of stock require a number of decimal places to be retained and displayed, others do not require any. This field is used throughout the system for invoices, orders and all places where the item quantity is displayed.
+    <!--Suggested content: Definition of Tax Category.-->
 
-    <h3>Item Properties</h3><!-- Help End: Stocks -->
-    <!-- Help Begin: StockCostUpdate -->
+	<!--Suggested content: Where is it used? (e.g. scripts, formulas, etc.)-->
+
+    <p>Tax categories are defined by system administrators in <i><u>Main Menu</u></i> &gt; <i><u>Setup</u></i> &gt; <i>General Setup Options</i> &gt; <i><u>Tax Category Maintenance</u></i>.</p>
+
+    <h3>Pan Size</h3>
+
+    <p>This modifier is sometimes called the order multiple. It is the minimum packing quantity. It allows you to create planned orders in even multiples. This is especially useful if you are required by your suppliers to place orders in specific lot sizes. It is also a useful modifier is you have established your own production run sizes. This modifier causes MRP to inflate the required order quantity to an even increment of the pansize value. As with all modifiers you do need to be careful with this modifier as its use could lead to excess inventories.</p>
+
+	<p>In other words if it is most efficient to manufacture an item in batches of 10 then the pan size would be 10, and MRP would calculate demand in batches of 10, so would inflate a demand of 17 to 20. For instance, we purchase some chemical materials which is 25 kg/pack. The pansize means you have to purchase at least one pack each time.</p>
+
+    <h3>Shrinkage Factor</h3>
+
+    <p>Percentage by which an output falls short of the estimated or planned output.</p>
+
+	<!--Suggested content: Where is it used? (e.g. scripts, formulas, etc.)-->
+
+    <h3>Item Properties</h3>
+
+<!-- Help End: Stocks -->
+<!-- Help Begin: StockCostUpdate -->
 
     <div class="floatright">
         <a class="minitext" href="#top">⬆ Top</a>
