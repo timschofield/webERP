@@ -227,6 +227,7 @@ if ($_SESSION['UserID'] == "Ricard"){
 	BalanceAccountControl("111499000",         -1,          1, $periodnow, $db);
 	BalanceAccountControl("211021400", -200000000,          0, $periodnow, $db);
 	BalanceAccountControl("211021500",  -20000000,  100000000, $periodnow, $db);
+	BalanceAccountControl("612011215",         -1,          1, $periodnow, $db);
 }
 
 /***************************************************************************************
