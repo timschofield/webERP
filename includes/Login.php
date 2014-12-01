@@ -37,7 +37,7 @@ if (get_magic_quotes_gpc()){
 	<input type="hidden" name="FormID" value="<?php echo $_SESSION['FormID']; ?>" />
 	<span>
 	<?php
-	    if (isset($CompanyList) && is_array($CompanyList)) {
+	    if (isset($CompanyList) AND is_array($CompanyList)) {
             foreach ($CompanyList as $key => $CompanyEntry){
                 if ($DefaultDatabase == $CompanyEntry['database']) {
                     $CompanyNameField = "$key";

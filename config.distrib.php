@@ -51,7 +51,7 @@ $DBPassword = 'weberp_db_pwd';
 //	'ShowInputBox'
 //	'Hide'
 
-
+//$AllowCompanySelectionBox = 'Hide';
 //$AllowCompanySelectionBox = 'ShowInputBox';
 $AllowCompanySelectionBox = 'ShowSelectionBox';
 
