@@ -1,5 +1,5 @@
 <?php
-/* $Id: PDFStatementPageHeader.inc 5766 2012-12-19 06:45:03Z daintree $*/
+/* $Id: PDFStatementPageHeader.inc 7006 2014-11-24 17:40:55Z rchacon $*/
 /* PDFlib code to set up a new page */
 
 $Perforation = $Page_Width - $Right_Margin - 160;
@@ -113,7 +113,7 @@ $pdf->addText($Perforation+1, $YPosR-$LineCountR*$LineHeight,$FontSize, _('Custo
 
 $FontSize=8;
 $XPos = $Page_Width/2 - 60;
-$pdf->addText($XPos, $YPos,$FontSize, _('All amounts stated in') . ' - ' . $StmtHeader['currency']);
+$pdf->addText($XPos, $YPos,$FontSize, _('All amounts stated in') . ': ' . _($StmtHeader['currency']));
 $YPos -= $line_height;
 $pdf->addText($XPos, $YPos,$FontSize, $StmtHeader['terms']);
 

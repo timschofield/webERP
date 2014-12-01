@@ -1,5 +1,5 @@
 <?php
-/* $Id: Stocks.php 6945 2014-10-27 07:20:48Z daintree $ */
+/* $Id: Stocks.php 7010 2014-11-29 17:45:46Z rchacon $ */
 /**************************************************************************************
 KL RICARD MODIFICATIONS:
 - management of the extra KL fileds in stockmaster
@@ -1404,8 +1404,8 @@ echo '</select></td>
 	</tr>';
 
 echo '<tr>
-		<td>' . _('Pan Size') . ':</td>
-		<td><input type="text" class="number" name="Pansize" size="6" maxlength="6" value="' . locale_number_format($_POST['Pansize'],0) . '" /></td>
+		<td><label for="Pansize">' . _('Pan Size') . ':</label></td>
+		<td><input class="number" id="Pansize" maxlength="6" name="Pansize" size="6" title="' . _('Order multiple. It is the minimum packing quantity.') . '" type="text" value="' . locale_number_format($_POST['Pansize'],0) . '" /></td>
 	</tr>
 	 <tr>
 		<td>' . _('Shrinkage Factor') . ':</td>

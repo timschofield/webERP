@@ -1,5 +1,5 @@
 <?php
-/* $Id: Credit_Invoice.php 6945 2014-10-27 07:20:48Z daintree $*/
+/* $Id: Credit_Invoice.php 7001 2014-11-22 05:29:23Z exsonqu $*/
 
 /*Functions to get the GL codes to post the transaction to */
 include('includes/GetSalesTransGLCodes.inc');
@@ -942,12 +942,14 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 							$SQL = "INSERT INTO stockserialitems (stockid,
 																	loccode,
 																	serialno,
-																	quantity)
+																	quantity,
+																	qualitytext)
 											VALUES
 														('" . $CreditLine->StockID . "',
 														 '" . $_SESSION['CreditItems' . $identifier]->Location . "',
 														 '" . $Item->BundleRef . "',
-														 '". $Item->BundleQty ."')";
+														 '". $Item->BundleQty ."',
+													 	 '')";
 
 							$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be updated because');
 							$DbgMsg = _('The following SQL to update the serial stock item record was used');

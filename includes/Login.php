@@ -1,5 +1,5 @@
 <?php
-/* $Id: Login.php 6592 2014-03-02 08:41:40Z daintree $*/
+/* $Id: Login.php 7011 2014-12-01 07:08:55Z daintree $*/
 
 // Display demo user name and password within login form if $AllowDemoMode is true
 //include ('LanguageSetup.php');
@@ -37,7 +37,7 @@ if (get_magic_quotes_gpc()){
 	<input type="hidden" name="FormID" value="<?php echo $_SESSION['FormID']; ?>" />
 	<span>
 	<?php
-	    if (isset($CompanyList) && is_array($CompanyList)) {
+	    if (isset($CompanyList) AND is_array($CompanyList)) {
             foreach ($CompanyList as $key => $CompanyEntry){
                 if ($DefaultDatabase == $CompanyEntry['database']) {
                     $CompanyNameField = "$key";

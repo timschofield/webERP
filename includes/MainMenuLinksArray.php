@@ -147,7 +147,8 @@ $MenuItems['AR']['Reports']['Caption'] = array(	_('Where Allocated Inquiry'),
 												_('Customer Listing By Area/Salesperson'),
 												_('Sales Graphs'),
 												_('List Daily Transactions'),
-												_('Customer Transaction Inquiries')	);
+												_('Customer Transaction Inquiries'),
+												_('Customer Activity and Balances'));
 
 if ($_SESSION['InvoicePortraitFormat']==0){
 	$PrintInvoicesOrCreditNotesScript = '/PrintCustTrans.php';
@@ -165,7 +166,8 @@ $MenuItems['AR']['Reports']['URL'] = array(	'/CustWhereAlloc.php',
 											'/PDFCustomerList.php',
 											'/SalesGraph.php',
 											'/PDFCustTransListing.php',
-											'/CustomerTransInquiry.php');
+											'/CustomerTransInquiry.php',
+											'/CustomerBalancesMovement.php' );
 
 $MenuItems['AR']['Maintenance']['Caption'] = array(	_('Add Customer'),
 													_('Select Customer'));

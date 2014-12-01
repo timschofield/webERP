@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: SalesCategories.php 6941 2014-10-26 23:18:08Z daintree $ */
+/* $Id: SalesCategories.php 7007 2014-11-25 05:14:06Z tehonu $ */
 
 include('includes/session.inc');
 
