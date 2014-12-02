@@ -42,6 +42,8 @@ define("LIST_STOCK_CATEGORIES_DISCOUNT",           "('DISCOU', 'OUTLET')");
 define("LIST_STOCK_CATEGORIES_OUTLET",             "('OUTLET')");
 define("LIST_STOCK_CATEGORIES_PROMOTIONAL_ITEMS",  "('ZAPRO')");
 define("LIST_STOCK_CATEGORIES_OLD",                "('ZZZZZZ', 'ZZZZZX')");
+define("LIST_STOCK_CATEGORIES_SHOP_DISPLAYS",      "('SHDISP')");
+define("LIST_STOCK_CATEGORIES_SHOP_CONSUMABLES",   "('SHCONS')");
 
 /* Defines about LOCATIONS*/
 define("LIST_SHOPS_WITH_OUTLET",             "('')");

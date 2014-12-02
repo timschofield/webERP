@@ -1973,13 +1973,16 @@ No pending transfer regarding this item
 }
 
 function ItemsWithStockKantorButReorderLevelTokoZero($RootPath, $db){
-/*
+/**********************************************************************
 items with stock kantor > 0 
 RL is zero at all shops
 No pending transfer regarding this item
-*/
-/* 2013-04-16 excluding items in change price process */
-/* 2013-04-25 excluding items in move to discount / outlet process */
+
+2013-04-16 excluding items in change price process
+2013-04-25 excluding items in move to discount / outlet process 
+2014-12-02 excluding items in OLD categories
+
+***********************************************************************/
 
 	$SQL = "SELECT stockid,
 			stockmaster.categoryid,
@@ -2007,7 +2010,10 @@ No pending transfer regarding this item
 							AND loctransfers.stockid =  stockmaster.stockid)
 				AND discontinued = 0
 				AND stockcategory.stocktype = 'F'
-				AND stockmaster.categoryid NOT IN('SHDISP', 'SHCONS', 'OUTLET')
+				AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_SHOP_DISPLAYS . "
+				AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_SHOP_CONSUMABLES . "
+				AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_OUTLET . "
+				AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_OLD . "
 			ORDER BY stockid";
 
 	$result = DB_query($SQL);
