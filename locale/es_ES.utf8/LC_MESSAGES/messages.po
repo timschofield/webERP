@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: webERP 4.11.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-24 08:05-0600\n"
+"POT-Creation-Date: 2014-12-02 13:21-0600\n"
 "PO-Revision-Date: 2014-11-24 10:23-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
@@ -708,8 +708,8 @@ msgid "Phone no"
 msgstr "Número de teléfono"
 
 #: AddCustomerContacts.php:129 AddCustomerContacts.php:241
-#: CustomerBranches.php:414 CustomerBranches.php:849 CustomerInquiry.php:433
-#: CustomerInquiry.php:475 Customers.php:1121 Customers.php:1129
+#: CustomerBranches.php:414 CustomerBranches.php:849 CustomerInquiry.php:432
+#: CustomerInquiry.php:474 Customers.php:1121 Customers.php:1129
 #: EmailCustTrans.php:15 EmailCustTrans.php:64 Factors.php:246 Factors.php:297
 #: Locations.php:616 OrderDetails.php:115 PDFRemittanceAdvice.php:251
 #: PDFWOPrint.php:591 PDFWOPrint.php:594 PDFWOPrint.php:674 PDFWOPrint.php:677
@@ -803,7 +803,7 @@ msgstr "Anotaciones del cliente"
 #: AgedControlledInventory.php:47 BankMatching.php:281
 #: BankReconciliation.php:217 BankReconciliation.php:294
 #: ContractCosting.php:177 CustomerAllocations.php:348
-#: CustomerAllocations.php:378 CustomerInquiry.php:252
+#: CustomerAllocations.php:378 CustomerInquiry.php:251
 #: CustomerTransInquiry.php:106 GLAccountInquiry.php:174
 #: GLAccountReport.php:343 GLTransInquiry.php:47 MRPCalendar.php:219
 #: PDFRemittanceAdvice.php:308 PaymentAllocations.php:66
@@ -1020,7 +1020,7 @@ msgstr ""
 #: CounterReturns.php:756 CounterSales.php:759 CounterSales.php:853
 #: CounterSales.php:855 Credit_Invoice.php:298 Credit_Invoice.php:302
 #: CustomerAllocations.php:349 CustomerAllocations.php:379
-#: CustomerInquiry.php:257 DeliveryDetails.php:881 DeliveryDetails.php:950
+#: CustomerInquiry.php:256 DeliveryDetails.php:881 DeliveryDetails.php:950
 #: GLBalanceSheet.php:191 GLBalanceSheet.php:203 GLBalanceSheet.php:293
 #: GLBalanceSheet.php:302 GLBudgets.php:213 GLJournal.php:435
 #: GLTransInquiry.php:195 GLTrialBalance.php:225 GLTrialBalance.php:245
@@ -1092,7 +1092,7 @@ msgstr "Análisis de saldos de cuentas por cobrar por vencimiento"
 msgid "Problem Report"
 msgstr "Informe de problemas"
 
-#: AgedDebtors.php:269 CustomerInquiry.php:117 CustomerInquiry.php:142
+#: AgedDebtors.php:269 CustomerInquiry.php:116 CustomerInquiry.php:141
 #: CustomerPurchases.php:25 Dashboard.php:145 DebtorsAtPeriodEnd.php:59
 msgid "The customer details could not be retrieved by the SQL because"
 msgstr "No se pudo obtener mediante SQL el detalle del cliente porque"
@@ -1484,9 +1484,9 @@ msgstr "ID de usuario"
 
 #: AuditTrail.php:55 AuditTrail.php:69 ContractBOM.php:306
 #: CounterReturns.php:1631 CounterReturns.php:1634 CounterSales.php:2195
-#: CounterSales.php:2198 CustomerBalancesMovement.php:26
-#: CustomerBalancesMovement.php:36 CustomerInquiry.php:194
-#: CustomerInquiry.php:199 CustomerInquiry.php:203 CustomerTransInquiry.php:36
+#: CounterSales.php:2198 CustomerBalancesMovement.php:29
+#: CustomerBalancesMovement.php:39 CustomerInquiry.php:193
+#: CustomerInquiry.php:198 CustomerInquiry.php:202 CustomerTransInquiry.php:36
 #: DailyBankTransactions.php:70 DailySalesInquiry.php:52
 #: DailySalesInquiry.php:54 FixedAssetRegister.php:59
 #: FixedAssetRegister.php:68 InventoryQuantities.php:168
@@ -1544,7 +1544,7 @@ msgstr "Usuario"
 
 #: AuditTrail.php:177 BankReconciliation.php:218 BankReconciliation.php:295
 #: CustWhereAlloc.php:21 CustWhereAlloc.php:111 CustomerAllocations.php:376
-#: CustomerInquiry.php:250 CustomerPurchases.php:77
+#: CustomerInquiry.php:249 CustomerPurchases.php:77
 #: CustomerTransInquiry.php:25 CustomerTransInquiry.php:104
 #: DailyBankTransactions.php:127 GLAccountInquiry.php:172
 #: GLAccountReport.php:341 GLJournal.php:266 MRPReschedules.php:194
@@ -3259,7 +3259,7 @@ msgstr "Sumar cheques no cobrados"
 
 #: BankReconciliation.php:219 BankReconciliation.php:296
 #: CustWhereAlloc.php:112 CustomerAllocations.php:347
-#: CustomerAllocations.php:377 CustomerInquiry.php:251
+#: CustomerAllocations.php:377 CustomerInquiry.php:250
 #: CustomerTransInquiry.php:105 DailyBankTransactions.php:126
 #: EmailCustTrans.php:15 GLAccountInquiry.php:173 ImportBankTrans.php:483
 #: PrintCustTrans.php:509 PrintCustTrans.php:733 PrintCustTrans.php:966
@@ -3278,7 +3278,7 @@ msgid "Number"
 msgstr "Número"
 
 #: BankReconciliation.php:220 BankReconciliation.php:297
-#: ContractCosting.php:176 CustWhereAlloc.php:113 CustomerInquiry.php:254
+#: ContractCosting.php:176 CustWhereAlloc.php:113 CustomerInquiry.php:253
 #: CustomerPurchases.php:84 CustomerReceipt.php:930
 #: CustomerTransInquiry.php:109 DailyBankTransactions.php:128 Dashboard.php:54
 #: GLAccountReport.php:342 PDFRemittanceAdvice.php:309
@@ -3893,19 +3893,20 @@ msgstr "Confirmar nota de Entrega y Factura"
 
 #: ConfirmDispatch_Invoice.php:279 Contracts.php:778 CustItem.php:144
 #: CustLoginSetup.php:32 CustomerAllocations.php:345
-#: CustomerBalancesMovement.php:24 CustomerBalancesMovement.php:95
-#: CustomerBranches.php:403 CustomerBranches.php:586 CustomerBranches.php:633
-#: CustomerInquiry.php:163 CustomerPurchases.php:30 CustomerReceipt.php:968
-#: CustomerReceipt.php:1024 CustomerReceipt.php:1174
-#: CustomerTransInquiry.php:107 Customers.php:25 Customers.php:348
-#: Dashboard.php:53 Dashboard.php:657 DeliveryDetails.php:855
-#: FTP_RadioBeacon.php:51 PDFOrderStatus.php:293 PDFOrdersInvoiced.php:292
-#: PricesByCost.php:154 SalesGraph.php:188 SalesTopCustomersInquiry.php:214
-#: SelectCompletedOrder.php:556 SelectContract.php:148
-#: SelectCreditItems.php:242 SelectCustomer.php:24 SelectCustomer.php:210
-#: SelectOrderItems.php:594 SelectRecurringSalesOrder.php:91
-#: SelectSalesOrder.php:701 SelectSalesOrder.php:718
-#: SellThroughSupport.php:262 StockLocMovements.php:93 StockMovements.php:100
+#: CustomerBalancesMovement.php:27 CustomerBalancesMovement.php:104
+#: CustomerBalancesMovement.php:111 CustomerBranches.php:403
+#: CustomerBranches.php:586 CustomerBranches.php:633 CustomerInquiry.php:162
+#: CustomerPurchases.php:30 CustomerReceipt.php:968 CustomerReceipt.php:1024
+#: CustomerReceipt.php:1174 CustomerTransInquiry.php:107 Customers.php:25
+#: Customers.php:348 Dashboard.php:53 Dashboard.php:657
+#: DeliveryDetails.php:855 FTP_RadioBeacon.php:51 PDFOrderStatus.php:293
+#: PDFOrdersInvoiced.php:292 PricesByCost.php:154 SalesGraph.php:188
+#: SalesTopCustomersInquiry.php:214 SelectCompletedOrder.php:556
+#: SelectContract.php:148 SelectCreditItems.php:242 SelectCustomer.php:24
+#: SelectCustomer.php:210 SelectOrderItems.php:594
+#: SelectRecurringSalesOrder.php:91 SelectSalesOrder.php:701
+#: SelectSalesOrder.php:718 SellThroughSupport.php:262
+#: StockLocMovements.php:93 StockMovements.php:100
 #: includes/PDFAgedDebtorsPageHeader.inc:48
 #: includes/PDFBankingSummaryPageHeader.inc:56
 #: includes/PDFCustTransListingPageHeader.inc:48
@@ -4674,7 +4675,7 @@ msgstr ""
 "componentes para ensamblar porque "
 
 #: ConfirmDispatch_Invoice.php:1048 CounterSales.php:1472
-#: CustomerInquiry.php:256 CustomerTransInquiry.php:111
+#: CustomerInquiry.php:255 CustomerTransInquiry.php:111
 #: DeliveryDetails.php:621 DeliveryDetails.php:627 DeliveryDetails.php:634
 #: DeliveryDetails.php:811 DeliveryDetails.php:817 DeliveryDetails.php:840
 #: MRPReport.php:412 PDFOrderStatus.php:292 PDFOrdersInvoiced.php:291
@@ -6032,7 +6033,7 @@ msgstr "Parte del Teléfono de la Sucursal del cliente"
 msgid "Reset"
 msgstr "Empezar de nuevo"
 
-#: Contracts.php:779 CustomerInquiry.php:253 CustomerTransInquiry.php:108
+#: Contracts.php:779 CustomerInquiry.php:252 CustomerTransInquiry.php:108
 #: Dashboard.php:658 FTP_RadioBeacon.php:52 PDFOrderStatus.php:294
 #: PDFOrdersInvoiced.php:293 PDFPriceList.php:429 PricesByCost.php:155
 #: Prices_Customer.php:263 Prices_Customer.php:337 PrintCustTrans.php:844
@@ -6065,7 +6066,7 @@ msgstr "Contacto"
 msgid "Fax"
 msgstr "Fax"
 
-#: Contracts.php:829 CustomerInquiry.php:163 CustomerReceipt.php:1024
+#: Contracts.php:829 CustomerInquiry.php:162 CustomerReceipt.php:1024
 #: PDFRemittanceAdvice.php:275 PO_Header.php:609 PrintCustTrans.php:881
 #: PrintCustTransPortrait.php:933 SupplierInquiry.php:120
 #: includes/PDFQuotationPageHeader.inc:88
@@ -6875,7 +6876,7 @@ msgstr "Existencia"
 msgid "Picked Up By"
 msgstr "Recogido Por"
 
-#: CounterSales.php:909 CustomerInquiry.php:255 CustomerTransInquiry.php:110
+#: CounterSales.php:909 CustomerInquiry.php:254 CustomerTransInquiry.php:110
 #: DeliveryDetails.php:1105 OrderDetails.php:125 PO_Header.php:1155
 #: PO_OrderDetails.php:156 RecurringSalesOrders.php:419 SpecialOrder.php:614
 #: SupplierCredit.php:602 SupplierInquiry.php:213 SupplierInvoice.php:950
@@ -8533,8 +8534,8 @@ msgstr "Asignado"
 msgid "This"
 msgstr "Este"
 
-#: CustomerAllocations.php:381 CustomerInquiry.php:438 CustomerInquiry.php:480
-#: CustomerInquiry.php:505 CustomerInquiry.php:535 SupplierAllocations.php:460
+#: CustomerAllocations.php:381 CustomerInquiry.php:437 CustomerInquiry.php:479
+#: CustomerInquiry.php:504 CustomerInquiry.php:534 SupplierAllocations.php:460
 #: SupplierInquiry.php:263
 msgid "Allocation"
 msgstr "Asignación"
@@ -8544,9 +8545,10 @@ msgid "Running"
 msgstr "Ejecutando"
 
 #: CustomerAllocations.php:382 CustomerAllocations.php:570
-#: CustomerAllocations.php:622 CustomerBalancesMovement.php:99
-#: CustomerBalancesMovement.php:166 CustomerInquiry.php:259 Dashboard.php:57
-#: Dashboard.php:534 GLAccountInquiry.php:178 SupplierInquiry.php:216
+#: CustomerAllocations.php:622 CustomerBalancesMovement.php:108
+#: CustomerBalancesMovement.php:111 CustomerBalancesMovement.php:187
+#: CustomerInquiry.php:258 Dashboard.php:57 Dashboard.php:534
+#: GLAccountInquiry.php:178 SupplierInquiry.php:216
 #: includes/PDFAgedDebtorsPageHeader.inc:49
 #: includes/PDFAgedSuppliersPageHeader.inc:35
 #: includes/PDFDebtorBalsPageHeader.inc:31
@@ -8601,48 +8603,53 @@ msgstr "No hay cobros o créditos pendientes que asignar a este cliente"
 msgid "There are no allocations to be done"
 msgstr "No hay asignaciones que hacer"
 
-#: CustomerBalancesMovement.php:5 CustomerBalancesMovement.php:9
+#: CustomerBalancesMovement.php:5 CustomerBalancesMovement.php:11
 msgid "Customer Balances Movements"
 msgstr ""
 
-#: CustomerBalancesMovement.php:34 CustomerBranches.php:785
+#: CustomerBalancesMovement.php:37 CustomerBranches.php:785
 #: SalesAnalRepts.php:20 SalesAnalRepts.php:22 SalesInquiry.php:776
 #: SalesInquiry.php:811 SalesInquiry.php:986 SalesInquiry.php:1235
 msgid "Sales Area"
 msgstr "Zona de Ventas"
 
-#: CustomerBalancesMovement.php:44 SalesByTypePeriodInquiry.php:70
+#: CustomerBalancesMovement.php:47 SalesByTypePeriodInquiry.php:70
 #: SalesCategoryPeriodInquiry.php:64 SalesTopCustomersInquiry.php:66
 #: SalesTopItemsInquiry.php:67 SuppPriceList.php:312
 msgid "Date From"
 msgstr "Fecha Inicio"
 
-#: CustomerBalancesMovement.php:48 SalesByTypePeriodInquiry.php:74
+#: CustomerBalancesMovement.php:51 SalesByTypePeriodInquiry.php:74
 #: SalesCategoryPeriodInquiry.php:68 SalesTopCustomersInquiry.php:70
 #: SalesTopItemsInquiry.php:71
 msgid "Date To"
 msgstr "Fecha Final"
 
 #: CustomerBalancesMovement.php:55
+msgid "Create CSV"
+msgstr ""
+
+#: CustomerBalancesMovement.php:62
 msgid "Show Customer Balance Movements"
 msgstr ""
 
-#: CustomerBalancesMovement.php:96 CustomerBalancesMovement.php:163
-#: includes/DatabaseTranslations.php:55
+#: CustomerBalancesMovement.php:105 CustomerBalancesMovement.php:111
+#: CustomerBalancesMovement.php:184 includes/DatabaseTranslations.php:55
 msgid "Opening Balance"
 msgstr "Saldo inicial"
 
-#: CustomerBalancesMovement.php:97 CustomerBalancesMovement.php:164
-#: GLTransInquiry.php:50
+#: CustomerBalancesMovement.php:106 CustomerBalancesMovement.php:111
+#: CustomerBalancesMovement.php:185 GLTransInquiry.php:50
 msgid "Debits"
 msgstr "Débitos"
 
-#: CustomerBalancesMovement.php:98 CustomerBalancesMovement.php:165
-#: GLTransInquiry.php:51 includes/PDFStatementPageHeader.inc:171
+#: CustomerBalancesMovement.php:107 CustomerBalancesMovement.php:111
+#: CustomerBalancesMovement.php:186 GLTransInquiry.php:51
+#: includes/PDFStatementPageHeader.inc:171
 msgid "Credits"
 msgstr "Créditos"
 
-#: CustomerBalancesMovement.php:169
+#: CustomerBalancesMovement.php:190 CustomerBalancesMovement.php:198
 msgid "TOTALS"
 msgstr "TOTALES"
 
@@ -9158,39 +9165,39 @@ msgstr ""
 msgid "You have no authority to review this data"
 msgstr ""
 
-#: CustomerInquiry.php:58
+#: CustomerInquiry.php:57
 msgid "The balance status should be all or zero balance or not zero balance"
 msgstr ""
 
-#: CustomerInquiry.php:159
+#: CustomerInquiry.php:158
 msgid "Back to Customer Screen"
 msgstr "Volver a la pantalla de cliente"
 
-#: CustomerInquiry.php:163 CustomerReceipt.php:1024 SelectOrderItems.php:698
+#: CustomerInquiry.php:162 CustomerReceipt.php:1024 SelectOrderItems.php:698
 #: SupplierCredit.php:264 SupplierInquiry.php:122 SupplierInvoice.php:606
 msgid "Terms"
 msgstr "Términos"
 
-#: CustomerInquiry.php:163 CustomerReceipt.php:1024 Customers.php:566
+#: CustomerInquiry.php:162 CustomerReceipt.php:1024 Customers.php:566
 #: Customers.php:907 Customers.php:937
 msgid "Credit Limit"
 msgstr "Límite de crédito"
 
-#: CustomerInquiry.php:163 CustomerReceipt.php:1024 Customers.php:592
+#: CustomerInquiry.php:162 CustomerReceipt.php:1024 Customers.php:592
 #: Customers.php:974 Customers.php:980 includes/MainMenuLinksArray.php:482
 msgid "Credit Status"
 msgstr "Estado de crédito"
 
-#: CustomerInquiry.php:167 CustomerReceipt.php:1028
+#: CustomerInquiry.php:166 CustomerReceipt.php:1028
 msgid "ACCOUNT ON HOLD"
 msgstr "Cuenta en Espera"
 
-#: CustomerInquiry.php:172 CustomerReceipt.php:1034
+#: CustomerInquiry.php:171 CustomerReceipt.php:1034
 #: PrintCustStatements.php:398 SupplierInquiry.php:144
 msgid "Total Balance"
 msgstr "Saldo total"
 
-#: CustomerInquiry.php:173 CustomerReceipt.php:1035 Dashboard.php:58
+#: CustomerInquiry.php:172 CustomerReceipt.php:1035 Dashboard.php:58
 #: PrintCustStatements.php:394 SalesPeople.php:206 Shipments.php:406
 #: StockClone.php:873 StockClone.php:875 Stocks.php:1176 Stocks.php:1178
 #: SupplierInquiry.php:145 WhereUsedInquiry.php:92
@@ -9199,115 +9206,112 @@ msgstr "Saldo total"
 msgid "Current"
 msgstr "Actual"
 
-#: CustomerInquiry.php:174 CustomerReceipt.php:1036 SupplierInquiry.php:146
+#: CustomerInquiry.php:173 CustomerReceipt.php:1036 SupplierInquiry.php:146
 msgid "Now Due"
 msgstr "Debido Ahora"
 
-#: CustomerInquiry.php:175 CustomerInquiry.php:176 CustomerReceipt.php:1037
+#: CustomerInquiry.php:174 CustomerInquiry.php:175 CustomerReceipt.php:1037
 #: CustomerReceipt.php:1038 SupplierInquiry.php:147 SupplierInquiry.php:148
 msgid "Days Overdue"
 msgstr "Dias de atraso"
 
-#: CustomerInquiry.php:176 CustomerReceipt.php:1038
+#: CustomerInquiry.php:175 CustomerReceipt.php:1038
 #: PrintCustStatements.php:397 SupplierInquiry.php:148
 msgid "Over"
 msgstr "Sobre los"
 
-#: CustomerInquiry.php:190 SupplierInquiry.php:165
+#: CustomerInquiry.php:189 SupplierInquiry.php:165
 msgid "Show all transactions after"
 msgstr "Mostrar todas las transacciones después de"
 
-#: CustomerInquiry.php:195 CustomerInquiry.php:200 CustomerInquiry.php:204
+#: CustomerInquiry.php:194 CustomerInquiry.php:199 CustomerInquiry.php:203
 msgid "Invoices not fully allocated"
 msgstr ""
 
-#: CustomerInquiry.php:196 CustomerInquiry.php:201 CustomerInquiry.php:205
+#: CustomerInquiry.php:195 CustomerInquiry.php:200 CustomerInquiry.php:204
 msgid "Invoices fully allocated"
 msgstr "Facturas totalmente asignados"
 
-#: CustomerInquiry.php:210 SupplierInquiry.php:166
+#: CustomerInquiry.php:209 SupplierInquiry.php:166
 msgid "Refresh Inquiry"
 msgstr "Refrescar consulta"
 
-#: CustomerInquiry.php:237 SupplierInquiry.php:193
+#: CustomerInquiry.php:236 SupplierInquiry.php:193
 msgid "No transactions were returned by the SQL because"
 msgstr "SQL no devolvió transacciones porque"
 
-#: CustomerInquiry.php:241 SupplierInquiry.php:199
+#: CustomerInquiry.php:240 SupplierInquiry.php:199
 msgid "There are no transactions to display since"
 msgstr "No existen transacciones a desplegar desde"
 
-#: CustomerInquiry.php:258 SupplierInquiry.php:215
+#: CustomerInquiry.php:257 SupplierInquiry.php:215
 #: Z_CheckAllocationsFrom.php:35 Z_CheckAllocationsFrom.php:60
 #: includes/PDFStatementPageHeader.inc:172
 msgid "Allocated"
 msgstr "Asignado"
 
-#: CustomerInquiry.php:260 CustomerInquiry.php:261 CustomerInquiry.php:262
-#: CustomerInquiry.php:263 CustomerInquiry.php:264 SupplierAllocations.php:647
+#: CustomerInquiry.php:259 CustomerInquiry.php:260 CustomerInquiry.php:261
+#: CustomerInquiry.php:262 CustomerInquiry.php:263 SupplierAllocations.php:647
 #: SupplierInquiry.php:217 SupplierInquiry.php:218
 msgid "More Info"
 msgstr "Más información"
 
-#: CustomerInquiry.php:305 CustomerInquiry.php:347
+#: CustomerInquiry.php:304 CustomerInquiry.php:346
 msgid "Credit "
 msgstr "Crédito"
 
-#: CustomerInquiry.php:306 CustomerInquiry.php:348
+#: CustomerInquiry.php:305 CustomerInquiry.php:347
 msgid "Click to credit the invoice"
 msgstr "Haga clic para acreditar la factura"
 
-#: CustomerInquiry.php:310 CustomerInquiry.php:352 CustomerInquiry.php:389
-#: CustomerInquiry.php:423 CustomerInquiry.php:465
+#: CustomerInquiry.php:309 CustomerInquiry.php:351 CustomerInquiry.php:388
+#: CustomerInquiry.php:422 CustomerInquiry.php:464
 msgid "HTML "
 msgstr "HTML"
 
-#: CustomerInquiry.php:311 CustomerInquiry.php:353 CustomerInquiry.php:390
+#: CustomerInquiry.php:310 CustomerInquiry.php:352 CustomerInquiry.php:389
 #: CustomerTransInquiry.php:146
 #, php-format
 msgid "Click to preview the invoice"
 msgstr "Haga clic para ver la factura"
 
-#: CustomerInquiry.php:315 CustomerInquiry.php:357 CustomerInquiry.php:394
-#: CustomerInquiry.php:428 CustomerInquiry.php:470
+#: CustomerInquiry.php:314 CustomerInquiry.php:356 CustomerInquiry.php:393
+#: CustomerInquiry.php:427 CustomerInquiry.php:469
 msgid "PDF "
 msgstr "PDF"
 
-#: CustomerInquiry.php:316 CustomerInquiry.php:358 CustomerInquiry.php:395
-#: CustomerInquiry.php:429 CustomerInquiry.php:471 SelectSalesOrder.php:772
+#: CustomerInquiry.php:315 CustomerInquiry.php:357 CustomerInquiry.php:394
+#: CustomerInquiry.php:428 CustomerInquiry.php:470 SelectSalesOrder.php:772
 #: SelectSalesOrder.php:799
 #, php-format
 msgid "Click for PDF"
 msgstr "Haga clic para PDF"
 
-#: CustomerInquiry.php:320 CustomerInquiry.php:362 CustomerInquiry.php:399
+#: CustomerInquiry.php:319 CustomerInquiry.php:361 CustomerInquiry.php:398
 msgid "Email "
 msgstr "Correo-e"
 
-#: CustomerInquiry.php:321 CustomerInquiry.php:363 CustomerInquiry.php:400
+#: CustomerInquiry.php:320 CustomerInquiry.php:362 CustomerInquiry.php:399
 msgid "Click to email the invoice"
 msgstr "Haga clic para enviar la factura por correo-e"
 
-#: CustomerInquiry.php:325 CustomerInquiry.php:443 CustomerInquiry.php:513
-#: CustomerInquiry.php:567 CustomerInquiry.php:616
+#: CustomerInquiry.php:324 CustomerInquiry.php:325 CustomerInquiry.php:442
+#: CustomerInquiry.php:443 CustomerInquiry.php:512 CustomerInquiry.php:513
+#: CustomerInquiry.php:566 CustomerInquiry.php:567 CustomerInquiry.php:615
+#: CustomerInquiry.php:616
 msgid "View GL Entries"
 msgstr "Ver entradas del libro mayor"
 
-#: CustomerInquiry.php:326 CustomerInquiry.php:444 CustomerInquiry.php:514
-#: CustomerInquiry.php:568 CustomerInquiry.php:617
-msgid "View the GL Entries"
-msgstr ""
-
-#: CustomerInquiry.php:424 CustomerInquiry.php:466
+#: CustomerInquiry.php:423 CustomerInquiry.php:465
 msgid "Click to preview the credit note"
 msgstr "Haga clic para ver la nota de crédito"
 
-#: CustomerInquiry.php:434 CustomerInquiry.php:476
+#: CustomerInquiry.php:433 CustomerInquiry.php:475
 msgid "Click to email the credit note"
 msgstr "Haga clic para enviar la nota de crédito por correo-e"
 
-#: CustomerInquiry.php:439 CustomerInquiry.php:481 CustomerInquiry.php:506
-#: CustomerInquiry.php:536 SupplierInquiry.php:262
+#: CustomerInquiry.php:438 CustomerInquiry.php:480 CustomerInquiry.php:505
+#: CustomerInquiry.php:535 SupplierInquiry.php:262
 msgid "Click to allocate funds"
 msgstr "Haga clic para asignar fondos"
 
@@ -31793,6 +31797,10 @@ msgid ""
 "This language translation of the item will be used in invoices and credits "
 "to customers who are defined to use this language. The language translations "
 "to maintain here can be configured in the system parameters page"
+msgstr ""
+
+#: Stocks.php:1291
+msgid "Order multiple. It is the minimum packing quantity."
 msgstr ""
 
 #: Stocks.php:1401
