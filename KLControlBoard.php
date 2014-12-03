@@ -22,28 +22,7 @@ include ('includes/WeberpOpenCartDefines.php');
 include ('includes/GLPostings.inc');
 
 /* ASSIGN users to groups */
-
-if (($_SESSION['UserID'] == "Silo")
-	OR ($_SESSION['UserID'] == "Dini")
-	OR ($_SESSION['UserID'] == "Tari")
-	OR ($_SESSION['UserID'] == "RiaResti")){
-	$ShopSupportTeam = TRUE;
-}else{
-	$ShopSupportTeam = FALSE;
-}
-
-if (($_SESSION['UserID'] == "RiaResti")){
-	$ShopSupportManager = TRUE;
-}else{
-	$ShopSupportManager = FALSE;
-}
-
-if (($_SESSION['UserID'] == "Juliette")){
-	$SalesTrainer = TRUE;
-}else{
-	$SalesTrainer = FALSE;
-}
-
+include ('includes/KLRoles.inc');
 
 $begintime = time_start();
 
@@ -54,7 +33,7 @@ $periodnow=GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
 * TEST AND PLAY AREA      
 ***************************************************************************************/
 
-if ($_SESSION['UserID'] == "Ricard"){
+if ($KL_SystemAdmin){
 //	phpinfo();
 }
 
@@ -63,21 +42,21 @@ if ($_SESSION['UserID'] == "Ricard"){
 * SPG PERFORMANCE         
 ***************************************************************************************/
 
-if (($_SESSION['UserID'] == "Ricard") 
-	OR ($_SESSION['UserID'] == "Laia")
-	OR $SalesTrainer
-	OR ($_SESSION['UserID'] == "Ike1")){
+if ($KL_SystemAdmin 
+	OR $KL_PurchasingManager
+	OR $KL_SalesManager
+	OR $KL_KantorManager){
 	SPGNotReportingSalesInDays(2, $db);
 }
 
-if (($_SESSION['UserID'] == "Ricard") 
-	OR ($_SESSION['UserID'] == "Laia")
-	OR ($_SESSION['UserID'] == "Ike1")){
+if ($KL_SystemAdmin
+	OR $KL_PurchasingManager
+	OR $KL_KantorManager){
 	SplittedPaymentsBySPG(15, 2, $db);
 }
 
 /*
-if (($_SESSION['UserID'] == "Laia")
+if (($KL_PurchasingManager)
 	OR ($_SESSION['UserID'] == "Evelin")){
 	SPGBelowMinimumSales("TOK66", 2, 1300000,$db);
 	SPGBelowMinimumSales("TOKSA", 2, 1650000,$db);
@@ -94,12 +73,12 @@ if (($_SESSION['UserID'] == "Laia")
 /***************************************************************************************
 * STANDARD COST         
 ***************************************************************************************/
-if (($_SESSION['UserID'] == "Ricard")
-	OR ($_SESSION['UserID'] == "Cicik")){
+if ($KL_SystemAdmin
+	OR $KL_PurchasingTeam){
 	ItemsWithoutStandardCost($RootPath, $db);
 }
 
-if ($_SESSION['UserID'] == "Ricard"){
+if ($KL_SystemAdmin){
 	WrongStandardCost("Indonesia"         , "", 1.00, 0.04, false, $RootPath, $db);
 	WrongStandardCost("Thailand"          , "", 1.25, 0.04, false, $RootPath, $db);
 	WrongStandardCost("China"             , "", 1.25, 0.04, false, $RootPath, $db);
@@ -107,7 +86,7 @@ if ($_SESSION['UserID'] == "Ricard"){
 	WrongStandardCost("Catalonia"         , "", 1.25, 0.10, false, $RootPath, $db);
 }
 
-if ($_SESSION['UserID'] == "Cicik"){
+if ($KL_PurchasingTeam) {
 	WrongStandardCost("Indonesia"         , "", 1.00, 0.05, true, $RootPath, $db);
 	WrongStandardCost("Thailand"          , "", 1.25, 0.05, true, $RootPath, $db);
 	WrongStandardCost("China"             , "", 1.25, 0.05, true, $RootPath, $db);
@@ -119,16 +98,16 @@ if ($_SESSION['UserID'] == "Cicik"){
 ***************************************************************************************/
 
 /*
-if (($_SESSION['UserID'] == "Ricard")){
+if (($KL_SystemAdmin)){
 	over_or_below_limit("Items changing price", "OVER", 0, $RootPath, $db);
 	over_or_below_limit("Items moving to discount", "OVER", 0, $RootPath, $db);
 	over_or_below_limit("Items moving to outlet", "OVER", 0, $RootPath, $db);
 }
 */
 
-if (($_SESSION['UserID'] == "Laia")
-	OR $ShopSupportTeam
-	OR ($_SESSION['UserID'] == "Ike1")){
+if ($KL_PurchasingManager
+	OR $KL_ShopSupportTeam
+	OR $KL_KantorManager){
 	
 	over_or_below_limit("Items changing price or moving category", "OVER", 50, $RootPath, $db);
 	over_or_below_limit("Items changing price", "OVER", 20, $RootPath, $db);
@@ -136,38 +115,38 @@ if (($_SESSION['UserID'] == "Laia")
 	over_or_below_limit("Items moving to outlet", "OVER", 0, $RootPath, $db);
 }
 
-if ($ShopSupportTeam){
+if ($KL_ShopSupportTeam){
 
 	ItemsChangingPriceDelayed(4, $RootPath, $db);
 	ItemsMovingToDiscountDelayed(4, $RootPath, $db);
 	ItemsMovingToOutletDelayed(4, $RootPath, $db);
 }
 
-if (($_SESSION['UserID'] == "Ricard") 
-	OR ($_SESSION['UserID'] == "Ike1")
-	OR ($_SESSION['UserID'] == "Laia")){
+if ($KL_SystemAdmin 
+	OR $KL_KantorManager
+	OR $KL_PurchasingManager){
 
 	ItemsChangingPriceDelayed(5, $RootPath, $db);
 	ItemsMovingToDiscountDelayed(5, $RootPath, $db);
 	ItemsMovingToOutletDelayed(5, $RootPath, $db);
 }
 
-if (($_SESSION['UserID'] == "Ricard") 
-	OR ($_SESSION['UserID'] == "Laia")
-	OR ($_SESSION['UserID'] == "Ike1")
-	OR $SalesTrainer
-	OR ($_SESSION['UserID'] == "Cicik") 
-	OR $ShopSupportTeam){
+if ($KL_SystemAdmin 
+	OR $KL_PurchasingManager
+	OR $KL_KantorManager
+	OR $KL_SalesManager
+	OR $KL_PurchasingTeam 
+	OR $KL_ShopSupportTeam){
 	
 	DiscountedItemsOnWrongShops("DISCOU", $RootPath, $db);
 	DiscountedItemsOnWrongShops("OUTLET", $RootPath, $db);
 }
 
-if (($_SESSION['UserID'] == "Ricard") 
-	OR ($_SESSION['UserID'] == "Laia")
-	OR ($_SESSION['UserID'] == "Ike1")
-	OR ($_SESSION['UserID'] == "Cicik") 
-	OR $ShopSupportTeam){
+if ($KL_SystemAdmin 
+	OR $KL_PurchasingManager
+	OR $KL_KantorManager
+	OR $KL_PurchasingTeam 
+	OR $KL_ShopSupportTeam){
 	
 	DiscountedItemsWithWrongDiscount("DISCOU", "50", $RootPath, $db);
 //	DiscountedItemsWithWrongDiscount("OUTLET", "80", $RootPath, $db);
@@ -177,14 +156,14 @@ if (($_SESSION['UserID'] == "Ricard")
 /***************************************************************************************
 * BALANCE ACCOUNTS         
 ***************************************************************************************/
-if ($_SESSION['UserID'] == "Ricard"){
+if ($KL_SystemAdmin){
 	GoodsReceivedNotInvoicedControl($periodnow, $db);
 	CustomersDebtControl(100000, $periodnow, $db);
 }
 
-if (($_SESSION['UserID'] == "Ricard") 
-	OR ($_SESSION['UserID'] == "Ike1")
-	OR ($_SESSION['UserID'] == "Revi")){
+if ($KL_SystemAdmin 
+	OR $KL_KantorManager
+	OR $KL_KantorAdministration){
 	
 	BalanceAccountControl("111111101",         0,   10000000, $periodnow, $db);
 	BalanceAccountControl("111111102",         0,   10000000, $periodnow, $db);
@@ -198,21 +177,21 @@ if (($_SESSION['UserID'] == "Ricard")
 	BalanceAccountControl("111111111",         0,   10000000, $periodnow, $db);
 }
 
-if (($_SESSION['UserID'] == "Ricard") 
-	OR ($_SESSION['UserID'] == "Cicik")
-	OR ($_SESSION['UserID'] == "Revi")){
+if ($KL_SystemAdmin 
+	OR $KL_PurchasingTeam
+	OR $KL_KantorAdministration){
 
 	BalanceAccountControl("111111100",          -1,          1, $periodnow, $db);
 }
 
 
-if (($_SESSION['UserID'] == "Ricard") 
-	OR ($_SESSION['UserID'] == "Revi")){
+if ($KL_SystemAdmin 
+	OR $KL_KantorAdministration){
 	// Bank Mandiri has enough funds to be transferred to Danamon
 	BalanceAccountControl("111121100PT", 10000000,  100000000, $periodnow, $db);
 }
 
-if ($_SESSION['UserID'] == "Ricard"){
+if ($KL_SystemAdmin){
 
 	BalanceAccountControl("111111200",   20000000,   50000000, $periodnow, $db);
 	BalanceAccountControl("111111209",          0,   15000000, $periodnow, $db);
@@ -236,29 +215,29 @@ if ($_SESSION['UserID'] == "Ricard"){
 /***************************************************************************************
 * STOCK CONTROL         
 ***************************************************************************************/
-if (($_SESSION['UserID'] == "Laia")
-	OR ($_SESSION['UserID'] == "Ike1")
-	OR $ShopSupportTeam){
+if ($KL_PurchasingManager
+	OR $KL_KantorManager
+	OR $KL_ShopSupportTeam){
 	
 	ItemsWithStockLocationButNoStockAvailable("WABOM", "WaterBom", 15, 600, $RootPath, $db);
 	ItemsWithStockLocationButNoStockAvailable("WHAYA", "Ayana", 15, 600, $RootPath, $db);
 	ItemsWithStockLocationButNoStockAvailable("WHINT", "InterContinental", 15, 600, $RootPath, $db);
 }
 
-if (($_SESSION['UserID'] == "Laia")
-	OR ($_SESSION['UserID'] == "Ike1")
-	OR ($_SESSION['UserID'] == "Cicik")){
+if ($KL_PurchasingManager
+	OR $KL_KantorManager
+	OR $KL_PurchasingTeam){
 
 	InsuficientStockForItems("SILVER", "TM-", "Tali Mie", 20, 40, $RootPath, $db);
 }
 
-if (($_SESSION['UserID'] == "Laia")
-	OR ($_SESSION['UserID'] == "Ricard")
-	OR ($_SESSION['UserID'] == "Cicik")){
+if ($KL_PurchasingManager
+	OR $KL_SystemAdmin
+	OR $KL_PurchasingTeam){
 	ObsoleteComponentsInActiveBOM($RootPath, $db);
 }
 
-if ($_SESSION['UserID'] == "Laia"){
+if ($KL_PurchasingManager){
 
 	GoodsJustArrived("PO", "KANTO", 3, $RootPath, $db);
 	GoodsJustArrived("WO", "KANTO", 3, $RootPath, $db);
@@ -304,15 +283,15 @@ if ($_SESSION['UserID'] == "Laia"){
 	ItemsInCategoryWithStockKantorButReorderLevelTokoZero("DISCOU", $RootPath, $db);
 }
 
-if (($_SESSION['UserID'] == "Ike1") 
-	OR ($_SESSION['UserID'] == "Laia")
-	OR ($_SESSION['UserID'] == "Cicik")){
+if ($KL_KantorManager 
+	OR $KL_PurchasingManager
+	OR $KL_PurchasingTeam){
 
 	ConsumablesGoodsNotEnoughStock(50, 25, 75, $RootPath, $db);
 }
 
-if (($_SESSION['UserID'] == "Laia")
-	OR ($_SESSION['UserID'] == "Cicik")){
+if ($KL_PurchasingManager
+	OR $KL_PurchasingTeam){
 
 	ValueStockLocation("SERVI",    0,  150, 0, 0, $db);
 	ValueStockLocation("SERDE",    0,  150, 0, 0, $db);
@@ -323,66 +302,64 @@ if (($_SESSION['UserID'] == "Laia")
 }
 
 
-if (($_SESSION['UserID'] == "Ricard")
-	OR ($_SESSION['UserID'] == "Cicik")){
+if ($KL_SystemAdmin
+	OR $KL_PurchasingTeam){
 	ItemsWithoutPurchasingData($RootPath, $db);
 }
-if (($_SESSION['UserID'] == "Laia")
-	OR ($_SESSION['UserID'] == "Cicik")){
+if ($KL_PurchasingManager
+	OR $KL_PurchasingTeam){
 	ComponentsToObsolete(false, 0, $RootPath, $db);
 }
 
-if (($_SESSION['UserID'] == "Ricard")
-	OR ($_SESSION['UserID'] == "Laia")
-	OR ($_SESSION['UserID'] == "Cicik")){
+if ($KL_SystemAdmin
+	OR $KL_PurchasingManager
+	OR $KL_PurchasingTeam){
 	FlaggedAsObsoleteButStockAvailable($RootPath, $db);
 }
 
-if (($_SESSION['UserID'] == "Laia")){
+if ($KL_PurchasingManager){
 	ItemsInKLProcessAndRLNotZero($RootPath, $db);
 }
 
-if (($_SESSION['UserID'] == "Ricard") 
-	OR ($_SESSION['UserID'] == "Ike1")
-	OR ($_SESSION['UserID'] == "Laia")){
+if ($KL_SystemAdmin 
+	OR $KL_KantorManager
+	OR $KL_PurchasingManager){
 	ItemsOnSpecialRequest($RootPath, $db);
 }
 
-if (($_SESSION['UserID'] == "Ricard") 
-	OR ($_SESSION['UserID'] == "Cicik")){
+if ($KL_SystemAdmin 
+	OR $KL_PurchasingTeam){
 	PackagingItemsOnWrongLocation($RootPath, $db);
 }
 
-if (($_SESSION['UserID'] == "Ricard")){
+if ($KL_SystemAdmin){
 	PackagingToBeRefilled(false, $RootPath, $db);
 }
 
-
-if (($_SESSION['UserID'] == "Ricard")){
+if ($KL_SystemAdmin){
 	InsuficientStockForShopPackaging('SHPACK', 21, 90, 30, false, $RootPath, $db);
 }
 
-if (($_SESSION['UserID'] == "Cicik")){
+if ($KL_PurchasingTeam){
 	InsuficientStockForShopPackaging('SHPACK', 21, 90, 30, true, $RootPath, $db);
 }
 
-
-if (($_SESSION['UserID'] == "Ricard") 
-	OR ($_SESSION['UserID'] == "Ike1")){
+if ($KL_SystemAdmin 
+	OR $KL_KantorManager){
 	InsuficientStockForShopPackaging('ZAPON', 21, 60, 30, false, $RootPath, $db);
 }
 
-if (($_SESSION['UserID'] == "Ricard") 
-	OR ($_SESSION['UserID'] == "Ike1")
-	OR ($_SESSION['UserID'] == "Cicik") 
-	OR $ShopSupportTeam){
+if ($KL_SystemAdmin 
+	OR $KL_KantorManager
+	OR $KL_PurchasingTeam 
+	OR $KL_ShopSupportTeam){
 	
 	CheckNegativeStock($RootPath, $db);
 }
 /***************************************************************************************
 * SALES CONTROL         
 ***************************************************************************************/
-if ($_SESSION['UserID'] == "Laia"){
+if ($KL_PurchasingManager){
 
 	GoodSellingItemsInCategory("TESTSI", 15, 6, $RootPath, $db);
 	GoodSellingItemsInCategory("TESTSS", 15, 6, $RootPath, $db);
@@ -465,8 +442,8 @@ if ($_SESSION['UserID'] == "Laia"){
 	PerformanceItemsInCategory("BAD",  "DISCOU",120, 100, "MOVE TO OUTLET", $RootPath, $db);
 }
 
-if (($_SESSION['UserID'] == "Laia")
-	OR ($_SESSION['UserID'] == "Ike1")){
+if ($KL_PurchasingManager
+	OR $KL_KantorManager){
 	
 	ItemsNoSalesInLocation("WABOM", 30, 10, $RootPath, $db);
 	ItemsNoSalesInLocation("WHAYA", 30, 10, $RootPath, $db);
@@ -478,8 +455,8 @@ if (($_SESSION['UserID'] == "Laia")
 ***************************************************************************************/
 
 
-if (($_SESSION['UserID'] == "Laia")
-	OR ($_SESSION['UserID'] == "Cicik")){
+if ($KL_PurchasingManager
+	OR $KL_PurchasingTeam){
 	
 	OldPurchasingOrdersStillActive(90, $RootPath, $db);
 	WrongItemsOnPurchaseOrders($RootPath, $db);
@@ -489,33 +466,35 @@ if (($_SESSION['UserID'] == "Laia")
 }
 
 
-if (($_SESSION['UserID'] == "Ike1")){
+if ($KL_KantorManager){
 	
-	WrongGiftItem("ONLINE-VIP-PACK", "Retail", "OVER",  500000, 1, $RootPath, $db);
-	WrongGiftItem("ONLINE-VIP-PACK", "Retail", "BELOW", 500000, 1, $RootPath, $db);
+//	WrongGiftItem("ONLINE-VIP-PACK", "Retail", "OVER",  500000, 1, $RootPath, $db);
+//	WrongGiftItem("ONLINE-VIP-PACK", "Retail", "BELOW", 500000, 1, $RootPath, $db);
+	WrongGiftItem("GIFT-ALAR01", "Retail", "OVER",  1000000, 1, $RootPath, $db);
+	WrongGiftItem("GIFT-ALAR01", "Retail", "BELOW", 1000000, 1, $RootPath, $db);
 }
 
-if (($_SESSION['UserID'] == "Ricard") 
-	OR ($_SESSION['UserID'] == "Ike1")){
+if ($KL_SystemAdmin 
+	OR $KL_KantorManager){
 	OutstandingOrders("Retail", "Order", $RootPath, $db);
 	OutstandingOrders("Retail", "Quotation", $RootPath, $db);
 }
 
-if (($_SESSION['UserID'] == "Ricard") 
-	OR ($_SESSION['UserID'] == "Laia")
-	OR ($_SESSION['UserID'] == "Ike1")){
+if ($KL_SystemAdmin 
+	OR $KL_PurchasingManager
+	OR $KL_KantorManager){
 	OutstandingOrders("Wholesale", "Order", $RootPath, $db);
 	OutstandingOrders("Wholesale", "Quotation", $RootPath, $db);
 }
 
-if (($_SESSION['UserID'] == "Ricard") 
-	OR ($_SESSION['UserID'] == "Ike1")
-	OR $ShopSupportManager){ 
+if ($KL_SystemAdmin 
+	OR $KL_KantorManager
+	OR $KL_ShopSupportManager){ 
 	OutstandingOrders("Consignment", "Order", $RootPath, $db);
 	OutstandingOrders("Consignment", "Quotation", $RootPath, $db);
 }
 
-if (($_SESSION['UserID'] == "Ricard")){
+if ($KL_SystemAdmin){
 //	NewCustomers(2, $RootPath, $db);
 	OnlineCustomersNoOrderPlaced($RootPath, $db);
 	OnlineQuotationsFollowUp($RootPath, $db);
@@ -525,21 +504,21 @@ if (($_SESSION['UserID'] == "Ricard")){
 	OnlineItemsOnProcess($RootPath, $db);
 }
 
-if (($_SESSION['UserID'] == "Ricard") 
-	OR ($_SESSION['UserID'] == "Ike1")
-	OR $ShopSupportTeam){ 
+if ($KL_SystemAdmin 
+	OR $KL_KantorManager
+	OR $KL_ShopSupportTeam){ 
 	OutstandingOrders("Online", "Order", $RootPath, $db);
 }
 
 /***************************************************************************************
 * Other tests     
 ***************************************************************************************/
-if (($_SESSION['UserID'] == "Ricard") 
-	OR ($_SESSION['UserID'] == "Cicik")){
+if ($KL_SystemAdmin 
+	OR $KL_PurchasingTeam){
 	ActiveItemsWithoutPicture($RootPath, $db);
 }
 
-if ($_SESSION['UserID'] == "Ricard"){
+if ($KL_SystemAdmin){
 	ImagesWithoutProduct($RootPath, $db);
 	OpenCartItemsWithoutPicture($RootPath, $db, $db_oc, $oc_tableprefix);
 //	ImagesShouldNotBeInOpencartCatalog($RootPath, $db, $db_oc, $oc_tableprefix);
@@ -549,19 +528,19 @@ if ($_SESSION['UserID'] == "Ricard"){
 	UsersNotLoggingIn(90, "SPGSUPPORT", $db);
 }
 
-if ($ShopSupportTeam){ 
+if ($KL_ShopSupportTeam){ 
 	TransfersDelayed(3, $RootPath, $db);
 }
 
-if (($_SESSION['UserID'] == "Ricard") 
-	OR ($_SESSION['UserID'] == "Laia")
-	OR ($_SESSION['UserID'] == "Ike1")){
+if ($KL_SystemAdmin 
+	OR $KL_PurchasingManager
+	OR $KL_KantorManager){
 	TransfersDelayed(4, $RootPath, $db);
 }
 
-if (($_SESSION['UserID'] == "Ricard") 
-	OR ($_SESSION['UserID'] == "Laia")
-	OR ($_SESSION['UserID'] == "Ike1")){
+if ($KL_SystemAdmin 
+	OR $KL_PurchasingManager
+	OR $KL_KantorManager){
 	PettyCashBalance($db);
 	PettyCashToBeAuthorized($db);
 }

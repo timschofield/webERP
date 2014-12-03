@@ -11,13 +11,15 @@ include('includes/KLDefines.php');
 include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
 
+/* ASSIGN users to groups */
+include ('includes/KLRoles.inc');
 $begintime = time_start();
 
 $periodnow=GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
 
 AverageSales("Shop", 365, 90, 30, 15, 7, 1, 30, "CurrentYear", "All", $db);
 
-if ($_SESSION['UserID'] == "Ricard"){
+if ($KL_SystemAdmin){
 //	AverageSales("Shop", 365, 90, 30, 15,7, 1, 30, "LastYear", "All", $db);
 	YearDifferenceSales("Shop",  15, $db);
 	YearDifferenceSales("Shop",  30, $db);
@@ -40,29 +42,29 @@ SPGPerformanceByShop("RETAILMF", 30, 60, 90, $db);
 SPGPerformanceByShop("RETAILPU", 30, 60, 90, $db);
 SPGPerformanceByShop("RETAILJC", 30, 60, 90, $db);
 
-if ($_SESSION['UserID'] == "Ricard"){
+if ($KL_SystemAdmin){
 	YearDifferenceSales("SPG", 30, $db);
 	YearDifferenceSales("SPG", 90, $db);
 }
 
-if ($_SESSION['UserID'] == "Ricard"){
+if ($KL_SystemAdmin){
 	AverageCustomerBehaviourByValueInvoice("Shop", 15, $db);
 }
 
 AverageCustomerBehaviourByValueInvoice("Shop", 30, $db);
 
-if ($_SESSION['UserID'] == "Ricard"){
+if ($KL_SystemAdmin){
 	AverageCustomerBehaviourByValueInvoice("Shop", 90, $db);
 	AverageCustomerBehaviourByValueInvoice("Shop", 365, $db);
 }
 
-if (($_SESSION['UserID'] == "Ricard") 
+if (($KL_SystemAdmin) 
 	OR ($_SESSION['UserID'] == "Laia")){
 	GeneralCustomerBehaviour(30, $db);
 	GeneralCustomerBehaviour(90, $db);
 }
 
-if ($_SESSION['UserID'] == "Ricard"){
+if ($KL_SystemAdmin){
 	ListPriorityLocations($db);
 }
 
@@ -72,7 +74,7 @@ RecentlyClosedTransferStatus(1, $RootPath, $db);
 
 FinishedStockDistribution("FORSALE", "LOCATION", $db);
 
-if (($_SESSION['UserID'] == "Ricard") 
+if (($KL_SystemAdmin) 
 	OR ($_SESSION['UserID'] == "Laia")){
 	FinishedStockDistribution("FORSALE", "STOCKCATEGORY", $db);
 }
@@ -81,18 +83,18 @@ FinishedStockDistribution("DISPLAYS", "LOCATION", $db);
 
 PackagingStatus($RootPath, $db);
 
-if ($_SESSION['UserID'] == "Ricard"){
+if ($KL_SystemAdmin){
 	PackagingUsage(30, $RootPath, $db);
 	FinishedStockDistribution("PACKAGING", "LOCATION", $db);
 }
-if (($_SESSION['UserID'] == "Ricard") 
-	OR ($_SESSION['UserID'] == "Ike1")
-	OR ($_SESSION['UserID'] == "Laia")){
+if (($KL_SystemAdmin) 
+	OR ($KL_KantorManager)
+	OR ($KL_PurchasingManager)){
 	InsuficientStockForShopPackaging( 'SHPACK', 21, 90, 30, true, $RootPath, $db);
 	InsuficientStockForShopPackaging( 'ZAPON', 21, 60, 30, true, $RootPath, $db);
 }
 
-if ($_SESSION['UserID'] == "Ricard"){
+if ($KL_SystemAdmin){
 	GoodsToBeProduced("COMPON",$RootPath, $db);
 	ComponentsToObsolete(false, 0, $RootPath, $db);
 }
@@ -102,7 +104,7 @@ if ($_SESSION['UserID'] == "Ricard"){
 RetailTypePayments("SPG",180, $db);
 RetailTypePayments("SPG",  15, $db);
 
-if ($_SESSION['UserID'] == "Ricard"){
+if ($KL_SystemAdmin){
 	PettyCashStatus("IDR", $db);
 	PettyCashStatus("USD", $db);
 	PettyCashStatus("THB", $db);
