@@ -30,7 +30,7 @@ function DailyReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db, 
 
 	SetRLZeroForNotAvailableItems($ShowMessages, $updateDB, $RootPath, $db);
 
-	$EmailText = AdjustPackaging(30, 150, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+	$EmailText = AdjustPackaging(60, 180, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 	
 	return $EmailText;
 }
