@@ -632,36 +632,40 @@ function YearDifferenceSales($typereport, $NumDaysA, $db){
 					locale_number_format($TotalBothYearsDateB,0), 
 					$trend
 					);
-			$k = StartEvenOrOddRow($k);
-			printf('<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					</tr>', 
-					"",
-					"",
-					"NEW SHOPS",
-					locale_number_format($TotalNewDateA,0), 
-					"", 
-					""
-					);
-			$k = StartEvenOrOddRow($k);
-			printf('<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					</tr>', 
-					"",
-					"",
-					"CLOSED SHOPS",
-					"", 
-					locale_number_format($TotalOldDateB,0), 
-					""
-					);
+			if ($TotalNewDateA > 0){
+				$k = StartEvenOrOddRow($k);
+				printf('<td>%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td>%s</td>
+						</tr>', 
+						"",
+						"",
+						"NEW SHOPS",
+						locale_number_format($TotalNewDateA,0), 
+						"", 
+						""
+						);
+			}
+			if ($TotalOldDateB > 0){
+				$k = StartEvenOrOddRow($k);
+				printf('<td>%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td>%s</td>
+						</tr>', 
+						"",
+						"",
+						"CLOSED SHOPS",
+						"", 
+						locale_number_format($TotalOldDateB,0), 
+						""
+						);
+			}
 			$percent = (($TotalDateA)-($TotalDateB))/($TotalDateB) * 100;
 			$trend = " ";
 			if ($percent > 0){
