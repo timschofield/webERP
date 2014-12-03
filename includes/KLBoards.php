@@ -306,8 +306,8 @@ function FinishedStockDistribution($kind, $byreport, $db){
 		$operator1 = " AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_IN_KL_SHOPS_NOT_FOR_SALE ."";
 		$operator2 = " AND m2.categoryid NOT IN " . LIST_STOCK_CATEGORIES_IN_KL_SHOPS_NOT_FOR_SALE ."";
 	}elseif ($kind == "DISPLAYS"){			
-		$operator1 =  "	AND stockmaster.categoryid IN ('SHDISP')";
-		$operator2 = "	AND m2.categoryid IN ('SHDISP')";
+		$operator1 =  "	AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_SHOP_DISPLAYS . " ";
+		$operator2 = "	AND m2.categoryid IN " . LIST_STOCK_CATEGORIES_SHOP_DISPLAYS . " ";
 	}elseif ($kind == "PACKAGING"){			
 		$operator1 =  "	AND stockmaster.categoryid IN ('SHPACK')";
 		$operator2 = "	AND m2.categoryid IN ('SHPACK')";
@@ -1914,7 +1914,9 @@ No pending transfer regarding this item
 			WHERE stockmaster.categoryid = stockcategory.categoryid
 				AND discontinued = 0
 				AND stockcategory.stocktype = 'F'
-				AND stockmaster.categoryid NOT IN('SHDISP', 'SHCONS', 'IDCNCL')
+				AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_SHOP_DISPLAYS . "
+				AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_SHOP_CONSUMABLES . "
+				AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_OLD . "
 				AND stockmaster.klmovingdiscount = 0
 				AND stockmaster.klmovingoutlet = 0
 				AND stockmaster.klchangingprice = 0 " .
@@ -1937,7 +1939,7 @@ No pending transfer regarding this item
 
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . $StockCat . _(' Items with stock available (but NO changing price, No moving category) at Kantor but RL zero at ') . $Location . "." .$MessageDiscount . $MessageOutlet . '</strong></p>';
+		echo '<p class="page_title_text" align="center"><strong>' . $StockCat . _(' Items with stock available (but NO changing price or category) at Kantor but RL = 0 at ') . $Location . "." .$MessageDiscount . $MessageOutlet . '</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
@@ -2599,7 +2601,8 @@ function ValueStockLocation($location, $minpcs, $maxpcs, $minvalue, $maxvalue, $
 				locstock
 			WHERE stockmaster.stockid=locstock.stockid
 				AND stockmaster.categoryid=stockcategory.categoryid
-				AND stockmaster.categoryid NOT IN('SHDISP', 'SHCONS')
+				AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_SHOP_DISPLAYS . "
+				AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_SHOP_CONSUMABLES . "
 				AND locstock.quantity!=0
 				AND locstock.loccode = '" . $location . "'";
 				
@@ -4748,7 +4751,11 @@ function ActiveItemsWithoutPicture($RootPath, $db){
 		WHERE stockmaster.categoryid = stockcategory.categoryid
 			AND stockmaster.discontinued = 0
 			AND stockcategory.stocktype = 'F'
-			AND stockmaster.categoryid NOT IN ('SHCONS','SHDISP','OUTLET','DISCOU','ZAPRO','ZZZZZZ')
+			AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_SHOP_DISPLAYS . "
+			AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_SHOP_CONSUMABLES . "
+			AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_PROMOTIONAL_ITEMS . "
+			AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_DISCOUNT . "
+			AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_OLD . "
 		ORDER BY stockcategory.categorydescription, stockmaster.stockid";
 	$result = DB_query($SQL);
 	$showHeader = TRUE;
@@ -5368,7 +5375,7 @@ function ItemsNoSalesInLocation($location, $maxdays, $QOHAvailable, $RootPath, $
 					locations.locationname 
 			FROM 	stockmaster,locstock,locations
 			WHERE 	stockmaster.stockid = locstock.stockid
-					AND stockmaster.categoryid != 'SHDISP'
+					AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_SHOP_DISPLAYS . "
 					AND (locstock.loccode = locations.loccode)
 					AND locstock.loccode = '" . $location . "'
 					AND (locstock.quantity > 0)
