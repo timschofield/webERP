@@ -569,8 +569,8 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 and !isset($_POST['Proces
 
 	} /* end of loop around items */
 
-	echo '<tr class="EvenTableRows"><td colspan="7" class="number"><b>' . _('Total') . '</b></td>
-				<td class="number">' . number_format(($_SESSION['Items'.$identifier]->total+$TaxTotal),0) . '</td>
+	echo '<tr class="TotalTableRows"><td colspan="7" class="numberTotal"><b>' . _('Total') . '</b></td>
+				<td class="numberTotal">' . number_format(($_SESSION['Items'.$identifier]->total+$TaxTotal),0) . '</td>
 						</tr>
 		</table>';
 	echo '<input type="hidden" name="TaxTotal" value="'.$TaxTotal.'" />';
