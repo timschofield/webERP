@@ -631,7 +631,7 @@ if (isset($_POST['Search'])){
 						SELECT *
 						FROM 	custbranch
 						WHERE 	custbranch.debtorno = debtorsmaster.debtorno
-							AND custbranch.salesperson='" . $_SESSION['SalesmanLogin'] . "')";
+							AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "')";
 		}
 
 		$CustomerSearchResult = DB_query($SQL,'','',false,false);
