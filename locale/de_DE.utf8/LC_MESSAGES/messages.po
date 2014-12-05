@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.11.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-12-02 13:21-0600\n"
-"PO-Revision-Date: 2014-08-14 18:50-0600\n"
+"PO-Revision-Date: 2014-12-05 07:08-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: Deutsch <weberp-translation@lists.sourceforge.net>\n"
 "Language: de_DE\n"
@@ -16927,7 +16927,7 @@ msgstr "Wirtschaftliche Bestellmengen verwenden"
 
 #: MRP.php:600
 msgid "Use Pan Size"
-msgstr "Rundungsfaktoren verwenden"
+msgstr "Verpackungseinheit verwenden"
 
 #: MRP.php:604
 msgid "Use Shrinkage"
@@ -16951,7 +16951,7 @@ msgstr "Wirtschaftliche Bestellmengen verwenden?"
 
 #: MRP.php:650
 msgid "Use Pan Size?"
-msgstr "Rundungsfaktoren verwenden?"
+msgstr "Verpackungseinheit verwenden?"
 
 #: MRP.php:654
 msgid "Use Shrinkage?"
@@ -17479,7 +17479,7 @@ msgstr "Beschr.:"
 
 #: MRPReport.php:188
 msgid "Pan Size:"
-msgstr "Rund.-Fakt.:"
+msgstr "Verpackungseinheit:"
 
 #: MRPReport.php:190
 msgid "On Order:"
@@ -30141,7 +30141,7 @@ msgstr ""
 
 #: StockClone.php:250 Stocks.php:239
 msgid "Pansize quantity must be numeric"
-msgstr "Die Rundungsmenge muss numerisch sein"
+msgstr "Die Verpackungseinheit muss numerisch sein"
 
 #: StockClone.php:256 Stocks.php:245
 msgid "Shrinkage factor quantity must be numeric"
@@ -30316,7 +30316,7 @@ msgstr "Steuerkategorie"
 
 #: StockClone.php:987 Stocks.php:1290
 msgid "Pan Size"
-msgstr "Rundungsmenge"
+msgstr "Verpackungseinheit"
 
 #: StockClone.php:991 Stocks.php:1294
 msgid "Shrinkage Factor"

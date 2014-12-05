@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.11.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-12-02 13:21-0600\n"
-"PO-Revision-Date: 2014-11-24 10:23-0600\n"
+"PO-Revision-Date: 2014-12-05 07:13-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -16862,7 +16862,7 @@ msgstr "Usar Cantidad de Requisición Económica"
 
 #: MRP.php:600
 msgid "Use Pan Size"
-msgstr "Usar Tamaño Panorámico"
+msgstr "Usar tamaño de lote"
 
 #: MRP.php:604
 msgid "Use Shrinkage"
@@ -16886,7 +16886,7 @@ msgstr "Usar Cantidad de Requisición Económica?"
 
 #: MRP.php:650
 msgid "Use Pan Size?"
-msgstr "Usar Tamaño Pan?"
+msgstr "¿Usar tamaño de lote?"
 
 #: MRP.php:654
 msgid "Use Shrinkage?"
@@ -17417,7 +17417,7 @@ msgstr "Desc:"
 
 #: MRPReport.php:188
 msgid "Pan Size:"
-msgstr "Tamaño Panorámico:"
+msgstr "Tamaño de lote:"
 
 #: MRPReport.php:190
 msgid "On Order:"
@@ -29937,7 +29937,7 @@ msgstr ""
 
 #: StockClone.php:185 Stocks.php:174 Z_ImportStocks.php:149
 msgid "The weight of the packaged item must be a positive number"
-msgstr "El peso del artículo empaquetado debe ser un número positivo"
+msgstr "El peso del artículo empacado debe ser un número positivo"
 
 #: StockClone.php:191 Stocks.php:180
 msgid "The net weight of the item in Net Weight must be numeric"
@@ -29945,7 +29945,7 @@ msgstr ""
 
 #: StockClone.php:197 Stocks.php:186
 msgid "The net weight of the item must be a positive number"
-msgstr ""
+msgstr "El peso neto del artículo debe ser un número positivo"
 
 #: StockClone.php:203 Stocks.php:192 Z_ImportStocks.php:153
 msgid "The economic order quantity must be numeric"
@@ -30028,7 +30028,7 @@ msgstr ""
 
 #: StockClone.php:250 Stocks.php:239
 msgid "Pansize quantity must be numeric"
-msgstr "Las cantidad Pansize debe ser numérica"
+msgstr "El tamaño de lote debe ser numérico"
 
 #: StockClone.php:256 Stocks.php:245
 msgid "Shrinkage factor quantity must be numeric"
@@ -30071,7 +30071,7 @@ msgstr ""
 
 #: StockClone.php:502
 msgid "New cloned Item"
-msgstr ""
+msgstr "Nuevo artículo clonado"
 
 #: StockClone.php:503
 msgid "We also attempted to setup item purchase data and pricing."
@@ -30084,7 +30084,7 @@ msgstr ""
 
 #: StockClone.php:510
 msgid "Review Item Prices"
-msgstr ""
+msgstr "Revisar precios del artículo"
 
 #: StockClone.php:514
 msgid ""
@@ -30102,7 +30102,7 @@ msgstr "Costeo fue actualizado para este artículo clonado."
 
 #: StockClone.php:518
 msgid "Review Item Cost"
-msgstr ""
+msgstr "Revisar costo del artículo"
 
 #: StockClone.php:576
 msgid "Cloned Item Code"
@@ -30201,7 +30201,7 @@ msgstr "Clase de impuesto"
 
 #: StockClone.php:987 Stocks.php:1290
 msgid "Pan Size"
-msgstr "Tamaño Panorámico"
+msgstr "Tamaño de lote"
 
 #: StockClone.php:991 Stocks.php:1294
 msgid "Shrinkage Factor"
@@ -31801,7 +31801,7 @@ msgstr ""
 
 #: Stocks.php:1291
 msgid "Order multiple. It is the minimum packing quantity."
-msgstr ""
+msgstr "Múltiplo de pedido. Es la cantidad mínima de embalaje."
 
 #: Stocks.php:1401
 msgid ""

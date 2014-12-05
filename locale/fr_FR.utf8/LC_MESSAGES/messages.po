@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.11.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-12-02 13:21-0600\n"
-"PO-Revision-Date: 2014-08-30 18:36-0600\n"
+"PO-Revision-Date: 2014-12-05 08:09-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: French <none>\n"
 "Language: fr_FR\n"
@@ -16974,7 +16974,7 @@ msgstr ""
 
 #: MRP.php:600
 msgid "Use Pan Size"
-msgstr ""
+msgstr "Taille du lot"
 
 #: MRP.php:604
 msgid "Use Shrinkage"
@@ -16998,7 +16998,7 @@ msgstr ""
 
 #: MRP.php:650
 msgid "Use Pan Size?"
-msgstr ""
+msgstr "Utiliser taille du lot?"
 
 #: MRP.php:654
 msgid "Use Shrinkage?"
@@ -17547,7 +17547,7 @@ msgstr "Desc:"
 
 #: MRPReport.php:188
 msgid "Pan Size:"
-msgstr ""
+msgstr "Taille du lot:"
 
 #: MRPReport.php:190
 msgid "On Order:"
@@ -30383,7 +30383,7 @@ msgstr ""
 
 #: StockClone.php:250 Stocks.php:239
 msgid "Pansize quantity must be numeric"
-msgstr "La quantité pansize doit être numérique"
+msgstr "La taille du lot doit être numérique"
 
 #: StockClone.php:256 Stocks.php:245
 msgid "Shrinkage factor quantity must be numeric"
@@ -30553,7 +30553,7 @@ msgstr "Catégorie T.V.A."
 
 #: StockClone.php:987 Stocks.php:1290
 msgid "Pan Size"
-msgstr "Taille du plateau"
+msgstr "Taille du lot"
 
 #: StockClone.php:991 Stocks.php:1294
 msgid "Shrinkage Factor"
@@ -32152,7 +32152,7 @@ msgstr ""
 
 #: Stocks.php:1291
 msgid "Order multiple. It is the minimum packing quantity."
-msgstr ""
+msgstr "Multiple de commande. C'est la quantité minimale d'emballage."
 
 #: Stocks.php:1401
 msgid ""
@@ -51320,65 +51320,3 @@ msgstr ""
 #~ msgstr ""
 #~ "Impossible d'afficher la valeur de configuration "
 #~ "\"NumberOfMonthMustBeShown\""
-
-# JDN
-#~ msgid ""
-#~ "The selected period range is more than 12 months - only graphs for a "
-#~ "period less than 12 months can be created"
-#~ msgstr ""
-#~ "La période choisie est supérieure à 12 mois - Seuls des graphiques de "
-#~ "période de moins de 12 mois peuvent être créés"
-
-#~ msgid ""
-#~ "The quantity on work orders for this product cannot be retrieved because"
-#~ msgstr ""
-#~ "La quantité des commandes de travail pour ce produit ne peut pas être "
-#~ "trouvé en raison"
-
-#~ msgid "The quantity on order for this product to be received into"
-#~ msgstr "La quantité à la commande de ce produit pour être reçu dans"
-
-#~ msgid "The quantity on work orders for this product to be received into"
-#~ msgstr ""
-#~ "La quantité des commandes de travail pour ce produit d'être reçu dans"
-
-#~ msgid "HTML"
-#~ msgstr "HTML"
-
-#~ msgid "PDF"
-#~ msgstr "PDF"
-
-#~ msgid "Rates"
-#~ msgstr "Taux"
-
-#~ msgid "Tax Groupings"
-#~ msgstr "Groupes de taxes"
-
-#~ msgid "Tax Provinces"
-#~ msgstr "Région(s)"
-
-#~ msgid "Edit/Review Tax Authorities"
-#~ msgstr "Modifier / Afficher les autorités fiscales"
-
-#~ msgid "Edit/Review Tax Groupings"
-#~ msgstr "Modifier / Examiner Groupements d'impôt"
-
-#~ msgid "Edit/Review Tax Categories"
-#~ msgstr "Modifier / Examiner les catégories d'impôt"
-
-#~ msgid "Tax Authority To Report On:"
-#~ msgstr "Administration fiscale à formuler sur:"
-
-#~ msgid ""
-#~ "Adjustments for Tax paid to Customs, FBT, entertainments etc must also be "
-#~ "entered"
-#~ msgstr ""
-#~ "Ajustements de la taxe payée à la douane, FBT, etc divertissements "
-#~ "doivent aussi être indiqués"
-
-#~ msgid ""
-#~ "This information excludes Tax on journal entries/payments/receipts all "
-#~ "Tax should be entered through AR/AP"
-#~ msgstr ""
-#~ "Cette information ne comprend pas la taxe sur les entrées du journal / "
-#~ "paiements / recettes fiscales devraient tous être entré par AR / AP"
