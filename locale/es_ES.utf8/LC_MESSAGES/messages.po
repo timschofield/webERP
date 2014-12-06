@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.11.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-12-02 13:21-0600\n"
-"PO-Revision-Date: 2014-12-05 07:13-0600\n"
+"PO-Revision-Date: 2014-12-05 20:28-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -3873,7 +3873,7 @@ msgstr ""
 
 #: ConfirmDispatch_Invoice.php:250
 msgid "Dispathed Quantity should not be more than order balanced quantity"
-msgstr ""
+msgstr "Cantidad despachada no debe ser más que el saldo del pedido"
 
 #: ConfirmDispatch_Invoice.php:250
 msgid "To dispatch quantity is"
@@ -18842,7 +18842,7 @@ msgstr ""
 
 #: PDFGrn.php:20
 msgid "Goods Received Note"
-msgstr "Nota de Bienes Recibidos"
+msgstr "Nota de bienes recibidos"
 
 #: PDFGrn.php:75 PDFQALabel.php:53
 msgid "Could not get the supplier of the selected GRN"
@@ -19079,7 +19079,7 @@ msgstr "Notas de Crédito de clientes"
 
 #: PDFPeriodStockTransListing.php:169 SelectProduct.php:406
 msgid "Location Transfers"
-msgstr "Transferencias de Localidad"
+msgstr "Transferencias de localidad"
 
 #: PDFPeriodStockTransListing.php:172 StockAdjustments.php:8
 msgid "Stock Adjustments"
@@ -19113,7 +19113,7 @@ msgstr ""
 
 #: PDFPickingList.php:22
 msgid "Select Picking Lists"
-msgstr "Seleccionar Listas de Recolección"
+msgstr "Seleccionar listas de recolección"
 
 #: PDFPickingList.php:35
 msgid "Create picking lists for all deliveries to be made on"
@@ -19121,11 +19121,11 @@ msgstr "Crear listas de recolección para todas las entregas que se harán en"
 
 #: PDFPickingList.php:39
 msgid "From Warehouse"
-msgstr "Del Almacén"
+msgstr "Del almacén"
 
 #: PDFPickingList.php:49 includes/MainMenuLinksArray.php:37
 msgid "Print Picking Lists"
-msgstr "Imprimir Listas de Recolección"
+msgstr "Imprimir listas de recolección"
 
 #: PDFPickingList.php:58
 msgid ""
@@ -19240,7 +19240,7 @@ msgstr "Para Ventas Lista Tipo/Precio"
 
 #: PDFPriceList.php:320 PDFPrintLabel.php:328
 msgid "For Currency"
-msgstr "para la Moneda"
+msgstr "para la moneda"
 
 #: PDFPriceList.php:331
 msgid "Show Gross Profit %"
@@ -19327,7 +19327,7 @@ msgstr "Hasta el código de categoría de inventario"
 
 #: PDFPrintLabel.php:350
 msgid "Show Labels"
-msgstr "Mostrar Etiquetas"
+msgstr "Mostrar etiquetas"
 
 #: PDFQALabel.php:20
 msgid "QA Label"
@@ -19451,11 +19451,11 @@ msgstr "Aviso de Remesa"
 #: PrintCheque.php:92 Suppliers.php:832 Suppliers.php:1078
 #: includes/PDFStatementPageHeader.inc:27
 msgid "Remittance Advice"
-msgstr "Aviso para Envío de Remesa"
+msgstr "Aviso de remesa"
 
 #: PDFRemittanceAdvice.php:48 SuppPaymentRun.php:31
 msgid "suppliers from"
-msgstr "Proveedor desde"
+msgstr "proveedores desde"
 
 #: PDFRemittanceAdvice.php:48
 msgid "and Paid On"
@@ -19480,7 +19480,7 @@ msgstr "Avisos_Remesa"
 
 #: PDFRemittanceAdvice.php:130 includes/MainMenuLinksArray.php:147
 msgid "Remittance Advices"
-msgstr "Avisos Remesa"
+msgstr "Avisos de remesa"
 
 #: PDFRemittanceAdvice.php:168
 msgid "Date Of Payment"
@@ -19492,7 +19492,7 @@ msgstr "impreso:"
 
 #: PDFRemittanceAdvice.php:269
 msgid "Our Code:"
-msgstr "Nuestro Código:"
+msgstr "Nuestro código:"
 
 #: PDFRemittanceAdvice.php:311
 msgid "This Payment"
@@ -19804,7 +19804,7 @@ msgstr ""
 
 #: PDFWOPrint.php:448
 msgid "Date : "
-msgstr ""
+msgstr "Fecha :"
 
 #: PDFWOPrint.php:449
 msgid "Signed for: "
