@@ -58,8 +58,8 @@ if ($KL_SystemAdmin){
 	AverageCustomerBehaviourByValueInvoice("Shop", 365, $db);
 }
 
-if (($KL_SystemAdmin) 
-	OR ($_SESSION['UserID'] == "Laia")){
+if ($KL_SystemAdmin 
+	OR $KL_PurchasingManager){
 	GeneralCustomerBehaviour(30, $db);
 	GeneralCustomerBehaviour(90, $db);
 }
@@ -74,8 +74,8 @@ RecentlyClosedTransferStatus(1, $RootPath, $db);
 
 FinishedStockDistribution("FORSALE", "LOCATION", $db);
 
-if (($KL_SystemAdmin) 
-	OR ($_SESSION['UserID'] == "Laia")){
+if ($KL_SystemAdmin 
+	OR $KL_PurchasingManager){
 	FinishedStockDistribution("FORSALE", "STOCKCATEGORY", $db);
 }
 

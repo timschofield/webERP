@@ -37,6 +37,19 @@ if ($KL_SystemAdmin){
 //	phpinfo();
 }
 
+if ($KL_SystemAdmin 
+	OR $KL_KantorManager 
+	OR $KL_KantorAdministration 
+	OR $KL_PurchasingManager 
+	OR $KL_PurchasingTeam 
+	OR $KL_ShopSupportTeam 
+	OR $KL_ShopSupportManager 
+	OR $KL_SalesManager 
+	OR $KL_PettyCash 
+	OR $KL_SPG 
+	OR $KL_SPGSupport){
+
+}
 
 /***************************************************************************************
 * SPG PERFORMANCE         
@@ -466,7 +479,8 @@ if ($KL_PurchasingManager
 }
 
 
-if ($KL_KantorManager){
+if ($KL_KantorManager
+	OR $KL_ShopSupportManager){
 	
 //	WrongGiftItem("ONLINE-VIP-PACK", "Retail", "OVER",  500000, 1, $RootPath, $db);
 //	WrongGiftItem("ONLINE-VIP-PACK", "Retail", "BELOW", 500000, 1, $RootPath, $db);

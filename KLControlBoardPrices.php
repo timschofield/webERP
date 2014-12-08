@@ -17,6 +17,8 @@ include('includes/KLEmails.php');
 /* Do the pending GL Postings to get the latest finantial control reports*/
 include ('includes/GLPostings.inc');
 
+/* ASSIGN users to groups */
+include ('includes/KLRoles.inc');
 $begintime = time_start();
 
 $periodnow=GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
@@ -24,8 +26,8 @@ $periodnow=GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
 /***************************************************************************************
 * RETAIL PRICE         
 ***************************************************************************************/
-if (($_SESSION['UserID'] == "Ricard") 
-	OR ($_SESSION['UserID'] == "Laia")){
+if ($KL_SystemAdmin 
+	OR $KL_PurchasingManager){
 	ItemsWithoutRetailPrice("TESTSI", 4.25, $RootPath, $db);
 	ItemsWithoutRetailPrice("TESTSS", 4.25, $RootPath, $db);
 	ItemsWithoutRetailPrice("TESTFJ", 4.25, $RootPath, $db);
@@ -41,8 +43,8 @@ if (($_SESSION['UserID'] == "Ricard")
 	ItemsWithoutRetailPrice("NOPOSS", 4.25, $RootPath, $db);
 }
 
-if (($_SESSION['UserID'] == "Ricard") 
-	OR ($_SESSION['UserID'] == "Laia")){
+if ($KL_SystemAdmin 
+	OR $KL_PurchasingManager){
 	PriceBelowStandard("TESTSI", 4.25, 0.05, 10, $RootPath, $db);
 	PriceBelowStandard("TESTSI", 4.25, 0.20,  5, $RootPath, $db);
 
@@ -86,8 +88,8 @@ if (($_SESSION['UserID'] == "Ricard")
 	ItemsWith20501231($RootPath, $db);
 }
 
-if (($_SESSION['UserID'] == "Ricard") 
-	OR ($_SESSION['UserID'] == "Laia")){
+if ($KL_SystemAdmin 
+	OR $KL_PurchasingManager){
 	ItemsTooCheap("TESTSI", 4.25, 4.75, 0.05, 10,  50, 60, $RootPath, $db);
 	ItemsTooCheap("TESTSI", 4.25, 4.50, 0.05, 10, 100, 60, $RootPath, $db);
 
@@ -145,8 +147,8 @@ if (($_SESSION['UserID'] == "Ricard")
 }
 
 
-if (($_SESSION['UserID'] == "Ricard") 
-	OR ($_SESSION['UserID'] == "Laia")){
+if ($KL_SystemAdmin 
+	OR $KL_PurchasingManager){
 	PriceWrongRounding($RootPath, $db);
 }
 

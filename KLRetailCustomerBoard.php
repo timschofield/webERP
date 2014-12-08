@@ -9,9 +9,12 @@ include('includes/KLDefines.php');
 include('includes/KLCountriesForRetail.php');
 include('includes/KLGeneralFunctions.php');
 
+/* ASSIGN users to groups */
+include ('includes/KLRoles.inc');
+
 $begintime = time_start();
 
-if ($_SESSION['UserID'] == "Ricard"){
+if ($KL_SystemAdmin){
 
 	RetailCustomerDataQualitySPG( 3, $db);
 	RetailCustomerDataQualitySPG(15, $db);
@@ -47,9 +50,10 @@ if ($_SESSION['UserID'] == "Ricard"){
 	
 }
 
-if ($_SESSION['UserID'] == "Laia"
-	OR $_SESSION['UserID'] == "Ike1"
-	OR $_SESSION['UserID'] == "Juliette"){
+if ($KL_SystemAdmin 
+	OR $KL_KantorManager 
+	OR $KL_PurchasingManager 
+	OR $KL_SalesManager){
 	RetailCustomerDataQualitySPG(30, $db);
 
 	RetailCustomerAnalysisBySex(30, "ALL", $db);
