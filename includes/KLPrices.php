@@ -162,7 +162,7 @@ function UpdateTablePrice($StockId, $RetailPrice, $db){
 	UpdatePriceItem($StockId, 'W5', 'IDR', $Wholesale50, $Today, TRUE , $db);
 
 	/* 3rd: set prices in USD */
-	$RetailUSD = round_basic_price($RetailPrice / RATE_IDRUSD_FOR_RETAIL_WEBSTORE, 0.05);
+/*	$RetailUSD = round_basic_price($RetailPrice / RATE_IDRUSD_FOR_RETAIL_WEBSTORE, 0.05);
 	UpdatePriceItem($StockId, 'RT', 'USD', $RetailUSD, $Today, TRUE , $db);
 
 	$Wholesale25USD = round_basic_price($RetailPrice / RATE_IDRUSD_FOR_RETAIL_WEBSTORE * (0.75), 0.05);
@@ -176,7 +176,7 @@ function UpdateTablePrice($StockId, $RetailPrice, $db){
 
 	$Wholesale50USD = round_basic_price($RetailPrice / RATE_IDRUSD_FOR_RETAIL_WEBSTORE * (0.50), 0.05);
 	UpdatePriceItem($StockId, 'W5', 'USD', $Wholesale50USD, $Today, TRUE , $db);
-
+*/
 }
 
 

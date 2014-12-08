@@ -1,5 +1,13 @@
 <?php
 
+/*******************************************************************************************
+KL RICARD:
+08/12/2014
+This script is OBSOLETE since webSHOP is using IDR as default currency. Not need to use it, 
+Keep it in repository for future references ONLY:
+
+********************************************************************************************/
+
 include ('includes/session.inc');
 $Title = _('Kapal-Laut. Update all USD prices');
 include('includes/header.inc');
@@ -65,11 +73,11 @@ if (DB_num_rows($result) != 0){
 		$Wholesale40USD = round_basic_price($myrow['price'] / RATE_IDRUSD_FOR_RETAIL_WEBSTORE * (0.60), 0.05);
 		$Wholesale50USD = round_basic_price($myrow['price'] / RATE_IDRUSD_FOR_RETAIL_WEBSTORE * (0.50), 0.05);
 
-		UpdatePriceItem($myrow['stockid'], 'RT', 'USD', $RetailUSD,      $Today, FALSE, $db);
+/*		UpdatePriceItem($myrow['stockid'], 'RT', 'USD', $RetailUSD,      $Today, FALSE, $db);
 		UpdatePriceItem($myrow['stockid'], 'W3', 'USD', $Wholesale30USD, $Today, FALSE, $db);
 		UpdatePriceItem($myrow['stockid'], 'W4', 'USD', $Wholesale40USD, $Today, FALSE, $db);
 		UpdatePriceItem($myrow['stockid'], 'W5', 'USD', $Wholesale50USD, $Today, FALSE, $db);;
-
+*/
 		printf('<td class="number">%s</td>
 				<td>%s</td>
 				<td class="number">%s</td>

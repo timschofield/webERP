@@ -44,8 +44,8 @@ function submit(&$db, &$db_oc, $oc_tableprefix, $FromPrice, $ToPrice) {
 	}
 
 	if ($InputError == 0){
-		$FromPriceUSD = $_POST['FromPrice'] / RATE_IDRUSD_FOR_RETAIL_WEBSTORE;
-		$ToPriceUSD = $_POST['ToPrice'] / RATE_IDRUSD_FOR_RETAIL_WEBSTORE;
+		$FromPrice = $_POST['FromPrice'];
+		$ToPrice = $_POST['ToPrice'];
 		
 		$sql = "SELECT 	" . $oc_tableprefix . "product.product_id,
 						" . $oc_tableprefix . "product_description.name,
@@ -57,8 +57,8 @@ function submit(&$db, &$db_oc, $oc_tableprefix, $FromPrice, $ToPrice) {
 						" . $oc_tableprefix . "product_description
 				WHERE   " . $oc_tableprefix . "product.product_id = " . $oc_tableprefix . "product_description.product_id
 					AND " . $oc_tableprefix . "product.status = 1
-					AND " . $oc_tableprefix . "product.price >= '" . $FromPriceUSD . "'
-					AND " . $oc_tableprefix . "product.price <= '" . $ToPriceUSD . "'
+					AND " . $oc_tableprefix . "product.price >= '" . $FromPrice . "'
+					AND " . $oc_tableprefix . "product.price <= '" . $ToPrice . "'
 				ORDER BY " . $oc_tableprefix . "product.model";
 		
 		$ErrMsg = _('The SQL to find the OpenCart Products to export to Zalora');
