@@ -16,7 +16,7 @@ $begintime = time_start();
 
 if ($KL_SystemAdmin){
 
-	RetailCustomerDataQualitySPG( 3, $db);
+	RetailCustomerDataQualitySPG( 5, $db);
 	RetailCustomerDataQualitySPG(15, $db);
 	RetailCustomerAnalysisBySex(30, "ALL", $db);
 
@@ -646,7 +646,14 @@ function RetailCustomerDataQualitySPG($NumDays, $db){
 				SUM(CASE klretailcustomers.country WHEN '0' then 0 else 1 END) AS countries, 
 				SUM(CASE klretailcustomers.date_of_birth WHEN '0000-00-00' then 0 else 1 END) AS date_of_births, 
 				SUM(CASE klretailcustomers.email WHEN '' then 0 else 1 END) AS emails, 
-				SUM(CASE klretailcustomers.sex WHEN '' then 0 else 1 END) AS sexs
+				SUM(CASE klretailcustomers.sex WHEN '' then 0 else 1 END) AS sexs,
+				(SELECT SUM(qtyinvoiced)
+					FROM salesorderdetails, salesorders AS so2
+					WHERE salesorderdetails.orderno = so2.orderno
+						AND so2.orddate >= '". $StartDate ."'
+						AND so2.orddate <= '". $Yesterday ."'
+						AND so2.salesperson = salesorders.salesperson
+						AND salesorderdetails.stkcode = 'ONLINE-VIP-PACK') AS onlinevipcards 
 			FROM klretailcustomers, salesorders, salesman
 			WHERE salesorders.orderno = klretailcustomers.orderno
 				AND salesman.salesmancode = salesorders.salesperson
@@ -671,6 +678,7 @@ function RetailCustomerDataQualitySPG($NumDays, $db){
 							<th class="ascending">' . _('% DOB') . '</th>
 							<th class="ascending">' . _('% Email') . '</th>
 							<th class="ascending">' . _('% Sex') . '</th>
+							<th class="ascending">' . _('% VIP-PACK') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -679,6 +687,7 @@ function RetailCustomerDataQualitySPG($NumDays, $db){
 			$k = StartEvenOrOddRow($k);
 			printf('<td>%s</td>
 				<td>%s</td>
+				<td class="number">%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>
@@ -697,7 +706,8 @@ function RetailCustomerDataQualitySPG($NumDays, $db){
 				locale_number_format(($myrow['countries']/$myrow['harvested'])*100,0).'%',
 				locale_number_format(($myrow['date_of_births']/$myrow['harvested'])*100,0).'%',
 				locale_number_format(($myrow['emails']/$myrow['harvested'])*100,0).'%',
-				locale_number_format(($myrow['sexs']/$myrow['harvested'])*100,0).'%'
+				locale_number_format(($myrow['sexs']/$myrow['harvested'])*100,0).'%',
+				locale_number_format(($myrow['onlinevipcards']/$myrow['totalorders'])*100,0).'%'
 				);
 		}
 		echo '</table>
