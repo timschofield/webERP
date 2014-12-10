@@ -11,7 +11,7 @@ $EmailText  = "KL webERP: Smart Stock Dispatch " . "\n";
 
 /* Parameters */
 $ReportType = "Batch"; // ONLY FOR REAL ENVIRONMENT
-//$ReportType = "ReportOnly"; // ONLY FOR TESTS
+// $ReportType = "ReportOnly"; // ONLY FOR TESTS
 
 $DispatchPercent = 0;
 $_SESSION['DefaultPageSize'] = 'A4';
@@ -118,7 +118,9 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 			AND (fromlocstock.quantity - fromlocstock.reorderlevel) > 0
 			AND stockcategory.stocktype<>'A'
 			AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M') " .
-			$WhereCategory . " ORDER BY locstock.loccode,locstock.stockid";
+			$WhereCategory . 
+			" ORDER BY stockcategory.klprioritytransfers,
+						locstock.stockid";
 
 	$result = DB_query($sql,'','',false,true);
 
@@ -237,21 +239,21 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 					PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,$Right_Margin,$Trf_ID,$FromLocation,$ToLocation,$CategoryDescription);
 				}
 
-				// Create loctransfers records for each record
-				$sql2 = "INSERT INTO loctransfers (reference,
-													stockid,
-													shipqty,
-													shipdate,
-													shiploc,
-													recloc)
-												VALUES ('" . $Trf_ID . "',
-													'" . $myrow['stockid'] . "',
-													'" . $ShipQty . "',
-													'" . $Now . "',
-													'" . $FromLocCode  ."',
-													'" . $ToLocCode . "')";
-				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('Unable to enter Location Transfer record for'). ' '.$myrow['stockid'];
 				if ($ReportType == 'Batch') {
+					// Create loctransfers records for each record
+					$sql2 = "INSERT INTO loctransfers (reference,
+														stockid,
+														shipqty,
+														shipdate,
+														shiploc,
+														recloc)
+													VALUES ('" . $Trf_ID . "',
+														'" . $myrow['stockid'] . "',
+														'" . $ShipQty . "',
+														'" . $Now . "',
+														'" . $FromLocCode  ."',
+														'" . $ToLocCode . "')";
+					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('Unable to enter Location Transfer record for'). ' '.$myrow['stockid'];
 					$resultLocShip = DB_query($sql2, $ErrMsg);
 				}
 				$EmailText = $EmailText . str_pad($ShipQty, 3, " ") . " x " . $myrow['stockid'] . "\n";
@@ -261,10 +263,15 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 
 		// if we reached the maximum of models allowed per dispatch, we warn the user
 		if ($NumModelsInThisStockDispatch == $MaxModelsPerDispatch){
+			$ModelsSkipped = 0;
+			while ($myrow = DB_fetch_array($result,$db)){
+				$ModelsSkipped++;
+			}
 			$YPos -=(2 * $line_height);
 			$WarningMaxModels = "Reached the maximum of " . $MaxModelsPerDispatch . " models per transfer.";
+			$WarningModelsSkipped = "Skipped " . $ModelsSkipped . " models for next transfers.";
 			$pdf->addTextWrap(50,$YPos,500,9,$WarningMaxModels, 'left');
-			$EmailText = $EmailText . $WarningMaxModels . "\n";
+			$EmailText = $EmailText . $WarningMaxModels . "\n" . $WarningModelsSkipped . "\n";
 		}
 		
 		$EmailText = $EmailText . "# Models in this transfer = " . locale_number_format($NumModelsInThisStockDispatch,0) . "\n" . 
