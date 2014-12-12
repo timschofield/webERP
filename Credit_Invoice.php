@@ -13,20 +13,20 @@ $Title = _('Credit An Invoice');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
-if (empty($_GET['identifier'])) {
+if(empty($_GET['identifier'])) {
 	/*unique session identifier to ensure that there is no conflict with other credit entry sessions on the same machine  */
 	$identifier=date('U');
 } else {
 	$identifier=$_GET['identifier'];
 }
 
-if (!isset($_GET['InvoiceNumber']) AND !$_SESSION['ProcessingCredit']) {
+if(!isset($_GET['InvoiceNumber']) AND !$_SESSION['ProcessingCredit']) {
 	/* This page can only be called with an invoice number for crediting*/
 	prnMsg(_('This page can only be opened if an invoice has been selected for crediting') . '. ' . _('Please select an invoice first') . ' - ' . _('from the customer inquiry screen click the link to credit an invoice'),'info');
 	include('includes/footer.inc');
 	exit;
 
-} elseif (isset($_GET['InvoiceNumber'])) {
+} elseif(isset($_GET['InvoiceNumber'])) {
 	$_GET['InvoiceNumber']=intval($_GET['InvoiceNumber']);
 	unset($_SESSION['CreditItems' . $identifier]->LineItems);
 	unset($_SESSION['CreditItems' . $identifier]);
@@ -75,14 +75,14 @@ if (!isset($_GET['InvoiceNumber']) AND !$_SESSION['ProcessingCredit']) {
 							WHERE debtortrans.transno = '" . intval($_GET['InvoiceNumber']) . "'
 							AND stockmoves.type=10";
 
-	if ($_SESSION['SalesmanLogin'] != '') {
+	if($_SESSION['SalesmanLogin'] != '') {
 		$sql .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 	}
 	$ErrMsg = _('A credit cannot be produced for the selected invoice') . '. ' . _('The invoice details cannot be retrieved because');
 	$DbgMsg = _('The SQL used to retrieve the invoice details was');
 	$GetInvHdrResult = DB_query($InvoiceHeaderSQL,$ErrMsg,$DbgMsg);
 
-	if (DB_num_rows($GetInvHdrResult)==1) {
+	if(DB_num_rows($GetInvHdrResult)==1) {
 
 		$myrow = DB_fetch_array($GetInvHdrResult);
 
@@ -143,9 +143,9 @@ if (!isset($_GET['InvoiceNumber']) AND !$_SESSION['ProcessingCredit']) {
 
 		$LineItemsResult = DB_query($LineItemsSQL,$ErrMsg, $DbgMsg);
 
-		if (DB_num_rows($LineItemsResult)>0) {
+		if(DB_num_rows($LineItemsResult)>0) {
 
-			while ($myrow=DB_fetch_array($LineItemsResult)) {
+			while($myrow=DB_fetch_array($LineItemsResult)) {
 
 				$LineNumber = $_SESSION['CreditItems' . $identifier]->LineCounter;
 
@@ -177,7 +177,7 @@ if (!isset($_GET['InvoiceNumber']) AND !$_SESSION['ProcessingCredit']) {
 
 				$_SESSION['CreditItems' . $identifier]->GetExistingTaxes($LineNumber, $myrow['stkmoveno']);
 
-				if ($myrow['controlled']==1){/* Populate the SerialItems array too*/
+				if($myrow['controlled']==1) {/* Populate the SerialItems array too*/
 
 					$SQL = "SELECT 	serialno,
 									moveqty
@@ -189,7 +189,7 @@ if (!isset($_GET['InvoiceNumber']) AND !$_SESSION['ProcessingCredit']) {
 					$DbgMsg = _('The SQL used to get the controlled item details was');
 					$SerialItemsResult = DB_query($SQL,$ErrMsg, $DbgMsg);
 
-					while ($SerialItemsRow = DB_fetch_array($SerialItemsResult)){
+					while($SerialItemsRow = DB_fetch_array($SerialItemsResult)) {
 						$_SESSION['CreditItems' . $identifier]->LineItems[$LineNumber]->SerialItems[$SerialItemsRow['serialno']] = new SerialItem($SerialItemsRow['serialno'], -$SerialItemsRow['moveqty']);
 						$_SESSION['CreditItems' . $identifier]->LineItems[$LineNumber]->QtyDispatched -= $SerialItemsRow['moveqty'];
 					}
@@ -212,7 +212,7 @@ if (!isset($_GET['InvoiceNumber']) AND !$_SESSION['ProcessingCredit']) {
 
 }
 
-if (isset($_POST['Location'])){
+if(isset($_POST['Location'])) {
 	$_SESSION['CreditItems' . $identifier]->Location = $_POST['Location'];
 
 	$NewDispatchTaxProvResult = DB_query("SELECT taxprovinceid FROM locations WHERE loccode='" . $_POST['Location'] . "'");
@@ -220,41 +220,41 @@ if (isset($_POST['Location'])){
 
 	$_SESSION['CreditItems' . $identifier]->DispatchTaxProvince = $myrow['taxprovinceid'];
 
-	foreach ($_SESSION['CreditItems' . $identifier]->LineItems as $LineItem) {
+	foreach($_SESSION['CreditItems' . $identifier]->LineItems as $LineItem) {
 		$_SESSION['CreditItems' . $identifier]->GetTaxes($LineItem->LineNumber);
 	}
 }
 
-if (isset($_POST['ChargeFreightCost'])){
+if(isset($_POST['ChargeFreightCost'])) {
 	$_SESSION['CreditItems' . $identifier]->FreightCost = filter_number_format($_POST['ChargeFreightCost']);
 }
-if ($_SESSION['SalesmanLogin'] == '') {
-	if (isset($_POST['SalesPerson'])){
+if($_SESSION['SalesmanLogin'] == '') {
+	if(isset($_POST['SalesPerson'])) {
 		$_SESSION['CreditItems' . $identifier]->SalesPerson = $_POST['SalesPerson'];
 	}
 }
-foreach ($_SESSION['CreditItems' . $identifier]->FreightTaxes as $FreightTaxLine) {
-	if (isset($_POST['FreightTaxRate'  . $FreightTaxLine->TaxCalculationOrder])){
+foreach($_SESSION['CreditItems' . $identifier]->FreightTaxes as $FreightTaxLine) {
+	if(isset($_POST['FreightTaxRate'  . $FreightTaxLine->TaxCalculationOrder])) {
 		$_SESSION['CreditItems' . $identifier]->FreightTaxes[$FreightTaxLine->TaxCalculationOrder]->TaxRate = filter_number_format($_POST['FreightTaxRate'  . $FreightTaxLine->TaxCalculationOrder])/100;
 	}
 }
 
-if ($_SESSION['CreditItems' . $identifier]->ItemsOrdered > 0 OR isset($_POST['NewItem'])){
+if($_SESSION['CreditItems' . $identifier]->ItemsOrdered > 0 OR isset($_POST['NewItem'])) {
 
-	if(isset($_GET['Delete'])){
+	if(isset($_GET['Delete'])) {
 		$_SESSION['CreditItems' . $identifier]->remove_from_cart($_GET['Delete']);
 	}
 
-	foreach ($_SESSION['CreditItems' . $identifier]->LineItems as $LineItem) {
+	foreach($_SESSION['CreditItems' . $identifier]->LineItems as $LineItem) {
 
-		if (isset($_POST['Quantity_' . $LineItem->LineNumber])){
+		if(isset($_POST['Quantity_' . $LineItem->LineNumber])) {
 
 			$Narrative = $_POST['Narrative_' . $LineItem->LineNumber];
 			$Quantity = filter_number_format($_POST['Quantity_' . $LineItem->LineNumber]);
 			$Price = filter_number_format($_POST['Price_' . $LineItem->LineNumber]);
 			$DiscountPercentage = filter_number_format($_POST['Discount_' . $LineItem->LineNumber]);
 
-			if ($Quantity<0 OR $Price <0 OR $DiscountPercentage >100 OR $DiscountPercentage <0){
+			if($Quantity<0 OR $Price <0 OR $DiscountPercentage >100 OR $DiscountPercentage <0) {
 				prnMsg(_('The item could not be updated because you are attempting to set the quantity credited to less than 0 or the price less than 0 or the discount more than 100% or less than 0%'),'error');
 			} else {
 				$_SESSION['CreditItems' . $identifier]->LineItems[$LineItem->LineNumber]->QtyDispatched=$Quantity;
@@ -262,8 +262,8 @@ if ($_SESSION['CreditItems' . $identifier]->ItemsOrdered > 0 OR isset($_POST['Ne
 				$_SESSION['CreditItems' . $identifier]->LineItems[$LineItem->LineNumber]->DiscountPercent=($DiscountPercentage/100);
 				$_SESSION['CreditItems' . $identifier]->LineItems[$LineItem->LineNumber]->Narrative=$Narrative;
 			}
-			foreach ($LineItem->Taxes as $TaxLine) {
-				if (isset($_POST[$LineItem->LineNumber  . $TaxLine->TaxCalculationOrder . '_TaxRate'])){
+			foreach($LineItem->Taxes as $TaxLine) {
+				if(isset($_POST[$LineItem->LineNumber  . $TaxLine->TaxCalculationOrder . '_TaxRate'])) {
 					$_SESSION['CreditItems' . $identifier]->LineItems[$LineItem->LineNumber]->Taxes[$TaxLine->TaxCalculationOrder]->TaxRate = filter_number_format($_POST[$LineItem->LineNumber  . $TaxLine->TaxCalculationOrder . '_TaxRate'])/100;
 				}
 			}
@@ -275,7 +275,7 @@ if ($_SESSION['CreditItems' . $identifier]->ItemsOrdered > 0 OR isset($_POST['Ne
 NB QtyDispatched in the LineItems array is used for the quantity to credit */
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/credit.gif" title="' . _('Search') . '" alt="" />' . $Title . '</p>';
 
-if (!isset($_POST['ProcessCredit'])) {
+if(!isset($_POST['ProcessCredit'])) {
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier=' . $identifier . '" method="post">';
     echo '<div>';
@@ -288,7 +288,8 @@ if (!isset($_POST['ProcessCredit'])) {
 		<b>' . ' - ' . $_SESSION['CreditItems' . $identifier]->CustomerName . '</b>
 		 - ' . _('Credit Note amounts stated in') . ' ' . $_SESSION['CreditItems' . $identifier]->DefaultCurrency . '</div>';
 	echo '</th></tr>';
-	echo '<tr><th>' . _('Item Code') . '</th>
+	echo '<tr>
+			<th>' . _('Item Code') . '</th>
 			<th>' . _('Item Description') . '</th>
 			<th>' . _('Invoiced') . '</th>
 			<th>' . _('Units') . '</th>
@@ -299,7 +300,8 @@ if (!isset($_POST['ProcessCredit'])) {
 			<th>' . _('Tax Authority') . '</th>
 			<th>' . _('Tax') . ' %' . '</th>
 			<th>' . _('Tax') . '<br />' . _('Amount') . '</th>
-			<th>' . _('Total') . '<br />' . _('Incl Tax') . '</th></tr>';
+			<th>' . _('Total') . '<br />' . _('Incl Tax') . '</th>
+		</tr>';
 }
 $_SESSION['CreditItems' . $identifier]->total = 0;
 $_SESSION['CreditItems' . $identifier]->totalVolume = 0;
@@ -314,35 +316,37 @@ $TaxTotal =0;
 $k=0; //row colour counter
 $j=0; //row counter
 
-foreach ($_SESSION['CreditItems' . $identifier]->LineItems as $LnItm) {
+foreach($_SESSION['CreditItems' . $identifier]->LineItems as $LnItm) {
 
-	$LineTotal = $LnItm->QtyDispatched * $LnItm->Price * (1 - $LnItm->DiscountPercent);
+	$LineTotal = $LnItm->QtyDispatched * $LnItm->Price *(1 - $LnItm->DiscountPercent);
 	$_SESSION['CreditItems' . $identifier]->total +=$LineTotal;
-	$_SESSION['CreditItems' . $identifier]->totalVolume += ($LnItm->QtyDispatched * $LnItm->Volume);
-	$_SESSION['CreditItems' . $identifier]->totalWeight += ($LnItm->QtyDispatched * $LnItm->Weight);
+	$_SESSION['CreditItems' . $identifier]->totalVolume +=($LnItm->QtyDispatched * $LnItm->Volume);
+	$_SESSION['CreditItems' . $identifier]->totalWeight +=($LnItm->QtyDispatched * $LnItm->Weight);
 
-	if (!isset($_POST['ProcessCredit'])) {
-		if ($k==1){
-			$RowStarter = 'class="EvenTableRows"';
+	if(!isset($_POST['ProcessCredit'])) {
+
+		if($k==1) {
+			echo '<tr class="EvenTableRows">';
 			$k=0;
 		} else {
-			$RowStarter = 'class="OddTableRows"';
+			echo '<tr class="OddTableRows">';
 			$k=1;
 		}
+
 		$j++;
 
-		echo '<tr '.$RowStarter.'><td>' . $LnItm->StockID . '</td>
+		echo '<td>' . $LnItm->StockID . '</td>
 			<td title="'. $LnItm->LongDescription . '">' . $LnItm->ItemDescription . '</td>
 			<td class="number">' . locale_number_format($LnItm->Quantity,$LnItm->DecimalPlaces) . '</td>
 			<td>' . $LnItm->Units . '</td>';
 
-		if ($LnItm->Controlled==1){
+		if($LnItm->Controlled==1) {
 
-			echo '<td><input type="hidden" class="number" name="Quantity_' . $LnItm->LineNumber .'" value="' . locale_number_format($LnItm->QtyDispatched,$LnItm->DecimalPlaces) . '" /><a ' . ($j==1 ? 'autofocus="autofocus" ':'') . ' href="' . $RootPath . '/CreditItemsControlled.php?LineNo=' . $LnItm->LineNumber . '&amp;CreditInvoice=Yes&amp;identifier=' . $identifier . '">' . locale_number_format($LnItm->QtyDispatched,$LnItm->DecimalPlaces) . '</a></td>';
+			echo '<td><input type="hidden" class="number" name="Quantity_' . $LnItm->LineNumber .'" value="' . locale_number_format($LnItm->QtyDispatched,$LnItm->DecimalPlaces) . '" /><a ' .($j==1 ? 'autofocus="autofocus" ':'') . ' href="' . $RootPath . '/CreditItemsControlled.php?LineNo=' . $LnItm->LineNumber . '&amp;CreditInvoice=Yes&amp;identifier=' . $identifier . '">' . locale_number_format($LnItm->QtyDispatched,$LnItm->DecimalPlaces) . '</a></td>';
 
 		} else {
 
-			echo '<td><input tabindex="' . $j . '" type="text" class="number" ' . ($j==1 ? 'autofocus="autofocus" ':'') . 'required="required" title="' . _('Enter the quantity of this item to credit') . '" name="Quantity_' . $LnItm->LineNumber .'" maxlength="6" size="6" value="' . locale_number_format($LnItm->QtyDispatched,$LnItm->DecimalPlaces) . '" /></td>';
+			echo '<td><input tabindex="' . $j . '" type="text" class="number" ' .($j==1 ? 'autofocus="autofocus" ':'') . 'required="required" title="' . _('Enter the quantity of this item to credit') . '" name="Quantity_' . $LnItm->LineNumber .'" maxlength="6" size="6" value="' . locale_number_format($LnItm->QtyDispatched,$LnItm->DecimalPlaces) . '" /></td>';
 
 		}
 
@@ -356,9 +360,9 @@ foreach ($_SESSION['CreditItems' . $identifier]->LineItems as $LnItm) {
 		/*Need to list the taxes applicable to this line */
 		echo '<td>';
 		$i=0;
-		if (is_array($_SESSION['CreditItems' . $identifier]->LineItems[$LnItm->LineNumber]->Taxes) ){
-			foreach ($_SESSION['CreditItems' . $identifier]->LineItems[$LnItm->LineNumber]->Taxes AS $Tax) {
-				if ($i>0){
+		if(is_array($_SESSION['CreditItems' . $identifier]->LineItems[$LnItm->LineNumber]->Taxes) ) {
+			foreach($_SESSION['CreditItems' . $identifier]->LineItems[$LnItm->LineNumber]->Taxes AS $Tax) {
+				if($i>0) {
 					echo '<br />';
 				}
 				echo $Tax->TaxAuthDescription;
@@ -371,22 +375,22 @@ foreach ($_SESSION['CreditItems' . $identifier]->LineItems as $LnItm) {
 	}
 	$i=0; // initialise the number of taxes iterated through
 	$TaxLineTotal =0; //initialise tax total for the line
-	if (is_array($LnItm->Taxes) ){
-		foreach ($LnItm->Taxes as $Tax) {
-			if ($i>0){
+	if(is_array($LnItm->Taxes) ) {
+		foreach($LnItm->Taxes as $Tax) {
+			if($i>0) {
 				echo '<br />';
 			}
-			if (!isset($_POST['ProcessCredit'])) {
+			if(!isset($_POST['ProcessCredit'])) {
 				echo '<input type="text" class="number" required="required" name="' . $LnItm->LineNumber . $Tax->TaxCalculationOrder .
 					'_TaxRate" maxlength="4" size="4" value="' . locale_number_format($Tax->TaxRate*100,2) . '" />';
 			}
 			$i++;
-			if ($Tax->TaxOnTax ==1){
-				$TaxTotals[$Tax->TaxAuthID] += ($Tax->TaxRate * ($LineTotal + $TaxLineTotal));
-				$TaxLineTotal += ($Tax->TaxRate * ($LineTotal + $TaxLineTotal));
+			if($Tax->TaxOnTax ==1) {
+				$TaxTotals[$Tax->TaxAuthID] +=($Tax->TaxRate *($LineTotal + $TaxLineTotal));
+				$TaxLineTotal +=($Tax->TaxRate *($LineTotal + $TaxLineTotal));
 			} else {
-				$TaxTotals[$Tax->TaxAuthID] += ($Tax->TaxRate * $LineTotal);
-				$TaxLineTotal += ($Tax->TaxRate * $LineTotal);
+				$TaxTotals[$Tax->TaxAuthID] +=($Tax->TaxRate * $LineTotal);
+				$TaxLineTotal +=($Tax->TaxRate * $LineTotal);
 			}
 			$TaxGLCodes[$Tax->TaxAuthID] = $Tax->TaxGLCode;
 		}
@@ -396,7 +400,7 @@ foreach ($_SESSION['CreditItems' . $identifier]->LineItems as $LnItm) {
 	$DisplayTaxAmount = locale_number_format($TaxLineTotal ,$_SESSION['CreditItems' . $identifier]->CurrDecimalPlaces);
 	$DisplayGrossLineTotal = locale_number_format($LineTotal+ $TaxLineTotal,$_SESSION['CreditItems' . $identifier]->CurrDecimalPlaces);
 
-	if (!isset($_POST['ProcessCredit'])) {
+	if(!isset($_POST['ProcessCredit'])) {
 		echo '</td>';
 
 		echo '<td class="number">' . $DisplayTaxAmount . '</td>
@@ -413,11 +417,11 @@ foreach ($_SESSION['CreditItems' . $identifier]->LineItems as $LnItm) {
 	}
 } /*end foreach loop displaying the invoice lines to credit */
 
-if (!isset($_POST['ChargeFreightCost']) AND !isset($_SESSION['CreditItems' . $identifier]->FreightCost)){
+if(!isset($_POST['ChargeFreightCost']) AND !isset($_SESSION['CreditItems' . $identifier]->FreightCost)) {
 	$_POST['ChargeFreightCost']=0;
 }
 
-if (!isset($_POST['ProcessCredit'])) {
+if(!isset($_POST['ProcessCredit'])) {
 	echo '<tr>
 		<td colspan="3" class="number">' . _('Freight cost charged on invoice') . '</td>
 		<td class="number">' . locale_number_format($_SESSION['Old_FreightCost'],$_SESSION['CreditItems' . $identifier]->CurrDecimalPlaces) . '</td>
@@ -428,8 +432,8 @@ if (!isset($_POST['ProcessCredit'])) {
 		<td>';
 
 	$i=0; // initialise the number of taxes iterated through
-	foreach ($_SESSION['CreditItems' . $identifier]->FreightTaxes as $FreightTaxLine) {
-		if ($i>0){
+	foreach($_SESSION['CreditItems' . $identifier]->FreightTaxes as $FreightTaxLine) {
+		if($i>0) {
 			echo '<br />';
 		}
 		echo  $FreightTaxLine->TaxAuthDescription;
@@ -439,25 +443,25 @@ if (!isset($_POST['ProcessCredit'])) {
 $FreightTaxTotal =0; //initialise tax total
 
 $i=0;
-foreach ($_SESSION['CreditItems' . $identifier]->FreightTaxes as $FreightTaxLine) {
-	if ($i>0){
+foreach($_SESSION['CreditItems' . $identifier]->FreightTaxes as $FreightTaxLine) {
+	if($i>0) {
 		echo '<br />';
 	}
 
-	if (!isset($_POST['ProcessCredit'])) {
+	if(!isset($_POST['ProcessCredit'])) {
 		echo  '<input type="text" class="number" required="required" name="FreightTaxRate' . $FreightTaxLine->TaxCalculationOrder . '" maxlength="4" size="4" value="' . locale_number_format(($FreightTaxLine->TaxRate * 100),2) . '" />';
 	}
-	if ($FreightTaxLine->TaxOnTax ==1){
-		$TaxTotals[$FreightTaxLine->TaxAuthID] += ($FreightTaxLine->TaxRate * ($_SESSION['CreditItems' . $identifier]->FreightCost + $FreightTaxTotal));
-		$FreightTaxTotal += ($FreightTaxLine->TaxRate * ($_SESSION['CreditItems' . $identifier]->FreightCost + $FreightTaxTotal));
+	if($FreightTaxLine->TaxOnTax ==1) {
+		$TaxTotals[$FreightTaxLine->TaxAuthID] +=($FreightTaxLine->TaxRate *($_SESSION['CreditItems' . $identifier]->FreightCost + $FreightTaxTotal));
+		$FreightTaxTotal +=($FreightTaxLine->TaxRate *($_SESSION['CreditItems' . $identifier]->FreightCost + $FreightTaxTotal));
 	} else {
-		$TaxTotals[$FreightTaxLine->TaxAuthID] += ($FreightTaxLine->TaxRate * $_SESSION['CreditItems' . $identifier]->FreightCost);
-		$FreightTaxTotal += ($FreightTaxLine->TaxRate * $_SESSION['CreditItems' . $identifier]->FreightCost);
+		$TaxTotals[$FreightTaxLine->TaxAuthID] +=($FreightTaxLine->TaxRate * $_SESSION['CreditItems' . $identifier]->FreightCost);
+		$FreightTaxTotal +=($FreightTaxLine->TaxRate * $_SESSION['CreditItems' . $identifier]->FreightCost);
 	}
 	$i++;
 	$TaxGLCodes[$FreightTaxLine->TaxAuthID] = $FreightTaxLine->TaxGLCode;
 }
-if (!isset($_POST['ProcessCredit'])) {
+if(!isset($_POST['ProcessCredit'])) {
 	echo '</td>';
 	echo '<td class="number">' . locale_number_format($FreightTaxTotal,$_SESSION['CreditItems' . $identifier]->CurrDecimalPlaces) . '</td>
 		<td class="number">' . locale_number_format($FreightTaxTotal+ $_SESSION['CreditItems' . $identifier]->FreightCost,$_SESSION['CreditItems' . $identifier]->CurrDecimalPlaces) . '</td>
@@ -467,7 +471,7 @@ if (!isset($_POST['ProcessCredit'])) {
 $TaxTotal += $FreightTaxTotal;
 $DisplayTotal = locale_number_format($_SESSION['CreditItems' . $identifier]->total + $_SESSION['CreditItems' . $identifier]->FreightCost,$_SESSION['CreditItems' . $identifier]->CurrDecimalPlaces);
 
-if (!isset($_POST['ProcessCredit'])) {
+if(!isset($_POST['ProcessCredit'])) {
 	echo '<tr>
 			<td colspan="7" class="number">' . _('Credit Totals') . '</td>
 			<td class="number"><hr /><b>' . $DisplayTotal . '</b><hr /></td>
@@ -482,32 +486,32 @@ $DefaultDispatchDate = Date($_SESSION['DefaultDateFormat']);
 
 $OKToProcess = true;
 //Here we just validate if there is no credit qty available since the credit items not retrieve from salesorders, so following method is not 100% correct.
-if(isset($_POST['CreditType']) AND ($_POST['CreditType']=='WriteOff' OR $_POST['CreditType'] == 'Return' OR $_POST['CreditType']=='ReverseOverCharge')){
-	foreach ($_SESSION['CreditItems' . $identifier]->LineItems as $CreditLine) {
+if(isset($_POST['CreditType']) AND($_POST['CreditType']=='WriteOff' OR $_POST['CreditType'] == 'Return' OR $_POST['CreditType']=='ReverseOverCharge')) {
+	foreach($_SESSION['CreditItems' . $identifier]->LineItems as $CreditLine) {
 		$SQL = "SELECT count(*) FROM salesorderdetails WHERE orderno = '" . $_SESSION['CreditItems'.$identifier]->OrderNo . "'
 									AND stkcode = '" . $CreditLine->StockID . "'
-									AND quantity >=" . $CreditLine->QtyDispatched . " 
+									AND quantity >=" . $CreditLine->QtyDispatched . "
 									AND qtyinvoiced >=" . $CreditLine->QtyDispatched;
 		$ErrMsg = _('Failed to retrieve salesoderdetails to compare if the order has been invoiced and that it is possible that the credit note may not already have been done');
 		$DuplicateCreditResult = DB_query($SQL,$ErrMsg);
 		$myrow1 = DB_fetch_array($DuplicateCreditResult);
-		if($myrow1[0] == 0){
-			prnMsg(_('The credit quantity for the line for') . ' ' . $CreditLine->StockID . ' ' . ('is more than the quantity invoiced. This check is made to ensure that the credit note is not duplicated.'),'error');
+		if($myrow1[0] == 0) {
+			prnMsg(_('The credit quantity for the line for') . ' ' . $CreditLine->StockID . ' ' .('is more than the quantity invoiced. This check is made to ensure that the credit note is not duplicated.'),'error');
 			$OKToProcess = false;
 			include('includes/footer.inc');
 			exit;
 		}
 	}
 }
-	
 
 
-if ((isset($_POST['CreditType']) AND $_POST['CreditType']=='WriteOff') AND !isset($_POST['WriteOffGLCode'])){
-	prnMsg (_('The GL code to write off the credit value to must be specified. Please select the appropriate GL code for the selection box'),'info');
+
+if((isset($_POST['CreditType']) AND $_POST['CreditType']=='WriteOff') AND !isset($_POST['WriteOffGLCode'])) {
+	prnMsg(_('The GL code to write off the credit value to must be specified. Please select the appropriate GL code for the selection box'),'info');
 	$OKToProcess = false;
 }
 
-if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
+if(isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 
 /* SQL to process the postings for sales credit notes... First Get the area where the credit note is to from the branches table */
 
@@ -523,7 +527,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 
 /*company record is read in on login and has information on GL Links and debtors GL account*/
 
-	if ($_SESSION['CompanyRecord']==0){
+	if($_SESSION['CompanyRecord']==0) {
 		/*The company data and preferences could not be retrieved for some reason */
 		prnMsg(_('The company information and preferences could not be retrieved') . ' - ' . _('see your system administrator'),'error');
 		include('includes/footer.inc');
@@ -544,7 +548,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 
 	/*Calculate the allocation and see if it is possible to allocate to the invoice being credited */
 
-	$SQL = "SELECT (ovamount+ovgst+ovfreight-ovdiscount-alloc) AS baltoallocate
+	$SQL = "SELECT(ovamount+ovgst+ovfreight-ovdiscount-alloc) AS baltoallocate
 			FROM debtortrans
 			WHERE transno=" . $_SESSION['ProcessingCredit'] . "
 			AND type=10";
@@ -559,13 +563,13 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 	$Allocate_amount=0;
 	$Settled =0;
 	$SettledInvoice=0;
-	if ($myrow[0]>0){ /*the invoice is not already fully allocated */
+	if($myrow[0]>0) { /*the invoice is not already fully allocated */
 
-		if ($myrow[0] > ($_SESSION['CreditItems' . $identifier]->total + $_SESSION['CreditItems' . $identifier]->FreightCost + $TaxTotal)){
+		if($myrow[0] >($_SESSION['CreditItems' . $identifier]->total + $_SESSION['CreditItems' . $identifier]->FreightCost + $TaxTotal)) {
 
 			$Allocate_amount = $_SESSION['CreditItems' . $identifier]->total + $_SESSION['CreditItems' . $identifier]->FreightCost + $TaxTotal;
 			$Settled = 1;
-		} else if ($myrow[0] > ($_SESSION['CreditItems' . $identifier]->total + $_SESSION['CreditItems' . $identifier]->FreightCost + $TaxTotal)) {
+		} else if($myrow[0] >($_SESSION['CreditItems' . $identifier]->total + $_SESSION['CreditItems' . $identifier]->FreightCost + $TaxTotal)) {
 			/*the balance left to allocate is less than the credit note value */
 			$Allocate_amount = $myrow[0];
 			$SettledInvoice = 1;
@@ -590,7 +594,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 	}
 
 /*Now insert the Credit Note into the DebtorTrans table with the allocations as calculated above*/
-	$SQL = "INSERT INTO debtortrans (transno,
+	$SQL = "INSERT INTO debtortrans(transno,
 									type,
 									debtorno,
 									branchcode,
@@ -608,7 +612,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 									alloc,
 									settled,
 									salesperson)
-						VALUES (". $CreditNo . ",
+						VALUES(". $CreditNo . ",
 							11,
 							'" . $_SESSION['CreditItems' . $identifier]->DebtorNo . "',
 							'" . $_SESSION['CreditItems' . $identifier]->Branch . "',
@@ -634,15 +638,15 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 	$CreditTransID = DB_Last_Insert_ID($db,'debtortrans','id');
 
 	/* Insert the tax totals for each tax authority where tax was charged on the invoice */
-	foreach ($TaxTotals AS $TaxAuthID => $TaxAmount) {
+	foreach($TaxTotals AS $TaxAuthID => $TaxAmount) {
 
-		$SQL = "INSERT INTO debtortranstaxes (
+		$SQL = "INSERT INTO debtortranstaxes(
 							debtortransid,
 							taxauthid,
 							taxamount)
-				VALUES ('" . $CreditTransID . "',
+				VALUES('" . $CreditTransID . "',
 					'" . $TaxAuthID . "',
-					'" . (-$TaxAmount/$_SESSION['CurrencyRate']) . "')";
+					'" .(-$TaxAmount/$_SESSION['CurrencyRate']) . "')";
 
 		$ErrMsg =_('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The debtor transaction taxes records could not be inserted because');
 		$DbgMsg = _('The following SQL to insert the debtor transaction taxes record was used');
@@ -650,12 +654,12 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 	}
 
 /*Now insert the allocation record if > 0 */
-	if ($Allocate_amount!=0){
-		$SQL = "INSERT INTO custallocns (amt,
+	if($Allocate_amount!=0) {
+		$SQL = "INSERT INTO custallocns(amt,
 						transid_allocfrom,
 						transid_allocto,
 						datealloc)
-			VALUES ('" . $Allocate_amount . "',
+			VALUES('" . $Allocate_amount . "',
 				'" . $CreditTransID . "',
 				'" . $_SESSION['CreditItems' . $identifier]->TransID . "',
 				'" . Date('Y-m-d') . "')";
@@ -668,13 +672,13 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 
 /* Update sales order details quantity invoiced less this credit quantity. */
 
-	foreach ($_SESSION['CreditItems' . $identifier]->LineItems as $CreditLine) {
+	foreach($_SESSION['CreditItems' . $identifier]->LineItems as $CreditLine) {
 
-		if ($CreditLine->QtyDispatched >0){
+		if($CreditLine->QtyDispatched >0) {
 
 			$LocalCurrencyPrice= round(($CreditLine->Price / $_SESSION['CurrencyRate']),$_SESSION['CompanyRecord']['decimalplaces']);
 
-			if ($CreditLine->MBflag=='M' oR $CreditLine->MBflag=='B'){
+			if($CreditLine->MBflag=='M' oR $CreditLine->MBflag=='B') {
 				/*Need to get the current location quantity will need it later for the stock movements */
 		 		$SQL="SELECT locstock.quantity
 					FROM locstock
@@ -682,7 +686,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 					AND loccode= '" . $_SESSION['CreditItems' . $identifier]->Location . "'";
 
 				$Result = DB_query($SQL);
-				if (DB_num_rows($Result)==1){
+				if(DB_num_rows($Result)==1) {
 					$LocQtyRow = DB_fetch_row($Result);
 					$QtyOnHandPrior = $LocQtyRow[0];
 				} else {
@@ -693,7 +697,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 				$QtyOnHandPrior =0; //because its a dummy/assembly/kitset part
 			}
 
-			if ($_POST['CreditType']=='Return'){
+			if($_POST['CreditType']=='Return') {
 
 				/* some want this some do not
 				 * We cannot use the orderlineno to update with as it could be different when added to the credit note than it was when the order was created
@@ -715,7 +719,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 
 				/* Update location stock records if not a dummy stock item */
 
-				if ($CreditLine->MBflag=='M' oR $CreditLine->MBflag=='B'){
+				if($CreditLine->MBflag=='M' oR $CreditLine->MBflag=='B') {
 
 					$SQL = "UPDATE locstock
 								SET locstock.quantity = locstock.quantity + " . $CreditLine->QtyDispatched . "
@@ -726,7 +730,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 					$DbgMsg = _('The following SQL to update the location stock record was used');
 					$Result = DB_query($SQL, $ErrMsg,$DbgMsg,true);
 
-				} else if ($CreditLine->MBflag=='A'){ /* its an assembly */
+				} else if($CreditLine->MBflag=='A') { /* its an assembly */
 					/*Need to get the BOM for this part and make stock moves for the components
 					and of course update the Location stock balances */
 
@@ -747,7 +751,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 					$DbgMsg = _('The SQL that failed was');
 					$AssResult = DB_query($sql, $ErrMsg, $DbgMsg, true);
 
-					while ($AssParts = DB_fetch_array($AssResult,$db)){
+					while($AssParts = DB_fetch_array($AssResult,$db)) {
 
 						$StandardCost += $AssParts['standard'] * $AssParts['quantity'];
 						/*Determine the type of stock item being credited */
@@ -759,14 +763,14 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 						$Component_MBFlag = $MBFlagRow[0];
 
 						/* Insert stock movements for the stock coming back in - with unit cost */
-						if ($Component_MBFlag=='M' OR $Component_MBFlag=='B'){
+						if($Component_MBFlag=='M' OR $Component_MBFlag=='B') {
 							/*Need to get the current location quantity will need it later for the stock movement */
 							$SQL="SELECT locstock.quantity
 									FROM locstock
 									WHERE locstock.stockid='" . $AssParts['component'] . "'
 									AND loccode= '" . $_SESSION['CreditItems' . $identifier]->Location . "'";
 							$Result = DB_query($SQL, _('Could not get the current location stock of the assembly component') . ' ' . $AssParts['component'], _('The SQL that failed was'), true);
-							if (DB_num_rows($Result)==1){
+							if(DB_num_rows($Result)==1) {
 								$LocQtyRow = DB_fetch_row($Result);
 								$QtyOnHandPrior = $LocQtyRow[0];
 							} else {
@@ -777,9 +781,9 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 							$QtyOnHandPrior =0; //because its a dummy/assembly/kitset part
 						}
 
-						if ($Component_MBFlag=='M' OR $Component_MBFlag=='B'){
+						if($Component_MBFlag=='M' OR $Component_MBFlag=='B') {
 
-							$SQL = "INSERT INTO stockmoves (stockid,
+							$SQL = "INSERT INTO stockmoves(stockid,
 															type,
 															transno,
 															loccode,
@@ -792,7 +796,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 															standardcost,
 															show_on_inv_crds,
 															newqoh )
-												VALUES ('" . $AssParts['component'] . "',
+												VALUES('" . $AssParts['component'] . "',
 														11,
 														'" . $CreditNo . "',
 														'" . $_SESSION['CreditItems' . $identifier]->Location . "',
@@ -801,14 +805,14 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 														'" . $_SESSION['CreditItems' . $identifier]->Branch . "',
 														'" . $PeriodNo . "',
 														'" . _('Ex Inv') . ': ' .  $_SESSION['ProcessingCredit'] . ' ' . _('Assembly') . ': ' . $CreditLine->StockID . "',
-														'" . ($AssParts['quantity'] * $CreditLine->QtyDispatched) . "',
+														'" .($AssParts['quantity'] * $CreditLine->QtyDispatched) . "',
 														'" . $AssParts['standard'] . "',
 														0,
-														'" . ($QtyOnHandPrior + ($AssParts['quantity'] * $CreditLine->QtyDispatched)) . "'
+														'" .($QtyOnHandPrior +($AssParts['quantity'] * $CreditLine->QtyDispatched)) . "'
 														)";
 						} else {
 
-							$SQL = "INSERT INTO stockmoves (stockid,
+							$SQL = "INSERT INTO stockmoves(stockid,
 															type,
 															transno,
 															loccode,
@@ -820,7 +824,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 															qty,
 															standardcost,
 															show_on_inv_crds)
-												VALUES ('" . $AssParts['component'] . "',
+												VALUES('" . $AssParts['component'] . "',
 														11,
 														'" . $CreditNo . "',
 														'" . $_SESSION['CreditItems' . $identifier]->Location . "',
@@ -829,7 +833,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 														'" . $_SESSION['CreditItems' . $identifier]->Branch . "',
 														'" . $PeriodNo . "',
 														'" . _('Ex Inv') . ': ' . $_SESSION['ProcessingCredit'] . ' ' . _('Assembly') . ': ' . $CreditLine->StockID . "',
-														'" . ($AssParts['quantity'] * $CreditLine->QtyDispatched) . "',
+														'" .($AssParts['quantity'] * $CreditLine->QtyDispatched) . "',
 														'" . $AssParts['standard'] . "',
 														0)";
 						}
@@ -838,9 +842,9 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 						$DbgMsg = _('The following SQL to insert the assembly components stock movement records was used');
 						$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 
-						if ($Component_MBFlag=='M' OR $Component_MBFlag=='B'){
+						if($Component_MBFlag=='M' OR $Component_MBFlag=='B') {
 							$SQL = "UPDATE locstock
-									SET locstock.quantity = locstock.quantity + " . ($AssParts['quantity'] * $CreditLine->QtyDispatched) . "
+									SET locstock.quantity = locstock.quantity + " .($AssParts['quantity'] * $CreditLine->QtyDispatched) . "
 									WHERE locstock.stockid = '" . $AssParts['component'] . "'
 									AND loccode = '" . $_SESSION['CreditItems' . $identifier]->Location . "'";
 
@@ -856,8 +860,8 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 
 /* Insert stock movements for the stock coming back in - with unit cost */
 
-				if ($CreditLine->MBflag=='M' oR $CreditLine->MBflag=='B'){
-					$SQL = "INSERT INTO stockmoves (stockid,
+				if($CreditLine->MBflag=='M' oR $CreditLine->MBflag=='B') {
+					$SQL = "INSERT INTO stockmoves(stockid,
 													type,
 													transno,
 													loccode,
@@ -872,7 +876,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 													standardcost,
 													newqoh,
 													narrative)
-											VALUES ('" . $CreditLine->StockID . "',
+											VALUES('" . $CreditLine->StockID . "',
 													11,
 													'" . $CreditNo . "',
 													'" . $_SESSION['CreditItems' . $identifier]->Location . "',
@@ -885,11 +889,11 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 													'" . $CreditLine->QtyDispatched . "',
 													'" . $CreditLine->DiscountPercent . "',
 													'" . $CreditLine->StandardCost . "',
-													'" .  ($QtyOnHandPrior + $CreditLine->QtyDispatched) . "',
+													'" . ($QtyOnHandPrior + $CreditLine->QtyDispatched) . "',
 													'" . $CreditLine->Narrative . "')";
 				} else {
 
-					$SQL = "INSERT INTO stockmoves (stockid,
+					$SQL = "INSERT INTO stockmoves(stockid,
 													type,
 													transno,
 													loccode,
@@ -903,7 +907,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 													discountpercent,
 													standardcost,
 													narrative)
-											VALUES ('" . $CreditLine->StockID . "',
+											VALUES('" . $CreditLine->StockID . "',
 													11,
 													'" . $CreditNo . "',
 													'" . $_SESSION['CreditItems' . $identifier]->Location . "',
@@ -926,8 +930,8 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 				$StkMoveNo = DB_Last_Insert_ID($db,'stockmoves','stkmoveno');
 				/*Insert the StockSerialMovements and update the StockSerialItems  for controlled items*/
 				//echo "<div align="left"><pre>"; var_dump($CreditLine); echo "</pre> </div>";
-				if ($CreditLine->Controlled ==1){
-					foreach($CreditLine->SerialItems as $Item){
+				if($CreditLine->Controlled ==1) {
+					foreach($CreditLine->SerialItems as $Item) {
 						/*We need to add the StockSerialItem record and The StockSerialMoves as well */
 						$SQL = "SELECT quantity from stockserialitems
 								WHERE stockid='" . $CreditLine->StockID . "'
@@ -938,8 +942,8 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 						$DbgMsg = _('The following SQL to select the serial stock item record was used');
 						$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 
-						if (DB_num_rows($Result)==0){
-							$SQL = "INSERT INTO stockserialitems (stockid,
+						if(DB_num_rows($Result)==0) {
+							$SQL = "INSERT INTO stockserialitems(stockid,
 																	loccode,
 																	serialno,
 																	quantity,
@@ -968,11 +972,11 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 
 						/* now insert the serial stock movement */
 
-						$SQL = "INSERT INTO stockserialmoves (stockmoveno,
+						$SQL = "INSERT INTO stockserialmoves(stockmoveno,
 																stockid,
 																serialno,
 																moveqty)
-													VALUES ('" . $StkMoveNo . "',
+													VALUES('" . $StkMoveNo . "',
 															'" . $CreditLine->StockID . "',
 															'" . $Item->BundleRef . "',
 															'" . $Item->BundleQty . "')";
@@ -983,12 +987,12 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 					}/* foreach controlled item in the serialitems array */
 				} /*end if the orderline is a controlled item */
 
-			} elseif ($_POST['CreditType']=='WriteOff') {
+			} elseif($_POST['CreditType']=='WriteOff') {
 			/*Insert a stock movement coming back in to show the credit note and
 			a reversing stock movement to show the write off
 			no mods to location stock records*/
 
-				$SQL = "INSERT INTO stockmoves (stockid,
+				$SQL = "INSERT INTO stockmoves(stockid,
 												type,
 												transno,
 												loccode,
@@ -1003,7 +1007,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 												standardcost,
 												newqoh,
 												narrative )
-									VALUES ('" . $CreditLine->StockID . "',
+									VALUES('" . $CreditLine->StockID . "',
 											11,
 											'" . $CreditNo . "',
 											'" . $_SESSION['CreditItems' . $identifier]->Location . "',
@@ -1016,7 +1020,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 											'" . $CreditLine->QtyDispatched . "',
 											'" . $CreditLine->DiscountPercent . "',
 											'" . $CreditLine->StandardCost . "',
-											'" . ($QtyOnHandPrior + $CreditLine->QtyDispatched)  . "',
+											'" .($QtyOnHandPrior + $CreditLine->QtyDispatched)  . "',
 											'" . $CreditLine->Narrative . "')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Stock movement records could not be inserted because');
@@ -1025,7 +1029,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 				/*Get the ID of the StockMove... */
 				$StkMoveNo = DB_Last_Insert_ID($db,'stockmoves','stkmoveno');
 
-				$SQL = "INSERT INTO stockmoves (stockid,
+				$SQL = "INSERT INTO stockmoves(stockid,
 												type,
 												transno,
 												loccode,
@@ -1042,7 +1046,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 												newqoh,
 												narrative
 												)
-									VALUES ('" . $CreditLine->StockID . "',
+									VALUES('" . $CreditLine->StockID . "',
 											11,
 											'" . $CreditNo . "',
 											'" . $_SESSION['CreditItems' . $identifier]->Location . "',
@@ -1063,9 +1067,9 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 				$DbgMsg = _('The following SQL to insert the stock movement records was used');
 				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 
-			} elseif ($_POST['CreditType']=='ReverseOverCharge') {
+			} elseif($_POST['CreditType']=='ReverseOverCharge') {
 				/*Insert a stock movement coming back in to show the credit note  - flag the stockmovement not to show on stock movement enquiries - its is not a real stock movement only for invoice line - also no mods to location stock records*/
-				$SQL = "INSERT INTO stockmoves (stockid,
+				$SQL = "INSERT INTO stockmoves(stockid,
 												type,
 												transno,
 												loccode,
@@ -1081,7 +1085,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 												newqoh,
 												hidemovt,
 												narrative)
-									VALUES ('" . $CreditLine->StockID . "',
+									VALUES('" . $CreditLine->StockID . "',
 											11,
 											'" . $CreditNo . "',
 											'" . $_SESSION['CreditItems' . $identifier]->Location . "',
@@ -1108,14 +1112,14 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 			}
 
 			/*Insert the taxes that applied to this line */
-			foreach ($CreditLine->Taxes as $Tax) {
+			foreach($CreditLine->Taxes as $Tax) {
 
-				$SQL = "INSERT INTO stockmovestaxes (stkmoveno,
+				$SQL = "INSERT INTO stockmovestaxes(stkmoveno,
 													taxauthid,
 													taxrate,
 													taxcalculationorder,
 													taxontax)
-					VALUES ('" . $StkMoveNo . "',
+					VALUES('" . $StkMoveNo . "',
 						'" . $Tax->TaxAuthID . "',
 						'" . $Tax->TaxRate . "',
 						'" . $Tax->TaxCalculationOrder . "',
@@ -1128,7 +1132,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 
 /*Insert Sales Analysis records */
 			$SalesValue = 0;
-			if ($_SESSION['CurrencyRate']>0){
+			if($_SESSION['CurrencyRate']>0) {
 				$SalesValue = $CreditLine->Price * $CreditLine->QtyDispatched / $_SESSION['CurrencyRate'];
 			}
 
@@ -1159,13 +1163,13 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 
 			$myrow = DB_fetch_row($Result);
 
-			if ($myrow[0]>0){  /*Update the existing record that already exists */
+			if($myrow[0]>0) {  /*Update the existing record that already exists */
 
-				if ($_POST['CreditType']=='ReverseOverCharge'){
+				if($_POST['CreditType']=='ReverseOverCharge') {
 
 					$SQL = "UPDATE salesanalysis
 							SET amt=amt-" . $SalesValue . ",
-							disc=disc-" . ($CreditLine->DiscountPercent * $CreditLine->Price * $CreditLine->QtyDispatched / $_SESSION['CurrencyRate']) . "
+							disc=disc-" .($CreditLine->DiscountPercent * $CreditLine->Price * $CreditLine->QtyDispatched / $_SESSION['CurrencyRate']) . "
 							WHERE salesanalysis.area='" . $myrow[2] . "'
 							AND salesanalysis.salesperson='" . $_SESSION['CreditItems' . $identifier]->SalesPerson . "'
 							AND typeabbrev ='" . $_SESSION['CreditItems' . $identifier]->DefaultSalesType . "'
@@ -1196,9 +1200,9 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 
 			} else { /* insert a new sales analysis record */
 
-				if ($_POST['CreditType']=='ReverseOverCharge'){
+				if($_POST['CreditType']=='ReverseOverCharge') {
 
-					$SQL = "INSERT INTO salesanalysis (typeabbrev,
+					$SQL = "INSERT INTO salesanalysis(typeabbrev,
 														periodno,
 														amt,
 														cust,
@@ -1229,7 +1233,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 							AND custbranch.branchcode='" . $_SESSION['CreditItems' . $identifier]->Branch . "'";
 				} else {
 
-					$SQL = "INSERT INTO salesanalysis (typeabbrev,
+					$SQL = "INSERT INTO salesanalysis(typeabbrev,
 								periodno,
 								amt,
 								cost,
@@ -1271,22 +1275,22 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 
 		/* If GLLink_Stock then insert GLTrans to credit stock and debit cost of sales at standard cost*/
 
-			if ($_SESSION['CompanyRecord']['gllink_stock']==1
-				AND ($CreditLine->StandardCost !=0  OR (isset($StandardCost) and $StandardCost !=0))
-				AND $_POST['CreditType']!='ReverseOverCharge'){
+			if($_SESSION['CompanyRecord']['gllink_stock']==1
+				AND($CreditLine->StandardCost !=0  OR(isset($StandardCost) and $StandardCost !=0))
+				AND $_POST['CreditType']!='ReverseOverCharge') {
 
 /*first the cost of sales entry*/
 
 				$COGSAccount = GetCOGSGLAccount($Area, $CreditLine->StockID, $_SESSION['CreditItems' . $identifier]->DefaultSalesType, $db);
 
-				$SQL = "INSERT INTO gltrans (type,
+				$SQL = "INSERT INTO gltrans(type,
 											typeno,
 											trandate,
 											periodno,
 											account,
 											narrative,
 											amount)
-						VALUES (11,
+						VALUES(11,
 							'" . $CreditNo . "',
 							'" . $DefaultDispatchDate . "',
 							'" . $PeriodNo . "',
@@ -1302,15 +1306,15 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 				/*now the stock entry*/
 
 
-				if ($_POST['CreditType']=='WriteOff'){
-					$SQL = "INSERT INTO gltrans (type,
+				if($_POST['CreditType']=='WriteOff') {
+					$SQL = "INSERT INTO gltrans(type,
 												typeno,
 												trandate,
 												periodno,
 												account,
 												narrative,
 												amount)
-								VALUES (11,
+								VALUES(11,
 									'" . $CreditNo . "',
 									'" . $DefaultDispatchDate . "',
 									'" . $PeriodNo . "',
@@ -1319,14 +1323,14 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 									'" . round($CreditLine->StandardCost * $CreditLine->QtyDispatched,$_SESSION['CompanyRecord']['decimalplaces']) . "')";
 				} else {
 					$StockGLCode = GetStockGLCode($CreditLine->StockID, $db);
-					$SQL = "INSERT INTO gltrans (type,
+					$SQL = "INSERT INTO gltrans(type,
 												typeno,
 												trandate,
 												periodno,
 												account,
 												narrative,
 												amount)
-								VALUES (11,
+								VALUES(11,
 									'" . $CreditNo . "',
 									'" . $DefaultDispatchDate . "',
 									'" . $PeriodNo . "',
@@ -1341,19 +1345,19 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 
 			} /* end of if GL and stock integrated and standard cost !=0 */
 
-			if ($_SESSION['CompanyRecord']['gllink_debtors']==1 AND $CreditLine->Price !=0){
+			if($_SESSION['CompanyRecord']['gllink_debtors']==1 AND $CreditLine->Price !=0) {
 
 //Post sales transaction to GL credit sales
 				$SalesGLAccounts = GetSalesGLAccount($Area, $CreditLine->StockID, $_SESSION['CreditItems' . $identifier]->DefaultSalesType, $db);
 
-				$SQL = "INSERT INTO gltrans (type,
+				$SQL = "INSERT INTO gltrans(type,
 							typeno,
 							trandate,
 							periodno,
 							account,
 							narrative,
 							amount)
-					VALUES (11,
+					VALUES(11,
 						'" . $CreditNo . "',
 						'" . $DefaultDispatchDate . "',
 						'" . $PeriodNo . "',
@@ -1366,21 +1370,21 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
 				$Result = DB_query($SQL,$ErrMsg, $DbgMsg, true);
 
-				if ($CreditLine->DiscountPercent !=0){
+				if($CreditLine->DiscountPercent !=0) {
 
-					$SQL = "INSERT INTO gltrans (type,
+					$SQL = "INSERT INTO gltrans(type,
 								typeno,
 								trandate,
 								periodno,
 								account,
 								narrative,
 								amount)
-						VALUES (11,
+						VALUES(11,
 							'" . $CreditNo . "',
 							'" . $DefaultDispatchDate . "',
 							'" . $PeriodNo . "',
 							'" . $SalesGLAccounts['discountglcode'] . "',
-							'" . $_SESSION['CreditItems' . $identifier]->DebtorNo . " - " . $CreditLine->StockID . " @ " . ($CreditLine->DiscountPercent * 100) . "%',
+							'" . $_SESSION['CreditItems' . $identifier]->DebtorNo . " - " . $CreditLine->StockID . " @ " .($CreditLine->DiscountPercent * 100) . "%',
 							'" . -round($CreditLine->Price * $CreditLine->QtyDispatched * $CreditLine->DiscountPercent/$_SESSION['CurrencyRate'],$_SESSION['CompanyRecord']['decimalplaces']) . "'
 							)";
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The credit note discount GL posting could not be inserted because');
@@ -1392,18 +1396,18 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 	} /*end of OrderLine loop */
 
 
-	if ($_SESSION['CompanyRecord']['gllink_debtors']==1){
+	if($_SESSION['CompanyRecord']['gllink_debtors']==1) {
 
 /*Post credit note transaction to GL credit debtors, debit freight re-charged and debit sales */
-		if (($_SESSION['CreditItems' . $identifier]->total + $_SESSION['CreditItems' . $identifier]->FreightCost + $TaxTotal) !=0) {
-			$SQL = "INSERT INTO gltrans (type,
+		if(($_SESSION['CreditItems' . $identifier]->total + $_SESSION['CreditItems' . $identifier]->FreightCost + $TaxTotal) !=0) {
+			$SQL = "INSERT INTO gltrans(type,
 							typeno,
 							trandate,
 							periodno,
 							account,
 							narrative,
 							amount)
-					VALUES (11,
+					VALUES(11,
 						'" . $CreditNo . "',
 						'" . $DefaultDispatchDate . "',
 						'" . $PeriodNo . "',
@@ -1421,15 +1425,15 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 /*Could do with setting up a more flexible freight posting schema that looks at the sales type and area of the customer branch to determine where to post the freight recovery */
 
 
-		if (round($_SESSION['CreditItems' . $identifier]->FreightCost,$_SESSION['CreditItems' . $identifier]->CurrDecimalPlaces) !=0 ) {
-			$SQL = "INSERT INTO gltrans (type,
+		if(round($_SESSION['CreditItems' . $identifier]->FreightCost,$_SESSION['CreditItems' . $identifier]->CurrDecimalPlaces) !=0 ) {
+			$SQL = "INSERT INTO gltrans(type,
 							typeno,
 							trandate,
 							periodno,
 							account,
 							narrative,
 							amount)
-				VALUES (11,
+				VALUES(11,
 					'" . $CreditNo . "',
 					'" . $DefaultDispatchDate . "',
 					'" . $PeriodNo . "',
@@ -1443,9 +1447,9 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 			$Result = DB_query($SQL,$ErrMsg, $DbgMsg, true);
 		}
 
-		foreach ( $TaxTotals as $TaxAuthID => $TaxAmount){
-			if ($TaxAmount !=0 ){
-				$SQL = "INSERT INTO gltrans (
+		foreach( $TaxTotals as $TaxAuthID => $TaxAmount) {
+			if($TaxAmount !=0 ) {
+				$SQL = "INSERT INTO gltrans(
 						type,
 						typeno,
 						trandate,
@@ -1454,7 +1458,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 						narrative,
 						amount
 						)
-					VALUES (
+					VALUES(
 						11,
 						'" . $CreditNo . "',
 						'" . $DefaultDispatchDate . "',
@@ -1481,7 +1485,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 	unset($_SESSION['ProcessingCredit']);
 
 	echo '<div class="centre">' . _('Credit Note number') . ' ' . $CreditNo . ' ' . _('has been processed');
-	if ($_SESSION['InvoicePortraitFormat']==0){
+	if($_SESSION['InvoicePortraitFormat']==0) {
 		echo '<br /><a href="' . $RootPath . '/PrintCustTrans.php?FromTransNo=' . $CreditNo . '&InvOrCredit=Credit&PrintPDF=True">' . _('Print this credit note') . '</a>';
 	} else {
 		echo '<br /><a href="' . $RootPath . '/PrintCustTransPortrait.php?FromTransNo=' . $CreditNo . '&InvOrCredit=Credit&PrintPDF=True">' . _('Print this credit note') . '</a>';
@@ -1498,7 +1502,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 			<td>' . _('Credit Note Type') . '</td>
 			<td><select tabindex="' . $j .'" name="CreditType">';
 
-	if (!isset($_POST['CreditType']) OR $_POST['CreditType']=='Return'){
+	if(!isset($_POST['CreditType']) OR $_POST['CreditType']=='Return') {
 		echo '<option selected="selected" value="Return">' . _('Goods returned to store') . '</option>';
 		echo '<option value="WriteOff">' . _('Goods written off') . '</option>';
 		echo '<option value="ReverseOverCharge">' . _('Reverse overcharge') . '</option>';
@@ -1515,7 +1519,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 		</tr>';
 	$j++;
 
-	if (!isset($_POST['CreditType']) OR $_POST['CreditType']=='Return'){
+	if(!isset($_POST['CreditType']) OR $_POST['CreditType']=='Return') {
 
 /*if the credit note is a return of goods then need to know which location to receive them into */
 
@@ -1526,12 +1530,12 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 		$SQL="SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1";
 		$Result = DB_query($SQL);
 
-		if (!isset($_POST['Location'])){
+		if(!isset($_POST['Location'])) {
 			$_POST['Location'] = $_SESSION['CreditItems' . $identifier]->Location;
 		}
-		while ($myrow = DB_fetch_array($Result)) {
+		while($myrow = DB_fetch_array($Result)) {
 
-			if ($_POST['Location']==$myrow['loccode']){
+			if($_POST['Location']==$myrow['loccode']) {
 				echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 			} else {
 				echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
@@ -1555,9 +1559,9 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 
 		$Result = DB_query($SQL);
 
-		while ($myrow = DB_fetch_array($Result)) {
+		while($myrow = DB_fetch_array($Result)) {
 
-			if ($_POST['WriteOffGLCode']==$myrow['accountcode']){
+			if($_POST['WriteOffGLCode']==$myrow['accountcode']) {
 				echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . $myrow['accountname']. '</option>';
 			} else {
 				echo '<option value="' . $myrow['accountcode'] . '">' . $myrow['accountname'] . '</option>';
@@ -1566,12 +1570,12 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 		echo '</select></td>
 			</tr>';
 	}
-	
+
 	$j++;
 	echo '<tr>
 			<td>' . _('Sales person'). ':</td>';
 
-	if ($_SESSION['SalesmanLogin'] != '') {
+	if($_SESSION['SalesmanLogin'] != '') {
 		echo '<td>';
 		echo $_SESSION['UsersRealName'];
 		echo '</td>';
@@ -1579,8 +1583,8 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 		echo '<td><select tabindex="' . $j . '" name="SalesPerson">';
 		$SalesPeopleResult = DB_query("SELECT salesmancode, salesmanname FROM salesman WHERE current=1");
 		/* SalesPerson will be set because it is an invoice being credited and the order salesperson would/should have been retrieved */
-		while ($SalesPersonRow = DB_fetch_array($SalesPeopleResult)){
-			if ($SalesPersonRow['salesmancode']==$_SESSION['CreditItems'.$identifier]->SalesPerson){
+		while($SalesPersonRow = DB_fetch_array($SalesPeopleResult)) {
+			if($SalesPersonRow['salesmancode']==$_SESSION['CreditItems'.$identifier]->SalesPerson) {
 				echo '<option selected="selected" value="' . $SalesPersonRow['salesmancode'] . '">' . $SalesPersonRow['salesmanname'] . '</option>';
 			} else {
 				echo '<option value="' . $SalesPersonRow['salesmancode'] . '">' . $SalesPersonRow['salesmanname'] . '</option>';
@@ -1600,7 +1604,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 			<input tabindex="' . $j . '" type="submit" name="Update" value="' . _('Update') . '" />
 			<br />';
 	$j++;
-	if (!isset($_POST['CreditText'])) {
+	if(!isset($_POST['CreditText'])) {
 		$_POST['CreditText'] = '';
 	}
 	echo '<input type="submit" tabindex="'.$j++.'" name="ProcessCredit" value="' . _('Process Credit') .'" />
