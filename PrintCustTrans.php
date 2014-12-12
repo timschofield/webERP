@@ -699,7 +699,7 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 
 			$result=DB_query($sql);
 			if (DB_num_rows($result)==0 OR DB_error_no()!=0) {
-				echo '<p>' . _('There was a problem retrieving the invoice or credit note details for note number') . ' ' . $InvoiceToPrint . ' ' . _('from the database') . '. ' . _('To print an invoice, the sales order record, the customer transaction record and the branch record for the customer must not have been purged') . '. ' . _('To print a credit note only requires the customer, transaction, salesman and branch records be available');
+				echo '<p>' . _('There was a problem retrieving the invoice or credit note details for note number') . ' ' . $FromTransNo . ' ' . _('from the database') . '. ' . _('To print an invoice, the sales order record, the customer transaction record and the branch record for the customer must not have been purged') . '. ' . _('To print a credit note only requires the customer, transaction, salesman and branch records be available');
 				if ($debug==1) {
 					echo _('The SQL used to get this information that failed was') . '<br />' . $sql;
 				}
