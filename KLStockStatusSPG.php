@@ -64,17 +64,9 @@ if ($StockID != ''){
 
 	echo $TableHeader;
 	$j = 1;
-	$k=0; //row colour counter
-
+	$k = 0; //row colour counter
 	while ($myrow=DB_fetch_array($LocStockResult)) {
-
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k=1;
-		}
+		$k = StartEvenOrOddRow($k);
 
 		$InTransitSQL="SELECT SUM(shipqty-recqty) as intransit
 						FROM loctransfers
@@ -105,7 +97,6 @@ if ($StockID != ''){
 		} else {
 			$Available = $myrow['quantity'];
 		}
-
 		echo '<td>' . $myrow['locationname'] . '</td>';
 
 		printf('<td class="number">%s</td>',
