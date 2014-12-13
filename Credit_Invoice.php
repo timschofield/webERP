@@ -357,10 +357,8 @@ foreach($_SESSION['CreditItems' . $identifier]->LineItems as $LnItm) {
 
 		$j++;
 		echo '<td><input class="number" maxlength="12" name="Price_' . $LnItm->LineNumber . '" required="required" size="6" tabindex="'.$tabindex++.'" title="' . _('Enter the price at which to credit this item') . '" type="text" value="' . locale_number_format($LnItm->Price,$_SESSION['CreditItems' . $identifier]->CurrDecimalPlaces) . '" /></td>
-
-
-	<td><input class="number" maxlength="3" name="Discount_' . $LnItm->LineNumber . '" required="required" size="3" tabindex="'.$tabindex++.'" title="Discount percent" type="text" value="' . locale_number_format(($LnItm->DiscountPercent * 100),2) . '" /></td>
-	<td class="number">' . $DisplayLineTotal . '</td>';
+			<td><input class="number" maxlength="3" name="Discount_' . $LnItm->LineNumber . '" required="required" size="3" tabindex="'.$tabindex++.'" type="text" value="' . locale_number_format(($LnItm->DiscountPercent * 100),2) . '" />%</td>
+			<td class="number">' . $DisplayLineTotal . '</td>';
 
 		/*Need to list the taxes applicable to this line */
 		echo '<td>';
@@ -374,8 +372,8 @@ foreach($_SESSION['CreditItems' . $identifier]->LineItems as $LnItm) {
 				$i++;
 			}
 		}
-		echo '</td>';
-		echo '<td class="number">';
+		echo '</td>
+			<td class="number">';
 
 	}
 	$i=0; // initialise the number of taxes iterated through
@@ -386,7 +384,7 @@ foreach($_SESSION['CreditItems' . $identifier]->LineItems as $LnItm) {
 				echo '<br />';
 			}
 			if(!isset($_POST['ProcessCredit'])) {
-				echo '<input class="number" maxlength="4" name="' . $LnItm->LineNumber . $Tax->TaxCalculationOrder . '_TaxRate" required="required" size="4" type="text" value="' . locale_number_format($Tax->TaxRate*100,2) . '" tabindex="'.$tabindex++.'" />';
+				echo '<input class="number" maxlength="4" name="' . $LnItm->LineNumber . $Tax->TaxCalculationOrder . '_TaxRate" required="required" size="4" tabindex="'.$tabindex++.'" type="text" value="' . locale_number_format($Tax->TaxRate*100,2) . '" />%';
 			}
 			$i++;
 			if($Tax->TaxOnTax ==1) {
@@ -413,7 +411,7 @@ foreach($_SESSION['CreditItems' . $identifier]->LineItems as $LnItm) {
 			</tr>';
 
 		echo '<tr class="'.$RowClass.'">
-	<td colspan="13"><textarea tabindex="'.$tabindex++.'"  name="Narrative_' . $LnItm->LineNumber . '" cols="100%" rows="1">' . $LnItm->Narrative . '</textarea>
+	<td colspan="13"><textarea name="Narrative_' . $LnItm->LineNumber . '" cols="100%" rows="1" tabindex="'.$tabindex++.'">' . $LnItm->Narrative . '</textarea>
 				<br />
 				<hr /></td>
 			</tr>';
@@ -432,7 +430,7 @@ if(!isset($_POST['ProcessCredit'])) {
 		<td></td>
 		<td class="number" colspan="2">' . _('Credit Freight Cost') . '</td>
 		<td><input class="number" maxlength="6" name="ChargeFreightCost" required="required" size="6" tabindex="'.$tabindex++.'" type="text" value="' . locale_number_format($_SESSION['CreditItems' . $identifier]->FreightCost,$_SESSION['CreditItems' . $identifier]->CurrDecimalPlaces) . '" /></td>
-		<td></td>
+		<td>&nbsp;</td>
 		<td>';
 
 	$i=0; // initialise the number of taxes iterated through
