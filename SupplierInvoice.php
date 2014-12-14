@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: SupplierInvoice.php 6953 2014-10-30 01:37:37Z turbopt $ */
+/* $Id: SupplierInvoice.php 7021 2014-12-14 02:04:44Z tehonu $ */
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing
@@ -283,6 +283,7 @@ if (isset($_GET['ReceivePO']) AND $_GET['ReceivePO']!=''){
 														transno,
 														loccode,
 														trandate,
+														userid,
 														price,
 														prd,
 														reference,
@@ -295,6 +296,7 @@ if (isset($_GET['ReceivePO']) AND $_GET['ReceivePO']!=''){
 												'" . $GRN . "',
 												'" . $_SESSION['PO'.$identifier]->Location . "',
 												'" . FormatDateForSQL($DeliveryDate) . "',
+												'" . $_SESSION['UserID'] . "',
 												'" . $LocalCurrencyPrice . "',
 												'" . $PeriodNo . "',
 												'" . $_SESSION['PO'.$identifier]->SupplierID . " (" . DB_escape_string($_SESSION['PO'.$identifier]->SupplierName) . ") - " .$_SESSION['PO'.$identifier]->OrderNo . "',

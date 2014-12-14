@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: ConfirmDispatch_Invoice.php 6990 2014-11-17 06:44:46Z exsonqu $*/
+/* $Id: ConfirmDispatch_Invoice.php 7021 2014-12-14 02:04:44Z tehonu $*/
 
 /* Session started in session.inc for password checking and authorisation level check */
 include('includes/DefineCartClass.php');
@@ -1029,6 +1029,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 													transno,
 													loccode,
 													trandate,
+													userid,
 													debtorno,
 													branchcode,
 													prd,
@@ -1042,6 +1043,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 												 '" . $InvoiceNo . "',
 												 '" . $_SESSION['Items'.$identifier]->Location . "',
 												 '" . $DefaultDispatchDate . "',
+												 '" . $_SESSION['UserID'] . "',
 												 '" . $_SESSION['Items'.$identifier]->DebtorNo . "',
 												 '" . $_SESSION['Items'.$identifier]->Branch . "',
 												 '" . $PeriodNo . "',
@@ -1084,6 +1086,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 														transno,
 														loccode,
 														trandate,
+														userid,
 														debtorno,
 														branchcode,
 														price,
@@ -1099,6 +1102,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 														'" . $InvoiceNo . "',
 														'" . $_SESSION['Items'.$identifier]->Location . "',
 														'" . $DefaultDispatchDate . "',
+														'" . $_SESSION['UserID'] . "',
 														'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
 														'" . $_SESSION['Items'.$identifier]->Branch . "',
 														'" . $LocalCurrencyPrice . "',
@@ -1119,6 +1123,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 												transno,
 												loccode,
 												trandate,
+												userid,
 												debtorno,
 												branchcode,
 												price,
@@ -1133,6 +1138,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 												'" . $InvoiceNo . "',
 												'" . $_SESSION['Items'.$identifier]->Location . "',
 												'" . $DefaultDispatchDate . "',
+												'" . $_SESSION['UserID'] . "',
 												'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
 												'" . $_SESSION['Items'.$identifier]->Branch . "',
 												'" . $LocalCurrencyPrice . "',

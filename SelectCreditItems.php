@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: SelectCreditItems.php 6945 2014-10-27 07:20:48Z daintree $*/
+/* $Id: SelectCreditItems.php 7021 2014-12-14 02:04:44Z tehonu $*/
 
 /*The credit selection screen uses the Cart class used for the making up orders
 some of the variable names refer to order - please think credit when you read order */
@@ -1215,6 +1215,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 												transno,
 												loccode,
 												trandate,
+												userid,
 												debtorno,
 												branchcode,
 												price,
@@ -1231,6 +1232,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 												'" . $CreditNo . "',
 												'" . $_SESSION['CreditItems'.$identifier]->Location . "',
 												'" . $SQLCreditDate . "',
+												'" . $_SESSION['UserID'] . "',
 												'" . $_SESSION['CreditItems'.$identifier]->DebtorNo . "',
 												'" . $_SESSION['CreditItems'.$identifier]->Branch . "',
 												'" . $LocalCurrencyPrice . "',
@@ -1255,6 +1257,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 												transno,
 												loccode,
 												trandate,
+												userid,
 												debtorno,
 												branchcode,
 												price,
@@ -1271,6 +1274,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 												" . $CreditNo . ",
 												'" . $_SESSION['CreditItems'.$identifier]->Location . "',
 												'" . $SQLCreditDate . "',
+												'" . $_SESSION['UserID'] . "',
 												'" . $_SESSION['CreditItems'.$identifier]->DebtorNo . "',
 												'" . $_SESSION['CreditItems'.$identifier]->Branch . "',
 												'" . $LocalCurrencyPrice . "',
@@ -1289,6 +1293,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 													transno,
 													loccode,
 													trandate,
+													userid,
 													debtorno,
 													branchcode,
 													price,
@@ -1303,6 +1308,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 													'" . $CreditNo . "',
 													'" . $_SESSION['CreditItems'.$identifier]->Location . "',
 													'" . $SQLCreditDate . "',
+													'" . $_SESSION['UserID'] . "',
 													'" . $_SESSION['CreditItems'.$identifier]->DebtorNo . "',
 													'" . $_SESSION['CreditItems'.$identifier]->Branch . "',
 													'" . $LocalCurrencyPrice . "',
@@ -1466,6 +1472,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 														transno,
 														loccode,
 														trandate,
+														userid,
 														debtorno,
 														branchcode,
 														prd,
@@ -1480,6 +1487,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 													'" . $CreditNo . "',
 													'" . $_SESSION['CreditItems'.$identifier]->Location . "',
 													'" . $SQLCreditDate . "',
+													'" . $_SESSION['UserID'] . "',
 													'" . $_SESSION['CreditItems'.$identifier]->DebtorNo . "',
 													'" . $_SESSION['CreditItems'.$identifier]->Branch . "',
 													'" . $PeriodNo . "',
@@ -1522,6 +1530,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 													transno,
 													loccode,
 													trandate,
+													userid,
 													debtorno,
 													branchcode,
 													price,
@@ -1539,6 +1548,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 													'" . $CreditNo . "',
 													'" . $_SESSION['CreditItems'.$identifier]->Location . "',
 													'" . $SQLCreditDate . "',
+													'" . $_SESSION['UserID'] . "',
 													'" . $_SESSION['CreditItems'.$identifier]->DebtorNo . "',
 													'" . $_SESSION['CreditItems'.$identifier]->Branch . "',
 													'" . $LocalCurrencyPrice . "',
@@ -1559,6 +1569,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 													transno,
 													loccode,
 													trandate,
+													userid,
 													debtorno,
 													branchcode,
 													price,
@@ -1574,6 +1585,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 													'" . $CreditNo . "',
 													'" . $_SESSION['CreditItems'.$identifier]->Location . "',
 													'" . $SQLCreditDate . "',
+													'" . $_SESSION['UserID'] . "',
 													'" . $_SESSION['CreditItems'.$identifier]->DebtorNo . "',
 													'" . $_SESSION['CreditItems'.$identifier]->Branch . "',
 													'" . $LocalCurrencyPrice . "',

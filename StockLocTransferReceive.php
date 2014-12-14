@@ -1,5 +1,5 @@
 <?php
-/* $Id: StockLocTransferReceive.php 6945 2014-10-27 07:20:48Z daintree $*/
+/* $Id: StockLocTransferReceive.php 7021 2014-12-14 02:04:44Z tehonu $*/
 /* Inventory Transfer - Receive */
 
 include('includes/DefineSerialItems.php');
@@ -88,6 +88,7 @@ if(isset($_POST['ProcessTransfer'])){
 												transno,
 												loccode,
 												trandate,
+												userid,
 												prd,
 												reference,
 												qty,
@@ -98,6 +99,7 @@ if(isset($_POST['ProcessTransfer'])){
 						'" . $_SESSION['Transfer']->TrfID . "',
 						'" . $_SESSION['Transfer']->StockLocationFrom . "',
 						'" . $SQLTransferDate . "',
+						'" . $_SESSION['UserID'] . "',
 						'" . $PeriodNo . "',
 						'" . _('To') . ' ' . DB_escape_string($_SESSION['Transfer']->StockLocationToName) . "',
 						'" . round(-$TrfLine->Quantity, $TrfLine->DecimalPlaces) . "',
@@ -200,6 +202,7 @@ if(isset($_POST['ProcessTransfer'])){
 												transno,
 												loccode,
 												trandate,
+												userid,
 												prd,
 												reference,
 												qty,
@@ -210,6 +213,7 @@ if(isset($_POST['ProcessTransfer'])){
 						'" . $_SESSION['Transfer']->TrfID . "',
 						'" . $_SESSION['Transfer']->StockLocationTo . "',
 						'" . $SQLTransferDate . "',
+						'" . $_SESSION['UserID'] . "',
 						'" . $PeriodNo . "',
 						'" . _('From') . ' ' . DB_escape_string($_SESSION['Transfer']->StockLocationFromName) ."',
 						'" . round($TrfLine->Quantity, $TrfLine->DecimalPlaces) . "',

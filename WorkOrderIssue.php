@@ -1,5 +1,5 @@
 <?php
-/* $Id: WorkOrderIssue.php 6945 2014-10-27 07:20:48Z daintree $*/
+/* $Id: WorkOrderIssue.php 7021 2014-12-14 02:04:44Z tehonu $*/
 
 include('includes/session.inc');
 $Title = _('Issue Materials To Work Order');
@@ -190,6 +190,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 						transno,
 						loccode,
 						trandate,
+						userid,
 						price,
 						prd,
 						reference,
@@ -201,6 +202,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 							'" . $WOIssueNo . "',
 							'" . $_POST['FromLocation'] . "',
 							'" . FormatDateForSQL($_POST['IssuedDate']) . "',
+							'" . $_SESSION['UserID'] . "',
 							'" . $IssueItemRow['cost'] . "',
 							'" . $PeriodNo . "',
 							'" . $_POST['WO'] . "',

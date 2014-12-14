@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: PDFStockCheckComparison.php 6945 2014-10-27 07:20:48Z daintree $*/
+/* $Id: PDFStockCheckComparison.php 7021 2014-12-14 02:04:44Z tehonu $*/
 
 include('includes/session.inc');
 
@@ -101,6 +101,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 								transno,
 								loccode,
 								trandate,
+								userid,
 								prd,
 								reference,
 								qty,
@@ -110,6 +111,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 							'" . $AdjustmentNumber . "',
 							'" . $myrow['loccode'] . "',
 							'" . $SQLAdjustmentDate . "',
+							'" . $_SESSION['UserID'] . "',
 							'" . $PeriodNo . "',
 							'" . _('Inventory Check') . "',
 							'" . $StockQtyDifference . "',
