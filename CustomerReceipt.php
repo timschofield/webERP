@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: CustomerReceipt.php 6945 2014-10-27 07:20:48Z daintree $ */
+/* $Id: CustomerReceipt.php 7013 2014-12-05 04:02:57Z exsonqu $ */
 
 /**************************************************************************************
 KL RICARD MODIFICATIONS:
@@ -642,7 +642,7 @@ if (isset($_POST['Search'])){
 						SELECT *
 						FROM 	custbranch
 						WHERE 	custbranch.debtorno = debtorsmaster.debtorno
-							AND custbranch.salesperson='" . $_SESSION['SalesmanLogin'] . "')";
+							AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "')";
 		}
 
 		$CustomerSearchResult = DB_query($SQL,'','',false,false);

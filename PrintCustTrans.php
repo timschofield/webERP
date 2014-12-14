@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: PrintCustTrans.php 6943 2014-10-27 07:06:42Z daintree $ */
+/* $Id: PrintCustTrans.php 7019 2014-12-12 09:13:23Z tehonu $ */
 /**************************************************************************************
 KL RICARD MODIFICATIONS:
 - use of salesorders.salesperson instead of custbranch.salesman
