@@ -36,6 +36,7 @@ $sql = "SELECT stockmoves.stockid,
 				stockmoves.type,
 				stockmoves.transno,
 				stockmoves.trandate,
+				stockmoves.userid,
 				stockmoves.debtorno,
 				stockmoves.branchcode,
 				stockmoves.qty,
@@ -64,6 +65,7 @@ echo '<div>';
 echo '<table class="selection">';
 $tableheader = '<tr>
 					<th>' . _('Date') . '</th>
+					<th>' . _('User') . '</th>
 					<th>' . _('Type') . '</th>
 					<th>' . _('Number') . '</th>
 					<th>' . _('Reference') . '</th>
@@ -89,10 +91,12 @@ while ($myrow=DB_fetch_array($MovtsResult)) {
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
+				<td>%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>
 				</tr>',
 				$DisplayTranDate,
+				$myrow['userid'],
 				$InvoiceLink,
 				$myrow['transno'],
 				$myrow['reference'],
@@ -102,6 +106,7 @@ while ($myrow=DB_fetch_array($MovtsResult)) {
 	} elseif ($myrow['type']==11){
 
 		printf('<td>%s</td>
+				<td>%s</td>
 				<td><a target="_blank" href="%s/PrintCustTrans.php?FromTransNo=%s&amp;InvOrCredit=Credit">%s</a></td>
 				<td>%s</td>
 				<td>%s</td>
@@ -109,6 +114,7 @@ while ($myrow=DB_fetch_array($MovtsResult)) {
 				<td class="number">%s</td>
 				</tr>',
 				$DisplayTranDate,
+				$myrow['userid'],
 				$RootPath,
 				$myrow['transno'],
 				$myrow['typename'],
@@ -122,10 +128,12 @@ while ($myrow=DB_fetch_array($MovtsResult)) {
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
+				<td>%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>
 				</tr>',
 				$DisplayTranDate,
+				$myrow['userid'],
 				$myrow['typename'],
 				$myrow['transno'],
 				$myrow['reference'],
