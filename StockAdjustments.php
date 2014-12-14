@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: StockAdjustments.php 6945 2014-10-27 07:20:48Z daintree $*/
+/* $Id: StockAdjustments.php 7021 2014-12-14 02:04:44Z tehonu $*/
 
 include('includes/DefineStockAdjustment.php');
 include('includes/DefineSerialItems.php');
@@ -215,6 +215,7 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 										transno,
 										loccode,
 										trandate,
+										userid,
 										prd,
 										reference,
 										qty,
@@ -225,6 +226,7 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 										'" . $AdjustmentNumber . "',
 										'" . $_SESSION['Adjustment' . $identifier]->StockLocation . "',
 										'" . $SQLAdjustmentDate . "',
+										'" . $_SESSION['UserID'] . "',
 										'" . $PeriodNo . "',
 										'" . $_SESSION['Adjustment' . $identifier]->Narrative ."',
 										'" . $_SESSION['Adjustment' . $identifier]->Quantity . "',

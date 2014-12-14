@@ -1,5 +1,5 @@
 <?php
-/* $Id: RecurringSalesOrdersProcess.php 6945 2014-10-27 07:20:48Z daintree $*/
+/* $Id: RecurringSalesOrdersProcess.php 7021 2014-12-14 02:04:44Z tehonu $*/
 
 /*need to allow this script to run from Cron or windows scheduler */
 
@@ -340,6 +340,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 						transno,
 						loccode,
 						trandate,
+						userid,
 						debtorno,
 						branchcode,
 						price,
@@ -356,6 +357,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 						'" . $InvoiceNo . "',
 						'" . $RecurrOrderRow['fromstkloc'] . "',
 						'" . $DelDate . "',
+						'" . $_SESSION['UserID'] . "',
 						'" . $RecurrOrderRow['debtorno'] . "',
 						'" . $RecurrOrderRow['branchcode'] . "',
 						'" . $LocalCurrencyPrice . "',

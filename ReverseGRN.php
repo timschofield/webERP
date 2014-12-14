@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: ReverseGRN.php 6945 2014-10-27 07:20:48Z daintree $*/
+/* $Id: ReverseGRN.php 7021 2014-12-14 02:04:44Z tehonu $*/
 
 include('includes/DefineSerialItems.php');
 include('includes/SQL_CommonFunctions.inc');
@@ -228,6 +228,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 										transno,
 										loccode,
 										trandate,
+										userid,
 										prd,
 										reference,
 										qty,
@@ -239,6 +240,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 										'" . $_GET['GRNNo'] . "',
 										'" . $GRN['intostocklocation'] . "',
 										'" . $GRN['deliverydate'] . "',
+										'" . $_SESSION['UserID'] . "',
 										'" . $PeriodNo . "',
 										'" . _('Reversal') . ' - ' . $_POST['SupplierID'] . ' - ' . $GRN['orderno'] . "',
 										'" . -$QtyToReverse . "',

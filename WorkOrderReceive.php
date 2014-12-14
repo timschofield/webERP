@@ -1,5 +1,5 @@
 <?php
-/* $Id: WorkOrderReceive.php 6945 2014-10-27 07:20:48Z daintree $*/
+/* $Id: WorkOrderReceive.php 7021 2014-12-14 02:04:44Z tehonu $*/
 
 include('includes/session.inc');
 $Title = _('Receive Work Order');
@@ -351,6 +351,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 											transno,
 											loccode,
 											trandate,
+											userid,
 											prd,
 											reference,
 											price,
@@ -362,6 +363,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 								'" . $WOIssueNo . "',
 								'" . $WORow['loccode'] . "',
 								'" . Date('Y-m-d') . "',
+								'" . $_SESSION['UserID'] . "',
 								'" . $PeriodNo . "',
 								'" . $_POST['WO'] . "',
 								'" . $AutoIssueCompRow['cost'] . "',
@@ -459,6 +461,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 										transno,
 										loccode,
 										trandate,
+										userid,
 										price,
 										prd,
 										reference,
@@ -470,6 +473,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 							'" . $WOReceiptNo . "',
 							'" . $_POST['IntoLocation'] . "',
 							'" . Date('Y-m-d') . "',
+							'" . $_SESSION['UserID'] . "',
 							'" . $WORow['stdcost'] . "',
 							'" . $PeriodNo . "',
 							'" . $_POST['WO'] . "',

@@ -1,5 +1,5 @@
 <?php
-/* $Id: StockTransfers.php 6945 2014-10-27 07:20:48Z daintree $*/
+/* $Id: StockTransfers.php 7021 2014-12-14 02:04:44Z tehonu $*/
 /**************************************************************************************
 KL RICARD MODIFICATIONS:
 - send email if destination = location SERDE (to be destroyed)
@@ -228,6 +228,7 @@ if ( isset($_POST['EnterTransfer']) ){
 										transno,
 										loccode,
 										trandate,
+										userid,
 										prd,
 										reference,
 										qty,
@@ -238,6 +239,7 @@ if ( isset($_POST['EnterTransfer']) ){
 						'" . $TransferNumber . "',
 						'" . $_SESSION['Transfer']->StockLocationFrom . "',
 						'" . $SQLTransferDate . "',
+						'" . $_SESSION['UserID'] . "',
 						'" . $PeriodNo . "',
 						'To " . $_SESSION['Transfer']->StockLocationTo ."',
 						'" . round(-$_SESSION['Transfer']->TransferItem[0]->Quantity,$_SESSION['Transfer']->TransferItem[0]->DecimalPlaces)  . "',
@@ -344,6 +346,7 @@ if ( isset($_POST['EnterTransfer']) ){
 						transno,
 						loccode,
 						trandate,
+						userid,
 						prd,
 						reference,
 						qty,
@@ -353,6 +356,7 @@ if ( isset($_POST['EnterTransfer']) ){
 					'" . $TransferNumber . "',
 					'" . $_SESSION['Transfer']->StockLocationTo . "',
 					'" . $SQLTransferDate . "',
+					'" . $_SESSION['UserID'] . "',
 					'" . $PeriodNo . "',
 					'" . _('From') . " " . $_SESSION['Transfer']->StockLocationFrom . "',
 					'" . $_SESSION['Transfer']->TransferItem[0]->Quantity . "',

@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: GoodsReceived.php 6945 2014-10-27 07:20:48Z daintree $*/
+/* $Id: GoodsReceived.php 7021 2014-12-14 02:04:44Z tehonu $*/
 
 /* Session started in header.inc for password checking and authorisation level check */
 include('includes/DefinePOClass.php');
@@ -516,6 +516,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 												transno,
 												loccode,
 												trandate,
+												userid,
 												price,
 												prd,
 												reference,
@@ -528,6 +529,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 										'" . $GRN . "',
 										'" . $_SESSION['PO'.$identifier]->Location . "',
 										'" . $_POST['DefaultReceivedDate'] . "',
+										'" . $_SESSION['UserID'] . "',
 										'" . $LocalCurrencyPrice . "',
 										'" . $PeriodNo . "',
 										'" . $_SESSION['PO'.$identifier]->SupplierID . " (" . DB_escape_string($_SESSION['PO'.$identifier]->SupplierName) . ") - " .$_SESSION['PO'.$identifier]->OrderNo . "',
