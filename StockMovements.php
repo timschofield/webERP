@@ -70,6 +70,7 @@ $sql = "SELECT stockmoves.stockid,
 				stockmoves.type,
 				stockmoves.transno,
 				stockmoves.trandate,
+				stockmoves.userid,
 				stockmoves.debtorno,
 				stockmoves.branchcode,
 				stockmoves.qty,
@@ -97,6 +98,7 @@ $tableheader = '<tr>
 					<th>' . _('Type') . '</th>
 					<th>' . _('Number') . '</th>
 					<th>' . _('Date') . '</th>
+					<th>' . _('User ID') . '</th>
 					<th>' . _('Customer') . '</th>
 					<th>' . _('Branch') . '</th>
 					<th>' . _('Quantity') . '</th>
@@ -130,6 +132,7 @@ while ($myrow=DB_fetch_array($MovtsResult)) {
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
+				<td>%s</td>
 				<td class="number">%s</td>
 				<td>%s</td>
 				<td class="number">%s</td>
@@ -141,6 +144,7 @@ while ($myrow=DB_fetch_array($MovtsResult)) {
 				$myrow['typename'],
 				$myrow['transno'],
 				$DisplayTranDate,
+				$myrow['userid'],
 				$myrow['debtorno'],
 				$myrow['branchcode'],
 				locale_number_format($myrow['qty'],$myrow['decimalplaces']),
@@ -156,6 +160,7 @@ while ($myrow=DB_fetch_array($MovtsResult)) {
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
+				<td>%s</td>
 				<td class="number">%s</td>
 				<td>%s</td>
 				<td class="number">%s</td>
@@ -166,6 +171,7 @@ while ($myrow=DB_fetch_array($MovtsResult)) {
 				$myrow['transno'],
 				$myrow['typename'],
 				$myrow['transno'],
+				$myrow['userid'],
 				$DisplayTranDate,
 				$myrow['debtorno'],
 				$myrow['branchcode'],
@@ -181,6 +187,7 @@ while ($myrow=DB_fetch_array($MovtsResult)) {
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
+				<td>%s</td>
 				<td class="number">%s</td>
 				<td>%s</td>
 				<td class="number">%s</td>
@@ -190,6 +197,7 @@ while ($myrow=DB_fetch_array($MovtsResult)) {
 				$myrow['typename'],
 				$myrow['transno'],
 				$DisplayTranDate,
+				$myrow['userid'],
 				$myrow['debtorno'],
 				$myrow['branchcode'],
 				locale_number_format($myrow['qty'],$myrow['decimalplaces']),
