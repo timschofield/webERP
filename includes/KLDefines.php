@@ -79,7 +79,7 @@ define("STOCK_MOVEMENT_DAYS_FOR_SPG", 90);
 define("PAYMENT_BY_CASH", 2); 
 define("PAYMENT_BY_CREDITCARD", 3); 
 define("PERCENTAGE_SALES_CASH_TO_PT", 10); // % of cash transactions going to cash KL acccounts
-define("PERCENTAGE_COMPENSATION_HPP_PT", 160); // % of HPP to be assigned to PT sales
+define("PERCENTAGE_COMPENSATION_HPP_PT", 165); // % of HPP to be assigned to PT sales
 define("ACCOUNT_COMPENSATION_HPP_PT", "510010050"); 
 
 define("COMISSION_CC_DANAMON",     1.80); // % of Credit card comission paid to Danamon
