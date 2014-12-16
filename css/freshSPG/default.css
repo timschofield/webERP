@@ -89,6 +89,10 @@ td.select {
 td.number {
 	text-align: right;
 }
+td.numberTotal {
+	text-align: right;
+	font-size: 15px;
+}
 div.centre { /* centering buttons / links */
   margin: 0 auto;
   text-align:center;
@@ -98,6 +102,9 @@ input {
 	font-size: 12px;
 }
 input.number{
+	text-align: right;
+}
+input.numberTotal{
 	text-align: right;
 }
 input.image {
@@ -121,6 +128,10 @@ textarea:hover{
 }
 .OddTableRows {
 	background-color: #CAF17C;
+}
+.TotalTableRows {
+	background-color: #72824D;
+	font-size: 20px;
 }
 
 div.error {

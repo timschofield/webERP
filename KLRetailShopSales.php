@@ -569,8 +569,8 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 and !isset($_POST['Proces
 
 	} /* end of loop around items */
 
-	echo '<tr class="EvenTableRows"><td colspan="7" class="number"><b>' . _('Total') . '</b></td>
-				<td class="number">' . number_format(($_SESSION['Items'.$identifier]->total+$TaxTotal),0) . '</td>
+	echo '<tr class="TotalTableRows"><td colspan="7" class="numberTotal"><b>' . _('Total') . '</b></td>
+				<td class="numberTotal">' . number_format(($_SESSION['Items'.$identifier]->total+$TaxTotal),0) . '</td>
 						</tr>
 		</table>';
 	echo '<input type="hidden" name="TaxTotal" value="'.$TaxTotal.'" />';
@@ -804,8 +804,11 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 and !isset($_POST['Proces
 	/////////////////////////////////////////////////
 	// Buttons confirm / recalculate the sale
 	/////////////////////////////////////////////////
-	echo '<br /><div class="centre"><input type="submit" name="Recalculate" value="' . _('Re-Calculate') . '" />
-				<input type="submit" name="ProcessSale" value="' . _('Process The Sale') . '" /></div><hr />';
+	echo '<br /><div class="centre">
+				<input type="submit" name="Recalculate" value="' . _('Re-Calculate') . '" />
+				<input type="submit" name="ProcessSale" value="' . _('Process The Sale') . '" />
+				</div>
+				<hr />';
 
 } # end of if lines
 
@@ -2199,7 +2202,12 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 			}
 		}
 	
-		// if has some comments
+		/************************************************************************************/
+		/*                         PRINT THE CUSTOMER INVOICE                               */
+		/************************************************************************************/
+		
+
+
 		
 		unset($_SESSION['Items'.$identifier]->LineItems);
 		unset($_SESSION['Items'.$identifier]);
@@ -2214,8 +2222,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 }
 /*******************************
  * end of Invoice Processing
- * *****************************
-*/
+ * ******************************/
 
 
 /* Now show the stock item selection search stuff below */
@@ -2233,14 +2240,14 @@ if (!isset($_POST['ProcessSale'])){
 		echo '<input type="hidden" name="CustRef" value="'.$_SESSION['Items'.$identifier]->CustRef.'" />';
 		echo '<input type="hidden" name="Comments" value="'.$_SESSION['Items'.$identifier]->Comments.'" />';
 	}
+	$DefaultQuantityInput = 1;
 	for ($i=1;$i<=LENGHT_OF_LIST_OF_CODES_RETAIL_SHOP_SALES;$i++){
 
 		echo '<tr class="OddTableRow">';
 		/* Do not display column unless customer requires po line number by sales order line*/
 		echo '<td><input type="text" name="part_' . $i . '" size="21" maxlength="20" /></td>
-				<td><input type="text" class="number" name="qty_' . $i . '" size="6" maxlength="6" /></td>
-					<input type="hidden" class="date" name="ItemDue_' . $i . '"
-					value="' . $DefaultDeliveryDate . '" /></tr>';
+				<td><input type="text" class="number" name="qty_' . $i . '" size="6" maxlength="6"value="' . $DefaultQuantityInput . '" /></td>
+					<input type="hidden" class="date" name="ItemDue_' . $i . '"value="' . $DefaultDeliveryDate . '" /></tr>';
 	}
 	echo '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.part_1);}</script>';
 
