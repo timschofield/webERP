@@ -865,7 +865,7 @@ if ($_SESSION['PaymentDetail' . $identifier]->AccountCurrency!=$_SESSION['Paymen
 	}
 	echo '<tr>
 			<td>' . _('Payment Exchange Rate') . ':</td>
-			<td><input class="number" type="text" name="ExRate" maxlength="10" size="12" title="' . _('The exchange rate between the currency of the bank account currency and the currency of the payment') . '" value="' . $_POST['ExRate'] . '" /></td>
+			<td><input class="number" maxlength="12" name="ExRate" size="14" title="' . _('The exchange rate between the currency of the bank account currency and the currency of the payment') . '" type="text" value="' . $_POST['ExRate'] . '" /></td>
 			<td>' . $SuggestedExRateText . ' <i>' . _('The exchange rate between the currency of the bank account currency and the currency of the payment') . '. 1 ' . $_SESSION['PaymentDetail' . $identifier]->AccountCurrency . ' = ? ' . $_SESSION['PaymentDetail' . $identifier]->Currency . '</i></td>
 		</tr>';
 }
@@ -882,7 +882,7 @@ if ($_SESSION['PaymentDetail' . $identifier]->AccountCurrency!=$_SESSION['Compan
 	}
 	echo '<tr>
 			<td>' . _('Functional Exchange Rate') . ':</td>
-			<td><input type="text" name="FunctionalExRate" maxlength="10" size="12" class="number" title="' . _('The exchange rate between the currency of the business (the functional currency) and the currency of the bank account') .  '" value="' . $_POST['FunctionalExRate'] . '" /></td>
+			<td><input class="number" maxlength="12" name="FunctionalExRate" size="14" title="' . _('The exchange rate between the currency of the business (the functional currency) and the currency of the bank account') .  '" type="text" value="' . $_POST['FunctionalExRate'] . '" /></td>
 			<td>' . ' ' . $SuggestedFunctionalExRateText . ' <i>' . _('The exchange rate between the currency of the business (the functional currency) and the currency of the bank account') .  '. 1 ' . $_SESSION['CompanyRecord']['currencydefault'] . ' = ? ' . $_SESSION['PaymentDetail' . $identifier]->AccountCurrency . '</i></td>
 		</tr>';
 }
@@ -1042,15 +1042,15 @@ if ($_SESSION['CompanyRecord']['gllink_creditors']==1 AND $_SESSION['PaymentDeta
 			<td><input type="text" name="Cheque" maxlength="12" size="12" /></td>
 		</tr>';
 
-	if (isset($_POST['GLNarrative'])) { // General Ledger Payment (Different than Bank Account) info to be inserted on gltrans.narrative, varchar(200).
+	if (isset($_POST['GLNarrative'])) {// General Ledger Payment (Different than Bank Account) info to be inserted on gltrans.narrative, varchar(200).
 		echo '<tr>
 				<td>' . _('GL Narrative') . ':</td>
-				<td><input type="text" name="GLNarrative" maxlength="50" size="52" value="' . stripslashes($_POST['GLNarrative']) . '" /></td>
+				<td><input maxlength="200" name="GLNarrative" size="52" type="text" value="' . stripslashes($_POST['GLNarrative']) . '" /></td>
 			</tr>';
 	} else {
 		echo '<tr>
 				<td>' . _('GL Narrative') . ':</td>
-				<td><input type="text" name="GLNarrative" maxlength="50" size="52" /></td>
+				<td><input maxlength="200" name="GLNarrative" size="52" type="text" /></td>
 			</tr>';
 	}
 
