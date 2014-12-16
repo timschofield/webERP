@@ -283,11 +283,12 @@ $MenuItems['stock']['Maintenance']['URL'] = array(	'/Stocks.php',
 													'/ReorderLevelLocation.php');
 
 $MenuItems['manuf']['Transactions']['Caption'] = array(	_('Work Order Entry'),
-														_('Select A Work Order'));
+														_('Select A Work Order')),
+														_('QA Samples and Test Results'));
 
 $MenuItems['manuf']['Transactions']['URL'] = array(	'/WorkOrderEntry.php',
-													'/SelectWorkOrder.php');
-
+													'/SelectWorkOrder.php',
+													'/SelectQASamples.php');
 $MenuItems['manuf']['Reports']['Caption'] = array(	_('Select A Work Order'),
 													_('Costed Bill Of Material Inquiry'),
 													_('Where Used Inquiry'),
@@ -301,7 +302,10 @@ $MenuItems['manuf']['Reports']['Caption'] = array(	_('Select A Work Order'),
 													_('MRP Shortages'),
 													_('MRP Suggested Purchase Orders'),
 													_('MRP Suggested Work Orders'),
-													_('MRP Reschedules Required'));
+													_('MRP Reschedules Required'),
+													_('Print Product Specification'),
+													_('Print Certificate of Analysis'),
+													_('Historical QA Test Results'));
 
 $MenuItems['manuf']['Reports']['URL'] = array(	'/SelectWorkOrder.php',
 												'/BOMInquiry.php',
@@ -316,21 +320,28 @@ $MenuItems['manuf']['Reports']['URL'] = array(	'/SelectWorkOrder.php',
 												'/MRPShortages.php',
 												'/MRPPlannedPurchaseOrders.php',
 												'/MRPPlannedWorkOrders.php',
-												'/MRPReschedules.php');
+												'/MRPReschedules.php',
+												'/PDFProdSpec.php',
+												'/PDFCOA.php',
+												'/HistoricalTestResults.php');
 
 $MenuItems['manuf']['Maintenance']['Caption'] = array(	_('Work Centre'),
 														_('Bills Of Material'),
 														_('Copy a Bill Of Materials Between Items'),
 														_('Master Schedule'),
 														_('Auto Create Master Schedule'),
-														_('MRP Calculation'));
+														_('MRP Calculation'),
+														_('Quality Tests Maintenance'),
+														_('Product Specifications'));
 
 $MenuItems['manuf']['Maintenance']['URL'] = array(	'/WorkCentres.php',
 													'/BOMs.php',
 													'/CopyBOM.php',
 													'/MRPDemands.php',
 													'/MRPCreateDemands.php',
-													'/MRP.php');
+													'/MRP.php',
+													'/QATests.php',
+													'/ProductSpecs.php');
 
 $MenuItems['GL']['Transactions']['Caption'] = array(	_('Bank Account Payments Entry'),
 														_('Bank Account Receipts Entry'),
