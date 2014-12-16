@@ -1,5 +1,6 @@
 webERP Change Log
 
+16/12/14 RChacon: Expand and uniform the accuracy of the exchange rate.
 5/12/14 Exson: Fixed the branch field bug in CustomerReceipt.php. Reported by wertthey.
 29/11/14 RChacon: Add Pan Size explanation (thanks to Exson Qu) and other item maintenance explanations.
 29/11/14 RChacon: Add Pan Size explanation (thanks to Tim Schofield and Pak Ricard).
