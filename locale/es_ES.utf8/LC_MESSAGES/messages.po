@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: webERP 4.11.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-13 13:29-0600\n"
-"PO-Revision-Date: 2014-12-13 13:57-0600\n"
+"POT-Creation-Date: 2014-12-13 15:27-0600\n"
+"PO-Revision-Date: 2014-12-13 15:41-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -452,7 +452,7 @@ msgstr "¿Confirma que desea eliminar este grupo de cuenta?"
 #: BOMs.php:159 BankAccounts.php:242 COGSGLPostings.php:113
 #: COGSGLPostings.php:217 ContractBOM.php:272 ContractOtherReqts.php:124
 #: CounterReturns.php:740 CounterSales.php:836 CreditStatus.php:176
-#: Credit_Invoice.php:412 Currencies.php:365 CustItem.php:167
+#: Credit_Invoice.php:410 Currencies.php:365 CustItem.php:167
 #: CustomerReceipt.php:989 CustomerTypes.php:206 Customers.php:1166
 #: Departments.php:187 DiscountCategories.php:238 DiscountMatrix.php:183
 #: EDIMessageFormat.php:151 FixedAssetCategories.php:191 FreightCosts.php:254
@@ -1172,7 +1172,7 @@ msgstr "no se pudo obtener porque"
 #: ConfirmDispatch_Invoice.php:172 ConfirmDispatch_Invoice.php:1001
 #: ConfirmDispatch_Invoice.php:1015 Contracts.php:592 CounterReturns.php:1024
 #: CounterReturns.php:1038 CounterSales.php:1425 CounterSales.php:1439
-#: Credit_Invoice.php:757 Credit_Invoice.php:778 CustItem.php:73
+#: Credit_Invoice.php:755 Credit_Invoice.php:776 CustItem.php:73
 #: CustItem.php:86 CustItem.php:197 CustomerReceipt.php:574
 #: CustomerReceipt.php:726 CustomerReceipt.php:754 CustomerTransInquiry.php:97
 #: Dashboard.php:259 Dashboard.php:439 DeliveryDetails.php:409
@@ -2387,7 +2387,7 @@ msgid "The SQL used to retrieve description of the parent part was"
 msgstr "El SQL usado para obtener la descripción de la pieza que usa ésta fue"
 
 #: BOMs.php:436 ConfirmDispatch_Invoice.php:1048 CounterReturns.php:1072
-#: CounterSales.php:1472 Credit_Invoice.php:813 Credit_Invoice.php:841
+#: CounterSales.php:1472 Credit_Invoice.php:811 Credit_Invoice.php:839
 #: SelectCreditItems.php:1486 StockClone.php:834 StockClone.php:836
 #: Stocks.php:1137 Stocks.php:1139 api/api_debtortransactions.php:753
 #: api/api_salesorders.php:920 reportwriter/languages/en_US/reports.php:56
@@ -3739,7 +3739,7 @@ msgid ""
 msgstr ""
 
 #: CompanyPreferences.php:468 ConfirmDispatch_Invoice.php:654
-#: ConfirmDispatch_Invoice.php:1700 Credit_Invoice.php:1609 CustItem.php:452
+#: ConfirmDispatch_Invoice.php:1700 Credit_Invoice.php:1607 CustItem.php:452
 #: FixedAssetItems.php:127 FixedAssetItems.php:653 GLBudgets.php:240
 #: GLTags.php:68 GoodsReceived.php:257 GoodsReceived.php:263
 #: GoodsReceived.php:270 GoodsReceived.php:766 ImportBankTransAnalysis.php:154
@@ -4218,12 +4218,12 @@ msgstr ""
 msgid "Please remedy this"
 msgstr "Por favor arreglar eso"
 
-#: ConfirmDispatch_Invoice.php:681 Credit_Invoice.php:538
+#: ConfirmDispatch_Invoice.php:681 Credit_Invoice.php:536
 #: GoodsReceived.php:282
 msgid "The company information and preferences could not be retrieved"
 msgstr "No se pudo obtener la información de la compañía ni la configuración"
 
-#: ConfirmDispatch_Invoice.php:681 Credit_Invoice.php:538
+#: ConfirmDispatch_Invoice.php:681 Credit_Invoice.php:536
 #: GoodsReceived.php:282
 msgid "see your system administrator"
 msgstr "consulte con el administrador del sistema"
@@ -4335,14 +4335,14 @@ msgstr "El SQL utilizada para actualizar la compañía por defecto fue"
 #: CounterSales.php:1570 CounterSales.php:1591 CounterSales.php:1756
 #: CounterSales.php:1778 CounterSales.php:1803 CounterSales.php:1824
 #: CounterSales.php:1850 CounterSales.php:1873 Credit_Invoice.php:208
-#: Credit_Invoice.php:597 Credit_Invoice.php:640 Credit_Invoice.php:657
-#: Credit_Invoice.php:673 Credit_Invoice.php:722 Credit_Invoice.php:735
-#: Credit_Invoice.php:847 Credit_Invoice.php:857 Credit_Invoice.php:932
-#: Credit_Invoice.php:947 Credit_Invoice.php:964 Credit_Invoice.php:974
-#: Credit_Invoice.php:989 Credit_Invoice.php:1032 Credit_Invoice.php:1072
-#: Credit_Invoice.php:1112 Credit_Invoice.php:1134 Credit_Invoice.php:1308
-#: Credit_Invoice.php:1348 Credit_Invoice.php:1375 Credit_Invoice.php:1396
-#: Credit_Invoice.php:1425 Credit_Invoice.php:1451 Credit_Invoice.php:1477
+#: Credit_Invoice.php:595 Credit_Invoice.php:638 Credit_Invoice.php:655
+#: Credit_Invoice.php:671 Credit_Invoice.php:720 Credit_Invoice.php:733
+#: Credit_Invoice.php:845 Credit_Invoice.php:855 Credit_Invoice.php:930
+#: Credit_Invoice.php:945 Credit_Invoice.php:962 Credit_Invoice.php:972
+#: Credit_Invoice.php:987 Credit_Invoice.php:1030 Credit_Invoice.php:1070
+#: Credit_Invoice.php:1110 Credit_Invoice.php:1132 Credit_Invoice.php:1306
+#: Credit_Invoice.php:1346 Credit_Invoice.php:1373 Credit_Invoice.php:1394
+#: Credit_Invoice.php:1423 Credit_Invoice.php:1449 Credit_Invoice.php:1475
 #: GoodsReceived.php:301 GoodsReceived.php:409 GoodsReceived.php:450
 #: GoodsReceived.php:480 GoodsReceived.php:508 GoodsReceived.php:539
 #: GoodsReceived.php:557 GoodsReceived.php:586 GoodsReceived.php:603
@@ -4457,15 +4457,15 @@ msgstr "ERROR CRÍTICO"
 #: CounterSales.php:1438 CounterSales.php:1478 CounterSales.php:1488
 #: CounterSales.php:1570 CounterSales.php:1591 CounterSales.php:1756
 #: CounterSales.php:1778 CounterSales.php:1803 CounterSales.php:1824
-#: CounterSales.php:1850 CounterSales.php:1873 Credit_Invoice.php:597
-#: Credit_Invoice.php:640 Credit_Invoice.php:657 Credit_Invoice.php:673
-#: Credit_Invoice.php:722 Credit_Invoice.php:735 Credit_Invoice.php:847
-#: Credit_Invoice.php:857 Credit_Invoice.php:932 Credit_Invoice.php:947
-#: Credit_Invoice.php:964 Credit_Invoice.php:974 Credit_Invoice.php:989
-#: Credit_Invoice.php:1032 Credit_Invoice.php:1072 Credit_Invoice.php:1112
-#: Credit_Invoice.php:1134 Credit_Invoice.php:1308 Credit_Invoice.php:1348
-#: Credit_Invoice.php:1375 Credit_Invoice.php:1396 Credit_Invoice.php:1425
-#: Credit_Invoice.php:1451 Credit_Invoice.php:1477 GoodsReceived.php:301
+#: CounterSales.php:1850 CounterSales.php:1873 Credit_Invoice.php:595
+#: Credit_Invoice.php:638 Credit_Invoice.php:655 Credit_Invoice.php:671
+#: Credit_Invoice.php:720 Credit_Invoice.php:733 Credit_Invoice.php:845
+#: Credit_Invoice.php:855 Credit_Invoice.php:930 Credit_Invoice.php:945
+#: Credit_Invoice.php:962 Credit_Invoice.php:972 Credit_Invoice.php:987
+#: Credit_Invoice.php:1030 Credit_Invoice.php:1070 Credit_Invoice.php:1110
+#: Credit_Invoice.php:1132 Credit_Invoice.php:1306 Credit_Invoice.php:1346
+#: Credit_Invoice.php:1373 Credit_Invoice.php:1394 Credit_Invoice.php:1423
+#: Credit_Invoice.php:1449 Credit_Invoice.php:1475 GoodsReceived.php:301
 #: GoodsReceived.php:409 GoodsReceived.php:450 GoodsReceived.php:480
 #: GoodsReceived.php:508 GoodsReceived.php:539 GoodsReceived.php:557
 #: GoodsReceived.php:586 GoodsReceived.php:603 GoodsReceived.php:690
@@ -4574,7 +4574,7 @@ msgstr ""
 "Se usó el siguiente SQL para agregar el registro de transacción del deudor"
 
 #: ConfirmDispatch_Invoice.php:834 CounterReturns.php:967
-#: CounterSales.php:1368 Credit_Invoice.php:657
+#: CounterSales.php:1368 Credit_Invoice.php:655
 #: RecurringSalesOrdersProcess.php:694 SelectCreditItems.php:1179
 msgid "The debtor transaction taxes records could not be inserted because"
 msgstr ""
@@ -4582,7 +4582,7 @@ msgstr ""
 "porque"
 
 #: ConfirmDispatch_Invoice.php:835 CounterReturns.php:968
-#: CounterSales.php:1369 Credit_Invoice.php:658
+#: CounterSales.php:1369 Credit_Invoice.php:656
 #: RecurringSalesOrdersProcess.php:695 SelectCreditItems.php:1180
 msgid ""
 "The following SQL to insert the debtor transaction taxes record was used"
@@ -4601,7 +4601,7 @@ msgstr ""
 "No se pudo actualizar el registro de detalle de la orden de venta porque"
 
 #: ConfirmDispatch_Invoice.php:867 ConfirmDispatch_Invoice.php:944
-#: Credit_Invoice.php:723 RecurringSalesOrdersProcess.php:324
+#: Credit_Invoice.php:721 RecurringSalesOrdersProcess.php:324
 msgid "The following SQL to update the sales order detail record was used"
 msgstr ""
 "Se usó el siguiente SQL para actualizar el registro detalle del pedido de "
@@ -4636,12 +4636,12 @@ msgid "Could not retrieve current location stock"
 msgstr "No se pudo obtener las existencias de la ubicación actual"
 
 #: ConfirmDispatch_Invoice.php:982 CounterReturns.php:1004
-#: CounterSales.php:1405 Credit_Invoice.php:735 SelectCreditItems.php:1419
+#: CounterSales.php:1405 Credit_Invoice.php:733 SelectCreditItems.php:1419
 msgid "Location stock record could not be updated because"
 msgstr "No se pudo actualizar el registro de Ubicación del almacén porque"
 
 #: ConfirmDispatch_Invoice.php:983 ContractCosting.php:338
-#: CounterReturns.php:1005 CounterSales.php:1406 Credit_Invoice.php:736
+#: CounterReturns.php:1005 CounterSales.php:1406 Credit_Invoice.php:734
 #: GoodsReceived.php:509 ReverseGRN.php:221 SelectCreditItems.php:1420
 #: StockTransfers.php:434 StockTransfers.php:443 SupplierInvoice.php:276
 #: WorkOrderIssue.php:181 WorkOrderReceive.php:344 WorkOrderReceive.php:451
@@ -4650,13 +4650,13 @@ msgstr ""
 "Para actualizar el registro de Ubicación del almacén, se usó el SQL siguiente"
 
 #: ConfirmDispatch_Invoice.php:1000 CounterReturns.php:1023
-#: CounterSales.php:1424 Credit_Invoice.php:756 SelectCreditItems.php:1440
+#: CounterSales.php:1424 Credit_Invoice.php:754 SelectCreditItems.php:1440
 msgid "Could not retrieve assembly components from the database for"
 msgstr ""
 "No se pudo recuperar los componentes del montaje de la base de datos para"
 
 #: ConfirmDispatch_Invoice.php:1000 CounterReturns.php:1023
-#: CounterSales.php:1424 Credit_Invoice.php:756 EDIMessageFormat.php:43
+#: CounterSales.php:1424 Credit_Invoice.php:754 EDIMessageFormat.php:43
 #: EDISendInvoices.php:105 EDISendInvoices_Reece.php:185
 #: FixedAssetCategories.php:94 FixedAssetCategories.php:113
 #: PricesBasedOnMarkUp.php:340 PricesBasedOnMarkUp.php:356
@@ -4690,13 +4690,13 @@ msgid "Order"
 msgstr "Pedidos"
 
 #: ConfirmDispatch_Invoice.php:1054 CounterReturns.php:1078
-#: CounterSales.php:1478 Credit_Invoice.php:847 SelectCreditItems.php:1493
+#: CounterSales.php:1478 Credit_Invoice.php:845 SelectCreditItems.php:1493
 msgid "Stock movement records for the assembly components of"
 msgstr ""
 "Registro de movimientos de inventario para los componentes del montaje de"
 
 #: ConfirmDispatch_Invoice.php:1054 CounterReturns.php:1078
-#: CounterSales.php:1478 Credit_Invoice.php:847 SelectCreditItems.php:1493
+#: CounterSales.php:1478 Credit_Invoice.php:845 SelectCreditItems.php:1493
 #: ShipmentCosting.php:397 SupplierAllocations.php:139
 #: includes/PDFPaymentRun_PymtFooter.php:57
 #: includes/PDFPaymentRun_PymtFooter.php:88
@@ -4708,7 +4708,7 @@ msgid "could not be inserted because"
 msgstr "no se pudo agregar porque"
 
 #: ConfirmDispatch_Invoice.php:1055 CounterReturns.php:1079
-#: CounterSales.php:1479 Credit_Invoice.php:848 SelectCreditItems.php:1494
+#: CounterSales.php:1479 Credit_Invoice.php:846 SelectCreditItems.php:1494
 msgid ""
 "The following SQL to insert the assembly components stock movement records "
 "was used"
@@ -4717,7 +4717,7 @@ msgstr ""
 "existencias de componentes de ensamblados"
 
 #: ConfirmDispatch_Invoice.php:1064 CounterReturns.php:1088
-#: CounterSales.php:1488 Credit_Invoice.php:857 SelectCreditItems.php:1503
+#: CounterSales.php:1488 Credit_Invoice.php:855 SelectCreditItems.php:1503
 msgid ""
 "Location stock record could not be updated for an assembly component because"
 msgstr ""
@@ -4734,16 +4734,16 @@ msgstr ""
 "ubicaciones del componente"
 
 #: ConfirmDispatch_Invoice.php:1148 CounterReturns.php:1168
-#: CounterSales.php:1570 Credit_Invoice.php:932 Credit_Invoice.php:1032
-#: Credit_Invoice.php:1072 Credit_Invoice.php:1112
+#: CounterSales.php:1570 Credit_Invoice.php:930 Credit_Invoice.php:1030
+#: Credit_Invoice.php:1070 Credit_Invoice.php:1110
 #: RecurringSalesOrdersProcess.php:363 ReverseGRN.php:249
 #: SelectCreditItems.php:1246 SelectCreditItems.php:1317
 msgid "Stock movement records could not be inserted because"
 msgstr "No se pudo agregar los registros de movimiento de existencias porque"
 
 #: ConfirmDispatch_Invoice.php:1149 ContractCosting.php:367
-#: CounterReturns.php:1169 CounterSales.php:1571 Credit_Invoice.php:933
-#: Credit_Invoice.php:1033 Credit_Invoice.php:1073 GoodsReceived.php:540
+#: CounterReturns.php:1169 CounterSales.php:1571 Credit_Invoice.php:931
+#: Credit_Invoice.php:1031 Credit_Invoice.php:1071 GoodsReceived.php:540
 #: RecurringSalesOrdersProcess.php:364 ReverseGRN.php:250
 #: SelectCreditItems.php:1318 SupplierInvoice.php:307 WorkOrderIssue.php:212
 #: WorkOrderReceive.php:373 WorkOrderReceive.php:481
@@ -4762,7 +4762,7 @@ msgstr ""
 "de la factura porque"
 
 #: ConfirmDispatch_Invoice.php:1170 CounterReturns.php:1190
-#: CounterSales.php:1592 Credit_Invoice.php:1135
+#: CounterSales.php:1592 Credit_Invoice.php:1133
 #: RecurringSalesOrdersProcess.php:385 SelectCreditItems.php:1339
 msgid ""
 "The following SQL to insert the stock movement tax detail records was used"
@@ -4770,16 +4770,16 @@ msgstr ""
 "Se usó el siguiente SQL para agregar los registros de detalle de impuestos "
 "de movimiento de existencias"
 
-#: ConfirmDispatch_Invoice.php:1186 Credit_Invoice.php:964
-#: Credit_Invoice.php:974 SelectCreditItems.php:1383 StockAdjustments.php:265
+#: ConfirmDispatch_Invoice.php:1186 Credit_Invoice.php:962
+#: Credit_Invoice.php:972 SelectCreditItems.php:1383 StockAdjustments.php:265
 #: StockAdjustments.php:283 StockLocTransferReceive.php:141
 #: StockTransfers.php:274 StockTransfers.php:387
 msgid "The serial stock item record could not be updated because"
 msgstr ""
 "No se pudo actualizar el registro del artículo de existencias seriado porque"
 
-#: ConfirmDispatch_Invoice.php:1187 Credit_Invoice.php:965
-#: Credit_Invoice.php:975 SelectCreditItems.php:1384
+#: ConfirmDispatch_Invoice.php:1187 Credit_Invoice.php:963
+#: Credit_Invoice.php:973 SelectCreditItems.php:1384
 #: SelectCreditItems.php:1608 StockAdjustments.php:266
 #: StockAdjustments.php:284 StockLocTransferReceive.php:142
 #: StockLocTransferReceive.php:156 StockLocTransferReceive.php:256
@@ -4790,7 +4790,7 @@ msgstr ""
 "Se usó el siguiente SQL para actualizar el registro del artículo de "
 "existencias seriado"
 
-#: ConfirmDispatch_Invoice.php:1201 Credit_Invoice.php:989
+#: ConfirmDispatch_Invoice.php:1201 Credit_Invoice.php:987
 #: GoodsReceived.php:603 SelectCreditItems.php:1398 StockAdjustments.php:299
 #: StockLocTransferReceive.php:174 StockLocTransferReceive.php:286
 #: StockTransfers.php:310 StockTransfers.php:421 WorkOrderIssue.php:248
@@ -4799,7 +4799,7 @@ msgid "The serial stock movement record could not be inserted because"
 msgstr ""
 "No se pudo agregar el registro de movimiento de existencias seriadas porque"
 
-#: ConfirmDispatch_Invoice.php:1202 Credit_Invoice.php:990
+#: ConfirmDispatch_Invoice.php:1202 Credit_Invoice.php:988
 #: GoodsReceived.php:604 StockAdjustments.php:300
 #: StockLocTransferReceive.php:175 StockLocTransferReceive.php:287
 #: StockTransfers.php:311 StockTransfers.php:422 WorkOrderIssue.php:249
@@ -4818,7 +4818,7 @@ msgstr ""
 "Ventas porque"
 
 #: ConfirmDispatch_Invoice.php:1247 CounterReturns.php:1235
-#: CounterSales.php:1674 Credit_Invoice.php:1166
+#: CounterSales.php:1674 Credit_Invoice.php:1164
 #: RecurringSalesOrdersProcess.php:424 SelectCreditItems.php:1666
 #: api/api_salesorders.php:1027
 msgid "SQL to count the no of sales analysis records"
@@ -4831,14 +4831,14 @@ msgstr ""
 "No se pudo agregar ó actualizar el registro de análisis de ventas porque"
 
 #: ConfirmDispatch_Invoice.php:1303 CounterReturns.php:1293
-#: CounterSales.php:1732 Credit_Invoice.php:1278
+#: CounterSales.php:1732 Credit_Invoice.php:1276
 #: RecurringSalesOrdersProcess.php:483 SelectCreditItems.php:1776
 msgid "The following SQL to insert the sales analysis record was used"
 msgstr ""
 "Se usó el siguiente SQL para agregar el registro del análisis de ventas"
 
 #: ConfirmDispatch_Invoice.php:1328 CounterReturns.php:1317
-#: CounterSales.php:1756 Credit_Invoice.php:1308
+#: CounterSales.php:1756 Credit_Invoice.php:1306
 msgid "The cost of sales GL posting could not be inserted because"
 msgstr "No se pudo agregar el registro contable de costo de ventas porque"
 
@@ -4851,9 +4851,9 @@ msgstr "No se pudo agregar el registro contable de costo de ventas porque"
 #: CounterReturns.php:1340 CounterReturns.php:1365 CounterReturns.php:1386
 #: CounterReturns.php:1435 CounterSales.php:1757 CounterSales.php:1779
 #: CounterSales.php:1804 CounterSales.php:1825 CounterSales.php:1874
-#: Credit_Invoice.php:1309 Credit_Invoice.php:1349 Credit_Invoice.php:1376
-#: Credit_Invoice.php:1397 Credit_Invoice.php:1426 Credit_Invoice.php:1452
-#: Credit_Invoice.php:1478 RecurringSalesOrdersProcess.php:511
+#: Credit_Invoice.php:1307 Credit_Invoice.php:1347 Credit_Invoice.php:1374
+#: Credit_Invoice.php:1395 Credit_Invoice.php:1424 Credit_Invoice.php:1450
+#: Credit_Invoice.php:1476 RecurringSalesOrdersProcess.php:511
 #: RecurringSalesOrdersProcess.php:538 RecurringSalesOrdersProcess.php:631
 #: SelectCreditItems.php:1810 SelectCreditItems.php:1836
 #: SelectCreditItems.php:1859 SelectCreditItems.php:1890
@@ -4981,7 +4981,7 @@ msgid "The freight GL posting could not be inserted because"
 msgstr "No se pudo agregar el registro contable de transporte porque"
 
 #: ConfirmDispatch_Invoice.php:1625 CounterReturns.php:1434
-#: CounterSales.php:1873 Credit_Invoice.php:1477
+#: CounterSales.php:1873 Credit_Invoice.php:1475
 #: RecurringSalesOrdersProcess.php:577 SelectCreditItems.php:1981
 msgid "The tax GL posting could not be inserted because"
 msgstr "No se pudo agregar el registro contable de impuestos porque"
@@ -6526,7 +6526,7 @@ msgstr "Se requiere un número de teléfono para las devoluciones en mostrador"
 msgid "Contact Email"
 msgstr "Correo electrónico del contacto"
 
-#: CounterReturns.php:787 CounterSales.php:884 Credit_Invoice.php:1582
+#: CounterReturns.php:787 CounterSales.php:884 Credit_Invoice.php:1580
 #: DeliveryDetails.php:1117 SelectCreditItems.php:924
 msgid "Sales person"
 msgstr "Vendedor"
@@ -6645,12 +6645,12 @@ msgstr ""
 "No se puede insertar la asignación de clientes de la recepción de la factura "
 "porque"
 
-#: CounterReturns.php:1596 Credit_Invoice.php:1493 SelectCreditItems.php:1996
+#: CounterReturns.php:1596 Credit_Invoice.php:1491 SelectCreditItems.php:1996
 msgid "Credit Note number"
 msgstr "abono No."
 
-#: CounterReturns.php:1601 CounterReturns.php:1603 Credit_Invoice.php:1495
-#: Credit_Invoice.php:1497
+#: CounterReturns.php:1601 CounterReturns.php:1603 Credit_Invoice.php:1493
+#: Credit_Invoice.php:1495
 msgid "Print this credit note"
 msgstr "Imprimir esta nota de crédito"
 
@@ -7080,7 +7080,7 @@ msgstr ""
 #: CounterSales.php:2092 CounterSales.php:2093 SelectOrderItems.php:1443
 #: SelectOrderItems.php:1446 SystemParameters.php:429
 msgid "Frequently Ordered Items"
-msgstr "Artículos Pedidos Frecuentemente"
+msgstr "Artículos pedidos frecuentemente"
 
 #: CounterSales.php:2093 SelectOrderItems.php:1446
 msgid ""
@@ -7219,7 +7219,7 @@ msgstr "Se eliminó este código de estado de crédito"
 
 #: CreditStatus.php:151 CreditStatus.php:223 CreditStatus.php:234
 msgid "Status Code"
-msgstr "Código del Estado de Crédito"
+msgstr "Código de estado"
 
 #: CreditStatus.php:153 CreditStatus.php:248
 msgid "Disallow Invoices"
@@ -7352,7 +7352,7 @@ msgstr "Facturado"
 #: GLJournal.php:361 GLJournal.php:390 GLJournal.php:444
 #: SuppCreditGRNs.php:294
 msgid "Credit"
-msgstr "Haber"
+msgstr "Crédito"
 
 #: Credit_Invoice.php:298 DiscountMatrix.php:136 DiscountMatrix.php:164
 msgid "Discount Rate"
@@ -7367,7 +7367,7 @@ msgstr "Tasa impositiva"
 #: includes/PDFQuotationPortraitPageHeader.inc:99
 #: includes/PDFSuppTransListingPageHeader.inc:52
 msgid "Tax Amount"
-msgstr "Impuestos"
+msgstr "Monto de impuestos"
 
 #: Credit_Invoice.php:352
 msgid "Enter the quantity of this item to credit"
@@ -7377,34 +7377,34 @@ msgstr ""
 msgid "Enter the price at which to credit this item"
 msgstr "Introduzca el precio al cual acreditar este artículo"
 
-#: Credit_Invoice.php:412
+#: Credit_Invoice.php:410
 msgid "Are you sure you wish to delete this item from the credit?"
 msgstr "¿Está seguro de que quiere borrar este artículo del crédito?"
 
-#: Credit_Invoice.php:430
+#: Credit_Invoice.php:428
 msgid "Freight cost charged on invoice"
 msgstr "Costo de flete cargado en la factura"
 
-#: Credit_Invoice.php:433
+#: Credit_Invoice.php:431
 msgid "Credit Freight Cost"
 msgstr "Costo transporte credito"
 
-#: Credit_Invoice.php:481 SelectCreditItems.php:843
+#: Credit_Invoice.php:479 SelectCreditItems.php:843
 msgid "Credit Totals"
 msgstr "Total Créditos"
 
-#: Credit_Invoice.php:501
+#: Credit_Invoice.php:499
 msgid ""
 "Failed to retrieve salesoderdetails to compare if the order has been "
 "invoiced and that it is possible that the credit note may not already have "
 "been done"
 msgstr ""
 
-#: Credit_Invoice.php:505
+#: Credit_Invoice.php:503
 msgid "The credit quantity for the line for"
 msgstr ""
 
-#: Credit_Invoice.php:516 SelectCreditItems.php:952
+#: Credit_Invoice.php:514 SelectCreditItems.php:952
 msgid ""
 "The GL code to write off the credit value to must be specified. Please "
 "select the appropriate GL code for the selection box"
@@ -7412,7 +7412,7 @@ msgstr ""
 "Debe indicar el código de la cuenta a la que apuntar el valor del crédito. "
 "Seleccione el código de cuenta apropiado."
 
-#: Credit_Invoice.php:597
+#: Credit_Invoice.php:595
 msgid ""
 "The alteration to the invoice record to reflect the allocation of the credit "
 "note to the invoice could not be done because"
@@ -7420,11 +7420,11 @@ msgstr ""
 "La modificación del registro de la factura para reflejar la asignación de la "
 "nota de crédito a la factura no se pudo hacer, porque"
 
-#: Credit_Invoice.php:598
+#: Credit_Invoice.php:596
 msgid "The following SQL to update the invoice allocation was used"
 msgstr "Se usó el siguiente SQL para actualizar la asignación de la factura"
 
-#: Credit_Invoice.php:640 SelectCreditItems.php:1162
+#: Credit_Invoice.php:638 SelectCreditItems.php:1162
 msgid ""
 "The customer credit note transaction could not be added to the database "
 "because"
@@ -7432,12 +7432,12 @@ msgstr ""
 "No se pudo agregar la transacción de nota de crédito del cliente a la base "
 "de datos porque"
 
-#: Credit_Invoice.php:641 SelectCreditItems.php:1101
+#: Credit_Invoice.php:639 SelectCreditItems.php:1101
 #: SelectCreditItems.php:1163
 msgid "The following SQL to insert the customer credit note was used"
 msgstr "Se usó el siguiente SQL para agregar la nota de crédito del cliente"
 
-#: Credit_Invoice.php:673
+#: Credit_Invoice.php:671
 msgid ""
 "The allocation record for the credit note could not be added to the database "
 "because"
@@ -7445,7 +7445,7 @@ msgstr ""
 "No se pudo agregar el registro de asignación para la nota de crédito a la "
 "base de datos porque"
 
-#: Credit_Invoice.php:674
+#: Credit_Invoice.php:672
 msgid ""
 "The following SQL to insert the allocation record for the credit note was "
 "used"
@@ -7453,7 +7453,7 @@ msgstr ""
 "Se usó el siguiente SQL para agregar el registro de asignación para la nota "
 "de crédito"
 
-#: Credit_Invoice.php:722
+#: Credit_Invoice.php:720
 msgid ""
 "The sales order detail record could not be updated for the reduced quantity "
 "invoiced because"
@@ -7461,40 +7461,40 @@ msgstr ""
 "El registro de detalle del pedido de ventas no se pudo actualizar para la "
 "cantidad reducida facturada, porque"
 
-#: Credit_Invoice.php:778
+#: Credit_Invoice.php:776
 msgid "Could not get the current location stock of the assembly component"
 msgstr ""
 "No se pudo obtener la existencia de la ubicación actual del componente del "
 "ensamblaje"
 
-#: Credit_Invoice.php:813 Credit_Invoice.php:841 Credit_Invoice.php:894
-#: Credit_Invoice.php:925 Credit_Invoice.php:1025 Credit_Invoice.php:1103
+#: Credit_Invoice.php:811 Credit_Invoice.php:839 Credit_Invoice.php:892
+#: Credit_Invoice.php:923 Credit_Invoice.php:1023 Credit_Invoice.php:1101
 msgid "Ex Inv"
 msgstr "Ex Inv"
 
-#: Credit_Invoice.php:858
+#: Credit_Invoice.php:856
 msgid ""
 "The following SQL to update the components location stock record was used"
 msgstr ""
 "Se usó el siguiente SQL para actualizar el registro de existencias de la "
 "ubicación de los componentes"
 
-#: Credit_Invoice.php:947
+#: Credit_Invoice.php:945
 msgid "The serial stock item record could not be selected because"
 msgstr ""
 "No se pudo seleccionar el registro del artículo de existencias seriado porque"
 
-#: Credit_Invoice.php:948
+#: Credit_Invoice.php:946
 msgid "The following SQL to select the serial stock item record was used"
 msgstr ""
 "Se usó el siguiente SQL para seleccionar el registro del artículo de "
 "existencias seriado"
 
-#: Credit_Invoice.php:1064
+#: Credit_Invoice.php:1062
 msgid "Written off ex Inv"
 msgstr "Escrito ex Inv"
 
-#: Credit_Invoice.php:1113 SelectCreditItems.php:1247
+#: Credit_Invoice.php:1111 SelectCreditItems.php:1247
 msgid ""
 "The following SQL to insert the stock movement records for the purpose of "
 "display on the credit note was used"
@@ -7502,7 +7502,7 @@ msgstr ""
 "Se usó el siguiente SQL para agregar los registros de movimiento de "
 "existencias con el propósito de mostrarlos en la nota de crédito"
 
-#: Credit_Invoice.php:1134 SelectCreditItems.php:1338
+#: Credit_Invoice.php:1132 SelectCreditItems.php:1338
 msgid ""
 "Taxes and rates applicable to this credit note line item could not be "
 "inserted because"
@@ -7510,21 +7510,21 @@ msgstr ""
 "No se pudo agregar los Impuestos y Tasas aplicables a esta fila de la nota "
 "de crédito porque"
 
-#: Credit_Invoice.php:1165 SelectCreditItems.php:1665
+#: Credit_Invoice.php:1163 SelectCreditItems.php:1665
 msgid ""
 "The count to check for existing Sales analysis records could not run because"
 msgstr ""
 "No se pudo procesar el cómputo para comprobar registros existentes de "
 "análisis de Ventas porque"
 
-#: Credit_Invoice.php:1277 SelectCreditItems.php:1775
+#: Credit_Invoice.php:1275 SelectCreditItems.php:1775
 msgid ""
 "The sales analysis record for this credit note could not be added because"
 msgstr ""
 "No se pudo agregar el registro de análisis de ventas de esta nota de crédito "
 "porque"
 
-#: Credit_Invoice.php:1348
+#: Credit_Invoice.php:1346
 msgid ""
 "The stock side or write off of the cost of sales GL posting could not be "
 "inserted because"
@@ -7532,67 +7532,67 @@ msgstr ""
 "No se pudo agregar el registro contable del costo de ventas por la parte de "
 "existencias o su propio registro porque"
 
-#: Credit_Invoice.php:1375 SelectCreditItems.php:1889
+#: Credit_Invoice.php:1373 SelectCreditItems.php:1889
 msgid "The credit note GL posting could not be inserted because"
 msgstr "No se pudo agregar el registro contable de la nota de crédito porque"
 
-#: Credit_Invoice.php:1396 SelectCreditItems.php:1912
+#: Credit_Invoice.php:1394 SelectCreditItems.php:1912
 msgid "The credit note discount GL posting could not be inserted because"
 msgstr ""
 "No se pudo agregar el registro contable del descuento de la nota de crédito "
 "porque"
 
-#: Credit_Invoice.php:1425 SelectCreditItems.php:1940
+#: Credit_Invoice.php:1423 SelectCreditItems.php:1940
 msgid ""
 "The total debtor GL posting for the credit note could not be inserted because"
 msgstr ""
 "No se pudo agregar el registro contable de total deudor de la nota de "
 "crédito porque"
 
-#: Credit_Invoice.php:1451 SelectCreditItems.php:1960
+#: Credit_Invoice.php:1449 SelectCreditItems.php:1960
 msgid ""
 "The freight GL posting for this credit note could not be inserted because"
 msgstr ""
 "No se pudo agregar el registro contable de transporte de la nota de crédito "
 "porque"
 
-#: Credit_Invoice.php:1493 GoodsReceived.php:741 SupplierCredit.php:1329
+#: Credit_Invoice.php:1491 GoodsReceived.php:741 SupplierCredit.php:1329
 #: SupplierInvoice.php:1881 WorkOrderIssue.php:374 WorkOrderReceive.php:736
 #: Z_BottomUpCosts.php:33
 msgid "has been processed"
 msgstr "ha sido procesada"
 
-#: Credit_Invoice.php:1508 SelectCreditItems.php:856
+#: Credit_Invoice.php:1506 SelectCreditItems.php:856
 msgid "Credit Note Type"
 msgstr "Tipo de Abono"
 
-#: Credit_Invoice.php:1512 Credit_Invoice.php:1517 Credit_Invoice.php:1521
+#: Credit_Invoice.php:1510 Credit_Invoice.php:1515 Credit_Invoice.php:1519
 #: SelectCreditItems.php:860 SelectCreditItems.php:865
 msgid "Goods returned to store"
 msgstr "Productos devueltos al almacén"
 
-#: Credit_Invoice.php:1513 Credit_Invoice.php:1516 Credit_Invoice.php:1520
+#: Credit_Invoice.php:1511 Credit_Invoice.php:1514 Credit_Invoice.php:1518
 #: SelectCreditItems.php:861 SelectCreditItems.php:864
 msgid "Goods written off"
 msgstr "Productos anulados"
 
-#: Credit_Invoice.php:1514 Credit_Invoice.php:1518 Credit_Invoice.php:1522
+#: Credit_Invoice.php:1512 Credit_Invoice.php:1516 Credit_Invoice.php:1520
 msgid "Reverse overcharge"
 msgstr "Sobrecarga Inversa"
 
-#: Credit_Invoice.php:1533
+#: Credit_Invoice.php:1531
 msgid "Goods returned to location"
 msgstr "Productos devueltos a ubicación"
 
-#: Credit_Invoice.php:1556 SelectCreditItems.php:902
+#: Credit_Invoice.php:1554 SelectCreditItems.php:902
 msgid "Write off the cost of the goods to"
 msgstr "Cancelar el costo de los productos para"
 
-#: Credit_Invoice.php:1603
+#: Credit_Invoice.php:1601
 msgid "Credit note text"
 msgstr "Texto de la nota de crédito"
 
-#: Credit_Invoice.php:1615
+#: Credit_Invoice.php:1613
 msgid "Process Credit"
 msgstr "Procesar crédito"
 
@@ -45182,7 +45182,7 @@ msgstr ""
 
 #: includes/PDFWOPageHeader.inc:46
 msgid "Required Qty"
-msgstr ""
+msgstr "Cantidad requerida"
 
 #: includes/PDFWOPageHeader.inc:48
 msgid "Packing Qty"
@@ -48304,7 +48304,7 @@ msgstr "Opciones de Exportación de Datos"
 
 #: includes/MainMenuLinksArray.php:572
 msgid "Import Customers from .csv file"
-msgstr ""
+msgstr "Importar clientes de un archivo CSV"
 
 #: includes/MainMenuLinksArray.php:573
 msgid "Import Stock Items from .csv file"
@@ -49212,7 +49212,7 @@ msgstr ""
 
 #: reportwriter/languages/en_US/reports.php:149
 msgid "Import"
-msgstr ""
+msgstr "Importar"
 
 #: reportwriter/languages/en_US/reports.php:150
 msgid "Page Setup"
@@ -49220,19 +49220,19 @@ msgstr ""
 
 #: reportwriter/languages/en_US/reports.php:151
 msgid "Properties"
-msgstr ""
+msgstr "Propiedades"
 
 #: reportwriter/languages/en_US/reports.php:152
 msgid "Replace"
-msgstr ""
+msgstr "Reemplazar"
 
 #: reportwriter/languages/en_US/reports.php:154
 msgid "Rename"
-msgstr ""
+msgstr "Renombrar"
 
 #: reportwriter/languages/en_US/reports.php:155
 msgid "Save"
-msgstr ""
+msgstr "Guardar"
 
 #: reportwriter/languages/en_US/reports.php:159
 msgid "Report Filters: "
