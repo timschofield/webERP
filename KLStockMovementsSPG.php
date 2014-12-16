@@ -99,7 +99,7 @@ while ($myrow=DB_fetch_array($MovtsResult)) {
 				$myrow['userid'],
 				$InvoiceLink,
 				$myrow['transno'],
-				$myrow['reference'],
+				'',
 				locale_number_format($myrow['qty'],$myrow['decimalplaces']),
 				locale_number_format($myrow['newqoh'],$myrow['decimalplaces']));
 
@@ -119,7 +119,7 @@ while ($myrow=DB_fetch_array($MovtsResult)) {
 				$myrow['transno'],
 				$myrow['typename'],
 				$myrow['transno'],
-				$myrow['reference'],
+				'',
 				locale_number_format($myrow['qty'],$myrow['decimalplaces']),
 				locale_number_format($myrow['newqoh'],$myrow['decimalplaces']));
 	} else {

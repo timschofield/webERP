@@ -711,7 +711,7 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 			} elseif (DB_num_rows($result)==1) {
 
 				$myrow = DB_fetch_array($result);
-				/* Then there's an invoice (or credit note) to print. So print out the invoice header and GST Number from the company record */
+				/* Then there's an invoice (or credit note) to print. So print out the invoice header and PPN Number from the company record */
 				if (count($_SESSION['AllowedPageSecurityTokens'])==1
                      AND in_array(1, $_SESSION['AllowedPageSecurityTokens'])
                      AND $myrow['debtorno'] != $_SESSION['CustomerID']){
@@ -728,11 +728,11 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 						<td style="background-color:#BBBBBB">';
 
 				if ($InvOrCredit=='Invoice') {
-				   echo '<h2>' . _('TAX INVOICE') . ' ';
+				   echo '<h2>' . _('INVOICE') . ' ';
 				} else {
-				   echo '<h2 style="color:red">' . _('TAX CREDIT NOTE') . ' ';
+				   echo '<h2 style="color:red">' . _('CREDIT NOTE') . ' ';
 				}
-				echo _('Number') . ' ' . $FromTransNo . '</h2><br />' . _('Tax Authority Ref') . '. ' . $_SESSION['CompanyRecord']['gstno'] . '</td>
+				echo _('Number') . ' ' . $FromTransNo . '</h2><br />' . _('NPWP Number') . '. ' . $_SESSION['CompanyRecord']['gstno'] . '</td>
 					</tr>
 					</table>';
 
@@ -805,13 +805,13 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 
 				   echo '<table class="table1">
 				   		<tr>
-							<td align="left" style="background-color:#BBBBBB"><b>' . _('Your Order Ref') . '</b></td>
+							<td align="left" style="background-color:#BBBBBB"><b>' . _('Yellow Invoice#') . '</b></td>
 							<td align="left" style="background-color:#BBBBBB"><b>' . _('Our Order No') . '</b></td>
 							<td align="left" style="background-color:#BBBBBB"><b>' . _('Order Date') . '</b></td>
 							<td align="left" style="background-color:#BBBBBB"><b>' . _('Invoice Date') . '</b></td>
-							<td align="left" style="background-color:#BBBBBB"><b>' . _('Sales Person') . '</b></td>
+							<td align="left" style="background-color:#BBBBBB"><b>' . _('SPG') . '</b></td>
 							<td align="left" style="background-color:#BBBBBB"><b>' . _('Shipper') . '</b></td>
-							<td align="left" style="background-color:#BBBBBB"><b>' . _('Consignment Ref') . '</b></td>
+							<td align="left" style="background-color:#BBBBBB"><b>' . _('Tracking #') . '</b></td>
 						</tr>';
 				   	echo '<tr>
 							<td style="background-color:#EEEEEE">' . $myrow['customerref'] . '</td>
@@ -961,11 +961,11 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 									<td style="background-color:#BBBBBB">';
 
 						   if ($InvOrCredit=='Invoice') {
-							    echo '<h2>' . _('TAX INVOICE') . ' ';
+							    echo '<h2>' . _('INVOICE') . ' ';
 						   } else {
-							    echo '<h2 style="color:red">' . _('TAX CREDIT NOTE') . ' ';
+							    echo '<h2 style="color:red">' . _('CREDIT NOTE') . ' ';
 						   }
-						   echo _('Number') . ' ' . $FromTransNo . '</h2><br />' . _('GST Number') . ' - ' . $_SESSION['CompanyRecord']['gstno'] . '</td></tr></table>';
+						   echo _('Number') . ' ' . $FromTransNo . '</h2><br />' . _('PPN Number') . ' - ' . $_SESSION['CompanyRecord']['gstno'] . '</td></tr></table>';
 
 						/*Now print out company name and address */
 						    echo '<table class="table1"><tr>
@@ -1010,11 +1010,11 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 							<td style="background-color:#BBBBBB">';
 
 					if ($InvOrCredit=='Invoice') {
-					      echo '<h2>' . _('TAX INVOICE') .' ';
+					      echo '<h2>' . _('INVOICE') .' ';
 					} else {
-					      echo '<h2 style="color:red">' . _('TAX CREDIT NOTE') . ' ';
+					      echo '<h2 style="color:red">' . _('CREDIT NOTE') . ' ';
 					}
-					echo _('Number') . ' ' . $FromTransNo . '</h2><br />' . _('GST Number') . ' - ' . $_SESSION['CompanyRecord']['gstno'] . '</td></tr><table>';
+					echo _('Number') . ' ' . $FromTransNo . '</h2><br />' . _('PPN Number') . ' - ' . $_SESSION['CompanyRecord']['gstno'] . '</td></tr><table>';
 
 					/* Print out the logo and company name and address */
 					echo '<table class="table1">
