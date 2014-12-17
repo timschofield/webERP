@@ -43,8 +43,8 @@ SPGPerformanceByShop("RETAILPU", 30, 60, 90, $db);
 SPGPerformanceByShop("RETAILJC", 30, 60, 90, $db);
 
 if ($KL_SystemAdmin){
-	YearDifferenceSales("SPG", 30, $db);
-	YearDifferenceSales("SPG", 90, $db);
+//	YearDifferenceSales("SPG", 30, $db);
+//	YearDifferenceSales("SPG", 90, $db);
 }
 
 if ($KL_SystemAdmin){
