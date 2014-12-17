@@ -5,17 +5,19 @@ INSERT INTO scripts (`script` ,`pagesecurity` ,`description` ) VALUES ('Customer
 INSERT INTO  `scripts` VALUES ('UserLocations.php',  '15',  'Location User Maintenance');
 ALTER TABLE  `stockmoves` ADD  `userid` VARCHAR( 20 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL AFTER  `trandate`;
 
-INSERT INTO `scripts` ( `script` , `pagesecurity` , `description` ) VALUES ('QATests.php', '16', 'Quality Test Maintenance');
-INSERT INTO `scripts` ( `script` , `pagesecurity` , `description` ) VALUES ('ProductSpecs.php', '16', 'Product Specification Maintenance');
-INSERT INTO `scripts` ( `script` , `pagesecurity` , `description` ) VALUES ('TestPlanResults.php', '16', 'Test Plan Results Entry');
-INSERT INTO `scripts` ( `script` , `pagesecurity` , `description` ) VALUES ('PDFProdSpec.php', '0', 'PDF OF Product Specification');
-INSERT INTO `scripts` ( `script` , `pagesecurity` , `description` ) VALUES ('PDFCOA.php', '0', 'PDF of COA');
-INSERT INTO `scripts` ( `script` , `pagesecurity` , `description` ) VALUES ('PDFTestPlan.php', '16', 'PDF of Test Plan');
-INSERT INTO `scripts` ( `script` , `pagesecurity` , `description` ) VALUES ('SelectQASamples.php', '16', 'Select  QA Samples');
-INSERT INTO `scripts` ( `script` , `pagesecurity` , `description` ) VALUES ('HistoricalTestResults.php', '16', 'Historical Test Results')
+INSERT INTO  `securitytokens` VALUES ('16', 'QA');
+
+INSERT INTO `scripts`  VALUES ('QATests.php', '16', 'Quality Test Maintenance');
+INSERT INTO `scripts`  VALUES ('ProductSpecs.php', '16', 'Product Specification Maintenance');
+INSERT INTO `scripts`  VALUES ('TestPlanResults.php', '16', 'Test Plan Results Entry');
+INSERT INTO `scripts`  VALUES ('PDFProdSpec.php', '0', 'PDF OF Product Specification');
+INSERT INTO `scripts`  VALUES ('PDFCOA.php', '0', 'PDF of COA');
+INSERT INTO `scripts`  VALUES ('PDFTestPlan.php', '16', 'PDF of Test Plan');
+INSERT INTO `scripts`  VALUES ('SelectQASamples.php', '16', 'Select  QA Samples');
+INSERT INTO `scripts`  VALUES ('HistoricalTestResults.php', '16', 'Historical Test Results');
 
 
-INSERT INTO `config` (`confname` ,`confvalue` )VALUES ('QualityLogSamples', '0');
+INSERT INTO `config` (`confname` ,`confvalue` ) VALUES ('QualityLogSamples', '0');
 INSERT INTO `config` (`confname` ,`confvalue` ) VALUES ('QualityCOAText', '');
 INSERT INTO `config` (`confname` ,`confvalue` ) VALUES (' QualityProdSpecText', '');
 

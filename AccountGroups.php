@@ -34,9 +34,6 @@ ie the parent group results in a recursive group structure otherwise false ie 0 
 	return false;
 } //end of function CheckForRecursiveGroupName
 
-
-
-
 // If $Errors is set, then unset it.
 if (isset($Errors)) {
 	unset($Errors);
@@ -200,6 +197,7 @@ if (isset($_POST['submit'])) {
 		unset ($_POST['GroupName']);
 		unset ($_POST['SequenceInTB']);
 	}
+
 } elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
 
@@ -258,7 +256,6 @@ if (isset($_POST['submit'])) {
 		}
 
 	} //end if account group used in GL accounts
-
 }
 
 if (!isset($_GET['SelectedAccountGroup']) AND !isset($_POST['SelectedAccountGroup'])) {

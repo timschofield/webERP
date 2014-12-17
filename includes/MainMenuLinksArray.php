@@ -283,7 +283,7 @@ $MenuItems['stock']['Maintenance']['URL'] = array(	'/Stocks.php',
 													'/ReorderLevelLocation.php');
 
 $MenuItems['manuf']['Transactions']['Caption'] = array(	_('Work Order Entry'),
-														_('Select A Work Order')),
+														_('Select A Work Order'),
 														_('QA Samples and Test Results'));
 
 $MenuItems['manuf']['Transactions']['URL'] = array(	'/WorkOrderEntry.php',

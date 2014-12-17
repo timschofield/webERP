@@ -3,6 +3,8 @@
 
 include('includes/session.inc');
 $Title = _('Product Specifications Maintenance');
+$ViewTopic= 'QualityAssurance';// Filename in ManualContents.php's TOC.
+$BookMark = 'QA';// Anchor's id in the manual's html document.
 include('includes/header.inc');
 
 if (isset($_GET['SelectedQATest'])){
@@ -16,15 +18,15 @@ if (isset($_GET['KeyValue'])){
 	$KeyValue =mb_strtoupper($_POST['KeyValue']);
 }
 
-if ($_POST['RangeMin']=='') {
-	$RangeMin="NULL";
+if (!isset($_POST['RangeMin']) OR $_POST['RangeMin']=='') {
+	$RangeMin = 'NULL';
 } else {
-	$RangeMin="'" . $_POST['RangeMin'] . "'";
+	$RangeMin = "'" . $_POST['RangeMin'] . "'";
 }
-if ($_POST['RangeMax']=='') {
-	$RangeMax="NULL";
+if (!isset($_POST['RangeMax']) OR $_POST['RangeMax']=='') {
+	$RangeMax = 'NULL';
 } else {
-	$RangeMax="'" . $_POST['RangeMax'] . "'";
+	$RangeMax = "'" . $_POST['RangeMax'] . "'";
 }
 
 if (isset($Errors)) {
@@ -48,7 +50,7 @@ if (isset($_GET['CopySpec']) OR isset($_POST['CopySpec'])) {
 		include('includes/footer.inc');
 		exit;
 	} else {
-		$sql = "INSERT IGNORE INTO prodspecs 
+		$sql = "INSERT IGNORE INTO prodspecs
 							(keyval,
 							testid,
 							defaultvalue,
@@ -73,7 +75,7 @@ if (isset($_GET['CopySpec']) OR isset($_POST['CopySpec'])) {
 			$msg = _('A Product Specification has been copied to') . ' ' . $_POST['CopyTo']  . ' from ' . ' ' . $KeyValue ;
 			$ErrMsg = _('The insert of the Product Specification failed because');
 			$DbgMsg = _('The SQL that was used and failed was');
-			$result = DB_query($sql,$db,$ErrMsg, $DbgMsg);
+			$result = DB_query($sql,$ErrMsg, $DbgMsg);
 			prnMsg($msg , 'success');
 		$KeyValue=$_POST['CopyTo'];
 		unset($_GET['CopySpec']);
@@ -107,15 +109,15 @@ if (!isset($KeyValue) OR $KeyValue=='') {
 							description
 						FROM prodspecs LEFT OUTER JOIN stockmaster
 						ON stockmaster.stockid=prodspecs.keyval";
-						
 
-	$ResultSelection=DB_query($SQLSpecSelect, $db);
+
+	$ResultSelection=DB_query($SQLSpecSelect);
 	echo '<td><select name="KeyValue">';
 
 	while ($MyRowSelection=DB_fetch_array($ResultSelection)){
 		echo '<option value="' . $MyRowSelection['keyval'] . '">' . $MyRowSelection['keyval'].' - ' .htmlspecialchars($MyRowSelection['description'], ENT_QUOTES,'UTF-8', false)  . '</option>';
 	}
-	echo '</select></td>';		
+	echo '</select></td>';
 	echo '</tr>
 		</table>
 		</div>
@@ -123,7 +125,7 @@ if (!isset($KeyValue) OR $KeyValue=='') {
 		<input type="submit" name="pickspec" value="' . _('Submit') . '" />
 		</div>
 		</form>';
-	
+
 
 } else {
 	//show header
@@ -131,7 +133,7 @@ if (!isset($KeyValue) OR $KeyValue=='') {
 						FROM stockmaster
 						WHERE stockmaster.stockid='" .$KeyValue. "'";
 
-	$ResultSelection=DB_query($SQLSpecSelect, $db);
+	$ResultSelection=DB_query($SQLSpecSelect);
 	$MyRowSelection=DB_fetch_array($ResultSelection);
 	echo '<br/>' . _('Product Specification for') . ' ' . $KeyValue . '-' . $MyRowSelection['description'] . '<br/><br/>';
 }
@@ -144,13 +146,13 @@ if (isset($_GET['ListTests'])) {
 				numericvalue,
 				qatests.defaultvalue
 			FROM qatests
-			LEFT JOIN prodspecs 
+			LEFT JOIN prodspecs
 			ON prodspecs.testid=qatests.testid
 			AND prodspecs.keyval='".$KeyValue."'
 			WHERE qatests.active='1'
 			AND prodspecs.keyval IS NULL
 			ORDER BY name";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -186,7 +188,7 @@ if (isset($_GET['ListTests'])) {
 	} else {
 		$IsNumeric = _('No');
 	}
-	
+
 	switch ($myrow['type']) {
 	 	case 0; //textbox
 	 		$TypeDisp=_('Text Box');
@@ -226,8 +228,8 @@ if (isset($_GET['ListTests'])) {
 			$RangeMax);
 
 	} //END WHILE LIST LOOP
-	
-	echo '</table><br /></div>	
+
+	echo '</table><br /></div>
 			<div class="centre">
 				<input type="hidden" name="KeyValue" value="' . $KeyValue . '" />
 				<input type="hidden" name="AddTestsCounter" value="' . $x . '" />
@@ -249,8 +251,8 @@ if (isset($_POST['AddTests'])) {
 			} else {
 				$AddRangeMax="'" . $_POST['AddRangeMax' .$i] . "'";
 			}
-			
-			$sql = "INSERT INTO prodspecs 
+
+			$sql = "INSERT INTO prodspecs
 							(keyval,
 							testid,
 							defaultvalue,
@@ -262,21 +264,21 @@ if (isset($_POST['AddTests'])) {
 							showontestplan,
 							active)
 						SELECT '"  . $KeyValue . "',
-								testid, 
-								defaultvalue, 
+								testid,
+								defaultvalue,
 								'"  .  $_POST['AddTargetValue' .$i] . "',
 								"  . $AddRangeMin . ",
 								"  . $AddRangeMax. ",
-								showoncert, 
+								showoncert,
 								showonspec,
 								showontestplan,
-								active 
+								active
 						FROM qatests WHERE testid='" .$_POST['AddTestID' .$i]. "'";
 			echo $sql;
 			$msg = _('A Product Specification record has been added for Test ID') . ' ' . $_POST['AddTestID' .$i]  . ' for ' . ' ' . $KeyValue ;
 			$ErrMsg = _('The insert of the Product Specification failed because');
 			$DbgMsg = _('The SQL that was used and failed was');
-			$result = DB_query($sql,$db,$ErrMsg, $DbgMsg);
+			$result = DB_query($sql,$ErrMsg, $DbgMsg);
 			prnMsg($msg , 'success');
 		} //if on
 	} //for
@@ -311,7 +313,7 @@ if (isset($_POST['submit'])) {
 		$msg = _('Product Specification record for') . ' ' . $_POST['QATestName']  . ' for ' . ' ' . $KeyValue .  _('has been updated');
 		$ErrMsg = _('The update of the Product Specification failed because');
 		$DbgMsg = _('The SQL that was used and failed was');
-		$result = DB_query($sql,$db,$ErrMsg, $DbgMsg);
+		$result = DB_query($sql,$ErrMsg, $DbgMsg);
 
 		prnMsg($msg , 'success');
 
@@ -323,16 +325,16 @@ if (isset($_POST['submit'])) {
 		unset($_POST['ShowOnCert']);
 		unset($_POST['ShowOnSpec']);
 		unset($_POST['Active']);
-	} 
+	}
 } elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
 
 // PREVENT DELETES IF DEPENDENT RECORDS
 
-	$sql= "SELECT COUNT(*) FROM qasamples 
+	$sql= "SELECT COUNT(*) FROM qasamples
 			INNER JOIN sampleresults on sampleresults.sampleid=qasamples.sampleid AND sampleresults.testid='". $SelectedQATest."'
 			WHERE qasamples.prodspeckey='".$KeyValue."'";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {
 		prnMsg(_('Cannot delete this Product Specification because there are test results tied to it'),'error');
@@ -340,7 +342,7 @@ if (isset($_POST['submit'])) {
 		$sql="DELETE FROM prodspecs WHERE keyval='". $KeyValue."'
 									AND testid='". $SelectedQATest."'";
 		$ErrMsg = _('The Product Specification could not be deleted because');
-		$result = DB_query($sql,$db,$ErrMsg);
+		$result = DB_query($sql,$ErrMsg);
 
 		prnMsg(_('Product Specification') . ' ' . $SelectedQATest . ' for ' . ' ' . $KeyValue . _('has been deleted from the database'),'success');
 		unset ($SelectedQATest);
@@ -374,10 +376,10 @@ or deletion of the records*/
 			ON qatests.testid=prodspecs.testid
 			WHERE prodspecs.keyval='" .$KeyValue."'
 			ORDER BY name";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 
-	echo '<table class="selection">';
-	echo '<tr>
+	echo '<table class="selection">
+		<tr>
 			<th class="ascending">' . _('Name') . '</th>
 			<th class="ascending">' . _('Method') . '</th>
 			<th class="ascending">' . _('Units') . '</th>
@@ -515,8 +517,8 @@ if (! isset($_GET['delete'])) {
 				ON qatests.testid=prodspecs.testid
 				WHERE prodspecs.keyval='".$KeyValue."'
 				AND prodspecs.testid='".$SelectedQATest."'";
-		
-		$result = DB_query($sql, $db);
+
+		$result = DB_query($sql);
 		$myrow = DB_fetch_array($result);
 
 		$_POST['SelectedQATest'] = $myrow['testid'];
@@ -534,7 +536,7 @@ if (! isset($_GET['delete'])) {
 		$_POST['ShowOnSpec'] = $myrow['showonspec'];
 		$_POST['ShowOnTestPlan'] = $myrow['showontestplan'];
 		$_POST['Active'] = $myrow['active'];
-		
+
 
 		echo '<input type="hidden" name="SelectedQATest" value="' . $SelectedQATest . '" />';
 		echo '<input type="hidden" name="KeyValue" value="' . $KeyValue . '" />';
@@ -557,7 +559,7 @@ if (! isset($_GET['delete'])) {
 		if ($myrow['numericvalue'] == 1) {
 			$IsNumeric = _('Yes');
 			$Class="number";
-		} 
+		}
 		switch ($myrow['type']) {
 			case 0; //textbox
 				$TypeDisp='Text Box';
@@ -586,7 +588,7 @@ if (! isset($_GET['delete'])) {
 				<td>' . _('Target Value') . ':</td>
 				<td><input type="text" class="' . $Class.'" name="TargetValue" size="15" maxlength="15" value="' . $_POST['TargetValue']. '" />&nbsp;'.$_POST['Units'].'</td>
 			</tr>';
-			
+
 		if ($TypeDisp=='Range') {
 			echo '<tr>
 					<td>' . _('Range Min') . ':</td>
@@ -596,7 +598,7 @@ if (! isset($_GET['delete'])) {
 					<td>' . _('Range Max') . ':</td>
 					<td><input class="' . $Class.'" type="text" name="RangeMax" size="10" maxlength="10" value="' . $_POST['RangeMax']. '" /></td>
 				</tr>';
-		} 
+		}
 		echo '<tr>
 				<td>' . _('Show On Cert?') . ':</td>
 				<td><select name="ShowOnCert">';
@@ -658,7 +660,7 @@ if (! isset($_GET['delete'])) {
 			</div>
 			</div>
 			</form>';
-	} 
+	}
 	if (isset($KeyValue)) {
 		echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?ListTests=yes&amp;KeyValue=' .$KeyValue .'">' . _('Add More Tests') . '</a></div>';
 		echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?CopySpec=yes&amp;KeyValue=' .$KeyValue .'">' . _('Copy This Specification') . '</a></div>';

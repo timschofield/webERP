@@ -1,0 +1,32 @@
+<h1><a id="QA">Quality Assurance</a></h1>
+
+<h2>Overview</h2>
+
+<p>The Quality module allows the users of webERP to define what they would like to test, apply those tests to certain templates or specific products (Items, Stocks) and then to capture actual test results on a Lot to Lot or Serial number basis. Outputs from the module include a Product Specification or Data Sheet and a Certificate of Analysis. Historical Results are kept and can be compared side by side for any particular Item. There is an option in the configuration that allows QA Samples to be automatically logged for Purchase Order and Work Order receipts if the product specification exists and the item is Lot or Serial Controlled. Also in the configuration are some disclaimers for specifcations and certifications.</p>
+
+<img src="images/QA_Config.png" alt="QA Config screen" />
+
+<h2>Menu Options</h2>
+<p>All menu options for Quality are found under Manufacturing. Your menus may look differnet based on your permissoins. The menus are shown below.</p>
+<img src="images/QA_Menus.png" alt="QA Menu options screen" />
+
+<h2>QA Tests Maintenance</h2>
+<p>This is where all tests that will be performed are defined. Other specification related information can be captured here that isn’t tested but describes in more detail the product specification. An example of this would be Processing Conditions for your product that you wish for your customers to understand. A specification is made up of any number of tests. The test defines outer tolerances but the specification allows the upper and lower bounds of the test to be specified.</p>
+<img src="images/QA_Tests.png" alt="QA Tests screen" />
+
+<img src="images/QA_TestsEntry.png" alt="QA Tests Entry screen" />
+
+Test Name: The name of the Test you are setting up
+Method: ASTM, ISO, UL or other.
+Group By: Free Form. Can be used to Group certain Test on the Product Specification or Certificate of
+Analysis
+Units: How this is measure. PSI, Fahrenheit, Celsius etc.
+Type: How do we measure/Enter this value (Text, Date, Numeric Range, and Selection List?)
+Possible Values: (Only valid for type Select List, controls what appears in the drop down?)
+Numeric Value: Enforces numbers to be entered for this test type
+Show on Cert: Does this test print on the Certificate of Analysis (Can be overwritten at a Product level)
+Show on Cert: Does this test print on the Product Specification (Can be overwritten at a Product level)
+Show on Cert: Does this test print on the Test Plan (Can be overwritten at a Product level)
+Active: once a test has results entered against it delete is no longer allowed. This flag can be used to
+inactivate it and not use it on future product specifications.
+<!-- Help End: QA -->

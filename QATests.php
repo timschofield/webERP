@@ -36,7 +36,7 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'QATestName';
 		$i++;
 	}
-	
+
 	if (mb_strlen($_POST['Type']) =='') {
 		$InputError = 1;
 		prnMsg(_('The Type must not be blank'),'error');
@@ -51,7 +51,7 @@ if (isset($_POST['submit'])) {
 		$InputError = 1;
 		prnMsg(_('The QA Test name already exists'),'error');
 		$Errors[$i] = 'QATestName';
-		$i++;	
+		$i++;
 	}
 
 	if (isset($SelectedQATest) AND $InputError !=1) {
@@ -189,7 +189,7 @@ if (! isset($_GET['delete'])) {
 		$_POST['ShowOnSpec'] = $myrow['showonspec'];
 		$_POST['ShowOnTestPlan'] = $myrow['showontestplan'];
 		$_POST['Active'] = $myrow['active'];
-		
+
 
 		echo '<input type="hidden" name="SelectedQATest" value="' . $SelectedQATest . '" />';
 		echo '<input type="hidden" name="TestID" value="' . $_POST['SelectedQATest'] . '" />';
@@ -236,23 +236,24 @@ if (! isset($_GET['delete'])) {
 	}
 	echo '<tr>
 			<td>' . _('QA Test Name') . ':</td>
-			<td><input type="text" '. (in_array('QATestName',$Errors) ? 'class="inputerror"' : '' ) .' name="QATestName"  size="30" maxlength="50" value="' . $_POST['QATestName'] . '" /></td>
+			<td><input type="text" '. (in_array('QATestName',$Errors) ? 'class="inputerror"' : '' ) .' name="QATestName"  required="required" title="' . _('The name of the Test you are setting up') . '" size="30" maxlength="50" value="' . $_POST['QATestName'] . '" /></td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('Method') . ':</td>
-			<td><input type="text" name="Method" size="20" maxlength="20" value="' . $_POST['Method'] . '" /></td>
+			<td><input type="text" name="Method" title="' . _('ASTM, ISO, UL or other') . '" size="20" maxlength="20" value="' . $_POST['Method'] . '" /></td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('Group By') . ':</td>
-			<td><input type="text" name="GroupBy" size="20" maxlength="20" value="' . $_POST['GroupBy'] . '" /></td>
+			<td><input type="text" name="GroupBy" title="' . _('Can be used to group certain Tests on the Product Specification or Certificate of
+Analysis or left blank') . '" size="20" maxlength="20" value="' . $_POST['GroupBy'] . '" /></td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('Units') . ':</td>
-			<td><input type="text" name="Units" size="20" maxlength="20" value="' . $_POST['Units'] . '" /></td>
+			<td><input type="text" name="Units" title="' . _('How this is measured. PSI, Fahrenheit, Celsius etc.') . '" size="20" maxlength="20" value="' . $_POST['Units'] . '" /></td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('Type') . ':</td>
-			<td><select name="Type">';
+			<td><select title="' . _('What sort of data field is required to record the results for this test') . '" name="Type">';
 	if ($_POST['Type']==0){
 		echo '<option selected="selected" value="0">' . _('Text Box') . '</option>';
 	} else {
