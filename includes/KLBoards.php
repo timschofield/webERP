@@ -6587,6 +6587,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 							AND purchorders.status NOT IN ('Cancelled', 'Pending', 'Rejected')) AS qoo
 			FROM stockmaster
 			WHERE categoryid = '". $Category ."'
+				AND discontinued = 0
 			ORDER BY stockid";
 	
 	$result = DB_query($SQL);		

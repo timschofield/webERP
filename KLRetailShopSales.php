@@ -684,9 +684,6 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 and !isset($_POST['Proces
 	if (!isset($_POST['ShoppingBag02L'])){
 		$_POST['ShoppingBag02L'] =0;
 	}
-	if (!isset($_POST['ShoppingBag02XL'])){
-		$_POST['ShoppingBag02XL'] =0;
-	}
 
 	echo '<table class="selection">
 			<tr>
@@ -694,12 +691,6 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 and !isset($_POST['Proces
 				</th>
 			</tr>';
 	
-	echo '<tr>';
-	echo '<td colspan=6></td>';
-	echo '<td>' . _('Shopping Bag XLarge') . ':</td>
-		  <td><input type="text" class="number" name="ShoppingBag02XL" maxlength="3" size="3" value="' . $_POST['ShoppingBag02XL'] . '" /></td>';
-	echo'</tr>';
-
 	echo '<tr>
 	      <td>' . _('Box Large') . ':</td>
 		  <td><input type="text" class="number" name="PackagingBox01L" maxlength="3" size="3" value="' . $_POST['PackagingBox01L'] . '" /></td>';
@@ -2124,7 +2115,6 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 		AdjustPackagingMovement("PKSB02-M", $_POST['ShoppingBag02M'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
 		AdjustPackagingMovement("PKSB02-S", $_POST['ShoppingBag02S'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
 
-		AdjustPackagingMovement("PKSB02-XL", $_POST['ShoppingBag02XL'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
 		/*	End account for the packaging */
 		
 		RecordRetailCustomerInformation($OrderNo, $_POST['FirstName'], $_POST['LastName'], $_POST['Country'], $_POST['DateOfBirth'], $_POST['Email'], $_POST['Sex'], $db);
