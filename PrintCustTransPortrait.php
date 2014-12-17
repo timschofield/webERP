@@ -2,6 +2,11 @@
 
 /* $Id: PrintCustTransPortrait.php 6943 2014-10-27 07:06:42Z daintree $ */
 
+/**************************************************************************************
+KL RICARD MODIFICATIONS:
+- change of "consignment" to "tracking"
+***************************************************************************************/
+
 include('includes/session.inc');
 
 $ViewTopic = 'ARReports';
@@ -857,7 +862,7 @@ If (isset($PrintPDF)
 							<td align="left" style="background-color:#bbbbbb"><b>' . _('Invoice Date') . '</b></td>
 							<td align="left" style="background-color:#bbbbbb"><b>' . _('Sales Person') . '</b></td>
 							<td align="left" style="background-color:#bbbbbb"><b>' . _('Shipper') . '</b></td>
-							<td align="left" style="background-color:#bbbbbb"><b>' . _('Consignment Ref') . '</b></td>
+							<td align="left" style="background-color:#bbbbbb"><b>' . _('Tracking #') . '</b></td>
 						</tr>';
 				   	echo '<tr>
 							<td style="background-color:#EEEEEE">' . $myrow['customerref'] . '</td>

@@ -2,6 +2,11 @@
 
 /* $Id: Shipments.php 6944 2014-10-27 07:15:34Z daintree $*/
 
+/**************************************************************************************
+KL RICARD MODIFICATIONS:
+- change of "consignment" to "tracking"
+***************************************************************************************/
+
 include('includes/DefineShiptClass.php');
 include('includes/session.inc');
 $Title = _('Shipments');
@@ -311,7 +316,7 @@ echo '<table class="selection">
 echo '<tr>
 		<td>' .  _('Vessel Name /Transport Agent'). ': </td>
 		<td colspan="3"><input type="text" name="Vessel" maxlength="50" size="50" value="' . $_SESSION['Shipment']->Vessel . '" /></td>
-		<td>' . _('Voyage Ref / Consignment Note').': </td>
+		<td>' . _('Voyage Ref / Tracking #').': </td>
 		<td><input type="text" name="VoyageRef" maxlength="20" size="20" value="' . $_SESSION['Shipment']->VoyageRef . '" /></td>
 	</tr>';
 

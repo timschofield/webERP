@@ -2,6 +2,11 @@
 
 /* $Id: ConfirmDispatch_Invoice.php 7021 2014-12-14 02:04:44Z tehonu $*/
 
+/**************************************************************************************
+KL RICARD MODIFICATIONS:
+- change of "consignment" to "tracking"
+***************************************************************************************/
+
 /* Session started in session.inc for password checking and authorisation level check */
 include('includes/DefineCartClass.php');
 include('includes/DefineSerialItems.php');
@@ -1679,7 +1684,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 		</tr>';
 	$j++;
 	echo '<tr>
-			<td>' . _('Consignment Note Ref'). ':</td>
+			<td>' . _('Tracking Number'). ':</td>
 			<td><input tabindex="'.$j.'" type="text" data-type="no-illegal-chars" title="' . _('Enter the consignment note reference to enable tracking of the delivery in the event of customer proof of delivery issues') . '" maxlength="20" size="20" name="Consignment" value="' . $_POST['Consignment'] . '" /></td>
 		</tr>';
 	$j++;
