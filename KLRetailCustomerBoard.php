@@ -15,39 +15,7 @@ include ('includes/KLRoles.inc');
 $begintime = time_start();
 
 if ($KL_SystemAdmin){
-
-	RetailCustomerDataQualitySPG( 5, $db);
-	RetailCustomerDataQualitySPG(15, $db);
-	RetailCustomerAnalysisBySex(30, "ALL", $db);
-
-//	RetailCustomerAnalysisByCountry(7, "ALL", 3, $CountriesForRetail, $db);
-	RetailCustomerAnalysisByCountry(30, "ALL", 5, $CountriesForRetail, $db);
-//	RetailCustomerAnalysisByCountry(7, "'TOK66','TOKSE','TOKOB'", 3, $CountriesForRetail, $db);
-	RetailCustomerAnalysisByCountry(30, "'TOK66','TOKSE','TOKOB'", 3, $CountriesForRetail, $db);
-//	RetailCustomerAnalysisByCountry(7, "'TOKKS','TOKBW'", 3, $CountriesForRetail, $db);
-	RetailCustomerAnalysisByCountry(30, "'TOKKS','TOKBW'", 3, $CountriesForRetail, $db);
-//	RetailCustomerAnalysisByCountry(7, "'TOKJC'", 3, $CountriesForRetail, $db);
-	RetailCustomerAnalysisByCountry(30, "'TOKJC'", 3, $CountriesForRetail, $db);
-//	RetailCustomerAnalysisByCountry(7, "'TOKSA','TOKSS','TOKSU'", 3, $CountriesForRetail, $db);
-	RetailCustomerAnalysisByCountry(30, "'TOKSA','TOKSS','TOKSU'", 3, $CountriesForRetail, $db);
-//	RetailCustomerAnalysisByCountry(7, "'TOKUB','TOKPU','TOKMF'", 3, $CountriesForRetail, $db);
-	RetailCustomerAnalysisByCountry(30, "'TOKUB','TOKPU','TOKMF'", 3, $CountriesForRetail, $db);
-
-	RetailCustomerAnalysisByAge(30, "ALL", $db);
-	RetailCustomerAnalysisByAge(30, "'TOK66','TOKSE','TOKOB'", $db);
-	RetailCustomerAnalysisByAge(30, "'TOKKS','TOKBW'", $db);
-	RetailCustomerAnalysisByAge(30, "'TOKJC'", $db);
-	RetailCustomerAnalysisByAge(30, "'TOKSA','TOKSS','TOKSU'", $db);
-	RetailCustomerAnalysisByAge(30, "'TOKUB','TOKPU','TOKMF'", $db);
-	
-//	EmailHarvested(1, "ALL", $db);
-	EmailHarvested(30, "ALL", $db);
-//	EmailHarvested(1, "'TOK66','TOKSE','TOKOB'", $db);
-//	EmailHarvested(1, "'TOKKS','TOKBW'", $db);
-//	EmailHarvested(1, "'TOKJC'", $db);
-//	EmailHarvested(1, "'TOKSA','TOKSS','TOKSU'", $db);
-//	EmailHarvested(1, "'TOKUB','TOKPU','TOKMF'", $db);
-	
+	RetailCustomerDataQualitySPG(7, $db);
 }
 
 if ($KL_SystemAdmin 
@@ -55,8 +23,31 @@ if ($KL_SystemAdmin
 	OR $KL_PurchasingManager 
 	OR $KL_SalesManager){
 	RetailCustomerDataQualitySPG(30, $db);
+}
+
+if ($KL_SystemAdmin 
+	OR $KL_KantorManager 
+	OR $KL_PurchasingManager 
+	OR $KL_SalesManager){
 
 	RetailCustomerAnalysisBySex(30, "ALL", $db);
+}
+
+if ($KL_SystemAdmin){
+	RetailCustomerAnalysisByCountry(365, "ALL", 10, $CountriesForRetail, $db);
+
+//	RetailCustomerAnalysisByCountry(7, "ALL", 3, $CountriesForRetail, $db);
+//	RetailCustomerAnalysisByCountry(7, "'TOK66','TOKSE','TOKOB'", 3, $CountriesForRetail, $db);
+//	RetailCustomerAnalysisByCountry(7, "'TOKKS','TOKBW'", 3, $CountriesForRetail, $db);
+//	RetailCustomerAnalysisByCountry(7, "'TOKJC'", 3, $CountriesForRetail, $db);
+//	RetailCustomerAnalysisByCountry(7, "'TOKSA','TOKSS','TOKSU'", 3, $CountriesForRetail, $db);
+//	RetailCustomerAnalysisByCountry(7, "'TOKUB','TOKPU','TOKMF'", 3, $CountriesForRetail, $db);
+}
+
+if ($KL_SystemAdmin 
+	OR $KL_KantorManager 
+	OR $KL_PurchasingManager 
+	OR $KL_SalesManager){
 
 	RetailCustomerAnalysisByCountry(30, "ALL", 5, $CountriesForRetail, $db);
 	RetailCustomerAnalysisByCountry(30, "'TOK66','TOKSE','TOKOB'", 3, $CountriesForRetail, $db);
@@ -64,6 +55,12 @@ if ($KL_SystemAdmin
 	RetailCustomerAnalysisByCountry(30, "'TOKJC'", 3, $CountriesForRetail, $db);
 	RetailCustomerAnalysisByCountry(30, "'TOKSA','TOKSS','TOKSU'", 3, $CountriesForRetail, $db);
 	RetailCustomerAnalysisByCountry(30, "'TOKUB','TOKPU','TOKMF'", 3, $CountriesForRetail, $db);
+}
+
+if ($KL_SystemAdmin 
+	OR $KL_KantorManager 
+	OR $KL_PurchasingManager 
+	OR $KL_SalesManager){
 
 	RetailCustomerAnalysisByAge(30, "ALL", $db);
 	RetailCustomerAnalysisByAge(30, "'TOK66','TOKSE','TOKOB'", $db);
@@ -73,7 +70,15 @@ if ($KL_SystemAdmin
 	RetailCustomerAnalysisByAge(30, "'TOKUB','TOKPU','TOKMF'", $db);
 
 	EmailHarvested(30, "ALL", $db);
+}
 
+if ($KL_SystemAdmin){
+//	EmailHarvested(1, "ALL", $db);
+//	EmailHarvested(1, "'TOK66','TOKSE','TOKOB'", $db);
+//	EmailHarvested(1, "'TOKKS','TOKBW'", $db);
+//	EmailHarvested(1, "'TOKJC'", $db);
+//	EmailHarvested(1, "'TOKSA','TOKSS','TOKSU'", $db);
+//	EmailHarvested(1, "'TOKUB','TOKPU','TOKMF'", $db);
 }
 
 prnMsg("Performed ". NUMBER_OF_TESTS . " Retail Customers Analysis",'success');
