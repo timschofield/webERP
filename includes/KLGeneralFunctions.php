@@ -180,5 +180,9 @@ function ReviseEmailAddress($email){
 	return $revisedemail; 
 }
 
+function CleanStringForWebERP($s){
+	$s = str_replace("'", " ", $s);
+	return $s;
+}
 
 ?>
