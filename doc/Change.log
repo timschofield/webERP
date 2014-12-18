@@ -1,4 +1,7 @@
 webERP Change Log
+
+18/12/14 Phil: Fix to only add a description translation record where there is a non-empty translation string
+18/12/14 Ricard: Google translate script to add descriptions in a selected language
 16/12/14 Agaluski: Add new Quality Module to WebERP.
 16/12/14 RChacon: Expand and uniform the accuracy of the exchange rate.
 5/12/14 Exson: Fixed the branch field bug in CustomerReceipt.php. Reported by wertthey.
