@@ -1,15 +1,12 @@
 <?php
 
-
-// Based on http://hayageek.com/google-translate-api-tutorial/
-
 include ('includes/session.inc');
 $Title = _('Automatic Translation - Descriptions');
 include ('includes/header.inc');
+include ('includes/GoogleTranslator.php');
 
-$api_key = 'AIzaSyBwTQG8F0cue7FY5sP34uZYXZEH9KVBesU';
-$source="en";
-$target="id";
+$SourceLanguage="en";
+$TargetLanguage="id";
 
 // Select items and classify them
 $SQL = "SELECT stockid,
@@ -44,23 +41,7 @@ if (DB_num_rows($result) != 0){
 		}
 		$i++;
 		
-		$obj = translate_google_api($api_key,$myrow['description'],$target,$source);
-		if($obj != null)
-		{
-			if(isset($obj['error']))
-			{
-				$TranslatedText = "ERROR: " . $obj['error']['message'];
-			}
-			else
-			{
-				$TranslatedText = $obj['data']['translations'][0]['translatedText'];
-//				if(isset($obj['data']['translations'][0]['detectedSourceLanguage'])) //this is set if only source is not available.
-//					echo "Detecte Source Languge : ".$obj['data']['translations'][0]['detectedSourceLanguage']."n";     
-			}
-		}
-		else{
-			$TranslatedText = "UNKNOW ERROR";		
-		}
+		$TranslatedText = translate_via_google_translator($myrow['description'],$TargetLanguage,$SourceLanguage);
 		
 		printf('<td class="number">%s</td>
 				<td>%s</td>
@@ -71,7 +52,7 @@ if (DB_num_rows($result) != 0){
 				$i, 
 				$myrow['stockid'], 
 				$myrow['description'],
-				$target,
+				$TargetLanguage,
 				$TranslatedText
 				);
 	}
@@ -81,21 +62,4 @@ if (DB_num_rows($result) != 0){
 }
 
 include ('includes/footer.inc');
-
-function translate_google_api($api_key,$text,$target,$source=false)
-{
-    $url = 'https://www.googleapis.com/language/translate/v2?key=' . $api_key . '&q=' . rawurlencode($text);
-    $url .= '&target='.$target;
-    if($source)
-     $url .= '&source='.$source;
- 
-    $ch = curl_init($url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    $response = curl_exec($ch);                 
-    curl_close($ch);
- 
-    $obj =json_decode($response,true); //true converts stdClass to associative array.
-    return $obj;
-}  
-
 ?>
