@@ -4,8 +4,10 @@ include('includes/session.inc');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
 include('includes/WeberpOpenCartDefines.php');
+include('includes/KLGeneralFunctions.php');
 include('includes/OpenCartGeneralFunctions.php');
 include('includes/OpenCartConnectDB.php');
+include ('includes/GoogleTranslator.php');
 
 require_once ('Classes/PHPExcel.php');
 
@@ -30,6 +32,26 @@ if (isset($_POST['submit'])) {
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
 function submit(&$db, &$db_oc, $oc_tableprefix, $FromPrice, $ToPrice, $QOHMinimal, $PopularItems) {
 
+	// CONSTANT TEXTS
+	$ShippingTimeMinimal = 3;
+	$ShippingTimeMaximal = 6;
+	$Brand = "Kapal-Laut Your Essential Jewellery";
+	$Warranty = "Garansi terbatas untuk 3 bulan. Cek http://www.kapal-laut.com/Warranty-Conditions";
+	$Country = "Indonesia";
+	$ImagePath = "http://www.kapal-laut.com/image/";
+	$ColourSteel = 'Putih keperakan';
+	$ColourMetal = 'Logam putih';
+	$ColourSilver = 'Perak';
+	$MaterialSteel = 'Stainless Steel';
+	$MaterialMetal = 'Logam';
+	$MaterialSilver = 'Perak 925';
+	$SizeFreeSize = 'Free size';
+	$UnitPair = '1 pasang';
+	$UnitPcs = '1 biji';
+
+	$SourceLanguage="en";
+	$TargetLanguage="id";
+	
 	//initialise no input errors
 	$InputError = 0;
 
@@ -75,10 +97,15 @@ function submit(&$db, &$db_oc, $oc_tableprefix, $FromPrice, $ToPrice, $QOHMinima
 						" . $oc_tableprefix . "product.gender,
 						" . $oc_tableprefix . "product.agegroup,
 						" . $oc_tableprefix . "product.price,
-						" . $oc_tableprefix . "product.quantity
+						" . $oc_tableprefix . "product.quantity,
+						" . $oc_tableprefix . "category_description.name AS category_name
 				FROM " . $oc_tableprefix . "product,
-						" . $oc_tableprefix . "product_description
+						" . $oc_tableprefix . "product_description,
+						" . $oc_tableprefix . "product_to_category,
+						" . $oc_tableprefix . "category_description
 				WHERE   " . $oc_tableprefix . "product.product_id = " . $oc_tableprefix . "product_description.product_id
+					AND " . $oc_tableprefix . "product.product_id = " . $oc_tableprefix . "product_to_category.product_id
+					AND " . $oc_tableprefix . "product_to_category.category_id = " . $oc_tableprefix . "category_description.category_id
 					AND " . $oc_tableprefix . "product.status = 1
 					AND " . $oc_tableprefix . "product.price >= '" . $FromPrice . "'
 					AND " . $oc_tableprefix . "product.price <= '" . $ToPrice . "'
@@ -134,41 +161,119 @@ function submit(&$db, &$db_oc, $oc_tableprefix, $FromPrice, $ToPrice, $QOHMinima
 
 			// Add data
 			$i = 2;
-			$Brand = "Kapal-Laut Your Essential Jewellery";
-			$ShippingTimeMinimal = 3;
-			$ShippingTimeMaximal = 6;
-			$Dimensions = locale_number_format($myrow['length'],2) . ' x ' . 
-							locale_number_format($myrow['width'],2) . ' x ' . 
-							locale_number_format($myrow['height'],2);
-			$Weight = locale_number_format($myrow['weight'],2);
-			$Warranty = "6 months limited warranty. Check http://www.kapal-laut.com/Warranty-Conditions for details";
-			$Country = "Indonesia";
-			$ImagePath = "http://www.kapal-laut.com/image/";
+
+			$NameProductPrefix = $Brand . ' ';
 			
 			while ($myrow = DB_fetch_array($result)) {
+
 				$objPHPExcel->setActiveSheetIndex(0);
 				$objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $i-1);
-				$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, $myrow['name']);
+				$NameProduct = translate_via_google_translator($myrow['name'],$TargetLanguage,$SourceLanguage);
+				$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, $NameProductPrefix . $NameProduct);
 				$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, $Brand);
 				$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, $myrow['model']);
-				$objPHPExcel->getActiveSheet()->setCellValue('E'.$i, '');
+				
+				if (mb_stristr($myrow['name'], "steel") != FALSE){
+					$Colour = $ColourSteel;
+					$Material = $MaterialSteel;
+				}elseif (mb_stristr($myrow['name'], "metal") != FALSE){
+					$Colour = $ColourMetal;
+					$Material = $MaterialMetal;
+				}elseif (mb_stristr($myrow['name'], "silver") != FALSE){
+					$Colour = $ColourSilver;
+					$Material = $MaterialSilver;
+				}elseif (mb_stristr($myrow['category_name'], "silver") != FALSE){
+					$Colour = $ColourSilver;
+					$Material = $MaterialSilver;
+				}elseif (mb_stristr($myrow['category_name'], "fashion") != FALSE){
+					$Colour = $ColourMetal;
+					$Material = $MaterialMetal;
+				}elseif (mb_stristr($myrow['category_name'], "steel") != FALSE){
+					$Colour = $ColourSteel;
+					$Material = $MaterialSteel;
+				}else{
+					$Colour = $ColourSilver;
+				}
+				$objPHPExcel->getActiveSheet()->setCellValue('E'.$i, $Colour);
 				$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, $myrow['price']);
 				$objPHPExcel->getActiveSheet()->setCellValue('G'.$i, $myrow['model']);
-				$objPHPExcel->getActiveSheet()->setCellValue('H'.$i, '');
+
+				if (isRing($myrow['model'])){
+					$Size = RingSize($myrow['model']);
+					if ($Size == "FR"){
+						$Size = $SizeFreeSize;
+					}
+				}else{
+					$Size = "";
+				}
+				$objPHPExcel->getActiveSheet()->setCellValue('H'.$i, $Size);
+
 				$objPHPExcel->getActiveSheet()->setCellValue('I'.$i, $myrow['quantity']);
-				$objPHPExcel->getActiveSheet()->setCellValue('J'.$i, $myrow['description']);
+
+				$Description = translate_via_google_translator($myrow['description'],$TargetLanguage,$SourceLanguage);
+				$objPHPExcel->getActiveSheet()->setCellValue('J'.$i, $Description);
+
 				$objPHPExcel->getActiveSheet()->setCellValue('K'.$i, '');
-				$objPHPExcel->getActiveSheet()->setCellValue('N'.$i, '');
+
+				if (isEarring($myrow['model']) OR isEarcuff($myrow['model'])){
+					$UnitsSale = $UnitPair; 
+				}else{
+					$UnitsSale = $UnitPcs; 
+				}
+				$objPHPExcel->getActiveSheet()->setCellValue('N'.$i, $UnitsSale);
 				$objPHPExcel->getActiveSheet()->setCellValue('O'.$i, $ShippingTimeMinimal);
 				$objPHPExcel->getActiveSheet()->setCellValue('P'.$i, $ShippingTimeMaximal);
+
+				$LenghtUnits = GetLenghtUnits($myrow['length_class_id'], 1, $db_oc, $oc_tableprefix);
+				if ($LenghtUnits == 'cm'){
+					$Lenght = locale_number_format($myrow['length'],1);
+					$Width = locale_number_format($myrow['width'],1);
+					$Height = locale_number_format($myrow['height'],1);
+				}elseif ($LenghtUnits == 'mm'){
+					$Lenght = locale_number_format($myrow['length']/10,2);
+					$Width = locale_number_format($myrow['width']/10,2);
+					$Height = locale_number_format($myrow['height']/10,2);
+				}
+
+				$Dimensions = '';
+				if ($myrow['length'] > 0){
+					$Dimensions = $Lenght;
+				}else{
+					$Lenght = '';
+				}
+				if ($myrow['width'] > 0){
+					if ($Dimensions == ''){
+						$Dimensions = $Width;
+					}else{
+						$Dimensions = $Dimensions . ' x ' . $Width;
+					}
+				}else{
+					$Width = '';
+				}
+				if ($myrow['height'] > 0){
+					if ($Dimensions == ''){
+						$Dimensions = $Height;
+					}else{
+						$Dimensions = $Dimensions . ' x ' . $Height;
+					}
+				}else{
+					$Height = '';
+				}
+				if ($Dimensions != ''){
+					$Dimensions = $Dimensions . ' cm';
+				}
+				 
 				$objPHPExcel->getActiveSheet()->setCellValue('Q'.$i, $Dimensions);
+
+				$Weight = locale_number_format($myrow['weight'],2);
 				$objPHPExcel->getActiveSheet()->setCellValue('R'.$i, $Weight);
-				$objPHPExcel->getActiveSheet()->setCellValue('S'.$i, '');
-				$objPHPExcel->getActiveSheet()->setCellValue('T'.$i, '');
-				$objPHPExcel->getActiveSheet()->setCellValue('U'.$i, '');
+				
+				$objPHPExcel->getActiveSheet()->setCellValue('S'.$i, $Lenght);
+				$objPHPExcel->getActiveSheet()->setCellValue('T'.$i, $Width);
+				$objPHPExcel->getActiveSheet()->setCellValue('U'.$i, $Height);
 				$objPHPExcel->getActiveSheet()->setCellValue('V'.$i, $Weight);
 				$objPHPExcel->getActiveSheet()->setCellValue('W'.$i, $Warranty);
-				$objPHPExcel->getActiveSheet()->setCellValue('X'.$i, '');
+				$objPHPExcel->getActiveSheet()->setCellValue('X'.$i, $Material);
 				$objPHPExcel->getActiveSheet()->setCellValue('Y'.$i, $Country);
 				$objPHPExcel->getActiveSheet()->setCellValue('Z'.$i, $ImagePath . $myrow['image']);
 				$objPHPExcel->getActiveSheet()->setCellValue('AA'.$i, $myrow['google_product_category']);
@@ -181,7 +286,7 @@ function submit(&$db, &$db_oc, $oc_tableprefix, $FromPrice, $ToPrice, $QOHMinima
 			$objPHPExcel->getActiveSheet()->freezePane('A2');
 		
 			// Auto Size columns
-			foreach(range('A','D') as $columnID) {
+			foreach(range('A','AA') as $columnID) {
 				$objPHPExcel->getActiveSheet()->getColumnDimension($columnID)
 					->setAutoSize(true);
 			}
