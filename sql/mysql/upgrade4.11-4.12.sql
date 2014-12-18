@@ -127,4 +127,6 @@ ALTER TABLE `sampleresults`
   ADD CONSTRAINT `sampleresults_ibfk_1` FOREIGN KEY (`testid`) REFERENCES `qatests` (`testid`);
 
 
+INSERT INTO `config` (`confname` ,`confvalue`) VALUES ('GoogleTranslatorAPIKey',  '');  
+
 UPDATE config SET confvalue='4.12' WHERE confname='VersionNumber';

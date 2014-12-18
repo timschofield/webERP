@@ -261,6 +261,9 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['AllowOrderLineItemNarrative'] != $_POST['X_AllowOrderLineItemNarrative'] ) {
 			$sql[] = "UPDATE config SET confvalue = '". $_POST['X_AllowOrderLineItemNarrative']."' WHERE confname = 'AllowOrderLineItemNarrative'";
 		}
+		if ($_SESSION['GoogleTranslatorAPIKey'] != $_POST['X_GoogleTranslatorAPIKey'] ) {
+			$sql[] = "UPDATE config SET confvalue = '". $_POST['X_GoogleTranslatorAPIKey']."' WHERE confname = 'GoogleTranslatorAPIKey'";
+		}
 		if ($_SESSION['RequirePickingNote'] != $_POST['X_RequirePickingNote'] ) {
 			$sql[] = "UPDATE config SET confvalue = '". $_POST['X_RequirePickingNote']."' WHERE confname = 'RequirePickingNote'";
 		}
@@ -486,6 +489,11 @@ echo '</select></td>
 		<td>' . _('Select the languages in which translations of the item description will be maintained. The default language is excluded.') . '</td>
 	</tr>';
 
+// Google Translator API Key 
+echo '<tr style="outline: 1px solid"><td>' . _('Google Translator API Key') . ':</td>
+	<td><input type="text" name="X_GoogleTranslatorAPIKey" size="25" maxlength="50" value="' . $_SESSION['GoogleTranslatorAPIKey'] . '" /></td>
+	<td>' . _('Google Translator API Key to allow automatic translations. More info at https://cloud.google.com/translate/')  . '</td></tr>';
+	
 //'RequirePickingNote'
 echo '<tr style="outline: 1px solid"><td>' . _('A picking note must be produced before an order can be delivered') . ':</td>
 	<td><select name="X_RequirePickingNote">
