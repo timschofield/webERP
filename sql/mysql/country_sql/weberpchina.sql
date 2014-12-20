@@ -1638,10 +1638,7 @@ CREATE TABLE IF NOT EXISTS `locstock` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Dumping data for table weberpcn.locstock: ~1 rows (approximately)
-/*!40000 ALTER TABLE `locstock` DISABLE KEYS */;
-INSERT INTO `locstock` (`loccode`, `stockid`, `quantity`, `reorderlevel`, `bin`) VALUES
-	('MEL', '001', -11, 0, '');
-/*!40000 ALTER TABLE `locstock` ENABLE KEYS */;
+
 
 
 -- Dumping structure for table weberpcn.loctransfers
@@ -4013,12 +4010,6 @@ CREATE TABLE IF NOT EXISTS `stockdescriptiontranslations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Dumping data for table weberpcn.stockdescriptiontranslations: ~3 rows (approximately)
-/*!40000 ALTER TABLE `stockdescriptiontranslations` DISABLE KEYS */;
-INSERT INTO `stockdescriptiontranslations` (`stockid`, `language_id`, `descriptiontranslation`) VALUES
-	('001', 'de_DE.utf8', ''),
-	('001', 'fr_FR.utf8', ''),
-	('001', 'it_IT.utf8', '');
-/*!40000 ALTER TABLE `stockdescriptiontranslations` ENABLE KEYS */;
 
 
 -- Dumping structure for table weberpcn.stockitemproperties
@@ -4084,11 +4075,6 @@ CREATE TABLE IF NOT EXISTS `stockmaster` (
   CONSTRAINT `stockmaster_ibfk_2` FOREIGN KEY (`taxcatid`) REFERENCES `taxcategories` (`taxcatid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table weberpcn.stockmaster: ~1 rows (approximately)
-/*!40000 ALTER TABLE `stockmaster` DISABLE KEYS */;
-INSERT INTO `stockmaster` (`stockid`, `categoryid`, `description`, `longdescription`, `units`, `mbflag`, `actualcost`, `lastcost`, `materialcost`, `labourcost`, `overheadcost`, `lowestlevel`, `discontinued`, `controlled`, `eoq`, `volume`, `grossweight`, `barcode`, `discountcategory`, `taxcatid`, `serialised`, `appendfile`, `perishable`, `decimalplaces`, `pansize`, `shrinkfactor`, `nextserialno`, `netweight`, `lastcostupdate`) VALUES
-	('001', 'CCP', '易耗品1', '易耗品1描述', 'each', 'B', 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0, 0, 0, 0, 0.0000, 0.0000, '', '', 1, 0, 'none', 0, 0, 0, 0, 0, 0.0000, '0000-00-00');
-/*!40000 ALTER TABLE `stockmaster` ENABLE KEYS */;
 
 
 -- Dumping structure for table weberpcn.stockmoves
