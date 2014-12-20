@@ -1,5 +1,6 @@
 webERP Change Log
 
+20/12/14 Exson: Remove item from weberpchina.sql
 18/12/14 RChacon:  Modifications of stockdescriptiontranslations table for longdescription translation and translated versions control.
 18/12/14 Phil: Fix to only add a description translation record where there is a non-empty translation string
 18/12/14 Ricard: Google translate script to add descriptions in a selected language
