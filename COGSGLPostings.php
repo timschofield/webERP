@@ -144,11 +144,14 @@ if (!isset($SelectedCOGSPostingID)) {
 			$sql = "INSERT INTO accountgroups (	groupname,
 												sectioninaccounts,
 												pandl,
-												sequenceintb )
+												sequenceintb,
+												accountgroups
+										       			)
 										VALUES ('Sales',
 												'1',
 												'1',
-												'10')";
+												'10',
+												' ')";
 
 			$result = DB_query($sql);
 		}
