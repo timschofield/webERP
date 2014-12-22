@@ -261,7 +261,9 @@ if (isset($_POST['submit'])) {
 							serialised,
 							materialcost+labourcost+overheadcost AS itemcost,
 							stockcategory.stockact,
-							stockcategory.wipact
+							stockcategory.wipact,
+							description,
+							longdescription
 					FROM stockmaster
 					INNER JOIN stockcategory
 					ON stockmaster.categoryid=stockcategory.categoryid
@@ -274,6 +276,8 @@ if (isset($_POST['submit'])) {
 			$UnitCost = $myrow[3];
 			$OldStockAccount = $myrow[4];
 			$OldWIPAccount = $myrow[5];
+			$OldDescription = $myrow[6];
+			$OldLongDescription = $myrow[7];
 
 
 			$sql = "SELECT SUM(locstock.quantity)
@@ -390,8 +394,6 @@ if (isset($_POST['submit'])) {
 				}
 			}
 
-
-
 			if ($InputError == 0){
 
 				DB_Txn_Begin();
@@ -430,7 +432,15 @@ if (isset($_POST['submit'])) {
 					foreach ($ItemDescriptionLanguagesArray as $LanguageId) {
 						if ($LanguageId != ''){
 							$result = DB_query("DELETE FROM stockdescriptiontranslations WHERE stockid='" . $StockID . "' AND language_id='" . $LanguageId . "'", $ErrMsg, $DbgMsg, true);
-							$result = DB_query("INSERT INTO stockdescriptiontranslations VALUES('" . $StockID . "','" . $LanguageId . "', '" . $_POST['Description_' . str_replace('.','_',$LanguageId)] . "')",$ErrMsg,$DbgMsg,true);
+							$result = DB_query("INSERT INTO stockdescriptiontranslations (stockid,
+																						language_id,
+																						descriptiontranslation,
+																						longdescriptiontranslation)
+												VALUES('" . $StockID . "','" . 
+															$LanguageId . "', '" . 
+															$_POST['Description_' . str_replace('.','_',$LanguageId)]  . "', '" . 
+															$_POST['LongDescription_' . str_replace('.','_',$LanguageId)]. 
+															"')",$ErrMsg,$DbgMsg,true);
 						}
 					}
 					/*
@@ -446,6 +456,17 @@ if (isset($_POST['submit'])) {
 
 				}
 
+				/* Activate the needs revision flag for translations for modified descriptions */
+				if ($OldDescription != $_POST['Description'] OR $OldLongDescription != $_POST['LongDescription']){
+					$sql = "UPDATE stockdescriptiontranslations
+						SET needsrevision = '0'
+						WHERE stockid='".$StockID."'";
+					$ErrMsg = _('The stock description translations could not be updated because');
+					$DbgMsg = _('The SQL that was used to set the flag for translation revision failed was');
+					$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
+				}
+
+				
 				//delete any properties for the item no longer relevant with the change of category
 				$result = DB_query("DELETE FROM stockitemproperties WHERE stockid ='" . $StockID . "'",$ErrMsg, $DbgMsg, true);
 
@@ -633,8 +654,15 @@ if (isset($_POST['submit'])) {
 					if (count($ItemDescriptionLanguages)>0){
 						foreach ($ItemDescriptionLanguagesArray as $LanguageId) {
 							if ($LanguageId != '' AND $_POST['Description_' . str_replace('.','_',$LanguageId)] != ''){
-								$sql = "INSERT INTO stockdescriptiontranslations VALUES('" . $StockID . "','" . $LanguageId . "', '" . $_POST['Description_' . str_replace('.','_',$LanguageId)] . "')";
-								$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
+								$result = DB_query("INSERT INTO stockdescriptiontranslations (stockid,
+																							language_id,
+																							descriptiontranslation,
+																							longdescriptiontranslation)
+													VALUES('" . $StockID . "','" . 
+																$LanguageId . "', '" . 
+																$_POST['Description_' . str_replace('.','_',$LanguageId)]  . "', '" . 
+																$_POST['longDescription_' . str_replace('.','_',$LanguageId)]. 
+																"')",$ErrMsg,$DbgMsg,true);
 							}
 						}
 					}
@@ -942,7 +970,7 @@ if (!isset($StockID) OR $StockID=='' or isset($_POST['UpdateCategories'])) {
 	$_POST['ShrinkFactor'] = $myrow['shrinkfactor'];
 
 
-	$sql = "SELECT descriptiontranslation, language_id FROM stockdescriptiontranslations WHERE stockid='" . $StockID . "' AND (";
+	$sql = "SELECT descriptiontranslation, longdescriptiontranslation, language_id FROM stockdescriptiontranslations WHERE stockid='" . $StockID . "' AND (";
 	foreach ($ItemDescriptionLanguagesArray as $LanguageId) {
 		$sql .= "language_id='" . $LanguageId ."' OR ";
 	}
@@ -950,6 +978,7 @@ if (!isset($StockID) OR $StockID=='' or isset($_POST['UpdateCategories'])) {
 	$result = DB_query($sql);
 	while ($myrow = DB_fetch_array($result)){
 		$_POST['Description_' . str_replace('.','_',$myrow['language_id'])] = $myrow['descriptiontranslation'];
+		$_POST['LongDescription_' . str_replace('.','_',$myrow['language_id'])] = $myrow['longdescriptiontranslation'];
 	}
 
 	echo '<tr><td>' . _('Item Code') . ':</td>
@@ -995,8 +1024,23 @@ if (isset($_POST['LongDescription'])) {
 echo '<tr>
 		<td>' . _('Part Description') . ' (' . _('long') . '):</td>
 		<td><textarea ' . (in_array('LongDescription',$Errors) ?  'class="texterror"' : '' ) .'  name="LongDescription" cols="40" rows="3">' . stripslashes($LongDescription) . '</textarea></td>
-	</tr>
-	<tr>
+	</tr>';
+
+foreach ($ItemDescriptionLanguagesArray as $LanguageId) {
+	if ($LanguageId!=''){
+		//unfortunately cannot have points in POST variables so have to mess with the language id
+		$PostVariableName = 'LongDescription_' . str_replace('.','_',$LanguageId);
+		if (!isset($_POST[$PostVariableName])){
+			$_POST[$PostVariableName] ='';
+		}
+		echo '<tr>
+				<td>' . $LanguagesArray[$LanguageId]['LanguageName'] . ' ' . _('Long Description') . ':</td>
+				<td><textarea name="'. $PostVariableName . '"" cols="40" rows="3">' . stripslashes(AddCarriageReturns($_POST[$PostVariableName])) . '</textarea></td>
+			</tr>';
+	}
+}
+
+echo '<tr>
 		<td>' .  _('Image File (.jpg)') . ':</td>
 		<td><input type="file" id="ItemPicture" name="ItemPicture" />
 		<br /><input type="checkbox" name="ClearImage" id="ClearImage" value="1" > '._('Clear Image').'

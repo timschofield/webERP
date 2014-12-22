@@ -126,17 +126,14 @@ ALTER TABLE `qasamples`
 ALTER TABLE `sampleresults`
   ADD CONSTRAINT `sampleresults_ibfk_1` FOREIGN KEY (`testid`) REFERENCES `qatests` (`testid`);
 
+ALTER TABLE `stockdescriptiontranslations` CHANGE `descriptiontranslation` `descriptiontranslation` VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Item''s short description';
+ALTER TABLE `stockdescriptiontranslations` ADD `longdescriptiontranslation` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Item''s long description';
+ALTER TABLE `stockdescriptiontranslations` ADD  `needsrevision` INT( 1 ) NOT NULL DEFAULT  '0';
+
+INSERT INTO  `scripts` (`script` ,`pagesecurity` ,`description`) VALUES ('AutomaticTranslationDescriptions.php',  '15',  'Translates via Google Translator all empty translated descriptions '
 
 INSERT INTO `config` (`confname` ,`confvalue`) VALUES ('GoogleTranslatorAPIKey',  '');  
 
 UPDATE config SET confvalue='4.12' WHERE confname='VersionNumber';
 
---
--- Modifications of stockdescriptiontranslations table for longdescription translation and translated versions control.
--- 
--- Modify field for the short description translation of an item.
-ALTER TABLE `stockdescriptiontranslations` CHANGE `descriptiontranslation` `descriptiontranslation` VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Item''s short description';
--- Add field for the long description translation of an item.
-ALTER TABLE `stockdescriptiontranslations` ADD `longdescription` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Item''s long description';
--- Add field for the version control of the record.
-ALTER TABLE `stockdescriptiontranslations` ADD `lastupdate` DATETIME NULL DEFAULT NULL COMMENT 'Last update of this record';
+
