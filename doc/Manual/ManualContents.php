@@ -48,10 +48,10 @@ if (((!isset($_POST['Submit'])) AND (empty($_GET['ViewTopic']))) ||
 	   $Name = 'Select' . $Title;
 	   echo "<ul>\n";
 	   if (!isset($_POST['Submit'])) {
-		 echo '<li class="toc" style="list-style-type:none;"><input type="checkbox" name="'.$Name.'">'."\n";
-		 echo '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?ViewTopic='.$Title.'">'.$SubLinks[0].'</a></li>'."\n";
+		 echo '<li class="toc" style="list-style-type:none;"><input type="checkbox" name="' . $Name . '">'."\n";
+		 echo '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?ViewTopic=' . $Title . '">' . $SubLinks[0] . '</a></li>' . "\n";
 	   } else {
-		 echo' <li class="toc"><a href="#'.$Title.'">'.$SubLinks[0].'</a></li>'."\n";
+		 echo' <li class="toc"><a href="#'.$Title.'">' . $SubLinks[0] . '</a></li>' . "\n";
 	   }
 	   if (count($SubLinks)>1) {
 		  echo'<ul>'."\n";

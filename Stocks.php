@@ -1,11 +1,9 @@
 <?php
-/* $Id: Stocks.php 7010 2014-11-29 17:45:46Z rchacon $ */
+/* $Id: Stocks.php 7030 2014-12-18 08:29:23Z daintree $ */
 /**************************************************************************************
 KL RICARD MODIFICATIONS:
 - management of the extra KL fileds in stockmaster
 ***************************************************************************************/
-
-/* $Id: Stocks.php 6730 2014-05-26 07:08:19Z rchacon $ */
 
 include('includes/session.inc');
 $Title = _('Item Maintenance');
@@ -466,8 +464,8 @@ if (isset($_POST['submit'])) {
 
 				if (count($ItemDescriptionLanguagesArray)>0){
 					foreach ($ItemDescriptionLanguagesArray as $LanguageId) {
-						if ($LanguageId!=''){
-							$result = DB_query("DELETE FROM stockdescriptiontranslations WHERE stockid='" . $StockID . "' AND language_id='" . $LanguageId . "'",$ErrMsg,$DbgMsg,true);
+						if ($LanguageId != ''){
+							$result = DB_query("DELETE FROM stockdescriptiontranslations WHERE stockid='" . $StockID . "' AND language_id='" . $LanguageId . "'", $ErrMsg, $DbgMsg, true);
 							$result = DB_query("INSERT INTO stockdescriptiontranslations VALUES('" . $StockID . "','" . $LanguageId . "', '" . $_POST['Description_' . str_replace('.','_',$LanguageId)] . "')",$ErrMsg,$DbgMsg,true);
 						}
 					}
@@ -682,7 +680,7 @@ if (isset($_POST['submit'])) {
 					$DbgMsg = _('The SQL that was used to update the language description and failed was');
 					if (count($ItemDescriptionLanguages)>0){
 						foreach ($ItemDescriptionLanguagesArray as $LanguageId) {
-							if ($LanguageId!=''){
+							if ($LanguageId != '' AND $_POST['Description_' . str_replace('.','_',$LanguageId)] != ''){
 								$sql = "INSERT INTO stockdescriptiontranslations VALUES('" . $StockID . "','" . $LanguageId . "', '" . $_POST['Description_' . str_replace('.','_',$LanguageId)] . "')";
 								$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
 							}

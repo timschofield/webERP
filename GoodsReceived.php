@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: GoodsReceived.php 7021 2014-12-14 02:04:44Z tehonu $*/
+/* $Id: GoodsReceived.php 7026 2014-12-16 20:55:46Z agaluski $*/
 
 /* Session started in header.inc for password checking and authorisation level check */
 include('includes/DefinePOClass.php');
@@ -605,6 +605,9 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 							$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock movement record could not be inserted because');
 							$DbgMsg = _('The following SQL to insert the serial stock movement records was used');
 							$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+							if ($_SESSION['QualityLogSamples']==1) {
+								CreateQASample($OrderLine->StockID,$Item->BundleRef, '', 'Created from Purchase Order', 0, 0,$db);
+							}	
 						}//non blank BundleRef
 					} //end foreach
 				}

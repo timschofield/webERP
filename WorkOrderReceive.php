@@ -1,5 +1,5 @@
 <?php
-/* $Id: WorkOrderReceive.php 7021 2014-12-14 02:04:44Z tehonu $*/
+/* $Id: WorkOrderReceive.php 7026 2014-12-16 20:55:46Z agaluski $*/
 
 include('includes/session.inc');
 $Title = _('Receive Work Order');
@@ -565,6 +565,9 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 								$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 							}
 						}//end prefined controlled items or not
+						if ($_SESSION['QualityLogSamples']==1) {
+							CreateQASample($_POST['StockID'],$_POST['SerialNo'.$i], '', 'Created from Work Order', 0, 0,$db);
+						}
 					} //non blank SerialNo
 				} //end for all of the potential serialised fields received
 			} else { //the item is just batch/lot controlled not serialised
@@ -663,6 +666,9 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 								$DbgMsg = _('The following SQL to delete the predefined work order batch/bundle/lot record was used');
 								$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 							}
+						}
+						if ($_SESSION['QualityLogSamples']==1) {
+							CreateQASample($_POST['StockID'],$_POST['BatchRef'.$i], '', 'Created from Work Order', 0 ,0,$db);
 						}
 					}//non blank BundleRef
 				} //end for all of the potential batch/lot fields received

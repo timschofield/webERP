@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: StockMovements.php 7021 2014-12-14 02:04:44Z tehonu $*/
+/* $Id: StockMovements.php 7022 2014-12-14 02:40:23Z tehonu $*/
 
 include('includes/session.inc');
 $Title = _('Stock Movements');

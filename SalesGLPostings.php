@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: SalesGLPostings.php 6941 2014-10-26 23:18:08Z daintree $*/
+/* $Id: SalesGLPostings.php 7035 2014-12-20 06:55:12Z exsonqu $*/
 
 include('includes/session.inc');
 $Title = _('Sales GL Postings Set Up');
@@ -167,12 +167,14 @@ if (!isset($SelectedSalesPostingID)) {
 					groupname,
 					sectioninaccounts,
 					pandl,
-					sequenceintb
+					sequenceintb,
+					parentgroupname
 				) VALUES (
 					'Sales',
 					1,
 					1,
-					10)";
+					10,
+					' ')";
 
 			$result = DB_query($SQL);
 		}

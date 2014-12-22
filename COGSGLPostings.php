@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: COGSGLPostings.php 6941 2014-10-26 23:18:08Z daintree $*/
+/* $Id: COGSGLPostings.php 7035 2014-12-20 06:55:12Z exsonqu $*/
 
 include('includes/session.inc');
 
@@ -144,11 +144,14 @@ if (!isset($SelectedCOGSPostingID)) {
 			$sql = "INSERT INTO accountgroups (	groupname,
 												sectioninaccounts,
 												pandl,
-												sequenceintb )
+												sequenceintb,
+												accountgroups
+										       			)
 										VALUES ('Sales',
 												'1',
 												'1',
-												'10')";
+												'10',
+												' ')";
 
 			$result = DB_query($sql);
 		}

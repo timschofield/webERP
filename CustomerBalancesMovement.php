@@ -16,6 +16,7 @@ if (!isset($_POST['RunReport'])){
 
 	$SalesAreasResult = DB_query("SELECT areacode, areadescription FROM areas");
 	$CustomersResult = DB_query("SELECT debtorno, name FROM debtorsmaster ORDER BY name");
+	$SalesFolkResult = DB_query("SELECT salesmancode, salesmanname FROM salesman ORDER BY salesmanname");
 
 	echo '<form id="Form1" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
 
@@ -39,6 +40,16 @@ if (!isset($_POST['RunReport'])){
 						<option selected="selected" value="">' . _('All') . '</option>';
 	while ($AreaRow = DB_fetch_array($SalesAreasResult)) {
 		echo 			'<option value="' . $AreaRow['areacode'] . '">' . $AreaRow['areadescription'] . '</option>';
+	}
+	echo 			'</select>
+					</td>
+				</tr>
+				<tr>
+					<td>' . _('Sales Person') . '</td>
+					<td><select name="SalesPerson">
+						<option selected="selected" value="">' . _('All') . '</option>';
+	while ($SalesPersonRow = DB_fetch_array($SalesFolkResult)) {
+		echo 			'<option value="' . $SalesPersonRow['salesmancode'] . '">' . $SalesPersonRow['salesmanname'] . '</option>';
 	}
 	echo 			'</select>
 					</td>
@@ -72,8 +83,8 @@ if ($_POST['Customer']!='') {
 	$WhereClause = "debtorsmaster.debtorno='" . $_POST['Customer'] . "'";
 } elseif ($_POST['SalesArea']!='') {
 	$WhereClause = "custbranch.area='" . $_POST['SalesArea'] . "'";
-} else {
-	$WhereClause ='';
+} elseif ($_POST['SalesPerson']!='') {
+	$WhereClause = "custbranch.salesman='" . $_POST['SalesPerson'] . "'";
 }
 
 $sql = "SELECT SUM(ovamount+ovgst+ovdiscount+ovfreight-alloc) AS currencybalance,
