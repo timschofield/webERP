@@ -99,6 +99,23 @@ function CodeModelRing($stockid){
 	return $CodeModel;
 }
 
+function RingSize($stockid){
+	if (strlen($stockid) == 6){
+		$Size = "FR";
+	}else{
+		if((substr($stockid, -2,1) == "0") 
+			OR (substr($stockid, -2,1) == "1")
+			OR (substr($stockid, -2,1) == "2")){
+			// ring with sizes! We need to cut the 3 last characters -XX
+//			$CodeModel = (substr($stockid, 0,strlen($stockid)-3));
+			$Size = substr($stockid, strlen($stockid)-2,2);
+		}else{
+			$Size = "FR";
+		}
+	}
+	return $Size;
+}
+
 function locale_number_format_zero_blank($num,$dec){
 	if($num == 0){
 		return '';
