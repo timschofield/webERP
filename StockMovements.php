@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: StockMovements.php 7021 2014-12-14 02:04:44Z tehonu $*/
+/* $Id: StockMovements.php 7022 2014-12-14 02:40:23Z tehonu $*/
 
 include('includes/session.inc');
 $Title = _('Stock Movements');
@@ -171,8 +171,8 @@ while ($myrow=DB_fetch_array($MovtsResult)) {
 				$myrow['transno'],
 				$myrow['typename'],
 				$myrow['transno'],
-				$myrow['userid'],
 				$DisplayTranDate,
+				$myrow['userid'],
 				$myrow['debtorno'],
 				$myrow['branchcode'],
 				locale_number_format($myrow['qty'],$myrow['decimalplaces']),

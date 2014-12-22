@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: SystemParameters.php 6988 2014-11-17 04:08:15Z exsonqu $*/
+/* $Id: SystemParameters.php 7029 2014-12-18 02:07:07Z tehonu $*/
 
 include('includes/session.inc');
 
@@ -99,6 +99,15 @@ if (isset($_POST['submit'])) {
 	}elseif (strlen($_POST['X_SmtpSetting']) != 1 OR !is_numeric($_POST['X_SmtpSetting'])){
 		$InputError = 1;
 		prnMsg(_('The SMTP setting should be selected as Yes or No'),'error');
+	}elseif (strlen($_POST['X_QualityLogSamples']) != 1 OR !is_numeric($_POST['X_QualityLogSamples'])){
+		$InputError = 1;
+		prnMsg(_('The Quality Log Samples setting should be selected as Yes or No'),'error');
+	} elseif (mb_strstr($_POST['X_QualityProdSpecText'], "'") OR mb_strlen($_POST['X_QualityProdSpecText']) > 5000) {
+		$InputError = 1;
+		prnMsg(_('The Quality ProdSpec Text may not contain single quotes and may not be longer than 5000 chars'),'error');
+	} elseif (mb_strstr($_POST['X_QualityCOAText'], "'") OR mb_strlen($_POST['X_QualityCOAText']) > 5000) {
+		$InputError = 1;
+		prnMsg(_('The Quality COA Text may not contain single quotes and may not be longer than 5000 chars'),'error');	
 	}
 
 	if ($InputError !=1){
@@ -252,6 +261,9 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['AllowOrderLineItemNarrative'] != $_POST['X_AllowOrderLineItemNarrative'] ) {
 			$sql[] = "UPDATE config SET confvalue = '". $_POST['X_AllowOrderLineItemNarrative']."' WHERE confname = 'AllowOrderLineItemNarrative'";
 		}
+		if ($_SESSION['GoogleTranslatorAPIKey'] != $_POST['X_GoogleTranslatorAPIKey'] ) {
+			$sql[] = "UPDATE config SET confvalue = '". $_POST['X_GoogleTranslatorAPIKey']."' WHERE confname = 'GoogleTranslatorAPIKey'";
+		}
 		if ($_SESSION['RequirePickingNote'] != $_POST['X_RequirePickingNote'] ) {
 			$sql[] = "UPDATE config SET confvalue = '". $_POST['X_RequirePickingNote']."' WHERE confname = 'RequirePickingNote'";
 		}
@@ -331,6 +343,18 @@ if (isset($_POST['submit'])) {
 		}
 		if ($_SESSION['SmtpSetting'] != $_POST['X_SmtpSetting']){
 			$sql[] = "UPDATE config SET confvalue = '" . $_POST['X_SmtpSetting'] . "' WHERE confname='SmtpSetting'";
+
+		}
+		if ($_SESSION['QualityLogSamples'] != $_POST['X_QualityLogSamples']){
+			$sql[] = "UPDATE config SET confvalue = '" . $_POST['X_QualityLogSamples'] . "' WHERE confname='QualityLogSamples'";
+
+		}
+		if ($_SESSION['QualityProdSpecText'] != $_POST['X_QualityProdSpecText']){
+			$sql[] = "UPDATE config SET confvalue = '" . $_POST['X_QualityProdSpecText'] . "' WHERE confname='QualityProdSpecText'";
+
+		}
+		if ($_SESSION['QualityCOAText'] != $_POST['X_QualityCOAText']){
+			$sql[] = "UPDATE config SET confvalue = '" . $_POST['X_QualityCOAText'] . "' WHERE confname='QualityCOAText'";
 
 		}
 		$ErrMsg =  _('The system configuration could not be updated because');
@@ -465,6 +489,11 @@ echo '</select></td>
 		<td>' . _('Select the languages in which translations of the item description will be maintained. The default language is excluded.') . '</td>
 	</tr>';
 
+// Google Translator API Key 
+echo '<tr style="outline: 1px solid"><td>' . _('Google Translator API Key') . ':</td>
+	<td><input type="text" name="X_GoogleTranslatorAPIKey" size="25" maxlength="50" value="' . $_SESSION['GoogleTranslatorAPIKey'] . '" /></td>
+	<td>' . _('Google Translator API Key to allow automatic translations. More info at https://cloud.google.com/translate/')  . '</td></tr>';
+	
 //'RequirePickingNote'
 echo '<tr style="outline: 1px solid"><td>' . _('A picking note must be produced before an order can be delivered') . ':</td>
 	<td><select name="X_RequirePickingNote">
@@ -1145,7 +1174,29 @@ echo '		</select>
 	 </td>
      </tr>';
 
+echo '<tr style="outline: 1px solid"><td>' . _('Text for Quality Product Specification') . ':</td>
+	<td><textarea name="X_QualityProdSpecText" rows="3" cols="40">' . $_SESSION['QualityProdSpecText'] . '</textarea></td>
+	<td>' . _('This text appears on product specifications') . '</td></tr>';
+echo '<tr style="outline: 1px solid"><td>' . _('Text for Quality Product Certifications') . ':</td>
+	<td><textarea name="X_QualityCOAText" rows="3" cols="40">' . $_SESSION['QualityCOAText'] . '</textarea></td>
+	<td>' . _('This text appears on product certifications') . '</td></tr>';
+echo '<tr style="outline: 1px solid">
+	<td>' . _('Auto Log Quality Samples'). '</td>
+	<td>
+		<select type="text" name="X_QualityLogSamples" >';
+		if ($_SESSION['QualityLogSamples'] == 0){
+			echo '<option select="selected" value="0">' . _('No') . '</option>';
+			echo '<option value="1">' . _('Yes') . '</option>';
+		} elseif ($_SESSION['QualityLogSamples'] == 1){
+			echo '<option select="selected" value="1">' . _('Yes') . '</option>';
+			echo '<option value="0">' . _('No') . '</option>';
+		};
 
+echo '</select>
+         </td>
+	 <td>' .  _('The flag determines if the system creates quality samples automatically for each lot during P/O Receipt and W/O Receipt transactions.').'
+	 </td>
+     </tr>';
 
 
 echo '</table>

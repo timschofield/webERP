@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: SupplierInvoice.php 7021 2014-12-14 02:04:44Z tehonu $ */
+/* $Id: SupplierInvoice.php 7024 2014-12-16 14:57:11Z rchacon $ */
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing
@@ -634,7 +634,7 @@ if (!isset($_POST['PostInvoice'])){
 	echo '<td>' . _('Invoice Date') . ' (' . _('in format') . ' ' . $_SESSION['DefaultDateFormat'] . ') :</td>
 		<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" size="11" maxlength="10" name="TranDate" value="' . $_SESSION['SuppTrans']->TranDate . '" /></td>
 		<td>' . _('Exchange Rate') . ':</td>
-		<td><input type="text" class="number" size="11" maxlength="10" name="ExRate" value="' . locale_number_format($_SESSION['SuppTrans']->ExRate,8) . '" /></td>
+		<td><input class="number" maxlength="12" name="ExRate" size="14" type="text" value="' . locale_number_format($_SESSION['SuppTrans']->ExRate,10) . '" /></td>
 	</tr>
 	</table>';
 
