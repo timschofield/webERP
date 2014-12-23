@@ -130,7 +130,7 @@ ALTER TABLE `stockdescriptiontranslations` CHANGE `descriptiontranslation` `desc
 ALTER TABLE `stockdescriptiontranslations` ADD `longdescriptiontranslation` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Item''s long description';
 ALTER TABLE `stockdescriptiontranslations` ADD  `needsrevision` INT( 1 ) NOT NULL DEFAULT  '0';
 
-INSERT INTO  `scripts` (`script` ,`pagesecurity` ,`description`) VALUES ('AutomaticTranslationDescriptions.php',  '15',  'Translates via Google Translator all empty translated descriptions '
+INSERT INTO  `scripts` (`script` ,`pagesecurity` ,`description`) VALUES ('AutomaticTranslationDescriptions.php',  '15',  'Translates via Google Translator all empty translated descriptions ');
 
 INSERT INTO `config` (`confname` ,`confvalue`) VALUES ('GoogleTranslatorAPIKey',  '');  
 
