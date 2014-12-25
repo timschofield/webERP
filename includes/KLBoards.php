@@ -3168,9 +3168,13 @@ function SplittedpaymentsBySPG($maxdays, $maxsplitted, $db){
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th class="ascending">' .  _('SPG') . '</th>
-							<th class="ascending">' . _('Splitted') . '</th>
-							<th class="ascending">' . _('Amount') . '</th>
+							<th>' .  _('SPG') . '</th>
+							<th>' . _('Splitted') . '</th>
+							<th>' . _('Amount') . '</th>
+							<th>' . _('Order') . '</th>
+							<th>' . _('Yellow#') . '</th>
+							<th>' . _('Cash') . '</th>
+							<th>' . _('Credit Card') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -3180,11 +3184,49 @@ function SplittedpaymentsBySPG($maxdays, $maxsplitted, $db){
 			printf('<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
 					</tr>', 
 					$myrow['salesperson'],
 					locale_number_format($myrow['splitted'],0),
-					locale_number_format($myrow['amount'],0)
+					locale_number_format($myrow['amount'],0),
+					'',
+					'',
+					'',
+					''
 					);
+			$SQLDetails = "SELECT orderno,
+								customerref,
+								klpaidcash, 
+								klpaidcreditcard 
+						FROM salesorders
+						WHERE orddate >= '". $StartDate. "'
+							AND salesperson = '". $myrow['salesperson']. "'
+							AND klpaidcash > 0
+							AND klpaidcreditcard > 0
+						ORDER BY orderno";
+			$resultdetails = DB_query($SQLDetails);
+			while ($myrowdetails = DB_fetch_array($resultdetails)) {
+				$k = StartEvenOrOddRow($k);
+				printf('<td>%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						</tr>', 
+						'',
+						'',
+						'',
+						$myrowdetails['orderno'],
+						$myrowdetails['customerref'],
+						locale_number_format($myrowdetails['klpaidcash'],0),
+						locale_number_format($myrowdetails['klpaidcreditcard'],0)
+						);
+			}
 			$i++;
 		}
 		echo '</table>
