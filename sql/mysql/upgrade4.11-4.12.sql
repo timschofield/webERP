@@ -134,6 +134,9 @@ INSERT INTO  `scripts` (`script` ,`pagesecurity` ,`description`) VALUES ('Automa
 
 INSERT INTO `config` (`confname` ,`confvalue`) VALUES ('GoogleTranslatorAPIKey',  '');  
 
+INSERT INTO  `scripts` (`script` ,`pagesecurity` ,`description`) VALUES ('RevisionTranslations.php',  '15',  'Human revision for automatic descriptions translations');
+
+
 UPDATE config SET confvalue='4.12' WHERE confname='VersionNumber';
 
 
