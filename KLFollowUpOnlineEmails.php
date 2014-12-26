@@ -261,7 +261,7 @@ if ($_GET['EmailType']=='NoOrderPlaced'){
 	$MailMessage .= '	
 			<table>
 				<tr>
-					<th> ' . _('You were registered from this email address as') . ':
+					<th> ' . 'You were registered from this email address as' . ':
 					</th>
 					<td>' . DB_escape_string($myrow['customername']) . '
 					</td>
@@ -381,41 +381,26 @@ if ($_GET['EmailType']=='TrackingConfirmation'){
 					' . 'You can track your shipment at http://ems.posindonesia.co.id/index.php' . '
 				</td>
 			</tr>';
-		$MailMessage .= '
-			<tr>
-				<td colspan="4">
-					<p>' . 'Parcel should arrive in 3-5 working days time. Please let us know when you receive it, and we would like to see some pictures of you wearing the jewels! You can post them on our Facebook Fan Page at www.facebook.com/KapalLautBali ' . '</p>
-				</td>
-			</tr>';
-	 }
-	if($myrow['shippername'] == 'JNE OKE'){
+	}else{
 		$MailMessage .= '
 			<tr>
 				<td colspan="4">
 					' . 'You can track your shipment at http://jne.co.id/index.php?lang=IN' . '
 				</td>
 			</tr>';
-	 $MailMessage .= '
-			<tr>
-				<td colspan="4">
-					<p>' . 'Parcel should arrive in 3-5 working days time. Please let us know when you receive it, and we would like to see some pictures of you wearing the jewels! You can post them on our Facebook Fan Page at www.facebook.com/KapalLautBali ' . '</p>
-				</td>
-			</tr>';
 	 }
-	if($myrow['shippername'] == 'JNE YES'){
-		$MailMessage .= '
-			<tr>
-				<td colspan="4">
-					' . 'You can track your shipment at http://jne.co.id/index.php?lang=IN' . '
-				</td>
-			</tr>';
-	 $MailMessage .= '
-			<tr>
-				<td colspan="4">
-					<p>' . 'Parcel should arrive tomorrow. Please let us know when you receive it, and we would like to see some pictures of you wearing the jewels! You can post them on our Facebook Fan Page at www.facebook.com/KapalLautBali ' . '</p>
-				</td>
-			</tr>';
-	 }
+	$MailMessage .= '
+		<tr>
+			<td colspan="4">
+				' . 'For delivery transit schedules and general information check http://www.kapal-laut.com/Delivery-Shipping-Information' . '
+			</td>
+		</tr>';
+	$MailMessage .= '
+		<tr>
+			<td colspan="4">
+				<p>' . 'Please let us know when you receive it, and we would like to see some pictures of you wearing the jewels! You can post them on our Facebook Fan Page at www.facebook.com/KapalLautBali ' . '</p>
+			</td>
+		</tr>';
 }
 
 if ($_GET['EmailType']=='ThankYouOrder'){
@@ -424,7 +409,7 @@ if ($_GET['EmailType']=='ThankYouOrder'){
 				<td colspan="4">
 					<p>' . 'On '. ConvertSQLDate($myrow['orddate']) .' you purchased some jewellery from us, and we shipped it via ' . DB_escape_string($myrow['shippername']). '.</p>
 					<p>' . 'You should have received it few days ago, and we very much hope you are enjoying your new jewels. ' . '</p>
-					<p>' . 'Should you wish to comment your experience on our Facebook fan page you can find us here www.facebook.com/KapalLautBali.' . '</p>
+					<p>' . 'Should you wish to comment your experience on our Facebook fan page you can find us here http://www.facebook.com/KapalLautBali.' . '</p>
 					<p>' . 'Be sure we will read it to all our staff at our daily briefing! We do take all feedback seriously. If there is any information that you think will help us improve, feel free to email us direct to sales@kapal-laut.com ' . '</p>
 				</td>
 			</tr>';
