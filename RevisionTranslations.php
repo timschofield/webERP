@@ -46,11 +46,9 @@ $result = DB_query($sql);
 
 echo '<tr>
 	<th>' . _('Code') . '</th>
+	<th>' . _('Language') . '</th>
 	<th>' . _('Description') . '</th>
 	<th>' . _('Long Description') . '</th>
-	<th>' . _('Language') . '</th>
-	<th>' . _('Translated Description') . '</th>
-	<th>' . _('Translated Long Description') . '</th>
 	<th>' . _('Revised?') . '</th>
 </tr>';
 
@@ -67,14 +65,27 @@ while ($myrow=DB_fetch_array($result))	{
 	}
 
 	echo'<td>' . $myrow['stockid'] . '</td>
+		<td>'. $_SESSION['Language']. '</td>
 		<td>' . $myrow['description'] . '</td>
 		<td>' . $myrow['longdescription'] . '</td>
+		</tr>';
+	
+	if ($k==1){
+		echo '<tr class="EvenTableRows">';
+		$k=0;
+	} else {
+		echo '<tr class="OddTableRows">';
+		$k=1;
+	}
+
+	echo'<td></td>
 		<td>' . $myrow['language_id'] . '</td>';
+
 	echo '<td>
 			<input type="text" class="text" name="DescriptionTranslation' . $i .'" maxlength="50" size="52" value="'. $myrow['descriptiontranslation'] .'" />
 		</td>
 		<td>
-			<textarea name="LongDescriptionTranslation' . $i .'" cols="60" rows="5">'. $myrow['longdescriptiontranslation'] .'" </textarea></td>
+			<textarea name="LongDescriptionTranslation' . $i .'" cols="70" rows="5">'. $myrow['longdescriptiontranslation'] .'" </textarea></td>
 		</td>';
 
 	echo '<td><input type="checkbox" name="Revised' . $i.'" value="1" />
