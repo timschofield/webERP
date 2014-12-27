@@ -1,5 +1,6 @@
 webERP Change Log
 
+27/12/14 RChacon: In AutomaticTranslationDescriptions.php, add comment for the SVN repository automatically updates the revision number, add $ViewTopic and $BookMark, and else if no translation. Add info to manual.
 27/12/14 RChacon: Set boolean field needrevision to tiny integer with a maximum display width of 1, signed and not null. Add comments to sql file.
 20/12/14 Exson: Make COGSGLPostings.php, SalesGLPostings.php SQL strict mode compatible.
 20/12/14 Exson: Remove item from weberpchina.sql

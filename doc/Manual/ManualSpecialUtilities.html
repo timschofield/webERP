@@ -4,21 +4,60 @@
 
 <p>The Utility menu is a separate module so access can be turned off to hide these utility script links by turning off the Utilities module in user settings. All utlity pages are prefixed with a Z_.</p>
 
-<h2>Re-Apply Standard Costs to Sales Analysis</h2>
+<h2><a id="Z_ChangeCustomerCode">Change A Customer Code</a></h2>
+
+<p>This page requires the entry of an existing customer code and the new customer code. The system checks to see the new code entered doesn't already exist and that the code entered for the existing customer does exist. If all is well then the customer code data is changed in all tables throughout the system that refer to the customer code. Due to the extensive changes taking place throughout the database this utility should not be run during normal operating hours when others are using the system.</p>
+
+<h2><a id="Z_ChangeCustomerCode">Change A Customer Code</a></h2>
+
+<p>.</p>
+
+<h2><a id="Z_ChangeBranchCode">Change A Customer Branch Code</a></h2>
+
+<p>.</p>
+
+<h2><a id="Z_ChangeSupplierCode">Change A Supplier Code</a></h2>
+
+<p>.</p>
+
+<h2><a id="Z_ChangeStockCategory">Change A Stock Category Code</a></h2>
+
+<p>.</p>
+
+<h2><a id="Z_ChangeStockCode">Change An Inventory Item Code</a></h2>
+
+<p>This page requires the entry of an existing stock code and the new stock code. The system checks to see the new code entered doesn&apos;t already exist and that the code entered for the existing item does exist. If all is well then the stock code data is changed in all tables through-out the system. Sales analysis, stock movements, stock locations, Bills of Material, parent and component items, sales order details and purchase order details as well as the Stock Master, pricing and shipment charges. Due to the extensive changes taking place throughout the database this utility should not be run during normal operating hours, when others are using the system.</p>
+
+<p>.</p>
+
+<h2><a id="Z_ChangeGLAccountCode">Change A GL Account Code</a></h2>
+
+<p>.</p>
+
+<h2><a id="Z_ChangeLocationCode">Change A Location Code</a></h2>
+
+<p>.</p>
+
+<h2><a id="Z_TranslateItemDescriptions">Translate Item Descriptions</a></h2>
+
+<p>
+This utility uses the Google Translator API to automatically translate item descriptions (short and long part descriptions).</p>
+
+<p>It translates from the item description in the default language (It was set up in $DefaultLanguage in config) to the languages to maintain translations for item descriptions (They were set up in <u>Main Menu</u> &gt; <u>Setup</u> &gt; General Setup Options  &gt; <u>System Parameters</u> &gt; General Settings).</p>
+
+<p>It requieres a Google Translator API Key (more info in <a href="https://cloud.google.com/translate/" target=_blank">https://cloud.google.com/translate/</a>) to allow automatic translations.</p>
+
+<h2><a id="Z_BottomUpCosts">Update costs for all BOM items, from the bottom up</a></h2>
+
+<p>.</p>
+
+<h2><a id="Z_ReApplyCostToSA">Re-apply costs to Sales Analysis</a></h2>
 
 <p>This utility allows a period to be selected for which the current standard cost is applied to the quantities recorded in the sales analysis as sold to re-calculate the cost of goods sold.</p>
 
 <p>It is important to realise that this will destroy the integrity of the matching general ledger journals created at the time of invoicing and that the GL cost of sales will no longer match with the sales analysis cost of sales.</p>
 
 <p>However, occasionally incorrect cost data that has made a monkey of the sales analysis and general ledger can only be rectified by running this utility.</p>
-
-<h2>Change A Customer Code</h2>
-
-<p>This page requires the entry of an existing customer code and the new customer code. The system checks to see the new code entered doesn't already exist and that the code entered for the existing customer does exist. If all is well then the customer code data is changed in all tables throughout the system that refer to the customer code. Due to the extensive changes taking place throughout the database this utility should not be run during normal operating hours when others are using the system.</p>
-
-<h2><a id="Z_ChangeStockCode">Change An Inventory Item Code</a></h2>
-
-<p>This page requires the entry of an existing stock code and the new stock code. The system checks to see the new code entered doesn&apos;t already exist and that the code entered for the existing item does exist. If all is well then the stock code data is changed in all tables through-out the system. Sales analysis, stock movements, stock locations, Bills of Material, parent and component items, sales order details and purchase order details as well as the Stock Master, pricing and shipment charges. Due to the extensive changes taking place throughout the database this utility should not be run during normal operating hours, when others are using the system.</p>
 
 <h2>Make Stock Locations</h2>
 
