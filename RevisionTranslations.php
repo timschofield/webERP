@@ -17,6 +17,7 @@ if (isset($_POST['Submit'])){
 						WHERE stockid = '". $_POST['StockID' .$i] ."'
 							AND language_id = '". $_POST['LanguageID' .$i] ."'";
 			$ResultUpdate = DB_Query($sqlUpdate,'', '', true);
+			prnMsg($_POST['StockID' .$i] . ' ' . _('descriptions') . ' ' .  _('in') . ' ' . $_POST['LanguageID' .$i] . ' ' . _('have been updated'),'success');
 		}
 	}
 }
