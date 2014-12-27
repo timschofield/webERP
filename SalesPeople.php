@@ -3,6 +3,10 @@
 
 include('includes/session.inc');
 $Title = _('Sales People Maintenance');
+$ViewTopic = 'SalesPeople';
+$BookMark = 'SalesPeople';
+if(isset($_GET['SelectedSalesPerson'])) {$BookMark = 'SalespeopleEdit';}// For Edit's screen.
+if(isset($_GET['delete'])) {$BookMark = 'SalespeopleDelete';}// For Delete's ERROR Message Report.
 include('includes/header.inc');
 
 if (isset($_GET['SelectedSalesPerson'])){
@@ -139,6 +143,7 @@ if (isset($_POST['submit'])) {
 	}
 
 } elseif (isset($_GET['delete'])) {
+$BookMark = 'SalespeopleDelete';
 //the link to delete a selected record was clicked instead of the submit button
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'DebtorsMaster'
@@ -173,7 +178,6 @@ if (isset($_POST['submit'])) {
 			}
 		}
 	} //end if Sales-person used in GL accounts
-
 }
 
 if (!isset($SelectedSalesPerson)) {
