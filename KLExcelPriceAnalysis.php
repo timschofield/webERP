@@ -46,6 +46,39 @@ function submit(&$db, $ListCategories, $DaysTopSales) {
 				AND (prices.enddate >= '". $today. "' OR prices.enddate = '0000-00-00')
 			ORDER BY stockmaster.stockid";
 		
+/*		$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -filter_number_format($DaysTopSales)));
+			
+		$SQL ="SELECT salesorderdetails.stkcode AS stockid,
+					SUM(salesorderdetails.qtyinvoiced) AS totalinvoiced,
+					SUM(salesorderdetails.qtyinvoiced * salesorderdetails.unitprice/currencies.rate ) AS valuesales,
+					stockmaster.description,
+					stockmaster.units,
+					stockmaster.mbflag,
+					currencies.rate,
+					debtorsmaster.currcode,
+					stockmaster.decimalplaces,
+					stockmaster.categoryid,
+					stockmaster.lastcategoryupdate,
+					(SELECT SUM(quantity)
+						FROM locstock
+						WHERE stockmaster.stockid = locstock.stockid) AS qoh,
+					prices.price AS retailprice,
+					(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS standardcost
+			FROM 	salesorderdetails, salesorders,	debtorsmaster,stockmaster, currencies,prices
+			WHERE 	salesorderdetails.orderno = salesorders.orderno
+					AND salesorderdetails.stkcode = stockmaster.stockid
+					AND salesorders.debtorno = debtorsmaster.debtorno
+					AND debtorsmaster.currcode = currencies.currabrev
+					AND salesorderdetails.actualdispatchdate >= '" . $FromDate . "'
+					AND stockmaster.categoryid IN ('". implode("','",$ListCategories)."')
+					AND stockmaster.discontinued = 0	
+					AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
+					AND prices.currabrev = '". CURRENCY_CODE ."'
+					AND prices.startdate <= '". $today. "' 
+					AND (prices.enddate >= '". $today. "' OR prices.enddate = '0000-00-00')
+			GROUP BY salesorderdetails.stkcode
+			ORDER BY salesorderdetails.stkcode";
+*/					
 		$result = DB_query($SQL);
 		if (DB_num_rows($result) != 0){
 
@@ -66,12 +99,15 @@ function submit(&$db, $ListCategories, $DaysTopSales) {
 			$objPHPExcel->getActiveSheet()->setCellValue('A1', 'CODE');
 			$objPHPExcel->getActiveSheet()->setCellValue('B1', 'DESCRIPTION');
 			$objPHPExcel->getActiveSheet()->setCellValue('C1', 'CATEGORY');
-			$objPHPExcel->getActiveSheet()->setCellValue('D1', 'QOH');
-			$objPHPExcel->getActiveSheet()->setCellValue('E1', 'TOP_SALES');
-			$objPHPExcel->getActiveSheet()->setCellValue('F1', 'STANDARD_COST');
-			$objPHPExcel->getActiveSheet()->setCellValue('G1', 'RETAILPRICE');
-			$objPHPExcel->getActiveSheet()->setCellValue('H1', 'PRICEFACTOR');
-
+			$objPHPExcel->getActiveSheet()->setCellValue('D1', 'DOB_CATEGORY');
+			$objPHPExcel->getActiveSheet()->setCellValue('E1', 'QOH');
+			$objPHPExcel->getActiveSheet()->setCellValue('F1', 'TOP_ITEM');
+//			$objPHPExcel->getActiveSheet()->setCellValue('G1', 'PCS_SOLD');
+//			$objPHPExcel->getActiveSheet()->setCellValue('H1', 'VALUE_SOLD');
+			$objPHPExcel->getActiveSheet()->setCellValue('I1', 'STANDARD_COST');
+			$objPHPExcel->getActiveSheet()->setCellValue('J1', 'RETAILPRICE');
+			$objPHPExcel->getActiveSheet()->setCellValue('K1', 'PRICEFACTOR');
+ 
 			// Add data
 			$i = 2;
 			while ($myrow = DB_fetch_array($result)) {
@@ -79,11 +115,14 @@ function submit(&$db, $ListCategories, $DaysTopSales) {
 				$objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $myrow['stockid']);
 				$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, $myrow['description']);
 				$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, $myrow['categoryid']);
-				$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, $myrow['qoh']);
-				$objPHPExcel->getActiveSheet()->setCellValue('E'.$i, positionTopSalesItem($myrow['stockid'], 99999, $DaysTopSales, $db));
-				$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, round($myrow['standardcost'],0));
-				$objPHPExcel->getActiveSheet()->setCellValue('G'.$i, $myrow['retailprice']);
-				$objPHPExcel->getActiveSheet()->setCellValue('H'.$i, round(($myrow['retailprice']/$myrow['standardcost']),2));
+				$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, ConvertSQLDate($myrow['lastcategoryupdate']));
+				$objPHPExcel->getActiveSheet()->setCellValue('E'.$i, $myrow['qoh']);
+				$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, positionTopSalesItem($myrow['stockid'], 99999, $DaysTopSales, $db));
+//				$objPHPExcel->getActiveSheet()->setCellValue('G'.$i, round($myrow['totalinvoiced'],0));
+//				$objPHPExcel->getActiveSheet()->setCellValue('H'.$i, round($myrow['valuesales'],0));
+				$objPHPExcel->getActiveSheet()->setCellValue('I'.$i, round($myrow['standardcost'],0));
+				$objPHPExcel->getActiveSheet()->setCellValue('J'.$i, $myrow['retailprice']);
+				$objPHPExcel->getActiveSheet()->setCellValue('K'.$i, round(($myrow['retailprice']/$myrow['standardcost']),2));
 				
 				$i++;
 			}
@@ -144,7 +183,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<p class="page_title_text">
-			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Excel file for Price Analysis') . '" alt="" />' . ' ' . _('Excel file for Sendinblue: Export Retail Customer') . '
+			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Excel file for Price Analysis') . '" alt="" />' . ' ' . _('Excel file for Price Analysis') . '
 		</p>';
 
 	echo '<table class="selection">
