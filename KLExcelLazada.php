@@ -165,10 +165,26 @@ function submit(&$db, &$db_oc, $oc_tableprefix, $FromPrice, $ToPrice, $QOHMinima
 			$NameProductPrefix = $Brand . ' ';
 			
 			while ($myrow = DB_fetch_array($result)) {
+				// Get the Bahasa Indonesia descriptions from webERP database
+				$sqlwebERP = "SELECT descriptiontranslation,
+									longdescriptiontranslation
+							FROM stockdescriptiontranslations
+							WHERE stockid = '" . $myrow['model'] . "'
+								AND language_id = 'id_ID.utf8'";
+				$ErrMsg = _('The SQL to find the webERP descriptions to export to Lazada');
+				$resultdescriptions = DB_query($sqlwebERP,$ErrMsg);
+				if (DB_num_rows($resultdescriptions) != 0){
+					$mydescriptions = DB_fetch_array($resultdescriptions);
+					$Description = $mydescriptions['descriptiontranslation'];
+					$LongDescription = $mydescriptions['longdescriptiontranslation'];
+				}else{
+					$Description = '';
+					$LongDescription = '';
+				}
 
 				$objPHPExcel->setActiveSheetIndex(0);
 				$objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $i-1);
-				$NameProduct = translate_via_google_translator($myrow['name'],$TargetLanguage,$SourceLanguage);
+				$NameProduct = $Description;
 				$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, $NameProductPrefix . $NameProduct);
 				$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, $Brand);
 				$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, $myrow['model']);
@@ -210,8 +226,7 @@ function submit(&$db, &$db_oc, $oc_tableprefix, $FromPrice, $ToPrice, $QOHMinima
 
 				$objPHPExcel->getActiveSheet()->setCellValue('I'.$i, $myrow['quantity']);
 
-				$Description = translate_via_google_translator($myrow['description'],$TargetLanguage,$SourceLanguage);
-				$objPHPExcel->getActiveSheet()->setCellValue('J'.$i, $Description);
+				$objPHPExcel->getActiveSheet()->setCellValue('J'.$i, $LongDescription);
 
 				$objPHPExcel->getActiveSheet()->setCellValue('K'.$i, '');
 

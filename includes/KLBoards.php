@@ -6806,5 +6806,29 @@ id	select_type	table		type	possible_keys		key			key_len	ref									rows	Extra
 	}
 }
 
+function ItemsNeedingTranslationRevision($RootPath, $db){
+	$SQL = "SELECT COUNT(stockid)
+			FROM stockdescriptiontranslations
+			WHERE needsrevision = '1'";
+	$result = DB_query($SQL);
+	$myrow = DB_fetch_array($result);
+	if ($myrow[0] > 0){
+		$text = locale_number_format($myrow[0],0) . " items need Translation revision";
+		echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+	}
+}
+
+function ItemsNeedingAutomaticTranslation($RootPath, $db){
+	$SQL = "SELECT COUNT(stockid)
+			FROM stockdescriptiontranslations
+			WHERE descriptiontranslation = ''
+				OR longdescriptiontranslation = ''";
+	$result = DB_query($SQL);
+	$myrow = DB_fetch_array($result);
+	if ($myrow[0] > 0){
+		$text = locale_number_format($myrow[0],0) . " items need Automatic Description Translation";
+		echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+	}
+}
 
 ?>

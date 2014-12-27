@@ -228,6 +228,19 @@ if ($KL_SystemAdmin){
 /***************************************************************************************
 * STOCK CONTROL         
 ***************************************************************************************/
+
+if ($KL_SystemAdmin){
+	
+	ItemsNeedingAutomaticTranslation($RootPath, $db);
+}
+
+if ($KL_SystemAdmin
+	OR $KL_PurchasingManager
+	OR $KL_KantorManager){
+	
+	ItemsNeedingTranslationRevision($RootPath, $db);
+}
+
 if ($KL_PurchasingManager
 	OR $KL_KantorManager
 	OR $KL_ShopSupportTeam){

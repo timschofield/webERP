@@ -28,7 +28,7 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 
 echo '<table class="selection">
 		<tr>
-			<th colspan="7">' . _('Translations to revise') .'</th>
+			<th colspan="7">' . _('Translations to revise (max 100)') .'</th>
 		</tr>';
 
 $sql = "SELECT stockdescriptiontranslations.stockid,
@@ -41,7 +41,8 @@ $sql = "SELECT stockdescriptiontranslations.stockid,
 		WHERE stockdescriptiontranslations.stockid = stockmaster.stockid
 			AND stockdescriptiontranslations.needsrevision = '1'
 		ORDER BY stockdescriptiontranslations.stockid,
-				stockdescriptiontranslations.language_id";
+				stockdescriptiontranslations.language_id
+		LIMIT 1, 100";
 
 $result = DB_query($sql);
 
