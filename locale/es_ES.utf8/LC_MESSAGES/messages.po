@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.11.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-12-13 15:27-0600\n"
-"PO-Revision-Date: 2014-12-13 15:41-0600\n"
+"PO-Revision-Date: 2014-12-27 17:34-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -24065,7 +24065,7 @@ msgstr "en la Moneda del Proveedor"
 
 #: PurchData.php:620
 msgid "Price Effective From"
-msgstr ""
+msgstr "Precio efectivo desde"
 
 #: PurchData.php:630
 msgid "Suppliers Unit of Measure"
@@ -24093,11 +24093,12 @@ msgstr "Proveedor Preferido"
 
 #: PurchData.php:693
 msgid "The supplier discounts could not be retrieved because"
-msgstr ""
+msgstr "Los descuentos del proveedor no pudieron ser recuperados debido"
 
 #: PurchData.php:694
 msgid "The SQL to retrieve supplier discounts for this item that failed was"
 msgstr ""
+"El SQL para recuperar descuentos del proveedor de este artículo que falló fue"
 
 #: PurchData.php:699
 msgid "Discount Name"
@@ -24105,11 +24106,11 @@ msgstr "Nombre del descuento"
 
 #: PurchData.php:701 SellThroughSupport.php:264
 msgid "Percent"
-msgstr "Por Ciento"
+msgstr "Por ciento"
 
 #: PurchaseByPrefSupplier.php:6
 msgid "Preferred Supplier Purchasing"
-msgstr ""
+msgstr "Compras a proveedor preferido"
 
 #: PurchaseByPrefSupplier.php:109
 msgid ""
@@ -24133,11 +24134,11 @@ msgstr ""
 
 #: PurchaseByPrefSupplier.php:296
 msgid "Print Order"
-msgstr ""
+msgstr "Imprimir orden"
 
 #: PurchaseByPrefSupplier.php:297
 msgid "Edit Order"
-msgstr ""
+msgstr "Editar orden"
 
 #: PurchaseByPrefSupplier.php:300
 msgid "Unable to create the order"
@@ -24188,7 +24189,7 @@ msgstr "2"
 #: PurchaseByPrefSupplier.php:447 PurchaseByPrefSupplier.php:471
 #: PurchaseByPrefSupplier.php:500 PurchaseByPrefSupplier.php:531
 msgid "Preferred supplier purchasing"
-msgstr ""
+msgstr "Compra a proveedor preferido"
 
 #: PurchaseByPrefSupplier.php:533
 msgid "The purchase order quantities could not be retrieved by the SQL because"
@@ -24351,7 +24352,7 @@ msgstr "Anual"
 
 #: RecurringSalesOrders.php:489
 msgid "Invoice Automatically"
-msgstr "Facturar Automáticamente"
+msgstr "Facturar automáticamente"
 
 #: RecurringSalesOrders.php:512
 msgid "Update Recurring Order Details"
@@ -47821,7 +47822,7 @@ msgstr "Administrar Compañías Financieras"
 
 #: includes/MainMenuLinksArray.php:170
 msgid "Purchase Order Grid Entry"
-msgstr ""
+msgstr "Entrada en cuadrícula de orden de compra"
 
 #: includes/MainMenuLinksArray.php:171
 msgid "Create a New Tender"
@@ -47853,7 +47854,7 @@ msgstr "Consultar Detalle ó Sumario de Órdenes de Compra"
 
 #: includes/MainMenuLinksArray.php:195
 msgid "Maintain Supplier Price Lists"
-msgstr "Administrar Listas de Precios del Proveedor"
+msgstr "Administrar listas de precios del proveedor"
 
 #: includes/MainMenuLinksArray.php:200
 msgid "Inventory Location Transfers"
@@ -48526,7 +48527,7 @@ msgstr ""
 #: install/index.php:430 install/index.php:432 install/index.php:459
 #: install/index.php:461
 msgid "Failed to create database "
-msgstr ""
+msgstr "Error al crear la base de datos"
 
 #: install/index.php:440 install/index.php:442 install/index.php:473
 #: install/index.php:475
@@ -48535,11 +48536,11 @@ msgstr ""
 
 #: install/index.php:513
 msgid "The Host Name is illegal"
-msgstr ""
+msgstr "El nombre de host es ilegal"
 
 #: install/index.php:520
 msgid "The Host Name should not be empty"
-msgstr ""
+msgstr "El nombre de host no debe estar vacío"
 
 #: install/index.php:532
 msgid ""
