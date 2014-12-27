@@ -1,5 +1,4 @@
 <?php
-
 /* $Id$*/
 
 include ('includes/session.inc');
@@ -293,7 +292,7 @@ if (isset($_POST['Show'])){
 				<td class="number"><b>%s</b></td>
 				<td>%s</td>
 				</tr>',
-				$myrow['typename'],
+				_($myrow['typename']),
 				$URL_to_TransDetail,
 				$myrow['typeno'],
 				$FormatedTranDate,
