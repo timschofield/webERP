@@ -16,8 +16,9 @@ $SQL = "SELECT stockmaster.stockid,
 				longdescriptiontranslation
 		FROM stockmaster, stockdescriptiontranslations
 		WHERE stockmaster.stockid = stockdescriptiontranslations.stockid
-			AND (descriptiontranslation = ''
+			AND (descriptiontranslation = '' 
 				OR longdescriptiontranslation = '')
+			AND LENGTH(description) > 2
 		ORDER BY stockmaster.stockid,
 				language_id";
 $result = DB_query($SQL);

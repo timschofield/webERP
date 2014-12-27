@@ -28,21 +28,21 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 
 echo '<table class="selection">
 		<tr>
-			<th colspan="7">' . _('Translations to revise (max 100)') .'</th>
+			<th colspan="7">' . _('Translations to revise (max 50)') .'</th>
 		</tr>';
 
 $sql = "SELECT stockdescriptiontranslations.stockid,
-				stockmaster.description,
-				stockmaster.longdescription,
-				stockdescriptiontranslations.language_id,
-				stockdescriptiontranslations.descriptiontranslation,
-				stockdescriptiontranslations.longdescriptiontranslation
+			stockmaster.description,
+			stockmaster.longdescription,
+			stockdescriptiontranslations.language_id,
+			stockdescriptiontranslations.descriptiontranslation,
+			stockdescriptiontranslations.longdescriptiontranslation
 		FROM stockdescriptiontranslations, stockmaster
 		WHERE stockdescriptiontranslations.stockid = stockmaster.stockid
 			AND stockdescriptiontranslations.needsrevision = '1'
 		ORDER BY stockdescriptiontranslations.stockid,
 				stockdescriptiontranslations.language_id
-		LIMIT 1, 100";
+		LIMIT 1, 50";
 
 $result = DB_query($sql);
 

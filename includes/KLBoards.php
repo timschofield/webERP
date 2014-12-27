@@ -6813,7 +6813,7 @@ function ItemsNeedingTranslationRevision($RootPath, $db){
 	$result = DB_query($SQL);
 	$myrow = DB_fetch_array($result);
 	if ($myrow[0] > 0){
-		$text = locale_number_format($myrow[0],0) . " items need Translation revision";
+		$text = locale_number_format($myrow[0],0) . " items need Translation Revision";
 		echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
 	}
 }
