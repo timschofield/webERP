@@ -337,9 +337,9 @@ echo '<table class="selection">
 			<td>' . _('Branch') . ':</td>
 			<td><select name="Branch">';
 if ($myrow['branchcode']=='') {
-	echo '<option selected="selected" value="">' . _('All branches') . '</option>';
+	echo '<option selected="selected" value="">' . _('All Branches') . '</option>';
 } else {
-	echo '<option value="">' . _('All branches') . '</option>';
+	echo '<option value="">' . _('All Branches') . '</option>';
 }
 
 while ($myrow=DB_fetch_array($result)) {

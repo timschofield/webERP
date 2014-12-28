@@ -1,18 +1,20 @@
 <?php
-
 /* $Id$*/
+/* This script is to maintaining access permissions. */
 
-include('includes/session.inc');
-
-$Title = _('Access Permission Maintenance');
+include ('includes/session.inc');
+$Title = _('Access Permissions Maintenance');// Screen identificator.
+$ViewTopic = 'SecuritySchema';// Filename's id in ManualContents.php's TOC.
+$BookMark = 'WWW_Access';// Anchor's id in the manual's html document.
 include('includes/header.inc');
+echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
+	'/images/group_add.png" title="' .
+	_('Access Permissions Maintenance') . '" /> ' .// Icon title.
+	_('Access Permissions Maintenance') . '</p>';// Page title.
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/group_add.png" title="' .
-		_('Search') . '" alt="" />' . ' ' . $Title . '</p>';
-
-if (isset($_GET['SelectedRole'])){
+if(isset($_GET['SelectedRole'])) {
 	$SelectedRole = $_GET['SelectedRole'];
-} elseif (isset($_POST['SelectedRole'])){
+} elseif (isset($_POST['SelectedRole'])) {
 	$SelectedRole = $_POST['SelectedRole'];
 }
 
@@ -106,13 +108,17 @@ if (!isset($SelectedRole)) {
 		ORDER BY secrolename";
 	$result = DB_query($sql);
 
-	echo '<table class="selection">';
-	echo '<tr><th>' . _('Role') . '</th></tr>';
+	echo '<table class="selection">
+		<tr>
+			<th>' . _('Role') . '</th>
+			<th>&nbsp;</th>
+			<th>&nbsp;</th>
+		</tr>';
 
 	$k=0; //row colour counter
 
-	while ($myrow = DB_fetch_array($result)) {
-		if ($k==1){
+	while($myrow = DB_fetch_array($result)) {
+		if($k==1) {
 			echo '<tr class="EvenTableRows">';
 			$k=0;
 		} else {

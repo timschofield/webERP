@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.11.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-12-13 15:27-0600\n"
-"PO-Revision-Date: 2014-12-28 12:34-0600\n"
+"PO-Revision-Date: 2014-12-28 17:08-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -28,7 +28,7 @@ msgid ""
 "An error occurred in retrieving the account groups of the parent account "
 "group during the check for recursion"
 msgstr ""
-"Ocurrió un error al obtener los grupos contables del grupo contable ancestro "
+"Hubo un error al obtener los grupos contables del grupo contable ancestro "
 "durante la comprobación de recursividad"
 
 #: AccountGroups.php:20
@@ -512,7 +512,7 @@ msgstr "Detalles de grupo contable nuevo"
 
 #: AccountGroups.php:403
 msgid "Account Group Name"
-msgstr "Nombre de grupo contable"
+msgstr "Nombre del grupo contable"
 
 #: AccountGroups.php:404
 msgid "Enter the account group name"
@@ -2319,8 +2319,7 @@ msgstr "ha sido cambiado"
 
 #: BOMs.php:333
 msgid "An error occurred in checking the component is not already on the BOM"
-msgstr ""
-"Ha ocurrido un error al verificar que el componenete no estuviera den la HCM"
+msgstr "Hubo un error al verificar que el componente no estuviera den la HCM"
 
 #: BOMs.php:334
 msgid ""
@@ -6745,7 +6744,7 @@ msgstr "Demanda de este producto desde"
 #: CounterReturns.php:1776 CounterSales.php:2181 CounterSales.php:2245
 #: CounterSales.php:2339
 msgid "Add to Sale"
-msgstr "Agregar a la Venta"
+msgstr "Añadir a venta"
 
 #: CounterReturns.php:1786
 msgid ""
@@ -8124,7 +8123,7 @@ msgstr "Descricpción de inventario del cliente"
 #: reportwriter/languages/en_US/reports.php:131
 #, php-format
 msgid "Add"
-msgstr "Agregar"
+msgstr "Añadir"
 
 #: CustItem.php:462 PurchData.php:770 SelectProduct.php:384
 #: StockAdjustments.php:523 StockCostUpdate.php:202 StockLocStatus.php:118
@@ -8950,7 +8949,7 @@ msgstr "Cambiar Sucursal"
 
 #: CustomerBranches.php:633
 msgid "Add a Branch"
-msgstr "Agregar una Sucursal"
+msgstr "Añadir una sucursal"
 
 #: CustomerBranches.php:637
 msgid ""
@@ -10547,7 +10546,7 @@ msgstr "Saldos bancarios y de tarjetas de crédito"
 #: includes/PDFTagProfitAndLossPageHeader.inc:34
 #: includes/PDFTrialBalancePageHeader.inc:29
 msgid "Account Name"
-msgstr "Cuenta"
+msgstr "Nombre de la cuenta"
 
 #: Dashboard.php:601 Dashboard.php:620 GLAccountCSV.php:189
 #: GLAccountCSV.php:218 GLAccountInquiry.php:195 GLAccountInquiry.php:233
@@ -13822,7 +13821,7 @@ msgstr ""
 #: Z_CreateCompanyTemplateFile.php:236 Z_ImportChartOfAccounts.php:28
 #: Z_UpdateChartDetailsBFwd.php:81 includes/PDFGLJournalHeader.inc:19
 msgid "Account Code"
-msgstr "Código de la Cuenta"
+msgstr "Código contable"
 
 #: GLAccounts.php:234
 msgid ""
@@ -13840,7 +13839,7 @@ msgstr ""
 
 #: GLAccounts.php:249 GLAccounts.php:296 Z_ImportGLAccountGroups.php:26
 msgid "Account Group"
-msgstr "Subgrupo de Cuentas"
+msgstr "Grupo contable"
 
 #: GLAccounts.php:282 GLBalanceSheet.php:9 GLBalanceSheet.php:22
 #: GLBalanceSheet.php:84 GLBalanceSheet.php:85 GLBalanceSheet.php:108
@@ -14550,7 +14549,7 @@ msgstr "Balance de Comprobación para el mes de "
 
 #: GLTrialBalance.php:446
 msgid " AND for the "
-msgstr ""
+msgstr "Y para los "
 
 #: GLTrialBalance.php:446 includes/PDFProfitAndLossPageHeader.inc:21
 #: includes/PDFTagProfitAndLossPageHeader.inc:21
@@ -15739,7 +15738,7 @@ msgstr "Obsoleto"
 
 #: InternalStockRequest.php:622 InternalStockRequest.php:743
 msgid "Add to Requisition"
-msgstr "Agregar a Requisición"
+msgstr "Añadir a requisición"
 
 #: InternalStockRequest.php:689 InternalStockRequest.php:703
 msgid "The order details for this product cannot be retrieved because"
@@ -15947,7 +15946,7 @@ msgstr "Para inventario en ubicación"
 #: PDFDeliveryDifferences.php:64 PDFOrderStatus.php:63
 #: PDFOrdersInvoiced.php:66 StockUsage.php:87 StockUsage.php:89
 msgid "All Locations"
-msgstr "Todos los Almacénes"
+msgstr "Todos los Almacenes"
 
 #: InventoryPlanning.php:396
 msgid "Stock Planning"
@@ -16427,7 +16426,7 @@ msgstr ""
 
 #: LocationUsers.php:194 UserLocations.php:195
 msgid "Add Update"
-msgstr ""
+msgstr "Añadir actualización"
 
 #: Locations.php:5
 msgid "Location Maintenance"
@@ -18377,8 +18376,8 @@ msgid ""
 "An error occurred getting the header information about the receipt batch "
 "number"
 msgstr ""
-"Se produjo un error obteniendo la información de cabecera sobre el número de "
-"lote recibido"
+"Hubo un error al obtener la información de cabecera sobre el número de lote "
+"recibido"
 
 #: PDFBankingSummary.php:74 PDFChequeListing.php:110 PDFChequeListing.php:153
 #: PDFSuppTransListing.php:84
@@ -18518,7 +18517,7 @@ msgstr "Abonos"
 
 #: PDFCustTransListing.php:84 PDFPeriodStockTransListing.php:139
 msgid "An error occurred getting the transactions"
-msgstr "Se produjo un error al obtener las transacciones"
+msgstr "Hubo un error al obtener las transacciones"
 
 #: PDFCustTransListing.php:86
 msgid "The SQL used to get the transaction information that failed was"
@@ -23111,11 +23110,11 @@ msgstr "Precio Especial"
 
 #: Prices_Customer.php:269
 msgid "All Branches"
-msgstr "Todas las Sucursales"
+msgstr "Todas las sucursales"
 
 #: Prices_Customer.php:340 Prices_Customer.php:342
 msgid "All branches"
-msgstr "Todas las Sucursales"
+msgstr "Todas las sucursales"
 
 #: PrintCheque.php:13
 msgid ""
@@ -23506,7 +23505,7 @@ msgstr "TOTAL FACTURA"
 
 #: PrintCustTrans.php:467
 msgid "Account No:"
-msgstr "Cuenta Nr:"
+msgstr "Cuenta No.:"
 
 #: PrintCustTrans.php:477 PrintCustTrans.php:1084
 #: PrintCustTransPortrait.php:506 PrintCustTransPortrait.php:1150
@@ -24901,8 +24900,7 @@ msgstr "Mostrar Bienes (productos) Pendientes de Recibir"
 
 #: ReverseGRN.php:382
 msgid "An error occurred in the attempt to get the outstanding GRNs for"
-msgstr ""
-"Ha ocurrido un error al intentar obtener las Remisiones pendientes para"
+msgstr "Hubo un error al intentar obtener las Remisiones pendientes para"
 
 #: ReverseGRN.php:382
 msgid "The message was"
@@ -25705,7 +25703,7 @@ msgstr "Sub Categoría"
 
 #: SalesCategories.php:244
 msgid "Active?"
-msgstr "¡Activo?"
+msgstr "¿Activo?"
 
 #: SalesCategories.php:273
 #, php-format
@@ -26926,7 +26924,7 @@ msgstr "Crear una venta de mostrador para este cliente"
 
 #: SelectCustomer.php:234 SelectCustomer.php:255
 msgid "Add a New Customer"
-msgstr "Registrar un Nuevo cliente"
+msgstr "Añadir un cliente nuevo"
 
 #: SelectCustomer.php:235
 msgid "Modify Customer Details"
@@ -27045,7 +27043,7 @@ msgstr "Tipo de cliente:"
 
 #: SelectCustomer.php:616 SelectCustomer.php:641
 msgid "Add New Contact"
-msgstr "Añadir un Nuevo contacto"
+msgstr "Añadir un contacto nuevo"
 
 #: SelectCustomer.php:661
 msgid "Hyperlink"
@@ -27358,7 +27356,7 @@ msgstr "Introduzca Detalles de Entrega y Confirmar Pedido"
 #: SelectOrderItems.php:1538 SelectOrderItems.php:1610
 #: SelectOrderItems.php:1706
 msgid "Add to Sales Order"
-msgstr "Agregar a la orden de venta"
+msgstr "Añadir a orden de venta"
 
 #: SelectOrderItems.php:1543 SelectOrderItems.php:1544
 msgid "Search for Order Items"
@@ -27850,7 +27848,7 @@ msgstr "Revocar una nota de Productos Recibidos (GRN) Pendiente"
 
 #: SelectSupplier.php:189 SelectSupplier.php:212
 msgid "Add a New Supplier"
-msgstr "Registrar un Nuevo Proveedor"
+msgstr "Añadir un proveedor nuevo"
 
 #: SelectSupplier.php:190
 msgid "Modify Or Delete Supplier Details"
@@ -29269,7 +29267,7 @@ msgstr "Enviar el"
 
 #: SpecialOrder.php:751
 msgid "Add Item to Order"
-msgstr "Agregar Artículo al Pedido"
+msgstr "Añadir artículo al pedido"
 
 #: SpecialOrder.php:754
 msgid "Start Again"
@@ -32058,7 +32056,7 @@ msgstr ""
 
 #: SuppCreditGRNs.php:328
 msgid "Add to Credit Note"
-msgstr "Añadir a nota de Crédito"
+msgstr "Añadir a nota de crédito"
 
 #: SuppFixedAssetChgs.php:14
 msgid "Fixed Asset Charges or Credits"
@@ -32260,7 +32258,7 @@ msgstr "Desmarcar todo"
 
 #: SuppInvGRNs.php:305
 msgid "Add to Invoice"
-msgstr "Agregar a factura"
+msgstr "Añadir a factura"
 
 #: SuppLoginSetup.php:15
 msgid "A supplier must first be selected before logins can be defined for it"
@@ -32502,7 +32500,7 @@ msgstr "Lista de Precios de Bienes de un Proveedor"
 
 #: SuppPriceList.php:51 SuppPriceList.php:253
 msgid "All Prices"
-msgstr "Todos los Precios"
+msgstr "Todos los precios"
 
 #: SuppPriceList.php:53
 msgid "Current Price"
@@ -33951,7 +33949,7 @@ msgstr "Seleccionar los artículos requeridos en esta Licitación"
 
 #: SupplierTenderCreate.php:899
 msgid "Add to Tender"
-msgstr "Agregar a la Licitación"
+msgstr "Añadir a licitación"
 
 #: SupplierTenders.php:6
 msgid "Supplier Tendering"
@@ -37903,7 +37901,7 @@ msgstr "Cancelar esta Orden de Trabajo"
 #: WorkOrderEntry.php:770 WorkOrderIssue.php:794
 #, php-format
 msgid "Add to Work Order"
-msgstr "Añadir a la Orden de Trabajo"
+msgstr "Añadir a orden de trabajo"
 
 #: WorkOrderIssue.php:5
 msgid "Issue Materials To Work Order"
@@ -39475,11 +39473,11 @@ msgstr "Crear E-mail y Plantilla"
 
 #: Z_CurrencyDebtorsBalances.php:5
 msgid "Currency Debtor Balances"
-msgstr "Saldos Deudores de Divisa"
+msgstr "Saldos de deudores por divisa"
 
 #: Z_CurrencyDebtorsBalances.php:8
 msgid "Debtors Balances By Currency Totals"
-msgstr "Totales de Saldos de Deudores por Moneda"
+msgstr "Saldos de deudores en total por divisa"
 
 #: Z_CurrencyDebtorsBalances.php:30
 msgid "Total Debtor Balances in"
@@ -39491,11 +39489,11 @@ msgstr "Total de Saldos en moneda local"
 
 #: Z_CurrencySuppliersBalances.php:5
 msgid "Currency Supplier Balances"
-msgstr ""
+msgstr "Saldos de proveedores por divisa"
 
 #: Z_CurrencySuppliersBalances.php:8
 msgid "Suppliers Balances By Currency Totals"
-msgstr "Totales de Saldos de Proveedores por Moneda"
+msgstr "Saldos de proveedores en total por divisa"
 
 #: Z_CurrencySuppliersBalances.php:28
 msgid "Total Supplier Balances in"
@@ -40359,7 +40357,7 @@ msgstr ""
 
 #: Z_ImportGLAccountSections.php:27
 msgid "Account Section"
-msgstr "Grupo Principal"
+msgstr "Sección contable"
 
 #: Z_ImportGLTransactions.php:6
 msgid "Import General Ledger Transactions"
@@ -43556,7 +43554,7 @@ msgstr ""
 
 #: api/api_xml-rpc.php:1418
 msgid "Account Section Details"
-msgstr "Detalles de la Sección de la Cuenta"
+msgstr "Detalles de la sección contable"
 
 #: api/api_xml-rpc.php:1419
 msgid "An array of index/value items describing the account section to insert."
@@ -43566,7 +43564,7 @@ msgstr ""
 
 #: api/api_xml-rpc.php:1450
 msgid "Account Group Details"
-msgstr "Detalles del Grupo de Cuenta"
+msgstr "Detalles del grupo contable"
 
 #: api/api_xml-rpc.php:1451
 msgid "An array of index/value items describing the account group to insert."
@@ -44562,7 +44560,7 @@ msgstr ""
 
 #: includes/DateFunctions.inc:953
 msgid "An error occurred in adding a new period number"
-msgstr "Ha ocurrido un error al agregar ordinal de período"
+msgstr "Hubo un error al agregar ordinal de período"
 
 #: includes/DateFunctions.inc:1011 includes/GLPostings.inc:32
 #: includes/GLPostings.inc:33
@@ -44697,7 +44695,7 @@ msgstr "Consignado en"
 #: includes/PDFBankingSummaryPageHeader.inc:38
 #: ../webSHOP/includes/Functions.php:761
 msgid "Account Number"
-msgstr "Número de Cuenta"
+msgstr "Número de cuenta"
 
 #: includes/PDFBankingSummaryPageHeader.inc:57
 msgid "Bank Details"
@@ -47795,7 +47793,7 @@ msgstr "Actividad y saldos de cliente"
 
 #: includes/MainMenuLinksArray.php:135
 msgid "Add Customer"
-msgstr "Agregar cliente"
+msgstr "Añadir cliente"
 
 #: includes/MainMenuLinksArray.php:136
 msgid "Select Customer"
@@ -47956,7 +47954,7 @@ msgstr ""
 
 #: includes/MainMenuLinksArray.php:269
 msgid "Add A New Item"
-msgstr "Agregar artículo"
+msgstr "Añadir un artículo nuevo"
 
 #: includes/MainMenuLinksArray.php:270
 msgid "Select An Item"
@@ -48100,7 +48098,7 @@ msgstr "Cuentas bancarias"
 
 #: includes/MainMenuLinksArray.php:391
 msgid "Add a new Asset"
-msgstr "Añadir un Nuevo Activo"
+msgstr "Añadir un activo nuevo"
 
 #: includes/MainMenuLinksArray.php:394
 msgid "Depreciation Journal"
@@ -49170,7 +49168,7 @@ msgstr ""
 
 #: reportwriter/languages/en_US/reports.php:132
 msgid "Add New"
-msgstr ""
+msgstr "Añadir nuevo"
 
 #: reportwriter/languages/en_US/reports.php:133
 msgid "Go Back"
@@ -49681,7 +49679,7 @@ msgstr ""
 
 #: reportwriter/languages/en_US/reports.php:296
 msgid "A5"
-msgstr ""
+msgstr "A5"
 
 #: reportwriter/languages/en_US/reports.php:303
 msgid "Courier"
@@ -49697,7 +49695,7 @@ msgstr ""
 
 #: reportwriter/languages/en_US/reports.php:308
 msgid "1"
-msgstr ""
+msgstr "1"
 
 #: reportwriter/languages/en_US/reports.php:311
 msgid "4"
@@ -49725,35 +49723,35 @@ msgstr ""
 
 #: reportwriter/languages/en_US/reports.php:317
 msgid "10"
-msgstr ""
+msgstr "10"
 
 #: reportwriter/languages/en_US/reports.php:318
 msgid "12"
-msgstr ""
+msgstr "12"
 
 #: reportwriter/languages/en_US/reports.php:319
 msgid "14"
-msgstr ""
+msgstr "14"
 
 #: reportwriter/languages/en_US/reports.php:320
 msgid "16"
-msgstr ""
+msgstr "16"
 
 #: reportwriter/languages/en_US/reports.php:321
 msgid "18"
-msgstr ""
+msgstr "18"
 
 #: reportwriter/languages/en_US/reports.php:322
 msgid "20"
-msgstr ""
+msgstr "20"
 
 #: reportwriter/languages/en_US/reports.php:323
 msgid "24"
-msgstr ""
+msgstr "24"
 
 #: reportwriter/languages/en_US/reports.php:324
 msgid "28"
-msgstr ""
+msgstr "28"
 
 #: reportwriter/languages/en_US/reports.php:325
 msgid "32"
@@ -50379,7 +50377,7 @@ msgstr ""
 
 #: ../webSHOP/ItemDetails.php:119 ../webSHOP/includes/Functions.php:63
 msgid "Add to Order"
-msgstr ""
+msgstr "Añadir a pedido"
 
 #: ../webSHOP/ItemDetails.php:121
 msgid "Back to Category"
