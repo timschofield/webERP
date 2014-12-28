@@ -1,15 +1,17 @@
 <?php
-/* $Id: Z_CustomerBalancesMovements.php 6941 2014-10-26 23:18:08Z daintree $*/
+/* $Id: CustomerBalancesMovement.php 6941 2014-10-26 23:18:08Z daintree $*/
+
 $PageSecurity = 1;
+
 include('includes/session.inc');
-$Title=_('Customer Balances Movements');
+$Title=_('Customer Activity and Balances');
+/*To do: Info in the manual. RChacon.
+$ViewTopic = '';// Filename in ManualContents.php's TOC.
+$BookMark = '';// Anchor's id in the manual's html document.*/
 
-if (!isset($_POST['CreateCSV'])){
+if(!isset($_POST['CreateCSV'])) {
 	include('includes/header.inc');
-
-	echo '<p class="page_title_text">
-		<img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('Customer Balances Movements') . '" alt="" />' . ' ' . _('Customer Balances Movements') . '
-	</p>';
+	echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('Customer Activity and Balances') . '" /> ' . _('Customer Activity and Balances') . '</p>';
 }
 
 if (!isset($_POST['RunReport'])){

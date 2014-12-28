@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.11.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-12-13 15:27-0600\n"
-"PO-Revision-Date: 2014-12-27 17:34-0600\n"
+"PO-Revision-Date: 2014-12-28 10:09-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -603,7 +603,8 @@ msgstr ""
 
 #: AccountSections.php:130
 msgid "general ledger accounts groups that refer to this account section"
-msgstr "Subgrupos de Cuentas relacionados con este Grupo Principal"
+msgstr ""
+"grupos contables del libro mayor que hacen referencia a esta sección contable"
 
 #: AccountSections.php:142
 msgid "section has been deleted"
@@ -627,7 +628,7 @@ msgstr "Restringida"
 
 #: AccountSections.php:204
 msgid "Review Account Sections"
-msgstr "Revisar Grupos Principales"
+msgstr "Revisar se secciones contables"
 
 #: AccountSections.php:223
 msgid "Could not retrieve the requested section please try again."
@@ -772,7 +773,7 @@ msgstr "Notas del cliente"
 
 #: AddCustomerNotes.php:21 AddCustomerTypeNotes.php:19
 msgid "Back to Select Customer"
-msgstr "Volver a Seleccionar cliente"
+msgstr "Volver a seleccionar cliente"
 
 #: AddCustomerNotes.php:34
 msgid "The contact priority must be an integer."
@@ -884,7 +885,7 @@ msgstr "Las notas del contacto no pueden estar vacías"
 
 #: AddCustomerTypeNotes.php:48 SelectCustomer.php:730
 msgid "Customer Group Notes"
-msgstr "Notas del Grupo del cliente"
+msgstr "Notas del grupo del cliente"
 
 #: AddCustomerTypeNotes.php:61
 msgid "The contact group notes record has been added"
@@ -6124,7 +6125,7 @@ msgstr ""
 
 #: Contracts.php:896
 msgid "Default Work Centre"
-msgstr "Centro de Trabajo Predeterminado"
+msgstr "Centro de trabajo predeterminado"
 
 #: Contracts.php:913
 msgid "Contract Description"
@@ -47790,7 +47791,7 @@ msgstr "Lista de Transacciones Diarias"
 
 #: includes/MainMenuLinksArray.php:114
 msgid "Customer Activity and Balances"
-msgstr ""
+msgstr "Actividad y saldos de cliente"
 
 #: includes/MainMenuLinksArray.php:135
 msgid "Add Customer"
