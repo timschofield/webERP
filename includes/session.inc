@@ -15,7 +15,7 @@ if (!file_exists($PathPrefix . 'config.php')){
 }
 include($PathPrefix . 'config.php');
 
-if (isset($dbuser)) {
+if (isset($dbuser)) { //this gets past an upgrade issue where old versions used lower case variable names
 	$DBUser=$dbuser;
 	$DBPassword=$dbpassword;
 	$DBType=$dbType;
@@ -102,7 +102,7 @@ if(basename($_SERVER['SCRIPT_NAME'])=='Logout.php'){
 	}
 
 	/*  Need to set the theme to make login screen nice */
-	$Theme = (isset($_SESSION['Theme'])) ? $_SESSION['Theme'] : 'gel';
+	$Theme = (isset($_SESSION['Theme'])) ? $_SESSION['Theme'] : 'xenos';
 	switch ($rc) {
 	case  UL_OK; //user logged in successfully
 		include($PathPrefix . 'includes/LanguageSetup.php'); //set up the language

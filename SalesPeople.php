@@ -5,8 +5,12 @@ include('includes/session.inc');
 $Title = _('Sales People Maintenance');
 $ViewTopic = 'SalesPeople';
 $BookMark = 'SalesPeople';
-if(isset($_GET['SelectedSalesPerson'])) {$BookMark = 'SalespeopleEdit';}// For Edit's screen.
-if(isset($_GET['delete'])) {$BookMark = 'SalespeopleDelete';}// For Delete's ERROR Message Report.
+if(isset($_GET['SelectedSalesPerson'])) {
+	$BookMark = 'SalespeopleEdit';
+}// For Edit's screen.
+if(isset($_GET['delete'])) {
+	$BookMark = 'SalespeopleDelete';
+}// For Delete's ERROR Message Report.
 include('includes/header.inc');
 
 if (isset($_GET['SelectedSalesPerson'])){

@@ -15,9 +15,8 @@ echo '<div class="page_help_text">' . _('Choose which type of transaction to rep
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<div>';
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-
-echo '<table class="selection">
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+	<table class="selection">
 		<tr>
 			<td>' . _('Type') . ':</td>
 			<td><select tabindex="1" name="TransType"> ';
