@@ -571,8 +571,8 @@ $MenuItems['Utilities']['Transactions']['URL'] = array(	'/Z_ChangeCustomerCode.p
 														'/Z_ReverseSuppPaymentRun.php',
 														'/Z_UpdateSalesAnalysisWithLatestCustomerData.php');
 
-$MenuItems['Utilities']['Reports']['Caption'] = array(	_('Show Local Currency Total Debtor Balances'),
-														_('Show Local Currency Total Suppliers Balances'),
+$MenuItems['Utilities']['Reports']['Caption'] = array(	_('Debtors Balances By Currency Totals'),
+														_('Suppliers Balances By Currency Totals'),
 														_('Show General Transactions That Do Not Balance'),
 														_('List of items without picture'));
 
