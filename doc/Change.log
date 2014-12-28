@@ -1,5 +1,6 @@
 webERP Change Log
 
+28/12/14 RChacon: Add comments, variables to link to the manual and titles in Z_Change*.php.
 28/12/14 RChacon: Update comment for the SVN repository automatically updates the revision number, standardise title.
 27/12/14 RChacon: Add info to manual and context $BookMark for Sales People Maintenance.
 27/12/14 RChacon: Allow translation of typename in CustomerTransInquiry.php.
