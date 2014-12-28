@@ -1,10 +1,17 @@
 <?php
-
 /* $Id$ */
+/* This script is an utility to change a stock category code. */
 
 include ('includes/session.inc');
-$Title = _('UTILITY PAGE Change A Stock Category');
-include ('includes/header.inc');
+$Title = _('UTILITY PAGE Change A Stock Category');// Screen identificator.
+$ViewTopic = 'SpecialUtilities'; // Filename's id in ManualContents.php's TOC.
+$BookMark = 'Z_ChangeStockCategory'; // Anchor's id in the manual's html document
+include('includes/header.inc');
+echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
+	'/images/inventory.png" title="' . 
+	_('Change A Stock Category Code') . '" /> ' .// Icon title.
+	_('Change A Stock Category Code') . '</p>';// Page title.
+
 include ('includes/SQL_CommonFunctions.inc');
 
 if (isset($_POST['ProcessStockChange'])) {

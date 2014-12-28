@@ -1,9 +1,16 @@
 <?php
 /* $Id$*/
+/* This script is an utility to change a customer branch code. */
 
 include ('includes/session.inc');
-$Title = _('UTILITY PAGE To Changes A Customer Branch Code In All Tables');
+$Title = _('UTILITY PAGE To Changes A Customer Branch Code In All Tables');// Screen identificator.
+$ViewTopic = 'SpecialUtilities'; // Filename's id in ManualContents.php's TOC.
+$BookMark = 'Z_ChangeBranchCode'; // Anchor's id in the manual's html document.
 include('includes/header.inc');
+echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
+	'/images/customer.png" title="' . 
+	_('Change A Customer Branch Code') . '" /> ' .// Icon title.
+	_('Change A Customer Branch Code') . '</p>';// Page title.
 
 if (isset($_POST['ProcessCustomerChange'])){
 

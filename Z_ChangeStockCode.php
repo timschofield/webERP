@@ -5,14 +5,14 @@
 	$NewValue, $db) from .../includes/MiscFunctions.php.*/
 
 include ('includes/session.inc');
-$Title = _('UTILITY PAGE Change A Stock Code');// _('Change An Inventory Item Code')
-$ViewTopic = 'SpecialUtilities';
-$BookMark = 'Z_ChangeStockCode';// Anchor's id in the manual's html document.
+$Title = _('UTILITY PAGE Change A Stock Code');// Screen identificator.
+$ViewTopic = 'SpecialUtilities'; // Filename in ManualContents.php's TOC.
+$BookMark = 'Z_ChangeStockCode'; // Anchor's id in the manual's html document.
 include('includes/header.inc');
-echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme . 
-		'/images/maintenance.png" title="' . 
-		_('Change An Inventory Item Code') . '" />' . ' ' . 
-		_('Change An Inventory Item Code') . '</p>';
+echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
+	'/images/inventory.png" title="' . 
+	_('Change An Inventory Item Code') . '" /> ' .// Icon title.
+	_('Change An Inventory Item Code') . '</p>';// Page title.
 
 include('includes/SQL_CommonFunctions.inc');
 

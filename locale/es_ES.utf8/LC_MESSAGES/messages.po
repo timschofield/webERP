@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.11.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-12-13 15:27-0600\n"
-"PO-Revision-Date: 2014-12-28 10:09-0600\n"
+"PO-Revision-Date: 2014-12-28 12:34-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -45938,7 +45938,7 @@ msgstr "Irak"
 
 #: includes/CountriesArray.php:98
 msgid "Iran"
-msgstr ""
+msgstr "Irán"
 
 #: includes/CountriesArray.php:99
 msgid "Iceland"
@@ -48232,7 +48232,7 @@ msgstr "Mantener categorías de inventario interno por funciones de usuario"
 
 #: includes/MainMenuLinksArray.php:519
 msgid "Label Templates Maintenance"
-msgstr "Mantenimiento de Plantillas de Etiquetas"
+msgstr "Mantenimiento de plantillas de etiquetas"
 
 #: includes/MainMenuLinksArray.php:533
 msgid "Change A Customer Code"
@@ -48261,12 +48261,12 @@ msgstr "Cambiar un código de ubicación"
 #: includes/MainMenuLinksArray.php:540
 msgid "Update costs for all BOM items, from the bottom up"
 msgstr ""
-"Actualización de costos de todos los elementos de lista de materiales, de "
-"abajo hacia arriba"
+"Actualizar costos de todos los elementos de lista de materiales, de abajo "
+"hacia arriba"
 
 #: includes/MainMenuLinksArray.php:541
 msgid "Re-apply costs to Sales Analysis"
-msgstr "Aplicar Costos al Análisis de Ventas"
+msgstr "Reaplicar costos al análisis de ventas"
 
 #: includes/MainMenuLinksArray.php:542
 msgid "Delete sales transactions"
@@ -48278,19 +48278,19 @@ msgstr "Revocar todos los pagos a proveedores en una fecha específica"
 
 #: includes/MainMenuLinksArray.php:544
 msgid "Update sales analysis with latest customer data"
-msgstr ""
+msgstr "Actualizar análisis de ventas con últimos datos de clientes"
 
 #: includes/MainMenuLinksArray.php:559
 msgid "Show Local Currency Total Debtor Balances"
-msgstr "Mostrar Total de Saldos del Deudor en Moneda Local"
+msgstr "Mostrar total de saldos de deudores en moneda local"
 
 #: includes/MainMenuLinksArray.php:560
 msgid "Show Local Currency Total Suppliers Balances"
-msgstr "Mostrar Total de Saldos de Proveedores en Moneda Local"
+msgstr "Mostrar total de saldos de proveedores en moneda local"
 
 #: includes/MainMenuLinksArray.php:561
 msgid "Show General Transactions That Do Not Balance"
-msgstr "Mostrar Transacciones Generales que no Cuadran"
+msgstr "Mostrar transacciones generales que no cuadran"
 
 #: includes/MainMenuLinksArray.php:562
 msgid "List of items without picture"
@@ -48298,7 +48298,7 @@ msgstr "Lista de artículos sin foto"
 
 #: includes/MainMenuLinksArray.php:570
 msgid "Make New Company"
-msgstr "Crear Nueva Compañía"
+msgstr "Crear nueva compañía"
 
 #: includes/MainMenuLinksArray.php:571
 msgid "Data Export Options"

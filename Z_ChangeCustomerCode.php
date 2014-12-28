@@ -1,10 +1,16 @@
 <?php
 /* $Id$*/
-/*Script to Delete all sales transactions*/
+/* This script is an utility to change a customer code. */
 
 include ('includes/session.inc');
-$Title = _('UTILITY PAGE To Changes A Customer Code In All Tables');
+$Title = _('UTILITY PAGE To Changes A Customer Code In All Tables');// Screen identificator.
+$ViewTopic = 'SpecialUtilities'; // Filename's id in ManualContents.php's TOC.
+$BookMark = 'Z_ChangeCustomerCode'; // Anchor's id in the manual's html document.
 include('includes/header.inc');
+echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
+	'/images/customer.png" title="' . 
+	_('Change A Customer Code') . '" /> ' .// Icon title.
+	_('Change A Customer Code') . '</p>';// Page title.
 
 if (isset($_POST['ProcessCustomerChange'])){
 
@@ -244,5 +250,4 @@ echo '<br />
 	</form>';
 
 include('includes/footer.inc');
-
 ?>

@@ -3,6 +3,8 @@
 
 include('includes/session.inc');
 $Title=_('Currency Debtor Balances');
+$ViewTopic = 'SpecialUtilities'; // Filename in ManualContents.php's TOC.
+$BookMark = 'Z_CurrencyDebtorsBalances'; // Anchor's id in the manual's html document.
 include('includes/header.inc');
 
 echo '<div class="centre"><h3>' . _('Debtors Balances By Currency Totals') . '</h3></div>';
