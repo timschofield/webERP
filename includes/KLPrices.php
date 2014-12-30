@@ -97,6 +97,20 @@ function round_basic_price($n,$x=1) {
 }
 
 function round_price($n, $up="UP"){
+
+	// for "small prices" we jump to the minimum set by the company
+	// then do special steps until we reach the normal pricing system
+	
+	if ($n <= SMALL_PRICE_CALCULATED_STEP01){
+		$n = SMALL_PRICE_CORRECTED_STEP01;
+	}else if ($n <= SMALL_PRICE_CALCULATED_STEP02){
+		$n = SMALL_PRICE_CORRECTED_STEP02;
+	}else if ($n <= SMALL_PRICE_CALCULATED_STEP03){
+		$n = SMALL_PRICE_CORRECTED_STEP03;
+	}else if ($n <= SMALL_PRICE_CALCULATED_STEP04){
+		$n = SMALL_PRICE_CORRECTED_STEP03;
+	}
+
 	$price = $n;
 	if($n <= PRICE_ROUNDING_LIMIT01){
 		if(!multiple_of($n, PRICE_ROUNDING_STEP01)){
