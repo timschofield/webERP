@@ -30,8 +30,8 @@ if ($KL_SystemAdmin
 	OR $KL_PurchasingManager){
 	ItemsWithoutRetailPrice("TESTSI", 4.25, $RootPath, $db);
 	ItemsWithoutRetailPrice("TESTSS", 4.25, $RootPath, $db);
-	ItemsWithoutRetailPrice("TESTFJ", 4.25, $RootPath, $db);
-	ItemsWithoutRetailPrice("TESTAC", 4.25, $RootPath, $db);
+	ItemsWithoutRetailPrice("TESTFJ", 5.00, $RootPath, $db);
+	ItemsWithoutRetailPrice("TESTAC", 5.00, $RootPath, $db);
 	ItemsWithoutRetailPrice("SILVER", 4.25, $RootPath, $db);
 	ItemsWithoutRetailPrice("STAINL", 4.25, $RootPath, $db);
 	ItemsWithoutRetailPrice("FASHIO", 5.00, $RootPath, $db);
@@ -57,9 +57,12 @@ if ($KL_SystemAdmin
 	PriceBelowStandard("TESTAC", 4.25, 0.05, 10, $RootPath, $db);
 	PriceBelowStandard("TESTAC", 4.25, 0.20,  5, $RootPath, $db);
 
-	PriceBelowStandard("SILVER", 4.25, 0.03, 15, $RootPath, $db);
+/*	PriceBelowStandard("SILVER", 4.25, 0.03, 15, $RootPath, $db);
 	PriceBelowStandard("SILVER", 4.25, 0.05, 10, $RootPath, $db);
 	PriceBelowStandard("SILVER", 4.25, 0.20,  5, $RootPath, $db);
+*/	PriceBelowStandard("SILVER", 4.25, 0, 0, $RootPath, $db);
+	PriceBelowStandard("SILVER", 4.25, 0, 0, $RootPath, $db);
+	PriceBelowStandard("SILVER", 4.25, 0, 0, $RootPath, $db);
 
 	PriceBelowStandard("STAINL", 4.25, 0.03, 15, $RootPath, $db);
 	PriceBelowStandard("STAINL", 4.25, 0.05, 10, $RootPath, $db);
