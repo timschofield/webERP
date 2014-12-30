@@ -541,6 +541,7 @@ if ($KL_SystemAdmin
 * Other tests     
 ***************************************************************************************/
 if ($KL_SystemAdmin 
+	OR $KL_PurchasingManager
 	OR $KL_PurchasingTeam){
 	ActiveItemsWithoutPicture($RootPath, $db);
 }
