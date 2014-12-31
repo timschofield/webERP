@@ -35,6 +35,7 @@ function KLTranslationFixes($TranslatedText, $target){
 	if($target == 'id'){
 		$TranslatedText = str_replace("Finishing dipoles tinggi", "Finishing dipoles", $TranslatedText);
 
+		// Anting Anting 
 		if (strpos($TranslatedText," anting-anting perak") !== false) {
 			$TranslatedText = str_replace(" anting-anting perak", "", $TranslatedText);
 			$TranslatedText = "Anting perak ". $TranslatedText; 
@@ -47,21 +48,53 @@ function KLTranslationFixes($TranslatedText, $target){
 			$TranslatedText = str_replace(" perak anting", "", $TranslatedText);
 			$TranslatedText = "Anting perak ". $TranslatedText; 
 		}
+		if (strpos($TranslatedText," anting kawat") !== false) {
+			$TranslatedText = str_replace(" anting kawat", "", $TranslatedText);
+			$TranslatedText = "Anting kawat ". $TranslatedText; 
+		}
+		if (strpos($TranslatedText," anting-anting") !== false) {
+			$TranslatedText = str_replace(" anting-anting", "", $TranslatedText);
+			$TranslatedText = "Anting-anting ". $TranslatedText; 
+		}
+
+		// cincin
 		if (strpos($TranslatedText," perak cincin") !== false) {
 			$TranslatedText = str_replace(" perak cincin", "", $TranslatedText);
 			$TranslatedText = "Cincin perak ". $TranslatedText; 
 		}
+		if (strpos($TranslatedText," cincin perak") !== false) {
+			$TranslatedText = str_replace(" cincin perak", "", $TranslatedText);
+			$TranslatedText = "Cincin perak ". $TranslatedText; 
+		}
+
+		// kalung
 		if (strpos($TranslatedText," perak kalung") !== false) {
 			$TranslatedText = str_replace(" perak kalung", "", $TranslatedText);
 			$TranslatedText = "Kalung perak ". $TranslatedText; 
 		}
+		if (strpos($TranslatedText," kawat kalung") !== false) {
+			$TranslatedText = str_replace(" kawat kalung", "", $TranslatedText);
+			$TranslatedText = "Kalung kawat ". $TranslatedText; 
+		}
+
+		// gelang
 		if (strpos($TranslatedText," perak gelang") !== false) {
 			$TranslatedText = str_replace(" perak gelang", "", $TranslatedText);
 			$TranslatedText = "Gelang perak ". $TranslatedText; 
 		}
-		if (strpos($TranslatedText," kawat kalung") !== false) {
-			$TranslatedText = str_replace(" kawat kalung", "", $TranslatedText);
-			$TranslatedText = "Kalung kawat ". $TranslatedText; 
+		if (strpos($TranslatedText," gelang perak") !== false) {
+			$TranslatedText = str_replace(" gelang perak", "", $TranslatedText);
+			$TranslatedText = "Gelang perak ". $TranslatedText; 
+		}
+		if (strpos($TranslatedText," gelang") !== false) {
+			$TranslatedText = str_replace(" gelang", "", $TranslatedText);
+			$TranslatedText = "Gelang ". $TranslatedText; 
+		}
+		
+		// liontin
+		if (strpos($TranslatedText," liontin perak") !== false) {
+			$TranslatedText = str_replace(" liontin perak", "", $TranslatedText);
+			$TranslatedText = "Liontin perak ". $TranslatedText; 
 		}
 		
 	}
