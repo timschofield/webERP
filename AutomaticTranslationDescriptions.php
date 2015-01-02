@@ -20,6 +20,7 @@ $SQL = "SELECT stockmaster.stockid,
 				longdescriptiontranslation
 		FROM stockmaster, stockdescriptiontranslations
 		WHERE stockmaster.stockid = stockdescriptiontranslations.stockid
+			AND stockmaster.discontinued = 0
 			AND (descriptiontranslation = ''
 				OR longdescriptiontranslation = '')
 		ORDER BY stockmaster.stockid,
