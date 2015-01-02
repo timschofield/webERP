@@ -6807,9 +6807,11 @@ id	select_type	table		type	possible_keys		key			key_len	ref									rows	Extra
 }
 
 function ItemsNeedingTranslationRevision($RootPath, $db){
-	$SQL = "SELECT COUNT(stockid)
-			FROM stockdescriptiontranslations
-			WHERE needsrevision = '1'";
+	$SQL = "SELECT COUNT(stockdescriptiontranslations.stockid)
+			FROM stockmaster, stockdescriptiontranslations
+			WHERE stockmaster.stockid = stockdescriptiontranslations.stockid
+				AND stockmaster.discontinued = 0
+				AND needsrevision = '1'";
 	$result = DB_query($SQL);
 	$myrow = DB_fetch_array($result);
 	if ($myrow[0] > 0){
@@ -6819,10 +6821,12 @@ function ItemsNeedingTranslationRevision($RootPath, $db){
 }
 
 function ItemsNeedingAutomaticTranslation($RootPath, $db){
-	$SQL = "SELECT COUNT(stockid)
-			FROM stockdescriptiontranslations
-			WHERE descriptiontranslation = ''
-				OR longdescriptiontranslation = ''";
+	$SQL = "SELECT COUNT(stockdescriptiontranslations.stockid)
+			FROM stockmaster, stockdescriptiontranslations
+			WHERE stockmaster.stockid = stockdescriptiontranslations.stockid
+				AND stockmaster.discontinued = 0
+				AND (descriptiontranslation = ''
+					OR longdescriptiontranslation = '')";
 	$result = DB_query($SQL);
 	$myrow = DB_fetch_array($result);
 	if ($myrow[0] > 0){
