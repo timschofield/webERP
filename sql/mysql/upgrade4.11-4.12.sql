@@ -144,7 +144,7 @@ INSERT INTO  `scripts` (`script` ,`pagesecurity` ,`description`) VALUES ('Revisi
 --
 -- Insert default theme value for login screen
 --
-INSERT INTO `verdoram_erp`.`config` (`confname`, `confvalue`) VALUES ('DefaultTheme', 'xenos');
+INSERT INTO `config` (`confname`, `confvalue`) VALUES ('DefaultTheme', 'xenos');
 
 
 UPDATE config SET confvalue='4.12' WHERE confname='VersionNumber';

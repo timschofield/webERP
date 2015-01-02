@@ -117,7 +117,7 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['DefaultDateFormat'] != $_POST['X_DefaultDateFormat'] ) {
 			$sql[] = "UPDATE config SET confvalue = '".$_POST['X_DefaultDateFormat']."' WHERE confname = 'DefaultDateFormat'";
 		}
-		if ($_SESSION['DefaultTheme'] != $_POST['X_DefaultTheme'] ) {// If not equal, update the default theme (login window).
+		if ($_SESSION['DefaultTheme'] != $_POST['X_DefaultTheme'] ) {// If not equal, update the default theme.
 			$sql[] = "UPDATE config SET confvalue = '".$_POST['X_DefaultTheme']."' WHERE confname = 'DefaultTheme'";
 			// BEGIN Update config.php:
 			$FileName = $RootPath . 'config.php';
