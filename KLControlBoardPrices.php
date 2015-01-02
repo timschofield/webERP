@@ -68,61 +68,61 @@ if ($KL_SystemAdmin
 
 if ($KL_SystemAdmin 
 	OR $KL_PurchasingManager){
-	ItemsTooCheap("TESTSI", 4.75, 5.25, 0.05, 10,  50, 60, $RootPath, $db);
+//	ItemsTooCheap("TESTSI", 4.75, 5.25, 0.05, 10,  50, 60, $RootPath, $db);
 	ItemsTooCheap("TESTSI", 4.75, 5.00, 0.05, 10, 100, 60, $RootPath, $db);
-	ItemsTooCheap("SILVER", 4.75, 5.25, 0.05, 10,  50, 60, $RootPath, $db);
+//	ItemsTooCheap("SILVER", 4.75, 5.25, 0.05, 10,  50, 60, $RootPath, $db);
 	ItemsTooCheap("SILVER", 4.75, 5.00, 0.05, 10, 100, 60, $RootPath, $db);
-	ItemsTooCheap("NOPOSI", 4.75, 5.25, 0.05, 10,  50, 60, $RootPath, $db);
+//	ItemsTooCheap("NOPOSI", 4.75, 5.25, 0.05, 10,  50, 60, $RootPath, $db);
 	ItemsTooCheap("NOPOSI", 4.75, 5.00, 0.05, 10, 100, 60, $RootPath, $db);
 
-	ItemsTooCheap("TESTSS", 4.75, 5.25, 0.05, 10,  50, 60, $RootPath, $db);
+//	ItemsTooCheap("TESTSS", 4.75, 5.25, 0.05, 10,  50, 60, $RootPath, $db);
 	ItemsTooCheap("TESTSS", 4.75, 5.00, 0.05, 10, 100, 60, $RootPath, $db);
-	ItemsTooCheap("STAINL", 4.75, 5.25, 0.05, 10,  50, 60, $RootPath, $db);
+//	ItemsTooCheap("STAINL", 4.75, 5.25, 0.05, 10,  50, 60, $RootPath, $db);
 	ItemsTooCheap("STAINL", 4.75, 5.00, 0.05, 10, 100, 60, $RootPath, $db);
-	ItemsTooCheap("TESTSS", 4.75, 5.25, 0.05, 10,  50, 60, $RootPath, $db);
+//	ItemsTooCheap("TESTSS", 4.75, 5.25, 0.05, 10,  50, 60, $RootPath, $db);
 	ItemsTooCheap("TESTSS", 4.75, 5.00, 0.05, 10, 100, 60, $RootPath, $db);
 	
-	ItemsTooCheap("TESTFJ", 5.50, 6.00, 0.05, 10,  50, 60, $RootPath, $db);
+//	ItemsTooCheap("TESTFJ", 5.50, 6.00, 0.05, 10,  50, 60, $RootPath, $db);
 	ItemsTooCheap("TESTFJ", 5.50, 5.75, 0.05, 10, 100, 60, $RootPath, $db);
-	ItemsTooCheap("FASHIO", 5.50, 6.00, 0.05, 10,  50, 60, $RootPath, $db);
+//	ItemsTooCheap("FASHIO", 5.50, 6.00, 0.05, 10,  50, 60, $RootPath, $db);
 	ItemsTooCheap("FASHIO", 5.50, 5.75, 0.05, 10, 100, 60, $RootPath, $db);
-	ItemsTooCheap("NOPOFJ", 5.50, 6.00, 0.05, 10,  50, 60, $RootPath, $db);
+//	ItemsTooCheap("NOPOFJ", 5.50, 6.00, 0.05, 10,  50, 60, $RootPath, $db);
 	ItemsTooCheap("NOPOFJ", 5.50, 5.75, 0.05, 10, 100, 60, $RootPath, $db);
 
-	ItemsTooCheap("TESTAC", 5.50, 6.00, 0.05, 10,  50, 60, $RootPath, $db);
+//	ItemsTooCheap("TESTAC", 5.50, 6.00, 0.05, 10,  50, 60, $RootPath, $db);
 	ItemsTooCheap("TESTAC", 5.50, 5.75, 0.05, 10, 100, 60, $RootPath, $db);
-	ItemsTooCheap("ACCESO", 5.50, 6.00, 0.05, 10,  50, 60, $RootPath, $db);
+//	ItemsTooCheap("ACCESO", 5.50, 6.00, 0.05, 10,  50, 60, $RootPath, $db);
 	ItemsTooCheap("ACCESO", 5.50, 5.75, 0.05, 10, 100, 60, $RootPath, $db);
-	ItemsTooCheap("NOPOAC", 5.50, 6.00, 0.05, 10,  50, 60, $RootPath, $db);
+//	ItemsTooCheap("NOPOAC", 5.50, 6.00, 0.05, 10,  50, 60, $RootPath, $db);
 	ItemsTooCheap("NOPOAC", 5.50, 5.75, 0.05, 10, 100, 60, $RootPath, $db);
 
 	ItemsTooExpensive("TESTSI", 4.75, 5.00, 0.05, 5, 800, 90, $RootPath, $db);
-	ItemsTooExpensive("TESTSI", 4.75, 6.00, 0.05, 5, 600, 90, $RootPath, $db);
+//	ItemsTooExpensive("TESTSI", 4.75, 6.00, 0.05, 5, 600, 90, $RootPath, $db);
 	ItemsTooExpensive("SILVER", 4.75, 5.50, 0.05, 5, 800, 90, $RootPath, $db);
-	ItemsTooExpensive("SILVER", 4.75, 6.00, 0.05, 5, 600, 90, $RootPath, $db);
+//	ItemsTooExpensive("SILVER", 4.75, 6.00, 0.05, 5, 600, 90, $RootPath, $db);
 	ItemsTooExpensive("NOPOSI", 4.75, 6.00, 0.05, 5, 800, 60, $RootPath, $db);
-	ItemsTooExpensive("NOPOSI", 4.75, 6.50, 0.05, 5, 600, 60, $RootPath, $db);
+//	ItemsTooExpensive("NOPOSI", 4.75, 6.50, 0.05, 5, 600, 60, $RootPath, $db);
 
 	ItemsTooExpensive("TESTSS", 4.75, 5.00, 0.05, 5, 800, 90, $RootPath, $db);
-	ItemsTooExpensive("TESTSS", 4.75, 6.00, 0.05, 5, 600, 90, $RootPath, $db);
+//	ItemsTooExpensive("TESTSS", 4.75, 6.00, 0.05, 5, 600, 90, $RootPath, $db);
 	ItemsTooExpensive("STAINL", 4.75, 5.50, 0.05, 5, 800, 90, $RootPath, $db);
-	ItemsTooExpensive("STAINL", 4.75, 6.00, 0.05, 5, 600, 90, $RootPath, $db);
+//	ItemsTooExpensive("STAINL", 4.75, 6.00, 0.05, 5, 600, 90, $RootPath, $db);
 	ItemsTooExpensive("NOPOSS", 4.75, 6.00, 0.05, 5, 800, 60, $RootPath, $db);
-	ItemsTooExpensive("NOPOSS", 4.75, 6.50, 0.05, 5, 600, 60, $RootPath, $db);
+//	ItemsTooExpensive("NOPOSS", 4.75, 6.50, 0.05, 5, 600, 60, $RootPath, $db);
 	
 	ItemsTooExpensive("TESTFJ", 5.50, 6.00, 0.05, 5, 800, 90, $RootPath, $db);
-	ItemsTooExpensive("TESTFJ", 5.50, 6.50, 0.05, 5, 600, 90, $RootPath, $db);
+//	ItemsTooExpensive("TESTFJ", 5.50, 6.50, 0.05, 5, 600, 90, $RootPath, $db);
 	ItemsTooExpensive("FASHIO", 5.50, 6.00, 0.05, 5, 800, 90, $RootPath, $db);
-	ItemsTooExpensive("FASHIO", 5.50, 6.50, 0.05, 5, 600, 90, $RootPath, $db);
+//	ItemsTooExpensive("FASHIO", 5.50, 6.50, 0.05, 5, 600, 90, $RootPath, $db);
 	ItemsTooExpensive("NOPOFJ", 5.50, 6.00, 0.05, 5, 800, 90, $RootPath, $db);
-	ItemsTooExpensive("NOPOFJ", 5.50, 6.50, 0.05, 5, 600, 90, $RootPath, $db);
+//	ItemsTooExpensive("NOPOFJ", 5.50, 6.50, 0.05, 5, 600, 90, $RootPath, $db);
 
 	ItemsTooExpensive("TESTAC", 5.50, 6.00, 0.05, 5, 800, 90, $RootPath, $db);
-	ItemsTooExpensive("TESTAC", 5.50, 6.50, 0.05, 5, 600, 90, $RootPath, $db);
+//	ItemsTooExpensive("TESTAC", 5.50, 6.50, 0.05, 5, 600, 90, $RootPath, $db);
 	ItemsTooExpensive("ACCESO", 5.50, 6.00, 0.05, 5, 800, 90, $RootPath, $db);
-	ItemsTooExpensive("ACCESO", 5.50, 6.50, 0.05, 5, 600, 90, $RootPath, $db);
+//	ItemsTooExpensive("ACCESO", 5.50, 6.50, 0.05, 5, 600, 90, $RootPath, $db);
 	ItemsTooExpensive("NOPOAC", 5.50, 6.00, 0.05, 5, 800, 90, $RootPath, $db);
-	ItemsTooExpensive("NOPOAC", 5.50, 6.50, 0.05, 5, 600, 90, $RootPath, $db);
+//	ItemsTooExpensive("NOPOAC", 5.50, 6.50, 0.05, 5, 600, 90, $RootPath, $db);
 
 }
 
