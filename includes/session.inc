@@ -102,7 +102,7 @@ if(basename($_SERVER['SCRIPT_NAME'])=='Logout.php'){
 	}
 
 	/*  Need to set the theme to make login screen nice */
-	$Theme = (isset($_SESSION['Theme'])) ? $_SESSION['Theme'] : 'xenos';
+	$Theme = (isset($_SESSION['Theme'])) ? $_SESSION['Theme'] : $DefaultTheme;
 	switch ($rc) {
 	case  UL_OK; //user logged in successfully
 		include($PathPrefix . 'includes/LanguageSetup.php'); //set up the language
@@ -146,8 +146,8 @@ If (isset($_POST['Theme']) AND ($_SESSION['UsersRealName'] == $_POST['RealName']
 } elseif (isset($_SESSION['Theme'])) {
 	$Theme = $_SESSION['Theme'];
 } else {
-	$Theme = 'xenos';
-	$_SESSION['Theme'] = 'xenos';
+	$Theme = $DefaultTheme;
+	$_SESSION['Theme'] = '$DefaultTheme';
 }
 
 

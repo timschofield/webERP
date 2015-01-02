@@ -5,9 +5,13 @@
 // User configurable variables
 //---------------------------------------------------
 
-//DefaultLanguage to use for the login screen and the setup of new users
+// Default language to use for the login screen and the setup of new users.
 //The users' language selection will override
-$DefaultLanguage ='en_GB.utf8';
+$DefaultLanguage = 'en_GB.utf8';
+
+// Default theme to use for the login screen and the setup of new users.
+//The users' theme selection will override
+$DefaultTheme = 'xenos';
 
 // Whether to display the demo login and password or not on the login screen
 $AllowDemoMode = True;

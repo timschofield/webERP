@@ -141,5 +141,10 @@ INSERT INTO `config` (`confname` ,`confvalue`) VALUES ('GoogleTranslatorAPIKey',
 
 INSERT INTO  `scripts` (`script` ,`pagesecurity` ,`description`) VALUES ('RevisionTranslations.php',  '15',  'Human revision for automatic descriptions translations');
 
+--
+-- Insert default theme value for login screen
+--
+INSERT INTO `verdoram_erp`.`config` (`confname`, `confvalue`) VALUES ('DefaultTheme', 'xenos');
+
 
 UPDATE config SET confvalue='4.12' WHERE confname='VersionNumber';

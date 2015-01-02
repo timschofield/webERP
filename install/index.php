@@ -150,8 +150,9 @@ if(!extension_loaded('mbstring')){
 	$PathPrefix = '../';//To make the LanguageSetup.php script run properly
 	include('../includes/LanguageSetup.php');
 	include('../includes/MiscFunctions.php');
-	//prevent the installation file from running again
+	$DefaultTheme = 'xenos';
 
+	// Prevent the installation file from running again:
 	if(file_exists('../config.php') or file_exists('../Config.php')){
 		prnMsg(_('It seems that the system has been already installed. If you want to install again, please remove the config.php file first'),'error');
 		exit;
@@ -344,8 +345,10 @@ if(!extension_loaded('mbstring')){
 			$msg = "<?php\n\n";
 			$msg .= "// User configurable variables\n";
 			$msg .= "//---------------------------------------------------\n\n";
-			$msg .= "//DefaultLanguage to use for the login screen and the setup of new users.\n";
+			$msg .= "// Default language to use for the login screen and the setup of new users.\n";
 			$msg .= "\$DefaultLanguage = '" . $UserLanguage . "';\n\n";
+			$msg .= "// Default theme to use for the login screen and the setup of new users.\n";
+			$msg .= "\$DefaultTheme = '" . $DefaultTheme . "';\n\n";
 			$msg .= "// Whether to display the demo login and password or not on the login screen\n";
 			$msg .= "\$AllowDemoMode = FALSE;\n\n";
 			$msg .= "// Connection information for the database\n";
