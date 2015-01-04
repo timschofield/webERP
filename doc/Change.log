@@ -1,5 +1,6 @@
 webERP Change Log
 
+04/01/15 RChacon: In RevisionTranslations.php, add $Id, $ViewTopic, $BookMark and page_title_text. Add info to manual. Add comments to code.
 04/01/15 RChacon: In SystemParameters.php, remove root path to config.php and add comments.
 01/01/15 RChacon: Move default theme from session.inc to config.php. Add the ability to change the default theme in SystemParameters.php.
 01/01/15 Exson: Make StockCategories.php strict sql mode compatible. 

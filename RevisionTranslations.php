@@ -1,16 +1,26 @@
 <?php
+/* $Id: RevisionTranslations.php 7040 2014-12-27 15:15:29Z tehonu $*/
+/* This script is to review the item description translations. */
 
 include('includes/session.inc');
-$Title = _('Revision of Description Translations');
+
+$Title = _('Review Translated Descriptions');// Screen identificator.
+$ViewTopic= 'Inventory';// Filename's id in ManualContents.php's TOC.
+$BookMark = 'ReviewTranslatedDescriptions';// Anchor's id in the manual's html document.
 include('includes/header.inc');
+echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
+	'/images/maintenance.png" title="' .// Title icon.
+	_('Review Translated Descriptions') . '" />' .// Icon title.
+	_('Review Translated Descriptions') . '</p>';// Page title.
+
 include('includes/SQL_CommonFunctions.inc');
 
 //update database if update pressed
-if (isset($_POST['Submit'])){
-	for ($i=1;$i<count($_POST);$i++){ //loop through the returned translations
+if(isset($_POST['Submit'])) {
+	for ($i=1;$i<count($_POST);$i++) { //loop through the returned translations
 
-		if (isset($_POST['Revised' . $i]) AND ($_POST['Revised' . $i] == '1')){
-			$sqlUpdate="UPDATE stockdescriptiontranslations 
+		if(isset($_POST['Revised' . $i]) AND ($_POST['Revised' . $i] == '1')) {
+			$sqlUpdate="UPDATE stockdescriptiontranslations
 						SET needsrevision = '0',
 							descriptiontranslation = '". $_POST['DescriptionTranslation' .$i] ."',
 							longdescriptiontranslation = '". $_POST['LongDescriptionTranslation' .$i] ."'
@@ -55,9 +65,9 @@ echo '<tr>
 
 $k=0; //row colour counter
 $i=1;
-while ($myrow=DB_fetch_array($result))	{
+while($myrow=DB_fetch_array($result)) {
 
-	if ($k==1){
+	if($k==1) {
 		echo '<tr class="EvenTableRows">';
 		$k=0;
 	} else {
@@ -65,13 +75,13 @@ while ($myrow=DB_fetch_array($result))	{
 		$k=1;
 	}
 
-	echo'<td>' . $myrow['stockid'] . '</td>
+	echo '<td>' . $myrow['stockid'] . '</td>
 		<td>'. $_SESSION['Language']. '</td>
 		<td>' . $myrow['description'] . '</td>
 		<td>' . $myrow['longdescription'] . '</td>
 		</tr>';
-	
-	if ($k==1){
+
+	if($k==1) {
 		echo '<tr class="EvenTableRows">';
 		$k=0;
 	} else {
@@ -79,7 +89,7 @@ while ($myrow=DB_fetch_array($result))	{
 		$k=1;
 	}
 
-	echo'<td></td>
+	echo '<td></td>
 		<td>' . $myrow['language_id'] . '</td>';
 
 	echo '<td>
@@ -92,7 +102,7 @@ while ($myrow=DB_fetch_array($result))	{
 	echo '<td><input type="checkbox" name="Revised' . $i.'" value="1" />
 		</td>
 		</tr>';
-	echo'<input type="hidden" value="' . $myrow['stockid'] . '" name="StockID' . $i . '" />
+	echo '<input type="hidden" value="' . $myrow['stockid'] . '" name="StockID' . $i . '" />
 		<input type="hidden" value="' . $myrow['language_id'] . '" name="LanguageID' . $i . '" />';
 	$i++;
 
