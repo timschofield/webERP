@@ -1,17 +1,19 @@
 <?php
-
 /* $Id$*/
+/* This script is for maintenance of the system parameters. */
 
 include('includes/session.inc');
 
-$Title = _('System Parameters');
-$ViewTopic= 'GettingStarted';
-$BookMark = 'SystemConfiguration';
+$Title = _('System Parameters');// Screen identificator.
+$ViewTopic= 'GettingStarted';// Filename's id in ManualContents.php's TOC.
+$BookMark = 'SystemConfiguration';// Anchor's id in the manual's html document.
 include('includes/header.inc');
-include('includes/CountriesArray.php');
+echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
+	'/images/maintenance.png" title="' .// Title icon.
+	$Title . '" />' .// Icon title.
+	$Title . '</p>';// Page title.
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Supplier Types')
-	. '" alt="" />' . $Title. '</p>';
+include('includes/CountriesArray.php');
 
 if (isset($_POST['submit'])) {
 
@@ -117,26 +119,25 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['DefaultDateFormat'] != $_POST['X_DefaultDateFormat'] ) {
 			$sql[] = "UPDATE config SET confvalue = '".$_POST['X_DefaultDateFormat']."' WHERE confname = 'DefaultDateFormat'";
 		}
-		if ($_SESSION['DefaultTheme'] != $_POST['X_DefaultTheme'] ) {// If not equal, update the default theme.
+		if($_SESSION['DefaultTheme'] != $_POST['X_DefaultTheme']) {// If not equal, update the default theme.
 			$sql[] = "UPDATE config SET confvalue = '".$_POST['X_DefaultTheme']."' WHERE confname = 'DefaultTheme'";
-			// BEGIN Update config.php:
-			$FileName = $RootPath . 'config.php';
-			$fhandle = fopen($FileName,"r");
+			// BEGIN: Update the config.php file:
+			$fhandle = fopen('config.php', 'r');
 			if($fhandle) {
-				$content = fread($fhandle,filesize($FileName));
-				$content = str_replace(" ;", ";", $content);// Clean space before end-of-php-line.
-				$content = str_replace("'".$_SESSION['DefaultTheme']."';", "'".$_POST['X_DefaultTheme']."';", $content);
-				$fhandle = fopen($FileName,"w");
+				$content = fread($fhandle, filesize('config.php'));
+				$content = str_replace(' ;\n', ';\n', $content);// Clean space before the end-of-php-line.
+				$content = str_replace('\''.$_SESSION['DefaultTheme'].'\';', '\''.$_POST['X_DefaultTheme'].'\';', $content);
+				$fhandle = fopen('config.php','w');
 				if(!fwrite($fhandle,$content)) {
-					prnMsg(_("Cannot write to the configuration file").' '.$FileName,'error');
+					prnMsg(_('Cannot write to the configuration file.'), 'error');
 				} else {
-					prnMsg(_("The configuration file was updated"),'info');
+					prnMsg(_('The configuration file was updated.'), 'info');
 				}
 				fclose($fhandle);
 			} else {
-				prnMsg(_("Cannot open the configuration file").' '.$FileName,'error');
+				prnMsg(_('Cannot open the configuration file.'), 'error');
 			}
-			// END Update config.php.
+			// END: Update the config.php file.
 		}
 		if ($_SESSION['PastDueDays1'] != $_POST['X_PastDueDays1'] ) {
 			$sql[] = "UPDATE config SET confvalue = '".$_POST['X_PastDueDays1']."' WHERE confname = 'PastDueDays1'";
