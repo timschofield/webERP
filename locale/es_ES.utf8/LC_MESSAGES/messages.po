@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.11.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-01-04 16:05-0600\n"
-"PO-Revision-Date: 2015-01-04 16:29-0600\n"
+"PO-Revision-Date: 2015-01-04 16:48-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -1618,7 +1618,7 @@ msgstr "Valor"
 
 #: AutomaticTranslationDescriptions.php:5 includes/MainMenuLinksArray.php:553
 msgid "Translate Item Descriptions"
-msgstr "Traducir descripciones de artículo"
+msgstr "Traducir descripciones de artículos"
 
 #: AutomaticTranslationDescriptions.php:31
 msgid "Description Automatic Translation for empty translations"
@@ -8740,7 +8740,7 @@ msgstr "Fecha Final"
 
 #: CustomerBalancesMovement.php:68
 msgid "Create CSV"
-msgstr ""
+msgstr "Crear CSV"
 
 #: CustomerBalancesMovement.php:75
 msgid "Show Customer Balance Movements"
@@ -15260,11 +15260,11 @@ msgstr ""
 
 #: HistoricalTestResults.php:130
 msgid "Identifier:"
-msgstr ""
+msgstr "Identificador:"
 
 #: HistoricalTestResults.php:130
 msgid "Sample Date:"
-msgstr ""
+msgstr "Fecha de muestreo:"
 
 #: ImportBankTrans.php:7 ImportBankTransAnalysis.php:20
 #: ImportBankTransAnalysis.php:34 includes/MainMenuLinksArray.php:350
@@ -18581,7 +18581,7 @@ msgstr ""
 
 #: PDFCOA.php:64
 msgid "Lot/Serial"
-msgstr ""
+msgstr "Lote/Serie"
 
 #: PDFCOA.php:81
 msgid "There was a problem retrieving the Lot Information"
@@ -18601,15 +18601,15 @@ msgstr ""
 
 #: PDFCOA.php:169
 msgid "Physical Properties"
-msgstr ""
+msgstr "Propiedades físicas"
 
 #: PDFCOA.php:169 PDFProdSpec.php:129
 msgid "Physical Property"
-msgstr ""
+msgstr "Propiedad física"
 
 #: PDFCOA.php:169 PDFProdSpec.php:129 TestPlanResults.php:804
 msgid "Test Method"
-msgstr ""
+msgstr "Método de prueba"
 
 #: PDFCOA.php:170 PDFProdSpec.php:130
 msgid "Injection Molding Processing Guidelines"
@@ -19557,11 +19557,11 @@ msgstr ""
 
 #: PDFProdSpec.php:103 includes/MainMenuLinksArray.php:337
 msgid "Product Specifications"
-msgstr ""
+msgstr "Especificaciones de producto"
 
 #: PDFProdSpec.php:117 PDFProdSpec.php:118 ProductSpecs.php:347
 msgid "Product Specification"
-msgstr ""
+msgstr "Especificación de producto"
 
 #: PDFProdSpec.php:129
 msgid "Technical Data Sheet Properties"
@@ -24680,7 +24680,7 @@ msgstr ""
 
 #: QATests.php:288
 msgid "Numeric Value?"
-msgstr ""
+msgstr "¿Valor numérico?"
 
 #: QATests.php:388
 msgid "Test ID"
@@ -25427,7 +25427,7 @@ msgstr "Revisar descripciones traducidas"
 
 #: RevisionTranslations.php:30
 msgid "descriptions"
-msgstr ""
+msgstr "descripciones"
 
 #: RevisionTranslations.php:41
 msgid "Translations to revise"
