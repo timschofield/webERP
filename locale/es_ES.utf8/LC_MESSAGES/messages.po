@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.11.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-01-04 16:05-0600\n"
-"PO-Revision-Date: 2014-12-28 17:08-0600\n"
+"PO-Revision-Date: 2015-01-04 16:29-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -1618,7 +1618,7 @@ msgstr "Valor"
 
 #: AutomaticTranslationDescriptions.php:5 includes/MainMenuLinksArray.php:553
 msgid "Translate Item Descriptions"
-msgstr ""
+msgstr "Traducir descripciones de artículo"
 
 #: AutomaticTranslationDescriptions.php:31
 msgid "Description Automatic Translation for empty translations"
@@ -1668,12 +1668,12 @@ msgstr "Para"
 
 #: AutomaticTranslationDescriptions.php:39
 msgid "Translated"
-msgstr ""
+msgstr "Traducido"
 
 #: AutomaticTranslationDescriptions.php:116
 #: AutomaticTranslationDescriptions.php:117
 msgid "No item description was automatically translated"
-msgstr ""
+msgstr "Ninguna descripción de artículo fue traducido automáticamente"
 
 #: BOMExtendedQty.php:12 BOMExtendedQty.php:13 BOMExtendedQty.php:154
 #: BOMExtendedQty.php:254
@@ -15237,7 +15237,7 @@ msgstr ""
 #: HistoricalTestResults.php:70 SelectQASamples.php:243
 #: TestPlanResults.php:128
 msgid "To Sample Date"
-msgstr ""
+msgstr "A fecha de muestreo"
 
 #: HistoricalTestResults.php:76 InternalStockRequest.php:301
 #: MRPCreateDemands.php:282 MailingGroupMaintenance.php:145 PDFCOA.php:43
@@ -25423,7 +25423,7 @@ msgstr "Abonar"
 #: RevisionTranslations.php:7 RevisionTranslations.php:13
 #: RevisionTranslations.php:14
 msgid "Review Translated Descriptions"
-msgstr ""
+msgstr "Revisar descripciones traducidas"
 
 #: RevisionTranslations.php:30
 msgid "descriptions"
@@ -37191,11 +37191,11 @@ msgstr ""
 
 #: TestPlanResults.php:433
 msgid " from sample"
-msgstr ""
+msgstr "de la muestra"
 
 #: TestPlanResults.php:433
 msgid " for test "
-msgstr ""
+msgstr "para prueba"
 
 #: TestPlanResults.php:439
 msgid "Test Results have NOT BEEN overwritten for Result ID "
@@ -37207,11 +37207,11 @@ msgstr ""
 
 #: TestPlanResults.php:474
 msgid " from "
-msgstr ""
+msgstr "desde"
 
 #: TestPlanResults.php:474
 msgid " for "
-msgstr ""
+msgstr "para"
 
 #: TestPlanResults.php:620
 msgid "A Sample Result record has been added for Test ID"
@@ -50626,7 +50626,7 @@ msgstr ""
 
 #: reportwriter/languages/en_US/reports.php:340
 msgid "Today"
-msgstr ""
+msgstr "Hoy"
 
 #: reportwriter/languages/en_US/reports.php:342
 msgid "This Week To Date"

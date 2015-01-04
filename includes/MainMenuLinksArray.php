@@ -268,7 +268,7 @@ $MenuItems['stock']['Reports']['URL'] = array(	'/StockSerialItemResearch.php',
 
 $MenuItems['stock']['Maintenance']['Caption'] = array(	_('Add A New Item'),
 														_('Select An Item'),
-														_('Translated Descriptions Revision'),
+														_('Review Translated Descriptions'),
 														_('Sales Category Maintenance'),
 														_('Brands Maintenance'),
 														_('Add or Update Prices Based On Costs'),
