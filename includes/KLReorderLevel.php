@@ -1142,7 +1142,7 @@ function AdjustPackagingItemByShop($Item, $Shop, $DaysSales, $LongDaysSales, $Sh
 		$LongRL  = round($myrow['longsales'] / $LongDaysSales * $myrow['rldaysforpackaging'],0);
 		$NewRL = max($ShortRL, $LongRL, $RLMinim);
 		$OldRL = $myrow['rl'];
-		if ($NewRL != $OldRL){
+		if ($NewRL > $OldRL){
 			if ($ShowMessages){
 				$text = $Shop . ' ' . $Item .  
 					' Old RL = ' . $OldRL . 
