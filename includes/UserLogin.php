@@ -110,7 +110,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
 			$_SESSION['SalesmanLogin'] = $myrow['salesman'];
 			$_SESSION['CanCreateTender'] = $myrow['cancreatetender'];
 			$_SESSION['AllowedDepartment'] = $myrow['department'];
-			$_SESSION['ShowDashboard'] = $myrow['dashboard'];
+			$_SESSION['ShowDashboard'] = $myrow['showdashboard'];
 
 			if (isset($myrow['pdflanguage'])) {
 				$_SESSION['PDFLanguage'] = $myrow['pdflanguage'];

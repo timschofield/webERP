@@ -1,5 +1,4 @@
 <?php
-
 /* $Id$*/
 
 if (isset($_POST['UserID']) AND isset($_POST['ID'])){
@@ -26,15 +25,18 @@ $PDFLanguages = array(_('Latin Western Languages'),
 						_('Chinese'),
 						_('Free Serif'));
 
-$Title = _('Users Maintenance');
-/* webERP manual links before header.inc */
-$ViewTopic= 'GettingStarted';
-$BookMark = 'UserMaintenance';
+$Title = _('Users Maintenance');// Screen identificator.
+$ViewTopic= 'GettingStarted';// Filename's id in ManualContents.php's TOC.
+$BookMark = 'UserMaintenance';// Anchor's id in the manual's html document.
 include('includes/header.inc');
+echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
+	'/images/group_add.png" title="' .// Title icon.
+	_('Search') . '" />' .// Icon title.
+	$Title . '</p>';// Page title.
+
 include('includes/SQL_CommonFunctions.inc');
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/group_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>
-	<br />';
+echo '<br />';// Extra line after page_title_text.
 
 // Make an array of the security roles
 $sql = "SELECT secroleid,
@@ -155,6 +157,7 @@ if (isset($_POST['submit'])) {
 						language ='" . $_POST['UserLanguage'] . "',
 						defaultlocation='" . $_POST['DefaultLocation'] ."',
 						modulesallowed='" . $ModulesAllowed . "',
+						showdashboard='" . $_POST['ShowDashboard'] . "',
 						blocked='" . $_POST['Blocked'] . "',
 						pdflanguage='" . $_POST['PDFLanguage'] . "',
 						department='" . $_POST['Department'] . "'
@@ -238,6 +241,7 @@ if (isset($_POST['submit'])) {
 		unset($_POST['CanCreateTender']);
 		unset($_POST['DefaultLocation']);
 		unset($_POST['ModulesAllowed']);
+		unset($_POST['ShowDashboard']);
 		unset($_POST['Blocked']);
 		unset($_POST['Theme']);
 		unset($_POST['UserLanguage']);
@@ -303,10 +307,12 @@ if (!isset($SelectedUser)) {
 				<th>' . _('Supplier Code') . '</th>
 				<th>' . _('Salesperson') . '</th>
 				<th>' . _('Last Visit') . '</th>
-				<th>' . _('Security Role')  . '</th>
-				<th>' . _('Report Size')  . '</th>
-				<th>' . _('Theme')  . '</th>
-				<th>' . _('Language')  . '</th>
+				<th>' . _('Security Role') . '</th>
+				<th>' . _('Report Size') . '</th>
+				<th>' . _('Theme') . '</th>
+				<th>' . _('Language') . '</th>
+				<th>&nbsp;</th>
+				<th>&nbsp;</th>
 			</tr>';
 
 	$k=0; //row colour counter
@@ -392,6 +398,7 @@ if (isset($SelectedUser)) {
 			cancreatetender,
 			defaultlocation,
 			modulesallowed,
+			showdashboard,
 			blocked,
 			theme,
 			language,
@@ -418,6 +425,7 @@ if (isset($SelectedUser)) {
 	$_POST['ModulesAllowed'] = $myrow['modulesallowed'];
 	$_POST['Theme'] = $myrow['theme'];
 	$_POST['UserLanguage'] = $myrow['language'];
+	$_POST['ShowDashboard'] = $myrow['showdashboard'];
 	$_POST['Blocked'] = $myrow['blocked'];
 	$_POST['PDFLanguage'] = $myrow['pdflanguage'];
 	$_POST['Department'] = $myrow['department'];
@@ -687,6 +695,20 @@ foreach($ModuleList as $ModuleName){
 		</tr>';
 	$i++;
 }
+
+echo '<tr>
+		<td>' . _('Display Dashboard after Login') . ': </td>
+		<td><select name="ShowDashboard">';
+if($_POST['ShowDashboard']==0) {
+	echo '<option selected="selected" value="0">' . _('No') . '</option>';
+	echo '<option value="1">' . _('Yes') . '</option>';
+} else {
+ 	echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
+	echo '<option value="0">' . _('No') . '</option>';
+}
+echo '</select></td>
+	</tr>';
+
 if (!isset($_POST['PDFLanguage'])){
 	$_POST['PDFLanguage']=0;
 }
