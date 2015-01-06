@@ -137,7 +137,7 @@ ALTER TABLE `stockdescriptiontranslations` ADD `longdescriptiontranslation` TEXT
 -- Add a field to mark if a description needs revision:
 ALTER TABLE `stockdescriptiontranslations` ADD `needsrevision` TINYINT(1) NOT NULL DEFAULT '0';
 -- 
-INSERT INTO `config` (`confname` ,`confvalue`) VALUES ('GoogleTranslatorAPIKey',  '');  
+INSERT INTO `config` (`confname` ,`confvalue`) VALUES ('GoogleTranslatorAPIKey',  '');
 -- Assign a Page Security value to each translation script:
 INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES 
 	('AutomaticTranslationDescriptions.php', '15', 'Translates via Google Translator all empty translated descriptions'), 
@@ -147,6 +147,23 @@ INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES
 -- Insert default theme value for login screen
 --
 INSERT INTO `config` (`confname`, `confvalue`) VALUES ('DefaultTheme', 'xenos');
+INSERT INTO  scripts (`script`,`pagesecurity`,`description`) VALUES ('SalesTopCustomersInquiry.php',  '2',  'Shows the top customers sales for a selected date range');
 
+
+CREATE TABLE IF NOT EXISTS `supplierdiscounts` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `supplierno` varchar(10) NOT NULL,
+  `stockid` varchar(20) NOT NULL,
+  `discountnarrative` varchar(20) NOT NULL,
+  `discountpercent` double NOT NULL,
+  `discountamount` double NOT NULL,
+  `effectivefrom` date NOT NULL,
+  `effectiveto` date NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `supplierno` (`supplierno`),
+  KEY `effectivefrom` (`effectivefrom`),
+  KEY `effectiveto` (`effectiveto`),
+  KEY `stockid` (`stockid`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
 UPDATE config SET confvalue='4.12' WHERE confname='VersionNumber';
