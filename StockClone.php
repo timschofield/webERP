@@ -365,7 +365,7 @@ if (isset($_POST['submit'])) {
 																							language_id,
 																							descriptiontranslation,
 																							longdescriptiontranslation)
-													VALUES('" . $StockID . "','" . 
+													VALUES('" . $_POST['StockID'] . "','" . 
 																$LanguageId . "', '" . 
 																$_POST['Description_' . str_replace('.','_',$LanguageId)]  . "', '" . 
 																$_POST['LongDescription_' . str_replace('.','_',$LanguageId)]. 
