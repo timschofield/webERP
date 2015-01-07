@@ -1,10 +1,11 @@
 webERP Change Log
 
+7/1/15 Phil: Added missing SQL for suppliercontacts and supplierdiscounts and adding the script SalesTopCustomersInquiry to the scripts table
 05/01/15 RChacon: Allow turn on/off the dashboard display after login for an specific user. Add comments to code.
 04/01/15 RChacon: In RevisionTranslations.php, add $Id, $ViewTopic, $BookMark and page_title_text. Add info to manual. Add comments to code.
 04/01/15 RChacon: In SystemParameters.php, remove root path to config.php and add comments.
 01/01/15 RChacon: Move default theme from session.inc to config.php. Add the ability to change the default theme in SystemParameters.php.
-01/01/15 Exson: Make StockCategories.php strict sql mode compatible. 
+01/01/15 Exson: Make StockCategories.php strict sql mode compatible.
 28/12/14 RChacon: Standardise labels and texts in Prices_Customer.php SpecialOrder.php and WWW_Access.php. Add $ViewTopic and $BookMark to  WWW_Access.php
 28/12/14 RChacon: Add comments, variables to link to the manual and titles in Z_CurrencyDebtorsBalances.php and Z_CurrencySuppliersBalances.php.
 28/12/14 RChacon: Add comments, variables to link to the manual and titles in Z_Change*.php.

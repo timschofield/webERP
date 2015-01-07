@@ -136,11 +136,11 @@ ALTER TABLE `stockdescriptiontranslations` CHANGE `descriptiontranslation` `desc
 ALTER TABLE `stockdescriptiontranslations` ADD `longdescriptiontranslation` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Item''s long description';
 -- Add a field to mark if a description needs revision:
 ALTER TABLE `stockdescriptiontranslations` ADD `needsrevision` TINYINT(1) NOT NULL DEFAULT '0';
--- 
+--
 INSERT INTO `config` (`confname` ,`confvalue`) VALUES ('GoogleTranslatorAPIKey',  '');
 -- Assign a Page Security value to each translation script:
-INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES 
-	('AutomaticTranslationDescriptions.php', '15', 'Translates via Google Translator all empty translated descriptions'), 
+INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES
+	('AutomaticTranslationDescriptions.php', '15', 'Translates via Google Translator all empty translated descriptions'),
 	('RevisionTranslations.php', '15', 'Human revision for automatic descriptions translations');
 
 --
@@ -166,4 +166,21 @@ CREATE TABLE IF NOT EXISTS `supplierdiscounts` (
   KEY `stockid` (`stockid`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
+
+CREATE TABLE IF NOT EXISTS `suppliercontacts` (
+  `supplierid` varchar(10) NOT NULL DEFAULT '',
+  `contact` varchar(30) NOT NULL DEFAULT '',
+  `position` varchar(30) NOT NULL DEFAULT '',
+  `tel` varchar(30) NOT NULL DEFAULT '',
+  `fax` varchar(30) NOT NULL DEFAULT '',
+  `mobile` varchar(30) NOT NULL DEFAULT '',
+  `email` varchar(55) NOT NULL DEFAULT '',
+  `ordercontact` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`supplierid`,`contact`),
+  KEY `Contact` (`contact`),
+  KEY `SupplierID` (`supplierid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `suppliercontacts`
+  ADD CONSTRAINT `suppliercontacts_ibfk_1` FOREIGN KEY (`supplierid`) REFERENCES `suppliers` (`supplierid`);
 UPDATE config SET confvalue='4.12' WHERE confname='VersionNumber';
