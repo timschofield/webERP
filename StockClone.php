@@ -324,7 +324,15 @@ if (isset($_POST['submit'])) {
 					if (count($ItemDescriptionLanguagesArray)>0){
 						foreach ($ItemDescriptionLanguagesArray as $LanguageId) {
 							if ($LanguageId!=''){
-								$result = DB_query("INSERT INTO stockdescriptiontranslations VALUES('" . $_POST['StockID'] . "','" . $LanguageId . "', '" . $_POST['Description_' . str_replace('.','_',$LanguageId)] . "')",$ErrMsg,$DbgMsg,true);
+								$result = DB_query("INSERT INTO stockdescriptiontranslations (stockid,
+																							language_id,
+																							descriptiontranslation,
+																							longdescriptiontranslation)
+													VALUES('" . $StockID . "','" . 
+																$LanguageId . "', '" . 
+																$_POST['Description_' . str_replace('.','_',$LanguageId)]  . "', '" . 
+																$_POST['LongDescription_' . str_replace('.','_',$LanguageId)]. 
+																"')",$ErrMsg,$DbgMsg,true);
 							}
 						}
 					}
@@ -633,7 +641,11 @@ if ( (!isset($_POST['UpdateCategories']) AND ($InputError!=1))  OR $_POST['New']
 	$_POST['Pansize'] = $myrow['pansize'];
 	$_POST['ShrinkFactor'] = $myrow['shrinkfactor'];
 
-	$sql = "SELECT descriptiontranslation, language_id FROM stockdescriptiontranslations WHERE stockid='" . $selectedStockID . "' AND (";
+	$sql = "SELECT descriptiontranslation, 
+					longdescriptiontranslation, 
+					language_id 
+			FROM stockdescriptiontranslations 
+			WHERE stockid='" . $selectedStockID . "' AND (";
 	foreach ($ItemDescriptionLanguagesArray as $LanguageId) {
 		$sql .= "language_id='" . $LanguageId ."' OR ";
 	}
@@ -641,6 +653,7 @@ if ( (!isset($_POST['UpdateCategories']) AND ($InputError!=1))  OR $_POST['New']
 	$result = DB_query($sql);
 	while ($myrow = DB_fetch_array($result)){
 		$_POST['Description_' . str_replace('.','_',$myrow['language_id'])] = $myrow['descriptiontranslation'];
+		$_POST['LongDescription_' . str_replace('.','_',$myrow['language_id'])] = $myrow['longdescriptiontranslation'];
 	}
 
 }
