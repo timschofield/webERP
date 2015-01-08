@@ -89,6 +89,7 @@ define("MINIMUM_REORDER_LEVEL_FOR_PACKAGING_AT_SHOP", 8);
 
 /* Defines about Stock Control*/
 define("STOCK_MOVEMENT_DAYS_FOR_SPG", 60); 
+define("TRANSFER_LIST_DAYS_FOR_SPG", 7); 
 
 define("PAYMENT_BY_CASH", 2); 
 define("PAYMENT_BY_CREDITCARD", 3); 
