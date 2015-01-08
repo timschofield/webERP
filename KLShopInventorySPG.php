@@ -5,10 +5,7 @@ include ('includes/header.inc');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLDefines.php');
 
-$SQL="SELECT locationname FROM locations WHERE loccode='" . $_SESSION['UserStockLocation'] . "'";
-$result = DB_query($SQL,$ErrMsg);
-$Row = DB_fetch_row($result);
-$LocationName = $Row['0'];
+$LocationName = GetLocationNameFromCode($_SESSION['UserStockLocation']);
 
 $SQL = "SELECT locstock.stockid, 
 				stockmaster.description,

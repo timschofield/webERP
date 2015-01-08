@@ -202,4 +202,12 @@ function CleanStringForWebERP($s){
 	return $s;
 }
 
+function GetLocationNameFromCode($LocCode){
+	$ErrMsg = 'Error in function GetLocationNameFromCode()';
+	$SQL="SELECT locationname FROM locations WHERE loccode='" . $LocCode . "'";
+	$result = DB_query($SQL,$ErrMsg);
+	$Row = DB_fetch_row($result);
+	return $Row['0'];
+}
+
 ?>
