@@ -1,5 +1,5 @@
 webERP Change Log
-
+9/1/15 Bob Thomas: Removed reference to AliasNbPages() now no longer part of TCPDF
 7/1/15 Phil: Added missing SQL for suppliercontacts and supplierdiscounts and adding the script SalesTopCustomersInquiry to the scripts table
 05/01/15 RChacon: Allow turn on/off the dashboard display after login for an specific user. Add comments to code.
 04/01/15 RChacon: In RevisionTranslations.php, add $Id, $ViewTopic, $BookMark and page_title_text. Add info to manual. Add comments to code.

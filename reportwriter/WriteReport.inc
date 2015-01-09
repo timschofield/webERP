@@ -21,7 +21,6 @@ var $pageY; // y value of bottom of page less bottom margin
 
 		$this->SetDrawColor(128,0,0);
 		$this->SetLineWidth(.35); // 1 point
-		$this->AliasNbPages();
 		$this->AddPage();
 
 	}
