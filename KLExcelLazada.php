@@ -48,6 +48,9 @@ function submit(&$db, &$db_oc, $oc_tableprefix, $FromPrice, $ToPrice, $QOHMinima
 	$SizeFreeSize = 'Free size';
 	$UnitPair = '1 pasang';
 	$UnitPcs = '1 biji';
+	$Highlight01 = 'Highlight Sentence 01';
+	$Highlight02 = 'Highlight Sentence 02';
+	$Highlight03 = 'Highlight Sentence 03';
 
 	$SourceLanguage="en";
 	$TargetLanguage="id";
@@ -229,7 +232,9 @@ function submit(&$db, &$db_oc, $oc_tableprefix, $FromPrice, $ToPrice, $QOHMinima
 
 				$objPHPExcel->getActiveSheet()->setCellValue('J'.$i, $LongDescription);
 
-				$objPHPExcel->getActiveSheet()->setCellValue('K'.$i, '');
+				$objPHPExcel->getActiveSheet()->setCellValue('K'.$i, $Highlight01);
+				$objPHPExcel->getActiveSheet()->setCellValue('L'.$i, $Highlight02);
+				$objPHPExcel->getActiveSheet()->setCellValue('M'.$i, $Highlight03);
 
 				if (isEarring($myrow['model']) OR isEarcuff($myrow['model'])){
 					$UnitsSale = $UnitPair; 
@@ -274,9 +279,6 @@ function submit(&$db, &$db_oc, $oc_tableprefix, $FromPrice, $ToPrice, $QOHMinima
 					}
 				}else{
 					$Height = '';
-				}
-				if ($Dimensions != ''){
-					$Dimensions = $Dimensions . ' cm';
 				}
 				 
 				$objPHPExcel->getActiveSheet()->setCellValue('Q'.$i, $Dimensions);
