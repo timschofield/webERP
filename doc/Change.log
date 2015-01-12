@@ -1,5 +1,5 @@
 webERP Change Log
-
+12/1/15  Exson: Remove redundant code from Prices.php.
 12/1/15 Exson: Fixed bug in Z_AutoCustomerAllocations.php to make it workable.
 9/1/15 Bob Thomas: Removed reference to AliasNbPages() now no longer part of TCPDF
 7/1/15 Phil: Added missing SQL for suppliercontacts and supplierdiscounts and adding the script SalesTopCustomersInquiry to the scripts table
