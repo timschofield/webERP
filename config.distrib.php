@@ -11,6 +11,10 @@ $DefaultLanguage = 'en_GB.utf8';
 
 // Default theme to use for the login screen and the setup of new users.
 //The users' theme selection will override
+//$DefaultTheme = 'professional';
+//$DefaultTheme = 'wood';
+//$DefaultTheme = 'silverwolf';
+//$DefaultTheme = 'gel';
 $DefaultTheme = 'xenos';
 
 // Whether to display the demo login and password or not on the login screen

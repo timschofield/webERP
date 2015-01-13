@@ -146,7 +146,7 @@ INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES
 --
 -- Insert default theme value for login screen
 --
-INSERT INTO `config` (`confname`, `confvalue`) VALUES ('DefaultTheme', 'xenos');
+
 INSERT INTO  scripts (`script`,`pagesecurity`,`description`) VALUES ('SalesTopCustomersInquiry.php',  '2',  'Shows the top customers sales for a selected date range');
 
 
