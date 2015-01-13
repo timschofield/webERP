@@ -1,30 +1,13 @@
 <?php
 include ('includes/session.inc');
-$Title = _('Shop Inventory Control for SPG');
+$Title = _('List of Transfers from/to shop');
 include ('includes/header.inc');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLDefines.php');
 
 $LocationName = GetLocationNameFromCode($_SESSION['UserStockLocation']);
 $StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-TRANSFER_LIST_DAYS_FOR_SPG));
-/*
-$SQL = "SELECT reference, 
-				stockid,
-				shipqty,
-				recqty,
-				shipdate,
-				recdate,
-				shiploc,
-				recloc
-		FROM loctransfers
-		WHERE shipqty = recqty
-			AND (shiploc = '". $_SESSION['UserStockLocation'] ."'
-				OR recloc = '". $_SESSION['UserStockLocation'] ."')
-			AND (shipdate >= '". $StartDate ."'
-				OR recdate >= '". $StartDate ."')
-		ORDER BY reference DESC,
-				stockid ASC";
-*/
+
 $SQL = "SELECT transno,
 				reference,
 				loccode,
