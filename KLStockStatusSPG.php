@@ -59,7 +59,8 @@ if ($StockID != ''){
 
 	$TableHeader = '<tr>
 						<th class="ascending">' . _('Location') . '</th>
-						<th class="ascending">' . _('Available') . '</th>
+						<th class="ascending">' . _('QOH') . '</th>
+						<th class="ascending">' . _('In Transit') . '</th>
 					</tr>';
 
 	echo $TableHeader;
@@ -92,18 +93,23 @@ if ($StockID != ''){
 			$InTransitQuantityIn=0;
 		}
 
-		if (($InTransitQuantityIn+$InTransitQuantityOut) < 0) {
+		$InTransit = $InTransitQuantityIn+$InTransitQuantityOut;
+		$Available = $myrow['quantity'];
+
+/*		if (($InTransitQuantityIn+$InTransitQuantityOut) < 0) {
 			$Available = $myrow['quantity'] + ($InTransitQuantityIn+$InTransitQuantityOut);
 		} else {
 			$Available = $myrow['quantity'];
 		}
-		echo '<td>' . $myrow['locationname'] . '</td>';
-
-		printf('<td class="number">%s</td>',
-				locale_number_format_zero_blank($Available, $DecimalPlaces)
+*/
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				</tr>',
+				$myrow['locationname'],
+				locale_number_format_zero_blank($Available, $DecimalPlaces),
+				locale_number_format_zero_blank($InTransit, $DecimalPlaces)
 				);
-
-		echo '</tr>';
 
 	}
 }
