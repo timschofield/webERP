@@ -1284,6 +1284,8 @@ function OnlineOrdersFollowUp($numDays, $RootPath, $db){
 
 	$Titletext = "Follow up Outstanding Online Orders";
 	$ThankYouDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$numDays));
+// 2015-01-14 Prices already NET for online orders
+//				(SELECT SUM(salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent))
 			
 	$SQL = "SELECT salesorders.orderno,	
 				salesorders.customerref,
@@ -1293,7 +1295,7 @@ function OnlineOrdersFollowUp($numDays, $RootPath, $db){
 				debtorsmaster.debtorno,
 				salesorders.deliverto AS name,
 				salesorders.orddate,
-				(SELECT SUM(salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent))
+				(SELECT SUM(salesorderdetails.unitprice*salesorderdetails.quantity)
 						FROM salesorderdetails
 						WHERE salesorderdetails.orderno = salesorders.orderno) AS ordervalue,
 				salesorders.freightcost,
