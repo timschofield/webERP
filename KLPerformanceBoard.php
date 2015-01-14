@@ -29,18 +29,18 @@ if ($KL_SystemAdmin){
 
 AverageSales("SPG", 365, 90, 30, 15, 7, 1,30, "CurrentYear", "All", $db);
 
-SPGPerformanceByShop("RETAIL66", 30, 60, 90, $db);
-SPGPerformanceByShop("RETAILSE", 30, 60, 90, $db);
-SPGPerformanceByShop("RETAILOB", 30, 60, 90, $db);
-SPGPerformanceByShop("RETAILKS", 30, 60, 90, $db);
-SPGPerformanceByShop("RETAILBW", 30, 60, 90, $db);
-SPGPerformanceByShop("RETAILSA", 30, 60, 90, $db);
-SPGPerformanceByShop("RETAILSU", 30, 60, 90, $db);
-SPGPerformanceByShop("RETAILSS", 30, 60, 90, $db);
-SPGPerformanceByShop("RETAILUB", 30, 60, 90, $db);
-SPGPerformanceByShop("RETAILMF", 30, 60, 90, $db);
-SPGPerformanceByShop("RETAILPU", 30, 60, 90, $db);
-SPGPerformanceByShop("RETAILJC", 30, 60, 90, $db);
+SPGPerformanceByShop("RETAIL66", 15, 30, 60, $db);
+SPGPerformanceByShop("RETAILSE", 15, 30, 60, $db);
+SPGPerformanceByShop("RETAILOB", 15, 30, 60, $db);
+SPGPerformanceByShop("RETAILKS", 15, 30, 60, $db);
+SPGPerformanceByShop("RETAILBW", 15, 30, 60, $db);
+SPGPerformanceByShop("RETAILSA", 15, 30, 60, $db);
+SPGPerformanceByShop("RETAILSU", 15, 30, 60, $db);
+SPGPerformanceByShop("RETAILSS", 15, 30, 60, $db);
+SPGPerformanceByShop("RETAILUB", 15, 30, 60, $db);
+SPGPerformanceByShop("RETAILMF", 15, 30, 60, $db);
+SPGPerformanceByShop("RETAILPU", 15, 30, 60, $db);
+SPGPerformanceByShop("RETAILJC", 15, 30, 60, $db);
 
 if ($KL_SystemAdmin){
 //	YearDifferenceSales("SPG", 30, $db);
