@@ -522,7 +522,10 @@ if (($_GET['EmailType']=='PaymentConfirmation')
 	$CartTotalVolume = 0;
 	if (DB_num_rows($result)>0){
 		while ($myrow2=DB_fetch_array($result)){
-			$GrossPrice = round(($myrow2['unitprice'] * (1-$myrow2['discountpercent'])),$myrow['decimalplaces']) ;
+//			14/01/2015 
+// 			ONLINE ORDERS already come with NET prices
+//			$GrossPrice = round(($myrow2['unitprice'] * (1-$myrow2['discountpercent'])),$myrow['decimalplaces']) ;
+			$GrossPrice = round($myrow2['unitprice'],$myrow['decimalplaces']) ;
 			$LineTotal = $GrossPrice * $myrow2['quantity'];
 			$CartTotalValue += $LineTotal;
 			$CartTotalWeight += $CartItem->Weight * $CartItem->Quantity;
