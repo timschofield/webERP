@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-06 10:30-0600\n"
+"POT-Creation-Date: 2015-01-16 16:56-0600\n"
 "PO-Revision-Date: 2013-06-01 11:22-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -354,19 +354,19 @@ msgstr "Κέρδος και Ζημία"
 #: ShopParameters.php:289 ShopParameters.php:293 ShopParameters.php:337
 #: ShopParameters.php:341 ShopParameters.php:391 ShopParameters.php:395
 #: ShopParameters.php:413 ShopParameters.php:417 ShopParameters.php:495
-#: ShopParameters.php:499 StockClone.php:909 StockClone.php:911
-#: StockClone.php:934 StockClone.php:936 Stocks.php:1256 Stocks.php:1258
+#: ShopParameters.php:499 StockClone.php:922 StockClone.php:924
+#: StockClone.php:947 StockClone.php:949 Stocks.php:1256 Stocks.php:1258
 #: Stocks.php:1281 Stocks.php:1283 SuppContractChgs.php:90
-#: SystemParameters.php:476 SystemParameters.php:499 SystemParameters.php:539
-#: SystemParameters.php:620 SystemParameters.php:628 SystemParameters.php:668
-#: SystemParameters.php:759 SystemParameters.php:768 SystemParameters.php:776
-#: SystemParameters.php:794 SystemParameters.php:801 SystemParameters.php:845
-#: SystemParameters.php:941 SystemParameters.php:1084
-#: SystemParameters.php:1086 SystemParameters.php:1096
-#: SystemParameters.php:1098 SystemParameters.php:1152
-#: SystemParameters.php:1164 SystemParameters.php:1166
-#: SystemParameters.php:1204 SystemParameters.php:1206
-#: SystemParameters.php:1228 SystemParameters.php:1230 TaxGroups.php:310
+#: SystemParameters.php:479 SystemParameters.php:502 SystemParameters.php:543
+#: SystemParameters.php:624 SystemParameters.php:632 SystemParameters.php:672
+#: SystemParameters.php:763 SystemParameters.php:772 SystemParameters.php:780
+#: SystemParameters.php:798 SystemParameters.php:805 SystemParameters.php:849
+#: SystemParameters.php:945 SystemParameters.php:1088
+#: SystemParameters.php:1090 SystemParameters.php:1100
+#: SystemParameters.php:1102 SystemParameters.php:1156
+#: SystemParameters.php:1168 SystemParameters.php:1170
+#: SystemParameters.php:1208 SystemParameters.php:1210
+#: SystemParameters.php:1232 SystemParameters.php:1234 TaxGroups.php:310
 #: TaxGroups.php:313 TaxGroups.php:364 TestPlanResults.php:304
 #: TestPlanResults.php:532 TestPlanResults.php:747 TestPlanResults.php:864
 #: TestPlanResults.php:924 TestPlanResults.php:928 WWW_Users.php:516
@@ -418,19 +418,19 @@ msgstr "Ναί"
 #: ShopParameters.php:290 ShopParameters.php:292 ShopParameters.php:338
 #: ShopParameters.php:340 ShopParameters.php:392 ShopParameters.php:394
 #: ShopParameters.php:414 ShopParameters.php:416 ShopParameters.php:496
-#: ShopParameters.php:498 StockClone.php:904 StockClone.php:906
-#: StockClone.php:929 StockClone.php:931 Stocks.php:1251 Stocks.php:1253
+#: ShopParameters.php:498 StockClone.php:917 StockClone.php:919
+#: StockClone.php:942 StockClone.php:944 Stocks.php:1251 Stocks.php:1253
 #: Stocks.php:1276 Stocks.php:1278 SuppContractChgs.php:92
-#: SystemParameters.php:477 SystemParameters.php:500 SystemParameters.php:540
-#: SystemParameters.php:621 SystemParameters.php:629 SystemParameters.php:669
-#: SystemParameters.php:760 SystemParameters.php:769 SystemParameters.php:777
-#: SystemParameters.php:795 SystemParameters.php:802 SystemParameters.php:846
-#: SystemParameters.php:942 SystemParameters.php:1083
-#: SystemParameters.php:1087 SystemParameters.php:1095
-#: SystemParameters.php:1099 SystemParameters.php:1153
-#: SystemParameters.php:1163 SystemParameters.php:1167
-#: SystemParameters.php:1203 SystemParameters.php:1207
-#: SystemParameters.php:1227 SystemParameters.php:1231 TaxGroups.php:311
+#: SystemParameters.php:480 SystemParameters.php:503 SystemParameters.php:544
+#: SystemParameters.php:625 SystemParameters.php:633 SystemParameters.php:673
+#: SystemParameters.php:764 SystemParameters.php:773 SystemParameters.php:781
+#: SystemParameters.php:799 SystemParameters.php:806 SystemParameters.php:850
+#: SystemParameters.php:946 SystemParameters.php:1087
+#: SystemParameters.php:1091 SystemParameters.php:1099
+#: SystemParameters.php:1103 SystemParameters.php:1157
+#: SystemParameters.php:1167 SystemParameters.php:1171
+#: SystemParameters.php:1207 SystemParameters.php:1211
+#: SystemParameters.php:1231 SystemParameters.php:1235 TaxGroups.php:311
 #: TaxGroups.php:314 TaxGroups.php:366 TestPlanResults.php:306
 #: TestPlanResults.php:535 TestPlanResults.php:749 TestPlanResults.php:866
 #: TestPlanResults.php:925 TestPlanResults.php:927 WWW_Users.php:515
@@ -766,7 +766,7 @@ msgstr "Email"
 #: PcAssignCashToTab.php:242 PcAssignCashToTab.php:380
 #: PcAuthorizeExpenses.php:97 PcClaimExpensesFromTab.php:238
 #: PcClaimExpensesFromTab.php:405 PcReportTab.php:333 SelectCustomer.php:613
-#: ShopParameters.php:198 SystemParameters.php:412 WOSerialNos.php:306
+#: ShopParameters.php:198 SystemParameters.php:411 WOSerialNos.php:306
 #: WOSerialNos.php:312
 msgid "Notes"
 msgstr "Σημειώσεις"
@@ -861,7 +861,7 @@ msgid "Date"
 msgstr "Ημερομηνία"
 
 #: AddCustomerNotes.php:118 AddCustomerTypeNotes.php:112 PcReportTab.php:180
-#: SelectCustomer.php:660 SelectCustomer.php:702 StockClone.php:913
+#: SelectCustomer.php:660 SelectCustomer.php:702 StockClone.php:926
 #: Stocks.php:1260 UpgradeDatabase.php:236 UpgradeDatabase.php:239
 #: UpgradeDatabase.php:242 UpgradeDatabase.php:245 UpgradeDatabase.php:248
 #: UpgradeDatabase.php:251 UpgradeDatabase.php:254 UpgradeDatabase.php:257
@@ -1012,7 +1012,7 @@ msgstr "Χρηματιστήριο"
 #: SelectCreditItems.php:1021 SelectOrderItems.php:1452
 #: SelectOrderItems.php:1614 SelectProduct.php:531 SelectProduct.php:757
 #: SelectQASamples.php:292 SelectQASamples.php:390 SelectSalesOrder.php:560
-#: SelectWorkOrder.php:219 Shipt_Select.php:191 StockClone.php:667
+#: SelectWorkOrder.php:219 Shipt_Select.php:191 StockClone.php:680
 #: StockCounts.php:142 StockDispatch.php:504 StockLocStatus.php:173
 #: StockQuantityByDate.php:109 Stocks.php:1013 SuppCreditGRNs.php:92
 #: SuppCreditGRNs.php:192 SuppFixedAssetChgs.php:78 SuppInvGRNs.php:120
@@ -1219,8 +1219,8 @@ msgstr "δεν μπορούσε να ανακτηθεί επειδή"
 #: RecurringSalesOrders.php:267 ReverseGRN.php:192 ReverseGRN.php:206
 #: ReverseGRN.php:385 SMTPServer.php:62 SelectCreditItems.php:1447
 #: SelectSalesOrder.php:209 SelectSalesOrder.php:375 SellThroughSupport.php:81
-#: SellThroughSupport.php:97 StockCheck.php:217 StockClone.php:422
-#: StockClone.php:496 StockCostUpdate.php:78 StockCostUpdate.php:88
+#: SellThroughSupport.php:97 StockCheck.php:217 StockClone.php:430
+#: StockClone.php:504 StockCostUpdate.php:78 StockCostUpdate.php:88
 #: StockLocStatus.php:165 StockMovements.php:93 StockQuantityByDate.php:98
 #: StockReorderLevel.php:45 StockStatus.php:285 StockTransfers.php:201
 #: StockUsage.php:142 StockUsageGraph.php:55 SuppPaymentRun.php:114
@@ -1537,9 +1537,9 @@ msgstr "Αναγνωριστικό χρήστη"
 #: SupplierPriceList.php:24 SupplierTenderCreate.php:683
 #: SupplierTenderCreate.php:685 SupplierTenders.php:409
 #: SupplierTenders.php:411 SupplierTransInquiry.php:31
-#: SystemParameters.php:1115 SystemParameters.php:1121
-#: SystemParameters.php:1127 SystemParameters.php:1133
-#: SystemParameters.php:1139 TopItems.php:32 TopItems.php:49 TopItems.php:71
+#: SystemParameters.php:1119 SystemParameters.php:1125
+#: SystemParameters.php:1131 SystemParameters.php:1137
+#: SystemParameters.php:1143 TopItems.php:32 TopItems.php:49 TopItems.php:71
 #: TopItems.php:73 WorkOrderEntry.php:677 WorkOrderEntry.php:680
 #: WorkOrderIssue.php:716 WorkOrderIssue.php:719
 #: reportwriter/languages/en_US/reports.php:54
@@ -1601,7 +1601,7 @@ msgstr "Όνομα πεδίου"
 #: AuditTrail.php:180 MaterialsNotUsed.php:38 PDFCOA.php:169 PDFCOA.php:170
 #: PDFCOA.php:171 PDFProdSpec.php:129 PDFProdSpec.php:130 PDFProdSpec.php:131
 #: PurchData.php:700 SellThroughSupport.php:263 ShopParameters.php:197
-#: SystemParameters.php:411 includes/PDFOstdgGRNsPageHeader.inc:43
+#: SystemParameters.php:410 includes/PDFOstdgGRNsPageHeader.inc:43
 msgid "Value"
 msgstr "Αξία"
 
@@ -1941,8 +1941,8 @@ msgid "M/B"
 msgstr "M / B"
 
 #: BOMExtendedQty.php:333 POReport.php:549 POReport.php:635 POReport.php:726
-#: POReport.php:1315 POReport.php:1366 POReport.php:1420 StockClone.php:655
-#: StockClone.php:679 Stocks.php:1001 Stocks.php:1025
+#: POReport.php:1315 POReport.php:1366 POReport.php:1420 StockClone.php:668
+#: StockClone.php:692 Stocks.php:1001 Stocks.php:1025
 msgid "Part Description"
 msgstr "Μέρος Περιγραφή"
 
@@ -2466,18 +2466,18 @@ msgstr ""
 
 #: BOMs.php:436 ConfirmDispatch_Invoice.php:1050 CounterReturns.php:1074
 #: CounterSales.php:1474 Credit_Invoice.php:813 Credit_Invoice.php:843
-#: SelectCreditItems.php:1494 StockClone.php:834 StockClone.php:836
+#: SelectCreditItems.php:1494 StockClone.php:847 StockClone.php:849
 #: Stocks.php:1181 Stocks.php:1183 api/api_debtortransactions.php:753
 #: api/api_salesorders.php:920 reportwriter/languages/en_US/reports.php:56
 msgid "Assembly"
 msgstr "Συναρμολόγηση"
 
-#: BOMs.php:439 FixedAssetRegister.php:390 StockClone.php:854
-#: StockClone.php:856 Stocks.php:1201 Stocks.php:1203
+#: BOMs.php:439 FixedAssetRegister.php:390 StockClone.php:867
+#: StockClone.php:869 Stocks.php:1201 Stocks.php:1203
 msgid "Purchased"
 msgstr "Αγορασμένο"
 
-#: BOMs.php:442 StockClone.php:844 StockClone.php:846 Stocks.php:1191
+#: BOMs.php:442 StockClone.php:857 StockClone.php:859 Stocks.php:1191
 #: Stocks.php:1193
 msgid "Manufactured"
 msgstr "Κατασκευασμένο"
@@ -2486,7 +2486,7 @@ msgstr "Κατασκευασμένο"
 msgid "Kit Set"
 msgstr "Kit Set"
 
-#: BOMs.php:448 BOMs.php:541 StockClone.php:849 StockClone.php:851
+#: BOMs.php:448 BOMs.php:541 StockClone.php:862 StockClone.php:864
 #: Stocks.php:1196 Stocks.php:1198
 msgid "Phantom"
 msgstr "Φάντασμα"
@@ -3209,7 +3209,7 @@ msgstr "Ποσό"
 #: BankMatching.php:284 BankReconciliation.php:222 BankReconciliation.php:299
 #: PDFOrderStatus.php:340 PDFOrdersInvoiced.php:338
 #: PO_SelectOSPurchOrder.php:265 PO_SelectPurchOrder.php:216
-#: Shipt_Select.php:193 SuppCreditGRNs.php:291 SystemParameters.php:583
+#: Shipt_Select.php:193 SuppCreditGRNs.php:291 SystemParameters.php:587
 #: includes/PDFStatementPageHeader.inc:173
 #: includes/PDFStatementPageHeader.inc:180
 msgid "Outstanding"
@@ -3558,12 +3558,12 @@ msgid "Could not update the currency rates"
 msgstr "Δεν ήταν δυνατή η ενημέρωση των ποσοστών νομίσματος"
 
 #: CompanyPreferences.php:97 Customers.php:279 ShopParameters.php:185
-#: Suppliers.php:628 SystemParameters.php:399
+#: Suppliers.php:628 SystemParameters.php:398
 msgid "Validation failed"
 msgstr "Η επικύρωση απέτυχε"
 
 #: CompanyPreferences.php:97 ShopParameters.php:185 Suppliers.php:628
-#: SystemParameters.php:399
+#: SystemParameters.php:398
 msgid "no updates or deletes took place"
 msgstr "καμία αναπροσαρμογή ή διαγραφή δεν πραγματοποιήθηκε"
 
@@ -3811,7 +3811,7 @@ msgstr ""
 #: RevisionTranslations.php:114 SMTPServer.php:122 SecurityTokens.php:97
 #: SelectCreditItems.php:956 SellThroughSupport.php:476 ShopParameters.php:610
 #: StockCostUpdate.php:196 StockReorderLevel.php:111 Stocks.php:1442
-#: SystemParameters.php:1242 UserLocations.php:178 WOSerialNos.php:345
+#: SystemParameters.php:1246 UserLocations.php:178 WOSerialNos.php:345
 #: WorkOrderEntry.php:661 reportwriter/languages/en_US/reports.php:156
 msgid "Update"
 msgstr "Ενημέρωση"
@@ -5091,14 +5091,14 @@ msgid "Print this invoice"
 msgstr "Τυπώστε αυτό το τιμολόγιο πώλησης"
 
 #: ConfirmDispatch_Invoice.php:1654 CounterReturns.php:1607
-#: CounterSales.php:2056 SelectSalesOrder.php:823 SystemParameters.php:573
+#: CounterSales.php:2056 SelectSalesOrder.php:823 SystemParameters.php:577
 #: reportwriter/languages/en_US/reports.php:300
 #, php-format
 msgid "Landscape"
 msgstr "Τοπίου"
 
 #: ConfirmDispatch_Invoice.php:1656 CounterReturns.php:1609
-#: CounterSales.php:2058 SelectSalesOrder.php:823 SystemParameters.php:574
+#: CounterSales.php:2058 SelectSalesOrder.php:823 SystemParameters.php:578
 #: reportwriter/languages/en_US/reports.php:299
 #, php-format
 msgid "Portrait"
@@ -5329,7 +5329,7 @@ msgstr ""
 msgid "Create a New Stock Item"
 msgstr "Δημιουργήστε ένα νέο στοιχείο Χρηματιστήριο"
 
-#: ContractBOM.php:356 FixedAssetItems.php:504 StockClone.php:727
+#: ContractBOM.php:356 FixedAssetItems.php:504 StockClone.php:740
 #: Stocks.php:1074 SupplierTenderCreate.php:855 SupplierTenders.php:689
 msgid "Image"
 msgstr "Εικόνα"
@@ -5338,8 +5338,8 @@ msgstr "Εικόνα"
 #: FixedAssetItems.php:503 InternalStockRequest.php:637 Manufacturers.php:211
 #: PO_Items.php:1212 SalesCategories.php:261 SelectCreditItems.php:1050
 #: SelectOrderItems.php:1466 SelectOrderItems.php:1623 SelectProduct.php:428
-#: StockClone.php:100 StockClone.php:712 StockClone.php:717 StockClone.php:722
-#: StockClone.php:726 Stocks.php:1065 Stocks.php:1069 Stocks.php:1073
+#: StockClone.php:100 StockClone.php:725 StockClone.php:730 StockClone.php:735
+#: StockClone.php:739 Stocks.php:1065 Stocks.php:1069 Stocks.php:1073
 #: SupplierTenderCreate.php:878 SupplierTenders.php:714 WorkOrderEntry.php:753
 #: WorkOrderIssue.php:778 reportwriter/languages/en_US/reports.php:270
 #, php-format
@@ -5933,11 +5933,11 @@ msgid "The SQL that was used to insert the contract item failed was"
 msgstr ""
 "Ο SQL που χρησιμοποιείται για την εισαγωγή του στοιχείου σύμβαση απέτυχε ήταν"
 
-#: Contracts.php:502 StockClone.php:367 Stocks.php:703 Z_ImportStocks.php:242
+#: Contracts.php:502 StockClone.php:375 Stocks.php:703 Z_ImportStocks.php:242
 msgid "The locations for the item"
 msgstr "Οι θέσεις για το στοιχείο"
 
-#: Contracts.php:502 Factors.php:80 StockClone.php:367 Stocks.php:703
+#: Contracts.php:502 Factors.php:80 StockClone.php:375 Stocks.php:703
 #: SupplierCredit.php:756 SupplierCredit.php:815 SupplierCredit.php:1202
 #: SupplierCredit.php:1256 SupplierCredit.php:1284 SupplierInvoice.php:1141
 #: SupplierInvoice.php:1199 SupplierInvoice.php:1564 SupplierInvoice.php:1802
@@ -5946,13 +5946,13 @@ msgstr "Οι θέσεις για το στοιχείο"
 msgid "could not be added because"
 msgstr "δεν ήταν δυνατό να προστεθεί επειδή"
 
-#: Contracts.php:503 StockClone.php:368 Stocks.php:704 Z_ImportStocks.php:243
+#: Contracts.php:503 StockClone.php:376 Stocks.php:704 Z_ImportStocks.php:243
 msgid "NB Locations records can be added by opening the utility page"
 msgstr ""
 "Σημείωση: τα αρχεία τοποθεσίες μπορούν να προστεθούν από το άνοιγμα της "
 "σελίδας χρησιμότητα"
 
-#: Contracts.php:503 StockClone.php:368 Stocks.php:704 Z_ImportStocks.php:243
+#: Contracts.php:503 StockClone.php:376 Stocks.php:704 Z_ImportStocks.php:243
 msgid "The SQL that was used to add the location records that failed was"
 msgstr ""
 "Ο SQL που χρησιμοποιήθηκε για να προσθέσετε τα αρχεία θέση που απέτυχε ήταν"
@@ -6167,7 +6167,7 @@ msgstr ""
 #: Contracts.php:852 InventoryQuantities.php:237 PricesByCost.php:245
 #: ReorderLevel.php:286 ReorderLevelLocation.php:179
 #: SalesCategoryPeriodInquiry.php:164 SalesTopItemsInquiry.php:221
-#: SelectProduct.php:95 SpecialOrder.php:697 StockClone.php:732
+#: SelectProduct.php:95 SpecialOrder.php:697 StockClone.php:745
 #: StockDispatch.php:487 Stocks.php:1079 SuppPriceList.php:237
 #: SuppPriceList.php:299 Z_ItemsWithoutPicture.php:31
 #: includes/PDFInventoryValnPageHeader.inc:32
@@ -6176,12 +6176,12 @@ msgid "Category"
 msgstr "Κατηγορία"
 
 #: Contracts.php:856 PricesBasedOnMarkUp.php:108 SpecialOrder.php:701
-#: StockClone.php:736 Stocks.php:1083
+#: StockClone.php:749 Stocks.php:1083
 msgid "The stock categories could not be retrieved because"
 msgstr "Οι κατηγορίες μετοχών δεν μπορεί να ανακτηθεί, επειδή"
 
 #: Contracts.php:857 FixedAssetItems.php:518 PricesBasedOnMarkUp.php:109
-#: SpecialOrder.php:702 StockClone.php:737 Stocks.php:1084
+#: SpecialOrder.php:702 StockClone.php:750 Stocks.php:1084
 msgid "The SQL used to retrieve stock categories and failed was"
 msgstr ""
 "Η SQL χρησιμοποιείται για την ανάκτηση κατηγορίες μετοχών και απέτυχε ήταν"
@@ -7144,7 +7144,7 @@ msgstr ""
 "Ο SQL που απέτυχε να εισάγετε την κατανομή της παραλαβής του τιμολογίου"
 
 #: CounterSales.php:2098 CounterSales.php:2099 SelectOrderItems.php:1443
-#: SelectOrderItems.php:1446 SystemParameters.php:492
+#: SelectOrderItems.php:1446 SystemParameters.php:495
 msgid "Frequently Ordered Items"
 msgstr "Συχνά παραγγελθέντα προϊόντα"
 
@@ -7916,7 +7916,7 @@ msgstr "Ενεργοποίηση Αποστολής Τιμολογίων ΗΑΔ"
 
 #: CustEDISetup.php:105 CustEDISetup.php:108 CustEDISetup.php:120
 #: CustEDISetup.php:123 CustomerBranches.php:886 CustomerBranches.php:888
-#: SystemParameters.php:980
+#: SystemParameters.php:984
 msgid "Disabled"
 msgstr "Απενεργοποιημένο"
 
@@ -8562,19 +8562,19 @@ msgstr ""
 msgid "Could not change allocation record"
 msgstr ""
 
-#: CustomerAllocations.php:124 Z_AutoCustomerAllocations.php:155
+#: CustomerAllocations.php:124 Z_AutoCustomerAllocations.php:195
 msgid "Could not update difference on exchange"
 msgstr ""
 
-#: CustomerAllocations.php:140 Z_AutoCustomerAllocations.php:171
+#: CustomerAllocations.php:140 Z_AutoCustomerAllocations.php:211
 msgid "Could not update receipt or credit note"
 msgstr ""
 
-#: CustomerAllocations.php:169 Z_AutoCustomerAllocations.php:200
+#: CustomerAllocations.php:169 Z_AutoCustomerAllocations.php:240
 msgid "Could not update exchange difference in General Ledger"
 msgstr ""
 
-#: CustomerAllocations.php:190 Z_AutoCustomerAllocations.php:220
+#: CustomerAllocations.php:190 Z_AutoCustomerAllocations.php:260
 msgid "Could not update debtors control in General Ledger"
 msgstr ""
 
@@ -9308,7 +9308,7 @@ msgstr "Συνολικό Ισοζύγιο"
 
 #: CustomerInquiry.php:172 CustomerReceipt.php:1035 Dashboard.php:58
 #: PrintCustStatements.php:394 SalesPeople.php:214 Shipments.php:406
-#: StockClone.php:873 StockClone.php:875 Stocks.php:1220 Stocks.php:1222
+#: StockClone.php:886 StockClone.php:888 Stocks.php:1220 Stocks.php:1222
 #: SupplierInquiry.php:145 WhereUsedInquiry.php:92
 #: includes/PDFAgedDebtorsPageHeader.inc:50
 #: includes/PDFAgedSuppliersPageHeader.inc:36
@@ -10441,7 +10441,7 @@ msgstr ""
 #: SelectCompletedOrder.php:88 SelectCompletedOrder.php:236
 #: SelectContract.php:34 SelectQASamples.php:240 SelectSalesOrder.php:442
 #: SelectSalesOrder.php:446 SelectWorkOrder.php:131 Shipt_Select.php:48
-#: StockClone.php:1051 StockMovements.php:62 Stocks.php:392 Stocks.php:1398
+#: StockClone.php:1064 StockMovements.php:62 Stocks.php:392 Stocks.php:1398
 #: TestPlanResults.php:125 includes/PDFBOMListingPageHeader.inc:21
 #: includes/PDFCustomerListPageHeader.inc:31
 #: includes/PDFCustomerListPageHeader.inc:53
@@ -11321,7 +11321,7 @@ msgstr "σε όλα τα στοιχεία της κατηγορίας υλικο
 msgid "Update Items"
 msgstr "Ενημέρωση Είδη"
 
-#: DiscountCategories.php:221 DiscountMatrix.php:162 StockClone.php:961
+#: DiscountCategories.php:221 DiscountMatrix.php:162 StockClone.php:974
 #: StockDispatch.php:239 Stocks.php:1308
 msgid "Discount Category"
 msgstr "Κατηγορία Έκπτωσης"
@@ -12363,7 +12363,7 @@ msgstr ""
 msgid "A new factoring company for"
 msgstr "Μια νέα εταιρεία factoring για"
 
-#: Factors.php:85 SalesAnalReptCols.php:186 StockClone.php:502 Stocks.php:708
+#: Factors.php:85 SalesAnalReptCols.php:186 StockClone.php:510 Stocks.php:708
 #: Suppliers.php:594
 msgid "has been added to the database"
 msgstr "έχει προστεθεί στη βάση δεδομένων"
@@ -12916,7 +12916,7 @@ msgstr ""
 "Το νέο περιουσιακό στοιχείο έχει προστεθεί στη βάση δεδομένων με κωδικό "
 "στοιχείο του ενεργητικού της:"
 
-#: FixedAssetItems.php:286 StockClone.php:554 Stocks.php:746
+#: FixedAssetItems.php:286 StockClone.php:562 Stocks.php:746
 msgid "Validation failed, no updates or deletes took place"
 msgstr "Επικύρωση απέτυχε, όχι ενημερώσεις ή διαγράφει έλαβε χώρα"
 
@@ -12986,7 +12986,7 @@ msgstr ""
 msgid "Asset Description"
 msgstr "Asset Περιγραφή"
 
-#: FixedAssetItems.php:468 StockClone.php:655 Stocks.php:1001
+#: FixedAssetItems.php:468 StockClone.php:668 Stocks.php:1001
 msgid "short"
 msgstr "σύντομο"
 
@@ -12994,7 +12994,7 @@ msgstr "σύντομο"
 msgid "Enter the description of the item. Up to 50 characters can be used."
 msgstr ""
 
-#: FixedAssetItems.php:478 StockClone.php:679 Stocks.php:1025
+#: FixedAssetItems.php:478 StockClone.php:692 Stocks.php:1025
 msgid "long"
 msgstr "μακράς"
 
@@ -13004,7 +13004,7 @@ msgid ""
 "characters are allowed."
 msgstr ""
 
-#: FixedAssetItems.php:485 SalesCategories.php:363 StockClone.php:683
+#: FixedAssetItems.php:485 SalesCategories.php:363 StockClone.php:696
 #: Stocks.php:1044
 msgid "Image File (.jpg)"
 msgstr "Image File (. Jpg)"
@@ -13041,7 +13041,7 @@ msgstr "Asset Τοποθεσία"
 msgid "Add Asset Location"
 msgstr ""
 
-#: FixedAssetItems.php:561 StockClone.php:951 StockCounts.php:166
+#: FixedAssetItems.php:561 StockClone.php:964 StockCounts.php:166
 #: Stocks.php:1298 includes/DefineLabelClass.php:50
 msgid "Bar Code"
 msgstr "Bar Code"
@@ -14316,10 +14316,10 @@ msgstr "GL Tag"
 #: ImportBankTransAnalysis.php:303 MRPPlannedPurchaseOrders.php:274
 #: MRPPlannedPurchaseOrders.php:324 MRPPlannedWorkOrders.php:330
 #: MRPPlannedWorkOrders.php:378 PcExpenses.php:334 StockAdjustments.php:503
-#: Suppliers.php:795 Suppliers.php:1046 SystemParameters.php:519
-#: SystemParameters.php:1111 SystemParameters.php:1117
-#: SystemParameters.php:1123 SystemParameters.php:1129
-#: SystemParameters.php:1135 includes/DefineSuppTransClass.php:430
+#: Suppliers.php:795 Suppliers.php:1046 SystemParameters.php:523
+#: SystemParameters.php:1115 SystemParameters.php:1121
+#: SystemParameters.php:1127 SystemParameters.php:1133
+#: SystemParameters.php:1139 includes/DefineSuppTransClass.php:430
 #: reportwriter/languages/en_US/reports.php:83
 msgid "None"
 msgstr "Κανένας"
@@ -15899,7 +15899,7 @@ msgid "Stock Status"
 msgstr "Χρηματιστήριο Κατάσταση"
 
 #: InternalStockRequest.php:584 SelectProduct.php:82 SelectProduct.php:782
-#: StockClone.php:878 StockClone.php:880 Stocks.php:1225 Stocks.php:1227
+#: StockClone.php:891 StockClone.php:893 Stocks.php:1225 Stocks.php:1227
 #: WhereUsedInquiry.php:90
 msgid "Obsolete"
 msgstr "Ξεπερασμένα"
@@ -17193,7 +17193,7 @@ msgstr "Διανομή Περίοδος"
 #: MRPPlannedPurchaseOrders.php:326 MRPPlannedWorkOrders.php:331
 #: MRPPlannedWorkOrders.php:380 RecurringSalesOrders.php:450
 #: RecurringSalesOrders.php:452 SalesByTypePeriodInquiry.php:93
-#: SystemParameters.php:956 SystemParameters.php:958
+#: SystemParameters.php:960 SystemParameters.php:962
 msgid "Weekly"
 msgstr "Εβδομαδιαία"
 
@@ -17201,7 +17201,7 @@ msgstr "Εβδομαδιαία"
 #: MRPPlannedPurchaseOrders.php:328 MRPPlannedWorkOrders.php:332
 #: MRPPlannedWorkOrders.php:382 RecurringSalesOrders.php:460
 #: RecurringSalesOrders.php:462 SalesByTypePeriodInquiry.php:101
-#: SystemParameters.php:961 SystemParameters.php:963
+#: SystemParameters.php:965 SystemParameters.php:967
 msgid "Monthly"
 msgstr "Μηνιαία"
 
@@ -21130,7 +21130,7 @@ msgstr "Ποσότητα για την αγορά"
 msgid "Price per item"
 msgstr "Τιμή ανά τεμάχιο"
 
-#: PO_Items.php:836 StockClone.php:817 Stocks.php:1164
+#: PO_Items.php:836 StockClone.php:830 Stocks.php:1164
 #: includes/PO_ReadInOrder.inc:180
 msgid "each"
 msgstr "κάθε"
@@ -21144,7 +21144,7 @@ msgid "Only items defined as from this Supplier"
 msgstr ""
 
 #: PO_Items.php:1157 SelectProduct.php:466 SelectProduct.php:504
-#: StockClone.php:1087 Stocks.php:1435
+#: StockClone.php:1100 Stocks.php:1435
 msgid "Insert New Item"
 msgstr "Εισαγωγή νέου στοιχείου"
 
@@ -24333,7 +24333,7 @@ msgstr "Τα στοιχεία της αγοράς προμηθευτής δεν 
 msgid "This purchasing data record has been successfully deleted"
 msgstr "Αυτή η αγοραστική εγγραφή δεδομένων διεγράφη επιτυχώς"
 
-#: PurchData.php:262 StockClone.php:391
+#: PurchData.php:262 StockClone.php:399
 msgid ""
 "The supplier purchasing details for the selected part could not be retrieved "
 "because"
@@ -24341,7 +24341,7 @@ msgstr ""
 "Ο προμηθευτής προμηθειών λεπτομέρειες για το επιλεγμένο τμήμα δεν μπορεί να "
 "ανακτηθεί, επειδή"
 
-#: PurchData.php:265 StockClone.php:453
+#: PurchData.php:265 StockClone.php:461
 msgid "There is no purchasing data set up for the part selected"
 msgstr ""
 
@@ -25699,7 +25699,7 @@ msgid "From Period"
 msgstr "Από Περίοδος"
 
 #: SalesAnalReptCols.php:434 SalesAnalReptCols.php:450
-#: SystemParameters.php:1050
+#: SystemParameters.php:1054
 msgid "Could not load periods table"
 msgstr "Δεν ήταν δυνατή η φόρτωση περιόδους πίνακα"
 
@@ -26079,8 +26079,8 @@ msgstr ""
 msgid "Display Data"
 msgstr ""
 
-#: SalesByTypePeriodInquiry.php:85 SystemParameters.php:951
-#: SystemParameters.php:953
+#: SalesByTypePeriodInquiry.php:85 SystemParameters.php:955
+#: SystemParameters.php:957
 msgid "Daily"
 msgstr "Ημερησίως"
 
@@ -29283,7 +29283,7 @@ msgstr ""
 msgid "Shop Configuration Parameter"
 msgstr ""
 
-#: ShopParameters.php:201 SystemParameters.php:415 SystemParameters.php:806
+#: ShopParameters.php:201 SystemParameters.php:414 SystemParameters.php:810
 msgid "General Settings"
 msgstr "Γενικές Ρυθμίσεις"
 
@@ -29940,7 +29940,7 @@ msgstr "Αποθήκη Περιγραφή"
 msgid "Adjust"
 msgstr "Ρύθμιση"
 
-#: StockAdjustments.php:162 StockClone.php:483 StockCostUpdate.php:42
+#: StockAdjustments.php:162 StockClone.php:491 StockCostUpdate.php:42
 #: StockCostUpdate.php:64 StockTransfers.php:168 StockTransfers.php:263
 msgid "The entered item code does not exist"
 msgstr "Το εγγεγραμμένο κωδικό του στοιχείου δεν υπάρχει"
@@ -30236,7 +30236,7 @@ msgstr "Η κατηγορία μετοχών"
 msgid "Stock Type"
 msgstr "Χρηματιστήριο Τύπος"
 
-#: StockCategories.php:266 StockCategories.php:428 SystemParameters.php:712
+#: StockCategories.php:266 StockCategories.php:428 SystemParameters.php:716
 msgid "Default Tax Category"
 msgstr "Προεπιλογή φορολογική κατηγορία"
 
@@ -30662,171 +30662,171 @@ msgstr ""
 msgid "The SQL that was used to update the language description and failed was"
 msgstr ""
 
-#: StockClone.php:421
+#: StockClone.php:429
 msgid ""
 "The cloned supplier purchasing details could not be added to the database "
 "because"
 msgstr ""
 
-#: StockClone.php:471
+#: StockClone.php:479
 msgid "The cloned pricing could not be added"
 msgstr ""
 
-#: StockClone.php:495
+#: StockClone.php:503
 msgid "The cost details for the cloned stock item could not be updated because"
 msgstr ""
 
-#: StockClone.php:502
+#: StockClone.php:510
 msgid "New cloned Item"
 msgstr ""
 
-#: StockClone.php:503
+#: StockClone.php:511
 msgid "We also attempted to setup item purchase data and pricing."
 msgstr ""
 
-#: StockClone.php:507
+#: StockClone.php:515
 msgid ""
 "There is no pricing data to clone. Use the following link to add pricing."
 msgstr ""
 
-#: StockClone.php:510
+#: StockClone.php:518
 msgid "Review Item Prices"
 msgstr ""
 
-#: StockClone.php:514
+#: StockClone.php:522
 msgid ""
 "There is no purchasing data to clone .Use the following link to add "
 "purchasing data."
 msgstr ""
 
-#: StockClone.php:516
+#: StockClone.php:524
 msgid "Review Item Purchase Data."
 msgstr ""
 
-#: StockClone.php:517
+#: StockClone.php:525
 msgid "Costing was updated for this cloned item."
 msgstr ""
 
-#: StockClone.php:518
+#: StockClone.php:526
 msgid "Review Item Cost"
 msgstr ""
 
-#: StockClone.php:576
+#: StockClone.php:584
 msgid "Cloned Item Code"
 msgstr ""
 
-#: StockClone.php:578
+#: StockClone.php:586
 msgid "Enter a unique item code for the new item."
 msgstr ""
 
-#: StockClone.php:686 Stocks.php:1046
+#: StockClone.php:699 Stocks.php:1046
 msgid "Clear Image"
 msgstr ""
 
-#: StockClone.php:710 Stocks.php:1063
+#: StockClone.php:723 Stocks.php:1063
 msgid "You do not have access to delete this item image file."
 msgstr ""
 
-#: StockClone.php:753 Stocks.php:1100
+#: StockClone.php:766 Stocks.php:1100
 msgid "Add or Modify Stock Categories"
 msgstr "Προσθήκη ή Τροποποίηση Κατηγορίες Χρηματιστήριο"
 
-#: StockClone.php:793 Stocks.php:1140
+#: StockClone.php:806 Stocks.php:1140
 msgid "Economic Order Quantity"
 msgstr "Οικονομική Ποσότητα Παραγγελίας"
 
-#: StockClone.php:797 Stocks.php:1144
+#: StockClone.php:810 Stocks.php:1144
 msgid "Packaged Volume (metres cubed)"
 msgstr "Συσκευασμένο τόμος (μέτρα σε κύβους)"
 
-#: StockClone.php:802 Stocks.php:1149
+#: StockClone.php:815 Stocks.php:1149
 msgid "Packaged Gross Weight (KGs)"
 msgstr ""
 
-#: StockClone.php:806 Stocks.php:1153
+#: StockClone.php:819 Stocks.php:1153
 msgid "Net Weight (KGs)"
 msgstr ""
 
-#: StockClone.php:810 Stocks.php:1157 SupplierTenders.php:125
+#: StockClone.php:823 Stocks.php:1157 SupplierTenders.php:125
 #: SupplierTenders.php:532 SupplierTenders.php:535 UnitsOfMeasure.php:170
 #: includes/MainMenuLinksArray.php:527
 msgid "Units of Measure"
 msgstr "Μονάδες μέτρησης"
 
-#: StockClone.php:831 Stocks.php:1178
+#: StockClone.php:844 Stocks.php:1178
 msgid "Assembly, Kit, Manufactured or Service/Labour"
 msgstr "Συνέλευση, Kit, Κατασκευάζεται ή Υπηρεσία / Εργασίας"
 
-#: StockClone.php:839 StockClone.php:841 Stocks.php:1186 Stocks.php:1188
+#: StockClone.php:852 StockClone.php:854 Stocks.php:1186 Stocks.php:1188
 msgid "Kit"
 msgstr "Kit"
 
-#: StockClone.php:860 StockClone.php:862 Stocks.php:1207 Stocks.php:1209
+#: StockClone.php:873 StockClone.php:875 Stocks.php:1207 Stocks.php:1209
 msgid "Service/Labour"
 msgstr "Υπηρεσία / Εργασίας"
 
-#: StockClone.php:869 Stocks.php:1216
+#: StockClone.php:882 Stocks.php:1216
 msgid "Current or Obsolete"
 msgstr "Τρέχουσα ή παρωχημένα"
 
-#: StockClone.php:886 Stocks.php:1233
+#: StockClone.php:899 Stocks.php:1233
 msgid "Batch, Serial or Lot Control"
 msgstr "Παρτίδας, σειράς, ή Control Παρτίδα"
 
-#: StockClone.php:890 StockClone.php:892 Stocks.php:1237 Stocks.php:1239
+#: StockClone.php:903 StockClone.php:905 Stocks.php:1237 Stocks.php:1239
 msgid "No Control"
 msgstr "Δεν Ελέγχου"
 
-#: StockClone.php:895 StockClone.php:897 Stocks.php:1242 Stocks.php:1244
+#: StockClone.php:908 StockClone.php:910 Stocks.php:1242 Stocks.php:1244
 msgid "Controlled"
 msgstr "Ελεγχόμενη"
 
-#: StockClone.php:901 Stocks.php:1248
+#: StockClone.php:914 Stocks.php:1248
 msgid "Serialised"
 msgstr "Serialised"
 
-#: StockClone.php:913 Stocks.php:1260
+#: StockClone.php:926 Stocks.php:1260
 msgid "this has no effect if the item is not Controlled"
 msgstr "αυτό δεν έχει καμία επίδραση, αν το στοιχείο δεν είναι ελεγχόμενες"
 
-#: StockClone.php:918 Stocks.php:1265
+#: StockClone.php:931 Stocks.php:1265
 msgid "Next Serial No (>0 for auto numbering)"
 msgstr "Επόμενο Αύξων αριθ (&gt; 0 για την αρίθμηση auto)"
 
-#: StockClone.php:925 Stocks.php:1272
+#: StockClone.php:938 Stocks.php:1272
 msgid "Perishable"
 msgstr "Φθαρτών"
 
-#: StockClone.php:941 Stocks.php:1288
+#: StockClone.php:954 Stocks.php:1288
 msgid "Decimal Places for display Quantity"
 msgstr "Δεκαδικών ψηφίων για τα Ποσότητα οθόνη"
 
-#: StockClone.php:966 Stocks.php:1313 TaxAuthorityRates.php:82
+#: StockClone.php:979 Stocks.php:1313 TaxAuthorityRates.php:82
 #: TaxCategories.php:168
 msgid "Tax Category"
 msgstr "Φορολογική Κατηγορία"
 
-#: StockClone.php:987 Stocks.php:1334
+#: StockClone.php:1000 Stocks.php:1334
 msgid "Pan Size"
 msgstr "Pan Μέγεθος"
 
-#: StockClone.php:991 Stocks.php:1338
+#: StockClone.php:1004 Stocks.php:1338
 msgid "Shrinkage Factor"
 msgstr "Συρρίκνωση Factor"
 
-#: StockClone.php:1022 Stocks.php:1369
+#: StockClone.php:1035 Stocks.php:1369
 msgid "Item Category Properties"
 msgstr "Κατηγορία Ακινήτων Θέση"
 
-#: StockClone.php:1051 Stocks.php:1398
+#: StockClone.php:1064 Stocks.php:1398
 msgid "A number between"
 msgstr "Ένας αριθμός μεταξύ του"
 
-#: StockClone.php:1051 Stocks.php:1398
+#: StockClone.php:1064 Stocks.php:1398
 msgid "is expected"
 msgstr "Αναμένεται"
 
-#: StockClone.php:1088 Stocks.php:1436 Stocks.php:1443
+#: StockClone.php:1101 Stocks.php:1436 Stocks.php:1443
 #: ../webSHOP/includes/Functions.php:127
 #: ../webSHOP/includes/ShowSalesCategoriesMenu.php:15
 msgid "Categories"
@@ -33187,7 +33187,7 @@ msgstr "Αποστολή αναφοράς"
 msgid "The shiment Ref should be positive integer"
 msgstr ""
 
-#: SuppShiptChgs.php:113 SystemParameters.php:869
+#: SuppShiptChgs.php:113 SystemParameters.php:873
 msgid "positive integer"
 msgstr ""
 
@@ -33688,13 +33688,13 @@ msgid "Update Tax Calculation"
 msgstr "Ενημέρωση υπολογισμού του φόρου"
 
 #: SupplierCredit.php:530 SupplierCredit.php:533 SupplierInvoice.php:878
-#: SupplierInvoice.php:881 SystemParameters.php:548 SystemParameters.php:685
-#: SystemParameters.php:687 SystemParameters.php:698 SystemParameters.php:700
+#: SupplierInvoice.php:881 SystemParameters.php:552 SystemParameters.php:689
+#: SystemParameters.php:691 SystemParameters.php:702 SystemParameters.php:704
 msgid "Automatic"
 msgstr "Αυτόματη"
 
-#: SupplierCredit.php:531 SupplierCredit.php:534 SystemParameters.php:684
-#: SystemParameters.php:688 SystemParameters.php:697 SystemParameters.php:701
+#: SupplierCredit.php:531 SupplierCredit.php:534 SystemParameters.php:688
+#: SystemParameters.php:692 SystemParameters.php:701 SystemParameters.php:705
 msgid "Manual Entry"
 msgstr "Χειροκίνητη έναρξη"
 
@@ -34180,12 +34180,12 @@ msgid "Total contract charges"
 msgstr ""
 
 #: SupplierInvoice.php:869 SupplierTenders.php:741 SupplierTenders.php:742
-#: SystemParameters.php:461 SystemParameters.php:675 WorkCentres.php:276
+#: SystemParameters.php:464 SystemParameters.php:679 WorkCentres.php:276
 #: WorkOrderReceive.php:1000
 msgid "The input must be numeric"
 msgstr ""
 
-#: SupplierInvoice.php:879 SupplierInvoice.php:882 SystemParameters.php:549
+#: SupplierInvoice.php:879 SupplierInvoice.php:882 SystemParameters.php:553
 msgid "Manually"
 msgstr ""
 
@@ -35243,55 +35243,55 @@ msgid ""
 "than 5000 chars"
 msgstr ""
 
-#: SystemParameters.php:132
+#: SystemParameters.php:131
 msgid "Cannot write to the configuration file."
 msgstr ""
 
-#: SystemParameters.php:134
+#: SystemParameters.php:133
 msgid "The configuration file was updated."
 msgstr ""
 
-#: SystemParameters.php:138
+#: SystemParameters.php:137
 msgid "Cannot open the configuration file."
 msgstr ""
 
-#: SystemParameters.php:382
+#: SystemParameters.php:381
 msgid "The system configuration could not be updated because"
 msgstr "Η διάταξη του συστήματος θα μπορούσε να μην είναι ενημερωμένος, επειδή"
 
-#: SystemParameters.php:393
+#: SystemParameters.php:392
 msgid "System configuration updated"
 msgstr "Σύστημα ενημέρωση διαμόρφωσης"
 
-#: SystemParameters.php:410
+#: SystemParameters.php:409
 msgid "System Variable Name"
 msgstr "Σύστημα όνομα της μεταβλητής"
 
-#: SystemParameters.php:419
+#: SystemParameters.php:418
 msgid "Default Date Format"
 msgstr "Προεπιλεγμένη μορφή ημερομηνίας"
 
-#: SystemParameters.php:421
+#: SystemParameters.php:420
 msgid "d/m/Y"
 msgstr ""
 
-#: SystemParameters.php:422
+#: SystemParameters.php:421
 msgid "d.m.Y"
 msgstr ""
 
-#: SystemParameters.php:423
+#: SystemParameters.php:422
 msgid "m/d/Y"
 msgstr ""
 
-#: SystemParameters.php:424
+#: SystemParameters.php:423
 msgid "Y/m/d"
 msgstr ""
 
-#: SystemParameters.php:425
+#: SystemParameters.php:424
 msgid "Y-m-d"
 msgstr ""
 
-#: SystemParameters.php:427
+#: SystemParameters.php:426
 msgid "The default date format for entry of dates and display."
 msgstr ""
 "Η προεπιλεγμένη μορφή ημερομηνίας για την έναρξη των ημερομηνιών και οθόνη."
@@ -35306,19 +35306,19 @@ msgid ""
 "The users' theme selection will override it."
 msgstr ""
 
-#: SystemParameters.php:446
+#: SystemParameters.php:449
 msgid "Accounts Receivable/Payable Settings"
 msgstr "Εισπρακτέους / πληρωτέους λογαριασμούς Ρυθμίσεις"
 
-#: SystemParameters.php:449
+#: SystemParameters.php:452
 msgid "First Overdue Deadline in (days)"
 msgstr "Πρώτη Εκπρόθεσμες Προθεσμία σε (ημέρες)"
 
-#: SystemParameters.php:450 SystemParameters.php:455
+#: SystemParameters.php:453 SystemParameters.php:458
 msgid "The input must be integer"
 msgstr ""
 
-#: SystemParameters.php:451
+#: SystemParameters.php:454
 msgid ""
 "Customer and supplier balances are displayed as overdue by this many days. "
 "This parameter is used on customer and supplier enquiry screens and aged "
@@ -35328,39 +35328,39 @@ msgstr ""
 "πολλές ημέρες. Αυτή η παράμετρος χρησιμοποιείται για τον πελάτη και "
 "προμηθευτή οθόνες έρευνας και ηλικίας καταχωρήσεις"
 
-#: SystemParameters.php:454
+#: SystemParameters.php:457
 msgid "Second Overdue Deadline in (days)"
 msgstr "Δεύτερη Εκπρόθεσμες Προθεσμία σε (ημέρες)"
 
-#: SystemParameters.php:456
+#: SystemParameters.php:459
 msgid "As above but the next level of overdue"
 msgstr "Όπως και παραπάνω, αλλά το επόμενο επίπεδο των ληξιπρόθεσμων"
 
-#: SystemParameters.php:460
+#: SystemParameters.php:463
 msgid "Default Credit Limit"
 msgstr "Προεπιλογή Όριο Πίστωσης"
 
-#: SystemParameters.php:462
+#: SystemParameters.php:465
 msgid "The default used in new customer set up"
 msgstr "Η προεπιλογή που χρησιμοποιείται σε νέο πελάτη που έχει συσταθεί"
 
-#: SystemParameters.php:465
+#: SystemParameters.php:468
 msgid "Check Credit Limits"
 msgstr "Ελέγξτε Πιστωτικών Ορίων"
 
-#: SystemParameters.php:467
+#: SystemParameters.php:470
 msgid "Do not check"
 msgstr "Μην επιλέξετε"
 
-#: SystemParameters.php:468
+#: SystemParameters.php:471
 msgid "Warn on breach"
 msgstr "Προειδοποίηση σε παράβαση"
 
-#: SystemParameters.php:469
+#: SystemParameters.php:472
 msgid "Prohibit Sales"
 msgstr "Πωλήσεις Απαγόρευση"
 
-#: SystemParameters.php:471
+#: SystemParameters.php:474
 msgid ""
 "Credit limits can be checked at order entry to warn only or to stop the "
 "order from being entered where it would take a customer account balance over "
@@ -35370,11 +35370,11 @@ msgstr ""
 "μόνο ή να σταματήσει τη σειρά από το να εγγράφονται σε περίπτωση που θα "
 "λάβει το υπόλοιπο του λογαριασμού του πελάτη υπερβεί το όριο τους"
 
-#: SystemParameters.php:474
+#: SystemParameters.php:477
 msgid "Show Settled Last Month"
 msgstr "Εμφάνιση Πάγια Τελευταίος μήνας"
 
-#: SystemParameters.php:479
+#: SystemParameters.php:482
 msgid ""
 "This setting refers to the format of customer statements. If the invoices "
 "and credit notes that have been paid and settled during the course of the "
@@ -35388,11 +35388,11 @@ msgstr ""
 "Ναι. Επιλέγοντας Δεν θα δείξει μόνο το παρόν εκκρεμή τιμολόγια, τις "
 "πιστώσεις και τις πληρωμές που δεν έχουν κατανεμηθεί"
 
-#: SystemParameters.php:482
+#: SystemParameters.php:485
 msgid "Romalpa Clause"
 msgstr "Romalpa ρήτρα"
 
-#: SystemParameters.php:484
+#: SystemParameters.php:487
 msgid ""
 "This text appears on invoices and credit notes in small print. Normally a "
 "reservation of title clause that gives the company rights to collect goods "
@@ -35403,11 +35403,11 @@ msgstr ""
 "δικαίωμα της εταιρείας να συλλέξει τα εμπορεύματα τα οποία δεν έχουν "
 "πληρωθεί για το - για να δώσει κάποια προστασία για επισφαλείς απαιτήσεις."
 
-#: SystemParameters.php:487
+#: SystemParameters.php:490
 msgid "Quick Entries"
 msgstr "Γρήγορη Ενδείξεις"
 
-#: SystemParameters.php:489
+#: SystemParameters.php:492
 msgid ""
 "This parameter defines the layout of the sales order entry screen. The "
 "number of fields available for quick entries. Any number from 1 to 99 can be "
@@ -35417,7 +35417,7 @@ msgstr ""
 "Ο αριθμός των διαθέσιμων πεδίων για γρήγορη καταχωρήσεις. Οποιοσδήποτε "
 "αριθμός 1 - 99 μπορούν να εισαχθούν."
 
-#: SystemParameters.php:494
+#: SystemParameters.php:497
 msgid ""
 "To show the most frequently ordered items enter the number of frequently "
 "ordered items you wish to display from 1 to 99. If you do not wish to "
@@ -35427,23 +35427,23 @@ msgstr ""
 "των συχνά διέταξε στοιχεία που θέλετε να εμφανίσετε 1 έως 99. Εάν δεν "
 "επιθυμείτε να εμφανίζονται τα συχνά παραγγείλει λίστα εισάγετε το 0."
 
-#: SystemParameters.php:497
+#: SystemParameters.php:500
 msgid "Sales Order Allows Same Item Multiple Times"
 msgstr "Πωλήσεις Διάταξη Επιτρέπει ίδιο σημείο πολλές φορές"
 
-#: SystemParameters.php:505
+#: SystemParameters.php:508
 msgid "Order Entry allows Line Item Narrative"
 msgstr "Order Entry σάς επιτρέπει στοιχείου γραμμής Αφήγηση"
 
-#: SystemParameters.php:507
+#: SystemParameters.php:510
 msgid "Allow Narrative Entry"
 msgstr "Καταστεί δυνατή η έναρξη Αφήγηση"
 
-#: SystemParameters.php:508
+#: SystemParameters.php:511
 msgid "No Narrative Line"
 msgstr "Δεν αφηγηματική γραμμή"
 
-#: SystemParameters.php:510
+#: SystemParameters.php:513
 msgid ""
 "Select whether or not to allow entry of narrative on order line items. This "
 "narrative will appear on invoices and packing slips. Useful mainly for "
@@ -35453,33 +35453,33 @@ msgstr ""
 "παραγγελία. Αυτή η αφήγηση θα αναγράφονται στα τιμολόγια και τη συσκευασία "
 "μπόλια. Χρήσιμα κυρίως για τις επιχειρήσεις παροχής υπηρεσιών."
 
-#: SystemParameters.php:517
+#: SystemParameters.php:520
 msgid "Languages to Maintain Translations for Item Descriptions"
 msgstr ""
 
-#: SystemParameters.php:528
+#: SystemParameters.php:532
 msgid ""
 "Select the languages in which translations of the item description will be "
 "maintained. The default language is excluded."
 msgstr ""
 
-#: SystemParameters.php:532
+#: SystemParameters.php:536
 msgid "Google Translator API Key"
 msgstr ""
 
-#: SystemParameters.php:534
+#: SystemParameters.php:538
 msgid ""
 "Google Translator API Key to allow automatic translations. More info at "
 "https://cloud.google.com/translate/"
 msgstr ""
 
-#: SystemParameters.php:537
+#: SystemParameters.php:541
 msgid "A picking note must be produced before an order can be delivered"
 msgstr ""
 "Μια συλλογή σημείωμα θα πρέπει να έχουν παραχθεί πριν από την παραγγελία "
 "μπορεί να παραδοθεί"
 
-#: SystemParameters.php:542
+#: SystemParameters.php:546
 msgid ""
 "Select whether or not a picking note must be produced before an order can be "
 "delivered to a customer."
@@ -35487,11 +35487,11 @@ msgstr ""
 "Επιλέξτε ή μη-συγκομιδής σημείωμα θα πρέπει να έχουν παραχθεί πριν από την "
 "παραγγελία μπορεί να παραδοθεί σε έναν πελάτη."
 
-#: SystemParameters.php:546
+#: SystemParameters.php:550
 msgid "Auto Update Exchange Rates Daily"
 msgstr "Αυτόματη Συνάλλαγμα Ενημέρωση Ημερήσια"
 
-#: SystemParameters.php:551
+#: SystemParameters.php:555
 msgid ""
 "Automatic updates to exchange rates will retrieve the latest daily rates "
 "from either the European Central Bank or Google once per day - when the "
@@ -35499,57 +35499,57 @@ msgid ""
 "automatically - exchange rates will need to be maintained manually"
 msgstr ""
 
-#: SystemParameters.php:553
+#: SystemParameters.php:557
 msgid "Source Exchange Rates From"
 msgstr ""
 
-#: SystemParameters.php:555
+#: SystemParameters.php:559
 msgid "European Central Bank"
 msgstr ""
 
-#: SystemParameters.php:556
+#: SystemParameters.php:560
 msgid "Google"
 msgstr ""
 
-#: SystemParameters.php:558
+#: SystemParameters.php:562
 msgid "Specify the source to use for exchange rates"
 msgstr ""
 
-#: SystemParameters.php:562
+#: SystemParameters.php:566
 msgid "Format of Packing Slips"
 msgstr "Μορφή της συσκευασίας Γλιστρήματα"
 
-#: SystemParameters.php:564
+#: SystemParameters.php:568
 msgid "Laser Printed"
 msgstr "Εκτύπωση με λέιζερ"
 
-#: SystemParameters.php:565
+#: SystemParameters.php:569
 msgid "Special Stationery"
 msgstr "Ειδικά Χαρτικά"
 
-#: SystemParameters.php:567
+#: SystemParameters.php:571
 msgid "Choose the format that packing notes should be printed by default"
 msgstr ""
 "Επιλέξτε τη μορφή που επισημαίνει συσκευασίας θα πρέπει να εκτυπώνονται από "
 "προεπιλογή"
 
-#: SystemParameters.php:571
+#: SystemParameters.php:575
 msgid "Invoice Orientation"
 msgstr "Τιμολόγιο Προσανατολισμός"
 
-#: SystemParameters.php:576
+#: SystemParameters.php:580
 msgid "Select the invoice layout"
 msgstr "Επιλέξτε το τιμολόγιο διάταξη"
 
-#: SystemParameters.php:580
+#: SystemParameters.php:584
 msgid "Invoice Quantity Default"
 msgstr ""
 
-#: SystemParameters.php:582
+#: SystemParameters.php:586
 msgid "0"
 msgstr ""
 
-#: SystemParameters.php:585
+#: SystemParameters.php:589
 msgid ""
 "This setting controls the default behaviour of invoicing. Setting to 0 "
 "defaults the invocie quantity to zero to force entry. Set to outstanding to "
@@ -35557,19 +35557,19 @@ msgid ""
 "deliveries, on the sales order"
 msgstr ""
 
-#: SystemParameters.php:589
+#: SystemParameters.php:593
 msgid "Show company details on packing slips"
 msgstr "Εμφάνιση στοιχείων της εταιρείας σχετικά με τη συσκευασία μπόλια"
 
-#: SystemParameters.php:591
+#: SystemParameters.php:595
 msgid "Show Company Details"
 msgstr "Αναλυτικά η Εταιρεία"
 
-#: SystemParameters.php:592
+#: SystemParameters.php:596
 msgid "Hide Company Details"
 msgstr "Απόκρυψη Λεπτομέρειες Εταιρίας"
 
-#: SystemParameters.php:594
+#: SystemParameters.php:598
 msgid ""
 "Customer branches can be set by default not to print packing slips with the "
 "company logo and address. This is useful for companies that ship to "
@@ -35585,23 +35585,23 @@ msgstr ""
 "αυτή η ρύθμιση είναι η προεπιλογή εφαρμόζεται σε όλα τα νέα καταστήματα του "
 "πελάτη"
 
-#: SystemParameters.php:599
+#: SystemParameters.php:603
 msgid "Working Days on a Week"
 msgstr ""
 
-#: SystemParameters.php:601 SystemParameters.php:602 SystemParameters.php:603
+#: SystemParameters.php:605 SystemParameters.php:606 SystemParameters.php:607
 msgid "working days"
 msgstr ""
 
-#: SystemParameters.php:605
+#: SystemParameters.php:609
 msgid "Number of working days on a week"
 msgstr ""
 
-#: SystemParameters.php:610
+#: SystemParameters.php:614
 msgid "Dispatch Cut-Off Time"
 msgstr "Αποστολή καταληκτική ώρα"
 
-#: SystemParameters.php:615
+#: SystemParameters.php:619
 msgid ""
 "Orders entered after this time will default to be dispatched the following "
 "day, this can be over-ridden at the time of sales order entry"
@@ -35610,11 +35610,11 @@ msgstr ""
 "την επόμενη ημέρα, αυτό μπορεί να είναι πάνω από μαστίζονται από τη στιγμή "
 "της πώλησης εισόδου για"
 
-#: SystemParameters.php:618
+#: SystemParameters.php:622
 msgid "Allow Sales Of Zero Cost Items"
 msgstr "Επιτρέψτε Πωλήσεων της μηδενικής στοιχεία κόστους"
 
-#: SystemParameters.php:623
+#: SystemParameters.php:627
 msgid ""
 "If an item selected at order entry does not have a cost set up then if this "
 "parameter is set to No then the order line will not be able to be entered"
@@ -35623,11 +35623,11 @@ msgstr ""
 "έχει συσταθεί στη συνέχεια, αν αυτή η παράμετρος έχει οριστεί σε Δεν τότε η "
 "γραμμή ώστε δεν θα μπορούν να εγγράφονται"
 
-#: SystemParameters.php:626
+#: SystemParameters.php:630
 msgid "Controlled Items Must Exist For Crediting"
 msgstr "Ελεγχόμενων ειδών θα πρέπει να υπάρχουν για την πίστωση"
 
-#: SystemParameters.php:631
+#: SystemParameters.php:635
 msgid ""
 "This parameter relates to the behaviour of the controlled items code. If a "
 "serial numbered item has not previously existed then a credit note for it "
@@ -35638,20 +35638,20 @@ msgstr ""
 "υπήρχε τότε ένα πιστωτικό σημείωμα για αυτό δεν θα επιτρέπεται εφόσον αυτό "
 "έχει οριστεί στην τιμή Ναι"
 
-#: SystemParameters.php:635
+#: SystemParameters.php:639
 msgid "Could not load price lists"
 msgstr "Δεν ήταν δυνατή η φόρτωση των τιμοκαταλόγων"
 
-#: SystemParameters.php:637
+#: SystemParameters.php:641
 msgid "Default Price List"
 msgstr "Default Τιμοκατάλογος"
 
-#: SystemParameters.php:640 SystemParameters.php:656 SystemParameters.php:715
-#: SystemParameters.php:734
+#: SystemParameters.php:644 SystemParameters.php:660 SystemParameters.php:719
+#: SystemParameters.php:738
 msgid "Unavailable"
 msgstr "Unavailable"
 
-#: SystemParameters.php:647
+#: SystemParameters.php:651
 msgid ""
 "This price list is used as a last resort where there is no price set up for "
 "an item in the price list that the customer is set up for"
@@ -35660,15 +35660,15 @@ msgstr ""
 "που έχει δημιουργηθεί για ένα αντικείμενο στον τιμοκατάλογο ότι ο πελάτης "
 "έχει ρυθμιστεί για"
 
-#: SystemParameters.php:651
+#: SystemParameters.php:655
 msgid "Could not load shippers"
 msgstr "Δεν ήταν δυνατή η φόρτωση φορτωτές"
 
-#: SystemParameters.php:653
+#: SystemParameters.php:657
 msgid "Default Shipper"
 msgstr "Default Φορτωτής"
 
-#: SystemParameters.php:663
+#: SystemParameters.php:667
 msgid ""
 "This shipper is used where the best shipper for a customer branch has not "
 "been defined previously"
@@ -35676,11 +35676,11 @@ msgstr ""
 "Αυτό αποστολέα χρησιμοποιείται όταν το καλύτερο φορτωτή για το υποκατάστημα "
 "πελάτης δεν έχει οριστεί προηγουμένως"
 
-#: SystemParameters.php:666
+#: SystemParameters.php:670
 msgid "Do Freight Calculation"
 msgstr "Να Υπολογισμός φορτίων"
 
-#: SystemParameters.php:671
+#: SystemParameters.php:675
 msgid ""
 "If this is set to Yes then the system will attempt to calculate the freight "
 "cost of a dispatch based on the weight and cubic and the data defined for "
@@ -35697,11 +35697,11 @@ msgstr ""
 "όγκου στο σημείο εγκατάστασης των αποθεμάτων για όλα τα στοιχεία και το "
 "κόστος μεταφοράς για κάθε αποστολέα συντηρείται σωστά."
 
-#: SystemParameters.php:674
+#: SystemParameters.php:678
 msgid "Apply freight charges if an order is less than"
 msgstr "Εφαρμόστε τα έξοδα μεταφοράς, αν μια εντολή είναι μικρότερη από"
 
-#: SystemParameters.php:676
+#: SystemParameters.php:680
 msgid ""
 "This parameter is only effective if Do Freight Calculation is set to Yes. If "
 "it is set to 0 then freight is always charged. The total order value is "
@@ -35712,11 +35712,11 @@ msgstr ""
 "είναι πάντα φορτισμένη. Η συνολική αξία της παραγγελίας είναι σε σύγκριση με "
 "την τιμή αυτή να αποφασίσει εάν ή να μην ναύλο"
 
-#: SystemParameters.php:680 Z_ImportDebtors.php:653
+#: SystemParameters.php:684 Z_ImportDebtors.php:653
 msgid "Create Debtor Codes Automatically"
 msgstr "Δημιουργία Κώδικες οφειλέτη Αυτόματα"
 
-#: SystemParameters.php:691
+#: SystemParameters.php:695
 msgid ""
 "Set to Automatic - customer codes are automatically created - as a "
 "sequential number"
@@ -35724,21 +35724,21 @@ msgstr ""
 "Ρύθμιση για αυτόματη - οι κωδικοί των πελατών δημιουργούνται αυτόματα - ως "
 "ένας αύξων αριθμός"
 
-#: SystemParameters.php:693
+#: SystemParameters.php:697
 msgid "Create Supplier Codes Automatically"
 msgstr ""
 
-#: SystemParameters.php:704
+#: SystemParameters.php:708
 msgid ""
 "Set to Automatic - Supplier codes are automatically created - as a "
 "sequential number"
 msgstr ""
 
-#: SystemParameters.php:710
+#: SystemParameters.php:714
 msgid "Could not load tax categories table"
 msgstr "Δεν ήταν δυνατή η φορολογική επιβάρυνση πίνακα κατηγορίες"
 
-#: SystemParameters.php:722
+#: SystemParameters.php:726
 msgid ""
 "This is the tax category used for entry of supplier invoices and the "
 "category at which freight attracts tax"
@@ -35746,11 +35746,11 @@ msgstr ""
 "Αυτή είναι η κατηγορία που χρησιμοποιήθηκε για την είσοδο των τιμολογίων "
 "προμηθευτών καθώς και την κατηγορία στην οποία εμπορευμάτων προσελκύει φόρου"
 
-#: SystemParameters.php:726
+#: SystemParameters.php:730
 msgid "Tax Authority Reference Name"
 msgstr ""
 
-#: SystemParameters.php:728
+#: SystemParameters.php:732
 msgid ""
 "This parameter is what is displayed on tax invoices and credits for the tax "
 "authority of the company eg. in Australian this would by A.B.N.: - in NZ it "
@@ -35761,28 +35761,28 @@ msgstr ""
 "θα από την ABN: - στη ΝΖ θα ήταν GST αριθ: στο Ηνωμένο Βασίλειο θα ήταν ΦΠΑ "
 "Regn. Δεν"
 
-#: SystemParameters.php:732
+#: SystemParameters.php:736
 msgid "Country Of Operation"
 msgstr "Χώρα λειτουργίας"
 
-#: SystemParameters.php:740
+#: SystemParameters.php:744
 msgid ""
 "This parameter is only effective if Do Freight Calculation is set to Yes."
 msgstr ""
 
-#: SystemParameters.php:743
+#: SystemParameters.php:747
 msgid "Standard Cost Decimal Places"
 msgstr ""
 
-#: SystemParameters.php:747
+#: SystemParameters.php:751
 msgid "Decimal Places to be used in Standard Cost"
 msgstr ""
 
-#: SystemParameters.php:750
+#: SystemParameters.php:754
 msgid "Number Of Periods Of StockUsage"
 msgstr "Αριθμό των περιόδων StockUsage"
 
-#: SystemParameters.php:754
+#: SystemParameters.php:758
 msgid ""
 "In stock usage inquiries this determines how many periods of stock usage to "
 "show. An average is calculated over this many periods"
@@ -35791,21 +35791,21 @@ msgstr ""
 "υλικού για να δείξει. Μια μέση τιμή υπολογίζεται για διάστημα αυτό πολλές "
 "περιόδους"
 
-#: SystemParameters.php:757
+#: SystemParameters.php:761
 msgid "Show order values on GRN"
 msgstr "Εμφάνιση τιμών για την GRN"
 
-#: SystemParameters.php:762
+#: SystemParameters.php:766
 msgid "Should the value of the purchased stock be shown on the GRN screen"
 msgstr ""
 "Σε περίπτωση που η αξία των εξαγορασθεισών μετοχών να εμφανίζεται στην οθόνη "
 "GRN"
 
-#: SystemParameters.php:766
+#: SystemParameters.php:770
 msgid "Check Quantity Charged vs Deliver Qty"
 msgstr "Έλεγχος ποσότητας που καταλογίστηκε εναντίον Παράδοση Ποσότητα"
 
-#: SystemParameters.php:771
+#: SystemParameters.php:775
 msgid ""
 "In entry of AP invoices this determines whether or not to check the "
 "quantities received into stock tie up with the quantities invoiced"
@@ -35813,11 +35813,11 @@ msgstr ""
 "Στην είσοδο της ΑΡ τιμολογίων αυτή καθορίζει εάν όχι να ελέγχει τις "
 "παραληφθείσες ποσότητες στο απόθεμα δένουν με τις ποσότητες που τιμολογούνται"
 
-#: SystemParameters.php:774
+#: SystemParameters.php:778
 msgid "Check Price Charged vs Order Price"
 msgstr "Ελέγξτε τιμή που χρεώνεται vs Τιμή Παραγγελία"
 
-#: SystemParameters.php:779
+#: SystemParameters.php:783
 msgid ""
 "In entry of AP invoices this parameter determines whether or not to check "
 "invoice prices tie up to ordered prices"
@@ -35825,19 +35825,19 @@ msgstr ""
 "Στην είσοδο της ΑΡ τιμολογίων Αυτή η παράμετρος καθορίζει το αν ή όχι να "
 "ελέγξει τις τιμές τιμολογίου δένουν να καταδικάζεται τιμές"
 
-#: SystemParameters.php:782
+#: SystemParameters.php:786
 msgid "Allowed Over Charge Proportion"
 msgstr "Επιτρέπονται Πάνω Αναλογία Χρέωση"
 
-#: SystemParameters.php:783 SystemParameters.php:788
+#: SystemParameters.php:787 SystemParameters.php:792
 msgid "The input must between 0 and 100"
 msgstr ""
 
-#: SystemParameters.php:783
+#: SystemParameters.php:787
 msgid "integer between 0 and 100"
 msgstr ""
 
-#: SystemParameters.php:784
+#: SystemParameters.php:788
 msgid ""
 "If check price charges vs Order price is set to yes then this proportion "
 "determines the percentage by which invoices can be overcharged with respect "
@@ -35847,11 +35847,11 @@ msgstr ""
 "αναλογία αυτή καθορίζει το ποσοστό κατά το οποίο τα τιμολόγια μπορούν να "
 "είναι υπερβολικό ποσό σε σχέση με την τιμή"
 
-#: SystemParameters.php:787
+#: SystemParameters.php:791
 msgid "Allowed Over Receive Proportion"
 msgstr "Επιτρέπονται Λήψη Πάνω Ποσοστό"
 
-#: SystemParameters.php:789
+#: SystemParameters.php:793
 msgid ""
 "If check quantity charged vs delivery quantity is set to yes then this "
 "proportion determines the percentage by which invoices can be overcharged "
@@ -35861,80 +35861,80 @@ msgstr ""
 "πρόκειται να ναι, τότε η αναλογία αυτή καθορίζει το ποσοστό κατά το οποίο τα "
 "τιμολόγια μπορούν να είναι υπερβολικό ποσό σε σχέση με την παράδοση"
 
-#: SystemParameters.php:792
+#: SystemParameters.php:796
 msgid "Purchase Order Allows Same Item Multiple Times"
 msgstr "Εντολή αγοράς Επιτρέπει ίδιο σημείο πολλές φορές"
 
-#: SystemParameters.php:796
+#: SystemParameters.php:800
 msgid ""
 "If a purchase order can have the same item on the order several times this "
 "parameter should be set to yes"
 msgstr ""
 
-#: SystemParameters.php:799
+#: SystemParameters.php:803
 msgid "Automatically authorise purchase orders if user has authority"
 msgstr ""
 
-#: SystemParameters.php:803
+#: SystemParameters.php:807
 msgid ""
 "If the user changing an existing purchase order or adding a new puchase "
 "order is set up to authorise purchase orders and the order is within their "
 "limit, then the purchase order status is automatically set to authorised"
 msgstr ""
 
-#: SystemParameters.php:810 includes/DateFunctions.inc:107
+#: SystemParameters.php:814 includes/DateFunctions.inc:107
 msgid "January"
 msgstr "Ιανουάριος"
 
-#: SystemParameters.php:811 includes/DateFunctions.inc:110
+#: SystemParameters.php:815 includes/DateFunctions.inc:110
 msgid "February"
 msgstr "Φεβρουάριος"
 
-#: SystemParameters.php:812 includes/DateFunctions.inc:113
+#: SystemParameters.php:816 includes/DateFunctions.inc:113
 msgid "March"
 msgstr "Μαρτίου"
 
-#: SystemParameters.php:813 includes/DateFunctions.inc:116
+#: SystemParameters.php:817 includes/DateFunctions.inc:116
 msgid "April"
 msgstr "Απριλίου"
 
-#: SystemParameters.php:814 includes/DateFunctions.inc:119
+#: SystemParameters.php:818 includes/DateFunctions.inc:119
 msgid "May"
 msgstr "Μάιος"
 
-#: SystemParameters.php:815 includes/DateFunctions.inc:122
+#: SystemParameters.php:819 includes/DateFunctions.inc:122
 msgid "June"
 msgstr "Ιουνίου"
 
-#: SystemParameters.php:816 includes/DateFunctions.inc:125
+#: SystemParameters.php:820 includes/DateFunctions.inc:125
 msgid "July"
 msgstr "Ιουλίου"
 
-#: SystemParameters.php:817 includes/DateFunctions.inc:128
+#: SystemParameters.php:821 includes/DateFunctions.inc:128
 msgid "August"
 msgstr "Αύγουστος"
 
-#: SystemParameters.php:818 includes/DateFunctions.inc:131
+#: SystemParameters.php:822 includes/DateFunctions.inc:131
 msgid "September"
 msgstr "Σεπτέμβριος"
 
-#: SystemParameters.php:819 includes/DateFunctions.inc:134
+#: SystemParameters.php:823 includes/DateFunctions.inc:134
 msgid "October"
 msgstr "Οκτωβρίου"
 
-#: SystemParameters.php:820 includes/DateFunctions.inc:137
+#: SystemParameters.php:824 includes/DateFunctions.inc:137
 msgid "November"
 msgstr "Νοεμβρίου"
 
-#: SystemParameters.php:821 includes/DateFunctions.inc:140
+#: SystemParameters.php:825 includes/DateFunctions.inc:140
 msgid "December"
 msgstr "Δεκεμβρίου"
 
-#: SystemParameters.php:822
+#: SystemParameters.php:826
 msgid "Financial Year Ends On"
 msgstr "Οικονομικό Έτος Λήξη"
 
-#: SystemParameters.php:827
+#: SystemParameters.php:831
 msgid ""
 "Defining the month in which the financial year ends enables the system to "
 "provide useful defaults for general ledger reports"
@@ -35942,27 +35942,27 @@ msgstr ""
 "Καθορισμός του μήνα κατά τον οποίο το οικονομικό έτος που λήγει επιτρέπει "
 "στο σύστημα να παρέχει χρήσιμες προεπιλογών για γενικές εκθέσεις καθολικό"
 
-#: SystemParameters.php:830
+#: SystemParameters.php:834
 msgid "Report Page Length"
 msgstr "Έκθεση Μήκος Σελίδα"
 
-#: SystemParameters.php:831 SystemParameters.php:855
+#: SystemParameters.php:835 SystemParameters.php:859
 msgid "The input should be between 1 and 999"
 msgstr ""
 
-#: SystemParameters.php:831 SystemParameters.php:855
+#: SystemParameters.php:835 SystemParameters.php:859
 msgid "1 to 999"
 msgstr ""
 
-#: SystemParameters.php:836
+#: SystemParameters.php:840
 msgid "Default Maximum Number of Records to Show"
 msgstr "Default Μέγιστος Αριθμός βιβλία που αποδεικνύουν"
 
-#: SystemParameters.php:837
+#: SystemParameters.php:841
 msgid "The records should be between 1 and 999"
 msgstr ""
 
-#: SystemParameters.php:838
+#: SystemParameters.php:842
 msgid ""
 "When pages have code to limit the number of returned records - such as "
 "select customer, select supplier and select item, then this will be the "
@@ -35975,19 +35975,19 @@ msgstr ""
 "εγγραφών προς εμφάνιση για ένα χρήστη που δεν έχει αλλάξει αυτό για τον "
 "εαυτό τους στις ρυθμίσεις του χρήστη."
 
-#: SystemParameters.php:843
+#: SystemParameters.php:847
 msgid "Show Stockid on images"
 msgstr ""
 
-#: SystemParameters.php:848
+#: SystemParameters.php:852
 msgid "Show the code inside the thumbnail image of the items"
 msgstr ""
 
-#: SystemParameters.php:854
+#: SystemParameters.php:858
 msgid "Maximum Size in KB of uploaded images"
 msgstr "Μέγιστο μέγεθος σε KB του μεταφόρτωση εικόνων"
 
-#: SystemParameters.php:856
+#: SystemParameters.php:860
 msgid ""
 "Picture files of items can be uploaded to the server. The system will check "
 "that files uploaded are less than this size (in KB) before they will be "
@@ -36000,19 +36000,19 @@ msgstr ""
 "θα κάνει το σύστημα αργό και θα είναι δύσκολο να δείτε στην οθόνη του Η "
 "συντήρηση του τροχαίου."
 
-#: SystemParameters.php:863
+#: SystemParameters.php:867
 msgid "Could not load the Number Of Month Must be Shown"
 msgstr "Δεν ήταν δυνατή η φόρτωση του αριθμού του μήνα πρέπει να εμφανίζεται"
 
-#: SystemParameters.php:868
+#: SystemParameters.php:872
 msgid "Number Of Month Must Be Shown"
 msgstr "Αριθμός του μήνα πρέπει να εμφανίζεται"
 
-#: SystemParameters.php:869
+#: SystemParameters.php:873
 msgid "input must be positive integer"
 msgstr ""
 
-#: SystemParameters.php:870
+#: SystemParameters.php:874
 msgid ""
 "Number of month must be shown on report can be changed with this parameters "
 "ex: in CustomerInquiry.php "
@@ -36020,11 +36020,11 @@ msgstr ""
 "Αριθμός μηνών πρέπει να παρουσιάζονται σε έκθεση που μπορεί να αλλάξει με "
 "αυτό το παραμέτρους ex: σε CustomerInquiry.php "
 
-#: SystemParameters.php:874
+#: SystemParameters.php:878
 msgid "The directory where images are stored"
 msgstr "Ο κατάλογος στην οποία οι εικόνες αποθηκεύονται"
 
-#: SystemParameters.php:900
+#: SystemParameters.php:904
 msgid ""
 "The directory under which all image files should be stored. Image files take "
 "the format of ItemCode.jpg - they must all be .jpg files and the part code "
@@ -36037,11 +36037,11 @@ msgstr ""
 "ονομάζεται αυτόματα upload. Το σύστημα θα ελέγξει για να εξασφαλίζει ότι η "
 "εικόνα είναι ένα. Jpg αρχείο"
 
-#: SystemParameters.php:905
+#: SystemParameters.php:909
 msgid "The directory where reports are stored"
 msgstr "Ο κατάλογος όπου οι εκθέσεις είναι αποθηκευμένα"
 
-#: SystemParameters.php:934
+#: SystemParameters.php:938
 msgid ""
 "The directory under which all report pdf files should be created in. A "
 "separate directory is recommended"
@@ -36049,30 +36049,30 @@ msgstr ""
 "Ο κατάλογος βάσει του οποίου όλα τα αρχεία pdf έκθεση θα πρέπει να "
 "δημιουργηθεί in. Ένα ξεχωριστό κατάλογο, συνιστάται"
 
-#: SystemParameters.php:939
+#: SystemParameters.php:943
 msgid "Only allow secure socket connections"
 msgstr "Να επιτρέπεται μόνο σε ασφαλείς συνδέσεις πρίζα"
 
-#: SystemParameters.php:944
+#: SystemParameters.php:948
 msgid ""
 "Force connections to be only over secure sockets - ie encrypted data only"
 msgstr ""
 "Δύναμη συνδέσεις να είναι μόνο μέσω Secure Sockets - δηλαδή κρυπτογραφημένων "
 "δεδομένων μόνο"
 
-#: SystemParameters.php:948
+#: SystemParameters.php:952
 msgid "Perform Database Maintenance At Logon"
 msgstr "Εκτελέστε συντήρησης της βάσης δεδομένων κατά τη σύνδεση"
 
-#: SystemParameters.php:966 SystemParameters.php:968
+#: SystemParameters.php:970 SystemParameters.php:972
 msgid "Never"
 msgstr "Ποτέ"
 
-#: SystemParameters.php:971 SystemParameters.php:973
+#: SystemParameters.php:975 SystemParameters.php:977
 msgid "Allow SysAdmin Access Only"
 msgstr ""
 
-#: SystemParameters.php:977
+#: SystemParameters.php:981
 msgid ""
 "Uses the function DB_Maintenance defined in ConnectDB_XXXX.inc to perform "
 "database maintenance tasks, to run at regular intervals - checked at each "
@@ -36082,23 +36082,23 @@ msgstr ""
 "εκτελούν εργασίες συντήρησης της βάσης δεδομένων, να τρέχει σε τακτά χρονικά "
 "διαστήματα - ελέγχονται σε κάθε σύνδεση χρηστών"
 
-#: SystemParameters.php:981 includes/MiscFunctions.php:249
+#: SystemParameters.php:985 includes/MiscFunctions.php:249
 msgid "WackoWiki"
 msgstr "WackoWiki"
 
-#: SystemParameters.php:982 includes/MiscFunctions.php:251
+#: SystemParameters.php:986 includes/MiscFunctions.php:251
 msgid "MediaWiki"
 msgstr "MediaWiki"
 
-#: SystemParameters.php:983 includes/MiscFunctions.php:253
+#: SystemParameters.php:987 includes/MiscFunctions.php:253
 msgid "DokuWiki"
 msgstr ""
 
-#: SystemParameters.php:985
+#: SystemParameters.php:989
 msgid "Wiki application"
 msgstr "Wiki εφαρμογή"
 
-#: SystemParameters.php:991
+#: SystemParameters.php:995
 msgid ""
 "This feature makes webERP show links to a free form company knowledge base "
 "using a wiki. This allows sharing of important company information - about "
@@ -36111,29 +36111,29 @@ msgstr ""
 "και τα προϊόντα και η δημιουργία των μενού της ροής εργασίας και / ή "
 "εταιρικό τεκμηρίωση των διαδικασιών"
 
-#: SystemParameters.php:993
+#: SystemParameters.php:997
 msgid "Wiki Path"
 msgstr "Wiki Path"
 
-#: SystemParameters.php:995
+#: SystemParameters.php:999
 msgid ""
 "The path to the wiki installation to form the basis of wiki URLs - or the "
 "full URL of the wiki."
 msgstr ""
 
-#: SystemParameters.php:997
+#: SystemParameters.php:1001
 msgid "Geocode Customers and Suppliers"
 msgstr "Geocode Πελάτες και Προμηθευτές"
 
-#: SystemParameters.php:1000 SystemParameters.php:1004
+#: SystemParameters.php:1004 SystemParameters.php:1008
 msgid "Geocode Integration Enabled"
 msgstr "Geocode Ένταξη Ενεργοποιήθηκε"
 
-#: SystemParameters.php:1001 SystemParameters.php:1003
+#: SystemParameters.php:1005 SystemParameters.php:1007
 msgid "Geocode Integration Disabled"
 msgstr "Geocode άτομα με ειδικές ανάγκες ολοκλήρωσης"
 
-#: SystemParameters.php:1007
+#: SystemParameters.php:1011
 msgid ""
 "This feature will give Latitude and Longitude coordinates to customers and "
 "suppliers. Requires access to a mapping provider. You must setup this "
@@ -36145,57 +36145,57 @@ msgstr ""
 "πρέπει να ρυθμίσετε τη διευκόλυνση αυτή υπό Main Menu - Διαμόρφωση - geocode "
 "Εγκατάστασης. Αυτή η λειτουργία είναι σε πειραματικό στάδιο."
 
-#: SystemParameters.php:1009
+#: SystemParameters.php:1013
 msgid "Extended Customer Information"
 msgstr "Εκτεταμένη Πληροφορίες Πελατών"
 
-#: SystemParameters.php:1012 SystemParameters.php:1016
+#: SystemParameters.php:1016 SystemParameters.php:1020
 msgid "Extended Customer Info Enabled"
 msgstr "Εκτεταμένη Πληροφορίες Πελατών Ενεργοποιήθηκε"
 
-#: SystemParameters.php:1013 SystemParameters.php:1015
+#: SystemParameters.php:1017 SystemParameters.php:1019
 msgid "Extended Customer Info Disabled"
 msgstr "Εκτεταμένη Πληροφορίες για άτομα με ειδικές ανάγκες πελατών"
 
-#: SystemParameters.php:1019
+#: SystemParameters.php:1023
 msgid ""
 "This feature will give extended information in the Select Customer screen."
 msgstr ""
 "Αυτό το χαρακτηριστικό θα δώσει εκτεταμένες πληροφορίες στην οθόνη Επιλογή "
 "Πελάτη."
 
-#: SystemParameters.php:1021
+#: SystemParameters.php:1025
 msgid "Extended Supplier Information"
 msgstr "Εκτεταμένη Πληροφορίες Προμηθευτή"
 
-#: SystemParameters.php:1024 SystemParameters.php:1028
+#: SystemParameters.php:1028 SystemParameters.php:1032
 msgid "Extended Supplier Info Enabled"
 msgstr "Εκτεταμένη Πληροφορίες Προμηθευτή Ενεργοποιήθηκε"
 
-#: SystemParameters.php:1025 SystemParameters.php:1027
+#: SystemParameters.php:1029 SystemParameters.php:1031
 msgid "Extended Supplier Info Disabled"
 msgstr "Εκτεταμένη Πληροφορίες για άτομα με ειδικές ανάγκες Προμηθευτή"
 
-#: SystemParameters.php:1031
+#: SystemParameters.php:1035
 msgid ""
 "This feature will give extended information in the Select Supplier screen."
 msgstr ""
 "Αυτό το χαρακτηριστικό θα δώσει εκτεταμένες πληροφορίες στην οθόνη Επιλογή "
 "Προμηθευτή."
 
-#: SystemParameters.php:1033
+#: SystemParameters.php:1037
 msgid "Prohibit GL Journals to Control Accounts"
 msgstr "Απαγορεύουν GL Περιοδικά για τον Έλεγχο Λογαριασμών"
 
-#: SystemParameters.php:1036 SystemParameters.php:1039
+#: SystemParameters.php:1040 SystemParameters.php:1043
 msgid "Prohibited"
 msgstr "Απαγορευμένες"
 
-#: SystemParameters.php:1037 SystemParameters.php:1040
+#: SystemParameters.php:1041 SystemParameters.php:1044
 msgid "Allowed"
 msgstr "Κατοικίδια"
 
-#: SystemParameters.php:1042
+#: SystemParameters.php:1046
 msgid ""
 "Setting this to prohibited prevents accidentally entering a journal to the "
 "automatically posted and reconciled control accounts for creditors (AP) and "
@@ -36205,11 +36205,11 @@ msgstr ""
 "περιοδικό για την αυτόματη δημοσιεύτηκε και συμπεφωνημένους λογαριασμούς "
 "ελέγχου των πιστωτών (AP) και τους οφειλέτες (AR)"
 
-#: SystemParameters.php:1046
+#: SystemParameters.php:1050
 msgid "Prohibit GL Journals to Periods Prior To"
 msgstr "Απαγορεύουν GL Περιοδικά σε περιόδους προγενέστερες του"
 
-#: SystemParameters.php:1063
+#: SystemParameters.php:1067
 msgid ""
 "This allows all periods before the selected date to be locked from postings. "
 "All postings for transactions dated prior to this date will be posted in the "
@@ -36220,19 +36220,19 @@ msgstr ""
 "χρονολογείται πριν από την ημερομηνία αυτή θα αναρτώνται κατά την περίοδο "
 "μετά την ημερομηνία αυτή."
 
-#: SystemParameters.php:1066
+#: SystemParameters.php:1070
 msgid "Inventory Costing Method"
 msgstr "Απογραφή Κοστολόγηση Μέθοδος"
 
-#: SystemParameters.php:1070 SystemParameters.php:1074
+#: SystemParameters.php:1074 SystemParameters.php:1078
 msgid "Weighted Average Costing"
 msgstr "Μεσοσταθμικό Κοστολόγηση"
 
-#: SystemParameters.php:1071 SystemParameters.php:1073
+#: SystemParameters.php:1075 SystemParameters.php:1077
 msgid "Standard Costing"
 msgstr "Standard Κοστολόγηση"
 
-#: SystemParameters.php:1077
+#: SystemParameters.php:1081
 msgid ""
 "webERP allows inventory to be costed based on the weighted average of items "
 "in stock or full standard costing with price variances reported. The "
@@ -36245,11 +36245,11 @@ msgstr ""
 "χρησιμοποιείται και το γενικό καθολικό καταχωρίσεις που προκύπτουν από τα "
 "τιμολόγια αγοράς και το κλείσιμο αποστολή"
 
-#: SystemParameters.php:1079
+#: SystemParameters.php:1083
 msgid "Auto Issue Components"
 msgstr "Αυτόματη Εξαρτήματα Τεύχος"
 
-#: SystemParameters.php:1089
+#: SystemParameters.php:1093
 msgid ""
 "When items are manufactured it is possible for the components of the item to "
 "be automatically decremented from stock in accordance with the Bill of "
@@ -36259,11 +36259,11 @@ msgstr ""
 "που αυτομάτως decremented από το απόθεμα, σύμφωνα με τον Bill του υλικού "
 "ρύθμιση"
 
-#: SystemParameters.php:1091
+#: SystemParameters.php:1095
 msgid "Prohibit Negative Stock"
 msgstr "Απαγορεύουν Αρνητική Χρηματιστήριο"
 
-#: SystemParameters.php:1101
+#: SystemParameters.php:1105
 msgid ""
 "Setting this parameter to Yes prevents invoicing and the issue of stock if "
 "this would result in negative stock. The stock problem must be corrected "
@@ -36274,11 +36274,11 @@ msgstr ""
 "υλικού πρέπει να διορθωθεί πριν από το τιμολόγιο ή το θέμα επιτρέπεται να "
 "υποστούν επεξεργασία."
 
-#: SystemParameters.php:1104
+#: SystemParameters.php:1108
 msgid "Months of Audit Trail to Retain"
 msgstr "Μήνες Ίχνος να διατηρούν"
 
-#: SystemParameters.php:1105
+#: SystemParameters.php:1109
 msgid ""
 "If this parameter is set to 0 (zero) then no audit trail is retained. An "
 "audit trail is a log of which users performed which additions updates and "
@@ -36289,41 +36289,41 @@ msgstr ""
 "χρήστες που πραγματοποιούνται προσθήκες ενημερώσεις και διαγράφει από τα "
 "αρχεία της βάσης δεδομένων. Το πλήρες SQL διατηρείται"
 
-#: SystemParameters.php:1109
+#: SystemParameters.php:1113
 msgid "Log Severity Level"
 msgstr "Σύνδεση επίπεδο σοβαρότητας"
 
-#: SystemParameters.php:1112 SystemParameters.php:1118
-#: SystemParameters.php:1124 SystemParameters.php:1130
-#: SystemParameters.php:1136
+#: SystemParameters.php:1116 SystemParameters.php:1122
+#: SystemParameters.php:1128 SystemParameters.php:1134
+#: SystemParameters.php:1140
 msgid "Errors Only"
 msgstr "Λάθη Μόνο"
 
-#: SystemParameters.php:1113 SystemParameters.php:1119
-#: SystemParameters.php:1125 SystemParameters.php:1131
+#: SystemParameters.php:1117 SystemParameters.php:1123
+#: SystemParameters.php:1129 SystemParameters.php:1135
 msgid "Errors and Warnings"
 msgstr "Σφάλματα και Προειδοποιήσεις"
 
-#: SystemParameters.php:1114 SystemParameters.php:1120
-#: SystemParameters.php:1126 SystemParameters.php:1132
-#: SystemParameters.php:1138
+#: SystemParameters.php:1118 SystemParameters.php:1124
+#: SystemParameters.php:1130 SystemParameters.php:1136
+#: SystemParameters.php:1142
 msgid "Errors, Warnings and Info"
 msgstr "Σφάλματα, προειδοποιήσεις και Πληροφορίες"
 
-#: SystemParameters.php:1137
+#: SystemParameters.php:1141
 msgid "Errors andWarnings"
 msgstr "Λάθη andWarnings"
 
-#: SystemParameters.php:1142
+#: SystemParameters.php:1146
 msgid "Choose which Status messages to keep in your log file."
 msgstr ""
 "Επιλέξτε το οποίο Status μηνύματα για να κρατήσει στο αρχείο καταγραφής σας."
 
-#: SystemParameters.php:1145
+#: SystemParameters.php:1149
 msgid "Path to log files"
 msgstr "Πορεία σε αρχεία καταγραφής"
 
-#: SystemParameters.php:1146
+#: SystemParameters.php:1150
 msgid ""
 "The path to the directory where the log files will be stored. Note the "
 "apache user must have write permissions on this directory."
@@ -36332,11 +36332,11 @@ msgstr ""
 "να αποθηκεύονται. Σημείωση ο χρήστης apache πρέπει να έχει δικαιώματα "
 "εγγραφής σε αυτόν τον κατάλογο."
 
-#: SystemParameters.php:1150
+#: SystemParameters.php:1154
 msgid "Controlled Items Defined At Work Order Entry"
 msgstr "Ελεγχόμενη στοιχεία που ορίζονται κατά την έναρξη απευθείας εργασίας"
 
-#: SystemParameters.php:1155
+#: SystemParameters.php:1159
 msgid ""
 "When set to yes, controlled items are defined at the time of the work order "
 "creation. Otherwise controlled items (serial numbers and batch/roll/lot "
@@ -36348,11 +36348,11 @@ msgstr ""
 "αριθμοί παρτίδας και / roll / αναφορές παρτίδα) εισήλθαν κατά τη στιγμή του "
 "τελικού στοιχεία λαμβάνονται από την εντολή εργασίας"
 
-#: SystemParameters.php:1158
+#: SystemParameters.php:1162
 msgid "Auto Create Work Orders"
 msgstr "Αυτόματη Δημιουργία εντολών εργασίας"
 
-#: SystemParameters.php:1169
+#: SystemParameters.php:1173
 msgid ""
 "Setting this parameter to Yes will ensure that when a sales order is placed "
 "if there is insufficient stock then a new work order is created at the "
@@ -36363,15 +36363,15 @@ msgstr ""
 "συνέχεια, μια νέα τάξη πραγμάτων έργο έχει δημιουργηθεί στη θέση "
 "προεπιλεγμένη εργοστασιακή"
 
-#: SystemParameters.php:1171
+#: SystemParameters.php:1175
 msgid "Default Factory Location"
 msgstr "Default Τοποθεσία Εργοστάσιο"
 
-#: SystemParameters.php:1175
+#: SystemParameters.php:1179
 msgid "Could not load locations table"
 msgstr "Δεν ήταν δυνατή η φόρτωση θέσεις πίνακα"
 
-#: SystemParameters.php:1184
+#: SystemParameters.php:1188
 msgid ""
 "This location is the location where work orders will be created from when "
 "the auto create work orders option is activated"
@@ -36380,11 +36380,11 @@ msgstr ""
 "στιγμή που η αυτόματη δημιουργία εργασίες επιλογή παραγγελίες είναι "
 "ενεργοποιημένη"
 
-#: SystemParameters.php:1186
+#: SystemParameters.php:1190
 msgid "Factory Manager Email Address"
 msgstr "Εργοστάσιο Διεύθυνση Email Διαχειριστή"
 
-#: SystemParameters.php:1188
+#: SystemParameters.php:1192
 msgid ""
 "Work orders automatically created when sales orders are entered will be "
 "emailed to this address"
@@ -36392,11 +36392,11 @@ msgstr ""
 "εντολών εργασίας δημιουργούνται αυτόματα όταν οι εντολές πώλησης που "
 "εγγράφονται θα αποσταλεί σε αυτή τη διεύθυνση"
 
-#: SystemParameters.php:1190
+#: SystemParameters.php:1194
 msgid "Purchasing Manager Email Address"
 msgstr "Ηλεκτρονική Διεύθυνση Προμηθειών Διευθυντής"
 
-#: SystemParameters.php:1192
+#: SystemParameters.php:1196
 msgid ""
 "The email address for the purchasing manager, used to receive notifications "
 "by the tendering system"
@@ -36404,48 +36404,48 @@ msgstr ""
 "Η διεύθυνση ηλεκτρονικού ταχυδρομείου για το διευθυντή αγορών, "
 "χρησιμοποιείται για να λαμβάνετε ειδοποιήσεις από το σύστημα των διαγωνισμών"
 
-#: SystemParameters.php:1194
+#: SystemParameters.php:1198
 msgid "Inventory Manager Email Address"
 msgstr ""
 
-#: SystemParameters.php:1196
+#: SystemParameters.php:1200
 msgid ""
 "The email address for the inventory manager, where notifications of all "
 "manual stock adjustments created are sent by the system. Leave blank if no "
 "emails should be sent to the factory manager for manual stock adjustments"
 msgstr ""
 
-#: SystemParameters.php:1199
+#: SystemParameters.php:1203
 msgid "Using Smtp Mail"
 msgstr ""
 
-#: SystemParameters.php:1212
+#: SystemParameters.php:1216
 msgid ""
 "The default setting is using mail in default php.ini, if you choose Yes for "
 "this selection, you can use the SMTP set in the setup section."
 msgstr ""
 
-#: SystemParameters.php:1216
+#: SystemParameters.php:1220
 msgid "Text for Quality Product Specification"
 msgstr ""
 
-#: SystemParameters.php:1218
+#: SystemParameters.php:1222
 msgid "This text appears on product specifications"
 msgstr ""
 
-#: SystemParameters.php:1219
+#: SystemParameters.php:1223
 msgid "Text for Quality Product Certifications"
 msgstr ""
 
-#: SystemParameters.php:1221
+#: SystemParameters.php:1225
 msgid "This text appears on product certifications"
 msgstr ""
 
-#: SystemParameters.php:1223
+#: SystemParameters.php:1227
 msgid "Auto Log Quality Samples"
 msgstr ""
 
-#: SystemParameters.php:1236
+#: SystemParameters.php:1240
 msgid ""
 "The flag determines if the system creates quality samples automatically for "
 "each lot during P/O Receipt and W/O Receipt transactions."
@@ -39205,7 +39205,7 @@ msgstr ""
 msgid "Automatic Customer Receipt"
 msgstr ""
 
-#: Z_AutoCustomerAllocations.php:142
+#: Z_AutoCustomerAllocations.php:182
 msgid "Could not insert allocation record"
 msgstr ""
 
