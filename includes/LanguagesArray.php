@@ -1,5 +1,28 @@
 <?php
+/* $Id: LanguagesArray.php 6966 2014-11-06 09:15:09Z daintree $*/
+/* Script to define a set of parameters that defines the user's language, decimal separator and thousands separator. */
+
 $LanguagesArray = array();
+
+$LanguagesArray['ar_EG.utf8']['LanguageName'] = 'مصرى';
+$LanguagesArray['ar_EG.utf8']['WindowsLocale'] = 'arabic';
+$LanguagesArray['ar_EG.utf8']['DecimalPoint'] = ',';
+$LanguagesArray['ar_EG.utf8']['ThousandsSeparator'] = ' ';
+
+$LanguagesArray['cs_CZ.utf8']['LanguageName'] = 'Čeština';
+$LanguagesArray['cs_CZ.utf8']['WindowsLocale'] = 'czech';
+$LanguagesArray['cs_CZ.utf8']['DecimalPoint'] = ',';
+$LanguagesArray['cs_CZ.utf8']['ThousandsSeparator'] = ' ';
+
+$LanguagesArray['de_DE.utf8']['LanguageName'] = 'Deutsch';
+$LanguagesArray['de_DE.utf8']['WindowsLocale'] = 'german';
+$LanguagesArray['de_DE.utf8']['DecimalPoint'] = ',';
+$LanguagesArray['de_DE.utf8']['ThousandsSeparator'] = '.';
+
+$LanguagesArray['el_GR.utf8']['LanguageName'] = 'Ελληνικά';
+$LanguagesArray['el_GR.utf8']['WindowsLocale'] = 'greek';
+$LanguagesArray['el_GR.utf8']['DecimalPoint'] = ',';
+$LanguagesArray['el_GR.utf8']['ThousandsSeparator'] = '.';
 
 $LanguagesArray['en_GB.utf8']['LanguageName'] = 'English United Kingdom';
 $LanguagesArray['en_GB.utf8']['WindowsLocale'] = 'english-uk';
@@ -15,26 +38,6 @@ $LanguagesArray['en_US.utf8']['LanguageName'] = 'English United States';
 $LanguagesArray['en_US.utf8']['WindowsLocale'] = 'english-us';
 $LanguagesArray['en_US.utf8']['DecimalPoint'] = '.';
 $LanguagesArray['en_US.utf8']['ThousandsSeparator'] = ',';
-
-$LanguagesArray['ar_EG.utf8']['LanguageName'] = 'مصرى';
-$LanguagesArray['ar_EG.utf8']['WindowsLocale'] = 'arabic';
-$LanguagesArray['ar_EG.utf8']['DecimalPoint'] = ',';
-$LanguagesArray['ar_EG.utf8']['ThousandsSeparator'] = ' ';
-
-$LanguagesArray['cz_CZ.utf8']['LanguageName'] = 'Čeština';
-$LanguagesArray['cz_CZ.utf8']['WindowsLocale'] = 'czech';
-$LanguagesArray['cz_CZ.utf8']['DecimalPoint'] = ',';
-$LanguagesArray['cz_CZ.utf8']['ThousandsSeparator'] = ' ';
-
-$LanguagesArray['de_DE.utf8']['LanguageName'] = 'Deutsch';
-$LanguagesArray['de_DE.utf8']['WindowsLocale'] = 'german';
-$LanguagesArray['de_DE.utf8']['DecimalPoint'] = ',';
-$LanguagesArray['de_DE.utf8']['ThousandsSeparator'] = '.';
-
-$LanguagesArray['el_GR.utf8']['LanguageName'] = 'Ελληνικά';
-$LanguagesArray['el_GR.utf8']['WindowsLocale'] = 'greek';
-$LanguagesArray['el_GR.utf8']['DecimalPoint'] = ',';
-$LanguagesArray['el_GR.utf8']['ThousandsSeparator'] = '.';
 
 $LanguagesArray['es_ES.utf8']['LanguageName'] = 'Español';
 $LanguagesArray['es_ES.utf8']['WindowsLocale'] = 'spanish';
@@ -66,10 +69,10 @@ $LanguagesArray['hi_IN.utf8']['WindowsLocale'] = 'hindi';
 $LanguagesArray['hi_IN.utf8']['DecimalPoint'] = '.';
 $LanguagesArray['hi_IN.utf8']['ThousandsSeparator'] = ',';
 
-$LanguagesArray['mr_IN.utf8']['LanguageName'] = _('Marathi');
-$LanguagesArray['mr_IN.utf8']['WindowsLocale'] = 'marathi';
-$LanguagesArray['mr_IN.utf8']['DecimalPoint'] = '.';
-$LanguagesArray['mr_IN.utf8']['ThousandsSeparator'] = ',';
+$LanguagesArray['hr_HR.utf8']['LanguageName'] = _('Hrvatski');
+$LanguagesArray['hr_HR.utf8']['WindowsLocale'] = 'croatian';
+$LanguagesArray['hr_HR.utf8']['DecimalPoint'] = ',';
+$LanguagesArray['hr_HR.utf8']['ThousandsSeparator'] = ' ';
 
 $LanguagesArray['hr_HR.utf8']['LanguageName'] = 'Magyar';
 $LanguagesArray['hr_HR.utf8']['WindowsLocale'] = 'hungarian';
@@ -95,6 +98,11 @@ $LanguagesArray['lv_LV.utf8']['LanguageName'] = 'Latviešu';
 $LanguagesArray['lv_LV.utf8']['WindowsLocale'] = 'latvian';
 $LanguagesArray['lv_LV.utf8']['DecimalPoint'] = ',';
 $LanguagesArray['lv_LV.utf8']['ThousandsSeparator'] = '.';
+
+$LanguagesArray['mr_IN.utf8']['LanguageName'] = _('Marathi');
+$LanguagesArray['mr_IN.utf8']['WindowsLocale'] = 'marathi';
+$LanguagesArray['mr_IN.utf8']['DecimalPoint'] = '.';
+$LanguagesArray['mr_IN.utf8']['ThousandsSeparator'] = ',';
 
 $LanguagesArray['nl_NL.utf8']['LanguageName'] = 'Nederlands';
 $LanguagesArray['nl_NL.utf8']['WindowsLocale'] = 'dutch';
