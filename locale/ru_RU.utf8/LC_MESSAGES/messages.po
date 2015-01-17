@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: webERP 4.11.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-17 16:16-0600\n"
+"POT-Creation-Date: 2015-01-17 17:09-0600\n"
 "PO-Revision-Date: 2013-06-01 12:18-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: American English <kde-i18n-doc@kde.org>\n"
@@ -47297,18 +47297,6 @@ msgstr "Начало:"
 #: includes/InputSerialItemsSequential.php:48
 msgid "End:"
 msgstr "Конец:"
-
-#: includes/LanguagesArray.php:67
-msgid "Hindi"
-msgstr ""
-
-#: includes/LanguagesArray.php:72
-msgid "Hrvatski"
-msgstr ""
-
-#: includes/LanguagesArray.php:102
-msgid "Marathi"
-msgstr ""
 
 #: includes/Login.php:7
 msgid "Login as user"

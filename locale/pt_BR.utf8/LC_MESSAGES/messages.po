@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: webERP 4.11.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-17 16:16-0600\n"
+"POT-Creation-Date: 2015-01-17 17:09-0600\n"
 "PO-Revision-Date: 2014-01-28 14:48-0300\n"
 "Last-Translator: gilberto dos santos alves <gsavix@gmail.com>\n"
 "Language-Team: pt-br <gsavix@gmail.com>\n"
@@ -47191,18 +47191,6 @@ msgstr "Início:"
 msgid "End:"
 msgstr "Fim:"
 
-#: includes/LanguagesArray.php:67
-msgid "Hindi"
-msgstr "Hindi"
-
-#: includes/LanguagesArray.php:72
-msgid "Hrvatski"
-msgstr ""
-
-#: includes/LanguagesArray.php:102
-msgid "Marathi"
-msgstr ""
-
 #: includes/Login.php:7
 msgid "Login as user"
 msgstr "Entrar com Usuário"
@@ -50507,6 +50495,9 @@ msgstr "Crédito"
 #: ../webSHOP/includes/session.php:137
 msgid "Bank Transfer"
 msgstr "Banco Transfer."
+
+#~ msgid "Hindi"
+#~ msgstr "Hindi"
 
 #~ msgid "Remmitance Advice"
 #~ msgstr "Aviso de Remessa"
