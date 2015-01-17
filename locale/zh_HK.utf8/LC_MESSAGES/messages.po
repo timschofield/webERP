@@ -5,14 +5,14 @@
 # THIS VERSION FROM http://weberp-china.oicp.net
 msgid ""
 msgstr ""
-"Project-Id-Version: WEBERP3.05 VERSION\n"
+"Project-Id-Version: webERP 4.11.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-16 16:56-0600\n"
+"POT-Creation-Date: 2015-01-17 16:16-0600\n"
 "PO-Revision-Date: 2013-11-25 08:24-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: WebERP Translation Team <web-erp-translation@lists."
 "sourceforge.net>\n"
-"Language: \n"
+"Language: zh_HK\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -982,10 +982,9 @@ msgstr "库"
 #: PcExpenses.php:296 PcExpensesTypeTab.php:171 PcReportTab.php:178
 #: PcTypeTabs.php:164 PricesByCost.php:153 RelatedItemsUpdate.php:154
 #: ReorderLevel.php:298 ReorderLevelLocation.php:73 ReverseGRN.php:397
-#: RevisionTranslations.php:61 SalesCategories.php:509 SecurityTokens.php:94
-#: SecurityTokens.php:103 SecurityTokens.php:120 SelectAsset.php:264
-#: SelectCompletedOrder.php:505 SelectContract.php:147
-#: SelectCreditItems.php:1021 SelectOrderItems.php:1452
+#: SalesCategories.php:509 SecurityTokens.php:94 SecurityTokens.php:103
+#: SecurityTokens.php:120 SelectAsset.php:264 SelectCompletedOrder.php:505
+#: SelectContract.php:147 SelectCreditItems.php:1021 SelectOrderItems.php:1452
 #: SelectOrderItems.php:1614 SelectProduct.php:531 SelectProduct.php:757
 #: SelectQASamples.php:292 SelectQASamples.php:390 SelectSalesOrder.php:560
 #: SelectWorkOrder.php:219 Shipt_Select.php:191 StockClone.php:680
@@ -3710,7 +3709,7 @@ msgstr ""
 #: MRPCalendar.php:315 PO_AuthoriseMyOrders.php:142 Payments.php:932
 #: PcAuthorizeExpenses.php:108 PcAuthorizeExpenses.php:293
 #: PricesByCost.php:223 PurchData.php:758 ReorderLevelLocation.php:140
-#: RevisionTranslations.php:114 SMTPServer.php:122 SecurityTokens.php:97
+#: RevisionTranslations.php:111 SMTPServer.php:122 SecurityTokens.php:97
 #: SelectCreditItems.php:956 SellThroughSupport.php:476 ShopParameters.php:610
 #: StockCostUpdate.php:196 StockReorderLevel.php:111 Stocks.php:1442
 #: SystemParameters.php:1246 UserLocations.php:178 WOSerialNos.php:345
@@ -24095,9 +24094,13 @@ msgstr ""
 msgid "Translations to revise"
 msgstr ""
 
-#: RevisionTranslations.php:62 Stocks.php:1037
-msgid "Long Description"
-msgstr ""
+#: RevisionTranslations.php:61
+msgid "Part Description (short)"
+msgstr "物料描述 (短)"
+
+#: RevisionTranslations.php:62
+msgid "Part Description (long)"
+msgstr "物料描述 (长)"
 
 #: RevisionTranslations.php:63
 msgid "Revised?"
@@ -30652,6 +30655,10 @@ msgid ""
 "This language translation of the item will be used in invoices and credits "
 "to customers who are defined to use this language. The language translations "
 "to maintain here can be configured in the system parameters page"
+msgstr ""
+
+#: Stocks.php:1037
+msgid "Long Description"
 msgstr ""
 
 #: Stocks.php:1335
@@ -45479,11 +45486,15 @@ msgstr "开始:"
 msgid "End:"
 msgstr "完结:"
 
-#: includes/LanguagesArray.php:64
+#: includes/LanguagesArray.php:67
 msgid "Hindi"
 msgstr ""
 
-#: includes/LanguagesArray.php:69
+#: includes/LanguagesArray.php:72
+msgid "Hrvatski"
+msgstr ""
+
+#: includes/LanguagesArray.php:102
 msgid "Marathi"
 msgstr ""
 

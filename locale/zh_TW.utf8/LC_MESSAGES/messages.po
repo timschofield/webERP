@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: webERP 4.11.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-16 16:56-0600\n"
+"POT-Creation-Date: 2015-01-17 16:16-0600\n"
 "PO-Revision-Date: 2014-10-14 14:26+0800\n"
 "Last-Translator: Jiro Akits <akits.tw@yahoo.com.tw>\n"
 "Language-Team: Jiro Akits <akits.tw@yahoo.com.tw>\n"
@@ -988,10 +988,9 @@ msgstr "存貨"
 #: PcExpenses.php:296 PcExpensesTypeTab.php:171 PcReportTab.php:178
 #: PcTypeTabs.php:164 PricesByCost.php:153 RelatedItemsUpdate.php:154
 #: ReorderLevel.php:298 ReorderLevelLocation.php:73 ReverseGRN.php:397
-#: RevisionTranslations.php:61 SalesCategories.php:509 SecurityTokens.php:94
-#: SecurityTokens.php:103 SecurityTokens.php:120 SelectAsset.php:264
-#: SelectCompletedOrder.php:505 SelectContract.php:147
-#: SelectCreditItems.php:1021 SelectOrderItems.php:1452
+#: SalesCategories.php:509 SecurityTokens.php:94 SecurityTokens.php:103
+#: SecurityTokens.php:120 SelectAsset.php:264 SelectCompletedOrder.php:505
+#: SelectContract.php:147 SelectCreditItems.php:1021 SelectOrderItems.php:1452
 #: SelectOrderItems.php:1614 SelectProduct.php:531 SelectProduct.php:757
 #: SelectQASamples.php:292 SelectQASamples.php:390 SelectSalesOrder.php:560
 #: SelectWorkOrder.php:219 Shipt_Select.php:191 StockClone.php:680
@@ -3743,7 +3742,7 @@ msgstr ""
 #: MRPCalendar.php:315 PO_AuthoriseMyOrders.php:142 Payments.php:932
 #: PcAuthorizeExpenses.php:108 PcAuthorizeExpenses.php:293
 #: PricesByCost.php:223 PurchData.php:758 ReorderLevelLocation.php:140
-#: RevisionTranslations.php:114 SMTPServer.php:122 SecurityTokens.php:97
+#: RevisionTranslations.php:111 SMTPServer.php:122 SecurityTokens.php:97
 #: SelectCreditItems.php:956 SellThroughSupport.php:476 ShopParameters.php:610
 #: StockCostUpdate.php:196 StockReorderLevel.php:111 Stocks.php:1442
 #: SystemParameters.php:1246 UserLocations.php:178 WOSerialNos.php:345
@@ -24216,9 +24215,13 @@ msgstr ""
 msgid "Translations to revise"
 msgstr ""
 
-#: RevisionTranslations.php:62 Stocks.php:1037
-msgid "Long Description"
-msgstr ""
+#: RevisionTranslations.php:61
+msgid "Part Description (short)"
+msgstr "物料說明 (短)"
+
+#: RevisionTranslations.php:62
+msgid "Part Description (long)"
+msgstr "物料說明 (長敘述)"
 
 #: RevisionTranslations.php:63
 msgid "Revised?"
@@ -30797,6 +30800,10 @@ msgid ""
 msgstr ""
 "依照客戶的需求，這欄位的摘要的語言將用予發票及單據的備註說明上。而語言的翻譯"
 "可以在系統參數頁面進行設定。可以不填。"
+
+#: Stocks.php:1037
+msgid "Long Description"
+msgstr ""
 
 #: Stocks.php:1335
 msgid "Order multiple. It is the minimum packing quantity."
@@ -45702,11 +45709,15 @@ msgstr "開始:"
 msgid "End:"
 msgstr "完結:"
 
-#: includes/LanguagesArray.php:64
+#: includes/LanguagesArray.php:67
 msgid "Hindi"
 msgstr "印地文"
 
-#: includes/LanguagesArray.php:69
+#: includes/LanguagesArray.php:72
+msgid "Hrvatski"
+msgstr ""
+
+#: includes/LanguagesArray.php:102
 msgid "Marathi"
 msgstr "馬拉地語"
 

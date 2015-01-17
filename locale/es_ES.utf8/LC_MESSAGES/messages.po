@@ -1,14 +1,14 @@
-# webERP - SPANISH Translation File
+# webERP - Spanish Translation File.
 # Copyright (C) 2009 WebERP Team
 # This file is distributed under the same license as the WebERP package.
 # Javier De Lorenzo-Cáceres <info@civicom.eu>, 2009.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: webERP 4.11.3\n"
+"Project-Id-Version: webERP 4.11.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-16 16:56-0600\n"
-"PO-Revision-Date: 2015-01-04 16:48-0600\n"
+"POT-Creation-Date: 2015-01-17 16:16-0600\n"
+"PO-Revision-Date: 2015-01-17 09:03-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -1008,10 +1008,9 @@ msgstr "Existencia"
 #: PcExpenses.php:296 PcExpensesTypeTab.php:171 PcReportTab.php:178
 #: PcTypeTabs.php:164 PricesByCost.php:153 RelatedItemsUpdate.php:154
 #: ReorderLevel.php:298 ReorderLevelLocation.php:73 ReverseGRN.php:397
-#: RevisionTranslations.php:61 SalesCategories.php:509 SecurityTokens.php:94
-#: SecurityTokens.php:103 SecurityTokens.php:120 SelectAsset.php:264
-#: SelectCompletedOrder.php:505 SelectContract.php:147
-#: SelectCreditItems.php:1021 SelectOrderItems.php:1452
+#: SalesCategories.php:509 SecurityTokens.php:94 SecurityTokens.php:103
+#: SecurityTokens.php:120 SelectAsset.php:264 SelectCompletedOrder.php:505
+#: SelectContract.php:147 SelectCreditItems.php:1021 SelectOrderItems.php:1452
 #: SelectOrderItems.php:1614 SelectProduct.php:531 SelectProduct.php:757
 #: SelectQASamples.php:292 SelectQASamples.php:390 SelectSalesOrder.php:560
 #: SelectWorkOrder.php:219 Shipt_Select.php:191 StockClone.php:680
@@ -1955,7 +1954,7 @@ msgstr "M/B"
 #: POReport.php:1315 POReport.php:1366 POReport.php:1420 StockClone.php:668
 #: StockClone.php:692 Stocks.php:1001 Stocks.php:1025
 msgid "Part Description"
-msgstr "Descripción parcial"
+msgstr "Descripción del artículo"
 
 #: BOMExtendedQty.php:338 MRPShortages.php:356
 msgid "Shortage"
@@ -3834,7 +3833,7 @@ msgstr ""
 #: MRPCalendar.php:315 PO_AuthoriseMyOrders.php:142 Payments.php:932
 #: PcAuthorizeExpenses.php:108 PcAuthorizeExpenses.php:293
 #: PricesByCost.php:223 PurchData.php:758 ReorderLevelLocation.php:140
-#: RevisionTranslations.php:114 SMTPServer.php:122 SecurityTokens.php:97
+#: RevisionTranslations.php:111 SMTPServer.php:122 SecurityTokens.php:97
 #: SelectCreditItems.php:956 SellThroughSupport.php:476 ShopParameters.php:610
 #: StockCostUpdate.php:196 StockReorderLevel.php:111 Stocks.php:1442
 #: SystemParameters.php:1246 UserLocations.php:178 WOSerialNos.php:345
@@ -25427,9 +25426,13 @@ msgstr "descripciones"
 msgid "Translations to revise"
 msgstr ""
 
-#: RevisionTranslations.php:62 Stocks.php:1037
-msgid "Long Description"
-msgstr ""
+#: RevisionTranslations.php:61
+msgid "Part Description (short)"
+msgstr "Descripción del artículo (corta)"
+
+#: RevisionTranslations.php:62
+msgid "Part Description (long)"
+msgstr "Descripción del artículo (larga)"
 
 #: RevisionTranslations.php:63
 msgid "Revised?"
@@ -32401,6 +32404,10 @@ msgid ""
 "This language translation of the item will be used in invoices and credits "
 "to customers who are defined to use this language. The language translations "
 "to maintain here can be configured in the system parameters page"
+msgstr ""
+
+#: Stocks.php:1037
+msgid "Long Description"
 msgstr ""
 
 #: Stocks.php:1335
@@ -48481,11 +48488,15 @@ msgstr "Inicio:"
 msgid "End:"
 msgstr "Fin:"
 
-#: includes/LanguagesArray.php:64
+#: includes/LanguagesArray.php:67
 msgid "Hindi"
 msgstr "Hindi"
 
-#: includes/LanguagesArray.php:69
+#: includes/LanguagesArray.php:72
+msgid "Hrvatski"
+msgstr ""
+
+#: includes/LanguagesArray.php:102
 msgid "Marathi"
 msgstr ""
 
@@ -50298,7 +50309,7 @@ msgstr ""
 
 #: reportwriter/languages/en_US/reports.php:220
 msgid "Page Margins"
-msgstr ""
+msgstr "Márgenes de página"
 
 #: reportwriter/languages/en_US/reports.php:221
 msgid "Rename Report"
@@ -50442,7 +50453,7 @@ msgstr ""
 
 #: reportwriter/languages/en_US/reports.php:276
 msgid "Page Number"
-msgstr ""
+msgstr "Número de página"
 
 #: reportwriter/languages/en_US/reports.php:277
 msgid "Uppercase"
