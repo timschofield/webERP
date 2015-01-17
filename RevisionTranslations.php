@@ -58,8 +58,8 @@ $result = DB_query($sql);
 echo '<tr>
 	<th>' . _('Code') . '</th>
 	<th>' . _('Language') . '</th>
-	<th>' . _('Description') . '</th>
-	<th>' . _('Long Description') . '</th>
+	<th>' . _('Part Description (short)') . '</th>
+	<th>' . _('Part Description (long)') . '</th>
 	<th>' . _('Revised?') . '</th>
 </tr>';
 

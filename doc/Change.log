@@ -1,5 +1,6 @@
 webERP Change Log
 
+16/01/15 RChacon: Standardise RevisionTranslations.php's titles to Stocks.php's titles.
 16/01/15 RChacon: Inserts HTML line breaks before all newlines in the default language's long description.
 12/1/15  Exson: Remove redundant code from Prices.php.
 12/1/15 Exson: Fixed bug in Z_AutoCustomerAllocations.php to make it workable.
