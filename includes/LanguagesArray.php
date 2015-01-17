@@ -74,10 +74,10 @@ $LanguagesArray['hr_HR.utf8']['WindowsLocale'] = 'croatian';
 $LanguagesArray['hr_HR.utf8']['DecimalPoint'] = ',';
 $LanguagesArray['hr_HR.utf8']['ThousandsSeparator'] = ' ';
 
-$LanguagesArray['hr_HR.utf8']['LanguageName'] = 'Magyar';
-$LanguagesArray['hr_HR.utf8']['WindowsLocale'] = 'hungarian';
-$LanguagesArray['hr_HR.utf8']['DecimalPoint'] = ',';
-$LanguagesArray['hr_HR.utf8']['ThousandsSeparator'] = ' ';
+$LanguagesArray['hu_HU.utf8']['LanguageName'] = 'Magyar';
+$LanguagesArray['hu_HU.utf8']['WindowsLocale'] = 'hungarian';
+$LanguagesArray['hu_HU.utf8']['DecimalPoint'] = ',';
+$LanguagesArray['hu_HU.utf8']['ThousandsSeparator'] = ' ';
 
 $LanguagesArray['id_ID.utf8']['LanguageName'] = 'Bahasa Indonesia';
 $LanguagesArray['id_ID.utf8']['WindowsLocale'] = 'indonesian';
