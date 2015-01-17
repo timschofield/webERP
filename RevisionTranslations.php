@@ -76,10 +76,10 @@ while($myrow=DB_fetch_array($result)) {
 	}
 
 	echo '<td>' . $myrow['stockid'] . '</td>
-		<td>'. $_SESSION['Language']. '</td>
+		<td>' . $_SESSION['Language']. '</td>
 		<td>' . $myrow['description'] . '</td>
-		<td>' . $myrow['longdescription'] . '</td>
-		</tr>';
+		<td>' . nl2br($myrow['longdescription']) . '</td>
+		<td>&nbsp;</td></tr>';// nl2br: Inserts HTML line breaks before all newlines in a string.
 
 	if($k==1) {
 		echo '<tr class="EvenTableRows">';
@@ -89,21 +89,18 @@ while($myrow=DB_fetch_array($result)) {
 		$k=1;
 	}
 
-	echo '<td></td>
+	echo '<td>&nbsp;</td>
 		<td>' . $myrow['language_id'] . '</td>';
 
-	echo '<td>
-			<input type="text" class="text" name="DescriptionTranslation' . $i .'" maxlength="50" size="52" value="'. $myrow['descriptiontranslation'] .'" />
-		</td>
-		<td>
-			<textarea name="LongDescriptionTranslation' . $i .'" cols="70" rows="5">'. $myrow['longdescriptiontranslation'] .'" </textarea></td>
-		</td>';
+	echo '<td><input class="text" maxlength="50" name="DescriptionTranslation' . $i .'" size="52" type="text" value="'. $myrow['descriptiontranslation'] .'" /></td>
+		<td><textarea name="LongDescriptionTranslation' . $i .'" cols="70" rows="5">'. $myrow['longdescriptiontranslation'] .'" </textarea></td>';
 
-	echo '<td><input type="checkbox" name="Revised' . $i.'" value="1" />
+	echo '<td>
+			<input name="Revised' . $i . '" type="checkbox" value="1" />
+			<input name="StockID' . $i . '" type="hidden" value="' . $myrow['stockid'] . '" />
+			<input name="LanguageID' . $i . '" type="hidden" value="' . $myrow['language_id'] . '" />
 		</td>
 		</tr>';
-	echo '<input type="hidden" value="' . $myrow['stockid'] . '" name="StockID' . $i . '" />
-		<input type="hidden" value="' . $myrow['language_id'] . '" name="LanguageID' . $i . '" />';
 	$i++;
 
 } //end of looping
