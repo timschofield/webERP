@@ -64,12 +64,12 @@ $LanguagesArray['fr_FR.utf8']['WindowsLocale'] = 'french';
 $LanguagesArray['fr_FR.utf8']['DecimalPoint'] = ',';
 $LanguagesArray['fr_FR.utf8']['ThousandsSeparator'] = ' ';
 
-$LanguagesArray['hi_IN.utf8']['LanguageName'] = _('Hindi');
+$LanguagesArray['hi_IN.utf8']['LanguageName'] = 'हिन्दी, हिंदी';
 $LanguagesArray['hi_IN.utf8']['WindowsLocale'] = 'hindi';
 $LanguagesArray['hi_IN.utf8']['DecimalPoint'] = '.';
 $LanguagesArray['hi_IN.utf8']['ThousandsSeparator'] = ',';
 
-$LanguagesArray['hr_HR.utf8']['LanguageName'] = _('Hrvatski');
+$LanguagesArray['hr_HR.utf8']['LanguageName'] = 'Hrvatski';
 $LanguagesArray['hr_HR.utf8']['WindowsLocale'] = 'croatian';
 $LanguagesArray['hr_HR.utf8']['DecimalPoint'] = ',';
 $LanguagesArray['hr_HR.utf8']['ThousandsSeparator'] = ' ';
@@ -99,7 +99,7 @@ $LanguagesArray['lv_LV.utf8']['WindowsLocale'] = 'latvian';
 $LanguagesArray['lv_LV.utf8']['DecimalPoint'] = ',';
 $LanguagesArray['lv_LV.utf8']['ThousandsSeparator'] = '.';
 
-$LanguagesArray['mr_IN.utf8']['LanguageName'] = _('Marathi');
+$LanguagesArray['mr_IN.utf8']['LanguageName'] = 'मराठी';
 $LanguagesArray['mr_IN.utf8']['WindowsLocale'] = 'marathi';
 $LanguagesArray['mr_IN.utf8']['DecimalPoint'] = '.';
 $LanguagesArray['mr_IN.utf8']['ThousandsSeparator'] = ',';
