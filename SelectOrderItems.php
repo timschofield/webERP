@@ -561,7 +561,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	echo '<div class="page_help_text">' . _('Orders/Quotations are placed against the Customer Branch. A Customer may have several Branches.') . '</div>';
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier . '" method="post">
 		 <div>
-			 <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+			 <input name="FormID" type="hidden" value="' . $_SESSION['FormID'] . '" />
 			 <table cellpadding="3" class="selection">
 				<tr>
 				<td>' . _('Part of the Customer Branch Name') . ':</td>
@@ -585,8 +585,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	if (isset($result_CustSelect)) {
 
         echo '<div>
-					<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-					<input type="hidden" name="JustSelectedACustomer" value="Yes" />
+					<input name="FormID" type="hidden" value="' . $_SESSION['FormID'] . '" />
+					<input name="JustSelectedACustomer" type="hidden" value="Yes" />
 					<br />
 					<table class="selection">';
 
@@ -613,8 +613,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 			echo '	<td>' . htmlspecialchars($myrow['name'], ENT_QUOTES, 'UTF-8', false) . '</td>
 					<td><input tabindex="'.strval($j+5).'" type="submit" name="SubmitCustomerSelection' . $j .'" value="' . htmlspecialchars($myrow['brname'], ENT_QUOTES, 'UTF-8', false). '" />
-					<input type="hidden" name="SelectedCustomer' . $j .'" value="'.$myrow['debtorno'].'" />
-					<input type="hidden" name="SelectedBranch' . $j .'" value="'. $myrow['branchcode'].'" /></td>
+					<input name="SelectedCustomer' . $j .'" type="hidden" value="'.$myrow['debtorno'].'" />
+					<input name="SelectedBranch' . $j .'" type="hidden" value="'. $myrow['branchcode'].'" /></td>
 					<td>' . $myrow['contactname'] . '</td>
 					<td>' . $myrow['phoneno'] . '</td>
 					<td>' . $myrow['faxno'] . '</td>
@@ -800,7 +800,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier . '" id="SelectParts" method="post">';
     echo '<div>';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<input name="FormID" type="hidden" value="' . $_SESSION['FormID'] . '" />';
 
 //Get The exchange rate used for GPPercent calculations on adding or amending items
 	if ($_SESSION['Items'.$identifier]->DefaultCurrency != $_SESSION['CompanyRecord']['currencydefault']){
@@ -1278,11 +1278,24 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 /* This is where the order as selected should be displayed  reflecting any deletions or insertions*/
 
+	 	if($_SESSION['Items'.$identifier]->DefaultPOLine ==1) {// Does customer require PO Line number by sales order line?
+			$ShowPOLine=1;// Show one additional column:  'PO Line'.
+		} else {
+			$ShowPOLine=0;// Do NOT show 'PO Line'.
+		}
+
+		if(in_array($_SESSION['PageSecurityArray']['OrderEntryDiscountPricing'], $_SESSION['AllowedPageSecurityTokens'])) {//Is it an internal user with appropriate permissions?
+			$ShowDiscountGP=2;// Show two additional columns: 'Discount' and 'GP %'.
+		} else {
+			$ShowDiscountGP=0;// Do NOT show 'Discount' and 'GP %'.
+		}
+
         echo '<div class="page_help_text">' . _('Quantity (required) - Enter the number of units ordered.  Price (required) - Enter the unit price.  Discount (optional) - Enter a percentage discount.  GP% (optional) - Enter a percentage Gross Profit (GP) to add to the unit cost.  Due Date (optional) - Enter a date for delivery.') . '</div><br />';
 		echo '<br />
 				<table width="90%" cellpadding="2">
 				<tr style="background-color:#800000">';
-		if($_SESSION['Items'.$identifier]->DefaultPOLine == 1){
+/*		if($_SESSION['Items'.$identifier]->DefaultPOLine == 1){*/
+		if($ShowPOLine) {
 			echo '<th>' . _('PO Line') . '</th>';
 		}
 		echo '<th>' . _('Item Code') . '</th>
@@ -1292,12 +1305,14 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				<th>' . _('Unit') . '</th>
 				<th>' . _('Price') . '</th>';
 
-		if (in_array($_SESSION['PageSecurityArray']['OrderEntryDiscountPricing'], $_SESSION['AllowedPageSecurityTokens'])){
+/*		if (in_array($_SESSION['PageSecurityArray']['OrderEntryDiscountPricing'], $_SESSION['AllowedPageSecurityTokens'])){*/
+		if($ShowDiscountGP) {
 			echo '<th>' . _('Discount') . '</th>
 					<th>' . _('GP %') . '</th>';
 		}
 		echo '<th>' . _('Total') . '</th>
-				<th>' . _('Due Date') . '</th></tr>';
+			<th>' . _('Due Date') . '</th>
+			<th>&nbsp;</th></tr>';
 
 		$_SESSION['Items'.$identifier]->total = 0;
 		$_SESSION['Items'.$identifier]->totalVolume = 0;
@@ -1324,16 +1339,17 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 			echo $RowStarter;
             echo '<td>';
-			if($_SESSION['Items'.$identifier]->DefaultPOLine ==1){ //show the input field only if required
-				echo '<input tabindex="1" type="text" name="POLine_' . $OrderLine->LineNumber . '" size="20" maxlength="20" value="' . $OrderLine->POLine . '" title="' . _('Enter the customer\'s purchase order reference if required by the customer') . '" /></td><td>';
+/*			if($_SESSION['Items'.$identifier]->DefaultPOLine ==1){ //show the input field only if required*/
+			if($ShowPOLine) {// Show the input field only if required.
+				echo '<input maxlength="20" name="POLine_' . $OrderLine->LineNumber . '" size="20" title="' . _('Enter the customer\'s purchase order reference if required by the customer') . '" type="text" value="' . $OrderLine->POLine . '" /></td><td>';
 			} else {
-				echo '<input type="hidden" name="POLine_' .	 $OrderLine->LineNumber . '" value="" />';
+				echo '<input name="POLine_' . $OrderLine->LineNumber . '" type="hidden" value="" />';
 			}
 
-			echo '<a target="_blank" href="' . $RootPath . '/StockStatus.php?identifier='.$identifier . '&amp;StockID=' . $OrderLine->StockID . '&amp;DebtorNo=' . $_SESSION['Items'.$identifier]->DebtorNo . '">' . $OrderLine->StockID . '</a></td>
+			echo '<a href="' . $RootPath . '/StockStatus.php?identifier='.$identifier . '&amp;StockID=' . $OrderLine->StockID . '&amp;DebtorNo=' . $_SESSION['Items'.$identifier]->DebtorNo . '" target="_blank">' . $OrderLine->StockID . '</a></td>
 				<td title="' . $OrderLine->LongDescription . '">' . $OrderLine->ItemDescription . '</td>';
 
-			echo '<td><input class="number" tabindex="2" type="text" required="required" name="Quantity_' . $OrderLine->LineNumber . '" size="6" maxlength="8" value="' . locale_number_format($OrderLine->Quantity,$OrderLine->DecimalPlaces) . '" title="' . _('Enter the quantity of this item ordered by the customer') . '" />';
+			echo '<td><input class="number" maxlength="8" name="Quantity_' . $OrderLine->LineNumber . '" required="required" size="6" title="' . _('Enter the quantity of this item ordered by the customer') . '" type="text" value="' . locale_number_format($OrderLine->Quantity,$OrderLine->DecimalPlaces) . '" />';
 			if ($QtyRemain != $QtyOrdered){
 				echo '<br />' . locale_number_format($OrderLine->QtyInv,$OrderLine->DecimalPlaces) .' ' . _('of') . ' ' . locale_number_format($OrderLine->Quantity,$OrderLine->DecimalPlaces).' ' . _('invoiced');
 			}
@@ -1341,16 +1357,18 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					<td class="number">' . locale_number_format($OrderLine->QOHatLoc,$OrderLine->DecimalPlaces) . '</td>
 					<td>' . $OrderLine->Units . '</td>';
 
-				/*OK to display with discount if it is an internal user with appropriate permissions */
-			if (in_array($_SESSION['PageSecurityArray']['OrderEntryDiscountPricing'], $_SESSION['AllowedPageSecurityTokens'])){
-				echo '<td><input class="number" type="text" required="required" name="Price_' . $OrderLine->LineNumber . '" size="16" maxlength="16" value="' . locale_number_format($OrderLine->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces)  . '" title="' . _('Enter the price to charge the customer for this item') . '" /></td>
-					<td><input class="number" type="text" required="required" name="Discount_' . $OrderLine->LineNumber . '" size="5" maxlength="4" value="' . locale_number_format(($OrderLine->DiscountPercent * 100),2) . '" title="' . _('Enter the discount percentage to apply to the price for this item') . '" /></td>
-					<td><input class="number" type="text" required="required" name="GPPercent_' . $OrderLine->LineNumber . '" size="4" maxlength="40" value="' . locale_number_format($OrderLine->GPPercent,2) . '" title="' . _('Enter a gross profit percentage to use as the basis to calculate the price to charge the customer for this line item') . '" /></td>';
+			/*OK to display with discount if it is an internal user with appropriate permissions */
+/*			if (in_array($_SESSION['PageSecurityArray']['OrderEntryDiscountPricing'], $_SESSION['AllowedPageSecurityTokens'])){*/
+			if ($ShowDiscountGP){
+				echo '<td><input class="number" maxlength="16" name="Price_' . $OrderLine->LineNumber . '" required="required" size="16" title="' . _('Enter the price to charge the customer for this item') . '" type="text" value="' . locale_number_format($OrderLine->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces)  . '" /></td>
+					<td><input class="number" maxlength="4" name="Discount_' . $OrderLine->LineNumber . '" required="required" size="5" title="' . _('Enter the discount percentage to apply to the price for this item') . '" type="text" value="' . locale_number_format(($OrderLine->DiscountPercent * 100),2) . '" /></td>
+					<td><input class="number" maxlength="40" name="GPPercent_' . $OrderLine->LineNumber . '" required="required" size="4" value="' . locale_number_format($OrderLine->GPPercent,2) . '" title="' . _('Enter a gross profit percentage to use as the basis to calculate the price to charge the customer for this line item') . '" type="text" /></td>';
 			} else {
 				echo '<td class="number">' . locale_number_format($OrderLine->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
-				echo '<input class="number" type="hidden" name="GPPercent_' . $OrderLine->LineNumber . '" size="4" maxlength="40" value="' . locale_number_format($OrderLine->GPPercent,2) . '" />';
-				echo '<input type="hidden" name="Price_' . $OrderLine->LineNumber . '" value="' . locale_number_format($OrderLine->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '" /></td>';
+				echo '<input class="number" maxlength="40" name="GPPercent_' . $OrderLine->LineNumber . '" size="4" type="hidden" value="' . locale_number_format($OrderLine->GPPercent,2) . '" />';
+				echo '<input name="Price_' . $OrderLine->LineNumber . '" type="hidden" value="' . locale_number_format($OrderLine->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '" /></td>';
 			}
+
 			if ($_SESSION['Items'.$identifier]->Some_Already_Delivered($OrderLine->LineNumber)){
 				$RemTxt = _('Clear Remaining');
 			} else {
@@ -1363,17 +1381,18 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				$_SESSION['Items'.$identifier]->LineItems[$OrderLine->LineNumber]->ItemDue= $LineDueDate;
 			}
 
-			echo '<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ItemDue_' . $OrderLine->LineNumber . '" size="10" maxlength="10" value="' . $LineDueDate . '" /></td>';
+			echo '<td><input alt="' . $_SESSION['DefaultDateFormat'] . '" class="date" maxlength="10" name="ItemDue_' . $OrderLine->LineNumber . '" size="10" type="text" value="' . $LineDueDate . '" /></td>';
 
-			echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier=' . $identifier . '&amp;Delete=' . $OrderLine->LineNumber . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');">' . $RemTxt . '</a></td></tr>';
+			echo '<td rowspan="2"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier=' . $identifier . '&amp;Delete=' . $OrderLine->LineNumber . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');">' . $RemTxt . '</a></td></tr>';
 
 			if ($_SESSION['AllowOrderLineItemNarrative'] == 1){
 				echo $RowStarter;
-				echo '<td colspan="10">' . _('Narrative') . ':<textarea name="Narrative_' . $OrderLine->LineNumber . '" cols="100%" rows="1" title="' . _('Enter any narrative to describe to the customer the nature of the charge for this line') . '" >' . stripslashes(AddCarriageReturns($OrderLine->Narrative)) . '</textarea><br /></td>
+				$varColSpan=8+$ShowPOLine+$ShowDiscountGP;
+				echo '<td colspan="' . $varColSpan . '">' . _('Narrative') . ':<textarea name="Narrative_' . $OrderLine->LineNumber . '" cols="100%" rows="1" title="' . _('Enter any narrative to describe to the customer the nature of the charge for this line') . '" >' . stripslashes(AddCarriageReturns($OrderLine->Narrative)) . '</textarea><br /></td>
 					</tr>';
 			} else {
 				echo '<tr>
-						<td><input type="hidden" name="Narrative" value="" /></td>
+						<td><input name="Narrative" type="hidden" value="" /></td>
 					</tr>';
 			}
 
@@ -1384,14 +1403,16 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		} /* end of loop around items */
 
 		$DisplayTotal = locale_number_format($_SESSION['Items'.$identifier]->total,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
-		if (in_array($_SESSION['PageSecurityArray']['OrderEntryDiscountPricing'], $_SESSION['AllowedPageSecurityTokens'])){
+/*		if (in_array($_SESSION['PageSecurityArray']['OrderEntryDiscountPricing'], $_SESSION['AllowedPageSecurityTokens'])){
 			$ColSpanNumber = 2;
 		} else {
 			$ColSpanNumber = 1;
-		}
+		}*/
+		$varColSpan=1+$ShowPOLine+$ShowDiscountGP;
 		echo '<tr class="EvenTableRows">
 				<td class="number" colspan="6"><b>' . _('TOTAL Excl Tax/Freight') . '</b></td>
-				<td colspan="' . $ColSpanNumber . '" class="number">' . $DisplayTotal . '</td>
+				<td colspan="' . $varColSpan . '" class="number"><b>' . $DisplayTotal . '</b></td>
+				<td colspan="2">' . $ShowDiscountGP . '&nbsp;</td>
 			</tr>
 			</table>';
 
@@ -1417,7 +1438,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	 if ((!isset($_POST['QuickEntry'])
 			AND !isset($_POST['SelectAsset']))){
 
-		echo '<input type="hidden" name="PartSearch" value="' .  _('Yes Please') . '" />';
+		echo '<input name="PartSearch" type="hidden" value="' .  _('Yes Please') . '" />';
 
 		if ($_SESSION['FrequentlyOrderedItems']>0){ //show the Frequently Order Items selection where configured to do so
 
@@ -1516,7 +1537,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td><input class="number" ' . ($i==0 ? 'autofocus="autofocus"':'') . ' tabindex="%s" type="text" required="required" size="6" name="OrderQty%s" value="0" />
-						<input type="hidden" name="StockID%s" value="%s" />
+						<input name="StockID%s" type="hidden" value="%s" />
 						</td>
 						</tr>',
 						$myrow['stockid'],
@@ -1535,7 +1556,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 #end of page full new headings if
 			}
 #end of while loop for Frequently Ordered Items
-			echo '<td style="text-align:center" colspan="8"><input type="hidden" name="SelectingOrderItems" value="1" /><input tabindex="'.strval($j+8).'" type="submit" value="'._('Add to Sales Order').'" /></td></tr>';
+			echo '<td style="text-align:center" colspan="8"><input name="SelectingOrderItems" type="hidden" value="1" /><input tabindex="'.strval($j+8).'" type="submit" value="'._('Add to Sales Order').'" /></td></tr>';
 			echo '</table>';
 		} //end of if Frequently Ordered Items > 0
 		echo '<br /><div class="centre">' . $msg;
@@ -1604,11 +1625,11 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			$j = 1;
 			//echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier . '" method="post" name="orderform">';
             echo '<div>';
-			echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+			echo '<input name="FormID" type="hidden" value="' . $_SESSION['FormID'] . '" />';
 			echo '<table class="table1">';
-			echo '<tr><td colspan="1"><input type="hidden" name="PreviousList" value="'.strval($Offset-1).'" /><input tabindex="'.strval($j+8).'" type="submit" name="Previous" value="'._('Previous').'" /></td>';
-			echo '<td style="text-align:center" colspan="6"><input type="hidden" name="SelectingOrderItems" value="1" /><input tabindex="'.strval($j+9).'" type="submit" value="'._('Add to Sales Order').'" /></td>';
-			echo '<td colspan="1"><input type="hidden" name="NextList" value="'.strval($Offset+1).'" /><input tabindex="'.strval($j+10).'" type="submit" name="Next" value="'._('Next').'" /></td></tr>';
+			echo '<tr><td colspan="1"><input name="PreviousList" type="hidden" value="'.strval($Offset-1).'" /><input tabindex="'.strval($j+8).'" type="submit" name="Previous" value="'._('Previous').'" /></td>';
+			echo '<td style="text-align:center" colspan="6"><input name="SelectingOrderItems" type="hidden" value="1" /><input tabindex="'.strval($j+9).'" type="submit" value="'._('Add to Sales Order').'" /></td>';
+			echo '<td colspan="1"><input name="NextList" type="hidden" value="'.strval($Offset+1).'" /><input tabindex="'.strval($j+10).'" name="Next" type="submit" value="'._('Next').'" /></td></tr>';
 			echo '<tr>
 					<th class="ascending" >' . _('Code') . '</th>
 		   			<th class="ascending" >' . _('Description') . '</th>
@@ -1680,7 +1701,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td><input class="number" tabindex="%s" type="text" size="6" name="OrderQty%s"  ' . ($i==0 ? 'autofocus="autofocus"':'') . ' value="0" min="0"/>
-						<input type="hidden" name="StockID%s" value="%s" />
+						<input name="StockID%s" type="hidden" value="%s" />
 						</td>
 						</tr>',
 						$myrow['stockid'],
@@ -1702,9 +1723,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			}
 	#end of while loop
 			echo '<tr>
-					<td><input type="hidden" name="PreviousList" value="'. strval($Offset-1).'" /><input tabindex="'. strval($j+7).'" type="submit" name="Previous" value="'._('Previous').'" /></td>
-					<td style="text-align:center" colspan="6"><input type="hidden" name="SelectingOrderItems" value="1" /><input tabindex="'. strval($j+8).'" type="submit" value="'._('Add to Sales Order').'" /></td>
-					<td><input type="hidden" name="NextList" value="'.strval($Offset+1).'" /><input tabindex="'.strval($j+9).'" type="submit" name="Next" value="'._('Next').'" /></td>
+					<td><input name="PreviousList" type="hidden" value="'. strval($Offset-1).'" /><input tabindex="'. strval($j+7).'" type="submit" name="Previous" value="'._('Previous').'" /></td>
+					<td style="text-align:center" colspan="6"><input name="SelectingOrderItems" type="hidden" value="1" /><input tabindex="'. strval($j+8).'" type="submit" value="'._('Add to Sales Order').'" /></td>
+					<td><input name="NextList" type="hidden" value="'.strval($Offset+1).'" /><input tabindex="'.strval($j+9).'" name="Next" type="submit" value="'._('Next').'" /></td>
 				</tr>
 				</table>
 				</div>';
@@ -1783,10 +1804,10 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier .
 				'" method="post" name="deleteform">';
             		echo '<div>';
-			echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+			echo '<input name="FormID" type="hidden" value="' . $_SESSION['FormID'] . '" />
 				<br />
 				<div class="centre">
-					<input type="submit" name="CancelOrder" value="' . _('Cancel Whole Order') . '" onclick="return confirm(\'' . _('Are you sure you wish to cancel this entire order?') . '\');" />
+					<input name="CancelOrder" type="submit" value="' . _('Cancel Whole Order') . '" onclick="return confirm(\'' . _('Are you sure you wish to cancel this entire order?') . '\');" />
 				</div>
 				</form>';
 		}

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.11.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-01-17 17:09-0600\n"
-"PO-Revision-Date: 2015-01-17 09:03-0600\n"
+"PO-Revision-Date: 2015-01-19 16:08-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -6981,7 +6981,7 @@ msgstr "Girado a"
 
 #: CounterSales.php:950
 msgid "Amount Paid"
-msgstr "Cantidad Pagada"
+msgstr "Monto pagado"
 
 #: CounterSales.php:951
 msgid ""
@@ -8529,7 +8529,7 @@ msgstr "para omitir este mensaje en el futuro"
 
 #: CustomerAllocations.php:51
 msgid "Amount entered was negative"
-msgstr "Se indicó una cantidad negativa"
+msgstr "Monto ingresado fue negativo"
 
 #: CustomerAllocations.php:51
 msgid "Only positive amounts are allowed"
@@ -8608,7 +8608,7 @@ msgstr "Acción"
 
 #: CustomerAllocations.php:371
 msgid "Amount in customer currency"
-msgstr "Importe en la moneda del cliente"
+msgstr "Monto en la moneda del cliente"
 
 #: CustomerAllocations.php:371 SupplierAllocations.php:443
 msgid "converted into local currency at an exchange rate of"
@@ -9460,7 +9460,7 @@ msgstr "Fecha de transacción"
 #: api/api_xml-rpc.php:2493 api/api_xml-rpc.php:2529 api/api_xml-rpc.php:2575
 #: api/api_xml-rpc.php:2771 api/api_xml-rpc.php:3048
 msgid "Stock ID"
-msgstr "ID de Existencia"
+msgstr "ID de existencia"
 
 #: CustomerPurchases.php:78
 msgid "Transaction No."
@@ -9469,15 +9469,15 @@ msgstr "Transacción No."
 #: CustomerPurchases.php:79 SelectOrderItems.php:696
 #: StockLocTransferReceive.php:343
 msgid "From Location"
-msgstr "Desde Ubicación"
+msgstr "Desde ubicación"
 
 #: CustomerPurchases.php:83
 msgid "Amount of Sale"
-msgstr "Importe de venta"
+msgstr "Monto de la venta"
 
 #: CustomerPurchases.php:109
 msgid "Return to customer selection screen"
-msgstr ""
+msgstr "Volver a la pantalla de selección del cliente"
 
 #: CustomerReceipt.php:8
 msgid "Receipt Entry"
@@ -9575,7 +9575,7 @@ msgstr "Código contable"
 
 #: CustomerReceipt.php:277 CustomerReceipt.php:1139
 msgid "Amount of Receipt"
-msgstr "Importe del Ingreso"
+msgstr "Monto del recibo"
 
 #: CustomerReceipt.php:301
 msgid "Print a Customer Receipt"
@@ -9813,7 +9813,7 @@ msgstr ""
 
 #: CustomerReceipt.php:1145 Payments.php:1132
 msgid "Amount of Discount"
-msgstr "Descuento"
+msgstr "Monto del descuento"
 
 #: CustomerReceipt.php:1146
 msgid "agreed prompt payment discount is"
@@ -10453,7 +10453,7 @@ msgstr "Tipo de transacción"
 
 #: DailyBankTransactions.php:129 DailyBankTransactions.php:131
 msgid "Amount in"
-msgstr "Cantidad en"
+msgstr "Monto en"
 
 #: DailyBankTransactions.php:130 DailyBankTransactions.php:132
 msgid "Running Total"
@@ -22109,7 +22109,7 @@ msgstr "Aceptar y Procesar el Pago"
 
 #: Payments.php:1125
 msgid "Amount of Payment"
-msgstr "Importe del Pago"
+msgstr "Monto del pago"
 
 #: PcAssignCashToTab.php:5
 msgid "Assignment of Cash to Petty Cash Tab"
@@ -23625,7 +23625,7 @@ msgstr "Último pago recibido"
 
 #: PrintCustStatements.php:416
 msgid "Amount received was"
-msgstr "La cantidad recibida fue"
+msgstr "el monto recibido fue"
 
 #: PrintCustStatements.php:421
 msgid "Please make payments to our account:"
@@ -32499,7 +32499,7 @@ msgstr "de otra manera seleccione el contrato de la lista"
 
 #: SuppContractChgs.php:165
 msgid "Amount must be numeric"
-msgstr ""
+msgstr "Monto debe ser numérico"
 
 #: SuppContractChgs.php:165
 msgid "Non zero amount"
@@ -33411,7 +33411,7 @@ msgstr "Asignación de proveedor"
 
 #: SupplierAllocations.php:441 SupplierInvoice.php:861 SupplierInvoice.php:868
 msgid "Amount in supplier currency"
-msgstr "Importe en la moneda del proveedor"
+msgstr "Monto en la moneda del proveedor"
 
 #: SupplierAllocations.php:447
 msgid "Transaction total"

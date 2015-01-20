@@ -1,5 +1,6 @@
 webERP Change Log
 
+20/01/15 RChacon: Add translation for transaction type, script ID, manual references, class="number" to columns.
 20/1/15 Exson: Remove die() function from Suppliers.php which will make adding or updating suppliers' data failed when google map is activated. Reported by Terry.
 17/01/15 RChacon: Fix Czech language code, add info for Croatian language, add the script name and revision number and sort by language code.
 16/01/15 RChacon: Standardise RevisionTranslations.php's titles to Stocks.php's titles.

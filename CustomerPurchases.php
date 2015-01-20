@@ -1,15 +1,19 @@
 <?php
+/* $Id: CustomerPurchases.php 7090 2015-01-20 13:43:08Z daintree $*/
+/* This script is to view the items purchased by a customer. */
+
 include('includes/session.inc');
-$Title = _('Customer Purchases');
+$Title = _('Customer Purchases');// Screen identificator.
+$ViewTopic = 'ARInquiries';// Filename's id in ManualContents.php's TOC.
+/* This help needs to be writing...
+$BookMark = 'CustomerPurchases';// Anchor's id in the manual's html document.*/
 include('includes/header.inc');
 
-if (isset($_GET['DebtorNo'])) {
-	$DebtorNo = $_GET['DebtorNo'];
-} //isset($_GET['DebtorNo'])
-else if (isset($_POST['DebtorNo'])) {
-	$DebtorNo = $_POST['DebtorNo'];
-} //isset($_POST['DebtorNo'])
-else {
+if(isset($_GET['DebtorNo'])) {
+	$DebtorNo = $_GET['DebtorNo'];// Set DebtorNo from $_GET['DebtorNo'].
+} elseif(isset($_POST['DebtorNo'])) {
+	$DebtorNo = $_POST['DebtorNo'];// Set DebtorNo from $_POST['DebtorNo'].
+} else {
 	prnMsg(_('This script must be called with a customer code.'), 'info');
 	include('includes/footer.inc');
 	exit;
@@ -26,9 +30,10 @@ $ErrMsg = _('The customer details could not be retrieved by the SQL because');
 $CustomerResult = DB_query($SQL, $ErrMsg);
 $CustomerRecord = DB_fetch_array($CustomerResult);
 
-echo '<p class="page_title_text">
-		<img src="' . $RootPath . '/css/' . $Theme . '/images/customer.png" title="' . _('Customer') . '" alt="" /> ' . _('Items Purchased by Customer') . ' : ' . $CustomerRecord['name'] . '
-	</p>';
+echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
+	'/images/customer.png" title="' .
+	_('Customer') . '" /> ' .// Icon title.
+	_('Items Purchased by Customer') . '<br />' . $DebtorNo . " - " . $CustomerRecord['name'] . '</p>';// Page title.
 
 $SQL = "SELECT stockmoves.stockid,
 			stockmaster.description,
@@ -90,14 +95,14 @@ else {
 				<td>' . ConvertSQLDate($StockMovesRow['trandate']) . '</td>
 				<td>' . $StockMovesRow['stockid'] . '</td>
 				<td>' . $StockMovesRow['description'] . '</td>
-				<td>' . $StockMovesRow['typename'] . '</td>
-				<td>' . $StockMovesRow['transno'] . '</td>
+				<td>' . _($StockMovesRow['typename']) . '</td>
+				<td class="number">' . $StockMovesRow['transno'] . '</td>
 				<td>' . $StockMovesRow['locationname'] . '</td>
 				<td>' . $StockMovesRow['branchcode'] . '</td>
 				<td class="number">' . locale_number_format($StockMovesRow['price'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				<td class="number">' . locale_number_format(-$StockMovesRow['qty'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				<td class="number">' . locale_number_format((-$StockMovesRow['qty'] * $StockMovesRow['price']), $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-				<td>' . $StockMovesRow['reference'] . '</td>
+				<td class="number">' . $StockMovesRow['reference'] . '</td>
 				<td>' . $StockMovesRow['narrative'] . '</td>
 			</tr>';
 
