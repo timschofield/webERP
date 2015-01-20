@@ -427,7 +427,7 @@ if (isset($_POST['submit'])) {
 			$base_url = 'http://' . MAPS_HOST . '/maps/geo?output=xml' . '&key=' . KEY;
 			$request_url = $base_url . '&q=' . urlencode($address);
 
-			$xml = simplexml_load_string(utf8_encode(file_get_contents($request_url))) or die('url not loading');
+			$xml = simplexml_load_string(utf8_encode(file_get_contents($request_url))) or prnMsg(_('Goole map url not loading'),'warn');
 //			$xml = simplexml_load_file($request_url) or die("url not loading");
 
 			$coordinates = $xml->Response->Placemark->Point->coordinates;
