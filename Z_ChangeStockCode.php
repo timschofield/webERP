@@ -181,9 +181,6 @@ if (isset($_POST['ProcessStockChange'])){
 		ChangeFieldInTable("stockserialmoves", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
 		ChangeFieldInTable("offers", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
 		ChangeFieldInTable("tenderitems", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
-		ChangeFieldInTable("supplierstock", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
-		ChangeFieldInTable("altstock", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
-		ChangeFieldInTable("altstock", "altstock", $_POST['OldStockID'], $_POST['NewStockID'], $db);
 		ChangeFieldInTable("prodspecs", "keyval", $_POST['OldStockID'], $_POST['NewStockID'], $db);
 		ChangeFieldInTable("qasamples", "prodspeckey", $_POST['OldStockID'], $_POST['NewStockID'], $db);
 
