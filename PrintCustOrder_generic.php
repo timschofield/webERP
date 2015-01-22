@@ -215,7 +215,9 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 								stockmaster.decimalplaces
 						FROM bom INNER JOIN stockmaster
 						ON bom.component=stockmaster.stockid
-						WHERE bom.parent='" . $myrow2['stkcode'] . "'";
+						WHERE bom.parent='" . $myrow2['stkcode'] . "'
+                        AND bom.effectiveafter <= '" . date('Y-m-d') . "'
+                        AND bom.effectiveto > '" . date('Y-m-d') . "'";
 				$ErrMsg = _('Could not retrieve the components of the ordered assembly item');
 				$AssemblyResult = DB_query($sql,$ErrMsg);
 				$LeftOvers = $pdf->addTextWrap($XPos,$YPos,150,$FontSize, _('Assembly Components:-'));

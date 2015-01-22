@@ -881,8 +881,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 							bom.quantity
 							FROM bom
 							WHERE bom.parent='" . $NewItem . "'
-							AND bom.effectiveto > '" . Date('Y-m-d') . "'
-							AND bom.effectiveafter < '" . Date('Y-m-d') . "'";
+                            AND bom.effectiveafter <= '" . date('Y-m-d') . "'
+                            AND bom.effectiveto > '" . date('Y-m-d') . "'";
 
 					$ErrMsg =  _('Could not retrieve kitset components from the database because') . ' ';
 					$KitResult = DB_query($sql,$ErrMsg,$DbgMsg);
@@ -1166,8 +1166,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 							bom.quantity
 						FROM bom
 						WHERE bom.parent='" . $NewItem . "'
-						AND bom.effectiveto > '" . Date('Y-m-d') . "'
-						AND bom.effectiveafter < '" . Date('Y-m-d') . "'";
+                        AND bom.effectiveafter <= '" . date('Y-m-d') . "'
+                        AND bom.effectiveto > '" . date('Y-m-d') . "'";
 
 				$ErrMsg = _('Could not retrieve kitset components from the database because');
 				$KitResult = DB_query($sql,$ErrMsg);
@@ -1215,8 +1215,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 										bom.quantity
 								FROM bom
 								WHERE bom.parent='" . $NewItem . "'
-								AND bom.effectiveto > '" . Date('Y-m-d') . "'
-								AND bom.effectiveafter < '" . Date('Y-m-d') . "'";
+                                AND bom.effectiveafter <= '" . date('Y-m-d') . "'
+                                AND bom.effectiveto > '" . date('Y-m-d') . "'";
 
 						$ErrMsg = _('Could not retrieve kitset components from the database because');
 						$KitResult = DB_query($sql,$ErrMsg);
