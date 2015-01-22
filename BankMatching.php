@@ -1,13 +1,11 @@
 <?php
-
 /* $Id$*/
+/* This script allows payments and receipts to be matched off against bank statements. */
 
 include('includes/session.inc');
-$Title = _('Bank Account Matching');
-
-$ViewTopic = 'GeneralLedger';
-$BookMark = 'BankMatching';
-
+$Title = _('Bank Matching');// Screen identificator.
+$ViewTopic = 'GeneralLedger';// Filename's id in ManualContents.php's TOC.
+$BookMark = 'BankMatching';// Filename's id in ManualContents.php's TOC.
 include('includes/header.inc');
 
 if ((isset($_GET['Type']) AND $_GET['Type']=='Receipts')
@@ -15,18 +13,20 @@ if ((isset($_GET['Type']) AND $_GET['Type']=='Receipts')
 
 	$Type = 'Receipts';
 	$TypeName =_('Receipts');
-	echo '<p class="page_title_text">
-			<img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . _('Bank Matching') . '" alt="" />' . ' ' . _('Bank Account Matching - Receipts') . '
-		</p>';
+	echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
+		'/images/bank.png" title="' .
+		_('Bank Matching') . '" /> ' .// Icon title.
+		_('Bank Account Matching - Receipts') . '</p>';// Page title.
 
 } elseif ((isset($_GET['Type']) AND $_GET['Type']=='Payments')
 			OR (isset($_POST['Type']) AND $_POST['Type']=='Payments')) {
 
 	$Type = 'Payments';
 	$TypeName =_('Payments');
-	echo '<p class="page_title_text">
-			<img src="'.$RootPath.'/css/'.$Theme.'/images/money_delete.png" title="' . _('Bank Matching') . '" alt="" />' . ' ' . _('Bank Account Matching - Payments') . '
-		</p>';
+	echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
+		'/images/bank.png" title="' .
+		_('Bank Matching') . '" /> ' .// Icon title.
+		_('Bank Account Matching - Payments') . '</p>';// Page title.
 
 } else {
 

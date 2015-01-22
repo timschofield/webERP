@@ -1,20 +1,20 @@
 <?php
-
 /* $Id$*/
+/* This script displays the bank reconciliation for a selected bank account. */
 
-include ('includes/session.inc');
-
-$Title = _('Bank Reconciliation');
-
-$ViewTopic= 'GeneralLedger';
-$BookMark = 'BankAccounts';
-
+include('includes/session.inc');
+$Title = _('Bank Reconciliation');;// Screen identificator.
+$ViewTopic= 'GeneralLedger';// Filename's id in ManualContents.php's TOC.
+$BookMark = 'BankAccounts';// Anchor's id in the manual's html document.
 include('includes/header.inc');
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
+echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
+	'/images/bank.png" title="' .
+	_('Bank Reconciliation') . '" /> ' .// Icon title.
+	_('Bank Reconciliation') . '</p>';// Page title.
 
 if (isset($_GET['Account'])) {
 	$_POST['BankAccount']=$_GET['Account'];
@@ -99,8 +99,8 @@ if (isset($_POST['PostExchangeDifference']) AND is_numeric(filter_number_format(
 
 echo '<table class="selection">';
 
-$SQL = "SELECT bankaccounts.accountcode, 
-				bankaccounts.bankaccountname 
+$SQL = "SELECT bankaccounts.accountcode,
+				bankaccounts.bankaccountname
 		FROM bankaccounts, bankaccountusers
 		WHERE bankaccounts.accountcode=bankaccountusers.accountcode
 			AND bankaccountusers.userid = '" . $_SESSION['UserID'] ."'

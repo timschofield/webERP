@@ -183,4 +183,9 @@ CREATE TABLE IF NOT EXISTS `suppliercontacts` (
 
 ALTER TABLE `suppliercontacts`
   ADD CONSTRAINT `suppliercontacts_ibfk_1` FOREIGN KEY (`supplierid`) REFERENCES `suppliers` (`supplierid`);
+
+-- Add a description for the script:
+UPDATE `scripts` SET `description` = 'Allows you to view all bank transactions for a selected date range, and the inquiry can be filtered by matched or unmatched transactions, or all transactions can be chosen' WHERE `scripts`.`script` = 'DailyBankTransactions.php';
+
+
 UPDATE config SET confvalue='4.12' WHERE confname='VersionNumber';

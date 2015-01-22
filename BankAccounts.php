@@ -1,15 +1,17 @@
 <?php
-
 /* $Id$*/
+/* This script defines the general ledger code for bank accounts and specifies that bank transactions be created for these accounts for the purposes of reconciliation. */
 
 include('includes/session.inc');
-
-$Title = _('Bank Accounts Maintenance');
-$ViewTopic= 'GeneralLedger';
-$BookMark = 'BankAccounts';
+$Title = _('Bank Accounts');// Screen identificator.
+$ViewTopic= 'GeneralLedger';// Filename's id in ManualContents.php's TOC.
+$BookMark = 'BankAccounts';// Anchor's id in the manual's html document.
 include('includes/header.inc');
+echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
+	'/images/bank.png" title="' .
+	_('Bank') . '" /> ' .// Icon title.
+	_('Bank Accounts Maintenance') . '</p>';// Page title.
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . _('Bank') . '" alt="" />' . ' ' . $Title . '</p>';
 echo '<div class="page_help_text">' . _('Update Bank Account details.  Account Code is for SWIFT or BSB type Bank Codes.  Set Default for Invoices to Currency Default  or Fallback Default to print Account details on Invoices (only one account should be set to Fall Back Default).') . '.</div><br />';
 
 if (isset($_GET['SelectedBankAccount'])) {
