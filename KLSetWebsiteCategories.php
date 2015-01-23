@@ -142,69 +142,75 @@ if (DB_num_rows($result) != 0){
 			}
 			UpdateVolume($myrow['stockid'], $Volume, $UpdateDB, $db);
 		}
-		// si tenim foto seguim endavant, sino no el publiquem a la website
-		if(file_exists($_SESSION['part_pics_dir'] . '/' .$myrow['stockid'].'.jpg') ) {
+		// si tenim descripció prou llarga
+		if (strlen($myrow['description']) > 2){
+			// si tenim foto seguim endavant, sino no el publiquem a la website
+			if(file_exists($_SESSION['part_pics_dir'] . '/' .$myrow['stockid'].'.jpg') ) {
 
-			// Mirar si pertany a super categoria ON SPECIAL. Si està en DISCOUNT, Només pot estar a on SPECIAL, per a no mesclar...
-			$WebsiteCategory = WebsiteCategoryDiscount($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
-			if ($WebsiteCategory > 0){
-				DeleteWebsiteSalesCategories($myrow['stockid'], $UpdateDB, $db);
-				InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $FeaturedAsTopSales, $UpdateDB, $db);
-				$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
-				$ItemsAdded++;
-			}else{
-				// Mirar si pertany a super categoria SILVER
-				$WebsiteCategory = WebsiteCategorySilverJewellery($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
+				// Mirar si pertany a super categoria ON SPECIAL. Si està en DISCOUNT, Només pot estar a on SPECIAL, per a no mesclar...
+				$WebsiteCategory = WebsiteCategoryDiscount($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
 				if ($WebsiteCategory > 0){
+					DeleteWebsiteSalesCategories($myrow['stockid'], $UpdateDB, $db);
 					InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $FeaturedAsTopSales, $UpdateDB, $db);
 					$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
 					$ItemsAdded++;
 				}else{
-					// Mirar si pertany a super categoria FASHION JEWELLERY
-					$WebsiteCategory = WebsiteCategoryFashionJewellery($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
+					// Mirar si pertany a super categoria SILVER
+					$WebsiteCategory = WebsiteCategorySilverJewellery($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
 					if ($WebsiteCategory > 0){
 						InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $FeaturedAsTopSales, $UpdateDB, $db);
 						$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
 						$ItemsAdded++;
 					}else{
-						// Mirar si pertany a super categoria STAINLESS STEEL
-						$WebsiteCategory = WebsiteCategoryStainlessSteel($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
+						// Mirar si pertany a super categoria FASHION JEWELLERY
+						$WebsiteCategory = WebsiteCategoryFashionJewellery($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
 						if ($WebsiteCategory > 0){
 							InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $FeaturedAsTopSales, $UpdateDB, $db);
 							$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
 							$ItemsAdded++;
 						}else{
-							// Mirar si pertany a super categoria LEATHER RICARD DESACTIVATED 20/10/2014
-							// $WebsiteCategory = WebsiteCategoryLeatherJewellery($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
-							// Mirar si pertany a super categoria CLASSIC
-							$WebsiteCategory = WebsiteCategoryClassic($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
+							// Mirar si pertany a super categoria STAINLESS STEEL
+							$WebsiteCategory = WebsiteCategoryStainlessSteel($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
 							if ($WebsiteCategory > 0){
 								InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $FeaturedAsTopSales, $UpdateDB, $db);
 								$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
 								$ItemsAdded++;
 							}else{
-								// Mirar si pertany a super categoria BAGS
-								$WebsiteCategory = WebsiteCategoryBags($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
+								// Mirar si pertany a super categoria LEATHER RICARD DESACTIVATED 20/10/2014
+								// $WebsiteCategory = WebsiteCategoryLeatherJewellery($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
+								// Mirar si pertany a super categoria CLASSIC
+								$WebsiteCategory = WebsiteCategoryClassic($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
 								if ($WebsiteCategory > 0){
 									InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $FeaturedAsTopSales, $UpdateDB, $db);
 									$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
 									$ItemsAdded++;
 								}else{
-									// Mirar si pertany a super categoria WORLD BRANDS
-									$WebsiteCategory = WebsiteCategoryWorldBrandJewellery($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
+									// Mirar si pertany a super categoria BAGS
+									$WebsiteCategory = WebsiteCategoryBags($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
 									if ($WebsiteCategory > 0){
 										InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $FeaturedAsTopSales, $UpdateDB, $db);
 										$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
 										$ItemsAdded++;
+									}else{
+										// Mirar si pertany a super categoria WORLD BRANDS
+										$WebsiteCategory = WebsiteCategoryWorldBrandJewellery($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
+										if ($WebsiteCategory > 0){
+											InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $FeaturedAsTopSales, $UpdateDB, $db);
+											$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
+											$ItemsAdded++;
+										}
 									}
 								}
 							}
 						}
 					}
 				}
+			}else{
+				$WebsiteDescription = 'NO PICTURE';
+				$WebsiteCategory = 0;
 			}
 		}else{
-			$WebsiteDescription = 'NO PICTURE';
+			$WebsiteDescription = 'NO DESCRIPTION';
 			$WebsiteCategory = 0;
 		}
 		if ($WebsiteCategory < 0){

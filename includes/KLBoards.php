@@ -6827,6 +6827,7 @@ function ItemsNeedingAutomaticTranslation($RootPath, $db){
 			FROM stockmaster, stockdescriptiontranslations
 			WHERE stockmaster.stockid = stockdescriptiontranslations.stockid
 				AND stockmaster.discontinued = 0
+				AND LENGTH(stockmaster.description) > 2
 				AND (descriptiontranslation = ''
 					OR longdescriptiontranslation = '')";
 	$result = DB_query($SQL);
