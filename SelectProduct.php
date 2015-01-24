@@ -154,7 +154,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 									ON bom.component=stockmaster.stockid
 									WHERE bom.parent='" . $StockID . "'
                                     AND bom.effectiveafter <= '" . date('Y-m-d') . "'
-                                    AND bom.effectiveto > '" . date('Y-m-d') . "'";
+                                    AND bom.effectiveto > '" . date('Y-m-d') . "'");
 			$CostRow = DB_fetch_row($CostResult);
 			$Cost = $CostRow[0];
 		} else {
@@ -185,7 +185,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 									ON bom.component=stockmaster.stockid
 									WHERE bom.parent = '" . $StockID . "'
                                     AND bom.effectiveafter <= '" . date('Y-m-d') . "'
-                                    AND bom.effectiveto > '" . date('Y-m-d') . "'";
+                                    AND bom.effectiveto > '" . date('Y-m-d') . "'");
 			$CostRow = DB_fetch_row($CostResult);
 			$Cost = $CostRow[0];
 		} else {
