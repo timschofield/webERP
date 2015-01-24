@@ -13,7 +13,7 @@ if (isset($_POST['submit'])) {
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
 function submit(&$db, $RootPath, $Location) {
 
-	$WhereLocation 	= " AND workorders.loccode >= '". $Location ."' ";
+	$WhereLocation 	= " AND workorders.loccode = '". $Location ."' ";
 	
 	$sql = "SELECT woitems.wo,
 				woitems.stockid,
