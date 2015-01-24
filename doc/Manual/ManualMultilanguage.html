@@ -8,8 +8,7 @@
     <li><a href="http://lists.sourceforge.net/lists/listinfo/web-erp-translation">Join the mailing list here</a><br>
     Let the list know you're wanting to help with a translation - someone may already be working on it.</li>
 
-    <li>Obtain the latest messages.po file and enter the translations using your favourite editor (or poedit). The latest messages.po file is included with the latest archive:<br>
-    www_root/webERP/locale/en_GB/LC_MESSAGES/message.po&lt; br /&gt; Edit the file provided entering the translations for the strings labelled msgid in the string labelled msgstr. Watch for html strings embedded inside the strings the html will also be required in the translated string. Also be sure to ensure that each translated string is enclosed in speech marks ("). Please also complete the translation file header information - with your details so that you are accorded proper recognition for your contribution.</li>
+    <li>Obtain the latest messages.po file and enter the translations using your favourite editor (or poedit). The latest messages.po file is included with the latest archive:<br />www_root/webERP/locale/en_GB/LC_MESSAGES/message.po<br />Edit the file provided entering the translations for the strings labelled msgid in the string labelled msgstr. Watch for html strings embedded inside the strings the html will also be required in the translated string. Also be sure to ensure that each translated string is enclosed in speech marks ("). Please also complete the translation file header information - with your details so that you are accorded proper recognition for your contribution.</li>
 </ol>
 
 <p>It is especially important to ensure that the string "ISO-8859-1" (at the time of writing around line 19400 in the messages.po file) is translated to be the character set that you wish your translation to use. webERP uses the translated string here to send appropriate html headers so your browser knows how to interpret the characters sent.</p>
@@ -24,6 +23,7 @@
     <a class="minitext" href="#top">⬆ Top</a>
 </div>
 
+<!-- Help BEGIN: TechnicalOverview -->
 <h2>Technical Overview</h2>
 
 <h3>How is it Done</h3>
@@ -34,29 +34,24 @@
 
 <p>New directories will need to be made up if a translator wishes to have a local version for their language. Under the locale directory the five character locale abbreviation code directory there is a further sub-directory called LC_MESSAGES - this is where the translation files exist. There are two files in each of these directories:</p>
 
-<p></p>
-
 <ol>
-    <li>messages.po this file contains all the strings to be translated. This is the only file of concern for translators</li>
-
-    <li>messages.mo this is a binary machine searchable translation file used by gettext. The .mo file is automatically produced by a gettext utility (msgfmt.exe or msgfmt in *nix) using the messages.po file (the syntax from a command window is msgfmt.exe messages.po). The main effort is required to get the .po file translated - the .mo file is easily and happily created by the webERP project admin if required.</li>
+    <li><b>messages.po</b>. This file contains all the strings to be translated. This is the only file of concern for translators</li>
+    <li><b>messages.mo</b>. This is a binary machine searchable translation file used by gettext. The .mo file is automatically produced by a gettext utility (msgfmt.exe or msgfmt in *nix) using the messages.po file (the syntax from a command window is msgfmt.exe messages.po). The main effort is required to get the .po file translated - the .mo file is easily and happily created by the webERP project admin if required.</li>
 </ol>
 
-<p>Any text editor can be used to edit the .po file (GNU Emacs contains specific functionality for editing .po files there is a special PO-Mode) - there is also a utility called poedit which is often recommended by translators.</p>
-
-<p></p>
+<p>Any text editor can be used to edit the .po file (GNU Emacs contains specific functionality for editing .po files there is a special PO-Mode) - there is also a utility called <a href="http://poedit.net/" target="_blank">Poedit - Gettext Translations Editor</a> which is often recommended by translators.</p>
 
 <h3>Understanding the messages.po File</h3>
 
-<p>The translation is performed by tranlating the strings in the messages.po file into the other language. It is important to work on the most recent messages.po file from the locale/en_GB/LC_MESSAGES/ deirectory in the CVS. This can be downloaded from http://web-erp.cvs.sourceforge.net/viewvc/*checkout*/web-erp/webERP/locale/en_GB/LC_MESSAGES/messages.po</p>
+<p>The translation is performed by translating the strings in the messages.po file into the other language. It is important to work on the most recent messages.po file from the locale/en_GB/LC_MESSAGES/ directory in the CVS. This can be downloaded from http://web-erp.cvs.sourceforge.net/viewvc/*checkout*/web-erp/webERP/locale/en_GB/LC_MESSAGES/messages.po</p>
 
 <p>The messages.po is made up of sections</p>
 
-<p>eg. for a French translation file</p>
+<p>E.g. for a French translation file</p>
 
 <p>#: AccountGroups.php:8 index.php:890<br>
 msgid "An example string in English that needs to be translated"<br>
-msgstr="Une corde d'exemple dans le ce anglais doit &#234;tre traduite "</p>
+msgstr="Une chaîne d'exemple en anglais qui doit &#234;tre traduite"</p>
 
 <p>the line #: AccountGroups.php:8 index.php:890<br>
 means that the string following is used in the AccountGroups.php script on line 8 and the index.php script on line 890. It could be useful to understand the context of where the script is used. Strings that are used several times throughout the application only need to be translated once. In some cases the #: line showing where the string is used can be quite an extensive list of scripts.<br></p>
@@ -66,13 +61,26 @@ this line is the english string which is to be substituted by the text in msgstr
 
 <p>The effort of the translation is to edit the messages.po file and enter the language translation within the inverted commas of the msgstr.</p>
 
+<h3><a id="IndianNumberingSystem">Indian Numbering System</a></h3>
+
+<p>Many people in India speak English but want to see numbers formatted in Indian Numbering System. The Indian Numbering System uses separators differently from the Arabic Numbering System; besides the three least significant digits of the integer part, a comma divides every two rather than every three digits, thus:</p>
+
+<ul>
+	<li>Arabic Numbering System: 1,234,567,890</li>
+	<li>Indian Numbering System: 1,23,45,67,890</li>
+</ul>
+
+<p>Having a record in the LanguagesArray.php and an empty folder under ~/locale/en_IN.utf8 allows us to have English (British) language --no strings translated as there is no matching strings in a messages.mo-- but the number format in Indian Numbering System. See <a href="ManualContents.php?ViewTopic=NewScripts#MiscFunctions">MiscFunctions.php</a> in Manual, New Scripts, Directory Structure.</p>
+
 <div class="floatright">
     <a class="minitext" href="#top">⬆ Top</a>
 </div>
+<!-- Help END: TechnicalOverview -->
+
 
 <h2>The .po File Header</h2>
 
-<h4>The .po file starts with some initial comments which should also be completed</h4>
+<p>The .po file starts with some initial comments which should also be completed</p>
 
 <p>"SOME DESCRIPTIVE TITLE", - should be replaced with <b><i>webERP - LANGUAGE Translation File</i></b> - where LANGUAGE is the language being translated into<br>
 # FIRST AUTHOR , YEAR. - should be your name and email address - with the year of the work being done</p>
@@ -104,7 +112,7 @@ this line is the english string which is to be substituted by the text in msgstr
 
     <li>ISO-8859-5 for Macedonian, Serbian,</li>
 
-    <li>ISO-8859-6 for Arabic,&lt;&lt;/li&gt;</li>
+    <li>ISO-8859-6 for Arabic,</li>
 
     <li>ISO-8859-7 for Greek,</li>
 

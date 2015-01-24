@@ -156,17 +156,13 @@
     <a class="minitext" href="#top">⬆ Top</a>
 </div>
 
-<h3>MiscFunctions.php</h3>
+<h3><a id="MiscFunctions">MiscFunctions.php</a></h3>
 
 <p>This script holds miscellaneous functions:</p>
 
-<ul>
-    <li><i>TableRows</i> - Outputs the table row html tag ("<i>&lt;tr&gt;</i>") with the class to format the table row ("<i>OddTableRows</i>" or "<i>EvenTableRows</i>") and returns the row  counter to determine background colour updated. It requires that the Row counter to determine background colour is initialised before using this function.<br />
-    Example:<br />
-    <code>
-	$k = False;// Row counter to determine background colour.<br />
-	...<br />
-	$k = TableRows($k);// Outputs html table row with class (Odd|Even).
-	</code>
-	</li>
-</ul>
+<dl>
+
+    <dt>locale_number_format($Number, $DecimalPlaces=0)</dt>
+    <dd>Displays numbers in locale of the user. See <a href="ManualContents.php?ViewTopic=Multilanguage#IndianNumberingSystem">Indian Numbering System</a> in Manual, Multilanguage, Technical Overview.</dd>
+
+</dl>

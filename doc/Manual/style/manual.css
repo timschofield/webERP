@@ -4,89 +4,115 @@
  *
  */
 body {
-font-family:"Ubuntu", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
-font-size:.85em;
-color:#0000;
-font-weight:lighter;
+	color:#000;
+	font-family:"Ubuntu", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+	font-size:.85em;
+	font-weight:lighter;
 }
 
 img {
-border:none;
-width:50%;
+	border:none;
+	width:50%;
 }
 
 #pagetitle {
-font-weight:400;
-font-size:330%;
-text-align:center;
-color:#066307;
-background:#6BA81E;
-text-shadow:1px 1px #A9BD55;
-border-radius: 5px;
+	background:#6BA81E;
+	border-radius:5px;
+	color:#066307;
+	font-size:330%;
+	font-weight:400;
+	text-align:center;
+	text-shadow:1px 1px #A9BD55;
 }
 
 h1,h2,h3,h4,h1 a,h2 a,h3 a,h4 a {
-font-weight:400;
+	font-weight:400;
 }
 
 h1 {
-color:#0D1F54;
-background:#BED4EB;
-text-shadow:1px 1px #293EF5;
-padding:10px;
-margin:1%;
-border-radius: 5px;
+	background:#BED4EB;
+	border-radius:5px;
+	color:#0D1F54;
+	margin:1%;
+	padding:10px;
+	text-shadow:1px 1px #293EF5;
 }
 
 h2 {
-color:#0D1F54;
-background:#C8D5E3;
-padding:8px 8px 8px 20px;
-margin-left:1%;
-margin-right:1%;
-border-radius: 5px;
+	background:#C8D5E3;
+	border-radius:5px;
+	color:#0D1F54;
+	margin-left:1%;
+	margin-right:1%;
+	padding:8px 8px 8px 20px;
 }
 
 h3 {
-color:#0D1F54;
-background:#E1E6EC;
-padding:8px 8px 8px 30px;
-margin-left:1%;
-margin-right:1%;
-border-radius: 5px;
+	background:#E1E6EC;
+	border-radius:5px;
+	color:#0D1F54;
+	margin-left:1%;
+	margin-right:1%;
+	padding:6px 6px 6px 30px;
+}
+
+h4 {
+	background:#F2EFEC;
+	border-radius:5px;
+	color:#0D1F54;
+	margin-left:1%;
+	margin-right:1%;
+	padding:4px 4px 4px 40px;
+	/* Heading level 4 format. */
 }
 
 a {
-text-decoration:none;
+	text-decoration:none;
 }
 
 a:hover {
-color:#03c;
-}
-
-.right {
-text-align:right;
+	color:#03c;
 }
 
 .floatright {
-float:right;
+	float:right;
 }
 
 .left {
-text-align:left;
+	text-align:left;
 }
 
 .minitext {
-margin-right:1%;
-font-size:80%;
+	margin-right:1%;
+	font-size:80%;
+}
+
+.right {
+	text-align:right;
+}
+
+dl {
+	margin-left:2%;
+	/* Description list format. */
+}
+
+dt {
+	font-weight:bold;
+	/* Description list terms format. */	
+}
+
+dd {
+	/* Description list descriptions format. */	
 }
 
 li.toc {
-color:#03c;
+	color:#03c;
 }
+
 input[type=checkbox] {
-	visibility: hidden;
+	visibility:hidden;
 }
+
 p {
-margin-left: 2%;
+	margin-left:2%;
 }

@@ -1,16 +1,15 @@
 <?php
-
 /* $Id$ */
 
 /* Set internal character encoding to UTF-8 */
 mb_internal_encoding('UTF-8');
 
 /* This file is included in session.inc or PDFStarter.php or a report script that does not use PDFStarter.php
-to check for the existance of gettext function and setup the necessary enviroment to allow for automatic translation
+to check for the existence of gettext function and setup the necessary environment to allow for automatic translation
 
 Set language - defined in config.php or user variable when logging in (session.inc)
 NB this language must also exist in the locale on the web-server
-normally the lower case two character country code underscore uppercase
+normally the lower case two character language code underscore uppercase
 2 character country code does the trick  except for en !!*/
 
 
@@ -26,18 +25,18 @@ If (isset($_POST['Language'])) {
 //Check users' locale format via their language
 //Then pass this information to the js for number validation purpose
 
-$Collect = array('US'=> array('en_US.utf8','en_GB.utf8','ja_JP.utf8','hi_IN.utf8','mr_IN.utf8','sw_KE.utf8','tr_TR.utf8','vi_VN.utf8','zh_CN.utf8','zh_HK.utf8','zh_TW.utf8'),
-	'IN'=>array('en_IN.utf8'),
+$Collect = array(
+	'US'=>array('en_US.utf8','en_GB.utf8','ja_JP.utf8','hi_IN.utf8','mr_IN.utf8','sw_KE.utf8','tr_TR.utf8','vi_VN.utf8','zh_CN.utf8','zh_HK.utf8','zh_TW.utf8'),
+	'IN'=>array('en_IN.utf8','hi_IN.utf8','mr_IN.utf8'),
 	'EE'=>array('ar_EG.utf8','cz_CZ.utf8','fr_CA.utf8','fr_FR.utf8','hr_HR.utf8','pl_PL.utf8','ru_RU.utf8','sq_AL.utf8','sv_SE.utf8'),
 	'FR'=>array('ar_EG.utf8','cz_CZ.utf8','fr_CA.utf8','fr_FR.utf8','hr_HR.utf8','pl_PL.utf8','ru_RU.utf8','sq_AL.utf8','sv_SE.utf8'),
 	'GM'=>array('de_DE.utf8','el_GR.utf8','es_ES.utf8','fa_IR.utf8','id_ID.utf8','it_IT.utf8','ro_RO.utf8','lv_LV.utf8','nl_NL.utf8','pt_BR.utf8','pt_PT.utf8'));
 
-foreach ($Collect as $Key=>$Value){
-	if (in_array($Language,$Value)){
+foreach($Collect as $Key=>$Value) {
+	if(in_array($Language,$Value)) {
 		$Lang = $Key;
 		$_SESSION['Lang'] = $Lang;
 	}
-
 }
 
 /*Since LanguagesArray requires the function _() to translate the language names - we must provide a substitute if it doesn't exist aready before we include includes/LanguagesArray.php
