@@ -1,5 +1,6 @@
 webERP Change Log
 
+25/01/15 RChacon: Add $ViewTopic and $BookMark, comments and page_title_text to ImportBankTrans.php. Add info to Manual.
 24/01/15 RChacon: Add info to Manual about Indian Numbering System. Add comments to code. Improvements to Cascading Style Sheet (CSS) for Manual.
 23/01/15 RChacon: Generalise indian number format for country=India (languages: English, Hindi, Marathi, etc.).
 20/01/15 RChacon: Add translation for transaction type, script ID, manual references, class="number" to columns.

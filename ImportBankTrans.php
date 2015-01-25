@@ -1,12 +1,19 @@
 <?php
-
 /* $Id: ImportBankTrans.php 4213 2010-12-22 14:33:20Z tim_schofield $*/
+/* This script imports bank transactions. */
+
 include('includes/DefineImportBankTransClass.php');
+
 include ('includes/session.inc');
+$Title = _('Import Bank Transactions');// Screen identificator.
+$ViewTopic = 'GeneralLedger';// Filename's id in ManualContents.php's TOC.
+$BookMark = 'ImportBankTrans';// Anchor's id in the manual's html document.
+include('includes/header.inc');
+echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
+	'/images/bank.png" title="' .// Icon image.
+	_('Import Bank Transactions') . '" /> ' .// Icon title.
+	_('Import Bank Transactions') . '</p>';// Page title.
 
-$Title = _('Import Bank Transactions');
-
-include ('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/CurrenciesArray.php');
 
