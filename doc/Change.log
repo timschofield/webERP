@@ -1,5 +1,6 @@
 webERP Change Log
 
+
 25/01/15 RChacon: Add $ViewTopic and $BookMark, comments and page_title_text to ImportBankTrans.php. Add info to Manual.
 24/01/15 RChacon: Add info to Manual about Indian Numbering System. Add comments to code. Improvements to Cascading Style Sheet (CSS) for Manual.
 23/01/15 RChacon: Generalise indian number format for country=India (languages: English, Hindi, Marathi, etc.).
@@ -12,11 +13,11 @@ webERP Change Log
 12/1/15 Exson: Fixed bug in Z_AutoCustomerAllocations.php to make it workable.
 9/1/15 Bob Thomas: Removed reference to AliasNbPages() now no longer part of TCPDF
 7/1/15 Phil: Added missing SQL for suppliercontacts and supplierdiscounts and adding the script SalesTopCustomersInquiry to the scripts table
-05/01/15 RChacon: Allow turn on/off the dashboard display after login for an specific user. Add comments to code.
-04/01/15 RChacon: In RevisionTranslations.php, add $Id, $ViewTopic, $BookMark and page_title_text. Add info to manual. Add comments to code.
-04/01/15 RChacon: In SystemParameters.php, remove root path to config.php and add comments.
-01/01/15 RChacon: Move default theme from session.inc to config.php. Add the ability to change the default theme in SystemParameters.php.
-01/01/15 Exson: Make StockCategories.php strict sql mode compatible.
+5/01/15 RChacon: Allow turn on/off the dashboard display after login for an specific user. Add comments to code.
+4/01/15 RChacon: In RevisionTranslations.php, add $Id, $ViewTopic, $BookMark and page_title_text. Add info to manual. Add comments to code.
+4/01/15 RChacon: In SystemParameters.php, remove root path to config.php and add comments.
+1/01/15 RChacon: Move default theme from session.inc to config.php. Add the ability to change the default theme in SystemParameters.php.
+1/01/15 Exson: Make StockCategories.php strict sql mode compatible.
 28/12/14 RChacon: Standardise labels and texts in Prices_Customer.php SpecialOrder.php and WWW_Access.php. Add $ViewTopic and $BookMark to  WWW_Access.php
 28/12/14 RChacon: Add comments, variables to link to the manual and titles in Z_CurrencyDebtorsBalances.php and Z_CurrencySuppliersBalances.php.
 28/12/14 RChacon: Add comments, variables to link to the manual and titles in Z_Change*.php.
@@ -34,8 +35,7 @@ webERP Change Log
 16/12/14 Agaluski: Add new Quality Module to WebERP.
 16/12/14 RChacon: Expand and uniform the accuracy of the exchange rate.
 5/12/14 Exson: Fixed the branch field bug in CustomerReceipt.php. Reported by wertthey.
-29/11/14 RChacon: Add Pan Size explanation (thanks to Exson Qu) and other item maintenance explanations.
-29/11/14 RChacon: Add Pan Size explanation (thanks to Tim Schofield and Pak Ricard).
+29/11/14 RChacon: Add Pan Size explanation (thanks to Exson Qu Tim Schofield and Pak Ricard) and other item maintenance explanations.
 24/11/14 RChacon: In PrintCustStatements.php, make translatable the currency name and the transaction type.
 24/11/14 RChacon: Spanish translation improvements. Merging "View GL Entries" and "View the GL Entries".
 22/11/14 Exson: Fix the qualitytext does not have default value for strict sql mode in Credit_Invoice.php.
