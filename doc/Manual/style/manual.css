@@ -98,11 +98,16 @@ dl {
 
 dt {
 	font-weight:bold;
-	/* Description list terms format. */	
+	/* Description list terms format. */
 }
 
 dd {
-	/* Description list descriptions format. */	
+	/* Description list descriptions format. */
+}
+
+li {
+	margin-left:2%;
+	margin-right:2%;
 }
 
 li.toc {
@@ -115,4 +120,5 @@ input[type=checkbox] {
 
 p {
 	margin-left:2%;
+	margin-right:2%;
 }
