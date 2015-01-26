@@ -1280,62 +1280,101 @@ function OutstandingOrders($customertype, $ordertype, $RootPath, $db){
 	}
 }
 
-function OnlineOrdersFollowUp($numDays, $RootPath, $db){
+function OnlineOrdersFollowUp($Source, $numDays, $RootPath, $db){
 
-	$Titletext = "Follow up Outstanding Online Orders";
+	$Titletext = "Follow up Outstanding " . $Source. " Online Orders";
 	$ThankYouDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$numDays));
 // 2015-01-14 Prices already NET for online orders
 //				(SELECT SUM(salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent))
-			
-	$SQL = "SELECT salesorders.orderno,	
-				salesorders.customerref,
-				salesorders.klemailpaymentconfirm,
-				salesorders.klemailtrackingconfirm,
-				salesorders.klemailthankyouorder,
-				debtorsmaster.debtorno,
-				salesorders.deliverto AS name,
-				salesorders.orddate,
-				(SELECT SUM(salesorderdetails.unitprice*salesorderdetails.quantity)
-						FROM salesorderdetails
-						WHERE salesorderdetails.orderno = salesorders.orderno) AS ordervalue,
-				salesorders.freightcost,
-				debtorsmaster.currcode,
-				shippers.shippername,
-				debtortrans.consignment,
-				currencies.decimalplaces
-			FROM salesorders 
-				INNER JOIN debtorsmaster 
-					ON salesorders.debtorno = debtorsmaster.debtorno
-				INNER JOIN debtortrans 
-					ON debtortrans.order_ = salesorders.orderno
-				INNER JOIN shippers 
-					ON salesorders.shipvia = shippers.shipper_id
-				INNER JOIN currencies
-					ON debtorsmaster.currcode = currencies.currabrev
-			WHERE debtorsmaster.typeid IN (". CUSTOMER_TYPE_ONLINE . ")
-				AND salesorders.quotation = 0
-				AND (	(debtortrans.type = 12 
-							AND salesorders.klemailpaymentconfirm = '0000-00-00')
-					 OR (debtortrans.type = 10 
-							AND salesorders.klemailtrackingconfirm = '0000-00-00')
-					 OR (salesorders.klemailthankyouorder = '0000-00-00' 
-							AND salesorders.klemailtrackingconfirm <= '" . $ThankYouDate . "' 
-							AND salesorders.klemailtrackingconfirm != '0000-00-00')
-					)
-			GROUP BY salesorders.orderno,	
-				debtorsmaster.name,
-				salesorders.orddate
-			ORDER BY salesorders.orderno";			
-
+	if ($Source == "LAZADA"){	
+		$SQL = "SELECT salesorders.orderno,	
+					salesorders.customerref,
+					salesorders.klemailpaymentconfirm,
+					salesorders.klemailtrackingconfirm,
+					salesorders.klemailthankyouorder,
+					debtorsmaster.debtorno,
+					salesorders.deliverto AS name,
+					salesorders.orddate,
+					(SELECT SUM(salesorderdetails.unitprice*salesorderdetails.quantity)
+							FROM salesorderdetails
+							WHERE salesorderdetails.orderno = salesorders.orderno) AS ordervalue,
+					salesorders.freightcost,
+					debtorsmaster.currcode,
+					shippers.shippername,
+					debtortrans.consignment,
+					currencies.decimalplaces
+				FROM salesorders 
+					INNER JOIN debtorsmaster 
+						ON salesorders.debtorno = debtorsmaster.debtorno
+					INNER JOIN debtortrans 
+						ON debtortrans.order_ = salesorders.orderno
+					INNER JOIN shippers 
+						ON salesorders.shipvia = shippers.shipper_id
+					INNER JOIN currencies
+						ON debtorsmaster.currcode = currencies.currabrev
+				WHERE debtorsmaster.name = 'LAZADA'
+					AND salesorders.quotation = 0
+					AND ((debtortrans.type = 10 
+								AND salesorders.klemailtrackingconfirm = '0000-00-00')
+						 OR (salesorders.klemailthankyouorder = '0000-00-00' 
+								AND salesorders.klemailtrackingconfirm <= '" . $ThankYouDate . "' 
+								AND salesorders.klemailtrackingconfirm != '0000-00-00')
+						)
+				GROUP BY salesorders.orderno,	
+					debtorsmaster.name,
+					salesorders.orddate
+				ORDER BY salesorders.orderno";			
+	}else{
+		$SQL = "SELECT salesorders.orderno,	
+					salesorders.customerref,
+					salesorders.klemailpaymentconfirm,
+					salesorders.klemailtrackingconfirm,
+					salesorders.klemailthankyouorder,
+					debtorsmaster.debtorno,
+					salesorders.deliverto AS name,
+					salesorders.orddate,
+					(SELECT SUM(salesorderdetails.unitprice*salesorderdetails.quantity)
+							FROM salesorderdetails
+							WHERE salesorderdetails.orderno = salesorders.orderno) AS ordervalue,
+					salesorders.freightcost,
+					debtorsmaster.currcode,
+					shippers.shippername,
+					debtortrans.consignment,
+					currencies.decimalplaces
+				FROM salesorders 
+					INNER JOIN debtorsmaster 
+						ON salesorders.debtorno = debtorsmaster.debtorno
+					INNER JOIN debtortrans 
+						ON debtortrans.order_ = salesorders.orderno
+					INNER JOIN shippers 
+						ON salesorders.shipvia = shippers.shipper_id
+					INNER JOIN currencies
+						ON debtorsmaster.currcode = currencies.currabrev
+				WHERE debtorsmaster.typeid IN (". CUSTOMER_TYPE_ONLINE . ")
+					AND debtorsmaster.name != 'LAZADA'
+					AND salesorders.quotation = 0
+					AND (	(debtortrans.type = 12 
+								AND salesorders.klemailpaymentconfirm = '0000-00-00')
+						 OR (debtortrans.type = 10 
+								AND salesorders.klemailtrackingconfirm = '0000-00-00')
+						 OR (salesorders.klemailthankyouorder = '0000-00-00' 
+								AND salesorders.klemailtrackingconfirm <= '" . $ThankYouDate . "' 
+								AND salesorders.klemailtrackingconfirm != '0000-00-00')
+						)
+				GROUP BY salesorders.orderno,	
+					debtorsmaster.name,
+					salesorders.orddate
+				ORDER BY salesorders.orderno";			
+	}
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . $Titletext . '</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . '#' . '</th>
 							<th class="ascending">' . _('webERP Order') . '</th>
-							<th class="ascending">' . _('Shop Online Order') . '</th>
+							<th class="ascending">' . '#' . $Source . '</th>
 							<th class="ascending">' . _('Customer') . '</th>
 							<th class="ascending">' . _('Name') . '</th>
 							<th class="ascending">' . _('Order Date') . '</th>

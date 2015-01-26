@@ -526,17 +526,20 @@ if ($KL_SystemAdmin){
 	OnlineCustomersNoOrderPlaced($RootPath, $db);
 	OnlineQuotationsFollowUp($RootPath, $db);
 	OldOnlineQuotations(30, $RootPath, $db);
-	OnlineOrdersFollowUp(7, $RootPath, $db);
 //	OutstandingOrders("Online", "Quotation", $RootPath, $db);
-	OnlineItemsOnProcess($RootPath, $db);
 }
 
 if ($KL_SystemAdmin 
 	OR $KL_KantorManager
 	OR $KL_ShopSupportTeam){ 
 	OutstandingOrders("Online", "Order", $RootPath, $db);
+	OnlineItemsOnProcess($RootPath, $db);
 }
 
+if ($KL_SystemAdmin){
+	OnlineOrdersFollowUp("KL-WEBSITE", 7, $RootPath, $db);
+	OnlineOrdersFollowUp("LAZADA", 7, $RootPath, $db);
+}
 /***************************************************************************************
 * Other tests     
 ***************************************************************************************/
