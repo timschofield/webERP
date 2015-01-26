@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: webERP 4.11.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-23 08:08-0600\n"
+"POT-Creation-Date: 2015-01-26 15:51-0600\n"
 "PO-Revision-Date: 2014-12-05 08:09-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: French <none>\n"
@@ -2925,7 +2925,7 @@ msgstr "transactions avec ce compte bancaire"
 msgid "Bank account deleted"
 msgstr "Compte bancaire supprimé"
 
-#: BankAccounts.php:192 Dashboard.php:544 ImportBankTrans.php:26
+#: BankAccounts.php:192 Dashboard.php:544 ImportBankTrans.php:33
 msgid "The bank accounts set up could not be retrieved because"
 msgstr "Impossible d'afficher les comptes bancaires mis en place:"
 
@@ -3314,7 +3314,7 @@ msgstr "Échec de la commande SQL d'affichage des comptes bancaires"
 
 # JDN
 #: BankReconciliation.php:110 CustomerReceipt.php:792
-#: DailyBankTransactions.php:33 ImportBankTrans.php:27 Payments.php:773
+#: DailyBankTransactions.php:33 ImportBankTrans.php:34 Payments.php:773
 #: SuppPaymentRun.php:319
 msgid "The SQL used to retrieve the bank accounts was"
 msgstr "Commande SQL d'affichage des comptes bancaires:"
@@ -3369,7 +3369,7 @@ msgstr "Ajouter les chèques non encaissés"
 #: CustWhereAlloc.php:112 CustomerAllocations.php:347
 #: CustomerAllocations.php:377 CustomerInquiry.php:250
 #: CustomerTransInquiry.php:99 DailyBankTransactions.php:128
-#: EmailCustTrans.php:15 GLAccountInquiry.php:172 ImportBankTrans.php:483
+#: EmailCustTrans.php:15 GLAccountInquiry.php:172 ImportBankTrans.php:490
 #: PrintCustTrans.php:509 PrintCustTrans.php:733 PrintCustTrans.php:966
 #: PrintCustTrans.php:1015 PrintCustTransPortrait.php:537
 #: PrintCustTransPortrait.php:775 PrintCustTransPortrait.php:1023
@@ -5210,7 +5210,7 @@ msgstr "Problème de sélection des articles à afficher"
 #: ContractBOM.php:145 PO_Items.php:1092 SupplierTenderCreate.php:835
 #: SupplierTenders.php:668 Z_ChangeGLAccountCode.php:62
 #: Z_ChangeLocationCode.php:97 Z_ChangeStockCategory.php:74
-#: Z_ChangeStockCode.php:112 includes/MiscFunctions.php:447
+#: Z_ChangeStockCode.php:112 includes/MiscFunctions.php:448
 msgid "The SQL statement that failed was"
 msgstr "Échec de la commande SQL:"
 
@@ -7116,7 +7116,7 @@ msgid "New Work Order Number"
 msgstr "Nouveau n° d'ordre de travail"
 
 #: CounterSales.php:1278 DeliveryDetails.php:571 EDIMessageFormat.php:127
-#: EDIMessageFormat.php:205 ImportBankTrans.php:483 Prices_Customer.php:37
+#: EDIMessageFormat.php:205 ImportBankTrans.php:490 Prices_Customer.php:37
 #: RecurringSalesOrdersProcess.php:90 ReverseGRN.php:339 SpecialOrder.php:122
 #: SpecialOrder.php:125
 msgid "for"
@@ -9604,13 +9604,13 @@ msgstr "Nombre de reçus"
 msgid "Print a Customer Receipt"
 msgstr "Imprimer un reçu à la clientèle"
 
-#: CustomerReceipt.php:325 ImportBankTrans.php:238 ImportBankTrans.php:256
-#: ImportBankTrans.php:299
+#: CustomerReceipt.php:325 ImportBankTrans.php:245 ImportBankTrans.php:263
+#: ImportBankTrans.php:306
 msgid "Cannot insert a GL entry for the receipt because"
 msgstr "Impossible d'insérer une entrée de GL pour la réception, car"
 
-#: CustomerReceipt.php:326 ImportBankTrans.php:239 ImportBankTrans.php:257
-#: ImportBankTrans.php:300
+#: CustomerReceipt.php:326 ImportBankTrans.php:246 ImportBankTrans.php:264
+#: ImportBankTrans.php:307
 msgid "The SQL that failed to insert the receipt GL entry was"
 msgstr "Échec de la commande SQL d'ajoût de reçu GL:"
 
@@ -9618,7 +9618,7 @@ msgstr "Échec de la commande SQL d'ajoût de reçu GL:"
 msgid "Act Transfer"
 msgstr "Transfert de l'acte"
 
-#: CustomerReceipt.php:404 ImportBankTrans.php:452
+#: CustomerReceipt.php:404 ImportBankTrans.php:459
 msgid "The SQL that failed to insert the bank transaction was"
 msgstr "Échec de la commande SQL d'ajoût de transaction bancaire:"
 
@@ -10716,7 +10716,7 @@ msgstr "Livrer à"
 msgid "Order Total"
 msgstr "Total"
 
-#: Dashboard.php:663 ImportBankTrans.php:486 ImportBankTrans.php:528
+#: Dashboard.php:663 ImportBankTrans.php:493 ImportBankTrans.php:535
 #: ImportBankTransAnalysis.php:208 Prices_Customer.php:37
 #: RevisionTranslations.php:30 SpecialOrder.php:122 SpecialOrder.php:125
 #: SuppTransGLAnalysis.php:109 SupplierCredit.php:319 SupplierCredit.php:320
@@ -15371,63 +15371,64 @@ msgstr ""
 msgid "Sample Date:"
 msgstr ""
 
-#: ImportBankTrans.php:7 ImportBankTransAnalysis.php:20
-#: ImportBankTransAnalysis.php:34 includes/MainMenuLinksArray.php:350
+#: ImportBankTrans.php:8 ImportBankTrans.php:14 ImportBankTrans.php:15
+#: ImportBankTransAnalysis.php:20 ImportBankTransAnalysis.php:34
+#: includes/MainMenuLinksArray.php:350
 msgid "Import Bank Transactions"
 msgstr ""
 
-#: ImportBankTrans.php:30
+#: ImportBankTrans.php:37
 msgid ""
 "There are no bank accounts defined that are set up to allow importation of "
 "bank statement transactions. First define the file format used by your bank "
 "for statement exports."
 msgstr ""
 
-#: ImportBankTrans.php:31
+#: ImportBankTrans.php:38
 msgid "Setup Import Format for Bank Accounts"
 msgstr ""
 
-#: ImportBankTrans.php:39
+#: ImportBankTrans.php:46
 msgid "Bank Account to Import Transaction For"
 msgstr ""
 
-#: ImportBankTrans.php:49
+#: ImportBankTrans.php:56
 msgid "MT940 format Bank Statement File to import"
 msgstr ""
 
-#: ImportBankTrans.php:50
+#: ImportBankTrans.php:57
 msgid "Select the file that contains the bank transactions in MT940 format"
 msgstr ""
 
-#: ImportBankTrans.php:63
+#: ImportBankTrans.php:70
 msgid ""
 "The file size is over the maximum allowed. The maximum size allowed is 1 "
 "megabyte. This file size is (bytes)"
 msgstr ""
 
-#: ImportBankTrans.php:64 includes/ImportBankTrans_MT940_SCB.php:30
+#: ImportBankTrans.php:71 includes/ImportBankTrans_MT940_SCB.php:30
 msgid "The MT940 bank statement file cannot be imported and processed"
 msgstr ""
 
-#: ImportBankTrans.php:113
+#: ImportBankTrans.php:120
 msgid ""
 "Could not retrieve bank accounts that match with the statement being imported"
 msgstr ""
 
-#: ImportBankTrans.php:118
+#: ImportBankTrans.php:125
 msgid "The account"
 msgstr ""
 
-#: ImportBankTrans.php:118
+#: ImportBankTrans.php:125
 msgid ""
 "is not defined as a bank account of the business. No imports can be processed"
 msgstr ""
 
-#: ImportBankTrans.php:133
+#: ImportBankTrans.php:140
 msgid "There was a problem identifying a matching bank transaction"
 msgstr ""
 
-#: ImportBankTrans.php:146
+#: ImportBankTrans.php:153
 msgid ""
 "It is necessary to enter the exchange rate to convert the bank receipts and "
 "payments into local currency for the purposes of calculating the general "
@@ -15435,138 +15436,138 @@ msgid ""
 "as the company functional currency so an exchange rate of 1 is inappropriate"
 msgstr ""
 
-#: ImportBankTrans.php:150
+#: ImportBankTrans.php:157
 msgid ""
 "The exchange rate is expected to be the number of the bank account currency "
 "that would purchase one unit of the company functional currency. A number is "
 "expected"
 msgstr ""
 
-#: ImportBankTrans.php:176
+#: ImportBankTrans.php:183
 msgid "Could not update the bank transaction as cleared"
 msgstr ""
 
-#: ImportBankTrans.php:177
+#: ImportBankTrans.php:184
 msgid "The SQL that failed to update the bank transaction as cleared was"
 msgstr ""
 
-#: ImportBankTrans.php:210
+#: ImportBankTrans.php:217
 msgid "Could not insert the customer transaction"
 msgstr ""
 
 # JDN
-#: ImportBankTrans.php:211
+#: ImportBankTrans.php:218
 msgid "The SQL used to insert the debtortrans was"
 msgstr ""
 
-#: ImportBankTrans.php:218
+#: ImportBankTrans.php:225
 msgid "Could not update the last payment date and amount paid"
 msgstr ""
 
-#: ImportBankTrans.php:219
+#: ImportBankTrans.php:226
 msgid "The SQL that failed to update the debtorsmaster was"
 msgstr ""
 
-#: ImportBankTrans.php:279
+#: ImportBankTrans.php:286
 msgid "Cannot insert a GL entry for the receipt gl analysis because"
 msgstr ""
 
-#: ImportBankTrans.php:280
+#: ImportBankTrans.php:287
 msgid "The SQL that failed to insert the gl analysis of this receipt was"
 msgstr ""
 
-#: ImportBankTrans.php:327
+#: ImportBankTrans.php:334
 msgid "Could not insert the supplier transaction"
 msgstr ""
 
 # JDN
-#: ImportBankTrans.php:328
+#: ImportBankTrans.php:335
 msgid "The SQL used to insert the supptrans was"
 msgstr ""
 
-#: ImportBankTrans.php:335
+#: ImportBankTrans.php:342
 msgid "Could not update the supplier last payment date and amount paid"
 msgstr ""
 
-#: ImportBankTrans.php:336
+#: ImportBankTrans.php:343
 msgid ""
 "The SQL that failed to update the supplier with the last payment amount and "
 "date was"
 msgstr ""
 
-#: ImportBankTrans.php:354
+#: ImportBankTrans.php:361
 msgid ""
 "Cannot insert a GL entry for the supplier payment to creditors control "
 "because"
 msgstr ""
 
-#: ImportBankTrans.php:355
+#: ImportBankTrans.php:362
 msgid "The SQL that failed to insert the creditors control GL entry was"
 msgstr ""
 
-#: ImportBankTrans.php:373
+#: ImportBankTrans.php:380
 msgid "Cannot insert a GL entry for the supplier payment because"
 msgstr ""
 
-#: ImportBankTrans.php:374
+#: ImportBankTrans.php:381
 msgid ""
 "The SQL that failed to insert the supplier payment GL entry to the bank "
 "account was"
 msgstr ""
 
-#: ImportBankTrans.php:397
+#: ImportBankTrans.php:404
 msgid "Cannot insert a GL entry for the payment gl analysis because"
 msgstr ""
 
-#: ImportBankTrans.php:398
+#: ImportBankTrans.php:405
 msgid "The SQL that failed to insert the gl analysis of this payment was"
 msgstr ""
 
-#: ImportBankTrans.php:418
+#: ImportBankTrans.php:425
 msgid "Cannot insert a GL entry for the payment because"
 msgstr ""
 
-#: ImportBankTrans.php:419
+#: ImportBankTrans.php:426
 msgid "The SQL that failed to insert the payment GL entry was"
 msgstr ""
 
-#: ImportBankTrans.php:447
+#: ImportBankTrans.php:454
 msgid "Imported"
 msgstr ""
 
-#: ImportBankTrans.php:451
+#: ImportBankTrans.php:458
 msgid "Could not insert the bank transaction"
 msgstr ""
 
-#: ImportBankTrans.php:458
+#: ImportBankTrans.php:465
 msgid "Completed the importing of analysed bank transactions"
 msgstr ""
 
-#: ImportBankTrans.php:483
+#: ImportBankTrans.php:490
 msgid "Bank Statement No"
 msgstr ""
 
-#: ImportBankTrans.php:486
+#: ImportBankTrans.php:493
 msgid "Opening Balance as at"
 msgstr ""
 
-#: ImportBankTrans.php:523
+#: ImportBankTrans.php:530
 msgid "Analysis"
 msgstr ""
 
-#: ImportBankTrans.php:528
+#: ImportBankTrans.php:535
 msgid "Closing Balance as at"
 msgstr ""
 
-#: ImportBankTrans.php:542
+#: ImportBankTrans.php:549
 msgid "Exchange Rate to Use When Processing Transactions"
 msgstr ""
 
-#: ImportBankTrans.php:549
+#: ImportBankTrans.php:556
 msgid "Process Bank Transactions"
 msgstr ""
 
-#: ImportBankTrans.php:549
+#: ImportBankTrans.php:556
 msgid ""
 "This process will create bank transactions for ONLY THE ANALYSED "
 "transactions shown in yellow above together with the necessary general "
@@ -40043,7 +40044,7 @@ msgstr ""
 #: Z_ChangeStockCategory.php:92 Z_ChangeStockCategory.php:98
 #: Z_ChangeStockCategory.php:107 Z_ChangeStockCode.php:115
 #: Z_ChangeStockCode.php:167 Z_ChangeStockCode.php:195
-#: includes/MiscFunctions.php:450
+#: includes/MiscFunctions.php:451
 msgid "completed"
 msgstr "terminé"
 
@@ -40529,11 +40530,11 @@ msgstr ""
 msgid "The SQL to insert the new suppliers master record failed"
 msgstr ""
 
-#: Z_ChangeSupplierCode.php:93 includes/MiscFunctions.php:445
+#: Z_ChangeSupplierCode.php:93 includes/MiscFunctions.php:446
 msgid "Changing"
 msgstr ""
 
-#: Z_ChangeSupplierCode.php:93 includes/MiscFunctions.php:445
+#: Z_ChangeSupplierCode.php:93 includes/MiscFunctions.php:446
 msgid "records"
 msgstr ""
 
@@ -40541,7 +40542,7 @@ msgstr ""
 msgid "The SQL to update"
 msgstr ""
 
-#: Z_ChangeSupplierCode.php:95 includes/MiscFunctions.php:448
+#: Z_ChangeSupplierCode.php:95 includes/MiscFunctions.php:449
 msgid "records failed"
 msgstr ""
 
@@ -49568,11 +49569,11 @@ msgstr "Message"
 msgid "Wiki "
 msgstr "Wiki "
 
-#: includes/MiscFunctions.php:428
+#: includes/MiscFunctions.php:429
 msgid "Failed to retrieve mail lists"
 msgstr ""
 
-#: includes/MiscFunctions.php:448
+#: includes/MiscFunctions.php:449
 msgid "The SQL to update "
 msgstr ""
 
