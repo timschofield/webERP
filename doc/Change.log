@@ -1,5 +1,8 @@
 webERP Change Log
 
+27/01/15 RChacon: Spanish translation improvements. Note: The "Delete" key (keyboard) is translated to "Suprimir"; for usability, we standardise "borrar", "eliminar", etc. to  "suprimir".
+
+27/01/15 Version 4.12 release
 
 25/01/15 RChacon: Add $ViewTopic and $BookMark, comments and page_title_text to ImportBankTrans.php. Add info to Manual.
 24/01/15 RChacon: Add info to Manual about Indian Numbering System. Add comments to code. Improvements to Cascading Style Sheet (CSS) for Manual.
