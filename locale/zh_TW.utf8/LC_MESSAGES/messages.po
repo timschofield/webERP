@@ -1,22 +1,22 @@
-# webERP 4.11.3繁體(台灣)中文介面
+# webERP 4.12繁體(台灣)中文介面
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <akits.tw@yahoo.com.tw>, 2014.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: webERP 4.11.5\n"
+"Project-Id-Version: webERP 4.12\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-01-27 21:55+1300\n"
-"PO-Revision-Date: 2014-10-14 14:26+0800\n"
+"PO-Revision-Date: 2015-01-29 08:00+0800\n"
 "Last-Translator: Jiro Akits <akits.tw@yahoo.com.tw>\n"
 "Language-Team: Jiro Akits <akits.tw@yahoo.com.tw>\n"
-"Language: zh_Hant_TW\n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 1.6.9\n"
+"X-Generator: Poedit 1.7.3\n"
 "X-Poedit-Basepath: d:\\\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
@@ -1570,11 +1570,11 @@ msgstr "值"
 
 #: AutomaticTranslationDescriptions.php:5 includes/MainMenuLinksArray.php:553
 msgid "Translate Item Descriptions"
-msgstr ""
+msgstr "翻譯物料說明"
 
 #: AutomaticTranslationDescriptions.php:31
 msgid "Description Automatic Translation for empty translations"
-msgstr ""
+msgstr "沒有翻譯的說明將自動翻譯"
 
 #: AutomaticTranslationDescriptions.php:35 MaterialsNotUsed.php:33
 #: TopItems.php:168
@@ -1618,12 +1618,12 @@ msgstr "至"
 
 #: AutomaticTranslationDescriptions.php:39
 msgid "Translated"
-msgstr ""
+msgstr "翻譯"
 
 #: AutomaticTranslationDescriptions.php:116
 #: AutomaticTranslationDescriptions.php:117
 msgid "No item description was automatically translated"
-msgstr ""
+msgstr "物料的描述說明是沒有自動翻譯"
 
 #: BackupDatabase.php:7
 msgid "Backup webERP Database"
@@ -1880,7 +1880,7 @@ msgstr "外幣帳戶"
 
 #: BankAccountUsers.php:6
 msgid "Bank Account Users"
-msgstr ""
+msgstr "銀行帳戶的用戶"
 
 #: BankAccountUsers.php:13 includes/MainMenuLinksArray.php:394
 msgid "Bank Account Authorised Users"
@@ -2440,12 +2440,12 @@ msgstr "數量展開的BOM清單"
 #: BOMExtendedQty.php:30 BOMIndented.php:27 BOMIndentedReverse.php:26
 #: MRPCalendar.php:86 MRP.php:26
 msgid "The SQL to create passbom failed with the message"
-msgstr "新建passbom在SQL失敗消息"
+msgstr "建立passbom在SQL失敗訊息"
 
 #: BOMExtendedQty.php:43 BOMIndented.php:40 BOMIndentedReverse.php:39
 #: MRP.php:33
 msgid "Create of tempbom failed because"
-msgstr "新建tempbom的失敗，因為"
+msgstr "建立臨時的bom的失敗，因為"
 
 #: BOMExtendedQty.php:156
 msgid ""
@@ -2454,7 +2454,7 @@ msgstr "該Quantiy擴展的BOM清單不能由SQL來檢索，因為"
 
 #: BOMExtendedQty.php:241 BOMIndented.php:234
 msgid "Print Indented BOM Listing Error"
-msgstr "打印縮進的BOM清單錯誤"
+msgstr "列印鋸齒狀的BOM清單錯誤"
 
 #: BOMExtendedQty.php:243 BOMIndented.php:236
 msgid "There were no items for the selected assembly"
@@ -2548,7 +2548,7 @@ msgstr "只顯示短缺"
 #: MRPPlannedPurchaseOrders.php:280 MRPPlannedWorkOrders.php:336
 #: MRPReschedules.php:136 MRPShortages.php:293
 msgid "Print Option"
-msgstr "打印選項"
+msgstr "列印選項"
 
 #: BOMExtendedQty.php:280 BOMIndented.php:270 BOMIndentedReverse.php:248
 #: MRPPlannedPurchaseOrders.php:282 MRPPlannedWorkOrders.php:338
@@ -3833,7 +3833,7 @@ msgstr "訂單的列商品未能取, 因為"
 msgid ""
 "There are no ordered items with a quantity left to deliver. There is nothing "
 "left to invoice"
-msgstr "已沒有未完成訂單數量可交貨, 沒有可以開發票"
+msgstr "已沒有未完成訂單數量可交貨, 沒有任何發票可以開立"
 
 #: ConfirmDispatch_Invoice.php:222
 msgid "This order item could not be retrieved. Please select another order"
@@ -4617,7 +4617,7 @@ msgstr "未能提取組裝零件地點的存貨數量, 因為"
 #: includes/PDFDIFOTPageHeader.inc:40 includes/PDFOstdgGRNsPageHeader.inc:37
 #: api/api_salesorders.php:920
 msgid "Order"
-msgstr "訂單"
+msgstr "次序"
 
 #: ConfirmDispatch_Invoice.php:1056 CounterReturns.php:1080
 #: CounterSales.php:1480 Credit_Invoice.php:849 SelectCreditItems.php:1501
@@ -6076,7 +6076,7 @@ msgstr "取消和刪除合同"
 
 #: CopyBOM.php:11 includes/header.inc:26
 msgid "Copy a BOM to New Item Code"
-msgstr "BOM表複製到新的產品編號"
+msgstr "BOM表複製到新物料編號"
 
 #: CopyBOM.php:27
 msgid ""
@@ -8200,7 +8200,7 @@ msgstr "沒有冲帳紀錄"
 #: CustomerBalancesMovement.php:7 CustomerBalancesMovement.php:14
 #: includes/MainMenuLinksArray.php:114
 msgid "Customer Activity and Balances"
-msgstr ""
+msgstr "客戶活動和餘額"
 
 #: CustomerBalancesMovement.php:40 CustomerBranches.php:785
 #: SalesAnalRepts.php:20 SalesAnalRepts.php:22 SalesInquiry.php:776
@@ -8230,11 +8230,11 @@ msgstr "日期到"
 
 #: CustomerBalancesMovement.php:68
 msgid "Create CSV"
-msgstr ""
+msgstr "製作 CSV 檔案"
 
 #: CustomerBalancesMovement.php:75
 msgid "Show Customer Balance Movements"
-msgstr ""
+msgstr "顯示客戶餘額變動"
 
 #: CustomerBalancesMovement.php:118 CustomerBalancesMovement.php:124
 #: CustomerBalancesMovement.php:197 includes/DatabaseTranslations.php:55
@@ -8254,7 +8254,7 @@ msgstr "貸方"
 
 #: CustomerBalancesMovement.php:203 CustomerBalancesMovement.php:211
 msgid "TOTALS"
-msgstr ""
+msgstr "總計"
 
 #: CustomerBranches.php:6
 msgid "Customer Branches"
@@ -8324,11 +8324,11 @@ msgstr "在檢索信息時出錯"
 msgid ""
 "Warning - Geocode Integration is enabled, but no hosts are setup.  Go to "
 "Geocode Setup"
-msgstr "警告 - 地理編碼集成已啟用，但沒有主機的設置。去設置地理編碼"
+msgstr "警告 - 地圖編碼整合已啟用，但是沒有設定主機的配置。請先去配置地圖編碼"
 
 #: CustomerBranches.php:135
 msgid "Geocode Notice"
-msgstr "地理編碼的通知"
+msgstr "地圖編碼的通知"
 
 #: CustomerBranches.php:135 PO_Header.php:563 PO_Header.php:1001
 #: PO_Header.php:1005 PO_Header.php:1009 PO_Header.php:1013 PO_Header.php:1017
@@ -8343,7 +8343,7 @@ msgstr "地址"
 
 #: CustomerBranches.php:135 Suppliers.php:451
 msgid "failed to geocode"
-msgstr "未能進行地理編碼"
+msgstr "進行地圖編碼失敗"
 
 #: CustomerBranches.php:136 Suppliers.php:452
 msgid "Received status"
@@ -8724,15 +8724,15 @@ msgstr "選擇要查詢的客戶"
 
 #: CustomerInquiry.php:28
 msgid "Failed to retrieve sales data"
-msgstr ""
+msgstr "無法檢索銷售數據"
 
 #: CustomerInquiry.php:37
 msgid "There is no salesman data set for this debtor"
-msgstr ""
+msgstr "對這借方資料沒有設定業務員的數據"
 
 #: CustomerInquiry.php:42
 msgid "You have no authority to review this data"
-msgstr ""
+msgstr "你無權查看該數據"
 
 #: CustomerInquiry.php:57
 msgid "The balance status should be all or zero balance or not zero balance"
@@ -9916,11 +9916,11 @@ msgstr "有沒有交易，這個帳戶在選定的日期範圍"
 
 #: DailyBankTransactions.php:123
 msgid "Account Transactions For"
-msgstr "帳號交易"
+msgstr "銀行交易帳戶"
 
 #: DailyBankTransactions.php:123 GLJournalInquiry.php:26
 msgid "Between"
-msgstr "之間"
+msgstr "區間"
 
 #: DailyBankTransactions.php:123 GLJournalInquiry.php:26
 #: PDFPeriodStockTransListing.php:146 PO_SelectOSPurchOrder.php:54
@@ -9944,24 +9944,24 @@ msgstr "之間"
 #: includes/PDFStockCheckPageHeader.inc:16
 #: includes/PDFSupplierBalsPageHeader.inc:17
 msgid "and"
-msgstr "和"
+msgstr "及"
 
 #: DailyBankTransactions.php:127 PDFCustTransListing.php:41
 #: PDFPeriodStockTransListing.php:40 PDFSuppTransListing.php:37
 msgid "Transaction type"
-msgstr "交易類型"
+msgstr "交易型態"
 
 #: DailyBankTransactions.php:131 DailyBankTransactions.php:133
 msgid "Amount in"
-msgstr "在量"
+msgstr "金額"
 
 #: DailyBankTransactions.php:132 DailyBankTransactions.php:134
 msgid "Running Total"
-msgstr "運行總計"
+msgstr "小計"
 
 #: DailyBankTransactions.php:135
 msgid "Cleared"
-msgstr "清除"
+msgstr "已清算"
 
 #: DailyBankTransactions.php:173 GLJournalInquiry.php:126
 msgid "Select Another Date"
@@ -10490,11 +10490,11 @@ msgstr "輸入客戶的名字來提供這種以"
 
 #: DeliveryDetails.php:1007 RecurringSalesOrders.php:389
 msgid "Deliver from the warehouse at"
-msgstr "發貨地點"
+msgstr "發貨倉庫"
 
 #: DeliveryDetails.php:1014
 msgid "The stock locations could not be retrieved"
-msgstr "該股地點無法檢索"
+msgstr "倉庫位置無法檢索"
 
 #: DeliveryDetails.php:1015
 msgid "SQL used to retrieve the stock locations was"
@@ -12746,7 +12746,7 @@ msgstr "該表格佈局"
 
 #: FreightCosts.php:6 includes/MainMenuLinksArray.php:504
 msgid "Freight Costs Maintenance"
-msgstr "發貨地點維護"
+msgstr "維護運輸成本"
 
 #: FreightCosts.php:28 FreightCosts.php:83
 #: ../webSHOP/includes/PlaceOrder.php:287
@@ -12985,19 +12985,19 @@ msgstr "可能這是設定為從其他存貨地點派送"
 
 #: geocode_genxml_customers.php:5 geocode_genxml_suppliers.php:5
 msgid "Geocode Generate XML"
-msgstr "地理編碼產生XML"
+msgstr "地圖編碼產生XML"
 
 #: geocode.php:5
 msgid "Geocode Generate"
-msgstr "產生地理編碼"
+msgstr "產生地圖編碼"
 
 #: geocode.php:26 GeocodeSetup.php:135 GeocodeSetup.php:230
 msgid "Geocode Setup"
-msgstr "設置地理編碼"
+msgstr "設置地圖編碼"
 
 #: geocode.php:26
 msgid "Geocoding of Customers and Suppliers"
-msgstr "客戶和供應商的地理編碼"
+msgstr "客戶和供應商的地圖編碼"
 
 #: geocode.php:54
 msgid "Customer Code: "
@@ -13005,7 +13005,7 @@ msgstr "客戶編碼:"
 
 #: geocode.php:89
 msgid "failed to geocode."
-msgstr "未能進行地理編碼。"
+msgstr "進行地圖編碼失敗"
 
 #: geocode.php:106
 msgid "Supplier Code: "
@@ -13013,31 +13013,31 @@ msgstr "供應商編碼"
 
 #: geocode.php:145
 msgid "Go back to Geocode Setup"
-msgstr "返回到設置地理編碼"
+msgstr "返回到設置地圖編碼"
 
 #: GeocodeSetup.php:6 includes/MainMenuLinksArray.php:466
 msgid "Geocode Maintenance"
-msgstr "地理編碼維護"
+msgstr "地圖編碼維護"
 
 #: GeocodeSetup.php:38
 msgid "That geocode ID already exists in the database"
-msgstr "該地理編碼的ID已經存在於數據庫中"
+msgstr "該地圖編碼的ID已經存在於數據庫中"
 
 #: GeocodeSetup.php:59
 msgid "The geocode status record has been updated"
-msgstr "地理編碼狀態記錄已更新"
+msgstr "地圖編碼狀態記錄已更新"
 
 #: GeocodeSetup.php:98
 msgid "A new geocode status record has been inserted"
-msgstr "一種新的地理編碼狀態記錄已經插入"
+msgstr "新的地圖編碼狀態記錄已經插入"
 
 #: GeocodeSetup.php:111
 msgid "Geocode deleted"
-msgstr "刪除地理編碼"
+msgstr "刪除地圖編碼"
 
 #: GeocodeSetup.php:136 GeocodeSetup.php:230
 msgid "Setup configuration for Geocoding of Customers and Suppliers"
-msgstr "客戶和供應商的地理編碼設置配置"
+msgstr "設立客戶和供應商的地圖編碼的配置"
 
 #: GeocodeSetup.php:137
 msgid "Get a google API key at "
@@ -13057,11 +13057,11 @@ msgstr ""
 
 #: GeocodeSetup.php:146
 msgid "Geocode ID"
-msgstr "地理編碼標識"
+msgstr "地圖編碼ID"
 
 #: GeocodeSetup.php:147 GeocodeSetup.php:251
 msgid "Geocode Key"
-msgstr "地理編碼關鍵"
+msgstr "地圖編碼金鑰"
 
 #: GeocodeSetup.php:148
 msgid "Center Longitude"
@@ -13085,31 +13085,31 @@ msgstr "地圖主機"
 
 #: GeocodeSetup.php:195
 msgid "Show Defined Geocode Param Codes"
-msgstr "顯示定義的地理編碼Param代碼"
+msgstr "顯示定義的地圖編碼參數代碼"
 
 #: GeocodeSetup.php:232
 msgid "Geocode Code"
-msgstr "地理編碼"
+msgstr "地圖編碼"
 
 #: GeocodeSetup.php:256
 msgid "Geocode Center Long"
-msgstr "地理編碼中心長"
+msgstr "地圖編碼中心經度"
 
 #: GeocodeSetup.php:259
 msgid "Geocode Center Lat"
-msgstr "地理編碼中心緯度"
+msgstr "地圖編碼中心緯度"
 
 #: GeocodeSetup.php:262
 msgid "Geocode Map Height"
-msgstr "地理編碼身高地圖"
+msgstr "地圖編碼的地圖高度"
 
 #: GeocodeSetup.php:265
 msgid "Geocode Map Width"
-msgstr "地理編碼地圖寬度"
+msgstr "地圖編碼的地圖寬度"
 
 #: GeocodeSetup.php:268
 msgid "Geocode Host"
-msgstr "地理編碼主機"
+msgstr "地圖編碼主機"
 
 #: GeocodeSetup.php:276
 msgid ""
@@ -13117,20 +13117,20 @@ msgid ""
 "Geocode all Branches and Suppliers. This may take some time. Errors will be "
 "returned to the screen."
 msgstr ""
-"準備就緒後，請單擊下面的鏈接來運行地理編碼過程。這將處理地理編碼全部的分公司"
-"機構和供應商。這可能需要一些時間，誤差將被返回到屏幕上。"
+"當準備就緒後，請單擊下面的鏈接來執行地圖編碼。這將執行全部客戶的分公司和供應"
+"商的地理編碼。可能需要一些時間，若有誤差將返回到螢幕上。"
 
 #: GeocodeSetup.php:277
 msgid ""
 "Suppliers and Customer Branches are geocoded when being entered/updated. You "
 "can rerun the geocode process from this screen at any time."
 msgstr ""
-"當被輸入/更新的供應商和客戶分公司進行地理編碼。你可以從這個畫面在任何時候重新"
-"執行地理編碼過程。"
+"當供應商和客戶分公司被輸入或更新需要進行地圖編碼。你可以從這個畫面在任何時候"
+"重新執行地理編碼。"
 
 #: GeocodeSetup.php:279
 msgid "Run GeoCode process (may take a long time)"
-msgstr "執行地理編碼程序（可能需要很長的時間）"
+msgstr "執行地圖編碼程序（可能需要很長的時間）"
 
 #: GeocodeSetup.php:280
 msgid "Display Map of Customer Branches"
@@ -13142,15 +13142,15 @@ msgstr "顯示供應商地圖"
 
 #: geo_displaymap_customers.php:5
 msgid "Geocoded Customers Report"
-msgstr "客戶分公司地理編碼報表"
+msgstr "客戶分公司地圖編碼報表"
 
 #: geo_displaymap_customers.php:118 geo_displaymap_suppliers.php:118
 msgid "Go to Geocode Setup"
-msgstr "去設置地理編碼"
+msgstr "去設置地圖編碼"
 
 #: geo_displaymap_suppliers.php:5
 msgid "Geocoded Supplier Report"
-msgstr "供應商地理編碼報表"
+msgstr "供應商地圖編碼報表"
 
 #: GetStockImage.php:53
 msgid "Image Manipulation Script Problem"
@@ -14484,7 +14484,7 @@ msgstr "執行收貨"
 
 #: HistoricalTestResults.php:5
 msgid "Historical Test Results"
-msgstr ""
+msgstr "歷史測試結果"
 
 #: HistoricalTestResults.php:22 MRPCalendar.php:47 POReport.php:88
 #: POReport.php:863 SalesInquiry.php:82 SelectQASamples.php:164
@@ -14500,17 +14500,17 @@ msgstr "無效的日期"
 
 #: HistoricalTestResults.php:48
 msgid "Show Test Results For"
-msgstr ""
+msgstr "顯示測試結果"
 
 #: HistoricalTestResults.php:70 SelectQASamples.php:243
 #: TestPlanResults.php:128
 msgid "From Sample Date"
-msgstr ""
+msgstr "從採樣日期"
 
 #: HistoricalTestResults.php:70 SelectQASamples.php:243
 #: TestPlanResults.php:128
 msgid "To Sample Date"
-msgstr ""
+msgstr "採樣截止日期"
 
 #: HistoricalTestResults.php:76 InternalStockRequest.php:301
 #: MailingGroupMaintenance.php:145 MRPCreateDemands.php:282 PDFCOA.php:43
@@ -14521,11 +14521,11 @@ msgstr "確認新增"
 
 #: HistoricalTestResults.php:128
 msgid "Historical Test Results for"
-msgstr ""
+msgstr "歷史測試結果"
 
 #: HistoricalTestResults.php:130
 msgid "Sample ID:"
-msgstr ""
+msgstr "樣品編號："
 
 #: HistoricalTestResults.php:130 PDFGrn.php:142 PDFStockTransfer.php:135
 msgid "Lot/Serial:"
@@ -14533,11 +14533,11 @@ msgstr "批號/序列號"
 
 #: HistoricalTestResults.php:130
 msgid "Identifier:"
-msgstr ""
+msgstr "標識"
 
 #: HistoricalTestResults.php:130
 msgid "Sample Date:"
-msgstr ""
+msgstr "採樣日期:"
 
 #: ImportBankTransAnalysis.php:14
 msgid "Imported Bank Transaction General Ledger Analysis"
@@ -15409,7 +15409,7 @@ msgstr "庫存計劃報表"
 #: InventoryPlanning.php:362 InventoryValuation.php:226 PDFPriceList.php:293
 #: StockCheck.php:262
 msgid "Select Inventory Categories"
-msgstr ""
+msgstr "選擇庫存類別"
 
 #: InventoryPlanning.php:380 InventoryPlanningPrefSupplier.php:393
 #: InventoryValuation.php:244 StockCheck.php:280
@@ -15905,7 +15905,7 @@ msgstr "現有用戶已授權該位置"
 msgid ""
 "Cannot delete this location because sales orders have been created "
 "delivering from this location"
-msgstr "未能前除地點, 因為已有銷售訂單的發貨地點使用"
+msgstr "未能刪除倉庫, 因為已有銷售訂單使用此倉庫發貨"
 
 #: Locations.php:265
 msgid "sales orders with this Location code"
@@ -17637,7 +17637,7 @@ msgstr "交貨地址 3"
 
 #: OrderDetails.php:103
 msgid "Deliver From Location"
-msgstr "發貨地點 "
+msgstr "發貨倉庫"
 
 #: OrderDetails.php:105 PO_OrderDetails.php:122
 msgid "Delivery Address 4"
@@ -18426,7 +18426,7 @@ msgstr "授權以零用金標籤支出"
 
 #: PcClaimExpensesFromTab.php:6
 msgid "Claim Petty Cash Expenses From Tab"
-msgstr "權利要求零用現金開支由標籤"
+msgstr "確認零用現金開支來自標籤"
 
 #: PcClaimExpensesFromTab.php:44
 msgid "You have not selected a tab to claim the expenses on"
@@ -18454,11 +18454,11 @@ msgstr "零用金支出記錄"
 
 #: PcClaimExpensesFromTab.php:149
 msgid "Petty Cash Tabs for User "
-msgstr "小資的用戶標籤的現金"
+msgstr "零用金的用戶標籤"
 
 #: PcClaimExpensesFromTab.php:182
 msgid "Petty Cash Claim Entry"
-msgstr "零用現金索賠條目"
+msgstr "輸入零用現金要求"
 
 #: PcClaimExpensesFromTab.php:194
 msgid "Petty Cash Tab"
@@ -18822,19 +18822,19 @@ msgstr "標籤類型"
 
 #: PcTabs.php:209
 msgid "Limit"
-msgstr "極限"
+msgstr "限制"
 
 #: PcTabs.php:210 PcTabs.php:385
 msgid "Assigner"
-msgstr "出讓方"
+msgstr "分配者"
 
 #: PcTabs.php:212
 msgid "GL Account For Cash Assignment"
-msgstr "GL帳戶現金分配"
+msgstr "總帳帳戶現金分配"
 
 #: PcTabs.php:213 PcTabs.php:461
 msgid "GL Account Petty Cash Tab"
-msgstr "GL帳戶零用現金片"
+msgstr "總帳帳戶零用現金標籤"
 
 #: PcTabs.php:237
 #, php-format
@@ -18847,11 +18847,11 @@ msgstr "顯示所有標籤定義"
 
 #: PcTabs.php:381
 msgid "Limit Of Tab"
-msgstr "選項卡極限"
+msgstr "限制標籤"
 
 #: PcTabs.php:435
 msgid "GL Account Cash Assignment"
-msgstr "GL帳戶現金分配"
+msgstr "總帳帳戶現金分配"
 
 #: PcTypeTabs.php:5
 msgid "Maintenance Of Petty Cash Type of Tabs"
@@ -19024,7 +19024,7 @@ msgstr "在資料庫中沒找不到期間內的銀行交易"
 
 #: PDFChequeListing.php:117
 msgid "Please try again selecting a different date range or account"
-msgstr "請選取其他的日期範圍或帳目"
+msgstr "請再試選擇其他的日期範圍或帳戶"
 
 #: PDFChequeListing.php:126
 msgid "Cheque Listing"
@@ -19058,7 +19058,7 @@ msgstr "有沒有會員的區別？上市收件人的電子郵件組，沒有郵
 
 #: PDFCOA.php:27
 msgid "Select Certificate of Analysis To Print"
-msgstr ""
+msgstr "選擇要列印的分析證書"
 
 #: PDFCOA.php:35 PO_Items.php:844
 msgid "Enter Item"
@@ -19066,59 +19066,59 @@ msgstr "輸入物料"
 
 #: PDFCOA.php:37
 msgid "Enter Lot"
-msgstr ""
+msgstr "輸入批次/捆/批號"
 
 #: PDFCOA.php:51
 msgid "Or Select Existing Lot"
-msgstr ""
+msgstr "或選擇現有的批號"
 
 #: PDFCOA.php:64
 msgid "Lot/Serial"
-msgstr ""
+msgstr "批號/序列號"
 
 #: PDFCOA.php:81
 msgid "There was a problem retrieving the Lot Information"
-msgstr ""
+msgstr "提取批號資訊時發生錯誤"
 
 #: PDFCOA.php:126
 msgid "Print Certificate of Analysis Error"
-msgstr ""
+msgstr "列印證書的誤差分析"
 
 #: PDFCOA.php:132
 msgid "Unable to Locate Lot"
-msgstr ""
+msgstr "找不到批號位置"
 
 #: PDFCOA.php:139 PDFCOA.php:157 PDFCOA.php:158 includes/PDFCOAHeader.inc:28
 msgid "Certificate of Analysis"
-msgstr ""
+msgstr "分析證明書"
 
 #: PDFCOA.php:169
 msgid "Physical Properties"
-msgstr ""
+msgstr "實體屬性"
 
 #: PDFCOA.php:169 PDFProdSpec.php:129
 msgid "Physical Property"
-msgstr ""
+msgstr "實體屬性"
 
 #: PDFCOA.php:169 PDFProdSpec.php:129 TestPlanResults.php:804
 msgid "Test Method"
-msgstr ""
+msgstr "測試方法"
 
 #: PDFCOA.php:170 PDFProdSpec.php:130
 msgid "Injection Molding Processing Guidelines"
-msgstr ""
+msgstr "注塑成型加工指南"
 
 #: PDFCOA.php:170 PDFProdSpec.php:130
 msgid "* Desicant type dryer required."
-msgstr ""
+msgstr "乾燥型烘乾機是必需的。"
 
 #: PDFCOA.php:170 PDFProdSpec.php:130
 msgid "Setting"
-msgstr ""
+msgstr "設定"
 
 #: PDFCOA.php:171 PDFProdSpec.php:131
 msgid "Regulatory Compliance"
-msgstr ""
+msgstr "遵從法規"
 
 #: PDFCustomerList.php:12 PDFCustomerList.php:13
 msgid "Customer Listing"
@@ -19622,7 +19622,7 @@ msgstr "採購訂單交貨"
 
 #: PDFPeriodStockTransListing.php:47 includes/DatabaseTranslations.php:39
 msgid "Work Order Receipt"
-msgstr "製令單收穫"
+msgstr "製令單據回執"
 
 #: PDFPeriodStockTransListing.php:48 includes/DatabaseTranslations.php:40
 msgid "Work Order Issue"
@@ -19893,49 +19893,49 @@ msgstr "顯示標籤"
 
 #: PDFProdSpec.php:16
 msgid "Select Product Specification To Print"
-msgstr ""
+msgstr "選取要列印的產品規格"
 
 #: PDFProdSpec.php:24 ProductSpecs.php:93
 msgid "Enter Specification Name"
-msgstr ""
+msgstr "輸入規格名稱"
 
 #: PDFProdSpec.php:38 ProductSpecs.php:107
 msgid "Or Select Existing Specification"
-msgstr ""
+msgstr "選取要列印的現有規格"
 
 #: PDFProdSpec.php:64
 msgid "There was a problem retrieving the Product Specification"
-msgstr ""
+msgstr "選取的產品規格發生錯誤"
 
 #: PDFProdSpec.php:90
 msgid "Print Product Specification Error"
-msgstr ""
+msgstr "列印的產品規格有錯誤"
 
 #: PDFProdSpec.php:96
 msgid "Unable to Locate Specification"
-msgstr ""
+msgstr "無法打到產品規格"
 
 #: PDFProdSpec.php:103 includes/MainMenuLinksArray.php:337
 msgid "Product Specifications"
-msgstr ""
+msgstr "產品規格"
 
 #: PDFProdSpec.php:117 PDFProdSpec.php:118 ProductSpecs.php:347
 msgid "Product Specification"
-msgstr ""
+msgstr "產品規格"
 
 #: PDFProdSpec.php:129
 msgid "Technical Data Sheet Properties"
-msgstr ""
+msgstr "技術數據表屬性"
 
 #: PDFProdSpec.php:129
 msgid "* Data herein is typical and not to be construed as specifications."
-msgstr ""
+msgstr "*數據在這裡是典型的並且不應被解釋為規格。"
 
 #: PDFProdSpec.php:264
 msgid ""
 "The information provided on this datasheet should only be used as a "
 "guideline. Actual lot to lot values will vary."
-msgstr ""
+msgstr "提供此數據表中的信息只能作為參考。實際批次值會有所不同。"
 
 #: PDFQALabel.php:20
 msgid "QA Label"
@@ -21643,11 +21643,11 @@ msgstr "全部類別"
 
 #: POReport.php:1607 SalesInquiry.php:1207
 msgid "Sort By"
-msgstr "Sort By"
+msgstr "排序依據"
 
 #: POReport.php:1620 SalesInquiry.php:1224
 msgid "Summary Type"
-msgstr "摘要類型"
+msgstr "彙總類型"
 
 #: POReport.php:1636 SalesInquiry.php:1246
 msgid "Run Inquiry"
@@ -22946,11 +22946,11 @@ msgstr "簽名"
 
 #: ProductSpecs.php:5
 msgid "Product Specifications Maintenance"
-msgstr ""
+msgstr "產品規格維護"
 
 #: ProductSpecs.php:45
 msgid "Enter The Item, Fixed Asset or Template to Copy this Specification to"
-msgstr ""
+msgstr "輸入料品，固定資產或模組，以複製這規格到"
 
 #: ProductSpecs.php:48 PurchData.php:313 TestPlanResults.php:331
 #, php-format
@@ -22959,40 +22959,40 @@ msgstr "複製"
 
 #: ProductSpecs.php:75
 msgid "A Product Specification has been copied to"
-msgstr ""
+msgstr "產品規格已被複製到"
 
 #: ProductSpecs.php:76 ProductSpecs.php:279
 msgid "The insert of the Product Specification failed because"
-msgstr ""
+msgstr "產品規格的插入失敗，因為"
 
 #: ProductSpecs.php:138
 msgid "Product Specification for"
-msgstr ""
+msgstr "產品規格"
 
 #: ProductSpecs.php:163 ProductSpecs.php:384 QATests.php:242 QATests.php:390
 #: TestPlanResults.php:509
 msgid "Method"
-msgstr ""
+msgstr "方法"
 
 #: ProductSpecs.php:165 ProductSpecs.php:387 ProductSpecs.php:583
 #: QATests.php:283 QATests.php:394 TestPlanResults.php:511
 msgid "Possible Values"
-msgstr ""
+msgstr "可能的值"
 
 #: ProductSpecs.php:166 ProductSpecs.php:388 ProductSpecs.php:588
 #: TestPlanResults.php:512 TestPlanResults.php:806
 msgid "Target Value"
-msgstr ""
+msgstr "目標值"
 
 #: ProductSpecs.php:167 ProductSpecs.php:389 ProductSpecs.php:594
 #: TestPlanResults.php:513
 msgid "Range Min"
-msgstr ""
+msgstr "最小範圍"
 
 #: ProductSpecs.php:168 ProductSpecs.php:390 ProductSpecs.php:598
 #: TestPlanResults.php:514
 msgid "Range Max"
-msgstr ""
+msgstr "最大範圍"
 
 #: ProductSpecs.php:194 QATests.php:258 QATests.php:260
 #: StockCategories.php:589 StockCategories.php:591 StockCategories.php:635
@@ -23021,25 +23021,25 @@ msgstr "範圍"
 
 #: ProductSpecs.php:278
 msgid "A Product Specification record has been added for Test ID"
-msgstr ""
+msgstr "產品規格記錄已新增測試ID"
 
 #: ProductSpecs.php:313
 msgid "Product Specification record for"
-msgstr ""
+msgstr "產品規格記錄"
 
 #: ProductSpecs.php:314
 msgid "The update of the Product Specification failed because"
-msgstr ""
+msgstr "產品規格的更新失敗，因為"
 
 #: ProductSpecs.php:340
 msgid ""
 "Cannot delete this Product Specification because there are test results tied "
 "to it"
-msgstr ""
+msgstr "無法刪除此產品規格，因為有測試結果連接到它"
 
 #: ProductSpecs.php:344
 msgid "The Product Specification could not be deleted because"
-msgstr ""
+msgstr "產品規格不能刪除，因為"
 
 #: ProductSpecs.php:347 QATests.php:142 SalesPeople.php:179
 #: SelectQASamples.php:138 TestPlanResults.php:709
@@ -23048,15 +23048,15 @@ msgstr "已從資料庫中刪除"
 
 #: ProductSpecs.php:391 QATests.php:396
 msgid "Show on Cert"
-msgstr ""
+msgstr "顯示在證書"
 
 #: ProductSpecs.php:392 QATests.php:397
 msgid "Show on Spec"
-msgstr ""
+msgstr "顯示在規格"
 
 #: ProductSpecs.php:393 QATests.php:398
 msgid "Show on Test Plan"
-msgstr ""
+msgstr "顯示測試計畫"
 
 #: ProductSpecs.php:394 QATests.php:399
 msgid "Active"
@@ -23065,27 +23065,27 @@ msgstr "啟動"
 #: ProductSpecs.php:464
 #, php-format
 msgid "Are you sure you wish to delete this Product Specification ?"
-msgstr ""
+msgstr "您確定要刪除該產品規格？"
 
 #: ProductSpecs.php:490
 msgid "Show All Product Specs"
-msgstr ""
+msgstr "顯示所有產品規格"
 
 #: ProductSpecs.php:546 TestPlanResults.php:803
 msgid "Test Name"
-msgstr ""
+msgstr "測試名稱"
 
 #: ProductSpecs.php:603 QATests.php:301
 msgid "Show On Cert?"
-msgstr ""
+msgstr "顯示在證書？"
 
 #: ProductSpecs.php:616 QATests.php:314
 msgid "Show On Spec?"
-msgstr ""
+msgstr "顯示在規格？"
 
 #: ProductSpecs.php:629 QATests.php:327
 msgid "Show On Test Plan?"
-msgstr ""
+msgstr "顯示在測試計劃？"
 
 #: ProductSpecs.php:642 QATests.php:340 SalesCategories.php:244
 msgid "Active?"
@@ -23093,19 +23093,19 @@ msgstr "現行"
 
 #: ProductSpecs.php:665 TestPlanResults.php:972
 msgid "Add More Tests"
-msgstr ""
+msgstr "增加更多測試"
 
 #: ProductSpecs.php:666
 msgid "Copy This Specification"
-msgstr ""
+msgstr "複製本規格"
 
 #: ProductSpecs.php:667 includes/MainMenuLinksArray.php:308
 msgid "Print Product Specification"
-msgstr ""
+msgstr "列印產品規格"
 
 #: ProductSpecs.php:668
 msgid "Product Specification Main Page"
-msgstr ""
+msgstr "產品規格主頁"
 
 #: PurchaseByPrefSupplier.php:6
 msgid "Preferred Supplier Purchasing"
@@ -23521,90 +23521,90 @@ msgstr "百分比"
 
 #: QATests.php:5
 msgid "QA Tests Maintenance"
-msgstr ""
+msgstr "QA測試維護"
 
 #: QATests.php:35
 msgid "The QA Test name must be fifty characters or less long"
-msgstr ""
+msgstr "QA測試名稱必須是50個字以內長度"
 
 #: QATests.php:42
 msgid "The Type must not be blank"
-msgstr ""
+msgstr "該類型不能為空"
 
 #: QATests.php:52
 msgid "The QA Test name already exists"
-msgstr ""
+msgstr "QA測試名稱已經存在"
 
 #: QATests.php:74
 msgid "QA Test record for"
-msgstr ""
+msgstr "對於QA測試記錄"
 
 #: QATests.php:103
 msgid "A new QA Test record has been added for"
-msgstr ""
+msgstr "新的QA測試記錄已新增"
 
 #: QATests.php:107
 msgid "The insert or update of the QA Test failed because"
-msgstr ""
+msgstr "在QA測試的插入或更新失敗，因為"
 
 #: QATests.php:136
 msgid "Cannot delete this QA Test because Product Specs are using it"
-msgstr ""
+msgstr "由於產品規格都用它不能刪除這個QA測試"
 
 #: QATests.php:139
 msgid "The QA Test could not be deleted because"
-msgstr ""
+msgstr "QA測試不能刪除因為"
 
 #: QATests.php:142
 msgid "QA Test"
-msgstr ""
+msgstr "QA測試"
 
 #: QATests.php:150
 msgid "Show All QA Tests"
-msgstr ""
+msgstr "顯示所有QA測試"
 
 #: QATests.php:198
 msgid "QA Test ID"
-msgstr ""
+msgstr "QA測試編號"
 
 #: QATests.php:238
 msgid "QA Test Name"
-msgstr ""
+msgstr "QA測試名稱"
 
 #: QATests.php:239
 msgid "The name of the Test you are setting up"
-msgstr ""
+msgstr "該測試的名稱要設定"
 
 #: QATests.php:243
 msgid "ASTM, ISO, UL or other"
-msgstr ""
+msgstr "ASTM，ISO，UL等"
 
 #: QATests.php:246 QATests.php:391
 msgid "Group By"
-msgstr ""
+msgstr "按群組"
 
 #: QATests.php:247
 msgid ""
 "Can be used to group certain Tests on the Product Specification or "
 "Certificate of\n"
 "Analysis or left blank"
-msgstr ""
+msgstr "可用於組的某些測試上的產品規格或分析證書或留空白"
 
 #: QATests.php:252
 msgid "How this is measured. PSI, Fahrenheit, Celsius etc."
-msgstr ""
+msgstr "這是如何測量的。 PSI，華氏攝氏度等。"
 
 #: QATests.php:256
 msgid "What sort of data field is required to record the results for this test"
-msgstr ""
+msgstr "分類的數據欄位是必需的，以記錄該測試結果"
 
 #: QATests.php:288
 msgid "Numeric Value?"
-msgstr ""
+msgstr "數值?"
 
 #: QATests.php:388
 msgid "Test ID"
-msgstr ""
+msgstr "測試ID"
 
 #: QATests.php:395 StockCategories.php:577
 msgid "Numeric Value"
@@ -23613,7 +23613,7 @@ msgstr "數值"
 #: QATests.php:466
 #, php-format
 msgid "Are you sure you wish to delete this QA Test ?"
-msgstr ""
+msgstr "您確定要刪除該QA測試？"
 
 #: RecurringSalesOrders.php:13
 msgid "Recurring Orders"
@@ -24070,7 +24070,7 @@ msgstr "重印標籤"
 
 #: ReverseGRN.php:9 includes/MainMenuLinksArray.php:204
 msgid "Reverse Goods Received"
-msgstr "取銷收貨"
+msgstr "取消收貨"
 
 #: ReverseGRN.php:21
 msgid "This page is expected to be called after a supplier has been selected"
@@ -24275,27 +24275,27 @@ msgstr "撤銷"
 #: RevisionTranslations.php:7 RevisionTranslations.php:13
 #: RevisionTranslations.php:14 includes/MainMenuLinksArray.php:271
 msgid "Review Translated Descriptions"
-msgstr ""
+msgstr "評論翻譯說明"
 
 #: RevisionTranslations.php:30
 msgid "descriptions"
-msgstr ""
+msgstr "說明"
 
 #: RevisionTranslations.php:41
 msgid "Translations to revise"
-msgstr ""
+msgstr "修改翻譯"
 
 #: RevisionTranslations.php:61
 msgid "Part Description (short)"
-msgstr "物料說明 (短)"
+msgstr "部分描述（短）"
 
 #: RevisionTranslations.php:62
 msgid "Part Description (long)"
-msgstr "物料說明 (長敘述)"
+msgstr "部分描述（長）"
 
 #: RevisionTranslations.php:63
 msgid "Revised?"
-msgstr ""
+msgstr "修改?"
 
 #: SalesAnalReptCols.php:7
 msgid "Sales Analysis Report Columns"
@@ -25219,7 +25219,7 @@ msgstr "沒有圖表要求的銷售資料條件"
 #: SalesInquiry.php:9 SalesInquiry.php:791 SalesTopCustomersInquiry.php:9
 #: SalesTopItemsInquiry.php:9
 msgid "Sales Inquiry"
-msgstr "銷售諮詢"
+msgstr "銷售查詢"
 
 #: SalesInquiry.php:91
 msgid "Cannot summarize by transaction number with a date type of Order Date"
@@ -25289,7 +25289,7 @@ msgstr "全部業務員"
 
 #: SalesInquiry.php:1216
 msgid "Transaction Number sort only valid for Invoice Date Type"
-msgstr "交易數量排序僅適用於發票日期類型"
+msgstr "交易編號排序僅適用於發票日期類型"
 
 #: SalesInquiry.php:1238
 msgid "Transaction Number summary only valid for Invoice Date Type"
@@ -26708,7 +26708,7 @@ msgstr "維護供應商資料"
 
 #: SelectProduct.php:471
 msgid "Maintain Customer Item Data"
-msgstr "維持客戶產品數據"
+msgstr "維護客戶產品資料"
 
 #: SelectProduct.php:477
 msgid "Maintain Pricing"
@@ -26728,7 +26728,7 @@ msgstr "複製物料"
 
 #: SelectProduct.php:485
 msgid "Maintain Related Items"
-msgstr "保持相關物料"
+msgstr "維護相關物料"
 
 #: SelectProduct.php:486
 msgid "Maintain Price Matrix"
@@ -26744,115 +26744,115 @@ msgstr "輸入您希望在項目代碼中搜索的文本"
 
 #: SelectQASamples.php:5
 msgid "Select QA Samples"
-msgstr ""
+msgstr "Select QA Samples"
 
 #: SelectQASamples.php:65 TestPlanResults.php:690
 msgid ""
 "Test Results have not all been entered.  This Lot is not able to be used for "
 "a a Certificate of Analysis"
-msgstr ""
+msgstr "測試結果還沒有全部被輸入。該批次不能用於分析證書"
 
 #: SelectQASamples.php:74
 msgid "Some Results are out of Spec"
-msgstr ""
+msgstr "有些結果是超出規格的"
 
 #: SelectQASamples.php:83
 msgid "QA Sample record for"
-msgstr ""
+msgstr "對於QA樣本記錄"
 
 #: SelectQASamples.php:84 SelectQASamples.php:98 TestPlanResults.php:691
 msgid "The update of the QA Sample failed because"
-msgstr ""
+msgstr "質量保證樣品的更新失敗，因為"
 
 #: SelectQASamples.php:97
 msgid "All other samples for this Specification and Lot was marked as Cert=No"
-msgstr ""
+msgstr "所有其他樣本規格和批次被標記為證書=無"
 
 #: SelectQASamples.php:109
 msgid "Created New Sample"
-msgstr ""
+msgstr "建立新樣品"
 
 #: SelectQASamples.php:129
 msgid "Cannot delete this Sample ID because there are test results tied to it"
-msgstr ""
+msgstr "無法刪除此樣品編號，因為有測試結果連接到它"
 
 #: SelectQASamples.php:132 TestPlanResults.php:706
 msgid "The sample results could not be deleted because"
-msgstr ""
+msgstr "抽樣結果不能刪除，因為"
 
 #: SelectQASamples.php:135
 msgid "The QA Sample could not be deleted because"
-msgstr ""
+msgstr "質量保證樣品不能被刪除，因為"
 
 #: SelectQASamples.php:138
 msgid "QA Sample"
-msgstr ""
+msgstr "QA樣品"
 
 #: SelectQASamples.php:156 TestPlanResults.php:41
 msgid "The Sample ID entered"
-msgstr ""
+msgstr "輸入樣品編號："
 
 #: SelectQASamples.php:159 SelectQASamples.php:242 SelectQASamples.php:483
 #: TestPlanResults.php:44 TestPlanResults.php:127 TestPlanResults.php:755
 msgid "Sample ID"
-msgstr ""
+msgstr "樣品編號："
 
 #: SelectQASamples.php:242 TestPlanResults.php:127
 msgid "Lot Number"
-msgstr ""
+msgstr "批號"
 
 #: SelectQASamples.php:244 TestPlanResults.php:129
 msgid "Search Samples"
-msgstr ""
+msgstr "搜索樣本"
 
 #: SelectQASamples.php:257 TestPlanResults.php:142
 msgid ""
 "To search for Pick Lists for a specific part use the part selection "
 "facilities below"
-msgstr ""
+msgstr "要搜索撿取列表的特定部件，使用下面的部件選擇設備"
 
 #: SelectQASamples.php:382 TestPlanResults.php:271
 msgid "No QA samples were returned by the SQL because"
-msgstr ""
+msgstr "無質量保證樣品通過SQL返回，因為"
 
 #: SelectQASamples.php:388 TestPlanResults.php:278
 msgid "Enter Results"
-msgstr ""
+msgstr "輸入結果"
 
 #: SelectQASamples.php:389 SelectQASamples.php:488 SelectQASamples.php:544
 #: TestPlanResults.php:279 TestPlanResults.php:756
 msgid "Specification"
-msgstr ""
+msgstr "產品規格"
 
 #: SelectQASamples.php:391 TestPlanResults.php:281 TestPlanResults.php:757
 msgid "Lot / Serial"
-msgstr ""
+msgstr "批號/序列號"
 
 #: SelectQASamples.php:392 SelectQASamples.php:496 SelectQASamples.php:556
 #: TestPlanResults.php:282 TestPlanResults.php:758
 msgid "Identifier"
-msgstr ""
+msgstr "標識"
 
 #: SelectQASamples.php:393 TestPlanResults.php:283
 msgid "Created By"
-msgstr ""
+msgstr "建立者"
 
 #: SelectQASamples.php:394 SelectQASamples.php:504 TestPlanResults.php:284
 #: TestPlanResults.php:759
 msgid "Sample Date"
-msgstr ""
+msgstr "採樣日期:"
 
 #: SelectQASamples.php:396 TestPlanResults.php:286
 msgid "Cert Allowed"
-msgstr ""
+msgstr "證書允許的"
 
 #: SelectQASamples.php:411
 msgid "Are you sure you wish to delete this Sample ID ?"
-msgstr ""
+msgstr "您確定要刪除該樣品ID？"
 
 #: SelectQASamples.php:449
 msgid "Show All Samples"
-msgstr ""
+msgstr "顯示所有樣品"
 
 #: SelectQASamples.php:492 SelectQASamples.php:552
 #: includes/PDFWOPageHeader.inc:45
@@ -26861,11 +26861,11 @@ msgstr "批次"
 
 #: SelectQASamples.php:508 SelectQASamples.php:565
 msgid "Use for Cert?"
-msgstr ""
+msgstr "使用證書？"
 
 #: SelectQASamples.php:579
 msgid "Duplicate for Lot OK?"
-msgstr ""
+msgstr "重複的的批次，OK？"
 
 #: SelectRecurringSalesOrder.php:5
 msgid "Search Recurring Sales Orders"
@@ -30411,12 +30411,12 @@ msgstr "用作更新存貨商品失敗的 SQL 是"
 
 #: Stocks.php:464
 msgid "The stock description translations could not be updated because"
-msgstr ""
+msgstr "庫存說明翻譯不能更新，因為"
 
 #: Stocks.php:465
 msgid ""
 "The SQL that was used to set the flag for translation revision failed was"
-msgstr ""
+msgstr "該SQL用於設定修正翻譯的標誌失敗"
 
 #: Stocks.php:512 Stocks.php:529 Stocks.php:566 Stocks.php:583
 msgid "Change stock category"
@@ -30605,11 +30605,11 @@ msgstr ""
 
 #: Stocks.php:1037
 msgid "Long Description"
-msgstr ""
+msgstr "詳細描述"
 
 #: Stocks.php:1335
 msgid "Order multiple. It is the minimum packing quantity."
-msgstr ""
+msgstr "多數的訂單。它是最小包裝量。"
 
 #: Stocks.php:1445
 msgid ""
@@ -32468,7 +32468,7 @@ msgstr "供應商設立日期必須是日期格式"
 
 #: Suppliers.php:430
 msgid "Goole map url not loading"
-msgstr ""
+msgstr "谷歌地圖網址未下載"
 
 #: Suppliers.php:498 Z_ImportSuppliers.php:245
 msgid "Cannot change currency code as transactions already exist"
@@ -33425,31 +33425,31 @@ msgstr "在SMTP設置應選擇是或否"
 
 #: SystemParameters.php:106
 msgid "The Quality Log Samples setting should be selected as Yes or No"
-msgstr ""
+msgstr "質量記錄樣本設定應選擇是或否"
 
 #: SystemParameters.php:109
 msgid ""
 "The Quality ProdSpec Text may not contain single quotes and may not be "
 "longer than 5000 chars"
-msgstr ""
+msgstr "質量產品規格文字不包含單引號，不超過5000個字符"
 
 #: SystemParameters.php:112
 msgid ""
 "The Quality COA Text may not contain single quotes and may not be longer "
 "than 5000 chars"
-msgstr ""
+msgstr "質量COA文字不包含單引號，不超過5000個字符"
 
 #: SystemParameters.php:131
 msgid "Cannot write to the configuration file."
-msgstr ""
+msgstr "配置文件無法寫入"
 
 #: SystemParameters.php:133
 msgid "The configuration file was updated."
-msgstr ""
+msgstr "配置文件無法更新"
 
 #: SystemParameters.php:137
 msgid "Cannot open the configuration file."
-msgstr ""
+msgstr "無法開啟組態檔"
 
 #: SystemParameters.php:381
 msgid "The system configuration could not be updated because"
@@ -33493,13 +33493,13 @@ msgstr "日期和顯示輸入格式為預設的日期格式"
 
 #: SystemParameters.php:430
 msgid "Default Theme"
-msgstr ""
+msgstr "預設版面樣式"
 
 #: SystemParameters.php:443
 msgid ""
 "The default theme to use for the login screen and the setup of new users. "
 "The users' theme selection will override it."
-msgstr ""
+msgstr "預設版面用於登錄界面和新用戶的設置。用戶選擇的版面將被覆蓋。"
 
 #: SystemParameters.php:449
 msgid "Accounts Receivable/Payable Settings"
@@ -33648,13 +33648,14 @@ msgstr "選擇所有的項目說明翻譯都是要保持預設的語言 "
 
 #: SystemParameters.php:536
 msgid "Google Translator API Key"
-msgstr ""
+msgstr "谷歌的API密鑰"
 
 #: SystemParameters.php:538
 msgid ""
 "Google Translator API Key to allow automatic translations. More info at "
 "https://cloud.google.com/translate/"
 msgstr ""
+"谷歌翻譯API密鑰允許自動翻譯。更多信息在 https://cloud.google.com/translate/"
 
 #: SystemParameters.php:541
 msgid "A picking note must be produced before an order can be delivered"
@@ -33722,11 +33723,11 @@ msgstr "選取發票格式"
 
 #: SystemParameters.php:584
 msgid "Invoice Quantity Default"
-msgstr ""
+msgstr "預設的訂單數量"
 
 #: SystemParameters.php:586
 msgid "0"
-msgstr ""
+msgstr "0"
 
 #: SystemParameters.php:589
 msgid ""
@@ -33735,6 +33736,8 @@ msgid ""
 "default the invoice quantity to the balance outstanding, after previous "
 "deliveries, on the sales order"
 msgstr ""
+"此設置控制預設的發票行為。設置為0則預設發票數量強制輸入為0。設置為特殊則預設"
+"發票數量為特殊餘額，於前面交付之後，銷售訂單上"
 
 #: SystemParameters.php:593
 msgid "Show company details on packing slips"
@@ -34256,15 +34259,15 @@ msgstr "的路徑維基安裝，形成維基網址的基礎 - 或wiki的完整UR
 
 #: SystemParameters.php:1001
 msgid "Geocode Customers and Suppliers"
-msgstr "地理編碼客戶及供應商"
+msgstr "地圖編碼客戶及供應商"
 
 #: SystemParameters.php:1004 SystemParameters.php:1008
 msgid "Geocode Integration Enabled"
-msgstr "地理編碼整合啟用"
+msgstr "地圖編碼整合啟用"
 
 #: SystemParameters.php:1005 SystemParameters.php:1007
 msgid "Geocode Integration Disabled"
-msgstr "禁用地理編碼整合"
+msgstr "禁用地圖編碼整合"
 
 #: SystemParameters.php:1011
 msgid ""
@@ -34273,8 +34276,8 @@ msgid ""
 "facility under Main Menu - Setup - Geocode Setup. This feature is "
 "experimental."
 msgstr ""
-"此功能將使緯度和經度坐標，客戶和供應商。需要訪問映射提供。您必須安裝這一設施"
-"主菜單下 - 設置 - 地理編碼設置。此功能是實驗性的。"
+"此功能為客戶和供應商對應提供的經緯度坐標。您必須設置這功能在主目錄下 - 設定 "
+"- 地圖編碼設置。此功能是實驗性的。"
 
 #: SystemParameters.php:1013
 msgid "Extended Customer Information"
@@ -34530,29 +34533,30 @@ msgstr ""
 
 #: SystemParameters.php:1220
 msgid "Text for Quality Product Specification"
-msgstr ""
+msgstr "質量產品規格的文字"
 
 #: SystemParameters.php:1222
 msgid "This text appears on product specifications"
-msgstr ""
+msgstr "該文本顯示於產品規格"
 
 #: SystemParameters.php:1223
 msgid "Text for Quality Product Certifications"
-msgstr ""
+msgstr "質量產品認證的文字"
 
 #: SystemParameters.php:1225
 msgid "This text appears on product certifications"
-msgstr ""
+msgstr "文字顯示有關產品認證"
 
 #: SystemParameters.php:1227
 msgid "Auto Log Quality Samples"
-msgstr ""
+msgstr "自動記錄樣品質量"
 
 #: SystemParameters.php:1240
 msgid ""
 "The flag determines if the system creates quality samples automatically for "
 "each lot during P/O Receipt and W/O Receipt transactions."
 msgstr ""
+"該標誌確定系統是否每批期間P/ O收據和W/ O收據的交易將自動建立質量的樣本。"
 
 #: TaxAuthorities.php:5
 msgid "Tax Authorities"
@@ -35101,15 +35105,15 @@ msgstr "未能取得期間資料, 因為"
 
 #: Tax.php:376
 msgid "Detail Or Summary Only"
-msgstr "只要詳情或彙總"
+msgstr "只要明細或彙總"
 
 #: Tax.php:378
 msgid "Detail and Summary"
-msgstr "詳情或彙總"
+msgstr "明細及彙總"
 
 #: Tax.php:379
 msgid "Summary Only"
-msgstr "只要撮要"
+msgstr "只要彙總"
 
 #: TaxProvinces.php:5
 msgid "Dispatch Tax Provinces"
@@ -35207,127 +35211,127 @@ msgstr "在30個合法字符"
 
 #: TestPlanResults.php:5
 msgid "Test Plan Results"
-msgstr ""
+msgstr "測試計畫結果"
 
 #: TestPlanResults.php:277
 msgid "Copy Results"
-msgstr ""
+msgstr "複製結果"
 
 #: TestPlanResults.php:300
 msgid "Copy to This Sample"
-msgstr ""
+msgstr "複製到這個樣品"
 
 #: TestPlanResults.php:330
 msgid "Override existing Test values?"
-msgstr ""
+msgstr "覆寫現有的測試值？"
 
 #: TestPlanResults.php:354
 msgid "Test Results have been copied to sample"
-msgstr ""
+msgstr "測試結果已經被複製到樣品"
 
 #: TestPlanResults.php:355 TestPlanResults.php:434 TestPlanResults.php:475
 msgid "The insert of the test results failed because"
-msgstr ""
+msgstr "測試結果的插入失敗，因為"
 
 #: TestPlanResults.php:433
 msgid "Test Results have been overwritten to sample"
-msgstr ""
+msgstr "測試結果已經被覆蓋採樣"
 
 #: TestPlanResults.php:433
 msgid " from sample"
-msgstr ""
+msgstr "樣品來自"
 
 #: TestPlanResults.php:433
 msgid " for test "
-msgstr ""
+msgstr "測試"
 
 #: TestPlanResults.php:439
 msgid "Test Results have NOT BEEN overwritten for Result ID "
-msgstr ""
+msgstr "測試結果還沒有被結果編號覆蓋"
 
 #: TestPlanResults.php:474
 msgid "Test Results have been copied to"
-msgstr ""
+msgstr "測試結果已經被複製到"
 
 #: TestPlanResults.php:474
 msgid " from "
-msgstr ""
+msgstr "從："
 
 #: TestPlanResults.php:474
 msgid " for "
-msgstr ""
+msgstr "為"
 
 #: TestPlanResults.php:620
 msgid "A Sample Result record has been added for Test ID"
-msgstr ""
+msgstr "樣品結果記錄已被新增測試編號"
 
 #: TestPlanResults.php:621
 msgid "The insert of the Sample Result failed because"
-msgstr ""
+msgstr "抽樣結果的插入失敗，因為"
 
 #: TestPlanResults.php:673
 msgid "Sample Results were updated for Result ID"
-msgstr ""
+msgstr "樣品結果的結果編號進行更新"
 
 #: TestPlanResults.php:674
 msgid "The updated of the sampleresults failed because"
-msgstr ""
+msgstr "更新後的抽樣結果失敗，因為"
 
 #: TestPlanResults.php:703
 msgid ""
 "Cannot delete this Result ID because it is a part of the Product "
 "Specification"
-msgstr ""
+msgstr "不能刪除此編號的結果，因為它是產品規格的一部分"
 
 #: TestPlanResults.php:709
 msgid "Result QA Sample"
-msgstr ""
+msgstr "QA樣品的結果"
 
 #: TestPlanResults.php:717
 msgid "Select a sample to enter results against"
-msgstr ""
+msgstr "選擇樣本，以針對輸入結果"
 
 #: TestPlanResults.php:719
 msgid ""
 "This page can only be opened if a QA Sample has been selected. Please select "
 "a sample first"
-msgstr ""
+msgstr "如果一個樣品的QA已經被選擇當前只能打開的頁面。請先選擇一個樣本"
 
 #: TestPlanResults.php:724
 msgid "Back to Samples"
-msgstr ""
+msgstr "返回樣品"
 
 #: TestPlanResults.php:761
 msgid "Used for Cert"
-msgstr ""
+msgstr "使用證書？"
 
 #: TestPlanResults.php:807
 msgid "Test Date"
-msgstr ""
+msgstr "測試日期"
 
 #: TestPlanResults.php:808
 msgid "Tested By"
-msgstr ""
+msgstr "測試人員"
 
 #: TestPlanResults.php:809
 msgid "Test Result"
-msgstr ""
+msgstr "測試結果"
 
 #: TestPlanResults.php:810
 msgid "On Cert"
-msgstr ""
+msgstr "在證書"
 
 #: TestPlanResults.php:920
 msgid "Are you sure you wish to delete this Test from this Sample ?"
-msgstr ""
+msgstr "你確定你想從這個樣品刪除此測試？"
 
 #: TestPlanResults.php:973
 msgid "Copy These Results"
-msgstr ""
+msgstr "複製結果"
 
 #: TestPlanResults.php:976
 msgid "Print COA"
-msgstr ""
+msgstr "列印COA"
 
 #: TopItems.php:8
 msgid "Top Items Searching"
@@ -35653,49 +35657,49 @@ msgstr "錯誤號"
 
 #: UserLocations.php:5 includes/MainMenuLinksArray.php:525
 msgid "User Authorised Inventory Locations Maintenance"
-msgstr ""
+msgstr "授權用戶的倉庫位置維護"
 
 #: UserLocations.php:10
 msgid "User Authorised Locations"
-msgstr ""
+msgstr "授權用戶的位置"
 
 #: UserLocations.php:33
 msgid "You have not selected any User"
-msgstr ""
+msgstr "您還沒有選擇任何用戶"
 
 #: UserLocations.php:46
 msgid ""
 "You have not selected an inventory location to be authorised for this user"
-msgstr ""
+msgstr "您沒有選擇一個被授權用戶使用這個倉庫的位置"
 
 #: UserLocations.php:65
 msgid "The location"
-msgstr ""
+msgstr "倉庫地點"
 
 #: UserLocations.php:65
 msgid "is already authorised for this user"
-msgstr ""
+msgstr "已經授權此用戶"
 
 #: UserLocations.php:154
 msgid "Authorised inventory locations for"
-msgstr ""
+msgstr "授權倉庫位置"
 
 #: UserLocations.php:172
 msgid "Authorised Inventory Locations for User"
-msgstr ""
+msgstr "授權用戶的倉庫位置"
 
 #: UserLocations.php:193
 msgid "Are you sure you wish to remove Update for this location?"
-msgstr ""
+msgstr "您確定要移除更新此位置？"
 
 #: UserLocations.php:195
 msgid "Are you sure you wish to add Update for this location?"
-msgstr ""
+msgstr "是否確定要新增更新這位置?"
 
 #: UserLocations.php:203
 #, php-format
 msgid "Are you sure you wish to un-authorise this location?"
-msgstr ""
+msgstr "您確定要取消授權此位置？"
 
 #: UserSettings.php:6 UserSettings.php:10
 msgid "User Settings"
@@ -36983,7 +36987,7 @@ msgstr "無法刪除，該用戶已存在審計跟踪的檔案中.."
 
 #: WWW_Users.php:266
 msgid "The Location - User could not be deleted because"
-msgstr ""
+msgstr "這位置-用戶不能刪除, 因為"
 
 #: WWW_Users.php:270
 msgid "The User could not be deleted because"
@@ -37079,7 +37083,7 @@ msgstr "模組"
 
 #: WWW_Users.php:700
 msgid "Display Dashboard after Login"
-msgstr ""
+msgstr "登錄後顯示儀表板"
 
 #: WWW_Users.php:732
 msgid "Allowed Department for Internal Requests"
@@ -38132,7 +38136,7 @@ msgstr "貨幣借方結餘"
 
 #: Z_CurrencyDebtorsBalances.php:12
 msgid "Show Local Currency Total Debtors Balances"
-msgstr ""
+msgstr "應收帳款總餘額顯示本地貨幣"
 
 #: Z_CurrencyDebtorsBalances.php:13 includes/MainMenuLinksArray.php:574
 msgid "Debtors Balances By Currency Totals"
@@ -38628,24 +38632,24 @@ msgstr "你是否真的確定?"
 
 #: Z_DescribeTable.php:5
 msgid "Database table details"
-msgstr "資料庫表說明"
+msgstr "資料表說明"
 
 #: Z_DescribeTable.php:12 api/api_xml-rpc.php:2457 api/api_xml-rpc.php:2625
 msgid "Field name"
-msgstr "欄位名"
+msgstr "欄位名稱"
 
 #: Z_DescribeTable.php:13
 msgid "Field type"
-msgstr "欄位種類"
+msgstr "欄位類型"
 
 #: Z_DescribeTable.php:14
 msgid "Can field be null"
-msgstr "CAN現場為null"
+msgstr "欄位值可以為Null"
 
 #: Z_DescribeTable.php:15 includes/DatabaseTranslations.php:64
 #: install/index.php:1043
 msgid "Default"
-msgstr "預設"
+msgstr "預設值"
 
 #: Z_ExportSalesAnalysis.php:17
 msgid "Create and send sales analysis files"
@@ -38682,7 +38686,7 @@ msgstr "以SQL來獲得存貨數量的信息為失敗 "
 #: Z_ImportChartOfAccounts.php:7 Z_ImportGLAccountGroups.php:5
 #: Z_ImportGLAccountSections.php:5
 msgid "Import Chart of Accounts"
-msgstr "帳戶進口走勢圖"
+msgstr "匯入會計科目"
 
 #: Z_ImportChartOfAccounts.php:68 Z_ImportGLAccountGroups.php:61
 #: Z_ImportGLAccountSections.php:65 Z_ImportPartCodes.php:67
@@ -38703,7 +38707,7 @@ msgstr "選擇包含您要導入到ERP帳戶代碼以及詳細信息的csv文件
 #: Z_ImportChartOfAccounts.php:74 Z_ImportGLAccountGroups.php:67
 #: Z_ImportGLAccountSections.php:71 Z_ImportPartCodes.php:78
 msgid "The first line must contain the field names that you wish to import. "
-msgstr "第一行必須包含您要導入的字段名。"
+msgstr "第一行必須包含您要匯入的欄位名。"
 
 #: Z_ImportChartOfAccounts.php:75 Z_ImportGLAccountGroups.php:68
 #: Z_ImportGLAccountSections.php:72 Z_ImportPartCodes.php:79
@@ -38717,7 +38721,7 @@ msgstr "要匯入的文件"
 
 #: Z_ImportDebtors.php:5
 msgid "Import Debtors And branches"
-msgstr "進口應收帳款及分公司機構"
+msgstr "匯入客戶及分公司資料"
 
 #: Z_ImportDebtors.php:105 Z_ImportStocks.php:56 Z_ImportSuppliers.php:67
 msgid "File contains "
@@ -38769,7 +38773,7 @@ msgstr "已存在"
 msgid ""
 "Please ensure that your csv file is encoded in UTF-8, otherwise the input "
 "data will not store correctly in database"
-msgstr "請確保您的csv文件編碼為UTF-8，否則輸入的數據將無法正確在數據庫中存儲"
+msgstr "請確認您的csv文件編碼為UTF-8格式，否則匯入的數據將無法正確存入數據庫中"
 
 #: Z_ImportDebtors.php:651 Z_ImportGLTransactions.php:259
 #: Z_ImportPriceList.php:160 Z_ImportStocks.php:294 Z_ImportSuppliers.php:360
@@ -38786,7 +38790,7 @@ msgstr "傳送檔案"
 
 #: Z_ImportDebtors.php:656
 msgid "Update if DebtorNo exists"
-msgstr "如果債務人不存在就更新"
+msgstr "如果客戶資料不存在就更新"
 
 #: Z_ImportFixedAssets.php:6 includes/DatabaseTranslations.php:54
 msgid "Import Fixed Assets"
@@ -38932,7 +38936,7 @@ msgstr "已經完成。本文件中的所有資產已確認新增到數據庫。
 
 #: Z_ImportFixedAssets.php:291
 msgid "Get Import Template"
-msgstr "獲取匯入範本"
+msgstr "選取匯入範本"
 
 #: Z_ImportFixedAssets.php:301
 msgid "Select Date to Upload B/Fwd Assets To:"
@@ -38946,11 +38950,11 @@ msgstr "固定資產上載文件："
 msgid ""
 "Select a csv file containing the details of the account sections that you "
 "wish to import into webERP. "
-msgstr "選擇包含要導入到ERP帳戶部分的細節csv文件。 "
+msgstr "選擇一個CSV文件，要匯入到ERP的會計要素資料。 "
 
 #: Z_ImportGLAccountSections.php:27
 msgid "Account Section"
-msgstr "帳戶部分"
+msgstr "會計要素"
 
 #: Z_ImportGLTransactions.php:6
 msgid "Import General Ledger Transactions"
@@ -38958,15 +38962,15 @@ msgstr "匯入總帳交易"
 
 #: Z_ImportGLTransactions.php:11 Z_ImportGLTransactions.php:12
 msgid "Import GL Payments Receipts Or Journals From CSV"
-msgstr "自CSV文件匯入收款紀錄"
+msgstr "匯入總帳付款收據或日記帳(.CSV)"
 
 #: Z_ImportGLTransactions.php:40 Z_ImportGLTransactions.php:50
 msgid "Try downloading a new template"
-msgstr "嘗試下載一個新的模板"
+msgstr "嘗試下載一個新的模組"
 
 #: Z_ImportGLTransactions.php:50
 msgid "File contains incorrect headers"
-msgstr "文件中包含頭文件不正確"
+msgstr "文件中的表頭內容不正確"
 
 #: Z_ImportGLTransactions.php:98
 msgid "Account code "
@@ -39003,7 +39007,7 @@ msgstr "失效的行"
 
 #: Z_ImportGLTransactions.php:210
 msgid "Batch import has been rolled back"
-msgstr "批量導入已回退"
+msgstr "批量匯入已回退"
 
 #: Z_ImportGLTransactions.php:214
 msgid "has been completed. All transactions committed to the database"
@@ -39019,18 +39023,18 @@ msgstr "這個函數的功能為載入一組CSV文件格式的總帳交易。"
 msgid ""
 "The file must contain six columns, and the first row should be the following "
 "headers:"
-msgstr "該文件必須包含六列，第一行應該是下面的標題："
+msgstr "此檔案必須包含六欄，第一行的標題為："
 
 #: Z_ImportGLTransactions.php:229
 msgid ""
 "followed by rows containing these six fields for each price to be uploaded."
-msgstr "其次是每個價格包含這六個欄位要上傳。"
+msgstr "依循每行的價款(包含六個欄位)將被上傳。"
 
 #: Z_ImportGLTransactions.php:230
 msgid ""
 "The total of the transactions must come back to zero. Debits are positive, "
 "credits are negative."
-msgstr "全部的總交易必須回到零。借方是正數，信用是負數。"
+msgstr "全部的總交易必須歸零。借方是正數，貸方是負數。"
 
 #: Z_ImportGLTransactions.php:231
 msgid "All the transactions must be within the same accounting period."
@@ -39078,12 +39082,12 @@ msgstr "從CSV文件匯入價格表"
 
 #: Z_ImportPriceList.php:34
 msgid "Download the template to see the expected columns."
-msgstr "下載模板看到預期的列。"
+msgstr "下載模組看到預期的列。"
 
 #: Z_ImportPriceList.php:44
 msgid ""
 "The file to import the price list from contains incorrect column headings"
-msgstr "從進口價格列表中的文件包含有不正確的列標題"
+msgstr "匯入的銷售價格表中的列標題不正確"
 
 #: Z_ImportPriceList.php:44 Z_UpdateItemCosts.php:41
 msgid "The column headings must be"
@@ -39860,47 +39864,47 @@ msgstr "請重新輸入重新報表的期間"
 
 #: Z_UpdateItemCosts.php:3
 msgid "Update Item Costs From CSV"
-msgstr ""
+msgstr "更新商品成本自CSV"
 
 #: Z_UpdateItemCosts.php:8 Z_UpdateItemCosts.php:9
 msgid "Update Item Costs from CSV file"
-msgstr ""
+msgstr "更新商品成本自CSV文件"
 
 #: Z_UpdateItemCosts.php:41
 msgid ""
 "The file to import the item cost updates from contains incorrect column "
 "headings"
-msgstr ""
+msgstr "匯入的更新商品成本檔案表頭內含有不正確的欄位"
 
 #: Z_UpdateItemCosts.php:71
 msgid "The selected item code does not exist"
-msgstr ""
+msgstr "選擇的商品編碼不存在"
 
 #: Z_UpdateItemCosts.php:101
 msgid "Batch Update of costs"
-msgstr ""
+msgstr "批次更新成本"
 
 #: Z_UpdateItemCosts.php:111
 msgid ""
 "This function updates the costs of all items from a comma separated variable "
 "(csv) file."
-msgstr ""
+msgstr "此功能更新所有物料的成本，其文件來自逗號分隔的變量（CSV）文件。"
 
 #: Z_UpdateItemCosts.php:112
 msgid ""
 "The file must contain two columns, and the first row should be the following "
 "headers:"
-msgstr ""
+msgstr "此檔案必須包含六欄，第一行的標題為："
 
 #: Z_UpdateItemCosts.php:113
 msgid ""
 "followed by rows containing these four fields for each cost to be updated."
-msgstr ""
+msgstr "每一成本更本包含下列的這四個欄位"
 
 #: Z_UpdateItemCosts.php:114
 msgid ""
 "The StockID field must have a corresponding entry in the stockmaster table."
-msgstr ""
+msgstr "庫存ID欄位在會計科目主檔中必須是存在的科目。"
 
 #: Z_UpdateSalesAnalysisWithLatestCustomerData.php:6
 msgid "Apply Current Customer and Branch Data to Sales Analysis"
@@ -42599,7 +42603,7 @@ msgstr "選取一個工作單"
 
 #: includes/MainMenuLinksArray.php:289
 msgid "QA Samples and Test Results"
-msgstr ""
+msgstr "QA樣品和測試結果"
 
 #: includes/MainMenuLinksArray.php:295
 msgid "Costed Bill Of Material Inquiry"
@@ -42643,11 +42647,11 @@ msgstr "MRP要求重新計劃"
 
 #: includes/MainMenuLinksArray.php:309
 msgid "Print Certificate of Analysis"
-msgstr ""
+msgstr "列印分析證書"
 
 #: includes/MainMenuLinksArray.php:310
 msgid "Historical QA Test Results"
-msgstr ""
+msgstr "歷史QA測試結果"
 
 #: includes/MainMenuLinksArray.php:331
 msgid "Bills Of Material"
@@ -42655,7 +42659,7 @@ msgstr "物料清單 (BOM)"
 
 #: includes/MainMenuLinksArray.php:332
 msgid "Copy a Bill Of Materials Between Items"
-msgstr "物料之間直接複製BOM"
+msgstr "複製BOM為新的物料編號"
 
 #: includes/MainMenuLinksArray.php:333
 msgid "Master Schedule"
@@ -42671,7 +42675,7 @@ msgstr "計算MRP"
 
 #: includes/MainMenuLinksArray.php:336
 msgid "Quality Tests Maintenance"
-msgstr ""
+msgstr "QA測試維護"
 
 #: includes/MainMenuLinksArray.php:351
 msgid "Bank Account Payments Matching"
@@ -42863,7 +42867,7 @@ msgstr "從下而上更新所有BOM料件的成本"
 
 #: includes/MainMenuLinksArray.php:555
 msgid "Re-apply costs to Sales Analysis"
-msgstr "更新銷售分析的成本紀錄"
+msgstr "銷售分析的成本再應用"
 
 #: includes/MainMenuLinksArray.php:556
 msgid "Delete sales transactions"
@@ -42871,11 +42875,11 @@ msgstr "刪除銷售交易"
 
 #: includes/MainMenuLinksArray.php:557
 msgid "Reverse all supplier payments on a specified date"
-msgstr "撤銷指定日期的所有供應商付款"
+msgstr "取銷特定日期內的供應商付款"
 
 #: includes/MainMenuLinksArray.php:558
 msgid "Update sales analysis with latest customer data"
-msgstr "期間的銷售分析已更新"
+msgstr "最新的客戶銷售分析已更新"
 
 #: includes/MainMenuLinksArray.php:576
 msgid "Show General Transactions That Do Not Balance"
@@ -43695,7 +43699,7 @@ msgstr "實際撿取"
 
 #: includes/PDFProdSpecHeader.inc:30
 msgid "Technical Data Sheet"
-msgstr ""
+msgstr "技術數據表"
 
 #: includes/PDFProfitAndLossPageHeader.inc:21
 #: includes/PDFTagProfitAndLossPageHeader.inc:21
@@ -44107,19 +44111,19 @@ msgstr "這訂單數量依據工作單"
 
 #: includes/SQL_CommonFunctions.inc:484
 msgid "The create of the qasamples record failed"
-msgstr ""
+msgstr "建立質量保證的樣品記錄失敗"
 
 #: includes/SQL_CommonFunctions.inc:485
 msgid "The following SQL to create the qasamples was used"
-msgstr ""
+msgstr "下面的SQL用於建立QA樣品"
 
 #: includes/SQL_CommonFunctions.inc:506
 msgid "The create of the sampleresults record failed"
-msgstr ""
+msgstr "抽樣結果記錄的建立失敗"
 
 #: includes/SQL_CommonFunctions.inc:507
 msgid "The following SQL to create the sampleresults was used"
-msgstr ""
+msgstr "下面的SQL用於建立樣本結果"
 
 #: api/api_debtortransactions.php:1271 api/api_debtortransactions.php:1284
 #: api/api_debtortransactions.php:1569 api/api_debtortransactions.php:1581
@@ -48102,6 +48106,43 @@ msgstr "銀行轉帳"
 #~ "name."
 #~ msgstr "你輸入的檔名是預設的報表名。請輸入新的我的報表名稱。"
 
+#~ msgid "Customer Balances Movements"
+#~ msgstr "客戶餘額變動"
+
+#~ msgid ""
+#~ "There is an error in your database field or description. Please check and "
+#~ "try again."
+#~ msgstr "在你的數據庫中的欄位或描述有錯誤。請檢查並再試一次。"
+
+#~ msgid ""
+#~ "There is an error in one of your data fields. Please check and try again."
+#~ msgstr "在你的數據某一個欄位中有一個錯誤。請檢查並再試一次。"
+
+#~ msgid "A data field has been left empty located at sequence number: "
+#~ msgstr "序列號資料欄位留空白"
+
+#~ msgid ""
+#~ "If you replace this report/form, the original report/form will be deleted!"
+#~ msgstr "如果更換本報表/表格，原始報表/表格將被刪除！"
+
+#~ msgid ""
+#~ "There was not any data in this report based on the criteria provided!"
+#~ msgstr "根據規定的標準，本報表沒有任何數據！"
+
+#~ msgid "Hindi"
+#~ msgstr "印地文"
+
+#~ msgid "Marathi"
+#~ msgstr "馬拉地語"
+
+#~ msgid "Show Local Currency Total Debtor Balances"
+#~ msgstr "顯示本地貨幣的客戶欠款彙總表"
+
+#~ msgid ""
+#~ "The name you entered is a default report. Please enter a new My Report "
+#~ "name."
+#~ msgstr "你輸入的檔名是預設的報表名。請輸入新的我的報表名稱。"
+
 #~ msgid ""
 #~ "This report name already exists! Press Replace to overwrite or enter a "
 #~ "new name and press continue."
@@ -48116,6 +48157,9 @@ msgstr "銀行轉帳"
 #~ "There is an error in your database field or description. Please check and "
 #~ "try again."
 #~ msgstr "在你的數據庫中的欄位或描述有錯誤。請檢查並再試一次。"
+
+#~ msgid "Either Report or Form type needs to be selected!"
+#~ msgstr "無論是報表或表單類型都需要選擇！"
 
 #~ msgid ""
 #~ "There is an error in one of your data fields. Please check and try again."
@@ -48149,6 +48193,9 @@ msgstr "銀行轉帳"
 
 #~ msgid "Either Report or Form type needs to be selected!"
 #~ msgstr "無論是報表或表單類型都需要選擇！"
+
+#~ msgid "Or browse for a report to upload."
+#~ msgstr "或瀏覽盎船的報表"
 
 #~ msgid ""
 #~ "The name you entered is already in use. Please enter a new report name!"
@@ -48837,6 +48884,9 @@ msgstr "銀行轉帳"
 #~ msgid "This Year To Date"
 #~ msgstr "今年至今"
 
+#~ msgid "Process payment using your PayPal Account"
+#~ msgstr "付款流程使用您的PayPal帳戶"
+
 #~ msgid "incl Tax"
 #~ msgstr "含稅"
 
@@ -48845,35 +48895,6 @@ msgstr "銀行轉帳"
 
 #~ msgid "The billing address is expected to 4 characters or more long"
 #~ msgstr "帳單地址長度需求為4個字符或更長"
-
-#~ msgid "Bank Account Matching"
-#~ msgstr "銀行帳戶匹配"
-
-#~ msgid "Hindi"
-#~ msgstr "印地文"
-
-#~ msgid "Marathi"
-#~ msgstr "馬拉地語"
-
-#~ msgid "Remmitance Advice"
-#~ msgstr "匯款通知單"
-
-#~ msgid "Date : "
-#~ msgstr "日期:"
-
-#~ msgid "All branches"
-#~ msgstr "所有分公司機構"
-
-#~ msgid ""
-#~ "account is currently flagged as an account that needs to be watched "
-#~ "please contact the credit control personnel to discuss"
-#~ msgstr "帳號現正被標示,帳 戶需要被監督, 請聯絡冲銷控制人討論"
-
-#~ msgid "Access Permission Maintenance"
-#~ msgstr "設定使用者存取權限"
-
-#~ msgid "Show Local Currency Total Debtor Balances"
-#~ msgstr "顯示本地貨幣的客戶欠款彙總表"
 
 #~ msgid "View the GL Entries"
 #~ msgstr "查看總帳分錄"
