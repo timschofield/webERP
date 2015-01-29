@@ -1312,11 +1312,9 @@ function OnlineOrdersFollowUp($Source, $numDays, $RootPath, $db){
 						ON salesorders.shipvia = shippers.shipper_id
 					INNER JOIN currencies
 						ON debtorsmaster.currcode = currencies.currabrev
-				WHERE debtorsmaster.name = 'LAZADA'
+				WHERE debtorsmaster.debtorno = 'LAZADA'
 					AND salesorders.quotation = 0
-					AND ((debtortrans.type = 10 
-								AND salesorders.klemailtrackingconfirm = '0000-00-00')
-						 OR (salesorders.klemailthankyouorder = '0000-00-00' 
+					AND ((salesorders.klemailthankyouorder = '0000-00-00' 
 								AND salesorders.klemailtrackingconfirm <= '" . $ThankYouDate . "' 
 								AND salesorders.klemailtrackingconfirm != '0000-00-00')
 						)
@@ -1351,7 +1349,7 @@ function OnlineOrdersFollowUp($Source, $numDays, $RootPath, $db){
 					INNER JOIN currencies
 						ON debtorsmaster.currcode = currencies.currabrev
 				WHERE debtorsmaster.typeid IN (". CUSTOMER_TYPE_ONLINE . ")
-					AND debtorsmaster.name != 'LAZADA'
+					AND debtorsmaster.debtorno != 'LAZADA'
 					AND salesorders.quotation = 0
 					AND (	(debtortrans.type = 12 
 								AND salesorders.klemailpaymentconfirm = '0000-00-00')
@@ -1419,6 +1417,10 @@ function OnlineOrdersFollowUp($Source, $numDays, $RootPath, $db){
 				$EmailLink1 = ConvertSQLDate($myrow['klemailpaymentconfirm']);
 			}
 
+			if ($Source == "LAZADA"){
+				$EmailLink1 = '';
+				$EmailLink2 = '';
+			}
 			printf('<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
