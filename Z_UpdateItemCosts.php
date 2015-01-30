@@ -109,7 +109,7 @@ if (isset($_FILES['CostUpdateFile']) and $_FILES['CostUpdateFile']['name']) { //
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<div class="page_help_text">' .
 			_('This function updates the costs of all items from a comma separated variable (csv) file.') . '<br />' .
-			_('The file must contain two columns, and the first row should be the following headers:') . '<br /><i>' . _('StockID, Material Cost, Labour Cost, Overhead Cost') . '</i><br />' .
+			_('The file must contain four columns, and the first row should be the following headers:') . '<br /><i>StockID, Material Cost, Labour Cost, Overhead Cost</i><br />' .
 			_('followed by rows containing these four fields for each cost to be updated.') .  '<br />' .
 			_('The StockID field must have a corresponding entry in the stockmaster table.') . '</div>';
 
