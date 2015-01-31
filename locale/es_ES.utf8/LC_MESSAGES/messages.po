@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.11.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-01-27 09:44-0600\n"
-"PO-Revision-Date: 2015-01-29 10:45-0600\n"
+"PO-Revision-Date: 2015-01-31 12:03-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -662,7 +662,7 @@ msgstr "Restringida"
 
 #: AccountSections.php:204
 msgid "Review Account Sections"
-msgstr "Revisar se secciones contables"
+msgstr "Revisar secciones contables"
 
 #: AccountSections.php:223
 msgid "Could not retrieve the requested section please try again."
@@ -2499,7 +2499,7 @@ msgstr "Fantasma"
 
 #: BOMs.php:452
 msgid "Select a Different BOM"
-msgstr "Escojer una HCM diferente"
+msgstr "Seleccione una HCM diferente"
 
 #: BOMs.php:468
 msgid "Manufactured parent items"
@@ -3852,7 +3852,7 @@ msgstr "Especificar Artículos Controlados Despachados"
 
 #: ConfirmDispatchControlled_Invoice.php:27
 msgid "Select a line item to invoice"
-msgstr "Seleccionar una fila de artículos a facturar"
+msgstr "Seleccione una fila de artículos a facturar"
 
 #: ConfirmDispatchControlled_Invoice.php:30
 msgid ""
@@ -4384,7 +4384,7 @@ msgstr ""
 
 #: ConfirmDispatch_Invoice.php:730
 msgid "Select a sales order for confirming deliveries and invoicing"
-msgstr "Seleccionar una orden de venta para confirmar entregas y facturar"
+msgstr "Seleccione una orden de venta para confirmar entregas y facturar"
 
 #: ConfirmDispatch_Invoice.php:760
 msgid "Could not update the default shipping carrier for this branch because"
@@ -5311,7 +5311,7 @@ msgstr "Actualizar Líneas"
 
 #: ContractBOM.php:284 ContractOtherReqts.php:138
 msgid "Back To Contract Header"
-msgstr "Regresar a la cabecera de contrato"
+msgstr "Volver a la cabecera de contrato"
 
 #: ContractBOM.php:295 PO_Items.php:1113
 msgid "The supplier category details could not be retrieved because"
@@ -5738,7 +5738,7 @@ msgstr ""
 
 #: Contracts.php:111
 msgid "Back to Contract Selection"
-msgstr "Regresar a la Selección del Contrato"
+msgstr "Volver a la Selección del Contrato"
 
 #: Contracts.php:122 FixedAssetItems.php:38 Manufacturers.php:37
 #: Manufacturers.php:109 SalesCategories.php:44 StockClone.php:65
@@ -6767,7 +6767,7 @@ msgstr ""
 
 #: CounterReturns.php:1634 CounterSales.php:2198 SelectOrderItems.php:1568
 msgid "Select a Stock Category"
-msgstr "Seleccionar una categoría de inventario"
+msgstr "Seleccione una categoría de inventario"
 
 #: CounterReturns.php:1659 CounterSales.php:2221 SelectOrderItems.php:1592
 msgid "Enter partial Description"
@@ -6867,7 +6867,7 @@ msgstr "Cancelar devolución"
 
 #: CounterReturns.php:1827
 msgid "Are you sure you wish to cancel this return?"
-msgstr "¿Seguro que desea cancelar de esta devolución?"
+msgstr "¿Está seguro que desea cancelar de esta devolución?"
 
 #: CounterSales.php:11 CounterSales.php:230
 msgid "Counter Sales"
@@ -7210,7 +7210,7 @@ msgstr "Cancelar venta"
 
 #: CounterSales.php:2386
 msgid "Are you sure you wish to cancel this sale?"
-msgstr "¿Seguro que desea cancelar de esta venta?"
+msgstr "¿Está seguro que desea cancelar de esta venta?"
 
 #: CreditItemsControlled.php:9
 msgid "Specify Credited Controlled Items"
@@ -7991,7 +7991,7 @@ msgstr ""
 #: StockClone.php:50 StockCostUpdate.php:18 StockReorderLevel.php:17
 #: Stocks.php:60 WhereUsedInquiry.php:15
 msgid "Back to Items"
-msgstr "Volver a Artículos"
+msgstr "Volver a artículos"
 
 #: CustItem.php:50 PurchData.php:62
 msgid ""
@@ -8256,7 +8256,7 @@ msgstr "Primero debe seleccionar un cliente, antes de definir su acceso"
 
 #: CustLoginSetup.php:15
 msgid "Select A Customer"
-msgstr "Seleccionar un cliente"
+msgstr "Seleccione un cliente"
 
 #: CustLoginSetup.php:32 SelectCustomer.php:210 SuppLoginSetup.php:33
 msgid " has been selected"
@@ -9598,7 +9598,7 @@ msgstr "El SQL que falló al agregar la entrada contable del ingreso fue"
 
 #: CustomerReceipt.php:395
 msgid "Act Transfer"
-msgstr "Acta de Transferencia"
+msgstr "Acta de transferencia"
 
 #: CustomerReceipt.php:404 ImportBankTrans.php:459
 msgid "The SQL that failed to insert the bank transaction was"
@@ -9830,7 +9830,7 @@ msgstr "Detalles del banco del beneficiario"
 
 #: CustomerReceipt.php:1174
 msgid "Select a Customer"
-msgstr "Seleccionar un cliente"
+msgstr "Seleccione un cliente"
 
 #: CustomerReceipt.php:1177
 msgid "Text in the Customer"
@@ -11297,7 +11297,7 @@ msgstr "Actualizar artículo"
 
 #: DiscountCategories.php:169
 msgid "Select a part code"
-msgstr "Seleccionar un código de pieza"
+msgstr "Seleccione un código de pieza"
 
 #: DiscountCategories.php:178
 msgid "Assign discount category"
@@ -11464,7 +11464,7 @@ msgstr "Crear Nuevo Mensaje de Factura EDI desde Plantilla"
 
 #: EDIMessageFormat.php:192
 msgid "Review Message Lines"
-msgstr "Revisar Líneas del Mensaje"
+msgstr "Revisar líneas del mensaje"
 
 #: EDIMessageFormat.php:213 EDIMessageFormat.php:215
 msgid "Heading"
@@ -12780,7 +12780,7 @@ msgstr "Activos fijos"
 
 #: FixedAssetItems.php:14
 msgid "Back to Select"
-msgstr "Regresar a la Selección"
+msgstr "Volver a seleccionar"
 
 #: FixedAssetItems.php:17
 msgid "Fixed Asset Items"
@@ -13516,7 +13516,7 @@ msgstr "Seleccione una compañía de transporte para configurar costos para"
 
 #: FreightCosts.php:46
 msgid "Select the warehouse"
-msgstr "Seleccione Almacén"
+msgstr "Seleccione el almacén"
 
 #: FreightCosts.php:46
 msgid "ship from location"
@@ -14121,7 +14121,7 @@ msgstr "Cuenta Anterior"
 
 #: GLBudgets.php:82
 msgid "Select Account"
-msgstr "Seleccionar Cuenta"
+msgstr "Seleccionar cuenta"
 
 #: GLBudgets.php:83
 msgid "Next Account"
@@ -14278,7 +14278,7 @@ msgstr "Fecha a Procesar el Diario"
 
 #: GLJournal.php:270 GLJournal.php:273
 msgid "Reversing"
-msgstr "Inverso"
+msgstr "Reversando"
 
 #: GLJournal.php:271 GLJournal.php:274
 msgid "Normal"
@@ -14507,7 +14507,7 @@ msgstr "Ingresos y Gastos por Etiqueta"
 
 #: GLTagProfit_Loss.php:97
 msgid "Select tag"
-msgstr "Seleccione centro de costo"
+msgstr "Seleccionar centro de costo"
 
 #: GLTagProfit_Loss.php:128
 msgid "Show Statement of Income and Expenditure"
@@ -14979,7 +14979,7 @@ msgstr ""
 #: GoodsReceived.php:310 GoodsReceived.php:372 GoodsReceived.php:755
 msgid "Select a different purchase order for receiving goods against"
 msgstr ""
-"Seleccionar una orden de compra distinta para los bienes recibidos respecto a"
+"Seleccione una orden de compra distinta para los bienes recibidos respecto a"
 
 #: GoodsReceived.php:330
 msgid "To enter a delivery against this purchase order"
@@ -15211,7 +15211,7 @@ msgstr ""
 
 #: GoodsReceivedControlled.php:66
 msgid "Back To Purchase Order"
-msgstr "Volver a la orden de compra"
+msgstr "Volver a orden de compra"
 
 #: GoodsReceivedControlled.php:68
 msgid "Receive controlled item"
@@ -15260,7 +15260,7 @@ msgstr ""
 
 #: HistoricalTestResults.php:130
 msgid "Sample ID:"
-msgstr ""
+msgstr "Identificación de muestra:"
 
 #: HistoricalTestResults.php:130 PDFGrn.php:142 PDFStockTransfer.php:135
 msgid "Lot/Serial:"
@@ -15634,7 +15634,7 @@ msgstr "La categoría de inventario"
 
 #: InternalStockCategoriesByRole.php:72
 msgid "already allowed as internal for this security role"
-msgstr ""
+msgstr "ya permitido como interno para este rol de seguridad"
 
 #: InternalStockCategoriesByRole.php:80
 msgid "Stock Category:"
@@ -15662,7 +15662,7 @@ msgstr ""
 
 #: InternalStockCategoriesByRole.php:113
 msgid "Select User Role"
-msgstr ""
+msgstr "Seleccionar perfil de usuario"
 
 #: InternalStockCategoriesByRole.php:147
 msgid "Stock Categories available as internal for role"
@@ -15676,10 +15676,11 @@ msgstr "Categorías de inventario internas permitidas al rol de usuario"
 #, php-format
 msgid "Are you sure you wish to delete this internal stock category code?"
 msgstr ""
+"¿Está seguro que desea suprimir este código de categoría inventario interno?"
 
 #: InternalStockCategoriesByRole.php:201
 msgid "Select Stock Category Code"
-msgstr "Seleccionar un código de categoría de inventario"
+msgstr "Seleccione un código de categoría de inventario"
 
 #: InternalStockRequest.php:8
 msgid "Create an Internal Materials Request"
@@ -15776,7 +15777,7 @@ msgstr "Lugar desde el cual solicitar la existencia"
 
 #: InternalStockRequest.php:227
 msgid "Select a Location"
-msgstr "Seleccionar una Ubicación"
+msgstr "Seleccione una ubicación"
 
 #: InternalStockRequest.php:238
 msgid "Date when required"
@@ -16814,11 +16815,11 @@ msgstr "¿Está seguro que desea suprimir esta ubicación del inventario?"
 
 #: Locations.php:440 Manufacturers.php:239
 msgid "Review Records"
-msgstr "Revisar Registros"
+msgstr "Revisar registros"
 
 #: Locations.php:503
 msgid "Amend Location details"
-msgstr "Modificar Detalles de ubicación"
+msgstr "Corregir detalles de ubicación"
 
 #: Locations.php:515
 msgid "New Location details"
@@ -17974,7 +17975,7 @@ msgstr ""
 #: MaintenanceTasks.php:93 MaintenanceTasks.php:133
 #: MaintenanceUserSchedule.php:48
 msgid "Task ID"
-msgstr ""
+msgstr "Identificación de tarea"
 
 #: MaintenanceTasks.php:96 MaintenanceUserSchedule.php:51
 msgid "Last Completed"
@@ -18131,7 +18132,7 @@ msgstr ""
 
 #: Manufacturers.php:272
 msgid "Amend Brand Details"
-msgstr ""
+msgstr "Corregir detalles de marca"
 
 #: Manufacturers.php:278
 msgid "New Brand/Manufacturer Details"
@@ -19660,7 +19661,7 @@ msgstr "Imprimir otra cotización"
 
 #: PDFReceipt.php:9
 msgid "Sales Receipt"
-msgstr "Recibo de Ventas"
+msgstr "Recibo de ventas"
 
 #: PDFReceipt.php:33
 msgid "Customer Receipt Number "
@@ -20010,7 +20011,7 @@ msgstr "Resultado de la búsqueda Artículos Principales"
 
 #: PDFWOPrint.php:89
 msgid "Select a Work Order"
-msgstr ""
+msgstr "Seleccione una orden de trabajo"
 
 #: PDFWOPrint.php:92
 msgid "Select a Work Order Number to Print before calling this page"
@@ -20051,7 +20052,7 @@ msgstr ""
 
 #: PDFWOPrint.php:449
 msgid "Signed for: "
-msgstr ""
+msgstr "Firmado por:"
 
 #: PDFWOPrint.php:579 PDFWOPrint.php:662 PO_PDFPurchOrder.php:388
 msgid "Print or Email the Order"
@@ -21068,7 +21069,7 @@ msgstr "Entregar Por"
 
 #: PO_Items.php:776
 msgid " excluding Tax"
-msgstr " excluyendo Impuestos"
+msgstr " sin impuestos"
 
 #: PO_Items.php:781
 msgid "Update Order Lines"
@@ -21269,7 +21270,7 @@ msgstr "Valor total de la orden recibida sin impuestos"
 
 #: PO_PDFPurchOrder.php:10
 msgid "Select a Purchase Order"
-msgstr "Seleccionar una orden de compra"
+msgstr "Seleccione una orden de compra"
 
 #: PO_PDFPurchOrder.php:13
 msgid "Select a Purchase Order Number to Print before calling this page"
@@ -21440,7 +21441,7 @@ msgstr ""
 #: PO_SelectOSPurchOrder.php:216 PO_SelectPurchOrder.php:5
 #: PO_SelectPurchOrder.php:165
 msgid "Search Purchase Orders"
-msgstr "Buscar Órdenes de Compra"
+msgstr "Buscar órdenes de compra"
 
 #: PO_SelectOSPurchOrder.php:225 PO_SelectPurchOrder.php:179
 msgid ""
@@ -21456,7 +21457,7 @@ msgstr ""
 #: Shipt_Select.php:158 TestPlanResults.php:144 WorkOrderEntry.php:674
 #: WorkOrderIssue.php:713
 msgid "Select a stock category"
-msgstr "Seleccionar una clase de existencia"
+msgstr "Seleccione una clase de existencia"
 
 #: PO_SelectOSPurchOrder.php:252 PO_SelectPurchOrder.php:201
 #: SelectCompletedOrder.php:487 SelectQASamples.php:279
@@ -21556,7 +21557,7 @@ msgstr "Ésto le muestra cómo fue asignado el pago a proveedor"
 
 #: PaymentAllocations.php:34
 msgid "Back to supplier inquiry"
-msgstr "Volver a Consulta de proveedor"
+msgstr "Volver a consulta de proveedor"
 
 #: PaymentAllocations.php:56
 msgid "There may be a problem retrieving the information. No data is returned"
@@ -21907,7 +21908,7 @@ msgstr "No se puede agregar una entrada contable para el pago usando SQL"
 
 #: Payments.php:433
 msgid "Act Transfer From "
-msgstr "Acta de Transferencia de"
+msgstr "Acta de transferencia de"
 
 #: Payments.php:441 Payments.php:588 PcAuthorizeExpenses.php:224
 msgid "Cannot insert a bank transaction because"
@@ -22913,7 +22914,7 @@ msgstr "Precio por código"
 
 #: Prices.php:217
 msgid "Review Prices"
-msgstr "Revisar Precio"
+msgstr "Revisar precios"
 
 #: Prices.php:223 PricesByCost.php:156 Prices_Customer.php:354
 #: RecurringSalesOrders.php:428 SelectWorkOrder.php:337 WorkOrderEntry.php:583
@@ -22940,7 +22941,7 @@ msgstr "Precio de Lista por Tipo de Venta"
 
 #: Prices.php:344
 msgid "Amend Price"
-msgstr "Corregir el precio"
+msgstr "Corregir precio"
 
 #: PricesBasedOnMarkUp.php:5
 msgid "Update Pricing"
@@ -23046,8 +23047,8 @@ msgid ""
 "Are you sure you wish to update or add all the prices according to the "
 "criteria selected?"
 msgstr ""
-"¿Seguro que desea actualizar o agregar todos los precios de acuerdo a los "
-"criterios seleccionados?"
+"¿Está seguro que desea actualizar o agregar todos los precios de acuerdo a "
+"los criterios seleccionados?"
 
 #: PricesBasedOnMarkUp.php:177
 msgid "No price list is selected to update. No updates will take place"
@@ -23636,7 +23637,7 @@ msgstr "Último pago recibido"
 
 #: PrintCustStatements.php:416
 msgid "Amount received was"
-msgstr "el monto recibido fue"
+msgstr "Monto recibido fue"
 
 #: PrintCustStatements.php:421
 msgid "Please make payments to our account:"
@@ -24120,7 +24121,7 @@ msgstr ""
 
 #: ProductSpecs.php:546 TestPlanResults.php:803
 msgid "Test Name"
-msgstr ""
+msgstr "Nombre de prueba"
 
 #: ProductSpecs.php:603 QATests.php:301
 msgid "Show On Cert?"
@@ -24645,7 +24646,7 @@ msgstr "Prueba de aseguramiento de la calidad"
 
 #: QATests.php:150
 msgid "Show All QA Tests"
-msgstr ""
+msgstr "Mostrar todas las pruebas de aseguramiento de calidad"
 
 #: QATests.php:198
 msgid "QA Test ID"
@@ -24661,7 +24662,7 @@ msgstr ""
 
 #: QATests.php:243
 msgid "ASTM, ISO, UL or other"
-msgstr ""
+msgstr "ASTM, ISO, UL u otro"
 
 #: QATests.php:246 QATests.php:391
 msgid "Group By"
@@ -24688,7 +24689,7 @@ msgstr "¿Valor numérico?"
 
 #: QATests.php:388
 msgid "Test ID"
-msgstr ""
+msgstr "Identificación de prueba"
 
 #: QATests.php:395 StockCategories.php:577
 msgid "Numeric Value"
@@ -25028,7 +25029,7 @@ msgstr ""
 
 #: RelatedItemsUpdate.php:170
 msgid "Are you sure you wish to delete this relationship?"
-msgstr ""
+msgstr "¿Está seguro que desea suprimir esta relación?"
 
 #: RelatedItemsUpdate.php:179
 msgid "There are no items related set up for this part"
@@ -25040,7 +25041,7 @@ msgstr ""
 
 #: RelatedItemsUpdate.php:204
 msgid "Amend Relation"
-msgstr ""
+msgstr "Corregir relación"
 
 #: ReorderLevel.php:12 ReorderLevel.php:282
 msgid "Reorder Level Report"
@@ -25447,7 +25448,7 @@ msgstr "Descripción del artículo (larga)"
 
 #: RevisionTranslations.php:63
 msgid "Revised?"
-msgstr ""
+msgstr "¿Revisado?"
 
 #: SMTPServer.php:5
 msgid "SMTP Server details"
@@ -25937,7 +25938,7 @@ msgstr "Crear Informe PDF"
 #: SalesAnalRepts.php:307
 #, php-format
 msgid "Are you sure you wish to remove this report design?"
-msgstr "¿Desea suprimir este diseño de informe?"
+msgstr "¿Está seguro que desea suprimir este diseño de informe?"
 
 #: SalesAnalRepts.php:332
 msgid "Show All Defined Reports"
@@ -26217,7 +26218,7 @@ msgstr "Sub Categoría"
 #: SalesCategories.php:273
 #, php-format
 msgid "Are you sure you wish to delete this sales category?"
-msgstr "¡Está seguro que desea suprimir esta categoría de ventas?"
+msgstr "¿Está seguro que desea suprimir esta categoría de ventas?"
 
 #: SalesCategories.php:325
 msgid "Edit Sub Category"
@@ -26253,7 +26254,7 @@ msgstr ""
 
 #: SalesCategories.php:453
 msgid "Select Brand"
-msgstr ""
+msgstr "Seleccionar marca"
 
 #: SalesCategories.php:463
 msgid "Add Item To Sales Category"
@@ -26840,7 +26841,7 @@ msgstr "No se pudo suprimir el registro de Tipo de Venta porque"
 
 #: SalesTypes.php:156
 msgid "Sales type"
-msgstr "Tipos de Venta"
+msgstr "Tipo de venta"
 
 #: SalesTypes.php:156
 msgid "price list"
@@ -26925,7 +26926,7 @@ msgstr "¿Está seguro que desea suprimir este testigo de seguridad?"
 
 #: SelectAsset.php:5 includes/MainMenuLinksArray.php:405
 msgid "Select an Asset"
-msgstr "Seleccionar un activo"
+msgstr "Seleccione un activo"
 
 #: SelectAsset.php:39
 msgid ""
@@ -27230,7 +27231,7 @@ msgstr ""
 
 #: SelectCreditItems.php:957
 msgid "Are you sure you wish to cancel the whole of this credit note?"
-msgstr "¿Seguro que desea cancelar la totalidad de esta nota de crédito?"
+msgstr "¿Está seguro que desea cancelar la totalidad de esta nota de crédito?"
 
 #: SelectCreditItems.php:959
 msgid "Process Credit Note"
@@ -27597,11 +27598,11 @@ msgstr "Indicar una parte del nombre de la Cuenta"
 
 #: SelectGLAccount.php:88
 msgid "Select an Account Code"
-msgstr "Seleccionar un código de cuenta"
+msgstr "Seleccione un código de cuenta"
 
 #: SelectGLAccount.php:115
 msgid "Account Type"
-msgstr "Tipo de Cuenta"
+msgstr "Tipo de cuenta"
 
 #: SelectOrderItems.php:12
 msgid "Modifying Order"
@@ -27932,7 +27933,7 @@ msgstr "Seleccione el activo A Disponer de los de la siguiente lista"
 
 #: SelectOrderItems.php:1796
 msgid "Add Asset To Order"
-msgstr "Agregar un activo a una Orden"
+msgstr "Agregar un activo a una orden"
 
 #: SelectOrderItems.php:1810
 msgid "Cancel Whole Order"
@@ -27940,7 +27941,7 @@ msgstr "Cancelar Todo el Pedido"
 
 #: SelectOrderItems.php:1810
 msgid "Are you sure you wish to cancel this entire order?"
-msgstr "¿Seguro que desea cancelar todo el pedido?"
+msgstr "¿Está seguro que desea cancelar todo el pedido?"
 
 #: SelectProduct.php:8
 msgid "Search Inventory Items"
@@ -28190,7 +28191,7 @@ msgstr ""
 #: SelectQASamples.php:159 SelectQASamples.php:242 SelectQASamples.php:483
 #: TestPlanResults.php:44 TestPlanResults.php:127 TestPlanResults.php:755
 msgid "Sample ID"
-msgstr ""
+msgstr "Identificación de muestra"
 
 #: SelectQASamples.php:242 TestPlanResults.php:127
 msgid "Lot Number"
@@ -28198,7 +28199,7 @@ msgstr ""
 
 #: SelectQASamples.php:244 TestPlanResults.php:129
 msgid "Search Samples"
-msgstr ""
+msgstr "Buscar muestras"
 
 #: SelectQASamples.php:257 TestPlanResults.php:142
 msgid ""
@@ -28217,7 +28218,7 @@ msgstr "Introducir resultado"
 #: SelectQASamples.php:389 SelectQASamples.php:488 SelectQASamples.php:544
 #: TestPlanResults.php:279 TestPlanResults.php:756
 msgid "Specification"
-msgstr ""
+msgstr "Especificación"
 
 #: SelectQASamples.php:391 TestPlanResults.php:281 TestPlanResults.php:757
 msgid "Lot / Serial"
@@ -28235,7 +28236,7 @@ msgstr ""
 #: SelectQASamples.php:394 SelectQASamples.php:504 TestPlanResults.php:284
 #: TestPlanResults.php:759
 msgid "Sample Date"
-msgstr ""
+msgstr "Fecha de muestra"
 
 #: SelectQASamples.php:396 TestPlanResults.php:286
 msgid "Cert Allowed"
@@ -28243,11 +28244,11 @@ msgstr ""
 
 #: SelectQASamples.php:411
 msgid "Are you sure you wish to delete this Sample ID ?"
-msgstr ""
+msgstr "¿Está seguro que desea suprimir esta identificación de muestra?"
 
 #: SelectQASamples.php:449
 msgid "Show All Samples"
-msgstr ""
+msgstr "Mostrar todas las muestras"
 
 #: SelectQASamples.php:492 SelectQASamples.php:552
 #: includes/PDFWOPageHeader.inc:45
@@ -30698,7 +30699,7 @@ msgstr ""
 
 #: StockClone.php:524
 msgid "Review Item Purchase Data."
-msgstr ""
+msgstr "Revisar datos compra de artículos."
 
 #: StockClone.php:525
 msgid "Costing was updated for this cloned item."
@@ -31508,7 +31509,7 @@ msgstr "Por usuario"
 
 #: StockLocTransferReceive.php:348
 msgid "At"
-msgstr ""
+msgstr "En"
 
 #: StockLocTransferReceive.php:364
 msgid "Unable to COMMIT the Stock Transfer transaction"
@@ -31560,7 +31561,7 @@ msgstr "Procesar traslado de inventario"
 
 #: StockLocTransferReceive.php:531
 msgid "Select A Different Transfer"
-msgstr "Selecciones una transferencia diferente"
+msgstr "Seleccione una transferencia diferente"
 
 #: StockLocTransferReceive.php:545
 msgid "Select Location Receiving Into"
@@ -31898,7 +31899,7 @@ msgstr "Los Elementos de Transferencia se establecen como iguales a"
 
 #: StockTransferControlled.php:60 StockTransferControlled.php:63
 msgid "Back To Transfer Screen"
-msgstr "Regresar a la Pantalla de Transferencia"
+msgstr "Volver a la Pantalla de Transferencia"
 
 #: StockTransferControlled.php:67
 msgid "Transfer of controlled item"
@@ -32499,7 +32500,7 @@ msgstr "Créditos del Contrato en nota de Crédito"
 #: SuppContractChgs.php:114 SuppFixedAssetChgs.php:103 SuppInvGRNs.php:163
 #: SuppShiptChgs.php:21 SuppTransGLAnalysis.php:147 SupplierInvoice.php:1900
 msgid "Back to Invoice Entry"
-msgstr "Regresar a introducción de facturas"
+msgstr "Volver a introducción de facturas"
 
 #: SuppContractChgs.php:136
 msgid "Contract Selection"
@@ -34034,7 +34035,7 @@ msgstr ""
 
 #: SupplierInquiry.php:18
 msgid "Select a Supplier to Inquire On"
-msgstr "Seleccionar un proveedor para Informarse Sobre"
+msgstr "Seleccione un proveedor para Informarse Sobre"
 
 #: SupplierInquiry.php:77 SupplierInquiry.php:99
 msgid "The supplier details could not be retrieved by the SQL because"
@@ -34540,7 +34541,7 @@ msgstr ""
 
 #: SupplierTenderCreate.php:475
 msgid "Save Tender"
-msgstr "Guardar la Licitación"
+msgstr "Guardar licitación"
 
 #: SupplierTenderCreate.php:562 SupplierTenderCreate.php:564
 #: SupplierTenderCreate.php:568 SupplierTenderCreate.php:570
@@ -34873,7 +34874,7 @@ msgstr ""
 
 #: Suppliers.php:307 Suppliers.php:597
 msgid "Review Supplier Contact Details"
-msgstr ""
+msgstr "Revisar detalles del contacto del proveedor"
 
 #: Suppliers.php:329
 msgid "The supplier number already exists in the database"
@@ -37009,7 +37010,7 @@ msgstr "¿Está seguro que desea suprimir este grupo de impuestos?"
 
 #: TaxGroups.php:208
 msgid "Review Existing Groups"
-msgstr "Revisar Grupos Existentes"
+msgstr "Revisar grupos existentes"
 
 #: TaxGroups.php:221
 msgid "The selected tax group is no longer available."
@@ -37274,7 +37275,7 @@ msgstr ""
 
 #: TestPlanResults.php:724
 msgid "Back to Samples"
-msgstr ""
+msgstr "Volver a muestras"
 
 #: TestPlanResults.php:761
 msgid "Used for Cert"
@@ -37282,7 +37283,7 @@ msgstr ""
 
 #: TestPlanResults.php:807
 msgid "Test Date"
-msgstr ""
+msgstr "Fecha de prueba"
 
 #: TestPlanResults.php:808
 msgid "Tested By"
@@ -37290,7 +37291,7 @@ msgstr ""
 
 #: TestPlanResults.php:809
 msgid "Test Result"
-msgstr ""
+msgstr "Resultado de prueba"
 
 #: TestPlanResults.php:810
 msgid "On Cert"
@@ -37298,7 +37299,7 @@ msgstr ""
 
 #: TestPlanResults.php:920
 msgid "Are you sure you wish to delete this Test from this Sample ?"
-msgstr ""
+msgstr "¿Está seguro que desea suprimir esta prueba de esta muestra?"
 
 #: TestPlanResults.php:973
 msgid "Copy These Results"
@@ -37433,7 +37434,7 @@ msgstr "¿Está seguro que desea suprimir esta unidad de medida?"
 
 #: UnitsOfMeasure.php:196
 msgid "Review Units of Measure"
-msgstr "Revisar Unidades de Medida"
+msgstr "Revisar unidades de medida"
 
 #: UnitsOfMeasure.php:218
 msgid "Could not retrieve the requested unit of measure, please try again."
@@ -38024,7 +38025,7 @@ msgstr "Usuarios con este Perfil de Seguridad"
 
 #: WWW_Access.php:94
 msgid "security role has been deleted"
-msgstr "Se eliminó el Perfil de Seguridad"
+msgstr "El Perfil de Seguridad fue suprimido"
 
 #: WWW_Access.php:133
 #, php-format
@@ -38033,7 +38034,7 @@ msgstr "¿Está seguro que desea suprimir este rol?"
 
 #: WWW_Access.php:148
 msgid "Review Existing Roles"
-msgstr "Revisar Perfiles Existentes"
+msgstr "Revisar perfiles existentes"
 
 #: WWW_Access.php:160
 msgid "The selected role is no longer available."
@@ -38406,7 +38407,7 @@ msgstr "Volver a Órdenes de Trabajo"
 
 #: WorkOrderCosting.php:32
 msgid "Select a work order"
-msgstr "Seleccionar una orden de trabajo"
+msgstr "Seleccione una orden de trabajo"
 
 #: WorkOrderCosting.php:33
 msgid "This page can only be opened if a work order has been selected."
@@ -38601,7 +38602,7 @@ msgstr ""
 
 #: WorkOrderEntry.php:49 WorkOrderEntry.php:330 WorkOrderEntry.php:553
 msgid "Select an existing work order"
-msgstr "Seleccionar una orden de trabajo existente"
+msgstr "Seleccione una orden de trabajo existente"
 
 #: WorkOrderEntry.php:264
 msgid ""
@@ -38683,7 +38684,7 @@ msgstr "Se ha cancelado la orden de trabajo"
 
 #: WorkOrderEntry.php:470
 msgid "Select an existing outstanding work order"
-msgstr "Seleccionar una Orden de Trabajo Pendiente"
+msgstr "Seleccione una Orden de Trabajo Pendiente"
 
 #: WorkOrderEntry.php:509
 msgid "Could not get the work order items"
@@ -38976,7 +38977,7 @@ msgstr "Recibir Orden de Trabajo"
 
 #: WorkOrderReceive.php:40
 msgid "Select a work order to receive"
-msgstr "Seleccionar una Orden de Trabajo a recibir"
+msgstr "Seleccione una Orden de Trabajo a recibir"
 
 #: WorkOrderReceive.php:42
 msgid ""
@@ -39322,7 +39323,7 @@ msgstr "ya existe como código de sucursal para el mismo cliente"
 
 #: Z_ChangeBranchCode.php:44
 msgid "a unique branch code must be entered for the new code"
-msgstr "debe entrar un código de sucursal único para el nuevo código"
+msgstr "debe introducir un código de sucursal único para el nuevo código"
 
 #: Z_ChangeBranchCode.php:52
 msgid "Inserting the new customer branches master record"
@@ -39459,7 +39460,7 @@ msgstr "ya existe como código de cliente en el sistema"
 
 #: Z_ChangeCustomerCode.php:34
 msgid "a unique customer code must be entered for the new code"
-msgstr "debe introducir un código de cliente único"
+msgstr "debe introducir un código de cliente único para el nuevo código"
 
 #: Z_ChangeCustomerCode.php:41
 msgid "Inserting the new debtors master record"
@@ -39581,11 +39582,13 @@ msgstr ""
 
 #: Z_ChangeGLAccountCode.php:45
 msgid "already exists as a GL account code in the system"
-msgstr ""
+msgstr "ya existe como código de cuenta contable en el sistema"
 
 #: Z_ChangeGLAccountCode.php:45
 msgid "a unique GL account code must be entered for the new code"
 msgstr ""
+"debe introducir un código de un código de cuenta contable único para el "
+"nuevo código"
 
 #: Z_ChangeGLAccountCode.php:52
 msgid "Adding the new chartmaster record"
@@ -39932,7 +39935,7 @@ msgstr "La categoría de reposición de existencias"
 
 #: Z_ChangeStockCategory.php:46
 msgid "already exists as a stock category in the system"
-msgstr "ya existe como una categoría de existencias en el sistema"
+msgstr "ya existe como categoría de existencias en el sistema"
 
 #: Z_ChangeStockCategory.php:46
 msgid "a unique stock category must be entered for the new stock category"
@@ -40099,11 +40102,11 @@ msgstr ""
 
 #: Z_ChangeSupplierCode.php:62
 msgid "already exists as a supplier code in the system"
-msgstr "ya existe como un código de proveedor en el sistema"
+msgstr "ya existe como código de proveedor en el sistema"
 
 #: Z_ChangeSupplierCode.php:62
 msgid "a unique supplier code must be entered for the new code"
-msgstr "un código de proveedor único se debe introducir para el código nuevo"
+msgstr "debe introducir un código de proveedor único para el código nuevo"
 
 #: Z_ChangeSupplierCode.php:71
 msgid "Inserting the new supplier record"
@@ -41316,7 +41319,7 @@ msgstr ""
 
 #: Z_ImportGLTransactions.php:235
 msgid "Select Transaction Type"
-msgstr ""
+msgstr "Seleccionar tipo de transacción"
 
 #: Z_ImportGLTransactions.php:237
 msgid "GL Journal"
@@ -41705,8 +41708,8 @@ msgid ""
 "Are you sure you wish to re-post all general ledger transactions since the "
 "selected period this can take some time?"
 msgstr ""
-"¿Seguro de que desea volver a publicar todas las transacciones contables que "
-"quedan desde el período seleccionado esto puede tomar algún tiempo?"
+"¿Está seguro que desea re-publicar todas las transacciones contables desde "
+"el período seleccionado? Esto puede tomar algún tiempo."
 
 #: Z_RePostGLFromPeriod.php:58
 msgid "All general ledger postings have been reposted from period"
@@ -45217,7 +45220,7 @@ msgstr ""
 #: includes/ConnectDB_mysql.inc:42 includes/ConnectDB_mysqli.inc:43
 #: includes/ConnectDB_mysqli.inc:50 includes/ConnectDB_postgres.inc:29
 msgid "Back to login page"
-msgstr "Volver a la Página de Autenticación"
+msgstr "Volver a página de inicio de sesión"
 
 #: includes/ConnectDB.inc:41
 msgid "The company name entered ("
@@ -46264,7 +46267,7 @@ msgstr "Manual"
 
 #: includes/header.inc:90 ../webSHOP/includes/header.php:232
 msgid "Are you sure you wish to logout?"
-msgstr "¿Confirma que desea salir?"
+msgstr "¿Está seguro que desea salir?"
 
 #: includes/header.inc:90 ../webSHOP/includes/header.php:232
 msgid "Logout"
@@ -48715,7 +48718,7 @@ msgstr "Ingreso de embarque"
 
 #: includes/MainMenuLinksArray.php:176
 msgid "Select A Shipment"
-msgstr "Seleccionar un embarque"
+msgstr "Seleccione un embarque"
 
 #: includes/MainMenuLinksArray.php:188
 msgid "Purchase Order Detail Or Summary Inquiries"
@@ -48828,7 +48831,7 @@ msgstr "Añadir un artículo nuevo"
 
 #: includes/MainMenuLinksArray.php:270
 msgid "Select An Item"
-msgstr "Seleccionar artículo"
+msgstr "Seleccione un artículo"
 
 #: includes/MainMenuLinksArray.php:274
 msgid "Add or Update Prices Based On Costs"
@@ -48844,7 +48847,7 @@ msgstr "Punto de pedido por Categoría/Ubicación"
 
 #: includes/MainMenuLinksArray.php:288 includes/MainMenuLinksArray.php:294
 msgid "Select A Work Order"
-msgstr "Seleccionar una orden de trabajo"
+msgstr "Seleccione una orden de trabajo"
 
 #: includes/MainMenuLinksArray.php:289
 msgid "QA Samples and Test Results"
@@ -49929,7 +49932,7 @@ msgstr ""
 
 #: reportwriter/languages/en_US/reports.php:102
 msgid "Standard Color"
-msgstr ""
+msgstr "Color estándar"
 
 #: reportwriter/languages/en_US/reports.php:104
 msgid "Third"
@@ -49994,7 +49997,7 @@ msgstr ""
 
 #: reportwriter/languages/en_US/reports.php:127
 msgid "Save Report"
-msgstr ""
+msgstr "Guardar informe"
 
 #: reportwriter/languages/en_US/reports.php:128
 msgid "Report Page Setup"
@@ -50255,7 +50258,7 @@ msgstr ""
 
 #: reportwriter/languages/en_US/reports.php:207
 msgid "Select Stored Image"
-msgstr ""
+msgstr "Seleccionar imagen almacenada"
 
 #: reportwriter/languages/en_US/reports.php:208
 msgid "Image  Dimensions (mm)"
@@ -50401,7 +50404,7 @@ msgstr ""
 
 #: reportwriter/languages/en_US/reports.php:261
 msgid "Sales Receipts"
-msgstr ""
+msgstr "Recibos de ventas"
 
 #: reportwriter/languages/en_US/reports.php:262
 msgid "Labels - Vendor"
@@ -50465,7 +50468,7 @@ msgstr ""
 
 #: reportwriter/languages/en_US/reports.php:280
 msgid "Round (2 decimal)"
-msgstr ""
+msgstr "redondear (2 decimales)"
 
 #: reportwriter/languages/en_US/reports.php:281
 msgid "Convert Dollars"
@@ -50769,7 +50772,7 @@ msgstr ""
 
 #: ../webSHOP/Checkout.php:251 ../webSHOP/Register.php:428
 msgid "An email address is required"
-msgstr ""
+msgstr "Se requiere una dirección de correo electrónico"
 
 #: ../webSHOP/Checkout.php:252 ../webSHOP/Register.php:429
 msgid "The email address must be a valid email address"
@@ -50924,11 +50927,11 @@ msgstr ""
 
 #: ../webSHOP/Checkout.php:511 ../webSHOP/Checkout.php:623
 msgid "Back to Delivery Details"
-msgstr ""
+msgstr "Volver a detalles de entrega"
 
 #: ../webSHOP/Checkout.php:512
 msgid "Review Freight Method and Charges"
-msgstr ""
+msgstr "Revisar método y cargos de flete"
 
 #: ../webSHOP/Checkout.php:513
 msgid "Confirm Selected Payment Method"
@@ -51199,7 +51202,7 @@ msgstr ""
 #: ../webSHOP/ItemDetails.php:102 ../webSHOP/ItemDetails.php:111
 #: ../webSHOP/includes/Functions.php:43 ../webSHOP/includes/Functions.php:52
 msgid "Arriving Soon"
-msgstr ""
+msgstr "Llega pronto"
 
 #: ../webSHOP/ItemDetails.php:109
 msgid "In Stock QTY"
@@ -51215,7 +51218,7 @@ msgstr "Añadir a pedido"
 
 #: ../webSHOP/ItemDetails.php:121
 msgid "Back to Category"
-msgstr ""
+msgstr "Volver a categoría"
 
 #: ../webSHOP/ItemDetails.php:134
 msgid "Product Details"
@@ -51673,7 +51676,7 @@ msgstr ""
 
 #: ../webSHOP/includes/PlaceOrder.php:337
 msgid "Shipment information"
-msgstr ""
+msgstr "Información de envío"
 
 #: ../webSHOP/includes/PlaceOrder.php:339
 msgid "Your order will be shipped to you shortly via"
