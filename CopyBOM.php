@@ -108,7 +108,7 @@ if(isset($_POST['Submit'])) {
 			$myrow = DB_fetch_row($result);
 
 			$sql = "UPDATE stockmaster set
-					lastcostupdate  = " . $myrow[0] . ",
+					lastcostupdate  = '" . $myrow[0] . "',
 					actualcost      = " . $myrow[1] . ",
 					lastcost        = " . $myrow[2] . ",
 					materialcost    = " . $myrow[3] . ",
