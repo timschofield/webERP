@@ -1,4 +1,7 @@
 webERP Change Log
+
+3/2/15 Phil: Added more of Andrew Galuski's QA pdf manual to the webERP html manual.
+3/2/15 Andrew Galuski: Fix bug in Credit_Invoice.php that prevented the credit note where the origianal invoice was over delivered compared to the underlying order.
 2/2/15 Exson: Remove unecessary suppliercontact sql statement which makes installation failed.
 31/01/15 RChacon: Add and modify help text. Spanish translation improvements. Standardise "Account:" to "Account".
 30/1/15 Jiro: Updated Traditional Chinese translation under zh_TW.utf8
