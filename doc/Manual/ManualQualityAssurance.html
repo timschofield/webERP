@@ -16,17 +16,47 @@
 
 <img src="images/QA_TestsEntry.png" alt="QA Tests Entry screen" />
 
-Test Name: The name of the Test you are setting up
-Method: ASTM, ISO, UL or other.
-Group By: Free Form. Can be used to Group certain Test on the Product Specification or Certificate of
-Analysis
-Units: How this is measure. PSI, Fahrenheit, Celsius etc.
-Type: How do we measure/Enter this value (Text, Date, Numeric Range, and Selection List?)
-Possible Values: (Only valid for type Select List, controls what appears in the drop down?)
-Numeric Value: Enforces numbers to be entered for this test type
-Show on Cert: Does this test print on the Certificate of Analysis (Can be overwritten at a Product level)
-Show on Cert: Does this test print on the Product Specification (Can be overwritten at a Product level)
-Show on Cert: Does this test print on the Test Plan (Can be overwritten at a Product level)
-Active: once a test has results entered against it delete is no longer allowed. This flag can be used to
-inactivate it and not use it on future product specifications.
+<ul>
+	<li>Test Name: The name of the Test you are setting up</li>
+	<li>Method: ASTM, ISO, UL or other.</li>
+	<li>Group By: Free Form. Can be used to Group certain Test on the Product Specification or Certificate of Analysis</li>
+	<li>Units: How this is measure. PSI, Fahrenheit, Celsius etc.</li>
+	<li>Type: How do we measure/Enter this value (Text, Date, Numeric Range, and Selection List?)
+		Possible Values: (Only valid for type Select List, controls what appears in the drop down?)
+Numeric Value: Enforces numbers to be entered for this test type</li>
+	<li>Show on Cert: Does this test print on the Certificate of Analysis (Can be overwritten at a Product level)</li>
+	<li>Show on Product Specification: Does this test print on the Product Specification (Can be overwritten at a Product level)</li>
+	<li>Show on Test Plan: Does this test print on the Test Plan (Can be overwritten at a Product level)</li>
+	<li>Active: once a test has results entered against it delete is no longer allowed. This flag can be used to
+inactivate it and not use it on future product specifications.</li>
+</ul>
+<h2>Product Specification</h2>
+<p>Product Specifications are a collection of QA Tests that come together to define how a Product Data Sheet is built, what we test for and what we certify our results to. These are loosely tied to Items (Stocks). If a Product Specification is named the same as a stock ID then the Product Description will be used in printed paperwork and screens. If it is not a stock id then it is considered a generic product specification that can be used to hold any type of test results in your system. This also allows cascading templates to be created for faster product specification definition. In the future I foresee there may also be a loose connection to Fixed Assets. A Product Specification is added as soon as a test is added to it.
+To start a new specification, go to the Product Specification Screen, Type in a specification Name or stock id and click Submit.</p>
+<img src="images/QA_ProductSpecificationMaintenance.png" alt="QA Product specification maintenance screen" />
+<p>Then click on &quot;Add More Tasks&quot;</p>
+<img src="images/QA_ProdSpecAddTasks.png" alt="QA Product Specification Add Tasks" />
+<p>Adding additoinal tests to the Specifcation. Click &quot;Add Tests&quot;. All tests not yet on this specification shown. You may enter the values for the specification on this screen before clicking the Add button</p>
+<img src="images/QA_ProdSpecValues.png" alt="QA Enter Product Specification Test Values" />
+<h2>Copying Specifications</h2>
+<p>Specifications can be quickly copied from one specification to another. From the Product Specification Maintenance screen select the From Specification. Choose &quot;Copy this
+Specification&quot;. Then enter the Destination Specification.</p>
+<img src="images/QA_CopySpecification.png" alt="QA copying a specification" />
+<h2>Print Product Specification</h2>
+<p>Prints a Customer Facing document that shows all the QA Tests that you have specified to &quot;Show on Product Specification&quot;</p>
+<img src="images/QA_PrintProductSpecification.png" alt="QA printing a product specification" />
+<h2>Logging Samples</h2>
+<p>Samples can be logged automatically by the system or manually by a Quality person. If the configuration is set to Yes and the item is lot or serial controlled then at P/O receipt a sample is created in the system for each new Lot or serial received for the item being received. The system will not create duplicate samples if you receive the same lot 3 times against a purchase order or work order.</p>
+<p>You can view and edit existing samples in the &quot;QA Samples and Test Results&quot; under the Manufacturing
+module.</p>
+<img src="images/QA_LogSampleResults.png" alt="QA log sample results" />
+<p>When manually adding a sample you select a specification, enter a lot # (No validation exists) and an identifier and some comments. An identifier can be used to distinguish multiple samples for the same lot from each other. In many manufacturing environments samples are taken through the process for example at machine startup, quarter, half, three quarter processing and at batch end. The identifier allows us to distinguish these from each other. It can also be used to specify a retest later of a sample retain. Duplicate for Lot OK – if you choose no and a sample already exists for this lot it will not create a new one. Use for Cert marks the specific sample to be used for certification if multiple samples exist for
+a particular lot. Only one sample can be marked as “Use for Cert” per Item/lot combination. The system also disallows a sample being used for certification if it is missing test results. A warning is given is test results are out of specification. Some companies may wish to change this warning to a hard stop. This will require a code change or a new configuration parameter to be entered into the system.</p>
+<h2>Entering Test Results for a Sample</h2>
+<p>Selecting a sample from the Select Sample screen allows test results to be entered as well as a test date and the name of the person that performed the testing. When reviewing the Test Plan Results screen the tests are color coded. Yellow: No Result Entered. Orange: Out of Specification. White: In Spec.</p>
+<img src="images/QA_LogSampleResults2.png" alt="QA log sample results" />
+<p>Additional tests (just for this sample) can be added without affecting the existing template.</p>
+<img src="images/QA_AdditionalTests.png" alt="QA additional test results" />
+<p>Manually added tests that are not part of the normal testing plan are noted for this sample. Because they were manually added they may also be deleted from the sample.</p>
+<img src="images/QA_DeleteTestResult.png" alt="QA delete manually added test result" />
 <!-- Help End: QA -->
