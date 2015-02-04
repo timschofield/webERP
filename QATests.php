@@ -3,6 +3,8 @@
 
 include('includes/session.inc');
 $Title = _('QA Tests Maintenance');
+$ViewTopic= 'QualityAssurance';// Filename in ManualContents.php's TOC.
+$BookMark = 'QA_Tests';// Anchor's id in the manual's html document.
 include('includes/header.inc');
 
 if (isset($_GET['SelectedQATest'])){

@@ -4,7 +4,7 @@
 include('includes/session.inc');
 $Title = _('Product Specifications Maintenance');
 $ViewTopic= 'QualityAssurance';// Filename in ManualContents.php's TOC.
-$BookMark = 'QA';// Anchor's id in the manual's html document.
+$BookMark = 'QA_ProdSpecs';// Anchor's id in the manual's html document.
 include('includes/header.inc');
 
 if (isset($_GET['SelectedQATest'])){
