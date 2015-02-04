@@ -47,7 +47,7 @@ if (isset($_POST['submit'])) {
 	}
 	$sql= "SELECT COUNT(*) FROM qatests WHERE qatests.name='".$_POST['QATestName']."'
 										AND qatests.testid <> '" .$SelectedQATest. "'";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {
 		$InputError = 1;
@@ -108,7 +108,7 @@ if (isset($_POST['submit'])) {
 		//run the SQL from either of the above possibilites
 		$ErrMsg = _('The insert or update of the QA Test failed because');
 		$DbgMsg = _('The SQL that was used and failed was');
-		$result = DB_query($sql,$db,$ErrMsg, $DbgMsg);
+		$result = DB_query($sql,$ErrMsg, $DbgMsg);
 
 		prnMsg($msg , 'success');
 
@@ -139,7 +139,7 @@ if (isset($_POST['submit'])) {
 	} else {
 		$sql="DELETE FROM qatests WHERE testid='". $SelectedQATest."'";
 		$ErrMsg = _('The QA Test could not be deleted because');
-		$result = DB_query($sql,$db,$ErrMsg);
+		$result = DB_query($sql,$ErrMsg);
 
 		prnMsg(_('QA Test') . ' ' . $SelectedQATest . ' ' . _('has been deleted from the database'),'success');
 		unset ($SelectedQATest);
@@ -176,7 +176,7 @@ if (! isset($_GET['delete'])) {
 				FROM qatests
 				WHERE testid='".$SelectedQATest."'";
 
-		$result = DB_query($sql, $db);
+		$result = DB_query($sql);
 		$myrow = DB_fetch_array($result);
 
 		$_POST['SelectedQATest'] = $myrow['testid'];
@@ -383,7 +383,7 @@ or deletion of the records*/
 				active
 			FROM qatests
 			ORDER BY name";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 
 	echo '<table class="selection">';
 	echo '<tr>

@@ -40,13 +40,14 @@ echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/m
 if (isset($_GET['CopySpec']) OR isset($_POST['CopySpec'])) {
 	if (!isset($_POST['CopyTo']) OR $_POST['CopyTo']=='' ) {
 		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-		echo '<div>';
-		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-		echo _('Enter The Item, Fixed Asset or Template to Copy this Specification to') . ':<input type="text" name="CopyTo" size="25" maxlength="25" />';
-		echo '<div class="centre">
-					<input type="hidden" name="KeyValue" value="' . $KeyValue . '" />
-					<input type="submit" name="CopySpec" value="' . _('Copy') . '" />
-			</div></form>';
+		echo '<div>
+			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+		echo _('Enter The Item, Fixed Asset or Template to Copy this Specification to') . ':<input type="text" name="CopyTo" size="25" maxlength="25" />
+			<div class="centre">
+				<input type="hidden" name="KeyValue" value="' . $KeyValue . '" />
+				<input type="submit" name="CopySpec" value="' . _('Copy') . '" />
+			</div>
+			</form>';
 		include('includes/footer.inc');
 		exit;
 	} else {
@@ -105,6 +106,7 @@ if (!isset($KeyValue) OR $KeyValue=='') {
 				<table class="selection">
 				<tr>
 					<td>' . _('Or Select Existing Specification') .':</td>';
+
 	$SQLSpecSelect="SELECT DISTINCT(keyval),
 							description
 						FROM prodspecs LEFT OUTER JOIN stockmaster
@@ -274,7 +276,7 @@ if (isset($_POST['AddTests'])) {
 								showontestplan,
 								active
 						FROM qatests WHERE testid='" .$_POST['AddTestID' .$i]. "'";
-			echo $sql;
+			//echo $sql;
 			$msg = _('A Product Specification record has been added for Test ID') . ' ' . $_POST['AddTestID' .$i]  . ' for ' . ' ' . $KeyValue ;
 			$ErrMsg = _('The insert of the Product Specification failed because');
 			$DbgMsg = _('The SQL that was used and failed was');

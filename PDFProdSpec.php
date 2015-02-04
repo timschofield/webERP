@@ -9,10 +9,11 @@ if (isset($_GET['KeyValue']))  {
 	$SelectedProdSpec=$_GET['KeyValue'];
 } elseif (isset($_POST['KeyValue'])) {
 	$SelectedProdSpec=$_POST['KeyValue'];
+} else {
+	$SelectedProdSpec='';
 }
-
 //Get Out if we have no product specification
-If (!isset($SelectedProdSpec) || $SelectedProdSpec==""){
+If (!isset($SelectedProdSpec) OR $SelectedProdSpec==''){
         $Title = _('Select Product Specification To Print');
         include('includes/header.inc');
 		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print')  . '" alt="" />' . ' ' . $Title . '</p>';
@@ -27,7 +28,7 @@ If (!isset($SelectedProdSpec) || $SelectedProdSpec==""){
 		</table>
 		</div>
 		<div>
-		<input type="submit" name="pickspec" value="' . _('Submit') . '" />
+		<input type="submit" name="PickSpec" value="' . _('Submit') . '" />
 		</div>
 		</form>
 		<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method="post">
@@ -40,20 +41,20 @@ If (!isset($SelectedProdSpec) || $SelectedProdSpec==""){
 							description
 						FROM prodspecs LEFT OUTER JOIN stockmaster
 						ON stockmaster.stockid=prodspecs.keyval";
-						
 
-	$ResultSelection=DB_query($SQLSpecSelect, $db);
+
+	$ResultSelection=DB_query($SQLSpecSelect);
 	echo '<td><select name="KeyValue">';
 
 	while ($MyRowSelection=DB_fetch_array($ResultSelection)){
 		echo '<option value="' . $MyRowSelection['keyval'] . '">' . $MyRowSelection['keyval'].' - ' .htmlspecialchars($MyRowSelection['description'], ENT_QUOTES,'UTF-8', false)  . '</option>';
 	}
-	echo '</select></td>';		
+	echo '</select></td>';
 	echo '</tr>
 		</table>
 		</div>
 		<div>
-		<input type="submit" name="pickspec" value="' . _('Submit') . '" />
+		<input type="submit" name="PickSpec" value="' . _('Submit') . '" />
 		</div>
 		</form>';
     include('includes/footer.inc');
@@ -83,7 +84,7 @@ $sql = "SELECT keyval,
 			AND prodspecs.showonspec='1'
 			ORDER by groupby, prodspecs.testid";
 
-$result=DB_query($sql,$db, $ErrMsg);
+$result=DB_query($sql,$ErrMsg);
 
 //If there are no rows, there's a problem.
 if (DB_num_rows($result)==0){
@@ -110,7 +111,7 @@ if (DB_num_rows($result)==0){
 			<br />';
 	include('includes/footer.inc');
 	exit;
-} 
+}
 $PaperSize = 'Letter';
 
 include('includes/PDFStarter.php');
@@ -148,7 +149,7 @@ while ($myrow=DB_fetch_array($result)){
 		include('includes/PDFProdSpecHeader.inc');
 		$HeaderPrinted=1;
 	}
-	
+
 	if ($CurSection!=$myrow['groupby']) {
 		$SectionHeading=0;
 		if ($CurSection!='' AND $PrintTrailer==1) {
@@ -163,7 +164,7 @@ while ($myrow=DB_fetch_array($result)){
 			}
 		}
 	}
-	
+
 	if ($SectionHeading==0) {
 		$XPos=65;
 		if ($PrevTrailer>'' AND $PrintTrailer==1) {
@@ -220,16 +221,16 @@ while ($myrow=DB_fetch_array($result)){
 		$ColWidth=$SectionColSizes[$x];
 		$ColAlign=$SectionAlign[$x];
 		switch ($x) {
-			case 0; 
+			case 0;
 				$DispValue=$myrow['name'];
 				break;
-			case 1; 
+			case 1;
 				$DispValue=$Value;
 				break;
 			case 2;
 				$DispValue=$myrow['method'];
 				break;
-		}		
+		}
 		$LeftOvers = $pdf->addTextWrap($XPos+1,$YPos,$ColWidth,$FontSize,$DispValue,$ColAlign,1);
 		$XPos+=$ColWidth;
 		$x++;
@@ -272,7 +273,7 @@ $sql = "SELECT confvalue
 			FROM config
 			WHERE confname='QualityProdSpecText'";
 
-$result=DB_query($sql,$db, $ErrMsg);
+$result=DB_query($sql,$ErrMsg);
 $myrow=DB_fetch_array($result);
 $Disclaimer=$myrow[0];
 $LeftOvers = $pdf->addTextWrap($XPos+5,$YPos,500,$FontSize,$Disclaimer);
@@ -281,7 +282,7 @@ while (mb_strlen($LeftOvers) > 1) {
 	$LeftOvers = $pdf->addTextWrap($XPos+5,$YPos,445,$FontSize, $LeftOvers, 'left');
 }
 
-$pdf->OutputI($_SESSION['DatabaseName'] . 'ProductSpecification' . date('Y-m-d') . '.pdf');
+$pdf->OutputI($_SESSION['DatabaseName'] . '_ProductSpecification_' . date('Y-m-d') . '.pdf');
 $pdf->__destruct();
 
 ?>

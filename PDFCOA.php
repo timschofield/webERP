@@ -40,7 +40,7 @@ If ((!isset($SelectedCOA) || $SelectedCOA=='') AND (!isset($QASampleID) OR $QASa
 		</table>
 		</div>
 		<div>
-		<input type="submit" name="pickspec" value="' . _('Submit') . '" />
+		<input type="submit" name="PickSpec" value="' . _('Submit') . '" />
 		</div>
 		</form>
 		<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method="post">
@@ -57,20 +57,20 @@ If ((!isset($SelectedCOA) || $SelectedCOA=='') AND (!isset($QASampleID) OR $QASa
 						ON stockmaster.stockid=qasamples.prodspeckey
 						WHERE cert='1'
 						ORDER BY lotkey";
-						
 
-	$ResultSelection=DB_query($SQLSpecSelect, $db);
+
+	$ResultSelection=DB_query($SQLSpecSelect);
 	echo '<td><select name="QASampleID" style="font-family: monospace; white-space:pre;">';
 	echo '<option value="">' . str_pad(_('Lot/Serial'),15,'_'). str_pad(_('Item'),20, '_', STR_PAD_RIGHT). str_pad(_('Description'),20,'_') . '</option>';
 	while ($MyRowSelection=DB_fetch_array($ResultSelection)){
 		echo '<option value="' . $MyRowSelection['sampleid'] . '">' . str_pad($MyRowSelection['lotkey'],15, '_', STR_PAD_RIGHT). str_pad($MyRowSelection['prodspeckey'],20,'_') .htmlspecialchars($MyRowSelection['description'], ENT_QUOTES,'UTF-8', false)  . '</option>';
 	}
-	echo '</select></td>';		
+	echo '</select></td>';
 	echo '</tr>
 		</table>
 		</div>
 		<div>
-		<input type="submit" name="pickspec" value="' . _('Submit') . '" />
+		<input type="submit" name="PickSpec" value="' . _('Submit') . '" />
 		</div>
 		</form>';
     include('includes/footer.inc');
@@ -89,7 +89,7 @@ if (isset($SelectedCOA)) {
 					testvalue,
 					sampledate,
 					groupby
-				FROM qasamples INNER JOIN sampleresults 
+				FROM qasamples INNER JOIN sampleresults
 				ON sampleresults.sampleid=qasamples.sampleid
 				INNER JOIN qatests
 				ON qatests.testid=sampleresults.testid
@@ -109,7 +109,7 @@ if (isset($SelectedCOA)) {
 					testvalue,
 					sampledate,
 					groupby
-				FROM qasamples INNER JOIN sampleresults 
+				FROM qasamples INNER JOIN sampleresults
 				ON sampleresults.sampleid=qasamples.sampleid
 				INNER JOIN qatests
 				ON qatests.testid=sampleresults.testid
@@ -119,7 +119,7 @@ if (isset($SelectedCOA)) {
 				AND sampleresults.showoncert='1'
 				ORDER by groupby, sampleresults.testid";
 }
-$result=DB_query($sql,$db, $ErrMsg);
+$result=DB_query($sql,$ErrMsg);
 
 //If there are no rows, there's a problem.
 if (DB_num_rows($result)==0){
@@ -146,7 +146,7 @@ if (DB_num_rows($result)==0){
 			<br />';
 	include('includes/footer.inc');
 	exit;
-} 
+}
 $PaperSize = 'Letter';
 if ($QASampleID>'') {
 	$myrow=DB_fetch_array($result);
@@ -176,7 +176,7 @@ while ($myrow=DB_fetch_array($result)){
 	}
 	$Spec=$myrow['description'];
 	$SampleDate=ConvertSQLDate($myrow['sampledate']);
-	
+
 	foreach($SectionsArray as $row) {
 		if ($myrow['groupby']==$row[0]) {
 			$SectionColSizes=$row[4];
@@ -189,7 +189,7 @@ while ($myrow=DB_fetch_array($result)){
 		include('includes/PDFCOAHeader.inc');
 		$HeaderPrinted=1;
 	}
-	
+
 	if ($CurSection!=$myrow['groupby']) {
 		$SectionHeading=0;
 		if ($CurSection!='' AND $PrintTrailer==1) {
@@ -204,7 +204,7 @@ while ($myrow=DB_fetch_array($result)){
 			}
 		}
 	}
-	
+
 	if ($SectionHeading==0) {
 		$XPos=65;
 		if ($PrevTrailer>'' AND $PrintTrailer==1) {
@@ -254,16 +254,16 @@ while ($myrow=DB_fetch_array($result)){
 		$ColWidth=$SectionColSizes[$x];
 		$ColAlign=$SectionAlign[$x];
 		switch ($x) {
-			case 0; 
+			case 0;
 				$DispValue=$myrow['name'];
 				break;
-			case 1; 
+			case 1;
 				$DispValue=$Value;
 				break;
 			case 2;
 				$DispValue=$myrow['method'];
 				break;
-		}		
+		}
 		$LeftOvers = $pdf->addTextWrap($XPos+1,$YPos,$ColWidth,$FontSize,$DispValue,$ColAlign,1);
 		$XPos+=$ColWidth;
 		$x++;
@@ -305,7 +305,7 @@ $sql = "SELECT confvalue
 			FROM config
 			WHERE confname='QualityCOAText'";
 
-$result=DB_query($sql,$db, $ErrMsg);
+$result=DB_query($sql, $ErrMsg);
 $myrow=DB_fetch_array($result);
 $Disclaimer=$myrow[0];
 $LeftOvers = $pdf->addTextWrap($XPos+5,$YPos,500,$FontSize,$Disclaimer);
