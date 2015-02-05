@@ -388,7 +388,7 @@ If (isset($PrintPDF)
 				}
 				$YPos -= ($FontSize*$lines);
 
-				$lines=explode('\r\n',htmlspecialchars_decode($myrow2['narrative']));
+				$lines=explode("\r\n",htmlspecialchars_decode($myrow2['narrative']));
 				for ($i=0;$i<sizeOf($lines);$i++) {
 				while (mb_strlen($lines[$i])>1){
 					if ($YPos-$line_height <= $Bottom_Margin){
@@ -465,7 +465,7 @@ If (isset($PrintPDF)
   		$pdf->addTextWrap($Left_Margin, $YPos+3, 280, $FontSize,_('Payment Terms') . ': ' . $myrow['terms']);
 
 		$FontSize =8;
-		$LeftOvers=explode('\r\n',DB_escape_string($myrow['invtext']));
+		$LeftOvers=explode("\r\n",DB_escape_string($myrow['invtext']));
 		for ($i=0;$i<sizeOf($LeftOvers);$i++) {
 			$pdf->addText($Left_Margin, $YPos-8-($i*8), $FontSize, $LeftOvers[$i]);
 		}

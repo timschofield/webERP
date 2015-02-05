@@ -323,7 +323,7 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 
 					$YPos -= ($line_height);
 
-					$lines=explode('\r\n',htmlspecialchars_decode($myrow2['narrative']));
+					$lines=explode("\r\n",htmlspecialchars_decode($myrow2['narrative']));
 					for ($i=0;$i<sizeOf($lines);$i++) {
 						while (mb_strlen($lines[$i])>1) {
 							if ($YPos-$line_height <= $Bottom_Margin) {
