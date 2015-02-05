@@ -1,86 +1,137 @@
 <?php
 /* $Id$*/
 
-//$PageSecurity = 11;
-
 include('includes/session.inc');
-$Title = _('Import Chart of Accounts');
+$Title = _('Import Chart Of Accounts');
 include('includes/header.inc');
-include('xmlrpc/lib/xmlrpc.inc');
-include('api/api_errorcodes.php');
+echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
+		'/images/maintenance.png" title="' .
+		_('Import Chart of Accounts from CSV file') . '" />' . ' ' .
+		_('Import Chart of Accounts from CSV file') . '</p>';
 
-$weberpuser = $_SESSION['UserID'];
-$sql='SELECT password FROM www_users WHERE userid="'.$weberpuser.'"';
-$result=DB_query($sql);
-$myrow=DB_fetch_array($result);
-$weberppassword = $myrow[0];
+$FieldHeadings = array(
+	'Account Code',			//  0 'Account Code
+	'Description',		//  1 'Account Description',
+	'Account Group'		//  2 'Account Group',
+);
 
-$ServerURL = "http://". $_SERVER['HTTP_HOST'].$RootPath."/api/api_xml-rpc.php";
-$DebugLevel = 0; //Set to 0,1, or 2 with 2 being the highest level of debug info
+if (isset($_FILES['ChartFile']) and $_FILES['ChartFile']['name']) { //start file processing
+	//check file info
+	$FileName = $_FILES['ChartFile']['name'];
+	$TempName  = $_FILES['ChartFile']['tmp_name'];
+	$FileSize = $_FILES['ChartFile']['size'];
 
+	$InputError = 0;
 
-if (isset($_POST['update'])) {
-	$fp = fopen($_FILES['ImportFile']['tmp_name'], "r");
-   	$buffer = fgets($fp, 4096);
-   	$FieldNames = explode(',', $buffer);
-   	$SuccessStyle='style="color:green; font-weight:bold"';
-   	$FailureStyle='style="color:red; font-weight:bold"';
-   	echo '<table><tr><th>' .  _('Account Code')  . '</th><th>' .  _('Result') . '</th><th>' .  _('Comments')  . '</th></tr>';
-   	$successes=0;
-   	$failures=0;
- 	while (!feof ($fp)) {
-    	$buffer = fgets($fp, 4096);
-    	$FieldValues = explode(',', $buffer);
-    	if ($FieldValues[0]!='') {
-    		for ($i=0; $i<sizeof($FieldValues); $i++) {
-    			if (mb_substr($FieldNames[$i],0,6)=='group_' or $FieldNames[$i]=='group_') {
-    				$FieldNames[$i] = mb_substr($FieldNames[$i],0,6);
-    				$FieldValues[$i] = mb_substr($FieldValues[$i], 0, mb_strlen($FieldValues[$i])-1);
-    				$FieldValues[$i] = mb_substr($FieldValues[$i], 0, 30);
-    			}
-    			$AccountDetails[$FieldNames[$i]]=$FieldValues[$i];
-    		}
-			$account = php_xmlrpc_encode($AccountDetails);
-			$user = new xmlrpcval($weberpuser);
-			$password = new xmlrpcval($weberppassword);
+	//get file handle
+	$FileHandle = fopen($TempName, 'r');
 
-			$msg = new xmlrpcmsg("weberp.xmlrpc_InsertGLAccount", array($account, $user, $password));
+	//get the header row
+	$HeadRow = fgetcsv($FileHandle, 10000, ',');
 
-			$client = new xmlrpc_client($ServerURL);
-			$client->setDebug($DebugLevel);
-
-			$response = $client->send($msg);
-			$answer = php_xmlrpc_decode($response->value());
-			if ($answer[0]==0) {
-				echo '<tr '.$SuccessStyle.'><td>' . $AccountDetails['accountcode'] . '</td><td>' . 'Success' . '</td></tr>';
-				$successes++;
-			} else {
-				echo '<tr '.$FailureStyle.'><td>' . $AccountDetails['accountcode'] . '</td><td>' . 'Failure' . '</td><td>';
-				for ($i=0; $i<sizeof($answer); $i++) {
-					echo 'Error no '.$answer[$i].' - '.$ErrorDescription[$answer[$i]] . '<br />';
-				}
-				echo '</td></tr>';
-				$failures++;
-			}
-    	}
-		unset($AccountDetails);
+	//check for correct number of fields
+	if ( count($HeadRow) != count($FieldHeadings) ) {
+		prnMsg (_('File contains') . ' '. count($HeadRow). ' ' . _('columns, expected') . ' '. count($FieldHeadings) . '<br/>' . _('There should be three column headings:') . ' Account Code, Description, Account Group','error');
+		fclose($FileHandle);
+		include('includes/footer.inc');
+		exit;
 	}
-	echo '<tr><td>' . $successes._(' records successfully imported')  . '</td></tr>';
-	echo '<tr><td>' . $failures._(' records failed to import')  . '</td></tr>';
-	echo '</table>';
-	fclose ($fp);
-} else {
-	prnMsg( _('Select a csv file containing the details of the account codes that you wish to import into webERP. '). '<br />' .
-		 _('The first line must contain the field names that you wish to import. ').
-		 '<a href ="Z_DescribeTable.php?table=chartmaster">' . _('The field names can be found here'). '</a>', 'info');
-	echo '<form id="ItemForm" enctype="multipart/form-data" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' .SID .'">';
-    echo '<div>';
+
+	//test header row field name and sequence
+	$HeadingColumnNumber = 0;
+	foreach ($HeadRow as $HeadField) {
+		if ( trim(mb_strtoupper($HeadField)) != trim(mb_strtoupper($FieldHeadings[$HeadingColumnNumber]))) {
+			prnMsg (_('The file to import the chart of accounts from contains incorrect column headings') . ' '. mb_strtoupper($HeadField). ' != '. mb_strtoupper($FieldHeadings[$HeadingColumnNumber]). '<br />' . _('There should be three column headings:') . ' Account Code, Description, Account Group','error');
+			fclose($FileHandle);
+			include('includes/footer.inc');
+			exit;
+		}
+		$HeadingColumnNumber++;
+	}
+
+	//start database transaction
+	DB_Txn_Begin();
+
+	//loop through file rows
+	$LineNumber = 1;
+	while ( ($myrow = fgetcsv($FileHandle, 10000, ',')) !== FALSE ) {
+
+		//check for correct number of fields
+		$FieldCount = count($myrow);
+		if ($FieldCount != count($FieldHeadings)){
+			prnMsg (count($FieldHeadings) . ' ' . _('fields required') . ', '. $FieldCount. ' ' . _('fields received'),'error');
+			fclose($FileHandle);
+			include('includes/footer.inc');
+			exit;
+		}
+
+		// cleanup the data (csv files often import with empty strings and such)
+		$AccountCode = mb_strtoupper($myrow[0]);
+		foreach ($myrow as &$value) {
+			$value = trim($value);
+			$value = str_replace('"', '', $value);
+		}
+
+		//Then check that the account group actually exists
+		$sql = "SELECT COUNT(group_) FROM chartmaster WHERE group_='" . $myrow[2] . "'";
+		$result = DB_query($sql);
+		$testrow = DB_fetch_row($result);
+		if ($testrow[0] == 0) {
+			$InputError = 1;
+			prnMsg (_('Account Group') . ' "' . $myrow[2]. '" ' . _('does not exist. First enter the account groups you require in webERP before attempting to import the accounts.'),'error');
+		}
+
+		if ($InputError !=1){
+
+			//Insert the chart record
+			$sql = "INSERT INTO chartmaster (accountcode,
+											accountname,
+											group_
+										) VALUES (
+										'" . $myrow[0] . "',
+										'" . $myrow[1] . "',
+										'" . $myrow[2] . "')";
+
+			$ErrMsg =  _('The general ledger account could not be added because');
+			$DbgMsg = _('The SQL that was used to add the general ledger account that failed was');
+			$result = DB_query($sql, $ErrMsg, $DbgMsg);
+		}
+
+		if ($InputError == 1) { //this row failed so exit loop
+			break;
+		}
+		$LineNumber++;
+	}
+
+	if ($InputError == 1) { //exited loop with errors so rollback
+		prnMsg(_('Failed on row') . ' '. $LineNumber. '. ' . _('Batch import of the chart of accounts has been rolled back.'),'error');
+		DB_Txn_Rollback();
+	} else { //all good so commit data transaction
+		DB_Txn_Commit();
+		prnMsg( _('Batch Import of') .' ' . $FileName  . ' '. _('has been completed') . '. ' . _('All general ledger accounts have been added to the chart of accounts'),'success');
+	}
+
+	fclose($FileHandle);
+	//Now create the chartdetails records as necessary for the new chartsmaster records
+	include('includes/GLPostings.inc');
+
+} else { //show file upload form
+
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint" enctype="multipart/form-data">';
+	echo '<div class="centre">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table><tr><td>' . _('File to import') . '</td>' . 
-		'<td><input type="file" id="ImportFile" name="ImportFile" /></td></tr></table>';
-	echo '<div class="centre"><input type="submit" name="update" value="Process" /></div>';
-	echo '</div>
-          </form>';
+	echo '<div class="page_help_text">' .
+			_('This function loads a chart of accounts from a comma separated variable (csv) file.') . '<br />' .
+			_('The file must contain three columns, and the first row should be the following headers:') . '<br />Account Code, Description, Account Group<br />' .
+			_('followed by rows containing these three fields for each general ledger account to be uploaded.') .  '<br />' .
+			_('The Account Group field must have a corresponding entry in the account groups table. So these need to be set up first.') . '</div>';
+
+	echo '<br /><input type="hidden" name="MAX_FILE_SIZE" value="1000000" />' .
+			_('Upload file') . ': <input name="ChartFile" type="file" />
+			<input type="submit" name="submit" value="' . _('Send File') . '" />
+		</div>
+		</form>';
+
 }
 
 include('includes/footer.inc');
