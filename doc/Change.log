@@ -1,5 +1,7 @@
 webERP Change Log
 
+6/2/15 Version 4.12.1
+
 5/2/15 Phil: Rewrite of Z_ImportChartOfAccounts.php old script used the api and hard coded based on the database in api_php.php
 3/02/15 Exson: Fixed date compatible problem for strict sql mode in CopyBOM.php.
 3/2/15 Phil: Added more of Andrew Galuski's QA pdf manual to the webERP html manual.
