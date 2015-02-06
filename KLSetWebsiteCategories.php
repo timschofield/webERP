@@ -615,6 +615,7 @@ function ItemFeaturedAsTopSale($StockID, $Category, $DaysTopSales, $db){
 
 function ItemExcludedFromWebsite($StockID, $Category){
 	if ((substr($StockID, 0,3) == "TM-")
+		OR (substr($StockID, 0,4) == "GOTA")
 		OR (substr($StockID, 0,4) == "BSBE")
 		OR (substr($StockID, 0,4) == "KLBE")){
 		return true;
