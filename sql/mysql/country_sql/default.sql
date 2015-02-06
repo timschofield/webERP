@@ -3341,7 +3341,7 @@ CREATE TABLE `www_users` (
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-02-06 12:41:43
+-- Dump completed on 2015-02-06 19:17:44
 -- MySQL dump 10.14  Distrib 5.5.40-MariaDB, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: weberpdemo
@@ -6405,7 +6405,7 @@ INSERT INTO `taxprovinces` VALUES (1,'Default Tax province');
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('admin','$2y$10$Q8HLC/2rQaB5NcCcK6V6ZOQG3chIsx16mKtZRoSaUsU9okMBDbUwG','Demonstration user','','','','','admin@weberp.org','MEL',8,1,'2015-02-06 12:35:05','','A4','1,1,1,1,1,1,1,1,1,1,1,',0,0,50,'xenos','en_GB.utf8',0,0);
+INSERT INTO `www_users` VALUES ('admin','$2y$10$Q8HLC/2rQaB5NcCcK6V6ZOQG3chIsx16mKtZRoSaUsU9okMBDbUwG','Demonstration user','','','','','admin@weberp.org','MEL',8,1,'2015-02-06 19:03:06','','A4','1,1,1,1,1,1,1,1,1,1,1,',0,0,50,'xenos','en_GB.utf8',0,0);
 
 --
 -- Dumping data for table `edi_orders_segs`
@@ -6825,7 +6825,7 @@ INSERT INTO `scripts` VALUES ('InventoryQuantities.php',2,'');
 INSERT INTO `scripts` VALUES ('InventoryValuation.php',2,'Creates a pdf report showing the value of stock at standard cost for a range of product categories selected');
 INSERT INTO `scripts` VALUES ('Labels.php',15,'Produces item pricing labels in a pdf from a range of selected criteria');
 INSERT INTO `scripts` VALUES ('Locations.php',11,'Defines the inventory stocking locations or warehouses');
-INSERT INTO `scripts` VALUES ('LocationUsers.php',15,'User Location Maintenance');
+INSERT INTO `scripts` VALUES ('LocationUsers.php',15,'Allows users that have permission to access a location to be defined');
 INSERT INTO `scripts` VALUES ('Logout.php',1,'Shows when the user logs out of webERP');
 INSERT INTO `scripts` VALUES ('MailingGroupMaintenance.php',15,'Mainting mailing lists for items to mail');
 INSERT INTO `scripts` VALUES ('MailInventoryValuation.php',1,'Meant to be run as a scheduled process to email the stock valuation off to a specified person. Creates the same stock valuation report as InventoryValuation.php');
@@ -7219,7 +7219,7 @@ INSERT INTO `accountsection` VALUES (50,'Financed By');
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-02-06 12:41:43
+-- Dump completed on 2015-02-06 19:17:44
 SET FOREIGN_KEY_CHECKS = 1;
 UPDATE systypes SET typeno=0;
 INSERT INTO shippers VALUES (1,'Default Shipper',0);

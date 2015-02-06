@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: webERP 4.11.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-06 12:41+1300\n"
+"POT-Creation-Date: 2015-02-06 19:17+1300\n"
 "PO-Revision-Date: 2013-06-01 11:31-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: HUNGARIAN <LL@li.org>\n"
@@ -717,11 +717,12 @@ msgid "Phone no"
 msgstr "Telefon"
 
 #: AddCustomerContacts.php:129 AddCustomerContacts.php:241
-#: CustomerBranches.php:414 CustomerBranches.php:849 CustomerInquiry.php:432
-#: CustomerInquiry.php:474 Customers.php:1121 Customers.php:1129
-#: EmailCustTrans.php:15 EmailCustTrans.php:64 Factors.php:246 Factors.php:297
-#: Locations.php:616 OrderDetails.php:115 PDFRemittanceAdvice.php:251
-#: PDFWOPrint.php:591 PDFWOPrint.php:594 PDFWOPrint.php:674 PDFWOPrint.php:677
+#: CustomerAccount.php:429 CustomerAccount.php:471 CustomerBranches.php:414
+#: CustomerBranches.php:849 CustomerInquiry.php:432 CustomerInquiry.php:474
+#: Customers.php:1121 Customers.php:1129 EmailCustTrans.php:15
+#: EmailCustTrans.php:64 Factors.php:246 Factors.php:297 Locations.php:616
+#: OrderDetails.php:115 PDFRemittanceAdvice.php:251 PDFWOPrint.php:591
+#: PDFWOPrint.php:594 PDFWOPrint.php:674 PDFWOPrint.php:677
 #: PO_PDFPurchOrder.php:400 PO_PDFPurchOrder.php:403 PrintCustTrans.php:748
 #: PrintCustTrans.php:979 PrintCustTrans.php:1028
 #: PrintCustTransPortrait.php:793 PrintCustTransPortrait.php:1039
@@ -810,7 +811,7 @@ msgstr "Tudomásul veszi az Ügyfél"
 #: AddCustomerTypeNotes.php:111 AddCustomerTypeNotes.php:211
 #: AgedControlledInventory.php:47 BankMatching.php:281
 #: BankReconciliation.php:217 BankReconciliation.php:294
-#: ContractCosting.php:177 CustomerAllocations.php:348
+#: ContractCosting.php:177 CustomerAccount.php:248 CustomerAllocations.php:348
 #: CustomerAllocations.php:378 CustomerInquiry.php:251
 #: CustomerTransInquiry.php:100 GLAccountInquiry.php:173
 #: GLAccountReport.php:343 GLTransInquiry.php:47 MRPCalendar.php:219
@@ -834,10 +835,10 @@ msgstr "Dátum"
 
 #: AddCustomerNotes.php:118 AddCustomerTypeNotes.php:112 PcReportTab.php:180
 #: SelectCustomer.php:660 SelectCustomer.php:702 StockClone.php:926
-#: Stocks.php:1260 UpgradeDatabase.php:240 UpgradeDatabase.php:243
-#: UpgradeDatabase.php:246 UpgradeDatabase.php:249 UpgradeDatabase.php:252
-#: UpgradeDatabase.php:255 UpgradeDatabase.php:258 UpgradeDatabase.php:261
-#: UpgradeDatabase.php:264 Z_Upgrade_3.10-3.11.php:62
+#: Stocks.php:1260 UpgradeDatabase.php:242 UpgradeDatabase.php:245
+#: UpgradeDatabase.php:248 UpgradeDatabase.php:251 UpgradeDatabase.php:254
+#: UpgradeDatabase.php:257 UpgradeDatabase.php:260 UpgradeDatabase.php:263
+#: UpgradeDatabase.php:266 Z_Upgrade_3.10-3.11.php:62
 #: Z_Upgrade_3.10-3.11.php:66 Z_Upgrade_3.10-3.11.php:70
 #: Z_Upgrade_3.10-3.11.php:74 Z_Upgrade_3.10-3.11.php:78
 #: Z_Upgrade_3.11-4.00.php:62 Z_Upgrade_3.11-4.00.php:66
@@ -1026,16 +1027,16 @@ msgstr ""
 #: ConfirmDispatch_Invoice.php:309 CounterReturns.php:676
 #: CounterReturns.php:756 CounterSales.php:759 CounterSales.php:853
 #: CounterSales.php:855 Credit_Invoice.php:299 Credit_Invoice.php:303
-#: CustomerAllocations.php:349 CustomerAllocations.php:379
-#: CustomerInquiry.php:256 DeliveryDetails.php:881 DeliveryDetails.php:950
-#: GLBalanceSheet.php:191 GLBalanceSheet.php:203 GLBalanceSheet.php:293
-#: GLBalanceSheet.php:302 GLBudgets.php:213 GLJournal.php:435
-#: GLTransInquiry.php:195 GLTrialBalance.php:225 GLTrialBalance.php:245
-#: GLTrialBalance.php:266 GLTrialBalance.php:362 GLTrialBalance.php:492
-#: GLTrialBalance.php:512 GLTrialBalance.php:536 GLTrialBalance.php:648
-#: GLTrialBalance.php:668 GLTrialBalance.php:692 InventoryValuation.php:197
-#: MaterialsNotUsed.php:77 OffersReceived.php:111 OrderDetails.php:177
-#: OutstandingGRNs.php:243 PDFCustTransListing.php:137
+#: CustomerAccount.php:253 CustomerAllocations.php:349
+#: CustomerAllocations.php:379 CustomerInquiry.php:256 DeliveryDetails.php:881
+#: DeliveryDetails.php:950 GLBalanceSheet.php:191 GLBalanceSheet.php:203
+#: GLBalanceSheet.php:293 GLBalanceSheet.php:302 GLBudgets.php:213
+#: GLJournal.php:435 GLTransInquiry.php:195 GLTrialBalance.php:225
+#: GLTrialBalance.php:245 GLTrialBalance.php:266 GLTrialBalance.php:362
+#: GLTrialBalance.php:492 GLTrialBalance.php:512 GLTrialBalance.php:536
+#: GLTrialBalance.php:648 GLTrialBalance.php:668 GLTrialBalance.php:692
+#: InventoryValuation.php:197 MaterialsNotUsed.php:77 OffersReceived.php:111
+#: OrderDetails.php:177 OutstandingGRNs.php:243 PDFCustTransListing.php:137
 #: PDFOrdersInvoiced.php:379 PDFRemittanceAdvice.php:310
 #: PDFSuppTransListing.php:131 RecurringSalesOrders.php:335
 #: SalesByTypePeriodInquiry.php:395 SalesByTypePeriodInquiry.php:430
@@ -1098,8 +1099,9 @@ msgstr "Görgetett vevői számla elemzés"
 msgid "Problem Report"
 msgstr "Hibalista"
 
-#: AgedDebtors.php:269 CustomerInquiry.php:116 CustomerInquiry.php:141
-#: CustomerPurchases.php:29 Dashboard.php:145 DebtorsAtPeriodEnd.php:59
+#: AgedDebtors.php:269 CustomerAccount.php:138 CustomerInquiry.php:116
+#: CustomerInquiry.php:141 CustomerPurchases.php:29 Dashboard.php:145
+#: DebtorsAtPeriodEnd.php:59
 msgid "The customer details could not be retrieved by the SQL because"
 msgstr "A vevői adatok nem elérhetők (SQL), mert"
 
@@ -1480,7 +1482,8 @@ msgstr "Felhasználói azonosító"
 
 #: AuditTrail.php:55 AuditTrail.php:69 ContractBOM.php:306
 #: CounterReturns.php:1637 CounterReturns.php:1640 CounterSales.php:2201
-#: CounterSales.php:2204 CustomerBalancesMovement.php:32
+#: CounterSales.php:2204 CustomerAccount.php:190 CustomerAccount.php:195
+#: CustomerAccount.php:199 CustomerBalancesMovement.php:32
 #: CustomerBalancesMovement.php:42 CustomerBalancesMovement.php:52
 #: CustomerInquiry.php:193 CustomerInquiry.php:198 CustomerInquiry.php:202
 #: CustomerTransInquiry.php:32 DailyBankTransactions.php:72
@@ -1538,7 +1541,7 @@ msgid "User"
 msgstr "Lézer"
 
 #: AuditTrail.php:177 BankReconciliation.php:218 BankReconciliation.php:295
-#: CustomerAllocations.php:376 CustomerInquiry.php:249
+#: CustomerAccount.php:246 CustomerAllocations.php:376 CustomerInquiry.php:249
 #: CustomerPurchases.php:82 CustomerTransInquiry.php:21
 #: CustomerTransInquiry.php:98 CustWhereAlloc.php:21 CustWhereAlloc.php:111
 #: DailyBankTransactions.php:129 GLAccountInquiry.php:171
@@ -2322,8 +2325,9 @@ msgid "Add back unpresented cheques"
 msgstr "Add vissza unpresented ellenőrzések"
 
 #: BankReconciliation.php:219 BankReconciliation.php:296
-#: CustomerAllocations.php:347 CustomerAllocations.php:377
-#: CustomerInquiry.php:250 CustomerTransInquiry.php:99 CustWhereAlloc.php:112
+#: CustomerAccount.php:247 CustomerAllocations.php:347
+#: CustomerAllocations.php:377 CustomerInquiry.php:250
+#: CustomerTransInquiry.php:99 CustWhereAlloc.php:112
 #: DailyBankTransactions.php:128 EmailCustTrans.php:15
 #: GLAccountInquiry.php:172 ImportBankTrans.php:490 PrintCustTrans.php:509
 #: PrintCustTrans.php:733 PrintCustTrans.php:966 PrintCustTrans.php:1015
@@ -2342,8 +2346,9 @@ msgid "Number"
 msgstr "Szám"
 
 #: BankReconciliation.php:220 BankReconciliation.php:297
-#: ContractCosting.php:176 CustomerInquiry.php:253 CustomerPurchases.php:89
-#: CustomerReceipt.php:930 CustomerTransInquiry.php:103 CustWhereAlloc.php:113
+#: ContractCosting.php:176 CustomerAccount.php:250 CustomerInquiry.php:253
+#: CustomerPurchases.php:89 CustomerReceipt.php:930
+#: CustomerTransInquiry.php:103 CustWhereAlloc.php:113
 #: DailyBankTransactions.php:130 Dashboard.php:54 GLAccountReport.php:342
 #: PaymentAllocations.php:64 PaymentAllocations.php:65 Payments.php:920
 #: PDFRemittanceAdvice.php:309 ShiptsList.php:37 StockCounts.php:144
@@ -3857,7 +3862,7 @@ msgid "Confirm Dispatch and Invoice"
 msgstr "Megrendelésből számlakészítés megerősítése"
 
 #: ConfirmDispatch_Invoice.php:279 Contracts.php:778 CustItem.php:144
-#: CustLoginSetup.php:32 CustomerAllocations.php:345
+#: CustLoginSetup.php:32 CustomerAccount.php:159 CustomerAllocations.php:345
 #: CustomerBalancesMovement.php:30 CustomerBalancesMovement.php:117
 #: CustomerBalancesMovement.php:124 CustomerBranches.php:403
 #: CustomerBranches.php:586 CustomerBranches.php:633 CustomerInquiry.php:162
@@ -4616,10 +4621,11 @@ msgid "Can not retrieve assembly components location stock quantities because "
 msgstr "Nem elérhetők az összeépítés alkatrészei (mennyiség), mert "
 
 #: ConfirmDispatch_Invoice.php:1050 CounterSales.php:1474
-#: CustomerInquiry.php:255 CustomerTransInquiry.php:105
-#: DeliveryDetails.php:621 DeliveryDetails.php:627 DeliveryDetails.php:634
-#: DeliveryDetails.php:811 DeliveryDetails.php:817 DeliveryDetails.php:840
-#: MRPReport.php:412 PDFOrdersInvoiced.php:291 PDFOrderStatus.php:292
+#: CustomerAccount.php:252 CustomerInquiry.php:255
+#: CustomerTransInquiry.php:105 DeliveryDetails.php:621
+#: DeliveryDetails.php:627 DeliveryDetails.php:634 DeliveryDetails.php:811
+#: DeliveryDetails.php:817 DeliveryDetails.php:840 MRPReport.php:412
+#: PDFOrdersInvoiced.php:291 PDFOrderStatus.php:292
 #: PDFSalesBySalesperson.php:82 PDFWeeklyOrders.php:78
 #: SelectCompletedOrder.php:555 SelectContract.php:143
 #: SelectOrderItems.php:686 SelectProduct.php:367 Shipments.php:399
@@ -5882,12 +5888,13 @@ msgstr "Kapcsolat telefon"
 msgid "Reset"
 msgstr "Reset"
 
-#: Contracts.php:779 CustomerInquiry.php:252 CustomerTransInquiry.php:102
-#: Dashboard.php:658 FTP_RadioBeacon.php:52 PDFOrdersInvoiced.php:293
-#: PDFOrderStatus.php:294 PDFPriceList.php:427 PricesByCost.php:155
-#: Prices_Customer.php:263 Prices_Customer.php:337 PrintCustTrans.php:844
-#: PrintCustTransPortrait.php:892 SelectCompletedOrder.php:557
-#: SelectCreditItems.php:243 SelectCustomer.php:422 SelectOrderItems.php:595
+#: Contracts.php:779 CustomerAccount.php:249 CustomerInquiry.php:252
+#: CustomerTransInquiry.php:102 Dashboard.php:658 FTP_RadioBeacon.php:52
+#: PDFOrdersInvoiced.php:293 PDFOrderStatus.php:294 PDFPriceList.php:427
+#: PricesByCost.php:155 Prices_Customer.php:263 Prices_Customer.php:337
+#: PrintCustTrans.php:844 PrintCustTransPortrait.php:892
+#: SelectCompletedOrder.php:557 SelectCreditItems.php:243
+#: SelectCustomer.php:422 SelectOrderItems.php:595
 #: SelectRecurringSalesOrder.php:92 SelectSalesOrder.php:702
 #: SelectSalesOrder.php:719 StockMovements.php:103
 #: StockSerialItemResearch.php:84
@@ -5916,10 +5923,10 @@ msgstr "Kapcsolat"
 msgid "Fax"
 msgstr "Fax"
 
-#: Contracts.php:829 CustomerInquiry.php:162 CustomerReceipt.php:1024
-#: PDFRemittanceAdvice.php:275 PO_Header.php:609 PrintCustTrans.php:881
-#: PrintCustTransPortrait.php:933 SupplierInquiry.php:120
-#: includes/PDFQuotationPageHeader.inc:88
+#: Contracts.php:829 CustomerAccount.php:159 CustomerInquiry.php:162
+#: CustomerReceipt.php:1024 PDFRemittanceAdvice.php:275 PO_Header.php:609
+#: PrintCustTrans.php:881 PrintCustTransPortrait.php:933
+#: SupplierInquiry.php:120 includes/PDFQuotationPageHeader.inc:88
 #: includes/PDFQuotationPortraitPageHeader.inc:88
 #: includes/PDFStatementPageHeader.inc:116 includes/PDFTransPageHeader.inc:162
 #: includes/PDFTransPageHeaderPortrait.inc:214
@@ -6698,9 +6705,9 @@ msgstr "QOH"
 msgid "Picked Up By"
 msgstr "Felvette"
 
-#: CounterSales.php:909 CustomerInquiry.php:254 CustomerTransInquiry.php:104
-#: DeliveryDetails.php:1105 OrderDetails.php:125 PO_Header.php:1155
-#: PO_OrderDetails.php:156 RecurringSalesOrders.php:419
+#: CounterSales.php:909 CustomerAccount.php:251 CustomerInquiry.php:254
+#: CustomerTransInquiry.php:104 DeliveryDetails.php:1105 OrderDetails.php:125
+#: PO_Header.php:1155 PO_OrderDetails.php:156 RecurringSalesOrders.php:419
 #: SelectQASamples.php:402 SelectQASamples.php:507 SelectQASamples.php:567
 #: SpecialOrder.php:613 SupplierCredit.php:602 SupplierInquiry.php:213
 #: SupplierInvoice.php:952 SupplierTransInquiry.php:107
@@ -8064,6 +8071,252 @@ msgstr "Téma"
 msgid "Language"
 msgstr "Nyelv"
 
+#: CustomerAccount.php:5
+msgid "Customer Account"
+msgstr ""
+
+#: CustomerAccount.php:14
+msgid ""
+"To display the account a customer must first be selected from the customer "
+"selection screen"
+msgstr ""
+
+#: CustomerAccount.php:15
+msgid "Select a Customer Account to Display"
+msgstr ""
+
+#: CustomerAccount.php:28 CustomerInquiry.php:28
+msgid "Failed to retrieve sales data"
+msgstr ""
+
+#: CustomerAccount.php:37
+msgid "There is no salesman data set for this customer"
+msgstr ""
+
+#: CustomerAccount.php:42
+msgid "You have no authority to review this customer account"
+msgstr ""
+
+#: CustomerAccount.php:57 CustomerInquiry.php:57
+msgid "The balance status should be all or zero balance or not zero balance"
+msgstr ""
+
+#: CustomerAccount.php:70 PrintCustStatements.php:116
+msgid "There was a problem retrieving the outstanding transactions for"
+msgstr "Ott sikerült betölteni a fennálló ügyletek"
+
+#: CustomerAccount.php:70 CustomerAccount.php:93 EmailConfirmation.php:43
+#: FTP_RadioBeacon.php:178 PDFCOA.php:81 PDFPickingList.php:224
+#: PDFProdSpec.php:65 PDFQuotation.php:37 PDFQuotation.php:123
+#: PDFQuotationPortrait.php:39 PDFQuotationPortrait.php:125 PDFWOPrint.php:144
+#: PDFWOPrint.php:264 PO_PDFPurchOrder.php:78 PO_PDFPurchOrder.php:209
+#: PrintCustOrder_generic.php:38 PrintCustOrder_generic.php:163
+#: PrintCustOrder.php:39 PrintCustOrder.php:136 PrintCustStatements.php:116
+#: PrintCustStatements.php:139 PrintCustTrans.php:225 PrintCustTrans.php:280
+#: PrintCustTrans.php:702 PrintCustTrans.php:885
+#: PrintCustTransPortrait.php:248 PrintCustTransPortrait.php:305
+#: PrintCustTransPortrait.php:746 PrintCustTransPortrait.php:937
+msgid "from the database"
+msgstr "adatbázisból"
+
+#: CustomerAccount.php:93 PrintCustStatements.php:139
+msgid ""
+"There was a problem retrieving the transactions that were settled over the "
+"course of the last month for"
+msgstr ""
+"Ott sikerült betölteni a tranzakciókat, hogy sikerült rendezni folyamán az "
+"utolsó hónap,"
+
+#: CustomerAccount.php:155 CustomerInquiry.php:158
+msgid "Back to Customer Screen"
+msgstr ""
+
+#: CustomerAccount.php:159 CustomerInquiry.php:162 CustomerReceipt.php:1024
+#: SelectOrderItems.php:698 SupplierCredit.php:264 SupplierInquiry.php:122
+#: SupplierInvoice.php:608
+msgid "Terms"
+msgstr "Határidő"
+
+#: CustomerAccount.php:159 CustomerInquiry.php:162 CustomerReceipt.php:1024
+#: Customers.php:566 Customers.php:907 Customers.php:937
+msgid "Credit Limit"
+msgstr "Hitel limit"
+
+#: CustomerAccount.php:159 CustomerInquiry.php:162 CustomerReceipt.php:1024
+#: Customers.php:592 Customers.php:974 Customers.php:980
+#: includes/MainMenuLinksArray.php:495
+msgid "Credit Status"
+msgstr "Pénzügyi állapot"
+
+#: CustomerAccount.php:163 CustomerInquiry.php:166 CustomerReceipt.php:1028
+msgid "ACCOUNT ON HOLD"
+msgstr "SZÁMLA ZÁROLVA"
+
+#: CustomerAccount.php:168 CustomerInquiry.php:171 CustomerReceipt.php:1034
+#: PrintCustStatements.php:398 SupplierInquiry.php:144
+msgid "Total Balance"
+msgstr "Egyenleg"
+
+#: CustomerAccount.php:169 CustomerInquiry.php:172 CustomerReceipt.php:1035
+#: Dashboard.php:58 PrintCustStatements.php:394 SalesPeople.php:214
+#: Shipments.php:406 StockClone.php:886 StockClone.php:888 Stocks.php:1220
+#: Stocks.php:1222 SupplierInquiry.php:145 WhereUsedInquiry.php:92
+#: includes/PDFAgedDebtorsPageHeader.inc:50
+#: includes/PDFAgedSuppliersPageHeader.inc:36
+msgid "Current"
+msgstr "Aktuális"
+
+#: CustomerAccount.php:170 CustomerInquiry.php:173 CustomerReceipt.php:1036
+#: SupplierInquiry.php:146
+msgid "Now Due"
+msgstr "Tartozás"
+
+#: CustomerAccount.php:171 CustomerAccount.php:172 CustomerInquiry.php:174
+#: CustomerInquiry.php:175 CustomerReceipt.php:1037 CustomerReceipt.php:1038
+#: SupplierInquiry.php:147 SupplierInquiry.php:148
+msgid "Days Overdue"
+msgstr "Tartozás napok"
+
+#: CustomerAccount.php:172 CustomerInquiry.php:175 CustomerReceipt.php:1038
+#: PrintCustStatements.php:397 SupplierInquiry.php:148
+msgid "Over"
+msgstr "Túl"
+
+#: CustomerAccount.php:186 CustomerInquiry.php:189 SupplierInquiry.php:165
+msgid "Show all transactions after"
+msgstr "Minden trnzakció (után)"
+
+#: CustomerAccount.php:191 CustomerAccount.php:196 CustomerAccount.php:200
+#: CustomerInquiry.php:194 CustomerInquiry.php:199 CustomerInquiry.php:203
+msgid "Invoices not fully allocated"
+msgstr ""
+
+#: CustomerAccount.php:192 CustomerAccount.php:197 CustomerAccount.php:201
+#: CustomerInquiry.php:195 CustomerInquiry.php:200 CustomerInquiry.php:204
+msgid "Invoices fully allocated"
+msgstr ""
+
+#: CustomerAccount.php:206 CustomerInquiry.php:209 SupplierInquiry.php:166
+msgid "Refresh Inquiry"
+msgstr "Lekérdezés frissítés"
+
+#: CustomerAccount.php:233 CustomerInquiry.php:236 SupplierInquiry.php:193
+msgid "No transactions were returned by the SQL because"
+msgstr "Nincs eredménye a lekérdezésnek, mert"
+
+#: CustomerAccount.php:237 CustomerInquiry.php:240 SupplierInquiry.php:199
+msgid "There are no transactions to display since"
+msgstr "Nincs megjeleníthető adat (után)"
+
+#: CustomerAccount.php:254 CustomerInquiry.php:257 SupplierInquiry.php:215
+#: Z_CheckAllocationsFrom.php:35 Z_CheckAllocationsFrom.php:60
+#: includes/PDFStatementPageHeader.inc:172
+msgid "Allocated"
+msgstr "Allokált"
+
+#: CustomerAccount.php:255 CustomerAllocations.php:382
+#: CustomerAllocations.php:570 CustomerAllocations.php:622
+#: CustomerBalancesMovement.php:121 CustomerBalancesMovement.php:124
+#: CustomerBalancesMovement.php:200 CustomerInquiry.php:258 Dashboard.php:57
+#: Dashboard.php:534 GLAccountInquiry.php:177 SupplierInquiry.php:216
+#: includes/PDFAgedDebtorsPageHeader.inc:49
+#: includes/PDFAgedSuppliersPageHeader.inc:35
+#: includes/PDFDebtorBalsPageHeader.inc:31
+#: includes/PDFOstdgGRNsPageHeader.inc:41
+#: includes/PDFSupplierBalsPageHeader.inc:34
+msgid "Balance"
+msgstr "Egyenleg"
+
+#: CustomerAccount.php:256 CustomerAccount.php:257 CustomerAccount.php:258
+#: CustomerAccount.php:259 CustomerAccount.php:260 CustomerInquiry.php:259
+#: CustomerInquiry.php:260 CustomerInquiry.php:261 CustomerInquiry.php:262
+#: CustomerInquiry.php:263 SupplierAllocations.php:647 SupplierInquiry.php:217
+#: SupplierInquiry.php:218
+msgid "More Info"
+msgstr "További információ"
+
+#: CustomerAccount.php:301 CustomerAccount.php:343 CustomerInquiry.php:304
+#: CustomerInquiry.php:346
+msgid "Credit "
+msgstr "Jóváírás "
+
+#: CustomerAccount.php:302 CustomerAccount.php:344 CustomerInquiry.php:305
+#: CustomerInquiry.php:347
+msgid "Click to credit the invoice"
+msgstr "Klikk a számla jóváíráshoz"
+
+#: CustomerAccount.php:306 CustomerAccount.php:348 CustomerAccount.php:385
+#: CustomerAccount.php:419 CustomerAccount.php:461 CustomerInquiry.php:309
+#: CustomerInquiry.php:351 CustomerInquiry.php:388 CustomerInquiry.php:422
+#: CustomerInquiry.php:464
+msgid "HTML "
+msgstr "HTML "
+
+#: CustomerAccount.php:307 CustomerAccount.php:349 CustomerAccount.php:386
+#: CustomerInquiry.php:310 CustomerInquiry.php:352 CustomerInquiry.php:389
+#: CustomerTransInquiry.php:140
+#, php-format
+msgid "Click to preview the invoice"
+msgstr "klikk a számla megtekintéshe"
+
+#: CustomerAccount.php:311 CustomerAccount.php:353 CustomerAccount.php:390
+#: CustomerAccount.php:424 CustomerAccount.php:466 CustomerInquiry.php:314
+#: CustomerInquiry.php:356 CustomerInquiry.php:393 CustomerInquiry.php:427
+#: CustomerInquiry.php:469
+msgid "PDF "
+msgstr "PDF "
+
+#: CustomerAccount.php:312 CustomerAccount.php:354 CustomerAccount.php:391
+#: CustomerAccount.php:425 CustomerAccount.php:467 CustomerInquiry.php:315
+#: CustomerInquiry.php:357 CustomerInquiry.php:394 CustomerInquiry.php:428
+#: CustomerInquiry.php:470 SelectSalesOrder.php:772 SelectSalesOrder.php:799
+#, php-format
+msgid "Click for PDF"
+msgstr "Klikk vissza"
+
+#: CustomerAccount.php:316 CustomerAccount.php:358 CustomerAccount.php:395
+#: CustomerInquiry.php:319 CustomerInquiry.php:361 CustomerInquiry.php:398
+msgid "Email "
+msgstr "Email "
+
+#: CustomerAccount.php:317 CustomerAccount.php:359 CustomerAccount.php:396
+#: CustomerInquiry.php:320 CustomerInquiry.php:362 CustomerInquiry.php:399
+msgid "Click to email the invoice"
+msgstr "Klikk a számla küldéshez (email)"
+
+#: CustomerAccount.php:321 CustomerAccount.php:322 CustomerAccount.php:439
+#: CustomerAccount.php:440 CustomerAccount.php:509 CustomerAccount.php:510
+#: CustomerAccount.php:563 CustomerAccount.php:564 CustomerAccount.php:612
+#: CustomerAccount.php:613 CustomerInquiry.php:324 CustomerInquiry.php:325
+#: CustomerInquiry.php:442 CustomerInquiry.php:443 CustomerInquiry.php:512
+#: CustomerInquiry.php:513 CustomerInquiry.php:566 CustomerInquiry.php:567
+#: CustomerInquiry.php:615 CustomerInquiry.php:616
+msgid "View GL Entries"
+msgstr "Készlet szám"
+
+#: CustomerAccount.php:420 CustomerAccount.php:462 CustomerInquiry.php:423
+#: CustomerInquiry.php:465
+msgid "Click to preview the credit note"
+msgstr "klikk a jóváírás megtekintéshez"
+
+#: CustomerAccount.php:430 CustomerAccount.php:472 CustomerInquiry.php:433
+#: CustomerInquiry.php:475
+msgid "Click to email the credit note"
+msgstr "Klikk a jóváírás küldéshez (email)"
+
+#: CustomerAccount.php:434 CustomerAccount.php:476 CustomerAccount.php:501
+#: CustomerAccount.php:531 CustomerAllocations.php:381 CustomerInquiry.php:437
+#: CustomerInquiry.php:479 CustomerInquiry.php:504 CustomerInquiry.php:534
+#: SupplierAllocations.php:460 SupplierInquiry.php:263
+msgid "Allocation"
+msgstr "Allokálás"
+
+#: CustomerAccount.php:435 CustomerAccount.php:477 CustomerAccount.php:502
+#: CustomerAccount.php:532 CustomerInquiry.php:438 CustomerInquiry.php:480
+#: CustomerInquiry.php:505 CustomerInquiry.php:535 SupplierInquiry.php:262
+msgid "Click to allocate funds"
+msgstr "Klikk az allokáláshoz"
+
 #: CustomerAllocations.php:13
 msgid "Customer Receipt"
 msgstr "Vevői bevétel"
@@ -8205,28 +8458,9 @@ msgstr "Allokál"
 msgid "This"
 msgstr "Ez"
 
-#: CustomerAllocations.php:381 CustomerInquiry.php:437 CustomerInquiry.php:479
-#: CustomerInquiry.php:504 CustomerInquiry.php:534 SupplierAllocations.php:460
-#: SupplierInquiry.php:263
-msgid "Allocation"
-msgstr "Allokálás"
-
 #: CustomerAllocations.php:382
 msgid "Running"
 msgstr "használva"
-
-#: CustomerAllocations.php:382 CustomerAllocations.php:570
-#: CustomerAllocations.php:622 CustomerBalancesMovement.php:121
-#: CustomerBalancesMovement.php:124 CustomerBalancesMovement.php:200
-#: CustomerInquiry.php:258 Dashboard.php:57 Dashboard.php:534
-#: GLAccountInquiry.php:177 SupplierInquiry.php:216
-#: includes/PDFAgedDebtorsPageHeader.inc:49
-#: includes/PDFAgedSuppliersPageHeader.inc:35
-#: includes/PDFDebtorBalsPageHeader.inc:31
-#: includes/PDFOstdgGRNsPageHeader.inc:41
-#: includes/PDFSupplierBalsPageHeader.inc:34
-msgid "Balance"
-msgstr "Egyenleg"
 
 #: CustomerAllocations.php:394
 msgid "Being allocated"
@@ -8803,10 +9037,6 @@ msgstr "Vevői lekérdezéshez először ki kell választani egy vevőt"
 msgid "Select a Customer to Inquire On"
 msgstr "Válasszon egy vevőt a lekérdezéshez"
 
-#: CustomerInquiry.php:28
-msgid "Failed to retrieve sales data"
-msgstr ""
-
 #: CustomerInquiry.php:37
 msgid "There is no salesman data set for this debtor"
 msgstr ""
@@ -8814,156 +9044,6 @@ msgstr ""
 #: CustomerInquiry.php:42
 msgid "You have no authority to review this data"
 msgstr ""
-
-#: CustomerInquiry.php:57
-msgid "The balance status should be all or zero balance or not zero balance"
-msgstr ""
-
-#: CustomerInquiry.php:158
-msgid "Back to Customer Screen"
-msgstr ""
-
-#: CustomerInquiry.php:162 CustomerReceipt.php:1024 SelectOrderItems.php:698
-#: SupplierCredit.php:264 SupplierInquiry.php:122 SupplierInvoice.php:608
-msgid "Terms"
-msgstr "Határidő"
-
-#: CustomerInquiry.php:162 CustomerReceipt.php:1024 Customers.php:566
-#: Customers.php:907 Customers.php:937
-msgid "Credit Limit"
-msgstr "Hitel limit"
-
-#: CustomerInquiry.php:162 CustomerReceipt.php:1024 Customers.php:592
-#: Customers.php:974 Customers.php:980 includes/MainMenuLinksArray.php:495
-msgid "Credit Status"
-msgstr "Pénzügyi állapot"
-
-#: CustomerInquiry.php:166 CustomerReceipt.php:1028
-msgid "ACCOUNT ON HOLD"
-msgstr "SZÁMLA ZÁROLVA"
-
-#: CustomerInquiry.php:171 CustomerReceipt.php:1034
-#: PrintCustStatements.php:398 SupplierInquiry.php:144
-msgid "Total Balance"
-msgstr "Egyenleg"
-
-#: CustomerInquiry.php:172 CustomerReceipt.php:1035 Dashboard.php:58
-#: PrintCustStatements.php:394 SalesPeople.php:214 Shipments.php:406
-#: StockClone.php:886 StockClone.php:888 Stocks.php:1220 Stocks.php:1222
-#: SupplierInquiry.php:145 WhereUsedInquiry.php:92
-#: includes/PDFAgedDebtorsPageHeader.inc:50
-#: includes/PDFAgedSuppliersPageHeader.inc:36
-msgid "Current"
-msgstr "Aktuális"
-
-#: CustomerInquiry.php:173 CustomerReceipt.php:1036 SupplierInquiry.php:146
-msgid "Now Due"
-msgstr "Tartozás"
-
-#: CustomerInquiry.php:174 CustomerInquiry.php:175 CustomerReceipt.php:1037
-#: CustomerReceipt.php:1038 SupplierInquiry.php:147 SupplierInquiry.php:148
-msgid "Days Overdue"
-msgstr "Tartozás napok"
-
-#: CustomerInquiry.php:175 CustomerReceipt.php:1038
-#: PrintCustStatements.php:397 SupplierInquiry.php:148
-msgid "Over"
-msgstr "Túl"
-
-#: CustomerInquiry.php:189 SupplierInquiry.php:165
-msgid "Show all transactions after"
-msgstr "Minden trnzakció (után)"
-
-#: CustomerInquiry.php:194 CustomerInquiry.php:199 CustomerInquiry.php:203
-msgid "Invoices not fully allocated"
-msgstr ""
-
-#: CustomerInquiry.php:195 CustomerInquiry.php:200 CustomerInquiry.php:204
-msgid "Invoices fully allocated"
-msgstr ""
-
-#: CustomerInquiry.php:209 SupplierInquiry.php:166
-msgid "Refresh Inquiry"
-msgstr "Lekérdezés frissítés"
-
-#: CustomerInquiry.php:236 SupplierInquiry.php:193
-msgid "No transactions were returned by the SQL because"
-msgstr "Nincs eredménye a lekérdezésnek, mert"
-
-#: CustomerInquiry.php:240 SupplierInquiry.php:199
-msgid "There are no transactions to display since"
-msgstr "Nincs megjeleníthető adat (után)"
-
-#: CustomerInquiry.php:257 SupplierInquiry.php:215
-#: Z_CheckAllocationsFrom.php:35 Z_CheckAllocationsFrom.php:60
-#: includes/PDFStatementPageHeader.inc:172
-msgid "Allocated"
-msgstr "Allokált"
-
-#: CustomerInquiry.php:259 CustomerInquiry.php:260 CustomerInquiry.php:261
-#: CustomerInquiry.php:262 CustomerInquiry.php:263 SupplierAllocations.php:647
-#: SupplierInquiry.php:217 SupplierInquiry.php:218
-msgid "More Info"
-msgstr "További információ"
-
-#: CustomerInquiry.php:304 CustomerInquiry.php:346
-msgid "Credit "
-msgstr "Jóváírás "
-
-#: CustomerInquiry.php:305 CustomerInquiry.php:347
-msgid "Click to credit the invoice"
-msgstr "Klikk a számla jóváíráshoz"
-
-#: CustomerInquiry.php:309 CustomerInquiry.php:351 CustomerInquiry.php:388
-#: CustomerInquiry.php:422 CustomerInquiry.php:464
-msgid "HTML "
-msgstr "HTML "
-
-#: CustomerInquiry.php:310 CustomerInquiry.php:352 CustomerInquiry.php:389
-#: CustomerTransInquiry.php:140
-#, php-format
-msgid "Click to preview the invoice"
-msgstr "klikk a számla megtekintéshe"
-
-#: CustomerInquiry.php:314 CustomerInquiry.php:356 CustomerInquiry.php:393
-#: CustomerInquiry.php:427 CustomerInquiry.php:469
-msgid "PDF "
-msgstr "PDF "
-
-#: CustomerInquiry.php:315 CustomerInquiry.php:357 CustomerInquiry.php:394
-#: CustomerInquiry.php:428 CustomerInquiry.php:470 SelectSalesOrder.php:772
-#: SelectSalesOrder.php:799
-#, php-format
-msgid "Click for PDF"
-msgstr "Klikk vissza"
-
-#: CustomerInquiry.php:319 CustomerInquiry.php:361 CustomerInquiry.php:398
-msgid "Email "
-msgstr "Email "
-
-#: CustomerInquiry.php:320 CustomerInquiry.php:362 CustomerInquiry.php:399
-msgid "Click to email the invoice"
-msgstr "Klikk a számla küldéshez (email)"
-
-#: CustomerInquiry.php:324 CustomerInquiry.php:325 CustomerInquiry.php:442
-#: CustomerInquiry.php:443 CustomerInquiry.php:512 CustomerInquiry.php:513
-#: CustomerInquiry.php:566 CustomerInquiry.php:567 CustomerInquiry.php:615
-#: CustomerInquiry.php:616
-msgid "View GL Entries"
-msgstr "Készlet szám"
-
-#: CustomerInquiry.php:423 CustomerInquiry.php:465
-msgid "Click to preview the credit note"
-msgstr "klikk a jóváírás megtekintéshez"
-
-#: CustomerInquiry.php:433 CustomerInquiry.php:475
-msgid "Click to email the credit note"
-msgstr "Klikk a jóváírás küldéshez (email)"
-
-#: CustomerInquiry.php:438 CustomerInquiry.php:480 CustomerInquiry.php:505
-#: CustomerInquiry.php:535 SupplierInquiry.php:262
-msgid "Click to allocate funds"
-msgstr "Klikk az allokáláshoz"
 
 #: CustomerPurchases.php:6
 msgid "Customer Purchases"
@@ -11579,20 +11659,6 @@ msgstr "Befejezett Vevői rendelések"
 msgid ""
 "There was a problem retrieving the order header details for Order Number"
 msgstr "Hiba a rendelés fej letöltésénél. Megrendelés száma:"
-
-#: EmailConfirmation.php:43 FTP_RadioBeacon.php:178 PDFCOA.php:81
-#: PDFPickingList.php:224 PDFProdSpec.php:65 PDFQuotation.php:37
-#: PDFQuotation.php:123 PDFQuotationPortrait.php:39
-#: PDFQuotationPortrait.php:125 PDFWOPrint.php:144 PDFWOPrint.php:264
-#: PO_PDFPurchOrder.php:78 PO_PDFPurchOrder.php:209
-#: PrintCustOrder_generic.php:38 PrintCustOrder_generic.php:163
-#: PrintCustOrder.php:39 PrintCustOrder.php:136 PrintCustStatements.php:116
-#: PrintCustStatements.php:139 PrintCustTrans.php:225 PrintCustTrans.php:280
-#: PrintCustTrans.php:702 PrintCustTrans.php:885
-#: PrintCustTransPortrait.php:248 PrintCustTransPortrait.php:305
-#: PrintCustTransPortrait.php:746 PrintCustTransPortrait.php:937
-msgid "from the database"
-msgstr "adatbázisból"
 
 #: EmailConfirmation.php:83 EmailConfirmation.php:117
 #: PrintCustOrder_generic.php:81 PrintCustOrder_generic.php:110
@@ -22922,18 +22988,6 @@ msgstr "Kimutatások nyomtatás"
 #: PrintCustStatements.php:106
 msgid "There were no Customers matching your selection of "
 msgstr "Nem voltak vevők felelt meg a kiválasztott "
-
-#: PrintCustStatements.php:116
-msgid "There was a problem retrieving the outstanding transactions for"
-msgstr "Ott sikerült betölteni a fennálló ügyletek"
-
-#: PrintCustStatements.php:139
-msgid ""
-"There was a problem retrieving the transactions that were settled over the "
-"course of the last month for"
-msgstr ""
-"Ott sikerült betölteni a tranzakciókat, hogy sikerült rendezni folyamán az "
-"utolsó hónap,"
 
 #: PrintCustStatements.php:188
 msgid "Settled Transactions"
@@ -36427,70 +36481,70 @@ msgstr ""
 msgid "You should now make the config.php read only for the web server."
 msgstr ""
 
-#: UpgradeDatabase.php:195
+#: UpgradeDatabase.php:197
 msgid ""
 "Only mysql upgrades are performed seamlessly at this time. Your database "
 "will need to be manually updated"
 msgstr ""
 
-#: UpgradeDatabase.php:209
+#: UpgradeDatabase.php:211
 msgid "Applying"
 msgstr "Alkalmazása"
 
-#: UpgradeDatabase.php:237 Z_Upgrade_3.10-3.11.php:59 Z_Upgrade3.10.php:29
+#: UpgradeDatabase.php:239 Z_Upgrade_3.10-3.11.php:59 Z_Upgrade3.10.php:29
 #: Z_Upgrade3.10.php:34 Z_Upgrade3.10.php:46 Z_Upgrade3.10.php:51
 #: Z_Upgrade3.10.php:60 Z_Upgrade3.10.php:65 Z_Upgrade3.10.php:74
 #: Z_Upgrade3.10.php:79 Z_Upgrade_3.11-4.00.php:59
 msgid "Success"
 msgstr "Siker"
 
-#: UpgradeDatabase.php:240
+#: UpgradeDatabase.php:242
 msgid "Foreign Key already removed"
 msgstr ""
 
-#: UpgradeDatabase.php:243 Z_Upgrade_3.10-3.11.php:63
+#: UpgradeDatabase.php:245 Z_Upgrade_3.10-3.11.php:63
 #: Z_Upgrade_3.11-4.00.php:63
 msgid "Table has already been created"
 msgstr "már eladva"
 
-#: UpgradeDatabase.php:246
+#: UpgradeDatabase.php:248
 msgid "Column has already been changed"
 msgstr ""
 
-#: UpgradeDatabase.php:249 Z_Upgrade_3.10-3.11.php:67
+#: UpgradeDatabase.php:251 Z_Upgrade_3.10-3.11.php:67
 #: Z_Upgrade_3.11-4.00.php:67
 msgid "Column has already been created"
 msgstr "már eladva"
 
-#: UpgradeDatabase.php:252 Z_Upgrade_3.10-3.11.php:71
+#: UpgradeDatabase.php:254 Z_Upgrade_3.10-3.11.php:71
 #: Z_Upgrade_3.11-4.00.php:71
 msgid "Index already exists"
 msgstr "már eladva"
 
-#: UpgradeDatabase.php:255 Z_Upgrade_3.10-3.11.php:75
+#: UpgradeDatabase.php:257 Z_Upgrade_3.10-3.11.php:75
 #: Z_Upgrade_3.11-4.00.php:75
 msgid "Entry has already been done"
 msgstr "már eladva"
 
-#: UpgradeDatabase.php:258
+#: UpgradeDatabase.php:260
 msgid "SQL syntax error. The SQL error message is"
 msgstr "SQL szintaktikai hiba. Az SQL hibaüzenet"
 
-#: UpgradeDatabase.php:261 Z_Upgrade_3.10-3.11.php:79
+#: UpgradeDatabase.php:263 Z_Upgrade_3.10-3.11.php:79
 #: Z_Upgrade_3.11-4.00.php:79
 msgid "Primary key already exists"
 msgstr "már eladva"
 
-#: UpgradeDatabase.php:264
+#: UpgradeDatabase.php:266
 msgid "Index already dropped previously"
 msgstr "Index már korábban esett"
 
-#: UpgradeDatabase.php:267 Z_Upgrade_3.10-3.11.php:82
+#: UpgradeDatabase.php:269 Z_Upgrade_3.10-3.11.php:82
 #: Z_Upgrade_3.11-4.00.php:82
 msgid "Failure"
 msgstr "Hiba"
 
-#: UpgradeDatabase.php:267 Z_Upgrade_3.10-3.11.php:83
+#: UpgradeDatabase.php:269 Z_Upgrade_3.10-3.11.php:83
 #: Z_Upgrade_3.11-4.00.php:83
 msgid "Error number"
 msgstr "Megrendelés szám"
