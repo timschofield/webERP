@@ -1,14 +1,16 @@
 <?php
 /* $Id: DailyBankTransactions.php 4556 2011-04-26 11:03:36Z daintree $ */
+/* This script allows you to view all bank transactions for a selected date range, and the inquiry can be filtered by matched or unmatched transactions, or all transactions can be chosen. */
 
-include ('includes/session.inc');
-$Title = _('Bank Transactions Inquiry');
-$ViewTopic= 'GeneralLedger';
-$BookMark = 'DailyBankTransactions';
-
+include('includes/session.inc');
+$Title = _('Daily Bank Transactions');// Screen identificator.
+$ViewTopic = 'GeneralLedger';// Filename's id in ManualContents.php's TOC.
+$BookMark = 'DailyBankTransactions';// Anchor's id in the manual's html document.
 include('includes/header.inc');
-
-echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/money_add.png" title="' . _('Search') . '" />' . ' ' . $Title . '</p>';
+echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
+	'/images/bank.png" title="' .
+	_('Bank Transactions Inquiry') . '" /> ' .// Icon title.
+	_('Bank Transactions Inquiry') . '</p>';// Page title.
 
 if (!isset($_POST['Show'])) {
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
@@ -21,7 +23,7 @@ if (!isset($_POST['Show'])) {
 					bankaccounts.accountcode,
 					bankaccounts.currcode
 			FROM bankaccounts,
-				chartmaster, 
+				chartmaster,
 				bankaccountusers
 			WHERE bankaccounts.accountcode=chartmaster.accountcode
 				AND bankaccounts.accountcode=bankaccountusers.accountcode
@@ -140,7 +142,7 @@ if (!isset($_POST['Show'])) {
 
 			$AccountCurrTotal += $myrow['amount'];
 			$LocalCurrTotal += $myrow['amount']/$myrow['functionalexrate']/$myrow['exrate'];
-                        
+
                         if ($myrow['amount']==$myrow['amountcleared']) {
                            $Matched=_('Yes');
                         } else {

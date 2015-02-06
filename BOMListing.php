@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: BOMListing.php 6943 2014-10-27 07:06:42Z daintree $*/
+/* $Id: BOMListing.php 7113 2015-02-01 18:10:18Z vvs2012 $*/
 
 include('includes/session.inc');
 
@@ -32,7 +32,7 @@ If (isset($_POST['PrintPDF'])
 			INNER JOIN locationusers ON locationusers.loccode=bom.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 			WHERE bom.parent >= '" . $_POST['FromCriteria'] . "'
 			AND bom.parent <= '" . $_POST['ToCriteria'] . "'
-			AND bom.effectiveto >= '" . date('Y-m-d') . "' AND bom.effectiveafter <= '" . date('Y-m-d') . "'
+			AND bom.effectiveto > '" . date('Y-m-d') . "' AND bom.effectiveafter <= '" . date('Y-m-d') . "'
 			ORDER BY bom.parent,
 					bom.component";
 

@@ -1,6 +1,5 @@
 <?php
-
-/* $Id: SpecialOrder.php 6945 2014-10-27 07:20:48Z daintree $ */
+/* $Id: SpecialOrder.php 7053 2014-12-28 23:21:24Z rchacon $ */
 
 include('includes/DefineSpecialOrderClass.php');
 /* Session started in header.inc for password checking and authorisation level check */
@@ -96,7 +95,7 @@ if (!isset($_SESSION['SPL'.$identifier]->CustomerID)){
 	$myrow = DB_fetch_array($result);
 	if ($myrow['dissallowinvoices'] != 1){
 		if ($myrow['dissallowinvoices']==2){
-			prnMsg(_('The') . ' ' . $myrow['name'] . ' ' . _('account is currently flagged as an account that needs to be watched please contact the credit control personnel to discuss'),'warn');
+			prnMsg(_('The') . ' ' . $myrow['name'] . ' ' . _('account is currently flagged as an account that needs to be watched. Please contact the credit control personnel to discuss'),'warn');
 		}
 	}
 	$_SESSION['SPL'.$identifier]->CustomerID = $_SESSION['CustomerID'];

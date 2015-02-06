@@ -1,10 +1,16 @@
 <?php
 /* $Id: Z_ChangeSupplierCode.php 4466 2011-01-13 09:33:59Z daintree $*/
-/*Script to Delete all sales transactions*/
+/* This script is an utility to change a supplier code. */
 
 include ('includes/session.inc');
-$Title = _('UTILITY PAGE To Changes A Supplier Code In All Tables');
+$Title = _('UTILITY PAGE To Changes A Supplier Code In All Tables');// Screen identificator.
+$ViewTopic = 'SpecialUtilities'; // Filename's id in ManualContents.php's TOC.
+$BookMark = 'Z_ChangeSupplierCode'; // Anchor's id in the manual's html document
 include('includes/header.inc');
+echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
+	'/images/supplier.png" title="' . 
+	_('Change A Supplier Code') . '" /> ' .// Icon title.
+	_('Change A Supplier Code') . '</p>';// Page title.
 
 if (isset($_POST['ProcessSupplierChange']))
 	ProcessSupplier($_POST['OldSupplierNo'], $_POST['NewSupplierNo']);

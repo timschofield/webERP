@@ -1,5 +1,5 @@
 <?php
-/* $Id: Prices.php 6942 2014-10-27 02:48:29Z daintree $*/
+/* $Id: Prices.php 7077 2015-01-12 10:48:34Z exsonqu $*/
 
 include('includes/session.inc');
 $Title = _('Item Prices');
@@ -393,7 +393,6 @@ function ReSequenceEffectiveDates ($Item, $PriceList, $CurrAbbrev, $db) {
 			}
 			$StartDate = $myrow['startdate'];
 			$EndDate = $myrow['enddate'];
-			$Price = $myrow['price'];
 		} // end of loop around all prices
 
 		//Now look for duplicate prices with no end

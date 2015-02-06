@@ -1,7 +1,7 @@
 <?php
 
 /*  Performs login checks and $_SESSION initialisation */
-/* $Id: UserLogin.php 6966 2014-11-06 09:15:09Z daintree $*/
+/* $Id: UserLogin.php 7067 2015-01-05 03:41:43Z rchacon $*/
 
 define('UL_OK',  0);		/* User verified, session initialised */
 define('UL_NOTVALID', 1);	/* User/password do not agree */
@@ -110,7 +110,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
 			$_SESSION['SalesmanLogin'] = $myrow['salesman'];
 			$_SESSION['CanCreateTender'] = $myrow['cancreatetender'];
 			$_SESSION['AllowedDepartment'] = $myrow['department'];
-			$_SESSION['ShowDashboard'] = $myrow['dashboard'];
+			$_SESSION['ShowDashboard'] = $myrow['showdashboard'];
 
 			if (isset($myrow['pdflanguage'])) {
 				$_SESSION['PDFLanguage'] = $myrow['pdflanguage'];

@@ -1,5 +1,5 @@
 <?php
-/* $Id: Credit_Invoice.php 7021 2014-12-14 02:04:44Z tehonu $*/
+/* $Id: Credit_Invoice.php 7118 2015-02-03 08:56:58Z daintree $*/
 
 /*Functions to get the GL codes to post the transaction to */
 include('includes/GetSalesTransGLCodes.inc');
@@ -494,8 +494,7 @@ if(isset($_POST['CreditType']) AND($_POST['CreditType']=='WriteOff' OR $_POST['C
 	foreach($_SESSION['CreditItems' . $identifier]->LineItems as $CreditLine) {
 		$SQL = "SELECT count(*) FROM salesorderdetails WHERE orderno = '" . $_SESSION['CreditItems'.$identifier]->OrderNo . "'
 									AND stkcode = '" . $CreditLine->StockID . "'
-									AND quantity >=" . $CreditLine->QtyDispatched . "
-									AND qtyinvoiced >=" . $CreditLine->QtyDispatched;
+									AND qtyinvoiced >='" . $CreditLine->QtyDispatched . "'";
 		$ErrMsg = _('Failed to retrieve salesoderdetails to compare if the order has been invoiced and that it is possible that the credit note may not already have been done');
 		$DuplicateCreditResult = DB_query($SQL,$ErrMsg);
 		$myrow1 = DB_fetch_array($DuplicateCreditResult);
@@ -748,8 +747,8 @@ if(isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 									stockmaster
 								WHERE bom.component=stockmaster.stockid
 								AND bom.parent='" . $CreditLine->StockID . "'
-								AND bom.effectiveto > '" . Date('Y-m-d') . "'
-								AND bom.effectiveafter < '" . Date('Y-m-d') . "'";
+                                AND bom.effectiveafter <= '" . date('Y-m-d') . "'
+                                AND bom.effectiveto > '" . date('Y-m-d') . "'";
 
 					$ErrMsg = _('Could not retrieve assembly components from the database for') . ' ' . $CreditLine->StockID . ' ' . _('because');
 					$DbgMsg = _('The SQL that failed was');

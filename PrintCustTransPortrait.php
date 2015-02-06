@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: PrintCustTransPortrait.php 6943 2014-10-27 07:06:42Z daintree $ */
+/* $Id: PrintCustTransPortrait.php 7124 2015-02-05 02:12:56Z vvs2012 $ */
 
 include('includes/session.inc');
 
@@ -93,7 +93,7 @@ If (isset($PrintPDF)
 		if (DB_error_no()!=1) {
 			if (DB_num_rows($result)==1){
 				$myrow = DB_fetch_array($result);
-				$DefaultBankAccountNumber = _('Account:') .' ' .$myrow['bankaccountnumber'];
+				$DefaultBankAccountNumber = _('Account') .': ' .$myrow['bankaccountnumber'];
 				$DefaultBankAccountCode =  _('Bank Code:') .' ' .$myrow['bankaccountcode'];
 			} else {
 				$DefaultBankAccountNumber = '';
@@ -388,7 +388,7 @@ If (isset($PrintPDF)
 				}
 				$YPos -= ($FontSize*$lines);
 
-				$lines=explode('\r\n',htmlspecialchars_decode($myrow2['narrative']));
+				$lines=explode("\r\n",htmlspecialchars_decode($myrow2['narrative']));
 				for ($i=0;$i<sizeOf($lines);$i++) {
 				while (mb_strlen($lines[$i])>1){
 					if ($YPos-$line_height <= $Bottom_Margin){
@@ -465,7 +465,7 @@ If (isset($PrintPDF)
   		$pdf->addTextWrap($Left_Margin, $YPos+3, 280, $FontSize,_('Payment Terms') . ': ' . $myrow['terms']);
 
 		$FontSize =8;
-		$LeftOvers=explode('\r\n',DB_escape_string($myrow['invtext']));
+		$LeftOvers=explode("\r\n",DB_escape_string($myrow['invtext']));
 		for ($i=0;$i<sizeOf($LeftOvers);$i++) {
 			$pdf->addText($Left_Margin, $YPos-8-($i*8), $FontSize, $LeftOvers[$i]);
 		}

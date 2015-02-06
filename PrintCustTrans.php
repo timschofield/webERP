@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: PrintCustTrans.php 7019 2014-12-12 09:13:23Z tehonu $ */
+/* $Id: PrintCustTrans.php 7124 2015-02-05 02:12:56Z vvs2012 $ */
 
 include('includes/session.inc');
 
@@ -323,7 +323,7 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 
 					$YPos -= ($line_height);
 
-					$lines=explode('\r\n',htmlspecialchars_decode($myrow2['narrative']));
+					$lines=explode("\r\n",htmlspecialchars_decode($myrow2['narrative']));
 					for ($i=0;$i<sizeOf($lines);$i++) {
 						while (mb_strlen($lines[$i])>1) {
 							if ($YPos-$line_height <= $Bottom_Margin) {

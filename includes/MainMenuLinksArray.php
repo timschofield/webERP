@@ -268,6 +268,7 @@ $MenuItems['stock']['Reports']['URL'] = array(	'/StockSerialItemResearch.php',
 
 $MenuItems['stock']['Maintenance']['Caption'] = array(	_('Add A New Item'),
 														_('Select An Item'),
+														_('Review Translated Descriptions'),
 														_('Sales Category Maintenance'),
 														_('Brands Maintenance'),
 														_('Add or Update Prices Based On Costs'),
@@ -276,6 +277,7 @@ $MenuItems['stock']['Maintenance']['Caption'] = array(	_('Add A New Item'),
 
 $MenuItems['stock']['Maintenance']['URL'] = array(	'/Stocks.php',
 													'/SelectProduct.php',
+													'/RevisionTranslations.php',
 													'/SalesCategories.php',
 													'/Manufacturers.php',
 													'/PricesBasedOnMarkUp.php',
@@ -548,7 +550,7 @@ $MenuItems['Utilities']['Transactions']['Caption'] = array(	_('Change A Customer
 															_('Change An Inventory Item Code'),
 															_('Change A GL Account Code'),
 															_('Change A Location Code'),
-															_('Automatic Translation - Item descriptions'),
+															_('Translate Item Descriptions'),
 															_('Update costs for all BOM items, from the bottom up'),
 															_('Re-apply costs to Sales Analysis'),
 															_('Delete sales transactions'),
@@ -569,8 +571,8 @@ $MenuItems['Utilities']['Transactions']['URL'] = array(	'/Z_ChangeCustomerCode.p
 														'/Z_ReverseSuppPaymentRun.php',
 														'/Z_UpdateSalesAnalysisWithLatestCustomerData.php');
 
-$MenuItems['Utilities']['Reports']['Caption'] = array(	_('Show Local Currency Total Debtor Balances'),
-														_('Show Local Currency Total Suppliers Balances'),
+$MenuItems['Utilities']['Reports']['Caption'] = array(	_('Debtors Balances By Currency Totals'),
+														_('Suppliers Balances By Currency Totals'),
 														_('Show General Transactions That Do Not Balance'),
 														_('List of items without picture'));
 

@@ -1,5 +1,5 @@
 <?php
-/* $Id: MiscFunctions.php 6966 2014-11-06 09:15:09Z daintree $*/
+/* $Id: MiscFunctions.php 7097 2015-01-24 17:32:11Z rchacon $*/
 
 /*  ******************************************  */
 /** STANDARD MESSAGE HANDLING & FORMATTING **/
@@ -333,7 +333,7 @@ function http_file_exists($url)  {
 function locale_number_format($Number, $DecimalPlaces=0) {
 	global $DecimalPoint;
 	global $ThousandsSeparator;
-	if ($_SESSION['Language']=='hi_IN.utf8' OR $_SESSION['Language']=='en_IN.utf8'){
+	if(substr($_SESSION['Language'], 3, 2)=='IN') {// If country is India (??_IN.utf8). See Indian Numbering System in Manual, Multilanguage, Technical Overview.
 		return indian_number_format(floatval($Number),$DecimalPlaces);
 	} else {
 		if (!is_numeric($DecimalPlaces) AND $DecimalPlaces == 'Variable'){
@@ -400,6 +400,7 @@ function indian_number_format($Number,$DecimalPlaces){
 		return $IntegerNumber. $DecimalValue;
 	}
 }
+
 function SendMailBySmtp(&$mail,$To) {
 	if(IsEmailAddress($_SESSION['SMTPSettings']['username'])){//user has set the fully mail address as user name
 		$SendFrom = $_SESSION['SMTPSettings']['username'];

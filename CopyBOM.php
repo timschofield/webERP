@@ -4,7 +4,7 @@
  *
  * Script to duplicate BoMs.
  */
-/* $Id: CopyBOM.php 6945 2014-10-27 07:20:48Z daintree $*/
+/* $Id: CopyBOM.php 7119 2015-02-03 11:31:59Z exsonqu $*/
 
 include('includes/session.inc');
 
@@ -108,7 +108,7 @@ if(isset($_POST['Submit'])) {
 			$myrow = DB_fetch_row($result);
 
 			$sql = "UPDATE stockmaster set
-					lastcostupdate  = " . $myrow[0] . ",
+					lastcostupdate  = '" . $myrow[0] . "',
 					actualcost      = " . $myrow[1] . ",
 					lastcost        = " . $myrow[2] . ",
 					materialcost    = " . $myrow[3] . ",

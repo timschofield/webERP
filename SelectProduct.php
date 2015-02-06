@@ -1,5 +1,5 @@
 <?php
-/* $Id: SelectProduct.php 6942 2014-10-27 02:48:29Z daintree $*/
+/* $Id: SelectProduct.php 7096 2015-01-24 03:08:00Z turbopt $*/
 
 $PricesSecurity = 12;//don't show pricing info unless security token 12 available to user
 $SuppliersSecurity = 9; //don't show supplier purchasing info unless security token 9 available to user
@@ -153,8 +153,8 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 									FROM bom INNER JOIN stockmaster
 									ON bom.component=stockmaster.stockid
 									WHERE bom.parent='" . $StockID . "'
-									AND bom.effectiveto > '" . Date('Y-m-d') . "'
-									AND bom.effectiveafter < '" . Date('Y-m-d') . "'");
+                                    AND bom.effectiveafter <= '" . date('Y-m-d') . "'
+                                    AND bom.effectiveto > '" . date('Y-m-d') . "'");
 			$CostRow = DB_fetch_row($CostResult);
 			$Cost = $CostRow[0];
 		} else {
@@ -184,9 +184,8 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 										stockmaster
 									ON bom.component=stockmaster.stockid
 									WHERE bom.parent = '" . $StockID . "'
-									AND bom.effectiveafter < '" . Date('Y-m-d') . "'
-									AND (bom.effectiveto > '" . Date('Y-m-d') . "'
-									OR bom.effectiveto='0000-00-00')");
+                                    AND bom.effectiveafter <= '" . date('Y-m-d') . "'
+                                    AND bom.effectiveto > '" . date('Y-m-d') . "'");
 			$CostRow = DB_fetch_row($CostResult);
 			$Cost = $CostRow[0];
 		} else {

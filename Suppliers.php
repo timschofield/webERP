@@ -1,5 +1,5 @@
 <?php
-/* $Id: Suppliers.php 6941 2014-10-26 23:18:08Z daintree $ */
+/* $Id: Suppliers.php 7088 2015-01-20 08:02:37Z exsonqu $ */
 
 include('includes/session.inc');
 $Title = _('Supplier Maintenance');
@@ -427,7 +427,7 @@ if (isset($_POST['submit'])) {
 			$base_url = 'http://' . MAPS_HOST . '/maps/geo?output=xml' . '&key=' . KEY;
 			$request_url = $base_url . '&q=' . urlencode($address);
 
-			$xml = simplexml_load_string(utf8_encode(file_get_contents($request_url))) or die('url not loading');
+			$xml = simplexml_load_string(utf8_encode(file_get_contents($request_url))) or prnMsg(_('Goole map url not loading'),'warn');
 //			$xml = simplexml_load_file($request_url) or die("url not loading");
 
 			$coordinates = $xml->Response->Placemark->Point->coordinates;

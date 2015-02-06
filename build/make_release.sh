@@ -1,6 +1,6 @@
 #! /bin/bash
 
-BASE_DIR=/var/www/webERP;
+BASE_DIR=/usr/share/nginx/html/webERP;
 OUTPUT_DIR=/home/phil/Documents/webERP;
 MYSQL_USER=root;
 MYSQL_PWD=a;

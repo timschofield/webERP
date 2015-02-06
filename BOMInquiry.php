@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: BOMInquiry.php 6942 2014-10-27 02:48:29Z daintree $*/
+/* $Id: BOMInquiry.php 7093 2015-01-22 20:15:40Z vvs2012 $*/
 
 include('includes/session.inc');
 $Title = _('Costed Bill Of Material');
@@ -172,9 +172,8 @@ if (isset($StockID) and $StockID!=""){
 			FROM bom INNER JOIN stockmaster
 			ON bom.component = stockmaster.stockid
 			WHERE bom.parent = '" . $StockID . "'
-			AND bom.effectiveafter < '" . Date('Y-m-d') . "'
-			AND (bom.effectiveto > '" . Date('Y-m-d') . "'
-			 OR bom.effectiveto='0000-00-00')";
+            AND bom.effectiveafter <= '" . date('Y-m-d') . "'
+            AND bom.effectiveto > '" . date('Y-m-d') . "'";
 
 	$ErrMsg = _('The bill of material could not be retrieved because');
 	$BOMResult = DB_query ($sql,$ErrMsg);
