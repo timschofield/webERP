@@ -3341,7 +3341,7 @@ CREATE TABLE `www_users` (
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-02-06 19:17:44
+-- Dump completed on 2015-02-06 20:01:47
 -- MySQL dump 10.14  Distrib 5.5.40-MariaDB, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: weberpdemo
@@ -6405,7 +6405,7 @@ INSERT INTO `taxprovinces` VALUES (1,'Default Tax province');
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('admin','$2y$10$Q8HLC/2rQaB5NcCcK6V6ZOQG3chIsx16mKtZRoSaUsU9okMBDbUwG','Demonstration user','','','','','admin@weberp.org','MEL',8,1,'2015-02-06 19:03:06','','A4','1,1,1,1,1,1,1,1,1,1,1,',0,0,50,'xenos','en_GB.utf8',0,0);
+INSERT INTO `www_users` VALUES ('admin','$2y$10$Q8HLC/2rQaB5NcCcK6V6ZOQG3chIsx16mKtZRoSaUsU9okMBDbUwG','Demonstration user','','','','','admin@weberp.org','MEL',8,1,'2015-02-06 20:00:59','','A4','1,1,1,1,1,1,1,1,1,1,1,',0,0,50,'xenos','en_GB.utf8',0,0);
 
 --
 -- Dumping data for table `edi_orders_segs`
@@ -6679,7 +6679,7 @@ INSERT INTO `config` VALUES ('SO_AllowSameItemMultipleTimes','1');
 INSERT INTO `config` VALUES ('StandardCostDecimalPlaces','2');
 INSERT INTO `config` VALUES ('TaxAuthorityReferenceName','');
 INSERT INTO `config` VALUES ('UpdateCurrencyRatesDaily','2015-02-06');
-INSERT INTO `config` VALUES ('VersionNumber','4.12.1');
+INSERT INTO `config` VALUES ('VersionNumber','4.12.2');
 INSERT INTO `config` VALUES ('WeightedAverageCosting','0');
 INSERT INTO `config` VALUES ('WikiApp','0');
 INSERT INTO `config` VALUES ('WikiPath','wiki');
@@ -7219,7 +7219,7 @@ INSERT INTO `accountsection` VALUES (50,'Financed By');
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-02-06 19:17:44
+-- Dump completed on 2015-02-06 20:01:47
 SET FOREIGN_KEY_CHECKS = 1;
 UPDATE systypes SET typeno=0;
 INSERT INTO shippers VALUES (1,'Default Shipper',0);
