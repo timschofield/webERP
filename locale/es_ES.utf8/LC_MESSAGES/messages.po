@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: webERP 4.11.5\n"
+"Project-Id-Version: webERP 4.12.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-02-06 19:17+1300\n"
-"PO-Revision-Date: 2015-01-31 12:03-0600\n"
+"PO-Revision-Date: 2015-02-06 12:45-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -3676,7 +3676,7 @@ msgstr "Número de facsímil"
 #: Suppliers.php:988 SupplierTenderCreate.php:415 SuppLoginSetup.php:145
 #: WWW_Users.php:491 ../webSHOP/Checkout.php:578
 msgid "Email Address"
-msgstr "Correo electrónico"
+msgstr "Dirección de correo electrónico"
 
 #: CompanyPreferences.php:229
 msgid ""
@@ -5662,7 +5662,7 @@ msgstr "Descripción de los Requisitos"
 #: InternalStockRequest.php:273 SelectWorkOrder.php:334
 #: WhereUsedInquiry.php:75 WorkOrderCosting.php:99
 msgid "Quantity Required"
-msgstr "Cantidad Requerida"
+msgstr "Cantidad requerida"
 
 #: ContractOtherReqts.php:163
 msgid "Cost Per Unit"
@@ -7956,7 +7956,7 @@ msgstr "Método de Comunicación EDI"
 
 #: CustEDISetup.php:138 CustEDISetup.php:141
 msgid "Email Attachments"
-msgstr "Adjuntos del correo-e"
+msgstr "Adjuntos de correo-e"
 
 #: CustEDISetup.php:139 CustEDISetup.php:142
 msgid "File Transfer Protocol (FTP)"
@@ -12159,7 +12159,7 @@ msgstr "Su orden de compra"
 
 #: EmailConfirmation.php:150 EmailConfirmation.php:289
 msgid "Email Confirmation"
-msgstr "Confirmación de Email"
+msgstr "Confirmación de correo-e"
 
 #: EmailConfirmation.php:176 EmailConfirmation.php:297
 msgid "Order Acknowledgement"
@@ -16061,7 +16061,7 @@ msgstr "Unidad de Medida"
 
 #: InternalStockRequest.php:166
 msgid "Quantity Requested"
-msgstr "Cantidad Requerida"
+msgstr "Cantidad solicitada"
 
 #: InternalStockRequest.php:173
 msgid "Update Line"
@@ -16591,7 +16591,7 @@ msgstr "Revisar todos los registros definidos de etiquetas"
 
 #: Labels.php:441 PDFWOPrint.php:655
 msgid "Label Description"
-msgstr "Descripción de etiqueta"
+msgstr "Descripción en etiqueta"
 
 #: Labels.php:445
 msgid "Label Paper Size"
@@ -16607,7 +16607,7 @@ msgstr "Alto de etiqueta"
 
 #: Labels.php:511
 msgid "Label Width"
-msgstr "Ancho de Etiqueta"
+msgstr "Ancho de etiqueta"
 
 #: Labels.php:515
 msgid "Top Margin"
@@ -16657,7 +16657,7 @@ msgstr "¿Está seguro que desea suprimir este campo de etiqueta?"
 #: Labels.php:645 PDFPrintLabel.php:15 PDFPrintLabel.php:109
 #: PDFWOPrint.php:598
 msgid "Print Labels"
-msgstr "Imprimir Etiquetas"
+msgstr "Imprimir etiquetas"
 
 #: Locations.php:5
 msgid "Location Maintenance"
@@ -17339,7 +17339,7 @@ msgstr ""
 
 #: Manufacturers.php:8 includes/MainMenuLinksArray.php:273
 msgid "Brands Maintenance"
-msgstr ""
+msgstr "Administrar marcas"
 
 #: Manufacturers.php:77
 msgid "manufacturer record because"
@@ -17389,11 +17389,11 @@ msgstr "Fabricantes"
 
 #: Manufacturers.php:192
 msgid "Brand Code"
-msgstr ""
+msgstr "Código de marca"
 
 #: Manufacturers.php:193 Manufacturers.php:292
 msgid "Brand Name"
-msgstr ""
+msgstr "Nombre de marca"
 
 #: Manufacturers.php:194 Manufacturers.php:296
 msgid "Brand URL"
@@ -17410,7 +17410,7 @@ msgstr "¿Está seguro que desea suprimir esta marca?"
 
 #: Manufacturers.php:252 SalesCategories.php:510
 msgid "Brand"
-msgstr ""
+msgstr "Marca"
 
 #: Manufacturers.php:272
 msgid "Amend Brand Details"
@@ -17422,7 +17422,7 @@ msgstr ""
 
 #: Manufacturers.php:300
 msgid "Brand Image File (.jpg)"
-msgstr "Archivo de imagen (.jpg)"
+msgstr "Archivo de imagen de marca (.jpg)"
 
 #: MaterialsNotUsed.php:6
 msgid "Raw Materials Not Used Anywhere"
@@ -20403,7 +20403,7 @@ msgstr ""
 
 #: PDFFGLabel.php:199 PDFFGLabel.php:205 PDFWOPrint.php:494 PDFWOPrint.php:500
 msgid "Email a Work Order"
-msgstr ""
+msgstr "Enviar orden de trabajo por correo-e"
 
 #: PDFFGLabel.php:202 PDFWOPrint.php:258 PDFWOPrint.php:497
 #: includes/DatabaseTranslations.php:49
@@ -20421,7 +20421,7 @@ msgstr "como se solicito"
 
 #: PDFFGLabel.php:208 PDFWOPrint.php:503
 msgid "Emailing Work order"
-msgstr ""
+msgstr "Enviando orden de trabajo por correo-e"
 
 #: PDFFGLabel.php:208 PDFWOPrint.php:503 PO_PDFPurchOrder.php:358
 #: Z_ChangeStockCode.php:169
@@ -21127,7 +21127,7 @@ msgstr "Este pago"
 
 #: PDFSalesBySalesperson.php:15 PDFWeeklyOrders.php:15
 msgid "Weekly Orders"
-msgstr ""
+msgstr "Pedidos semanales"
 
 #: PDFSalesBySalesperson.php:17 PDFWeeklyOrders.php:17
 msgid "There are no members of the Weekly Orders Recipients email group"
@@ -21330,7 +21330,7 @@ msgstr ""
 
 #: PDFStockLocTransfer.php:46 PDFStockTransfer.php:51
 msgid "Print Shipping Labels"
-msgstr ""
+msgstr "Imprimir etiquetas de envío"
 
 #: PDFStockLocTransfer.php:55 PDFStockLocTransfer.php:56
 msgid "Inventory Location Transfer BOL"
@@ -21388,7 +21388,7 @@ msgstr "La referencia de transferencias introducida debe ser numérica"
 
 #: PDFStockTransfer.php:20
 msgid "Print Stock Transfer"
-msgstr "Imprimir Transferencia de Existencias"
+msgstr "Imprimir traslado de inventario"
 
 #: PDFStockTransfer.php:22 PDFStockTransfer.php:34 StockTransfers.php:453
 msgid "Print Transfer Note"
@@ -21396,7 +21396,7 @@ msgstr "Imprimir nota de Transferencia"
 
 #: PDFStockTransfer.php:28
 msgid "Print Stock Transfer Note"
-msgstr "Imprimir nota de Transferencia de Existencia"
+msgstr "Imprimir nota de traslado de inventario"
 
 #: PDFStockTransfer.php:63
 msgid "Stock Transfer Form"
@@ -21453,7 +21453,7 @@ msgstr ""
 
 #: PDFWOPrint.php:98 PDFWOPrint.php:187
 msgid "Select Work Order"
-msgstr ""
+msgstr "Seleccionar orden de trabajo"
 
 #: PDFWOPrint.php:108
 msgid "This page must be called with a Work order number to print"
@@ -21490,7 +21490,7 @@ msgstr "Firmado por:"
 
 #: PDFWOPrint.php:579 PDFWOPrint.php:662 PO_PDFPurchOrder.php:388
 msgid "Print or Email the Order"
-msgstr "Imprimir el Pedido ó Enviarlo por Correo Electrónico"
+msgstr "Imprimir o enviar el pedido por correo-e"
 
 #: PDFWOPrint.php:610
 msgid "There was a problem retrieving the contact details for the location"
@@ -21498,7 +21498,7 @@ msgstr ""
 
 #: PDFWOPrint.php:623 PDFWOPrint.php:692 PO_PDFPurchOrder.php:429
 msgid "Email to"
-msgstr "Enviar por correo electrónico a"
+msgstr "Enviar correo-e a"
 
 #: PDFWOPrint.php:637 SelectWorkOrder.php:332
 msgid "Paperwork"
@@ -21506,23 +21506,23 @@ msgstr ""
 
 #: PDFWOPrint.php:654
 msgid "Label Item"
-msgstr ""
+msgstr "Artículo en etiqueta"
 
 #: PDFWOPrint.php:656
 msgid "Label Lot"
-msgstr ""
+msgstr "Lote en etiqueta"
 
 #: PDFWOPrint.php:657
 msgid "No of Full Packages"
-msgstr ""
+msgstr "Cantidad de paquetes completos"
 
 #: PDFWOPrint.php:658
 msgid "Labels/Package"
-msgstr ""
+msgstr "Etiquetas/Paquete"
 
 #: PDFWOPrint.php:659
 msgid "Weight/Package"
-msgstr ""
+msgstr "Peso/Paquete"
 
 #: PDFWOPrint.php:660
 msgid "LeftOver Qty"
@@ -21530,7 +21530,7 @@ msgstr ""
 
 #: PDFWOPrint.php:705
 msgid "Labels"
-msgstr ""
+msgstr "Etiquetas"
 
 #: PeriodsInquiry.php:7
 msgid "Periods Inquiry"
@@ -22648,7 +22648,7 @@ msgstr "Enviar orden de compra por correo-e"
 
 #: PO_PDFPurchOrder.php:358
 msgid "Emailing Purchase order"
-msgstr "Enviando prden de compra por correo-e"
+msgstr "Enviando orden de compra por correo-e"
 
 #: PO_PDFPurchOrder.php:362
 msgid "Printed by"
@@ -23792,7 +23792,7 @@ msgstr ""
 #: PrintCustStatements.php:103 PrintCustStatements.php:442
 #: includes/MainMenuLinksArray.php:105
 msgid "Print Statements"
-msgstr "Imprimir Estado de Cuentas"
+msgstr "Imprimir estados de cuenta"
 
 #: PrintCustStatements.php:103
 msgid "No Customers Found"
@@ -23942,7 +23942,7 @@ msgstr "Por favor, vea adjunto"
 
 #: PrintCustTrans.php:509 PrintCustTransPortrait.php:537
 msgid "Emailing"
-msgstr "Enviando email"
+msgstr "Enviando correo-e"
 
 #: PrintCustTrans.php:527 PrintCustTransPortrait.php:554
 msgid "Select Invoices/Credit Notes To Print"
@@ -25358,7 +25358,7 @@ msgstr "Número de Recepción"
 #: ReprintGRN.php:89 SelectWorkOrder.php:335 StockLocTransferReceive.php:461
 #: WorkOrderCosting.php:101 WorkOrderReceive.php:999
 msgid "Quantity Received"
-msgstr "Cantidades recibidas"
+msgstr "Cantidad recibida"
 
 #: ReprintGRN.php:108
 msgid "Reprint GRN "
@@ -28118,7 +28118,7 @@ msgstr ""
 #: StockSerialItems.php:114 StockSerialItems.php:119 StockSerialItems.php:123
 #: StockSerialItems.php:127 StockStatus.php:95
 msgid "Quantity On Hand"
-msgstr "Cantidad Disponible"
+msgstr "Cantidad disponible"
 
 #: SelectProduct.php:316
 msgid "Quantity Demand"
@@ -28708,7 +28708,7 @@ msgstr "Cantidad Pendiente"
 #: SelectWorkOrder.php:368
 #, php-format
 msgid "Print W/O"
-msgstr ""
+msgstr "Imprimir orden de trabajo"
 
 #: SellThroughSupport.php:6
 msgid "Sell Through Support"
@@ -31356,7 +31356,7 @@ msgstr "No. Transac."
 
 #: StockLocMovements.php:98
 msgid "Quantity on Hand"
-msgstr "Cantidad en Mano"
+msgstr "Cantidad disponible"
 
 #: StockLocStatus.php:7
 msgid "All Stock Status By Location/Category"
@@ -31712,7 +31712,7 @@ msgstr "Cantidades despachadas"
 
 #: StockLocTransferReceive.php:462
 msgid "Quantity To Receive"
-msgstr "Cantidades a recibir"
+msgstr "Cantidad a recibir"
 
 #: StockLocTransferReceive.php:464
 msgid "Cancel Balance"
@@ -37819,11 +37819,11 @@ msgstr "Número de Error"
 
 #: UserLocations.php:5 includes/MainMenuLinksArray.php:525
 msgid "User Authorised Inventory Locations Maintenance"
-msgstr ""
+msgstr "Administrar ubicaciones de inventario autorizadas por usuario"
 
 #: UserLocations.php:10
 msgid "User Authorised Locations"
-msgstr ""
+msgstr "Ubicaciones autorizadas por usuario"
 
 #: UserLocations.php:33
 msgid "You have not selected any User"
@@ -39710,7 +39710,7 @@ msgstr "Nuevo Código de Deudor"
 
 #: Z_ChangeGLAccountCode.php:6
 msgid "UTILITY PAGE Change A GL Account Code"
-msgstr ""
+msgstr "PÁGINA UTILITARIA - Cambiar un código de cuenta contable"
 
 #: Z_ChangeGLAccountCode.php:12 Z_ChangeGLAccountCode.php:13
 #: includes/MainMenuLinksArray.php:551
@@ -39806,7 +39806,7 @@ msgstr "Código de cuenta contable nuevo"
 
 #: Z_ChangeLocationCode.php:6
 msgid "UTILITY PAGE Change A Location Code"
-msgstr "PÁGINA DE HERRAMIENTAS Cambiar un Código de Localidad"
+msgstr "PÁGINA UTILITARIA - Cambiar un código de ubicación"
 
 #: Z_ChangeLocationCode.php:12 Z_ChangeLocationCode.php:13
 #: includes/MainMenuLinksArray.php:552
@@ -40063,7 +40063,7 @@ msgstr "Nuevo Nombre de Localidad"
 
 #: Z_ChangeStockCategory.php:6
 msgid "UTILITY PAGE Change A Stock Category"
-msgstr "PÁGINA DE UTILIDAD Cambia una Categoría de Existencia"
+msgstr "PÁGINA UTILITARIA - Cambiar una categoría de inventario"
 
 #: Z_ChangeStockCategory.php:12 Z_ChangeStockCategory.php:13
 #: includes/MainMenuLinksArray.php:549
@@ -40159,7 +40159,7 @@ msgstr "Nuevo Código de Categoría de Inventario"
 
 #: Z_ChangeStockCode.php:8
 msgid "UTILITY PAGE Change A Stock Code"
-msgstr "PÁGINA DE SOPORTE Cambio de Código de Existencia"
+msgstr "PÁGINA UTILITARIA - Cambiar un código de inventario"
 
 #: Z_ChangeStockCode.php:14 Z_ChangeStockCode.php:15
 #: includes/MainMenuLinksArray.php:550
@@ -41883,7 +41883,7 @@ msgstr "Volver al menú de traducción"
 
 #: Z_poAddLanguage.php:31
 msgid "Utility to create a new language file"
-msgstr "Utilidad para crear un nuevo archivo de idioma"
+msgstr "Utilitario para crear un nuevo archivo de idioma"
 
 #: Z_poAddLanguage.php:32 Z_poEditLangHeader.php:22 Z_poEditLangModule.php:24
 #: Z_poEditLangRemaining.php:25
@@ -41936,7 +41936,7 @@ msgstr "El código completo de la nueva lengua en el formato en_US"
 
 #: Z_poAdmin.php:9
 msgid "UTILITY PAGE"
-msgstr "PÁGINA DE UTILIDADES"
+msgstr "PÁGINA UTILITARIA"
 
 #: Z_poAdmin.php:9
 msgid "that helps maintain language files"
@@ -41993,7 +41993,7 @@ msgstr "Editar encabezado"
 
 #: Z_poEditLangHeader.php:21
 msgid "Utility to edit a language file header"
-msgstr "Utilidad para editar un encabezado de archivo de idioma"
+msgstr "Utilitario para editar un encabezado de archivo de idioma"
 
 #: Z_poEditLangHeader.php:41
 msgid "Writing the language file header"
@@ -42057,7 +42057,7 @@ msgstr "Editar módulo"
 
 #: Z_poEditLangModule.php:23 Z_poEditLangRemaining.php:24
 msgid "Utility to edit a language file module"
-msgstr "Utilidad para editar un módulo de archivo de idioma"
+msgstr "Utilitario para editar un módulo de archivo de idioma"
 
 #: Z_poEditLangModule.php:70 Z_poEditLangRemaining.php:46
 msgid "Writing the language file"
@@ -42105,7 +42105,7 @@ msgstr "Editar los Restantes Artículos"
 #: Z_poRebuildDefault.php:27
 msgid "Utility page to rebuild the system default language file"
 msgstr ""
-"Utilidad de la página para reconstruir el archivo de idioma del sistema por "
+"Página utilitaria para reconstruir el archivo de idioma del sistema por "
 "defecto"
 
 #: Z_poRebuildDefault.php:37
@@ -44511,7 +44511,7 @@ msgstr ""
 
 #: includes/DefineLabelClass.php:8
 msgid "Label id"
-msgstr "ID de Etiqueta"
+msgstr "Identificación de etiqueta"
 
 #: includes/DefineLabelClass.php:23
 msgid "Rows per sheet"
@@ -44531,11 +44531,11 @@ msgstr "Ancho de la hoja"
 
 #: includes/DefineLabelClass.php:27
 msgid "Label height"
-msgstr "Etiqueta de altura"
+msgstr "Alto de etiqueta"
 
 #: includes/DefineLabelClass.php:28
 msgid "Label width"
-msgstr "Ancho de Etiqueta"
+msgstr "Ancho de etiqueta"
 
 #: includes/DefineLabelClass.php:29
 msgid "Top margin"
@@ -45157,7 +45157,7 @@ msgstr "Despacho de Existencias"
 
 #: includes/MainMenuLinksArray.php:231
 msgid "Mail Inventory Valuation Report"
-msgstr ""
+msgstr "Enviar informe de valuación de inventario por correo"
 
 #: includes/MainMenuLinksArray.php:233
 msgid "Inventory Planning Based On Preferred Supplier Data"
@@ -46551,7 +46551,7 @@ msgstr ""
 
 #: includes/PDFWOPageHeader.inc:71
 msgid "Quantity Reqd"
-msgstr ""
+msgstr "Cantidad requerida"
 
 #: includes/PO_PDFOrderPageHeader.inc:14
 msgid "FOR VIEWING ONLY"
@@ -48984,7 +48984,7 @@ msgstr ""
 
 #: api/api_xml-rpc.php:2223
 msgid "Label Name"
-msgstr "Etiqueta de Nombre"
+msgstr "Nombre de etiqueta"
 
 #: api/api_xml-rpc.php:2224
 msgid "The category label to search on."
