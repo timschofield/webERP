@@ -1,5 +1,7 @@
 webERP Change Log
 
+7/2/15 New script CustomerAccount.php - on screen statement similar to CustomerInquiry.php
+
 6/2/15 Version 4.12.2
 
 6/2/15 Vitaly:Added SQL to add the script LocationUsers.php and the necessary table locationusers
