@@ -1,6 +1,3 @@
-INSERT INTO `securitygroups` VALUES (8,16);
--- Add a description for the script:
-UPDATE `scripts` SET `description` = 'Allows you to view all bank transactions for a selected date range, and the inquiry can be filtered by matched or unmatched transactions, or all transactions can be chosen' WHERE `scripts`.`script` = 'DailyBankTransactions.php';
-
+INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('CustomerAccount.php', '1', 'Shows customer account/statement on screen rather than PDF');
 
 -----UPDATE config SET confvalue='4.13' WHERE confname='VersionNumber';

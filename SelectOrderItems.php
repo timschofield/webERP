@@ -1729,7 +1729,6 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				</tr>
 				</table>
 				</div>';
-			echo $jsCall;
 
 		}#end if SearchResults to show
 	} /*end of PartSearch options to be displayed */

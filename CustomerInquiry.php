@@ -317,7 +317,7 @@ while ($MyRow = DB_fetch_array($TransResult)) {
 					</td>
 					<td>
 						<a href="', $RootPath, '/EmailCustTrans.php?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Invoice">', _('Email '), '
-							<img src="', $RootPath, '/css/', $Theme, '/images/email.png" title="', _('Click to email the invoice'), '" alt="" />
+							<img src="', $RootPath, '/css/', $Theme, '/images/email.gif" title="', _('Click to email the invoice'), '" alt="" />
 						</a>
 					</td>
 					<td>
@@ -359,7 +359,7 @@ while ($MyRow = DB_fetch_array($TransResult)) {
 					</td>
 					<td>
 						<a href="', $RootPath, '/EmailCustTrans.php?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Invoice">', _('Email ') . '
-							<img src="', $RootPath, '/css/', $Theme, '/images/email.png" title="', _('Click to email the invoice'), '" alt="" />
+							<img src="', $RootPath, '/css/', $Theme, '/images/email.gif" title="', _('Click to email the invoice'), '" alt="" />
 						</a>
 					</td>
 					<td></td>
@@ -396,7 +396,7 @@ while ($MyRow = DB_fetch_array($TransResult)) {
 				</td>
 				<td>
 					<a href="', $RootPath, '/EmailCustTrans.php?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Invoice">', _('Email ') . '
-						<img src="', $RootPath, '/css/', $Theme, '/images/email.png" title="', _('Click to email the invoice'), '" alt="" />
+						<img src="', $RootPath, '/css/', $Theme, '/images/email.gif" title="', _('Click to email the invoice'), '" alt="" />
 					</a>
 				</td>
 				<td></td>
@@ -430,7 +430,7 @@ while ($MyRow = DB_fetch_array($TransResult)) {
 					</td>
 					<td>
 						<a href="', $RootPath, '/EmailCustTrans.php?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Credit">', _('Email'), '
-							<img src="', $RootPath, '/css/', $Theme, '/images/email.png" title="', _('Click to email the credit note'), '" alt="" />
+							<img src="', $RootPath, '/css/', $Theme, '/images/email.gif" title="', _('Click to email the credit note'), '" alt="" />
 						</a>
 					</td>
 					<td>
@@ -472,7 +472,7 @@ while ($MyRow = DB_fetch_array($TransResult)) {
 					</td>
 					<td>
 						<a href="', $RootPath, '/EmailCustTrans.php?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Credit">', _('Email'), '
-							<img src="', $RootPath, '/css/', $Theme, '/images/email.png" title="', _('Click to email the credit note'), '" alt="" />
+							<img src="', $RootPath, '/css/', $Theme, '/images/email.gif" title="', _('Click to email the credit note'), '" alt="" />
 						</a>
 					</td>
 					<td>
