@@ -139,6 +139,9 @@ function GetMonthText($MonthNumber){
 		case 12:
 			$Month = _('December');
 			break;
+		default:
+			$Month = _('error');
+			break;
 	}
 	return $Month;
 }
