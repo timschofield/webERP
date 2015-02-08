@@ -1,6 +1,8 @@
 webERP Change Log
 
+8/2/15 RChacon: Changes from email.gif to email.png. Delete email.gif.
 8/2/15 InventoryPlanning.php now has an option to export the last 24 months usage to CSV
+8/2/15 RChacon:  Add credit.png, email.png, folders.png and currency.png. Delete bank.gif.
 7/2/15 New script CustomerAccount.php - on screen statement similar to CustomerInquiry.php
 
 6/2/15 Version 4.12.2

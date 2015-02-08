@@ -1,11 +1,11 @@
 <?php
 /* $Id: CustomerAccount.php 7004 2014-11-24 15:56:19Z rchacon $*/
+/* This script is <create a description for script table>. */
 
 include('includes/session.inc');
-$Title = _('Customer Account');
-/* Manual links before header.inc */
-$ViewTopic = 'ARInquiries'; // Filename in ManualContents.php's TOC.
-$BookMark = 'CustomerAccount'; // Anchor's id in the manual's html document.
+$Title = _('Customer Account');// Screen identification.
+$ViewTopic = 'ARInquiries';// Filename in ManualContents.php's TOC.
+$BookMark = 'CustomerAccount';// Anchor's id in the manual's html document.
 include('includes/header.inc');
 
 // always figure out the SQL required from the inputs available
@@ -313,7 +313,7 @@ foreach ($Transactions as $MyRow) {
 			</td>
 			<td>
 				<a href="', $RootPath, '/EmailCustTrans.php?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Invoice">', _('Email ') . '
-					<img src="', $RootPath, '/css/', $Theme, '/images/email.gif" title="', _('Click to email the invoice'), '" alt="" />
+					<img src="', $RootPath, '/css/', $Theme, '/images/email.png" title="', _('Click to email the invoice'), '" alt="" />
 				</a>
 			</td>
 			<td></td>
@@ -343,7 +343,7 @@ foreach ($Transactions as $MyRow) {
 				</td>
 				<td>
 					<a href="', $RootPath, '/EmailCustTrans.php?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Credit">', _('Email'), '
-						<img src="', $RootPath, '/css/', $Theme, '/images/email.gif" title="', _('Click to email the credit note'), '" alt="" />
+						<img src="', $RootPath, '/css/', $Theme, '/images/email.png" title="', _('Click to email the credit note'), '" alt="" />
 					</a>
 				</td>
 				<td>
