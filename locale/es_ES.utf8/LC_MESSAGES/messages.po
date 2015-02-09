@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.12.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-02-06 19:17+1300\n"
-"PO-Revision-Date: 2015-02-06 12:45-0600\n"
+"PO-Revision-Date: 2015-02-09 17:02-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -7554,7 +7554,7 @@ msgstr "Cancelar el costo de los productos para"
 
 #: Credit_Invoice.php:1614
 msgid "Credit note text"
-msgstr "Texto de la nota de crédito"
+msgstr "Texto de nota de crédito"
 
 #: Credit_Invoice.php:1626
 msgid "Process Credit"
@@ -15699,7 +15699,7 @@ msgstr "Ver o Modificar las ofertas extraordinarias"
 
 #: index.php:23
 msgid "Create a new offer"
-msgstr "Crear una Nueva Oferta"
+msgstr "Crear una nueva oferta"
 
 #: index.php:28
 msgid "View any open tenders without an offer"
@@ -17471,7 +17471,7 @@ msgstr "Excluir los siguientes días"
 
 #: MRPCalendar.php:302
 msgid "Create Calendar"
-msgstr "Crear Calendario"
+msgstr "Crear calendario"
 
 #: MRPCalendar.php:303
 msgid "List Date Range"
@@ -27327,7 +27327,7 @@ msgstr "Productos Devueltos a Ubicación (location = sitio localidad)"
 
 #: SelectCreditItems.php:944
 msgid "Credit Note Text"
-msgstr ""
+msgstr "Texto de nota de crédito"
 
 #: SelectCreditItems.php:957
 msgid "Are you sure you wish to cancel the whole of this credit note?"
@@ -31263,7 +31263,7 @@ msgstr "Artículos con existencias excedidas desde la localidad"
 
 #: StockDispatch.php:423
 msgid "Create Batch"
-msgstr "Crear Lote"
+msgstr "Crear lote"
 
 #: StockDispatch.php:424
 msgid "Report Only"
@@ -41069,7 +41069,7 @@ msgstr "Predeterminado"
 
 #: Z_ExportSalesAnalysis.php:17
 msgid "Create and send sales analysis files"
-msgstr ""
+msgstr "Crear y enviar archivos de análisis de ventas"
 
 #: Z_ExportSalesAnalysis.php:20
 msgid "Export Sales Analysis Files"
@@ -45004,7 +45004,7 @@ msgstr "Seleccionar pedido para facturar"
 
 #: includes/MainMenuLinksArray.php:95
 msgid "Create A Credit Note"
-msgstr "Crear una nota de Crédito (Abono)"
+msgstr "Crear una nota de crédito (Abono)"
 
 #: includes/MainMenuLinksArray.php:97
 msgid "Allocate Receipts or Credit Notes"
