@@ -1,12 +1,13 @@
 <?php
-
 /* $Id$*/
+/* This script defines the currencies available. Each customer and supplier must be defined as transacting in one of the currencies defined here. */
 
 include('includes/session.inc');
-$Title = _('Currencies Maintenance');
-$ViewTopic= 'Currencies';
-$BookMark = 'Currencies';
+$Title = _('Currencies Maintenance');// Screen identification.
+$ViewTopic= 'Currencies';// Filename's id in ManualContents.php's TOC.
+$BookMark = 'Currencies';// Anchor's id in the manual's html document.
 include('includes/header.inc');
+
 include('includes/CurrenciesArray.php'); // To get the currency name from the currency code.
 include('includes/SQL_CommonFunctions.inc');
 
@@ -27,8 +28,10 @@ if (isset($Errors)) {
 
 $Errors = array();
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>
-	<br />';
+echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
+	'/images/currency.png" title="' .// Icon image.
+	_('Currencies') . '" /> ' .// Icon title.
+	_('Currencies Maintenance') . '</p>';// Page title.
 
 if (isset($_POST['submit'])) {
 
