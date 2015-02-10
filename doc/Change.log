@@ -1,10 +1,11 @@
 webERP Change Log
 
+10/2/15 Phil: Reinstate Andrew Galuski's lost functionality that shows only the items that are defined for a customer (in the custitems table) when searching for items for a sales order/quote.
 9/2/15 RChacon: Standardise to currency.png. Delete currency.gif.
 8/2/15 RChacon: Changes from email.gif to email.png. Delete email.gif.
-8/2/15 InventoryPlanning.php now has an option to export the last 24 months usage to CSV
+8/2/15 Phil: InventoryPlanning.php now has an option to export the last 24 months usage to CSV
 8/2/15 RChacon:  Add credit.png, email.png, folders.png and currency.png. Delete bank.gif.
-7/2/15 New script CustomerAccount.php - on screen statement similar to CustomerInquiry.php
+7/2/15 Phil: New script CustomerAccount.php - on screen statement similar to CustomerInquiry.php
 
 6/2/15 Version 4.12.2
 

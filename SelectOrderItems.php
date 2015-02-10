@@ -707,10 +707,10 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		}
 		if(!empty($_POST['CustItemFlag'])){
 			$IncludeCustItem = " INNER JOIN custitem ON custitem.stockid=stockmaster.stockid
-								AND custitem.debtorno='" .  $_SESSION['Items'.$identifier]->DebtorNo . "'";
-		}else{
+								AND custitem.debtorno='" .  $_SESSION['Items'.$identifier]->DebtorNo . "' ";
+		} else {
 			$IncludeCustItem = " LEFT OUTER JOIN custitem ON custitem.stockid=stockmaster.stockid
-								AND custitem.debtorno='" .  $_SESSION['Items'.$identifier]->DebtorNo . "'";
+								AND custitem.debtorno='" .  $_SESSION['Items'.$identifier]->DebtorNo . "' ";
 		}
 
 		if ($_POST['Keywords']!='' AND $_POST['StockCode']=='') {
@@ -721,14 +721,18 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			$msg='<div class="page_help_text">' . _('Stock Category has been used in search') . '.</div>';
 		}
 		$SQL = "SELECT stockmaster.stockid,
-								stockmaster.description,
-								stockmaster.longdescription,
-								stockmaster.units
-						FROM stockmaster INNER JOIN stockcategory
-						ON stockmaster.categoryid=stockcategory.categoryid
-						WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D' OR stockcategory.stocktype='L')
-						AND stockmaster.mbflag <>'G'
-						AND stockmaster.discontinued=0 ";
+						stockmaster.description,
+						stockmaster.longdescription,
+						stockmaster.units,
+						custitem.cust_part,
+						custitem.cust_description
+				FROM stockmaster INNER JOIN stockcategory
+				ON stockmaster.categoryid=stockcategory.categoryid
+				" . $IncludeCustItem . "
+				WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D' OR stockcategory.stocktype='L')
+				AND stockmaster.mbflag <>'G'
+				AND stockmaster.discontinued=0 ";
+
 		if (isset($_POST['Keywords']) AND mb_strlen($_POST['Keywords'])>0) {
 			//insert wildcard characters in spaces
 			$_POST['Keywords'] = mb_strtoupper($_POST['Keywords']);
