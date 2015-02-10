@@ -1,5 +1,6 @@
 webERP Change Log
 
+10/2/15 Phil: New script StockCategorySalesInquiry.php - shows category sales by item for a selected custom date range
 10/2/15 Phil: Reinstate Andrew Galuski's lost functionality that shows only the items that are defined for a customer (in the custitems table) when searching for items for a sales order/quote.
 9/2/15 RChacon: Standardise to currency.png. Delete currency.gif.
 8/2/15 RChacon: Changes from email.gif to email.png. Delete email.gif.
