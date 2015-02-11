@@ -108,11 +108,12 @@ if (isset($_POST['PrintPDF'])) {
 						 bom.effectiveafter,
 						 bom.effectiveto,
 						 bom.quantity
-				 FROM bom, passbom
-				 INNER JOIN locationusers ON locationusers.loccode=loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
-				 WHERE bom.parent = passbom.part
-                 AND bom.effectiveafter <= '" . date('Y-m-d') . "'
-                 AND bom.effectiveto > '" . date('Y-m-d') . "'";
+				FROM bom
+                 INNER JOIN passbom ON bom.parent = passbom.part
+				 INNER JOIN locationusers ON locationusers.loccode=bom.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
+				WHERE bom.effectiveafter <= '" . date('Y-m-d') . "'
+				AND bom.effectiveafter <= '" . date('Y-m-d') . "'
+				AND bom.effectiveto > '" . date('Y-m-d') . "'";
 			$result = DB_query($sql);
 
 			$sql = "DROP TABLE IF EXISTS passbom2";
