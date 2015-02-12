@@ -2442,6 +2442,7 @@ function ItemsShouldBeInWebsite($db){
 			WHERE categoryid IN " . CATEGORIES_AVAILABLE_WEBSITE ."
 				AND discontinued = 0
 				AND stockid NOT LIKE 'KLBE%'
+				AND stockid NOT LIKE 'GOTA%'
 				AND stockid NOT LIKE 'TM-%'
 				AND NOT EXISTS (SELECT *
 								FROM salescatprod
