@@ -1,5 +1,6 @@
 webERP Change Log
 
+12/2/15 RChacon: Fix on PrintCustTransPortrait.php: Do not need to escape special characters in a string for use in an SQL statement.
 11/2/15 Vitaly: BOMIndented.php fix bug that duplicated components - error with SQL to restrict to only those users with permission to view a locations
 10/2/15 Phil: New script StockCategorySalesInquiry.php - shows category sales by item for a selected custom date range
 10/2/15 Phil: Reinstate Andrew Galuski's lost functionality that shows only the items that are defined for a customer (in the custitems table) when searching for items for a sales order/quote.
