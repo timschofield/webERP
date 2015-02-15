@@ -22,13 +22,13 @@ if (isset($_GET['WO'])) {
 if (isset($_GET['ReqDate'])){
 	$ReqDate = $_GET['ReqDate'];
 } else {
-	$ReqDate=Date($_SESSION['DefaultDateFormat']);
+	$ReqDate=Date('Y-m-d');
 }
 
 if (isset($_GET['StartDate'])){
 	$StartDate = $_GET['StartDate'];
 } else {
-	$StartDate=Date($_SESSION['DefaultDateFormat']);
+	$StartDate=Date('Y-m-d');
 }
 
 if (isset($_GET['loccode'])){
