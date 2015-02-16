@@ -139,7 +139,7 @@ function correction_for_low_end_prices($n){
 	}else if ($n <= SMALL_PRICE_CALCULATED_STEP03){
 		$n = SMALL_PRICE_CORRECTED_STEP03;
 	}else if ($n <= SMALL_PRICE_CALCULATED_STEP04){
-		$n = SMALL_PRICE_CORRECTED_STEP03;
+		$n = SMALL_PRICE_CORRECTED_STEP04;
 	}
 	return $n;
 }
