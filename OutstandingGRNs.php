@@ -164,7 +164,7 @@ If (isset($_POST['PrintPDF']) AND DB_num_rows($GRNsResult)>0){
 	$pdf->OutputD($_SESSION['DatabaseName'] . '_OSGRNsValuation_' . date('Y-m-d').'.pdf');
 	$pdf->__destruct();
 } elseif (isset($_POST['ShowOnScreen'])  AND DB_num_rows($GRNsResult)>0) {
-	
+	$Title=_('Outstanding GRNs Report');
 	include('includes/header.inc');
 
 	echo '<p class="page_title_text" align="center"><strong>' . _('Goods Received but not invoiced Yet') . '</strong></p>';
@@ -175,6 +175,7 @@ If (isset($_POST['PrintPDF']) AND DB_num_rows($GRNsResult)>0){
 	echo '<table class="selection">';
 	$TableHeader = '<tr>
 						<th>' . _('Supplier') . '</th>
+						<th>' . _('Supplier Name') . '</th>
 						<th>' . _('PO#') . '</th>
 						<th>' . _('Item Code') . '</th>
 						<th>' . _('Qty Received') . '</th>
@@ -202,6 +203,7 @@ If (isset($_POST['PrintPDF']) AND DB_num_rows($GRNsResult)>0){
 		$QtyPending = $GRNs['qtyrecd'] - $GRNs['quantityinv'];
 		$TotalHomeCurrency = $TotalHomeCurrency + ($QtyPending * $GRNs['stdcostunit']);
 		printf('<td>%s</td>
+				<td>%s</td>
 				<td class="number">%s</td>
 				<td>%s</td>
 				<td class="number">%s</td>
@@ -215,6 +217,7 @@ If (isset($_POST['PrintPDF']) AND DB_num_rows($GRNsResult)>0){
 				<td>%s</td>
 				</tr>', 
 				$GRNs['supplierid'], 
+				$GRNs['suppname'], 
 				$GRNs['orderno'], 
 				$GRNs['itemcode'], 
 				$GRNs['qtyrecd'], 
