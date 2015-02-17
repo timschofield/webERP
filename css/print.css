@@ -1,0 +1,67 @@
+@media print {
+
+#HeaderDiv {display:none;}
+#FooterDiv {display:none;}
+#MainMenuDiv {display:none;}
+.noprint {display:none;}
+
+#content p {
+  color: black;
+}
+ 
+#content img {
+  display:block;
+  page-break-after: avoid;
+  page-break-inside: avoid;
+}
+ 
+#content ul, li {
+  display:block;
+  page-break-inside:avoid;
+}
+
+hr {
+    color: black;
+}
+
+a {
+    color:navy;
+    text-decoration:none;
+}
+ 
+#CanvasDiv, body { 
+    font-family: Arial, Verdana, Helvetica, sans-serif;
+    font-size:11pt;
+    background: white;
+    background-image: none;
+    margin: 0;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    box-shadow: none;
+}
+
+#BodyDiv {
+    background: white;
+    background-image: none;
+    width: 100%; 
+    margin: 0; 
+    float: none; 
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    box-shadow: none;
+}
+
+#BodyDiv table{ 
+    background: white;
+    border: none;
+    padding: 0;
+    box-shadow: none;
+    border-radius:0;
+}
+ 
+.site-description {display:none;}
+.site-title {display:none;}
+ 
+}

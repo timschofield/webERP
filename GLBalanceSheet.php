@@ -384,7 +384,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 			chartdetails.accountcode";
 
 	$AccountsResult = DB_query($SQL,_('No general ledger accounts were returned by the SQL because'));
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/preview.gif" title="' . _('Search') . '" alt="" /> ' . _('HTML View') . '</p>';
+	echo '<p class="page_title_text noprint"><img src="'.$RootPath.'/css/'.$Theme.'/images/preview.gif" title="' . _('Search') . '" alt="" /> ' . _('HTML View') . '</p>';
 
 	echo '<div class="invoice">
 			<table class="selection">
@@ -701,7 +701,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 
 	echo '</table>';
     echo '</div>';
-	echo '<br /><div class="centre"><input type="submit" name="SelectADifferentPeriod" value="'._('Select A Different Balance Date').'" /></div>';
+	echo '<br /><div class="centre noprint"><input type="submit" name="SelectADifferentPeriod" value="'._('Select A Different Balance Date').'" /></div>';
     echo '</div></form>';
 }
 

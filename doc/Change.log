@@ -1,5 +1,6 @@
 webERP Change Log
 
+17/2/15 Vitaly: Added print.css to allow printing pages off the screen
 15/2/2015: Exson: Fixed date format error for request date and start date in WorkOrderEntry.php.
 12/2/15 RChacon: Fix on PrintCustTransPortrait.php: Do not need to escape special characters in a string for use in an SQL statement.
 11/2/15 Vitaly: BOMIndented.php fix bug that duplicated components - error with SQL to restrict to only those users with permission to view a locations

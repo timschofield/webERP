@@ -435,7 +435,7 @@ if ((! isset($_POST['FromPeriod'])
 
 	$AccountsResult = DB_query($SQL, _('No general ledger accounts were returned by the SQL because'), _('The SQL that failed was:'));
 
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' .
+	echo '<p class="page_title_text noprint"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' .
 		_('Trial Balance') . '" alt="" />' . ' ' . _('Trial Balance Report') . '</p>';
 
 	/*show a table of the accounts info returned by the SQL
@@ -727,7 +727,7 @@ if ((! isset($_POST['FromPeriod'])
 			locale_number_format($CheckPeriodBudget,$_SESSION['CompanyRecord']['decimalplaces']));
 
 	echo '</table><br />';
-	echo '<div class="centre">
+	echo '<div class="centre noprint">
 			<input type="submit" name="SelectADifferentPeriod" value="' . _('Select A Different Period') . '" />
 		</div>';
 }

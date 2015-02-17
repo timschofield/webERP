@@ -608,7 +608,8 @@ if ((!isset($_POST['FromPeriod'])
 
 	$AccountsResult = DB_query($SQL,_('No general ledger accounts were returned by the SQL because'),_('The SQL that failed was'));
 
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('General Ledger Profit Loss Inquiry') . '" alt="" />' . ' ' . _('Statement of Profit and Loss for the') . ' ' . $NumberOfMonths . ' ' . _('months to') . ' and including ' . $PeriodToDate . '</p>';
+	echo '<p class="page_title_text"><img class="noprint" src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('General Ledger Profit Loss Inquiry') . '" alt="" />
+          <h2>' . ' ' . _('Statement of Profit and Loss for the') . ' ' . $NumberOfMonths . ' ' . _('months to') . ' and including ' . $PeriodToDate . '</h2></p>';
 
 	/*show a table of the accounts info returned by the SQL
 	Account Code ,   Account Name , Month Actual, Month Budget, Period Actual, Period Budget */
@@ -1290,7 +1291,7 @@ if ((!isset($_POST['FromPeriod'])
 			<td colspan="6"><hr /></td>
 		</tr>';
 	echo '</table>';
-	echo '<br /><div class="centre"><input type="submit" name="SelectADifferentPeriod" value="' . _('Select A Different Period') . '" /></div>';
+	echo '<br /><div class="centre noprint"><input type="submit" name="SelectADifferentPeriod" value="' . _('Select A Different Period') . '" /></div>';
 }
 echo '</div>';
 echo '</form>';
