@@ -237,7 +237,7 @@ If (isset($_POST['PrintPDF']) AND DB_num_rows($GRNsResult)>0){
 			$i++;
 		}
 	}
-	printf('<td colspan="9">%s</td>
+	printf('<tr><td colspan="9">%s</td>
 			<td>%s</td>
 			<td class="number">%s</td>
 			<td>%s</td>
