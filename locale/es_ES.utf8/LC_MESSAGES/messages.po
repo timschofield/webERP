@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.12.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-02-06 19:17+1300\n"
-"PO-Revision-Date: 2015-02-09 17:02-0600\n"
+"PO-Revision-Date: 2015-02-17 12:27-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -6733,7 +6733,7 @@ msgstr ""
 
 #: CounterReturns.php:1602 Credit_Invoice.php:1504 SelectCreditItems.php:2008
 msgid "Credit Note number"
-msgstr "abono No."
+msgstr "Número de nota de crédito"
 
 #: CounterReturns.php:1607 CounterReturns.php:1609 Credit_Invoice.php:1506
 #: Credit_Invoice.php:1508
@@ -7300,7 +7300,7 @@ msgstr ""
 
 #: Credit_Invoice.php:287
 msgid "Credit Invoice"
-msgstr "Acreditar Factura"
+msgstr "Acreditar factura"
 
 #: Credit_Invoice.php:289
 msgid "Credit Note amounts stated in"
@@ -7351,7 +7351,7 @@ msgstr "Costo de flete cargado en la factura"
 
 #: Credit_Invoice.php:431
 msgid "Credit Freight Cost"
-msgstr "Costo transporte credito"
+msgstr "Acreditar costo del flete"
 
 #: Credit_Invoice.php:479 SelectCreditItems.php:843
 msgid "Credit Totals"
@@ -7528,7 +7528,7 @@ msgstr "ha sido procesada"
 
 #: Credit_Invoice.php:1519 SelectCreditItems.php:856
 msgid "Credit Note Type"
-msgstr "Tipo de Abono"
+msgstr "Tipo de nota de crédito"
 
 #: Credit_Invoice.php:1523 Credit_Invoice.php:1528 Credit_Invoice.php:1532
 #: SelectCreditItems.php:860 SelectCreditItems.php:865
@@ -11495,7 +11495,7 @@ msgstr "¿Está seguro que desea suprimir este registro de matriz de descuentos?
 
 #: EDIMessageFormat.php:6
 msgid "EDI Message Format"
-msgstr "Formato de Mensaje EDI"
+msgstr "Formato de mensaje EDI"
 
 #: EDIMessageFormat.php:43
 msgid ""
@@ -12004,7 +12004,7 @@ msgstr ""
 #: EDISendInvoices.php:228 EDISendInvoices.php:231 EDISendInvoices.php:246
 #: EDISendInvoices_Reece.php:316 EDISendInvoices_Reece.php:319
 msgid "EDI Message"
-msgstr "Mensaje Electrónico"
+msgstr "Mensaje EDI"
 
 #: EDISendInvoices.php:228
 msgid "was successfully emailed"
@@ -13413,11 +13413,11 @@ msgstr "Coordenada Y Inicial"
 
 #: FormDesigner.php:352
 msgid "End x co-ordinate"
-msgstr "Coordenada X Final"
+msgstr "Coordenada X final"
 
 #: FormDesigner.php:353
 msgid "End y co-ordinate"
-msgstr "Coordenada Y Final"
+msgstr "Coordenada Y final"
 
 #: FormDesigner.php:365
 msgid "Preview the Form Layout"
@@ -17726,7 +17726,7 @@ msgstr "Correr el Cálculo de la Planificación de Requerimiento de Materiales"
 
 #: MRP.php:15
 msgid "Start time"
-msgstr "Fecha de Inicio"
+msgstr "Fecha inicial"
 
 #: MRP.php:16
 msgid "Initialising tables ....."
@@ -20217,7 +20217,7 @@ msgstr "Introduzca la fecha en que las transacciones se deben listar"
 #: PrintCustTrans.php:543 PrintCustTrans.php:545
 #: PrintCustTransPortrait.php:575 PrintCustTransPortrait.php:577
 msgid "Credit Notes"
-msgstr "Abonos"
+msgstr "Notas de crédito"
 
 #: PDFCustTransListing.php:84 PDFPeriodStockTransListing.php:139
 msgid "An error occurred getting the transactions"
@@ -23342,7 +23342,7 @@ msgstr "Fecha Inicio"
 #: PricesByCost.php:157 Prices_Customer.php:358 Prices.php:224
 #: SelectRecurringSalesOrder.php:95
 msgid "End Date"
-msgstr "Fecha Final"
+msgstr "Fecha final"
 
 #: PricesByCost.php:160
 msgid "Price Proposed"
@@ -23860,7 +23860,7 @@ msgstr "Facturas desde"
 
 #: PrintCustTrans.php:66 PrintCustTransPortrait.php:65
 msgid "Credit Notes from"
-msgstr "Abonos desde"
+msgstr "Notas de crédito desde"
 
 #: PrintCustTrans.php:223 PrintCustTrans.php:278
 #: PrintCustTransPortrait.php:245 PrintCustTransPortrait.php:303
@@ -23955,33 +23955,33 @@ msgstr "Imprimir facturas o notas de crédito (modo horizontal)"
 #: PrintCustTrans.php:539 PrintCustTransPortrait.php:569
 #: includes/MainMenuLinksArray.php:104
 msgid "Print Invoices or Credit Notes"
-msgstr "Imprimir Facturas ó Abonos"
+msgstr "Imprimir facturas o notas de crédito"
 
 #: PrintCustTrans.php:550 PrintCustTransPortrait.php:584
 msgid "Print EDI Transactions"
-msgstr "Imprimir transacciones edi"
+msgstr "Imprimir transacciones EDI"
 
 #: PrintCustTrans.php:554 PrintCustTrans.php:559
 #: PrintCustTransPortrait.php:589 PrintCustTransPortrait.php:594
 msgid "Do not Print PDF EDI Transactions"
-msgstr "No imprimir transacciones edi"
+msgstr "No imprimir transacciones EDI"
 
 #: PrintCustTrans.php:555 PrintCustTrans.php:560
 #: PrintCustTransPortrait.php:590 PrintCustTransPortrait.php:595
 msgid "Print PDF EDI Transactions Too"
-msgstr "Ademas imprimir transacciones edi"
+msgstr "También imprimir transacciones EDI"
 
 #: PrintCustTrans.php:564 PrintCustTransPortrait.php:602
 msgid "Start invoice/credit note number to print"
-msgstr "Imprimir Facturas/Abonos desde"
+msgstr "Imprimir factura/nota de crédito desde"
 
 #: PrintCustTrans.php:566 PrintCustTransPortrait.php:606
 msgid "End invoice/credit note number to print"
-msgstr "Último número de Factura/Abono a Imprimir"
+msgstr "Imprimir factura/nota de crédito hasta"
 
 #: PrintCustTrans.php:577 PrintCustTransPortrait.php:622
 msgid "The last invoice created was number"
-msgstr "La última Factura generada fue la nº"
+msgstr "La última factura creada fue la número"
 
 #: PrintCustTrans.php:577 PrintCustTransPortrait.php:622
 msgid "If only a single invoice is required"
@@ -24006,7 +24006,7 @@ msgstr ""
 
 #: PrintCustTrans.php:584 PrintCustTransPortrait.php:629
 msgid "The last credit note created was number"
-msgstr "El ultimo Abono fue:"
+msgstr "La última nota de crédito creada fue la número"
 
 #: PrintCustTrans.php:585 PrintCustTransPortrait.php:629
 msgid ""
@@ -24047,7 +24047,7 @@ msgstr "Factura"
 #: PrintCustTransPortrait.php:773 PrintCustTransPortrait.php:1021
 #: PrintCustTransPortrait.php:1076 includes/PDFTransPageHeaderPortrait.inc:22
 msgid "TAX CREDIT NOTE"
-msgstr "Abono Impuestos"
+msgstr "Nota de crédito"
 
 #: PrintCustTrans.php:733 PrintCustTransPortrait.php:776
 msgid "Tax Authority Ref"
@@ -24097,7 +24097,7 @@ msgstr "Código bancario:"
 
 #: PrintCustTransPortrait.php:565
 msgid "Print Invoices or Credit Notes (Portrait Mode)"
-msgstr "Imprimir Facturas o Abonos (en vertical)"
+msgstr "Imprimir facturas o notas de crédito (modo vertical)"
 
 #: PrintCustTransPortrait.php:612
 msgid "Print Preview"
@@ -27303,7 +27303,7 @@ msgstr ""
 
 #: SelectCreditItems.php:797
 msgid "Credit Freight"
-msgstr "Crédito de Transporte"
+msgstr "Acreditar flete"
 
 #: SelectCreditItems.php:862 SelectCreditItems.php:866
 msgid "Reverse an Overcharge"
@@ -33430,7 +33430,7 @@ msgstr "Referencia Abono proveedor"
 
 #: SupplierCredit.php:289
 msgid "Credit Note Date"
-msgstr "Fecha Abono"
+msgstr "Fecha de nota de crédito"
 
 #: SupplierCredit.php:289 SupplierInvoice.php:634
 msgid "in format"
@@ -33501,7 +33501,7 @@ msgstr "Entrada Manual"
 
 #: SupplierCredit.php:594
 msgid "Credit Note Total"
-msgstr "Total Abono"
+msgstr "Total de nota de crédito"
 
 #: SupplierCredit.php:609
 msgid "Enter Credit Note"
@@ -33682,7 +33682,7 @@ msgstr "pero la suma de SobreCantidad convertida en TasaDeCambio"
 
 #: SupplierCredit.php:1085
 msgid "Credit note"
-msgstr "Nota de Crédito (Abono)"
+msgstr "Nota de crédito"
 
 #: SupplierCredit.php:1088 SupplierInvoice.php:1442
 msgid "The general ledger transaction for the tax could not be added because"
@@ -34513,7 +34513,7 @@ msgstr ""
 
 #: Suppliers.php:745 Suppliers.php:989
 msgid "email format such as xx@mail.cn"
-msgstr ""
+msgstr "formato de correo-e como xx@mail.cn"
 
 #: Suppliers.php:749
 msgid "Only URL address are allowed"
@@ -40368,7 +40368,7 @@ msgstr "Hata Período:"
 
 #: Z_CheckDebtorsControl.php:41
 msgid "End Period:"
-msgstr "Período"
+msgstr "Período final"
 
 #: Z_CheckDebtorsControl.php:72
 msgid "Bal B/F in GL"
@@ -40727,7 +40727,7 @@ msgstr ""
 
 #: Z_DeleteCreditNote.php:149
 msgid "Credit note number"
-msgstr "Abono número"
+msgstr "Número de nota de crédito"
 
 #: Z_DeleteCreditNote.php:149
 msgid "has been completely deleted"
@@ -46488,7 +46488,7 @@ msgstr "Total Facturado"
 
 #: includes/PDFTransPageHeader.inc:20
 msgid "CREDIT NOTE"
-msgstr "NOTA DE CRÉDITO (ABONO)"
+msgstr "NOTA DE CRÉDITO"
 
 #: includes/PDFTransPageHeader.inc:61
 #: includes/PDFTransPageHeaderPortrait.inc:74
@@ -48420,7 +48420,7 @@ msgstr ""
 
 #: api/api_xml-rpc.php:1119
 msgid "Credit note line items"
-msgstr "Artículod de nota de Crédito"
+msgstr "Artículos de nota de crédito"
 
 #: api/api_xml-rpc.php:1120
 msgid ""
