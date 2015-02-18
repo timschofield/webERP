@@ -483,14 +483,21 @@ function YearDifferenceSales($typereport, $NumDaysA, $db){
 
 	$TotalDateA = 0;
 	$TotalDateB = 0;
+	$TotalRent = 0;
 	$TotalBothYearsDateA = 0;
 	$TotalBothYearsDateB = 0;
+	$TotalBothYearsRent = 0;
 	$TotalNewDateA = 0;
-	$TotalOldDateB = 0;
+	$TotalNewRent = 0;
+	$TotalOldRent = 0;
 
 	if ($typereport == "Shop"){
 		$SQL = "SELECT debtorno,
 					name,
+					(SELECT locations.klyearlyrent 
+						FROM locations
+						WHERE locations.cashsalecustomer = debtorsmaster.debtorno
+						LIMIT 1) AS yearlyrent,
 					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
@@ -555,6 +562,7 @@ function YearDifferenceSales($typereport, $NumDaysA, $db){
 							<th class="ascending">' . $NumDaysA . _(' Days This Year') . '</th>
 							<th class="ascending">' . $NumDaysA . _(' Days Last Year') . '</th>
 							<th class="ascending">' . _('Trend') . '</th>
+							<th class="ascending">' . _('%Rent/Sales') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -565,9 +573,15 @@ function YearDifferenceSales($typereport, $NumDaysA, $db){
 			if ($typereport == "Shop"){
 				$Code = $myrow['debtorno'];
 				$Name = $myrow['name'];
+				if (($myrow['salesA'] > 0) AND ($myrow['yearlyrent'] > 0)){
+					$Rent = round(($myrow['yearlyrent'] / 365 * $NumDaysA) / $myrow['salesA'] * 100) . '%';
+				}else{
+					$Rent = "";
+				}
 			}else{
 				$Code = $myrow['salesmancode'];
 				$Name = $myrow['salesmanname'];
+				$Rent = "";
 			}
 			
 			$percent = (($myrow['salesA'])-($myrow['salesB']))/($myrow['salesB']) * 100;
@@ -585,26 +599,32 @@ function YearDifferenceSales($typereport, $NumDaysA, $db){
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
+					<td class="number">%s</td>
 					</tr>', 
 					$i,
 					$Code,
 					$Name,
 					locale_number_format($myrow['salesA'],0), 
 					locale_number_format($myrow['salesB'],0), 
-					$trend
+					$trend,
+					$Rent
 					);
 
 			if (($myrow['salesA'] > 0) AND ($myrow['salesB'] > 0)){
 				$TotalBothYearsDateA = $TotalBothYearsDateA +($myrow['salesA']);
 				$TotalBothYearsDateB = $TotalBothYearsDateB +($myrow['salesB']);
+				$TotalBothYearsRent = $TotalBothYearsRent +($myrow['yearlyrent']);
 			}
 			if (($myrow['salesA'] > 0) AND ($myrow['salesB'] == 0)){
 				$TotalNewDateA = $TotalNewDateA +($myrow['salesA']);
+				$TotalNewRent = $TotalNewRent +($myrow['yearlyrent']);
 			}
 			if (($myrow['salesA'] == 0) AND ($myrow['salesB'] > 0)){
 				$TotalOldDateB = $TotalOldDateB +($myrow['salesB']);
+				$TotalOldRent = $TotalOldRent +($myrow['yearlyrent']);
 			}
 			$TotalDateA = $TotalDateA +($myrow['salesA']);
+			$TotalRent = $TotalRent +($myrow['yearlyrent']);
 			$TotalDateB = $TotalDateB +($myrow['salesB']);
 			$i++;
 		}
@@ -618,52 +638,61 @@ function YearDifferenceSales($typereport, $NumDaysA, $db){
 				$trend = "Degrading ". locale_number_format($percent,0) . "%";
 			}
 			$k = StartEvenOrOddRow($k);
+			$Rent = round(($TotalBothYearsRent / 365 * $NumDaysA) / $TotalBothYearsDateA * 100) . '%';
 			printf('<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
+					<td class="number">%s</td>
 					</tr>', 
 					"",
 					"",
 					"EXISTING SHOPS",
 					locale_number_format($TotalBothYearsDateA,0), 
 					locale_number_format($TotalBothYearsDateB,0), 
-					$trend
+					$trend,
+					$Rent
 					);
 			if ($TotalNewDateA > 0){
 				$k = StartEvenOrOddRow($k);
+				$Rent = round(($TotalNewRent / 365 * $NumDaysA) / $TotalNewDateA * 100) . '%';
 				printf('<td>%s</td>
 						<td>%s</td>
 						<td>%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td>%s</td>
+						<td class="number">%s</td>
 						</tr>', 
 						"",
 						"",
 						"NEW SHOPS",
 						locale_number_format($TotalNewDateA,0), 
 						"", 
-						""
+						"",
+						$Rent
 						);
 			}
 			if ($TotalOldDateB > 0){
 				$k = StartEvenOrOddRow($k);
+				$Rent = round(($TotalOldRent / 365 * $NumDaysA) / $TotalOldDateB * 100) . '%';
 				printf('<td>%s</td>
 						<td>%s</td>
 						<td>%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td>%s</td>
+						<td class="number">%s</td>
 						</tr>', 
 						"",
 						"",
 						"CLOSED SHOPS",
 						"", 
 						locale_number_format($TotalOldDateB,0), 
-						""
+						"",
+						$Rent
 						);
 			}
 			$percent = (($TotalDateA)-($TotalDateB))/($TotalDateB) * 100;
@@ -675,19 +704,22 @@ function YearDifferenceSales($typereport, $NumDaysA, $db){
 				$trend = "Degrading ". locale_number_format($percent,0) . "%";
 			}
 			$k = StartEvenOrOddRow($k);
+			$Rent = round(($TotalRent / 365 * $NumDaysA) / $TotalDateA * 100) . '%';
 			printf('<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
+					<td class="number">%s</td>
 					</tr>', 
 					"",
 					"",
 					"TOTAL",
 					locale_number_format($TotalDateA,0), 
 					locale_number_format($TotalDateB,0), 
-					$trend
+					$trend,
+					$Rent
 					);
 		}
 		echo '</table>
