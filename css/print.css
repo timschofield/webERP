@@ -28,6 +28,10 @@ a {
     color:navy;
     text-decoration:none;
 }
+
+.number{
+    text-align:right;
+}
  
 #CanvasDiv, body { 
     font-family: Arial, Verdana, Helvetica, sans-serif;
