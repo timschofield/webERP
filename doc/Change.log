@@ -1,5 +1,6 @@
 webERP Change Log
 
+19/2/15 RChacon: Fix AddTextWrap split behaviour (thanks Andrew Galuski). Add code documentation.
 19/2/15 Tim: Align numbers to the right in print.css
 17/2/15 Vitaly: Added print.css to allow printing pages off the screen
 15/2/2015: Exson: Fixed date format error for request date and start date in WorkOrderEntry.php.

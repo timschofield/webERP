@@ -73,107 +73,88 @@ if (!class_exists('Cpdf', false)) {
 
 		function addText($xb,$YPos,$size,$text/*,$angle=0,$wordSpaceAdjust=0*/) {
 	// Javier	$text = html_entity_decode($text);
-			$this->SetFontSize($size);
-			$this->Text($xb, $this->h-$YPos, $text);
+			$this->SetFontSize($size);// Public function SetFontSize() in ~/includes/tcpdf/tcpdf.php.
+			$this->Text($xb, $this->h-$YPos, $text);// Public function Text() in ~/includes/tcpdf/tcpdf.php.
 		}
 
-		function addTextWrap($XPos, $YPos, $Width, $Height, $Text, $Align='J', $border=0, $fill=0) {
-			// R&OS version 0.12.2: "addTextWrap function is no more, use addText instead".
-			/* Returns the balance of the string that could not fit in the width
-			 * XPos = pdf horizontal coordinate
-			 * YPos = pdf vertical coordiante
-			*/
-			//some special characters are html encoded
-			//this code serves to make them appear human readable in pdf file
-			$Text = html_entity_decode($Text, ENT_QUOTES, 'UTF-8');
+//------------------------------------------------------------------------------
+public function addTextWrap($xpos, $ypos, $linewidth, $fontsize, $text, $justification='left', $angle=0, $test=0) {
+// Adds text to the page, but ensure that it fits within a certain width. If it does not fit then put in as much as possible, splitting at white space or soft hyphen character and return the remainder. Justification can also be specified for the text. It use UTF-8 encoding.
+// $xpos = cell horizontal coordinate from page left side to cell left side in dpi (72dpi = 25.4mm).
+// $ypos = cell vertical coordinate from page bottom side to cell bottom? side in dpi (72dpi = 25.4mm).
+// $linewidth = cell (line) width in dpi (72dpi = 25.4mm).
+// $fontsize = font size in dpi (72dpi = 25.4mm).
+// $text = text to be split in portion to be add to the page and the remainder to be returned.
+// $justification = 'left', 'right', 'center', 'centre' or 'full'.
+// Ignores $angle and $test.
+// @access public.
 
-			$this->x = $XPos;
-			$this->y = $this->h - $YPos - $Height;//RChacon: This -$Height is the difference in yPos between AddText() and AddTextWarp().
+if($linewidth == 0) {
+	$linewidth = $this->w -$this->rMargin -$xpos;// Line_width = Page_width - Right_margin - Cell_horizontal_coordinate.
+}
 
-			switch($Align) {
-				case 'right':
-					$Align = 'R'; break;
-				case 'center':
-					$Align = 'C'; break;
-				default:
-					$Align = 'L';
-			}
-			$this->SetFontSize($Height);
+$this->SetFontSize($fontsize);// Public function SetFontSize() in ~/includes/tcpdf/tcpdf.php.
 
-			if($Width==0) {
-				$Width=$this->w-$this->rMargin-$this->x;
-			}
-			$wmax=($Width-2*$this->cMargin);
-			$s=str_replace("\r",'',$Text);
-			$s=str_replace("\n",' ',$s);
-			$s = trim($s).' ';
-			$nb=mb_strlen($s);
-			$b=0;
-			if ($border) {
-				if ($border==1) {
-					$border='LTRB';
-					$b='LRT';
-					$b2='LR';
-				} else {
-					$b2='';
-					if(is_int(mb_strpos($border,'L'))) {
-						$b2.='L';
-					}
-					if(is_int(mb_strpos($border,'R'))) {
-						$b2.='R';
-					}
-					$b=is_int(mb_strpos($border,'T')) ? $b2.'T' : $b2;
-				}
-			}
-			$sep=-1;
-			$i=0;
-			$l= $ls=0;
-			$ns=0;
-            $cw = $this->GetStringWidth($s, '', '', 0, true);
-			while($i<$nb) {
-				$c=$s{$i};
-				if($c==' ' AND $i>0) {
-					$sep=$i;
-					$ls=$l;
-					$ns++;
-				}
-				if (isset($cw[$i])) {
-					$l += $cw[$i];
-				}
-				if($l>$wmax){
-					break;
-				} else {
-					$i++;
-				}
-			}
-			if($sep==-1) {
-				if($i==0) {
-					$i++;
-				}
+$text = html_entity_decode($text, ENT_QUOTES, 'UTF-8');// Convert all HTML entities to their applicable characters.
 
-				if(isset($this->ws) and $this->ws>0) {
-					$this->ws=0;
-					$this->_out('0 Tw');
-				}
-				$sep = $i;
-			} else {
-				if($Align=='J') {
-					$this->ws=($ns>1) ? ($wmax-$ls)/($ns-1) : 0;
-					$this->_out(sprintf('%.3f Tw',$this->ws*$this->k));
-				}
-			}
+switch($justification) {// Translate from Pdf-Creator to TCPDF.
+	case 'left':
+		$justification = 'L'; break;
+	case 'right':
+		$justification = 'R'; break;
+	case 'center':
+		$justification = 'C'; break;
+	case 'centre':
+		$justification = 'C'; break;
+	case 'full':
+		$justification = 'J'; break;
+	default:
+		$justification = 'L'; break;
+}
 
-			$this->Cell($Width,$Height,mb_substr($s,0,$sep),$b,2,$Align,$fill);
-			$this->x=$this->lMargin;
-			return mb_substr($s, $sep);
-		}// End function addTextWrap.
+$this->MultiCell($linewidth, $fontsize, $text, 0, $justification, false, 1, $xpos, $this->h - $ypos - $fontsize);// COMMENT: In "$this->h -$ypos -$fontsize", "-$fontsize" is the difference in the yPos between AddText() and AddTextWarp(). It is better "$this->h -$ypos", but that requires to recode all the pdf generator scripts.
+}
+//------------------------------------------------------------------------------
+function TextWrap($xpos, $ypos, $linewidth, $fontsize, $text, $justification='left', $angle=0, $test=0) {
+	// Adds text to the page, but ensure that it fits within a certain width. If it does not fit then put in as much as possible, splitting at white space or soft hyphen character and return the remainder. Justification can also be specified for the text. It use UTF-8 encoding.
+	// $xpos = cell horizontal coordinate from page left side to cell left side in dpi (72dpi = 25.4mm).
+	// $ypos = cell vertical coordinate from page bottom side to cell bottom? side in dpi (72dpi = 25.4mm).
+	// $linewidth = cell (line) width in dpi (72dpi = 25.4mm).
+	// $fontsize = font size in dpi (72dpi = 25.4mm).
+	// $text = text to be split in portion to be add to the page and the remainder to be returned.
+	// $justification = 'left', 'right', 'center', 'centre' or 'full'.
+	// Ignores $angle and $test.
+	// @access public.
+	if($linewidth == 0) {
+		$linewidth = $this->w -$this->rMargin -$xpos;// Line_width = Page_width - Right_margin - Cell_horizontal_coordinate.
+	}
+	$this->SetFontSize($fontsize);// Public function SetFontSize() in ~/includes/tcpdf/tcpdf.php.
+	$text = html_entity_decode($text, ENT_QUOTES, 'UTF-8');// Convert all HTML entities to their applicable characters.
+	switch($justification) {// Translate from Pdf-Creator to TCPDF.
+		case 'left':
+			$justification = 'L'; break;
+		case 'right':
+			$justification = 'R'; break;
+		case 'center':
+			$justification = 'C'; break;
+		case 'centre':
+			$justification = 'C'; break;
+		case 'full':
+			$justification = 'J'; break;
+		default:
+			$justification = 'L'; break;
+	}
+	$this->MultiCell($linewidth, $fontsize, $text, 0, $justification, false, 1, $xpos, $this->h - $ypos);
+	return $this->h - $this->y;// yPos is the same as in addText().
+}
+//===========================================================================================
 
 		function addInfo($label, $value) {
 			if ($label == 'Creator') {
 
 	/* Javier: Some scripts set the creator to be WebERP like this
 				$pdf->addInfo('Creator', 'WebERP http://www.weberp.org');
-		But the Creator is TCPDF by Nicola Asuni, PDF_CREATOR is defined as 'TCPDF' in tcpdf/config/tcpdfconfig.php
+		But the Creator is TCPDF by Nicola Asuni, PDF_CREATOR is defined as 'TCPDF' in ~/includes/tcpdf/config/tcpdfconfig.php
 	*/ 			$this->SetCreator(PDF_CREATOR);
 			}
 			if ($label == 'Author') {
@@ -194,7 +175,7 @@ if (!class_exists('Cpdf', false)) {
 		}
 
 		function addJpegFromFile($img,$XPos,$YPos,$Width=0,$Height=0,$Type=''){
-			$this->Image($img, $x=$XPos, $y=$this->h-$YPos-$Height, $w=$Width, $h=$Height,$type=$Type);
+			$this->Image($img, $x=$XPos, $y=$this->h-$YPos/*-$Height*/, $w=$Width, $h=$Height,$type=$Type);
 		}
 
 		/*
