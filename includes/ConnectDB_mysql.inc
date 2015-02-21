@@ -180,7 +180,7 @@ function DB_show_fields($TableName, &$Conn=''){
 }
 
 function interval( $val, $Inter ){
-		global $dbtype;
+		global $DBType;
 		return "\n".'interval ' . $val . ' '. $Inter."\n";
 }
 
@@ -199,23 +199,28 @@ function DB_Maintenance(){
 
 
 function DB_Txn_Begin(){
+	global $db;
 	mysql_query("SET autocommit=0",$db);
 	mysql_query("START TRANSACTION",$db);
 }
 
 function DB_Txn_Commit(){
+	global $db;
 	mysql_query("COMMIT",$db);
 	mysql_query("SET autocommit=1",$db);
 }
 
 function DB_Txn_Rollback(){
+	global $db;
     mysql_query("ROLLBACK",$db);
 }
 
 function DB_IgnoreForeignKeys(){
+	global $db;
 	mysql_query("SET FOREIGN_KEY_CHECKS=0",$db);
 }
 function DB_ReinstateForeignKeys(){
+	global $db;
 	mysql_query("SET FOREIGN_KEY_CHECKS=1",$db);
 }
 
