@@ -1,25 +1,28 @@
 <?php
-
 /* $Id$*/
+/* This script shows the balance sheet for the company as at a specified date. */
 
 /*Through deviousness and cunning, this system allows shows the balance sheets as at the end of any period selected - so first off need to show the input of criteria screen while the user is selecting the period end of the balance date meanwhile the system is posting any unposted transactions */
 
 
 include ('includes/session.inc');
-$Title = _('Balance Sheet');
+$Title = _('Balance Sheet');// Screen identification.
+$ViewTopic = 'GeneralLedger';// Filename's id in ManualContents.php's TOC.
+$BookMark = 'BalanceSheet';// Anchor's id in the manual's html document.
 include('includes/SQL_CommonFunctions.inc');
 include('includes/AccountSectionsDef.inc'); // This loads the $Sections variable
 
-
-$ViewTopic= 'GeneralLedger';
-$BookMark = 'BalanceSheet';
 
 if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'])){
 
 	/*Show a form to allow input of criteria for TB to show */
 	include('includes/header.inc');
-	echo '<div class="centre"><p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="'
-		. _('Print') . '" alt="" />' . ' ' . _('Balance Sheet') . '</p></div>';
+	echo '<p class="page_title_text"><img alt="" class="noprint" src="'.$RootPath.'/css/'.$Theme.
+		'/images/printer.png" title="' .// Icon image.
+		_('Print Statement of Financial Position') . '" /> ' .// Icon title.
+		_('Balance Sheet') . '</p>';// Page title.
+//		_('Print Statement of Financial Position') . '</p>';// Page title.
+
 	echo '<div class="page_help_text">'
 	. _('Balance Sheet (or statement of financial position) is a summary  of balances. Assets, liabilities and ownership equity are listed as of a specific date, such as the end of its financial year. Of the four basic financial statements, the balance sheet is the only statement which applies to a single point in time.') . '<br />'
 	. _('The balance sheet has three parts: assets, liabilities and ownership equity. The main categories of assets are listed first and are followed by the liabilities. The difference between the assets and the liabilities is known as equity or the net assets or the net worth or capital of the company and according to the accounting equation, net worth must equal assets minus liabilities.') . '<br />'
@@ -384,17 +387,20 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 			chartdetails.accountcode";
 
 	$AccountsResult = DB_query($SQL,_('No general ledger accounts were returned by the SQL because'));
-	echo '<p class="page_title_text noprint"><img src="'.$RootPath.'/css/'.$Theme.'/images/preview.gif" title="' . _('Search') . '" alt="" /> ' . _('HTML View') . '</p>';
+
+	// Page title as IAS1 numerals 10 and 51:
+	include_once('includes/CurrenciesArray.php');// Array to retrieve currency name.
+	echo '<p class="page_title_text"><img alt="" class="noprint" src="'.$RootPath.'/css/'.$Theme.
+		'/images/gl.png" title="' .// Icon image.
+		_('Statement of Financial Position') . '" /> ' .// Icon title.
+		_('Balance Sheet') . '<br />' .// Page title, reporting statement.
+//		_('Statement of Financial Position') . '<br />' .// Page title, reporting statement.
+		stripslashes($_SESSION['CompanyRecord']['coyname']) . '<br />' .// Page title, reporting entity.
+		_('as at') . ' ' . $BalanceDate . '<br />' .// Page title, reporting period.
+		_('All amounts stated in').': '. _($CurrencyName[$_SESSION['CompanyRecord']['currencydefault']]).'</p>';// Page title, reporting presentation currency and level of rounding used.
 
 	echo '<div class="invoice">
-			<table class="selection">
-			<tr>
-				<th colspan="6">
-					<div class="centre"><h1>' .
-		_('Balance Sheet as at') . ' ' . $BalanceDate  . '</h1>
-					</div>
-				</th>
-			</tr>';
+			<table class="selection">';
 
 	if ($_POST['Detail']=='Detailed'){
 		$TableHeader = '<tr>
@@ -577,9 +583,9 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 	  				echo '<tr class="EvenTableRows">';
 	  				$k++;
 	  			}
-	  
+
 	  			$ActEnquiryURL = '<a href="' . $RootPath . '/GLAccountInquiry.php?Period=' . $_POST['BalancePeriodEnd'] . '&amp;Account=' . $myrow['accountcode'] . '">' . $myrow['accountcode'] . '</a>';
-	  
+
 	  			printf('<td>%s</td>
 	  					<td>%s</td>
 	  					<td class="number">%s</td>

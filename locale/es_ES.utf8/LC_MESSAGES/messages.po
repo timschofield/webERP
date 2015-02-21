@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.12.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-02-06 19:17+1300\n"
-"PO-Revision-Date: 2015-02-17 12:27-0600\n"
+"PO-Revision-Date: 2015-02-21 08:31-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -37861,7 +37861,7 @@ msgstr ""
 #: UserLocations.php:203
 #, php-format
 msgid "Are you sure you wish to un-authorise this location?"
-msgstr ""
+msgstr "¿Está seguro que desea desautorizar esta ubicación?"
 
 #: UserSettings.php:6 UserSettings.php:10
 msgid "User Settings"
@@ -45029,7 +45029,7 @@ msgstr "Reimprimir una Lista de Depósitos"
 
 #: includes/MainMenuLinksArray.php:109
 msgid "Debtor Balances At A Prior Month End"
-msgstr "Saldos de Deudores a Fin de Mes Previo"
+msgstr "Saldos de clientes al final del mes previo"
 
 #: includes/MainMenuLinksArray.php:110
 msgid "Customer Listing By Area/Salesperson"
@@ -45057,7 +45057,7 @@ msgstr "Informe de proveedores Antiguos"
 
 #: includes/MainMenuLinksArray.php:149
 msgid "Supplier Balances At A Prior Month End"
-msgstr "Balances de proveedores a Fin de Mes Previo"
+msgstr "Saldos de proveedores al final del mes previo"
 
 #: includes/MainMenuLinksArray.php:151
 msgid "Supplier Transaction Inquiries"
@@ -46137,7 +46137,7 @@ msgstr "Saldos de cliente de los clientes entre"
 #: includes/PDFDebtorBalsPageHeader.inc:17
 #: includes/PDFSupplierBalsPageHeader.inc:17
 msgid "as at"
-msgstr "según en"
+msgstr "al"
 
 #: includes/PDFDebtorBalsPageHeader.inc:32
 #: includes/PDFSupplierBalsPageHeader.inc:35
