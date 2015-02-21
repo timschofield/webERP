@@ -1,14 +1,14 @@
 <?php
-
 /* $Id$*/
+/* This script shows the profit and loss of the company for the range of periods entered. */
 
 include ('includes/session.inc');
-$Title = _('Profit and Loss');
+$Title = _('Profit and Loss');// Screen identification.
+$ViewTopic= 'GeneralLedger';// Filename's id in ManualContents.php's TOC.
+$BookMark = 'ProfitAndLoss';// Anchor's id in the manual's html document.
 include('includes/SQL_CommonFunctions.inc');
 include('includes/AccountSectionsDef.inc'); // This loads the $Sections variable
 
-$ViewTopic= 'GeneralLedger';
-$BookMark = 'ProfitAndLoss';
 
 if (isset($_POST['FromPeriod']) and ($_POST['FromPeriod'] > $_POST['ToPeriod'])){
 	prnMsg(_('The selected period from is actually after the period to') . '! ' . _('Please reselect the reporting period'),'error');
@@ -20,10 +20,11 @@ if ((!isset($_POST['FromPeriod'])
 		OR isset($_POST['SelectADifferentPeriod'])){
 
 	include('includes/header.inc');
+	echo '<p class="page_title_text"><img alt="" class="noprint" src="'.$RootPath.'/css/'.$Theme.
+		'/images/printer.png" title="' .// Icon image.
+		_('Print') . '" /> ' .// Icon title.
+		_('Print Profit and Loss Report') . '</p>';// Page title.
 
-	echo '<p class="page_title_text">
-			<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . _('Print Profit and Loss Report') . '
-		</p>';
 	echo '<div class="page_help_text">' . _('Profit and loss statement (P&amp;L), also called an Income Statement, or Statement of Operations, this is the statement that indicates how the revenue (money received from the sale of products and services before expenses are taken out, also known as the "top line") is transformed into the net income (the result after all revenues and expenses have been accounted for, also known as the "bottom line").') .
 		'<br />'
 	. _('The purpose of the income statement is to show whether the company made or lost money during the period being reported.') . '<br />'
@@ -608,8 +609,10 @@ if ((!isset($_POST['FromPeriod'])
 
 	$AccountsResult = DB_query($SQL,_('No general ledger accounts were returned by the SQL because'),_('The SQL that failed was'));
 
-	echo '<p class="page_title_text"><img class="noprint" src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('General Ledger Profit Loss Inquiry') . '" alt="" />
-          <h2>' . ' ' . _('Statement of Profit and Loss for the') . ' ' . $NumberOfMonths . ' ' . _('months to') . ' and including ' . $PeriodToDate . '</h2></p>';
+	echo '<p class="page_title_text"><img alt="" class="noprint" src="'.$RootPath.'/css/'.$Theme.
+		'/images/transactions.png" title="' .// Icon image.
+		_('General Ledger Profit Loss Inquiry') . '" /> ' .// Icon title.
+		_('Statement of Profit and Loss for the') . ' ' . $NumberOfMonths . ' ' . _('months to') . ' and including ' . $PeriodToDate . '</p>';// Page title.
 
 	/*show a table of the accounts info returned by the SQL
 	Account Code ,   Account Name , Month Actual, Month Budget, Period Actual, Period Budget */
