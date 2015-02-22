@@ -1735,11 +1735,12 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				</div>';
 
 		}#end if SearchResults to show
+        echo '</form>';
 	} /*end of PartSearch options to be displayed */
 	   elseif( isset($_POST['QuickEntry'])) { /* show the quick entry form variable */
 		  /*FORM VARIABLES TO POST TO THE ORDER  WITH PART CODE AND QUANTITY */
 	   	echo '<div class="page_help_text"><b>' . _('Use this screen for the '). _('Quick Entry')._(' of products to be ordered') . '</b></div><br />
-		 			<table border="1">
+		 			<table class="selection">
 					<tr>';
 			/*do not display colum unless customer requires po line number by sales order line*/
 		 	if($_SESSION['Items'.$identifier]->DefaultPOLine ==1){
@@ -1812,6 +1813,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				<div class="centre">
 					<input name="CancelOrder" type="submit" value="' . _('Cancel Whole Order') . '" onclick="return confirm(\'' . _('Are you sure you wish to cancel this entire order?') . '\');" />
 				</div>
+                </div>
 				</form>';
 		}
 	}#end of else not selecting a customer

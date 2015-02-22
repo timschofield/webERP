@@ -64,7 +64,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 		</tr>
 		<tr>
 			 <td>' . _('Show all Accounts including zero balances') . '</td>
-			 <td><input type="checkbox" title="' . _('Check this box to display all accounts including those accounts with no balance') . '" name="ShowZeroBalances"></td>
+			 <td><input type="checkbox" title="' . _('Check this box to display all accounts including those accounts with no balance') . '" name="ShowZeroBalances" /></td>
 		</tr>
 		</table>';
 
