@@ -1309,7 +1309,7 @@ if ((!isset($_POST['FromPeriod'])
 			'<button name="SelectADifferentPeriod" type="submit" value="'. _('Select A Different Period') .'"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 				'/images/gl.png" /> ' . _('Select A Different Period') . '</button>'.// "Select A Different Period" button.
 			'<button formaction="index.php" type="submit"><img alt="" src="'.$RootPath.'/css/'.$Theme.
-				'/images/previous.png" /> ' . ('Return') . '</button>'.// "Return" button.
+				'/images/previous.png" /> ' . _('Return') . '</button>'.// "Return" button.
 		'</div>';
 }
 echo '</div>';

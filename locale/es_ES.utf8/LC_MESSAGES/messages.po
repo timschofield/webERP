@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.12.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-02-22 11:19-0600\n"
-"PO-Revision-Date: 2015-02-22 11:41-0600\n"
+"PO-Revision-Date: 2015-02-22 11:50-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -24277,7 +24277,7 @@ msgstr ""
 #: ProductSpecs.php:396 QATests.php:401
 #: reportwriter/languages/en_US/reports.php:53
 msgid "Active"
-msgstr ""
+msgstr "Activo"
 
 #: ProductSpecs.php:466
 #, php-format
@@ -50551,7 +50551,7 @@ msgstr ""
 
 #: reportwriter/languages/en_US/reports.php:213
 msgid "No Border"
-msgstr ""
+msgstr "Sin borde"
 
 #: reportwriter/languages/en_US/reports.php:214
 msgid "No Fill"
@@ -52026,25 +52026,3 @@ msgstr "Tarjeta de crédito"
 #: ../webSHOP/includes/session.php:137
 msgid "Bank Transfer"
 msgstr "Transferencia bancaria"
-
-#~ msgid "HTML View"
-#~ msgstr "Ver como HTML"
-
-#~ msgid "General Ledger Profit Loss Inquiry"
-#~ msgstr "Consultar Ganancias y Pérdidas Contables"
-
-#~ msgid "Statement of Profit and Loss for the"
-#~ msgstr "Estado de Ganancias y Pérdidas para el"
-
-#~ msgid "Trial Balance Report"
-#~ msgstr "Reporte de balance de comprobación"
-
-#~ msgid "Account:"
-#~ msgstr "Cuenta:"
-
-#~ msgid ""
-#~ "Select a csv file containing the details of the account codes that you "
-#~ "wish to import into webERP. "
-#~ msgstr ""
-#~ "Seleccione un archivo CSV con los detalles de los códigos contables que "
-#~ "desea importar al webERP. "
