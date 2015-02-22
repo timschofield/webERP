@@ -1,5 +1,6 @@
 webERP Change Log
 
+22/2/15 RChacon: Add missing preview.png and new previous.png icons. Add "Print This" and "Return" buttons with icon in GLBalanceSheet.php.
 22/2/15 Simon Rhodes: added global $db; statements to functions in ConnectDB_mysql.inc that had been missed for the transaction functions
 21/2/15 RChacon: Add headings, page-title and centre-align styles to print.css. Improve page title to use with print.css and add code documentation in GLBalanceSheet.php.
 20/2/15 RChacon: Fix heading 2 html-tags inside paragraph html-tags. Add code documentation.

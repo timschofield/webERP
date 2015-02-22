@@ -1,3 +1,4 @@
+/* $Id$*/
 /*** 
 
 New "SilverWolf" Theme for WebERP
@@ -499,6 +500,10 @@ select.selecterror{ /*AccountGroups.php, BankAccounts.php, BOMs.php, Stocks.php 
 	float:right;
 	line-height:2.8em; /* Center the text vertically.
 						  [vertical-align has no effect on text alone] */
+}
+.centre {
+	text-align:center;
+	/* centre class (general). */
 }
 
 /*** END ***/

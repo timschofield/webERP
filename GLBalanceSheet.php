@@ -707,7 +707,18 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 
 	echo '</table>';
     echo '</div>';
-	echo '<br /><div class="centre noprint"><input type="submit" name="SelectADifferentPeriod" value="'._('Select A Different Balance Date').'" /></div>';
+	echo '<br />';
+/*	<div class="centre noprint"><input type="submit" name="SelectADifferentPeriod" value="'._('Select A Different Balance Date').'" /></div>';*/
+
+echo '<div class="centre noprint">'.
+			'<button onclick="javascript:window.print()" type="button"><img alt="" src="'.$RootPath.'/css/'.$Theme.
+				'/images/printer.png" /> ' . _('Print This') . '</button>'.// "Print This" button.
+			'<button name="SelectADifferentPeriod" type="submit" value="'. _('Select A Different Period') .'"><img alt="" src="'.$RootPath.'/css/'.$Theme.
+				'/images/gl.png" /> ' . _('Select A Different Balance Date') . '</button>'.// "Select A Different Period" button.
+			'<button formaction="index.php" type="submit"><img alt="" src="'.$RootPath.'/css/'.$Theme.
+				'/images/previous.png" /> ' . ('Return') . '</button>'.// "Return" button.
+	'</div>';
+
     echo '</div></form>';
 }
 

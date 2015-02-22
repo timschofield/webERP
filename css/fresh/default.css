@@ -1,3 +1,4 @@
+/* $Id$*/
 /*** 
 
 New "Fresh" Theme for WebERP
@@ -501,6 +502,10 @@ background:#E0F3B1;
 }
 #FooterTimeDiv{
 	clear:left; /* below  */
+}
+.centre {
+	text-align:center;
+	/* centre class (general). */
 }
 
 /*** END ***/

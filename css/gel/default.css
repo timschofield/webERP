@@ -1,3 +1,4 @@
+/* $Id$*/
 /*** 
 
 New "Gel" Theme for WebERP
@@ -538,6 +539,10 @@ li { /* ??? */
 	float:right;
 	line-height:2.8em; /* Center the text vertically.
 						  [vertical-align has no effect on text alone] */
+}
+.centre {
+	text-align:center;
+	/* centre class (general). */
 }
 
 /*** END ***/
