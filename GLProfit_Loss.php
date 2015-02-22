@@ -1,6 +1,6 @@
 <?php
 /* $Id$*/
-/* This script shows the profit and loss of the company for the range of periods entered. */
+/* Shows the profit and loss of the company for the range of periods entered. */
 
 include ('includes/session.inc');
 $Title = _('Profit and Loss');// Screen identification.
@@ -22,8 +22,9 @@ if ((!isset($_POST['FromPeriod'])
 	include('includes/header.inc');
 	echo '<p class="page_title_text"><img alt="" class="noprint" src="'.$RootPath.'/css/'.$Theme.
 		'/images/printer.png" title="' .// Icon image.
-		_('Print') . '" /> ' .// Icon title.
+		_('Print Statement of Comprehensive Income') . '" /> ' .// Icon title.
 		_('Print Profit and Loss Report') . '</p>';// Page title.
+//		_('Print Statement of Comprehensive Income') . '</p>';// Page title.
 
 	echo '<div class="page_help_text">' . _('Profit and loss statement (P&amp;L), also called an Income Statement, or Statement of Operations, this is the statement that indicates how the revenue (money received from the sale of products and services before expenses are taken out, also known as the "top line") is transformed into the net income (the result after all revenues and expenses have been accounted for, also known as the "bottom line").') .
 		'<br />'
@@ -407,7 +408,7 @@ if ((!isset($_POST['FromPeriod'])
 		$SectionPrdBudget +=$AccountPeriodBudget;
 
 		if ($_POST['Detail'] == 'Detailed') {
-			
+
 			if (isset($_POST['ShowZeroBalances']) OR (!isset($_POST['ShowZeroBalances']) AND ($AccountPeriodActual <> 0 OR $AccountPeriodBudget <> 0 OR $AccountPeriodLY <> 0))){ //condition for pdf
 				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,$myrow['accountcode']);
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+60,$YPos,190,$FontSize,$myrow['accountname']);
@@ -609,10 +610,17 @@ if ((!isset($_POST['FromPeriod'])
 
 	$AccountsResult = DB_query($SQL,_('No general ledger accounts were returned by the SQL because'),_('The SQL that failed was'));
 
+	// Page title as IAS1 numerals 10 and 51:
+	include_once('includes/CurrenciesArray.php');// Array to retrieve currency name.
 	echo '<p class="page_title_text"><img alt="" class="noprint" src="'.$RootPath.'/css/'.$Theme.
-		'/images/transactions.png" title="' .// Icon image.
-		_('General Ledger Profit Loss Inquiry') . '" /> ' .// Icon title.
-		_('Statement of Profit and Loss for the') . ' ' . $NumberOfMonths . ' ' . _('months to') . ' and including ' . $PeriodToDate . '</p>';// Page title.
+		'/images/gl.png" title="' .// Icon image.
+		_('Statement of Comprehensive Income') . '" /> ' .// Icon title.
+		_('Profit and Loss Statement') . '<br />' .// Page title, reporting statement.
+//		_('Statement of Comprehensive Income') . '<br />' .// Page title, reporting statement.
+		stripslashes($_SESSION['CompanyRecord']['coyname']) . '<br />' .// Page title, reporting entity.
+		_('For') . ' ' . $NumberOfMonths . ' ' . _('months to') . ' ' . $PeriodToDate . '<br />' .// Page title, reporting period.
+//		_('From') . ' ' . $PeriodFromDate? . ' ' . _('to') . ' ' . $PeriodToDate . '<br />' .// Page title, reporting period. ??????????
+		_('All amounts stated in').': '. _($CurrencyName[$_SESSION['CompanyRecord']['currencydefault']]).'</p>';// Page title, reporting presentation currency and level of rounding used.
 
 	/*show a table of the accounts info returned by the SQL
 	Account Code ,   Account Name , Month Actual, Month Budget, Period Actual, Period Budget */
@@ -1294,7 +1302,15 @@ if ((!isset($_POST['FromPeriod'])
 			<td colspan="6"><hr /></td>
 		</tr>';
 	echo '</table>';
-	echo '<br /><div class="centre noprint"><input type="submit" name="SelectADifferentPeriod" value="' . _('Select A Different Period') . '" /></div>';
+	echo '<br />
+		<div class="centre noprint">'.
+			'<button onclick="javascript:window.print()" type="button"><img alt="" src="'.$RootPath.'/css/'.$Theme.
+				'/images/printer.png" /> ' . _('Print This') . '</button>'.// "Print This" button.
+			'<button name="SelectADifferentPeriod" type="submit" value="'. _('Select A Different Period') .'"><img alt="" src="'.$RootPath.'/css/'.$Theme.
+				'/images/gl.png" /> ' . _('Select A Different Period') . '</button>'.// "Select A Different Period" button.
+			'<button formaction="index.php" type="submit"><img alt="" src="'.$RootPath.'/css/'.$Theme.
+				'/images/previous.png" /> ' . ('Return') . '</button>'.// "Return" button.
+		'</div>';
 }
 echo '</div>';
 echo '</form>';

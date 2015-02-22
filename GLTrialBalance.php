@@ -1,14 +1,17 @@
 <?php
-
 /* $Id$*/
+/* Shows the trial balance for the month and the for the period selected together with the budgeted trial balances. */
 
-/*Through deviousness AND cunning, this system allows trial balances for any date range that recalcuates the p & l balances
+/*Through deviousness AND cunning, this system allows trial balances for any date range that recalculates the P&L balances
 and shows the balance sheets as at the end of the period selected - so first off need to show the input of criteria screen
 while the user is selecting the criteria the system is posting any unposted transactions */
 
 
 include ('includes/session.inc');
-$Title = _('Trial Balance');
+$Title = _('Trial Balance');// Screen identification.
+$ViewTopic= 'GeneralLedger';// Filename's id in ManualContents.php's TOC.
+$BookMark = 'TrialBalance';// Anchor's id in the manual's html document.
+
 include('includes/SQL_CommonFunctions.inc');
 include('includes/AccountSectionsDef.inc'); //this reads in the Accounts Sections array
 
@@ -25,13 +28,12 @@ if ((! isset($_POST['FromPeriod'])
 	AND ! isset($_POST['ToPeriod']))
 	OR isset($_POST['SelectADifferentPeriod'])){
 
-	$ViewTopic = 'GeneralLedger';
-	$BookMark = 'TrialBalance';
-
 	include  ('includes/header.inc');
-	echo '<p class="page_title_text">
-			<img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Trial Balance') . '" alt="" />' . ' ' . $Title . '
-		</p>';
+	echo '<p class="page_title_text"><img alt="" class="noprint" src="'.$RootPath.'/css/'.$Theme.
+		'/images/printer.png" title="' .// Icon image.
+		_('Print Trial Balance') . '" /> ' .// Icon title.
+		_('Trial Balance') . '</p>';// Page title.
+
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -161,8 +163,6 @@ if ((! isset($_POST['FromPeriod'])
 	$AccountsResult = DB_query($SQL);
 	if (DB_error_no() !=0) {
 		$Title = _('Trial Balance') . ' - ' . _('Problem Report') . '....';
-		$ViewTopic = 'GeneralLedger';
-		$BookMark = 'TrialBalance';
 		include('includes/header.inc');
 		prnMsg( _('No general ledger accounts were returned by the SQL because') . ' - ' . DB_error_msg() );
 		echo '<br /><a href="' .$RootPath .'/index.php">' .  _('Back to the menu'). '</a>';
@@ -174,8 +174,6 @@ if ((! isset($_POST['FromPeriod'])
 	}
 	if (DB_num_rows($AccountsResult)==0){
 		$Title = _('Print Trial Balance Error');
-		$ViewTopic = 'GeneralLedger';
-		$BookMark = 'TrialBalance';
 		include('includes/header.inc');
 		echo '<p>';
 		prnMsg( _('There were no entries to print out for the selections specified') );
@@ -435,16 +433,17 @@ if ((! isset($_POST['FromPeriod'])
 
 	$AccountsResult = DB_query($SQL, _('No general ledger accounts were returned by the SQL because'), _('The SQL that failed was:'));
 
-	echo '<p class="page_title_text noprint"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' .
-		_('Trial Balance') . '" alt="" />' . ' ' . _('Trial Balance Report') . '</p>';
+	echo '<p class="page_title_text"><img alt="" class="noprint" src="'.$RootPath.'/css/'.$Theme.
+		'/images/gl.png" title="' .// Icon image.
+		_('Trial Balance') . '" /> ' .// Icon title.
+		_('Trial Balance for the month of ') . $PeriodToDate . '<br />' .
+		_(' AND for the ') . $NumberOfMonths . ' ' . _('months to') . ' ' . $PeriodToDate;// Page title.
 
 	/*show a table of the accounts info returned by the SQL
-	Account Code ,   Account Name , Month Actual, Month Budget, Period Actual, Period Budget */
+	Account Code, Account Name, Month Actual, Month Budget, Period Actual, Period Budget */
 
 	echo '<table cellpadding="2" class="selection">';
-	echo '<tr>
-			<th colspan="6"><b>' .  _('Trial Balance for the month of ') . $PeriodToDate . _(' AND for the ') . $NumberOfMonths . _(' months to ') . $PeriodToDate  . '</b></th>
-		</tr>';
+
 	$TableHeader = '<tr>
 						<th>' . _('Account') . '</th>
 						<th>' . _('Account Name') . '</th>
@@ -727,9 +726,15 @@ if ((! isset($_POST['FromPeriod'])
 			locale_number_format($CheckPeriodBudget,$_SESSION['CompanyRecord']['decimalplaces']));
 
 	echo '</table><br />';
-	echo '<div class="centre noprint">
-			<input type="submit" name="SelectADifferentPeriod" value="' . _('Select A Different Period') . '" />
-		</div>';
+
+	echo '<div class="centre noprint">'.
+			'<button onclick="javascript:window.print()" type="button"><img alt="" src="'.$RootPath.'/css/'.$Theme.
+				'/images/printer.png" /> ' . _('Print This') . '</button>'.// "Print This" button.
+			'<button name="SelectADifferentPeriod" type="submit" value="'. _('Select A Different Period') .'"><img alt="" src="'.$RootPath.'/css/'.$Theme.
+				'/images/gl.png" /> ' . _('Select A Different Period') . '</button>'.// "Select A Different Period" button.
+			'<button formaction="index.php" type="submit"><img alt="" src="'.$RootPath.'/css/'.$Theme.
+				'/images/previous.png" /> ' . ('Return') . '</button>'.// "Return" button.
+		'</div>';
 }
 echo '</div>
 	</form>';
