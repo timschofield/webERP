@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: webERP 4.11.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-22 11:19-0600\n"
+"POT-Creation-Date: 2015-02-24 17:34-0600\n"
 "PO-Revision-Date: 2014-12-05 08:09-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: French <none>\n"
@@ -1756,7 +1756,7 @@ msgstr ""
 #: SalesTopCustomersInquiry.php:218 SalesTopItemsInquiry.php:225
 #: SelectCreditItems.php:687 SelectCreditItems.php:1067
 #: SelectOrderItems.php:1307 SelectOrderItems.php:1483
-#: SelectOrderItems.php:1646 SelectOrderItems.php:1749 ShipmentCosting.php:149
+#: SelectOrderItems.php:1646 SelectOrderItems.php:1750 ShipmentCosting.php:149
 #: ShipmentCosting.php:150 Shipments.php:401 Shipments.php:403
 #: Shipments.php:404 Shipments.php:488 Shipments.php:490 SpecialOrder.php:628
 #: StockCounts.php:143 StockCounts.php:168 StockLocMovements.php:94
@@ -6051,7 +6051,7 @@ msgstr "Le dossier client sélectionné"
 #: InternalStockRequest.php:669 PO_Header.php:416 PO_Header.php:490
 #: SelectCreditItems.php:182 SelectOrderItems.php:404 SelectOrderItems.php:507
 #: SelectOrderItems.php:1511 SelectOrderItems.php:1674
-#: SelectOrderItems.php:1846 SpecialOrder.php:67 SpecialOrder.php:91
+#: SelectOrderItems.php:1848 SpecialOrder.php:67 SpecialOrder.php:91
 #: StockCheck.php:215 StockLocStatus.php:196 StockLocStatus.php:220
 #: StockStatus.php:125 StockStatus.php:149 StockStatus.php:169
 #: SupplierCredit.php:91 SupplierInvoice.php:80
@@ -6430,12 +6430,12 @@ msgid "The details of the customer selected"
 msgstr "Les coordonnées du client sélectionné"
 
 #: CounterReturns.php:148 CounterSales.php:162 DeliveryDetails.php:158
-#: SelectCreditItems.php:182 SelectOrderItems.php:1846
+#: SelectCreditItems.php:182 SelectOrderItems.php:1848
 msgid "The customer branch record of the customer selected"
 msgstr "Fiche de l'agence du client sélectionné"
 
 #: CounterReturns.php:149 CounterSales.php:163 DeliveryDetails.php:159
-#: SelectCreditItems.php:183 SelectOrderItems.php:1847
+#: SelectCreditItems.php:183 SelectOrderItems.php:1849
 msgid "SQL used to retrieve the branch details was"
 msgstr "Commande SQL d'affichage des informations de la succursale:"
 
@@ -6871,13 +6871,13 @@ msgstr ""
 # Written vs CounterSales.php
 # Causes pb in SelectOrderItems.php
 #: CounterReturns.php:1819 CounterSales.php:2379 SelectCreditItems.php:1013
-#: SelectCreditItems.php:1064 SelectOrderItems.php:1741
-#: SelectOrderItems.php:1769
+#: SelectCreditItems.php:1064 SelectOrderItems.php:1742
+#: SelectOrderItems.php:1770
 msgid "Quick Entry"
 msgstr "Vente rapide"
 
 #: CounterReturns.php:1820 CounterSales.php:2380 SelectCreditItems.php:1082
-#: SelectOrderItems.php:1770 SelectOrderItems.php:1800
+#: SelectOrderItems.php:1771 SelectOrderItems.php:1801
 msgid "Search Parts"
 msgstr "Rechercher un article"
 
@@ -10704,7 +10704,7 @@ msgstr "Trans Date"
 #: EmailConfirmation.php:351 MRPDemands.php:298 MRPDemands.php:399
 #: MRPPlannedPurchaseOrders.php:339 MRPPlannedWorkOrders.php:260
 #: MRPPlannedWorkOrders.php:393 MRPReport.php:414 MRPReport.php:420
-#: OrderDetails.php:179 SelectOrderItems.php:1318 SelectOrderItems.php:1750
+#: OrderDetails.php:179 SelectOrderItems.php:1318 SelectOrderItems.php:1751
 #: SupplierTransInquiry.php:108
 msgid "Due Date"
 msgstr "Date d'échéance"
@@ -12275,8 +12275,8 @@ msgid "Delivered To"
 msgstr "Livré à"
 
 #: EmailConfirmation.php:216 EmailConfirmation.php:346 OrderDetails.php:170
-#: SelectOrderItems.php:1303 SelectOrderItems.php:1746
-#: SelectOrderItems.php:1782
+#: SelectOrderItems.php:1303 SelectOrderItems.php:1747
+#: SelectOrderItems.php:1783
 msgid "PO Line"
 msgstr ""
 
@@ -14306,6 +14306,10 @@ msgstr "Sélectionner une autre période"
 #: GLBalanceSheet.php:717
 msgid "Select A Different Balance Date"
 msgstr "Sélectionner une date de solde différente"
+
+#: GLBalanceSheet.php:719 GLProfit_Loss.php:1312 GLTrialBalance.php:736
+msgid "Return"
+msgstr ""
 
 #: GLBudgets.php:7
 msgid "Create GL Budgets"
@@ -27671,7 +27675,7 @@ msgstr "Note Processus de crédit"
 msgid "Change Customer"
 msgstr "Changer de client"
 
-#: SelectCreditItems.php:1066 SelectOrderItems.php:1748
+#: SelectCreditItems.php:1066 SelectOrderItems.php:1749
 #: Z_ImportPartCodes.php:29
 msgid "Part Code"
 msgstr "Partie de code"
@@ -28344,61 +28348,61 @@ msgid "Fixed Asset Disposal"
 msgstr "Cession d'actif"
 
 # JDN
-#: SelectOrderItems.php:1741
+#: SelectOrderItems.php:1742
 msgid "Use this screen for the "
 msgstr " "
 
 # JDN
-#: SelectOrderItems.php:1741
+#: SelectOrderItems.php:1742
 msgid " of products to be ordered"
 msgstr " "
 
 # JDN
-#: SelectOrderItems.php:1758
+#: SelectOrderItems.php:1759
 msgid "Enter the customer purchase order reference"
 msgstr ""
 
-#: SelectOrderItems.php:1760
+#: SelectOrderItems.php:1761
 msgid "Enter the item code ordered"
 msgstr ""
 
-#: SelectOrderItems.php:1761
+#: SelectOrderItems.php:1762
 msgid "Enter the quantity of the item ordered by the customer"
 msgstr ""
 
-#: SelectOrderItems.php:1763
+#: SelectOrderItems.php:1764
 msgid "Enter the date that the customer requires delivery by"
 msgstr ""
 
 # JDN
-#: SelectOrderItems.php:1776
+#: SelectOrderItems.php:1777
 msgid "Use this screen to select an asset to dispose of to this customer"
 msgstr "Sélectionner un actif à vendre à ce client"
 
 # JDN
-#: SelectOrderItems.php:1783
+#: SelectOrderItems.php:1784
 msgid "Enter the customer's purchase order reference"
 msgstr ""
 
-#: SelectOrderItems.php:1787
+#: SelectOrderItems.php:1788
 msgid "Asset to Dispose Of"
 msgstr "Actif à supprimer"
 
 # JDN
-#: SelectOrderItems.php:1790
+#: SelectOrderItems.php:1791
 msgid "Select Asset To Dispose of From the List Below"
 msgstr "Sélectionner un actif à vendre dans la liste ci-dessous"
 
 # JDN
-#: SelectOrderItems.php:1799
+#: SelectOrderItems.php:1800
 msgid "Add Asset To Order"
 msgstr "Ajouter un actif à la commande"
 
-#: SelectOrderItems.php:1813
+#: SelectOrderItems.php:1814
 msgid "Cancel Whole Order"
 msgstr "Annuler toute la Commande"
 
-#: SelectOrderItems.php:1813
+#: SelectOrderItems.php:1814
 msgid "Are you sure you wish to cancel this entire order?"
 msgstr "Voulez-vous annuler cette commande?"
 
