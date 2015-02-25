@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.11.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-02-24 17:34-0600\n"
-"PO-Revision-Date: 2014-12-05 07:08-0600\n"
+"PO-Revision-Date: 2015-02-24 18:41-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: Deutsch <weberp-translation@lists.sourceforge.net>\n"
 "Language: de_DE\n"
@@ -14222,7 +14222,7 @@ msgstr "Es gab keine Einträge zum Ausdrucken für die angegebenen Kriterien"
 
 #: GLBalanceSheet.php:395
 msgid "Statement of Financial Position"
-msgstr ""
+msgstr "Bilanz"
 
 #: GLBalanceSheet.php:399 includes/PDFDebtorBalsPageHeader.inc:17
 #: includes/PDFSupplierBalsPageHeader.inc:17
