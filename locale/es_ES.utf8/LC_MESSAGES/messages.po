@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.12.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-02-24 17:34-0600\n"
-"PO-Revision-Date: 2015-02-22 11:50-0600\n"
+"PO-Revision-Date: 2015-03-02 09:36-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -17680,7 +17680,7 @@ msgstr "Parte:"
 
 #: MRPReport.php:181
 msgid "EOQ:"
-msgstr "COE:"
+msgstr "Cantidad económica de pedido:"
 
 #: MRPReport.php:183
 msgid "On Hand:"
@@ -28173,7 +28173,7 @@ msgstr "Peso"
 
 #: SelectProduct.php:137
 msgid "EOQ"
-msgstr "Cantidad Económica para Reordenar"
+msgstr "Cantidad económica de pedido"
 
 #: SelectProduct.php:164
 msgid "No Default Price Set in Home Currency"

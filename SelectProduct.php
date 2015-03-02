@@ -92,7 +92,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 	echo '<tr>
 			<td style="width:40%" valign="top">
 			<table>'; //nested table
-	echo '<tr><th class="number">' . _('Category') . ':</th> <td colspan="2" class="select">' . $myrow['categorydescription'] , '</td></tr>';
+	echo '<tr><th class="number">' . _('Category') . ':</th> <td colspan="6" class="select">' . $myrow['categorydescription'] , '</td></tr>';
 	echo '<tr><th class="number">' . _('Item Type') . ':</th>
 			<td colspan="2" class="select">';
 	switch ($myrow['mbflag']) {
@@ -137,8 +137,6 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 			<th class="number">' . _('EOQ') . ':</th>
 			<td class="select">' . locale_number_format($myrow['eoq'], $myrow['decimalplaces']) . '</td></tr>';
 	if (in_array($PricesSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($PricesSecurity)) {
-		echo '<tr><th colspan="2">' . _('Sell Price') . ':</th>
-				<td class="select">';
 		$PriceResult = DB_query("SELECT typeabbrev,
 										price
 								FROM prices
@@ -160,6 +158,9 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 		} else {
 			$Cost = $myrow['cost'];
 		}
+		echo '<tr>
+				<th class="number">' . _('Price') . ':</th>
+				<td class="select">';
 		if (DB_num_rows($PriceResult) == 0) {
 			echo _('No Default Price Set in Home Currency') . '</td></tr>';
 			$Price = 0;
@@ -168,33 +169,18 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 			$Price = $PriceRow[1];
 			echo $PriceRow[0] . '</td>
 				<td class="select">' . locale_number_format($Price, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<th class="number">' . _('Cost') . '</th>
+				<td class="select">' . locale_number_format($Cost, $_SESSION['StandardCostDecimalPlaces']) . '</td>
 				<th class="number">' . _('Gross Profit') . '</th>
 				<td class="select">';
 			if ($Price > 0) {
-				$GP = locale_number_format(($Price - $Cost) * 100 / $Price, 1);
+				echo locale_number_format(($Price - $Cost) * 100 / $Price, $_SESSION['CompanyRecord']['decimalplaces']) . '%';
 			} else {
-				$GP = _('N/A');
+				echo _('N/A');
 			}
-			echo $GP . '%' . '</td>
+			echo '</td>
 				</tr>';
 		}
-		if ($myrow['mbflag'] == 'K' OR $myrow['mbflag'] == 'A') {
-			$CostResult = DB_query("SELECT SUM(bom.quantity * (stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost)) AS cost
-									FROM bom INNER JOIN
-										stockmaster
-									ON bom.component=stockmaster.stockid
-									WHERE bom.parent = '" . $StockID . "'
-                                    AND bom.effectiveafter <= '" . date('Y-m-d') . "'
-                                    AND bom.effectiveto > '" . date('Y-m-d') . "'");
-			$CostRow = DB_fetch_row($CostResult);
-			$Cost = $CostRow[0];
-		} else {
-			$Cost = $myrow['cost'];
-		}
-		echo '<tr>
-				<th class="number">' . _('Cost') . '</th>
-				<td class="select">' . locale_number_format($Cost, $_SESSION['StandardCostDecimalPlaces']) . '</td>
-			</tr>';
 	} //end of if PricesSecuirty allows viewing of prices
 	echo '</table>'; //end of first nested table
 	// Item Category Property mod: display the item properties
