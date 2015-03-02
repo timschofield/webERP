@@ -159,19 +159,19 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 			$Cost = $myrow['cost'];
 		}
 		echo '<tr>
-				<th class="number">' . _('Price') . ':</th>
-				<td class="select">';
+				<th class="number">' . _('Price') . ':</th>';
 		if (DB_num_rows($PriceResult) == 0) {
-			echo _('No Default Price Set in Home Currency') . '</td></tr>';
+			echo '<td class="select" colspan="6">' . _('No Default Price Set in Home Currency') . '</td>
+				</tr>';
 			$Price = 0;
 		} else {
 			$PriceRow = DB_fetch_row($PriceResult);
 			$Price = $PriceRow[1];
-			echo $PriceRow[0] . '</td>
+			echo '<td class="select">' . $PriceRow[0] . '</td>
 				<td class="select">' . locale_number_format($Price, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-				<th class="number">' . _('Cost') . '</th>
+				<th class="number">' . _('Cost') . ':</th>
 				<td class="select">' . locale_number_format($Cost, $_SESSION['StandardCostDecimalPlaces']) . '</td>
-				<th class="number">' . _('Gross Profit') . '</th>
+				<th class="number">' . _('Gross Profit') . ':</th>
 				<td class="select">';
 			if ($Price > 0) {
 				echo locale_number_format(($Price - $Cost) * 100 / $Price, $_SESSION['CompanyRecord']['decimalplaces']) . '%';
