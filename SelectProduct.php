@@ -1,5 +1,6 @@
 <?php
 /* $Id$*/
+/* Selection of items. All item maintenance, transactions and inquiries start with this script. */
 
 $PricesSecurity = 12;//don't show pricing info unless security token 12 available to user
 $SuppliersSecurity = 9; //don't show supplier purchasing info unless security token 9 available to user
@@ -174,7 +175,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 				<th class="number">' . _('Gross Profit') . ':</th>
 				<td class="select">';
 			if ($Price > 0) {
-				echo locale_number_format(($Price - $Cost) * 100 / $Price, $_SESSION['CompanyRecord']['decimalplaces']) . '%';
+				echo locale_number_format(($Price - $Cost) * 100 / $Price, 1) . '%';
 			} else {
 				echo _('N/A');
 			}
