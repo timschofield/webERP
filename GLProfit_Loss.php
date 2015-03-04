@@ -106,7 +106,7 @@ if ((!isset($_POST['FromPeriod'])
 	echo '<tr>
 			<td>' . _('Detail Or Summary').':</td>
 			<td><select name="Detail">
-					<option selected="selected" value="Summary">' . _('Summary') . '</option>
+					<option value="Summary">' . _('Summary') . '</option>
 					<option selected="selected" value="Detailed">' . _('All Accounts') . '</option>
 					</select>
 			</td>
