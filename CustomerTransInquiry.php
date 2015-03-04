@@ -152,7 +152,7 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 					$myrow['currcode'],
 					$RootPath,
 					$myrow['transno'],
-					$RootPath.'/css/'.$Theme.'/images/preview.gif');
+					$RootPath.'/css/'.$Theme.'/images/preview.png');
 
 		} elseif($_POST['TransType']==11) { /* credit notes */
 			printf($format_base .
@@ -171,7 +171,7 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 					$myrow['currcode'],
 					$RootPath,
 					$myrow['transno'],
-					$RootPath.'/css/'.$Theme.'/images/preview.gif');
+					$RootPath.'/css/'.$Theme.'/images/preview.png');
 		} else {  /* otherwise */
 			printf($format_base . '</tr>',
 					_($myrow['typename']),
