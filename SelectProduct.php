@@ -101,6 +101,11 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 			echo _('Assembly Item');
 			$Its_A_Kitset_Assembly_Or_Dummy = True;
 		break;
+        case 'G':
+            echo _('Phantom Assembly Item');
+            $Its_A_Kitset_Assembly_Or_Dummy = True;
+            $Its_A_Kitset = True;
+        break;
 		case 'K':
 			echo _('Kitset Item');
 			$Its_A_Kitset_Assembly_Or_Dummy = True;
@@ -147,7 +152,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 								AND branchcode=''
 								AND startdate <= '". Date('Y-m-d') ."' AND ( enddate >= '" . Date('Y-m-d') . "' OR enddate = '0000-00-00')
 								AND stockid='" . $StockID . "'");
-		if ($myrow['mbflag'] == 'K' OR $myrow['mbflag'] == 'A') {
+		if ($myrow['mbflag'] == 'K' OR $myrow['mbflag'] == 'A' OR $myrow['mbflag'] == 'G') {
 			$CostResult = DB_query("SELECT SUM(bom.quantity * (stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost)) AS cost
 									FROM bom INNER JOIN stockmaster
 									ON bom.component=stockmaster.stockid
