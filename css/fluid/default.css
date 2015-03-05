@@ -1,3 +1,4 @@
+/* $Id: default.css 7166 2015-02-21 21:18:59Z Joshua $*/
 /* 
 "Fluid Tabs" theme for webERP
 
@@ -389,3 +390,7 @@ list-style-image:url(bullet.gif);
 }
 #FooterVersionDiv{}
 #FooterTimeDiv{}
+.centre {
+	text-align:center;
+	/* centre class (general). */
+}

@@ -1,5 +1,5 @@
 <?php
-/* $Id: CustomerTransInquiry.php 7048 2014-12-28 09:33:08Z daintree $*/
+/* $Id: CustomerTransInquiry.php 7184 2015-03-04 00:06:20Z rchacon $*/
 
 include('includes/session.inc');
 $Title = _('Customer Transactions Inquiry');
@@ -152,7 +152,7 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 					$myrow['currcode'],
 					$RootPath,
 					$myrow['transno'],
-					$RootPath.'/css/'.$Theme.'/images/preview.gif');
+					$RootPath.'/css/'.$Theme.'/images/preview.png');
 
 		} elseif($_POST['TransType']==11) { /* credit notes */
 			printf($format_base .
@@ -171,7 +171,7 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 					$myrow['currcode'],
 					$RootPath,
 					$myrow['transno'],
-					$RootPath.'/css/'.$Theme.'/images/preview.gif');
+					$RootPath.'/css/'.$Theme.'/images/preview.png');
 		} else {  /* otherwise */
 			printf($format_base . '</tr>',
 					_($myrow['typename']),

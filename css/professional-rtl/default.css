@@ -1,3 +1,4 @@
+/* $Id: default.css 7169 2015-02-22 04:57:51Z rchacon $*/
 /*** 
 
 New "Professional RTL" Theme for WebERP
@@ -546,6 +547,10 @@ li {
 }
 #FooterTimeDiv{
 	clear:right; /* below  */
+}
+.centre {
+	text-align:center;
+	/* centre class (general). */
 }
 
 /*** END ***/

@@ -1,3 +1,4 @@
+/* $Id: default.css 7169 2015-02-22 04:57:51Z rchacon $*/
 /***
 
 New Default Theme for WebERP
@@ -447,4 +448,8 @@ textarea.texterror{
 #FooterTimeDiv{
 	float:right;
 	margin-top:15px;
+}
+.centre {
+	text-align:center;
+	/* centre class (general). */
 }

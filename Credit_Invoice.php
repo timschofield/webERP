@@ -1,5 +1,5 @@
 <?php
-/* $Id: Credit_Invoice.php 7118 2015-02-03 08:56:58Z daintree $*/
+/* $Id: Credit_Invoice.php 7187 2015-03-05 01:28:14Z vvs2012 $*/
 
 /*Functions to get the GL codes to post the transaction to */
 include('includes/GetSalesTransGLCodes.inc');
@@ -273,7 +273,7 @@ if($_SESSION['CreditItems' . $identifier]->ItemsOrdered > 0 OR isset($_POST['New
 
 /* Always display credit quantities
 NB QtyDispatched in the LineItems array is used for the quantity to credit */
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/credit.gif" title="' . _('Search') . '" alt="" />' . $Title . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/credit.png" title="' . _('Search') . '" alt="" />' . $Title . '</p>';
 
 if(!isset($_POST['ProcessCredit'])) {
 
@@ -922,7 +922,7 @@ if(isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 													'" . $CreditNo . "',
 													'" . $_SESSION['CreditItems' . $identifier]->Location . "',
 													'" . $DefaultDispatchDate . "',
-													'" . $_SESSION['UserID'] . "'
+													'" . $_SESSION['UserID'] . "',
 													'" . $_SESSION['CreditItems' . $identifier]->DebtorNo . "',
 													'" . $_SESSION['CreditItems' . $identifier]->Branch . "',
 													'" . $LocalCurrencyPrice . "',

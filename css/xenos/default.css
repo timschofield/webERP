@@ -1,3 +1,4 @@
+/* $Id: default.css 7166 2015-02-21 21:18:59Z Khwunchai $*/
 /*** 
 
 Xenos Theme
@@ -634,6 +635,10 @@ select.selecterror {
 }
 #FooterTimeDiv{
 	clear:left; /* below  */
+}
+.centre {
+	text-align:center;
+	/* centre class (general). */
 }
 
 /*** END ***/

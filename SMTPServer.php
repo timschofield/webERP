@@ -1,12 +1,16 @@
 <?php
 /* $Id: SMTPServer.php 4469 2011-01-15 02:28:37Z daintree $*/
+/* This script is <create a description for script table>. */
+
 include('includes/session.inc');
-
-$Title = _('SMTP Server details');
-
+$Title = _('SMTP Server details');// Screen identification.
+$ViewTopic = 'CreatingNewSystem';// Filename's id in ManualContents.php's TOC.
+$BookMark = 'SMTPServer';// Anchor's id in the manual's html document.
 include('includes/header.inc');
-
-echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/email.gif" title="' . _('SMTP Server') . '" alt="" />' . ' ' . _('SMTP Server Settings') . '</p>';
+echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
+	'/images/email.png" title="' .// Icon image.
+	_('SMTP Server') . '" /> ' .// Icon title.
+	_('SMTP Server Settings') . '</p>';// Page title.
 // First check if there are smtp server data or not
 
 
@@ -18,7 +22,7 @@ if (isset($_POST['submit']) AND $_POST['MailServerSetting']==1) {//If there are 
 				username='".$_POST['UserName']."',
 				password='".$_POST['Password']."',
 				auth='".$_POST['Auth']."'";
-				
+
 	$ErrMsg = _('The email setting information failed to update');
 	$DbgMsg = _('The SQL failed to update is ');
 	$result1=DB_query($sql, $ErrMsg, $DbgMsg);

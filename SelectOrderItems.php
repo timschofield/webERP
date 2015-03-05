@@ -1,5 +1,5 @@
 <?php
-/* $Id: SelectOrderItems.php 7093 2015-01-22 20:15:40Z vvs2012 $*/
+/* $Id: SelectOrderItems.php 7171 2015-02-22 17:37:31Z vvs2012 $*/
 
 include('includes/DefineCartClass.php');
 
@@ -707,10 +707,10 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		}
 		if(!empty($_POST['CustItemFlag'])){
 			$IncludeCustItem = " INNER JOIN custitem ON custitem.stockid=stockmaster.stockid
-								AND custitem.debtorno='" .  $_SESSION['Items'.$identifier]->DebtorNo . "'";
-		}else{
+								AND custitem.debtorno='" .  $_SESSION['Items'.$identifier]->DebtorNo . "' ";
+		} else {
 			$IncludeCustItem = " LEFT OUTER JOIN custitem ON custitem.stockid=stockmaster.stockid
-								AND custitem.debtorno='" .  $_SESSION['Items'.$identifier]->DebtorNo . "'";
+								AND custitem.debtorno='" .  $_SESSION['Items'.$identifier]->DebtorNo . "' ";
 		}
 
 		if ($_POST['Keywords']!='' AND $_POST['StockCode']=='') {
@@ -721,14 +721,18 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			$msg='<div class="page_help_text">' . _('Stock Category has been used in search') . '.</div>';
 		}
 		$SQL = "SELECT stockmaster.stockid,
-								stockmaster.description,
-								stockmaster.longdescription,
-								stockmaster.units
-						FROM stockmaster INNER JOIN stockcategory
-						ON stockmaster.categoryid=stockcategory.categoryid
-						WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D' OR stockcategory.stocktype='L')
-						AND stockmaster.mbflag <>'G'
-						AND stockmaster.discontinued=0 ";
+						stockmaster.description,
+						stockmaster.longdescription,
+						stockmaster.units,
+						custitem.cust_part,
+						custitem.cust_description
+				FROM stockmaster INNER JOIN stockcategory
+				ON stockmaster.categoryid=stockcategory.categoryid
+				" . $IncludeCustItem . "
+				WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D' OR stockcategory.stocktype='L')
+				AND stockmaster.mbflag <>'G'
+				AND stockmaster.discontinued=0 ";
+
 		if (isset($_POST['Keywords']) AND mb_strlen($_POST['Keywords'])>0) {
 			//insert wildcard characters in spaces
 			$_POST['Keywords'] = mb_strtoupper($_POST['Keywords']);
@@ -1729,14 +1733,14 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				</tr>
 				</table>
 				</div>';
-			echo $jsCall;
 
 		}#end if SearchResults to show
+        echo '</form>';
 	} /*end of PartSearch options to be displayed */
 	   elseif( isset($_POST['QuickEntry'])) { /* show the quick entry form variable */
 		  /*FORM VARIABLES TO POST TO THE ORDER  WITH PART CODE AND QUANTITY */
 	   	echo '<div class="page_help_text"><b>' . _('Use this screen for the '). _('Quick Entry')._(' of products to be ordered') . '</b></div><br />
-		 			<table border="1">
+		 			<table class="selection">
 					<tr>';
 			/*do not display colum unless customer requires po line number by sales order line*/
 		 	if($_SESSION['Items'.$identifier]->DefaultPOLine ==1){
@@ -1809,6 +1813,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				<div class="centre">
 					<input name="CancelOrder" type="submit" value="' . _('Cancel Whole Order') . '" onclick="return confirm(\'' . _('Are you sure you wish to cancel this entire order?') . '\');" />
 				</div>
+                </div>
 				</form>';
 		}
 	}#end of else not selecting a customer
