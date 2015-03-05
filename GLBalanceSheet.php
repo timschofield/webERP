@@ -400,7 +400,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 		_('All amounts stated in').': '. _($CurrencyName[$_SESSION['CompanyRecord']['currencydefault']]).'</p>';// Page title, reporting presentation currency and level of rounding used.
 
 	echo '<div class="invoice">
-			<table class="selection">';
+			<table class="selection" width="100%">';
 
 	if ($_POST['Detail']=='Detailed'){
 		$TableHeader = '<tr>
@@ -416,7 +416,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 							<th colspan="2">' ._('Last Year') . '</th>
 						</tr>';
 	}
-
+/* echo '<thead>' . $TableHeader . '<thead><tbody>';// thead used in conjunction with tbody enable scrolling of the table body independently of the header and footer. Also, when printing a large table that spans multiple pages, these elements can enable the table header to be printed at the top of each page. */
 
 	$k=0; //row colour counter
 	$Section='';
@@ -704,20 +704,18 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 		<td></td>
 		<td><hr /></td>
 		</tr>';
-
+/*	echo '</tbody>';// See comment at the begin of the table.*/
 	echo '</table>';
     echo '</div>';
-	echo '<br />';
-/*	<div class="centre noprint"><input type="submit" name="SelectADifferentPeriod" value="'._('Select A Different Balance Date').'" /></div>';*/
-
-echo '<div class="centre noprint">'.
+	echo '<br />
+		<div class="centre noprint">'.
 			'<button onclick="javascript:window.print()" type="button"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 				'/images/printer.png" /> ' . _('Print This') . '</button>'.// "Print This" button.
 			'<button name="SelectADifferentPeriod" type="submit" value="'. _('Select A Different Period') .'"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 				'/images/gl.png" /> ' . _('Select A Different Balance Date') . '</button>'.// "Select A Different Period" button.
 			'<button formaction="index.php" type="submit"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 				'/images/previous.png" /> ' . _('Return') . '</button>'.// "Return" button.
-	'</div>';
+		'</div>';
 
     echo '</div></form>';
 }

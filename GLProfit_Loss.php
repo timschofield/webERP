@@ -625,7 +625,7 @@ if ((!isset($_POST['FromPeriod'])
 	/*show a table of the accounts info returned by the SQL
 	Account Code ,   Account Name , Month Actual, Month Budget, Period Actual, Period Budget */
 
-	echo '<table class="selection">';
+	echo '<table class="selection" width="100%">';
 
 	if ($_POST['Detail']=='Detailed'){
 		$TableHeader = '<tr>
@@ -643,7 +643,7 @@ if ((!isset($_POST['FromPeriod'])
 							<th colspan="2">' . _('Last Year') . '</th>
 						</tr>';
 	}
-
+/* echo '<thead>' . $TableHeader . '<thead><tbody>';// thead used in conjunction with tbody enable scrolling of the table body independently of the header and footer. Also, when printing a large table that spans multiple pages, these elements can enable the table header to be printed at the top of each page. */
 
 	$j = 1;
 	$k=0; //row colour counter
@@ -1301,6 +1301,7 @@ if ((!isset($_POST['FromPeriod'])
 			<td colspan="2"></td>
 			<td colspan="6"><hr /></td>
 		</tr>';
+/*	echo '</tbody>';// See comment at the begin of the table.*/
 	echo '</table>';
 	echo '<br />
 		<div class="centre noprint">'.
