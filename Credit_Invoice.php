@@ -922,7 +922,7 @@ if(isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 													'" . $CreditNo . "',
 													'" . $_SESSION['CreditItems' . $identifier]->Location . "',
 													'" . $DefaultDispatchDate . "',
-													'" . $_SESSION['UserID'] . "'
+													'" . $_SESSION['UserID'] . "',
 													'" . $_SESSION['CreditItems' . $identifier]->DebtorNo . "',
 													'" . $_SESSION['CreditItems' . $identifier]->Branch . "',
 													'" . $LocalCurrencyPrice . "',

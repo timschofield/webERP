@@ -1,5 +1,6 @@
 webERP Change Log
 
+3/4/15 Vitaly: Added missing comma to SQL statement in Credit_Invoice.php
 3/3/15 RChacon: Adds cross.png to all css images for use in Reset or Cancel buttons as needed.
 2/3/15 RChacon: Completes table-row colums, regroups price, cost and gross profit in one table-row, uses company decimal places for gross profit in SelectProduct.php.
 25/2/15 TurboPT: Fix Z_ImportSupplier bug reported in forum by: Bill Schlaerth.
