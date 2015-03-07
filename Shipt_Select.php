@@ -126,7 +126,7 @@ if (!isset($ShiptRef) or $ShiptRef==""){
 
 	echo '</select>';
 	echo ' <select name="OpenOrClosed">';
-	if ($_POST['OpenOrClosed']==1){
+	if (isset($_POST['OpenOrClosed']) AND $_POST['OpenOrClosed']==1){
 		echo '<option selected="selected" value="1">' .  _('Closed Shipments Only')  . '</option>';
 		echo '<option value="0">' .  _('Open Shipments Only')  . '</option>';
 	} else {
