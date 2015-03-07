@@ -275,7 +275,7 @@ textarea.texterror{
 /*** CANVAS ***/
 
 #CanvasDiv{
-	background:#588BB6;	
+	background:#588BB6;
 }
 
 /*** HEADER ***/
@@ -344,11 +344,11 @@ textarea.texterror{
 	white-space:nowrap;
 }
 #MainMenuDiv ul{
-	margin:0; 
+	margin:0;
 	padding:0;
 }
 #MainMenuDiv li{
-	list-style:none; 
+	list-style:none;
 }
 
 #MainMenuDiv li a{
@@ -448,6 +448,11 @@ textarea.texterror{
 #FooterTimeDiv{
 	float:right;
 	margin-top:15px;
+}
+#Report {
+	/* Division id for reports. */}
+#Report table {
+	/* Body of a report formatted with table tag. */
 }
 .centre {
 	text-align:center;

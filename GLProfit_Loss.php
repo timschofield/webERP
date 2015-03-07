@@ -33,7 +33,7 @@ if ((!isset($_POST['FromPeriod'])
 	. _('webERP is an "accrual" based system (not a "cash based" system).  Accrual systems include items when they are invoiced to the customer, and when expenses are owed based on the supplier invoice date.') . '</div>';
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
+	echo '<div>';// div class=?
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (Date('m') > $_SESSION['YearEnd']){
@@ -564,7 +564,7 @@ if ((!isset($_POST['FromPeriod'])
 
 	include('includes/header.inc');
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
+	echo '<div>';// div class=?
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 			<input type="hidden" name="FromPeriod" value="' . $_POST['FromPeriod'] . '" />
 			<input type="hidden" name="ToPeriod" value="' . $_POST['ToPeriod'] . '" />';
@@ -612,6 +612,7 @@ if ((!isset($_POST['FromPeriod'])
 
 	// Page title as IAS1 numerals 10 and 51:
 	include_once('includes/CurrenciesArray.php');// Array to retrieve currency name.
+	echo '<div id="Report">';// Division to identify the report block.
 	echo '<p class="page_title_text"><img alt="" class="noprint" src="'.$RootPath.'/css/'.$Theme.
 		'/images/gl.png" title="' .// Icon image.
 		_('Statement of Comprehensive Income') . '" /> ' .// Icon title.
@@ -619,13 +620,13 @@ if ((!isset($_POST['FromPeriod'])
 //		_('Statement of Comprehensive Income') . '<br />' .// Page title, reporting statement.
 		stripslashes($_SESSION['CompanyRecord']['coyname']) . '<br />' .// Page title, reporting entity.
 		_('For') . ' ' . $NumberOfMonths . ' ' . _('months to') . ' ' . $PeriodToDate . '<br />' .// Page title, reporting period.
-//		_('From') . ' ' . $PeriodFromDate? . ' ' . _('to') . ' ' . $PeriodToDate . '<br />' .// Page title, reporting period. ??????????
+//		_('From') . ' ' . $PeriodFromDate? . ' ' . _('to') . ' ' . $PeriodToDate . '<br />' .// Page title, reporting period. ???
 		_('All amounts stated in').': '. _($CurrencyName[$_SESSION['CompanyRecord']['currencydefault']]).'</p>';// Page title, reporting presentation currency and level of rounding used.
 
 	/*show a table of the accounts info returned by the SQL
 	Account Code ,   Account Name , Month Actual, Month Budget, Period Actual, Period Budget */
 
-	echo '<table class="selection" width="100%">';
+	echo '<table class="selection">';
 
 	if ($_POST['Detail']=='Detailed'){
 		$TableHeader = '<tr>
@@ -1303,17 +1304,18 @@ if ((!isset($_POST['FromPeriod'])
 		</tr>';
 /*	echo '</tbody>';// See comment at the begin of the table.*/
 	echo '</table>';
+	echo '</div>';// div id="Report".
 	echo '<br />
 		<div class="centre noprint">'.
 			'<button onclick="javascript:window.print()" type="button"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 				'/images/printer.png" /> ' . _('Print This') . '</button>'.// "Print This" button.
 			'<button name="SelectADifferentPeriod" type="submit" value="'. _('Select A Different Period') .'"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 				'/images/gl.png" /> ' . _('Select A Different Period') . '</button>'.// "Select A Different Period" button.
-			'<button formaction="index.php" type="submit"><img alt="" src="'.$RootPath.'/css/'.$Theme.
+			'<button formaction="index.php?Application=GL" type="submit"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 				'/images/previous.png" /> ' . _('Return') . '</button>'.// "Return" button.
 		'</div>';
 }
-echo '</div>';
+echo '</div>';// div class=?
 echo '</form>';
 include('includes/footer.inc');
 

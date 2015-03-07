@@ -572,6 +572,11 @@ display:table-cell;
 	float:right;
 	margin-top:17px;
 }
+#Report {
+	/* Division id for reports. */}
+#Report table {
+	/* Body of a report formatted with table tag. */
+}
 .centre {
 	text-align:center;
 	/* centre class (general). */

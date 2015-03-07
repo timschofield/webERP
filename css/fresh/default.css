@@ -1,5 +1,5 @@
 /* $Id$*/
-/*** 
+/***
 
 New "Fresh" Theme for WebERP
 
@@ -10,10 +10,10 @@ by Hindra Joshua
 Based from the previous theme "SilverWolf"
 Credits to the original authors.
 
-NOTE: 
+NOTE:
 This CSS is not yet optimized. Some styles maybe 'redundant' or 'unused',
 but for the obvious one it will be cleaned up.
-To optimized the rest we should examined the whole codes! That would be for 
+To optimized the rest we should examined the whole codes! That would be for
 the next project. :)
 
 ***/
@@ -330,14 +330,14 @@ select.selecterror {
     display:inline; /* items are inline */
 }
 
-/*** links as buttons!!! clicking anywhere in the button will activate 
+/*** links as buttons!!! clicking anywhere in the button will activate
      the link!!! ***HJ***/
-	 
+
 #QuickMenuDiv li a{
 	background:#B4BB86;
     border:thin outset #5A5F00;
     color:#5A5F00;
-    padding:8px;	
+    padding:8px;
 }
 #QuickMenuDiv li a:hover{
 	background:#B4BB86;
@@ -377,7 +377,7 @@ background:#E0F3B1;
 #MainMenuDiv{
 	float:left; /* REQUIRED: to the left side */
 	white-space:nowrap; /* don't break text */
-	text-align:center; 
+	text-align:center;
 	width:11%;
 	background:#617C4F;
 }
@@ -400,12 +400,12 @@ background:#E0F3B1;
 	text-decoration:none;
 	padding:3px;
 	border:thin inset #617C4F;
-	background:#5A5F00;	
+	background:#5A5F00;
 }
 #MainMenuDiv .main_menu_selected a{ /* the selected button */
-	border:thin inset #5A5F00;	
+	border:thin inset #5A5F00;
 	background:#5A5F00;
-	color:white;	
+	color:white;
 }
 
 /*** BODY - SUB MENU ***/
@@ -435,7 +435,7 @@ background:#E0F3B1;
 #SubMenuDiv li{
 	/*list-style:none;*/ /* REQUIRED: hide the bullets */
 	padding:2px;
-	background:#E0F3B1;	
+	background:#E0F3B1;
 }
 #SubMenuDiv li img{
 	vertical-align:middle; /* verticall align icon with the text */
@@ -468,7 +468,7 @@ background:#E0F3B1;
 /*    float:left;*/
 /*    width:32.5%;
 	border:thin solid black;*/
-	
+
 }
 .menu_group_item p {
 	color: #00f; /* This is the color for bullets, I like it to be the same as the anchor color, but it's up to you */
@@ -480,14 +480,14 @@ background:#E0F3B1;
 
 #FooterDiv{
 	clear:both; /* REQUIRED */
-    overflow:hidden;	
+    overflow:hidden;
     background:#C9D392;
 }
 #FooterWrapDiv{
 	overflow:hidden;
 	padding:3px;
 }
-#FooterLogoDiv{ 
+#FooterLogoDiv{
 	float:right; /* right side */
 	background:white;
     border-radius:8px;
@@ -502,6 +502,11 @@ background:#E0F3B1;
 }
 #FooterTimeDiv{
 	clear:left; /* below  */
+}
+#Report {
+	/* Division id for reports. */}
+#Report table {
+	/* Body of a report formatted with table tag. */
 }
 .centre {
 	text-align:center;

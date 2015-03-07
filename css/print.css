@@ -100,4 +100,11 @@ body, #CanvasDiv {
 	padding:0;
 }
 
+#Report {
+	/* Division id for reports. */}
+#Report table {
+	width:100%;
+	/* Expands the body of the report to use the full width of the page. */
+}
+
 }
