@@ -1,5 +1,5 @@
 webERP Change Log
-
+07/03/15 Exson: Fixed undefined index noise in ShipmentCosting.php.
 07/03/15 Exson: Fixed property ShiptCounter non defined bug in DefineSuppTransClass.php.
 07/03/15 Exson: Fixed the undefine index OpenOrClose noise in Shipt_Select.php.
 07/03/15 Exson: Fixed undefine index InputError noise in SupplierInvoice.php.
