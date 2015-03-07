@@ -36,6 +36,7 @@ Class SuppTrans {
 	var $TaxGroupDescription;
 	var $Taxes;
 	var $Hold;
+	var $ShiptCounter;
 
 	function SuppTrans(){
 	/*Constructor function initialises a new Supplier Transaction object */
@@ -45,6 +46,7 @@ Class SuppTrans {
 		$this->Contracts = array();
 		$this->Assets = array();
 		$this->Taxes = array();
+		$ShiptCounter = 0;
 	}
 
 	function GetTaxes () {
