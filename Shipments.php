@@ -36,8 +36,6 @@ if (isset($_GET['SelectedShipment'])){
 
        $_SESSION['Shipment'] = new Shipment;
 
-       $_SESSION['Shipment']->GLLink = $_SESSION['CompanyRecord']['gllink_stock'];
-
 /*read in all the guff from the selected shipment into the Shipment Class variable - the class code is included in the main script before this script is included  */
 
        $ShipmentHeaderSQL = "SELECT shipments.supplierid,
