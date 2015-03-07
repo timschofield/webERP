@@ -54,7 +54,7 @@ echo '<tr>
 		<td><select tabindex="3" name="SelectedUser">
 			<option value="ALL">' . _('All') . '</option>';
 while ($Users = DB_fetch_row($UserResult)) {
-	if (isset($_POST['SelectedUser']) and $users[0]==$_POST['SelectedUser']) {
+	if (isset($_POST['SelectedUser']) and $Users[0]==$_POST['SelectedUser']) {
 		echo '<option selected="selected" value="' . $Users[0] . '">' . $Users[0] . '</option>';
 	} else {
 		echo '<option value="' . $Users[0] . '">' . $Users[0] . '</option>';
