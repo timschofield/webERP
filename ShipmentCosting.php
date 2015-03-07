@@ -399,7 +399,7 @@ if (DB_num_rows($LineItemsResult) > 0) {
 				  $result = DB_query($sql, $ErrMsg,'',TRUE);
 						 }
 
-				if ( $_POST['UpdateCost'] == 'Yes' ){ /*Only ever a standard costing option
+				if ( isset($_POST['UpdateCost']) AND $_POST['UpdateCost'] == 'Yes' ){ /*Only ever a standard costing option
 												  Weighted average costing implies cost updates taking place automatically */
 
 					$QOHResult = DB_query("SELECT SUM(quantity)
@@ -705,7 +705,7 @@ if ( isset($_POST['Close']) ){ /* OK do the shipment close journals */
 		echo '<br />';
 		prnMsg ( _('All variances were posted to the general ledger') );
 	}
-	If ($_POST['UpdateCost']=='Yes'){
+	If (isset($_POST['UpdateCost']) AND $_POST['UpdateCost']=='Yes'){
 		echo '<br />';
 		prnMsg ( _('All shipment items have had their standard costs updated') );
 	}
