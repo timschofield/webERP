@@ -1,5 +1,6 @@
 webERP Change Log
 
+07/03/15 Exson: Fixed typo in AuditTrail.php.
 07/03/15 Exson: Remove properties $_SESSION['Shipment']->GLLink which never been defined in Shipments.php.
 07/03/15: Exson: Change login date of users without login record to 'No login record' instead of today. It's very confusion.
 07/03/15 Exson: Fixed order value error that should be value undelivered instead of uncompleted line value and some notice noise in SelectSalesOrder.php.
