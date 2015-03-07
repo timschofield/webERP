@@ -327,7 +327,7 @@ if (!isset($SelectedUser)) {
 		}
 
 	if ($myrow[8]=='') {
-		$LastVisitDate = Date($_SESSION['DefaultDateFormat']);
+		$LastVisitDate = _('No login record');
 	} else {
 		$LastVisitDate = ConvertSQLDate($myrow[8]);
 	}
