@@ -1,5 +1,6 @@
 webERP Change Log
 
+08/03/15 Vitaly: Fit HTML view of invoices to one screen
 08/03/15 Exson: Fixed undefined index noise in PO_Items.php.
 07/03/15 RChacon: Deletes class="invoice" (it does not exist in css). Creates division id="Report" to identify the report block. Moves full width style to print.css (thanks Tim Schofield).
 07/03/15 Exson: Fixed undefined index noise in ShipmentCosting.php.
@@ -10,8 +11,8 @@ webERP Change Log
 07/03/15 Exson: Remove properties $_SESSION['Shipment']->GLLink which never been defined in Shipments.php.
 07/03/15: Exson: Change login date of users without login record to 'No login record' instead of today. It's very confusion.
 07/03/15 Exson: Fixed order value error that should be value undelivered instead of uncompleted line value and some notice noise in SelectSalesOrder.php.
-3/4/15 Vitaly: Display Phantom assembly type correctly in SelectProduct.php
-3/4/15 Vitaly: Added missing comma to SQL statement in Credit_Invoice.php
+04/03/15 Vitaly: Display Phantom assembly type correctly in SelectProduct.php
+04/03/15 Vitaly: Added missing comma to SQL statement in Credit_Invoice.php
 3/3/15 RChacon: Adds cross.png to all css images for use in Reset or Cancel buttons as needed.
 2/3/15 RChacon: Completes table-row colums, regroups price, cost and gross profit in one table-row, uses company decimal places for gross profit in SelectProduct.php.
 25/2/15 TurboPT: Fix Z_ImportSupplier bug reported in forum by: Bill Schlaerth.
