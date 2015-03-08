@@ -1,5 +1,6 @@
 webERP Change Log
 
+08/03/15 Exson: Fixed undefined index noise in PO_Items.php.
 07/03/15 RChacon: Deletes class="invoice" (it does not exist in css). Creates division id="Report" to identify the report block. Moves full width style to print.css (thanks Tim Schofield).
 07/03/15 Exson: Fixed undefined index noise in ShipmentCosting.php.
 07/03/15 Exson: Fixed property ShiptCounter non defined bug in DefineSuppTransClass.php.
