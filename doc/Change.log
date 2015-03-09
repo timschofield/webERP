@@ -1,5 +1,6 @@
 webERP Change Log
 
+09/03/15 Vitaly: Page refresh when credit type changes in Credit_Invoce.php
 09/03/15 RChacon: In DailyBankTransactions.php: Improves page_title_text. Orders by banktrans.transdate ascending and banktrans.banktransid ascending. Adds division to identify the report block. Groups table-header cells inside thead tags. Groups table-data cells inside tbody tags. Adds th.text class to left align. Adds "Print This" and "Return" buttons with icon.
 09/03/15 Exson: Fixed undefined index noise of $_POST['SupplierContact'] in PO_Header.php. 
 08/03/15 Vitaly: Fit HTML view of invoices to one screen

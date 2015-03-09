@@ -166,7 +166,7 @@ if(!isset($_GET['InvoiceNumber']) AND !$_SESSION['ProcessingCredit']) {
 														$myrow['controlled'],
 														$myrow['serialised'],
 														$myrow['decimalplaces'],
-														$myrow['narrative'],
+														str_replace("\\r\\n", " ", $myrow['narrative']),
 														'No',
 														-1,
 														$myrow['taxcatid'],
@@ -275,12 +275,11 @@ if($_SESSION['CreditItems' . $identifier]->ItemsOrdered > 0 OR isset($_POST['New
 NB QtyDispatched in the LineItems array is used for the quantity to credit */
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/credit.png" title="' . _('Search') . '" alt="" />' . $Title . '</p>';
 
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier=' . $identifier . '" method="post">';
+echo '<div>';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+
 if(!isset($_POST['ProcessCredit'])) {
-
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier=' . $identifier . '" method="post">';
-    echo '<div>';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-
 
 	echo '<table cellpadding="2" class="selection">';
 	echo '<tr><th colspan="13">';
@@ -1517,7 +1516,7 @@ if(isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 		<table class="selection">
 		<tr>
 			<td>' . _('Credit Note Type') . '</td>
-			<td><select name="CreditType" tabindex="'.$tabindex++.'">';
+			<td><select name="CreditType" tabindex="'.$tabindex++.'" onchange="ReloadForm(Update)">';
 
 	if(!isset($_POST['CreditType']) OR $_POST['CreditType']=='Return') {
 		echo '<option selected="selected" value="Return">' . _('Goods returned to store') . '</option>';
