@@ -81,10 +81,16 @@ th.descending:after {
 	visibility: visible;
 }
 th.number{
-	text-align:right;
-	font-weight:normal;
 	background-color:#B06161;
 	color:white;
+	font-weight:normal;
+	text-align:right;
+}
+th.text{
+	background-color:#B06161;
+	color:white;
+	font-weight:normal;
+	text-align:left;
 }
 td {
 	text-align:left;

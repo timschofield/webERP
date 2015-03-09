@@ -100,11 +100,18 @@ th { /* table heading */
 	text-align: center;
 }
 th.number {
-	font-weight: normal;
-	font-size: 10px;
 	background-color: #cccce5;
 	color: #330000;
+	font-size: 10px;
+	font-weight: normal;
 	text-align: right;
+}
+th.text {
+	background-color: #cccce5;
+	color: #330000;
+	font-size: 10px;
+	font-weight: normal;
+	text-align: left;
 }
 th.ascending {
   cursor: s-resize;

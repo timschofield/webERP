@@ -52,10 +52,16 @@ th{ /* table heading */
 	text-align:center;
 }
 th.number{
-	font-weight:normal;
 	background-color:#cccce5;
 	color:#330000;
+	font-weight:normal;
 	text-align:right;
+}
+th.text{
+	background-color:#cccce5;
+	color:#330000;
+	font-weight:normal;
+	text-align:left;
 }
 th.ascending {
   cursor: s-resize;
@@ -91,6 +97,9 @@ td.select{
 }
 td.number{
 	text-align:right;
+}
+td.text{
+	text-align:left;
 }
 .centre{ /* used */
 	margin:0 auto;

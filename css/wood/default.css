@@ -81,10 +81,16 @@ th { /* table headers */
 	text-align: center;
 }
 th.number {
-	text-align: right;
-	font-weight: normal;
 	background-color: #800000;
 	color: white;
+	font-weight: normal;
+	text-align: right;
+}
+th.text {
+	background-color: #800000;
+	color: white;
+	font-weight: normal;
+	text-align: left;
 }
 th.ascending {
   cursor: s-resize;

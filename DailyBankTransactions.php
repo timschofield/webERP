@@ -1,24 +1,14 @@
 <?php
-/* $Id: DailyBankTransactions.php 4556 2011-04-26 11:03:36Z daintree $ */
-/* This script allows you to view all bank transactions for a selected date range, and the inquiry can be filtered by matched or unmatched transactions, or all transactions can be chosen. */
+/* $Id: DailyBankTransactions.php 4556 2011-04-26 11:03:36Z daintree $*/
+/* Allows you to view all bank transactions for a selected date range, and the inquiry can be filtered by matched or unmatched transactions, or all transactions can be chosen. */
 
 include('includes/session.inc');
-$Title = _('Daily Bank Transactions');// Screen identificator.
+$Title = _('Daily Bank Transactions');// Screen identification.
 $ViewTopic = 'GeneralLedger';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'DailyBankTransactions';// Anchor's id in the manual's html document.
 include('includes/header.inc');
-echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
-	'/images/bank.png" title="' .
-	_('Bank Transactions Inquiry') . '" /> ' .// Icon title.
-	_('Bank Transactions Inquiry') . '</p>';// Page title.
 
 if (!isset($_POST['Show'])) {
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-    echo '<div>';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-
-	echo '<table class="selection">';
-
 	$SQL = "SELECT 	bankaccountname,
 					bankaccounts.accountcode,
 					bankaccounts.currcode
@@ -33,6 +23,16 @@ if (!isset($_POST['Show'])) {
 	$DbgMsg = _('The SQL used to retrieve the bank accounts was');
 	$AccountsResults = DB_query($SQL,$ErrMsg,$DbgMsg);
 
+	echo '<p class="page_title_text"><img alt="" class="noprint" src="'.$RootPath.'/css/'.$Theme.
+		'/images/bank.png" title="' .// Icon image.
+		_('Bank Transactions Inquiry') . '" /> ' .// Icon title.
+		_('Bank Transactions Inquiry') . '</p>';// Page title.
+
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+    echo '<div>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+
+	echo '<table class="selection">';
 	echo '<tr>
 			<td>' . _('Bank Account') . ':</td>
 			<td><select name="BankAccount">';
@@ -68,11 +68,11 @@ if (!isset($_POST['Show'])) {
 		</tr>
 		<tr>
 			<td>' . _('Show Transactions') . '</td>
-				<td><select name="ShowType">
-							<option value="All">' . _('All') . '</option>
-							<option value="Unmatched">' . _('Unmatched') . '</option>
-							<option value="Matched">' . _('Matched') . '</option>
-				</select></td>
+			<td><select name="ShowType">
+				<option value="All">' . _('All') . '</option>
+				<option value="Unmatched">' . _('Unmatched') . '</option>
+				<option value="Matched">' . _('Matched') . '</option>
+			</select></td>
 			</tr>
 		</table>
 		<br />
@@ -90,7 +90,6 @@ if (!isset($_POST['Show'])) {
 				ON bankaccounts.currcode = currencies.currabrev
 			WHERE bankaccounts.accountcode='" . $_POST['BankAccount'] . "'";
 	$BankResult = DB_query($SQL,_('Could not retrieve the bank account details'));
-
 
 	$sql="SELECT 	banktrans.currcode,
 					banktrans.amount,
@@ -112,28 +111,38 @@ if (!isset($_POST['Show'])) {
 				WHERE bankact='".$_POST['BankAccount']."'
 					AND transdate>='" . FormatDateForSQL($_POST['FromTransDate']) . "'
 					AND transdate<='" . FormatDateForSQL($_POST['ToTransDate']) . "'
-				ORDER BY banktrans.transdate";
+				ORDER BY banktrans.transdate ASC, banktrans.banktransid ASC";
 	$result = DB_query($sql);
+
 	if (DB_num_rows($result)==0) {
+		echo '<p class="page_title_text"><img alt="" class="noprint" src="'.$RootPath.'/css/'.$Theme.
+			'/images/bank.png" title="' .// Icon image.
+			_('Bank Transactions Inquiry') . '" /> ' .// Icon title.
+			_('Bank Transactions Inquiry') . '</p>';// Page title.
 		prnMsg(_('There are no transactions for this account in the date range selected'), 'info');
 	} else {
 		$BankDetailRow = DB_fetch_array($BankResult);
+		echo '<div id="Report">';// Division to identify the report block.
+		echo '<p class="page_title_text"><img alt="" class="noprint" src="'.$RootPath.'/css/'.$Theme.
+			'/images/bank.png" title="' .// Icon image.
+			_('Bank Transactions Inquiry') . '" /> ' .// Icon title.
+			_('Account Transactions For').'<br />'.$BankDetailRow['bankaccountname'].'<br />'.
+			_('Between').' '.$_POST['FromTransDate'] . ' ' . _('and') . ' ' . $_POST['ToTransDate'] . '</p>';// Page title.*/
 		echo '<table class="selection">
-				<tr>
-					<th colspan="10"><h3>' . _('Account Transactions For').' '.$BankDetailRow['bankaccountname'].' '._('Between').' '.$_POST['FromTransDate'] . ' ' . _('and') . ' ' . $_POST['ToTransDate'] . '</h3></th>
-				</tr>
+			<thead>
 				<tr>
 					<th>' . ('Date') . '</th>
-					<th>' . _('Transaction type') . '</th>
-					<th>' . _('Number') . '</th>
-					<th>' . _('Type') . '</th>
-					<th>' . _('Reference') . '</th>
-					<th>' . _('Amount in').' '.$BankDetailRow['currcode'] . '</th>
-					<th>' . _('Running Total').' '.$BankDetailRow['currcode'] . '</th>
-					<th>' . _('Amount in').' '.$_SESSION['CompanyRecord']['currencydefault'] . '</th>
-					<th>' . _('Running Total').' '.$_SESSION['CompanyRecord']['currencydefault'] . '</th>
-					<th>' . _('Cleared') . '</th>
-				</tr>';
+					<th class="text">' . _('Transaction type') . '</th>
+					<th class="number">' . _('Number') . '</th>
+					<th class="text">' . _('Type') . '</th>
+					<th class="text">' . _('Reference') . '</th>
+					<th class="number">' . _('Amount in').' '.$BankDetailRow['currcode'] . '</th>
+					<th class="number">' . _('Running Total').' '.$BankDetailRow['currcode'] . '</th>
+					<th class="number">' . _('Amount in').' '.$_SESSION['CompanyRecord']['currencydefault'] . '</th>
+					<th class="number">' . _('Running Total').' '.$_SESSION['CompanyRecord']['currencydefault'] . '</th>
+					<th class="number">' . _('Cleared') . '</th>
+				</tr>
+			</thead><tbody>';
 
 		$AccountCurrTotal=0;
 		$LocalCurrTotal =0;
@@ -143,14 +152,14 @@ if (!isset($_POST['Show'])) {
 			$AccountCurrTotal += $myrow['amount'];
 			$LocalCurrTotal += $myrow['amount']/$myrow['functionalexrate']/$myrow['exrate'];
 
-                        if ($myrow['amount']==$myrow['amountcleared']) {
-                           $Matched=_('Yes');
-                        } else {
-                           $Matched=_('No');
-                        }
+			if ($myrow['amount']==$myrow['amountcleared']) {
+				$Matched=_('Yes');
+			} else {
+				$Matched=_('No');
+			}
 
 			echo '<tr>
-					<td>' .  ConvertSQLDate($myrow['transdate']) . '</td>
+					<td class="centre">' .  ConvertSQLDate($myrow['transdate']) . '</td>
 					<td>' . _($myrow['typename']) . '</td>
 					<td class="number"><a href="' . $RootPath . '/GLTransInquiry.php?TypeID=' . $myrow['typeid'] . '&amp;TransNo=' . $myrow['transno'] . '">' . $myrow['transno'] . '</a></td>
 					<td>' . $myrow['banktranstype'] . '</td>
@@ -162,18 +171,25 @@ if (!isset($_POST['Show'])) {
 					<td class="number">' . $Matched . '</td>
 				</tr>';
 		}
-		echo '</table>';
+		echo '</tbody></table>';
+		echo '</div>';// div id="Report".
 	} //end if no bank trans in the range to show
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-              <div>
-                   <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-                   <br />
-                   <div class="centre">
-                        <input type="submit" name="Return" value="' . _('Select Another Date'). '" />
-                   </div>
-             </div>
-             </form>';
+			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+			<br />
+			<div class="centre noprint">'.
+				'<button onclick="javascript:window.print()" type="button"><img alt="" src="'.$RootPath.'/css/'.$Theme.
+					'/images/printer.png" /> ' .
+					_('Print This') . '</button>'.// "Print This" button.
+				'<button name="SelectADifferentPeriod" type="submit" value="'. _('Select A Different Period') .'"><img alt="" src="'.$RootPath.'/css/'.$Theme.
+					'/images/gl.png" /> ' .
+					_('Select Another Date') . '</button>'.// "Select A Different Period" button.
+				'<button formaction="index.php?Application=GL" type="submit"><img alt="" src="'.$RootPath.'/css/'.$Theme.
+					'/images/previous.png" /> ' .
+					_('Return') . '</button>'.// "Return" button.
+			'</div>
+		</form>';
 }
 include('includes/footer.inc');
 ?>

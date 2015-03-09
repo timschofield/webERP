@@ -97,10 +97,16 @@ th.descending:after {
 	visibility: visible;
 }
 th.number {
-	text-align: right;
-	font-weight: normal;
 	background-color: skyblue;
 	color: white;
+	font-weight: normal;
+	text-align: right;
+}
+th.text {
+	background-color: skyblue;
+	color: white;
+	font-weight: normal;
+	text-align: left;
 }
 td {
 	font-family: Arial, Verdana, Helvetica, sans-serif;

@@ -70,10 +70,16 @@ th {
 	text-align: center;
 }
 th.number {
-	text-align: right;
-	font-weight: normal;
 	background-color: #ccc;
 	color: #330000;
+	font-weight: normal;
+	text-align: right;
+}
+th.text {
+	background-color: #ccc;
+	color: #330000;
+	font-weight: normal;
+	text-align: left;
 }
 th.ascending {
   cursor: s-resize;

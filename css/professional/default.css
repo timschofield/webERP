@@ -121,10 +121,16 @@ th.descending:after {
 	visibility: visible;
 }
 th.number {
-	font-weight: normal;
 	background-color: #cccce5;
 	color: #330000;
+	font-weight: normal;
 	text-align: right;
+}
+th.text {
+	background-color: #cccce5;
+	color: #330000;
+	font-weight: normal;
+	text-align: left;
 }
 div.error {
 	background-color:#fddbdb;

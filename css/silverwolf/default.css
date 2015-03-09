@@ -70,11 +70,19 @@ th{
 	vertical-align:middle;
 }
 th.number{
-	font-weight:normal;
 	background-color:#cccce5;
-	font-size:100%;
 	color:#300;
+	font-size:100%;
+	font-weight:normal;
 	text-align:right;
+	vertical-align:middle;
+}
+th.text{
+	background-color:#cccce5;
+	color:#300;
+	font-size:100%;
+	font-weight:normal;
+	text-align:left;
 	vertical-align:middle;
 }
 th.ascending {

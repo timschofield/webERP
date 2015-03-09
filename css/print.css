@@ -60,6 +60,11 @@ a {
 	/* number class (general). */
 }
 
+.text {
+	text-align:left;
+	/* number class (general). */
+}
+
 .page_title_text {
 	font-weight:bold;
 	font-size: 207%;
