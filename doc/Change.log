@@ -1,5 +1,6 @@
 webERP Change Log
 
+09/03/15 Exson: Fixed undefined index noise of $_POST['SupplierContact'] in PO_Header.php. 
 08/03/15 Vitaly: Fit HTML view of invoices to one screen
 08/03/15 Exson: Fixed undefined index noise in PO_Items.php.
 07/03/15 RChacon: Deletes class="invoice" (it does not exist in css). Creates division id="Report" to identify the report block. Moves full width style to print.css (thanks Tim Schofield).
