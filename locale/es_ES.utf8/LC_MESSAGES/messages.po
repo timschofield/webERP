@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.12.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-02-24 17:34-0600\n"
-"PO-Revision-Date: 2015-03-02 09:36-0600\n"
+"PO-Revision-Date: 2015-03-09 16:56-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -18,6 +18,7 @@ msgstr ""
 "X-Generator: Poedit 1.5.4\n"
 "X-Launchpad-Export-Date: 2011-05-24 09:54+0000\n"
 "X-Poedit-SourceCharset: UTF-8\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: AccountGroups.php:6 includes/MainMenuLinksArray.php:391
 msgid "Account Groups"
@@ -3145,7 +3146,7 @@ msgstr "Mostrar todos:"
 
 #: BankMatching.php:146 BankMatching.php:149
 msgid "Show unmatched"
-msgstr "Mostrar no conciliados:"
+msgstr "Mostrar no conciliados"
 
 #: BankMatching.php:146 BankMatching.php:149 PrintCheque.php:52
 #: ReverseGRN.php:105 includes/PDFCustomerListPageHeader.inc:46
@@ -3465,11 +3466,11 @@ msgstr ""
 
 #: BankReconciliation.php:389 BankReconciliation.php:397
 msgid "Match off cleared payments"
-msgstr "Conciliar los Pagos pasados por el banco"
+msgstr "Conciliar los pagos pasados por el banco"
 
 #: BankReconciliation.php:392 BankReconciliation.php:400
 msgid "Match off cleared deposits"
-msgstr "Conciliar los ingresos pasados por el banco"
+msgstr "Conciliar los depósitos pasados por el banco"
 
 #: COGSGLPostings.php:7
 msgid "Cost Of Sales GL Postings Set Up"
@@ -5384,7 +5385,7 @@ msgstr "Imagen"
 #: WorkOrderIssue.php:778 reportwriter/languages/en_US/reports.php:270
 #, php-format
 msgid "No Image"
-msgstr "Sin Imagen"
+msgstr "Sin imagen"
 
 #: ContractBOM.php:383
 msgid "Enter the quantity required of this item to complete the contract"
@@ -7714,7 +7715,7 @@ msgstr "Administrar monedas"
 
 #: Currencies.php:33
 msgid "Currencies"
-msgstr ""
+msgstr "Monedas"
 
 #: Currencies.php:56
 msgid "The currency already exists in the database"
@@ -7766,11 +7767,11 @@ msgstr "la moneda funcional ha sido creada"
 
 #: Currencies.php:199 Currencies.php:217
 msgid "currency rate adjustment to"
-msgstr ""
+msgstr "ajuste en tipo de cambio de"
 
 #: Currencies.php:221
 msgid "Currency Rate difference of"
-msgstr ""
+msgstr "Diferencia en tasa de cambio de"
 
 #: Currencies.php:246
 msgid ""
@@ -10502,11 +10503,11 @@ msgstr "Transacciones Fechadas Hasta"
 
 #: DailyBankTransactions.php:73
 msgid "Unmatched"
-msgstr ""
+msgstr "Sin conciliar"
 
 #: DailyBankTransactions.php:74
 msgid "Matched"
-msgstr ""
+msgstr "Conciliado"
 
 #: DailyBankTransactions.php:80 GLJournalInquiry.php:49
 msgid "Show transactions"
@@ -10523,7 +10524,7 @@ msgstr ""
 
 #: DailyBankTransactions.php:123
 msgid "Account Transactions For"
-msgstr "Transacciones de Cuenta para"
+msgstr "Transacciones de cuenta para"
 
 #: DailyBankTransactions.php:123 GLJournalInquiry.php:26
 msgid "Between"
@@ -10564,11 +10565,11 @@ msgstr "Monto en"
 
 #: DailyBankTransactions.php:132 DailyBankTransactions.php:134
 msgid "Running Total"
-msgstr "Corriendo Total"
+msgstr "Acumulado en"
 
 #: DailyBankTransactions.php:135
 msgid "Cleared"
-msgstr ""
+msgstr "Compensado"
 
 #: DailyBankTransactions.php:173 GLJournalInquiry.php:126
 msgid "Select Another Date"
@@ -26454,7 +26455,7 @@ msgstr ""
 
 #: SalesCategories.php:541
 msgid "No Inventory items in this category"
-msgstr "No hay artículos de Inventario en esta categoría"
+msgstr "No hay artículos de inventario en esta categoría"
 
 #: SalesCategoryPeriodInquiry.php:6 SalesCategoryPeriodInquiry.php:9
 msgid "Sales Category Report"
@@ -30441,10 +30442,12 @@ msgid ""
 "Enter up to six alphanumeric characters or underscore as a code for this "
 "stock category"
 msgstr ""
+"Introduzca hasta seis caracteres alfanuméricos o guión_bajo como un código "
+"para esta categoría de inventario"
 
 #: StockCategories.php:408
 msgid "A description of the inventory category is required"
-msgstr ""
+msgstr "Se requiere una descripción de la categoría inventario"
 
 #: StockCategories.php:444
 msgid "Recovery GL Code"
@@ -30522,11 +30525,11 @@ msgstr ""
 
 #: StockCategorySalesInquiry.php:122
 msgid "Qty Sold"
-msgstr ""
+msgstr "Cantidad vendida"
 
 #: StockCategorySalesInquiry.php:123
 msgid "Sales Revenue"
-msgstr ""
+msgstr "Ingresos por ventas"
 
 #: StockCategorySalesInquiry.php:124
 msgid "COGS"
@@ -30534,7 +30537,7 @@ msgstr ""
 
 #: StockCategorySalesInquiry.php:125
 msgid "Gross Margin"
-msgstr ""
+msgstr "Margen bruto"
 
 #: StockCategorySalesInquiry.php:126 StockCategorySalesInquiry.php:127
 msgid "Avg Unit"
@@ -30542,7 +30545,7 @@ msgstr ""
 
 #: StockCategorySalesInquiry.php:126
 msgid "Sale Price"
-msgstr ""
+msgstr "Precio de venta"
 
 #: StockCategorySalesInquiry.php:128
 msgid "Margin %"
@@ -30550,7 +30553,7 @@ msgstr ""
 
 #: StockCategorySalesInquiry.php:145 StockCategorySalesInquiry.php:208
 msgid "Category Total"
-msgstr ""
+msgstr "Total de la categoría"
 
 #: StockCheck.php:10 StockCheck.php:11
 msgid "Stock Count Sheets"
@@ -30750,7 +30753,7 @@ msgstr "El volumen del artículo empaquetado debe ser un número positivo"
 
 #: StockClone.php:179 Stocks.php:168
 msgid "The weight of the packaged item in Gross Weight must be numeric"
-msgstr ""
+msgstr "El peso del artículo empaquetado en peso bruto debe ser numérico"
 
 #: StockClone.php:185 Stocks.php:174 Z_ImportStocks.php:149
 msgid "The weight of the packaged item must be a positive number"
@@ -30758,7 +30761,7 @@ msgstr "El peso del artículo empacado debe ser un número positivo"
 
 #: StockClone.php:191 Stocks.php:180
 msgid "The net weight of the item in Net Weight must be numeric"
-msgstr ""
+msgstr "El peso neto del producto en peso neto debe ser numérico"
 
 #: StockClone.php:197 Stocks.php:186
 msgid "The net weight of the item must be a positive number"
@@ -38390,7 +38393,7 @@ msgstr "e.g. user@domain.com"
 
 #: WWW_Users.php:492
 msgid "A valid email address is required"
-msgstr ""
+msgstr "Se requiere una dirección de correo-e válida"
 
 #: WWW_Users.php:511
 msgid "User Can Create Tenders"
@@ -40269,7 +40272,7 @@ msgstr "Cambiando todos los ficheros de imagen"
 
 #: Z_ChangeStockCode.php:172
 msgid "no image to rename"
-msgstr ""
+msgstr "sin imagen para renombrar"
 
 #: Z_ChangeStockCode.php:191
 msgid "Deleting the old stock master record"
@@ -49210,7 +49213,7 @@ msgstr "Conciliar ingresos a cuenta bancaria"
 
 #: includes/MainMenuLinksArray.php:365
 msgid "Account Inquiry"
-msgstr "Consulta de cuentas"
+msgstr "Consulta de cuenta"
 
 #: includes/MainMenuLinksArray.php:366
 msgid "Account Listing"
@@ -51327,7 +51330,7 @@ msgstr ""
 #: ../webSHOP/CreditCardPayFlowPro.php:167
 #: ../webSHOP/CreditCardPayPalPro.php:176
 msgid "A valid credit card number must be entered"
-msgstr ""
+msgstr "Se debe introducir un número de tarjeta de crédito válido"
 
 #: ../webSHOP/CreditCardPayFlowPro.php:170
 #: ../webSHOP/CreditCardPayFlowPro.php:171
