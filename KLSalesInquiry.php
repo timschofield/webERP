@@ -1200,7 +1200,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 	$SalesmanResult= DB_query($sql);
 	echo '<option selected="selected" value="All">' . _('All Salesmen')  . '</option>';
 	While ($myrow = DB_fetch_array($SalesmanResult)){
-		echo '<option value="' . $myrow['salesmancode'] . '">' . $myrow['salesmanname']  . '</option>';
+		echo '<option value="' . $myrow['salesmancode'] . '">' . $myrow['salesmancode'] . '-' . $myrow['salesmanname']  . '</option>';
 	}
 	echo '</select></td></tr>';
 
