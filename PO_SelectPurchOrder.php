@@ -137,27 +137,27 @@ if (!isset($OrderNumber) or $OrderNumber == "") {
 	} else {
 		echo '<option value="Pending_Authorised_Completed">' . _('Pending/Authorised/Completed') . '</option>';
 	}
-	if ($_POST['Status']=='Pending'){
+	if (isset($_POST['Status']) AND $_POST['Status']=='Pending'){
 		echo '<option selected="selected" value="Pending">' . _('Pending') . '</option>';
 	} else {
 		echo '<option value="Pending">' . _('Pending') . '</option>';
 	}
- 	if ($_POST['Status']=='Authorised'){
+ 	if (isset($_POST['Status']) AND $_POST['Status']=='Authorised'){
 		echo '<option selected="selected" value="Authorised">' . _('Authorised') . '</option>';
 	} else {
 		echo '<option value="Authorised">' . _('Authorised') . '</option>';
 	}
-	if ($_POST['Status']=='Completed'){
+	if (isset($_POST['Status']) AND $_POST['Status']=='Completed'){
 		echo '<option selected="selected" value="Completed">' . _('Completed') . '</option>';
 	} else {
 		echo '<option value="Completed">' . _('Completed') . '</option>';
 	}
-	if ($_POST['Status']=='Cancelled'){
+	if (isset($_POST['Status']) AND $_POST['Status']=='Cancelled'){
 		echo '<option selected="selected" value="Cancelled">' . _('Cancelled') . '</option>';
 	} else {
 		echo '<option value="Cancelled">' . _('Cancelled') . '</option>';
 	}
-	if ($_POST['Status']=='Rejected'){
+	if (isset($_POST['Status']) AND $_POST['Status']=='Rejected'){
 		echo '<option selected="selected" value="Rejected">' . _('Rejected') . '</option>';
 	} else {
 		echo '<option value="Rejected">' . _('Rejected') . '</option>';
