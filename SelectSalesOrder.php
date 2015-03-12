@@ -695,7 +695,7 @@ if (isset($StockItemsResult)
 
 		if (isset($_POST['Quotations']) AND $_POST['Quotations']=='Orders_Only'){
 			$TableHeader = '<tr>
-								<th>' . _('Modify') . '</th>
+								<th class="ascending" >' . _('Modify') . '</th>
 								<th>' . _('Invoice') . '</th>
 								<th>' . _('Dispatch Note') . '</th>
 								<th class="ascending" >' . _('Customer') . '</th>
