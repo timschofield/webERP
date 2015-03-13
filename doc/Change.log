@@ -1,5 +1,5 @@
 webERP Change Log
-
+13/03/15 Exson: Fixed the undefined index noise in SelectWorkOrder.php.
 13/03/15 Exson: Make Labor type allowed by category select in WorkOrderIssue.php.
 12/03/15 Exson: Make Order No sortable in SelectSalesOrder.php.
 12/03/15 Exson: Fixed undefined parameters noise in PO_SelectPurchOrder.php.
