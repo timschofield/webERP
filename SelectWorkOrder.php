@@ -158,11 +158,11 @@ if (!isset($StockID)) {
 		echo '</select> &nbsp;&nbsp;
 			<select name="ClosedOrOpen">';
 
-		if ($_GET['ClosedOrOpen']=='Closed_Only'){
+		if (isset($_GET['ClosedOrOpen']) AND $_GET['ClosedOrOpen']=='Closed_Only'){
 			$_POST['ClosedOrOpen']='Closed_Only';
 		}
 
-		if ($_POST['ClosedOrOpen']=='Closed_Only'){
+		if (isset($_POST['ClosedOrOpen']) AND $_POST['ClosedOrOpen']=='Closed_Only'){
 			echo '<option selected="selected" value="Closed_Only">' . _('Closed Work Orders Only') . '</option>';
 			echo '<option value="Open_Only">' . _('Open Work Orders Only')  . '</option>';
 		} else {
