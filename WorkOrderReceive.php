@@ -977,6 +977,8 @@ if($WORow['controlled']==1){ //controlled
 						<td><input type="textbox" name="BatchRef' . $i .'" placeholder="'._('Batch/Lot No').'" ';
 
 				if ($i==0){
+					$StringBitOfLotSNRef = isset($StringBitOfLotSNRef)?$StringBitOfLotSNRef:'';
+					$LotSNRefNumeric = isset($LotSNRefNumeric)?$LotSNRefNumeric:'';
 					echo 'value="' . $StringBitOfLotSNRef . ($LotSNRefNumeric + 1) . '"';
 				}
 				echo ' /></td>
