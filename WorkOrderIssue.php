@@ -77,7 +77,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 		$InputError=true;
 	}
 	$QuantityIssued =0;
-	if (is_array($_POST['SerialNos'])){ //then we are issuing a serialised item
+	if (isset($_POST['SerialNos']) AND is_array($_POST['SerialNos'])){ //then we are issuing a serialised item
 		$QuantityIssued = count($_POST['SerialNos']); // the total quantity issued as 1 per serial no
 	} elseif (isset($_POST['Qty'])){ //then its a plain non-controlled item
 		$QuantityIssued = filter_number_format($_POST['Qty']);
@@ -705,7 +705,7 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 	$SQL="SELECT categoryid,
 			categorydescription
 			FROM stockcategory
-			WHERE stocktype='F' OR stocktype='D'
+			WHERE stocktype='F' OR stocktype='D' OR stocktype='L'
 			ORDER BY categorydescription";
 		$result1 = DB_query($SQL);
 
