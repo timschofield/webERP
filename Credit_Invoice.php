@@ -1609,6 +1609,9 @@ if(isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 		echo '</select></td>';
 	}
 	echo '</tr>';
+	if(!isset($_POST['CreditText'])){
+		$_POST['CreditText'] = '';
+	}
 	echo '<tr>
 			<td>' . _('Credit note text') . '</td>
 			<td><textarea name="CreditText" cols="31" rows="5" tabindex="'.$tabindex++.'">' . $_POST['CreditText'] . '</textarea></td>
