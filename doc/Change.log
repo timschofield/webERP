@@ -1,5 +1,6 @@
 webERP Change Log
 
+14/03/15 Exson: Fixed undefined index noise in Credit_Invoice.php.
 13/03/15 Exson: fixed the undefined index noise in WorkOrderReceive.php.
 13/03/15 Exson: Fixed the undefined index noise in SelectWorkOrder.php.
 13/03/15 Exson: Make Labor type allowed by category select in WorkOrderIssue.php.
