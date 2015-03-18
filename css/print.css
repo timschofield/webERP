@@ -60,6 +60,11 @@ a {
 	/* number class (general). */
 }
 
+.text {
+	text-align:left;
+	/* number class (general). */
+}
+
 .page_title_text {
 	font-weight:bold;
 	font-size: 207%;
@@ -98,6 +103,13 @@ body, #CanvasDiv {
 	border-radius:0;
 	box-shadow:none;
 	padding:0;
+}
+
+#Report {
+	/* Division id for reports. */}
+#Report table {
+	width:100%;
+	/* Expands the body of the report to use the full width of the page. */
 }
 
 }

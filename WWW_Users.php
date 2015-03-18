@@ -1,5 +1,5 @@
 <?php
-/* $Id: WWW_Users.php 7067 2015-01-05 03:41:43Z rchacon $*/
+/* $Id: WWW_Users.php 7192 2015-03-07 02:22:03Z exsonqu $*/
 
 if (isset($_POST['UserID']) AND isset($_POST['ID'])){
 	if ($_POST['UserID'] == $_POST['ID']) {
@@ -327,7 +327,7 @@ if (!isset($SelectedUser)) {
 		}
 
 	if ($myrow[8]=='') {
-		$LastVisitDate = Date($_SESSION['DefaultDateFormat']);
+		$LastVisitDate = _('No login record');
 	} else {
 		$LastVisitDate = ConvertSQLDate($myrow[8]);
 	}

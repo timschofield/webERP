@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: SupplierInvoice.php 7024 2014-12-16 14:57:11Z rchacon $ */
+/* $Id: SupplierInvoice.php 7198 2015-03-07 13:49:08Z exsonqu $ */
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing
@@ -1896,7 +1896,7 @@ then do the updates and inserts to process the invoice entered */
 
 } /*end of process invoice */
 
-if($InputError==true){ //add a link to return if users make input errors.
+if(isset($InputError) AND $InputError==true){ //add a link to return if users make input errors.
 	echo '<div class="centre"><a href="'.$RootPath.'/SupplierInvoice.php" >' . _('Back to Invoice Entry') . '</a></div>';
 } //end of return link for input errors
 

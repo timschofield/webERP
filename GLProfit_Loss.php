@@ -1,5 +1,5 @@
 <?php
-/* $Id: GLProfit_Loss.php 7186 2015-03-04 13:12:03Z rchacon $*/
+/* $Id: GLProfit_Loss.php 7206 2015-03-07 17:44:35Z rchacon $*/
 /* Shows the profit and loss of the company for the range of periods entered. */
 
 include ('includes/session.inc');
@@ -33,7 +33,7 @@ if ((!isset($_POST['FromPeriod'])
 	. _('webERP is an "accrual" based system (not a "cash based" system).  Accrual systems include items when they are invoiced to the customer, and when expenses are owed based on the supplier invoice date.') . '</div>';
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
+	echo '<div>';// div class=?
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (Date('m') > $_SESSION['YearEnd']){
@@ -564,7 +564,7 @@ if ((!isset($_POST['FromPeriod'])
 
 	include('includes/header.inc');
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
+	echo '<div>';// div class=?
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 			<input type="hidden" name="FromPeriod" value="' . $_POST['FromPeriod'] . '" />
 			<input type="hidden" name="ToPeriod" value="' . $_POST['ToPeriod'] . '" />';
@@ -612,6 +612,7 @@ if ((!isset($_POST['FromPeriod'])
 
 	// Page title as IAS1 numerals 10 and 51:
 	include_once('includes/CurrenciesArray.php');// Array to retrieve currency name.
+	echo '<div id="Report">';// Division to identify the report block.
 	echo '<p class="page_title_text"><img alt="" class="noprint" src="'.$RootPath.'/css/'.$Theme.
 		'/images/gl.png" title="' .// Icon image.
 		_('Statement of Comprehensive Income') . '" /> ' .// Icon title.
@@ -619,7 +620,7 @@ if ((!isset($_POST['FromPeriod'])
 //		_('Statement of Comprehensive Income') . '<br />' .// Page title, reporting statement.
 		stripslashes($_SESSION['CompanyRecord']['coyname']) . '<br />' .// Page title, reporting entity.
 		_('For') . ' ' . $NumberOfMonths . ' ' . _('months to') . ' ' . $PeriodToDate . '<br />' .// Page title, reporting period.
-//		_('From') . ' ' . $PeriodFromDate? . ' ' . _('to') . ' ' . $PeriodToDate . '<br />' .// Page title, reporting period. ??????????
+//		_('From') . ' ' . $PeriodFromDate? . ' ' . _('to') . ' ' . $PeriodToDate . '<br />' .// Page title, reporting period. ???
 		_('All amounts stated in').': '. _($CurrencyName[$_SESSION['CompanyRecord']['currencydefault']]).'</p>';// Page title, reporting presentation currency and level of rounding used.
 
 	/*show a table of the accounts info returned by the SQL
@@ -643,7 +644,7 @@ if ((!isset($_POST['FromPeriod'])
 							<th colspan="2">' . _('Last Year') . '</th>
 						</tr>';
 	}
-
+/* echo '<thead>' . $TableHeader . '<thead><tbody>';// thead used in conjunction with tbody enable scrolling of the table body independently of the header and footer. Also, when printing a large table that spans multiple pages, these elements can enable the table header to be printed at the top of each page. */
 
 	$j = 1;
 	$k=0; //row colour counter
@@ -1301,18 +1302,20 @@ if ((!isset($_POST['FromPeriod'])
 			<td colspan="2"></td>
 			<td colspan="6"><hr /></td>
 		</tr>';
+/*	echo '</tbody>';// See comment at the begin of the table.*/
 	echo '</table>';
+	echo '</div>';// div id="Report".
 	echo '<br />
 		<div class="centre noprint">'.
 			'<button onclick="javascript:window.print()" type="button"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 				'/images/printer.png" /> ' . _('Print This') . '</button>'.// "Print This" button.
 			'<button name="SelectADifferentPeriod" type="submit" value="'. _('Select A Different Period') .'"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 				'/images/gl.png" /> ' . _('Select A Different Period') . '</button>'.// "Select A Different Period" button.
-			'<button formaction="index.php" type="submit"><img alt="" src="'.$RootPath.'/css/'.$Theme.
+			'<button formaction="index.php?Application=GL" type="submit"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 				'/images/previous.png" /> ' . _('Return') . '</button>'.// "Return" button.
 		'</div>';
 }
-echo '</div>';
+echo '</div>';// div class=?
 echo '</form>';
 include('includes/footer.inc');
 

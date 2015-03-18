@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: Shipments.php 6944 2014-10-27 07:15:34Z daintree $*/
+/* $Id: Shipments.php 7194 2015-03-07 10:13:21Z exsonqu $*/
 
 include('includes/DefineShiptClass.php');
 include('includes/session.inc');
@@ -35,8 +35,6 @@ if (isset($_GET['SelectedShipment'])){
 	}
 
        $_SESSION['Shipment'] = new Shipment;
-
-       $_SESSION['Shipment']->GLLink = $_SESSION['CompanyRecord']['gllink_stock'];
 
 /*read in all the guff from the selected shipment into the Shipment Class variable - the class code is included in the main script before this script is included  */
 

@@ -1,5 +1,5 @@
 <?php
-/* $Id: Credit_Invoice.php 7187 2015-03-05 01:28:14Z vvs2012 $*/
+/* $Id: Credit_Invoice.php 7227 2015-03-14 09:59:55Z exsonqu $*/
 
 /*Functions to get the GL codes to post the transaction to */
 include('includes/GetSalesTransGLCodes.inc');
@@ -166,7 +166,7 @@ if(!isset($_GET['InvoiceNumber']) AND !$_SESSION['ProcessingCredit']) {
 														$myrow['controlled'],
 														$myrow['serialised'],
 														$myrow['decimalplaces'],
-														$myrow['narrative'],
+														str_replace("\\r\\n", " ", $myrow['narrative']),
 														'No',
 														-1,
 														$myrow['taxcatid'],
@@ -275,12 +275,11 @@ if($_SESSION['CreditItems' . $identifier]->ItemsOrdered > 0 OR isset($_POST['New
 NB QtyDispatched in the LineItems array is used for the quantity to credit */
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/credit.png" title="' . _('Search') . '" alt="" />' . $Title . '</p>';
 
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier=' . $identifier . '" method="post">';
+echo '<div>';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+
 if(!isset($_POST['ProcessCredit'])) {
-
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier=' . $identifier . '" method="post">';
-    echo '<div>';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-
 
 	echo '<table cellpadding="2" class="selection">';
 	echo '<tr><th colspan="13">';
@@ -1517,7 +1516,7 @@ if(isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 		<table class="selection">
 		<tr>
 			<td>' . _('Credit Note Type') . '</td>
-			<td><select name="CreditType" tabindex="'.$tabindex++.'">';
+			<td><select name="CreditType" tabindex="'.$tabindex++.'" onchange="ReloadForm(Update)">';
 
 	if(!isset($_POST['CreditType']) OR $_POST['CreditType']=='Return') {
 		echo '<option selected="selected" value="Return">' . _('Goods returned to store') . '</option>';
@@ -1610,6 +1609,9 @@ if(isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 		echo '</select></td>';
 	}
 	echo '</tr>';
+	if(!isset($_POST['CreditText'])){
+		$_POST['CreditText'] = '';
+	}
 	echo '<tr>
 			<td>' . _('Credit note text') . '</td>
 			<td><textarea name="CreditText" cols="31" rows="5" tabindex="'.$tabindex++.'">' . $_POST['CreditText'] . '</textarea></td>

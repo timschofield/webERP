@@ -97,10 +97,16 @@ th.descending:after {
 	visibility: visible;
 }
 th.number {
-	text-align: right;
-	font-weight: normal;
 	background-color: skyblue;
 	color: white;
+	font-weight: normal;
+	text-align: right;
+}
+th.text {
+	background-color: skyblue;
+	color: white;
+	font-weight: normal;
+	text-align: left;
 }
 td {
 	font-family: Arial, Verdana, Helvetica, sans-serif;
@@ -481,6 +487,11 @@ li {
 #FooterTimeDiv{
 	float:right;
 	margin-top:15px;
+}
+#Report {
+	/* Division id for reports. */}
+#Report table {
+	/* Body of a report formatted with table tag. */
 }
 .centre {
 	text-align:center;

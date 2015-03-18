@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: AuditTrail.php 6941 2014-10-26 23:18:08Z daintree $ */
+/* $Id: AuditTrail.php 7196 2015-03-07 11:06:33Z exsonqu $ */
 
 include('includes/session.inc');
 
@@ -54,7 +54,7 @@ echo '<tr>
 		<td><select tabindex="3" name="SelectedUser">
 			<option value="ALL">' . _('All') . '</option>';
 while ($Users = DB_fetch_row($UserResult)) {
-	if (isset($_POST['SelectedUser']) and $users[0]==$_POST['SelectedUser']) {
+	if (isset($_POST['SelectedUser']) and $Users[0]==$_POST['SelectedUser']) {
 		echo '<option selected="selected" value="' . $Users[0] . '">' . $Users[0] . '</option>';
 	} else {
 		echo '<option value="' . $Users[0] . '">' . $Users[0] . '</option>';
