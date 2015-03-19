@@ -147,7 +147,6 @@ if ($KL_SystemAdmin
 if ($KL_SystemAdmin 
 	OR $KL_PurchasingManager
 	OR $KL_KantorManager
-	OR $KL_SalesManager
 	OR $KL_PurchasingTeam 
 	OR $KL_ShopSupportTeam){
 	
@@ -385,7 +384,8 @@ if ($KL_SystemAdmin
 /***************************************************************************************
 * SALES CONTROL         
 ***************************************************************************************/
-if ($KL_PurchasingManager){
+if ($KL_PurchasingManager
+	OR $KL_SalesManager){
 
 	GoodSellingItemsInCategory("TESTSI", 15, 6, $RootPath, $db);
 	GoodSellingItemsInCategory("TESTSS", 15, 6, $RootPath, $db);
@@ -469,7 +469,8 @@ if ($KL_PurchasingManager){
 }
 
 if ($KL_PurchasingManager
-	OR $KL_KantorManager){
+	OR $KL_KantorManager
+	OR $KL_SalesManager){
 	
 	ItemsNoSalesInLocation("WABOM", 30, 10, $RootPath, $db);
 	ItemsNoSalesInLocation("WHAYA", 30, 10, $RootPath, $db);
