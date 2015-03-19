@@ -37,6 +37,12 @@ if ($_SESSION['AccessLevel'] == 8){
 	$KL_ShopSupportManager = TRUE;
 }else if ($_SESSION['AccessLevel'] == 24){
 	$KL_PurchasingTeam = TRUE;
+}else if ($_SESSION['AccessLevel'] == 25){ // PakRicard
+	$KL_KantorManager = TRUE;
+	$KL_SalesManager = TRUE;
+	$KL_KantorAdministration = TRUE;
+	$KL_PurchasingManager = TRUE;
+	$KL_ShopSupportManager = TRUE;
 }
 
 ?>
