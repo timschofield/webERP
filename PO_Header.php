@@ -195,7 +195,7 @@ if (isset($_POST['EnterLines']) OR isset($_POST['AllowRePrint'])) {
 	 *  ensure session variables updated then meta refresh to PO_Items.php*/
 
 	$_SESSION['PO' . $identifier]->Location = $_POST['StkLocation'];
-	$_SESSION['PO' . $identifier]->SupplierContact = $_POST['SupplierContact'];
+	$_SESSION['PO' . $identifier]->SupplierContact = isset($_POST['SupplierContact'])?$_POST['SupplierContact']:'';
 	$_SESSION['PO' . $identifier]->DelAdd1 = $_POST['DelAdd1'];
 	$_SESSION['PO' . $identifier]->DelAdd2 = $_POST['DelAdd2'];
 	$_SESSION['PO' . $identifier]->DelAdd3 = $_POST['DelAdd3'];
@@ -1104,7 +1104,7 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 		</tr>
 		<tr>
 			<td>' . _('Address') . ' 6 :</td>
-			<td><input type="text" name="SuppDelAdd5" size="16" maxlength="15" value="' . $_POST['SuppDelAdd6'] . '" /></td>
+			<td><input type="text" name="SuppDelAdd6" size="16" maxlength="15" value="' . $_POST['SuppDelAdd6'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Phone') . ':</td>

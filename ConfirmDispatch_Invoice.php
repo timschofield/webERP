@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: ConfirmDispatch_Invoice.php 7021 2014-12-14 02:04:44Z tehonu $*/
+/* $Id: ConfirmDispatch_Invoice.php 7093 2015-01-22 20:15:40Z vvs2012 $*/
 
 /**************************************************************************************
 KL RICARD MODIFICATIONS:
@@ -637,8 +637,8 @@ invoices can have a zero amount but there must be a quantity to invoice */
 						ON stockmaster.stockid=bom.component
 						WHERE bom.parent='" . $OrderLine->StockID . "'
 						AND locstock.loccode='" . $_SESSION['Items'.$identifier]->Location . "'
-						AND effectiveafter <'" . Date('Y-m-d') . "'
-						AND effectiveto >='" . Date('Y-m-d') . "'";
+                        AND bom.effectiveafter <= '" . date('Y-m-d') . "'
+                        AND bom.effectiveto > '" . date('Y-m-d') . "'";
 
 				$ErrMsg = _('Could not retrieve the component quantity left at the location once the assembly item on this order is invoiced (for the purposes of checking that stock will not go negative because)');
 				$Result = DB_query($SQL,$ErrMsg);
@@ -999,8 +999,8 @@ invoices can have a zero amount but there must be a quantity to invoice */
 							FROM bom INNER JOIN stockmaster
 							ON bom.component=stockmaster.stockid
 							WHERE bom.parent='" . $OrderLine->StockID . "'
-							AND bom.effectiveto >= '" . Date('Y-m-d') . "'
-							AND bom.effectiveafter < '" . Date('Y-m-d') . "'";
+                            AND bom.effectiveafter <= '" . date('Y-m-d') . "'
+                            AND bom.effectiveto > '" . date('Y-m-d') . "'";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Could not retrieve assembly components from the database for'). ' '. $OrderLine->StockID . _('because').' ';
 				$DbgMsg = _('The SQL that failed was');

@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: WhereUsedInquiry.php 6942 2014-10-27 02:48:29Z daintree $*/
+/* $Id: WhereUsedInquiry.php 7093 2015-01-22 20:15:40Z vvs2012 $*/
 
 include('includes/session.inc');
 $Title = _('Where Used Inquiry');
@@ -56,8 +56,8 @@ if (isset($StockID)) {
 			ON bom.parent = stockmaster.stockid
 			INNER JOIN locationusers ON locationusers.loccode=bom.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 			WHERE component='" . $StockID . "'
-				AND bom.effectiveafter<='" . Date('Y-m-d') . "'
-				AND bom.effectiveto >='" . Date('Y-m-d') . "'
+                AND bom.effectiveafter <= '" . date('Y-m-d') . "'
+                AND bom.effectiveto > '" . date('Y-m-d') . "'
 			ORDER BY stockmaster.discontinued, bom.parent";
 
 	$ErrMsg = _('The parents for the selected part could not be retrieved because');;

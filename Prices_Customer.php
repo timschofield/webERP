@@ -1,5 +1,5 @@
 <?php
-/* $Id: Prices_Customer.php 6944 2014-10-27 07:15:34Z daintree $*/
+/* $Id: Prices_Customer.php 7053 2014-12-28 23:21:24Z rchacon $*/
 
 include('includes/session.inc');
 
@@ -337,9 +337,9 @@ echo '<table class="selection">
 			<td>' . _('Branch') . ':</td>
 			<td><select name="Branch">';
 if ($myrow['branchcode']=='') {
-	echo '<option selected="selected" value="">' . _('All branches') . '</option>';
+	echo '<option selected="selected" value="">' . _('All Branches') . '</option>';
 } else {
-	echo '<option value="">' . _('All branches') . '</option>';
+	echo '<option value="">' . _('All Branches') . '</option>';
 }
 
 while ($myrow=DB_fetch_array($result)) {

@@ -1,5 +1,5 @@
 <?php
-/* $Id: StockCategories.php 6941 2014-10-26 23:18:08Z daintree $*/
+/* $Id: StockCategories.php 7054 2015-01-01 11:36:36Z exsonqu $*/
 
 include('includes/session.inc');
 
@@ -118,6 +118,13 @@ if (isset($_POST['submit'])) {
 			} else {
 					$_POST['PropNumeric' .$i] =0;
 			}
+			if (!isset($_POST['PropMinimum' . $i]) or $_POST['PropMinimum' . $i] === ''){
+				$_POST['PropMinimum' . $i] = '-999999999';
+			}
+			if (!isset($_POST['PropMaximum' . $i]) or $_POST['PropMaximum' . $i] === ''){
+				$_POST['PropMaximum' . $i] = '999999999';
+			}
+
 			if ($_POST['PropID' .$i] =='NewProperty' AND mb_strlen($_POST['PropLabel'.$i])>0){
 				$sql = "INSERT INTO stockcatproperties (categoryid,
 														label,

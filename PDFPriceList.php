@@ -1,5 +1,5 @@
 <?php
-/* $Id: PDFPriceList.php 6962 2014-11-06 02:59:12Z tehonu $*/
+/* $Id: PDFPriceList.php 7068 2015-01-06 07:52:25Z daintree $*/
 /*	Script to print a price list by inventory category */
 /*	Output column sizes:
 		* stockmaster.stockid, varchar(20), len = 20chr
@@ -292,8 +292,8 @@ If (isset($_POST['PrintPDF'])) {
 			<tr>
 				<td>' . _('Select Inventory Categories') . ':</td>
 				<td><select autofocus="autofocus" required="required" minlength="1" size="12" name="Categories[]"multiple="multiple">';
-	$SQL = 'SELECT categoryid, categorydescription 
-			FROM stockcategory 
+	$SQL = 'SELECT categoryid, categorydescription
+			FROM stockcategory
 			ORDER BY categorydescription';
 	$CatResult = DB_query($SQL);
 	while ($MyRow = DB_fetch_array($CatResult)) {
@@ -395,9 +395,7 @@ function PageHeader () {
 		_('Printed') . ': ' . date($_SESSION['DefaultDateFormat']), 'right');// Date printed.
 
 	$YPos -= $FontSize;
-	$pdf->addText($Left_Margin, $YPos, $FontSize,
-		_('Categories') . ': ' . $_POST['FromCriteria'] . ' - ' . $_POST['ToCriteria'] . '. ' .
-		_('Effective As At') . ' ' . $_POST['EffectiveDate']);// Categories and effective date.
+	$pdf->addText($Left_Margin, $YPos, $FontSize, _('Effective As At') . ' ' . $_POST['EffectiveDate']);
 	$pdf->addTextWrap($Page_Width-$Right_Margin-140, $YPos-$FontSize, 140, $FontSize,
 		date('H:i:s'), 'right');// Time printed.
 

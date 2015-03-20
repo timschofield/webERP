@@ -82,16 +82,16 @@ if (isset($_GET['DebtorNo'])) {
 				FROM debtortrans INNER JOIN systypes
 				ON debtortrans.type = systypes.typeid
 				WHERE debtortrans.settled=0
-				AND (systypes.typeid=10 OR (systypes.typeid=12 AND ovamount>0)
+				AND (systypes.typeid=10 OR (systypes.typeid=12 AND ovamount>0))
 				AND debtorno='" . $_SESSION['Alloc']->DebtorNo . "'
-				ORDER BY debtortransid DESC";
+				ORDER BY debtortrans.id DESC";
 		$TransResult = DB_query($SQL);
 		$BalToAllocate = $_SESSION['Alloc']->TransAmt - $myrow['alloc'];
-		while ($myalloc=DB_fetch_array($TransResult) AND $BalToAllocate > 0) {
-			if ($myalloc['total']-$myalloc['alloc']< $BalToAllocate) {
+		while ($myalloc=DB_fetch_array($TransResult) AND $BalToAllocate < 0) {
+			if ($myalloc['total']-$myalloc['alloc']< abs($BalToAllocate)) {
 				$ThisAllocation = $myalloc['total']-$myalloc['alloc'];
 			} else {
-				$ThisAllocation = $BalToAllocate;
+				$ThisAllocation = abs($BalToAllocate);
 			}
 			$_SESSION['Alloc']->add_to_AllocsAllocn ($myalloc['id'],
 													$myalloc['typename'],
@@ -104,9 +104,49 @@ if (isset($_GET['DebtorNo'])) {
 													$myalloc['diffonexch'],
 													$myalloc['alloc'],
 													'NA');
-			$BalToAllocate -= $ThisAllocation;
+			$BalToAllocate += $ThisAllocation;//since $BalToAllocate is negative
 		}
 		DB_free_result($TransResult);
+			// Get trans previously allocated to by this trans - this will overwrite incomplete allocations above
+		$SQL= "SELECT debtortrans.id,
+					typename,
+					transno,
+					trandate,
+					rate,
+					ovamount+ovgst+ovfreight+ovdiscount AS total,
+					diffonexch,
+					debtortrans.alloc-custallocns.amt AS prevallocs,
+					amt,
+					custallocns.id AS allocid
+			FROM debtortrans INNER JOIN systypes
+			ON debtortrans.type = systypes.typeid
+			INNER JOIN custallocns
+			ON debtortrans.id=custallocns.transid_allocto
+			WHERE custallocns.transid_allocfrom='" . $_SESSION['Alloc']->AllocTrans . "'
+			AND debtorno='" . $_SESSION['Alloc']->DebtorNo . "'";
+
+		if ($_SESSION['SalesmanLogin'] != '') {
+			$SQL .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
+		}
+
+		$SQL .= " ORDER BY debtortrans.trandate";
+
+		$Result=DB_query($SQL,$db);
+
+		while ($myrow=DB_fetch_array($Result)) {
+			$DiffOnExchThisOne = ($myrow['amt']/$myrow['rate']) - ($myrow['amt']/$_SESSION['Alloc']->TransExRate);
+			$_SESSION['Alloc']->add_to_AllocsAllocn ($myrow['id'],
+												$myrow['typename'],//_($myrow['typename']), **********
+												$myrow['transno'],
+												ConvertSQLDate($myrow['trandate']),
+												$myrow['amt'],
+												$myrow['total'],
+												$myrow['rate'],
+												$DiffOnExchThisOne,
+												($myrow['diffonexch'] - $DiffOnExchThisOne),
+												$myrow['prevallocs'],
+												$myrow['allocid']);
+		}
 		ProcessAllocation();
 	}
 	echo '</table>';
@@ -176,7 +216,7 @@ function ProcessAllocation() {
 
 		if ($MovtInDiffOnExch !=0) {
 			if ($_SESSION['CompanyRecord']['gllink_debtors'] == 1) {
-				$PeriodNo = GetPeriod($_SESSION['Alloc']->TransDate,);
+				$PeriodNo = GetPeriod($_SESSION['Alloc']->TransDate);
 				$_SESSION['Alloc']->TransDate = FormatDateForSQL($_SESSION['Alloc']->TransDate);
 
 					$SQL = "INSERT INTO gltrans (

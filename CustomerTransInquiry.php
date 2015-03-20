@@ -1,13 +1,10 @@
 <?php
-
-/* $Id: CustomerTransInquiry.php 6944 2014-10-27 07:15:34Z daintree $*/
+/* $Id: CustomerTransInquiry.php 7184 2015-03-04 00:06:20Z rchacon $*/
 
 include('includes/session.inc');
 $Title = _('Customer Transactions Inquiry');
-
 $ViewTopic = 'ARInquiries';
 $BookMark = 'ARTransInquiry';
-
 include('includes/header.inc');
 
 echo '<p class="page_title_text">
@@ -18,9 +15,8 @@ echo '<div class="page_help_text">' . _('Choose which type of transaction to rep
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<div>';
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-
-echo '<table class="selection">
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+	<table class="selection">
 		<tr>
 			<td>' . _('Type') . ':</td>
 			<td><select tabindex="1" name="TransType"> ';
@@ -34,16 +30,14 @@ $sql = "SELECT typeid,
 $resultTypes = DB_query($sql);
 
 echo '<option value="All">' . _('All') . '</option>';
-while ($myrow=DB_fetch_array($resultTypes)){
-	if (isset($_POST['TransType'])){
-		if ($myrow['typeid'] == $_POST['TransType']){
-		     echo '<option selected="selected" value="' . $myrow['typeid'] . '">' . $myrow['typename'] . '</option>';
-		} else {
-		     echo '<option value="' . $myrow['typeid'] . '">' . $myrow['typename'] . '</option>';
+while($myrow=DB_fetch_array($resultTypes)) {
+	echo '<option';
+	if(isset($_POST['TransType'])) {
+		if($myrow['typeid'] == $_POST['TransType']) {
+		     echo ' selected="selected"' ;
 		}
-	} else {
-		     echo '<option value="' . $myrow['typeid'] . '">' . $myrow['typename'] . '</option>';
 	}
+	echo ' value="' . $myrow['typeid'] . '">' . _($myrow['typename']) . '</option>';
 }
 echo '</select></td>';
 
@@ -54,14 +48,14 @@ if (!isset($_POST['ToDate'])){
 	$_POST['ToDate'] = Date($_SESSION['DefaultDateFormat']);
 }
 echo '<td>' . _('From') . ':</td>
-	<td><input tabindex="2" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="text" name="FromDate"  required="required" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" /></td>
+	<td><input alt="'.$_SESSION['DefaultDateFormat'].'" class="date" maxlength="10" name="FromDate" required="required" size="11" tabindex="2" type="text" value="' . $_POST['FromDate'] . '" /></td>
 	<td>' . _('To') . ':</td>
-	<td><input tabindex="3" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="text" name="ToDate"  required="required" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" /></td>
+	<td><input alt="'.$_SESSION['DefaultDateFormat'].'" class="date" maxlength="10" name="ToDate" required="required" size="11" tabindex="3" type="text" value="' . $_POST['ToDate'] . '" /></td>
 	</tr>
 	</table>
 	<br />
 	<div class="centre">
-		<input tabindex="4" type="submit" name="ShowResults" value="' . _('Show Transactions') . '" />
+		<input name="ShowResults" tabindex="4" type="submit" value="' . _('Show Transactions') . '" />
 	</div>
     </div>
 	</form>';
@@ -145,7 +139,7 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 			printf($format_base .
 					'<td><a target="_blank" href="%s/PrintCustTrans.php?FromTransNo=%s&InvOrCredit=Invoice"><img src="%s" title="' . _('Click to preview the invoice') . '" /></a></td>
 					</tr>',
-					$myrow['typename'],
+					_($myrow['typename']),
 					$myrow['transno'],
 					ConvertSQLDate($myrow['trandate']),
 					$myrow['debtorno'],
@@ -158,13 +152,13 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 					$myrow['currcode'],
 					$RootPath,
 					$myrow['transno'],
-					$RootPath.'/css/'.$Theme.'/images/preview.gif');
+					$RootPath.'/css/'.$Theme.'/images/preview.png');
 
-		} elseif ($_POST['TransType']==11){ /* credit notes */
+		} elseif($_POST['TransType']==11) { /* credit notes */
 			printf($format_base .
 					'<td><a target="_blank" href="%s/PrintCustTrans.php?FromTransNo=%s&InvOrCredit=Credit"><img src="%s" title="' . _('Click to preview the credit') . '" /></a></td>
 					</tr>',
-					$myrow['typename'],
+					_($myrow['typename']),
 					$myrow['transno'],
 					ConvertSQLDate($myrow['trandate']),
 					$myrow['debtorno'],
@@ -177,10 +171,10 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 					$myrow['currcode'],
 					$RootPath,
 					$myrow['transno'],
-					$RootPath.'/css/'.$Theme.'/images/preview.gif');
+					$RootPath.'/css/'.$Theme.'/images/preview.png');
 		} else {  /* otherwise */
 			printf($format_base . '</tr>',
-					$myrow['typename'],
+					_($myrow['typename']),
 					$myrow['transno'],
 					ConvertSQLDate($myrow['trandate']),
 					$myrow['debtorno'],

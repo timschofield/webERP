@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: SQL_CommonFunctions.inc 7026 2014-12-16 20:55:46Z agaluski $*/
+/* $Id: SQL_CommonFunctions.inc 7093 2015-01-22 20:15:40Z vvs2012 $*/
 
 /* Common SQL Functions */
 
@@ -221,8 +221,8 @@ function BomMaterialCost($Parent, $db) {
 	   					FROM bom LEFT JOIN stockmaster
 						ON bom.component = stockmaster.stockid
 						WHERE bom.parent='". $Parent . "'
-						AND bom.effectiveafter<='" . Date('Y-m-d') . "'
-						AND bom.effectiveto>='" . Date('Y-m-d') . "'";
+                        AND bom.effectiveafter <= '" . date('Y-m-d') . "'
+                        AND bom.effectiveto > '" . date('Y-m-d') . "'";
 	$result = DB_query($SQL);
 	$MyRow = DB_fetch_row($result);
 	$MaterialCost = $MyRow[0];
@@ -276,8 +276,8 @@ function WoRealRequirements($db, $WO, $LocCode, $StockID, $Qty=1, $ParentID='') 
 			ON bom.component=stockmaster.stockid
 			WHERE bom.parent='" . $StockID . "'
 			AND bom.loccode ='" . $LocCode . "'
-			AND bom.effectiveafter<='" . Date('Y-m-d') . "'
-			AND bom.effectiveto>='" . Date('Y-m-d') . "'
+            AND bom.effectiveafter <= '" . date('Y-m-d') . "'
+            AND bom.effectiveto > '" . date('Y-m-d') . "'
 			AND stockmaster.mbflag<>'G'
 			AND bom.component NOT IN (
 				SELECT stockid
@@ -304,8 +304,8 @@ function WoRealRequirements($db, $WO, $LocCode, $StockID, $Qty=1, $ParentID='') 
 						ON bom.component=stockmaster.stockid
 						WHERE bom.parent='" . $StockID . "'
 						AND bom.loccode ='" . $LocCode . "'
-						AND bom.effectiveafter<='" . Date('Y-m-d') . "'
-						AND bom.effectiveto>='" . Date('Y-m-d') . "'
+                        AND bom.effectiveafter <= '" . date('Y-m-d') . "'
+                        AND bom.effectiveto > '" . date('Y-m-d') . "'
 						AND stockmaster.mbflag<>'G'
 						AND bom.component IN (
 							SELECT stockid
@@ -328,8 +328,8 @@ function WoRealRequirements($db, $WO, $LocCode, $StockID, $Qty=1, $ParentID='') 
 			ON bom.component=stockmaster.stockid
 			WHERE parent='" . $StockID . "'
 			AND loccode ='" . $LocCode . "'
-			AND bom.effectiveafter<='" . Date('Y-m-d') . "'
-			AND bom.effectiveto>='" . Date('Y-m-d') . "'
+            AND bom.effectiveafter <= '" . date('Y-m-d') . "'
+            AND bom.effectiveto > '" . date('Y-m-d') . "'
 			AND stockmaster.mbflag='G'";
 	$result = DB_query($sql);
 	while ($MyRow=DB_fetch_array($result)) {

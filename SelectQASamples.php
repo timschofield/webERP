@@ -3,6 +3,8 @@
 
 include('includes/session.inc');
 $Title = _('Select QA Samples');
+$ViewTopic= 'QualityAssurance';// Filename in ManualContents.php's TOC.
+$BookMark = 'QA_Samples';// Anchor's id in the manual's html document.
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
@@ -28,7 +30,7 @@ if (isset($_GET['SampleID'])) {
 	$SampleID = $_POST['SampleID'];
 }
 if (!isset($_POST['FromDate'])){
-	$_POST['FromDate']=Date(($_SESSION['DefaultDateFormat']), strtotime($UpcomingDate . ' - 15 days'));
+	$_POST['FromDate']=Date(($_SESSION['DefaultDateFormat']), Mktime(0, 0, 0, Date('m'), Date('d')-15, Date('Y')));
 }
 if (!isset($_POST['ToDate'])){
 	$_POST['ToDate'] = Date($_SESSION['DefaultDateFormat']);
@@ -56,9 +58,9 @@ if (isset($_POST['submit'])) {
 	if (isset($SelectedSampleID) AND $InputError !=1) {
 		//check to see all values are in spec or at least entered
 		$result = DB_query("SELECT count(sampleid) FROM sampleresults
-							WHERE sampleid = '".$SelectedSampleID."'
+							WHERE sampleid = '" . $SelectedSampleID . "'
 							AND showoncert='1'
-							AND testvalue=''",	$db);
+							AND testvalue=''");
 		$myrow = DB_fetch_row($result);;
 		if($myrow[0]>0 AND $_POST['Cert']=='1') {
 			 $_POST['Cert']='0';
@@ -68,7 +70,7 @@ if (isset($_POST['submit'])) {
 		$result = DB_query("SELECT count(sampleid) FROM sampleresults
 							WHERE sampleid = '".$SelectedSampleID."'
 							AND showoncert='1'
-							AND isinspec='0'",	$db);
+							AND isinspec='0'");
 		$myrow = DB_fetch_row($result);;
 		if($myrow[0]>0 AND $_POST['Cert']=='1') {
 			 $msg = _('Some Results are out of Spec');
@@ -78,26 +80,26 @@ if (isset($_POST['submit'])) {
 									comments='" . $_POST['Comments'] . "',
 									sampledate='" . FormatDateForSQL($_POST['SampleDate']) . "',
 									cert='" . $_POST['Cert'] . "'
-				WHERE sampleid = '".$SelectedSampleID."'";
+				WHERE sampleid = '" . $SelectedSampleID . "'";
 
 		$msg = _('QA Sample record for') . ' ' . $SelectedSampleID  . ' ' .  _('has been updated');
 		$ErrMsg = _('The update of the QA Sample failed because');
 		$DbgMsg = _('The SQL that was used and failed was');
-		$result = DB_query($sql,$db,$ErrMsg, $DbgMsg);
+		$result = DB_query($sql,$ErrMsg, $DbgMsg);
 		prnMsg($msg , 'success');
 		if ( $_POST['Cert']==1) {
 			$result = DB_query("SELECT prodspeckey, lotkey FROM qasamples
-							WHERE sampleid = '".$SelectedSampleID."'",	$db);
+							WHERE sampleid = '".$SelectedSampleID."'");
 			$myrow = DB_fetch_row($result);;
 			if($myrow[0]>'') {
 				$sql = "UPDATE qasamples SET cert='0'
-						WHERE sampleid <> '".$SelectedSampleID."'
-						AND prodspeckey='".$myrow[0]."'
-						AND lotkey='".$myrow[1]."'";
+						WHERE sampleid <> '".$SelectedSampleID . "'
+						AND prodspeckey='" . $myrow[0] . "'
+						AND lotkey='" . $myrow[1] . "'";
 				$msg = _('All other samples for this Specification and Lot was marked as Cert=No');
 				$ErrMsg = _('The update of the QA Sample failed because');
 				$DbgMsg = _('The SQL that was used and failed was');
-				$result = DB_query($sql,$db,$ErrMsg, $DbgMsg);
+				$result = DB_query($sql,$ErrMsg, $DbgMsg);
 				prnMsg($msg , 'success');
 			}
 		}
@@ -107,7 +109,7 @@ if (isset($_POST['submit'])) {
 		$SelectedSampleID=DB_Last_Insert_ID($db,'qasamples','sampleid');
 		if ($SelectedSampleID > '') {
 			$msg = _('Created New Sample');
-			prnMsg($msg , 'success');		
+			prnMsg($msg , 'success');
 		}
 	}
 	unset($SelectedSampleID);
@@ -115,25 +117,25 @@ if (isset($_POST['submit'])) {
 	unset($_POST['LotKey']);
 	unset($_POST['Identifier']);
 	unset($_POST['Comments']);
-	unset($_POST['Cert']);	
+	unset($_POST['Cert']);
 } elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
 
 // PREVENT DELETES IF DEPENDENT RECORDS
 
 	$sql= "SELECT COUNT(*) FROM sampleresults WHERE sampleresults.sampleid='".$SelectedSampleID."'
-											AND sampleresults.testvalue>''";
-	$result = DB_query($sql,$db);
+											AND sampleresults.testvalue > ''";
+	$result = DB_query($sql);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {
 		prnMsg(_('Cannot delete this Sample ID because there are test results tied to it'),'error');
 	} else {
-		$sql="DELETE FROM sampleresults WHERE sampleid='". $SelectedSampleID."'";
+		$sql="DELETE FROM sampleresults WHERE sampleid='" . $SelectedSampleID . "'";
 		$ErrMsg = _('The sample results could not be deleted because');
-		$result = DB_query($sql,$db,$ErrMsg);
-		$sql="DELETE FROM qasamples WHERE sampleid='". $SelectedSampleID."'";
+		$result = DB_query($sql,$ErrMsg);
+		$sql="DELETE FROM qasamples WHERE sampleid='" . $SelectedSampleID ."'";
 		$ErrMsg = _('The QA Sample could not be deleted because');
-		$result = DB_query($sql,$db,$ErrMsg);
+		$result = DB_query($sql,$ErrMsg);
 		echo $sql;
 		prnMsg(_('QA Sample') . ' ' . $SelectedSampleID . _('has been deleted from the database'),'success');
 		unset ($SelectedSampleID);
@@ -150,7 +152,7 @@ if (!isset($SelectedSampleID)) {
 	if (isset($_POST['ResetPart'])) {
 		unset($SelectedStockItem);
 	}
-	
+
 	if (isset($SampleID) AND $SampleID != '') {
 		if (!is_numeric($SampleID)) {
 			prnMsg(_('The Sample ID entered') . ' <U>' . _('MUST') . '</U> ' . _('be numeric'), 'error');
@@ -162,13 +164,13 @@ if (!isset($SelectedSampleID)) {
 	if (!Is_Date($_POST['FromDate'])) {
 		$InputError = 1;
 		prnMsg(_('Invalid From Date'),'error');
-		$_POST['FromDate']=Date(($_SESSION['DefaultDateFormat']), strtotime($UpcomingDate . ' - 15 days'));
-	} 
+		$_POST['FromDate']=Date(($_SESSION['DefaultDateFormat']), mktime(0, 0, 0, Date('m'), Date('d')-15, Date('Y')));
+	}
 	if (!Is_Date($_POST['ToDate'])) {
 		$InputError = 1;
 		prnMsg(_('Invalid To Date'),'error');
 		$_POST['ToDate'] = Date($_SESSION['DefaultDateFormat']);
-	} 
+	}
 	if (isset($_POST['SearchParts'])) {
 		if ($_POST['Keywords'] AND $_POST['StockCode']) {
 			prnMsg(_('Stock description keywords have been used in preference to the Stock code extract entered'), 'info');
@@ -182,7 +184,7 @@ if (!isset($SelectedSampleID)) {
 					SUM(locstock.quantity) as qoh,
 					stockmaster.units,
 				FROM stockmaster INNER JOIN locstock
-				ON stockmaster.stockid = locstock.stockid 
+				ON stockmaster.stockid = locstock.stockid
 				INNER JOIN locationusers ON locationusers.loccode = locstock.loccode
 						AND locationusers.userid='" .  $_SESSION['UserID'] . "'
 						AND locationusers.canview=1
@@ -228,14 +230,20 @@ if (!isset($SelectedSampleID)) {
 					stockmaster.units
 				ORDER BY stockmaster.stockid";
 		}
-		
+
 		$ErrMsg = _('No stock items were returned by the SQL because');
 		$DbgMsg = _('The SQL used to retrieve the searched parts was');
-		$StockItemsResult = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
+		$StockItemsResult = DB_query($SQL, $ErrMsg, $DbgMsg);
 	}
 
-	if (true or !isset($LotNumber) or $LotNumber == "") { //revisit later, right now always show all inputs
+	if (true or !isset($LotNumber) or $LotNumber == '') { //revisit later, right now always show all inputs
 		echo '<table class="selection"><tr><td>';
+		if (!isset($LotNumber)){
+			$LotNumber ='';
+		}
+		if (!isset($SampleID)){
+			$SampleID='';
+		}
 		if (isset($SelectedStockItem)) {
 			echo _('For the part') . ':<b>' . $SelectedStockItem . '</b> ' . _('and') . ' <input type="hidden" name="SelectedStockItem" value="' . $SelectedStockItem . '" />';
 		}
@@ -249,14 +257,13 @@ if (!isset($SelectedSampleID)) {
 				categorydescription
 			FROM stockcategory
 			ORDER BY categorydescription";
-	$result1 = DB_query($SQL, $db);
-	echo '
-			<table class="selection">
+	$result1 = DB_query($SQL);
+	echo '<table class="selection">
 			<tr>
-				<td>';
-	echo _('To search for Pick Lists for a specific part use the part selection facilities below') . '</td></tr>';
-	echo '<tr>
-			<td>' . _('Select a stock category') . ':<select name="StockCat">';
+				<td>' . _('To search for Pick Lists for a specific part use the part selection facilities below') . '</td>
+			</tr>
+			<tr>
+				<td>' . _('Select a stock category') . ':<select name="StockCat">';
 	while ($myrow1 = DB_fetch_array($result1)) {
 		if (isset($_POST['StockCat']) and $myrow1['categoryid'] == $_POST['StockCat']) {
 			echo '<option selected="selected" value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
@@ -380,7 +387,7 @@ if (!isset($SelectedSampleID)) {
 			} //no stock item selected
 		} //end no sample id selected
 		$ErrMsg = _('No QA samples were returned by the SQL because');
-		$SampleResult = DB_query($SQL, $db, $ErrMsg);
+		$SampleResult = DB_query($SQL, $ErrMsg);
 		if (DB_num_rows($SampleResult) > 0) {
 
 			echo '<table cellpadding="2" width="90%" class="selection">';
@@ -410,7 +417,7 @@ if (!isset($SelectedSampleID)) {
 				$Edit = '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedSampleID=' . $myrow['sampleid'] .'">' . _('Edit') .'</a>';
 				$Delete = '<a href="' .htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8')  .'?delete=yes&amp;SelectedSampleID=' . $myrow['sampleid'].'" onclick="return confirm(\'' . _('Are you sure you wish to delete this Sample ID ?') . '\');">' . _('Delete').'</a>';
 				$FormatedSampleDate = ConvertSQLDate($myrow['sampledate']);
-				
+
 				//echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?CopyTest=yes&amp;SelectedSampleID=' .$SelectedSampleID .'">' . _('Copy These Results') . '</a></div>';
 				//echo '<div class="centre"><a target="_blank" href="'. $RootPath . '/PDFTestPlan.php?SelectedSampleID=' .$SelectedSampleID .'">' . _('Print Testing Worksheet') . '</a></div>';
 				if ($myrow['cert']==1) {
@@ -418,7 +425,7 @@ if (!isset($SelectedSampleID)) {
 				} else {
 					$CertAllowed=_('No');
 				}
-				
+
 				echo '<td><a href="' . $ModifySampleID . '">' . str_pad($myrow['sampleid'],10,'0',STR_PAD_LEFT) . '</a></td>
 						<td>' . $myrow['prodspeckey'] . '</td>
 						<td>' . $myrow['description'] . '</td>
@@ -447,7 +454,7 @@ if (!isset($SelectedSampleID)) {
 
 if (isset($SelectedSampleID)) {
 	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Show All Samples') . '</a></div>';
-	
+
 }
 
 if (! isset($_GET['delete'])) {
@@ -464,10 +471,10 @@ if (! isset($_GET['delete'])) {
 						comments,
 						cert,
 						sampledate
-				FROM qasamples 
+				FROM qasamples
 				WHERE sampleid='".$SelectedSampleID."'";
-		
-		$result = DB_query($sql, $db);
+
+		$result = DB_query($sql);
 		$myrow = DB_fetch_array($result);
 
 		$_POST['ProdSpecKey'] = $myrow['prodspeckey'];
@@ -476,7 +483,7 @@ if (! isset($_GET['delete'])) {
 		$_POST['Comments'] = $myrow['comments'];
 		$_POST['SampleDate'] = ConvertSQLDate($myrow['sampledate']);
 		$_POST['Cert'] = $myrow['cert'];
-	
+
 		echo '<input type="hidden" name="SelectedSampleID" value="' . $SelectedSampleID . '" />';
 		echo '<table class="selection">
 				<tr>
@@ -487,24 +494,24 @@ if (! isset($_GET['delete'])) {
 		echo '<tr>
 				<td>' . _('Specification') . ':</td>
 				<td>' . $_POST['ProdSpecKey']. '</td>
-			</tr>';
-		echo '<tr>
+			</tr>
+			<tr>
 				<td>' . _('Lot') . ':</td>
 				<td>' . $_POST['LotKey']. '</td>
-			</tr>';
-		echo '<tr>
+			</tr>
+			<tr>
 				<td>' . _('Identifier') . ':</td>
 				<td><input type="text" name="Identifier" size="15" maxlength="15" value="' . $_POST['Identifier']. '" /></td>
-			</tr>';
-		echo '<tr>
+			</tr>
+			<tr>
 				<td>' . _('Comments') . ':</td>
 				<td><input type="text" name="Comments" size="30" maxlength="255" value="' . $_POST['Comments']. '" /></td>
-			</tr>';
-		echo '<tr>
+			</tr>
+			<tr>
 				<td>' . _('Sample Date') . ':</td>
 				<td><input class="date" type="text" name="SampleDate" size="10" maxlength="10" value="' . $_POST['SampleDate']. '" /></td>
-			</tr>';	
-		echo '<tr>
+			</tr>
+			<tr>
 				<td>' . _('Use for Cert?') . ':</td>
 				<td><select name="Cert">';
 		if ($_POST['Cert']==1){
@@ -538,30 +545,29 @@ if (! isset($_GET['delete'])) {
 								description
 							FROM prodspecs LEFT OUTER JOIN stockmaster
 							ON stockmaster.stockid=prodspecs.keyval";
-						
-		$ResultSelection=DB_query($SQLSpecSelect, $db);
+
+		$ResultSelection=DB_query($SQLSpecSelect);
 		echo '<tr>
 				<td>' . _('Specification') . ':</td>';
 		echo '<td><select name="ProdSpecKey">';
 		while ($MyRowSelection=DB_fetch_array($ResultSelection)){
 			echo '<option value="' . $MyRowSelection['keyval'] . '">' . $MyRowSelection['keyval'].' - ' .htmlspecialchars($MyRowSelection['description'], ENT_QUOTES,'UTF-8', false)  . '</option>';
 		}
-		echo '</select></td>	
-			</tr>';
-		echo '<tr>
+		echo '</select></td>
+			</tr>
+			<tr>
 				<td>' . _('Lot') . ':</td>
-				<td><input type="text" required="required" name="LotKey" size="15" maxlength="15" value="' . $_POST['LotKey']. '" /></td>
-			</tr>';
-		echo '<tr>
+				<td><input type="text" required="required" name="LotKey" size="15" maxlength="15" value="' . (isset($_POST['LotKey'])? $_POST['LotKey']:'') . '" /></td>
+			</tr>
+			<tr>
 				<td>' . _('Identifier') . ':</td>
-				<td><input type="text" name="Identifier" size="15" maxlength="15" value="' . $_POST['Identifier']. '" /></td>
-			</tr>';
-		echo '<tr>
+				<td><input type="text" name="Identifier" size="15" maxlength="15" value="' . (isset($_POST['Identifier'])? $_POST['Identifier']:'') . '" /></td>
+			</tr>
+			<tr>
 				<td>' . _('Comments') . ':</td>
-				<td><input type="text" name="Comments" size="30" maxlength="255" value="' . $_POST['Comments']. '" /></td>
-			</tr>';
-			
-		echo '<tr>
+				<td><input type="text" name="Comments" size="30" maxlength="255" value="' . (isset($_POST['Comments'])? $_POST['Comments']:'') . '" /></td>
+			</tr>
+			<tr>
 				<td>' . _('Use for Cert?') . ':</td>
 				<td><select name="Cert">';
 		if ($_POST['Cert']==1){

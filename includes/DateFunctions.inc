@@ -1,5 +1,5 @@
 <?php
-/* $Id: DateFunctions.inc 6966 2014-11-06 09:15:09Z daintree $*/
+/* $Id: DateFunctions.inc 7137 2015-02-08 02:15:28Z daintree $*/
 
 /*
 date validation and parsing functions
@@ -138,6 +138,9 @@ function GetMonthText($MonthNumber){
 			break;
 		case 12:
 			$Month = _('December');
+			break;
+		default:
+			$Month = _('error');
 			break;
 	}
 	return $Month;

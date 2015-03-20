@@ -1,5 +1,5 @@
 <?php
-/* $Id: Stocks.php 7037 2014-12-22 14:45:20Z tehonu $ */
+/* $Id: Stocks.php 7112 2015-01-31 18:10:59Z rchacon $ */
 /**************************************************************************************
 KL RICARD MODIFICATIONS:
 - management of the extra KL fileds in stockmaster
@@ -472,10 +472,10 @@ if (isset($_POST['submit'])) {
 																						language_id,
 																						descriptiontranslation,
 																						longdescriptiontranslation)
-												VALUES('" . $StockID . "','" . 
-															$LanguageId . "', '" . 
-															$_POST['Description_' . str_replace('.','_',$LanguageId)]  . "', '" . 
-															$_POST['LongDescription_' . str_replace('.','_',$LanguageId)]. 
+												VALUES('" . $StockID . "','" .
+															$LanguageId . "', '" .
+															$_POST['Description_' . str_replace('.','_',$LanguageId)]  . "', '" .
+															$_POST['LongDescription_' . str_replace('.','_',$LanguageId)].
 															"')",$ErrMsg,$DbgMsg,true);
 						}
 					}
@@ -502,7 +502,7 @@ if (isset($_POST['submit'])) {
 					$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
 				}
 
-				
+
 				//delete any properties for the item no longer relevant with the change of category
 				$result = DB_query("DELETE FROM stockitemproperties WHERE stockid ='" . $StockID . "'",$ErrMsg, $DbgMsg, true);
 
@@ -706,10 +706,10 @@ if (isset($_POST['submit'])) {
 																							language_id,
 																							descriptiontranslation,
 																							longdescriptiontranslation)
-													VALUES('" . $StockID . "','" . 
-																$LanguageId . "', '" . 
-																$_POST['Description_' . str_replace('.','_',$LanguageId)]  . "', '" . 
-																$_POST['longDescription_' . str_replace('.','_',$LanguageId)]. 
+													VALUES('" . $StockID . "','" .
+																$LanguageId . "', '" .
+																$_POST['Description_' . str_replace('.','_',$LanguageId)]  . "', '" .
+																$_POST['longDescription_' . str_replace('.','_',$LanguageId)].
 																"')",$ErrMsg,$DbgMsg,true);
 							}
 						}
@@ -1446,12 +1446,12 @@ echo '</select></td>
 	</tr>';
 
 echo '<tr>
-		<td><label for="Pansize">' . _('Pan Size') . ':</label></td>
-		<td><input class="number" id="Pansize" maxlength="6" name="Pansize" size="6" title="' . _('Order multiple. It is the minimum packing quantity.') . '" type="text" value="' . locale_number_format($_POST['Pansize'],0) . '" /></td>
+		<td><label for="PanSize">' . _('Pan Size') . ':</label></td>
+		<td><input class="number" id="PanSize" maxlength="6" name="Pansize" size="6" title="' . _('Order multiple. It is the minimum packing quantity.') . '" type="text" value="' . locale_number_format($_POST['Pansize'],0) . '" /></td>
 	</tr>
 	 <tr>
-		<td>' . _('Shrinkage Factor') . ':</td>
-		<td><input type="text" class="number" name="ShrinkFactor" size="6" maxlength="6" value="' . locale_number_format($_POST['ShrinkFactor'],0) . '" /></td>
+		<td><label for="ShrinkageFactor">' . _('Shrinkage Factor') . ':</label></td>
+		<td><input class="number" id="ShrinkageFactor" maxlength="6" name="ShrinkFactor" size="6" title="' . _('Amount by which an output falls short of the estimated or planned output.') . '" type="text" value="' . locale_number_format($_POST['ShrinkFactor'],0) . '" /></td>
 	</tr>';
 
 echo '</table>

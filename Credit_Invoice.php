@@ -1,5 +1,5 @@
 <?php
-/* $Id: Credit_Invoice.php 7021 2014-12-14 02:04:44Z tehonu $*/
+/* $Id: Credit_Invoice.php 7227 2015-03-14 09:59:55Z exsonqu $*/
 
 /*Functions to get the GL codes to post the transaction to */
 include('includes/GetSalesTransGLCodes.inc');
@@ -166,7 +166,7 @@ if(!isset($_GET['InvoiceNumber']) AND !$_SESSION['ProcessingCredit']) {
 														$myrow['controlled'],
 														$myrow['serialised'],
 														$myrow['decimalplaces'],
-														$myrow['narrative'],
+														str_replace("\\r\\n", " ", $myrow['narrative']),
 														'No',
 														-1,
 														$myrow['taxcatid'],
@@ -273,14 +273,13 @@ if($_SESSION['CreditItems' . $identifier]->ItemsOrdered > 0 OR isset($_POST['New
 
 /* Always display credit quantities
 NB QtyDispatched in the LineItems array is used for the quantity to credit */
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/credit.gif" title="' . _('Search') . '" alt="" />' . $Title . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/credit.png" title="' . _('Search') . '" alt="" />' . $Title . '</p>';
+
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier=' . $identifier . '" method="post">';
+echo '<div>';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if(!isset($_POST['ProcessCredit'])) {
-
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier=' . $identifier . '" method="post">';
-    echo '<div>';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-
 
 	echo '<table cellpadding="2" class="selection">';
 	echo '<tr><th colspan="13">';
@@ -494,8 +493,7 @@ if(isset($_POST['CreditType']) AND($_POST['CreditType']=='WriteOff' OR $_POST['C
 	foreach($_SESSION['CreditItems' . $identifier]->LineItems as $CreditLine) {
 		$SQL = "SELECT count(*) FROM salesorderdetails WHERE orderno = '" . $_SESSION['CreditItems'.$identifier]->OrderNo . "'
 									AND stkcode = '" . $CreditLine->StockID . "'
-									AND quantity >=" . $CreditLine->QtyDispatched . "
-									AND qtyinvoiced >=" . $CreditLine->QtyDispatched;
+									AND qtyinvoiced >='" . $CreditLine->QtyDispatched . "'";
 		$ErrMsg = _('Failed to retrieve salesoderdetails to compare if the order has been invoiced and that it is possible that the credit note may not already have been done');
 		$DuplicateCreditResult = DB_query($SQL,$ErrMsg);
 		$myrow1 = DB_fetch_array($DuplicateCreditResult);
@@ -748,8 +746,8 @@ if(isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 									stockmaster
 								WHERE bom.component=stockmaster.stockid
 								AND bom.parent='" . $CreditLine->StockID . "'
-								AND bom.effectiveto > '" . Date('Y-m-d') . "'
-								AND bom.effectiveafter < '" . Date('Y-m-d') . "'";
+                                AND bom.effectiveafter <= '" . date('Y-m-d') . "'
+                                AND bom.effectiveto > '" . date('Y-m-d') . "'";
 
 					$ErrMsg = _('Could not retrieve assembly components from the database for') . ' ' . $CreditLine->StockID . ' ' . _('because');
 					$DbgMsg = _('The SQL that failed was');
@@ -923,7 +921,7 @@ if(isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 													'" . $CreditNo . "',
 													'" . $_SESSION['CreditItems' . $identifier]->Location . "',
 													'" . $DefaultDispatchDate . "',
-													'" . $_SESSION['UserID'] . "'
+													'" . $_SESSION['UserID'] . "',
 													'" . $_SESSION['CreditItems' . $identifier]->DebtorNo . "',
 													'" . $_SESSION['CreditItems' . $identifier]->Branch . "',
 													'" . $LocalCurrencyPrice . "',
@@ -1518,7 +1516,7 @@ if(isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 		<table class="selection">
 		<tr>
 			<td>' . _('Credit Note Type') . '</td>
-			<td><select name="CreditType" tabindex="'.$tabindex++.'">';
+			<td><select name="CreditType" tabindex="'.$tabindex++.'" onchange="ReloadForm(Update)">';
 
 	if(!isset($_POST['CreditType']) OR $_POST['CreditType']=='Return') {
 		echo '<option selected="selected" value="Return">' . _('Goods returned to store') . '</option>';
@@ -1611,6 +1609,9 @@ if(isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 		echo '</select></td>';
 	}
 	echo '</tr>';
+	if(!isset($_POST['CreditText'])){
+		$_POST['CreditText'] = '';
+	}
 	echo '<tr>
 			<td>' . _('Credit note text') . '</td>
 			<td><textarea name="CreditText" cols="31" rows="5" tabindex="'.$tabindex++.'">' . $_POST['CreditText'] . '</textarea></td>

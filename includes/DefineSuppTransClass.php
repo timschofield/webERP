@@ -1,5 +1,5 @@
 <?php
-/* $Id: DefineSuppTransClass.php 6942 2014-10-27 02:48:29Z daintree $*/
+/* $Id: DefineSuppTransClass.php 7202 2015-03-07 14:15:55Z exsonqu $*/
 /* Definition of the Supplier Transactions class to hold all the information for an accounts payable invoice or credit note
 */
 
@@ -36,6 +36,7 @@ Class SuppTrans {
 	var $TaxGroupDescription;
 	var $Taxes;
 	var $Hold;
+	var $ShiptCounter;
 
 	function SuppTrans(){
 	/*Constructor function initialises a new Supplier Transaction object */
@@ -45,6 +46,7 @@ Class SuppTrans {
 		$this->Contracts = array();
 		$this->Assets = array();
 		$this->Taxes = array();
+		$ShiptCounter = 0;
 	}
 
 	function GetTaxes () {

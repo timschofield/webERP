@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: MRP.php 6986 2014-11-15 09:19:14Z exsonqu $*/
+/* $Id: MRP.php 7093 2015-01-22 20:15:40Z vvs2012 $*/
 
 include('includes/session.inc');
 $Title = _('Run MRP Calculation');
@@ -897,8 +897,8 @@ function CreateLowerLevelRequirement(&$db,
 				 LEFT JOIN levels
 				   ON bom.component = levels.part
 			WHERE bom.parent = '".$TopPart."'
-		 AND effectiveafter <= '" . date('Y-m-d') . "'
-		 AND effectiveto >= '" . date('Y-m-d') . "'";
+            AND bom.effectiveafter <= '" . date('Y-m-d') . "'
+            AND bom.effectiveto > '" . date('Y-m-d') . "'";
 	$ResultBOM = DB_query($sql);
 	while ($myrow=DB_fetch_array($ResultBOM)) {
 		// Calculate required date by subtracting leadtime from top part's required date

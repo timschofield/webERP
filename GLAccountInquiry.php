@@ -1,6 +1,5 @@
 <?php
-
-/* $Id: GLAccountInquiry.php 6942 2014-10-27 02:48:29Z daintree $*/
+/* $Id: GLAccountInquiry.php 7044 2014-12-27 19:53:03Z rchacon $*/
 
 include ('includes/session.inc');
 $Title = _('General Ledger Account Inquiry');
@@ -293,7 +292,7 @@ if (isset($_POST['Show'])){
 				<td class="number"><b>%s</b></td>
 				<td>%s</td>
 				</tr>',
-				$myrow['typename'],
+				_($myrow['typename']),
 				$URL_to_TransDetail,
 				$myrow['typeno'],
 				$FormatedTranDate,

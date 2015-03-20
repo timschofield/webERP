@@ -4,7 +4,7 @@
 include('includes/session.inc');
 $Title = _('Product Specifications Maintenance');
 $ViewTopic= 'QualityAssurance';// Filename in ManualContents.php's TOC.
-$BookMark = 'QA';// Anchor's id in the manual's html document.
+$BookMark = 'QA_ProdSpecs';// Anchor's id in the manual's html document.
 include('includes/header.inc');
 
 if (isset($_GET['SelectedQATest'])){
@@ -40,13 +40,14 @@ echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/m
 if (isset($_GET['CopySpec']) OR isset($_POST['CopySpec'])) {
 	if (!isset($_POST['CopyTo']) OR $_POST['CopyTo']=='' ) {
 		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-		echo '<div>';
-		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-		echo _('Enter The Item, Fixed Asset or Template to Copy this Specification to') . ':<input type="text" name="CopyTo" size="25" maxlength="25" />';
-		echo '<div class="centre">
-					<input type="hidden" name="KeyValue" value="' . $KeyValue . '" />
-					<input type="submit" name="CopySpec" value="' . _('Copy') . '" />
-			</div></form>';
+		echo '<div>
+			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+		echo _('Enter The Item, Fixed Asset or Template to Copy this Specification to') . ':<input type="text" name="CopyTo" size="25" maxlength="25" />
+			<div class="centre">
+				<input type="hidden" name="KeyValue" value="' . $KeyValue . '" />
+				<input type="submit" name="CopySpec" value="' . _('Copy') . '" />
+			</div>
+			</form>';
 		include('includes/footer.inc');
 		exit;
 	} else {
@@ -86,25 +87,26 @@ if (isset($_GET['CopySpec']) OR isset($_POST['CopySpec'])) {
 if (!isset($KeyValue) OR $KeyValue=='') {
 	//prompt user for Key Value
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method="post">
-		<div>
-		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-		<table class="selection">
-		<tr>
-			<td>' . _('Enter Specification Name') .':</td>
-			<td><input type="text" name="KeyValue" size="25" maxlength="25" /></td>
-		</tr>
-		</table>
-		</div>
-		<div>
-		<input type="submit" name="pickspec" value="' . _('Submit') . '" />
-		</div>
+			<div>
+			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+			<table class="selection">
+				<tr>
+					<td>' . _('Enter Specification Name') .':</td>
+					<td><input type="text" name="KeyValue" size="25" maxlength="25" /></td>
+				</tr>
+			</table>
+			</div>
+			<div>
+				<input type="submit" name="pickspec" value="' . _('Submit') . '" />
+			</div>
 		</form>
 		<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method="post">
-		<div>
-		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-		<table class="selection">
-		<tr>
-			<td>' . _('Or Select Existing Specification') .':</td>';
+			<div>
+				<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+				<table class="selection">
+				<tr>
+					<td>' . _('Or Select Existing Specification') .':</td>';
+
 	$SQLSpecSelect="SELECT DISTINCT(keyval),
 							description
 						FROM prodspecs LEFT OUTER JOIN stockmaster
@@ -117,12 +119,12 @@ if (!isset($KeyValue) OR $KeyValue=='') {
 	while ($MyRowSelection=DB_fetch_array($ResultSelection)){
 		echo '<option value="' . $MyRowSelection['keyval'] . '">' . $MyRowSelection['keyval'].' - ' .htmlspecialchars($MyRowSelection['description'], ENT_QUOTES,'UTF-8', false)  . '</option>';
 	}
-	echo '</select></td>';
-	echo '</tr>
+	echo 	'</select></td>
+			</tr>
 		</table>
 		</div>
 		<div>
-		<input type="submit" name="pickspec" value="' . _('Submit') . '" />
+			<input type="submit" name="pickspec" value="' . _('Submit') . '" />
 		</div>
 		</form>';
 
@@ -155,18 +157,18 @@ if (isset($_GET['ListTests'])) {
 	$result = DB_query($sql);
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
     echo '<div>';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table class="selection">';
-	echo '<tr>
-			<th class="ascending">' . _('Add') . '</th>
-			<th class="ascending">' . _('Name') . '</th>
-			<th class="ascending">' . _('Method') . '</th>
-			<th class="ascending">' . _('Units') . '</th>
-			<th>' . _('Possible Values') . '</th>
-			<th>' . _('Target Value') . '</th>
-			<th>' . _('Range Min') . '</th>
-			<th>' . _('Range Max') . '</th>
-		</tr>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+		<table class="selection">
+			<tr>
+				<th class="ascending">' . _('Add') . '</th>
+				<th class="ascending">' . _('Name') . '</th>
+				<th class="ascending">' . _('Method') . '</th>
+				<th class="ascending">' . _('Units') . '</th>
+				<th>' . _('Possible Values') . '</th>
+				<th>' . _('Target Value') . '</th>
+				<th>' . _('Range Min') . '</th>
+				<th>' . _('Range Max') . '</th>
+			</tr>';
 	$k=0;
 	$x=0;
 	while ($myrow=DB_fetch_array($result)) {
@@ -274,7 +276,7 @@ if (isset($_POST['AddTests'])) {
 								showontestplan,
 								active
 						FROM qatests WHERE testid='" .$_POST['AddTestID' .$i]. "'";
-			echo $sql;
+			//echo $sql;
 			$msg = _('A Product Specification record has been added for Test ID') . ' ' . $_POST['AddTestID' .$i]  . ' for ' . ' ' . $KeyValue ;
 			$ErrMsg = _('The insert of the Product Specification failed because');
 			$DbgMsg = _('The SQL that was used and failed was');

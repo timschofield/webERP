@@ -1,5 +1,5 @@
 <?php
-/* $Id: CustomerInquiry.php 7004 2014-11-24 15:56:19Z rchacon $*/
+/* $Id: CustomerInquiry.php 7138 2015-02-08 02:17:15Z daintree $*/
 
 include('includes/session.inc');
 $Title = _('Customer Inquiry');

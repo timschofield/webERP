@@ -1,5 +1,5 @@
 <?php
-/* $Id: class.pdf.php 6803 2014-08-04 20:16:08Z rchacon $ */
+/* $Id: class.pdf.php 7160 2015-02-20 16:12:16Z rchacon $ */
 
      /* -----------------------------------------------------------------------------------------------
 	This class was an extension to the FPDF class to use the syntax of the R&OS pdf.php class,
@@ -71,17 +71,20 @@ if (!class_exists('Cpdf', false)) {
 			TCPDF::Line ($x1,$this->h-$y1,$x2,$this->h-$y2,$style);
 		}
 
-		function addText($xb,$YPos,$size,$text/*,$angle=0,$wordSpaceAdjust=0*/) {
+		function addText($XPos,$YPos,$fontsize,$text/*,$angle=0,$wordSpaceAdjust=0*/) {
+			// $XPos = cell horizontal coordinate from page left side to cell left side in dpi (72dpi = 25.4mm).
+			// $YPos = cell vertical coordinate from page bottom side to cell top side in dpi (72dpi = 25.4mm).
+			// $fontsize = font size in dpi (72dpi = 25.4mm).
 	// Javier	$text = html_entity_decode($text);
-			$this->SetFontSize($size);
-			$this->Text($xb, $this->h-$YPos, $text);
+			$this->SetFontSize($fontsize);// Public function SetFontSize() in ~/includes/tcpdf/tcpdf.php.
+			$this->Text($XPos, $this->h-$YPos, $text);// Public function Text() in ~/includes/tcpdf/tcpdf.php.
 		}
 
 		function addTextWrap($XPos, $YPos, $Width, $Height, $Text, $Align='J', $border=0, $fill=0) {
 			// R&OS version 0.12.2: "addTextWrap function is no more, use addText instead".
 			/* Returns the balance of the string that could not fit in the width
-			 * XPos = pdf horizontal coordinate
-			 * YPos = pdf vertical coordiante
+			// $XPos = cell horizontal coordinate from page left side to cell left side in dpi (72dpi = 25.4mm).
+			// $YPos = cell vertical coordinate from page bottom side to cell bottom side in dpi (72dpi = 25.4mm).
 			*/
 			//some special characters are html encoded
 			//this code serves to make them appear human readable in pdf file
@@ -131,7 +134,8 @@ if (!class_exists('Cpdf', false)) {
 			$ns=0;
             $cw = $this->GetStringWidth($s, '', '', 0, true);
 			while($i<$nb) {
-				$c=$s{$i};
+				/*$c=$s{$i};*/
+				$c=mb_substr($s, $i, 1, 'UTF-8');
 				if($c==' ' AND $i>0) {
 					$sep=$i;
 					$ls=$l;

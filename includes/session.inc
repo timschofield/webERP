@@ -1,5 +1,5 @@
 <?php
-/* $Id: session.inc 6966 2014-11-06 09:15:09Z daintree $*/
+/* $Id: session.inc 7056 2015-01-02 00:53:14Z rchacon $*/
 
 /*****************************************************************************************
 KL RICARD MODIFICATIONS:
@@ -22,7 +22,7 @@ if (!file_exists($PathPrefix . 'config.php')){
 }
 include($PathPrefix . 'config.php');
 
-if (isset($dbuser)) {
+if (isset($dbuser)) { //this gets past an upgrade issue where old versions used lower case variable names
 	$DBUser=$dbuser;
 	$DBPassword=$dbpassword;
 	$DBType=$dbType;
@@ -109,6 +109,7 @@ if(basename($_SERVER['SCRIPT_NAME'])=='Logout.php'){
 	}
 
 	/*  Need to set the theme to make login screen nice */
+	$Theme = (isset($_SESSION['Theme'])) ? $_SESSION['Theme'] : $DefaultTheme;
 	/* RICARD KL Set up the login theme for regular and test webERP */
 	if (strpos($_SERVER['PHP_SELF'],"TEST")){
 		$Theme = (isset($_SESSION['Theme'])) ? $_SESSION['Theme'] : 'gel'; 
@@ -159,8 +160,8 @@ If (isset($_POST['Theme']) AND ($_SESSION['UsersRealName'] == $_POST['RealName']
 } elseif (isset($_SESSION['Theme'])) {
 	$Theme = $_SESSION['Theme'];
 } else {
-	$Theme = 'xenos';
-	$_SESSION['Theme'] = 'xenos';
+	$Theme = $DefaultTheme;
+	$_SESSION['Theme'] = '$DefaultTheme';
 }
 
 

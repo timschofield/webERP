@@ -1,5 +1,5 @@
 <?php
-/* $Id: api_debtortransactions.php 6945 2014-10-27 07:20:48Z daintree $*/
+/* $Id: api_debtortransactions.php 7093 2015-01-22 20:15:40Z vvs2012 $*/
 
 /* Check that the transaction number is unique
  * for this type of transaction*/
@@ -703,8 +703,8 @@ function ConvertToSQLDate($DateEntry) {
 							FROM bom INNER JOIN stockmaster
 							ON bom.component=stockmaster.stockid
 							WHERE bom.parent='" . $CN_Line['stockid'] . "'
-							AND bom.effectiveto >= '" . Date('Y-m-d') . "'
-							AND bom.effectiveafter < '" . Date('Y-m-d') . "'";
+                            AND bom.effectiveafter <= '" . date('Y-m-d') . "'
+							AND bom.effectiveto > '" . date('Y-m-d') . "'";
 
 				$AssResult = api_DB_query($SQL);
 

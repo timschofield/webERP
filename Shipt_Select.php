@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: Shipt_Select.php 6944 2014-10-27 07:15:34Z daintree $*/
+/* $Id: Shipt_Select.php 7200 2015-03-07 13:57:58Z exsonqu $*/
 
 include('includes/session.inc');
 $Title = _('Search Shipments');
@@ -126,7 +126,7 @@ if (!isset($ShiptRef) or $ShiptRef==""){
 
 	echo '</select>';
 	echo ' <select name="OpenOrClosed">';
-	if ($_POST['OpenOrClosed']==1){
+	if (isset($_POST['OpenOrClosed']) AND $_POST['OpenOrClosed']==1){
 		echo '<option selected="selected" value="1">' .  _('Closed Shipments Only')  . '</option>';
 		echo '<option value="0">' .  _('Open Shipments Only')  . '</option>';
 	} else {

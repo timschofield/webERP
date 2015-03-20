@@ -1,17 +1,19 @@
 <?php
-
-/* $Id: SystemParameters.php 7029 2014-12-18 02:07:07Z tehonu $*/
+/* $Id: SystemParameters.php 7079 2015-01-13 09:10:28Z daintree $*/
+/* This script is for maintenance of the system parameters. */
 
 include('includes/session.inc');
 
-$Title = _('System Parameters');
-$ViewTopic= 'GettingStarted';
-$BookMark = 'SystemConfiguration';
+$Title = _('System Parameters');// Screen identificator.
+$ViewTopic= 'GettingStarted';// Filename's id in ManualContents.php's TOC.
+$BookMark = 'SystemConfiguration';// Anchor's id in the manual's html document.
 include('includes/header.inc');
-include('includes/CountriesArray.php');
+echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
+	'/images/maintenance.png" title="' .// Title icon.
+	$Title . '" />' .// Icon title.
+	$Title . '</p>';// Page title.
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Supplier Types')
-	. '" alt="" />' . $Title. '</p>';
+include('includes/CountriesArray.php');
 
 if (isset($_POST['submit'])) {
 
@@ -107,7 +109,7 @@ if (isset($_POST['submit'])) {
 		prnMsg(_('The Quality ProdSpec Text may not contain single quotes and may not be longer than 5000 chars'),'error');
 	} elseif (mb_strstr($_POST['X_QualityCOAText'], "'") OR mb_strlen($_POST['X_QualityCOAText']) > 5000) {
 		$InputError = 1;
-		prnMsg(_('The Quality COA Text may not contain single quotes and may not be longer than 5000 chars'),'error');	
+		prnMsg(_('The Quality COA Text may not contain single quotes and may not be longer than 5000 chars'),'error');
 	}
 
 	if ($InputError !=1){
@@ -116,6 +118,25 @@ if (isset($_POST['submit'])) {
 
 		if ($_SESSION['DefaultDateFormat'] != $_POST['X_DefaultDateFormat'] ) {
 			$sql[] = "UPDATE config SET confvalue = '".$_POST['X_DefaultDateFormat']."' WHERE confname = 'DefaultDateFormat'";
+		}
+		if($DefaultTheme != $_POST['X_DefaultTheme']) {// If not equal, update the default theme.
+			// BEGIN: Update the config.php file:
+			$fhandle = fopen('config.php', 'r');
+			if($fhandle) {
+				$content = fread($fhandle, filesize('config.php'));
+				$content = str_replace(' ;\n', ';\n', $content);// Clean space before the end-of-php-line.
+				$content = str_replace('\''.$DefaultTheme .'\';', '\''.$_POST['X_DefaultTheme'].'\';', $content);
+				$fhandle = fopen('config.php','w');
+				if(!fwrite($fhandle,$content)) {
+					prnMsg(_('Cannot write to the configuration file.'), 'error');
+				} else {
+					prnMsg(_('The configuration file was updated.'), 'info');
+				}
+				fclose($fhandle);
+			} else {
+				prnMsg(_('Cannot open the configuration file.'), 'error');
+			}
+			// END: Update the config.php file.
 		}
 		if ($_SESSION['PastDueDays1'] != $_POST['X_PastDueDays1'] ) {
 			$sql[] = "UPDATE config SET confvalue = '".$_POST['X_PastDueDays1']."' WHERE confname = 'PastDueDays1'";
@@ -404,6 +425,27 @@ echo '<tr style="outline: 1px solid"><td>' . _('Default Date Format') . ':</td>
 	</select></td>
 	<td>' . _('The default date format for entry of dates and display.') . '</td></tr>';
 
+// DefaultTheme:
+if (is_writable('config.php')) {
+	echo '<tr style="outline: 1px solid"><td>' . _('Default Theme') . ':</td>
+			<td><select name="X_DefaultTheme">';
+	$ThemeDirectories = scandir('css');// List directories inside ~/css. Each diretory is a theme.
+	foreach($ThemeDirectories as $ThemeName) {
+		if(is_dir('css/'.$ThemeName) AND $ThemeName!='.' AND $ThemeName!='..' AND $ThemeName!='.svn') {
+			echo '<option';
+			if ($DefaultTheme == $ThemeName) {
+				echo ' selected="selected"';
+			}
+			echo ' value="'. $ThemeName.'">' . $ThemeName . '</option>';
+		}
+	}
+	echo '</select></td>
+			<td>' . _("The default theme to use for the login screen and the setup of new users. The users' theme selection will override it.") . '</td>
+		</tr>';
+} else {
+	echo '<input type="hidden" name="X_DefaultTheme" value="' . $DefaultTheme . '" />';
+}
+// ---------- New section:
 echo '<tr><th colspan="3">' . _('Accounts Receivable/Payable Settings') . '</th></tr>';
 
 // PastDueDays1
@@ -465,8 +507,8 @@ echo '<tr style="outline: 1px solid"><td>' . _('Sales Order Allows Same Item Mul
 echo '<tr style="outline: 1px solid">
 		<td>' . _('Order Entry allows Line Item Narrative') . ':</td>
 		<td><select name="X_AllowOrderLineItemNarrative">
-		<option '.($_SESSION['AllowOrderLineItemNarrative']=='1'?'selected="selected" ':'').'value="1">' . _('Allow Narrative Entry') . '</option>
-		<option '.($_SESSION['AllowOrderLineItemNarrative']=='0'?'selected="selected" ':'').'value="0">' . _('No Narrative Line') . '</option>
+		<option ' . ($_SESSION['AllowOrderLineItemNarrative']=='1'?'selected="selected" ':'').'value="1">' . _('Allow Narrative Entry') . '</option>
+		<option ' . ($_SESSION['AllowOrderLineItemNarrative']=='0'?'selected="selected" ':'').'value="0">' . _('No Narrative Line') . '</option>
 		</select></td>
 		<td>' . _('Select whether or not to allow entry of narrative on order line items. This narrative will appear on invoices and packing slips. Useful mainly for service businesses.') . '</td>
 	</tr>';
@@ -477,7 +519,8 @@ if (!isset($_POST['X_ItemDescriptionLanguages'])){
 echo '<tr style="outline: 1px solid">
 		<td>' . _('Languages to Maintain Translations for Item Descriptions') . ':</td>
 		<td><select name="X_ItemDescriptionLanguages[]" size="5" multiple="multiple" >';
-		echo '<option value="">' . _('None')  . '</option>';
+
+		echo '<option value=""' . (count($LanguagesArray)==0 ? '':'selected="selected"') . '>' . _('None')  . '</option>';
 foreach ($LanguagesArray as $LanguageEntry => $LanguageName){
 	if (isset($_POST['X_ItemDescriptionLanguages']) AND in_array($LanguageEntry,$_POST['X_ItemDescriptionLanguages'])){
 		echo '<option selected="selected" value="' . $LanguageEntry . '">' . $LanguageName['LanguageName']  . '</option>';
@@ -489,11 +532,11 @@ echo '</select></td>
 		<td>' . _('Select the languages in which translations of the item description will be maintained. The default language is excluded.') . '</td>
 	</tr>';
 
-// Google Translator API Key 
+// Google Translator API Key
 echo '<tr style="outline: 1px solid"><td>' . _('Google Translator API Key') . ':</td>
 	<td><input type="text" name="X_GoogleTranslatorAPIKey" size="25" maxlength="50" value="' . $_SESSION['GoogleTranslatorAPIKey'] . '" /></td>
 	<td>' . _('Google Translator API Key to allow automatic translations. More info at https://cloud.google.com/translate/')  . '</td></tr>';
-	
+
 //'RequirePickingNote'
 echo '<tr style="outline: 1px solid"><td>' . _('A picking note must be produced before an order can be delivered') . ':</td>
 	<td><select name="X_RequirePickingNote">

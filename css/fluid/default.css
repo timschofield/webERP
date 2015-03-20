@@ -1,4 +1,5 @@
-/* 
+/* $Id: default.css 7166 2015-02-21 21:18:59Z Joshua $*/
+/*
 "Fluid Tabs" theme for webERP
 
 by Hindra Joshua
@@ -51,10 +52,16 @@ th{ /* table heading */
 	text-align:center;
 }
 th.number{
-	font-weight:normal;
 	background-color:#cccce5;
 	color:#330000;
+	font-weight:normal;
 	text-align:right;
+}
+th.text{
+	background-color:#cccce5;
+	color:#330000;
+	font-weight:normal;
+	text-align:left;
 }
 th.ascending {
   cursor: s-resize;
@@ -90,6 +97,9 @@ td.select{
 }
 td.number{
 	text-align:right;
+}
+td.text{
+	text-align:left;
 }
 .centre{ /* used */
 	margin:0 auto;
@@ -389,3 +399,12 @@ list-style-image:url(bullet.gif);
 }
 #FooterVersionDiv{}
 #FooterTimeDiv{}
+#Report {
+	/* Division id for reports. */}
+#Report table {
+	/* Body of a report formatted with table tag. */
+}
+.centre {
+	text-align:center;
+	/* centre class (general). */
+}

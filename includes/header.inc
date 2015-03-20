@@ -1,5 +1,5 @@
 <?php
-/* $Id: header.inc 6644 2014-03-27 20:04:34Z rchacon $ */
+/* $Id: header.inc 7155 2015-02-17 20:14:32Z vvs2012 $ */
 
 	// Titles and screen header
 	// Needs the file config.php loaded where the variables are defined for
@@ -37,7 +37,8 @@
 	} else {
 		echo '<meta http-equiv="Content-Type" content="application/html; charset=utf-8" />';
 	}
-	echo '<link href="' . $RootPath . '/css/'. $_SESSION['Theme'] .'/default.css" rel="stylesheet" type="text/css" />';
+    echo '<link href="' . $RootPath . '/css/print.css" rel="stylesheet" type="text/css" media="print" />';
+	echo '<link href="' . $RootPath . '/css/'. $_SESSION['Theme'] .'/default.css" rel="stylesheet" type="text/css" media="screen"/>';
 	echo '<script type="text/javascript" src = "'.$RootPath.'/javascripts/MiscFunctions.js"></script>';
 	echo '</head>';
 	echo '<body>';

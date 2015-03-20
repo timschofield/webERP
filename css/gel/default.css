@@ -1,4 +1,5 @@
-/*** 
+/* $Id: default.css 7212 2015-03-09 04:20:16Z rchacon $*/
+/***
 
 New "Gel" Theme for WebERP
 
@@ -7,10 +8,10 @@ by Hindra Joshua
 Based from the previous theme "Gel"
 Credits to the original authors.
 
-NOTE: 
+NOTE:
 This CSS is not yet optimized. Some styles maybe 'redundant' or 'unused',
 but for the obvious one it will be cleaned up.
-To optimized the rest we should examined the whole codes! That would be for 
+To optimized the rest we should examined the whole codes! That would be for
 the next project. :)
 
 ***/
@@ -69,10 +70,16 @@ th {
 	text-align: center;
 }
 th.number {
-	text-align: right;
-	font-weight: normal;
 	background-color: #ccc;
 	color: #330000;
+	font-weight: normal;
+	text-align: right;
+}
+th.text {
+	background-color: #ccc;
+	color: #330000;
+	font-weight: normal;
+	text-align: left;
 }
 th.ascending {
   cursor: s-resize;
@@ -167,11 +174,11 @@ textarea:hover{
 div.error { /*** is this used??? ***/
 	background-color:red;
 	color: white;
-	font-style: italic; 
+	font-style: italic;
 	font-weight:bold;
 	border: 3px solid red;
 }
-div.warn { 
+div.warn {
 	background-color:#fa0;
 	color: black;
 	border: 1px solid black;
@@ -357,9 +364,9 @@ li { /* ??? */
     display:inline; /* items are inline */
 }
 
-/*** links as buttons!!! clicking anywhere in the button will activate 
+/*** links as buttons!!! clicking anywhere in the button will activate
      the link!!! ***HJ***/
-	 
+
 #QuickMenuDiv li a{
 	padding:5px; /* links as button */
 	border:2px outset transparent; /* un-pressed state */
@@ -372,7 +379,7 @@ li { /* ??? */
 	border:2px inset steelblue; /* pressed state */
 	text-decoration:none; /* no underline */
 	color:whie;
-	border-radius:15px;	
+	border-radius:15px;
 }
 
 /*** BODY ***/
@@ -399,7 +406,7 @@ li { /* ??? */
 #MainMenuDiv{
 	float:left; /* REQUIRED: to the left side */
 	white-space:nowrap; /* don't break text */
-	text-align:center; 
+	text-align:center;
 	width:11%;
 	background:url(images/gelbluev.png) repeat-y blue;
 	background-size:contain;
@@ -407,7 +414,7 @@ li { /* ??? */
 	border-radius:20px;
 	margin-top:5px;
 	padding:3px;
-	
+
 }
 #MainMenuDiv ul{
 	list-style:none; /* REQUIRED: hide bullets */
@@ -430,14 +437,14 @@ li { /* ??? */
 	text-decoration:none;
 	padding:3px;
 	border:2px inset steelblue;
-	background:none;	
+	background:none;
 	border-radius:15px;
 }
 #MainMenuDiv .main_menu_selected a{ /* the selected button */
 	text-decoration:none;
 	padding:3px;
 	border:2px inset steelblue;
-	background:none;	
+	background:none;
 	border-radius:15px;
 }
 
@@ -454,7 +461,7 @@ li { /* ??? */
 #SubMenuDiv ul{
 	list-style-type:none; /* REQUIRED: hide bullets */
 	padding:0; /* REQUIRED: remove extra gaps (ex-bullets) */
-	margin:0;	
+	margin:0;
 	border:thin solid black;
 	margin-left:3px;
 }
@@ -494,10 +501,10 @@ li { /* ??? */
 	background:#bfd8ff;
 }
 #TransactionsDiv{
-	display:table-cell;	
+	display:table-cell;
 }
 #InquiriesDiv{
-	display:table-cell;		
+	display:table-cell;
 }
 #InquiriesDiv div{ /* default div, used for custom report header */
 	background:#dddddd;
@@ -506,14 +513,14 @@ li { /* ??? */
 /*	border:thin outset silver;*/
 }
 #MaintenanceDiv{
-	display:table-cell;	
+	display:table-cell;
 }
 
 /*** FOOTER ***/
 
 #FooterDiv{
 	clear:both; /* REQUIRED */
-    overflow:hidden;	
+    overflow:hidden;
     color:gray;
 	background:url(images/bar.png) repeat-x lightgray;
 	border:thin solid lightgray;
@@ -538,6 +545,15 @@ li { /* ??? */
 	float:right;
 	line-height:2.8em; /* Center the text vertically.
 						  [vertical-align has no effect on text alone] */
+}
+#Report {
+	/* Division id for reports. */}
+#Report table {
+	/* Body of a report formatted with table tag. */
+}
+.centre {
+	text-align:center;
+	/* centre class (general). */
 }
 
 /*** END ***/

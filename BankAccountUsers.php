@@ -1,11 +1,17 @@
 <?php
+/* $Id: BankAccountUsers.php 6946 2014-10-27 07:30:11Z daintree $*/
+/* This script maintains table bankaccountusers (Authorized users to work with a bank account in webERP). */
 
 include('includes/session.inc');
-$Title = _('Maintenance Of Bank Account Authorised Users');
+$Title = _('Bank Account Users');;// Screen identificator.
+$ViewTopic = 'GeneralLedger';// Filename's id in ManualContents.php's TOC.
+/* To do this section in the manual.
+$BookMark = 'BankAccountUsers';// Anchor's id in the manual's html document.*/
 include('includes/header.inc');
-
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . _('Bank Account Authorised Users')
-	. '" alt="" />' . ' ' . $Title . '</p>';
+echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
+	'/images/bank.png" title="' .
+	_('Bank Account Authorised Users') . '" /> ' .// Icon title.
+	_('Maintenance Of Bank Account Authorised Users') . '</p>';// Page title.
 
 if (isset($_POST['SelectedUser'])){
 	$SelectedUser = mb_strtoupper($_POST['SelectedUser']);
@@ -137,7 +143,7 @@ if (isset($_POST['process'])OR isset($SelectedBankAccount)) {
 	$result = DB_query($SQLName);
 	$myrow = DB_fetch_array($result);
 	$SelectedBankName = $myrow['bankaccountname'];
-	
+
 	echo '<br /><div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Authorised users for') . ' ' .$SelectedBankName . ' ' . _('bank account') .'</a></div>';
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
     echo '<div>';

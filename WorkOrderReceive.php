@@ -1,5 +1,5 @@
 <?php
-/* $Id: WorkOrderReceive.php 7026 2014-12-16 20:55:46Z agaluski $*/
+/* $Id: WorkOrderReceive.php 7225 2015-03-13 02:42:14Z exsonqu $*/
 
 include('includes/session.inc');
 $Title = _('Receive Work Order');
@@ -977,6 +977,8 @@ if($WORow['controlled']==1){ //controlled
 						<td><input type="textbox" name="BatchRef' . $i .'" placeholder="'._('Batch/Lot No').'" ';
 
 				if ($i==0){
+					$StringBitOfLotSNRef = isset($StringBitOfLotSNRef)?$StringBitOfLotSNRef:'';
+					$LotSNRefNumeric = isset($LotSNRefNumeric)?$LotSNRefNumeric:'';
 					echo 'value="' . $StringBitOfLotSNRef . ($LotSNRefNumeric + 1) . '"';
 				}
 				echo ' /></td>

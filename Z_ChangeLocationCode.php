@@ -1,10 +1,17 @@
 <?php
-
 /* $Id: Z_ChangeLocationCode.php 5296 2012-04-29 15:28:19Z vvs2012 $*/
+/* This script is an utility to change a location code. */
 
 include ('includes/session.inc');
-$Title = _('UTILITY PAGE Change A Location Code');
+$Title = _('UTILITY PAGE Change A Location Code');// Screen identificator.
+$ViewTopic = 'SpecialUtilities'; // Filename's id in ManualContents.php's TOC.
+$BookMark = 'Z_ChangeLocationCode'; // Anchor's id in the manual's html document.
 include('includes/header.inc');
+echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
+	'/images/maintenance.png" title="' . 
+	_('Change A Location Code') . '" /> ' .// Icon title.
+	_('Change A Location Code') . '</p>';// Page title.
+
 include('includes/SQL_CommonFunctions.inc');
 
 if (isset($_POST['ProcessLocationChange'])){

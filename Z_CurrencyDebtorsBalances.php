@@ -1,11 +1,16 @@
 <?php
-/* $Id: Z_CurrencyDebtorsBalances.php 6941 2014-10-26 23:18:08Z daintree $*/
+/* $Id: Z_CurrencyDebtorsBalances.php 7052 2014-12-28 21:40:12Z rchacon $*/
+/* This script is an utility to show debtors balances in total by currency. */
 
-include('includes/session.inc');
-$Title=_('Currency Debtor Balances');
+include ('includes/session.inc');
+$Title = _('Currency Debtor Balances');// Screen identificator.
+$ViewTopic = 'SpecialUtilities';// Filename's id in ManualContents.php's TOC.
+$BookMark = 'Z_CurrencyDebtorsBalances';// Anchor's id in the manual's html document.
 include('includes/header.inc');
-
-echo '<div class="centre"><h3>' . _('Debtors Balances By Currency Totals') . '</h3></div>';
+echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
+	'/images/ar.png" title="' .
+	_('Show Local Currency Total Debtors Balances') . '" /> ' .// Icon title.
+	_('Debtors Balances By Currency Totals') . '</p>';// Page title.
 
 $sql = "SELECT SUM(ovamount+ovgst+ovdiscount+ovfreight-alloc) AS currencybalance,
 		currcode,

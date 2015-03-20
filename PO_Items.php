@@ -1023,7 +1023,7 @@ if (isset($_POST['Search']) OR isset($_POST['Prev']) OR isset($_POST['Next'])){ 
 					ORDER BY stockmaster.stockid ";
 			}
 		} else { // for a specific stock category
-			if ($_POST['SupplierItemsOnly']=='on'){
+			if (isset($_POST['SupplierItemsOnly']) AND $_POST['SupplierItemsOnly']=='on'){
 				$sql = "SELECT stockmaster.stockid,
 								stockmaster.description,
 								stockmaster.units
@@ -1059,6 +1059,8 @@ if (isset($_POST['Search']) OR isset($_POST['Prev']) OR isset($_POST['Next'])){ 
 	$SQLCount = substr($sql,strpos($sql,   "FROM"));
 	$SQLCount = substr($SQLCount,0, strpos($SQLCount,   "ORDER"));
 	$SQLCount = 'SELECT COUNT(*) '.$SQLCount;
+	$ErrMsg = _('Failed to retrieve result count');
+	$DbgMsg = _('The SQL failed is ');
 	$SearchResult = DB_query($SQLCount,$ErrMsg,$DbgMsg);
 	$myrow=DB_fetch_array($SearchResult);
 	DB_free_result($SearchResult);

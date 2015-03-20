@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: SelectSalesOrder.php 6945 2014-10-27 07:20:48Z daintree $*/
+/* $Id: SelectSalesOrder.php 7219 2015-03-12 01:03:30Z exsonqu $*/
 
 include('includes/session.inc');
 $Title = _('Search Outstanding Sales Orders');
@@ -496,11 +496,11 @@ if (!isset($StockID)) {
 		echo '</select></td>
 			<td><select name="Quotations">';
 
-		if ($_GET['Quotations']=='Quotes_Only'){
+		if (isset($_GET['Quotations']) AND $_GET['Quotations']=='Quotes_Only'){
 			$_POST['Quotations']='Quotes_Only';
 		}
 
-		if ($_POST['Quotations']=='Quotes_Only'){
+		if (isset($_POST['Quotations']) AND $_POST['Quotations']=='Quotes_Only'){
 			echo '<option selected="selected" value="Quotes_Only">' . _('Quotations Only') . '</option>';
 			echo '<option value="Orders_Only">' . _('Orders Only')  . '</option>';
 		} else {
@@ -613,7 +613,7 @@ if (isset($StockItemsResult)
 					salesorders.deliverto,
 					salesorders.printedpackingslip,
 					salesorders.poplaced,
-					SUM(salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent)/currencies.rate) AS ordervalue
+					SUM(salesorderdetails.unitprice*(salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*(1-salesorderdetails.discountpercent)/currencies.rate) AS ordervalue
 				FROM salesorders INNER JOIN salesorderdetails
 					ON salesorders.orderno = salesorderdetails.orderno
 					INNER JOIN debtorsmaster
@@ -695,7 +695,7 @@ if (isset($StockItemsResult)
 
 		if (isset($_POST['Quotations']) AND $_POST['Quotations']=='Orders_Only'){
 			$TableHeader = '<tr>
-								<th>' . _('Modify') . '</th>
+								<th class="ascending" >' . _('Modify') . '</th>
 								<th>' . _('Invoice') . '</th>
 								<th>' . _('Dispatch Note') . '</th>
 								<th class="ascending" >' . _('Customer') . '</th>

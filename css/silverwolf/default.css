@@ -1,4 +1,5 @@
-/*** 
+/* $Id: default.css 7212 2015-03-09 04:20:16Z rchacon $*/
+/***
 
 New "SilverWolf" Theme for WebERP
 
@@ -10,7 +11,7 @@ Credits to the original authors.
 NOTE:
 This CSS is not yet optimized. Some styles maybe 'redundant' or 'unused',
 but for the obvious one it will be cleaned up.
-To optimized the rest we should examined the whole codes! That would be for 
+To optimized the rest we should examined the whole codes! That would be for
 the next project. :)
 
 ***/
@@ -69,11 +70,19 @@ th{
 	vertical-align:middle;
 }
 th.number{
-	font-weight:normal;
 	background-color:#cccce5;
-	font-size:100%;
 	color:#300;
+	font-size:100%;
+	font-weight:normal;
 	text-align:right;
+	vertical-align:middle;
+}
+th.text{
+	background-color:#cccce5;
+	color:#300;
+	font-size:100%;
+	font-weight:normal;
+	text-align:left;
 	vertical-align:middle;
 }
 th.ascending {
@@ -362,9 +371,9 @@ select.selecterror{ /*AccountGroups.php, BankAccounts.php, BOMs.php, Stocks.php 
 	display:inline; /* items are inline */
 }
 
-/*** links as buttons!!! clicking anywhere in the button will activate 
+/*** links as buttons!!! clicking anywhere in the button will activate
  the link!!! ***HJ***/
- 
+
 #QuickMenuDiv li a{
 	padding:9px; /* links as button */
 	border:thin outset lightgray; /* un-pressed state */
@@ -393,7 +402,7 @@ select.selecterror{ /*AccountGroups.php, BankAccounts.php, BOMs.php, Stocks.php 
 #MainMenuDiv{
 	float:left; /* REQUIRED:to the left side */
 	white-space:nowrap; /* don't break text */
-	text-align:center; 
+	text-align:center;
 	width:12%;
 	margin-top:3px;
 }
@@ -499,6 +508,15 @@ select.selecterror{ /*AccountGroups.php, BankAccounts.php, BOMs.php, Stocks.php 
 	float:right;
 	line-height:2.8em; /* Center the text vertically.
 						  [vertical-align has no effect on text alone] */
+}
+#Report {
+	/* Division id for reports. */}
+#Report table {
+	/* Body of a report formatted with table tag. */
+}
+.centre {
+	text-align:center;
+	/* centre class (general). */
 }
 
 /*** END ***/
