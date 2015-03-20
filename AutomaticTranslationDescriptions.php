@@ -1,8 +1,12 @@
 <?php
+/* $Id: AutomaticTranslationDescriptions.php 7037 2014-12-22 14:45:20Z tehonu $ */
 
 include ('includes/session.inc');
-$Title = _('Automatic Translation - Descriptions');
+$Title = _('Translate Item Descriptions');
+$ViewTopic = 'SpecialUtilities'; // Filename in ManualContents.php's TOC.
+$BookMark = 'Z_TranslateItemDescriptions'; // Anchor's id in the manual's html document.
 include ('includes/header.inc');
+
 include ('includes/GoogleTranslator.php');
 
 $SourceLanguage=mb_substr($_SESSION['Language'],0,2);
@@ -17,14 +21,14 @@ $SQL = "SELECT stockmaster.stockid,
 		FROM stockmaster, stockdescriptiontranslations
 		WHERE stockmaster.stockid = stockdescriptiontranslations.stockid
 			AND stockmaster.discontinued = 0
-			AND (descriptiontranslation = '' 
+			AND (descriptiontranslation = ''
 				OR longdescriptiontranslation = '')
 			AND LENGTH(description) > 2
 		ORDER BY stockmaster.stockid,
 				language_id";
 $result = DB_query($SQL);
 
-if (DB_num_rows($result) != 0){
+if(DB_num_rows($result) != 0) {
 	echo '<p class="page_title_text" align="center"><strong>' . _('Description Automatic Translation for empty translations') . '</strong></p>';
 	echo '<div>';
 	echo '<table class="selection">';
@@ -106,6 +110,15 @@ if (DB_num_rows($result) != 0){
 	echo '</table>
 			</div>';
 	prnMsg("Number of translated descriptions via Google API: " . locale_number_format($i));
+} else {
+
+echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
+		'/images/maintenance.png" title="' .
+		_('No item description was automatically translated') . '" />' . ' ' .
+		_('No item description was automatically translated') . '</p>';
+
+// Add error message for "Google Translator API Key" empty.
+
 }
 
 include ('includes/footer.inc');
