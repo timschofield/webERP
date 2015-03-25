@@ -204,13 +204,17 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 	$YPos -= (2*$line_height);
 
 	// Calculate fields for prjected available weekly buckets
+	$plannedaccum = array();
 	$pastdueavail = ($qoh + $PastDueSup + $pastdueplan) - $PastDueReq;
 	$weeklyavail = array();
 	$weeklyavail[0] = ($pastdueavail + $WeeklySup[0] + $weeklyplan[0]) - $WeeklyReq[0];
+	$plannedaccum[0] = $pastdueplan + $weeklyplan[0];
 	for ($i = 1; $i < 28; $i++) {
 		 $weeklyavail[$i] = ($weeklyavail[$i - 1] + $WeeklySup[$i] + $weeklyplan[$i]) - $WeeklyReq[$i];
+		 $plannedaccum[$i] = $plannedaccum[$i-1] + $weeklyplan[$i];
 	}
 	$futureavail = ($weeklyavail[27] + $FutureSup + $futureplan) - $FutureReq;
+	$futureplannedaccum = $plannedaccum[27] + $futureplan;
 
 	// Headers for Weekly Buckets
 	$FontSize =7;
@@ -275,6 +279,14 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 	$pdf->addTextWrap(400,$YPos,45,$FontSize,locale_number_format($weeklyavail[6],0),'right');
 	$pdf->addTextWrap(445,$YPos,45,$FontSize,locale_number_format($weeklyavail[7],0),'right');
 	$pdf->addTextWrap(490,$YPos,45,$FontSize,locale_number_format($weeklyavail[8],0),'right');
+	$YPos -=$line_height;
+	$pdf->addTextWrap($Left_Margin,$YPos,40,$FontSize,_('Planned Acc'));
+	$pdf->addTextWrap($Left_Margin+40,$YPos,45,$FontSize,locale_number_format($pastdueplan,0),'right');
+	$InitialPoint = 130;
+	for($c=0;$c<9;$c++){
+		$pdf->addTextWrap($InitialPoint,$YPos,45,$FontSize,locale_number_format($plannedaccum[$c],0),'right');
+		$InitialPoint += 45;
+	}
 	$YPos -= 2 * $line_height;
 
 	// Second Group of Weeks
@@ -337,6 +349,14 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 	$pdf->addTextWrap(400,$YPos,45,$FontSize,locale_number_format($weeklyavail[16],0),'right');
 	$pdf->addTextWrap(445,$YPos,45,$FontSize,locale_number_format($weeklyavail[17],0),'right');
 	$pdf->addTextWrap(490,$YPos,45,$FontSize,locale_number_format($weeklyavail[18],0),'right');
+	$YPos -=$line_height;
+	$pdf->addTextWrap($Left_Margin,$YPos,40,$FontSize,_('Planned Acc'));
+	$pdf->addTextWrap($Left_Margin+40,$YPos,45,$FontSize,locale_number_format($plannedaccum[9],0),right);
+	$InitialPoint = 130;
+	for($c=10;$c<19;$c++){
+		$pdf->addTextWrap($InitialPoint,$YPos,45,$FontSize,locale_number_format($plannedaccum[$c],0),'right');
+		$InitialPoint += 45;
+	}
 	$YPos -= 2 * $line_height;
 
 	// Third Group of Weeks
@@ -400,6 +420,14 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 	$pdf->addTextWrap(445,$YPos,45,$FontSize,locale_number_format($weeklyavail[27],0),'right');
 	$pdf->addTextWrap(490,$YPos,45,$FontSize,locale_number_format($futureavail,0),'right');
 	$YPos -=$line_height;
+	$pdf->addTextWrap($Left_Margin,$YPos,40,$FontSize,_('Planned Acc'));
+	$pdf->addTextWrap($Left_Margin+40,$YPos,45,$FontSize,locale_number_format($plannedaccum[19],0),'right');
+	$InitialPoint = 130;
+	for($c=20;$c<28;$c++){
+		$pdf->addTextWrap($InitialPoint,$YPos,45,$FontSize,locale_number_format($plannedaccum[$c],0),'right');
+		$InitialPoint += 45;
+	}
+	$pdf->addTextWrap(490,$YPos,45,$FontSize,locale_number_format($futureplannedaccum,0),'right');
 
 	// Headers for Demand/Supply Sections
 	$YPos -= (2*$line_height);
