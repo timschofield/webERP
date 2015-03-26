@@ -1,5 +1,6 @@
 webERP Change Log
 
+26/03/15 Exson: Fixed disabletrans status bug in CustomerBranches.php and fix index undefined noise.
 25/03/15 Exson: Add planned accumulation in MRP report. 
 14/03/15 Exson: Fixed undefined index noise in Credit_Invoice.php.
 13/03/15 Exson: fixed the undefined index noise in WorkOrderReceive.php.
