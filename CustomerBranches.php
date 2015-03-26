@@ -458,7 +458,7 @@ if (!isset($SelectedBranch)){
 				urlencode($myrow[1]),
 				_('Delete Branch'));
 
-			if ($myrow[11]){
+			if ($myrow[10]){
 				$TotalDisable++;
 			}else {
 				$TotalEnable++;
@@ -881,7 +881,7 @@ if (!isset($_GET['delete'])) {
 		<tr>
 			<td>' . _('Transactions on this branch') . ':</td>
 			<td><select tabindex="20" name="DisableTrans">';
-	if ($_POST['DisableTrans']==0){
+	if (isset($_POST['DisableTrans']) AND $_POST['DisableTrans']==0){
 		echo '<option selected="selected" value="0">' . _('Enabled') . '</option>
 				<option value="1">' . _('Disabled') . '</option>';
 	} else {
