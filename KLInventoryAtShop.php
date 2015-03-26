@@ -3,6 +3,7 @@
 /* $Id: InventoryAtShop.php . Variation of Inventoryvaluation for inventory taking at shops */
 
 include('includes/session.inc');
+include('includes/KLGeneralFunctions.php');
 
 if (isset($_POST['PrintPDF'])){
 
@@ -14,11 +15,18 @@ if (isset($_POST['PrintPDF'])){
 	$PageNumber=1;
 	$line_height=12;
 
+	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-RE_CHECK_PRICETAGS_CHANGED_DURING_LAST_X_DAYS));
+
 	$SQL = "SELECT stockmaster.stockid,
 				stockmaster.description,
 				stockmaster.units,
 				stockmaster.decimalplaces,
-				locstock.quantity AS qtyonhand
+				locstock.quantity AS qtyonhand,
+				(SELECT klchangeprice.newretailprice
+					FROM klchangeprice
+					WHERE klchangeprice.stockid = stockmaster.stockid
+					ORDER BY klchangeprice.endprocessdate DESC
+					LIMIT 1) AS retailprice
 			FROM stockmaster,
 				stockcategory,
 				locstock
@@ -70,6 +78,9 @@ if (isset($_POST['PrintPDF'])){
 
 		$LeftOvers = $pdf->addTextWrap(300,$YPos,60,$FontSize,$DisplayQtyOnHand,'right');
 		$LeftOvers = $pdf->addTextWrap(363,$YPos,15,$FontSize,$InventoryValn['units'],'left');
+
+		$RetailPrice = locale_number_format_zero_blank($InventoryValn['retailprice'],0);
+		$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$RetailPrice,'right');
 
 		$pdf->line($Left_Margin, $YPos-$line_height+6,$Page_Width-$Right_Margin, $YPos-$line_height+6);
 		$YPos -=(0.5*$line_height);

@@ -47,6 +47,9 @@ define("AGE_STEP_05",  54);
 define("AGE_STEP_06",  64);
 define("AGE_STEP_07",  74);
 
+/* Defines about Pricetag control */
+define("RE_CHECK_PRICETAGS_CHANGED_DURING_LAST_X_DAYS",  35);
+
 /* Defines about categories */
 define("LIST_STOCK_CATEGORIES_IN_KL_SHOPS_NOT_FOR_SALE", "('SHDISP', 'SHCONS', 'SHPACK')");
 

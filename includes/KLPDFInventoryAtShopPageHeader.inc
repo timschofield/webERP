@@ -29,7 +29,9 @@ $Xpos = $Left_Margin+1;
 
 	
 $LeftOvers = $pdf->addTextWrap($Xpos,$YPos,300-$Left_Margin,$FontSize, _('Item'), 'left');
+$LeftOvers = $pdf->addTextWrap(200,$YPos,60,$FontSize, _('Description'), 'left');
 $LeftOvers = $pdf->addTextWrap(360,$YPos,60,$FontSize,_('Qty'), 'left');
+$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,_('Check pricetags'), 'left');
 
 $YPos =$YPos - (2*$line_height);
 
