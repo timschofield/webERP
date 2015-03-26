@@ -8,6 +8,14 @@
 //DefaultLanguage to use for the login screen and the setup of new users - the users language selection will override
 $DefaultLanguage ='en_GB.utf8';
 
+// Default theme to use for the login screen and the setup of new users.
+//The users' theme selection will override
+//$DefaultTheme = 'professional';
+//$DefaultTheme = 'wood';
+//$DefaultTheme = 'silverwolf';
+$DefaultTheme = 'gel';
+//$DefaultTheme = 'xenos';
+
 // Whether to display the demo login and password or not on the login screen
 $allow_demo_mode = False;
 
@@ -100,5 +108,8 @@ turning on NOTICES destroys things */
 error_reporting (E_ALL & ~E_NOTICE & ~E_WARNING);
 /* For Development Use */
 //error_reporting (-1);
+
+//Installed companies
+$CompanyList[0] = array('database'=>'kurakura_klerp' ,'company'=>'Kapal-Laut' );
 /*Make sure there is nothing - not even spaces after this last ?> */
 ?>

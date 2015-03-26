@@ -100,5 +100,9 @@ turning on NOTICES destroys things */
 error_reporting (E_ALL & ~E_NOTICE & ~E_WARNING);
 /* For Development Use */
 //error_reporting (-1);
+
+//Installed companies
+$CompanyList[0] = array('database'=>'weberpdemo' ,'company'=>'WebERP Demo Company' );
+$CompanyList[1] = array('database'=>'kurakura_klerp_test' ,'company'=>'TEST Kapal-Laut' );
 /*Make sure there is nothing - not even spaces after this last ?> */
 ?>

@@ -80,6 +80,7 @@ $MenuItems['orders']['Reports']['Caption'] = array( _('Sales Order Inquiry'),
 													_('KL SPG Control Board'),
 													_('KL Performance Board'),
 													_('KL Retail Customer Analysis'),
+													_('KL Excel Sales Analysis'),
 													_('Sell Through Support Claims Report'));
 
 $MenuItems['orders']['Reports']['URL'] = array( '/SelectCompletedOrder.php',
@@ -104,6 +105,7 @@ $MenuItems['orders']['Reports']['URL'] = array( '/SelectCompletedOrder.php',
 												'/KLControlBoardSPG.php',
 												'/KLPerformanceBoard.php',
 												'/KLRetailCustomerBoard.php',
+												'/KLExcelSalesAnalysis.php',
 												'/PDFSellThroughSupportClaim.php');
 
 $MenuItems['orders']['Maintenance']['Caption'] = array( _('Create Contract'),
