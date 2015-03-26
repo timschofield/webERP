@@ -26,7 +26,6 @@ include ('includes/KLRoles.inc');
 
 $begintime = time_start();
 
-
 $periodnow=GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
 
 /***************************************************************************************
@@ -69,8 +68,8 @@ if ($KL_SystemAdmin
 }
 
 /*
-if (($KL_PurchasingManager)
-	OR ($_SESSION['UserID'] == "Evelin")){
+if ($KL_PurchasingManager
+	OR $KL_SalesManager){
 	SPGBelowMinimumSales("TOK66", 2, 1300000,$db);
 	SPGBelowMinimumSales("TOKSA", 2, 1650000,$db);
 	SPGBelowMinimumSales("TOKKS", 2, 2000000,$db);
@@ -407,27 +406,27 @@ if ($KL_PurchasingManager
 	ActiveItemsNoSales( 45, "DISCOU", $RootPath, $db);
 	ActiveItemsNoSales(365, "OUTLET", $RootPath, $db);
 
-	TopSalesNotInEnoughShops(  1, 300, 60, 12, "ACTIVE", $RootPath, $db);
-	TopSalesNotInEnoughShops(300, 350, 60, 10, "ACTIVE", $RootPath, $db);
-	TopSalesNotInEnoughShops(350, 500, 60,  8, "ACTIVE", $RootPath, $db);
+	TopSalesNotInEnoughShops(  1, 400, 60, 11, "ACTIVE", $RootPath, $db);
+	TopSalesNotInEnoughShops(400, 500, 60,  9, "ACTIVE", $RootPath, $db);
+	TopSalesNotInEnoughShops(500, 600, 60,  8, "ACTIVE", $RootPath, $db);
 //	TopSalesNotInEnoughShops(  1,  50, 60, 3, "DISCOU", $RootPath, $db);
 
-	ItemsNotTopSalesInShop(1, 500, 60, "TOK66", "ACTIVE", $RootPath, $db);
-	ItemsNotTopSalesInShop(1, 500, 60, "TOKSE", "ACTIVE", $RootPath, $db);
-	ItemsNotTopSalesInShop(1, 500, 60, "TOKOB", "ACTIVE", $RootPath, $db);
+	ItemsNotTopSalesInShop(1, 800, 60, "TOK66", "ACTIVE", $RootPath, $db);
+	ItemsNotTopSalesInShop(1, 800, 60, "TOKSE", "ACTIVE", $RootPath, $db);
+	ItemsNotTopSalesInShop(1, 800, 60, "TOKOB", "ACTIVE", $RootPath, $db);
 
-	ItemsNotTopSalesInShop(1, 500, 60, "TOKKS", "ACTIVE", $RootPath, $db);
-	ItemsNotTopSalesInShop(1, 500, 60, "TOKBW", "ACTIVE", $RootPath, $db);
+	ItemsNotTopSalesInShop(1, 800, 60, "TOKKS", "ACTIVE", $RootPath, $db);
+	ItemsNotTopSalesInShop(1, 800, 60, "TOKBW", "ACTIVE", $RootPath, $db);
 
-	ItemsNotTopSalesInShop(1, 500, 60, "TOKJC", "ACTIVE", $RootPath, $db);
+	ItemsNotTopSalesInShop(1, 800, 60, "TOKJC", "ACTIVE", $RootPath, $db);
 
-	ItemsNotTopSalesInShop(1, 500, 60, "TOKUB", "ACTIVE", $RootPath, $db);
-	ItemsNotTopSalesInShop(1, 500, 60, "TOKMF", "ACTIVE", $RootPath, $db);
-	ItemsNotTopSalesInShop(1, 500, 60, "TOKPU", "ACTIVE", $RootPath, $db);
+	ItemsNotTopSalesInShop(1, 800, 60, "TOKUB", "ACTIVE", $RootPath, $db);
+	ItemsNotTopSalesInShop(1, 800, 60, "TOKMF", "ACTIVE", $RootPath, $db);
+	ItemsNotTopSalesInShop(1, 800, 60, "TOKPU", "ACTIVE", $RootPath, $db);
 
-	ItemsNotTopSalesInShop(1, 500, 60, "TOKSA", "ACTIVE", $RootPath, $db);
-	ItemsNotTopSalesInShop(1, 500, 60, "TOKSU", "ACTIVE", $RootPath, $db);
-	ItemsNotTopSalesInShop(1, 500, 60, "TOKSS", "ACTIVE", $RootPath, $db);
+	ItemsNotTopSalesInShop(1, 800, 60, "TOKSA", "ACTIVE", $RootPath, $db);
+//	ItemsNotTopSalesInShop(1, 800, 60, "TOKSU", "ACTIVE", $RootPath, $db);
+	ItemsNotTopSalesInShop(1, 800, 60, "TOKSS", "ACTIVE", $RootPath, $db);
 
 	PerformanceItemsInCategory("GOOD", "TESTSI", 15,  30, "VERY GOOD", $RootPath, $db);
 	PerformanceItemsInCategory("GOOD", "TESTSI", 30,  45, "GOOD", $RootPath, $db);

@@ -20,6 +20,7 @@ $periodnow=GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
 AverageSales("Shop", 365, 90, 30, 15, 7, 1, 30, "CurrentYear", "All", $db);
 
 if ($KL_SystemAdmin
+	OR $KL_PurchasingManager
 	OR $KL_SalesManager){
 //	AverageSales("Shop", 365, 90, 30, 15,7, 1, 30, "LastYear", "All", $db);
 	YearDifferenceSales("Shop",  15, $db);
