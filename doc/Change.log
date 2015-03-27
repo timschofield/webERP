@@ -1,4 +1,6 @@
 webERP Change Log
+
+27/03/15 Exson: Remove redundant code from PrintCustTrans.php.
 27/03/15 Exson: Make credit not for freight only is printable in PrintCustTrans.php.
 26/03/15 Exson: Fixed disabletrans status bug in CustomerBranches.php and fix index undefined noise.
 25/03/15 Exson: Add planned accumulation in MRP report. 
