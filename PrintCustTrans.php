@@ -11,8 +11,6 @@ if (isset($_GET['FromTransNo'])) {
 	$FromTransNo = trim($_GET['FromTransNo']);
 } elseif (isset($_POST['FromTransNo'])) {
 	$FromTransNo = filter_number_format($_POST['FromTransNo']);
-} else {
-	$FromTransNo = '';
 }
 
 if (isset($_GET['InvOrCredit'])) {
@@ -36,11 +34,7 @@ if (!isset($_POST['ToTransNo'])
 
 $FirstTrans = $FromTransNo; /* Need to start a new page only on subsequent transactions */
 
-if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
-	AND $PrintPDF
-	AND isset($FromTransNo)
-	AND isset($InvOrCredit)
-	AND $FromTransNo!=''){
+if (isset($PrintPDF) AND isset($FromTransNo) AND isset($InvOrCredit)){
 
 	include ('includes/class.pdf.php');
 
@@ -59,7 +53,7 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 	$pdf->addInfo('Author', 'webERP ' . $Version);
 
 	if ($InvOrCredit=='Invoice') {
-		$pdf->addInfo('Title',_('Sales Invoice') . ' ' . $FromTransNo . ' to ' . $_POST['ToTransNo']);
+		$pdf->addInfo('Title',_('Sales Invoice') . ' ' . $FromTransNo . ' ' . _('to') . ' ' . $_POST['ToTransNo']);
 		$pdf->addInfo('Subject',_('Invoices from') . ' ' . $FromTransNo . ' ' . _('to') . ' ' . $_POST['ToTransNo']);
 	} else {
 		$pdf->addInfo('Title',_('Sales Credit Note') );
