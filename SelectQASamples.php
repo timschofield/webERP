@@ -278,7 +278,7 @@ if (!isset($SelectedSampleID)) {
 		<tr>
 			<td></td>
 			<td><b>' . _('OR') . ' </b>' . _('Enter extract of the') . '<b> ' . _('Stock Code') . '</b>:</td>
-			<td><input type="text" name="StockCode" size="15" maxlength="18" /></td>
+			<td><input type="text" name="StockCode" size="20" maxlength="25" /></td>
 		</tr>
 		<tr>
 			<td colspan="3">
@@ -501,7 +501,7 @@ if (! isset($_GET['delete'])) {
 			</tr>
 			<tr>
 				<td>' . _('Identifier') . ':</td>
-				<td><input type="text" name="Identifier" size="15" maxlength="15" value="' . $_POST['Identifier']. '" /></td>
+				<td><input type="text" name="Identifier" size="10" maxlength="10" value="' . $_POST['Identifier']. '" /></td>
 			</tr>
 			<tr>
 				<td>' . _('Comments') . ':</td>
@@ -557,11 +557,11 @@ if (! isset($_GET['delete'])) {
 			</tr>
 			<tr>
 				<td>' . _('Lot') . ':</td>
-				<td><input type="text" required="required" name="LotKey" size="15" maxlength="15" value="' . (isset($_POST['LotKey'])? $_POST['LotKey']:'') . '" /></td>
+				<td><input type="text" required="required" name="LotKey" size="25" maxlength="25" value="' . (isset($_POST['LotKey'])? $_POST['LotKey']:'') . '" /></td>
 			</tr>
 			<tr>
 				<td>' . _('Identifier') . ':</td>
-				<td><input type="text" name="Identifier" size="15" maxlength="15" value="' . (isset($_POST['Identifier'])? $_POST['Identifier']:'') . '" /></td>
+				<td><input type="text" name="Identifier" size="10" maxlength="10" value="' . (isset($_POST['Identifier'])? $_POST['Identifier']:'') . '" /></td>
 			</tr>
 			<tr>
 				<td>' . _('Comments') . ':</td>
