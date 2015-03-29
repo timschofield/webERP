@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: PrintCustTrans.php 7209 2015-03-08 22:44:47Z vvs2012 $ */
+/* $Id: PrintCustTrans.php 7238 2015-03-27 13:56:35Z exsonqu $ */
 /**************************************************************************************
 KL RICARD MODIFICATIONS:
 - use of salesorders.salesperson instead of custbranch.salesman
@@ -16,8 +16,6 @@ if (isset($_GET['FromTransNo'])) {
 	$FromTransNo = trim($_GET['FromTransNo']);
 } elseif (isset($_POST['FromTransNo'])) {
 	$FromTransNo = filter_number_format($_POST['FromTransNo']);
-} else {
-	$FromTransNo = '';
 }
 
 if (isset($_GET['InvOrCredit'])) {
@@ -41,11 +39,7 @@ if (!isset($_POST['ToTransNo'])
 
 $FirstTrans = $FromTransNo; /* Need to start a new page only on subsequent transactions */
 
-if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
-	AND $PrintPDF
-	AND isset($FromTransNo)
-	AND isset($InvOrCredit)
-	AND $FromTransNo!=''){
+if (isset($PrintPDF) AND isset($FromTransNo) AND isset($InvOrCredit)){
 
 	include ('includes/class.pdf.php');
 
@@ -64,7 +58,7 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 	$pdf->addInfo('Author', 'webERP ' . $Version);
 
 	if ($InvOrCredit=='Invoice') {
-		$pdf->addInfo('Title',_('Sales Invoice') . ' ' . $FromTransNo . ' to ' . $_POST['ToTransNo']);
+		$pdf->addInfo('Title',_('Sales Invoice') . ' ' . $FromTransNo . ' ' . _('to') . ' ' . $_POST['ToTransNo']);
 		$pdf->addInfo('Subject',_('Invoices from') . ' ' . $FromTransNo . ' ' . _('to') . ' ' . $_POST['ToTransNo']);
 	} else {
 		$pdf->addInfo('Title',_('Sales Credit Note') );
@@ -278,8 +272,8 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 			} // end else
 
 			$result=DB_query($sql);
-			if (DB_error_no()!=0 OR DB_num_rows($result)==0) {
-
+			if (DB_error_no()!=0 OR (DB_num_rows($result)==0 AND $InvOrCredit == 'Invoice')) {
+			
 				$Title = _('Transaction Print Error Report');
 				include ('includes/header.inc');
 				echo '<br />' . _('There was a problem retrieving the invoice or credit note stock movement details for invoice number') . ' ' . $FromTransNo . ' ' . _('from the database');
@@ -700,7 +694,7 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 							AND debtortrans.transno='" . $FromTransNo . "'";
 			}
 			$result=DB_query($sql);
-			if (DB_num_rows($result)==0 OR DB_error_no()!=0) {
+			if ((DB_num_rows($result)==0 AND $InvOrCredit == 'Invoice') OR (DB_error_no()!=0)) {
 				echo '<p>' . _('There was a problem retrieving the invoice or credit note details for note number') . ' ' . $FromTransNo . ' ' . _('from the database') . '. ' . _('To print an invoice, the sales order record, the customer transaction record and the branch record for the customer must not have been purged') . '. ' . _('To print a credit note only requires the customer, transaction, salesman and branch records be available');
 				if ($debug==1) {
 					echo _('The SQL used to get this information that failed was') . '<br />' . $sql;
