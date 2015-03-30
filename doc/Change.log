@@ -1,5 +1,6 @@
 webERP Change Log
 
+30/3/15  Vitaly: Get all taxes for the tax group, even if calculationorder is left at default value 0.
 29/3/15  Phil: Allow dummy/service items to be propogated to CounterLogic POS installs through the api
 27/03/15 Exson: Remove redundant code from PrintCustTrans.php.
 27/03/15 Exson: Make credit not for freight only is printable in PrintCustTrans.php.

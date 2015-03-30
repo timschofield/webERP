@@ -310,15 +310,16 @@ Class Cart {
 
 		$ErrMsg = _('The taxes and rates for this item could not be retrieved because');
 		$GetTaxRatesResult = DB_query($sql,$ErrMsg);
-
+		$i=1;
 		while ($myrow = DB_fetch_array($GetTaxRatesResult)){
 
-			$this->LineItems[$LineNumber]->Taxes[$myrow['taxcalculationorder']] =   new Tax($myrow['taxcalculationorder'],
+			$this->LineItems[$LineNumber]->Taxes[$i] =   new Tax($myrow['taxcalculationorder'],
 																							$myrow['taxauthid'],
 																							$myrow['description'],
 																							$myrow['taxrate'],
 																							$myrow['taxontax'],
 																							$myrow['taxglcode']);
+			$i++;
 		}
 	} //end method GetExistingTaxes
 
@@ -350,15 +351,16 @@ Class Cart {
 		if (DB_num_rows($GetTaxRatesResult)==0){
 			prnMsg(_('It appears that taxes are not defined correctly for this customer tax group') ,'error');
 		} else {
-
+			$i=1;
 			while ($myrow = DB_fetch_array($GetTaxRatesResult)){
 
-				$this->LineItems[$LineNumber]->Taxes[$myrow['calculationorder']] = new Tax($myrow['calculationorder'],
+				$this->LineItems[$LineNumber]->Taxes[$i] = new Tax($myrow['calculationorder'],
 																							$myrow['taxauthid'],
 																							$myrow['description'],
 																							$myrow['taxrate'],
 																							$myrow['taxontax'],
 																							$myrow['taxglcode']);
+				$i++;
 			} //end loop around different taxes
 		} //end if there are some taxes defined
 	} //end method GetTaxes
@@ -397,15 +399,16 @@ Class Cart {
 
 		$ErrMsg = _('The taxes and rates for this item could not be retrieved because');
 		$GetTaxRatesResult = DB_query($SQL,$ErrMsg);
-
+		$i=1;
 		while ($myrow = DB_fetch_array($GetTaxRatesResult)){
 
-			$this->FreightTaxes[$myrow['calculationorder']] = new Tax($myrow['calculationorder'],
+			$this->FreightTaxes[$i] = new Tax($myrow['calculationorder'],
 																		$myrow['taxauthid'],
 																		$myrow['description'],
 																		$myrow['taxrate'],
 																		$myrow['taxontax'],
 																		$myrow['taxglcode']);
+			$i++;
 		}
 	} //end method GetFreightTaxes()
 
