@@ -93,7 +93,7 @@ if(isset($_POST['submit']) OR isset($_GET['remove']) OR isset($_GET['add']) ) {
 
 	while($myrow=DB_fetch_row($Result)) {
 
-		if(is_numeric($_POST['CalcOrder_' . $myrow[0]]) AND $_POST['CalcOrder_' . $myrow[0]] <5) {
+		if(is_numeric($_POST['CalcOrder_' . $myrow[0]]) AND $_POST['CalcOrder_' . $myrow[0]] < 10) {
 
 			$sql = "UPDATE taxgrouptaxes
 				SET calculationorder='" . $_POST['CalcOrder_' . $myrow[0]] . "',
@@ -304,7 +304,7 @@ if(isset($SelectedGroup)) {
 			    $j++;
 			}
 			echo '<td>' . $TaxAuthRow[$i]['taxname'] . '</td>
-				<td><input type="text" class="integer" pattern="[1-4] {1}" title="'._('The input must be positive integer and less than 5').'" name="CalcOrder_' . $TaxAuthRow[$i]['taxauthid'] . '" value="' . $TaxAuthRow[$i]['calculationorder'] . '" size="2" maxlength="2" style="width: 100%" /></td>
+				<td><input type="text" class="integer" pattern="(?!^0*$)(\d+)" title="'._('The input must be positive integer and less than 10').'" name="CalcOrder_' . $TaxAuthRow[$i]['taxauthid'] . '" value="' . $TaxAuthRow[$i]['calculationorder'] . '" size="1" maxlength="1" style="width: 90%" /></td>
 				<td><select name="TaxOnTax_' . $TaxAuthRow[$i]['taxauthid'] . '" style="width: 100%">';
 			if($TaxAuthRow[$i]['taxontax']==1) {
 				echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
