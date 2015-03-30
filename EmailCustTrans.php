@@ -2,8 +2,9 @@
 
 /* $Id$*/
 
-include ('includes/session.inc');
-include ('includes/SQL_CommonFunctions.inc');
+include('includes/session.inc');
+include('includes/header.inc');
+include('includes/SQL_CommonFunctions.inc');
 
 if ($_GET['InvOrCredit']=='Invoice'){
 	$TransactionType = _('Invoice');
