@@ -1,0 +1,246 @@
+<?php
+require_once ('Classes/PHPExcel.php');
+
+include('includes/session.inc');
+include('includes/SQL_CommonFunctions.inc');
+
+if (isset($_POST['submit'])) {
+    submit($db, $_POST['Tabs']);
+} else {
+    display($db);
+}
+
+//####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
+function submit(&$db, $TabToShow) {
+
+	//initialise no input errors
+	$InputError = 0;
+
+	//first off validate inputs sensible
+
+	if ($InputError == 0){
+		// Creation of beginning of SQL query
+		$SQL = "SELECT pcexpenses.codeexpense,";
+		
+		// Creation of periods SQL query
+		$period_today=GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
+		$sqlPeriods = "SELECT periodno,
+						lastdate_in_period
+				FROM periods
+				WHERE periodno <= ". $period_today ."
+				ORDER BY periodno DESC
+				LIMIT 24";
+		$Periods = DB_query($sqlPeriods);
+		$numPeriod = 0;
+		$LabelsArray = array();
+		while ($myrow=DB_fetch_array($Periods,$db)){
+		
+			$numPeriod++;
+			$LabelsArray[$numPeriod] = MonthAndYearFromSQLDate($myrow['lastdate_in_period']);
+			$SQL = $SQL . "(SELECT SUM(pcashdetails.amount)
+							FROM pcashdetails
+							WHERE pcashdetails.codeexpense = pcexpenses.codeexpense";
+			if ($TabToShow!='All'){
+				$SQL = $SQL." 	AND pcashdetails.tabcode = '". $TabToShow ."'";
+			}
+			$SQL = $SQL . "		AND date >= '" . beginning_of_month($myrow['lastdate_in_period']). "'
+								AND date <= '" . $myrow['lastdate_in_period'] . "') AS expense_period".$numPeriod.", ";
+		}
+		// Creation of final part of SQL
+		$SQL = $SQL." pcexpenses.description
+				FROM  pcexpenses
+				ORDER BY pcexpenses.codeexpense";
+
+		$result = DB_query($SQL);
+		if (DB_num_rows($result) != 0){
+
+			// Create new PHPExcel object
+			$objPHPExcel = new PHPExcel();
+
+			// Set document properties
+			$objPHPExcel->getProperties()->setCreator("webERP")
+										 ->setLastModifiedBy("webERP")
+										 ->setTitle("Petty Cash Expenses Analysis")
+										 ->setSubject("Petty Cash Expenses Analysis")
+										 ->setDescription("Petty Cash Expenses Analysis")
+										 ->setKeywords("")
+										 ->setCategory("");
+										 
+			$objPHPExcel->getActiveSheet()->getStyle('1')->getAlignment()->setWrapText(true);
+			$objPHPExcel->getActiveSheet()->getStyle('C:AB')->getNumberFormat()->setFormatCode('#,###');
+			
+			// Add title data
+			$objPHPExcel->setActiveSheetIndex(0);
+			$objPHPExcel->getActiveSheet()->setCellValue('A1', 'Code');
+			$objPHPExcel->getActiveSheet()->setCellValue('B1', 'Description');
+
+			$objPHPExcel->getActiveSheet()->setCellValue('C1', 'Total 12 Months');
+			$objPHPExcel->getActiveSheet()->setCellValue('D1', 'Average 12 Months');
+
+			$objPHPExcel->getActiveSheet()->setCellValue('E1', $LabelsArray[24]);
+			$objPHPExcel->getActiveSheet()->setCellValue('F1', $LabelsArray[23]);
+			$objPHPExcel->getActiveSheet()->setCellValue('G1', $LabelsArray[22]);
+			$objPHPExcel->getActiveSheet()->setCellValue('H1', $LabelsArray[21]);
+ 			$objPHPExcel->getActiveSheet()->setCellValue('I1', $LabelsArray[20]);
+ 			$objPHPExcel->getActiveSheet()->setCellValue('J1', $LabelsArray[19]);
+ 			$objPHPExcel->getActiveSheet()->setCellValue('K1', $LabelsArray[18]);
+ 			$objPHPExcel->getActiveSheet()->setCellValue('L1', $LabelsArray[17]);
+ 			$objPHPExcel->getActiveSheet()->setCellValue('M1', $LabelsArray[16]);
+ 			$objPHPExcel->getActiveSheet()->setCellValue('N1', $LabelsArray[15]);
+ 			$objPHPExcel->getActiveSheet()->setCellValue('O1', $LabelsArray[14]);
+ 			$objPHPExcel->getActiveSheet()->setCellValue('P1', $LabelsArray[13]);
+ 			$objPHPExcel->getActiveSheet()->setCellValue('Q1', $LabelsArray[12]);
+ 			$objPHPExcel->getActiveSheet()->setCellValue('R1', $LabelsArray[11]);
+ 			$objPHPExcel->getActiveSheet()->setCellValue('S1', $LabelsArray[10]);
+ 			$objPHPExcel->getActiveSheet()->setCellValue('T1', $LabelsArray[9]);
+ 			$objPHPExcel->getActiveSheet()->setCellValue('U1', $LabelsArray[8]);
+ 			$objPHPExcel->getActiveSheet()->setCellValue('V1', $LabelsArray[7]);
+ 			$objPHPExcel->getActiveSheet()->setCellValue('W1', $LabelsArray[6]);
+ 			$objPHPExcel->getActiveSheet()->setCellValue('X1', $LabelsArray[5]);
+ 			$objPHPExcel->getActiveSheet()->setCellValue('Y1', $LabelsArray[4]);
+ 			$objPHPExcel->getActiveSheet()->setCellValue('Z1', $LabelsArray[3]);
+ 			$objPHPExcel->getActiveSheet()->setCellValue('AA1', $LabelsArray[2]);
+ 			$objPHPExcel->getActiveSheet()->setCellValue('AB1', $LabelsArray[1]);
+ 
+			// Add data
+			$i = 2;
+			while ($myrow = DB_fetch_array($result)) {
+				$objPHPExcel->setActiveSheetIndex(0);
+				$objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $myrow['codeexpense']);
+				$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, $myrow['description']);
+	
+				$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, '=SUM(Q'.$i.':AB'.$i.')');
+				$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, '=AVERAGE(Q'.$i.':AB'.$i.')');
+
+				$objPHPExcel->getActiveSheet()->setCellValue('E'.$i, -$myrow['expense_period24']);
+				$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, -$myrow['expense_period23']);
+				$objPHPExcel->getActiveSheet()->setCellValue('G'.$i, -$myrow['expense_period22']);
+				$objPHPExcel->getActiveSheet()->setCellValue('H'.$i, -$myrow['expense_period21']);
+				$objPHPExcel->getActiveSheet()->setCellValue('I'.$i, -$myrow['expense_period20']);
+				$objPHPExcel->getActiveSheet()->setCellValue('J'.$i, -$myrow['expense_period19']);
+				$objPHPExcel->getActiveSheet()->setCellValue('K'.$i, -$myrow['expense_period18']);
+				$objPHPExcel->getActiveSheet()->setCellValue('L'.$i, -$myrow['expense_period17']);
+				$objPHPExcel->getActiveSheet()->setCellValue('M'.$i, -$myrow['expense_period16']);
+				$objPHPExcel->getActiveSheet()->setCellValue('N'.$i, -$myrow['expense_period15']);
+				$objPHPExcel->getActiveSheet()->setCellValue('O'.$i, -$myrow['expense_period14']);
+				$objPHPExcel->getActiveSheet()->setCellValue('P'.$i, -$myrow['expense_period13']);
+				$objPHPExcel->getActiveSheet()->setCellValue('Q'.$i, -$myrow['expense_period12']);
+				$objPHPExcel->getActiveSheet()->setCellValue('R'.$i, -$myrow['expense_period11']);
+				$objPHPExcel->getActiveSheet()->setCellValue('S'.$i, -$myrow['expense_period10']);
+				$objPHPExcel->getActiveSheet()->setCellValue('T'.$i, -$myrow['expense_period9']);
+				$objPHPExcel->getActiveSheet()->setCellValue('U'.$i, -$myrow['expense_period8']);
+				$objPHPExcel->getActiveSheet()->setCellValue('V'.$i, -$myrow['expense_period7']);
+				$objPHPExcel->getActiveSheet()->setCellValue('W'.$i, -$myrow['expense_period6']);
+				$objPHPExcel->getActiveSheet()->setCellValue('X'.$i, -$myrow['expense_period5']);
+				$objPHPExcel->getActiveSheet()->setCellValue('Y'.$i, -$myrow['expense_period4']);
+				$objPHPExcel->getActiveSheet()->setCellValue('Z'.$i, -$myrow['expense_period3']);
+				$objPHPExcel->getActiveSheet()->setCellValue('AA'.$i, -$myrow['expense_period2']);
+				$objPHPExcel->getActiveSheet()->setCellValue('AB'.$i, -$myrow['expense_period1']);
+
+				$i++;
+			}
+			
+			// Freeze panes
+			$objPHPExcel->getActiveSheet()->freezePane('E2');
+		
+			// Auto Size columns
+			foreach(range('A','AB') as $columnID) {
+				$objPHPExcel->getActiveSheet()->getColumnDimension($columnID)
+					->setAutoSize(true);
+			}
+			
+			// Rename worksheet
+			if ($TabToShow=='All'){
+				$objPHPExcel->getActiveSheet()->setTitle('All Accounts');
+			}else{
+				$objPHPExcel->getActiveSheet()->setTitle($TabToShow);
+			}
+			// Set active sheet index to the first sheet, so Excel opens this as the first sheet
+			$objPHPExcel->setActiveSheetIndex(0);
+
+			// Redirect output to a client’s web browser (Excel2007)
+			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+			$File = 'PCExpensesAnalysis-' . Date('Y-m-d'). '.xlsx';
+			header('Content-Disposition: attachment;filename="' . $File . '"');
+			header('Cache-Control: max-age=0');
+			// If you're serving to IE 9, then the following may be needed
+			header('Cache-Control: max-age=1');
+
+			// If you're serving to IE over SSL, then the following may be needed
+			header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+			header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
+			header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+			header ('Pragma: public'); // HTTP/1.0
+
+			$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+			$objWriter->save('php://output');
+
+		}else{
+			$Title = _('Excel file for petty Cash Expenses Analysis');
+			include('includes/header.inc');
+			prnMsg('No data to analyse');
+			include('includes/footer.inc');
+		}
+	}
+} // End of function submit()
+
+
+function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
+{
+// Display form fields. This function is called the first time
+// the page is called.
+	$Title = _('Excel file for Petty Cash Expenses Analysis');
+
+	include('includes/header.inc');
+
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
+          <div>
+			<br/>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+
+	echo '<p class="page_title_text">
+			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Excel file for Petty Cash Expenses Analysis') . '" alt="" />' . ' ' . _('Excel file for Petty Cash Expenses Analysis') . '
+		</p>';
+
+	echo '<table class="selection">
+		<tr>
+		<td>' . _('For Petty Cash Tabs') . ':</td>
+		<td><select name="Tabs">';
+
+	$sql = "SELECT tabcode
+			FROM pctabs 
+			ORDER BY tabcode";
+	$CatResult=DB_query($sql);
+
+	echo '<option value="All">' . _('All Tabs') . '</option>';
+
+	while ($myrow=DB_fetch_array($CatResult)){
+		echo '<option value="' . $myrow['tabcode'] . '">' . $myrow['tabcode'] . '</option>';
+	}
+	echo '</select>
+			</td>
+		</tr>';
+
+	echo '
+		<tr><td>&nbsp;</td></tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td><input type="submit" name="submit" value="' . _('Create Petty Cash Expenses Excel File') . '" /></td>
+		</tr>
+		</table>
+		<br />';
+	echo '</div>
+         </form>';
+	include('includes/footer.inc');
+
+} // End of function display()
+
+function beginning_of_month($date){
+	$date2 = explode("-",$date);
+	$m = $date2[1]; 
+	$y = $date2[0];
+	$first_of_month = $y . '-' . $m . '-01';
+	return $first_of_month;
+}
+
+?>
