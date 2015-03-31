@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.12.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-02-24 17:34-0600\n"
-"PO-Revision-Date: 2015-03-09 16:56-0600\n"
+"PO-Revision-Date: 2015-03-23 18:29-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -6221,7 +6221,7 @@ msgstr "El SQL que falló al obtener las categorías de existencias fue"
 
 #: Contracts.php:868
 msgid "Add or Modify Contract Categories"
-msgstr "Agregar o modificar las Categorías de Contrato"
+msgstr "Añadir o modificar categorías de contrato"
 
 #: Contracts.php:871
 msgid "The stock locations could not be retrieved because"
@@ -10447,7 +10447,7 @@ msgstr "Dirección de la sucursal"
 
 #: Customers.php:677 Customers.php:1187
 msgid "Add New Customer"
-msgstr "Agregar nuevo cliente"
+msgstr "Añadir cliente nuevo"
 
 #: Customers.php:767
 msgid ""
@@ -13078,7 +13078,7 @@ msgstr "Las categorías de activos no se pudo recuperar porque"
 
 #: FixedAssetItems.php:529
 msgid "Add or Modify Asset Categories"
-msgstr "Agregar o modificar categorías de activos"
+msgstr "Añadir o modificar categorías de activos"
 
 #: FixedAssetItems.php:542
 msgid "The asset locations could not be retrieved because"
@@ -13096,7 +13096,7 @@ msgstr "Ubicación de activos"
 
 #: FixedAssetItems.php:558
 msgid "Add Asset Location"
-msgstr "Agregar ubicación de activo"
+msgstr "Añadir ubicación de activo"
 
 #: FixedAssetItems.php:561 StockClone.php:964 StockCounts.php:166
 #: Stocks.php:1298 includes/DefineLabelClass.php:50
@@ -14304,7 +14304,7 @@ msgstr "Grupo"
 
 #: GLJournal.php:8 includes/MainMenuLinksArray.php:355
 msgid "Journal Entry"
-msgstr "Ingreso del Diario"
+msgstr "Entrada en libro diario"
 
 #: GLJournal.php:46
 msgid ""
@@ -14332,7 +14332,7 @@ msgstr "No se puede agregar un asiento contable para el diario inverso porque"
 
 #: GLJournal.php:119
 msgid "Journal"
-msgstr "Diario"
+msgstr "Libro diario"
 
 #: GLJournal.php:128
 msgid "Enter Another General Ledger Journal"
@@ -14398,7 +14398,7 @@ msgstr "Normal"
 
 #: GLJournal.php:288
 msgid "Journal Line Entry"
-msgstr "Ingreso de Línea del Diario"
+msgstr "Entrada de línea de libro diario"
 
 #: GLJournal.php:294 GLJournal.php:387
 msgid "GL Tag"
@@ -14426,7 +14426,7 @@ msgstr "Descripción contable"
 
 #: GLJournal.php:384
 msgid "Journal Summary"
-msgstr "Resumen Diario"
+msgstr "Resumen de libro diario"
 
 #: GLJournal.php:440
 msgid "Required to balance"
@@ -14448,7 +14448,7 @@ msgstr "Criterio de búsqueda"
 
 #: GLJournalInquiry.php:26
 msgid "Journal Number Range"
-msgstr "Rango del número de Diario"
+msgstr "Rango de números en libro diario"
 
 #: GLJournalInquiry.php:43
 msgid "Journals Dated Between"
@@ -14456,7 +14456,7 @@ msgstr "Diarios fechado entre"
 
 #: GLJournalInquiry.php:81
 msgid "Journal Number"
-msgstr "Número de Diario"
+msgstr "Número en libro diario"
 
 #: GLJournalInquiry.php:83 PcExpenses.php:192
 #: includes/PDFGLJournalHeader.inc:20
@@ -18212,7 +18212,7 @@ msgstr ""
 
 #: Manufacturers.php:154
 msgid "items with this manufacturer code"
-msgstr ""
+msgstr "artículos con este código de fabricante"
 
 #: Manufacturers.php:163
 msgid "Manufacturer"
@@ -19180,7 +19180,7 @@ msgstr "fallo"
 
 #: PDFFGLabel.php:214
 msgid "Label Error"
-msgstr ""
+msgstr "Error de etiqueta"
 
 #: PDFFGLabel.php:216
 msgid "There were no labels to print"
@@ -21609,7 +21609,7 @@ msgstr "El SQL usado para obtener los códigos buscados fue"
 
 #: PO_SelectOSPurchOrder.php:144 PO_SelectOSPurchOrder.php:146
 msgid "Add Purchase Order"
-msgstr "Agregar orden de compra"
+msgstr "Añadir orden de compra"
 
 #: PO_SelectOSPurchOrder.php:151 PO_SelectPurchOrder.php:118
 #: Shipt_Select.php:109
@@ -24315,7 +24315,7 @@ msgstr "¿Activo?"
 
 #: ProductSpecs.php:667 TestPlanResults.php:972
 msgid "Add More Tests"
-msgstr "Agregar más pruebas"
+msgstr "Añadir más pruebas"
 
 #: ProductSpecs.php:668
 msgid "Copy This Specification"
@@ -27735,7 +27735,7 @@ msgstr "Hipervínculo"
 
 #: SelectCustomer.php:666
 msgid "Add New Note"
-msgstr "Añadir una Nueva nota"
+msgstr "Añadir una nota nueva"
 
 #: SelectCustomer.php:690
 msgid "Add New Note for this Customer"
@@ -27751,7 +27751,7 @@ msgstr ""
 
 #: SelectCustomer.php:708 SelectCustomer.php:731
 msgid "Add New Group Note"
-msgstr "Añadir una Nueva nota de Grupo"
+msgstr "Añadir una nota de grupo nueva"
 
 #: SelectGLAccount.php:6
 msgid "Search GL Accounts"
@@ -28110,7 +28110,7 @@ msgstr "Seleccione el activo A Disponer de los de la siguiente lista"
 
 #: SelectOrderItems.php:1800
 msgid "Add Asset To Order"
-msgstr "Agregar un activo a una orden"
+msgstr "Añadir un activo a una orden"
 
 #: SelectOrderItems.php:1814
 msgid "Cancel Whole Order"
@@ -30942,7 +30942,7 @@ msgstr ""
 
 #: StockClone.php:766 Stocks.php:1100
 msgid "Add or Modify Stock Categories"
-msgstr "Añadir ó Modificar Categorías de Existencias"
+msgstr "Añadir o modificar categorías de inventario"
 
 #: StockClone.php:806 Stocks.php:1140
 msgid "Economic Order Quantity"
@@ -38127,7 +38127,7 @@ msgstr ""
 
 #: WOSerialNos.php:256
 msgid "Add A Number of New Serial Numbers"
-msgstr "Agregar Un Número de Nuevos Números de Serie"
+msgstr "Añadir un número de números de serie nuevos"
 
 #: WOSerialNos.php:258
 msgid "The input must be in number format"
@@ -38149,7 +38149,7 @@ msgstr "No. de Serie"
 
 #: WOSerialNos.php:267
 msgid "Add a single serial number"
-msgstr "Agregar un sólo número de serie"
+msgstr "Añadir un sólo número de serie"
 
 #: WOSerialNos.php:271
 msgid "Batch/Lot Ref"
@@ -45957,11 +45957,11 @@ msgstr "Listado de Variaciones Entre Pedidos y Entregas"
 
 #: includes/PDFGLJournalHeader.inc:11
 msgid "Journal number "
-msgstr "Número de diario"
+msgstr "Número en libro diario"
 
 #: includes/PDFGLJournalHeader.inc:12
 msgid "Journal Date "
-msgstr "Fecha de diario"
+msgstr "Fecha en libro diario"
 
 #: includes/PDFGLJournalHeader.inc:23
 msgid "Tag Details"
@@ -48275,7 +48275,7 @@ msgstr "Kwacha zambiano"
 
 #: includes/DatabaseTranslations.php:22
 msgid "Journal - GL"
-msgstr "Diario contable"
+msgstr "Libro diario"
 
 #: includes/DatabaseTranslations.php:23
 msgid "Payment - GL"
@@ -48291,7 +48291,7 @@ msgstr ""
 
 #: includes/DatabaseTranslations.php:29
 msgid "Journal - Debtors"
-msgstr ""
+msgstr "Libro diario - Deudores"
 
 #: includes/DatabaseTranslations.php:34
 msgid "Purchase Invoice"
@@ -48964,7 +48964,7 @@ msgstr "Consultas de proveedores de Transacción"
 
 #: includes/MainMenuLinksArray.php:163
 msgid "Add Supplier"
-msgstr "Agregar proveedor"
+msgstr "Añadir proveedor"
 
 #: includes/MainMenuLinksArray.php:165
 msgid "Maintain Factor Companies"
@@ -49113,7 +49113,7 @@ msgstr "Seleccione un artículo"
 
 #: includes/MainMenuLinksArray.php:276
 msgid "Add or Update Prices Based On Costs"
-msgstr "Añadir ó Actualizar Precios Basados en Costos"
+msgstr "Añadir o actualizar precios basados en costos"
 
 #: includes/MainMenuLinksArray.php:277
 msgid "View or Update Prices Based On Costs"
