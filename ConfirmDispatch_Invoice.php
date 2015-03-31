@@ -233,10 +233,12 @@ set all the necessary session variables changed by the POST  */
 	if (isset($_POST['ChargeFreightCost'])){
 		$_SESSION['Items'.$identifier]->FreightCost = filter_number_format($_POST['ChargeFreightCost']);
 	}
+	$i=1;
 	foreach ($_SESSION['Items'.$identifier]->FreightTaxes as $FreightTaxLine) {
-		if (isset($_POST['FreightTaxRate'  . $FreightTaxLine->TaxCalculationOrder])){
-			$_SESSION['Items'.$identifier]->FreightTaxes[$FreightTaxLine->TaxCalculationOrder]->TaxRate = filter_number_format($_POST['FreightTaxRate'  . $FreightTaxLine->TaxCalculationOrder])/100;
+		if (isset($_POST['FreightTaxRate'  . $i])){
+			$_SESSION['Items'.$identifier]->FreightTaxes[$i]->TaxRate = filter_number_format($_POST['FreightTaxRate'  . $i])/100;
 		}
+		$i++;
 	}
 
 	foreach ($_SESSION['Items'.$identifier]->LineItems as $Itm) {
@@ -258,10 +260,12 @@ set all the necessary session variables changed by the POST  */
 				$_SESSION['Items'.$identifier]->LineItems[$Itm->LineNumber]->QtyDispatched = round(filter_number_format($_POST[$Itm->LineNumber  . '_QtyDispatched']),$Itm->DecimalPlaces);
 			}
 		}
+		$i=1;
 		foreach ($Itm->Taxes as $TaxLine) {
-			if (isset($_POST[$Itm->LineNumber  . $TaxLine->TaxCalculationOrder . '_TaxRate'])){
-				$_SESSION['Items'.$identifier]->LineItems[$Itm->LineNumber]->Taxes[$TaxLine->TaxCalculationOrder]->TaxRate = filter_number_format($_POST[$Itm->LineNumber  . $TaxLine->TaxCalculationOrder . '_TaxRate'])/100;
+			if (isset($_POST[$Itm->LineNumber  . $i . '_TaxRate'])){
+				$_SESSION['Items'.$identifier]->LineItems[$Itm->LineNumber]->Taxes[$i]->TaxRate = filter_number_format($_POST[$Itm->LineNumber  . $i . '_TaxRate'])/100;
 			}
+			$i++;
 		}
 	} //end foreach lineitem
 
@@ -377,7 +381,7 @@ foreach ($_SESSION['Items'.$identifier]->LineItems as $LnItm) {
 	echo '</td>';
 	echo '<td class="number">';
 
-	$i=0; // initialise the number of taxes iterated through
+	$i=1; // initialise the number of taxes iterated through
 	$TaxLineTotal =0; //initialise tax total for the line
 
 
@@ -385,13 +389,13 @@ foreach ($_SESSION['Items'.$identifier]->LineItems as $LnItm) {
 		if (empty($TaxTotals[$Tax->TaxAuthID])) {
 			$TaxTotals[$Tax->TaxAuthID]=0;
 		}
-		if ($i>0){
+		if ($i>1){
 			echo '<br />';
 		}
 		if (isset($_POST['ProcessInvoice'])) {
 			echo  $Tax->TaxRate*100;
 		} else {
-			echo '<input type="text" class="number" required="required" title="' . _('Enter the tax rate applicable as a number') . '" name="' . $LnItm->LineNumber . $Tax->TaxCalculationOrder . '_TaxRate" maxlength="4" size="4" value="' . $Tax->TaxRate*100 . '" />';
+			echo '<input type="text" class="number" required="required" title="' . _('Enter the tax rate applicable as a number') . '" name="' . $LnItm->LineNumber . $i . '_TaxRate" maxlength="4" size="4" value="' . $Tax->TaxRate*100 . '" />';
 		}
 		$i++;
 		if ($Tax->TaxOnTax ==1){
