@@ -65,10 +65,9 @@ define("LIST_STOCK_CATEGORIES_SHOP_DISPLAYS",      "('SHDISP')");
 define("LIST_STOCK_CATEGORIES_SHOP_PACKAGING",     "('SHPACK')");
 
 /* Defines about LOCATIONS*/
-define("LIST_SHOPS_WITH_OUTLET",             "('')");
-//define("LIST_SHOPS_WITH_OUTLET",           "('TOKLE')");
+define("LIST_SHOPS_WITH_OUTLET",             "('TOKSU')");
 define("LIST_ACTIVE_KL_SHOPS_BALI",          "('TOK66','TOKSA','TOKKS','TOKJC','TOKSE','TOKUB','TOKMF','TOKPU','TOKSU','TOKBW','TOKOB','TOKSS')"); // NOT includes the shop online
-define("LIST_SHOPS_WITH_DISCOUNT",    		 "('TOKJC','TOKBW','TOKSU','TOKWS')");
+define("LIST_SHOPS_WITH_DISCOUNT",    		 "('TOKSU')");
 
 define("LIST_LOCATIONS_SPG_STOCK_STATUS",	 "('KANTO','TOK66','TOKSA','TOKKS','TOKJC','TOKSE','TOKUB','TOKMF','TOKOB','TOKPU','TOKSU','TOKSS','TOKBW')"); 
 

@@ -2817,6 +2817,66 @@ function DiscountedItemsOnWrongShops($Category, $RootPath, $db){
 				</div>';
 	}
 }
+
+function CategoryItemsNotInShop($Category, $Shop, $RootPath, $db){
+	
+	$Message = $Category . _(' items NOT in ') . $Shop;
+	
+	$SQL = "SELECT stockmaster.stockid,
+					stockmaster.description,
+					locstock.loccode,
+					(SELECT SUM(l.quantity)
+						FROM locstock l
+						WHERE l.stockid = stockmaster.stockid) AS qoh,
+					locstock.reorderlevel
+			FROM stockmaster, locstock
+			WHERE stockmaster.stockid = locstock.stockid
+				AND stockmaster.categoryid = '" . $Category . "'
+				AND stockmaster.discontinued = 0
+				AND locstock.loccode = '" . $Shop . "'
+				AND locstock.quantity = 0 
+				AND locstock.reorderlevel = 0
+			ORDER BY stockmaster.stockid";
+
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		echo '<p class="page_title_text" align="center"><strong>' . $Message . '</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Description') . '</th>
+							<th class="ascending">' . _('QOH') . '</th>
+							<th class="ascending">' . _('Reorder Level') . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		while ($myrow = DB_fetch_array($result)) {
+			$k = StartEvenOrOddRow($k);
+			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+			$CodeLinkRL = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stockid'] . '">' . $myrow['reorderlevel'] . '</a>';
+			printf('<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					$i, 
+					$CodeLink, 
+					$myrow['description'], 
+					$myrow['qoh'], 
+					$CodeLinkRL 
+					);
+			$i++;
+		}
+		echo '</table>
+				</div>';
+	}
+}
+
+
 			
 function OutletItemsOnKLShops($RootPath, $db){
 	$SQL = "SELECT stockmaster.stockid,

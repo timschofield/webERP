@@ -303,6 +303,9 @@ if ($KL_PurchasingManager){
 
 //	ItemsWithStockKantorButRLZeroAt("DISCOU", "TOKLE", $RootPath, $db);
 
+	CategoryItemsNotInShop("DISCOU", "TOKSU", $RootPath, $db);
+	CategoryItemsNotInShop("OUTLET", "TOKSU", $RootPath, $db);
+
 	ItemsInCategoryWithStockKantorButReorderLevelTokoZero("OUTLET", $RootPath, $db);
 	ItemsInCategoryWithStockKantorButReorderLevelTokoZero("DISCOU", $RootPath, $db);
 }
