@@ -17,6 +17,9 @@ if (isset($_POST['PrintPDF'])){
 
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-RE_CHECK_PRICETAGS_CHANGED_DURING_LAST_X_DAYS));
 
+	// SQL ORDER BY needs the 2 dates because in some cases 1 items has more than 1 row in klchenageprice
+	// if there has been a typing error while entering the new price, then the system adds another row. is it a bug?
+	// KL RICARD 31/03/2015
 	$SQL = "SELECT stockmaster.stockid,
 				stockmaster.description,
 				stockmaster.units,
@@ -25,7 +28,9 @@ if (isset($_POST['PrintPDF'])){
 				(SELECT klchangeprice.newretailprice
 					FROM klchangeprice
 					WHERE klchangeprice.stockid = stockmaster.stockid
-					ORDER BY klchangeprice.endprocessdate DESC
+						AND klchangeprice.endprocessdate != '0000-00-00'
+					ORDER BY klchangeprice.endprocessdate DESC,
+						klchangeprice.startprocessdate DESC
 					LIMIT 1) AS retailprice
 			FROM stockmaster,
 				stockcategory,
