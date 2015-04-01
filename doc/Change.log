@@ -1,5 +1,6 @@
 webERP Change Log
 
+01/04/15 Exson: Fixed comma bug due to locale issue of POReport.php csv file. And add ordered/received quantity field in the report.
 01/04/15 Exson: Fixed the bug that when delete one gl item from the payment details, the bank account related setting will disappeared in Payments.php. Reported by Steven.
 01/04/15 Thumb: Add a Z_ImportCustbranch.php script to import customer branches.
 30/3/15  Vitaly: Get all taxes for the tax group, even if calculationorder is left at default value 0.
