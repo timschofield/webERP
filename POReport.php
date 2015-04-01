@@ -1333,15 +1333,15 @@ function submitcsv(&$db,
 					$myrow['itemcode'],
 					ConvertSQLDate($myrow['orddate']),
 					$myrow['supplierno'],
-					$myrow['suppname'],
-					locale_number_format($myrow['quantityord'],$myrow['decimalplaces']),
-					locale_number_format($myrow['quantityrecd'],$myrow['decimalplaces']),
-					locale_number_format($myrow['extcost'],2),
-					locale_number_format($myrow['extprice'],2),
-					locale_number_format($myrow['qtyinvoiced'],$myrow['decimalplaces']),
+					str_replace(',',' ',$myrow['suppname']),
+					round($myrow['quantityord'],$myrow['decimalplaces']),
+					round($myrow['quantityrecd'],$myrow['decimalplaces']),
+					round($myrow['extcost'],2),
+					round($myrow['extprice'],2),
+					round($myrow['qtyinvoiced'],$myrow['decimalplaces']),
 					$myrow['linestatus'],
 					ConvertSQLDate($myrow['deliverydate']),
-					$myrow['description']);
+					str_replace(',',' ',$myrow['description']));
 					$LastDecimalPlaces = $myrow['decimalplaces'];
 					$TotalQty += $myrow['quantityord'];
 					$TotalExtCost += $myrow['extcost'];
@@ -1387,7 +1387,7 @@ function submitcsv(&$db,
 					$myrow['itemcode'],
 					ConvertSQLDate($myrow['orddate']),
 					$myrow['supplierno'],
-					$myrow['suppname'],
+					str_replace(',',' ',$myrow['suppname']),
 					round($myrow['quantityrecd'],$myrow['decimalplaces']),
 					round($myrow['quantityord'],$myrow['decimalplaces']),
 					round($myrow['extcost'],2),
@@ -1395,7 +1395,7 @@ function submitcsv(&$db,
 					round($myrow['qtyinvoiced'],$myrow['decimalplaces']),
 					$myrow['linestatus'],
 					ConvertSQLDate($myrow['deliverydate']),
-					$myrow['description']);
+					str_replace(',',' ',$myrow['description']));
 					$LastDecimalPlaces = $myrow['decimalplaces'];
 					$TotalQty += $myrow['quantityord'];
 					$TotalExtCost += $myrow['extcost'];
