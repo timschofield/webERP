@@ -1,9 +1,10 @@
 <?php
 
-/* $Id: EmailCustTrans.php 6941 2014-10-26 23:18:08Z daintree $*/
+/* $Id: EmailCustTrans.php 7245 2015-03-30 21:46:47Z vvs2012 $*/
 
-include ('includes/session.inc');
-include ('includes/SQL_CommonFunctions.inc');
+include('includes/session.inc');
+include('includes/header.inc');
+include('includes/SQL_CommonFunctions.inc');
 
 if ($_GET['InvOrCredit']=='Invoice'){
 	$TransactionType = _('Invoice');
