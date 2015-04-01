@@ -166,6 +166,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$Suppli
 							   purchorders.supplierno,
 							   purchorders.orddate,
 							   purchorderdetails.quantityord,
+							   purchorderdetails.quantityrecd,
 							   purchorderdetails.qtyinvoiced,
 							   (purchorderdetails.quantityord * purchorderdetails.unitprice) as extprice,
 							   (purchorderdetails.quantityord * purchorderdetails.stdcostunit) as extcost,
@@ -194,6 +195,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$Suppli
 							   grns.deliverydate,
 							   purchorders.supplierno,
 							   purchorders.orddate,
+							   purchorderdetails.quantityord as quantityrecd,
 							   grns.qtyrecd as quantityord,
 							   grns.quantityinv as qtyinvoiced,
 							   (grns.qtyrecd * purchorderdetails.unitprice) as extprice,
@@ -541,6 +543,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$Suppli
 						<th>' . _('Supplier No') . '</th>
 						<th>' . _('Supplier Name') . '</th>
 						<th>' . _('Order Qty') . '</th>
+						<th>' . _('Qty Received') . '</th>
 						<th>' . _('Extended Cost') . '</th>
 						<th>' . _('Extended Price') . '</th>
 						<th>' . _('Invoiced Qty') . '</th>
@@ -566,6 +569,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$Suppli
 							<td>%s</td>
 							<td>%s</td>
 							<td>%s</td>
+							<td>%s</td>
 							<td class="number">%s</td>
 							<td class="number">%s</td>
 							<td class="number">%s</td>
@@ -581,6 +585,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$Suppli
 							$myrow['supplierno'],
 							$myrow['suppname'],
 							locale_number_format($myrow['quantityord'],$myrow['decimalplaces']),
+							locale_number_format($myrow['quantityrecd'],$myrow['decimalplaces']),
 							locale_number_format($myrow['extcost'],2),
 							locale_number_format($myrow['extprice'],2),
 							locale_number_format($myrow['qtyinvoiced'],$myrow['decimalplaces']),
@@ -626,6 +631,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$Suppli
 						<th>' . _('Order Date') . '</th>
 						<th>' . _('Supplier No') . '</th>
 						<th>' . _('Supplier Name') . '</th>
+						<th>' . _('Order Qty') . '</th>
 						<th>' . _('Received')  . '</th>
 						<th>' . _('Extended Cost') . '</th>
 						<th>' . _('Extended Price') . '</th>
@@ -657,6 +663,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$Suppli
 							<td class="number">%s</td>
 							<td class="number">%s</td>
 							<td class="number">%s</td>
+							<td class="number">%s</td>
 							<td>%s</td>
 							<td>%s</td>
 							<td>%s</td>
@@ -666,6 +673,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$Suppli
 							ConvertSQLDate($myrow['orddate']),
 							$myrow['supplierno'],
 							$myrow['suppname'],
+							locale_number_format($myrow['quantityrecd'],$myrow['decimalplaces']),
 							locale_number_format($myrow['quantityord'],$myrow['decimalplaces']),
 							locale_number_format($myrow['extcost'],2),
 							locale_number_format($myrow['extprice'],2),
@@ -940,6 +948,7 @@ function submitcsv(&$db,
 							   purchorderdetails.deliverydate,
 							   purchorders.supplierno,
 							   purchorders.orddate,
+							   purchorderdetails.quantityrecd,
 							   purchorderdetails.quantityord,
 							   purchorderdetails.qtyinvoiced,
 							   (purchorderdetails.quantityord * purchorderdetails.unitprice) as extprice,
@@ -969,6 +978,7 @@ function submitcsv(&$db,
 							   grns.deliverydate,
 							   purchorders.supplierno,
 							   purchorders.orddate,
+							   purchorderdetails.quantityord as quantityrecd,
 							   grns.qtyrecd as quantityord,
 							   grns.quantityinv as qtyinvoiced,
 							   (grns.qtyrecd * purchorderdetails.unitprice) as extprice,
@@ -1300,13 +1310,14 @@ function submitcsv(&$db,
 
 		if ($_POST['ReportType'] == 'Detail') {
 			if ($_POST['DateType'] == 'Order') {
-				fprintf($FileHandle, '"%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s"'."\n",
+				fprintf($FileHandle, '"%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s"'."\n",
 					 _('Order No'),
 					 _('Part Number'),
 					 _('Order Date'),
 					 _('Supplier No'),
 					 _('Supplier Name'),
 					 _('Order Qty'),
+					 _('Qty Received'),
 					 _('Extended Cost'),
 					 _('Extended Price'),
 					 _('Invoiced Qty'),
@@ -1317,13 +1328,14 @@ function submitcsv(&$db,
 				while ($myrow = DB_fetch_array($result)) {
 					$linectr++;
 				   // Detail for both DateType of Order
-					fprintf($FileHandle, '"%s","%s","%s","%s","%s",%s,%s,%s,%s,"%s","%s","%s"'."\n",
+					fprintf($FileHandle, '"%s","%s","%s","%s","%s",%s,%s,%s,%s,%s,"%s","%s","%s"'."\n",
 					$myrow['orderno'],
 					$myrow['itemcode'],
 					ConvertSQLDate($myrow['orddate']),
 					$myrow['supplierno'],
 					$myrow['suppname'],
 					locale_number_format($myrow['quantityord'],$myrow['decimalplaces']),
+					locale_number_format($myrow['quantityrecd'],$myrow['decimalplaces']),
 					locale_number_format($myrow['extcost'],2),
 					locale_number_format($myrow['extprice'],2),
 					locale_number_format($myrow['qtyinvoiced'],$myrow['decimalplaces']),
@@ -1343,20 +1355,21 @@ function submitcsv(&$db,
 					' ',
 					' ',
 					' ',
-					locale_number_format($TotalQty,2),
-					locale_number_format($TotalExtCost,2),
-					locale_number_format($TotalExtPrice,2),
-					locale_number_format($TotalInvQty,2),
+					round($TotalQty,2),
+					round($TotalExtCost,2),
+					round($TotalExtPrice,2),
+					round($TotalInvQty,2),
 					' ',
 					' ');
 			} else {
 			  // Header for Date Type of Delivery Date
-				fprintf($FileHandle, '"%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s"'."\n",
-					 _('Order No'),
-					 _('Part Number'),
+				fprintf($FileHandle, '"%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s"'."\n",
+					_('Order No'), 
+					_('Part Number'),
 					 _('Order Date'),
 					 _('Supplier No'),
 					 _('Supplier Name'),
+					 _('Order Qty'),
 					 _('Received'),
 					 _('Extended Cost'),
 					 _('Extended Price'),
@@ -1369,16 +1382,17 @@ function submitcsv(&$db,
 					$linectr++;
 				   // Detail for both DateType of Ship
 				   // In sql, had to alias grns.qtyrecd as quantityord so could use same name here
-					fprintf($FileHandle, '"%s","%s","%s","%s","%s",%s,%s,%s,%s,"%s","%s","%s"'."\n",
+					fprintf($FileHandle, '"%s","%s","%s","%s","%s",%s,%s,%s,%s,%s,"%s","%s","%s"'."\n",
 					$myrow['orderno'],
 					$myrow['itemcode'],
 					ConvertSQLDate($myrow['orddate']),
 					$myrow['supplierno'],
 					$myrow['suppname'],
-					locale_number_format($myrow['quantityord'],$myrow['decimalplaces']),
-					locale_number_format($myrow['extcost'],2),
-					locale_number_format($myrow['extprice'],2),
-					locale_number_format($myrow['qtyinvoiced'],$myrow['decimalplaces']),
+					round($myrow['quantityrecd'],$myrow['decimalplaces']),
+					round($myrow['quantityord'],$myrow['decimalplaces']),
+					round($myrow['extcost'],2),
+					round($myrow['extprice'],2),
+					round($myrow['qtyinvoiced'],$myrow['decimalplaces']),
 					$myrow['linestatus'],
 					ConvertSQLDate($myrow['deliverydate']),
 					$myrow['description']);
@@ -1395,10 +1409,10 @@ function submitcsv(&$db,
 					' ',
 					' ',
 					' ',
-					locale_number_format($TotalQty,$LastDecimalPlaces),
-					locale_number_format($TotalExtCost,2),
-					locale_number_format($TotalExtPrice,2),
-					locale_number_format($TotalInvQty,$LastDecimalPlaces),
+					round($TotalQty,$LastDecimalPlaces),
+					round($TotalExtCost,2),
+					round($TotalExtPrice,2),
+					round($TotalInvQty,$LastDecimalPlaces),
 					" ",
 					" ");
 			}
@@ -1461,10 +1475,10 @@ function submitcsv(&$db,
 				fprintf($FileHandle, '"%s","%s",%s,%s,%s,%s,"%s"'."\n",
 				$myrow[$summarytype],
 				$myrow[$description],
-				locale_number_format($myrow['quantityord'],$myrow['decimalplaces']),
-				locale_number_format($myrow['extcost'],2),
-				locale_number_format($myrow['extprice'],2),
-				locale_number_format($myrow['qtyinvoiced'],$myrow['decimalplaces']),
+				round($myrow['quantityord'],$myrow['decimalplaces']),
+				round($myrow['extcost'],2),
+				round($myrow['extprice'],2),
+				round($myrow['qtyinvoiced'],$myrow['decimalplaces']),
 				$suppname);
 				print '<br/>';
 				$LastDecimalPlaces = $myrow['decimalplaces'];
@@ -1477,10 +1491,10 @@ function submitcsv(&$db,
 				fprintf($FileHandle, '"%s","%s",%s,%s,%s,%s,"%s"'."\n",
 				'Totals',
 				_('Lines - ') . $linectr,
-				locale_number_format($TotalQty,$LastDecimalPlaces),
-				locale_number_format($TotalExtCost,2),
-				locale_number_format($TotalExtPrice,2),
-				locale_number_format($TotalInvQty,$LastDecimalPlaces),
+				round($TotalQty,$LastDecimalPlaces),
+				round($TotalExtCost,2),
+				round($TotalExtPrice,2),
+				round($TotalInvQty,$LastDecimalPlaces),
 				' ');
 		} // End of if ($_POST['ReportType']
 		fclose($FileHandle);
