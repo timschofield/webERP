@@ -122,7 +122,7 @@ function Create_POS_Data_Full ($POSDebtorNo, $POSBranchCode, $PathPrefix, $db) {
 	fwrite($FileHandle,"DELETE FROM stockmaster;\n");
 
 
-	$result = DB_query("SELECT stockid, categoryid, description, longdescription, units, barcode, taxcatid, decimalplaces, discountcategory FROM stockmaster WHERE (mbflag='B' OR mbflag='M') AND discontinued=0 AND controlled=0");
+	$result = DB_query("SELECT stockid, categoryid, description, longdescription, units, barcode, taxcatid, decimalplaces, discountcategory FROM stockmaster WHERE (mbflag='B' OR mbflag='M' OR mbflag='D') AND discontinued=0 AND controlled=0");
 
 	while ($myrow = DB_fetch_array($result)) {
 
