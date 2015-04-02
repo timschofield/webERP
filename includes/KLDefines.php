@@ -124,7 +124,6 @@ define("ACCOUNT_BANK_MANDIRI_IDR", "111121100PT"); // number of account for Bank
 define("ACCOUNT_COMISSION_CREDITCARD", "700211300PT"); // number of account used to charge the bank comission
 
 /* Defines about WebStore */
-// define('RATE_IDRUSD_FOR_RETAIL_WEBSTORE',12000);
 
 define("ONLINE_PRICE_LIST", 'RT');
 
