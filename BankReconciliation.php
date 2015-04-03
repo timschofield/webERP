@@ -149,16 +149,11 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 
 /*Get the balance of the bank account concerned */
 
-	$sql = "SELECT MAX(period)
-			FROM chartdetails
-			WHERE accountcode='" . $_POST['BankAccount']."'";
-	$PrdResult = DB_query($sql);
-	$myrow = DB_fetch_row($PrdResult);
-	$LastPeriod = $myrow[0];
+	$PeriodNo = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);
 
 	$SQL = "SELECT bfwd+actual AS balance
 			FROM chartdetails
-			WHERE period='" . $LastPeriod . "'
+			WHERE period='" . $PeriodNo . "'
 			AND accountcode='" . $_POST['BankAccount']."'";
 
 	$ErrMsg = _('The bank account balance could not be returned by the SQL because');
