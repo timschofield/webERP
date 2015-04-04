@@ -175,7 +175,7 @@ if (isset($_POST['CommitBatch']) AND $_POST['CommitBatch']==_('Accept and Proces
 				unset($_POST['GLManualCode']);
 			} else {
 				$myrow = DB_fetch_array($Result);
-				$_SESSION['JournalDetail']->add_to_glanalysis(filter_number_format($_POST['GLAmount']),
+				$_SESSION['JournalDetail']->add_to_glanalysis($_POST['GLAmount'],
 															$_POST['GLNarrative'],
 															$_POST['GLManualCode'],
 															$myrow['accountname'],
@@ -215,7 +215,7 @@ if (isset($_POST['CommitBatch']) AND $_POST['CommitBatch']==_('Accept and Proces
 			$SQL = "SELECT accountname FROM chartmaster WHERE accountcode='" . $_POST['GLCode'] . "'";
 			$Result=DB_query($SQL);
 			$myrow=DB_fetch_array($Result);
-			$_SESSION['JournalDetail']->add_to_glanalysis(filter_number_format($_POST['GLAmount']),
+			$_SESSION['JournalDetail']->add_to_glanalysis($_POST['GLAmount'],
 															$_POST['GLNarrative'],
 															$_POST['GLCode'],
 															$myrow['accountname'],
