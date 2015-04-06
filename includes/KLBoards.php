@@ -2820,14 +2820,15 @@ function DiscountedItemsOnWrongShops($Category, $RootPath, $db){
 
 function CategoryItemsNotInShop($Category, $Shop, $RootPath, $db){
 	
-	$Message = $Category . _(' items NOT in ') . $Shop;
+	$Message = $Category . _(' items NOT in ') . $Shop . ' (excluding Service and return to Supplier)';
 	
 	$SQL = "SELECT stockmaster.stockid,
 					stockmaster.description,
 					locstock.loccode,
 					(SELECT SUM(l.quantity)
 						FROM locstock l
-						WHERE l.stockid = stockmaster.stockid) AS qoh,
+						WHERE l.stockid = stockmaster.stockid
+							AND l.loccode NOT IN " . LIST_SERVICE_LOCATIONS . ") AS qoh,
 					locstock.reorderlevel
 			FROM stockmaster, locstock
 			WHERE stockmaster.stockid = locstock.stockid
