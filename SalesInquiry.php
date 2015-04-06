@@ -973,6 +973,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 				$columnheader7 =  _('Customer Name');
 			}
 			if ($SummaryType == 'categoryid') {
+				$Description = 'categorydescription';
 				$SummaryHeader =  _('Stock Category');
 				$Descriptionheader =  _('Category Description');
 			}
