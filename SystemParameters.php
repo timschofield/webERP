@@ -264,7 +264,7 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['CheckCreditLimits'] != $_POST['X_CheckCreditLimits'] ) {
 			$sql[] = "UPDATE config SET confvalue = '". ($_POST['X_CheckCreditLimits'])."' WHERE confname = 'CheckCreditLimits'";
 		}
-		if ($_SESSION['WikiApp'] != $_POST['X_WikiApp'] ) {
+		if ($_SESSION['WikiApp'] !== $_POST['X_WikiApp'] ) {
 			$sql[] = "UPDATE config SET confvalue = '". $_POST['X_WikiApp']."' WHERE confname = 'WikiApp'";
 		}
 		if ($_SESSION['WikiPath'] != $_POST['X_WikiPath'] ) {
@@ -989,7 +989,7 @@ $WikiApplications = array( _('Disabled'),
 echo '<tr style="outline: 1px solid"><td>' . _('Wiki application') . ':</td>
 	<td><select name="X_WikiApp">';
 for ($i=0; $i < sizeof($WikiApplications); $i++ ) {
-	echo '<option '.($_SESSION['WikiApp'] == $i ? 'selected="selected" ' : '').'value="'. $i .'">' . $WikiApplications[$i]  . '</option>';
+	echo '<option '.($_SESSION['WikiApp'] == $WikiApplications[$i] ? 'selected="selected" ' : '').'value="'.$WikiApplications[$i].'">' . $WikiApplications[$i]  . '</option>';
 }
 echo '</select></td>
 	<td>' . _('This feature makes webERP show links to a free form company knowledge base using a wiki. This allows sharing of important company information - about customers, suppliers and products and the set up of work flow menus and/or company procedures documentation')  . '</td></tr>';
