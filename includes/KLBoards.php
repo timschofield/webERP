@@ -2837,6 +2837,10 @@ function CategoryItemsNotInShop($Category, $Shop, $RootPath, $db){
 				AND locstock.loccode = '" . $Shop . "'
 				AND locstock.quantity = 0 
 				AND locstock.reorderlevel = 0
+				AND (SELECT SUM(l.quantity)
+						FROM locstock l
+						WHERE l.stockid = stockmaster.stockid
+							AND l.loccode NOT IN " . LIST_SERVICE_LOCATIONS . " > 0)
 			ORDER BY stockmaster.stockid";
 
 	$result = DB_query($SQL);
