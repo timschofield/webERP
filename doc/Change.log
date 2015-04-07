@@ -1,5 +1,6 @@
 webERP Change Log
 
+07/04/15 Exson: Fixed the Wiki link broken bug in SystemParameters.php. 
 04/04/15 Exson: Fixed the bug that Credit and Debit submit amount was duplicated processed by local_number_format function.
 01/04/15 Exson: Remove comma from item description and suppliername to make csv file correctly in POReport.php.
 01/04/15 Exson: Fixed comma bug due to locale issue of POReport.php csv file. And add ordered/received quantity field in the report.
