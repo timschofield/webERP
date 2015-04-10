@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: SalesInquiry.php 6941 2014-10-26 23:18:08Z daintree $*/
+/* $Id: SalesInquiry.php 7262 2015-04-06 08:24:23Z tehonu $*/
 // SalesInquiry.php
 // Inquiry on Sales Orders - If Date Type is Order Date, salesorderdetails is the main table
 // If Date Type is Invoice, stockmoves is the main table
@@ -193,7 +193,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 							   salesorders.branchcode,
 							   salesorderdetails.quantity,
 							   salesorderdetails.qtyinvoiced,
-							   (salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent)) / currencies.rate as extprice,
+							   (salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent) / currencies.rate) as extprice,
 							   (salesorderdetails.quantity * stockmaster.actualcost) as extcost,
 							   IF(salesorderdetails.quantity = salesorderdetails.qtyinvoiced ||
 								  salesorderdetails.completed = 1,'Completed','Open') as linestatus,
@@ -231,7 +231,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 							   salesorders.branchcode,
 							   salesorderdetails.quantity,
 							   salesorderdetails.qtyinvoiced,
-							   (tempstockmoves.qty * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent)) * -1 / currencies.rate as extprice,
+							   (tempstockmoves.qty * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent) * -1 / currencies.rate) as extprice,
 							   (tempstockmoves.qty * tempstockmoves.standardcost) * -1 as extcost,
 							   IF(salesorderdetails.quantity = salesorderdetails.qtyinvoiced ||
 								  salesorderdetails.completed = 1,'Completed','Open') as linestatus,
@@ -283,7 +283,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 					$sql = "SELECT salesorderdetails.stkcode,
 								   SUM(salesorderdetails.quantity) as quantity,
 								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
-								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent)) / currencies.rate as extprice,
+								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent) / currencies.rate) as extprice,
 								   SUM(salesorderdetails.quantity * stockmaster.actualcost) as extcost,
 								   stockmaster.description,
 								   stockmaster.decimalplaces
@@ -318,7 +318,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 					               debtorsmaster.name,
 								   SUM(salesorderdetails.quantity) as quantity,
 								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
-								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent)) / currencies.rate as extprice,
+								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent) / currencies.rate) as extprice,
 								   SUM(salesorderdetails.quantity * stockmaster.actualcost) as extcost
 								   FROM salesorderdetails
 							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
@@ -352,7 +352,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 					               debtorsmaster.name,
 								   SUM(salesorderdetails.quantity) as quantity,
 								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
-								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent)) / currencies.rate as extprice,
+								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent) / currencies.rate) as extprice,
 								   SUM(salesorderdetails.quantity * stockmaster.actualcost) as extcost
 								   FROM salesorderdetails
 							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
@@ -382,7 +382,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 								   CONCAT(MONTHNAME(salesorders.orddate),' ',YEAR(salesorders.orddate)) as monthname,
 								   SUM(salesorderdetails.quantity) as quantity,
 								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
-								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent)) / currencies.rate as extprice,
+								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent) / currencies.rate) as extprice,
 								   SUM(salesorderdetails.quantity * stockmaster.actualcost) as extcost
 								   FROM salesorderdetails
 							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
@@ -412,7 +412,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 								   stockcategory.categorydescription,
 								   SUM(salesorderdetails.quantity) as quantity,
 								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
-								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent)) / currencies.rate as extprice,
+								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent) / currencies.rate) as extprice,
 								   SUM(salesorderdetails.quantity * stockmaster.actualcost) as extcost
 								   FROM salesorderdetails
 							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
@@ -443,7 +443,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 								   salesman.salesmanname,
 								   SUM(salesorderdetails.quantity) as quantity,
 								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
-								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent)) / currencies.rate as extprice,
+								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent) / currencies.rate) as extprice,
 								   SUM(salesorderdetails.quantity * stockmaster.actualcost) as extcost
 								   FROM salesorderdetails
 							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
@@ -473,7 +473,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 								   areas.areadescription,
 								   SUM(salesorderdetails.quantity) as quantity,
 								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
-								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent)) / currencies.rate as extprice,
+								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent) / currencies.rate) as extprice,
 								   SUM(salesorderdetails.quantity * stockmaster.actualcost) as extcost
 								   FROM salesorderdetails
 							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
@@ -505,7 +505,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 					$sql = "SELECT salesorderdetails.stkcode,
 								   SUM(salesorderdetails.quantity) as quantity,
 								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
-								   SUM(tempstockmoves.qty * tempstockmoves.price) * -1 / currencies.rate as extprice,
+								   SUM(tempstockmoves.qty * tempstockmoves.price * -1 / currencies.rate) as extprice,
 								   SUM(tempstockmoves.qty * tempstockmoves.standardcost) * -1 as extcost,
 								   stockmaster.description,
 								   SUM(tempstockmoves.qty * -1) as qty
@@ -542,7 +542,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 					               debtorsmaster.name,
 								   SUM(salesorderdetails.quantity) as quantity,
 								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
-								   SUM(tempstockmoves.qty * tempstockmoves.price) * -1 / currencies.rate as extprice,
+								   SUM(tempstockmoves.qty * tempstockmoves.price * -1 / currencies.rate) as extprice,
 								   SUM(tempstockmoves.qty * tempstockmoves.standardcost) * -1 as extcost,
 								   SUM(tempstockmoves.qty * -1) as qty
 								   FROM tempstockmoves
@@ -581,7 +581,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 					               debtorsmaster.name,
 								   SUM(salesorderdetails.quantity) as quantity,
 								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
-								   SUM(tempstockmoves.qty * tempstockmoves.price) * -1 / currencies.rate as extprice,
+								   SUM(tempstockmoves.qty * tempstockmoves.price * -1 / currencies.rate) as extprice,
 								   SUM(tempstockmoves.qty * tempstockmoves.standardcost) * -1 as extcost,
 								   SUM(tempstockmoves.qty * -1) as qty
 								   FROM tempstockmoves
@@ -616,7 +616,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 								   CONCAT(MONTHNAME(salesorders.orddate),' ',YEAR(salesorders.orddate)) as monthname,
 								   SUM(salesorderdetails.quantity) as quantity,
 								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
-								   SUM(tempstockmoves.qty * tempstockmoves.price) * -1 / currencies.rate as extprice,
+								   SUM(tempstockmoves.qty * tempstockmoves.price * -1 / currencies.rate) as extprice,
 								   SUM(tempstockmoves.qty * tempstockmoves.standardcost) * -1 as extcost,
 								   SUM(tempstockmoves.qty * -1) as qty
 								   FROM tempstockmoves
@@ -651,7 +651,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 								   stockcategory.categorydescription,
 								   SUM(salesorderdetails.quantity) as quantity,
 								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
-								   SUM(tempstockmoves.qty * tempstockmoves.price) * -1 / currencies.rate as extprice,
+								   SUM(tempstockmoves.qty * tempstockmoves.price * -1 / currencies.rate) as extprice,
 								   SUM(tempstockmoves.qty * tempstockmoves.standardcost) * -1 as extcost,
 								   SUM(tempstockmoves.qty * -1) as qty
 								   FROM tempstockmoves
@@ -686,7 +686,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 								   salesman.salesmanname,
 								   SUM(salesorderdetails.quantity) as quantity,
 								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
-								   SUM(tempstockmoves.qty * tempstockmoves.price) * -1 / currencies.rate as extprice,
+								   SUM(tempstockmoves.qty * tempstockmoves.price * -1 / currencies.rate) as extprice,
 								   SUM(tempstockmoves.qty * tempstockmoves.standardcost) * -1 as extcost,
 								   SUM(tempstockmoves.qty * -1) as qty
 								   FROM tempstockmoves
@@ -721,7 +721,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 								   areas.areadescription,
 								   SUM(salesorderdetails.quantity) as quantity,
 								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
-								   SUM(tempstockmoves.qty * tempstockmoves.price) * -1 / currencies.rate as extprice,
+								   SUM(tempstockmoves.qty * tempstockmoves.price * -1 / currencies.rate) as extprice,
 								   SUM(tempstockmoves.qty * tempstockmoves.standardcost) * -1 as extcost,
 								   SUM(tempstockmoves.qty * -1) as qty
 								   FROM tempstockmoves
@@ -973,6 +973,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 				$columnheader7 =  _('Customer Name');
 			}
 			if ($SummaryType == 'categoryid') {
+				$Description = 'categorydescription';
 				$SummaryHeader =  _('Stock Category');
 				$Descriptionheader =  _('Category Description');
 			}
