@@ -43,6 +43,8 @@ if ($_SESSION['AccessLevel'] == 8){
 	$KL_KantorAdministration = TRUE;
 	$KL_PurchasingManager = TRUE;
 	$KL_ShopSupportManager = TRUE;
+}else if ($_SESSION['AccessLevel'] == 26){ // Shop Support + Online
+	$KL_ShopSupportTeam = TRUE;
 }
 
 ?>
