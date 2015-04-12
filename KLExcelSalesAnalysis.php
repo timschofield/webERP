@@ -169,77 +169,148 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate) {
 										 ->setDescription("Sales Analysis")
 										 ->setKeywords("")
 										 ->setCategory("");
+
+			$objPHPExcel->getActiveSheet()->getStyle('A:AZ')->getNumberFormat()->setFormatCode('#,###');
+			$objPHPExcel->getActiveSheet()->getStyle('3')->getNumberFormat()->setFormatCode('0.0%');
 		
 			// Add title data
 			$objPHPExcel->setActiveSheetIndex(0);
-			$objPHPExcel->getActiveSheet()->setCellValue('A1', 'ITEM CODE');
-			$objPHPExcel->getActiveSheet()->setCellValue('B1', 'DESCRIPTION');
-			$objPHPExcel->getActiveSheet()->setCellValue('C1', 'CATEGORY');
-			$objPHPExcel->getActiveSheet()->setCellValue('D1', 'DOB_CATEGORY');
-			$objPHPExcel->getActiveSheet()->setCellValue('E1', 'QOH');
-			$objPHPExcel->getActiveSheet()->setCellValue('F1', 'STANDARD_COST');
-			$objPHPExcel->getActiveSheet()->setCellValue('G1', 'RETAIL_PRICE');
-			$objPHPExcel->getActiveSheet()->setCellValue('H1', '%_DISCOUNT');
+			$objPHPExcel->getActiveSheet()->setCellValue('A5', 'ITEM CODE');
+			$objPHPExcel->getActiveSheet()->setCellValue('B5', 'DESCRIPTION');
+			$objPHPExcel->getActiveSheet()->setCellValue('C5', 'CATEGORY');
+			$objPHPExcel->getActiveSheet()->setCellValue('D5', 'FAMILY');
+			$objPHPExcel->getActiveSheet()->setCellValue('E5', 'TYPE');
+			$objPHPExcel->getActiveSheet()->setCellValue('F5', 'DOB_CATEGORY');
 
- 			$objPHPExcel->getActiveSheet()->setCellValue('L1', 'SALES_66');
- 			$objPHPExcel->getActiveSheet()->setCellValue('M1', 'SALES_SE');
- 			$objPHPExcel->getActiveSheet()->setCellValue('N1', 'SALES_OB');
- 			$objPHPExcel->getActiveSheet()->setCellValue('O1', 'SALES_KS');
- 			$objPHPExcel->getActiveSheet()->setCellValue('P1', 'SALES_BW');
- 			$objPHPExcel->getActiveSheet()->setCellValue('Q1', 'SALES_JC');
- 			$objPHPExcel->getActiveSheet()->setCellValue('R1', 'SALES_SA');
- 			$objPHPExcel->getActiveSheet()->setCellValue('S1', 'SALES_SU');
- 			$objPHPExcel->getActiveSheet()->setCellValue('T1', 'SALES_SS');
- 			$objPHPExcel->getActiveSheet()->setCellValue('U1', 'SALES_UB');
- 			$objPHPExcel->getActiveSheet()->setCellValue('V1', 'SALES_MF');
- 			$objPHPExcel->getActiveSheet()->setCellValue('W1', 'SALES_PU');
+			$objPHPExcel->getActiveSheet()->setCellValue('G5', 'STANDARD_COST');
 
- 			$objPHPExcel->getActiveSheet()->setCellValue('Y1', 'SALES_PCS');
- 			$objPHPExcel->getActiveSheet()->setCellValue('Z1', 'SALES_VALUE');
- 			$objPHPExcel->getActiveSheet()->setCellValue('AA1', 'COST_VALUE');
- 			$objPHPExcel->getActiveSheet()->setCellValue('AB1', 'GROSS_MARGIN');
- 			$objPHPExcel->getActiveSheet()->setCellValue('AC1', 'QOH_COST_VALUE');
+			$objPHPExcel->getActiveSheet()->setCellValue('H5', 'RETAIL_PRICE');
+			$objPHPExcel->getActiveSheet()->setCellValue('I5', '%_DISCOUNT');
+			$objPHPExcel->getActiveSheet()->setCellValue('J5', 'NET_PRICE');
+
+			$objPHPExcel->getActiveSheet()->setCellValue('K5', 'QOH');
+ 			$objPHPExcel->getActiveSheet()->setCellValue('L5', 'STOCK_VALUE');
+
+  			$objPHPExcel->getActiveSheet()->setCellValue('M5', 'PCS_SOLD');
+ 			$objPHPExcel->getActiveSheet()->setCellValue('N5', 'SALES_VALUE');
+ 			$objPHPExcel->getActiveSheet()->setCellValue('O5', 'COST_VALUE');
+ 			$objPHPExcel->getActiveSheet()->setCellValue('P5', 'GROSS_MARGIN');
  
+			$objPHPExcel->getActiveSheet()->setCellValue('AA5', 'SALES_66');
+ 			$objPHPExcel->getActiveSheet()->setCellValue('AB5', 'SALES_SE');
+ 			$objPHPExcel->getActiveSheet()->setCellValue('AC5', 'SALES_OB');
+ 			$objPHPExcel->getActiveSheet()->setCellValue('AD5', 'SALES_KS');
+ 			$objPHPExcel->getActiveSheet()->setCellValue('AE5', 'SALES_BW');
+ 			$objPHPExcel->getActiveSheet()->setCellValue('AF5', 'SALES_JC');
+ 			$objPHPExcel->getActiveSheet()->setCellValue('AG5', 'SALES_SA');
+ 			$objPHPExcel->getActiveSheet()->setCellValue('AH5', 'SALES_SU');
+ 			$objPHPExcel->getActiveSheet()->setCellValue('AI5', 'SALES_SS');
+ 			$objPHPExcel->getActiveSheet()->setCellValue('AJ5', 'SALES_UB');
+ 			$objPHPExcel->getActiveSheet()->setCellValue('AK5', 'SALES_MF');
+ 			$objPHPExcel->getActiveSheet()->setCellValue('AL5', 'SALES_PU');
+
+
 			// Add data
-			$i = 2;
+			$StartingRow = 6;
+			$i = $StartingRow;
 			while ($myrow = DB_fetch_array($result)) {
 				$objPHPExcel->setActiveSheetIndex(0);
 				$objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $myrow['stockid']);
 				$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, $myrow['description']);
 				$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, $myrow['categoryid']);
-				$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, ConvertSQLDate($myrow['lastcategoryupdate']));
-				$objPHPExcel->getActiveSheet()->setCellValue('E'.$i, round($myrow['qoh'],0));
-				$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, round($myrow['standardcost'],0));
-				$objPHPExcel->getActiveSheet()->setCellValue('G'.$i, round($myrow['retailprice'],0));
-				$objPHPExcel->getActiveSheet()->setCellValue('H'.$i, $myrow['discountcategory']);
+				$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, substr($myrow['stockid'], 0,2));
+				
+				if (isRing($myrow['stockid'])){
+					$Type = "Ring";
+				}elseif (isToeRing($myrow['stockid'])){
+					$Type = "ToeRing";
+				}elseif (isBead($myrow['stockid'])){
+					$Type = "Bead";
+				}elseif (isEarring($myrow['stockid'])){
+					$Type = "Earring";
+				}elseif (isEarcuff($myrow['stockid'])){
+					$Type = "EarCuff";
+				}elseif (isBracelet($myrow['stockid'])){
+					$Type = "Bracelet";
+				}elseif (isAnklet($myrow['stockid'])){
+					$Type = "Anklet";
+				}elseif (isPendant($myrow['stockid'])){
+					$Type = "Pendant";
+				}elseif (isNecklace($myrow['stockid'])){
+					$Type = "Necklace";
+				}elseif (isPlasticBag($myrow['stockid'])){
+					$Type = "Bag";
+				}elseif (isTali($myrow['stockid'])){
+					$Type = "Tali";
+				}else{
+					$Type = "Unknown";
+				}
+				$objPHPExcel->getActiveSheet()->setCellValue('E'.$i, $Type);
+				$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, ConvertSQLDate($myrow['lastcategoryupdate']));
 
-				$objPHPExcel->getActiveSheet()->setCellValue('L'.$i, round($myrow['sales66'],0));
-				$objPHPExcel->getActiveSheet()->setCellValue('M'.$i, round($myrow['salesSE'],0));
-				$objPHPExcel->getActiveSheet()->setCellValue('N'.$i, round($myrow['salesOB'],0));
-				$objPHPExcel->getActiveSheet()->setCellValue('O'.$i, round($myrow['salesKS'],0));
-				$objPHPExcel->getActiveSheet()->setCellValue('P'.$i, round($myrow['salesBW'],0));
-				$objPHPExcel->getActiveSheet()->setCellValue('Q'.$i, round($myrow['salesJC'],0));
-				$objPHPExcel->getActiveSheet()->setCellValue('R'.$i, round($myrow['salesSA'],0));
-				$objPHPExcel->getActiveSheet()->setCellValue('S'.$i, round($myrow['salesSU'],0));
-				$objPHPExcel->getActiveSheet()->setCellValue('T'.$i, round($myrow['salesSS'],0));
-				$objPHPExcel->getActiveSheet()->setCellValue('U'.$i, round($myrow['salesUB'],0));
-				$objPHPExcel->getActiveSheet()->setCellValue('V'.$i, round($myrow['salesMF'],0));
-				$objPHPExcel->getActiveSheet()->setCellValue('W'.$i, round($myrow['salesPU'],0));
+				$objPHPExcel->getActiveSheet()->setCellValue('G'.$i, round($myrow['standardcost'],0));
 
-				$objPHPExcel->getActiveSheet()->setCellValue('Y'.$i, '=SUM(L'.$i.':W'.$i.')');
-				$objPHPExcel->getActiveSheet()->setCellValue('Z'.$i, '=Y'.$i.'*G'.$i.'*(100-H'.$i.')/100');
-				$objPHPExcel->getActiveSheet()->setCellValue('AA'.$i, '=Y'.$i.'*F'.$i.'');
-				$objPHPExcel->getActiveSheet()->setCellValue('AB'.$i, '=Z'.$i.'-AA'.$i.'');
-				$objPHPExcel->getActiveSheet()->setCellValue('AC'.$i, '=E'.$i.'*F'.$i.'');
+				$objPHPExcel->getActiveSheet()->setCellValue('H'.$i, round($myrow['retailprice'],0));
+				$objPHPExcel->getActiveSheet()->setCellValue('I'.$i, $myrow['discountcategory']);
+				$objPHPExcel->getActiveSheet()->setCellValue('J'.$i, '=H'.$i.'*(100-I'.$i.')/100');
+
+				$objPHPExcel->getActiveSheet()->setCellValue('K'.$i, round($myrow['qoh'],0));
+				$objPHPExcel->getActiveSheet()->setCellValue('L'.$i, '=G'.$i.'*K'.$i.'');
+
+				$objPHPExcel->getActiveSheet()->setCellValue('M'.$i, '=SUM(AA'.$i.':AL'.$i.')');
+				$objPHPExcel->getActiveSheet()->setCellValue('N'.$i, '=M'.$i.'*J'.$i.'');
+				$objPHPExcel->getActiveSheet()->setCellValue('O'.$i, '=M'.$i.'*G'.$i.'');
+				$objPHPExcel->getActiveSheet()->setCellValue('P'.$i, '=M'.$i.'-O'.$i.'');
+
+				$objPHPExcel->getActiveSheet()->setCellValue('AA'.$i, round($myrow['sales66'],0));
+				$objPHPExcel->getActiveSheet()->setCellValue('AB'.$i, round($myrow['salesSE'],0));
+				$objPHPExcel->getActiveSheet()->setCellValue('AC'.$i, round($myrow['salesOB'],0));
+				$objPHPExcel->getActiveSheet()->setCellValue('AD'.$i, round($myrow['salesKS'],0));
+				$objPHPExcel->getActiveSheet()->setCellValue('AE'.$i, round($myrow['salesBW'],0));
+				$objPHPExcel->getActiveSheet()->setCellValue('AF'.$i, round($myrow['salesJC'],0));
+				$objPHPExcel->getActiveSheet()->setCellValue('AG'.$i, round($myrow['salesSA'],0));
+				$objPHPExcel->getActiveSheet()->setCellValue('AH'.$i, round($myrow['salesSU'],0));
+				$objPHPExcel->getActiveSheet()->setCellValue('AI'.$i, round($myrow['salesSS'],0));
+				$objPHPExcel->getActiveSheet()->setCellValue('AJ'.$i, round($myrow['salesUB'],0));
+				$objPHPExcel->getActiveSheet()->setCellValue('AK'.$i, round($myrow['salesMF'],0));
+				$objPHPExcel->getActiveSheet()->setCellValue('AL'.$i, round($myrow['salesPU'],0));
 				
 				$i++;
 			}
 			
-			// Freeze panes
-			$objPHPExcel->getActiveSheet()->freezePane('B2');
+			// Calculating totals, subtotals, etc
+			$objPHPExcel->getActiveSheet()->setCellValue('A1', 'TOTAL');
+			$objPHPExcel->getActiveSheet()->setCellValue('K1', '=SUM(K'.$StartingRow.':K'.$i.')');
+			$objPHPExcel->getActiveSheet()->setCellValue('L1', '=SUM(L'.$StartingRow.':L'.$i.')');
+			$objPHPExcel->getActiveSheet()->setCellValue('M1', '=SUM(M'.$StartingRow.':M'.$i.')');
+			$objPHPExcel->getActiveSheet()->setCellValue('N1', '=SUM(N'.$StartingRow.':N'.$i.')');
+			$objPHPExcel->getActiveSheet()->setCellValue('O1', '=SUM(O'.$StartingRow.':O'.$i.')');
+			$objPHPExcel->getActiveSheet()->setCellValue('P1', '=SUM(P'.$StartingRow.':P'.$i.')');
+
+			$objPHPExcel->getActiveSheet()->setCellValue('A2', 'SUBTOTAL');
+			$objPHPExcel->getActiveSheet()->setCellValue('K2', '=SUBTOTAL(9,K'.$StartingRow.':K'.$i.')');
+			$objPHPExcel->getActiveSheet()->setCellValue('L2', '=SUBTOTAL(9,L'.$StartingRow.':L'.$i.')');
+			$objPHPExcel->getActiveSheet()->setCellValue('M2', '=SUBTOTAL(9,M'.$StartingRow.':M'.$i.')');
+			$objPHPExcel->getActiveSheet()->setCellValue('N2', '=SUBTOTAL(9,N'.$StartingRow.':N'.$i.')');
+			$objPHPExcel->getActiveSheet()->setCellValue('O2', '=SUBTOTAL(9,O'.$StartingRow.':O'.$i.')');
+			$objPHPExcel->getActiveSheet()->setCellValue('P2', '=SUBTOTAL(9,P'.$StartingRow.':P'.$i.')');
+
+			$objPHPExcel->getActiveSheet()->setCellValue('A3', '%');
+			$objPHPExcel->getActiveSheet()->setCellValue('K3', '=K2/K1');
+			$objPHPExcel->getActiveSheet()->setCellValue('L3', '=L2/L1');
+			$objPHPExcel->getActiveSheet()->setCellValue('M3', '=M2/M1');
+			$objPHPExcel->getActiveSheet()->setCellValue('N3', '=N2/N1');
+			$objPHPExcel->getActiveSheet()->setCellValue('O3', '=O2/O1');
+			$objPHPExcel->getActiveSheet()->setCellValue('P3', '=P2/P1');
 		
+			// Freeze panes
+			$objPHPExcel->getActiveSheet()->freezePane('B6');
+
+			// Set auto filter
+			$objPHPExcel->getActiveSheet()->setAutoFilter('A5:AL' . $i);
+			
 			// Auto Size columns
-			foreach(range('A','W') as $columnID) {
+			foreach(range('A','AL') as $columnID) {
 				$objPHPExcel->getActiveSheet()->getColumnDimension($columnID)
 					->setAutoSize(true);
 			}
