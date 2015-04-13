@@ -157,6 +157,9 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate) {
 
 		$result = DB_query($SQL);
 		if (DB_num_rows($result) != 0){
+			
+			// Set value binder
+			PHPExcel_Cell::setValueBinder( new PHPExcel_Cell_AdvancedValueBinder() );
 
 			// Create new PHPExcel object
 			$objPHPExcel = new PHPExcel();
@@ -172,6 +175,7 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate) {
 
 			$objPHPExcel->getActiveSheet()->getStyle('A:AZ')->getNumberFormat()->setFormatCode('#,###');
 			$objPHPExcel->getActiveSheet()->getStyle('3')->getNumberFormat()->setFormatCode('0.0%');
+			$objPHPExcel->getActiveSheet()->getStyle('F')->getNumberFormat()->setFormatCode('dd/mm/yyyy');
 		
 			// Add title data
 			$objPHPExcel->setActiveSheetIndex(0);
@@ -260,7 +264,7 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate) {
 				$objPHPExcel->getActiveSheet()->setCellValue('M'.$i, '=SUM(AA'.$i.':AL'.$i.')');
 				$objPHPExcel->getActiveSheet()->setCellValue('N'.$i, '=M'.$i.'*J'.$i.'');
 				$objPHPExcel->getActiveSheet()->setCellValue('O'.$i, '=M'.$i.'*G'.$i.'');
-				$objPHPExcel->getActiveSheet()->setCellValue('P'.$i, '=M'.$i.'-O'.$i.'');
+				$objPHPExcel->getActiveSheet()->setCellValue('P'.$i, '=N'.$i.'-O'.$i.'');
 
 				$objPHPExcel->getActiveSheet()->setCellValue('AA'.$i, round($myrow['sales66'],0));
 				$objPHPExcel->getActiveSheet()->setCellValue('AB'.$i, round($myrow['salesSE'],0));
