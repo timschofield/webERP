@@ -364,11 +364,11 @@ if ($KL_SystemAdmin){
 }
 
 if ($KL_SystemAdmin){
-	InsuficientStockForShopPackaging('SHPACK', 21, 80, 30, false, $RootPath, $db);
+	InsuficientStockForShopPackaging('SHPACK', 21, 75, 30, false, $RootPath, $db);
 }
 
 if ($KL_PurchasingTeam){
-	InsuficientStockForShopPackaging('SHPACK', 21, 80, 30, true, $RootPath, $db);
+	InsuficientStockForShopPackaging('SHPACK', 21, 75, 30, true, $RootPath, $db);
 }
 
 if ($KL_SystemAdmin 
