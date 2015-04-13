@@ -60,6 +60,13 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate) {
 							WHERE salesorderdetails.orderno = salesorders.orderno
 								AND salesorderdetails.stkcode = stockmaster.stockid
 								AND salesorders.orddate >= '" . $FromDate . "'
+								AND salesorders.orddate <= '" . $ToDate . "') AS totalsales,
+						(SELECT SUM(salesorderdetails.qtyinvoiced)
+							FROM salesorderdetails,
+								salesorders
+							WHERE salesorderdetails.orderno = salesorders.orderno
+								AND salesorderdetails.stkcode = stockmaster.stockid
+								AND salesorders.orddate >= '" . $FromDate . "'
 								AND salesorders.orddate <= '" . $ToDate . "'
 								AND salesorders.debtorno = 'RETAIL66') AS sales66,
 						(SELECT SUM(salesorderdetails.qtyinvoiced)
@@ -213,7 +220,6 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate) {
  			$objPHPExcel->getActiveSheet()->setCellValue('AK5', 'SALES_MF');
  			$objPHPExcel->getActiveSheet()->setCellValue('AL5', 'SALES_PU');
 
-
 			// Add data
 			$StartingRow = 6;
 			$i = $StartingRow;
@@ -261,7 +267,7 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate) {
 				$objPHPExcel->getActiveSheet()->setCellValue('K'.$i, round($myrow['qoh'],0));
 				$objPHPExcel->getActiveSheet()->setCellValue('L'.$i, '=G'.$i.'*K'.$i.'');
 
-				$objPHPExcel->getActiveSheet()->setCellValue('M'.$i, '=SUM(AA'.$i.':AL'.$i.')');
+				$objPHPExcel->getActiveSheet()->setCellValue('M'.$i, round($myrow['totalsales'],0));
 				$objPHPExcel->getActiveSheet()->setCellValue('N'.$i, '=M'.$i.'*J'.$i.'');
 				$objPHPExcel->getActiveSheet()->setCellValue('O'.$i, '=M'.$i.'*G'.$i.'');
 				$objPHPExcel->getActiveSheet()->setCellValue('P'.$i, '=N'.$i.'-O'.$i.'');
@@ -283,7 +289,7 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate) {
 			}
 			
 			// Calculating totals, subtotals, etc
-			$objPHPExcel->getActiveSheet()->setCellValue('A1', 'TOTAL');
+			$objPHPExcel->getActiveSheet()->setCellValue('A1', '=COUNTA(A'.$StartingRow.':A'.$i.')');
 			$objPHPExcel->getActiveSheet()->setCellValue('K1', '=SUM(K'.$StartingRow.':K'.$i.')');
 			$objPHPExcel->getActiveSheet()->setCellValue('L1', '=SUM(L'.$StartingRow.':L'.$i.')');
 			$objPHPExcel->getActiveSheet()->setCellValue('M1', '=SUM(M'.$StartingRow.':M'.$i.')');
@@ -291,7 +297,7 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate) {
 			$objPHPExcel->getActiveSheet()->setCellValue('O1', '=SUM(O'.$StartingRow.':O'.$i.')');
 			$objPHPExcel->getActiveSheet()->setCellValue('P1', '=SUM(P'.$StartingRow.':P'.$i.')');
 
-			$objPHPExcel->getActiveSheet()->setCellValue('A2', 'SUBTOTAL');
+			$objPHPExcel->getActiveSheet()->setCellValue('A2', '=SUBTOTAL(3,A'.$StartingRow.':A'.$i.')');
 			$objPHPExcel->getActiveSheet()->setCellValue('K2', '=SUBTOTAL(9,K'.$StartingRow.':K'.$i.')');
 			$objPHPExcel->getActiveSheet()->setCellValue('L2', '=SUBTOTAL(9,L'.$StartingRow.':L'.$i.')');
 			$objPHPExcel->getActiveSheet()->setCellValue('M2', '=SUBTOTAL(9,M'.$StartingRow.':M'.$i.')');
@@ -299,7 +305,7 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate) {
 			$objPHPExcel->getActiveSheet()->setCellValue('O2', '=SUBTOTAL(9,O'.$StartingRow.':O'.$i.')');
 			$objPHPExcel->getActiveSheet()->setCellValue('P2', '=SUBTOTAL(9,P'.$StartingRow.':P'.$i.')');
 
-			$objPHPExcel->getActiveSheet()->setCellValue('A3', '%');
+			$objPHPExcel->getActiveSheet()->setCellValue('A3', '=A2/A1');
 			$objPHPExcel->getActiveSheet()->setCellValue('K3', '=K2/K1');
 			$objPHPExcel->getActiveSheet()->setCellValue('L3', '=L2/L1');
 			$objPHPExcel->getActiveSheet()->setCellValue('M3', '=M2/M1');
