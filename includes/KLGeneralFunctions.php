@@ -106,14 +106,91 @@ function RingSize($stockid){
 		if((substr($stockid, -2,1) == "0") 
 			OR (substr($stockid, -2,1) == "1")
 			OR (substr($stockid, -2,1) == "2")){
-			// ring with sizes! We need to cut the 3 last characters -XX
-//			$CodeModel = (substr($stockid, 0,strlen($stockid)-3));
+			// ring with sizes! We need to get the 2 last characters -XX
 			$Size = substr($stockid, strlen($stockid)-2,2);
 		}else{
 			$Size = "FR";
 		}
 	}
 	return $Size;
+}
+
+function ItemCodeQOH($Stockid){
+	$ErrMsg = 'Error in function ItemCodeQOH()';
+	$SQL = "SELECT SUM(quantity)
+			FROM locstock
+			WHERE stockid LIKE '". $Stockid ."%'";
+	$result = DB_query($SQL,$ErrMsg);
+	$Row = DB_fetch_row($result);
+	return $Row['0'];
+}
+
+function ItemCodeQuantityInvoiced($Stockid,$FromDate,$ToDate,$Debtorno){
+	$ErrMsg = 'Error in function ItemCodeQuantityInvoiced()';
+	$SQL = "SELECT SUM(salesorderdetails.qtyinvoiced)
+			FROM salesorderdetails,
+				salesorders
+			WHERE salesorderdetails.orderno = salesorders.orderno
+				AND salesorderdetails.stkcode LIKE '". $Stockid ."%'
+				AND salesorders.orddate >= '" . $FromDate . "'
+				AND salesorders.orddate <= '" . $ToDate . "'";
+	if ($Debtorno != ''){
+		$SQL = $SQL . " AND salesorders.debtorno LIKE '". $Debtorno ."%'";
+	}
+	$result = DB_query($SQL,$ErrMsg);
+	$Row = DB_fetch_row($result);
+	return $Row['0'];
+}
+
+function ItemCodeAvgPriceInvoiced($Stockid,$FromDate,$ToDate,$Debtorno){
+	$ErrMsg = 'Error in function ItemCodeAvgPriceInvoiced()';
+	$SQL = "SELECT AVG(salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent) / currencies.rate)
+			FROM salesorderdetails,
+				salesorders,
+				debtorsmaster,
+				currencies 
+			WHERE salesorderdetails.orderno = salesorders.orderno
+				AND salesorders.debtorno = debtorsmaster.debtorno
+				AND currencies.currabrev = debtorsmaster.currcode
+				AND salesorderdetails.stkcode LIKE '". $Stockid ."%'
+				AND salesorders.orddate >= '" . $FromDate . "'
+				AND salesorders.orddate <= '" . $ToDate . "'";
+	if ($Debtorno != ''){
+		$SQL = $SQL . " AND salesorders.debtorno LIKE '". $Debtorno ."%'";
+	}
+	$result = DB_query($SQL,$ErrMsg);
+	$Row = DB_fetch_row($result);
+	return $Row['0'];
+}
+
+function ItemCodeQOO_PurchaseOrders($Stockid){
+	$ErrMsg = 'Error in function ItemCodeQOO_PurchaseOorders()';
+	$SQL="SELECT SUM(purchorderdetails.quantityord -purchorderdetails.quantityrecd) AS QtyOnOrder
+		FROM purchorders
+			INNER JOIN purchorderdetails
+				ON purchorders.orderno=purchorderdetails.orderno
+		WHERE purchorderdetails.itemcode LIKE '". $Stockid ."%'
+			AND purchorderdetails.completed = 0
+			AND purchorders.status<>'Cancelled'
+			AND purchorders.status<>'Pending'
+			AND purchorders.status<>'Rejected'
+			AND purchorders.status<>'Completed'";
+	$result = DB_query($SQL,$ErrMsg);
+	$Row = DB_fetch_row($result);
+	return $Row['0'];
+}
+
+function ItemCodeQOO_WorkOrders($Stockid){
+	$ErrMsg = 'Error in function ItemCodeQOO_WorkOorders()';
+	$SQL="SELECT SUM(woitems.qtyreqd-woitems.qtyrecd) AS qtywo
+			FROM woitems
+				INNER JOIN workorders
+					ON woitems.wo=workorders.wo
+			WHERE workorders.closed=0
+				AND woitems.stockid LIKE '". $Stockid ."%'";
+	$result = DB_query($SQL,$ErrMsg);
+	$Row = DB_fetch_row($result);
+	return $Row['0'];
 }
 
 function locale_number_format_zero_blank($num,$dec){

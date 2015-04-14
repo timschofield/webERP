@@ -6,10 +6,6 @@ include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
-include('includes/KLCountriesForRetail.php');
-include('includes/WeberpOpenCartDefines.php');
-include('includes/OpenCartGeneralFunctions.php');
-include('includes/OpenCartConnectDB.php');
 
 if (!isset($_POST['FromDate'])){
 	$_POST['FromDate'] = Date($_SESSION['DefaultDateFormat']);
@@ -20,148 +16,46 @@ if (!isset($_POST['ToDate'])){
 }
 
 if (isset($_POST['submit'])) {
-    submit($db, $_POST['Categories'], $_POST['FromDate'], $_POST['ToDate']);
+    submit($db, $_POST['Categories'], $_POST['FromDate'], $_POST['ToDate'], $_POST['CodeDetail']);
 } else {
     display($db);
 }
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit(&$db, $ListCategories, $FromDate, $ToDate) {
+function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
 
 	//initialise no input errors
 	$InputError = 0;
 
 	//first off validate inputs sensible
+/*
+							(SELECT prices.price
+								FROM prices
+								WHERE prices.stockid=stockmaster.stockid
+									AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
+									AND prices.currabrev = '". CURRENCY_CODE ."'
+									AND prices.startdate <= '". $today. "' 
+									AND (prices.enddate >= '". $today. "' OR prices.enddate = '0000-00-00')) AS retailprice,
 
+*/
 	if ($InputError == 0){
 		$today = date('Y-m-d');
 		$FromDate = FormatDateForSQL($_POST['FromDate']);
 		$ToDate = FormatDateForSQL($_POST['ToDate']);
-
-		$SQL = "SELECT stockmaster.stockid,
-						stockmaster.description,
-						stockmaster.categoryid,
-						stockmaster.lastcategoryupdate,
-						(stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost) AS standardcost,
-						stockmaster.discountcategory,
-						(SELECT SUM(quantity)
-							FROM locstock
-							WHERE stockmaster.stockid = locstock.stockid) AS qoh,
-						(SELECT prices.price
-							FROM prices
-							WHERE prices.stockid=stockmaster.stockid
-								AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
-								AND prices.currabrev = '". CURRENCY_CODE ."'
-								AND prices.startdate <= '". $today. "' 
-								AND (prices.enddate >= '". $today. "' OR prices.enddate = '0000-00-00')) AS retailprice,
-						(SELECT SUM(salesorderdetails.qtyinvoiced)
-							FROM salesorderdetails,
-								salesorders
-							WHERE salesorderdetails.orderno = salesorders.orderno
-								AND salesorderdetails.stkcode = stockmaster.stockid
-								AND salesorders.orddate >= '" . $FromDate . "'
-								AND salesorders.orddate <= '" . $ToDate . "') AS totalsales,
-						(SELECT SUM(salesorderdetails.qtyinvoiced)
-							FROM salesorderdetails,
-								salesorders
-							WHERE salesorderdetails.orderno = salesorders.orderno
-								AND salesorderdetails.stkcode = stockmaster.stockid
-								AND salesorders.orddate >= '" . $FromDate . "'
-								AND salesorders.orddate <= '" . $ToDate . "'
-								AND salesorders.debtorno = 'RETAIL66') AS sales66,
-						(SELECT SUM(salesorderdetails.qtyinvoiced)
-							FROM salesorderdetails,
-								salesorders
-							WHERE salesorderdetails.orderno = salesorders.orderno
-								AND salesorderdetails.stkcode = stockmaster.stockid
-								AND salesorders.orddate >= '" . $FromDate . "'
-								AND salesorders.orddate <= '" . $ToDate . "'
-								AND salesorders.debtorno = 'RETAILSE') AS salesSE,
-						(SELECT SUM(salesorderdetails.qtyinvoiced)
-							FROM salesorderdetails,
-								salesorders
-							WHERE salesorderdetails.orderno = salesorders.orderno
-								AND salesorderdetails.stkcode = stockmaster.stockid
-								AND salesorders.orddate >= '" . $FromDate . "'
-								AND salesorders.orddate <= '" . $ToDate . "'
-								AND salesorders.debtorno = 'RETAILOB') AS salesOB,
-						(SELECT SUM(salesorderdetails.qtyinvoiced)
-							FROM salesorderdetails,
-								salesorders
-							WHERE salesorderdetails.orderno = salesorders.orderno
-								AND salesorderdetails.stkcode = stockmaster.stockid
-								AND salesorders.orddate >= '" . $FromDate . "'
-								AND salesorders.orddate <= '" . $ToDate . "'
-								AND salesorders.debtorno = 'RETAILKS') AS salesKS,
-						(SELECT SUM(salesorderdetails.qtyinvoiced)
-							FROM salesorderdetails,
-								salesorders
-							WHERE salesorderdetails.orderno = salesorders.orderno
-								AND salesorderdetails.stkcode = stockmaster.stockid
-								AND salesorders.orddate >= '" . $FromDate . "'
-								AND salesorders.orddate <= '" . $ToDate . "'
-								AND salesorders.debtorno = 'RETAILBW') AS salesBW,
-						(SELECT SUM(salesorderdetails.qtyinvoiced)
-							FROM salesorderdetails,
-								salesorders
-							WHERE salesorderdetails.orderno = salesorders.orderno
-								AND salesorderdetails.stkcode = stockmaster.stockid
-								AND salesorders.orddate >= '" . $FromDate . "'
-								AND salesorders.orddate <= '" . $ToDate . "'
-								AND salesorders.debtorno = 'RETAILJC') AS salesJC,
-						(SELECT SUM(salesorderdetails.qtyinvoiced)
-							FROM salesorderdetails,
-								salesorders
-							WHERE salesorderdetails.orderno = salesorders.orderno
-								AND salesorderdetails.stkcode = stockmaster.stockid
-								AND salesorders.orddate >= '" . $FromDate . "'
-								AND salesorders.orddate <= '" . $ToDate . "'
-								AND salesorders.debtorno = 'RETAILSA') AS salesSA,
-						(SELECT SUM(salesorderdetails.qtyinvoiced)
-							FROM salesorderdetails,
-								salesorders
-							WHERE salesorderdetails.orderno = salesorders.orderno
-								AND salesorderdetails.stkcode = stockmaster.stockid
-								AND salesorders.orddate >= '" . $FromDate . "'
-								AND salesorders.orddate <= '" . $ToDate . "'
-								AND salesorders.debtorno = 'RETAILSU') AS salesSU,
-						(SELECT SUM(salesorderdetails.qtyinvoiced)
-							FROM salesorderdetails,
-								salesorders
-							WHERE salesorderdetails.orderno = salesorders.orderno
-								AND salesorderdetails.stkcode = stockmaster.stockid
-								AND salesorders.orddate >= '" . $FromDate . "'
-								AND salesorders.orddate <= '" . $ToDate . "'
-								AND salesorders.debtorno = 'RETAILSS') AS salesSS,
-						(SELECT SUM(salesorderdetails.qtyinvoiced)
-							FROM salesorderdetails,
-								salesorders
-							WHERE salesorderdetails.orderno = salesorders.orderno
-								AND salesorderdetails.stkcode = stockmaster.stockid
-								AND salesorders.orddate >= '" . $FromDate . "'
-								AND salesorders.orddate <= '" . $ToDate . "'
-								AND salesorders.debtorno = 'RETAILUB') AS salesUB,
-						(SELECT SUM(salesorderdetails.qtyinvoiced)
-							FROM salesorderdetails,
-								salesorders
-							WHERE salesorderdetails.orderno = salesorders.orderno
-								AND salesorderdetails.stkcode = stockmaster.stockid
-								AND salesorders.orddate >= '" . $FromDate . "'
-								AND salesorders.orddate <= '" . $ToDate . "'
-								AND salesorders.debtorno = 'RETAILMF') AS salesMF,
-						(SELECT SUM(salesorderdetails.qtyinvoiced)
-							FROM salesorderdetails,
-								salesorders
-							WHERE salesorderdetails.orderno = salesorders.orderno
-								AND salesorderdetails.stkcode = stockmaster.stockid
-								AND salesorders.orddate >= '" . $FromDate . "'
-								AND salesorders.orddate <= '" . $ToDate . "'
-								AND salesorders.debtorno = 'RETAILPU') AS salesPU
-				FROM stockmaster
-				WHERE stockmaster.discontinued = 0
-					AND stockmaster.categoryid IN ('". implode("','",$_POST['Categories'])."')
-				ORDER BY stockmaster.stockid";
-
+		
+		if ($CodeDetail == 'CodeFull'){
+			$SQL = "SELECT stockmaster.stockid,
+							stockmaster.description,
+							stockmaster.categoryid,
+							stockmaster.lastcategoryupdate,
+							(stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost) AS standardcost,
+							stockmaster.discountcategory
+					FROM stockmaster
+					WHERE stockmaster.discontinued = 0
+						AND stockmaster.categoryid IN ('". implode("','",$_POST['Categories'])."')
+					ORDER BY stockmaster.stockid";
+		}else{
+		}
 		$result = DB_query($SQL);
 		if (DB_num_rows($result) != 0){
 			
@@ -195,17 +89,19 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate) {
 
 			$objPHPExcel->getActiveSheet()->setCellValue('G5', 'STANDARD_COST');
 
-			$objPHPExcel->getActiveSheet()->setCellValue('H5', 'RETAIL_PRICE');
-			$objPHPExcel->getActiveSheet()->setCellValue('I5', '%_DISCOUNT');
-			$objPHPExcel->getActiveSheet()->setCellValue('J5', 'NET_PRICE');
+			$objPHPExcel->getActiveSheet()->setCellValue('H5', 'DISCOUNT');
+			$objPHPExcel->getActiveSheet()->setCellValue('I5', 'AVG_PRICE');
 
-			$objPHPExcel->getActiveSheet()->setCellValue('K5', 'QOH');
- 			$objPHPExcel->getActiveSheet()->setCellValue('L5', 'STOCK_VALUE');
+			$objPHPExcel->getActiveSheet()->setCellValue('J5', 'QOH');
+ 			$objPHPExcel->getActiveSheet()->setCellValue('K5', 'STOCK_VALUE');
 
-  			$objPHPExcel->getActiveSheet()->setCellValue('M5', 'PCS_SOLD');
- 			$objPHPExcel->getActiveSheet()->setCellValue('N5', 'SALES_VALUE');
- 			$objPHPExcel->getActiveSheet()->setCellValue('O5', 'COST_VALUE');
- 			$objPHPExcel->getActiveSheet()->setCellValue('P5', 'GROSS_MARGIN');
+			$objPHPExcel->getActiveSheet()->setCellValue('L5', 'QOO');
+ 			$objPHPExcel->getActiveSheet()->setCellValue('M5', 'ORDER_VALUE');
+
+  			$objPHPExcel->getActiveSheet()->setCellValue('N5', 'PCS_SOLD');
+ 			$objPHPExcel->getActiveSheet()->setCellValue('O5', 'SALES_VALUE');
+ 			$objPHPExcel->getActiveSheet()->setCellValue('P5', 'COST_VALUE');
+ 			$objPHPExcel->getActiveSheet()->setCellValue('Q5', 'GROSS_MARGIN');
  
 			$objPHPExcel->getActiveSheet()->setCellValue('AA5', 'SALES_66');
  			$objPHPExcel->getActiveSheet()->setCellValue('AB5', 'SALES_SE');
@@ -219,7 +115,7 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate) {
  			$objPHPExcel->getActiveSheet()->setCellValue('AJ5', 'SALES_UB');
  			$objPHPExcel->getActiveSheet()->setCellValue('AK5', 'SALES_MF');
  			$objPHPExcel->getActiveSheet()->setCellValue('AL5', 'SALES_PU');
-
+			
 			// Add data
 			$StartingRow = 6;
 			$i = $StartingRow;
@@ -260,58 +156,66 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate) {
 
 				$objPHPExcel->getActiveSheet()->setCellValue('G'.$i, round($myrow['standardcost'],0));
 
-				$objPHPExcel->getActiveSheet()->setCellValue('H'.$i, round($myrow['retailprice'],0));
-				$objPHPExcel->getActiveSheet()->setCellValue('I'.$i, $myrow['discountcategory']);
-				$objPHPExcel->getActiveSheet()->setCellValue('J'.$i, '=H'.$i.'*(100-I'.$i.')/100');
+				$objPHPExcel->getActiveSheet()->setCellValue('H'.$i, $myrow['discountcategory']);
+				$objPHPExcel->getActiveSheet()->setCellValue('I'.$i, round(ItemCodeAvgPriceInvoiced($myrow['stockid'],$FromDate,$ToDate,''),0));
 
-				$objPHPExcel->getActiveSheet()->setCellValue('K'.$i, round($myrow['qoh'],0));
-				$objPHPExcel->getActiveSheet()->setCellValue('L'.$i, '=G'.$i.'*K'.$i.'');
+				$objPHPExcel->getActiveSheet()->setCellValue('J'.$i, round(ItemCodeQOH($myrow['stockid']),0));
+				$objPHPExcel->getActiveSheet()->setCellValue('K'.$i, '=G'.$i.'*J'.$i.'');
 
-				$objPHPExcel->getActiveSheet()->setCellValue('M'.$i, round($myrow['totalsales'],0));
-				$objPHPExcel->getActiveSheet()->setCellValue('N'.$i, '=M'.$i.'*J'.$i.'');
-				$objPHPExcel->getActiveSheet()->setCellValue('O'.$i, '=M'.$i.'*G'.$i.'');
-				$objPHPExcel->getActiveSheet()->setCellValue('P'.$i, '=N'.$i.'-O'.$i.'');
+				$objPHPExcel->getActiveSheet()->setCellValue('L'.$i, round(ItemCodeQOO_PurchaseOrders($myrow['stockid'])+ItemCodeQOO_WorkOrders($myrow['stockid']),0));
+				$objPHPExcel->getActiveSheet()->setCellValue('M'.$i, '=G'.$i.'*L'.$i.'');
 
-				$objPHPExcel->getActiveSheet()->setCellValue('AA'.$i, round($myrow['sales66'],0));
-				$objPHPExcel->getActiveSheet()->setCellValue('AB'.$i, round($myrow['salesSE'],0));
-				$objPHPExcel->getActiveSheet()->setCellValue('AC'.$i, round($myrow['salesOB'],0));
-				$objPHPExcel->getActiveSheet()->setCellValue('AD'.$i, round($myrow['salesKS'],0));
-				$objPHPExcel->getActiveSheet()->setCellValue('AE'.$i, round($myrow['salesBW'],0));
-				$objPHPExcel->getActiveSheet()->setCellValue('AF'.$i, round($myrow['salesJC'],0));
-				$objPHPExcel->getActiveSheet()->setCellValue('AG'.$i, round($myrow['salesSA'],0));
-				$objPHPExcel->getActiveSheet()->setCellValue('AH'.$i, round($myrow['salesSU'],0));
-				$objPHPExcel->getActiveSheet()->setCellValue('AI'.$i, round($myrow['salesSS'],0));
-				$objPHPExcel->getActiveSheet()->setCellValue('AJ'.$i, round($myrow['salesUB'],0));
-				$objPHPExcel->getActiveSheet()->setCellValue('AK'.$i, round($myrow['salesMF'],0));
-				$objPHPExcel->getActiveSheet()->setCellValue('AL'.$i, round($myrow['salesPU'],0));
+				$objPHPExcel->getActiveSheet()->setCellValue('N'.$i, round(ItemCodeQuantityInvoiced($myrow['stockid'],$FromDate,$ToDate,''),0));
+				$objPHPExcel->getActiveSheet()->setCellValue('O'.$i, '=N'.$i.'*I'.$i.'');
+				$objPHPExcel->getActiveSheet()->setCellValue('P'.$i, '=N'.$i.'*G'.$i.'');
+				$objPHPExcel->getActiveSheet()->setCellValue('Q'.$i, '=O'.$i.'-P'.$i.'');
+
+				$objPHPExcel->getActiveSheet()->setCellValue('AA'.$i, round(ItemCodeQuantityInvoiced($myrow['stockid'],$FromDate,$ToDate,'RETAIL66'),0));
+				$objPHPExcel->getActiveSheet()->setCellValue('AB'.$i, round(ItemCodeQuantityInvoiced($myrow['stockid'],$FromDate,$ToDate,'RETAILSE'),0));
+				$objPHPExcel->getActiveSheet()->setCellValue('AC'.$i, round(ItemCodeQuantityInvoiced($myrow['stockid'],$FromDate,$ToDate,'RETAILOB'),0));
+				$objPHPExcel->getActiveSheet()->setCellValue('AD'.$i, round(ItemCodeQuantityInvoiced($myrow['stockid'],$FromDate,$ToDate,'RETAILKS'),0));
+				$objPHPExcel->getActiveSheet()->setCellValue('AE'.$i, round(ItemCodeQuantityInvoiced($myrow['stockid'],$FromDate,$ToDate,'RETAILBW'),0));
+				$objPHPExcel->getActiveSheet()->setCellValue('AF'.$i, round(ItemCodeQuantityInvoiced($myrow['stockid'],$FromDate,$ToDate,'RETAILJC'),0));
+				$objPHPExcel->getActiveSheet()->setCellValue('AG'.$i, round(ItemCodeQuantityInvoiced($myrow['stockid'],$FromDate,$ToDate,'RETAILSA'),0));
+				$objPHPExcel->getActiveSheet()->setCellValue('AH'.$i, round(ItemCodeQuantityInvoiced($myrow['stockid'],$FromDate,$ToDate,'RETAILSU'),0));
+				$objPHPExcel->getActiveSheet()->setCellValue('AI'.$i, round(ItemCodeQuantityInvoiced($myrow['stockid'],$FromDate,$ToDate,'RETAILSS'),0));
+				$objPHPExcel->getActiveSheet()->setCellValue('AJ'.$i, round(ItemCodeQuantityInvoiced($myrow['stockid'],$FromDate,$ToDate,'RETAILUB'),0));
+				$objPHPExcel->getActiveSheet()->setCellValue('AK'.$i, round(ItemCodeQuantityInvoiced($myrow['stockid'],$FromDate,$ToDate,'RETAILMF'),0));
+				$objPHPExcel->getActiveSheet()->setCellValue('AL'.$i, round(ItemCodeQuantityInvoiced($myrow['stockid'],$FromDate,$ToDate,'RETAILPU'),0));
 				
 				$i++;
 			}
 			
 			// Calculating totals, subtotals, etc
 			$objPHPExcel->getActiveSheet()->setCellValue('A1', '=COUNTA(A'.$StartingRow.':A'.$i.')');
+			$objPHPExcel->getActiveSheet()->setCellValue('J1', '=SUM(J'.$StartingRow.':J'.$i.')');
 			$objPHPExcel->getActiveSheet()->setCellValue('K1', '=SUM(K'.$StartingRow.':K'.$i.')');
 			$objPHPExcel->getActiveSheet()->setCellValue('L1', '=SUM(L'.$StartingRow.':L'.$i.')');
 			$objPHPExcel->getActiveSheet()->setCellValue('M1', '=SUM(M'.$StartingRow.':M'.$i.')');
 			$objPHPExcel->getActiveSheet()->setCellValue('N1', '=SUM(N'.$StartingRow.':N'.$i.')');
 			$objPHPExcel->getActiveSheet()->setCellValue('O1', '=SUM(O'.$StartingRow.':O'.$i.')');
 			$objPHPExcel->getActiveSheet()->setCellValue('P1', '=SUM(P'.$StartingRow.':P'.$i.')');
+			$objPHPExcel->getActiveSheet()->setCellValue('Q1', '=SUM(Q'.$StartingRow.':Q'.$i.')');
 
 			$objPHPExcel->getActiveSheet()->setCellValue('A2', '=SUBTOTAL(3,A'.$StartingRow.':A'.$i.')');
+			$objPHPExcel->getActiveSheet()->setCellValue('J2', '=SUBTOTAL(9,J'.$StartingRow.':J'.$i.')');
 			$objPHPExcel->getActiveSheet()->setCellValue('K2', '=SUBTOTAL(9,K'.$StartingRow.':K'.$i.')');
 			$objPHPExcel->getActiveSheet()->setCellValue('L2', '=SUBTOTAL(9,L'.$StartingRow.':L'.$i.')');
 			$objPHPExcel->getActiveSheet()->setCellValue('M2', '=SUBTOTAL(9,M'.$StartingRow.':M'.$i.')');
 			$objPHPExcel->getActiveSheet()->setCellValue('N2', '=SUBTOTAL(9,N'.$StartingRow.':N'.$i.')');
 			$objPHPExcel->getActiveSheet()->setCellValue('O2', '=SUBTOTAL(9,O'.$StartingRow.':O'.$i.')');
 			$objPHPExcel->getActiveSheet()->setCellValue('P2', '=SUBTOTAL(9,P'.$StartingRow.':P'.$i.')');
+			$objPHPExcel->getActiveSheet()->setCellValue('Q2', '=SUBTOTAL(9,Q'.$StartingRow.':Q'.$i.')');
 
 			$objPHPExcel->getActiveSheet()->setCellValue('A3', '=A2/A1');
+			$objPHPExcel->getActiveSheet()->setCellValue('J3', '=J2/J1');
 			$objPHPExcel->getActiveSheet()->setCellValue('K3', '=K2/K1');
 			$objPHPExcel->getActiveSheet()->setCellValue('L3', '=L2/L1');
 			$objPHPExcel->getActiveSheet()->setCellValue('M3', '=M2/M1');
 			$objPHPExcel->getActiveSheet()->setCellValue('N3', '=N2/N1');
 			$objPHPExcel->getActiveSheet()->setCellValue('O3', '=O2/O1');
 			$objPHPExcel->getActiveSheet()->setCellValue('P3', '=P2/P1');
+			$objPHPExcel->getActiveSheet()->setCellValue('Q3', '=Q2/Q1');
 		
 			// Freeze panes
 			$objPHPExcel->getActiveSheet()->freezePane('B6');
@@ -392,6 +296,14 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 	}
 	echo '</select>
 			</td>
+		</tr>';
+
+	echo '<tr>
+			<td>' . _('Item Codes detailed as') . ':</td>
+			<td><select name="CodeDetail">
+				<option selected="selected" value="CodeFull">' . _('Full Item Code') . '</option>
+				<option value="Code6">' . _('6 Char Item Code') . '</option>
+			</select></td>
 		</tr>';
 	
 	echo '<tr>
