@@ -28,20 +28,12 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
 	$InputError = 0;
 
 	//first off validate inputs sensible
-/*
-							(SELECT prices.price
-								FROM prices
-								WHERE prices.stockid=stockmaster.stockid
-									AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
-									AND prices.currabrev = '". CURRENCY_CODE ."'
-									AND prices.startdate <= '". $today. "' 
-									AND (prices.enddate >= '". $today. "' OR prices.enddate = '0000-00-00')) AS retailprice,
 
-*/
 	if ($InputError == 0){
 		$today = date('Y-m-d');
 		$FromDate = FormatDateForSQL($_POST['FromDate']);
 		$ToDate = FormatDateForSQL($_POST['ToDate']);
+//		$NumDays = floor((strtotime($ToDate) - strtotime($FromDate))/(60*60*24));
 		
 		if ($CodeDetail == 'CodeFull'){
 			$SQL = "SELECT stockmaster.stockid,
@@ -55,6 +47,13 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
 						AND stockmaster.categoryid IN ('". implode("','",$_POST['Categories'])."')
 					ORDER BY stockmaster.stockid";
 		}else{
+			$SQL = "SELECT SUBSTRING(stockmaster.stockid,1,6),
+							AVG (stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost) AS standardcost
+					FROM stockmaster
+					WHERE stockmaster.discontinued = 0
+						AND stockmaster.categoryid IN ('". implode("','",$_POST['Categories'])."')
+					GROUP BY SUBSTRING(stockmaster.stockid,1,6)
+					ORDER BY SUBSTRING(stockmaster.stockid,1,6)";
 		}
 		$result = DB_query($SQL);
 		if (DB_num_rows($result) != 0){
@@ -75,11 +74,21 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
 										 ->setCategory("");
 
 			$objPHPExcel->getActiveSheet()->getStyle('A:AZ')->getNumberFormat()->setFormatCode('#,###');
+			$objPHPExcel->getActiveSheet()->getStyle('R')->getNumberFormat()->setFormatCode('#,##0.0');
 			$objPHPExcel->getActiveSheet()->getStyle('3')->getNumberFormat()->setFormatCode('0.0%');
 			$objPHPExcel->getActiveSheet()->getStyle('F')->getNumberFormat()->setFormatCode('dd/mm/yyyy');
 		
 			// Add title data
 			$objPHPExcel->setActiveSheetIndex(0);
+
+			$objPHPExcel->getActiveSheet()->setCellValue('B1', 'Sales From:');
+			$objPHPExcel->getActiveSheet()->setCellValue('B2', 'Sales To:');
+			$objPHPExcel->getActiveSheet()->setCellValue('B3', '# Days:');
+
+			$objPHPExcel->getActiveSheet()->setCellValue('C1', ConvertSQLDate($FromDate));
+			$objPHPExcel->getActiveSheet()->setCellValue('C2', ConvertSQLDate($ToDate));
+			$objPHPExcel->getActiveSheet()->setCellValue('C3', '=C2-C1');
+
 			$objPHPExcel->getActiveSheet()->setCellValue('A5', 'ITEM CODE');
 			$objPHPExcel->getActiveSheet()->setCellValue('B5', 'DESCRIPTION');
 			$objPHPExcel->getActiveSheet()->setCellValue('C5', 'CATEGORY');
@@ -102,7 +111,12 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
  			$objPHPExcel->getActiveSheet()->setCellValue('O5', 'SALES_VALUE');
  			$objPHPExcel->getActiveSheet()->setCellValue('P5', 'COST_VALUE');
  			$objPHPExcel->getActiveSheet()->setCellValue('Q5', 'GROSS_MARGIN');
- 
+
+			$objPHPExcel->getActiveSheet()->setCellValue('R5', 'SALES/DAY');
+ 			$objPHPExcel->getActiveSheet()->setCellValue('S5', 'DAYS_QOO');
+ 			$objPHPExcel->getActiveSheet()->setCellValue('T5', 'DAYS_QOO');
+ 			$objPHPExcel->getActiveSheet()->setCellValue('U5', 'DAYS');
+
 			$objPHPExcel->getActiveSheet()->setCellValue('AA5', 'SALES_66');
  			$objPHPExcel->getActiveSheet()->setCellValue('AB5', 'SALES_SE');
  			$objPHPExcel->getActiveSheet()->setCellValue('AC5', 'SALES_OB');
@@ -169,6 +183,11 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
 				$objPHPExcel->getActiveSheet()->setCellValue('O'.$i, '=N'.$i.'*I'.$i.'');
 				$objPHPExcel->getActiveSheet()->setCellValue('P'.$i, '=N'.$i.'*G'.$i.'');
 				$objPHPExcel->getActiveSheet()->setCellValue('Q'.$i, '=O'.$i.'-P'.$i.'');
+
+				$objPHPExcel->getActiveSheet()->setCellValue('R'.$i, '=N'.$i.'/$C$3');
+				$objPHPExcel->getActiveSheet()->setCellValue('S'.$i, '=J'.$i.'/R'.$i.'');
+				$objPHPExcel->getActiveSheet()->setCellValue('T'.$i, '=L'.$i.'/R'.$i.'');
+				$objPHPExcel->getActiveSheet()->setCellValue('U'.$i, '=S'.$i.'+T'.$i.'');
 
 				$objPHPExcel->getActiveSheet()->setCellValue('AA'.$i, round(ItemCodeQuantityInvoiced($myrow['stockid'],$FromDate,$ToDate,'RETAIL66'),0));
 				$objPHPExcel->getActiveSheet()->setCellValue('AB'.$i, round(ItemCodeQuantityInvoiced($myrow['stockid'],$FromDate,$ToDate,'RETAILSE'),0));
