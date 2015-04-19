@@ -17,7 +17,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 
 	/*Show a form to allow input of criteria for TB to show */
 	include('includes/header.inc');
-	echo '<p class="page_title_text"><img alt="" class="noprint" src="'.$RootPath.'/css/'.$Theme.
+	echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 		'/images/printer.png" title="' .// Icon image.
 		_('Print Statement of Financial Position') . '" /> ' .// Icon title.
 		_('Balance Sheet') . '</p>';// Page title.
@@ -392,7 +392,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 	// Page title as IAS1 numerals 10 and 51:
 	include_once('includes/CurrenciesArray.php');// Array to retrieve currency name.
 	echo '<div id="Report">';// Division to identify the report block.
-	echo '<p class="page_title_text"><img alt="" class="noprint" src="'.$RootPath.'/css/'.$Theme.
+	echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 		'/images/gl.png" title="' .// Icon image.
 		_('Statement of Financial Position') . '" /> ' .// Icon title.
 		_('Balance Sheet') . '<br />' .// Page title, reporting statement.
