@@ -371,7 +371,7 @@ if (isset($_SESSION['SupplierID']) and $_SESSION['SupplierID'] != '') {
 			$DataResult = DB_query($sql, $ErrMsg);
 			$myrow = DB_fetch_array($DataResult);
 			// Select some more data about the supplier
-			$SQL = "SELECT SUM(-ovamount) AS total FROM supptrans WHERE supplierno = '" . $_SESSION['SupplierID'] . "' and type != '20'";
+			$SQL = "SELECT SUM(-ovamount) AS total FROM supptrans WHERE supplierno = '" . $_SESSION['SupplierID'] . "' AND (type == '20' OR type='21')";
 			$Total1Result = DB_query($SQL);
 			$row = DB_fetch_array($Total1Result);
 			echo '<br />';

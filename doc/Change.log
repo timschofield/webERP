@@ -1,40 +1,41 @@
 webERP Change Log
 
-07/04/15 Exson: Fixed the Wiki link broken bug in SystemParameters.php. 
-04/04/15 Exson: Fixed the bug that Credit and Debit submit amount was duplicated processed by local_number_format function.
-01/04/15 Exson: Remove comma from item description and suppliername to make csv file correctly in POReport.php.
-01/04/15 Exson: Fixed comma bug due to locale issue of POReport.php csv file. And add ordered/received quantity field in the report.
-01/04/15 Exson: Fixed the bug that when delete one gl item from the payment details, the bank account related setting will disappeared in Payments.php. Reported by Steven.
-01/04/15 Thumb: Add a Z_ImportCustbranch.php script to import customer branches.
+19/4/15 Phil: SelectSupplier - total supplier spend was incorrect only looked at supplier transactions excluding invoices? Now takes invoice net of debit notes reported by Andrew Galuski
+07/4/15 Exson: Fixed the Wiki link broken bug in SystemParameters.php.
+04/4/15 Exson: Fixed the bug that Credit and Debit submit amount was duplicated processed by local_number_format function.
+01/4/15 Exson: Remove comma from item description and suppliername to make csv file correctly in POReport.php.
+01/4/15 Exson: Fixed comma bug due to locale issue of POReport.php csv file. And add ordered/received quantity field in the report.
+01/4/15 Exson: Fixed the bug that when delete one gl item from the payment details, the bank account related setting will disappeared in Payments.php. Reported by Steven.
+01/4/15 Thumb: Add a Z_ImportCustbranch.php script to import customer branches.
 30/3/15  Vitaly: Get all taxes for the tax group, even if calculationorder is left at default value 0.
 29/3/15  Phil: Allow dummy/service items to be propogated to CounterLogic POS installs through the api
-27/03/15 Exson: Remove redundant code from PrintCustTrans.php.
-27/03/15 Exson: Make credit not for freight only is printable in PrintCustTrans.php.
-26/03/15 Exson: Fixed disabletrans status bug in CustomerBranches.php and fix index undefined noise.
-25/03/15 Exson: Add planned accumulation in MRP report.
-14/03/15 Exson: Fixed undefined index noise in Credit_Invoice.php.
-13/03/15 Exson: fixed the undefined index noise in WorkOrderReceive.php.
-13/03/15 Exson: Fixed the undefined index noise in SelectWorkOrder.php.
-13/03/15 Exson: Make Labor type allowed by category select in WorkOrderIssue.php.
-12/03/15 Exson: Make Order No sortable in SelectSalesOrder.php.
-12/03/15 Exson: Fixed undefined parameters noise in PO_SelectPurchOrder.php.
+27/3/15 Exson: Remove redundant code from PrintCustTrans.php.
+27/3/15 Exson: Make credit not for freight only is printable in PrintCustTrans.php.
+26/3/15 Exson: Fixed disabletrans status bug in CustomerBranches.php and fix index undefined noise.
+25/3/15 Exson: Add planned accumulation in MRP report.
+14/3/15 Exson: Fixed undefined index noise in Credit_Invoice.php.
+13/3/15 Exson: fixed the undefined index noise in WorkOrderReceive.php.
+13/3/15 Exson: Fixed the undefined index noise in SelectWorkOrder.php.
+13/3/15 Exson: Make Labor type allowed by category select in WorkOrderIssue.php.
+12/3/15 Exson: Make Order No sortable in SelectSalesOrder.php.
+12/3/15 Exson: Fixed undefined parameters noise in PO_SelectPurchOrder.php.
 11/3/15 Exson: Fixed wrong handling for dummy parts receiving from PO in GoodsReceived.php.
-09/03/15 Vitaly: Page refresh when credit type changes in Credit_Invoce.php
-09/03/15 RChacon: In DailyBankTransactions.php: Improves page_title_text. Orders by banktrans.transdate ascending and banktrans.banktransid ascending. Adds division to identify the report block. Groups table-header cells inside thead tags. Groups table-data cells inside tbody tags. Adds th.text class to left align. Adds "Print This" and "Return" buttons with icon.
-09/03/15 Exson: Fixed undefined index noise of $_POST['SupplierContact'] in PO_Header.php.
-08/03/15 Vitaly: Fit HTML view of invoices to one screen
-08/03/15 Exson: Fixed undefined index noise in PO_Items.php.
-07/03/15 RChacon: Deletes class="invoice" (it does not exist in css). Creates division id="Report" to identify the report block. Moves full width style to print.css (thanks Tim Schofield).
-07/03/15 Exson: Fixed undefined index noise in ShipmentCosting.php.
-07/03/15 Exson: Fixed property ShiptCounter non defined bug in DefineSuppTransClass.php.
-07/03/15 Exson: Fixed the undefine index OpenOrClose noise in Shipt_Select.php.
-07/03/15 Exson: Fixed undefine index InputError noise in SupplierInvoice.php.
-07/03/15 Exson: Fixed typo in AuditTrail.php.
-07/03/15 Exson: Remove properties $_SESSION['Shipment']->GLLink which never been defined in Shipments.php.
-07/03/15: Exson: Change login date of users without login record to 'No login record' instead of today. It's very confusion.
-07/03/15 Exson: Fixed order value error that should be value undelivered instead of uncompleted line value and some notice noise in SelectSalesOrder.php.
-04/03/15 Vitaly: Display Phantom assembly type correctly in SelectProduct.php
-04/03/15 Vitaly: Added missing comma to SQL statement in Credit_Invoice.php
+09/3/15 Vitaly: Page refresh when credit type changes in Credit_Invoce.php
+09/3/15 RChacon: In DailyBankTransactions.php: Improves page_title_text. Orders by banktrans.transdate ascending and banktrans.banktransid ascending. Adds division to identify the report block. Groups table-header cells inside thead tags. Groups table-data cells inside tbody tags. Adds th.text class to left align. Adds "Print This" and "Return" buttons with icon.
+09/3/15 Exson: Fixed undefined index noise of $_POST['SupplierContact'] in PO_Header.php.
+08/3/15 Vitaly: Fit HTML view of invoices to one screen
+08/3/15 Exson: Fixed undefined index noise in PO_Items.php.
+07/3/15 RChacon: Deletes class="invoice" (it does not exist in css). Creates division id="Report" to identify the report block. Moves full width style to print.css (thanks Tim Schofield).
+07/3/15 Exson: Fixed undefined index noise in ShipmentCosting.php.
+07/3/15 Exson: Fixed property ShiptCounter non defined bug in DefineSuppTransClass.php.
+07/3/15 Exson: Fixed the undefine index OpenOrClose noise in Shipt_Select.php.
+07/3/15 Exson: Fixed undefine index InputError noise in SupplierInvoice.php.
+07/3/15 Exson: Fixed typo in AuditTrail.php.
+07/3/15 Exson: Remove properties $_SESSION['Shipment']->GLLink which never been defined in Shipments.php.
+07/3/15: Exson: Change login date of users without login record to 'No login record' instead of today. It's very confusion.
+07/3/15 Exson: Fixed order value error that should be value undelivered instead of uncompleted line value and some notice noise in SelectSalesOrder.php.
+04/3/15 Vitaly: Display Phantom assembly type correctly in SelectProduct.php
+04/3/15 Vitaly: Added missing comma to SQL statement in Credit_Invoice.php
 3/3/15 RChacon: Adds cross.png to all css images for use in Reset or Cancel buttons as needed.
 2/3/15 RChacon: Completes table-row colums, regroups price, cost and gross profit in one table-row, uses company decimal places for gross profit in SelectProduct.php.
 25/2/15 TurboPT: Fix Z_ImportSupplier bug reported in forum by: Bill Schlaerth.
