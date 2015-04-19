@@ -1,5 +1,6 @@
 webERP Change Log
 
+19/4/15 RChacon: Add ".page_title_text img" as a display none class. This makes unnecessary to add the class noprint to the image in page_title_text.
 19/4/15 Phil: SelectSupplier - total supplier spend was incorrect only looked at supplier transactions excluding invoices? Now takes invoice net of debit notes reported by Andrew Galuski
 07/4/15 Exson: Fixed the Wiki link broken bug in SystemParameters.php.
 04/4/15 Exson: Fixed the bug that Credit and Debit submit amount was duplicated processed by local_number_format function.
