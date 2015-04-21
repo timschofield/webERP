@@ -398,7 +398,8 @@ if (in_array($PayeeSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($
 	$SupplierID ='';
 	$TotalPayments = 0;
 	$TotalAccumDiffOnExch = 0;
-
+	$AccumBalance =0;
+	
 	while ($SuppliersToPay = DB_fetch_array($SuppliersResult)){
 
 		$CurrDecimalPlaces = $SuppliersToPay['currdecimalplaces'];
@@ -445,7 +446,6 @@ if (in_array($PayeeSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($
 		unset($Allocs);
 		$Allocs = array();
 		$AllocCounter =0;
-		$AccumBalance =0;
 		$k=0; //row colour counter
 
 		while ($DetailTrans = DB_fetch_array($TransResult)){
