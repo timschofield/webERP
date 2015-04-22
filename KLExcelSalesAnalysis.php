@@ -76,6 +76,7 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
 			$objPHPExcel->getActiveSheet()->getStyle('A:AZ')->getNumberFormat()->setFormatCode('#,###');
 			$objPHPExcel->getActiveSheet()->getStyle('R')->getNumberFormat()->setFormatCode('#,##0.0');
 			$objPHPExcel->getActiveSheet()->getStyle('3')->getNumberFormat()->setFormatCode('0.0%');
+			$objPHPExcel->getActiveSheet()->getStyle('C3')->getNumberFormat()->setFormatCode('#,###');
 			$objPHPExcel->getActiveSheet()->getStyle('F')->getNumberFormat()->setFormatCode('dd/mm/yyyy');
 		
 			// Add title data
@@ -84,10 +85,12 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
 			$objPHPExcel->getActiveSheet()->setCellValue('B1', 'Sales From:');
 			$objPHPExcel->getActiveSheet()->setCellValue('B2', 'Sales To:');
 			$objPHPExcel->getActiveSheet()->setCellValue('B3', '# Days:');
+ 			$objPHPExcel->getActiveSheet()->setCellValue('B4', 'Optimum Stock days');
 
 			$objPHPExcel->getActiveSheet()->setCellValue('C1', ConvertSQLDate($FromDate));
 			$objPHPExcel->getActiveSheet()->setCellValue('C2', ConvertSQLDate($ToDate));
 			$objPHPExcel->getActiveSheet()->setCellValue('C3', '=C2-C1');
+ 			$objPHPExcel->getActiveSheet()->setCellValue('C4', 150);
 
 			$objPHPExcel->getActiveSheet()->setCellValue('A5', 'ITEM CODE');
 			$objPHPExcel->getActiveSheet()->setCellValue('B5', 'DESCRIPTION');
@@ -117,6 +120,8 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
  			$objPHPExcel->getActiveSheet()->setCellValue('T5', 'DAYS_QOO');
  			$objPHPExcel->getActiveSheet()->setCellValue('U5', 'DAYS');
 
+ 			$objPHPExcel->getActiveSheet()->setCellValue('V5', 'PCS TO PO/WO');
+			
 			$objPHPExcel->getActiveSheet()->setCellValue('AA5', 'SALES_66');
  			$objPHPExcel->getActiveSheet()->setCellValue('AB5', 'SALES_SE');
  			$objPHPExcel->getActiveSheet()->setCellValue('AC5', 'SALES_OB');
@@ -188,6 +193,8 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
 				$objPHPExcel->getActiveSheet()->setCellValue('S'.$i, '=J'.$i.'/R'.$i.'');
 				$objPHPExcel->getActiveSheet()->setCellValue('T'.$i, '=L'.$i.'/R'.$i.'');
 				$objPHPExcel->getActiveSheet()->setCellValue('U'.$i, '=S'.$i.'+T'.$i.'');
+				
+				$objPHPExcel->getActiveSheet()->setCellValue('V'.$i, '=IF(U'.$i.'<$C$4,ROUNDUP(($C$4-U'.$i.')*R'.$i.',0),"")'.'');
 
 				$objPHPExcel->getActiveSheet()->setCellValue('AA'.$i, round(ItemCodeQuantityInvoiced($myrow['stockid'],$FromDate,$ToDate,'RETAIL66'),0));
 				$objPHPExcel->getActiveSheet()->setCellValue('AB'.$i, round(ItemCodeQuantityInvoiced($myrow['stockid'],$FromDate,$ToDate,'RETAILSE'),0));
@@ -215,6 +222,7 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
 			$objPHPExcel->getActiveSheet()->setCellValue('O1', '=SUM(O'.$StartingRow.':O'.$i.')');
 			$objPHPExcel->getActiveSheet()->setCellValue('P1', '=SUM(P'.$StartingRow.':P'.$i.')');
 			$objPHPExcel->getActiveSheet()->setCellValue('Q1', '=SUM(Q'.$StartingRow.':Q'.$i.')');
+			$objPHPExcel->getActiveSheet()->setCellValue('U1', '=SUM(U'.$StartingRow.':U'.$i.')');
 
 			$objPHPExcel->getActiveSheet()->setCellValue('A2', '=SUBTOTAL(3,A'.$StartingRow.':A'.$i.')');
 			$objPHPExcel->getActiveSheet()->setCellValue('J2', '=SUBTOTAL(9,J'.$StartingRow.':J'.$i.')');
@@ -225,6 +233,7 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
 			$objPHPExcel->getActiveSheet()->setCellValue('O2', '=SUBTOTAL(9,O'.$StartingRow.':O'.$i.')');
 			$objPHPExcel->getActiveSheet()->setCellValue('P2', '=SUBTOTAL(9,P'.$StartingRow.':P'.$i.')');
 			$objPHPExcel->getActiveSheet()->setCellValue('Q2', '=SUBTOTAL(9,Q'.$StartingRow.':Q'.$i.')');
+			$objPHPExcel->getActiveSheet()->setCellValue('U2', '=SUBTOTAL(9,U'.$StartingRow.':U'.$i.')');
 
 			$objPHPExcel->getActiveSheet()->setCellValue('A3', '=A2/A1');
 			$objPHPExcel->getActiveSheet()->setCellValue('J3', '=J2/J1');
@@ -235,6 +244,7 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
 			$objPHPExcel->getActiveSheet()->setCellValue('O3', '=O2/O1');
 			$objPHPExcel->getActiveSheet()->setCellValue('P3', '=P2/P1');
 			$objPHPExcel->getActiveSheet()->setCellValue('Q3', '=Q2/Q1');
+			$objPHPExcel->getActiveSheet()->setCellValue('U3', '=U2/U1');
 		
 			// Freeze panes
 			$objPHPExcel->getActiveSheet()->freezePane('B6');
