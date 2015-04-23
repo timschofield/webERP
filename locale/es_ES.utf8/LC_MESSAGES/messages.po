@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.12.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-02-24 17:34-0600\n"
-"PO-Revision-Date: 2015-03-23 18:29-0600\n"
+"PO-Revision-Date: 2015-04-23 07:53-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -13211,7 +13211,7 @@ msgstr "La ubicación se ha eliminado correctamente"
 
 #: FixedAssetLocations.php:98 FixedAssetLocations.php:121
 msgid "Location ID"
-msgstr "ID de Ubicación"
+msgstr "ID de ubicación"
 
 #: FixedAssetLocations.php:99 FixedAssetLocations.php:131
 msgid "Location Description"
@@ -16022,7 +16022,7 @@ msgstr "Número de Requisición"
 #: InternalStockRequestAuthorisation.php:70
 #: InternalStockRequestFulfill.php:288
 msgid "Location Of Stock"
-msgstr "Ubicación de la Existencia: "
+msgstr "Ubicación del inventario"
 
 #: InternalStockRequestAuthorisation.php:71
 #: InternalStockRequestFulfill.php:289
@@ -16704,7 +16704,7 @@ msgstr "Añadir actualización"
 
 #: Locations.php:5
 msgid "Location Maintenance"
-msgstr "Administrar Ubicaciones"
+msgstr "Administrar ubicaciones"
 
 #: Locations.php:29
 msgid "The location code may not be empty"
@@ -16917,11 +16917,11 @@ msgstr ""
 #: Locations.php:396 Locations.php:506 Locations.php:518
 #: api/api_xml-rpc.php:876
 msgid "Location Code"
-msgstr "Código Localidad"
+msgstr "Código de ubicación"
 
 #: Locations.php:397 Locations.php:566
 msgid "Location Name"
-msgstr "Nombre Localidad"
+msgstr "Nombre de ubicación"
 
 #: Locations.php:398 Locations.php:620 TaxAuthorityRates.php:81
 #: TaxProvinces.php:165
@@ -16943,7 +16943,7 @@ msgstr "Corregir detalles de ubicación"
 
 #: Locations.php:515
 msgid "New Location details"
-msgstr "Detalles Nueva Ubicación"
+msgstr "Detalles de nueva ubicación"
 
 #: Locations.php:519
 msgid "Enter up to five characters for the inventory location code"
@@ -18328,7 +18328,7 @@ msgstr ""
 
 #: NoSalesItems.php:195
 msgid "Location QOH"
-msgstr "Ubicación"
+msgstr "Ubicación de la disponibilidad"
 
 #: NoSalesItems.php:196
 msgid "Total QOH"
@@ -19389,7 +19389,7 @@ msgstr "Abono"
 
 #: PDFPeriodStockTransListing.php:44 includes/DatabaseTranslations.php:30
 msgid "Location Transfer"
-msgstr "Transferencia de Localidad"
+msgstr "Transferencia de ubicación"
 
 #: PDFPeriodStockTransListing.php:45 includes/DatabaseTranslations.php:31
 msgid "Stock Adjustment"
@@ -19437,7 +19437,7 @@ msgstr "Notas de Crédito de clientes"
 
 #: PDFPeriodStockTransListing.php:169 SelectProduct.php:405
 msgid "Location Transfers"
-msgstr "Transferencias de localidad"
+msgstr "Transferencias de ubicación"
 
 #: PDFPeriodStockTransListing.php:172 StockAdjustments.php:8
 msgid "Stock Adjustments"
@@ -31752,7 +31752,7 @@ msgstr "Por favor Verifique las Cantidades Recibidas en el Envío"
 
 #: StockLocTransferReceive.php:454
 msgid "Location Transfer Reference"
-msgstr "Referencia de Ubicación de transferencia"
+msgstr "Referencia de transferencia de ubicación"
 
 #: StockLocTransferReceive.php:460
 msgid "Quantity Dispatched"
@@ -40106,7 +40106,7 @@ msgstr "Falló el SQL para suprimir el antiguo registro de localidad"
 
 #: Z_ChangeLocationCode.php:244
 msgid "Location code"
-msgstr "Código de Localidad"
+msgstr "Código de ubicación"
 
 #: Z_ChangeLocationCode.php:255
 msgid "Existing Location Code"
@@ -43018,7 +43018,7 @@ msgstr "Dirección de correo-e inválida"
 
 #: api/api_errorcodes.php:215
 msgid "Location Code Not Setup"
-msgstr "Código de Localidad no Configurado"
+msgstr "Código de ubicación sin configurar"
 
 #: api/api_errorcodes.php:216
 msgid "Tax Group Id Not Setup"
@@ -46023,7 +46023,7 @@ msgstr "Valoración de Inventario para las Categorías entre"
 
 #: includes/PDFInventoryValnPageHeader.inc:15
 msgid "location"
-msgstr "Ubicación"
+msgstr "ubicación"
 
 #: includes/PDFLowGPPageHeader.inc:15
 msgid "Low GP Sales Between"
