@@ -71,7 +71,7 @@ function isEarcuff($stockid){
 }
 
 function isPlasticBag($stockid){
-	return (substr($stockid, 0,4) == "BAPL");
+	return ((substr($stockid, 0,4) == "BAPL") OR (substr($stockid, 0,4) == "BAGC"));
 }
 
 function isTali($stockid){
