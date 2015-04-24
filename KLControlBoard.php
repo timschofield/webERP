@@ -540,8 +540,8 @@ if ($KL_SystemAdmin
 }
 
 if ($KL_SystemAdmin){
-	OnlineOrdersFollowUp("KL-WEBSITE", 7, $RootPath, $db);
-	OnlineOrdersFollowUp("LAZADA", 7, $RootPath, $db);
+	OnlineOrdersFollowUp("KL-WEBSITE", 10, $RootPath, $db);
+	OnlineOrdersFollowUp("LAZADA", 10, $RootPath, $db);
 }
 /***************************************************************************************
 * Other tests     
