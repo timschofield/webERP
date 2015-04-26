@@ -1,5 +1,6 @@
 webERP Change Log
 
+26/04/15 Exson: Add adjustment reason to the mail text and fixed the notice noise in StockAdjustments.php.
 26/04/15 Exson: Comment out the mrpparameters table update in sql file upgrade4.11.3-4.11.4.sql which made a misleading during upgrade and absolutely non-necessary.
 26/4/15 Exson: Fixed the account code cannot be key in directly bug in GLJournal.php. Reported by Akits.
 26/4/15 Exson: Fixed the raw material sellable bug introduced by myself in SelectOrderItems.php.
