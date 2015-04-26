@@ -1,4 +1,5 @@
 webERP Change Log
+26/4/15 Exson: Fixed the account code cannot be key in directly bug in GLJournal.php. Reported by Akits.
 26/4/15 Exson: Fixed the raw material sellable bug introduced by myself in SelectOrderItems.php.
 19/4/15 RChacon: Remove the class noprint from the image in page_title_text.
 19/4/15 RChacon: Add ".page_title_text img" as a display none class. This makes unnecessary to add the class noprint to the image in page_title_text.
