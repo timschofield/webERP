@@ -727,9 +727,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 						custitem.cust_part,
 						custitem.cust_description
 				FROM stockmaster INNER JOIN stockcategory
-				ON stockmaster.categoryid=stockcategory.categoryid
+				ON stockmaster.categoryid=stockcategory.categoryid 
 				" . $IncludeCustItem . "
-				WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D' OR stockcategory.stocktype='L')
+				WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D' OR stockcategory.stocktype='L' " . $RawMaterialSellable . ")
 				AND stockmaster.mbflag <>'G'
 				AND stockmaster.discontinued=0 ";
 
