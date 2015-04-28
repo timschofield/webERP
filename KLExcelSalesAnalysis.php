@@ -76,7 +76,7 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
 			$objPHPExcel->getActiveSheet()->getStyle('A:AZ')->getNumberFormat()->setFormatCode('#,###');
 			$objPHPExcel->getActiveSheet()->getStyle('R')->getNumberFormat()->setFormatCode('#,##0.0');
 			$objPHPExcel->getActiveSheet()->getStyle('3')->getNumberFormat()->setFormatCode('0.0%');
-			$objPHPExcel->getActiveSheet()->getStyle('C3')->getNumberFormat()->setFormatCode('#,###');
+			$objPHPExcel->getActiveSheet()->getStyle('B3:C3')->getNumberFormat()->setFormatCode('#,##0');
 			$objPHPExcel->getActiveSheet()->getStyle('F')->getNumberFormat()->setFormatCode('dd/mm/yyyy');
 		
 			// Add title data
@@ -116,9 +116,9 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
  			$objPHPExcel->getActiveSheet()->setCellValue('Q5', 'GROSS_MARGIN');
 
 			$objPHPExcel->getActiveSheet()->setCellValue('R5', 'SALES/DAY');
- 			$objPHPExcel->getActiveSheet()->setCellValue('S5', 'DAYS_QOO');
+ 			$objPHPExcel->getActiveSheet()->setCellValue('S5', 'DAYS_QOH');
  			$objPHPExcel->getActiveSheet()->setCellValue('T5', 'DAYS_QOO');
- 			$objPHPExcel->getActiveSheet()->setCellValue('U5', 'DAYS');
+ 			$objPHPExcel->getActiveSheet()->setCellValue('U5', 'DAYS QOH+QOO');
 
  			$objPHPExcel->getActiveSheet()->setCellValue('V5', 'PCS TO PO/WO');
 			
@@ -190,8 +190,8 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
 				$objPHPExcel->getActiveSheet()->setCellValue('Q'.$i, '=O'.$i.'-P'.$i.'');
 
 				$objPHPExcel->getActiveSheet()->setCellValue('R'.$i, '=N'.$i.'/$C$3');
-				$objPHPExcel->getActiveSheet()->setCellValue('S'.$i, '=J'.$i.'/R'.$i.'');
-				$objPHPExcel->getActiveSheet()->setCellValue('T'.$i, '=L'.$i.'/R'.$i.'');
+				$objPHPExcel->getActiveSheet()->setCellValue('S'.$i, '=IF(R'.$i.'>0,J'.$i.'/R'.$i.',99999)'.'');
+				$objPHPExcel->getActiveSheet()->setCellValue('T'.$i, '=IF(R'.$i.'>0,L'.$i.'/R'.$i.',99999)'.'');
 				$objPHPExcel->getActiveSheet()->setCellValue('U'.$i, '=S'.$i.'+T'.$i.'');
 				
 				$objPHPExcel->getActiveSheet()->setCellValue('V'.$i, '=IF(U'.$i.'<$C$4,ROUNDUP(($C$4-U'.$i.')*R'.$i.',0),"")'.'');
