@@ -28,7 +28,7 @@ Class SuppTrans {
 	var $OvAmount;
 	var $OvGST;
 	var $GLCodesCounter=0;
-	var $ShiptsCounter=0;
+	var $ShiptCounter=0;
 	var $ContractsCounter=0;
 	var $AssetCounter=0;
 	var $TaxGroup;
@@ -36,7 +36,6 @@ Class SuppTrans {
 	var $TaxGroupDescription;
 	var $Taxes;
 	var $Hold;
-	var $ShiptCounter;
 
 	function SuppTrans(){
 	/*Constructor function initialises a new Supplier Transaction object */
@@ -46,7 +45,6 @@ Class SuppTrans {
 		$this->Contracts = array();
 		$this->Assets = array();
 		$this->Taxes = array();
-		$ShiptCounter = 0;
 	}
 
 	function GetTaxes () {
