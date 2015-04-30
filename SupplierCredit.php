@@ -526,7 +526,7 @@ echo '<tr>
 		<td colspan="2"><input type="submit" name="ToggleTaxMethod" value="' . _('Update Tax Calculation') .  '" /></td>
 		<td><select name="OverRideTax" onchange="ReloadForm(form1.ToggleTaxMethod)">';
 
-if ($_POST['OverRideTax']=='Man'){
+if (isset($_POST['OverRideTax']) AND $_POST['OverRideTax']=='Man'){
 	echo '<option value="Auto">' . _('Automatic') . '</option>
 			<option selected="selected" value="Man">' . _('Manual Entry') . '</option>';
 } else {
