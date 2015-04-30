@@ -1,5 +1,6 @@
 webERP Change Log
 
+30/04/15 Exson: Fixed the notice noise in SupplierCredit.php and SupplierInvoice.php.
 30/04/15 Exson: Fixed the properties initial bug and tidy code up by fix typo.
 26/04/15 Exson: Add adjustment reason to the mail text and fixed the notice noise in StockAdjustments.php.
 26/04/15 Exson: Comment out the mrpparameters table update in sql file upgrade4.11.3-4.11.4.sql which made a misleading during upgrade and absolutely non-necessary.
