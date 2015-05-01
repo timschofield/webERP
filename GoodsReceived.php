@@ -92,9 +92,9 @@ if (!isset($_POST['ProcessGoodsReceived'])) {
 
 	echo '<table cellpadding="2" class="selection">
 			<tr><th colspan="2"></th>
-				<th align="center" colspan="3"><b>' . _('Supplier Units') . '</b></th>
+				<th class="centre" colspan="3"><b>' . _('Supplier Units') . '</b></th>
 				<th></th>
-				<th align="center" colspan="5"><b>' . _('Our Receiving Units') . '</b></th>
+				<th class="centre" colspan="5"><b>' . _('Our Receiving Units') . '</b></th>
 			</tr>
 			<tr>
 				<th>' . _('Item Code') . '</th>
@@ -106,6 +106,7 @@ if (!isset($_POST['ProcessGoodsReceived'])) {
 				<th>' . _('Quantity') . '<br />' . _('Ordered') . '</th>
 				<th>' . _('Units') . '</th>
 				<th>' . _('Already') . '<br />' . _('Received') . '</th>
+				<th>' . _('Delivery') . '<br />' . _('Date') . '</th>
 				<th>' . _('This Delivery') . '<br />' . _('Quantity') . '</th>
 				<th>' . _('Completed') . '</th>';
 
@@ -170,6 +171,7 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_POST['ProcessGo
 			<td class="number">' . $DisplayQtyOrd . '</td>
 			<td>' . $LnItm->Units . '</td>
 			<td class="number">' . $DisplayQtyRec . '</td>
+			<td>' . $LnItm->ReqDelDate . '</td>
 			<td class="number">';
 
 		if ($LnItm->Controlled == 1) {
@@ -206,7 +208,7 @@ maxlength="10" size="10" value="' . locale_number_format(round($LnItm->ReceiveQt
 	$DisplayTotal = locale_number_format($_SESSION['PO'.$identifier]->Total,$_SESSION['PO'.$identifier]->CurrDecimalPlaces);
 	if ($_SESSION['ShowValueOnGRN']==1) {
 		echo '<tr>
-				<td colspan="11" class="number"><b>' . _('Total value of goods received'). '</b></td>
+				<td colspan="13" class="number"><b>' . _('Total value of goods received'). '</b></td>
 				<td class="number"><b>' .  $DisplayTotal. '</b></td>
 			</tr>
 			</table>';
@@ -422,7 +424,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 					$_SESSION['PO'.$identifier]->LineItems[$OrderLine->LineNo]->StandardCost = (($CurrentStandardCost * $OrderLine->ReceiveQty) + ($_SESSION['PO'.$identifier]->LineItems[$OrderLine->LineNo]->StandardCost * $OrderLine->QtyReceived)) / ($OrderLine->ReceiveQty + $OrderLine->QtyReceived);
 				} elseif ($myrow[1] == 'D') { //it's a dummy part which without stock.
 					$Dummy = true;
-					if($OrderLine->QtyReceived == 0){//There is 
+					if($OrderLine->QtyReceived == 0){//There is
 						$_SESSION['PO'.$identifier]->LineItems[$OrderLine->LineNo]->StandardCost = $LocalCurrencyPrice;
 					}
 				}
@@ -612,7 +614,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 							$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 							if ($_SESSION['QualityLogSamples']==1) {
 								CreateQASample($OrderLine->StockID,$Item->BundleRef, '', 'Created from Purchase Order', 0, 0,$db);
-							}	
+							}
 						}//non blank BundleRef
 					} //end foreach
 				}
