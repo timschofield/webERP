@@ -222,7 +222,7 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
 			$objPHPExcel->getActiveSheet()->setCellValue('O1', '=SUM(O'.$StartingRow.':O'.$i.')');
 			$objPHPExcel->getActiveSheet()->setCellValue('P1', '=SUM(P'.$StartingRow.':P'.$i.')');
 			$objPHPExcel->getActiveSheet()->setCellValue('Q1', '=SUM(Q'.$StartingRow.':Q'.$i.')');
-			$objPHPExcel->getActiveSheet()->setCellValue('U1', '=SUM(U'.$StartingRow.':U'.$i.')');
+			$objPHPExcel->getActiveSheet()->setCellValue('V1', '=SUM(V'.$StartingRow.':V'.$i.')');
 
 			$objPHPExcel->getActiveSheet()->setCellValue('A2', '=SUBTOTAL(3,A'.$StartingRow.':A'.$i.')');
 			$objPHPExcel->getActiveSheet()->setCellValue('J2', '=SUBTOTAL(9,J'.$StartingRow.':J'.$i.')');
@@ -233,7 +233,7 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
 			$objPHPExcel->getActiveSheet()->setCellValue('O2', '=SUBTOTAL(9,O'.$StartingRow.':O'.$i.')');
 			$objPHPExcel->getActiveSheet()->setCellValue('P2', '=SUBTOTAL(9,P'.$StartingRow.':P'.$i.')');
 			$objPHPExcel->getActiveSheet()->setCellValue('Q2', '=SUBTOTAL(9,Q'.$StartingRow.':Q'.$i.')');
-			$objPHPExcel->getActiveSheet()->setCellValue('U2', '=SUBTOTAL(9,U'.$StartingRow.':U'.$i.')');
+			$objPHPExcel->getActiveSheet()->setCellValue('V2', '=SUBTOTAL(9,V'.$StartingRow.':V'.$i.')');
 
 			$objPHPExcel->getActiveSheet()->setCellValue('A3', '=A2/A1');
 			$objPHPExcel->getActiveSheet()->setCellValue('J3', '=J2/J1');
@@ -244,7 +244,7 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
 			$objPHPExcel->getActiveSheet()->setCellValue('O3', '=O2/O1');
 			$objPHPExcel->getActiveSheet()->setCellValue('P3', '=P2/P1');
 			$objPHPExcel->getActiveSheet()->setCellValue('Q3', '=Q2/Q1');
-			$objPHPExcel->getActiveSheet()->setCellValue('U3', '=U2/U1');
+			$objPHPExcel->getActiveSheet()->setCellValue('V3', '=V2/V1');
 		
 			// Freeze panes
 			$objPHPExcel->getActiveSheet()->freezePane('B6');

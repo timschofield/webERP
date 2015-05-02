@@ -117,8 +117,7 @@ define("ACCOUNT_CASH_TOKPU", "111111110"); // number of account for toko PU
 define("ACCOUNT_CASH_TOKSU", "111111111"); // number of account for toko SU
 define("ACCOUNT_CASH_TOKOB", "111111112"); // number of account for toko OB
 define("ACCOUNT_CASH_TOKSS", "111111113"); // number of account for toko SS
-
-define("ACCOUNT_CASH_TOKPA", "111111130"); // number of account for toko PAMERAN
+define("ACCOUNT_CASH_TOKPA", "111111114"); // number of account for toko PA
 
 define("ACCOUNT_BANK_DANAMON_IDR", "111121105PT"); // number of account for Bank Danamon IDR
 define("ACCOUNT_BANK_MANDIRI_IDR", "111121100PT"); // number of account for Bank Mandiri IDR

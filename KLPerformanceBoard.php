@@ -899,7 +899,9 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 				echo '<p class="page_title_text" align="center"><strong>' . _('Current Average Daily sales in ') . $Shop . ' by ' . $typereport . " during the last " . $NumDaysA . ", ". $NumDaysB . ", ". $NumDaysC . ", ". $NumDaysD . ", ". $NumDaysE . ", ". $NumDaysF . " days. Sorted by " . $NumDaysSort ." days. Trend by " . $NumDaysD . " days.".'</strong></p>';
 			}
 			if($typereport == "Shop"){
-				$TitleTarget = "Minimum Target";
+// Ricard Do not show
+//				$TitleTarget = "Minimum Target";
+				$TitleTarget = "";
 			}else{
 				$TitleTarget = "";
 			}
@@ -931,7 +933,7 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 				$Code = $myrow['debtorno'];
 				$Name = $myrow['name'];
 				if($Year != "LastYear"){
-					$target = locale_number_format($myrow['minmonthlysalestarget']/30*$NumDaysC,0);
+//					$target = locale_number_format($myrow['minmonthlysalestarget']/30*$NumDaysC,0);
 				}
 			}else{
 				$Code = $myrow['salesmancode'];
