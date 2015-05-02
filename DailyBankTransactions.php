@@ -23,7 +23,7 @@ if (!isset($_POST['Show'])) {
 	$DbgMsg = _('The SQL used to retrieve the bank accounts was');
 	$AccountsResults = DB_query($SQL,$ErrMsg,$DbgMsg);
 
-	echo '<p class="page_title_text"><img alt="" class="noprint" src="'.$RootPath.'/css/'.$Theme.
+	echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 		'/images/bank.png" title="' .// Icon image.
 		_('Bank Transactions Inquiry') . '" /> ' .// Icon title.
 		_('Bank Transactions Inquiry') . '</p>';// Page title.
@@ -115,7 +115,7 @@ if (!isset($_POST['Show'])) {
 	$result = DB_query($sql);
 
 	if (DB_num_rows($result)==0) {
-		echo '<p class="page_title_text"><img alt="" class="noprint" src="'.$RootPath.'/css/'.$Theme.
+		echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 			'/images/bank.png" title="' .// Icon image.
 			_('Bank Transactions Inquiry') . '" /> ' .// Icon title.
 			_('Bank Transactions Inquiry') . '</p>';// Page title.
@@ -123,7 +123,7 @@ if (!isset($_POST['Show'])) {
 	} else {
 		$BankDetailRow = DB_fetch_array($BankResult);
 		echo '<div id="Report">';// Division to identify the report block.
-		echo '<p class="page_title_text"><img alt="" class="noprint" src="'.$RootPath.'/css/'.$Theme.
+		echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 			'/images/bank.png" title="' .// Icon image.
 			_('Bank Transactions Inquiry') . '" /> ' .// Icon title.
 			_('Account Transactions For').'<br />'.$BankDetailRow['bankaccountname'].'<br />'.

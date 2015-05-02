@@ -1,5 +1,5 @@
 <?php
-/* $Id: GLBalanceSheet.php 7206 2015-03-07 17:44:35Z rchacon $*/
+/* $Id: GLBalanceSheet.php 7268 2015-04-19 14:57:47Z rchacon $*/
 /* This script shows the balance sheet for the company as at a specified date. */
 
 /*Through deviousness and cunning, this system allows shows the balance sheets as at the end of any period selected - so first off need to show the input of criteria screen while the user is selecting the period end of the balance date meanwhile the system is posting any unposted transactions */
@@ -17,7 +17,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 
 	/*Show a form to allow input of criteria for TB to show */
 	include('includes/header.inc');
-	echo '<p class="page_title_text"><img alt="" class="noprint" src="'.$RootPath.'/css/'.$Theme.
+	echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 		'/images/printer.png" title="' .// Icon image.
 		_('Print Statement of Financial Position') . '" /> ' .// Icon title.
 		_('Balance Sheet') . '</p>';// Page title.
@@ -392,7 +392,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 	// Page title as IAS1 numerals 10 and 51:
 	include_once('includes/CurrenciesArray.php');// Array to retrieve currency name.
 	echo '<div id="Report">';// Division to identify the report block.
-	echo '<p class="page_title_text"><img alt="" class="noprint" src="'.$RootPath.'/css/'.$Theme.
+	echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 		'/images/gl.png" title="' .// Icon image.
 		_('Statement of Financial Position') . '" /> ' .// Icon title.
 		_('Balance Sheet') . '<br />' .// Page title, reporting statement.

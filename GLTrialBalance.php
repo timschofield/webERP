@@ -1,5 +1,5 @@
 <?php
-/* $Id: GLTrialBalance.php 7173 2015-02-22 19:45:21Z rchacon $*/
+/* $Id: GLTrialBalance.php 7268 2015-04-19 14:57:47Z rchacon $*/
 /* Shows the trial balance for the month and the for the period selected together with the budgeted trial balances. */
 
 /*Through deviousness AND cunning, this system allows trial balances for any date range that recalculates the P&L balances
@@ -29,7 +29,7 @@ if ((! isset($_POST['FromPeriod'])
 	OR isset($_POST['SelectADifferentPeriod'])){
 
 	include  ('includes/header.inc');
-	echo '<p class="page_title_text"><img alt="" class="noprint" src="'.$RootPath.'/css/'.$Theme.
+	echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 		'/images/printer.png" title="' .// Icon image.
 		_('Print Trial Balance') . '" /> ' .// Icon title.
 		_('Trial Balance') . '</p>';// Page title.
@@ -433,7 +433,7 @@ if ((! isset($_POST['FromPeriod'])
 
 	$AccountsResult = DB_query($SQL, _('No general ledger accounts were returned by the SQL because'), _('The SQL that failed was:'));
 
-	echo '<p class="page_title_text"><img alt="" class="noprint" src="'.$RootPath.'/css/'.$Theme.
+	echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 		'/images/gl.png" title="' .// Icon image.
 		_('Trial Balance') . '" /> ' .// Icon title.
 		_('Trial Balance for the month of ') . $PeriodToDate . '<br />' .
