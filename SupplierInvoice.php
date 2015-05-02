@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: SupplierInvoice.php 7198 2015-03-07 13:49:08Z exsonqu $ */
+/* $Id: SupplierInvoice.php 7282 2015-04-30 10:30:23Z exsonqu $ */
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing
@@ -874,7 +874,7 @@ if (!isset($_POST['PostInvoice'])){
 			<td colspan="2"><input type="submit" name="ToggleTaxMethod" value="' . _('Update Tax Calculation') . '" /></td>
 			<td><select name="OverRideTax" onchange="ReloadForm(form1.ToggleTaxMethod)">';
 
-	if ($_POST['OverRideTax']=='Man'){
+	if (isset($_POST['OverRideTax']) AND $_POST['OverRideTax']=='Man'){
 		echo '<option value="Auto">' . _('Automatic') . '</option>
 				<option selected="selected" value="Man">' . _('Manually') . '</option>';
 	} else {

@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: SupplierCredit.php 6945 2014-10-27 07:20:48Z daintree $ */
+/* $Id: SupplierCredit.php 7282 2015-04-30 10:30:23Z exsonqu $ */
 
 /*This page is very largely the same as the SupplierInvoice.php script
 the same result could have been acheived by using if statements in that script and just having the one
@@ -526,7 +526,7 @@ echo '<tr>
 		<td colspan="2"><input type="submit" name="ToggleTaxMethod" value="' . _('Update Tax Calculation') .  '" /></td>
 		<td><select name="OverRideTax" onchange="ReloadForm(form1.ToggleTaxMethod)">';
 
-if ($_POST['OverRideTax']=='Man'){
+if (isset($_POST['OverRideTax']) AND $_POST['OverRideTax']=='Man'){
 	echo '<option value="Auto">' . _('Automatic') . '</option>
 			<option selected="selected" value="Man">' . _('Manual Entry') . '</option>';
 } else {

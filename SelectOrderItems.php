@@ -1,5 +1,5 @@
 <?php
-/* $Id: SelectOrderItems.php 7171 2015-02-22 17:37:31Z vvs2012 $*/
+/* $Id: SelectOrderItems.php 7272 2015-04-26 02:33:51Z exsonqu $*/
 
 /**************************************************************************************
 KL RICARD MODIFICATIONS:
@@ -732,9 +732,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 						custitem.cust_part,
 						custitem.cust_description
 				FROM stockmaster INNER JOIN stockcategory
-				ON stockmaster.categoryid=stockcategory.categoryid
+				ON stockmaster.categoryid=stockcategory.categoryid 
 				" . $IncludeCustItem . "
-				WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D' OR stockcategory.stocktype='L')
+				WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D' OR stockcategory.stocktype='L' " . $RawMaterialSellable . ")
 				AND stockmaster.mbflag <>'G'
 				AND stockmaster.discontinued=0 ";
 
