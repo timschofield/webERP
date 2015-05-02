@@ -1,5 +1,5 @@
 webERP Change Log
-
+02/05/15 TeHonu: Added bankaccountusers table in Z_ChangeGLAccountCode.php
 30/04/15 TurboPT: Add Delivery Date in GoodsReceived.php output. Forum feature request by giusba71. 
 30/04/15 Exson: Fixed the notice noise in SupplierCredit.php and SupplierInvoice.php.
 30/04/15 Exson: Fixed the properties initial bug and tidy code up by fix typo.
