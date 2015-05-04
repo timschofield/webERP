@@ -176,6 +176,9 @@ if (!isset($OrderNumber) or $OrderNumber == '') {
 	$UserLocations = DB_num_rows($resultStkLocs);
 	$AllListed = false;
 	while ($myrow = DB_fetch_array($resultStkLocs)) {
+		if(!isset($LocQty)){
+			$LocQty = $myrow['total'];
+		}
 		if (isset($_POST['StockLocation'])) {//The user has selected location
 			if ($_POST['StockLocation'] == 'ALLLOC'){//user have selected all locations
 				if($AllListed === false) {//it's the first loop
@@ -364,6 +367,9 @@ else {
 						SUM(purchorderdetails.unitprice*purchorderdetails.quantityord) AS ordervalue
 				FROM purchorders INNER JOIN purchorderdetails
 				ON purchorders.orderno=purchorderdetails.orderno
+				INNER JOIN locationusers 
+				ON purchorders.intostocklocation=locationusers.loccode
+				AND userid='" . $_SESSION['UserID'] . "' AND canview = 1
 				INNER JOIN suppliers
 				ON purchorders.supplierno = suppliers.supplierid
 				INNER JOIN currencies
@@ -382,8 +388,12 @@ else {
 		//$OrderNumber is not set
 		if (isset($SelectedSupplier)) {
 			if (!isset($_POST['StockLocation'])) {
-				$_POST['StockLocation'] = $_SESSION['UserStockLocation'];
-				$WhereStockLocation = " AND purchorders.intostocklocation ='" . $_POST['StockLocation'] . "' ";
+				if (isset($UserLocations) AND isset($LocQty) AND $UserLocations == $LocQty) {
+					$WhereStockLocation = " AND purchorders.intostocklocation ='" . $_POST['StockLocation'] . "' ";
+				} else {
+					$_POST['StockLocation'] = $_SESSION['UserStockLocation'];
+					$WhereStockLocation = " AND purchorders.intostocklocation ='" . $_POST['StockLocation'] . "' ";
+				}
 			} else {
 				if ($_POST['StockLocation'] == 'ALLLOC'){
 					$WhereStockLocation = ' ';
@@ -469,8 +479,13 @@ else {
 		} //isset($SelectedSupplier)
 		else { //no supplier selected
 			if (!isset($_POST['StockLocation'])) {
-				$_POST['StockLocation'] = $_SESSION['UserStockLocation'];
-				$WhereStockLocation = " AND purchorders.intostocklocation = '" . $_POST['StockLocation'] . "'";
+				if (isset($UserLocations) AND isset($LocQty) AND $UserLocations == $LocQty) {
+					$WhereStockLocation = " ";
+					$_POST['StockLocation'] = 'ALLLOC';
+				} else {
+					$_POST['StockLocation'] = $_SESSION['UserStockLocation'];
+					$WhereStockLocation = " AND purchorders.intostocklocation ='" . $_POST['StockLocation'] . "' ";
+				}
 			} else {
 				if ($_POST['StockLocation'] == 'ALLLOC'){
 					$WhereStockLocation = ' ';
