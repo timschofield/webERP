@@ -1,4 +1,6 @@
 webERP Change Log
+
+04/05/15 Exson: Make all option available for users who have authority for all locations and all option available for all stock categories in PO_SelectOSPurchOrder.php.
 02/05/15 TeHonu: Added bankaccountusers table in Z_ChangeGLAccountCode.php
 30/04/15 TurboPT: Add Delivery Date in GoodsReceived.php output. Forum feature request by giusba71. 
 30/04/15 Exson: Fixed the notice noise in SupplierCredit.php and SupplierInvoice.php.
