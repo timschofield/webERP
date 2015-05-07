@@ -1,6 +1,7 @@
 webERP Change Log
 
-07/05/15 RChacon: Hides submit button and 'More Info' columns when printing. Add thead tag to enable the table header to be printed at the top of each page.
+07/05/15 RChacon: In CustomerInquiry.php, hide submit button and 'More Info' columns when printing. Add thead tag to enable the table header to be printed at the top of each page.
+07/05/15 RChacon: In SupplierInquiry.php, hide submit button and 'More Info' columns when printing. Add thead tag to enable the table header to be printed at the top of each page.
 04/05/15 Exson: Make PO number searching also in compliance with location authority rules and make default search result as all if users have full location authority.
 04/05/15 Exson: Make all option available for users who have authority for all locations and all option available for all stock categories in PO_SelectOSPurchOrder.php.
 02/05/15 TeHonu: Added bankaccountusers table in Z_ChangeGLAccountCode.php
