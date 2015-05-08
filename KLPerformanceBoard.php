@@ -1010,7 +1010,6 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 			$TotalDateD = $TotalDateD +($myrow['salesD']/$NumDaysD);
 			$TotalDateE = $TotalDateE +($myrow['salesE']/$NumDaysE);
 			$TotalDateF = $TotalDateF +($myrow['salesF']/$NumDaysF);
-			$TotalDateF = $TotalDateF +($myrow['salesF']/$NumDaysF);
 			$TotalDateMTD = $TotalDateMTD +$myrow['salesMTD'];
 			$TotalForecast = $TotalForecast + round($myrow['salesC'], -5);
 			$i++;

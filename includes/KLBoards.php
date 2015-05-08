@@ -2619,9 +2619,9 @@ function SamplesNotLongerNeeded($RootPath, $db){
 			FROM locstock, stockmaster
 			WHERE locstock.stockid = stockmaster.stockid
 				AND loccode = 'SAMPR'
-				AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING ."
-				AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_DISCOUNT ."
-				AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET ."
+				AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING ." 
+					OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_DISCOUNT ."
+					OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET .")
 				AND quantity > 0
 			ORDER BY locstock.stockid";
 
