@@ -1,5 +1,6 @@
 webERP Change Log
 
+08/05/15 RChacon: In DeliveryDetails.php, add $ViewTopic and $BookMark to ManualSalesOrders.html.
 07/05/15 RChacon: In CustomerInquiry.php, hide submit button and 'More Info' columns when printing. Add thead tag to enable the table header to be printed at the top of each page.
 07/05/15 RChacon: In SupplierInquiry.php, hide submit button and 'More Info' columns when printing. Add thead tag to enable the table header to be printed at the top of each page.
 04/05/15 Exson: Make PO number searching also in compliance with location authority rules and make default search result as all if users have full location authority.
