@@ -743,6 +743,7 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 		$StartDateE = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysE-366));
 		$StartDateF = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysF-366));
 		$StartDateSort = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysSort-366));
+		$StartDateMTD=FormatDateForSQL(Date($_SESSION['DefaultDateFormat'], mktime(0,0,0,Date('m'),1,Date('Y'))));
 	}else{
 		$Yesterday  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
 		$StartDateA = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA-1));
@@ -752,6 +753,7 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 		$StartDateE = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysE-1));
 		$StartDateF = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysF-1));
 		$StartDateSort = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysSort-1));
+		$StartDateMTD=FormatDateForSQL(Date($_SESSION['DefaultDateFormat'], mktime(0,0,0,Date('m'),1,Date('Y'))));
 	}
 
 	$TotalDateA = 0;
@@ -761,6 +763,7 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 	$TotalDateE = 0;
 	$TotalDateF = 0;
 	$TotalForecast = 0;
+	$TotalMTD = 0;
 	
 	if ($Shop == "All"){
 		$SQLByShop = "";
@@ -813,7 +816,14 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 							AND salesorderdetails.completed = 1
 							AND salesorders.orddate >  '". $StartDateF . "'
 							AND salesorders.orddate <= '". $Yesterday . "'
-							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesF
+							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesF,
+					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+						FROM salesorderdetails, salesorders
+						WHERE salesorderdetails.orderno = salesorders.orderno
+							AND salesorderdetails.completed = 1
+							AND salesorders.orddate >=  '". $StartDateMTD . "'
+							AND salesorders.orddate <= '". $Yesterday . "'
+							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesMTD
 				FROM debtorsmaster, locations
 				WHERE debtorsmaster.debtorno = locations.cashsalecustomer
 					AND debtorsmaster.typeid = 2
@@ -874,7 +884,15 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 							$SQLByShop . "
 							AND salesorders.orddate >  '". $StartDateF . "'
 							AND salesorders.orddate <= '". $Yesterday . "'
-							AND salesorders.salesperson = salesman.salesmancode) AS salesF
+							AND salesorders.salesperson = salesman.salesmancode) AS salesF,
+					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+						FROM salesorderdetails, salesorders
+						WHERE salesorderdetails.orderno = salesorders.orderno
+							AND salesorderdetails.completed = 1 ".
+							$SQLByShop . "
+							AND salesorders.orddate >  '". $StartDateMTD . "'
+							AND salesorders.orddate <= '". $Yesterday . "'
+							AND salesorders.salesperson = salesman.salesmancode) AS salesMTD
 				FROM salesman
 				WHERE salesman.current = 1
 				ORDER BY (SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
@@ -918,6 +936,7 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 							<th class="ascending">' . $NumDaysD . _(' days') . '</th>
 							<th class="ascending">' . $NumDaysE . _(' days') . '</th>
 							<th class="ascending">' . $NumDaysF . _(' days') . '</th>
+							<th class="ascending">' . _('MTD') . '</th>
 							<th class="ascending">' . _('Trend') . '</th>
 							<th class="ascending">' . 'Forecast '. $NumDaysC . _(' days') . '</th>
 							<th class="ascending">' . $TitleTarget . '</th>
@@ -955,10 +974,12 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 				$trend = "Degrading ". locale_number_format($percent,0) . "%";
 			}
 			$forecast = locale_number_format(round($myrow['salesC'], -5),0);
+			$MTD = locale_number_format($myrow['salesMTD'], 0);
 			
 			printf('<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
+					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -978,6 +999,7 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 					$dailyD,
 					$dailyE,
 					$dailyF,
+					$MTD,
 					$trend,
 					$forecast,
 					$target
@@ -988,6 +1010,8 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 			$TotalDateD = $TotalDateD +($myrow['salesD']/$NumDaysD);
 			$TotalDateE = $TotalDateE +($myrow['salesE']/$NumDaysE);
 			$TotalDateF = $TotalDateF +($myrow['salesF']/$NumDaysF);
+			$TotalDateF = $TotalDateF +($myrow['salesF']/$NumDaysF);
+			$TotalDateMTD = $TotalDateMTD +$myrow['salesMTD'];
 			$TotalForecast = $TotalForecast + round($myrow['salesC'], -5);
 			$i++;
 		}
@@ -995,6 +1019,7 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 			printf('<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
+					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -1014,6 +1039,7 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 					locale_number_format($TotalDateD,0),
 					locale_number_format($TotalDateE,0),
 					locale_number_format($TotalDateF,0),
+					locale_number_format($TotalDateMTD,0),
 					"",
 					locale_number_format($TotalForecast,0),
 					""
