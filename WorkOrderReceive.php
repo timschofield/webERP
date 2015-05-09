@@ -22,10 +22,13 @@ if (isset($_GET['StockID'])) {
 }
 echo '<div>
 		<a href="'. $RootPath . '/SelectWorkOrder.php">' . _('Back to Work Orders'). '</a>
-		<br />
-		<a href="'. $RootPath . '/WorkOrderCosting.php?WO=' .  $SelectedWO . '">' . _('Back to Costing'). '</a>
-		<br />
-	</div>';
+		<br />';
+if(isset($SelectedWO)){
+
+	echo '<a href="'. $RootPath . '/WorkOrderCosting.php?WO=' .  $SelectedWO . '">' . _('Back to Costing'). '</a>
+		<br />';
+}
+echo '</div>';
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/group_add.png" title="' .
 	_('Search') . '" alt="" />' . ' ' . $Title . '</p>';
@@ -107,8 +110,12 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 				}
 			}
 		} else { //controlled but not serialised - just lot/batch control
-			for ($i=0;$i<15;$i++){
-				if (mb_strlen($_POST['BatchRef' . $i])>0){
+			for ($i=0;$i<$_POST['CountOfInputs'];$i++){
+				if(isset($_POST['Qty' . $i]) AND trim($_POST['Qty' . $i]) != '' AND !is_numeric($_POST['Qty' . $i])) {
+					$InputError = true;
+					prnMsg(_('The quantity entered is not numeric - a number is expected'),'error');
+				}
+				if (mb_strlen($_POST['BatchRef' . $i])>0 AND (is_numeric($_POST['Qty' . $i]) AND ABS($_POST['Qty' . $i])>0)){
 					$QuantityReceived += filter_number_format($_POST['Qty' .$i]);
 				}
 			}
@@ -452,7 +459,6 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 		$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The location stock record could not be updated because');
 		$DbgMsg =  _('The following SQL to update the location stock record was used');
 		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
-
 		$WOReceiptNo = GetNextTransNo(26,$db);
 		/*Insert stock movements - with unit cost */
 
@@ -576,7 +582,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 				/*  We need to add the StockSerialItem record and
 					The StockSerialMoves as well */
 				//need to test if the batch/lot exists first already
-					if (trim($_POST['BatchRef' .$i]) != ""){
+					if (trim($_POST['BatchRef' .$i]) != "" AND (is_numeric($_POST['Qty' . $i]) AND ABS($_POST['Qty' . $i]>0))){
 						$LastRef = trim($_POST['BatchRef' .$i]);
 						$SQL = "SELECT COUNT(*) FROM stockserialitems
 								WHERE stockid='" . $_POST['StockID'] . "'
@@ -597,7 +603,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 										WHERE stockid='" . $_POST['StockID'] . "'
 										AND loccode = '" . $_POST['IntoLocation'] . "'
 										AND serialno = '" . $_POST['BatchRef' .$i] . "'";
-						} else {
+						} else if($_POST['Qty' . $i]>0) {//only the positive quantity can be insert into database;
 							if(empty($_POST['ExpiryDate'])){
 								$SQL = "INSERT INTO stockserialitems (stockid,
 																loccode,
@@ -626,6 +632,10 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 												'" . $_POST['QualityText'] . "',
 												'" . FormatDateForSQL($_POST['ExpiryDate']) . "')";
 							}
+						} else {
+							prnMsg(_('The input quantity should not be negative since there are no this lot no existed'),'error');
+							include('includes/footer.inc');
+							exit;
 						}
 						$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be inserted because');
 						$DbgMsg =  _('The following SQL to insert the serial stock item records was used');
@@ -656,7 +666,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 
 							$BatchTotQtyResult = DB_query($SQL);
 							$BatchTotQtyRow = DB_fetch_row($BatchTotQtyResult);
-							if ($BatchTotQtyRow[0] >= $_POST['QtyReqd'.$i]){
+						/*	if ($BatchTotQtyRow[0] >= $_POST['QtyReqd'.$i]){
 								//need to delete the item from woserialnos
 								$SQL = "DELETE FROM	woserialnos
 										WHERE wo='" . $_POST['WO'] . "'
@@ -665,7 +675,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 								$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The predefined batch/lot/bundle record could not be deleted because');
 								$DbgMsg = _('The following SQL to delete the predefined work order batch/bundle/lot record was used');
 								$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
-							}
+						} */
 						}
 						if ($_SESSION['QualityLogSamples']==1) {
 							CreateQASample($_POST['StockID'],$_POST['BatchRef'.$i], '', 'Created from Work Order', 0 ,0,$db);
