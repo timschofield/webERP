@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.12.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-05-10 11:26-0600\n"
-"PO-Revision-Date: 2015-04-23 07:53-0600\n"
+"PO-Revision-Date: 2015-05-10 12:08-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -16931,7 +16931,7 @@ msgstr "Jurisdicción fiscal"
 
 #: Locations.php:414 Locations.php:699
 msgid "Allow Invoicing"
-msgstr ""
+msgstr "Permitir facturación"
 
 #: Locations.php:440
 #, php-format
@@ -17027,11 +17027,11 @@ msgstr ""
 
 #: Locations.php:665
 msgid "Allow internal requests?"
-msgstr ""
+msgstr "¿Permitir solicitudes internas?"
 
 #: Locations.php:680
 msgid "Use for Work Order Productions?"
-msgstr ""
+msgstr "¿Usar para producciones con órdenes de trabajo?"
 
 #: Locations.php:694
 msgid ""
@@ -17154,11 +17154,11 @@ msgstr "Usar Solicitudes MRP"
 
 #: MRP.php:592
 msgid "Use Reorder Level Demands"
-msgstr ""
+msgstr "Usar demandas de nivel de reorden"
 
 #: MRP.php:596
 msgid "Use EOQ"
-msgstr "Usar Cantidad de Requisición Económica"
+msgstr "Usar cantidad económica de pedido"
 
 #: MRP.php:600
 msgid "Use Pan Size"
@@ -17178,11 +17178,11 @@ msgstr "¿Usar Solicitudes MRP?"
 
 #: MRP.php:642
 msgid "Use Reorder Level Demands?"
-msgstr ""
+msgstr "¿Usar demandas de nivel de reorden?"
 
 #: MRP.php:646
 msgid "Use EOQ?"
-msgstr "Usar Cantidad de Requisición Económica?"
+msgstr "¿Usar cantidad económica de pedido?"
 
 #: MRP.php:650
 msgid "Use Pan Size?"
@@ -25204,7 +25204,7 @@ msgstr ""
 
 #: RelatedItemsUpdate.php:5
 msgid "Update Related Items"
-msgstr ""
+msgstr "Actualizar artículos relacionados"
 
 #: RelatedItemsUpdate.php:35
 msgid "Only valid parts can have related items entered against them"
@@ -29669,7 +29669,7 @@ msgstr ""
 
 #: ShopParameters.php:334
 msgid "Allow Payment Surcharges"
-msgstr ""
+msgstr "Permitir sobrecargos en pago"
 
 #: ShopParameters.php:344
 msgid "Add surcharges for different payment methods."
@@ -29703,7 +29703,7 @@ msgstr "Permitir pagos con transferencias bancarias."
 
 #: ShopParameters.php:398
 msgid "Allow bank transfers to be used for payments."
-msgstr ""
+msgstr "Permitir transferencias bancarias sean usadas para los pagos."
 
 #: ShopParameters.php:401
 msgid "Bank Transfer Surcharge"
@@ -29719,7 +29719,7 @@ msgstr ""
 
 #: ShopParameters.php:410
 msgid "Allow PayPal Payment"
-msgstr ""
+msgstr "Permitir Pago PayPal"
 
 #: ShopParameters.php:420
 msgid ""
@@ -36399,7 +36399,7 @@ msgstr "Nunca"
 
 #: SystemParameters.php:975 SystemParameters.php:977
 msgid "Allow SysAdmin Access Only"
-msgstr ""
+msgstr "Permitir solo acceso del SysAdmin"
 
 #: SystemParameters.php:981
 msgid ""
@@ -38506,7 +38506,7 @@ msgstr "Mostrar cuadro de indicadores al iniciar sesión"
 
 #: WWW_Users.php:732
 msgid "Allowed Department for Internal Requests"
-msgstr ""
+msgstr "Departamentos permitidos para solicitudes internas"
 
 #: WWW_Users.php:742 WWW_Users.php:744
 msgid "Any Internal Department"
@@ -50945,7 +50945,7 @@ msgstr "Número de página"
 
 #: reportwriter/languages/en_US/reports.php:277
 msgid "Uppercase"
-msgstr ""
+msgstr "Mayúsculas"
 
 #: reportwriter/languages/en_US/reports.php:278
 msgid "Lowercase"
@@ -51987,7 +51987,7 @@ msgstr ""
 
 #: ../webSHOP/Register.php:728
 msgid "Update Details"
-msgstr ""
+msgstr "Actualizar detalles"
 
 #: ../webSHOP/index.php:95
 msgid ""
@@ -52013,7 +52013,7 @@ msgstr ""
 
 #: ../webSHOP/includes/DisplayShoppingCart.php:25
 msgid "Update Quantity"
-msgstr ""
+msgstr "Actualizar cantidad"
 
 #: ../webSHOP/includes/DisplayShoppingCart.php:26
 msgid "Remove item"
