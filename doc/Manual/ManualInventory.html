@@ -517,14 +517,54 @@
     <p>A table of locations is maintained which contains a location code of 5 characters and the location description (up to 20 characters).</p>
     <p>Inventory locations are the factories or warehouses where inventory is stored. When a sales order is created the location from which the inventory is to be picked is specified. Also, when a work order is created it is created on a specific location - in this case a manufacturing facility. Every transaction involving inventory must specify the location.</p>
     <p>To create or modify inventory locations go to the Main Menu -> Setup -> Inventory Setup tab and select Inventory Location Maintenance</p>
-	<p><img src="images/InventoryLocations.jpg" alt="Inventory Locations" /></p>
+	<p><img src="images/InventoryLocations.png" alt="Inventory Locations" /></p>
     <p>The description is the field used in lookups on invoicing and crediting. To keep the database as compact as possible it is the code which is stored against stock movement transactions. As many locations as required can be set up. When a new location is defined, location records for all items in the database are created. When a location is deleted, so too are all the item location records. However, a location record cannot be deleted if there are stock movements or stock held for any part in the location.</p>
     <p>When creating a purchase order, the inventory location that it is required for is specified. The inventory location address and contact details defined here are used as the default addresses available for delivery of goods ordered on purchase orders.</p>
-    <p>Since the location represents the physical location from where goods/services are supplied it is important for determining the tax applicable on a sale. The governing tax authority must specified with the location record. It is used in the calculation of the applicable rate of tax in conjunction with the tax authority of the customer branch being delivered to and the tax level of the item being sold.</p>
-	<p>The counter sales functionality looks at the default inventory location for a user and when that user enters a counter sale it uses the customer account and customer branch defined against the inventory location record. Consider a business with locations in Melbourne Australia and one in Anahaim USA - it is unlikely that a user based in Anaheim would be making a counter sale in Melbourne! Each location can have a customer account (and branch) defined for it's counter sales. These customers are expected to be cash only customers as the counter sales functionality expects the cash to be taken at the time of the sale. Not a substitute for proper Point of Sale - but suitable for occassional Counter Sales.</p>
-    <p>Some inventory locations are never going to be used as manufacturing facilities and to reduce the scope for errors it is possible to specify those inventory locations which can be used for work orders.</p>
-    <p>Note: Location codes cannot be modified retrospectively. Neither can they be deleted if there are stock movements, users (default location) or customer branch records set up to receive stock from the location.</p>
 
+	<dl>
+	<!--dt><Location Code</dt>
+	<dd>.</dd>
+	<dt>Location Name</dt>
+	<dd>.</dd>
+	<dt>Contact for deliveries</dt>
+	<dd>.</dd>
+	<dt>Delivery Address 1 (Building)</dt>
+	<dd>.</dd>
+	<dt>Delivery Address 2 (Street):</dt>
+	<dd>.</dd>
+	<dt>Delivery Address 3 (Suburb):</dt>
+	<dd>.</dd>
+	<dt>Delivery Address 4 (City):</dt>
+	<dd>.</dd>
+	<dt>Delivery Address 5 (Zip Code):</dt>
+	<dd>.</dd>
+	<dt>Country</dt>
+	<dd>.</dd>
+	<dt>Telephone No:</dt>
+	<dd>.</dd>
+	<dt>Facsimile No:</dt>
+	<dd>.</dd>
+	<dt>Email:</dt>
+	<dd>.</dd-->
+	<dt>Tax Province:</dt>
+	<dd>Since the location represents the physical location from where goods/services are supplied it is important for determining the tax applicable on a sale. The governing tax authority must specified with the location record. It is used in the calculation of the applicable rate of tax in conjunction with the tax authority of the customer branch being delivered to and the tax level of the item being sold.</dd>
+	<dt><a id="DefaultCounterSalesCustomerCode">Default Counter Sales Customer Code</a></dt>
+		<dd>The counter sales functionality looks at the default inventory location for a user and when that user enters a counter sale it uses the customer account and customer branch defined against the inventory location record. Consider a business with locations in Melbourne Australia and one in Anahaim USA - it is unlikely that a user based in Anaheim would be making a counter sale in Melbourne! Each location can have a customer account (and branch) defined for it's counter sales. These customers are expected to be cash only customers as the counter sales functionality expects the cash to be taken at the time of the sale. Not a substitute for proper Point of Sale - but suitable for occassional Counter Sales.</dd>
+	<dt>Counter Sales Branch Code</dt>
+		<dd>See <a href="#DefaultCounterSalesCustomerCode">Default Counter Sales Customer Code</a>.</dd>
+	<!--dt>Allow internal requests?:</dt>
+	<dd>.</dd-->
+	<dt>Use for Work Order Productions?</dt>
+		<dd>Some inventory locations are never going to be used as manufacturing facilities and to reduce the scope for errors it is possible to specify those inventory locations which can be used for work orders.</dd>
+	<dt><a id="LocationAccountCode">Account Code</a></dt>
+		<dd>Sometimes it is needed to have general ledger transactions of inventory transfers to or from a location. For example, a location that is used for pledged inventory or a place with goods on consignment. In this case, the location should be related to a ledger account. To do this, enter the general ledger account code for this location in this field. This account code overwrites the account codes of <a href="#InventoryCategories">inventory categories</a> when a general ledger transaction related with this location is created. Each time you do an inventory transfer from or to a location with a non blank account code, the system will generate a general ledger transaction (a SysType 16 --Location Transfer-- transaction).<br />
+		If you do not need accounting entries for inventory transfers, nor locations with his own GL account, leave this field in blank.</dd>
+	<dt><a id="LocationAllowInvoicing">Allow Invoicing</a></dt>
+		<dd>This parameter is to allow or deny the invoicing of items in this location. For items on consignment, depending on the agreement, you can not sell or can sell them (if you notify the consignee). Also, for pledged items, depending on the agreement, you can not sell or can sell them (if you replace them with items with equal or greater value). For these cases, use this parameter to indicate whether these inventory locations allow or deny such transactions.<br />
+		This parameters hides locations from <a href="ManualContents.php?ViewTopic=AccountsReceivable#DrawStockFrom">Draw Stock From</a> in <em>Customer Branches</em> and in <a href="ManualContents.php?ViewTopic=SalesOrders#DeliveryDetails">Deliver from the warehouse at</a> in <em>Delivery Details</em>.<br />
+		For standard locations, leave this option in "<em>Yes</em>" (allow invoicing).</dd>
+	</dl>
+    <p>Note: Location codes cannot be modified retrospectively. Neither can they be deleted if there are stock movements, users (default location) or customer branch records set up to receive stock from the location.</p>
 
 <!-- Help End: Inventory Locations Maintenance -->
 

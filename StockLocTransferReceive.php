@@ -6,21 +6,22 @@ include('includes/DefineSerialItems.php');
 include('includes/DefineStockTransfers.php');
 
 include('includes/session.inc');
-$Title = _('Inventory Transfer') . ' - ' . _('Receiving');
-$BookMark = "LocationTransfers";
-$ViewTopic = "Inventory";
+$Title = _('Inventory Transfer') . ' - ' . _('Receiving');// Screen identification.
+$ViewTopic = 'Inventory';// Filename's id in ManualContents.php's TOC.
+$BookMark = 'LocationTransfers';// Anchor's id in the manual's html document.
 include('includes/header.inc');
+
 include('includes/SQL_CommonFunctions.inc');
 
-if (isset($_GET['NewTransfer'])){
+if(isset($_GET['NewTransfer'])) {
 	unset($_SESSION['Transfer']);
 }
-if ( isset($_SESSION['Transfer']) and $_SESSION['Transfer']->TrfID == ''){
+if(isset($_SESSION['Transfer']) and $_SESSION['Transfer']->TrfID == '') {
 	unset($_SESSION['Transfer']);
 }
 
 
-if(isset($_POST['ProcessTransfer'])){
+if(isset($_POST['ProcessTransfer'])) {
 /*Ok Time To Post transactions to Inventory Transfers, and Update Posted variable & received Qty's  to LocTransfers */
 
 	$PeriodNo = GetPeriod ($_SESSION['Transfer']->TranDate, $db);
@@ -30,24 +31,24 @@ if(isset($_POST['ProcessTransfer'])){
 	$i=0;
 	$TotalQuantity = 0;
 	foreach ($_SESSION['Transfer']->TransferItem AS $TrfLine) {
-		if (is_numeric(filter_number_format($_POST['Qty' . $i]))){
+		if(is_numeric(filter_number_format($_POST['Qty' . $i]))) {
 		/*Update the quantity received from the inputs */
 			$_SESSION['Transfer']->TransferItem[$i]->Quantity= round(filter_number_format($_POST['Qty' . $i]),$_SESSION['Transfer']->TransferItem[$i]->DecimalPlaces);
-  		} elseif ($_POST['Qty' . $i]=='') {
+  		} elseif($_POST['Qty' . $i]=='') {
 			$_SESSION['Transfer']->TransferItem[$i]->Quantity= 0;
-		} else { 
+		} else {
 			prnMsg(_('The quantity entered for'). ' ' . $TrfLine->StockID . ' '. _('is not numeric') . '. ' . _('All quantities must be numeric'),'error');
 			$InputError = True;
 		}
-		if (filter_number_format($_POST['Qty' . $i])<0){
+		if(filter_number_format($_POST['Qty' . $i])<0) {
 			prnMsg(_('The quantity entered for'). ' ' . $TrfLine->StockID . ' '. _('is negative') . '. ' . _('All quantities must be for positive numbers greater than zero'),'error');
 			$InputError = True;
 		}
-		if ($TrfLine->PrevRecvQty + $TrfLine->Quantity > $TrfLine->ShipQty){
+		if($TrfLine->PrevRecvQty + $TrfLine->Quantity > $TrfLine->ShipQty) {
 			prnMsg( _('The Quantity entered plus the Quantity Previously Received can not be greater than the Total Quantity shipped for').' '. $TrfLine->StockID , 'error');
 			$InputError = True;
 		}
-		if (isset($_POST['CancelBalance' . $i]) and $_POST['CancelBalance' . $i]==1){
+		if(isset($_POST['CancelBalance' . $i]) and $_POST['CancelBalance' . $i]==1) {
 			$_SESSION['Transfer']->TransferItem[$i]->CancelBalance=1;
 		} else {
 			 $_SESSION['Transfer']->TransferItem[$i]->CancelBalance=0;
@@ -55,16 +56,16 @@ if(isset($_POST['ProcessTransfer'])){
 		$TotalQuantity += $TrfLine->Quantity;
 		$i++;
 	} /*end loop to validate and update the SESSION['Transfer'] data */
-	if ($TotalQuantity < 0){
+	if($TotalQuantity < 0) {
 		prnMsg( _('All quantities entered are less than zero') . '. ' . _('Please correct that and try again'), 'error' );
 		$InputError = True;
 	}
 //exit;
-	if (!$InputError){
+	if(!$InputError) {
 	/*All inputs must be sensible so make the stock movement records and update the locations stocks */
 
 		foreach ($_SESSION['Transfer']->TransferItem AS $TrfLine) {
-			if ($TrfLine->Quantity >=0){
+			if($TrfLine->Quantity >=0) {
 				$Result = DB_Txn_Begin();
 
 				/* Need to get the current location quantity will need it later for the stock movement */
@@ -74,7 +75,7 @@ if(isset($_POST['ProcessTransfer'])){
 						AND loccode= '" . $_SESSION['Transfer']->StockLocationFrom . "'";
 
 				$Result = DB_query($SQL, _('Could not retrieve the stock quantity at the dispatch stock location prior to this transfer being processed') );
-				if (DB_num_rows($Result)==1){
+				if(DB_num_rows($Result)==1) {
 					$LocQtyRow = DB_fetch_row($Result);
 					$QtyOnHandPrior = $LocQtyRow[0];
 				} else {
@@ -115,8 +116,8 @@ if(isset($_POST['ProcessTransfer'])){
 
 		/*Insert the StockSerialMovements and update the StockSerialItems  for controlled items*/
 
-				if ($TrfLine->Controlled ==1){
-					foreach($TrfLine->SerialItems as $Item){
+				if($TrfLine->Controlled ==1) {
+					foreach($TrfLine->SerialItems as $Item) {
 					/*We need to add or update the StockSerialItem record and
 					The StockSerialMoves as well */
 
@@ -131,7 +132,7 @@ if(isset($_POST['ProcessTransfer'])){
 						$Result = DB_query($SQL,'<br />' . _('Could not determine if the serial item exists') );
 						$SerialItemExistsRow = DB_fetch_row($Result);
 
-						if ($SerialItemExistsRow[0]==1){
+						if($SerialItemExistsRow[0]==1) {
 
 							$SQL = "UPDATE stockserialitems SET
 								quantity= quantity - " . $Item->BundleQty . "
@@ -188,13 +189,56 @@ if(isset($_POST['ProcessTransfer'])){
 						AND loccode= '" . $_SESSION['Transfer']->StockLocationTo . "'";
 
 				$Result = DB_query($SQL,  _('Could not retrieve the quantity on hand at the location being transferred to') );
-				if (DB_num_rows($Result)==1){
+				if(DB_num_rows($Result)==1) {
 					$LocQtyRow = DB_fetch_row($Result);
 					$QtyOnHandPrior = $LocQtyRow[0];
 				} else {
 					// There must actually be some error this should never happen
 					$QtyOnHandPrior = 0;
 				}
+
+// COMMENT: "if($TrfLine->Quantity !=0) {}" should be as a general condition to avoid transactions in zero.
+
+// BEGIN: **********************************************************************
+				// Insert outgoing inventory GL transaction if any of the locations has a GL account code:
+				if(($_SESSION['Transfer']->StockLocationFromAccount !='' or $_SESSION['Transfer']->StockLocationToAccount !='') and $TrfLine->Quantity !=0) {
+					// Get the account code:
+					if($_SESSION['Transfer']->StockLocationFromAccount !='') {
+						$AccountCode = $_SESSION['Transfer']->StockLocationFromAccount;
+					} else {
+						$StockGLCode = GetStockGLCode($TrfLine->StockID, $db);// Get Category's account codes.
+						$AccountCode = $StockGLCode['stockact'];// Select account code for stock.
+					}
+					// Get the item cost:
+					$SQLstandardcost = "SELECT stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost AS standardcost
+										FROM stockmaster
+										WHERE stockmaster.stockid ='" . $TrfLine->StockID . "'";
+					$ErrMsg = _('The standard cost of the item cannot be retrieved because');
+					$DbgMsg = _('The SQL that failed was');
+					$myrow = DB_fetch_array(DB_query($SQLstandardcost,$ErrMsg,$DbgMsg));
+					$StandardCost = $myrow['standardcost'];// QUESTION: Standard cost for: Assembly (value="A") and Manufactured (value="M") items ?
+					// Insert record:
+					$SQL = "INSERT INTO gltrans (
+							periodno,
+							trandate,
+							type,
+							typeno,
+							account,
+							narrative,
+							amount)
+						VALUES ('" .
+							$PeriodNo . "','" .
+							$SQLTransferDate .
+							"',16,'" .
+							$_SESSION['Transfer']->TrfID . "','" .
+							$AccountCode . "','" .
+							$_SESSION['Transfer']->StockLocationFrom.' - '.$TrfLine->StockID.' x '.$TrfLine->Quantity.' @ '. $StandardCost . "','" .
+							-$TrfLine->Quantity * $StandardCost . "')";
+					$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The outgoing inventory GL transacction record could not be inserted because');
+					$DbgMsg =  _('The following SQL to insert records was used');
+					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+				}
+// END: ************************************************************************
 
 				// Insert the stock movement for the stock coming into the to location
 				$SQL = "INSERT INTO stockmoves (stockid,
@@ -228,12 +272,10 @@ if(isset($_POST['ProcessTransfer'])){
 				/*Get the ID of the StockMove... */
 				$StkMoveNo = DB_Last_Insert_ID($db,'stockmoves','stkmoveno');
 
-		/*Insert the StockSerialMovements and update the StockSerialItems  for controlled items*/
-
-				if ($TrfLine->Controlled ==1){
-					foreach($TrfLine->SerialItems as $Item){
-					/*We need to add or update the StockSerialItem record and
-					The StockSerialMoves as well */
+				/*Insert the StockSerialMovements and update the StockSerialItems  for controlled items*/
+				if($TrfLine->Controlled ==1) {
+					foreach($TrfLine->SerialItems as $Item) {
+					/*We need to add or update the StockSerialItem record and the StockSerialMoves as well */
 
 						/*First need to check if the serial items already exists or not in the location to */
 						$SQL = "SELECT COUNT(*)
@@ -247,7 +289,7 @@ if(isset($_POST['ProcessTransfer'])){
 						$SerialItemExistsRow = DB_fetch_row($Result);
 
 
-						if ($SerialItemExistsRow[0]==1){
+						if($SerialItemExistsRow[0]==1) {
 
 							$SQL = "UPDATE stockserialitems SET
 								quantity= quantity + '" . $Item->BundleQty . "'
@@ -312,9 +354,50 @@ if(isset($_POST['ProcessTransfer'])){
 				$DbgMsg =  _('The following SQL to update the stock record was used');
 				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 
+// BEGIN: **********************************************************************
+				// Insert incoming inventory GL transaction if any of the locations has a GL account code:
+				if(($_SESSION['Transfer']->StockLocationFromAccount !='' or $_SESSION['Transfer']->StockLocationToAccount !='') and $TrfLine->Quantity !=0) {
+					// Get the account code:
+					if($_SESSION['Transfer']->StockLocationToAccount !='') {
+						$AccountCode = $_SESSION['Transfer']->StockLocationToAccount;
+					} else {
+						$StockGLCode = GetStockGLCode($TrfLine->StockID, $db);// Get Category's account codes.
+						$AccountCode = $StockGLCode['stockact'];// Select account code for stock.
+					}
+					// Get the item cost:
+					$SQLstandardcost = "SELECT stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost AS standardcost
+										FROM stockmaster
+										WHERE stockmaster.stockid ='" . $TrfLine->StockID . "'";
+					$ErrMsg = _('The standard cost of the item cannot be retrieved because');
+					$DbgMsg = _('The SQL that failed was');
+					$myrow = DB_fetch_array(DB_query($SQLstandardcost,$ErrMsg,$DbgMsg));
+					$StandardCost = $myrow['standardcost'];// QUESTION: Standard cost for: Assembly (value="A") and Manufactured (value="M") items ?
+					// Insert record:
+					$SQL = "INSERT INTO gltrans (
+							periodno,
+							trandate,
+							type,
+							typeno,
+							account,
+							narrative,
+							amount)
+						VALUES ('" .
+							$PeriodNo . "','" .
+							$SQLTransferDate . "',
+							16,'" .
+							$_SESSION['Transfer']->TrfID . "','" .
+							$AccountCode . "','" .
+							$_SESSION['Transfer']->StockLocationTo.' - '.$TrfLine->StockID.' x '.$TrfLine->Quantity.' @ '. $StandardCost . "','" .
+							$TrfLine->Quantity * $StandardCost . "')";
+					$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The incoming inventory GL transacction record could not be inserted because');
+					$DbgMsg =  _('The following SQL to insert records was used');
+					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+				}
+// END: ************************************************************************
+
 				prnMsg(_('A stock transfer for item code'). ' - '  . $TrfLine->StockID . ' ' . $TrfLine->ItemDescription . ' '. _('has been created from').' ' . $_SESSION['Transfer']->StockLocationFromName . ' '. _('to'). ' ' . $_SESSION['Transfer']->StockLocationToName . ' ' . _('for a quantity of'). ' '. $TrfLine->Quantity,'success');
 
-				if ($TrfLine->CancelBalance==1){
+				if($TrfLine->CancelBalance==1) {
 					$sql = "UPDATE loctransfers SET recqty = recqty + '". round($TrfLine->Quantity, $TrfLine->DecimalPlaces) . "',
 						shipqty = recqty + '". round($TrfLine->Quantity, $TrfLine->DecimalPlaces) . "',
 								recdate = '".Date('Y-m-d H:i:s'). "'
@@ -323,22 +406,22 @@ if(isset($_POST['ProcessTransfer'])){
 				} else {
 					$sql = "UPDATE loctransfers SET recqty = recqty + '". round($TrfLine->Quantity, $TrfLine->DecimalPlaces) . "',
 								recdate = '".Date('Y-m-d H:i:s'). "'
-							WHERE reference = '". $_SESSION['Transfer']->TrfID . "'
-								AND stockid = '".  $TrfLine->StockID."'";
+						WHERE reference = '". $_SESSION['Transfer']->TrfID . "'
+						AND stockid = '".  $TrfLine->StockID."'";
 				}
 				$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('Unable to update the Location Transfer Record');
 				$Result = DB_query($sql, $ErrMsg, $DbgMsg, true);
 				unset ($_SESSION['Transfer']->LineItem[$i]);
 				unset ($_POST['Qty' . $i]);
 			} /*end if Quantity > 0 */
-			if ($TrfLine->CancelBalance==1){
+			if($TrfLine->CancelBalance==1) {
 				$sql = "UPDATE loctransfers SET shipqty = recqty
 						WHERE reference = '". $_SESSION['Transfer']->TrfID . "'
 						AND stockid = '".  $TrfLine->StockID."'";
 				$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('Unable to set the quantity received to the quantity shipped to cancel the balance on this transfer line');
 				$Result = DB_query($sql, $ErrMsg, $DbgMsg, true);
 				// send an email to the inventory manager about this cancellation (as can lead to employee fraud)
-				if ($_SESSION['InventoryManagerEmail']!=''){
+				if($_SESSION['InventoryManagerEmail']!='') {
 					$ConfirmationText = _('Cancelled balance of transfer'). ': ' . $_SESSION['Transfer']->TrfID .
 										"\r\n" . _('From Location') . ': ' . $_SESSION['Transfer']->StockLocationFrom .
 										"\r\n" . _('To Location') . ': ' . $_SESSION['Transfer']->StockLocationTo .
@@ -347,7 +430,7 @@ if(isset($_POST['ProcessTransfer'])){
 										"\r\n" . _('By user') . ': ' . $_SESSION['UserID'] .
 										"\r\n" . _('At') . ': ' . Date('Y-m-d H:i:s');
 					$EmailSubject = _('Cancelled balance of transfer'). ' ' . $_SESSION['Transfer']->TrfID;
-					if($_SESSION['SmtpSetting']==0){
+					if($_SESSION['SmtpSetting']==0) {
 						      mail($_SESSION['InventoryManagerEmail'],$EmailSubject,$ConfirmationText);
 					}else{
 						include('includes/htmlMimeMail.php');
@@ -370,7 +453,7 @@ if(isset($_POST['ProcessTransfer'])){
 
 } /*end of PRocess Transfer */
 
-if(isset($_GET['Trf_ID'])){
+if(isset($_GET['Trf_ID'])) {
 
 	unset($_SESSION['Transfer']);
 
@@ -384,7 +467,9 @@ if(isset($_GET['Trf_ID'])){
 				loctransfers.shipqty,
 				loctransfers.recqty,
 				locations.locationname as shiplocationname,
+				locations.glaccountcode as shipaccountcode,
 				reclocations.locationname as reclocationname,
+				reclocations.glaccountcode as recaccountcode,
 				loctransfers.shiploc,
 				loctransfers.recloc
 			FROM loctransfers INNER JOIN locations
@@ -401,7 +486,7 @@ if(isset($_GET['Trf_ID'])){
 	$DbgMsg = _('The SQL to retrieve the transfer was');
 	$result = DB_query($sql,$ErrMsg,$DbgMsg);
 
-	if(DB_num_rows($result) == 0){
+	if(DB_num_rows($result) == 0) {
 		echo '<h3>' . _('Transfer') . ' #' . $_GET['Trf_ID'] . ' '. _('Does Not Exist') . '</h3><br />';
 		include('includes/footer.inc');
 		exit;
@@ -412,8 +497,10 @@ if(isset($_GET['Trf_ID'])){
 	$_SESSION['Transfer']= new StockTransfer($_GET['Trf_ID'],
 											$myrow['shiploc'],
 											$myrow['shiplocationname'],
+											$myrow['shipaccountcode'],
 											$myrow['recloc'],
 											$myrow['reclocationname'],
+											$myrow['recaccountcode'],
 											Date($_SESSION['DefaultDateFormat']) );
 	/*Populate the StockTransfer TransferItem s array with the lines to be transferred */
 	$i = 0;
@@ -435,7 +522,7 @@ if(isset($_GET['Trf_ID'])){
 
 } /* $_GET['Trf_ID'] is set */
 
-if (isset($_SESSION['Transfer'])){
+if(isset($_SESSION['Transfer'])) {
 	//Begin Form for receiving shipment
 
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . _('Dispatch') .
@@ -467,7 +554,7 @@ if (isset($_SESSION['Transfer'])){
 	echo $tableheader;
 	$k=0;
 	foreach ($_SESSION['Transfer']->TransferItem AS $TrfLine) {
-		if ($k==1){
+		if($k==1) {
 			echo '<tr class="EvenTableRows">';
 			$k=0;
 		} else {
@@ -479,14 +566,14 @@ if (isset($_SESSION['Transfer'])){
 			<td>' . $TrfLine->ItemDescription . '</td>';
 
 		echo '<td class="number">' . locale_number_format($TrfLine->ShipQty, $TrfLine->DecimalPlaces) . '</td>';
-		if (isset($_POST['Qty' . $i]) AND is_numeric(filter_number_format($_POST['Qty' . $i]))){
+		if(isset($_POST['Qty' . $i]) AND is_numeric(filter_number_format($_POST['Qty' . $i]))) {
 
 			$_SESSION['Transfer']->TransferItem[$i]->Quantity= round(filter_number_format($_POST['Qty' . $i]),$TrfLine->DecimalPlaces);
 
 			$Qty = round(filter_number_format($_POST['Qty' . $i]),$TrfLine->DecimalPlaces);
 
-		} else if ($TrfLine->Controlled==1) {
-			if (sizeOf($TrfLine->SerialItems)==0) {
+		} else if($TrfLine->Controlled==1) {
+			if(sizeOf($TrfLine->SerialItems)==0) {
 				$Qty = 0;
 			} else {
 				$Qty = $TrfLine->Quantity;
@@ -496,7 +583,7 @@ if (isset($_SESSION['Transfer'])){
 		}
 		echo '<td class="number">' . locale_number_format($TrfLine->PrevRecvQty, $TrfLine->DecimalPlaces) . '</td>';
 
-		if ($TrfLine->Controlled==1){
+		if($TrfLine->Controlled==1) {
 			echo '<td class="number"><input type="hidden" name="Qty' . $i . '" value="' . locale_number_format($Qty,$TrfLine->DecimalPlaces) . '" /><a href="' . $RootPath .'/StockTransferControlled.php?TransferItem=' . $i . '" />' . $Qty . '</a></td>';
 		} else {
 			echo '<td><input type="text" class="number" name="Qty' . $i . '" maxlength="10" size="auto" value="' . locale_number_format($Qty,$TrfLine->DecimalPlaces) . '" /></td>';
@@ -507,8 +594,8 @@ if (isset($_SESSION['Transfer'])){
 		echo '<td><input type="checkbox" name="CancelBalance' . $i . '" value="1" /></td>';
 
 
-		if ($TrfLine->Controlled==1){
-			if ($TrfLine->Serialised==1){
+		if($TrfLine->Controlled==1) {
+			if($TrfLine->Serialised==1) {
 				echo '<td><a href="' . $RootPath .'/StockTransferControlled.php?TransferItem=' . $i . '">' . _('Enter Serial Numbers') . '</a></td>';
 			} else {
 				echo '<td><a href="' . $RootPath .'/StockTransferControlled.php?TransferItem=' . $i . '">' . _('Enter Batch Refs') . '</a></td>';
@@ -545,11 +632,11 @@ if (isset($_SESSION['Transfer'])){
 			<td>' .  _('Select Location Receiving Into'). ':</td>
 			<td>';
 	echo '<select name="RecLocation" onchange="ReloadForm(form1.RefreshTransferList)">';
-	if (!isset($_POST['RecLocation'])){
+	if(!isset($_POST['RecLocation'])) {
 		$_POST['RecLocation'] = $_SESSION['UserStockLocation'];
 	}
-	while ($myrow=DB_fetch_array($LocResult)){
-		if ($myrow['loccode'] == $_POST['RecLocation']){
+	while ($myrow=DB_fetch_array($LocResult)) {
+		if($myrow['loccode'] == $_POST['RecLocation']) {
 			echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		} else {
 			echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
@@ -570,7 +657,7 @@ if (isset($_SESSION['Transfer'])){
 			AND recqty < shipqty";
 
 	$TrfResult = DB_query($sql);
-	if (DB_num_rows($TrfResult)>0){
+	if(DB_num_rows($TrfResult)>0) {
 		$LocSql = "SELECT locationname FROM locations WHERE loccode='" . $_POST['RecLocation'] . "'";
 		$LocResult = DB_query($LocSql);
 		$LocRow = DB_fetch_array($LocResult);
@@ -581,9 +668,9 @@ if (isset($_SESSION['Transfer'])){
 			<th>' .  _('Transfer From'). '</th>
 			<th>' .  _('Dispatch Date'). '</th></tr>';
 		$k=0;
-		while ($myrow=DB_fetch_array($TrfResult)){
+		while ($myrow=DB_fetch_array($TrfResult)) {
 
-			if ($k==1){
+			if($k==1) {
 				echo '<tr class="EvenTableRows">';
 				$k=0;
 			} else {
@@ -597,7 +684,7 @@ if (isset($_SESSION['Transfer'])){
 					</tr>';
 		}
 		echo '</table>';
-	} else if (!isset($_POST['ProcessTransfer'])) {
+	} else if(!isset($_POST['ProcessTransfer'])) {
 		prnMsg(_('There are no incoming transfers to this location'), 'info');
 	}
 	echo '</div>

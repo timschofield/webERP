@@ -1,6 +1,6 @@
 <?php
 /* $Id: Z_ChangeGLAccountCode.php 6946 2014-10-27 07:30:11Z daintree $*/
-/* This script is an utility to change a GL account code in all webERP. */
+/* Utility to change a GL account code in all webERP. */
 
 include ('includes/session.inc');
 $Title = _('UTILITY PAGE Change A GL Account Code');// Screen identificator.
@@ -8,7 +8,7 @@ $ViewTopic = 'SpecialUtilities'; // Filename's id in ManualContents.php's TOC.
 $BookMark = 'Z_ChangeGLAccountCode'; // Anchor's id in the manual's html document.
 include('includes/header.inc');
 echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
-	'/images/gl.png" title="' . 
+	'/images/gl.png" title="' .
 	_('Change A GL Account Code') . '" /> ' .// Icon title.
 	_('Change A GL Account Code') . '</p>';// Page title.
 
@@ -96,6 +96,10 @@ if (isset($_POST['ProcessGLAccountCode'])){
 		ChangeFieldInTable("lastcostrollup", "stockact", $_POST['OldAccountCode'], $_POST['NewAccountCode'], $db);
 		ChangeFieldInTable("lastcostrollup", "adjglact", $_POST['OldAccountCode'], $_POST['NewAccountCode'], $db);
 
+// BEGIN: **********************************************************************
+		ChangeFieldInTable("locations", "glaccountcode", $_POST['OldAccountCode'], $_POST['NewAccountCode'], $db);// Location's ledger account.
+// END: ************************************************************************
+
 		ChangeFieldInTable("pcexpenses", "glaccount", $_POST['OldAccountCode'], $_POST['NewAccountCode'], $db);
 
 		ChangeFieldInTable("pctabs", "glaccountassignment", $_POST['OldAccountCode'], $_POST['NewAccountCode'], $db);
@@ -156,6 +160,4 @@ echo '<br />
 	</form>';
 
 include('includes/footer.inc');
-
-
 ?>

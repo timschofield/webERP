@@ -113,7 +113,7 @@ if(isset($_POST['Update'])
 
 	 elseif(Date1GreaterThanDate2(Date($_SESSION['DefaultDateFormat'],$EarliestDispatch), $_POST['DeliveryDate'])) {
 		$InputErrors =1;
-		echo '<br /><b>' . _('The delivery details cannot be updated because you are attempting to set the date the order is to be dispatched earlier than is possible. No dispatches are made on Saturday and Sunday. Also, the dispatch cut off time is') .  $_SESSION['DispatchCutOffTime']  . _(':00 hrs. Orders placed after this time will be dispatched the following working day.');
+		echo '<br /><b>' . _('The delivery details cannot be updated because you are attempting to set the date the order is to be dispatched earlier than is possible. No dispatches are made on Saturday and Sunday. Also, the dispatch cut off time is') . $_SESSION['DispatchCutOffTime'] . _(':00 hrs. Orders placed after this time will be dispatched the following working day.');
 	}
 
 	*/
@@ -236,7 +236,7 @@ if(isset($_POST['Update'])
 		- if shippers defined but the default shipper is bogus then use the first shipper defined
 		*/
 		if((isset($BestShipper) AND $BestShipper=='') AND ($_POST['ShipVia']=='' OR !isset($_POST['ShipVia']))) {
-			$sql =  "SELECT shipper_id
+			$sql = "SELECT shipper_id
 						FROM shippers
 						WHERE shipper_id='" . $_SESSION['Default_Shipper']."'";
 			$ErrMsg = _('There was a problem testing for the default shipper');
@@ -258,7 +258,7 @@ if(isset($_POST['Update'])
 					$BestShipper = $ShipperReturned[0];
 				} else {
 					prnMsg(_('We have a problem') . ' - ' . _('there are no shippers defined'). '. ' . _('Please use the link below to set up shipping or freight companies') . ', ' . _('the system expects the shipping company to be selected or a default freight company to be used'),'error');
-					echo '<a href="' . $RootPath . 'Shippers.php">' .  _('Enter') . '/' . _('Amend Freight Companies')  . '</a>';
+					echo '<a href="' . $RootPath . 'Shippers.php">' . _('Enter') . '/' . _('Amend Freight Companies') . '</a>';
 				}
 			}
 			if(isset($_SESSION['Items'.$identifier]->ShipVia) AND $_SESSION['Items'.$identifier]->ShipVia!='') {
@@ -272,8 +272,8 @@ if(isset($_POST['Update'])
 
 if(isset($_POST['MakeRecurringOrder']) AND ! $InputErrors) {
 
-	echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/RecurringSalesOrders.php?identifier='.$identifier   .  '&amp;NewRecurringOrder=Yes">';
-	prnMsg(_('You should automatically be forwarded to the entry of recurring order details page') . '. ' . _('If this does not happen') . '(' . _('if the browser does not support META Refresh') . ') ' . '<a href="' . $RootPath . '/RecurringOrders.php?identifier='.$identifier  . '&amp;NewRecurringOrder=Yes">' .  _('click here')  . '</a> '. _('to continue'),'info');
+	echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/RecurringSalesOrders.php?identifier='.$identifier  . '&amp;NewRecurringOrder=Yes">';
+	prnMsg(_('You should automatically be forwarded to the entry of recurring order details page') . '. ' . _('If this does not happen') . '(' . _('if the browser does not support META Refresh') . ') ' . '<a href="' . $RootPath . '/RecurringOrders.php?identifier='.$identifier . '&amp;NewRecurringOrder=Yes">' . _('click here') . '</a> '. _('to continue'),'info');
 	include('includes/footer.inc');
 	exit;
 }
@@ -281,8 +281,8 @@ if(isset($_POST['MakeRecurringOrder']) AND ! $InputErrors) {
 
 if(isset($_POST['BackToLineDetails']) and $_POST['BackToLineDetails']==_('Modify Order Lines')) {
 
-	echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/SelectOrderItems.php?identifier='.$identifier   . '">';
-	prnMsg(_('You should automatically be forwarded to the entry of the order line details page') . '. ' . _('If this does not happen') . '(' . _('if the browser does not support META Refresh') . ') '  . '<a href="' . $RootPath . '/SelectOrderItems.php?identifier='.$identifier  . '">' .  _('click here')  . '</a> '. _('to continue'),'info');
+	echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/SelectOrderItems.php?identifier='.$identifier  . '">';
+	prnMsg(_('You should automatically be forwarded to the entry of the order line details page') . '. ' . _('If this does not happen') . '(' . _('if the browser does not support META Refresh') . ') ' . '<a href="' . $RootPath . '/SelectOrderItems.php?identifier='.$identifier . '">' . _('click here') . '</a> '. _('to continue'),'info');
 	include('includes/footer.inc');
 	exit;
 
@@ -318,7 +318,7 @@ if(isset($_POST['ProcessOrder'])) {
 
 UNTIL ONLINE CREDIT CARD PROCESSING IS PERFORMED ASSUME OK TO PROCESS
 
-		NOT YET CODED     */
+		NOT YET CODED   */
 
 			$OK_to_PROCESS =1;
 
@@ -540,7 +540,7 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 
 				$FactoryManagerEmail = _('A new work order has been created for') .
 									":\n" . $StockItem->StockID . ' - ' . $StockItem->ItemDescription . ' x ' . $WOQuantity . ' ' . $StockItem->Units .
-									"\n" . _('These are for') . ' ' . $_SESSION['Items'.$identifier]->CustomerName . ' ' . _('there order ref') . ': '  . $_SESSION['Items'.$identifier]->CustRef . ' ' ._('our order number') . ': ' . $OrderNo;
+									"\n" . _('These are for') . ' ' . $_SESSION['Items'.$identifier]->CustomerName . ' ' . _('there order ref') . ': ' . $_SESSION['Items'.$identifier]->CustRef . ' ' ._('our order number') . ': ' . $OrderNo;
 
 				if($StockItem->Serialised AND $StockItem->NextSerialNo>0) {
 						//then we must create the serial numbers for the new WO also
@@ -603,16 +603,16 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 			echo '<br /><table class="selection">
 					<tr>
 						<td><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print') . '" alt="" /></td>
-						<td>' . ' ' . '<a target="_blank" href="' . $RootPath . '/PrintCustOrder.php?identifier='.$identifier . '&amp;TransNo=' . $OrderNo . '">' .  _('Print packing slip') . ' (' . _('Preprinted stationery') . ')'  . '</a></td>
+						<td>' . ' ' . '<a target="_blank" href="' . $RootPath . '/PrintCustOrder.php?identifier='.$identifier . '&amp;TransNo=' . $OrderNo . '">' . _('Print packing slip') . ' (' . _('Preprinted stationery') . ')' . '</a></td>
 					</tr>';
 			echo '<tr>
 					<td><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print') . '" alt="" /></td>
-					<td>' . ' ' . '<a  target="_blank" href="' . $RootPath . '/PrintCustOrder_generic.php?identifier='.$identifier . '&amp;TransNo=' . $OrderNo . '">' .  _('Print packing slip') . ' (' . _('Laser') . ')'  . '</a></td>
+					<td>' . ' ' . '<a target="_blank" href="' . $RootPath . '/PrintCustOrder_generic.php?identifier='.$identifier . '&amp;TransNo=' . $OrderNo . '">' . _('Print packing slip') . ' (' . _('Laser') . ')' . '</a></td>
 				</tr>';
 
 			echo '<tr>
 					<td><img src="'.$RootPath.'/css/'.$Theme.'/images/reports.png" title="' . _('Invoice') . '" alt="" /></td>
-					<td>' . ' ' . '<a href="' . $RootPath . '/ConfirmDispatch_Invoice.php?identifier='.$identifier . '&amp;OrderNumber=' . $OrderNo .'">' .  _('Confirm Dispatch and Produce Invoice')  . '</a></td>
+					<td>' . ' ' . '<a href="' . $RootPath . '/ConfirmDispatch_Invoice.php?identifier='.$identifier . '&amp;OrderNumber=' . $OrderNo .'">' . _('Confirm Dispatch and Produce Invoice') . '</a></td>
 				</tr>';
 
 			echo '</table>';
@@ -622,7 +622,7 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 			echo '<br /><table class="selection">
 					<tr>
 						<td><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Order') . '" alt=""></td>
-						<td>' . ' ' . '<a href="' . $RootPath . '/PDFQuotation.php?identifier='.$identifier . '&amp;QuotationNo=' . $OrderNo . '" target="_blank">' .  _('Print Quotation (Landscape)')  . '</a></td>
+						<td>' . ' ' . '<a href="' . $RootPath . '/PDFQuotation.php?identifier='.$identifier . '&amp;QuotationNo=' . $OrderNo . '" target="_blank">' . _('Print Quotation (Landscape)') . '</a></td>
 					</tr>
 					</table>';
 			echo '<br /><table class="selection">
@@ -1007,29 +1007,30 @@ echo '<br />
 	</tr>';
 
 echo '<tr>
-	<td>' .  _('Deliver from the warehouse at') .':</td>
+	<td>', _('Deliver from the warehouse at'), ':</td>
 	<td><select name="Location">';
 
 if($_SESSION['Items'.$identifier]->Location=='' OR !isset($_SESSION['Items'.$identifier]->Location)) {
 	$_SESSION['Items'.$identifier]->Location = $DefaultStockLocation;
 }
 
+// BEGIN: **********************************************************************
+$SQL = "SELECT locations.loccode, locationname
+	FROM locations
+	INNER JOIN locationusers
+	ON locationusers.loccode=locations.loccode
+		AND locationusers.userid='" . $_SESSION['UserID'] . "'
+		AND locationusers.canupd=1
+	WHERE locations.allowinvoicing='1'";
 $ErrMsg = _('The stock locations could not be retrieved');
 $DbgMsg = _('SQL used to retrieve the stock locations was') . ':';
-$StkLocsResult = DB_query("SELECT locationname,locations.loccode
-							FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1",
-						$ErrMsg,
-						$DbgMsg);
-
-while ($myrow=DB_fetch_array($StkLocsResult)) {
-	if($_SESSION['Items'.$identifier]->Location==$myrow['loccode']) {
-		echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
-	} else {
-		echo '<option value="'.$myrow['loccode'].'">' . $myrow['locationname'] . '</option>';
-	}
+$StkLocsResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+// COMMENT: What if there is no authorized locations available for this user?
+while($myrow=DB_fetch_array($StkLocsResult)) {
+	echo '<option', ($_SESSION['Items'.$identifier]->Location==$myrow['loccode'] ? ' selected="selected"' : ''), ' value="', $myrow['loccode'], '">', $myrow['locationname'], '</option>';
 }
-
 echo '</select></td></tr>';
+// END: ************************************************************************
 
 // Set the default date to earliest possible date if not set already
 if(!isset($_SESSION['Items'.$identifier]->DeliveryDate)) {

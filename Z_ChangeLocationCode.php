@@ -8,7 +8,7 @@ $ViewTopic = 'SpecialUtilities'; // Filename's id in ManualContents.php's TOC.
 $BookMark = 'Z_ChangeLocationCode'; // Anchor's id in the manual's html document.
 include('includes/header.inc');
 echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
-	'/images/maintenance.png" title="' . 
+	'/images/maintenance.png" title="' .
 	_('Change A Location Code') . '" /> ' .// Icon title.
 	_('Change A Location Code') . '</p>';// Page title.
 
@@ -74,7 +74,12 @@ if (isset($_POST['ProcessLocationChange'])){
 										taxprovinceid,
 										managed,
 										cashsalecustomer,
-										cashsalebranch)
+										cashsalebranch,
+										internalrequest,
+										usedforwo,
+										glaccountcode,
+										allowinvoicing
+										)
 				SELECT '" . $_POST['NewLocationID'] . "',
 					    '" . $_POST['NewLocationName'] . "',
 						deladd1,
@@ -90,7 +95,11 @@ if (isset($_POST['ProcessLocationChange'])){
 						taxprovinceid,
 						managed,
 						cashsalecustomer,
-						cashsalebranch
+						cashsalebranch,
+						internalrequest,
+						usedforwo,
+						glaccountcode,
+						allowinvoicing
 				FROM locations
 				WHERE loccode='" . $_POST['OldLocationID'] . "'";
 

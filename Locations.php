@@ -77,7 +77,9 @@ if(isset($_POST['submit'])) {
 									cashsalebranch ='" . $_POST['CashSaleBranch'] . "',
 									managed = '" . $_POST['Managed'] . "',
 									internalrequest = '" . $_POST['InternalRequest'] . "',
-									usedforwo = '" . $_POST['UsedForWO'] . "'
+									usedforwo = '" . $_POST['UsedForWO'] . "',
+									glaccountcode = '" . $_POST['GLAccountCode'] . "',
+									allowinvoicing = '" . $_POST['AllowInvoicing'] . "'
 						WHERE loccode = '" . $SelectedLocation . "'";
 
 		$ErrMsg = _('An error occurred updating the') . ' ' . $SelectedLocation . ' ' . _('location record because');
@@ -105,6 +107,8 @@ if(isset($_POST['submit'])) {
 		unset($_POST['Contact']);
 		unset($_POST['InternalRequest']);
 		unset($_POST['UsedForWO']);
+		unset($_POST['GLAccountCode']);
+		unset($_POST['AllowInvoicing']);
 
 
 	} elseif($InputError !=1) {
@@ -135,7 +139,9 @@ if(isset($_POST['submit'])) {
 										cashsalebranch,
 										managed,
 										internalrequest,
-										usedforwo)
+										usedforwo,
+										glaccountcode,
+										allowinvoicing)
 						VALUES ('" . $_POST['LocCode'] . "',
 								'" . $_POST['LocationName'] . "',
 								'" . $_POST['DelAdd1'] ."',
@@ -150,13 +156,15 @@ if(isset($_POST['submit'])) {
 								'" . $_POST['Contact'] . "',
 								'" . $_POST['TaxProvince'] . "',
 								'" . $_POST['CashSaleCustomer'] . "',
-				        		'" . $_POST['CashSaleBranch'] . "',
+								'" . $_POST['CashSaleBranch'] . "',
 								'" . $_POST['Managed'] . "',
-								'" . $_POST['InternalRequest'] ."',
-								'" . $_POST['UsedForWO'] . "')";
+								'" . $_POST['InternalRequest'] . "',
+								'" . $_POST['UsedForWO'] . "',
+								'" . $_POST['GLAccountCode'] . "',
+								'" . $_POST['AllowInvoicing'] . "')";
 
-		$ErrMsg =  _('An error occurred inserting the new location record because');
-		$DbgMsg =  _('The SQL used to insert the location record was');
+		$ErrMsg = _('An error occurred inserting the new location record because');
+		$DbgMsg = _('The SQL used to insert the location record was');
 		$result = DB_query($sql,$ErrMsg,$DbgMsg);
 
 		prnMsg(_('The new location record has been added'),'success');
@@ -174,10 +182,10 @@ if(isset($_POST['submit'])) {
 				0
 			FROM stockmaster";
 
-		$ErrMsg =  _('An error occurred inserting the new location stock records for all pre-existing parts because');
-		$DbgMsg =  _('The SQL used to insert the new stock location records was');
+		$ErrMsg = _('An error occurred inserting the new location stock records for all pre-existing parts because');
+		$DbgMsg = _('The SQL used to insert the new stock location records was');
 		$result = DB_query($sql,$ErrMsg, $DbgMsg);
-		prnMsg ('........ ' . _('and new stock locations inserted for all existing stock items for the new location'), 'success');
+		prnMsg('........ ' . _('and new stock locations inserted for all existing stock items for the new location'), 'success');
 
 	/* Also need to add locationuser records for all existing users*/
 		$sql = "INSERT INTO locationusers (userid, loccode, canview, canupd)
@@ -190,7 +198,7 @@ if(isset($_POST['submit'])) {
 				ON www_users.userid = locationusers.userid
 				AND locations.loccode = locationusers.loccode
 				WHERE locationusers.userid IS NULL
-				AND  locations.loccode='". $_POST['LocCode'] . "';";
+				AND locations.loccode='". $_POST['LocCode'] . "';";
 
 		$ErrMsg = _('The users/locations that need user location records created cannot be retrieved because');
 		$Result = DB_query($sql,$ErrMsg);
@@ -215,7 +223,8 @@ if(isset($_POST['submit'])) {
 		unset($_POST['Contact']);
 		unset($_POST['InternalRequest']);
 		unset($_POST['UsedForWO']);
-
+		unset($_POST['GLAccountCode']);
+		unset($_POST['AllowInvoicing']);
 	}
 
 
@@ -267,7 +276,7 @@ if(isset($_POST['submit'])) {
 	if($myrow[0]>0) {
 		$CancelDelete = 1;
 		prnMsg(_('Cannot delete this location because sales orders have been created delivering from this location'),'warn');
-		echo  _('There are') . ' ' . $myrow[0] . ' ' . _('sales orders with this Location code');
+		echo _('There are') . ' ' . $myrow[0] . ' ' . _('sales orders with this Location code');
 	} else {
 		$sql= "SELECT COUNT(*) FROM stockmoves WHERE stockmoves.loccode='" . $SelectedLocation . "'";
 		$result = DB_query($sql);
@@ -385,20 +394,24 @@ or deletion of the records*/
 	$sql = "SELECT loccode,
 				locationname,
 				taxprovinces.taxprovincename as description,
+				glaccountcode,
+				allowinvoicing,
 				managed
 			FROM locations INNER JOIN taxprovinces
 			ON locations.taxprovinceid=taxprovinces.taxprovinceid";
 	$result = DB_query($sql);
 
 	if(DB_num_rows($result)==0) {
-		prnMsg (_('There are no locations that match up with a tax province record to display. Check that tax provinces are set up for all dispatch locations'),'error');
+		prnMsg(_('There are no locations that match up with a tax province record to display. Check that tax provinces are set up for all dispatch locations'),'error');
 	}
 
-	echo '<table class="selection">';
-	echo '<tr>
-			<th class="ascending">' . _('Location Code') . '</th>
-			<th class="ascending">' . _('Location Name') . '</th>
-			<th class="ascending">' . _('Tax Province') . '</th>
+	echo '<table class="selection">
+		<tr>
+			<th class="ascending">', _('Location Code'), '</th>
+			<th class="ascending">', _('Location Name'), '</th>
+			<th class="ascending">', _('Tax Province'), '</th>
+			<th class="ascending">', _('GL Account Code'), '</th>
+			<th class="ascending">', _('Allow Invoicing'), '</th>
 			<th class="noprint" colspan="2">&nbsp;</th>
 		</tr>';
 
@@ -414,22 +427,25 @@ while ($myrow = DB_fetch_array($result)) {
 /* warehouse management not implemented ... yet
 	if($myrow['managed'] == 1) {
 		$myrow['managed'] = _('Yes');
-	}  else {
+	} else {
 		$myrow['managed'] = _('No');
 	}
 */
 	printf('<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
+			<td class="number">%s</td>
+			<td class="centre">%s</td>
 			<td class="noprint"><a href="%sSelectedLocation=%s">' . _('Edit') . '</a></td>
 			<td class="noprint"><a href="%sSelectedLocation=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this inventory location?') . '\');">' . _('Delete') . '</a></td>
 			</tr>',
 			$myrow['loccode'],
 			$myrow['locationname'],
 			$myrow['description'],
+			($myrow['glaccountcode']!='' ? $myrow['glaccountcode'] : '&nbsp;'),// Use a non-breaking space to avoid an empty cell in a HTML table.
+			($myrow['allowinvoicing']==1 ? _('Yes') : _('No')),
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $myrow['loccode'],
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $myrow['loccode']);
-
 	}
 	//END WHILE LIST LOOP
 	echo '</table>';
@@ -446,7 +462,7 @@ echo '<br />';
 if(!isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
+	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if(isset($SelectedLocation)) {
@@ -469,7 +485,9 @@ if(!isset($_GET['delete'])) {
 					cashsalebranch,
 					managed,
 					internalrequest,
-					usedforwo
+					usedforwo,
+					glaccountcode,
+					allowinvoicing
 				FROM locations
 				WHERE loccode='" . $SelectedLocation . "'";
 
@@ -477,7 +495,7 @@ if(!isset($_GET['delete'])) {
 		$myrow = DB_fetch_array($result);
 
 		$_POST['LocCode'] = $myrow['loccode'];
-		$_POST['LocationName']  = $myrow['locationname'];
+		$_POST['LocationName'] = $myrow['locationname'];
 		$_POST['DelAdd1'] = $myrow['deladd1'];
 		$_POST['DelAdd2'] = $myrow['deladd2'];
 		$_POST['DelAdd3'] = $myrow['deladd3'];
@@ -494,7 +512,8 @@ if(!isset($_GET['delete'])) {
 		$_POST['Managed'] = $myrow['managed'];
 		$_POST['InternalRequest'] = $myrow['internalrequest'];
 		$_POST['UsedForWO'] = $myrow['usedforwo'];
-
+		$_POST['GLAccountCode'] = $myrow['glaccountcode'];
+		$_POST['AllowInvoicing'] = $myrow['allowinvoicing'];
 
 		echo '<input type="hidden" name="SelectedLocation" value="' . $SelectedLocation . '" />';
 		echo '<input type="hidden" name="LocCode" value="' . $_POST['LocCode'] . '" />';
@@ -561,9 +580,12 @@ if(!isset($_GET['delete'])) {
 	if(!isset($_POST['Managed'])) {
 		$_POST['Managed'] = 0;
 	}
+	if(!isset($_POST['AllowInvoicing'])) {
+		$_POST['AllowInvoicing'] = 1;// If not set, set value to "Yes".
+	}
 
 	echo '<tr>
-			<td>' .  _('Location Name') . ':' . '</td>
+			<td>' . _('Location Name') . ':' . '</td>
 			<td><input type="text" name="LocationName" required="required" value="'. $_POST['LocationName'] . '" title="' . _('Enter the inventory location name this could be either a warehouse or a factory') . '" namesize="51" maxlength="50" /></td>
 		</tr>
 		<tr>
@@ -571,23 +593,23 @@ if(!isset($_GET['delete'])) {
 			<td><input type="text" name="Contact" required="required" value="' . $_POST['Contact'] . '" title="' . _('Enter the name of the responsible person to contact for this inventory location') . '" size="31" maxlength="30" /></td>
 		</tr>
 		<tr>
-			<td>' .  _('Delivery Address 1 (Building)') . ':' . '</td>
+			<td>' . _('Delivery Address 1 (Building)') . ':' . '</td>
 			<td><input type="text" name="DelAdd1" value="' . $_POST['DelAdd1'] . '" size="41" maxlength="40" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Delivery Address 2 (Street)') . ':' . '</td>
-			<td><input type="text" name="DelAdd2" value="' .  $_POST['DelAdd2'] . '" size="41" maxlength="40" /></td>
+			<td><input type="text" name="DelAdd2" value="' . $_POST['DelAdd2'] . '" size="41" maxlength="40" /></td>
 		</tr>
 		<tr>
-			<td>' .  _('Delivery Address 3 (Suburb)') . ':' . '</td>
-			<td><input type="text" name="DelAdd3" value="' .  $_POST['DelAdd3'] . '" size="41" maxlength="40" /></td>
+			<td>' . _('Delivery Address 3 (Suburb)') . ':' . '</td>
+			<td><input type="text" name="DelAdd3" value="' . $_POST['DelAdd3'] . '" size="41" maxlength="40" /></td>
 		</tr>
 		<tr>
-			<td>' .  _('Delivery Address 4 (City)') . ':' . '</td>
+			<td>' . _('Delivery Address 4 (City)') . ':' . '</td>
 			<td><input type="text" name="DelAdd4" value="' . $_POST['DelAdd4'] . '" size="41" maxlength="40" /></td>
 		</tr>
 		<tr>
-			<td>' .  _('Delivery Address 5 (Zip Code)') . ':' . '</td>
+			<td>' . _('Delivery Address 5 (Zip Code)') . ':' . '</td>
 			<td><input type="text" name="DelAdd5" value="' . $_POST['DelAdd5'] . '" size="21" maxlength="20" /></td>
 		</tr>
 		<tr>
@@ -595,29 +617,29 @@ if(!isset($_GET['delete'])) {
 			<td><select name="DelAdd6">';
 		foreach ($CountriesArray as $CountryEntry => $CountryName) {
 			if(isset($_POST['DelAdd6']) AND (strtoupper($_POST['DelAdd6']) == strtoupper($CountryName))) {
-				echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName  . '</option>';
-			}elseif(!isset($_POST['Address6']) AND $CountryName == "") {
-				echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName  . '</option>';
+				echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName . '</option>';
+			} elseif(!isset($_POST['Address6']) AND $CountryName == "") {
+				echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName . '</option>';
 			} else {
-				echo '<option value="' . $CountryName . '">' . $CountryName  . '</option>';
+				echo '<option value="' . $CountryName . '">' . $CountryName . '</option>';
 			}
 		}
 		echo '</select></td>
 		</tr>
 		<tr>
-			<td>' .  _('Telephone No') . ':' . '</td>
-			<td><input type="tel" name="Tel" pattern="[0-9+\-\s()]*" value="' . $_POST['Tel'] . '" size="31" maxlength="30" title="' . _('The phone number should consist of numbers, spaces, parentheses, or the + character') . '" /></td>
+			<td>' . _('Telephone No') . ':' . '</td>
+			<td><input name="Tel" type="tel" pattern="[0-9+\-\s()]*" value="' . $_POST['Tel'] . '" size="31" maxlength="30" title="' . _('The phone number should consist of numbers, spaces, parentheses, or the + character') . '" /></td>
 		</tr>
 		<tr>
-			<td>' .  _('Facsimile No') . ':' . '</td>
-			<td><input type="tel" name="Fax" pattern="[0-9+\-\s()]*" value="' . $_POST['Fax'] . '" size="31" maxlength="30" title="' . _('The fax number should consist of numbers, parentheses, spaces or the + character') . '"/></td>
+			<td>' . _('Facsimile No') . ':' . '</td>
+			<td><input name="Fax" type="tel" pattern="[0-9+\-\s()]*" value="' . $_POST['Fax'] . '" size="31" maxlength="30" title="' . _('The fax number should consist of numbers, parentheses, spaces or the + character') . '"/></td>
 		</tr>
 		<tr>
-			<td>' .  _('Email') . ':' . '</td>
-			<td><input type="email" name="Email" value="' . $_POST['Email'] . '" size="31" maxlength="55" /></td>
+			<td>' . _('Email') . ':' . '</td>
+			<td><input name="Email" type="email" value="' . $_POST['Email'] . '" size="31" maxlength="55" /></td>
 		</tr>
 		<tr>
-			<td>' .  _('Tax Province') . ':' . '</td>
+			<td>' . _('Tax Province') . ':' . '</td>
 			<td><select name="TaxProvince">';
 
 	$TaxProvinceResult = DB_query("SELECT taxprovinceid, taxprovincename FROM taxprovinces");
@@ -668,6 +690,18 @@ if(!isset($_GET['delete'])) {
 		echo '<option value="0">' . _('No') . '</option>';
 	}
 	echo '</select></td></tr>';
+	// Location's ledger account:
+	echo '<tr title="', _('Enter the GL account for this location, or leave it in blank if not needed'), '">
+			<td><label for="GLAccountCode">', _('GL Account Code'), ':</label></td>
+			<td><input data-type="no-illegal-chars" id="GLAccountCode" maxlength="20" name="GLAccountCode" size="20" type="text" value="', $_POST['GLAccountCode'], '" /></td></tr>';
+	// Allow or deny the invoicing of items in this location:
+	echo '<tr title="', _('Use this parameter to indicate whether these inventory location allows or denies the invoicing of its items.'), '">
+			<td><label for="AllowInvoicing">', _('Allow Invoicing'), ':</label></td>
+			<td><select name="AllowInvoicing">
+				<option', ($_POST['AllowInvoicing']==1 ? ' selected="selected"' : ''), ' value="1">', _('Yes'), '</option>
+				<option', ($_POST['AllowInvoicing']==0 ? ' selected="selected"' : ''), ' value="0">', _('No'), '</option>
+			</select></td>
+		</tr>';
 
 	/*
 	This functionality is not written yet ...
@@ -677,9 +711,9 @@ if(!isset($_GET['delete'])) {
 	echo '</table>
 		<br />
 		<div class="centre">
-			<input type="submit" name="submit" value="' .  _('Enter Information') . '" />
+			<input type="submit" name="submit" value="' . _('Enter Information') . '" />
 		</div>
-        </div>
+		</div>
 		</form>';
 
 } //end if record deleted no point displaying form to add record
