@@ -7,10 +7,10 @@ $Title = _('Location Maintenance');// Screen identification.
 $ViewTopic = 'Inventory';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'Locations';// Anchor's id in the manual's html document.
 include('includes/header.inc');
-echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
-	'/images/supplier.png" title="' .// Icon image.
-	_('Inventory') . '" /> ' .// Icon title.
-	_('Location Maintenance') . '</p>';// Page title.
+echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+	'/images/supplier.png" title="',// Icon image.
+	_('Inventory'), '" /> ',// Icon title.
+	_('Location Maintenance'), '</p>';// Page title.
 
 include('includes/CountriesArray.php');
 
@@ -38,7 +38,7 @@ if(isset($_POST['submit'])) {
 		if($_POST['CashSaleBranch']=='') {
 			prnMsg(_('A cash sale customer and branch are necessary to fully setup the counter sales functionality'),'error');
 			$InputError =1;
-		} else { //customer branch is set too ... check it ties up with a valid customer
+		} else {//customer branch is set too ... check it ties up with a valid customer
 			$sql = "SELECT * FROM custbranch
 					WHERE debtorno='" . $_POST['CashSaleCustomer'] . "'
 					AND branchcode='" . $_POST['CashSaleBranch'] . "'";
@@ -49,7 +49,7 @@ if(isset($_POST['submit'])) {
 				prnMsg(_('The cash sale customer for this location must be defined with both a valid customer code and a valid branch code for this customer'),'error');
 			}
 		}
-	} //end of checking the customer - branch code entered
+	}//end of checking the customer - branch code entered
 
 	if(isset($SelectedLocation) AND $InputError !=1) {
 
@@ -235,7 +235,7 @@ if(isset($_POST['submit'])) {
 
 	$DispTaxProvincesResult = DB_query("SELECT taxprovinceid FROM locations");
 	$TaxCatsResult = DB_query("SELECT taxcatid FROM taxcategories");
-	if(DB_num_rows($TaxCatsResult) > 0) { // This will only work if there are levels else we get an error on seek.
+	if(DB_num_rows($TaxCatsResult) > 0) {// This will only work if there are levels else we get an error on seek.
 
 		while ($myrow=DB_fetch_row($DispTaxProvincesResult)) {
 			/*Check to see there are TaxAuthRates records set up for this TaxProvince */
@@ -379,7 +379,7 @@ if(isset($_POST['submit'])) {
 
 		prnMsg(_('Location') . ' ' . $SelectedLocation . ' ' . _('has been deleted') . '!', 'success');
 		unset ($SelectedLocation);
-	} //end if Delete Location
+	}//end if Delete Location
 	unset($SelectedLocation);
 	unset($_GET['delete']);
 }
@@ -415,7 +415,7 @@ or deletion of the records*/
 			<th class="noprint" colspan="2">&nbsp;</th>
 		</tr>';
 
-$k=0; //row colour counter
+$k=0;//row colour counter
 while ($myrow = DB_fetch_array($result)) {
 	if($k==1) {
 		echo '<tr class="EvenTableRows">';
@@ -525,7 +525,7 @@ if(!isset($_GET['delete'])) {
 				<td>' . _('Location Code') . ':</td>
 				<td>' . $_POST['LocCode'] . '</td>
 			</tr>';
-	} else { //end of if $SelectedLocation only do the else when a new record is being entered
+	} else {//end of if $SelectedLocation only do the else when a new record is being entered
 		if(!isset($_POST['LocCode'])) {
 			$_POST['LocCode'] = '';
 		}
@@ -716,7 +716,7 @@ if(!isset($_GET['delete'])) {
 		</div>
 		</form>';
 
-} //end if record deleted no point displaying form to add record
+}//end if record deleted no point displaying form to add record
 
 include('includes/footer.inc');
 ?>

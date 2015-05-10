@@ -1,20 +1,20 @@
 <?php
 /* $Id: Z_ChangeLocationCode.php 5296 2012-04-29 15:28:19Z vvs2012 $*/
-/* This script is an utility to change a location code. */
+/* Utility to change a location code. */
 
 include ('includes/session.inc');
 $Title = _('UTILITY PAGE Change A Location Code');// Screen identificator.
-$ViewTopic = 'SpecialUtilities'; // Filename's id in ManualContents.php's TOC.
-$BookMark = 'Z_ChangeLocationCode'; // Anchor's id in the manual's html document.
+$ViewTopic = 'SpecialUtilities';// Filename's id in ManualContents.php's TOC.
+$BookMark = 'Z_ChangeLocationCode';// Anchor's id in the manual's html document.
 include('includes/header.inc');
-echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
-	'/images/maintenance.png" title="' .
-	_('Change A Location Code') . '" /> ' .// Icon title.
-	_('Change A Location Code') . '</p>';// Page title.
+echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+	'/images/maintenance.png" title="',// Icon image.
+	_('Change A Location Code'), '" /> ',// Icon title.
+	_('Change A Location Code'), '</p>';// Page title.
 
 include('includes/SQL_CommonFunctions.inc');
 
-if (isset($_POST['ProcessLocationChange'])){
+if(isset($_POST['ProcessLocationChange'])) {
 
 	$InputError =0;
 
@@ -22,39 +22,39 @@ if (isset($_POST['ProcessLocationChange'])){
 
 /*First check the location code exists */
 	$result=DB_query("SELECT loccode FROM locations WHERE loccode='" . $_POST['OldLocationID'] . "'");
-	if (DB_num_rows($result)==0){
+	if(DB_num_rows($result)==0) {
 		prnMsg(_('The location code') . ': ' . $_POST['OldLocationID'] . ' ' . _('does not currently exist as a location code in the system'),'error');
 		$InputError =1;
 	}
 
-	if (ContainsIllegalCharacters($_POST['NewLocationID'])){
+	if(ContainsIllegalCharacters($_POST['NewLocationID'])) {
 		prnMsg(_('The new location code to change the old code to contains illegal characters - no changes will be made'),'error');
 		$InputError =1;
 	}
 
-	if ($_POST['NewLocationID']==''){
+	if($_POST['NewLocationID']=='') {
 		prnMsg(_('The new location code to change the old code to must be entered as well'),'error');
 		$InputError =1;
 	}
 
-	if (ContainsIllegalCharacters($_POST['NewLocationName'])){
+	if(ContainsIllegalCharacters($_POST['NewLocationName'])) {
 		prnMsg(_('The new location name to change the old name to contains illegal characters - no changes will be made'),'error');
 		$InputError =1;
 	}
 
-	if ($_POST['NewLocationName']==''){
+	if($_POST['NewLocationName']=='') {
 		prnMsg(_('The new location name to change the old name to must be entered as well'),'error');
 		$InputError =1;
 	}
 /*Now check that the new code doesn't already exist */
 	$result=DB_query("SELECT loccode FROM locations WHERE loccode='" . $_POST['NewLocationID'] . "'");
-	if (DB_num_rows($result)!=0){
+	if(DB_num_rows($result)!=0) {
 		echo '<br /><br />';
 		prnMsg(_('The replacement location code') . ': ' . $_POST['NewLocationID'] . ' ' . _('already exists as a location code in the system') . ' - ' . _('a unique location code must be entered for the new code'),'error');
 		$InputError =1;
 	}
 
-	if ($InputError ==0){ // no input errors
+	if($InputError ==0) {// no input errors
 		$result = DB_Txn_Begin();
 		DB_IgnoreForeignKeys();
 
@@ -159,7 +159,7 @@ if (isset($_POST['ProcessLocationChange'])){
 		//check if MRP tables exist before assuming
 
 		$result = DB_query("SELECT COUNT(*) FROM mrpparameters",'','',false,false);
-		if (DB_error_no()==0) {
+		if(DB_error_no()==0) {
 			echo '<br />' . _('Changing MRP parameters information');
 			$sql = "UPDATE mrpparameters SET location='" . $_POST['NewLocationID'] . "' WHERE location='" . $_POST['OldLocationID'] . "'";
 			$ErrMsg = _('The SQL to update the mrpparameters records failed');
@@ -251,7 +251,7 @@ if (isset($_POST['ProcessLocationChange'])){
 
 
 		echo '<p>' . _('Location code') . ': ' . $_POST['OldLocationID'] . ' ' . _('was successfully changed to') . ' : ' . $_POST['NewLocationID'];
-	} //only do the stuff above if  $InputError==0
+	}//only do the stuff above if  $InputError==0
 }
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method="post">';

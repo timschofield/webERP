@@ -44,7 +44,7 @@ $EarliestDispatch = CalcEarliestDispatchDate();
 if(isset($_POST['ProcessOrder']) OR isset($_POST['MakeRecurringOrder'])) {
 
 	/*need to check for input errors in any case before order processed */
-	$_POST['Update']='Yes rerun the validation checks'; //no need for gettext!
+	$_POST['Update']='Yes rerun the validation checks';//no need for gettext!
 
 	/*store the old freight cost before it is recalculated to ensure that there has been no change - test for change after freight recalculated and get user to re-confirm if changed */
 
@@ -432,7 +432,7 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 
 		if($StockItem->MBflag=='M'
 			AND $_SESSION['AutoCreateWOs']==1
-			AND $_SESSION['Items'.$identifier]->Quotation!=1) { //oh yeah its all on!
+			AND $_SESSION['Items'.$identifier]->Quotation!=1) {//oh yeah its all on!
 
 			echo '<br />';
 
@@ -488,7 +488,7 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 			//Now we have the data - do we need to make any more?
 			$ShortfallQuantity = $QOH-$QuantityDemand-$QuantityAssemblyDemand+$QuantityPurchOrders+$QuantityWorkOrders;
 
-			if($ShortfallQuantity < 0) { //then we need to make a work order
+			if($ShortfallQuantity < 0) {//then we need to make a work order
 				//How many should the work order be for??
 				if($ShortfallQuantity + $StockItem->EOQ < 0) {
 					$WOQuantity = -$ShortfallQuantity;
@@ -565,25 +565,25 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 								$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
 								$FactoryManagerEmail .= "\n" . ($StockItem->NextSerialNo + $i);
 							}
-						} //end loop around creation of woserialnos
+						}//end loop around creation of woserialnos
 						$NewNextSerialNo = ($StockItem->NextSerialNo + $WOQuantity +1);
 						$ErrMsg = _('Could not update the new next serial number for the item');
 						$UpdateNextSerialNoResult = DB_query("UPDATE stockmaster SET nextserialno='" . $NewNextSerialNo . "' WHERE stockid='" . $StockItem->StockID . "'",$ErrMsg,$DbgMsg,true);
-				} // end if the item is serialised and nextserialno is set
+				}// end if the item is serialised and nextserialno is set
 
 				$EmailSubject = _('New Work Order Number') . ' ' . $WONo . ' ' . _('for') . ' ' . $StockItem->StockID . ' x ' . $WOQuantity;
 				//Send email to the Factory Manager
 				if($_SESSION['SmtpSetting']==0) {
 					mail($_SESSION['FactoryManagerEmail'],$EmailSubject,$FactoryManagerEmail);
 
-				}else {
+				} else {
 					include('includes/htmlMimeMail.php');
 					$mail = new htmlMimeMail();
 					$mail->setSubject($EmailSubject);
 					$result = SendmailBySmtp($mail,array($_SESSION['FactoryManagerEmail']));
 				}
 
-			} //end if with this sales order there is a shortfall of stock - need to create the WO
+			}//end if with this sales order there is a shortfall of stock - need to create the WO
 		}//end if auto create WOs in on
 	} /* end inserted line items into sales order details */
 
@@ -659,12 +659,12 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 	$Result = DB_Txn_Begin();
 
 	/*see if this is a contract quotation being changed to an order? */
-	if($_SESSION['Items'.$identifier]->Quotation==0) { //now its being changed? to an order
+	if($_SESSION['Items'.$identifier]->Quotation==0) {//now its being changed? to an order
 		$ContractResult = DB_query("SELECT contractref,
 											requireddate
 									FROM contracts WHERE orderno='" .  $_SESSION['ExistingOrder'.$identifier] ."'
 									AND status=1");
-		if(DB_num_rows($ContractResult)==1) { //then it is a contract quotation being changed to an order
+		if(DB_num_rows($ContractResult)==1) {//then it is a contract quotation being changed to an order
 			$ContractRow = DB_fetch_array($ContractResult);
 			$WONo = GetNextTransNo(40,$db);
 			$ErrMsg = _('Could not update the contract status');
@@ -716,7 +716,7 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 				$Cost =0;
 				prnMsg(_('In automatically creating a work order for') . ' ' . $ContractRow['contractref'] . ' ' . _('an item on this sales order, the cost of this item as accumulated from the sum of the component costs is nil. This could be because there is no bill of material set up ... you may wish to double check this'),'warn');
 			} else {
-				$Cost = $CostRow[0]; //cost of contract BOM
+				$Cost = $CostRow[0];//cost of contract BOM
 			}
 			$CostResult = DB_query("SELECT SUM(costperunit*quantity) AS cost
 									FROM contractreqts
@@ -740,8 +740,8 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 			//Recursively insert real component requirements - see includes/SQL_CommonFunctions.in for function WoRealRequirements
 			WoRealRequirements($db, $WONo, $_SESSION['Items'.$identifier]->Location, $ContractRow['contractref']);
 
-		} //end processing if the order was a contract quotation being changed to an order
-	} //end test to see if the order was a contract quotation being changed to an order
+		}//end processing if the order was a contract quotation being changed to an order
+	}//end test to see if the order was a contract quotation being changed to an order
 
 
 	$HeaderSQL = "UPDATE salesorders SET debtorno = '" . $_SESSION['Items'.$identifier]->DebtorNo . "',
@@ -805,7 +805,7 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 	unset($_SESSION['Items'.$identifier]->LineItems);
 	unset($_SESSION['Items'.$identifier]);
 
-	if($Quotation) { //handle Quotations and Orders print after modification
+	if($Quotation) {//handle Quotations and Orders print after modification
 		prnMsg(_('Quotation Number') .' ' . $_SESSION['ExistingOrder'.$identifier] . ' ' . _('has been updated'),'success');
 
 		/*link to print the quotation */
@@ -821,7 +821,7 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 					<td>' . ' ' . '<a href="' . $RootPath . '/PDFQuotationPortrait.php?identifier='.$identifier . '&amp;QuotationNo=' . $_SESSION['ExistingOrder'.$identifier] . '" target="_blank">' .  _('Print Quotation (Portrait)')  . '</a></td>
 				</tr>
 				</table>';
-	}else {
+	} else {
 
 	prnMsg(_('Order Number') .' ' . $_SESSION['ExistingOrder'.$identifier] . ' ' . _('has been updated'),'success');
 
@@ -887,7 +887,7 @@ if(in_array(2,$_SESSION['AllowedPageSecurityTokens'])) {
 	$_SESSION['Items'.$identifier]->total = 0;
 	$_SESSION['Items'.$identifier]->totalVolume = 0;
 	$_SESSION['Items'.$identifier]->totalWeight = 0;
-	$k = 0; //row colour counter
+	$k = 0;//row colour counter
 
 	foreach ($_SESSION['Items'.$identifier]->LineItems as $StockItem) {
 
@@ -956,7 +956,7 @@ if(in_array(2,$_SESSION['AllowedPageSecurityTokens'])) {
 	$_SESSION['Items'.$identifier]->total = 0;
 	$_SESSION['Items'.$identifier]->totalVolume = 0;
 	$_SESSION['Items'.$identifier]->totalWeight = 0;
-	$k=0; // row colour counter
+	$k=0;// row colour counter
 	foreach ($_SESSION['Items'.$identifier]->LineItems as $StockItem) {
 
 		$LineTotal = $StockItem->Quantity * $StockItem->Price * (1 - $StockItem->DiscountPercent);
@@ -1014,7 +1014,6 @@ if($_SESSION['Items'.$identifier]->Location=='' OR !isset($_SESSION['Items'.$ide
 	$_SESSION['Items'.$identifier]->Location = $DefaultStockLocation;
 }
 
-// BEGIN: **********************************************************************
 $SQL = "SELECT locations.loccode, locationname
 	FROM locations
 	INNER JOIN locationusers
@@ -1030,7 +1029,6 @@ while($myrow=DB_fetch_array($StkLocsResult)) {
 	echo '<option', ($_SESSION['Items'.$identifier]->Location==$myrow['loccode'] ? ' selected="selected"' : ''), ' value="', $myrow['loccode'], '">', $myrow['locationname'], '</option>';
 }
 echo '</select></td></tr>';
-// END: ************************************************************************
 
 // Set the default date to earliest possible date if not set already
 if(!isset($_SESSION['Items'.$identifier]->DeliveryDate)) {
@@ -1084,7 +1082,7 @@ echo '<tr>
 foreach ($CountriesArray as $CountryEntry => $CountryName) {
 	if(isset($_POST['BrAdd6']) AND (strtoupper($_POST['BrAdd6']) == strtoupper($CountryName))) {
 		echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName  . '</option>';
-	}elseif(!isset($_POST['BrAdd6']) AND $CountryName == $_SESSION['Items'.$identifier]->DelAdd6) {
+	} elseif(!isset($_POST['BrAdd6']) AND $CountryName == $_SESSION['Items'.$identifier]->DelAdd6) {
 		echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName  . '</option>';
 	} else {
 		echo '<option value="' . $CountryName . '">' . $CountryName  . '</option>';
@@ -1187,14 +1185,12 @@ echo'	<tr>
 		$ShipperResults = DB_query($sql,$ErrMsg,$DbgMsg);
 		while ($myrow=DB_fetch_array($ShipperResults)) {
 			if($myrow['shipper_id']==$_POST['ShipVia']) {
-					echo '<option selected="selected" value="' . $myrow['shipper_id'] . '">' . $myrow['shippername'] . '</option>';
-			}else {
+				echo '<option selected="selected" value="' . $myrow['shipper_id'] . '">' . $myrow['shippername'] . '</option>';
+			} else {
 				echo '<option value="' . $myrow['shipper_id'] . '">' . $myrow['shippername'] . '</option>';
 			}
 		}
-
 		echo '</select></td></tr>';
-
 
 		echo '<tr><td>' .  _('Quotation Only') .':</td>
 				<td><select name="Quotation">';
@@ -1206,7 +1202,7 @@ echo'	<tr>
 			echo '<option selected="selected" value="0">' . _('No') . '</option>';
 		}
 		echo '</select></td></tr>';
-	} //end if it is NOT a CustomerLogin
+	}//end if it is NOT a CustomerLogin
 
 echo '</table>';
 

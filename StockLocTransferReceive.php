@@ -199,7 +199,6 @@ if(isset($_POST['ProcessTransfer'])) {
 
 // COMMENT: "if($TrfLine->Quantity !=0) {}" should be as a general condition to avoid transactions in zero.
 
-// BEGIN: **********************************************************************
 				// Insert outgoing inventory GL transaction if any of the locations has a GL account code:
 				if(($_SESSION['Transfer']->StockLocationFromAccount !='' or $_SESSION['Transfer']->StockLocationToAccount !='') and $TrfLine->Quantity !=0) {
 					// Get the account code:
@@ -238,7 +237,6 @@ if(isset($_POST['ProcessTransfer'])) {
 					$DbgMsg =  _('The following SQL to insert records was used');
 					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 				}
-// END: ************************************************************************
 
 				// Insert the stock movement for the stock coming into the to location
 				$SQL = "INSERT INTO stockmoves (stockid,
@@ -354,7 +352,6 @@ if(isset($_POST['ProcessTransfer'])) {
 				$DbgMsg =  _('The following SQL to update the stock record was used');
 				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 
-// BEGIN: **********************************************************************
 				// Insert incoming inventory GL transaction if any of the locations has a GL account code:
 				if(($_SESSION['Transfer']->StockLocationFromAccount !='' or $_SESSION['Transfer']->StockLocationToAccount !='') and $TrfLine->Quantity !=0) {
 					// Get the account code:
@@ -393,7 +390,6 @@ if(isset($_POST['ProcessTransfer'])) {
 					$DbgMsg =  _('The following SQL to insert records was used');
 					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 				}
-// END: ************************************************************************
 
 				prnMsg(_('A stock transfer for item code'). ' - '  . $TrfLine->StockID . ' ' . $TrfLine->ItemDescription . ' '. _('has been created from').' ' . $_SESSION['Transfer']->StockLocationFromName . ' '. _('to'). ' ' . $_SESSION['Transfer']->StockLocationToName . ' ' . _('for a quantity of'). ' '. $TrfLine->Quantity,'success');
 
@@ -432,7 +428,7 @@ if(isset($_POST['ProcessTransfer'])) {
 					$EmailSubject = _('Cancelled balance of transfer'). ' ' . $_SESSION['Transfer']->TrfID;
 					if($_SESSION['SmtpSetting']==0) {
 						      mail($_SESSION['InventoryManagerEmail'],$EmailSubject,$ConfirmationText);
-					}else{
+					} else{
 						include('includes/htmlMimeMail.php');
 						$mail = new htmlMimeMail();
 						$mail->setSubject($EmailSubject);
@@ -533,7 +529,7 @@ if(isset($_SESSION['Transfer'])) {
 
 	prnMsg(_('Please Verify Shipment Quantities Received'),'info');
 
-	$i = 0; //Line Item Array pointer
+	$i = 0;//Line Item Array pointer
 
 	echo '<br />
 			<table class="selection">';

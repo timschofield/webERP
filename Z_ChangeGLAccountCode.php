@@ -4,17 +4,17 @@
 
 include ('includes/session.inc');
 $Title = _('UTILITY PAGE Change A GL Account Code');// Screen identificator.
-$ViewTopic = 'SpecialUtilities'; // Filename's id in ManualContents.php's TOC.
-$BookMark = 'Z_ChangeGLAccountCode'; // Anchor's id in the manual's html document.
+$ViewTopic = 'SpecialUtilities';// Filename's id in ManualContents.php's TOC.
+$BookMark = 'Z_ChangeGLAccountCode';// Anchor's id in the manual's html document.
 include('includes/header.inc');
-echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
-	'/images/gl.png" title="' .
-	_('Change A GL Account Code') . '" /> ' .// Icon title.
-	_('Change A GL Account Code') . '</p>';// Page title.
+echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+	'/images/gl.png" title="',// Icon image.
+	_('Change A GL Account Code'), '" /> ',// Icon title.
+	_('Change A GL Account Code'), '</p>';// Page title.
 
 include('includes/SQL_CommonFunctions.inc');
 
-if (isset($_POST['ProcessGLAccountCode'])){
+if(isset($_POST['ProcessGLAccountCode'])) {
 
 	$InputError =0;
 
@@ -22,17 +22,17 @@ if (isset($_POST['ProcessGLAccountCode'])){
 
 /*First check the code exists */
 	$result=DB_query("SELECT accountcode FROM chartmaster WHERE accountcode='" . $_POST['OldAccountCode'] . "'");
-	if (DB_num_rows($result)==0){
+	if(DB_num_rows($result)==0) {
 		prnMsg(_('The GL account code') . ': ' . $_POST['OldAccountCode'] . ' ' . _('does not currently exist as a GL account code in the system'),'error');
 		$InputError =1;
 	}
 
-	if (ContainsIllegalCharacters($_POST['NewAccountCode'])){
+	if(ContainsIllegalCharacters($_POST['NewAccountCode'])) {
 		prnMsg(_('The new GL account code to change the old code to contains illegal characters - no changes will be made'),'error');
 		$InputError =1;
 	}
 
-	if ($_POST['NewAccountCode']==''){
+	if($_POST['NewAccountCode']=='') {
 		prnMsg(_('The new GL account code to change the old code to must be entered as well'),'error');
 		$InputError =1;
 	}
@@ -40,14 +40,14 @@ if (isset($_POST['ProcessGLAccountCode'])){
 
 /*Now check that the new code doesn't already exist */
 	$result=DB_query("SELECT accountcode FROM chartmaster WHERE accountcode='" . $_POST['NewAccountCode'] . "'");
-	if (DB_num_rows($result)!=0){
+	if(DB_num_rows($result)!=0) {
 		echo '<br /><br />';
 		prnMsg(_('The replacement GL account code') . ': ' . $_POST['NewAccountCode'] . ' ' . _('already exists as a GL account code in the system') . ' - ' . _('a unique GL account code must be entered for the new code'),'error');
 		$InputError =1;
 	}
 
 
-	if ($InputError ==0){ // no input errors
+	if($InputError ==0) {// no input errors
 		$result = DB_Txn_Begin();
 		echo '<br />' . _('Adding the new chartmaster record');
 		$sql = "INSERT INTO chartmaster (accountcode,
@@ -96,9 +96,7 @@ if (isset($_POST['ProcessGLAccountCode'])){
 		ChangeFieldInTable("lastcostrollup", "stockact", $_POST['OldAccountCode'], $_POST['NewAccountCode'], $db);
 		ChangeFieldInTable("lastcostrollup", "adjglact", $_POST['OldAccountCode'], $_POST['NewAccountCode'], $db);
 
-// BEGIN: **********************************************************************
 		ChangeFieldInTable("locations", "glaccountcode", $_POST['OldAccountCode'], $_POST['NewAccountCode'], $db);// Location's ledger account.
-// END: ************************************************************************
 
 		ChangeFieldInTable("pcexpenses", "glaccount", $_POST['OldAccountCode'], $_POST['NewAccountCode'], $db);
 
@@ -133,9 +131,8 @@ if (isset($_POST['ProcessGLAccountCode'])){
 		$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
 		echo ' ... ' . _('completed');
 
-
 		echo '<p>' . _('GL account Code') . ': ' . $_POST['OldAccountCode'] . ' ' . _('was successfully changed to') . ' : ' . $_POST['NewAccountCode'];
-	} //only do the stuff above if  $InputError==0
+	}//only do the stuff above if  $InputError==0
 
 }
 

@@ -25,10 +25,10 @@ if(isset($_GET['From'])) {
 
 if(isset($_POST['CheckCode'])) {
 
-	echo '<p class="page_title_text">
-			<img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Dispatch') . '" alt="" />
-            ' . ' ' . _('Select Item to Transfer') . '
-		  </p>';
+	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+		'/images/magnifier.png" title="',// Icon image.
+		_('Dispatch'), '" /> ',// Icon title.
+		_('Select Item to Transfer'), '</p>';// Page title.
 
 	if(mb_strlen($_POST['StockText'])>0) {
 		$sql="SELECT stockid,
@@ -215,7 +215,6 @@ if(isset($_POST['EnterTransfer']) ) {
 			include('includes/footer.inc');
 			exit;
 		}
-// BEGIN: **********************************************************************
 		// Insert outgoing inventory GL transaction if any of the locations has a GL account code:
 		if($_SESSION['Transfer']->StockLocationFromAccount !='' or $_SESSION['Transfer']->StockLocationToAccount !='') {
 			// Get the account code:
@@ -254,7 +253,6 @@ if(isset($_POST['EnterTransfer']) ) {
 					$DbgMsg =  _('The following SQL to insert records was used');
 					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 		}
-// END: ************************************************************************
 		// Insert the stock movement for the stock going out of the from location
 		$SQL = "INSERT INTO stockmoves(stockid,
 										type,
@@ -372,7 +370,6 @@ if(isset($_POST['EnterTransfer']) ) {
 			// There must actually be some error this should never happen
 			$QtyOnHandPrior = 0;
 		}
-// BEGIN: **********************************************************************
 		// Insert incoming inventory GL transaction if any of the locations has a GL account code:
 		if($_SESSION['Transfer']->StockLocationFromAccount !='' or $_SESSION['Transfer']->StockLocationToAccount !='') {
 			// Get the account code:
@@ -411,7 +408,6 @@ if(isset($_POST['EnterTransfer']) ) {
 			$DbgMsg =  _('The following SQL to insert records was used');
 			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 		}
-// END: ************************************************************************
 		// Insert the stock movement for the stock coming into the to location
 		$SQL = "INSERT INTO stockmoves (stockid,
 						type,

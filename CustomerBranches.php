@@ -4,7 +4,7 @@
 
 include('includes/session.inc');
 $Title = _('Customer Branches');// Screen identification.
-$ViewTopic= 'AccountsReceivable';// Filename's id in ManualContents.php's TOC.
+$ViewTopic = 'AccountsReceivable';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'NewCustomerBranch';// Anchor's id in the manual's html document.
 include('includes/header.inc');
 
@@ -362,7 +362,7 @@ if(isset($_POST['submit'])) {
 				}
 			}
 		}
-	} //end ifs to test if the branch can be deleted
+	}//end ifs to test if the branch can be deleted
 
 }
 if(!isset($SelectedBranch)) {
@@ -601,7 +601,7 @@ if(!isset($_GET['delete'])) {
 				<td>' . $_POST['BranchCode'] . '</td>
 			</tr>';
 
-	} else { //end of if $SelectedBranch only do the else when a new record is being entered
+	} else {//end of if $SelectedBranch only do the else when a new record is being entered
 
 	/* SETUP ANY $_GET VALUES THAT ARE PASSED. This really is just used coming from the Customers.php when a new customer is created.
 			Maybe should only do this when that page is the referrer?
@@ -765,12 +765,12 @@ if(!isset($_GET['delete'])) {
 			}
 			echo $myrow['salesmancode'] . '">' . $myrow['salesmanname'] . '</option>';
 
-		} //end while loop
+		}//end while loop
 
 		echo '</select></td>
 			</tr>';
 
-	//	DB_data_seek($result,0); //by thumb
+	//	DB_data_seek($result,0);//by thumb
 	}
 	$SQL = "SELECT areacode, areadescription FROM areas";
 	$result = DB_query($SQL);
@@ -793,14 +793,13 @@ if(!isset($_GET['delete'])) {
 		}
 		echo $myrow['areacode'] . '">' . $myrow['areadescription'] . '</option>';
 
-	} //end while loop
+	}//end while loop
 
 
 	echo '</select></td>
 		</tr>';
 	DB_data_seek($result,0);
 
-// BEGIN: **********************************************************************
 	$SQL = "SELECT locations.loccode, locationname
 		FROM locations
 		INNER JOIN locationusers
@@ -831,7 +830,6 @@ if(!isset($_GET['delete'])) {
 		echo $myrow['loccode'], '">', $myrow['locationname'], '</option>';
 
 	}// End while loop.
-// END: ************************************************************************
 
 	echo '</select></td>
 		</tr>
@@ -856,7 +854,7 @@ if(!isset($_GET['delete'])) {
 	}
 	echo '<tr>
 			<td>' . (($_POST['Email']) ? '<a href="Mailto:'.$_POST['Email'].'">' . _('Email').':</a>' : _('Email').':') . '</td>';
-	 //only display email link if there is an email address
+	//only display email link if there is an email address
 	echo '<td><input tabindex="18" type="email" name="Email" placeholder="e.g. example@domain.com" size="56" maxlength="55" value="'. $_POST['Email'].'" /></td>
 		</tr>';
 
@@ -883,7 +881,7 @@ if(!isset($_GET['delete'])) {
 		}
 		echo $myrow['taxgroupid'] . '">' . $myrow['taxgroupdescription'] . '</option>';
 
-	} //end while loop
+	}//end while loop
 
 	echo '</select></td>
 		</tr>
@@ -997,7 +995,7 @@ if(!isset($_GET['delete'])) {
 		</div>
 		</form>';
 
-} //end if record deleted no point displaying form to add record
+}//end if record deleted no point displaying form to add record
 
 include('includes/footer.inc');
 ?>
