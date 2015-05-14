@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.12.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-05-10 11:26-0600\n"
-"PO-Revision-Date: 2015-05-10 12:08-0600\n"
+"PO-Revision-Date: 2015-05-14 08:31-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -1634,7 +1634,7 @@ msgstr "Traducir descripciones de artículos"
 
 #: AutomaticTranslationDescriptions.php:31
 msgid "Description Automatic Translation for empty translations"
-msgstr ""
+msgstr "Traducción automática de descripción para traducciones vacías"
 
 #: AutomaticTranslationDescriptions.php:35 MaterialsNotUsed.php:33
 #: TopItems.php:168
@@ -5692,7 +5692,7 @@ msgstr "Costo Unitario"
 
 #: ContractOtherReqts.php:164
 msgid "Enter the cost per unit of this requirement"
-msgstr ""
+msgstr "Introduzca el costo por unidad de este requisito"
 
 #: ContractOtherReqts.php:171
 msgid "Enter New Contract Requirement"
@@ -6644,7 +6644,7 @@ msgstr "Tipo de pago"
 
 #: CounterReturns.php:844
 msgid "Paid to Customer"
-msgstr ""
+msgstr "Pagado al cliente"
 
 #: CounterReturns.php:853 CounterSales.php:961 SelectOrderItems.php:1434
 msgid "Re-Calculate"
@@ -8651,7 +8651,7 @@ msgstr ""
 
 #: CustomerAccount.php:305 CustomerAccount.php:335
 msgid "HTML "
-msgstr ""
+msgstr "HTML "
 
 #: CustomerAccount.php:306 CustomerInquiry.php:311 CustomerInquiry.php:357
 #: CustomerInquiry.php:396 CustomerInquiry.php:432 CustomerInquiry.php:478
@@ -8662,7 +8662,7 @@ msgstr "Haga clic para ver la factura"
 
 #: CustomerAccount.php:310 CustomerAccount.php:340
 msgid "PDF "
-msgstr ""
+msgstr "PDF "
 
 #: CustomerAccount.php:311 CustomerAccount.php:341 CustomerInquiry.php:317
 #: CustomerInquiry.php:363 CustomerInquiry.php:402 CustomerInquiry.php:438
@@ -9534,7 +9534,7 @@ msgstr "Compras de cliente"
 
 #: CustomerPurchases.php:17
 msgid "This script must be called with a customer code."
-msgstr ""
+msgstr "Este script debe ser llamado con un código de cliente."
 
 #: CustomerPurchases.php:36
 msgid "Items Purchased by Customer"
@@ -19003,7 +19003,7 @@ msgstr "Actividad desde"
 
 #: PDFDIFOT.php:21 includes/MainMenuLinksArray.php:64
 msgid "Delivery In Full On Time (DIFOT) Report"
-msgstr "Informe de Entregas DIFOT (Delivery In Full On Time)"
+msgstr "Informe de entregas DIFOT (Delivery In Full On Time)"
 
 #: PDFDIFOT.php:25
 msgid "DIFOT Report"
@@ -25975,7 +25975,7 @@ msgstr "Porcentaje"
 
 #: SalesAnalRepts.php:7
 msgid "Sales Analysis Reports Maintenance"
-msgstr "Administrar Informes de Análisis de Ventas"
+msgstr "Administrar informes de análisis de ventas"
 
 #: SalesAnalRepts.php:25 SalesAnalRepts.php:27
 msgid "Product Code"
@@ -31960,7 +31960,7 @@ msgstr ""
 
 #: StockSerialItemResearch.php:5
 msgid "Serial Item Research"
-msgstr "Busqueda del Serial del Elemento"
+msgstr "Investigación de artículo seriado"
 
 #: StockSerialItemResearch.php:71
 msgid "No History found for Serial Number"
@@ -31968,7 +31968,7 @@ msgstr "No se encontro Historia para el Número de Serial "
 
 #: StockSerialItemResearch.php:73
 msgid "Details for Serial Item"
-msgstr "Detalles del Serial del Elemento"
+msgstr "Detalles de artículo seriado"
 
 #: StockSerialItemResearch.php:73 reportwriter/languages/en_US/reports.php:80
 msgid "Length"
@@ -49078,7 +49078,7 @@ msgstr "Consulta de ventas por categoría"
 
 #: includes/MainMenuLinksArray.php:60
 msgid "Sales Analysis Reports"
-msgstr "Informes de Análisis de Ventas"
+msgstr "Informes de análisis de ventas"
 
 #: includes/MainMenuLinksArray.php:61
 msgid "Sales Graphs"
@@ -49130,7 +49130,7 @@ msgstr "Asignar Recibos ó notas de Crédito"
 
 #: includes/MainMenuLinksArray.php:109
 msgid "Where Allocated Inquiry"
-msgstr "Consultar Dónde está Asignado"
+msgstr "Consultar dónde está asignado"
 
 #: includes/MainMenuLinksArray.php:112
 msgid "Aged Customer Balances/Overdues Report"
@@ -49139,7 +49139,7 @@ msgstr ""
 
 #: includes/MainMenuLinksArray.php:113
 msgid "Re-Print A Deposit Listing"
-msgstr "Reimprimir una Lista de Depósitos"
+msgstr "Reimprimir una lista de depósitos"
 
 #: includes/MainMenuLinksArray.php:114
 msgid "Debtor Balances At A Prior Month End"
@@ -49147,11 +49147,11 @@ msgstr "Saldos de clientes al final del mes previo"
 
 #: includes/MainMenuLinksArray.php:115
 msgid "Customer Listing By Area/Salesperson"
-msgstr "Listado de clientes por Zona/Vendedor"
+msgstr "Listado de clientes por zona/vendedor"
 
 #: includes/MainMenuLinksArray.php:116 includes/MainMenuLinksArray.php:152
 msgid "List Daily Transactions"
-msgstr "Lista de Transacciones Diarias"
+msgstr "Lista de transacciones diarias"
 
 #: includes/MainMenuLinksArray.php:137
 msgid "Add Customer"
@@ -49243,7 +49243,7 @@ msgstr "Cumplir con las Solicitudes de Existencia Internas"
 
 #: includes/MainMenuLinksArray.php:223
 msgid "Serial Item Research Tool"
-msgstr "Herramienta de Investigación de Artículos Seriados"
+msgstr "Herramienta de investigación de artículo seriado"
 
 #: includes/MainMenuLinksArray.php:225
 msgid "Reprint GRN"
@@ -49251,15 +49251,15 @@ msgstr "Reimprimir"
 
 #: includes/MainMenuLinksArray.php:226
 msgid "Inventory Item Movements"
-msgstr "Movimientos de Artículos del Inventario"
+msgstr "Movimientos de artículo de inventario"
 
 #: includes/MainMenuLinksArray.php:227
 msgid "Inventory Item Status"
-msgstr "Estado de Artículos del Inventario"
+msgstr "Estado de artículo de inventario"
 
 #: includes/MainMenuLinksArray.php:228
 msgid "Inventory Item Usage"
-msgstr "Uso de Artículos del Inventario"
+msgstr "Uso de artículo de inventario"
 
 #: includes/MainMenuLinksArray.php:231
 msgid "Stock Dispatch"
@@ -49312,7 +49312,7 @@ msgstr "Nota de Transferencia de Existencias"
 
 #: includes/MainMenuLinksArray.php:245
 msgid "Aged Controlled Stock Report"
-msgstr ""
+msgstr "Informe de inventario controlado AGED"
 
 #: includes/MainMenuLinksArray.php:271
 msgid "Add A New Item"
@@ -50925,11 +50925,11 @@ msgstr ""
 
 #: reportwriter/languages/en_US/reports.php:272
 msgid "Rectangle"
-msgstr ""
+msgstr "Rectángulo"
 
 #: reportwriter/languages/en_US/reports.php:273
 msgid "Line"
-msgstr ""
+msgstr "Línea"
 
 #: reportwriter/languages/en_US/reports.php:274
 msgid "Company Data Line"
@@ -51025,7 +51025,7 @@ msgstr "1"
 
 #: reportwriter/languages/en_US/reports.php:311
 msgid "4"
-msgstr ""
+msgstr "4"
 
 #: reportwriter/languages/en_US/reports.php:312
 msgid "5"
@@ -51081,11 +51081,11 @@ msgstr "28"
 
 #: reportwriter/languages/en_US/reports.php:325
 msgid "32"
-msgstr ""
+msgstr "32"
 
 #: reportwriter/languages/en_US/reports.php:326
 msgid "36"
-msgstr ""
+msgstr "36"
 
 #: reportwriter/languages/en_US/reports.php:327
 msgid "40"
@@ -51983,7 +51983,7 @@ msgstr ""
 
 #: ../webSHOP/Register.php:706
 msgid "Billing Currency"
-msgstr ""
+msgstr "Moneda de facturación"
 
 #: ../webSHOP/Register.php:728
 msgid "Update Details"
@@ -52017,7 +52017,7 @@ msgstr "Actualizar cantidad"
 
 #: ../webSHOP/includes/DisplayShoppingCart.php:26
 msgid "Remove item"
-msgstr ""
+msgstr "Remover artículo"
 
 #: ../webSHOP/includes/DisplayShoppingCart.php:29
 msgid "Enter New Quantity"
@@ -52025,7 +52025,7 @@ msgstr "Introducir nueva cantidad"
 
 #: ../webSHOP/includes/DisplayShoppingCart.php:64
 msgid "Freight cost"
-msgstr ""
+msgstr "Costo del flete"
 
 #: ../webSHOP/includes/DisplayShoppingCart.php:68
 #: ../webSHOP/includes/PlaceOrder.php:280
@@ -52036,7 +52036,7 @@ msgstr ""
 #: ../webSHOP/includes/DisplayShoppingCart.php:85
 #: ../webSHOP/includes/Functions.php:61
 msgid "incl tax"
-msgstr ""
+msgstr "impuesto incluido"
 
 #: ../webSHOP/includes/DisplayShoppingCart.php:85
 msgid "Total Due"
@@ -52044,7 +52044,7 @@ msgstr ""
 
 #: ../webSHOP/includes/Functions.php:27 ../webSHOP/includes/Functions.php:30
 msgid "Click for more information"
-msgstr ""
+msgstr "Haga clic para más información"
 
 #: ../webSHOP/includes/Functions.php:50
 msgid "Stock QTY"
