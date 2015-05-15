@@ -1,5 +1,5 @@
 <?php
-define("VERSIONFILE", "1.00"); // 
+define("VERSIONFILE", "2.00"); // 
 
 /* Session started in session.inc for password checking and authorisation level check
 config.php is in turn included in session.inc*/
@@ -15,7 +15,7 @@ $periodnow=GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
 
 AverageSPGSales($_SESSION['SalesmanLogin'], 90, 60, 30, 15, $db);
 SPGTypePayments($_SESSION['SalesmanLogin'], 15, $db);
-lastSalesSPG($_SESSION['SalesmanLogin'], 20, $db);
+lastSalesSPG($_SESSION['SalesmanLogin'], 3, $db);
 
 prnMsg("Performed 3 SPG control board tests",'success');
 
@@ -34,11 +34,7 @@ function AverageSPGSales($SPG, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $db){
 	$StartDateB = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysB-1));
 	$StartDateC = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysC-1));
 	$StartDateD = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysD-1));
-	$TotalDateA = 0;
-	$TotalDateB = 0;
-	$TotalDateC = 0;
-	$TotalDateD = 0;
-	$TotalForecast = 0;
+	$StartDateMTD=FormatDateForSQL(Date($_SESSION['DefaultDateFormat'], mktime(0,0,0,Date('m'),1,Date('Y'))));
 
 	$SQL = "SELECT salesmancode,
 				salesmanname,
@@ -69,10 +65,16 @@ function AverageSPGSales($SPG, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $db){
 						AND salesorderdetails.completed = 1
 						AND salesorders.orddate >= '". $StartDateD . "'
 						AND salesorders.orddate <= '". $Yesterday . "'
-						AND salesorders.salesperson = salesman.salesmancode) AS salesD
+						AND salesorders.salesperson = salesman.salesmancode) AS salesD,
+				(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+					FROM salesorderdetails, salesorders
+					WHERE salesorderdetails.orderno = salesorders.orderno
+						AND salesorderdetails.completed = 1
+						AND salesorders.orddate >= '". $StartDateMTD . "'
+						AND salesorders.orddate <= '". $Yesterday . "'
+						AND salesorders.salesperson = salesman.salesmancode) AS salesMTD
 			FROM salesman
 			WHERE salesman.salesmancode = '" . $SPG . "'";
-	
 						
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
@@ -87,6 +89,7 @@ function AverageSPGSales($SPG, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $db){
 							<th>' . $NumDaysB . _(' days') . '</th>
 							<th>' . $NumDaysC . _(' days') . '</th>
 							<th>' . $NumDaysD . _(' days') . '</th>
+							<th>' . _('MTD') . '</th>
 							<th>' . _('Trend') . '</th>
 							<th>' . 'Forecast '. $NumDaysC . _(' days') . '</th>
 						</tr>';
@@ -118,10 +121,12 @@ function AverageSPGSales($SPG, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $db){
 				$trend = "Degrading ". locale_number_format($percent,0) . "%";
 			}
 			$forecast = locale_number_format(round($myrow['salesC'], -5),0);
+			$MTD = locale_number_format($myrow['salesMTD'], 0);
 			
 			printf('<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
+					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -136,14 +141,10 @@ function AverageSPGSales($SPG, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $db){
 					$dailyB, 
 					$dailyC,
 					$dailyD,
+					$MTD,
 					$trend,
 					$forecast
 					);
-			$TotalDateA = $TotalDateA +($myrow['salesA']/$NumDaysA);
-			$TotalDateB = $TotalDateB +($myrow['salesB']/$NumDaysB);
-			$TotalDateC = $TotalDateC +($myrow['salesC']/$NumDaysC);
-			$TotalDateD = $TotalDateD +($myrow['salesD']/$NumDaysD);
-			$TotalForecast = $TotalForecast + round($myrow['salesC'], -5);
 			$i++;
 		}
 		echo '</table>
@@ -234,7 +235,8 @@ function SPGTypePayments($SPG, $maxdays, $db){
 	}
 }
 
-function lastSalesSPG($spg, $numsales, $db){
+function lastSalesSPG($spg, $NumDaysA, $db){
+	$StartDateA = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA-1));
 	
 	$SQL = "SELECT salesorders.orderno,	
 				salesorders.customerref,
@@ -245,12 +247,12 @@ function lastSalesSPG($spg, $numsales, $db){
 				salesorders.klvouchers
 			FROM salesorders
 			WHERE salesorders.salesperson = '". $spg ."'
-			ORDER BY salesorders.orderno DESC
-			LIMIT 0, ".$numsales;
+				AND salesorders.orddate >= '". $StartDateA . "'
+			ORDER BY salesorders.orderno DESC";
 	
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . $numsales . ' last sales for SPG ' . $spg . '</strong></p>';
+		echo '<p class="page_title_text" align="center"><strong>Sales of the last ' . $NumDaysA . ' days for SPG ' . $spg . '</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
