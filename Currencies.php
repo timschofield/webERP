@@ -264,10 +264,19 @@ if (isset($_POST['submit'])) {
 			} elseif ($FunctionalCurrency==$SelectedCurrency){
 				prnMsg(_('Cannot delete this currency because it is the functional currency of the company'),'warn');
 			} else {
-				//only delete if used in neither customer or supplier, comp prefs, bank trans accounts
-				$sql="DELETE FROM currencies WHERE currabrev='" . $SelectedCurrency . "'";
+				$sql= "SELECT COUNT(*) FROM bankaccounts
+					WHERE currcode = '" . $SelectedCurrency . "'";
 				$result = DB_query($sql);
-				prnMsg(_('The currency definition record has been deleted'),'success');
+				$myrow = DB_fetch_row($result);
+				if ($myrow[0] > 0){
+					prnMsg(_('Cannot delete this currency because there are bank accounts that use this currency') .
+					'<br />' . ' ' . _('There are') . ' ' . $myrow[0] . ' ' . _('bank accounts that refer to this currency'),'warn');
+				} else {
+					//only delete if used in neither customer or supplier, comp prefs, bank trans accounts
+					$sql="DELETE FROM currencies WHERE currabrev='" . $SelectedCurrency . "'";
+					$result = DB_query($sql);
+					prnMsg(_('The currency definition record has been deleted'),'success');
+				}
 			}
 		}
 	}
