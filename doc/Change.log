@@ -1,7 +1,9 @@
 webERP Change Log
+17/5/15 Version 4.12.3
 
 17/5/15 Phil: Made currencies delete check first for bank accounts set up using the currency - as reported by Ricard
 10/05/15 RChacon: New features: (1) GL account code for an inventory location, so that you can have general ledger transactions of inventory transfers to or from this location; useful for pledged inventory and goods on consignment. (2) Allow Invoicing parameter to allow or deny the availability of a location to be delivered; useful when a location stores compromised good that can not be sold.
+09/05/15 Exson: Fixed no input filtering bug which cause input failure and location quantity become mess in WorkOrderReceive.php. But the transaction failure maybe still there.
 08/05/15 RChacon: In DeliveryDetails.php, add $ViewTopic and $BookMark to ManualSalesOrders.html.
 07/05/15 RChacon: In CustomerInquiry.php, hide submit button and 'More Info' columns when printing. Add thead tag to enable the table header to be printed at the top of each page.
 07/05/15 RChacon: In SupplierInquiry.php, hide submit button and 'More Info' columns when printing. Add thead tag to enable the table header to be printed at the top of each page.
@@ -25,10 +27,6 @@ webERP Change Log
 01/4/15 Exson: Fixed the bug that when delete one gl item from the payment details, the bank account related setting will disappeared in Payments.php. Reported by Steven.
 01/4/15 Thumb: Add a Z_ImportCustbranch.php script to import customer branches.
 30/3/15  Vitaly: Get all taxes for the tax group, even if calculationorder is left at default value 0.
-
-
-
-09/05/15 Exson: Fixed no input filtering bug which cause input failure and location quantity become mess in WorkOrderReceive.php. But the transaction failure maybe still there.
 29/3/15  Phil: Allow dummy/service items to be propogated to CounterLogic POS installs through the api
 27/3/15 Exson: Remove redundant code from PrintCustTrans.php.
 27/3/15 Exson: Make credit not for freight only is printable in PrintCustTrans.php.

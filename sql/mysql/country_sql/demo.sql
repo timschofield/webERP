@@ -1,11 +1,11 @@
 CREATE DATABASE IF NOT EXISTS weberpdemo;
 USE weberpdemo;
 SET FOREIGN_KEY_CHECKS = 0;
--- MySQL dump 10.14  Distrib 5.5.40-MariaDB, for debian-linux-gnu (x86_64)
+-- MySQL dump 10.13  Distrib 5.5.41, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: weberpdemo
 -- ------------------------------------------------------
--- Server version	5.5.40-MariaDB-0ubuntu0.14.04.1
+-- Server version	5.5.41-0ubuntu0.14.04.1
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -1196,6 +1196,8 @@ CREATE TABLE `locations` (
   `cashsalebranch` varchar(10) DEFAULT '',
   `internalrequest` tinyint(4) NOT NULL DEFAULT '1' COMMENT 'Allow (1) or not (0) internal request from this location',
   `usedforwo` tinyint(4) NOT NULL DEFAULT '1',
+  `glaccountcode` varchar(20) NOT NULL DEFAULT '' COMMENT 'GL account of the location',
+  `allowinvoicing` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'Allow invoicing of items at this location',
   PRIMARY KEY (`loccode`),
   UNIQUE KEY `locationname` (`locationname`),
   KEY `taxprovinceid` (`taxprovinceid`),
@@ -3343,14 +3345,15 @@ CREATE TABLE `www_users` (
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-02-06 20:01:47
--- MySQL dump 10.14  Distrib 5.5.40-MariaDB, for debian-linux-gnu (x86_64)
+-- Dump completed on 2015-05-17 13:40:30
+-- MySQL dump 10.13  Distrib 5.5.41, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: weberpdemo
 -- ------------------------------------------------------
--- Server version	5.5.40-MariaDB-0ubuntu0.14.04.1
+-- Server version	5.5.41-0ubuntu0.14.04.1
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
@@ -4844,29 +4847,6 @@ INSERT INTO `chartdetails` VALUES ('2460',33,0,0,0,0);
 INSERT INTO `chartdetails` VALUES ('2460',34,0,0,0,0);
 INSERT INTO `chartdetails` VALUES ('2460',35,0,0,0,0);
 INSERT INTO `chartdetails` VALUES ('2460',36,0,0,0,0);
-INSERT INTO `chartdetails` VALUES ('2470',14,0,0,0,0);
-INSERT INTO `chartdetails` VALUES ('2470',15,0,0,0,0);
-INSERT INTO `chartdetails` VALUES ('2470',16,0,0,0,0);
-INSERT INTO `chartdetails` VALUES ('2470',17,0,0,0,0);
-INSERT INTO `chartdetails` VALUES ('2470',18,0,0,0,0);
-INSERT INTO `chartdetails` VALUES ('2470',19,0,0,0,0);
-INSERT INTO `chartdetails` VALUES ('2470',20,0,0,0,0);
-INSERT INTO `chartdetails` VALUES ('2470',21,0,0,0,0);
-INSERT INTO `chartdetails` VALUES ('2470',22,0,0,0,0);
-INSERT INTO `chartdetails` VALUES ('2470',23,0,0,0,0);
-INSERT INTO `chartdetails` VALUES ('2470',24,0,0,0,0);
-INSERT INTO `chartdetails` VALUES ('2470',25,0,0,0,0);
-INSERT INTO `chartdetails` VALUES ('2470',26,0,0,0,0);
-INSERT INTO `chartdetails` VALUES ('2470',27,0,0,0,0);
-INSERT INTO `chartdetails` VALUES ('2470',28,0,0,0,0);
-INSERT INTO `chartdetails` VALUES ('2470',29,0,0,0,0);
-INSERT INTO `chartdetails` VALUES ('2470',30,0,0,0,0);
-INSERT INTO `chartdetails` VALUES ('2470',31,0,0,0,0);
-INSERT INTO `chartdetails` VALUES ('2470',32,0,0,0,0);
-INSERT INTO `chartdetails` VALUES ('2470',33,0,0,0,0);
-INSERT INTO `chartdetails` VALUES ('2470',34,0,0,0,0);
-INSERT INTO `chartdetails` VALUES ('2470',35,0,0,0,0);
-INSERT INTO `chartdetails` VALUES ('2470',36,0,0,0,0);
 INSERT INTO `chartdetails` VALUES ('2480',14,0,0,0,0);
 INSERT INTO `chartdetails` VALUES ('2480',15,0,0,0,0);
 INSERT INTO `chartdetails` VALUES ('2480',16,0,0,0,0);
@@ -6932,7 +6912,6 @@ INSERT INTO `chartmaster` VALUES ('2410','Management Salaries Payable','Liabilit
 INSERT INTO `chartmaster` VALUES ('2420','Director / Partner Fees Payable','Liabilities');
 INSERT INTO `chartmaster` VALUES ('2450','Health Benefits Payable','Liabilities');
 INSERT INTO `chartmaster` VALUES ('2460','Pension Benefits Payable','Liabilities');
-INSERT INTO `chartmaster` VALUES ('2470','Canada Pension Plan Payable','Liabilities');
 INSERT INTO `chartmaster` VALUES ('2480','Employment Insurance Premiums Payable','Liabilities');
 INSERT INTO `chartmaster` VALUES ('2500','Land Payable','Liabilities');
 INSERT INTO `chartmaster` VALUES ('2550','Long-Term Bank Loan','Liabilities');
@@ -7051,7 +7030,7 @@ INSERT INTO `config` VALUES ('Check_Qty_Charged_vs_Del_Qty','1');
 INSERT INTO `config` VALUES ('CountryOfOperation','US');
 INSERT INTO `config` VALUES ('CreditingControlledItems_MustExist','0');
 INSERT INTO `config` VALUES ('DB_Maintenance','1');
-INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2015-02-06');
+INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2015-05-17');
 INSERT INTO `config` VALUES ('DefaultBlindPackNote','1');
 INSERT INTO `config` VALUES ('DefaultCreditLimit','1000');
 INSERT INTO `config` VALUES ('DefaultCustomerType','1');
@@ -7162,8 +7141,8 @@ INSERT INTO `config` VALUES ('SmtpSetting','0');
 INSERT INTO `config` VALUES ('SO_AllowSameItemMultipleTimes','1');
 INSERT INTO `config` VALUES ('StandardCostDecimalPlaces','2');
 INSERT INTO `config` VALUES ('TaxAuthorityReferenceName','');
-INSERT INTO `config` VALUES ('UpdateCurrencyRatesDaily','2015-02-06');
-INSERT INTO `config` VALUES ('VersionNumber','4.12.2');
+INSERT INTO `config` VALUES ('UpdateCurrencyRatesDaily','2015-05-17');
+INSERT INTO `config` VALUES ('VersionNumber','4.12.3');
 INSERT INTO `config` VALUES ('WeightedAverageCosting','0');
 INSERT INTO `config` VALUES ('WikiApp','0');
 INSERT INTO `config` VALUES ('WikiPath','wiki');
@@ -7200,11 +7179,11 @@ INSERT INTO `contracts` VALUES ('Test123','Testing manufact tape','14','14','TOR
 -- Dumping data for table `currencies`
 --
 
-INSERT INTO `currencies` VALUES ('Australian Dollars','AUD','Australia','cents',2,1.2824,0);
-INSERT INTO `currencies` VALUES ('Swiss Francs','CHF','Swizerland','centimes',2,0.9213,0);
-INSERT INTO `currencies` VALUES ('Euro','EUR','Euroland','cents',2,0.8713,1);
-INSERT INTO `currencies` VALUES ('Pounds','GBP','England','Pence',2,0.6525,0);
-INSERT INTO `currencies` VALUES ('Kenyian Shillings','KES','Kenya','none',0,91.3495,0);
+INSERT INTO `currencies` VALUES ('Australian Dollars','AUD','Australia','cents',2,1.2442,0);
+INSERT INTO `currencies` VALUES ('Swiss Francs','CHF','Swizerland','centimes',2,0.916,0);
+INSERT INTO `currencies` VALUES ('Euro','EUR','Euroland','cents',2,0.878,1);
+INSERT INTO `currencies` VALUES ('Pounds','GBP','England','Pence',2,0.636,0);
+INSERT INTO `currencies` VALUES ('Kenyian Shillings','KES','Kenya','none',0,95.927,0);
 INSERT INTO `currencies` VALUES ('US Dollars','USD','United States','Cents',2,1,1);
 
 --
@@ -7766,9 +7745,9 @@ INSERT INTO `labels` VALUES (1,'Test',210,297,0,0,5,10,0,0);
 -- Dumping data for table `locations`
 --
 
-INSERT INTO `locations` VALUES ('AN','Anaheim',' ','','','','','United States','','','','Brett',1,'',0,'',0,1);
-INSERT INTO `locations` VALUES ('MEL','Melbourne','1234 Collins Street','Melbourne','Victoria 2345','','2345','Australia','+(61) (3) 5678901','+61 3 56789013','jacko@webdemo.com','Jack Roberts',1,'',0,'',1,1);
-INSERT INTO `locations` VALUES ('TOR','Toronto','Level 100 ','CN Tower','Toronto','','','','','','','Clive Contrary',1,'',1,'',1,1);
+INSERT INTO `locations` VALUES ('AN','Anaheim',' ','','','','','United States','','','','Brett',1,'',0,'',0,1,'',1);
+INSERT INTO `locations` VALUES ('MEL','Melbourne','1234 Collins Street','Melbourne','Victoria 2345','','2345','Australia','+(61) (3) 5678901','+61 3 56789013','jacko@webdemo.com','Jack Roberts',1,'',0,'',1,1,'',1);
+INSERT INTO `locations` VALUES ('TOR','Toronto','Level 100 ','CN Tower','Toronto','','','','','','','Clive Contrary',1,'',1,'',1,1,'',1);
 
 --
 -- Dumping data for table `locationusers`
@@ -11045,6 +11024,7 @@ INSERT INTO `scripts` VALUES ('Currencies.php',9,'Defines the currencies availab
 INSERT INTO `scripts` VALUES ('CustEDISetup.php',11,'Allows the set up the customer specified EDI parameters for server, email or ftp.');
 INSERT INTO `scripts` VALUES ('CustItem.php',11,'Customer Items');
 INSERT INTO `scripts` VALUES ('CustLoginSetup.php',15,'');
+INSERT INTO `scripts` VALUES ('CustomerAccount.php',1,'Shows customer account/statement on screen rather than PDF');
 INSERT INTO `scripts` VALUES ('CustomerAllocations.php',3,'Allows customer receipts and credit notes to be allocated to sales invoices');
 INSERT INTO `scripts` VALUES ('CustomerBalancesMovement.php',3,'Allow customers to be listed in local currency with balances and activity over a date range');
 INSERT INTO `scripts` VALUES ('CustomerBranches.php',3,'Defines the details of customer branches such as delivery address and contact details - also sales area, representative etc');
@@ -11150,6 +11130,7 @@ INSERT INTO `scripts` VALUES ('PaymentAllocations.php',5,'');
 INSERT INTO `scripts` VALUES ('PaymentMethods.php',15,'');
 INSERT INTO `scripts` VALUES ('Payments.php',5,'Entry of bank account payments either against an AP account or a general ledger payment - if the AP-GL link in company preferences is set');
 INSERT INTO `scripts` VALUES ('PaymentTerms.php',10,'Defines the payment terms records, these can be expressed as either a number of days credit or a day in the following month. All customers and suppliers must have a corresponding payment term recorded against their account');
+INSERT INTO `scripts` VALUES ('PcAnalysis.php',15,'Creates an Excel with details of PC expnese for 24 months');
 INSERT INTO `scripts` VALUES ('PcAssignCashToTab.php',6,'');
 INSERT INTO `scripts` VALUES ('PcAuthorizeExpenses.php',6,'');
 INSERT INTO `scripts` VALUES ('PcClaimExpensesFromTab.php',6,'');
@@ -11268,6 +11249,7 @@ INSERT INTO `scripts` VALUES ('SpecialOrder.php',4,'Allows for a sales order to 
 INSERT INTO `scripts` VALUES ('StockAdjustments.php',11,'Entry of quantity corrections to stocks in a selected location.');
 INSERT INTO `scripts` VALUES ('StockAdjustmentsControlled.php',11,'Entry of batch references or serial numbers on controlled stock items being adjusted');
 INSERT INTO `scripts` VALUES ('StockCategories.php',11,'Defines the stock categories. All items must refer to one of these categories. The category record also allows the specification of the general ledger codes where stock items are to be posted - the balance sheet account and the profit and loss effect of any adjustments and the profit and loss effect of any price variances');
+INSERT INTO `scripts` VALUES ('StockCategorySalesInquiry.php',2,'Sales inquiry by stock category showing top items');
 INSERT INTO `scripts` VALUES ('StockCheck.php',2,'Allows creation of a stock check file - copying the current quantites in stock for later comparison to the entered counts. Also produces a pdf for the count sheets.');
 INSERT INTO `scripts` VALUES ('StockClone.php',11,'Script to copy a stock item and associated properties, image, price, purchase and cost data');
 INSERT INTO `scripts` VALUES ('StockCostUpdate.php',9,'Allows update of the standard cost of items producing general ledger journals if the company preferences stock GL interface is active');
@@ -11999,12 +11981,13 @@ INSERT INTO `workorders` VALUES (36,'MEL','2014-08-30','2014-08-30',0,0,NULL);
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('admin','$2y$10$Q8HLC/2rQaB5NcCcK6V6ZOQG3chIsx16mKtZRoSaUsU9okMBDbUwG','Demonstration user','','','','','admin@weberp.org','MEL',8,1,'2015-02-06 20:00:59','','A4','1,1,1,1,1,1,1,1,1,1,1,',0,0,50,'xenos','en_GB.utf8',0,0);
+INSERT INTO `www_users` VALUES ('admin','$2y$10$Q8HLC/2rQaB5NcCcK6V6ZOQG3chIsx16mKtZRoSaUsU9okMBDbUwG','Demonstration user','','','','','admin@weberp.org','MEL',8,1,'2015-05-17 13:37:32','','A4','1,1,1,1,1,1,1,1,1,1,1,',0,0,50,'xenos','en_GB.utf8',0,0);
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-02-06 20:01:47
+-- Dump completed on 2015-05-17 13:40:30
 SET FOREIGN_KEY_CHECKS = 1;
