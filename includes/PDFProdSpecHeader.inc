@@ -31,8 +31,8 @@ $LeftOvers = $pdf->addTextWrap($XPos+330,$YPos,140,$FontSize,_('Technical Data S
 $YPos -= $line_height;
 $YPos -= $line_height;
 $pdf->setFont('','B');
-$LeftOvers = $pdf->addTextWrap($XPos+1,$YPos,240,$FontSize,$Spec);
-$Offset= array_sum($pdf->GetStringWidth(($Spec), '', '', 0, true)) + 4;
+$Offset= array_sum($pdf->GetStringWidth(($Spec), '', '', 0, true)) + 2;
+$LeftOvers = $pdf->addTextWrap($XPos+1,$YPos,$Offset,$FontSize,$Spec);
 $pdf->setFont('','');
 $LeftOvers = $pdf->addTextWrap($XPos+$Offset,$YPos,500-$Offset,$FontSize,'- ' . $SpecDesc);
 while (mb_strlen($LeftOvers) > 1) {
