@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.12.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-05-17 13:40+1200\n"
-"PO-Revision-Date: 2015-05-14 08:31-0600\n"
+"PO-Revision-Date: 2015-05-17 20:11-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -16975,6 +16975,7 @@ msgstr "Detalles de nueva ubicación"
 #: Locations.php:538
 msgid "Enter up to five characters for the inventory location code"
 msgstr ""
+"Introduzca hasta cinco caracteres para el código de ubicación de inventario"
 
 #: Locations.php:589
 msgid ""
@@ -16991,6 +16992,8 @@ msgid ""
 "Enter the name of the responsible person to contact for this inventory "
 "location"
 msgstr ""
+"introduzca el nombre de la persona responsable a contactar para esta "
+"ubicación de inventario"
 
 #: Locations.php:596
 msgid "Delivery Address 1 (Building)"
@@ -17013,6 +17016,8 @@ msgid ""
 "The phone number should consist of numbers, spaces, parentheses, or the + "
 "character"
 msgstr ""
+"El número de teléfono debe consistir en números, espacios, paréntesis, o el "
+"carácter +"
 
 #: Locations.php:634 SalesPeople.php:344 SupplierContacts.php:269
 msgid "Facsimile No"
@@ -17023,6 +17028,8 @@ msgid ""
 "The fax number should consist of numbers, parentheses, spaces or the + "
 "character"
 msgstr ""
+"El número de facsímil debe consistir en números, espacios, paréntesis, o el "
+"carácter +"
 
 #: Locations.php:657
 msgid "Default Counter Sales Customer Code"
@@ -17059,12 +17066,16 @@ msgstr "¿Usar para producciones con órdenes de trabajo?"
 msgid ""
 "Enter the GL account for this location, or leave it in blank if not needed"
 msgstr ""
+"Introduzca la cuenta contable para esta ubicación, o déjelo en blanco si no "
+"se necesita"
 
 #: Locations.php:698
 msgid ""
 "Use this parameter to indicate whether these inventory location allows or "
 "denies the invoicing of its items."
 msgstr ""
+"Use este parámetro para indicar si esta ubicación de inventario permite o "
+"deniega la facturación de sus artículos."
 
 #: LocationUsers.php:5 includes/MainMenuLinksArray.php:528
 msgid "Inventory Location Authorised Users Maintenance"
