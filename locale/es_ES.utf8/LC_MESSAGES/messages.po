@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.12.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-05-17 13:40+1200\n"
-"PO-Revision-Date: 2015-05-17 20:11-0600\n"
+"PO-Revision-Date: 2015-05-19 07:25-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -29557,7 +29557,7 @@ msgstr ""
 
 #: ShopParameters.php:233
 msgid "Shop Manager Email"
-msgstr ""
+msgstr "Correo-e del gerente de tienda"
 
 #: ShopParameters.php:235
 msgid "Enter the email address of the webSHOP manager."

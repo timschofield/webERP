@@ -1,4 +1,7 @@
 webERP Change Log
+
+19/5/15 RChacon: Add documentation and help for users in Locations.php and ManualInventory.html.
+
 17/5/15 Version 4.12.3
 
 17/5/15 Phil: Made currencies delete check first for bank accounts set up using the currency - as reported by Ricard

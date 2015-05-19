@@ -522,36 +522,38 @@
     <p>When creating a purchase order, the inventory location that it is required for is specified. The inventory location address and contact details defined here are used as the default addresses available for delivery of goods ordered on purchase orders.</p>
 
 	<dl>
-	<!--dt><Location Code</dt>
-	<dd>.</dd>
+	<dt>Location Code</dt>
+	<dd>Enter up to five characters for the inventory location code.</dd>
 	<dt>Location Name</dt>
-	<dd>.</dd>
+	<dd>The inventory location name could be either a warehouse or a factory.</dd>
 	<dt>Contact for deliveries</dt>
+	<dd>This field is for the name of the responsible person to contact for this inventory location.</dd>
+	<!--dt>Delivery Address 1 (Building)</dt>
 	<dd>.</dd>
-	<dt>Delivery Address 1 (Building)</dt>
+	<dt>Delivery Address 2 (Street)</dt>
 	<dd>.</dd>
-	<dt>Delivery Address 2 (Street):</dt>
+	<dt>Delivery Address 3 (Suburb)</dt>
 	<dd>.</dd>
-	<dt>Delivery Address 3 (Suburb):</dt>
+	<dt>Delivery Address 4 (City)</dt>
 	<dd>.</dd>
-	<dt>Delivery Address 4 (City):</dt>
-	<dd>.</dd>
-	<dt>Delivery Address 5 (Zip Code):</dt>
+	<dt>Delivery Address 5 (Zip Code)</dt>
 	<dd>.</dd>
 	<dt>Country</dt>
-	<dd>.</dd>
-	<dt>Telephone No:</dt>
-	<dd>.</dd>
-	<dt>Facsimile No:</dt>
-	<dd>.</dd>
-	<dt>Email:</dt>
 	<dd>.</dd-->
-	<dt>Tax Province:</dt>
+	<dt>Telephone No</dt>
+	<dd>The phone number should consist of numbers, spaces, parentheses, or the + character.</dd>
+	<dt>Facsimile No</dt>
+	<dd>The fax number should consist of numbers, spaces, parentheses, or the + character.</dd>
+	<dt>Email</dt>
+	<dd>The email address should be an email format such as adm@weberp.org.</dd>
+	<dt>Tax Province</dt>
 	<dd>Since the location represents the physical location from where goods/services are supplied it is important for determining the tax applicable on a sale. The governing tax authority must specified with the location record. It is used in the calculation of the applicable rate of tax in conjunction with the tax authority of the customer branch being delivered to and the tax level of the item being sold.</dd>
 	<dt><a id="DefaultCounterSalesCustomerCode">Default Counter Sales Customer Code</a></dt>
-		<dd>The counter sales functionality looks at the default inventory location for a user and when that user enters a counter sale it uses the customer account and customer branch defined against the inventory location record. Consider a business with locations in Melbourne Australia and one in Anahaim USA - it is unlikely that a user based in Anaheim would be making a counter sale in Melbourne! Each location can have a customer account (and branch) defined for it's counter sales. These customers are expected to be cash only customers as the counter sales functionality expects the cash to be taken at the time of the sale. Not a substitute for proper Point of Sale - but suitable for occassional Counter Sales.</dd>
+		<dd>The counter sales functionality looks at the default inventory location for a user and when that user enters a counter sale it uses the customer account and customer branch defined against the inventory location record. Consider a business with locations in Melbourne Australia and one in Anahaim USA - it is unlikely that a user based in Anaheim would be making a counter sale in Melbourne! Each location can have a customer account (and branch) defined for it's counter sales. These customers are expected to be cash only customers as the counter sales functionality expects the cash to be taken at the time of the sale. Not a substitute for proper Point of Sale - but suitable for occassional Counter Sales.<br />
+		If counter sales are being used for this location then an existing customer account code needs to be entered here. All sales created from the counter sales will be recorded against this customer account.</dd>
 	<dt>Counter Sales Branch Code</dt>
-		<dd>See <a href="#DefaultCounterSalesCustomerCode">Default Counter Sales Customer Code</a>.</dd>
+		<dd>If counter sales are being used for this location then an existing customer branch code for the customer account code entered above needs to be entered here. All sales created from the counter sales will be recorded against this branch.<br />
+		See <a href="#DefaultCounterSalesCustomerCode">Default Counter Sales Customer Code</a>.</dd>
 	<!--dt>Allow internal requests?:</dt>
 	<dd>.</dd-->
 	<dt>Use for Work Order Productions?</dt>
