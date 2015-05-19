@@ -83,6 +83,35 @@ function isFamily($stockid, $Family){
 	return (substr($stockid, 0,2) == $Family);
 }
 
+function TypeOfItem($stockid){
+	if (isRing($stockid)){
+		$Type = "Ring";
+	}elseif (isToeRing($stockid)){
+		$Type = "ToeRing";
+	}elseif (isBead($stockid)){
+		$Type = "Bead";
+	}elseif (isEarring($stockid)){
+		$Type = "Earring";
+	}elseif (isEarcuff($stockid)){
+		$Type = "EarCuff";
+	}elseif (isBracelet($stockid)){
+		$Type = "Bracelet";
+	}elseif (isAnklet($stockid)){
+		$Type = "Anklet";
+	}elseif (isPendant($stockid)){
+		$Type = "Pendant";
+	}elseif (isNecklace($stockid)){
+		$Type = "Necklace";
+	}elseif (isPlasticBag($stockid)){
+		$Type = "Bag";
+	}elseif (isTali($stockid)){
+		$Type = "Tali";
+	}else{
+		$Type = "Unknown";
+	}
+	return $Type;
+}
+
 function CodeModelRing($stockid){
 	if (strlen($stockid) == 6){
 		$CodeModel = $stockid;
