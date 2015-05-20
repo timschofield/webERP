@@ -87,8 +87,8 @@ if ($StockID != ''){
 						<th>' . _('Type') . '</th>
 						<th>' . _('Number') . '</th>
 						<th>' . _('Reference') . '</th>
-						<th>' . _('Quantity') . '</th>
-						<th>' . _('New Qty') . '</th>
+						<th>' . _('Qty Movement') . '</th>
+						<th>' . _('Stock after movement') . '</th>
 					</tr>';
 
 	echo $tableheader;

@@ -4921,7 +4921,11 @@ function ConsumablesGoodsNotEnoughStock($DaysUsage, $DaysMinStock, $DaysStockPur
 
 function ActiveItemsWithoutPicture($RootPath, $db){
 /* EXPLAIN SQL 2014-05-21	Can't use key. Probably explained at http://stackoverflow.com/questions/11784322/why-would-mysql-not-use-keys-when-there-are-possible-keys 
-2014-05-30Fixed adding a new index disontinued+Stockid
+2014-05-30 Fixed adding a new index disontinued+Stockid
+2015-05-19 TAke out some exceptions 
+			AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_PROMOTIONAL_ITEMS . "
+			AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_DISCOUNT . "
+
 */
 	$SQL = "SELECT stockmaster.stockid,
 			stockmaster.description,
@@ -4930,11 +4934,9 @@ function ActiveItemsWithoutPicture($RootPath, $db){
 		WHERE stockmaster.categoryid = stockcategory.categoryid
 			AND stockmaster.discontinued = 0
 			AND stockcategory.stocktype = 'F'
+			AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_OLD . "
 			AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_SHOP_DISPLAYS . "
 			AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_SHOP_CONSUMABLES . "
-			AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_PROMOTIONAL_ITEMS . "
-			AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_DISCOUNT . "
-			AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_OLD . "
 		ORDER BY stockcategory.categorydescription, stockmaster.stockid";
 	$result = DB_query($SQL);
 	$showHeader = TRUE;

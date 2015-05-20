@@ -890,7 +890,7 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1 ".
 							$SQLByShop . "
-							AND salesorders.orddate >  '". $StartDateMTD . "'
+							AND salesorders.orddate >=  '". $StartDateMTD . "'
 							AND salesorders.orddate <= '". $Yesterday . "'
 							AND salesorders.salesperson = salesman.salesmancode) AS salesMTD
 				FROM salesman
@@ -904,7 +904,6 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 							AND salesorders.salesperson = salesman.salesmancode) DESC";
 	}
 	
-						
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		if ($Year == "LastYear"){

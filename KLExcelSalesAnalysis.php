@@ -41,7 +41,13 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
 							stockmaster.categoryid,
 							stockmaster.lastcategoryupdate,
 							(stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost) AS standardcost,
-							stockmaster.discountcategory
+							stockmaster.discountcategory,
+							(SELECT supplierno
+								FROM purchdata
+								WHERE purchdata.stockid = stockmaster.stockid
+									AND preferred = 1
+								ORDER BY effectivefrom DESC
+								LIMIT 1) AS preferredsupplier
 					FROM stockmaster
 					WHERE stockmaster.discontinued = 0
 						AND stockmaster.categoryid IN ('". implode("','",$_POST['Categories'])."')
@@ -121,6 +127,7 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
  			$objPHPExcel->getActiveSheet()->setCellValue('U5', 'DAYS QOH+QOO');
 
  			$objPHPExcel->getActiveSheet()->setCellValue('V5', 'PCS TO PO/WO');
+ 			$objPHPExcel->getActiveSheet()->setCellValue('W5', 'SUPPLIER');
 			
 			$objPHPExcel->getActiveSheet()->setCellValue('AA5', 'SALES_66');
  			$objPHPExcel->getActiveSheet()->setCellValue('AB5', 'SALES_SE');
@@ -145,32 +152,7 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
 				$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, $myrow['categoryid']);
 				$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, substr($myrow['stockid'], 0,2));
 				
-				if (isRing($myrow['stockid'])){
-					$Type = "Ring";
-				}elseif (isToeRing($myrow['stockid'])){
-					$Type = "ToeRing";
-				}elseif (isBead($myrow['stockid'])){
-					$Type = "Bead";
-				}elseif (isEarring($myrow['stockid'])){
-					$Type = "Earring";
-				}elseif (isEarcuff($myrow['stockid'])){
-					$Type = "EarCuff";
-				}elseif (isBracelet($myrow['stockid'])){
-					$Type = "Bracelet";
-				}elseif (isAnklet($myrow['stockid'])){
-					$Type = "Anklet";
-				}elseif (isPendant($myrow['stockid'])){
-					$Type = "Pendant";
-				}elseif (isNecklace($myrow['stockid'])){
-					$Type = "Necklace";
-				}elseif (isPlasticBag($myrow['stockid'])){
-					$Type = "Bag";
-				}elseif (isTali($myrow['stockid'])){
-					$Type = "Tali";
-				}else{
-					$Type = "Unknown";
-				}
-				$objPHPExcel->getActiveSheet()->setCellValue('E'.$i, $Type);
+				$objPHPExcel->getActiveSheet()->setCellValue('E'.$i, TypeOfItem($myrow['stockid']));
 				$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, ConvertSQLDate($myrow['lastcategoryupdate']));
 
 				$objPHPExcel->getActiveSheet()->setCellValue('G'.$i, round($myrow['standardcost'],0));
@@ -195,6 +177,7 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
 				$objPHPExcel->getActiveSheet()->setCellValue('U'.$i, '=S'.$i.'+T'.$i.'');
 				
 				$objPHPExcel->getActiveSheet()->setCellValue('V'.$i, '=IF(U'.$i.'<$C$4,ROUNDUP(($C$4-U'.$i.')*R'.$i.',0),"")'.'');
+				$objPHPExcel->getActiveSheet()->setCellValue('W'.$i, $myrow['preferredsupplier']);
 
 				$objPHPExcel->getActiveSheet()->setCellValue('AA'.$i, round(ItemCodeQuantityInvoiced($myrow['stockid'],$FromDate,$ToDate,'RETAIL66'),0));
 				$objPHPExcel->getActiveSheet()->setCellValue('AB'.$i, round(ItemCodeQuantityInvoiced($myrow['stockid'],$FromDate,$ToDate,'RETAILSE'),0));
