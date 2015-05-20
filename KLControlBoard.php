@@ -244,8 +244,8 @@ if ($KL_PurchasingManager
 	OR $KL_ShopSupportTeam){
 	
 	ItemsWithStockLocationButNoStockAvailable("WABOM", "WaterBom", 15, 600, $RootPath, $db);
-	ItemsWithStockLocationButNoStockAvailable("WHAYA", "Ayana", 15, 600, $RootPath, $db);
-	ItemsWithStockLocationButNoStockAvailable("WHINT", "InterContinental", 15, 600, $RootPath, $db);
+//	ItemsWithStockLocationButNoStockAvailable("WHAYA", "Ayana", 15, 600, $RootPath, $db);
+//	ItemsWithStockLocationButNoStockAvailable("WHINT", "InterContinental", 15, 600, $RootPath, $db);
 }
 
 if ($KL_PurchasingManager
@@ -288,7 +288,7 @@ if ($KL_PurchasingManager){
 	ValueStockLocation("TOKSA", 1000, 1400, 0, 0, $db);
 	ValueStockLocation("TOKKS",  650,  750, 0, 0, $db);
 	ValueStockLocation("TOKJC",  900, 1100, 0, 0, $db);
-//	ValueStockLocation("TOKBW",  650,  800, 0, 0, $db);
+	ValueStockLocation("TOKBW",  650,  800, 0, 0, $db);
 	ValueStockLocation("TOKUB", 1000, 1200, 0, 0, $db);
 	ValueStockLocation("TOKMF", 1300, 1500, 0, 0, $db);
 	ValueStockLocation("TOKSE", 1000, 1200, 0, 0, $db);
@@ -364,11 +364,11 @@ if ($KL_SystemAdmin){
 }
 
 if ($KL_SystemAdmin){
-	InsuficientStockForShopPackaging('SHPACK', 21, 75, 30, false, $RootPath, $db);
+	InsuficientStockForShopPackaging('SHPACK', 21, 85, 30, false, $RootPath, $db);
 }
 
 if ($KL_PurchasingTeam){
-	InsuficientStockForShopPackaging('SHPACK', 21, 75, 30, true, $RootPath, $db);
+	InsuficientStockForShopPackaging('SHPACK', 21, 85, 30, true, $RootPath, $db);
 }
 
 if ($KL_SystemAdmin 
