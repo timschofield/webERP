@@ -1,5 +1,6 @@
 webERP Change Log
 
+21/5/15 RChacon: Adjust CustomerAccount.php for direct printing.
 19/5/15 RChacon: Add documentation and help for users in Locations.php and ManualInventory.html.
 
 17/5/15 Version 4.12.3
