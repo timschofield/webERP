@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.12.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-05-17 13:40+1200\n"
-"PO-Revision-Date: 2015-05-19 07:25-0600\n"
+"PO-Revision-Date: 2015-05-21 10:54-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -1083,7 +1083,7 @@ msgstr "Total"
 
 #: AgedDebtors.php:14
 msgid "Aged Customer Balance Listing"
-msgstr "Consulta de saldos de cuentas por cobrar por vencimiento"
+msgstr "Consultar saldos de cuentas por cobrar por vencimiento"
 
 #: AgedDebtors.php:15
 msgid "Aged Customer Balances"
@@ -9397,11 +9397,11 @@ msgstr ""
 
 #: CustomerInquiry.php:194 CustomerInquiry.php:199 CustomerInquiry.php:203
 msgid "Invoices not fully allocated"
-msgstr ""
+msgstr "Facturas no totalmente asignadas"
 
 #: CustomerInquiry.php:195 CustomerInquiry.php:200 CustomerInquiry.php:204
 msgid "Invoices fully allocated"
-msgstr "Facturas totalmente asignados"
+msgstr "Facturas totalmente asignadas"
 
 #: CustomerInquiry.php:236 SupplierInquiry.php:194
 msgid "No transactions were returned by the SQL because"
@@ -9796,7 +9796,7 @@ msgstr ""
 
 #: CustomerReceipt.php:1039
 msgid "Customer Transaction Inquiry"
-msgstr "Consulta de transacción del cliente"
+msgstr "Consultar transacción del cliente"
 
 #: CustomerReceipt.php:1048 SelectGLAccount.php:116 SelectGLAccount.php:131
 #, php-format
@@ -10484,7 +10484,7 @@ msgstr "Transacciones diarias del banco"
 #: DailyBankTransactions.php:120 DailyBankTransactions.php:121
 #: DailyBankTransactions.php:128
 msgid "Bank Transactions Inquiry"
-msgstr "Consulta de transacciones bancarias"
+msgstr "Consultar transacciones bancarias"
 
 #: DailyBankTransactions.php:43 Payments.php:794 SuppPaymentRun.php:332
 msgid "Bank Accounts have not yet been defined. You must first"
@@ -10591,7 +10591,7 @@ msgstr ""
 
 #: DailySalesInquiry.php:6 includes/MainMenuLinksArray.php:56
 msgid "Daily Sales Inquiry"
-msgstr "Consulta de ventas diarias"
+msgstr "Consultar ventas diarias"
 
 #: DailySalesInquiry.php:9
 msgid "Daily Sales"
@@ -13933,7 +13933,7 @@ msgstr "Reporte de Cuentas Contables"
 #: GLAccountCSV.php:21 GLAccountInquiry.php:5 GLAccountInquiry.php:33
 #: GLAccountReport.php:223
 msgid "General Ledger Account Inquiry"
-msgstr "Consulta de cuentas contables"
+msgstr "Consultar cuentas contables"
 
 #: GLAccountCSV.php:23 GLAccountReport.php:225
 msgid "Use the keyboard Shift key to select multiple accounts and periods"
@@ -14488,7 +14488,7 @@ msgstr ""
 
 #: GLCodesInquiry.php:7
 msgid "GL Codes Inquiry"
-msgstr "Consultar Códigos Contables"
+msgstr "Consultar códigos contables"
 
 #: GLCodesInquiry.php:25 SelectGLAccount.php:114
 msgid "Group"
@@ -15367,7 +15367,7 @@ msgstr "Procesar Bienes Recibidos"
 
 #: HistoricalTestResults.php:5
 msgid "Historical Test Results"
-msgstr ""
+msgstr "Resultados de pruebas históricas"
 
 #: HistoricalTestResults.php:26 MRPCalendar.php:47 POReport.php:88
 #: POReport.php:871 SalesInquiry.php:82 SelectQASamples.php:166
@@ -15383,12 +15383,12 @@ msgstr "Fecha A Inválida"
 
 #: HistoricalTestResults.php:51
 msgid "Show Test Results For"
-msgstr ""
+msgstr "Mostrar resultados de pruebas para"
 
 #: HistoricalTestResults.php:72 SelectQASamples.php:251
 #: TestPlanResults.php:128
 msgid "From Sample Date"
-msgstr ""
+msgstr "Desde fecha de mustreo"
 
 #: HistoricalTestResults.php:76 SelectQASamples.php:251
 #: TestPlanResults.php:128
@@ -15404,7 +15404,7 @@ msgstr "Enviar"
 
 #: HistoricalTestResults.php:134
 msgid "Historical Test Results for"
-msgstr ""
+msgstr "Resultados de pruebas históricas para"
 
 #: HistoricalTestResults.php:136
 msgid "Sample ID:"
@@ -15412,7 +15412,7 @@ msgstr "Identificación de muestra:"
 
 #: HistoricalTestResults.php:136 PDFGrn.php:142 PDFStockTransfer.php:135
 msgid "Lot/Serial:"
-msgstr ""
+msgstr "Lote/Serie:"
 
 #: HistoricalTestResults.php:136
 msgid "Identifier:"
@@ -20173,7 +20173,7 @@ msgstr ""
 
 #: PDFCOA.php:27
 msgid "Select Certificate of Analysis To Print"
-msgstr ""
+msgstr "Seleccione el certificado de análisis a imprimir"
 
 #: PDFCOA.php:35 PO_Items.php:844
 msgid "Enter Item"
@@ -20185,7 +20185,7 @@ msgstr "Introducir lote"
 
 #: PDFCOA.php:51
 msgid "Or Select Existing Lot"
-msgstr ""
+msgstr "O seleccione un lote existente"
 
 #: PDFCOA.php:64
 msgid "Lot/Serial"
@@ -26376,7 +26376,7 @@ msgstr "Cant"
 
 #: SalesCategories.php:7 includes/MainMenuLinksArray.php:274
 msgid "Sales Category Maintenance"
-msgstr "Administrar Categorías de Ventas"
+msgstr "Administrar categorías de ventas"
 
 #: SalesCategories.php:63
 msgid "Somthing is wrong with uploading a file"
@@ -26951,7 +26951,7 @@ msgstr "Actual?"
 
 #: SalesTopCustomersInquiry.php:6 SalesTopCustomersInquiry.php:9
 msgid "Top Customer Sales Inquiry"
-msgstr "Consulta de ventas a mejores clientes"
+msgstr "Consultar ventas a mejores clientes"
 
 #: SalesTopCustomersInquiry.php:82 SalesTopItemsInquiry.php:83
 #: WWW_Users.php:685
@@ -26976,11 +26976,11 @@ msgstr "Rango"
 
 #: SalesTopItemsInquiry.php:6
 msgid "Top Sales Inquiry"
-msgstr "Consulta de Mejores Ventas"
+msgstr "Consultar mejores ventas"
 
 #: SalesTopItemsInquiry.php:9 includes/MainMenuLinksArray.php:66
 msgid "Top Sales Items Inquiry"
-msgstr "Consulta de artículos más vendidos"
+msgstr "Consultar artículos más vendidos"
 
 #: SalesTypes.php:5 includes/MainMenuLinksArray.php:496
 msgid "Sales Types"
@@ -27630,7 +27630,7 @@ msgstr "Seleccione una opción de menú para trabajar sobre este cliente"
 
 #: SelectCustomer.php:215 SelectCustomer.php:247
 msgid "Customer Inquiries"
-msgstr "Consultar clientes"
+msgstr "Consultas de clientes"
 
 #: SelectCustomer.php:216 SelectCustomer.php:248
 msgid "Customer Transactions"
@@ -27638,7 +27638,7 @@ msgstr "Transacciones del cliente"
 
 #: SelectCustomer.php:221 includes/MainMenuLinksArray.php:117
 msgid "Customer Transaction Inquiries"
-msgstr "Consultar Transacciones de clientes"
+msgstr "Consultas de transacciones de clientes"
 
 #: SelectCustomer.php:222
 msgid "Customer Account statement on screen"
@@ -28293,7 +28293,7 @@ msgstr "Consultar Artículos"
 
 #: SelectProduct.php:368 SelectProduct.php:486
 msgid "Item Transactions"
-msgstr "Transacciones de Artículos"
+msgstr "Transacciones de artículos"
 
 #: SelectProduct.php:369 SelectProduct.php:487 Stocks.php:5
 msgid "Item Maintenance"
@@ -28442,7 +28442,7 @@ msgstr "Identificación de muestra"
 
 #: SelectQASamples.php:250 TestPlanResults.php:127
 msgid "Lot Number"
-msgstr ""
+msgstr "Número de lote"
 
 #: SelectQASamples.php:252 TestPlanResults.php:129
 msgid "Search Samples"
@@ -28469,7 +28469,7 @@ msgstr "Especificación"
 
 #: SelectQASamples.php:398 TestPlanResults.php:281 TestPlanResults.php:757
 msgid "Lot / Serial"
-msgstr ""
+msgstr "Lote / Serie"
 
 #: SelectQASamples.php:399 SelectQASamples.php:503 SelectQASamples.php:563
 #: TestPlanResults.php:282 TestPlanResults.php:758
@@ -28500,7 +28500,7 @@ msgstr "Mostrar todas las muestras"
 #: SelectQASamples.php:499 SelectQASamples.php:559
 #: includes/PDFWOPageHeader.inc:45
 msgid "Lot"
-msgstr ""
+msgstr "Lote"
 
 #: SelectQASamples.php:515 SelectQASamples.php:571
 msgid "Use for Cert?"
@@ -28669,7 +28669,7 @@ msgstr "Seleccione una opción del menú para operar usando este proveedor"
 
 #: SelectSupplier.php:166 SelectSupplier.php:204
 msgid "Supplier Inquiries"
-msgstr "Consultar proveedores"
+msgstr "Consultas de proveedores"
 
 #: SelectSupplier.php:167 SelectSupplier.php:205
 msgid "Supplier Transactions"
@@ -30654,7 +30654,7 @@ msgstr ""
 #: StockCategorySalesInquiry.php:6 StockCategorySalesInquiry.php:9
 #: includes/MainMenuLinksArray.php:59
 msgid "Sales By Category By Item Inquiry"
-msgstr ""
+msgstr "Consultar ventas por categoría y por artículo"
 
 #: StockCategorySalesInquiry.php:10
 msgid "Select the parameters for the inquiry"
@@ -32508,7 +32508,7 @@ msgstr ""
 
 #: Stocks.php:1037
 msgid "Long Description"
-msgstr ""
+msgstr "Descripción larga"
 
 #: Stocks.php:1335
 msgid "Order multiple. It is the minimum packing quantity."
@@ -34750,7 +34750,7 @@ msgstr "Cuenta Bancaria No."
 
 #: Suppliers.php:776
 msgid "Less than 30 characters"
-msgstr ""
+msgstr "Menos de 30 caracteres"
 
 #: Suppliers.php:793 Suppliers.php:1044
 msgid "Factor Company"
@@ -38045,7 +38045,7 @@ msgstr ""
 
 #: UserLocations.php:65
 msgid "is already authorised for this user"
-msgstr ""
+msgstr "ya está autorizado para este usuario"
 
 #: UserLocations.php:154
 msgid "Authorised inventory locations for"
@@ -45303,11 +45303,11 @@ msgstr "Informes de pedidos facturados"
 
 #: includes/MainMenuLinksArray.php:57
 msgid "Sales By Sales Type Inquiry"
-msgstr "Consulta de ventas por tipo de venta"
+msgstr "Consultar ventas por tipo de venta"
 
 #: includes/MainMenuLinksArray.php:58
 msgid "Sales By Category Inquiry"
-msgstr "Consulta de ventas por categoría"
+msgstr "Consultar ventas por categoría"
 
 #: includes/MainMenuLinksArray.php:60
 msgid "Sales Analysis Reports"
@@ -45319,7 +45319,7 @@ msgstr "Gráficas de Ventas"
 
 #: includes/MainMenuLinksArray.php:62
 msgid "Top Sellers Inquiry"
-msgstr "Consulta de mejores ventas"
+msgstr "Consultar mejores vendidos"
 
 #: includes/MainMenuLinksArray.php:63
 msgid "Order Delivery Differences Report"
@@ -45331,7 +45331,7 @@ msgstr "Consultar Detalles/Sumario de Pedidos de Venta"
 
 #: includes/MainMenuLinksArray.php:67
 msgid "Top Customers Inquiry"
-msgstr "Consulta de mejores clientes"
+msgstr "Consultar mejores clientes"
 
 #: includes/MainMenuLinksArray.php:68
 msgid "Worst Sales Items Report"
@@ -45573,11 +45573,11 @@ msgstr "Seleccione una orden de trabajo"
 
 #: includes/MainMenuLinksArray.php:291
 msgid "QA Samples and Test Results"
-msgstr ""
+msgstr "Muestras de control de calidad y resultados de pruebas"
 
 #: includes/MainMenuLinksArray.php:297
 msgid "Costed Bill Of Material Inquiry"
-msgstr "Consulta de lista de materiales costeada"
+msgstr "Consultar lista de materiales costeada"
 
 #: includes/MainMenuLinksArray.php:300
 msgid "Indented Bill Of Material Listing"
@@ -45617,11 +45617,11 @@ msgstr "PRM - Reprogramación Requerida"
 
 #: includes/MainMenuLinksArray.php:311
 msgid "Print Certificate of Analysis"
-msgstr ""
+msgstr "Imprimir certificado de análisis"
 
 #: includes/MainMenuLinksArray.php:312
 msgid "Historical QA Test Results"
-msgstr ""
+msgstr "Resultados de pruebas de control de calidad históricas"
 
 #: includes/MainMenuLinksArray.php:333
 msgid "Bills Of Material"
@@ -45657,7 +45657,7 @@ msgstr "Conciliar ingresos a cuenta bancaria"
 
 #: includes/MainMenuLinksArray.php:365
 msgid "Account Inquiry"
-msgstr "Consulta de cuenta"
+msgstr "Consultar cuenta"
 
 #: includes/MainMenuLinksArray.php:366
 msgid "Account Listing"
@@ -45737,7 +45737,7 @@ msgstr "Informe General de la Ficha de la Caja Chica"
 
 #: includes/MainMenuLinksArray.php:441
 msgid "PC Expenses Analysis"
-msgstr ""
+msgstr "Análisis de gastos de caja chica"
 
 #: includes/MainMenuLinksArray.php:446
 msgid "Types of PC Tabs"
@@ -45809,7 +45809,7 @@ msgstr "Matriz de descuentos"
 
 #: includes/MainMenuLinksArray.php:527
 msgid "Inventory Locations Maintenance"
-msgstr "Administrar Ubicaciones (Sedes, Almacenes)"
+msgstr "Administrar ubicaciones (sedes, almacenes)"
 
 #: includes/MainMenuLinksArray.php:530
 msgid "Discount Category Maintenance"
@@ -50747,7 +50747,7 @@ msgstr ""
 
 #: ../webSHOP/CreditCardPayPalPro.php:277
 msgid "Last Name"
-msgstr ""
+msgstr "Apellido"
 
 #: ../webSHOP/CreditCardPayPalPro.php:278
 msgid "The last name of the credit card holder"
@@ -50986,7 +50986,7 @@ msgstr ""
 
 #: ../webSHOP/Register.php:441
 msgid "A password is required"
-msgstr ""
+msgstr "Una contraseña es requerida"
 
 #: ../webSHOP/Register.php:442
 msgid "The password is expected to 5 characters or more long"
