@@ -813,9 +813,10 @@ function RecentlyClosedTransferStatus($maxdays, $RootPath, $db){
 }
 
 function ListPriorityLocations($db){
-	$SQL="SELECT priority, 
-				locationname, 
-				prioritydiscount
+	$SQL="SELECT locationname,
+				priority,
+				prioritydiscount,
+				smartdispatchmaxmodels
 		FROM locations
 		WHERE (loccode LIKE 'TOK%')
 		ORDER BY locationname ASC";
@@ -828,6 +829,7 @@ function ListPriorityLocations($db){
 							<th class="ascending">' . _('Location') . '</th>
 							<th class="ascending">' . _('Priority Normal') . '</th>
 							<th class="ascending">' . _('Priority Discount') . '</th>
+							<th class="ascending">' . _('MAX Models Daily Transfer') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -837,10 +839,12 @@ function ListPriorityLocations($db){
 			printf('<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
+					<td class="number">%s</td>
 					</tr>', 
 					$myrow['locationname'],
-					$myrow['priority'], 
-					$myrow['prioritydiscount']					
+					$myrow['priority'],
+					$myrow['prioritydiscount'],
+					$myrow['smartdispatchmaxmodels']
 					);
 			$i++;
 		}
