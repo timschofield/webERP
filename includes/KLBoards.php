@@ -813,9 +813,10 @@ function RecentlyClosedTransferStatus($maxdays, $RootPath, $db){
 }
 
 function ListPriorityLocations($db){
-	$SQL="SELECT priority, 
-				locationname, 
-				prioritydiscount
+	$SQL="SELECT locationname,
+				priority,
+				prioritydiscount,
+				smartdispatchmaxmodels
 		FROM locations
 		WHERE (loccode LIKE 'TOK%')
 		ORDER BY locationname ASC";
@@ -828,6 +829,7 @@ function ListPriorityLocations($db){
 							<th class="ascending">' . _('Location') . '</th>
 							<th class="ascending">' . _('Priority Normal') . '</th>
 							<th class="ascending">' . _('Priority Discount') . '</th>
+							<th class="ascending">' . _('MAX Models Daily Transfer') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -837,10 +839,12 @@ function ListPriorityLocations($db){
 			printf('<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
+					<td class="number">%s</td>
 					</tr>', 
 					$myrow['locationname'],
-					$myrow['priority'], 
-					$myrow['prioritydiscount']					
+					$myrow['priority'],
+					$myrow['prioritydiscount'],
+					$myrow['smartdispatchmaxmodels']
 					);
 			$i++;
 		}
@@ -5761,7 +5765,7 @@ Updated 3 index in loctransfers
 							AND loctransfers.shipqty != loctransfers.recqty
 							AND loctransfers.stockid = 'PKSB02-S') AS ot_shopping_s
 			FROM locations
-			WHERE locations.loccode IN " . LIST_ACTIVE_KL_SHOPS_BALI . 
+			WHERE locations.loccode IN " . LIST_SHOPS_USING_PACKAGING_CONTROL . 
 			$OrderBy;
 
 	$result = DB_query($SQL);
@@ -5862,17 +5866,18 @@ Updated 3 index in loctransfers
 			}
 */
 			/* SA, SU, SS are sister shops */
+// DEACTIVATED SU in 20/05/2015
 			if ($TableResult[$i]['loccode'] == 'TOKSA'){
-				MarkSisterShopInArray($TableResult, $numshops, "TOKSU");
+//				MarkSisterShopInArray($TableResult, $numshops, "TOKSU");
 				MarkSisterShopInArray($TableResult, $numshops, "TOKSS");
 			}
-			if ($TableResult[$i]['loccode'] == 'TOKSU'){
-				MarkSisterShopInArray($TableResult, $numshops, "TOKSA");
-				MarkSisterShopInArray($TableResult, $numshops, "TOKSS");
-			}
+//			if ($TableResult[$i]['loccode'] == 'TOKSU'){
+//				MarkSisterShopInArray($TableResult, $numshops, "TOKSA");
+//				MarkSisterShopInArray($TableResult, $numshops, "TOKSS");
+//			}
 			if ($TableResult[$i]['loccode'] == 'TOKSS'){
 				MarkSisterShopInArray($TableResult, $numshops, "TOKSA");
-				MarkSisterShopInArray($TableResult, $numshops, "TOKSU");
+//				MarkSisterShopInArray($TableResult, $numshops, "TOKSU");
 			}
 		}
 		$i++;
@@ -6183,8 +6188,7 @@ function PackagingStatus($RootPath, $db){
 							AND loctransfers.shipqty != loctransfers.recqty
 							AND loctransfers.stockid = 'PKSB02-S') AS ot_shopping_s
 			FROM locations
-			WHERE locations.loccode IN " . LIST_ACTIVE_KL_SHOPS_BALI . "
-				OR locations.loccode = 'PACKA'
+			WHERE locations.loccode IN " . LIST_SHOPS_USING_PACKAGING_CONTROL . "
 			ORDER BY locations.loccode";
 
 	$result = DB_query($SQL);
@@ -6410,8 +6414,7 @@ function PackagingUsage($NumDays, $RootPath, $db){
 							AND packagingused.stockid = 'PKSB02-S'
 							AND packagingused.date >= '". $FromDate ."') AS sales_shopping_s
 			FROM locations
-			WHERE locations.loccode IN " . LIST_ACTIVE_KL_SHOPS_BALI . "
-				OR locations.loccode = 'PACKA'
+			WHERE locations.loccode IN " . LIST_SHOPS_USING_PACKAGING_CONTROL . "
 			ORDER BY locations.loccode";
 
 	$result = DB_query($SQL);
