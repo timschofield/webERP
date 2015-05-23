@@ -4123,7 +4123,6 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $Tolerance, $MinQo
 					echo $TableHeader;
 					$ShowHeader = FALSE;
 				}
-				$k = StartEvenOrOddRow($k);
 				$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
 				$MaxPrice = $myrow['standardcost'] * $FactorMax;
 				$MinPrice = $myrow['standardcost'] * $FactorMin;
@@ -4131,34 +4130,36 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $Tolerance, $MinQo
 				$Decrease = locale_number_format(($RecommendedPrice-$myrow['retailprice'])/$myrow['retailprice']*100,1).'%';
 				$NewPriceLink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $myrow['stockid'] . '&NewPrice='. $RecommendedPrice .  '">' . locale_number_format($RecommendedPrice,0) . '</a>';
 				$IncomeDecrease = $myrow['qoh'] * ($RecommendedPrice-$myrow['retailprice']);
-				
-				printf('<td class="number">%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						</tr>', 
-						$i, 
-						$CodeLink, 
-						$myrow['description'], 
-						locale_number_format($PositionTopSales,0),
-						locale_number_format($myrow['qoh'],0),
-						locale_number_format($myrow['standardcost'],0),
-						locale_number_format($MinPrice,0),
-						locale_number_format($myrow['retailprice'],0),
-						locale_number_format($MaxPrice,0),
-						$NewPriceLink,
-						$Decrease,
-						locale_number_format($IncomeDecrease,0)
-						);
-				$i++;
+				if ($RecommendedPrice < $myrow['retailprice']){
+					$k = StartEvenOrOddRow($k);
+					printf('<td class="number">%s</td>
+							<td>%s</td>
+							<td>%s</td>
+							<td class="number">%s</td>
+							<td class="number">%s</td>
+							<td class="number">%s</td>
+							<td class="number">%s</td>
+							<td class="number">%s</td>
+							<td class="number">%s</td>
+							<td class="number">%s</td>
+							<td>%s</td>
+							<td class="number">%s</td>
+							</tr>', 
+							$i, 
+							$CodeLink, 
+							$myrow['description'], 
+							locale_number_format($PositionTopSales,0),
+							locale_number_format($myrow['qoh'],0),
+							locale_number_format($myrow['standardcost'],0),
+							locale_number_format($MinPrice,0),
+							locale_number_format($myrow['retailprice'],0),
+							locale_number_format($MaxPrice,0),
+							$NewPriceLink,
+							$Decrease,
+							locale_number_format($IncomeDecrease,0)
+							);
+					$i++;
+				}
 			}
 		}
 	}
