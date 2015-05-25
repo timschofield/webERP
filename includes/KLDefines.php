@@ -56,22 +56,22 @@ define("LIST_STOCK_CATEGORIES_IN_KL_SHOPS_NOT_FOR_SALE", "('SHDISP', 'SHCONS', '
 define("LIST_STOCK_CATEGORIES_ACTIVE",             "('TESTSI','TESTSS','TESTFJ','TESTAC','SILVER','STAINL','FASHIO','ACCESO')");
 define("LIST_STOCK_CATEGORIES_CONSIGNMENT",        "('CONSIG')");
 define("LIST_STOCK_CATEGORIES_DISCOUNT",           "('DISCOU', 'OUTLET')");
+define("LIST_STOCK_CATEGORIES_OUTLET",             "('OUTLET')");
 define("LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING", "('NOPOSI','NOPOSS','NOPOFJ','NOPOAC')");
 define("LIST_STOCK_CATEGORIES_OLD",                "('ZZZZZZ', 'ZZZZZX')");
-define("LIST_STOCK_CATEGORIES_OUTLET",             "('OUTLET')");
 define("LIST_STOCK_CATEGORIES_PROMOTIONAL_ITEMS",  "('ZAPRO')");
 define("LIST_STOCK_CATEGORIES_SHOP_CONSUMABLES",   "('SHCONS')");
 define("LIST_STOCK_CATEGORIES_SHOP_DISPLAYS",      "('SHDISP')");
 define("LIST_STOCK_CATEGORIES_SHOP_PACKAGING",     "('SHPACK')");
 
 /* Defines about LOCATIONS*/
-define("LIST_ACTIVE_KL_SHOPS_BALI",          "('TOK66','TOKSA','TOKKS','TOKJC','TOKSE','TOKUB','TOKMF','TOKPU','TOKSU','TOKBW','TOKOB','TOKSS')"); // NOT includes the shop online
+define("LIST_ACTIVE_KL_SHOPS_BALI",          "('TOK66','TOKSA','TOKKS','TOKJC','TOKSE','TOKUB','TOKMF','TOKPU','TOKSU','TOKBW','TOKOB','TOKSS','TOKPA')"); // NOT includes the shop online
 define("LIST_SHOPS_WITH_DISCOUNT",    		 "('TOKSU','TOKPA','TOKWS')");
 define("LIST_SHOPS_WITH_OUTLET",             "('TOKSU','TOKPA','TOKWS')");
 
-define("LIST_LOCATIONS_SPG_STOCK_STATUS",	 "('KANTO','TOK66','TOKSA','TOKKS','TOKJC','TOKSE','TOKUB','TOKMF','TOKOB','TOKPU','TOKSU','TOKSS','TOKBW')"); 
+define("LIST_LOCATIONS_SPG_STOCK_STATUS",	 "('KANTO','TOK66','TOKSA','TOKKS','TOKJC','TOKSE','TOKUB','TOKMF','TOKOB','TOKPU','TOKSU','TOKSS','TOKBW','TOKPA')"); 
 
-// FRom LIST_SHOPS_USING_PACKAGING_CONTROL TOKSU is deleted on 20/05/2015 as it is ot using regular packaging
+// From LIST_SHOPS_USING_PACKAGING_CONTROL TOKSU is deleted on 20/05/2015 as it is ot using regular packaging
 define("LIST_SHOPS_USING_PACKAGING_CONTROL", "('TOK66','TOKSA','TOKKS','TOKJC','TOKSE','TOKUB','TOKMF','TOKOB','TOKPU','TOKSS','TOKBW','PACKA')"); // PACKA MUST be the last one in this list
 define("LIST_ITEMS_USING_PACKAGING_CONTROL", "('PKBX01-L','PKBX01-M','PKBX01-S','PKPB01-L','PKPB01-M','PKPB01-S','PKSB02-L','PKSB02-M','PKSB02-S')");
 
@@ -89,7 +89,7 @@ define("IMPROVEMENT_SALES_COMPARED_LAST_YEAR", 5);
 define("LENGHT_OF_LIST_OF_CODES_RETAIL_SHOP_SALES", 6); 
 
 /* Defines about Packaging*/
-define("MINIMUM_REORDER_LEVEL_FOR_PACKAGING_AT_SHOP", 8); 
+define("MINIMUM_REORDER_LEVEL_FOR_PACKAGING_AT_SHOP", 0); // Set to 0 as test for packaging control for outet shows. If 0 works OK, then delete this define everywhere as will be not needed
 
 /* Defines about Stock Control*/
 define("STOCK_MOVEMENT_DAYS_FOR_SPG", 60); 

@@ -6675,6 +6675,7 @@ id	select_type	table	type	possible_keys	key	key_len	ref	rows	Extra
 							<th class="ascending">' . _('Description') . '</th>
 							<th class="ascending">' . _('Shop') . '</th>
 							<th class="ascending">' . _('Quantity') . '</th>
+							<th class="ascending">' . _('RL') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -6687,12 +6688,14 @@ id	select_type	table	type	possible_keys	key	key_len	ref	rows	Extra
 					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
+					<td class="number">%s</td>
 					</tr>', 
 					$i, 
 					$CodeLink, 
 					$myrow['description'], 
 					$myrow['loccode'], 
-					$myrow['quantity']
+					$myrow['quantity'],
+					$myrow['reorderlevel']
 					);
 			$i++;
 		}
