@@ -1,5 +1,5 @@
 <?php
-define("VERSIONFILE", "1.10"); 
+define("VERSIONFILE", "1.11"); 
 define("NUMBER_OF_TESTS", 28); 
 
 include ('includes/session.inc');
@@ -30,11 +30,11 @@ if ($KL_SystemAdmin
 	OR $KL_PurchasingManager 
 	OR $KL_SalesManager){
 
-	RetailCustomerAnalysisBySex(30, "ALL", $db);
+	RetailCustomerAnalysisBySex(90, "ALL", $db);
 }
 
 if ($KL_SystemAdmin){
-	RetailCustomerAnalysisByCountry(365, "ALL", 10, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(365, "ALL", 50, $CountriesForRetail, $db);
 
 //	RetailCustomerAnalysisByCountry(7, "ALL", 3, $CountriesForRetail, $db);
 //	RetailCustomerAnalysisByCountry(7, "'TOK66','TOKSE','TOKOB'", 3, $CountriesForRetail, $db);
@@ -49,12 +49,12 @@ if ($KL_SystemAdmin
 	OR $KL_PurchasingManager 
 	OR $KL_SalesManager){
 
-	RetailCustomerAnalysisByCountry(30, "ALL", 5, $CountriesForRetail, $db);
-	RetailCustomerAnalysisByCountry(30, "'TOK66','TOKSE','TOKOB'", 3, $CountriesForRetail, $db);
-	RetailCustomerAnalysisByCountry(30, "'TOKKS','TOKBW'", 3, $CountriesForRetail, $db);
-	RetailCustomerAnalysisByCountry(30, "'TOKJC'", 3, $CountriesForRetail, $db);
-	RetailCustomerAnalysisByCountry(30, "'TOKSA','TOKSS','TOKSU'", 3, $CountriesForRetail, $db);
-	RetailCustomerAnalysisByCountry(30, "'TOKUB','TOKPU','TOKMF'", 3, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(90, "ALL", 20, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(90, "'TOK66','TOKSE','TOKOB'", 10, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(90, "'TOKKS','TOKBW'", 10, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(90, "'TOKJC'", 10, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(90, "'TOKSA','TOKSS','TOKSU'", 10, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(90, "'TOKUB','TOKPU','TOKMF'", 10, $CountriesForRetail, $db);
 }
 
 if ($KL_SystemAdmin 
@@ -62,17 +62,19 @@ if ($KL_SystemAdmin
 	OR $KL_PurchasingManager 
 	OR $KL_SalesManager){
 
-	RetailCustomerAnalysisByAge(30, "ALL", $db);
-	RetailCustomerAnalysisByAge(30, "'TOK66','TOKSE','TOKOB'", $db);
-	RetailCustomerAnalysisByAge(30, "'TOKKS','TOKBW'", $db);
-	RetailCustomerAnalysisByAge(30, "'TOKJC'", $db);
-	RetailCustomerAnalysisByAge(30, "'TOKSA','TOKSS','TOKSU'", $db);
-	RetailCustomerAnalysisByAge(30, "'TOKUB','TOKPU','TOKMF'", $db);
+	RetailCustomerAnalysisByAge(60, "ALL", $db);
+	RetailCustomerAnalysisByAge(60, "'TOK66','TOKSE','TOKOB'", $db);
+	RetailCustomerAnalysisByAge(60, "'TOKKS','TOKBW'", $db);
+	RetailCustomerAnalysisByAge(60, "'TOKJC'", $db);
+	RetailCustomerAnalysisByAge(60, "'TOKSA','TOKSS','TOKSU'", $db);
+	RetailCustomerAnalysisByAge(60, "'TOKUB','TOKPU','TOKMF'", $db);
 
 	EmailHarvested(30, "ALL", $db);
 }
 
 if ($KL_SystemAdmin){
+	EmailHarvested(365, "ALL", $db);
+
 //	EmailHarvested(1, "ALL", $db);
 //	EmailHarvested(1, "'TOK66','TOKSE','TOKOB'", $db);
 //	EmailHarvested(1, "'TOKKS','TOKBW'", $db);
