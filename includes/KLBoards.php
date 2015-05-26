@@ -309,8 +309,8 @@ function FinishedStockDistribution($kind, $byreport, $db){
 		$operator1 =  "	AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_SHOP_DISPLAYS . " ";
 		$operator2 = "	AND m2.categoryid IN " . LIST_STOCK_CATEGORIES_SHOP_DISPLAYS . " ";
 	}elseif ($kind == "PACKAGING"){			
-		$operator1 =  "	AND stockmaster.categoryid IN ('SHPACK')";
-		$operator2 = "	AND m2.categoryid IN ('SHPACK')";
+		$operator1 =  "	AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_SHOP_PACKAGING . " ";
+		$operator2 = "	AND m2.categoryid IN " . LIST_STOCK_CATEGORIES_SHOP_PACKAGING . " ";
 	}else{
 		$operator1 =  "	";
 		$operator2 =  "	";
