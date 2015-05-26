@@ -220,8 +220,16 @@ echo '<table class="selection"><thead>
 	</tr>
 	</thead><tbody>';
 
+$AuthSQL="SELECT offhold
+			FROM purchorderauth
+			WHERE userid='" . $_SESSION['UserID'] . "'
+			AND currabrev='" . $SupplierRecord['currcode']."'";
+$AuthResult=DB_query($AuthSQL);
+$AuthRow=DB_fetch_array($AuthResult);
+
 $j = 1;
 $k = 0;// Row colour counter.
+
 while ($myrow=DB_fetch_array($TransResult)) {
 
 	if ($myrow['hold'] == 0 AND $myrow['settled'] == 0) {
@@ -282,15 +290,8 @@ while ($myrow=DB_fetch_array($TransResult)) {
 					$myrow['transno']);
 
 			} else {
-				$AuthSQL="SELECT offhold
-							FROM purchorderauth
-							WHERE userid='" . $_SESSION['UserID'] . "'
-							AND currabrev='" . $SupplierRecord['currcode']."'";
-				$AuthResult=DB_query($AuthSQL);
-				$AuthRow=DB_fetch_array($AuthResult);
-
 				printf($BaseTD8);
-				if ($AuthRow[0]==0) {
+				if ($AuthRow['offhold']==0) {
 					echo '<td class="noprint"><a href="' .htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?HoldType=' . $myrow['type'] . '&amp;HoldTrans=' . $myrow['transno']. '&amp;HoldStatus=' . $HoldValue . '&amp;FromDate=' . $_POST['TransAfterDate'].'">' . $HoldValue  . '</a></td>';
 				} else {
 					if ($HoldValue==_('Release')) {

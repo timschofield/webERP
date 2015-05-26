@@ -1,5 +1,6 @@
 webERP Change Log
 
+25/5/15 Tom Barry: SupplierInquiry.php moved SQL to get the users authorisation to put supplier invoices on hold outside the loop to avoid unecessary  round trips to the SQL server
 21/5/15 RChacon: Adjust CustomerAccount.php for direct printing.
 19/5/15 RChacon: Add documentation and help for users in Locations.php and ManualInventory.html.
 
