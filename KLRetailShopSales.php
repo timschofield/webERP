@@ -1,10 +1,7 @@
 <?php
-/**********************************************************************
-PROBLEMS KNOWN:
-Needs some simplification of code. Take out all Assembly, Kit, Controlled stuff
-************************************************************************/
 
 /************************************************************************
+v 2.12 Mod to use outlet or regular packaging
 v 2.11 Mod to include BCA CC accounts
 v 2.10 use KL list of countries to avoid mistakes of "funny" visitor countries
 v 2.09 Add HPP Compensation for PT sales
@@ -22,15 +19,9 @@ v 1.02 Mod to use only one area per payment, not for shop
 v 1.01 Mod to allow partical CC/Cash payments and returned goods from customer.
 v 1.00 2011-08-10: Shops start using it.
 v 1.00 2011-07-25: Kantor starts using it.
-
-Mods from Counter sales:
-From user of webERP we need to:
-- Get salesman code and assign to sales
-- Get location from list of locations
-- Assign sales and COGS accounts
-- Get the yellow invoice number CustRef
 *********************************************************************/
-define("VERSIONFILE", "2.11"); // 
+
+define("VERSIONFILE", "2.12"); // 
 
 include('includes/DefineCartClass.php');
 include('includes/session.inc');
@@ -696,48 +687,105 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 and !isset($_POST['Proces
 	if (!isset($_POST['ShoppingBag02L'])){
 		$_POST['ShoppingBag02L'] =0;
 	}
+	if (!isset($_POST['OutletPouchBag01L'])){
+		$_POST['OutletPouchBag01L'] =0;
+	}
+	if (!isset($_POST['OutletPouchBag01M'])){
+		$_POST['OutletPouchBag01M'] =0;
+	}
+	if (!isset($_POST['OutletPouchBag01S'])){
+		$_POST['OutletPouchBag01S'] =0;
+	}
+	if (!isset($_POST['OutletShoppingBag02M'])){
+		$_POST['OutletShoppingBag02M'] =0;
+	}
 
-	echo '<table class="selection">
-			<tr>
-				<th colspan=8>' . _('Packaging / Shopping Bags included in this sale') . '
-				</th>
-			</tr>';
-	
-	echo '<tr>
-	      <td>' . _('Box Large') . ':</td>
-		  <td><input type="text" class="number" name="PackagingBox01L" maxlength="3" size="3" value="' . $_POST['PackagingBox01L'] . '" /></td>';
-	echo '<td></td>';
-	echo '<td>' . _('Pouch Bag Large') . ':</td>
-		  <td><input type="text" class="number" name="PackagingPouchBag01L" maxlength="3" size="3" value="' . $_POST['PackagingPouchBag01L'] . '" /></td>';
-	echo '<td></td>';
-	echo '<td>' . _('Shopping Bag Large') . ':</td>
-		  <td><input type="text" class="number" name="ShoppingBag02L" maxlength="3" size="3" value="' . $_POST['ShoppingBag02L'] . '" /></td></tr>';
-	echo'</tr>';
+	// If the shop is using regular packaging, show it!
+	if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_USING_REGULAR_PACKAGING)){
+		echo '<table class="selection">
+				<tr>
+					<th colspan=8>' . _('Regular Packaging & Shopping Bags included in this sale') . '
+					</th>
+				</tr>';
+		
+		echo '<tr>
+			  <td>' . _('Box Large') . ':</td>
+			  <td><input type="text" class="number" name="PackagingBox01L" maxlength="3" size="3" value="' . $_POST['PackagingBox01L'] . '" /></td>';
+		echo '<td></td>';
+		echo '<td>' . _('Pouch Bag Large') . ':</td>
+			  <td><input type="text" class="number" name="PackagingPouchBag01L" maxlength="3" size="3" value="' . $_POST['PackagingPouchBag01L'] . '" /></td>';
+		echo '<td></td>';
+		echo '<td>' . _('Shopping Bag Large') . ':</td>
+			  <td><input type="text" class="number" name="ShoppingBag02L" maxlength="3" size="3" value="' . $_POST['ShoppingBag02L'] . '" /></td></tr>';
+		echo'</tr>';
 
-	echo '<tr>
-		  <td>' . _('Box Medium') . ':</td>
-		  <td><input type="text" class="number" name="PackagingBox01M" maxlength="3" size="3" value="' . $_POST['PackagingBox01M'] . '" /></td>';
-	echo '<td></td>';
-	echo '<td>' . _('Pouch Bag Medium') . ':</td>
-		  <td><input type="text" class="number" name="PackagingPouchBag01M" maxlength="3" size="3" value="' . $_POST['PackagingPouchBag01M'] . '" /></td>';
-	echo '<td></td>';
-	echo '<td>' . _('Shopping Bag Medium') . ':</td>
-		  <td><input type="text" class="number" name="ShoppingBag02M" maxlength="3" size="3" value="' . $_POST['ShoppingBag02M'] . '" /></td>';
-	echo'</tr>';
-	
-	echo '<tr>
-		  <td>' . _('Box Small') . ':</td>
-		  <td><input type="text" class="number" name="PackagingBox01S" maxlength="3" size="3" value="' . $_POST['PackagingBox01S'] . '" /></td>';
-	echo '<td></td>';
-	echo '<td>' . _('Pouch Bag Small') . ':</td>
-		  <td><input type="text" class="number" name="PackagingPouchBag01S" maxlength="3" size="3" value="' . $_POST['PackagingPouchBag01S'] . '" /></td>';
-	echo '<td></td>';
-	echo '<td>' . _('Shopping Bag Small') . ':</td>
-		  <td><input type="text" class="number" name="ShoppingBag02S" maxlength="3" size="3" value="' . $_POST['ShoppingBag02S'] . '" /></td>';
-	echo'</tr>';
+		echo '<tr>
+			  <td>' . _('Box Medium') . ':</td>
+			  <td><input type="text" class="number" name="PackagingBox01M" maxlength="3" size="3" value="' . $_POST['PackagingBox01M'] . '" /></td>';
+		echo '<td></td>';
+		echo '<td>' . _('Pouch Bag Medium') . ':</td>
+			  <td><input type="text" class="number" name="PackagingPouchBag01M" maxlength="3" size="3" value="' . $_POST['PackagingPouchBag01M'] . '" /></td>';
+		echo '<td></td>';
+		echo '<td>' . _('Shopping Bag Medium') . ':</td>
+			  <td><input type="text" class="number" name="ShoppingBag02M" maxlength="3" size="3" value="' . $_POST['ShoppingBag02M'] . '" /></td>';
+		echo'</tr>';
+		
+		echo '<tr>
+			  <td>' . _('Box Small') . ':</td>
+			  <td><input type="text" class="number" name="PackagingBox01S" maxlength="3" size="3" value="' . $_POST['PackagingBox01S'] . '" /></td>';
+		echo '<td></td>';
+		echo '<td>' . _('Pouch Bag Small') . ':</td>
+			  <td><input type="text" class="number" name="PackagingPouchBag01S" maxlength="3" size="3" value="' . $_POST['PackagingPouchBag01S'] . '" /></td>';
+		echo '<td></td>';
+		echo '<td>' . _('Shopping Bag Small') . ':</td>
+			  <td><input type="text" class="number" name="ShoppingBag02S" maxlength="3" size="3" value="' . $_POST['ShoppingBag02S'] . '" /></td>';
+		echo'</tr>';
 
-	echo '</table>';	//end of column/row/master table
+		echo '</table>';	//end of column/row/master table
+	}
 
+	if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_USING_OUTLET_PACKAGING)){
+		echo '<table class="selection">
+				<tr>
+					<th colspan=8>' . _('Outlet Packaging & Shopping Bags included in this sale') . '
+					</th>
+				</tr>';
+		
+		echo '<tr>
+			  <td></td>
+			  <td></td>';
+		echo '<td></td>';
+		echo '<td>' . _('Outlet Pouch Bag Large') . ':</td>
+			  <td><input type="text" class="number" name="OutletPouchBag01L" maxlength="3" size="3" value="' . $_POST['OutletPouchBag01L'] . '" /></td>';
+		echo '<td></td>';
+		echo '<td></td>
+			  <td></td>';
+		echo'</tr>';
+
+		echo '<tr>
+			  <td></td>
+			  <td></td>';
+		echo '<td></td>';
+		echo '<td>' . _('Outlet Pouch Bag Medium') . ':</td>
+			  <td><input type="text" class="number" name="OutletPouchBag01M" maxlength="3" size="3" value="' . $_POST['OutletPouchBag01M'] . '" /></td>';
+		echo '<td></td>';
+		echo '<td>' . _('Outlet Shopping Bag') . ':</td>
+			  <td><input type="text" class="number" name="OutletShoppingBag02M" maxlength="3" size="3" value="' . $_POST['OutletShoppingBag02M'] . '" /></td></tr>';
+		echo'</tr>';
+		
+		echo '<tr>
+			  <td></td>
+			  <td></td>';
+		echo '<td></td>';
+		echo '<td>' . _('Outlet Pouch Bag Small') . ':</td>
+			  <td><input type="text" class="number" name="OutletPouchBag01S" maxlength="3" size="3" value="' . $_POST['OutletPouchBag01S'] . '" /></td>';
+		echo '<td></td>';
+		echo '<td></td>
+			  <td></td>';
+		echo'</tr>';
+
+		echo '</table>';	//end of column/row/master table
+	}
 	/////////////////////////////////////////////////
 	// TABLE for Customer Information Data Entry
 	/////////////////////////////////////////////////
@@ -1669,6 +1717,12 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 		AdjustPackagingMovement("PKSB02-M", $_POST['ShoppingBag02M'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
 		AdjustPackagingMovement("PKSB02-S", $_POST['ShoppingBag02S'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
 
+//		AdjustPackagingMovement("TBA", $_POST['OutletPouchBag01L'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
+//		AdjustPackagingMovement("TBA", $_POST['OutletPouchBag01M'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
+//		AdjustPackagingMovement("TBA", $_POST['OutletPouchBag01S'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
+
+//		AdjustPackagingMovement("TBA", $_POST['OutletShoppingBag02M'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
+
 		/*	End account for the packaging */
 		
 		RecordRetailCustomerInformation($OrderNo, $_POST['FirstName'], $_POST['LastName'], $_POST['Country'], $_POST['DateOfBirth'], $_POST['Email'], $_POST['Sex'], $db);
@@ -1678,7 +1732,6 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 	//   E N D   O F   I N V O I C E   S Q L   P R O C E S S I N G
 	// *************************************************************************
 
-
 		echo prnMsg( _('YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' WI'). ' '. $InvoiceNo . _('. Total Cash: ') . number_format($_POST['AmountPaidCash'],0) , 'success');
 		echo prnMsg( _('YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' WI'). ' '. $InvoiceNo . _('. Total CC EDC Danamon: ') . number_format($_POST['AmountPaidCCDanamon'],0)  , 'success');
 		echo prnMsg( _('YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' WI'). ' '. $InvoiceNo . _('. Total Amex EDC Danamon: ') . number_format($_POST['AmountPaidAmexDanamon'],0)  , 'success');
@@ -1687,13 +1740,26 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 		echo prnMsg( _('YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' WI'). ' '. $InvoiceNo . _('. Total Returned Goods: ') . number_format($_POST['AmountReturnedGoods'],0) , 'success');
 		echo prnMsg( _('YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' WI'). ' '. $InvoiceNo . _('. Total Vouchers/Discounts: ') . number_format($_POST['AmountVouchers'],0) , 'success');
 		echo '<br /><div class="centre">';
-
 		
 		// if splitted payments
-		if (($_POST['AmountPaidCash'] <> 0 AND  $_POST['AmountPaidCCDanamon'] <> 0) OR
-     		($_POST['AmountPaidCash'] <> 0 AND  $_POST['AmountPaidAmexDanamon'] <> 0) OR
-     		($_POST['AmountPaidCash'] <> 0 AND  $_POST['AmountPaidCCMandiri'] <> 0) OR
-     		($_POST['AmountPaidCash'] <> 0 AND  $_POST['AmountPaidCCBCA'] <> 0)){
+		$PaymentSystemsUsed = 0;
+		if ($_POST['AmountPaidCash'] <> 0){
+			$PaymentSystemsUsed++;
+		}
+		if ($_POST['AmountPaidCCDanamon'] <> 0){
+			$PaymentSystemsUsed++;
+		}
+		if ($_POST['AmountPaidAmexDanamon'] <> 0){
+			$PaymentSystemsUsed++;
+		}
+		if ($_POST['AmountPaidCCMandiri'] <> 0){
+			$PaymentSystemsUsed++;
+		}
+		if ($_POST['AmountPaidCCBCA'] <> 0){
+			$PaymentSystemsUsed++;
+		}
+		
+		if (PaymentSystemsUsed > 1){
 
 			KLSendEmail("SplittedPayment", 
 						"Silent",

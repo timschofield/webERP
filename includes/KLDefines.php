@@ -80,6 +80,10 @@ define("LIST_LOCATIONS_SPG_STOCK_STATUS",	 "('KANTO','TOK66','TOKSA','TOKKS','TO
 define("LIST_SHOPS_USING_PACKAGING_CONTROL", "('TOK66','TOKSA','TOKKS','TOKJC','TOKSE','TOKUB','TOKMF','TOKOB','TOKPU','TOKSS','TOKBW','PACKA')"); // PACKA MUST be the last one in this list
 define("LIST_ITEMS_USING_PACKAGING_CONTROL", "('PKBX01-L','PKBX01-M','PKBX01-S','PKPB01-L','PKPB01-M','PKPB01-S','PKSB02-L','PKSB02-M','PKSB02-S')");
 
+define("LIST_SHOPS_USING_REGULAR_PACKAGING", "('TOK66','TOKSA','TOKKS','TOKJC','TOKSE','TOKUB','TOKMF','TOKOB','TOKPU','TOKSS','TOKBW')"); 
+//define("LIST_SHOPS_USING_OUTLET_PACKAGING", "('TOKSU','TOKPA')"); 
+define("LIST_SHOPS_USING_OUTLET_PACKAGING", "()"); 
+
 define("LIST_KANTOR_LOCATIONS",              "('KANTO','SAMPR','SASPG','SERSU','SERVI','SERDE','WHOLE')");
 define("LIST_SERVICE_LOCATIONS",              "('SERSU','SERVI')");
 define("LIST_CONSIGNMENT_LOCATIONS",         "('WABOM','WHAYA','WHINT')");
@@ -128,7 +132,9 @@ define("ACCOUNT_CASH_TOKPA", "111111114"); // number of account for toko PA
 
 define("ACCOUNT_BANK_DANAMON_IDR", "111121105PT"); // number of account for Bank Danamon IDR
 define("ACCOUNT_BANK_MANDIRI_IDR", "111121100PT"); // number of account for Bank Mandiri IDR
-define("ACCOUNT_BANK_BCA_IDR", "111121110PT"); // number of account for Bank BCA IDR
+// USE OF THE DANAMON ACCOUNT UNTIL BCA ACCOUNT IS ACTIVE
+//define("ACCOUNT_BANK_BCA_IDR", "111121110PT"); // number of account for Bank BCA IDR
+define("ACCOUNT_BANK_BCA_IDR", "111121105PT"); // number of account for Bank BCA IDR
 define("ACCOUNT_COMISSION_CREDITCARD", "700211300PT"); // number of account used to charge the bank comission
 
 /* Defines about WebStore */
