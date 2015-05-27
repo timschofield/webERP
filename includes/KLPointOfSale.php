@@ -331,4 +331,98 @@ function RecordRetailCustomerInformation($OrderNo, $FirstName, $LastName, $Count
 	}
 }
 
+function AccountPaymentRetail($PeriodNo,
+							  $BankAccount,
+							  $Area,
+							  $InvoiceNo,
+							  $AmountPaid,
+							  $BankCommision,
+							  $NetPayment,
+							  $Tag,
+							  $GLAccountBankCommission,
+							  $ExRate){
+
+	$ReceiptNumber = GetNextTransNo(12,$db);
+	
+	$SQL="INSERT INTO gltrans (type,
+			typeno,
+			trandate,
+			periodno,
+			account,
+			narrative,
+			amount,
+			tag)
+		VALUES (12,
+			'" . $ReceiptNumber . "',
+			'" . Date('Y-m-d') . "',
+			'" . $PeriodNo . "',
+			'" . $BankAccount . "',
+			'" . $Area . 
+				 _(' WI: ') . $InvoiceNo . 
+				 _(' YI: ') . $_SESSION['Items'.$identifier]->CustRef  . 
+				 _(' SPG: '). $_SESSION['SalesmanLogin'] . 
+				 ' ' . $_SESSION['Items'.$identifier]->Location . 
+				 ' CC -> T: ' . number_format($AmountPaid,0) . 
+				 ' C: ' . number_format($BankCommision,0) . "',
+			'" . $NetPayment . "',
+			'" . $Tag . "')";
+	$DbgMsg = _('The SQL that failed to insert the NET GL transaction for the bank account debit was');
+	$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
+	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+
+	// RICARD: la resta ($BankCommision) va a la compte $GLAccountBankCommission per comissió de CC
+	$SQL="INSERT INTO gltrans (type,
+			typeno,
+			trandate,
+			periodno,
+			account,
+			narrative,
+			amount,
+			tag)
+		VALUES (12,
+			'" . $ReceiptNumber . "',
+			'" . Date('Y-m-d') . "',
+			'" . $PeriodNo . "',
+			'" . $GLAccountBankCommission . "',
+			'" . $Area . 
+				 _(' WI: ') . $InvoiceNo . 
+				 _(' YI: ') . $_SESSION['Items'.$identifier]->CustRef  . 
+				 _(' SPG: '). $_SESSION['SalesmanLogin'] . 
+				 ' ' . $_SESSION['Items'.$identifier]->Location . 
+				 ' CC -> T: ' . number_format($AmountPaid,0) . 
+				 ' C: ' . number_format($BankCommision,0) . "',
+			'" . $BankCommision . "',
+			'" . $Tag . "')";
+	$DbgMsg = _('The SQL that failed to insert the bank Commission GL transaction for the bank account debit was');
+	$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
+	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+
+	/* Now Credit Debtors account with receipt */
+	$SQL="INSERT INTO gltrans ( type,
+			typeno,
+			trandate,
+			periodno,
+			account,
+			narrative,
+			amount,
+			tag)
+	VALUES (12,
+		'" . $ReceiptNumber . "',
+		'" . Date('Y-m-d') . "',
+		'" . $PeriodNo . "',
+		'" . $_SESSION['CompanyRecord']['debtorsact'] . "',
+		'" . $Area . 
+			 _(' WI: ') . $InvoiceNo . 
+			 _(' YI: ') . $_SESSION['Items'.$identifier]->CustRef  . 
+			 _(' SPG: '). $_SESSION['SalesmanLogin'] . 
+			 ' ' . $_SESSION['Items'.$identifier]->Location . "',
+		'" . -($AmountPaid/$ExRate) . "',
+		'" . $Tag . "')";
+	$DbgMsg = _('The SQL that failed to insert the GL transaction for the debtors account credit was');
+	$ErrMsg = _('Cannot insert a GL transaction for the debtors account credit');
+	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+	
+	
+}
+
 ?>

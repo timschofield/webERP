@@ -5,6 +5,7 @@ Needs some simplification of code. Take out all Assembly, Kit, Controlled stuff
 ************************************************************************/
 
 /************************************************************************
+v 2.11 Mod to include BCA CC accounts
 v 2.10 use KL list of countries to avoid mistakes of "funny" visitor countries
 v 2.09 Add HPP Compensation for PT sales
 v 2.08 Reorganization of Payment fields
@@ -29,7 +30,7 @@ From user of webERP we need to:
 - Assign sales and COGS accounts
 - Get the yellow invoice number CustRef
 *********************************************************************/
-define("VERSIONFILE", "2.10"); // 
+define("VERSIONFILE", "2.11"); // 
 
 include('includes/DefineCartClass.php');
 include('includes/session.inc');
@@ -594,6 +595,9 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 and !isset($_POST['Proces
 	if (!isset($_POST['AmountPaidCCMandiri'])){
 		$_POST['AmountPaidCCMandiri'] =0;
 	}
+	if (!isset($_POST['AmountPaidCCBCA'])){
+		$_POST['AmountPaidCCBCA'] =0;
+	}
 	if (!isset($_POST['AmountReturnedGoods'])){
 		$_POST['AmountReturnedGoods'] =0;
 	}
@@ -621,7 +625,7 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 and !isset($_POST['Proces
 	echo '<td>' . _('Amount Paid Cash') . ':</td>
 		  <td><input type="text" class="number" name="AmountPaidCash" maxlength="12" size="12" value="' . $_POST['AmountPaidCash'] . '" /></td>';
 	echo '<td></td>';
-	echo'<th colspan=2>' . _('Cedit Card Payments') . '</th>'; 
+	echo'<th colspan=2>' . _('Credit Card Payments') . '</th>'; 
 	echo '</tr>';
 
 	echo '<tr>';
@@ -645,6 +649,14 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 and !isset($_POST['Proces
 	echo '<td></td>';
 	echo '<td>' . _('Amount Paid CC EDC Mandiri') . ':</td>
 		  <td><input type="text" class="number" name="AmountPaidCCMandiri" maxlength="12" size="12" value="' . $_POST['AmountPaidCCMandiri'] . '" /></td>';
+	echo '</tr>';
+
+	echo '<tr>';
+	echo '<td></td>
+		  <td></td>';
+	echo '<td></td>';
+	echo '<td>' . _('Amount Paid CC EDC BCA') . ':</td>
+		  <td><input type="text" class="number" name="AmountPaidCCBCA" maxlength="12" size="12" value="' . $_POST['AmountPaidCCBCA'] . '" /></td>';
 	echo '</tr>';
 
 	echo '<tr>';
@@ -776,11 +788,6 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 and !isset($_POST['Proces
 	echo	'<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="DateOfBirth" maxlength="10" size="10" value="' . $_POST['DateOfBirth'] . '" /></td>';
 	echo '</tr>';	
 
-	echo '<tr>';
-	echo	'<td>' . _('email') . ':</td>';
-	echo	'<td><input type="email" class="text" name="Email" maxlength="255" size="32" value="' . $_POST['Email'] . '" /></td>';
-	echo '</tr>';	
-
 	echo '<tr><td>' . _('Sex') . ':</td>
 			<td><select name="Sex">
 				<option selected="selected" value="">' . _('') . '</option>
@@ -789,6 +796,11 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 and !isset($_POST['Proces
 				</select>
 			</td>
 		</tr>';
+
+	echo '<tr>';
+	echo	'<td>' . _('email') . ':</td>';
+	echo	'<td><input type="email" class="text" name="Email" maxlength="255" size="32" value="' . $_POST['Email'] . '" /></td>';
+	echo '</tr>';	
 
 	echo '</table>';
 
@@ -820,6 +832,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 						+ $_POST['AmountPaidCCDanamon'] 
 						+ $_POST['AmountPaidAmexDanamon']
 						+ $_POST['AmountPaidCCMandiri'] 
+						+ $_POST['AmountPaidCCBCA'] 
 						+ $_POST['AmountReturnedGoods'] 
 						+ $_POST['AmountVouchers'];
 	
@@ -871,7 +884,8 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 		// If all (or part of) the goods were paid with CC, consider payment as CC
 		if (($_POST['AmountPaidCCDanamon'] > 0) 
 			OR ($_POST['AmountPaidAmexDanamon'] > 0) 
-			OR ($_POST['AmountPaidCCMandiri'] > 0)){
+			OR ($_POST['AmountPaidCCMandiri'] > 0)
+			OR ($_POST['AmountPaidCCBCA'] > 0)){
 			$PaymentMethod = PAYMENT_BY_CREDITCARD;
 		}else{
 			$PaymentMethod = PAYMENT_BY_CASH;
@@ -942,7 +956,8 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 												'" . $_POST['AmountPaidCash'] . "',
 												'" . ($_POST['AmountPaidCCDanamon'] 
 													+ $_POST['AmountPaidAmexDanamon']
-												    + $_POST['AmountPaidCCMandiri']) . "',
+												    + $_POST['AmountPaidCCMandiri']
+													+ $_POST['AmountPaidCCBCA']) . "',
 												'" . $_POST['AmountReturnedGoods'] . "',
 												'" . $_POST['AmountVouchers'] . "',
 												'" . $Area . "')";
@@ -993,6 +1008,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 				' Paid CC EDC Danamon: '. number_format($_POST['AmountPaidCCDanamon'],0) .
 				' Paid Amex EDC Danamon: '. number_format($_POST['AmountPaidAmexDanamon'],0) .
 				' Paid CC EDC Mandiri: '. number_format($_POST['AmountPaidCCMandiri'],0) .
+				' Paid CC EDC BCA: '. number_format($_POST['AmountPaidCCBCA'],0) .
 				' Returned Goods: '. number_format($_POST['AmountReturnedGoods'],0) .
 				' Vouchers/Discounts: '. number_format($_POST['AmountVouchers'],0) .
 				' Yellow invoice: '. $_SESSION['Items'.$identifier]->CustRef,'success');
@@ -1001,8 +1017,6 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 
 		/*Now Get the next invoice number - GetNextTransNo() function in SQL_CommonFunctions
 		 * GetPeriod() in includes/DateFunctions.inc */
-
-		$DefaultDispatchDate = Date('Y-m-d');
 
 		/*Now insert the DebtorTrans */
 
@@ -1028,7 +1042,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 				10,
 				'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
 				'" . $_SESSION['Items'.$identifier]->Branch . "',
-				'" . $DefaultDispatchDate . "',
+				'" . Date('Y-m-d') . "',
 				'" . date('Y-m-d H-i-s') . "',
 				'" . $PeriodNo . "',
 				'" . $_SESSION['Items'.$identifier]->CustRef  . "',
@@ -1108,27 +1122,27 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 			}
 
 			$SQL = "INSERT INTO stockmoves (
-													stockid,
-													type,
-													transno,
-													loccode,
-													trandate,
-													userid,
-													debtorno,
-													branchcode,
-													price,
-													prd,
-													reference,
-													qty,
-													discountpercent,
-													standardcost,
-													newqoh,
-													narrative )
+											stockid,
+											type,
+											transno,
+											loccode,
+											trandate,
+											userid,
+											debtorno,
+											branchcode,
+											price,
+											prd,
+											reference,
+											qty,
+											discountpercent,
+											standardcost,
+											newqoh,
+											narrative )
 							VALUES ('" . $OrderLine->StockID . "',
 											10,
 											'" . $InvoiceNo . "',
 											'" . $_SESSION['Items'.$identifier]->Location . "',
-											'" . $DefaultDispatchDate . "',
+											'" . Date('Y-m-d') . "',
 											'" . $_SESSION['UserID'] . "',
 											'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
 											'" . $_SESSION['Items'.$identifier]->Branch . "',
@@ -1289,7 +1303,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 												tag)
 										VALUES ( 10,
 												'" . $InvoiceNo . "',
-												'" . $DefaultDispatchDate . "',
+												'" . Date('Y-m-d') . "',
 												'" . $PeriodNo . "',
 												'" . $AccountCOGS . "',
 												'" . $_SESSION['Items'.$identifier]->DebtorNo . " - " . $OrderLine->StockID . " x " . $OrderLine->Quantity . " @ " . $StandardCost . "',
@@ -1312,7 +1326,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 													tag)
 											VALUES ( 10,
 													'" . $InvoiceNo . "',
-													'" . $DefaultDispatchDate . "',
+													'" . Date('Y-m-d') . "',
 													'" . $PeriodNo . "',
 													'" . ACCOUNT_COMPENSATION_HPP_PT . "',
 													'" . $_SESSION['Items'.$identifier]->DebtorNo . " - " . $OrderLine->StockID . " x " . $OrderLine->Quantity . " @ " . round($Compensation,0) . "',
@@ -1337,7 +1351,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 												)
 										VALUES ( 10,
 											'" . $InvoiceNo . "',
-											'" . $DefaultDispatchDate . "',
+											'" . Date('Y-m-d') . "',
 											'" . $PeriodNo . "',
 											'" . $StockGLCode['stockact'] . "',
 											'" . $_SESSION['Items'.$identifier]->DebtorNo . " - " . $OrderLine->StockID . " x " . $OrderLine->Quantity . " @ " . $OrderLine->StandardCost . "',
@@ -1364,7 +1378,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 											)
 										VALUES ( 10,
 											'" . $InvoiceNo . "',
-											'" . $DefaultDispatchDate . "',
+											'" . Date('Y-m-d') . "',
 											'" . $PeriodNo . "',
 											'" . $SalesGLAccounts['salesglcode'] . "',
 											'" . $_SESSION['Items'.$identifier]->DebtorNo . " - " . $OrderLine->StockID . " x " . $OrderLine->Quantity . " @ " . $OrderLine->Price . "',
@@ -1388,7 +1402,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 												)
 												VALUES ( 10,
 													'" . $InvoiceNo . "',
-													'" . $DefaultDispatchDate . "',
+													'" . Date('Y-m-d') . "',
 													'" . $PeriodNo . "',
 													'" . $SalesGLAccounts['discountglcode'] . "',
 													'" . $_SESSION['Items'.$identifier]->DebtorNo . " - " . $OrderLine->StockID . " @ " . ($OrderLine->DiscountPercent * 100) . "%',
@@ -1415,7 +1429,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 												tag )
 											VALUES ( 10,
 												'" . $InvoiceNo . "',
-												'" . $DefaultDispatchDate . "',
+												'" . Date('Y-m-d') . "',
 												'" . $PeriodNo . "',
 												'" . $_SESSION['CompanyRecord']['debtorsact'] . "',
 												'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
@@ -1439,7 +1453,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 													tag )
 												VALUES ( 10,
 													'" . $InvoiceNo . "',
-													'" . $DefaultDispatchDate . "',
+													'" . Date('Y-m-d') . "',
 													'" . $PeriodNo . "',
 													'" . $_SESSION['Items'.$identifier]->TaxGLCodes[$TaxAuthID] . "',
 													'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
@@ -1469,7 +1483,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 						tag )
 					VALUES (12,
 						'" . $ReceiptNumber . "',
-						'" . $DefaultDispatchDate . "',
+						'" . Date('Y-m-d') . "',
 						'" . $PeriodNo . "',
 						'" . $BankAccountCash . "',
 						'" . $Area . _(' WI: ') . $InvoiceNo . _(' YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' SPG: ') . $_SESSION['SalesmanLogin'] . ' ' . $_SESSION['Items'.$identifier]->Location . "',
@@ -1491,7 +1505,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 						tag)
 				VALUES (12,
 					'" . $ReceiptNumber . "',
-					'" . $DefaultDispatchDate . "',
+					'" . Date('Y-m-d') . "',
 					'" . $PeriodNo . "',
 					'" . $_SESSION['CompanyRecord']['debtorsact'] . "',
 					'" . $Area . _(' WI: ') . $InvoiceNo . _(' YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' SPG: '). $_SESSION['SalesmanLogin'] . ' ' . $_SESSION['Items'.$identifier]->Location . "',
@@ -1505,15 +1519,27 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 			
 			if ($_POST['AmountPaidCCDanamon']!=0){
 				// si han pagat CREDITCARD DANAMON, tot o en part
-				$BankAccountCreditCard = ACCOUNT_BANK_DANAMON_IDR;
+//				$BankAccountCreditCard = ACCOUNT_BANK_DANAMON_IDR;
 
 				// RICARD: Una part (100- COMISSION_CC_DANAMON)/100 va a la compte del bank
 				// RICARD: la resta (COMISSION_CC_DANAMON)/100 va a la compte ACCOUNT_COMISSION_CREDITCARD per comissió de CC
-				$CreditCardNetPaymentDanamon = (($_POST['AmountPaidCCDanamon']/$ExRate)*(100- COMISSION_CC_DANAMON)/100);
-				$CreditCardBankComissionsDanamon = (($_POST['AmountPaidCCDanamon']/$ExRate)*(COMISSION_CC_DANAMON)/100);
+				$CreditCardNetPayment = (($_POST['AmountPaidCCDanamon']/$ExRate)*(100- COMISSION_CC_DANAMON)/100);
+				$CreditCardBankComissions = (($_POST['AmountPaidCCDanamon']/$ExRate)*(COMISSION_CC_DANAMON)/100);
 				
-				$ReceiptNumber = GetNextTransNo(12,$db);
-		
+				// RICARD AQUI
+				AccountPaymentRetail($PeriodNo,
+									  ACCOUNT_BANK_DANAMON_IDR,
+									  $Area,
+									  $InvoiceNo,
+									  $_POST['AmountPaidCCDanamon'],
+									  $CreditCardBankComissions,
+									  $CreditCardNetPayment,
+									  $Tag,
+									  ACCOUNT_COMISSION_CREDITCARD,
+									  $ExRate);
+
+/*				$ReceiptNumber = GetNextTransNo(12,$db);
+				
 				$SQL="INSERT INTO gltrans (type,
 						typeno,
 						trandate,
@@ -1524,7 +1550,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 						tag)
 					VALUES (12,
 						'" . $ReceiptNumber . "',
-						'" . $DefaultDispatchDate . "',
+						'" . Date('Y-m-d') . "',
 						'" . $PeriodNo . "',
 						'" . $BankAccountCreditCard . "',
 						'" . $Area . _(' WI: ') . $InvoiceNo . _(' YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' SPG: '). $_SESSION['SalesmanLogin'] . ' ' . $_SESSION['Items'.$identifier]->Location . ' CC -> T: ' . number_format($_POST['AmountPaidCCDanamon'],0) . ' C: ' . number_format($CreditCardBankComissionsDanamon,0) . "',
@@ -1545,7 +1571,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 						tag)
 					VALUES (12,
 						'" . $ReceiptNumber . "',
-						'" . $DefaultDispatchDate . "',
+						'" . Date('Y-m-d') . "',
 						'" . $PeriodNo . "',
 						'" . ACCOUNT_COMISSION_CREDITCARD . "',
 						'" . $Area . _(' WI: ') . $InvoiceNo . _(' YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' SPG: '). $_SESSION['SalesmanLogin'] . ' ' . $_SESSION['Items'.$identifier]->Location . ' CC -> T: ' . number_format($_POST['AmountPaidCCDanamon'],0) . ' C: ' . number_format($CreditCardBankComissionsDanamon,0) . "',
@@ -1556,7 +1582,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 				/* Now Credit Debtors account with receipt */
-				$SQL="INSERT INTO gltrans ( type,
+/*				$SQL="INSERT INTO gltrans ( type,
 						typeno,
 						trandate,
 						periodno,
@@ -1566,7 +1592,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 						tag)
 				VALUES (12,
 					'" . $ReceiptNumber . "',
-					'" . $DefaultDispatchDate . "',
+					'" . Date('Y-m-d') . "',
 					'" . $PeriodNo . "',
 					'" . $_SESSION['CompanyRecord']['debtorsact'] . "',
 					'" . $Area . _(' WI: ') . $InvoiceNo . _(' YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' SPG: '). $_SESSION['SalesmanLogin'] . ' ' . $_SESSION['Items'.$identifier]->Location . "',
@@ -1575,7 +1601,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 				$DbgMsg = _('The SQL that failed to insert the GL transaction for the debtors account credit was');
 				$ErrMsg = _('Cannot insert a GL transaction for the debtors account credit');
 				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-			}//amount paid Credit Card DANAMON  was not zero
+*/			}//amount paid Credit Card DANAMON  was not zero
 
 			if ($_POST['AmountPaidAmexDanamon']!=0){
 				// si han pagat AMEX DANAMON, tot o en part
@@ -1598,7 +1624,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 						tag)
 					VALUES (12,
 						'" . $ReceiptNumber . "',
-						'" . $DefaultDispatchDate . "',
+						'" . Date('Y-m-d') . "',
 						'" . $PeriodNo . "',
 						'" . $BankAccountCreditCard . "',
 						'" . $Area . _(' WI: ') . $InvoiceNo . _(' YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' SPG: '). $_SESSION['SalesmanLogin'] . ' ' . $_SESSION['Items'.$identifier]->Location . ' AMEX -> T: ' . number_format($_POST['AmountPaidAmexDanamon'],0) . ' C: ' . number_format($AmexBankComissions,0) . "',
@@ -1620,7 +1646,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 						tag)
 					VALUES (12,
 						'" . $ReceiptNumber . "',
-						'" . $DefaultDispatchDate . "',
+						'" . Date('Y-m-d') . "',
 						'" . $PeriodNo . "',
 						'" .ACCOUNT_COMISSION_CREDITCARD . "',
 						'" . $Area . _(' WI: ') . $InvoiceNo . _(' YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' SPG: '). $_SESSION['SalesmanLogin'] . ' ' . $_SESSION['Items'.$identifier]->Location . ' AMEX -> T: ' . number_format($_POST['AmountPaidAmexDanamon'],0) . ' C: ' . number_format($AmexBankComissions,0) . "',
@@ -1641,7 +1667,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 						tag)
 				VALUES (12,
 					'" . $ReceiptNumber . "',
-					'" . $DefaultDispatchDate . "',
+					'" . Date('Y-m-d') . "',
 					'" . $PeriodNo . "',
 					'" . $_SESSION['CompanyRecord']['debtorsact'] . "',
 					'" . $Area . _(' WI: ') . $InvoiceNo . _(' YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' SPG: '). $_SESSION['SalesmanLogin'] . ' ' . $_SESSION['Items'.$identifier]->Location . "',
@@ -1673,7 +1699,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 						tag)
 					VALUES (12,
 						'" . $ReceiptNumber . "',
-						'" . $DefaultDispatchDate . "',
+						'" . Date('Y-m-d') . "',
 						'" . $PeriodNo . "',
 						'" . $BankAccountCreditCard . "',
 						'" . $Area . _(' WI: ') . $InvoiceNo . _(' YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' SPG: '). $_SESSION['SalesmanLogin'] . ' ' . $_SESSION['Items'.$identifier]->Location . ' CC -> T: ' . number_format($_POST['AmountPaidCCMandiri'],0) . ' C: ' . number_format($CreditCardBankComissionsMandiri,0) . "',
@@ -1694,7 +1720,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 						tag)
 					VALUES (12,
 						'" . $ReceiptNumber . "',
-						'" . $DefaultDispatchDate . "',
+						'" . Date('Y-m-d') . "',
 						'" . $PeriodNo . "',
 						'" . ACCOUNT_COMISSION_CREDITCARD . "',
 						'" . $Area . _(' WI: ') . $InvoiceNo . _(' YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' SPG: '). $_SESSION['SalesmanLogin'] . ' ' . $_SESSION['Items'.$identifier]->Location . ' CC -> T: ' . number_format($_POST['AmountPaidCCMandiri'],0) . ' C: ' . number_format($CreditCardBankComissionsMandiri,0) . "',
@@ -1715,7 +1741,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 						tag)
 				VALUES (12,
 					'" . $ReceiptNumber . "',
-					'" . $DefaultDispatchDate . "',
+					'" . Date('Y-m-d') . "',
 					'" . $PeriodNo . "',
 					'" . $_SESSION['CompanyRecord']['debtorsact'] . "',
 					'" . $Area . _(' WI: ') . $InvoiceNo . _(' YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' SPG: '). $_SESSION['SalesmanLogin'] . ' ' . $_SESSION['Items'.$identifier]->Location . "',
@@ -1725,6 +1751,80 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 				$ErrMsg = _('Cannot insert a GL transaction for the debtors account credit');
 				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 			}//amount paid Credit Card MANDIRI was not zero
+			
+			if ($_POST['AmountPaidCCBCA']!=0){
+				// si han pagat CREDITCARD BCA, tot o en part
+				$BankAccountCreditCard = ACCOUNT_BANK_BCA_IDR;
+
+				// RICARD: Una part (100- COMISSION_CC_BCA)/100 va a la compte del bank
+				// RICARD: la resta (COMISSION_CC_BCA)/100 va a la compte ACCOUNT_COMISSION_CREDITCARD per comissió de CC
+				$CreditCardNetPaymentBCA = (($_POST['AmountPaidCCBCA']/$ExRate)*(100- COMISSION_CC_BCA)/100);
+				$CreditCardBankComissionsBCA = (($_POST['AmountPaidCCBCA']/$ExRate)*(COMISSION_CC_BCA)/100);
+				
+				$ReceiptNumber = GetNextTransNo(12,$db);
+		
+				$SQL="INSERT INTO gltrans (type,
+						typeno,
+						trandate,
+						periodno,
+						account,
+						narrative,
+						amount,
+						tag)
+					VALUES (12,
+						'" . $ReceiptNumber . "',
+						'" . Date('Y-m-d') . "',
+						'" . $PeriodNo . "',
+						'" . $BankAccountCreditCard . "',
+						'" . $Area . _(' WI: ') . $InvoiceNo . _(' YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' SPG: '). $_SESSION['SalesmanLogin'] . ' ' . $_SESSION['Items'.$identifier]->Location . ' CC -> T: ' . number_format($_POST['AmountPaidCCBCA'],0) . ' C: ' . number_format($CreditCardBankComissionsBCA,0) . "',
+						'" . $CreditCardNetPaymentBCA . "',
+						'" . $Tag . "')";
+				$DbgMsg = _('The SQL that failed to insert the NET GL transaction for the bank account debit was');
+				$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
+				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+
+				// RICARD: la resta (COMISSION_CC_BCA)/100 va a la compte ACCOUNT_COMISSION_CREDITCARD per comissió de CC
+				$SQL="INSERT INTO gltrans (type,
+						typeno,
+						trandate,
+						periodno,
+						account,
+						narrative,
+						amount,
+						tag)
+					VALUES (12,
+						'" . $ReceiptNumber . "',
+						'" . Date('Y-m-d') . "',
+						'" . $PeriodNo . "',
+						'" . ACCOUNT_COMISSION_CREDITCARD . "',
+						'" . $Area . _(' WI: ') . $InvoiceNo . _(' YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' SPG: '). $_SESSION['SalesmanLogin'] . ' ' . $_SESSION['Items'.$identifier]->Location . ' CC -> T: ' . number_format($_POST['AmountPaidCCBCA'],0) . ' C: ' . number_format($CreditCardBankComissionsBCA,0) . "',
+						'" . $CreditCardBankComissionsBCA . "',
+						'" . $Tag . "')";
+				$DbgMsg = _('The SQL that failed to insert the bank Comission GL transaction for the bank account debit was');
+				$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
+				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+
+				/* Now Credit Debtors account with receipt */
+				$SQL="INSERT INTO gltrans ( type,
+						typeno,
+						trandate,
+						periodno,
+						account,
+						narrative,
+						amount,
+						tag)
+				VALUES (12,
+					'" . $ReceiptNumber . "',
+					'" . Date('Y-m-d') . "',
+					'" . $PeriodNo . "',
+					'" . $_SESSION['CompanyRecord']['debtorsact'] . "',
+					'" . $Area . _(' WI: ') . $InvoiceNo . _(' YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' SPG: '). $_SESSION['SalesmanLogin'] . ' ' . $_SESSION['Items'.$identifier]->Location . "',
+					'" . -($_POST['AmountPaidCCBCA']/$ExRate) . "',
+					'" . $Tag . "')";
+				$DbgMsg = _('The SQL that failed to insert the GL transaction for the debtors account credit was');
+				$ErrMsg = _('Cannot insert a GL transaction for the debtors account credit');
+				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+			}//amount paid Credit Card BCA was not zero
 
 		} /*end of if Sales and GL integrated */
 		
@@ -1758,7 +1858,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 						'" . $Area . _(' WI: ') . $InvoiceNo . _(' YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' SPG: '). $_SESSION['SalesmanLogin'] . ' ' . $_SESSION['Items'.$identifier]->Location . "',
 						'" . $ExRate . "',
 						'" . $BankAccountExRate . "',
-						'" . $DefaultDispatchDate . "',
+						'" . Date('Y-m-d') . "',
 						'2',
 						'" . ($_POST['AmountPaidCash'] * $BankAccountExRate) . "',
 						'" . $_SESSION['Items'.$identifier]->DefaultCurrency . "')";
@@ -1783,7 +1883,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 					VALUES ('" . $ReceiptNumber . "',
 						12,
 						'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
-						'" . $DefaultDispatchDate . "',
+						'" . Date('Y-m-d') . "',
 						'" . date('Y-m-d H-i-s') . "',
 						'" . $PeriodNo . "',
 						'" . $InvoiceNo . "',
@@ -1797,7 +1897,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 
 			$ReceiptDebtorTransID = DB_Last_Insert_ID($db,'debtortrans','id');
 
-			$SQL = "UPDATE debtorsmaster SET lastpaiddate = '" . $DefaultDispatchDate . "',
+			$SQL = "UPDATE debtorsmaster SET lastpaiddate = '" . Date('Y-m-d') . "',
 											lastpaid='" . $_POST['AmountPaidCash'] . "'
 									WHERE debtorsmaster.debtorno='" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
 
@@ -1812,7 +1912,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 												transid_allocfrom,
 												transid_allocto )
 									VALUES  ('" . $_POST['AmountPaidCash'] . "',
-											'" . $DefaultDispatchDate . "',
+											'" . Date('Y-m-d') . "',
 											 '" . $ReceiptDebtorTransID . "',
 											 '" . $DebtorTransID . "')";
 			$DbgMsg = _('The SQL that failed to insert the allocation of the receipt to the invoice was');
@@ -1852,7 +1952,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 						'" . $Area . _(' WI: ') . $InvoiceNo . _(' YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' SPG: '). $_SESSION['SalesmanLogin'] . ' ' . $_SESSION['Items'.$identifier]->Location . ' CC -> T: ' . number_format($_POST['AmountPaidCCDanamon'],0) . ' C: ' . number_format($CreditCardBankComissionsDanamon,0) . "',
 						'" . $ExRate . "',
 						'" . $BankAccountExRate . "',
-						'" . $DefaultDispatchDate . "',
+						'" . Date('Y-m-d') . "',
 						'3',
 						'" . $CreditCardNetPaymentDanamon . "',
 						'" . $_SESSION['Items'.$identifier]->DefaultCurrency . "')";
@@ -1877,7 +1977,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 					VALUES ('" . $ReceiptNumber . "',
 						12,
 						'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
-						'" . $DefaultDispatchDate . "',
+						'" . Date('Y-m-d') . "',
 						'" . date('Y-m-d H-i-s') . "',
 						'" . $PeriodNo . "',
 						'" . $InvoiceNo . "',
@@ -1891,7 +1991,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 
 			$ReceiptDebtorTransID = DB_Last_Insert_ID($db,'debtortrans','id');
 
-			$SQL = "UPDATE debtorsmaster SET lastpaiddate = '" . $DefaultDispatchDate . "',
+			$SQL = "UPDATE debtorsmaster SET lastpaiddate = '" . Date('Y-m-d') . "',
 											lastpaid='" . $_POST['AmountPaidCCDanamon'] . "'
 									WHERE debtorsmaster.debtorno='" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
 
@@ -1906,7 +2006,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 												transid_allocfrom,
 												transid_allocto )
 									VALUES  ('" . $_POST['AmountPaidCCDanamon'] . "',
-											'" . $DefaultDispatchDate . "',
+											'" . Date('Y-m-d') . "',
 											 '" . $ReceiptDebtorTransID . "',
 											 '" . $DebtorTransID . "')";
 			$DbgMsg = _('The SQL that failed to insert the allocation of the receipt to the invoice was');
@@ -1946,7 +2046,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 						'" . $Area . _(' WI: ') . $InvoiceNo . _(' YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' SPG: '). $_SESSION['SalesmanLogin'] . ' ' . $_SESSION['Items'.$identifier]->Location . ' AMEX -> T: ' . number_format($_POST['AmountPaidAmexDanamon'],0) . ' C: ' . number_format($AmexBankComissions,0) . "',
 						'" . $ExRate . "',
 						'" . $BankAccountExRate . "',
-						'" . $DefaultDispatchDate . "',
+						'" . Date('Y-m-d') . "',
 						'3',
 						'" . $AmexNetPayment . "',
 						'" . $_SESSION['Items'.$identifier]->DefaultCurrency . "')";
@@ -1971,7 +2071,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 					VALUES ('" . $ReceiptNumber . "',
 						12,
 						'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
-						'" . $DefaultDispatchDate . "',
+						'" . Date('Y-m-d') . "',
 						'" . date('Y-m-d H-i-s') . "',
 						'" . $PeriodNo . "',
 						'" . $InvoiceNo . "',
@@ -1985,7 +2085,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 
 			$ReceiptDebtorTransID = DB_Last_Insert_ID($db,'debtortrans','id');
 
-			$SQL = "UPDATE debtorsmaster SET lastpaiddate = '" . $DefaultDispatchDate . "',
+			$SQL = "UPDATE debtorsmaster SET lastpaiddate = '" . Date('Y-m-d') . "',
 											lastpaid='" . $_POST['AmountPaidAmexDanamon'] . "'
 									WHERE debtorsmaster.debtorno='" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
 
@@ -2000,7 +2100,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 												transid_allocfrom,
 												transid_allocto )
 									VALUES  ('" . $_POST['AmountPaidAmexDanamon'] . "',
-											'" . $DefaultDispatchDate . "',
+											'" . Date('Y-m-d') . "',
 											 '" . $ReceiptDebtorTransID . "',
 											 '" . $DebtorTransID . "')";
 			$DbgMsg = _('The SQL that failed to insert the allocation of the receipt to the invoice was');
@@ -2040,7 +2140,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 						'" . $Area . _(' WI: ') . $InvoiceNo . _(' YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' SPG: '). $_SESSION['SalesmanLogin'] . ' ' . $_SESSION['Items'.$identifier]->Location . ' CC -> T: ' . number_format($_POST['AmountPaidCCMandiri'],0) . ' C: ' . number_format($CreditCardBankComissionsMandiri,0) . "',
 						'" . $ExRate . "',
 						'" . $BankAccountExRate . "',
-						'" . $DefaultDispatchDate . "',
+						'" . Date('Y-m-d') . "',
 						'3',
 						'" . $CreditCardNetPaymentMandiri . "',
 						'" . $_SESSION['Items'.$identifier]->DefaultCurrency . "')";
@@ -2065,7 +2165,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 					VALUES ('" . $ReceiptNumber . "',
 						12,
 						'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
-						'" . $DefaultDispatchDate . "',
+						'" . Date('Y-m-d') . "',
 						'" . date('Y-m-d H-i-s') . "',
 						'" . $PeriodNo . "',
 						'" . $InvoiceNo . "',
@@ -2079,7 +2179,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 
 			$ReceiptDebtorTransID = DB_Last_Insert_ID($db,'debtortrans','id');
 
-			$SQL = "UPDATE debtorsmaster SET lastpaiddate = '" . $DefaultDispatchDate . "',
+			$SQL = "UPDATE debtorsmaster SET lastpaiddate = '" . Date('Y-m-d') . "',
 											lastpaid='" . $_POST['AmountPaidCCMandiri'] . "'
 									WHERE debtorsmaster.debtorno='" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
 
@@ -2094,7 +2194,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 												transid_allocfrom,
 												transid_allocto )
 									VALUES  ('" . $_POST['AmountPaidCCMandiri'] . "',
-											 '" . $DefaultDispatchDate . "',
+											 '" . Date('Y-m-d') . "',
 											 '" . $ReceiptDebtorTransID . "',
 											 '" . $DebtorTransID . "')";
 			$DbgMsg = _('The SQL that failed to insert the allocation of the receipt to the invoice was');
@@ -2102,6 +2202,101 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 		} //end if $_POST['AmountPaidCCMandiri']!= 0
 
+		if ($_POST['AmountPaidCCBCA']!=0){
+			$BankAccountCreditCard = ACCOUNT_BANK_BCA_IDR;
+			if (!isset($ReceiptNumber)){
+				$ReceiptNumber = GetNextTransNo(12,$db);
+			}
+			//Now need to add the receipt banktrans record
+			//First get the account currency that it has been banked into
+			$result = DB_query("SELECT rate FROM currencies
+								INNER JOIN bankaccounts ON currencies.currabrev=bankaccounts.currcode
+								WHERE bankaccounts.accountcode='" . $BankAccountCreditCard . "'");
+			$myrow = DB_fetch_row($result);
+			$BankAccountExRate = $myrow[0];
+
+			//insert the banktrans record in the currency of the bank account
+			// RICARD: Only the NET amount (after bank comissions) gets it's way to the bank account. :-(((
+
+			$SQL="INSERT INTO banktrans (type,
+						transno,
+						bankact,
+						ref,
+						exrate,
+						functionalexrate,
+						transdate,
+						banktranstype,
+						amount,
+						currcode)
+					VALUES (12,
+						'" . $ReceiptNumber . "',
+						'" . $BankAccountCreditCard . "',
+						'" . $Area . _(' WI: ') . $InvoiceNo . _(' YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' SPG: '). $_SESSION['SalesmanLogin'] . ' ' . $_SESSION['Items'.$identifier]->Location . ' CC -> T: ' . number_format($_POST['AmountPaidCCBCA'],0) . ' C: ' . number_format($CreditCardBankComissionsBCA,0) . "',
+						'" . $ExRate . "',
+						'" . $BankAccountExRate . "',
+						'" . Date('Y-m-d') . "',
+						'3',
+						'" . $CreditCardNetPaymentBCA . "',
+						'" . $_SESSION['Items'.$identifier]->DefaultCurrency . "')";
+
+			$DbgMsg = _('The SQL that failed to insert the bank account transaction was');
+			$ErrMsg = _('Cannot insert a bank transaction');
+			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+
+			//insert a new debtortrans for the receipt
+
+			$SQL = "INSERT INTO debtortrans (transno,
+							type,
+							debtorno,
+							trandate,
+							inputdate,
+							prd,
+							reference,
+							rate,
+							ovamount,
+							alloc,
+							invtext)
+					VALUES ('" . $ReceiptNumber . "',
+						12,
+						'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
+						'" . Date('Y-m-d') . "',
+						'" . date('Y-m-d H-i-s') . "',
+						'" . $PeriodNo . "',
+						'" . $InvoiceNo . "',
+						'" . $ExRate . "',
+						'" . -$_POST['AmountPaidCCBCA'] . "',
+						'" . -$_POST['AmountPaidCCBCA'] . "',
+						'" . $Area . _(' WI: ') . $InvoiceNo . _(' YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' SPG: '). $_SESSION['SalesmanLogin'] . ' ' . $_SESSION['Items'.$identifier]->Location . " CC')";
+			$DbgMsg = _('The SQL that failed to insert the customer receipt transaction was');
+			$ErrMsg = _('Cannot insert a receipt transaction against the customer because') ;
+			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+
+			$ReceiptDebtorTransID = DB_Last_Insert_ID($db,'debtortrans','id');
+
+			$SQL = "UPDATE debtorsmaster SET lastpaiddate = '" . Date('Y-m-d') . "',
+											lastpaid='" . $_POST['AmountPaidCCBCA'] . "'
+									WHERE debtorsmaster.debtorno='" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
+
+			$DbgMsg = _('The SQL that failed to update the date of the last payment received was');
+			$ErrMsg = _('Cannot update the customer record for the date of the last payment received because');
+			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+
+			//and finally add the allocation record between receipt and invoice
+
+			$SQL = "INSERT INTO custallocns (	amt,
+												datealloc,
+												transid_allocfrom,
+												transid_allocto )
+									VALUES  ('" . $_POST['AmountPaidCCBCA'] . "',
+											 '" . Date('Y-m-d') . "',
+											 '" . $ReceiptDebtorTransID . "',
+											 '" . $DebtorTransID . "')";
+			$DbgMsg = _('The SQL that failed to insert the allocation of the receipt to the invoice was');
+			$ErrMsg = _('Cannot insert the customer allocation of the receipt to the invoice because');
+			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		} //end if $_POST['AmountPaidCCBCA']!= 0
+		
+		
 		/* Account for the Packaging */
 		AdjustPackagingMovement("PKBX01-L", $_POST['PackagingBox01L'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
 		AdjustPackagingMovement("PKBX01-M", $_POST['PackagingBox01M'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
@@ -2129,15 +2324,17 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 		echo prnMsg( _('YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' WI'). ' '. $InvoiceNo . _('. Total CC EDC Danamon: ') . number_format($_POST['AmountPaidCCDanamon'],0)  , 'success');
 		echo prnMsg( _('YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' WI'). ' '. $InvoiceNo . _('. Total Amex EDC Danamon: ') . number_format($_POST['AmountPaidAmexDanamon'],0)  , 'success');
 		echo prnMsg( _('YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' WI'). ' '. $InvoiceNo . _('. Total CC EDC Mandiri: ') . number_format($_POST['AmountPaidCCMandiri'],0)  , 'success');
+		echo prnMsg( _('YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' WI'). ' '. $InvoiceNo . _('. Total CC EDC BCA: ') . number_format($_POST['AmountPaidCCBCA'],0)  , 'success');
 		echo prnMsg( _('YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' WI'). ' '. $InvoiceNo . _('. Total Returned Goods: ') . number_format($_POST['AmountReturnedGoods'],0) , 'success');
 		echo prnMsg( _('YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' WI'). ' '. $InvoiceNo . _('. Total Vouchers/Discounts: ') . number_format($_POST['AmountVouchers'],0) , 'success');
 		echo '<br /><div class="centre">';
 
 		
 		// if splitted payments
-		if (($_POST['AmountPaidCash'] <> 0 &&  $_POST['AmountPaidCCDanamon'] <> 0) ||
-     		($_POST['AmountPaidCash'] <> 0 &&  $_POST['AmountPaidAmexDanamon'] <> 0) ||
-     		($_POST['AmountPaidCash'] <> 0 &&  $_POST['AmountPaidCCMandiri'] <> 0)){
+		if (($_POST['AmountPaidCash'] <> 0 AND  $_POST['AmountPaidCCDanamon'] <> 0) OR
+     		($_POST['AmountPaidCash'] <> 0 AND  $_POST['AmountPaidAmexDanamon'] <> 0) OR
+     		($_POST['AmountPaidCash'] <> 0 AND  $_POST['AmountPaidCCMandiri'] <> 0) OR
+     		($_POST['AmountPaidCash'] <> 0 AND  $_POST['AmountPaidCCBCA'] <> 0)){
 
 			KLSendEmail("SplittedPayment", 
 						"Silent",
@@ -2150,6 +2347,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 						number_format($_POST['AmountPaidCCDanamon'],0),
 						number_format($_POST['AmountPaidAmexDanamon'],0),
 						number_format($_POST['AmountPaidCCMandiri'],0),
+						number_format($_POST['AmountPaidCCBCA'],0),
 						number_format($_POST['AmountReturnedGoods'],0),
 						number_format($_POST['AmountVouchers'],0),
 						stripcslashes($_SESSION['Items'.$identifier]->Comments));
@@ -2170,6 +2368,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 						number_format($_POST['AmountPaidCCDanamon'],0),
 						number_format($_POST['AmountPaidAmexDanamon'],0),
 						number_format($_POST['AmountPaidCCMandiri'],0),
+						number_format($_POST['AmountPaidCCBCA'],0),
 						number_format($_POST['AmountReturnedGoods'],0),
 						number_format($_POST['AmountVouchers'],0),
 						stripcslashes($_SESSION['Items'.$identifier]->Comments));
@@ -2186,6 +2385,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 						number_format($_POST['AmountPaidCCDanamon'],0),
 						number_format($_POST['AmountPaidAmexDanamon'],0),
 						number_format($_POST['AmountPaidCCMandiri'],0),
+						number_format($_POST['AmountPaidCCBCA'],0),
 						number_format($_POST['AmountReturnedGoods'],0),
 						number_format($_POST['AmountVouchers'],0),
 						stripcslashes($_SESSION['Items'.$identifier]->Comments));

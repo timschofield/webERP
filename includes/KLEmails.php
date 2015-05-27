@@ -158,9 +158,10 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 						'Total CC EDC Danamon    : ' . $Param7  . "\r\n" .
 						'Total Amex EDC Danamon  : ' . $Param8  . "\r\n" .
 						'Total CC EDC Mandiri    : ' . $Param9  . "\r\n" .
-						'Total Returned Goods    : ' . $Param10 . "\r\n" .
-						'Total Voucher/Discount  : ' . $Param11 . "\r\n" .
-						'Comments                : ' . $Param12; 		
+						'Total CC EDC BCA        : ' . $Param10  . "\r\n" .
+						'Total Returned Goods    : ' . $Param11 . "\r\n" .
+						'Total Voucher/Discount  : ' . $Param12 . "\r\n" .
+						'Comments                : ' . $Param13; 		
 			$EmailAddress = "kl-splittedpayments@kapal-laut.com";
 			break;
 		case "GoodsReturnedToShop":
@@ -175,9 +176,10 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 						'Total CC EDC Danamon    : ' . $Param7  . "\r\n" .
 						'Total Amex EDC Danamon  : ' . $Param8  . "\r\n" .
 						'Total CC EDC Mandiri    : ' . $Param9  . "\r\n" .
-						'Total Returned Goods    : ' . $Param10 . "\r\n" .
-						'Total Voucher/Discount  : ' . $Param11 . "\r\n" .
-						'Comments                : ' . $Param12; 		
+						'Total CC EDC BCA        : ' . $Param10  . "\r\n" .
+						'Total Returned Goods    : ' . $Param11 . "\r\n" .
+						'Total Voucher/Discount  : ' . $Param12 . "\r\n" .
+						'Comments                : ' . $Param13; 		
 			$EmailAddress = "kl-goodsreturnedtoshop@kapal-laut.com";
 			break;
 		case "VoucherDiscounts":
@@ -192,9 +194,10 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 						'Total CC EDC Danamon    : ' . $Param7  . "\r\n" .
 						'Total Amex EDC Danamon  : ' . $Param8  . "\r\n" .
 						'Total CC EDC Mandiri    : ' . $Param9  . "\r\n" .
-						'Total Returned Goods    : ' . $Param10 . "\r\n" .
-						'Total Voucher/Discount  : ' . $Param11 . "\r\n" .
-						'Comments                : ' . $Param12; 		
+						'Total CC EDC BCA        : ' . $Param10  . "\r\n" .
+						'Total Returned Goods    : ' . $Param11 . "\r\n" .
+						'Total Voucher/Discount  : ' . $Param12 . "\r\n" .
+						'Comments                : ' . $Param13; 		
 			$EmailAddress = "kl-voucherdiscounts@kapal-laut.com";
 			break;
 
