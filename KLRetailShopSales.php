@@ -1471,829 +1471,188 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 			if ($_POST['AmountPaidCash']!=0){
 				// si han pagat CASH, tot o en part
 				$BankAccountCash       = KapalLautRetailBankAccountSelection($_SESSION['Items'.$identifier]->DebtorNo, 2,	$db);
-			
-				$ReceiptNumber = GetNextTransNo(12,$db);
-				$SQL="INSERT INTO gltrans (type,
-						typeno,
-						trandate,
-						periodno,
-						account,
-						narrative,
-						amount,
-						tag )
-					VALUES (12,
-						'" . $ReceiptNumber . "',
-						'" . Date('Y-m-d') . "',
-						'" . $PeriodNo . "',
-						'" . $BankAccountCash . "',
-						'" . $Area . _(' WI: ') . $InvoiceNo . _(' YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' SPG: ') . $_SESSION['SalesmanLogin'] . ' ' . $_SESSION['Items'.$identifier]->Location . "',
-						'" . ($_POST['AmountPaidCash']/$ExRate) . "',
-						'" . $Tag . "')";
-
-				$DbgMsg = _('The SQL that failed to insert the GL transaction for the bank account debit was');
-				$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
-				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-
-				/* Now Credit Debtors account with receipt */
-				$SQL="INSERT INTO gltrans ( type,
-						typeno,
-						trandate,
-						periodno,
-						account,
-						narrative,
-						amount, 
-						tag)
-				VALUES (12,
-					'" . $ReceiptNumber . "',
-					'" . Date('Y-m-d') . "',
-					'" . $PeriodNo . "',
-					'" . $_SESSION['CompanyRecord']['debtorsact'] . "',
-					'" . $Area . _(' WI: ') . $InvoiceNo . _(' YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' SPG: '). $_SESSION['SalesmanLogin'] . ' ' . $_SESSION['Items'.$identifier]->Location . "',
-					'" . -($_POST['AmountPaidCash']/$ExRate) . "',
-					'" . $Tag . "')";
-
-				$DbgMsg = _('The SQL that failed to insert the GL transaction for the debtors account credit was');
-				$ErrMsg = _('Cannot insert a GL transaction for the debtors account credit');
-				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+				$ReceiptNumber = AccountPaymentRetail(PAYMENT_BY_CASH,
+									$PeriodNo,
+									$BankAccountCash,
+									$Area,
+									$InvoiceNo,
+									$_SESSION['Items'.$identifier]->CustRef,
+									$_SESSION['Items'.$identifier]->Location,
+									$_POST['AmountPaidCash'],
+									0,
+									$_POST['AmountPaidCash'],
+									$Tag,
+									'',
+									$ExRate);
 			}//amount paid cash was not zero
 			
 			if ($_POST['AmountPaidCCDanamon']!=0){
 				// si han pagat CREDITCARD DANAMON, tot o en part
-//				$BankAccountCreditCard = ACCOUNT_BANK_DANAMON_IDR;
+				$CreditCardNetPayment = ($_POST['AmountPaidCCDanamon']*(100- COMISSION_CC_DANAMON)/100);
+				$CreditCardBankComissions = ($_POST['AmountPaidCCDanamon']*(COMISSION_CC_DANAMON)/100);
 
-				// RICARD: Una part (100- COMISSION_CC_DANAMON)/100 va a la compte del bank
-				// RICARD: la resta (COMISSION_CC_DANAMON)/100 va a la compte ACCOUNT_COMISSION_CREDITCARD per comissió de CC
-				$CreditCardNetPayment = (($_POST['AmountPaidCCDanamon']/$ExRate)*(100- COMISSION_CC_DANAMON)/100);
-				$CreditCardBankComissions = (($_POST['AmountPaidCCDanamon']/$ExRate)*(COMISSION_CC_DANAMON)/100);
-				
-				// RICARD AQUI
-				AccountPaymentRetail($PeriodNo,
-									  ACCOUNT_BANK_DANAMON_IDR,
-									  $Area,
-									  $InvoiceNo,
-									  $_POST['AmountPaidCCDanamon'],
-									  $CreditCardBankComissions,
-									  $CreditCardNetPayment,
-									  $Tag,
-									  ACCOUNT_COMISSION_CREDITCARD,
-									  $ExRate);
+				$ReceiptNumber = AccountPaymentRetail(PAYMENT_BY_CREDITCARD,
+									$PeriodNo,
+									ACCOUNT_BANK_DANAMON_IDR,
+									$Area,
+									$InvoiceNo,
+									$_SESSION['Items'.$identifier]->CustRef,
+									$_SESSION['Items'.$identifier]->Location,
+									$_POST['AmountPaidCCDanamon'],
+									$CreditCardBankComissions,
+									$CreditCardNetPayment,
+									$Tag,
+									ACCOUNT_COMISSION_CREDITCARD,
+									$ExRate);
 
-/*				$ReceiptNumber = GetNextTransNo(12,$db);
-				
-				$SQL="INSERT INTO gltrans (type,
-						typeno,
-						trandate,
-						periodno,
-						account,
-						narrative,
-						amount,
-						tag)
-					VALUES (12,
-						'" . $ReceiptNumber . "',
-						'" . Date('Y-m-d') . "',
-						'" . $PeriodNo . "',
-						'" . $BankAccountCreditCard . "',
-						'" . $Area . _(' WI: ') . $InvoiceNo . _(' YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' SPG: '). $_SESSION['SalesmanLogin'] . ' ' . $_SESSION['Items'.$identifier]->Location . ' CC -> T: ' . number_format($_POST['AmountPaidCCDanamon'],0) . ' C: ' . number_format($CreditCardBankComissionsDanamon,0) . "',
-						'" . $CreditCardNetPaymentDanamon . "',
-						'" . $Tag . "')";
-				$DbgMsg = _('The SQL that failed to insert the NET GL transaction for the bank account debit was');
-				$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
-				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-
-				// RICARD: la resta (COMISSION_CC_DANAMON)/100 va a la compte ACCOUNT_COMISSION_CREDITCARD per comissió de CC
-				$SQL="INSERT INTO gltrans (type,
-						typeno,
-						trandate,
-						periodno,
-						account,
-						narrative,
-						amount,
-						tag)
-					VALUES (12,
-						'" . $ReceiptNumber . "',
-						'" . Date('Y-m-d') . "',
-						'" . $PeriodNo . "',
-						'" . ACCOUNT_COMISSION_CREDITCARD . "',
-						'" . $Area . _(' WI: ') . $InvoiceNo . _(' YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' SPG: '). $_SESSION['SalesmanLogin'] . ' ' . $_SESSION['Items'.$identifier]->Location . ' CC -> T: ' . number_format($_POST['AmountPaidCCDanamon'],0) . ' C: ' . number_format($CreditCardBankComissionsDanamon,0) . "',
-						'" . $CreditCardBankComissionsDanamon . "',
-						'" . $Tag . "')";
-				$DbgMsg = _('The SQL that failed to insert the bank Comission GL transaction for the bank account debit was');
-				$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
-				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-
-				/* Now Credit Debtors account with receipt */
-/*				$SQL="INSERT INTO gltrans ( type,
-						typeno,
-						trandate,
-						periodno,
-						account,
-						narrative,
-						amount,
-						tag)
-				VALUES (12,
-					'" . $ReceiptNumber . "',
-					'" . Date('Y-m-d') . "',
-					'" . $PeriodNo . "',
-					'" . $_SESSION['CompanyRecord']['debtorsact'] . "',
-					'" . $Area . _(' WI: ') . $InvoiceNo . _(' YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' SPG: '). $_SESSION['SalesmanLogin'] . ' ' . $_SESSION['Items'.$identifier]->Location . "',
-					'" . -($_POST['AmountPaidCCDanamon']/$ExRate) . "',
-					'" . $Tag . "')";
-				$DbgMsg = _('The SQL that failed to insert the GL transaction for the debtors account credit was');
-				$ErrMsg = _('Cannot insert a GL transaction for the debtors account credit');
-				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-*/			}//amount paid Credit Card DANAMON  was not zero
+			}//amount paid Credit Card DANAMON  was not zero
 
 			if ($_POST['AmountPaidAmexDanamon']!=0){
 				// si han pagat AMEX DANAMON, tot o en part
-				$BankAccountCreditCard = ACCOUNT_BANK_DANAMON_IDR;
-
-				// RICARD: Una part (100- COMISSION_AMEX_DANAMON)/100 va a la compte del bank
-				// RICARD: la resta (COMISSION_AMEX_DANAMON)/100 va a la compte ACCOUNT_COMISSION_CREDITCARD per comissió de CC
-				$AmexNetPayment = (($_POST['AmountPaidAmexDanamon']/$ExRate)*(100- COMISSION_AMEX_DANAMON)/100);
-				$AmexBankComissions = (($_POST['AmountPaidAmexDanamon']/$ExRate)*(COMISSION_AMEX_DANAMON)/100);
+				$CreditCardNetPayment = ($_POST['AmountPaidAmexDanamon']*(100- COMISSION_AMEX_DANAMON)/100);
+				$CreditCardBankComissions = ($_POST['AmountPaidAmexDanamon']*(COMISSION_AMEX_DANAMON)/100);
 				
-				$ReceiptNumber = GetNextTransNo(12,$db);
-		
-				$SQL="INSERT INTO gltrans (type,
-						typeno,
-						trandate,
-						periodno,
-						account,
-						narrative,
-						amount,
-						tag)
-					VALUES (12,
-						'" . $ReceiptNumber . "',
-						'" . Date('Y-m-d') . "',
-						'" . $PeriodNo . "',
-						'" . $BankAccountCreditCard . "',
-						'" . $Area . _(' WI: ') . $InvoiceNo . _(' YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' SPG: '). $_SESSION['SalesmanLogin'] . ' ' . $_SESSION['Items'.$identifier]->Location . ' AMEX -> T: ' . number_format($_POST['AmountPaidAmexDanamon'],0) . ' C: ' . number_format($AmexBankComissions,0) . "',
-						'" . $AmexNetPayment . "',
-						'" . $Tag . "')";
-				$DbgMsg = _('The SQL that failed to insert the NET GL transaction for the bank account debit was');
-				$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
-				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+				$ReceiptNumber = AccountPaymentRetail(PAYMENT_BY_CREDITCARD,
+									$PeriodNo,
+									ACCOUNT_BANK_DANAMON_IDR,
+									$Area,
+									$InvoiceNo,
+									$_SESSION['Items'.$identifier]->CustRef,
+									$_SESSION['Items'.$identifier]->Location,
+									$_POST['AmountPaidAmexDanamon'],
+									$CreditCardBankComissions,
+									$CreditCardNetPayment,
+									$Tag,
+									ACCOUNT_COMISSION_CREDITCARD,
+									$ExRate);
 
-				// RICARD: la resta (COMISSION_AMEX_DANAMON)/100 va a la compte ACCOUNT_COMISSION_CREDITCARD per comissió de CC
-				$GLACCOUNT_COMISSION_CREDITCARD = ACCOUNT_COMISSION_CREDITCARD;
-				$SQL="INSERT INTO gltrans (type,
-						typeno,
-						trandate,
-						periodno,
-						account,
-						narrative,
-						amount,
-						tag)
-					VALUES (12,
-						'" . $ReceiptNumber . "',
-						'" . Date('Y-m-d') . "',
-						'" . $PeriodNo . "',
-						'" .ACCOUNT_COMISSION_CREDITCARD . "',
-						'" . $Area . _(' WI: ') . $InvoiceNo . _(' YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' SPG: '). $_SESSION['SalesmanLogin'] . ' ' . $_SESSION['Items'.$identifier]->Location . ' AMEX -> T: ' . number_format($_POST['AmountPaidAmexDanamon'],0) . ' C: ' . number_format($AmexBankComissions,0) . "',
-						'" . $AmexBankComissions . "',
-						'" . $Tag . "')";
-				$DbgMsg = _('The SQL that failed to insert the bank Comission GL transaction for the bank account debit was');
-				$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
-				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-
-				/* Now Credit Debtors account with receipt */
-				$SQL="INSERT INTO gltrans ( type,
-						typeno,
-						trandate,
-						periodno,
-						account,
-						narrative,
-						amount,
-						tag)
-				VALUES (12,
-					'" . $ReceiptNumber . "',
-					'" . Date('Y-m-d') . "',
-					'" . $PeriodNo . "',
-					'" . $_SESSION['CompanyRecord']['debtorsact'] . "',
-					'" . $Area . _(' WI: ') . $InvoiceNo . _(' YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' SPG: '). $_SESSION['SalesmanLogin'] . ' ' . $_SESSION['Items'.$identifier]->Location . "',
-					'" . -($_POST['AmountPaidAmexDanamon']/$ExRate) . "',
-					'" . $Tag . "')";
-				$DbgMsg = _('The SQL that failed to insert the GL transaction for the debtors account credit was');
-				$ErrMsg = _('Cannot insert a GL transaction for the debtors account credit');
-				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 			}//amount paid American Express was not zero
 
 			if ($_POST['AmountPaidCCMandiri']!=0){
 				// si han pagat CREDITCARD MANDIRI, tot o en part
-				$BankAccountCreditCard = ACCOUNT_BANK_MANDIRI_IDR;
+				$CreditCardNetPayment = ($_POST['AmountPaidCCMandiri']*(100- COMISSION_CC_MANDIRI)/100);
+				$CreditCardBankComissions = ($_POST['AmountPaidCCMandiri']*(COMISSION_CC_MANDIRI)/100);
 
-				// RICARD: Una part (100- COMISSION_CC_MANDIRI)/100 va a la compte del bank
-				// RICARD: la resta (COMISSION_CC_MANDIRI)/100 va a la compte ACCOUNT_COMISSION_CREDITCARD per comissió de CC
-				$CreditCardNetPaymentMandiri = (($_POST['AmountPaidCCMandiri']/$ExRate)*(100- COMISSION_CC_MANDIRI)/100);
-				$CreditCardBankComissionsMandiri = (($_POST['AmountPaidCCMandiri']/$ExRate)*(COMISSION_CC_MANDIRI)/100);
+				$ReceiptNumber = AccountPaymentRetail(PAYMENT_BY_CREDITCARD,
+									$PeriodNo,
+									ACCOUNT_BANK_MANDIRI_IDR,
+									$Area,
+									$InvoiceNo,
+									$_SESSION['Items'.$identifier]->CustRef,
+									$_SESSION['Items'.$identifier]->Location,
+									$_POST['AmountPaidCCMandiri'],
+									$CreditCardBankComissions,
+									$CreditCardNetPayment,
+									$Tag,
+									ACCOUNT_COMISSION_CREDITCARD,
+									$ExRate);
 				
-				$ReceiptNumber = GetNextTransNo(12,$db);
-		
-				$SQL="INSERT INTO gltrans (type,
-						typeno,
-						trandate,
-						periodno,
-						account,
-						narrative,
-						amount,
-						tag)
-					VALUES (12,
-						'" . $ReceiptNumber . "',
-						'" . Date('Y-m-d') . "',
-						'" . $PeriodNo . "',
-						'" . $BankAccountCreditCard . "',
-						'" . $Area . _(' WI: ') . $InvoiceNo . _(' YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' SPG: '). $_SESSION['SalesmanLogin'] . ' ' . $_SESSION['Items'.$identifier]->Location . ' CC -> T: ' . number_format($_POST['AmountPaidCCMandiri'],0) . ' C: ' . number_format($CreditCardBankComissionsMandiri,0) . "',
-						'" . $CreditCardNetPaymentMandiri . "',
-						'" . $Tag . "')";
-				$DbgMsg = _('The SQL that failed to insert the NET GL transaction for the bank account debit was');
-				$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
-				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-
-				// RICARD: la resta (COMISSION_CC_MANDIRI)/100 va a la compte ACCOUNT_COMISSION_CREDITCARD per comissió de CC
-				$SQL="INSERT INTO gltrans (type,
-						typeno,
-						trandate,
-						periodno,
-						account,
-						narrative,
-						amount,
-						tag)
-					VALUES (12,
-						'" . $ReceiptNumber . "',
-						'" . Date('Y-m-d') . "',
-						'" . $PeriodNo . "',
-						'" . ACCOUNT_COMISSION_CREDITCARD . "',
-						'" . $Area . _(' WI: ') . $InvoiceNo . _(' YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' SPG: '). $_SESSION['SalesmanLogin'] . ' ' . $_SESSION['Items'.$identifier]->Location . ' CC -> T: ' . number_format($_POST['AmountPaidCCMandiri'],0) . ' C: ' . number_format($CreditCardBankComissionsMandiri,0) . "',
-						'" . $CreditCardBankComissionsMandiri . "',
-						'" . $Tag . "')";
-				$DbgMsg = _('The SQL that failed to insert the bank Comission GL transaction for the bank account debit was');
-				$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
-				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-
-				/* Now Credit Debtors account with receipt */
-				$SQL="INSERT INTO gltrans ( type,
-						typeno,
-						trandate,
-						periodno,
-						account,
-						narrative,
-						amount,
-						tag)
-				VALUES (12,
-					'" . $ReceiptNumber . "',
-					'" . Date('Y-m-d') . "',
-					'" . $PeriodNo . "',
-					'" . $_SESSION['CompanyRecord']['debtorsact'] . "',
-					'" . $Area . _(' WI: ') . $InvoiceNo . _(' YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' SPG: '). $_SESSION['SalesmanLogin'] . ' ' . $_SESSION['Items'.$identifier]->Location . "',
-					'" . -($_POST['AmountPaidCCMandiri']/$ExRate) . "',
-					'" . $Tag . "')";
-				$DbgMsg = _('The SQL that failed to insert the GL transaction for the debtors account credit was');
-				$ErrMsg = _('Cannot insert a GL transaction for the debtors account credit');
-				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 			}//amount paid Credit Card MANDIRI was not zero
 			
 			if ($_POST['AmountPaidCCBCA']!=0){
 				// si han pagat CREDITCARD BCA, tot o en part
-				$BankAccountCreditCard = ACCOUNT_BANK_BCA_IDR;
-
-				// RICARD: Una part (100- COMISSION_CC_BCA)/100 va a la compte del bank
-				// RICARD: la resta (COMISSION_CC_BCA)/100 va a la compte ACCOUNT_COMISSION_CREDITCARD per comissió de CC
-				$CreditCardNetPaymentBCA = (($_POST['AmountPaidCCBCA']/$ExRate)*(100- COMISSION_CC_BCA)/100);
-				$CreditCardBankComissionsBCA = (($_POST['AmountPaidCCBCA']/$ExRate)*(COMISSION_CC_BCA)/100);
+				$CreditCardNetPayment = ($_POST['AmountPaidCCBCA']*(100- COMISSION_CC_BCA)/100);
+				$CreditCardBankComissions = ($_POST['AmountPaidCCBCA']*(COMISSION_CC_BCA)/100);
 				
-				$ReceiptNumber = GetNextTransNo(12,$db);
-		
-				$SQL="INSERT INTO gltrans (type,
-						typeno,
-						trandate,
-						periodno,
-						account,
-						narrative,
-						amount,
-						tag)
-					VALUES (12,
-						'" . $ReceiptNumber . "',
-						'" . Date('Y-m-d') . "',
-						'" . $PeriodNo . "',
-						'" . $BankAccountCreditCard . "',
-						'" . $Area . _(' WI: ') . $InvoiceNo . _(' YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' SPG: '). $_SESSION['SalesmanLogin'] . ' ' . $_SESSION['Items'.$identifier]->Location . ' CC -> T: ' . number_format($_POST['AmountPaidCCBCA'],0) . ' C: ' . number_format($CreditCardBankComissionsBCA,0) . "',
-						'" . $CreditCardNetPaymentBCA . "',
-						'" . $Tag . "')";
-				$DbgMsg = _('The SQL that failed to insert the NET GL transaction for the bank account debit was');
-				$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
-				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-
-				// RICARD: la resta (COMISSION_CC_BCA)/100 va a la compte ACCOUNT_COMISSION_CREDITCARD per comissió de CC
-				$SQL="INSERT INTO gltrans (type,
-						typeno,
-						trandate,
-						periodno,
-						account,
-						narrative,
-						amount,
-						tag)
-					VALUES (12,
-						'" . $ReceiptNumber . "',
-						'" . Date('Y-m-d') . "',
-						'" . $PeriodNo . "',
-						'" . ACCOUNT_COMISSION_CREDITCARD . "',
-						'" . $Area . _(' WI: ') . $InvoiceNo . _(' YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' SPG: '). $_SESSION['SalesmanLogin'] . ' ' . $_SESSION['Items'.$identifier]->Location . ' CC -> T: ' . number_format($_POST['AmountPaidCCBCA'],0) . ' C: ' . number_format($CreditCardBankComissionsBCA,0) . "',
-						'" . $CreditCardBankComissionsBCA . "',
-						'" . $Tag . "')";
-				$DbgMsg = _('The SQL that failed to insert the bank Comission GL transaction for the bank account debit was');
-				$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
-				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-
-				/* Now Credit Debtors account with receipt */
-				$SQL="INSERT INTO gltrans ( type,
-						typeno,
-						trandate,
-						periodno,
-						account,
-						narrative,
-						amount,
-						tag)
-				VALUES (12,
-					'" . $ReceiptNumber . "',
-					'" . Date('Y-m-d') . "',
-					'" . $PeriodNo . "',
-					'" . $_SESSION['CompanyRecord']['debtorsact'] . "',
-					'" . $Area . _(' WI: ') . $InvoiceNo . _(' YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' SPG: '). $_SESSION['SalesmanLogin'] . ' ' . $_SESSION['Items'.$identifier]->Location . "',
-					'" . -($_POST['AmountPaidCCBCA']/$ExRate) . "',
-					'" . $Tag . "')";
-				$DbgMsg = _('The SQL that failed to insert the GL transaction for the debtors account credit was');
-				$ErrMsg = _('Cannot insert a GL transaction for the debtors account credit');
-				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+				$ReceiptNumber = AccountPaymentRetail(PAYMENT_BY_CREDITCARD,
+									$PeriodNo,
+									ACCOUNT_BANK_BCA_IDR,
+									$Area,
+									$InvoiceNo,
+									$_SESSION['Items'.$identifier]->CustRef,
+									$_SESSION['Items'.$identifier]->Location,
+									$_POST['AmountPaidCCBCA'],
+									$CreditCardBankComissions,
+									$CreditCardNetPayment,
+									$Tag,
+									ACCOUNT_COMISSION_CREDITCARD,
+									$ExRate);
 			}//amount paid Credit Card BCA was not zero
 
 		} /*end of if Sales and GL integrated */
 		
 		if ($_POST['AmountPaidCash']!=0){
-			if (!isset($ReceiptNumber)){
-				$ReceiptNumber = GetNextTransNo(12,$db);
-			}
-			//Now need to add the receipt banktrans record
-			//First get the account currency that it has been banked into
-			$result = DB_query("SELECT rate FROM currencies
-													INNER JOIN bankaccounts ON currencies.currabrev=bankaccounts.currcode
-													WHERE bankaccounts.accountcode='" . $BankAccountCash . "'");
-			$myrow = DB_fetch_row($result);
-			$BankAccountExRate = $myrow[0];
-
-			//insert the banktrans record in the currency of the bank account
-
-			$SQL="INSERT INTO banktrans (type,
-						transno,
-						bankact,
-						ref,
-						exrate,
-						functionalexrate,
-						transdate,
-						banktranstype,
-						amount,
-						currcode)
-					VALUES (12,
-						'" . $ReceiptNumber . "',
-						'" . $BankAccountCash . "',
-						'" . $Area . _(' WI: ') . $InvoiceNo . _(' YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' SPG: '). $_SESSION['SalesmanLogin'] . ' ' . $_SESSION['Items'.$identifier]->Location . "',
-						'" . $ExRate . "',
-						'" . $BankAccountExRate . "',
-						'" . Date('Y-m-d') . "',
-						'2',
-						'" . ($_POST['AmountPaidCash'] * $BankAccountExRate) . "',
-						'" . $_SESSION['Items'.$identifier]->DefaultCurrency . "')";
-
-			$DbgMsg = _('The SQL that failed to insert the bank account transaction was');
-			$ErrMsg = _('Cannot insert a bank transaction');
-			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-
-			//insert a new debtortrans for the receipt
-
-			$SQL = "INSERT INTO debtortrans (transno,
-							type,
-							debtorno,
-							trandate,
-							inputdate,
-							prd,
-							reference,
-							rate,
-							ovamount,
-							alloc,
-							invtext)
-					VALUES ('" . $ReceiptNumber . "',
-						12,
-						'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
-						'" . Date('Y-m-d') . "',
-						'" . date('Y-m-d H-i-s') . "',
-						'" . $PeriodNo . "',
-						'" . $InvoiceNo . "',
-						'" . $ExRate . "',
-						'" . -$_POST['AmountPaidCash'] . "',
-						'" . -$_POST['AmountPaidCash'] . "',
-						'" . $Area . _(' WI: ') . $InvoiceNo . _(' YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' SPG: '). $_SESSION['SalesmanLogin'] . ' ' . $_SESSION['Items'.$identifier]->Location . " CASH')";
-			$DbgMsg = _('The SQL that failed to insert the customer receipt transaction was');
-			$ErrMsg = _('Cannot insert a receipt transaction against the customer because') ;
-			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-
-			$ReceiptDebtorTransID = DB_Last_Insert_ID($db,'debtortrans','id');
-
-			$SQL = "UPDATE debtorsmaster SET lastpaiddate = '" . Date('Y-m-d') . "',
-											lastpaid='" . $_POST['AmountPaidCash'] . "'
-									WHERE debtorsmaster.debtorno='" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
-
-			$DbgMsg = _('The SQL that failed to update the date of the last payment received was');
-			$ErrMsg = _('Cannot update the customer record for the date of the last payment received because');
-			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-
-			//and finally add the allocation record between receipt and invoice
-
-			$SQL = "INSERT INTO custallocns (	amt,
-												datealloc,
-												transid_allocfrom,
-												transid_allocto )
-									VALUES  ('" . $_POST['AmountPaidCash'] . "',
-											'" . Date('Y-m-d') . "',
-											 '" . $ReceiptDebtorTransID . "',
-											 '" . $DebtorTransID . "')";
-			$DbgMsg = _('The SQL that failed to insert the allocation of the receipt to the invoice was');
-			$ErrMsg = _('Cannot insert the customer allocation of the receipt to the invoice because');
-			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+			$ReceiptNumber = AccountDebtorPayment($ReceiptNumber,
+								PAYMENT_BY_CASH,
+								$PeriodNo,
+								$BankAccountCash,
+								$Area,
+								$InvoiceNo,
+								$_SESSION['Items'.$identifier]->CustRef,
+								$_SESSION['Items'.$identifier]->Location,
+								$_POST['AmountPaidCash'],
+								$CreditCardNetPayment,
+								$ExRate,
+								$_SESSION['Items'.$identifier]->DefaultCurrency,
+								$_SESSION['Items'.$identifier]->DebtorNo);
 		} //end if $_POST['AmountPaidCash']!= 0
-		
+
 		if ($_POST['AmountPaidCCDanamon']!=0){
-			$BankAccountCreditCard = ACCOUNT_BANK_DANAMON_IDR;
-			if (!isset($ReceiptNumber)){
-				$ReceiptNumber = GetNextTransNo(12,$db);
-			}
-			//Now need to add the receipt banktrans record
-			//First get the account currency that it has been banked into
-			$result = DB_query("SELECT rate FROM currencies
-								INNER JOIN bankaccounts ON currencies.currabrev=bankaccounts.currcode
-								WHERE bankaccounts.accountcode='" . $BankAccountCreditCard . "'");
-			$myrow = DB_fetch_row($result);
-			$BankAccountExRate = $myrow[0];
-
-			//insert the banktrans record in the currency of the bank account
-			// RICARD: Only the NET amount (after bank comissions) gets its way to the bank account. :-(((
-
-			$SQL="INSERT INTO banktrans (type,
-						transno,
-						bankact,
-						ref,
-						exrate,
-						functionalexrate,
-						transdate,
-						banktranstype,
-						amount,
-						currcode)
-					VALUES (12,
-						'" . $ReceiptNumber . "',
-						'" . $BankAccountCreditCard . "',
-						'" . $Area . _(' WI: ') . $InvoiceNo . _(' YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' SPG: '). $_SESSION['SalesmanLogin'] . ' ' . $_SESSION['Items'.$identifier]->Location . ' CC -> T: ' . number_format($_POST['AmountPaidCCDanamon'],0) . ' C: ' . number_format($CreditCardBankComissionsDanamon,0) . "',
-						'" . $ExRate . "',
-						'" . $BankAccountExRate . "',
-						'" . Date('Y-m-d') . "',
-						'3',
-						'" . $CreditCardNetPaymentDanamon . "',
-						'" . $_SESSION['Items'.$identifier]->DefaultCurrency . "')";
-
-			$DbgMsg = _('The SQL that failed to insert the bank account transaction was');
-			$ErrMsg = _('Cannot insert a bank transaction');
-			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-
-			//insert a new debtortrans for the receipt
-
-			$SQL = "INSERT INTO debtortrans (transno,
-							type,
-							debtorno,
-							trandate,
-							inputdate,
-							prd,
-							reference,
-							rate,
-							ovamount,
-							alloc,
-							invtext)
-					VALUES ('" . $ReceiptNumber . "',
-						12,
-						'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
-						'" . Date('Y-m-d') . "',
-						'" . date('Y-m-d H-i-s') . "',
-						'" . $PeriodNo . "',
-						'" . $InvoiceNo . "',
-						'" . $ExRate . "',
-						'" . -$_POST['AmountPaidCCDanamon'] . "',
-						'" . -$_POST['AmountPaidCCDanamon'] . "',
-						'" . $Area . _(' WI: ') . $InvoiceNo . _(' YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' SPG: '). $_SESSION['SalesmanLogin'] . ' ' . $_SESSION['Items'.$identifier]->Location . " CC')";
-			$DbgMsg = _('The SQL that failed to insert the customer receipt transaction was');
-			$ErrMsg = _('Cannot insert a receipt transaction against the customer because') ;
-			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-
-			$ReceiptDebtorTransID = DB_Last_Insert_ID($db,'debtortrans','id');
-
-			$SQL = "UPDATE debtorsmaster SET lastpaiddate = '" . Date('Y-m-d') . "',
-											lastpaid='" . $_POST['AmountPaidCCDanamon'] . "'
-									WHERE debtorsmaster.debtorno='" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
-
-			$DbgMsg = _('The SQL that failed to update the date of the last payment received was');
-			$ErrMsg = _('Cannot update the customer record for the date of the last payment received because');
-			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-
-			//and finally add the allocation record between receipt and invoice
-
-			$SQL = "INSERT INTO custallocns (	amt,
-												datealloc,
-												transid_allocfrom,
-												transid_allocto )
-									VALUES  ('" . $_POST['AmountPaidCCDanamon'] . "',
-											'" . Date('Y-m-d') . "',
-											 '" . $ReceiptDebtorTransID . "',
-											 '" . $DebtorTransID . "')";
-			$DbgMsg = _('The SQL that failed to insert the allocation of the receipt to the invoice was');
-			$ErrMsg = _('Cannot insert the customer allocation of the receipt to the invoice because');
-			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-		} //end if $_POST['AmountPaidCCDanamon']!= 0
+			$CreditCardNetPayment = ($_POST['AmountPaidCCDanamon']*(100- COMISSION_CC_DANAMON)/100);
+			$ReceiptNumber = AccountDebtorPayment($ReceiptNumber,
+								PAYMENT_BY_CREDITCARD,
+								$PeriodNo,
+								ACCOUNT_BANK_DANAMON_IDR,
+								$Area,
+								$InvoiceNo,
+								$_SESSION['Items'.$identifier]->CustRef,
+								$_SESSION['Items'.$identifier]->Location,
+								$_POST['AmountPaidCCDanamon'],
+								$CreditCardNetPayment,
+								$ExRate,
+								$_SESSION['Items'.$identifier]->DefaultCurrency,
+								$_SESSION['Items'.$identifier]->DebtorNo);
+		} //end if $_POST['AmountPaidAmexDanamon']!= 0
 
 		if ($_POST['AmountPaidAmexDanamon']!=0){
-			$BankAccountCreditCard = ACCOUNT_BANK_DANAMON_IDR;
-			if (!isset($ReceiptNumber)){
-				$ReceiptNumber = GetNextTransNo(12,$db);
-			}
-			//Now need to add the receipt banktrans record
-			//First get the account currency that it has been banked into
-			$result = DB_query("SELECT rate FROM currencies
-								INNER JOIN bankaccounts ON currencies.currabrev=bankaccounts.currcode
-								WHERE bankaccounts.accountcode='" . $BankAccountCreditCard . "'");
-			$myrow = DB_fetch_row($result);
-			$BankAccountExRate = $myrow[0];
-
-			//insert the banktrans record in the currency of the bank account
-			// RICARD: Only the NET amount (after bank comissions) gets it's way to the bank account. :-(((
-
-			$SQL="INSERT INTO banktrans (type,
-						transno,
-						bankact,
-						ref,
-						exrate,
-						functionalexrate,
-						transdate,
-						banktranstype,
-						amount,
-						currcode)
-					VALUES (12,
-						'" . $ReceiptNumber . "',
-						'" . $BankAccountCreditCard . "',
-						'" . $Area . _(' WI: ') . $InvoiceNo . _(' YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' SPG: '). $_SESSION['SalesmanLogin'] . ' ' . $_SESSION['Items'.$identifier]->Location . ' AMEX -> T: ' . number_format($_POST['AmountPaidAmexDanamon'],0) . ' C: ' . number_format($AmexBankComissions,0) . "',
-						'" . $ExRate . "',
-						'" . $BankAccountExRate . "',
-						'" . Date('Y-m-d') . "',
-						'3',
-						'" . $AmexNetPayment . "',
-						'" . $_SESSION['Items'.$identifier]->DefaultCurrency . "')";
-
-			$DbgMsg = _('The SQL that failed to insert the bank account transaction was');
-			$ErrMsg = _('Cannot insert a bank transaction');
-			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-
-			//insert a new debtortrans for the receipt
-
-			$SQL = "INSERT INTO debtortrans (transno,
-							type,
-							debtorno,
-							trandate,
-							inputdate,
-							prd,
-							reference,
-							rate,
-							ovamount,
-							alloc,
-							invtext)
-					VALUES ('" . $ReceiptNumber . "',
-						12,
-						'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
-						'" . Date('Y-m-d') . "',
-						'" . date('Y-m-d H-i-s') . "',
-						'" . $PeriodNo . "',
-						'" . $InvoiceNo . "',
-						'" . $ExRate . "',
-						'" . -$_POST['AmountPaidAmexDanamon'] . "',
-						'" . -$_POST['AmountPaidAmexDanamon'] . "',
-						'" . $Area . _(' WI: ') . $InvoiceNo . _(' YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' SPG: '). $_SESSION['SalesmanLogin'] . ' ' . $_SESSION['Items'.$identifier]->Location . " AMEX')";
-			$DbgMsg = _('The SQL that failed to insert the customer receipt transaction was');
-			$ErrMsg = _('Cannot insert a receipt transaction against the customer because') ;
-			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-
-			$ReceiptDebtorTransID = DB_Last_Insert_ID($db,'debtortrans','id');
-
-			$SQL = "UPDATE debtorsmaster SET lastpaiddate = '" . Date('Y-m-d') . "',
-											lastpaid='" . $_POST['AmountPaidAmexDanamon'] . "'
-									WHERE debtorsmaster.debtorno='" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
-
-			$DbgMsg = _('The SQL that failed to update the date of the last payment received was');
-			$ErrMsg = _('Cannot update the customer record for the date of the last payment received because');
-			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-
-			//and finally add the allocation record between receipt and invoice
-
-			$SQL = "INSERT INTO custallocns (	amt,
-												datealloc,
-												transid_allocfrom,
-												transid_allocto )
-									VALUES  ('" . $_POST['AmountPaidAmexDanamon'] . "',
-											'" . Date('Y-m-d') . "',
-											 '" . $ReceiptDebtorTransID . "',
-											 '" . $DebtorTransID . "')";
-			$DbgMsg = _('The SQL that failed to insert the allocation of the receipt to the invoice was');
-			$ErrMsg = _('Cannot insert the customer allocation of the receipt to the invoice because');
-			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+			$CreditCardNetPayment = ($_POST['AmountPaidAmexDanamon']*(100- COMISSION_AMEX_DANAMON)/100);
+			$ReceiptNumber = AccountDebtorPayment($ReceiptNumber,
+								PAYMENT_BY_CREDITCARD,
+								$PeriodNo,
+								ACCOUNT_BANK_DANAMON_IDR,
+								$Area,
+								$InvoiceNo,
+								$_SESSION['Items'.$identifier]->CustRef,
+								$_SESSION['Items'.$identifier]->Location,
+								$_POST['AmountPaidAmexDanamon'],
+								$CreditCardNetPayment,
+								$ExRate,
+								$_SESSION['Items'.$identifier]->DefaultCurrency,
+								$_SESSION['Items'.$identifier]->DebtorNo);
 		} //end if $_POST['AmountPaidAmexDanamon']!= 0
 
 		if ($_POST['AmountPaidCCMandiri']!=0){
-			$BankAccountCreditCard = ACCOUNT_BANK_MANDIRI_IDR;
-			if (!isset($ReceiptNumber)){
-				$ReceiptNumber = GetNextTransNo(12,$db);
-			}
-			//Now need to add the receipt banktrans record
-			//First get the account currency that it has been banked into
-			$result = DB_query("SELECT rate FROM currencies
-								INNER JOIN bankaccounts ON currencies.currabrev=bankaccounts.currcode
-								WHERE bankaccounts.accountcode='" . $BankAccountCreditCard . "'");
-			$myrow = DB_fetch_row($result);
-			$BankAccountExRate = $myrow[0];
-
-			//insert the banktrans record in the currency of the bank account
-			// RICARD: Only the NET amount (after bank comissions) gets it's way to the bank account. :-(((
-
-			$SQL="INSERT INTO banktrans (type,
-						transno,
-						bankact,
-						ref,
-						exrate,
-						functionalexrate,
-						transdate,
-						banktranstype,
-						amount,
-						currcode)
-					VALUES (12,
-						'" . $ReceiptNumber . "',
-						'" . $BankAccountCreditCard . "',
-						'" . $Area . _(' WI: ') . $InvoiceNo . _(' YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' SPG: '). $_SESSION['SalesmanLogin'] . ' ' . $_SESSION['Items'.$identifier]->Location . ' CC -> T: ' . number_format($_POST['AmountPaidCCMandiri'],0) . ' C: ' . number_format($CreditCardBankComissionsMandiri,0) . "',
-						'" . $ExRate . "',
-						'" . $BankAccountExRate . "',
-						'" . Date('Y-m-d') . "',
-						'3',
-						'" . $CreditCardNetPaymentMandiri . "',
-						'" . $_SESSION['Items'.$identifier]->DefaultCurrency . "')";
-
-			$DbgMsg = _('The SQL that failed to insert the bank account transaction was');
-			$ErrMsg = _('Cannot insert a bank transaction');
-			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-
-			//insert a new debtortrans for the receipt
-
-			$SQL = "INSERT INTO debtortrans (transno,
-							type,
-							debtorno,
-							trandate,
-							inputdate,
-							prd,
-							reference,
-							rate,
-							ovamount,
-							alloc,
-							invtext)
-					VALUES ('" . $ReceiptNumber . "',
-						12,
-						'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
-						'" . Date('Y-m-d') . "',
-						'" . date('Y-m-d H-i-s') . "',
-						'" . $PeriodNo . "',
-						'" . $InvoiceNo . "',
-						'" . $ExRate . "',
-						'" . -$_POST['AmountPaidCCMandiri'] . "',
-						'" . -$_POST['AmountPaidCCMandiri'] . "',
-						'" . $Area . _(' WI: ') . $InvoiceNo . _(' YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' SPG: '). $_SESSION['SalesmanLogin'] . ' ' . $_SESSION['Items'.$identifier]->Location . " CC')";
-			$DbgMsg = _('The SQL that failed to insert the customer receipt transaction was');
-			$ErrMsg = _('Cannot insert a receipt transaction against the customer because') ;
-			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-
-			$ReceiptDebtorTransID = DB_Last_Insert_ID($db,'debtortrans','id');
-
-			$SQL = "UPDATE debtorsmaster SET lastpaiddate = '" . Date('Y-m-d') . "',
-											lastpaid='" . $_POST['AmountPaidCCMandiri'] . "'
-									WHERE debtorsmaster.debtorno='" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
-
-			$DbgMsg = _('The SQL that failed to update the date of the last payment received was');
-			$ErrMsg = _('Cannot update the customer record for the date of the last payment received because');
-			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-
-			//and finally add the allocation record between receipt and invoice
-
-			$SQL = "INSERT INTO custallocns (	amt,
-												datealloc,
-												transid_allocfrom,
-												transid_allocto )
-									VALUES  ('" . $_POST['AmountPaidCCMandiri'] . "',
-											 '" . Date('Y-m-d') . "',
-											 '" . $ReceiptDebtorTransID . "',
-											 '" . $DebtorTransID . "')";
-			$DbgMsg = _('The SQL that failed to insert the allocation of the receipt to the invoice was');
-			$ErrMsg = _('Cannot insert the customer allocation of the receipt to the invoice because');
-			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+			$CreditCardNetPayment = ($_POST['AmountPaidCCMandiri']*(100- COMISSION_CC_MANDIRI)/100);
+			$ReceiptNumber = AccountDebtorPayment($ReceiptNumber,
+								PAYMENT_BY_CREDITCARD,
+								$PeriodNo,
+								ACCOUNT_BANK_MANDIRI_IDR,
+								$Area,
+								$InvoiceNo,
+								$_SESSION['Items'.$identifier]->CustRef,
+								$_SESSION['Items'.$identifier]->Location,
+								$_POST['AmountPaidCCMandiri'],
+								$CreditCardNetPayment,
+								$ExRate,
+								$_SESSION['Items'.$identifier]->DefaultCurrency,
+								$_SESSION['Items'.$identifier]->DebtorNo);
 		} //end if $_POST['AmountPaidCCMandiri']!= 0
 
 		if ($_POST['AmountPaidCCBCA']!=0){
-			$BankAccountCreditCard = ACCOUNT_BANK_BCA_IDR;
-			if (!isset($ReceiptNumber)){
-				$ReceiptNumber = GetNextTransNo(12,$db);
-			}
-			//Now need to add the receipt banktrans record
-			//First get the account currency that it has been banked into
-			$result = DB_query("SELECT rate FROM currencies
-								INNER JOIN bankaccounts ON currencies.currabrev=bankaccounts.currcode
-								WHERE bankaccounts.accountcode='" . $BankAccountCreditCard . "'");
-			$myrow = DB_fetch_row($result);
-			$BankAccountExRate = $myrow[0];
-
-			//insert the banktrans record in the currency of the bank account
-			// RICARD: Only the NET amount (after bank comissions) gets it's way to the bank account. :-(((
-
-			$SQL="INSERT INTO banktrans (type,
-						transno,
-						bankact,
-						ref,
-						exrate,
-						functionalexrate,
-						transdate,
-						banktranstype,
-						amount,
-						currcode)
-					VALUES (12,
-						'" . $ReceiptNumber . "',
-						'" . $BankAccountCreditCard . "',
-						'" . $Area . _(' WI: ') . $InvoiceNo . _(' YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' SPG: '). $_SESSION['SalesmanLogin'] . ' ' . $_SESSION['Items'.$identifier]->Location . ' CC -> T: ' . number_format($_POST['AmountPaidCCBCA'],0) . ' C: ' . number_format($CreditCardBankComissionsBCA,0) . "',
-						'" . $ExRate . "',
-						'" . $BankAccountExRate . "',
-						'" . Date('Y-m-d') . "',
-						'3',
-						'" . $CreditCardNetPaymentBCA . "',
-						'" . $_SESSION['Items'.$identifier]->DefaultCurrency . "')";
-
-			$DbgMsg = _('The SQL that failed to insert the bank account transaction was');
-			$ErrMsg = _('Cannot insert a bank transaction');
-			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-
-			//insert a new debtortrans for the receipt
-
-			$SQL = "INSERT INTO debtortrans (transno,
-							type,
-							debtorno,
-							trandate,
-							inputdate,
-							prd,
-							reference,
-							rate,
-							ovamount,
-							alloc,
-							invtext)
-					VALUES ('" . $ReceiptNumber . "',
-						12,
-						'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
-						'" . Date('Y-m-d') . "',
-						'" . date('Y-m-d H-i-s') . "',
-						'" . $PeriodNo . "',
-						'" . $InvoiceNo . "',
-						'" . $ExRate . "',
-						'" . -$_POST['AmountPaidCCBCA'] . "',
-						'" . -$_POST['AmountPaidCCBCA'] . "',
-						'" . $Area . _(' WI: ') . $InvoiceNo . _(' YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' SPG: '). $_SESSION['SalesmanLogin'] . ' ' . $_SESSION['Items'.$identifier]->Location . " CC')";
-			$DbgMsg = _('The SQL that failed to insert the customer receipt transaction was');
-			$ErrMsg = _('Cannot insert a receipt transaction against the customer because') ;
-			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-
-			$ReceiptDebtorTransID = DB_Last_Insert_ID($db,'debtortrans','id');
-
-			$SQL = "UPDATE debtorsmaster SET lastpaiddate = '" . Date('Y-m-d') . "',
-											lastpaid='" . $_POST['AmountPaidCCBCA'] . "'
-									WHERE debtorsmaster.debtorno='" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
-
-			$DbgMsg = _('The SQL that failed to update the date of the last payment received was');
-			$ErrMsg = _('Cannot update the customer record for the date of the last payment received because');
-			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-
-			//and finally add the allocation record between receipt and invoice
-
-			$SQL = "INSERT INTO custallocns (	amt,
-												datealloc,
-												transid_allocfrom,
-												transid_allocto )
-									VALUES  ('" . $_POST['AmountPaidCCBCA'] . "',
-											 '" . Date('Y-m-d') . "',
-											 '" . $ReceiptDebtorTransID . "',
-											 '" . $DebtorTransID . "')";
-			$DbgMsg = _('The SQL that failed to insert the allocation of the receipt to the invoice was');
-			$ErrMsg = _('Cannot insert the customer allocation of the receipt to the invoice because');
-			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+			$CreditCardNetPayment = ($_POST['AmountPaidCCBCA']*(100- COMISSION_CC_BCA)/100);
+			$ReceiptNumber = AccountDebtorPayment($ReceiptNumber,
+								PAYMENT_BY_CREDITCARD,
+								$PeriodNo,
+								ACCOUNT_BANK_BCA_IDR,
+								$Area,
+								$InvoiceNo,
+								$_SESSION['Items'.$identifier]->CustRef,
+								$_SESSION['Items'.$identifier]->Location,
+								$_POST['AmountPaidCCBCA'],
+								$CreditCardNetPayment,
+								$ExRate,
+								$_SESSION['Items'.$identifier]->DefaultCurrency,
+								$_SESSION['Items'.$identifier]->DebtorNo);
 		} //end if $_POST['AmountPaidCCBCA']!= 0
 		
 		
