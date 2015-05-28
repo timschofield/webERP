@@ -186,6 +186,9 @@ if ($KL_SystemAdmin
 	BalanceAccountControl("111111109",         0,   10000000, $periodnow, $db);
 	BalanceAccountControl("111111110",         0,   10000000, $periodnow, $db);
 	BalanceAccountControl("111111111",         0,   10000000, $periodnow, $db);
+	BalanceAccountControl("111111112",         0,   10000000, $periodnow, $db);
+	BalanceAccountControl("111111113",         0,   10000000, $periodnow, $db);
+	BalanceAccountControl("111111114",         0,   10000000, $periodnow, $db);
 }
 
 if ($KL_SystemAdmin 
@@ -305,6 +308,9 @@ if ($KL_PurchasingManager){
 
 	CategoryItemsNotInShop("DISCOU", "TOKSU", $RootPath, $db);
 	CategoryItemsNotInShop("OUTLET", "TOKSU", $RootPath, $db);
+
+	CategoryItemsNotInShop("DISCOU", "TOKPA", $RootPath, $db);
+	CategoryItemsNotInShop("OUTLET", "TOKPA", $RootPath, $db);
 
 	ItemsInCategoryWithStockKantorButReorderLevelTokoZero("OUTLET", $RootPath, $db);
 	ItemsInCategoryWithStockKantorButReorderLevelTokoZero("DISCOU", $RootPath, $db);
@@ -482,7 +488,6 @@ if ($KL_PurchasingManager
 /***************************************************************************************
 * PO, Sales Orders         
 ***************************************************************************************/
-
 
 if ($KL_PurchasingManager
 	OR $KL_PurchasingTeam){

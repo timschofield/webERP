@@ -1631,6 +1631,8 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 								$_POST['AmountPaidCash'],
 								$CreditCardNetPayment,
 								$ExRate,
+								$DebtorTransID,
+								$OrderNo,
 								$_SESSION['Items'.$identifier]->DefaultCurrency,
 								$_SESSION['Items'.$identifier]->DebtorNo);
 		} //end if $_POST['AmountPaidCash']!= 0
@@ -1648,6 +1650,8 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 								$_POST['AmountPaidCCDanamon'],
 								$CreditCardNetPayment,
 								$ExRate,
+								$DebtorTransID,
+								$OrderNo,
 								$_SESSION['Items'.$identifier]->DefaultCurrency,
 								$_SESSION['Items'.$identifier]->DebtorNo);
 		} //end if $_POST['AmountPaidAmexDanamon']!= 0
@@ -1665,6 +1669,8 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 								$_POST['AmountPaidAmexDanamon'],
 								$CreditCardNetPayment,
 								$ExRate,
+								$DebtorTransID,
+								$OrderNo,
 								$_SESSION['Items'.$identifier]->DefaultCurrency,
 								$_SESSION['Items'.$identifier]->DebtorNo);
 		} //end if $_POST['AmountPaidAmexDanamon']!= 0
@@ -1682,6 +1688,8 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 								$_POST['AmountPaidCCMandiri'],
 								$CreditCardNetPayment,
 								$ExRate,
+								$DebtorTransID,
+								$OrderNo,
 								$_SESSION['Items'.$identifier]->DefaultCurrency,
 								$_SESSION['Items'.$identifier]->DebtorNo);
 		} //end if $_POST['AmountPaidCCMandiri']!= 0
@@ -1699,10 +1707,39 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 								$_POST['AmountPaidCCBCA'],
 								$CreditCardNetPayment,
 								$ExRate,
+								$DebtorTransID,
+								$OrderNo,
 								$_SESSION['Items'.$identifier]->DefaultCurrency,
 								$_SESSION['Items'.$identifier]->DebtorNo);
 		} //end if $_POST['AmountPaidCCBCA']!= 0
 		
+		if ($_POST['AmountVouchers']!=0){
+			$ReceiptNumber = AccountDebtorDiscount($ReceiptNumber,
+								'VOUCHER_DISCOUNT',
+								$PeriodNo,
+								$Area,
+								$InvoiceNo,
+								$_SESSION['Items'.$identifier]->CustRef,
+								$_SESSION['Items'.$identifier]->Location,
+								$_POST['AmountVouchers'],
+								$ExRate,
+								$OrderNo,
+								$_SESSION['Items'.$identifier]->DebtorNo);
+		} //end if $_POST['AmountVouchers']!= 0
+
+		if ($_POST['AmountReturnedGoods']!=0){
+			$ReceiptNumber = AccountDebtorDiscount($ReceiptNumber,
+								'RETURNED_GOODS',
+								$PeriodNo,
+								$Area,
+								$InvoiceNo,
+								$_SESSION['Items'.$identifier]->CustRef,
+								$_SESSION['Items'.$identifier]->Location,
+								$_POST['AmountReturnedGoods'],
+								$ExRate,
+								$OrderNo,
+								$_SESSION['Items'.$identifier]->DebtorNo);
+		} //end if $_POST['AmountReturnedGoods']!= 0
 		
 		/* Account for the Packaging */
 		AdjustPackagingMovement("PKBX01-L", $_POST['PackagingBox01L'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);

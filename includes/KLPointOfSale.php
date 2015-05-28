@@ -443,6 +443,8 @@ function AccountDebtorPayment($ReceiptNumber,
 							$AmountPaid,
 							$NetPayment,
 							$ExRate,
+							$DebtorTransID,
+							$OrderNo,
 							$Currency,
 							$DebtorNo){
 
@@ -493,7 +495,7 @@ function AccountDebtorPayment($ReceiptNumber,
 				'" . $Currency . "')";
 
 	$DbgMsg = _('The SQL that failed to insert the bank account transaction was');
-	$ErrMsg = _('Cannot insert a bank transaction');
+	$ErrMsg = _('Report to Office: AccountDebtorPayment ERROR-001 FAILED Insert banktrans');
 	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 	//insert a new debtortrans for the receipt
@@ -505,6 +507,7 @@ function AccountDebtorPayment($ReceiptNumber,
 					inputdate,
 					prd,
 					reference,
+					order_,
 					rate,
 					ovamount,
 					alloc,
@@ -516,12 +519,13 @@ function AccountDebtorPayment($ReceiptNumber,
 				'" . date('Y-m-d H-i-s') . "',
 				'" . $PeriodNo . "',
 				'" . $InvoiceNo . "',
+				'" . $OrderNo . "',
 				'" . $ExRate . "',
 				'" . -$AmountPaid . "',
 				'" . -$AmountPaid . "',
 				'" . $Description . "')";
 	$DbgMsg = _('The SQL that failed to insert the customer receipt transaction was');
-	$ErrMsg = _('Cannot insert a receipt transaction against the customer because') ;
+	$ErrMsg = _('Report to Office: AccountDebtorPayment ERROR-002 FAILED Insert debtortrans');
 	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 	$ReceiptDebtorTransID = DB_Last_Insert_ID($db,'debtortrans','id');
@@ -531,7 +535,7 @@ function AccountDebtorPayment($ReceiptNumber,
 							WHERE debtorsmaster.debtorno='" . $DebtorNo . "'";
 
 	$DbgMsg = _('The SQL that failed to update the date of the last payment received was');
-	$ErrMsg = _('Cannot update the customer record for the date of the last payment received because');
+	$ErrMsg = _('Report to Office: AccountDebtorPayment ERROR-003 FAILED Update debtorsmaster');
 	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 	//and finally add the allocation record between receipt and invoice
@@ -540,15 +544,78 @@ function AccountDebtorPayment($ReceiptNumber,
 										datealloc,
 										transid_allocfrom,
 										transid_allocto )
-							VALUES  ('" . $_POST['AmountPaidCCDanamon'] . "',
+							VALUES  ('" . $AmountPaid . "',
 									'" . Date('Y-m-d') . "',
 									 '" . $ReceiptDebtorTransID . "',
 									 '" . $DebtorTransID . "')";
 	$DbgMsg = _('The SQL that failed to insert the allocation of the receipt to the invoice was');
-	$ErrMsg = _('Cannot insert the customer allocation of the receipt to the invoice because');
+	$ErrMsg = _('Report to Office: AccountDebtorPayment ERROR-004 FAILED Insert custallocns');
 	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);							
 	return $ReceiptNumber;
 }
 
+function AccountDebtorDiscount($ReceiptNumber,
+							$Type,
+							$PeriodNo,
+							$Area,
+							$InvoiceNo,
+							$CustomerReference,
+							$Location,
+							$AmountDiscount,
+							$ExRate,
+							$OrderNo,
+							$DebtorNo){
+
+	if (!isset($ReceiptNumber)){
+		$ReceiptNumber = GetNextTransNo(12,$db);
+	}
+
+	if ($Type == 'VOUCHER_DISCOUNT'){
+		$Description = $Area . 
+					 _(' WI:') . $InvoiceNo . 
+					 _(' YI:') . $CustomerReference  . 
+					 _(' SPG:'). $_SESSION['SalesmanLogin'] . 
+					 ' ' . $Location . ' Voucher/Discount';
+	}else{
+		$Description = $Area . 
+					 _(' WI:') . $InvoiceNo . 
+					 _(' YI:') . $CustomerReference  . 
+					 _(' SPG:'). $_SESSION['SalesmanLogin'] . 
+					 ' ' . $Location . ' Returned Goods';
+	}
+	//insert a new debtortrans for the receipt
+
+	$SQL = "INSERT INTO debtortrans (transno,
+					type,
+					debtorno,
+					trandate,
+					inputdate,
+					prd,
+					reference,
+					order_,
+					rate,
+					ovamount,
+					ovdiscount,
+					alloc,
+					invtext)
+			VALUES ('" . $ReceiptNumber . "',
+				12,
+				'" . $DebtorNo . "',
+				'" . Date('Y-m-d') . "',
+				'" . date('Y-m-d H-i-s') . "',
+				'" . $PeriodNo . "',
+				'" . $InvoiceNo . "',
+				'" . $OrderNo . "',
+				'" . $ExRate . "',
+				'" . 0 . "',
+				'" . -$AmountDiscount . "',
+				'" . 0 . "',
+				'" . $Description . "')";
+	$DbgMsg = _('The SQL that failed to insert the customer receipt transaction was');
+	$ErrMsg = _('Report to Office: AccountDebtorDiscount ERROR-002 FAILED Insert debtortrans');
+	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+
+	return $ReceiptNumber;
+}
 
 ?>

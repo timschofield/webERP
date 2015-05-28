@@ -36,6 +36,7 @@ SPGPerformanceByShop("RETAILSE", 30, 60, 90, $db);
 SPGPerformanceByShop("RETAILOB", 30, 60, 90, $db);
 SPGPerformanceByShop("RETAILKS", 30, 60, 90, $db);
 SPGPerformanceByShop("RETAILBW", 30, 60, 90, $db);
+SPGPerformanceByShop("RETAILPA", 30, 60, 90, $db);
 SPGPerformanceByShop("RETAILSA", 30, 60, 90, $db);
 SPGPerformanceByShop("RETAILSU", 30, 60, 90, $db);
 SPGPerformanceByShop("RETAILSS", 30, 60, 90, $db);
