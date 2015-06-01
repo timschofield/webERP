@@ -143,7 +143,7 @@ if (DB_num_rows($result) != 0){
 			UpdateVolume($myrow['stockid'], $Volume, $UpdateDB, $db);
 		}
 		// si tenim descripció prou llarga
-		if (strlen($myrow['description']) > 2){
+		if (strlen($myrow['description']) >= 5){
 			// si tenim foto seguim endavant, sino no el publiquem a la website
 			if(file_exists($_SESSION['part_pics_dir'] . '/' .$myrow['stockid'].'.jpg') ) {
 
