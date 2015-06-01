@@ -140,7 +140,7 @@ function AdjustPackagingMovement($StockId, $QtyDelivered, $InvoiceNo, $PeriodNo,
 		$SQL="SELECT (materialcost + labourcost + overheadcost)
 						FROM stockmaster
 						WHERE stockmaster.stockid='" . $StockId . "'";
-		$ErrMsg = _('WARNING') . ': ' . _('Could not retrieve standard cost');
+		$ErrMsg = _('ERROR: Contact the office!!!  -> AdjustPackagingMovement-0010');
 		$Result = DB_query($SQL, $ErrMsg);
 		if (DB_num_rows($Result)==1){
 			$Row = DB_fetch_row($Result);
@@ -155,7 +155,7 @@ function AdjustPackagingMovement($StockId, $QtyDelivered, $InvoiceNo, $PeriodNo,
 						FROM locstock
 						WHERE locstock.stockid='" . $StockId . "'
 						AND loccode= '" . $_SESSION['UserStockLocation'] . "'";
-		$ErrMsg = _('WARNING') . ': ' . _('Could not retrieve current location stock');
+		$ErrMsg = _('ERROR: Contact the office!!!  -> AdjustPackagingMovement-0020');
 		$Result = DB_query($SQL, $ErrMsg);
 
 		if (DB_num_rows($Result)==1){
@@ -178,7 +178,7 @@ function AdjustPackagingMovement($StockId, $QtyDelivered, $InvoiceNo, $PeriodNo,
 					'" . $StockId . "',
 					'" . $QtyDelivered . "',
 					'" . Date('Y-m-d') . "')";
-		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('Packaging Used records could not be inserted because');
+		$ErrMsg = _('ERROR: Contact the office!!!  -> AdjustPackagingMovement-0030');
 		$DbgMsg = _('The following SQL to insert the packaging used was used');
 		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
@@ -189,7 +189,7 @@ function AdjustPackagingMovement($StockId, $QtyDelivered, $InvoiceNo, $PeriodNo,
 					WHERE locstock.stockid = '" . $StockId . "'
 					AND loccode = '" . $_SESSION['UserStockLocation'] . "'";
 
-		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('Location stock record could not be updated because');
+		$ErrMsg = _('ERROR: Contact the office!!!  -> AdjustPackagingMovement-0040');
 		$DbgMsg = _('The following SQL to update the location stock record was used');
 		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
@@ -212,7 +212,7 @@ function AdjustPackagingMovement($StockId, $QtyDelivered, $InvoiceNo, $PeriodNo,
 					newqoh,
 					narrative )
 				VALUES ('" . $StockId . "',
-					17,
+					10,
 					'" . $InvoiceNo . "',
 					'" . $_SESSION['UserStockLocation'] . "',
 					'" . Date('Y-m-d') . "',
@@ -227,7 +227,7 @@ function AdjustPackagingMovement($StockId, $QtyDelivered, $InvoiceNo, $PeriodNo,
 					'" . $StandardCost . "',
 					'" . ($QtyOnHandPrior - $QtyDelivered) . "',
 					'" . _('Shop Packaging used') . "' )";
-		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('Stock movement records could not be inserted because');
+		$ErrMsg = _('ERROR: Contact the office!!!  -> AdjustPackagingMovement-0050');
 		$DbgMsg = _('The following SQL to insert the stock movement records was used');
 		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 		
@@ -243,7 +243,7 @@ function AdjustPackagingMovement($StockId, $QtyDelivered, $InvoiceNo, $PeriodNo,
 											narrative,
 											amount,
 											tag)
-									VALUES ( 17,
+									VALUES ( 10,
 											'" . $InvoiceNo . "',
 											'" . Date('Y-m-d') . "',
 											'" . $PeriodNo . "',
@@ -252,7 +252,7 @@ function AdjustPackagingMovement($StockId, $QtyDelivered, $InvoiceNo, $PeriodNo,
 											'" . $StandardCost * $QtyDelivered . "',
 											'" . $Tag . "')";
 
-			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The cost of COGSGLAccount GL posting could not be inserted because');
+			$ErrMsg = _('ERROR: Contact the office!!!  -> AdjustPackagingMovement-0060');
 			$DbgMsg = _('The following SQL to insert the GLTrans record was used');
 			$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
@@ -267,7 +267,7 @@ function AdjustPackagingMovement($StockId, $QtyDelivered, $InvoiceNo, $PeriodNo,
 											amount,
 											tag
 											)
-									VALUES ( 17,
+									VALUES ( 10,
 										'" . $InvoiceNo . "',
 										'" . Date('Y-m-d') . "',
 										'" . $PeriodNo . "',
@@ -276,7 +276,7 @@ function AdjustPackagingMovement($StockId, $QtyDelivered, $InvoiceNo, $PeriodNo,
 										'" . (-$StandardCost * $QtyDelivered) . "',
 										'" . $Tag . "')";
 
-			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The stock side of the cost of sales StockGLCode GL posting could not be inserted because');
+			$ErrMsg = _('ERROR: Contact the office!!!  -> AdjustPackagingMovement-0070');
 			$DbgMsg = _('The following SQL to insert the GLTrans record was used');
 			$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 		} /* end of if GL and stock integrated and standard cost !=0 */
