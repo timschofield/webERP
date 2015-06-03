@@ -13,12 +13,15 @@ $SQL = "SELECT grns.supplierid,
 				grns.quantityinv,
 				purchorderdetails.unitprice,
 				suppliers.currcode,
+				(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS standardcost,
 				currencies.rate,
 				currencies.decimalplaces
 		FROM grns INNER JOIN purchorderdetails
 		ON grns.podetailitem=purchorderdetails.podetailitem
 		INNER JOIN suppliers
 		ON grns.supplierid = suppliers.supplierid
+		INNER JOIN stockmaster
+		ON grns.itemcode = stockmaster.stockid
 		INNER JOIN currencies
 		ON suppliers.currcode = currencies.currabrev
 		WHERE grns.qtyrecd - grns.quantityinv > 0
@@ -48,13 +51,18 @@ if (DB_num_rows($result) != 0){
 						<th>' .'' . '</th>
 						<th>' . _('Line Total') . '</th>
 						<th>' . '' . '</th>
-						<th>' . _('Line Total') . '</th>
+						<th>' . _('IDR Total') . '</th>
+						<th>' . '' . '</th>
+						<th>' . _('Std Cost') . '</th>
+						<th>' . _('Total') . '</th>
+						<th>' . _('Std Cost Total') . '</th>
 						<th>' . '' . '</th>
 					</tr>';
 	echo $TableHeader;
 	$k = 0; //row colour counter
 	$i = 1;
 	$TotalHomeCurrency = 0;
+	$TotalAtStandardCost = 0;
 	while ($myrow = DB_fetch_array($result)) {
 		if ($k == 1) {
 			echo '<tr class="EvenTableRows">';
@@ -65,6 +73,7 @@ if (DB_num_rows($result) != 0){
 		}
 		$QtyPending = $myrow['qtyrecd'] - $myrow['quantityinv'];
 		$TotalHomeCurrency = $TotalHomeCurrency + ($QtyPending * $myrow['unitprice'] / $myrow['rate']);
+		$TotalAtStandardCost = $TotalAtStandardCost + ($QtyPending * $myrow['standardcost']);
 		printf('<td>%s</td>
 				<td class="number">%s</td>
 				<td>%s</td>
@@ -75,6 +84,10 @@ if (DB_num_rows($result) != 0){
 				<td>%s</td>
 				<td class="number">%s</td>
 				<td>%s</td>
+				<td class="number">%s</td>
+				<td>%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
 				<td class="number">%s</td>
 				<td>%s</td>
 				</tr>', 
@@ -89,7 +102,12 @@ if (DB_num_rows($result) != 0){
 				locale_number_format(($QtyPending * $myrow['unitprice']),$myrow['decimalplaces']), 
 				$myrow['currcode'], 
 				locale_number_format(($QtyPending * $myrow['unitprice'] / $myrow['rate']),$_SESSION['CompanyRecord']['decimalplaces']),
-				$_SESSION['CompanyRecord']['currencydefault']);
+				$_SESSION['CompanyRecord']['currencydefault'],
+				locale_number_format($myrow['standardcost'],$_SESSION['CompanyRecord']['decimalplaces']), 
+				locale_number_format(($QtyPending * $myrow['standardcost']),$_SESSION['CompanyRecord']['decimalplaces']), 
+				locale_number_format(($QtyPending * $myrow['standardcost']),$_SESSION['CompanyRecord']['decimalplaces']),
+				$_SESSION['CompanyRecord']['currencydefault']
+				);
 
 		if ($i==15){
 			$i=0;
@@ -102,11 +120,20 @@ if (DB_num_rows($result) != 0){
 			<td>%s</td>
 			<td class="number">%s</td>
 			<td>%s</td>
+			<td>%s</td>
+			<td>%s</td>
+			<td class="number">%s</td>
+			<td>%s</td>
 			</tr>', 
 			'',
 			_('Total').':', 
 			locale_number_format($TotalHomeCurrency,$_SESSION['CompanyRecord']['decimalplaces']),
-			$_SESSION['CompanyRecord']['currencydefault']);
+			$_SESSION['CompanyRecord']['currencydefault'],
+			'',
+			_('Std Cost').':', 
+			locale_number_format($TotalAtStandardCost,$_SESSION['CompanyRecord']['decimalplaces']),
+			$_SESSION['CompanyRecord']['currencydefault']
+			);
 	
 	echo '</table>
 			</div>
