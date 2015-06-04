@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.12.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-05-17 13:40+1200\n"
-"PO-Revision-Date: 2015-05-21 10:54-0600\n"
+"PO-Revision-Date: 2015-06-04 09:54-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -545,7 +545,7 @@ msgstr "Nombre del grupo contable"
 
 #: AccountGroups.php:401
 msgid "Enter the account group name"
-msgstr "Introduzca el nombre del grupo de cuentas"
+msgstr "Introducir el nombre del grupo de cuentas"
 
 #: AccountGroups.php:401
 msgid ""
@@ -2936,7 +2936,7 @@ msgstr "ó"
 #: SelectQASamples.php:280 Shipt_Select.php:174 TestPlanResults.php:158
 #: WorkOrderEntry.php:706 WorkOrderIssue.php:737
 msgid "Enter extract of the"
-msgstr "Introduzca una parte del"
+msgstr "Introducir una parte del"
 
 #: BOMInquiry.php:29 BOMs.php:899 EmailConfirmation.php:218
 #: EmailConfirmation.php:348 InternalStockRequest.php:154
@@ -5326,7 +5326,7 @@ msgstr "Buscar artículos de inventario"
 #: ContractBOM.php:327 PO_Items.php:1148 SelectCompletedOrder.php:479
 #: SelectCreditItems.php:1001
 msgid "Enter text extracts in the description"
-msgstr "Introduzca una parte de la descripción"
+msgstr "Introducir una parte de la descripción"
 
 #: ContractBOM.php:328
 msgid ""
@@ -5338,7 +5338,7 @@ msgstr ""
 #: PO_Items.php:1155 SelectCompletedOrder.php:484 SelectCreditItems.php:1004
 #: SelectOrderItems.php:1603 SelectSalesOrder.php:544 SelectWorkOrder.php:206
 msgid "Enter extract of the Stock Code"
-msgstr "Introduzca una parte del Código de Existencia"
+msgstr "Introducir una parte del código de inventario"
 
 #: ContractBOM.php:333
 msgid ""
@@ -5589,7 +5589,7 @@ msgid ""
 "Could not update the work order item record with the total quantity received "
 "because"
 msgstr ""
-"No se pudo actualizar el registro del Artículo en la Orden de Trabajo con la "
+"No se pudo actualizar el registro del artículo en la Orden de Trabajo con la "
 "cantidad total recibida porque"
 
 #: ContractCosting.php:425 WorkOrderIssue.php:365 WorkOrderReceive.php:743
@@ -5682,7 +5682,7 @@ msgstr "Introduzca el costo por unidad de este requisito"
 
 #: ContractOtherReqts.php:171
 msgid "Enter New Contract Requirement"
-msgstr "Introducir Nuevo Requerimiento del Contrato"
+msgstr "Introducir nuevo requerimiento del contrato"
 
 #: Contracts.php:9 Contracts.php:832
 msgid "Modify Contract"
@@ -6343,7 +6343,7 @@ msgstr "Introducir artículos requeridos"
 
 #: Contracts.php:1066
 msgid "Enter Other Requirements"
-msgstr "Introducir Otros Requerimientos"
+msgstr "Introducir otros requerimientos"
 
 #: Contracts.php:1068
 msgid "Commit Changes"
@@ -6774,7 +6774,7 @@ msgstr "Seleccione una categoría de inventario"
 
 #: CounterReturns.php:1659 CounterSales.php:2221 SelectOrderItems.php:1596
 msgid "Enter partial Description"
-msgstr "Introduzca una parte de la descripción"
+msgstr "Introducir una parte de la descripción"
 
 #: CounterReturns.php:1667 CounterSales.php:2232 SelectOrderItems.php:1615
 msgid "Use Quick Entry"
@@ -7621,7 +7621,7 @@ msgstr ""
 
 #: CreditItemsControlled.php:79
 msgid "Credit of Controlled Item"
-msgstr "Crédito del Artículo Controlado"
+msgstr "Crédito del artículo Controlado"
 
 #: CreditStatus.php:6
 msgid "Credit Status Code Maintenance"
@@ -8339,7 +8339,7 @@ msgstr "Nombre de Usuario"
 
 #: CustLoginSetup.php:133
 msgid "Enter a userid for this customer login"
-msgstr "Introduzca una identificación de usuario para el acceso este cliente"
+msgstr "Introducir una identificación de usuario para el acceso este cliente"
 
 #: CustLoginSetup.php:150 SMTPServer.php:118 SuppLoginSetup.php:133
 #: WWW_Users.php:479 includes/Login.php:99 includes/Login.php:100
@@ -8350,7 +8350,7 @@ msgstr "Contraseña"
 
 #: CustLoginSetup.php:151
 msgid "Enter a password for this customer login"
-msgstr "Introduzca una contraseña para el acceso este cliente"
+msgstr "Introducir una contraseña para el acceso este cliente"
 
 #: CustLoginSetup.php:154 SuppLoginSetup.php:137 WWW_Users.php:302
 #: WWW_Users.php:483
@@ -8432,7 +8432,7 @@ msgstr "Idioma"
 
 #: CustomerAccount.php:6
 msgid "Customer Account"
-msgstr ""
+msgstr "Cuenta de cliente"
 
 #: CustomerAccount.php:14
 msgid ""
@@ -9697,7 +9697,7 @@ msgstr "Introducir Ingreso"
 
 #: CustomerReceipt.php:798
 msgid "Enter Customer Receipt"
-msgstr "Introduzca un Ingreso de cliente"
+msgstr "Introducir un Ingreso de cliente"
 
 #: CustomerReceipt.php:799
 msgid ""
@@ -13260,7 +13260,7 @@ msgstr "En la Categoría de activo"
 #: SupplierTenderCreate.php:695 SupplierTenderCreate.php:706
 #: SupplierTenders.php:421 SupplierTenders.php:433
 msgid "Enter partial"
-msgstr "Introduzca una parte de ..."
+msgstr "Introducir una parte de ..."
 
 #: FixedAssetTransfer.php:64 FixedAssetTransfer.php:66
 msgid ""
@@ -15172,7 +15172,7 @@ msgstr ""
 
 #: GoodsReceived.php:332
 msgid "To enter a delivery against this purchase order"
-msgstr "Introduzca una entrega respecto esta orden de compra"
+msgstr "Introducir una entrega respecto esta orden de compra"
 
 #: GoodsReceived.php:332
 msgid ""
@@ -15184,11 +15184,11 @@ msgstr ""
 
 #: GoodsReceived.php:337
 msgid "GL Code of the Line Item"
-msgstr "Código contable del Artículo"
+msgstr "Código contable del artículo"
 
 #: GoodsReceived.php:342
 msgid "ShiptRef of the Line Item"
-msgstr "Referencia de Transporte del Artículo"
+msgstr "Referencia de Transporte del artículo"
 
 #: GoodsReceived.php:347
 msgid "Contract Reference of the Line Item"
@@ -15196,19 +15196,19 @@ msgstr "Referencia del Contrato de la Fila de Artículos"
 
 #: GoodsReceived.php:352
 msgid "Quantity Invoiced of the Line Item"
-msgstr "Cantidad Facturada del Artículo"
+msgstr "Cantidad Facturada del artículo"
 
 #: GoodsReceived.php:357
 msgid "Stock Code of the Line Item"
-msgstr "Código de Existencia del Artículo"
+msgstr "Código de Existencia del artículo"
 
 #: GoodsReceived.php:362
 msgid "Order Quantity of the Line Item"
-msgstr "Cantidad Ordenada del Artículo"
+msgstr "Cantidad Ordenada del artículo"
 
 #: GoodsReceived.php:367
 msgid "Quantity of the Line Item Already Received"
-msgstr "Cantidad del Artculo ya Recibida"
+msgstr "Cantidad del artículo ya recibida"
 
 #: GoodsReceived.php:375
 msgid "Re-read the updated purchase order for receiving goods against"
@@ -15815,7 +15815,7 @@ msgstr ""
 #: PcClaimExpensesFromTab.php:142 PcExpenses.php:12 PcExpensesTypeTab.php:9
 #: PcReportTab.php:20 PcReportTab.php:237 PcTabs.php:11 PcTypeTabs.php:11
 msgid "Payment Entry"
-msgstr "Introduzca un Pago a proveedor"
+msgstr "Introducir un pago"
 
 #: InternalStockCategoriesByRole.php:24
 msgid "The Selected type cannot contain any of the following characters"
@@ -20935,7 +20935,7 @@ msgstr "Para propósitos de depuración del SQL utilizado fue:"
 
 #: PDFPriceList.php:155
 msgid "Print Price List Error"
-msgstr "Imprimir Errores en lista de precios"
+msgstr "Imprimir errores en lista de precios"
 
 #: PDFPriceList.php:157
 msgid ""
@@ -22757,7 +22757,7 @@ msgstr ""
 
 #: PO_PDFPurchOrder.php:153
 msgid "Print This Order as a Copy"
-msgstr "Imprimir Esta Orden como una Copia"
+msgstr "Imprimir esta orden como una copia"
 
 #: PO_PDFPurchOrder.php:154
 msgid "Modify the order to allow a real reprint"
@@ -22852,7 +22852,7 @@ msgstr "Intervalo"
 #: POReport.php:532 POReport.php:1308 POReport.php:1598 SalesInquiry.php:808
 #: SalesInquiry.php:1157
 msgid "Line Item Status"
-msgstr "Estado del Artículo de la Fila"
+msgstr "Estado del artículo de la Fila"
 
 #: POReport.php:540 POReport.php:629 POReport.php:1314 POReport.php:1367
 #: SalesInquiry.php:825 SalesInquiry.php:843
@@ -22892,7 +22892,7 @@ msgstr "Estado de la Línea (contenido)"
 
 #: POReport.php:551 POReport.php:1325 SalesInquiry.php:836
 msgid "Item Due"
-msgstr "Deuda del Artículo"
+msgstr "Deuda del artículo"
 
 #: POReport.php:616 POReport.php:706 POReport.php:819 POReport.php:1354
 #: POReport.php:1408 POReport.php:1493 SalesInquiry.php:912
@@ -23646,7 +23646,7 @@ msgstr "¿Está seguro que desea suprimir este precio?"
 
 #: Prices.php:5
 msgid "Item Prices"
-msgstr "Precios del Artículo"
+msgstr "Precios del artículo"
 
 #: Prices.php:48 RelatedItemsUpdate.php:42
 msgid "An item must first be selected before this page is called"
@@ -23936,7 +23936,7 @@ msgstr "No se encontraron clientes"
 
 #: PrintCustStatements.php:105 PrintCustStatements.php:453
 msgid "Print Customer Account Statements"
-msgstr "Imprimir Estados de las Cuentas del cliente"
+msgstr "Imprimir estados de cuenta del cliente"
 
 #: PrintCustStatements.php:106
 msgid "There were no Customers matching your selection of "
@@ -24888,7 +24888,7 @@ msgstr "Cantidad Mínima de Orden"
 
 #: PurchData.php:651
 msgid "Supplier Stock Description"
-msgstr "Descripción del Artículo del proveedor"
+msgstr "Descripción del artículo del proveedor"
 
 #: PurchData.php:659
 msgid "in days from date of order"
@@ -25089,7 +25089,7 @@ msgstr "Se actualizó la plantilla de pedidos frecuentes"
 
 #: RecurringSalesOrders.php:308
 msgid "Enter New Sales Order"
-msgstr "Introduzca una Nuevo Pedido de Venta"
+msgstr "Introducir una Nuevo Pedido de Venta"
 
 #: RecurringSalesOrders.php:321
 msgid "Recurring Order for Customer"
@@ -25346,11 +25346,11 @@ msgstr "¿Está seguro que desea suprimir esta relación?"
 
 #: RelatedItemsUpdate.php:179
 msgid "There are no items related set up for this part"
-msgstr ""
+msgstr "No hay artículos relacionados creados para esta parte"
 
 #: RelatedItemsUpdate.php:194
 msgid "Related Item Code"
-msgstr ""
+msgstr "Código de artículo relacionado"
 
 #: RelatedItemsUpdate.php:204
 msgid "Amend Relation"
@@ -25457,7 +25457,7 @@ msgstr "Seleccione una orden de compra"
 
 #: ReprintGRN.php:22
 msgid "Enter a Purchase Order Number"
-msgstr "Introduzca un Número de Orden de Compra"
+msgstr "Introducir un número de orden de compra"
 
 #: ReprintGRN.php:26
 msgid "Show GRNs"
@@ -25500,7 +25500,7 @@ msgstr ""
 
 #: ReprintGRN.php:109
 msgid "Reprint Labels"
-msgstr ""
+msgstr "Reimprimir etiquetas"
 
 #: ReverseGRN.php:9 includes/MainMenuLinksArray.php:206
 msgid "Reverse Goods Received"
@@ -27377,11 +27377,11 @@ msgstr "Seleccionar cliente"
 
 #: SelectCreditItems.php:225
 msgid "Enter text in the customer name"
-msgstr "Introduzca una parte del Nombre del cliente"
+msgstr "Introducir una parte del nombre del cliente"
 
 #: SelectCreditItems.php:228
 msgid "Enter text extract in the customer code"
-msgstr "Introduzca una parte del Código del cliente"
+msgstr "Introducir una parte del código del cliente"
 
 #: SelectCreditItems.php:394
 msgid "There are no products available that match the criteria specified"
@@ -27601,11 +27601,11 @@ msgstr "Mostrar este abono en Pantalla"
 
 #: SelectCreditItems.php:2011 SelectCreditItems.php:2013
 msgid "Print this Credit Note"
-msgstr "Imprimir este abono"
+msgstr "Imprimir esta nota de crédito"
 
 #: SelectCreditItems.php:2015
 msgid "Enter Another Credit Note"
-msgstr "Introducir Otro abono"
+msgstr "Introducir otra nota de crédito"
 
 #: SelectCustomer.php:6
 msgid "Search Customers"
@@ -27630,7 +27630,7 @@ msgstr "Seleccione una opción de menú para trabajar sobre este cliente"
 
 #: SelectCustomer.php:215 SelectCustomer.php:247
 msgid "Customer Inquiries"
-msgstr "Consultas de clientes"
+msgstr "Consultas de cliente"
 
 #: SelectCustomer.php:216 SelectCustomer.php:248
 msgid "Customer Transactions"
@@ -27638,19 +27638,19 @@ msgstr "Transacciones del cliente"
 
 #: SelectCustomer.php:221 includes/MainMenuLinksArray.php:117
 msgid "Customer Transaction Inquiries"
-msgstr "Consultas de transacciones de clientes"
+msgstr "Consultas de transacciones del cliente"
 
 #: SelectCustomer.php:222
 msgid "Customer Account statement on screen"
-msgstr ""
+msgstr "Estado de cuenta de cliente en la pantalla"
 
 #: SelectCustomer.php:223
 msgid "View Customer Details"
-msgstr "Ver Detalles del cliente"
+msgstr "Ver detalles del cliente"
 
 #: SelectCustomer.php:224
 msgid "Print Customer Statement"
-msgstr "Imprimir Estado de Cuenta del cliente"
+msgstr "Imprimir estado de cuenta del cliente"
 
 #: SelectCustomer.php:225
 msgid "Order Inquiries"
@@ -27666,7 +27666,7 @@ msgstr "Modificar Pedidos Pendientes"
 
 #: SelectCustomer.php:230
 msgid "Allocate Receipts OR Credit Notes"
-msgstr ""
+msgstr "Asignar recibos o notas de crédito"
 
 #: SelectCustomer.php:232
 msgid "Create a Counter Sale for this Customer"
@@ -27694,19 +27694,19 @@ msgstr "Buscar clientes"
 
 #: SelectCustomer.php:268 SelectSupplier.php:223 SupplierTenderCreate.php:559
 msgid "Enter a partial Name"
-msgstr "Introduzca una parte del Nombre"
+msgstr "Introducir una parte del nombre"
 
 #: SelectCustomer.php:275 SelectSupplier.php:232 SupplierTenderCreate.php:566
 msgid "Enter a partial Code"
-msgstr "Introduzca una parte del Código"
+msgstr "Introducir una parte del código"
 
 #: SelectCustomer.php:286
 msgid "Enter a partial Phone Number"
-msgstr "Introduzca una parte del Teléfono"
+msgstr "Introducir una parte del teléfono"
 
 #: SelectCustomer.php:295
 msgid "Enter part of the Address"
-msgstr "Introduzca una parte de la Dirección"
+msgstr "Introducir una parte de la dirección"
 
 #: SelectCustomer.php:305
 msgid "Choose a Type"
@@ -27723,11 +27723,11 @@ msgstr "Cualquier"
 
 #: SelectCustomer.php:352
 msgid "Choose an Area"
-msgstr "Escoja un Área"
+msgstr "Escoja una área"
 
 #: SelectCustomer.php:357
 msgid "Setup Areas"
-msgstr "Configurar Áreas"
+msgstr "Configurar áreas"
 
 #: SelectCustomer.php:358
 msgid "No Sales Areas defined"
@@ -28371,11 +28371,11 @@ msgstr "Clonar este artículo"
 
 #: SelectProduct.php:477
 msgid "Maintain Related Items"
-msgstr ""
+msgstr "Administrar artículos relacionados"
 
 #: SelectProduct.php:478
 msgid "Maintain Price Matrix"
-msgstr ""
+msgstr "Administrar matriz de precios"
 
 #: SelectProduct.php:524 SelectProduct.php:526
 msgid "Enter text that you wish to search for in the item description"
@@ -28397,7 +28397,7 @@ msgstr ""
 
 #: SelectQASamples.php:76
 msgid "Some Results are out of Spec"
-msgstr ""
+msgstr "Algunos resultados están fuera de especificaciones"
 
 #: SelectQASamples.php:85
 msgid "QA Sample record for"
@@ -28474,11 +28474,11 @@ msgstr "Lote / Serie"
 #: SelectQASamples.php:399 SelectQASamples.php:503 SelectQASamples.php:563
 #: TestPlanResults.php:282 TestPlanResults.php:758
 msgid "Identifier"
-msgstr ""
+msgstr "Identificador"
 
 #: SelectQASamples.php:400 TestPlanResults.php:283
 msgid "Created By"
-msgstr ""
+msgstr "Creado por"
 
 #: SelectQASamples.php:401 SelectQASamples.php:511 TestPlanResults.php:284
 #: TestPlanResults.php:759
@@ -28669,7 +28669,7 @@ msgstr "Seleccione una opción del menú para operar usando este proveedor"
 
 #: SelectSupplier.php:166 SelectSupplier.php:204
 msgid "Supplier Inquiries"
-msgstr "Consultas de proveedores"
+msgstr "Consultas de proveedor"
 
 #: SelectSupplier.php:167 SelectSupplier.php:205
 msgid "Supplier Transactions"
@@ -28681,7 +28681,7 @@ msgstr "Administrar proveedores"
 
 #: SelectSupplier.php:171
 msgid "Supplier Account Inquiry"
-msgstr "Consultar Cuenta del proveedor"
+msgstr "Consultar cuenta del proveedor"
 
 #: SelectSupplier.php:175
 msgid "Add / Receive / View Outstanding Purchase Orders"
@@ -28707,19 +28707,19 @@ msgstr "Listado de Precios del proveedor"
 
 #: SelectSupplier.php:182
 msgid "Enter a Purchase Order for This Supplier"
-msgstr "Introduzca una Orden de Compra para este proveedor"
+msgstr "Introducir una orden de compra para este proveedor"
 
 #: SelectSupplier.php:183
 msgid "Enter a Suppliers Invoice"
-msgstr "Introduzca una Factura de proveedor"
+msgstr "Introducir una Factura de proveedor"
 
 #: SelectSupplier.php:184
 msgid "Enter a Suppliers Credit Note"
-msgstr "Introduzca una nota de Crédito (Abono) a proveedor"
+msgstr "Introducir una nota de Crédito (Abono) a proveedor"
 
 #: SelectSupplier.php:185
 msgid "Enter a Payment to, or Receipt from the Supplier"
-msgstr "Introduzca un Pago a, ó Ingreso desde, proveedor"
+msgstr "Introducir un Pago a, ó Ingreso desde, proveedor"
 
 #: SelectSupplier.php:187
 msgid "Reverse an Outstanding Goods Received Note (GRN)"
@@ -29049,7 +29049,7 @@ msgstr "No se puede obtener de la base de datos los costos del artículo"
 
 #: ShipmentCosting.php:101
 msgid "No Item Cost Records exist for Shipment"
-msgstr "No existen Registros de Costo del Artículo para el Envío"
+msgstr "No existen Registros de Costo del artículo para el Envío"
 
 #: ShipmentCosting.php:121
 msgid "The lines on the shipment could not be retrieved from the database"
@@ -30167,7 +30167,7 @@ msgstr "Un cargo de transporte puede también ser aplicable"
 
 #: SpecialOrder.php:582
 msgid "Enter A New Special Order"
-msgstr "Introduzca un Nuevo Pedido Especial"
+msgstr "Introducir un Nuevo Pedido Especial"
 
 #: SpecialOrder.php:590
 msgid "Receive Purchase Into and Sell From"
@@ -30215,7 +30215,7 @@ msgstr "Ajustando Artículos Controlados"
 
 #: StockAdjustmentsControlled.php:22 StockAdjustmentsControlled.php:39
 msgid "Enter A Stock Adjustment"
-msgstr "Introduzca un Ajuste de Existencias"
+msgstr "Introducir un ajuste de existencias"
 
 #: StockAdjustmentsControlled.php:23
 msgid ""
@@ -30372,7 +30372,7 @@ msgstr "Cantidad Ajustada"
 
 #: StockAdjustments.php:517
 msgid "Enter Stock Adjustment"
-msgstr "Introduzca Ajuste de Existencias"
+msgstr "Introducir ajuste de inventario"
 
 #: StockAdjustments.php:527 StockStatus.php:371 StockTransfers.php:655
 msgid "Show Movements"
@@ -31067,7 +31067,7 @@ msgstr "Código de artículo clonado"
 
 #: StockClone.php:586
 msgid "Enter a unique item code for the new item."
-msgstr "Introduzca un código de artículo único para el nuevo artículo."
+msgstr "Introducir un código de artículo único para el nuevo artículo."
 
 #: StockClone.php:699 Stocks.php:1046
 msgid "Clear Image"
@@ -32172,7 +32172,7 @@ msgstr "Cantidad Total"
 
 #: Stocks.php:131 Z_ImportStocks.php:116
 msgid "The Stock Item code cannot be empty"
-msgstr "El código del Artículo de Existencias no puede estar vacío"
+msgstr "El código del artículo de Existencias no puede estar vacío"
 
 #: Stocks.php:305 Stocks.php:310
 msgid "The make or buy flag cannot be changed from"
@@ -32611,7 +32611,7 @@ msgstr "Transferir Artículos Controlados"
 
 #: StockTransferControlled.php:18 StockTransferControlled.php:46
 msgid "Enter A Stock Transfer"
-msgstr "Introduzca una transferencia de la existencia"
+msgstr "Introducir una transferencia de la existencia"
 
 #: StockTransferControlled.php:19
 msgid ""
@@ -38165,7 +38165,7 @@ msgstr ""
 
 #: WhereUsedInquiry.php:41 WhereUsedInquiry.php:43
 msgid "Enter an Item Code"
-msgstr "Introduzca un Código de Artículo"
+msgstr "Introducir un código de artículo"
 
 #: WhereUsedInquiry.php:41 WhereUsedInquiry.php:43
 msgid "Illegal characters and blank is not allowed"
@@ -38575,7 +38575,7 @@ msgstr ""
 
 #: WorkOrderEntry.php:329
 msgid "Enter a new work order"
-msgstr "Introduzca una nueva orden de trabajo"
+msgstr "Introducir una nueva orden de trabajo"
 
 #: WorkOrderEntry.php:331
 msgid "Go to Costing"
@@ -41837,7 +41837,7 @@ msgstr "No existe"
 
 #: Z_ImportGLTransactions.php:124
 msgid "All transactions must be in the same period"
-msgstr ""
+msgstr "Todas las transacciones deben estar en el mismo período"
 
 #: Z_ImportGLTransactions.php:187
 msgid "Cheque"
@@ -41880,7 +41880,7 @@ msgstr ""
 
 #: Z_ImportGLTransactions.php:231
 msgid "All the transactions must be within the same accounting period."
-msgstr ""
+msgstr "Todas las transacciones deben estar dentro del mismo período contable."
 
 #: Z_ImportGLTransactions.php:232
 msgid ""
@@ -42715,7 +42715,7 @@ msgstr "Comprobar Artículos del Pedido huérfanos"
 
 #: Z_SalesIntegrityCheck.php:132
 msgid "Check Order Item Amounts"
-msgstr "Comprobar Importes del Artículo del Pedido"
+msgstr "Comprobar Importes del artículo del Pedido"
 
 #: Z_SalesIntegrityCheck.php:141
 msgid "Order Item"
@@ -45359,7 +45359,7 @@ msgstr "Crear una nota de crédito (Abono)"
 
 #: includes/MainMenuLinksArray.php:103
 msgid "Allocate Receipts or Credit Notes"
-msgstr "Asignar Recibos ó notas de Crédito"
+msgstr "Asignar recibos o notas de crédito"
 
 #: includes/MainMenuLinksArray.php:109
 msgid "Where Allocated Inquiry"
@@ -45404,7 +45404,7 @@ msgstr "Saldos de proveedores al final del mes previo"
 
 #: includes/MainMenuLinksArray.php:153
 msgid "Supplier Transaction Inquiries"
-msgstr "Consultas de proveedores de Transacción"
+msgstr "Consultas de transacciones del proveedor"
 
 #: includes/MainMenuLinksArray.php:163
 msgid "Add Supplier"
@@ -46420,7 +46420,7 @@ msgstr "Lista de clientes para"
 
 #: includes/PDFCustomerListPageHeader.inc:21
 msgid "All Territories"
-msgstr "Todos los Territorios"
+msgstr "Todos los territorios"
 
 #: includes/PDFCustomerListPageHeader.inc:24
 msgid "Territory"
@@ -50898,7 +50898,7 @@ msgstr ""
 
 #: ../webSHOP/Register.php:247
 msgid "customer"
-msgstr ""
+msgstr "cliente"
 
 #: ../webSHOP/Register.php:249
 msgid "The details that we have on record for you are as follows"
