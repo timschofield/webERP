@@ -306,6 +306,7 @@ $MenuItems['stock']['Reports']['Caption'] = array(	_('Serial Item Research Tool'
 													_('KL Reorder Level Distribution'),
 													_('KL Active Transfer Status'),
 													_('KL Price Analysis'),
+													_('KL Inventory Distribution By Type'),
 													_('Stock Transfer Note'),
 													_('Aged Controlled Stock Report'));
 
@@ -342,6 +343,7 @@ $MenuItems['stock']['Reports']['URL'] = array(	'/StockSerialItemResearch.php',
 												'/KLReorderLevelDistribution.php',
 												'/KLTransferStatus.php',
 												'/KLExcelPriceAnalysis.php',
+												'/KLInventoryDistribution.php',
 												'/PDFStockTransfer.php',
 												'/AgedControlledInventory.php');
 

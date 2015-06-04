@@ -46,39 +46,6 @@ function submit(&$db, $ListCategories, $DaysTopSales) {
 				AND (prices.enddate >= '". $today. "' OR prices.enddate = '0000-00-00')
 			ORDER BY stockmaster.stockid";
 		
-/*		$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -filter_number_format($DaysTopSales)));
-			
-		$SQL ="SELECT salesorderdetails.stkcode AS stockid,
-					SUM(salesorderdetails.qtyinvoiced) AS totalinvoiced,
-					SUM(salesorderdetails.qtyinvoiced * salesorderdetails.unitprice/currencies.rate ) AS valuesales,
-					stockmaster.description,
-					stockmaster.units,
-					stockmaster.mbflag,
-					currencies.rate,
-					debtorsmaster.currcode,
-					stockmaster.decimalplaces,
-					stockmaster.categoryid,
-					stockmaster.lastcategoryupdate,
-					(SELECT SUM(quantity)
-						FROM locstock
-						WHERE stockmaster.stockid = locstock.stockid) AS qoh,
-					prices.price AS retailprice,
-					(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS standardcost
-			FROM 	salesorderdetails, salesorders,	debtorsmaster,stockmaster, currencies,prices
-			WHERE 	salesorderdetails.orderno = salesorders.orderno
-					AND salesorderdetails.stkcode = stockmaster.stockid
-					AND salesorders.debtorno = debtorsmaster.debtorno
-					AND debtorsmaster.currcode = currencies.currabrev
-					AND salesorderdetails.actualdispatchdate >= '" . $FromDate . "'
-					AND stockmaster.categoryid IN ('". implode("','",$ListCategories)."')
-					AND stockmaster.discontinued = 0	
-					AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
-					AND prices.currabrev = '". CURRENCY_CODE ."'
-					AND prices.startdate <= '". $today. "' 
-					AND (prices.enddate >= '". $today. "' OR prices.enddate = '0000-00-00')
-			GROUP BY salesorderdetails.stkcode
-			ORDER BY salesorderdetails.stkcode";
-*/					
 		$result = DB_query($SQL);
 		if (DB_num_rows($result) != 0){
 
