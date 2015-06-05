@@ -1,5 +1,6 @@
 webERP Change Log
 
+04/06/15 TurboPT: Currencies.php: Add closing select, td and tr tags to complete last table row.
 27/05/15 Thumb: Fix error_reporting() bug change && to & in install/index.php.
 25/5/15 Tom Barry: SupplierInquiry.php moved SQL to get the users authorisation to put supplier invoices on hold outside the loop to avoid unecessary  round trips to the SQL server
 21/5/15 RChacon: Adjust CustomerAccount.php for direct printing.

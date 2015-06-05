@@ -527,7 +527,10 @@ if (!isset($_GET['delete'])) {
 		echo '<option value="0">' . _('No') . '</option>';
 	}
 
-	echo '</table>';
+	echo '</select>
+			</td>
+		</tr>
+		</table>';
 
 	echo '<br />
 		<div class="centre">
