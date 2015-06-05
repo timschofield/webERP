@@ -1482,7 +1482,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 												'" . $_SESSION['CompanyRecord']['debtorsact'] . "',
 												'" . $_SESSION['Items'.$identifier]->DebtorNo . 
 													 _(' WI:') . $InvoiceNo . 
-													 _(' YI:') . $CustomerReference  . 
+													 _(' YI:') . $_SESSION['Items'.$identifier]->CustRef  . 
 													 _(' SPG:'). $_SESSION['SalesmanLogin'] . "',
 												'" . (($_SESSION['Items'.$identifier]->total + $_POST['TaxTotal'] - $_POST['AmountVouchers'] - $_POST['AmountReturnedGoods'])/$ExRate) . "',
 												'" . $Tag . "')";
