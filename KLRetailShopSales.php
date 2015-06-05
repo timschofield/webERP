@@ -16,7 +16,7 @@ v 2.01 Mod to include special discount / vouchers
 v 2.00 Mod to include Mandiri CC accounts
 v 1.03 Mod to allow automatic accounting for CC bank charges
 v 1.02 Mod to use only one area per payment, not for shop
-v 1.01 Mod to allow partical CC/Cash payments and returned goods from customer.
+v 1.01 Mod to allow parcial CC/Cash payments and returned goods from customer.
 v 1.00 2011-08-10: Shops start using it.
 v 1.00 2011-07-25: Kantor starts using it.
 *********************************************************************/
@@ -1413,7 +1413,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 
 			if ($_SESSION['CompanyRecord']['gllink_debtors']==1 AND $OrderLine->Price !=0){
 
-		//Post sales transaction to GL credit sales
+				//Post sales transaction to GL credit sales
 				$SalesGLAccounts = GetSalesGLAccount($Area, $OrderLine->StockID, $_SESSION['Items'.$identifier]->DefaultSalesType, $db);
 				$SQL = "INSERT INTO gltrans (	type,
 												typeno,
@@ -1480,8 +1480,11 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 												'" . Date('Y-m-d') . "',
 												'" . $PeriodNo . "',
 												'" . $_SESSION['CompanyRecord']['debtorsact'] . "',
-												'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
-												'" . (($_SESSION['Items'.$identifier]->total + $_POST['TaxTotal'])/$ExRate) . "',
+												'" . $_SESSION['Items'.$identifier]->DebtorNo . 
+													 _(' WI:') . $InvoiceNo . 
+													 _(' YI:') . $CustomerReference  . 
+													 _(' SPG:'). $_SESSION['SalesmanLogin'] . "',
+												'" . (($_SESSION['Items'.$identifier]->total + $_POST['TaxTotal'] - $_POST['AmountVouchers'] - $_POST['AmountReturnedGoods'])/$ExRate) . "',
 												'" . $Tag . "')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The total debtor GL posting could not be inserted because');
