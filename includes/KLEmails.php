@@ -40,6 +40,17 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 						"Once ready inform Laia or Ike if transfer by car is needed.";
 			$EmailAddress = "kl-shopsupport@kapal-laut.com";
 			break;
+		/* PREPARE OUTLET PACKAGING TRANSFER EMAILS */
+		case "SendOutletPackagingToShop":
+			$EmailSubject = "Prepare OUTLET packaging transfer for: ". $Param1;
+			$EmailText = $EmailSubject . "\n\n" . 
+						$Param2 . " x PKPB02-L (OUTLET PouchBag-L)" . "\n\n" . 
+						$Param3 . " x PKPB02-M (OUTLET PouchBag-M)" . "\n\n" . 
+						$Param4 . " x PKPB02-S (OUTLET PouchBag-S)" . "\n\n" . 
+						$Param5 . " x PKSB03   (OUTLET ShoppingBag)" . "\n\n" . 
+						"Once ready inform Laia or Ike if transfer by car is needed.";
+			$EmailAddress = "kl-shopsupport@kapal-laut.com";
+			break;
 		/* CHANGE OF PRICE EMAILS */
 		case "ChangePriceStarted":
 			/* Change Price Started */

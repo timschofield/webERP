@@ -1,5 +1,5 @@
 <?php
-define("VERSIONFILE", "3.22"); 
+define("VERSIONFILE", "3.23"); 
 define("NUMBER_OF_TESTS", 155); 
 
 /* Session started in session.inc for password checking and authorisation level check
@@ -362,11 +362,12 @@ if ($KL_SystemAdmin
 
 if ($KL_SystemAdmin 
 	OR $KL_PurchasingTeam){
-	PackagingItemsOnWrongLocation($RootPath, $db);
+	PackagingItemsOnWrongLocation($RootPath, $db); // Works for both regular and outlet shop packaging
 }
 
 if ($KL_SystemAdmin){
 	PackagingToBeRefilled(false, $RootPath, $db);
+	OutletPackagingToBeRefilled(false, $RootPath, $db);
 }
 
 if ($KL_SystemAdmin){
