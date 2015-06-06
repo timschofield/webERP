@@ -44,6 +44,7 @@ function submit(&$db, $ListCategories, $ListLocations) {
 			$TotalBracelet = 0;
 			$TotalAnklet = 0;
 			$TotalPendant = 0;
+			$TotalNecklace = 0;
 			$TotalBag = 0;
 			$TotalTali = 0;
 			$TotalUnknown = 0;
@@ -58,12 +59,14 @@ function submit(&$db, $ListCategories, $ListLocations) {
 							<th>' . _('Bracelet') . '</th>
 							<th>' . _('Anklet') . '</th>
 							<th>' . _('Pendant') . '</th>
+							<th>' . _('Necklace') . '</th>
 							<th>' . _('Bag') . '</th>
 							<th>' . _('Tali') . '</th>
 							<th>' . _('Others') . '</th>
 							<th>' . _('TOTAL') . '</th>
 						</tr>';
 			echo $TableHeader;
+			$k = 0; //row colour counter
 
 			while ($myrowLoc = DB_fetch_array($resultLocation)) {
 				// for every location, select all items with stock, RL, and classify by type 
@@ -86,6 +89,7 @@ function submit(&$db, $ListCategories, $ListLocations) {
 					$TotalBraceletByLoc = 0;
 					$TotalAnkletByLoc = 0;
 					$TotalPendantByLoc = 0;
+					$TotalNecklaceByLoc = 0;
 					$TotalBagByLoc = 0;
 					$TotalTaliByLoc = 0;
 					$TotalUnknownByLoc = 0;
@@ -118,8 +122,24 @@ function submit(&$db, $ListCategories, $ListLocations) {
 							$TotalUnknownByLoc++;
 						}
 					}
+					
+					$Total = $TotalRingByLoc+
+							$TotalToeRingByLoc+
+							$TotalBeadByLoc+
+							$TotalEarringByLoc+
+							$TotalEarCuffByLoc+
+							$TotalBraceletByLoc+
+							$TotalAnkletByLoc+
+							$TotalPendantByLoc+
+							$TotalNecklaceByLoc+
+							$TotalBagByLoc+
+							$TotalTaliByLoc+
+							$TotalUnknownByLoc;
+							
 					// show the results of the location
+					$k = StartEvenOrOddRow($k);
 					printf('<td>%s</td>
+							<td class="number">%s</td>
 							<td class="number">%s</td>
 							<td class="number">%s</td>
 							<td class="number">%s</td>
@@ -134,28 +154,19 @@ function submit(&$db, $ListCategories, $ListLocations) {
 							<td class="number">%s</td>
 							</tr>', 
 							$myrowLoc['locationname'], 
-							locale_number_format_zero_blank($TotalRingByLoc,0),
-							locale_number_format_zero_blank($TotalToeRingByLoc,0),
-							locale_number_format_zero_blank($TotalBeadByLoc,0),
-							locale_number_format_zero_blank($TotalEarringByLoc,0),
-							locale_number_format_zero_blank($TotalEarCuffByLoc,0),
-							locale_number_format_zero_blank($TotalBraceletByLoc,0),
-							locale_number_format_zero_blank($TotalAnkletByLoc,0),
-							locale_number_format_zero_blank($TotalPendantByLoc,0),
-							locale_number_format_zero_blank($TotalBagByLoc,0),
-							locale_number_format_zero_blank($TotalTaliByLoc,0),
-							locale_number_format_zero_blank($TotalUnknownByLoc,0),
-							locale_number_format_zero_blank($TotalRingByLoc+
-															$TotalToeRingByLoc+
-															$TotalBeadByLoc+
-															$TotalEarringByLoc+
-															$TotalEarCuffByLoc+
-															$TotalBraceletByLoc+
-															$TotalAnkletByLoc+
-															$TotalPendantByLoc+
-															$TotalBagByLoc+
-															$TotalTaliByLoc+
-															$TotalUnknownByLoc,0)
+							locale_number_format_zero_blank($TotalRingByLoc,0) . ' ('. locale_number_format_zero_blank($TotalRingByLoc/$Total*100,0) . '%)',
+							locale_number_format_zero_blank($TotalToeRingByLoc,0) . ' ('. locale_number_format_zero_blank($TotalToeRingByLoc/$Total*100,0) . '%)',
+							locale_number_format_zero_blank($TotalBeadByLoc,0) . ' ('. locale_number_format_zero_blank($TotalBeadByLoc/$Total*100,0) . '%)',
+							locale_number_format_zero_blank($TotalEarringByLoc,0) . ' ('. locale_number_format_zero_blank($TotalEarringByLoc/$Total*100,0) . '%)',
+							locale_number_format_zero_blank($TotalEarCuffByLoc,0) . ' ('. locale_number_format_zero_blank($TotalEarCuffByLoc/$Total*100,0) . '%)',
+							locale_number_format_zero_blank($TotalBraceletByLoc,0) . ' ('. locale_number_format_zero_blank($TotalBraceletByLoc/$Total*100,0) . '%)',
+							locale_number_format_zero_blank($TotalAnkletByLoc,0) . ' ('. locale_number_format_zero_blank($TotalAnkletByLoc/$Total*100,0) . '%)',
+							locale_number_format_zero_blank($TotalPendantByLoc,0) . ' ('. locale_number_format_zero_blank($TotalPendantByLoc/$Total*100,0) . '%)',
+							locale_number_format_zero_blank($TotalNecklaceByLoc,0) . ' ('. locale_number_format_zero_blank($TotalNecklaceByLoc/$Total*100,0) . '%)',
+							locale_number_format_zero_blank($TotalBagByLoc,0) . ' ('. locale_number_format_zero_blank($TotalBagByLoc/$Total*100,0) . '%)',
+							locale_number_format_zero_blank($TotalTaliByLoc,0) . ' ('. locale_number_format_zero_blank($TotalTaliByLoc/$Total*100,0) . '%)',
+							locale_number_format_zero_blank($TotalUnknownByLoc,0) . ' ('. locale_number_format_zero_blank($TotalUnknownByLoc/$Total*100,0) . '%)',
+							locale_number_format_zero_blank($Total,0)
 							);
 
 				}
@@ -181,6 +192,7 @@ function submit(&$db, $ListCategories, $ListLocations) {
 				$TotalBraceletByLoc = 0;
 				$TotalAnkletByLoc = 0;
 				$TotalPendantByLoc = 0;
+				$TotalNecklaceByLoc = 0;
 				$TotalBagByLoc = 0;
 				$TotalTaliByLoc = 0;
 				$TotalUnknownByLoc = 0;
@@ -213,8 +225,24 @@ function submit(&$db, $ListCategories, $ListLocations) {
 						$TotalUnknownByLoc++;
 					}
 				}
+
+				$Total = $TotalRingByLoc+
+						$TotalToeRingByLoc+
+						$TotalBeadByLoc+
+						$TotalEarringByLoc+
+						$TotalEarCuffByLoc+
+						$TotalBraceletByLoc+
+						$TotalAnkletByLoc+
+						$TotalPendantByLoc+
+						$TotalNecklaceByLoc+
+						$TotalBagByLoc+
+						$TotalTaliByLoc+
+						$TotalUnknownByLoc;
+
 				// show the results of the location
+				$k = StartEvenOrOddRow($k);
 				printf('<td>%s</td>
+						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
@@ -229,28 +257,19 @@ function submit(&$db, $ListCategories, $ListLocations) {
 						<td class="number">%s</td>
 						</tr>', 
 						'TOTALS', 
-						locale_number_format_zero_blank($TotalRingByLoc,0),
-						locale_number_format_zero_blank($TotalToeRingByLoc,0),
-						locale_number_format_zero_blank($TotalBeadByLoc,0),
-						locale_number_format_zero_blank($TotalEarringByLoc,0),
-						locale_number_format_zero_blank($TotalEarCuffByLoc,0),
-						locale_number_format_zero_blank($TotalBraceletByLoc,0),
-						locale_number_format_zero_blank($TotalAnkletByLoc,0),
-						locale_number_format_zero_blank($TotalPendantByLoc,0),
-						locale_number_format_zero_blank($TotalBagByLoc,0),
-						locale_number_format_zero_blank($TotalTaliByLoc,0),
-						locale_number_format_zero_blank($TotalUnknownByLoc,0),
-						locale_number_format_zero_blank($TotalRingByLoc+
-														$TotalToeRingByLoc+
-														$TotalBeadByLoc+
-														$TotalEarringByLoc+
-														$TotalEarCuffByLoc+
-														$TotalBraceletByLoc+
-														$TotalAnkletByLoc+
-														$TotalPendantByLoc+
-														$TotalBagByLoc+
-														$TotalTaliByLoc+
-														$TotalUnknownByLoc,0)
+						locale_number_format_zero_blank($TotalRingByLoc,0) . ' ('. locale_number_format_zero_blank($TotalRingByLoc/$Total*100,0) . '%)',
+						locale_number_format_zero_blank($TotalToeRingByLoc,0) . ' ('. locale_number_format_zero_blank($TotalToeRingByLoc/$Total*100,0) . '%)',
+						locale_number_format_zero_blank($TotalBeadByLoc,0) . ' ('. locale_number_format_zero_blank($TotalBeadByLoc/$Total*100,0) . '%)',
+						locale_number_format_zero_blank($TotalEarringByLoc,0) . ' ('. locale_number_format_zero_blank($TotalEarringByLoc/$Total*100,0) . '%)',
+						locale_number_format_zero_blank($TotalEarCuffByLoc,0) . ' ('. locale_number_format_zero_blank($TotalEarCuffByLoc/$Total*100,0) . '%)',
+						locale_number_format_zero_blank($TotalBraceletByLoc,0) . ' ('. locale_number_format_zero_blank($TotalBraceletByLoc/$Total*100,0) . '%)',
+						locale_number_format_zero_blank($TotalAnkletByLoc,0) . ' ('. locale_number_format_zero_blank($TotalAnkletByLoc/$Total*100,0) . '%)',
+						locale_number_format_zero_blank($TotalPendantByLoc,0) . ' ('. locale_number_format_zero_blank($TotalPendantByLoc/$Total*100,0) . '%)',
+						locale_number_format_zero_blank($TotalNecklaceByLoc,0) . ' ('. locale_number_format_zero_blank($TotalNecklaceByLoc/$Total*100,0) . '%)',
+						locale_number_format_zero_blank($TotalBagByLoc,0) . ' ('. locale_number_format_zero_blank($TotalBagByLoc/$Total*100,0) . '%)',
+						locale_number_format_zero_blank($TotalTaliByLoc,0) . ' ('. locale_number_format_zero_blank($TotalTaliByLoc/$Total*100,0) . '%)',
+						locale_number_format_zero_blank($TotalUnknownByLoc,0) . ' ('. locale_number_format_zero_blank($TotalUnknownByLoc/$Total*100,0) . '%)',
+						locale_number_format_zero_blank($Total,0)
 						);
 
 			}
