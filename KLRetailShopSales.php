@@ -687,17 +687,17 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 and !isset($_POST['Proces
 	if (!isset($_POST['ShoppingBag02L'])){
 		$_POST['ShoppingBag02L'] =0;
 	}
-	if (!isset($_POST['OutletPouchBag01L'])){
-		$_POST['OutletPouchBag01L'] =0;
+	if (!isset($_POST['OutletPouchBag02L'])){
+		$_POST['OutletPouchBag02L'] =0;
 	}
-	if (!isset($_POST['OutletPouchBag01M'])){
-		$_POST['OutletPouchBag01M'] =0;
+	if (!isset($_POST['OutletPouchBag02M'])){
+		$_POST['OutletPouchBag02M'] =0;
 	}
-	if (!isset($_POST['OutletPouchBag01S'])){
-		$_POST['OutletPouchBag01S'] =0;
+	if (!isset($_POST['OutletPouchBag02S'])){
+		$_POST['OutletPouchBag02S'] =0;
 	}
-	if (!isset($_POST['OutletShoppingBag02M'])){
-		$_POST['OutletShoppingBag02M'] =0;
+	if (!isset($_POST['OutletShoppingBag03M'])){
+		$_POST['OutletShoppingBag03M'] =0;
 	}
 
 	// If the shop is using regular packaging, show it!
@@ -756,7 +756,7 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 and !isset($_POST['Proces
 			  <td></td>';
 		echo '<td></td>';
 		echo '<td>' . _('Outlet Pouch Bag Large') . ':</td>
-			  <td><input type="text" class="number" name="OutletPouchBag01L" maxlength="3" size="3" value="' . $_POST['OutletPouchBag01L'] . '" /></td>';
+			  <td><input type="text" class="number" name="OutletPouchBag02L" maxlength="3" size="3" value="' . $_POST['OutletPouchBag02L'] . '" /></td>';
 		echo '<td></td>';
 		echo '<td></td>
 			  <td></td>';
@@ -767,10 +767,10 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 and !isset($_POST['Proces
 			  <td></td>';
 		echo '<td></td>';
 		echo '<td>' . _('Outlet Pouch Bag Medium') . ':</td>
-			  <td><input type="text" class="number" name="OutletPouchBag01M" maxlength="3" size="3" value="' . $_POST['OutletPouchBag01M'] . '" /></td>';
+			  <td><input type="text" class="number" name="OutletPouchBag02M" maxlength="3" size="3" value="' . $_POST['OutletPouchBag02M'] . '" /></td>';
 		echo '<td></td>';
 		echo '<td>' . _('Outlet Shopping Bag') . ':</td>
-			  <td><input type="text" class="number" name="OutletShoppingBag02M" maxlength="3" size="3" value="' . $_POST['OutletShoppingBag02M'] . '" /></td></tr>';
+			  <td><input type="text" class="number" name="OutletShoppingBag03M" maxlength="3" size="3" value="' . $_POST['OutletShoppingBag03M'] . '" /></td></tr>';
 		echo'</tr>';
 		
 		echo '<tr>
@@ -778,7 +778,7 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 and !isset($_POST['Proces
 			  <td></td>';
 		echo '<td></td>';
 		echo '<td>' . _('Outlet Pouch Bag Small') . ':</td>
-			  <td><input type="text" class="number" name="OutletPouchBag01S" maxlength="3" size="3" value="' . $_POST['OutletPouchBag01S'] . '" /></td>';
+			  <td><input type="text" class="number" name="OutletPouchBag02S" maxlength="3" size="3" value="' . $_POST['OutletPouchBag02S'] . '" /></td>';
 		echo '<td></td>';
 		echo '<td></td>
 			  <td></td>';
@@ -1745,24 +1745,27 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 		} //end if $_POST['AmountReturnedGoods']!= 0
 		
 		/* Account for the Packaging */
-		AdjustPackagingMovement("PKBX01-L", $_POST['PackagingBox01L'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
-		AdjustPackagingMovement("PKBX01-M", $_POST['PackagingBox01M'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
-		AdjustPackagingMovement("PKBX01-S", $_POST['PackagingBox01S'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
+		if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_USING_REGULAR_PACKAGING)){
+			AdjustPackagingMovement("PKBX01-L", $_POST['PackagingBox01L'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
+			AdjustPackagingMovement("PKBX01-M", $_POST['PackagingBox01M'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
+			AdjustPackagingMovement("PKBX01-S", $_POST['PackagingBox01S'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
 
-		AdjustPackagingMovement("PKPB01-L", $_POST['PackagingPouchBag01L'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
-		AdjustPackagingMovement("PKPB01-M", $_POST['PackagingPouchBag01M'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
-		AdjustPackagingMovement("PKPB01-S", $_POST['PackagingPouchBag01S'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
+			AdjustPackagingMovement("PKPB01-L", $_POST['PackagingPouchBag01L'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
+			AdjustPackagingMovement("PKPB01-M", $_POST['PackagingPouchBag01M'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
+			AdjustPackagingMovement("PKPB01-S", $_POST['PackagingPouchBag01S'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
 
-		AdjustPackagingMovement("PKSB02-L", $_POST['ShoppingBag02L'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
-		AdjustPackagingMovement("PKSB02-M", $_POST['ShoppingBag02M'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
-		AdjustPackagingMovement("PKSB02-S", $_POST['ShoppingBag02S'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
+			AdjustPackagingMovement("PKSB02-L", $_POST['ShoppingBag02L'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
+			AdjustPackagingMovement("PKSB02-M", $_POST['ShoppingBag02M'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
+			AdjustPackagingMovement("PKSB02-S", $_POST['ShoppingBag02S'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
+		}
+		
+		if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_USING_OUTLET_PACKAGING)){
+			AdjustPackagingMovement("PKPB02-L", $_POST['OutletPouchBag02L'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
+			AdjustPackagingMovement("PKPB02-M", $_POST['OutletPouchBag02M'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
+			AdjustPackagingMovement("PKPB02-S", $_POST['OutletPouchBag02S'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
 
-//		AdjustPackagingMovement("TBA", $_POST['OutletPouchBag01L'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
-//		AdjustPackagingMovement("TBA", $_POST['OutletPouchBag01M'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
-//		AdjustPackagingMovement("TBA", $_POST['OutletPouchBag01S'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
-
-//		AdjustPackagingMovement("TBA", $_POST['OutletShoppingBag02M'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
-
+			AdjustPackagingMovement("PKSB03", $_POST['OutletShoppingBag03M'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
+		}
 		/*	End account for the packaging */
 		
 		RecordRetailCustomerInformation($OrderNo, $_POST['FirstName'], $_POST['LastName'], $_POST['Country'], $_POST['DateOfBirth'], $_POST['Email'], $_POST['Sex'], $db);

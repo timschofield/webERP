@@ -88,9 +88,11 @@ if ($KL_SystemAdmin
 FinishedStockDistribution("DISPLAYS", "LOCATION", $db);
 
 PackagingStatus($RootPath, $db);
+OutletPackagingStatus($RootPath, $db);
 
 if ($KL_SystemAdmin){
 	PackagingUsage(30, $RootPath, $db);
+	OutletPackagingUsage(30, $RootPath, $db);
 	FinishedStockDistribution("PACKAGING", "LOCATION", $db);
 }
 if (($KL_SystemAdmin) 
