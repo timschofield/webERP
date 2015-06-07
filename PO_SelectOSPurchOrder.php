@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: PO_SelectOSPurchOrder.php 6967 2014-11-07 09:39:42Z exsonqu $*/
+/* $Id: PO_SelectOSPurchOrder.php 7288 2015-05-04 06:54:44Z exsonqu $*/
 
 $PricesSecurity = 12;
 
@@ -64,6 +64,11 @@ if (isset($_POST['SearchParts'])) {
 	if (isset($_POST['Keywords']) AND isset($_POST['StockCode'])) {
 		echo '<div class="page_help_text">' . _('Stock description keywords have been used in preference to the Stock code extract entered') . '.</div>';
 	}
+	if (isset($_POST['StockCat']) AND $_POST['StockCat'] == 'All'){
+		$WhereStockCat = ' ';
+	} else {
+		$WhereStockCat = " AND stockmaster.categoryid='" . $_POST['StockCat'] . "'";
+	}
 	if ($_POST['Keywords']) {
 		//insert wildcard characters in spaces
 		$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
@@ -81,7 +86,7 @@ if (isset($_POST['SearchParts'])) {
 					INNER JOIN locationusers ON locationusers.loccode=purchorders.intostocklocation AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 				WHERE purchorderdetails.completed=0
 				AND stockmaster.description " . LIKE . " '" . $SearchString . "'
-				AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+				" . $WhereStockCat . "
 				GROUP BY stockmaster.stockid,
 					stockmaster.description,
 					stockmaster.units
@@ -103,7 +108,7 @@ if (isset($_POST['SearchParts'])) {
 				INNER JOIN locationusers ON locationusers.loccode=purchorders.intostocklocation AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 				WHERE purchorderdetails.completed=0
 				AND stockmaster.stockid " . LIKE . " '%" . $_POST['StockCode'] . "%'
-				AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+				" . $WhereStockCat . "
 				GROUP BY stockmaster.stockid,
 					stockmaster.description,
 					stockmaster.units
@@ -122,7 +127,7 @@ if (isset($_POST['SearchParts'])) {
 				INNER JOIN purchorders on purchorders.orderno=purchorderdetails.orderno
 				INNER JOIN locationusers ON locationusers.loccode=purchorders.intostocklocation AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 				WHERE purchorderdetails.completed=0
-				AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+				" . $WhereStockCat . "
 				GROUP BY stockmaster.stockid,
 					stockmaster.description,
 					stockmaster.units
@@ -164,21 +169,59 @@ if (!isset($OrderNumber) or $OrderNumber == '') {
 		$DateTo = FormatDateForSQL($_POST['DateTo']);
 	}
 
-	$sql = "SELECT locations.loccode, locationname FROM locations
+	$sql = "SELECT locations.loccode, locationname,(SELECT count(*) FROM locations) AS total FROM locations
 				INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
-	$resultStkLocs = DB_query($sql);
+	$ErrMsg = _('Failed to retrieve location data');
+	$resultStkLocs = DB_query($sql,$ErrMsg);
+	$UserLocations = DB_num_rows($resultStkLocs);
+	$AllListed = false;
 	while ($myrow = DB_fetch_array($resultStkLocs)) {
-		if (isset($_POST['StockLocation'])) {
-			if ($myrow['loccode'] == $_POST['StockLocation']) {
-				echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
-			} else {
-				echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
-			}
-		} elseif ($myrow['loccode'] == $_SESSION['UserStockLocation']) {
-			echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
-		} else {
-			echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+		if(!isset($LocQty)){
+			$LocQty = $myrow['total'];
 		}
+		if (isset($_POST['StockLocation'])) {//The user has selected location
+			if ($_POST['StockLocation'] == 'ALLLOC'){//user have selected all locations
+				if($AllListed === false) {//it's the first loop
+					echo '<option selected="selected" value="ALLLOC">' . _('All') . '</option>';
+					echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+					$AllListed = true;
+				} else { //it's not the first loop
+					echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+				}
+			
+			} else {//user have not selected all locations; There are two possibilities that users have right, but not choose all; or vice visa
+				if ($myrow['total'] == $UserLocations) { //user have allloc right
+					if($AllListed === false){//first loop
+						echo '<option value="ALLLOC">' . _('All') . '</option>';
+						$AllListed = true;
+					}
+				}
+				if ($myrow['loccode'] == $_POST['StockLocation']){
+					echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+				} else {
+					echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+				}
+			}
+		} else {//users have not selected locations
+			if($myrow['total'] == $UserLocations){//users have right to submit All locations
+				if($AllListed === false){//first loop
+					echo '<option selected="selected" value="ALLLOC">' . _('All') . '</option>';//default value is all 
+					echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+					$AllListed = true;
+				} else {//not first loop
+					echo '<option value="' . $myrow['loccode'] . '" >' . $myrow['locationname'] . '</option>';
+				}
+			} else {//no right to submit all locations
+				if ($myrow['loccode'] == $_SESSION['UserStockLocation']) {
+					echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+				} else {
+					echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+				}
+			
+			}
+
+		}
+	
 	}
 	echo '</select> ' . _('Order Status:') . ' <select name="Status">';
 	if (!isset($_POST['Status']) OR $_POST['Status'] == 'Pending_Authorised') {
@@ -229,7 +272,9 @@ echo '<br />
 
 echo '<td>' . _('Select a stock category') . ':
 		<select name="StockCat">';
-
+if (DB_num_rows($result1)>0){
+	echo '<option value="All">' . _('All') . '</option>';
+}
 while ($myrow1 = DB_fetch_array($result1)) {
 	if (isset($_POST['StockCat']) and $myrow1['categoryid'] == $_POST['StockCat']) {
 		echo '<option selected="selected" value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
@@ -322,6 +367,9 @@ else {
 						SUM(purchorderdetails.unitprice*purchorderdetails.quantityord) AS ordervalue
 				FROM purchorders INNER JOIN purchorderdetails
 				ON purchorders.orderno=purchorderdetails.orderno
+				INNER JOIN locationusers 
+				ON purchorders.intostocklocation=locationusers.loccode
+				AND userid='" . $_SESSION['UserID'] . "' AND canview = 1
 				INNER JOIN suppliers
 				ON purchorders.supplierno = suppliers.supplierid
 				INNER JOIN currencies
@@ -340,7 +388,18 @@ else {
 		//$OrderNumber is not set
 		if (isset($SelectedSupplier)) {
 			if (!isset($_POST['StockLocation'])) {
-				$_POST['StockLocation'] = $_SESSION['UserStockLocation'];
+				if (isset($UserLocations) AND isset($LocQty) AND $UserLocations == $LocQty) {
+					$WhereStockLocation = " AND purchorders.intostocklocation ='" . $_POST['StockLocation'] . "' ";
+				} else {
+					$_POST['StockLocation'] = $_SESSION['UserStockLocation'];
+					$WhereStockLocation = " AND purchorders.intostocklocation ='" . $_POST['StockLocation'] . "' ";
+				}
+			} else {
+				if ($_POST['StockLocation'] == 'ALLLOC'){
+					$WhereStockLocation = ' ';
+				} else {
+					$WhereStockLocation = " AND purchorders.intostocklocation = '" . $_POST['StockLocation'] . "' ";
+				}
 			}
 
 			if (isset($SelectedStockItem)) {
@@ -368,8 +427,8 @@ else {
 						AND orddate<='" . $DateTo . "'
 						AND purchorderdetails.itemcode='" . $SelectedStockItem . "'
 						AND purchorders.supplierno='" . $SelectedSupplier . "'
-						AND purchorders.intostocklocation = '" . $_POST['StockLocation'] . "'
-						" . $StatusCriteria . "
+						" . $WhereStockLocation 
+						 . $StatusCriteria . "
 						GROUP BY purchorders.orderno ASC,
 							purchorders.realorderno,
 							suppliers.suppname,
@@ -404,8 +463,8 @@ else {
 						AND orddate>='" . $DateFrom . "'
 						AND orddate<='" . $DateTo . "'
 						AND purchorders.supplierno='" . $SelectedSupplier . "'
-						AND purchorders.intostocklocation = '" . $_POST['StockLocation'] . "'
-						" . $StatusCriteria . "
+						" . $WhereStockLocation  
+						 . $StatusCriteria . "
 						GROUP BY purchorders.orderno ASC,
 							purchorders.realorderno,
 							suppliers.suppname,
@@ -420,7 +479,19 @@ else {
 		} //isset($SelectedSupplier)
 		else { //no supplier selected
 			if (!isset($_POST['StockLocation'])) {
-				$_POST['StockLocation'] = $_SESSION['UserStockLocation'];
+				if (isset($UserLocations) AND isset($LocQty) AND $UserLocations == $LocQty) {
+					$WhereStockLocation = " ";
+					$_POST['StockLocation'] = 'ALLLOC';
+				} else {
+					$_POST['StockLocation'] = $_SESSION['UserStockLocation'];
+					$WhereStockLocation = " AND purchorders.intostocklocation ='" . $_POST['StockLocation'] . "' ";
+				}
+			} else {
+				if ($_POST['StockLocation'] == 'ALLLOC'){
+					$WhereStockLocation = ' ';
+				} else {
+					$WhereStockLocation = " AND purchorders.intostocklocation = '" . $_POST['StockLocation'] . "'";
+				}
 			}
 			if (isset($SelectedStockItem) AND isset($_POST['StockLocation'])) {
 				$SQL = "SELECT purchorders.realorderno,
@@ -446,8 +517,8 @@ else {
 						AND orddate>='" . $DateFrom . "'
 						AND orddate<='" . $DateTo . "'
 						AND purchorderdetails.itemcode='" . $SelectedStockItem . "'
-						AND purchorders.intostocklocation = '" . $_POST['StockLocation'] . "'
-						" . $StatusCriteria . "
+						" . $WhereStockLocation . 
+						 $StatusCriteria . "
 						GROUP BY purchorders.orderno ASC,
 							purchorders.realorderno,
 							suppliers.suppname,
@@ -481,8 +552,8 @@ else {
 						WHERE purchorderdetails.completed=0
 						AND orddate>='" . $DateFrom . "'
 						AND orddate<='" . $DateTo . "'
-						AND purchorders.intostocklocation = '" . $_POST['StockLocation'] . "'
-						" . $StatusCriteria . "
+						" . $WhereStockLocation .  
+						  $StatusCriteria . "
 						GROUP BY purchorders.orderno ASC,
 							purchorders.realorderno,
 							suppliers.suppname,

@@ -1,5 +1,5 @@
 <?php
-/* $Id: Currencies.php 7143 2015-02-09 00:07:40Z rchacon $*/
+/* $Id: Currencies.php 7317 2015-06-05 03:28:26Z turbopt $*/
 /* This script defines the currencies available. Each customer and supplier must be defined as transacting in one of the currencies defined here. */
 
 include('includes/session.inc');
@@ -264,10 +264,19 @@ if (isset($_POST['submit'])) {
 			} elseif ($FunctionalCurrency==$SelectedCurrency){
 				prnMsg(_('Cannot delete this currency because it is the functional currency of the company'),'warn');
 			} else {
-				//only delete if used in neither customer or supplier, comp prefs, bank trans accounts
-				$sql="DELETE FROM currencies WHERE currabrev='" . $SelectedCurrency . "'";
+				$sql= "SELECT COUNT(*) FROM bankaccounts
+					WHERE currcode = '" . $SelectedCurrency . "'";
 				$result = DB_query($sql);
-				prnMsg(_('The currency definition record has been deleted'),'success');
+				$myrow = DB_fetch_row($result);
+				if ($myrow[0] > 0){
+					prnMsg(_('Cannot delete this currency because there are bank accounts that use this currency') .
+					'<br />' . ' ' . _('There are') . ' ' . $myrow[0] . ' ' . _('bank accounts that refer to this currency'),'warn');
+				} else {
+					//only delete if used in neither customer or supplier, comp prefs, bank trans accounts
+					$sql="DELETE FROM currencies WHERE currabrev='" . $SelectedCurrency . "'";
+					$result = DB_query($sql);
+					prnMsg(_('The currency definition record has been deleted'),'success');
+				}
 			}
 		}
 	}
@@ -518,7 +527,10 @@ if (!isset($_GET['delete'])) {
 		echo '<option value="0">' . _('No') . '</option>';
 	}
 
-	echo '</table>';
+	echo '</select>
+			</td>
+		</tr>
+		</table>';
 
 	echo '<br />
 		<div class="centre">

@@ -1,5 +1,5 @@
 <?php
-/* $Id: DefineStockTransfers.php 5766 2012-12-19 06:45:03Z daintree $*/
+/* $Id: DefineStockTransfers.php 7296 2015-05-10 04:54:12Z rchacon $*/
 
 /*Class to hold stock transfer records */
 
@@ -8,23 +8,29 @@ class StockTransfer {
 	Var $TrfID;
 	Var $StockLocationFrom;
 	Var $StockLocationFromName;
+	Var $StockLocationFromAccount;
 	Var $StockLocationTo;
 	Var $StockLocationToName;
+	Var $StockLocationToAccount;
 	Var $TranDate;
 	Var $TransferItem; /*Array of LineItems */
 
 	function StockTransfer($TrfID,
 				$StockLocationFrom,
 				$StockLocationFromName,
+				$StockLocationFromAccount,
 				$StockLocationTo,
 				$StockLocationToName,
+				$StockLocationToAccount,
 				$TranDate )	{
 
 		$this->TrfID = $TrfID;
 		$this->StockLocationFrom = $StockLocationFrom;
 		$this->StockLocationFromName = $StockLocationFromName;
+		$this->StockLocationFromAccount = $StockLocationFromAccount;
 		$this->StockLocationTo =$StockLocationTo;
 		$this->StockLocationToName =$StockLocationToName;
+		$this->StockLocationToAccount =$StockLocationToAccount;
 		$this->TranDate = $TranDate;
 		$this->TransferItem=array(); /*Array of LineItem s */
 	}

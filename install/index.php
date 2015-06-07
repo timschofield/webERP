@@ -1,5 +1,5 @@
 <?php
-/* $Id: index.php 7056 2015-01-02 00:53:14Z rchacon $*/
+/* $Id: index.php 7314 2015-05-27 05:19:30Z exsonqu $*/
 	ini_set('max_execution_time', "600");
 	session_name('weberp_installation');
 	session_start();
@@ -386,7 +386,7 @@ if(!extension_loaded('mbstring')){
 			$msg .= "if (\$RootPath == '/' OR \$RootPath == '\\\') {\n";
 			$msg .= "	\$RootPath = '';\n";
 			$msg .= "}\n";
-			$msg .= "error_reporting(E_ALL && ~E_NOTICE && ~E_WARNING);\n";
+			$msg .= "error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);\n";
 			$msg .=  "//Installed companies \n";
 			foreach ($CompanyList as $k=>$compinfo)
 			{

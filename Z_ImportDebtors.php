@@ -18,7 +18,7 @@ if(isset($_POST['FormID'])){
 		if(!isset($_POST['UpdateIfExists'])){
 			$_POST['UpdateIfExists']=0;
 		}else{
-			$_POST['UpdateIfExists']=1;	
+			$_POST['UpdateIfExists']=1;
 		}
 	}
 }else{
@@ -174,14 +174,14 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		$_POST['TaxRef']=$filerow[28];
 		$_POST['CustomerPOLine']=$filerow[29];
 		$_POST['typeid']=$filerow[30];
-		
+
 		if ($_POST['AutoDebtorNo']== 1) {
 			$_POST['DebtorNo'] = GetNextTransNo(500, $db);
 		}else{
 			$_POST['DebtorNo'] = mb_strtoupper($_POST['DebtorNo']);
 		}
 
-		//$_POST['DebtorNo']=$_POST['DebtorNo']; 
+		//$_POST['DebtorNo']=$_POST['DebtorNo'];
 		$_POST['BranchCode']=$_POST['DebtorNo'];
 		$_POST['BrName']=$_POST['CustName'];
 		$_POST['BrAddress1']=$_POST['Address1'];
@@ -212,7 +212,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		$_POST['BrPostAddr5']=$filerow[50];
 		$_POST['CustBranchCode']=$filerow[51];
 		$_POST['SpecialInstructions']=$filerow[52];
-		
+
 		$i=0;
 		if ($_POST['AutoDebtorNo']==0 AND mb_strlen($_POST['DebtorNo']) ==0) {
 			$InputError = 1;
@@ -318,7 +318,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 			if ($DebtorExists AND $_POST['UpdateIfExists']!=1) {
 				$UpdatedNum++;
 			}else{
-			
+
 				$SQL_ClientSince = FormatDateForSQL($_POST['ClientSince']);
 
 				if ($DebtorExists) {//update
@@ -327,7 +327,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 							  FROM debtortrans
 							where debtorno = '" . $_POST['DebtorNo'] . "' LIMIT 1";
 					$result = DB_query($sql);
-					
+
 					$curr=false;
 					if (DB_num_rows($result) == 0) {
 						$curr=true;
@@ -427,13 +427,13 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 			}
 
 		}else{
-			
+
 			break;
 		}
-		
+
 		$i=0;
 
-		if (ContainsIllegalCharacters($_POST['BranchCode']) OR mb_strstr($_POST['BranchCode'],' ') OR mb_strstr($_POST['BranchCode'],'-')) {
+		if (ContainsIllegalCharacters($_POST['BranchCode']) OR mb_strstr($_POST['BranchCode'],' ')) {
 			$InputError = 1;
 			prnMsg(_('The Branch code cannot contain any of the following characters')." -  &amp; \' &lt; &gt;",'error');
 			$Errors[$i] = 'BranchCode';
@@ -471,7 +471,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		}
 
 		if ($InputError !=1){
-			if (DB_error_no() ==0) { 
+			if (DB_error_no() ==0) {
 
 				$sql = "SELECT 1
 				     FROM custbranch
@@ -482,7 +482,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 				if ($BranchExists AND $_POST['UpdateIfExists']!=1) {
 					//do nothing
 				}else{
-				
+
 					if (!isset($_POST['EstDeliveryDays'])) {
 						$_POST['EstDeliveryDays']=1;
 					}
@@ -587,7 +587,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 									'" . $_POST['CustBranchCode'] ."',
 									'" . $_POST['DeliverBlind'] . "')";
 					}
-					
+
 					//run the SQL from either of the above possibilites
 
 					$ErrMsg = _('The branch record could not be inserted or updated because');
@@ -635,7 +635,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 	echo '<br /><br /><br />"'. implode('","',$FieldHeadings). '"<br /><br /><br />';
 
 } else { //show file upload form
-	
+
 	prnMsg(_('Please ensure that your csv file is encoded in UTF-8, otherwise the input data will not store correctly in database'),'warn');
 
 	echo '
@@ -651,7 +651,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 			_('Upload file') . ': <input name="userfile" type="file" />
 			<input type="submit" value="' . _('Send File') . '" />';
 	echo '<br/>',_('Create Debtor Codes Automatically'),':<input type="checkbox" name="AutoDebtorNo" ';
-	if($_POST['AutoDebtorNo']==1)echo 'checked="checked"';	
+	if($_POST['AutoDebtorNo']==1)echo 'checked="checked"';
 	echo '>';
 	echo '<br/>',_('Update if DebtorNo exists'),':<input type="checkbox" name="UpdateIfExists">';
 	echo'</div>
