@@ -55,6 +55,14 @@ function submit(&$db, $Period) {
 
 		// Rename worksheet
 		$objPHPExcel->getActiveSheet()->setTitle('By Category');
+
+		// Add cell formats
+		$objPHPExcel->getActiveSheet()->getStyle('B:L')->getNumberFormat()->setFormatCode('#,###');
+		$objPHPExcel->getActiveSheet()->getStyle('D')->getNumberFormat()->setFormatCode('0.0%');
+		$objPHPExcel->getActiveSheet()->getStyle('G:H')->getNumberFormat()->setFormatCode('0.0%');
+		$objPHPExcel->getActiveSheet()->getStyle('J:K')->getNumberFormat()->setFormatCode('0.0%');
+		$objPHPExcel->getActiveSheet()->getStyle('M:O')->getNumberFormat()->setFormatCode('0.0%');
+
 		
 		// Titles
 		TitleCells($objPHPExcel, 'CATEGORY', 'A3', 'A6');
@@ -80,26 +88,129 @@ function submit(&$db, $Period) {
 		TitleCells($objPHPExcel, 'Cont', 'N6', 'N6');
 		TitleCells($objPHPExcel, 'Var %', 'O6', 'O6');
 		
-		$objPHPExcel->getActiveSheet()->setCellValue('A7', "SILVER");
+		// Get data for current Month
 		list ($SalesMonth, $PcsMonth, $CostMonth) = SalesForPeriod($CurrentMonth, LIST_STOCK_CATEGORIES_SILVER);						 
+		$objPHPExcel->getActiveSheet()->setCellValue('A7', "SILVER");
 		$objPHPExcel->getActiveSheet()->setCellValue('B7', $SalesMonth);
 		$objPHPExcel->getActiveSheet()->setCellValue('C7', $PcsMonth);
 		$objPHPExcel->getActiveSheet()->setCellValue('I7', $SalesMonth-$CostMonth);
 									 
-		$objPHPExcel->getActiveSheet()->setCellValue('A8', "FASHION JEWELLERY");
 		list ($SalesMonth, $PcsMonth, $CostMonth) = SalesForPeriod($CurrentMonth, LIST_STOCK_CATEGORIES_FASHION_JEWELLERY);						 
+		$objPHPExcel->getActiveSheet()->setCellValue('A8', "FASHION JEWELLERY");
 		$objPHPExcel->getActiveSheet()->setCellValue('B8', $SalesMonth);
 		$objPHPExcel->getActiveSheet()->setCellValue('C8', $PcsMonth);
 		$objPHPExcel->getActiveSheet()->setCellValue('I8', $SalesMonth-$CostMonth);
 		
-		$objPHPExcel->getActiveSheet()->setCellValue('A9', "STAINLESS STEEL");
 		list ($SalesMonth, $PcsMonth, $CostMonth) = SalesForPeriod($CurrentMonth, LIST_STOCK_CATEGORIES_STAINLESS);						 
+		$objPHPExcel->getActiveSheet()->setCellValue('A9', "STAINLESS STEEL");
 		$objPHPExcel->getActiveSheet()->setCellValue('B9', $SalesMonth);
 		$objPHPExcel->getActiveSheet()->setCellValue('C9', $PcsMonth);
 		$objPHPExcel->getActiveSheet()->setCellValue('I9', $SalesMonth-$CostMonth);
 		
+		list ($SalesMonth, $PcsMonth, $CostMonth) = SalesForPeriod($CurrentMonth, LIST_STOCK_CATEGORIES_ACCESSORIES);						 
+		$objPHPExcel->getActiveSheet()->setCellValue('A10', "ACCESSORIES");
+		$objPHPExcel->getActiveSheet()->setCellValue('B10', $SalesMonth);
+		$objPHPExcel->getActiveSheet()->setCellValue('C10', $PcsMonth);
+		$objPHPExcel->getActiveSheet()->setCellValue('I10', $SalesMonth-$CostMonth);
 									 
-/*		$objPHPExcel->getActiveSheet()->getStyle('A:AZ')->getNumberFormat()->setFormatCode('#,###');
+		list ($SalesMonth, $PcsMonth, $CostMonth) = SalesForPeriod($CurrentMonth, LIST_STOCK_CATEGORIES_CONSIGNMENT);						 
+		$objPHPExcel->getActiveSheet()->setCellValue('A11', "CONSIGNMENT");
+		$objPHPExcel->getActiveSheet()->setCellValue('B11', $SalesMonth);
+		$objPHPExcel->getActiveSheet()->setCellValue('C11', $PcsMonth);
+		$objPHPExcel->getActiveSheet()->setCellValue('I11', $SalesMonth-$CostMonth);
+
+		list ($SalesMonth, $PcsMonth, $CostMonth) = SalesForPeriod($CurrentMonth, LIST_STOCK_CATEGORIES_DISCOUNT);						 
+		$objPHPExcel->getActiveSheet()->setCellValue('A12', "DISCOUNT/OUTLET");
+		$objPHPExcel->getActiveSheet()->setCellValue('B12', $SalesMonth);
+		$objPHPExcel->getActiveSheet()->setCellValue('C12', $PcsMonth);
+		$objPHPExcel->getActiveSheet()->setCellValue('I12', $SalesMonth-$CostMonth);
+
+		
+		// Get data for current month last year
+		list ($SalesMonth, $PcsMonth, $CostMonth) = SalesForPeriod($CurrentMonthLastYear, LIST_STOCK_CATEGORIES_SILVER);						 
+		$objPHPExcel->getActiveSheet()->setCellValue('E7', $SalesMonth);
+		$objPHPExcel->getActiveSheet()->setCellValue('F7', $PcsMonth);
+		$objPHPExcel->getActiveSheet()->setCellValue('L7', $SalesMonth-$CostMonth);
+									 
+		list ($SalesMonth, $PcsMonth, $CostMonth) = SalesForPeriod($CurrentMonthLastYear, LIST_STOCK_CATEGORIES_FASHION_JEWELLERY);						 
+		$objPHPExcel->getActiveSheet()->setCellValue('E8', $SalesMonth);
+		$objPHPExcel->getActiveSheet()->setCellValue('F8', $PcsMonth);
+		$objPHPExcel->getActiveSheet()->setCellValue('L8', $SalesMonth-$CostMonth);
+		
+		list ($SalesMonth, $PcsMonth, $CostMonth) = SalesForPeriod($CurrentMonthLastYear, LIST_STOCK_CATEGORIES_STAINLESS);						 
+		$objPHPExcel->getActiveSheet()->setCellValue('E9', $SalesMonth);
+		$objPHPExcel->getActiveSheet()->setCellValue('F9', $PcsMonth);
+		$objPHPExcel->getActiveSheet()->setCellValue('L9', $SalesMonth-$CostMonth);
+		
+		list ($SalesMonth, $PcsMonth, $CostMonth) = SalesForPeriod($CurrentMonthLastYear, LIST_STOCK_CATEGORIES_ACCESSORIES);						 
+		$objPHPExcel->getActiveSheet()->setCellValue('E10', $SalesMonth);
+		$objPHPExcel->getActiveSheet()->setCellValue('F10', $PcsMonth);
+		$objPHPExcel->getActiveSheet()->setCellValue('L10', $SalesMonth-$CostMonth);
+									 
+		list ($SalesMonth, $PcsMonth, $CostMonth) = SalesForPeriod($CurrentMonthLastYear, LIST_STOCK_CATEGORIES_CONSIGNMENT);						 
+		$objPHPExcel->getActiveSheet()->setCellValue('E11', $SalesMonth);
+		$objPHPExcel->getActiveSheet()->setCellValue('F11', $PcsMonth);
+		$objPHPExcel->getActiveSheet()->setCellValue('L11', $SalesMonth-$CostMonth);
+
+		list ($SalesMonth, $PcsMonth, $CostMonth) = SalesForPeriod($CurrentMonthLastYear, LIST_STOCK_CATEGORIES_DISCOUNT);						 
+		$objPHPExcel->getActiveSheet()->setCellValue('E12', $SalesMonth);
+		$objPHPExcel->getActiveSheet()->setCellValue('F12', $PcsMonth);
+		$objPHPExcel->getActiveSheet()->setCellValue('L12', $SalesMonth-$CostMonth);
+	
+		// Get the calculations done
+		
+		// Totals
+		$objPHPExcel->getActiveSheet()->setCellValue('A13', "TOTAL");
+		$objPHPExcel->getActiveSheet()->setCellValue('B13', '=SUM(B7:B12)');
+		$objPHPExcel->getActiveSheet()->setCellValue('C13', '=SUM(C7:C12)');
+		$objPHPExcel->getActiveSheet()->setCellValue('D13', '=SUM(D7:D12)');
+		$objPHPExcel->getActiveSheet()->setCellValue('E13', '=SUM(E7:E12)');
+		$objPHPExcel->getActiveSheet()->setCellValue('F13', '=SUM(F7:F12)');
+		$objPHPExcel->getActiveSheet()->setCellValue('G13', '=SUM(G7:G12)');
+		$objPHPExcel->getActiveSheet()->setCellValue('I13', '=SUM(I7:I12)');
+		$objPHPExcel->getActiveSheet()->setCellValue('K13', '=SUM(K7:K12)');
+		$objPHPExcel->getActiveSheet()->setCellValue('L13', '=SUM(L7:L12)');
+		$objPHPExcel->getActiveSheet()->setCellValue('M13', '=SUM(M7:M12)');
+		$objPHPExcel->getActiveSheet()->setCellValue('N13', '=SUM(N7:N12)');
+		$objPHPExcel->getActiveSheet()->setCellValue('O13', '=SUM(O7:O12)');
+		
+		// Current Month Sales Contribution
+		$objPHPExcel->getActiveSheet()->setCellValue('D7', '=B7/B13');
+		$objPHPExcel->getActiveSheet()->setCellValue('D8', '=B8/B13');
+		$objPHPExcel->getActiveSheet()->setCellValue('D9', '=B9/B13');
+		$objPHPExcel->getActiveSheet()->setCellValue('D10', '=B10/B13');
+		$objPHPExcel->getActiveSheet()->setCellValue('D11', '=B11/B13');
+		$objPHPExcel->getActiveSheet()->setCellValue('D12', '=B12/B13');
+
+		// Current Month Last Year Sales Contribution
+		$objPHPExcel->getActiveSheet()->setCellValue('G7', '=E7/E13');
+		$objPHPExcel->getActiveSheet()->setCellValue('G8', '=E8/E13');
+		$objPHPExcel->getActiveSheet()->setCellValue('G9', '=E9/E13');
+		$objPHPExcel->getActiveSheet()->setCellValue('G10', '=E10/E13');
+		$objPHPExcel->getActiveSheet()->setCellValue('G11', '=E11/E13');
+		$objPHPExcel->getActiveSheet()->setCellValue('G12', '=E12/E13');
+
+		// Variation Current Month vs Current Month Last Year
+		$objPHPExcel->getActiveSheet()->setCellValue('H7', '=(B7-E7)/E7');
+		$objPHPExcel->getActiveSheet()->setCellValue('H8', '=(B8-E8)/E8');
+		$objPHPExcel->getActiveSheet()->setCellValue('H9', '=(B9-E9)/E9');
+		$objPHPExcel->getActiveSheet()->setCellValue('H10', '=(B10-E10)/E10');
+		$objPHPExcel->getActiveSheet()->setCellValue('H11', '=(B11-E11)/E11');
+		$objPHPExcel->getActiveSheet()->setCellValue('H12', '=(B12-E12)/E12');
+		$objPHPExcel->getActiveSheet()->setCellValue('H13', '=(B13-E13)/E13');
+
+		// Variation Current Month vs Current Month Last Year
+		$objPHPExcel->getActiveSheet()->setCellValue('J7', '=I7/B7');
+		$objPHPExcel->getActiveSheet()->setCellValue('J8', '=I8/B8');
+		$objPHPExcel->getActiveSheet()->setCellValue('J9', '=I9/B9');
+		$objPHPExcel->getActiveSheet()->setCellValue('J10', '=I10/B10');
+		$objPHPExcel->getActiveSheet()->setCellValue('J11', '=I11/B11');
+		$objPHPExcel->getActiveSheet()->setCellValue('J12', '=I12/B12');
+		$objPHPExcel->getActiveSheet()->setCellValue('J13', '=I13/B13');
+
+
+		
+ /*		$objPHPExcel->getActiveSheet()->getStyle('A:AZ')->getNumberFormat()->setFormatCode('#,###');
 		$objPHPExcel->getActiveSheet()->getStyle('R')->getNumberFormat()->setFormatCode('#,##0.0');
 		$objPHPExcel->getActiveSheet()->getStyle('3')->getNumberFormat()->setFormatCode('0.0%');
 		$objPHPExcel->getActiveSheet()->getStyle('B3:C3')->getNumberFormat()->setFormatCode('#,##0');
@@ -251,13 +362,13 @@ function submit(&$db, $Period) {
 
 		// Set auto filter
 		$objPHPExcel->getActiveSheet()->setAutoFilter('A5:AL' . $i);
-		
+*/		
 		// Auto Size columns
-		foreach(range('A','AL') as $columnID) {
+		foreach(range('A','O') as $columnID) {
 			$objPHPExcel->getActiveSheet()->getColumnDimension($columnID)
 				->setAutoSize(true);
 		}
-*/		
+		
 
 		// Set active sheet index to the first sheet, so Excel opens this as the first sheet
 		$objPHPExcel->setActiveSheetIndex(0);
