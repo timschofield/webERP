@@ -424,8 +424,9 @@ if(isset($_POST['ProcessTransfer'])) {
 				$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('Unable to set the quantity received to the quantity shipped to cancel the balance on this transfer line');
 				$Result = DB_query($sql, $ErrMsg, $DbgMsg, true);
 				// send an email to the inventory manager about this cancellation (as can lead to employee fraud)
-				// KL RICARD NEVER SEND THIS EMAIL
-/*				if ($_SESSION['InventoryManagerEmail']!=''){
+// KL RICARD NEVER SEND THIS EMAIL
+//				if ($_SESSION['InventoryManagerEmail']!=''){
+				if (FALSE){
 					$ConfirmationText = _('Cancelled balance of transfer'). ': ' . $_SESSION['Transfer']->TrfID .
 										"\r\n" . _('From Location') . ': ' . $_SESSION['Transfer']->StockLocationFrom .
 										"\r\n" . _('To Location') . ': ' . $_SESSION['Transfer']->StockLocationTo .
@@ -444,7 +445,6 @@ if(isset($_POST['ProcessTransfer'])) {
 						$result = SendmailBySmtp($mail,array($_SESSION['InventoryManagerEmail']));
 					}
 				}
-*/
 			}
 			$i++;
 		} /*end of foreach TransferItem */
