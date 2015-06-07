@@ -176,19 +176,19 @@ if ($KL_SystemAdmin
 	OR $KL_KantorManager
 	OR $KL_KantorAdministration){
 	
-	BalanceAccountControl("111111101",         0,   10000000, $periodnow, $db);
-	BalanceAccountControl("111111102",         0,   10000000, $periodnow, $db);
-	BalanceAccountControl("111111103",         0,   10000000, $periodnow, $db);
-	BalanceAccountControl("111111105",         0,   10000000, $periodnow, $db);
-	BalanceAccountControl("111111106",         0,   10000000, $periodnow, $db);
-	BalanceAccountControl("111111107",         0,   10000000, $periodnow, $db);
-	BalanceAccountControl("111111108",         0,   10000000, $periodnow, $db);
-	BalanceAccountControl("111111109",         0,   10000000, $periodnow, $db);
-	BalanceAccountControl("111111110",         0,   10000000, $periodnow, $db);
-	BalanceAccountControl("111111111",         0,   10000000, $periodnow, $db);
-	BalanceAccountControl("111111112",         0,   10000000, $periodnow, $db);
-	BalanceAccountControl("111111113",         0,   10000000, $periodnow, $db);
-	BalanceAccountControl("111111114",         0,   10000000, $periodnow, $db);
+	BalanceAccountControl("111111101",         0,   15000000, $periodnow, $db);
+	BalanceAccountControl("111111102",         0,   15000000, $periodnow, $db);
+	BalanceAccountControl("111111103",         0,   15000000, $periodnow, $db);
+	BalanceAccountControl("111111105",         0,   15000000, $periodnow, $db);
+	BalanceAccountControl("111111106",         0,   15000000, $periodnow, $db);
+	BalanceAccountControl("111111107",         0,   15000000, $periodnow, $db);
+	BalanceAccountControl("111111108",         0,   15000000, $periodnow, $db);
+	BalanceAccountControl("111111109",         0,   15000000, $periodnow, $db);
+	BalanceAccountControl("111111110",         0,   15000000, $periodnow, $db);
+	BalanceAccountControl("111111111",         0,   15000000, $periodnow, $db);
+	BalanceAccountControl("111111112",         0,   15000000, $periodnow, $db);
+	BalanceAccountControl("111111113",         0,   15000000, $periodnow, $db);
+	BalanceAccountControl("111111114",         0,   15000000, $periodnow, $db);
 }
 
 if ($KL_SystemAdmin 
