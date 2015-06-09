@@ -4,6 +4,7 @@
 /**************************************************************************************
 KL RICARD MODIFICATIONS:
 - do not send email to inventory manager.
+- block "To" options for SPG
 ***************************************************************************************/
 
 /* $Id: StockLocTransferReceive.php 6808 2014-08-11 21:27:11Z agaluski $*/
@@ -20,13 +21,15 @@ include('includes/header.inc');
 
 include('includes/SQL_CommonFunctions.inc');
 
+// RICARD: later on we find who is using this script to block "To" locations if it's SPG or SPG Support
+include('includes/KLRoles.inc');
+
 if(isset($_GET['NewTransfer'])) {
 	unset($_SESSION['Transfer']);
 }
 if(isset($_SESSION['Transfer']) and $_SESSION['Transfer']->TrfID == '') {
 	unset($_SESSION['Transfer']);
 }
-
 
 if(isset($_POST['ProcessTransfer'])) {
 /*Ok Time To Post transactions to Inventory Transfers, and Update Posted variable & received Qty's  to LocTransfers */
@@ -89,7 +92,7 @@ if(isset($_POST['ProcessTransfer'])) {
 					/* There must actually be some error this should never happen */
 					$QtyOnHandPrior = 0;
 				}
-
+				
 				/* Insert the stock movement for the stock going out of the from location */
 				$SQL = "INSERT INTO stockmoves (stockid,
 												type,
@@ -481,7 +484,6 @@ if(isset($_GET['Trf_ID'])) {
 			ON loctransfers.shiploc=locations.loccode
 			INNER JOIN locations as reclocations
 			ON loctransfers.recloc = reclocations.loccode
-			INNER JOIN locationusers ON locationusers.loccode=reclocations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
 			INNER JOIN stockmaster
 			ON loctransfers.stockid=stockmaster.stockid
 			WHERE reference ='" . $_GET['Trf_ID'] . "' ORDER BY loctransfers.stockid";
@@ -630,7 +632,9 @@ if(isset($_SESSION['Transfer'])) {
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	$LocResult = DB_query("SELECT locationname, locations.loccode FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1 ORDER BY locationname");
+// RICARD: TEMPORARY FIX UNTIL SPG GET locationusers
+//	$LocResult = DB_query("SELECT locationname, locations.loccode FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1 ORDER BY locationname");
+	$LocResult = DB_query("SELECT locationname, locations.loccode FROM locations");
 
 	echo '<table class="selection">';
 	echo '<tr>
@@ -644,7 +648,12 @@ if(isset($_SESSION['Transfer'])) {
 		if($myrow['loccode'] == $_POST['RecLocation']) {
 			echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		} else {
-			echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+			// RICARD let's find who is using this script to block "To" locations if it's SPG ot SPG Support
+			if ($KL_SPG OR $KL_SPGSupport){
+			}else{
+				// if user is not SPG or SPG Support, then show all options.
+				echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+			}
 		}
 	}
 	echo '</select>

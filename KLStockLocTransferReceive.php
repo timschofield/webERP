@@ -76,6 +76,11 @@ if(isset($_POST['ProcessTransfer'])){
 					/* There must actually be some error this should never happen */
 					$QtyOnHandPrior = 0;
 				}
+				
+prnMsg('$_SESSION[Transfer]->StockLocationFrom = '. $_SESSION['Transfer']->StockLocationFrom,'info');
+prnMsg('$TrfLine->StockID = '. $TrfLine->StockID,'info');
+prnMsg('$QtyOnHandPrior = '. $QtyOnHandPrior,'info');
+prnMsg('$_SESSION[Transfer]->StockLocationToName = '. $_SESSION['Transfer']->StockLocationToName,'info');
 
 				/* Insert the stock movement for the stock going out of the from location */
 				$SQL = "INSERT INTO stockmoves (stockid,
@@ -386,8 +391,10 @@ if(isset($_GET['Trf_ID'])){
 	$_SESSION['Transfer']= new StockTransfer($_GET['Trf_ID'],
 											$myrow['shiploc'],
 											$myrow['shiplocationname'],
+											'',
 											$myrow['recloc'],
 											$myrow['reclocationname'],
+											'',
 											Date($_SESSION['DefaultDateFormat']) );
 	/*Populate the StockTransfer TransferItem s array with the lines to be transferred */
 	$i = 0;

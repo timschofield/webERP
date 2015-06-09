@@ -6,6 +6,8 @@
 KL RICARD MODIFICATIONS:
 - Added entries for all KL scripts
 *****************************************************************************************/
+// RICARD: personalize menu entries by level
+include('includes/KLRoles.inc');
 
 /* webERP menus with Captions and URLs. */
 
@@ -241,11 +243,16 @@ $MenuItems['PO']['Maintenance']['Caption'] = array(_('Maintain Supplier Price Li
 
 $MenuItems['PO']['Maintenance']['URL'] = array('/SupplierPriceList.php');
 
+if ($KL_SPG OR $KL_SPGSupport){
+	$TextTransferReceive = _('KL Shop Inventory Transfer') . ' - ' . _('Receive from kantor');
+} else {
+	$TextTransferReceive = _('Bulk Inventory Transfer') . ' - ' . _('Receive');
+}
+
 $MenuItems['stock']['Transactions']['Caption'] = array(	_('Receive Purchase Orders'),
 														_('Inventory Location Transfers'),
 														_('Bulk Inventory Transfer') . ' - ' . _('Dispatch'),
-														_('Bulk Inventory Transfer') . ' - ' . _('Receive'),
-														_('KL Shop Inventory Transfer') . ' - ' . _('Receive from kantor'),
+														$TextTransferReceive,
 														_('KL Shop Inventory Transfer') . ' - ' . _('Send return to kantor'),
 														_('KL Shop Packaging Fill Up'),
 														_('KL Export Products for Zalora'),
@@ -261,7 +268,6 @@ $MenuItems['stock']['Transactions']['URL'] = array(	'/PO_SelectOSPurchOrder.php'
 													'/StockTransfers.php?New=Yes',
 													'/StockLocTransfer.php',
 													'/StockLocTransferReceive.php',
-													'/KLStockLocTransferReceive.php',
 													'/KLStockLocTransfer.php',
 													'/KLFillUpShopPackaging.php',
 													'/KLExcelZalora.php',
