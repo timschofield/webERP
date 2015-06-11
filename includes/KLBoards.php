@@ -195,8 +195,7 @@ function TransfersDelayed($maxdays, $RootPath, $db){
 					shipdate,
 					shiploc,
 					recloc
-			FROM loctransfers INNER JOIN locations
-				ON loctransfers.shiploc=locations.loccode
+			FROM loctransfers 
 			WHERE  recqty < shipqty
 				AND shipdate <= '". $StartDate ."'
 			ORDER BY reference";
@@ -229,6 +228,71 @@ function TransfersDelayed($maxdays, $RootPath, $db){
 					ConvertSQLDate($myrow['shipdate']), 
 					$myrow['shiploc'], 
 					$myrow['recloc'] 
+					);
+			$i++;
+		}
+		echo '</table>
+				</div>';
+	}
+}
+
+function ItemsCancelledInTransfers($maxdays, $RootPath, $db){
+	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
+	$SQL = "SELECT loctransfers.reference,
+					loctransfers.shipdate,
+					loctransfers.shiploc,
+					loctransfers.recloc,
+					loctransfers.stockid,
+					loctransfercancellations.cancelqty,
+					loctransfercancellations.canceldate,
+					loctransfercancellations.canceluserid
+			FROM loctransfers 
+			INNER JOIN loctransfercancellations
+				ON loctransfers.reference = loctransfercancellations.reference 
+					AND loctransfers.stockid = loctransfercancellations.stockid
+			WHERE loctransfercancellations.canceldate >= '". $StartDate ."'
+			ORDER BY loctransfers.stockid";
+			
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		echo '<p class="page_title_text" align="center"><strong>' . _('Items cancelled in Transfers during the last ') . $maxdays . _(' days ') . '</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Transfer') . '</th>
+							<th class="ascending">' . _('Date') . '</th>
+							<th class="ascending">' . _('From') . '</th>
+							<th class="ascending">' . _('To') . '</th>
+							<th class="ascending">' . _('Cancel Qty') . '</th>
+							<th class="ascending">' . _('Cancel Date') . '</th>
+							<th class="ascending">' . _('Cancelled By') . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		while ($myrow = DB_fetch_array($result)) {
+			$k = StartEvenOrOddRow($k);
+			printf('<td class="number">%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					</tr>', 
+					$i, 
+					$myrow['stockid'],
+					$myrow['reference'], 
+					ConvertSQLDate($myrow['shipdate']), 
+					$myrow['shiploc'], 
+					$myrow['recloc'],
+					locale_number_format($myrow['cancelqty'],0),
+					ConvertSQLDate($myrow['canceldate']), 
+					$myrow['canceluserid']
 					);
 			$i++;
 		}

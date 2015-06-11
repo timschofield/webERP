@@ -75,7 +75,7 @@ if(isset($_POST['ProcessTransfer'])) {
 	/*All inputs must be sensible so make the stock movement records and update the locations stocks */
 
 		foreach ($_SESSION['Transfer']->TransferItem AS $TrfLine) {
-			if($TrfLine->Quantity >=0) {
+			if($TrfLine->Quantity >= 0) {
 				$Result = DB_Txn_Begin();
 
 				/* Need to get the current location quantity will need it later for the stock movement */
@@ -404,6 +404,7 @@ if(isset($_POST['ProcessTransfer'])) {
 				prnMsg(_('A stock transfer for item code'). ' - '  . $TrfLine->StockID . ' ' . $TrfLine->ItemDescription . ' '. _('has been created from').' ' . $_SESSION['Transfer']->StockLocationFromName . ' '. _('to'). ' ' . $_SESSION['Transfer']->StockLocationToName . ' ' . _('for a quantity of'). ' '. $TrfLine->Quantity,'success');
 
 				if($TrfLine->CancelBalance==1) {
+					RecordItemCancelledInTransfer($_SESSION['Transfer']->TrfID, $TrfLine->StockID, $TrfLine->Quantity);
 					$sql = "UPDATE loctransfers SET recqty = recqty + '". round($TrfLine->Quantity, $TrfLine->DecimalPlaces) . "',
 						shipqty = recqty + '". round($TrfLine->Quantity, $TrfLine->DecimalPlaces) . "',
 								recdate = '".Date('Y-m-d H:i:s'). "'
@@ -421,11 +422,11 @@ if(isset($_POST['ProcessTransfer'])) {
 				unset ($_POST['Qty' . $i]);
 			} /*end if Quantity > 0 */
 			if($TrfLine->CancelBalance==1) {
-				$sql = "UPDATE loctransfers SET shipqty = recqty
-						WHERE reference = '". $_SESSION['Transfer']->TrfID . "'
-						AND stockid = '".  $TrfLine->StockID."'";
-				$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('Unable to set the quantity received to the quantity shipped to cancel the balance on this transfer line');
-				$Result = DB_query($sql, $ErrMsg, $DbgMsg, true);
+//				$sql = "UPDATE loctransfers SET shipqty = recqty
+//						WHERE reference = '". $_SESSION['Transfer']->TrfID . "'
+//						AND stockid = '".  $TrfLine->StockID."'";
+//				$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('Unable to set the quantity received to the quantity shipped to cancel the balance on this transfer line');
+//				$Result = DB_query($sql, $ErrMsg, $DbgMsg, true);
 				// send an email to the inventory manager about this cancellation (as can lead to employee fraud)
 // KL RICARD NEVER SEND THIS EMAIL
 //				if ($_SESSION['InventoryManagerEmail']!=''){
@@ -704,4 +705,25 @@ if(isset($_SESSION['Transfer'])) {
           </form>';
 }
 include('includes/footer.inc');
+
+function RecordItemCancelledInTransfer($TransferReference, $StockID, $CancelQty){
+	$SQL = "INSERT INTO loctransfercancellations (
+			reference,
+			stockid,
+			cancelqty,
+			canceldate,
+			canceluserid)
+		VALUES ('" . $TransferReference . "',
+			'" . $StockID . "',
+			(SELECT (l2.shipqty-l2.recqty)
+				FROM loctransfers AS l2
+				WHERE l2.reference = '" . $TransferReference . "'
+					AND l2.stockid ='" . $StockID . "') - " . $CancelQty . ",
+			'" . Date('Y-m-d H:i:s') . "',
+			'" . $_SESSION['UserID'] . "')";
+	$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The transfer cancellation record could not be inserted because');
+	$DbgMsg =  _('The following SQL to insert records was used');
+	$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+
+}
 ?>
