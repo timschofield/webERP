@@ -73,10 +73,11 @@ if(isset($_POST['ProcessTransfer'])) {
 //exit;
 	if(!$InputError) {
 	/*All inputs must be sensible so make the stock movement records and update the locations stocks */
+	
+		$Result = DB_Txn_Begin();
 
 		foreach ($_SESSION['Transfer']->TransferItem AS $TrfLine) {
 			if($TrfLine->Quantity >= 0) {
-				$Result = DB_Txn_Begin();
 
 				/* Need to get the current location quantity will need it later for the stock movement */
 				$SQL="SELECT locstock.quantity
@@ -420,7 +421,7 @@ if(isset($_POST['ProcessTransfer'])) {
 				$Result = DB_query($sql, $ErrMsg, $DbgMsg, true);
 				unset ($_SESSION['Transfer']->LineItem[$i]);
 				unset ($_POST['Qty' . $i]);
-			} /*end if Quantity > 0 */
+			} /*end if Quantity >= 0 */
 			if($TrfLine->CancelBalance==1) {
 //				$sql = "UPDATE loctransfers SET shipqty = recqty
 //						WHERE reference = '". $_SESSION['Transfer']->TrfID . "'
