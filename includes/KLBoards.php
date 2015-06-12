@@ -274,6 +274,8 @@ function ItemsCancelledInTransfers($maxdays, $RootPath, $db){
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
 			$k = StartEvenOrOddRow($k);
+			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+			$TransferLink = '<a href="' . $RootPath . '/StockLocTransferReceive.php?Trf_ID=' . $myrow['reference'] . '">' . $myrow['reference'] . '</a>';
 			printf('<td class="number">%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
@@ -285,8 +287,8 @@ function ItemsCancelledInTransfers($maxdays, $RootPath, $db){
 					<td>%s</td>
 					</tr>', 
 					$i, 
-					$myrow['stockid'],
-					$myrow['reference'], 
+					$CodeLink,
+					$TransferLink, 
 					ConvertSQLDate($myrow['shipdate']), 
 					$myrow['shiploc'], 
 					$myrow['recloc'],
