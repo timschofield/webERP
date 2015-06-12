@@ -202,7 +202,8 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 				}
 			}
 
-			if ($ShipQty>0) {
+			// ONLY add to transfer if there's QTY and we have a picture for it. If no picture, no send!
+			if (($ShipQty>0) AND (file_exists($_SESSION['part_pics_dir'] . '/' .$myrow['stockid'].'.jpg'))){
 				$NumModelsInThisStockDispatch++;
 				$NumPcsInThisStockDispatch = $NumPcsInThisStockDispatch + $ShipQty;
 				$YPos -=(2 * $line_height);
@@ -213,9 +214,7 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 				$fill = False;
 			
 				$pdf->addTextWrap(50,$YPos,70,$FontSize,$myrow['stockid'],'',0,$fill);
-				if(file_exists($_SESSION['part_pics_dir'] . '/' .$myrow['stockid'].'.jpg') ) {
-					$pdf->Image($_SESSION['part_pics_dir'] . '/'.$myrow['stockid'].'.jpg',135,$Page_Height-$Top_Margin-$YPos+10,45,35);
-				}/*end checked file exist*/
+				$pdf->Image($_SESSION['part_pics_dir'] . '/'.$myrow['stockid'].'.jpg',135,$Page_Height-$Top_Margin-$YPos+10,45,35);
 				$pdf->addTextWrap(180,$YPos,200,$FontSize,$myrow['description'],'',0,$fill);
 				$pdf->addTextWrap(355,$YPos,40,$FontSize,locale_number_format($myrow['fromquantity'] - $InTransitQuantityAtFrom,$myrow['decimalplaces']),'right',0,$fill);
 				$pdf->addTextWrap(405,$YPos,40,$FontSize,locale_number_format($myrow['quantity'] + $InTransitQuantityAtTo,$myrow['decimalplaces']),'right',0,$fill);
