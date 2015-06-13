@@ -1492,6 +1492,42 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 			}
 
+			if ($_POST['AmountVouchers']!=0){
+				// If there's any general discount or voucher on the purchase, not item by item
+				$ReceiptNumber = AccountDiscountOnOrderRetail('Voucher/Discount',
+									$InvoiceNo,
+									$PeriodNo,
+									$SalesGLAccounts['discountglcode'],
+									$Area,
+									$InvoiceNo,
+									$_SESSION['Items'.$identifier]->CustRef,
+									$_SESSION['Items'.$identifier]->Location,
+									$_POST['AmountVouchers'],
+									0,
+									$_POST['AmountVouchers'],
+									$Tag,
+									'',
+									$ExRate);
+			}//amount vouched or discount was not zero
+			
+			if ($_POST['AmountReturnedGoods']!=0){
+				// If there's any good returned, also account for it
+				$ReceiptNumber = AccountDiscountOnOrderRetail('Returned Goods',
+									$InvoiceNo,
+									$PeriodNo,
+									$SalesGLAccounts['discountglcode'],
+									$Area,
+									$InvoiceNo,
+									$_SESSION['Items'.$identifier]->CustRef,
+									$_SESSION['Items'.$identifier]->Location,
+									$_POST['AmountReturnedGoods'],
+									0,
+									$_POST['AmountReturnedGoods'],
+									$Tag,
+									'',
+									$ExRate);
+			}//amount vouched or discount was not zero
+	
 			foreach ( $_SESSION['Items'.$identifier]->TaxTotals as $TaxAuthID => $TaxAmount){
 				if ($TaxAmount !=0 ){
 					$SQL = "INSERT INTO gltrans (	type,
@@ -1521,7 +1557,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 
 			if ($_POST['AmountPaidCash']!=0){
 				// si han pagat CASH, tot o en part
-				$BankAccountCash       = KapalLautRetailBankAccountSelection($_SESSION['Items'.$identifier]->DebtorNo, 2,	$db);
+				$BankAccountCash = KapalLautRetailBankAccountSelection($_SESSION['Items'.$identifier]->DebtorNo, 2,	$db);
 				$ReceiptNumber = AccountPaymentRetail(PAYMENT_BY_CASH,
 									$PeriodNo,
 									$BankAccountCash,

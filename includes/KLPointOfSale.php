@@ -432,6 +432,54 @@ function AccountPaymentRetail($PaymentMethod,
 	return $ReceiptNumber;
 }
 
+function AccountDiscountOnOrderRetail($TypeDiscount,
+							$ReceiptNumber,
+							$PeriodNo,
+							$BankAccount,
+							$Area,
+							$InvoiceNo,
+							$CustomerReference,
+							$Location,
+							$AmountPaid,
+							$BankCommision,
+							$NetPayment,
+							$Tag,
+							$GLAccountBankCommission,
+							$ExRate){
+
+	if (!isset($ReceiptNumber)){
+		$ReceiptNumber = GetNextTransNo(10,$db);
+	}
+	
+	$Description = $Area . 
+				 _(' WI:') . $InvoiceNo . 
+				 ' ' . $TypeDiscount;
+	
+	$SQL="INSERT INTO gltrans (type,
+			typeno,
+			trandate,
+			periodno,
+			account,
+			narrative,
+			amount,
+			tag)
+		VALUES (10,
+			'" . $ReceiptNumber . "',
+			'" . Date('Y-m-d') . "',
+			'" . $PeriodNo . "',
+			'" . $BankAccount . "',
+			'" . $Description . "',
+			'" . $NetPayment/$ExRate . "',
+			'" . $Tag . "')";
+	$DbgMsg = _('The SQL that failed to insert the NET GL transaction for the bank account debit was');
+	$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
+	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+
+	return $ReceiptNumber;
+}
+
+
+
 function AccountDebtorPayment($ReceiptNumber,
 							$PaymentMethod,
 							$PeriodNo,
