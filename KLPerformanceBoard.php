@@ -73,9 +73,14 @@ if ($KL_SystemAdmin){
 	ListPriorityLocations($db);
 }
 
-ActiveTransfersByLocation($RootPath, $db);
-ActiveTransferStatus($RootPath, $db);
-RecentlyClosedTransferStatus(1, $RootPath, $db);
+if ($KL_SystemAdmin 
+	OR ($KL_KantorManager)
+	OR $KL_PurchasingManager){
+	ActiveTransfersByLocation($RootPath, $db);
+	ActiveTransferStatus($RootPath, $db);
+	RecentlyClosedTransferStatus(1, $RootPath, $db);
+	ErrorsInTransfers(3, $RootPath, $db);
+}
 
 FinishedStockDistribution("FORSALE", "LOCATION", $db);
 

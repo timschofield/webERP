@@ -289,11 +289,11 @@ function ItemsCancelledInTransfers($maxdays, $RootPath, $db){
 					$i, 
 					$CodeLink,
 					$TransferLink, 
-					ConvertSQLDate($myrow['shipdate']), 
+					ConvertSQLDateTime($myrow['shipdate']), 
 					$myrow['shiploc'], 
 					$myrow['recloc'],
 					locale_number_format($myrow['cancelqty'],0),
-					ConvertSQLDate($myrow['canceldate']), 
+					ConvertSQLDateTime($myrow['canceldate']), 
 					$myrow['canceluserid']
 					);
 			$i++;
@@ -303,6 +303,118 @@ function ItemsCancelledInTransfers($maxdays, $RootPath, $db){
 	}
 }
 
+function ErrorsInTransfers($maxdays, $RootPath, $db){
+	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
+	$SQL = "SELECT DISTINCT(loctransfers.reference),
+					loctransfers.shipdate,
+					loctransfers.shiploc,
+					loctransfers.recloc,
+					SUM(loctransfers.shipqty) AS shipped_quantity,
+					COUNT(loctransfers.stockid) AS shipped_models,
+					(SELECT SUM(loctransfercancellations.cancelqty)
+						FROM loctransfercancellations
+						WHERE loctransfercancellations.reference = loctransfers.reference) AS cancelled_quantity,
+					(SELECT COUNT(loctransfercancellations.stockid)
+						FROM loctransfercancellations
+						WHERE loctransfercancellations.reference = loctransfers.reference) AS cancelled_models
+			FROM loctransfers 
+			WHERE loctransfers.shipdate >= '". $StartDate ."'
+			GROUP BY loctransfers.reference
+			HAVING SUM(loctransfers.shipqty) = SUM(loctransfers.recqty)
+			ORDER BY loctransfers.reference";
+			
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		echo '<p class="page_title_text" align="center"><strong>' . _('Errors on Closed Transfers during the last ') . $maxdays . _(' days ') . '</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Transfer') . '</th>
+							<th class="ascending">' . _('Date') . '</th>
+							<th class="ascending">' . _('From') . '</th>
+							<th class="ascending">' . _('To') . '</th>
+							<th class="ascending">' . _('Total Models') . '</th>
+							<th class="ascending">' . _('Cancelled Models') . '</th>
+							<th class="ascending">' . _('% Items') . '</th>
+							<th class="ascending">' . _('Total Qty') . '</th>
+							<th class="ascending">' . _('Cancelled Qty') . '</th>
+							<th class="ascending">' . _('% Qty') . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		
+		$TotalShippedModels = 0;
+		$TotalCancelledModels = 0;
+		$TotalShippedQty = 0;
+		$TotalCancelledQty = 0;
+		
+		while ($myrow = DB_fetch_array($result)) {
+			$k = StartEvenOrOddRow($k);
+
+			$TotalShippedModels += $myrow['shipped_models'];
+			$TotalCancelledModels += $myrow['cancelled_models'];
+			$TotalShippedQty += $myrow['shipped_quantity'];
+			$TotalCancelledQty += $myrow['cancelled_quantity'];
+
+			$TransferLink = '<a href="' . $RootPath . '/StockLocTransferReceive.php?Trf_ID=' . $myrow['reference'] . '">' . $myrow['reference'] . '</a>';
+			printf('<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					$i, 
+					$TransferLink, 
+					ConvertSQLDateTime($myrow['shipdate']), 
+					$myrow['shiploc'], 
+					$myrow['recloc'],
+					locale_number_format($myrow['shipped_models'],0),
+					locale_number_format($myrow['cancelled_models'],0),
+					locale_number_format($myrow['cancelled_models'] / $myrow['shipped_models'] * 100,2) . '%',
+					locale_number_format($myrow['shipped_quantity'],0),
+					locale_number_format($myrow['cancelled_quantity'],0),
+					locale_number_format($myrow['cancelled_quantity'] / $myrow['shipped_quantity'] * 100,2) . '%'
+					);
+			$i++;
+		}
+		$k = StartEvenOrOddRow($k);
+		printf('<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				'', 
+				'', 
+				'', 
+				'', 
+				'TOTAL',
+				locale_number_format($TotalShippedModels,0),
+				locale_number_format($TotalCancelledModels,0),
+				locale_number_format($TotalCancelledModels / $TotalShippedModels * 100,2) . '%',
+				locale_number_format($TotalShippedQty,0),
+				locale_number_format($TotalCancelledQty,0),
+				locale_number_format($TotalCancelledQty / $TotalShippedQty* 100,2) . '%'
+				);
+		echo '</table>
+				</div>';
+	}
+
+}
 
 
 function isTopSalesItem($stockid, $topitems, $topitemsdays, $db){

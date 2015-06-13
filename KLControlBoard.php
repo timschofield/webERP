@@ -576,7 +576,7 @@ if ($KL_SystemAdmin
 	OR $KL_PurchasingManager
 	OR $KL_KantorManager){
 	TransfersDelayed(4, $RootPath, $db);
-	ItemsCancelledInTransfers(4, $RootPath, $db);
+	ItemsCancelledInTransfers(3, $RootPath, $db);
 }
 
 if ($KL_SystemAdmin 
