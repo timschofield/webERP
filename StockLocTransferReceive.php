@@ -1,5 +1,5 @@
 <?php
-/* $Id: StockLocTransferReceive.php 7299 2015-05-10 20:53:03Z rchacon $*/
+/* $Id: StockLocTransferReceive.php 7319 2015-06-11 09:49:54Z tehonu $*/
 
 /**************************************************************************************
 KL RICARD MODIFICATIONS:
@@ -75,6 +75,8 @@ if(isset($_POST['ProcessTransfer'])) {
 	/*All inputs must be sensible so make the stock movement records and update the locations stocks */
 	
 		$Result = DB_Txn_Begin();
+
+		$Result = DB_Txn_Begin(); // The Txn should affect the full transfer
 
 		foreach ($_SESSION['Transfer']->TransferItem AS $TrfLine) {
 			if($TrfLine->Quantity >= 0) {
@@ -208,10 +210,8 @@ if(isset($_POST['ProcessTransfer'])) {
 					$QtyOnHandPrior = 0;
 				}
 
-// COMMENT: "if($TrfLine->Quantity !=0) {}" should be as a general condition to avoid transactions in zero.
-
 				// Insert outgoing inventory GL transaction if any of the locations has a GL account code:
-				if(($_SESSION['Transfer']->StockLocationFromAccount !='' or $_SESSION['Transfer']->StockLocationToAccount !='') and $TrfLine->Quantity !=0) {
+				if(($_SESSION['Transfer']->StockLocationFromAccount !='' or $_SESSION['Transfer']->StockLocationToAccount !='')) {
 					// Get the account code:
 					if($_SESSION['Transfer']->StockLocationFromAccount !='') {
 						$AccountCode = $_SESSION['Transfer']->StockLocationFromAccount;
@@ -364,7 +364,7 @@ if(isset($_POST['ProcessTransfer'])) {
 				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 
 				// Insert incoming inventory GL transaction if any of the locations has a GL account code:
-				if(($_SESSION['Transfer']->StockLocationFromAccount !='' or $_SESSION['Transfer']->StockLocationToAccount !='') and $TrfLine->Quantity !=0) {
+				if(($_SESSION['Transfer']->StockLocationFromAccount !='' or $_SESSION['Transfer']->StockLocationToAccount !='')) {
 					// Get the account code:
 					if($_SESSION['Transfer']->StockLocationToAccount !='') {
 						$AccountCode = $_SESSION['Transfer']->StockLocationToAccount;
@@ -423,11 +423,6 @@ if(isset($_POST['ProcessTransfer'])) {
 				unset ($_POST['Qty' . $i]);
 			} /*end if Quantity >= 0 */
 			if($TrfLine->CancelBalance==1) {
-//				$sql = "UPDATE loctransfers SET shipqty = recqty
-//						WHERE reference = '". $_SESSION['Transfer']->TrfID . "'
-//						AND stockid = '".  $TrfLine->StockID."'";
-//				$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('Unable to set the quantity received to the quantity shipped to cancel the balance on this transfer line');
-//				$Result = DB_query($sql, $ErrMsg, $DbgMsg, true);
 				// send an email to the inventory manager about this cancellation (as can lead to employee fraud)
 // KL RICARD NEVER SEND THIS EMAIL
 //				if ($_SESSION['InventoryManagerEmail']!=''){

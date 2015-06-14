@@ -1,5 +1,5 @@
 <?php
-/* $Id: DeliveryDetails.php 7299 2015-05-10 20:53:03Z rchacon $ */
+/* $Id: DeliveryDetails.php 7321 2015-06-14 03:38:33Z tehonu $ */
 /* Used during order entry to allow the entry of delivery addresses other than the defaulted branch delivery address and information about carrier/shipping method etc. */
 
 /*
@@ -1020,7 +1020,8 @@ $SQL = "SELECT locations.loccode, locationname
 	ON locationusers.loccode=locations.loccode
 		AND locationusers.userid='" . $_SESSION['UserID'] . "'
 		AND locationusers.canupd=1
-	WHERE locations.allowinvoicing='1'";
+	WHERE locations.allowinvoicing='1'
+	ORDER BY locations.locationname";
 $ErrMsg = _('The stock locations could not be retrieved');
 $DbgMsg = _('SQL used to retrieve the stock locations was') . ':';
 $StkLocsResult = DB_query($SQL, $ErrMsg, $DbgMsg);
