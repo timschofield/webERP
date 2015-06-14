@@ -1,5 +1,5 @@
 <?php
-/* $Id: StockLocTransferReceive.php 7299 2015-05-10 20:53:03Z rchacon $*/
+/* $Id: StockLocTransferReceive.php 7319 2015-06-11 09:49:54Z tehonu $*/
 /* Inventory Transfer - Receive */
 
 include('includes/DefineSerialItems.php');
@@ -64,9 +64,10 @@ if(isset($_POST['ProcessTransfer'])) {
 	if(!$InputError) {
 	/*All inputs must be sensible so make the stock movement records and update the locations stocks */
 
+		$Result = DB_Txn_Begin(); // The Txn should affect the full transfer
+
 		foreach ($_SESSION['Transfer']->TransferItem AS $TrfLine) {
-			if($TrfLine->Quantity >=0) {
-				$Result = DB_Txn_Begin();
+			if($TrfLine->Quantity >= 0) {
 
 				/* Need to get the current location quantity will need it later for the stock movement */
 				$SQL="SELECT locstock.quantity
@@ -197,10 +198,8 @@ if(isset($_POST['ProcessTransfer'])) {
 					$QtyOnHandPrior = 0;
 				}
 
-// COMMENT: "if($TrfLine->Quantity !=0) {}" should be as a general condition to avoid transactions in zero.
-
 				// Insert outgoing inventory GL transaction if any of the locations has a GL account code:
-				if(($_SESSION['Transfer']->StockLocationFromAccount !='' or $_SESSION['Transfer']->StockLocationToAccount !='') and $TrfLine->Quantity !=0) {
+				if(($_SESSION['Transfer']->StockLocationFromAccount !='' or $_SESSION['Transfer']->StockLocationToAccount !='')) {
 					// Get the account code:
 					if($_SESSION['Transfer']->StockLocationFromAccount !='') {
 						$AccountCode = $_SESSION['Transfer']->StockLocationFromAccount;
@@ -353,7 +352,7 @@ if(isset($_POST['ProcessTransfer'])) {
 				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 
 				// Insert incoming inventory GL transaction if any of the locations has a GL account code:
-				if(($_SESSION['Transfer']->StockLocationFromAccount !='' or $_SESSION['Transfer']->StockLocationToAccount !='') and $TrfLine->Quantity !=0) {
+				if(($_SESSION['Transfer']->StockLocationFromAccount !='' or $_SESSION['Transfer']->StockLocationToAccount !='')) {
 					// Get the account code:
 					if($_SESSION['Transfer']->StockLocationToAccount !='') {
 						$AccountCode = $_SESSION['Transfer']->StockLocationToAccount;
@@ -394,6 +393,7 @@ if(isset($_POST['ProcessTransfer'])) {
 				prnMsg(_('A stock transfer for item code'). ' - '  . $TrfLine->StockID . ' ' . $TrfLine->ItemDescription . ' '. _('has been created from').' ' . $_SESSION['Transfer']->StockLocationFromName . ' '. _('to'). ' ' . $_SESSION['Transfer']->StockLocationToName . ' ' . _('for a quantity of'). ' '. $TrfLine->Quantity,'success');
 
 				if($TrfLine->CancelBalance==1) {
+					RecordItemCancelledInTransfer($_SESSION['Transfer']->TrfID, $TrfLine->StockID, $TrfLine->Quantity);
 					$sql = "UPDATE loctransfers SET recqty = recqty + '". round($TrfLine->Quantity, $TrfLine->DecimalPlaces) . "',
 						shipqty = recqty + '". round($TrfLine->Quantity, $TrfLine->DecimalPlaces) . "',
 								recdate = '".Date('Y-m-d H:i:s'). "'
@@ -409,13 +409,8 @@ if(isset($_POST['ProcessTransfer'])) {
 				$Result = DB_query($sql, $ErrMsg, $DbgMsg, true);
 				unset ($_SESSION['Transfer']->LineItem[$i]);
 				unset ($_POST['Qty' . $i]);
-			} /*end if Quantity > 0 */
+			} /*end if Quantity >= 0 */
 			if($TrfLine->CancelBalance==1) {
-				$sql = "UPDATE loctransfers SET shipqty = recqty
-						WHERE reference = '". $_SESSION['Transfer']->TrfID . "'
-						AND stockid = '".  $TrfLine->StockID."'";
-				$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('Unable to set the quantity received to the quantity shipped to cancel the balance on this transfer line');
-				$Result = DB_query($sql, $ErrMsg, $DbgMsg, true);
 				// send an email to the inventory manager about this cancellation (as can lead to employee fraud)
 				if($_SESSION['InventoryManagerEmail']!='') {
 					$ConfirmationText = _('Cancelled balance of transfer'). ': ' . $_SESSION['Transfer']->TrfID .
@@ -687,4 +682,25 @@ if(isset($_SESSION['Transfer'])) {
           </form>';
 }
 include('includes/footer.inc');
+
+function RecordItemCancelledInTransfer($TransferReference, $StockID, $CancelQty){
+	$SQL = "INSERT INTO loctransfercancellations (
+			reference,
+			stockid,
+			cancelqty,
+			canceldate,
+			canceluserid)
+		VALUES ('" . $TransferReference . "',
+			'" . $StockID . "',
+			(SELECT (l2.shipqty-l2.recqty)
+				FROM loctransfers AS l2
+				WHERE l2.reference = '" . $TransferReference . "'
+					AND l2.stockid ='" . $StockID . "') - " . $CancelQty . ",
+			'" . Date('Y-m-d H:i:s') . "',
+			'" . $_SESSION['UserID'] . "')";
+	$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The transfer cancellation record could not be inserted because');
+	$DbgMsg =  _('The following SQL to insert records was used');
+	$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+
+}
 ?>
