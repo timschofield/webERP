@@ -336,7 +336,7 @@ function ErrorsInTransfers($maxdays, $RootPath, $db){
 							<th class="ascending">' . _('To') . '</th>
 							<th class="ascending">' . _('Total Models') . '</th>
 							<th class="ascending">' . _('Cancelled Models') . '</th>
-							<th class="ascending">' . _('% Items') . '</th>
+							<th class="ascending">' . _('% Models') . '</th>
 							<th class="ascending">' . _('Total Qty') . '</th>
 							<th class="ascending">' . _('Cancelled Qty') . '</th>
 							<th class="ascending">' . _('% Qty') . '</th>
