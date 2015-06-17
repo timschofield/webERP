@@ -570,6 +570,7 @@ if ($KL_SystemAdmin){
 
 if ($KL_ShopSupportTeam){ 
 	TransfersDelayed(3, $RootPath, $db);
+	ItemsCancelledInTransfers(3, $RootPath, $db);
 }
 
 if ($KL_SystemAdmin 

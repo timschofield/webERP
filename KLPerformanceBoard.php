@@ -79,7 +79,7 @@ if ($KL_SystemAdmin
 	ActiveTransfersByLocation($RootPath, $db);
 	ActiveTransferStatus($RootPath, $db);
 	RecentlyClosedTransferStatus(1, $RootPath, $db);
-	ErrorsInTransfers(3, $RootPath, $db);
+	ErrorsInTransfers(7, $RootPath, $db);
 }
 
 FinishedStockDistribution("FORSALE", "LOCATION", $db);
