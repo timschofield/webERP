@@ -358,7 +358,8 @@ select.selecterror {
 /*** HEADER ***/
 
 #HeaderDiv {
-	overflow:hidden; /* REQUIRED: height according to items contained */
+	/*
+	overflow:hidden;  REQUIRED: height according to items contained */
 	color:#333333;
 	font-weight:bold;
 	padding-left:3px;
