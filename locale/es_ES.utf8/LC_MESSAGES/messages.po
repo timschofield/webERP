@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.12.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-05-17 13:40+1200\n"
-"PO-Revision-Date: 2015-06-04 09:54-0600\n"
+"PO-Revision-Date: 2015-06-22 11:30-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -16176,7 +16176,7 @@ msgstr "Definir Categorías de Existencias"
 #: StockLocStatus.php:66 SupplierPriceList.php:17 SupplierTenderCreate.php:678
 #: SupplierTenders.php:403 TopItems.php:64
 msgid "In Stock Category"
-msgstr "Clase de Artículo"
+msgstr "En categoría de inventario"
 
 #: InternalStockRequest.php:333 InternalStockRequest.php:335
 msgid "All Authorized"
@@ -31549,7 +31549,7 @@ msgstr "Todos los Estados de Existencias por Ubicación/Categoría"
 
 #: StockLocStatus.php:86
 msgid "Shown Only Items Where"
-msgstr "Mostrar Elementos Únicamente Donde"
+msgstr "Mostrar solo artículos donde"
 
 #: StockLocStatus.php:93 StockLocStatus.php:98 StockLocStatus.php:103
 #: StockLocStatus.php:108
@@ -32582,7 +32582,7 @@ msgstr "Solo alfanumerico"
 
 #: StockStatus.php:98
 msgid "In Transit"
-msgstr "En Tránsito"
+msgstr "En tránsito"
 
 #: StockStatus.php:169
 msgid "The workorder component demand for this product from"
