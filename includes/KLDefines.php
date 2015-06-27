@@ -132,10 +132,8 @@ define("ACCOUNT_CASH_TOKSS", "111111113"); // number of account for toko SS
 define("ACCOUNT_CASH_TOKPA", "111111114"); // number of account for toko PA
 
 define("ACCOUNT_BANK_DANAMON_IDR", "111121105PT"); // number of account for Bank Danamon IDR
-define("ACCOUNT_BANK_MANDIRI_IDR", "111121100PT"); // number of account for Bank Mandiri IDR
-// USE OF THE DANAMON ACCOUNT UNTIL BCA ACCOUNT IS ACTIVE
-//define("ACCOUNT_BANK_BCA_IDR", "111121110PT"); // number of account for Bank BCA IDR
-define("ACCOUNT_BANK_BCA_IDR", "111121105PT"); // number of account for Bank BCA IDR
+define("ACCOUNT_BANK_MANDIRI_IDR", "111121101PT"); // number of account for Bank Mandiri IDR
+define("ACCOUNT_BANK_BCA_IDR", "111121110PT"); // number of account for Bank BCA IDR
 define("ACCOUNT_COMISSION_CREDITCARD", "700211300PT"); // number of account used to charge the bank comission
 
 /* Defines about WebStore */
