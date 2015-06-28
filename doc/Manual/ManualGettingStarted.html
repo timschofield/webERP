@@ -236,8 +236,12 @@ mysql&gt; GRANT ALL PRIVILEGES ON *.* TO weberp@localhost IDENTIFIED BY 'some_pa
         //The maximum time that a script can execute for before the web-server should terminate it
         $MaximumExecutionTime =120;
 
-        //The path to which session files should be stored in the server - useful for some multi-host web servers
-        //this can be left commented out
+        /*The path to which session files should be stored in the server - useful for some multi-host web servers where pages are serviced using load balancing servers - when the load picks a different server then the session can be lost unless this option is used - which tells the server explicitly where to find the session file.
+        It is also useful where there are several webERP installs where the code is in two different paths on the same server and being used by the same client browser. It is possible in this scenario for the session to be over-written by the two different webERP installations. The solution is to specify different $SessionSavePath in each installations config.php
+        
+        If there is only one installation of webERP on the web-server - which can be used with many company databases (and there is no load balancing difficulties to circumvent then this can be left commented out
+
+        */
         //$SessionSavePath = '/tmp';
 
         // which encryption function should be used
