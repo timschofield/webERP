@@ -77,13 +77,13 @@ define("LIST_SHOPS_WITH_OUTLET",             "('TOKSU','TOKPA','TOKWS')");
 
 define("LIST_LOCATIONS_SPG_STOCK_STATUS",	 "('KANTO','TOK66','TOKSA','TOKKS','TOKJC','TOKSE','TOKUB','TOKMF','TOKOB','TOKPU','TOKSU','TOKSS','TOKBW','TOKPA')"); 
 
-// From LIST_SHOPS_USING_PACKAGING_CONTROL TOKSU is deleted on 20/05/2015 as it is not using regular packaging
-define("LIST_SHOPS_USING_PACKAGING_CONTROL", "('TOK66','TOKSA','TOKKS','TOKJC','TOKSE','TOKUB','TOKMF','TOKOB','TOKPU','TOKSS','TOKBW','PACKA')"); // PACKA MUST be the last one in this list
+
+define("LIST_SHOPS_USING_PACKAGING_CONTROL", "('TOKSU','TOK66','TOKSA','TOKKS','TOKJC','TOKSE','TOKUB','TOKMF','TOKOB','TOKPU','TOKSS','TOKBW','PACKA')"); // PACKA MUST be the last one in this list
 define("LIST_ITEMS_USING_PACKAGING_CONTROL", "('PKBX01-L','PKBX01-M','PKBX01-S','PKPB01-L','PKPB01-M','PKPB01-S','PKPB02-L','PKPB02-M','PKPB02-S','PKSB02-L','PKSB02-M','PKSB02-S','PKSB03')");
 
 define("LIST_SHOPS_USING_REGULAR_PACKAGING", "('TOK66','TOKSA','TOKKS','TOKJC','TOKSE','TOKUB','TOKMF','TOKOB','TOKPU','TOKSS','TOKBW')"); 
 //define("LIST_SHOPS_USING_OUTLET_PACKAGING", "('TOKSU','TOKPA')"); 
-define("LIST_SHOPS_USING_OUTLET_PACKAGING", "()"); 
+define("LIST_SHOPS_USING_OUTLET_PACKAGING", "('TOKSU')"); 
 
 define("LIST_KANTOR_LOCATIONS",              "('KANTO','SAMPR','SASPG','SERSU','SERVI','SERDE','WHOLE')");
 define("LIST_SERVICE_LOCATIONS",              "('SERSU','SERVI')");
@@ -115,6 +115,7 @@ define("COMISSION_CC_DANAMON",     1.80); // % of Credit card comission paid to 
 define("COMISSION_AMEX_DANAMON",   3.00); // % of Credit card comission paid to American Express by Danamon
 define("COMISSION_CC_MANDIRI",     1.80); // % of Credit card comission paid to Mandiri
 define("COMISSION_CC_BCA",         1.80); // % of Credit card comission paid to BCA
+define("COMISSION_AMEX_BCA",       3.00); // % of Credit card comission paid to American Express by BCA
 
 define("ACCOUNT_CASH_TOK66", "111111101"); // number of account for toko 66
 define("ACCOUNT_CASH_TOKSA", "111111102"); // number of account for toko SA

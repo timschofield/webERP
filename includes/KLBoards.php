@@ -6334,6 +6334,13 @@ function OutletPackagingToBeRefilled($ShowAll, $RootPath, $db){
 		$k = 0; //row colour counter
 
 		while ($i <= $numshops) {
+			if (($TableResult[$i]['qty_bag_l'] < $TableResult[$i]['rl_bag_l']) OR 
+				($TableResult[$i]['qty_bag_m'] < $TableResult[$i]['rl_bag_m']) OR 
+				($TableResult[$i]['qty_bag_s'] < $TableResult[$i]['rl_bag_s']) OR 
+				($TableResult[$i]['qty_shopping_m'] < $TableResult[$i]['rl_shopping_m'])) 
+			{
+				$TableResult[$i]['show'] = TRUE;
+			}
 			
 			if ($ShowAll OR ($TableResult[$i]['show'])) {
 				// IF we are SHORT of any packaging material in that shop...

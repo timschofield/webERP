@@ -1,6 +1,7 @@
 <?php
 
 /************************************************************************
+v 2.13 Mod to use Amex credit card with BCA ECDD
 v 2.12 Mod to use outlet or regular packaging
 v 2.11 Mod to include BCA CC accounts
 v 2.10 use KL list of countries to avoid mistakes of "funny" visitor countries
@@ -21,7 +22,7 @@ v 1.00 2011-08-10: Shops start using it.
 v 1.00 2011-07-25: Kantor starts using it.
 *********************************************************************/
 
-define("VERSIONFILE", "2.12"); // 
+define("VERSIONFILE", "2.13"); // 
 
 include('includes/DefineCartClass.php');
 include('includes/session.inc');
@@ -580,8 +581,8 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 and !isset($_POST['Proces
 	if (!isset($_POST['AmountPaidCCDanamon'])){
 		$_POST['AmountPaidCCDanamon'] =0;
 	}
-	if (!isset($_POST['AmountPaidAmexDanamon'])){
-		$_POST['AmountPaidAmexDanamon'] =0;
+	if (!isset($_POST['AmountPaidAmexBCA'])){
+		$_POST['AmountPaidAmexBCA'] =0;
 	}
 	if (!isset($_POST['AmountPaidCCMandiri'])){
 		$_POST['AmountPaidCCMandiri'] =0;
@@ -630,8 +631,8 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 and !isset($_POST['Proces
 	echo '<td>' . _('Amount Returned Goods') . ':</td>
 		  <td><input type="text" class="number" name="AmountReturnedGoods" maxlength="12" size="12" value="' . $_POST['AmountReturnedGoods'] . '" /></td>';
 	echo '<td></td>';
-	echo '<td>' . _('Amount Paid Amex EDC Danamon') . ':</td>
-		  <td><input type="text" class="number" name="AmountPaidAmexDanamon" maxlength="12" size="12" value="' . $_POST['AmountPaidAmexDanamon'] . '" /></td>';
+	echo '<td>' . _('Amount Paid Amex EDC BCA') . ':</td>
+		  <td><input type="text" class="number" name="AmountPaidAmexBCA" maxlength="12" size="12" value="' . $_POST['AmountPaidAmexBCA'] . '" /></td>';
 	echo '</tr>';
 
 	echo '<tr>';
@@ -878,7 +879,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 	
 	$TotalFromCustomer = $_POST['AmountPaidCash'] 
 						+ $_POST['AmountPaidCCDanamon'] 
-						+ $_POST['AmountPaidAmexDanamon']
+						+ $_POST['AmountPaidAmexBCA']
 						+ $_POST['AmountPaidCCMandiri'] 
 						+ $_POST['AmountPaidCCBCA'] 
 						+ $_POST['AmountReturnedGoods'] 
@@ -931,7 +932,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 		// RICARD: KL Mod to select area
 		// If all (or part of) the goods were paid with CC, consider payment as CC
 		if (($_POST['AmountPaidCCDanamon'] > 0) 
-			OR ($_POST['AmountPaidAmexDanamon'] > 0) 
+			OR ($_POST['AmountPaidAmexBCA'] > 0) 
 			OR ($_POST['AmountPaidCCMandiri'] > 0)
 			OR ($_POST['AmountPaidCCBCA'] > 0)){
 			$PaymentMethod = PAYMENT_BY_CREDITCARD;
@@ -1003,7 +1004,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 												'" . $_SESSION['SalesmanLogin'] . "',
 												'" . $_POST['AmountPaidCash'] . "',
 												'" . ($_POST['AmountPaidCCDanamon'] 
-													+ $_POST['AmountPaidAmexDanamon']
+													+ $_POST['AmountPaidAmexBCA']
 												    + $_POST['AmountPaidCCMandiri']
 													+ $_POST['AmountPaidCCBCA']) . "',
 												'" . $_POST['AmountReturnedGoods'] . "',
@@ -1054,7 +1055,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 				' Total invoice: ' . number_format(($_SESSION['Items'.$identifier]->total+$_POST['TaxTotal']),0) .
 				' Paid Cash: '. number_format($_POST['AmountPaidCash'],0) .
 				' Paid CC EDC Danamon: '. number_format($_POST['AmountPaidCCDanamon'],0) .
-				' Paid Amex EDC Danamon: '. number_format($_POST['AmountPaidAmexDanamon'],0) .
+				' Paid Amex EDC BCA: '. number_format($_POST['AmountPaidAmexBCA'],0) .
 				' Paid CC EDC Mandiri: '. number_format($_POST['AmountPaidCCMandiri'],0) .
 				' Paid CC EDC BCA: '. number_format($_POST['AmountPaidCCBCA'],0) .
 				' Returned Goods: '. number_format($_POST['AmountReturnedGoods'],0) .
@@ -1594,19 +1595,19 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 
 			}//amount paid Credit Card DANAMON  was not zero
 
-			if ($_POST['AmountPaidAmexDanamon']!=0){
+			if ($_POST['AmountPaidAmexBCA']!=0){
 				// si han pagat AMEX DANAMON, tot o en part
-				$CreditCardNetPayment = ($_POST['AmountPaidAmexDanamon']*(100- COMISSION_AMEX_DANAMON)/100);
-				$CreditCardBankComissions = ($_POST['AmountPaidAmexDanamon']*(COMISSION_AMEX_DANAMON)/100);
+				$CreditCardNetPayment = ($_POST['AmountPaidAmexBCA']*(100- COMISSION_AMEX_BCA)/100);
+				$CreditCardBankComissions = ($_POST['AmountPaidAmexBCA']*(COMISSION_AMEX_BCA)/100);
 				
 				$ReceiptNumber = AccountPaymentRetail(PAYMENT_BY_CREDITCARD,
 									$PeriodNo,
-									ACCOUNT_BANK_DANAMON_IDR,
+									ACCOUNT_BANK_BCA_IDR,
 									$Area,
 									$InvoiceNo,
 									$_SESSION['Items'.$identifier]->CustRef,
 									$_SESSION['Items'.$identifier]->Location,
-									$_POST['AmountPaidAmexDanamon'],
+									$_POST['AmountPaidAmexBCA'],
 									$CreditCardBankComissions,
 									$CreditCardNetPayment,
 									$Tag,
@@ -1693,26 +1694,26 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 								$OrderNo,
 								$_SESSION['Items'.$identifier]->DefaultCurrency,
 								$_SESSION['Items'.$identifier]->DebtorNo);
-		} //end if $_POST['AmountPaidAmexDanamon']!= 0
+		} //end if $_POST['AmountPaidCCDanamon']!= 0
 
-		if ($_POST['AmountPaidAmexDanamon']!=0){
-			$CreditCardNetPayment = ($_POST['AmountPaidAmexDanamon']*(100- COMISSION_AMEX_DANAMON)/100);
+		if ($_POST['AmountPaidAmexBCA']!=0){
+			$CreditCardNetPayment = ($_POST['AmountPaidAmexBCA']*(100- COMISSION_AMEX_BCA)/100);
 			$ReceiptNumber = AccountDebtorPayment($ReceiptNumber,
 								PAYMENT_BY_CREDITCARD,
 								$PeriodNo,
-								ACCOUNT_BANK_DANAMON_IDR,
+								ACCOUNT_BANK_BCA_IDR,
 								$Area,
 								$InvoiceNo,
 								$_SESSION['Items'.$identifier]->CustRef,
 								$_SESSION['Items'.$identifier]->Location,
-								$_POST['AmountPaidAmexDanamon'],
+								$_POST['AmountPaidAmexBCA'],
 								$CreditCardNetPayment,
 								$ExRate,
 								$DebtorTransID,
 								$OrderNo,
 								$_SESSION['Items'.$identifier]->DefaultCurrency,
 								$_SESSION['Items'.$identifier]->DebtorNo);
-		} //end if $_POST['AmountPaidAmexDanamon']!= 0
+		} //end if $_POST['AmountPaidAmexBCA']!= 0
 
 		if ($_POST['AmountPaidCCMandiri']!=0){
 			$CreditCardNetPayment = ($_POST['AmountPaidCCMandiri']*(100- COMISSION_CC_MANDIRI)/100);
@@ -1813,7 +1814,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 
 		echo prnMsg( _('YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' WI'). ' '. $InvoiceNo . _('. Total Cash: ') . number_format($_POST['AmountPaidCash'],0) , 'success');
 		echo prnMsg( _('YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' WI'). ' '. $InvoiceNo . _('. Total CC EDC Danamon: ') . number_format($_POST['AmountPaidCCDanamon'],0)  , 'success');
-		echo prnMsg( _('YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' WI'). ' '. $InvoiceNo . _('. Total Amex EDC Danamon: ') . number_format($_POST['AmountPaidAmexDanamon'],0)  , 'success');
+		echo prnMsg( _('YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' WI'). ' '. $InvoiceNo . _('. Total Amex EDC BCA: ') . number_format($_POST['AmountPaidAmexBCA'],0)  , 'success');
 		echo prnMsg( _('YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' WI'). ' '. $InvoiceNo . _('. Total CC EDC Mandiri: ') . number_format($_POST['AmountPaidCCMandiri'],0)  , 'success');
 		echo prnMsg( _('YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' WI'). ' '. $InvoiceNo . _('. Total CC EDC BCA: ') . number_format($_POST['AmountPaidCCBCA'],0)  , 'success');
 		echo prnMsg( _('YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' WI'). ' '. $InvoiceNo . _('. Total Returned Goods: ') . number_format($_POST['AmountReturnedGoods'],0) , 'success');
@@ -1828,7 +1829,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 		if ($_POST['AmountPaidCCDanamon'] <> 0){
 			$PaymentSystemsUsed++;
 		}
-		if ($_POST['AmountPaidAmexDanamon'] <> 0){
+		if ($_POST['AmountPaidAmexBCA'] <> 0){
 			$PaymentSystemsUsed++;
 		}
 		if ($_POST['AmountPaidCCMandiri'] <> 0){
@@ -1849,7 +1850,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 						$Area,
 						number_format($_POST['AmountPaidCash'],0),
 						number_format($_POST['AmountPaidCCDanamon'],0),
-						number_format($_POST['AmountPaidAmexDanamon'],0),
+						number_format($_POST['AmountPaidAmexBCA'],0),
 						number_format($_POST['AmountPaidCCMandiri'],0),
 						number_format($_POST['AmountPaidCCBCA'],0),
 						number_format($_POST['AmountReturnedGoods'],0),
@@ -1870,7 +1871,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 						$Area,
 						number_format($_POST['AmountPaidCash'],0),
 						number_format($_POST['AmountPaidCCDanamon'],0),
-						number_format($_POST['AmountPaidAmexDanamon'],0),
+						number_format($_POST['AmountPaidAmexBCA'],0),
 						number_format($_POST['AmountPaidCCMandiri'],0),
 						number_format($_POST['AmountPaidCCBCA'],0),
 						number_format($_POST['AmountReturnedGoods'],0),
@@ -1887,7 +1888,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 						$Area,
 						number_format($_POST['AmountPaidCash'],0),
 						number_format($_POST['AmountPaidCCDanamon'],0),
-						number_format($_POST['AmountPaidAmexDanamon'],0),
+						number_format($_POST['AmountPaidAmexBCA'],0),
 						number_format($_POST['AmountPaidCCMandiri'],0),
 						number_format($_POST['AmountPaidCCBCA'],0),
 						number_format($_POST['AmountReturnedGoods'],0),

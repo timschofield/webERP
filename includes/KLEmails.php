@@ -167,7 +167,7 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 						'Area: ' . $Param5 ."\r\n" .
 						'Total Cash              : ' . $Param6  . "\r\n" .
 						'Total CC EDC Danamon    : ' . $Param7  . "\r\n" .
-						'Total Amex EDC Danamon  : ' . $Param8  . "\r\n" .
+						'Total Amex EDC BCA      : ' . $Param8  . "\r\n" .
 						'Total CC EDC Mandiri    : ' . $Param9  . "\r\n" .
 						'Total CC EDC BCA        : ' . $Param10  . "\r\n" .
 						'Total Returned Goods    : ' . $Param11 . "\r\n" .
@@ -185,7 +185,7 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 						'Area: ' . $Param5 ."\r\n" .
 						'Total Cash              : ' . $Param6  . "\r\n" .
 						'Total CC EDC Danamon    : ' . $Param7  . "\r\n" .
-						'Total Amex EDC Danamon  : ' . $Param8  . "\r\n" .
+						'Total Amex EDC BCA      : ' . $Param8  . "\r\n" .
 						'Total CC EDC Mandiri    : ' . $Param9  . "\r\n" .
 						'Total CC EDC BCA        : ' . $Param10  . "\r\n" .
 						'Total Returned Goods    : ' . $Param11 . "\r\n" .
@@ -203,7 +203,7 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 						'Area: ' . $Param5 ."\r\n" .
 						'Total Cash              : ' . $Param6  . "\r\n" .
 						'Total CC EDC Danamon    : ' . $Param7  . "\r\n" .
-						'Total Amex EDC Danamon  : ' . $Param8  . "\r\n" .
+						'Total Amex EDC BCA      : ' . $Param8  . "\r\n" .
 						'Total CC EDC Mandiri    : ' . $Param9  . "\r\n" .
 						'Total CC EDC BCA        : ' . $Param10  . "\r\n" .
 						'Total Returned Goods    : ' . $Param11 . "\r\n" .
