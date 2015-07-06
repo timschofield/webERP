@@ -201,8 +201,10 @@ if ($KL_SystemAdmin
 
 if ($KL_SystemAdmin 
 	OR $KL_KantorAdministration){
-	// Bank Mandiri has enough funds to be transferred to Danamon
-	BalanceAccountControl("111121100PT", 10000000,  100000000, $periodnow, $db);
+	// Bank Mandiri or  BCA has enough funds to be transferred to Danamon
+	BalanceAccountControl("111121100PT", 10000000,   50000000, $periodnow, $db);
+	BalanceAccountControl("111121101PT",  1000000,  100000000, $periodnow, $db);
+	BalanceAccountControl("111121110PT",  1000000,  100000000, $periodnow, $db);
 }
 
 if ($KL_SystemAdmin){
@@ -308,9 +310,6 @@ if ($KL_PurchasingManager){
 
 	CategoryItemsNotInShop("DISCOU", "TOKSU", $RootPath, $db);
 	CategoryItemsNotInShop("OUTLET", "TOKSU", $RootPath, $db);
-
-	CategoryItemsNotInShop("DISCOU", "TOKPA", $RootPath, $db);
-	CategoryItemsNotInShop("OUTLET", "TOKPA", $RootPath, $db);
 
 	ItemsInCategoryWithStockKantorButReorderLevelTokoZero("OUTLET", $RootPath, $db);
 	ItemsInCategoryWithStockKantorButReorderLevelTokoZero("DISCOU", $RootPath, $db);
@@ -421,22 +420,23 @@ if ($KL_PurchasingManager
 	TopSalesNotInEnoughShops(800,1200, 60,  7, "ACTIVE", $RootPath, $db);
 //	TopSalesNotInEnoughShops(  1,  50, 60, 3, "DISCOU", $RootPath, $db);
 
-	ItemsNotTopSalesInShop(1, 1000, 60, "TOK66", "ACTIVE", $RootPath, $db);
-	ItemsNotTopSalesInShop(1, 1000, 60, "TOKSE", "ACTIVE", $RootPath, $db);
-	ItemsNotTopSalesInShop(1, 1000, 60, "TOKOB", "ACTIVE", $RootPath, $db);
+	ItemsNotTopSalesInShop(1, 900, 60, "TOK66", "ACTIVE", $RootPath, $db);
+	ItemsNotTopSalesInShop(1, 900, 60, "TOKSE", "ACTIVE", $RootPath, $db);
+	ItemsNotTopSalesInShop(1, 900, 60, "TOKOB", "ACTIVE", $RootPath, $db);
 
 	ItemsNotTopSalesInShop(1, 800, 60, "TOKKS", "ACTIVE", $RootPath, $db);
 	ItemsNotTopSalesInShop(1, 800, 60, "TOKBW", "ACTIVE", $RootPath, $db);
 
-	ItemsNotTopSalesInShop(1, 1000, 60, "TOKJC", "ACTIVE", $RootPath, $db);
+	ItemsNotTopSalesInShop(1, 900, 60, "TOKJC", "ACTIVE", $RootPath, $db);
 
-	ItemsNotTopSalesInShop(1, 1000, 60, "TOKUB", "ACTIVE", $RootPath, $db);
+	ItemsNotTopSalesInShop(1, 900, 60, "TOKUB", "ACTIVE", $RootPath, $db);
 	ItemsNotTopSalesInShop(1, 1000, 60, "TOKMF", "ACTIVE", $RootPath, $db);
 	ItemsNotTopSalesInShop(1, 1000, 60, "TOKPU", "ACTIVE", $RootPath, $db);
 
 	ItemsNotTopSalesInShop(1, 1000, 60, "TOKSA", "ACTIVE", $RootPath, $db);
 //	ItemsNotTopSalesInShop(1, 800, 60, "TOKSU", "ACTIVE", $RootPath, $db);
 	ItemsNotTopSalesInShop(1, 1000, 60, "TOKSS", "ACTIVE", $RootPath, $db);
+	ItemsNotTopSalesInShop(1, 900, 60, "TOKPA", "ACTIVE", $RootPath, $db);
 
 	PerformanceItemsInCategory("GOOD", "TESTSI", 15,  30, "VERY GOOD", $RootPath, $db);
 	PerformanceItemsInCategory("GOOD", "TESTSI", 30,  45, "GOOD", $RootPath, $db);
