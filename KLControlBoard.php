@@ -360,6 +360,7 @@ if ($KL_SystemAdmin
 }
 
 if ($KL_SystemAdmin 
+	OR $KL_ShopSupportTeam
 	OR $KL_PurchasingTeam){
 	PackagingItemsOnWrongLocation($RootPath, $db); // Works for both regular and outlet shop packaging
 }
