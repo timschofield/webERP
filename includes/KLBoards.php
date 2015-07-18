@@ -4940,9 +4940,15 @@ function ObsoleteComponentsInActiveBOM($RootPath, $db){
 
 
 
-function GoodsToBeProduced($CategoryComponent, $RootPath, $db){
+function GoodsToBeProduced($CategoryComponent, $ParentCategory, $RootPath, $db){
 /* EXPLAIN SQL 2014-05-30 */
-	/* Check if there is any component at kantor ready to be transformed into sellable goods */
+	/* Check if there is any	component at kantor ready to be transformed into sellable goods */
+	if ($ParentCategory == "DISCOUNT"){
+		$WhereParentCategory = " AND stP.categoryid IN " . LIST_STOCK_CATEGORIES_DISCOUNT . " ";
+	}else{
+		$WhereParentCategory = " ";
+	}
+	
 	$SQL = "SELECT s.stockid,
 				s.units,
 				s.description, 
@@ -4962,12 +4968,17 @@ function GoodsToBeProduced($CategoryComponent, $RootPath, $db){
 				FROM bom,stockmaster AS stP, stockmaster AS stC
 				WHERE bom.parent = stP.stockid
 					AND bom.component = stC.stockid 
-					AND s.stockid = bom.component
+					AND s.stockid = bom.component " .
+					$WhereParentCategory . "
 					AND stP.discontinued = 0)";
 
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Components '). $CategoryComponent . _(' ready to WO in kantor') . '</strong></p>';
+		if ($ParentCategory == "DISCOUNT"){
+			echo '<p class="page_title_text" align="center"><strong>' . _('Components '). $CategoryComponent . _(' ready to WO in kantor for items Discount / Outlet') . '</strong></p>';
+		}else{
+			echo '<p class="page_title_text" align="center"><strong>' . _('Components '). $CategoryComponent . _(' ready to WO in kantor for all items') . '</strong></p>';
+		}
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>

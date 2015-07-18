@@ -108,7 +108,8 @@ if (($KL_SystemAdmin)
 }
 
 if ($KL_SystemAdmin){
-	GoodsToBeProduced("COMPON",$RootPath, $db);
+	GoodsToBeProduced("COMPON", "DISCOUNT", $RootPath, $db);
+	GoodsToBeProduced("COMPON", "ALL", $RootPath, $db);
 	ComponentsToObsolete(false, 0, $RootPath, $db);
 }
 

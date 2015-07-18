@@ -330,7 +330,8 @@ if ($KL_PurchasingManager
 	ValueStockLocation("SERSU",    0,  300, 0, 0, $db);
 	OvestockAtSamples(1, $RootPath, $db);
 	SamplesNotLongerNeeded($RootPath, $db);
-	GoodsToBeProduced("COMPON",$RootPath, $db);
+	GoodsToBeProduced("COMPON", "DISCOUNT", $RootPath, $db);
+	GoodsToBeProduced("COMPON", "ALL", $RootPath, $db);
 }
 
 
