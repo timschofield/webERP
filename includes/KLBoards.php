@@ -1907,6 +1907,7 @@ function OnlineItemsOnProcess($RootPath, $db){
 		while ($myrow = DB_fetch_array($result)) {
 			$k = StartEvenOrOddRow($k);
 			$CodeLink = '<a href="' . $RootPath . '/SelectOrderItems.php?ModifyOrderNumber=' . $myrow['orderno'] . '">' . $myrow['orderno'] . '</a>';
+			$ItemLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stkcode'] . '">' . $myrow['stkcode'] . '</a>';
 			printf('<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
@@ -1922,7 +1923,7 @@ function OnlineItemsOnProcess($RootPath, $db){
 					$myrow['debtorno'], 
 					$myrow['name'], 
 					ConvertSQLDate($myrow['orddate']), 
-					$myrow['stkcode'], 
+					$ItemLink, 
 					locale_number_format($myrow['qtyorder'],0),
 					locale_number_format($myrow['reorderlevel'],0),
 					locale_number_format($myrow['qtyready'],0)
