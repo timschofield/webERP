@@ -7670,4 +7670,95 @@ function ItemsNeedingAutomaticTranslation($RootPath, $db){
 	}
 }
 
+function ItemsinSetUp($Check, $RootPath, $db){
+	
+	if ($Check == "ReadyToTest"){
+		$Title = "Items in SETUP ready to change to TEST";
+		$SQLWhere = "AND LENGTH(stockmaster.description) > 2
+					AND (SELECT SUM(locstock.quantity)
+							FROM locstock
+							WHERE locstock.stockid = stockmaster.stockid) > 0
+					AND (SELECT price
+					FROM prices
+					WHERE stockmaster.stockid = prices.stockid
+						AND prices.typeabbrev = 'RT'
+						AND currabrev = 'IDR') > 0
+					AND NOT EXISTS (SELECT *
+							FROM loctransfers 
+							WHERE  recqty < shipqty
+								AND loctransfers.stockid =  stockmaster.stockid)";
+	}elseif($Check == "NeedDescription"){
+		$Title = "Items in SETUP needing descriptions";
+		$SQLWhere ="AND LENGTH(stockmaster.description) <= 2";
+	}elseif($Check == "NeedPrice"){
+		$Title = "Items in SETUP needing price";
+		$SQLWhere ="AND (SELECT price
+				FROM prices
+				WHERE stockmaster.stockid = prices.stockid
+					AND prices.typeabbrev = 'RT'
+					AND currabrev = 'IDR') IS NULL";
+	}elseif($Check == "WithReorderLevel"){
+		$Title = "Items in SETUP with RL (items in SETUP should not have RL set)";
+		$SQLWhere ="AND (SELECT SUM(reorderlevel)
+				FROM locstock
+				WHERE stockmaster.stockid = locstock.stockid) > 0 ";
+	}else{
+		$Title = "Items in SETUP";
+		$SQLWhere ="";
+	}
+
+	$SQL = "SELECT stockmaster.stockid,
+			stockmaster.description,
+			(SELECT price
+				FROM prices
+				WHERE stockmaster.stockid = prices.stockid
+					AND prices.typeabbrev = 'RT'
+					AND currabrev = 'IDR') AS price,
+			(SELECT SUM(locstock.quantity)
+				FROM locstock
+				WHERE locstock.stockid = stockmaster.stockid) AS QOH
+			FROM stockmaster
+			WHERE stockmaster.categoryid = 'SETUP'
+				AND discontinued = 0 ".
+			 $SQLWhere ." 
+			ORDER BY stockid";
+
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		echo '<p class="page_title_text" align="center"><strong>' . $Title . '</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Description') . '</th>
+							<th class="ascending">' . _('Price') . '</th>
+							<th class="ascending">' . _('QOH') . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		while ($myrow = DB_fetch_array($result)) {
+			$k = StartEvenOrOddRow($k);
+			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+			$RLLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stockid'] . '">' . locale_number_format($myrow['QOH'],0) . '</a>';
+			printf('<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					$i, 
+					$CodeLink, 
+					$myrow['description'], 
+					locale_number_format($myrow['price'],0),
+					$RLLink
+					);
+			$i++;
+		}
+		echo '</table>
+				</div>';
+	}
+}
+
 ?>

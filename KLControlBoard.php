@@ -1,5 +1,5 @@
 <?php
-define("VERSIONFILE", "3.23"); 
+define("VERSIONFILE", "3.24"); 
 define("NUMBER_OF_TESTS", 155); 
 
 /* Session started in session.inc for password checking and authorisation level check
@@ -34,6 +34,7 @@ $periodnow=GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
 
 if ($KL_SystemAdmin){
 //	phpinfo();
+
 }
 
 if ($KL_SystemAdmin 
@@ -248,7 +249,7 @@ if ($KL_PurchasingManager
 	OR $KL_KantorManager
 	OR $KL_ShopSupportTeam){
 	
-	ItemsWithStockLocationButNoStockAvailable("WABOM", "WaterBom", 15, 600, $RootPath, $db);
+//	ItemsWithStockLocationButNoStockAvailable("WABOM", "WaterBom", 15, 600, $RootPath, $db);
 //	ItemsWithStockLocationButNoStockAvailable("WHAYA", "Ayana", 15, 600, $RootPath, $db);
 //	ItemsWithStockLocationButNoStockAvailable("WHINT", "InterContinental", 15, 600, $RootPath, $db);
 }
@@ -257,12 +258,17 @@ if ($KL_PurchasingManager
 	OR $KL_KantorManager
 	OR $KL_PurchasingTeam){
 
-	InsuficientStockForItems("SILVER", "TM-", "Tali Mie", 20, 40, $RootPath, $db);
+//	InsuficientStockForItems("SILVER", "TM-", "Tali Mie", 20, 40, $RootPath, $db);
 }
 
 if ($KL_PurchasingManager
 	OR $KL_SystemAdmin
 	OR $KL_PurchasingTeam){
+	ItemsinSetUp("ReadyToTest", $RootPath, $db);
+	ItemsinSetUp("NeedDescription", $RootPath, $db);
+	ItemsinSetUp("NeedPrice", $RootPath, $db);
+	ItemsinSetUp("WithReorderLevel", $RootPath, $db);
+
 	ObsoleteComponentsInActiveBOM($RootPath, $db);
 }
 
@@ -277,11 +283,11 @@ if ($KL_PurchasingManager){
 	GoodsJustTransferred("SERSU", "KANTO", 2, 50, $RootPath, $db);
 	GoodsJustTransferred("SERDE", "KANTO", 2, 50, $RootPath, $db);
 	GoodsJustTransferred("SERVI", "KANTO", 2, 50, $RootPath, $db);
-	GoodsJustTransferred("WABOM", "KANTO", 2, 50, $RootPath, $db);
-	GoodsJustTransferred("WHAYA", "KANTO", 2, 50, $RootPath, $db);
-	GoodsJustTransferred("WHINT", "KANTO", 2, 50, $RootPath, $db);
+//	GoodsJustTransferred("WABOM", "KANTO", 2, 50, $RootPath, $db);
+//	GoodsJustTransferred("WHAYA", "KANTO", 2, 50, $RootPath, $db);
+//	GoodsJustTransferred("WHINT", "KANTO", 2, 50, $RootPath, $db);
+//	GoodsJustTransferred("WHSHE", "KANTO", 2, 50, $RootPath, $db);
 	GoodsJustTransferred("WHOLE", "KANTO", 2, 50, $RootPath, $db);
-	GoodsJustTransferred("WHSHE", "KANTO", 2, 50, $RootPath, $db);
 	
 	InsuficientStockForTopSalesItems("SILVER", "10-Silver",90, 100, 150, $RootPath, $db);
 	InsuficientStockForTopSalesItems("STAINL", "20-Stainless Steel", 90, 100, 150, $RootPath, $db);
@@ -483,9 +489,9 @@ if ($KL_PurchasingManager
 	OR $KL_KantorManager
 	OR $KL_SalesManager){
 	
-	ItemsNoSalesInLocation("WABOM", 30, 10, $RootPath, $db);
-	ItemsNoSalesInLocation("WHAYA", 30, 10, $RootPath, $db);
-	ItemsNoSalesInLocation("WHINT", 30, 10, $RootPath, $db);
+//	ItemsNoSalesInLocation("WABOM", 30, 10, $RootPath, $db);
+//	ItemsNoSalesInLocation("WHAYA", 30, 10, $RootPath, $db);
+//	ItemsNoSalesInLocation("WHINT", 30, 10, $RootPath, $db);
 }
 
 /***************************************************************************************
