@@ -51,22 +51,22 @@ if($_SESSION['SalesmanLogin'] != '') {
 }else{
 	echo '<td><select tabindex="2" name="Salesperson">';
 // KL RICARD Filter by Current = 1
-	$SalespeopleResult = DB_query("SELECT salesmancode, salesmanname FROM salesman WHERE current = 1");
+	$SalespeopleResult = DB_query("SELECT salesmancode, salesmanname FROM salesman WHERE current = 1 ORDER BY salesmancode");
 	if (!isset($_POST['Salesperson'])){
 		$_POST['Salesperson'] = 'All';
 		echo '<option selected="selected" value="All">' . _('All') . '</option>';
-} else {
-	echo '<option value="All">' . _('All') . '</option>';
-}
-while ($SalespersonRow = DB_fetch_array($SalespeopleResult)){
-
-	if ($_POST['Salesperson']==$SalespersonRow['salesmancode']) {
-		echo '<option selected="selected" value="' . $SalespersonRow['salesmancode'] . '">' . $SalespersonRow['salesmanname'] . '</option>';
 	} else {
-		echo '<option value="' . $SalespersonRow['salesmancode'] . '">' . $SalespersonRow['salesmanname'] . '</option>';
+		echo '<option value="All">' . _('All') . '</option>';
 	}
-}
-echo '</select></td>';
+	while ($SalespersonRow = DB_fetch_array($SalespeopleResult)){
+
+		if ($_POST['Salesperson']==$SalespersonRow['salesmancode']) {
+			echo '<option selected="selected" value="' . $SalespersonRow['salesmancode'] . '">' . $SalespersonRow['salesmancode'] . '-' . $SalespersonRow['salesmanname'] . '</option>';
+		} else {
+			echo '<option value="' . $SalespersonRow['salesmancode'] . '">' . $SalespersonRow['salesmancode'] . '-' . $SalespersonRow['salesmanname'] . '</option>';
+		}
+	}
+	echo '</select></td>';
 }
 echo '</tr>
 	</table>
