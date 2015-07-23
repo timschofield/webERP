@@ -93,25 +93,25 @@ if (mb_strlen($Date_Array[2])>4) {
 $StartDateSQL =  date('Y-m-d', mktime(0,0,0, (int)$Date_Array[1],1,(int)$Date_Array[0]));
 
 /* KL RICARD Change the SQl to use salesorders table to filter by SPG correctly*/
-$sql = "SELECT 	trandate,
-				SUM(price*(1-discountpercent)* (-qty)) as salesvalue,
-				SUM(CASE WHEN mbflag='A' THEN 0 ELSE (standardcost * -qty) END) as cost
-			FROM stockmoves
+$sql = "SELECT 	orddate AS trandate,
+				SUM(unitprice*(1-discountpercent)* (qtyinvoiced)) as salesvalue,
+				SUM(CASE WHEN mbflag='A' THEN 0 ELSE ((materialcost+labourcost+overheadcost) * qtyinvoiced) END) as cost
+			FROM salesorders
+			INNER JOIN salesorderdetails
+			ON salesorders.orderno=salesorderdetails.orderno
 			INNER JOIN stockmaster
-			ON stockmoves.stockid=stockmaster.stockid
-			INNER JOIN salesorders
-			ON stockmoves.reference=salesorders.orderno
-			WHERE (stockmoves.type=10 or stockmoves.type=11)
-			AND trandate>='" . $StartDateSQL . "'
-			AND trandate<='" . $EndDateSQL . "'";
-
+			ON stockmaster.stockid=salesorderdetails.stkcode
+			WHERE orddate>='" . $StartDateSQL . "'
+			AND orddate<='" . $EndDateSQL . "'";
+			
 if ($_SESSION['SalesmanLogin'] != '') {
 	$SQL .= " AND salesorders.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 }elseif ($_POST['Salesperson']!='All') {
 	$sql .= " AND salesorders.salesperson='" . $_POST['Salesperson'] . "'";
 }
 
-$sql .= " GROUP BY stockmoves.trandate ORDER BY stockmoves.trandate";
+$sql .= " GROUP BY salesorders.orddate ORDER BY salesorders.orddate";
+
 $ErrMsg = _('The sales data could not be retrieved because') . ' - ' . DB_error_msg();
 $SalesResult = DB_query($sql,$ErrMsg);
 
