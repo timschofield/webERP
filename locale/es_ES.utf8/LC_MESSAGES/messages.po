@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.12.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-05-17 13:40+1200\n"
-"PO-Revision-Date: 2015-06-22 11:30-0600\n"
+"PO-Revision-Date: 2015-06-25 10:56-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -3977,7 +3977,7 @@ msgstr "Confirmar Factura"
 
 #: ConfirmDispatch_Invoice.php:280
 msgid "Confirm Dispatch and Invoice"
-msgstr "Confirmar nota de Entrega y Factura"
+msgstr "Confirmar despacho y factura"
 
 #: ConfirmDispatch_Invoice.php:283 Contracts.php:778 CustItem.php:144
 #: CustLoginSetup.php:32 CustomerAllocations.php:345
@@ -11026,7 +11026,7 @@ msgstr "Láser"
 
 #: DeliveryDetails.php:615
 msgid "Confirm Dispatch and Produce Invoice"
-msgstr "Confirmar la nota de Entrega y Generar Factura"
+msgstr "Confirmar entrega y generar factura"
 
 #: DeliveryDetails.php:625 DeliveryDetails.php:815
 msgid "Print Quotation (Landscape)"
@@ -11140,7 +11140,7 @@ msgstr "El SQL usado para obtener las ubicaciones de existencias fue"
 
 #: DeliveryDetails.php:1046
 msgid "Estimated Delivery Date"
-msgstr "Fecha de Entrega Estimada"
+msgstr "Fecha estimada de entrega"
 
 #: DeliveryDetails.php:1047
 msgid "Enter the estimated delivery date requested by the customer"
@@ -11148,11 +11148,11 @@ msgstr ""
 
 #: DeliveryDetails.php:1051 SelectSalesOrder.php:721
 msgid "Quote Date"
-msgstr "Fecha de la Oferta"
+msgstr "Fecha de cotización"
 
 #: DeliveryDetails.php:1056
 msgid "Confirmed Order Date"
-msgstr "Fecha de Pedido Confirmado"
+msgstr "Fecha confirmada de pedido"
 
 #: DeliveryDetails.php:1060
 msgid "Delivery Address 1 (Street)"
@@ -34968,7 +34968,7 @@ msgstr "Ofrecido"
 
 #: SupplierTenders.php:145
 msgid "Confirm and Send Email"
-msgstr "Confirmar y Enviar E-mail"
+msgstr "Confirmar y enviar correo-e"
 
 #: SupplierTenders.php:148
 msgid "Cancel Offer"
@@ -50379,7 +50379,7 @@ msgstr ""
 
 #: ../webSHOP/Checkout.php:519
 msgid "Confirm Delivery Address"
-msgstr ""
+msgstr "Confirmar dirección de entrega"
 
 #: ../webSHOP/Checkout.php:523
 msgid "Delivery Address - Building/Number"
@@ -50451,7 +50451,7 @@ msgstr ""
 
 #: ../webSHOP/Checkout.php:591
 msgid "Confirm Delivery Details"
-msgstr ""
+msgstr "Confirmar detalles de entrega"
 
 #: ../webSHOP/Checkout.php:607
 msgid "Revise Delivery Address"
@@ -50541,7 +50541,7 @@ msgstr ""
 
 #: ../webSHOP/Checkout.php:762 ../webSHOP/Checkout.php:774
 msgid "Confirm and Place Order"
-msgstr ""
+msgstr "Confirmar y colocar pedido"
 
 #: ../webSHOP/Checkout.php:766
 msgid "Thank you for purchasing from us. Please note the order number"
