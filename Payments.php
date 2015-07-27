@@ -1,6 +1,6 @@
 <?php
-
 /* $Id$*/
+/* Entry of bank account payments either against an AP account or a general ledger payment - if the AP-GL link in company preferences is set */
 
 include('includes/DefinePaymentClass.php');
 include('includes/session.inc');
@@ -488,7 +488,7 @@ if (isset($_POST['CommitBatch'])){
 			$DbgMsg = _('Cannot update the supplier record for the date of the last payment made using the SQL');
 			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
-			$_SESSION['PaymentDetail' . $identifier]->Narrative = $_SESSION['PaymentDetail' . $identifier]->SupplierID . '-' . $_SESSION['PaymentDetail' . $identifier]->Narrative;
+			$_SESSION['PaymentDetail' . $identifier]->Narrative = $_SESSION['PaymentDetail' . $identifier]->SupplierID . ' - ' . $_SESSION['PaymentDetail' . $identifier]->Narrative;
 
 			if ($_SESSION['CompanyRecord']['gllink_creditors']==1){ /* then do the supplier control GLTrans */
 			/* Now debit creditors account with payment + discount */
@@ -860,39 +860,39 @@ if (!isset($_POST['ExRate'])){
 if (!isset($_POST['FunctionalExRate'])){
 	$_POST['FunctionalExRate']=1;
 }
-if ($_SESSION['PaymentDetail' . $identifier]->AccountCurrency!=$_SESSION['PaymentDetail' . $identifier]->Currency AND isset($_SESSION['PaymentDetail' . $identifier]->AccountCurrency)){
-	if (isset($SuggestedExRate)){
-		$SuggestedExRateText = '<b>' . _('Suggested rate:') . ' ' . locale_number_format($SuggestedExRate,8) . '</b>';
-	} else {
-		$SuggestedExRateText ='';
+if($_SESSION['PaymentDetail' . $identifier]->AccountCurrency != $_SESSION['PaymentDetail' . $identifier]->Currency AND isset($_SESSION['PaymentDetail' . $identifier]->AccountCurrency)) {
+	if($_POST['ExRate']==1 AND isset($SuggestedExRate)) {
+		$_POST['ExRate'] = locale_number_format($SuggestedExRate,8);
+	} elseif($_POST['Currency'] != $_POST['PreviousCurrency'] AND isset($SuggestedExRate)) {
+		$_POST['ExRate'] = locale_number_format($SuggestedExRate,8);
 	}
-	if ($_POST['ExRate']==1 AND isset($SuggestedExRate)){
-		$_POST['ExRate'] = locale_number_format($SuggestedExRate,8);
-	}elseif($_POST['Currency'] != $_POST['PreviousCurrency'] and isset($SuggestedExRate)){
-		$_POST['ExRate'] = locale_number_format($SuggestedExRate,8);
 
+	if(isset($SuggestedExRate)) {
+		$SuggestedExRateText = '<b>' . _('Suggested rate:') . ' 1 ' . $_SESSION['PaymentDetail' . $identifier]->AccountCurrency . ' = '	. locale_number_format($SuggestedExRate,8) . ' ' . $_SESSION['PaymentDetail' . $identifier]->Currency . '</b>';
+	} else {
+		$SuggestedExRateText = '1 ' . $_SESSION['PaymentDetail' . $identifier]->AccountCurrency . ' = ? ' . $_SESSION['PaymentDetail' . $identifier]->Currency;
 	}
 	echo '<tr>
-			<td>' . _('Payment Exchange Rate') . ':</td>
-			<td><input class="number" maxlength="12" name="ExRate" size="14" title="' . _('The exchange rate between the currency of the bank account currency and the currency of the payment') . '" type="text" value="' . $_POST['ExRate'] . '" /></td>
-			<td>' . $SuggestedExRateText . ' <i>' . _('The exchange rate between the currency of the bank account currency and the currency of the payment') . '. 1 ' . $_SESSION['PaymentDetail' . $identifier]->AccountCurrency . ' = ? ' . $_SESSION['PaymentDetail' . $identifier]->Currency . '</i></td>
+			<td>', _('Payment Exchange Rate'), ':</td>
+			<td><input class="number" maxlength="12" name="ExRate" size="14" title="', _('The exchange rate between the currency of the bank account currency and the currency of the payment'), '" type="text" value="', $_POST['ExRate'], '" /></td>
+			<td>', $SuggestedExRateText, '. <i>', _('The exchange rate between the currency of the bank account currency and the currency of the payment'), '.</i></td>
 		</tr>';
 }
 
-if ($_SESSION['PaymentDetail' . $identifier]->AccountCurrency!=$_SESSION['CompanyRecord']['currencydefault']
-										AND isset($_SESSION['PaymentDetail' . $identifier]->AccountCurrency)){
-	if (isset($SuggestedFunctionalExRate)){
-		$SuggestedFunctionalExRateText = '<b>' . _('Suggested rate:') . ' ' . locale_number_format($SuggestedFunctionalExRate,8) . '</b>';
-	} else {
-		$SuggestedFunctionalExRateText ='';
-	}
-	if ($_POST['FunctionalExRate']==1 AND isset($SuggestedFunctionalExRate)){
+if($_SESSION['PaymentDetail' . $identifier]->AccountCurrency != $_SESSION['CompanyRecord']['currencydefault'] AND isset($_SESSION['PaymentDetail' . $identifier]->AccountCurrency)) {
+	if($_POST['FunctionalExRate']==1 AND isset($SuggestedFunctionalExRate)) {
 		$_POST['FunctionalExRate'] = locale_number_format($SuggestedFunctionalExRate,'Variable');
 	}
+
+	if(isset($SuggestedFunctionalExRate)) {
+		$SuggestedFunctionalExRateText = '<b>' . _('Suggested rate:') . ' 1 ' . $_SESSION['CompanyRecord']['currencydefault'] . ' = ' . locale_number_format($SuggestedFunctionalExRate,8) . ' ' . $_SESSION['PaymentDetail' . $identifier]->AccountCurrency . '</b>';
+	} else {
+		$SuggestedFunctionalExRateText = '1 ' . $_SESSION['CompanyRecord']['currencydefault'] . ' = ? ' . $_SESSION['PaymentDetail' . $identifier]->AccountCurrency;
+	}
 	echo '<tr>
-			<td>' . _('Functional Exchange Rate') . ':</td>
-			<td><input class="number" maxlength="12" name="FunctionalExRate" size="14" title="' . _('The exchange rate between the currency of the business (the functional currency) and the currency of the bank account') .  '" type="text" value="' . $_POST['FunctionalExRate'] . '" /></td>
-			<td>' . ' ' . $SuggestedFunctionalExRateText . ' <i>' . _('The exchange rate between the currency of the business (the functional currency) and the currency of the bank account') .  '. 1 ' . $_SESSION['CompanyRecord']['currencydefault'] . ' = ? ' . $_SESSION['PaymentDetail' . $identifier]->AccountCurrency . '</i></td>
+			<td>', _('Functional Exchange Rate'), ':</td>
+			<td><input class="number" maxlength="12" name="FunctionalExRate" size="14" title="', _('The exchange rate between the currency of the business (the functional currency) and the currency of the bank account'), '" type="text" value="', $_POST['FunctionalExRate'], '" /></td>
+			<td>', $SuggestedFunctionalExRateText, '. <i>', _('The exchange rate between the currency of the business (the functional currency) and the currency of the bank account'), '.</i></td>
 		</tr>';
 }
 echo '<tr>

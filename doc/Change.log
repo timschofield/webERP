@@ -1,5 +1,6 @@
 webERP Change Log
 
+27/07/15 RChacon: In Payments.php, move currency tags near currency rates.
 20/06/15 RChacon: In header.inc, add meta tag to keep relationship between CSS pixels and device pixels.
 19/06/15 : Kif (from webERP Chinese Community QQ group) fixed the menu cannot show completely on mobile phone in xenos/default.css.
 04/06/15 TurboPT: Currencies.php: Add closing select, td and tr tags to complete last table row.
