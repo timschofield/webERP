@@ -50,7 +50,7 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 				bin,
 				quantity,
 				stockmaster.klchangingprice,
-				stockmaster.klmovingdiscount,
+				stockmaster.klmovingdiscount50,
 				stockmaster.klmovingoutlet,
 				decimalplaces,
 				canupd
@@ -132,7 +132,7 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 		/*	KL RICARD Fill the $Notes variable*/
 		if	   ($myrow['klchangingprice']){
 			$Notes = "Changing price";
-		}elseif($myrow['klmovingdiscount']){
+		}elseif($myrow['klmovingdiscount50']){
 			$Notes = "Moving to discount";
 		}elseif($myrow['klmovingoutlet']){
 			$Notes = "Moving to outlet";

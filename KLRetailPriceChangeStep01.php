@@ -33,7 +33,7 @@ if (isset($_POST['submit'])) {
 	$i=1;
 	//first off validate inputs sensible round_price($myrow['retailprice'], "UP")
 	$result = DB_query("SELECT klchangingprice, 
-								klmovingdiscount,
+								klmovingdiscount50,
 								klmovingoutlet,
 								categoryid, 
 								discontinued 
@@ -60,7 +60,7 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'klchangingprice';
 		$i++;
 		prnMsg(_('This item is already in changing price procedure.'),'error');
-	}elseif ($myrow['klmovingdiscount'] == 1) {
+	}elseif ($myrow['klmovingdiscount50'] == 1) {
 		$InputError = 1;
 		$Errors[$i] = 'MovingDiscount';
 		$i++;

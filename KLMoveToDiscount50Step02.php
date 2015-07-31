@@ -44,12 +44,12 @@ include('includes/KLPrices.php');
 				(SELECT sum(quantity)
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid) AS qohtotal,
-				klmovetodiscount.countermovediscount,
-				klmovetodiscount.startprocessdate,
-				klmovetodiscount.discountcategory
-			FROM stockmaster, klmovetodiscount					
-			WHERE stockmaster.stockid = klmovetodiscount.stockid
-				AND klmovetodiscount.endprocessdate = '0000-00-00'";
+				klmovetodiscount50.countermovediscount,
+				klmovetodiscount50.startprocessdate,
+				klmovetodiscount50.discountcategory
+			FROM stockmaster, klmovetodiscount50					
+			WHERE stockmaster.stockid = klmovetodiscount50.stockid
+				AND klmovetodiscount50.endprocessdate = '0000-00-00'";
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Items ready to be moved to Discount in KL kantor') . '</strong></p>';

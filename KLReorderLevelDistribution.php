@@ -145,7 +145,7 @@ if (!(isset($_POST['Search']))) {
 			WHERE stockmaster.categoryid = stockcategory.categoryid
 				AND stockcategory.stocktype = 'F'
 				AND stockmaster.klchangingprice = 0
-				AND stockmaster.klmovingdiscount = 0
+				AND stockmaster.klmovingdiscount50 = 0
 				AND stockmaster.klmovingoutlet = 0
 				AND stockmaster.discontinued = 0 ";
 	if ($_POST['StockCat'] != 'All') {

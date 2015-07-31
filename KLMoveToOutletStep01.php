@@ -32,7 +32,7 @@ if (isset($_POST['submit'])) {
 
 	//first off validate inputs sensible
 	$result = DB_query("SELECT klchangingprice, 
-								klmovingdiscount,
+								klmovingdiscount50,
 								klmovingoutlet,
 								categoryid, 
 								discontinued 
@@ -59,7 +59,7 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'ChangingPrice';
 		$i++;
 		prnMsg(_('This item is already in Change Price procedure. Finish or delete this process first'),'error');
-	}elseif ($myrow['klmovingdiscount'] == 1) {
+	}elseif ($myrow['klmovingdiscount50'] == 1) {
 		$InputError = 1;
 		$Errors[$i] = 'MovingDiscount';
 		$i++;

@@ -32,7 +32,7 @@ if (isset($_POST['submit'])) {
 
 	//first off validate inputs sensible
 	$result = DB_query("SELECT klchangingprice, 
-								klmovingdiscount,
+								klmovingdiscount50,
 								klmovingoutlet,
 								categoryid, 
 								discontinued 
@@ -59,7 +59,7 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'ChangingPrice';
 		$i++;
 		prnMsg(_('This item is already in Change Price procedure. Finish or delete this process first'),'error');
-	}elseif ($myrow['klmovingdiscount'] == 1) {
+	}elseif ($myrow['klmovingdiscount50'] == 1) {
 		$InputError = 1;
 		$Errors[$i] = 'MovingDiscount';
 		$i++;
@@ -85,7 +85,7 @@ if (isset($_POST['submit'])) {
 
 	if (isset($SelectedMovement) AND $InputError !=1) {
 		/*SelectedMovement could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
-		$sql = "UPDATE klmovetodiscount 
+		$sql = "UPDATE klmovetodiscount50 
 				SET stockid='" . $_POST['Stockid'] . "',
 					startprocessdate='" . Date('Y-m-d') . "',
 					discountcategory='50',
@@ -95,7 +95,7 @@ if (isset($_POST['submit'])) {
 		$msg = _('KL Move Item To Discount Step 01 record for') . ' ' . $_POST['Stockid'] . ' ' . _('has been updated');
 	} elseif ($InputError !=1) {
 
-		$sql = "INSERT INTO klmovetodiscount 
+		$sql = "INSERT INTO klmovetodiscount50 
 						(stockid,
 						startprocessdate,
 						discountcategory,
@@ -142,13 +142,13 @@ if (isset($_POST['submit'])) {
 } elseif (isset($_GET['delete'])) {
 	//the link to delete a selected record was clicked instead of the submit button
 	$sql = "SELECT stockid
-			FROM klmovetodiscount
+			FROM klmovetodiscount50
 			WHERE countermovediscount='".$SelectedMovement."'";
 	$result = DB_query($sql);
 	$myrow = DB_fetch_array($result);
 	SetMoveDiscountFlag(0,$myrow['stockid'], $db);
 
-	$sql="DELETE FROM klmovetodiscount WHERE countermovediscount='". $SelectedMovement."'";
+	$sql="DELETE FROM klmovetodiscount50 WHERE countermovediscount='". $SelectedMovement."'";
 	$ErrMsg = _('The Move Item To Discount Step 01 could not be deleted because');
 	$result = DB_query($sql,$ErrMsg);
 
@@ -170,7 +170,7 @@ or deletion of the records*/
 				stockid,
 				discountcategory,
 				startprocessdate
-			FROM klmovetodiscount
+			FROM klmovetodiscount50
 			WHERE endprocessdate = '0000-00-00'";
 	$result = DB_query($sql);
 
@@ -228,7 +228,7 @@ if (! isset($_GET['delete'])) {
 		$sql = "SELECT countermovediscount,
 					stockid,
 					discountcategory
-				FROM klmovetodiscount
+				FROM klmovetodiscount50
 				WHERE countermovediscount='".$SelectedMovement."'";
 
 		$result = DB_query($sql);

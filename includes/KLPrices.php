@@ -16,7 +16,7 @@ function SetChangePriceFlag($Flag, $StockId, $db){
 function SetMoveDiscountFlag($Flag, $StockId, $db){
 	/* sets $flag value to flag in stockmaster */
 	$sql = "UPDATE stockmaster 
-			SET klmovingdiscount = '" . $Flag . "'
+			SET klmovingdiscount50 = '" . $Flag . "'
 			WHERE stockid = '".$StockId."'";
 
 	$msg = _('Changing Move To Discount Flag set to') . ' ' . $Flag . ' ' . _('for item code') . ' ' . $StockId;
@@ -53,7 +53,7 @@ function SetEndDateChangePrice($StockId, $db){
 }
 
 function SetEndDateMoveDiscount($StockId, $db){
-	$sql = "UPDATE klmovetodiscount 
+	$sql = "UPDATE klmovetodiscount50 
 			SET endprocessdate = '" . Date('Y-m-d') . "'
 			WHERE stockid = '".$StockId."'";
 
@@ -426,12 +426,12 @@ function SendEmailMoveToDiscountReadyForStep02($db, $EmailText){
 				(SELECT sum(quantity)
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid) AS qohtotal,
-				klmovetodiscount.countermovediscount,
-				klmovetodiscount.startprocessdate,
-				klmovetodiscount.discountcategory
-			FROM stockmaster, klmovetodiscount					
-			WHERE stockmaster.stockid = klmovetodiscount.stockid
-				AND klmovetodiscount.endprocessdate = '0000-00-00'";
+				klmovetodiscount50.countermovediscount,
+				klmovetodiscount50.startprocessdate,
+				klmovetodiscount50.discountcategory
+			FROM stockmaster, klmovetodiscount50					
+			WHERE stockmaster.stockid = klmovetodiscount50.stockid
+				AND klmovetodiscount50.endprocessdate = '0000-00-00'";
 				
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){

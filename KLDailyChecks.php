@@ -82,7 +82,7 @@ function KL_DailyMaintenanceDatabase($ShowMessages, $db, $EmailText = ''){
 	BlockInactiveUsers(22, 30, $ShowMessages, $db); // 22 = SPG-Support
 	PurgeKLTable("kladjustrl","adjustdate", $ShowMessages, $db);
 	PurgeKLTable("klchangeprice","endprocessdate", $ShowMessages, $db);
-	PurgeKLTable("klmovetodiscount","endprocessdate", $ShowMessages, $db);
+	PurgeKLTable("klmovetodiscount50","endprocessdate", $ShowMessages, $db);
 	PurgeKLTable("klmovetooutlet","endprocessdate", $ShowMessages, $db);
 	PurgeAuditTrailTable($ShowMessages, $db);
 	$EmailText = KL_DailyOptimizationDatabase($ShowMessages, $db, $EmailText);
@@ -160,7 +160,7 @@ function KL_DailyOptimizationDatabase($ShowMessages, $db, $EmailText = ''){
 								`kladjustrl` ,
 								`klchangeprice` ,
 								`klfreeexchanges` ,
-								`klmovetodiscount` ,
+								`klmovetodiscount50` ,
 								`klmovetooutlet` ,
 								`kloldprices` ,
 								`labelfields` ,
