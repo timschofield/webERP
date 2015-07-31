@@ -1096,7 +1096,7 @@ function ItemsInKLProcessAndRLNotZero($RootPath, $db){
 				   locations.locationname,			
 				   locstock.reorderlevel,
 					stockmaster.klmovingdiscount50,		
-					stockmaster.klmovingoutlet,		
+					stockmaster.klmovingdiscount80,		
 					stockmaster.klchangingprice   
 			FROM stockmaster INNER JOIN locstock 			
 			ON stockmaster.stockid=locstock.stockid			
@@ -1104,7 +1104,7 @@ function ItemsInKLProcessAndRLNotZero($RootPath, $db){
 			ON locstock.loccode = locations.loccode			
 			WHERE locstock.reorderlevel != 0
 				AND (stockmaster.klmovingdiscount50 != 0
-					OR  stockmaster.klmovingoutlet != 0
+					OR  stockmaster.klmovingdiscount80 != 0
 					OR stockmaster.klchangingprice != 0 ) 			
 			ORDER BY stockmaster.stockid,
 					locstock.loccode";
@@ -1138,7 +1138,7 @@ function ItemsInKLProcessAndRLNotZero($RootPath, $db){
 			}else{
 				$ItemMovingToDiscount = "";
 			}
-			if ($myrow['klmovingoutlet'] == 1){
+			if ($myrow['klmovingdiscount80'] == 1){
 				$ItemMovingToOutlet = "Yes";
 			}else{
 				$ItemMovingToOutlet = "";
@@ -2172,7 +2172,7 @@ No pending transfer regarding this item
 				AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_SHOP_CONSUMABLES . "
 				AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_OLD . "
 				AND stockmaster.klmovingdiscount50 = 0
-				AND stockmaster.klmovingoutlet = 0
+				AND stockmaster.klmovingdiscount80 = 0
 				AND stockmaster.klchangingprice = 0 " .
 				$FilterCategory .
 				$FilterDiscount .
@@ -2251,7 +2251,7 @@ No pending transfer regarding this item
 			WHERE stockmaster.categoryid = stockcategory.categoryid
 				AND stockmaster.klchangingprice = 0
 				AND stockmaster.klmovingdiscount50 = 0
-				AND stockmaster.klmovingoutlet = 0
+				AND stockmaster.klmovingdiscount80 = 0
 				AND (SELECT SUM(locstock.reorderlevel)
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid
@@ -2339,7 +2339,7 @@ function ItemsInCategoryWithStockKantorButReorderLevelTokoZero($CategoryId, $Roo
 			WHERE stockmaster.categoryid = stockcategory.categoryid
 				AND stockmaster.klchangingprice = 0
 				AND stockmaster.klmovingdiscount50 = 0
-				AND stockmaster.klmovingoutlet = 0
+				AND stockmaster.klmovingdiscount80 = 0
 				AND (SELECT SUM(locstock.reorderlevel)
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid ".
@@ -3356,7 +3356,7 @@ function PerformanceItemsInCategory($ReportType, $CategoryId, $maxdays, $percent
 				AND lastcategoryupdate ". $Sign . " '" . $StartDate. "'
 				AND klchangingprice = 0
 				AND klmovingdiscount50 = 0
-				AND klmovingoutlet = 0
+				AND klmovingdiscount80 = 0
 				AND (SELECT SUM(quantity)
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid
@@ -3546,6 +3546,9 @@ function ItemsNotTopSalesInShop($starttopitems, $endtopitems, $maxdays, $codesho
 						AND locstock.loccode = '". $codeshop ."') AS rl
 			FROM salesorderdetails, salesorders, stockmaster
 			WHERE salesorderdetails.orderno = salesorders.orderno ";
+	if ($categories == "DISC20"){
+		$SQL = $SQL . " AND stockmaster.categoryid = 'DISC20'";
+	}		
 	if ($categories == "DISC50"){
 		$SQL = $SQL . " AND stockmaster.categoryid = 'DISC50'";
 	}		
@@ -3553,7 +3556,7 @@ function ItemsNotTopSalesInShop($starttopitems, $endtopitems, $maxdays, $codesho
 		$SQL = $SQL . " AND stockmaster.categoryid = 'DISC80'";
 	}		
 	if ($categories == "ACTIVE"){
-		$SQL = $SQL . " AND stockmaster.categoryid NOT IN ('DISC50', 'DISC80')";
+		$SQL = $SQL . " AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_DISCOUNT . " ";
 	}		
 	$SQL = $SQL . " AND stockmaster.discontinued = 0
 				AND salesorderdetails.stkcode = stockmaster.stockid
@@ -3570,10 +3573,10 @@ function ItemsNotTopSalesInShop($starttopitems, $endtopitems, $maxdays, $codesho
 			if ($myrow['rl'] > 0){
 				if($showHeader){
 					if ($categories == "DISC50"){
-						echo '<p class="page_title_text" align="center"><strong>' . 'NOT ' . $endtopitems . ' top sales items DISCOUNTED available in ' . $codeshop . ' shop. ' . '</strong></p>';
+						echo '<p class="page_title_text" align="center"><strong>' . 'NOT ' . $endtopitems . ' top sales items 50% DISCOUNT available in ' . $codeshop . ' shop. ' . '</strong></p>';
 					}		
 					if ($categories == "DISC80"){
-						echo '<p class="page_title_text" align="center"><strong>' . 'NOT ' . $endtopitems . ' top sales items OUTLET available in ' . $codeshop . ' shop. ' . '</strong></p>';
+						echo '<p class="page_title_text" align="center"><strong>' . 'NOT ' . $endtopitems . ' top sales items 80% DISCOUNT available in ' . $codeshop . ' shop. ' . '</strong></p>';
 					}		
 					if ($categories == "ACTIVE"){
 						echo '<p class="page_title_text" align="center"><strong>' . 'NOT ' . $endtopitems . ' top sales items NOT DISCOUNTED OR OUTLET available in ' . $codeshop . ' shop. ' . '</strong></p>';
@@ -3639,19 +3642,25 @@ function TopSalesNotInEnoughShops($starttopitems, $endtopitems, $maxdays, $minsh
 						AND locstock.loccode LIKE 'TOK%') AS availableshops
 			FROM salesorderdetails, salesorders, stockmaster
 			WHERE salesorderdetails.orderno = salesorders.orderno ";
+	if ($categories == "DISC20"){
+		$SQL = $SQL . " AND stockmaster.categoryid = 'DISC20'";
+	}		
 	if ($categories == "DISC50"){
 		$SQL = $SQL . " AND stockmaster.categoryid = 'DISC50'";
 	}		
 	if ($categories == "DISC80"){
 		$SQL = $SQL . " AND stockmaster.categoryid = 'DISC80'";
 	}		
-	if ($categories == "ACTIVE"){
-		$SQL = $SQL . " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_ACTIVE . "";
+	if ($categories == "TEST"){
+		$SQL = $SQL . " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_TEST . "";
+	}		
+	if ($categories == "STABLE"){
+		$SQL = $SQL . " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_STABLE . "";
 	}		
 	$SQL = $SQL . " AND stockmaster.discontinued = 0
 					AND stockmaster.klchangingprice = 0
 					AND stockmaster.klmovingdiscount50 = 0
-					AND stockmaster.klmovingoutlet = 0
+					AND stockmaster.klmovingdiscount80 = 0
 				AND salesorderdetails.stkcode = stockmaster.stockid
 				AND salesorderdetails.actualdispatchdate >= '" . $StartDate . "'
 			GROUP BY salesorderdetails.stkcode
@@ -3665,14 +3674,17 @@ function TopSalesNotInEnoughShops($starttopitems, $endtopitems, $maxdays, $minsh
 		while ($myrow = DB_fetch_array($result)) {
 			if (($myrow['availableshops'] < $minshops) && ($myrow['qoh'] > $myrow['availableshops'])){
 				if($showHeader){
+					if ($categories == "DISC20"){
+						echo '<p class="page_title_text" align="center"><strong>' . $endtopitems . ' Top sales items 20% Discount available in less than ' . $minshops . ' shops. ' . '</strong></p>';
+					}		
 					if ($categories == "DISC50"){
-						echo '<p class="page_title_text" align="center"><strong>' . $endtopitems . ' Top sales items DISCOUNTED available in less than ' . $minshops . ' shops. ' . '</strong></p>';
+						echo '<p class="page_title_text" align="center"><strong>' . $endtopitems . ' Top sales items 50% Discount available in less than ' . $minshops . ' shops. ' . '</strong></p>';
 					}		
 					if ($categories == "DISC80"){
-						echo '<p class="page_title_text" align="center"><strong>' . $endtopitems . ' Top sales items OUTLET available in less than ' . $minshops . ' shops. ' . '</strong></p>';
+						echo '<p class="page_title_text" align="center"><strong>' . $endtopitems . ' Top sales items 80% Discount available in less than ' . $minshops . ' shops. ' . '</strong></p>';
 					}		
-					if ($categories == "ACTIVE"){
-						echo '<p class="page_title_text" align="center"><strong>' . $endtopitems . ' Top sales items NOT DISCOUNTED, OUTLET, CHANGING PRICE available in less than ' . $minshops . ' shops. ' . '</strong></p>';
+					if ($categories == "STABLE"){
+						echo '<p class="page_title_text" align="center"><strong>' . $endtopitems . ' Top sales items NOT DISCOUNTED OR CHANGING PRICE available in less than ' . $minshops . ' shops. ' . '</strong></p>';
 					}		
 					echo '<div>';
 					echo '<table class="selection">';
@@ -3733,7 +3745,7 @@ function GoodsJustArrived($kind, $location, $numdays, $RootPath, $db){
 				AND stockmaster.categoryid = stockcategory.categoryid
 				AND stockmaster.klchangingprice = 0
 				AND stockmaster.klmovingdiscount50 = 0
-				AND stockmaster.klmovingoutlet = 0
+				AND stockmaster.klmovingdiscount80 = 0
 				AND stockcategory.stocktype = 'F'
 				AND stockmoves.loccode ='" . $location . "'
 				AND stockmoves.type ='" . $type . "'
@@ -3865,10 +3877,11 @@ function ActiveItemsNoSales($maxdays, $group, $RootPath, $db){
 					AND stockmaster.discontinued = 0 
 					AND stockmaster.klchangingprice = 0
 					AND stockmaster.klmovingdiscount50 = 0
-					AND stockmaster.klmovingoutlet = 0
+					AND stockmaster.klmovingdiscount80 = 0
 					AND stockmaster.lastcategoryupdate <= '" . $FromDate . "'";
 	if ($group == "ACTIVE"){
-		$SQL = $SQL . "	AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_ACTIVE ." ";
+		$SQL = $SQL . "	AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_TEST ." ";
+		$SQL = $SQL . 		" OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_STABLE ." ";
 		$SQL = $SQL . 		" OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING .") ";
 		$SQL = $SQL . " AND stockmaster.klmovingdiscount50 = 0";
 	}else{
@@ -3899,12 +3912,10 @@ function ActiveItemsNoSales($maxdays, $group, $RootPath, $db){
 	$result = DB_query($SQL);		
 	
 	if (DB_num_rows($result) != 0){
-		if ($group == "DISC50"){
-			echo '<p class="page_title_text" align="center"><strong>' . _('DISCOUNTED Items with NO sales on last ') . $maxdays . ' days and NO current PO.</strong></p>';
-		}elseif($group == "NOPOSI"){
-			echo '<p class="page_title_text" align="center"><strong>' . _('NO + PURCHASE ORDER Items with NO sales on last ') . $maxdays . ' days and NO current PO. Consider change to Discount or Obsolete.</strong></p>';
+		if ($group == "ACTIVE"){
+			echo '<p class="page_title_text" align="center"><strong>' . _('ACTIVE Items with NO sales on last ') . $maxdays . ' days and NO current PO.</strong></p>';
 		}else{
-			echo '<p class="page_title_text" align="center"><strong>' . _('ACTIVE Items with NO sales on last ') . $maxdays . ' days and NO current PO. Consider change to No Buy or Discount or Obsolete.</strong></p>';
+			echo '<p class="page_title_text" align="center"><strong>' . $group . _(' Items with NO sales on last ') . $maxdays . ' days and NO current PO. Consider change to No Buy or Discount or Obsolete.</strong></p>';
 		}				
 		echo '<div>';
 		echo '<table class="selection">';
@@ -4071,7 +4082,7 @@ function PriceBelowStandard($Stockcat, $Factor, $Tolerance, $MinQoh, $RootPath, 
 				AND stockmaster.discontinued = 0
 				AND stockmaster.klchangingprice = 0
 				AND stockmaster.klmovingdiscount50 = 0
-				AND stockmaster.klmovingoutlet = 0
+				AND stockmaster.klmovingdiscount80 = 0
 				AND ((SELECT SUM(quantity)
 					FROM locstock
 					WHERE stockmaster.stockid = locstock.stockid) >= " . $MinQoh . ")
@@ -4170,11 +4181,12 @@ function PriceWrongRounding($RootPath, $db){
 				(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS standardcost
 			FROM stockmaster				
 			WHERE stockmaster.discontinued = 0
-				AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_ACTIVE . "
+				AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_TEST . "
+					OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_STABLE . "
 					OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING . ")
 				AND stockmaster.klchangingprice = 0
 				AND stockmaster.klmovingdiscount50 = 0
-				AND stockmaster.klmovingoutlet = 0
+				AND stockmaster.klmovingdiscount80 = 0
 			ORDER BY stockmaster.stockid";
 
 	$result = DB_query($SQL);
@@ -4262,7 +4274,7 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $Tolerance, $MinQo
 				AND stockmaster.discontinued = 0
 				AND stockmaster.klchangingprice = 0
 				AND stockmaster.klmovingdiscount50 = 0
-				AND stockmaster.klmovingoutlet = 0
+				AND stockmaster.klmovingdiscount80 = 0
 				AND stockmaster.lastcategoryupdate <= '". $StartDate."'
 				AND ((SELECT SUM(quantity)
 					FROM locstock
@@ -4376,7 +4388,7 @@ function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $Tolerance, $MinQoh, $
 				AND stockmaster.discontinued = 0
 				AND stockmaster.klchangingprice = 0
 				AND stockmaster.klmovingdiscount50 = 0
-				AND stockmaster.klmovingoutlet = 0
+				AND stockmaster.klmovingdiscount80 = 0
 				AND stockmaster.lastcategoryupdate <= '". $StartDate."'
 				AND ((SELECT SUM(quantity)
 					FROM locstock
@@ -4850,7 +4862,7 @@ function GoodSellingItemsInCategory($CategoryId, $days, $minsales, $RootPath, $d
 			WHERE categoryid = '" . $CategoryId . "'
 				AND stockmaster.klchangingprice = 0
 				AND stockmaster.klmovingdiscount50 = 0
-				AND stockmaster.klmovingoutlet = 0
+				AND stockmaster.klmovingdiscount80 = 0
 				AND (SELECT SUM(quantity)
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid
@@ -5569,13 +5581,13 @@ function ItemsMovingToOutletDelayed($NumDays, $RootPath, $db){
 				(SELECT sum(quantity)
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid) AS qohtotal,
-				klmovetooutlet.countermoveoutlet,
-				klmovetooutlet.startprocessdate,
-				klmovetooutlet.discountcategory
-			FROM stockmaster, klmovetooutlet					
-			WHERE stockmaster.stockid = klmovetooutlet.stockid
-				AND klmovetooutlet.endprocessdate = '0000-00-00'
-				AND klmovetooutlet.startprocessdate <= '". $StartDate ."'";
+				klmovetodiscount80.countermoveoutlet,
+				klmovetodiscount80.startprocessdate,
+				klmovetodiscount80.discountcategory
+			FROM stockmaster, klmovetodiscount80					
+			WHERE stockmaster.stockid = klmovetodiscount80.stockid
+				AND klmovetodiscount80.endprocessdate = '0000-00-00'
+				AND klmovetodiscount80.startprocessdate <= '". $StartDate ."'";
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Items delayed in Move To Outlet Procedure for more than '). $NumDays . ' days. </strong></p>';
@@ -5647,13 +5659,13 @@ function over_or_below_limit($Request, $Sign, $Limit, $RootPath, $db){
 	}elseif ($Request =="Items moving to outlet"){
 		$SQL = "SELECT COUNT(*)
 				FROM stockmaster
-				WHERE stockmaster.klmovingoutlet != 0";
+				WHERE stockmaster.klmovingdiscount80 != 0";
 	}elseif ($Request =="Items changing price or moving category"){
 		$SQL = "SELECT COUNT(*)
 				FROM stockmaster
 				WHERE stockmaster.klchangingprice != 0
 					OR stockmaster.klmovingdiscount50 != 0
-					OR stockmaster.klmovingoutlet != 0";
+					OR stockmaster.klmovingdiscount80 != 0";
 	}
 	
 	$result = DB_query($SQL);

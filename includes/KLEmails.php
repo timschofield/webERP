@@ -85,9 +85,25 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 
 			
 		/* MOVE TO DISCOUNT EMAILS */
+		case "MoveToDiscount20Started":
+			/* Move To Discount Started */
+			$EmailSubject = "Movement to 20% Discount Category procedure just started for item: ". $Param1;
+			$EmailText = $EmailSubject . "\n\n" . 
+						"All existing pieces of the item will return to kantor shortly." . "\n\n" . 
+						"If there is any problem or delay, please email Laia and Memo.";
+			$EmailAddress = "kl-shopsupport@kapal-laut.com";
+			break;
 		case "MoveToDiscount50Started":
 			/* Move To Discount Started */
 			$EmailSubject = "Movement to 50% Discount Category procedure just started for item: ". $Param1;
+			$EmailText = $EmailSubject . "\n\n" . 
+						"All existing pieces of the item will return to kantor shortly." . "\n\n" . 
+						"If there is any problem or delay, please email Laia and Memo.";
+			$EmailAddress = "kl-shopsupport@kapal-laut.com";
+			break;
+		case "MoveToDiscount80Started":
+			/* Move To Discount Started */
+			$EmailSubject = "Movement to 80% Discount Category procedure just started for item: ". $Param1;
 			$EmailText = $EmailSubject . "\n\n" . 
 						"All existing pieces of the item will return to kantor shortly." . "\n\n" . 
 						"If there is any problem or delay, please email Laia and Memo.";
@@ -113,38 +129,6 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 			$EmailText = $EmailSubject . "\n\n" . 
 						$Param2 . " is ready at kantor. Stock = " . $Param3 . " pcs." .  "\n\n" .
 						"Please go to webERP Move To Discount Step02 and finish the process ASAP.";
-			$EmailAddress = "kl-shopsupport@kapal-laut.com";
-			break;
-
-		/* MOVE TO OUTLET EMAILS */
-		case "MoveToOutletStarted":
-			/* Move To Outlet Started */
-			$EmailSubject = "Movement to Outlet Category procedure just started for item: ". $Param1;
-			$EmailText = $EmailSubject . "\n\n" . 
-						"All existing pieces of the item will return to kantor shortly." . "\n\n" . 
-						"If there is any problem or delay, please email Laia.";
-			$EmailAddress = "kl-shopsupport@kapal-laut.com";
-			break;
-		case "MoveToOutletFromConsignment":
-			$EmailSubject = "Return item from consignment locations: ". $Param1;
-			$EmailText = $EmailSubject . "\n\n" . 
-						"Please return all the pieces for this item in consignment locations to kantor ASAP, as the item is moving to Outlet discount procedure." . "\n\n" .
-						"Locations considered: Waterbom & Ayana."  . "\n\n" .
-						"If there is some stock at Sheraton, please notify Ike or Ricard as it is an exception and must checked.";
-			$EmailAddress = "kl-shopsupport@kapal-laut.com";
-			break;
-		case "PrintOutletPriceTags":
-			/* Print Outlet Pricetags */ 
-			$EmailSubject = "Stamp Outlet Pricetags needed for: ". $Param1;
-			$EmailText = $EmailSubject . "\n\n" . 
-						"Please stamp ALL pricetags with the -" . $Param2 ."% stamp and get them ready at kantor.";
-			$EmailAddress = "kl-shopsupport@kapal-laut.com";
-			break;
-		case "ItemReadyMoveToOutletStep02":
-			$EmailSubject = "Item: ". $Param1 . " ready for Step02 of Move To Outlet.";
-			$EmailText = $EmailSubject . "\n\n" . 
-						$Param2 . " is ready at kantor. Stock = " . $Param3 . " pcs." .  "\n\n" .
-						"Please go to webERP Move To Outlet Step02 and finish the process ASAP.";
 			$EmailAddress = "kl-shopsupport@kapal-laut.com";
 			break;
 

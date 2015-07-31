@@ -34,7 +34,7 @@ if (isset($_POST['submit'])) {
 	//first off validate inputs sensible round_price($myrow['retailprice'], "UP")
 	$result = DB_query("SELECT klchangingprice, 
 								klmovingdiscount50,
-								klmovingoutlet,
+								klmovingdiscount80,
 								categoryid, 
 								discontinued 
 						FROM stockmaster 
@@ -65,7 +65,7 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'MovingDiscount';
 		$i++;
 		prnMsg(_('This item is already being Moved to Discount procedure. Finish or delete this process first'),'error');
-	}elseif ($myrow['klmovingoutlet'] == 1) {
+	}elseif ($myrow['klmovingdiscount80'] == 1) {
 		$InputError = 1;
 		$Errors[$i] = 'MovingOutlet';
 		$i++;

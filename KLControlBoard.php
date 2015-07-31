@@ -160,6 +160,7 @@ if ($KL_SystemAdmin
 	OR $KL_PurchasingTeam 
 	OR $KL_ShopSupportTeam){
 	
+	DiscountedItemsWithWrongDiscount("DISC20", "20", $RootPath, $db);
 	DiscountedItemsWithWrongDiscount("DISC50", "50", $RootPath, $db);
 //	DiscountedItemsWithWrongDiscount("DISC80", "80", $RootPath, $db);
 	NotDiscountedItemsWithDiscount($RootPath, $db);
@@ -317,8 +318,9 @@ if ($KL_PurchasingManager){
 	CategoryItemsNotInShop("DISC50", "TOKSU", $RootPath, $db);
 	CategoryItemsNotInShop("DISC80", "TOKSU", $RootPath, $db);
 
-	ItemsInCategoryWithStockKantorButReorderLevelTokoZero("DISC80", $RootPath, $db);
+	ItemsInCategoryWithStockKantorButReorderLevelTokoZero("DISC20", $RootPath, $db);
 	ItemsInCategoryWithStockKantorButReorderLevelTokoZero("DISC50", $RootPath, $db);
+	ItemsInCategoryWithStockKantorButReorderLevelTokoZero("DISC80", $RootPath, $db);
 }
 
 if ($KL_KantorManager 
@@ -413,19 +415,20 @@ if ($KL_PurchasingManager
 	GoodSellingItemsInCategory("NOPOFJ", 15, 6, $RootPath, $db);
 	GoodSellingItemsInCategory("NOPOAC", 15, 6, $RootPath, $db);
 
-	ActiveItemsNoSales( 30, "ACTIVE", $RootPath, $db);
+	ActiveItemsNoSales( 30, "STABLE", $RootPath, $db);
 
 	ActiveItemsNoSales( 45, "NOPOSI", $RootPath, $db);
 	ActiveItemsNoSales( 45, "NOPOSS", $RootPath, $db);
 	ActiveItemsNoSales( 45, "NOPOFJ", $RootPath, $db);
 	ActiveItemsNoSales( 45, "NOPOAC", $RootPath, $db);
 
+	ActiveItemsNoSales( 45, "DISC20", $RootPath, $db);
 	ActiveItemsNoSales( 45, "DISC50", $RootPath, $db);
 	ActiveItemsNoSales(120, "DISC80", $RootPath, $db);
 
-	TopSalesNotInEnoughShops(  1, 500, 60, 11, "ACTIVE", $RootPath, $db);
-	TopSalesNotInEnoughShops(500, 800, 60,  9, "ACTIVE", $RootPath, $db);
-	TopSalesNotInEnoughShops(800,1200, 60,  7, "ACTIVE", $RootPath, $db);
+	TopSalesNotInEnoughShops(  1, 500, 60, 11, "STABLE", $RootPath, $db);
+	TopSalesNotInEnoughShops(500, 800, 60,  9, "STABLE", $RootPath, $db);
+	TopSalesNotInEnoughShops(800,1200, 60,  7, "STABLE", $RootPath, $db);
 //	TopSalesNotInEnoughShops(  1,  50, 60, 3, "DISC50", $RootPath, $db);
 
 	ItemsNotTopSalesInShop(1, 900, 60, "TOK66", "ACTIVE", $RootPath, $db);

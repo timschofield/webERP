@@ -13,23 +13,36 @@ function SetChangePriceFlag($Flag, $StockId, $db){
 	prnMsg($msg , 'success');
 }
 
-function SetMoveDiscount50Flag($Flag, $StockId, $db){
+function SetMoveDiscount20Flag($Flag, $StockId, $db){
 	/* sets $flag value to flag in stockmaster */
 	$sql = "UPDATE stockmaster 
-			SET klmovingdiscount50 = '" . $Flag . "'
+			SET klmovingdiscount20 = '" . $Flag . "'
 			WHERE stockid = '".$StockId."'";
 
-	$msg = _('Changing Move To Discount Flag set to') . ' ' . $Flag . ' ' . _('for item code') . ' ' . $StockId;
+	$msg = _('Changing Move To 20% Discount Flag set to') . ' ' . $Flag . ' ' . _('for item code') . ' ' . $StockId;
 	$ErrMsg = _('The flag update failed because');
 	$DbgMsg = _('The SQL that was used and failed was');
 	$result = DB_query($sql,$ErrMsg, $DbgMsg);
 	prnMsg($msg , 'success');
 }
 
-function SetMoveOutletFlag($Flag, $StockId, $db){
+function SetMoveDiscount50Flag($Flag, $StockId, $db){
+	/* sets $flag value to flag in stockmaster */
+	$sql = "UPDATE stockmaster 
+			SET klmovingdiscount50 = '" . $Flag . "'
+			WHERE stockid = '".$StockId."'";
+
+	$msg = _('Changing Move To 50% Discount Flag set to') . ' ' . $Flag . ' ' . _('for item code') . ' ' . $StockId;
+	$ErrMsg = _('The flag update failed because');
+	$DbgMsg = _('The SQL that was used and failed was');
+	$result = DB_query($sql,$ErrMsg, $DbgMsg);
+	prnMsg($msg , 'success');
+}
+
+function SetMoveDiscount80Flag($Flag, $StockId, $db){
 	/* sets $flag value to  flag in stockmaster */
 	$sql = "UPDATE stockmaster 
-			SET klmovingoutlet = '" . $Flag . "'
+			SET klmovingdiscount80 = '" . $Flag . "'
 			WHERE stockid = '".$StockId."'";
 
 	$msg = _('Changing Move To Outlet Flag set to') . ' ' . $Flag . ' ' . _('for item code') . ' ' . $StockId;
@@ -64,8 +77,8 @@ function SetEndDateMoveDiscount50($StockId, $db){
 	prnMsg($msg , 'success');
 }
 
-function SetEndDateMoveOutlet($StockId, $db){
-	$sql = "UPDATE klmovetooutlet 
+function SetEndDateMoveDiscount80($StockId, $db){
+	$sql = "UPDATE klmovetodiscount80 
 			SET endprocessdate = '" . Date('Y-m-d') . "'
 			WHERE stockid = '".$StockId."'";
 
@@ -471,12 +484,12 @@ function SendEmailMoveToOutletReadyForStep02($db, $EmailText){
 				(SELECT sum(quantity)
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid) AS qohtotal,
-				klmovetooutlet.countermoveoutlet,
-				klmovetooutlet.startprocessdate,
-				klmovetooutlet.discountcategory
-			FROM stockmaster, klmovetooutlet					
-			WHERE stockmaster.stockid = klmovetooutlet.stockid
-				AND klmovetooutlet.endprocessdate = '0000-00-00'";
+				klmovetodiscount80.countermoveoutlet,
+				klmovetodiscount80.startprocessdate,
+				klmovetodiscount80.discountcategory
+			FROM stockmaster, klmovetodiscount80					
+			WHERE stockmaster.stockid = klmovetodiscount80.stockid
+				AND klmovetodiscount80.endprocessdate = '0000-00-00'";
 				
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){

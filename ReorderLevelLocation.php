@@ -51,7 +51,7 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 				quantity,
 				stockmaster.klchangingprice,
 				stockmaster.klmovingdiscount50,
-				stockmaster.klmovingoutlet,
+				stockmaster.klmovingdiscount80,
 				decimalplaces,
 				canupd
 			FROM locstock INNER JOIN stockmaster
@@ -134,7 +134,7 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 			$Notes = "Changing price";
 		}elseif($myrow['klmovingdiscount50']){
 			$Notes = "Moving to discount";
-		}elseif($myrow['klmovingoutlet']){
+		}elseif($myrow['klmovingdiscount80']){
 			$Notes = "Moving to outlet";
 		}else{
 			$Notes = "";

@@ -96,7 +96,7 @@ if (!(isset($_POST['Search']))) {
 				AND stockmaster.stockid = locstock.stockid
 				AND stockcategory.stocktype = 'F'
 				AND stockmaster.categoryid NOT IN('SHDISP', 'SHCONS') ";
-	$SQL = $SQL . "	AND stockmaster.categoryid NOT IN('DISC50') ";
+//	$SQL = $SQL . "	AND stockmaster.categoryid NOT IN('DISC50') ";
 	$SQL = $SQL . "	AND stockmaster.discontinued = 0 
 				AND locstock.reorderlevel = 0 
 				AND locstock.loccode = '" . $_POST['Shop'] . "'

@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.inc');
-$Title = _('KL Move To 50% Discount -> Step 02');
+$Title = _('KL Move To 80% Discount -> Step 02');
 include('includes/header.inc');
 include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
@@ -44,15 +44,15 @@ include('includes/KLPrices.php');
 				(SELECT sum(quantity)
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid) AS qohtotal,
-				klmovetodiscount50.countermovediscount,
-				klmovetodiscount50.startprocessdate,
-				klmovetodiscount50.discountcategory
-			FROM stockmaster, klmovetodiscount50					
-			WHERE stockmaster.stockid = klmovetodiscount50.stockid
-				AND klmovetodiscount50.endprocessdate = '0000-00-00'";
+				klmovetodiscount80.countermoveoutlet,
+				klmovetodiscount80.startprocessdate,
+				klmovetodiscount80.discountcategory
+			FROM stockmaster, klmovetodiscount80					
+			WHERE stockmaster.stockid = klmovetodiscount80.stockid
+				AND klmovetodiscount80.endprocessdate = '0000-00-00'";
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Items ready to be moved to 50% Discount in kantor') . '</strong></p>';
+		echo '<p class="page_title_text" align="center"><strong>' . _('Items ready to be moved to 80% Discount in kantor') . '</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
@@ -88,7 +88,7 @@ include('includes/KLPrices.php');
 				){
 				// if we have ONLY stock in kantor (or in locations not needing procedure) and NO transit, all the QOH is at kantor
 				// We can apply the new discount category
-				$NewDiscountCategory = '<a href="' . $RootPath . '/KLChangeToDiscount50.php?Item=' . $myrow['stockid'] . '&Discount='. $myrow['discountcategory'] . '&Action=Change">' . $myrow['discountcategory'] . '</a>';
+				$NewDiscountCategory = '<a href="' . $RootPath . '/KLChangeToDiscount80.php?Item=' . $myrow['stockid'] . '&Discount='. $myrow['discountcategory'] . '&Action=Change">' . $myrow['discountcategory'] . '</a>';
 			}else{
 				$NewDiscountCategory = $myrow['discountcategory'];
 			}
@@ -105,7 +105,7 @@ include('includes/KLPrices.php');
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					</tr>', 
-					locale_number_format($myrow['countermovediscount'],0),
+					locale_number_format($myrow['countermoveoutlet'],0),
 					$CodeLink, 
 					$myrow['description'],
 					ConvertSQLDate($myrow['startprocessdate']),
@@ -123,7 +123,7 @@ include('includes/KLPrices.php');
 		echo '</table>
 				</div>';
 	}else{
-		prnMsg("No items to be moved to 50% discount at the moment", "success");
+		prnMsg("No items to be moved to 80% Discount at the moment", "success");
 	}
 
 include('includes/footer.inc');

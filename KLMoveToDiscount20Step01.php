@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.inc');
-$Title = _('KL Move Item To Outlet -> Step 01');
+$Title = _('KL Move Item To 20% Discount -> Step 01');
 include('includes/header.inc');
 include('includes/KLDefines.php');
 include('includes/KLPrices.php');
@@ -19,7 +19,7 @@ if (isset($Errors)) {
 
 $Errors = array();
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('KL Move Item to Outlet Category') . '" alt="" />' . ' ' . $Title.'</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('KL Move Item to 20% Discount Category') . '" alt="" />' . ' ' . $Title.'</p>';
 
 if (isset($_POST['submit'])) {
 
@@ -32,8 +32,9 @@ if (isset($_POST['submit'])) {
 
 	//first off validate inputs sensible
 	$result = DB_query("SELECT klchangingprice, 
+								klmovingdiscount20,
 								klmovingdiscount50,
-								klmovingoutlet,
+								klmovingdiscount80,
 								categoryid, 
 								discontinued 
 						FROM stockmaster 
@@ -44,31 +45,36 @@ if (isset($_POST['submit'])) {
 		$InputError = 1;
 		$Errors[$i] = 'StockId';
 		$i++;
-	}elseif ($_POST['DiscountCategory'] != '80') {
+	}elseif ($_POST['DiscountCategory'] != '20') {
 		$InputError = 1;
 		$Errors[$i] = 'DiscountCategory';
 		$i++;
-		prnMsg(_('The Outlet Type must be 80 (so far, only 80% discount available for Outlet Category)'),'error');
-	}elseif ($myrow['categoryid'] == 'DISC80') {
+		prnMsg(_('The Discount Type must be 20 (so far, only 20% discount available for Discount Category)'),'error');
+	}elseif ($myrow['categoryid'] == 'DISC20') {
 		$InputError = 1;
-		$Errors[$i] = 'AlreadyOutlet';
+		$Errors[$i] = 'AlreadyDiscount20';
 		$i++;
-		prnMsg(_('This item is already in DISC80 category. No need to move it.'),'error');
+		prnMsg(_('This item is already in 20% DISCOUNT category. No need to move it.'),'error');
 	}elseif ($myrow['klchangingprice'] == 1) {
 		$InputError = 1;
 		$Errors[$i] = 'ChangingPrice';
 		$i++;
 		prnMsg(_('This item is already in Change Price procedure. Finish or delete this process first'),'error');
+	}elseif ($myrow['klmovingdiscount20'] == 1) {
+		$InputError = 1;
+		$Errors[$i] = 'MovingDiscount20';
+		$i++;
+		prnMsg(_('This item is already in Move To 20% Discount procedure. No need to do it twice'),'error');
 	}elseif ($myrow['klmovingdiscount50'] == 1) {
 		$InputError = 1;
-		$Errors[$i] = 'MovingDiscount';
+		$Errors[$i] = 'MovingDiscount50';
 		$i++;
-		prnMsg(_('This item is already in Move To Discount procedure. Finish or delete this process first'),'error');
-	}elseif ($myrow['klmovingoutlet'] == 1) {
+		prnMsg(_('This item is already in Move To 50% Discount procedure. Finish or delete this process first.'),'error');
+	}elseif ($myrow['klmovingdiscount80'] == 1) {
 		$InputError = 1;
 		$Errors[$i] = 'MovingOutlet';
 		$i++;
-		prnMsg(_('This item is already in Move To Outlet procedure. No need to do it twice.'),'error');
+		prnMsg(_('This item is already in Move To 80% Discount procedure. Finish or delete this process first.'),'error');
 	}elseif ($myrow['discontinued'] == 1) {
 		$InputError = 1;
 		$Errors[$i] = 'Discontinued';
@@ -80,45 +86,45 @@ if (isset($_POST['submit'])) {
 	  $_POST['Stockid']='';
 	}
 	if (!isset($_POST['DiscountCategory'])){
-	  $_POST['DiscountCategory']='80';
+	  $_POST['DiscountCategory']='20';
 	}
 
 	if (isset($SelectedMovement) AND $InputError !=1) {
 		/*SelectedMovement could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
-		$sql = "UPDATE klmovetooutlet 
+		$sql = "UPDATE klmovetodiscount20 
 				SET stockid='" . $_POST['Stockid'] . "',
 					startprocessdate='" . Date('Y-m-d') . "',
-					discountcategory='80',
+					discountcategory='20',
 					endprocessdate='0000-00-00'
-				WHERE countermoveoutlet = '".$SelectedMovement."'";
+				WHERE countermovediscount = '".$SelectedMovement."'";
 
-		$msg = _('KL Move Item To Outlet Step 01 record for') . ' ' . $_POST['Stockid'] . ' ' . _('has been updated');
+		$msg = _('KL Move Item To 20% Discount Step 01 record for') . ' ' . $_POST['Stockid'] . ' ' . _('has been updated');
 	} elseif ($InputError !=1) {
 
-		$sql = "INSERT INTO klmovetooutlet 
+		$sql = "INSERT INTO klmovetodiscount20 
 						(stockid,
 						startprocessdate,
 						discountcategory,
 						endprocessdate)
 				VALUES ('" . $_POST['Stockid'] . "',
 					'" . Date('Y-m-d') . "',
-					'80',
+					'20',
 					'0000-00-00')";
-		$msg = _('KL Move Item To Outlet Step 01 record for') . ' ' . $_POST['Stockid'] . ' ' . _('has been created');
+		$msg = _('KL Move Item To 20% Discount Step 01 record for') . ' ' . $_POST['Stockid'] . ' ' . _('has been created');
 	}
 	if ($InputError !=1) {
 		//run the SQL from either of the above possibilites
 		DB_Txn_Begin();
 
-		$ErrMsg = _('The insert or update of the KL Move Item To Outlet Step 01 failed because');
+		$ErrMsg = _('The insert or update of the KL Move Item To 20% Discount Step 01 failed because');
 		$DbgMsg = _('The SQL that was used and failed was');
 		$result = DB_query($sql,$ErrMsg, $DbgMsg);
 		prnMsg($msg , 'success');
 
 		SetRLZeroAtPointOfSales($_POST['Stockid'], $db);
-		SetMoveOutletFlag(1,$_POST['Stockid'], $db);
+		SetMoveDiscount20Flag(1,$_POST['Stockid'], $db);
 
-		KLSendEmail("MoveToOutletStarted", "Silent", $_POST['Stockid']);
+		KLSendEmail("MoveToDiscount20Started", "Silent", $_POST['Stockid']);
 
 		// check if there is stock in consignment, so we need to send an extra email to kantor team
 		$sql = "SELECT SUM(quantity)
@@ -129,7 +135,7 @@ if (isset($_POST['submit'])) {
 		$myrow = DB_fetch_array($result);
 		if ($myrow[0] != 0){
 			// send the email as there is some stock in consignment
-			KLSendEmail("MoveToOutletFromConsignment", "Silent", $_POST['Stockid']);
+			KLSendEmail("MoveToDiscountFromConsignment", "Silent", $_POST['Stockid']);
 		}
 
 		DB_Txn_Commit();
@@ -142,17 +148,17 @@ if (isset($_POST['submit'])) {
 } elseif (isset($_GET['delete'])) {
 	//the link to delete a selected record was clicked instead of the submit button
 	$sql = "SELECT stockid
-			FROM klmovetooutlet
-			WHERE countermoveoutlet='".$SelectedMovement."'";
+			FROM klmovetodiscount20
+			WHERE countermovediscount='".$SelectedMovement."'";
 	$result = DB_query($sql);
 	$myrow = DB_fetch_array($result);
-	SetMoveOutletFlag(0,$myrow['stockid'], $db);
+	SetMoveDiscount20Flag(0,$myrow['stockid'], $db);
 
-	$sql="DELETE FROM klmovetooutlet WHERE countermoveoutlet='". $SelectedMovement."'";
-	$ErrMsg = _('The Move Item To Outlet Step 01 could not be deleted because');
+	$sql="DELETE FROM klmovetodiscount20 WHERE countermovediscount='". $SelectedMovement."'";
+	$ErrMsg = _('The Move Item To 20% Discount Step 01 could not be deleted because');
 	$result = DB_query($sql,$ErrMsg);
 
-	prnMsg(_('KL Move Item To Outlet Step 01') . ' ' . $SelectedMovement . ' ' . _('has been deleted from the database'),'success');
+	prnMsg(_('KL Move Item To 20% Discount Step 01') . ' ' . $SelectedMovement . ' ' . _('has been deleted from the database'),'success');
 
 	unset($SelectedMovement);
 	unset($delete);
@@ -166,11 +172,11 @@ then none of the above are true and the list of Sales-persons will be displayed 
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
-	$sql = "SELECT countermoveoutlet,
+	$sql = "SELECT countermovediscount,
 				stockid,
 				discountcategory,
 				startprocessdate
-			FROM klmovetooutlet
+			FROM klmovetodiscount20
 			WHERE endprocessdate = '0000-00-00'";
 	$result = DB_query($sql);
 
@@ -178,7 +184,7 @@ or deletion of the records*/
 	echo '<tr>
 			<th>' . _('Move #') . '</th>
 			<th>' . _('Item Code') . '</th>
-			<th>' . _('Outlet Discount') . '</th>
+			<th>' . _('Discount') . '</th>
 			<th>' . _('Start Date') . '</th>
 		</tr>';
 	$k=0;
@@ -197,23 +203,23 @@ or deletion of the records*/
 			<td class="number">%s</td>
 			<td>%s</td>
 			<td><a href="%sSelectedMovement=%s">'. _('Edit') . '</a></td>
-			<td><a href="%sSelectedMovement=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this movement to outlet?') . '\');">' . _('Delete') . '</a></td>
+			<td><a href="%sSelectedMovement=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this movement to 20% discount?') . '\');">' . _('Delete') . '</a></td>
 			</tr>',
-			$myrow['countermoveoutlet'],
+			$myrow['countermovediscount'],
 			$myrow['stockid'],
 			$myrow['discountcategory'],
 			ConvertSQLDate($myrow['startprocessdate']),
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-			$myrow['countermoveoutlet'],
+			$myrow['countermovediscount'],
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-			$myrow['countermoveoutlet']);
+			$myrow['countermovediscount']);
 
 	} //END WHILE LIST LOOP
 	echo '</table><br />';
 } //end of ifs and buts!
 
 if (isset($SelectedMovement)) {
-	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Show All Active Movements To Outlet') . '</a></div>';
+	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Show All Active Movements To 20% Discount') . '</a></div>';
 }
 
 if (! isset($_GET['delete'])) {
@@ -225,11 +231,11 @@ if (! isset($_GET['delete'])) {
 	if (isset($SelectedMovement)) {
 		//editing an existing Price Change
 
-		$sql = "SELECT countermoveoutlet,
+		$sql = "SELECT countermovediscount,
 					stockid,
 					discountcategory
-				FROM klmovetooutlet
-				WHERE countermoveoutlet='".$SelectedMovement."'";
+				FROM klmovetodiscount20
+				WHERE countermovediscount='".$SelectedMovement."'";
 
 		$result = DB_query($sql);
 		$myrow = DB_fetch_array($result);
@@ -248,7 +254,7 @@ if (! isset($_GET['delete'])) {
 	  $_POST['Stockid']='';
 	}
 	if (!isset($_POST['DiscountCategory'])){
-	  $_POST['DiscountCategory']='80';
+	  $_POST['DiscountCategory']='20';
 	}
 
 	echo '<tr>
@@ -256,7 +262,7 @@ if (! isset($_GET['delete'])) {
 			<td><input type="text" name="Stockid" size="20" maxlength="20" value="' . $_POST['Stockid'] . '" /></td>
 		</tr>';
 	echo '<tr>
-			<td>' . _('Outlet Category') . ':</td>
+			<td>' . _('Discount Category') . ':</td>
 			<td><input type="text" class="number" name="DiscountCategory" size="2" maxlength="2" value="' . $_POST['DiscountCategory'] . '" /></td>
 		</tr>';
 
@@ -265,7 +271,7 @@ if (! isset($_GET['delete'])) {
 		</table>
 		<br />
 		<div class="centre">
-			<input type="submit" name="submit" value="' . _('Enter Change To Outlet') . '" />
+			<input type="submit" name="submit" value="' . _('Start Change To 20% Discount') . '" />
 		</div>
         </div>
 		</form>';

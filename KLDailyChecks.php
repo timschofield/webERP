@@ -61,6 +61,7 @@ function KL_HourlyChecks($RootPath, $db, $EmailText=''){
 
 
 function KL_DailyMaintenanceDatabase($ShowMessages, $db, $EmailText = ''){
+	SetObsoleteForCategoryWithoutStock("DISC20", $ShowMessages, $db);
 	SetObsoleteForCategoryWithoutStock("DISC50", $ShowMessages, $db);
 	SetObsoleteForCategoryWithoutStock("DISC80", $ShowMessages, $db);
 	SetObsoleteForCategoryWithoutStock("NOPOSI", $ShowMessages, $db);
@@ -83,7 +84,7 @@ function KL_DailyMaintenanceDatabase($ShowMessages, $db, $EmailText = ''){
 	PurgeKLTable("kladjustrl","adjustdate", $ShowMessages, $db);
 	PurgeKLTable("klchangeprice","endprocessdate", $ShowMessages, $db);
 	PurgeKLTable("klmovetodiscount50","endprocessdate", $ShowMessages, $db);
-	PurgeKLTable("klmovetooutlet","endprocessdate", $ShowMessages, $db);
+	PurgeKLTable("klmovetodiscount80","endprocessdate", $ShowMessages, $db);
 	PurgeAuditTrailTable($ShowMessages, $db);
 	$EmailText = KL_DailyOptimizationDatabase($ShowMessages, $db, $EmailText);
 
@@ -161,7 +162,7 @@ function KL_DailyOptimizationDatabase($ShowMessages, $db, $EmailText = ''){
 								`klchangeprice` ,
 								`klfreeexchanges` ,
 								`klmovetodiscount50` ,
-								`klmovetooutlet` ,
+								`klmovetodiscount80` ,
 								`kloldprices` ,
 								`labelfields` ,
 								`labels` ,
