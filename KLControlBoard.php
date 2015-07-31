@@ -214,9 +214,9 @@ if ($KL_SystemAdmin){
 	BalanceAccountControl("111111209",          0,   15000000, $periodnow, $db);
 	BalanceAccountControl("111121105PT",100000000,  300000000, $periodnow, $db);
 	BalanceAccountControl("111131100",         -1,  300000000, $periodnow, $db);
-//	BalanceAccountControl("111510000",          0,  250000000, $periodnow, $db);
-//	BalanceAccountControl("111511000",  500000000, 1250000000, $periodnow, $db);
-	BalanceAccountControl("111511010",  150000000,  300000000, $periodnow, $db);
+//	BalanceAccountControl("111516000",          0,  250000000, $periodnow, $db);
+//	BalanceAccountControl("111517000",  500000000, 1250000000, $periodnow, $db);
+	BalanceAccountControl("111520000",  150000000,  300000000, $periodnow, $db);
 	BalanceAccountControl("111512000",   50000000,  150000000, $periodnow, $db);
 	BalanceAccountControl("111513000",         -1,          1, $periodnow, $db);
 //	BalanceAccountControl("111518000",   25000000,  100000000, $periodnow, $db);
