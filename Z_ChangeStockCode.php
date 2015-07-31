@@ -92,6 +92,7 @@ if (isset($_POST['ProcessStockChange'])){
 										height,
 										unitsdimension,
 										klchangingprice,
+										klmovingdiscount20,
 										klmovingdiscount50,
 										klmovingoutlet)
 				SELECT '" . $_POST['NewStockID'] . "',
@@ -126,6 +127,7 @@ if (isset($_POST['ProcessStockChange'])){
 					height,
 					unitsdimension,
 					klchangingprice,
+					klmovingdiscount20,
 					klmovingdiscount50,
 					klmovingoutlet
 				FROM stockmaster
@@ -212,6 +214,7 @@ if (isset($_POST['ProcessStockChange'])){
 		ChangeFieldInTable("klchangeprice", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
 		ChangeFieldInTable("klfreeexchanges", "itemfrom", $_POST['OldStockID'], $_POST['NewStockID'], $db);
 		ChangeFieldInTable("klfreeexchanges", "itemto", $_POST['OldStockID'], $_POST['NewStockID'], $db);
+		ChangeFieldInTable("klmovetodiscount20", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
 		ChangeFieldInTable("klmovetodiscount50", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
 		ChangeFieldInTable("klmovetooutlet", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
 		ChangeFieldInTable("relateditems", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);

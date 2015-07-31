@@ -85,12 +85,12 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 
 			
 		/* MOVE TO DISCOUNT EMAILS */
-		case "MoveToDiscountStarted":
+		case "MoveToDiscount50Started":
 			/* Move To Discount Started */
-			$EmailSubject = "Movement to Discount Category procedure just started for item: ". $Param1;
+			$EmailSubject = "Movement to 50% Discount Category procedure just started for item: ". $Param1;
 			$EmailText = $EmailSubject . "\n\n" . 
 						"All existing pieces of the item will return to kantor shortly." . "\n\n" . 
-						"If there is any problem or delay, please email Laia.";
+						"If there is any problem or delay, please email Laia and Memo.";
 			$EmailAddress = "kl-shopsupport@kapal-laut.com";
 			break;
 		case "MoveToDiscountFromConsignment":

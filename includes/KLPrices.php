@@ -13,7 +13,7 @@ function SetChangePriceFlag($Flag, $StockId, $db){
 	prnMsg($msg , 'success');
 }
 
-function SetMoveDiscountFlag($Flag, $StockId, $db){
+function SetMoveDiscount50Flag($Flag, $StockId, $db){
 	/* sets $flag value to flag in stockmaster */
 	$sql = "UPDATE stockmaster 
 			SET klmovingdiscount50 = '" . $Flag . "'
@@ -52,7 +52,7 @@ function SetEndDateChangePrice($StockId, $db){
 	prnMsg($msg , 'success');
 }
 
-function SetEndDateMoveDiscount($StockId, $db){
+function SetEndDateMoveDiscount50($StockId, $db){
 	$sql = "UPDATE klmovetodiscount50 
 			SET endprocessdate = '" . Date('Y-m-d') . "'
 			WHERE stockid = '".$StockId."'";
@@ -227,8 +227,12 @@ function UpdatePriceItem($StockId, $SalesType, $Currency, $Price, $StartDate, $S
 function UpdateDiscountCategory($StockId, $NewCategory, $DiscountCode, $db){
 	if ($NewCategory == "OUTLET"){
 		$reason = "KL Move To Outlet";
+	}else if ($NewCategory == "DISCOU"){
+		$reason = "KL Move To 50% Discount";
+	}else if ($NewCategory == "DISC20"){
+		$reason = "KL Move To 20% Discount";
 	}else{
-		$reason = "KL Move To Discount";
+		$reason = "";
 	}
 
 	// Search for the GL account for the Old Category

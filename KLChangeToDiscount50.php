@@ -1,7 +1,7 @@
 <?php
 
 include ('includes/session.inc');
-$Title = _('Kapal-Laut. Change To Discount');
+$Title = _('Kapal-Laut. Change To Discount 50%');
 include('includes/header.inc');
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
@@ -19,10 +19,10 @@ if (!isset($_GET['Item']) or !isset($_GET['Discount']) or !isset($_GET['Action']
 
 if ($_GET['Action'] == "New"){
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' .
-				_('retail Price') . '" alt="" />' . ' ' . _('KL Set the Discount Code for item').' ' . $_GET['Item']. '.</p>';
+				_('retail Price') . '" alt="" />' . ' ' . _('KL Set the 50% Discount Code for item').' ' . $_GET['Item']. '.</p>';
 }else if ($_GET['Action'] == "Change"){
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' .
-				_('retail Price') . '" alt="" />' . ' ' . _('KL Change the Discount Code for item').' ' . $_GET['Item']. '.</p>';
+				_('retail Price') . '" alt="" />' . ' ' . _('KL Change the 50% Discount Code for item').' ' . $_GET['Item']. '.</p>';
 }else{
 	echo '<br />';
 	prnMsg( _('Action unknown'), 'error');
@@ -35,8 +35,8 @@ DB_Txn_Begin();
 UpdateDiscountCategory($_GET['Item'], "DISCOU", $_GET['Discount'],$db);
 
 if ($_GET['Action'] == "Change"){
-	SetMoveDiscountFlag(0, $_GET['Item'], $db);
-	SetEndDateMoveDiscount($_GET['Item'], $db);
+	SetMoveDiscount50Flag(0, $_GET['Item'], $db);
+	SetEndDateMoveDiscount50($_GET['Item'], $db);
 	KLSendEmail("PrintDiscountPriceTags", "Silent", $_GET['Item'], $_GET['Discount']);
 }
 
