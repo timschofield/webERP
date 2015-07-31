@@ -61,8 +61,8 @@ function KL_HourlyChecks($RootPath, $db, $EmailText=''){
 
 
 function KL_DailyMaintenanceDatabase($ShowMessages, $db, $EmailText = ''){
-	SetObsoleteForCategoryWithoutStock("DISCOU", $ShowMessages, $db);
-	SetObsoleteForCategoryWithoutStock("OUTLET", $ShowMessages, $db);
+	SetObsoleteForCategoryWithoutStock("DISC50", $ShowMessages, $db);
+	SetObsoleteForCategoryWithoutStock("DISC80", $ShowMessages, $db);
 	SetObsoleteForCategoryWithoutStock("NOPOSI", $ShowMessages, $db);
 	SetObsoleteForCategoryWithoutStock("NOPOSS", $ShowMessages, $db);
 	SetObsoleteForCategoryWithoutStock("NOPOFJ", $ShowMessages, $db);

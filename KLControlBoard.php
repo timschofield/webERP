@@ -150,8 +150,8 @@ if ($KL_SystemAdmin
 	OR $KL_PurchasingTeam 
 	OR $KL_ShopSupportTeam){
 	
-	DiscountedItemsOnWrongShops("DISCOU", $RootPath, $db);
-	DiscountedItemsOnWrongShops("OUTLET", $RootPath, $db);
+	DiscountedItemsOnWrongShops("DISC50", $RootPath, $db);
+	DiscountedItemsOnWrongShops("DISC80", $RootPath, $db);
 }
 
 if ($KL_SystemAdmin 
@@ -160,8 +160,8 @@ if ($KL_SystemAdmin
 	OR $KL_PurchasingTeam 
 	OR $KL_ShopSupportTeam){
 	
-	DiscountedItemsWithWrongDiscount("DISCOU", "50", $RootPath, $db);
-//	DiscountedItemsWithWrongDiscount("OUTLET", "80", $RootPath, $db);
+	DiscountedItemsWithWrongDiscount("DISC50", "50", $RootPath, $db);
+//	DiscountedItemsWithWrongDiscount("DISC80", "80", $RootPath, $db);
 	NotDiscountedItemsWithDiscount($RootPath, $db);
 }
 
@@ -312,13 +312,13 @@ if ($KL_PurchasingManager){
 	ItemsWithStockKantorButRLZeroAt("ALL", "TOKMF", $RootPath, $db);
 	ItemsWithStockKantorButRLZeroAt("ALL", "TOKPU", $RootPath, $db);
 
-//	ItemsWithStockKantorButRLZeroAt("DISCOU", "TOKLE", $RootPath, $db);
+//	ItemsWithStockKantorButRLZeroAt("DISC50", "TOKLE", $RootPath, $db);
 
-	CategoryItemsNotInShop("DISCOU", "TOKSU", $RootPath, $db);
-	CategoryItemsNotInShop("OUTLET", "TOKSU", $RootPath, $db);
+	CategoryItemsNotInShop("DISC50", "TOKSU", $RootPath, $db);
+	CategoryItemsNotInShop("DISC80", "TOKSU", $RootPath, $db);
 
-	ItemsInCategoryWithStockKantorButReorderLevelTokoZero("OUTLET", $RootPath, $db);
-	ItemsInCategoryWithStockKantorButReorderLevelTokoZero("DISCOU", $RootPath, $db);
+	ItemsInCategoryWithStockKantorButReorderLevelTokoZero("DISC80", $RootPath, $db);
+	ItemsInCategoryWithStockKantorButReorderLevelTokoZero("DISC50", $RootPath, $db);
 }
 
 if ($KL_KantorManager 
@@ -420,13 +420,13 @@ if ($KL_PurchasingManager
 	ActiveItemsNoSales( 45, "NOPOFJ", $RootPath, $db);
 	ActiveItemsNoSales( 45, "NOPOAC", $RootPath, $db);
 
-	ActiveItemsNoSales( 45, "DISCOU", $RootPath, $db);
-	ActiveItemsNoSales(120, "OUTLET", $RootPath, $db);
+	ActiveItemsNoSales( 45, "DISC50", $RootPath, $db);
+	ActiveItemsNoSales(120, "DISC80", $RootPath, $db);
 
 	TopSalesNotInEnoughShops(  1, 500, 60, 11, "ACTIVE", $RootPath, $db);
 	TopSalesNotInEnoughShops(500, 800, 60,  9, "ACTIVE", $RootPath, $db);
 	TopSalesNotInEnoughShops(800,1200, 60,  7, "ACTIVE", $RootPath, $db);
-//	TopSalesNotInEnoughShops(  1,  50, 60, 3, "DISCOU", $RootPath, $db);
+//	TopSalesNotInEnoughShops(  1,  50, 60, 3, "DISC50", $RootPath, $db);
 
 	ItemsNotTopSalesInShop(1, 900, 60, "TOK66", "ACTIVE", $RootPath, $db);
 	ItemsNotTopSalesInShop(1, 900, 60, "TOKSE", "ACTIVE", $RootPath, $db);
@@ -482,7 +482,7 @@ if ($KL_PurchasingManager
 	PerformanceItemsInCategory("BAD",  "NOPOAC", 60,  50, "MOVE TO DISCOUNT", $RootPath, $db);
 	PerformanceItemsInCategory("BAD",  "NOPOAC",120, 100, "MOVE TO DISCOUNT", $RootPath, $db);
 
-	PerformanceItemsInCategory("BAD",  "DISCOU",120, 100, "MOVE TO OUTLET", $RootPath, $db);
+	PerformanceItemsInCategory("BAD",  "DISC50",120, 100, "MOVE TO OUTLET", $RootPath, $db);
 }
 
 if ($KL_PurchasingManager

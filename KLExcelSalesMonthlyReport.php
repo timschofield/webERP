@@ -287,7 +287,7 @@ function SheetSalesReport($objPHPExcel,
 	$objPHPExcel->getActiveSheet()->setCellValue('I11', $SalesMonth-$CostMonth);
 
 	list ($SalesMonth, $PcsMonth, $CostMonth) = SalesForPeriod($MonthA, $MonthB, LIST_STOCK_CATEGORIES_DISCOUNT);						 
-	$objPHPExcel->getActiveSheet()->setCellValue('A12', "DISCOUNT/OUTLET");
+	$objPHPExcel->getActiveSheet()->setCellValue('A12', "DISCOUNTED");
 	$objPHPExcel->getActiveSheet()->setCellValue('B12', $SalesMonth);
 	$objPHPExcel->getActiveSheet()->setCellValue('C12', $PcsMonth);
 	$objPHPExcel->getActiveSheet()->setCellValue('I12', $SalesMonth-$CostMonth);

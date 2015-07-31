@@ -3074,7 +3074,7 @@ function OutletItemsOnKLShops($RootPath, $db){
 					locstock.reorderlevel
 			FROM stockmaster, locstock
 			WHERE stockmaster.stockid = locstock.stockid
-				AND stockmaster.categoryid IN ('OUTLET')
+				AND stockmaster.categoryid IN ('DISC80')
 				AND locstock.loccode LIKE 'TOK%'
 				AND locstock.quantity > 0
 				AND NOT EXISTS (SELECT *
@@ -3546,14 +3546,14 @@ function ItemsNotTopSalesInShop($starttopitems, $endtopitems, $maxdays, $codesho
 						AND locstock.loccode = '". $codeshop ."') AS rl
 			FROM salesorderdetails, salesorders, stockmaster
 			WHERE salesorderdetails.orderno = salesorders.orderno ";
-	if ($categories == "DISCOU"){
-		$SQL = $SQL . " AND stockmaster.categoryid = 'DISCOU'";
+	if ($categories == "DISC50"){
+		$SQL = $SQL . " AND stockmaster.categoryid = 'DISC50'";
 	}		
-	if ($categories == "OUTLET"){
-		$SQL = $SQL . " AND stockmaster.categoryid = 'OUTLET'";
+	if ($categories == "DISC80"){
+		$SQL = $SQL . " AND stockmaster.categoryid = 'DISC80'";
 	}		
 	if ($categories == "ACTIVE"){
-		$SQL = $SQL . " AND stockmaster.categoryid NOT IN ('DISCOU', 'OUTLET')";
+		$SQL = $SQL . " AND stockmaster.categoryid NOT IN ('DISC50', 'DISC80')";
 	}		
 	$SQL = $SQL . " AND stockmaster.discontinued = 0
 				AND salesorderdetails.stkcode = stockmaster.stockid
@@ -3569,10 +3569,10 @@ function ItemsNotTopSalesInShop($starttopitems, $endtopitems, $maxdays, $codesho
 		while ($myrow = DB_fetch_array($result)) {
 			if ($myrow['rl'] > 0){
 				if($showHeader){
-					if ($categories == "DISCOU"){
+					if ($categories == "DISC50"){
 						echo '<p class="page_title_text" align="center"><strong>' . 'NOT ' . $endtopitems . ' top sales items DISCOUNTED available in ' . $codeshop . ' shop. ' . '</strong></p>';
 					}		
-					if ($categories == "OUTLET"){
+					if ($categories == "DISC80"){
 						echo '<p class="page_title_text" align="center"><strong>' . 'NOT ' . $endtopitems . ' top sales items OUTLET available in ' . $codeshop . ' shop. ' . '</strong></p>';
 					}		
 					if ($categories == "ACTIVE"){
@@ -3639,11 +3639,11 @@ function TopSalesNotInEnoughShops($starttopitems, $endtopitems, $maxdays, $minsh
 						AND locstock.loccode LIKE 'TOK%') AS availableshops
 			FROM salesorderdetails, salesorders, stockmaster
 			WHERE salesorderdetails.orderno = salesorders.orderno ";
-	if ($categories == "DISCOU"){
-		$SQL = $SQL . " AND stockmaster.categoryid = 'DISCOU'";
+	if ($categories == "DISC50"){
+		$SQL = $SQL . " AND stockmaster.categoryid = 'DISC50'";
 	}		
-	if ($categories == "OUTLET"){
-		$SQL = $SQL . " AND stockmaster.categoryid = 'OUTLET'";
+	if ($categories == "DISC80"){
+		$SQL = $SQL . " AND stockmaster.categoryid = 'DISC80'";
 	}		
 	if ($categories == "ACTIVE"){
 		$SQL = $SQL . " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_ACTIVE . "";
@@ -3665,10 +3665,10 @@ function TopSalesNotInEnoughShops($starttopitems, $endtopitems, $maxdays, $minsh
 		while ($myrow = DB_fetch_array($result)) {
 			if (($myrow['availableshops'] < $minshops) && ($myrow['qoh'] > $myrow['availableshops'])){
 				if($showHeader){
-					if ($categories == "DISCOU"){
+					if ($categories == "DISC50"){
 						echo '<p class="page_title_text" align="center"><strong>' . $endtopitems . ' Top sales items DISCOUNTED available in less than ' . $minshops . ' shops. ' . '</strong></p>';
 					}		
-					if ($categories == "OUTLET"){
+					if ($categories == "DISC80"){
 						echo '<p class="page_title_text" align="center"><strong>' . $endtopitems . ' Top sales items OUTLET available in less than ' . $minshops . ' shops. ' . '</strong></p>';
 					}		
 					if ($categories == "ACTIVE"){
@@ -3899,7 +3899,7 @@ function ActiveItemsNoSales($maxdays, $group, $RootPath, $db){
 	$result = DB_query($SQL);		
 	
 	if (DB_num_rows($result) != 0){
-		if ($group == "DISCOU"){
+		if ($group == "DISC50"){
 			echo '<p class="page_title_text" align="center"><strong>' . _('DISCOUNTED Items with NO sales on last ') . $maxdays . ' days and NO current PO.</strong></p>';
 		}elseif($group == "NOPOSI"){
 			echo '<p class="page_title_text" align="center"><strong>' . _('NO + PURCHASE ORDER Items with NO sales on last ') . $maxdays . ' days and NO current PO. Consider change to Discount or Obsolete.</strong></p>';

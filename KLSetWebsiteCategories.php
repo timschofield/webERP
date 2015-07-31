@@ -542,7 +542,7 @@ function WebsiteCategoryClassic($StockId, $Description, $Long, $Category){
 function WebsiteCategoryDiscount($StockId, $Description, $Long, $Category){
 	$WebCat = 0;
 
-	if($Category == "DISCOU"){
+	if($Category == "DISC50"){
 		$WebCat = JEWELLERY_ON_SPECIAL;	
 	}
 

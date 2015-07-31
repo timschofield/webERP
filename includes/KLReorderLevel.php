@@ -279,7 +279,7 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 					$LocationsDistributed = 0;
 					
 					// if category is discount or outlet, then use priority for these categories
-					if(($myrow['categoryid'] == 'DISCOU') OR ($myrow['categoryid'] == 'OUTLET')){
+					if(($myrow['categoryid'] == 'DISC50') OR ($myrow['categoryid'] == 'DISC80')){
 						$OrderBy = " ORDER BY locations.prioritydiscount ASC, "; 
 					}else{
 						$OrderBy = " ORDER BY locations.priority ASC, "; 
@@ -402,7 +402,7 @@ function WorstLocationForItem($stockid, $stockcat, $kind, $maxdays, $db){
 	$SQL = $SQL . "	AND (locstock.loccode LIKE 'TOK%')";
 
 	// if category is discount or outlet, then use priority for these categories
-	if(($stockcat == 'DISCOU') OR ($stockcat == 'OUTLET')){
+	if(($stockcat == 'DISC50') OR ($stockcat == 'DISC80')){
 		$SQL = $SQL . " ORDER BY locations.prioritydiscount DESC, "; 
 	}else{
 		$SQL = $SQL . " ORDER BY locations.priority DESC, "; 
@@ -802,7 +802,7 @@ function SetRLForLowSalesHighRL($maxdays, $oldRL, $maxRL, $minavailablestock, $S
 					locations.locationname 
 			FROM 	stockmaster,locstock,locations
 			WHERE 	stockmaster.stockid = locstock.stockid
-					AND stockmaster.categoryid NOT IN ('SHDISP', 'DISCOU', 'OUTLET')
+					AND stockmaster.categoryid NOT IN ('SHDISP', 'DISC50', 'DISC80')
 					AND (locstock.loccode = locations.loccode)
 					AND (locstock.loccode LIKE 'TOK%')
 					AND (locstock.quantity > 0)
@@ -861,7 +861,7 @@ function SetRLForLowSalesHighRL($maxdays, $oldRL, $maxRL, $minavailablestock, $S
 				$newRL = $myrow['reorderlevel'];
 				$notes = "KLPRGE - Tali. RL Not changed";
 			}
-*/			if ($myrow['categoryid'] == "DISCOU" OR $myrow['categoryid'] == "OUTLET"){
+*/			if ($myrow['categoryid'] == "DISC50" OR $myrow['categoryid'] == "DISC80"){
 				$newRL = $myrow['reorderlevel'];
 				$notes = "Discounted or outlet item. RL Not changed";
 			}

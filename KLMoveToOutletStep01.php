@@ -49,11 +49,11 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'DiscountCategory';
 		$i++;
 		prnMsg(_('The Outlet Type must be 80 (so far, only 80% discount available for Outlet Category)'),'error');
-	}elseif ($myrow['categoryid'] == 'OUTLET') {
+	}elseif ($myrow['categoryid'] == 'DISC80') {
 		$InputError = 1;
 		$Errors[$i] = 'AlreadyOutlet';
 		$i++;
-		prnMsg(_('This item is already in OUTLET category. No need to move it.'),'error');
+		prnMsg(_('This item is already in DISC80 category. No need to move it.'),'error');
 	}elseif ($myrow['klchangingprice'] == 1) {
 		$InputError = 1;
 		$Errors[$i] = 'ChangingPrice';

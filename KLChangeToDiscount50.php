@@ -32,7 +32,7 @@ if ($_GET['Action'] == "New"){
 
 DB_Txn_Begin();
 
-UpdateDiscountCategory($_GET['Item'], "DISCOU", $_GET['Discount'],$db);
+UpdateDiscountCategory($_GET['Item'], "DISC50", $_GET['Discount'],$db);
 
 if ($_GET['Action'] == "Change"){
 	SetMoveDiscount50Flag(0, $_GET['Item'], $db);
