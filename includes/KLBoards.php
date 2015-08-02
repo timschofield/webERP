@@ -2144,7 +2144,7 @@ No pending transfer regarding this item
 		$MessageDiscount = " ";
 	}
 
-	if (!ItemInList($Location, LIST_SHOPS_WITH_OUTLET)){
+	if (!ItemInList($Location, LIST_OUTLET_SHOPS)){
 		$FilterOutlet =  " AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_OUTLET . " ";
 		$MessageOutlet = " NO outlet.";
 	}else{
@@ -2311,11 +2311,11 @@ No pending transfer regarding this item
 
 function ItemsInCategoryWithStockKantorButReorderLevelTokoZero($CategoryId, $RootPath, $db){
 	if (ItemInList($CategoryId, LIST_STOCK_CATEGORIES_OUTLET)){
-		if (LIST_SHOPS_WITH_OUTLET == "('')"){
+		if (LIST_OUTLET_SHOPS == "('')"){
 			// no shops with outlet, so this report has NO sense.
 			return;
 		}else{
-			$WhereLocation = " AND locstock.loccode IN  " . LIST_SHOPS_WITH_OUTLET . " ";
+			$WhereLocation = " AND locstock.loccode IN  " . LIST_OUTLET_SHOPS . " ";
 		}
 	}elseif (ItemInList($CategoryId, LIST_STOCK_CATEGORIES_DISCOUNT)){
 		if (LIST_SHOPS_WITH_DISCOUNT == "('')"){
@@ -2360,7 +2360,7 @@ function ItemsInCategoryWithStockKantorButReorderLevelTokoZero($CategoryId, $Roo
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		if (ItemInList($CategoryId, LIST_STOCK_CATEGORIES_OUTLET)){
-			echo '<p class="page_title_text" align="center"><strong>' . $CategoryId ._(' Items with stock available at Kantor but RL zero for ') . LIST_SHOPS_WITH_OUTLET . '</strong></p>';
+			echo '<p class="page_title_text" align="center"><strong>' . $CategoryId ._(' Items with stock available at Kantor but RL zero for ') . LIST_OUTLET_SHOPS . '</strong></p>';
 		}elseif (ItemInList($CategoryId, LIST_STOCK_CATEGORIES_DISCOUNT)){
 			echo '<p class="page_title_text" align="center"><strong>' . $CategoryId ._(' Items with stock available at Kantor but RL zero for ') . LIST_SHOPS_WITH_DISCOUNT . '</strong></p>';
 		}else{
@@ -2930,7 +2930,7 @@ function ItemsOnSpecialRequest($RootPath, $db){
 	}
 }
 
-function DiscountedItemsOnWrongShops($Category, $RootPath, $db){
+function DiscountedItemsOnNotOutletShops($Category, $RootPath, $db){
 /*
 				AND NOT EXISTS (SELECT *
 						FROM loctransfers 
@@ -2938,13 +2938,8 @@ function DiscountedItemsOnWrongShops($Category, $RootPath, $db){
 							AND loctransfers.stockid =  stockmaster.stockid)
 */
 	
-	if (ItemInList($Category, LIST_STOCK_CATEGORIES_DISCOUNT)){
-		$FilterLocations = LIST_SHOPS_WITH_DISCOUNT ;
-		$Message = _('Discounted items on shops not in discount promotion (wrong shops)');
-	}elseif (ItemInList($Category, LIST_STOCK_CATEGORIES_OUTLET)){
-		$FilterLocations = LIST_SHOPS_WITH_OUTLET ;
-		$Message = _('Outlet items on shops not in outlet promotion (wrong shops)');
-	}
+	$FilterLocations = LIST_OUTLET_SHOPS ;
+	$Message = $Category . _('% Discounted items on shops not OUTLET Shops (wrong shops)');
 	
 	$SQL = "SELECT stockmaster.stockid,
 					stockmaster.description,
@@ -5440,7 +5435,7 @@ function ItemsChangingPriceDelayed($NumDays, $RootPath, $db){
 	}
 }
 
-function ItemsMovingToDiscountDelayed($NumDays, $RootPath, $db){
+function ItemsMovingToDiscountDelayed($TypeDiscount, $NumDays, $RootPath, $db){
 /* EXPLAIN SQL 2014-05-21	*/
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
 	$SQL = "SELECT stockmaster.stockid, 
@@ -5478,16 +5473,16 @@ function ItemsMovingToDiscountDelayed($NumDays, $RootPath, $db){
 				(SELECT sum(quantity)
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid) AS qohtotal,
-				klmovetodiscount50.countermovediscount,
-				klmovetodiscount50.startprocessdate,
-				klmovetodiscount50.discountcategory
-			FROM stockmaster, klmovetodiscount50					
-			WHERE stockmaster.stockid = klmovetodiscount50.stockid
-				AND klmovetodiscount50.endprocessdate = '0000-00-00'
-				AND klmovetodiscount50.startprocessdate <= '". $StartDate ."'";
+				klmovetodiscount".$TypeDiscount.".countermovediscount,
+				klmovetodiscount".$TypeDiscount.".startprocessdate,
+				klmovetodiscount".$TypeDiscount.".discountcategory
+			FROM stockmaster, klmovetodiscount".$TypeDiscount."					
+			WHERE stockmaster.stockid = klmovetodiscount".$TypeDiscount.".stockid
+				AND klmovetodiscount".$TypeDiscount.".endprocessdate = '0000-00-00'
+				AND klmovetodiscount".$TypeDiscount.".startprocessdate <= '". $StartDate ."'";
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Items delayed in Move To Discount Procedure for more than '). $NumDays . ' days. </strong></p>';
+		echo '<p class="page_title_text" align="center"><strong>' . 'Items delayed Moving To ' . $TypeDiscount . '% Discount Procedure for more than '. $NumDays . ' days. </strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
@@ -5543,108 +5538,6 @@ function ItemsMovingToDiscountDelayed($NumDays, $RootPath, $db){
 	}
 }
 
-function ItemsMovingToOutletDelayed($NumDays, $RootPath, $db){
-/* EXPLAIN SQL 2014-05-21	*/
-	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
-	$SQL = "SELECT stockmaster.stockid, 
-				stockmaster.description,
-				(SELECT sum(quantity)
-					FROM locstock
-					WHERE locstock.stockid = stockmaster.stockid
-					AND loccode LIKE 'TOK%') AS qohpos,
-				(SELECT sum(quantity)
-					FROM locstock
-					WHERE locstock.stockid = stockmaster.stockid
-					AND loccode IN " . LIST_CONSIGNMENT_LOCATIONS . ") AS qohconsignment,
-				(SELECT sum(quantity)
-					FROM locstock
-					WHERE locstock.stockid = stockmaster.stockid
-					AND loccode IN " . LIST_KANTOR_LOCATIONS . ") AS qohkantor,
-				(SELECT sum(quantity)
-					FROM locstock
-					WHERE locstock.stockid = stockmaster.stockid
-					AND loccode NOT IN " . LIST_KANTOR_LOCATIONS . "
-					AND loccode NOT LIKE 'TOK%'
-					AND loccode NOT IN " . LIST_CONSIGNMENT_LOCATIONS . ") AS qohotherlocs,
-				(SELECT SUM(loctransfers.shipqty-loctransfers.recqty) 
-						FROM loctransfers
-						WHERE loctransfers.stockid = stockmaster.stockid
-						AND loctransfers.shiploc LIKE 'TOK%') AS intransitfromshops,
-				(SELECT SUM(loctransfers.shipqty-loctransfers.recqty) 
-						FROM loctransfers
-						WHERE loctransfers.stockid = stockmaster.stockid
-						AND loctransfers.shiploc IN " . LIST_CONSIGNMENT_LOCATIONS . ") AS intransitfromconsignment,
-				(SELECT SUM(loctransfers.shipqty-loctransfers.recqty) 
-						FROM loctransfers
-						WHERE loctransfers.stockid = stockmaster.stockid
-						AND loctransfers.shiploc IN " . LIST_KANTOR_LOCATIONS . ") AS intransitfromkantor,
-				(SELECT sum(quantity)
-					FROM locstock
-					WHERE locstock.stockid = stockmaster.stockid) AS qohtotal,
-				klmovetodiscount80.countermoveoutlet,
-				klmovetodiscount80.startprocessdate,
-				klmovetodiscount80.discountcategory
-			FROM stockmaster, klmovetodiscount80					
-			WHERE stockmaster.stockid = klmovetodiscount80.stockid
-				AND klmovetodiscount80.endprocessdate = '0000-00-00'
-				AND klmovetodiscount80.startprocessdate <= '". $StartDate ."'";
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Items delayed in Move To Outlet Procedure for more than '). $NumDays . ' days. </strong></p>';
-		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Code') . '</th>
-							<th class="ascending">' . _('Description') . '</th>
-							<th class="ascending">' . _('Start Date') . '</th>
-							<th class="ascending">' . _('QOH KL Shops') . '</th>
-							<th class="ascending">' . _('QOH Consignment') . '</th>
-							<th class="ascending">' . _('Transit From Kantor') . '</th>
-							<th class="ascending">' . _('Transit To Kantor') . '</th>
-							<th class="ascending">' . _('QOH Kantor') . '</th>
-							<th class="ascending">' . _('QOH Others') . '</th>
-							<th class="ascending">' . _('QOH Total') . '</th>
-							<th class="ascending">' . _('Discount Code') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
-		$i = 1;
-		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
-			$CodeLink = '<a href="' . $RootPath . '/StockStatus.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
-			printf('<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					locale_number_format($myrow['countermoveoutlet'],0),
-					$CodeLink, 
-					$myrow['description'],
-					ConvertSQLDate($myrow['startprocessdate']),
-					locale_number_format_zero_blank($myrow['qohpos']-$myrow['intransitfromshops'],0),
-					locale_number_format_zero_blank($myrow['qohconsignment']-$myrow['intransitfromconsignment'],0),
-					locale_number_format_zero_blank($myrow['intransitfromkantor'],0),
-					locale_number_format_zero_blank($myrow['intransitfromshops']+$myrow['intransitfromconsignment'],0),
-					locale_number_format_zero_blank($myrow['qohkantor']-$myrow['intransitfromkantor'],0),
-					locale_number_format_zero_blank($myrow['qohotherlocs'],0),
-					locale_number_format_zero_blank($myrow['qohtotal'],0),
-					$myrow['discountcategory']
-					);
-			$i++;
-		}
-		echo '</table>
-				</div>';
-	}
-}
 
 function over_or_below_limit($Request, $Sign, $Limit, $RootPath, $db){
 /* EXPLAIN SQL 2014-05-21	*/

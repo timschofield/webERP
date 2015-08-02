@@ -96,7 +96,7 @@ if (isset($_POST['submit'])) {
 					startprocessdate='" . Date('Y-m-d') . "',
 					discountcategory='80',
 					endprocessdate='0000-00-00'
-				WHERE countermoveoutlet = '".$SelectedMovement."'";
+				WHERE countermovediscount = '".$SelectedMovement."'";
 
 		$msg = _('KL Move Item To 80% Discount Step 01 record for') . ' ' . $_POST['Stockid'] . ' ' . _('has been updated');
 	} elseif ($InputError !=1) {
@@ -149,12 +149,12 @@ if (isset($_POST['submit'])) {
 	//the link to delete a selected record was clicked instead of the submit button
 	$sql = "SELECT stockid
 			FROM klmovetodiscount80
-			WHERE countermoveoutlet='".$SelectedMovement."'";
+			WHERE countermovediscount='".$SelectedMovement."'";
 	$result = DB_query($sql);
 	$myrow = DB_fetch_array($result);
 	SetMoveDiscount80Flag(0,$myrow['stockid'], $db);
 
-	$sql="DELETE FROM klmovetodiscount80 WHERE countermoveoutlet='". $SelectedMovement."'";
+	$sql="DELETE FROM klmovetodiscount80 WHERE countermovediscount='". $SelectedMovement."'";
 	$ErrMsg = _('The Move Item To 80% Discount Step 01 could not be deleted because');
 	$result = DB_query($sql,$ErrMsg);
 
@@ -172,7 +172,7 @@ then none of the above are true and the list of Sales-persons will be displayed 
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
-	$sql = "SELECT countermoveoutlet,
+	$sql = "SELECT countermovediscount,
 				stockid,
 				discountcategory,
 				startprocessdate
@@ -205,14 +205,14 @@ or deletion of the records*/
 			<td><a href="%sSelectedMovement=%s">'. _('Edit') . '</a></td>
 			<td><a href="%sSelectedMovement=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this movement to outlet?') . '\');">' . _('Delete') . '</a></td>
 			</tr>',
-			$myrow['countermoveoutlet'],
+			$myrow['countermovediscount'],
 			$myrow['stockid'],
 			$myrow['discountcategory'],
 			ConvertSQLDate($myrow['startprocessdate']),
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-			$myrow['countermoveoutlet'],
+			$myrow['countermovediscount'],
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-			$myrow['countermoveoutlet']);
+			$myrow['countermovediscount']);
 
 	} //END WHILE LIST LOOP
 	echo '</table><br />';
@@ -231,11 +231,11 @@ if (! isset($_GET['delete'])) {
 	if (isset($SelectedMovement)) {
 		//editing an existing Price Change
 
-		$sql = "SELECT countermoveoutlet,
+		$sql = "SELECT countermovediscount,
 					stockid,
 					discountcategory
 				FROM klmovetodiscount80
-				WHERE countermoveoutlet='".$SelectedMovement."'";
+				WHERE countermovediscount='".$SelectedMovement."'";
 
 		$result = DB_query($sql);
 		$myrow = DB_fetch_array($result);

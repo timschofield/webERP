@@ -131,8 +131,9 @@ if ($KL_PurchasingManager
 if ($KL_ShopSupportTeam){
 
 	ItemsChangingPriceDelayed(4, $RootPath, $db);
-	ItemsMovingToDiscountDelayed(4, $RootPath, $db);
-	ItemsMovingToOutletDelayed(4, $RootPath, $db);
+	ItemsMovingToDiscountDelayed(20, 4, $RootPath, $db);
+	ItemsMovingToDiscountDelayed(50, 4, $RootPath, $db);
+	ItemsMovingToDiscountDelayed(80, 4, $RootPath, $db);
 }
 
 if ($KL_SystemAdmin 
@@ -140,8 +141,9 @@ if ($KL_SystemAdmin
 	OR $KL_PurchasingManager){
 
 	ItemsChangingPriceDelayed(5, $RootPath, $db);
-	ItemsMovingToDiscountDelayed(5, $RootPath, $db);
-	ItemsMovingToOutletDelayed(5, $RootPath, $db);
+	ItemsMovingToDiscountDelayed(20, 5, $RootPath, $db);
+	ItemsMovingToDiscountDelayed(50, 5, $RootPath, $db);
+	ItemsMovingToDiscountDelayed(80, 5, $RootPath, $db);
 }
 
 if ($KL_SystemAdmin 
@@ -150,8 +152,8 @@ if ($KL_SystemAdmin
 	OR $KL_PurchasingTeam 
 	OR $KL_ShopSupportTeam){
 	
-	DiscountedItemsOnWrongShops("DISC50", $RootPath, $db);
-	DiscountedItemsOnWrongShops("DISC80", $RootPath, $db);
+	DiscountedItemsOnNotOutletShops("DISC50", $RootPath, $db);
+	DiscountedItemsOnNotOutletShops("DISC80", $RootPath, $db);
 }
 
 if ($KL_SystemAdmin 

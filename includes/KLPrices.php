@@ -484,7 +484,7 @@ function SendEmailMoveToOutletReadyForStep02($db, $EmailText){
 				(SELECT sum(quantity)
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid) AS qohtotal,
-				klmovetodiscount80.countermoveoutlet,
+				klmovetodiscount80.countermovediscount,
 				klmovetodiscount80.startprocessdate,
 				klmovetodiscount80.discountcategory
 			FROM stockmaster, klmovetodiscount80					

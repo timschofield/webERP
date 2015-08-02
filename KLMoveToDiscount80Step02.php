@@ -44,7 +44,7 @@ include('includes/KLPrices.php');
 				(SELECT sum(quantity)
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid) AS qohtotal,
-				klmovetodiscount80.countermoveoutlet,
+				klmovetodiscount80.countermovediscount,
 				klmovetodiscount80.startprocessdate,
 				klmovetodiscount80.discountcategory
 			FROM stockmaster, klmovetodiscount80					
@@ -105,7 +105,7 @@ include('includes/KLPrices.php');
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					</tr>', 
-					locale_number_format($myrow['countermoveoutlet'],0),
+					locale_number_format($myrow['countermovediscount'],0),
 					$CodeLink, 
 					$myrow['description'],
 					ConvertSQLDate($myrow['startprocessdate']),
