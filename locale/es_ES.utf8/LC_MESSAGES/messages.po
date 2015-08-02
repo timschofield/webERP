@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.12.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-05-17 13:40+1200\n"
-"PO-Revision-Date: 2015-06-25 10:56-0600\n"
+"PO-Revision-Date: 2015-08-02 08:50-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -9656,7 +9656,7 @@ msgstr "Imprimir Sumario por Lotes (batch) PDF"
 
 #: CustomerReceipt.php:581 includes/MainMenuLinksArray.php:102
 msgid "Enter Receipts"
-msgstr "Introducir Ingresos (Cobros)"
+msgstr "Introducir ingresos (cobros)"
 
 #: CustomerReceipt.php:594 SelectCreditItems.php:73
 msgid ""
@@ -16394,7 +16394,7 @@ msgstr "Cantidad Media"
 
 #: InventoryPlanningPrefSupplier.php:75
 msgid "4 mths"
-msgstr "Cuatro Meses"
+msgstr "4 meses"
 
 #: InventoryPlanningPrefSupplier.php:77
 msgid "Max Mnth"
@@ -18460,7 +18460,7 @@ msgstr "Cant Total"
 
 #: OffersReceived.php:6 OffersReceived.php:100
 msgid "Supplier Offers"
-msgstr "Ofertas de proveedores"
+msgstr "Ofertas del proveedor"
 
 #: OffersReceived.php:39
 msgid "There are no offers outstanding that you are authorised to deal with"
@@ -19911,7 +19911,7 @@ msgstr "La Pestaña"
 
 #: PcTabs.php:118
 msgid " already exists"
-msgstr "ya existe"
+msgstr " already exists"
 
 #: PcTabs.php:166
 msgid "The Tab record could not be deleted because"
@@ -28703,7 +28703,7 @@ msgstr "Buscar/Modificar/Cerrar Envíos"
 #: SuppPriceList.php:208 SuppPriceList.php:210
 #: includes/MainMenuLinksArray.php:191
 msgid "Supplier Price List"
-msgstr "Listado de Precios del proveedor"
+msgstr "Lista de precios del proveedor"
 
 #: SelectSupplier.php:182
 msgid "Enter a Purchase Order for This Supplier"
@@ -29711,7 +29711,7 @@ msgstr ""
 
 #: ShopParameters.php:384
 msgid "Bank Transfer Settings"
-msgstr ""
+msgstr "Ajustes de transferencia bancaria"
 
 #: ShopParameters.php:388
 msgid "Allow Bank Transfer Payment"
@@ -33110,7 +33110,7 @@ msgstr "Activos fijos en la Factura"
 
 #: SuppFixedAssetChgs.php:71
 msgid "Fixed Asset credits on Credit Note"
-msgstr "Créditos de activo fijo en nota de Crédito"
+msgstr "Créditos de activo fijo en nota de crédito"
 
 #: SuppFixedAssetChgs.php:117
 msgid ""
@@ -35699,6 +35699,9 @@ msgid ""
 "The default theme to use for the login screen and the setup of new users. "
 "The users' theme selection will override it."
 msgstr ""
+"El tema por defecto a utilizar para la pantalla de inicio de sesión y la "
+"configuración de los usuarios nuevos. Selección de temas de los usuarios lo "
+"anulará."
 
 #: SystemParameters.php:449
 msgid "Accounts Receivable/Payable Settings"
@@ -39145,7 +39148,7 @@ msgstr "No hay lotes/conjuntos definidos todavía"
 
 #: WorkOrderReceive.php:976 WorkOrderReceive.php:987
 msgid "Batch/Lot No"
-msgstr ""
+msgstr "Lote No."
 
 #: WorkOrderReceive.php:1012 includes/PDFWOPageHeader.inc:47
 msgid "Received Qty"
@@ -41445,7 +41448,7 @@ msgstr ""
 
 #: Z_ImportCustbranch.php:208 Z_ImportCustbranch.php:331
 msgid "characters"
-msgstr ""
+msgstr "caracteres"
 
 #: Z_ImportCustbranch.php:214
 msgid "The latitude is expected to be a numeric"
@@ -45315,7 +45318,7 @@ msgstr "Informes de análisis de ventas"
 
 #: includes/MainMenuLinksArray.php:61
 msgid "Sales Graphs"
-msgstr "Gráficas de Ventas"
+msgstr "Gráficas de ventas"
 
 #: includes/MainMenuLinksArray.php:62
 msgid "Top Sellers Inquiry"
@@ -50336,7 +50339,7 @@ msgstr ""
 
 #: ../webSHOP/Checkout.php:390
 msgid "Customer Phone"
-msgstr ""
+msgstr "Teléfono del cliente"
 
 #: ../webSHOP/Checkout.php:391
 msgid "Customer Email"
@@ -50578,7 +50581,7 @@ msgstr ""
 
 #: ../webSHOP/Checkout.php:802
 msgid "Change Payment Method"
-msgstr ""
+msgstr "Cambiar forma de pago"
 
 #: ../webSHOP/Checkout.php:807
 msgid "Back to Shop Home Page"
