@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.12.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-05-17 13:40+1200\n"
-"PO-Revision-Date: 2015-08-02 08:50-0600\n"
+"PO-Revision-Date: 2015-08-02 10:39-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -9750,7 +9750,7 @@ msgstr "Tipo de Ingreso"
 
 #: CustomerReceipt.php:931 Payments.php:930
 msgid "Reference on Bank Transactions Inquiry"
-msgstr "Referencia en la consulta de transacciones bancarias "
+msgstr "Referencia en la consulta de transacciones bancarias"
 
 #: CustomerReceipt.php:943 Payments.php:938
 msgid "Narrative on General Ledger Account Inquiry"
@@ -19911,7 +19911,7 @@ msgstr "La Pestaña"
 
 #: PcTabs.php:118
 msgid " already exists"
-msgstr " already exists"
+msgstr " ya existe"
 
 #: PcTabs.php:166
 msgid "The Tab record could not be deleted because"

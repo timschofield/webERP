@@ -1,6 +1,6 @@
 <?php
-
 /* $Id$ */
+/* Entry of both customer receipts against accounts receivable and also general ledger or nominal receipts */
 
 include('includes/DefineReceiptClass.php');
 include('includes/session.inc');
@@ -869,38 +869,36 @@ if (!isset($_SESSION['ReceiptBatch']->ExRate)){
 if (!isset($_SESSION['ReceiptBatch']->FunctionalExRate)){
 	$_SESSION['ReceiptBatch']->FunctionalExRate=1;
 }
-if ($_SESSION['ReceiptBatch']->AccountCurrency!=$_SESSION['ReceiptBatch']->Currency AND isset($_SESSION['ReceiptBatch']->AccountCurrency)){
-	if (isset($SuggestedExRate)){
-		$SuggestedExRateText = '<b>' . _('Suggested rate:') . ' ' . locale_number_format($SuggestedExRate,8) . '</b>';
-	} else {
-		$SuggestedExRateText ='';
+if($_SESSION['ReceiptBatch']->AccountCurrency != $_SESSION['ReceiptBatch']->Currency AND isset($_SESSION['ReceiptBatch']->AccountCurrency)) {
+	if($_SESSION['ReceiptBatch']->ExRate==1 AND isset($SuggestedExRate)) {
+		$_SESSION['ReceiptBatch']->ExRate = $SuggestedExRate;
+	} elseif($_POST['Currency'] != $_POST['PreviousCurrency'] AND isset($SuggestedExRate)) {//the user has changed the currency, then we should revise suggested rate
+		$_SESSION['ReceiptBatch']->ExRate = $SuggestedExRate;
 	}
-	if ($_SESSION['ReceiptBatch']->ExRate==1 AND isset($SuggestedExRate)){
-		$_SESSION['ReceiptBatch']->ExRate = $SuggestedExRate;
-	}elseif($_POST['Currency'] != $_POST['PreviousCurrency'] AND isset($SuggestedExRate)){//the user has changed the currency, then we should revise suggested rate
-		$_SESSION['ReceiptBatch']->ExRate = $SuggestedExRate;
+
+	if(isset($SuggestedExRate)) {
+		$SuggestedExRateText = '<b>' . _('Suggested rate:') . ' 1 ' . $_SESSION['ReceiptBatch']->AccountCurrency . ' = ' . locale_number_format($SuggestedExRate,8) . ' ' . $_SESSION['ReceiptBatch']->Currency . '</b>';
+	} else {
+		$SuggestedExRateText = '<b>1 ' . $_SESSION['ReceiptBatch']->AccountCurrency . ' = ? ' . $_SESSION['ReceiptBatch']->Currency . '</b>';
 	}
 	echo '<tr>
-			<td>' . _('Receipt Exchange Rate') . ':</td>
-			<td><input class="number" maxlength="12" name="ExRate" required="required" size="14" tabindex="4" type="text" value="' . locale_number_format($_SESSION['ReceiptBatch']->ExRate,8) . '" /></td>
-			<td>' . $SuggestedExRateText . ' <i>' . _('The exchange rate between the currency of the bank account currency and the currency of the receipt') . '. 1 ' . $_SESSION['ReceiptBatch']->AccountCurrency . ' = ? ' . $_SESSION['ReceiptBatch']->Currency . '</i></td>
+			<td>', _('Receipt Exchange Rate'), ':</td>
+			<td><input class="number" maxlength="12" name="ExRate" required="required" size="14" tabindex="4" type="text" value="', locale_number_format($_SESSION['ReceiptBatch']->ExRate,8), '" /> ', $SuggestedExRateText, ' <i>', _('The exchange rate between the currency of the bank account currency and the currency of the receipt'), '.</i></td>
 		</tr>';
 }
 
-if ($_SESSION['ReceiptBatch']->AccountCurrency!=$_SESSION['CompanyRecord']['currencydefault']
-				AND isset($_SESSION['ReceiptBatch']->AccountCurrency)){
-	if (isset($SuggestedFunctionalExRate)){
-		$SuggestedFunctionalExRateText = '<b>' . _('Suggested rate:') . ' ' . locale_number_format($SuggestedFunctionalExRate,8) . '</b>';
-	} else {
-		$SuggestedFunctionalExRateText ='';
-	}
-	if ($_SESSION['ReceiptBatch']->FunctionalExRate==1 AND isset($SuggestedFunctionalExRate)){
+if($_SESSION['ReceiptBatch']->AccountCurrency != $_SESSION['CompanyRecord']['currencydefault'] AND isset($_SESSION['ReceiptBatch']->AccountCurrency)) {
+	if($_SESSION['ReceiptBatch']->FunctionalExRate==1 AND isset($SuggestedFunctionalExRate)) {
 		$_SESSION['ReceiptBatch']->FunctionalExRate = $SuggestedFunctionalExRate;
 	}
+	if(isset($SuggestedFunctionalExRate)) {
+		$SuggestedFunctionalExRateText = '<b>' . _('Suggested rate:') . ' 1 ' . $_SESSION['CompanyRecord']['currencydefault'] . ' = ' . locale_number_format($SuggestedFunctionalExRate,8) . ' ' . $_SESSION['ReceiptBatch']->AccountCurrency . '</b>';
+	} else {
+		$SuggestedFunctionalExRateText = '<b>1 ' . $_SESSION['CompanyRecord']['currencydefault'] . ' = ? ' . $_SESSION['ReceiptBatch']->AccountCurrency . '</b>';
+	}
 	echo '<tr>
-			<td>' . _('Functional Exchange Rate') . ':</td>
-			<td><input class="number" maxlength="12" name="FunctionalExRate" pattern="[0-9\.,]*" required="required" size="14" tabindex="5" type="text" value="' . locale_number_format($_SESSION['ReceiptBatch']->FunctionalExRate,8) . '" /></td>
-			<td>' . ' ' . $SuggestedFunctionalExRateText . ' <i>' . _('The exchange rate between the currency of the business (the functional currency) and the currency of the bank account') .  '. 1 ' . $_SESSION['CompanyRecord']['currencydefault'] . ' = ? ' . $_SESSION['ReceiptBatch']->AccountCurrency . '</i></td>
+			<td>', _('Functional Exchange Rate'), ':</td>
+			<td><input class="number" maxlength="12" name="FunctionalExRate" pattern="[0-9\.,]*" required="required" size="14" tabindex="5" type="text" value="', locale_number_format($_SESSION['ReceiptBatch']->FunctionalExRate,8), '" /> ', $SuggestedFunctionalExRateText, ' <i>', _('The exchange rate between the currency of the business (the functional currency) and the currency of the bank account'),  '.</i></td>
 		</tr>';
 }
 
@@ -927,8 +925,8 @@ if (!isset($_SESSION['ReceiptBatch']->BankTransRef)) {
 	$_SESSION['ReceiptBatch']->BankTransRef='';
 }
 echo '<tr>
-		<td>' . _('Reference') . ':</td>
-		<td><input tabindex="7" type="text" name="BankTransRef" maxlength="50" size="52" value="' . $_SESSION['ReceiptBatch']->BankTransRef . '" />  ' . _('Reference on Bank Transactions Inquiry') . '</td>
+		<td>', _('Reference'), ':</td>
+		<td><input maxlength="50" name="BankTransRef" size="52" tabindex="7" type="text" value="', $_SESSION['ReceiptBatch']->BankTransRef,'" /> <i>', _('Reference on Bank Transactions Inquiry'), '.</i></td>
 	</tr>';
 
 /* Receipt (Bank Account) info to be inserted on gltrans.narrative, varchar(200). */
@@ -939,14 +937,14 @@ if (!isset($_POST['Currency'])){
 	$_POST['Currency'] = $_SESSION['CompanyRecord']['currencydefault'];
 }
 echo '<tr>
-		<td>' . _('Narrative') . ':</td>
-		<td><input tabindex="8" type="text" name="BatchNarrative" maxlength="200" size="52" value="' . $_SESSION['ReceiptBatch']->Narrative . '" />  ' . _('Narrative on General Ledger Account Inquiry') . '</td>
+		<td>', _('Narrative'), ':</td>
+		<td><input maxlength="200" name="BatchNarrative" size="52" tabindex="8" type="text" value="', $_SESSION['ReceiptBatch']->Narrative, '" /> <i>', _('Narrative on General Ledger Account Inquiry'), '.</i></td>
 	</tr>
-	<input type="hidden" name="PreviousCurrency" value="' . $_POST['Currency'] . '" />
+	<input name="PreviousCurrency" type="hidden" value="', $_POST['Currency'], '" />
 	<tr>
 		<td colspan="3">
 		<div class="centre">
-			<input tabindex="9" type="submit" name="BatchInput" value="' . _('Accept') . '" />
+			<input name="BatchInput" tabindex="9" type="submit" value="', _('Accept'), '" />
 		</div>
 		</td>
 	</tr>
