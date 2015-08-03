@@ -72,24 +72,27 @@ define("LIST_STOCK_CATEGORIES_ACCESSORIES",       "('TESTAC','ACCESO','NOPOAC')"
 
 
 /* Defines about LOCATIONS*/
+// TOKKA nneds to be added below
 define("LIST_ACTIVE_KL_SHOPS_BALI",          "('TOK66','TOKSA','TOKKS','TOKJC','TOKSE','TOKUB','TOKMF','TOKPU','TOKSU','TOKBW','TOKOB','TOKSS','TOKPA')"); // NOT includes the shop online
 define("LIST_SHOPS_WITH_DISCOUNT",    		 "('TOKSU','TOKWS')");
 define("LIST_OUTLET_SHOPS",                  "('TOKSU','TOKWS')");
 
+// TOKKA nneds to be added below
 define("LIST_LOCATIONS_SPG_STOCK_STATUS",	 "('KANTO','TOK66','TOKSA','TOKKS','TOKJC','TOKSE','TOKUB','TOKMF','TOKOB','TOKPU','TOKSU','TOKSS','TOKBW','TOKPA')"); 
 
+// TOKKA nneds to be added below
 define("LIST_SHOPS_USING_PACKAGING_CONTROL", "('TOKPA','TOKSU','TOK66','TOKSA','TOKKS','TOKJC','TOKSE','TOKUB','TOKMF','TOKOB','TOKPU','TOKSS','TOKBW','PACKA')"); // PACKA MUST be the last one in this list
 define("LIST_ITEMS_USING_PACKAGING_CONTROL", "('PKBX01-L','PKBX01-M','PKBX01-S','PKPB01-L','PKPB01-M','PKPB01-S','PKPB02-L','PKPB02-M','PKPB02-S','PKSB02-L','PKSB02-M','PKSB02-S','PKSB03')");
 
+// TOKKA nneds to be added below
 define("LIST_SHOPS_USING_REGULAR_PACKAGING", "('TOK66','TOKSA','TOKKS','TOKJC','TOKSE','TOKUB','TOKMF','TOKOB','TOKPU','TOKSS','TOKBW','TOKPA')"); 
-//define("LIST_SHOPS_USING_OUTLET_PACKAGING", "('TOKSU','TOKPA')"); 
 define("LIST_SHOPS_USING_OUTLET_PACKAGING", "('TOKSU')"); 
 
 define("LIST_KANTOR_LOCATIONS",              "('KANTO','SAMPR','SASPG','SERSU','SERVI','SERDE','WHOLE')");
 define("LIST_SERVICE_LOCATIONS",             "('SERSU','SERVI')");
 define("LIST_CONSIGNMENT_LOCATIONS",         "('')");
 
-define("LIST_LOCATIONS_WITH_RL_ALWAYS_ZERO", "('KANTO','PACKA','SUPBA','WHSHE','SERVI','SERSU','SERDE','SAMPR','SASPG')");
+define("LIST_LOCATIONS_WITH_RL_ALWAYS_ZERO", "('KANTO','PACKA','SUPBA','SERVI','SERSU','SERDE','SAMPR','SASPG')");
 
 /* Defines about Performance */
 define("IMPROVEMENT_AVERAGE_SALES", 5);
@@ -97,9 +100,6 @@ define("IMPROVEMENT_SALES_COMPARED_LAST_YEAR", 5);
 
 /* Defines about Retail Sales at KL Shops*/
 define("LENGHT_OF_LIST_OF_CODES_RETAIL_SHOP_SALES", 6); 
-
-/* Defines about Packaging*/
-define("MINIMUM_REORDER_LEVEL_FOR_PACKAGING_AT_SHOP", 0); // Set to 0 as test for packaging control for outet shows. If 0 works OK, then delete this define everywhere as will be not needed
 
 /* Defines about Stock Control*/
 define("STOCK_MOVEMENT_DAYS_FOR_SPG", 60); 
@@ -131,6 +131,7 @@ define("ACCOUNT_CASH_TOKSU", "111111111"); // number of account for toko SU
 define("ACCOUNT_CASH_TOKOB", "111111112"); // number of account for toko OB
 define("ACCOUNT_CASH_TOKSS", "111111113"); // number of account for toko SS
 define("ACCOUNT_CASH_TOKPA", "111111114"); // number of account for toko PA
+define("ACCOUNT_CASH_TOKKA", "111111115"); // number of account for toko KA
 
 define("ACCOUNT_BANK_DANAMON_IDR", "111121105PT"); // number of account for Bank Danamon IDR
 define("ACCOUNT_BANK_MANDIRI_IDR", "111121101PT"); // number of account for Bank Mandiri IDR

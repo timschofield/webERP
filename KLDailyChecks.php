@@ -93,8 +93,9 @@ function KL_DailyMaintenanceDatabase($ShowMessages, $db, $EmailText = ''){
 
 function KL_DailyEmailsToStaff($db, $EmailText){
 	$EmailText = SendEmailChangePriceReadyForStep02($db, $EmailText);
-	$EmailText = SendEmailMoveToDiscountReadyForStep02($db, $EmailText);
-	$EmailText = SendEmailMoveToOutletReadyForStep02($db, $EmailText);
+	$EmailText = SendEmailMoveToDiscountReadyForStep02("20", $db, $EmailText);
+	$EmailText = SendEmailMoveToDiscountReadyForStep02("50", $db, $EmailText);
+	$EmailText = SendEmailMoveToDiscountReadyForStep02("80", $db, $EmailText);
 	return $EmailText;
 }
 

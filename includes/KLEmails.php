@@ -125,10 +125,10 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 			$EmailAddress = "kl-shopsupport@kapal-laut.com";
 			break;
 		case "ItemReadyMoveToDiscountStep02":
-			$EmailSubject = "Item: ". $Param1 . " ready for Step02 of Move To Discount.";
+			$EmailSubject = "Item: ". $Param1 . " ready for Step02 of Move To " . $Param4 ."% Discount.";
 			$EmailText = $EmailSubject . "\n\n" . 
 						$Param2 . " is ready at kantor. Stock = " . $Param3 . " pcs." .  "\n\n" .
-						"Please go to webERP Move To Discount Step02 and finish the process ASAP.";
+						"Please go to webERP Move To " . $Param4 ."% Discount Step02 and finish the process ASAP.";
 			$EmailAddress = "kl-shopsupport@kapal-laut.com";
 			break;
 

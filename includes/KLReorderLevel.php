@@ -1116,8 +1116,6 @@ function AdjustPackaging($DaysSales, $ShowMessages, $updateDB, $RootPath, $db, $
 
 function AdjustPackagingItemByShop($Item, $Shop, $DaysSales, $ShowMessages, $updateDB, $RootPath, $db, $EmailText){
 
-	$RLMinim = MINIMUM_REORDER_LEVEL_FOR_PACKAGING_AT_SHOP;
-
 	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -$DaysSales));
 
 	$SQL = "SELECT 	locations.locationname,
@@ -1137,15 +1135,13 @@ function AdjustPackagingItemByShop($Item, $Shop, $DaysSales, $ShowMessages, $upd
 	if (DB_num_rows($result) != 0){
 		$myrow = DB_fetch_array($result);
 		// New RL is the daily needs x number of days to keep as RL
-		$ShortRL = round($myrow['sales'] / $DaysSales * $myrow['rldaysforpackaging'],0);
-		$NewRL = max($ShortRL, $RLMinim);
+		$NewRL = round($myrow['sales'] / $DaysSales * $myrow['rldaysforpackaging'],0);
 		$OldRL = $myrow['rl'];
 		if ($NewRL > $OldRL){
 			if ($ShowMessages){
 				$text = $Shop . ' ' . $Item .  
 					' Old RL = ' . $OldRL . 
 					' Used ' . $DaysSales . ' days = ' . $myrow['sales'] . 
-					' RL for ' . $DaysSales . ' days = ' . $ShortRL . 
 					' New RL = ' . $NewRL;
 				echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
 			}
@@ -1153,7 +1149,6 @@ function AdjustPackagingItemByShop($Item, $Shop, $DaysSales, $ShowMessages, $upd
 				$text = $Shop . ' ' . $Item . "\n" . 
 					' Old RL = ' . $OldRL . "\n" . 
 					' Used ' . $DaysSales . ' days = ' . $myrow['sales'] . "\n" . 
-					' RL for ' . $DaysSales . ' days = ' . $ShortRL . "\n" . 
 					' New RL = ' . $NewRL . "\n";
 				$EmailText = $EmailText . $text;
 			}

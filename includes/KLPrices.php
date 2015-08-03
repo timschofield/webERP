@@ -427,7 +427,7 @@ function SendEmailChangePriceReadyForStep02($db, $EmailText){
 	return $EmailText;
 }
 
-function SendEmailMoveToDiscountReadyForStep02($db, $EmailText){
+function SendEmailMoveToDiscountReadyForStep02($TypeDiscount, $db, $EmailText){
 	$SQL = "SELECT stockmaster.stockid, 
 				stockmaster.description,
 				(SELECT sum(quantity)
@@ -443,12 +443,12 @@ function SendEmailMoveToDiscountReadyForStep02($db, $EmailText){
 				(SELECT sum(quantity)
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid) AS qohtotal,
-				klmovetodiscount50.countermovediscount,
-				klmovetodiscount50.startprocessdate,
-				klmovetodiscount50.discountcategory
-			FROM stockmaster, klmovetodiscount50					
-			WHERE stockmaster.stockid = klmovetodiscount50.stockid
-				AND klmovetodiscount50.endprocessdate = '0000-00-00'";
+				klmovetodiscount".$TypeDiscount.".countermovediscount,
+				klmovetodiscount".$TypeDiscount.".startprocessdate,
+				klmovetodiscount".$TypeDiscount.".discountcategory
+			FROM stockmaster, klmovetodiscount".$TypeDiscount."					
+			WHERE stockmaster.stockid = klmovetodiscount".$TypeDiscount.".stockid
+				AND klmovetodiscount".$TypeDiscount.".endprocessdate = '0000-00-00'";
 				
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
@@ -458,50 +458,9 @@ function SendEmailMoveToDiscountReadyForStep02($db, $EmailText){
 		while ($myrow = DB_fetch_array($result)) {
 			if (($myrow['qohkantor'] + $myrow['qohotherlocs']) == $myrow['qohtotal']){
 				// Send Email
-				KLSendEmail("ItemReadyMoveToDiscountStep02", "Silent", $myrow['stockid'], $myrow['description'],$myrow['qohtotal']);
+				KLSendEmail("ItemReadyMoveToDiscountStep02", "Silent", $myrow['stockid'], $myrow['description'],$myrow['qohtotal'], $TypeDiscount);
 				if ($EmailText !=''){
-					$EmailText = $EmailText . _('Item Ready Move To Discount Step 02 = '). $myrow['stockid'] . " QOH = " . $myrow['qohtotal'] . "\n"; 
-				}
-			}
-		}
-	}
-	return $EmailText;
-}
-
-function SendEmailMoveToOutletReadyForStep02($db, $EmailText){
-	$SQL = "SELECT stockmaster.stockid, 
-				stockmaster.description,
-				(SELECT sum(quantity)
-					FROM locstock
-					WHERE locstock.stockid = stockmaster.stockid
-					AND loccode IN " . LIST_KANTOR_LOCATIONS . ") AS qohkantor,
-				(SELECT sum(quantity)
-					FROM locstock
-					WHERE locstock.stockid = stockmaster.stockid
-					AND loccode NOT IN " . LIST_KANTOR_LOCATIONS . "
-					AND loccode NOT LIKE 'TOK%'
-					AND loccode NOT IN " . LIST_CONSIGNMENT_LOCATIONS . ") AS qohotherlocs,
-				(SELECT sum(quantity)
-					FROM locstock
-					WHERE locstock.stockid = stockmaster.stockid) AS qohtotal,
-				klmovetodiscount80.countermovediscount,
-				klmovetodiscount80.startprocessdate,
-				klmovetodiscount80.discountcategory
-			FROM stockmaster, klmovetodiscount80					
-			WHERE stockmaster.stockid = klmovetodiscount80.stockid
-				AND klmovetodiscount80.endprocessdate = '0000-00-00'";
-				
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
-		if ($EmailText !=''){
-			$EmailText = $EmailText . "\n"; 
-		}
-		while ($myrow = DB_fetch_array($result)) {
-			if (($myrow['qohkantor'] + $myrow['qohotherlocs']) == $myrow['qohtotal']){
-				// Send Email
-				KLSendEmail("ItemReadyMoveTooutletStep02", "Silent", $myrow['stockid'], $myrow['description'],$myrow['qohtotal']);
-				if ($EmailText !=''){
-					$EmailText = $EmailText . _('Item Ready Move To Outlet Step 02 = '). $myrow['stockid'] . " QOH = " . $myrow['qohtotal'] . "\n"; 
+					$EmailText = $EmailText . 'Item Ready Move To ' . $TypeDiscount . '% Discount Step 02 = '. $myrow['stockid'] . " QOH = " . $myrow['qohtotal'] . "\n"; 
 				}
 			}
 		}
