@@ -4983,7 +4983,7 @@ function GoodsToBeProduced($CategoryComponent, $ParentCategory, $RootPath, $db){
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		if ($ParentCategory == "DISCOUNT"){
-			echo '<p class="page_title_text" align="center"><strong>' . _('Components '). $CategoryComponent . _(' ready to WO in kantor for items Discount / Outlet') . '</strong></p>';
+			echo '<p class="page_title_text" align="center"><strong>' . _('Components '). $CategoryComponent . _(' ready to WO in kantor for items Discount') . '</strong></p>';
 		}else{
 			echo '<p class="page_title_text" align="center"><strong>' . _('Components '). $CategoryComponent . _(' ready to WO in kantor for all items') . '</strong></p>';
 		}

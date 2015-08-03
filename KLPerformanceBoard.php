@@ -103,7 +103,7 @@ if ($KL_SystemAdmin){
 if (($KL_SystemAdmin) 
 	OR ($KL_KantorManager)
 	OR ($KL_PurchasingManager)){
-	InsuficientStockForShopPackaging( 'SHPACK', 21, 85, 30, true, $RootPath, $db);
+	InsuficientStockForShopPackaging( 'SHPACK', 21, 90, 30, true, $RootPath, $db);
 	InsuficientStockForShopPackaging( 'ZAPON', 21, 60, 30, true, $RootPath, $db);
 }
 
