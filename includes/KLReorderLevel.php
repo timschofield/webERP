@@ -279,9 +279,7 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 					$LocationsDistributed = 0;
 					
 					// if category is discount or outlet, then use priority for these categories
-					if(($myrow['categoryid'] == 'DISC20') OR
-						(myrow['categoryid'] == 'DISC50') OR 
-						($myrow['categoryid'] == 'DISC80')){
+					if(($myrow['categoryid'] == 'DISC20') OR($myrow['categoryid'] == 'DISC50') OR ($myrow['categoryid'] == 'DISC80')){
 						$OrderBy = " ORDER BY locations.prioritydiscount ASC, "; 
 					}else{
 						$OrderBy = " ORDER BY locations.priority ASC, "; 
@@ -866,7 +864,8 @@ function SetRLForLowSalesHighRL($maxdays, $oldRL, $maxRL, $minavailablestock, $S
 				$newRL = $myrow['reorderlevel'];
 				$notes = "KLPRGE - Tali. RL Not changed";
 			}
-*/			if ($myrow['categoryid'] == "DISC20" OR myrow['categoryid'] == "DISC50" OR $myrow['categoryid'] == "DISC80"){
+*/
+			if(($myrow['categoryid'] == 'DISC20') OR($myrow['categoryid'] == 'DISC50') OR ($myrow['categoryid'] == 'DISC80')){
 				$newRL = $myrow['reorderlevel'];
 				$notes = "Discounted or outlet item. RL Not changed";
 			}
