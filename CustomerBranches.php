@@ -773,7 +773,7 @@ if(!isset($_GET['delete'])) {
 
 	//	DB_data_seek($result,0);//by thumb
 	}
-	$SQL = "SELECT areacode, areadescription FROM areas";
+	$SQL = "SELECT areacode, areadescription FROM areas ORDER BY areadescription";
 	$result = DB_query($SQL);
 	if(DB_num_rows($result)==0) {
 		echo '</table>';
