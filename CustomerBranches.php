@@ -741,7 +741,8 @@ if(!isset($_GET['delete'])) {
 		$SQL = "SELECT salesmanname,
 						salesmancode
 				FROM salesman
-				WHERE current = 1";
+				WHERE current = 1
+				ORDER BY salesmanname";
 
 		$result = DB_query($SQL);
 
@@ -806,7 +807,8 @@ if(!isset($_GET['delete'])) {
 		ON locationusers.loccode=locations.loccode
 			AND locationusers.userid='" . $_SESSION['UserID'] . "'
 			AND locationusers.canupd=1
-		WHERE locations.allowinvoicing='1'";
+		WHERE locations.allowinvoicing='1'
+		ORDER BY locationname";
 	$result = DB_query($SQL);
 
 	if(DB_num_rows($result)==0) {
