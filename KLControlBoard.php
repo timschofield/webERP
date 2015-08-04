@@ -113,8 +113,9 @@ if ($KL_PurchasingTeam) {
 /*
 if (($KL_SystemAdmin)){
 	over_or_below_limit("Items changing price", "OVER", 0, $RootPath, $db);
-	over_or_below_limit("Items moving to discount", "OVER", 0, $RootPath, $db);
-	over_or_below_limit("Items moving to outlet", "OVER", 0, $RootPath, $db);
+	over_or_below_limit("Items moving to 20% discount", "OVER", 0, $RootPath, $db);
+	over_or_below_limit("Items moving to 50% discount", "OVER", 0, $RootPath, $db);
+	over_or_below_limit("Items moving to 80% discount", "OVER", 0, $RootPath, $db);
 }
 */
 
@@ -124,8 +125,9 @@ if ($KL_PurchasingManager
 	
 	over_or_below_limit("Items changing price or moving category", "OVER", 50, $RootPath, $db);
 	over_or_below_limit("Items changing price", "OVER", 20, $RootPath, $db);
-	over_or_below_limit("Items moving to discount", "OVER", 20, $RootPath, $db);
-	over_or_below_limit("Items moving to outlet", "OVER", 20, $RootPath, $db);
+	over_or_below_limit("Items moving to 20% discount", "OVER", 20, $RootPath, $db);
+	over_or_below_limit("Items moving to 50% discount", "OVER", 20, $RootPath, $db);
+	over_or_below_limit("Items moving to 80% discount", "OVER", 20, $RootPath, $db);
 }
 
 if ($KL_ShopSupportTeam){
@@ -193,6 +195,8 @@ if ($KL_SystemAdmin
 	BalanceAccountControl("111111112",         0,   15000000, $periodnow, $db);
 	BalanceAccountControl("111111113",         0,   15000000, $periodnow, $db);
 	BalanceAccountControl("111111114",         0,   15000000, $periodnow, $db);
+	BalanceAccountControl("111111115",         0,   15000000, $periodnow, $db);
+	BalanceAccountControl("111111116",         0,   15000000, $periodnow, $db);
 }
 
 if ($KL_SystemAdmin 
@@ -206,7 +210,7 @@ if ($KL_SystemAdmin
 if ($KL_SystemAdmin 
 	OR $KL_KantorAdministration){
 	// Bank Mandiri or  BCA has enough funds to be transferred to Danamon
-	BalanceAccountControl("111121100PT", 10000000,   50000000, $periodnow, $db);
+	BalanceAccountControl("111121100PT",  1000000,   50000000, $periodnow, $db);
 	BalanceAccountControl("111121101PT",  1000000,  100000000, $periodnow, $db);
 	BalanceAccountControl("111121110PT",  1000000,  100000000, $periodnow, $db);
 }
@@ -215,14 +219,11 @@ if ($KL_SystemAdmin){
 
 	BalanceAccountControl("111111200",   20000000,   50000000, $periodnow, $db);
 	BalanceAccountControl("111111209",          0,   15000000, $periodnow, $db);
-	BalanceAccountControl("111121105PT",100000000,  300000000, $periodnow, $db);
+	BalanceAccountControl("111121105PT",200000000,  400000000, $periodnow, $db);
 	BalanceAccountControl("111131100",         -1,  300000000, $periodnow, $db);
-//	BalanceAccountControl("111516000",          0,  250000000, $periodnow, $db);
-//	BalanceAccountControl("111517000",  500000000, 1250000000, $periodnow, $db);
 	BalanceAccountControl("111520000",  150000000,  300000000, $periodnow, $db);
 	BalanceAccountControl("111512000",   50000000,  150000000, $periodnow, $db);
 	BalanceAccountControl("111513000",         -1,          1, $periodnow, $db);
-//	BalanceAccountControl("111518000",   25000000,  100000000, $periodnow, $db);
 	BalanceAccountControl("111800000",   90000000,  120000000, $periodnow, $db);
 	BalanceAccountControl("111900000",   10000000,   20000000, $periodnow, $db);
 	BalanceAccountControl("111311100",   -1000000,    1000000, $periodnow, $db);
@@ -248,21 +249,24 @@ if ($KL_SystemAdmin
 	ItemsNeedingTranslationRevision($RootPath, $db);
 }
 
+/*
 if ($KL_PurchasingManager
 	OR $KL_KantorManager
 	OR $KL_ShopSupportTeam){
-	
-//	ItemsWithStockLocationButNoStockAvailable("WABOM", "WaterBom", 15, 600, $RootPath, $db);
-//	ItemsWithStockLocationButNoStockAvailable("WHAYA", "Ayana", 15, 600, $RootPath, $db);
-//	ItemsWithStockLocationButNoStockAvailable("WHINT", "InterContinental", 15, 600, $RootPath, $db);
+	ItemsWithStockLocationButNoStockAvailable("WABOM", "WaterBom", 15, 600, $RootPath, $db);
+	ItemsWithStockLocationButNoStockAvailable("WHAYA", "Ayana", 15, 600, $RootPath, $db);
+	ItemsWithStockLocationButNoStockAvailable("WHINT", "InterContinental", 15, 600, $RootPath, $db);
 }
+*/
 
+/*
 if ($KL_PurchasingManager
 	OR $KL_KantorManager
 	OR $KL_PurchasingTeam){
 
-//	InsuficientStockForItems("SILVER", "TM-", "Tali Mie", 20, 40, $RootPath, $db);
+	InsuficientStockForItems("SILVER", "TM-", "Tali Mie", 20, 40, $RootPath, $db);
 }
+*/
 
 if ($KL_PurchasingManager
 	OR $KL_SystemAdmin
@@ -287,10 +291,6 @@ if ($KL_PurchasingManager){
 	GoodsJustTransferred("SERDE", "KANTO", 2, 50, $RootPath, $db);
 	GoodsJustTransferred("SERVI", "KANTO", 2, 50, $RootPath, $db);
 //	GoodsJustTransferred("WABOM", "KANTO", 2, 50, $RootPath, $db);
-//	GoodsJustTransferred("WHAYA", "KANTO", 2, 50, $RootPath, $db);
-//	GoodsJustTransferred("WHINT", "KANTO", 2, 50, $RootPath, $db);
-//	GoodsJustTransferred("WHSHE", "KANTO", 2, 50, $RootPath, $db);
-	GoodsJustTransferred("WHOLE", "KANTO", 2, 50, $RootPath, $db);
 	
 	InsuficientStockForTopSalesItems("SILVER", "10-Silver",90, 100, 150, $RootPath, $db);
 	InsuficientStockForTopSalesItems("STAINL", "20-Stainless Steel", 90, 100, 150, $RootPath, $db);
@@ -417,7 +417,15 @@ if ($KL_PurchasingManager
 	GoodSellingItemsInCategory("NOPOFJ", 15, 6, $RootPath, $db);
 	GoodSellingItemsInCategory("NOPOAC", 15, 6, $RootPath, $db);
 
-	ActiveItemsNoSales( 30, "STABLE", $RootPath, $db);
+	ActiveItemsNoSales( 30, "TESTSI", $RootPath, $db);
+	ActiveItemsNoSales( 30, "TESTSS", $RootPath, $db);
+	ActiveItemsNoSales( 30, "TESTFJ", $RootPath, $db);
+	ActiveItemsNoSales( 30, "TESTAC", $RootPath, $db);
+
+	ActiveItemsNoSales( 30, "SILVER", $RootPath, $db);
+	ActiveItemsNoSales( 30, "STAINL", $RootPath, $db);
+	ActiveItemsNoSales( 30, "FASHIO", $RootPath, $db);
+	ActiveItemsNoSales( 30, "ACCESO", $RootPath, $db);
 
 	ActiveItemsNoSales( 45, "NOPOSI", $RootPath, $db);
 	ActiveItemsNoSales( 45, "NOPOSS", $RootPath, $db);
@@ -426,7 +434,7 @@ if ($KL_PurchasingManager
 
 	ActiveItemsNoSales( 45, "DISC20", $RootPath, $db);
 	ActiveItemsNoSales( 45, "DISC50", $RootPath, $db);
-	ActiveItemsNoSales(120, "DISC80", $RootPath, $db);
+	ActiveItemsNoSales( 90, "DISC80", $RootPath, $db);
 
 	TopSalesNotInEnoughShops(  1, 500, 60, 11, "STABLE", $RootPath, $db);
 	TopSalesNotInEnoughShops(500, 800, 60,  9, "STABLE", $RootPath, $db);
@@ -487,7 +495,8 @@ if ($KL_PurchasingManager
 	PerformanceItemsInCategory("BAD",  "NOPOAC", 60,  50, "MOVE TO DISCOUNT", $RootPath, $db);
 	PerformanceItemsInCategory("BAD",  "NOPOAC",120, 100, "MOVE TO DISCOUNT", $RootPath, $db);
 
-	PerformanceItemsInCategory("BAD",  "DISC50",120, 100, "MOVE TO OUTLET", $RootPath, $db);
+	PerformanceItemsInCategory("BAD",  "DISC20", 60, 100, "MOVE TO 50% DISCOUNT", $RootPath, $db);
+	PerformanceItemsInCategory("BAD",  "DISC50",120, 100, "MOVE TO 80% DISCOUNT", $RootPath, $db);
 }
 
 if ($KL_PurchasingManager
