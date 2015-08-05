@@ -140,6 +140,7 @@ if ($KL_ShopSupportTeam){
 
 if ($KL_SystemAdmin 
 	OR $KL_KantorManager
+	OR $KL_SalesManager 
 	OR $KL_PurchasingManager){
 
 	ItemsChangingPriceDelayed(5, $RootPath, $db);
@@ -151,6 +152,7 @@ if ($KL_SystemAdmin
 if ($KL_SystemAdmin 
 	OR $KL_PurchasingManager
 	OR $KL_KantorManager
+	OR $KL_SalesManager 
 	OR $KL_PurchasingTeam 
 	OR $KL_ShopSupportTeam){
 	
@@ -161,6 +163,7 @@ if ($KL_SystemAdmin
 if ($KL_SystemAdmin 
 	OR $KL_PurchasingManager
 	OR $KL_KantorManager
+	OR $KL_SalesManager 
 	OR $KL_PurchasingTeam 
 	OR $KL_ShopSupportTeam){
 	
