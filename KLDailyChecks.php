@@ -283,19 +283,6 @@ function KL_DailyOptimizationDatabase($ShowMessages, $db, $EmailText = ''){
 	return $EmailText;
 }
 
-/*
-function PurgeOldPrices($ShowMessages, $db){
-	$sql = "INSERT INTO kloldprices (SELECT * FROM prices WHERE enddate != '0000-00-00')";
-	$ErrMsg ='Could not insert table kloldprices because';
-	$result = DB_query($sql,$ErrMsg);
-	if ($ShowMessages) prnMsg("Old prices inserted into kloldprices table.","info");
-
-	$sql = "DELETE FROM prices WHERE enddate != '0000-00-00'";
-	$ErrMsg ='Could not clean table prices because';
-	$result = DB_query($sql,$ErrMsg);
-	if ($ShowMessages) prnMsg("Old prices deleted from prices table.","info");
-}
-*/
 function PurgeKLTable($TableName,$DateField, $ShowMessages, $db){
 	if ($_SESSION['MonthsAuditTrail'] > 0){
 		 $sql = "DELETE FROM " . $TableName . "
