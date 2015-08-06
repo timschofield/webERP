@@ -77,7 +77,7 @@ function KL_DailyMaintenanceDatabase($ShowMessages, $db, $EmailText = ''){
 	SetStatusCompleteToFinishedOldPurchaseOrders(150, $ShowMessages, $db);
 	CleanWrongPrices($ShowMessages, $db);
 	AuthorizeAllInternalStockRequest($ShowMessages, $db);
-	PurgeOldPrices($ShowMessages, $db);
+//	PurgeOldPrices($ShowMessages, $db);
 	CleanOldDoubleReceivedGoods(15, $ShowMessages, $db);
 	BlockInactiveUsers(17,  7, $ShowMessages, $db); // 17 = SPG
 	BlockInactiveUsers(22, 30, $ShowMessages, $db); // 22 = SPG-Support
@@ -164,7 +164,6 @@ function KL_DailyOptimizationDatabase($ShowMessages, $db, $EmailText = ''){
 								`klfreeexchanges` ,
 								`klmovetodiscount50` ,
 								`klmovetodiscount80` ,
-								`kloldprices` ,
 								`labelfields` ,
 								`labels` ,
 								`lastcostrollup` ,
@@ -284,7 +283,7 @@ function KL_DailyOptimizationDatabase($ShowMessages, $db, $EmailText = ''){
 	return $EmailText;
 }
 
-
+/*
 function PurgeOldPrices($ShowMessages, $db){
 	$sql = "INSERT INTO kloldprices (SELECT * FROM prices WHERE enddate != '0000-00-00')";
 	$ErrMsg ='Could not insert table kloldprices because';
@@ -296,7 +295,7 @@ function PurgeOldPrices($ShowMessages, $db){
 	$result = DB_query($sql,$ErrMsg);
 	if ($ShowMessages) prnMsg("Old prices deleted from prices table.","info");
 }
-
+*/
 function PurgeKLTable($TableName,$DateField, $ShowMessages, $db){
 	if ($_SESSION['MonthsAuditTrail'] > 0){
 		 $sql = "DELETE FROM " . $TableName . "

@@ -1,8 +1,5 @@
 UPDATE  `config` SET `confvalue` = 'data/KL/part_pics/' WHERE confname = 'WeberpImagesFromOpenCart';
 
-ALTER TABLE  `kloldprices` ADD  `date_created` DATETIME NOT NULL ,
-	ADD  `date_updated` DATETIME NOT NULL;
-
 ALTER TABLE `stockmaster`  
 	ADD `length` DECIMAL(15,8) NULL DEFAULT '0' AFTER `netweight`,  
 	ADD `width` DECIMAL(15,8) NULL DEFAULT '0' AFTER `length`,  

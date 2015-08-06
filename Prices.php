@@ -4,6 +4,7 @@
 /**************************************************************************************
 KL RICARD MODIFICATIONS:
 - Added function KLShowOldPrices() showing old retail prices in sepparate table.
+Cancelled on 06/08/2015. If it works, delete the KL 
 ***************************************************************************************/
 
 include('includes/session.inc');
@@ -349,7 +350,7 @@ echo '<tr><td>' . _('Price') . ':</td>
 <input type="submit" name="submit" value="' . _('Enter') . '/' . _('Amend Price') . '" />';
 echo '</div>';
 // KL RICARD
-KLShowOldPrices($Item);
+// KLShowOldPrices($Item);
 // END KL RICARD
 echo '</div>
 	  </form>';
@@ -432,6 +433,7 @@ function ReSequenceEffectiveDates ($Item, $PriceList, $CurrAbbrev, $db) {
 
 } // end function ReSequenceEffectiveDates
 
+/*
 function KLShowOldPrices($Item){
 	$sql = "SELECT kloldprices.price,
 				kloldprices.startdate,
@@ -477,5 +479,5 @@ function KLShowOldPrices($Item){
 				</div>';
 	}
 }
-
+*/
 ?>
