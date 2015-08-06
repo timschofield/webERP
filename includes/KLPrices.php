@@ -65,12 +65,24 @@ function SetEndDateChangePrice($StockId, $db){
 	prnMsg($msg , 'success');
 }
 
+function SetEndDateMoveDiscount20($StockId, $db){
+	$sql = "UPDATE klmovetodiscount20 
+			SET endprocessdate = '" . Date('Y-m-d') . "'
+			WHERE stockid = '".$StockId."'";
+
+	$msg = _('Changing End Date of Move To 20% Discount to today for item code') . ' ' . $StockId;
+	$ErrMsg = _('The End Date update failed because');
+	$DbgMsg = _('The SQL that was used and failed was');
+	$result = DB_query($sql,$ErrMsg, $DbgMsg);
+	prnMsg($msg , 'success');
+}
+
 function SetEndDateMoveDiscount50($StockId, $db){
 	$sql = "UPDATE klmovetodiscount50 
 			SET endprocessdate = '" . Date('Y-m-d') . "'
 			WHERE stockid = '".$StockId."'";
 
-	$msg = _('Changing End Date of Move To Discount to today for item code') . ' ' . $StockId;
+	$msg = _('Changing End Date of Move To 50% Discount to today for item code') . ' ' . $StockId;
 	$ErrMsg = _('The End Date update failed because');
 	$DbgMsg = _('The SQL that was used and failed was');
 	$result = DB_query($sql,$ErrMsg, $DbgMsg);
@@ -82,7 +94,7 @@ function SetEndDateMoveDiscount80($StockId, $db){
 			SET endprocessdate = '" . Date('Y-m-d') . "'
 			WHERE stockid = '".$StockId."'";
 
-	$msg = _('Changing End Date of Move To Outlet to today for item code') . ' ' . $StockId;
+	$msg = _('Changing End Date of Move To 80% Discount to today for item code') . ' ' . $StockId;
 	$ErrMsg = _('The End Date update failed because');
 	$DbgMsg = _('The SQL that was used and failed was');
 	$result = DB_query($sql,$ErrMsg, $DbgMsg);
