@@ -2271,13 +2271,12 @@ No pending transfer regarding this item
 				AND stockcategory.stocktype = 'F'
 				AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_SHOP_DISPLAYS . "
 				AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_SHOP_CONSUMABLES . "
-				AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_OUTLET . "
 				AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_OLD . "
 			ORDER BY stockid";
 
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Items with stock available (but NO changing price) at Kantor but RL zero for all toko KL (Excluding OUTLET)') . '</strong></p>';
+		echo '<p class="page_title_text" align="center"><strong>' . _('Items with stock available (but NO changing price or category) at Kantor but RL zero for all toko KL') . '</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
