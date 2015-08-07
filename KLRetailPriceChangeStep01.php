@@ -33,6 +33,7 @@ if (isset($_POST['submit'])) {
 	$i=1;
 	//first off validate inputs sensible round_price($myrow['retailprice'], "UP")
 	$result = DB_query("SELECT klchangingprice, 
+								klmovingdiscount20,
 								klmovingdiscount50,
 								klmovingdiscount80,
 								categoryid, 
@@ -60,16 +61,26 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'klchangingprice';
 		$i++;
 		prnMsg(_('This item is already in changing price procedure.'),'error');
+	}elseif ($myrow['klmovingdiscount20'] == 1) {
+		$InputError = 1;
+		$Errors[$i] = 'MovingDiscount20';
+		$i++;
+		prnMsg(_('This item is already in Move To 20% Discount procedure. Finish or delete this process first.'),'error');
 	}elseif ($myrow['klmovingdiscount50'] == 1) {
 		$InputError = 1;
-		$Errors[$i] = 'MovingDiscount';
+		$Errors[$i] = 'MovingDiscount50';
 		$i++;
-		prnMsg(_('This item is already being Moved to Discount procedure. Finish or delete this process first'),'error');
+		prnMsg(_('This item is already being Moved to 50% Discount procedure. Finish or delete this process first'),'error');
 	}elseif ($myrow['klmovingdiscount80'] == 1) {
 		$InputError = 1;
-		$Errors[$i] = 'MovingOutlet';
+		$Errors[$i] = 'MovingDiscount80';
 		$i++;
-		prnMsg(_('This item is already being Moved to Outlet procedure. Finish or delete this process first'),'error');
+		prnMsg(_('This item is already being Moved to 80% Discount procedure. Finish or delete this process first'),'error');
+	}elseif ($myrow['discontinued'] == 1) {
+		$InputError = 1;
+		$Errors[$i] = 'Discontinued';
+		$i++;
+		prnMsg(_('This item is already an Obsolete item. '),'error');
 	}
 
 	if (!isset($_POST['Stockid'])){

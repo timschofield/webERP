@@ -22,6 +22,7 @@ $Errors = array();
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('KL Move Item to 80% Discount Category') . '" alt="" />' . ' ' . $Title.'</p>';
 
 if (isset($_POST['submit'])) {
+	$_POST['Stockid'] = strtoupper($_POST['Stockid']); // just in case it came in lowercase
 
 	//initialise no input errors assumed initially before we test
 	$InputError = 0;
@@ -190,36 +191,47 @@ or deletion of the records*/
 	$k=0;
 	while ($myrow=DB_fetch_array($result)) {
 
-	if ($k==1){
-		echo '<tr class="EvenTableRows">';
-		$k=0;
-	} else {
-		echo '<tr class="OddTableRows">';
-		$k++;
-	}
+		if ($k==1){
+			echo '<tr class="EvenTableRows">';
+			$k=0;
+		} else {
+			echo '<tr class="OddTableRows">';
+			$k++;
+		}
 
-	printf('<td class="number">%s</td>
-			<td>%s</td>
-			<td class="number">%s</td>
-			<td>%s</td>
-			<td><a href="%sSelectedMovement=%s">'. _('Edit') . '</a></td>
-			<td><a href="%sSelectedMovement=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this movement to outlet?') . '\');">' . _('Delete') . '</a></td>
-			</tr>',
-			$myrow['countermovediscount'],
-			$myrow['stockid'],
-			$myrow['discountcategory'],
-			ConvertSQLDate($myrow['startprocessdate']),
-			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-			$myrow['countermovediscount'],
-			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-			$myrow['countermovediscount']);
+		printf('<td class="number">%s</td>
+				<td>%s</td>
+				<td class="number">%s</td>
+				<td>%s</td>
+				</tr>',
+				$myrow['countermovediscount'],
+				$myrow['stockid'],
+				$myrow['discountcategory'],
+				ConvertSQLDate($myrow['startprocessdate']));
+
+/*		printf('<td class="number">%s</td>
+				<td>%s</td>
+				<td class="number">%s</td>
+				<td>%s</td>
+				<td><a href="%SelectedMovement=%s">'. _('Edit') . '</a></td>
+				<td><a href="%SelectedMovement=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this movement to Discount 20% change?') . '\');">' . _('Delete') . '</a></td>
+				</tr>',
+				$myrow['countermovediscount'],
+				$myrow['stockid'],
+				$myrow['discountcategory'],
+				ConvertSQLDate($myrow['startprocessdate']),
+				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
+				$myrow['countermovediscount'],
+				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
+				$myrow['countermovediscount']);
+*/
 
 	} //END WHILE LIST LOOP
 	echo '</table><br />';
 } //end of ifs and buts!
 
 if (isset($SelectedMovement)) {
-	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Show All Active Movements To Outlet') . '</a></div>';
+	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Show All Active Movements To 80% Discount') . '</a></div>';
 }
 
 if (! isset($_GET['delete'])) {
@@ -271,7 +283,7 @@ if (! isset($_GET['delete'])) {
 		</table>
 		<br />
 		<div class="centre">
-			<input type="submit" name="submit" value="' . _('Enter Change To Outlet') . '" />
+			<input type="submit" name="submit" value="' . _('Start Change To 80% Discount') . '" />
 		</div>
         </div>
 		</form>';
