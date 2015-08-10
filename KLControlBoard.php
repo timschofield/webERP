@@ -311,8 +311,14 @@ if ($KL_PurchasingManager){
 	ValueStockLocation("TOKSE", 1000, 1200, 0, 0, $db);
 	ValueStockLocation("SASPG",   10,   30, 0, 0, $db);
 */
-	ItemsWithStockKantorButReorderLevelTokoZero($RootPath, $db);
+}
 
+if ($KL_PurchasingManager
+	OR $KL_SalesManager){
+	ItemsWithStockKantorButReorderLevelTokoZero($RootPath, $db);
+}
+	
+if ($KL_PurchasingManager){
 	ItemsWithStockKantorButRLZeroAt("ALL", "TOKSA", $RootPath, $db);
 	ItemsWithStockKantorButRLZeroAt("ALL", "TOKSS", $RootPath, $db);
 	ItemsWithStockKantorButRLZeroAt("ALL", "TOKMF", $RootPath, $db);
@@ -327,6 +333,7 @@ if ($KL_PurchasingManager){
 	ItemsInCategoryWithStockKantorButReorderLevelTokoZero("DISC50", $RootPath, $db);
 	ItemsInCategoryWithStockKantorButReorderLevelTokoZero("DISC80", $RootPath, $db);
 }
+
 
 if ($KL_KantorManager 
 	OR $KL_PurchasingManager

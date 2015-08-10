@@ -97,11 +97,15 @@ function SPGNotReportingSalesInDays($maxdays, $db){
 						FROM salesorders
 						WHERE orddate >= '". $StartDate. "'
 							AND salesorders.salesperson = salesman.salesmancode)
+		AND EXISTS (SELECT *
+					FROM www_users
+					WHERE www_users.salesman = salesman.salesmancode
+						AND www_users.fullaccess = '17')
 		ORDER BY salesman.salesmancode";
 //	prnMsg($SQL);			
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('SPG with more than ') . $maxdays . _(' days not reporting ANY sales.') .'</strong></p>';
+		echo '<p class="page_title_text" align="center"><strong>' . _('Senior SPG with more than ') . $maxdays . _(' days not reporting ANY sales.') .'</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
