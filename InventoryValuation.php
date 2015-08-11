@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: InventoryValuation.php 6962 2014-11-06 02:59:12Z tehonu $ */
+/* $Id: InventoryValuation.php 7336 2015-08-10 01:43:46Z tehonu $ */
 
 include('includes/session.inc');
 if (isset($_POST['PrintPDF']) OR isset($_POST['CSV'])){
@@ -247,7 +247,8 @@ if (isset($_POST['PrintPDF'])){
 	$sql = "SELECT locations.loccode,
 					locationname
 			FROM locations
-			INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
+			INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
+			ORDER BY locationname";
 
 	$LocnResult=DB_query($sql);
 

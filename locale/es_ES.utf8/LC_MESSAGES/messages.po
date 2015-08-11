@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.12.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-05-17 13:40+1200\n"
-"PO-Revision-Date: 2015-06-04 09:54-0600\n"
+"PO-Revision-Date: 2015-08-02 10:39-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -3977,7 +3977,7 @@ msgstr "Confirmar Factura"
 
 #: ConfirmDispatch_Invoice.php:280
 msgid "Confirm Dispatch and Invoice"
-msgstr "Confirmar nota de Entrega y Factura"
+msgstr "Confirmar despacho y factura"
 
 #: ConfirmDispatch_Invoice.php:283 Contracts.php:778 CustItem.php:144
 #: CustLoginSetup.php:32 CustomerAllocations.php:345
@@ -9656,7 +9656,7 @@ msgstr "Imprimir Sumario por Lotes (batch) PDF"
 
 #: CustomerReceipt.php:581 includes/MainMenuLinksArray.php:102
 msgid "Enter Receipts"
-msgstr "Introducir Ingresos (Cobros)"
+msgstr "Introducir ingresos (cobros)"
 
 #: CustomerReceipt.php:594 SelectCreditItems.php:73
 msgid ""
@@ -9750,7 +9750,7 @@ msgstr "Tipo de Ingreso"
 
 #: CustomerReceipt.php:931 Payments.php:930
 msgid "Reference on Bank Transactions Inquiry"
-msgstr "Referencia en la consulta de transacciones bancarias "
+msgstr "Referencia en la consulta de transacciones bancarias"
 
 #: CustomerReceipt.php:943 Payments.php:938
 msgid "Narrative on General Ledger Account Inquiry"
@@ -11026,7 +11026,7 @@ msgstr "Láser"
 
 #: DeliveryDetails.php:615
 msgid "Confirm Dispatch and Produce Invoice"
-msgstr "Confirmar la nota de Entrega y Generar Factura"
+msgstr "Confirmar entrega y generar factura"
 
 #: DeliveryDetails.php:625 DeliveryDetails.php:815
 msgid "Print Quotation (Landscape)"
@@ -11140,7 +11140,7 @@ msgstr "El SQL usado para obtener las ubicaciones de existencias fue"
 
 #: DeliveryDetails.php:1046
 msgid "Estimated Delivery Date"
-msgstr "Fecha de Entrega Estimada"
+msgstr "Fecha estimada de entrega"
 
 #: DeliveryDetails.php:1047
 msgid "Enter the estimated delivery date requested by the customer"
@@ -11148,11 +11148,11 @@ msgstr ""
 
 #: DeliveryDetails.php:1051 SelectSalesOrder.php:721
 msgid "Quote Date"
-msgstr "Fecha de la Oferta"
+msgstr "Fecha de cotización"
 
 #: DeliveryDetails.php:1056
 msgid "Confirmed Order Date"
-msgstr "Fecha de Pedido Confirmado"
+msgstr "Fecha confirmada de pedido"
 
 #: DeliveryDetails.php:1060
 msgid "Delivery Address 1 (Street)"
@@ -16176,7 +16176,7 @@ msgstr "Definir Categorías de Existencias"
 #: StockLocStatus.php:66 SupplierPriceList.php:17 SupplierTenderCreate.php:678
 #: SupplierTenders.php:403 TopItems.php:64
 msgid "In Stock Category"
-msgstr "Clase de Artículo"
+msgstr "En categoría de inventario"
 
 #: InternalStockRequest.php:333 InternalStockRequest.php:335
 msgid "All Authorized"
@@ -16394,7 +16394,7 @@ msgstr "Cantidad Media"
 
 #: InventoryPlanningPrefSupplier.php:75
 msgid "4 mths"
-msgstr "Cuatro Meses"
+msgstr "4 meses"
 
 #: InventoryPlanningPrefSupplier.php:77
 msgid "Max Mnth"
@@ -18460,7 +18460,7 @@ msgstr "Cant Total"
 
 #: OffersReceived.php:6 OffersReceived.php:100
 msgid "Supplier Offers"
-msgstr "Ofertas de proveedores"
+msgstr "Ofertas del proveedor"
 
 #: OffersReceived.php:39
 msgid "There are no offers outstanding that you are authorised to deal with"
@@ -19911,7 +19911,7 @@ msgstr "La Pestaña"
 
 #: PcTabs.php:118
 msgid " already exists"
-msgstr "ya existe"
+msgstr " ya existe"
 
 #: PcTabs.php:166
 msgid "The Tab record could not be deleted because"
@@ -28703,7 +28703,7 @@ msgstr "Buscar/Modificar/Cerrar Envíos"
 #: SuppPriceList.php:208 SuppPriceList.php:210
 #: includes/MainMenuLinksArray.php:191
 msgid "Supplier Price List"
-msgstr "Listado de Precios del proveedor"
+msgstr "Lista de precios del proveedor"
 
 #: SelectSupplier.php:182
 msgid "Enter a Purchase Order for This Supplier"
@@ -29711,7 +29711,7 @@ msgstr ""
 
 #: ShopParameters.php:384
 msgid "Bank Transfer Settings"
-msgstr ""
+msgstr "Ajustes de transferencia bancaria"
 
 #: ShopParameters.php:388
 msgid "Allow Bank Transfer Payment"
@@ -31549,7 +31549,7 @@ msgstr "Todos los Estados de Existencias por Ubicación/Categoría"
 
 #: StockLocStatus.php:86
 msgid "Shown Only Items Where"
-msgstr "Mostrar Elementos Únicamente Donde"
+msgstr "Mostrar solo artículos donde"
 
 #: StockLocStatus.php:93 StockLocStatus.php:98 StockLocStatus.php:103
 #: StockLocStatus.php:108
@@ -32582,7 +32582,7 @@ msgstr "Solo alfanumerico"
 
 #: StockStatus.php:98
 msgid "In Transit"
-msgstr "En Tránsito"
+msgstr "En tránsito"
 
 #: StockStatus.php:169
 msgid "The workorder component demand for this product from"
@@ -33110,7 +33110,7 @@ msgstr "Activos fijos en la Factura"
 
 #: SuppFixedAssetChgs.php:71
 msgid "Fixed Asset credits on Credit Note"
-msgstr "Créditos de activo fijo en nota de Crédito"
+msgstr "Créditos de activo fijo en nota de crédito"
 
 #: SuppFixedAssetChgs.php:117
 msgid ""
@@ -34968,7 +34968,7 @@ msgstr "Ofrecido"
 
 #: SupplierTenders.php:145
 msgid "Confirm and Send Email"
-msgstr "Confirmar y Enviar E-mail"
+msgstr "Confirmar y enviar correo-e"
 
 #: SupplierTenders.php:148
 msgid "Cancel Offer"
@@ -35699,6 +35699,9 @@ msgid ""
 "The default theme to use for the login screen and the setup of new users. "
 "The users' theme selection will override it."
 msgstr ""
+"El tema por defecto a utilizar para la pantalla de inicio de sesión y la "
+"configuración de los usuarios nuevos. Selección de temas de los usuarios lo "
+"anulará."
 
 #: SystemParameters.php:449
 msgid "Accounts Receivable/Payable Settings"
@@ -39145,7 +39148,7 @@ msgstr "No hay lotes/conjuntos definidos todavía"
 
 #: WorkOrderReceive.php:976 WorkOrderReceive.php:987
 msgid "Batch/Lot No"
-msgstr ""
+msgstr "Lote No."
 
 #: WorkOrderReceive.php:1012 includes/PDFWOPageHeader.inc:47
 msgid "Received Qty"
@@ -41445,7 +41448,7 @@ msgstr ""
 
 #: Z_ImportCustbranch.php:208 Z_ImportCustbranch.php:331
 msgid "characters"
-msgstr ""
+msgstr "caracteres"
 
 #: Z_ImportCustbranch.php:214
 msgid "The latitude is expected to be a numeric"
@@ -45315,7 +45318,7 @@ msgstr "Informes de análisis de ventas"
 
 #: includes/MainMenuLinksArray.php:61
 msgid "Sales Graphs"
-msgstr "Gráficas de Ventas"
+msgstr "Gráficas de ventas"
 
 #: includes/MainMenuLinksArray.php:62
 msgid "Top Sellers Inquiry"
@@ -50336,7 +50339,7 @@ msgstr ""
 
 #: ../webSHOP/Checkout.php:390
 msgid "Customer Phone"
-msgstr ""
+msgstr "Teléfono del cliente"
 
 #: ../webSHOP/Checkout.php:391
 msgid "Customer Email"
@@ -50379,7 +50382,7 @@ msgstr ""
 
 #: ../webSHOP/Checkout.php:519
 msgid "Confirm Delivery Address"
-msgstr ""
+msgstr "Confirmar dirección de entrega"
 
 #: ../webSHOP/Checkout.php:523
 msgid "Delivery Address - Building/Number"
@@ -50451,7 +50454,7 @@ msgstr ""
 
 #: ../webSHOP/Checkout.php:591
 msgid "Confirm Delivery Details"
-msgstr ""
+msgstr "Confirmar detalles de entrega"
 
 #: ../webSHOP/Checkout.php:607
 msgid "Revise Delivery Address"
@@ -50541,7 +50544,7 @@ msgstr ""
 
 #: ../webSHOP/Checkout.php:762 ../webSHOP/Checkout.php:774
 msgid "Confirm and Place Order"
-msgstr ""
+msgstr "Confirmar y colocar pedido"
 
 #: ../webSHOP/Checkout.php:766
 msgid "Thank you for purchasing from us. Please note the order number"
@@ -50578,7 +50581,7 @@ msgstr ""
 
 #: ../webSHOP/Checkout.php:802
 msgid "Change Payment Method"
-msgstr ""
+msgstr "Cambiar forma de pago"
 
 #: ../webSHOP/Checkout.php:807
 msgid "Back to Shop Home Page"
