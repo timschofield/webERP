@@ -7,5 +7,10 @@ CREATE TABLE `loctransfercancellations` (
 ALTER TABLE `loctransfercancellations` ADD INDEX `Index1` (`reference`, `stockid`) COMMENT '';
 ALTER TABLE `loctransfercancellations` ADD INDEX `Index2` (`canceldate`, `reference`, `stockid`) COMMENT '';
 
+-- Add new script:
+INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES
+	('AnalysisHorizontalPosition.php', '8', 'Horizontal analysis of statement of financial position');
+
+
 -- Update version number:
 UPDATE config SET confvalue='4.13' WHERE confname='VersionNumber';

@@ -1,5 +1,5 @@
 <?php
-/* $Id: CustomerBranches.php 7299 2015-05-10 20:53:03Z rchacon $*/
+/* $Id: CustomerBranches.php 7334 2015-08-04 07:40:21Z tehonu $*/
 /* Defines the details of customer branches such as delivery address and contact details - also sales area, representative etc.*/
 
 include('includes/session.inc');
@@ -741,7 +741,8 @@ if(!isset($_GET['delete'])) {
 		$SQL = "SELECT salesmanname,
 						salesmancode
 				FROM salesman
-				WHERE current = 1";
+				WHERE current = 1
+				ORDER BY salesmanname";
 
 		$result = DB_query($SQL);
 
@@ -772,7 +773,7 @@ if(!isset($_GET['delete'])) {
 
 	//	DB_data_seek($result,0);//by thumb
 	}
-	$SQL = "SELECT areacode, areadescription FROM areas";
+	$SQL = "SELECT areacode, areadescription FROM areas ORDER BY areadescription";
 	$result = DB_query($SQL);
 	if(DB_num_rows($result)==0) {
 		echo '</table>';
@@ -806,7 +807,8 @@ if(!isset($_GET['delete'])) {
 		ON locationusers.loccode=locations.loccode
 			AND locationusers.userid='" . $_SESSION['UserID'] . "'
 			AND locationusers.canupd=1
-		WHERE locations.allowinvoicing='1'";
+		WHERE locations.allowinvoicing='1'
+		ORDER BY locationname";
 	$result = DB_query($SQL);
 
 	if(DB_num_rows($result)==0) {
