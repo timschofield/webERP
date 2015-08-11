@@ -2181,8 +2181,7 @@ No pending transfer regarding this item
 				AND stockmaster.klmovingdiscount80 = 0
 				AND stockmaster.klchangingprice = 0 " .
 				$FilterCategory .
-				$FilterDiscount .
-				$FilterOutlet . "
+				$FilterDiscount . "
 				AND (SELECT SUM(locstock.reorderlevel)
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid

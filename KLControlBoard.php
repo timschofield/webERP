@@ -34,7 +34,6 @@ $periodnow=GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
 
 if ($KL_SystemAdmin){
 //	phpinfo();
-
 }
 
 if ($KL_SystemAdmin 
@@ -316,6 +315,9 @@ if ($KL_PurchasingManager){
 if ($KL_PurchasingManager
 	OR $KL_SalesManager){
 	ItemsWithStockKantorButReorderLevelTokoZero($RootPath, $db);
+
+	ItemsWithStockKantorButRLZeroAt("DISC50", "TOKSU", $RootPath, $db);
+	ItemsWithStockKantorButRLZeroAt("DISC80", "TOKSU", $RootPath, $db);
 }
 	
 if ($KL_PurchasingManager){
@@ -323,8 +325,6 @@ if ($KL_PurchasingManager){
 	ItemsWithStockKantorButRLZeroAt("ALL", "TOKSS", $RootPath, $db);
 	ItemsWithStockKantorButRLZeroAt("ALL", "TOKMF", $RootPath, $db);
 	ItemsWithStockKantorButRLZeroAt("ALL", "TOKPU", $RootPath, $db);
-
-//	ItemsWithStockKantorButRLZeroAt("DISC50", "TOKLE", $RootPath, $db);
 
 	CategoryItemsNotInShop("DISC50", "TOKSU", $RootPath, $db);
 	CategoryItemsNotInShop("DISC80", "TOKSU", $RootPath, $db);
