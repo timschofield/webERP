@@ -3003,7 +3003,7 @@ function DiscountedItemsOnNotOutletShops($Category, $RootPath, $db){
 
 function CategoryItemsNotInShop($Category, $Shop, $RootPath, $db){
 	
-	$Message = $Category . _(' items NOT in ') . $Shop . ' (excluding Service and return to Supplier)';
+	$Message = $Category . _(' items NOT in ') . $Shop . ' (excluding Service, Shop online and Return to Supplier)';
 	
 	$SQL = "SELECT stockmaster.stockid,
 					stockmaster.description,
@@ -3020,10 +3020,14 @@ function CategoryItemsNotInShop($Category, $Shop, $RootPath, $db){
 				AND locstock.loccode = '" . $Shop . "'
 				AND locstock.quantity = 0 
 				AND locstock.reorderlevel = 0
-				AND (SELECT SUM(l.quantity)
+				AND ((SELECT SUM(l.quantity)
 						FROM locstock l
 						WHERE l.stockid = stockmaster.stockid
-							AND l.loccode NOT IN " . LIST_SERVICE_LOCATIONS . " > 0)
+							AND l.loccode NOT IN " . LIST_SERVICE_LOCATIONS . ") > 0)
+				AND ((SELECT SUM(l.reorderlevel)
+						FROM locstock l
+						WHERE l.stockid = stockmaster.stockid
+							AND l.loccode = 'TOKWS') = 0)
 			ORDER BY stockmaster.stockid";
 
 	$result = DB_query($SQL);
@@ -5135,6 +5139,7 @@ function ActiveItemsWithoutPicture($RootPath, $db){
 2015-05-19 TAke out some exceptions 
 			AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_PROMOTIONAL_ITEMS . "
 			AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_DISCOUNT . "
+			AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_SHOP_DISPLAYS . "
 
 */
 	$SQL = "SELECT stockmaster.stockid,
@@ -5145,7 +5150,6 @@ function ActiveItemsWithoutPicture($RootPath, $db){
 			AND stockmaster.discontinued = 0
 			AND stockcategory.stocktype = 'F'
 			AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_OLD . "
-			AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_SHOP_DISPLAYS . "
 			AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_SHOP_CONSUMABLES . "
 		ORDER BY stockcategory.categorydescription, stockmaster.stockid";
 	$result = DB_query($SQL);
