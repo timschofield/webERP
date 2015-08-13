@@ -82,7 +82,7 @@ if(! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod']
 		</table>
 		<br />', // Form buttons:
 		'<div class="centre noprint">',
-			'<button name="ShowPL" type="submit" value="', _('Show on Screen (HTML)'), '"><img alt="" src="', $RootPath, '/css/', $Theme,
+			'<button name="ShowBalanceSheet" type="submit" value="', _('Show on Screen (HTML)'), '"><img alt="" src="', $RootPath, '/css/', $Theme,
 				'/images/gl.png" /> ', _('Show on Screen (HTML)'), '</button> ', // "Show on Screen (HTML)" button.
 			'<button formaction="index.php?Application=GL" type="submit"><img alt="" src="', $RootPath, '/css/', $Theme,
 				'/images/previous.png" /> ', _('Return'), '</button>', // "Return" button.
@@ -411,8 +411,7 @@ if(! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod']
 	echo '<br />',
 		'<form method="post" action="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '">',
 		'<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />',
-		'<input type="hidden" name="FromPeriod" value="', $_POST['FromPeriod'], '" />',
-		'<input type="hidden" name="ToPeriod" value="', $_POST['ToPeriod'], '" />', // Form buttons:
+		'<input type="hidden" name="BalancePeriodEnd" value="', $_POST['BalancePeriodEnd'], '" />', // Form buttons:
 		'<div class="centre noprint">',
 			'<button onclick="javascript:window.print()" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
 				'/images/printer.png" /> ', _('Print This'), '</button> ', // "Print This" button.
