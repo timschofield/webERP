@@ -1,5 +1,6 @@
 webERP Change Log
 
+13/08/15 RChacon: Add new script AnalysisHorizontalIncome.php to generate an horizontal analysis of the statement of comprehensive income. In AnalysisHorizontalPosition.php, adjust signs and add report footnote.
 05/08/15 RChacon: In AnalysisHorizontalPosition.php, modify DB_fetch_array() function because it requires only one parameter (thanks Tim). Other improvements.
 04/08/15 RChacon: Add new script AnalysisHorizontalPosition.php to generate an horizontal analysis of the statement of financial position.
 02/08/15 RChacon: In CustomerReceipt.php, move currency tags near currency ratesand other minor changes.

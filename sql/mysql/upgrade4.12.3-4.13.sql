@@ -7,9 +7,10 @@ CREATE TABLE `loctransfercancellations` (
 ALTER TABLE `loctransfercancellations` ADD INDEX `Index1` (`reference`, `stockid`) COMMENT '';
 ALTER TABLE `loctransfercancellations` ADD INDEX `Index2` (`canceldate`, `reference`, `stockid`) COMMENT '';
 
--- Add new script:
+-- Add new scripts:
 INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES
-	('AnalysisHorizontalPosition.php', '8', 'Horizontal analysis of statement of financial position');
+	('AnalysisHorizontalIncome.php', '8', 'Shows the horizontal analysis of the statement of comprehensive income'),
+	('AnalysisHorizontalPosition.php', '8', 'Shows the horizontal analysis of the statement of financial position');
 
 
 -- Update version number:

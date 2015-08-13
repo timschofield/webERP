@@ -1305,18 +1305,17 @@ if ((!isset($_POST['FromPeriod'])
 /*	echo '</tbody>';// See comment at the begin of the table.*/
 	echo '</table>';
 	echo '</div>';// div id="Report".
-	echo '<br />
-		<div class="centre noprint">'.
-			'<button onclick="javascript:window.print()" type="button"><img alt="" src="'.$RootPath.'/css/'.$Theme.
-				'/images/printer.png" /> ' . _('Print This') . '</button>'.// "Print This" button.
-			'<button name="SelectADifferentPeriod" type="submit" value="'. _('Select A Different Period') .'"><img alt="" src="'.$RootPath.'/css/'.$Theme.
-				'/images/gl.png" /> ' . _('Select A Different Period') . '</button>'.// "Select A Different Period" button.
-			'<button formaction="index.php?Application=GL" type="submit"><img alt="" src="'.$RootPath.'/css/'.$Theme.
-				'/images/previous.png" /> ' . _('Return') . '</button>'.// "Return" button.
+	echo '<br />', // Form buttons:
+		'<div class="centre noprint">',
+			'<button onclick="javascript:window.print()" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
+				'/images/printer.png" /> ', _('Print This'), '</button> ', // "Print This" button.
+			'<button name="SelectADifferentPeriod" type="submit" value="', _('Select A Different Period'), '"><img alt="" src="', $RootPath, '/css/', $Theme,
+				'/images/gl.png" /> ', _('Select A Different Period'), '</button> ', // "Select A Different Period" button.
+			'<button formaction="index.php?Application=GL" type="submit"><img alt="" src="', $RootPath, '/css/', $Theme,
+				'/images/previous.png" /> ', _('Return'), '</button>', // "Return" button.
 		'</div>';
 }
 echo '</div>';// div class=?
 echo '</form>';
 include('includes/footer.inc');
-
 ?>
