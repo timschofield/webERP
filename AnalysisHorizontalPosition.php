@@ -1,5 +1,5 @@
 <?php
-/* $Id: AnalysisHorizontalPosition.php 7268 2015-04-19 14:57:47Z rchacon $*/
+/* $Id: AnalysisHorizontalPosition.php 7338 2015-08-13 18:51:07Z rchacon $*/
 /* Shows the horizontal analysis of the statement of financial position. */
 
 function RelativeVariation($SelectedPeriod, $PreviousPeriod) {
@@ -188,6 +188,13 @@ if(! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod']
 	$GroupTotalLY = array(0);
 
 	$k=0;// Row colour counter.
+	$DrawTotalLine = '<tr>
+		<td colspan="2">&nbsp;</td>
+		<td><hr /></td>
+		<td><hr /></td>
+		<td><hr /></td>
+		<td><hr /></td>
+	</tr>';
 
 	while($myrow=DB_fetch_array($AccountsResult)) {
 		$AccountBalance = $myrow['balancecfwd'];
@@ -202,13 +209,7 @@ if(! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod']
 			if($myrow['parentgroupname']!=$ActGrp) {
 				while($myrow['groupname']!=$ParentGroups[$Level] AND $Level>0) {
 					if($_POST['Detail']=='Detailed') {
-						echo '<tr>
-								<td colspan="2">&nbsp;</td>
-								<td><hr /></td>
-								<td><hr /></td>
-								<td><hr /></td>
-								<td><hr /></td>
-							</tr>';
+						echo $DrawTotalLine;
 					}
 					echo '<tr>
 							<td colspan="2">', $ParentGroups[$Level], '</td>
@@ -223,13 +224,7 @@ if(! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod']
 					$Level--;
 				}
 				if($_POST['Detail']=='Detailed') {
-					echo '<tr>
-							<td colspan="2">&nbsp;</td>
-							<td><hr /></td>
-							<td><hr /></td>
-							<td><hr /></td>
-							<td><hr /></td>
-						</tr>';
+					echo $DrawTotalLine;
 				}
 				echo '<tr>
 						<td class="text" colspan="2">', $ParentGroups[$Level], '</td>
@@ -245,23 +240,7 @@ if(! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod']
 		}
 		if($myrow['sectioninaccounts'] != $Section ) {
 			if($Section!='') {
-				if($_POST['Detail']=='Detailed') {
-					echo '<tr>
-							<td colspan="2">&nbsp;</td>
-							<td><hr /></td>
-							<td><hr /></td>
-							<td><hr /></td>
-							<td><hr /></td>
-						</tr>';
-				} else {
-					echo '<tr>
-							<td colspan="2">&nbsp;</td>
-							<td><hr /></td>
-							<td><hr /></td>
-							<td><hr /></td>
-							<td><hr /></td>
-						</tr>';
-				}
+				echo $DrawTotalLine;
 				echo '<tr>
 						<td class="text" colspan="2"><h2>', $Sections[$Section], '</h2></td>
 						<td class="number"><h2>', locale_number_format($SectionBalance,$_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
@@ -329,13 +308,7 @@ if(! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod']
 
 	while($myrow['groupname']!=$ParentGroups[$Level] AND $Level>0) {
 		if($_POST['Detail']=='Detailed') {
-			echo '<tr>
-					<td colspan="2">&nbsp;</td>
-					<td><hr /></td>
-					<td><hr /></td>
-					<td><hr /></td>
-					<td><hr /></td>
-				</tr>';
+			echo $DrawTotalLine;
 		}
 		echo '<tr>
 				<td colspan="2">', $ParentGroups[$Level], '</td>
@@ -347,13 +320,7 @@ if(! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod']
 		$Level--;
 	}
 	if($_POST['Detail']=='Detailed') {
-		echo '<tr>
-				<td colspan="2">&nbsp;</td>
-				<td><hr /></td>
-				<td><hr /></td>
-				<td><hr /></td>
-				<td><hr /></td>
-			</tr>';
+		echo $DrawTotalLine;
 	}
 	echo '<tr>
 			<td colspan="2">', $ParentGroups[$Level], '</td>
@@ -362,13 +329,7 @@ if(! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod']
 			<td class="number">', locale_number_format(-$GroupTotal[$Level]+$GroupTotalLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']), '</td>
 			<td class="number">', RelativeVariation(-$GroupTotal[$Level],-$GroupTotalLY[$Level]), '</td>
 		</tr>';
-	echo '<tr>
-			<td colspan="2">&nbsp;</td>
-			<td><hr /></td>
-			<td><hr /></td>
-			<td><hr /></td>
-			<td><hr /></td>
-		</tr>';
+	echo $DrawTotalLine;
 	echo '<tr>
 			<td colspan="2"><h2>', $Sections[$Section], '</h2></td>
 			<td class="number"><h2>', locale_number_format($SectionBalance,$_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
@@ -384,13 +345,7 @@ if(! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod']
 				<td colspan="6"><h2>', $Sections[$myrow['sectioninaccounts']], '</h2></td>
 			</tr>';
 	}
-	echo '<tr>
-			<td colspan="2">&nbsp;</td>
-			<td><hr /></td>
-			<td><hr /></td>
-			<td><hr /></td>
-			<td><hr /></td>
-		</tr>';
+	echo $DrawTotalLine;
 	echo'<tr>
 			<td colspan="2"><h2>', _('Check Total'), '</h2></td>
 			<td class="number"><h2>', locale_number_format($CheckTotal,$_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
@@ -398,13 +353,7 @@ if(! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod']
 			<td class="number"><h2>', locale_number_format(-$CheckTotal+$CheckTotalLY,$_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
 			<td class="number"><h2>', RelativeVariation(-$CheckTotal,-$CheckTotalLY), '</h2></td>
 		</tr>';
-	echo '<tr>
-			<td colspan="2">&nbsp;</td>
-			<td><hr /></td>
-			<td><hr /></td>
-			<td><hr /></td>
-			<td><hr /></td>
-		</tr>';
+	echo $DrawTotalLine;
 	echo '</tbody>', // See comment at the begin of the table.
 		'</table>
 		</div>'; // Close div id="Report".
