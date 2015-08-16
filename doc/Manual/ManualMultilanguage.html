@@ -1,8 +1,13 @@
 <h1><a id="Multilanguage">Multilanguage</a></h1>
 
 <p>webERP can be translated to any language so that the entire web-interface is displayed in the language of any user. The system can display different languages for different users - all at the same time - depending on the setting of the language in the individual users' settings.</p>
+<p>Each user can select their language by clicking on their user name at the top left of every screen immediately to the right of the company name. Clicking on your user name this brings up the user settings screen below:</p>
+<img src="images/UserSettings.png" alt="User Settings Screen" />
+<p>A dropdown box displaying all the available translations is available. Also, the character set of PDFs must also be selected from the 3 choices to create small portable pdf files using the CID fonts bundled with webERP. The preferred user display theme can also be selected from this screen.</p>
 
-<p>The recommended procedure to create a translation is as follows:<br></p>
+<h2>Other Language Translations</h2>
+
+<p>If your language is not listed in the drop down box it is possible to create a new translation. The recommended procedure to create a translation is as follows:</p>
 
 <ol>
     <li><a href="http://lists.sourceforge.net/lists/listinfo/web-erp-translation">Join the mailing list here</a><br>
@@ -10,9 +15,6 @@
 
     <li>Obtain the latest messages.po file and enter the translations using your favourite editor (or poedit). The latest messages.po file is included with the latest archive:<br />www_root/webERP/locale/en_GB/LC_MESSAGES/message.po<br />Edit the file provided entering the translations for the strings labelled msgid in the string labelled msgstr. Watch for html strings embedded inside the strings the html will also be required in the translated string. Also be sure to ensure that each translated string is enclosed in speech marks ("). Please also complete the translation file header information - with your details so that you are accorded proper recognition for your contribution.</li>
 </ol>
-
-<p>It is especially important to ensure that the string "ISO-8859-1" (at the time of writing around line 19400 in the messages.po file) is translated to be the character set that you wish your translation to use. webERP uses the translated string here to send appropriate html headers so your browser knows how to interpret the characters sent.</p>
-
 <p>It is worthwhile investigating the poedit package as this has some time saving features for creating gettext translation files.</p>
 
 <p>Return the file containing your translations to submissions@weberp.org</p>
@@ -43,7 +45,7 @@
 
 <h3>Understanding the messages.po File</h3>
 
-<p>The translation is performed by translating the strings in the messages.po file into the other language. It is important to work on the most recent messages.po file from the locale/en_GB/LC_MESSAGES/ directory in the CVS. This can be downloaded from http://web-erp.cvs.sourceforge.net/viewvc/*checkout*/web-erp/webERP/locale/en_GB/LC_MESSAGES/messages.po</p>
+<p>The translation is performed by translating the strings in the messages.po file into the other language. It is important to work on the most recent messages.po file from the locale/en_GB-utf8/LC_MESSAGES/ directory in the SVN. This can be downloaded from <a href="https://sourceforge.net/p/web-erp/code/HEAD/tree/trunk/locale/en_GB.utf8/LC_MESSAGES/messages.pot">the subversion repository</a></p>
 
 <p>The messages.po is made up of sections</p>
 
@@ -59,7 +61,38 @@ means that the string following is used in the AccountGroups.php script on line 
 <p>msgid "An example string in English that needs to be translated"<br>
 this line is the english string which is to be substituted by the text in msgstr. If the value of msgstr is empty - "". gettext will return the english string.</p>
 
-<p>The effort of the translation is to edit the messages.po file and enter the language translation within the inverted commas of the msgstr.</p>
+<p>The effort of the translation is to edit the messages.po file and enter the language translation within the inverted commas of the msgstr. All that is required then is to take the messages.po file from the en_GB-utf8/LC_MESSAGES folder and edit it with translations for your language.</p>
+
+<p>Make a copy and edit the file provided entering the translations for the strings labelled msgid in the string labelled msgstr. Although every attempt has been made to avoid it, watch out for html strings embedded inside the strings the html will also be required in the translated string. Also the translation file header information - with the translators details so that you are accorded proper recognition for your contribution.</p>
+<p>A new folder under webERP/locale/ needs to be created with the locale abbreviation for your language - note that webERP requires utf-8 locales - some examples:</p>
+<ol>
+<li>fr_FR.utf8 - French</li>
+<li>en_US.utf8 - English US</li>
+<li>de_DE.utf8 - German</li>
+</ol>
+<p>say you are creating a German translation you need to create the folder</p>
+<p>webERP/locale/de_DE.utf8</p>
+<p>and the folder below this called LC_MESSAGES</p>
+<p>webERP/locale/de_DE.utf8/LC_MESSAGES</p>
+<h3><a id="LanguagesArray">The Languges Array</a></h3>
+
+<p>To allow the language to be selected it must exist in the webERP $LanguagesArray this is an array of all available languages that webERP has been translated into and is maintained by webERP in the file</p>
+<p>/webERP/includes/LanguagesArray.php</p>
+<p>This array as as it&apos;s key the locale code for the language for British English the locale code is en_GB.utf8 - and for each element there is a sub-array of the following named elements for each key in the Languages Array</p>
+<ol>
+	<li>LanguageName - written in the target language - so that native speakers of that language will recognise it in the list</li>
+	<li>WindowsLocale - this is the name of the locale under Microsoft Windows operating system - not the ISO system</li>
+	<li>DecimalPoint - this is the character that the language uses as a decimal point</li>
+	<li>ThousandsSeperator - this is the character that the language uses as the thousands seperator</li>
+</ol>
+<p>The characters in this array for the selected locale are used by the functions used throughout webERP in the includes/MiscFunctions.php file for locale_number_format() to display numbers in an appropriate format for the selected language.</p>
+<p>e.g.</p>
+<ol>
+<li>$LanguagesArray['en_GB.utf8']['LanguageName'] = 'English United Kingdom';</li>
+<li>$LanguagesArray['en_GB.utf8']['WindowsLocale'] = 'english-uk';</li>
+<li>$LanguagesArray['en_GB.utf8']['DecimalPoint'] = '.';</li>
+<li>$LanguagesArray['en_GB.utf8']['ThousandsSeparator'] = ',';</li>
+</ol>
 
 <h3><a id="IndianNumberingSystem">Indian Numbering System</a></h3>
 
@@ -99,53 +132,8 @@ this line is the english string which is to be substituted by the text in msgstr
 
 <h4>Content-Type</h4>
 
-<p>Replace `CHARSET' with the character encoding used for your language, in your locale, or UTF-8.</p>
+<p>Replace `CHARSET' with UTF-8 this characters set has characters for all languages and webERP is written with care to handle mutli-byte characters (because utf-8 character set contains so many characters several bytes must be used to uniquely identify each character correctly).</p>
 
-<p>In the GNU system, the following encodings are frequently used for the corresponding languages:</p>
-
-<ul>
-    <li>ISO-8859-1 for Afrikaans, Albanian, Basque, Catalan, Dutch, English, Estonian, Faroese, Finnish, French, Galician, German, Greenlandic, Icelandic, Indonesian, Irish, Italian, Malay, Norwegian, Portuguese, Spanish, Swedish,</li>
-
-    <li>SO-8859-2 for Croatian, Czech, Hungarian, Polish, Romanian, Serbian, Slovak, Slovenian,</li>
-
-    <li>ISO-8859-3 for Maltese,</li>
-
-    <li>ISO-8859-5 for Macedonian, Serbian,</li>
-
-    <li>ISO-8859-6 for Arabic,</li>
-
-    <li>ISO-8859-7 for Greek,</li>
-
-    <li>ISO-8859-8 for Hebrew,</li>
-
-    <li>ISO-8859-9 for Turkish,</li>
-
-    <li>ISO-8859-13 for Latvian, Lithuanian,</li>
-
-    <li>ISO-8859-15 for Basque, Catalan, Dutch, English, Finnish, French, Galician, German, Irish, Italian, Portuguese, Spanish, Swedish,</li>
-
-    <li>KOI8-R for Russian,</li>
-
-    <li>KOI8-U for Ukrainian,</li>
-
-    <li>CP1251 for Bulgarian, Byelorussian,</li>
-
-    <li>GB2312, GBK, GB18030 for simplified writing of Chinese,</li>
-
-    <li>BIG5, BIG5-HKSCS for traditional writing of Chinese,</li>
-
-    <li>EUC-JP for Japanese,</li>
-
-    <li>EUC-KR for Korean,</li>
-
-    <li>TIS-620 for Thai,</li>
-
-    <li>UTF-8 for any language, including those listed above.</li>
-</ul>
-
-<p>Since there are such a lot of potential characters in utf-8, the size of font files necessary to be embedded in pdf files makes the resulting pdf file too big to be sent over dial up connections and is therefore to be avoided in favour of the more specific character sets above.</p>
-
-<p>The character encoding name can be written in either upper or lower case. Usually upper case is preferred.</p>
 
 <h4>Content-Transfer-Encoding</h4>
 
@@ -167,7 +155,7 @@ this line is the english string which is to be substituted by the text in msgstr
 
 <h2>Translation Utilities</h2>
 
-<p>webERP comes bundled with some on-line tools for adminstering translations - there are some issues with maintaining translations using these facilities - in particular certain characters cause problems for the scripts and character encodings can be lost. It is therefore not recommended to use these except for adhoc maintenance where a backup of the most recent messages.po is held elsewhere.</p>
+<p>webERP comes bundled with some on-line tools for adminstering translations - there are some issues with maintaining translations using these facilities - in particular certain characters cause problems for the scripts and character encodings can be lost. It is therefore NOT recommended to use these except for ad-hoc maintenance where a backup of the most recent messages.po is held elsewhere. The recommended procedure for maintaining translations are discussed above and the remainder of this narrative is depreciated.</p>
 
 <p>The following explains how to use the language translation utilities provided with webERP for the purpose of adding languages and maintaining their translations.</p>
 
