@@ -9,7 +9,7 @@ ALTER TABLE `loctransfercancellations` ADD INDEX `Index2` (`canceldate`, `refere
 
 -- Add new script:
 INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES
-	('AnalysisHorizontalPosition.php', '8', 'Horizontal analysis of statement of financial position');
+	('AnalysisHorizontalPosition.php', '15', 'Horizontal analysis of statement of financial position');
 
 
 -- Update version number:
