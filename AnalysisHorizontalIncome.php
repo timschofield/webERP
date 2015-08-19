@@ -23,9 +23,8 @@ if(isset($_POST['FromPeriod']) and ($_POST['FromPeriod'] > $_POST['ToPeriod'])) 
 	$_POST['SelectADifferentPeriod']='Select A Different Period';
 }
 
+include('includes/header.inc');
 if((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST['SelectADifferentPeriod'])) {
-
-	include('includes/header.inc');
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 		'/images/printer.png" title="', // Icon image.
 		_('Print Horizontal Analysis of Statement of Comprehensive Income'), '" /> ', // Icon title.
@@ -52,7 +51,6 @@ if((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST
 		$DefaultFromDate = Date ('Y-m-d', Mktime(0,0,0,$_SESSION['YearEnd'] + 2,0,Date('Y')-1));
 		$FromDate = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,$_SESSION['YearEnd'] + 2,0,Date('Y')-1));
 	}
-	$period=GetPeriod($FromDate, $db);
 
 	$sql = "SELECT periodno, lastdate_in_period
 			FROM periods
@@ -127,10 +125,7 @@ if((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST
 	include ('includes/GLPostings.inc');
 
 } else {
-	include('includes/header.inc');
-
 	$NumberOfMonths = $_POST['ToPeriod'] - $_POST['FromPeriod'] + 1;
-
 	if($NumberOfMonths >12) {
 		echo '<br />';
 		prnMsg(_('A period up to 12 months in duration can be specified') . ' - ' . _('the system automatically shows a comparative for the same period from the previous year') . ' - ' . _('it cannot do this if a period of more than 12 months is specified') . '. ' . _('Please select an alternative period range'),'error');
