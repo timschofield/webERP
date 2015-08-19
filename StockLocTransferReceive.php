@@ -411,6 +411,11 @@ if(isset($_POST['ProcessTransfer'])) {
 				unset ($_POST['Qty' . $i]);
 			} /*end if Quantity >= 0 */
 			if($TrfLine->CancelBalance==1) {
+				$sql = "UPDATE loctransfers SET shipqty = recqty
+						WHERE reference = '". $_SESSION['Transfer']->TrfID . "'
+						AND stockid = '".  $TrfLine->StockID."'";
+				$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('Unable to set the quantity received to the quantity shipped to cancel the balance on this transfer line');
+				$Result = DB_query($sql, $ErrMsg, $DbgMsg, true);
 				// send an email to the inventory manager about this cancellation (as can lead to employee fraud)
 				if($_SESSION['InventoryManagerEmail']!='') {
 					$ConfirmationText = _('Cancelled balance of transfer'). ': ' . $_SESSION['Transfer']->TrfID .
