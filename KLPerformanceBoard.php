@@ -74,7 +74,8 @@ if ($KL_SystemAdmin){
 }
 
 if ($KL_SystemAdmin 
-	OR ($KL_KantorManager)
+	OR $KL_KantorManager
+	OR $KL_SalesManager
 	OR $KL_PurchasingManager){
 	ActiveTransfersByLocation($RootPath, $db);
 	ActiveTransferStatus($RootPath, $db);
