@@ -1326,6 +1326,74 @@ function ItemsWithoutStandardCost($RootPath, $db){
 	}
 }
 
+function PricesNotUpdatedinXDays($numDays, $percentageIncrease, $RootPath, $db){
+	
+	$InitialDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$numDays));
+	$today = date('Y-m-d');
+
+	$SQL = "SELECT stockmaster.stockid, 
+				stockmaster.description,
+				(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS stdcost,
+				prices.price,
+				prices.startdate
+			FROM prices, stockmaster
+			WHERE stockmaster.stockid = prices.stockid	
+				AND ( stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_TEST . "
+					OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_STABLE . "
+					OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING . ")
+				AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
+				AND prices.currabrev = '". CURRENCY_CODE ."'
+				AND prices.startdate <= '". $InitialDate. "' 
+				AND (prices.enddate >= '". $today. "' OR prices.enddate = '0000-00-00')
+				AND stockmaster.discontinued = 0					
+			ORDER BY stockmaster.stockid";
+
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		echo '<p class="page_title_text" align="center"><strong>' . 'Prices not updated during the last ' . $numDays . ' days. Recommended increase '. $percentageIncrease . '%</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Description') . '</th>
+							<th class="ascending">' . _('Std Cost') . '</th>
+							<th class="ascending">' . _('Date Price') . '</th>
+							<th class="ascending">' . _('Current Price') . '</th>
+							<th class="ascending">' . _('Recommended Price') . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		while ($myrow = DB_fetch_array($result)) {
+			$k = StartEvenOrOddRow($k);
+			$NewPrice = correction_for_low_end_prices(round_price($myrow['price'] * (1 + $percentageIncrease/100), "UP"));
+			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+		//	$PriceLink = '<a href="' . $RootPath . '/Prices.php?Item=' . $myrow['stockid'] . '">' . locale_number_format($myrow['price'],0) . '</a>';
+			$NewPriceLink = '<a href="' . $RootPath . '/KLChangeRetailPrice.php?Item=' . $myrow['stockid'] . '&NewPrice='. $NewPrice .  '&Action=New">' . locale_number_format($NewPrice,0) . '</a>';
+			printf('<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					$i, 
+					$CodeLink, 
+					$myrow['description'],
+					locale_number_format($myrow['stdcost'],0),
+					ConvertSQLDate($myrow['startdate']), 
+					locale_number_format($myrow['price'],0),
+					$NewPriceLink
+					);
+			$i++;
+		}
+		echo '</table>
+				</div>';
+	}
+}
+
 function ItemsWithoutRetailPrice($stockcat, $factorRetail, $RootPath, $db){
 	/* Check if there is any item without retail price */
 	$today = date('Y-m-d');
@@ -1383,6 +1451,8 @@ function ItemsWithoutRetailPrice($stockcat, $factorRetail, $RootPath, $db){
 				</div>';
 	}
 }
+
+
 
 function OutstandingOrders($customertype, $ordertype, $RootPath, $db){
 	/* Check if there are outstanding orders for retail customers */
