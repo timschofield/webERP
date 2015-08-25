@@ -1,11 +1,13 @@
 <?php
-define("VERSIONFILE", "2.00"); // 
+define("VERSIONFILE", "2.10"); // 
 
 /* Session started in session.inc for password checking and authorisation level check
 config.php is in turn included in session.inc*/
 include ('includes/session.inc');
 $Title = _('Kapal-Laut SPG Control Board '. VERSIONFILE);
 include ('includes/header.inc');
+include('includes/KLGeneralFunctions.php');
+include ('includes/KLRetailCustomer.php');
 
 $periodnow=GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
 
@@ -16,8 +18,9 @@ $periodnow=GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
 AverageSPGSales($_SESSION['SalesmanLogin'], 90, 60, 30, 15, $db);
 SPGTypePayments($_SESSION['SalesmanLogin'], 15, $db);
 lastSalesSPG($_SESSION['SalesmanLogin'], 3, $db);
+RetailCustomerDataQualitySPG($_SESSION['SalesmanLogin'], 15, $db);
 
-prnMsg("Performed 3 SPG control board tests",'success');
+prnMsg("Performed 4 SPG control board tests",'success');
 
 include ('includes/footer.inc');
 
