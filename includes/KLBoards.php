@@ -1346,6 +1346,10 @@ function PricesNotUpdatedinXDays($numDays, $percentageIncrease, $RootPath, $db){
 				AND prices.startdate <= '". $InitialDate. "' 
 				AND (prices.enddate >= '". $today. "' OR prices.enddate = '0000-00-00')
 				AND stockmaster.discontinued = 0					
+				AND stockmaster.klchangingprice = 0
+				AND stockmaster.klmovingdiscount20 = 0
+				AND stockmaster.klmovingdiscount50 = 0
+				AND stockmaster.klmovingdiscount80 = 0
 			ORDER BY stockmaster.stockid";
 
 	$result = DB_query($SQL);
