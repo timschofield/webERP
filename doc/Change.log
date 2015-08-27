@@ -1,5 +1,6 @@
 webERP Change Log
 
+27/08/15 Exson: Fixed the allocation status of involved invoice and credit notes in Credit_Invoice.php.
 19/08/15 RChacon: In AnalysisHorizontalIncome.php, delete variable $period because it is not used anywhere (thanks Tim). Extract header.inc from if.
 13/08/15 RChacon: In doc/ManualGeneralLedger.html, add help for the horizontal analysis.
 13/08/15 RChacon: Add new script AnalysisHorizontalIncome.php to generate an horizontal analysis of the statement of comprehensive income. In AnalysisHorizontalPosition.php, adjust signs and add report footnote.
