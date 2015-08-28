@@ -1961,15 +1961,19 @@ function OnlineItemsOnProcess($RootPath, $db){
 				salesorders.orddate,
 				salesorderdetails.stkcode,
 				salesorderdetails.quantity AS qtyorder,
-				locstock.reorderlevel,
-				locstock.quantity AS qtyready
-			FROM salesorderdetails, salesorders, locstock, debtorsmaster	
+				l1.reorderlevel,
+				l1.quantity AS qtyready,
+				(SELECT SUM(l2.quantity)
+					FROM locstock AS l2
+					WHERE l1.stockid = l2.stockid
+						AND l2.loccode = 'KANTO') AS qohkantor
+			FROM salesorderdetails, salesorders, locstock AS l1, debtorsmaster	
 			WHERE salesorderdetails.orderno = salesorders.orderno
-				AND salesorderdetails.stkcode = locstock.stockid
+				AND salesorderdetails.stkcode = l1.stockid
 				AND salesorders.debtorno = debtorsmaster.debtorno
 				AND salesorders.quotation = 0
 				AND salesorders.fromstkloc = 'TOKWS'
-				AND locstock.loccode = 'TOKWS'
+				AND l1.loccode = 'TOKWS'
 				AND salesorderdetails.completed= 0
 			ORDER BY salesorders.orderno, salesorderdetails.stkcode";
 	$result = DB_query($SQL);
@@ -1987,7 +1991,8 @@ function OnlineItemsOnProcess($RootPath, $db){
 							<th class="ascending">' . _('Item Code') . '</th>
 							<th class="ascending">' . _('Quantity') . '</th>
 							<th class="ascending">' . _('RL at Toko Online') . '</th>
-							<th class="ascending">' . _('QOH at Toko Online') . '</th>
+							<th class="ascending">' . _('QOH Toko Online') . '</th>
+							<th class="ascending">' . _('QOH Kantor') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -2005,6 +2010,7 @@ function OnlineItemsOnProcess($RootPath, $db){
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
+					<td class="number">%s</td>
 					</tr>', 
 					$i, 
 					$CodeLink, 
@@ -2014,7 +2020,8 @@ function OnlineItemsOnProcess($RootPath, $db){
 					$ItemLink, 
 					locale_number_format($myrow['qtyorder'],0),
 					locale_number_format($myrow['reorderlevel'],0),
-					locale_number_format($myrow['qtyready'],0)
+					locale_number_format($myrow['qtyready'],0),
+					locale_number_format($myrow['qohkantor'],0)
 					);
 			$i++;
 		}
