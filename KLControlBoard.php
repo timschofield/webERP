@@ -325,6 +325,8 @@ if ($KL_PurchasingManager){
 	ItemsWithStockKantorButRLZeroAt("ALL", "TOKSS", $RootPath, $db);
 	ItemsWithStockKantorButRLZeroAt("ALL", "TOKMF", $RootPath, $db);
 	ItemsWithStockKantorButRLZeroAt("ALL", "TOKPU", $RootPath, $db);
+	ItemsWithStockKantorButRLZeroAt("ALL", "TOKPA", $RootPath, $db);
+	ItemsWithStockKantorButRLZeroAt("ALL", "TOKKA", $RootPath, $db);
 
 	CategoryItemsNotInShop("DISC50", "TOKSU", $RootPath, $db);
 	CategoryItemsNotInShop("DISC80", "TOKSU", $RootPath, $db);
@@ -454,7 +456,9 @@ if ($KL_PurchasingManager
 	ItemsNotTopSalesInShop(1, 900, 60, "TOK66", "ACTIVE", $RootPath, $db);
 	ItemsNotTopSalesInShop(1, 900, 60, "TOKSE", "ACTIVE", $RootPath, $db);
 	ItemsNotTopSalesInShop(1, 900, 60, "TOKOB", "ACTIVE", $RootPath, $db);
+	ItemsNotTopSalesInShop(1, 900, 60, "TOKKA", "ACTIVE", $RootPath, $db);
 
+	ItemsNotTopSalesInShop(1, 900, 60, "TOKPA", "ACTIVE", $RootPath, $db);
 	ItemsNotTopSalesInShop(1, 800, 60, "TOKKS", "ACTIVE", $RootPath, $db);
 	ItemsNotTopSalesInShop(1, 800, 60, "TOKBW", "ACTIVE", $RootPath, $db);
 
@@ -467,7 +471,6 @@ if ($KL_PurchasingManager
 	ItemsNotTopSalesInShop(1, 1000, 60, "TOKSA", "ACTIVE", $RootPath, $db);
 //	ItemsNotTopSalesInShop(1, 800, 60, "TOKSU", "ACTIVE", $RootPath, $db);
 	ItemsNotTopSalesInShop(1, 1000, 60, "TOKSS", "ACTIVE", $RootPath, $db);
-	ItemsNotTopSalesInShop(1, 900, 60, "TOKPA", "ACTIVE", $RootPath, $db);
 
 	PerformanceItemsInCategory("GOOD", "TESTSI", 15,  30, "VERY GOOD", $RootPath, $db);
 	PerformanceItemsInCategory("GOOD", "TESTSI", 30,  45, "GOOD", $RootPath, $db);

@@ -51,8 +51,8 @@ if ($KL_SystemAdmin
 	OR $KL_SalesManager){
 
 	RetailCustomerAnalysisByCountry(90, "ALL", 20, $CountriesForRetail, $db);
-	RetailCustomerAnalysisByCountry(90, "'TOK66','TOKSE','TOKOB'", 10, $CountriesForRetail, $db);
-	RetailCustomerAnalysisByCountry(90, "'TOKKS','TOKBW'", 10, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(90, "'TOK66','TOKSE','TOKOB','TOKKA'", 10, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(90, "'TOKKS','TOKBW','TOKPA'", 10, $CountriesForRetail, $db);
 	RetailCustomerAnalysisByCountry(90, "'TOKJC'", 10, $CountriesForRetail, $db);
 	RetailCustomerAnalysisByCountry(90, "'TOKSA','TOKSS','TOKSU'", 10, $CountriesForRetail, $db);
 	RetailCustomerAnalysisByCountry(90, "'TOKUB','TOKPU','TOKMF'", 10, $CountriesForRetail, $db);
@@ -64,8 +64,8 @@ if ($KL_SystemAdmin
 	OR $KL_SalesManager){
 
 	RetailCustomerAnalysisByAge(60, "ALL", $db);
-	RetailCustomerAnalysisByAge(60, "'TOK66','TOKSE','TOKOB'", $db);
-	RetailCustomerAnalysisByAge(60, "'TOKKS','TOKBW'", $db);
+	RetailCustomerAnalysisByAge(60, "'TOK66','TOKSE','TOKOB','TOKKA'", $db);
+	RetailCustomerAnalysisByAge(60, "'TOKKS','TOKBW','TOKPA'", $db);
 	RetailCustomerAnalysisByAge(60, "'TOKJC'", $db);
 	RetailCustomerAnalysisByAge(60, "'TOKSA','TOKSS','TOKSU'", $db);
 	RetailCustomerAnalysisByAge(60, "'TOKUB','TOKPU','TOKMF'", $db);
