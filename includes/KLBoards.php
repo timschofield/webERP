@@ -3082,6 +3082,68 @@ function DiscountedItemsOnNotOutletShops($Category, $RootPath, $db){
 	}
 }
 
+function NotDiscountedItemsOnOutletShops($RootPath, $db){
+
+	$Message = 'Not Discounted items on wrong shops (OUTLET Shops)';
+	
+	$SQL = "SELECT stockmaster.stockid,
+					stockmaster.description,
+					locstock.loccode,
+					locstock.quantity,
+					locstock.reorderlevel
+			FROM stockmaster, locstock
+			WHERE stockmaster.stockid = locstock.stockid
+				AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_TEST . "
+					OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_STABLE . "
+					OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING . ")
+				AND locstock.loccode LIKE 'TOK%'
+				AND locstock.loccode IN " . LIST_OUTLET_SHOPS . "
+				AND ( locstock.quantity > 0 OR locstock.reorderlevel > 0 )
+			ORDER BY stockmaster.stockid";
+// EXPLAIN SQL 2014-05-31
+//	prnMsg($SQL);
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		echo '<p class="page_title_text" align="center"><strong>' . $Message . '</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Description') . '</th>
+							<th class="ascending">' . _('Shop') . '</th>
+							<th class="ascending">' . _('Quantity') . '</th>
+							<th class="ascending">' . _('Reorder Level') . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		while ($myrow = DB_fetch_array($result)) {
+			$k = StartEvenOrOddRow($k);
+			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+			$CodeLinkRL = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stockid'] . '">' . $myrow['reorderlevel'] . '</a>';
+			printf('<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					$i, 
+					$CodeLink, 
+					$myrow['description'], 
+					$myrow['loccode'], 
+					$myrow['quantity'], 
+					$CodeLinkRL 
+					);
+			$i++;
+		}
+		echo '</table>
+				</div>';
+	}
+}
+
+
 function CategoryItemsNotInShop($Category, $Shop, $RootPath, $db){
 	
 	$Message = $Category . _(' items NOT in ') . $Shop . ' (excluding Service, Shop online and Return to Supplier)';

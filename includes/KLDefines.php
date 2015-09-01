@@ -74,7 +74,8 @@ define("LIST_STOCK_CATEGORIES_ACCESSORIES",       "('TESTAC','ACCESO','NOPOAC')"
 /* Defines about LOCATIONS*/
 // TOKKA, TOKMU nneds to be added below
 define("LIST_ACTIVE_KL_SHOPS_BALI",          "('TOK66','TOKSA','TOKKS','TOKJC','TOKSE','TOKUB','TOKMF','TOKPU','TOKSU','TOKBW','TOKOB','TOKSS','TOKPA','TOKKA')"); // NOT includes the shop online
-define("LIST_OUTLET_SHOPS",                  "('TOKSU','TOKWS')");
+//define("LIST_OUTLET_SHOPS",                  "('TOKSU','TOKWS')");
+define("LIST_OUTLET_SHOPS",                  "('TOKSU')");
 
 // TOKKA, TOKMU  nneds to be added below
 define("LIST_LOCATIONS_SPG_STOCK_STATUS",	 "('KANTO','TOK66','TOKSA','TOKKS','TOKJC','TOKSE','TOKUB','TOKMF','TOKOB','TOKPU','TOKSU','TOKSS','TOKBW','TOKPA','TOKKA')"); 

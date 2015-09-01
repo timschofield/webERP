@@ -157,20 +157,15 @@ if ($KL_SystemAdmin
 	
 	DiscountedItemsOnNotOutletShops("DISC50", $RootPath, $db);
 	DiscountedItemsOnNotOutletShops("DISC80", $RootPath, $db);
-}
-
-if ($KL_SystemAdmin 
-	OR $KL_PurchasingManager
-	OR $KL_KantorManager
-	OR $KL_SalesManager 
-	OR $KL_PurchasingTeam 
-	OR $KL_ShopSupportTeam){
+	NotDiscountedItemsOnOutLetShops($RootPath, $db);
 	
 	DiscountedItemsWithWrongDiscount("DISC20", "20", $RootPath, $db);
 	DiscountedItemsWithWrongDiscount("DISC50", "50", $RootPath, $db);
 //	DiscountedItemsWithWrongDiscount("DISC80", "80", $RootPath, $db);
+
 	NotDiscountedItemsWithDiscount($RootPath, $db);
 }
+
 
 /***************************************************************************************
 * BALANCE ACCOUNTS         
