@@ -1,4 +1,4 @@
-<?php
+ <?php
 /* $Id$*/
 
 include('includes/session.inc');
@@ -12,6 +12,9 @@ echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $The
 // If this script is called with a file object, then the file contents are imported
 // If this script is called with the gettemplate flag, then a template file is served
 // Otherwise, a file upload form is displayed
+
+// The CSV file must be saved in a format like the template in the import module I.E. "RECVALUE","RECVALUE2". The CSV file needs ANSI encoding for the import to work properly.
+
 
 $FieldHeadings = array(
 	'StockID',         	//  0 'STOCKID',
@@ -49,7 +52,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 	$FileHandle = fopen($TempName, 'r');
 
 	//get the header row
-	$headRow = fgetcsv($FileHandle, 10000, ",");
+	$headRow = fgetcsv($FileHandle, 10000, ",",'"');  // Modified to handle " "" " enclosed csv - useful if you need to include commas in your text descriptions
 
 	//check for correct number of fields
 	if ( count($headRow) != count($FieldHeadings) ) {
@@ -63,7 +66,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 	$head = 0;
 	foreach ($headRow as $headField) {
 		if ( mb_strtoupper($headField) != mb_strtoupper($FieldHeadings[$head]) ) {
-			prnMsg (_('File contains incorrect headers ('. mb_strtoupper($headField). ' != '. mb_strtoupper($header[$head]). '. Try downloading a new template.'),'error');
+			prnMsg (_('File contains incorrect headers '. mb_strtoupper($headField). ' != '. mb_strtoupper($FieldHeadings[$head]). '. Try downloading a new template.'),'error');  //Fixed $FieldHeadings from $headings
 			fclose($FileHandle);
 			include('includes/footer.inc');
 			exit;
