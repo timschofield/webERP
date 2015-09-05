@@ -3591,25 +3591,26 @@ function SplittedpaymentsBySPG($maxdays, $maxsplitted, $db){
 
 	$SQL = "SELECT salesperson, 
 				COUNT(klpaidcash + klpaidcreditcard) AS splitted, 
-				SUM(klpaidcash + klpaidcreditcard) AS amount 
+				SUM(klpaidcash + klpaidcreditcard) AS amount
 		FROM salesorders
 		WHERE orddate >= '". $StartDate. "'
 			AND debtorno LIKE 'RETAIL%'
 			AND klpaidcash > 0
 			AND klpaidcreditcard > 0
 		GROUP BY salesperson
-		HAVING COUNT(klpaidcash + klpaidcreditcard) > '" . $maxsplitted . "'
+		HAVING COUNT(klpaidcash + klpaidcreditcard) >= '" . $maxsplitted . "'
 		ORDER BY salesperson";
-//	prnMsg($SQL);			
+
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('SPG with more than ') . $maxsplitted . _(' splitted payments during the last ') . $maxdays . _(' days.') .'</strong></p>';
+		echo '<p class="page_title_text" align="center"><strong>' . _('SPG with ') . $maxsplitted . _(' or more splitted payments during the last ') . $maxdays . _(' days.') .'</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
 							<th>' .  _('SPG') . '</th>
 							<th>' . _('Splitted') . '</th>
 							<th>' . _('Amount') . '</th>
+							<th>' . _('Date') . '</th>
 							<th>' . _('Order') . '</th>
 							<th>' . _('Yellow#') . '</th>
 							<th>' . _('Cash') . '</th>
@@ -3627,10 +3628,12 @@ function SplittedpaymentsBySPG($maxdays, $maxsplitted, $db){
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
+					<td>%s</td>
 					</tr>', 
 					$myrow['salesperson'],
 					locale_number_format($myrow['splitted'],0),
 					locale_number_format($myrow['amount'],0),
+					'',
 					'',
 					'',
 					'',
@@ -3639,7 +3642,8 @@ function SplittedpaymentsBySPG($maxdays, $maxsplitted, $db){
 			$SQLDetails = "SELECT orderno,
 								customerref,
 								klpaidcash, 
-								klpaidcreditcard 
+								klpaidcreditcard,
+								orddate								
 						FROM salesorders
 						WHERE orddate >= '". $StartDate. "'
 							AND salesperson = '". $myrow['salesperson']. "'
@@ -3654,12 +3658,14 @@ function SplittedpaymentsBySPG($maxdays, $maxsplitted, $db){
 						<td>%s</td>
 						<td>%s</td>
 						<td>%s</td>
+						<td>%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						</tr>', 
 						'',
 						'',
 						'',
+						ConvertSQLDate($myrowdetails['orddate']),
 						$myrowdetails['orderno'],
 						$myrowdetails['customerref'],
 						locale_number_format($myrowdetails['klpaidcash'],0),
@@ -7538,11 +7544,10 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
 			$DailyUse = $myrow['qused'] / $DaysUsage;
-			$Forecast = ceil($DailyUse * ($DaysMinimumStock + ($DaysProduction * 0.5)));
 			$ForecastProductionOnly = ceil($DailyUse * $DaysProduction);
-			$ForecastIncludingProduction = ceil($DailyUse * ($DaysMinimumStock + $DaysProduction));
-			$QtyNeeded = max(0, $Forecast - $myrow['qoh'] - $myrow['qoo']);
-			$QtyNeededIncludingProduction = max(0, $ForecastIncludingProduction - $myrow['qoh'] - $myrow['qoo']);
+			$Forecast = ceil($DailyUse * ($DaysMinimumStock));
+			$ForecastIncludingProduction = $Forecast + $ForecastProductionOnly;
+			$QtyNeeded = max(0, $ForecastIncludingProduction - $myrow['qoh'] - $myrow['qoo']);
 			$DaysQOH = floor($myrow['qoh'] / $DailyUse);
 			$DaysQOO = floor(($myrow['qoh'] + $myrow['qoo']) / $DailyUse);
 			if ($QtyNeeded > 0){
@@ -7551,7 +7556,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 				}else{
 					$PanSize = 1;
 				}
-				$QtyToOrder = max($myrow['eoq'], ceil($QtyNeededIncludingProduction/$PanSize)*$PanSize);
+				$QtyToOrder = max($myrow['eoq'], ceil($QtyNeeded/$PanSize)*$PanSize);
 			}else{
 				$QtyToOrder = 0;
 			}
@@ -7577,7 +7582,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 										<th class="ascending">' . _('#') . '</th>
 										<th class="ascending">' . _('Code') . '</th>
 										<th class="ascending">' . _('Description') . '</th>
-										<th class="ascending">' . _('Forecast ') . $DaysProduction . ' days</th>
+										<th class="ascending">' . _('Usage ') . $DaysProduction . ' days</th>
 										<th class="ascending">' . _('Forecast ') . $DaysMinimumStock . ' days</th>
 										<th class="ascending">' . _('QOH Total') . '</th>
 										<th class="ascending">' . _('Days QOH') . '</th>
