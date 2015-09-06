@@ -3037,6 +3037,7 @@ function DiscountedItemsOnNotOutletShops($Category, $RootPath, $db){
 				AND stockmaster.categoryid = '" . $Category . "'
 				AND locstock.loccode LIKE 'TOK%'
 				AND locstock.loccode NOT IN " . LIST_OUTLET_SHOPS . "
+				AND locstock.loccode NOT IN " . LIST_ONLINE_SHOPS . "
 				AND ( locstock.quantity > 0 OR locstock.reorderlevel > 0 )
 			ORDER BY stockmaster.stockid";
 // EXPLAIN SQL 2014-05-31
