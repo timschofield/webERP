@@ -74,8 +74,7 @@ define("LIST_STOCK_CATEGORIES_ACCESSORIES",       "('TESTAC','ACCESO','NOPOAC')"
 /* Defines about LOCATIONS*/
 // TOKKA, TOKMU nneds to be added below
 define("LIST_ACTIVE_KL_SHOPS_BALI",          "('TOK66','TOKSA','TOKKS','TOKJC','TOKSE','TOKUB','TOKMF','TOKPU','TOKSU','TOKBW','TOKOB','TOKSS','TOKPA','TOKKA')"); // NOT includes the shop online
-//define("LIST_OUTLET_SHOPS",                  "('TOKSU','TOKWS')");
-define("LIST_OUTLET_SHOPS",                  "('TOKSU')");
+define("LIST_OUTLET_SHOPS",                  "('TOKSU','TOKJC')");
 define("LIST_ONLINE_SHOPS",                  "('TOKWS')");
 
 // TOKKA, TOKMU  nneds to be added below
@@ -86,8 +85,8 @@ define("LIST_SHOPS_USING_PACKAGING_CONTROL", "('TOKPA','TOKSU','TOK66','TOKSA','
 define("LIST_ITEMS_USING_PACKAGING_CONTROL", "('PKBX01-L','PKBX01-M','PKBX01-S','PKPB01-L','PKPB01-M','PKPB01-S','PKPB02-L','PKPB02-M','PKPB02-S','PKSB02-L','PKSB02-M','PKSB02-S','PKSB03')");
 
 // TOKKA, TOKMU  nneds to be added below
-define("LIST_SHOPS_USING_REGULAR_PACKAGING", "('TOK66','TOKSA','TOKKS','TOKJC','TOKSE','TOKUB','TOKMF','TOKOB','TOKPU','TOKSS','TOKBW','TOKPA','TOKKA')"); 
-define("LIST_SHOPS_USING_OUTLET_PACKAGING", "('TOKSU')"); 
+define("LIST_SHOPS_USING_REGULAR_PACKAGING", "('TOK66','TOKSA','TOKKS','TOKSE','TOKUB','TOKMF','TOKOB','TOKPU','TOKSS','TOKBW','TOKPA','TOKKA')"); 
+define("LIST_SHOPS_USING_OUTLET_PACKAGING", "('TOKSU','TOKJC')"); 
 
 define("LIST_KANTOR_LOCATIONS",              "('KANTO','SAMPR','SASPG','SERSU','SERVI','SERDE','WHOLE')");
 define("LIST_SERVICE_LOCATIONS",             "('SERSU','SERVI')");
