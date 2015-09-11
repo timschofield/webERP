@@ -33,6 +33,8 @@ if ($KL_SystemAdmin
 	PricesNotUpdatedinXDays(365*2, 15, $RootPath, $db);
 	PricesNotUpdatedinXDays(365  , 10, $RootPath, $db);
 
+	ItemsWithoutRetailPrice("SETUP", 4.75, $RootPath, $db);
+
 	ItemsWithoutRetailPrice("TESTSI", 4.75, $RootPath, $db);
 	ItemsWithoutRetailPrice("SILVER", 4.75, $RootPath, $db);
 	ItemsWithoutRetailPrice("NOPOSI", 4.75, $RootPath, $db);

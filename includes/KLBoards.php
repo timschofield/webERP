@@ -1418,7 +1418,7 @@ function ItemsWithoutRetailPrice($stockcat, $factorRetail, $RootPath, $db){
 									AND (prices.enddate >= '". $today. "' OR prices.enddate = '0000-00-00'))";
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Items without active retail price') . '</strong></p>';
+		echo '<p class="page_title_text" align="center"><strong>' . $stockcat . _(' Items without active retail price') . '</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
