@@ -1,9 +1,9 @@
 <?php
-/* $Id: AnalysisHorizontalIncome.php 7332 2015-08-04 03:27:51Z rchacon $*/
+/* $Id: AnalysisHorizontalIncome.php 7349 2015-09-14 14:43:19Z rchacon $*/
 /* Shows the horizontal analysis of the statement of comprehensive income. */
 
-function RelativeDifference($SelectedPeriod, $PreviousPeriod) {
-	// Calculates the relative difference between selected and previous periods. Uses percent in locale number format.
+function RelativeChange($SelectedPeriod, $PreviousPeriod) {
+	// Calculates the relative change between selected and previous periods. Uses percent with locale number format.
 	if($PreviousPeriod<>0) {
 		return locale_number_format(($SelectedPeriod-$PreviousPeriod)*100/$PreviousPeriod,$_SESSION['CompanyRecord']['decimalplaces']) . '%';
 	} else {
@@ -32,7 +32,7 @@ if((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST
 
 	echo '<div class="page_help_text">',
 		_('Horizontal analysis (also known as trend analysis) is a financial statement analysis technique that shows changes in the amounts of corresponding financial statement items over a period of time. It is a useful tool to evaluate trend situations.'), '<br />',
-		_('The statements for two periods are used in horizontal analysis. The earliest period is used as the base period. The items on the later statement are compared with items on the statement of the base period. The changes are shown both in currency (absolute difference) and percentage (relative difference).'), '<br />',
+		_('The statements for two periods are used in horizontal analysis. The earliest period is used as the base period. The items on the later statement are compared with items on the statement of the base period. The changes are shown both in currency (actual change) and percentage (relative change).'), '<br />',
 		_('webERP is an "accrual" based system (not a "cash based" system).  Accrual systems include items when they are invoiced to the customer, and when expenses are owed based on the supplier invoice date.'), '</div>',
 		// Show a form to allow input of criteria for the report to show:
 		'<form method="post" action="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '">',
@@ -159,16 +159,16 @@ if((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST
 	}
 	echo	'<th class="number">', ' - ', $myrow[0], '</th>
 			<th class="number">', _('Last Year'), '</th>
-			<th class="number">', _('Absolute difference'), '</th>
-			<th class="number">', _('Relative difference'), '</th>
+			<th class="number">', _('Actual change'), '</th>
+			<th class="number">', _('Relative change'), '</th>
 		</tr>
 		</thead>
 		<tfoot>
 			<tr>
-				<td class="text" colspan="6">',// Prints an explanation of signs in absolute and relative differences:
+				<td class="text" colspan="6">',// Prints an explanation of signs in actual and relative changes:
 					'<br /><b>', _('Notes'), ':</b><br />',
-					_('Absolute difference signs: a positive number indicates a variation that increases the net profit; a negative number indicates a variation that decreases the net profit.'), '<br />',
-					_('Relative difference signs: a positive number indicates an increase in the amount of that account; a negative number indicates a decrease in the amount of that account.'), '<br />',
+					_('Actual change signs: a positive number indicates a variation that increases the net profit; a negative number indicates a variation that decreases the net profit.'), '<br />',
+					_('Relative change signs: a positive number indicates an increase in the amount of that account; a negative number indicates a decrease in the amount of that account.'), '<br />',
 				'</td>
 			</tr>
 		</tfoot>
@@ -236,7 +236,7 @@ if((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST
 							<td class="number">', locale_number_format(-$GrpTotal[$Level],$_SESSION['CompanyRecord']['decimalplaces']), '</td>
 							<td class="number">', locale_number_format(-$GrpTotalLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']), '</td>
 							<td class="number">', locale_number_format(-$GrpTotal[$Level]+$GrpTotalLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']), '</td>
-							<td class="number">', RelativeDifference(-$GrpTotal[$Level],-$GrpTotalLY[$Level]), '</td>
+							<td class="number">', RelativeChange(-$GrpTotal[$Level],-$GrpTotalLY[$Level]), '</td>
 						</tr>';
 					$GrpTotal[$Level]=0;
 					$GrpTotalLY[$Level]=0;
@@ -260,7 +260,7 @@ if((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST
 						<td class="number">', locale_number_format(-$GrpTotal[$Level],$_SESSION['CompanyRecord']['decimalplaces']), '</td>
 						<td class="number">', locale_number_format(-$GrpTotalLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']), '</td>
 						<td class="number">', locale_number_format(-$GrpTotal[$Level]+$GrpTotalLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']), '</td>
-						<td class="number">', RelativeDifference(-$GrpTotal[$Level],-$GrpTotalLY[$Level]), '</td>
+						<td class="number">', RelativeChange(-$GrpTotal[$Level],-$GrpTotalLY[$Level]), '</td>
 					</tr>';
 				} else {// Costs
 // <---
@@ -269,7 +269,7 @@ if((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST
 						<td class="number">', locale_number_format(-$GrpTotal[$Level],$_SESSION['CompanyRecord']['decimalplaces']), '</td>
 						<td class="number">', locale_number_format(-$GrpTotalLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']), '</td>
 						<td class="number">', locale_number_format(-$GrpTotal[$Level]+$GrpTotalLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']), '</td>
-						<td class="number">', RelativeDifference(-$GrpTotal[$Level],-$GrpTotalLY[$Level]), '</td>
+						<td class="number">', RelativeChange(-$GrpTotal[$Level],-$GrpTotalLY[$Level]), '</td>
 					</tr>';
 // --->
 				}
@@ -291,7 +291,7 @@ if((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST
 							<td class="number"><h2>', locale_number_format(-$SectionTotal,$_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
 							<td class="number"><h2>', locale_number_format(-$SectionTotalLY,$_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
 							<td class="number"><h2>', locale_number_format(-$SectionTotal+$SectionTotalLY,$_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
-							<td class="number"><h2>', RelativeDifference(-$SectionTotal,-$SectionTotalLY), '</h2></td>
+							<td class="number"><h2>', RelativeChange(-$SectionTotal,-$SectionTotalLY), '</h2></td>
 						</tr>';
 					$GPIncome = $SectionTotal;
 					$GPIncomeLY = $SectionTotalLY;
@@ -301,7 +301,7 @@ if((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST
 							<td class="number"><h2>', locale_number_format(-$SectionTotal,$_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
 							<td class="number"><h2>', locale_number_format(-$SectionTotalLY,$_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
 							<td class="number"><h2>', locale_number_format(-$SectionTotal+$SectionTotalLY,$_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
-							<td class="number"><h2>', RelativeDifference(-$SectionTotal,-$SectionTotalLY), '</h2></td>
+							<td class="number"><h2>', RelativeChange(-$SectionTotal,-$SectionTotalLY), '</h2></td>
 						</tr>';
 				}
 
@@ -312,7 +312,7 @@ if((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST
 							<td class="number"><h2>', locale_number_format(-($GPIncome+$SectionTotal),$_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
 							<td class="number"><h2>', locale_number_format(-($GPIncomeLY+$SectionTotalLY),$_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
 							<td class="number"><h2>', locale_number_format(-($GPIncome+$SectionTotal)+($GPIncomeLY+$SectionTotalLY),$_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
-							<td class="number"><h2>', RelativeDifference(-($GPIncome+$SectionTotal),-($GPIncomeLY+$SectionTotalLY)), '</h2></td>
+							<td class="number"><h2>', RelativeChange(-($GPIncome+$SectionTotal),-($GPIncomeLY+$SectionTotalLY)), '</h2></td>
 						</tr>';
 				}
 
@@ -323,7 +323,7 @@ if((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST
 							<td class="number"><h2>', locale_number_format(-$PeriodTotal,$_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
 							<td class="number"><h2>', locale_number_format(-$PeriodTotalLY,$_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
 							<td class="number"><h2>', locale_number_format(-$PeriodTotal+$PeriodTotalLY,$_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
-							<td class="number"><h2>', RelativeDifference(-$PeriodTotal,-$PeriodTotalLY), '</h2></td>
+							<td class="number"><h2>', RelativeChange(-$PeriodTotal,-$PeriodTotalLY), '</h2></td>
 						</tr>';
 					echo $DrawTotalLine;
 				}
@@ -383,7 +383,7 @@ if((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST
 							<td class="number">', locale_number_format(-$AccountTotal,$_SESSION['CompanyRecord']['decimalplaces']), '</td>
 							<td class="number">', locale_number_format(-$AccountTotalLY,$_SESSION['CompanyRecord']['decimalplaces']), '</td>
 							<td class="number">', locale_number_format(-$AccountTotal+$AccountTotalLY,$_SESSION['CompanyRecord']['decimalplaces']), '</td>
-							<td class="number">', RelativeDifference(-$AccountTotal,-$AccountTotalLY), '</td>
+							<td class="number">', RelativeChange(-$AccountTotal,-$AccountTotalLY), '</td>
 						</tr>';
 				} else {
 // <---
@@ -391,7 +391,7 @@ if((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST
 							<td class="number">', locale_number_format(-$AccountTotal,$_SESSION['CompanyRecord']['decimalplaces']), '</td>
 							<td class="number">', locale_number_format(-$AccountTotalLY,$_SESSION['CompanyRecord']['decimalplaces']), '</td>
 							<td class="number">', locale_number_format(-$AccountTotal+$AccountTotalLY,$_SESSION['CompanyRecord']['decimalplaces']), '</td>
-							<td class="number">', RelativeDifference(-$AccountTotal,-$AccountTotalLY), '</td>
+							<td class="number">', RelativeChange(-$AccountTotal,-$AccountTotalLY), '</td>
 						</tr>';
 				}
 			}
@@ -414,7 +414,7 @@ if((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST
 							<td class="number">', locale_number_format(-$GrpTotal[$Level],$_SESSION['CompanyRecord']['decimalplaces']), '</td>
 							<td class="number">', locale_number_format(-$GrpTotalLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']), '</td>
 							<td class="number">', locale_number_format(-$GrpTotal[$Level]+$GrpTotalLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']), '</td>
-							<td class="number">', RelativeDifference(-$GrpTotal[$Level],-$GrpTotalLY[$Level]), '</td>
+							<td class="number">', RelativeChange(-$GrpTotal[$Level],-$GrpTotalLY[$Level]), '</td>
 						</tr>';
 				} else {// Costs.
 // <---
@@ -423,7 +423,7 @@ if((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST
 							<td class="number">', locale_number_format(-$GrpTotal[$Level],$_SESSION['CompanyRecord']['decimalplaces']), '</td>
 							<td class="number">', locale_number_format(-$GrpTotalLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']), '</td>
 							<td class="number">', locale_number_format(-$GrpTotal[$Level]+$GrpTotalLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']), '</td>
-							<td class="number">', RelativeDifference(-$GrpTotal[$Level],-$GrpTotalLY[$Level]), '</td>
+							<td class="number">', RelativeChange(-$GrpTotal[$Level],-$GrpTotalLY[$Level]), '</td>
 						</tr>';
 				}
 				$GrpTotal[$Level]=0;
@@ -443,7 +443,7 @@ if((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST
 					<td class="number">', locale_number_format(-$GrpTotal[$Level],$_SESSION['CompanyRecord']['decimalplaces']), '</td>
 					<td class="number">', locale_number_format(-$GrpTotalLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']), '</td>
 					<td class="number">', locale_number_format(-$GrpTotal[$Level]+$GrpTotalLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']), '</td>
-					<td class="number">', RelativeDifference(-$GrpTotal[$Level],-$GrpTotalLY[$Level]), '</td>
+					<td class="number">', RelativeChange(-$GrpTotal[$Level],-$GrpTotalLY[$Level]), '</td>
 				</tr>';
 			$GrpTotal[$Level]=0;
 			$GrpTotalLY[$Level]=0;
@@ -460,7 +460,7 @@ if((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST
 					<td class="number"><h2>', locale_number_format(-$SectionTotal,$_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
 					<td class="number"><h2>', locale_number_format(-$SectionTotalLY,$_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
 					<td class="number"><h2>', locale_number_format(-$SectionTotal+$SectionTotalLY,$_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
-					<td class="number"><h2>', RelativeDifference(-$SectionTotal,-$SectionTotalLY), '</h2></td>
+					<td class="number"><h2>', RelativeChange(-$SectionTotal,-$SectionTotalLY), '</h2></td>
 				</tr>';
 			$GPIncome = $SectionTotal;
 			$GPIncomeLY = $SectionTotalLY;
@@ -471,7 +471,7 @@ if((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST
 					<td class="number"><h2>', locale_number_format(-$SectionTotal,$_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
 					<td class="number"><h2>', locale_number_format(-$SectionTotalLY,$_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
 					<td class="number"><h2>', locale_number_format(-$SectionTotal+$SectionTotalLY,$_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
-					<td class="number"><h2>', RelativeDifference(-$SectionTotal,-$SectionTotalLY), '</h2></td>
+					<td class="number"><h2>', RelativeChange(-$SectionTotal,-$SectionTotalLY), '</h2></td>
 				</tr>';
 		}
 		if($Section==2) {// Cost of Sales - need sub total for Gross Profit.
@@ -481,7 +481,7 @@ if((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST
 					<td class="number"><h2>', locale_number_format(-($GPIncome+$SectionTotal),$_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
 					<td class="number"><h2>', locale_number_format(-($GPIncomeLY+$SectionTotalLY),$_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
 					<td class="number"><h2>', locale_number_format(-($GPIncome+$SectionTotal)+($GPIncomeLY+$SectionTotalLY),$_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
-					<td class="number"><h2>', RelativeDifference(-($GPIncome+$SectionTotal),-($GPIncomeLY+$SectionTotalLY)), '</h2></td>
+					<td class="number"><h2>', RelativeChange(-($GPIncome+$SectionTotal),-($GPIncomeLY+$SectionTotalLY)), '</h2></td>
 				</tr>';
 		}
 		$Section = $myrow['sectioninaccounts'];
@@ -501,7 +501,7 @@ if((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST
 			<td class="number"><h2>', locale_number_format(-$PeriodTotal,$_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
 			<td class="number"><h2>', locale_number_format(-$PeriodTotalLY,$_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
 			<td class="number"><h2>', locale_number_format(-$PeriodTotal+$PeriodTotalLY,$_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
-			<td class="number"><h2>', RelativeDifference(-$PeriodTotal,-$PeriodTotalLY), '</h2></td>
+			<td class="number"><h2>', RelativeChange(-$PeriodTotal,-$PeriodTotalLY), '</h2></td>
 		</tr>';
 	echo $DrawTotalLine;
 	echo '</tbody>', // See comment at the begin of the table.
