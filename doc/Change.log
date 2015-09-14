@@ -1,5 +1,6 @@
 webERP Change Log
 
+14/9/15 RChacon: In AnalysisHorizontalIncome.php, delete duplicated tag. Replaces text "Absolute/Relative variation" with "Absolute/Relative difference" to avoid confusions.
 13/9/15 RChacon: In AccountSections.php, add modifications for direct printing.
 4/9/15 Wes Wolfenbarger: Fix to Z_ImportStocks.php added quotes to descriptions - also fixes error message when the csv does not match the template
 27/08/15 Exson: Fixed the allocation status of involved invoice and credit notes in Credit_Invoice.php.
