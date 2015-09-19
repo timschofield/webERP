@@ -94,7 +94,7 @@ $LanguagesArray['ja_JP.utf8']['WindowsLocale'] = 'japanese';
 $LanguagesArray['ja_JP.utf8']['DecimalPoint'] = '.';
 $LanguagesArray['ja_JP.utf8']['ThousandsSeparator'] = ',';
 
-$LanguagesArray['ko_KR.utf8']['LanguageName'] = 'Korean';
+$LanguagesArray['ko_KR.utf8']['LanguageName'] = '한국어';
 $LanguagesArray['ko_KR.utf8']['WindowsLocale'] = 'korean';
 $LanguagesArray['ko_KR.utf8']['DecimalPoint'] = '.';
 $LanguagesArray['ko_KR.utf8']['ThousandsSeparator'] = ',';

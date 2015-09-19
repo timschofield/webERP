@@ -1,5 +1,6 @@
 webERP Change Log
 
+19/9/15 Dongbak Cha:Korean translation via Google translate
 14/9/15 RChacon: Rebuild languages files *.pot, *.po and *.mo to includes new texts.
 14/9/15 RChacon: In AnalysisHorizontalIncome.php, delete duplicated tag. Replaces text "Absolute/Relative variation" with "Absolute/Relative difference" to avoid confusions.
 13/9/15 RChacon: In AccountSections.php, add modifications for direct printing.

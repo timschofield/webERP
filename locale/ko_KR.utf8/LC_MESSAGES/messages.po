@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# FIRST AUTHOR Dongbak Cha <human@humansoft.kr>, 2015.
 #
 msgid ""
 msgstr ""
@@ -9,12 +9,12 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-09-17 20:17+0900\n"
 "PO-Revision-Date: 2015-09-18 10:34+0900\n"
-"Language-Team: \n"
+"Language-Team: Korean\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.8.4\n"
-"Last-Translator: \n"
+"Last-Translator: Dongbak Cha\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "Language: ko_KR\n"
 
