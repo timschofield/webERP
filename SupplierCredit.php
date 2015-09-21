@@ -960,7 +960,7 @@ then do the updates and inserts to process the credit note entered */
 									$CostIncrement = ($PurchPriceVar - $WriteOffToVariances) / $TotalQuantityOnHand;
 
 									$sql = "UPDATE stockmaster SET lastcost=materialcost+overheadcost+labourcost,
-																	materialcost=materialcost+" . $CostIncrement . "
+																	materialcost=materialcost-" . $CostIncrement . "
 											WHERE stockid='" . $EnteredGRN->ItemCode . "'";
 
 									$Result = DB_query($sql, $ErrMsg, $DbgMsg, True);
