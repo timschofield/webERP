@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.12.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-09-14 09:07-0600\n"
-"PO-Revision-Date: 2015-09-14 10:03-0600\n"
+"PO-Revision-Date: 2015-09-21 09:50-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -1488,7 +1488,7 @@ msgstr ""
 
 #: AnalysisHorizontalIncome.php:105 AnalysisHorizontalPosition.php:72
 msgid "Detail or summary"
-msgstr ""
+msgstr "Detalle o resumen"
 
 #: AnalysisHorizontalIncome.php:106 AnalysisHorizontalPosition.php:73
 #: GLBalanceSheet.php:60
@@ -1510,7 +1510,7 @@ msgstr "Todas las cuentas"
 
 #: AnalysisHorizontalIncome.php:112 AnalysisHorizontalPosition.php:79
 msgid "Show all accounts including zero balances"
-msgstr ""
+msgstr "Mostrar todas las cuentas incluyendo saldos en cero"
 
 #: AnalysisHorizontalIncome.php:113 AnalysisHorizontalPosition.php:80
 #: GLBalanceSheet.php:67 GLProfit_Loss.php:116
@@ -1525,14 +1525,14 @@ msgstr ""
 #: AnalysisHorizontalPosition.php:85 AnalysisHorizontalPosition.php:86
 #: GLBalanceSheet.php:73 GLProfit_Loss.php:121
 msgid "Show on Screen (HTML)"
-msgstr "Mostrar en Pantalla (HTML)"
+msgstr "Mostrar en pantalla (HTML)"
 
 #: AnalysisHorizontalIncome.php:121 AnalysisHorizontalIncome.php:521
 #: AnalysisHorizontalPosition.php:88 AnalysisHorizontalPosition.php:370
 #: DailyBankTransactions.php:190 GLBalanceSheet.php:718 GLProfit_Loss.php:1315
 #: GLTrialBalance.php:736
 msgid "Return"
-msgstr ""
+msgstr "Regresar"
 
 #: AnalysisHorizontalIncome.php:131 GLProfit_Loss.php:147
 #: GLProfit_Loss.php:576 GLTagProfit_Loss.php:155 GLTagProfit_Loss.php:479
@@ -1678,7 +1678,7 @@ msgstr ""
 
 #: AnalysisHorizontalIncome.php:500
 msgid "Net Profit"
-msgstr ""
+msgstr "Utilidad neta"
 
 #: AnalysisHorizontalIncome.php:517 AnalysisHorizontalPosition.php:366
 #: DailyBankTransactions.php:184 GLBalanceSheet.php:714 GLProfit_Loss.php:1311
@@ -1693,7 +1693,7 @@ msgstr "Imprimir esto"
 #: GLTrialBalance.php:733 GLTrialBalance.php:734 SalesGraph.php:20
 #: SalesGraph.php:29 SalesGraph.php:34
 msgid "Select A Different Period"
-msgstr "Seleccione un Período distinto"
+msgstr "Seleccione un período distinto"
 
 #: AnalysisHorizontalPosition.php:15 AnalysisHorizontalPosition.php:28
 #: AnalysisHorizontalPosition.php:109 AnalysisHorizontalPosition.php:110
@@ -2836,7 +2836,7 @@ msgstr "Fantasma"
 
 #: BOMs.php:452
 msgid "Select a Different BOM"
-msgstr "Seleccione una HCM diferente"
+msgstr "Seleccione una HCM distinta"
 
 #: BOMs.php:468
 msgid "Manufactured parent items"
@@ -11355,7 +11355,7 @@ msgstr "Confirmar Cantidades de Entrega del pedido y Generar Factura"
 
 #: DeliveryDetails.php:844
 msgid "Select A Different Order"
-msgstr "Seleccione una Pedidos  Diferente"
+msgstr "Seleccione una orden  distinta"
 
 #: DeliveryDetails.php:856 GoodsReceived.php:109 Shipments.php:489
 #: SpecialOrder.php:627
@@ -19130,7 +19130,7 @@ msgstr "Para el equipo de Ventas"
 
 #: PDFCustomerList.php:391
 msgid "All sales folk"
-msgstr "Todo el equipo de ventas"
+msgstr "Todos los vendedores"
 
 #: PDFCustomerList.php:401
 msgid "Level Of Activity"
@@ -20252,7 +20252,7 @@ msgstr "No ajustar existencias del Sistema a Nulo"
 
 #: PDFStockLocTransfer.php:5
 msgid "Stock Location Transfer Docket Error"
-msgstr "Error de Expediente de Transferencia de Ubicación de Existencia"
+msgstr "Error de Expediente de Transferencia de ubicación de inventario"
 
 #: PDFStockLocTransfer.php:17
 msgid "Reprint transfer docket"
@@ -22952,7 +22952,7 @@ msgstr "balance al"
 
 #: PcReportTab.php:409
 msgid "Select A Different Date"
-msgstr "Seleccione una Fecha distinta"
+msgstr "Seleccione una fecha distinta"
 
 #: PcTabs.php:5
 msgid "Maintenance Of Petty Cash Tabs"
@@ -25458,7 +25458,7 @@ msgstr ""
 #: StockLocMovements.php:19 StockLocStatus.php:34 StockLocTransfer.php:260
 #: StockMovements.php:38 StockTransfers.php:576 StockUsage.php:66
 msgid "From Stock Location"
-msgstr "Desde la localización de existencias"
+msgstr "Desde la ubicación de inventario"
 
 #: ReorderLevel.php:303 WOCanBeProducedNow.php:50
 msgid "Needed"
@@ -26930,7 +26930,7 @@ msgstr "Para el Vendedor"
 
 #: SalesInquiry.php:1188
 msgid "All Salesmen"
-msgstr "Todos los Vendedores"
+msgstr "Todos los vendedores"
 
 #: SalesInquiry.php:1217
 msgid "Transaction Number sort only valid for Invoice Date Type"
@@ -29470,7 +29470,7 @@ msgstr "Dentro de"
 
 #: Shipments.php:353
 msgid "Stock Location"
-msgstr "Ubicación de existencia"
+msgstr "Ubicación de inventario"
 
 #: Shipments.php:394
 msgid "Order Lines On This Shipment"
@@ -29809,7 +29809,7 @@ msgstr ""
 
 #: ShopParameters.php:319
 msgid "Stock Locations"
-msgstr "Ubicaciones de inventarios"
+msgstr "Ubicaciones de inventario"
 
 #: ShopParameters.php:330
 msgid ""
@@ -30174,7 +30174,7 @@ msgstr "El SQL que falló al agregar el artículo fue"
 #: SpecialOrder.php:442
 msgid "The item stock locations for the special order line"
 msgstr ""
-"Las ubicaciones de existencias del artículo para la fila del pedido especial"
+"Las ubicaciones de inventario del artículo para la fila del pedido especial"
 
 #: SpecialOrder.php:443
 msgid ""
@@ -31612,7 +31612,7 @@ msgstr "Cantidad disponible"
 
 #: StockLocStatus.php:7
 msgid "All Stock Status By Location/Category"
-msgstr "Todos los Estados de Existencias por Ubicación/Categoría"
+msgstr "Todos los estados de inventario por ubicación/categoría"
 
 #: StockLocStatus.php:86
 msgid "Shown Only Items Where"
@@ -32001,7 +32001,7 @@ msgstr "Procesar traslado de inventario"
 
 #: StockLocTransferReceive.php:614
 msgid "Select A Different Transfer"
-msgstr "Seleccione una transferencia diferente"
+msgstr "Seleccione una transferencia distinta"
 
 #: StockLocTransferReceive.php:628
 msgid "Select Location Receiving Into"
@@ -37607,7 +37607,7 @@ msgstr ""
 
 #: TaxProvinces.php:129
 msgid "stock locations that refer to this tax province"
-msgstr "Ubicaciones de Almacenes en esta jurisdicción fiscal"
+msgstr "Ubicaciones de inventario en esta jurisdicción fiscal"
 
 #: TaxProvinces.php:135
 msgid "tax province and any tax rates set for it have been deleted"
@@ -39603,7 +39603,7 @@ msgstr "El Ingreso de"
 #: WorkOrderReceive.php:757
 msgid "Select a different work order for receiving finished stock against"
 msgstr ""
-"Seleccione una orden de trabajo diferente para la recepción de existencias "
+"Seleccione una orden de trabajo distinta para la recepción de existencias "
 "terminadas en contra de"
 
 #: WorkOrderReceive.php:816
@@ -39877,7 +39877,7 @@ msgstr "Código de sucursal Existente"
 
 #: Z_ChangeBranchCode.php:217
 msgid "New Branch Code"
-msgstr "Nuevo Código de sucursal"
+msgstr "Nuevo código de sucursal"
 
 #: Z_ChangeCustomerCode.php:6
 msgid "UTILITY PAGE To Changes A Customer Code In All Tables"
@@ -45109,7 +45109,7 @@ msgstr ""
 
 #: api/api_xml-rpc.php:1507
 msgid "Stock Location Code"
-msgstr "Código de Ubicación de Existencia"
+msgstr "Código de ubicación de inventario"
 
 #: api/api_xml-rpc.php:1508
 msgid "A stock location code as returned by the GetLocationList function."
@@ -46269,7 +46269,7 @@ msgstr "y para"
 
 #: includes/PDFCustomerListPageHeader.inc:43
 msgid "All Salespeople"
-msgstr "Todos los Vendedores"
+msgstr "Todos los vendedores"
 
 #: includes/PDFCustomerListPageHeader.inc:48
 msgid "Salespeople"
@@ -49409,7 +49409,7 @@ msgstr "Herramienta de investigación de artículo seriado"
 
 #: includes/MainMenuLinksArray.php:225
 msgid "Reprint GRN"
-msgstr "Reimprimir"
+msgstr "Reimprimir "
 
 #: includes/MainMenuLinksArray.php:226
 msgid "Inventory Item Movements"
@@ -50559,7 +50559,7 @@ msgstr ""
 
 #: reportwriter/languages/en_US/reports.php:91
 msgid "Reports"
-msgstr ""
+msgstr "Informes"
 
 #: reportwriter/languages/en_US/reports.php:94
 msgid "Second"
@@ -50575,7 +50575,7 @@ msgstr ""
 
 #: reportwriter/languages/en_US/reports.php:97
 msgid "Select a field..."
-msgstr ""
+msgstr "Seleccione un campo..."
 
 #: reportwriter/languages/en_US/reports.php:99
 msgid "Sixth"
@@ -50607,7 +50607,7 @@ msgstr ""
 
 #: reportwriter/languages/en_US/reports.php:117
 msgid "Report/Form: "
-msgstr ""
+msgstr "Informe/Formulario:"
 
 #: reportwriter/languages/en_US/reports.php:118
 msgid "Report and Form Builder - "
@@ -50639,7 +50639,7 @@ msgstr ""
 
 #: reportwriter/languages/en_US/reports.php:125
 msgid "Reports Menu"
-msgstr ""
+msgstr "Menú de informes"
 
 #: reportwriter/languages/en_US/reports.php:126
 #: reportwriter/languages/en_US/reports.php:139
@@ -50967,11 +50967,11 @@ msgstr ""
 
 #: reportwriter/languages/en_US/reports.php:222
 msgid "Report Title 1"
-msgstr ""
+msgstr "Título 1 del informe"
 
 #: reportwriter/languages/en_US/reports.php:223
 msgid "Report Title 2"
-msgstr ""
+msgstr "Título 2 del informe"
 
 #: reportwriter/languages/en_US/reports.php:224
 msgid "Report Data"
@@ -50979,7 +50979,7 @@ msgstr ""
 
 #: reportwriter/languages/en_US/reports.php:225
 msgid "Report/Form Identification"
-msgstr ""
+msgstr "Identificación de informe/Formulario"
 
 #: reportwriter/languages/en_US/reports.php:226
 msgid "Report Import"
@@ -51015,7 +51015,7 @@ msgstr ""
 
 #: reportwriter/languages/en_US/reports.php:234
 msgid "Report Totals"
-msgstr ""
+msgstr "Totales del informe"
 
 #: reportwriter/languages/en_US/reports.php:235
 msgid "Enter fields to total (Table.Fieldname)"

@@ -1,5 +1,7 @@
 webERP Change Log
-21/09/15 Exson: Fix the wrong material cost updated in SupplierCredit.php. Reported by Akits. 
+
+21/09/15 RChacon: In StockLocStatus.php, add current date and time, and format to use print.css.
+21/09/15 Exson: Fix the wrong material cost updated in SupplierCredit.php. Reported by Akits.
 19/9/15 Dongbak Cha:Korean translation via Google translate
 14/9/15 RChacon: Rebuild languages files *.pot, *.po and *.mo to includes new texts.
 14/9/15 RChacon: In AnalysisHorizontalIncome.php, delete duplicated tag. Replaces text "Absolute/Relative variation" with "Absolute/Relative difference" to avoid confusions.
