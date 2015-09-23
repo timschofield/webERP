@@ -1,5 +1,6 @@
 webERP Change Log
 
+23/09/2015 Tim: ADD invoice to grns mapping data in SupplierInvoice.php. 
 21/09/15 RChacon: In StockLocStatus.php, add current date and time, and format to use print.css.
 21/09/15 Exson: Fix the wrong material cost updated in SupplierCredit.php. Reported by Akits.
 19/9/15 Dongbak Cha:Korean translation via Google translate
