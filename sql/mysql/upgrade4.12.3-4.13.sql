@@ -12,6 +12,16 @@ INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES
 	('AnalysisHorizontalIncome.php', '8', 'Shows the horizontal analysis of the statement of comprehensive income'),
 	('AnalysisHorizontalPosition.php', '8', 'Shows the horizontal analysis of the statement of financial position');
 
+CREATE TABLE `suppinvstogrn` (
+  `suppinv` int(11) NOT NULL,
+  `grnno` int(11) NOT NULL,
+  PRIMARY KEY (`suppinv`,`grnno`),
+  KEY `suppinvstogrn_ibfk_2` (`grnno`),
+  CONSTRAINT `suppinvstogrn_ibfk_1` FOREIGN KEY (`suppinv`) REFERENCES
+`supptrans` (`id`),
+  CONSTRAINT `suppinvstogrn_ibfk_2` FOREIGN KEY (`grnno`) REFERENCES
+`grns` (`grnno`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Update version number:
 UPDATE config SET confvalue='4.13' WHERE confname='VersionNumber';
