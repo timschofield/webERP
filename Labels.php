@@ -6,7 +6,7 @@ include('includes/session.inc');
 $Title = _('Label Templates');
 include('includes/header.inc');
 
-//define PaperSize array sizes in pdf points
+//define PaperSize array sizes in mm
 $PaperSize = array();
 $PaperSize['A4']['PageHeight'] = 297;
 $PaperSize['A4']['PageWidth'] = 210;
@@ -114,7 +114,7 @@ $LabelPaper['DPS01 *']['PageHeight']= 297;
 
 echo '<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Label Template Maintenance')
-	. '" alt="" />' . $Title . ' - ' . _('all measurements in PDF points') .
+	. '" alt="" />' . $Title . ' - ' . _('all measurements in mm.') .
 	'</p>';
 
 if (!function_exists('gd_info')) {
@@ -591,6 +591,11 @@ if (isset($SelectedLabelID)) {
 			} else {
 				echo '<option value="price">' . _('Price') . '</option>';
 			}
+			if ($myrow['fieldvalue']=='logo'){
+				echo '<option selected="selected" value="logo">' . _('Company Logo') . '</option>';
+			} else {
+				echo '<option value="logo">' . _('Company Logo') . '</option>';
+			}
 			echo '</select></td>
 				<td><input type="text" name="VPos' . $i . '" size="4" maxlength="4" value="' . $myrow['vpos'] . '" /></td>
 				<td><input type="text" name="HPos' . $i . '" size="4" maxlength="4" value="' . $myrow['hpos'] . '" /></td>
@@ -620,6 +625,7 @@ if (isset($SelectedLabelID)) {
 			<option value="itemdescription">' . _('Item Descrption') . '</option>
 			<option value="barcode">' . _('Item Barcode') . '</option>
 			<option value="price">' . _('Price') . '</option>
+			<option value="logo">' . _('Company Logo') . '</option>
 			</select></td>
 		<td><input type="text" size="4" maxlength="4" name="VPos" /></td>
 		<td><input type="text" size="4" maxlength="4" name="HPos" /></td>
