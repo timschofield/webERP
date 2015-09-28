@@ -280,7 +280,8 @@ $MenuItems['stock']['Transactions']['URL'] = array(	'/PO_SelectOSPurchOrder.php'
 													'/InternalStockRequestFulfill.php');
 
 $MenuItems['stock']['Reports']['Caption'] = array(	_('Serial Item Research Tool'),
-													_('Print Price Labels'),
+													_('KL Print Price Labels'),
+													_('webERP Print Price Labels'),
 													_('Reprint GRN'),
 													_('Inventory Item Movements'),
 													_('Inventory Item Status'),
@@ -318,6 +319,7 @@ $MenuItems['stock']['Reports']['Caption'] = array(	_('Serial Item Research Tool'
 
 $MenuItems['stock']['Reports']['URL'] = array(	'/StockSerialItemResearch.php',
 												'/KLPDFPrintLabel.php',
+												'/PDFPrintLabel.php',
 												'/ReprintGRN.php',
 												'/StockMovements.php',
 												'/StockStatus.php',
@@ -656,7 +658,8 @@ $MenuItems['system']['Maintenance']['Caption'] = array(	_('Inventory Categories 
 														_('MRP Demand Types'),
 														_('Maintain Internal Departments'),
 														_('Maintain Internal Stock Categories to User Roles'),
-														_('KL Label Templates Maintenance'));
+														_('KL Label Templates Maintenance'),
+														_('webERP Label Templates Maintenance'));
 
 $MenuItems['system']['Maintenance']['URL'] = array(	'/StockCategories.php',
 													'/Locations.php',
@@ -668,7 +671,8 @@ $MenuItems['system']['Maintenance']['URL'] = array(	'/StockCategories.php',
 													'/MRPDemandTypes.php',
 													'/Departments.php',
 													'/InternalStockCategoriesByRole.php',
-													'/KLLabels.php');
+													'/KLLabels.php',
+													'/Labels.php');
 
 $MenuItems['Utilities']['Transactions']['Caption'] = array(	_('Change A Customer Code'),
 															_('Change A Customer Branch Code'),
