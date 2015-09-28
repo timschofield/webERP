@@ -253,20 +253,11 @@ if ($KL_PurchasingManager
 	ItemsWithStockLocationButNoStockAvailable("WABOM", "WaterBom", 15, 600, $RootPath, $db);
 	ItemsWithStockLocationButNoStockAvailable("WHAYA", "Ayana", 15, 600, $RootPath, $db);
 	ItemsWithStockLocationButNoStockAvailable("WHINT", "InterContinental", 15, 600, $RootPath, $db);
-}
-*/
-
-/*
-if ($KL_PurchasingManager
-	OR $KL_KantorManager
-	OR $KL_PurchasingTeam){
-
 	InsuficientStockForItems("SILVER", "TM-", "Tali Mie", 20, 40, $RootPath, $db);
 }
 */
 
 if ($KL_PurchasingManager
-	OR $KL_SystemAdmin
 	OR $KL_PurchasingTeam){
 	ItemsinSetUp("ReadyToTest", $RootPath, $db);
 	ItemsinSetUp("NeedDescription", $RootPath, $db);
