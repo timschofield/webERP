@@ -46,10 +46,6 @@ if (isset($_POST['submit'])) {
 		prnMsg($msg,'error');
 	}
 
-	$WhereCategory = " ";
-	if ($_POST['CategoryID']!='All') {
-		$WhereCategory = " AND stockmaster.categoryid ='" . $_POST['CategoryID'] . "' ";
-	}
 	$WhereLocation = " ";
 	if ($_POST['Location']!='All') {
 		$WhereLocation = " AND salesorders.fromstkloc ='" . $_POST['Location'] . "' ";
@@ -67,7 +63,7 @@ if (isset($_POST['submit'])) {
 			WHERE orddate >='" . FormatDateForSQL($_POST['FromDate']) ."'
 			AND orddate <='" . FormatDateForSQL($_POST['ToDate']) .  "'
 			" . $WhereLocation . "
-			" . $WhereCategory . "
+			AND stockmaster.categoryid IN ('". implode("','",$_POST['Categories'])."')
 			AND stockmaster.discontinued = 0
 			AND salesorders.quotation=0
 			GROUP BY salesorderdetails.stkcode";
@@ -210,6 +206,26 @@ while ($myrow = DB_fetch_array($result)) {
 	 echo '<option value="' . $myrow['mrpdemandtype'] . '">' . $myrow['mrpdemandtype'] . ' - ' .$myrow['description'] . '</option>';
 } //end while loop
 echo '</select></td></tr>';
+
+echo '<tr>
+		<td>' . _('Inventory Categories') . ':</td>
+		<td><select autofocus="autofocus" required="required" minlength="1" size="12" name="Categories[]"multiple="multiple">';
+	$SQL = 'SELECT categoryid, categorydescription 
+			FROM stockcategory 
+			ORDER BY categorydescription';
+	$CatResult = DB_query($SQL);
+	while ($MyRow = DB_fetch_array($CatResult)) {
+		if (isset($_POST['Categories']) AND in_array($MyRow['categoryid'], $_POST['Categories'])) {
+			echo '<option selected="selected" value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] .'</option>';
+		} else {
+			echo '<option value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
+		}
+	}
+	echo '</select>
+			</td>
+		</tr>';
+
+/*
 echo '<tr><td>' . _('Inventory Category') . ':</td>
 		<td><select name="CategoryID">';
 echo '<option selected="selected" value="All">' . _('All Stock Categories') . '</option>';
@@ -222,6 +238,7 @@ while ($myrow = DB_fetch_array($result)) {
 } //end while loop
 echo '</select></td>
 		</tr>';
+*/
 echo '<tr><td>' . _('Inventory Location') . ':</td>
 		<td><select name="Location">';
 echo '<option selected="selected" value="All">' . _('All Locations') . '</option>';
