@@ -367,9 +367,9 @@ if (isset($_POST['JustSelectedACustomer'])){
 			break;
 		}
 	}
-	if ($i==count($_POST)){
+	if ($i==count($_POST) AND !isset($SelectedCustomer)){//if there is ONLY one customer searched at above, the $SelectedCustomer already setup, then there is a wrong warning
 		prnMsg(_('Unable to identify the selected customer'),'error');
-	} else {
+	} elseif(!isset($SelectedCustomer)) {
 		$SelectedCustomer = $_POST['SelectedCustomer'.$i];
 		$SelectedBranch = $_POST['SelectedBranch'.$i];
 	}
