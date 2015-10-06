@@ -22,6 +22,6 @@ CREATE TABLE `suppinvstogrn` (
   CONSTRAINT `suppinvstogrn_ibfk_2` FOREIGN KEY (`grnno`) REFERENCES
 `grns` (`grnno`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
+INSERT INTO scripts VALUES('EmailCustStatements.php','3','Email customer statement to customer');
 -- Update version number:
 UPDATE config SET confvalue='4.13' WHERE confname='VersionNumber';
