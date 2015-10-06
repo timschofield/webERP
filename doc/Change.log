@@ -1,5 +1,5 @@
 webERP Change Log
-
+06/10/15 UK-Steven: Contribute email customer statements feature scripts.
 06/10/15 Exson: Fixed the wrong unable to identify the selected customer warning at SelectOrderItems.php.
 23/09/2015 Tim: ADD invoice to grns mapping data in SupplierInvoice.php. 
 21/09/15 RChacon: In StockLocStatus.php, add current date and time, and format to use print.css.
