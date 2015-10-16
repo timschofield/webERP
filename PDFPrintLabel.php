@@ -180,7 +180,6 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 	$pdf->setPrintHeader(false);
 	$pdf->setPrintFooter(false);
 
-
 	$pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 	$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 	$pdf->setPrintHeader(false);
@@ -191,6 +190,8 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 	$YPos = $Page_Height - $Top_Margin; //top of current label
 	$XPos = $Left_Margin; // left of current label
 
+	$TotalLabels = $NoOfLabels * $_POST['LabelsPerItem'];
+	$LabelsPrinted = 0;
 	for ($i=0;$i < $_POST['NoOfLabels'];$i++){
 		if (isset($_POST['PrintLabel'.$i])){
 			$NoOfLabels--;
@@ -207,27 +208,47 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 						$Value = $_POST['Barcode' . $i];
 					}
 					if ($Field['FieldValue'] == 'price'){ //need to format for the number of decimal places
-	//					$LeftOvers = $pdf->addTextWrap($XPos+$Field['HPos'],$YPos-$LabelDimensions['label_height']+$Field['VPos'],$LabelDimensions['label_width']-$Field['HPos'],$Field['FontSize'],$_POST['Price' . $i],'center');
 						$LeftOvers = $pdf->addTextWrap($XPos+$Field['HPos'],$YPos-$LabelDimensions['label_height']+$Field['VPos'],$LabelDimensions['label_width']-$Field['HPos'],$Field['FontSize'],$Value);
 					}elseif ($Field['FieldValue'] == 'logo'){ 
 						$pdf->addJpegFromFile($_SESSION['LogoFile'],$XPos+$Field['HPos'],$YPos-$LabelDimensions['label_height']+$Field['VPos'],'', $Field['FontSize']);
-					
 					}elseif($Field['Barcode']==1) {
 
-						$BarcodeImage = new code128(str_replace('_','',$Value));
-
-						ob_start();
+						$BarcodeImage = new code128(str_replace('_','',$Value));	
+						
+						$WidthSmallestBar = 25.4 / 600; // 25.4mm per inch / 600 points per inch
+						// define barcode style
+						$style = array(
+							'position' => '',
+							'align' => 'C',
+							'stretch' => false,
+							'fitwidth' => true,
+							'cellfitalign' => '',
+							'border' => true,
+							'hpadding' => 'auto',
+							'vpadding' => 'auto',
+							'fgcolor' => array(0,0,0),
+							'bgcolor' => false, //array(255,255,255),
+							'text' => true,
+							'font' => 'helvetica',
+							'fontsize' => 8,
+							'stretchtext' => 4
+						);
+//						$pdf->Cell(0, 0, 'CODE 128 AUTO', 0, 1);
+//						$pdf->write1DBarcode($Value, 'C128', '', '', '', 18, $WidthSmallestBar, $style, 'N');						
+						
+/*						ob_start();
 						imagepng(imagepng($BarcodeImage->draw()));
 						$Image_String = ob_get_contents();
 						ob_end_clean();
-
+*/
 						$pdf->addJpegFromFile('@' . $Image_String,$XPos+$Field['HPos'],$YPos-$LabelDimensions['label_height']+$Field['VPos'],'', $Field['FontSize']);
 
 					} else {
 						$LeftOvers = $pdf->addTextWrap($XPos+$Field['HPos'],$YPos-$LabelDimensions['label_height']+$Field['VPos'],$LabelDimensions['label_width']-$Field['HPos'],$Field['FontSize'],$Value);
 					}
 				} // end loop through label fields
-				if (($NoOfLabels>0) OR ($LabelNumber < $_POST['LabelsPerItem'])){ // if there is another label to print
+				$LabelsPrinted++;
+				if ($LabelsPrinted < $TotalLabels){ // if there is another label to print
 					//setup $YPos and $XPos for the next label
 					if (($YPos - $LabelDimensions['label_rowheight']) < $LabelDimensions['label_height']){
 						/* not enough space below the above label to print a new label
