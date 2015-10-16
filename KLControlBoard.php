@@ -262,9 +262,9 @@ if ($KL_PurchasingManager
 	ItemsinSetUp("ReadyToTest", $RootPath, $db);
 	ItemsinSetUp("NeedDescription", $RootPath, $db);
 	//ItemsinSetUp("NeedPrice", $RootPath, $db);
-	ItemsWithoutRetailPrice("SETUP", 4.75, $RootPath, $db);
+	ItemsWithoutRetailPrice("SETKL", 4.75, $RootPath, $db);
+	ItemsWithoutRetailPrice("SETBL", 4.75, $RootPath, $db);
 	ItemsinSetUp("WithReorderLevel", $RootPath, $db);
-
 	ObsoleteComponentsInActiveBOM($RootPath, $db);
 }
 

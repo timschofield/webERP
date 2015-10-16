@@ -7789,7 +7789,7 @@ function ItemsinSetUp($Check, $RootPath, $db){
 				FROM locstock
 				WHERE locstock.stockid = stockmaster.stockid) AS QOH
 			FROM stockmaster
-			WHERE stockmaster.categoryid = 'SETUP'
+			WHERE stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_SETUP . "
 				AND discontinued = 0 ".
 			 $SQLWhere ." 
 			ORDER BY stockid";
