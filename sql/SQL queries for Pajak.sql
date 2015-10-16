@@ -1,3 +1,6 @@
+/* MOVE Account compensation to HPP */
+UPDATE gltrans SET account "510010000PT" WHERE account = "510010050" AND trandate >= "2015-01-01";
+
 /* List of GL transactions in a period of time */
 
 SELECT accountgroups.groupname AS 'Group',
