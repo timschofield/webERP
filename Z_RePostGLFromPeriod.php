@@ -40,15 +40,18 @@ if (!isset($_POST['FromPeriod'])){
 	/* Make the posted flag on all GL entries including and after the period selected = 0 */
 	$sql = "UPDATE gltrans SET posted=0 WHERE periodno >='" . $_POST['FromPeriod'] . "'";
 	$UpdGLTransPostedFlag = DB_query($sql);
+	prnMsg(_('Done') . ': ' . $sql,'success');
 
 	/* Now make all the actuals 0 for all periods including and after the period from */
 	$sql = "UPDATE chartdetails SET actual =0 WHERE period >= '" . $_POST['FromPeriod'] . "'";
 	$UpdActualChartDetails = DB_query($sql);
+	prnMsg(_('Done') . ': ' . $sql,'success');
 
 	$ChartDetailBFwdResult = DB_query("SELECT accountcode, bfwd FROM chartdetails WHERE period='" . $_POST['FromPeriod'] . "'");
 	while ($ChartRow=DB_fetch_array($ChartDetailBFwdResult)){
 		$sql = "UPDATE chartdetails SET bfwd ='" . $ChartRow['bfwd'] . "' WHERE period > '" . $_POST['FromPeriod'] . "' AND accountcode='" . $ChartRow['accountcode'] . "'";
 		$UpdActualChartDetails = DB_query($sql);
+		prnMsg(_('Done') . ': ' . $sql,'success');
 	}
 
 	/*Now repost the lot */
