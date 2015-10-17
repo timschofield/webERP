@@ -1364,7 +1364,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 				
 				// Compensation COGS for PT sales
-				if($Compensation != 0){
+				if($PERCENTAGE_COMPENSATION_HPP_PT != 100){
 					$SQL = "INSERT INTO gltrans (	type,
 													typeno,
 													trandate,
