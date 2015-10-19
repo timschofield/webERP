@@ -4633,7 +4633,30 @@ function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $Tolerance, $MinQoh, $
 	
 }
 
-function WrongStandardCost($Country, $StockCat, $StdFactor, $Tolerance, $ShowOnly, $RootPath, $db){
+function ChangeItemStandardCost($StockID, $NewCost, $OldCost, $QOH){
+	$Result = DB_Txn_Begin();
+	ItemCostUpdateGL($db, $StockID, $NewCost, $OldCost, $QOH);
+	$SQL = "UPDATE stockmaster SET	materialcost='" . $NewCost . "',
+									labourcost='" . 0 . "',
+									overheadcost='" . 0 . "',
+									lastcost='" . $OldCost . "',
+									lastcostupdate ='" . Date('Y-m-d')."'
+							WHERE stockid='" . $StockID . "'";
+
+	$ErrMsg = _('The cost details for the stock item could not be updated because');
+	$DbgMsg = _('The SQL that failed was');
+	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+	$Result = DB_Txn_Commit();
+	UpdateCost($db, $StockID); //Update any affected BOMs
+}
+
+
+function WrongStandardCost($Country, $StockCat, $StdFactor, $Tolerance, $Mode, $RootPath, $db){
+/* FunctionMode means
+	SHOWONLY: Shows data only
+	SHOWLINK: Shows link to update the standard Cost manually
+	UPDATEALL: Runs the update function for all items
+*/
 	$ToleranceHigh = 1 + $Tolerance;
 	$ToleranceLow  = 1 - $Tolerance;
 	
@@ -4647,6 +4670,9 @@ function WrongStandardCost($Country, $StockCat, $StdFactor, $Tolerance, $ShowOnl
 				purchdata.effectivefrom,
 				stockmaster.lastcostupdate,
 				(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS stdcost,
+				(SELECT SUM(locstock.quantity)
+					FROM locstock
+					WHERE locstock.stockid = stockmaster.stockid) AS qoh,
 				stockmaster.units,
 				currencies.decimalplaces,
 				currencies.rate
@@ -4675,7 +4701,7 @@ function WrongStandardCost($Country, $StockCat, $StdFactor, $Tolerance, $ShowOnl
 		echo '<p class="page_title_text" align="center"><strong>' . $StockCat . ' Items from ' . $Country . _(' with wrong Standard Cost') .  ' ---> Cost Factor = ' . locale_number_format($StdFactor, 2) . ' ---> Tolerance = '. locale_number_format($Tolerance * 100, 2) .'%</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
-		if ($ShowOnly){
+		if ($Mode == "SHOWONLY"){
 			$TableHeader = '<tr>
 								<th class="ascending">' . _('#') . '</th>
 								<th class="ascending">' . _('Code') . '</th>
@@ -4704,6 +4730,7 @@ function WrongStandardCost($Country, $StockCat, $StdFactor, $Tolerance, $ShowOnl
 								<th class="ascending">' . _('UOM Factor') . '</th>
 								<th class="ascending">' . _('Date Std Cost') . '</th>
 								<th class="ascending">' . _('Std Cost IDR') . '</th>
+								<th class="ascending">' . _('QOH') . '</th>
 								<th class="ascending">' . _('KL UOM') . '</th>
 								<th class="ascending">' . _('Real Std Cost') . '</th>
 								<th class="ascending">' . _('% Dif') . '</th>
@@ -4717,10 +4744,9 @@ function WrongStandardCost($Country, $StockCat, $StdFactor, $Tolerance, $ShowOnl
 			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
 			
 			$NewStdCost = $myrow['price'] / $myrow['conversionfactor'] * (1/$myrow['rate']) * $StdFactor;
-			$StdCostLink = '<a href="' . $RootPath . '/KLUpdateStandardCost.php?StockId=' . $myrow['stockid'] . '&NewCost=' . round($NewStdCost,0) .'">' . locale_number_format($NewStdCost,0) . '</a>';
 			$Price = locale_number_format($myrow['price'],$myrow['decimalplaces']);
 			$PurchasingLink = '<a href="' . $RootPath . '/PurchData.php?StockID=' . $myrow['stockid'] . '&SupplierID='. $myrow['supplierno'] . '&Edit=1&EffectiveFrom='. $myrow['effectivefrom']  .' ">' . $Price . '</a>';
-			if ($ShowOnly){
+			if ($Mode == "SHOWONLY"){
 				printf('<td class="number">%s</td>
 						<td>%s</td>
 						<td>%s</td>
@@ -4748,6 +4774,14 @@ function WrongStandardCost($Country, $StockCat, $StdFactor, $Tolerance, $ShowOnl
 						locale_number_format($myrow['stdcost'],0)
 						);
 			}else{
+				if($Mode == "UPDATEALL"){
+					// UPDATEALL
+					$StdCost = locale_number_format($NewStdCost,0);
+					ChangeItemStandardCost($myrow['stockid'], $NewStdCost, $myrow['stdcost'], $myrow['qoh']);
+				}else{
+					// SHOWLINK
+					$StdCost = '<a href="' . $RootPath . '/KLUpdateStandardCost.php?StockId=' . $myrow['stockid'] . '&NewCost=' . round($NewStdCost,0) .'">' . locale_number_format($NewStdCost,0) . '</a>';
+				}
 				printf('<td class="number">%s</td>
 						<td>%s</td>
 						<td>%s</td>
@@ -4759,6 +4793,7 @@ function WrongStandardCost($Country, $StockCat, $StdFactor, $Tolerance, $ShowOnl
 						<td>%s</td>
 						<td class="number">%s</td>
 						<td>%s</td>
+						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td>%s</td>
 						<td class="number">%s</td>
@@ -4776,8 +4811,9 @@ function WrongStandardCost($Country, $StockCat, $StdFactor, $Tolerance, $ShowOnl
 						locale_number_format($myrow['conversionfactor'],0),
 						ConvertSQLDate($myrow['lastcostupdate']),
 						locale_number_format($myrow['stdcost'],0),
+						locale_number_format($myrow['qoh'],0),
 						$myrow['units'], 
-						$StdCostLink,
+						$StdCost,
 						locale_number_format((($myrow['price'] / $myrow['conversionfactor'] * (1/$myrow['rate']) * $StdFactor)/$myrow['stdcost'] * 100)-100,1) . '%'
 						);
 			}

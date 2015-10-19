@@ -50,6 +50,14 @@ define("AGE_STEP_07",  74);
 /* Defines about Pricetag control */
 define("RE_CHECK_PRICETAGS_CHANGED_DURING_LAST_X_DAYS",  35);
 
+/* Defines about standard Cost*/
+define("STANDARD_COST_FACTOR_INDONESIA"  , 1.00);
+define("STANDARD_COST_FACTOR_THAILAND"   , 1.25);
+define("STANDARD_COST_FACTOR_CHINA"      , 1.25);
+define("STANDARD_COST_FACTOR_HONG_KONG"  , 1.25);
+define("STANDARD_COST_FACTOR_CATALONIA"  , 1.25);
+define("STANDARD_COST_FACTOR_PHILIPPINES", 1.25);
+
 /* Defines about categories */
 define("LIST_STOCK_CATEGORIES_IN_KL_SHOPS_NOT_FOR_SALE", "('SHDISP', 'SHCONS', 'SHPACK')");
 

@@ -91,19 +91,22 @@ if ($KL_SystemAdmin
 }
 
 if ($KL_SystemAdmin){
-	WrongStandardCost("Indonesia"         , "", 1.00, 0.04, false, $RootPath, $db);
-	WrongStandardCost("Thailand"          , "", 1.25, 0.04, false, $RootPath, $db);
-	WrongStandardCost("China"             , "", 1.25, 0.04, false, $RootPath, $db);
-	WrongStandardCost("Hong Kong, (China)", "", 1.25, 0.04, false, $RootPath, $db);
-	WrongStandardCost("Catalonia"         , "", 1.25, 0.10, false, $RootPath, $db);
+	WrongStandardCost("Indonesia"  , "", STANDARD_COST_FACTOR_INDONESIA, 0.04, "SHOWLINK", $RootPath, $db);
+	WrongStandardCost("Thailand"   , "", STANDARD_COST_FACTOR_THAILAND, 0.04, "SHOWLINK", $RootPath, $db);
+	WrongStandardCost("China"      , "", STANDARD_COST_FACTOR_CHINA, 0.04, "SHOWLINK", $RootPath, $db);
+	WrongStandardCost("Hong Kong"  , "", STANDARD_COST_FACTOR_HONG_KONG, 0.04, "SHOWLINK", $RootPath, $db);
+	WrongStandardCost("Catalonia"  , "", STANDARD_COST_FACTOR_CATALONIA, 0.10, "SHOWLINK", $RootPath, $db);
+	WrongStandardCost("Philippines", "", STANDARD_COST_FACTOR_PHILIPPINES, 0.04, "SHOWLINK", $RootPath, $db);
 }
 
 if ($KL_PurchasingTeam) {
-	WrongStandardCost("Indonesia"         , "", 1.00, 0.05, true, $RootPath, $db);
-	WrongStandardCost("Thailand"          , "", 1.25, 0.05, true, $RootPath, $db);
-	WrongStandardCost("China"             , "", 1.25, 0.05, true, $RootPath, $db);
-	WrongStandardCost("Hong Kong, (China)", "", 1.25, 0.05, true, $RootPath, $db);
-	WrongStandardCost("Catalonia"         , "", 1.25, 0.10, true, $RootPath, $db);
+	WrongStandardCost("Indonesia"  , "", STANDARD_COST_FACTOR_INDONESIA, 0.05, "SHOWONLY", $RootPath, $db);
+	WrongStandardCost("Thailand"   , "", STANDARD_COST_FACTOR_THAILAND, 0.05, "SHOWONLY", $RootPath, $db);
+	WrongStandardCost("China"      , "", STANDARD_COST_FACTOR_CHINA, 0.05, "SHOWONLY", $RootPath, $db);
+	WrongStandardCost("Hong Kong"  , "", STANDARD_COST_FACTOR_HONG_KONG, 0.05, "SHOWONLY", $RootPath, $db);
+	WrongStandardCost("Catalonia"  , "", STANDARD_COST_FACTOR_CATALONIA, 0.10, "SHOWONLY", $RootPath, $db);
+	WrongStandardCost("Philippines", "", STANDARD_COST_FACTOR_PHILIPPINES, 0.05, "SHOWONLY", $RootPath, $db);
+
 }
 /***************************************************************************************
 * RETAIL PRICE         
