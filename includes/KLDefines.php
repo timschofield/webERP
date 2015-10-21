@@ -119,6 +119,7 @@ define("PAYMENT_BY_CREDITCARD", 3);
 define("PERCENTAGE_SALES_CASH_TO_PT", 11); // % of cash transactions going to PT cash acccounts
 define("PERCENTAGE_COMPENSATION_HPP_PT", 100); // % of HPP to be assigned to PT sales. 100 means NO compensation.
 define("ACCOUNT_COMPENSATION_HPP_PT", "510010050"); 
+define("ACCOUNT_HUTANG_PPH23", "611012005PT"); // number of account for retention PPH23
 
 define("COMISSION_CC_DANAMON",     1.80); // % of Credit card comission paid to Danamon
 define("COMISSION_AMEX_DANAMON",   3.00); // % of Credit card comission paid to American Express by Danamon
