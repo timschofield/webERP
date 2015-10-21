@@ -206,8 +206,6 @@ if (isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 
 			$ResultTo = DB_query($sqlTo,'', '', true);
 
-prnMsg("PPH23:". $HutangPPH23);
-
 			// if there's a retention, we account for it
 			if ($HutangPPH23 != 0){
 				$sqlHutangPPH23="INSERT INTO `gltrans` (`counterindex`,
