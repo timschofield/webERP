@@ -7778,6 +7778,7 @@ function ItemsNeedingAutomaticTranslation($RootPath, $db){
 }
 
 function ItemsinSetUp($Check, $RootPath, $db){
+	$today = date('Y-m-d');
 	
 	if ($Check == "ReadyToTest"){
 		$Title = "Items in SETUP ready to change to TEST";
@@ -7786,10 +7787,12 @@ function ItemsinSetUp($Check, $RootPath, $db){
 							FROM locstock
 							WHERE locstock.stockid = stockmaster.stockid) > 0
 					AND (SELECT price
-					FROM prices
-					WHERE stockmaster.stockid = prices.stockid
-						AND prices.typeabbrev = 'RT'
-						AND currabrev = 'IDR') > 0
+							FROM prices
+							WHERE stockmaster.stockid = prices.stockid
+								AND prices.startdate <= '". $today. "' 
+								AND (prices.enddate >= '". $today. "' OR prices.enddate = '0000-00-00')
+								AND prices.typeabbrev = 'RT'
+								AND currabrev = 'IDR') IS NOT NULL
 					AND NOT EXISTS (SELECT *
 							FROM loctransfers 
 							WHERE  recqty < shipqty
@@ -7820,6 +7823,8 @@ function ItemsinSetUp($Check, $RootPath, $db){
 				FROM prices
 				WHERE stockmaster.stockid = prices.stockid
 					AND prices.typeabbrev = 'RT'
+					AND prices.startdate <= '". $today. "' 
+					AND (prices.enddate >= '". $today. "' OR prices.enddate = '0000-00-00')
 					AND currabrev = 'IDR') AS price,
 			(SELECT SUM(locstock.quantity)
 				FROM locstock
