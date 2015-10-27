@@ -2257,6 +2257,7 @@ No pending transfer regarding this item
 				AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_SHOP_DISPLAYS . "
 				AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_SHOP_CONSUMABLES . "
 				AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_OLD . "
+				AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_SETUP . "
 				AND stockmaster.klmovingdiscount20 = 0
 				AND stockmaster.klmovingdiscount50 = 0
 				AND stockmaster.klmovingdiscount80 = 0

@@ -16,7 +16,7 @@ TRUNCATE `chartmasterM`;
 INSERT INTO `chartmasterM` (`accountcode`, `accountname`, `group_`) 
 SELECT `accountcode`, `accountname`, `group_`
 FROM chartmaster
-WHERE accountcode NOT IN ('612011210', '612011215', '614012400', '614012405')
+WHERE accountcode NOT IN ('612011210', '612012015', '612011215', '614012400', '614012405')
 	AND accountname NOT LIKE 'RL%';
 
 /* ******************************************************************************************/
