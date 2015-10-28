@@ -173,6 +173,9 @@ if (isset($_POST['Show'])){
 						<th>' . _('Date') . '</th>
 						<th>' . _('Debit') . '</th>
 						<th>' . _('Credit') . '</th>
+						<th>' . _('Org Currency') . '</th>
+						<th>' . _('Amount in Org Currency') . '</th>
+						<th>' . _('Bank Ref') .'</th>
 						<th>' . _('Narrative') . '</th>
 						<th>' . _('Balance') . '</th>
 						<th>' . _('Tag') . '</th>
@@ -268,6 +271,21 @@ if (isset($_POST['Show'])){
 			echo '<tr class="OddTableRows">';
 			$k++;
 		}
+		if ($myrow['type'] == 12 OR $myrow['type'] == 22 OR $myrow['type'] == 2 OR $myrow['type'] == 1) {
+			$banksql = "SELECT ref,currcode,amount FROM banktrans WHERE type='" .$myrow['type']."' and transno='" . $myrow['typeno'] . "'";
+			$ErrMsg = _('Failed to retrieve bank data');
+			$bankresult = DB_query($banksql,$ErrMsg);
+			if (DB_num_rows($bankresult)>0) {
+				$bankrow = DB_fetch_array($bankresult);
+				$BankRef = $bankrow['ref'];
+				$OrgAmt = $bankrow['amount'];
+				$Currency = $bankrow['currcode'];
+			}
+		} else {
+			$BankRef = '';
+			$OrgAmt = '';
+			$Currency = '';
+		}
 
 		$RunningTotal += $myrow['amount'];
 		$PeriodTotal += $myrow['amount'];
@@ -291,6 +309,9 @@ if (isset($_POST['Show'])){
 				<td>%s</td>
 				<td class="number"><b>%s</b></td>
 				<td>%s</td>
+				<td>%s</td>
+				<td class="number">%s</td>
+				<td>%s</td>
 				</tr>',
 				_($myrow['typename']),
 				$URL_to_TransDetail,
@@ -298,9 +319,13 @@ if (isset($_POST['Show'])){
 				$FormatedTranDate,
 				$DebitAmount,
 				$CreditAmount,
+				$Currency,
+				locale_number_format($OrgAmt,$_SESSION['CompanyRecord']['decimalplaces']),
+				$BankRef,
 				$myrow['narrative'],
 				locale_number_format($RunningTotal,$_SESSION['CompanyRecord']['decimalplaces']),
-				$myrow['tagdescription']);
+				$myrow['tagdescription']
+				);
 
 	}
 
