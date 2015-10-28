@@ -1,4 +1,6 @@
 webERP Change Log
+
+28/10/15 Exson: Add bank default currency, original amount and check no data to GL account inquiry in GLAccountInquiry.php.
 06/10/15 UK-Steven: Contribute email customer statements feature scripts.
 06/10/15 Exson: Fixed the wrong unable to identify the selected customer warning at SelectOrderItems.php.
 23/09/2015 Tim: ADD invoice to grns mapping data in SupplierInvoice.php. 
