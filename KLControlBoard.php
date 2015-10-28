@@ -54,15 +54,14 @@ if ($KL_SystemAdmin
 * SPG PERFORMANCE         
 ***************************************************************************************/
 
-if ($KL_SystemAdmin 
-	OR $KL_PurchasingManager
-	OR $KL_SalesManager
-	OR $KL_KantorManager){
+if ($KL_PurchasingManager
+	OR $KL_SalesManager){
 	SPGNotReportingSalesInDays(2, $db);
 }
 
 if ($KL_SystemAdmin
-	OR $KL_PurchasingManager
+	OR $KL_SalesManager
+	OR $KL_ShopSupportManager
 	OR $KL_KantorManager){
 	SplittedPaymentsBySPG(15, 2, $db);
 }
@@ -85,8 +84,7 @@ if ($KL_PurchasingManager
 /***************************************************************************************
 * STANDARD COST         
 ***************************************************************************************/
-if ($KL_SystemAdmin
-	OR $KL_PurchasingTeam){
+if ($KL_PurchasingTeam){
 	ItemsWithoutStandardCost($RootPath, $db);
 }
 
@@ -122,8 +120,7 @@ if (($KL_SystemAdmin)){
 */
 
 if ($KL_PurchasingManager
-	OR $KL_ShopSupportTeam
-	OR $KL_KantorManager){
+	OR $KL_ShopSupportTeam){
 	
 	over_or_below_limit("Items changing price or moving category", "OVER", 50, $RootPath, $db);
 	over_or_below_limit("Items changing price", "OVER", 20, $RootPath, $db);
@@ -140,9 +137,7 @@ if ($KL_ShopSupportTeam){
 	ItemsMovingToDiscountDelayed(80, 4, $RootPath, $db);
 }
 
-if ($KL_SystemAdmin 
-	OR $KL_KantorManager
-	OR $KL_SalesManager 
+if ($KL_KantorManager
 	OR $KL_PurchasingManager){
 
 	ItemsChangingPriceDelayed(5, $RootPath, $db);
@@ -151,17 +146,19 @@ if ($KL_SystemAdmin
 	ItemsMovingToDiscountDelayed(80, 5, $RootPath, $db);
 }
 
-if ($KL_SystemAdmin 
-	OR $KL_PurchasingManager
-	OR $KL_KantorManager
-	OR $KL_SalesManager 
+if ($KL_PurchasingManager
 	OR $KL_PurchasingTeam 
-	OR $KL_ShopSupportTeam){
+	OR $KL_ShopSupportManager){
 	
 	DiscountedItemsOnNotOutletShops("DISC50", $RootPath, $db);
 	DiscountedItemsOnNotOutletShops("DISC80", $RootPath, $db);
 	NotDiscountedItemsOnOutLetShops($RootPath, $db);
-	
+}
+
+if ($KL_PurchasingManager
+	OR $KL_PurchasingTeam 
+	OR $KL_ShopSupportManager){	
+
 	DiscountedItemsWithWrongDiscount("DISC20", "20", $RootPath, $db);
 	DiscountedItemsWithWrongDiscount("DISC50", "50", $RootPath, $db);
 //	DiscountedItemsWithWrongDiscount("DISC80", "80", $RootPath, $db);
@@ -179,7 +176,6 @@ if ($KL_SystemAdmin){
 }
 
 if ($KL_SystemAdmin 
-	OR $KL_KantorManager
 	OR $KL_KantorAdministration){
 	
 	BalanceAccountControl("111111101",         0,   15000000, $periodnow, $db);
@@ -243,9 +239,8 @@ if ($KL_SystemAdmin){
 	ItemsNeedingAutomaticTranslation($RootPath, $db);
 }
 
-if ($KL_SystemAdmin
-	OR $KL_PurchasingManager
-	OR $KL_KantorManager){
+if ($KL_PurchasingTeam
+	OR $KL_PurchasingManager){
 	
 	ItemsNeedingTranslationRevision($RootPath, $db);
 }
@@ -283,15 +278,13 @@ if ($KL_PurchasingManager){
 	GoodsJustTransferred("SERSU", "KANTO", 2, 50, $RootPath, $db);
 	GoodsJustTransferred("SERDE", "KANTO", 2, 50, $RootPath, $db);
 	GoodsJustTransferred("SERVI", "KANTO", 2, 50, $RootPath, $db);
-//	GoodsJustTransferred("WABOM", "KANTO", 2, 50, $RootPath, $db);
 	
-	InsuficientStockForTopSalesItems("SILVER", "10-Silver",90, 100, 150, $RootPath, $db);
+/*	InsuficientStockForTopSalesItems("SILVER", "10-Silver",90, 100, 150, $RootPath, $db);
 	InsuficientStockForTopSalesItems("STAINL", "20-Stainless Steel", 90, 100, 150, $RootPath, $db);
 	InsuficientStockForTopSalesItems("FASHIO", "30-Fashion Jewellery", 90, 100, 150, $RootPath, $db);
 	InsuficientStockForTopSalesItems("ACCESO", "40-Accessories", 90, 100, 150, $RootPath, $db);
 	InsuficientStockForTopSalesItems("CONSIG", "50-Consignment", 60, 100, 30, $RootPath, $db);
-
-/*	ValueStockLocation("TOK66", 1000, 1200, 0, 0, $db);
+	ValueStockLocation("TOK66", 1000, 1200, 0, 0, $db);
 	ValueStockLocation("TOKSA", 1000, 1400, 0, 0, $db);
 	ValueStockLocation("TOKKS",  650,  750, 0, 0, $db);
 	ValueStockLocation("TOKJC",  900, 1100, 0, 0, $db);
@@ -303,12 +296,13 @@ if ($KL_PurchasingManager){
 */
 }
 
-if ($KL_PurchasingManager
-	OR $KL_SalesManager){
+if ($KL_PurchasingManager){
 	ItemsWithStockKantorButReorderLevelTokoZero($RootPath, $db);
 
 	ItemsWithStockKantorButRLZeroAt("DISC50", "TOKSU", $RootPath, $db);
 	ItemsWithStockKantorButRLZeroAt("DISC80", "TOKSU", $RootPath, $db);
+	ItemsWithStockKantorButRLZeroAt("DISC50", "TOKJC", $RootPath, $db);
+	ItemsWithStockKantorButRLZeroAt("DISC80", "TOKJC", $RootPath, $db);
 }
 	
 if ($KL_PurchasingManager){
@@ -329,7 +323,6 @@ if ($KL_PurchasingManager){
 
 
 if ($KL_KantorManager 
-	OR $KL_PurchasingManager
 	OR $KL_PurchasingTeam){
 
 	ConsumablesGoodsNotEnoughStock(50, 25, 75, $RootPath, $db);
@@ -352,29 +345,28 @@ if ($KL_SystemAdmin
 	OR $KL_PurchasingTeam){
 	ItemsWithoutPurchasingData($RootPath, $db);
 }
-if ($KL_PurchasingManager
-	OR $KL_PurchasingTeam){
+if ($KL_PurchasingManager){
 	ComponentsToObsolete(false, 0, $RootPath, $db);
 }
 
-if ($KL_SystemAdmin
-	OR $KL_PurchasingManager
+if ($KL_PurchasingManager
 	OR $KL_PurchasingTeam){
 	FlaggedAsObsoleteButStockAvailable($RootPath, $db);
 }
 
-if ($KL_PurchasingManager){
+if ($KL_PurchasingManager
+	OR $KL_PurchasingTeam
+	OR $KL_ShopSupportManager){
 	ItemsInKLProcessAndRLNotZero($RootPath, $db);
 }
 
-if ($KL_SystemAdmin 
-	OR $KL_KantorManager
-	OR $KL_PurchasingManager){
+if ($KL_PurchasingManager
+	OR $KL_PurchasingTeam
+	OR $KL_ShopSupportManager){
 	ItemsOnSpecialRequest($RootPath, $db);
 }
 
-if ($KL_SystemAdmin 
-	OR $KL_ShopSupportTeam
+if ($KL_ShopSupportTeam
 	OR $KL_PurchasingTeam){
 	PackagingItemsOnWrongLocation($RootPath, $db); // Works for both regular and outlet shop packaging
 }
@@ -392,13 +384,8 @@ if ($KL_PurchasingTeam){
 	InsuficientStockForShopPackaging('SHPACK', 21, 90, 30, true, $RootPath, $db); // Works for both regular and outlet shop packaging
 }
 
-if ($KL_SystemAdmin 
-	OR $KL_KantorManager){
-//	InsuficientStockForShopPackaging('ZAPON', 21, 60, 30, false, $RootPath, $db);
-}
-
-if ($KL_SystemAdmin 
-	OR $KL_KantorManager
+if ($KL_KantorManager
+	OR $KL_PurchasingManager
 	OR $KL_PurchasingTeam 
 	OR $KL_ShopSupportTeam){
 	
@@ -410,7 +397,7 @@ if ($KL_SystemAdmin
 if ($KL_PurchasingManager
 	OR $KL_SalesManager){
 
-	GoodSellingItemsInCategory("TESTSI", 15, 6, $RootPath, $db);
+/*	GoodSellingItemsInCategory("TESTSI", 15, 6, $RootPath, $db);
 	GoodSellingItemsInCategory("TESTSS", 15, 6, $RootPath, $db);
 	GoodSellingItemsInCategory("TESTFJ", 15, 6, $RootPath, $db);
 	GoodSellingItemsInCategory("TESTAC", 15, 6, $RootPath, $db);
@@ -419,7 +406,7 @@ if ($KL_PurchasingManager
 	GoodSellingItemsInCategory("NOPOSS", 15, 6, $RootPath, $db);
 	GoodSellingItemsInCategory("NOPOFJ", 15, 6, $RootPath, $db);
 	GoodSellingItemsInCategory("NOPOAC", 15, 6, $RootPath, $db);
-
+*/
 	ActiveItemsNoSales( 30, "TESTSI", $RootPath, $db);
 	ActiveItemsNoSales( 30, "TESTSS", $RootPath, $db);
 	ActiveItemsNoSales( 30, "TESTFJ", $RootPath, $db);
@@ -549,12 +536,14 @@ if ($KL_SystemAdmin
 	OutstandingOrders("Wholesale", "Quotation", $RootPath, $db);
 }
 
+/*
 if ($KL_SystemAdmin 
 	OR $KL_KantorManager
 	OR $KL_ShopSupportManager){ 
 	OutstandingOrders("Consignment", "Order", $RootPath, $db);
 	OutstandingOrders("Consignment", "Quotation", $RootPath, $db);
 }
+*/
 
 if ($KL_SystemAdmin){
 //	NewCustomers(2, $RootPath, $db);
@@ -600,15 +589,13 @@ if ($KL_ShopSupportTeam){
 }
 
 if ($KL_SystemAdmin 
-	OR $KL_PurchasingManager
 	OR $KL_KantorManager){
 	TransfersDelayed(4, $RootPath, $db);
 	ItemsCancelledInTransfers(3, $RootPath, $db);
 }
 
 if ($KL_SystemAdmin 
-	OR $KL_PurchasingManager
-	OR $KL_KantorManager){
+	OR $KL_PurchasingManager){
 	PettyCashBalance($db);
 	PettyCashToBeAuthorized($db);
 }

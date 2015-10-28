@@ -1407,6 +1407,10 @@ function ItemsWithoutRetailPrice($stockcat, $factorRetail, $RootPath, $db){
 			FROM stockmaster, stockcategory					
 			WHERE stockmaster.categoryid = stockcategory.categoryid					
 				AND stockmaster.discontinued = 0					
+				AND stockmaster.klchangingprice = 0
+				AND stockmaster.klmovingdiscount20 = 0
+				AND stockmaster.klmovingdiscount50 = 0
+				AND stockmaster.klmovingdiscount80 = 0
 				AND stockcategory.stocktype ='F' 		
 				AND stockmaster.categoryid = '". $stockcat ."'
 				AND NOT EXISTS (SELECT * 					
