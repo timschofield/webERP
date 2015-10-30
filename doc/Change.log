@@ -1,5 +1,6 @@
 webERP Change Log
 
+30/10/15 Exson: Allow user input supplier's delivery note during goods receiving and make the inquiry script for it. So users can search corresponding GRN, PO and invoice with it.  
 29/10/15 Exson: Add gl narrative and account balance information to DailyBankTransactions.php.
 28/10/15 Exson: Add bank default currency, original amount and check no data to GL account inquiry in GLAccountInquiry.php.
 06/10/15 UK-Steven: Contribute email customer statements feature scripts.
