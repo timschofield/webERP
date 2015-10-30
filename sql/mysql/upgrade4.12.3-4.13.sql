@@ -15,6 +15,7 @@ INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES
 CREATE TABLE `suppinvstogrn` (
   `suppinv` int(11) NOT NULL,
   `grnno` int(11) NOT NULL,
+  `supplierref` varchar(30) NOT NULL DEFAULT '',
   PRIMARY KEY (`suppinv`,`grnno`),
   KEY `suppinvstogrn_ibfk_2` (`grnno`),
   CONSTRAINT `suppinvstogrn_ibfk_1` FOREIGN KEY (`suppinv`) REFERENCES
@@ -23,5 +24,8 @@ CREATE TABLE `suppinvstogrn` (
 `grns` (`grnno`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 INSERT INTO scripts VALUES('EmailCustStatements.php','3','Email customer statement to customer');
+INSERT INTO scripts VALUES('SupplierGRNAndInvoiceInquiry.php',5,'Supplier\'s delivery note and grn relationship inquiry');
+ALTER table grns ADD supplierref varchar(30) NOT NULL DEFAULT '';
+
 -- Update version number:
 UPDATE config SET confvalue='4.13' WHERE confname='VersionNumber';

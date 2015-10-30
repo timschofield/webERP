@@ -95,7 +95,8 @@ if (isset($_POST['ModifyGRN'])){
 														$_SESSION['SuppTrans']->GRNs[$_POST['GRNNo'.$i]]->ShiptRef,
 														$_SESSION['SuppTrans']->GRNs[$_POST['GRNNo'.$i]]->JobRef,
 														$_SESSION['SuppTrans']->GRNs[$_POST['GRNNo'.$i]]->GLCode,
-														$Hold);
+														$Hold,
+														$_SESSION['SuppTrans']->GRNs[$_POST['GRNNo'.$i]]->SupplierRef);
 		}
 	}
 }
@@ -116,6 +117,7 @@ echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'
 		</tr>
 		<tr>
 			<th>' . _('Sequence') . ' #</th>
+			<th>' . _("Supplier's Ref") . '</th>
 			<th>' . _('Item Code') . '</th>
 			<th>' . _('Description') . '</th>
 			<th>' . _('Quantity Yet To Inv') . '</th>
@@ -137,6 +139,7 @@ foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){
 	
 	echo '<tr>
 			<td>' . $EnteredGRN->GRNNo . '</td>
+			<td>' . $EnteredGRN->SupplierRef . '</td>
 			<td>' . $EnteredGRN->ItemCode . '</td>
 			<td>' . $EnteredGRN->ItemDescription . '</td>
 			<td class="number">' . locale_number_format($EnteredGRN->QtyRecd - $EnteredGRN->Prev_QuantityInv,'Variable') . '</td>
@@ -177,6 +180,7 @@ $SQL = "SELECT grnbatch,
 				grns.qtyrecd,
 				grns.quantityinv,
 				grns.stdcostunit,
+				grns.supplierref,
 				purchorderdetails.glcode,
 				purchorderdetails.shiptref,
 				purchorderdetails.jobref,
@@ -235,7 +239,8 @@ if (!isset( $_SESSION['SuppTransTmp'])){
 														$myrow['assetid'],
 														0,
 														$myrow['decimalplaces'],
-														$myrow['grnbatch']);
+														$myrow['grnbatch'],
+														$myrow['supplierref']);
 		}
 	}
 }
@@ -253,6 +258,7 @@ if (!isset($_GET['Modify'])){
 						<th class="ascending">' . _('Select') . '</th>
 						<th class="ascending">' . _('Sequence') . ' #</th>
 						<th class="ascending">' . _('GRN Number') . '</th>
+						<th class="ascending">' . _('Supplier\'s Ref') . '</th>
 						<th class="ascending">' . _('Order') . '</th>
 						<th class="ascending">' . _('Item Code') . '</th>
 						<th class="ascending">' . _('Description') . '</th>
@@ -285,6 +291,7 @@ if (!isset($_GET['Modify'])){
 		}
 		echo '<td>' . $GRNTmp->GRNNo . '</td>
 			<td>' . $GRNTmp->GRNBatchNo . '</td>
+			<td>' . $GRNTmp->SupplierRef . '</td>
 			<td>' . $GRNTmp->PONo . '</td>
 			<td>' . $GRNTmp->ItemCode . '</td>
 			<td>' . $GRNTmp->ItemDescription . '</td>

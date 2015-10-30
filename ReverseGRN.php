@@ -39,6 +39,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 					grns.itemcode,
 					grns.itemdescription,
 					grns.deliverydate,
+					grns.supplierref,
 					purchorderdetails.glcode,
 					purchorderdetails.assetid,
 					grns.qtyrecd,
@@ -370,6 +371,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 						grns.itemcode,
 						grns.itemdescription,
 						grns.deliverydate,
+						grns.supplierref,
 						qtyrecd,
 						quantityinv,
 						qtyrecd-quantityinv AS qtytoreverse
@@ -393,6 +395,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 			$TableHeader = '<tr>
 								<th>' . _('GRN') . ' #</th>
 								<th>' . _('GRN Batch') . '</th>
+								<th>' . _('Supplier\' Ref') . '</th>
 								<th>' . _('Item Code') . '</th>
 								<th>' . _('Description') . '</th>
 								<th>' . _('Date') . '<br />' . _('Received') . '</th>
@@ -426,6 +429,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 						<td>%s</td>
 						<td>%s</td>
 						<td>%s</td>
+						<td>%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
@@ -433,6 +437,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 						</tr>',
 						$myrow['grnno'],
 						$myrow['grnbatch'],
+						$myrow['supplierref'],
 						$myrow['itemcode'],
 						$myrow['itemdescription'],
 						$DisplayDateDel,

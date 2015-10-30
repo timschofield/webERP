@@ -662,6 +662,8 @@ if (!isset($_POST['PostInvoice'])){
 			</tr>';
 		$tableheader = '<tr style="background-color:#800000">
 							<th>' . _('Seq') . ' #</th>
+							<th>' . _('GRN Batch') . '</th>
+							<th>' . _('Supplier Ref') . '</th>
 							<th>' . _('Item Code') . '</th>
 							<th>' . _('Description') . '</th>
 							<th>' . _('Quantity Charged') . '</th>
@@ -674,6 +676,8 @@ if (!isset($_POST['PostInvoice'])){
 
 			echo '<tr>
 					<td>' . $EnteredGRN->GRNNo . '</td>
+					<td>' . $EnteredGRN->GRNBatchNo . '</td>
+					<td>' . $EnteredGRN->SupplierRef . '</td>
 					<td>' . $EnteredGRN->ItemCode .	'</td>
 					<td>' . $EnteredGRN->ItemDescription . '</td>
 					<td class="number">' . locale_number_format($EnteredGRN->This_QuantityInv,$EnteredGRN->DecimalPlaces) . '</td>
@@ -1547,7 +1551,8 @@ then do the updates and inserts to process the invoice entered */
 			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, True);
 
 			$SQL = "INSERT INTO suppinvstogrn VALUES ('" . $InvoiceNo . "',
-                                                    			'" .$EnteredGRN->GRNNo . "')";
+									'" . $EnteredGRN->GRNNo . "',
+									'" . $EnteredGRN->SupplierRef . "')";
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The invoice could not be mapped to the
 					goods received record because');
 			$DbgMsg = _('The following SQL to map the invoice to the GRN was used');

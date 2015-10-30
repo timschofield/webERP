@@ -71,21 +71,40 @@ if ($_SESSION['PO'.$identifier]->Status != 'Printed') {
 
 echo '<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . _('Receive') . '" alt="" />' . ' ' . _('Receive Purchase Order') . ' : '. $_SESSION['PO'.$identifier]->OrderNo .' '. _('from'). ' ' . $_SESSION['PO'.$identifier]->SupplierName . '</p>';
-echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier=' . $identifier . '" method="post">';
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier=' . $identifier . '" id="form1" method="post">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (!isset($_POST['ProcessGoodsReceived'])) {
-	if (!isset($_POST['DefaultReceivedDate'])){
+	if (!isset($_POST['DefaultReceivedDate']) AND !isset($_SESSION['PO' . $identifier]->DefaultReceivedDate)){
 		/* This is meant to be the date the goods are received - it does not make sense to set this to the date that we requested delivery in the purchase order - I have not applied your change here Tim for this reason - let me know if I have it wrong - Phil */
 		$_POST['DefaultReceivedDate'] = Date($_SESSION['DefaultDateFormat']);
+		$_SESSION['PO' . $identifier]->DefaultReceivedDate = $_POST['DefaultReceivedDate'];
+	} else {
+		if (isset($_POST['DefaultReceivedDate']) AND is_date($_POST['DefaultReceivedDate'])) {
+			$_SESSION['PO' . $identifier]->DefaultReceivedDate = $_POST['DefaultReceivedDate'];
+		} elseif(isset($_POST['DefaultReceivedDate']) AND !is_date($_POST['DefaultReceivedDate'])) {
+			prnMsg(_('The default received date is not a date format'),'error');
+			$_POST['DefaultReceivedDate'] = Date($_SESSION['DefaultDateFormat']);
+		}
+	}
+	if (!isset($_POST['SupplierReference'])) {
+		$_POST['SupplierReference'] = '';
+	} else {
+		if (isset($_POST['SupplierReference']) AND mb_strlen(trim($_POST['SupplierReference']))>30) {
+			prnMsg(_('The supplier\'s delivery note no should not be more than 30 characters'),'error');
+		} else {
+			$_SESSION['PO' . $identifier]->SupplierReference = $_POST['SupplierReference'];
+		}
 	}
 
 	echo '<table class="selection">
 			<tr>
 				<td>' .  _('Date Goods/Service Received'). ':</td>
 				<td><input type="text" class="date" alt="'. $_SESSION['DefaultDateFormat'] .'" maxlength="10" size="10" onchange="return isDate(this, this.value, '."'".
-			$_SESSION['DefaultDateFormat']."'".')" name="DefaultReceivedDate" value="' . $_POST['DefaultReceivedDate'] . '" /></td>
+			$_SESSION['DefaultDateFormat']."'".')" name="DefaultReceivedDate" value="' . $_SESSION['PO' . $identifier]->DefaultReceivedDate . '" /></td>
+				<td>' . _("Supplier's Reference") . ':</td>
+				<td><input type="text" name="SupplierReference" value="' . $_SESSION['PO' . $identifier]->SupplierReference. '" maxlength="30" size="20"  onchange="ReloadForm(form1.Update)"/></td>
 			</tr>
 		</table>
 		<br />';
@@ -228,6 +247,17 @@ $DeliveryQuantityTooLarge = 0;
 $NegativesFound = false;
 $InputError = false;
 
+if (isset($_POST['DefaultReceivedDate']) AND !is_date($_POST['DefaultReceivedDate'])) {
+	$InputError = true;
+	prnMsg(_('The goods received date is not a date format'),'error');
+
+} else {
+}
+
+if (isset($_POST['SupplierReference']) AND mb_strlen(trim($_POST['SupplierReference']))>30) {
+	$InputError = true;
+	prnMsg(_('The delivery note of suppliers should not be more than 30 characters'),'error');
+}
 if (count($_SESSION['PO'.$identifier]->LineItems)>0){
 
 	foreach ($_SESSION['PO'.$identifier]->LineItems as $OrderLine) {
@@ -474,7 +504,8 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 									deliverydate,
 									qtyrecd,
 									supplierid,
-									stdcostunit)
+									stdcostunit,
+									supplierref)
 							VALUES ('" . $GRN . "',
 								'" . $OrderLine->PODetailRec . "',
 								'" . $OrderLine->StockID . "',
@@ -482,7 +513,8 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 								'" . $_POST['DefaultReceivedDate'] . "',
 								'" . $OrderLine->ReceiveQty . "',
 								'" . $_SESSION['PO'.$identifier]->SupplierID . "',
-								'" . $CurrentStandardCost . "')";
+								'" . $CurrentStandardCost . "',
+								'" . trim($_POST['SupplierReference']) ."')";
 
 			$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('A GRN record could not be inserted') . '. ' . _('This receipt of goods has not been processed because');
 			$DbgMsg =  _('The following SQL to insert the GRN record was used');

@@ -36,6 +36,7 @@ Class SuppTrans {
 	var $TaxGroupDescription;
 	var $Taxes;
 	var $Hold;
+	var $SupplierRef='';
 
 	function SuppTrans(){
 	/*Constructor function initialises a new Supplier Transaction object */
@@ -102,7 +103,8 @@ Class SuppTrans {
 								$AssetID=0,
 								$Hold=0,
 								$DecimalPlaces=2,
-								$GRNBatchNo){
+								$GRNBatchNo,
+								$SupplierRef){
 
 		if ($This_QuantityInv!=0 AND isset($This_QuantityInv)){
 			$this->GRNs[$GRNNo] = new GRNs($GRNNo,
@@ -123,7 +125,8 @@ Class SuppTrans {
 											$AssetID,
 											$Hold,
 											$DecimalPlaces,
-											$GRNBatchNo);
+											$GRNBatchNo,
+											$SupplierRef);
 			Return 1;
 		}
 		Return 0;
@@ -143,7 +146,8 @@ Class SuppTrans {
 									$ShiptRef,
 									$JobRef,
 									$GLCode,
-									$Hold){
+									$Hold,
+									$SupplierRef){
 
 		if ($This_QuantityInv!=0 AND isset($This_QuantityInv)){
 			$this->GRNs[$GRNNo]->Modify($PODetailItem,
@@ -159,7 +163,8 @@ Class SuppTrans {
 										$ShiptRef,
 										$JobRef,
 										$GLCode,
-										$Hold );
+										$Hold,
+								       		$SupplierRef);
 			Return 1;
 		}
 		Return 0;
@@ -186,7 +191,8 @@ Class SuppTrans {
 													$GRNSrc->AssetID,
 													$GRNSrc->Hold,
 													$GRNSrc->DecimalPlaces,
-													$GRNSrc->GRNBatchNo);
+													$GRNSrc->GRNBatchNo,
+													$GRNSrc->SupplierRef);
 			Return 1;
 		}
 		Return 0;
@@ -325,6 +331,7 @@ all the info to do the necessary entries without looking up ie additional querie
 	var $AssetID;
 	var $DecimalPlaces;
 	var $GRNBatchNo;
+	var $SupplierRef;
 
 	function GRNs ($GRNNo,
 					$PODetailItem,
@@ -344,7 +351,8 @@ all the info to do the necessary entries without looking up ie additional querie
 					$AssetID,
 					$Hold=0,
 					$DecimalPlaces=2,
-					$GRNBatchNo){
+					$GRNBatchNo,
+					$SupplierRef=''){
 
 
 
@@ -368,6 +376,7 @@ all the info to do the necessary entries without looking up ie additional querie
 		$this->Hold = $Hold;
 		$this->DecimalPlaces = $DecimalPlaces;
 		$this->GRNBatchNo = $GRNBatchNo;
+		$this->SupplierRef = $SupplierRef;
 	}
 
 	function Modify ($PODetailItem,
@@ -383,7 +392,8 @@ all the info to do the necessary entries without looking up ie additional querie
 					$ShiptRef,
 					$JobRef,
 					$GLCode,
-					$Hold){
+					$Hold,
+					$SupplierRef){
 
 	/* Modify function to edit a GRNs object with passed params */
 		$this->PODetailItem = $PODetailItem;
@@ -400,6 +410,7 @@ all the info to do the necessary entries without looking up ie additional querie
 		$this->JobRef = $JobRef;
 		$this->Hold = $Hold;
 		$this->GLCode = $GLCode;
+		$this->SupplierRef = $SupplierRef;
 	}
 }
 
