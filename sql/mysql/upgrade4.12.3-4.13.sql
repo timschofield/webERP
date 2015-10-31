@@ -15,7 +15,6 @@ INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES
 CREATE TABLE `suppinvstogrn` (
   `suppinv` int(11) NOT NULL,
   `grnno` int(11) NOT NULL,
-  `supplierref` varchar(30) NOT NULL DEFAULT '',
   PRIMARY KEY (`suppinv`,`grnno`),
   KEY `suppinvstogrn_ibfk_2` (`grnno`),
   CONSTRAINT `suppinvstogrn_ibfk_1` FOREIGN KEY (`suppinv`) REFERENCES

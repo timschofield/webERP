@@ -97,6 +97,7 @@ if (!isset($_POST['ProcessGoodsReceived'])) {
 			$_SESSION['PO' . $identifier]->SupplierReference = $_POST['SupplierReference'];
 		}
 	}
+	$SupplierReference = isset($_SESSION['PO' . $identifier]->SupplierReference)? $_SESSION['PO' . $identifier]->SupplierReference: $_POST['SupplierReference'];
 
 	echo '<table class="selection">
 			<tr>
@@ -104,7 +105,7 @@ if (!isset($_POST['ProcessGoodsReceived'])) {
 				<td><input type="text" class="date" alt="'. $_SESSION['DefaultDateFormat'] .'" maxlength="10" size="10" onchange="return isDate(this, this.value, '."'".
 			$_SESSION['DefaultDateFormat']."'".')" name="DefaultReceivedDate" value="' . $_SESSION['PO' . $identifier]->DefaultReceivedDate . '" /></td>
 				<td>' . _("Supplier's Reference") . ':</td>
-				<td><input type="text" name="SupplierReference" value="' . $_SESSION['PO' . $identifier]->SupplierReference. '" maxlength="30" size="20"  onchange="ReloadForm(form1.Update)"/></td>
+				<td><input type="text" name="SupplierReference" value="' . $SupplierReference. '" maxlength="30" size="20"  onchange="ReloadForm(form1.Update)"/></td>
 			</tr>
 		</table>
 		<br />';
@@ -251,7 +252,6 @@ if (isset($_POST['DefaultReceivedDate']) AND !is_date($_POST['DefaultReceivedDat
 	$InputError = true;
 	prnMsg(_('The goods received date is not a date format'),'error');
 
-} else {
 }
 
 if (isset($_POST['SupplierReference']) AND mb_strlen(trim($_POST['SupplierReference']))>30) {

@@ -35,15 +35,16 @@ echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'
 	
 echo '<table class="selection">
 	<tr>
-	<td class="label">' . _('Part of Supplier\'s Delivery Note') . ':</td><td><input type="text" name="SupplierRef" value="' . $_POST['SupplierRef'] . '" size="20" maxlength="30" ></td>
-	<td class="label">' . _('GRN No') . ':</td><td><input type="text" name="GRNBatchNo" value="' . $_POST['GRNBatchNo'] . '" size="6" maxlength="6" /></td>
-	<td class="label">' . _('Invoice No') . ':</td><td><input type="text" name="InvoiceNo" value="' . $_POST['InvoiceNo'] . '" size="11" maxlength="11" /></td>
+		<td class="label">' . _('Part of Supplier\'s Delivery Note') . ':</td>
+		<td><input type="text" name="SupplierRef" value="' . $_POST['SupplierRef'] . '" size="20" maxlength="30" ></td>
+		<td class="label">' . _('GRN No') . ':</td><td><input type="text" name="GRNBatchNo" value="' . $_POST['GRNBatchNo'] . '" size="6" maxlength="6" /></td>
+		<td class="label">' . _('Invoice No') . ':</td><td><input type="text" name="InvoiceNo" value="' . $_POST['InvoiceNo'] . '" size="11" maxlength="11" /></td>
 	
 	</tr>
 	</table>';
 echo '<div class="center">
 		<input type="submit" name="Submit" value="' . _('Submit') . '" />
-		</div>';
+	</div>';
 if (isset($_POST['Submit'])) {
 	$Where = '';
 	if (isset($_POST['SupplierRef']) AND trim($_POST['SupplierRef']) != '') {
@@ -82,10 +83,11 @@ if (isset($_POST['Submit'])) {
 				echo '<tr class="OddTableRows">';
 				$k = 0;
 			}
-			echo '<td class="ascending">' . $myrow['supplierref'] . '</td>
-				<td class="ascending"><a href="' . $RootPath .'/PDFGrn.php?GRNNo=' . $myrow['grnbatch'] . '&amp;PONo=' . $myrow['orderno'] . '">' . $myrow['grnbatch']. '</td>
-				<td class="ascending">' . $myrow['orderno'] . '</td>
-				<td class="ascending">' . $myrow['suppinv'] . '</td></tr>';
+				echo '<td class="ascending">' . $myrow['supplierref'] . '</td>
+					<td class="ascending"><a href="' . $RootPath .'/PDFGrn.php?GRNNo=' . $myrow['grnbatch'] . '&amp;PONo=' . $myrow['orderno'] . '">' . $myrow['grnbatch']. '</td>
+					<td class="ascending">' . $myrow['orderno'] . '</td>
+					<td class="ascending">' . $myrow['suppinv'] . '</td>
+				</tr>';
 
 		}
 		echo '</table><br/>';
