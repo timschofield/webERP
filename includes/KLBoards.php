@@ -2360,6 +2360,7 @@ No pending transfer regarding this item
 				AND stockcategory.stocktype = 'F'
 				AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_SHOP_DISPLAYS . "
 				AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_SHOP_CONSUMABLES . "
+				AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_SETUP . "
 				AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_OLD . "
 			ORDER BY stockid";
 
