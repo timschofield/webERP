@@ -502,6 +502,10 @@ if ($KL_PurchasingManager
 /***************************************************************************************
 * PO, Sales Orders         
 ***************************************************************************************/
+if ($KL_SystemAdmin){
+	PurchasingOrdersDeliveryControl("Coming Soon", 15, $RootPath, $db);
+}
+
 
 if ($KL_PurchasingManager
 	OR $KL_PurchasingTeam){

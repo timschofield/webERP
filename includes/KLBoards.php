@@ -3420,7 +3420,10 @@ function PurchasingOrdersDeliveryControl($reason, $maxdays, $RootPath, $db){
 				purchorders.allowprint,
 				suppliers.currcode,
 				currencies.decimalplaces AS currdecimalplaces,
-				SUM(purchorderdetails.unitprice*purchorderdetails.quantityord) AS ordervalue
+				SUM(purchorderdetails.unitprice*purchorderdetails.quantityord) AS ordervalue,
+				(SELECT SUM(supptrans.ovamount + supptrans.ovgst - supptrans.alloc)
+					FROM supptrans
+					WHERE suppliers.supplierid = supptrans.supplierno)AS balance
 			FROM purchorders INNER JOIN purchorderdetails
 				ON purchorders.orderno = purchorderdetails.orderno
 			INNER JOIN suppliers 
@@ -3456,6 +3459,10 @@ function PurchasingOrdersDeliveryControl($reason, $maxdays, $RootPath, $db){
 							<th class="ascending">' . _('Order Date') . '</th>
 							<th class="ascending">' . _('Delivery Date') . '</th>
 							<th class="ascending">' . _('Supplier') . '</th>
+							<th class="ascending">' . _('Order Value') . '</th>
+							<th class="ascending">' . _('Deposit') . '</th>
+							<th class="ascending">' . _('Remaining') . '</th>
+							<th class="ascending">' . _('Currency') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -3468,12 +3475,20 @@ function PurchasingOrdersDeliveryControl($reason, $maxdays, $RootPath, $db){
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
 					</tr>', 
 					$i, 
 					$CodeLink, 
 					ConvertSQLDate($myrow['orddate']), 
 					ConvertSQLDate($myrow['deliverydate']), 
-					$myrow['suppname']
+					$myrow['suppname'],
+					locale_number_format($myrow['ordervalue'],0),
+					locale_number_format($myrow['balance'],0),
+					locale_number_format($myrow['ordervalue']+$myrow['balance'],0),
+					$myrow['currcode']
 					);
 			$i++;
 		}
