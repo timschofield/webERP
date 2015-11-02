@@ -117,6 +117,11 @@ if ($KL_SystemAdmin){
 	ComponentsToObsolete(false, 0, $RootPath, $db);
 }
 
+if ($KL_SystemAdmin){
+	PurchasingOrdersDeliveryControl("Delayed", 0, $RootPath, $db);
+	PurchasingOrdersDeliveryControl("Coming Soon", 30, $RootPath, $db);
+}
+
 // RetailTypePayments("Shop",180, $db);
 
 RetailTypePayments("SPG",180, $db);

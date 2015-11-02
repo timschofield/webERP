@@ -3423,7 +3423,7 @@ function PurchasingOrdersDeliveryControl($reason, $maxdays, $RootPath, $db){
 				SUM(purchorderdetails.unitprice*purchorderdetails.quantityord) AS ordervalue,
 				(SELECT SUM(supptrans.ovamount + supptrans.ovgst - supptrans.alloc)
 					FROM supptrans
-					WHERE suppliers.supplierid = supptrans.supplierno)AS balance
+					WHERE suppliers.supplierid = supptrans.supplierno) AS balance
 			FROM purchorders INNER JOIN purchorderdetails
 				ON purchorders.orderno = purchorderdetails.orderno
 			INNER JOIN suppliers 
@@ -3442,7 +3442,8 @@ function PurchasingOrdersDeliveryControl($reason, $maxdays, $RootPath, $db){
 				purchorders.requisitionno,
 				purchorders.allowprint,
 				suppliers.currcode,
-				currencies.decimalplaces";
+				currencies.decimalplaces
+			ORDER BY purchorders.deliverydate ASC";
 	
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
