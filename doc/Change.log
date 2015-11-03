@@ -1,4 +1,6 @@
 webERP Change Log
+
+3/11/15 Exson: Tidy code up in StockClone.php.
 3/11/15 Exson: Fixed typo in PriceMatrix.php.
 30/10/15 Exson: Allow user input supplier's delivery note during goods receiving and make the inquiry script for it. So users can search corresponding GRN, PO and invoice with it.  
 29/10/15 Exson: Add gl narrative and account balance information to DailyBankTransactions.php.
