@@ -1,5 +1,6 @@
 webERP Change Log
 
+3/11/15 RChacon: In GLAccountInquiry.php, add ViewTopic and BookMark, fix some colspan, and add thead and column classes.
 3/11/15 Exson: Tidy code up in StockClone.php.
 3/11/15 Exson: Fixed typo in PriceMatrix.php.
 30/10/15 Exson: Allow user input supplier's delivery note during goods receiving and make the inquiry script for it. So users can search corresponding GRN, PO and invoice with it.  
