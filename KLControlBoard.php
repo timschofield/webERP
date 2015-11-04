@@ -59,8 +59,7 @@ if ($KL_PurchasingManager
 	SPGNotReportingSalesInDays(2, $db);
 }
 
-if ($KL_SystemAdmin
-	OR $KL_SalesManager
+if ($KL_SalesManager
 	OR $KL_ShopSupportManager
 	OR $KL_KantorManager){
 	SplittedPaymentsBySPG(15, 2, $db);
@@ -510,7 +509,7 @@ if ($KL_PurchasingManager
 	WrongItemsOnPurchaseOrders($RootPath, $db);
 	
 	PurchasingOrdersDeliveryControl("Delayed", 0, $RootPath, $db);
-	PurchasingOrdersDeliveryControl("Coming Soon", 7, $RootPath, $db);
+	PurchasingOrdersDeliveryControl("Coming Soon", 15, $RootPath, $db);
 }
 
 
