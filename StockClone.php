@@ -510,7 +510,7 @@ if (isset($_POST['submit'])) {
 						prnMsg( _('New cloned Item') .' ' . '<a href="SelectProduct.php?StockID=' . $_POST['StockID'] . '">' . $_POST['StockID'] . '</a> '. _('has been added to the database') .
 							'<br />' . _('We also attempted to setup item purchase data and pricing.'));
 
-                            if (!empty($NoPricingData))
+                            if (isset($NoPricingData))
                             {
                                 prnMsg(_('There is no pricing data to clone. Use the following link to add pricing.'));
                             }
