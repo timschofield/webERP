@@ -30,8 +30,8 @@ $periodnow=GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
 if ($KL_SystemAdmin 
 	OR $KL_PurchasingManager){
 	
-	PricesNotUpdatedinXDays(365*2, 15, $RootPath, $db);
-	PricesNotUpdatedinXDays(365  , 10, $RootPath, $db);
+//	PricesNotUpdatedinXDays(365*2, 15, $RootPath, $db);
+//	PricesNotUpdatedinXDays(365  , 10, $RootPath, $db);
 
 	ItemsWithoutRetailPrice("SETUP", 4.75, $RootPath, $db);
 
