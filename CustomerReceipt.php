@@ -264,18 +264,24 @@ if (isset($_POST['CommitBatch'])){
 	$CustomerReceiptCounter=1; //Count lines of customer receipts in this batch
 
 	echo '<br />
-		<p class="page_title_text">
-			<img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . _('Allocate') . '" alt="" />' . ' ' . _('Summary of Receipt Batch').'
-		</p>
-		<br />
+		<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+			'/images/money_add.png" title="',// Icon image.
+			_('Summary of Receipt Batch'), '" /> ',// Icon title.
+			_('Summary of Receipt Batch'), '</p>',// Page title.
+		'<br />
 		<table class="selection">
+		<thead>
 			<tr>
-				<th>' . _('Batch Number') . '</th>
-				<th>' . _('Date Banked') . '</th>
-				<th>' . _('Customer Name') . '</th>
-				<th>' . _('GL Code') . '</th>
-				<th>' . _('Amount of Receipt') . '</th>
-			</tr>';
+				<th>', _('Batch Number'), '</th>
+				<th>', _('Date Banked'), '</th>
+				<th>', _('Customer Name'), '</th>
+				<th class="text">', _('GL Code'), '</th>
+				<th class="number">', _('Amount of Receipt'), '</th>';
+	if($ReceiptItem->GLCode =='') {
+		echo '<th class="noprint">&nbsp;</th>';
+	}
+	echo '</tr>
+		</thead><tbody>';
 
 	foreach ($_SESSION['ReceiptBatch']->Items as $ReceiptItem) {
 
@@ -291,14 +297,14 @@ if (isset($_POST['CommitBatch'])){
 		$Result=DB_query($SQL);
 		$myrow=DB_fetch_array($Result);
 
-		echo '<td>' . $_SESSION['ReceiptBatch']->BatchNo . '</td>
-				<td>' . $_SESSION['ReceiptBatch']->DateBanked . '</td>
-				<td>' . $ReceiptItem->CustomerName . '</td>
-				<td>' . $ReceiptItem->GLCode.' - '.$myrow['accountname'] . '</td>
-				<td class="number">' . locale_number_format($ReceiptItem->Amount/$_SESSION['ReceiptBatch']->ExRate/$_SESSION['ReceiptBatch']->FunctionalExRate,$_SESSION['ReceiptBatch']->CurrDecimalPlaces)  . '</td>';
+		echo '<td>', $_SESSION['ReceiptBatch']->BatchNo, '</td>
+			<td>', $_SESSION['ReceiptBatch']->DateBanked, '</td>
+			<td>', $ReceiptItem->CustomerName, '</td>
+			<td class="text">', $ReceiptItem->GLCode, ' - ', $myrow['accountname'], '</td>
+			<td class="number">', locale_number_format($ReceiptItem->Amount/$_SESSION['ReceiptBatch']->ExRate/$_SESSION['ReceiptBatch']->FunctionalExRate,$_SESSION['ReceiptBatch']->CurrDecimalPlaces), '</td>';
 
 		if ($ReceiptItem->GLCode ==''){
-			echo '<td><a target="_blank"  href="' . $RootPath . '/PDFReceipt.php?BatchNumber=' . $_SESSION['ReceiptBatch']->BatchNo. '&ReceiptNumber='.$CustomerReceiptCounter.'">' . _('Print a Customer Receipt') . '</a></td></tr>';
+			echo '<td class="noprint"><a target="_blank" href="', $RootPath, '/PDFReceipt.php?BatchNumber=', $_SESSION['ReceiptBatch']->BatchNo, '&ReceiptNumber=', $CustomerReceiptCounter, '">', _('Print a Customer Receipt'), '</a></td></tr>';
 			$CustomerReceiptCounter += 1;
 		}
 
@@ -463,7 +469,7 @@ if (isset($_POST['CommitBatch'])){
 		$BatchReceiptsTotal += ($ReceiptItem->Amount/$_SESSION['ReceiptBatch']->ExRate/$_SESSION['ReceiptBatch']->FunctionalExRate);
 
 	} /*end foreach $ReceiptItem */
-	echo '</table>';
+	echo '</tbody></table>';
 
 	/*now enter the BankTrans entry */
 
@@ -576,10 +582,11 @@ if (isset($_POST['CommitBatch'])){
 	echo '<br />';
 	prnMsg( _('Receipt batch') . ' ' . $_SESSION['ReceiptBatch']->BatchNo . ' ' . _('has been successfully entered into the database'),'success');
 
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . '<a href="' . $RootPath . '/PDFBankingSummary.php?BatchNo=' . $_SESSION['ReceiptBatch']->BatchNo . '">' . _('Print PDF Batch Summary') . '</a></p>';
+	echo '<div class="centre noprint">',
+		'<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . '<a href="' . $RootPath . '/PDFBankingSummary.php?BatchNo=' . $_SESSION['ReceiptBatch']->BatchNo . '">' . _('Print PDF Batch Summary') . '</a></p>';
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/allocation.png" title="' . _('Allocate') . '" alt="" />' . ' ' . '<a href="' . $RootPath . '/CustomerAllocations.php">' . _('Allocate Receipts') . '</a></p>';
-	echo '<p class="page_title_text"><a href="' . $RootPath . '/CustomerReceipt.php?NewReceipt=Yes&Type=Customer">' . _('Enter Receipts') . '</a>
-		</p>';
+	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/transactions.png" title="', _('Enter Receipts'), '" /> ', '<a href="', $RootPath, '/CustomerReceipt.php?NewReceipt=Yes&Type=Customer">', _('Enter Receipts'), '</a></p>',
+		'</div>';
 
 	unset($_SESSION['ReceiptBatch']);
 	include('includes/footer.inc');

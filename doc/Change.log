@@ -1,5 +1,6 @@
 webERP Change Log
 
+09/11/15 RChacon: In CustomerReceipt.php, minor changes (completes table columns, adds classes, etc.).
 05/11/15 Exson: Tidy code up following Tim's suggestion. 
 3/11/15 RChacon: In GLAccountInquiry.php, add ViewTopic and BookMark, fix some colspan, and add thead and column classes.
 3/11/15 Exson: Tidy code up in StockClone.php.
