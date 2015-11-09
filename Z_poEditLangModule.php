@@ -1,20 +1,14 @@
 <?php
 /* $Id$ */
 
-/* Steve Kitchen */
-
-/* This code is really ugly ... */
-
-//$PageSecurity = 15;
-
 include ('includes/session.inc');
 $Title = _('Edit Module');// _('Edit a Language File Module')
 $ViewTopic = "SpecialUtilities";
 $BookMark = "Z_poEditLangModule";// Anchor's id in the manual's html document.
 include('includes/header.inc');
-echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme . 
-		'/images/maintenance.png" title="' . 
-		_('Edit a Language File Module') . '" />' . ' ' . 
+echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
+		'/images/maintenance.png" title="' .
+		_('Edit a Language File Module') . '" />' . ' ' .
 		_('Edit a Language File Module') . '</p>';
 
 /* Your webserver user MUST have read/write access to here,	otherwise you'll be wasting your time */
@@ -31,21 +25,25 @@ $PathToNewLanguage	= './locale/' . $_SESSION['Language'] . '/LC_MESSAGES/message
 if (isset($_POST['ReMergePO'])){
 
 /*update the messages.po file with any new strings */
-
+	if (!function_exists('msgmerge')) {
+		prnMsg(_('The gettext utilities must be present on your server for these language utilities to work'),'error');
+		exit;
+	} else {
 /*first rebuild the en_GB default with xgettext */
 
-	$PathToDefault = './locale/en_GB.utf8/LC_MESSAGES/messages.po';
-	$FilesToInclude	= '*php includes/*.php includes/*.inc';
-	$xgettextCmd		= 'xgettext --no-wrap -L php -o ' . $PathToDefault . ' ' . $FilesToInclude;
+		$PathToDefault = './locale/en_GB.utf8/LC_MESSAGES/messages.po';
+		$FilesToInclude	= '*php includes/*.php includes/*.inc';
+		$xgettextCmd		= 'xgettext --no-wrap -L php -o ' . $PathToDefault . ' ' . $FilesToInclude;
 
-	system($xgettextCmd);
-/*now merge the translated file with the new template to get new strings*/
+		system($xgettextCmd);
+	/*now merge the translated file with the new template to get new strings*/
 
-	$msgMergeCmd = 'msgmerge --no-wrap --update ' . $PathToLanguage . ' ' . $PathToDefault;
+		$msgMergeCmd = 'msgmerge --no-wrap --update ' . $PathToLanguage . ' ' . $PathToDefault;
 
-	system($msgMergeCmd);
-	//$Result = rename($PathToNewLanguage, $PathToLanguage);
-	exit;
+		system($msgMergeCmd);
+		//$Result = rename($PathToNewLanguage, $PathToLanguage);
+		exit;
+	}
 }
 
 if (isset($_POST['module'])) {
@@ -62,7 +60,7 @@ if (isset($_POST['module'])) {
     // save the modifications
 
 		echo '<br /><table><tr><td>';
-		echo '<form method="post" action=' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' . SID . '>';
+		echo '<form method="post" action=' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
     /* write the new language file */
@@ -107,7 +105,7 @@ if (isset($_POST['module'])) {
     /* now we need to parse the resulting array into something we can show the user */
 
 		$j = 1;
-
+		$AlsoIn = array();
 		for ($i=17; $i<=$LangFileEntries; $i++) {			/* start at line 18 to skip the header */
 			if (mb_substr($LangFile[$i], 0, 2) == '#:') {		/* it's a module reference */
 				$AlsoIn[$j] .= str_replace(' ','<br />', mb_substr($LangFile[$i],3)) . '<br />';
@@ -128,14 +126,21 @@ if (isset($_POST['module'])) {
 		echo '<br />';
 		prnMsg (_('Your existing translation file (messages.po) will be saved as messages.po.old') . '<br />', 'info', _('PLEASE NOTE'));
 		echo '<br />';
-		echo '<form method="post" action=' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' . SID . '>';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-		echo '</div';
-		echo '<table>';
-		echo '<tr><th align="center">' . _('Language File for') . ' "' . $_POST['language'] . '"</th></tr>';
-		echo '<tr><td align="center">' . _('Module') . ' "' . $_POST['module'] . '"</td></tr>';
-		echo '<tr><td></td></tr>';
-		echo '<tr><td>';
+		echo '<form method="post" action=' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '>
+				<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+				</div>
+				<table>
+					<tr>
+						<th align="center">' . _('Language File for') . ' "' . $_POST['language'] . '"</th>
+					</tr>
+					<tr>
+						<th align="center">' . _('Module') . ' "' . $_POST['module'] . '"</th>
+					</tr>
+					<tr>
+						<td></td>
+					</tr>
+					<tr>
+						<td>';
 
 		echo '<table width="100%">';
 		echo '<tr>';
@@ -162,7 +167,7 @@ if (isset($_POST['module'])) {
 
 		}
 
-		echo '</table>';
+		echo '</td></table>';
 
 		echo '</td></tr>';
 		echo '</table>';
