@@ -485,6 +485,20 @@ $MenuItems['GL']['Reports']['Caption'] = array(	_('Trial Balance'),
 												_('Balance Sheet for Kapal-Laut'),
 												_('Balance Sheet for CV. Merta Bali'),
 												_('Balance Sheet for PT. Bumi Biru'),
+												_('Horizontal Analysis of Statement of Comprehensive Income'),
+												_('Horizontal Analysis of Statement of Financial Position'),
+												_('Tag Reports'),
+												_('Tax Reports'));
+
+$MenuItems['GL']['Reports']['URL'] = array(	'/GLTrialBalance.php',
+											'/SelectGLAccount.php',
+											'/GLAccountReport.php',
+											'/GLAccountCSV.php',
+											'/GLJournalInquiry.php',
+											'/BankReconciliation.php',
+											'/PDFChequeListing.php',
+											'/DailyBankTransactions.php',
+											'/GLProfit_Loss.php',
 												_('Tag Reports'),
 												_('Tax Reports'));
 
@@ -505,6 +519,14 @@ $MenuItems['GL']['Reports']['URL'] = array(	'/GLTrialBalance.php',
 											'/KLGLBalanceSheetM.php',
 											'/KLGLBalanceSheetCV.php',
 											'/KLGLBalanceSheetPT.php',
+											'/AnalysisHorizontalIncome.php',
+											'/AnalysisHorizontalPosition.php',
+											'/GLTagProfit_Loss.php',
+											'/Tax.php');
+
+$MenuItems['GL']['Maintenance']['Caption'] = array(	_('Account Sections'),
+													_('Account Groups'),
+													_('GL Accounts'),
 											'/GLTagProfit_Loss.php',
 											'/Tax.php');
 

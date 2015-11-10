@@ -547,7 +547,7 @@ if (isset($_POST['submit'])) {
 						prnMsg( _('New cloned Item') .' ' . '<a href="SelectProduct.php?StockID=' . $_POST['StockID'] . '">' . $_POST['StockID'] . '</a> '. _('has been added to the database') .
 							'<br />' . _('We also attempted to setup item purchase data and pricing.'));
 
-                            if ($NoPricingData==1)
+                            if (isset($NoPricingData))
                             {
                                 prnMsg(_('There is no pricing data to clone. Use the following link to add pricing.'));
                             }
@@ -618,12 +618,11 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 	<input type="hidden" name="New" value="'.$_POST['New'].'" />
 	<table class="selection">';
 
-if ($_POST['StockID'] == '' || ($_POST['StockID'] == $_POST['OldStockID']) || isset($_POST['UpdateCategories'])) {
+if (empty($_POST['StockID']) || (isset($_POST['StockID']) AND $_POST['StockID'] == $_POST['OldStockID']) || isset($_POST['UpdateCategories'])) {
 
 /*If the page was called without $StockID or empty $StockID  then a new cloned stock item is to be entered. Show a form with a part Code field,
   otherwise show form for editing with only a hidden OldStockID field. */
 
-	//if ($_POST['New']==1) {
 	    $StockIDStyle= !empty($_POST['StockID'])  && ($_POST['StockID'] != $_POST['OldStockID'])? '' : ' style="color:red;border: 2px solid red;background-color:#fddbdb;" ';
 	    $StockID= !empty($_POST['StockID'])? $_POST['StockID']:$_POST['OldStockID'];
 		echo '<tr>
@@ -633,7 +632,6 @@ if ($_POST['StockID'] == '' || ($_POST['StockID'] == $_POST['OldStockID']) || is
 				</td>
 
 			</tr>';
-	//}
 
 }
 if ( (!isset($_POST['UpdateCategories']) AND ($InputError!=1))  OR $_POST['New']== 1 ) { // Must be modifying an existing item and no changes made yet
@@ -727,12 +725,14 @@ if ( (!isset($_POST['UpdateCategories']) AND ($InputError!=1))  OR $_POST['New']
         if ($LanguageId!=''){
             //unfortunately cannot have points in POST variables so have to mess with the language id
             $PostVariableName = 'Description_' . str_replace('.','_',$LanguageId);
+	    $LongDescriptionTranslated = 'LongDescription_' . str_replace('.','_',$LanguageId);
             if (!isset($_POST[$PostVariableName])){
                 $_POST[$PostVariableName] ='';
             }
             echo '<tr>
                 <td>' . $LanguagesArray[$LanguageId]['LanguageName'] . ' ' . _('Description') . ':</td>
                 <td><input type="text" name="'. $PostVariableName . '" size="52" maxlength="50" value="' . $_POST[$PostVariableName] . '" /></td>
+		<td><input type="hidden" name="' . $LongDescriptionTranslated . '" value="' . $_POST['LongDescription_' . str_replace('.','_',$LanguageId)] . '" />  
             </tr>';
         }
     }

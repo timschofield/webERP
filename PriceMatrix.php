@@ -60,9 +60,9 @@ if (isset($_POST['submit'])) {
 			WHERE stockid='".$StockID."'
 			AND startdate='".$SQLStartDate."'
 			AND enddate='".$SQLEndDate."'
-		        AND salestype='".$_POST['TypeAbbrev']."'
-			AND currabrev='".$_POST['currabrev']."'
-			AND quantitybreak='".$_POST['quantitybreak']."'";
+		        AND salestype='".$_POST['SalesType']."'
+			AND currabrev='".$_POST['CurrAbrev']."'
+			AND quantitybreak='".$_POST['QuantityBreak']."'";
 	$result = DB_query($sql);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]!=0 AND !isset($_POST['OldTypeAbbrev']) AND !isset($_POST['OldCurrAbrev'])){
@@ -167,7 +167,7 @@ echo '<tr><td>' . _('Currency') . ':</td>
 	<td><select name="CurrAbrev">';
 while ($myrow = DB_fetch_array($result)){
 	echo '<option';
-	if ($myrow['currabrev']==$_POST['CurrAbrev']){
+	if (isset($_POST['CurrAbrev']) AND $myrow['currabrev']==$_POST['CurrAbrev']){
 		echo ' selected="selected"';
 	}
 	echo ' value="' . $myrow['currabrev'] . '">' . $CurrencyName[$myrow['currabrev']] . '</option>';
@@ -210,6 +210,12 @@ if (!isset($_POST['StartDate'])){
 if (!isset($_POST['EndDate'])){
 	$_POST['EndDate'] = GetMySQLMaxDate();
 }
+if (!isset($_POST['QuantityBreak'])) {
+	$_POST['QuantityBreak'] = 0;
+}
+if (!isset($_POST['Price'])) {
+	$_POST['Price'] = 0;
+}
 echo '<tr><td>'. _('Price Effective From Date') . ':</td>
 	<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="StartDate" required="required" size="10" maxlength="10" title="' . _('Enter the date from which this price should take effect.') . '" value="' . $_POST['StartDate'] . '" /></td></tr>';
 echo '<tr><td>' . _('Price Effective To Date') . ':</td>
@@ -240,7 +246,7 @@ $sql = "SELECT sales_type,
 			price,
 			currencies.currabrev,
 			currencies.currency,
-			currencies.decimalplaces AS currdecimalplace
+			currencies.decimalplaces AS currdecimalplaces
 		FROM pricematrix INNER JOIN salestypes
 			ON pricematrix.salestype=salestypes.typeabbrev
 		INNER JOIN currencies

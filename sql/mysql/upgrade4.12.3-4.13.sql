@@ -7,10 +7,24 @@ CREATE TABLE `loctransfercancellations` (
 ALTER TABLE `loctransfercancellations` ADD INDEX `Index1` (`reference`, `stockid`) COMMENT '';
 ALTER TABLE `loctransfercancellations` ADD INDEX `Index2` (`canceldate`, `reference`, `stockid`) COMMENT '';
 
--- Add new script:
+-- Add new scripts:
 INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES
-	('AnalysisHorizontalPosition.php', '15', 'Horizontal analysis of statement of financial position');
+	('AnalysisHorizontalIncome.php', '8', 'Shows the horizontal analysis of the statement of comprehensive income'),
+	('AnalysisHorizontalPosition.php', '8', 'Shows the horizontal analysis of the statement of financial position');
 
+CREATE TABLE `suppinvstogrn` (
+  `suppinv` int(11) NOT NULL,
+  `grnno` int(11) NOT NULL,
+  PRIMARY KEY (`suppinv`,`grnno`),
+  KEY `suppinvstogrn_ibfk_2` (`grnno`),
+  CONSTRAINT `suppinvstogrn_ibfk_1` FOREIGN KEY (`suppinv`) REFERENCES
+`supptrans` (`id`),
+  CONSTRAINT `suppinvstogrn_ibfk_2` FOREIGN KEY (`grnno`) REFERENCES
+`grns` (`grnno`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+INSERT INTO scripts VALUES('EmailCustStatements.php','3','Email customer statement to customer');
+INSERT INTO scripts VALUES('SupplierGRNAndInvoiceInquiry.php',5,'Supplier\'s delivery note and grn relationship inquiry');
+ALTER table grns ADD supplierref varchar(30) NOT NULL DEFAULT '';
 
 -- Update version number:
 UPDATE config SET confvalue='4.13' WHERE confname='VersionNumber';

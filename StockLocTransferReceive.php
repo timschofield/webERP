@@ -1,5 +1,5 @@
 <?php
-/* $Id: StockLocTransferReceive.php 7319 2015-06-11 09:49:54Z tehonu $*/
+/* $Id: StockLocTransferReceive.php 7343 2015-08-19 07:37:57Z tehonu $*/
 
 /**************************************************************************************
 KL RICARD MODIFICATIONS:

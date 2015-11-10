@@ -1,5 +1,5 @@
 <?php
-/* $Id: SelectOrderItems.php 7272 2015-04-26 02:33:51Z exsonqu $*/
+/* $Id: SelectOrderItems.php 7363 2015-10-06 10:03:50Z exsonqu $*/
 
 /**************************************************************************************
 KL RICARD MODIFICATIONS:
@@ -372,9 +372,9 @@ if (isset($_POST['JustSelectedACustomer'])){
 			break;
 		}
 	}
-	if ($i==count($_POST)){
+	if ($i==count($_POST) AND !isset($SelectedCustomer)){//if there is ONLY one customer searched at above, the $SelectedCustomer already setup, then there is a wrong warning
 		prnMsg(_('Unable to identify the selected customer'),'error');
-	} else {
+	} elseif(!isset($SelectedCustomer)) {
 		$SelectedCustomer = $_POST['SelectedCustomer'.$i];
 		$SelectedBranch = $_POST['SelectedBranch'.$i];
 	}

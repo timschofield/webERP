@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: PDFGrn.php 6941 2014-10-26 23:18:08Z daintree $*/
+/* $Id: PDFGrn.php 7373 2015-10-30 12:12:52Z exsonqu $*/
 
 include('includes/session.inc');
 
@@ -46,6 +46,7 @@ if ($GRNNo == 'Preview'){
 				grns.itemdescription,
 				grns.qtyrecd,
 				grns.supplierid,
+				grns.supplierref,
 				purchorderdetails.suppliersunit,
 				purchorderdetails.conversionfactor,
 				stockmaster.units,
@@ -77,6 +78,9 @@ if ($GRNNo == 'Preview'){
 	}
 } // get data to print
 if ($NoOfGRNs >0){
+	$SupplierRef = DB_fetch_array($GRNResult);
+	$SupplierRef = $SupplierRef['supplierref'];
+	DB_data_seek($GRNResult,0);
 	include ('includes/PDFGrnHeader.inc'); //head up the page
 
 	$FooterPrintedInPage= 0;

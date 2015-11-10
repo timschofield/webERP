@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: SupplierCredit.php 7282 2015-04-30 10:30:23Z exsonqu $ */
+/* $Id: SupplierCredit.php 7354 2015-09-21 02:00:03Z exsonqu $ */
 
 /*This page is very largely the same as the SupplierInvoice.php script
 the same result could have been acheived by using if statements in that script and just having the one
@@ -960,7 +960,7 @@ then do the updates and inserts to process the credit note entered */
 									$CostIncrement = ($PurchPriceVar - $WriteOffToVariances) / $TotalQuantityOnHand;
 
 									$sql = "UPDATE stockmaster SET lastcost=materialcost+overheadcost+labourcost,
-																	materialcost=materialcost+" . $CostIncrement . "
+																	materialcost=materialcost-" . $CostIncrement . "
 											WHERE stockid='" . $EnteredGRN->ItemCode . "'";
 
 									$Result = DB_query($sql, $ErrMsg, $DbgMsg, True);
