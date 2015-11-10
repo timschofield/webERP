@@ -371,6 +371,8 @@ $MenuItems['GL']['Reports']['Caption'] = array(	_('Trial Balance'),
 												_('Daily Bank Transactions'),
 												_('Profit and Loss Statement'),
 												_('Balance Sheet'),
+												_('Horizontal Analysis of Statement of Comprehensive Income'),
+												_('Horizontal Analysis of Statement of Financial Position'),
 												_('Tag Reports'),
 												_('Tax Reports'));
 
@@ -384,6 +386,8 @@ $MenuItems['GL']['Reports']['URL'] = array(	'/GLTrialBalance.php',
 											'/DailyBankTransactions.php',
 											'/GLProfit_Loss.php',
 											'/GLBalanceSheet.php',
+											'/AnalysisHorizontalIncome.php',
+											'/AnalysisHorizontalPosition.php',
 											'/GLTagProfit_Loss.php',
 											'/Tax.php');
 

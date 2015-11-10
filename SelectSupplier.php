@@ -1,5 +1,5 @@
 <?php
-/* $Id: SelectSupplier.php 7269 2015-04-20 12:44:02Z agaluski $*/
+/* $Id: SelectSupplier.php 7373 2015-10-30 12:12:52Z exsonqu $*/
 
 include ('includes/session.inc');
 $Title = _('Search Suppliers');
@@ -169,6 +169,8 @@ if (isset($_SESSION['SupplierID'])) {
 		</tr>';
 	echo '<tr><td valign="top" class="select">'; /* Inquiry Options */
 	echo '<a href="' . $RootPath . '/SupplierInquiry.php?SupplierID=' . $_SESSION['SupplierID'] . '">' . _('Supplier Account Inquiry') . '</a>
+		<br />
+		<a href="' . $RootPath . '/SupplierGRNAndInvoiceInquiry.php?SelectedSupplier=' . $_SESSION['SupplierID'] . '&amp;SupplierName='.urlencode($SupplierName).'">' . _('Supplier Delivery Note AND GRN inquiry') . '</a>
 		<br />
 		<br />';
 

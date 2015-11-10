@@ -1,5 +1,5 @@
 <?php
-/* $Id: index.php 6941 2014-10-26 23:18:08Z daintree $*/
+/* $Id: index.php 7341 2015-08-16 05:08:07Z daintree $*/
 
 $PageSecurity=0;
 
@@ -193,8 +193,9 @@ be generated, one for standard reports and the other for custom reports.
 					reportname";
 	$Result=DB_query($sql,'','',false,true);
 	$ReportList = '';
-	while ($Temp = DB_fetch_array($Result)) $ReportList[] = $Temp;
-
+	while ($Temp = DB_fetch_array($Result)) {
+		$ReportList[] = $Temp;
+	}
 	$RptLinks = '';
 	for ($Def=1; $Def>=0; $Def--) {
         $RptLinks .= '<li class="menu_group_headers">';

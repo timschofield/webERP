@@ -91,7 +91,11 @@ if (!isset($_POST['Show'])) {
 			WHERE bankaccounts.accountcode='" . $_POST['BankAccount'] . "'";
 	$BankResult = DB_query($SQL,_('Could not retrieve the bank account details'));
 
-	$sql="SELECT 	banktrans.currcode,
+
+	$sql="SELECT (SELECT sum(banktrans.amount) FROM banktrans 
+				WHERE transdate < '" . FormatDateForSQL($_POST['FromTransDate']) . "'
+				AND bankact='" . $_POST['BankAccount'] ."') AS prebalance,
+					banktrans.currcode,
 					banktrans.amount,
 					banktrans.amountcleared,
 					banktrans.functionalexrate,
@@ -114,14 +118,26 @@ if (!isset($_POST['Show'])) {
 				ORDER BY banktrans.transdate ASC, banktrans.banktransid ASC";
 	$result = DB_query($sql);
 
+	$BankDetailRow = DB_fetch_array($BankResult);
 	if (DB_num_rows($result)==0) {
 		echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
-			'/images/bank.png" title="' .// Icon image.
-			_('Bank Transactions Inquiry') . '" /> ' .// Icon title.
-			_('Bank Transactions Inquiry') . '</p>';// Page title.
+		'/images/bank.png" title="' .// Icon image.
+		_('Bank Transactions Inquiry') . '" /> ' .// Icon title.
+		_('Bank Transactions Inquiry') . '</p>';// Page title.
 		prnMsg(_('There are no transactions for this account in the date range selected'), 'info');
+		
+		$sql = "SELECT sum(banktrans.amount) FROM banktrans WHERE bankact='" . $_POST['BankAccount'] . "'";
+		$ErrMsg = _('Failed to retrive balance data');
+		$balresult = DB_query($sql,$ErrMsg);
+		if (DB_num_rows($balresult)>0) {
+			$Balance = DB_fetch_row($balresult);
+			$Balance = $Balance[0];
+			if (ABS($Balance)>0.001){
+				echo '<p class="page_title_text">' . _('The Bank Account Balance Is in') . '  ' . $BankDetailRow['currcode'] . ' <span style="font-weight:bold">' . locale_number_format($Balance,$BankDetailRow['decimalplaces']) . '</span></p>';
+			}
+		}
+	
 	} else {
-		$BankDetailRow = DB_fetch_array($BankResult);
 		echo '<div id="Report">';// Division to identify the report block.
 		echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 			'/images/bank.png" title="' .// Icon image.
@@ -136,42 +152,91 @@ if (!isset($_POST['Show'])) {
 					<th class="number">' . _('Number') . '</th>
 					<th class="text">' . _('Type') . '</th>
 					<th class="text">' . _('Reference') . '</th>
-					<th class="number">' . _('Amount in').' '.$BankDetailRow['currcode'] . '</th>
+					<th class="number">' . _('Amount in org').' '.$BankDetailRow['currcode'] . '</th>
+					<th class="number">' . _('Balance in') . ' ' . $BankDetailRow['currcode'] . '</th>
 					<th class="number">' . _('Running Total').' '.$BankDetailRow['currcode'] . '</th>
 					<th class="number">' . _('Amount in').' '.$_SESSION['CompanyRecord']['currencydefault'] . '</th>
 					<th class="number">' . _('Running Total').' '.$_SESSION['CompanyRecord']['currencydefault'] . '</th>
-					<th class="number">' . _('Cleared') . '</th>
+					<th class="text">' . _('Cleared') . '</th>
+					<th class="text">' . _('GL Narrative') . '</th>
 				</tr>
 			</thead><tbody>';
 
 		$AccountCurrTotal=0;
 		$LocalCurrTotal =0;
-
+		$Balance = 0;
+		$j = 0;
+		$k = 0;
 		while ($myrow = DB_fetch_array($result)){
+		
+			if ($j == 0) {
+				if (ABS($myrow['prebalance'])>0.0001) {
+						if ($k == 0) {
+							echo '<tr class="OddTableRows">';
+							$k = 1;
+						} else {
+							echo '<tr class="EvenTableRows">';
+							$k = 0;
+						}
+					$Balance += $myrow['prebalance'];
+					echo '<td colspan="6" style="font-weight:bold">' . _('Previous Balance') . '</td>
+						<td class="number">' . locale_number_format($myrow['prebalance'],$BankDetailRow['decimalplaces']) . '</td>
+						<td colspan="5"></td></tr>';
+					$j++;
+
+				}	
+			}
+			if ($k == 0) {
+				echo '<tr class="OddTableRows">';
+				$k = 1;
+			} else {
+				echo '<tr class="EvenTableRows">';
+				$k = 0;
+			}
+			//check the GL narrative
+			$sql = "SELECT narrative FROM gltrans WHERE type='" . $myrow['typeid'] . "' AND typeno='" . $myrow['transno'] . "'";
+			$ErrMsg = _('Failed to retrieve gl narrative');
+			$glresult = DB_query($sql,$ErrMsg);
+			if (DB_num_rows($glresult)>0) {
+				$GLNarrative = DB_fetch_array($glresult);
+				$GLNarrative = $GLNarrative[0];
+			} else {
+				$GLNarrative = 'NA';
+			}
+			$Balance += $myrow['amount'];
 
 			$AccountCurrTotal += $myrow['amount'];
 			$LocalCurrTotal += $myrow['amount']/$myrow['functionalexrate']/$myrow['exrate'];
-
+		
 			if ($myrow['amount']==$myrow['amountcleared']) {
 				$Matched=_('Yes');
 			} else {
 				$Matched=_('No');
 			}
 
-			echo '<tr>
+			echo '
 					<td class="centre">' .  ConvertSQLDate($myrow['transdate']) . '</td>
 					<td>' . _($myrow['typename']) . '</td>
 					<td class="number"><a href="' . $RootPath . '/GLTransInquiry.php?TypeID=' . $myrow['typeid'] . '&amp;TransNo=' . $myrow['transno'] . '">' . $myrow['transno'] . '</a></td>
 					<td>' . $myrow['banktranstype'] . '</td>
 					<td>' . $myrow['ref'] . '</td>
 					<td class="number">' . locale_number_format($myrow['amount'],$BankDetailRow['decimalplaces']) . '</td>
+					<td class="number">' . locale_number_format($Balance,$BankDetailRow['decimalplaces']) . '</td>
 					<td class="number">' . locale_number_format($AccountCurrTotal,$BankDetailRow['decimalplaces']) . '</td>
 					<td class="number">' . locale_number_format($myrow['amount']/$myrow['functionalexrate']/$myrow['exrate'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 					<td class="number">' . locale_number_format($LocalCurrTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 					<td class="number">' . $Matched . '</td>
+					<td>' . $GLNarrative . '</td>
 				</tr>';
 		}
-		echo '</tbody></table>';
+		if ($k == 0 ) {
+			echo '<tr class="OddTableRows">';
+		} else {
+			echo '<tr class="EvenTableRows">';
+		}
+
+		echo '<td colspan="6" style="font-weight:bold;">' . _('Account Balance') . '</td><td class="number" style="font-weight:bold;">' .locale_number_format($Balance,$BankDetailRow['decimalplaces']) . '</td><td colspan="5"></td></tr>
+		</tbody></table>';
 		echo '</div>';// div id="Report".
 	} //end if no bank trans in the range to show
 

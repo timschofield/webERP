@@ -1,5 +1,5 @@
 <?php
-/* $Id: Credit_Invoice.php 7227 2015-03-14 09:59:55Z exsonqu $*/
+/* $Id: Credit_Invoice.php 7345 2015-08-27 08:26:02Z exsonqu $*/
 
 /*Functions to get the GL codes to post the transaction to */
 include('includes/GetSalesTransGLCodes.inc');
@@ -567,11 +567,12 @@ if(isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 	$SettledInvoice=0;
 	if($myrow[0]>0) { /*the invoice is not already fully allocated */
 
-		if($myrow[0] >($_SESSION['CreditItems' . $identifier]->total + $_SESSION['CreditItems' . $identifier]->FreightCost + $TaxTotal)) {
+		if($myrow[0] > ($_SESSION['CreditItems' . $identifier]->total + $_SESSION['CreditItems' . $identifier]->FreightCost + $TaxTotal)) {
 
 			$Allocate_amount = $_SESSION['CreditItems' . $identifier]->total + $_SESSION['CreditItems' . $identifier]->FreightCost + $TaxTotal;
+			$SettledInvoice = 0;
 			$Settled = 1;
-		} else if($myrow[0] >($_SESSION['CreditItems' . $identifier]->total + $_SESSION['CreditItems' . $identifier]->FreightCost + $TaxTotal)) {
+		} else if($myrow[0] < ($_SESSION['CreditItems' . $identifier]->total + $_SESSION['CreditItems' . $identifier]->FreightCost + $TaxTotal)) {
 			/*the balance left to allocate is less than the credit note value */
 			$Allocate_amount = $myrow[0];
 			$SettledInvoice = 1;

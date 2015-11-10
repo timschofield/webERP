@@ -1,5 +1,5 @@
 <?php
-/* $Id: StockLocTransferReceive.php 7319 2015-06-11 09:49:54Z tehonu $*/
+/* $Id: StockLocTransferReceive.php 7343 2015-08-19 07:37:57Z tehonu $*/
 /* Inventory Transfer - Receive */
 
 include('includes/DefineSerialItems.php');
@@ -411,6 +411,11 @@ if(isset($_POST['ProcessTransfer'])) {
 				unset ($_POST['Qty' . $i]);
 			} /*end if Quantity >= 0 */
 			if($TrfLine->CancelBalance==1) {
+				$sql = "UPDATE loctransfers SET shipqty = recqty
+						WHERE reference = '". $_SESSION['Transfer']->TrfID . "'
+						AND stockid = '".  $TrfLine->StockID."'";
+				$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('Unable to set the quantity received to the quantity shipped to cancel the balance on this transfer line');
+				$Result = DB_query($sql, $ErrMsg, $DbgMsg, true);
 				// send an email to the inventory manager about this cancellation (as can lead to employee fraud)
 				if($_SESSION['InventoryManagerEmail']!='') {
 					$ConfirmationText = _('Cancelled balance of transfer'). ': ' . $_SESSION['Transfer']->TrfID .

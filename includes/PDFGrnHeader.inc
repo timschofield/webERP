@@ -1,5 +1,5 @@
 <?php
-/* $Id: PDFGrnHeader.inc 6549 2014-01-24 20:32:31Z daintree $*/
+/* $Id: PDFGrnHeader.inc 7373 2015-10-30 12:12:52Z exsonqu $*/
 /*PDF page header for price list report */
 if ($PageNumber>1){
 	$pdf->newPage();
@@ -18,6 +18,7 @@ $LeftOvers = $pdf->addText($FormDesign->SupplierAddress6->x,$Page_Height-$FormDe
 
 $LeftOvers = $pdf->addText($FormDesign->CompanyName->x,$Page_Height-$FormDesign->CompanyName->y,$FormDesign->CompanyName->FontSize,$_SESSION['CompanyRecord']['coyname']);
 $LeftOvers = $pdf->addText($FormDesign->GRNNumber->x,$Page_Height-$FormDesign->GRNNumber->y,$FormDesign->GRNNumber->FontSize, _('GRN number ').' ' . $GRNNo );
+$LeftOvers = $pdf->addText($FormDesign->SupplierRef->x,$Page_Height-$FormDesign->SupplierRef->y,$FormDesign->SupplierRef->FontSize,_("Supplier's Ref") . ' ' . $SupplierRef);
 $LeftOvers = $pdf->addText($FormDesign->OrderNumber->x,$Page_Height-$FormDesign->OrderNumber->y,$FormDesign->OrderNumber->FontSize, _('PO number ').' ' . $_GET['PONo'] );
 $LeftOvers = $pdf->addText($FormDesign->PrintDate->x,$Page_Height-$FormDesign->PrintDate->y,$FormDesign->PrintDate->FontSize, _('Printed').': ' . Date($_SESSION['DefaultDateFormat']) . '   '. _('Page'). ' ' . $PageNumber);
 

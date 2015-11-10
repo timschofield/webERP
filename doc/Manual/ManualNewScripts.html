@@ -44,7 +44,7 @@
 
 <h3>session.inc</h3>
 
-<p>This page must be included after the page has set the variable $PageSecurity to an appropriate integer (see the security schema section), session.inc has the following functons:</p>
+<p>This page must be included and has the following functons:</p>
 
 <ul>
     <li>Establishes a session if none already exists and checks that an authorised user is logged in - if so it checks that the user is authorised for the specific page being called, based on the value of $PageSecurity.</li>
@@ -93,6 +93,65 @@
 <p>The variables in config.php are available to all of tcripts that have included session.inc. There are not many now most of the configuration is stored in the database using the config table. However, the variables that give the software the information to connect to the database such as datbase user, password and host, together with the database type - dbtype - in fact only mysql is supported but there are two libraries that can be used the mysqli and the old mysql functions. There are a couple of other variables including the timezone, $RootPath which is the directory where the web server holds the system files. Also the php error_reporting code.</p>
 
 <p>Having started the page with session.inc and header.inc - and then finishing with footer.inc much of the work to ensure a consistent look and feel is already done.</p>
+
+<h3>An Example webERP Script Template</h3>
+<p>Following from the discussion of the key component scripts of webERP, the general form of a webERP script would look like the following:</p>
+<pre>
+&lt;?php
+
+/* session.inc is the script that brings in session
+ * management, database management, and performs
+ * any other housekeeping tasks related to the running
+ * of webERP. and so should be included right at the
+ * top of every script.
+ */
+include(&apos;includes/session.inc&apos;);
+
+/* A title for the script must be assigned prior to
+ * including the header.inc script
+ */
+$Title = _(&apos;Simple webERP Script&apos;);
+
+/* The $ViewTopic variable should be set to the name
+ * of the manual page for this functionality and the
+ * $BookMark variable is the place in that manual page
+ * specifically for this functionality
+ */
+$ViewTopic = &apos;SimpleScript&apos;;
+$BookMark = &apos;GeneralTopics&apos;;
+
+/* The header.inc file sends all the http headers needed,
+ * links in the style sheets and downloads any javascript
+ * files that are needed. It also draws the header on the
+ * screen. Muse be included before any output is sent to
+ * the browser.
+ */
+include(&apos;includes/header.inc&apos;);
+
+if (!isset($_POST[&apos;Submit&apos;])) {
+/* In this section should go the code to validate the data
+ * submitted in the form, and if all is well it should
+ * post that data to the database. If there is more than
+ * one table to be updated that transactions should be used
+ * in order to maintain the database integrity.
+ * If the form does not validate then it processing can just
+ * fall through to the next section, but show any required
+ * messages.
+ */
+}
+
+/* This section is where any of the display code goes.
+ * Typically this will contain a table of the existing data,
+ * and a form for entry of new details.
+ */
+
+/* Finally we must include footer.inc to draw the footer on
+ * the screen, display any error messages, and close off the
+ * html tags in the page.
+ */
+include(&apos;includes/footer.inc&apos;);
+?&gt;
+</pre>
 
 <div class="floatright">
     <a class="minitext" href="#top">⬆ Top</a>
