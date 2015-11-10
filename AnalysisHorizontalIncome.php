@@ -1,13 +1,4 @@
 <?php
-<<<<<<< HEAD
-/* $Id: AnalysisHorizontalIncome.php 7332 2015-08-04 03:27:51Z rchacon $*/
-/* Shows the horizontal analysis of the statement of comprehensive income. */
-
-function RelativeVariation($CurrentPeriod, $PreviousPeriod) {
-	// Calculates the relative variation between current and previous periods. Uses percent in locale number format.
-	if($PreviousPeriod<>0) {
-		return locale_number_format(($CurrentPeriod-$PreviousPeriod)*100/$PreviousPeriod,$_SESSION['CompanyRecord']['decimalplaces']) . '%';
-=======
 /* $Id: AnalysisHorizontalIncome.php 7349 2015-09-14 14:43:19Z rchacon $*/
 /* Shows the horizontal analysis of the statement of comprehensive income. */
 
@@ -15,7 +6,6 @@ function RelativeChange($SelectedPeriod, $PreviousPeriod) {
 	// Calculates the relative change between selected and previous periods. Uses percent with locale number format.
 	if($PreviousPeriod<>0) {
 		return locale_number_format(($SelectedPeriod-$PreviousPeriod)*100/$PreviousPeriod,$_SESSION['CompanyRecord']['decimalplaces']) . '%';
->>>>>>> SVN_development
 	} else {
 		return _('N/A');
 	}
@@ -26,25 +16,15 @@ $Title = _('Horizontal Analysis of Statement of Comprehensive Income');// Screen
 $ViewTopic= 'GeneralLedger';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'AnalysisHorizontalIncome';// Anchor's id in the manual's html document.
 include('includes/SQL_CommonFunctions.inc');
-<<<<<<< HEAD
-include('includes/AccountSectionsDef.inc'); // This loads the $Sections variable
-=======
 include('includes/AccountSectionsDef.inc');// This loads the $Sections variable
->>>>>>> SVN_development
 
 if(isset($_POST['FromPeriod']) and ($_POST['FromPeriod'] > $_POST['ToPeriod'])) {
 	prnMsg(_('The selected period from is actually after the period to') . '! ' . _('Please reselect the reporting period'),'error');
 	$_POST['SelectADifferentPeriod']='Select A Different Period';
 }
 
-<<<<<<< HEAD
-if((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST['SelectADifferentPeriod'])) {
-
-	include('includes/header.inc');
-=======
 include('includes/header.inc');
 if((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST['SelectADifferentPeriod'])) {
->>>>>>> SVN_development
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 		'/images/printer.png" title="', // Icon image.
 		_('Print Horizontal Analysis of Statement of Comprehensive Income'), '" /> ', // Icon title.
@@ -52,11 +32,7 @@ if((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST
 
 	echo '<div class="page_help_text">',
 		_('Horizontal analysis (also known as trend analysis) is a financial statement analysis technique that shows changes in the amounts of corresponding financial statement items over a period of time. It is a useful tool to evaluate trend situations.'), '<br />',
-<<<<<<< HEAD
-		_('The statements for two periods are used in horizontal analysis. The earliest period is used as the base period. The items on the later statement are compared with items on the statement of the base period. The changes are shown both in currency (absolute variation) and percentage (relative variation).'), '<br />',
-=======
 		_('The statements for two periods are used in horizontal analysis. The earliest period is used as the base period. The items on the later statement are compared with items on the statement of the base period. The changes are shown both in currency (actual change) and percentage (relative change).'), '<br />',
->>>>>>> SVN_development
 		_('webERP is an "accrual" based system (not a "cash based" system).  Accrual systems include items when they are invoiced to the customer, and when expenses are owed based on the supplier invoice date.'), '</div>',
 		// Show a form to allow input of criteria for the report to show:
 		'<form method="post" action="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '">',
@@ -75,10 +51,6 @@ if((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST
 		$DefaultFromDate = Date ('Y-m-d', Mktime(0,0,0,$_SESSION['YearEnd'] + 2,0,Date('Y')-1));
 		$FromDate = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,$_SESSION['YearEnd'] + 2,0,Date('Y')-1));
 	}
-<<<<<<< HEAD
-	$period=GetPeriod($FromDate, $db);
-=======
->>>>>>> SVN_development
 
 	$sql = "SELECT periodno, lastdate_in_period
 			FROM periods
@@ -153,14 +125,7 @@ if((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST
 	include ('includes/GLPostings.inc');
 
 } else {
-<<<<<<< HEAD
-	include('includes/header.inc');
-
 	$NumberOfMonths = $_POST['ToPeriod'] - $_POST['FromPeriod'] + 1;
-
-=======
-	$NumberOfMonths = $_POST['ToPeriod'] - $_POST['FromPeriod'] + 1;
->>>>>>> SVN_development
 	if($NumberOfMonths >12) {
 		echo '<br />';
 		prnMsg(_('A period up to 12 months in duration can be specified') . ' - ' . _('the system automatically shows a comparative for the same period from the previous year') . ' - ' . _('it cannot do this if a period of more than 12 months is specified') . '. ' . _('Please select an alternative period range'),'error');
@@ -175,10 +140,6 @@ if((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST
 
 	// Page title as IAS 1, numerals 10 and 51:
 	include_once('includes/CurrenciesArray.php');// Array to retrieve currency name.
-<<<<<<< HEAD
-	echo '<div id="Report">';// Division to identify the report block.
-=======
->>>>>>> SVN_development
 	echo '<div id="Report">', // Division to identify the report block.
 		'<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 		'/images/gl.png" title="', // Icon image.
@@ -198,28 +159,6 @@ if((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST
 	}
 	echo	'<th class="number">', ' - ', $myrow[0], '</th>
 			<th class="number">', _('Last Year'), '</th>
-<<<<<<< HEAD
-			<th class="number">', _('Absolute variation'), '</th>
-			<th class="number">', _('Relative variation'), '</th>
-		</tr>
-		</thead>';
-
-//------------------------------------------------------------------------------
-//	if($PrintNotes) {// If selected, it prints an explanation of signs in absolute and relative variations:
-	echo '<tfoot>
-			<tr>
-				<td class="text" colspan="6">',
-					'<br /><b>', _('Notes'), ':</b><br />',
-					_('Absolute variation: A positive number indicates a variation that increases the net profit; A negative number indicates a variation that decreases the net profit.'), '<br />',
-					_('Relative variation: A positive number indicates an increase in the amount of that account; A negative number indicates a decrease in the amount of that account.'), '<br />',
-				'</td>
-			</tr>
-		</tfoot>';
-//	}
-//------------------------------------------------------------------------------
-
-	echo '<tbody>';// thead used in conjunction with tbody enable scrolling of the table body independently of the header and footer. Also, when printing a large table that spans multiple pages, these elements can enable the table header to be printed at the top of each page.
-=======
 			<th class="number">', _('Actual change'), '</th>
 			<th class="number">', _('Relative change'), '</th>
 		</tr>
@@ -234,7 +173,6 @@ if((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST
 			</tr>
 		</tfoot>
 		<tbody>';// thead and tfoot used in conjunction with tbody enable scrolling of the table body independently of the header and footer. Also, when printing a large table that spans multiple pages, these elements can enable the table header to be printed at the top of each page.
->>>>>>> SVN_development
 
 	$SQL = "SELECT accountgroups.sectioninaccounts,
 					accountgroups.parentgroupname,
@@ -293,32 +231,18 @@ if((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST
 					} else {
 						$ActGrpLabel = str_repeat('___',$Level) . $ParentGroups[$Level];
 					}
-<<<<<<< HEAD
-
-=======
->>>>>>> SVN_development
 					echo '<tr>
 							<td class="text" colspan="2">', $ActGrpLabel, '</td>
 							<td class="number">', locale_number_format(-$GrpTotal[$Level],$_SESSION['CompanyRecord']['decimalplaces']), '</td>
 							<td class="number">', locale_number_format(-$GrpTotalLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']), '</td>
 							<td class="number">', locale_number_format(-$GrpTotal[$Level]+$GrpTotalLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']), '</td>
-<<<<<<< HEAD
-							<td class="number">', RelativeVariation(-$GrpTotal[$Level],-$GrpTotalLY[$Level]), '</td>
-						</tr>';
-
-=======
 							<td class="number">', RelativeChange(-$GrpTotal[$Level],-$GrpTotalLY[$Level]), '</td>
 						</tr>';
->>>>>>> SVN_development
 					$GrpTotal[$Level]=0;
 					$GrpTotalLY[$Level]=0;
 					$ParentGroups[$Level]='';
 					$Level--;
-<<<<<<< HEAD
-				}//end while
-=======
 				}// End while.
->>>>>>> SVN_development
 
 				//still need to print out the old group totals
 
@@ -329,21 +253,13 @@ if((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST
 					$ActGrpLabel = str_repeat('___',$Level) . $ParentGroups[$Level];
 				}
 
-<<<<<<< HEAD
-=======
 // --->
 				if($Section ==1) {// Income
->>>>>>> SVN_development
 				echo '<tr>
 						<td class="text" colspan="2">', $ActGrpLabel, '</td>
 						<td class="number">', locale_number_format(-$GrpTotal[$Level],$_SESSION['CompanyRecord']['decimalplaces']), '</td>
 						<td class="number">', locale_number_format(-$GrpTotalLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']), '</td>
 						<td class="number">', locale_number_format(-$GrpTotal[$Level]+$GrpTotalLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']), '</td>
-<<<<<<< HEAD
-						<td class="number">', RelativeVariation(-$GrpTotal[$Level],-$GrpTotalLY[$Level]), '</td>
-					</tr>';
-
-=======
 						<td class="number">', RelativeChange(-$GrpTotal[$Level],-$GrpTotalLY[$Level]), '</td>
 					</tr>';
 				} else {// Costs
@@ -358,7 +274,6 @@ if((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST
 // --->
 				}
 // <---
->>>>>>> SVN_development
 				$GrpTotalLY[$Level]=0;
 				$GrpTotal[$Level]=0;
 				$ParentGroups[$Level]='';
@@ -368,25 +283,6 @@ if((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST
 		if($myrow['sectioninaccounts']!= $Section) {
 
 			if($SectionTotal+$SectionTotalLY !=0) {
-<<<<<<< HEAD
-				echo $DrawTotalLine;
-				echo '<tr>
-						<td class="text" colspan="2"><h2>', $Sections[$Section], '</h2></td>
-						<td class="number"><h2>', locale_number_format(-$SectionTotal,$_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
-						<td class="number"><h2>', locale_number_format(-$SectionTotalLY,$_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
-						<td class="number"><h2>', locale_number_format(-$SectionTotal+$SectionTotalLY,$_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
-						<td class="number"><h2>', RelativeVariation(-$SectionTotal,-$SectionTotalLY), '</h2></td>
-					</tr>';
-				echo $DrawTotalLine;
-				echo '<tr>
-						<td class="text" colspan="2"><h2>', _('Earnings after'), ' ', $Sections[$Section], '</h2></td>
-						<td class="number"><h2>', locale_number_format(-$PeriodTotal,$_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
-						<td class="number"><h2>', locale_number_format(-$PeriodTotalLY,$_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
-						<td class="number"><h2>', locale_number_format(-$PeriodTotal+$PeriodTotalLY,$_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
-						<td class="number"><h2>', RelativeVariation(-$PeriodTotal,-$PeriodTotalLY), '</h2></td>
-					</tr>';
-				echo $DrawTotalLine;
-=======
 
 				if($Section==1) {// Income.
 					echo $DrawTotalLine;
@@ -431,7 +327,6 @@ if((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST
 						</tr>';
 					echo $DrawTotalLine;
 				}
->>>>>>> SVN_development
 			}
 
 			$Section = $myrow['sectioninaccounts'];
@@ -443,10 +338,6 @@ if((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST
 						<td colspan="6"><h2>', $Sections[$myrow['sectioninaccounts']], '</h2></td>
 					</tr>';
 			}
-<<<<<<< HEAD
-
-=======
->>>>>>> SVN_development
 		}
 
 		if($myrow['groupname']!= $ActGrp) {
@@ -485,15 +376,6 @@ if((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST
 					echo '<tr class="OddTableRows">';
 					$k=1;
 				}
-<<<<<<< HEAD
-				echo	'<td class="text"><a href="', $RootPath, '/GLAccountInquiry.php?Period=', $_POST['ToPeriod'], '&amp;Account=', $myrow['accountcode'], '&amp;Show=Yes">', $myrow['accountcode'], '</a></td>
-						<td class="text">', htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false), '</td>
-						<td class="number">', locale_number_format(-$AccountTotal,$_SESSION['CompanyRecord']['decimalplaces']), '</td>
-						<td class="number">', locale_number_format(-$AccountTotalLY,$_SESSION['CompanyRecord']['decimalplaces']), '</td>
-						<td class="number">', locale_number_format(-$AccountTotal+$AccountTotalLY,$_SESSION['CompanyRecord']['decimalplaces']), '</td>
-						<td class="number">', RelativeVariation(-$AccountTotal,-$AccountTotalLY), '</td>
-					</tr>';
-=======
 				echo	'<td class="text"><a href="', $RootPath, '/GLAccountInquiry.php?Period=', $_POST['ToPeriod'], '&amp;Account=', $myrow['accountcode'], '&amp;Show=Yes">', $myrow['accountcode'], '</a></td>';
 // --->
 				if($Section ==1) {
@@ -512,7 +394,6 @@ if((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST
 							<td class="number">', RelativeChange(-$AccountTotal,-$AccountTotalLY), '</td>
 						</tr>';
 				}
->>>>>>> SVN_development
 			}
 		}
 	}// End of loop.
@@ -526,16 +407,6 @@ if((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST
 				} else {
 					$ActGrpLabel = str_repeat('___',$Level) . $ParentGroups[$Level];
 				}
-<<<<<<< HEAD
-
-				echo '<tr>
-						<td colspan="2"><h3>', $ParentGroups[$Level], '</h3></td>
-						<td class="number">', locale_number_format(-$GrpTotal[$Level],$_SESSION['CompanyRecord']['decimalplaces']), '</td>
-						<td class="number">', locale_number_format(-$GrpTotalLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']), '</td>
-						<td class="number">', locale_number_format(-$GrpTotal[$Level]+$GrpTotalLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']), '</td>
-						<td class="number">', RelativeVariation(-$GrpTotal[$Level],-$GrpTotalLY[$Level]), '</td>
-					</tr>';
-=======
 // --->
 				if($Section ==1) {// Income.
 					echo '<tr>
@@ -555,7 +426,6 @@ if((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST
 							<td class="number">', RelativeChange(-$GrpTotal[$Level],-$GrpTotalLY[$Level]), '</td>
 						</tr>';
 				}
->>>>>>> SVN_development
 				$GrpTotal[$Level]=0;
 				$GrpTotalLY[$Level]=0;
 				$ParentGroups[$Level]='';
@@ -573,11 +443,7 @@ if((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST
 					<td class="number">', locale_number_format(-$GrpTotal[$Level],$_SESSION['CompanyRecord']['decimalplaces']), '</td>
 					<td class="number">', locale_number_format(-$GrpTotalLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']), '</td>
 					<td class="number">', locale_number_format(-$GrpTotal[$Level]+$GrpTotalLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']), '</td>
-<<<<<<< HEAD
-					<td class="number">', RelativeVariation(-$GrpTotal[$Level],-$GrpTotalLY[$Level]), '</td>
-=======
 					<td class="number">', RelativeChange(-$GrpTotal[$Level],-$GrpTotalLY[$Level]), '</td>
->>>>>>> SVN_development
 				</tr>';
 			$GrpTotal[$Level]=0;
 			$GrpTotalLY[$Level]=0;
@@ -586,16 +452,6 @@ if((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST
 	}
 
 	if($myrow['sectioninaccounts']!= $Section) {
-<<<<<<< HEAD
-		echo $DrawTotalLine,
-			'<tr>
-				<td colspan="2"><h2>', $Sections[$Section], '</h2></td>
-				<td class="number"><h2>', locale_number_format(-$SectionTotal,$_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
-				<td class="number"><h2>', locale_number_format(-$SectionTotalLY,$_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
-				<td class="number"><h2>', locale_number_format(-$SectionTotal+$SectionTotalLY,$_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
-				<td class="number"><h2>', RelativeVariation(-$SectionTotal,-$SectionTotalLY), '</h2></td>
-			</tr>';
-=======
 
 		if($Section==1) {// Income.
 			echo $DrawTotalLine,
@@ -628,7 +484,6 @@ if((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST
 					<td class="number"><h2>', RelativeChange(-($GPIncome+$SectionTotal),-($GPIncomeLY+$SectionTotalLY)), '</h2></td>
 				</tr>';
 		}
->>>>>>> SVN_development
 		$Section = $myrow['sectioninaccounts'];
 		$SectionTotal=0;
 		$SectionTotalLY=0;
@@ -646,20 +501,12 @@ if((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST
 			<td class="number"><h2>', locale_number_format(-$PeriodTotal,$_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
 			<td class="number"><h2>', locale_number_format(-$PeriodTotalLY,$_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
 			<td class="number"><h2>', locale_number_format(-$PeriodTotal+$PeriodTotalLY,$_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
-<<<<<<< HEAD
-			<td class="number"><h2>', RelativeVariation(-$PeriodTotal,-$PeriodTotalLY), '</h2></td>
-=======
 			<td class="number"><h2>', RelativeChange(-$PeriodTotal,-$PeriodTotalLY), '</h2></td>
->>>>>>> SVN_development
 		</tr>';
 	echo $DrawTotalLine;
 	echo '</tbody>', // See comment at the begin of the table.
 		'</table>
-<<<<<<< HEAD
-		</div>'; // Close div id="Report".
-=======
 		</div>';// End div id="Report".
->>>>>>> SVN_development
 	echo '<br />',
 		'<form method="post" action="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '">',
 		'<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />',
