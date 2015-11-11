@@ -137,6 +137,7 @@ while ($myrow=DB_fetch_array($Result)){
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+65,$YPos,90,$FontSize,$myrow['ref'], 'left');
 
 	$sql = "SELECT accountname,
+					accountcode,
 					amount,
 					narrative
 			FROM gltrans INNER JOIN chartmaster
@@ -156,7 +157,21 @@ while ($myrow=DB_fetch_array($Result)){
   		exit;
 	}
 	while ($GLRow=DB_fetch_array($GLTransResult)){
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+150,$YPos,90,$FontSize,$GLRow['accountname'], 'left');
+		// if user is allowed to see the account we show it, other wise we show "OTHERS ACCOUNTS"
+		$CheckSql = "SELECT count(*)
+					 FROM glaccountusers
+					 WHERE accountcode= '" . $GLRow['accountcode'] . "'
+						 AND userid = '" . $_SESSION['UserID'] . "'
+						 AND canview = '1'";
+		$CheckResult = DB_query($CheckSql);
+		$CheckRow = DB_fetch_row($CheckResult);
+
+		if ($CheckRow[0] > 0) {
+			$AccountName = $GLRow['accountname'];
+		}else{
+			$AccountName = _('Other GL Accounts');
+		}
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+150,$YPos,90,$FontSize,$AccountName, 'left');
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+245,$YPos,60,$FontSize,locale_number_format($GLRow['amount'],$_SESSION['CompanyRecord']['decimalplaces']), 'right');
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,120,$FontSize,$GLRow['narrative'], 'left');
 		$YPos -= ($line_height);

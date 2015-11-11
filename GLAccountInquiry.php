@@ -49,7 +49,11 @@ echo '<table class="selection">
 			<td>' . _('Account').':</td>
 			<td><select name="Account">';
 
-$sql = "SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode";
+$sql = "SELECT chartmaster.accountcode, 
+			   chartmaster.accountname
+		FROM chartmaster 
+		INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmaster.accountcode AND glaccountusers.userid='" .  $_SESSION['UserID'] . "' AND glaccountusers.canview=1
+		ORDER BY chartmaster.accountcode";
 $Account = DB_query($sql);
 while ($myrow=DB_fetch_array($Account,$db)){
 	if($myrow['accountcode'] == $SelectedAccount){

@@ -147,8 +147,10 @@ if ((! isset($_POST['FromPeriod'])
 			Sum(CASE WHEN chartdetails.period='" . $_POST['ToPeriod'] . "' THEN chartdetails.actual ELSE 0 END) AS monthactual,
 			Sum(CASE WHEN chartdetails.period='" . $_POST['ToPeriod'] . "' THEN chartdetails.budget ELSE 0 END) AS monthbudget,
 			Sum(CASE WHEN chartdetails.period='" . $_POST['ToPeriod'] . "' THEN chartdetails.bfwdbudget + chartdetails.budget ELSE 0 END) AS lastprdbudgetcfwd
-		FROM chartmaster INNER JOIN accountgroups ON chartmaster.group_ = accountgroups.groupname
+		FROM chartmaster 
+			INNER JOIN accountgroups ON chartmaster.group_ = accountgroups.groupname
 			INNER JOIN chartdetails ON chartmaster.accountcode= chartdetails.accountcode
+			INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmaster.accountcode AND glaccountusers.userid='" . $_SESSION['UserID'] . "' AND glaccountusers.canview=1
 		GROUP BY accountgroups.groupname,
 				accountgroups.parentgroupname,
 				accountgroups.pandl,
@@ -417,8 +419,10 @@ if ((! isset($_POST['FromPeriod'])
 			Sum(CASE WHEN chartdetails.period='" . $_POST['ToPeriod'] . "' THEN chartdetails.actual ELSE 0 END) AS monthactual,
 			Sum(CASE WHEN chartdetails.period='" . $_POST['ToPeriod'] . "' THEN chartdetails.budget ELSE 0 END) AS monthbudget,
 			Sum(CASE WHEN chartdetails.period='" . $_POST['ToPeriod'] . "' THEN chartdetails.bfwdbudget + chartdetails.budget ELSE 0 END) AS lastprdbudgetcfwd
-		FROM chartmaster INNER JOIN accountgroups ON chartmaster.group_ = accountgroups.groupname
+		FROM chartmaster 
+			INNER JOIN accountgroups ON chartmaster.group_ = accountgroups.groupname
 			INNER JOIN chartdetails ON chartmaster.accountcode= chartdetails.accountcode
+			INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmaster.accountcode AND glaccountusers.userid='" . $_SESSION['UserID'] . "' AND glaccountusers.canview=1
 		GROUP BY accountgroups.groupname,
 				accountgroups.pandl,
 				accountgroups.sequenceintb,

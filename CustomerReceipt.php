@@ -1100,7 +1100,11 @@ if (isset($_POST['GLEntry']) AND isset($_SESSION['ReceiptBatch'])){
 			<td>' . _('GL Account') . ':</td>
 			<td><select tabindex="8" name="GLCode">';
 
-	$SQL = "SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode";
+	$SQL = "SELECT chartmaster.accountcode, 
+					chartmaster.accountname 
+			FROM chartmaster 
+				INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmaster.accountcode AND glaccountusers.userid='" .  $_SESSION['UserID'] . "' AND glaccountusers.canupd=1
+			ORDER BY chartmaster.accountcode";
 	$result=DB_query($SQL);
 	if (DB_num_rows($result)==0){
 		echo '</select>' . _('No General ledger accounts have been set up yet') . ' - ' . _('receipts cannot be entered against GL accounts until the GL accounts are set up') . '</td>

@@ -166,20 +166,6 @@ if (isset($_POST['submit'])) {
 		prnMsg( _('The selected user record has been updated'), 'success' );
 	} elseif ($InputError !=1) {
 
-		$LocationSql = "INSERT INTO locationusers (loccode,
-													userid,
-													canview,
-													canupd
-												) VALUES (
-													'" . $_POST['DefaultLocation'] . "',
-													'" . $_POST['UserID'] . "',
-													1,
-													1
-												)";
-		$ErrMsg = _('The default user locations could not be processed because');
-		$DbgMsg = _('The SQL that was used to update the user locations and failed was');
-		$Result = DB_query($LocationSql, $ErrMsg, $DbgMsg);
-
 		$sql = "INSERT INTO www_users (userid,
 						realname,
 						customerid,
@@ -219,6 +205,30 @@ if (isset($_POST['submit'])) {
 						'" . $_POST['PDFLanguage'] . "',
 						'" . $_POST['Department'] . "')";
 		prnMsg( _('A new user record has been inserted'), 'success' );
+		
+		$LocationSql = "INSERT INTO locationusers (loccode,
+													userid,
+													canview,
+													canupd
+												) VALUES (
+													'" . $_POST['DefaultLocation'] . "',
+													'" . $_POST['UserID'] . "',
+													1,
+													1
+												)";
+		$ErrMsg = _('The default user locations could not be processed because');
+		$DbgMsg = _('The SQL that was used to create the user locations and failed was');
+		$Result = DB_query($LocationSql, $ErrMsg, $DbgMsg);
+		prnMsg( _('User has been authorized to use and update only his / her default location'), 'success' );
+		
+		$GLAccountsSql = "INSERT INTO glaccountusers (userid, accountcode, canview, canupd)
+						  SELECT '" . $_POST['UserID'] . "', chartmaster.accountcode,1,1
+						  FROM chartmaster;	";
+		
+		$ErrMsg = _('The default user GL Accounts could not be processed because');
+		$DbgMsg = _('The SQL that was used to create the user GL Accounts and failed was');
+		$Result = DB_query($GLAccountsSql, $ErrMsg, $DbgMsg);
+		prnMsg( _('User has been authorized to use and update all GL accounts'), 'success' );
 	}
 
 	if ($InputError!=1){

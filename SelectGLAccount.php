@@ -22,8 +22,12 @@ if (isset($_POST['Search'])){
                     chartmaster.group_,
                     CASE WHEN accountgroups.pandl!=0 THEN '" . _('Profit and Loss') . "' ELSE '" . _('Balance Sheet') ."' END AS pl
                     FROM chartmaster,
-                        accountgroups
-                    WHERE chartmaster.group_=accountgroups.groupname
+                        accountgroups,
+						glaccountusers
+					WHERE glaccountusers.accountcode = chartmaster.accountcode 
+						AND glaccountusers.userid='" .  $_SESSION['UserID'] . "'
+						AND glaccountusers.canview=1 
+						AND chartmaster.group_=accountgroups.groupname
                     ORDER BY chartmaster.accountcode";
     }
 	elseif (mb_strlen($_POST['Keywords'])>0) {
@@ -37,9 +41,13 @@ if (isset($_POST['Search'])){
 						THEN '" . _('Profit and Loss') . "'
 						ELSE '" . _('Balance Sheet') . "' END AS pl
 				FROM chartmaster,
-					accountgroups
-				WHERE chartmaster.group_ = accountgroups.groupname
-				AND accountname " . LIKE  . " '$SearchString'
+					accountgroups,
+					glaccountusers
+				WHERE glaccountusers.accountcode = chartmaster.accountcode 
+					AND glaccountusers.userid='" .  $_SESSION['UserID'] . "'
+					AND glaccountusers.canview=1 
+					AND chartmaster.group_ = accountgroups.groupname
+					AND accountname " . LIKE  . "'". $SearchString ."'
 				ORDER BY accountgroups.sequenceintb,
 					chartmaster.accountcode";
 
@@ -50,8 +58,12 @@ if (isset($_POST['Search'])){
 					chartmaster.group_,
 					CASE WHEN accountgroups.pandl!=0 THEN '" . _('Profit and Loss') . "' ELSE '" . _('Balance Sheet') ."' END AS pl
 					FROM chartmaster,
-						accountgroups
-					WHERE chartmaster.group_=accountgroups.groupname
+						accountgroups, 
+						glaccountusers
+				WHERE glaccountusers.accountcode = chartmaster.accountcode 
+					AND glaccountusers.userid='" .  $_SESSION['UserID'] . "'
+					AND glaccountusers.canview=1 
+					AND chartmaster.group_=accountgroups.groupname
 					AND chartmaster.accountcode >= '" . $_POST['GLCode'] . "'
 					ORDER BY chartmaster.accountcode";
 		}
@@ -78,10 +90,11 @@ if (!isset($AccountID)) {
 			<td><input type="text" name="Keywords" size="20" maxlength="25" /></td>
 			<td><b>' .  _('OR') . '</b></td>';
 
-	$SQLAccountSelect="SELECT accountcode,
-							accountname
+	$SQLAccountSelect="SELECT chartmaster.accountcode,
+							chartmaster.accountname
 						FROM chartmaster
-						ORDER BY accountcode";
+						INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmaster.accountcode AND glaccountusers.userid='" .  $_SESSION['UserID'] . "' AND glaccountusers.canview=1
+						ORDER BY chartmaster.accountcode";
 
 	$ResultSelection=DB_query($SQLAccountSelect);
 	echo '<td><select name="GLCode">';

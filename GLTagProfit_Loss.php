@@ -172,9 +172,10 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 					chartmaster.accountname,
 					Sum(CASE WHEN (gltrans.periodno>='" . $_POST['FromPeriod'] . "' and gltrans.periodno<='" . $_POST['ToPeriod'] . "') THEN gltrans.amount ELSE 0 END) AS TotalAllPeriods,
 					Sum(CASE WHEN (gltrans.periodno='" . $_POST['ToPeriod'] . "') THEN gltrans.amount ELSE 0 END) AS TotalThisPeriod
-			FROM chartmaster INNER JOIN accountgroups
-			ON chartmaster.group_ = accountgroups.groupname INNER JOIN gltrans
-			ON chartmaster.accountcode= gltrans.account
+			FROM chartmaster 
+				INNER JOIN accountgroups ON chartmaster.group_ = accountgroups.groupname 
+				INNER JOIN gltrans ON chartmaster.accountcode= gltrans.account
+				INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmaster.accountcode AND glaccountusers.userid='" .  $_SESSION['UserID'] . "' AND glaccountusers.canview=1
 			WHERE accountgroups.pandl=1
 			AND gltrans.tag='" . $_POST['tag'] . "'
 			GROUP BY accountgroups.sectioninaccounts,
