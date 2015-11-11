@@ -538,6 +538,8 @@ $MenuItems['GL']['Maintenance']['Caption'] = array(	_('Account Sections'),
 													_('GL Accounts for PT. Bumi Biru'),
 													_('GL Budgets'),
 													_('GL Tags'),
+													_('GL Accounts Authorised Users Maintenance'),
+													_('User Authorised GL Accounts Maintenance'),
 													_('Bank Accounts'),
 													_('Bank Account Authorized Users'));
 
@@ -549,6 +551,8 @@ $MenuItems['GL']['Maintenance']['URL'] = array(		'/AccountSections.php',
 													'/KLGLAccountsPT.php',
 													'/GLBudgets.php',
 													'/GLTags.php',
+													'/GLAccountUsers.php',
+													'/UserGLAccounts.php',
 													'/BankAccounts.php',
 													'/BankAccountUsers.php');
 
