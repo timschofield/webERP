@@ -102,10 +102,26 @@ if (!isset($_POST['Show'])) {
 			} else {
 				echo '<tr><td colspan="2"></td>';
 			}
+			
+			// if user is allowed to see the account we show it, other wise we show "OTHERS ACCOUNTS"
+			$CheckSql = "SELECT count(*)
+						 FROM glaccountusers
+						 WHERE accountcode= '" . $myrow['account'] . "'
+							 AND userid = '" . $_SESSION['UserID'] . "'
+							 AND canview = '1'";
+			$CheckResult = DB_query($CheckSql);
+			$CheckRow = DB_fetch_row($CheckResult);
 
-			echo '<td>' . $myrow['account'] . '</td>
-					<td>' . $myrow['accountname'] . '</td>
-					<td>' . $myrow['narrative']  . '</td>
+			if ($CheckRow[0] > 0) {
+				echo '<td>' . $myrow['account'] . '</td>
+						<td>' . $myrow['accountname'] . '</td>';
+			}else{
+				echo '<td>' . _('Others') . '</td>
+						<td>' . _('Other GL Accounts') . '</td>';
+			}
+			
+					
+			echo '<td>' . $myrow['narrative']  . '</td>
 					<td class="number">' . locale_number_format($myrow['amount'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 					<td class="number">' . $myrow['tag'] . ' - ' . $myrow['tagdescription'] . '</td>';
 

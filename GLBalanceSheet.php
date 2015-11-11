@@ -1,5 +1,5 @@
 <?php
-/* $Id: GLBalanceSheet.php 7268 2015-04-19 14:57:47Z rchacon $*/
+/* $Id: GLBalanceSheet.php 7385 2015-11-11 08:03:20Z tehonu $*/
 /* This script shows the balance sheet for the company as at a specified date. */
 
 /*Through deviousness and cunning, this system allows shows the balance sheets as at the end of any period selected - so first off need to show the input of criteria screen while the user is selecting the period end of the balance date meanwhile the system is posting any unposted transactions */
@@ -130,9 +130,10 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 			chartmaster.accountname,
 			Sum(CASE WHEN chartdetails.period='" . $_POST['BalancePeriodEnd'] . "' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS balancecfwd,
 			Sum(CASE WHEN chartdetails.period='" . ($_POST['BalancePeriodEnd'] - 12) . "' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS lybalancecfwd
-		FROM chartmaster INNER JOIN accountgroups
-		ON chartmaster.group_ = accountgroups.groupname INNER JOIN chartdetails
-		ON chartmaster.accountcode= chartdetails.accountcode
+		FROM chartmaster 
+			INNER JOIN accountgroups ON chartmaster.group_ = accountgroups.groupname 
+			INNER JOIN chartdetails	ON chartmaster.accountcode= chartdetails.accountcode
+			INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmaster.accountcode AND glaccountusers.userid='" .  $_SESSION['UserID'] . "' AND glaccountusers.canview=1
 		WHERE accountgroups.pandl=0
 		GROUP BY accountgroups.groupname,
 			chartdetails.accountcode,
@@ -372,9 +373,10 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 			chartmaster.accountname,
 			Sum(CASE WHEN chartdetails.period='" . $_POST['BalancePeriodEnd'] . "' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS balancecfwd,
 			Sum(CASE WHEN chartdetails.period='" . ($_POST['BalancePeriodEnd'] - 12) . "' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS lybalancecfwd
-		FROM chartmaster INNER JOIN accountgroups
-		ON chartmaster.group_ = accountgroups.groupname INNER JOIN chartdetails
-		ON chartmaster.accountcode= chartdetails.accountcode
+		FROM chartmaster 
+			INNER JOIN accountgroups ON chartmaster.group_ = accountgroups.groupname 
+			INNER JOIN chartdetails	ON chartmaster.accountcode= chartdetails.accountcode
+			INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmaster.accountcode AND glaccountusers.userid='" .  $_SESSION['UserID'] . "' AND glaccountusers.canview=1
 		WHERE accountgroups.pandl=0
 		GROUP BY accountgroups.groupname,
 			chartdetails.accountcode,

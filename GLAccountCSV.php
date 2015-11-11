@@ -34,7 +34,11 @@ echo '<table>
 	        <tr>
 	         <td>' . _('Selected Accounts') . ':</td>
 	         <td><select name="Account[]" size="12" multiple="multiple">';
-$sql = "SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode";
+$sql = "SELECT chartmaster.accountcode, 
+			   chartmaster.accountname
+		FROM chartmaster 
+		INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmaster.accountcode AND glaccountusers.userid='" .  $_SESSION['UserID'] . "' AND glaccountusers.canview=1
+		ORDER BY chartmaster.accountcode";
 $AccountsResult = DB_query($sql);
 $i=0;
 while ($myrow=DB_fetch_array($AccountsResult,$db)){

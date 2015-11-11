@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: GLJournal.php 7274 2015-04-26 02:38:07Z exsonqu $*/
+/* $Id: GLJournal.php 7385 2015-11-11 08:03:20Z tehonu $*/
 
 include('includes/DefineJournalClass.php');
 
@@ -324,10 +324,11 @@ if (!isset($_POST['GLManualCode'])) {
 }
 echo '<td><input type="text" autofocus="autofocus" name="GLManualCode" maxlength="12" size="12" onchange="inArray(this, GLCode.options,'.	"'".'The account code '."'".'+ this.value+ '."'".' doesnt exist'."'".')" value="'. $_POST['GLManualCode'] .'"  /></td>';
 
-$sql="SELECT accountcode,
-			accountname
+$sql="SELECT chartmaster.accountcode,
+			chartmaster.accountname
 		FROM chartmaster
-		ORDER BY accountcode";
+			INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmaster.accountcode AND glaccountusers.userid='" .  $_SESSION['UserID'] . "' AND glaccountusers.canupd=1
+		ORDER BY chartmaster.accountcode";
 
 $result=DB_query($sql);
 echo '<td>

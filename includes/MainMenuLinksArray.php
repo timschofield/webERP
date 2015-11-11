@@ -396,6 +396,8 @@ $MenuItems['GL']['Maintenance']['Caption'] = array(	_('Account Sections'),
 													_('GL Accounts'),
 													_('GL Budgets'),
 													_('GL Tags'),
+													_('GL Accounts Authorised Users Maintenance'),
+													_('User Authorised GL Accounts Maintenance'),
 													_('Bank Accounts'),
 													_('Bank Account Authorised Users'));
 
@@ -404,6 +406,8 @@ $MenuItems['GL']['Maintenance']['URL'] = array(		'/AccountSections.php',
 													'/GLAccounts.php',
 													'/GLBudgets.php',
 													'/GLTags.php',
+													'/GLAccountUsers.php',
+													'/UserGLAccounts.php',
 													'/BankAccounts.php',
 													'/BankAccountUsers.php');
 

@@ -1,5 +1,5 @@
 <?php
-/* $Id: Payments.php 7328 2015-07-27 16:52:54Z rchacon $*/
+/* $Id: Payments.php 7385 2015-11-11 08:03:20Z tehonu $*/
 /* Entry of bank account payments either against an AP account or a general ledger payment - if the AP-GL link in company preferences is set */
 
 include('includes/DefinePaymentClass.php');
@@ -1013,16 +1013,18 @@ if ($_SESSION['CompanyRecord']['gllink_creditors']==1 AND $_SESSION['PaymentDeta
 	}
 
 	if (isset($_POST['GLGroup']) AND $_POST['GLGroup']!='') {
-		$SQL = "SELECT accountcode,
-						accountname
+		$SQL = "SELECT chartmaster.accountcode,
+						chartmaster.accountname
 				FROM chartmaster
-				WHERE group_='".$_POST['GLGroup']."'
-				ORDER BY accountcode";
+					INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmaster.accountcode AND glaccountusers.userid='" .  $_SESSION['UserID'] . "' AND glaccountusers.canupd=1
+				WHERE chartmaster.group_='".$_POST['GLGroup']."'
+				ORDER BY chartmaster.accountcode";
 	} else {
-		$SQL = "SELECT accountcode,
-						accountname
+		$SQL = "SELECT chartmaster.accountcode,
+						chartmaster.accountname
 				FROM chartmaster
-				ORDER BY accountcode";
+					INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmaster.accountcode AND glaccountusers.userid='" .  $_SESSION['UserID'] . "' AND glaccountusers.canupd=1
+				ORDER BY chartmaster.accountcode";
 	}
 
 
