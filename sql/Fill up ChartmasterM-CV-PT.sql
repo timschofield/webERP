@@ -58,3 +58,22 @@ INSERT INTO `chartmasterPT` (`accountcode`, `accountname`, `group_`)
 SELECT `accountcode`, `accountname`, `group_`
 FROM chartmaster
 WHERE (accountcode LIKE "%PT" OR accountcode = "350510100");
+
+
+DELETE FROM glaccountusers 
+WHERE userid = "PakRicard" 
+AND (accountcode NOT LIKE "%PT" AND accountcode != "350510100");
+
+DELETE FROM glaccountusers 
+WHERE userid = "Ike1";
+
+INSERT INTO glaccountusers (userid, accountcode, canview, canupd)
+SELECT "Ike1", accountcode, canview, canupd
+FROM glaccountusers
+WHERE userid = "Revi";
+
+UPDATE glaccountusers
+SET canupd = 0
+WHERE userid = "Revi"
+AND (accountcode LIKE "41%"
+	OR accountcode LIKE "51%");
