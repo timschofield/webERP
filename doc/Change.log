@@ -1,5 +1,6 @@
 webERP Change Log
 
+15/11/15 RChacon: Tidy css/*/default.css, reagrouping style for clases centre, number, page_title_text and text.
 15/11/15 Hazem wehbi Add new arabic locale for Syria. 
 14/11/15 RChacon: In css/default/default.css, add sections to use with a cascading style sheet for a small device width, reagroup style for centre, number and text in tables.
 11/11/15 Ricard: New feature GL accounts - users authority.
