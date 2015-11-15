@@ -50,10 +50,10 @@ table{
 table.selection{
 	padding-bottom:5px;
 }
-th{
-	font-weight:normal;
+th {
 	background-color:#B06161;
 	color:white;
+	font-weight:normal;
 }
 th.ascending {
   cursor: s-resize;
@@ -80,26 +80,8 @@ th.descending:after {
 	border-top: 4px solid #000;
 	visibility: visible;
 }
-th.number{
-	background-color:#B06161;
-	color:white;
-	font-weight:normal;
-	text-align:right;
-}
-th.text{
-	background-color:#B06161;
-	color:white;
-	font-weight:normal;
-	text-align:left;
-}
 td {
 	text-align:left;
-}
-td.centre{
-	text-align:center;
-}
-td.number{
-	text-align:right;
 }
 td.select{
 	background-color:#eee;
@@ -462,5 +444,29 @@ textarea.texterror{
 }
 .centre {
 	text-align:center;
-	/* centre class (general). */
+	/* Class selector to centre text horizontally in an element. */
+}
+.number {
+	text-align:right;
+	/* Class selector for horizontal alignment of a number (right) in an element. */
+}
+.text {
+	text-align:left;
+	/* Class selector for horizontal alignment of a text (left) in an element. */
+}
+/* END Style for all. ********************************************************/
+
+
+/* If you want to use a cascading style sheet for a small device width, uncomment line "<meta name="viewport" content="width=device-width, initial-scale=1" />" on includes/header.inc and use the following sections. */
+
+@media only screen and (max-device-width:767px) {
+	/* Style for new browser in a device with a rendering width less than 768px. */
+}
+
+@media only screen and (min-device-width:768px) and (max-device-width:1023px) {
+	/* Style for new browser in a device with a rendering width between 768px and 1024px. */
+}
+
+@media only screen and (min-device-width:1024px) {
+	/* Style for new browser in a device with a rendering width greater than 1024px. */
 }

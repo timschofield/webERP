@@ -1,5 +1,7 @@
 webERP Change Log
 
+14/11/15 RChacon: In css/default/default.css, add sections to use with a cascading style sheet for a small device width, reagroup style for centre, number and text in tables.
+11/11/15 Ricard: New feature GL accounts - users authority.
 09/11/15 RChacon: In CustomerReceipt.php, minor changes (completes table columns, adds classes, etc.).
 05/11/15 Exson: Tidy code up following Tim's suggestion. 
 3/11/15 RChacon: In GLAccountInquiry.php, add ViewTopic and BookMark, fix some colspan, and add thead and column classes.
