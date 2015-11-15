@@ -41,11 +41,6 @@ a:hover {
 	text-decoration:underline;
 }
 
-.centre { /* used */
-  margin: 0 auto;
-  text-align:center;
-}
-
 /*table detail items default format */
 td {
 	font-family: Arial, Verdana, Helvetica;
@@ -82,9 +77,6 @@ td.select {
 	text-align:right;
 	cursor:pointer;
 }
-td.number {
-	text-align: right;
-}
 .EvenTableRows {
 	background-color: #CCCCCC;
 }
@@ -93,25 +85,11 @@ td.number {
 }
 
 th { /* table heading */
-	font-weight: normal;
-	font-size: 10px;
 	background-color: #cccce5;
 	color: #330000;
+	font-size: 10px;
+	font-weight: normal;
 	text-align: center;
-}
-th.number {
-	background-color: #cccce5;
-	color: #330000;
-	font-size: 10px;
-	font-weight: normal;
-	text-align: right;
-}
-th.text {
-	background-color: #cccce5;
-	color: #330000;
-	font-size: 10px;
-	font-weight: normal;
-	text-align: left;
 }
 th.ascending {
   cursor: s-resize;
@@ -167,9 +145,6 @@ e.g.: class input_button, input_column_button, input_text */
 input {
 	font-family: Arial, Verdana, Helvetica;
 	font-size: 10px;
-}
-input.number{
-	text-align: right;
 }
 input.image {
 	border-width:0px;
@@ -268,33 +243,23 @@ div.csv {
         TEXT-ALIGN:center;
 }
 
-.page_title_text { /* used */
-	font-family: Arial, Verdana, Helvetica;
-        padding-top: 2px;
-        padding-bottom: 2px;
-	font-weight: bold;
-	font-size: 10px;
-	color: black;
-	TEXT-ALIGN:center;
-}
-
-DIV.page_help_text {
+div.page_help_text {
 	background: lightgrey url(images/help.png) top left no-repeat;
-	BORDER: #a52a2a 1px solid;
-	padding-top:2px;
-        padding-bottom: 2px;
-	PADDING-LEFT: 10px;
-	Z-INDEX: 1;
-	width: 80%;
-	FLOAT: none;
-	VISIBILITY: visible;
-	MARGIN: 0 auto;
-	POSITION: static;
+	border: #a52a2a 1px solid;
+	color: black;
+	float: none;
 	font-family: Arial, Verdana, Helvetica;
-        font-weight: normal;
-        font-size: 10px;
-        color: black;
-	TEXT-ALIGN:center;
+	font-size: 10px;
+	font-weight: normal;
+	margin: 0 auto;
+	padding-bottom: 2px;
+	padding-left: 10px;
+	padding-top:2px;
+	position: static;
+	text-align:center;
+	visibility: visible;
+	width: 80%;
+	z-index: 1;
 }
 
 .menu_group_item a {
@@ -435,10 +400,6 @@ li {
 	padding:5px;
 	border:thin outset #eee;
 }
-/*#BodyDiv .centre{
-	margin:0 auto 10px;
-    text-align:center;
-}*/
 
 /*** BODY - MAIN MENU ***/
 
@@ -562,7 +523,24 @@ li {
 }
 .centre {
 	text-align:center;
-	/* centre class (general). */
+	/* Class selector to centre text horizontally in an element. */
 }
-
-/*** END ***/
+.number {
+	text-align:right;/* Should be left ? */
+	/* Class selector to horizontal align a number (right) in an element. */
+}
+.page_title_text {
+	color:black;
+	font-family:Arial, Verdana, Helvetica;
+	font-size:120%;
+	font-weight:bold;
+	padding-bottom:2px;
+	padding-top:2px;
+	text-align:center;
+	/* Class selector for page title. */
+}
+.text {
+	text-align:left;/* Should be right ? */
+	/* Class selector to horizontal align a text (left) in an element. */
+}
+/* END Style for all. ********************************************************/

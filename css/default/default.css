@@ -27,12 +27,6 @@ img{
 	vertical-align:middle;
 }
 
-.page_title_text{
-	padding:5px;
-	font-weight:bold;
-	color:black;
-	text-align:center;
-}
 p.good{
 	font-weight:bold;
 	color:green;
@@ -448,11 +442,18 @@ textarea.texterror{
 }
 .number {
 	text-align:right;
-	/* Class selector for horizontal alignment of a number (right) in an element. */
+	/* Class selector to horizontal align a number (right) in an element. */
+}
+.page_title_text {
+	color:black;
+	font-weight:bold;
+	padding:5px;
+	text-align:center;
+	/* Class selector for page title. */
 }
 .text {
 	text-align:left;
-	/* Class selector for horizontal alignment of a text (left) in an element. */
+	/* Class selector to horizontal align a text (left) in an element. */
 }
 /* END Style for all. ********************************************************/
 

@@ -47,12 +47,6 @@ p.bad{
 	font-weight:bold;
 	color:red;
 }
-p.page_title_text{ /* page title, used in many *.php */
-	background:gainsboro;
-	margin:10px auto;
-	padding:5px;
-	text-align:center;
-}
 table{
 	width:auto; /* automatic width */
 	max-width:90%;
@@ -61,29 +55,21 @@ table{
 }
 table.selection{
 }
-th{
-	font-weight:normal;
+th {
 	background-color:#C3C3C3;
-	font-size:100%;
 	color:#300;
+	font-size:100%;
+	font-weight:normal;
 	text-align:center;
 	vertical-align:middle;
 }
 th.number{
-	background-color:#cccce5;
-	color:#300;
-	font-size:100%;
-	font-weight:normal;
+	background-color:#CCCCE5; /* Should be #C3C3C3 ? */
 	text-align:right;
-	vertical-align:middle;
 }
 th.text{
-	background-color:#cccce5;
-	color:#300;
-	font-size:100%;
-	font-weight:normal;
+	background-color:#CCCCE5; /* Should be #C3C3C3 ? */
 	text-align:left;
-	vertical-align:middle;
 }
 th.ascending {
   cursor: s-resize;
@@ -118,9 +104,6 @@ td{
 td.select{
 	background-color:#eee;
 }
-td.number{
-	text-align:right;
-}
 .centre{
 	margin:0 auto 10px;
 	text-align:center;
@@ -153,9 +136,6 @@ input:hover{
 	border-left-style:solid;
 	border-right-color:gray;
 	border-right-style:solid;
-}
-input.number{
-	text-align:right;
 }
 input.image{
 	border-width:0px;
@@ -516,7 +496,21 @@ select.selecterror{ /*AccountGroups.php, BankAccounts.php, BOMs.php, Stocks.php 
 }
 .centre {
 	text-align:center;
-	/* centre class (general). */
+	/* Class selector to centre text horizontally in an element. */
 }
-
-/*** END ***/
+.number {
+	text-align:right;
+	/* Class selector to horizontal align a number (right) in an element. */
+}
+.page_title_text {
+	background:gainsboro;
+	margin:10px auto;
+	padding:5px;
+	text-align:center;
+	/* Class selector for page title. */
+}
+.text {
+	text-align:left;
+	/* Class selector to horizontal align a text (left) in an element. */
+}
+/* END Style for all. ********************************************************/

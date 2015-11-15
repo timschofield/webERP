@@ -39,11 +39,6 @@ a:hover {
 	text-decoration:underline;
 }
 
-.centre { /* used */
-  margin: 0 auto;
-  text-align:center;
-}
-
 /*table detail items default format */
 td {
 	text-align: left;
@@ -78,9 +73,6 @@ td.select {
 	text-align:right;
 	cursor:pointer;
 }
-td.number {
-	text-align: right;
-}
 
 .EvenTableRows {
 	background-color: #CCCCCC;
@@ -90,9 +82,9 @@ td.number {
 }
 
 th { /* table heading */
-	font-weight: normal;
 	background-color: #cccce5;
 	color: #330000;
+	font-weight: normal;
 	text-align: center;
 }
 th.ascending {
@@ -119,18 +111,6 @@ th.descending:after {
 	border-right: 4px solid transparent;
 	border-top: 4px solid #000;
 	visibility: visible;
-}
-th.number {
-	background-color: #cccce5;
-	color: #330000;
-	font-weight: normal;
-	text-align: right;
-}
-th.text {
-	background-color: #cccce5;
-	color: #330000;
-	font-weight: normal;
-	text-align: left;
 }
 div.error {
 	background-color:#fddbdb;
@@ -159,9 +139,6 @@ div.info {
 which should have the same width as the column where it is located
 e.g.: class input_button, input_column_button, input_text */
 input {
-}
-input.number{
-	text-align: right;
 }
 input.image {
 	border-width:0px;
@@ -255,16 +232,7 @@ div.csv {
         text-align:center;
 }
 
-.page_title_text { /* used */
-	font-family: Arial, Verdana, Helvetica;
-	padding-top: 2px;
-	padding-bottom: 2px;
-	font-weight: bold;
-	color: black;
-	text-align:center;
-}
-
-DIV.page_help_text {
+div.page_help_text {
 	background: lightgrey url(images/help.png) top left no-repeat;
 	border: #a52a2a 1px solid;
 	padding-top:2px;
@@ -414,10 +382,6 @@ textarea.texterror {
 	padding:5px;
 	border:thin outset #eee;
 }
-/*#BodyDiv .centre{
-	margin:0 auto 10px;
-    text-align:center;
-}*/
 
 /*** BODY - MAIN MENU ***/
 
@@ -541,7 +505,24 @@ textarea.texterror {
 }
 .centre {
 	text-align:center;
-	/* centre class (general). */
+	/* Class selector to centre text horizontally in an element. */
 }
-
-/*** END ***/
+.number {
+	text-align:right;
+	/* Class selector to horizontal align a number (right) in an element. */
+}
+.page_title_text {
+	color:black;
+	font-family:Arial, Verdana, Helvetica;
+	font-size:120%;
+	font-weight:bold;
+	padding-bottom:2px;
+	padding-top:2px;
+	text-align:center;
+	/* Class selector for page title. */
+}
+.text {
+	text-align:left;
+	/* Class selector to horizontal align a text (left) in an element. */
+}
+/* END Style for all. ********************************************************/

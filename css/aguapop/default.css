@@ -37,13 +37,6 @@ img{ /* icon on page title, etc */
 p{ /* some text need to be centered */
 /*text-align:center;*/
 }
-p.page_title_text { /* page title */
-	color:black;
-	font-weight:bold;
-	margin:0 auto;
-	padding:5px;
-	text-align:center;
-}
 p.good {
 	font-weight: bold;
 	color: green;
@@ -52,7 +45,6 @@ p.bad {
 	font-weight: bold;
 	color:red;
 }
-
 
 table {
 	width:auto;
@@ -97,15 +89,11 @@ th.descending:after {
 	visibility: visible;
 }
 th.number {
-	background-color: skyblue;
-	color: white;
-	font-weight: normal;
+	color: white;/* Should be black ? */
 	text-align: right;
 }
 th.text {
-	background-color: skyblue;
-	color: white;
-	font-weight: normal;
+	color: white;/* Should be black ? */
 	text-align: left;
 }
 td {
@@ -116,9 +104,6 @@ td.select {
 	background-color: whitesmoke;
 	padding:3px;
 }
-td.number {
-	text-align: right;
-}
 
 div.centre {
 	padding:5px;
@@ -128,9 +113,6 @@ div.centre {
 input { /*specifies the input field text characteristics*/
 	font-family: Arial, Verdana, Helvetica, sans-serif;
 	font-style: italic;
-}
-input.number{
-	text-align: right;
 }
 input.image {
 	border-width: 0px;
@@ -495,7 +477,22 @@ li {
 }
 .centre {
 	text-align:center;
-	/* centre class (general). */
+	/* Class selector to centre text horizontally in an element. */
 }
-
-/**** END  ***/
+.number {
+	text-align:right;
+	/* Class selector to horizontal align a number (right) in an element. */
+}
+.page_title_text {
+	color:black;
+	font-weight:bold;
+	margin:0 auto; /* . */
+	padding:5px;
+	text-align:center;
+	/* Class selector for page title. */
+}
+.text {
+	text-align:left;
+	/* Class selector to horizontal align a text (left) in an element. */
+}
+/* END Style for all. ********************************************************/

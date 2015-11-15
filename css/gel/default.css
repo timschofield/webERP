@@ -37,13 +37,6 @@ img {
 	border:none;
 	vertical-align:middle;
 }
-.page_title_text {
-    padding-top: 2px;
-    padding-bottom: 2px;
-	font-weight: bold;
-	color: black;
-	text-align:center;
-}
 p.good {
     font-weight: bold;
     color: green;
@@ -64,28 +57,16 @@ table.selection {
 	outline-width:1px;
 }
 th {
-	font-weight: normal;
-	background-color: #ccc;
-	color: #330000;
-	text-align: center;
-}
-th.number {
-	background-color: #ccc;
-	color: #330000;
-	font-weight: normal;
-	text-align: right;
-}
-th.text {
-	background-color: #ccc;
-	color: #330000;
-	font-weight: normal;
-	text-align: left;
+	background-color:#ccc;
+	color:#330000;
+	font-weight:normal;
+	text-align:center;
 }
 th.ascending {
-  cursor: s-resize;
+	cursor: s-resize;
 }
 th.descending {
-  cursor: n-resize;
+	cursor: n-resize;
 }
 th:after {
 	content: "";
@@ -113,9 +94,6 @@ td {
 td.select {
 	background-color:#eee;
 }
-td.number {
-	text-align: right;
-}
 div.centre {
   margin: 0 auto;
   text-align:center;
@@ -129,9 +107,6 @@ input:hover{
 	background: url(images/inputh.png) #eee;
 	color:#000;
 	border: 1px 1px 1px 1px #000 solid;
-}
-input.number{
-	text-align: right;
 }
 input.image {
 	border-width:0px;
@@ -553,7 +528,22 @@ li { /* ??? */
 }
 .centre {
 	text-align:center;
-	/* centre class (general). */
+	/* Class selector to centre text horizontally in an element. */
 }
-
-/*** END ***/
+.number {
+	text-align:right;
+	/* Class selector to horizontal align a number (right) in an element. */
+}
+.page_title_text {
+	color:black;
+	font-weight:bold;
+    padding-bottom:2px;
+    padding-top:2px;
+	text-align:center;
+	/* Class selector for page title. */
+}
+.text {
+	text-align:left;
+	/* Class selector to horizontal align a text (left) in an element. */
+}
+/* END Style for all. ********************************************************/

@@ -39,16 +39,6 @@ img {
 	border:none;
 	vertical-align:middle;
 }
-p.page_title_text {
-	padding-top: 2px;
-	padding-bottom: 2px;
-	font-weight: bold;
-	color: black;
-	background-color: #C9D392;
-	width: 30%;
-	TEXT-ALIGN:center;
-	margin: 10px auto;
-}
 p.good { /***/
     font-weight: bold;
     color: green;
@@ -58,29 +48,17 @@ p.bad { /***/
     color:red;
 }
 table {
-  background-color: #ffffff;
-  margin: 0 auto;
-  width:100%
+	background-color: #ffffff;
+	margin: 0 auto;
+	width:100%
 }
 table.selection {
 }
 th {
-	font-weight: normal;
 	background-color: #777C59;
 	color: white;
+	font-weight: normal;
 	text-align: center;
-}
-th.number {
-	background-color: #800000;
-	color: white;
-	font-weight: normal;
-	text-align: right;
-}
-th.text {
-	background-color: #800000;
-	color: white;
-	font-weight: normal;
-	text-align: left;
 }
 th.ascending {
   cursor: s-resize;
@@ -113,17 +91,11 @@ td {
 td.select {
 	background-color:#eee;
 }
-td.number {
-	text-align: right;
-}
 div.centre { /* centering buttons / links */
   margin: 0 auto;
   text-align:center;
 }
 input {
-}
-input.number{
-	text-align: right;
 }
 input.image {
 	border-width:0px;
@@ -173,21 +145,21 @@ div.info {
 	color: navy;
 	border: 0px solid navy;
 }
-DIV.page_help_text {
-	background: lightgrey url(images/help.png) top left no-repeat;
-	border: #a52a2a 1px solid;
+div.page_help_text {
+	background:lightgrey url(images/help.png) top left no-repeat;
+	border:#A52A2A 1px solid;
+	color:black;
+	float:none;
+	font-weight:normal;
+	margin:0 auto;
+	padding-bottom:2px;
+	padding-left:10px;
 	padding-top:2px;
-	padding-bottom: 2px;
-	padding-left: 10px;
-	z-index: 1;
-	width: 80%;
-	float: none;
-	visibility: visible;
-	margin: 0 auto;
-	position: static;
-	font-weight: normal;
-	color: black;
+	position:static;
 	text-align:center;
+	visibility:visible;
+	width:80%;
+	z-index:1;
 }
 
 /*** calendar picker ***/
@@ -369,14 +341,10 @@ select.selecterror {
 	margin-bottom:10px;
 }
 #BodyDiv table.selection {
-background:#E0F3B1;
-    border:thin outset #E0F3B1;
-    padding:5px;
+	background:#E0F3B1;
+	border:thin outset #E0F3B1;
+	padding:5px;
 }
-/*#BodyDiv .centre{
-	margin:0 auto 10px;
-    text-align:center;
-}*/
 
 /*** BODY - MAIN MENU ***/
 
@@ -403,10 +371,10 @@ background:#E0F3B1;
 	color:white;
 }
 #MainMenuDiv li a:hover{ /* link as button!!! pressed state */
-	text-decoration:none;
-	padding:3px;
-	border:thin inset #617C4F;
 	background:#5A5F00;
+	border:thin inset #617C4F;
+	padding:3px;
+	text-decoration:none;
 }
 #MainMenuDiv .main_menu_selected a{ /* the selected button */
 	border:thin inset #5A5F00;
@@ -516,7 +484,25 @@ background:#E0F3B1;
 }
 .centre {
 	text-align:center;
-	/* centre class (general). */
+	/* Class selector to centre text horizontally in an element. */
 }
-
-/*** END ***/
+.number {
+	text-align:right;
+	/* Class selector to horizontal align a number (right) in an element. */
+}
+.page_title_text {
+	background-color:#C9D392;
+	color:black;
+	font-weight:bold;
+	margin:10px auto;
+	padding-bottom:2px;
+	padding-top:2px;
+	text-align:center;
+	width:30%;
+	/* Class selector for page title. */
+}
+.text {
+	text-align:left;
+	/* Class selector to horizontal align a text (left) in an element. */
+}
+/* END Style for all. ********************************************************/
