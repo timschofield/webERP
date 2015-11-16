@@ -527,12 +527,6 @@ $MenuItems['GL']['Reports']['URL'] = array(	'/GLTrialBalance.php',
 $MenuItems['GL']['Maintenance']['Caption'] = array(	_('Account Sections'),
 													_('Account Groups'),
 													_('GL Accounts'),
-											'/GLTagProfit_Loss.php',
-											'/Tax.php');
-
-$MenuItems['GL']['Maintenance']['Caption'] = array(	_('Account Sections'),
-													_('Account Groups'),
-													_('GL Accounts'),
 													_('GL Accounts for Kapal-Laut'),
 													_('GL Accounts for CV. Merta Bali'),
 													_('GL Accounts for PT. Bumi Biru'),
