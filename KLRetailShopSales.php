@@ -1,6 +1,7 @@
 <?php
 
 /************************************************************************
+v 2.14 Do not allow splitted payments. 
 v 2.13 Mod to use Amex credit card with BCA ECDD
 v 2.12 Mod to use outlet or regular packaging
 v 2.11 Mod to include BCA CC accounts
@@ -22,7 +23,7 @@ v 1.00 2011-08-10: Shops start using it.
 v 1.00 2011-07-25: Kantor starts using it.
 *********************************************************************/
 
-define("VERSIONFILE", "2.13"); // 
+define("VERSIONFILE", "2.14"); // 
 
 include('includes/DefineCartClass.php');
 include('includes/session.inc');
@@ -877,19 +878,58 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 		$InputError = true;
 	}
 	
-	$TotalFromCustomer = $_POST['AmountPaidCash'] 
-						+ $_POST['AmountPaidCCDanamon'] 
-						+ $_POST['AmountPaidAmexBCA']
-						+ $_POST['AmountPaidCCMandiri'] 
-						+ $_POST['AmountPaidCCBCA'] 
+	$TotalReceivedCash = $_POST['AmountPaidCash'];
+	$TotalReceivedCreditCard = $_POST['AmountPaidCCDanamon'] 
+								+ $_POST['AmountPaidAmexBCA']
+								+ $_POST['AmountPaidCCMandiri'] 
+								+ $_POST['AmountPaidCCBCA'];
+
+	$TotalFromCustomer = $TotalReceivedCash 
+						+ $TotalReceivedCreditCard 
 						+ $_POST['AmountReturnedGoods'] 
 						+ $_POST['AmountVouchers'];
+						
+	//check number of payment systems used in this transaction.
+	$PaymentSystemsUsed = 0;
+	if ($_POST['AmountPaidCash'] <> 0){
+		$PaymentSystemsUsed++;
+	}
+	if ($_POST['AmountPaidCCDanamon'] <> 0){
+		$PaymentSystemsUsed++;
+	}
+	if ($_POST['AmountPaidAmexBCA'] <> 0){
+		$PaymentSystemsUsed++;
+	}
+	if ($_POST['AmountPaidCCMandiri'] <> 0){
+		$PaymentSystemsUsed++;
+	}
+	if ($_POST['AmountPaidCCBCA'] <> 0){
+		$PaymentSystemsUsed++;
+	}
+
+	/////////////////////////////////////////////////
+	// Safety checks
+	/////////////////////////////////////////////////
 	
+	// payment received must be equal to total invoice
 	if (abs($TotalFromCustomer -($_SESSION['Items'.$identifier]->total+$_POST['TaxTotal']))>=0.01) {
 		prnMsg(_('The amount entered as payment does not equal the amount of the invoice. Please ensure the customer has paid the correct amount and re-enter'),'error');
 		$InputError = true;
 	}
+
+	// payment must be cash OR credit card, but not both (no splited payments)
+	if (($TotalReceivedCash != 0) && ($TotalReceivedCreditCard != 0)) {
+		prnMsg(_('Splitted Payments Cash - Credit Card are not allowed.'),'error');
+		$InputError = true;
+	}
 	
+	// if CC is used, only 1 CC is allowed per invoice
+	if (($TotalReceivedCash == 0) && ($PaymentSystemsUsed > 1)) {
+		prnMsg(_('Splited payments by several Cards are not allowed.'),'error');
+		$InputError = true;
+	}
+	
+	// Yellow paper invocie number is mandatory
 	if ($_POST['CustRef']== "") {
 		prnMsg(_('Please enter the number of the yellow paper invoice'),'error');
 		$InputError = true;
@@ -924,17 +964,13 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 
 	}//end of testing for negative stocks
 
-
 	if ($InputError == false) { //all good so let's get on with the processing
 
 		/* Now Get the where the sale is to from the branches table */
 
 		// RICARD: KL Mod to select area
 		// If all (or part of) the goods were paid with CC, consider payment as CC
-		if (($_POST['AmountPaidCCDanamon'] > 0) 
-			OR ($_POST['AmountPaidAmexBCA'] > 0) 
-			OR ($_POST['AmountPaidCCMandiri'] > 0)
-			OR ($_POST['AmountPaidCCBCA'] > 0)){
+		if ($TotalReceivedCreditCard > 0) {
 			$PaymentMethod = PAYMENT_BY_CREDITCARD;
 		}else{
 			$PaymentMethod = PAYMENT_BY_CASH;
@@ -1063,9 +1099,6 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 				' Yellow invoice: '. $_SESSION['Items'.$identifier]->CustRef,'success');
 
 		/* End of insertion of new sales order */
-
-		/*Now Get the next invoice number - GetNextTransNo() function in SQL_CommonFunctions
-		 * GetPeriod() in includes/DateFunctions.inc */
 
 		/*Now insert the DebtorTrans */
 
@@ -1364,7 +1397,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 				
 				// Compensation COGS for PT sales
-				if(($PERCENTAGE_COMPENSATION_HPP_PT - 100) < 0.01){
+				if(abs($PERCENTAGE_COMPENSATION_HPP_PT - 100) < 0.01){
 					$SQL = "INSERT INTO gltrans (	type,
 													typeno,
 													trandate,
@@ -1822,24 +1855,8 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 		echo '<br /><div class="centre">';
 		
 		// if splitted payments
-		$PaymentSystemsUsed = 0;
-		if ($_POST['AmountPaidCash'] <> 0){
-			$PaymentSystemsUsed++;
-		}
-		if ($_POST['AmountPaidCCDanamon'] <> 0){
-			$PaymentSystemsUsed++;
-		}
-		if ($_POST['AmountPaidAmexBCA'] <> 0){
-			$PaymentSystemsUsed++;
-		}
-		if ($_POST['AmountPaidCCMandiri'] <> 0){
-			$PaymentSystemsUsed++;
-		}
-		if ($_POST['AmountPaidCCBCA'] <> 0){
-			$PaymentSystemsUsed++;
-		}
 		
-		if (PaymentSystemsUsed > 1){
+		if ($PaymentSystemsUsed > 1){
 
 			KLSendEmail("SplittedPayment", 
 						"Silent",
@@ -1909,8 +1926,9 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 
 		echo '<br /><br /><a href="' .$_SERVER['PHP_SELF'] . '">' . _('Start a new Retail Sale') . '</a></div>';
 
+	}else{
+		// There were input errors so don't process nuffin
 	}
-	// There were input errors so don't process nuffin
 } else {
 	//pretend the user never tried to commit the sale
 	unset($_POST['ProcessSale']);
