@@ -44,13 +44,6 @@ img{ /* icon on page title, etc */
 
 p{
 }
-p.page_title_text { /* page title */
-	color:black;
-	font-weight:bold;
-	margin:5px auto;
-	padding:5px;
-	text-align:center;
-}
 p.good {
 	font-weight: bold;
 	color: green;
@@ -74,23 +67,11 @@ table .selection{ /* nested table for more complex data display/input */
 	box-shadow:none;
 }
 th { /* table headers */
-	font-weight: normal;
-	font-size:100%;
 	background-color: #ffd980;
 	color: black;
+	font-size:100%;
+	font-weight: normal;
 	text-align: center;
-}
-th.number {
-	background-color: #800000;
-	color: white;
-	font-weight: normal;
-	text-align: right;
-}
-th.text {
-	background-color: #800000;
-	color: white;
-	font-weight: normal;
-	text-align: left;
 }
 th.ascending {
   cursor: s-resize;
@@ -123,9 +104,6 @@ td {
 td.select {
 	background-color:#ffb;
 }
-td.number {
-	text-align: right;
-}
 
 .centre{ /* used by buttons */
 	text-align:center;
@@ -135,9 +113,6 @@ td.number {
 input { /* used for text box and buttons (buttons should have their own styles) */
 	font-family: Arial, Verdana, Helvetica, sans-serif;
 	font-size:100%;
-}
-input.number{
-	text-align: right;
 }
 input.image {
 	border-width:0px;
@@ -179,28 +154,28 @@ textarea:hover{
 div{ /* some input/buttons need to be centered */
 }
 div.error {
-	background-color:#fddbdb;
-	color: red;
+	background-color:#FDDBDB;
 	border: 1px solid red;
 	box-shadow:3px 3px 4px;
+	color: red;
 	margin:0 auto 10px;
 	padding:10px;
 	width:80%;
 }
 div.warn {
-	background-color:#f5dbfd;
-	color: maroon;
+	background-color:#F5DBFD;
 	border: 1px solid maroon;
 	box-shadow:3px 3px 4px;
+	color: maroon;
 	margin:0 auto 10px;
 	padding:10px;
 	width:80%;
 }
 div.success {
-	background-color:#b9ecb4;
-	color: darkgreen;
+	background-color:#B9ECB4;
 	border: 1px solid darkgreen;
 	box-shadow:3px 3px 4px;
+	color: darkgreen;
 	margin:0 auto 10px;
 	padding:10px;
 	width:80%;
@@ -208,49 +183,48 @@ div.success {
 div.info {
 	background-color:#C7CCF6;
 	border:0 solid navy;
+	box-shadow:3px 3px 4px;
 	color:navy;
-	box-shadow:3px 3px 4px;
 	margin:0 auto 10px;
 	padding:10px;
 	width:80%;
 }
-DIV.page_help_text {
+div.page_help_text {
 	background: lightgrey url(images/help.png) top left no-repeat;
-	BORDER: #a52a2a 1px solid;
-	padding-top:2px;
-	padding-bottom: 2px;
-	PADDING-LEFT: 10px;
-	Z-INDEX: 1;
-	FLOAT: none;
-	VISIBILITY: visible;
-	POSITION: static;
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-weight: normal;
-	font-size: 100%;
-	color: black;
-	TEXT-ALIGN:center;
-	
+	border: #A52A2A 1px solid;
 	box-shadow:3px 3px 4px;
-	margin:0 auto 10px;
-	padding:10px;
-	width:80%;
-}
-DIV.system_check { /* probably not used anywhere */
-	border: #a52a2a 1px solid;
-	z-index: 1;
+	color: black;
 	float: none;
-	visibility: visible;
-	position: static;
-	background: lightgray;
-	font-family: arial, verdana, helvetica, sans-serif;
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 100%;
 	font-weight: normal;
-	font-size:100%;
-	color: black;
-	text-align:left;
-	box-shadow:3px 3px 4px;
 	margin:0 auto 10px;
 	padding:10px;
+	padding-bottom: 2px;
+	padding-left: 10px;
+	padding-top:2px;
+	position: static;
+	text-align:center;
+	visibility: visible;
 	width:80%;
+	z-index: 1;
+}
+div.system_check { /* probably not used anywhere */
+	background: lightgray;
+	border: #A52A2A 1px solid;
+	box-shadow:3px 3px 4px;
+	color: black;
+	float: none;
+	font-family: arial, verdana, helvetica, sans-serif;
+	font-size:100%;
+	font-weight: normal;
+	margin:0 auto 10px;
+	padding:10px;
+	position: static;
+	text-align:left;
+	visibility: visible;
+	width:80%;
+	z-index: 1;
 }
 
 /* date picker */
@@ -585,7 +559,22 @@ display:table-cell;
 }
 .centre {
 	text-align:center;
-	/* centre class (general). */
+	/* Class selector to centre text horizontally in an element. */
 }
-
-/* END */
+.number {
+	text-align:right;
+	/* Class selector to horizontal align a number (right) in an element. */
+}
+.page_title_text {
+	color:black;
+	font-weight:bold;
+	margin:5px auto;
+	padding:5px;
+	text-align:center;
+	/* Class selector for page title. */
+}
+.text {
+	text-align:left;
+	/* Class selector to horizontal align a text (left) in an element. */
+}
+/* END Style for all. ********************************************************/

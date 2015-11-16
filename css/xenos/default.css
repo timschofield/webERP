@@ -33,15 +33,6 @@ img {
 	border:none;
 	vertical-align:middle;
 }
-p.page_title_text {
-	padding-top:2px;
-	padding-bottom:2px;
-	font-size:18px;
-	color:black;
-	width:60%;
-	text-align:center;
-	margin:10px auto;
-}
 p.good {
     font-weight:bold;
     color:green;
@@ -69,22 +60,10 @@ table {
 table.selection {
 }
 th {
-	font-weight:bold;
-	color:#2C2C2C;
-	text-align:center;
 	border-bottom:thin solid #B3B3B3;
-}
-th.number {
-	background-color:#800000;
-	color:white;
-	font-weight:normal;
-	text-align:right;
-}
-th.text {
-	background-color:#800000;
-	color:white;
-	font-weight:normal;
-	text-align:left;
+	color:#2C2C2C;
+	font-weight:bold;
+	text-align:center;
 }
 th.ascending {
   cursor:s-resize;
@@ -119,9 +98,6 @@ td {
 td.select {
 	background-color:#eee;
 }
-td.number {
-	text-align:right;
-}
 td table {
     background: red;
 }
@@ -152,9 +128,6 @@ div.centre {
   text-align:center;
 }
 input {
-}
-input.number{
-	text-align:right;
 }
 input.image {
 	border-width:0px;
@@ -244,16 +217,16 @@ div.info {
 div.page_help_text {
 	background:lightgrey url(images/help.png) top left no-repeat;
 	border:thin solid #C3C3C3;
-	padding:4px 10px;
-	z-index:1;
-	width:80%;
-	float:none;
-	visibility:visible;
-	margin:0 auto;
-	position:static;
-	font-weight:normal;
 	color:black;
+	float:none;
+	font-weight:normal;
+	margin:0 auto;
+	padding:4px 10px;
+	position:static;
 	text-align:center;
+	visibility:visible;
+	width:80%;
+	z-index:1;
 }
 
 /*** Calendar picker ***/
@@ -422,14 +395,14 @@ select.selecterror {
      the link!!! ***HJ***/
 
 #QuickMenuDiv li a{
-    color:white;
-    font-weight:bold;
-    padding:11px 24px;
-    background:#686868;
-    border-right:thin inset #5D5D5D;
-    border-left:thin outset #737373;
+	background:#686868;
 	border-bottom:thin solid #7C7C7C;
-    display:block;
+	border-left:thin outset #737373;
+	border-right:thin inset #5D5D5D;
+	color:white;
+	display:block;
+	font-weight:bold;
+	padding:11px 24px;
 }
 #QuickMenuDiv li:first-child a{
     -webkit-border-radius:  0 0 0 6px;
@@ -616,10 +589,10 @@ select.selecterror {
 
 #FooterDiv{
 	clear:both; /* REQUIRED */
-    overflow:hidden;
-    color:#999999;
-    width: 98.6%;
-    margin: auto;
+	color:#999999;
+	margin:auto;
+	overflow:hidden;
+	width:98.6%;
 }
 #FooterDiv a{
     text-decoration:underline;
@@ -650,7 +623,24 @@ select.selecterror {
 }
 .centre {
 	text-align:center;
-	/* centre class (general). */
+	/* Class selector to centre text horizontally in an element. */
 }
-
-/*** END ***/
+.number {
+	text-align:right;
+	/* Class selector to horizontal align a number (right) in an element. */
+}
+.page_title_text {
+	color:black;
+	font-size:18px;
+	margin:10px auto;
+	padding-bottom:2px;
+	padding-top:2px;
+	text-align:center;
+	width:60%;
+	/* Class selector for page title. */
+}
+.text {
+	text-align:left;
+	/* Class selector to horizontal align a text (left) in an element. */
+}
+/* END Style for all. ********************************************************/
