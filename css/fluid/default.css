@@ -26,11 +26,6 @@ img{
 	border:none;
 	vertical-align:middle;
 }
-.page_title_text{
-	font-weight:bold;
-	color:black;
-	TEXT-ALIGN:center;
-}
 p.good{
     font-weight:bold;
     color:green;
@@ -45,23 +40,11 @@ table{
 	margin-bottom:5px;
 }
 table.selection{}
-th{ /* table heading */
-	font-weight:normal;
+th { /* table heading */
 	background-color:#cccce5;
 	color:#330000;
+	font-weight:normal;
 	text-align:center;
-}
-th.number{
-	background-color:#cccce5;
-	color:#330000;
-	font-weight:normal;
-	text-align:right;
-}
-th.text{
-	background-color:#cccce5;
-	color:#330000;
-	font-weight:normal;
-	text-align:left;
 }
 th.ascending {
   cursor: s-resize;
@@ -95,23 +78,9 @@ td{
 td.select{
 	background-color:#eee;
 }
-td.number{
-	text-align:right;
-}
-td.text{
-	text-align:left;
-}
-.centre{ /* used */
-	margin:0 auto;
-	text-align:center;
-	margin-bottom:5px;
-}
 
 input{
 	font-family:Arial, Verdana, Helvetica;
-}
-input.number{
-	text-align:right;
 }
 input.image{
 	border-width:0px;
@@ -406,5 +375,20 @@ list-style-image:url(bullet.gif);
 }
 .centre {
 	text-align:center;
-	/* centre class (general). */
+	/* Class selector to centre text horizontally in an element. */
 }
+.number {
+	text-align:right;
+	/* Class selector to horizontal align a number (right) in an element. */
+}
+.page_title_text {
+	color:black;
+	font-weight:bold;
+	text-align:center;
+	/* Class selector for page title. */
+}
+.text {
+	text-align:left;
+	/* Class selector to horizontal align a text (left) in an element. */
+}
+/* END Style for all. ********************************************************/
