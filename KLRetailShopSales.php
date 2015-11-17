@@ -923,13 +923,13 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 		$InputError = true;
 	}
 	
-	// if CC is used, only 1 CC is allowed per invoice
+	// if CC is used, only 1 CC is allowed per invoice (no splitted payments)
 	if (($TotalReceivedCash == 0) && ($PaymentSystemsUsed > 1)) {
 		prnMsg(_('Splited payments by several Cards are not allowed.'),'error');
 		$InputError = true;
 	}
 	
-	// Yellow paper invocie number is mandatory
+	// Yellow paper invoice number is mandatory
 	if ($_POST['CustRef']== "") {
 		prnMsg(_('Please enter the number of the yellow paper invoice'),'error');
 		$InputError = true;
@@ -1397,7 +1397,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 				
 				// Compensation COGS for PT sales
-				if(abs($PERCENTAGE_COMPENSATION_HPP_PT - 100) < 0.01){
+				if(abs($Compensation) > pow(1,-($_SESSION['StandardCostDecimalPlaces']+1))){
 					$SQL = "INSERT INTO gltrans (	type,
 													typeno,
 													trandate,
