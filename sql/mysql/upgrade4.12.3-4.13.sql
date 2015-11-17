@@ -23,7 +23,7 @@ CREATE TABLE `suppinvstogrn` (
 `grns` (`grnno`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 INSERT INTO scripts VALUES('EmailCustStatements.php','3','Email customer statement to customer');
-INSERT INTO scripts VALUES('SupplierGRNAndInvoiceInquiry.php',5,'Suppliers delivery note and grn relationship inquiry');
+INSERT INTO scripts VALUES('SupplierGRNAndInvoiceInquiry.php',5,'Supplier\'s delivery note and grn relationship inquiry');
 ALTER table grns ADD supplierref varchar(30) NOT NULL DEFAULT '';
 
 CREATE TABLE IF NOT EXISTS `glaccountusers` (
@@ -48,9 +48,7 @@ INSERT INTO glaccountusers (userid, accountcode, canview, canupd)
 INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES
 ('GLAccountUsers.php', '15', 'Maintenance of users allowed to a GL Account'),
 ('UserGLAccounts.php', '15', 'Maintenance of GL Accounts allowed for a user');
-
-INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES
-('GLAccountUsersCopyAuthority.php', '15', 'Copy the authority into GL Accounts from user A to user B');
-
+ALTER table stockrequest DROP FOREIGN KEY `stockrequest_ibfk_3`;
+ALTER table stockrequest DROP FOREIGN KEY `stockrequest_ibfk_4`;
 -- Update version number:
 UPDATE config SET confvalue='4.13' WHERE confname='VersionNumber';
