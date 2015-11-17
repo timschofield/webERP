@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: StockCostUpdate.php 6945 2014-10-27 07:20:48Z daintree $*/
+/* $Id: StockCostUpdate.php 7393 2015-11-17 00:38:05Z tehonu $*/
 
 $UpdateSecurity =10;
 
@@ -62,7 +62,7 @@ if (isset($_POST['UpdateData'])){
 	$myrow = DB_fetch_row($result);
 	if (DB_num_rows($result)==0) {
 		prnMsg (_('The entered item code does not exist'),'error',_('Non-existent Item'));
-	} elseif ($OldCost != $NewCost){
+	} elseif (abs($NewCost - $OldCost) > pow(1,-($_SESSION['StandardCostDecimalPlaces']+1))){
 
 		$Result = DB_Txn_Begin();
 		ItemCostUpdateGL($db, $StockID, $NewCost, $OldCost, $_POST['QOH']);
