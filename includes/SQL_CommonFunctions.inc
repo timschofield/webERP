@@ -158,53 +158,54 @@ Function GetCreditAvailable($DebtorNo,&$db) {
 }
 
 function ItemCostUpdateGL($db, $StockID, $NewCost, $OldCost, $QOH) {
+	if ($_SESSION['CompanyRecord']['gllink_stock']==1 
+		AND $QOH!=0
+		AND (abs($NewCost - $OldCost) > pow(1,-($_SESSION['StandardCostDecimalPlaces']+1)))){
 
-		if ($_SESSION['CompanyRecord']['gllink_stock']==1 AND $QOH!=0){
+		$CostUpdateNo = GetNextTransNo(35, $db);
+		$PeriodNo = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);
+		$StockGLCode = GetStockGLCode($StockID,$db);
 
-			$CostUpdateNo = GetNextTransNo(35, $db);
-			$PeriodNo = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);
-			$StockGLCode = GetStockGLCode($StockID,$db);
+		$ValueOfChange = $QOH * ($NewCost - $OldCost);
 
-			$ValueOfChange = $QOH * ($NewCost - $OldCost);
-
-			$SQL = "INSERT INTO gltrans (type,
-										typeno,
-										trandate,
-										periodno,
-										account,
-										narrative,
-										amount)
-							VALUES ('35',
-							'" . $CostUpdateNo . "',
-							'" . Date('Y-m-d') . "',
-							'" . $PeriodNo . "',
-							'" . $StockGLCode['adjglact'] . "',
-							'" . $StockID . ' ' . _('cost was') . ' ' . $OldCost . ' ' . _('changed to') . ' ' . $NewCost . ' x ' . _('Quantity on hand of') . ' ' . $QOH . "',
-							'" . -$ValueOfChange . "')";
-
-			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL credit for the stock cost adjustment posting could not be inserted because');
-			$DbgMsg = _('The following SQL to insert the GLTrans record was used');
-			$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-
-			$SQL = "INSERT INTO gltrans (type,
-							typeno,
-							trandate,
-							periodno,
-							account,
-							narrative,
-							amount)
+		$SQL = "INSERT INTO gltrans (type,
+									typeno,
+									trandate,
+									periodno,
+									account,
+									narrative,
+									amount)
 						VALUES ('35',
-							'" . $CostUpdateNo . "',
-							'" . Date('Y-m-d') . "',
-							'" . $PeriodNo . "',
-							'" . $StockGLCode['stockact'] . "',
-							'" . $StockID . ' ' . _('cost was') . ' ' . $OldCost . ' ' . _('changed to') .' ' . $NewCost . ' x ' . _('Quantity on hand of') . ' ' . $QOH . "',
-							'" . $ValueOfChange . "')";
+						'" . $CostUpdateNo . "',
+						'" . Date('Y-m-d') . "',
+						'" . $PeriodNo . "',
+						'" . $StockGLCode['adjglact'] . "',
+						'" . $StockID . ' ' . _('cost was') . ' ' . $OldCost . ' ' . _('changed to') . ' ' . $NewCost . ' x ' . _('Quantity on hand of') . ' ' . $QOH . "',
+						'" . -$ValueOfChange . "')";
 
-			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL debit for stock cost adjustment posting could not be inserted because');
-			$DbgMsg = _('The following SQL to insert the GLTrans record was used');
-			$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-		}
+		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL credit for the stock cost adjustment posting could not be inserted because');
+		$DbgMsg = _('The following SQL to insert the GLTrans record was used');
+		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+
+		$SQL = "INSERT INTO gltrans (type,
+						typeno,
+						trandate,
+						periodno,
+						account,
+						narrative,
+						amount)
+					VALUES ('35',
+						'" . $CostUpdateNo . "',
+						'" . Date('Y-m-d') . "',
+						'" . $PeriodNo . "',
+						'" . $StockGLCode['stockact'] . "',
+						'" . $StockID . ' ' . _('cost was') . ' ' . $OldCost . ' ' . _('changed to') .' ' . $NewCost . ' x ' . _('Quantity on hand of') . ' ' . $QOH . "',
+						'" . $ValueOfChange . "')";
+
+		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL debit for stock cost adjustment posting could not be inserted because');
+		$DbgMsg = _('The following SQL to insert the GLTrans record was used');
+		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+	}
 }
 
 /* Calculates the material cost of a bill of materials, given parent code*/
