@@ -189,7 +189,9 @@ or deletion of the records*/
 				breakpoint,
 				commissionrate2,
 				current
-			FROM salesman";
+			FROM salesman
+			ORDER BY current DESC,
+				salesmancode";
 	$result = DB_query($sql);
 
 	echo '<table class="selection">';
