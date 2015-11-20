@@ -233,10 +233,12 @@ $MenuItems['PO']['Transactions']['URL'] = array(	'/PO_Header.php?NewOrder=Yes',
 
 $MenuItems['PO']['Reports']['Caption'] = array(	_('Purchase Order Inquiry'),
 												_('Purchase Order Detail Or Summary Inquiries'),
+												_('Purchase Order Financial Planning'),
 												_('Supplier Price List'));
 
 $MenuItems['PO']['Reports']['URL'] = array(	'/PO_SelectPurchOrder.php',
 											'/POReport.php',
+											'/POFinancialPlanning.php',
 											'/SuppPriceList.php');
 
 $MenuItems['PO']['Maintenance']['Caption'] = array(_('Maintain Supplier Price Lists'));

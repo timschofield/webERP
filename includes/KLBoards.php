@@ -5169,9 +5169,6 @@ function ObsoleteComponentsInActiveBOM($RootPath, $db){
 	}
 }
 
-
-
-
 function GoodsToBeProduced($CategoryComponent, $ParentCategory, $RootPath, $db){
 /* EXPLAIN SQL 2014-05-30 */
 	/* Check if there is any	component at kantor ready to be transformed into sellable goods */
@@ -5501,7 +5498,6 @@ function ImagesShouldNotBeInOpencartCatalog($RootPath, $db, $db_oc, $oc_tablepre
 	}
 }
 
-
 function ImagesWithoutProduct($RootPath, $db){
 	$ShowHeader = TRUE;
 	$k = 0; //row colour counter
@@ -5761,7 +5757,6 @@ function ItemsMovingToDiscountDelayed($TypeDiscount, $NumDays, $RootPath, $db){
 				</div>';
 	}
 }
-
 
 function over_or_below_limit($Request, $Sign, $Limit, $RootPath, $db){
 /* EXPLAIN SQL 2014-05-21	*/
@@ -7002,7 +6997,6 @@ function OutletPackagingStatus($RootPath, $db){
 	}
 }
 
-
 function PackagingUsage($NumDays, $RootPath, $db){
 /* EXPLAIN 2014-05-20	 OK! */
 
@@ -7492,7 +7486,6 @@ function OutletPackagingUsage($NumDays, $RootPath, $db){
 		}
 	}
 }
-
 
 function PackagingItemsOnWrongLocation($RootPath, $db){
 /* EXPLAIN SQL	2014-05-20
