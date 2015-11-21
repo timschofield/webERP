@@ -7892,4 +7892,38 @@ function ItemsinSetUp($Check, $RootPath, $db){
 	}
 }
 
+function SuppliersWithoutBasicData($RootPath, $db){
+
+	$SQL = "SELECT supplierid,
+					suppname
+			FROM suppliers
+			WHERE address6 = ''";
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		echo '<p class="page_title_text" align="center"><strong>' . _('Suppliers without basic data') . '</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Name') . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		while ($myrow = DB_fetch_array($result)) {
+			$k = StartEvenOrOddRow($k);
+			printf('<td>%s</td>
+					<td>%s</td>
+					</tr>', 
+					$myrow['supplierid'], 
+					$myrow['suppname'] 
+					);
+			$i++;
+		}
+		echo '</table>
+				</div>';
+	}
+}
+
+
 ?>

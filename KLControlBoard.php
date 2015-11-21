@@ -84,6 +84,7 @@ if ($KL_PurchasingManager
 * STANDARD COST         
 ***************************************************************************************/
 if ($KL_PurchasingTeam){
+	SuppliersWithoutBasicData($RootPath, $db);
 	ItemsWithoutStandardCost($RootPath, $db);
 }
 
