@@ -193,6 +193,7 @@ $MenuItems['AP']['Reports']['Caption'] = array(	_('Aged Supplier Report'),
 												_('Outstanding GRNs Report'),
 												_('Supplier Balances At A Prior Month End'),
 												_('List Daily Transactions'),
+												_('Purchase Order Financial Planning'),
 												_('KL Goods Received Not Invoiced Yet'),
 												_('Supplier Transaction Inquiries'));
 
@@ -202,6 +203,7 @@ $MenuItems['AP']['Reports']['URL'] = array(	'/AgedSuppliers.php',
 											'/OutstandingGRNs.php',
 											'/SupplierBalsAtPeriodEnd.php',
 											'/PDFSuppTransListing.php',
+											'/POFinancialPlanning.php',
 											'/KLGoodsReceivedNotInvoiced.php',
 											'/SupplierTransInquiry.php');
 
@@ -233,12 +235,10 @@ $MenuItems['PO']['Transactions']['URL'] = array(	'/PO_Header.php?NewOrder=Yes',
 
 $MenuItems['PO']['Reports']['Caption'] = array(	_('Purchase Order Inquiry'),
 												_('Purchase Order Detail Or Summary Inquiries'),
-												_('Purchase Order Financial Planning'),
 												_('Supplier Price List'));
 
 $MenuItems['PO']['Reports']['URL'] = array(	'/PO_SelectPurchOrder.php',
 											'/POReport.php',
-											'/POFinancialPlanning.php',
 											'/SuppPriceList.php');
 
 $MenuItems['PO']['Maintenance']['Caption'] = array(_('Maintain Supplier Price Lists'));
