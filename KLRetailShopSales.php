@@ -1,6 +1,7 @@
 <?php
 
 /************************************************************************
+v 2.15 Do not account returns in debtortrans to avoid balance errors getting large
 v 2.14 Do not allow splitted payments. 
 v 2.13 Mod to use Amex credit card with BCA ECDD
 v 2.12 Mod to use outlet or regular packaging
@@ -23,7 +24,7 @@ v 1.00 2011-08-10: Shops start using it.
 v 1.00 2011-07-25: Kantor starts using it.
 *********************************************************************/
 
-define("VERSIONFILE", "2.14"); // 
+define("VERSIONFILE", "2.15"); // 
 
 include('includes/DefineCartClass.php');
 include('includes/session.inc');
@@ -703,10 +704,10 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 and !isset($_POST['Proces
 	}
 
 	// If the shop is using regular packaging, show it!
-	if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_USING_REGULAR_PACKAGING)){
+	if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_USING_KAPAL_LAUT_PACKAGING)){
 		echo '<table class="selection">
 				<tr>
-					<th colspan=8>' . _('Regular Packaging & Shopping Bags included in this sale') . '
+					<th colspan=8>' . _('Kapal-Laut Packaging & Shopping Bags included in this sale') . '
 					</th>
 				</tr>';
 		
@@ -1800,6 +1801,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 								$_SESSION['Items'.$identifier]->DebtorNo);
 		} //end if $_POST['AmountVouchers']!= 0
 
+/* DO NOT account it, so retuns will tend to compensate one another. Otherwise, will keep growing
 		if ($_POST['AmountReturnedGoods']!=0){
 			$ReceiptNumber = AccountDebtorDiscount($ReceiptNumber,
 								'RETURNED_GOODS',
@@ -1813,9 +1815,9 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 								$OrderNo,
 								$_SESSION['Items'.$identifier]->DebtorNo);
 		} //end if $_POST['AmountReturnedGoods']!= 0
-		
+*/		
 		/* Account for the Packaging */
-		if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_USING_REGULAR_PACKAGING)){
+		if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_USING_KAPAL_LAUT_PACKAGING)){
 			AdjustPackagingMovement("PKBX01-L", $_POST['PackagingBox01L'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
 			AdjustPackagingMovement("PKBX01-M", $_POST['PackagingBox01M'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
 			AdjustPackagingMovement("PKBX01-S", $_POST['PackagingBox01S'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);

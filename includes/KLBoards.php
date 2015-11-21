@@ -5873,7 +5873,7 @@ function ItemsNoSalesInLocation($location, $maxdays, $QOHAvailable, $RootPath, $
 					(SELECT SUM(loc2.quantity)
 							FROM locstock AS loc2
 							WHERE loc2.stockid = stockmaster.stockid
-							AND (loc2.loccode IN " . LIST_ACTIVE_KL_SHOPS_BALI . "
+							AND (loc2.loccode IN " . LIST_KAPAL_LAUT_SHOPS . "
 								OR loc2.loccode = 'KANTO') ) AS qtyavailable,
 					locstock.reorderlevel,
 					locstock.loccode,
@@ -5888,7 +5888,7 @@ function ItemsNoSalesInLocation($location, $maxdays, $QOHAvailable, $RootPath, $
 					AND  (SELECT SUM(loc2.quantity)
 							FROM locstock AS loc2
 							WHERE loc2.stockid = stockmaster.stockid
-							AND (loc2.loccode IN " . LIST_ACTIVE_KL_SHOPS_BALI . "
+							AND (loc2.loccode IN " . LIST_KAPAL_LAUT_SHOPS . "
 								OR loc2.loccode = 'KANTO') ) <= ". $QOHAvailable ."
 					AND NOT EXISTS (SELECT * 
 									FROM 	salesorderdetails, salesorders
