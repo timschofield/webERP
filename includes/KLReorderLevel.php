@@ -7,7 +7,8 @@ function DailyReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db, 
 	$EmailText = SetRLForTopSalesItems(   1, 100, 60,  60, 999999, 4, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 	$EmailText = SetRLForTopSalesItems(   1, 100, 60,  45,     60, 3, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 	$EmailText = SetRLForTopSalesItems(   1, 100, 60,  30,     45, 2, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
-	$EmailText = SetRLForTopSalesItems( 101, 250, 60,  30, 999999, 2, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+	$EmailText = SetRLForTopSalesItems( 101, 250, 60,  45, 999999, 3, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+	$EmailText = SetRLForTopSalesItems( 101, 250, 60,  30,     45, 2, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 
 	RebalancingBetweenShops(60, $ShowMessages, $updateDB, $RootPath, $db);
 
@@ -806,8 +807,8 @@ function SetRLForLowSalesHighRL($maxdays, $oldRL, $maxRL, $minavailablestock, $S
 					locations.locationname 
 			FROM 	stockmaster,locstock,locations
 			WHERE 	stockmaster.stockid = locstock.stockid
-					AND stockmaster.categoryid NOT IN ('SHDISP',)
-					AND stockmaster.categoryid NOT IN" . LIST_STOCK_CATEGORIES_DISCOUNT . " 
+					AND stockmaster.categoryid NOT IN ('SHDISP')
+					AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_DISCOUNT . " 
 					AND (locstock.loccode = locations.loccode)
 					AND (locstock.loccode LIKE 'TOK%')
 					AND (locstock.quantity > 0)

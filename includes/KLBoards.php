@@ -5874,6 +5874,8 @@ function ItemsNoSalesInLocation($location, $maxdays, $QOHAvailable, $RootPath, $
 							FROM locstock AS loc2
 							WHERE loc2.stockid = stockmaster.stockid
 							AND (loc2.loccode IN " . LIST_SHOPS_KAPAL_LAUT . "
+								OR loc2.loccode IN " . LIST_SHOPS_BLINK . "
+								OR loc2.loccode IN " . LIST_SHOPS_OUTLET . "
 								OR loc2.loccode = 'KANTO') ) AS qtyavailable,
 					locstock.reorderlevel,
 					locstock.loccode,
@@ -6212,7 +6214,7 @@ Updated 3 index in loctransfers
 				// IF we are SHORT of any packaging material in that shop...
 				// Or we show All the shops 
 				if($showHeader){
-					echo '<p class="page_title_text" align="center"><strong>' . 'Shops needing Packaging Transfers (Do not forget to create transfer in webERP)' . '</strong></p>';
+					echo '<p class="page_title_text" align="center"><strong>' . 'KAPAL-LAUT Shops needing Packaging Transfers (Do not forget to create transfer in webERP)' . '</strong></p>';
 					echo '<div>';
 					echo '<table class="selection">';
 					$TableHeader = '<tr>
@@ -6487,7 +6489,7 @@ function OutletPackagingToBeRefilled($ShowAll, $RootPath, $db){
 				// IF we are SHORT of any packaging material in that shop...
 				// Or we show All the shops 
 				if($showHeader){
-					echo '<p class="page_title_text" align="center"><strong>' . 'Shops needing OUTLET Packaging Transfers (Do not forget to create transfer in webERP)' . '</strong></p>';
+					echo '<p class="page_title_text" align="center"><strong>' . 'OUTLET Shops needing OUTLET Packaging Transfers (Do not forget to create transfer in webERP)' . '</strong></p>';
 					echo '<div>';
 					echo '<table class="selection">';
 					$TableHeader = '<tr>
@@ -6727,7 +6729,7 @@ function KapalLautPackagingStatus($RootPath, $db){
 		$k = 0; //row colour counter
 		while ($myrow = DB_fetch_array($result)) {
 			if($showHeader){
-				echo '<p class="page_title_text" align="center"><strong>' . 'Shop Packaging Stock Status by Shop' . '</strong></p>';
+				echo '<p class="page_title_text" align="center"><strong>' . 'KAPAL-LAUT Shop Packaging Stock Status by Shop' . '</strong></p>';
 				echo '<div>';
 				echo '<table class="selection">';
 				$TableHeader = '<tr>
@@ -7122,7 +7124,7 @@ function KapalLautPackagingUsage($NumDays, $RootPath, $db){
 		$k = 0; //row colour counter
 		while ($myrow = DB_fetch_array($result)) {
 			if($showHeader){
-				echo '<p class="page_title_text" align="center"><strong>' . 'Shop Packaging Usage during the last ' . $NumDays . ' days'. '</strong></p>';
+				echo '<p class="page_title_text" align="center"><strong>' . 'KAPAL-LAUT Shop Packaging Usage during the last ' . $NumDays . ' days'. '</strong></p>';
 				echo '<div>';
 				echo '<table class="selection">';
 				$TableHeader = '<tr>
@@ -7363,7 +7365,7 @@ function OutletPackagingUsage($NumDays, $RootPath, $db){
 							AND packagingused.stockid = 'PKSB03'
 							AND packagingused.date >= '". $FromDate ."') AS sales_shopping_m
 			FROM locations
-			WHERE locations.loccode IN " . LIST_SHOPS_KAPAL_LAUT . "
+			WHERE locations.loccode IN " . LIST_SHOPS_OUTLET . "
 				OR locations.loccode IN " . LIST_GUDANG_FOR_PACKAGING . "
 			ORDER BY locations.loccode";
 

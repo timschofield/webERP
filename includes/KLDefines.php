@@ -81,6 +81,7 @@ define("LIST_STOCK_CATEGORIES_ACCESSORIES",       "('TESTAC','ACCESO','NOPOAC')"
 
 
 /* Defines about LOCATIONS*/
+define("LIST_ALL_SHOPS",           "('TOK66','TOKSA','TOKKS','TOKJC','TOKSE','TOKUB','TOKMF','TOKPU','TOKSU','TOKBW','TOKOB','TOKSS','TOKPA','TOKKA','TOKSU','TOKJC','TOKMU')"); // NOT includes the shop online
 define("LIST_SHOPS_KAPAL_LAUT",    "('TOK66','TOKSA','TOKKS','TOKJC','TOKSE','TOKUB','TOKMF','TOKPU','TOKSU','TOKBW','TOKOB','TOKSS','TOKPA','TOKKA')"); // NOT includes the shop online
 define("LIST_SHOPS_OUTLET",        "('TOKSU','TOKJC')");
 define("LIST_SHOPS_BLINK",         "('TOKMU')");
