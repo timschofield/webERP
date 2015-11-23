@@ -14,7 +14,7 @@ include('includes/KLPrices.php');
 				(SELECT sum(quantity)
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid
-					AND loccode LIKE 'TOK%') AS qohpos,
+					AND loccode IN " . LIST_ALL_SHOPS . ") AS qohpos,
 				(SELECT sum(quantity)
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid
@@ -27,12 +27,12 @@ include('includes/KLPrices.php');
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid
 					AND loccode NOT IN " . LIST_KANTOR_LOCATIONS . "
-					AND loccode NOT LIKE 'TOK%'
+					AND loccode NOT IN " . LIST_ALL_SHOPS . "
 					AND loccode NOT IN " . LIST_CONSIGNMENT_LOCATIONS . ") AS qohotherlocs,
 				(SELECT SUM(loctransfers.shipqty-loctransfers.recqty) 
 						FROM loctransfers
 						WHERE loctransfers.stockid = stockmaster.stockid
-						AND loctransfers.shiploc LIKE 'TOK%') AS intransitfromshops,
+						AND loctransfers.shiploc IN " . LIST_ALL_SHOPS . ") AS intransitfromshops,
 				(SELECT SUM(loctransfers.shipqty-loctransfers.recqty) 
 						FROM loctransfers
 						WHERE loctransfers.stockid = stockmaster.stockid

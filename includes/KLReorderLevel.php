@@ -206,7 +206,7 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 					(SELECT locstock.loccode
 						FROM locstock
 						WHERE stockmaster.stockid  = locstock.stockid 
-							AND locstock.loccode LIKE 'TOK%'
+							AND locstock.loccode IN " . LIST_ALL_SHOPS . "
 							AND locstock.quantity < locstock.reorderlevel
 						ORDER BY reorderlevel DESC
 						LIMIT 1) AS locationneeded
@@ -215,13 +215,13 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 				AND EXISTS (SELECT *
 						FROM locstock
 						WHERE stockmaster.stockid  = locstock.stockid 
-							AND (locstock.loccode LIKE 'TOK%'
+							AND (locstock.loccode IN " . LIST_ALL_SHOPS . "
 								)
 						AND locstock.quantity < locstock.reorderlevel)
 				AND EXISTS (SELECT *
 						FROM locstock
 						WHERE stockmaster.stockid  = locstock.stockid 
-							AND (locstock.loccode LIKE 'TOK%'
+							AND (locstock.loccode IN " . LIST_ALL_SHOPS . "
 							)
 							AND locstock.quantity > 0)
 				AND EXISTS (SELECT *
@@ -293,7 +293,7 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 										FROM locstock, locations
 										WHERE  locstock.loccode = locations.loccode
 											AND locstock.stockid = '" . $myrow['stockid'] . "'
-											AND (locstock.loccode LIKE 'TOK%'
+											AND (locstock.loccode IN " . LIST_ALL_SHOPS . "
 												)
 											AND locstock.reorderlevel > 0 ".
 										$OrderBy . "
@@ -402,7 +402,7 @@ function WorstLocationForItem($stockid, $stockcat, $kind, $maxdays, $db){
 		$SQL = $SQL . " AND locstock.quantity > 0 "; 
 	}
 
-	$SQL = $SQL . "	AND (locstock.loccode LIKE 'TOK%')";
+	$SQL = $SQL . "	AND (locstock.loccode IN " . LIST_ALL_SHOPS . ")";
 
 	// if category is discount or outlet, then use priority for these categories
 	if(($stockcat == 'DISC20') 
@@ -435,7 +435,7 @@ function LocationOrderForItem($stockid, $order, $maxdays, $db){
 	$SQL = "SELECT locstock.loccode
 			FROM locstock
 			WHERE locstock.stockid = '" . $stockid . "'
-			AND (locstock.loccode LIKE 'TOK%'
+			AND (locstock.loccode IN " . LIST_ALL_SHOPS . "
 				)
 			ORDER BY (SELECT COUNT(qtyinvoiced)
 						FROM salesorderdetails, salesorders
@@ -460,7 +460,7 @@ function QtyAvailable($stockid, $location, $db){
 			FROM locstock
 			WHERE locstock.stockid = '" . $stockid . "'";
 	if ($location == "ALLSHOPS"){
-		$SQL = $SQL . " AND locstock.loccode LIKE 'TOK%' "; 
+		$SQL = $SQL . " AND locstock.loccode IN " . LIST_ALL_SHOPS . " "; 
 	}elseif ($location == "ALL"){
 		$SQL = $SQL . " "; 
 	}else{
@@ -505,13 +505,13 @@ function SetRLZeroForNotAvailableItems($ShowMessages, $updateDB, $RootPath, $db)
 				AND stockmaster.categoryid != 'SHCONS'
 				AND stockmaster.categoryid != 'SHPACK'
 				AND stockcategory.stocktype = 'F'
-				AND (locstock.loccode LIKE 'TOK%'
+				AND (locstock.loccode IN " . LIST_ALL_SHOPS . "
 					OR locstock.loccode = 'KANTO')
 				AND EXISTS (SELECT *
 							FROM locstock
 							WHERE locstock.stockid = stockmaster.stockid
 								AND locstock.reorderlevel > 0 
-								AND (locstock.loccode LIKE 'TOK%'
+								AND (locstock.loccode IN " . LIST_ALL_SHOPS . "
 									OR locstock.loccode = 'KANTO'))
 			GROUP BY locstock.stockid
 			HAVING SUM(locstock.quantity) = 0";
@@ -592,7 +592,7 @@ to the shops with RL > 0.
 					(SELECT SUM(locstock.quantity)
 						FROM locstock
 						WHERE stockmaster.stockid  = locstock.stockid
-							AND (locstock.loccode = 'KANTO' OR locstock.loccode LIKE 'TOK%')
+							AND (locstock.loccode = 'KANTO' OR locstock.loccode IN " . LIST_ALL_SHOPS . ")
 							AND locstock.loccode != 'TOKWS') AS QtyAvailable
 			FROM salesorderdetails, salesorders, stockmaster
 			WHERE salesorderdetails.orderno = salesorders.orderno 
@@ -617,7 +617,7 @@ to the shops with RL > 0.
 										locstock.reorderlevel AS oldrl
 									FROM locstock
 									WHERE locstock.stockid = '" . $myrow['stockid'] . "'
-									AND locstock.loccode LIKE 'TOK%'
+									AND locstock.loccode IN " . LIST_ALL_SHOPS . "
 									AND locstock.loccode != 'TOKWS'
 									AND locstock.reorderlevel > 0";
 				$resultdistribution = DB_query($SQLDistribution);
@@ -721,7 +721,7 @@ function SetRLForLowSalesItems( $starttopitems, $endtopitems, $daystopitems, $Ne
 									locstock.reorderlevel AS oldrl
 								FROM locstock
 								WHERE locstock.stockid = '" . $myrow['stockid'] . "'
-								AND locstock.loccode LIKE 'TOK%'
+								AND locstock.loccode IN " . LIST_ALL_SHOPS . "
 								AND locstock.reorderlevel > 0";
 			$resultdistribution = DB_query($SQLDistribution);
 			$LocationsToDistribute = DB_num_rows($resultdistribution);
@@ -810,13 +810,13 @@ function SetRLForLowSalesHighRL($maxdays, $oldRL, $maxRL, $minavailablestock, $S
 					AND stockmaster.categoryid NOT IN ('SHDISP')
 					AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_DISCOUNT . " 
 					AND (locstock.loccode = locations.loccode)
-					AND (locstock.loccode LIKE 'TOK%')
+					AND (locstock.loccode IN " . LIST_ALL_SHOPS . ")
 					AND (locstock.quantity > 0)
 					AND (locstock.reorderlevel >= ". $oldRL .")
 					AND (SELECT SUM(locstock.quantity)
 						FROM locstock
 						WHERE stockmaster.stockid = locstock.stockid
-							AND (locstock.loccode LIKE 'TOK%' 
+							AND (locstock.loccode IN " . LIST_ALL_SHOPS . " 
 								OR locstock.loccode = 'KANTO' )) <= ".$minavailablestock."
 					AND NOT EXISTS (SELECT * 
 									FROM 	salesorderdetails, salesorders
@@ -964,7 +964,7 @@ function SetReorderLevel($reason, $stockid, $loccode, $oldRL, $newRL, $updateDB,
 				$sql = "UPDATE locstock
 						SET reorderlevel = '" . $newRL ."'
 						WHERE stockid = '". $stockid ."'
-							AND loccode LIKE 'TOK%'";
+							AND loccode IN " . LIST_ALL_SHOPS . "";
 			}else{
 				$sql = "UPDATE locstock
 						SET reorderlevel = '" . $newRL ."'

@@ -5,6 +5,8 @@ config.php is in turn included in session.inc*/
 include ('includes/session.inc');
 $Title = _('Items with stock available not in shop');
 include ('includes/header.inc');
+include('includes/KLDefines.php');
+
 //check if input already
 if (!(isset($_POST['Search']))) {
 			
@@ -41,7 +43,7 @@ if (!(isset($_POST['Search']))) {
 	$SQL="SELECT loccode,
 					locationname
 			FROM locations
-			WHERE loccode LIKE 'TOK%'
+			WHERE loccode IN " . LIST_ALL_SHOPS . "
 			ORDER BY locationname";
 	$result1 = DB_query($SQL);
 

@@ -409,7 +409,7 @@ function SendEmailChangePriceReadyForStep02($db, $EmailText){
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid
 					AND loccode NOT IN " . LIST_KANTOR_LOCATIONS . "
-					AND loccode NOT LIKE 'TOK%'
+					AND loccode NOT IN " . LIST_ALL_SHOPS . "
 					AND loccode NOT IN " . LIST_CONSIGNMENT_LOCATIONS . ") AS qohotherlocs,
 				(SELECT sum(quantity)
 					FROM locstock
@@ -450,7 +450,7 @@ function SendEmailMoveToDiscountReadyForStep02($TypeDiscount, $db, $EmailText){
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid
 					AND loccode NOT IN " . LIST_KANTOR_LOCATIONS . "
-					AND loccode NOT LIKE 'TOK%'
+					AND loccode NOT IN " . LIST_ALL_SHOPS . "
 					AND loccode NOT IN " . LIST_CONSIGNMENT_LOCATIONS . ") AS qohotherlocs,
 				(SELECT sum(quantity)
 					FROM locstock

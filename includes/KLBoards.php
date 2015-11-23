@@ -771,7 +771,7 @@ function ActiveTransfersByLocation($RootPath, $db){
 				WHERE  recqty < shipqty
 					AND loctransfers.recloc = locations.loccode) as transferin
 			FROM locations
-			WHERE locations.loccode LIKE 'TOK%'
+			WHERE locations.loccode IN " . LIST_ALL_SHOPS . "
 			ORDER BY (SELECT SUM(shipqty-recqty)
 				FROM loctransfers
 				WHERE  recqty < shipqty
@@ -1000,7 +1000,7 @@ function ListPriorityLocations($db){
 				prioritydiscount,
 				smartdispatchmaxmodels
 		FROM locations
-		WHERE (loccode LIKE 'TOK%')
+		WHERE (loccode IN " . LIST_ALL_SHOPS . ")
 		ORDER BY locationname ASC";
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
@@ -2347,7 +2347,7 @@ No pending transfer regarding this item
 				AND (SELECT SUM(locstock.reorderlevel)
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid
-						AND locstock.loccode LIKE 'TOK%') = 0
+						AND locstock.loccode IN " . LIST_ALL_SHOPS . ") = 0
 				AND (SELECT SUM(locstock.quantity)
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid
@@ -2417,7 +2417,7 @@ function ItemsInCategoryWithStockKantorButReorderLevelTokoZero($CategoryId, $Roo
 			$WhereLocation = " AND locstock.loccode IN  " . LIST_SHOPS_OUTLET . " ";
 		}
 	}else{
-		$WhereLocation = " AND locstock.loccode LIKE 'TOK%' ";
+		$WhereLocation = " AND locstock.loccode IN " . LIST_ALL_SHOPS . " ";
 	}
 
 	$SQL = "SELECT stockid,
@@ -2770,7 +2770,7 @@ function OvestockAtShops($kind, $RootPath, $db){
 						quantity - reorderlevel AS qty
 				FROM locstock, stockmaster
 				WHERE locstock.stockid = stockmaster.stockid
-					AND loccode LIKE 'TOK%'
+					AND loccode IN " . LIST_ALL_SHOPS . "
 					AND reorderlevel < quantity
 					AND NOT EXISTS (SELECT *
 									FROM loctransfers 
@@ -2787,7 +2787,7 @@ function OvestockAtShops($kind, $RootPath, $db){
 				WHERE locstock.stockid = stockmaster.stockid
 					AND locstock.reorderlevel > 0
 					AND locstock.quantity = 0
-					AND loccode LIKE 'TOK%'
+					AND loccode IN " . LIST_ALL_SHOPS . "
 					AND NOT EXISTS (SELECT *
 										FROM loctransfers 
 										WHERE  recqty < shipqty
@@ -3041,7 +3041,7 @@ function DiscountedItemsOnNotOutletShops($Category, $RootPath, $db){
 			FROM stockmaster, locstock
 			WHERE stockmaster.stockid = locstock.stockid
 				AND stockmaster.categoryid = '" . $Category . "'
-				AND locstock.loccode LIKE 'TOK%'
+				AND locstock.loccode IN " . LIST_ALL_SHOPS . "
 				AND locstock.loccode NOT IN " . LIST_SHOPS_OUTLET . "
 				AND locstock.loccode NOT IN " . LIST_ONLINE_SHOPS . "
 				AND ( locstock.quantity > 0 OR locstock.reorderlevel > 0 )
@@ -3103,7 +3103,7 @@ function NotDiscountedItemsOnOutletShops($RootPath, $db){
 				AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_TEST . "
 					OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_STABLE . "
 					OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING . ")
-				AND locstock.loccode LIKE 'TOK%'
+				AND locstock.loccode IN " . LIST_ALL_SHOPS . "
 				AND locstock.loccode IN " . LIST_SHOPS_OUTLET . "
 				AND ( locstock.quantity > 0 OR locstock.reorderlevel > 0 )
 			ORDER BY stockmaster.stockid";
@@ -3233,7 +3233,7 @@ function OutletItemsOnKLShops($RootPath, $db){
 			FROM stockmaster, locstock
 			WHERE stockmaster.stockid = locstock.stockid
 				AND stockmaster.categoryid IN ('DISC80')
-				AND locstock.loccode LIKE 'TOK%'
+				AND locstock.loccode IN " . LIST_ALL_SHOPS . "
 				AND locstock.quantity > 0
 				AND NOT EXISTS (SELECT *
 						FROM loctransfers 
@@ -3813,13 +3813,13 @@ function TopSalesNotInEnoughShops($starttopitems, $endtopitems, $maxdays, $minsh
 				(SELECT sum(quantity)
 					FROM locstock
 					WHERE locstock.stockid = salesorderdetails.stkcode
-						AND (locstock.loccode LIKE 'TOK%' 
+						AND (locstock.loccode IN " . LIST_ALL_SHOPS . " 
 							OR locstock.loccode = 'KANTO')) AS qoh,
 				(SELECT count(loccode)
 					FROM locstock
 					WHERE locstock.stockid = salesorderdetails.stkcode
 						AND locstock.reorderlevel > 0
-						AND locstock.loccode LIKE 'TOK%') AS availableshops
+						AND locstock.loccode IN " . LIST_ALL_SHOPS . ") AS availableshops
 			FROM salesorderdetails, salesorders, stockmaster
 			WHERE salesorderdetails.orderno = salesorders.orderno ";
 	if ($categories == "DISC20"){
@@ -4857,7 +4857,7 @@ function ItemsWithStockLocationButNoStockAvailable($Location, $NameLocation, $Mi
 				(SELECT SUM(l2.quantity)
 					FROM locstock l2
 					WHERE locstock.stockid = l2.stockid
-					AND (l2.loccode LIKE 'TOK%'
+					AND (l2.loccode IN " . LIST_ALL_SHOPS . "
 						OR l2.loccode = 'KANTO')
 				) AS available
 			FROM locstock, stockmaster
@@ -4872,7 +4872,7 @@ function ItemsWithStockLocationButNoStockAvailable($Location, $NameLocation, $Mi
 				AND (SELECT SUM(l2.quantity)
 						FROM locstock l2
 						WHERE locstock.stockid = l2.stockid
-						AND (l2.loccode LIKE 'TOK%'
+						AND (l2.loccode IN " . LIST_ALL_SHOPS . "
 							OR l2.loccode = 'KANTO')
 					) <= " . $MinAvailable;
 
@@ -4998,7 +4998,7 @@ function InsuficientStockForItems($Category, $ItemCode, $ItemDescription, $Minim
 					(SELECT SUM(locstock.quantity)
 						FROM locstock
 						WHERE locstock.stockid = stockmaster.stockid
-						AND (loccode LIKE 'TOK%'
+						AND (loccode IN " . LIST_ALL_SHOPS . "
 							OR loccode = 'KANTO')) AS qoh
 			FROM stockmaster
 			WHERE stockmaster.stockid LIKE '" . $ItemCode . "%'
@@ -5007,7 +5007,7 @@ function InsuficientStockForItems($Category, $ItemCode, $ItemDescription, $Minim
 				AND (SELECT SUM(locstock.quantity)
 						FROM locstock
 						WHERE locstock.stockid = stockmaster.stockid
-						AND (loccode LIKE 'TOK%'
+						AND (loccode IN " . LIST_ALL_SHOPS . "
 							OR loccode = 'KANTO')) < " . $MinimumStock . "
 			ORDER BY stockmaster.stockid";
 	
@@ -5558,7 +5558,7 @@ function ItemsChangingPriceDelayed($NumDays, $RootPath, $db){
 				(SELECT sum(quantity)
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid
-					AND loccode LIKE 'TOK%') AS qohpos,
+					AND loccode IN " . LIST_ALL_SHOPS . ") AS qohpos,
 				(SELECT sum(quantity)
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid
@@ -5571,12 +5571,12 @@ function ItemsChangingPriceDelayed($NumDays, $RootPath, $db){
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid
 					AND loccode NOT IN " . LIST_KANTOR_LOCATIONS . "
-					AND loccode NOT LIKE 'TOK%'
+					AND loccode NOT IN " . LIST_ALL_SHOPS . "
 					AND loccode NOT IN " . LIST_CONSIGNMENT_LOCATIONS . ") AS qohotherlocs,
 				(SELECT SUM(loctransfers.shipqty-loctransfers.recqty) 
 						FROM loctransfers
 						WHERE loctransfers.stockid = stockmaster.stockid
-						AND loctransfers.shiploc LIKE 'TOK%') AS intransitfromshops,
+						AND loctransfers.shiploc IN " . LIST_ALL_SHOPS . ") AS intransitfromshops,
 				(SELECT SUM(loctransfers.shipqty-loctransfers.recqty) 
 						FROM loctransfers
 						WHERE loctransfers.stockid = stockmaster.stockid
@@ -5663,7 +5663,7 @@ function ItemsMovingToDiscountDelayed($TypeDiscount, $NumDays, $RootPath, $db){
 				(SELECT sum(quantity)
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid
-					AND loccode LIKE 'TOK%') AS qohpos,
+					AND loccode IN " . LIST_ALL_SHOPS . ") AS qohpos,
 				(SELECT sum(quantity)
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid
@@ -5676,12 +5676,12 @@ function ItemsMovingToDiscountDelayed($TypeDiscount, $NumDays, $RootPath, $db){
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid
 					AND loccode NOT IN " . LIST_KANTOR_LOCATIONS . "
-					AND loccode NOT LIKE 'TOK%'
+					AND loccode NOT IN " . LIST_ALL_SHOPS . "
 					AND loccode NOT IN " . LIST_CONSIGNMENT_LOCATIONS . ") AS qohotherlocs,
 				(SELECT SUM(loctransfers.shipqty-loctransfers.recqty) 
 						FROM loctransfers
 						WHERE loctransfers.stockid = stockmaster.stockid
-						AND loctransfers.shiploc LIKE 'TOK%') AS intransitfromshops,
+						AND loctransfers.shiploc IN " . LIST_ALL_SHOPS . ") AS intransitfromshops,
 				(SELECT SUM(loctransfers.shipqty-loctransfers.recqty) 
 						FROM loctransfers
 						WHERE loctransfers.stockid = stockmaster.stockid

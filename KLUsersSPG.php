@@ -26,6 +26,7 @@ $ViewTopic= 'GettingStarted';
 $BookMark = 'UserMaintenance';
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
+include('includes/KLDefines.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/group_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>
 	<br />';
@@ -424,7 +425,7 @@ echo '<tr>
 $sql = "SELECT loccode, 
 				locationname
 		FROM locations 
-		WHERE loccode LIKE 'TOK%' 
+		WHERE loccode IN " . LIST_ALL_SHOPS . " 
 		ORDER BY locationname";
 $result = DB_query($sql);
 if ((isset($_POST['DefaultLocation']) AND $_POST['DefaultLocation']=='') OR !isset($_POST['DefaultLocation'])){
