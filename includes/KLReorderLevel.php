@@ -30,7 +30,9 @@ function DailyReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db, 
 
 	SetRLZeroForNotAvailableItems($ShowMessages, $updateDB, $RootPath, $db);
 
-	$EmailText = AdjustPackaging(60, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+	$EmailText = AdjustPackaging(60, 'KAPAL-LAUT', $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+	$EmailText = AdjustPackaging(60, 'OUTLET', $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+	$EmailText = AdjustPackaging(60, 'BLINK', $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 	
 	return $EmailText;
 }
@@ -1087,23 +1089,35 @@ function OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db,
 	return $EmailText;
 }
 
-function AdjustPackaging($DaysSales, $ShowMessages, $updateDB, $RootPath, $db, $EmailText){
+function AdjustPackaging($DaysSales, $ShopStyle, $ShowMessages, $updateDB, $RootPath, $db, $EmailText){
+	
+	if($ShopStyle == 'KAPAL-LAUT'){
+		$ListOfShops = LIST_SHOPS_KAPAL_LAUT;
+		$ListOfItems = LIST_ITEMS_KAPAL_LAUT_PACKAGING;
+	}elseif ($ShopStyle == 'BLINK'){
+		$ListOfShops = LIST_SHOPS_BLINK;
+		$ListOfItems = LIST_ITEMS_BLINK_PACKAGING;
+	}elseif ($ShopStyle == 'OUTLET'){
+		$ListOfShops = LIST_SHOPS_OUTLET;
+		$ListOfItems = LIST_ITEMS_OUTLET_PACKAGING;
+	}
+
 	if ($EmailText!=''){
 		$EmailText = $EmailText . "\n" . "Adjust Packaging" . "\n\n" .
 					"DaysSales = " . $DaysSales . " " .
 					"RootPath = " . $RootPath . "\n" .
-					"List Shops Using Packaging Control = " . CleanListToPrint(LIST_SHOPS_USING_PACKAGING_CONTROL) . "\n" .
-					"List Items Using Packaging Control = " . CleanListToPrint(LIST_ITEMS_USING_PACKAGING_CONTROL) . "\n\n" ;
+					"List Shops Using Packaging Control = " . CleanListToPrint($ListOfShops) . "\n" .
+					"List Items Using Packaging Control = " . CleanListToPrint($ListOfItems) . "\n\n" ;
 	}
 
-	$Shops = ListToArray(LIST_SHOPS_USING_PACKAGING_CONTROL,",");
+	$Shops = ListToArray($ListOfShops,",");
 	$CountShops = count($Shops);
 	$iShop = 0;
 
-	$Items = ListToArray(LIST_ITEMS_USING_PACKAGING_CONTROL,",");
+	$Items = ListToArray($ListOfItems,",");
 	$CountItem = count($Items);
 
-	while ($iShop < $CountShops -1 ){ // take out the lst PACKA location
+	while ($iShop < $CountShops){
 		$iItem = 0;
 		while ($iItem < $CountItem){
 			$EmailText = AdjustPackagingItemByShop($Items[$iItem], $Shops[$iShop], $DaysSales, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);

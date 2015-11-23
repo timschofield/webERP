@@ -704,7 +704,7 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 and !isset($_POST['Proces
 	}
 
 	// If the shop is using regular packaging, show it!
-	if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_USING_KAPAL_LAUT_PACKAGING)){
+	if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_KAPAL_LAUT)){
 		echo '<table class="selection">
 				<tr>
 					<th colspan=8>' . _('Kapal-Laut Packaging & Shopping Bags included in this sale') . '
@@ -747,7 +747,7 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 and !isset($_POST['Proces
 		echo '</table>';	//end of column/row/master table
 	}
 
-	if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_USING_OUTLET_PACKAGING)){
+	if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_OUTLET)){
 		echo '<table class="selection">
 				<tr>
 					<th colspan=8>' . _('Outlet Packaging & Shopping Bags included in this sale') . '
@@ -1817,7 +1817,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 		} //end if $_POST['AmountReturnedGoods']!= 0
 */		
 		/* Account for the Packaging */
-		if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_USING_KAPAL_LAUT_PACKAGING)){
+		if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_KAPAL_LAUT)){
 			AdjustPackagingMovement("PKBX01-L", $_POST['PackagingBox01L'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
 			AdjustPackagingMovement("PKBX01-M", $_POST['PackagingBox01M'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
 			AdjustPackagingMovement("PKBX01-S", $_POST['PackagingBox01S'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
@@ -1831,7 +1831,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 			AdjustPackagingMovement("PKSB02-S", $_POST['ShoppingBag02S'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
 		}
 		
-		if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_USING_OUTLET_PACKAGING)){
+		if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_OUTLET)){
 			AdjustPackagingMovement("PKPB02-L", $_POST['OutletPouchBag02L'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
 			AdjustPackagingMovement("PKPB02-M", $_POST['OutletPouchBag02M'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
 			AdjustPackagingMovement("PKPB02-S", $_POST['OutletPouchBag02S'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);

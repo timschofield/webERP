@@ -372,7 +372,7 @@ if ($KL_ShopSupportTeam
 }
 
 if ($KL_SystemAdmin){
-	PackagingToBeRefilled(false, $RootPath, $db);
+	KapalLautPackagingToBeRefilled(false, $RootPath, $db);
 	OutletPackagingToBeRefilled(false, $RootPath, $db);
 }
 

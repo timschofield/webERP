@@ -2234,7 +2234,7 @@ No pending transfer regarding this item
 /* 2013-05-27 excluding items in consignment clothing */
 
 	// if the location is NOT doing discount, then we should filter discounted items
-	if (!ItemInList($Location, LIST_OUTLET_SHOPS)){
+	if (!ItemInList($Location, LIST_SHOPS_OUTLET)){
 		$FilterDiscount = " AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_OUTLET . " ";
 		$MessageDiscount = " NO discount.";
 	}else{
@@ -2403,18 +2403,18 @@ No pending transfer regarding this item
 
 function ItemsInCategoryWithStockKantorButReorderLevelTokoZero($CategoryId, $RootPath, $db){
 	if (ItemInList($CategoryId, LIST_STOCK_CATEGORIES_OUTLET)){
-		if (LIST_OUTLET_SHOPS == "('')"){
+		if (LIST_SHOPS_OUTLET == "('')"){
 			// no shops with outlet, so this report has NO sense.
 			return;
 		}else{
-			$WhereLocation = " AND locstock.loccode IN  " . LIST_OUTLET_SHOPS . " ";
+			$WhereLocation = " AND locstock.loccode IN  " . LIST_SHOPS_OUTLET . " ";
 		}
 	}elseif (ItemInList($CategoryId, LIST_STOCK_CATEGORIES_DISCOUNT)){
-		if (LIST_OUTLET_SHOPS == "('')"){
+		if (LIST_SHOPS_OUTLET == "('')"){
 			// no shops with discount, so this report has NO sense.
 			return;
 		}else{
-			$WhereLocation = " AND locstock.loccode IN  " . LIST_OUTLET_SHOPS . " ";
+			$WhereLocation = " AND locstock.loccode IN  " . LIST_SHOPS_OUTLET . " ";
 		}
 	}else{
 		$WhereLocation = " AND locstock.loccode LIKE 'TOK%' ";
@@ -2453,9 +2453,9 @@ function ItemsInCategoryWithStockKantorButReorderLevelTokoZero($CategoryId, $Roo
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		if (ItemInList($CategoryId, LIST_STOCK_CATEGORIES_OUTLET)){
-			echo '<p class="page_title_text" align="center"><strong>' . $CategoryId ._(' Items with stock available at Kantor but RL zero for ') . LIST_OUTLET_SHOPS . '</strong></p>';
+			echo '<p class="page_title_text" align="center"><strong>' . $CategoryId ._(' Items with stock available at Kantor but RL zero for ') . LIST_SHOPS_OUTLET . '</strong></p>';
 		}elseif (ItemInList($CategoryId, LIST_STOCK_CATEGORIES_DISCOUNT)){
-			echo '<p class="page_title_text" align="center"><strong>' . $CategoryId ._(' Items with stock available at Kantor but RL zero for ') . LIST_OUTLET_SHOPS . '</strong></p>';
+			echo '<p class="page_title_text" align="center"><strong>' . $CategoryId ._(' Items with stock available at Kantor but RL zero for ') . LIST_SHOPS_OUTLET . '</strong></p>';
 		}else{
 			echo '<p class="page_title_text" align="center"><strong>' . $CategoryId ._(' Items with stock available at Kantor but RL zero for all toko KL') . '</strong></p>';
 		}
@@ -3042,7 +3042,7 @@ function DiscountedItemsOnNotOutletShops($Category, $RootPath, $db){
 			WHERE stockmaster.stockid = locstock.stockid
 				AND stockmaster.categoryid = '" . $Category . "'
 				AND locstock.loccode LIKE 'TOK%'
-				AND locstock.loccode NOT IN " . LIST_OUTLET_SHOPS . "
+				AND locstock.loccode NOT IN " . LIST_SHOPS_OUTLET . "
 				AND locstock.loccode NOT IN " . LIST_ONLINE_SHOPS . "
 				AND ( locstock.quantity > 0 OR locstock.reorderlevel > 0 )
 			ORDER BY stockmaster.stockid";
@@ -3104,7 +3104,7 @@ function NotDiscountedItemsOnOutletShops($RootPath, $db){
 					OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_STABLE . "
 					OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING . ")
 				AND locstock.loccode LIKE 'TOK%'
-				AND locstock.loccode IN " . LIST_OUTLET_SHOPS . "
+				AND locstock.loccode IN " . LIST_SHOPS_OUTLET . "
 				AND ( locstock.quantity > 0 OR locstock.reorderlevel > 0 )
 			ORDER BY stockmaster.stockid";
 // EXPLAIN SQL 2014-05-31
@@ -5873,7 +5873,7 @@ function ItemsNoSalesInLocation($location, $maxdays, $QOHAvailable, $RootPath, $
 					(SELECT SUM(loc2.quantity)
 							FROM locstock AS loc2
 							WHERE loc2.stockid = stockmaster.stockid
-							AND (loc2.loccode IN " . LIST_KAPAL_LAUT_SHOPS . "
+							AND (loc2.loccode IN " . LIST_SHOPS_KAPAL_LAUT . "
 								OR loc2.loccode = 'KANTO') ) AS qtyavailable,
 					locstock.reorderlevel,
 					locstock.loccode,
@@ -5888,7 +5888,7 @@ function ItemsNoSalesInLocation($location, $maxdays, $QOHAvailable, $RootPath, $
 					AND  (SELECT SUM(loc2.quantity)
 							FROM locstock AS loc2
 							WHERE loc2.stockid = stockmaster.stockid
-							AND (loc2.loccode IN " . LIST_KAPAL_LAUT_SHOPS . "
+							AND (loc2.loccode IN " . LIST_SHOPS_KAPAL_LAUT . "
 								OR loc2.loccode = 'KANTO') ) <= ". $QOHAvailable ."
 					AND NOT EXISTS (SELECT * 
 									FROM 	salesorderdetails, salesorders
@@ -5950,7 +5950,7 @@ function ItemsNoSalesInLocation($location, $maxdays, $QOHAvailable, $RootPath, $
 	}
 }
 
-function PackagingToBeRefilled($ShowAll, $RootPath, $db){
+function KapalLautPackagingToBeRefilled($ShowAll, $RootPath, $db){
 /* EXPLAIN SQL 2014-05-20
 Updated 3 index in loctransfers
 */
@@ -6084,7 +6084,7 @@ Updated 3 index in loctransfers
 							AND loctransfers.shipqty != loctransfers.recqty
 							AND loctransfers.stockid = 'PKSB02-S') AS ot_shopping_s
 			FROM locations
-			WHERE locations.loccode IN " . LIST_SHOPS_USING_PACKAGING_CONTROL . 
+			WHERE locations.loccode IN " . LIST_SHOPS_KAPAL_LAUT . 
 			$OrderBy;
 
 	$result = DB_query($SQL);
@@ -6438,7 +6438,7 @@ function OutletPackagingToBeRefilled($ShowAll, $RootPath, $db){
 							AND loctransfers.shipqty != loctransfers.recqty
 							AND loctransfers.stockid = 'PKSB03') AS ot_shopping_m
 			FROM locations
-			WHERE locations.loccode IN " . LIST_SHOPS_USING_PACKAGING_CONTROL . 
+			WHERE locations.loccode IN " . LIST_SHOPS_OUTLET . 
 			$OrderBy;
 
 	$result = DB_query($SQL);
@@ -6592,7 +6592,7 @@ function MarkSisterShopInArray(&$TableResult, $numshops, $SisterShop){
 	}
 }
 
-function PackagingStatus($RootPath, $db){
+function KapalLautPackagingStatus($RootPath, $db){
 
 	$SQL = "SELECT locations.loccode,
 					locations.locationname,
@@ -6716,7 +6716,8 @@ function PackagingStatus($RootPath, $db){
 							AND loctransfers.shipqty != loctransfers.recqty
 							AND loctransfers.stockid = 'PKSB02-S') AS ot_shopping_s
 			FROM locations
-			WHERE locations.loccode IN " . LIST_SHOPS_USING_PACKAGING_CONTROL . "
+			WHERE locations.loccode IN " . LIST_SHOPS_KAPAL_LAUT . "
+				OR locations.loccode IN " . LIST_GUDANG_FOR_PACKAGING . "
 			ORDER BY locations.loccode";
 
 	$result = DB_query($SQL);
@@ -6911,7 +6912,8 @@ function OutletPackagingStatus($RootPath, $db){
 							AND loctransfers.shipqty != loctransfers.recqty
 							AND loctransfers.stockid = 'PKSB03') AS ot_shopping_m
 			FROM locations
-			WHERE locations.loccode IN " . LIST_SHOPS_USING_PACKAGING_CONTROL . "
+			WHERE locations.loccode IN " . LIST_SHOPS_OUTLET . "
+				OR locations.loccode IN " . LIST_GUDANG_FOR_PACKAGING . "
 			ORDER BY locations.loccode";
 
 	$result = DB_query($SQL);
@@ -6997,7 +6999,7 @@ function OutletPackagingStatus($RootPath, $db){
 	}
 }
 
-function PackagingUsage($NumDays, $RootPath, $db){
+function KapalLautPackagingUsage($NumDays, $RootPath, $db){
 /* EXPLAIN 2014-05-20	 OK! */
 
 	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -$NumDays));
@@ -7087,7 +7089,8 @@ function PackagingUsage($NumDays, $RootPath, $db){
 							AND packagingused.stockid = 'PKSB02-S'
 							AND packagingused.date >= '". $FromDate ."') AS sales_shopping_s
 			FROM locations
-			WHERE locations.loccode IN " . LIST_SHOPS_USING_PACKAGING_CONTROL . "
+			WHERE locations.loccode IN " . LIST_SHOPS_KAPAL_LAUT . "
+				OR locations.loccode IN " . LIST_GUDANG_FOR_PACKAGING . "
 			ORDER BY locations.loccode";
 
 	$result = DB_query($SQL);
@@ -7360,7 +7363,8 @@ function OutletPackagingUsage($NumDays, $RootPath, $db){
 							AND packagingused.stockid = 'PKSB03'
 							AND packagingused.date >= '". $FromDate ."') AS sales_shopping_m
 			FROM locations
-			WHERE locations.loccode IN " . LIST_SHOPS_USING_PACKAGING_CONTROL . "
+			WHERE locations.loccode IN " . LIST_SHOPS_KAPAL_LAUT . "
+				OR locations.loccode IN " . LIST_GUDANG_FOR_PACKAGING . "
 			ORDER BY locations.loccode";
 
 	$result = DB_query($SQL);
@@ -7503,7 +7507,10 @@ id	select_type	table	type	possible_keys	key	key_len	ref	rows	Extra
 			FROM stockmaster, locstock
 			WHERE stockmaster.stockid = locstock.stockid
 				AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_SHOP_PACKAGING . "
-				AND locstock.loccode NOT IN " . LIST_SHOPS_USING_PACKAGING_CONTROL . "
+				AND locstock.loccode NOT IN " . LIST_SHOPS_KAPAL_LAUT . "
+				AND locstock.loccode NOT IN " . LIST_SHOPS_OUTLET . "
+				AND locstock.loccode NOT IN " . LIST_SHOPS_BLINK . "
+				AND locstock.loccode NOT IN " . LIST_GUDANG_FOR_PACKAGING . "
 				AND ( locstock.quantity > 0 OR locstock.reorderlevel > 0 )
 			ORDER BY stockmaster.stockid";
 
