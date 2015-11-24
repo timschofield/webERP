@@ -50,5 +50,8 @@ INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES
 ('UserGLAccounts.php', '15', 'Maintenance of GL Accounts allowed for a user');
 ALTER table stockrequest DROP FOREIGN KEY `stockrequest_ibfk_3`;
 ALTER table stockrequest DROP FOREIGN KEY `stockrequest_ibfk_4`;
+
+INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('UserBankAccounts.php', '15', 'Maintains table bankaccountusers (Authorized users to work with a bank account in webERP)');
+
 -- Update version number:
 UPDATE config SET confvalue='4.13' WHERE confname='VersionNumber';

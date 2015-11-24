@@ -400,7 +400,8 @@ $MenuItems['GL']['Maintenance']['Caption'] = array(	_('Account Sections'),
 													_('User Authorised GL Accounts Maintenance'),
 													_('Copy Authority GL Accounts from user A to B'),
 													_('Bank Accounts'),
-													_('Bank Account Authorised Users'));
+													_('Bank Account Authorized Users'),
+													_('User Authorized Bank Accounts'));
 
 $MenuItems['GL']['Maintenance']['URL'] = array(		'/AccountSections.php',
 													'/AccountGroups.php',
@@ -411,7 +412,8 @@ $MenuItems['GL']['Maintenance']['URL'] = array(		'/AccountSections.php',
 													'/UserGLAccounts.php',
 													'/GLAccountUsersCopyAuthority.php',
 													'/BankAccounts.php',
-													'/BankAccountUsers.php');
+													'/BankAccountUsers.php',
+													'/UserBankAccounts.php');
 
 $MenuItems['FA']['Transactions']['Caption'] = array(_('Add a new Asset'),
 													_('Select an Asset'),
