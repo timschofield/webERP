@@ -53,7 +53,7 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
 						AND stockmaster.categoryid IN ('". implode("','",$_POST['Categories'])."')
 					ORDER BY stockmaster.stockid";
 		}else{
-			$SQL = "SELECT SUBSTRING(stockmaster.stockid,1,6),
+			$SQL = "SELECT SUBSTRING(stockmaster.stockid,1,6) AS stockid,
 							AVG (stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost) AS standardcost
 					FROM stockmaster
 					WHERE stockmaster.discontinued = 0
@@ -129,7 +129,7 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
  			$objPHPExcel->getActiveSheet()->setCellValue('V5', 'PCS TO PO/WO');
  			$objPHPExcel->getActiveSheet()->setCellValue('W5', 'SUPPLIER');
 			
-			$objPHPExcel->getActiveSheet()->setCellValue('AA5', 'SALES_66');
+/*			$objPHPExcel->getActiveSheet()->setCellValue('AA5', 'SALES_66');
  			$objPHPExcel->getActiveSheet()->setCellValue('AB5', 'SALES_SE');
  			$objPHPExcel->getActiveSheet()->setCellValue('AC5', 'SALES_OB');
  			$objPHPExcel->getActiveSheet()->setCellValue('AD5', 'SALES_KS');
@@ -141,23 +141,33 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
  			$objPHPExcel->getActiveSheet()->setCellValue('AJ5', 'SALES_UB');
  			$objPHPExcel->getActiveSheet()->setCellValue('AK5', 'SALES_MF');
  			$objPHPExcel->getActiveSheet()->setCellValue('AL5', 'SALES_PU');
-			
+*/			
 			// Add data
 			$StartingRow = 6;
 			$i = $StartingRow;
 			while ($myrow = DB_fetch_array($result)) {
 				$objPHPExcel->setActiveSheetIndex(0);
-				$objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $myrow['stockid']);
-				$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, $myrow['description']);
-				$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, $myrow['categoryid']);
-				$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, substr($myrow['stockid'], 0,2));
-				
-				$objPHPExcel->getActiveSheet()->setCellValue('E'.$i, TypeOfItem($myrow['stockid']));
-				$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, ConvertSQLDate($myrow['lastcategoryupdate']));
 
+				$objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $myrow['stockid']);
+
+				if ($CodeDetail == 'CodeFull'){
+					$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, $myrow['description']);
+					$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, $myrow['categoryid']);
+				}
+
+				$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, substr($myrow['stockid'], 0,2));
+				$objPHPExcel->getActiveSheet()->setCellValue('E'.$i, TypeOfItem($myrow['stockid']));
+
+				if ($CodeDetail == 'CodeFull'){
+					$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, ConvertSQLDate($myrow['lastcategoryupdate']));
+				}
+				
 				$objPHPExcel->getActiveSheet()->setCellValue('G'.$i, round($myrow['standardcost'],0));
 
-				$objPHPExcel->getActiveSheet()->setCellValue('H'.$i, $myrow['discountcategory']);
+				if ($CodeDetail == 'CodeFull'){
+					$objPHPExcel->getActiveSheet()->setCellValue('H'.$i, $myrow['discountcategory']);
+				}
+				
 				$objPHPExcel->getActiveSheet()->setCellValue('I'.$i, round(ItemCodeAvgPriceInvoiced($myrow['stockid'],$FromDate,$ToDate,''),0));
 
 				$objPHPExcel->getActiveSheet()->setCellValue('J'.$i, round(ItemCodeQOH($myrow['stockid']),0));
@@ -179,7 +189,7 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
 				$objPHPExcel->getActiveSheet()->setCellValue('V'.$i, '=IF(U'.$i.'<$C$4,ROUNDUP(($C$4-U'.$i.')*R'.$i.',0),"")'.'');
 				$objPHPExcel->getActiveSheet()->setCellValue('W'.$i, $myrow['preferredsupplier']);
 
-				$objPHPExcel->getActiveSheet()->setCellValue('AA'.$i, round(ItemCodeQuantityInvoiced($myrow['stockid'],$FromDate,$ToDate,'RETAIL66'),0));
+/*				$objPHPExcel->getActiveSheet()->setCellValue('AA'.$i, round(ItemCodeQuantityInvoiced($myrow['stockid'],$FromDate,$ToDate,'RETAIL66'),0));
 				$objPHPExcel->getActiveSheet()->setCellValue('AB'.$i, round(ItemCodeQuantityInvoiced($myrow['stockid'],$FromDate,$ToDate,'RETAILSE'),0));
 				$objPHPExcel->getActiveSheet()->setCellValue('AC'.$i, round(ItemCodeQuantityInvoiced($myrow['stockid'],$FromDate,$ToDate,'RETAILOB'),0));
 				$objPHPExcel->getActiveSheet()->setCellValue('AD'.$i, round(ItemCodeQuantityInvoiced($myrow['stockid'],$FromDate,$ToDate,'RETAILKS'),0));
@@ -191,7 +201,7 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
 				$objPHPExcel->getActiveSheet()->setCellValue('AJ'.$i, round(ItemCodeQuantityInvoiced($myrow['stockid'],$FromDate,$ToDate,'RETAILUB'),0));
 				$objPHPExcel->getActiveSheet()->setCellValue('AK'.$i, round(ItemCodeQuantityInvoiced($myrow['stockid'],$FromDate,$ToDate,'RETAILMF'),0));
 				$objPHPExcel->getActiveSheet()->setCellValue('AL'.$i, round(ItemCodeQuantityInvoiced($myrow['stockid'],$FromDate,$ToDate,'RETAILPU'),0));
-				
+*/				
 				$i++;
 			}
 			
