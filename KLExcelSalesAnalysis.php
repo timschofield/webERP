@@ -33,7 +33,6 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
 		$today = date('Y-m-d');
 		$FromDate = FormatDateForSQL($_POST['FromDate']);
 		$ToDate = FormatDateForSQL($_POST['ToDate']);
-//		$NumDays = floor((strtotime($ToDate) - strtotime($FromDate))/(60*60*24));
 		
 		if ($CodeDetail == 'CodeFull'){
 			$SQL = "SELECT stockmaster.stockid,
@@ -54,6 +53,7 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
 					ORDER BY stockmaster.stockid";
 		}else{
 			$SQL = "SELECT SUBSTRING(stockmaster.stockid,1,6) AS stockid,
+							COUNT(stockmaster.stockid) AS flavours,
 							AVG (stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost) AS standardcost
 					FROM stockmaster
 					WHERE stockmaster.discontinued = 0
@@ -99,7 +99,13 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
  			$objPHPExcel->getActiveSheet()->setCellValue('C4', 150);
 
 			$objPHPExcel->getActiveSheet()->setCellValue('A5', 'ITEM CODE');
-			$objPHPExcel->getActiveSheet()->setCellValue('B5', 'DESCRIPTION');
+			if ($CodeDetail == 'CodeFull'){
+				$ColumnTitle = 'DESCRIPTION';
+			}else{
+				$ColumnTitle = 'FLAVOURS';
+			}
+			$objPHPExcel->getActiveSheet()->setCellValue('B5', $ColumnTitle);
+			
 			$objPHPExcel->getActiveSheet()->setCellValue('C5', 'CATEGORY');
 			$objPHPExcel->getActiveSheet()->setCellValue('D5', 'FAMILY');
 			$objPHPExcel->getActiveSheet()->setCellValue('E5', 'TYPE');
@@ -153,6 +159,8 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
 				if ($CodeDetail == 'CodeFull'){
 					$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, $myrow['description']);
 					$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, $myrow['categoryid']);
+				}else{
+					$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, round($myrow['flavours'],0));
 				}
 
 				$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, substr($myrow['stockid'], 0,2));
@@ -324,7 +332,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 			<td>' . _('Item Codes detailed as') . ':</td>
 			<td><select name="CodeDetail">
 				<option selected="selected" value="CodeFull">' . _('Full Item Code') . '</option>
-				<option value="Code6">' . _('6 Char Item Code') . '</option>
+				<option value="Code6">' . _('Basic Item Code (6 Char)') . '</option>
 			</select></td>
 		</tr>';
 	
