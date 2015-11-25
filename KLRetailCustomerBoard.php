@@ -51,6 +51,8 @@ if ($KL_SystemAdmin
 	OR $KL_SalesManager){
 
 	RetailCustomerAnalysisByCountry(90, "ALL", 20, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(60, "ALL", 20, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(30, "ALL", 20, $CountriesForRetail, $db);
 	RetailCustomerAnalysisByCountry(90, "'TOK66','TOKSE','TOKOB','TOKKA'", 10, $CountriesForRetail, $db);
 	RetailCustomerAnalysisByCountry(90, "'TOKKS','TOKBW','TOKPA'", 10, $CountriesForRetail, $db);
 	RetailCustomerAnalysisByCountry(90, "'TOKJC'", 10, $CountriesForRetail, $db);
