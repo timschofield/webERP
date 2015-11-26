@@ -1,5 +1,6 @@
 webERP Change Log
 
+26/11/15 Exson: Fixed the rounding error caused extra lines on WO pdf file and 2 number display without locale format in PDFWOPrint.php.
 21/11/15 Gilberto Dos Santos Alves: Updated Portuguese Brazilian translation
 18/11/15 AlexFigueiro: Remove the duplicate foreign key in stockrequest and stockrequestitem;
 15/11/15 RChacon: Tidy css/*/default.css, reagrouping style for clases centre, number, page_title_text and text.
