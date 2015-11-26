@@ -68,15 +68,26 @@ if (isset($_POST['submit'])) {
 		prnMsg('<br />' . _('The Amount must be input'),'error');
 	}
 
-	$sqlLimit = "SELECT tablimit
-				FROM pctabs
-				WHERE tabcode='" . $SelectedTabs . "'";
+	$sqlLimit = "SELECT pctabs.tablimit,
+					pctabs.currency,
+					currencies.decimalplaces
+				FROM pctabs,
+					currencies
+				WHERE pctabs.currency = currencies.currabrev
+					AND pctabs.tabcode='" . $SelectedTabs . "'";
 
 	$ResultLimit = DB_query($sqlLimit);
 	$Limit=DB_fetch_array($ResultLimit);
 
-	if (($_POST['CurrentAmount']+$_POST['Amount'])>$Limit['tablimit']){
-		prnMsg(_('The balance after this assignment would be greater than the specified limit for this PC tab'),'warning');
+	if (($_POST['CurrentAmount'])>$Limit['tablimit']){
+		$InputError = 1;
+		prnMsg(_('Cash NOT assigned because PC tab current balance is over its cash limit of') . ' ' . locale_number_format($Limit['tablimit'],$Limit['decimalplaces']) . ' ' . $Limit['currency'],'error');
+		prnMsg(_('Report expenses before being allowed to assign more cash or ask the administrator to increase the limit'),'error');
+	}
+
+	if ($InputError !=1 AND (($_POST['CurrentAmount']+$_POST['Amount'])>$Limit['tablimit'])){
+		prnMsg(_('Cash assigned but PC tab current balance is over its cash limit of') . ' ' . locale_number_format($Limit['tablimit'],$Limit['decimalplaces']) . ' ' . $Limit['currency'],'warning');
+		prnMsg(_('Report expenses before being allowed to assign more cash or ask the administrator to increase the limit'),'warning');
 	}
 
 	if ($InputError !=1 AND isset($SelectedIndex) ) {
