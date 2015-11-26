@@ -340,7 +340,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 				$WOLine[$i]['issued'] = 9999999.99;
 				$WOLine[$i]['decimalplaces'] = 2;
 			}
-			if ($WOLine['decimalplaces'] != NULL) {
+			if ($WOLine[$i]['decimalplaces'] != NULL) {
 				$DecimalPlaces = $WOLine[$i]['decimalplaces'];
 			}
 			else {
@@ -407,13 +407,15 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 				while ($ToIssue = DB_fetch_array($AvailQty)){
 					if ($WOLine[$i]['controlled']) {
 						$CurLot=$ToIssue['serialno'];
-						$CurQty=$ToIssue['qty'];
+						$CurQty=locale_number_format($ToIssue['qty'],$DecimalPlaces);
 					}
 					else {
 						$CurLot=substr($WOHeader['locationname'] . ' ' . $ToIssue['bin'],0,34);
-						$CurQty=$ToIssue['quantity'];
+						$CurQty=locale_number_format($ToIssue['quantity'],$DecimalPlaces);
 					}
-					if ($CurQty > 0) {
+					//remove display of very small number raised due to rounding error
+					$MinalQtyAllowed = 1/pow(10,$DecimalPlaces)/10;
+					if ($CurQty > $MinalQtyAllowed) {
 						$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column3->x, $YPos, $FormDesign->Data->Column3->Length, $FormDesign->Data->Column3->FontSize, $CurLot, 'left');
 						$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column3->x, $YPos, $FormDesign->Data->Column3->Length, $FormDesign->Data->Column3->FontSize, $CurQty, 'right');
 						$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column5->x, $YPos, $FormDesign->Data->Column5->Length, $FormDesign->Data->Column5->FontSize, '________', 'right');
