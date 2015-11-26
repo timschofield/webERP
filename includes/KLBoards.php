@@ -2179,21 +2179,34 @@ function PettyCashToBeAuthorized($db){
 	}
 }
 
-function PettyCashBalance($db){
+function PettyCashBalance($TypeUser, $db){
+
+	if ($TypeUser == 'Authorizer'){
+		$WhereUser = "AND pctabs.authorizer = '". $_SESSION['UserID'] ."'";
+	}elseif($TypeUser == 'User'){
+		$WhereUser = "AND pctabs.usercode = '". $_SESSION['UserID'] ."'";
+	}else{
+		$WhereUser = "";
+	}
 
 	$SQL = "SELECT pcashdetails.tabcode, 	
 				SUM(pcashdetails.amount) as amount,
 				pctabs.currency
 			FROM pcashdetails,pctabs	
-			WHERE pcashdetails.tabcode = pctabs.tabcode	
-				AND pctabs.authorizer = '". $_SESSION['UserID'] ."'
+			WHERE pcashdetails.tabcode = pctabs.tabcode	".
+			$WhereUser . "
 			GROUP BY pcashdetails.tabcode, pctabs.tablimit
 			HAVING ( SUM(pcashdetails.amount) < -0.01
 					OR SUM(pcashdetails.amount) > pctabs.tablimit)";
 
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Petty Cash Balance Too Low or Too High') . '</strong></p>';
+		
+		if ($TypeUser == "Authorizer"){
+			echo '<p class="page_title_text" align="center"><strong>' . _('Petty Cash Accounts you AUTHORIZE with balance too Low or Too High') . '</strong></p>';
+		}else{
+			echo '<p class="page_title_text" align="center"><strong>' . _('Petty Cash Balance you USE with balance too Low or Too High') . '</strong></p>';
+		}
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>

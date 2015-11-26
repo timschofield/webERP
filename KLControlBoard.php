@@ -594,9 +594,13 @@ if ($KL_SystemAdmin
 	ItemsCancelledInTransfers(3, $RootPath, $db);
 }
 
+if (!$KL_SystemAdmin){
+	PettyCashBalance('User', $db);
+}
+
 if ($KL_SystemAdmin 
 	OR $KL_PurchasingManager){
-	PettyCashBalance($db);
+	PettyCashBalance('Authorizer', $db);
 	PettyCashToBeAuthorized($db);
 }
 
