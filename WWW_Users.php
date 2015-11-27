@@ -1,5 +1,5 @@
 <?php
-/* $Id: WWW_Users.php 7391 2015-11-16 08:14:27Z tehonu $*/
+/* $Id: WWW_Users.php 7402 2015-11-27 00:26:56Z tehonu $*/
 
 if (isset($_POST['UserID']) AND isset($_POST['ID'])){
 	if ($_POST['UserID'] == $_POST['ID']) {
@@ -278,6 +278,10 @@ if (isset($_POST['submit'])) {
 
 			$sql="DELETE FROM glaccountusers WHERE userid='" . $SelectedUser . "'";
 			$ErrMsg = _('The GL Account - User could not be deleted because');;
+			$result = DB_query($sql,$ErrMsg);
+
+			$sql="DELETE FROM bankaccountusers WHERE userid='" . $SelectedUser . "'";
+			$ErrMsg = _('The Bank Accounts - User could not be deleted because');;
 			$result = DB_query($sql,$ErrMsg);
 
 			$sql="DELETE FROM www_users WHERE userid='" . $SelectedUser . "'";
