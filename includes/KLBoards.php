@@ -2622,9 +2622,10 @@ function GoodsReceivedNotInvoicedControl($period, $db){
 	
 	$ValueAtBalance = -$myrow['saldo'];
 	
-	$SQL = "SELECT SUM((grns.qtyrecd - grns.quantityinv) * grns.stdcostunit)
-			FROM grns
-			WHERE grns.qtyrecd - grns.quantityinv > 0";
+	$SQL = "SELECT SUM((grns.qtyrecd - grns.quantityinv) * (stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost))
+			FROM grns, stockmaster
+			WHERE stockmaster.stockid = grns.itemcode
+				AND (grns.qtyrecd - grns.quantityinv) > 0";
 // EXPLAIN SQL 2014-05-31
 // NOT OK. All 10.000 rows each time
 // prnMsg($SQL);	
