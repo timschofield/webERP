@@ -280,6 +280,10 @@ if (isset($_POST['submit'])) {
 			$ErrMsg = _('The GL Account - User could not be deleted because');;
 			$result = DB_query($sql,$ErrMsg);
 
+			$sql="DELETE FROM bankaccountusers WHERE userid='" . $SelectedUser . "'";
+			$ErrMsg = _('The Bank Accounts - User could not be deleted because');;
+			$result = DB_query($sql,$ErrMsg);
+
 			$sql="DELETE FROM www_users WHERE userid='" . $SelectedUser . "'";
 			$ErrMsg = _('The User could not be deleted because');;
 			$result = DB_query($sql,$ErrMsg);
