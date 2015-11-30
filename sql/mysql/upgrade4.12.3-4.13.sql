@@ -52,6 +52,7 @@ ALTER table stockrequest DROP FOREIGN KEY `stockrequest_ibfk_3`;
 ALTER table stockrequest DROP FOREIGN KEY `stockrequest_ibfk_4`;
 
 INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('UserBankAccounts.php', '15', 'Maintains table bankaccountusers (Authorized users to work with a bank account in webERP)');
+ALTER table suppinvstogrn DROP FOREIGN  KEY `suppinvstogrn_ibfk_1`;
 
 -- Update version number:
 UPDATE config SET confvalue='4.13' WHERE confname='VersionNumber';
