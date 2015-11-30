@@ -179,9 +179,9 @@ if (isset($_POST['Show'])){
 				<th class="centre">', ('Date'), '</th>
 				<th class="number">', _('Debit'), '</th>
 				<th class="number">', _('Credit'), '</th>
-				<th class="text">', _('Org Currency'), '</th>
-				<th class="number">', _('Amount in Org Currency'), '</th>
-				<th class="text">', _('Bank Reference'), '</th>
+				<th class="text">', _(''), '</th>
+				<th class="number">', _(''), '</th>
+				<th class="text">', _(''), '</th>
 				<th class="text">', _('Narrative'), '</th>
 				<th class="number">', _('Balance'), '</th>
 				<th class="text">', _('Tag'), '</th>
@@ -276,15 +276,19 @@ if (isset($_POST['Show'])){
 			$k++;
 		}
 		if ($myrow['type'] == 12 OR $myrow['type'] == 22 OR $myrow['type'] == 2 OR $myrow['type'] == 1) {
-			$banksql = "SELECT ref,currcode,amount FROM banktrans WHERE type='" .$myrow['type']."' and transno='" . $myrow['typeno'] . "'";
-			$ErrMsg = _('Failed to retrieve bank data');
-			$bankresult = DB_query($banksql,$ErrMsg);
-			if (DB_num_rows($bankresult)>0) {
-				$bankrow = DB_fetch_array($bankresult);
-				$BankRef = $bankrow['ref'];
-				$OrgAmt = $bankrow['amount'];
-				$Currency = $bankrow['currcode'];
-			}
+// RICARD COMMENTED OUT because it's returning the wrong info for petty cash expenses
+//			$banksql = "SELECT ref,currcode,amount FROM banktrans WHERE type='" .$myrow['type']."' and transno='" . $myrow['typeno'] . "'";
+//			$ErrMsg = _('Failed to retrieve bank data');
+//			$bankresult = DB_query($banksql,$ErrMsg);
+//			if (DB_num_rows($bankresult)>0) {
+//				$bankrow = DB_fetch_array($bankresult);
+//				$BankRef = $bankrow['ref'];
+//				$OrgAmt = $bankrow['amount'];
+//				$Currency = $bankrow['currcode'];
+//			}
+			$BankRef = '';
+			$OrgAmt = '';
+			$Currency = '';
 		} else {
 			$BankRef = '';
 			$OrgAmt = '';
