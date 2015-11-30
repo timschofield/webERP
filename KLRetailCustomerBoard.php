@@ -20,15 +20,15 @@ if ($KL_SystemAdmin){
 }
 
 if ($KL_SystemAdmin 
-	OR $KL_KantorManager 
-	OR $KL_PurchasingManager 
+	OR $KL_OperationalManager 
+	OR $KL_BusinessDevelopmentManager 
 	OR $KL_SalesManager){
 	RetailCustomerDataQualitySPG("ALL", 30, $db);
 }
 
 if ($KL_SystemAdmin 
-	OR $KL_KantorManager 
-	OR $KL_PurchasingManager 
+	OR $KL_OperationalManager 
+	OR $KL_BusinessDevelopmentManager 
 	OR $KL_SalesManager){
 
 	RetailCustomerAnalysisBySex(90, "ALL", $db);
@@ -46,8 +46,8 @@ if ($KL_SystemAdmin){
 }
 
 if ($KL_SystemAdmin 
-	OR $KL_KantorManager 
-	OR $KL_PurchasingManager 
+	OR $KL_OperationalManager 
+	OR $KL_BusinessDevelopmentManager 
 	OR $KL_SalesManager){
 
 	RetailCustomerAnalysisByCountry(90, "ALL", 20, $CountriesForRetail, $db);
@@ -61,8 +61,8 @@ if ($KL_SystemAdmin
 }
 
 if ($KL_SystemAdmin 
-	OR $KL_KantorManager 
-	OR $KL_PurchasingManager 
+	OR $KL_OperationalManager 
+	OR $KL_BusinessDevelopmentManager 
 	OR $KL_SalesManager){
 
 	RetailCustomerAnalysisByAge(60, "ALL", $db);

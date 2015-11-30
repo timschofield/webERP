@@ -20,7 +20,7 @@ $periodnow=GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
 AverageSales("Shop", 365, 90, 30, 15, 7, 1, 30, "CurrentYear", "All", $db);
 
 if ($KL_SystemAdmin
-	OR $KL_PurchasingManager
+	OR $KL_BusinessDevelopmentManager
 	OR $KL_SalesManager){
 //	AverageSales("Shop", 365, 90, 30, 15,7, 1, 30, "LastYear", "All", $db);
 	YearDifferenceSales("Shop",  15, $db);
@@ -67,7 +67,7 @@ if ($KL_SystemAdmin
 
 if ($KL_SystemAdmin 
 	OR $KL_SalesManager
-	OR $KL_PurchasingManager){
+	OR $KL_BusinessDevelopmentManager){
 	GeneralCustomerBehaviour(30, $db);
 	GeneralCustomerBehaviour(90, $db);
 }
@@ -77,9 +77,9 @@ if ($KL_SystemAdmin){
 }
 
 if ($KL_SystemAdmin 
-	OR $KL_KantorManager
+	OR $KL_OperationalManager
 	OR $KL_SalesManager
-	OR $KL_PurchasingManager){
+	OR $KL_BusinessDevelopmentManager){
 	ActiveTransfersByLocation($RootPath, $db);
 	ActiveTransferStatus($RootPath, $db);
 	RecentlyClosedTransferStatus(1, $RootPath, $db);
@@ -90,7 +90,7 @@ FinishedStockDistribution("FORSALE", "LOCATION", $db);
 
 if ($KL_SystemAdmin 
 	OR $KL_SalesManager
-	OR $KL_PurchasingManager){
+	OR $KL_BusinessDevelopmentManager){
 	FinishedStockDistribution("FORSALE", "STOCKCATEGORY", $db);
 }
 
@@ -105,8 +105,8 @@ if ($KL_SystemAdmin){
 	FinishedStockDistribution("PACKAGING", "LOCATION", $db);
 }
 if (($KL_SystemAdmin) 
-	OR ($KL_KantorManager)
-	OR ($KL_PurchasingManager)){
+	OR ($KL_OperationalManager)
+	OR ($KL_BusinessDevelopmentManager)){
 	InsuficientStockForShopPackaging( 'SHPACK', 21, 90, 30, true, $RootPath, $db);
 	InsuficientStockForShopPackaging( 'ZAPON', 21, 60, 30, true, $RootPath, $db);
 }

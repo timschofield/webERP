@@ -37,12 +37,12 @@ if ($KL_SystemAdmin){
 }
 
 if ($KL_SystemAdmin 
-	OR $KL_KantorManager 
-	OR $KL_KantorAdministration 
-	OR $KL_PurchasingManager 
+	OR $KL_OperationalManager 
+	OR $KL_AdministrationTeam 
+	OR $KL_BusinessDevelopmentManager 
 	OR $KL_PurchasingTeam 
 	OR $KL_ShopSupportTeam 
-	OR $KL_ShopSupportManager 
+	OR $KL_ShopSupportLeader 
 	OR $KL_SalesManager 
 	OR $KL_PettyCash 
 	OR $KL_SPG 
@@ -54,19 +54,19 @@ if ($KL_SystemAdmin
 * SPG PERFORMANCE         
 ***************************************************************************************/
 
-if ($KL_PurchasingManager
+if ($KL_BusinessDevelopmentManager
 	OR $KL_SalesManager){
 	SPGNotReportingSalesInDays(2, $db);
 }
 
 if ($KL_SalesManager
-	OR $KL_ShopSupportManager
-	OR $KL_KantorManager){
+	OR $KL_ShopSupportLeader
+	OR $KL_OperationalManager){
 	SplittedPaymentsBySPG(15, 2, $db);
 }
 
 /*
-if ($KL_PurchasingManager
+if ($KL_BusinessDevelopmentManager
 	OR $KL_SalesManager){
 	SPGBelowMinimumSales("TOK66", 2, 1300000,$db);
 	SPGBelowMinimumSales("TOKSA", 2, 1650000,$db);
@@ -119,7 +119,7 @@ if (($KL_SystemAdmin)){
 }
 */
 
-if ($KL_PurchasingManager
+if ($KL_BusinessDevelopmentManager
 	OR $KL_ShopSupportTeam){
 	
 	over_or_below_limit("Items changing price or moving category", "OVER", 50, $RootPath, $db);
@@ -137,8 +137,8 @@ if ($KL_ShopSupportTeam){
 	ItemsMovingToDiscountDelayed(80, 4, $RootPath, $db);
 }
 
-if ($KL_KantorManager
-	OR $KL_PurchasingManager){
+if ($KL_OperationalManager
+	OR $KL_BusinessDevelopmentManager){
 
 	ItemsChangingPriceDelayed(5, $RootPath, $db);
 	ItemsMovingToDiscountDelayed(20, 5, $RootPath, $db);
@@ -146,18 +146,18 @@ if ($KL_KantorManager
 	ItemsMovingToDiscountDelayed(80, 5, $RootPath, $db);
 }
 
-if ($KL_PurchasingManager
+if ($KL_BusinessDevelopmentManager
 	OR $KL_PurchasingTeam 
-	OR $KL_ShopSupportManager){
+	OR $KL_ShopSupportLeader){
 	
 	DiscountedItemsOnNotOutletShops("DISC50", $RootPath, $db);
 	DiscountedItemsOnNotOutletShops("DISC80", $RootPath, $db);
 	NotDiscountedItemsOnOutLetShops($RootPath, $db);
 }
 
-if ($KL_PurchasingManager
+if ($KL_BusinessDevelopmentManager
 	OR $KL_PurchasingTeam 
-	OR $KL_ShopSupportManager){	
+	OR $KL_ShopSupportLeader){	
 
 	DiscountedItemsWithWrongDiscount("DISC20", "20", $RootPath, $db);
 	DiscountedItemsWithWrongDiscount("DISC50", "50", $RootPath, $db);
@@ -176,7 +176,7 @@ if ($KL_SystemAdmin){
 }
 
 if ($KL_SystemAdmin 
-	OR $KL_KantorAdministration){
+	OR $KL_AdministrationTeam){
 	
 	BalanceAccountControl("111111101",         0,   15000000, $periodnow, $db);
 	BalanceAccountControl("111111102",         0,   15000000, $periodnow, $db);
@@ -197,14 +197,14 @@ if ($KL_SystemAdmin
 
 if ($KL_SystemAdmin 
 	OR $KL_PurchasingTeam
-	OR $KL_KantorAdministration){
+	OR $KL_AdministrationTeam){
 
 	BalanceAccountControl("111111100",          -1,          1, $periodnow, $db);
 }
 
 
 if ($KL_SystemAdmin 
-	OR $KL_KantorAdministration){
+	OR $KL_AdministrationTeam){
 	// Bank Mandiri or  BCA has enough funds to be transferred to Danamon
 	BalanceAccountControl("111121100PT",  1000000,   50000000, $periodnow, $db);
 	BalanceAccountControl("111121101PT",  1000000,  100000000, $periodnow, $db);
@@ -240,14 +240,14 @@ if ($KL_SystemAdmin){
 }
 
 if ($KL_PurchasingTeam
-	OR $KL_PurchasingManager){
+	OR $KL_BusinessDevelopmentManager){
 	
 	ItemsNeedingTranslationRevision($RootPath, $db);
 }
 
 /*
-if ($KL_PurchasingManager
-	OR $KL_KantorManager
+if ($KL_BusinessDevelopmentManager
+	OR $KL_OperationalManager
 	OR $KL_ShopSupportTeam){
 	ItemsWithStockLocationButNoStockAvailable("WABOM", "WaterBom", 15, 600, $RootPath, $db);
 	ItemsWithStockLocationButNoStockAvailable("WHAYA", "Ayana", 15, 600, $RootPath, $db);
@@ -256,7 +256,7 @@ if ($KL_PurchasingManager
 }
 */
 
-if ($KL_PurchasingManager
+if ($KL_BusinessDevelopmentManager
 	OR $KL_PurchasingTeam){
 	ItemsinSetUp("ReadyToTest", $RootPath, $db);
 	ItemsinSetUp("NeedDescription", $RootPath, $db);
@@ -267,7 +267,7 @@ if ($KL_PurchasingManager
 	ObsoleteComponentsInActiveBOM($RootPath, $db);
 }
 
-if ($KL_PurchasingManager){
+if ($KL_BusinessDevelopmentManager){
 
 	GoodsJustArrived("PO", "KANTO", 3, $RootPath, $db);
 	GoodsJustArrived("WO", "KANTO", 3, $RootPath, $db);
@@ -296,7 +296,7 @@ if ($KL_PurchasingManager){
 */
 }
 
-if ($KL_PurchasingManager){
+if ($KL_BusinessDevelopmentManager){
 	ItemsWithStockKantorButReorderLevelTokoZero($RootPath, $db);
 
 	ItemsWithStockKantorButRLZeroAt("DISC50", "TOKSU", $RootPath, $db);
@@ -305,7 +305,7 @@ if ($KL_PurchasingManager){
 	ItemsWithStockKantorButRLZeroAt("DISC80", "TOKJC", $RootPath, $db);
 }
 	
-if ($KL_PurchasingManager){
+if ($KL_BusinessDevelopmentManager){
 	ItemsWithStockKantorButRLZeroAt("ALL", "TOKSA", $RootPath, $db);
 	ItemsWithStockKantorButRLZeroAt("ALL", "TOKSS", $RootPath, $db);
 	ItemsWithStockKantorButRLZeroAt("ALL", "TOKMF", $RootPath, $db);
@@ -322,13 +322,13 @@ if ($KL_PurchasingManager){
 }
 
 
-if ($KL_KantorManager 
+if ($KL_OperationalManager 
 	OR $KL_PurchasingTeam){
 
 	ConsumablesGoodsNotEnoughStock(50, 25, 75, $RootPath, $db);
 }
 
-if ($KL_PurchasingManager
+if ($KL_BusinessDevelopmentManager
 	OR $KL_PurchasingTeam){
 
 	ValueStockLocation("SERVI",    0,  150, 0, 0, $db);
@@ -345,24 +345,24 @@ if ($KL_SystemAdmin
 	OR $KL_PurchasingTeam){
 	ItemsWithoutPurchasingData($RootPath, $db);
 }
-if ($KL_PurchasingManager){
+if ($KL_BusinessDevelopmentManager){
 	ComponentsToObsolete(false, 0, $RootPath, $db);
 }
 
-if ($KL_PurchasingManager
+if ($KL_BusinessDevelopmentManager
 	OR $KL_PurchasingTeam){
 	FlaggedAsObsoleteButStockAvailable($RootPath, $db);
 }
 
-if ($KL_PurchasingManager
+if ($KL_BusinessDevelopmentManager
 	OR $KL_PurchasingTeam
-	OR $KL_ShopSupportManager){
+	OR $KL_ShopSupportLeader){
 	ItemsInKLProcessAndRLNotZero($RootPath, $db);
 }
 
-if ($KL_PurchasingManager
+if ($KL_BusinessDevelopmentManager
 	OR $KL_PurchasingTeam
-	OR $KL_ShopSupportManager){
+	OR $KL_ShopSupportLeader){
 	ItemsOnSpecialRequest($RootPath, $db);
 }
 
@@ -384,8 +384,8 @@ if ($KL_PurchasingTeam){
 	InsuficientStockForShopPackaging('SHPACK', 21, 90, 30, true, $RootPath, $db); // Works for both regular and outlet shop packaging
 }
 
-if ($KL_KantorManager
-	OR $KL_PurchasingManager
+if ($KL_OperationalManager
+	OR $KL_BusinessDevelopmentManager
 	OR $KL_PurchasingTeam 
 	OR $KL_ShopSupportTeam){
 	
@@ -394,7 +394,7 @@ if ($KL_KantorManager
 /***************************************************************************************
 * SALES CONTROL         
 ***************************************************************************************/
-if ($KL_PurchasingManager
+if ($KL_BusinessDevelopmentManager
 	OR $KL_SalesManager){
 
 /*	GoodSellingItemsInCategory("TESTSI", 15, 6, $RootPath, $db);
@@ -490,8 +490,8 @@ if ($KL_PurchasingManager
 	PerformanceItemsInCategory("BAD",  "DISC50",120, 100, "MOVE TO 80% DISCOUNT", $RootPath, $db);
 }
 
-if ($KL_PurchasingManager
-	OR $KL_KantorManager
+if ($KL_BusinessDevelopmentManager
+	OR $KL_OperationalManager
 	OR $KL_SalesManager){
 	
 //	ItemsNoSalesInLocation("WABOM", 30, 10, $RootPath, $db);
@@ -503,7 +503,7 @@ if ($KL_PurchasingManager
 * PO, Sales Orders         
 ***************************************************************************************/
 
-if ($KL_PurchasingManager
+if ($KL_BusinessDevelopmentManager
 	OR $KL_PurchasingTeam){
 	
 	OldPurchasingOrdersStillActive(90, $RootPath, $db);
@@ -514,8 +514,8 @@ if ($KL_PurchasingManager
 }
 
 
-if ($KL_KantorManager
-	OR $KL_ShopSupportManager){
+if ($KL_OperationalManager
+	OR $KL_ShopSupportLeader){
 	
 //	WrongGiftItem("ONLINE-VIP-PACK", "Retail", "OVER",  500000, 1, $RootPath, $db);
 //	WrongGiftItem("ONLINE-VIP-PACK", "Retail", "BELOW", 500000, 1, $RootPath, $db);
@@ -524,22 +524,22 @@ if ($KL_KantorManager
 }
 
 if ($KL_SystemAdmin 
-	OR $KL_KantorManager){
+	OR $KL_OperationalManager){
 	OutstandingOrders("Retail", "Order", $RootPath, $db);
 	OutstandingOrders("Retail", "Quotation", $RootPath, $db);
 }
 
 if ($KL_SystemAdmin 
-	OR $KL_PurchasingManager
-	OR $KL_KantorManager){
+	OR $KL_BusinessDevelopmentManager
+	OR $KL_OperationalManager){
 	OutstandingOrders("Wholesale", "Order", $RootPath, $db);
 	OutstandingOrders("Wholesale", "Quotation", $RootPath, $db);
 }
 
 /*
 if ($KL_SystemAdmin 
-	OR $KL_KantorManager
-	OR $KL_ShopSupportManager){ 
+	OR $KL_OperationalManager
+	OR $KL_ShopSupportLeader){ 
 	OutstandingOrders("Consignment", "Order", $RootPath, $db);
 	OutstandingOrders("Consignment", "Quotation", $RootPath, $db);
 }
@@ -554,7 +554,7 @@ if ($KL_SystemAdmin){
 }
 
 if ($KL_SystemAdmin 
-	OR $KL_KantorManager
+	OR $KL_OperationalManager
 	OR $KL_ShopSupportTeam){ 
 	OutstandingOrders("Online", "Order", $RootPath, $db);
 	OnlineItemsOnProcess($RootPath, $db);
@@ -568,7 +568,7 @@ if ($KL_SystemAdmin){
 * Other tests     
 ***************************************************************************************/
 if ($KL_SystemAdmin 
-	OR $KL_PurchasingManager
+	OR $KL_BusinessDevelopmentManager
 	OR $KL_PurchasingTeam){
 	ActiveItemsWithoutPicture($RootPath, $db);
 }
@@ -589,7 +589,7 @@ if ($KL_ShopSupportTeam){
 }
 
 if ($KL_SystemAdmin 
-	OR $KL_KantorManager){
+	OR $KL_OperationalManager){
 	TransfersDelayed(4, $RootPath, $db);
 	ItemsCancelledInTransfers(3, $RootPath, $db);
 }
@@ -599,7 +599,7 @@ if (!$KL_SystemAdmin){
 }
 
 if ($KL_SystemAdmin 
-	OR $KL_PurchasingManager){
+	OR $KL_BusinessDevelopmentManager){
 	PettyCashBalance('Authorizer', $db);
 	PettyCashToBeAuthorized($db);
 }

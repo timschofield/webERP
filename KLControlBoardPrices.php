@@ -28,7 +28,7 @@ $periodnow=GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
 ***************************************************************************************/
 
 if ($KL_SystemAdmin 
-	OR $KL_PurchasingManager){
+	OR $KL_BusinessDevelopmentManager){
 	
 //	PricesNotUpdatedinXDays(365*2, 15, $RootPath, $db);
 //	PricesNotUpdatedinXDays(365  , 10, $RootPath, $db);
@@ -55,7 +55,7 @@ if ($KL_SystemAdmin
 }
 
 if ($KL_SystemAdmin 
-	OR $KL_PurchasingManager){
+	OR $KL_BusinessDevelopmentManager){
 	PriceBelowStandard("TESTSI", 4.75, 0, 10, $RootPath, $db);
 	PriceBelowStandard("SILVER", 4.75, 0, 10, $RootPath, $db);
 	PriceBelowStandard("NOPOSI", 4.75, 0, 10, $RootPath, $db);
@@ -74,7 +74,7 @@ if ($KL_SystemAdmin
 }
 
 if ($KL_SystemAdmin 
-	OR $KL_PurchasingManager){
+	OR $KL_BusinessDevelopmentManager){
 	ItemsTooCheap("TESTSI", 4.75, 5.00, 0.05, 10, 100, 60, $RootPath, $db);
 	ItemsTooCheap("SILVER", 4.75, 5.00, 0.05, 10, 100, 60, $RootPath, $db);
 	ItemsTooCheap("NOPOSI", 4.75, 5.00, 0.05, 10, 100, 60, $RootPath, $db);
@@ -111,7 +111,7 @@ if ($KL_SystemAdmin
 
 
 if ($KL_SystemAdmin 
-	OR $KL_PurchasingManager){
+	OR $KL_BusinessDevelopmentManager){
 	PriceWrongRounding($RootPath, $db);
 }
 

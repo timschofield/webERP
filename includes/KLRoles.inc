@@ -3,48 +3,54 @@
 /* Assign $KL_Role variables depending on AccessLevel, for ease of coding */
 
 $KL_SystemAdmin = FALSE;
-$KL_KantorManager = FALSE;
-$KL_KantorAdministration = FALSE;
-$KL_PurchasingManager = FALSE;
+$KL_OperationalManager = FALSE;
+$KL_AdministrationTeam = FALSE;
+$KL_BusinessDevelopmentManager = FALSE;
 $KL_PurchasingTeam = FALSE;
+
 $KL_ShopSupportTeam = FALSE;
-$KL_ShopSupportManager = FALSE;
+$KL_ShopSupportLeader = FALSE;
+
 $KL_SalesManager = FALSE;
 $KL_PettyCash = FALSE;
 $KL_SPG = FALSE;
 $KL_SPGSupport = FALSE;
 
-if ($_SESSION['AccessLevel'] == 8){
+if ($_SESSION['AccessLevel'] == 8){ // webERP System Administration
 	$KL_SystemAdmin = TRUE;
-}else if ($_SESSION['AccessLevel'] == 9){
+}else if ($_SESSION['AccessLevel'] == 9){ // Shop Support Team
 	$KL_ShopSupportTeam = TRUE;
-}else if ($_SESSION['AccessLevel'] == 14){
-	$KL_KantorManager = TRUE;
-}else if ($_SESSION['AccessLevel'] == 15){
+}else if ($_SESSION['AccessLevel'] == 26){ // Shop Support Team + Online. 
+	$KL_ShopSupportTeam = TRUE;
+}else if ($_SESSION['AccessLevel'] == 23){ // Shop Support Leader
+	$KL_ShopSupportTeam = TRUE;
+	$KL_ShopSupportLeader = TRUE;
+}else if ($_SESSION['AccessLevel'] == 14){ // Operational Manager
+	$KL_OperationalManager = TRUE;
+}else if ($_SESSION['AccessLevel'] == 15){ // PettyCash Only User (courier, IT, etc...)
 	$KL_PettyCash = TRUE;
-}else if ($_SESSION['AccessLevel'] == 16){
+}else if ($_SESSION['AccessLevel'] == 16){ // Sales Manager
 	$KL_SalesManager = TRUE;
-}else if ($_SESSION['AccessLevel'] == 17){
+}else if ($_SESSION['AccessLevel'] == 17){ // Sales Team SPG
 	$KL_SPG = TRUE;
-}else if ($_SESSION['AccessLevel'] == 19){
-	$KL_KantorAdministration = TRUE;
-}else if ($_SESSION['AccessLevel'] == 21){
-	$KL_PurchasingManager = TRUE;
-}else if ($_SESSION['AccessLevel'] == 22){
+}else if ($_SESSION['AccessLevel'] == 22){ // Sales Team SPG Support
 	$KL_SPGSupport = TRUE;
-}else if ($_SESSION['AccessLevel'] == 23){
-	$KL_ShopSupportTeam = TRUE;
-	$KL_ShopSupportManager = TRUE;
-}else if ($_SESSION['AccessLevel'] == 24){
+}else if ($_SESSION['AccessLevel'] == 19){ // Administration Leader
+	$KL_AdministrationTeam = TRUE;
+}else if ($_SESSION['AccessLevel'] == 27){ // Administration Team 
+	$KL_AdministrationTeam = TRUE;
+}else if ($_SESSION['AccessLevel'] == 21){ // Business Development manager (L)
+	$KL_BusinessDevelopmentManager = TRUE;
+}else if ($_SESSION['AccessLevel'] == 24){ // Purchasing Leader
 	$KL_PurchasingTeam = TRUE;
-}else if ($_SESSION['AccessLevel'] == 25){ // PakRicard
-	$KL_KantorManager = TRUE;
+}else if ($_SESSION['AccessLevel'] == 28){ // Purchasing Team
+	$KL_PurchasingTeam = TRUE;
+}else if ($_SESSION['AccessLevel'] == 25){ // Marketing Manager PakRicard
+	$KL_OperationalManager = TRUE;
 	$KL_SalesManager = TRUE;
-	$KL_KantorAdministration = TRUE;
-	$KL_PurchasingManager = TRUE;
-	$KL_ShopSupportManager = TRUE;
-}else if ($_SESSION['AccessLevel'] == 26){ // Shop Support + Online
-	$KL_ShopSupportTeam = TRUE;
+	$KL_AdministrationTeam = TRUE;
+	$KL_BusinessDevelopmentManager = TRUE;
+	$KL_ShopSupportLeader = TRUE;
 }
 
 ?>
