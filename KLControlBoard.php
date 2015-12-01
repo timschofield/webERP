@@ -1,5 +1,5 @@
 <?php
-define("VERSIONFILE", "3.24"); 
+define("VERSIONFILE", "3.24");
 define("NUMBER_OF_TESTS", 155); 
 
 /* Session started in session.inc for password checking and authorisation level check

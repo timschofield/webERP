@@ -1,5 +1,5 @@
 <?php
-define("VERSIONFILE", "1.11"); 
+define("VERSIONFILE", "1.11");
 define("NUMBER_OF_TESTS", 28); 
 
 include ('includes/session.inc');
