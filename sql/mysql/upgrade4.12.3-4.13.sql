@@ -1,4 +1,4 @@
-CREATE TABLE `loctransfercancellations` ( 
+CREATE TABLE IF NOT EXISTS `loctransfercancellations` ( 
 			`reference` INT(11) NOT NULL , 
 			`stockid` VARCHAR(20) NOT NULL , 
 			`cancelqty` DOUBLE NOT NULL , 
@@ -10,20 +10,21 @@ ALTER TABLE `loctransfercancellations` ADD INDEX `Index2` (`canceldate`, `refere
 -- Add new scripts:
 INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES
 	('AnalysisHorizontalIncome.php', '8', 'Shows the horizontal analysis of the statement of comprehensive income'),
-	('AnalysisHorizontalPosition.php', '8', 'Shows the horizontal analysis of the statement of financial position');
+	('AnalysisHorizontalPosition.php', '8', 'Shows the horizontal analysis of the statement of financial position'),
+	('EmailCustStatements.php','3','Email customer statement to customer'),
+	('GLAccountUsers.php', '15', 'Maintenance of users allowed to a GL Account'),
+	('SupplierGRNAndInvoiceInquiry.php',5,'Supplier\'s delivery note and grn relationship inquiry'),
+	('UserBankAccounts.php', '15', 'Maintains table bankaccountusers (Authorized users to work with a bank account in webERP)')
+	('UserGLAccounts.php', '15', 'Maintenance of GL Accounts allowed for a user');
 
-CREATE TABLE `suppinvstogrn` (
-  `suppinv` int(11) NOT NULL,
-  `grnno` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `suppinvstogrn` (
+	  `suppinv` int(11) NOT NULL,
+	  `grnno` int(11) NOT NULL,
   PRIMARY KEY (`suppinv`,`grnno`),
-  KEY `suppinvstogrn_ibfk_2` (`grnno`),
-  CONSTRAINT `suppinvstogrn_ibfk_1` FOREIGN KEY (`suppinv`) REFERENCES
-`supptrans` (`id`),
-  CONSTRAINT `suppinvstogrn_ibfk_2` FOREIGN KEY (`grnno`) REFERENCES
-`grns` (`grnno`)
+  KEY `suppinvstogrn_ibfk_1` (`grnno`),
+  CONSTRAINT `suppinvstogrn_ibfk_1` FOREIGN KEY (`grnno`) REFERENCES `grns` (`grnno`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-INSERT INTO scripts VALUES('EmailCustStatements.php','3','Email customer statement to customer');
-INSERT INTO scripts VALUES('SupplierGRNAndInvoiceInquiry.php',5,'Supplier\'s delivery note and grn relationship inquiry');
+
 ALTER table grns ADD supplierref varchar(30) NOT NULL DEFAULT '';
 
 CREATE TABLE IF NOT EXISTS `glaccountusers` (
@@ -45,14 +46,9 @@ INSERT INTO glaccountusers (userid, accountcode, canview, canupd)
 		AND chartmaster.accountcode = glaccountusers.accountcode
         WHERE glaccountusers.userid IS NULL;
 	
-INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES
-('GLAccountUsers.php', '15', 'Maintenance of users allowed to a GL Account'),
-('UserGLAccounts.php', '15', 'Maintenance of GL Accounts allowed for a user');
 ALTER table stockrequest DROP FOREIGN KEY `stockrequest_ibfk_3`;
 ALTER table stockrequest DROP FOREIGN KEY `stockrequest_ibfk_4`;
 
-INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('UserBankAccounts.php', '15', 'Maintains table bankaccountusers (Authorized users to work with a bank account in webERP)');
-ALTER table suppinvstogrn DROP FOREIGN  KEY `suppinvstogrn_ibfk_1`;
 
 -- Update version number:
 UPDATE config SET confvalue='4.13' WHERE confname='VersionNumber';
