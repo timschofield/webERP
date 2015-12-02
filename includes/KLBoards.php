@@ -5905,6 +5905,8 @@ function ItemsNoSalesInLocation($location, $maxdays, $QOHAvailable, $RootPath, $
 							FROM locstock AS loc2
 							WHERE loc2.stockid = stockmaster.stockid
 							AND (loc2.loccode IN " . LIST_SHOPS_KAPAL_LAUT . "
+								OR loc2.loccode IN " . LIST_SHOPS_BLINK . "
+								OR loc2.loccode IN " . LIST_SHOPS_OUTLET . "
 								OR loc2.loccode = 'KANTO') ) <= ". $QOHAvailable ."
 					AND NOT EXISTS (SELECT * 
 									FROM 	salesorderdetails, salesorders
