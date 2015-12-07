@@ -5520,42 +5520,44 @@ function ImagesWithoutProduct($RootPath, $db){
 	$suffix = ".jpg";
 	$imagefiles = getDirectoryTree($_SESSION['part_pics_dir'], 'jpg');
 	foreach ($imagefiles as $file) {
-		$StockId = substr($file, 0, strpos($file, $suffix));
-		if (strpos($StockId, '.1') > 0){
-			$StockId = substr($file, 0, strpos($StockId, '.1'));
-		}
-		if (strpos($StockId, '.2') > 0){
-			$StockId = substr($file, 0, strpos($StockId, '.2'));
-		}
-		if (strpos($StockId, '.3') > 0){
-			$StockId = substr($file, 0, strpos($StockId, '.3'));
-		}
-		if (strpos($StockId, '.4') > 0){
-			$StockId = substr($file, 0, strpos($StockId, '.4'));
-		}
-		if (strpos($StockId, '.5') > 0){
-			$StockId = substr($file, 0, strpos($StockId, '.5'));
-		}
-		$SQL = "SELECT stockid
-			FROM stockmaster
-			WHERE stockmaster.stockid = '" . $StockId . "'";
-		$result = DB_query($SQL);
-		if (DB_num_rows($result) == 0){
-			if ($ShowHeader){
-				echo '<p class="page_title_text" align="center"><strong>' . _('Images without product in webERP') .'</strong></p>';
-				echo '<div>';
-				echo '<table class="selection">';
-				$TableHeader = '<tr>
-									<th class="ascending">' . _('File') . '</th>
-								</tr>';
-				echo $TableHeader;
-				$ShowHeader = FALSE;
+		if ($file != '.ftpquota'){
+			$StockId = substr($file, 0, strpos($file, $suffix));
+			if (strpos($StockId, '.1') > 0){
+				$StockId = substr($file, 0, strpos($StockId, '.1'));
 			}
-			$k = StartEvenOrOddRow($k);
-			printf('<td>%s</td>
-					</tr>', 
-					$_SESSION['part_pics_dir'].'/'.$file
-					);
+			if (strpos($StockId, '.2') > 0){
+				$StockId = substr($file, 0, strpos($StockId, '.2'));
+			}
+			if (strpos($StockId, '.3') > 0){
+				$StockId = substr($file, 0, strpos($StockId, '.3'));
+			}
+			if (strpos($StockId, '.4') > 0){
+				$StockId = substr($file, 0, strpos($StockId, '.4'));
+			}
+			if (strpos($StockId, '.5') > 0){
+				$StockId = substr($file, 0, strpos($StockId, '.5'));
+			}
+			$SQL = "SELECT stockid
+				FROM stockmaster
+				WHERE stockmaster.stockid = '" . $StockId . "'";
+			$result = DB_query($SQL);
+			if (DB_num_rows($result) == 0){
+				if ($ShowHeader){
+					echo '<p class="page_title_text" align="center"><strong>' . _('Images without product in webERP') .'</strong></p>';
+					echo '<div>';
+					echo '<table class="selection">';
+					$TableHeader = '<tr>
+										<th class="ascending">' . _('File') . '</th>
+									</tr>';
+					echo $TableHeader;
+					$ShowHeader = FALSE;
+				}
+				$k = StartEvenOrOddRow($k);
+				printf('<td>%s</td>
+						</tr>', 
+						$_SESSION['part_pics_dir'].'/'.$file
+						);
+			}
 		}
 	}
 	if (!$ShowHeader){
