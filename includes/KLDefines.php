@@ -8,11 +8,12 @@ define("CUSTOMER_TYPE_ONLINE", '9');
 define("RETAIL_PRICE_LIST", 'RT');
 
 /* Defines about prices IDR */
-define("PRICE_ROUNDING_STEP01",   10000);
+/* Changed all steps to 5.000 IDR per laia's request on 07/12/2015*/
+define("PRICE_ROUNDING_STEP01",    5000);
 define("PRICE_ROUNDING_LIMIT01", 300000);
-define("PRICE_ROUNDING_STEP02",   25000);
+define("PRICE_ROUNDING_STEP02",    5000);
 define("PRICE_ROUNDING_LIMIT02",1000000);
-define("PRICE_ROUNDING_STEP03",   50000);
+define("PRICE_ROUNDING_STEP03",    5000);
 
 /* Defines abot small selling prices */
 define("SMALL_PRICE_CALCULATED_STEP01",  50000);
