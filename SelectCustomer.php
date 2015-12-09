@@ -289,7 +289,7 @@ echo '</td>
 if (isset($_POST['CustPhone'])) {
 	echo '<input type="tel" name="CustPhone"  pattern="[0-9\-\s()+]*" value="' . $_POST['CustPhone'] . '" size="15" maxlength="18" />';
 } else {
-	echo '<input type="tel" name="CustPhone"  pattern="[0-9\-\s()+]* "size="15" maxlength="18" />';
+	echo '<input type="tel" name="CustPhone"  pattern="[0-9\-\s()+]*" size="15" maxlength="18" />';
 }
 echo '</td>';
 echo '<td><b>' . _('OR') . '</b></td>
