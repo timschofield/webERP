@@ -309,7 +309,8 @@ $MenuItems['manuf']['Reports']['Caption'] = array(	_('Select A Work Order'),
 													_('MRP Reschedules Required'),
 													_('Print Product Specification'),
 													_('Print Certificate of Analysis'),
-													_('Historical QA Test Results'));
+													_('Historical QA Test Results'),
+													_('Multiple Work Orders Total Cost Inquiry'));
 
 $MenuItems['manuf']['Reports']['URL'] = array(	'/SelectWorkOrder.php',
 												'/BOMInquiry.php',
@@ -327,7 +328,8 @@ $MenuItems['manuf']['Reports']['URL'] = array(	'/SelectWorkOrder.php',
 												'/MRPReschedules.php',
 												'/PDFProdSpec.php',
 												'/PDFCOA.php',
-												'/HistoricalTestResults.php');
+												'/HistoricalTestResults.php',
+												'/CollectiveWorkOrderCost.php');
 
 $MenuItems['manuf']['Maintenance']['Caption'] = array(	_('Work Centre'),
 														_('Bills Of Material'),

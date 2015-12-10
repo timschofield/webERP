@@ -48,6 +48,7 @@ INSERT INTO glaccountusers (userid, accountcode, canview, canupd)
 	
 ALTER table stockrequest DROP FOREIGN KEY `stockrequest_ibfk_3`;
 ALTER table stockrequest DROP FOREIGN KEY `stockrequest_ibfk_4`;
+INSERT INTO scripts VALUES('CollectiveWorkOrderCost.php',2,'Multiple work orders cost review');
 
 
 -- Update version number:
