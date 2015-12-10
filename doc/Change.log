@@ -1,5 +1,6 @@
 webERP Change Log
 
+10/12/15 Exson: Add multiple work orders total cost inquiry script.
 09/12/05 Exson: Fixed the telephone regular expression bug in SelectCustomer.php. Reported by Terry.
 01/12/15 Exson: Remove the wrong foreign key in suppinvstogrn. Reported by rafael.
 26/11/15 Exson: Fixed the rounding error caused extra lines on WO pdf file and 2 number display without locale format in PDFWOPrint.php.
