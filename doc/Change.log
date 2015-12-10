@@ -1,5 +1,5 @@
 webERP Change Log
-
+10/12/15 Exson: Add invoice no while reprint GRN in ReprintGRN.php.
 10/12/15 Exson: Add multiple work orders total cost inquiry script.
 09/12/05 Exson: Fixed the telephone regular expression bug in SelectCustomer.php. Reported by Terry.
 01/12/15 Exson: Remove the wrong foreign key in suppinvstogrn. Reported by rafael.
