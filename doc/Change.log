@@ -1,4 +1,5 @@
 webERP Change Log
+11/12/15 Exson: Fixed the default Transaction Disable bug to enable for CustomerBranches.php.
 10/12/15 Exson: Add invoice no while reprint GRN in ReprintGRN.php.
 10/12/15 Exson: Add multiple work orders total cost inquiry script.
 09/12/05 Exson: Fixed the telephone regular expression bug in SelectCustomer.php. Reported by Terry.
