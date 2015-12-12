@@ -431,24 +431,24 @@ if ($KL_BusinessDevelopmentManager
 	TopSalesNotInEnoughShops(800,1200, 60,  7, "STABLE", $RootPath, $db);
 //	TopSalesNotInEnoughShops(  1,  50, 60, 3, "DISC50", $RootPath, $db);
 
-	ItemsNotTopSalesInShop(1, 900, 60, "TOK66", "ACTIVE", $RootPath, $db);
-	ItemsNotTopSalesInShop(1, 900, 60, "TOKSE", "ACTIVE", $RootPath, $db);
-	ItemsNotTopSalesInShop(1, 900, 60, "TOKOB", "ACTIVE", $RootPath, $db);
-	ItemsNotTopSalesInShop(1, 900, 60, "TOKKA", "ACTIVE", $RootPath, $db);
+	ItemsNotTopSalesInShop(1, 700, 60, "TOK66", "ACTIVE", $RootPath, $db);
+	ItemsNotTopSalesInShop(1, 600, 60, "TOKSE", "ACTIVE", $RootPath, $db);
+	ItemsNotTopSalesInShop(1, 600, 60, "TOKOB", "ACTIVE", $RootPath, $db);
+	ItemsNotTopSalesInShop(1, 800, 60, "TOKKA", "ACTIVE", $RootPath, $db);
 
-	ItemsNotTopSalesInShop(1, 900, 60, "TOKPA", "ACTIVE", $RootPath, $db);
-	ItemsNotTopSalesInShop(1, 800, 60, "TOKKS", "ACTIVE", $RootPath, $db);
-	ItemsNotTopSalesInShop(1, 800, 60, "TOKBW", "ACTIVE", $RootPath, $db);
+	ItemsNotTopSalesInShop(1, 800, 60, "TOKPA", "ACTIVE", $RootPath, $db);
+	ItemsNotTopSalesInShop(1, 500, 60, "TOKKS", "ACTIVE", $RootPath, $db);
+	ItemsNotTopSalesInShop(1, 500, 60, "TOKBW", "ACTIVE", $RootPath, $db);
 
-	ItemsNotTopSalesInShop(1, 900, 60, "TOKJC", "ACTIVE", $RootPath, $db);
+//	ItemsNotTopSalesInShop(1, 900, 60, "TOKJC", "ACTIVE", $RootPath, $db);
 
-	ItemsNotTopSalesInShop(1, 900, 60, "TOKUB", "ACTIVE", $RootPath, $db);
-	ItemsNotTopSalesInShop(1, 1000, 60, "TOKMF", "ACTIVE", $RootPath, $db);
-	ItemsNotTopSalesInShop(1, 1000, 60, "TOKPU", "ACTIVE", $RootPath, $db);
+	ItemsNotTopSalesInShop(1, 600, 60, "TOKUB", "ACTIVE", $RootPath, $db);
+	ItemsNotTopSalesInShop(1, 700, 60, "TOKMF", "ACTIVE", $RootPath, $db);
+	ItemsNotTopSalesInShop(1, 800, 60, "TOKPU", "ACTIVE", $RootPath, $db);
 
-	ItemsNotTopSalesInShop(1, 1000, 60, "TOKSA", "ACTIVE", $RootPath, $db);
+	ItemsNotTopSalesInShop(1, 800, 60, "TOKSA", "ACTIVE", $RootPath, $db);
 //	ItemsNotTopSalesInShop(1, 800, 60, "TOKSU", "ACTIVE", $RootPath, $db);
-	ItemsNotTopSalesInShop(1, 1000, 60, "TOKSS", "ACTIVE", $RootPath, $db);
+	ItemsNotTopSalesInShop(1, 700, 60, "TOKSS", "ACTIVE", $RootPath, $db);
 
 	PerformanceItemsInCategory("GOOD", "TESTSI", 15,  30, "VERY GOOD", $RootPath, $db);
 	PerformanceItemsInCategory("GOOD", "TESTSI", 30,  45, "GOOD", $RootPath, $db);
