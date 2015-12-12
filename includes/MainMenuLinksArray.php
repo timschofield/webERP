@@ -752,7 +752,6 @@ $MenuItems['Utilities']['Maintenance']['Caption'] = array(	_('Maintain Language 
 															_('Re-calculate brought forward amounts in GL'),
 															_('Re-Post all GL transactions from a specified period'),
 															_('KL Database Maintenance'),
-															_('KL Update all USD prices'),
 															_('Purge all old prices'));
 
 $MenuItems['Utilities']['Maintenance']['URL'] = array(	'/Z_poAdmin.php',
@@ -767,6 +766,5 @@ $MenuItems['Utilities']['Maintenance']['URL'] = array(	'/Z_poAdmin.php',
 														'/Z_UpdateChartDetailsBFwd.php',
 														'/Z_RePostGLFromPeriod.php',
 														'/KLMaintainDatabase.php',
-														'/KLUpdateAllUSDPrices.php',
 														'/Z_DeleteOldPrices.php');
 ?>
