@@ -285,7 +285,8 @@ $MenuItems['stock']['Transactions']['URL'] = array(	'/PO_SelectOSPurchOrder.php'
 
 $MenuItems['stock']['Reports']['Caption'] = array(	_('Serial Item Research Tool'),
 													_('KL Print Price Labels'),
-													_('webERP Print Price Labels'),
+													_('webERP Standard Print Price Labels'),
+													_('webERP TCPDF Print Price Labels'),
 													_('Reprint GRN'),
 													_('Inventory Item Movements'),
 													_('Inventory Item Status'),
@@ -324,6 +325,7 @@ $MenuItems['stock']['Reports']['Caption'] = array(	_('Serial Item Research Tool'
 $MenuItems['stock']['Reports']['URL'] = array(	'/StockSerialItemResearch.php',
 												'/KLPDFPrintLabel.php',
 												'/PDFPrintLabel.php',
+												'/PDFPrintLabelTCPDF.php',
 												'/ReprintGRN.php',
 												'/StockMovements.php',
 												'/StockStatus.php',
