@@ -95,6 +95,8 @@ if (DB_num_rows($result) != 0){
 				$Weight = STANDARD_RING_WEIGHT;
 			}elseif (isBead($myrow['stockid'])){
 				$Weight = STANDARD_BEAD_WEIGHT;
+			}elseif (isBrooche($myrow['stockid'])){
+				$Weight = STANDARD_BROOCHE_WEIGHT;
 			}elseif (isEarring($myrow['stockid'])){
 				$Weight = STANDARD_EARRING_WEIGHT;
 			}elseif (isEarcuff($myrow['stockid'])){
@@ -123,6 +125,8 @@ if (DB_num_rows($result) != 0){
 				$Volume = STANDARD_RING_VOLUME;
 			}elseif (isBead($myrow['stockid'])){
 				$Volume = STANDARD_BEAD_VOLUME;
+			}elseif (isBrooche($myrow['stockid'])){
+				$Volume = STANDARD_BROOCHE_VOLUME;
 			}elseif (isEarring($myrow['stockid'])){
 				$Volume = STANDARD_EARRING_VOLUME;
 			}elseif (isEarcuff($myrow['stockid'])){
@@ -374,6 +378,9 @@ function WebsiteCategorySilverJewellery($StockId, $Description, $Long, $Category
 	if (($WebCat == SILVER_JEWELLERY) AND isPendant($StockId)){
 		$WebCat = SILVER_PENDANTS;	
 	}	
+	if (($WebCat == SILVER_JEWELLERY) AND isBrooche($StockId)){
+		$WebCat = SILVER_BROOCHES;	
+	}	
 	return $WebCat; 
 }
 
@@ -410,6 +417,9 @@ function WebsiteCategoryFashionJewellery($StockId, $Description, $Long, $Categor
 	if (($WebCat == FASHION_JEWELLERY) AND isPendant($StockId)){
 		$WebCat = FASHION_JEWELLERY_PENDANTS;	
 	}	
+	if (($WebCat == FASHION_JEWELLERY) AND isBrooche($StockId)){
+		$WebCat = FASHION_JEWELLERY_BROOCHES;	
+	}	
 	return $WebCat; 
 }
 
@@ -444,6 +454,9 @@ function WebsiteCategoryStainlessSteel($StockId, $Description, $Long, $Category)
 	}
 	if (($WebCat == STAINLESS_STEEL_JEWELLERY) AND isPendant($StockId)){
 		$WebCat = STAINLESS_STEEL_PENDANTS;	
+	}	
+	if (($WebCat == STAINLESS_STEEL_JEWELLERY) AND isBrooche($StockId)){
+		$WebCat = STAINLESS_STEEL_BROOCHES;	
 	}	
 	return $WebCat; 
 }
@@ -480,6 +493,9 @@ function WebsiteCategoryLeatherJewellery($StockId, $Description, $Long, $Categor
 	}
 	if (($WebCat == LEATHER_JEWELLERY) AND isPendant($StockId)){
 		$WebCat = LEATHER_PENDANTS;	
+	}	
+	if (($WebCat == LEATHER_JEWELLERY) AND isBrooches($StockId)){
+		$WebCat = LEATHER_BROOCHES;	
 	}	
 	return $WebCat; 
 }
@@ -535,6 +551,9 @@ function WebsiteCategoryClassic($StockId, $Description, $Long, $Category){
 	if (($WebCat == CLASSIC_JEWELLERY) AND isPendant($StockId)){
 		$WebCat = CLASSIC_PENDANTS;	
 	}	
+	if (($WebCat == CLASSIC_JEWELLERY) AND isBrooche($StockId)){
+		$WebCat = CLASSIC_BROOCHES;	
+	}	
 	return $WebCat; 
 }
 
@@ -578,6 +597,9 @@ function WebsiteCategoryDiscount($StockId, $Description, $Long, $Category){
 	}	
 	if (($WebCat == JEWELLERY_ON_SPECIAL) AND isAnklet($StockId)){
 		$WebCat = ANKLETS_ON_SPECIAL;	
+	}	
+	if (($WebCat == JEWELLERY_ON_SPECIAL) AND isBrooche($StockId)){
+		$WebCat = BROOCHES_ON_SPECIAL;	
 	}	
 	return $WebCat; 
 }

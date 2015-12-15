@@ -34,6 +34,10 @@ function isBead($stockid){
 	return (substr($stockid, 2,2) == "BE");
 }
 
+function isBrooche($stockid){
+	return (substr($stockid, 2,2) == "PI");
+}
+
 function isRing($stockid){
 	return (substr($stockid, 2,2) == "AN");
 }
@@ -90,6 +94,8 @@ function TypeOfItem($stockid){
 		$Type = "ToeRing";
 	}elseif (isBead($stockid)){
 		$Type = "Bead";
+	}elseif (isBrooche($stockid)){
+		$Type = "Brooche";
 	}elseif (isEarring($stockid)){
 		$Type = "Earring";
 	}elseif (isEarcuff($stockid)){
