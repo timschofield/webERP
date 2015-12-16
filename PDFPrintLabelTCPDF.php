@@ -168,6 +168,7 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 
 	// create new PDF document
 	$pagelayout = array($LabelDimensions['page_height'], $LabelDimensions['page_width']);
+	$pagelayout = array(297, 210);
 	$pdf = new TCPDF('L', 'mm', $pagelayout, true, 'UTF-8', false);
 
 	// set document information
@@ -203,24 +204,21 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 	define ('PDF_MARGIN_BOTTOM', 0);
 	define ('PDF_MARGIN_LEFT', 0);
 	define ('PDF_MARGIN_RIGHT', 0);
-	$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+	$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT, true);
 	$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
 	$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
 
 	// set auto page breaks
-	$pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+	$pdf->SetAutoPageBreak(TRUE, 0);
 
 	// set image scale factor
 	define ('PDF_IMAGE_SCALE_RATIO', 1.25);
 	$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 
-	// set a barcode on the page footer
-	$pdf->setBarcode(date('Y-m-d H:i:s'));
+	$pdf->SetY(30);
 
 	// set font
 	$pdf->SetFont('helvetica', '', 11);
-
-	
 
 	$Top_Margin = $LabelDimensions['label_topmargin'];
 	$Left_Margin = $LabelDimensions['label_leftmargin'];
@@ -237,10 +235,23 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 	$pdf->setPrintHeader(false);
 	$pdf->setPrintFooter(false);
 
-	$PageNumber=1;
-	//go down first then accross
-	$YPos = $Page_Height - $Top_Margin; //top of current label
-	$XPos = $Left_Margin; // left of current label
+	// define barcode style
+	$WidthSmallestBar = 25.4 / 200; // 25.4mm per inch / 200 points per inch
+	$style = array(
+		'position' => '',
+		'align' => 'C',
+		'stretch' => false,
+		'fitwidth' => true,
+		'cellfitalign' => '',
+		'border' => true,
+		'hpadding' => 'auto',
+		'vpadding' => 'auto',
+		'fgcolor' => array(0,0,0),
+		'bgcolor' => false, //array(255,255,255),
+		'text' => true,
+		'font' => 'helvetica',
+		'fontsize' => 8,
+		'stretchtext' => 4);
 
 	$TotalLabels = $NoOfLabels * $_POST['LabelsPerItem'];
 	$LabelsPrinted = 0;
@@ -248,8 +259,8 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 		if (isset($_POST['PrintLabel'.$i])){
 			$NoOfLabels--;
 			for ($LabelNumber=0; $LabelNumber < $_POST['LabelsPerItem'];$LabelNumber++){
+				$pdf->AddPage();
 				foreach ($LabelFields AS $Field){
-					//print_r($Field);
 					if ($Field['FieldValue']== 'price'){
 						$Value = $_POST['Price' . $i] . ' '. $_POST['Currency'];
 					} elseif ($Field['FieldValue']== 'stockid'){
@@ -265,26 +276,8 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 //						$pdf->addJpegFromFile($_SESSION['LogoFile'],$XPos+$Field['HPos'],$YPos-$LabelDimensions['label_height']+$Field['VPos'],'', $Field['FontSize']);
 					}elseif($Field['Barcode']==1) {
 
-						$WidthSmallestBar = 25.4 / 200; // 25.4mm per inch / 200 points per inch
-						// define barcode style
-						$style = array(
-							'position' => '',
-							'align' => 'C',
-							'stretch' => false,
-							'fitwidth' => true,
-							'cellfitalign' => '',
-							'border' => true,
-							'hpadding' => 'auto',
-							'vpadding' => 'auto',
-							'fgcolor' => array(0,0,0),
-							'bgcolor' => false, //array(255,255,255),
-							'text' => true,
-							'font' => 'helvetica',
-							'fontsize' => 8,
-							'stretchtext' => 4
-						);
-						$pdf->Cell(0, 0, $Value, 0, 1);
-						$pdf->write1DBarcode($Value, 'C128', '', '', '', 18, $WidthSmallestBar, $style, 'N');						
+//						$pdf->Cell(0, 0, $Value, 0, 1);
+						$pdf->write1DBarcode($Value, 'C128', 0, 0, 20, 9, $WidthSmallestBar, $style, 'N');						
 
 					} else {
 //						$LeftOvers = $pdf->addTextWrap($XPos+$Field['HPos'],$YPos-$LabelDimensions['label_height']+$Field['VPos'],$LabelDimensions['label_width']-$Field['HPos'],$Field['FontSize'],$Value);
@@ -292,37 +285,14 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 				} // end loop through label fields
 				$LabelsPrinted++;
 				if ($LabelsPrinted < $TotalLabels){ // if there is another label to print
-					//setup $YPos and $XPos for the next label
-					if (($YPos - $LabelDimensions['label_rowheight']) < $LabelDimensions['label_height']){
-						/* not enough space below the above label to print a new label
-						 * so the above was the last label in the column
-						 * need to start either a new column or new page
-						 */
-						if (($Page_Width - $XPos - $LabelDimensions['label_columnwidth']) < $LabelDimensions['label_width']) {
-							/* Not enough space to start a new column so we are into a new page
-							 */
-							$pdf->AddPage();
-							$PageNumber++;
-							$YPos = $Page_Height - $Top_Margin; //top of next label
-							$XPos = $Left_Margin; // left of next label
-						} else {
-							/* There is enough space for another column */
-							$YPos = $Page_Height - $Top_Margin; //back to the top of next label column
-							$XPos += $LabelDimensions['label_columnwidth']; // left of next label
-						}
-					} else {
-						/* There is space below to print a label
-						 */
-						$YPos -= $LabelDimensions['label_rowheight']; //Top of next label
-					}
-				}//end if there is another label to print
+				}
 			}
 		} //this label is set to print
 	} //loop through labels selected to print
 
 
 	$FileName=$_SESSION['DatabaseName']. '_' . _('Price_Labels') . '_' . date('Y-m-d').'.pdf';
-	$pdf->Output($FileName, 'F');
+	$pdf->Output($FileName, 'I');
 	$pdf->__destruct();
 
 } else { /*The option to print PDF was not hit */
