@@ -161,6 +161,7 @@ define('STANDARD_BRACELET_WEIGHT', 0.080);
 define('STANDARD_PENDANT_WEIGHT',  0.090);
 define('STANDARD_NECKLACE_WEIGHT', 0.190);
 define('STANDARD_BAG_WEIGHT',      0.750);
+define('STANDARD_FOULARD_WEIGHT',  0.250);
 define('STANDARD_BROOCHE_WEIGHT',  0.080);
 
 /* Defines about volume in m3*/
@@ -172,6 +173,7 @@ define('STANDARD_BRACELET_VOLUME', 0.0004);
 define('STANDARD_PENDANT_VOLUME',  0.0004);
 define('STANDARD_NECKLACE_VOLUME', 0.0004);
 define('STANDARD_BAG_VOLUME',      0.0060);
+define('STANDARD_FOULARD_VOLUME',  0.0010);
 define('STANDARD_BROOCHE_VOLUME',  0.0004);
 
 /* Defines about website sales categories */
@@ -244,6 +246,7 @@ define('CLASSIC_BROOCHES',80);
 define('WORLD_BRAND_JEWELLERY',68);
 define('WORLD_BRAND_PLATADEPALO',69);
 define('WORLD_BRAND_HIPANEMA',70);
+define('WORLD_BRAND_DESIGUAL',83);
 
 
 ?>

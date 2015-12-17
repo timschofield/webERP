@@ -78,6 +78,14 @@ function isPlasticBag($stockid){
 	return ((substr($stockid, 0,4) == "BAPL") OR (substr($stockid, 0,4) == "BAGC"));
 }
 
+function isBag($stockid){
+	return (substr($stockid, 2,2) == "BA");
+}
+
+function isFoulard($stockid){
+	return (substr($stockid, 2,2) == "SC");
+}
+
 function isTali($stockid){
 	return ((substr($stockid, 0,3) == "TM-") 
 		OR (substr($stockid, 0,4) == "TA15"));

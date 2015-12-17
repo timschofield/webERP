@@ -109,6 +109,10 @@ if (DB_num_rows($result) != 0){
 				$Weight = STANDARD_PENDANT_WEIGHT;
 			}elseif (isNecklace($myrow['stockid'])){
 				$Weight = STANDARD_NECKLACE_WEIGHT;
+			}elseif (isFoulard($myrow['stockid'])){
+				$Weight = STANDARD_FOULARD_WEIGHT;
+			}elseif (isBag($myrow['stockid'])){
+				$Weight = STANDARD_BAG_WEIGHT;
 			}elseif (isPlasticBag($myrow['stockid'])){
 				$Weight = STANDARD_BAG_WEIGHT;
 			}elseif (isTali($myrow['stockid'])){
@@ -139,6 +143,10 @@ if (DB_num_rows($result) != 0){
 				$Volume = STANDARD_PENDANT_VOLUME;
 			}elseif (isNecklace($myrow['stockid'])){
 				$Volume = STANDARD_NECKLACE_VOLUME;
+			}elseif (isFoulard($myrow['stockid'])){
+				$Volume = STANDARD_FOULARD_VOLUME;
+			}elseif (isBag($myrow['stockid'])){
+				$Volume = STANDARD_BAG_VOLUME;
 			}elseif (isPlasticBag($myrow['stockid'])){
 				$Volume = STANDARD_BAG_VOLUME;
 			}elseif (isTali($myrow['stockid'])){
@@ -311,7 +319,7 @@ function WebsiteCategoryWorldBrandJewellery($StockId, $Description, $Long, $Cate
 	$WebCat = 0;
 	
 	//('WORLD_BRAND_JEWELLERY',68);
-	if (($Category == "CONSIG"))	{ 
+	if (($Category == "CONSIG") OR isFamily($StockId, "DS"))	{ 
 		// if belongs to one of the consignment categories 
 			$WebCat = WORLD_BRAND_JEWELLERY;	
 	}
@@ -327,6 +335,9 @@ function WebsiteCategoryWorldBrandJewellery($StockId, $Description, $Long, $Cate
 	}
 	if (($WebCat == WORLD_BRAND_JEWELLERY) AND isfamily($StockId, "HP")){
 		$WebCat = WORLD_BRAND_HIPANEMA;	
+	}
+	if (($WebCat == WORLD_BRAND_JEWELLERY) AND isfamily($StockId, "DS")){
+		$WebCat = WORLD_BRAND_DESIGUAL;	
 	}
 	return $WebCat; 
 }
@@ -640,7 +651,6 @@ function ItemFeaturedAsTopSale($StockID, $Category, $DaysTopSales, $db){
 
 function ItemExcludedFromWebsite($StockID, $Category){
 	if ((substr($StockID, 0,3) == "TM-")
-		OR (substr($StockID, 0,2) == "DS")
 		OR (substr($StockID, 0,4) == "GOTA")
 		OR (substr($StockID, 0,4) == "BSBE")
 		OR (substr($StockID, 0,4) == "KLBE")){
