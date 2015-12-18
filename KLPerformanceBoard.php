@@ -43,9 +43,12 @@ SPGPerformanceByShop("RETAILPA", 30, 60, 90, $db);
 SPGPerformanceByShop("RETAILSA", 30, 60, 90, $db);
 SPGPerformanceByShop("RETAILSU", 30, 60, 90, $db);
 SPGPerformanceByShop("RETAILSS", 30, 60, 90, $db);
+
 SPGPerformanceByShop("RETAILUB", 30, 60, 90, $db);
 SPGPerformanceByShop("RETAILMF", 30, 60, 90, $db);
+SPGPerformanceByShop("RETAILMU", 30, 60, 90, $db);
 SPGPerformanceByShop("RETAILPU", 30, 60, 90, $db);
+
 SPGPerformanceByShop("RETAILJC", 30, 60, 90, $db);
 
 if ($KL_SystemAdmin){
@@ -96,12 +99,14 @@ if ($KL_SystemAdmin
 
 FinishedStockDistribution("DISPLAYS", "LOCATION", $db);
 
-KapalLautPackagingStatus($RootPath, $db);
-OutletPackagingStatus($RootPath, $db);
+PackagingStatusForKapalLaut($RootPath, $db);
+PackagingStatusForBlink($RootPath, $db);
+PackagingStatusForOutlet($RootPath, $db);
 
 if ($KL_SystemAdmin){
-	KapalLautPackagingUsage(30, $RootPath, $db);
-	OutletPackagingUsage(30, $RootPath, $db);
+	PackagingUsageForKapalLaut(30, $RootPath, $db);
+	PackagingUsageForBlink(30, $RootPath, $db);
+	PackagingUsageForOutlet(30, $RootPath, $db);
 	FinishedStockDistribution("PACKAGING", "LOCATION", $db);
 }
 if (($KL_SystemAdmin) 
