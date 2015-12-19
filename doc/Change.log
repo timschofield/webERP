@@ -1,6 +1,7 @@
 webERP Change Log
 
-14/12/15 Exson: Remove retrieving allocated data in Z_AutoCustomerAllocations.php. 
+20/12/15 Phil: SelectProduct.php now allows items to be searched based on the supplier's item code
+14/12/15 Exson: Remove retrieving allocated data in Z_AutoCustomerAllocations.php.
 11/12/15 Exson: Fixed the default Transaction Disable bug to enable for CustomerBranches.php.
 10/12/15 Exson: Add invoice no while reprint GRN in ReprintGRN.php.
 10/12/15 Exson: Add multiple work orders total cost inquiry script.

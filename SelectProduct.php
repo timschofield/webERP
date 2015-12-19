@@ -167,26 +167,24 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 		echo '<tr>
 				<th class="number">' . _('Price') . ':</th>';
 		if (DB_num_rows($PriceResult) == 0) {
-			echo '<td class="select" colspan="6">' . _('No Default Price Set in Home Currency') . '</td>
-				</tr>';
+			echo '<td class="select" colspan="2">' . _('No Default Price Set') . '</td>';
 			$Price = 0;
 		} else {
 			$PriceRow = DB_fetch_row($PriceResult);
 			$Price = $PriceRow[1];
-			echo '<td class="select">' . $PriceRow[0] . '</td>
-				<td class="select">' . locale_number_format($Price, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-				<th class="number">' . _('Cost') . ':</th>
-				<td class="select">' . locale_number_format($Cost, $_SESSION['StandardCostDecimalPlaces']) . '</td>
-				<th class="number">' . _('Gross Profit') . ':</th>
-				<td class="select">';
-			if ($Price > 0) {
-				echo locale_number_format(($Price - $Cost) * 100 / $Price, 1) . '%';
-			} else {
-				echo _('N/A');
-			}
-			echo '</td>
-				</tr>';
+			echo '<td class="select" colspan="2" style="text-align:right">' . locale_number_format($Price, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>';
 		}
+		echo '<th class="number">' . _('Cost') . ':</th>
+			<td class="select" style="text-align:right">' . locale_number_format($Cost, $_SESSION['StandardCostDecimalPlaces']) . '</td>
+			<th class="number">' . _('Gross Profit') . ':</th>
+			<td class="select" style="text-align:right">';
+		if ($Price > 0) {
+			echo locale_number_format(($Price - $Cost) * 100 / $Price, 1) . '%';
+		} else {
+			echo _('N/A');
+		}
+		echo '</td>
+			</tr>';
 	} //end of if PricesSecuirty allows viewing of prices
 	echo '</table>'; //end of first nested table
 	// Item Category Property mod: display the item properties
@@ -302,15 +300,15 @@ if (DB_num_rows($DemandResult) == 1) {
 }
 echo '<tr>
 		<th class="number" style="width:15%">' . _('Quantity On Hand') . ':</th>
-		<td style="width:17%" class="select">' . $QOH . '</td>
-	</tr>';
-echo '<tr>
+		<td style="width:17%; text-align:right" class="select">' . $QOH . '</td>
+	</tr>
+	<tr>
 		<th class="number" style="width:15%">' . _('Quantity Demand') . ':</th>
-		<td style="width:17%" class="select">' . locale_number_format($Demand, $myrow['decimalplaces']) . '</td>
-	</tr>';
-echo '<tr>
+		<td style="width:17%; text-align:right" class="select">' . locale_number_format($Demand, $myrow['decimalplaces']) . '</td>
+	</tr>
+	<tr>
 		<th class="number" style="width:15%">' . _('Quantity On Order') . ':</th>
-		<td style="width:17%" class="select">' . $QOO . '</td>
+		<td style="width:17%; text-align:right" class="select">' . $QOO . '</td>
 	</tr>
 	</table>'; //end of nested table
 echo '</td>'; //end cell of master table
@@ -319,10 +317,10 @@ if (($myrow['mbflag'] == 'B' OR ($myrow['mbflag'] == 'M'))
 	AND (in_array($SuppliersSecurity, $_SESSION['AllowedPageSecurityTokens']))){
 
 	echo '<td style="width:50%" valign="top"><table>
-			<tr><th style="width:50%">' . _('Supplier') . '</th>
+			<tr><th style="width:20%">' . _('Supplier') . '</th>
+				<th stlye="width:15%">' . _('Code') . '</th>
 				<th style="width:15%">' . _('Cost') . '</th>
 				<th style="width:5%">' . _('Curr') . '</th>
-				<th style="width:15%">' . _('Eff Date') . '</th>
 				<th style="width:10%">' . _('Lead Time') . '</th>
 				<th style="width:10%">' . _('Min Order Qty') . '</th>
 				<th style="width:5%">' . _('Prefer') . '</th></tr>';
@@ -330,25 +328,38 @@ if (($myrow['mbflag'] == 'B' OR ($myrow['mbflag'] == 'M'))
 									suppliers.currcode,
 									suppliers.supplierid,
 									purchdata.price,
-									purchdata.effectivefrom,
+									purchdata.suppliers_partno,
 									purchdata.leadtime,
 									purchdata.conversionfactor,
 									purchdata.minorderqty,
 									purchdata.preferred,
-									currencies.decimalplaces
+									currencies.decimalplaces,
+									MAX(purchdata.effectivefrom)
 								FROM purchdata INNER JOIN suppliers
 								ON purchdata.supplierno=suppliers.supplierid
 								INNER JOIN currencies
 								ON suppliers.currcode=currencies.currabrev
 								WHERE purchdata.stockid = '" . $StockID . "'
-							ORDER BY purchdata.preferred DESC, purchdata.effectivefrom DESC");
+								GROUP BY suppliers.suppname,
+									suppliers.currcode,
+									suppliers.supplierid,
+									purchdata.price,
+									purchdata.suppliers_partno,
+									purchdata.leadtime,
+									purchdata.conversionfactor,
+									purchdata.minorderqty,
+									purchdata.preferred,
+									currencies.decimalplaces
+							ORDER BY purchdata.preferred DESC");
+
 	while ($SuppRow = DB_fetch_array($SuppResult)) {
-		echo '<tr><td class="select">' . $SuppRow['suppname'] . '</td>
-					<td class="select">' . locale_number_format($SuppRow['price'] / $SuppRow['conversionfactor'], $SuppRow['decimalplaces']) . '</td>
-					<td class="select">' . $SuppRow['currcode'] . '</td>
-					<td class="select">' . ConvertSQLDate($SuppRow['effectivefrom']) . '</td>
-					<td class="select">' . $SuppRow['leadtime'] . '</td>
-					<td class="select">' . $SuppRow['minorderqty'] . '</td>';
+		echo '<tr>
+				<td class="select">' . $SuppRow['suppname'] . '</td>
+				<td class="select">' . $SuppRow['suppliers_partno'] . '</td>
+				<td class="select" style="text-align:right">' . locale_number_format($SuppRow['price'] / $SuppRow['conversionfactor'], $SuppRow['decimalplaces']) . '</td>
+				<td class="select">' . $SuppRow['currcode'] . '</td>
+				<td class="select" style="text-align:right">' . $SuppRow['leadtime'] . '</td>
+				<td class="select" style="text-align:right">' . $SuppRow['minorderqty'] . '</td>';
 
 		if ($SuppRow['preferred']==1) { //then this is the preferred supplier
 			echo '<td class="select">' . _('Yes') . '</td>';
@@ -362,13 +373,18 @@ if (($myrow['mbflag'] == 'B' OR ($myrow['mbflag'] == 'M'))
 	echo '</table>';
 	DB_data_seek($result, 0);
 }
-echo '</td></tr></table><br />'; // end first item details table
-echo '<table width="90%"><tr>
-		<th style="width:33%">' . _('Item Inquiries') . '</th>
-		<th style="width:33%">' . _('Item Transactions') . '</th>
-		<th style="width:33%">' . _('Item Maintenance') . '</th>
-	</tr>';
-echo '<tr><td valign="top" class="select">';
+echo '</td>
+	</tr>
+	</table>
+	<br />'; // end first item details table
+echo '<table width="90%">
+		<tr>
+			<th style="width:33%">' . _('Item Inquiries') . '</th>
+			<th style="width:33%">' . _('Item Transactions') . '</th>
+			<th style="width:33%">' . _('Item Maintenance') . '</th>
+		</tr>
+		<tr>
+			<td valign="top" class="select">';
 /*Stock Inquiry Options */
 echo '<a href="' . $RootPath . '/StockMovements.php?StockID=' . $StockID . '">' . _('Show Stock Movements') . '</a><br />';
 if ($Its_A_Kitset_Assembly_Or_Dummy == False) {
@@ -525,13 +541,25 @@ if (isset($_POST['Keywords'])) {
 } else {
 	echo '<input type="text" autofocus="autofocus" name="Keywords" title="' . _('Enter text that you wish to search for in the item description') . '" size="20" maxlength="25" />';
 }
-echo '</td></tr><tr><td></td>';
-echo '<td><b>' . _('OR') . ' ' . '</b>' . _('Enter partial') . ' <b>' . _('Stock Code') . '</b>:</td>';
-echo '<td>';
+echo '</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td><b>' . _('OR') . ' ' . '</b>' . _('Enter partial') . ' <b>' . _('Stock Code') . '</b>:</td>
+		<td>';
 if (isset($_POST['StockCode'])) {
 	echo '<input type="text" name="StockCode" value="' . $_POST['StockCode'] . '" title="' . _('Enter text that you wish to search for in the item code') . '" size="15" maxlength="18" />';
 } else {
 	echo '<input type="text" name="StockCode" title="' . _('Enter text that you wish to search for in the item code') . '" size="15" maxlength="18" />';
+}
+echo '<tr>
+		<td></td>
+		<td><b>' . _('OR') . ' ' . '</b>' . _('Enter partial') . ' <b>' . _('Supplier Code') . '</b>:</td>
+		<td>';
+if (isset($_POST['SupplierStockCode'])) {
+	echo '<input type="text" name="SupplierStockCode" value="' . $_POST['SupplierStockCode'] . '" title="' . _('Enter text that you wish to search for in the supplier\'s item code') . '" size="15" maxlength="18" />';
+} else {
+	echo '<input type="text" name="SupplierStockCode" title="' . _('Enter text that you wish to search for in the supplier\'s item code') . '" size="15" maxlength="18" />';
 }
 echo '</td></tr></table><br />';
 echo '<div class="centre"><input type="submit" name="Search" value="' . _('Search Now') . '" /></div><br />';
@@ -549,7 +577,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 	if ($_POST['Keywords'] AND $_POST['StockCode']) {
 		prnMsg (_('Stock description keywords have been used in preference to the Stock code extract entered'), 'info');
 	}
-	if ($_POST['Keywords']) {
+	if (isset($_POST['Keywords']) AND mb_strlen($_POST['Keywords'])>0) {
 		//insert wildcard characters in spaces
 		$_POST['Keywords'] = mb_strtoupper($_POST['Keywords']);
 		$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
@@ -597,7 +625,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 							stockmaster.decimalplaces
 						ORDER BY stockmaster.discontinued, stockmaster.stockid";
 		}
-	} elseif (isset($_POST['StockCode'])) {
+	} elseif (isset($_POST['StockCode']) AND mb_strlen($_POST['StockCode'])>0) {
 		$_POST['StockCode'] = mb_strtoupper($_POST['StockCode']);
 		if ($_POST['StockCat'] == 'All') {
 			$SQL = "SELECT stockmaster.stockid,
@@ -643,7 +671,57 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 						stockmaster.decimalplaces
 					ORDER BY stockmaster.discontinued, stockmaster.stockid";
 		}
-	} elseif (!isset($_POST['StockCode']) AND !isset($_POST['Keywords'])) {
+	} elseif (isset($_POST['SupplierStockCode']) AND mb_strlen($_POST['SupplierStockCode'])>0) {
+		if ($_POST['StockCat'] == 'All') {
+			$SQL = "SELECT stockmaster.stockid,
+						stockmaster.description,
+						stockmaster.longdescription,
+						stockmaster.mbflag,
+						stockmaster.discontinued,
+						SUM(locstock.quantity) AS qoh,
+						stockmaster.units,
+						stockmaster.decimalplaces
+					FROM stockmaster
+					INNER JOIN purchdata
+					ON stockmaster.stockid=purchdata.stockid
+					INNER JOIN locstock
+					ON stockmaster.stockid=locstock.stockid
+					LEFT JOIN stockcategory
+					ON stockmaster.categoryid=stockcategory.categoryid
+					WHERE purchdata.suppliers_partno " . LIKE . " '%" . $_POST['SupplierStockCode'] . "%'
+					GROUP BY stockmaster.stockid,
+						stockmaster.description,
+						stockmaster.longdescription,
+						stockmaster.units,
+						stockmaster.mbflag,
+						stockmaster.discontinued,
+						stockmaster.decimalplaces
+					ORDER BY stockmaster.discontinued, stockmaster.stockid";
+		} else {
+			$SQL = "SELECT stockmaster.stockid,
+						stockmaster.description,
+						stockmaster.longdescription,
+						stockmaster.mbflag,
+						stockmaster.discontinued,
+						SUM(locstock.quantity) AS qoh,
+						stockmaster.units,
+						stockmaster.decimalplaces
+					FROM stockmaster INNER JOIN locstock
+					ON stockmaster.stockid=locstock.stockid
+					INNER JOIN purchdata
+					ON stockmaster.stockid=purchdata.stockid
+					WHERE categoryid='" . $_POST['StockCat'] . "'
+					AND purchdata.suppliers_partno " . LIKE . " '%" . $_POST['SupplierStockCode'] . "%'
+					GROUP BY stockmaster.stockid,
+						stockmaster.description,
+						stockmaster.longdescription,
+						stockmaster.units,
+						stockmaster.mbflag,
+						stockmaster.discontinued,
+						stockmaster.decimalplaces
+					ORDER BY stockmaster.discontinued, stockmaster.stockid";
+		}
+	} else {
 		if ($_POST['StockCat'] == 'All') {
 			$SQL = "SELECT stockmaster.stockid,
 						stockmaster.description,

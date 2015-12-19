@@ -5537,7 +5537,7 @@ msgstr ""
 #: includes/PDFSuppTransListingPageHeader.inc:48
 #: includes/PDFSupplierBalsPageHeader.inc:33
 msgid "Supplier"
-msgstr ""
+msgstr "Vendor"
 
 #: ContractCosting.php:180 SuppContractChgs.php:81
 msgid "Anticipated"
@@ -11620,7 +11620,7 @@ msgstr ""
 
 #: EDIProcessOrders.php:437
 msgid "This implies that the EDI message is for some other supplier"
-msgstr ""
+msgstr "This implies that the EDI message is for some other vendor"
 
 #: EDIProcessOrders.php:437
 msgid "No further processing will be done"
@@ -15560,7 +15560,7 @@ msgstr ""
 
 #: InventoryPlanningPrefSupplier.php:126 InventoryPlanningPrefSupplier.php:128
 msgid "Inventory Planning Based On Lead Time Of Preferred Supplier"
-msgstr ""
+msgstr "Inventory Planning Based On Lead Time Of Preferred Vendor"
 
 #: InventoryPlanningPrefSupplier.php:350
 msgid "Nil"
@@ -19832,7 +19832,7 @@ msgstr ""
 
 #: PO_Header.php:534
 msgid "Purchase Order: Select Supplier"
-msgstr ""
+msgstr "Purchase Order: Select Vendor"
 
 #: PO_Header.php:545
 msgid "Enter text in the supplier name"
