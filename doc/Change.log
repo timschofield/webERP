@@ -1,5 +1,6 @@
 webERP Change Log
 
+20/12/15 Phil: GoodsReceived.php now shows the supplier's item code as well
 20/12/15 Phil: SelectProduct.php now allows items to be searched based on the supplier's item code
 14/12/15 Exson: Remove retrieving allocated data in Z_AutoCustomerAllocations.php.
 11/12/15 Exson: Fixed the default Transaction Disable bug to enable for CustomerBranches.php.
