@@ -3438,7 +3438,7 @@ function PurchasingOrdersDeliveryControl($reason, $maxdays, $RootPath, $db){
 				purchorders.allowprint,
 				suppliers.currcode,
 				currencies.decimalplaces AS currdecimalplaces,
-				SUM(purchorderdetails.unitprice*purchorderdetails.quantityord) AS ordervalue,
+				SUM(purchorderdetails.unitprice*purchorderdetails.quantityord) AS ordervalue
 			FROM purchorders INNER JOIN purchorderdetails
 				ON purchorders.orderno = purchorderdetails.orderno
 			INNER JOIN suppliers 
