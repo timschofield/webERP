@@ -11,6 +11,7 @@ include('includes/KLGeneralFunctions.php');
 include('includes/KLEmails.php');
 
 KapalLautPackagingToBeRefilled(true, $RootPath, $db);
+BlinkPackagingToBeRefilled(true, $RootPath, $db);
 OutletPackagingToBeRefilled(true, $RootPath, $db);
 
 include ('includes/footer.inc');

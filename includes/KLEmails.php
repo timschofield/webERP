@@ -40,6 +40,18 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 						"Once ready inform Laia or Ike if transfer by car is needed.";
 			$EmailAddress = "kl-shopsupport@kapal-laut.com";
 			break;
+		/* PREPARE BLINK PACKAGING TRANSFER EMAILS */
+		case "SendBlinkPackagingToShop":
+			$EmailSubject = "Prepare BLINK packaging transfer for: ". $Param1;
+			$EmailText = $EmailSubject . "\n\n" . 
+						$Param2 . " x PKPB03-L (BLINK PouchBag-L)" . "\n\n" . 
+						$Param3 . " x PKPB03-M (BLINK PouchBag-M)" . "\n\n" . 
+						$Param4 . " x PKPB03-S (BLINK PouchBag-S)" . "\n\n" . 
+						$Param5 . " x PKSB04-M (BLINK ShoppingBag-M)" . "\n\n" . 
+						$Param5 . " x PKSB04-S (BLINK ShoppingBag-S)" . "\n\n" . 
+						"Once ready inform Laia or Ike if transfer by car is needed.";
+			$EmailAddress = "kl-shopsupport@kapal-laut.com";
+			break;
 		/* PREPARE OUTLET PACKAGING TRANSFER EMAILS */
 		case "SendOutletPackagingToShop":
 			$EmailSubject = "Prepare OUTLET packaging transfer for: ". $Param1;

@@ -3439,9 +3439,6 @@ function PurchasingOrdersDeliveryControl($reason, $maxdays, $RootPath, $db){
 				suppliers.currcode,
 				currencies.decimalplaces AS currdecimalplaces,
 				SUM(purchorderdetails.unitprice*purchorderdetails.quantityord) AS ordervalue,
-				(SELECT SUM(supptrans.ovamount + supptrans.ovgst - supptrans.alloc)
-					FROM supptrans
-					WHERE suppliers.supplierid = supptrans.supplierno) AS balance
 			FROM purchorders INNER JOIN purchorderdetails
 				ON purchorders.orderno = purchorderdetails.orderno
 			INNER JOIN suppliers 
@@ -3479,8 +3476,6 @@ function PurchasingOrdersDeliveryControl($reason, $maxdays, $RootPath, $db){
 							<th class="ascending">' . _('Delivery Date') . '</th>
 							<th class="ascending">' . _('Supplier') . '</th>
 							<th class="ascending">' . _('Order Value') . '</th>
-							<th class="ascending">' . _('Deposit') . '</th>
-							<th class="ascending">' . _('Remaining') . '</th>
 							<th class="ascending">' . _('Currency') . '</th>
 						</tr>';
 		echo $TableHeader;
@@ -3495,8 +3490,6 @@ function PurchasingOrdersDeliveryControl($reason, $maxdays, $RootPath, $db){
 					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
 					<td>%s</td>
 					</tr>', 
 					$i, 
@@ -3505,8 +3498,6 @@ function PurchasingOrdersDeliveryControl($reason, $maxdays, $RootPath, $db){
 					ConvertSQLDate($myrow['deliverydate']), 
 					$myrow['suppname'],
 					locale_number_format($myrow['ordervalue'],0),
-					locale_number_format($myrow['balance'],0),
-					locale_number_format($myrow['ordervalue']+$myrow['balance'],0),
 					$myrow['currcode']
 					);
 			$i++;
@@ -6601,6 +6592,256 @@ function OutletPackagingToBeRefilled($ShowAll, $RootPath, $db){
 		}
 	}
 }
+
+function BlinkPackagingToBeRefilled($ShowAll, $RootPath, $db){
+/* EXPLAIN SQL 2014-05-20
+Updated 3 index in loctransfers
+*/
+
+	$TableResult = array();
+	if ($ShowAll){
+		$OrderBy = " ORDER BY locations.locationname";
+	}else{
+		$OrderBy = " ORDER BY locations.klemaillastpackacgingtransfer";
+	}
+	
+	$SQL = "SELECT locations.loccode,
+					locations.locationname,
+					locations.rlfactorforpackaging,
+					locations.klemaillastpackacgingtransfer,
+					(SELECT locstock.quantity
+						FROM locstock
+						WHERE locstock.loccode = locations.loccode
+							AND locstock.stockid = 'PKPB03-L') AS qty_bag_l,
+					(SELECT locstock.reorderlevel
+						FROM locstock
+						WHERE locstock.loccode = locations.loccode
+							AND locstock.stockid = 'PKPB03-L') AS rl_bag_l,
+					(SELECT SUM(loctransfers.shipqty - loctransfers.recqty)
+						FROM loctransfers
+						WHERE loctransfers.recloc = locations.loccode
+							AND loctransfers.shipqty != loctransfers.recqty
+							AND loctransfers.stockid = 'PKPB03-L') AS ot_bag_l,
+					(SELECT locstock.quantity
+						FROM locstock
+						WHERE locstock.loccode = locations.loccode
+							AND locstock.stockid = 'PKPB03-M') AS qty_bag_m,
+					(SELECT locstock.reorderlevel
+						FROM locstock
+						WHERE locstock.loccode = locations.loccode
+							AND locstock.stockid = 'PKPB03-M') AS rl_bag_m,
+					(SELECT SUM(loctransfers.shipqty - loctransfers.recqty)
+						FROM loctransfers
+						WHERE loctransfers.recloc = locations.loccode
+							AND loctransfers.shipqty != loctransfers.recqty
+							AND loctransfers.stockid = 'PKPB03-M') AS ot_bag_m,
+					(SELECT locstock.quantity
+						FROM locstock
+						WHERE locstock.loccode = locations.loccode
+							AND locstock.stockid = 'PKPB03-S') AS qty_bag_s,
+					(SELECT locstock.reorderlevel
+						FROM locstock
+						WHERE locstock.loccode = locations.loccode
+							AND locstock.stockid = 'PKPB03-S') AS rl_bag_s,
+					(SELECT SUM(loctransfers.shipqty - loctransfers.recqty)
+						FROM loctransfers
+						WHERE loctransfers.recloc = locations.loccode
+							AND loctransfers.shipqty != loctransfers.recqty
+							AND loctransfers.stockid = 'PKPB03-S') AS ot_bag_s,
+					(SELECT locstock.quantity
+						FROM locstock
+						WHERE locstock.loccode = locations.loccode
+							AND locstock.stockid = 'PKSB04-M') AS qty_shopping_m,
+					(SELECT locstock.reorderlevel
+						FROM locstock
+						WHERE locstock.loccode = locations.loccode
+							AND locstock.stockid = 'PKSB04-M') AS rl_shopping_m,
+					(SELECT SUM(loctransfers.shipqty - loctransfers.recqty)
+						FROM loctransfers
+						WHERE loctransfers.recloc = locations.loccode
+							AND loctransfers.shipqty != loctransfers.recqty
+							AND loctransfers.stockid = 'PKSB04-M') AS ot_shopping_m,
+					(SELECT locstock.quantity
+						FROM locstock
+						WHERE locstock.loccode = locations.loccode
+							AND locstock.stockid = 'PKSB04-S') AS qty_shopping_s,
+					(SELECT locstock.reorderlevel
+						FROM locstock
+						WHERE locstock.loccode = locations.loccode
+							AND locstock.stockid = 'PKSB04-S') AS rl_shopping_s,
+					(SELECT SUM(loctransfers.shipqty - loctransfers.recqty)
+						FROM loctransfers
+						WHERE loctransfers.recloc = locations.loccode
+							AND loctransfers.shipqty != loctransfers.recqty
+							AND loctransfers.stockid = 'PKSB04-S') AS ot_shopping_s
+			FROM locations
+			WHERE locations.loccode IN " . LIST_SHOPS_BLINK . 
+			$OrderBy;
+
+	$result = DB_query($SQL);
+	$showHeader = TRUE;
+	$numshops = 0;
+	if (DB_num_rows($result) != 0){
+		while ($myrow = DB_fetch_array($result)) {
+			$numshops++;
+			$TableResult[$numshops]['show'] = FALSE; // to start we don't need to show any result
+			$TableResult[$numshops]['loccode'] = $myrow['loccode'];
+			$TableResult[$numshops]['locationname'] = $myrow['locationname'];
+			$TableResult[$numshops]['rlfactorforpackaging'] = $myrow['rlfactorforpackaging'];
+			$TableResult[$numshops]['klemaillastpackacgingtransfer'] = $myrow['klemaillastpackacgingtransfer'];
+
+			$TableResult[$numshops]['qty_bag_l'] = $myrow['qty_bag_l'];
+			$TableResult[$numshops]['qty_bag_m'] = $myrow['qty_bag_m'];
+			$TableResult[$numshops]['qty_bag_s'] = $myrow['qty_bag_s'];
+			$TableResult[$numshops]['qty_shopping_m'] = $myrow['qty_shopping_m'];
+			$TableResult[$numshops]['qty_shopping_s'] = $myrow['qty_shopping_s'];
+
+			$TableResult[$numshops]['ot_bag_l'] = $myrow['ot_bag_l'];
+			$TableResult[$numshops]['ot_bag_m'] = $myrow['ot_bag_m'];
+			$TableResult[$numshops]['ot_bag_s'] = $myrow['ot_bag_s'];
+			$TableResult[$numshops]['ot_shopping_m'] = $myrow['ot_shopping_m'];
+			$TableResult[$numshops]['ot_shopping_s'] = $myrow['ot_shopping_s'];
+
+			$TableResult[$numshops]['rl_bag_l'] = $myrow['rl_bag_l'];
+			$TableResult[$numshops]['rl_bag_m'] = $myrow['rl_bag_m'];
+			$TableResult[$numshops]['rl_bag_s'] = $myrow['rl_bag_s'];
+			$TableResult[$numshops]['rl_shopping_m'] = $myrow['rl_shopping_m'];
+			$TableResult[$numshops]['rl_shopping_s'] = $myrow['rl_shopping_s'];
+		}
+	}
+
+	/* Let's see if we need to show some shops	*/
+	$i = 1;
+	while ($i <= $numshops) {
+		if (($TableResult[$i]['qty_bag_l'] < $TableResult[$i]['rl_bag_l']) OR 
+			($TableResult[$i]['qty_bag_m'] < $TableResult[$i]['rl_bag_m']) OR 
+			($TableResult[$i]['qty_bag_s'] < $TableResult[$i]['rl_bag_s']) OR 
+			($TableResult[$i]['qty_shopping_m'] < $TableResult[$i]['rl_shopping_m']) OR 
+			($TableResult[$i]['qty_shopping_s'] < $TableResult[$i]['rl_shopping_s'])) 
+		{
+			$TableResult[$i]['show'] = TRUE;
+		}
+		$i++;
+	}
+	
+	if ($numshops > 0){
+		$i = 1;
+		$k = 0; //row colour counter
+
+		while ($i <= $numshops) {
+			
+			if ($ShowAll OR ($TableResult[$i]['show'])) {
+				// IF we are SHORT of any packaging material in that shop...
+				// Or we show All the shops 
+				if($showHeader){
+					echo '<p class="page_title_text" align="center"><strong>' . 'BLINK Shops needing Packaging Transfers (Do not forget to create transfer in webERP)' . '</strong></p>';
+					echo '<div>';
+					echo '<table class="selection">';
+					$TableHeader = '<tr>
+										<th>' . _('') . '</th>
+										<th colspan="3">' . _('PouchBag L') . '</th>
+										<th colspan="3">' . _('PouchBag M') . '</th>
+										<th colspan="3">' . _('PouchBag S') . '</th>
+										<th colspan="3">' . _('ShoppingBag M') . '</th>
+										<th colspan="3">' . _('ShoppingBag S') . '</th>
+										<th>' . _('') . '</th>
+										<th>' . _('') . '</th>
+									</tr>';
+					$TableHeader = $TableHeader . '<tr>
+										<th class="ascending">' . _('KL Shop') . '</th>
+										<th class="ascending">' . _('Needs') . '</th>
+										<th class="ascending">' . _('Transit') . '</th>
+										<th class="ascending">' . _('To Ship') . '</th>
+										<th class="ascending">' . _('Needs') . '</th>
+										<th class="ascending">' . _('Transit') . '</th>
+										<th class="ascending">' . _('To Ship') . '</th>
+										<th class="ascending">' . _('Needs') . '</th>
+										<th class="ascending">' . _('Transit') . '</th>
+										<th class="ascending">' . _('To Ship') . '</th>
+										<th class="ascending">' . _('Needs') . '</th>
+										<th class="ascending">' . _('Transit') . '</th>
+										<th class="ascending">' . _('To Ship') . '</th>
+										<th class="ascending">' . _('Needs') . '</th>
+										<th class="ascending">' . _('Transit') . '</th>
+										<th class="ascending">' . _('To Ship') . '</th>
+										<th class="ascending">' . _('Last Email') . '</th>
+										<th class="ascending">' . _('Action') . '</th>
+									</tr>';
+					echo $TableHeader;
+					$showHeader = FALSE;
+				}
+				$k = StartEvenOrOddRow($k);
+
+				// Calculate how many we should ship to the shop...
+				$NeedBagL = max(0,round(($TableResult[$i]['rl_bag_l'] * $TableResult[$i]['rlfactorforpackaging']) - $TableResult[$i]['qty_bag_l'],0));
+				$NeedBagM = max(0,round(($TableResult[$i]['rl_bag_m'] * $TableResult[$i]['rlfactorforpackaging']) - $TableResult[$i]['qty_bag_m'],0));
+				$NeedBagS = max(0,round(($TableResult[$i]['rl_bag_s'] * $TableResult[$i]['rlfactorforpackaging']) - $TableResult[$i]['qty_bag_s'],0));
+				$NeedShoppingM = max(0,round(($TableResult[$i]['rl_shopping_m'] * $TableResult[$i]['rlfactorforpackaging']) - $TableResult[$i]['qty_shopping_m'],0));
+				$NeedShoppingS = max(0,round(($TableResult[$i]['rl_shopping_s'] * $TableResult[$i]['rlfactorforpackaging']) - $TableResult[$i]['qty_shopping_s'],0));
+
+				$ToShipBagL = max(0,$NeedBagL - $TableResult[$i]['ot_bag_l']);
+				$ToShipBagM = max(0,$NeedBagM - $TableResult[$i]['ot_bag_m']);
+				$ToShipBagS = max(0,$NeedBagS - $TableResult[$i]['ot_bag_s']);
+				$ToShipShoppingM = max(0,$NeedShoppingM - $TableResult[$i]['ot_shopping_m']);
+				$ToShipShoppingS = max(0,$NeedShoppingS - $TableResult[$i]['ot_shopping_s']);
+
+				$EmailLink = '<a href="' . $RootPath . '/KLPreparePackagingTransferBlink.php?Shop=' . $TableResult[$i]['loccode'] 
+																						. '&Name=' . $TableResult[$i]['locationname'] 
+																						. '&BagL=' . $ToShipBagL 
+																						. '&BagM=' . $ToShipBagM 
+																						. '&BagS=' . $ToShipBagS 
+																						. '&ShoppingM=' . $ToShipShoppingM 
+																						. '&ShoppingS=' . $ToShipShoppingS 
+																						.'">' . 'Send email to team' . '</a>';
+				
+				printf('<td>%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						</tr>', 
+						$TableResult[$i]['locationname'], 
+						locale_number_format_zero_blank($NeedBagL, 0),
+						locale_number_format_zero_blank($TableResult[$i]['ot_bag_l'],0),
+						locale_number_format_zero_blank($ToShipBagL,0),
+						locale_number_format_zero_blank($NeedBagM, 0),
+						locale_number_format_zero_blank($TableResult[$i]['ot_bag_m'],0),
+						locale_number_format_zero_blank($ToShipBagM,0),
+						locale_number_format_zero_blank($NeedBagS,0),
+						locale_number_format_zero_blank($TableResult[$i]['ot_bag_s'],0),
+						locale_number_format_zero_blank($ToShipBagS,0),
+						locale_number_format_zero_blank($NeedShoppingM,0),
+						locale_number_format_zero_blank($TableResult[$i]['ot_shopping_m'],0),
+						locale_number_format_zero_blank($ToShipShoppingM,0),
+						locale_number_format_zero_blank($NeedShoppingS,0),
+						locale_number_format_zero_blank($TableResult[$i]['ot_shopping_s'],0),
+						locale_number_format_zero_blank($ToShipShoppingS,0),
+						ConvertSQLDateTime($TableResult[$i]['klemaillastpackacgingtransfer']), 
+						$EmailLink
+						);
+			}
+			$i++;
+		}
+		if (!$showHeader){
+			echo '</table>
+				</div>';
+		}
+	}
+}
+
 
 function MarkSisterShopInArray(&$TableResult, $numshops, $SisterShop){
 	$sistershop = 1;
