@@ -1,5 +1,6 @@
 webERP Change Log
 
+24/12/15 Exson: Add supplier no as a option for supplier transaction inquiry in SupplierTransInquiry.php.
 24/12/15 Exson: Add width of printed text to make day to appear in PDFOstdgGRNsPageHeader.inc.
 2015/12/24 Exson: Add Completed option for PO printed to allowed the order details can be completed in PO_Header.php.
 20/12/15 Phil: GoodsReceived.php now shows the supplier's item code as well
