@@ -346,7 +346,7 @@ function WebsiteCategorySilverJewellery($StockId, $Description, $Long, $Category
 	$WebCat = 0;
 	
 	//('SILVER_JEWELLERY',5);
-	if (($Category == "SILVER") OR ($Category == "TESTSI") OR ($Category == "NOPOSI"))	{ 
+	if (ItemInList($Category, LIST_STOCK_CATEGORIES_SILVER)){
 		// if belongs to one of the silver categories 
 		if (WebsiteCategoryClassic($StockId, $Description, $Long, $Category) == 0){
 			// AND is NOT a classic category
@@ -399,7 +399,7 @@ function WebsiteCategoryFashionJewellery($StockId, $Description, $Long, $Categor
 	$WebCat = 0;
 	
 	//(('FASHION_JEWELLERY',14);
-	if (($Category == "FASHIO") OR ($Category == "TESTFJ") OR ($Category == "NOPOFJ"))  { 
+	if (ItemInList($Category, LIST_STOCK_CATEGORIES_FASHION_JEWELLERY)){
 		// if belongs to one of the FJ categories BUT it does not have leather
 		$WebCat = FASHION_JEWELLERY;	
 	}
@@ -438,7 +438,7 @@ function WebsiteCategoryStainlessSteel($StockId, $Description, $Long, $Category)
 	$WebCat = 0;
 	
 	//('STAINLESS_STEEL_JEWELLERY',6);
-	if (($Category == "STAINL") OR ($Category == "TESTSS") OR ($Category == "NOPOSS")) { 
+	if (ItemInList($Category, LIST_STOCK_CATEGORIES_STAINLESS)){
 		// if belongs to one of the SS categories
 		$WebCat = STAINLESS_STEEL_JEWELLERY;	
 	}
@@ -476,7 +476,7 @@ function WebsiteCategoryLeatherJewellery($StockId, $Description, $Long, $Categor
 	$WebCat = 0;
 	
 	//(('LEATHER_JEWELLERY',26);
-	if ((($Category == "FASHIO") OR ($Category == "TESTFJ") OR ($Category == "NOPOFJ")) 
+	if (ItemInList($Category, LIST_STOCK_CATEGORIES_FASHION_JEWELLERY)){
 		AND ((isFamily($StockId, "LE")) OR (mb_stristr($Description, "leather") != FALSE)))  { 
 		$WebCat = LEATHER_JEWELLERY;	
 	}
@@ -515,7 +515,7 @@ function WebsiteCategoryBags($StockId, $Description, $Long, $Category){
 	$WebCat = 0;
 	
 	//('BAGS',29);
-	if ((($Category == "ACCESO") OR ($Category == "TESTAC") OR ($Category == "NOPOAC")) 
+	if ((ItemInList($Category, LIST_STOCK_CATEGORIES_ACCESSORIES))
 		AND (isPlasticBag($StockId))){ 
 		$WebCat = BAGS;	
 	}

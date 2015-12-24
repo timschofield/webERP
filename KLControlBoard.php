@@ -400,7 +400,7 @@ if ($KL_BusinessDevelopmentManager
 
 /*	GoodSellingItemsInCategory("TESTSI", 15, 6, $RootPath, $db);
 	GoodSellingItemsInCategory("TESTSS", 15, 6, $RootPath, $db);
-	GoodSellingItemsInCategory("TESTFJ", 15, 6, $RootPath, $db);
+	GoodSellingItemsInCategory("TESTBL", 15, 6, $RootPath, $db);
 	GoodSellingItemsInCategory("TESTAC", 15, 6, $RootPath, $db);
 
 	GoodSellingItemsInCategory("NOPOSI", 15, 6, $RootPath, $db);
@@ -410,7 +410,7 @@ if ($KL_BusinessDevelopmentManager
 */
 	ActiveItemsNoSales( 30, "TESTSI", $RootPath, $db);
 	ActiveItemsNoSales( 30, "TESTSS", $RootPath, $db);
-	ActiveItemsNoSales( 30, "TESTFJ", $RootPath, $db);
+	ActiveItemsNoSales( 30, "TESTBL", $RootPath, $db);
 	ActiveItemsNoSales( 30, "TESTAC", $RootPath, $db);
 
 	ActiveItemsNoSales( 30, "SILVER", $RootPath, $db);
@@ -463,11 +463,11 @@ if ($KL_BusinessDevelopmentManager
 	PerformanceItemsInCategory("BAD",  "TESTSS", 60, 100, "LONG TIME TESTING", $RootPath, $db);
 	PerformanceItemsInCategory("GOOD", "TESTSS", 60, 100, "TEST FINISHED", $RootPath, $db);
 
-	PerformanceItemsInCategory("GOOD", "TESTFJ", 15,  30, "VERY GOOD", $RootPath, $db);
-	PerformanceItemsInCategory("GOOD", "TESTFJ", 30,  45, "GOOD", $RootPath, $db);
-	PerformanceItemsInCategory("BAD",  "TESTFJ", 50,  30, "BAD", $RootPath, $db);
-	PerformanceItemsInCategory("BAD",  "TESTFJ", 60, 100, "LONG TIME TESTING", $RootPath, $db);
-	PerformanceItemsInCategory("GOOD", "TESTFJ", 60, 100, "TEST FINISHED", $RootPath, $db);
+	PerformanceItemsInCategory("GOOD", "TESTBL", 15,  30, "VERY GOOD", $RootPath, $db);
+	PerformanceItemsInCategory("GOOD", "TESTBL", 30,  45, "GOOD", $RootPath, $db);
+	PerformanceItemsInCategory("BAD",  "TESTBL", 50,  30, "BAD", $RootPath, $db);
+	PerformanceItemsInCategory("BAD",  "TESTBL", 60, 100, "LONG TIME TESTING", $RootPath, $db);
+	PerformanceItemsInCategory("GOOD", "TESTBL", 60, 100, "TEST FINISHED", $RootPath, $db);
 
 	PerformanceItemsInCategory("GOOD", "TESTAC", 15,  30, "VERY GOOD", $RootPath, $db);
 	PerformanceItemsInCategory("GOOD", "TESTAC", 30,  45, "GOOD", $RootPath, $db);

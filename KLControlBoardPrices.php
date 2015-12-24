@@ -43,7 +43,7 @@ if ($KL_SystemAdmin
 	ItemsWithoutRetailPrice("STAINL", 4.75, $RootPath, $db);
 	ItemsWithoutRetailPrice("NOPOSS", 4.75, $RootPath, $db);
 
-	ItemsWithoutRetailPrice("TESTFJ", 5.50, $RootPath, $db);
+	ItemsWithoutRetailPrice("TESTBL", 5.50, $RootPath, $db);
 	ItemsWithoutRetailPrice("FASHIO", 5.50, $RootPath, $db);
 	ItemsWithoutRetailPrice("NOPOFJ", 5.50, $RootPath, $db);
 
@@ -64,7 +64,7 @@ if ($KL_SystemAdmin
 	PriceBelowStandard("STAINL", 4.75, 0, 10, $RootPath, $db);
 	PriceBelowStandard("NOPOSS", 4.75, 0, 10, $RootPath, $db);
 
-	PriceBelowStandard("TESTFJ", 5.50, 0, 10, $RootPath, $db);
+	PriceBelowStandard("TESTBL", 5.50, 0, 10, $RootPath, $db);
 	PriceBelowStandard("FASHIO", 5.50, 0, 10, $RootPath, $db);
 	PriceBelowStandard("NOPOFJ", 5.50, 0, 10, $RootPath, $db);
 
@@ -83,7 +83,7 @@ if ($KL_SystemAdmin
 	ItemsTooCheap("STAINL", 4.75, 5.00, 0.05, 10, 100, 60, $RootPath, $db);
 	ItemsTooCheap("TESTSS", 4.75, 5.00, 0.05, 10, 100, 60, $RootPath, $db);
 	
-	ItemsTooCheap("TESTFJ", 5.50, 5.75, 0.05, 10, 100, 60, $RootPath, $db);
+	ItemsTooCheap("TESTBL", 5.50, 5.75, 0.05, 10, 100, 60, $RootPath, $db);
 	ItemsTooCheap("FASHIO", 5.50, 5.75, 0.05, 10, 100, 60, $RootPath, $db);
 	ItemsTooCheap("NOPOFJ", 5.50, 5.75, 0.05, 10, 100, 60, $RootPath, $db);
 
@@ -99,7 +99,7 @@ if ($KL_SystemAdmin
 	ItemsTooExpensive("STAINL", 4.75, 5.50, 0.05, 5, 800, 90, $RootPath, $db);
 	ItemsTooExpensive("NOPOSS", 4.75, 6.00, 0.05, 5, 800, 60, $RootPath, $db);
 	
-	ItemsTooExpensive("TESTFJ", 5.50, 6.00, 0.05, 5, 800, 90, $RootPath, $db);
+	ItemsTooExpensive("TESTBL", 5.50, 6.00, 0.05, 5, 800, 90, $RootPath, $db);
 	ItemsTooExpensive("FASHIO", 5.50, 6.00, 0.05, 5, 800, 90, $RootPath, $db);
 	ItemsTooExpensive("NOPOFJ", 5.50, 6.00, 0.05, 5, 800, 90, $RootPath, $db);
 
