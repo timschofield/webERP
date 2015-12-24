@@ -846,7 +846,8 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 			case 'Printed':
 				echo '<option value="Pending">' . _('Pending') . '</option>
 						<option selected="selected" value="Printed">' . _('Printed') . '</option>
-						<option value="Cancelled">' . _('Cancelled') . '</option>';
+						<option value="Cancelled">' . _('Cancelled') . '</option>
+						<option value="Completed">' . _('Completed') . '</option>';
 				break;
 			case 'Completed':
 				echo '<option selected="selected" value="Completed">' . _('Completed') . '</option>';
