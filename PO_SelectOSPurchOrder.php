@@ -364,6 +364,7 @@ else {
 						purchorders.allowprint,
 						suppliers.currcode,
 						currencies.decimalplaces AS currdecimalplaces,
+						group_concat(CASE WHEN quantityord>quantityrecd THEN CONCAT(itemcode,'--',round(quantityord-quantityrecd)) ELSE '' END) as bal,
 						SUM(purchorderdetails.unitprice*purchorderdetails.quantityord) AS ordervalue
 				FROM purchorders INNER JOIN purchorderdetails
 				ON purchorders.orderno=purchorderdetails.orderno
@@ -414,6 +415,7 @@ else {
 							purchorders.allowprint,
 							suppliers.currcode,
 							currencies.decimalplaces AS currdecimalplaces,
+							group_concat(CASE WHEN quantityord>quantityrecd THEN CONCAT(itemcode,'--',round(quantityord-quantityrecd)) ELSE '' END) as bal,
 							SUM(purchorderdetails.unitprice*purchorderdetails.quantityord) AS ordervalue
 						FROM purchorders INNER JOIN purchorderdetails
 						ON purchorders.orderno = purchorderdetails.orderno
@@ -451,6 +453,7 @@ else {
 							purchorders.allowprint,
 							suppliers.currcode,
 							currencies.decimalplaces AS currdecimalplaces,
+							group_concat(CASE WHEN quantityord>quantityrecd THEN CONCAT(itemcode,'--',round(quantityord-quantityrecd)) ELSE '' END) as bal,
 							SUM(purchorderdetails.unitprice*purchorderdetails.quantityord) AS ordervalue
 						FROM purchorders INNER JOIN purchorderdetails
 						ON purchorders.orderno = purchorderdetails.orderno
@@ -505,6 +508,7 @@ else {
 							purchorders.allowprint,
 							suppliers.currcode,
 							currencies.decimalplaces AS currdecimalplaces,
+							group_concat(CASE WHEN quantityord>quantityrecd THEN CONCAT(itemcode,'--',round(quantityord-quantityrecd)) ELSE '' END) as bal,
 							SUM(purchorderdetails.unitprice*purchorderdetails.quantityord) AS ordervalue
 						FROM purchorders INNER JOIN purchorderdetails
 						ON purchorders.orderno = purchorderdetails.orderno
@@ -541,6 +545,7 @@ else {
 							purchorders.allowprint,
 							suppliers.currcode,
 							currencies.decimalplaces AS currdecimalplaces,
+							group_concat(CASE WHEN quantityord>quantityrecd THEN CONCAT(itemcode,'--',round(quantityord-quantityrecd)) ELSE '' END) as bal,
 							SUM(purchorderdetails.unitprice*purchorderdetails.quantityord) AS ordervalue
 						FROM purchorders INNER JOIN purchorderdetails
 						ON purchorders.orderno = purchorderdetails.orderno
@@ -582,6 +587,7 @@ else {
 			<th class="ascending">' . _('Delivery Date') . '</th>
 			<th class="ascending">' . _('Initiated by') . '</th>
 			<th class="ascending">' . _('Supplier') . '</th>
+			<th class="ascending">' . _('Balance') .' ('. _('Stock ID') . '--' . _('Quantity') . ' )</th>
 			<th class="ascending">' . _('Currency') . '</th>';
 
 	if (in_array($PricesSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($PricesSecurity)) {
@@ -635,6 +641,7 @@ else {
 			<td>' . $FormatedDeliveryDate . '</td>
 			<td>' . $InitiatorName . '</td>
 			<td>' . $myrow['suppname'] . '</td>
+			<td width="250" style="word-break:break-all">' . $myrow['bal'] . '</td>
 			<td>' . $myrow['currcode'] . '</td>';
 		if (in_array($PricesSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($PricesSecurity)) {
 			echo '<td class="number">' . $FormatedOrderValue . '</td>';
