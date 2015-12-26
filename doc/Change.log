@@ -1,5 +1,6 @@
 webERP Change Log
 
+26/12/2015 Exson: Add items not received information on outstanding po inquiry screen in PO_SelectOSPurchOrder.php.
 24/12/15 Exson: Add supplier no as a option for supplier transaction inquiry in SupplierTransInquiry.php.
 24/12/15 Exson: Add width of printed text to make day to appear in PDFOstdgGRNsPageHeader.inc.
 2015/12/24 Exson: Add Completed option for PO printed to allowed the order details can be completed in PO_Header.php.
