@@ -1,5 +1,6 @@
 webERP Change Log
 
+27/12/15 RChacon: On UserGLAccounts.php: Fix script name; add $ViewTopic and $BookMark; improve $SelectedUser validation; improve page_title_text; improve select user; regroup modify access permission code (improve logic); add classes to table elements; transalate database "0" and "1" to human "No" and "Yes"; simplify and tide code; modify prnMsg from multiple part sentence to one part sentence (better to trasnlate when language use a different gramar structrure fron English); add "Print This", "Select A Different User" and "Return" buttons. Add info to ManualGeneralLedger.html.
 26/12/2015 Exson: Add items not received information on outstanding po inquiry screen in PO_SelectOSPurchOrder.php.
 24/12/15 Exson: Add supplier no as a option for supplier transaction inquiry in SupplierTransInquiry.php.
 24/12/15 Exson: Add width of printed text to make day to appear in PDFOstdgGRNsPageHeader.inc.
