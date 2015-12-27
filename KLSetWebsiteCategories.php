@@ -476,7 +476,7 @@ function WebsiteCategoryLeatherJewellery($StockId, $Description, $Long, $Categor
 	$WebCat = 0;
 	
 	//(('LEATHER_JEWELLERY',26);
-	if (ItemInList($Category, LIST_STOCK_CATEGORIES_FASHION_JEWELLERY)){
+	if ((ItemInList($Category, LIST_STOCK_CATEGORIES_FASHION_JEWELLERY))
 		AND ((isFamily($StockId, "LE")) OR (mb_stristr($Description, "leather") != FALSE)))  { 
 		$WebCat = LEATHER_JEWELLERY;	
 	}
