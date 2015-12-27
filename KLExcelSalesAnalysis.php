@@ -51,6 +51,24 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
 					WHERE stockmaster.discontinued = 0
 						AND stockmaster.categoryid IN ('". implode("','",$_POST['Categories'])."')
 					ORDER BY stockmaster.stockid";
+		}elseif($CodeDetail == 'CodeFullWithRings'){
+			$SQL = "SELECT CASE WHEN SUBSTRING(stockmaster.stockid,3,2) = 'AN' THEN SUBSTRING(stockmaster.stockid,1,6) ELSE stockmaster.stockid END AS stockid,
+							stockmaster.description,
+							stockmaster.categoryid,
+							stockmaster.lastcategoryupdate,
+							(stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost) AS standardcost,
+							stockmaster.discountcategory,
+							(SELECT supplierno
+								FROM purchdata
+								WHERE purchdata.stockid = stockmaster.stockid
+									AND preferred = 1
+								ORDER BY effectivefrom DESC
+								LIMIT 1) AS preferredsupplier
+					FROM stockmaster
+					WHERE stockmaster.discontinued = 0
+						AND stockmaster.categoryid IN ('". implode("','",$_POST['Categories'])."')
+					GROUP BY stockid
+					ORDER BY stockid";
 		}else{
 			$SQL = "SELECT SUBSTRING(stockmaster.stockid,1,6) AS stockid,
 							COUNT(stockmaster.stockid) AS flavours,
@@ -98,9 +116,19 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
 			$objPHPExcel->getActiveSheet()->setCellValue('C3', '=C2-C1');
  			$objPHPExcel->getActiveSheet()->setCellValue('C4', 150);
 
+			if ($CodeDetail == 'CodeFull'){
+				$objPHPExcel->getActiveSheet()->setCellValue('E1', 'ALL CODES');
+			}elseif ($CodeDetail == 'CodeFullWithRings'){
+				$objPHPExcel->getActiveSheet()->setCellValue('E1', 'RINGS GROUPED');
+			}else{
+				$objPHPExcel->getActiveSheet()->setCellValue('E1', '6 LETTER CODES');
+			}
+
 			$objPHPExcel->getActiveSheet()->setCellValue('A5', 'ITEM CODE');
 			if ($CodeDetail == 'CodeFull'){
 				$ColumnTitle = 'DESCRIPTION';
+			}elseif ($CodeDetail == 'CodeFullWithRings'){
+				$ColumnTitle = 'TEXT';
 			}else{
 				$ColumnTitle = 'FLAVOURS';
 			}
@@ -134,83 +162,65 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
 
  			$objPHPExcel->getActiveSheet()->setCellValue('V5', 'PCS TO PO/WO');
  			$objPHPExcel->getActiveSheet()->setCellValue('W5', 'SUPPLIER');
-			
-/*			$objPHPExcel->getActiveSheet()->setCellValue('AA5', 'SALES_66');
- 			$objPHPExcel->getActiveSheet()->setCellValue('AB5', 'SALES_SE');
- 			$objPHPExcel->getActiveSheet()->setCellValue('AC5', 'SALES_OB');
- 			$objPHPExcel->getActiveSheet()->setCellValue('AD5', 'SALES_KS');
- 			$objPHPExcel->getActiveSheet()->setCellValue('AE5', 'SALES_BW');
- 			$objPHPExcel->getActiveSheet()->setCellValue('AF5', 'SALES_JC');
- 			$objPHPExcel->getActiveSheet()->setCellValue('AG5', 'SALES_SA');
- 			$objPHPExcel->getActiveSheet()->setCellValue('AH5', 'SALES_SU');
- 			$objPHPExcel->getActiveSheet()->setCellValue('AI5', 'SALES_SS');
- 			$objPHPExcel->getActiveSheet()->setCellValue('AJ5', 'SALES_UB');
- 			$objPHPExcel->getActiveSheet()->setCellValue('AK5', 'SALES_MF');
- 			$objPHPExcel->getActiveSheet()->setCellValue('AL5', 'SALES_PU');
-*/			
+
 			// Add data
 			$StartingRow = 6;
 			$i = $StartingRow;
+			$LastStockid = '';
 			while ($myrow = DB_fetch_array($result)) {
 				$objPHPExcel->setActiveSheetIndex(0);
 
 				$objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $myrow['stockid']);
-
-				if ($CodeDetail == 'CodeFull'){
-					$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, $myrow['description']);
-					$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, $myrow['categoryid']);
-				}else{
-					$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, round($myrow['flavours'],0));
-				}
-
-				$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, substr($myrow['stockid'], 0,2));
-				$objPHPExcel->getActiveSheet()->setCellValue('E'.$i, TypeOfItem($myrow['stockid']));
-
-				if ($CodeDetail == 'CodeFull'){
-					$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, ConvertSQLDate($myrow['lastcategoryupdate']));
-				}
 				
-				$objPHPExcel->getActiveSheet()->setCellValue('G'.$i, round($myrow['standardcost'],0));
+				if ($LastStockid != $myrow['stockid']){
+				
+					if ($CodeDetail == 'CodeFull'){
+						$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, $myrow['description']);
+						$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, $myrow['categoryid']);
+					}elseif ($CodeDetail == 'CodeFullWithRings'){
+						$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, $myrow['description']);
+						$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, $myrow['categoryid']);
+					}else{
+						$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, round($myrow['flavours'],0));
+					}
 
-				if ($CodeDetail == 'CodeFull'){
-					$objPHPExcel->getActiveSheet()->setCellValue('H'.$i, $myrow['discountcategory']);
+					$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, substr($myrow['stockid'], 0,2));
+					$objPHPExcel->getActiveSheet()->setCellValue('E'.$i, TypeOfItem($myrow['stockid']));
+
+					if ($CodeDetail != 'Code6'){
+						$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, ConvertSQLDate($myrow['lastcategoryupdate']));
+					}
+					
+					$objPHPExcel->getActiveSheet()->setCellValue('G'.$i, round($myrow['standardcost'],0));
+
+					if ($CodeDetail != 'Code6'){
+						$objPHPExcel->getActiveSheet()->setCellValue('H'.$i, $myrow['discountcategory']);
+					}
+					
+					$objPHPExcel->getActiveSheet()->setCellValue('I'.$i, round(ItemCodeAvgPriceInvoiced($myrow['stockid'],$FromDate,$ToDate,''),0));
+
+					$objPHPExcel->getActiveSheet()->setCellValue('J'.$i, round(ItemCodeQOH($myrow['stockid']),0));
+					$objPHPExcel->getActiveSheet()->setCellValue('K'.$i, '=G'.$i.'*J'.$i.'');
+
+					$objPHPExcel->getActiveSheet()->setCellValue('L'.$i, round(ItemCodeQOO_PurchaseOrders($myrow['stockid'])+ItemCodeQOO_WorkOrders($myrow['stockid']),0));
+					$objPHPExcel->getActiveSheet()->setCellValue('M'.$i, '=G'.$i.'*L'.$i.'');
+
+					$objPHPExcel->getActiveSheet()->setCellValue('N'.$i, round(ItemCodeQuantityInvoiced($myrow['stockid'],$FromDate,$ToDate,''),0));
+					$objPHPExcel->getActiveSheet()->setCellValue('O'.$i, '=N'.$i.'*I'.$i.'');
+					$objPHPExcel->getActiveSheet()->setCellValue('P'.$i, '=N'.$i.'*G'.$i.'');
+					$objPHPExcel->getActiveSheet()->setCellValue('Q'.$i, '=O'.$i.'-P'.$i.'');
+
+					$objPHPExcel->getActiveSheet()->setCellValue('R'.$i, '=N'.$i.'/$C$3');
+					$objPHPExcel->getActiveSheet()->setCellValue('S'.$i, '=IF(R'.$i.'>0,J'.$i.'/R'.$i.',99999)'.'');
+					$objPHPExcel->getActiveSheet()->setCellValue('T'.$i, '=IF(R'.$i.'>0,L'.$i.'/R'.$i.',99999)'.'');
+					$objPHPExcel->getActiveSheet()->setCellValue('U'.$i, '=S'.$i.'+T'.$i.'');
+					
+					$objPHPExcel->getActiveSheet()->setCellValue('V'.$i, '=IF(U'.$i.'<$C$4,ROUNDUP(($C$4-U'.$i.')*R'.$i.',0),"")'.'');
+					$objPHPExcel->getActiveSheet()->setCellValue('W'.$i, $myrow['preferredsupplier']);
+					
+					$LastStockid = $myrow['stockid'];
+					$i++;
 				}
-				
-				$objPHPExcel->getActiveSheet()->setCellValue('I'.$i, round(ItemCodeAvgPriceInvoiced($myrow['stockid'],$FromDate,$ToDate,''),0));
-
-				$objPHPExcel->getActiveSheet()->setCellValue('J'.$i, round(ItemCodeQOH($myrow['stockid']),0));
-				$objPHPExcel->getActiveSheet()->setCellValue('K'.$i, '=G'.$i.'*J'.$i.'');
-
-				$objPHPExcel->getActiveSheet()->setCellValue('L'.$i, round(ItemCodeQOO_PurchaseOrders($myrow['stockid'])+ItemCodeQOO_WorkOrders($myrow['stockid']),0));
-				$objPHPExcel->getActiveSheet()->setCellValue('M'.$i, '=G'.$i.'*L'.$i.'');
-
-				$objPHPExcel->getActiveSheet()->setCellValue('N'.$i, round(ItemCodeQuantityInvoiced($myrow['stockid'],$FromDate,$ToDate,''),0));
-				$objPHPExcel->getActiveSheet()->setCellValue('O'.$i, '=N'.$i.'*I'.$i.'');
-				$objPHPExcel->getActiveSheet()->setCellValue('P'.$i, '=N'.$i.'*G'.$i.'');
-				$objPHPExcel->getActiveSheet()->setCellValue('Q'.$i, '=O'.$i.'-P'.$i.'');
-
-				$objPHPExcel->getActiveSheet()->setCellValue('R'.$i, '=N'.$i.'/$C$3');
-				$objPHPExcel->getActiveSheet()->setCellValue('S'.$i, '=IF(R'.$i.'>0,J'.$i.'/R'.$i.',99999)'.'');
-				$objPHPExcel->getActiveSheet()->setCellValue('T'.$i, '=IF(R'.$i.'>0,L'.$i.'/R'.$i.',99999)'.'');
-				$objPHPExcel->getActiveSheet()->setCellValue('U'.$i, '=S'.$i.'+T'.$i.'');
-				
-				$objPHPExcel->getActiveSheet()->setCellValue('V'.$i, '=IF(U'.$i.'<$C$4,ROUNDUP(($C$4-U'.$i.')*R'.$i.',0),"")'.'');
-				$objPHPExcel->getActiveSheet()->setCellValue('W'.$i, $myrow['preferredsupplier']);
-
-/*				$objPHPExcel->getActiveSheet()->setCellValue('AA'.$i, round(ItemCodeQuantityInvoiced($myrow['stockid'],$FromDate,$ToDate,'RETAIL66'),0));
-				$objPHPExcel->getActiveSheet()->setCellValue('AB'.$i, round(ItemCodeQuantityInvoiced($myrow['stockid'],$FromDate,$ToDate,'RETAILSE'),0));
-				$objPHPExcel->getActiveSheet()->setCellValue('AC'.$i, round(ItemCodeQuantityInvoiced($myrow['stockid'],$FromDate,$ToDate,'RETAILOB'),0));
-				$objPHPExcel->getActiveSheet()->setCellValue('AD'.$i, round(ItemCodeQuantityInvoiced($myrow['stockid'],$FromDate,$ToDate,'RETAILKS'),0));
-				$objPHPExcel->getActiveSheet()->setCellValue('AE'.$i, round(ItemCodeQuantityInvoiced($myrow['stockid'],$FromDate,$ToDate,'RETAILBW'),0));
-				$objPHPExcel->getActiveSheet()->setCellValue('AF'.$i, round(ItemCodeQuantityInvoiced($myrow['stockid'],$FromDate,$ToDate,'RETAILJC'),0));
-				$objPHPExcel->getActiveSheet()->setCellValue('AG'.$i, round(ItemCodeQuantityInvoiced($myrow['stockid'],$FromDate,$ToDate,'RETAILSA'),0));
-				$objPHPExcel->getActiveSheet()->setCellValue('AH'.$i, round(ItemCodeQuantityInvoiced($myrow['stockid'],$FromDate,$ToDate,'RETAILSU'),0));
-				$objPHPExcel->getActiveSheet()->setCellValue('AI'.$i, round(ItemCodeQuantityInvoiced($myrow['stockid'],$FromDate,$ToDate,'RETAILSS'),0));
-				$objPHPExcel->getActiveSheet()->setCellValue('AJ'.$i, round(ItemCodeQuantityInvoiced($myrow['stockid'],$FromDate,$ToDate,'RETAILUB'),0));
-				$objPHPExcel->getActiveSheet()->setCellValue('AK'.$i, round(ItemCodeQuantityInvoiced($myrow['stockid'],$FromDate,$ToDate,'RETAILMF'),0));
-				$objPHPExcel->getActiveSheet()->setCellValue('AL'.$i, round(ItemCodeQuantityInvoiced($myrow['stockid'],$FromDate,$ToDate,'RETAILPU'),0));
-*/				
-				$i++;
 			}
 			
 			// Calculating totals, subtotals, etc
@@ -332,6 +342,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 			<td>' . _('Item Codes detailed as') . ':</td>
 			<td><select name="CodeDetail">
 				<option selected="selected" value="CodeFull">' . _('Full Item Code') . '</option>
+				<option value="CodeFullWithRings">' . _('Full Item Code + Rings Grouped') . '</option>
 				<option value="Code6">' . _('Basic Item Code (6 Char)') . '</option>
 			</select></td>
 		</tr>';
