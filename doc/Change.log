@@ -1,5 +1,6 @@
 webERP Change Log
 
+28/12/15 Exson: Fixed the bug that discount not modified for items whose discount is null in discount matrix in SelectOrderItems.php.
 27/12/15 RChacon: On UserGLAccounts.php: Fix script name; add $ViewTopic and $BookMark; improve $SelectedUser validation; improve page_title_text; improve select user; regroup modify access permission code (improve logic); add classes to table elements; translate database "0" and "1" to human "No" and "Yes"; simplify and tide code; modify prnMsg from multiple part sentence to one part sentence (better to translate when language use a different grammar structure from English); add "Print This", "Select A Different User" and "Return" buttons. Add info to ManualGeneralLedger.html.
 26/12/2015 Exson: Add items not received information on outstanding po inquiry screen in PO_SelectOSPurchOrder.php.
 24/12/15 Exson: Add supplier no as a option for supplier transaction inquiry in SupplierTransInquiry.php.
