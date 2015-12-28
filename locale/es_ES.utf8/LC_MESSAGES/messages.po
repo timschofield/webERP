@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.12.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-09-14 09:07-0600\n"
-"PO-Revision-Date: 2015-09-21 09:50-0600\n"
+"PO-Revision-Date: 2015-12-27 20:50-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -1816,7 +1816,7 @@ msgstr "Código de zona"
 #: SupplierTypes.php:132 Suppliers.php:672 Z_DeleteInvoice.php:178
 #: includes/DefineOfferClass.php:134
 msgid "has been deleted"
-msgstr "ha sido eliminado"
+msgstr "ha sido suprimido"
 
 #: Areas.php:149 Areas.php:222
 msgid "Area Name"
@@ -3082,7 +3082,7 @@ msgstr "Seleccionar cuenta bancaria"
 #: PcExpensesTypeTab.php:212 PurchaseByPrefSupplier.php:317
 #: StockCounts.php:121 UserLocations.php:120 UserLocations.php:236
 msgid "Not Yet Selected"
-msgstr "Aún NO Seleccionado"
+msgstr "Aún no seleccionado"
 
 #: BankAccountUsers.php:129 BankAccountUsers.php:228 CustomerReceipt.php:947
 #: CustomerReceipt.php:1161 CustomerTypes.php:269 ExchangeRateTrend.php:56
@@ -3096,7 +3096,7 @@ msgstr "Aún NO Seleccionado"
 #: SalesTypes.php:282 SupplierTypes.php:236 UserLocations.php:137
 #: UserLocations.php:255 Z_CheckDebtorsControl.php:61
 msgid "Accept"
-msgstr "Guardar"
+msgstr "Aceptar"
 
 #: BankAccountUsers.php:130 BankAccountUsers.php:229
 #: CustomerAllocations.php:450 CustomerReceipt.php:1162
@@ -7082,7 +7082,7 @@ msgstr "Seleccione una categoría de inventario"
 
 #: CounterReturns.php:1659 CounterSales.php:2221 SelectOrderItems.php:1596
 msgid "Enter partial Description"
-msgstr "Introducir una parte de la descripción"
+msgstr "Introducir descripción parcial"
 
 #: CounterReturns.php:1667 CounterSales.php:2232 SelectOrderItems.php:1615
 msgid "Use Quick Entry"
@@ -14521,7 +14521,7 @@ msgstr "Libro diario"
 
 #: GLJournal.php:128
 msgid "Enter Another General Ledger Journal"
-msgstr "Introduzca otro Diario Contable"
+msgstr "Introducir otro diario contable"
 
 #: GLJournal.php:154 GLJournal.php:191
 msgid ""
@@ -15149,7 +15149,7 @@ msgstr ""
 
 #: GoodsReceived.php:200
 msgid "Enter Serial Nos"
-msgstr "Introduzca Números de Serie"
+msgstr "Introducir números de serie"
 
 #: GoodsReceived.php:203
 msgid "Enter Batches"
@@ -15748,7 +15748,7 @@ msgstr ""
 #: ImportBankTransAnalysis.php:53 ImportBankTransAnalysis.php:315
 #: SuppTransGLAnalysis.php:29 SuppTransGLAnalysis.php:234
 msgid "Enter GL Line"
-msgstr "Introduzca Fila Contable"
+msgstr "Introducir línea contable"
 
 #: ImportBankTransAnalysis.php:61 SuppTransGLAnalysis.php:37
 msgid "You must select a general ledger code from the list below"
@@ -15806,7 +15806,7 @@ msgstr ""
 #: ImportBankTransAnalysis.php:142 ImportBankTransAnalysis.php:144
 #: Z_ImportGLTransactions.php:238
 msgid "GL Payment"
-msgstr ""
+msgstr "Pago contable"
 
 #: ImportBankTransAnalysis.php:164
 msgid "Receipt to Customer Account"
@@ -15815,11 +15815,11 @@ msgstr ""
 #: ImportBankTransAnalysis.php:173 ImportBankTransAnalysis.php:175
 #: Z_ImportGLTransactions.php:239
 msgid "GL Receipt"
-msgstr ""
+msgstr "Recibo contable"
 
 #: ImportBankTransAnalysis.php:203
 msgid "General ledger Analysis"
-msgstr ""
+msgstr "Análisis contable"
 
 #: ImportBankTransAnalysis.php:231
 msgid "Total of GL Entries"
@@ -19509,7 +19509,7 @@ msgstr "Estado"
 
 #: PDFOrderStatus.php:325 PO_Header.php:794 PO_OrderDetails.php:142
 msgid "Not yet printed"
-msgstr "Aún sin imprimir"
+msgstr "Aún no impreso"
 
 #: PDFOrderStatus.php:353 PDFOrdersInvoiced.php:350 PO_Items.php:766
 msgid "Complete"
@@ -19673,7 +19673,7 @@ msgstr "No se pueden encontrar ninguna orden para este criterio"
 
 #: PDFPickingList.php:151
 msgid "Enter Another Date"
-msgstr "Introduzca otra fecha"
+msgstr "Introducir otra fecha"
 
 #: PDFPickingList.php:204 includes/PDFPickingListHeader.inc:12
 #: includes/DatabaseTranslations.php:33
@@ -21454,7 +21454,7 @@ msgstr "No es un activo"
 
 #: PO_Items.php:818
 msgid "Not yet purchased"
-msgstr "Todavía no ha comprado"
+msgstr "Aún no comprado"
 
 #: PO_Items.php:825 SuppFixedAssetChgs.php:123
 msgid "New Fixed Asset"
@@ -22365,7 +22365,7 @@ msgstr "Introduzca otro pago por"
 
 #: Payments.php:620
 msgid "Enter another General Ledger Payment"
-msgstr "Introduzca otro pago Contable"
+msgstr "Introducir otro pago contable"
 
 #: Payments.php:657
 msgid "The Cheque/Voucher number has already been used"
@@ -22453,7 +22453,7 @@ msgstr "Ingreso de Análisis de Pagos Contables"
 
 #: Payments.php:978 Payments.php:983
 msgid "Enter GL Account Manually"
-msgstr "Introduzca manualmente la cuenta contable"
+msgstr "Introducir manualmente la cuenta contable"
 
 #: Payments.php:979 Payments.php:984
 msgid "The account code"
@@ -24893,7 +24893,7 @@ msgstr ""
 
 #: PurchaseByPrefSupplier.php:295
 msgid "has been created."
-msgstr ""
+msgstr "ha sido creado."
 
 #: PurchaseByPrefSupplier.php:295
 msgid "Total order value of"
@@ -25040,7 +25040,7 @@ msgstr "ASTM, ISO, UL u otro"
 
 #: QATests.php:248 QATests.php:393
 msgid "Group By"
-msgstr ""
+msgstr "Grupo por"
 
 #: QATests.php:249
 msgid ""
@@ -26142,7 +26142,7 @@ msgstr "Sucursal del cliente"
 
 #: SalesAnalRepts.php:55 SalesAnalRepts.php:57
 msgid "Not Used"
-msgstr "No Usado"
+msgstr "No usado"
 
 #: SalesAnalRepts.php:84
 msgid "The report heading must be more than two characters long"
@@ -27319,7 +27319,7 @@ msgstr "Cualquier categoría de activos"
 
 #: SelectAsset.php:71
 msgid "Enter partial description"
-msgstr "Ingrese la descripción parcial"
+msgstr "Introducir descripción parcial"
 
 #: SelectAsset.php:104
 msgid "Enter partial asset code"
@@ -27417,7 +27417,7 @@ msgstr "Seleccione Un Contrato"
 
 #: SelectContract.php:51
 msgid "Not Yet Quoted"
-msgstr "Aún No Cotizado"
+msgstr "Aún no cotizado"
 
 #: SelectContract.php:52
 msgid "Quoted - No Order Placed"
@@ -28044,7 +28044,7 @@ msgstr ""
 
 #: SelectOrderItems.php:560
 msgid "Enter an Order or Quotation"
-msgstr "Indique un pedido o cotización"
+msgstr "Introducir un pedido o cotización"
 
 #: SelectOrderItems.php:560
 msgid "Search for the Customer Branch."
@@ -28386,7 +28386,7 @@ msgstr "No hay precio predeterminado en la moneda local"
 
 #: SelectProduct.php:213 SelectProduct.php:226 SelectProduct.php:227
 msgid "Not Set"
-msgstr ""
+msgstr "No ajustado"
 
 #: SelectProduct.php:297
 msgid ""
@@ -31412,7 +31412,7 @@ msgstr "Cantidad Contada"
 
 #: StockCounts.php:217
 msgid "Delete?"
-msgstr "¿Suprimir?\t"
+msgstr "¿Suprimir?"
 
 #: StockCounts.php:232
 msgid "Save Changes"
@@ -32381,7 +32381,7 @@ msgstr "No son posibles transferencias de existencias"
 
 #: StockTransfers.php:134
 msgid "Enter another Transfer"
-msgstr "Introduzca otra Transferencia"
+msgstr "Introducir otra transferencia"
 
 #: StockTransfers.php:177 WorkOrderEntry.php:339
 msgid "The quantity entered must be a positive number greater than zero"
@@ -33216,7 +33216,7 @@ msgstr "El monto debe ser numérico y no puede ser cero"
 
 #: SuppFixedAssetChgs.php:160
 msgid "Enter Fixed Asset"
-msgstr "Introduzca el activo fijo"
+msgstr "Introducir activo fijo"
 
 #: SuppInvGRNs.php:12
 msgid "Enter Supplier Invoice Against Goods Received"
@@ -34139,7 +34139,7 @@ msgstr "Total Acreditado contra Contratos"
 
 #: SupplierCredit.php:455 SupplierInvoice.php:825
 msgid "General Ledger Analysis"
-msgstr "Análisis Contable"
+msgstr "Análisis contable"
 
 #: SupplierCredit.php:488 SupplierInvoice.php:850
 msgid "Total GL Analysis"
@@ -34468,7 +34468,7 @@ msgstr "Abono proveedor"
 
 #: SupplierCredit.php:1330
 msgid "Enter another Credit Note for this Supplier"
-msgstr "Ingrese otra nota de Crédito para este proveedor"
+msgstr "Introducir otra nota de crédito para este proveedor"
 
 #: SupplierInquiry.php:6
 msgid "Supplier Inquiry"
@@ -34854,7 +34854,7 @@ msgstr "Numero Factura proveedor"
 
 #: SupplierInvoice.php:1886
 msgid "Enter another Invoice for this Supplier"
-msgstr "Introduzca otra Factura para este proveedor"
+msgstr "Introducir otra factura para este proveedor"
 
 #: SupplierInvoice.php:1888
 msgid "Enter payment"
@@ -37480,7 +37480,7 @@ msgstr ""
 
 #: TaxGroups.php:242
 msgid "Enter Group"
-msgstr "Guardar/Cambiar Nombre"
+msgstr "Introducir grupo"
 
 #: TaxGroups.php:285 TaxGroups.php:338
 msgid "Calculation Order"
@@ -40328,7 +40328,7 @@ msgstr "Falló el SQL para actualizar los registros de usuarios"
 
 #: Z_ChangeLocationCode.php:246
 msgid "Deleting the old location record"
-msgstr "Eliminando el antiguo registro de localidad"
+msgstr "Suprimiendo el registro de ubicación viejo"
 
 #: Z_ChangeLocationCode.php:248
 msgid "The SQL to delete the old location record failed"
@@ -40431,7 +40431,7 @@ msgstr ""
 
 #: Z_ChangeStockCategory.php:103
 msgid "Deleting the old stock category record"
-msgstr "La eliminación de la categoría del registro de existencias antiguo"
+msgstr "Suprimiendo el registro de la categoría de inventario viejo"
 
 #: Z_ChangeStockCategory.php:105
 msgid "The SQL to delete the old stock category record failed"
@@ -40506,7 +40506,7 @@ msgstr "sin imagen para renombrar"
 
 #: Z_ChangeStockCode.php:191
 msgid "Deleting the old stock master record"
-msgstr "Eliminando antiguo maestro de existencias"
+msgstr "Suprimiendo el registro maestro de inventario viejo"
 
 #: Z_ChangeStockCode.php:193
 msgid "The SQL to delete the old stock master record failed"
@@ -41258,7 +41258,7 @@ msgstr ""
 
 #: Z_DeleteSalesTransActions.php:117
 msgid "Deleting all Purchase Orders"
-msgstr "Borrando todas las Órdenes de Compra"
+msgstr "Suprimiendo todas las órdenes de compra"
 
 #: Z_DeleteSalesTransActions.php:119
 msgid ""
@@ -41902,7 +41902,7 @@ msgstr ""
 
 #: Z_ImportGLTransactions.php:50
 msgid "File contains incorrect headers"
-msgstr ""
+msgstr "Archivo contiene encabezados incorrectos"
 
 #: Z_ImportGLTransactions.php:98
 msgid "Account code "
@@ -42398,7 +42398,7 @@ msgstr "El número de pagos que se suprimirán es"
 
 #: Z_ReverseSuppPaymentRun.php:32
 msgid "Deleting payment number"
-msgstr "Eliminado pago número"
+msgstr "Suprimiendo número de pago"
 
 #: Z_ReverseSuppPaymentRun.php:32
 msgid "to supplier code"
@@ -46873,7 +46873,7 @@ msgstr "no se pudo agregar al pedido porque está marcado como obsoleto"
 
 #: includes/SelectOrderItems_IntoCart.inc:65
 msgid "Obsolete Item"
-msgstr "Artículo Obsoleto"
+msgstr "Artículo obsoleto"
 
 #: includes/SelectOrderItems_IntoCart.inc:182
 msgid "Sell through support available and applied of"
@@ -48754,7 +48754,7 @@ msgstr "No se pudo suprimir la línea de la orden porque"
 
 #: includes/DefineCartClass.php:230
 msgid "Deleted Line Number"
-msgstr "Número de Línea Eliminado"
+msgstr "Número de línea suprimido"
 
 #: includes/DefineCartClass.php:230
 msgid "from existing Order Number"
@@ -50519,7 +50519,7 @@ msgstr ""
 
 #: reportwriter/languages/en_US/reports.php:68
 msgid "Fifth"
-msgstr ""
+msgstr "Quinto"
 
 #: reportwriter/languages/en_US/reports.php:69
 msgid "Filter"
@@ -50539,7 +50539,7 @@ msgstr ""
 
 #: reportwriter/languages/en_US/reports.php:75
 msgid "Fourth"
-msgstr ""
+msgstr "Cuarto"
 
 #: reportwriter/languages/en_US/reports.php:78
 msgid "Inactive"
@@ -50660,7 +50660,7 @@ msgstr "Añadir nuevo"
 
 #: reportwriter/languages/en_US/reports.php:133
 msgid "Go Back"
-msgstr ""
+msgstr "Volver"
 
 #: reportwriter/languages/en_US/reports.php:135
 msgid "Change"
@@ -50728,7 +50728,7 @@ msgstr ""
 
 #: reportwriter/languages/en_US/reports.php:160
 msgid "Grouped by:"
-msgstr ""
+msgstr "Agrupado por:"
 
 #: reportwriter/languages/en_US/reports.php:161
 msgid "Sorted by:"
@@ -50877,7 +50877,7 @@ msgstr ""
 
 #: reportwriter/languages/en_US/reports.php:198
 msgid "Enter a New Field"
-msgstr ""
+msgstr "Introducir un campo nuevo"
 
 #: reportwriter/languages/en_US/reports.php:199
 msgid "Field List"
@@ -51279,7 +51279,7 @@ msgstr "Amarillo"
 
 #: reportwriter/languages/en_US/reports.php:336
 msgid "Green"
-msgstr ""
+msgstr "Verde"
 
 #: reportwriter/languages/en_US/reports.php:337
 msgid "White"

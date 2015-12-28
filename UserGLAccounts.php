@@ -43,8 +43,7 @@ if(!isset($SelectedUser)) {// If is NOT set a user for GL accounts.
 	if(isset($_POST['Process'])) {
 		prnMsg(_('You have not selected any user'), 'error');
 	}
-	echo '<br />',
-		'<form action="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '" method="post">',
+	echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '" method="post">',
 		'<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />',
 		'<table class="selection">
 			<tr>
@@ -167,40 +166,42 @@ if(!isset($SelectedUser)) {// If is NOT set a user for GL accounts.
 		ON glaccountusers.accountcode=chartmaster.accountcode
 		WHERE glaccountusers.userid='" . $SelectedUser . "'
 		ORDER BY chartmaster.accountcode ASC");
+	if(DB_num_rows($Result)>0) {// If the user has access permissions to one or more GL accounts:
+		$k = 0; //row colour counter
+		while ($MyRow = DB_fetch_array($Result)) {
+			if($k == 1) {
+				echo '<tr class="EvenTableRows">';
+				$k = 0;
+			} else {
+				echo '<tr class="OddTableRows">';
+				$k = 1;
+			}
+			echo '<td class="text">', $MyRow['accountcode'], '</td>
+				<td class="text">', $MyRow['accountname'], '</td>
+				<td class="centre">';
+			if($MyRow['canview'] == 1) {
+				echo _('Yes');
+			} else {
+				echo _('No');
+			}
+			echo '</td>
+				<td class="centre">';
 
-	$k = 0; //row colour counter
-
-	while ($MyRow = DB_fetch_array($Result)) {
-		if($k == 1) {
-			echo '<tr class="EvenTableRows">';
-			$k = 0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k = 1;
-		}
-		echo '<td class="text">', $MyRow['accountcode'], '</td>
-			<td class="text">', $MyRow['accountname'], '</td>
-			<td class="centre">';
-		if($MyRow['canview'] == 1) {
-			echo _('Yes');
-		} else {
-			echo _('No');
-		}
-		echo '</td>
-			<td class="centre">';
-
-		$ScriptName = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
-		if($MyRow['canupd'] == 1) {
-			echo _('Yes'), '</td>
-				<td class="noprint"><a href="', $ScriptName, '?SelectedUser=', $SelectedUser, '&amp;SelectedGLAccount=', $MyRow['accountcode'], '&amp;ToggleUpdate=0" onclick="return confirm(\'', _('Are you sure you wish to remove Update for this GL Account?'), '\');">', _('Remove Update');
-		} else {
-			echo _('No'), '</td>
-				<td class="noprint"><a href="', $ScriptName, '?SelectedUser=', $SelectedUser, '&amp;SelectedGLAccount=', $MyRow['accountcode'], '&amp;ToggleUpdate=1" onclick="return confirm(\'', _('Are you sure you wish to add Update for this GL Account?'), '\');">', _('Add Update');
-		}
-		echo	'</a></td>
-				<td class="noprint"><a href="', $ScriptName, '?SelectedUser=', $SelectedUser, '&amp;SelectedGLAccount=', $MyRow['accountcode'], '&amp;delete=yes" onclick="return confirm(\'', _('Are you sure you wish to un-authorise this GL Account?'), '\');">', _('Un-authorise'), '</a></td>
-			</tr>';
-	}// End while list loop.
+			$ScriptName = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
+			if($MyRow['canupd'] == 1) {
+				echo _('Yes'), '</td>',
+					'<td class="noprint"><a href="', $ScriptName, '?SelectedUser=', $SelectedUser, '&amp;SelectedGLAccount=', $MyRow['accountcode'], '&amp;ToggleUpdate=0" onclick="return confirm(\'', _('Are you sure you wish to remove Update for this GL Account?'), '\');">', _('Remove Update');
+			} else {
+				echo _('No'), '</td>',
+					'<td class="noprint"><a href="', $ScriptName, '?SelectedUser=', $SelectedUser, '&amp;SelectedGLAccount=', $MyRow['accountcode'], '&amp;ToggleUpdate=1" onclick="return confirm(\'', _('Are you sure you wish to add Update for this GL Account?'), '\');">', _('Add Update');
+			}
+			echo	'</a></td>',
+					'<td class="noprint"><a href="', $ScriptName, '?SelectedUser=', $SelectedUser, '&amp;SelectedGLAccount=', $MyRow['accountcode'], '&amp;delete=yes" onclick="return confirm(\'', _('Are you sure you wish to un-authorise this GL Account?'), '\');">', _('Un-authorise'), '</a></td>',
+				'</tr>';
+		}// End while list loop.
+	} else {// If the user does not have access permissions to GL accounts:
+		echo '<tr><td class="centre" colspan="6">', _('User does not have access permissions to GL accounts'), '</td></tr>';
+	}
 	echo '</tbody></table>',
 		'<br />',
 		'<form action="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '" method="post">',
