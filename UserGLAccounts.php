@@ -23,8 +23,10 @@ if(isset($_POST['SelectedGLAccount'])) {
 } elseif(isset($_GET['SelectedGLAccount'])) {
 	$SelectedGLAccount = mb_strtoupper($_GET['SelectedGLAccount']);
 } else {
-	$SelectedGLAccount = '';
-/*	unset($SelectedGLAccount);*/
+	$SelectedGLAccount = '';/*// Unset empty SelectedGLAccount:
+	unset($_GET['SelectedGLAccount']);
+	unset($_POST['SelectedGLAccount']);
+	unset($SelectedGLAccount);*/
 }
 
 if(isset($_GET['Cancel']) or isset($_POST['Cancel'])) {
@@ -85,15 +87,11 @@ if(!isset($SelectedUser)) {// If is NOT set a user for GL accounts.
 		_('User Authorised GL Accounts'), '" /> ',// Icon title.
 		_('Authorised GL Accounts for'), ' ', $SelectedUserName, '</p>';// Page title.
 
-// BEGIN: Needs $SelectedUser, $SelectedGLAccount:
-	if (isset($_POST['submit'])) {
-		$InputError = 0;
-		if ($_POST['SelectedGLAccount'] == '') {
-			$InputError = 1;
+	// BEGIN: Needs $SelectedUser, $SelectedGLAccount:
+	if(isset($_POST['submit'])) {
+		if(!isset('SelectedGLAccount')) {
 			prnMsg(_('You have not selected an GL Account to be authorised for this user'), 'error');
-			unset($SelectedGLAccount);
-		}
-		if ($InputError != 1) {
+		} else {
 			// First check the user is not being duplicated
 			$CheckResult = DB_query("
 				SELECT count(*)
@@ -101,33 +99,38 @@ if(!isset($SelectedUser)) {// If is NOT set a user for GL accounts.
 				WHERE accountcode= '" . $_POST['SelectedGLAccount'] . "'
 				AND userid = '" . $SelectedUser . "'");
 			$CheckRow = DB_fetch_row($CheckResult);
-			if ($CheckRow[0] > 0) {
-				$InputError = 1;
+			if($CheckRow[0] > 0) {
 				prnMsg(_('The GL Account') . ' ' . $SelectedGLAccount . ' ' . _('is already authorised for this user'), 'error');
 			} else {
 				// Add new record on submit
-				$SQL = "INSERT INTO glaccountusers (accountcode,
-													userid,
-													canview,
-													canupd)
-											VALUES ('" . $SelectedGLAccount . "',
-													'" . $SelectedUser . "',
-													'1',
-													'1')";
-				$Result = DB_query($SQL);
-				prnMsg(_('An access permission to a GL account was added') . '. ' . _('User') . ': ' . $SelectedUser . '. ' . _('GL Account') . ': ' . $SelectedGLAccount . '.', 'success');
-				unset($_POST['SelectedGLAccount']);
+				$SQL = "INSERT INTO glaccountusers (
+								accountcode,
+								userid,
+								canview,
+								canupd
+							) VALUES ('" .
+								$SelectedGLAccount . "','" .
+								$SelectedUser . "',
+								'1',
+								'1')";
+				$ErrMsg = _('An access permission to a GL account could not be added');
+				if(DB_query($SQL, $ErrMsg)) {
+					prnMsg(_('An access permission to a GL account was added') . '. ' . _('User') . ': ' . $SelectedUser . '. ' . _('GL Account') . ': ' . $SelectedGLAccount . '.', 'success');
+					unset($_GET['SelectedGLAccount']);
+					unset($_POST['SelectedGLAccount']);
+				}
 			}
 		}
 	} elseif(isset($_GET['delete']) or isset($_POST['delete'])) {
 		$SQL = "DELETE FROM glaccountusers
 			WHERE accountcode='" . $SelectedGLAccount . "'
 			AND userid='" . $SelectedUser . "'";
-		$ErrMsg = _('The GL Account user record could not be deleted because');
-		$Result = DB_query($SQL, $ErrMsg);
-		prnMsg(_('An access permission to a GL account was removed') . '. ' . _('User') . ': ' . $SelectedUser . '. ' . _('GL Account') . ': ' . $SelectedGLAccount . '.', 'success');
-		unset($_GET['delete']);
-		unset($_POST['delete']);
+		$ErrMsg = _('An access permission to a GL account could not be removed');
+		if(DB_query($SQL, $ErrMsg)) {
+			prnMsg(_('An access permission to a GL account was removed') . '. ' . _('User') . ': ' . $SelectedUser . '. ' . _('GL Account') . ': ' . $SelectedGLAccount . '.', 'success');
+			unset($_GET['delete']);
+			unset($_POST['delete']);
+		}
 	} elseif(isset($_GET['ToggleUpdate']) or isset($_POST['ToggleUpdate'])) {// Can update (write) GL accounts flag.
 		if(isset($_GET['ToggleUpdate']) and $_GET['ToggleUpdate']<>'') {//If GET not empty.
 			$ToggleUpdate = $_GET['ToggleUpdate'];
@@ -138,11 +141,12 @@ if(!isset($SelectedUser)) {// If is NOT set a user for GL accounts.
 				SET canupd='" . $ToggleUpdate . "'
 				WHERE accountcode='" . $SelectedGLAccount . "'
 				AND userid='" . $SelectedUser . "'";
-		$ErrMsg = _('The GL Account user record could not be updated because');
-		$Result = DB_query($SQL, $ErrMsg);
-		prnMsg(_('The access permission to update a GL account was modified') . '. ' . _('User') . ': ' . $SelectedUser . '. ' . _('GL Account') . ': ' . $SelectedGLAccount . '.', 'success');
-		unset($_GET['ToggleUpdate']);
-		unset($_POST['ToggleUpdate']);
+		$ErrMsg = _('An access permission to update a GL account could not be modified');
+		if(DB_query($SQL, $ErrMsg)) {
+			prnMsg(_('An access permission to update a GL account was modified') . '. ' . _('User') . ': ' . $SelectedUser . '. ' . _('GL Account') . ': ' . $SelectedGLAccount . '.', 'success');
+			unset($_GET['ToggleUpdate']);
+			unset($_POST['ToggleUpdate']);
+		}
 	}
 // END: Needs $SelectedUser, $SelectedGLAccount.
 
