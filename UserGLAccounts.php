@@ -18,21 +18,21 @@ if(isset($_POST['SelectedUser']) and $_POST['SelectedUser']<>'') {//If POST not 
 	unset($SelectedUser);
 }
 
-if(isset($_POST['SelectedGLAccount'])) {
+if(isset($_POST['SelectedGLAccount']) and $_POST['SelectedGLAccount']<>'') {//If POST not empty:
 	$SelectedGLAccount = mb_strtoupper($_POST['SelectedGLAccount']);
-} elseif(isset($_GET['SelectedGLAccount'])) {
+} elseif(isset($_GET['SelectedGLAccount']) and $_GET['SelectedGLAccount']<>'') {//If GET not empty:
 	$SelectedGLAccount = mb_strtoupper($_GET['SelectedGLAccount']);
-} else {
-	$SelectedGLAccount = '';/*// Unset empty SelectedGLAccount:
+} else {// Unset empty SelectedGLAccount:
 	unset($_GET['SelectedGLAccount']);
 	unset($_POST['SelectedGLAccount']);
-	unset($SelectedGLAccount);*/
+	unset($SelectedGLAccount);
 }
 
 if(isset($_GET['Cancel']) or isset($_POST['Cancel'])) {
 	unset($SelectedUser);
 	unset($SelectedGLAccount);
 }
+
 
 if(!isset($SelectedUser)) {// If is NOT set a user for GL accounts.
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
@@ -72,7 +72,7 @@ if(!isset($SelectedUser)) {// If is NOT set a user for GL accounts.
 	DB_free_result($Result);
 
 	echo	'<div class="centre noprint">',// Form buttons:
-				'<button name="Process" type="submit" value="Accept"><img alt="" src="', $RootPath, '/css/', $Theme,
+				'<button name="Process" type="submit" value="Submit"><img alt="" src="', $RootPath, '/css/', $Theme,
 					'/images/user.png" /> ', _('Accept'), '</button> '; // "Accept" button.
 
 } else {// If is set a user for GL accounts ($SelectedUser).
@@ -89,14 +89,14 @@ if(!isset($SelectedUser)) {// If is NOT set a user for GL accounts.
 
 	// BEGIN: Needs $SelectedUser, $SelectedGLAccount:
 	if(isset($_POST['submit'])) {
-		if(!isset('SelectedGLAccount')) {
+		if(!isset($SelectedGLAccount)) {
 			prnMsg(_('You have not selected an GL Account to be authorised for this user'), 'error');
 		} else {
 			// First check the user is not being duplicated
 			$CheckResult = DB_query("
 				SELECT count(*)
 				FROM glaccountusers
-				WHERE accountcode= '" . $_POST['SelectedGLAccount'] . "'
+				WHERE accountcode= '" . $SelectedGLAccount . "'
 				AND userid = '" . $SelectedUser . "'");
 			$CheckRow = DB_fetch_row($CheckResult);
 			if($CheckRow[0] > 0) {
