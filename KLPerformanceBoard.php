@@ -100,13 +100,15 @@ if ($KL_SystemAdmin
 FinishedStockDistribution("DISPLAYS", "LOCATION", $db);
 
 PackagingStatusForKapalLaut($RootPath, $db);
+PackagingUsageForKapalLaut(30, $RootPath, $db);
+
 PackagingStatusForBlink($RootPath, $db);
+PackagingUsageForBlink(30, $RootPath, $db);
+
 PackagingStatusForOutlet($RootPath, $db);
+PackagingUsageForOutlet(30, $RootPath, $db);
 
 if ($KL_SystemAdmin){
-	PackagingUsageForKapalLaut(30, $RootPath, $db);
-	PackagingUsageForBlink(30, $RootPath, $db);
-	PackagingUsageForOutlet(30, $RootPath, $db);
 	FinishedStockDistribution("PACKAGING", "LOCATION", $db);
 }
 if (($KL_SystemAdmin) 

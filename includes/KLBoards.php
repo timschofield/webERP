@@ -2237,7 +2237,7 @@ function PettyCashBalance($TypeUser, $db){
 	}
 }
 
-function ItemsWithStockKantorButRLZeroAt($StockCat, $Location, $RootPath, $db){
+function ItemsWithStockKantorButRLZeroAt($Location, $RootPath, $db){
 /*
 items with stock kantor > 0 
 RL is zero at $Location
@@ -2246,19 +2246,16 @@ No pending transfer regarding this item
 /* 2013-04-16 excluding items in change price process */
 /* 2013-05-27 excluding items in consignment clothing */
 
-	// if the location is NOT doing discount, then we should filter discounted items
-	if (!ItemInList($Location, LIST_SHOPS_OUTLET)){
-		$FilterDiscount = " AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_OUTLET . " ";
-		$MessageDiscount = " NO discount.";
-	}else{
-		$FilterDiscount = " ";
-		$MessageDiscount = " ";
+	if (ItemInList($Location, LIST_SHOPS_KAPAL_LAUT)){
+		$FilterCategory = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_SILVER . " ";
+		$MessageCategory = " KL Categories ";
+	}else if (ItemInList($Location, LIST_SHOPS_BLINK)){
+		$FilterCategory = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . " ";
+		$MessageCategory = " BLINK Categories ";
+	}else if (ItemInList($Location, LIST_SHOPS_OUTLET)){
+		$FilterCategory = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . " ";
+		$MessageCategory = " DISCOUNT Categories ";
 	}
-
-	if ($StockCat != "ALL"){
-		$FilterCategory = " AND stockmaster.categoryid = '" . $StockCat . "' ";;
-	}
-		
 	
 	$SQL = "SELECT stockid,
 			stockmaster.categoryid,
@@ -2271,16 +2268,11 @@ No pending transfer regarding this item
 			WHERE stockmaster.categoryid = stockcategory.categoryid
 				AND discontinued = 0
 				AND stockcategory.stocktype = 'F'
-				AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_SHOP_DISPLAYS . "
-				AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_SHOP_CONSUMABLES . "
-				AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_OLD . "
-				AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_SETUP . "
 				AND stockmaster.klmovingdiscount20 = 0
 				AND stockmaster.klmovingdiscount50 = 0
 				AND stockmaster.klmovingdiscount80 = 0
 				AND stockmaster.klchangingprice = 0 " .
-				$FilterCategory .
-				$FilterDiscount . "
+				$FilterCategory . "
 				AND (SELECT SUM(locstock.reorderlevel)
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid
@@ -2297,7 +2289,7 @@ No pending transfer regarding this item
 
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . $StockCat . _(' Items with stock available (but NO changing price or category) at Kantor but RL = 0 at ') . $Location . "." .$MessageDiscount . $MessageOutlet . '</strong></p>';
+		echo '<p class="page_title_text" align="center"><strong>' . $MessageCategory . _(' Items with stock available (but NO changing price or category) at Kantor but RL = 0 at ') . $Location . '</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
@@ -2379,7 +2371,7 @@ No pending transfer regarding this item
 
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Items with stock available (but NO changing price or category) at Kantor but RL zero for all toko KL') . '</strong></p>';
+		echo '<p class="page_title_text" align="center"><strong>' . _('Items with stock available (but NO changing price or category) at Kantor but RL zero for ALL SHOPS') . '</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
@@ -3569,7 +3561,7 @@ function PerformanceItemsInCategory($ReportType, $CategoryId, $maxdays, $percent
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
 							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Date') . '</th>
+							<th class="ascending">' . _('DOB Category') . '</th>
 							<th class="ascending">' . _('Code') . '</th>
 							<th class="ascending">' . _('Description') . '</th>
 							<th class="ascending">' . _('Total Qty') . '</th>
@@ -3711,8 +3703,15 @@ function SplittedpaymentsBySPG($maxdays, $maxsplitted, $db){
 	}
 }
 
-function ItemsNotTopSalesInShop($starttopitems, $endtopitems, $maxdays, $codeshop, $categories, $RootPath, $db){
+function ItemsNotTopSalesInShop($starttopitems, $endtopitems, $maxdays, $codeshop, $RootPath, $db){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
+	if (ItemInList($Location, LIST_SHOPS_KAPAL_LAUT)){
+		$FilterCategory = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_SILVER . " ";
+	}else if (ItemInList($Location, LIST_SHOPS_BLINK)){
+		$FilterCategory = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . " ";
+	}else if (ItemInList($Location, LIST_SHOPS_OUTLET)){
+		$FilterCategory = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . " ";
+	}
 	$SQL = "SELECT salesorderdetails.stkcode,
 				stockmaster.description,
 				stockmaster.categoryid,
@@ -3730,20 +3729,9 @@ function ItemsNotTopSalesInShop($starttopitems, $endtopitems, $maxdays, $codesho
 					WHERE locstock.stockid = salesorderdetails.stkcode
 						AND locstock.loccode = '". $codeshop ."') AS rl
 			FROM salesorderdetails, salesorders, stockmaster
-			WHERE salesorderdetails.orderno = salesorders.orderno ";
-	if ($categories == "DISC20"){
-		$SQL = $SQL . " AND stockmaster.categoryid = 'DISC20'";
-	}		
-	if ($categories == "DISC50"){
-		$SQL = $SQL . " AND stockmaster.categoryid = 'DISC50'";
-	}		
-	if ($categories == "DISC80"){
-		$SQL = $SQL . " AND stockmaster.categoryid = 'DISC80'";
-	}		
-	if ($categories == "ACTIVE"){
-		$SQL = $SQL . " AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_DISCOUNT . " ";
-	}		
-	$SQL = $SQL . " AND stockmaster.discontinued = 0
+			WHERE salesorderdetails.orderno = salesorders.orderno " . 
+			$FilterCategory . 
+			" AND stockmaster.discontinued = 0
 				AND salesorderdetails.stkcode = stockmaster.stockid
 				AND salesorderdetails.actualdispatchdate >= '" . $StartDate . "'
 			GROUP BY salesorderdetails.stkcode
@@ -3757,15 +3745,7 @@ function ItemsNotTopSalesInShop($starttopitems, $endtopitems, $maxdays, $codesho
 		while ($myrow = DB_fetch_array($result)) {
 			if ($myrow['rl'] > 0){
 				if($showHeader){
-					if ($categories == "DISC50"){
-						echo '<p class="page_title_text" align="center"><strong>' . 'NOT ' . $endtopitems . ' top sales items 50% DISCOUNT available in ' . $codeshop . ' shop. ' . '</strong></p>';
-					}		
-					if ($categories == "DISC80"){
-						echo '<p class="page_title_text" align="center"><strong>' . 'NOT ' . $endtopitems . ' top sales items 80% DISCOUNT available in ' . $codeshop . ' shop. ' . '</strong></p>';
-					}		
-					if ($categories == "ACTIVE"){
-						echo '<p class="page_title_text" align="center"><strong>' . 'NOT ' . $endtopitems . ' top sales items NOT DISCOUNTED OR OUTLET available in ' . $codeshop . ' shop. ' . '</strong></p>';
-					}		
+					echo '<p class="page_title_text" align="center"><strong>' . 'Items NOT ' . $endtopitems . ' top sales available in ' . $codeshop . ' shop. ' . '</strong></p>';
 					echo '<div>';
 					echo '<table class="selection">';
 					$TableHeader = '<tr>
@@ -4055,6 +4035,7 @@ function ActiveItemsNoSales($maxdays, $group, $RootPath, $db){
 	$SQL = "SELECT 	stockmaster.stockid,
 					stockmaster.description,
 					stockmaster.categoryid,
+					stockmaster.lastcategoryupdate,
 					stockmaster.units, 
 					(SELECT SUM(quantity)
 						FROM locstock
@@ -4066,15 +4047,9 @@ function ActiveItemsNoSales($maxdays, $group, $RootPath, $db){
 					AND stockmaster.klmovingdiscount20 = 0
 					AND stockmaster.klmovingdiscount50 = 0
 					AND stockmaster.klmovingdiscount80 = 0
-					AND stockmaster.lastcategoryupdate <= '" . $FromDate . "'";
-	if ($group == "ACTIVE"){
-		$SQL = $SQL . "	AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_TEST ." ";
-		$SQL = $SQL . 		" OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_STABLE ." ";
-		$SQL = $SQL . 		" OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING .") ";
-	}else{
-		$SQL = $SQL . "	AND stockmaster.categoryid ='" . $group . "'";
-	}				
-	$SQL = $SQL . " AND stockcategory.stocktype = 'F'
+					AND stockmaster.lastcategoryupdate <= '" . $FromDate . "'
+					AND stockmaster.categoryid ='" . $group . "'
+					AND stockcategory.stocktype = 'F'
 					AND NOT EXISTS (SELECT * 
 									FROM 	salesorderdetails, salesorders
 									WHERE 	stockmaster.stockid = salesorderdetails.stkcode
@@ -4107,6 +4082,7 @@ function ActiveItemsNoSales($maxdays, $group, $RootPath, $db){
 							<th class="ascending">' . _('Code') . '</th>
 							<th class="ascending">' . _('Description') . '</th>
 							<th class="ascending">' . _('Category') . '</th>
+							<th class="ascending">' . _('DOB Category') . '</th>
 							<th class="ascending">' . _('QOH') . '</th>
 						</tr>';
 		echo $TableHeader;
@@ -4119,12 +4095,14 @@ function ActiveItemsNoSales($maxdays, $group, $RootPath, $db){
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
+					<td>%s</td>
 					<td class="number">%s</td>
 					</tr>', 
 					$i, 
 					$CodeLink, 
 					$myrow['description'], 
 					$myrow['categoryid'], 
+					ConvertSQLDate($myrow['lastcategoryupdate']),
 					locale_number_format($myrow['quantity'],0)
 					);
 			$i++;

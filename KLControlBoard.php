@@ -5,24 +5,24 @@ define("NUMBER_OF_TESTS", 155);
 /* Session started in session.inc for password checking and authorisation level check
 config.php is in turn included in session.inc*/
 
-include ('includes/session.inc');
+include('includes/session.inc');
 $Title = _('Kapal-Laut General Control Board '. VERSIONFILE);
-include ('includes/header.inc');
+include('includes/header.inc');
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
-include ('includes/KLGeneralFunctions.php');
+include('includes/KLGeneralFunctions.php');
 include('includes/KLPrices.php');
 include('includes/KLEmails.php');
 
-include ('includes/OpenCartGeneralFunctions.php');
-include ('includes/OpenCartConnectDB.php');
-include ('includes/WeberpOpenCartDefines.php');
+include('includes/OpenCartGeneralFunctions.php');
+include('includes/OpenCartConnectDB.php');
+include('includes/WeberpOpenCartDefines.php');
 
 /* Do the pending GL Postings to get the latest financial control reports*/
-include ('includes/GLPostings.inc');
+include('includes/GLPostings.inc');
 
 /* ASSIGN users to groups */
-include ('includes/KLRoles.inc');
+include('includes/KLRoles.inc');
 
 $begintime = time_start();
 
@@ -299,26 +299,22 @@ if ($KL_BusinessDevelopmentManager){
 if ($KL_BusinessDevelopmentManager){
 	ItemsWithStockKantorButReorderLevelTokoZero($RootPath, $db);
 
-	ItemsWithStockKantorButRLZeroAt("DISC50", "TOKSU", $RootPath, $db);
-	ItemsWithStockKantorButRLZeroAt("DISC80", "TOKSU", $RootPath, $db);
-	ItemsWithStockKantorButRLZeroAt("DISC50", "TOKJC", $RootPath, $db);
-	ItemsWithStockKantorButRLZeroAt("DISC80", "TOKJC", $RootPath, $db);
-}
-	
-if ($KL_BusinessDevelopmentManager){
-	ItemsWithStockKantorButRLZeroAt("ALL", "TOKSA", $RootPath, $db);
-	ItemsWithStockKantorButRLZeroAt("ALL", "TOKSS", $RootPath, $db);
-	ItemsWithStockKantorButRLZeroAt("ALL", "TOKMF", $RootPath, $db);
-	ItemsWithStockKantorButRLZeroAt("ALL", "TOKPU", $RootPath, $db);
-	ItemsWithStockKantorButRLZeroAt("ALL", "TOKPA", $RootPath, $db);
-	ItemsWithStockKantorButRLZeroAt("ALL", "TOKKA", $RootPath, $db);
+	ItemsWithStockKantorButRLZeroAt("TOKSU", $RootPath, $db);
+	ItemsWithStockKantorButRLZeroAt("TOKJC", $RootPath, $db);
+
+	ItemsWithStockKantorButRLZeroAt("TOKSA", $RootPath, $db);
+	ItemsWithStockKantorButRLZeroAt("TOKSS", $RootPath, $db);
+	ItemsWithStockKantorButRLZeroAt("TOKMF", $RootPath, $db);
+	ItemsWithStockKantorButRLZeroAt("TOKPU", $RootPath, $db);
+	ItemsWithStockKantorButRLZeroAt("TOKPA", $RootPath, $db);
+	ItemsWithStockKantorButRLZeroAt("TOKKA", $RootPath, $db);
 
 	CategoryItemsNotInShop("DISC50", "TOKSU", $RootPath, $db);
 	CategoryItemsNotInShop("DISC80", "TOKSU", $RootPath, $db);
 
-	ItemsInCategoryWithStockKantorButReorderLevelTokoZero("DISC20", $RootPath, $db);
-	ItemsInCategoryWithStockKantorButReorderLevelTokoZero("DISC50", $RootPath, $db);
-	ItemsInCategoryWithStockKantorButReorderLevelTokoZero("DISC80", $RootPath, $db);
+//	ItemsInCategoryWithStockKantorButReorderLevelTokoZero("DISC20", $RootPath, $db);
+//	ItemsInCategoryWithStockKantorButReorderLevelTokoZero("DISC50", $RootPath, $db);
+//	ItemsInCategoryWithStockKantorButReorderLevelTokoZero("DISC80", $RootPath, $db);
 }
 
 
@@ -418,39 +414,39 @@ if ($KL_BusinessDevelopmentManager
 	ActiveItemsNoSales( 30, "FASHIO", $RootPath, $db);
 	ActiveItemsNoSales( 30, "ACCESO", $RootPath, $db);
 
-	ActiveItemsNoSales( 45, "NOPOSI", $RootPath, $db);
-	ActiveItemsNoSales( 45, "NOPOSS", $RootPath, $db);
-	ActiveItemsNoSales( 45, "NOPOFJ", $RootPath, $db);
-	ActiveItemsNoSales( 45, "NOPOAC", $RootPath, $db);
+	ActiveItemsNoSales( 30, "NOPOSI", $RootPath, $db);
+	ActiveItemsNoSales( 30, "NOPOSS", $RootPath, $db);
+	ActiveItemsNoSales( 30, "NOPOFJ", $RootPath, $db);
+	ActiveItemsNoSales( 30, "NOPOAC", $RootPath, $db);
 
 	ActiveItemsNoSales( 45, "DISC20", $RootPath, $db);
-	ActiveItemsNoSales( 45, "DISC50", $RootPath, $db);
+	ActiveItemsNoSales( 60, "DISC50", $RootPath, $db);
 	ActiveItemsNoSales( 90, "DISC80", $RootPath, $db);
 
-	TopSalesNotInEnoughShops(  1, 500, 60, 11, "STABLE", $RootPath, $db);
-	TopSalesNotInEnoughShops(500, 800, 60,  9, "STABLE", $RootPath, $db);
-	TopSalesNotInEnoughShops(800,1200, 60,  7, "STABLE", $RootPath, $db);
+//	TopSalesNotInEnoughShops(  1, 500, 60, 9,  "STABLE", $RootPath, $db);
+//	TopSalesNotInEnoughShops(500, 800, 60, 7, "STABLE", $RootPath, $db);
 //	TopSalesNotInEnoughShops(  1,  50, 60, 3, "DISC50", $RootPath, $db);
 
-	ItemsNotTopSalesInShop(1, 700, 60, "TOK66", "ACTIVE", $RootPath, $db);
-	ItemsNotTopSalesInShop(1, 600, 60, "TOKSE", "ACTIVE", $RootPath, $db);
-	ItemsNotTopSalesInShop(1, 600, 60, "TOKOB", "ACTIVE", $RootPath, $db);
-	ItemsNotTopSalesInShop(1, 800, 60, "TOKKA", "ACTIVE", $RootPath, $db);
+/*	ItemsNotTopSalesInShop(1, 700, 60, "TOK66", $RootPath, $db);
+	ItemsNotTopSalesInShop(1, 600, 60, "TOKSE", $RootPath, $db);
+	ItemsNotTopSalesInShop(1, 600, 60, "TOKOB", $RootPath, $db);
+	ItemsNotTopSalesInShop(1, 800, 60, "TOKKA", $RootPath, $db);
 
-	ItemsNotTopSalesInShop(1, 800, 60, "TOKPA", "ACTIVE", $RootPath, $db);
-	ItemsNotTopSalesInShop(1, 500, 60, "TOKKS", "ACTIVE", $RootPath, $db);
-	ItemsNotTopSalesInShop(1, 500, 60, "TOKBW", "ACTIVE", $RootPath, $db);
+	ItemsNotTopSalesInShop(1, 800, 60, "TOKPA", $RootPath, $db);
+	ItemsNotTopSalesInShop(1, 500, 60, "TOKKS", $RootPath, $db);
+	ItemsNotTopSalesInShop(1, 500, 60, "TOKBW", $RootPath, $db);
 
-//	ItemsNotTopSalesInShop(1, 900, 60, "TOKJC", "ACTIVE", $RootPath, $db);
+	ItemsNotTopSalesInShop(1, 900, 60, "TOKJC", $RootPath, $db);
 
-	ItemsNotTopSalesInShop(1, 600, 60, "TOKUB", "ACTIVE", $RootPath, $db);
-	ItemsNotTopSalesInShop(1, 700, 60, "TOKMF", "ACTIVE", $RootPath, $db);
-	ItemsNotTopSalesInShop(1, 800, 60, "TOKPU", "ACTIVE", $RootPath, $db);
+	ItemsNotTopSalesInShop(1, 600, 60, "TOKUB", $RootPath, $db);
+	ItemsNotTopSalesInShop(1, 700, 60, "TOKMF", $RootPath, $db);
+	ItemsNotTopSalesInShop(1, 700, 60, "TOKMU", $RootPath, $db);
+	ItemsNotTopSalesInShop(1, 800, 60, "TOKPU", $RootPath, $db);
 
-	ItemsNotTopSalesInShop(1, 800, 60, "TOKSA", "ACTIVE", $RootPath, $db);
-//	ItemsNotTopSalesInShop(1, 800, 60, "TOKSU", "ACTIVE", $RootPath, $db);
-	ItemsNotTopSalesInShop(1, 700, 60, "TOKSS", "ACTIVE", $RootPath, $db);
-
+	ItemsNotTopSalesInShop(1, 800, 60, "TOKSA", $RootPath, $db);
+	ItemsNotTopSalesInShop(1, 800, 60, "TOKSU", $RootPath, $db);
+	ItemsNotTopSalesInShop(1, 700, 60, "TOKSS", $RootPath, $db);
+*/
 	PerformanceItemsInCategory("GOOD", "TESTSI", 15,  30, "VERY GOOD", $RootPath, $db);
 	PerformanceItemsInCategory("GOOD", "TESTSI", 30,  45, "GOOD", $RootPath, $db);
 	PerformanceItemsInCategory("BAD",  "TESTSI", 50,  30, "BAD", $RootPath, $db);
@@ -476,19 +472,23 @@ if ($KL_BusinessDevelopmentManager
 	PerformanceItemsInCategory("GOOD", "TESTAC", 60, 100, "TEST FINISHED", $RootPath, $db);
 
 	PerformanceItemsInCategory("BAD",  "NOPOSI", 60,  50, "MOVE TO DISCOUNT", $RootPath, $db);
-	PerformanceItemsInCategory("BAD",  "NOPOSI",120, 100, "MOVE TO DISCOUNT", $RootPath, $db);
+	PerformanceItemsInCategory("BAD",  "NOPOSI",120,  75, "MOVE TO DISCOUNT", $RootPath, $db);
+	PerformanceItemsInCategory("BAD",  "NOPOSI",180, 100, "MOVE TO DISCOUNT", $RootPath, $db);
 
 	PerformanceItemsInCategory("BAD",  "NOPOSS", 60,  50, "MOVE TO DISCOUNT", $RootPath, $db);
-	PerformanceItemsInCategory("BAD",  "NOPOSS",120, 100, "MOVE TO DISCOUNT", $RootPath, $db);
+	PerformanceItemsInCategory("BAD",  "NOPOSS",120,  75, "MOVE TO DISCOUNT", $RootPath, $db);
+	PerformanceItemsInCategory("BAD",  "NOPOSS",180, 100, "MOVE TO DISCOUNT", $RootPath, $db);
 
 	PerformanceItemsInCategory("BAD",  "NOPOFJ", 60,  50, "MOVE TO DISCOUNT", $RootPath, $db);
-	PerformanceItemsInCategory("BAD",  "NOPOFJ",120, 100, "MOVE TO DISCOUNT", $RootPath, $db);
+	PerformanceItemsInCategory("BAD",  "NOPOFJ",120,  75, "MOVE TO DISCOUNT", $RootPath, $db);
+	PerformanceItemsInCategory("BAD",  "NOPOFJ",180, 100, "MOVE TO DISCOUNT", $RootPath, $db);
 
 	PerformanceItemsInCategory("BAD",  "NOPOAC", 60,  50, "MOVE TO DISCOUNT", $RootPath, $db);
-	PerformanceItemsInCategory("BAD",  "NOPOAC",120, 100, "MOVE TO DISCOUNT", $RootPath, $db);
+	PerformanceItemsInCategory("BAD",  "NOPOAC",120,  75, "MOVE TO DISCOUNT", $RootPath, $db);
+	PerformanceItemsInCategory("BAD",  "NOPOAC",180, 100, "MOVE TO DISCOUNT", $RootPath, $db);
 
 	PerformanceItemsInCategory("BAD",  "DISC20", 60, 100, "MOVE TO 50% DISCOUNT", $RootPath, $db);
-	PerformanceItemsInCategory("BAD",  "DISC50",120, 100, "MOVE TO 80% DISCOUNT", $RootPath, $db);
+	PerformanceItemsInCategory("BAD",  "DISC50",180, 100, "MOVE TO 80% DISCOUNT", $RootPath, $db);
 }
 
 if ($KL_BusinessDevelopmentManager

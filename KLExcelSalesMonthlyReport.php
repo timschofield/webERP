@@ -262,7 +262,7 @@ function SheetSalesReport($objPHPExcel,
 	$objPHPExcel->getActiveSheet()->setCellValue('C7', $PcsMonth);
 	$objPHPExcel->getActiveSheet()->setCellValue('I7', $SalesMonth-$CostMonth);
 								 
-	list ($SalesMonth, $PcsMonth, $CostMonth) = SalesForPeriod($MonthA, $MonthB, LIST_STOCK_CATEGORIES_FASHION_JEWELLERY);						 
+	list ($SalesMonth, $PcsMonth, $CostMonth) = SalesForPeriod($MonthA, $MonthB, LIST_STOCK_CATEGORIES_BLINK);						 
 	$objPHPExcel->getActiveSheet()->setCellValue('A8', "FASHION JEWELLERY");
 	$objPHPExcel->getActiveSheet()->setCellValue('B8', $SalesMonth);
 	$objPHPExcel->getActiveSheet()->setCellValue('C8', $PcsMonth);
@@ -299,7 +299,7 @@ function SheetSalesReport($objPHPExcel,
 	$objPHPExcel->getActiveSheet()->setCellValue('F7', $PcsMonth);
 	$objPHPExcel->getActiveSheet()->setCellValue('L7', $SalesMonth-$CostMonth);
 								 
-	list ($SalesMonth, $PcsMonth, $CostMonth) = SalesForPeriod($MonthC, $MonthD, LIST_STOCK_CATEGORIES_FASHION_JEWELLERY);						 
+	list ($SalesMonth, $PcsMonth, $CostMonth) = SalesForPeriod($MonthC, $MonthD, LIST_STOCK_CATEGORIES_BLINK);						 
 	$objPHPExcel->getActiveSheet()->setCellValue('E8', $SalesMonth);
 	$objPHPExcel->getActiveSheet()->setCellValue('F8', $PcsMonth);
 	$objPHPExcel->getActiveSheet()->setCellValue('L8', $SalesMonth-$CostMonth);
