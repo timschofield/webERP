@@ -309,6 +309,8 @@ if ($KL_BusinessDevelopmentManager){
 	ItemsWithStockKantorButRLZeroAt("TOKPA", $RootPath, $db);
 	ItemsWithStockKantorButRLZeroAt("TOKKA", $RootPath, $db);
 
+	CategoryItemsNotInShop("TESTBL", "TOKMU", $RootPath, $db);
+
 	CategoryItemsNotInShop("DISC50", "TOKSU", $RootPath, $db);
 	CategoryItemsNotInShop("DISC80", "TOKSU", $RootPath, $db);
 
