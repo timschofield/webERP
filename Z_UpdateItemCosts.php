@@ -75,7 +75,7 @@ if (isset($_FILES['CostUpdateFile']) and $_FILES['CostUpdateFile']['name']) { //
 
 	 	$OldCost = $OldRow['materialcost'] + $OldRow['labourcost'] + $OldRow['overheadcost'];
 		//dont update costs for assembly or kit-sets or ghost items!!
-		if ((abs($NewCost - $OldCost) > pow(1,-($_SESSION['StandardCostDecimalPlaces']+1))) 
+		if ((abs($NewCost - $OldCost) > pow(10,-($_SESSION['StandardCostDecimalPlaces']+1))) 
 			AND $OldRow['mbflag']!='K' 
 			AND $OldRow['mbflag']!='A' 
 			AND $OldRow['mbflag']!='G'){
