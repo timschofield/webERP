@@ -116,7 +116,7 @@ define("TRANSFER_LIST_DAYS_FOR_SPG", 7);
 define("PAYMENT_BY_CASH", 2); 
 define("PAYMENT_BY_CREDITCARD", 3); 
 define("PERCENTAGE_SALES_CASH_TO_PT", 10); // % of cash transactions going to PT cash acccounts
-define("PERCENTAGE_COMPENSATION_HPP_PT", 100); // % of HPP to be assigned to PT sales. 100 means NO compensation.
+define("PERCENTAGE_COMPENSATION_HPP_PT", 100.0); // % of HPP to be assigned to PT sales. 100 means NO compensation.
 define("ACCOUNT_COMPENSATION_HPP_PT", "510010050"); 
 define("ACCOUNT_HUTANG_PPH23", "611012005PT"); // number of account for retention PPH23
 
