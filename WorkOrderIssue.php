@@ -76,20 +76,43 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 		prnMsg(_('The work order is closed - no more materials or components can be issued to it.'),'error');
 		$InputError=true;
 	}
+	//Need to get the current standard cost for the item being issued
+	$SQL = "SELECT materialcost+labourcost+overheadcost AS cost,
+					controlled,
+					serialised,
+					decimalplaces,
+					mbflag
+			FROM stockmaster
+			WHERE stockid='" .$_POST['IssueItem'] . "'";
+	$Result = DB_query($SQL);
+	$IssueItemRow = DB_fetch_array($Result);
+	//now lets get the decimalplaces needed
+	if ($IssueItemRow['decimalplaces'] <=4) {
+		$VarianceAllowed = 0.0001;
+	} else {
+		$VarianceAllowed = pow(10,-$IssueItemRow['decimalplaces']);
+	}
+
 	$QuantityIssued =0;
 	if (isset($_POST['SerialNos']) AND is_array($_POST['SerialNos'])){ //then we are issuing a serialised item
 		$QuantityIssued = count($_POST['SerialNos']); // the total quantity issued as 1 per serial no
 	} elseif (isset($_POST['Qty'])){ //then its a plain non-controlled item
 		$QuantityIssued = filter_number_format($_POST['Qty']);
 	} else { //it must be a batch/lot controlled item
-		for ($i=0;$i<15;$i++){
-			if (mb_strlen($_POST['Qty'.$i])>0){
+		if (!isset($_POST['LotCounter']) OR !is_numeric($_POST['LotCounter'])) {
+			$InputError = true;
+			prnMsg(_('The line counter is not set up or not numeric, please ask administrator for help'),'error');
+			include('include/footer.inc');
+			exit;
+		}
+		for ($i=0;$i<$_POST['LotCounter'];$i++){
+			if (mb_strlen($_POST['Qty'.$i])>0 AND $_POST['Qty'.$i] != 0){
 				if (!is_numeric(filter_number_format($_POST['Qty'.$i]))){
 					$InputError=1;
 				} else {
 					$QuantityIssued += filter_number_format($_POST['Qty'.$i]);
 
-					if ($_SESSION['ProhibitNegativeStock']==1 and  $_POST['BatchRef'.$i] > "") {
+					 if ($_SESSION['ProhibitNegativeStock']==1 AND $_POST['BatchRef'.$i] > "" AND $_POST['Qty' . $i]>0) {
 						$SQL = "SELECT quantity from stockserialitems WHERE (stockid= '" . $_POST['IssueItem'] . "')
 										AND (loccode = '" . $_POST['FromLocation'] . "')
 										AND (serialno = '" . $_POST['BatchRef'.$i] . "')";
@@ -101,7 +124,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 						}
 						else {
 							$CheckLotRow = DB_fetch_row($Result);
-							if ($CheckLotRow[0]<$_POST['Qty'.$i]){
+							if (($_POST['Qty'.$i]-$CheckLotRow[0])>$VarianceAllowed){
 								$InputError = true;
 								prnMsg(_('This issue cannot be processed because the system parameter is set to prohibit negative stock and this issue would result in this batch going into negative. Please correct the stock first before attempting another issue'),'error');
 							}
@@ -113,15 +136,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 		}//end for the 15 fields available for batch/lot entry
 	}//end batch/lot controlled item
 
-	//Need to get the current standard cost for the item being issued
-	$SQL = "SELECT materialcost+labourcost+overheadcost AS cost,
-					controlled,
-					serialised,
-					mbflag
-			FROM stockmaster
-			WHERE stockid='" .$_POST['IssueItem'] . "'";
-	$Result = DB_query($SQL);
-	$IssueItemRow = DB_fetch_array($Result);
+
 
 	if ($IssueItemRow['cost']==0){
 		prnMsg(_('The item being issued has a zero cost. The issue will still be processed '),'warn');
@@ -136,7 +151,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 				AND loccode ='" . $_POST['FromLocation'] . "'";
 		$CheckNegResult = DB_query($SQL);
 		$CheckNegRow = DB_fetch_row($CheckNegResult);
-		if ($CheckNegRow[0]<$QuantityIssued){
+		if (($QuantityIssued-$CheckNegRow[0])>$VarianceAllowed){
 			$InputError = true;
 			prnMsg(_('This issue cannot be processed because the system parameter is set to prohibit negative stock and this issue would result in stock going into negative. Please correct the stock first before attempting another issue'),'error');
 		}
@@ -167,6 +182,9 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 			if (DB_num_rows($Result)==1){
 				$LocQtyRow = DB_fetch_row($Result);
 				$NewQtyOnHand = ($LocQtyRow[0] - $QuantityIssued);
+				if ($NewQtyOnHand < $VarianceAllowed) {
+					$NewQtyOnHand = 0;
+				}
 			} else {
 			/*There must actually be some error this should never happen */
 				$NewQtyOnHand = 0;
@@ -254,7 +272,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 				} //end for all of the potential serialised entries in the multi select box
 			} else { //the item is just batch/lot controlled not serialised
 			/*the form for entry of batch controlled items is only 15 possible fields */
-				for($i=0;$i<15;$i++){
+				for($i=0;$i<$_POST['LotCounter'];$i++){
 				/*  We need to add the StockSerialItem record and
 					The StockSerialMoves as well */
 					//need to test if the batch/lot exists first already
@@ -269,12 +287,16 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 						$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 						$AlreadyExistsRow = DB_fetch_row($Result);
 
-						if ($AlreadyExistsRow[0]>0){
-							$SQL = "UPDATE stockserialitems SET quantity = quantity - " . $_POST['Qty' . $i] . "
+						if ($AlreadyExistsRow[0]>0 AND $_POST['Qty'.$i] != 0){
+							$SQL = "UPDATE stockserialitems SET quantity = CASE
+												WHEN abs(quantity -" . $_POST['Qty' . $i] . ")<" . $VarianceAllowed . "
+												THEN 0 
+												ELSE  quantity - " . $_POST['Qty' . $i] . " 
+												END
 										WHERE stockid='" . $_POST['IssueItem'] . "'
 										AND loccode = '" . $_POST['FromLocation'] . "'
 										AND serialno = '" . $_POST['BatchRef' .$i] . "'";
-						} else {
+						} elseif ($_POST['Qty'.$i] != 0) {
 							$SQL = "INSERT INTO stockserialitems (stockid,
 												loccode,
 												serialno,
@@ -294,7 +316,8 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 						/** end of handle stockserialitems records */
 
 						/** now insert the serial stock movement **/
-						$SQL = "INSERT INTO stockserialmoves (stockmoveno,
+						if ($_POST['Qty'.$i]!=0) {
+							$SQL = "INSERT INTO stockserialmoves (stockmoveno,
 											stockid,
 											serialno,
 											moveqty)
@@ -302,9 +325,10 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 											'" . $_POST['IssueItem'] . "',
 											'" . $_POST['BatchRef'.$i]  . "',
 											'" . filter_number_format($_POST['Qty'.$i])*-1  . "')";
-						$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock movement record could not be inserted because');
-						$DbgMsg = _('The following SQL to insert the serial stock movement records was used');
-						$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+							$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock movement record could not be inserted because');
+							$DbgMsg = _('The following SQL to insert the serial stock movement records was used');
+							$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+						}
 					}//non blank BundleRef
 				} //end for all 15 of the potential batch/lot fields received
 			} //end of the batch controlled stuff
@@ -382,7 +406,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 		unset($_POST['FromLocation']);
 		unset($_POST['Process']);
 		unset($_POST['SerialNos']);
-		for ($i=0;$i<15;$i++){
+		for ($i=0;$i<$_POST['LotCounter'];$i++){
 			unset($_POST['BatchRef'.$i]);
 			unset($_POST['Qty'.$i]);
 		}
@@ -878,10 +902,40 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 			echo '<tr>
 					<th colspan="2">' . _('Batch/Lots Issued') . '</th>
 				</tr>';
-			for ($i=0;$i<15;$i++){
+			$LotNoSQL = "SELECT serialno,quantity
+										FROM stockserialitems
+										WHERE stockid='" . $_POST['IssueItem'] . "'
+										AND loccode='" . $_POST['FromLocation'] . "'
+										AND quantity > 0";
+			$ErrMsg = _('Failed to retrieve lot No');
+			$LotResult = DB_query($LotNoSQL,$ErrMsg);
+			if (DB_num_rows($LotResult)>0) {
+				$i = 0;
+				while($LotRow = DB_fetch_array($LotResult)) {
+					echo '<tr>
+						<td><input type="text" name="BatchRef' . $i .'" title="' . _('Enter a batch/roll reference being used with this work order') . '" value="' . $LotRow['serialno'] . '"  /></td>
+						<td><input class="number" title="' . _('Enter the quantity of this batch/roll to issue to the work order') . '" name="Qty' . $i .'"  placeholder="' . $LotRow['quantity'] . '" /></td>
+						</tr>';
+					$i++;
+				}
+				echo '<input type="hidden" name="LotCounter" value="' . $i . '" />';
+			} else {
 				echo '<tr>
-						<td><input type="text" name="BatchRef' . $i .'" title="' . _('Enter a batch/roll reference being used with this work order') . '" /></td>
-					  <td><input class="number" title="' . _('Enter the quantity of this batch/roll to issue to the work order') . '" name="Qty' . $i .'" value="0" /></td></tr>';
+						<td>' . _('There are no serial numbers at this location to issue') . '</td>
+					</tr>';
+				echo '<tr>
+						<td colspan="2"><div class="centre"><input type="submit" name="Retry" value="' . _('Reselect Location or Issued Item') . '" /></td>
+					</tr>';
+				$i=0;
+				echo '<tr>
+						<td colspan="4">' . _('You may need to receive (input negative quantity) some items whose serial no has never existed by following') . '</td>
+					</tr>';
+					echo '<tr>
+						<td colspan="2">' . _('Lot No') .': <input type="text" name="BatchRef' . $i .'" title="' . _('Enter a batch/roll reference being used with this work order') . '" value=""  />
+						<td colspan="2">' . _('Quantity') . ': <input class="number" title="' . _('Enter the quantity of this batch/roll to issue to the work order') . '" name="Qty' . $i .'" /></td>
+						</tr>';
+					$i++;
+					echo '<input type="hidden" name="LotCounter" value="' . $i . '" />';
 			}
 			echo '<input type="hidden" name="IssueItem" value="' . $_POST['IssueItem'] . '" />';
 			echo '<tr>
