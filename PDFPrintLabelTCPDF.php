@@ -2,7 +2,8 @@
 /* $Id: PDFPriceLabelsbyTCPDF.php  */
 
 include('includes/session.inc');
-require_once('includes/tcpdf/tcpdf.php');
+include('includes/KLDefines.php');
+include('includes/KLGeneralFunctions.php');
 
 if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 	AND isset($_POST['StockCategory'])
@@ -13,7 +14,6 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 
 	$SQL = "SELECT prices.stockid,
 					stockmaster.description,
-					stockmaster.barcode,
 					prices.price,
 					currencies.decimalplaces
 			FROM stockmaster INNER JOIN	stockcategory
@@ -23,11 +23,11 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 			INNER JOIN currencies
 				ON prices.currabrev=currencies.currabrev
 			WHERE stockmaster.categoryid = '" . $_POST['StockCategory'] . "'
-			AND prices.typeabbrev='" . $_POST['SalesType'] . "'
-			AND prices.currabrev='" . $_POST['Currency'] . "'
-			AND prices.startdate<='" . FormatDateForSQL($_POST['EffectiveDate']) . "'
-			AND (prices.enddate='0000-00-00' OR prices.enddate>'" . FormatDateForSQL($_POST['EffectiveDate']) . "')
-			AND prices.debtorno=''
+				AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
+				AND prices.currabrev = '". CURRENCY_CODE ."'
+				AND prices.startdate<='" . FormatDateForSQL($_POST['EffectiveDate']) . "'
+				AND (prices.enddate='0000-00-00' OR prices.enddate>'" . FormatDateForSQL($_POST['EffectiveDate']) . "')
+				AND prices.debtorno=''
 			ORDER BY prices.currabrev,
 				stockmaster.categoryid,
 				stockmaster.stockid,
@@ -94,8 +94,6 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 		<input type="hidden" name="NoOfLabels" value="' . $i . '" />
 		<input type="hidden" name="LabelID" value="' . $_POST['LabelID'] . '" />
 		<input type="hidden" name="StockCategory" value="' . $_POST['StockCategory'] . '" />
-		<input type="hidden" name="SalesType" value="' . $_POST['SalesType'] . '" />
-		<input type="hidden" name="Currency" value="' . $_POST['Currency'] . '" />
 		<input type="hidden" name="EffectiveDate" value="' . $_POST['EffectiveDate'] . '" />
 		<input type="hidden" name="LabelsPerItem" value="' . $_POST['LabelsPerItem'] . '" />
 		<br />
@@ -103,10 +101,6 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 
 			<input type="submit" name="PrintLabels" value="'. _('Print Labels'). '" />
 		</div>
-		<br />
-			<div class="centre">
-				<a href="'. $RootPath . '/Labels.php">' . _('Label Template Maintenance'). '</a>
-			</div>
 		</form>';
 	include('includes/footer.inc');
 	exit;
@@ -126,178 +120,121 @@ if (isset($_POST['PrintLabels']) AND isset($_POST['NoOfLabels']) AND $_POST['NoO
 }
 if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 
-	$result = DB_query("SELECT 	description,
-								pagewidth AS page_width,
-								pageheight AS page_height,
-								width AS label_width,
-								height AS label_height,
-								rowheight AS label_rowheight,
-								columnwidth AS label_columnwidth,
-								topmargin AS label_topmargin,
-								leftmargin AS label_leftmargin
-						FROM labels
-						WHERE labelid='" . $_POST['LabelID'] . "'");
-	$LabelDimensions = DB_fetch_array($result);
+	// Let's start the real PDF creation 
+	require_once('includes/tcpdf/tcpdf.php');
 
-	$result = DB_query("SELECT fieldvalue,
-								vpos,
-								hpos,
-								fontsize,
-								barcode
-						FROM labelfields
-						WHERE labelid = '" . $_POST['LabelID'] . "'");
-	$LabelFields = array();
-	$i=0;
-	while ($LabelFieldRow = DB_fetch_array($result)){
-		if ($LabelFieldRow['fieldvalue'] == 'itemcode'){
-			$LabelFields[$i]['FieldValue'] = 'stockid';
-		} elseif ($LabelFieldRow['fieldvalue'] == 'itemdescription'){
-			$LabelFields[$i]['FieldValue'] = 'description';
-		} else {
-			$LabelFields[$i]['FieldValue'] = $LabelFieldRow['fieldvalue'];
+	// set the variables depending on the label type
+	if ($_POST['LabelID'] == 'T570'){
+		// Pricetags T570 general
+		$pagelayout = array(90, 10.2);
+		$CoreFileName = "Pricetags";
+		
+		// define Logo information
+		if (ItemInList($_POST['StockCategory'], LIST_STOCK_CATEGORIES_BLINK)
+			OR $_POST['StockCategory'] == "SETBL"){
+			$LogoXPosition = 9;
+			$LogoYPosition = 1.5;
+			$LogoHeight = 4.5;
+			$LogoFile = 'companies/kurakura_klerp/LogoLabelBLINK.jpg';
+		}else{
+			$LogoXPosition = 5.5;
+			$LogoYPosition = 1.5;
+			$LogoHeight = 4.5;
+			$LogoFile = 'companies/kurakura_klerp/LogoLabelKL.jpg';
 		}
-		$LabelFields[$i]['VPos'] = $LabelFieldRow['vpos'];
-		$LabelFields[$i]['HPos'] = $LabelFieldRow['hpos'];
-		$LabelFields[$i]['FontSize'] = $LabelFieldRow['fontsize'];
-		$LabelFields[$i]['Barcode'] = $LabelFieldRow['barcode'];
-		$i++;
+	
+		// define price information
+		$PriceXPosition = 1;
+		$PriceYPosition = 6.5;
+		$PriceFont = 'helvetica';
+		$PriceFontSize = 7;
+		$PriceWidth = 24;
+		
+		// define barcode style for T570
+		$BarcodeXPosition = 30;
+		$BarcodeYPosition = 1.5;
+		$BarcodeLenght = 25;
+		$BarcodeWidth = 8.5;
+		$ResolutionDPI = 203; // uses imperial system so 200 are really 203. LOL
+		$XResolution = 25.4 / $ResolutionDPI; // 25.4mm per inch / resolution points per inch
+		$BarcodeStyle = array(
+				'position' => '',
+				'align' => 'L',
+				'stretch' => false,
+				'fitwidth' => false,
+				'cellfitalign' => '',
+				'border' => false,
+				'hpadding' => 'auto',
+				'vpadding' => 'auto',
+				'fgcolor' => array(0,0,0),
+				'bgcolor' => false, //array(255,255,255),
+				'text' => true,
+				'font' => 'helvetica',
+				'fontsize' => 6,
+				'stretchtext' => 4);
+	}else{
+		// Code tags
+		// not coded yet
+		return;
 	}
 
-	$PaperSize = 'Custom'; // so PDF starter wont default the DocumentPaper
-	$DocumentPaper = array($LabelDimensions['page_width'],$LabelDimensions['page_height']);
-
-	// create new PDF document
-	$pagelayout = array($LabelDimensions['page_height'], $LabelDimensions['page_width']);
-	$pagelayout = array(297, 210);
 	$pdf = new TCPDF('L', 'mm', $pagelayout, true, 'UTF-8', false);
-
-	// set document information
-	$pdf->SetCreator('TCPDF');
-	$pdf->SetAuthor('KL');
-	$pdf->SetTitle('Price Labels');
-	$pdf->SetSubject('Price Labels');
-
-	// set default header data
-	define ('PDF_HEADER_LOGO', '');
-	define ('PDF_HEADER_LOGO_WIDTH', 0);
-	define ('PDF_HEADER_TITLE', '');
-	define ('PDF_HEADER_STRING', '');
-
-	$pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE, PDF_HEADER_STRING);
-
-	// set header and footer fonts
-	define ('PDF_FONT_NAME_MAIN', 'helvetica');
-	define ('PDF_FONT_SIZE_MAIN', 10);
-	define ('PDF_FONT_NAME_DATA', 'helvetica');
-	define ('PDF_FONT_SIZE_DATA', 8);
+	
+	// set PDF document information
+	$pdf->SetCreator('webERP');
+	$pdf->SetAuthor('webERP');
+	$pdf->SetTitle($CoreFileName);
+	$pdf->SetSubject($CoreFileName);
 	$pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
 	$pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
-
-	// set default monospaced font
-	define ('PDF_FONT_MONOSPACED', 'courier');
 	$pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
-
-	// set margins
-	define ('PDF_MARGIN_HEADER', 0);
-	define ('PDF_MARGIN_FOOTER', 0);
-	define ('PDF_MARGIN_TOP', 0);
-	define ('PDF_MARGIN_BOTTOM', 0);
-	define ('PDF_MARGIN_LEFT', 0);
-	define ('PDF_MARGIN_RIGHT', 0);
-	$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT, true);
-	$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
-	$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
-
-	// set auto page breaks
+	$pdf->SetMargins(0, 0, 0);
+	$pdf->SetHeaderMargin(0);
+	$pdf->SetFooterMargin(0);
+	$pdf->setPrintHeader(false);
+	$pdf->setPrintFooter(false);
 	$pdf->SetAutoPageBreak(TRUE, 0);
-
-	// set image scale factor
-	define ('PDF_IMAGE_SCALE_RATIO', 1.25);
 	$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 
-	$pdf->SetY(30);
-
-	// set font
-	$pdf->SetFont('helvetica', '', 11);
-
-	$Top_Margin = $LabelDimensions['label_topmargin'];
-	$Left_Margin = $LabelDimensions['label_leftmargin'];
-	$Page_Height = $LabelDimensions['page_height'];
-	$Page_Width = $LabelDimensions['page_width'];
-	$Right_Margin =0;
-	$Bottom_Margin =0;
-
-	$pdf->setPrintHeader(false);
-	$pdf->setPrintFooter(false);
-
-	$pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
-	$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
-	$pdf->setPrintHeader(false);
-	$pdf->setPrintFooter(false);
-
-	// define barcode style
-	$WidthSmallestBar = 25.4 / 200; // 25.4mm per inch / 200 points per inch
-	$style = array(
-		'position' => '',
-		'align' => 'C',
-		'stretch' => false,
-		'fitwidth' => true,
-		'cellfitalign' => '',
-		'border' => true,
-		'hpadding' => 'auto',
-		'vpadding' => 'auto',
-		'fgcolor' => array(0,0,0),
-		'bgcolor' => false, //array(255,255,255),
-		'text' => true,
-		'font' => 'helvetica',
-		'fontsize' => 8,
-		'stretchtext' => 4);
-
+	// now print the labels
 	$TotalLabels = $NoOfLabels * $_POST['LabelsPerItem'];
 	$LabelsPrinted = 0;
 	for ($i=0;$i < $_POST['NoOfLabels'];$i++){
 		if (isset($_POST['PrintLabel'.$i])){
 			$NoOfLabels--;
 			for ($LabelNumber=0; $LabelNumber < $_POST['LabelsPerItem'];$LabelNumber++){
+				
+				// Get the data for each field
+				$Price = $_POST['Price' . $i] . ' '. CURRENCY_CODE;
+				$StockId = $_POST['StockID' . $i];
+				$Description = $_POST['Description' . $i];
+				
 				$pdf->AddPage();
-				foreach ($LabelFields AS $Field){
-					if ($Field['FieldValue']== 'price'){
-						$Value = $_POST['Price' . $i] . ' '. $_POST['Currency'];
-					} elseif ($Field['FieldValue']== 'stockid'){
-						$Value = $_POST['StockID' . $i];
-					} elseif ($Field['FieldValue']== 'description'){
-						$Value = $_POST['Description' . $i];
-					} elseif ($Field['FieldValue']== 'barcode'){
-						$Value = $_POST['Barcode' . $i];
-					}
-					if ($Field['FieldValue'] == 'price'){ //need to format for the number of decimal places
-//						$LeftOvers = $pdf->addTextWrap($XPos+$Field['HPos'],$YPos-$LabelDimensions['label_height']+$Field['VPos'],$LabelDimensions['label_width']-$Field['HPos'],$Field['FontSize'],$Value);
-					}elseif ($Field['FieldValue'] == 'logo'){ 
-//						$pdf->addJpegFromFile($_SESSION['LogoFile'],$XPos+$Field['HPos'],$YPos-$LabelDimensions['label_height']+$Field['VPos'],'', $Field['FontSize']);
-					}elseif($Field['Barcode']==1) {
 
-//						$pdf->Cell(0, 0, $Value, 0, 1);
-						$pdf->write1DBarcode($Value, 'C128', 0, 0, 20, 9, $WidthSmallestBar, $style, 'N');						
-
-					} else {
-//						$LeftOvers = $pdf->addTextWrap($XPos+$Field['HPos'],$YPos-$LabelDimensions['label_height']+$Field['VPos'],$LabelDimensions['label_width']-$Field['HPos'],$Field['FontSize'],$Value);
-					}
-				} // end loop through label fields
-				$LabelsPrinted++;
-				if ($LabelsPrinted < $TotalLabels){ // if there is another label to print
+				// print depending on each type of label
+				if ($_POST['LabelID'] == 'T570'){
+					//Print the logo
+					$pdf->Image($LogoFile, $LogoXPosition, $LogoYPosition, 0, $LogoHeight, 'JPG', '', '', true, 200, '', false, false, 0, false, false, false);
+					// print the price
+					$pdf->SetXY($PriceXPosition,$PriceYPosition);
+					$pdf->SetFont($PriceFont, '', $PriceFontSize);
+					$pdf->Cell($PriceWidth, 0, $Price, 0, 0, 'C');
+					// print the barcode
+					$pdf->write1DBarcode($StockId, 'C128', $BarcodeXPosition, $BarcodeYPosition, $BarcodeLenght, $BarcodeWidth, $XResolution, $BarcodeStyle, 'N');
 				}
+				$LabelsPrinted++;
 			}
 		} //this label is set to print
 	} //loop through labels selected to print
 
 
-	$FileName=$_SESSION['DatabaseName']. '_' . _('Price_Labels') . '_' . date('Y-m-d').'.pdf';
-	$pdf->Output($FileName, 'I');
+	$FileName= $CoreFileName . '_' . date('Y-m-d'). '_'. $_POST['StockCategory'] .'.pdf';
+	$pdf->Output($FileName, 'D');
 	$pdf->__destruct();
 
 } else { /*The option to print PDF was not hit */
 
-	$Title= _('Price Labels');
+	$Title= _('KL Print Labels');
 	include('includes/header.inc');
 
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/customer.png" title="' . _('Price Labels') . '" alt="" />
@@ -314,18 +251,17 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 
 		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
 				<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-				<table class="selection">
-				<tr>
-					<td>' . _('Label to print') . ':</td>
-					<td><select required="required" autofocus="autofocus" name="LabelID">';
+				<table class="selection">';
 
-		$LabelResult = DB_query("SELECT labelid, description FROM labels");
-		while ($LabelRow = DB_fetch_array($LabelResult)){
-			echo '<option value="' . $LabelRow['labelid'] . '">' . $LabelRow['description'] . '</option>';
-		}
-		echo '</select></td>
-			</tr>
-			<tr>
+		echo '<tr>
+			<td>' . _('Label Type') . ':</td>
+			<td><select name="LabelID">
+				<option selected="selected" value="T570">' . _('Pricetags T570') . '</option>
+				<option value="XXXX">' . _('Code Stickers') . '</option>
+			</select></td>
+			</tr>';
+			
+		echo '<tr>
 				<td>' .  _('For Stock Category') .':</td>
 				<td><select name="StockCategory">';
 
@@ -335,36 +271,8 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 		}
 		echo '</select></td></tr>';
 
-		echo '<tr><td>' . _('For Sales Type/Price List').':</td>
-                  <td><select name="SalesType">';
-		$sql = "SELECT sales_type, typeabbrev FROM salestypes";
-		$SalesTypesResult=DB_query($sql);
-
-		while ($myrow=DB_fetch_array($SalesTypesResult)){
-			if ($_SESSION['DefaultPriceList']==$myrow['typeabbrev']){
-				echo '<option selected="selected" value="' . $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
-			} else {
-				echo '<option value="' . $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
-			}
-		}
-		echo '</select></td></tr>';
-
-		echo '<tr><td>' . _('For Currency').':</td>
-                  <td><select name="Currency">';
-		$sql = "SELECT currabrev, country, currency FROM currencies";
-		$CurrenciesResult=DB_query($sql);
-
-		while ($myrow=DB_fetch_array($CurrenciesResult)){
-			if ($_SESSION['CompanyRecord']['currencydefault']==$myrow['currabrev']){
-				echo '<option selected="selected" value="' . $myrow['currabrev'] . '">' . $myrow['country'] . ' - ' .$myrow['currency'] . '</option>';
-			} else {
-				echo '<option value="' . $myrow['currabrev'] . '">' . $myrow['country'] . ' - ' .$myrow['currency'] . '</option>';
-			}
-		}
-		echo '</select></td>
-		</tr>
-		<tr>
-			<td>' . _('Effective AS At') . ':</td>
+		echo '<tr>
+			<td>' . _('Prices Effective As At') . ':</td>
 			<td><input type="text" size="11" class="date"	alt="' . $_SESSION['DefaultDateFormat'] . '" name="EffectiveDate" value="' . Date($_SESSION['DefaultDateFormat']) . '" />';
         echo '</td></tr>';
 
@@ -376,12 +284,7 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 				<div class="centre">
 					<input type="submit" name="ShowLabels" value="'. _('Show Labels'). '" />
 				</div>
-				<br />
-				<div class="centre">
-					<a href="'. $RootPath . '/Labels.php">' . _('Label Template Maintenance'). '</a>
-				</div>
 				</form>';
-
 	}
 	include('includes/footer.inc');
 
