@@ -1465,7 +1465,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 				
 				// Compensation COGS for PT sales
-				if(abs($Compensation) > pow(1,-($_SESSION['StandardCostDecimalPlaces']+1))){
+				if(abs($Compensation) > 1){
 					$SQL = "INSERT INTO gltrans (	type,
 													typeno,
 													trandate,
