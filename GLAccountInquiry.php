@@ -50,13 +50,18 @@ echo '<table class="selection">
 			<td><select name="Account">';
 
 $sql = "SELECT chartmaster.accountcode, 
+			bankaccounts.accountcode AS bankact,
 			   chartmaster.accountname
-		FROM chartmaster 
+		FROM chartmaster LEFT JOIN bankaccounts
+		ON chartmaster.accountcode=bankaccounts.accountcode
 		INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmaster.accountcode AND glaccountusers.userid='" .  $_SESSION['UserID'] . "' AND glaccountusers.canview=1
 		ORDER BY chartmaster.accountcode";
 $Account = DB_query($sql);
 while ($myrow=DB_fetch_array($Account,$db)){
 	if($myrow['accountcode'] == $SelectedAccount){
+		if (!is_null($myrow['bankact'])) {
+			$BankAccount = true;
+		}
 		echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' ' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</option>';
 	} else {
 		echo '<option value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' ' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</option>';
@@ -166,6 +171,10 @@ if (isset($_POST['Show'])){
 	$SelectedAccountName=$namerow['accountname'];
 	$ErrMsg = _('The transactions for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved because') ;
 	$TransResult = DB_query($sql,$ErrMsg);
+	$BankAccountInfo = isset($BankAccount)?'<th>' . _('Org Currency') . '</th>
+						<th>' . _('Amount in Org Currency') . '</th>	
+						<th>' . _('Bank Ref') .'</th>':'';
+
 
 	echo '<br />
 		<table class="selection">
@@ -178,10 +187,8 @@ if (isset($_POST['Show'])){
 				<th class="number">', _('Number'), '</th>
 				<th class="centre">', ('Date'), '</th>
 				<th class="number">', _('Debit'), '</th>
-				<th class="number">', _('Credit'), '</th>
-				<th class="text">', _('Org Currency'), '</th>
-				<th class="number">', _('Amount in Org Currency'), '</th>
-				<th class="text">', _('Bank Reference'), '</th>
+				<th class="number">', _('Credit'), '</th>' . 
+				$BankAccountInfo .'
 				<th class="text">', _('Narrative'), '</th>
 				<th class="number">', _('Balance'), '</th>
 				<th class="text">', _('Tag'), '</th>
@@ -276,7 +283,8 @@ if (isset($_POST['Show'])){
 			$k++;
 		}
 		if ($myrow['type'] == 12 OR $myrow['type'] == 22 OR $myrow['type'] == 2 OR $myrow['type'] == 1) {
-			$banksql = "SELECT ref,currcode,amount FROM banktrans WHERE type='" .$myrow['type']."' and transno='" . $myrow['typeno'] . "'";
+			$banksql = "SELECT ref,currcode,amount FROM banktrans 
+				WHERE type='" .$myrow['type']."' AND transno='" . $myrow['typeno'] . "' AND bankact='" . $SelectedAccount . "'";
 			$ErrMsg = _('Failed to retrieve bank data');
 			$bankresult = DB_query($banksql,$ErrMsg);
 			if (DB_num_rows($bankresult)>0) {
@@ -304,8 +312,8 @@ if (isset($_POST['Show'])){
 
 		$FormatedTranDate = ConvertSQLDate($myrow['trandate']);
 		$URL_to_TransDetail = $RootPath . '/GLTransInquiry.php?TypeID=' . $myrow['type'] . '&amp;TransNo=' . $myrow['typeno'];
-
-		printf('<td class="text">%s</td>
+		if (isset($BankAccount)) {
+			printf('<td class="text">%s</td>
 				<td class="number"><a href="%s">%s</a></td>
 				<td class="centre">%s</td>
 				<td class="number">%s</td>
@@ -329,7 +337,28 @@ if (isset($_POST['Show'])){
 				$myrow['narrative'],
 				locale_number_format($RunningTotal,$_SESSION['CompanyRecord']['decimalplaces']),
 				$myrow['tagdescription']
-				);
+			);
+		} else {
+			printf('<td class="text">%s</td>
+				<td class="number"><a href="%s">%s</a></td>
+				<td class="centre">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="text">%s</td>
+				<td class="number">%s</td>
+				<td class="text">%s</td>
+				</tr>',
+				_($myrow['typename']),
+				$URL_to_TransDetail,
+				$myrow['typeno'],
+				$FormatedTranDate,
+				$DebitAmount,
+				$CreditAmount,
+				$myrow['narrative'],
+				locale_number_format($RunningTotal,$_SESSION['CompanyRecord']['decimalplaces']),
+				$myrow['tagdescription']
+			);
+		}
 
 	}
 
