@@ -80,7 +80,7 @@ if (!(isset($_POST['Search']))) {
 					(SELECT locstock.quantity
 						FROM locstock
 						WHERE locstock.stockid = stockmaster.stockid
-						AND locstock.loccode = 'KANTO') AS qtykantor,
+						AND locstock.loccode = " . CODE_KANTOR . ") AS qtykantor,
 					(SELECT SUM(locstock.quantity)
 						FROM locstock
 						WHERE locstock.stockid = stockmaster.stockid

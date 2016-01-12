@@ -16,7 +16,7 @@ $SQL = "SELECT stockmaster.stockid,
 				(SELECT locstock.quantity
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid
-					AND locstock.loccode = 'KANTO') AS qtyKANTOR,
+					AND locstock.loccode = " . CODE_KANTOR . ") AS qtyKANTOR,
 				(SELECT SUM(stockrequestitems.qtydelivered)
 					FROM stockrequestitems, stockrequest
 					WHERE stockrequestitems.dispatchid = stockrequest.dispatchid

@@ -164,7 +164,7 @@ if (isset($_POST['submit'])) {
 													canview,
 													canupd
 												) VALUES (
-													'KANTO',
+													" . CODE_KANTOR . ",
 													'" . $_POST['UserID'] . "',
 													1,
 													1

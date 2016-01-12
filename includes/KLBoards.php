@@ -1970,14 +1970,14 @@ function OnlineItemsOnProcess($RootPath, $db){
 				(SELECT SUM(l2.quantity)
 					FROM locstock AS l2
 					WHERE l1.stockid = l2.stockid
-						AND l2.loccode = 'KANTO') AS qohkantor
+						AND l2.loccode = " . CODE_KANTOR . ") AS qohkantor
 			FROM salesorderdetails, salesorders, locstock AS l1, debtorsmaster	
 			WHERE salesorderdetails.orderno = salesorders.orderno
 				AND salesorderdetails.stkcode = l1.stockid
 				AND salesorders.debtorno = debtorsmaster.debtorno
 				AND salesorders.quotation = 0
-				AND salesorders.fromstkloc = 'TOKWS'
-				AND l1.loccode = 'TOKWS'
+				AND salesorders.fromstkloc = ". CODE_ONLINE_SHOP ."
+				AND l1.loccode = ". CODE_ONLINE_SHOP ."
 				AND salesorderdetails.completed= 0
 			ORDER BY salesorders.orderno, salesorderdetails.stkcode";
 	$result = DB_query($SQL);
@@ -2263,7 +2263,7 @@ No pending transfer regarding this item
 			(SELECT SUM(locstock.quantity)
 				FROM locstock
 				WHERE locstock.stockid = stockmaster.stockid
-				AND (locstock.loccode = 'KANTO' ))AS QtyKantor
+				AND (locstock.loccode = " . CODE_KANTOR . " ))AS QtyKantor
 			FROM stockmaster, stockcategory
 			WHERE stockmaster.categoryid = stockcategory.categoryid
 				AND discontinued = 0
@@ -2280,7 +2280,7 @@ No pending transfer regarding this item
 				AND (SELECT SUM(locstock.quantity)
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid
-						AND locstock.loccode = 'KANTO') > 0
+						AND locstock.loccode = " . CODE_KANTOR . ") > 0
 				AND NOT EXISTS (SELECT *
 						FROM loctransfers 
 						WHERE  recqty < shipqty
@@ -2342,7 +2342,7 @@ No pending transfer regarding this item
 			(SELECT SUM(locstock.quantity)
 				FROM locstock
 				WHERE locstock.stockid = stockmaster.stockid
-				AND (locstock.loccode = 'KANTO' ))AS QtyKantor
+				AND (locstock.loccode = " . CODE_KANTOR . " ))AS QtyKantor
 			FROM stockmaster, stockcategory
 			WHERE stockmaster.categoryid = stockcategory.categoryid
 				AND stockmaster.klchangingprice = 0
@@ -2356,7 +2356,7 @@ No pending transfer regarding this item
 				AND (SELECT SUM(locstock.quantity)
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid
-						AND locstock.loccode = 'KANTO') > 0
+						AND locstock.loccode = " . CODE_KANTOR . ") > 0
 				AND NOT EXISTS (SELECT *
 						FROM loctransfers 
 						WHERE  recqty < shipqty
@@ -2431,7 +2431,7 @@ function ItemsInCategoryWithStockKantorButReorderLevelTokoZero($CategoryId, $Roo
 			(SELECT SUM(locstock.quantity)
 				FROM locstock
 				WHERE locstock.stockid = stockmaster.stockid
-				AND (locstock.loccode = 'KANTO' ))AS QtyKantor
+				AND (locstock.loccode = " . CODE_KANTOR . " ))AS QtyKantor
 			FROM stockmaster, stockcategory
 			WHERE stockmaster.categoryid = stockcategory.categoryid
 				AND stockmaster.klchangingprice = 0
@@ -2445,7 +2445,7 @@ function ItemsInCategoryWithStockKantorButReorderLevelTokoZero($CategoryId, $Roo
 				AND (SELECT SUM(locstock.quantity)
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid
-						AND locstock.loccode = 'KANTO') > 0
+						AND locstock.loccode = " . CODE_KANTOR . ") > 0
 				AND NOT EXISTS (SELECT *
 						FROM loctransfers 
 						WHERE  recqty < shipqty
@@ -3187,7 +3187,7 @@ function CategoryItemsNotInShop($Category, $Shop, $RootPath, $db){
 				AND ((SELECT SUM(l.reorderlevel)
 						FROM locstock l
 						WHERE l.stockid = stockmaster.stockid
-							AND l.loccode = 'TOKWS') = 0)
+							AND l.loccode IN " . LIST_ONLINE_SHOPS . ") = 0)
 			ORDER BY stockmaster.stockid";
 
 	$result = DB_query($SQL);
@@ -3799,7 +3799,7 @@ function TopSalesNotInEnoughShops($starttopitems, $endtopitems, $maxdays, $minsh
 					FROM locstock
 					WHERE locstock.stockid = salesorderdetails.stkcode
 						AND (locstock.loccode IN " . LIST_ALL_SHOPS . " 
-							OR locstock.loccode = 'KANTO')) AS qoh,
+							OR locstock.loccode = " . CODE_KANTOR . ")) AS qoh,
 				(SELECT count(loccode)
 					FROM locstock
 					WHERE locstock.stockid = salesorderdetails.stkcode
@@ -4841,7 +4841,7 @@ function ItemsWithStockLocationButNoStockAvailable($Location, $NameLocation, $Mi
 					FROM locstock l2
 					WHERE locstock.stockid = l2.stockid
 					AND (l2.loccode IN " . LIST_ALL_SHOPS . "
-						OR l2.loccode = 'KANTO')
+						OR l2.loccode = " . CODE_KANTOR . ")
 				) AS available
 			FROM locstock, stockmaster
 			WHERE locstock.stockid = stockmaster.stockid
@@ -4856,7 +4856,7 @@ function ItemsWithStockLocationButNoStockAvailable($Location, $NameLocation, $Mi
 						FROM locstock l2
 						WHERE locstock.stockid = l2.stockid
 						AND (l2.loccode IN " . LIST_ALL_SHOPS . "
-							OR l2.loccode = 'KANTO')
+							OR l2.loccode = " . CODE_KANTOR . ")
 					) <= " . $MinAvailable;
 
 	$result = DB_query($SQL);
@@ -4982,7 +4982,7 @@ function InsuficientStockForItems($Category, $ItemCode, $ItemDescription, $Minim
 						FROM locstock
 						WHERE locstock.stockid = stockmaster.stockid
 						AND (loccode IN " . LIST_ALL_SHOPS . "
-							OR loccode = 'KANTO')) AS qoh
+							OR loccode = " . CODE_KANTOR . ")) AS qoh
 			FROM stockmaster
 			WHERE stockmaster.stockid LIKE '" . $ItemCode . "%'
 				AND stockmaster.discontinued = 0".
@@ -4991,7 +4991,7 @@ function InsuficientStockForItems($Category, $ItemCode, $ItemDescription, $Minim
 						FROM locstock
 						WHERE locstock.stockid = stockmaster.stockid
 						AND (loccode IN " . LIST_ALL_SHOPS . "
-							OR loccode = 'KANTO')) < " . $MinimumStock . "
+							OR loccode = " . CODE_KANTOR . ")) < " . $MinimumStock . "
 			ORDER BY stockmaster.stockid";
 	
 	$result = DB_query($SQL);		
@@ -5256,7 +5256,7 @@ function ConsumablesGoodsNotEnoughStock($DaysUsage, $DaysMinStock, $DaysStockPur
 				(SELECT locstock.quantity
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid
-						AND locstock.loccode = 'KANTO') AS qtyKANTOR,
+						AND locstock.loccode =  " . CODE_KANTOR . ") AS qtyKANTOR,
 				(SELECT SUM(stockrequestitems.qtydelivered)
 					FROM stockrequestitems, stockrequest
 					WHERE stockrequestitems.dispatchid = stockrequest.dispatchid
@@ -5268,7 +5268,7 @@ function ConsumablesGoodsNotEnoughStock($DaysUsage, $DaysMinStock, $DaysStockPur
 			AND ((SELECT locstock.quantity
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid
-						AND locstock.loccode = 'KANTO') < 
+						AND locstock.loccode = " . CODE_KANTOR . ") < 
 				(SELECT SUM(stockrequestitems.qtydelivered)
 					FROM stockrequestitems, stockrequest
 					WHERE stockrequestitems.dispatchid = stockrequest.dispatchid
@@ -5861,7 +5861,7 @@ function ItemsNoSalesInLocation($location, $maxdays, $QOHAvailable, $RootPath, $
 							AND (loc2.loccode IN " . LIST_SHOPS_KAPAL_LAUT . "
 								OR loc2.loccode IN " . LIST_SHOPS_BLINK . "
 								OR loc2.loccode IN " . LIST_SHOPS_OUTLET . "
-								OR loc2.loccode = 'KANTO') ) AS qtyavailable,
+								OR loc2.loccode =  " . CODE_KANTOR . ") ) AS qtyavailable,
 					locstock.reorderlevel,
 					locstock.loccode,
 					locations.locationname 
@@ -5878,7 +5878,7 @@ function ItemsNoSalesInLocation($location, $maxdays, $QOHAvailable, $RootPath, $
 							AND (loc2.loccode IN " . LIST_SHOPS_KAPAL_LAUT . "
 								OR loc2.loccode IN " . LIST_SHOPS_BLINK . "
 								OR loc2.loccode IN " . LIST_SHOPS_OUTLET . "
-								OR loc2.loccode = 'KANTO') ) <= ". $QOHAvailable ."
+								OR loc2.loccode = " . CODE_KANTOR . ") ) <= ". $QOHAvailable ."
 					AND NOT EXISTS (SELECT * 
 									FROM 	salesorderdetails, salesorders
 									WHERE 	stockmaster.stockid = salesorderdetails.stkcode

@@ -82,12 +82,16 @@ define("LIST_STOCK_CATEGORIES_ACCESSORIES","('TESTAC','ACCESO','NOPOAC')");
 
 
 /* Defines about LOCATIONS*/
+define("CODE_KANTOR",     "'KANTO'");
+define("CODE_ONLINE_SHOP","'TOKWS'");
+
 define("LIST_ALL_SHOPS",           "('TOK66','TOKSA','TOKKS','TOKJC','TOKSE','TOKUB','TOKMF','TOKPU','TOKSU','TOKBW','TOKOB','TOKSS','TOKPA','TOKKA','TOKSU','TOKJC','TOKMU')"); // NOT includes the shop online
 define("LIST_SHOPS_KAPAL_LAUT",    "('TOK66','TOKSA','TOKKS','TOKSE','TOKMF','TOKPU','TOKBW','TOKOB','TOKSS','TOKPA','TOKKA')"); // NOT includes the shop online
 define("LIST_SHOPS_OUTLET",        "('TOKSU','TOKJC','TOKUB')");
 define("LIST_SHOPS_BLINK",         "('TOKMU')");
 
-define("LIST_ONLINE_SHOPS",        "('TOKWS')");
+define("LIST_ONLINE_SHOPS", "(" . CODE_ONLINE_SHOP . ")");
+
 define("LIST_GUDANG_FOR_PACKAGING","('PACKA')");
 
 define("LIST_LOCATIONS_SPG_STOCK_STATUS",	 "('KANTO','TOK66','TOKSA','TOKKS','TOKJC','TOKSE','TOKUB','TOKMF','TOKOB','TOKPU','TOKSU','TOKSS','TOKBW','TOKPA','TOKKA','TOKMU')"); 

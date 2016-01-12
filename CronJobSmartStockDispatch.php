@@ -23,7 +23,7 @@ $StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-
 $SQL = "SELECT locations.loccode,
 				locations.smartdispatchmaxmodels
 		FROM locations
-		WHERE locations.smartdispatchfrom = 'KANTO'
+		WHERE locations.smartdispatchfrom = " . CODE_KANTOR . "
 		ORDER BY locations.priority ASC,
 			(SELECT COUNT(qtyinvoiced)
 			FROM salesorderdetails, salesorders
@@ -35,9 +35,9 @@ $result = DB_query($SQL);
 if (DB_num_rows($result) != 0){
 	while ($myrow = DB_fetch_array($result)) {
 		// From KANTO to Shop, send the items needed to fill the RL
-		$EmailText  = KLStockDispatch('KANTO', $myrow['loccode'], "All", $ReportType, $DispatchPercent, $myrow['smartdispatchmaxmodels'], $RootPath, $db, $EmailText);
+		$EmailText  = KLStockDispatch(CODE_KANTOR, $myrow['loccode'], "All", $ReportType, $DispatchPercent, $myrow['smartdispatchmaxmodels'], $RootPath, $db, $EmailText);
 		// From Shop to KANTO, return the overstock
-		$EmailText  = KLStockDispatch($myrow['loccode'], 'KANTO', "OverFrom", $ReportType, $DispatchPercent, $myrow['smartdispatchmaxmodels'], $RootPath, $db, $EmailText);
+		$EmailText  = KLStockDispatch($myrow['loccode'], CODE_KANTOR, "OverFrom", $ReportType, $DispatchPercent, $myrow['smartdispatchmaxmodels'], $RootPath, $db, $EmailText);
 	}
 }
 

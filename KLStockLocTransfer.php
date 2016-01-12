@@ -189,7 +189,7 @@ if(isset($_POST['Submit']) AND $InputError==False){
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<input type="hidden" name="FromStockLocation" value="' . $_SESSION['UserStockLocation'] . '" />';
-	echo '<input type="hidden" name="ToStockLocation" value="' . 'KANTO' . '" />';
+	echo '<input type="hidden" name="ToStockLocation" value="' . CODE_KANTOR . '" />';
 
 	echo '<table class="selection">';
 	echo '<tr>

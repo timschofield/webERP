@@ -227,7 +227,7 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 				AND EXISTS (SELECT *
 						FROM locstock
 						WHERE stockmaster.stockid  = locstock.stockid 
-							AND locstock.loccode = 'KANTO'
+							AND locstock.loccode = " . CODE_KANTOR . "
 							AND locstock.quantity = 0)
 				AND NOT EXISTS (SELECT *
 						FROM loctransfers 
@@ -506,13 +506,13 @@ function SetRLZeroForNotAvailableItems($ShowMessages, $updateDB, $RootPath, $db)
 				AND stockmaster.categoryid != 'SHPACK'
 				AND stockcategory.stocktype = 'F'
 				AND (locstock.loccode IN " . LIST_ALL_SHOPS . "
-					OR locstock.loccode = 'KANTO')
+					OR locstock.loccode = " . CODE_KANTOR . ")
 				AND EXISTS (SELECT *
 							FROM locstock
 							WHERE locstock.stockid = stockmaster.stockid
 								AND locstock.reorderlevel > 0 
 								AND (locstock.loccode IN " . LIST_ALL_SHOPS . "
-									OR locstock.loccode = 'KANTO'))
+									OR locstock.loccode = " . CODE_KANTOR . "))
 			GROUP BY locstock.stockid
 			HAVING SUM(locstock.quantity) = 0";
 	$result = DB_query($SQL);
@@ -592,8 +592,8 @@ to the shops with RL > 0.
 					(SELECT SUM(locstock.quantity)
 						FROM locstock
 						WHERE stockmaster.stockid  = locstock.stockid
-							AND (locstock.loccode = 'KANTO' OR locstock.loccode IN " . LIST_ALL_SHOPS . ")
-							AND locstock.loccode != 'TOKWS') AS QtyAvailable
+							AND (locstock.loccode = " . CODE_KANTOR . " OR locstock.loccode IN " . LIST_ALL_SHOPS . ")
+							AND locstock.loccode != ". CODE_ONLINE_SHOP .") AS QtyAvailable
 			FROM salesorderdetails, salesorders, stockmaster
 			WHERE salesorderdetails.orderno = salesorders.orderno 
 				AND stockmaster.discontinued = 0
@@ -618,7 +618,7 @@ to the shops with RL > 0.
 									FROM locstock
 									WHERE locstock.stockid = '" . $myrow['stockid'] . "'
 									AND locstock.loccode IN " . LIST_ALL_SHOPS . "
-									AND locstock.loccode != 'TOKWS'
+									AND locstock.loccode != ". CODE_ONLINE_SHOP ."
 									AND locstock.reorderlevel > 0";
 				$resultdistribution = DB_query($SQLDistribution);
 				$LocationsToDistribute = DB_num_rows($resultdistribution);
@@ -817,7 +817,7 @@ function SetRLForLowSalesHighRL($maxdays, $oldRL, $maxRL, $minavailablestock, $S
 						FROM locstock
 						WHERE stockmaster.stockid = locstock.stockid
 							AND (locstock.loccode IN " . LIST_ALL_SHOPS . " 
-								OR locstock.loccode = 'KANTO' )) <= ".$minavailablestock."
+								OR locstock.loccode = " . CODE_KANTOR . " )) <= ".$minavailablestock."
 					AND NOT EXISTS (SELECT * 
 									FROM 	salesorderdetails, salesorders
 									WHERE 	stockmaster.stockid = salesorderdetails.stkcode
@@ -1007,13 +1007,13 @@ function OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db,
 	if($updateDB){
 		$RLSQL = "UPDATE locstock
 					SET reorderlevel = 0 
-					WHERE reorderlevel > 0 AND loccode = 'TOKWS'";
+					WHERE reorderlevel > 0 AND loccode = ". CODE_ONLINE_SHOP ."";
 		$Result = DB_query($RLSQL,$ErrMsg,$DbgMsg,true);		
 		if ($ShowMessages){
-			prnMsg(_('Reset all RL=0 for shop online location TOKWS.'),'info');
+			prnMsg(_('Reset all RL=0 for location Shop Online'),'info');
 		}
 		if ($EmailText!=''){
-			$EmailText = $EmailText . "Reset all RL=0 for shop online location TOKWS" . "\n";
+			$EmailText = $EmailText . "Reset all RL=0 for location Shop Online" . "\n";
 		}
 	}
 // adjust RL for toko online as needed
@@ -1023,8 +1023,8 @@ function OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db,
 			FROM salesorders, salesorderdetails, locstock
 			WHERE salesorderdetails.orderno = salesorders.orderno
 				AND salesorderdetails.stkcode = locstock.stockid
-				AND locstock.loccode = 'TOKWS'
-				AND salesorders.fromstkloc = 'TOKWS'
+				AND locstock.loccode = ". CODE_ONLINE_SHOP ."
+				AND salesorders.fromstkloc = ". CODE_ONLINE_SHOP ."
 				AND salesorders.quotation = 0
 				AND salesorderdetails.completed= 0
 			GROUP BY salesorderdetails.stkcode
@@ -1049,7 +1049,7 @@ function OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db,
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
 			/* set the RL to the total of qty requested by customers */
-			SetReorderLevel("OnlineSales", $myrow['stkcode'],'TOKWS', 0, $myrow['totalqty'], $updateDB, $db);
+			SetReorderLevel("OnlineSales", $myrow['stkcode'],CODE_ONLINE_SHOP, 0, $myrow['totalqty'], $updateDB, $db);
 			if ($ShowMessages){
 				if ($k == 1) {
 					echo '<tr class="EvenTableRows">';
