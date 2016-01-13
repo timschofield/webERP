@@ -407,9 +407,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 /*Always do the stuff below if not looking for a customerid
   Set up the form for the credit note display and  entry*/
 
-	 echo '<form id="MainForm" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier . '" method="post">';
-     echo '<div>';
-	 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	 echo '<form id="MainForm" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier . '" method="post">
+		<div>
+		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 
 /*Process Quick Entry */
@@ -569,9 +569,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
      				$DiscountPercentage = filter_number_format($_POST['Discount_' . $LineItem->LineNumber]);
 
-					foreach ($LineItem->Taxes as $TaxLine) {
-						if (isset($_POST[$LineItem->LineNumber  . $TaxLine->TaxCalculationOrder . '_TaxRate'])){
-							$_SESSION['CreditItems'.$identifier]->LineItems[$LineItem->LineNumber]->Taxes[$TaxLine->TaxCalculationOrder]->TaxRate = filter_number_format($_POST[$LineItem->LineNumber  . $TaxLine->TaxCalculationOrder . '_TaxRate'])/100;
+					foreach ($LineItem->Taxes as $TaxKey=>$TaxLine) {
+						if (is_numeric(filter_number_format($_POST[$LineItem->LineNumber  . $TaxLine->TaxCalculationOrder . '_TaxRate']))){
+							$_SESSION['CreditItems'.$identifier]->LineItems[$LineItem->LineNumber]->Taxes[$TaxKey]->TaxRate = filter_number_format($_POST[$LineItem->LineNumber  . $TaxKey . '_TaxRate'])/100;
 						}
 					}
 				}
@@ -593,9 +593,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 		}
 
-		foreach ($_SESSION['CreditItems'.$identifier]->FreightTaxes as $FreightTaxLine) {
-			if (isset($_POST['FreightTaxRate'  . $FreightTaxLine->TaxCalculationOrder])){
-				$_SESSION['CreditItems'.$identifier]->FreightTaxes[$FreightTaxLine->TaxCalculationOrder]->TaxRate = filter_number_format($_POST['FreightTaxRate'  . $FreightTaxLine->TaxCalculationOrder])/100;
+		foreach ($_SESSION['CreditItems'.$identifier]->FreightTaxes as $FreightTaxKey=>$FreightTaxLine) {
+			if (is_numeric(filter_number_format($_POST['FreightTaxRate'  . $FreightTaxLine->TaxCalculationOrder]))){
+				$_SESSION['CreditItems'.$identifier]->FreightTaxes[$FreightTaxKey]->TaxRate = filter_number_format($_POST['FreightTaxRate'  . $FreightTaxKey])/100;
 			}
 		}
 
@@ -737,13 +737,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 			/*Need to list the taxes applicable to this line */
 			echo '<td>';
-			$i=0;
 			foreach ($_SESSION['CreditItems'.$identifier]->LineItems[$LineItem->LineNumber]->Taxes AS $Tax) {
-				if ($i>0){
-					echo '<br />';
-				}
+				echo '<br />';
 				echo $Tax->TaxAuthDescription;
-				$i++;
 			}
 			echo '</td>';
 			echo '<td>';
@@ -751,11 +747,12 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			$i=0; // initialise the number of taxes iterated through
 			$TaxLineTotal =0; //initialise tax total for the line
 
-			foreach ($LineItem->Taxes AS $Tax) {
+			foreach ($LineItem->Taxes AS $TaxKey=>$Tax) {
+
 				if ($i>0){
 					echo '<br />';
 				}
-				echo '<input type="text" class="number" name="' . $LineItem->LineNumber . $Tax->TaxCalculationOrder . '_TaxRate" maxlength="4" size="4" value="' . locale_number_format($Tax->TaxRate*100,'Variable') . '" />';
+				echo '<input type="text" class="number" name="' . $LineItem->LineNumber . $TaxKey . '_TaxRate" maxlength="4" size="4" value="' . locale_number_format($Tax->TaxRate*100,'Variable') . '" />';
 				$i++;
 				if ($Tax->TaxOnTax ==1){
 					$TaxTotals[$Tax->TaxAuthID] += ($Tax->TaxRate * ($LineTotal + $TaxLineTotal));

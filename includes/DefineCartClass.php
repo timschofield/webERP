@@ -314,11 +314,11 @@ Class Cart {
 		while ($myrow = DB_fetch_array($GetTaxRatesResult)){
 
 			$this->LineItems[$LineNumber]->Taxes[$i] =   new Tax($myrow['taxcalculationorder'],
-																							$myrow['taxauthid'],
-																							$myrow['description'],
-																							$myrow['taxrate'],
-																							$myrow['taxontax'],
-																							$myrow['taxglcode']);
+																$myrow['taxauthid'],
+																$myrow['description'],
+																$myrow['taxrate'],
+																$myrow['taxontax'],
+																$myrow['taxglcode']);
 			$i++;
 		}
 	} //end method GetExistingTaxes
@@ -353,13 +353,12 @@ Class Cart {
 		} else {
 			$i=1;
 			while ($myrow = DB_fetch_array($GetTaxRatesResult)){
-
 				$this->LineItems[$LineNumber]->Taxes[$i] = new Tax($myrow['calculationorder'],
-																							$myrow['taxauthid'],
-																							$myrow['description'],
-																							$myrow['taxrate'],
-																							$myrow['taxontax'],
-																							$myrow['taxglcode']);
+																	$myrow['taxauthid'],
+																	$myrow['description'],
+																	$myrow['taxrate'],
+																	$myrow['taxontax'],
+																	$myrow['taxglcode']);
 				$i++;
 			} //end loop around different taxes
 		} //end if there are some taxes defined
@@ -403,11 +402,11 @@ Class Cart {
 		while ($myrow = DB_fetch_array($GetTaxRatesResult)){
 
 			$this->FreightTaxes[$i] = new Tax($myrow['calculationorder'],
-																		$myrow['taxauthid'],
-																		$myrow['description'],
-																		$myrow['taxrate'],
-																		$myrow['taxontax'],
-																		$myrow['taxglcode']);
+												$myrow['taxauthid'],
+												$myrow['description'],
+												$myrow['taxrate'],
+												$myrow['taxontax'],
+												$myrow['taxglcode']);
 			$i++;
 		}
 	} //end method GetFreightTaxes()

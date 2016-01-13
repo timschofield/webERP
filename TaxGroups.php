@@ -59,6 +59,7 @@ if(isset($_POST['submit']) OR isset($_GET['remove']) OR isset($_GET['add']) ) {
 	} elseif(isset($SelectedGroup) ) {
 		$TaxAuthority = $_GET['TaxAuthority'];
 		if( isset($_GET['add']) ) { // adding a tax authority to a tax group
+
 			$sql = "INSERT INTO taxgrouptaxes ( taxgroupid,
 												taxauthid,
 												calculationorder)
