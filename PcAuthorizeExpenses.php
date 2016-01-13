@@ -211,7 +211,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 												amount,
 												currcode)
 										VALUES ('". $ReceiptTransNo . "',
-											1,
+											2,
 											'" . $AccountFrom . "',
 											'" . $Narrative . "',
 											1,
