@@ -282,6 +282,9 @@ if (isset($_POST['Show'])){
 			echo '<tr class="OddTableRows">';
 			$k++;
 		}
+		$BankRef = '';
+		$OrgAmt = '';
+		$Currency = '';
 		if ($myrow['type'] == 12 OR $myrow['type'] == 22 OR $myrow['type'] == 2 OR $myrow['type'] == 1) {
 			$banksql = "SELECT ref,currcode,amount FROM banktrans 
 				WHERE type='" .$myrow['type']."' AND transno='" . $myrow['typeno'] . "' AND bankact='" . $SelectedAccount . "'";
@@ -293,11 +296,7 @@ if (isset($_POST['Show'])){
 				$OrgAmt = $bankrow['amount'];
 				$Currency = $bankrow['currcode'];
 			}
-		} else {
-			$BankRef = '';
-			$OrgAmt = '';
-			$Currency = '';
-		}
+		} 
 
 		$RunningTotal += $myrow['amount'];
 		$PeriodTotal += $myrow['amount'];
