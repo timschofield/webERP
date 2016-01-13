@@ -84,6 +84,7 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level, $db) {
 						bom.effectiveto,
 						stockmaster.mbflag,
 						bom.autoissue,
+						bom.remark,
 						stockmaster.controlled,
 						locstock.quantity AS qoh,
 						stockmaster.decimalplaces
@@ -141,22 +142,24 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level, $db) {
 			} else {
 				$QuantityOnHand = locale_number_format($myrow['qoh'],$myrow['decimalplaces']);
 			}
+			$TextIndent= $Level . 'em';
 
-			printf('<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
+			printf('<td class="number" style="text-align:left;text-indent:' . $textindent . ';" >%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
-					<td><a href="%s&amp;Select=%s&amp;SelectedComponent=%s">' . _('Edit') . '</a></td>
-					<td>' . $DrillText . '</td>
-					 <td><a href="%s&amp;Select=%s&amp;SelectedComponent=%s&amp;delete=1&amp;ReSelect=%s&amp;Location=%s&amp;WorkCentre=%s" onclick="return confirm(\'' . _('Are you sure you wish to delete this component from the bill of material?') . '\');">' . _('Delete') . '</a></td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number noprint">%s</td>
+					<td class="noprint"><a href="%s&amp;Select=%s&amp;SelectedComponent=%s">' . _('Edit') . '</a></td>
+					<td class="noprint">' . $DrillText . '</td>
+					 <td class="noprint"><a href="%s&amp;Select=%s&amp;SelectedComponent=%s&amp;delete=1&amp;ReSelect=%s&amp;Location=%s&amp;WorkCentre=%s" onclick="return confirm(\'' . _('Are you sure you wish to delete this component from the bill of material?') . '\');">' . _('Delete') . '</a></td>
+					 </tr><tr><td colspan="11" style="text-indent:' . $TextIndent . ';">%s</td>
 					 </tr>',
 					$Level1,
 					$myrow['sequence'],
@@ -180,7 +183,9 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level, $db) {
 					$myrow['component'],
 					$UltimateParent,
 					$myrow['loccode'],
-					$myrow['workcentrecode']);
+					$myrow['workcentrecode'],
+					$myrow['remark']
+					);
 
 		} //END WHILE LIST LOOP
 } //end of function DisplayBOMItems
@@ -236,7 +241,7 @@ $InputError = 0;
 if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Component
 	$SelectedParent = $Select;
 	unset($Select);// = NULL;
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') .
+	echo '<p class="page_title_text noprint"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') .
 		'" alt="" />' . ' ' . $Title . '</p><br />';
 
 	if (isset($SelectedParent) AND isset($_POST['Submit'])) {
@@ -303,7 +308,8 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 						effectiveafter='" . $EffectiveAfterSQL . "',
 						effectiveto='" . $EffectiveToSQL . "',
 						quantity= '" . filter_number_format($_POST['Quantity']) . "',
-						autoissue='" . $_POST['AutoIssue'] . "'
+						autoissue='" . $_POST['AutoIssue'] . "',
+						remark='" . $_POST['Remark'] . "'
 					WHERE bom.parent='" . $SelectedParent . "'
 					AND bom.component='" . $SelectedComponent . "'";
 
@@ -345,7 +351,8 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 											quantity,
 											effectiveafter,
 											effectiveto,
-											autoissue)
+											autoissue,
+											remark)
 							VALUES ('" . $_POST['Sequence'] . "',
 								'".$SelectedParent."',
 								'" . $_POST['Component'] . "',
@@ -354,7 +361,8 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 								" . filter_number_format($_POST['Quantity']) . ",
 								'" . $EffectiveAfterSQL . "',
 								'" . $EffectiveToSQL . "',
-								" . $_POST['AutoIssue'] . ")";
+								" . $_POST['AutoIssue'] . ",
+								'" . $_POST['Remark'] . "')";
 
 					$ErrMsg = _('Could not insert the BOM component because');
 					$DbgMsg = _('The SQL used to insert the component was');
@@ -449,7 +457,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			break;
 	}
 
-	echo '<br /><div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Select a Different BOM') . '</a></div><br />';
+	echo '<br /><div class="centre noprint"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Select a Different BOM') . '</a></div><br />';
 	// Display Manufatured Parent Items
 	$sql = "SELECT bom.parent,
 				stockmaster.description,
@@ -464,7 +472,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 	$result=DB_query($sql,$ErrMsg,$DbgMsg);
 	$ix = 0;
 	if( DB_num_rows($result) > 0 ) {
-     echo '<table class="selection">';
+     echo '<table class="selection noprint">';
 	 echo '<tr><td><div class="centre">' . _('Manufactured parent items').' : ';
 	 while ($myrow = DB_fetch_array($result)){
 	 	   echo (($ix)?', ':'') . '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Select='.$myrow['parent'].'">' .
@@ -553,6 +561,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 	echo '<tr>
 			<th colspan="13"><div class="centre"><b>' . $SelectedParent .' - ' . $myrow[0] . ' ('. $MBdesc. ') </b></div></th>
 		</tr>';
+	echo '</table><div id="Report"><table class="selection">';
 
 	$BOMTree = array();
 	//BOMTree is a 2 dimensional array with three elements for each item in the array - Level, Parent, Component
@@ -572,7 +581,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 						<th>' . _('Effective After') . '</th>
 						<th>' . _('Effective To') . '</th>
 						<th>' . _('Auto Issue') . '</th>
-						<th>' . _('Qty On Hand') . '</th>
+						<th class="noprint">' . _('Qty On Hand') . '</th>
 					</tr>';
 	echo $TableHeader;
 	if(count($BOMTree) == 0) {
@@ -598,7 +607,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			DisplayBOMItems($UltimateParent, $Parent, $Component, $Level, $db);
 		}
 	}
-	echo '</table>
+	echo '</table></div>
 		<br />';
     /* We do want to show the new component entry form in any case - it is a lot of work to get back to it otherwise if we need to add */
 
@@ -615,7 +624,8 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 						effectiveto,
 						workcentreadded,
 						quantity,
-						autoissue
+						autoissue,
+						remark
 					FROM bom
 					INNER JOIN locationusers ON locationusers.loccode=bom.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
 					WHERE parent='".$SelectedParent."'
@@ -631,12 +641,13 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			$_POST['WorkCentreAdded']  = $myrow['workcentreadded'];
 			$_POST['Quantity'] = locale_number_format($myrow['quantity'],'Variable');
 			$_POST['AutoIssue'] = $myrow['autoissue'];
+			$_POST['Remark'] = $myrow['remark'];
 
 			prnMsg(_('Edit the details of the selected component in the fields below') . '. <br />' . _('Click on the Enter Information button to update the component details'),'info');
 			echo '<br />
 					<input type="hidden" name="SelectedParent" value="' . $SelectedParent . '" />';
 			echo '<input type="hidden" name="SelectedComponent" value="' . $SelectedComponent . '" />';
-			echo '<table class="selection">';
+			echo '<table class="selection noprint">';
 			echo '<tr>
 					<th colspan="13"><div class="centre"><b>' .  ('Edit Component Details')  . '</b></div></th>
 				</tr>';
@@ -648,10 +659,11 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 		} else { //end of if $SelectedComponent
 			$_POST['Sequence'] = 0;
+			$_POST['Remark'] = '';
 			echo '<input type="hidden" name="SelectedParent" value="' . $SelectedParent . '" />';
 			/* echo "Enter the details of a new component in the fields below. <br />Click on 'Enter Information' to add the new component, once all fields are completed.";
 			*/
-			echo '<table class="selection">';
+			echo '<table class="selection noprint">';
 			echo '<tr>
 					<th colspan="13"><div class="centre"><b>' . _('New Component Details')  . '</b></div></th>
 				</tr>';
@@ -702,7 +714,6 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
                 <td>' . _('Sequence in BOM') . ':</td>
                 <td><input type="text" class="integer" required="required" size="5" name="Sequence" value="' . $_POST['Sequence'] . '" /></td>
             </tr>';
-
 		echo '<tr>
 				<td>' . _('Location') . ': </td>
 				<td><select tabindex="2" name="LocCode">';
@@ -811,11 +822,18 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		} else {
 			echo '<input type="hidden" name="AutoIssue" value="0" />';
 		}
+	
+		echo '<tr><td>' . _('Remark') . '</td>
+			<td><textarea  rows="3" col="20" name="Remark" >' . $_POST['Remark'] . '</textarea></td>
+			</tr>';
 
 		echo '</table>
 			<br />
-			<div class="centre">
+			<div class="centre noprint">
 				<input tabindex="8" type="submit" name="Submit" value="' . _('Enter Information') . '" />
+					<button onclick="javascript:window.print()" type="button"><img alt="" src="' . $RootPath . '/css/' . $Theme .
+					'/images/printer.png" /> ' .
+					_('Print This') . '</button>
 			</div>
             </div>
 			</form>';
@@ -936,7 +954,7 @@ if (!isset($SelectedParent)) {
 			$tab = $j+3;
 			printf('<td><input tabindex="' . $tab . '" type="submit" name="Select" value="%s" /></td>
 					<td>%s</td>
-					<td class="number">%s</td>
+					<td class="number noprint">%s</td>
 					<td>%s</td>
 					</tr>',
 					$myrow['stockid'],
