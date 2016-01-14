@@ -1,5 +1,6 @@
 webERP Change Log
 
+14/01/16 Exson: Add credit note allocation option for CustWhereAlloc.php and add a link to it in CustomerInquiry.php and make the allocation printable by print.css.
 13/01/16 Exson: Add remark to BOM items and make the BOM printable via the new print.css created by Rafael.
 13/1/16 Phil: Fixed bug in creating customer credit notes manually - blank taxes were being added that caused the SQL to commit the transaction to fail with foreign key constraint to tax authorities
 13/01/16 Exson: Fixed the variables non-refresh bugs in GLAccountInquiry.php. Reported by Richard.
