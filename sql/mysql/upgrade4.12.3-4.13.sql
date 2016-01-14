@@ -50,6 +50,7 @@ ALTER table stockrequest DROP FOREIGN KEY `stockrequest_ibfk_3`;
 ALTER table stockrequest DROP FOREIGN KEY `stockrequest_ibfk_4`;
 INSERT INTO scripts VALUES('CollectiveWorkOrderCost.php',2,'Multiple work orders cost review');
 ALTER table BOM ADD remark varchar(500) NOT NULL DEFAULT '';
+INSERT INTO scripts VALUES ('SuppWhereAlloc.php',3,'Suppliers Where allocated');
 
 
 -- Update version number:
