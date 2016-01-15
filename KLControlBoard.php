@@ -300,6 +300,7 @@ if ($KL_BusinessDevelopmentManager){
 	ItemsWithStockKantorButReorderLevelTokoZero($RootPath, $db);
 
 	ItemsWithStockKantorButRLZeroAt("TOKSU", $RootPath, $db);
+	ItemsWithStockKantorButRLZeroAt("TOKUB", $RootPath, $db);
 	ItemsWithStockKantorButRLZeroAt("TOKJC", $RootPath, $db);
 
 	ItemsWithStockKantorButRLZeroAt("TOKSA", $RootPath, $db);
