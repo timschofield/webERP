@@ -12,7 +12,7 @@ $BookMark = "LocationTransfers";
 $ViewTopic = "Inventory";
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
-
+include('includes/KLDefines.php');
 include('includes/KLEmails.php');
 
 if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
@@ -106,17 +106,16 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 			}
 		}//for all LinesCounter
 
+		if ($TotalItems == 0){
+			$InputError = True;
+			$ErrorMessage .= _('You must enter at least 1 Stock Item to transfer') . '<br />';
+		}
 
-	if ($TotalItems == 0){
-		$InputError = True;
-		$ErrorMessage .= _('You must enter at least 1 Stock Item to transfer') . '<br />';
-	}
-
-/*Ship location and Receive location are different */
-	if ($_POST['FromStockLocation']==$_POST['ToStockLocation']){
-		$InputError=True;
-		$ErrorMessage .= _('The transfer must have a different location to receive into and location sent from');
-	}
+		/*Ship location and Receive location are different */
+		if ($_POST['FromStockLocation']==$_POST['ToStockLocation']){
+			$InputError=True;
+			$ErrorMessage .= _('The transfer must have a different location to receive into and location sent from');
+		}
 	} //end if the transfer is not a duplicated
 }
 
@@ -189,7 +188,7 @@ if(isset($_POST['Submit']) AND $InputError==False){
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<input type="hidden" name="FromStockLocation" value="' . $_SESSION['UserStockLocation'] . '" />';
-	echo '<input type="hidden" name="ToStockLocation" value="' . CODE_KANTOR . '" />';
+	echo '<input type="hidden" name="ToStockLocation" value="'."KANTO".'" />';
 
 	echo '<table class="selection">';
 	echo '<tr>
