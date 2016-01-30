@@ -429,13 +429,13 @@ while ($MyRow = DB_fetch_array($TransResult)) {
 					<td class="number">', locale_number_format($MyRow['allocated'], $CustomerRecord['decimalplaces']), '</td>
 					<td class="number">', locale_number_format($MyRow['totalamount'] - $MyRow['allocated'], $CustomerRecord['decimalplaces']), '</td>
 					<td class="noprint">
-						<a href="', $RootPath, '/PrintCustTrans.php?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Invoice" title="', _('Click to preview the invoice'), '">
+						<a href="', $RootPath, '/PrintCustTrans.php?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Credit" title="', _('Click to preview the credit note'), '">
 							<img alt="" src="', $RootPath, '/css/', $Theme, '/images/preview.png" /> ',
 							_('HTML'), '
 						</a>
 					</td>
 					<td class="noprint">
-						<a href="', $RootPath, '/', $PrintCustomerTransactionScript, '?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Invoice&amp;PrintPDF=True" title="', _('Click for PDF'), '">
+						<a href="', $RootPath, '/', $PrintCustomerTransactionScript, '?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Credit&amp;PrintPDF=True" title="', _('Click for PDF'), '">
 							<img alt="" src="', $RootPath, '/css/', $Theme, '/images/pdf.png" /> ',
 							_('PDF'), '
 						</a>
@@ -475,13 +475,13 @@ while ($MyRow = DB_fetch_array($TransResult)) {
 					<td class="number">', locale_number_format($MyRow['allocated'], $CustomerRecord['decimalplaces']), '</td>
 					<td class="number">', locale_number_format($MyRow['totalamount'] - $MyRow['allocated'], $CustomerRecord['decimalplaces']), '</td>
 					<td class="noprint">
-						<a href="', $RootPath, '/PrintCustTrans.php?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Invoice" title="', _('Click to preview the invoice'), '">
+						<a href="', $RootPath, '/PrintCustTrans.php?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Credit" title="', _('Click to preview the credit note'), '">
 							<img alt="" src="', $RootPath, '/css/', $Theme, '/images/preview.png" /> ',
 							_('HTML'), '
 						</a>
 					</td>
 					<td class="noprint">
-						<a href="', $RootPath, '/', $PrintCustomerTransactionScript, '?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Invoice&amp;PrintPDF=True" title="', _('Click for PDF'), '">
+						<a href="', $RootPath, '/', $PrintCustomerTransactionScript, '?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Credit&amp;PrintPDF=True" title="', _('Click for PDF'), '">
 							<img alt="" src="', $RootPath, '/css/', $Theme, '/images/pdf.png" /> ',
 							_('PDF'), '
 						</a>
