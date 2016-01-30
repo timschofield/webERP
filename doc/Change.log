@@ -1,5 +1,6 @@
 webERP Change Log
 
+30/01/16 Exson: Fix the bug to print invoice instead of credit note when a credit note requested in CustomerInquiry.php reported by daveparrish.
 14/01/16 Exson: Add Supplier transaction allocation inquiry in SuppWhereAlloc.php and add a link to in SupplierInquiry.php.
 14/01/16 Exson: Add credit note allocation option for CustWhereAlloc.php and add a link to it in CustomerInquiry.php and make the allocation printable by print.css.
 13/01/16 Exson: Add remark to BOM items and make the BOM printable via the new print.css created by Rafael.
