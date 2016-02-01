@@ -93,12 +93,14 @@ for ( $CurrPeriod = $CreateFrom; $CurrPeriod <= $CreateTo; $CurrPeriod++ ) {
 			$sql = "UPDATE chartdetails SET actual = actual + " . $TotalAmount . "
 					WHERE accountcode = '" . $CurrentAccount . "'
 					AND period= '" . $CurrPeriod . "'";
-			$PostPrd = DB_query($sql);
+			$ErrMsg = _('Failed to update actual amount in chartdetails table');
+			$PostPrd = DB_query($sql,$ErrMsg,'',true);
 			/*Update the BFwd for all following ChartDetail records */
 			$sql = "UPDATE chartdetails SET bfwd = bfwd + " . $TotalAmount . "
 					WHERE accountcode = '" . $CurrentAccount . "'
 					AND period > '" . $CurrPeriod . "'";
-			$PostBFwds = DB_query($sql);
+			$ErrMsg = _('Failed to update bfwd amount in chartdetails table');
+			$PostBFwds = DB_query($sql,$ErrMsg,'',true);
 			$TotalAmount = 0;
 		}
 		$CurrentAccount = $UnpostedTrans['account'];
@@ -109,16 +111,19 @@ for ( $CurrPeriod = $CreateFrom; $CurrPeriod <= $CreateTo; $CurrPeriod++ ) {
 		$sql = "UPDATE chartdetails SET actual = actual + " . $TotalAmount . "
 				WHERE accountcode = '" . $CurrentAccount . "'
 				AND period= '" . $CurrPeriod . "'";
-		$PostPrd = DB_query($sql);
+		$ErrMsg = _('Failed to update actual amount in chartdetails table');
+		$PostPrd = DB_query($sql,$ErrMsg,'',true);
 		/*Update the BFwd for all following ChartDetail records */
 		$sql = "UPDATE chartdetails SET bfwd = bfwd + " . $TotalAmount . "
 				WHERE accountcode = '" . $CurrentAccount . "'
 				AND period > '" . $CurrPeriod . "'";
-		$PostBFwds = DB_query($sql);
+		$ErrMsg = _('Failed to update actual amount in chartdetails table');
+		$PostBFwds = DB_query($sql,$ErrMsg,'',true);
 	}
 	
 	$sql = "UPDATE gltrans SET posted = 1 WHERE periodno = '" . $CurrPeriod . "' AND posted=0";
-	$Posted = DB_query($sql);
+	$ErrMsg = _('Failed to update gltrans table');
+	$Posted = DB_query($sql,$ErrMsg,'',true);
 	
 	$TransCommit = DB_Txn_Commit();
 }
