@@ -1,6 +1,5 @@
 <?php
-define("VERSIONFILE", "2.11");
-define("NUMBER_OF_TESTS", 43); 
+define("VERSIONFILE", "3.00");
 
 /* Session started in session.inc for password checking and authorisation level check config.php is in turn included in session.inc*/
 
@@ -14,137 +13,237 @@ include('includes/KLGeneralFunctions.php');
 /* ASSIGN users to groups */
 include ('includes/KLRoles.inc');
 $begintime = time_start();
+$NumberOfTestExecuted = 0;
 
 $periodnow=GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
 
-AverageSales("Shop", 365, 90, 30, 15, 7, 1, 30, "CurrentYear", "All", $db);
+/* Assign the sections to be executed, to avoid error 504*/
+$ShowSectionInfo = FALSE;
+$ProcessSection01 = FALSE;
+$ProcessSection02 = FALSE;
 
-if ($KL_SystemAdmin
-	OR $KL_BusinessDevelopmentManager
-	OR $KL_SalesManager){
-//	AverageSales("Shop", 365, 90, 30, 15,7, 1, 30, "LastYear", "All", $db);
-	YearDifferenceSales("Shop",  15, $db);
-	YearDifferenceSales("Shop",  30, $db);
-	YearDifferenceSales("Shop",	 90, $db);
-	YearDifferenceSales("Shop", 365, $db);
+if (!isset($_GET['Section'])){
+	$ProcessSection01 = TRUE;
+	$ProcessSection02 = TRUE;
+}else{
+	$ShowSectionInfo = TRUE;
+	if ($_GET['Section'] == '01'){
+		$ProcessSection01 = TRUE;
+	}elseif($_GET['Section'] == '02'){
+		$ProcessSection02 = TRUE;
+	}
 }
 
-AverageSales("SPG", 365, 90, 30, 15, 7, 1,30, "CurrentYear", "All", $db);
+/***************************************************************************************
+* SECTION 1         
+***************************************************************************************/
 
-SPGPerformanceByShop("RETAIL66", 30, 60, 90, $db);
-SPGPerformanceByShop("RETAILSE", 30, 60, 90, $db);
-SPGPerformanceByShop("RETAILOB", 30, 60, 90, $db);
-SPGPerformanceByShop("RETAILKA", 30, 60, 90, $db);
-SPGPerformanceByShop("RETAILPS", 30, 60, 90, $db);
-SPGPerformanceByShop("RETAILAR", 30, 60, 90, $db);
+if ($ProcessSection01){
+	if($ShowSectionInfo){
+		prnMsg("Performing Control Panel Section 01",'info');
+	}
 
-SPGPerformanceByShop("RETAILKS", 30, 60, 90, $db);
-SPGPerformanceByShop("RETAILBW", 30, 60, 90, $db);
-SPGPerformanceByShop("RETAILPA", 30, 60, 90, $db);
+	AverageSales("Shop", 365, 90, 30, 15, 7, 1, 30, "CurrentYear", "All", $db);
+	$NumberOfTestExecuted++;
 
-SPGPerformanceByShop("RETAILSA", 30, 60, 90, $db);
-SPGPerformanceByShop("RETAILSU", 30, 60, 90, $db);
-SPGPerformanceByShop("RETAILSS", 30, 60, 90, $db);
+	if ($KL_SystemAdmin
+		OR $KL_BusinessDevelopmentManager
+		OR $KL_SalesManager){
+	//	AverageSales("Shop", 365, 90, 30, 15,7, 1, 30, "LastYear", "All", $db);
+	//	$NumberOfTestExecuted++;
+		YearDifferenceSales("Shop",  15, $db);
+		$NumberOfTestExecuted++;
+		YearDifferenceSales("Shop",  30, $db);
+		$NumberOfTestExecuted++;
+		YearDifferenceSales("Shop",	 90, $db);
+		$NumberOfTestExecuted++;
+		YearDifferenceSales("Shop", 365, $db);
+		$NumberOfTestExecuted++;
+	}
 
-SPGPerformanceByShop("RETAILUB", 30, 60, 90, $db);
-SPGPerformanceByShop("RETAILMF", 30, 60, 90, $db);
-SPGPerformanceByShop("RETAILMU", 30, 60, 90, $db);
-SPGPerformanceByShop("RETAILPU", 30, 60, 90, $db);
+	AverageSales("SPG", 365, 90, 30, 15, 7, 1,30, "CurrentYear", "All", $db);
+	$NumberOfTestExecuted++;
 
-SPGPerformanceByShop("RETAILJC", 30, 60, 90, $db);
+	SPGPerformanceByShop("RETAIL66", 30, 60, 90, $db);
+	$NumberOfTestExecuted++;
+	SPGPerformanceByShop("RETAILSE", 30, 60, 90, $db);
+	$NumberOfTestExecuted++;
+	SPGPerformanceByShop("RETAILOB", 30, 60, 90, $db);
+	$NumberOfTestExecuted++;
+	SPGPerformanceByShop("RETAILKA", 30, 60, 90, $db);
+	$NumberOfTestExecuted++;
+	SPGPerformanceByShop("RETAILPS", 30, 60, 90, $db);
+	$NumberOfTestExecuted++;
+	SPGPerformanceByShop("RETAILAR", 30, 60, 90, $db);
+	$NumberOfTestExecuted++;
 
-if ($KL_SystemAdmin){
-//	YearDifferenceSales("SPG", 30, $db);
-//	YearDifferenceSales("SPG", 90, $db);
+	SPGPerformanceByShop("RETAILKS", 30, 60, 90, $db);
+	$NumberOfTestExecuted++;
+	SPGPerformanceByShop("RETAILBW", 30, 60, 90, $db);
+	$NumberOfTestExecuted++;
+	SPGPerformanceByShop("RETAILPA", 30, 60, 90, $db);
+	$NumberOfTestExecuted++;
+
+	SPGPerformanceByShop("RETAILSA", 30, 60, 90, $db);
+	$NumberOfTestExecuted++;
+	SPGPerformanceByShop("RETAILSU", 30, 60, 90, $db);
+	$NumberOfTestExecuted++;
+	SPGPerformanceByShop("RETAILSS", 30, 60, 90, $db);
+	$NumberOfTestExecuted++;
+
+	SPGPerformanceByShop("RETAILUB", 30, 60, 90, $db);
+	$NumberOfTestExecuted++;
+	SPGPerformanceByShop("RETAILMF", 30, 60, 90, $db);
+	$NumberOfTestExecuted++;
+	SPGPerformanceByShop("RETAILMU", 30, 60, 90, $db);
+	$NumberOfTestExecuted++;
+	SPGPerformanceByShop("RETAILPU", 30, 60, 90, $db);
+	$NumberOfTestExecuted++;
+
+	SPGPerformanceByShop("RETAILJC", 30, 60, 90, $db);
+	$NumberOfTestExecuted++;
+
+	if ($KL_SystemAdmin){
+	//	YearDifferenceSales("SPG", 30, $db);
+	//  $NumberOfTestExecuted++;
+	//	YearDifferenceSales("SPG", 90, $db);
+	//	$NumberOfTestExecuted++;
+	}
+
+	if ($KL_SystemAdmin){
+		AverageCustomerBehaviourByValueInvoice("Shop", 15, $db);
+		$NumberOfTestExecuted++;
+	}
+
+	AverageCustomerBehaviourByValueInvoice("Shop", 30, $db);
+	$NumberOfTestExecuted++;
+
+	if ($KL_SystemAdmin
+		OR $KL_SalesManager){
+		AverageCustomerBehaviourByValueInvoice("Shop", 90, $db);
+		$NumberOfTestExecuted++;
+		AverageCustomerBehaviourByValueInvoice("Shop", 365, $db);
+		$NumberOfTestExecuted++;
+	}
+
+	if ($KL_SystemAdmin 
+		OR $KL_SalesManager
+		OR $KL_BusinessDevelopmentManager){
+		GeneralCustomerBehaviour(30, $db);
+		$NumberOfTestExecuted++;
+		GeneralCustomerBehaviour(90, $db);
+		$NumberOfTestExecuted++;
+	}
 }
 
-if ($KL_SystemAdmin){
-	AverageCustomerBehaviourByValueInvoice("Shop", 15, $db);
+/***************************************************************************************
+* SECTION 2
+***************************************************************************************/
+
+if ($ProcessSection02){
+	if($ShowSectionInfo){
+		prnMsg("Performing Control Panel Section 02",'info');
+	}
+
+	if ($KL_SystemAdmin){
+		ListPriorityLocations($db);
+		$NumberOfTestExecuted++;
+	}
+
+	if ($KL_SystemAdmin 
+		OR $KL_OperationalManager
+		OR $KL_SalesManager
+		OR $KL_BusinessDevelopmentManager){
+		ActiveTransfersByLocation($RootPath, $db);
+		$NumberOfTestExecuted++;
+		ActiveTransferStatus($RootPath, $db);
+		$NumberOfTestExecuted++;
+		RecentlyClosedTransferStatus(1, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ErrorsInTransfers(7, $RootPath, $db);
+		$NumberOfTestExecuted++;
+	}
+
+	FinishedStockDistribution("FORSALE", "LOCATION", $db);
+	$NumberOfTestExecuted++;
+
+	if ($KL_SystemAdmin 
+		OR $KL_SalesManager
+		OR $KL_BusinessDevelopmentManager){
+		FinishedStockDistribution("FORSALE", "STOCKCATEGORY", $db);
+		$NumberOfTestExecuted++;
+	}
+
+	FinishedStockDistribution("DISPLAYS", "LOCATION", $db);
+	$NumberOfTestExecuted++;
+
+	PackagingStatusForKapalLaut($RootPath, $db);
+	$NumberOfTestExecuted++;
+	PackagingUsageForKapalLaut(30, $RootPath, $db);
+	$NumberOfTestExecuted++;
+
+	PackagingStatusForBlink($RootPath, $db);
+	$NumberOfTestExecuted++;
+	PackagingUsageForBlink(30, $RootPath, $db);
+	$NumberOfTestExecuted++;
+
+	PackagingStatusForOutlet($RootPath, $db);
+	$NumberOfTestExecuted++;
+	PackagingUsageForOutlet(30, $RootPath, $db);
+	$NumberOfTestExecuted++;
+
+	if ($KL_SystemAdmin){
+		FinishedStockDistribution("PACKAGING", "LOCATION", $db);
+		$NumberOfTestExecuted++;
+	}
+	if (($KL_SystemAdmin) 
+		OR ($KL_OperationalManager)
+		OR ($KL_BusinessDevelopmentManager)){
+		InsuficientStockForShopPackaging( 'SHPACK', 21, 90, 30, true, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		InsuficientStockForShopPackaging( 'ZAPON', 21, 60, 30, true, $RootPath, $db);
+		$NumberOfTestExecuted++;
+	}
+
+	if ($KL_SystemAdmin){
+		GoodsToBeProduced("COMPON", "DISCOUNT", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		GoodsToBeProduced("COMPON", "ALL", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ComponentsToObsolete(false, 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+	}
+
+	if ($KL_SystemAdmin){
+		PurchasingOrdersDeliveryControl("Delayed", 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		PurchasingOrdersDeliveryControl("Coming Soon", 30, $RootPath, $db);
+		$NumberOfTestExecuted++;
+	}
+
+//	RetailTypePayments("Shop",180, $db);
+//	NumberOfTestExecuted++;
+
+	RetailTypePayments("SPG",180, $db);
+	$NumberOfTestExecuted++;
+	RetailTypePayments("SPG",  15, $db);
+	$NumberOfTestExecuted++;
+
+	if ($KL_SystemAdmin){
+		PettyCashStatus("IDR", $db);
+		$NumberOfTestExecuted++;
+		PettyCashStatus("USD", $db);
+		$NumberOfTestExecuted++;
+		PettyCashStatus("THB", $db);
+		$NumberOfTestExecuted++;
+		PettyCashStatus("EUR", $db);
+		$NumberOfTestExecuted++;
+		PettyCashStatus("HKD", $db);
+		$NumberOfTestExecuted++;
+	}
 }
 
-AverageCustomerBehaviourByValueInvoice("Shop", 30, $db);
-
-if ($KL_SystemAdmin
-	OR $KL_SalesManager){
-	AverageCustomerBehaviourByValueInvoice("Shop", 90, $db);
-	AverageCustomerBehaviourByValueInvoice("Shop", 365, $db);
-}
-
-if ($KL_SystemAdmin 
-	OR $KL_SalesManager
-	OR $KL_BusinessDevelopmentManager){
-	GeneralCustomerBehaviour(30, $db);
-	GeneralCustomerBehaviour(90, $db);
-}
-
-if ($KL_SystemAdmin){
-	ListPriorityLocations($db);
-}
-
-if ($KL_SystemAdmin 
-	OR $KL_OperationalManager
-	OR $KL_SalesManager
-	OR $KL_BusinessDevelopmentManager){
-	ActiveTransfersByLocation($RootPath, $db);
-	ActiveTransferStatus($RootPath, $db);
-	RecentlyClosedTransferStatus(1, $RootPath, $db);
-	ErrorsInTransfers(7, $RootPath, $db);
-}
-
-FinishedStockDistribution("FORSALE", "LOCATION", $db);
-
-if ($KL_SystemAdmin 
-	OR $KL_SalesManager
-	OR $KL_BusinessDevelopmentManager){
-	FinishedStockDistribution("FORSALE", "STOCKCATEGORY", $db);
-}
-
-FinishedStockDistribution("DISPLAYS", "LOCATION", $db);
-
-PackagingStatusForKapalLaut($RootPath, $db);
-PackagingUsageForKapalLaut(30, $RootPath, $db);
-
-PackagingStatusForBlink($RootPath, $db);
-PackagingUsageForBlink(30, $RootPath, $db);
-
-PackagingStatusForOutlet($RootPath, $db);
-PackagingUsageForOutlet(30, $RootPath, $db);
-
-if ($KL_SystemAdmin){
-	FinishedStockDistribution("PACKAGING", "LOCATION", $db);
-}
-if (($KL_SystemAdmin) 
-	OR ($KL_OperationalManager)
-	OR ($KL_BusinessDevelopmentManager)){
-	InsuficientStockForShopPackaging( 'SHPACK', 21, 90, 30, true, $RootPath, $db);
-	InsuficientStockForShopPackaging( 'ZAPON', 21, 60, 30, true, $RootPath, $db);
-}
-
-if ($KL_SystemAdmin){
-	GoodsToBeProduced("COMPON", "DISCOUNT", $RootPath, $db);
-	GoodsToBeProduced("COMPON", "ALL", $RootPath, $db);
-	ComponentsToObsolete(false, 0, $RootPath, $db);
-}
-
-if ($KL_SystemAdmin){
-	PurchasingOrdersDeliveryControl("Delayed", 0, $RootPath, $db);
-	PurchasingOrdersDeliveryControl("Coming Soon", 30, $RootPath, $db);
-}
-
-// RetailTypePayments("Shop",180, $db);
-
-RetailTypePayments("SPG",180, $db);
-RetailTypePayments("SPG",  15, $db);
-
-if ($KL_SystemAdmin){
-	PettyCashStatus("IDR", $db);
-	PettyCashStatus("USD", $db);
-	PettyCashStatus("THB", $db);
-	PettyCashStatus("EUR", $db);
-	PettyCashStatus("HKD", $db);
-}
-
-prnMsg("Performed ". NUMBER_OF_TESTS . " performance tests",'success');
+prnMsg("Performed ". $NumberOfTestExecuted . " performance tests",'success');
 time_finish($begintime);
 
 include ('includes/footer.inc');

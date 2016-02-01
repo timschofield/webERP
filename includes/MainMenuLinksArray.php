@@ -60,6 +60,30 @@ $MenuItems['orders']['Transactions']['URL'] = array('/SelectOrderItems.php?NewOr
 													'/SelectRecurringSalesOrder.php',
 													'/RecurringSalesOrdersProcess.php');
 
+if ($KL_BusinessDevelopmentManager){
+	$TextControlBoard01 = _('KL Control Board Section 01');
+	$LinkControlBoard01 = "/KLControlBoard.php?Section=01";
+	$TextControlBoard02 = _('KL Control Board Section 02');
+	$LinkControlBoard02 = "/KLControlBoard.php?Section=02";
+} else {
+	$TextControlBoard01 = _('KL Control Board');
+	$LinkControlBoard01 = '/KLControlBoard.php';
+	$TextControlBoard02 = '';
+	$LinkControlBoard02 = '';
+}	
+													
+if ($KL_SystemAdmin OR $KL_BusinessDevelopmentManager){
+	$TextPerformanceBoard01 = _('KL Performance Board Section 01');
+	$LinkPerformanceBoard01 = "/KLPerformanceBoard.php?Section=01";
+	$TextPerformanceBoard02 = _('KL Performance Board Section 02');
+	$LinkPerformanceBoard02 = "/KLPerformanceBoard.php?Section=02";
+} else {
+	$TextPerformanceBoard01 = _('KL Performance Board');
+	$LinkPerformanceBoard01 = '/KLPerformanceBoard.php';
+	$TextPerformanceBoard02 = '';
+	$LinkPerformanceBoard02 = '';
+}	
+
 $MenuItems['orders']['Reports']['Caption'] = array( _('Sales Order Inquiry'),
 													_('Print Price Lists'),
 													_('Order Status Report'),
@@ -79,10 +103,12 @@ $MenuItems['orders']['Reports']['Caption'] = array( _('Sales Order Inquiry'),
 													_('Top Customers Inquiry'),
 													_('Worst Sales Items Report'),
 													_('Sales With Low Gross Profit Report'),
-													_('KL Control Board'),
+													$TextControlBoard01,
+													$TextControlBoard02,
 													_('KL Control Board for Pricing'),
 													_('KL SPG Control Board'),
-													_('KL Performance Board'),
+													$TextPerformanceBoard01,
+													$TextPerformanceBoard02,
 													_('KL Retail Customer Analysis'),
 													_('KL Excel Sales Analysis'),
 													_('KL Excel Sales Monthly Report'),
@@ -107,10 +133,12 @@ $MenuItems['orders']['Reports']['URL'] = array( '/SelectCompletedOrder.php',
 												'/SalesTopCustomersInquiry.php',
 												'/NoSalesItems.php',
 												'/PDFLowGP.php',
-												'/KLControlBoard.php',
+												$LinkControlBoard01,
+												$LinkControlBoard02,
 												'/KLControlBoardPrices.php',
 												'/KLControlBoardSPG.php',
-												'/KLPerformanceBoard.php',
+												$LinkPerformanceBoard01,
+												$LinkPerformanceBoard02,
 												'/KLRetailCustomerBoard.php',
 												'/KLExcelSalesAnalysis.php',
 												'/KLExcelSalesMonthlyReport.php',
