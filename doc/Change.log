@@ -1,5 +1,6 @@
 webERP Change Log
 
+1/2/15 Exson: Make GL Posting really transaction in GLPostings.inc.
 30/01/16 Exson: Fix the bug to print invoice instead of credit note when a credit note requested in CustomerInquiry.php reported by daveparrish.
 14/01/16 Exson: Add Supplier transaction allocation inquiry in SuppWhereAlloc.php and add a link to in SupplierInquiry.php.
 14/01/16 Exson: Add credit note allocation option for CustWhereAlloc.php and add a link to it in CustomerInquiry.php and make the allocation printable by print.css.
