@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.12.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-12-29 12:33-0600\n"
-"PO-Revision-Date: 2015-12-27 20:50-0600\n"
+"PO-Revision-Date: 2016-01-20 11:40-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -4028,11 +4028,11 @@ msgstr "Sólo Órdenes de Trabajo Abiertas"
 
 #: CollectiveWorkOrderCost.php:266
 msgid "Start Date From"
-msgstr ""
+msgstr "Fecha inicial desde"
 
 #: CollectiveWorkOrderCost.php:268
 msgid "Start Date To"
-msgstr ""
+msgstr "Fecha inial al"
 
 #: CollectiveWorkOrderCost.php:274 SelectWorkOrder.php:175
 msgid "New Work Order"
@@ -9178,7 +9178,7 @@ msgstr "Volver a la pantalla de cliente"
 
 #: CustomerAccount.php:220
 msgid "Customer Statement For"
-msgstr ""
+msgstr "Estado de cuenta para"
 
 #: CustomerAccount.php:231 CustomerInquiry.php:162 CustomerReceipt.php:1029
 #: SelectOrderItems.php:698 SupplierCredit.php:264 SupplierInquiry.php:123
@@ -9241,11 +9241,11 @@ msgstr "Saldo"
 
 #: CustomerAccount.php:275
 msgid "TRANSACTIONS SETTLED SINCE"
-msgstr ""
+msgstr "Operaciones liquidadas desde"
 
 #: CustomerAccount.php:278
 msgid "OUTSTANDING TRANSACTIONS"
-msgstr ""
+msgstr "Transacciones pendientes al"
 
 #: CustomerAccount.php:306 CustomerInquiry.php:311 CustomerInquiry.php:357
 #: CustomerInquiry.php:396 CustomerInquiry.php:432 CustomerInquiry.php:478
@@ -24371,7 +24371,7 @@ msgstr "Estado de las Cuentas del cliente"
 
 #: PrintCustStatements.php:46
 msgid "Statements from"
-msgstr "Estados de las cuentas desde"
+msgstr "Estados de cuenta desde"
 
 #: PrintCustStatements.php:72
 msgid "There was a problem settling the old transactions."
@@ -41151,7 +41151,7 @@ msgstr "Integridad del Control de Deudores"
 
 #: Z_CheckDebtorsControl.php:38
 msgid "Start Period:"
-msgstr "Hata Período:"
+msgstr "Período inicial:"
 
 #: Z_CheckDebtorsControl.php:41
 msgid "End Period:"
@@ -47063,15 +47063,15 @@ msgstr ""
 
 #: includes/PDFStatementPageHeader.inc:14
 msgid "Statement"
-msgstr "Estado de Cuenta"
+msgstr "Estado de cuenta"
 
 #: includes/PDFStatementPageHeader.inc:17
 msgid "as of"
-msgstr "como"
+msgstr "al"
 
 #: includes/PDFStatementPageHeader.inc:29
 msgid "Statement dated"
-msgstr "Estado de Cuenta fechado"
+msgstr "Estado de cuenta fechado"
 
 #: includes/PDFStatementPageHeader.inc:75
 msgid "Please send with remittance to"
@@ -51519,7 +51519,7 @@ msgstr ""
 
 #: reportwriter/languages/en_US/reports.php:228
 msgid "Start Position (Upper Left Corner in mm)"
-msgstr ""
+msgstr "Posición inicial (esquina superior izquierda en mm)"
 
 #: reportwriter/languages/en_US/reports.php:229
 msgid "Table Name"
@@ -52356,7 +52356,7 @@ msgstr ""
 
 #: ../webSHOP/CreditCardPayPalPro.php:287
 msgid "State"
-msgstr ""
+msgstr "Estado"
 
 #: ../webSHOP/CreditCardPayPalPro.php:288
 msgid "The state of the card holder"
