@@ -74,11 +74,11 @@
 			echo '<li><a href="'.$RootPath.'/SelectProduct.php">' . _('Items')     . '</a></li>';
 			echo '<li><a href="'.$RootPath.'/SelectSupplier.php">' . _('Suppliers') . '</a></li>';
 
-			$DefaultManualLink = '<li><a rel="external" accesskey="8" href="' .  $RootPath . '/doc/Manual/ManualContents.php'. $ViewTopic . $BookMark. '">' . _('Manual') . '</a></li>';
+			$DefaultManualLink = '<li><a rel="external" accesskey="8" href="' .  $RootPath . '../../wiki/index.php'. '">' . _('KL-Intranet') . '</a></li>';
 
 			if (mb_substr($_SESSION['Language'],0,2) != 'en'){
 				if (file_exists('locale/'.$_SESSION['Language'].'/Manual/ManualContents.php')){
-					echo '<li><a target="_blank" href="'.$RootPath.'/locale/'.$_SESSION['Language'].'/Manual/ManualContents.php'. $ViewTopic . $BookMark. '">' . _('Manual') . '</a></li>';
+					echo '<li><a target="_blank" href="'.$RootPath . '../../wiki/index.php' . '">' . _('KL-Intranet') . '</a></li>';
 				} else {
 					echo $DefaultManualLink;
 				}
