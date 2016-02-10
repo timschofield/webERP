@@ -135,12 +135,12 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 			$LogoXPosition = 9;
 			$LogoYPosition = 1.5;
 			$LogoHeight = 4.5;
-			$LogoFile = 'companies/kurakura_klerp/LogoLabelBLINK.jpg';
+			$LogoFile = 'companies/kurakura_kl_erp/LogoLabelBLINK.jpg';
 		}else{
 			$LogoXPosition = 5.5;
 			$LogoYPosition = 1.5;
 			$LogoHeight = 4.5;
-			$LogoFile = 'companies/kurakura_klerp/LogoLabelKL.jpg';
+			$LogoFile = 'companies/kurakura_kl_erp/LogoLabelKL.jpg';
 		}
 	
 		// define price information

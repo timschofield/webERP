@@ -45,8 +45,8 @@ $dbpassword = 'me.21.cago.73.ento';
 $AllowCompanySelectionBox = 'Hide';
 
 //If $AllowCompanySelectionBox is not 'ShowSelectionBox' above then the $DefaultCompany string is entered in the login screen as a default 
-//otherwise the user is expected to know the name of the company to log into.$DefaultCompany = 'kurakura_klerp';
-$DefaultCompany = 'kurakura_klerp';
+//otherwise the user is expected to know the name of the company to log into.$DefaultCompany = 'kurakura_kl_erp';
+$DefaultCompany = 'kurakura_kl_erp';
 
 //The maximum time that a login session can be idle before automatic logout
 //time is in seconds  3600 seconds in an hour
@@ -103,6 +103,6 @@ error_reporting (E_ALL & ~E_NOTICE & ~E_WARNING);
 
 //Installed companies
 $CompanyList[0] = array('database'=>'weberpdemo' ,'company'=>'WebERP Demo Company' );
-$CompanyList[1] = array('database'=>'kurakura_klerp_test' ,'company'=>'TEST Kapal-Laut' );
+$CompanyList[1] = array('database'=>'kurakura_kl_erp_test' ,'company'=>'TEST Kapal-Laut' );
 /*Make sure there is nothing - not even spaces after this last ?> */
 ?>
