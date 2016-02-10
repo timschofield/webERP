@@ -167,50 +167,40 @@ if (DB_num_rows($result) != 0){
 					$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
 					$ItemsAdded++;
 				}else{
-					// Mirar si pertany a super categoria SILVER
+					// Mirar si pertany a super categoria STABKL
 					$WebsiteCategory = WebsiteCategorySilverJewellery($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
 					if ($WebsiteCategory > 0){
 						InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $FeaturedAsTopSales, $UpdateDB, $db);
 						$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
 						$ItemsAdded++;
 					}else{
-						// Mirar si pertany a super categoria FASHION JEWELLERY
-						$WebsiteCategory = WebsiteCategoryFashionJewellery($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
+						// Mirar si pertany a super categoria BLINK JEWELLERY
+						$WebsiteCategory = WebsiteCategoryBlinkJewellery($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
 						if ($WebsiteCategory > 0){
 							InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $FeaturedAsTopSales, $UpdateDB, $db);
 							$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
 							$ItemsAdded++;
 						}else{
-							// Mirar si pertany a super categoria STAINLESS STEEL
-							$WebsiteCategory = WebsiteCategoryStainlessSteel($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
+							// Mirar si pertany a super categoria CLASSIC
+							$WebsiteCategory = WebsiteCategoryClassic($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
 							if ($WebsiteCategory > 0){
 								InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $FeaturedAsTopSales, $UpdateDB, $db);
 								$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
 								$ItemsAdded++;
 							}else{
-								// Mirar si pertany a super categoria LEATHER RICARD DESACTIVATED 20/10/2014
-								// $WebsiteCategory = WebsiteCategoryLeatherJewellery($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
-								// Mirar si pertany a super categoria CLASSIC
-								$WebsiteCategory = WebsiteCategoryClassic($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
+								// Mirar si pertany a super categoria BAGS
+								$WebsiteCategory = WebsiteCategoryBags($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
 								if ($WebsiteCategory > 0){
 									InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $FeaturedAsTopSales, $UpdateDB, $db);
 									$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
 									$ItemsAdded++;
 								}else{
-									// Mirar si pertany a super categoria BAGS
-									$WebsiteCategory = WebsiteCategoryBags($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
+									// Mirar si pertany a super categoria WORLD BRANDS
+									$WebsiteCategory = WebsiteCategoryWorldBrandJewellery($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
 									if ($WebsiteCategory > 0){
 										InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $FeaturedAsTopSales, $UpdateDB, $db);
 										$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
 										$ItemsAdded++;
-									}else{
-										// Mirar si pertany a super categoria WORLD BRANDS
-										$WebsiteCategory = WebsiteCategoryWorldBrandJewellery($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
-										if ($WebsiteCategory > 0){
-											InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $FeaturedAsTopSales, $UpdateDB, $db);
-											$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
-											$ItemsAdded++;
-										}
 									}
 								}
 							}
@@ -345,12 +335,12 @@ function WebsiteCategoryWorldBrandJewellery($StockId, $Description, $Long, $Cate
 function WebsiteCategorySilverJewellery($StockId, $Description, $Long, $Category){
 	$WebCat = 0;
 	
-	//('SILVER_JEWELLERY',5);
-	if (ItemInList($Category, LIST_STOCK_CATEGORIES_SILVER)){
+	//('KL_JEWELLERY',5);
+	if (ItemInList($Category, LIST_STOCK_CATEGORIES_KAPAL_LAUT)){
 		// if belongs to one of the silver categories 
 		if (WebsiteCategoryClassic($StockId, $Description, $Long, $Category) == 0){
 			// AND is NOT a classic category
-			$WebCat = SILVER_JEWELLERY;	
+			$WebCat = KL_JEWELLERY;	
 		}
 	}
 
@@ -360,48 +350,48 @@ function WebsiteCategorySilverJewellery($StockId, $Description, $Long, $Category
 	}
 	
 	// define subcategory
-	if (($WebCat == SILVER_JEWELLERY) AND isRing($StockId)){
+	if (($WebCat == KL_JEWELLERY) AND isRing($StockId)){
 		if (isSlimRing($StockId)){
-			$WebCat = SILVER_SLIMRINGS;
+			$WebCat = KL_SLIMRINGS;
 		}
 		else{
-			$WebCat = SILVER_RINGS;	
+			$WebCat = KL_RINGS;	
 		}
 	}
-	if (($WebCat == SILVER_JEWELLERY) AND isToeRing($StockId)){
-		$WebCat = SILVER_TOERINGS;	
+	if (($WebCat == KL_JEWELLERY) AND isToeRing($StockId)){
+		$WebCat = KL_TOERINGS;	
 	}
-	if (($WebCat == SILVER_JEWELLERY) AND isEarring($StockId)){
-		$WebCat = SILVER_EARRINGS;	
+	if (($WebCat == KL_JEWELLERY) AND isEarring($StockId)){
+		$WebCat = KL_EARRINGS;	
 	}
-	if (($WebCat == SILVER_JEWELLERY) AND isEarcuff($StockId)){
-		$WebCat = SILVER_EARCUFFS;	
+	if (($WebCat == KL_JEWELLERY) AND isEarcuff($StockId)){
+		$WebCat = KL_EARCUFFS;	
 	}
-	if (($WebCat == SILVER_JEWELLERY) AND isBracelet($StockId)){
-		$WebCat = SILVER_BRACELETS;	
+	if (($WebCat == KL_JEWELLERY) AND isBracelet($StockId)){
+		$WebCat = KL_BRACELETS;	
 	}
-	if (($WebCat == SILVER_JEWELLERY) AND isAnklet($StockId)){
-		$WebCat = SILVER_ANKLETS;	
+	if (($WebCat == KL_JEWELLERY) AND isAnklet($StockId)){
+		$WebCat = KL_ANKLETS;	
 	}
-	if (($WebCat == SILVER_JEWELLERY) AND isNecklace($StockId)){
-		$WebCat = SILVER_NECKLACES;	
+	if (($WebCat == KL_JEWELLERY) AND isNecklace($StockId)){
+		$WebCat = KL_NECKLACES;	
 	}
-	if (($WebCat == SILVER_JEWELLERY) AND isPendant($StockId)){
-		$WebCat = SILVER_PENDANTS;	
+	if (($WebCat == KL_JEWELLERY) AND isPendant($StockId)){
+		$WebCat = KL_PENDANTS;	
 	}	
-	if (($WebCat == SILVER_JEWELLERY) AND isBrooche($StockId)){
-		$WebCat = SILVER_BROOCHES;	
+	if (($WebCat == KL_JEWELLERY) AND isBrooche($StockId)){
+		$WebCat = KL_BROOCHES;	
 	}	
 	return $WebCat; 
 }
 
-function WebsiteCategoryFashionJewellery($StockId, $Description, $Long, $Category){
+function WebsiteCategoryBlinkJewellery($StockId, $Description, $Long, $Category){
 	$WebCat = 0;
 	
-	//(('FASHION_JEWELLERY',14);
+	//(('BLINK_JEWELLERY',14);
 	if (ItemInList($Category, LIST_STOCK_CATEGORIES_BLINK)){
 		// if belongs to one of the FJ categories BUT it does not have leather
-		$WebCat = FASHION_JEWELLERY;	
+		$WebCat = BLINK_JEWELLERY;	
 	}
 
 	// filter some false positives
@@ -410,103 +400,26 @@ function WebsiteCategoryFashionJewellery($StockId, $Description, $Long, $Categor
 	}
 
 	// define subcategory
-	if (($WebCat == FASHION_JEWELLERY) AND isRing($StockId)){
-		$WebCat = FASHION_JEWELLERY_RINGS;	
+	if (($WebCat == BLINK_JEWELLERY) AND isRing($StockId)){
+		$WebCat = BLINK_RINGS;	
 	}
-	if (($WebCat == FASHION_JEWELLERY) AND isEarring($StockId)){
-		$WebCat = FASHION_JEWELLERY_EARRINGS;	
+	if (($WebCat == BLINK_JEWELLERY) AND isEarring($StockId)){
+		$WebCat = BLINK_EARRINGS;	
 	}
-	if (($WebCat == FASHION_JEWELLERY) AND isEarcuff($StockId)){
-		$WebCat = FASHION_JEWELLERY_EARCUFFS;	
+	if (($WebCat == BLINK_JEWELLERY) AND isEarcuff($StockId)){
+		$WebCat = BLINK_EARCUFFS;	
 	}
-	if (($WebCat == FASHION_JEWELLERY) AND isBracelet($StockId)){
-		$WebCat = FASHION_JEWELLERY_BRACELETS;	
+	if (($WebCat == BLINK_JEWELLERY) AND isBracelet($StockId)){
+		$WebCat = BLINK_BRACELETS;	
 	}
-	if (($WebCat == FASHION_JEWELLERY) AND isNecklace($StockId)){
-		$WebCat = FASHION_JEWELLERY_NECKLACES;	
+	if (($WebCat == BLINK_JEWELLERY) AND isNecklace($StockId)){
+		$WebCat = BLINK_NECKLACES;	
 	}
-	if (($WebCat == FASHION_JEWELLERY) AND isPendant($StockId)){
-		$WebCat = FASHION_JEWELLERY_PENDANTS;	
+	if (($WebCat == BLINK_JEWELLERY) AND isPendant($StockId)){
+		$WebCat = BLINK_PENDANTS;	
 	}	
-	if (($WebCat == FASHION_JEWELLERY) AND isBrooche($StockId)){
-		$WebCat = FASHION_JEWELLERY_BROOCHES;	
-	}	
-	return $WebCat; 
-}
-
-function WebsiteCategoryStainlessSteel($StockId, $Description, $Long, $Category){
-	$WebCat = 0;
-	
-	//('STAINLESS_STEEL_JEWELLERY',6);
-	if (ItemInList($Category, LIST_STOCK_CATEGORIES_STAINLESS)){
-		// if belongs to one of the SS categories
-		$WebCat = STAINLESS_STEEL_JEWELLERY;	
-	}
-	// filter some false positives
-	if (ItemExcludedFromWebsite($StockId, $Category)){
-		$WebCat = ITEM_EXCLUDED_FROM_WEBSITE;
-	}
-
-	// define subcategory
-	if (($WebCat == STAINLESS_STEEL_JEWELLERY) AND isRing($StockId)){
-		$WebCat = STAINLESS_STEEL_RINGS;	
-	}
-	if (($WebCat == STAINLESS_STEEL_JEWELLERY) AND isEarring($StockId)){
-		$WebCat = STAINLESS_STEEL_EARRINGS;	
-	}
-	if (($WebCat == STAINLESS_STEEL_JEWELLERY) AND isEarcuff($StockId)){
-		$WebCat = STAINLESS_STEEL_EARCUFFS;	
-	}
-	if (($WebCat == STAINLESS_STEEL_JEWELLERY) AND isBracelet($StockId)){
-		$WebCat = STAINLESS_STEEL_BRACELETS;	
-	}
-	if (($WebCat == STAINLESS_STEEL_JEWELLERY) AND isNecklace($StockId)){
-		$WebCat = STAINLESS_STEEL_NECKLACE;	
-	}
-	if (($WebCat == STAINLESS_STEEL_JEWELLERY) AND isPendant($StockId)){
-		$WebCat = STAINLESS_STEEL_PENDANTS;	
-	}	
-	if (($WebCat == STAINLESS_STEEL_JEWELLERY) AND isBrooche($StockId)){
-		$WebCat = STAINLESS_STEEL_BROOCHES;	
-	}	
-	return $WebCat; 
-}
-
-function WebsiteCategoryLeatherJewellery($StockId, $Description, $Long, $Category){
-	$WebCat = 0;
-	
-	//(('LEATHER_JEWELLERY',26);
-	if ((ItemInList($Category, LIST_STOCK_CATEGORIES_BLINK))
-		AND ((isFamily($StockId, "LE")) OR (mb_stristr($Description, "leather") != FALSE)))  { 
-		$WebCat = LEATHER_JEWELLERY;	
-	}
-
-	// filter some false positives
-	if (ItemExcludedFromWebsite($StockId, $Category)){
-		$WebCat = ITEM_EXCLUDED_FROM_WEBSITE;
-	}
-
-	// define subcategory
-	if (($WebCat == LEATHER_JEWELLERY) AND isRing($StockId)){
-		$WebCat = LEATHER_RINGS;	
-	}
-	if (($WebCat == LEATHER_JEWELLERY) AND isEarring($StockId)){
-		$WebCat = LEATHER_EARRINGS;	
-	}
-	if (($WebCat == LEATHER_JEWELLERY) AND isEarcuff($StockId)){
-		$WebCat = LEATHER_EARCUFF;	
-	}
-	if (($WebCat == LEATHER_JEWELLERY) AND isBracelet($StockId)){
-		$WebCat = LEATHER_BRACELETS;	
-	}
-	if (($WebCat == LEATHER_JEWELLERY) AND isNecklace($StockId)){
-		$WebCat = LEATHER_NECKLACES;	
-	}
-	if (($WebCat == LEATHER_JEWELLERY) AND isPendant($StockId)){
-		$WebCat = LEATHER_PENDANTS;	
-	}	
-	if (($WebCat == LEATHER_JEWELLERY) AND isBrooches($StockId)){
-		$WebCat = LEATHER_BROOCHES;	
+	if (($WebCat == BLINK_JEWELLERY) AND isBrooche($StockId)){
+		$WebCat = BLINK_BROOCHES;	
 	}	
 	return $WebCat; 
 }
@@ -515,7 +428,7 @@ function WebsiteCategoryBags($StockId, $Description, $Long, $Category){
 	$WebCat = 0;
 	
 	//('BAGS',29);
-	if ((ItemInList($Category, LIST_STOCK_CATEGORIES_ACCESSORIES))
+	if ((ItemInList($Category, LIST_STOCK_CATEGORIES_GENERAL))
 		AND (isPlasticBag($StockId))){ 
 		$WebCat = BAGS;	
 	}

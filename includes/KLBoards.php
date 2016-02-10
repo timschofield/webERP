@@ -2247,7 +2247,7 @@ No pending transfer regarding this item
 /* 2013-05-27 excluding items in consignment clothing */
 
 	if (ItemInList($Location, LIST_SHOPS_KAPAL_LAUT)){
-		$FilterCategory = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_SILVER . " ";
+		$FilterCategory = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT . " ";
 		$MessageCategory = " KL Categories ";
 	}else if (ItemInList($Location, LIST_SHOPS_BLINK)){
 		$FilterCategory = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . " ";
@@ -3706,7 +3706,7 @@ function SplittedpaymentsBySPG($maxdays, $maxsplitted, $db){
 function ItemsNotTopSalesInShop($starttopitems, $endtopitems, $maxdays, $codeshop, $RootPath, $db){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
 	if (ItemInList($Location, LIST_SHOPS_KAPAL_LAUT)){
-		$FilterCategory = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_SILVER . " ";
+		$FilterCategory = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT . " ";
 	}else if (ItemInList($Location, LIST_SHOPS_BLINK)){
 		$FilterCategory = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . " ";
 	}else if (ItemInList($Location, LIST_SHOPS_OUTLET)){
