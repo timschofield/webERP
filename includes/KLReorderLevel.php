@@ -1049,7 +1049,7 @@ function OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db,
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
 			/* set the RL to the total of qty requested by customers */
-			SetReorderLevel("OnlineSales", $myrow['stkcode'],CODE_ONLINE_SHOP, 0, $myrow['totalqty'], $updateDB, $db);
+			SetReorderLevel("OnlineSales", $myrow['stkcode'],'TOKWS', 0, $myrow['totalqty'], $updateDB, $db);
 			if ($ShowMessages){
 				if ($k == 1) {
 					echo '<tr class="EvenTableRows">';
