@@ -135,12 +135,19 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 			$LogoXPosition = 14.0;
 			$LogoYPosition = 1.0;
 			$LogoHeight = 4.5;
-			$LogoFile = 'companies/kurakura_klerp/LogoLabelBLINK.jpg';
+			$LogoFile = 'companies/kurakura_kl_erp/LogoLabelBLINK.jpg';
 		}else{
+<<<<<<< HEAD
 			$LogoXPosition = 12.0;
 			$LogoYPosition = 1.0;
 			$LogoHeight = 4.0;
 			$LogoFile = 'companies/kurakura_klerp/LogoLabelKL.jpg';
+=======
+			$LogoXPosition = 5.5;
+			$LogoYPosition = 1.5;
+			$LogoHeight = 4.5;
+			$LogoFile = 'companies/kurakura_kl_erp/LogoLabelKL.jpg';
+>>>>>>> c7f15c39329c506a67f1c5d1b8946c2ef40009e5
 		}
 	
 		// define price information

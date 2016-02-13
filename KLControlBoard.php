@@ -352,7 +352,7 @@ if ($ProcessSection01){
 		ItemsWithStockLocationButNoStockAvailable("WABOM", "WaterBom", 15, 600, $RootPath, $db);
 		ItemsWithStockLocationButNoStockAvailable("WHAYA", "Ayana", 15, 600, $RootPath, $db);
 		ItemsWithStockLocationButNoStockAvailable("WHINT", "InterContinental", 15, 600, $RootPath, $db);
-		InsuficientStockForItems("SILVER", "TM-", "Tali Mie", 20, 40, $RootPath, $db);
+		InsuficientStockForItems("STABKL", "TM-", "Tali Mie", 20, 40, $RootPath, $db);
 	}
 	*/
 
@@ -367,6 +367,8 @@ if ($ProcessSection01){
 		ItemsWithoutRetailPrice("SETKL", 4.75, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		ItemsWithoutRetailPrice("SETBL", 4.75, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsWithoutRetailPrice("SETGE", 4.75, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		ItemsinSetUp("WithReorderLevel", $RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -394,9 +396,9 @@ if ($ProcessSection01){
 		GoodsJustTransferred("SERVI", "KANTO", 2, 50, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		
-	/*	InsuficientStockForTopSalesItems("SILVER", "10-Silver",90, 100, 150, $RootPath, $db);
+	/*	InsuficientStockForTopSalesItems("STABKL", "10-Silver",90, 100, 150, $RootPath, $db);
 		InsuficientStockForTopSalesItems("STAINL", "20-Stainless Steel", 90, 100, 150, $RootPath, $db);
-		InsuficientStockForTopSalesItems("FASHIO", "30-Fashion Jewellery", 90, 100, 150, $RootPath, $db);
+		InsuficientStockForTopSalesItems("STABBL", "30-Fashion Jewellery", 90, 100, 150, $RootPath, $db);
 		InsuficientStockForTopSalesItems("ACCESO", "40-Accessories", 90, 100, 150, $RootPath, $db);
 		InsuficientStockForTopSalesItems("CONSIG", "50-Consignment", 60, 100, 30, $RootPath, $db);
 		ValueStockLocation("TOK66", 1000, 1200, 0, 0, $db);
@@ -556,41 +558,31 @@ if ($ProcessSection02){
 	if ($KL_BusinessDevelopmentManager
 		OR $KL_SalesManager){
 
-	/*	GoodSellingItemsInCategory("TESTSI", 15, 6, $RootPath, $db);
-		GoodSellingItemsInCategory("TESTSS", 15, 6, $RootPath, $db);
+	/*	GoodSellingItemsInCategory("TESTKL", 15, 6, $RootPath, $db);
 		GoodSellingItemsInCategory("TESTBL", 15, 6, $RootPath, $db);
-		GoodSellingItemsInCategory("TESTAC", 15, 6, $RootPath, $db);
 
-		GoodSellingItemsInCategory("NOPOSI", 15, 6, $RootPath, $db);
-		GoodSellingItemsInCategory("NOPOSS", 15, 6, $RootPath, $db);
-		GoodSellingItemsInCategory("NOPOFJ", 15, 6, $RootPath, $db);
-		GoodSellingItemsInCategory("NOPOAC", 15, 6, $RootPath, $db);
+		GoodSellingItemsInCategory("NOPOKL", 15, 6, $RootPath, $db);
+		GoodSellingItemsInCategory("NOPOBL", 15, 6, $RootPath, $db);
 	*/
-		ActiveItemsNoSales( 30, "TESTSI", $RootPath, $db);
-		$NumberOfTestExecuted++;
-		ActiveItemsNoSales( 30, "TESTSS", $RootPath, $db);
+		ActiveItemsNoSales( 30, "TESTKL", $RootPath, $db);
 		$NumberOfTestExecuted++;
 		ActiveItemsNoSales( 30, "TESTBL", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ActiveItemsNoSales( 30, "TESTAC", $RootPath, $db);
+		ActiveItemsNoSales( 30, "TESTGE", $RootPath, $db);
 		$NumberOfTestExecuted++;
 
-		ActiveItemsNoSales( 30, "SILVER", $RootPath, $db);
+		ActiveItemsNoSales( 30, "STABKL", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ActiveItemsNoSales( 30, "STAINL", $RootPath, $db);
+		ActiveItemsNoSales( 30, "STABBL", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ActiveItemsNoSales( 30, "FASHIO", $RootPath, $db);
-		$NumberOfTestExecuted++;
-		ActiveItemsNoSales( 30, "ACCESO", $RootPath, $db);
+		ActiveItemsNoSales( 30, "STABGE", $RootPath, $db);
 		$NumberOfTestExecuted++;
 
-		ActiveItemsNoSales( 30, "NOPOSI", $RootPath, $db);
+		ActiveItemsNoSales( 30, "NOPOKL", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ActiveItemsNoSales( 30, "NOPOSS", $RootPath, $db);
+		ActiveItemsNoSales( 30, "NOPOBL", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ActiveItemsNoSales( 30, "NOPOFJ", $RootPath, $db);
-		$NumberOfTestExecuted++;
-		ActiveItemsNoSales( 30, "NOPOAC", $RootPath, $db);
+		ActiveItemsNoSales( 30, "NOPOGE", $RootPath, $db);
 		$NumberOfTestExecuted++;
 
 		ActiveItemsNoSales( 45, "DISC20", $RootPath, $db);
@@ -627,26 +619,15 @@ if ($ProcessSection02){
 		ItemsNotTopSalesInShop(1, 800, 60, "TOKSU", $RootPath, $db);
 		ItemsNotTopSalesInShop(1, 700, 60, "TOKSS", $RootPath, $db);
 	*/
-		PerformanceItemsInCategory("GOOD", "TESTSI", 15,  30, "VERY GOOD", $RootPath, $db);
+		PerformanceItemsInCategory("GOOD", "TESTKL", 15,  30, "VERY GOOD", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		PerformanceItemsInCategory("GOOD", "TESTSI", 30,  45, "GOOD", $RootPath, $db);
+		PerformanceItemsInCategory("GOOD", "TESTKL", 30,  45, "GOOD", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		PerformanceItemsInCategory("BAD",  "TESTSI", 50,  30, "BAD", $RootPath, $db);
+		PerformanceItemsInCategory("BAD",  "TESTKL", 50,  30, "BAD", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		PerformanceItemsInCategory("BAD",  "TESTSI", 60, 100, "LONG TIME TESTING", $RootPath, $db);
+		PerformanceItemsInCategory("BAD",  "TESTKL", 60, 100, "LONG TIME TESTING", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		PerformanceItemsInCategory("GOOD", "TESTSI", 60, 100, "TEST FINISHED", $RootPath, $db);
-		$NumberOfTestExecuted++;
-
-		PerformanceItemsInCategory("GOOD", "TESTSS", 15,  30, "VERY GOOD", $RootPath, $db);
-		$NumberOfTestExecuted++;
-		PerformanceItemsInCategory("GOOD", "TESTSS", 30,  45, "GOOD", $RootPath, $db);
-		$NumberOfTestExecuted++;
-		PerformanceItemsInCategory("BAD",  "TESTSS", 50,  30, "BAD", $RootPath, $db);
-		$NumberOfTestExecuted++;
-		PerformanceItemsInCategory("BAD",  "TESTSS", 60, 100, "LONG TIME TESTING", $RootPath, $db);
-		$NumberOfTestExecuted++;
-		PerformanceItemsInCategory("GOOD", "TESTSS", 60, 100, "TEST FINISHED", $RootPath, $db);
+		PerformanceItemsInCategory("GOOD", "TESTKL", 60, 100, "TEST FINISHED", $RootPath, $db);
 		$NumberOfTestExecuted++;
 
 		PerformanceItemsInCategory("GOOD", "TESTBL", 15,  30, "VERY GOOD", $RootPath, $db);
@@ -660,43 +641,36 @@ if ($ProcessSection02){
 		PerformanceItemsInCategory("GOOD", "TESTBL", 60, 100, "TEST FINISHED", $RootPath, $db);
 		$NumberOfTestExecuted++;
 
-		PerformanceItemsInCategory("GOOD", "TESTAC", 15,  30, "VERY GOOD", $RootPath, $db);
+		PerformanceItemsInCategory("GOOD", "TESTGE", 15,  30, "VERY GOOD", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		PerformanceItemsInCategory("GOOD", "TESTAC", 30,  45, "GOOD", $RootPath, $db);
+		PerformanceItemsInCategory("GOOD", "TESTGE", 30,  45, "GOOD", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		PerformanceItemsInCategory("BAD",  "TESTAC", 50,  30, "BAD", $RootPath, $db);
+		PerformanceItemsInCategory("BAD",  "TESTGE", 50,  30, "BAD", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		PerformanceItemsInCategory("BAD",  "TESTAC", 60, 100, "LONG TIME TESTING", $RootPath, $db);
+		PerformanceItemsInCategory("BAD",  "TESTGE", 60, 100, "LONG TIME TESTING", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		PerformanceItemsInCategory("GOOD", "TESTAC", 60, 100, "TEST FINISHED", $RootPath, $db);
-		$NumberOfTestExecuted++;
-
-		PerformanceItemsInCategory("BAD",  "NOPOSI", 60,  50, "MOVE TO DISCOUNT", $RootPath, $db);
-		$NumberOfTestExecuted++;
-		PerformanceItemsInCategory("BAD",  "NOPOSI",120,  75, "MOVE TO DISCOUNT", $RootPath, $db);
-		$NumberOfTestExecuted++;
-		PerformanceItemsInCategory("BAD",  "NOPOSI",180, 100, "MOVE TO DISCOUNT", $RootPath, $db);
+		PerformanceItemsInCategory("GOOD", "TESTGE", 60, 100, "TEST FINISHED", $RootPath, $db);
 		$NumberOfTestExecuted++;
 
-		PerformanceItemsInCategory("BAD",  "NOPOSS", 60,  50, "MOVE TO DISCOUNT", $RootPath, $db);
+		PerformanceItemsInCategory("BAD",  "NOPOKL", 60,  50, "MOVE TO DISCOUNT", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		PerformanceItemsInCategory("BAD",  "NOPOSS",120,  75, "MOVE TO DISCOUNT", $RootPath, $db);
+		PerformanceItemsInCategory("BAD",  "NOPOKL",120,  75, "MOVE TO DISCOUNT", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		PerformanceItemsInCategory("BAD",  "NOPOSS",180, 100, "MOVE TO DISCOUNT", $RootPath, $db);
-		$NumberOfTestExecuted++;
-
-		PerformanceItemsInCategory("BAD",  "NOPOFJ", 60,  50, "MOVE TO DISCOUNT", $RootPath, $db);
-		$NumberOfTestExecuted++;
-		PerformanceItemsInCategory("BAD",  "NOPOFJ",120,  75, "MOVE TO DISCOUNT", $RootPath, $db);
-		$NumberOfTestExecuted++;
-		PerformanceItemsInCategory("BAD",  "NOPOFJ",180, 100, "MOVE TO DISCOUNT", $RootPath, $db);
+		PerformanceItemsInCategory("BAD",  "NOPOKL",180, 100, "MOVE TO DISCOUNT", $RootPath, $db);
 		$NumberOfTestExecuted++;
 
-		PerformanceItemsInCategory("BAD",  "NOPOAC", 60,  50, "MOVE TO DISCOUNT", $RootPath, $db);
+		PerformanceItemsInCategory("BAD",  "NOPOBL", 60,  50, "MOVE TO DISCOUNT", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		PerformanceItemsInCategory("BAD",  "NOPOAC",120,  75, "MOVE TO DISCOUNT", $RootPath, $db);
+		PerformanceItemsInCategory("BAD",  "NOPOBL",120,  75, "MOVE TO DISCOUNT", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		PerformanceItemsInCategory("BAD",  "NOPOAC",180, 100, "MOVE TO DISCOUNT", $RootPath, $db);
+		PerformanceItemsInCategory("BAD",  "NOPOBL",180, 100, "MOVE TO DISCOUNT", $RootPath, $db);
+		$NumberOfTestExecuted++;
+
+		PerformanceItemsInCategory("BAD",  "NOPOGE", 60,  50, "MOVE TO DISCOUNT", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		PerformanceItemsInCategory("BAD",  "NOPOGE",120,  75, "MOVE TO DISCOUNT", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		PerformanceItemsInCategory("BAD",  "NOPOGE",180, 100, "MOVE TO DISCOUNT", $RootPath, $db);
 		$NumberOfTestExecuted++;
 
 		PerformanceItemsInCategory("BAD",  "DISC20", 60, 100, "MOVE TO 50% DISCOUNT", $RootPath, $db);

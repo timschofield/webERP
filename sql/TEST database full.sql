@@ -1,8 +1,8 @@
 SET FOREIGN_KEY_CHECKS=0;
 
-UPDATE  `config` SET  `confvalue` =  'companies/kurakura_klerp_test/part_pics' WHERE  `confname` =  'part_pics_dir';
-UPDATE  `config` SET  `confvalue` =  'companies/kurakura_klerp_test/reportwriter' WHERE  `confname` =  'reports_dir';
-UPDATE  `config` SET  `confvalue` =  'companies/kurakura_klerp_test/logs' WHERE  `confname` =  'LogPath';
+UPDATE  `config` SET  `confvalue` =  'companies/kurakura_kl_test_erp/part_pics' WHERE  `confname` =  'part_pics_dir';
+UPDATE  `config` SET  `confvalue` =  'companies/kurakura_kl_test_erp/reportwriter' WHERE  `confname` =  'reports_dir';
+UPDATE  `config` SET  `confvalue` =  'companies/kurakura_kl_test_erp/logs' WHERE  `confname` =  'LogPath';
 
 UPDATE  `config` SET  `confvalue` =  'TEST SHOP' WHERE  `confname` =  'ShopName';
 UPDATE  `config` SET  `confvalue` =  'TEST SHOP' WHERE  `confname` =  'ShopTitle';

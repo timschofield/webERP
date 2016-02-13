@@ -2247,7 +2247,7 @@ No pending transfer regarding this item
 /* 2013-05-27 excluding items in consignment clothing */
 
 	if (ItemInList($Location, LIST_SHOPS_KAPAL_LAUT)){
-		$FilterCategory = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_SILVER . " ";
+		$FilterCategory = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT . " ";
 		$MessageCategory = " KL Categories ";
 	}else if (ItemInList($Location, LIST_SHOPS_BLINK)){
 		$FilterCategory = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . " ";
@@ -3047,9 +3047,8 @@ function DiscountedItemsOnNotOutletShops($Category, $RootPath, $db){
 			FROM stockmaster, locstock
 			WHERE stockmaster.stockid = locstock.stockid
 				AND stockmaster.categoryid = '" . $Category . "'
-				AND locstock.loccode IN " . LIST_ALL_SHOPS . "
-				AND locstock.loccode NOT IN " . LIST_SHOPS_OUTLET . "
-				AND locstock.loccode NOT IN " . LIST_ONLINE_SHOPS . "
+				AND (locstock.loccode IN " . LIST_SHOPS_KAPAL_LAUT . "
+					OR locstock.loccode IN " . LIST_SHOPS_BLINK . ")
 				AND ( locstock.quantity > 0 OR locstock.reorderlevel > 0 )
 			ORDER BY stockmaster.stockid";
 // EXPLAIN SQL 2014-05-31
@@ -3106,10 +3105,8 @@ function NotDiscountedItemsOnOutletShops($RootPath, $db){
 					locstock.reorderlevel
 			FROM stockmaster, locstock
 			WHERE stockmaster.stockid = locstock.stockid
-				AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_TEST . "
-					OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_STABLE . "
-					OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING . ")
-				AND locstock.loccode IN " . LIST_ALL_SHOPS . "
+				AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT . "
+					OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . ")
 				AND locstock.loccode IN " . LIST_SHOPS_OUTLET . "
 				AND ( locstock.quantity > 0 OR locstock.reorderlevel > 0 )
 			ORDER BY stockmaster.stockid";
@@ -3228,64 +3225,7 @@ function CategoryItemsNotInShop($Category, $Shop, $RootPath, $db){
 	}
 }
 
-
-			
-function OutletItemsOnKLShops($RootPath, $db){
-	$SQL = "SELECT stockmaster.stockid,
-					stockmaster.description,
-					locstock.loccode,
-					locstock.quantity,
-					locstock.reorderlevel
-			FROM stockmaster, locstock
-			WHERE stockmaster.stockid = locstock.stockid
-				AND stockmaster.categoryid IN ('DISC80')
-				AND locstock.loccode IN " . LIST_ALL_SHOPS . "
-				AND locstock.quantity > 0
-				AND NOT EXISTS (SELECT *
-						FROM loctransfers 
-						WHERE  recqty < shipqty
-							AND loctransfers.stockid =  stockmaster.stockid)
-			ORDER BY stockmaster.stockid";
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Outlet items on KL shops') . '</strong></p>';
-		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Code') . '</th>
-							<th class="ascending">' . _('Description') . '</th>
-							<th class="ascending">' . _('Shop') . '</th>
-							<th class="ascending">' . _('Quantity') . '</th>
-							<th class="ascending">' . _('Reorder Level') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
-		$i = 1;
-		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
-			$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
-			printf('<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					$i, 
-					$CodeLink, 
-					$myrow['description'], 
-					$myrow['loccode'], 
-					$myrow['quantity'], 
-					$myrow['reorderlevel'] 
-					);
-			$i++;
-		}
-		echo '</table>
-				</div>';
-	}
-}
-			
+		
 function DiscountedItemsWithWrongDiscount($Category, $DiscountCode, $RootPath, $db){
 	$SQL = "SELECT * 
 			FROM  stockmaster 
@@ -3706,7 +3646,7 @@ function SplittedpaymentsBySPG($maxdays, $maxsplitted, $db){
 function ItemsNotTopSalesInShop($starttopitems, $endtopitems, $maxdays, $codeshop, $RootPath, $db){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
 	if (ItemInList($Location, LIST_SHOPS_KAPAL_LAUT)){
-		$FilterCategory = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_SILVER . " ";
+		$FilterCategory = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT . " ";
 	}else if (ItemInList($Location, LIST_SHOPS_BLINK)){
 		$FilterCategory = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . " ";
 	}else if (ItemInList($Location, LIST_SHOPS_OUTLET)){
@@ -8107,7 +8047,7 @@ function PackagingItemsOnWrongLocation($RootPath, $db){
 
 id	select_type	table	type	possible_keys	key	key_len	ref	rows	Extra
 1	SIMPLE	stockmaster	ref	PRIMARY,CategoryID,StockID	CategoryID	20	const	10	Using where
-1	SIMPLE	locstock	ref	PRIMARY,StockID	StockID	62	kurakura_klerp.stockmaster.stockid	14	Using where
+1	SIMPLE	locstock	ref	PRIMARY,StockID	StockID	62	kurakura_kl_erp.stockmaster.stockid	14	Using where
 
 */	
 	$SQL = "SELECT stockmaster.stockid,
@@ -8169,10 +8109,10 @@ function InsuficientStockForShopPackaging($Category, $DaysUsage, $DaysMinimumSto
 /* EXPLAIN SQL	2014-05-20	
 id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 1	PRIMARY				stockmaster			ref		CategoryID					CategoryID			20	const	10	Using where
-4	DEPENDENT SUBQUERY	purchorderdetails	ref		ItemCode,OrderNo,Completed	ItemCode			62	kurakura_klerp.stockmaster.stockid	2	Using where
-4	DEPENDENT SUBQUERY	purchorders			eq_ref	PRIMARY						PRIMARY				4	kurakura_klerp.purchorderdetails.orderno	1	Using where
-3	DEPENDENT SUBQUERY	packagingused		ref		StockID+Date				StockID+Date		62	kurakura_klerp.stockmaster.stockid	81	Using where
-2	DEPENDENT SUBQUERY	locstock			ref		StockID	StockID									62	kurakura_klerp.stockmaster.stockid	14	
+4	DEPENDENT SUBQUERY	purchorderdetails	ref		ItemCode,OrderNo,Completed	ItemCode			62	kurakura_kl_erp.stockmaster.stockid	2	Using where
+4	DEPENDENT SUBQUERY	purchorders			eq_ref	PRIMARY						PRIMARY				4	kurakura_kl_erp.purchorderdetails.orderno	1	Using where
+3	DEPENDENT SUBQUERY	packagingused		ref		StockID+Date				StockID+Date		62	kurakura_kl_erp.stockmaster.stockid	81	Using where
+2	DEPENDENT SUBQUERY	locstock			ref		StockID	StockID									62	kurakura_kl_erp.stockmaster.stockid	14	
 
 */
 	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -$DaysUsage-1));
@@ -8307,7 +8247,7 @@ function ItemsWithoutPurchasingData($RootPath, $db){
 
 id	select_type	table		type	possible_keys		key			key_len	ref									rows	Extra
 1	SIMPLE		purchdata	ref		StockID,Preferred	Preferred	1		const								4387	Using where; Using temporary; Using filesort
-1	SIMPLE		stockmaster	eq_ref	PRIMARY,StockID		PRIMARY		62		kurakura_klerp.purchdata.stockid	1	Using where
+1	SIMPLE		stockmaster	eq_ref	PRIMARY,StockID		PRIMARY		62		kurakura_kl_erp.purchdata.stockid	1	Using where
 
 */
 	
