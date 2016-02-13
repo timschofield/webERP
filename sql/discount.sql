@@ -1,11 +1,10 @@
 UPDATE locstock
-SET reorderlevel = 0
-WHERE loccode = "TOKSA"
-	AND stockid IN (
-					SELECT stockid
+SET reorderlevel = 5
+WHERE loccode = "TOKAR"
+	AND reorderlevel > 5
+	AND stockid IN (SELECT stockid
 					FROM stockmaster
-					WHERE categoryid = "DISCOU"
-					)
+					WHERE categoryid LIKE 'DISC%')
 					
 					
 					
