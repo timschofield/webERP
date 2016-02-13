@@ -126,40 +126,42 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 	// set the variables depending on the label type
 	if ($_POST['LabelID'] == 'T570'){
 		// Pricetags T570 general
-		$pagelayout = array(90, 10.2);
+		$pagelayout = array(90.0, 10.0);
 		$CoreFileName = "Pricetags";
 		
 		// define Logo information
 		if (ItemInList($_POST['StockCategory'], LIST_STOCK_CATEGORIES_BLINK)
 			OR $_POST['StockCategory'] == "SETBL"){
-			$LogoXPosition = 9;
-			$LogoYPosition = 1.5;
+			$LogoXPosition = 14.0;
+			$LogoYPosition = 1.0;
 			$LogoHeight = 4.5;
 			$LogoFile = 'companies/kurakura_klerp/LogoLabelBLINK.jpg';
 		}else{
-			$LogoXPosition = 5.5;
-			$LogoYPosition = 1.5;
-			$LogoHeight = 4.5;
+			$LogoXPosition = 12.0;
+			$LogoYPosition = 1.0;
+			$LogoHeight = 4.0;
 			$LogoFile = 'companies/kurakura_klerp/LogoLabelKL.jpg';
 		}
 	
 		// define price information
-		$PriceXPosition = 1;
-		$PriceYPosition = 6.5;
+		$PriceXPosition = 3;
+		$PriceYPosition = 5.7;
 		$PriceFont = 'helvetica';
-		$PriceFontSize = 7;
-		$PriceWidth = 24;
+		$PriceFontStyle = 'B';
+		$PriceAlignment = 'C';
+		$PriceFontSize = 7.5;
+		$PriceWidth = 30;
 		
 		// define barcode style for T570
-		$BarcodeXPosition = 30;
-		$BarcodeYPosition = 1.5;
-		$BarcodeLenght = 25;
-		$BarcodeWidth = 8.5;
+		$BarcodeXPosition = 30.5;
+		$BarcodeYPosition = 0.4;
+		$BarcodeLenght = 30;
+		$BarcodeWidth = 9.5;
 		$ResolutionDPI = 203; // uses imperial system so 200 are really 203. LOL
 		$XResolution = 25.4 / $ResolutionDPI; // 25.4mm per inch / resolution points per inch
 		$BarcodeStyle = array(
 				'position' => '',
-				'align' => 'L',
+				'align' => 'C',
 				'stretch' => false,
 				'fitwidth' => false,
 				'cellfitalign' => '',
@@ -170,8 +172,8 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 				'bgcolor' => false, //array(255,255,255),
 				'text' => true,
 				'font' => 'helvetica',
-				'fontsize' => 6,
-				'stretchtext' => 4);
+				'fontsize' => 7,
+				'stretchtext' => 0);
 	}else{
 		// Code tags
 		// not coded yet
@@ -217,8 +219,8 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 					$pdf->Image($LogoFile, $LogoXPosition, $LogoYPosition, 0, $LogoHeight, 'JPG', '', '', true, 200, '', false, false, 0, false, false, false);
 					// print the price
 					$pdf->SetXY($PriceXPosition,$PriceYPosition);
-					$pdf->SetFont($PriceFont, '', $PriceFontSize);
-					$pdf->Cell($PriceWidth, 0, $Price, 0, 0, 'C');
+					$pdf->SetFont($PriceFont, $PriceFontStyle, $PriceFontSize);
+					$pdf->Cell($PriceWidth, 0, $Price, 0, 0, $PriceAlignment);
 					// print the barcode
 					$pdf->write1DBarcode($StockId, 'C128', $BarcodeXPosition, $BarcodeYPosition, $BarcodeLenght, $BarcodeWidth, $XResolution, $BarcodeStyle, 'N');
 				}
