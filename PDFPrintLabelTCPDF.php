@@ -28,10 +28,7 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 				AND prices.startdate<='" . FormatDateForSQL($_POST['EffectiveDate']) . "'
 				AND (prices.enddate='0000-00-00' OR prices.enddate>'" . FormatDateForSQL($_POST['EffectiveDate']) . "')
 				AND prices.debtorno=''
-			ORDER BY prices.currabrev,
-				stockmaster.categoryid,
-				stockmaster.stockid,
-				prices.startdate";
+			ORDER BY stockmaster.stockid";
 
 	$LabelsResult = DB_query($SQL,'','',false,false);
 
@@ -137,17 +134,10 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 			$LogoHeight = 4.5;
 			$LogoFile = 'companies/kurakura_kl_erp/LogoLabelBLINK.jpg';
 		}else{
-<<<<<<< HEAD
 			$LogoXPosition = 12.0;
 			$LogoYPosition = 1.0;
 			$LogoHeight = 4.0;
-			$LogoFile = 'companies/kurakura_klerp/LogoLabelKL.jpg';
-=======
-			$LogoXPosition = 5.5;
-			$LogoYPosition = 1.5;
-			$LogoHeight = 4.5;
 			$LogoFile = 'companies/kurakura_kl_erp/LogoLabelKL.jpg';
->>>>>>> c7f15c39329c506a67f1c5d1b8946c2ef40009e5
 		}
 	
 		// define price information
