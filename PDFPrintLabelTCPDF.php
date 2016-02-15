@@ -14,14 +14,12 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 
 	$SQL = "SELECT prices.stockid,
 					stockmaster.description,
-					prices.price,
-					currencies.decimalplaces
+					stockmaster.discountcategory,
+					prices.price
 			FROM stockmaster INNER JOIN	stockcategory
    			     ON stockmaster.categoryid=stockcategory.categoryid
 			INNER JOIN prices
 				ON stockmaster.stockid=prices.stockid
-			INNER JOIN currencies
-				ON prices.currabrev=currencies.currabrev
 			WHERE stockmaster.categoryid = '" . $_POST['StockCategory'] . "'
 				AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
 				AND prices.currabrev = '". CURRENCY_CODE ."'
@@ -83,7 +81,8 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 		echo '<input type="hidden" name="StockID' . $i . '" value="' . $LabelRow['stockid'] . '" />
 			<input type="hidden" name="Description' . $i . '" value="' . $LabelRow['description'] . '" />
 			<input type="hidden" name="Barcode' . $i . '" value="' . $LabelRow['barcode'] . '" />
-			<input type="hidden" name="Price' . $i . '" value="' . locale_number_format($LabelRow['price'],$LabelRow['decimalplaces']) . '" />';
+			<input type="hidden" name="DiscountCategory' . $i . '" value="' . $LabelRow['discountcategory'] . '" />
+			<input type="hidden" name="Price' . $i . '" value="' . $LabelRow['price'] . '" />';
 		$i++;
 	}
 	$i--;
@@ -123,7 +122,7 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 	// set the variables depending on the label type
 	if ($_POST['LabelID'] == 'T570'){
 		// Pricetags T570 general
-		$pagelayout = array(90.0, 10.0);
+		$PageLayout = array(90.0, 10.0);
 		$CoreFileName = "Pricetags";
 		
 		// define Logo information
@@ -148,6 +147,7 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 		$PriceAlignment = 'C';
 		$PriceFontSize = 7.5;
 		$PriceWidth = 30;
+		$PreviousPriceYPosition = 1.0;
 		
 		// define barcode style for T570
 		$BarcodeXPosition = 30.5;
@@ -177,7 +177,7 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 		return;
 	}
 
-	$pdf = new TCPDF('L', 'mm', $pagelayout, true, 'UTF-8', false);
+	$pdf = new TCPDF('L', 'mm', $PageLayout, true, 'UTF-8', false);
 	
 	// set PDF document information
 	$pdf->SetCreator('webERP');
@@ -204,20 +204,54 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 			for ($LabelNumber=0; $LabelNumber < $_POST['LabelsPerItem'];$LabelNumber++){
 				
 				// Get the data for each field
-				$Price = $_POST['Price' . $i] . ' '. CURRENCY_CODE;
 				$StockId = $_POST['StockID' . $i];
 				$Description = $_POST['Description' . $i];
+
+				// define prices for discounted items
+				if (ItemInList($_POST['StockCategory'], LIST_STOCK_CATEGORIES_DISCOUNT)){
+					$ResultDiscount = DB_query("SELECT MAX(discountrate) AS discount
+									FROM discountmatrix
+								WHERE salestype='" . RETAIL_PRICE_LIST . "'
+								AND discountcategory ='" . $_POST['DiscountCategory'. $i] . "'
+								AND quantitybreak <='1'");
+					$myrow = DB_fetch_row($ResultDiscount);
+					if ($myrow[0]!=0){ 
+						// there's a discount!
+						$PercentageDiscount = $myrow[0];
+						$DiscountedPrice = "NOW: " . locale_number_format($_POST['Price' . $i] * (1-($PercentageDiscount)),0) . ' '. CURRENCY_CODE;
+						$Price = "WAS: " . locale_number_format($_POST['Price' . $i],0) . ' '. CURRENCY_CODE;
+					}else{
+						// no discount, price discounted by fixed price
+						$PercentageDiscount = 0;
+						$DiscountedPrice = "ONLY: " . locale_number_format($_POST['Price' . $i],0) . ' '. CURRENCY_CODE;
+						$Price = "";
+					}
+				}else{
+					// define prices for not discounted items
+					$Price = locale_number_format($_POST['Price' . $i],0) . ' '. CURRENCY_CODE;
+				}
 				
 				$pdf->AddPage();
 
 				// print depending on each type of label
 				if ($_POST['LabelID'] == 'T570'){
-					//Print the logo
-					$pdf->Image($LogoFile, $LogoXPosition, $LogoYPosition, 0, $LogoHeight, 'JPG', '', '', true, 200, '', false, false, 0, false, false, false);
-					// print the price
-					$pdf->SetXY($PriceXPosition,$PriceYPosition);
-					$pdf->SetFont($PriceFont, $PriceFontStyle, $PriceFontSize);
-					$pdf->Cell($PriceWidth, 0, $Price, 0, 0, $PriceAlignment);
+					if  (ItemInList($_POST['StockCategory'], LIST_STOCK_CATEGORIES_DISCOUNT)){
+						// print the previous price 
+						$pdf->SetXY($PriceXPosition,$PreviousPriceYPosition);
+						$pdf->SetFont($PriceFont, $PriceFontStyle, $PriceFontSize);
+						$pdf->Cell($PriceWidth, 0, $Price, 0, 0, $PriceAlignment);
+						// print the discounted price 
+						$pdf->SetXY($PriceXPosition,$PriceYPosition);
+						$pdf->SetFont($PriceFont, $PriceFontStyle, $PriceFontSize);
+						$pdf->Cell($PriceWidth, 0, $DiscountedPrice, 0, 0, $PriceAlignment);
+					}else{
+						//Print the logo
+						$pdf->Image($LogoFile, $LogoXPosition, $LogoYPosition, 0, $LogoHeight, 'JPG', '', '', true, 200, '', false, false, 0, false, false, false);
+						// print the price
+						$pdf->SetXY($PriceXPosition,$PriceYPosition);
+						$pdf->SetFont($PriceFont, $PriceFontStyle, $PriceFontSize);
+						$pdf->Cell($PriceWidth, 0, $Price, 0, 0, $PriceAlignment);
+					}
 					// print the barcode
 					$pdf->write1DBarcode($StockId, 'C128', $BarcodeXPosition, $BarcodeYPosition, $BarcodeLenght, $BarcodeWidth, $XResolution, $BarcodeStyle, 'N');
 				}
