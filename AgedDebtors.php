@@ -398,7 +398,6 @@ if (isset($_POST['PrintPDF'])
 
 				$YPos -=$line_height;
 				if ($YPos < $Bottom_Margin + $line_height){
-					$PageNumber++;
 					include('includes/PDFAgedDebtorsPageHeader.inc');
 				}
 
