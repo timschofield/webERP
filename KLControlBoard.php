@@ -444,11 +444,15 @@ if ($ProcessSection01){
 		CategoryItemsNotInShop("STABBL", "TOKPS", $RootPath, $db);
 		$NumberOfTestExecuted++;
 
+		CategoryItemsNotInShop("DISC50", "TOKAR", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("DISC80", "TOKAR", $RootPath, $db);
+		$NumberOfTestExecuted++;
+
 		CategoryItemsNotInShop("DISC50", "TOKSU", $RootPath, $db);
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("DISC80", "TOKSU", $RootPath, $db);
 		$NumberOfTestExecuted++;
-
 	//	ItemsInCategoryWithStockKantorButReorderLevelTokoZero("DISC20", $RootPath, $db);
 	//	$NumberOfTestExecuted++;
 	//	ItemsInCategoryWithStockKantorButReorderLevelTokoZero("DISC50", $RootPath, $db);
