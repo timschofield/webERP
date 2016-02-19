@@ -1,5 +1,6 @@
 webERP Change Log
 
+19/02/16 Daveparrish fixed page number error of AgedDebtors.php.
 02/02/16 Exson£ºFixed the bug of chartdetails bfwd amount wrong in GLPostings.inc.
 1/2/15 Exson: Make GL Posting really transaction in GLPostings.inc.
 30/01/16 Exson: Fix the bug to print invoice instead of credit note when a credit note requested in CustomerInquiry.php reported by daveparrish.
