@@ -1,5 +1,5 @@
 <?php
-/* $Id: PcAuthorizeExpenses.php 6951 2014-10-29 06:29:22Z daintree $*/
+/* $Id: PcAuthorizeExpenses.php 7443 2016-01-13 03:03:24Z tehonu $*/
 
 include('includes/session.inc');
 $Title = _('Authorisation of Petty Cash Expenses');
@@ -211,7 +211,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 												amount,
 												currcode)
 										VALUES ('". $ReceiptTransNo . "',
-											1,
+											2,
 											'" . $AccountFrom . "',
 											'" . $Narrative . "',
 											1,

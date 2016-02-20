@@ -1,5 +1,5 @@
 <?php
-/* $Id: TaxGroups.php 7244 2015-03-30 21:32:49Z vvs2012 $*/
+/* $Id: TaxGroups.php 7444 2016-01-13 07:32:36Z daintree $*/
 
 include('includes/session.inc');
 $Title = _('Tax Groups');
@@ -59,6 +59,7 @@ if(isset($_POST['submit']) OR isset($_GET['remove']) OR isset($_GET['add']) ) {
 	} elseif(isset($SelectedGroup) ) {
 		$TaxAuthority = $_GET['TaxAuthority'];
 		if( isset($_GET['add']) ) { // adding a tax authority to a tax group
+
 			$sql = "INSERT INTO taxgrouptaxes ( taxgroupid,
 												taxauthid,
 												calculationorder)

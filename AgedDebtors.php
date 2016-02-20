@@ -1,6 +1,6 @@
 <?php
 
- /* $Id: AgedDebtors.php 6944 2014-10-27 07:15:34Z daintree $ */
+ /* $Id: AgedDebtors.php 7458 2016-02-19 10:42:30Z exsonqu $ */
 
 include('includes/session.inc');
 
@@ -398,7 +398,6 @@ if (isset($_POST['PrintPDF'])
 
 				$YPos -=$line_height;
 				if ($YPos < $Bottom_Margin + $line_height){
-					$PageNumber++;
 					include('includes/PDFAgedDebtorsPageHeader.inc');
 				}
 

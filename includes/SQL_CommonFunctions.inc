@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: SQL_CommonFunctions.inc 7393 2015-11-17 00:38:05Z tehonu $*/
+/* $Id: SQL_CommonFunctions.inc 7436 2016-01-04 00:16:55Z tehonu $*/
 
 /* Common SQL Functions */
 
@@ -160,7 +160,7 @@ Function GetCreditAvailable($DebtorNo,&$db) {
 function ItemCostUpdateGL($db, $StockID, $NewCost, $OldCost, $QOH) {
 	if ($_SESSION['CompanyRecord']['gllink_stock']==1 
 		AND $QOH!=0
-		AND (abs($NewCost - $OldCost) > pow(1,-($_SESSION['StandardCostDecimalPlaces']+1)))){
+		AND (abs($NewCost - $OldCost) > pow(10,-($_SESSION['StandardCostDecimalPlaces']+1)))){
 
 		$CostUpdateNo = GetNextTransNo(35, $db);
 		$PeriodNo = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);

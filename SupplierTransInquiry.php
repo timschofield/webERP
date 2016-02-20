@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: SupplierTransInquiry.php 6944 2014-10-27 07:15:34Z daintree $*/
+/* $Id: SupplierTransInquiry.php 7423 2015-12-24 10:12:57Z exsonqu $*/
 
 include('includes/session.inc');
 $Title = _('Supplier Transactions Inquiry');
@@ -48,10 +48,16 @@ if (!isset($_POST['FromDate'])){
 if (!isset($_POST['ToDate'])){
 	$_POST['ToDate'] = Date($_SESSION['DefaultDateFormat']);
 }
+if (!isset($_POST['SupplierNo'])) {
+	$_POST['SupplierNo'] = '';
+}
 echo '<td>' . _('From') . ':</td>
 		<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" /></td>
 		<td>' . _('To') . ':</td>
 		<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" /></td>
+		<td>' . _('Supplier No') . ':</td>
+		<td><input type="text" name="SupplierNo" size="11" maxlength="10" value="' . $_POST['SupplierNo'] . '" />
+		</td>
 	</tr>
 	</table>
 	<br />

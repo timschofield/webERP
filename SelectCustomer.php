@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: SelectCustomer.php 7365 2015-10-06 12:36:27Z exsonqu $*/
+/* $Id: SelectCustomer.php 7407 2015-12-09 07:53:30Z exsonqu $*/
 
 include('includes/session.inc');
 $Title = _('Search Customers');
@@ -289,7 +289,7 @@ echo '</td>
 if (isset($_POST['CustPhone'])) {
 	echo '<input type="tel" name="CustPhone"  pattern="[0-9\-\s()+]*" value="' . $_POST['CustPhone'] . '" size="15" maxlength="18" />';
 } else {
-	echo '<input type="tel" name="CustPhone"  pattern="[0-9\-\s()+]* "size="15" maxlength="18" />';
+	echo '<input type="tel" name="CustPhone"  pattern="[0-9\-\s()+]*" size="15" maxlength="18" />';
 }
 echo '</td>';
 echo '<td><b>' . _('OR') . '</b></td>

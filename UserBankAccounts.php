@@ -1,10 +1,11 @@
 <?php
+/* $Id: UserBankAccounts.php 7398 2015-11-24 19:59:10Z tehonu $*/
+/* Maintains table bankaccountusers (Authorized users to work with a bank account in webERP). */
 
 include('includes/session.inc');
-$Title = _('Bank Account Users');;// Screen identificator.
-$ViewTopic = 'GeneralLedger';// Filename's id in ManualContents.php's TOC.
-/* To do this section in the manual.
-$BookMark = 'UserBankAccounts';// Anchor's id in the manual's html document.*/
+$Title = _('Bank Account Users');
+$ViewTopic = 'GeneralLedger';
+$BookMark = 'UserBankAccounts';
 include('includes/header.inc');
 
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/money_add.png" title="' . _('User Authorised Bank Accounts') . '" alt="" />' . ' ' . $Title . '</p>';

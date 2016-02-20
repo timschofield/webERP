@@ -107,46 +107,7 @@ if (isset($_GET['DebtorNo'])) {
 			$BalToAllocate += $ThisAllocation;//since $BalToAllocate is negative
 		}
 		DB_free_result($TransResult);
-			// Get trans previously allocated to by this trans - this will overwrite incomplete allocations above
-		$SQL= "SELECT debtortrans.id,
-					typename,
-					transno,
-					trandate,
-					rate,
-					ovamount+ovgst+ovfreight+ovdiscount AS total,
-					diffonexch,
-					debtortrans.alloc-custallocns.amt AS prevallocs,
-					amt,
-					custallocns.id AS allocid
-			FROM debtortrans INNER JOIN systypes
-			ON debtortrans.type = systypes.typeid
-			INNER JOIN custallocns
-			ON debtortrans.id=custallocns.transid_allocto
-			WHERE custallocns.transid_allocfrom='" . $_SESSION['Alloc']->AllocTrans . "'
-			AND debtorno='" . $_SESSION['Alloc']->DebtorNo . "'";
-
-		if ($_SESSION['SalesmanLogin'] != '') {
-			$SQL .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
-		}
-
-		$SQL .= " ORDER BY debtortrans.trandate";
-
-		$Result=DB_query($SQL,$db);
-
-		while ($myrow=DB_fetch_array($Result)) {
-			$DiffOnExchThisOne = ($myrow['amt']/$myrow['rate']) - ($myrow['amt']/$_SESSION['Alloc']->TransExRate);
-			$_SESSION['Alloc']->add_to_AllocsAllocn ($myrow['id'],
-												$myrow['typename'],//_($myrow['typename']), **********
-												$myrow['transno'],
-												ConvertSQLDate($myrow['trandate']),
-												$myrow['amt'],
-												$myrow['total'],
-												$myrow['rate'],
-												$DiffOnExchThisOne,
-												($myrow['diffonexch'] - $DiffOnExchThisOne),
-												$myrow['prevallocs'],
-												$myrow['allocid']);
-		}
+		
 		ProcessAllocation();
 	}
 	echo '</table>';
@@ -163,6 +124,7 @@ function ProcessAllocation() {
 		$Error = '';
 		$Result= DB_Txn_Begin();
 		$AllAllocations = 0;
+		$TotalDiffOnExch = 0;
 		foreach ($_SESSION['Alloc']->Allocs as $AllocnItem) {
 
 			if ($AllocnItem->AllocAmt > 0) {
@@ -185,6 +147,7 @@ function ProcessAllocation() {
 			$NewAllocTotal = $AllocnItem->PrevAlloc + $AllocnItem->AllocAmt;
 			$AllAllocations = $AllAllocations + $AllocnItem->AllocAmt;
 			$Settled = (abs($NewAllocTotal-$AllocnItem->TransAmount) < 0.005) ? 1 : 0;
+			$TotalDiffOnExch += $AllocnItem->DiffOnExch;
 
 			$SQL = "UPDATE debtortrans
 					SET diffonexch='" . $AllocnItem->DiffOnExch . "',
