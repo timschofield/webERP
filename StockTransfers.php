@@ -1,5 +1,5 @@
 <?php
-/* $Id: StockTransfers.php 7299 2015-05-10 20:53:03Z rchacon $*/
+/* $Id: StockTransfers.php 7462 2016-02-20 08:27:29Z tehonu $*/
 /* Entry of point to point stock location transfers of a single part. */
 
 include('includes/DefineSerialItems.php');
@@ -230,7 +230,8 @@ if(isset($_POST['EnterTransfer']) ) {
 								WHERE stockmaster.stockid ='" . $_SESSION['Transfer']->TransferItem[0]->StockID . "'";
 			$ErrMsg = _('The standard cost of the item cannot be retrieved because');
 			$DbgMsg = _('The SQL that failed was');
-			$myrow = DB_fetch_array(DB_query($SQLstandardcost,$ErrMsg,$DbgMsg));
+			$ResultStandardCost = DB_query($SQLstandardcost,$ErrMsg,$DbgMsg);
+			$myrow = DB_fetch_array($ResultStandardCost);
 			$StandardCost = $myrow['standardcost'];// QUESTION: Standard cost for: Assembly (value="A") and Manufactured (value="M") items ?
 			// Insert record:
 			$SQL = "INSERT INTO gltrans (
@@ -385,7 +386,8 @@ if(isset($_POST['EnterTransfer']) ) {
 								WHERE stockmaster.stockid ='" . $_SESSION['Transfer']->TransferItem[0]->StockID . "'";
 			$ErrMsg = _('The standard cost of the item cannot be retrieved because');
 			$DbgMsg = _('The SQL that failed was');
-			$myrow = DB_fetch_array(DB_query($SQLstandardcost,$ErrMsg,$DbgMsg));
+			$ResultStandardCost = DB_query($SQLstandardcost,$ErrMsg,$DbgMsg);
+			$myrow = DB_fetch_array($ResultStandardCost);
 			$StandardCost = $myrow['standardcost'];// QUESTION: Standard cost for: Assembly (value="A") and Manufactured (value="M") items ?
 			// Insert record:
 			$SQL = "INSERT INTO gltrans (
