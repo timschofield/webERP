@@ -63,12 +63,6 @@ function submit(&$db, $ListCategories, $Location) {
 										 ->setKeywords("")
 										 ->setCategory("");
 
-/*			$objPHPExcel->getActiveSheet()->getStyle('A:AZ')->getNumberFormat()->setFormatCode('#,###');
-			$objPHPExcel->getActiveSheet()->getStyle('R')->getNumberFormat()->setFormatCode('#,##0.0');
-			$objPHPExcel->getActiveSheet()->getStyle('3')->getNumberFormat()->setFormatCode('0.0%');
-			$objPHPExcel->getActiveSheet()->getStyle('B3:C3')->getNumberFormat()->setFormatCode('#,##0');
-			$objPHPExcel->getActiveSheet()->getStyle('F')->getNumberFormat()->setFormatCode('dd/mm/yyyy');
-*/		
 			// Add title data
 			$objPHPExcel->setActiveSheetIndex(0);
 			$objPHPExcel->getActiveSheet()->setTitle('Inventory');
@@ -91,8 +85,10 @@ function submit(&$db, $ListCategories, $Location) {
 
 			$objPHPExcel->getActiveSheet()->setCellValue('G5', 'TO COUNT');
 			$objPHPExcel->getActiveSheet()->setCellValue('H5', 'COUNTED');
-			$objPHPExcel->getActiveSheet()->setCellValue('I5', 'RESULT');
-			$objPHPExcel->getActiveSheet()->setCellValue('J5', 'DIFFRENCE');
+			$objPHPExcel->getActiveSheet()->setCellValue('I5', 'DIFFERENCE');
+
+			$objPHPExcel->getActiveSheet()->getStyle('A:AZ')->getNumberFormat()->setFormatCode('#,###');
+			$objPHPExcel->getActiveSheet()->getStyle('3')->getNumberFormat()->setFormatCode('0.0%');
 
 			$objPHPExcel->createSheet(1);
 			$objPHPExcel->setActiveSheetIndex(1);
@@ -102,90 +98,54 @@ function submit(&$db, $ListCategories, $Location) {
 			$StartingRow = 6;
 			$i = $StartingRow;
 			$objPHPExcel->setActiveSheetIndex(0);
+			$ActiveSheet = $objPHPExcel->getActiveSheet();
+			
 			while ($myrow = DB_fetch_array($result)) {
 
-				$objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $myrow['stockid']);
-				$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, $myrow['description']);
-				$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, $myrow['categoryid']);
+				$ActiveSheet->setCellValue('A'.$i, $myrow['stockid']);
+				$ActiveSheet->setCellValue('B'.$i, $myrow['description']);
+				$ActiveSheet->setCellValue('C'.$i, $myrow['categoryid']);
 
-				$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, round($myrow['quantity'],0));
-				$objPHPExcel->getActiveSheet()->setCellValue('E'.$i, round($myrow['intransitout'],0));
-				$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, round($myrow['intransitin'],0));
+				$ActiveSheet->setCellValue('D'.$i, round($myrow['quantity'],0));
+				$ActiveSheet->setCellValue('E'.$i, round($myrow['intransitout'],0));
+				$ActiveSheet->setCellValue('F'.$i, round($myrow['intransitin'],0));
 
 // We need to count whatever is in QOH, not in transit				
 //				$Available = $myrow['quantity']+($myrow['intransitin']+$myrow['intransitout']);
 				$Available = $myrow['quantity'];
 
-				$objPHPExcel->getActiveSheet()->setCellValue('G'.$i, round($Available,0));
-				
-				$objPHPExcel->getActiveSheet()->setCellValue('H'.$i, '=COUNTIFS(Barcodes!$A$1:$A$999,A'.$i.')');
-				
-				$objPHPExcel->getActiveSheet()->setCellValue('J'.$i, '=H'.$i.'-D'.$i.'');
+				$ActiveSheet->setCellValue('G'.$i, round($Available,0));
+				$ActiveSheet->setCellValue('H'.$i, '=COUNTIFS(Barcodes!$A$1:$A$9999,A'.$i.')');
+				$ActiveSheet->setCellValue('I'.$i, '=H'.$i.'-D'.$i.'');
 
-/*				$objPHPExcel->getActiveSheet()->setCellValue('K'.$i, '=G'.$i.'*J'.$i.'');
-
-				$objPHPExcel->getActiveSheet()->setCellValue('L'.$i, round(ItemCodeQOO_PurchaseOrders($myrow['stockid'])+ItemCodeQOO_WorkOrders($myrow['stockid']),0));
-				$objPHPExcel->getActiveSheet()->setCellValue('M'.$i, '=G'.$i.'*L'.$i.'');
-
-				$objPHPExcel->getActiveSheet()->setCellValue('N'.$i, round(ItemCodeQuantityInvoiced($myrow['stockid'],$FromDate,$ToDate,''),0));
-				$objPHPExcel->getActiveSheet()->setCellValue('O'.$i, '=N'.$i.'*I'.$i.'');
-				$objPHPExcel->getActiveSheet()->setCellValue('P'.$i, '=N'.$i.'*G'.$i.'');
-				$objPHPExcel->getActiveSheet()->setCellValue('Q'.$i, '=O'.$i.'-P'.$i.'');
-
-				$objPHPExcel->getActiveSheet()->setCellValue('R'.$i, '=N'.$i.'/$C$3');
-				$objPHPExcel->getActiveSheet()->setCellValue('S'.$i, '=IF(R'.$i.'>0,J'.$i.'/R'.$i.',99999)'.'');
-				$objPHPExcel->getActiveSheet()->setCellValue('T'.$i, '=IF(R'.$i.'>0,L'.$i.'/R'.$i.',99999)'.'');
-				$objPHPExcel->getActiveSheet()->setCellValue('U'.$i, '=S'.$i.'+T'.$i.'');
-				
-				$objPHPExcel->getActiveSheet()->setCellValue('V'.$i, '=IF(U'.$i.'<$C$4,ROUNDUP(($C$4-U'.$i.')*R'.$i.',0),"")'.'');
-				$objPHPExcel->getActiveSheet()->setCellValue('W'.$i, $myrow['preferredsupplier']);
-*/
 				$i++;
 			}
 			
 			// Calculating totals, subtotals, etc
-/*			$objPHPExcel->getActiveSheet()->setCellValue('A1', '=COUNTA(A'.$StartingRow.':A'.$i.')');
-			$objPHPExcel->getActiveSheet()->setCellValue('J1', '=SUM(J'.$StartingRow.':J'.$i.')');
-			$objPHPExcel->getActiveSheet()->setCellValue('K1', '=SUM(K'.$StartingRow.':K'.$i.')');
-			$objPHPExcel->getActiveSheet()->setCellValue('L1', '=SUM(L'.$StartingRow.':L'.$i.')');
-			$objPHPExcel->getActiveSheet()->setCellValue('M1', '=SUM(M'.$StartingRow.':M'.$i.')');
-			$objPHPExcel->getActiveSheet()->setCellValue('N1', '=SUM(N'.$StartingRow.':N'.$i.')');
-			$objPHPExcel->getActiveSheet()->setCellValue('O1', '=SUM(O'.$StartingRow.':O'.$i.')');
-			$objPHPExcel->getActiveSheet()->setCellValue('P1', '=SUM(P'.$StartingRow.':P'.$i.')');
-			$objPHPExcel->getActiveSheet()->setCellValue('Q1', '=SUM(Q'.$StartingRow.':Q'.$i.')');
-			$objPHPExcel->getActiveSheet()->setCellValue('V1', '=SUM(V'.$StartingRow.':V'.$i.')');
+			$ActiveSheet->setCellValue('A1', '=COUNTA(A'.$StartingRow.':A'.$i.')');
+			$ActiveSheet->setCellValue('G1', '=SUM(G'.$StartingRow.':G'.$i.')');
+			$ActiveSheet->setCellValue('H1', '=SUM(H'.$StartingRow.':H'.$i.')');
+			$ActiveSheet->setCellValue('I1', '=SUM(I'.$StartingRow.':I'.$i.')');
 
-			$objPHPExcel->getActiveSheet()->setCellValue('A2', '=SUBTOTAL(3,A'.$StartingRow.':A'.$i.')');
-			$objPHPExcel->getActiveSheet()->setCellValue('J2', '=SUBTOTAL(9,J'.$StartingRow.':J'.$i.')');
-			$objPHPExcel->getActiveSheet()->setCellValue('K2', '=SUBTOTAL(9,K'.$StartingRow.':K'.$i.')');
-			$objPHPExcel->getActiveSheet()->setCellValue('L2', '=SUBTOTAL(9,L'.$StartingRow.':L'.$i.')');
-			$objPHPExcel->getActiveSheet()->setCellValue('M2', '=SUBTOTAL(9,M'.$StartingRow.':M'.$i.')');
-			$objPHPExcel->getActiveSheet()->setCellValue('N2', '=SUBTOTAL(9,N'.$StartingRow.':N'.$i.')');
-			$objPHPExcel->getActiveSheet()->setCellValue('O2', '=SUBTOTAL(9,O'.$StartingRow.':O'.$i.')');
-			$objPHPExcel->getActiveSheet()->setCellValue('P2', '=SUBTOTAL(9,P'.$StartingRow.':P'.$i.')');
-			$objPHPExcel->getActiveSheet()->setCellValue('Q2', '=SUBTOTAL(9,Q'.$StartingRow.':Q'.$i.')');
-			$objPHPExcel->getActiveSheet()->setCellValue('V2', '=SUBTOTAL(9,V'.$StartingRow.':V'.$i.')');
+			$ActiveSheet->setCellValue('A2', '=SUBTOTAL(3,A'.$StartingRow.':A'.$i.')');
+			$ActiveSheet->setCellValue('G2', '=SUBTOTAL(9,G'.$StartingRow.':G'.$i.')');
+			$ActiveSheet->setCellValue('H2', '=SUBTOTAL(9,H'.$StartingRow.':H'.$i.')');
+			$ActiveSheet->setCellValue('I2', '=SUBTOTAL(9,I'.$StartingRow.':I'.$i.')');
 
-			$objPHPExcel->getActiveSheet()->setCellValue('A3', '=A2/A1');
-			$objPHPExcel->getActiveSheet()->setCellValue('J3', '=J2/J1');
-			$objPHPExcel->getActiveSheet()->setCellValue('K3', '=K2/K1');
-			$objPHPExcel->getActiveSheet()->setCellValue('L3', '=L2/L1');
-			$objPHPExcel->getActiveSheet()->setCellValue('M3', '=M2/M1');
-			$objPHPExcel->getActiveSheet()->setCellValue('N3', '=N2/N1');
-			$objPHPExcel->getActiveSheet()->setCellValue('O3', '=O2/O1');
-			$objPHPExcel->getActiveSheet()->setCellValue('P3', '=P2/P1');
-			$objPHPExcel->getActiveSheet()->setCellValue('Q3', '=Q2/Q1');
-			$objPHPExcel->getActiveSheet()->setCellValue('V3', '=V2/V1');
-*/		
+			$ActiveSheet->setCellValue('A3', '=A2/A1');
+			$ActiveSheet->setCellValue('G3', '=G2/G1');
+			$ActiveSheet->setCellValue('H3', '=H2/H1');
+			$ActiveSheet->setCellValue('I3', '=I2/I1');
+
 			// Freeze panes
-			$objPHPExcel->getActiveSheet()->freezePane('B6');
+			$ActiveSheet->freezePane('B6');
 
 			// Set auto filter
-			$objPHPExcel->getActiveSheet()->setAutoFilter('A5:I' . $i);
+			$ActiveSheet->setAutoFilter('A5:J' . $i);
 			
 			// Auto Size columns
-			foreach(range('D','I') as $columnID) {
-				$objPHPExcel->getActiveSheet()->getColumnDimension($columnID)
+			foreach(range('E','J') as $columnID) {
+				$ActiveSheet->getColumnDimension($columnID)
 					->setAutoSize(true);
 			}
 			
