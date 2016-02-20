@@ -14,7 +14,7 @@ INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES
 	('EmailCustStatements.php','3','Email customer statement to customer'),
 	('GLAccountUsers.php', '15', 'Maintenance of users allowed to a GL Account'),
 	('SupplierGRNAndInvoiceInquiry.php',5,'Supplier\'s delivery note and grn relationship inquiry'),
-	('UserBankAccounts.php', '15', 'Maintains table bankaccountusers (Authorized users to work with a bank account in webERP)')
+	('UserBankAccounts.php', '15', 'Maintains table bankaccountusers (Authorized users to work with a bank account in webERP)'),
 	('UserGLAccounts.php', '15', 'Maintenance of GL Accounts allowed for a user');
 
 CREATE TABLE IF NOT EXISTS `suppinvstogrn` (
@@ -49,7 +49,7 @@ INSERT INTO glaccountusers (userid, accountcode, canview, canupd)
 ALTER table stockrequest DROP FOREIGN KEY `stockrequest_ibfk_3`;
 ALTER table stockrequest DROP FOREIGN KEY `stockrequest_ibfk_4`;
 INSERT INTO scripts VALUES('CollectiveWorkOrderCost.php',2,'Multiple work orders cost review');
-ALTER table BOM ADD remark varchar(500) NOT NULL DEFAULT '';
+ALTER table bom ADD remark varchar(500) NOT NULL DEFAULT '';
 INSERT INTO scripts VALUES ('SuppWhereAlloc.php',3,'Suppliers Where allocated');
 
 
