@@ -1,8 +1,6 @@
 <?php
 /* $Id: CustomerBalancesMovement.php 6941 2014-10-26 23:18:08Z daintree $*/
 
-$PageSecurity = 1;
-
 include('includes/session.inc');
 $Title=_('Customer Activity and Balances');
 /*To do: Info in the manual. RChacon.

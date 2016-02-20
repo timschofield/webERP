@@ -4,7 +4,7 @@ KL RICARD MODIFICATIONS:
 - allow use of promotional vouchers in online shop
 ***************************************************************************************/
 
-/* $Id: DefineCartClass.php 7243 2015-03-30 21:12:13Z vvs2012 $*/
+/* $Id: DefineCartClass.php 7444 2016-01-13 07:32:36Z daintree $*/
 
 /* Definition of the cart class
 this class can hold all the information for:
@@ -318,11 +318,11 @@ Class Cart {
 		while ($myrow = DB_fetch_array($GetTaxRatesResult)){
 
 			$this->LineItems[$LineNumber]->Taxes[$i] =   new Tax($myrow['taxcalculationorder'],
-																							$myrow['taxauthid'],
-																							$myrow['description'],
-																							$myrow['taxrate'],
-																							$myrow['taxontax'],
-																							$myrow['taxglcode']);
+																$myrow['taxauthid'],
+																$myrow['description'],
+																$myrow['taxrate'],
+																$myrow['taxontax'],
+																$myrow['taxglcode']);
 			$i++;
 		}
 	} //end method GetExistingTaxes
@@ -357,13 +357,12 @@ Class Cart {
 		} else {
 			$i=1;
 			while ($myrow = DB_fetch_array($GetTaxRatesResult)){
-
 				$this->LineItems[$LineNumber]->Taxes[$i] = new Tax($myrow['calculationorder'],
-																							$myrow['taxauthid'],
-																							$myrow['description'],
-																							$myrow['taxrate'],
-																							$myrow['taxontax'],
-																							$myrow['taxglcode']);
+																	$myrow['taxauthid'],
+																	$myrow['description'],
+																	$myrow['taxrate'],
+																	$myrow['taxontax'],
+																	$myrow['taxglcode']);
 				$i++;
 			} //end loop around different taxes
 		} //end if there are some taxes defined
@@ -407,11 +406,11 @@ Class Cart {
 		while ($myrow = DB_fetch_array($GetTaxRatesResult)){
 
 			$this->FreightTaxes[$i] = new Tax($myrow['calculationorder'],
-																		$myrow['taxauthid'],
-																		$myrow['description'],
-																		$myrow['taxrate'],
-																		$myrow['taxontax'],
-																		$myrow['taxglcode']);
+												$myrow['taxauthid'],
+												$myrow['description'],
+												$myrow['taxrate'],
+												$myrow['taxontax'],
+												$myrow['taxglcode']);
 			$i++;
 		}
 	} //end method GetFreightTaxes()

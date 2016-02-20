@@ -49,16 +49,18 @@ if (isset($_POST['Show'])) {
 		exit;
 	}
 	$sql="SELECT grnbatch,
-				grnno,
+				grns.grnno,
 				grns.podetailitem,
 				grns.itemcode,
 				grns.itemdescription,
 				grns.deliverydate,
 				grns.qtyrecd,
+				suppinvstogrn.suppinv,
 				suppliers.suppname,
 				stockmaster.decimalplaces
 			FROM grns INNER JOIN suppliers
 			ON grns.supplierid=suppliers.supplierid
+			LEFT JOIN suppinvstogrn ON grns.grnno=suppinvstogrn.grnno
 			INNER JOIN purchorderdetails
 			ON grns.podetailitem=purchorderdetails.podetailitem
 			INNER JOIN purchorders on purchorders.orderno=purchorderdetails.orderno
@@ -87,6 +89,7 @@ if (isset($_POST['Show'])) {
 				<th>' . _('Item Description') . '</th>
 				<th>' . _('Delivery Date') . '</th>
 				<th>' . _('Quantity Received') . '</th>
+				<th>' . _('Invoice No') . '</th>
 				<th>' . _('Action') . '</th>
 			</tr>';
 
@@ -105,6 +108,7 @@ if (isset($_POST['Show'])) {
 			<td>' . $myrow['itemdescription'] . '</td>
 			<td>' . $myrow['deliverydate'] . '</td>
 			<td class="number">' . locale_number_format($myrow['qtyrecd'], $myrow['decimalplaces']) . '</td>
+			<td>' . $myrow['suppinv'] . '</td>
 			<td><a href="PDFGrn.php?GRNNo=' . $myrow['grnbatch'] .'&PONo=' . $_POST['PONumber'] . '">' . _('Reprint GRN ') . '</a>
 			&nbsp;<a href="PDFQALabel.php?GRNNo=' . $myrow['grnbatch'] .'&PONo=' . $_POST['PONumber'] . '">' . _('Reprint Labels') . '</a></td>
 		</tr>';

@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: GLPostings.inc 6945 2014-10-27 07:20:48Z daintree $*/
+/* $Id: GLPostings.inc 7456 2016-02-01 19:17:56Z exsonqu $*/
 
 /* This file contains the code to post GL transactions.
 
@@ -67,8 +67,22 @@ if(DB_num_rows($ChartDetailsNotSetUpResult)>0){
 		$ErrMsg = _('Inserting new chart details records required failed because');
 		$InsChartDetailsRecords = DB_query($sql,$ErrMsg);
 }
-
-
+//now lets update those new created period with the bfwd amount
+$sql = "SELECT max(period),accountcode 
+	FROM chartdetails 
+	WHERE bfwd!=0  
+	GROUP BY accountcode";
+$ErrMsg = _('Failed to retrieve new period data');
+$NewAccountsResult = DB_query($sql,$ErrMsg);
+if (DB_num_rows($NewAccountsResult)>0) {
+	while ($NewAccountsRow = DB_fetch_row($NewAccountsResult)) {
+		$sql = "UPDATE chartdetails AS c INNER JOIN chartdetails AS s ON c.accountcode=s.accountcode AND c.period=s.period 
+			SET c.bfwd= (SELECT bfwd FROM (SELECT bfwd FROM chartdetails WHERE period='" . $NewAccountsRow[0]. "' AND accountcode='" . $NewAccountsRow[1] . "') AS temple)
+			WHERE c.accountcode='" . $NewAccountsRow[1] . "' AND c.period>'" . $NewAccountsRow[0] . "'";
+		$ErrMsg = _('Failed to update chartdetails bfwd data');
+		$result = DB_query($sql,$ErrMsg);
+	}
+}
 
 /*All the ChartDetail records should have been created now and be available to accept postings */
 
@@ -93,32 +107,37 @@ for ( $CurrPeriod = $CreateFrom; $CurrPeriod <= $CreateTo; $CurrPeriod++ ) {
 			$sql = "UPDATE chartdetails SET actual = actual + " . $TotalAmount . "
 					WHERE accountcode = '" . $CurrentAccount . "'
 					AND period= '" . $CurrPeriod . "'";
-			$PostPrd = DB_query($sql);
+			$ErrMsg = _('Failed to update actual amount in chartdetails table');
+			$PostPrd = DB_query($sql,$ErrMsg,'',true);
 			/*Update the BFwd for all following ChartDetail records */
 			$sql = "UPDATE chartdetails SET bfwd = bfwd + " . $TotalAmount . "
 					WHERE accountcode = '" . $CurrentAccount . "'
 					AND period > '" . $CurrPeriod . "'";
-			$PostBFwds = DB_query($sql);
+			$ErrMsg = _('Failed to update bfwd amount in chartdetails table');
+			$PostBFwds = DB_query($sql,$ErrMsg,'',true);
 			$TotalAmount = 0;
 		}
 		$CurrentAccount = $UnpostedTrans['account'];
 		$TotalAmount += $UnpostedTrans['amount'];
 	} 
 	// There will be one account still to post after the loop
-	if($CurrentAccount != 0) {
+	if($CurrentAccount != '0') {
 		$sql = "UPDATE chartdetails SET actual = actual + " . $TotalAmount . "
 				WHERE accountcode = '" . $CurrentAccount . "'
 				AND period= '" . $CurrPeriod . "'";
-		$PostPrd = DB_query($sql);
+		$ErrMsg = _('Failed to update actual amount in chartdetails table');
+		$PostPrd = DB_query($sql,$ErrMsg,'',true);
 		/*Update the BFwd for all following ChartDetail records */
 		$sql = "UPDATE chartdetails SET bfwd = bfwd + " . $TotalAmount . "
 				WHERE accountcode = '" . $CurrentAccount . "'
 				AND period > '" . $CurrPeriod . "'";
-		$PostBFwds = DB_query($sql);
+		$ErrMsg = _('Failed to update actual amount in chartdetails table');
+		$PostBFwds = DB_query($sql,$ErrMsg,'',true);
 	}
 	
 	$sql = "UPDATE gltrans SET posted = 1 WHERE periodno = '" . $CurrPeriod . "' AND posted=0";
-	$Posted = DB_query($sql);
+	$ErrMsg = _('Failed to update gltrans table');
+	$Posted = DB_query($sql,$ErrMsg,'',true);
 	
 	$TransCommit = DB_Txn_Commit();
 }

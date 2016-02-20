@@ -1,11 +1,9 @@
 <?php
 
-/* $Id: CustWhereAlloc.php 7447 2016-01-14 08:19:19Z exsonqu $*/
-
 include('includes/session.inc');
-$Title = _('Customer How Paid Inquiry');
+$Title = _('Supplier How Paid Inquiry');
 
-$ViewTopic = 'ARInquiries';
+$ViewTopic = 'APInquiries';
 $BookMark = 'WhereAllocated';
 
 include('includes/header.inc');
@@ -19,7 +17,7 @@ echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'
 	<div>
 	<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 	<p class="page_title_text noprint">
-		<img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' .	_('Customer Where Allocated'). '" alt="" />' . $Title . '
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' .	_('Supplier Where Allocated'). '" alt="" />' . $Title . '
 	</p>
 	<table class="selection noprint">
 	<tr>
@@ -27,27 +25,27 @@ echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'
 		<td><select tabindex="1" name="TransType"> ';
 
 if (!isset($_POST['TransType'])){
-	$_POST['TransType']='10';
+	$_POST['TransType']='20';
 }
-if ($_POST['TransType']==10){
-	 echo '<option selected="selected" value="10">' . _('Invoice') . '</option>
-			<option value="12">' . _('Receipt') . '</option>
-			<option value="11">' . _('Credit Note') . '</option>';
-} elseif ($_POST['TransType'] == 12) {
-	echo '<option selected="selected" value="12">' . _('Receipt') . '</option>
-			<option value="10">' . _('Invoice') . '</option>
-			<option value="11">' . _('Credit Note') . '</option>';
-} elseif ($_POST['TransType'] == 11) {
-	echo '<option selected="selected" value="11">' . _('Credit Note') . '</option>
-		<option value="10">' . _('Invoice') . '</option>
-		<option value="12">' . _('Receipt') . '</option>';
+if ($_POST['TransType']==20){
+	 echo '<option selected="selected" value="20">' . _('Purchase Invoice') . '</option>
+			<option value="22">' . _('Payment') . '</option>
+			<option value="21">' . _('Debit Note') . '</option>';
+} elseif ($_POST['TransType'] == 22) {
+	echo '<option selected="selected" value="22">' . _('Payment') . '</option>
+			<option value="20">' . _('Purchase Invoice') . '</option>
+			<option value="21">' . _('Debit Note') . '</option>';
+} elseif ($_POST['TransType'] == 21) {
+	echo '<option selected="selected" value="21">' . _('Debit Note') . '</option>
+		<option value="20">' . _('Purchase Invoice') . '</option>
+		<option value="22">' . _('Payment') . '</option>';
 }
 
 echo '</select></td>';
 
 if (!isset($_POST['TransNo'])) {$_POST['TransNo']='';}
 echo '<td>' . _('Transaction Number').':</td>
-		<td><input tabindex="2" type="text" class="number" name="TransNo"  required="required" maxlength="10" size="10" value="'. $_POST['TransNo'] . '" /></td>
+		<td><input tabindex="2" type="text" class="number" name="TransNo"  required="required" maxlength="20" size="20" value="'. $_POST['TransNo'] . '" /></td>
 	</tr>
 	</table>
 	<br />
@@ -64,21 +62,21 @@ if (isset($_POST['ShowResults']) AND $_POST['TransNo']!=''){
 
 
 /*First off get the DebtorTransID of the transaction (invoice normally) selected */
-	$sql = "SELECT debtortrans.id,
+	$sql = "SELECT supptrans.id,
 				ovamount+ovgst AS totamt,
 				currencies.decimalplaces AS currdecimalplaces,
-				debtorsmaster.currcode
-			FROM debtortrans INNER JOIN debtorsmaster
-			ON debtortrans.debtorno=debtorsmaster.debtorno
+				suppliers.currcode
+			FROM supptrans INNER JOIN suppliers
+			ON supptrans.supplierno=suppliers.supplierid
 			INNER JOIN currencies
-			ON debtorsmaster.currcode=currencies.currabrev
+			ON suppliers.currcode=currencies.currabrev
 			WHERE type='" . $_POST['TransType'] . "'
 			AND transno = '" . $_POST['TransNo']."'";
 	
 	if ($_SESSION['SalesmanLogin'] != '') {
-			$sql .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
+			$sql .= " AND supptrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 	}
-	$result = DB_query($sql );
+	$result = DB_query($sql);
 
 	if (DB_num_rows($result)==1){
 		$myrow = DB_fetch_array($result);
@@ -88,22 +86,22 @@ if (isset($_POST['ShowResults']) AND $_POST['TransNo']!=''){
 		$sql = "SELECT type,
 					transno,
 					trandate,
-					debtortrans.debtorno,
-					reference,
-					debtortrans.rate,
-					ovamount+ovgst+ovfreight+ovdiscount as totalamt,
-					custallocns.amt
-				FROM debtortrans
-				INNER JOIN custallocns ";
-		if ($_POST['TransType']==12 OR $_POST['TransType'] == 11){
+					supptrans.supplierno,
+					suppreference,
+					supptrans.rate,
+					ovamount+ovgst as totalamt,
+					suppallocs.amt
+				FROM supptrans
+				INNER JOIN suppallocs ";
+		if ($_POST['TransType']==22 OR $_POST['TransType'] == 21){
 
-			$TitleInfo = ($_POST['TransType'] == 12)?_('Receipt'):_('Credit Note');
-			$sql .= "ON debtortrans.id = custallocns.transid_allocto 
-				WHERE custallocns.transid_allocfrom = '" . $AllocToID . "'";
+			$TitleInfo = ($_POST['TransType'] == 22)?_('Payment'):_('Debit Note');
+			$sql .= "ON supptrans.id = suppallocs.transid_allocto 
+				WHERE suppallocs.transid_allocfrom = '" . $AllocToID . "'";
 		} else {
 			$TitleInfo = _('invoice');
-			$sql .= "ON debtortrans.id = custallocns.transid_allocfrom
-				WHERE custallocns.transid_allocto = '" . $AllocToID . "'";
+			$sql .= "ON supptrans.id = suppallocs.transid_allocfrom
+				WHERE suppallocs.transid_allocto = '" . $AllocToID . "'";
 		}
 		$sql .= " ORDER BY transno ";
 
@@ -112,7 +110,7 @@ if (isset($_POST['ShowResults']) AND $_POST['TransNo']!=''){
 
 		if (DB_num_rows($TransResult)==0){
 
-			if ($myrow['totamt']<0 AND ($_POST['TransType']==12 OR $_POST['TransType'] == 11)){
+			if ($myrow['totamt']>0 AND ($_POST['TransType']==22 OR $_POST['TransType'] == 21)){
 					prnMsg(_('This transaction was a receipt of funds and there can be no allocations of receipts or credits to a receipt. This inquiry is meant to be used to see how a payment which is entered as a negative receipt is settled against credit notes or receipts'),'info');
 			} else {
 				prnMsg(_('There are no allocations made against this transaction'),'info');
@@ -154,23 +152,23 @@ if (isset($_POST['ShowResults']) AND $_POST['TransNo']!=''){
 					$k++;
 				}
 
-				if ($myrow['type']==11){
-					$TransType = _('Credit Note');
-				} elseif ($myrow['type'] == 10){
-					$TransType = _('Invoice');
+				if ($myrow['type']==21){
+					$TransType = _('Debit Note');
+				} elseif ($myrow['type'] == 20){
+					$TransType = _('Purchase Invoice');
 				} else {
-					$TransType = _('Receipt');
+					$TransType = _('Payment');
 				}
 				echo '<td>' . $TransType . '</td>
 					<td>' . $myrow['transno'] . '</td>
-					<td>' . $myrow['reference'] . '</td>
+					<td>' . $myrow['suppreference'] . '</td>
 					<td>' . $myrow['rate'] . '</td>
 					<td class="number">' . locale_number_format($myrow['totalamt'],$CurrDecimalPlaces) . '</td>
 					<td class="number">' . locale_number_format($myrow['amt'],$CurrDecimalPlaces) . '</td>
 					</tr>';
 
 				$RowCounter++;
-				If ($RowCounter == 12){
+				If ($RowCounter == 22){
 					$RowCounter=1;
 					echo $TableHeader;
 				}

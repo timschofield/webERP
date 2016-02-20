@@ -1,5 +1,5 @@
 <?php
-/* $Id: SelectOrderItems.php 7363 2015-10-06 10:03:50Z exsonqu $*/
+/* $Id: SelectOrderItems.php 7431 2015-12-28 03:47:44Z exsonqu $*/
 
 /**************************************************************************************
 KL RICARD MODIFICATIONS:
@@ -1136,7 +1136,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				} else {
 					$DiscountMatrixRate = $myrow[0];
 				}
-				if ($myrow[0]!=0){ /* need to update the lines affected */
+				if ($DiscountMatrixRate!=0){ /* need to update the lines affected */
 					foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine_2) {
 						if ($OrderLine_2->DiscCat==$OrderLine->DiscCat){
 							$_SESSION['Items'.$identifier]->LineItems[$OrderLine_2->LineNumber]->DiscountPercent = $DiscountMatrixRate;
@@ -1275,9 +1275,11 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			} else {
 				$DiscountMatrixRate = $myrow[0];
 			}
-			foreach ($_SESSION['Items'.$identifier]->LineItems as $StkItems_2) {
-				if ($StkItems_2->DiscCat==$OrderLine->DiscCat){
-					$_SESSION['Items'.$identifier]->LineItems[$StkItems_2->LineNumber]->DiscountPercent = $DiscountMatrixRate;
+			if ($DiscountMatrixRate != 0) {
+				foreach ($_SESSION['Items'.$identifier]->LineItems as $StkItems_2) {
+					if ($StkItems_2->DiscCat==$OrderLine->DiscCat){
+						$_SESSION['Items'.$identifier]->LineItems[$StkItems_2->LineNumber]->DiscountPercent = $DiscountMatrixRate;
+					}
 				}
 			}
 		}

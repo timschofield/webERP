@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: GoodsReceived.php 7375 2015-10-31 06:37:46Z exsonqu $*/
+/* $Id: GoodsReceived.php 7418 2015-12-20 00:49:16Z daintree $*/
 
 /* Session started in header.inc for password checking and authorisation level check */
 include('includes/DefinePOClass.php');
@@ -118,6 +118,7 @@ if (!isset($_POST['ProcessGoodsReceived'])) {
 			</tr>
 			<tr>
 				<th>' . _('Item Code') . '</th>
+				<th>' . _('Supplier') . '<br />'. _('Item') . '</th>
 				<th>' . _('Description') . '</th>
 				<th>' . _('Quantity') . '<br />' . _('Ordered') . '</th>
 				<th>' . _('Units') . '</th>
@@ -183,6 +184,7 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_POST['ProcessGo
 		//Now Display LineItem
 
 		echo '<td><a href="' . $RootPath . '/' . $_SESSION['part_pics_dir'] . '/' . $LnItm->StockID . '.jpg" target="_blank">' .  $LnItm->StockID . '</a></td>
+			<td>' . $LnItm->Suppliers_PartNo . '</td>
 			<td>' . $LnItm->ItemDescription . '</td>
 			<td class="number">' . $DisplaySupplierQtyOrd . '</td>
 			<td>' . $LnItm->SuppliersUnit . '</td>
