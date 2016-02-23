@@ -11,7 +11,7 @@ $KL_PurchasingTeam = FALSE;
 $KL_ShopSupportTeam = FALSE;
 $KL_ShopSupportLeader = FALSE;
 
-$KL_SalesManager = FALSE;
+$KL_SalesDirector = FALSE;
 $KL_PettyCash = FALSE;
 $KL_SPG = FALSE;
 $KL_SPGSupport = FALSE;
@@ -29,8 +29,10 @@ if ($_SESSION['AccessLevel'] == 8){ // webERP System Administration
 	$KL_OperationalManager = TRUE;
 }else if ($_SESSION['AccessLevel'] == 15){ // PettyCash Only User (courier, IT, etc...)
 	$KL_PettyCash = TRUE;
-}else if ($_SESSION['AccessLevel'] == 16){ // Sales Manager
-	$KL_SalesManager = TRUE;
+}else if ($_SESSION['AccessLevel'] == 16){ // Sales Director
+	$KL_SalesDirector = TRUE;
+}else if ($_SESSION['AccessLevel'] == 31){ // Shop Manager
+	$KL_ShopManager = TRUE;
 }else if ($_SESSION['AccessLevel'] == 17){ // Sales Team SPG
 	$KL_SPG = TRUE;
 }else if ($_SESSION['AccessLevel'] == 22){ // Sales Team SPG Support
@@ -47,7 +49,7 @@ if ($_SESSION['AccessLevel'] == 8){ // webERP System Administration
 	$KL_PurchasingTeam = TRUE;
 }else if ($_SESSION['AccessLevel'] == 25){ // Marketing Manager PakRicard
 	$KL_OperationalManager = TRUE;
-	$KL_SalesManager = TRUE;
+	$KL_SalesDirector = TRUE;
 	$KL_AdministrationTeam = TRUE;
 	$KL_BusinessDevelopmentManager = TRUE;
 	$KL_ShopSupportLeader = TRUE;

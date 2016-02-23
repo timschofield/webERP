@@ -48,8 +48,8 @@ if ($ProcessSection01){
 
 	if ($KL_SystemAdmin
 		OR $KL_BusinessDevelopmentManager
-		OR $KL_SalesManager){
-	//	AverageSales("Shop", 365, 90, 30, 15,7, 1, 30, "LastYear", "All", $db);
+		OR $KL_SalesDirector){
+	//	AverageSales("Shop", 365, 90, 30, 15, 7, 1, 30, "LastYear", "All", $db);
 	//	$NumberOfTestExecuted++;
 		YearDifferenceSales("Shop",  15, $db);
 		$NumberOfTestExecuted++;
@@ -119,7 +119,7 @@ if ($ProcessSection01){
 	$NumberOfTestExecuted++;
 
 	if ($KL_SystemAdmin
-		OR $KL_SalesManager){
+		OR $KL_SalesDirector){
 		AverageCustomerBehaviourByValueInvoice("Shop", 90, $db);
 		$NumberOfTestExecuted++;
 		AverageCustomerBehaviourByValueInvoice("Shop", 365, $db);
@@ -127,7 +127,7 @@ if ($ProcessSection01){
 	}
 
 	if ($KL_SystemAdmin 
-		OR $KL_SalesManager
+		OR $KL_SalesDirector
 		OR $KL_BusinessDevelopmentManager){
 		GeneralCustomerBehaviour(30, $db);
 		$NumberOfTestExecuted++;
@@ -152,12 +152,18 @@ if ($ProcessSection02){
 
 	if ($KL_SystemAdmin 
 		OR $KL_OperationalManager
-		OR $KL_SalesManager
+		OR $KL_SalesDirector
+		OR $KL_ShopManager
 		OR $KL_BusinessDevelopmentManager){
 		ActiveTransfersByLocation($RootPath, $db);
 		$NumberOfTestExecuted++;
 		ActiveTransferStatus($RootPath, $db);
 		$NumberOfTestExecuted++;
+	}
+
+	if ($KL_SystemAdmin 
+		OR $KL_OperationalManager
+		OR $KL_BusinessDevelopmentManager){
 		RecentlyClosedTransferStatus(1, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		ErrorsInTransfers(7, $RootPath, $db);
@@ -168,7 +174,7 @@ if ($ProcessSection02){
 	$NumberOfTestExecuted++;
 
 	if ($KL_SystemAdmin 
-		OR $KL_SalesManager
+		OR $KL_SalesDirector
 		OR $KL_BusinessDevelopmentManager){
 		FinishedStockDistribution("FORSALE", "STOCKCATEGORY", $db);
 		$NumberOfTestExecuted++;
@@ -177,20 +183,23 @@ if ($ProcessSection02){
 	FinishedStockDistribution("DISPLAYS", "LOCATION", $db);
 	$NumberOfTestExecuted++;
 
-	PackagingStatusForKapalLaut($RootPath, $db);
-	$NumberOfTestExecuted++;
-	PackagingUsageForKapalLaut(30, $RootPath, $db);
-	$NumberOfTestExecuted++;
+	if ($KL_SystemAdmin 
+		OR $KL_BusinessDevelopmentManager){
+		PackagingStatusForKapalLaut($RootPath, $db);
+		$NumberOfTestExecuted++;
+		PackagingUsageForKapalLaut(30, $RootPath, $db);
+		$NumberOfTestExecuted++;
 
-	PackagingStatusForBlink($RootPath, $db);
-	$NumberOfTestExecuted++;
-	PackagingUsageForBlink(30, $RootPath, $db);
-	$NumberOfTestExecuted++;
+		PackagingStatusForBlink($RootPath, $db);
+		$NumberOfTestExecuted++;
+		PackagingUsageForBlink(30, $RootPath, $db);
+		$NumberOfTestExecuted++;
 
-	PackagingStatusForOutlet($RootPath, $db);
-	$NumberOfTestExecuted++;
-	PackagingUsageForOutlet(30, $RootPath, $db);
-	$NumberOfTestExecuted++;
+		PackagingStatusForOutlet($RootPath, $db);
+		$NumberOfTestExecuted++;
+		PackagingUsageForOutlet(30, $RootPath, $db);
+		$NumberOfTestExecuted++;
+	}
 
 	if ($KL_SystemAdmin){
 		FinishedStockDistribution("PACKAGING", "LOCATION", $db);

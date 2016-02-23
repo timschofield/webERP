@@ -61,7 +61,7 @@ if ($KL_SystemAdmin
 	OR $KL_PurchasingTeam 
 	OR $KL_ShopSupportTeam 
 	OR $KL_ShopSupportLeader 
-	OR $KL_SalesManager 
+	OR $KL_SalesDirector 
 	OR $KL_PettyCash 
 	OR $KL_SPG 
 	OR $KL_SPGSupport){
@@ -83,12 +83,14 @@ if ($ProcessSection01){
 	***************************************************************************************/
 
 	if ($KL_BusinessDevelopmentManager
-		OR $KL_SalesManager){
+		OR $KL_SalesDirector
+		OR $KL_ShopManager){
 		SPGNotReportingSalesInDays(2, $db);
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_SalesManager
+	if ($KL_SalesDirector
+		OR $KL_ShopManager
 		OR $KL_ShopSupportLeader
 		OR $KL_OperationalManager){
 		SplittedPaymentsBySPG(15, 2, $db);
@@ -97,7 +99,7 @@ if ($ProcessSection01){
 
 	/*
 	if ($KL_BusinessDevelopmentManager
-		OR $KL_SalesManager){
+		OR $KL_SalesDirector){
 		SPGBelowMinimumSales("TOK66", 2, 1300000,$db);
 		SPGBelowMinimumSales("TOKSA", 2, 1650000,$db);
 		SPGBelowMinimumSales("TOKKS", 2, 2000000,$db);
@@ -566,7 +568,7 @@ if ($ProcessSection02){
 	* SALES CONTROL         
 	***************************************************************************************/
 	if ($KL_BusinessDevelopmentManager
-		OR $KL_SalesManager){
+		OR $KL_SalesDirector){
 
 	/*	GoodSellingItemsInCategory("TESTKL", 15, 6, $RootPath, $db);
 		GoodSellingItemsInCategory("TESTBL", 15, 6, $RootPath, $db);
@@ -691,7 +693,7 @@ if ($ProcessSection02){
 
 	if ($KL_BusinessDevelopmentManager
 		OR $KL_OperationalManager
-		OR $KL_SalesManager){
+		OR $KL_SalesDirector){
 		
 	//	ItemsNoSalesInLocation("WABOM", 30, 10, $RootPath, $db);
 	//	ItemsNoSalesInLocation("WHAYA", 30, 10, $RootPath, $db);
