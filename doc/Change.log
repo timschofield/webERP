@@ -1,4 +1,6 @@
 webERP Change Log
+
+24/02/16: Richard, Exson Fix the GLPosting initiating error in GLPostings.inc.
 20/02/16 Janb,Tim fixed typo in upgrade4.12.3-4.13.sql
 19/02/16 Daveparrish fixed page number error of AgedDebtors.php.
 02/02/16 Exson£ºFixed the bug of chartdetails bfwd amount wrong in GLPostings.inc.
