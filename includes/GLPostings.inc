@@ -54,7 +54,22 @@ $sql = "SELECT chartmaster.accountcode, MIN(periods.periodno) AS startperiod
 $ChartDetailsNotSetUpResult = DB_query($sql,_('Could not test to see that all chart detail records properly initiated'));
 
 if(DB_num_rows($ChartDetailsNotSetUpResult)>0){
-
+	//first lets retrieve those new added accountcode and period;
+	$sql = "SELECT chartmaster.accountcode,periods.periodno 
+		FROM (chartmaster CROSS JOIN periods) 
+		LEFT JOIN chartdetails ON chartmaster.accountcode=chartdetails.accountcode 
+		AND periods.periodno=chartdetails.period 
+		WHERE (periods.periodno BETWEEN '" . $CreateFrom . "' AND '" . $CreateTo . "')
+		AND chartdetails.account code IS NULL ORDER BY accountcode,periodno";
+	$ErrMsg = _('Failed to retrieve new account code and periods');
+	$NewPeriodResult = DB_query($sql,$ErrMsg);
+	if (DB_num_rows($result)>0){ 
+		$NewPeriods = array();
+		while ($NewPeriodsRow = DB_fetch_array($NewPeriodResult)) {
+			if (!isset($NewPeriods[$NewPeriodsRow['accountcode']])) {
+				$NewPeriods[$NewPeriodsRow['accountcode']] = $NewPeriodsRow['period'];
+			}
+		}
 		/*Now insert the chartdetails records that do not already exist */
 		$sql = "INSERT INTO chartdetails (accountcode, period)
 					SELECT chartmaster.accountcode, periods.periodno
@@ -66,21 +81,17 @@ if(DB_num_rows($ChartDetailsNotSetUpResult)>0){
 
 		$ErrMsg = _('Inserting new chart details records required failed because');
 		$InsChartDetailsRecords = DB_query($sql,$ErrMsg);
+	}
 }
+
 //now lets update those new created period with the bfwd amount
-$sql = "SELECT max(period),accountcode 
-	FROM chartdetails 
-	WHERE bfwd!=0  
-	GROUP BY accountcode";
-$ErrMsg = _('Failed to retrieve new period data');
-$NewAccountsResult = DB_query($sql,$ErrMsg);
-if (DB_num_rows($NewAccountsResult)>0) {
-	while ($NewAccountsRow = DB_fetch_row($NewAccountsResult)) {
-		$sql = "UPDATE chartdetails AS c INNER JOIN chartdetails AS s ON c.accountcode=s.accountcode AND c.period=s.period 
-			SET c.bfwd= (SELECT bfwd FROM (SELECT bfwd FROM chartdetails WHERE period='" . $NewAccountsRow[0]. "' AND accountcode='" . $NewAccountsRow[1] . "') AS temple)
-			WHERE c.accountcode='" . $NewAccountsRow[1] . "' AND c.period>'" . $NewAccountsRow[0] . "'";
-		$ErrMsg = _('Failed to update chartdetails bfwd data');
-		$result = DB_query($sql,$ErrMsg);
+if (isset($NewPeriods)) {
+	foreach ($NewPeriods as $Account=>$Period) {
+		if ($Period>$CreateFrom) {
+			$sql = "UPDATE chartdetails SET bfwd=(SELECT bfwd+actual FROM chartdetails WHERE accountcode='" . $Account . "' AND period='" . $Period - 1 . "') WHERE accountcode='" . $Account . "' AND period>= " . $Period;
+			$ErrMsg = _('Failed to update the bfwd amount');
+			$BfwdResult = DB_query($sql,$ErrMsg);
+		}
 	}
 }
 
