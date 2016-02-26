@@ -12,10 +12,20 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 	$Title = _('Print Labels');
 	include('includes/header.inc');
 
+	if ($_POST['Location'] != "None"){
+		$SQLQOH = " (SELECT SUM(quantity)
+					FROM locstock
+					WHERE locstock.stockid = prices.stockid
+						AND locstock.loccode = '".$_POST['Location']."') AS labelstoprint ";
+	}else{
+		$SQLQOH = $_POST['LabelsPerItem'] ." AS labelstoprint ";
+	}
+	
 	$SQL = "SELECT prices.stockid,
 					stockmaster.description,
 					stockmaster.discountcategory,
-					prices.price
+					prices.price, "
+					. $SQLQOH .	"
 			FROM stockmaster INNER JOIN	stockcategory
    			     ON stockmaster.categoryid=stockcategory.categoryid
 			INNER JOIN prices
@@ -27,7 +37,6 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 				AND (prices.enddate='0000-00-00' OR prices.enddate>'" . FormatDateForSQL($_POST['EffectiveDate']) . "')
 				AND prices.debtorno=''
 			ORDER BY stockmaster.stockid";
-
 	$LabelsResult = DB_query($SQL,'','',false,false);
 
 	if (DB_error_no() !=0) {
@@ -46,7 +55,6 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 		exit;
 	}
 
-
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">
@@ -54,10 +62,11 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 				<th>' . _('Item Code') . '</th>
 				<th>' . _('Item Description') . '</th>
 				<th>' . _('Price') . '</th>
+				<th>' . _('# Labels') . '</th>
 				<th>' . _('Print') . ' ?</th>
 			</tr>
 			<tr>
-				<th colspan="4"><input type="submit" name="SelectAll" value="' . _('Select All Labels') . '" /><input type="checkbox" name="CheckAll" ';
+				<th colspan="5"><input type="submit" name="SelectAll" value="' . _('Select All Labels') . '" /><input type="checkbox" name="CheckAll" ';
 	if (isset($_POST['CheckAll'])){
 		echo 'checked="checked" ';
 	}
@@ -70,6 +79,7 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 				<td>' . $LabelRow['stockid'] . '</td>
 				<td>' . $LabelRow['description'] . '</td>
 				<td class="number">' . locale_number_format($LabelRow['price'],$LabelRow['decimalplaces']) . '</td>
+				<td class="number">' . locale_number_format($LabelRow['labelstoprint'],0) . '</td>
 				<td>';
 		if (isset($_POST['SelectAll']) AND isset($_POST['CheckAll'])) {
 			echo '<input type="checkbox" checked="checked" name="PrintLabel' . $i .'" />';
@@ -82,16 +92,17 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 			<input type="hidden" name="Description' . $i . '" value="' . $LabelRow['description'] . '" />
 			<input type="hidden" name="Barcode' . $i . '" value="' . $LabelRow['barcode'] . '" />
 			<input type="hidden" name="DiscountCategory' . $i . '" value="' . $LabelRow['discountcategory'] . '" />
+			<input type="hidden" name="LabelsToPrint' . $i . '" value="' . $LabelRow['labelstoprint'] . '" />
 			<input type="hidden" name="Price' . $i . '" value="' . $LabelRow['price'] . '" />';
 		$i++;
 	}
-	$i--;
 	echo '</table>
 		<input type="hidden" name="NoOfLabels" value="' . $i . '" />
 		<input type="hidden" name="LabelID" value="' . $_POST['LabelID'] . '" />
 		<input type="hidden" name="StockCategory" value="' . $_POST['StockCategory'] . '" />
 		<input type="hidden" name="EffectiveDate" value="' . $_POST['EffectiveDate'] . '" />
 		<input type="hidden" name="LabelsPerItem" value="' . $_POST['LabelsPerItem'] . '" />
+		<input type="hidden" name="Location" value="' . $_POST['Location'] . '" />
 		<br />
 		<div class="centre">
 
@@ -102,19 +113,19 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 	exit;
 }
 
-$NoOfLabels = 0;
+$LabelsToBePrinted = FALSE;
 if (isset($_POST['PrintLabels']) AND isset($_POST['NoOfLabels']) AND $_POST['NoOfLabels']>0){
 
 	for ($i=0;$i < $_POST['NoOfLabels'];$i++){
-		if (isset($_POST['PrintLabel'.$i])){
-			$NoOfLabels++;
+		if (isset($_POST['PrintLabel'.$i]) AND ($_POST['LabelsToPrint'.$i] > 0)){
+			$LabelsToBePrinted = TRUE;
 		}
 	}
-	if ($NoOfLabels ==0){
+	if (!$LabelsToBePrinted){
 		prnMsg(_('There are no labels selected to print'),'info');
 	}
 }
-if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
+if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 
 	// Let's start the real PDF creation 
 	require_once('includes/tcpdf/tcpdf.php');
@@ -196,12 +207,10 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 	$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 
 	// now print the labels
-	$TotalLabels = $NoOfLabels * $_POST['LabelsPerItem'];
 	$LabelsPrinted = 0;
 	for ($i=0;$i < $_POST['NoOfLabels'];$i++){
 		if (isset($_POST['PrintLabel'.$i])){
-			$NoOfLabels--;
-			for ($LabelNumber=0; $LabelNumber < $_POST['LabelsPerItem'];$LabelNumber++){
+			for ($LabelNumber=0; $LabelNumber < $_POST['LabelsToPrint'.$i];$LabelNumber++){
 				
 				// Get the data for each field
 				$StockId = $_POST['StockID' . $i];
@@ -309,8 +318,23 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 			<td><input type="text" size="11" class="date"	alt="' . $_SESSION['DefaultDateFormat'] . '" name="EffectiveDate" value="' . Date($_SESSION['DefaultDateFormat']) . '" />';
         echo '</td></tr>';
 
-		echo'<tr><td>' . _('Number of labels per item') . ':</td>
-			<td><input type="text" class="number" name="LabelsPerItem" size="3" value="1" /></tr>';
+		echo'<tr><td>' . _('Number of labels to print') . '</td></tr>
+			<tr><td>' . _('Fixed number of labels') . ':</td>
+			<td><input type="text" class="number" name="LabelsPerItem" size="3" value="1" /td>
+			<td>' . _('or QOH at') . ':';
+
+		$sql = "SELECT locations.loccode,
+						locationname
+				FROM locations
+				INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
+				ORDER BY locationname";
+		$LocnResult=DB_query($sql);
+		echo '<select name="Location"><option value="None">' . _('') . '</option>';
+		while ($myrow=DB_fetch_array($LocnResult)){
+			echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+		}
+		echo '</select></td>
+				</tr>';
 
 		echo '</table>
 				<br />
