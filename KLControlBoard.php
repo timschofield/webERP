@@ -422,8 +422,6 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		ItemsWithStockKantorButRLZeroAt("TOKUB", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsWithStockKantorButRLZeroAt("TOKJC", $RootPath, $db);
-		$NumberOfTestExecuted++;
 		ItemsWithStockKantorButRLZeroAt("TOKSA", $RootPath, $db);
 		$NumberOfTestExecuted++;
 		ItemsWithStockKantorButRLZeroAt("TOKSS", $RootPath, $db);

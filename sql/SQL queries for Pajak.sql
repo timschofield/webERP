@@ -21,7 +21,27 @@ ORDER BY accountgroups.groupname ASC,
 	gltrans.account ASC, 
 	gltrans.trandate ASC;
 
+	
+/* FOR FEL
+*/
 
+SELECT accountgroups.groupname AS 'Group',
+	gltrans.account AS 'Account code', 
+	chartmaster.accountname AS 'Account name', 
+	gltrans.trandate AS 'Date', 
+	ROUND(gltrans.amount,2) AS 'Amount', 
+	gltrans.narrative AS 'Description'
+FROM gltrans, 
+	chartmaster, 
+	accountgroups
+WHERE gltrans.account = chartmaster.accountcode
+	AND chartmaster.group_ = accountgroups.groupname
+	AND (accountgroups.pandl = 1)
+	AND trandate >= "2015-01-01"
+	AND trandate <= "2015-12-31"
+ORDER BY gltrans.trandate ASC,
+	accountgroups.groupname ASC,
+	gltrans.account ASC;
 
 /* List of No Sales */
 

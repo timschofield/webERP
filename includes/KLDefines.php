@@ -85,11 +85,11 @@ define("CODE_KANTOR",     "'KANTO'");
 define("CODE_ONLINE_SHOP","'TOKWS'");
 
 define("LIST_ALL_SHOPS",           "('TOK66','TOKSA','TOKKS','TOKJC','TOKSE','TOKUB','TOKMF','TOKPU','TOKSU','TOKBW','TOKOB','TOKSS','TOKPA','TOKKA','TOKMU','TOKPS','TOKAR')"); // NOT includes the shop online
-define("LIST_SHOPS_KAPAL_LAUT",    "('TOK66','TOKSA','TOKKS','TOKSE','TOKMF','TOKPU','TOKBW','TOKOB','TOKSS','TOKPA','TOKKA')"); // NOT includes the shop online
-define("LIST_SHOPS_OUTLET",        "('TOKSU','TOKJC','TOKUB','TOKAR')");
+define("LIST_SHOPS_KAPAL_LAUT",    "('TOK66','TOKSA','TOKKS','TOKSE','TOKMF','TOKPU','TOKBW','TOKOB','TOKSS','TOKPA','TOKKA','TOKJC')"); // NOT includes the shop online
+define("LIST_SHOPS_OUTLET",        "('TOKSU','TOKUB','TOKAR')"); 
 define("LIST_SHOPS_BLINK",         "('TOKMU','TOKPS')");
 
-define("LIST_ONLINE_SHOPS", "(" . CODE_ONLINE_SHOP . ")");
+define("LIST_ONLINE_SHOPS", "('TOKWS')");
 
 define("LIST_GUDANG_FOR_PACKAGING","('PACKA')");
 
