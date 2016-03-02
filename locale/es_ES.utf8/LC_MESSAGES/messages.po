@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.12.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-12-29 12:33-0600\n"
-"PO-Revision-Date: 2016-01-20 11:40-0600\n"
+"PO-Revision-Date: 2016-02-01 09:59-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -3655,7 +3655,7 @@ msgstr "No se han definido cuentas bancarias"
 
 #: BankReconciliation.php:120 CustomerReceipt.php:819
 msgid "You must first"
-msgstr "Antes debe"
+msgstr "Primero debe seleccionar"
 
 #: BankReconciliation.php:120 CustomerReceipt.php:819
 #: DailyBankTransactions.php:43 Payments.php:794 SuppPaymentRun.php:332
@@ -4032,7 +4032,7 @@ msgstr "Fecha inicial desde"
 
 #: CollectiveWorkOrderCost.php:268
 msgid "Start Date To"
-msgstr "Fecha inial al"
+msgstr "Fecha inicial al"
 
 #: CollectiveWorkOrderCost.php:274 SelectWorkOrder.php:175
 msgid "New Work Order"
@@ -5815,7 +5815,7 @@ msgid ""
 "You should automatically be forwarded to the Contract page. If this does not "
 "happen perhaps the browser does not support META Refresh"
 msgstr ""
-"Debería ser redirigido automáticamente a la página de contrato. Si esto no "
+"Debería ser enviado automáticamente a la página de contrato. Si esto no "
 "ocurre, es posible que el buscador no soporte la recarga META"
 
 #: ContractBOM.php:44 ContractOtherReqts.php:47 Contracts.php:96
@@ -6331,8 +6331,8 @@ msgid ""
 "You should automatically be forwarded to the entry of the Contract line "
 "items page"
 msgstr ""
-"Automáticamente deberá enviarse a la entrada de los elementos del contrato "
-"de línea la página"
+"Debería ser enviado automáticamente a la entrada de los elementos del "
+"contrato de línea la página"
 
 #: Contracts.php:96 Contracts.php:104 Customers.php:272
 #: DeliveryDetails.php:276 DeliveryDetails.php:285 EmailCustStatements.php:14
@@ -6360,7 +6360,7 @@ msgid ""
 "You should automatically be forwarded to the entry of the Contract "
 "requirements page"
 msgstr ""
-"Usted debe ser automáticamente enviado a la entrada de los requisitos del "
+"Debería ser enviado automáticamente a la entrada de los requisitos del "
 "contrato página"
 
 #: Contracts.php:111
@@ -10806,8 +10806,8 @@ msgid ""
 "You should automatically be forwarded to the entry of a new Customer Branch "
 "page"
 msgstr ""
-"Debería ser dirigido automáticamente a la página de Nueva sucursal del "
-"Cliente"
+"Debería ser enviado automáticamente a la página de entrada de nueva sucursal "
+"del Cliente"
 
 #: Customers.php:279
 msgid "No updates or deletes took place"
@@ -11532,7 +11532,7 @@ msgid ""
 "You should automatically be forwarded to the entry of recurring order "
 "details page"
 msgstr ""
-"Debería ser dirigido automáticamente a la página de entrada de detalles de "
+"Debería ser enviado automáticamente a la página de entrada de detalles de "
 "pedidos frecuentes"
 
 #: DeliveryDetails.php:282 DeliveryDetails.php:1210
@@ -11544,7 +11544,7 @@ msgid ""
 "You should automatically be forwarded to the entry of the order line details "
 "page"
 msgstr ""
-"Debería ser dirigido automáticamente a la página de entrada de detalles de "
+"Debería ser enviado automáticamente a la página de entrada de detalles de "
 "filas del pedido"
 
 #: DeliveryDetails.php:298
@@ -15012,7 +15012,7 @@ msgstr "El código contable manual indicado no existe en la base de datos"
 
 #: GLJournal.php:202
 msgid "You must select a GL account code"
-msgstr "Usted debe seleccionar un código de cuenta contable"
+msgstr "Debe seleccionar un código de cuenta contable"
 
 #: GLJournal.php:264
 msgid "Date to Process Journal"
@@ -16205,7 +16205,7 @@ msgstr "Introducir línea contable"
 
 #: ImportBankTransAnalysis.php:61 SuppTransGLAnalysis.php:37
 msgid "You must select a general ledger code from the list below"
-msgstr "Usted debe seleccionar un código contable de la siguiente lista"
+msgstr "Debe seleccionar un código contable de la siguiente lista"
 
 #: ImportBankTransAnalysis.php:71 SuppTransGLAnalysis.php:47
 msgid "The account code entered is not a valid code"
@@ -21295,7 +21295,7 @@ msgid ""
 "You should automatically be forwarded to the entry of the purchase order "
 "line items page"
 msgstr ""
-"Debería ser conducido automáticamente a la página de entrada de filas "
+"Debería ser enviado automáticamente a la página de entrada de filas "
 "artículos de la orden de compra"
 
 #: PO_Header.php:296
@@ -23391,13 +23391,11 @@ msgstr "Debe seleccionar un usuario para autorizar esta pestaña"
 
 #: PcTabs.php:82
 msgid "You must select a General ledger code for the cash to be assigned from"
-msgstr ""
-"Usted debe seleccionar un código contable para el dinero que se asignará a"
+msgstr "Debe seleccionar un código contable para el dinero que se asignará a"
 
 #: PcTabs.php:87
 msgid "You must select a General ledger code for this petty cash tab"
-msgstr ""
-"Usted debe seleccionar un código contable para esta ficha de caja chica"
+msgstr "Debe seleccionar un código contable para esta ficha de caja chica"
 
 #: PcTabs.php:104 PcTabs.php:142 PcTabs.php:168
 msgid "The Petty Cash Tab"
@@ -23612,6 +23610,8 @@ msgstr ""
 #: PriceMatrix.php:202
 msgid "You must select a stock item first before set a price maxtrix"
 msgstr ""
+"Debe seleccionar primero un artículo de inventario antes de fijar una matriz "
+"de precios"
 
 #: PriceMatrix.php:219 PriceMatrix.php:266 Prices.php:329
 msgid "Price Effective From Date"
@@ -24440,7 +24440,7 @@ msgstr ""
 
 #: PrintCustStatements.php:460
 msgid " Customer statements has been emailed to"
-msgstr ""
+msgstr "Estados de cuenta de cliente han sido enviados por correo-e a"
 
 #: PrintCustStatements.php:475
 msgid "No Statements Found"
@@ -24683,7 +24683,7 @@ msgstr "Cargar sucursal"
 
 #: PrintCustTrans.php:785 PrintCustTransPortrait.php:854
 msgid "Your Order Ref"
-msgstr "Referencia Pedidos Compra"
+msgstr "Su referencia de pedido"
 
 #: PrintCustTrans.php:786 PrintCustTransPortrait.php:855
 msgid "Our Order No"
@@ -26809,7 +26809,7 @@ msgid ""
 "You should automatically be forwarded to the CSV Sales Analysis file when it "
 "is ready"
 msgstr ""
-"Debería ser conducido automáticamente al fichero CSV de Análisis de Ventas "
+"Debería ser enviado automáticamente al fichero CSV de Análisis de Ventas "
 "cuando esté listo"
 
 #: SalesByTypePeriodInquiry.php:6 SalesByTypePeriodInquiry.php:10
@@ -28593,8 +28593,8 @@ msgid ""
 "You should automatically be forwarded to the entry of the delivery details "
 "page"
 msgstr ""
-"Usted automáticamente debería redirigirse al ingreso de los detalles de "
-"entrega de la página"
+"Debería ser enviado automáticamente al ingreso de los detalles de entrega de "
+"la página"
 
 #: SelectOrderItems.php:1147
 msgid "if this does not happen"
@@ -32831,7 +32831,7 @@ msgstr "Uso del Stock"
 
 #: StockUsage.php:19
 msgid "You should automatically be forwarded to the usage graph"
-msgstr "Debería ser conducido automáticamente a la gráfica de uso"
+msgstr "Debería ser enviado automáticamente a la gráfica de uso"
 
 #: StockUsage.php:55
 msgid ""
@@ -34404,7 +34404,7 @@ msgid ""
 "You should automatically be forwarded to the entry of credit notes against "
 "goods received page"
 msgstr ""
-"Debería ser dirigido automáticamente a la página de entrada de notas de "
+"Debería ser enviado automáticamente a la página de entrada de notas de "
 "crédito respecto a bienes recibidos"
 
 #: SupplierCredit.php:221
@@ -34412,7 +34412,7 @@ msgid ""
 "You should automatically be forwarded to the entry of credit notes against "
 "shipments page"
 msgstr ""
-"Debería ser dirigido automáticamente a la página de entrada de notas de "
+"Debería ser enviado automáticamente a la página de entrada de notas de "
 "crédito respecto a envíos"
 
 #: SupplierCredit.php:233
@@ -34420,7 +34420,7 @@ msgid ""
 "You should automatically be forwarded to the entry of credit notes against "
 "the general ledger page"
 msgstr ""
-"Debería ser dirigido automáticamente a la página de entrada de notas de "
+"Debería ser enviado automáticamente a la página de entrada de notas de "
 "crédito respecto a la contabilidad"
 
 #: SupplierCredit.php:243
@@ -34428,15 +34428,15 @@ msgid ""
 "You should automatically be forwarded to the entry of supplier credit notes "
 "against contracts page"
 msgstr ""
-"Automáticamente debería remitirse al ingreso de notas de crédito de "
-"proveedores contra la página contratos"
+"Debería ser enviado automáticamente a la página de entrada de las notas de "
+"crédito de proveedores contra contratos"
 
 #: SupplierCredit.php:253
 msgid ""
 "You should automatically be forwarded to the entry of invoices against fixed "
 "assets page"
 msgstr ""
-"Automáticamente debería remitirse al ingreso de las facturas contra la "
+"Debería ser enviado automáticamente al ingreso de las facturas contra la "
 "página de activos fijos"
 
 #: SupplierCredit.php:283
@@ -34944,7 +34944,7 @@ msgid ""
 "You should automatically be forwarded to the entry of invoices against goods "
 "received page"
 msgstr ""
-"Debería ser dirigido automáticamente a la página de entrada de facturas "
+"Debería ser enviado automáticamente a la página de entrada de facturas "
 "respecto a bienes recibidos"
 
 #: SupplierInvoice.php:570
@@ -34952,7 +34952,7 @@ msgid ""
 "You should automatically be forwarded to the entry of invoices against "
 "shipments page"
 msgstr ""
-"Debería ser conducido automáticamente a la página de entrada de facturas "
+"Debería ser enviado automáticamente a la página de entrada de facturas "
 "contra envíos"
 
 #: SupplierInvoice.php:578
@@ -34960,7 +34960,7 @@ msgid ""
 "You should automatically be forwarded to the entry of invoices against the "
 "general ledger page"
 msgstr ""
-"Debería ser dirigido automáticamente a la página de entrada de facturas "
+"Debería ser enviado automáticamente a la página de entrada de facturas "
 "respecto a la contabilidad"
 
 #: SupplierInvoice.php:586
@@ -34968,15 +34968,15 @@ msgid ""
 "You should automatically be forwarded to the entry of invoices against "
 "contracts page"
 msgstr ""
-"Automáticamente deben remitirse al ingreso de las facturas contra la página "
-"contratos"
+"Debería ser enviado automáticamente al ingreso de las facturas contra la "
+"página contratos"
 
 #: SupplierInvoice.php:596
 msgid ""
 "You should automatically be forwarded to the entry of invoice amounts "
 "against fixed assets page"
 msgstr ""
-"Automáticamente deben remitirse a los ingresos de importes de la factura "
+"Debería ser enviado automáticamente a los ingresos de importes de la factura "
 "contra la página de activos fijos"
 
 #: SupplierInvoice.php:628
@@ -36181,9 +36181,9 @@ msgid ""
 "The default theme to use for the login screen and the setup of new users. "
 "The users' theme selection will override it."
 msgstr ""
-"El tema por defecto a utilizar para la pantalla de inicio de sesión y la "
-"configuración de los usuarios nuevos. Selección de temas de los usuarios lo "
-"anulará."
+"El tema por defecto a usar en la pantalla de inicio de sesión y en la "
+"configuración de los usuarios nuevos. La selección de un tema de usuario "
+"prevalecerá sobre este."
 
 #: SystemParameters.php:449
 msgid "Accounts Receivable/Payable Settings"
@@ -36435,7 +36435,7 @@ msgstr ""
 
 #: SystemParameters.php:586
 msgid "0"
-msgstr ""
+msgstr "0"
 
 #: SystemParameters.php:589
 msgid ""
@@ -39965,7 +39965,7 @@ msgstr "La cantidad entrada no es numérica - se espera un número"
 
 #: WorkOrderReceive.php:127
 msgid "The Expiry Date should be in date format"
-msgstr ""
+msgstr "La fecha de caducidad debe estar en formato de fecha"
 
 #: WorkOrderReceive.php:140
 msgid ""
@@ -42016,6 +42016,7 @@ msgstr " campos requeridos, "
 #: Z_ImportCustbranch.php:188
 msgid "The Debtor No cannot contain any of the following characters"
 msgstr ""
+"El número de deudor no puede contener ninguno de los siguientes caracteres"
 
 #: Z_ImportCustbranch.php:194
 msgid ""
@@ -42105,7 +42106,7 @@ msgstr ""
 
 #: Z_ImportCustbranch.php:359
 msgid "The Debtor No"
-msgstr ""
+msgstr "El número de deudor"
 
 #: Z_ImportCustbranch.php:359
 msgid "has not existed, and its branches data cannot be imported"
@@ -50489,6 +50490,7 @@ msgstr ""
 #: install/index.php:222
 msgid "You must enter a valid email address for the Administrator."
 msgstr ""
+"Debe introducir una dirección de correo-e válida para el administrador."
 
 #: install/index.php:228
 msgid ""
