@@ -2602,7 +2602,7 @@ function BalanceAccountControl($account, $min, $max, $period, $db){
 	}
 }
 
-function GoodsReceivedNotInvoicedControl($period, $db){
+function GoodsReceivedNotInvoicedControl($AcceptedDifference, $period, $db){
 	$SQL = "SELECT (bfwd + actual) as saldo
 			FROM chartdetails
 			WHERE chartdetails.accountcode = '211021400'
@@ -2626,7 +2626,7 @@ function GoodsReceivedNotInvoicedControl($period, $db){
 
 	$GoodsValue = $myrow[0];
 
-	if (abs($ValueAtBalance - $GoodsValue) > 1){
+	if (abs($ValueAtBalance - $GoodsValue) > $AcceptedDifference){
 		$text = "Goods Received Balance value = " . locale_number_format($ValueAtBalance,0) . " <-> Real Goods Received Value at Std Cost = " . locale_number_format($GoodsValue,0);
 		echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
 	}

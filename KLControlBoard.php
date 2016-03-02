@@ -235,7 +235,7 @@ if ($ProcessSection01){
 	* BALANCE ACCOUNTS         
 	***************************************************************************************/
 	if ($KL_SystemAdmin){
-		GoodsReceivedNotInvoicedControl($periodnow, $db);
+		GoodsReceivedNotInvoicedControl(1000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		CustomersDebtControl(100000, $periodnow, $db);
 		$NumberOfTestExecuted++;
@@ -312,7 +312,7 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111513000",         -1,          1, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111800000",  150000000,  200000000, $periodnow, $db);
+		BalanceAccountControl("111800000",  150000000,  250000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111900000",   15000000,   25000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
