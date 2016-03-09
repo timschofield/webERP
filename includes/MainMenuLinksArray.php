@@ -153,7 +153,7 @@ $MenuItems['AP']['Reports']['Caption'] = array(	_('Where Allocated Inquiry.php')
 												_('List Daily Transactions'),
 												_('Supplier Transaction Inquiries'));
 
-$MenuItems['AP']['Reports']['URL'] = array( '/SuppWhereAlloc.php',	
+$MenuItems['AP']['Reports']['URL'] = array( '/SuppWhereAlloc.php',
 											'/AgedSuppliers.php',
 											'/SuppPaymentRun.php',
 											'/PDFRemittanceAdvice.php',

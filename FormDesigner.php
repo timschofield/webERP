@@ -165,7 +165,7 @@ if (isset($_POST['preview']) or isset($_POST['save'])) {
 				echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/PDFFGLabel.php?' . SID .'WO=Preview">';
 				break;
 			case 'ShippingLabel.xml':
-				echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/PDFShipLabel.php?' . SID .'SO=Preview">';
+				echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/PDFShipLabel.php?' . SID .'ORD=Preview">';
 				break;
 		}
 	} else {
@@ -194,7 +194,8 @@ if (empty($_POST['FormName'])) {
 		while (false !== ($file = readdir($handle))) {
 			if ($file[0]!='.') {
 				$FormDesign = simplexml_load_file($PathPrefix.'companies/'.$_SESSION['DatabaseName'].'/FormDesigns/'.$file);
-				echo '<option value="'.$file.'">' . _($FormDesign['name']) . '</option>';
+				//echo "name is". $FormDesign['name'];
+				echo '<option value="'.$file.'">' . /*_(*/ $FormDesign['name'] /*)*/ . '</option>';
 			}
 		}
 		closedir($handle);
@@ -211,13 +212,13 @@ if (empty($_POST['FormName'])) {
 if (empty($_POST['preview'])) {
 	$FormDesign = simplexml_load_file($PathPrefix.'companies/'.$_SESSION['DatabaseName'].'/FormDesigns/'.$_POST['FormName']);
 }
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/reports.png" title="' . _('Form Designer') . '" alt="" />' . ' ' . _('Form Designer') . '<br />' .  _($FormDesign['name']) . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/reports.png" title="' . _('Form Designer') . '" alt="" />' . ' ' . _('Form Designer') . '<br />' .  _((string)$FormDesign['name']) . '</p>';
 echo '<div class="page_help_text">' . 
 	_('Enter the changes that you want in the form layout below.')  . '<br /> '. 
 	_('All measurements are in PostScript points (72 points = 25,4 mm).')  . '<br /> '. 
 	_('All coordinates are measured from the lower left corner of the sheet to the top left corner of the element.') . '</div><br />';
 
-$Papers=array('A4_Landscape', 'A4_Portrait', 'A5_Landscape', 'A5_Portrait', 'A6_Landscape', 'A3_Landscape', 'A3_Portrait', 'Letter_Portrait', 'Letter_Landscape', 'Legal_Portrait', 'Legal_Landscape'); // Possible paper sizes/orientations amg adds A6
+$Papers=array('A4_Landscape', 'A4_Portrait', 'A5_Landscape', 'A5_Portrait', 'A6_Landscape', 'A3_Landscape', 'A3_Portrait', 'Letter_Portrait', 'Letter_Landscape', 'Legal_Portrait', 'Legal_Landscape'); // Possible paper sizes/orientations 
 echo '<form method="post" id="Form" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' . SID . '">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -245,7 +246,7 @@ $counter=1; // Count how many sub tables are in the row
 foreach ($FormDesign as $key) {
 	switch ($key['type']) {
 		case 'image':
-			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="4">' . _($key['name']) . '</th>';
+			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="4">' . _((string)$key['name']) . '</th>';
 			echo '</tr><tr>'; // New table row.
 				InputX($key['id'], $key->x);
 				InputY($key['id'], $key->y);
@@ -259,7 +260,7 @@ foreach ($FormDesign as $key) {
 			break;
 		case 'SimpleText':
 			echo '<td colspan="1" valign="top"><table width="100%" border="1">';
-		        echo '<tr><th colspan="6">' . _($key['name']) . '</th>';
+		        echo '<tr><th colspan="6">' . _((string)$key['name']) . '</th>';
 				echo '</tr><tr>'; // New table row.
 					InputX($key['id'], $key->x);
 					InputY($key['id'], $key->y);
@@ -270,7 +271,7 @@ foreach ($FormDesign as $key) {
 			break;
 		case 'MultiLineText':
 			echo '<td colspan="1" valign="top"><table width="100%" border="1">';
-		        echo '<tr><th colspan="8">' . _($key['name']) . '</th>';
+		        echo '<tr><th colspan="8">' . _((string)$key['name']) . '</th>';
 				echo '</tr><tr>'; // New table row.
 					InputX($key['id'], $key->x);
 					InputY($key['id'], $key->y);
@@ -281,27 +282,27 @@ foreach ($FormDesign as $key) {
 			$counter=$counter+1;
 			break;
 		case 'ElementArray':
-			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="7">' . _($key['name']) . '</th></tr>';
+			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="7">' . _((string)$key['name']) . '</th></tr>';
 			foreach ($key as $subkey) {
             	echo '<tr>';
 				if ($subkey['type']=='SimpleText') {
-					echo '<td>' . _($subkey['name']) . '</td>';
+					echo '<td>' . _((string)$subkey['name']) . '</td>';
 					InputX($subkey['id'], $subkey->x);
 					InputY($subkey['id'], $subkey->y);
 					SelectFontSize($subkey['id'], $subkey->FontSize);
 				} elseif ($subkey['type']=='MultiLineText') { // This element (9 td) overflows the table size (7 td).
-					echo '<td>' . _($subkey['name']) . '</td>';
+					echo '<td>' . _((string)$subkey['name']) . '</td>';
 					InputX($subkey['id'], $subkey->x);
 					InputY($subkey['id'], $subkey->y);
 					InputWidth($subkey['id'], $subkey->Length);
 					SelectFontSize($subkey['id'], $subkey->FontSize);
 				} elseif ($subkey['type']=='DataText') {
-					echo '<td>' . _($subkey['name']) . '</td>';
+					echo '<td>' . _((string)$subkey['name']) . '</td>';
 					InputX($subkey['id'], $subkey->x);
 					InputWidth($subkey['id'], $subkey->Length);
 					SelectFontSize($subkey['id'], $subkey->FontSize);
 				} elseif ($subkey['type']=='StartLine') {
-					echo '<td colspan="3">' . _($subkey['name']) . ' = ' . '</td>';
+					echo '<td colspan="3">' . _((string)$subkey['name']) . ' = ' . '</td>';
 					echo '<td><input type="text" class="number" name="StartLine" size="4" maxlength="4" value="'.$key->y.'" /></td>';
 				}
 				echo '</tr>';
@@ -310,7 +311,7 @@ foreach ($FormDesign as $key) {
 			$counter=$counter+1;
 			break;
 		case 'CurvedRectangle':
-			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="6">' . _($key['name']) . '</th>';
+			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="6">' . _((string)$key['name']) . '</th>';
 			echo '</tr><tr>'; // New table row.
 				InputX($key['id'], $key->x);
 				InputY($key['id'], $key->y);
@@ -332,7 +333,7 @@ foreach ($FormDesign as $key) {
 			$counter=$counter+1;
 			break;
 		case 'Rectangle': // This case is probably included in CurvedRectangle.
-			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="8">' . _($key['name']) . '</th>';
+			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="8">' . _((string)$key['name']) . '</th>';
 			echo '</tr><tr>'; // New table row.
 				InputX($key['id'], $key->x);
 				InputY($key['id'], $key->y);
@@ -345,7 +346,7 @@ foreach ($FormDesign as $key) {
 			$counter=$counter+1;
 			break;
 		case 'Line':
-			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="6">' . _($key['name']) . '</th></tr>';
+			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="6">' . _((string)$key['name']) . '</th></tr>';
             echo '<tr>';
 			echo '<td class="number">' . _('Start x co-ordinate').' = ' . '</td><td><input type="text" class="number" name="'.$key['id'].'startx" size="4" maxlength="4" value="'.$key->startx.'" /></td>';
 			echo '<td class="number">' . _('Start y co-ordinate').' = ' . '</td><td><input type="text" class="number" name="'.$key['id'].'starty" size="4" maxlength="4" value="'.$key->starty.'" /></td></tr><tr>';
