@@ -60,7 +60,7 @@ if(DB_num_rows($ChartDetailsNotSetUpResult)>0){
 		LEFT JOIN chartdetails ON chartmaster.accountcode=chartdetails.accountcode 
 		AND periods.periodno=chartdetails.period 
 		WHERE (periods.periodno BETWEEN '" . $CreateFrom . "' AND '" . $CreateTo . "')
-		AND chartdetails.account code IS NULL ORDER BY accountcode,periodno";
+		AND chartdetails.accountcode IS NULL ORDER BY accountcode,periodno";
 	$ErrMsg = _('Failed to retrieve new account code and periods');
 	$NewPeriodResult = DB_query($sql,$ErrMsg);
 	if (DB_num_rows($result)>0){ 
