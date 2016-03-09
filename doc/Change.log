@@ -1,5 +1,5 @@
 webERP Change Log
-
+03/09/16 Exson: Fixed the typo which make sql query failed in GLPostings.inc. reported by Richard.
 24/02/16: Richard, Exson Fix the GLPosting initiating error in GLPostings.inc.
 20/02/16 Janb,Tim fixed typo in upgrade4.12.3-4.13.sql
 19/02/16 Daveparrish fixed page number error of AgedDebtors.php.
