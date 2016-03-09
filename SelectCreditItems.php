@@ -117,6 +117,7 @@ if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1){
 			    $myrow=DB_fetch_array($result_CustSelect);
 			    $SelectedCustomer = trim($myrow['debtorno']);
 			    $SelectedBranch = trim($myrow['branchcode']);
+			    $_POST['JustSelectedACustomer'] = true;
 		  } elseif (DB_num_rows($result_CustSelect)==0){
 			    prnMsg(_('Sorry') . ' ... ' . _('there are no customer branch records contain the selected text') . ' - ' . _('please alter your search criteria and try again'),'info');
 		  }
