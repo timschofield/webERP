@@ -284,7 +284,7 @@ if (isset($NewItem) AND isset($_POST['WO'])){
 									INNER JOIN bom
 										ON stockmaster.stockid=bom.component
 									WHERE bom.parent='" . $NewItem . "'
-										AND bom.loccode='" . $_POST['StockLocation'] . "'
+										AND bom.loccode=(SELECT loccode FROM workorders WHERE wo='" . $_POST['WO'] . "')
 										AND bom.effectiveafter<='" . Date('Y-m-d') . "'
 										AND bom.effectiveto>='" . Date('Y-m-d') . "'");
 		$CostRow = DB_fetch_array($CostResult);
