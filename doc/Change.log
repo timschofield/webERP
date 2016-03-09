@@ -1,4 +1,5 @@
 webERP Change Log
+10/03/2016 Tim: Fixed the credit note tax authority not set up bug in SelectCreditItems.php. Reported by Bob.
 03/09/16 Exson: Fixed the bug of wrong location selected when add items to Work Orders in WorkOrderEntry.php.
 9/3/16 Andrew Galuski: Fix FormDesigner requires casting XML elements as strings
 03/09/16 Exson: Add PO details option to show balance of each outstanding PO in PO_SelectOSPurchOrder.php.
