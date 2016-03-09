@@ -251,6 +251,7 @@ if (!isset($OrderNumber) or $OrderNumber == '') {
 			echo '<option value="Rejected">' . _('Rejected') . '</option>';
 		}
 	}
+	$Checked = (isset($_POST['PODetails']))?'checked="checked"':'';
 	echo '</select>
 		' . _('Orders Between') . ':&nbsp;
 			<input type="text" name="DateFrom" value="' . ConvertSQLDate($DateFrom) . '"  class="date" size="10" alt="' . $_SESSION['DefaultDateFormat'] . '"  />
@@ -259,6 +260,7 @@ if (!isset($OrderNumber) or $OrderNumber == '') {
 		<input type="submit" name="SearchOrders" value="' . _('Search Purchase Orders') . '" />
 		</td>
 		</tr>
+		<tr><td>' . _('Show PO Details') . '<input type="checkbox" name="PODetails" ' . $Checked . ' /></td></tr>
 		</table>';
 } //!isset($OrderNumber) or $OrderNumber == ''
 
@@ -580,14 +582,18 @@ else {
 
 	echo '<table cellpadding="2" width="97%" class="selection">';
 
-
+	if (isset($_POST['PODetails'])) {
+		$BalHead = '<th class="ascending">' . _('Balance') .' (' . _('Stock ID') . '--' . _('Quantity') . ' )</th>';
+	} else {
+		$BalHead = '';
+	}
 	echo '<tr>
 			<th class="ascending">' . _('Order #') . '</th>
 			<th class="ascending">' . _('Order Date') . '</th>
 			<th class="ascending">' . _('Delivery Date') . '</th>
 			<th class="ascending">' . _('Initiated by') . '</th>
 			<th class="ascending">' . _('Supplier') . '</th>
-			<th class="ascending">' . _('Balance') .' ('. _('Stock ID') . '--' . _('Quantity') . ' )</th>
+			' . $BalHead . '
 			<th class="ascending">' . _('Currency') . '</th>';
 
 	if (in_array($PricesSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($PricesSecurity)) {
@@ -600,6 +606,24 @@ else {
 	$j = 1;
 	$k = 0; //row colour counter
 	while ($myrow = DB_fetch_array($PurchOrdersResult)) {
+		$Bal = '';
+		if (isset($_POST['PODetails'])) {
+			//lets retrieve the PO balance here to make it a standard sql query.
+			$BalSql = "SELECT itemcode, quantityord - quantityrecd as balance FROM purchorderdetails WHERE orderno = '" . $myrow['orderno'] . "'";
+			$ErrMsg = _('Failed to retrieve purchorder details');
+			$BalResult  = DB_query($BalSql,$ErrMsg);
+			if (DB_num_rows($BalResult)>0) {
+				while ($BalRow = DB_fetch_array($BalResult)) {
+					$Bal .= '<br/>' . $BalRow['itemcode'] . ' -- ' . $BalRow['balance'];
+				}
+			}
+		}
+		if (isset($_POST['PODetails'])) {
+			$BalRow = '<td width="250" style="word-break:break-all">' . $Bal . '</td>';
+		} else {
+			$BalRow = '';
+		}
+
 		if ($k == 1) {
 			/*alternate bgcolour of row for highlighting */
 			echo '<tr class="EvenTableRows">';
@@ -641,7 +665,7 @@ else {
 			<td>' . $FormatedDeliveryDate . '</td>
 			<td>' . $InitiatorName . '</td>
 			<td>' . $myrow['suppname'] . '</td>
-			<td width="250" style="word-break:break-all">' . $myrow['bal'] . '</td>
+			' . $BalRow . '
 			<td>' . $myrow['currcode'] . '</td>';
 		if (in_array($PricesSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($PricesSecurity)) {
 			echo '<td class="number">' . $FormatedOrderValue . '</td>';
