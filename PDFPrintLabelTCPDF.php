@@ -45,8 +45,6 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 			ORDER BY stockmaster.stockid";
 	$LabelsResult = DB_query($SQL,'','',false,false);
 
-prnMsg($SQL);
-
 	if (DB_error_no() !=0) {
 		prnMsg( _('The Price Labels could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
 		echo '<br /><a href="' .$RootPath .'/index.php">' .   _('Back to the menu'). '</a>';
