@@ -1,5 +1,5 @@
 <?php
-define("VERSIONFILE", "4.00");
+define("VERSIONFILE", "4.01");
 
 /* Session started in session.inc for password checking and authorisation level check
 config.php is in turn included in session.inc*/
@@ -292,7 +292,9 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111121101PT",  1000000,  100000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111121110PT", 11000000,  210000000, $periodnow, $db);
+		BalanceAccountControl("111121110PT",   100000,  100000000, $periodnow, $db);
+		$NumberOfTestExecuted++;
+		BalanceAccountControl("111121111PT", 11000000,  110000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 	}
 
