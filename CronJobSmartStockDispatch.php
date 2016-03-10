@@ -165,7 +165,11 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 									AND shipqty>recqty";
 				$InTransitResult=DB_query($InTransitSQL);
 				$InTransitRow=DB_fetch_array($InTransitResult);
-				$InTransitQuantityAtFrom=$InTransitRow['intransit'];
+				if ($InTransitRow['intransit']!='') {
+					$InTransitQuantityAtFrom=$InTransitRow['intransit'];
+				} else {
+					$InTransitQuantityAtFrom=0;
+				}
 			}
 			// The real available stock to ship is the (qty - reorder level - in transit).
 			$AvailableShipQtyAtFrom = $myrow['available'] - $InTransitQuantityAtFrom;
@@ -179,7 +183,11 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 								AND shipqty>recqty";
 			$InTransitResult=DB_query($InTransitSQL);
 			$InTransitRow=DB_fetch_array($InTransitResult);
-			$InTransitQuantityAtTo=$InTransitRow['intransit'];
+			if ($InTransitRow['intransit']!='') {
+				$InTransitQuantityAtTo=$InTransitRow['intransit'];
+			} else {
+				$InTransitQuantityAtTo=0;
+			}
 
 			// The real needed stock is reorder level - qty - in transit).
 			$NeededQtyAtTo = $myrow['neededqty'] - $InTransitQuantityAtTo;
