@@ -16,9 +16,15 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 		$SQLQOH = " (SELECT SUM(quantity)
 					FROM locstock
 					WHERE locstock.stockid = prices.stockid
-						AND locstock.loccode = '".$_POST['Location']."') AS labelstoprint ";
+						AND locstock.loccode = '".$_POST['Location']."') AS qoh,
+					 (SELECT SUM(loctransfers.shipqty-loctransfers.recqty)
+								FROM loctransfers
+								WHERE loctransfers.stockid=prices.stockid
+									AND loctransfers.shiploc='".$_POST['Location']."'
+									AND loctransfers.shipqty > loctransfers.recqty)	AS intransit ";
 	}else{
-		$SQLQOH = $_POST['LabelsPerItem'] ." AS labelstoprint ";
+		$SQLQOH = $_POST['LabelsPerItem'] ." AS qoh,
+					0 AS intransit ";
 	}
 	
 	$SQL = "SELECT prices.stockid,
@@ -38,6 +44,8 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 				AND prices.debtorno=''
 			ORDER BY stockmaster.stockid";
 	$LabelsResult = DB_query($SQL,'','',false,false);
+
+prnMsg($SQL);
 
 	if (DB_error_no() !=0) {
 		prnMsg( _('The Price Labels could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
@@ -75,11 +83,22 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 
 	$i=0;
 	while ($LabelRow = DB_fetch_array($LabelsResult)){
+
+		if ($LabelRow['intransit']!='') {
+			$Intransit=$LabelRow['intransit'];
+		} else {
+			$Intransit=0;
+		}
+		$LabelsToPrint = $LabelRow['qoh'] - $Intransit;
+		if($LabelsToPrint < 0){
+			$LabelsToPrint = 0;
+		}
+
 		echo '<tr>
 				<td>' . $LabelRow['stockid'] . '</td>
 				<td>' . $LabelRow['description'] . '</td>
 				<td class="number">' . locale_number_format($LabelRow['price'],$LabelRow['decimalplaces']) . '</td>
-				<td class="number">' . locale_number_format($LabelRow['labelstoprint'],0) . '</td>
+				<td class="number">' . locale_number_format($LabelsToPrint,0) . '</td>
 				<td>';
 		if (isset($_POST['SelectAll']) AND isset($_POST['CheckAll'])) {
 			echo '<input type="checkbox" checked="checked" name="PrintLabel' . $i .'" />';
@@ -92,7 +111,7 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 			<input type="hidden" name="Description' . $i . '" value="' . $LabelRow['description'] . '" />
 			<input type="hidden" name="Barcode' . $i . '" value="' . $LabelRow['barcode'] . '" />
 			<input type="hidden" name="DiscountCategory' . $i . '" value="' . $LabelRow['discountcategory'] . '" />
-			<input type="hidden" name="LabelsToPrint' . $i . '" value="' . $LabelRow['labelstoprint'] . '" />
+			<input type="hidden" name="LabelsToPrint' . $i . '" value="' . $LabelsToPrint . '" />
 			<input type="hidden" name="Price' . $i . '" value="' . $LabelRow['price'] . '" />';
 		$i++;
 	}
