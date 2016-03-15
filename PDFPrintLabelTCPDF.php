@@ -13,15 +13,21 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 	include('includes/header.inc');
 
 	if ($_POST['Location'] != "None"){
+//	Ricard: Again, print only QOH, not available, so intransit = 0
+//		$SQLQOH = " (SELECT SUM(quantity)
+//					FROM locstock
+//					WHERE locstock.stockid = prices.stockid
+//						AND locstock.loccode = '".$_POST['Location']."') AS qoh,
+//					 (SELECT SUM(loctransfers.shipqty-loctransfers.recqty)
+//								FROM loctransfers
+//								WHERE loctransfers.stockid=prices.stockid
+//									AND loctransfers.shiploc='".$_POST['Location']."'
+//									AND loctransfers.shipqty > loctransfers.recqty)	AS intransit ";
 		$SQLQOH = " (SELECT SUM(quantity)
 					FROM locstock
 					WHERE locstock.stockid = prices.stockid
 						AND locstock.loccode = '".$_POST['Location']."') AS qoh,
-					 (SELECT SUM(loctransfers.shipqty-loctransfers.recqty)
-								FROM loctransfers
-								WHERE loctransfers.stockid=prices.stockid
-									AND loctransfers.shiploc='".$_POST['Location']."'
-									AND loctransfers.shipqty > loctransfers.recqty)	AS intransit ";
+					0 AS intransit ";
 	}else{
 		$SQLQOH = $_POST['LabelsPerItem'] ." AS qoh,
 					0 AS intransit ";
