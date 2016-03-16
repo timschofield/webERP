@@ -69,12 +69,13 @@ function submit(&$db, $ListCategories, $Location) {
 
 			$objPHPExcel->getActiveSheet()->setCellValue('B1', 'Location:');
 			$objPHPExcel->getActiveSheet()->setCellValue('B2', 'Date:');
-			$objPHPExcel->getActiveSheet()->setCellValue('B3', 'Category:');
+//			$objPHPExcel->getActiveSheet()->setCellValue('B3', 'Category:');
  
 			$objPHPExcel->getActiveSheet()->setCellValue('C1', $Location);
 			$objPHPExcel->getActiveSheet()->setCellValue('C2', $Now);
-			$objPHPExcel->getActiveSheet()->setCellValue('C3', implode("','",$_POST['Categories']));
- 
+//			$objPHPExcel->getActiveSheet()->setCellValue('C3', implode("','",$_POST['Categories']));
+ 			$objPHPExcel->getActiveSheet()->setCellValue('C3', 'COPY the formula of H6 until the end of stock');
+
 			$objPHPExcel->getActiveSheet()->setCellValue('A5', 'ITEM CODE');
 			$objPHPExcel->getActiveSheet()->setCellValue('B5', 'DESCRIPTION');
 			$objPHPExcel->getActiveSheet()->setCellValue('C5', 'CATEGORY');
@@ -86,9 +87,14 @@ function submit(&$db, $ListCategories, $Location) {
 			$objPHPExcel->getActiveSheet()->setCellValue('G5', 'TO COUNT');
 			$objPHPExcel->getActiveSheet()->setCellValue('H5', 'COUNTED');
 			$objPHPExcel->getActiveSheet()->setCellValue('I5', 'DIFFERENCE');
+			$objPHPExcel->getActiveSheet()->setCellValue('J5', 'COUNTED MANUALLY');
+			$objPHPExcel->getActiveSheet()->setCellValue('K5', 'FINAL DIFFERENCE');
+			$objPHPExcel->getActiveSheet()->setCellValue('L5', 'ADJUSTED WEBERP');
 
 			$objPHPExcel->getActiveSheet()->getStyle('A:AZ')->getNumberFormat()->setFormatCode('#,###');
 			$objPHPExcel->getActiveSheet()->getStyle('3')->getNumberFormat()->setFormatCode('0.0%');
+
+			$objPHPExcel->getActiveSheet()->setCellValue('H6', '=COUNTIFS(Barcodes!$A$1:$C$9999,A6)');
 
 			$objPHPExcel->createSheet(1);
 			$objPHPExcel->setActiveSheetIndex(1);
@@ -115,38 +121,34 @@ function submit(&$db, $ListCategories, $Location) {
 				$Available = $myrow['quantity'];
 
 				$ActiveSheet->setCellValue('G'.$i, round($Available,0));
-				$ActiveSheet->setCellValue('H'.$i, '=COUNTIFS(Barcodes!$A$1:$A$9999,A'.$i.')');
+//				$ActiveSheet->setCellValue('H'.$i, '=COUNTIFS(Barcodes!$A$1:$A$9999,A'.$i.')');
 				$ActiveSheet->setCellValue('I'.$i, '=H'.$i.'-D'.$i.'');
+
+				$ActiveSheet->setCellValue('K'.$i, '=IF(ISBLANK(J'.$i.'),"",J'.$i.'-D'.$i.')');
 
 				$i++;
 			}
 			
 			// Calculating totals, subtotals, etc
 			$ActiveSheet->setCellValue('A1', '=COUNTA(A'.$StartingRow.':A'.$i.')');
-			$ActiveSheet->setCellValue('G1', '=SUM(G'.$StartingRow.':G'.$i.')');
-			$ActiveSheet->setCellValue('H1', '=SUM(H'.$StartingRow.':H'.$i.')');
-			$ActiveSheet->setCellValue('I1', '=SUM(I'.$StartingRow.':I'.$i.')');
-
 			$ActiveSheet->setCellValue('A2', '=SUBTOTAL(3,A'.$StartingRow.':A'.$i.')');
-			$ActiveSheet->setCellValue('G2', '=SUBTOTAL(9,G'.$StartingRow.':G'.$i.')');
-			$ActiveSheet->setCellValue('H2', '=SUBTOTAL(9,H'.$StartingRow.':H'.$i.')');
-			$ActiveSheet->setCellValue('I2', '=SUBTOTAL(9,I'.$StartingRow.':I'.$i.')');
-
 			$ActiveSheet->setCellValue('A3', '=A2/A1');
-			$ActiveSheet->setCellValue('G3', '=G2/G1');
-			$ActiveSheet->setCellValue('H3', '=H2/H1');
-			$ActiveSheet->setCellValue('I3', '=I2/I1');
+
+			foreach(range('G','L') as $columnID) {
+				$ActiveSheet->setCellValue(''.$columnID.'1', '=SUM('.$columnID.$StartingRow.':'.$columnID.$i.')');
+				$ActiveSheet->setCellValue(''.$columnID.'2', '=SUBTOTAL(9,'.$columnID.$StartingRow.':'.$columnID.$i.')');
+				$ActiveSheet->setCellValue(''.$columnID.'3', '='.$columnID.'2/'.$columnID.'1');
+			}
 
 			// Freeze panes
 			$ActiveSheet->freezePane('B6');
 
 			// Set auto filter
-			$ActiveSheet->setAutoFilter('A5:J' . $i);
+			$ActiveSheet->setAutoFilter('A5:L' . $i);
 			
 			// Auto Size columns
-			foreach(range('E','J') as $columnID) {
-				$ActiveSheet->getColumnDimension($columnID)
-					->setAutoSize(true);
+			foreach(range('E','L') as $columnID) {
+				$ActiveSheet->getColumnDimension($columnID)->setAutoSize(true);
 			}
 			
 
