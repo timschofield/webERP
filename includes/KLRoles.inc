@@ -53,6 +53,15 @@ if ($_SESSION['AccessLevel'] == 8){ // webERP System Administration
 	$KL_AdministrationTeam = TRUE;
 	$KL_BusinessDevelopmentManager = TRUE;
 	$KL_ShopSupportLeader = TRUE;
+}else if ($_SESSION['AccessLevel'] == 29){ // IT Hostgator Support (as much rights as possible so they run long scripts
+	$KL_SystemAdmin = TRUE;
+	$KL_OperationalManager = TRUE;
+	$KL_PurchasingTeam = TRUE;
+	$KL_SalesDirector = TRUE;
+	$KL_AdministrationTeam = TRUE;
+	$KL_BusinessDevelopmentManager = TRUE;
+	$KL_ShopSupportLeader = TRUE;
 }
+
 
 ?>
