@@ -51,7 +51,8 @@ echo '<table class="selection">
 
 $sql = "SELECT chartmaster.accountcode, 
 			bankaccounts.accountcode AS bankact,
-			   chartmaster.accountname
+			bankaccounts.currcode,
+			chartmaster.accountname
 		FROM chartmaster LEFT JOIN bankaccounts
 		ON chartmaster.accountcode=bankaccounts.accountcode
 		INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmaster.accountcode AND glaccountusers.userid='" .  $_SESSION['UserID'] . "' AND glaccountusers.canview=1
@@ -61,6 +62,7 @@ while ($myrow=DB_fetch_array($Account,$db)){
 	if($myrow['accountcode'] == $SelectedAccount){
 		if (!is_null($myrow['bankact'])) {
 			$BankAccount = true;
+			$BankCurrency = $myrow['currcode'];
 		}
 		echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' ' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</option>';
 	} else {
@@ -295,6 +297,10 @@ if (isset($_POST['Show'])){
 				$BankRef = $bankrow['ref'];
 				$OrgAmt = $bankrow['amount'];
 				$Currency = $bankrow['currcode'];
+			} elseif(isset($BankCurrency)){
+				$BankRef = '';
+				$OrgAmt = $myrow['amount'];
+				$Currency = $BankCurrency;
 			}
 		} 
 
