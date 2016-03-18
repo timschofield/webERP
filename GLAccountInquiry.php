@@ -62,7 +62,6 @@ while ($myrow=DB_fetch_array($Account,$db)){
 	if($myrow['accountcode'] == $SelectedAccount){
 		if (!is_null($myrow['bankact'])) {
 			$BankAccount = true;
-			$BankCurrency = $myrow['currcode'];
 		}
 		echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' ' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</option>';
 	} else {
@@ -297,10 +296,10 @@ if (isset($_POST['Show'])){
 				$BankRef = $bankrow['ref'];
 				$OrgAmt = $bankrow['amount'];
 				$Currency = $bankrow['currcode'];
-			} elseif(isset($BankCurrency)){
+			} elseif(isset($BankAccount)){
 				$BankRef = '';
 				$OrgAmt = $myrow['amount'];
-				$Currency = $BankCurrency;
+				$Currency = $_SESSION['CompanyRecord']['currencydefault'];
 			}
 		} 
 
