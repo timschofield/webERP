@@ -7,14 +7,13 @@ $KL_OperationalManager = FALSE;
 $KL_AdministrationTeam = FALSE;
 $KL_BusinessDevelopmentManager = FALSE;
 $KL_PurchasingTeam = FALSE;
-
 $KL_ShopSupportTeam = FALSE;
 $KL_ShopSupportLeader = FALSE;
-
 $KL_SalesDirector = FALSE;
-$KL_PettyCash = FALSE;
+$KL_ShopManager = FALSE;
 $KL_SPG = FALSE;
 $KL_SPGSupport = FALSE;
+$KL_PettyCash = FALSE;
 
 if ($_SESSION['AccessLevel'] == 8){ // webERP System Administration
 	$KL_SystemAdmin = TRUE;
