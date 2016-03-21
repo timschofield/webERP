@@ -32,7 +32,7 @@ function submit(&$db, $ListCategories, $Location) {
 							FROM loctransfers
 							WHERE loctransfers.stockid = locstock.stockid
 								AND shiploc='" . $Location . "') AS intransitout,
-						(SELECT SUM(-shipqty+recqty) as intransit
+						(SELECT SUM(shipqty-recqty) as intransit
 							FROM loctransfers
 							WHERE loctransfers.stockid = locstock.stockid
 								AND recloc='" . $Location . "') AS intransitin
@@ -94,7 +94,7 @@ function submit(&$db, $ListCategories, $Location) {
 			$objPHPExcel->getActiveSheet()->getStyle('A:AZ')->getNumberFormat()->setFormatCode('#,###');
 			$objPHPExcel->getActiveSheet()->getStyle('3')->getNumberFormat()->setFormatCode('0.0%');
 
-			$objPHPExcel->getActiveSheet()->setCellValue('H6', '=COUNTIFS(Barcodes!$A$1:$C$9999,A6)');
+			$objPHPExcel->getActiveSheet()->setCellValue('H6', '=COUNTIFS(Barcodes!$A$1:$C$10000,A6)');
 
 			$objPHPExcel->createSheet(1);
 			$objPHPExcel->setActiveSheetIndex(1);
@@ -116,9 +116,9 @@ function submit(&$db, $ListCategories, $Location) {
 				$ActiveSheet->setCellValue('E'.$i, round($myrow['intransitout'],0));
 				$ActiveSheet->setCellValue('F'.$i, round($myrow['intransitin'],0));
 
-// We need to count whatever is in QOH, not in transit				
-//				$Available = $myrow['quantity']+($myrow['intransitin']+$myrow['intransitout']);
-				$Available = $myrow['quantity'];
+// We need to count whatever is in QOH - transit OUT, not transit IN
+//				$Available = $myrow['quantity']+$myrow['intransitin']-$myrow['intransitout'];
+				$Available = $myrow['quantity']-$myrow['intransitout'];
 
 				$ActiveSheet->setCellValue('G'.$i, round($Available,0));
 //				$ActiveSheet->setCellValue('H'.$i, '=COUNTIFS(Barcodes!$A$1:$A$9999,A'.$i.')');
