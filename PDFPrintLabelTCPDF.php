@@ -41,6 +41,7 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 					WHERE locstock.stockid = prices.stockid
 						AND locstock.loccode = 'KANTO') AS qoh,
 					0 AS intransit ";
+		
 		if ($_POST['ChangeToday'] == "ChangePrice"){
 			$SQLChange = " AND EXISTS (SELECT *
 								FROM klchangeprice
@@ -64,8 +65,22 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 		}
 	}
 
+	if ($_POST['StockCategory'] == "All"){
+		$SQLStockCategory = " AND (stockmaster.categoryid IN ". LIST_STOCK_CATEGORIES_SETUP . "
+								OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_TEST . "
+								OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_STABLE . "
+								OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING . "
+								OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_DISCOUNT . "
+								OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_DISCOUNT . "
+								OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_CONSIGNMENT . "
+								OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_PROMOTIONAL_ITEMS . ")";
+	}else{
+		$SQLStockCategory = " AND stockmaster.categoryid = '" . $_POST['StockCategory'] . "' ";
+	}
+
 	$SQL = "SELECT prices.stockid,
 					stockmaster.description,
+					stockmaster.categoryid,
 					stockmaster.discountcategory,
 					prices.price, "
 					. $SQLQOH .	"
@@ -73,19 +88,14 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
    			     ON stockmaster.categoryid=stockcategory.categoryid
 			INNER JOIN prices
 				ON stockmaster.stockid=prices.stockid
-			WHERE stockmaster.categoryid = '" . $_POST['StockCategory'] . "'
-				AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
+			WHERE prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
 				AND prices.currabrev = '". CURRENCY_CODE ."'
 				AND prices.startdate<='" . FormatDateForSQL($_POST['EffectiveDate']) . "'
 				AND (prices.enddate='0000-00-00' OR prices.enddate>'" . FormatDateForSQL($_POST['EffectiveDate']) . "')
 				AND prices.debtorno=''".
+				$SQLStockCategory.
 				$SQLChange."
 			ORDER BY stockmaster.stockid";
-
-//prnMsg("Stock Category: ".$_POST['StockCategory']);
-//prnMsg("Location: ".$_POST['Location']);
-//prnMsg("ChangeToday: ".$_POST['ChangeToday']);
-//prnMsg("SQL: ". $SQL);
 
 	$LabelsResult = DB_query($SQL,'','',false,false);
 	if (DB_error_no() !=0) {
@@ -109,17 +119,18 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 	echo '<table class="selection">
 			<tr>
 				<th>' . _('Item Code') . '</th>
+				<th>' . _('Category') . '</th>
 				<th>' . _('Item Description') . '</th>
 				<th>' . _('Price') . '</th>
 				<th>' . _('# Labels') . '</th>
 				<th>' . _('Print') . ' ?</th>
 			</tr>
 			<tr>
-				<th colspan="5"><input type="submit" name="SelectAll" value="' . _('Select All Labels') . '" /><input type="checkbox" name="CheckAll" ';
+				<th colspan="6"><input type="submit" name="SelectAll" value="' . _('Select All Labels') . '" /><input type="checkbox" name="CheckAll" ';
 	if (isset($_POST['CheckAll'])){
 		echo 'checked="checked" ';
 	}
-	echo 'onchange="ReloadForm(SelectAll)" /></td>
+	echo 'onchange="ReloadForm(SelectAll)" /></th>
 		</tr>';
 
 	$i=0;
@@ -137,6 +148,7 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 		if ($LabelsToPrint > 0){
 			echo '<tr>
 					<td>' . $LabelRow['stockid'] . '</td>
+					<td>' . $LabelRow['categoryid'] . '</td>
 					<td>' . $LabelRow['description'] . '</td>
 					<td class="number">' . locale_number_format($LabelRow['price'],$LabelRow['decimalplaces']) . '</td>
 					<td class="number">' . locale_number_format($LabelsToPrint,0) . '</td>
@@ -149,6 +161,7 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 			echo '</td>
 				</tr>';
 			echo '<input type="hidden" name="StockID' . $i . '" value="' . $LabelRow['stockid'] . '" />
+				<input type="hidden" name="Category' . $i . '" value="' . $LabelRow['categoryid'] . '" />
 				<input type="hidden" name="Description' . $i . '" value="' . $LabelRow['description'] . '" />
 				<input type="hidden" name="Barcode' . $i . '" value="' . $LabelRow['barcode'] . '" />
 				<input type="hidden" name="DiscountCategory' . $i . '" value="' . $LabelRow['discountcategory'] . '" />
@@ -196,21 +209,6 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 	if ($_POST['LabelID'] == 'T570'){
 		// Pricetags T570 general
 		$PageLayout = array(90.0, 10.0);
-		$CoreFileName = "Pricetags";
-		
-		// define Logo information
-		if (ItemInList($_POST['StockCategory'], LIST_STOCK_CATEGORIES_BLINK)
-			OR $_POST['StockCategory'] == "SETBL"){
-			$LogoXPosition = 14.0;
-			$LogoYPosition = 1.0;
-			$LogoHeight = 4.5;
-			$LogoFile = 'companies/' . $_SESSION['DatabaseName'] . '/LogoLabelBLINK.jpg';
-		}else{
-			$LogoXPosition = 12.0;
-			$LogoYPosition = 1.0;
-			$LogoHeight = 4.0;
-			$LogoFile = 'companies/' . $_SESSION['DatabaseName'] . '/LogoLabelKL.jpg';
-		}
 	
 		// define price information
 		$PriceXPosition = 3;
@@ -278,8 +276,22 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 				$StockId = $_POST['StockID' . $i];
 				$Description = $_POST['Description' . $i];
 
+				// define Logo information
+				if (ItemInList($_POST['Category' . $i], LIST_STOCK_CATEGORIES_BLINK)
+					OR $_POST['Category' . $i] == "SETBL"){
+					$LogoXPosition = 14.0;
+					$LogoYPosition = 1.0;
+					$LogoHeight = 4.5;
+					$LogoFile = 'companies/' . $_SESSION['DatabaseName'] . '/LogoLabelBLINK.jpg';
+				}else{
+					$LogoXPosition = 12.0;
+					$LogoYPosition = 1.0;
+					$LogoHeight = 4.0;
+					$LogoFile = 'companies/' . $_SESSION['DatabaseName'] . '/LogoLabelKL.jpg';
+				}
+
 				// define prices for discounted items
-				if (ItemInList($_POST['StockCategory'], LIST_STOCK_CATEGORIES_DISCOUNT)){
+				if (ItemInList($_POST['Category' . $i], LIST_STOCK_CATEGORIES_DISCOUNT)){
 					$ResultDiscount = DB_query("SELECT MAX(discountrate) AS discount
 									FROM discountmatrix
 								WHERE salestype='" . RETAIL_PRICE_LIST . "'
@@ -306,7 +318,7 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 
 				// print depending on each type of label
 				if ($_POST['LabelID'] == 'T570'){
-					if  (ItemInList($_POST['StockCategory'], LIST_STOCK_CATEGORIES_DISCOUNT)){
+					if  (ItemInList($_POST['Category' . $i], LIST_STOCK_CATEGORIES_DISCOUNT)){
 						// print the previous price 
 						$pdf->SetXY($PriceXPosition,$PreviousPriceYPosition);
 						$pdf->SetFont($PriceFont, $PriceFontStyle, $PriceFontSize);
@@ -331,8 +343,18 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 		} //this label is set to print
 	} //loop through labels selected to print
 
-
-	$FileName= $CoreFileName . '_' . date('Y-m-d'). '_'. $_POST['StockCategory'] .'.pdf';
+	$CoreFileName = "Pricetags";
+	if ($_POST['Location'] != "None"){
+		$CoreFileName = $CoreFileName . "-QOH-" . $_POST['Location'];
+	}
+	if ($_POST['ChangeToday'] != "Nothing"){
+		$CoreFileName = $CoreFileName . "-". $_POST['ChangeToday'];
+	}
+	if ($_POST['StockCategory'] != "All"){
+		$CoreFileName = $CoreFileName . "-". $_POST['StockCategory'];
+	}
+	
+	$FileName= $CoreFileName . '-' . Date('Y-m-d-H-i-s') . '.pdf';
 	$pdf->Output($FileName, 'D');
 	$pdf->__destruct();
 
@@ -367,7 +389,8 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 			
 		echo '<tr>
 				<td>' .  _('For Stock Category') .':</td>
-				<td><select name="StockCategory">';
+				<td><select name="StockCategory">
+					<option selected="selected" value="All">' . _('All Categories') . '</option>';
 
 		$CatResult= DB_query("SELECT categoryid, categorydescription FROM stockcategory ORDER BY categorydescription");
 		while ($myrow = DB_fetch_array($CatResult)){
