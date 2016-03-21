@@ -204,12 +204,12 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 			$LogoXPosition = 14.0;
 			$LogoYPosition = 1.0;
 			$LogoHeight = 4.5;
-			$LogoFile = 'companies/kurakura_kl_erp/LogoLabelBLINK.jpg';
+			$LogoFile = 'companies/' . $_SESSION['DatabaseName'] . '/LogoLabelBLINK.jpg';
 		}else{
 			$LogoXPosition = 12.0;
 			$LogoYPosition = 1.0;
 			$LogoHeight = 4.0;
-			$LogoFile = 'companies/kurakura_kl_erp/LogoLabelKL.jpg';
+			$LogoFile = 'companies/' . $_SESSION['DatabaseName'] . '/LogoLabelKL.jpg';
 		}
 	
 		// define price information
