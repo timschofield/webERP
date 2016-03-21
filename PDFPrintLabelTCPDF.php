@@ -32,7 +32,38 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 		$SQLQOH = $_POST['LabelsPerItem'] ." AS qoh,
 					0 AS intransit ";
 	}
-	
+
+	$SQLChange = " ";
+	if ($_POST['ChangeToday'] != "Nothing"){
+		// if they changed something today, all stock is supposed to be in KANTO
+		$SQLQOH = " (SELECT SUM(quantity)
+					FROM locstock
+					WHERE locstock.stockid = prices.stockid
+						AND locstock.loccode = 'KANTO') AS qoh,
+					0 AS intransit ";
+		if ($_POST['ChangeToday'] == "ChangePrice"){
+			$SQLChange = " AND EXISTS (SELECT *
+								FROM klchangeprice
+								WHERE klchangeprice.stockid = prices.stockid
+									AND klchangeprice.endprocessdate = '" . Date('Y-m-d') . "')";
+		}elseif ($_POST['ChangeToday'] == "ChangeDisc20"){
+			$SQLChange = " AND EXISTS (SELECT *
+										FROM klchangetodiscount20
+										WHERE klchangetodicsount20.stockid = prices.stockid
+											AND klchangetodicsount20.endprocessdate = '" . Date('Y-m-d') . "')";
+		}elseif ($_POST['ChangeToday'] == "ChangeDisc50"){
+			$SQLChange = " AND EXISTS (SELECT *
+										FROM klchangetodiscount50
+										WHERE klchangetodicsount50.stockid = prices.stockid
+											AND klchangetodicsount50.endprocessdate = '" . Date('Y-m-d') . "')";
+		}elseif ($_POST['ChangeToday'] == "ChangeDisc80"){
+			$SQLChange = " AND EXISTS (SELECT *
+										FROM klchangetodiscount80
+										WHERE klchangetodicsount80.stockid = prices.stockid
+											AND klchangetodicsount80.endprocessdate = '" . Date('Y-m-d') . "')";
+		}
+	}
+
 	$SQL = "SELECT prices.stockid,
 					stockmaster.description,
 					stockmaster.discountcategory,
@@ -47,10 +78,16 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 				AND prices.currabrev = '". CURRENCY_CODE ."'
 				AND prices.startdate<='" . FormatDateForSQL($_POST['EffectiveDate']) . "'
 				AND (prices.enddate='0000-00-00' OR prices.enddate>'" . FormatDateForSQL($_POST['EffectiveDate']) . "')
-				AND prices.debtorno=''
+				AND prices.debtorno=''".
+				$SQLChange."
 			ORDER BY stockmaster.stockid";
-	$LabelsResult = DB_query($SQL,'','',false,false);
 
+//prnMsg("Stock Category: ".$_POST['StockCategory']);
+//prnMsg("Location: ".$_POST['Location']);
+//prnMsg("ChangeToday: ".$_POST['ChangeToday']);
+//prnMsg("SQL: ". $SQL);
+
+	$LabelsResult = DB_query($SQL,'','',false,false);
 	if (DB_error_no() !=0) {
 		prnMsg( _('The Price Labels could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
 		echo '<br /><a href="' .$RootPath .'/index.php">' .   _('Back to the menu'). '</a>';
@@ -97,27 +134,28 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 		if($LabelsToPrint < 0){
 			$LabelsToPrint = 0;
 		}
-
-		echo '<tr>
-				<td>' . $LabelRow['stockid'] . '</td>
-				<td>' . $LabelRow['description'] . '</td>
-				<td class="number">' . locale_number_format($LabelRow['price'],$LabelRow['decimalplaces']) . '</td>
-				<td class="number">' . locale_number_format($LabelsToPrint,0) . '</td>
-				<td>';
-		if (isset($_POST['SelectAll']) AND isset($_POST['CheckAll'])) {
-			echo '<input type="checkbox" checked="checked" name="PrintLabel' . $i .'" />';
-		} else {
-			echo '<input type="checkbox" name="PrintLabel' . $i .'" />';
+		if ($LabelsToPrint > 0){
+			echo '<tr>
+					<td>' . $LabelRow['stockid'] . '</td>
+					<td>' . $LabelRow['description'] . '</td>
+					<td class="number">' . locale_number_format($LabelRow['price'],$LabelRow['decimalplaces']) . '</td>
+					<td class="number">' . locale_number_format($LabelsToPrint,0) . '</td>
+					<td>';
+			if (isset($_POST['SelectAll']) AND isset($_POST['CheckAll'])) {
+				echo '<input type="checkbox" checked="checked" name="PrintLabel' . $i .'" />';
+			} else {
+				echo '<input type="checkbox" name="PrintLabel' . $i .'" />';
+			}
+			echo '</td>
+				</tr>';
+			echo '<input type="hidden" name="StockID' . $i . '" value="' . $LabelRow['stockid'] . '" />
+				<input type="hidden" name="Description' . $i . '" value="' . $LabelRow['description'] . '" />
+				<input type="hidden" name="Barcode' . $i . '" value="' . $LabelRow['barcode'] . '" />
+				<input type="hidden" name="DiscountCategory' . $i . '" value="' . $LabelRow['discountcategory'] . '" />
+				<input type="hidden" name="LabelsToPrint' . $i . '" value="' . $LabelsToPrint . '" />
+				<input type="hidden" name="Price' . $i . '" value="' . $LabelRow['price'] . '" />';
+			$i++;
 		}
-		echo '</td>
-			</tr>';
-		echo '<input type="hidden" name="StockID' . $i . '" value="' . $LabelRow['stockid'] . '" />
-			<input type="hidden" name="Description' . $i . '" value="' . $LabelRow['description'] . '" />
-			<input type="hidden" name="Barcode' . $i . '" value="' . $LabelRow['barcode'] . '" />
-			<input type="hidden" name="DiscountCategory' . $i . '" value="' . $LabelRow['discountcategory'] . '" />
-			<input type="hidden" name="LabelsToPrint' . $i . '" value="' . $LabelsToPrint . '" />
-			<input type="hidden" name="Price' . $i . '" value="' . $LabelRow['price'] . '" />';
-		$i++;
 	}
 	echo '</table>
 		<input type="hidden" name="NoOfLabels" value="' . $i . '" />
@@ -126,6 +164,7 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 		<input type="hidden" name="EffectiveDate" value="' . $_POST['EffectiveDate'] . '" />
 		<input type="hidden" name="LabelsPerItem" value="' . $_POST['LabelsPerItem'] . '" />
 		<input type="hidden" name="Location" value="' . $_POST['Location'] . '" />
+		<input type="hidden" name="ChangeToday" value="' . $_POST['ChangeToday'] . '" />
 		<br />
 		<div class="centre">
 
@@ -340,11 +379,12 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 			<td>' . _('Prices Effective As At') . ':</td>
 			<td><input type="text" size="11" class="date"	alt="' . $_SESSION['DefaultDateFormat'] . '" name="EffectiveDate" value="' . Date($_SESSION['DefaultDateFormat']) . '" />';
         echo '</td></tr>';
-
-		echo'<tr><td>' . _('Number of labels to print') . '</td></tr>
+		echo'<tr><td></td></tr>';
+		echo'<tr><th colspan="2">' . _('Number of labels to print') . '</th></tr>
 			<tr><td>' . _('Fixed number of labels') . ':</td>
-			<td><input type="text" class="number" name="LabelsPerItem" size="3" value="1" /td>
-			<td>' . _('or QOH at') . ':';
+			<td><input type="text" class="number" name="LabelsPerItem" size="3" value="1" /td></tr>
+			<tr><td>' . _('or QOH at') . ':</td>
+			<td>';
 
 		$sql = "SELECT locations.loccode,
 						locationname
@@ -358,6 +398,16 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 		}
 		echo '</select></td>
 				</tr>';
+		echo '<tr>
+			<td>' . _('or items that') . ':</td>
+			<td><select name="ChangeToday">
+				<option selected="selected" value="Nothing">' . _('') . '</option>
+				<option value="ChangePrice">' . _('Changed price today') . '</option>
+				<option value="ChangeDisc20">' . _('Changed to Discount 20% today') . '</option>
+				<option value="ChangeDisc50">' . _('Changed to Discount 50% today') . '</option>
+				<option value="ChangeDisc80">' . _('Changed to Discount 80% today') . '</option>
+			</select></td>
+			</tr>';
 
 		echo '</table>
 				<br />
