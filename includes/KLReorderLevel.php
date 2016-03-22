@@ -281,13 +281,6 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 					$QOH =$QtyToDistribute;
 					$LocationsDistributed = 0;
 					
-					// if category is discount or outlet, then use priority for these categories
-					if(($myrow['categoryid'] == 'DISC20') OR($myrow['categoryid'] == 'DISC50') OR ($myrow['categoryid'] == 'DISC80')){
-						$OrderBy = " ORDER BY locations.prioritydiscount ASC, "; 
-					}else{
-						$OrderBy = " ORDER BY locations.priority ASC, "; 
-					}
-					
 					$SQLDistribution = "SELECT locstock.loccode, 
 											locstock.reorderlevel AS oldrl
 										FROM locstock, locations
@@ -295,8 +288,8 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 											AND locstock.stockid = '" . $myrow['stockid'] . "'
 											AND (locstock.loccode IN " . LIST_ALL_SHOPS . "
 												)
-											AND locstock.reorderlevel > 0 ".
-										$OrderBy . "
+											AND locstock.reorderlevel > 0 
+										ORDER BY locations.priority ASC, 
 												(SELECT COUNT(qtyinvoiced)
 													FROM salesorderdetails, salesorders
 													WHERE salesorderdetails.orderno = salesorders.orderno
@@ -402,18 +395,9 @@ function WorstLocationForItem($stockid, $stockcat, $kind, $maxdays, $db){
 		$SQL = $SQL . " AND locstock.quantity > 0 "; 
 	}
 
-	$SQL = $SQL . "	AND (locstock.loccode IN " . LIST_ALL_SHOPS . ")";
-
-	// if category is discount or outlet, then use priority for these categories
-	if(($stockcat == 'DISC20') 
-		OR ($stockcat == 'DISC50') 
-		OR ($stockcat == 'DISC80')){
-		$SQL = $SQL . " ORDER BY locations.prioritydiscount DESC, "; 
-	}else{
-		$SQL = $SQL . " ORDER BY locations.priority DESC, "; 
-	}
-	$SQL = $SQL . 
-			"		(SELECT COUNT(qtyinvoiced)
+	$SQL = $SQL . "	AND (locstock.loccode IN " . LIST_ALL_SHOPS . ")
+					ORDER BY locations.priority DESC,
+					(SELECT COUNT(qtyinvoiced)
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
