@@ -77,6 +77,8 @@ if(isset($_POST['submit'])) {
 									cashsalebranch ='" . $_POST['CashSaleBranch'] . "',
 									managed = '" . $_POST['Managed'] . "',
 									internalrequest = '" . $_POST['InternalRequest'] . "',
+									priority = '" . $_POST['Priority'] . "',
+									smartdispatchfrom = '" . $_POST['SmartDispatchFrom'] . "',
 									usedforwo = '" . $_POST['UsedForWO'] . "',
 									glaccountcode = '" . $_POST['GLAccountCode'] . "',
 									allowinvoicing = '" . $_POST['AllowInvoicing'] . "'
@@ -106,6 +108,8 @@ if(isset($_POST['submit'])) {
 		unset($SelectedLocation);
 		unset($_POST['Contact']);
 		unset($_POST['InternalRequest']);
+		unset($_POST['Priority']);
+		unset($_POST['SmartDispatchFrom']);
 		unset($_POST['UsedForWO']);
 		unset($_POST['GLAccountCode']);
 		unset($_POST['AllowInvoicing']);
@@ -139,6 +143,8 @@ if(isset($_POST['submit'])) {
 										cashsalebranch,
 										managed,
 										internalrequest,
+										priority,
+										smartdispatchfrom,
 										usedforwo,
 										glaccountcode,
 										allowinvoicing)
@@ -159,6 +165,8 @@ if(isset($_POST['submit'])) {
 								'" . $_POST['CashSaleBranch'] . "',
 								'" . $_POST['Managed'] . "',
 								'" . $_POST['InternalRequest'] . "',
+								'" . $_POST['Prority'] . "',
+								'" . $_POST['SmartDispatchFrom'] . "',
 								'" . $_POST['UsedForWO'] . "',
 								'" . $_POST['GLAccountCode'] . "',
 								'" . $_POST['AllowInvoicing'] . "')";
@@ -222,6 +230,8 @@ if(isset($_POST['submit'])) {
 		unset($SelectedLocation);
 		unset($_POST['Contact']);
 		unset($_POST['InternalRequest']);
+		unset($_POST['Priority']);
+		unset($_POST['SmartDispatchFrom']);
 		unset($_POST['UsedForWO']);
 		unset($_POST['GLAccountCode']);
 		unset($_POST['AllowInvoicing']);
@@ -373,7 +383,7 @@ if(isset($_POST['submit'])) {
 								WHERE dispatchtaxprovince='" . $TaxProvinceRow[0] . "'");
 		}
 
-		$result= DB_query("DELETE FROM locstock WHERE loccode ='" . $SelectedLocation . "'");
+		$result = DB_query("DELETE FROM locstock WHERE loccode ='" . $SelectedLocation . "'");
 		$result = DB_query("DELETE FROM locationusers WHERE loccode='" . $SelectedLocation . "'");
 		$result = DB_query("DELETE FROM locations WHERE loccode='" . $SelectedLocation . "'");
 
@@ -394,6 +404,8 @@ or deletion of the records*/
 	$sql = "SELECT loccode,
 				locationname,
 				taxprovinces.taxprovincename as description,
+				priority,
+				smartdispatchfrom,
 				glaccountcode,
 				allowinvoicing,
 				managed
@@ -410,6 +422,8 @@ or deletion of the records*/
 			<th class="ascending">', _('Location Code'), '</th>
 			<th class="ascending">', _('Location Name'), '</th>
 			<th class="ascending">', _('Tax Province'), '</th>
+			<th class="ascending">', _('Priority'), '</th>
+			<th class="ascending">', _('KL Smart Transfer From'), '</th>
 			<th class="ascending">', _('GL Account Code'), '</th>
 			<th class="ascending">', _('Allow Invoicing'), '</th>
 			<th class="noprint" colspan="2">&nbsp;</th>
@@ -435,6 +449,8 @@ while ($myrow = DB_fetch_array($result)) {
 			<td>%s</td>
 			<td>%s</td>
 			<td class="number">%s</td>
+			<td>%s</td>
+			<td class="number">%s</td>
 			<td class="centre">%s</td>
 			<td class="noprint"><a href="%sSelectedLocation=%s">' . _('Edit') . '</a></td>
 			<td class="noprint"><a href="%sSelectedLocation=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this inventory location?') . '\');">' . _('Delete') . '</a></td>
@@ -442,6 +458,8 @@ while ($myrow = DB_fetch_array($result)) {
 			$myrow['loccode'],
 			$myrow['locationname'],
 			$myrow['description'],
+			$myrow['priority'],
+			$myrow['smartdispatchfrom'],
 			($myrow['glaccountcode']!='' ? $myrow['glaccountcode'] : '&nbsp;'),// Use a non-breaking space to avoid an empty cell in a HTML table.
 			($myrow['allowinvoicing']==1 ? _('Yes') : _('No')),
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $myrow['loccode'],
@@ -485,6 +503,8 @@ if(!isset($_GET['delete'])) {
 					cashsalebranch,
 					managed,
 					internalrequest,
+					priority,
+					smartdispatchfrom,
 					usedforwo,
 					glaccountcode,
 					allowinvoicing
@@ -511,6 +531,8 @@ if(!isset($_GET['delete'])) {
 		$_POST['CashSaleBranch'] = $myrow['cashsalebranch'];
 		$_POST['Managed'] = $myrow['managed'];
 		$_POST['InternalRequest'] = $myrow['internalrequest'];
+		$_POST['Priority'] = $myrow['priority'];
+		$_POST['SmartDispatchFrom'] = $myrow['smartdispatchfrom'];
 		$_POST['UsedForWO'] = $myrow['usedforwo'];
 		$_POST['GLAccountCode'] = $myrow['glaccountcode'];
 		$_POST['AllowInvoicing'] = $myrow['allowinvoicing'];
@@ -662,6 +684,14 @@ if(!isset($_GET['delete'])) {
 		<tr>
 			<td>' . _('Counter Sales Branch Code') . ':' . '</td>
 			<td><input type="text" name="CashSaleBranch" data-type="no-illegal-chars" title="' . _('If counter sales are being used for this location then an existing customer branch code for the customer account code entered above needs to be entered here. All sales created from the counter sales will be recorded against this branch') . '" value="' . $_POST['CashSaleBranch'] . '" size="11" maxlength="10" /></td>
+		</tr>
+		<tr>
+			<td>' . _('Priority for KL Smart Transfers') . ':' . '</td>
+			<td><input type="text" name="Priority" class="number" title="' . _('Priority for KL Shops Smart Transfers 1-Max Priority 9-Min Priority') . '" value="' . $_POST['Priority'] . '" size="1" maxlength="1" /></td>
+		</tr>';
+	echo '<tr>
+			<td>' . _('KL Smart Transfers from') . ':</td>
+			<td><input type="text" name="SmartDispatchFrom" title="' . _('Enter the location code where KL Smart Transfers must pull stock to this location (usually KANTO)') . '" data-type="no-illegal-chars" name="LocCode" value="' . $_POST['SmartDispatchFrom'] . '" size="5" maxlength="5" /></td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('Allow internal requests?') . ':</td>
