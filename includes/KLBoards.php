@@ -772,6 +772,7 @@ function ActiveTransfersByLocation($RootPath, $db){
 					AND loctransfers.recloc = locations.loccode) as transferin
 			FROM locations
 			WHERE locations.loccode IN " . LIST_ALL_SHOPS . "
+				OR locations.loccode = " . CODE_ONLINE_SHOP . "
 			ORDER BY (SELECT SUM(shipqty-recqty)
 				FROM loctransfers
 				WHERE  recqty < shipqty
@@ -997,10 +998,10 @@ function RecentlyClosedTransferStatus($maxdays, $RootPath, $db){
 function ListPriorityLocations($db){
 	$SQL="SELECT locationname,
 				priority,
-				prioritydiscount,
 				smartdispatchmaxmodels
 		FROM locations
-		WHERE (loccode IN " . LIST_ALL_SHOPS . ")
+		WHERE locations.loccode IN " . LIST_ALL_SHOPS . "
+			OR locations.loccode = " . CODE_ONLINE_SHOP . "
 		ORDER BY locationname ASC";
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
@@ -1009,8 +1010,7 @@ function ListPriorityLocations($db){
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
 							<th class="ascending">' . _('Location') . '</th>
-							<th class="ascending">' . _('Priority Normal') . '</th>
-							<th class="ascending">' . _('Priority Discount') . '</th>
+							<th class="ascending">' . _('Priority') . '</th>
 							<th class="ascending">' . _('MAX Models Daily Transfer') . '</th>
 						</tr>';
 		echo $TableHeader;
@@ -1021,11 +1021,9 @@ function ListPriorityLocations($db){
 			printf('<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
-					<td class="number">%s</td>
 					</tr>', 
 					$myrow['locationname'],
 					$myrow['priority'],
-					$myrow['prioritydiscount'],
 					$myrow['smartdispatchmaxmodels']
 					);
 			$i++;
