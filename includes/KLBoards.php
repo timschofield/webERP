@@ -499,9 +499,7 @@ function FinishedStockDistribution($kind, $byreport, $db){
 	}
 	if ($byreport == "LOCATION"){
 		$SQL =	"SELECT locstock.loccode,
-						locations.locationname,
-						locations.kldisplaylenght,
-						locations.kldisplaysurface,
+					locations.locationname,
 					SUM(locstock.reorderlevel) AS optimalstock,
 					SUM(locstock.quantity) AS realstock,
 					(SELECT COUNT(l2.reorderlevel)
@@ -585,8 +583,6 @@ function FinishedStockDistribution($kind, $byreport, $db){
 							<th class="ascending">' . _('% Models') . '</th>
 							<th class="ascending">' . _('QOH Pcs/Model') . '</th>
 							<th class="ascending">' . _('RL Pcs/Model') . '</th>
-							<th class="ascending">' . _('cm/RL Model') . '</th>
-							<th class="ascending">' . _('cm2/RL Model') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -615,23 +611,9 @@ function FinishedStockDistribution($kind, $byreport, $db){
 			}else{
 				$optimalPcsModel = "";
 			}
-			if ($myrow['kldisplaylenght'] != 0){
-				$lenght_model =locale_number_format(($myrow['kldisplaylenght']/$myrow['optimalmodels']),1);
-			}else{
-				$lenght_model = "";
-			}
-			if ($myrow['kldisplaysurface'] != 0){
-				$surface_model =($myrow['kldisplaysurface']/$myrow['optimalmodels']);
-				$side_model = locale_number_format(sqrt($surface_model),0);
-				$square_model = $side_model . 'x' . $side_model;
-			}else{
-				$square_model = "";
-			}
 			if ($byreport == "LOCATION"){			
 				printf('<td class="number">%s</td>
 						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
@@ -650,16 +632,12 @@ function FinishedStockDistribution($kind, $byreport, $db){
 						locale_number_format($myrow['optimalmodels'],0),
 						$percentModels,
 						$realPcsModel,
-						$optimalPcsModel,
-						$lenght_model,
-						$square_model
+						$optimalPcsModel
 						);
 			}
 			if ($byreport == "STOCKCATEGORY"){			
 				printf('<td class="number">%s</td>
 						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
@@ -678,9 +656,7 @@ function FinishedStockDistribution($kind, $byreport, $db){
 						'',
 						'',
 						$realPcsModel,
-						$optimalPcsModel,
-						'',
-						''
+						$optimalPcsModel
 						);
 			}
 			$i++;
@@ -717,8 +693,6 @@ function FinishedStockDistribution($kind, $byreport, $db){
 				<td class="number">%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
 				</tr>', 
 				"",
 				"Total",
@@ -729,8 +703,6 @@ function FinishedStockDistribution($kind, $byreport, $db){
 				"",
 				"",
 				$percentModels,
-				"",
-				"",
 				""
 				);
 		

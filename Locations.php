@@ -79,6 +79,7 @@ if(isset($_POST['submit'])) {
 									internalrequest = '" . $_POST['InternalRequest'] . "',
 									priority = '" . $_POST['Priority'] . "',
 									smartdispatchfrom = '" . $_POST['SmartDispatchFrom'] . "',
+									smartdispatchmaxmodels = '" . $_POST['SmartDispatchMaxModels'] . "',
 									usedforwo = '" . $_POST['UsedForWO'] . "',
 									glaccountcode = '" . $_POST['GLAccountCode'] . "',
 									allowinvoicing = '" . $_POST['AllowInvoicing'] . "'
@@ -110,6 +111,7 @@ if(isset($_POST['submit'])) {
 		unset($_POST['InternalRequest']);
 		unset($_POST['Priority']);
 		unset($_POST['SmartDispatchFrom']);
+		unset($_POST['SmartDispatchMaxModels']);
 		unset($_POST['UsedForWO']);
 		unset($_POST['GLAccountCode']);
 		unset($_POST['AllowInvoicing']);
@@ -145,6 +147,7 @@ if(isset($_POST['submit'])) {
 										internalrequest,
 										priority,
 										smartdispatchfrom,
+										smartdispatchmaxmodels,
 										usedforwo,
 										glaccountcode,
 										allowinvoicing)
@@ -167,6 +170,7 @@ if(isset($_POST['submit'])) {
 								'" . $_POST['InternalRequest'] . "',
 								'" . $_POST['Prority'] . "',
 								'" . $_POST['SmartDispatchFrom'] . "',
+								'" . $_POST['SmartDispatchMaxModels'] . "',
 								'" . $_POST['UsedForWO'] . "',
 								'" . $_POST['GLAccountCode'] . "',
 								'" . $_POST['AllowInvoicing'] . "')";
@@ -232,6 +236,7 @@ if(isset($_POST['submit'])) {
 		unset($_POST['InternalRequest']);
 		unset($_POST['Priority']);
 		unset($_POST['SmartDispatchFrom']);
+		unset($_POST['SmartDispatchMaxModels']);
 		unset($_POST['UsedForWO']);
 		unset($_POST['GLAccountCode']);
 		unset($_POST['AllowInvoicing']);
@@ -406,6 +411,7 @@ or deletion of the records*/
 				taxprovinces.taxprovincename as description,
 				priority,
 				smartdispatchfrom,
+				smartdispatchmaxmodels,
 				glaccountcode,
 				allowinvoicing,
 				managed
@@ -423,9 +429,8 @@ or deletion of the records*/
 			<th class="ascending">', _('Location Name'), '</th>
 			<th class="ascending">', _('Tax Province'), '</th>
 			<th class="ascending">', _('Priority'), '</th>
-			<th class="ascending">', _('KL Smart Transfer From'), '</th>
-			<th class="ascending">', _('GL Account Code'), '</th>
-			<th class="ascending">', _('Allow Invoicing'), '</th>
+			<th class="ascending">', _('KL ST From'), '</th>
+			<th class="ascending">', _('KL ST Max Models'), '</th>
 			<th class="noprint" colspan="2">&nbsp;</th>
 		</tr>';
 
@@ -451,7 +456,6 @@ while ($myrow = DB_fetch_array($result)) {
 			<td class="number">%s</td>
 			<td>%s</td>
 			<td class="number">%s</td>
-			<td class="centre">%s</td>
 			<td class="noprint"><a href="%sSelectedLocation=%s">' . _('Edit') . '</a></td>
 			<td class="noprint"><a href="%sSelectedLocation=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this inventory location?') . '\');">' . _('Delete') . '</a></td>
 			</tr>',
@@ -460,8 +464,7 @@ while ($myrow = DB_fetch_array($result)) {
 			$myrow['description'],
 			$myrow['priority'],
 			$myrow['smartdispatchfrom'],
-			($myrow['glaccountcode']!='' ? $myrow['glaccountcode'] : '&nbsp;'),// Use a non-breaking space to avoid an empty cell in a HTML table.
-			($myrow['allowinvoicing']==1 ? _('Yes') : _('No')),
+			$myrow['smartdispatchmaxmodels'],
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $myrow['loccode'],
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $myrow['loccode']);
 	}
@@ -505,11 +508,13 @@ if(!isset($_GET['delete'])) {
 					internalrequest,
 					priority,
 					smartdispatchfrom,
+					smartdispatchmaxmodels,
 					usedforwo,
 					glaccountcode,
 					allowinvoicing
 				FROM locations
-				WHERE loccode='" . $SelectedLocation . "'";
+				WHERE loccode='" . $SelectedLocation . "'
+				ORDER BY locationname";
 
 		$result = DB_query($sql);
 		$myrow = DB_fetch_array($result);
@@ -533,6 +538,7 @@ if(!isset($_GET['delete'])) {
 		$_POST['InternalRequest'] = $myrow['internalrequest'];
 		$_POST['Priority'] = $myrow['priority'];
 		$_POST['SmartDispatchFrom'] = $myrow['smartdispatchfrom'];
+		$_POST['SmartDispatchMaxModels'] = $myrow['smartdispatchmaxmodels'];
 		$_POST['UsedForWO'] = $myrow['usedforwo'];
 		$_POST['GLAccountCode'] = $myrow['glaccountcode'];
 		$_POST['AllowInvoicing'] = $myrow['allowinvoicing'];
@@ -692,6 +698,10 @@ if(!isset($_GET['delete'])) {
 	echo '<tr>
 			<td>' . _('KL Smart Transfers from') . ':</td>
 			<td><input type="text" name="SmartDispatchFrom" title="' . _('Enter the location code where KL Smart Transfers must pull stock to this location (usually KANTO)') . '" data-type="no-illegal-chars" name="LocCode" value="' . $_POST['SmartDispatchFrom'] . '" size="5" maxlength="5" /></td>
+		</tr>';
+	echo '<tr>
+			<td>' . _('KL Smart Transfers # max models') . ':</td>
+			<td><input type="text" name="SmartDispatchMaxModels" class="number" title="' . _('Enter the maximum number of models to be included in KL Smart Transfers') . '" name="MaxModels" value="' . $_POST['SmartDispatchMaxModels'] . '" size="5" maxlength="5" /></td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('Allow internal requests?') . ':</td>
