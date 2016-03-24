@@ -416,7 +416,8 @@ or deletion of the records*/
 				allowinvoicing,
 				managed
 			FROM locations INNER JOIN taxprovinces
-			ON locations.taxprovinceid=taxprovinces.taxprovinceid";
+			ON locations.taxprovinceid=taxprovinces.taxprovinceid
+			ORDER BY locationname";
 	$result = DB_query($sql);
 
 	if(DB_num_rows($result)==0) {
