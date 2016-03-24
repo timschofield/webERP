@@ -1,5 +1,7 @@
 webERP Change Log
 
+24/03/16 Exson: Make the MRP report more place for material description in MRPReport.php.
+18/03/2016 Exson: Correct the currency code for transaction between bank account in GLAccountInquiry.php.
 18/03/2016 Exson: Fixed the bug that transaction between bank shows wrong original currency and amount in GLAccountInquiry.php.
 10/03/2016 Tim: Fixed the credit note tax authority not set up bug in SelectCreditItems.php. Reported by Bob.
 03/09/16 Exson: Fixed the bug of wrong location selected when add items to Work Orders in WorkOrderEntry.php.
