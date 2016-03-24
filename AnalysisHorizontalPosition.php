@@ -2,10 +2,10 @@
 /* $Id: AnalysisHorizontalPosition.php 7349 2015-09-14 14:43:19Z rchacon $*/
 /* Shows the horizontal analysis of the statement of financial position. */
 
-function RelativeChange($SelectedPeriod, $PreviousPeriod) {
+function RelativeChange($selected_period, $previous_period) {
 	// Calculates the relative change between selected and previous periods. Uses percent with locale number format.
-	if($PreviousPeriod<>0) {
-		return locale_number_format(($SelectedPeriod-$PreviousPeriod)*100/$PreviousPeriod,$_SESSION['CompanyRecord']['decimalplaces']) . '%';
+	if($previous_period<>0) {
+		return locale_number_format(($selected_period-$previous_period)*100/$previous_period, $_SESSION['CompanyRecord']['decimalplaces']) . '%';
 	} else {
 		return _('N/A');
 	}
@@ -57,15 +57,6 @@ if(! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod']
 		}
 		echo ' value="', $myrow['periodno'], '">', MonthAndYearFromSQLDate($myrow['lastdate_in_period']), '</option>';
 	}
-/*
-	while($myrow=DB_fetch_array($Periods)) {
-		echo '<option';
-		if($myrow['periodno']==$DefaultToPeriod) {
-			echo ' selected="selected"';
-		}
-		echo ' value="', $myrow['periodno'], '">', MonthAndYearFromSQLDate($myrow['lastdate_in_period']), '</option>';
-	}
-*/
 	echo		'</select></td>
 			</tr>
 			<tr>
@@ -120,8 +111,8 @@ if(! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod']
 	} else {// Summary report:
 		echo '<th class="text" colspan="2">', _('Summary'), '</th>';
 	}
-	echo	'<th class="number">', $BalanceDate, '</th>
-			<th class="number">', _('Last Year'), '</th>
+	echo	'<th class="number">', _('Current period'), '</th>
+			<th class="number">', _('Last period'), '</th>
 			<th class="number">', _('Actual change'), '</th>
 			<th class="number">', _('Relative change'), '</th>
 		</tr>
@@ -156,8 +147,8 @@ if(! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod']
 			chartmaster.accountname,
 			Sum(CASE WHEN chartdetails.period='" . $_POST['BalancePeriodEnd'] . "' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS balancecfwd,
 			Sum(CASE WHEN chartdetails.period='" . ($_POST['BalancePeriodEnd'] - 12) . "' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS balancecfwdly
-		FROM chartmaster 
-			INNER JOIN accountgroups ON chartmaster.group_ = accountgroups.groupname 
+		FROM chartmaster
+			INNER JOIN accountgroups ON chartmaster.group_ = accountgroups.groupname
 			INNER JOIN chartdetails	ON chartmaster.accountcode= chartdetails.accountcode
 			INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmaster.accountcode AND glaccountusers.userid='" .  $_SESSION['UserID'] . "' AND glaccountusers.canview=1
 		WHERE accountgroups.pandl=0
