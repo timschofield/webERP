@@ -1,5 +1,6 @@
 webERP Change Log
 
+24/03/16 RChacon: On CustomerReceipt.php, allow more precision on the functional_exchange_rate. On Payments.php, add pattern and required attributes to the functional_exchange_rate input.
 24/03/16 Exson: Make the MRP report more place for material description in MRPReport.php.
 18/03/2016 Exson: Correct the currency code for transaction between bank account in GLAccountInquiry.php.
 18/03/2016 Exson: Fixed the bug that transaction between bank shows wrong original currency and amount in GLAccountInquiry.php.

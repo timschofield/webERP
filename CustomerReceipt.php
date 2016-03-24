@@ -7,7 +7,6 @@ include('includes/session.inc');
 
 $Title = _('Receipt Entry');
 
-
 if ($_GET['Type']=='GL') {
 	$ViewTopic= 'GeneralLedger';
 	$BookMark = 'GLReceipts';
@@ -905,7 +904,7 @@ if($_SESSION['ReceiptBatch']->AccountCurrency != $_SESSION['CompanyRecord']['cur
 	}
 	echo '<tr>
 			<td>', _('Functional Exchange Rate'), ':</td>
-			<td><input class="number" maxlength="12" name="FunctionalExRate" pattern="[0-9\.,]*" required="required" size="14" tabindex="5" type="text" value="', locale_number_format($_SESSION['ReceiptBatch']->FunctionalExRate,8), '" /> ', $SuggestedFunctionalExRateText, ' <i>', _('The exchange rate between the currency of the business (the functional currency) and the currency of the bank account'),  '.</i></td>
+			<td><input class="number" maxlength="12" name="FunctionalExRate" pattern="[0-9\.,]*" required="required" size="14" tabindex="5" type="text" value="', $_POST['FunctionalExRate'], '" /> ', $SuggestedFunctionalExRateText, ' <i>', _('The exchange rate between the currency of the business (the functional currency) and the currency of the bank account'),  '.</i></td>
 		</tr>';
 }
 
@@ -1100,9 +1099,9 @@ if (isset($_POST['GLEntry']) AND isset($_SESSION['ReceiptBatch'])){
 			<td>' . _('GL Account') . ':</td>
 			<td><select tabindex="8" name="GLCode">';
 
-	$SQL = "SELECT chartmaster.accountcode, 
-					chartmaster.accountname 
-			FROM chartmaster 
+	$SQL = "SELECT chartmaster.accountcode,
+					chartmaster.accountname
+			FROM chartmaster
 				INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmaster.accountcode AND glaccountusers.userid='" .  $_SESSION['UserID'] . "' AND glaccountusers.canupd=1
 			ORDER BY chartmaster.accountcode";
 	$result=DB_query($SQL);

@@ -16,7 +16,6 @@ if (isset($_GET['SupplierID'])) {
 }
 
 include('includes/header.inc');
-
 include('includes/SQL_CommonFunctions.inc');
 
 if (isset($_POST['PaymentCancelled'])) {
@@ -891,7 +890,7 @@ if($_SESSION['PaymentDetail' . $identifier]->AccountCurrency != $_SESSION['Compa
 	}
 	echo '<tr>
 			<td>', _('Functional Exchange Rate'), ':</td>
-			<td><input class="number" maxlength="12" name="FunctionalExRate" size="14" title="', _('The exchange rate between the currency of the business (the functional currency) and the currency of the bank account'), '" type="text" value="', $_POST['FunctionalExRate'], '" /></td>
+			<td><input class="number" maxlength="12" name="FunctionalExRate" pattern="[0-9\.,]*" required="required" size="14" title="', _('The exchange rate between the currency of the business (the functional currency) and the currency of the bank account'), '" type="text" value="', $_POST['FunctionalExRate'], '" /></td>
 			<td>', $SuggestedFunctionalExRateText, '. <i>', _('The exchange rate between the currency of the business (the functional currency) and the currency of the bank account'), '.</i></td>
 		</tr>';
 }
