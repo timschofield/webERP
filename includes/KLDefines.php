@@ -236,4 +236,92 @@ define('WORLD_BRAND_PLATADEPALO',69);
 define('WORLD_BRAND_HIPANEMA',70);
 define('WORLD_BRAND_DESIGUAL',83);
 
+//********************************************************************************
+// WebERP - Opencart Bridge settings
+// previously were in the file includes/WeberpOpenCartDefines.php
+// moved here for easy maintenance
+//********************************************************************************
+
+define("WEBERP_ONLINE_CUSTOMER_CODE_PREFIX",    'WEB-KL-');
+
+define("LOCATIONS_WITH_STOCK_FOR_ONLINE_SHOP", 'KANTO,TOK66,TOKSA,TOKSS,TOKOB,TOKKS,TOKJC,TOKUB,TOKMF,TOKSE,TOKSU,TOKPU,TOKPA,TOKKA,TOKMU,TOKPS,TOKAR');
+define("WEBERP_DISCOUNTS_IN_OPENCART_TABLE", 'product_special');
+
+define("OPENCART_OUTLET_CATEGORIES", '51,52,53,54,55,56,59,60,74');
+define("WEBERP_OUTLET_CATEGORIES", '51,52,53,54,55,56,59,60,74');
+
+define("WEBERP_CATEGORIES_FOR_GOOGLE_PRODUCT_FEED", '31,32,33,34,36,37,50,38,35,43,44,45,46,47,48,51,52,53,54,55,56,40,41,49,42,39,61,62,63,64,65,66,67,71,72,73,74,75,76');
+
+define("GOOGLE_BRAND", 'Kapal-Laut. Your Essential Jewellery');
+define("GOOGLE_GENDER", 'Female');
+define("GOOGLE_AGEGROUP", 'Adult');
+define("GOOGLE_CONDITION", 'New');
+define("GOOGLE_OOS_STATUS", 'Available for Order');
+define("GOOGLE_IDENTIFIER", 'TRUE');
+
+/*	From webERP to OpenCart */
+define("PATH_OPENCART_IMAGES", 'data/KL/part_pics/');
+define("ABSOLUTE_PATH_OPENCART_IMAGES", '/home4/kurakura/public_html/kapal-laut.com/image/data/KL/part_pics/');
+
+define("PATH_OPENCART_BASE", 'http://www.kapal-laut.com');
+define("ROUTE_TO_PRODUCT", 'index.php?route=product/product&');
+define("REDIRECT_RESPONSE_CODE", 301);
+
+/* From OpenCart to webERP CUSTOMERS */
+
+define("OPENCART_DEFAULT_CUSTOMER_HOLD_REASON", '1');
+define("OPENCART_DEFAULT_CUSTOMER_PAYMENT_TERMS", 'CW');
+define("OPENCART_DEFAULT_CUSTOMER_SALES_TYPE", 'RT');
+define("OPENCART_DEFAULT_CUSTOMER_TYPE", '9');
+define("OPENCART_DEFAULT_CUSTOMER_CREDIT_LIMIT", 0);
+define("OPENCART_DEFAULT_CUSTOMER_LANGUAGE", 'en_GB.utf8');
+define("OPENCART_DEFAULT_CUSTOMER_TAXREF", '');
+define("OPENCART_DEFAULT_CUSTOMER_TAXGROUPID", 1);
+
+define("OPENCART_DEFAULT_SALESMAN", '999');
+define("OPENCART_DEFAULT_AREA", 'OWS');
+define("OPENCART_DEFAULT_AREA_INDONESIA", 'OWB');
+define("OPENCART_DEFAULT_CURRENCY", 'IDR');
+define("OPENCART_DEFAULT_LOCATION", 'TOKWS');
+
+define("SHIPMENT01_OPENCART_TEXT", 'EMS'); 
+define("SHIPMENT01_WEBERP_CODE", 5); 
+define("SHIPMENT02_OPENCART_TEXT", 'JNE-OKE'); 
+define("SHIPMENT02_WEBERP_CODE", 6); 
+define("SHIPMENT03_OPENCART_TEXT", 'JNE-YES'); 
+define("SHIPMENT03_WEBERP_CODE", 7); 
+define("SHIPMENT03_OPENCART_TEXT", 'JNE-REG'); 
+define("SHIPMENT03_WEBERP_CODE", 8); 
+
+define("OPENCART_DEFAULT_SHIPVIA", 5); 
+
+define("OPENCART_ONLINE_ORDER_DISCOUNT_CODE", 'DISCOUNT-10%');
+
+define("OPENCART_ONLINE_COUPON_CODE", 'VIP-ONLINE-10%');
+define("OPENCART_VIP_SILVER_CODE", 'VIP-SILVER-15%');
+define("OPENCART_VIP_GOLD_CODE", 'VIP-GOLD-30%');
+define("OPENCART_VIP_ELITE_CODE", 'VIP-ELITE-50%');
+define("OPENCART_CUSTOMER_REFUND_CODE", 'CUSTOMER-REFUND');
+define("OPENCART_BIRTHDAY_DISCOUNT_CODE", 'BIRTHDAY-20%');
+define("OPENCART_VALENTINE_DAY_DISCOUNT_CODE", 'VALENTINE-20%');
+define("OPENCART_KARTINI_DAY_DISCOUNT_CODE", 'KARTINI-20%');
+define("OPENCART_NATIONAL_DAY_DISCOUNT_CODE", 'NATIONALDAY-20%');
+define("OPENCART_GIFT_100K_CODE", 'GIFT-100K');
+define("OPENCART_GIFT_125K_CODE", 'GIFT-125K');
+define("OPENCART_GIFT_250K_CODE", 'GIFT-250K');
+define("OPENCART_GIFT_300K_CODE", 'GIFT-300K');
+
+define("OPENCART_DEFAULT_PAYMENT_SYSTEM", 'PayPal');
+
+define("OPENCART_FOREIGN_CURRENCY_SURCHARGE_PERCENT", 1.05); // factor to increase the exchange rate for foreign currency (> 1 = more expensive in foreign) 
+
+define("WEBERP_GL_PAYPAL_ACCOUNT_AUD",    '111259050');
+define("WEBERP_GL_PAYPAL_COMMISSION_AUD", '700211700');
+
+define("WEBERP_GL_PAYPAL_ACCOUNT_EUR",    '111259020');
+define("WEBERP_GL_PAYPAL_COMMISSION_EUR", '700211700');
+
+define("WEBERP_GL_PAYPAL_ACCOUNT_USD",    '111259010');
+define("WEBERP_GL_PAYPAL_COMMISSION_USD", '700211700');
+
 ?>
