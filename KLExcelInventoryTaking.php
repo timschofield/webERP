@@ -91,7 +91,9 @@ function submit(&$db, $ListCategories, $Location) {
 			$objPHPExcel->getActiveSheet()->setCellValue('K5', 'FINAL DIFFERENCE');
 			$objPHPExcel->getActiveSheet()->setCellValue('L5', 'ADJUSTED WEBERP');
 
-			$objPHPExcel->getActiveSheet()->getStyle('A:AZ')->getNumberFormat()->setFormatCode('#,###');
+			$objPHPExcel->getActiveSheet()->getStyle('A:F')->getNumberFormat()->setFormatCode('#,###');
+			$objPHPExcel->getActiveSheet()->getStyle('G:K')->getNumberFormat()->setFormatCode('#,##0');
+			$objPHPExcel->getActiveSheet()->getStyle('L')->getNumberFormat()->setFormatCode('#,###');
 			$objPHPExcel->getActiveSheet()->getStyle('3')->getNumberFormat()->setFormatCode('0.0%');
 
 			$objPHPExcel->getActiveSheet()->setCellValue('H6', '=COUNTIFS(Barcodes!$A$1:$C$10000,A6)');
@@ -122,9 +124,9 @@ function submit(&$db, $ListCategories, $Location) {
 
 				$ActiveSheet->setCellValue('G'.$i, round($Available,0));
 //				$ActiveSheet->setCellValue('H'.$i, '=COUNTIFS(Barcodes!$A$1:$A$9999,A'.$i.')');
-				$ActiveSheet->setCellValue('I'.$i, '=H'.$i.'-D'.$i.'');
+				$ActiveSheet->setCellValue('I'.$i, '=H'.$i.'-G'.$i.'');
 
-				$ActiveSheet->setCellValue('K'.$i, '=IF(ISBLANK(J'.$i.'),"",J'.$i.'-D'.$i.')');
+				$ActiveSheet->setCellValue('K'.$i, '=IF(ISBLANK(J'.$i.'),"",J'.$i.'-G'.$i.')');
 
 				$i++;
 			}
