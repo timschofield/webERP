@@ -26,18 +26,18 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 			break;
 		/* PREPARE PACKAGING TRANSFER EMAILS */
 		case "SendPackagingToShop":
-			$EmailSubject = "Prepare packaging transfer for: ". $Param1;
+			$EmailSubject = "Prepare KL packaging transfer for: ". $Param1;
 			$EmailText = $EmailSubject . "\n\n" . 
-						$Param2 . " x PKBX01-L (Box-L)" . "\n\n" . 
-						$Param3 . " x PKBX01-M (Box-M)" . "\n\n" . 
-						$Param4 . " x PKBX01-S (Box-S)" . "\n\n" . 
-						$Param5 . " x PKPB01-L (PouchBag-L)" . "\n\n" . 
-						$Param6 . " x PKPB01-M (PouchBag-M)" . "\n\n" . 
-						$Param7 . " x PKPB01-S (PouchBag-S)" . "\n\n" . 
-						$Param8 . " x PKSB02-L (ShoppingBag-L)" . "\n\n" . 
-						$Param9 . " x PKSB02-M (ShoppingBag-M)" . "\n\n" . 
-						$Param10 . " x PKSB02-S (ShoppingBag-S)" . "\n\n" . 
-						"Once ready inform Laia or Ike if transfer by car is needed.";
+						$Param2 . " x PKBX01-L (KL Box-L)" . "\n\n" . 
+						$Param3 . " x PKBX01-M (KL Box-M)" . "\n\n" . 
+						$Param4 . " x PKBX01-S (KL Box-S)" . "\n\n" . 
+						$Param5 . " x PKPB01-L (KL PouchBag-L)" . "\n\n" . 
+						$Param6 . " x PKPB01-M (KL PouchBag-M)" . "\n\n" . 
+						$Param7 . " x PKPB01-S (KL PouchBag-S)" . "\n\n" . 
+						$Param8 . " x PKSB02-L (KL ShoppingBag-L)" . "\n\n" . 
+						$Param9 . " x PKSB02-M (KL ShoppingBag-M)" . "\n\n" . 
+						$Param10 . " x PKSB02-S (KL ShoppingBag-S)" . "\n\n" . 
+						"Once ready inform Ike if transfer by car is needed.";
 			$EmailAddress = "kl-shopsupport@kapal-laut.com";
 			break;
 		/* PREPARE BLINK PACKAGING TRANSFER EMAILS */
@@ -49,7 +49,7 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 						$Param4 . " x PKPB03-S (BLINK PouchBag-S)" . "\n\n" . 
 						$Param5 . " x PKSB04-M (BLINK ShoppingBag-M)" . "\n\n" . 
 						$Param6 . " x PKSB04-S (BLINK ShoppingBag-S)" . "\n\n" . 
-						"Once ready inform Laia or Ike if transfer by car is needed.";
+						"Once ready inform Ike if transfer by car is needed.";
 			$EmailAddress = "kl-shopsupport@kapal-laut.com";
 			break;
 		/* PREPARE OUTLET PACKAGING TRANSFER EMAILS */
@@ -60,7 +60,7 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 						$Param3 . " x PKPB02-M (OUTLET PouchBag-M)" . "\n\n" . 
 						$Param4 . " x PKPB02-S (OUTLET PouchBag-S)" . "\n\n" . 
 						$Param5 . " x PKSB03   (OUTLET ShoppingBag)" . "\n\n" . 
-						"Once ready inform Laia or Ike if transfer by car is needed.";
+						"Once ready inform Ike if transfer by car is needed.";
 			$EmailAddress = "kl-shopsupport@kapal-laut.com";
 			break;
 		/* CHANGE OF PRICE EMAILS */
@@ -76,15 +76,14 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 			/* Print New Pricetags */ 
 			$EmailSubject = "New Pricetags needed for: ". $Param1;
 			$EmailText = $EmailSubject . "\n\n" . 
-						"Please destroy all OLD pricetags, print new ones and place them at the item's bin.";
+						"Please destroy all OLD pricetags, print new ones and place them at the items, so items are ready for sale.";
 			$EmailAddress = "kl-shopsupport@kapal-laut.com";
 			break;
 		case "ChangePriceItemFromConsignment":
 			$EmailSubject = "Return item from consignment locations: ". $Param1;
 			$EmailText = $EmailSubject . "\n\n" . 
 						"Please return all the pieces for this item in consignment locations to kantor ASAP, as the item is in Change of Price procedure." . "\n\n" .
-						"Locations considered: Waterbom, Ayana and InterContinental."  . "\n\n" .
-						"If there is some stock at Sheraton, please notify Ike or Ricard as it is an exception and must be checked.";
+						"Locations considered: Waterbom, Ayana and InterContinental."  . "\n\n";
 			$EmailAddress = "kl-shopsupport@kapal-laut.com";
 			break;
 		case "ItemReadyChangePriceStep02":
@@ -207,12 +206,27 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 						'Comments                : ' . $Param13; 		
 			$EmailAddress = "kl-voucherdiscounts@kapal-laut.com";
 			break;
+		case "SalesWithNotEnoughQOH":
+			$EmailSubject = "Sale created a negative QOH for " . $Param6 . " at shop ". $Param4;
+			$EmailText = $EmailSubject . "\n\n" .
+						'WI :'. ' '. $Param1 . "\r\n" .
+						'YI : '. $Param2 . "\r\n" .
+						'SPG : ' . $Param3 ."\r\n" .
+						'Shop: ' . $Param4 . "\r\n" .
+						'Area: ' . $Param5 ."\r\n" .
+						'Item: ' . $Param6  . "\r\n" .
+						'QOH before sale: ' . $Param7 . "\r\n" .
+						'Qty sold       : ' . $Param8  . "\r\n" .
+						'QOH after sale : ' . $Param9  . "\r\n" .
+						'Comments       : ' . $Param10; 		
+			$EmailAddress = "kl-saleswithnotenoughqoh@kapal-laut.com";
+			break;
 
 		/* OTHER GENERAL EMAILS */
 		case "UserLoggingIn":
 			$EmailSubject = "User Logging in KL webERP : ". $Param1;
 			$EmailText = $EmailSubject . ' at ' . $Param2 . ' from IP: ' . $Param3 . "\n\n";
-			$EmailAddress = "ricard@kapal-laut.com";
+			$EmailAddress = "it@bumibiru.com";
 			break;
 
 	}
@@ -221,13 +235,13 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 	if (strpos($_SERVER['PHP_SELF'],"TEST")){
 		$EmailSubject = "TEST webERP " . $EmailSubject;
 		$EmailText = "TEST webERP " . $EmailText;
-		$EmailAddress = "ricard@kapal-laut.com";
+		$EmailAddress = "it@bumibiru.com";
 	}
 
 	/* Final formatting bits */
 	$EmailSubject  = trim($EmailSubject); // just for sure
 	$EmailText = $EmailText . "\n---\r\n"; // \r is needed for signature separating
-	$EmailText = $EmailText . 'Email sent by Kapal-Laut webERP at '.date('d/M/Y H:i').'';
+	$EmailText = $EmailText . 'Email sent by Kapal-Laut webERP at '.date('d/M/Y H:i:s').'';
 	$EmailHeaders  = 'From: Kapal-Laut webERP';
 	
 	mail($EmailAddress,$EmailSubject,$EmailText,$EmailHeaders);

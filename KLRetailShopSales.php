@@ -337,14 +337,14 @@ if ((isset($_SESSION['Items'.$identifier])) OR isset($NewItem)) {
 						or $OrderLine->POLine != $_POST['POLine_' . $OrderLine->LineNumber]) {
 
 				$_SESSION['Items'.$identifier]->update_cart_item($OrderLine->LineNumber,
-									$Quantity,
-									$Price,
-									($DiscountPercentage/100),
-									$Narrative,
-									'Yes', /*Update DB */
-									$_POST['ItemDue_' . $OrderLine->LineNumber],
-									$_POST['POLine_' . $OrderLine->LineNumber],
-									$_POST['GPPercent_' . $OrderLine->LineNumber]);
+																$Quantity,
+																$Price,
+																($DiscountPercentage/100),
+																$Narrative,
+																'Yes', /*Update DB */
+																$_POST['ItemDue_' . $OrderLine->LineNumber],
+																$_POST['POLine_' . $OrderLine->LineNumber],
+																$_POST['GPPercent_' . $OrderLine->LineNumber]);
 			}
 		} //page not called from itself - POST variables not set
 	}
@@ -1006,7 +1006,11 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 		$InputError = true;
 	}
 
-	if ($_SESSION['ProhibitNegativeStock']==1){ // checks for negative stock after processing invoice
+/*******************************************************************************************************************
+KL RICARD: 20/03/2016 Commented out the QOH verification at shop to prevent SPG calling for QOH inconsistencies and adjustments
+Instead of preventing the sale report, webERP sends an email to control what happened, but at least sale can be reported
+********************************************************************************************************************/
+/*	if ($_SESSION['ProhibitNegativeStock']==1){ // checks for negative stock after processing invoice
 	//sadly this check does not combine quantities occuring twice on and order and each line is considered individually :-(
 		$NegativesFound = false;
 		foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine) {
@@ -1034,6 +1038,8 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 		}
 
 	}//end of testing for negative stocks
+
+END OF QOH Verification */
 
 	if ($InputError == false) { //all good so let's get on with the processing
 
@@ -1960,7 +1966,9 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 
 		// if has some comments
 		// if some goods returned
-		if (($_POST['AmountReturnedGoods'] <> 0 ) OR ($_POST['AmountVouchers'] <> 0 ) OR (stripcslashes($_SESSION['Items'.$identifier]->Comments) != "" )){
+		if (($_POST['AmountReturnedGoods'] <> 0 ) 
+			OR ($_POST['AmountVouchers'] <> 0 ) 
+			OR (stripcslashes($_SESSION['Items'.$identifier]->Comments) != "" )){
 			if ($_POST['AmountReturnedGoods'] <> 0 ){
 				KLSendEmail("GoodsReturnedToShop", 
 						"Silent",
@@ -1997,6 +2005,37 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 			}
 		}
 	
+		/* Check if there has been an item that produced QOH at location < 0 and report by email */
+		foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine) {
+			$SQL = "SELECT stockmaster.description,
+					   		locstock.quantity,
+					   		stockmaster.mbflag
+		 			FROM locstock
+		 			INNER JOIN stockmaster
+					ON stockmaster.stockid=locstock.stockid
+					WHERE stockmaster.stockid='" . $OrderLine->StockID . "'
+					AND locstock.loccode='" . $_SESSION['Items'.$identifier]->Location . "'";
+
+			$ErrMsg = _('Could not retrieve the quantity left at the location once this order is invoiced (for the purposes of checking that stock will not go negative because)');
+			$Result = DB_query($SQL,$ErrMsg);
+			$CheckNegRow = DB_fetch_array($Result);
+			if ($CheckNegRow['quantity'] < 0){
+				KLSendEmail("SalesWithNotEnoughQOH", 
+						"Silent",
+						$InvoiceNo, 
+						$_SESSION['Items'.$identifier]->CustRef, 
+						$_SESSION['SalesmanLogin'], 
+						$_SESSION['Items'.$identifier]->Location, 
+						$Area,
+						$OrderLine->StockID,
+						number_format($OrderLine->Quantity+$CheckNegRow['quantity'],0),
+						number_format($OrderLine->Quantity,0),
+						number_format($CheckNegRow['quantity'],0),
+						stripcslashes($_SESSION['Items'.$identifier]->Comments));
+
+			}
+		} //end of loop around items on the order for negative check
+
 		/************************************************************************************/
 		/*                         PRINT THE CUSTOMER INVOICE                               */
 		/************************************************************************************/
