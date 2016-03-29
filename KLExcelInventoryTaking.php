@@ -47,10 +47,7 @@ function submit(&$db, $ListCategories, $Location) {
 			
 			// Set value binder
 			PHPExcel_Cell::setValueBinder( new PHPExcel_Cell_AdvancedValueBinder() );
-
-/*			$cacheMethod = PHPExcel_CachedObjectStorageFactory::cache_in_memory_gzip;
-			PHPExcel_Settings::setCacheStorageMethod($cacheMethod);
-*/			
+		
 			// Create new PHPExcel object
 			$objPHPExcel = new PHPExcel();
 
@@ -89,11 +86,10 @@ function submit(&$db, $ListCategories, $Location) {
 			$objPHPExcel->getActiveSheet()->setCellValue('I5', 'DIFFERENCE');
 			$objPHPExcel->getActiveSheet()->setCellValue('J5', 'COUNTED MANUALLY');
 			$objPHPExcel->getActiveSheet()->setCellValue('K5', 'FINAL DIFFERENCE');
-			$objPHPExcel->getActiveSheet()->setCellValue('L5', 'ADJUSTED WEBERP');
+			$objPHPExcel->getActiveSheet()->setCellValue('L5', 'COMMENTS');
 
-			$objPHPExcel->getActiveSheet()->getStyle('A:F')->getNumberFormat()->setFormatCode('#,###');
-			$objPHPExcel->getActiveSheet()->getStyle('G:K')->getNumberFormat()->setFormatCode('#,##0');
-			$objPHPExcel->getActiveSheet()->getStyle('L')->getNumberFormat()->setFormatCode('#,###');
+			$objPHPExcel->getActiveSheet()->getStyle('A:G')->getNumberFormat()->setFormatCode('#,###');
+			$objPHPExcel->getActiveSheet()->getStyle('H:K')->getNumberFormat()->setFormatCode('#,##0');
 			$objPHPExcel->getActiveSheet()->getStyle('3')->getNumberFormat()->setFormatCode('0.0%');
 
 			$objPHPExcel->getActiveSheet()->setCellValue('H6', '=COUNTIFS(Barcodes!$A$1:$C$10000,A6)');
@@ -136,7 +132,7 @@ function submit(&$db, $ListCategories, $Location) {
 			$ActiveSheet->setCellValue('A2', '=SUBTOTAL(3,A'.$StartingRow.':A'.$i.')');
 			$ActiveSheet->setCellValue('A3', '=A2/A1');
 
-			foreach(range('G','L') as $columnID) {
+			foreach(range('G','K') as $columnID) {
 				$ActiveSheet->setCellValue(''.$columnID.'1', '=SUM('.$columnID.$StartingRow.':'.$columnID.$i.')');
 				$ActiveSheet->setCellValue(''.$columnID.'2', '=SUBTOTAL(9,'.$columnID.$StartingRow.':'.$columnID.$i.')');
 				$ActiveSheet->setCellValue(''.$columnID.'3', '='.$columnID.'2/'.$columnID.'1');
