@@ -189,6 +189,7 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_SystemAdmin 
+		OR $KL_OperationalManager
 		OR $KL_ShopManager
 		OR $KL_SalesDirector
 		OR $KL_BusinessDevelopmentManager){
