@@ -37,8 +37,8 @@ $mysqlport=3306;
 $dbType = 'mysqli';
 
 // sql user & password
-$dbuser = 'kurakura_kl00001';
-$dbpassword = 'eb0ea3b2e192529f334a1dbf611c57a7';
+$dbuser = 'kurakura_kl_0001';
+$dbpassword = 'KXGrwKrlKduQTSdqnLZc';
 
 // It would probably be inappropraite to allow selection of the company in a hosted envionment so this option can be switched to 'ShowInputBox' or 'Hide'
 // depending if you allow the user to select the name of the company or must use the default one described at $DefaultCompany
