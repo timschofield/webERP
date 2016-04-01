@@ -67,12 +67,12 @@ if (isset($_POST['Submit'])) {
 		echo prnMsg(_('You must select a type of tab from the list'),'error');
 		$Errors[$i] = 'TabType';
 		$i++;
-	} elseif (($_POST['SelectAssigner'])=='') {
+	} elseif (empty($_POST['SelectAssigner'])) {
 		$InputError = 1;
 		echo prnMsg(_('You must select a User to assign cash to this tab'),'error');
 		$Errors[$i] = 'AssignerName';
 		$i++;
-	} elseif (($_POST['SelectAuthoriser'])=='') {
+	} elseif (empty($_POST['SelectAuthoriser'])) {
 		$InputError = 1;
 		echo prnMsg(_('You must select a User to authorise this tab'),'error');
 		$Errors[$i] = 'AuthoriserName';
@@ -88,15 +88,35 @@ if (isset($_POST['Submit'])) {
 		$Errors[$i] = 'GLTab';
 		$i++;
 	}
+	
+	if ($InputError == 0) {
+		$Authorisers = '';
+		$i = 0;
+		foreach ($_POST['SelectAuthoriser'] as $value) {
+			if ($i) $Authorisers .= ',';
+			$Authorisers .= $value;
+			$i++;
+		}
+		$Assigners = '';
+		$i = 0;
+		foreach ($_POST['SelectAssigner'] as $value) {
+			if ($i) $Assigners .= ',';
+			$Assigners .= $value;
+			$i++;
+		}
+
+	}
 
 	if (isset($SelectedTab) AND $InputError !=1) {
+		//get the authorisers value
+	
 
 		$sql = "UPDATE pctabs SET usercode = '" . $_POST['SelectUser'] . "',
 									typetabcode = '" . $_POST['SelectTabs'] . "',
 									currency = '" . $_POST['SelectCurrency'] . "',
 									tablimit = '" . filter_number_format($_POST['TabLimit']) . "',
-									assigner = '" . $_POST['SelectAssigner'] . "',
-									authorizer = '" . $_POST['SelectAuthoriser'] . "',
+									assigner = '" . $Assigners . "',
+									authorizer = '" . $Authorisers . "',
 									glaccountassignment = '" . $_POST['GLAccountCash'] . "',
 									glaccountpcash = '" . $_POST['GLAccountPcashTab'] . "'
 				WHERE tabcode = '".$SelectedTab."'";
@@ -134,8 +154,8 @@ if (isset($_POST['Submit'])) {
 									'" . $_POST['SelectTabs'] . "',
 									'" . $_POST['SelectCurrency'] . "',
 									'" . filter_number_format($_POST['TabLimit']) . "',
-									'" . $_POST['SelectAssigner'] . "',
-									'" . $_POST['SelectAuthoriser'] . "',
+									'" . $Assigners . "',
+									'" . $Authorisers . "',
 									'" . $_POST['GLAccountCash'] . "',
 									'" . $_POST['GLAccountPcashTab'] . "')";
 
@@ -383,7 +403,7 @@ if (!isset($_GET['delete'])) {
 
 	echo '<tr>
 			<td>' . _('Assigner') . ':</td>
-			<td><select name="SelectAssigner">';
+			<td><select multiple="multiple" name="SelectAssigner[]">';
 
 	$SQL = "SELECT userid,
 					realname
@@ -393,7 +413,8 @@ if (!isset($_GET['delete'])) {
 	$result = DB_query($SQL);
 
 	while ($myrow = DB_fetch_array($result)) {
-		if (isset($_POST['SelectAssigner']) and $myrow['userid']==$_POST['SelectAssigner']) {
+		$Assigners = explode(',',$_POST['SelectAssigner']);
+		if (isset($_POST['SelectAssigner']) and in_array($myrow['userid'],$Assigners)) {
 			echo '<option selected="selected" value="';
 		} else {
 			echo '<option value="';
@@ -408,7 +429,7 @@ if (!isset($_GET['delete'])) {
 
 	echo '<tr>
 			<td>' . _('Authoriser') . ':</td>
-			<td><select name="SelectAuthoriser">';
+			<td><select multiple="multiple" name="SelectAuthoriser[]">';
 
 	$SQL = "SELECT userid,
 					realname
@@ -418,7 +439,8 @@ if (!isset($_GET['delete'])) {
 	$result = DB_query($SQL);
 
 	while ($myrow = DB_fetch_array($result)) {
-		if (isset($_POST['SelectAuthoriser']) and $myrow['userid']==$_POST['SelectAuthoriser']) {
+		$Authorizer = explode(',',$_POST['SelectAuthoriser']);
+		if (isset($_POST['SelectAuthoriser']) and in_array($myrow['userid'],$Authorizer)) {
 			echo '<option selected="selected" value="';
 		} else {
 			echo '<option value="';

@@ -304,9 +304,9 @@ echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_
 		<br />
 		<table class="selection">'; //Main table
 
-	$SQL = "SELECT tabcode
+	$SQL = "SELECT tabcode,authorizer
 		FROM pctabs
-		WHERE authorizer='" . $_SESSION['UserID'] . "'";
+		WHERE authorizer LIKE '%" . $_SESSION['UserID'] . "%'";
 
 	$result = DB_query($SQL);
 
@@ -315,12 +315,14 @@ echo '<tr>
 		<td><select name="SelectedTabs" required="required" autofocus="autofocus" >';
 
 	while ($myrow = DB_fetch_array($result)) {
-		if (isset($_POST['SelectTabs']) and $myrow['tabcode']==$_POST['SelectTabs']) {
-			echo '<option selected="selected" value="';
-		} else {
-			echo '<option value="';
-		}
-		echo $myrow['tabcode'] . '">' . $myrow['tabcode'] . '</option>';
+		$Authorisers = explode(',',$myrow['authorizer']);
+		if (in_array($_SESSION['UserID'],$Authorisers)) {
+			if (isset($_POST['SelectTabs']) and $myrow['tabcode']==$_POST['SelectTabs']) {
+				echo '<option selected="selected" value="';
+			} else {
+				echo '<option value="';
+			}
+			echo $myrow['tabcode'] . '">' . $myrow['tabcode'] . '</option>';
 
 	} //end while loop get type of tab
 

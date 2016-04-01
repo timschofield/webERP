@@ -186,11 +186,11 @@ or deletion of the records*/
 
 	echo '<table class="selection">';
 	echo '<tr>
-		<th>' . _('Code Of Expense') . '</th>
-		<th>' . _('Description') . '</th>
-		<th>' . _('Account Code') . '</th>
-		<th>' . _('Account Description') . '</th>
-		<th>' . _('Tag') . '</th>
+		<th class="ascending">' . _('Code Of Expense') . '</th>
+		<th class="ascending">' . _('Description') . '</th>
+		<th class="ascending">' . _('Account Code') . '</th>
+		<th class="ascending">' . _('Account Description') . '</th>
+		<th class="ascending">' . _('Tag') . '</th>
 		</tr>';
 
 	$k=0; //row colour counter

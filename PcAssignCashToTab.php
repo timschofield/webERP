@@ -163,9 +163,9 @@ if (!isset($SelectedTabs)){
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	$SQL = "SELECT tabcode
+	$SQL = "SELECT tabcode, assigner
 			FROM pctabs
-			WHERE assigner='" . $_SESSION['UserID'] . "'
+			WHERE assigner LIKE '%" . $_SESSION['UserID'] . "%'
 			ORDER BY tabcode";
 
 	$result = DB_query($SQL);
@@ -175,12 +175,15 @@ if (!isset($SelectedTabs)){
     echo '<tr><td>' . _('Petty Cash Tab To Assign Cash') . ':</td>
             <td><select name="SelectedTabs">';
 	while ($myrow = DB_fetch_array($result)) {
-		if (isset($_POST['SelectTabs']) and $myrow['tabcode']==$_POST['SelectTabs']) {
-			echo '<option selected="selected" value="';
-		} else {
-			echo '<option value="';
+		$Assigner = explode(',',$myrow['assigner']);
+		if (in_array($_SESSION['UserID'],$Assigner)) {
+			if (isset($_POST['SelectTabs']) and $myrow['tabcode']==$_POST['SelectTabs']) {
+				echo '<option selected="selected" value="';
+			} else {
+				echo '<option value="';
+			}
+			echo $myrow['tabcode'] . '">' . $myrow['tabcode'] . '</option>';
 		}
-		echo $myrow['tabcode'] . '">' . $myrow['tabcode'] . '</option>';
 	}
 
 	echo '</select></td></tr>';
