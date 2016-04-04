@@ -209,22 +209,6 @@ or deletion of the records*/
 				$myrow['discountcategory'],
 				ConvertSQLDate($myrow['startprocessdate']));
 
-/*		printf('<td class="number">%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td>%s</td>
-				<td><a href="%SelectedMovement=%s">'. _('Edit') . '</a></td>
-				<td><a href="%SelectedMovement=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this movement to Discount 20% change?') . '\');">' . _('Delete') . '</a></td>
-				</tr>',
-				$myrow['countermovediscount'],
-				$myrow['stockid'],
-				$myrow['discountcategory'],
-				ConvertSQLDate($myrow['startprocessdate']),
-				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-				$myrow['countermovediscount'],
-				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-				$myrow['countermovediscount']);
-*/
 
 	} //END WHILE LIST LOOP
 	echo '</table><br />';

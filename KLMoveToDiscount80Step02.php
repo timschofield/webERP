@@ -61,13 +61,13 @@ include('includes/KLPrices.php');
 							<th>' . _('Description') . '</th>
 							<th>' . _('Start Date') . '</th>
 							<th>' . _('QOH KL Shops') . '</th>
-							<th>' . _('QOH Consignment') . '</th>
 							<th>' . _('Transit From Kantor') . '</th>
 							<th>' . _('Transit To Kantor') . '</th>
 							<th>' . _('QOH Kantor') . '</th>
 							<th>' . _('QOH Others') . '</th>
 							<th>' . _('QOH Total') . '</th>
 							<th>' . _('Discount') . '</th>
+							<th>' . _('Labels') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -86,11 +86,20 @@ include('includes/KLPrices.php');
 				AND ($myrow['intransitfromconsignment'] == 0)
 				AND ($myrow['intransitfromshops'] == 0)
 				){
-				// if we have ONLY stock in kantor (or in locations not needing procedure) and NO transit, all the QOH is at kantor
-				// We can apply the new discount category
-				$NewDiscountCategory = '<a href="' . $RootPath . '/KLChangeToDiscount80.php?Item=' . $myrow['stockid'] . '&Discount='. $myrow['discountcategory'] . '&Action=Change">' . $myrow['discountcategory'] . '</a>';
+				if ($myrow['categoryid']== "DISC80"){
+					// already changed the category, so now it's time to see if labels have been printed and finish the process
+					$NewDiscountCategory = $myrow['discountcategory'];
+					$NewLabelsPrinted = '<a href="' . $RootPath . '/KLChangeToDiscount80.php?Item=' . $myrow['stockid'] . '&Discount='. $myrow['discountcategory'] . '&Action=Finish">' . ('Printed') . '</a>';
+				}else{
+					// the category is still the old one. We still need to change it!
+					// if we have ONLY stock in kantor (or in locations not needing procedure) and NO transit, all the QOH is at kantor
+					// We can apply the new discount category
+					$NewDiscountCategory = '<a href="' . $RootPath . '/KLChangeToDiscount80.php?Item=' . $myrow['stockid'] . '&Discount='. $myrow['discountcategory'] . '&Action=Change">' . $myrow['discountcategory'] . '</a>';
+					$NewLabelsPrinted = 'Not yet';
+				}
 			}else{
 				$NewDiscountCategory = $myrow['discountcategory'];
+				$NewLabelsPrinted = 'Not yet';
 			}
 			printf('<td class="number">%s</td>
 					<td>%s</td>
@@ -103,20 +112,20 @@ include('includes/KLPrices.php');
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
-					<td class="number">%s</td>
+					<td>%s</td>
 					</tr>', 
 					locale_number_format($myrow['countermovediscount'],0),
 					$CodeLink, 
 					$myrow['description'],
 					ConvertSQLDate($myrow['startprocessdate']),
 					locale_number_format_zero_blank($myrow['qohpos']-$myrow['intransitfromshops'],0),
-					locale_number_format_zero_blank($myrow['qohconsignment']-$myrow['intransitfromconsignment'],0),
 					locale_number_format_zero_blank($myrow['intransitfromkantor'],0),
 					locale_number_format_zero_blank($myrow['intransitfromshops']+$myrow['intransitfromconsignment'],0),
 					locale_number_format_zero_blank($myrow['qohkantor']-$myrow['intransitfromkantor'],0),
 					locale_number_format_zero_blank($myrow['qohotherlocs'],0),
 					locale_number_format_zero_blank($myrow['qohtotal'],0),
-					$NewDiscountCategory
+					$NewDiscountCategory,
+					$NewLabelsPrinted
 					);
 			$i++;
 		}

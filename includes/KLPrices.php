@@ -52,6 +52,18 @@ function SetMoveDiscount80Flag($Flag, $StockId, $db){
 	prnMsg($msg , 'success');
 }
 
+function SetFlagPriceChangedInChangePrice($StockId, $value, $db){
+	$sql = "UPDATE klchangeprice 
+			SET pricechanged = '" . $value . "'
+			WHERE stockid = '".$StockId."'";
+
+	$msg = _('Changing flag PriceChanged for item') . ' ' . $StockId . ' ' . _('to') . ' ' . $value;
+	$ErrMsg = _('SetFlagPriceChangedInChangePrice failed because');
+	$DbgMsg = _('The SQL that was used and failed was');
+	$result = DB_query($sql,$ErrMsg, $DbgMsg);
+	prnMsg($msg , 'success');
+}
+
 
 function SetEndDateChangePrice($StockId, $db){
 	$sql = "UPDATE klchangeprice 

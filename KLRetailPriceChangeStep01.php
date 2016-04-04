@@ -98,6 +98,7 @@ if (isset($_POST['submit'])) {
 				SET stockid='" . $_POST['Stockid'] . "',
 					startprocessdate='" . Date('Y-m-d') . "',
 					newretailprice='" . filter_number_format($_POST['NewRetailPrice']) . "',
+					pricechanged=0,
 					endprocessdate='0000-00-00'
 				WHERE counterpricechange = '".$SelectedPriceChange."'";
 
@@ -108,10 +109,12 @@ if (isset($_POST['submit'])) {
 						(stockid,
 						startprocessdate,
 						newretailprice,
+						pricechanged,
 						endprocessdate)
 				VALUES ('" . $_POST['Stockid'] . "',
 					'" . Date('Y-m-d') . "',
 					'" . filter_number_format($_POST['NewRetailPrice']) . "',
+					0,
 					'0000-00-00')";
 		$msg = _('KL Retail Price Change Step 01 record for') . ' ' . $_POST['Stockid'] . ' ' . _('has been created');
 	}

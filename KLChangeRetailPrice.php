@@ -19,10 +19,13 @@ if (!isset($_GET['Item']) or !isset($_GET['NewPrice']) or !isset($_GET['Action']
 
 if ($_GET['Action'] == "New"){
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' .
-				_('retail Price') . '" alt="" />' . ' ' . _('KL Set Initial Retail and Wholesale Prices for').' ' . $_GET['Item']. '.</p>';
+				_('retail Price') . '" alt="" />' . ' ' . _('KL Set Initial Retail Prices for').' ' . $_GET['Item']. '.</p>';
 }else if ($_GET['Action'] == "Change"){
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' .
-				_('retail Price') . '" alt="" />' . ' ' . _('KL Change Retail and Wholesale Prices for').' ' . $_GET['Item']. '.</p>';
+				_('retail Price') . '" alt="" />' . ' ' . _('KL Change Retail Prices for').' ' . $_GET['Item']. '.</p>';
+}else if ($_GET['Action'] == "Finish"){
+	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' .
+				_('retail Price') . '" alt="" />' . ' ' . _('KL Change Labels for item').' ' . $_GET['Item']. '.</p>';
 }else{
 	echo '<br />';
 	prnMsg( _('Action unknown'), 'error');
@@ -31,12 +34,16 @@ if ($_GET['Action'] == "New"){
 }
 
 DB_Txn_Begin();
+if (($_GET['Action'] == "New") OR
+	($_GET['Action'] == "Change")){
+	UpdateTablePrice($_GET['Item'], $_GET['NewPrice'],$db);
+	SetFlagPriceChangedInChangePrice($_GET['Item'], 1, $db);
+	KLSendEmail("PrintNewPriceTags", "Silent", $_GET['Item']);
+}
 
-UpdateTablePrice($_GET['Item'], $_GET['NewPrice'],$db);
-if ($_GET['Action'] == "Change"){
+if ($_GET['Action'] == "Finish"){
 	SetChangePriceFlag(0, $_GET['Item'], $db);
 	SetEndDateChangePrice($_GET['Item'], $db);
-	KLSendEmail("PrintNewPriceTags", "Silent", $_GET['Item']);
 }
 
 DB_Txn_Commit();

@@ -46,6 +46,7 @@ include('includes/KLPrices.php');
 					WHERE locstock.stockid = stockmaster.stockid) AS qohtotal,
 				klchangeprice.counterpricechange,
 				klchangeprice.startprocessdate,
+				klchangeprice.pricechanged,
 				klchangeprice.newretailprice
 			FROM stockmaster, klchangeprice					
 			WHERE stockmaster.stockid = klchangeprice.stockid
@@ -61,13 +62,13 @@ include('includes/KLPrices.php');
 							<th>' . _('Description') . '</th>
 							<th>' . _('Start Date') . '</th>
 							<th>' . _('QOH KL Shops') . '</th>
-							<th>' . _('QOH Consignment') . '</th>
 							<th>' . _('Transit From Kantor') . '</th>
 							<th>' . _('Transit To Kantor') . '</th>
 							<th>' . _('QOH Kantor') . '</th>
 							<th>' . _('QOH Others') . '</th>
 							<th>' . _('QOH Total') . '</th>
 							<th>' . _('New Retail Price') . '</th>
+							<th>' . _('Labels') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -86,11 +87,20 @@ include('includes/KLPrices.php');
 				AND ($myrow['intransitfromconsignment'] == 0)
 				AND ($myrow['intransitfromshops'] == 0)
 				){
-				// if we have ONLY stock in kantor (or in locations not needing change of price) and NO transit, all the QOH is at kantor
-				// We can apply the change of price
-				$NewPriceLink = '<a href="' . $RootPath . '/KLChangeRetailPrice.php?Item=' . $myrow['stockid'] . '&NewPrice='. $myrow['newretailprice'] .  '&Action=Change">' . locale_number_format($myrow['newretailprice'],0) . '</a>';
+				if ($myrow['pricechanged']==1){
+					// already changed the price, so now it's time to see if labels have been printed and finish the process
+					$NewPriceLink = locale_number_format($myrow['newretailprice'],0);
+					$NewLabelsPrinted = '<a href="' . $RootPath . '/KLChangeRetailPrice.php?Item=' . $myrow['stockid'] . '&NewPrice='. $myrow['newretailprice'] .  '&Action=Finish">' . _('Printed') . '</a>';
+				}else{
+					// the category is still the old one. We still need to change it!
+					// if we have ONLY stock in kantor (or in locations not needing procedure) and NO transit, all the QOH is at kantor
+					// We can apply the new discount category
+					$NewPriceLink = '<a href="' . $RootPath . '/KLChangeRetailPrice.php?Item=' . $myrow['stockid'] . '&NewPrice='. $myrow['newretailprice'] .  '&Action=Change">' . locale_number_format($myrow['newretailprice'],0) . '</a>';
+					$NewLabelsPrinted = 'Not yet';
+				}
 			}else{
 				$NewPriceLink = locale_number_format($myrow['newretailprice'],0);
+				$NewLabelsPrinted = 'Not yet';
 			}
 			printf('<td class="number">%s</td>
 					<td>%s</td>
@@ -103,20 +113,20 @@ include('includes/KLPrices.php');
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
-					<td class="number">%s</td>
+					<td>%s</td>
 					</tr>', 
 					locale_number_format($myrow['counterpricechange'],0),
 					$CodeLink, 
 					$myrow['description'],
 					ConvertSQLDate($myrow['startprocessdate']),
 					locale_number_format_zero_blank($myrow['qohpos']-$myrow['intransitfromshops'],0),
-					locale_number_format_zero_blank($myrow['qohconsignment']-$myrow['intransitfromconsignment'],0),
 					locale_number_format_zero_blank($myrow['intransitfromkantor'],0),
 					locale_number_format_zero_blank($myrow['intransitfromshops']+$myrow['intransitfromconsignment'],0),
 					locale_number_format_zero_blank($myrow['qohkantor']-$myrow['intransitfromkantor'],0),
 					locale_number_format_zero_blank($myrow['qohotherlocs'],0),
 					locale_number_format_zero_blank($myrow['qohtotal'],0),
-					$NewPriceLink
+					$NewPriceLink,
+					$NewLabelsPrinted
 					);
 			$i++;
 		}
