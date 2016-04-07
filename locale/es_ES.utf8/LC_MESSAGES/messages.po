@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.12.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-12-29 12:33-0600\n"
-"PO-Revision-Date: 2016-02-01 09:59-0600\n"
+"PO-Revision-Date: 2016-03-31 07:32-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -17213,7 +17213,7 @@ msgstr "Código de barras del artículo"
 
 #: Labels.php:595 Labels.php:597 Labels.php:628
 msgid "Company Logo"
-msgstr ""
+msgstr "Logotipo de la compañía"
 
 #: Labels.php:612
 msgid "Are you sure you wish to delete this label field?"
@@ -31088,7 +31088,7 @@ msgstr "Ingresos por ventas"
 
 #: StockCategorySalesInquiry.php:124
 msgid "COGS"
-msgstr ""
+msgstr "Costo de bienes vedidos"
 
 #: StockCategorySalesInquiry.php:125
 msgid "Gross Margin"
@@ -38538,7 +38538,7 @@ msgstr ""
 
 #: UserBankAccounts.php:87
 msgid "bank account removed"
-msgstr ""
+msgstr "Cuenta bancaria removida"
 
 #: UserBankAccounts.php:141
 msgid "Authorised bank accounts for"
@@ -51033,7 +51033,7 @@ msgstr ""
 
 #: reportwriter/languages/en_US/reports.php:61
 msgid "Color"
-msgstr ""
+msgstr "Color"
 
 #: reportwriter/languages/en_US/reports.php:62
 msgid "Custom Color (Range 0-255)"
@@ -51286,83 +51286,83 @@ msgstr ""
 
 #: reportwriter/languages/en_US/reports.php:167
 msgid "Column 1"
-msgstr ""
+msgstr "Columna 1"
 
 #: reportwriter/languages/en_US/reports.php:168
 msgid "Column 2"
-msgstr ""
+msgstr "Columna 2"
 
 #: reportwriter/languages/en_US/reports.php:169
 msgid "Column 3"
-msgstr ""
+msgstr "Columna 3"
 
 #: reportwriter/languages/en_US/reports.php:170
 msgid "Column 4"
-msgstr ""
+msgstr "Columna 4"
 
 #: reportwriter/languages/en_US/reports.php:171
 msgid "Column 5"
-msgstr ""
+msgstr "Columna 5"
 
 #: reportwriter/languages/en_US/reports.php:172
 msgid "Column 6"
-msgstr ""
+msgstr "Columna 6"
 
 #: reportwriter/languages/en_US/reports.php:173
 msgid "Column 7"
-msgstr ""
+msgstr "Columna 7"
 
 #: reportwriter/languages/en_US/reports.php:174
 msgid "Column 8"
-msgstr ""
+msgstr "Columna 8"
 
 #: reportwriter/languages/en_US/reports.php:175
 msgid "Column 9"
-msgstr ""
+msgstr "Columna 9"
 
 #: reportwriter/languages/en_US/reports.php:176
 msgid "Column 10"
-msgstr ""
+msgstr "Columna 10"
 
 #: reportwriter/languages/en_US/reports.php:177
 msgid "Column 11"
-msgstr ""
+msgstr "Columna 11"
 
 #: reportwriter/languages/en_US/reports.php:178
 msgid "Column 12"
-msgstr ""
+msgstr "Columna 12"
 
 #: reportwriter/languages/en_US/reports.php:179
 msgid "Column 13"
-msgstr ""
+msgstr "Columna 13"
 
 #: reportwriter/languages/en_US/reports.php:180
 msgid "Column 14"
-msgstr ""
+msgstr "Columna 14"
 
 #: reportwriter/languages/en_US/reports.php:181
 msgid "Column 15"
-msgstr ""
+msgstr "Columna 15"
 
 #: reportwriter/languages/en_US/reports.php:182
 msgid "Column 16"
-msgstr ""
+msgstr "Columna 16"
 
 #: reportwriter/languages/en_US/reports.php:183
 msgid "Column 17"
-msgstr ""
+msgstr "Columna 17"
 
 #: reportwriter/languages/en_US/reports.php:184
 msgid "Column 18"
-msgstr ""
+msgstr "Columna 18"
 
 #: reportwriter/languages/en_US/reports.php:185
 msgid "Column 19"
-msgstr ""
+msgstr "Columna 19"
 
 #: reportwriter/languages/en_US/reports.php:186
 msgid "Column 20"
-msgstr ""
+msgstr "Columna 20"
 
 #: reportwriter/languages/en_US/reports.php:187
 msgid "Type of Criteria"
@@ -51949,7 +51949,7 @@ msgstr "Política de privacidad"
 #: ../webSHOP/Register.php:494 ../webSHOP/index.php:30
 #: ../webSHOP/includes/InfoLinks.php:22
 msgid "Contact Details"
-msgstr ""
+msgstr "Detalles del contacto"
 
 #: ../webSHOP/Checkout.php:251 ../webSHOP/Register.php:428
 msgid "An email address is required"
