@@ -1,5 +1,6 @@
 webERP Change Log
 
+07/04/16 RChacon: On includes/class.pdf.php, add script documentation and completes switch($Align) to translate from Pdf-Creator to TCPDF.
 07/04/16 Exson: Add remark column to CopyBOM.php.
 01/04/2016 Exson: Make Petty cash assigner and authorizer multiple selectable in PcExpenses.php,PcTabs.php, PcAssignCashToTab.php and PcAuthorizeExpenses.
 24/03/16 RChacon: On CustomerReceipt.php, allow more precision on the functional_exchange_rate. On Payments.php, add pattern and required attributes to the functional_exchange_rate input.

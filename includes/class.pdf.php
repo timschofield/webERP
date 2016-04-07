@@ -82,29 +82,39 @@ if (!class_exists('Cpdf', false)) {
 
 		function addTextWrap($XPos, $YPos, $Width, $Height, $Text, $Align='J', $border=0, $fill=0) {
 			// R&OS version 0.12.2: "addTextWrap function is no more, use addText instead".
-			/* Returns the balance of the string that could not fit in the width
+			/* Returns the balance of the string that could not fit in the width */
 			// $XPos = cell horizontal coordinate from page left side to cell left side in dpi (72dpi = 25.4mm).
 			// $YPos = cell vertical coordinate from page bottom side to cell bottom side in dpi (72dpi = 25.4mm).
-			*/
+			// $Width = Cell (line) width in dpi (72dpi = 25.4mm).
+			// $Height = Font size in dpi (72dpi = 25.4mm).
+			// $Text = Text to be split in portion to be add to the page and the remainder to be returned.
+			// $Align = 'left', 'center', 'centre', 'full' or 'right'.
+			
 			//some special characters are html encoded
 			//this code serves to make them appear human readable in pdf file
-			$Text = html_entity_decode($Text, ENT_QUOTES, 'UTF-8');
+			$Text = html_entity_decode($Text, ENT_QUOTES, 'UTF-8');// Convert all HTML entities to their applicable characters.
 
 			$this->x = $XPos;
-			$this->y = $this->h - $YPos - $Height;//RChacon: This -$Height is the difference in yPos between AddText() and AddTextWarp().
+			$this->y = $this->h - $YPos - $Height;//RChacon: This -$Height is the difference in yPos between AddText() and AddTextWarp(). It is better "$this->y = $this->h-$YPos", but that requires to recode all the pdf generator scripts.
 
-			switch($Align) {
+			switch($Align) {// Translate from Pdf-Creator to TCPDF.
+				case 'left':
+					$Align = 'L'; break;
 				case 'right':
 					$Align = 'R'; break;
 				case 'center':
 					$Align = 'C'; break;
+				case 'centre':
+					$Align = 'C'; break;
+				case 'full':
+					$Align = 'J'; break;
 				default:
-					$Align = 'L';
+					$Align = 'L'; break;
 			}
-			$this->SetFontSize($Height);
+			$this->SetFontSize($Height);// Public function SetFontSize() in ~/includes/tcpdf/tcpdf.php.
 
 			if($Width==0) {
-				$Width=$this->w-$this->rMargin-$this->x;
+				$Width = $this->w - $this->rMargin - $this->x;// Line_width = Page_width - Right_margin - Cell_horizontal_coordinate($XPos).
 			}
 			$wmax=($Width-2*$this->cMargin);
 			$s=str_replace("\r",'',$Text);
@@ -167,7 +177,7 @@ if (!class_exists('Cpdf', false)) {
 				}
 			}
 
-			$this->Cell($Width,$Height,mb_substr($s,0,$sep),$b,2,$Align,$fill);
+			$this->Cell($Width, $Height, mb_substr($s,0,$sep), $b, 2, $Align, $fill);
 			$this->x=$this->lMargin;
 			return mb_substr($s, $sep);
 		}// End function addTextWrap.
@@ -177,7 +187,7 @@ if (!class_exists('Cpdf', false)) {
 
 	/* Javier: Some scripts set the creator to be WebERP like this
 				$pdf->addInfo('Creator', 'WebERP http://www.weberp.org');
-		But the Creator is TCPDF by Nicola Asuni, PDF_CREATOR is defined as 'TCPDF' in tcpdf/config/tcpdfconfig.php
+		But the Creator is TCPDF by Nicola Asuni, PDF_CREATOR is defined as 'TCPDF' in ~/includes/tcpdf/config/tcpdfconfig.php
 	*/ 			$this->SetCreator(PDF_CREATOR);
 			}
 			if ($label == 'Author') {
