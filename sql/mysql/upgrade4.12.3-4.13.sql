@@ -51,7 +51,9 @@ ALTER table stockrequest DROP FOREIGN KEY `stockrequest_ibfk_4`;
 INSERT INTO scripts VALUES('CollectiveWorkOrderCost.php',2,'Multiple work orders cost review');
 ALTER table bom ADD remark varchar(500) NOT NULL DEFAULT '';
 INSERT INTO scripts VALUES ('SuppWhereAlloc.php',3,'Suppliers Where allocated');
-
+ALTER table pctabs DROP FOREIGN KEY `pctabs_ibfk_4`;
+ALTER table pctabs CHANGE authorizer authorizer varchar(100);
+ALTER table pctabs CHANGE assigner assigner varchar(100);
 
 -- Update version number:
 UPDATE config SET confvalue='4.13' WHERE confname='VersionNumber';
