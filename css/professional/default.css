@@ -505,11 +505,15 @@ textarea.texterror {
 }
 .centre {
 	text-align:center;
-	/* Class selector to centre text horizontally in an element. */
+	/* Class selector to horizontal align a text (centre) in an element. */
 }
 .number {
 	text-align:right;
 	/* Class selector to horizontal align a number (right) in an element. */
+}
+.text {
+	text-align:left;
+	/* Class selector to horizontal align a text (left) in an element. */
 }
 .page_title_text {
 	color:black;
@@ -520,9 +524,5 @@ textarea.texterror {
 	padding-top:2px;
 	text-align:center;
 	/* Class selector for page title. */
-}
-.text {
-	text-align:left;
-	/* Class selector to horizontal align a text (left) in an element. */
 }
 /* END Style for all. ********************************************************/

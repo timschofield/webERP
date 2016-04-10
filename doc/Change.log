@@ -1,5 +1,6 @@
 webERP Change Log
 
+10/04/16 RChacon: On SupplierInvoice.php, add ' - ' to standardise gltran.narrative to "SupplierID - ". On SuppTransGLAnalysis.php, add ViewTopic and Bookmark, completes html tables, add text class, and add currency_code to input table. On css/*/default.css, regroup horizontal align classes for readability. On doc/Manual/ManualAccountsPayable.html, add anchor id="SuppTransGLAnalysis".
 07/04/16 RChacon: On includes/class.pdf.php, add script documentation and completes switch($Align) to translate from Pdf-Creator to TCPDF.
 07/04/16 Exson: Add remark column to CopyBOM.php.
 01/04/2016 Exson: Make Petty cash assigner and authorizer multiple selectable in PcExpenses.php,PcTabs.php, PcAssignCashToTab.php and PcAuthorizeExpenses.

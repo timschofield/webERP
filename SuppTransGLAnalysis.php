@@ -10,9 +10,9 @@ include('includes/DefineSuppTransClass.php');
 
 /* Session started in header.inc for password checking and authorisation level check */
 include('includes/session.inc');
-
 $Title = _('Supplier Transaction General Ledger Analysis');
-
+$ViewTopic = 'AccountsPayable';
+$BookMark = 'SuppTransGLAnalysis';
 include('includes/header.inc');
 
 if (!isset($_SESSION['SuppTrans'])){
@@ -106,9 +106,10 @@ echo '</p>
 $TableHeader = '<tr>
 					<th class="ascending">' . _('Account') . '</th>
 					<th class="ascending">' . _('Name') . '</th>
-					<th class="ascending">' . _('Amount') . '<br />' . _('in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
+					<th class="ascending">' . _('Amount') . '<br />(' . $_SESSION['SuppTrans']->CurrCode . ')</th>
 					<th>' . _('Narrative') . '</th>
 					<th class="ascending">' . _('Tag') . '</th>
+					<th colspan="2">&nbsp;</th>
 				</tr>';
 echo $TableHeader;
 $TotalGLValue=0;
@@ -117,11 +118,11 @@ $i=0;
 foreach ( $_SESSION['SuppTrans']->GLCodes AS $EnteredGLCode){
 
 	echo '<tr>
-			<td>' . $EnteredGLCode->GLCode . '</td>
-			<td>' . $EnteredGLCode->GLActName . '</td>
+			<td class="text">' . $EnteredGLCode->GLCode . '</td>
+			<td class="text">' . $EnteredGLCode->GLActName . '</td>
 			<td class="number">' . locale_number_format($EnteredGLCode->Amount,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
-			<td>' . $EnteredGLCode->Narrative . '</td>
-			<td>' . $EnteredGLCode->Tag  . ' - ' . $EnteredGLCode->TagName . '</td>
+			<td class="text">' . $EnteredGLCode->Narrative . '</td>
+			<td class="text">' . $EnteredGLCode->Tag  . ' - ' . $EnteredGLCode->TagName . '</td>
 			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Edit=' . $EnteredGLCode->Counter . '">' . _('Edit') . '</a></td>
 			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=' . $EnteredGLCode->Counter . '">' . _('Delete') . '</a></td>
 		</tr>';
@@ -138,6 +139,7 @@ foreach ( $_SESSION['SuppTrans']->GLCodes AS $EnteredGLCode){
 echo '<tr>
 		<td colspan="2" class="number">' . _('Total') . ':</td>
 		<td class="number">' . locale_number_format($TotalGLValue,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
+		<td colspan="4">&nbsp;</td>
 	</tr>
 	</table>';
 
@@ -216,7 +218,7 @@ if (!isset($_POST['Amount'])) {
 	$_POST['Amount']=0;
 }
 echo '<tr>
-		<td>' . _('Amount') . ':</td>
+		<td>' . _('Amount'), ' (', $_SESSION['SuppTrans']->CurrCode, '):</td>
 		<td><input type="text" class="number" required="required" pattern="(?!^[-]?0[.,]0*$).{1,11}" title="'._('The amount must be numeric and cannot be zero').'" name="Amount" size="12" placeholder="'._('No zero numeric').'" maxlength="11" value="' .  locale_number_format($_POST['Amount'],$_SESSION['SuppTrans']->CurrDecimalPlaces) . '" /></td>
 	</tr>';
 
