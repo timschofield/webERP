@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.12.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-12-29 12:33-0600\n"
-"PO-Revision-Date: 2016-03-31 07:32-0600\n"
+"PO-Revision-Date: 2016-04-10 19:44-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -2145,7 +2145,7 @@ msgstr "Mostrar todos los componentes"
 
 #: BOMExtendedQty.php:274
 msgid "Only Show Shortages"
-msgstr "Mostrar Sólo Escasez"
+msgstr "Solo mostrar escasez"
 
 #: BOMExtendedQty.php:278 BOMIndented.php:268 BOMIndentedReverse.php:246
 #: MRPPlannedPurchaseOrders.php:280 MRPPlannedWorkOrders.php:336
@@ -2585,7 +2585,7 @@ msgstr "Costo de mano de obra"
 
 #: BOMInquiry.php:245
 msgid "Overhead Cost"
-msgstr "Gastos Generales"
+msgstr "Costos generales"
 
 #: BOMInquiry.php:256
 msgid "Enter a stock item code above"
@@ -6007,7 +6007,7 @@ msgstr ""
 
 #: ContractBOM.php:399 SupplierTenders.php:758
 msgid "Only the first"
-msgstr "Sólo el primero"
+msgstr "Solo el primero"
 
 #: ContractBOM.php:399 SupplierTenders.php:758
 msgid "can be displayed"
@@ -6388,7 +6388,7 @@ msgstr ""
 #: Manufacturers.php:115 SalesCategories.php:50 StockClone.php:71
 #: Stocks.php:80 Z_MakeNewCompany.php:53
 msgid "Only graphics files can be uploaded"
-msgstr "Sólo puede cargar ficheros gráficos"
+msgstr "Solo puede cargar archivos gráficos"
 
 #: Contracts.php:131 FixedAssetItems.php:47 Manufacturers.php:46
 #: Manufacturers.php:118 SalesCategories.php:53 StockClone.php:77
@@ -7504,7 +7504,7 @@ msgstr "Iniciar una nueva venta de mostrador"
 
 #: CounterSales.php:436 SelectOrderItems.php:866 SelectOrderItems.php:1053
 msgid "An invalid date entry was made for "
-msgstr "Se realizó una entrada de fecha inválida para "
+msgstr "Se realizó una entrada de fecha no válida para "
 
 #: CounterSales.php:436 SelectOrderItems.php:866 SelectOrderItems.php:1053
 msgid "The date entry"
@@ -9361,7 +9361,7 @@ msgstr "Monto ingresado fue negativo"
 
 #: CustomerAllocations.php:51
 msgid "Only positive amounts are allowed"
-msgstr "Sólo se permiten importes positivos"
+msgstr "Solo se permite cantidades positivas"
 
 #: CustomerAllocations.php:75
 msgid ""
@@ -11491,7 +11491,7 @@ msgstr "Debe seleccionar el tipo de Hoja de Embalaje a imprimir"
 
 #: DeliveryDetails.php:99 DeliveryDetails.php:104 DeliveryDetails.php:109
 msgid "An invalid date entry was made"
-msgstr "La Fecha es inválida"
+msgstr "Se hizo una entrada de fecha no válidas "
 
 #: DeliveryDetails.php:99 DeliveryDetails.php:104 DeliveryDetails.php:109
 msgid "The date entry must be in the format"
@@ -15933,13 +15933,13 @@ msgstr "Resultados de pruebas históricas"
 #: POReport.php:871 SalesInquiry.php:82 SelectQASamples.php:166
 #: TestPlanResults.php:49
 msgid "Invalid From Date"
-msgstr "Fecha Desde Inválida"
+msgstr "Fecha Desde no válida"
 
 #: HistoricalTestResults.php:31 MRPCalendar.php:52 POReport.php:92
 #: POReport.php:875 SalesInquiry.php:86 SelectQASamples.php:171
 #: TestPlanResults.php:54
 msgid "Invalid To Date"
-msgstr "Fecha A Inválida"
+msgstr "Fecha A no válida"
 
 #: HistoricalTestResults.php:51
 msgid "Show Test Results For"
@@ -17802,7 +17802,7 @@ msgstr "El Calendario MRP ha sido creado"
 
 #: MRPCalendar.php:157
 msgid "Invalid Change Date"
-msgstr "Fecha de Cambio Inválida"
+msgstr "Fecha de Cambio no válida"
 
 #: MRPCalendar.php:174
 msgid "Cannot update the MRP Calendar"
@@ -18000,11 +18000,11 @@ msgstr "La cantidad debe ser mayor que 0"
 
 #: MRPDemands.php:151
 msgid "Invalid due date"
-msgstr "Fecha de vencimiento inválida"
+msgstr "Fecha de vencimiento no válida"
 
 #: MRPDemands.php:159
 msgid "Invalid demand type"
-msgstr "Tipo de solicitud inválida"
+msgstr "Tipo de solicitud no válida"
 
 #: MRPDemands.php:169
 msgid "is not a valid item code"
@@ -31580,7 +31580,7 @@ msgstr "Tamaño de lote"
 
 #: StockClone.php:1004 Stocks.php:1338
 msgid "Shrinkage Factor"
-msgstr "Factor de Escasez (¿Merma?)"
+msgstr "Factor de merma"
 
 #: StockClone.php:1035 Stocks.php:1369
 msgid "Item Category Properties"
@@ -35894,7 +35894,7 @@ msgstr ""
 
 #: Suppliers.php:745
 msgid "Only email address are allowed"
-msgstr ""
+msgstr "Solo se permite direcciones de correo-e"
 
 #: Suppliers.php:745 Suppliers.php:989
 msgid "email format such as xx@mail.cn"
@@ -35902,7 +35902,7 @@ msgstr "formato de correo-e como xx@mail.cn"
 
 #: Suppliers.php:749
 msgid "Only URL address are allowed"
-msgstr ""
+msgstr "Sólo se permite direcciones URL"
 
 #: Suppliers.php:749
 msgid "URL format such as www.example.com"
@@ -36909,8 +36909,8 @@ msgid ""
 "Number of month must be shown on report can be changed with this parameters "
 "ex: in CustomerInquiry.php "
 msgstr ""
-"El número de mes deberá indicarse en el informe, se puede cambiar con estos "
-"parámetros Ejm: in CustomerInquiry.php"
+"La cantidad de meses a mostrar por omisión en el informe se puede cambiar "
+"con este parámetro. E.g. en CustomerInquiry.php"
 
 #: SystemParameters.php:878
 msgid "The directory where images are stored"
@@ -39336,11 +39336,11 @@ msgstr "Código del CT"
 
 #: WorkCentres.php:130
 msgid "Overhead GL Account"
-msgstr "Cuenta Contable de Gastos Generales"
+msgstr "Cuenta contable de gastos generales"
 
 #: WorkCentres.php:131 WorkCentres.php:275
 msgid "Overhead Per Hour"
-msgstr "Gastos Generales Por Hora"
+msgstr "Gastos generales por hora"
 
 #: WorkCentres.php:143
 #, php-format
@@ -39615,7 +39615,7 @@ msgstr "Ir a cálculo de Costos"
 
 #: WorkOrderEntry.php:344
 msgid "The required by date entered is in an invalid format"
-msgstr "La fecha de \"requerido\" por entrada está en un formato inválido"
+msgstr "La fecha de \"requerido\" por entrada está en un formato no válido"
 
 #: WorkOrderEntry.php:364
 msgid ""
@@ -42228,7 +42228,7 @@ msgstr "Fila:"
 
 #: Z_ImportFixedAssets.php:128
 msgid "Invalid Description:"
-msgstr "Descripción Inválida:"
+msgstr "Descripción no válida:"
 
 #: Z_ImportFixedAssets.php:132
 msgid "The depreciation rate is expected to be numeric"
@@ -42236,7 +42236,7 @@ msgstr "Se espera que la tasa de depreciación sea numérica"
 
 #: Z_ImportFixedAssets.php:133 Z_ImportFixedAssets.php:137
 msgid "Invalid Depreciation Rate:"
-msgstr "Tasa de Depreciación Inválida:"
+msgstr "Tasa de Depreciación no válida:"
 
 #: Z_ImportFixedAssets.php:141
 msgid "The accumulated depreciation is expected to be numeric"
@@ -42244,7 +42244,7 @@ msgstr "Se espera que la depreciación acumulada sea numérica"
 
 #: Z_ImportFixedAssets.php:142 Z_ImportFixedAssets.php:146
 msgid "Invalid Accumulated Depreciation:"
-msgstr "Depreciación Acumulada No Válida:"
+msgstr "Depreciación acumulada no válida:"
 
 #: Z_ImportFixedAssets.php:145
 msgid ""
@@ -42258,7 +42258,7 @@ msgstr "Se espera que el costo sea numérico"
 
 #: Z_ImportFixedAssets.php:151 Z_ImportFixedAssets.php:155
 msgid "Invalid Cost:"
-msgstr "Costo Inválido:"
+msgstr "Costo no válido:"
 
 #: Z_ImportFixedAssets.php:154
 msgid "The cost is expected to be a positive number"
@@ -42274,7 +42274,7 @@ msgstr ""
 
 #: Z_ImportFixedAssets.php:160
 msgid "Invalid depreciation type:"
-msgstr "Tipo de Depreciación Inválida:"
+msgstr "Tipo de Depreciación no válida:"
 
 #: Z_ImportFixedAssets.php:166
 msgid ""
@@ -42285,7 +42285,7 @@ msgstr ""
 
 #: Z_ImportFixedAssets.php:167
 msgid "Invalid asset category:"
-msgstr "Categoría de activos No Válida:"
+msgstr "Categoría de activos no válida:"
 
 #: Z_ImportFixedAssets.php:172
 msgid ""
@@ -42304,7 +42304,7 @@ msgstr "La fecha de compra se debe introducir en el formato:"
 
 #: Z_ImportFixedAssets.php:178
 msgid "Invalid date format:"
-msgstr "Formato de Fecha Inválida:"
+msgstr "Formato de fecha no válido:"
 
 #: Z_ImportFixedAssets.php:216
 msgid "The SQL that was used to add the asset and failed was"
@@ -43752,7 +43752,7 @@ msgstr "Longitud del Nombre del Deudor Incorrecta"
 
 #: api/api_errorcodes.php:179
 msgid "Invalid Address Line"
-msgstr "Línea de Dirección Inválida"
+msgstr "Línea de dirección no válida"
 
 #: api/api_errorcodes.php:180
 msgid "Currency Code Not Setup"
@@ -43764,7 +43764,7 @@ msgstr "Tipo de Venta No Configurado"
 
 #: api/api_errorcodes.php:182
 msgid "Invalid Client Since Date"
-msgstr "Fecha de Antigüedad del cliente Inválida"
+msgstr "Fecha de Antigüedad del cliente no válida"
 
 #: api/api_errorcodes.php:183
 msgid "Hold Reason Not Setup"
@@ -43776,67 +43776,67 @@ msgstr "Forma de Pago No Configurada"
 
 #: api/api_errorcodes.php:185
 msgid "Invalid Discount"
-msgstr "Descuento Inválido"
+msgstr "Descuento no válido"
 
 #: api/api_errorcodes.php:186
 msgid "Invalid Payment Discount"
-msgstr "Descuento del Pago Inválido"
+msgstr "Descuento del Pago no válido"
 
 #: api/api_errorcodes.php:187
 msgid "Invalid Last Paid"
-msgstr "Último Pago Inválido"
+msgstr "Último Pago no válido"
 
 #: api/api_errorcodes.php:188
 msgid "Invalid Last Paid Date"
-msgstr "Fecha del Último Pago Inválida"
+msgstr "Fecha del Último Pago no válida"
 
 #: api/api_errorcodes.php:189
 msgid "Invalid Credit Limit"
-msgstr "Límite de Crédito Inválido"
+msgstr "Límite de crédito no válido"
 
 #: api/api_errorcodes.php:190
 msgid "Invalid Inv Address Branch"
-msgstr "Sucursal de la Dirección de la Factura Inválida"
+msgstr "Sucursal de la Dirección de la Factura no válida"
 
 #: api/api_errorcodes.php:191
 msgid "Invalid Discount Code"
-msgstr "Código de Descuento Inválido"
+msgstr "Código de descuento no válido"
 
 #: api/api_errorcodes.php:192
 msgid "Invalid EDI Invoices"
-msgstr "Facturas EDI Inválidas"
+msgstr "Facturas EDI no válidas"
 
 #: api/api_errorcodes.php:193
 msgid "Invalid EDI Orders"
-msgstr "Pedidos EDI Inválidos"
+msgstr "Pedidos EDI no válidos"
 
 #: api/api_errorcodes.php:194
 msgid "Invalid EDI Reference"
-msgstr "Referencia EDI Inválida"
+msgstr "Referencia EDI no válida"
 
 #: api/api_errorcodes.php:195
 msgid "Invalid EDI Transport"
-msgstr "Transporte EDI Inválido"
+msgstr "Transporte EDI no válido"
 
 #: api/api_errorcodes.php:196
 msgid "Invalid EDI Address"
-msgstr "Dirección EDI Inválida"
+msgstr "Dirección EDI no válida"
 
 #: api/api_errorcodes.php:197
 msgid "Invalid EDI Server User"
-msgstr "Usuario del Servidor EDI Inválido"
+msgstr "Usuario del Servidor EDI no válido"
 
 #: api/api_errorcodes.php:198
 msgid "Invalid EDI Server Password"
-msgstr "Contraseña para el Servidor EDI Inválida"
+msgstr "Contraseña para el Servidor EDI no válida"
 
 #: api/api_errorcodes.php:199
 msgid "Invalid Tax Reference"
-msgstr "Referencia Fiscal Inválida"
+msgstr "Referencia Fiscal no válida"
 
 #: api/api_errorcodes.php:200
 msgid "Invalid CustomerPOLine"
-msgstr "Línea PO del cliente (nº del cliente en la orden de compra) inválida"
+msgstr "Línea PO del cliente (nº del cliente en la orden de compra) no válida"
 
 #: api/api_errorcodes.php:201
 msgid "Database Update Failed"
@@ -43864,7 +43864,7 @@ msgstr "Longitud del Nombre de sucursal Incorrecta"
 
 #: api/api_errorcodes.php:207
 msgid "Invalid Est Delivery Days"
-msgstr "Días de Entrega Estimados Inválidos"
+msgstr "Días de Entrega Estimados no válidos"
 
 #: api/api_errorcodes.php:208
 msgid "Area Code Not Setup"
@@ -43876,23 +43876,23 @@ msgstr "Código del Vendedor no Configurado"
 
 #: api/api_errorcodes.php:210
 msgid "Invalid Fwd Date"
-msgstr "Fecha Fwd Inválida"
+msgstr "Fecha Fwd no válida"
 
 #: api/api_errorcodes.php:211
 msgid "Invalid Phone Number"
-msgstr "Nº de Teléfono Inválido"
+msgstr "Nº de Teléfono no válido"
 
 #: api/api_errorcodes.php:212
 msgid "Invalid Fax Number"
-msgstr "Número de Fax Inválido"
+msgstr "Número de Fax no válido"
 
 #: api/api_errorcodes.php:213
 msgid "Invalid Contact Name"
-msgstr "Nombre del contacto Inválido"
+msgstr "Nombre de contacto no válido"
 
 #: api/api_errorcodes.php:214
 msgid "Invalid Email Address"
-msgstr "Dirección de correo-e inválida"
+msgstr "Dirección de correo-e no válida"
 
 #: api/api_errorcodes.php:215
 msgid "Location Code Not Setup"
@@ -43908,19 +43908,19 @@ msgstr "Transportista no Configurado"
 
 #: api/api_errorcodes.php:218
 msgid "Invalid Deliver Blind"
-msgstr "Despacho a Ciegas Inválido"
+msgstr "Despacho a Ciegas no válido"
 
 #: api/api_errorcodes.php:219
 msgid "Invalid Disable Transactions"
-msgstr "Deshabilitar Transacciones Inválida"
+msgstr "Deshabilitar Transacciones no válida"
 
 #: api/api_errorcodes.php:220
 msgid "Invalid Special Instructions"
-msgstr "Instrucciones Especiales Inválidas"
+msgstr "Instrucciones Especiales no válidas"
 
 #: api/api_errorcodes.php:221
 msgid "Invalid Customer Branch Code"
-msgstr "Código de sucursal de cliente Inválida"
+msgstr "Código de sucursal de cliente no válida"
 
 #: api/api_errorcodes.php:222
 msgid "Branch No Does not Exist"
@@ -43944,39 +43944,39 @@ msgstr "Longitud de Unidades Incorrecta"
 
 #: api/api_errorcodes.php:227
 msgid "Incorrect MB Flag"
-msgstr "Marca MB Inválida"
+msgstr "Marca MB no válida"
 
 #: api/api_errorcodes.php:228
 msgid "Invalid Current Cost Date"
-msgstr "Fecha de Costo Actual Inválida"
+msgstr "Fecha de Costo Actual no válida"
 
 #: api/api_errorcodes.php:229
 msgid "Invalid Actual Cost"
-msgstr "Costo Real Inválido"
+msgstr "Costo Real no válido"
 
 #: api/api_errorcodes.php:230
 msgid "Invalid Lowest Level"
-msgstr "Nivel Mínimo Inválido"
+msgstr "Nivel Mínimo no válido"
 
 #: api/api_errorcodes.php:231
 msgid "Invalid Discontinued"
-msgstr "Descontinuado Inválido"
+msgstr "Descontinuado no válido"
 
 #: api/api_errorcodes.php:232
 msgid "Invalid EOQ"
-msgstr "EOQ Inválido"
+msgstr "EOQ no válido"
 
 #: api/api_errorcodes.php:233
 msgid "Invalid Volume"
-msgstr "Volumen Inválido"
+msgstr "Volumen no válido"
 
 #: api/api_errorcodes.php:234
 msgid "Invalid Kgs"
-msgstr "Peso Inválido"
+msgstr "Peso no válido"
 
 #: api/api_errorcodes.php:235
 msgid "Incorrect BarCode Length"
-msgstr "Longitud del Código de Barras Inválido"
+msgstr "Longitud del Código de Barras no válido"
 
 #: api/api_errorcodes.php:236
 msgid "Incorrect Discount Category"
@@ -43988,7 +43988,7 @@ msgstr "La Categoría de Impuestos No Existe"
 
 #: api/api_errorcodes.php:238
 msgid "Invalid Serialised"
-msgstr "Seriado Inválido"
+msgstr "Seriado no válido"
 
 #: api/api_errorcodes.php:239
 msgid "Incorrect Append File"
@@ -43996,11 +43996,11 @@ msgstr "Fichero Anexado Incorrecto"
 
 #: api/api_errorcodes.php:240
 msgid "Invalid Perishable"
-msgstr "Perecedero Inválido"
+msgstr "Perecedero no válido"
 
 #: api/api_errorcodes.php:241
 msgid "Invalid Decimal Places"
-msgstr "Posiciones Decimales Inválida"
+msgstr "Posiciones Decimales no válida"
 
 #: api/api_errorcodes.php:242
 msgid "Incorrect Long Stock Description Length"
@@ -44016,11 +44016,11 @@ msgstr "El Número de Transacción Ya Existe"
 
 #: api/api_errorcodes.php:245
 msgid "Invalid Transaction Date"
-msgstr "Fecha de Transacción Inválida"
+msgstr "Fecha de Transacción no válida"
 
 #: api/api_errorcodes.php:246
 msgid "Invalid Settled"
-msgstr "Establecido Inválido"
+msgstr "Establecido no válido"
 
 #: api/api_errorcodes.php:247
 msgid "Incorrect Reference"
@@ -44032,7 +44032,7 @@ msgstr "TPE Incorrecto"
 
 #: api/api_errorcodes.php:249
 msgid "Invalid Order Numbers"
-msgstr "Números de Pedidos Inválidos"
+msgstr "Números de Pedidos no válidos"
 
 #: api/api_errorcodes.php:250
 msgid "Invalid Exchange Rate"
@@ -44040,23 +44040,23 @@ msgstr "Tipo de cambio no válido"
 
 #: api/api_errorcodes.php:251
 msgid "Invalid OV Amount"
-msgstr "Importe OV Inválido"
+msgstr "Importe OV no válido"
 
 #: api/api_errorcodes.php:252
 msgid "Invalid OV Gst"
-msgstr "Gst OV Inválido"
+msgstr "Gst OV no válido"
 
 #: api/api_errorcodes.php:253
 msgid "Invalid OV Freight"
-msgstr "Flete OV Inválido"
+msgstr "Flete OV no válido"
 
 #: api/api_errorcodes.php:254
 msgid "Invalid Diff On Exchange"
-msgstr "Diferencia en Tasa de Cambio Inválida"
+msgstr "Diferencia en Tasa de Cambio no válida"
 
 #: api/api_errorcodes.php:255
 msgid "Invalid Allocation"
-msgstr "Asignación Inválida"
+msgstr "Asignación no válida"
 
 #: api/api_errorcodes.php:256
 msgid "Incorrect Invoice Text"
@@ -44064,63 +44064,63 @@ msgstr "Texto de Factura Incorrecto"
 
 #: api/api_errorcodes.php:257
 msgid "Invalid Ship Via"
-msgstr "Envío \"A Través De\" Inválido"
+msgstr "Envío \"A Través De\" no válido"
 
 #: api/api_errorcodes.php:258
 msgid "Invalid Edi Sent"
-msgstr "Envío EDI Inválido"
+msgstr "Envío EDI no válido"
 
 #: api/api_errorcodes.php:259
 msgid "Invalid Consignment"
-msgstr "Consignación Inválida"
+msgstr "Consignación no válida"
 
 #: api/api_errorcodes.php:260
 msgid "Invalid Last Cost"
-msgstr "Ultimo Costo Inválido"
+msgstr "Ultimo costo no válido"
 
 #: api/api_errorcodes.php:261
 msgid "Invalid Material Cost"
-msgstr "Costo de Material Inválido"
+msgstr "Costo de material no válido"
 
 #: api/api_errorcodes.php:262
 msgid "Invalid Labour Cost"
-msgstr "Costo de Mano de Obra Inválido"
+msgstr "Costo de mano de obra no válido"
 
 #: api/api_errorcodes.php:263
 msgid "Invalid Overhead Cost"
-msgstr "Costo de Gastos Generales Inválido"
+msgstr "Costo general no válido"
 
 #: api/api_errorcodes.php:264
 msgid "Invalid Customer Reference"
-msgstr "Referencia de cliente Inválida"
+msgstr "Referencia de cliente no válida"
 
 #: api/api_errorcodes.php:265
 msgid "Invalid Buyer Name"
-msgstr "Nombre del Comprador Inválido"
+msgstr "Nombre de comprador no válido"
 
 #: api/api_errorcodes.php:266
 msgid "Invalid Comments"
-msgstr "Comentarios Inválidos"
+msgstr "Comentarios no válidos"
 
 #: api/api_errorcodes.php:267
 msgid "Invalid Order Date"
-msgstr "Fecha de Pedido Inválida"
+msgstr "Fecha de pedido no válida"
 
 #: api/api_errorcodes.php:268
 msgid "Invalid Delivery Name"
-msgstr "Nombre de Entrega Inválido"
+msgstr "Nombre de Entrega no válido"
 
 #: api/api_errorcodes.php:269
 msgid "Invalid Freight Cost"
-msgstr "Costo de Transporte Inválido"
+msgstr "Costo de transporte no válido"
 
 #: api/api_errorcodes.php:270
 msgid "Invalid Delivery Date"
-msgstr "Fecha de Entrega Inválida"
+msgstr "Fecha de Entrega no válida"
 
 #: api/api_errorcodes.php:271
 msgid "Invalid Quotation Flag"
-msgstr "Referencia de cotización inválida"
+msgstr "Referencia de cotización no válida"
 
 #: api/api_errorcodes.php:272
 msgid "Order header not setup"
@@ -44128,27 +44128,27 @@ msgstr "Cabecera de Pedido no configurada"
 
 #: api/api_errorcodes.php:273
 msgid "Invalid unit cost"
-msgstr "Unidad de Costo Inválida"
+msgstr "Unidad de Costo no válida"
 
 #: api/api_errorcodes.php:274
 msgid "Invalid Quantity"
-msgstr "Cantidad Inválida"
+msgstr "Cantidad no válida"
 
 #: api/api_errorcodes.php:275
 msgid "Invalid Discount Percent"
-msgstr "Porcentaje de Descuento Inválido"
+msgstr "Porcentaje de descuento no válido"
 
 #: api/api_errorcodes.php:276
 msgid "Invalid Narrative"
-msgstr "Descripción inválida"
+msgstr "Descripción no válida"
 
 #: api/api_errorcodes.php:277
 msgid "Invalid Item Due"
-msgstr "Deuda de Artículo Inválida"
+msgstr "Deuda de Artículo no válida"
 
 #: api/api_errorcodes.php:278
 msgid "Invalid PO line"
-msgstr "Fila de Orden de Compra Inválida"
+msgstr "Fila de Orden de Compra no válida"
 
 #: api/api_errorcodes.php:279
 msgid "GL account code already exists"
@@ -44180,19 +44180,19 @@ msgstr "La sección de cuenta contable no existe"
 
 #: api/api_errorcodes.php:286
 msgid "Invalid profit and loss flag"
-msgstr "Marca de Ganancias y Pérdidas inválida"
+msgstr "Marca de Ganancias y Pérdidas no válida"
 
 #: api/api_errorcodes.php:287
 msgid "Invalid sequenceintb figure"
-msgstr "Figura sequenceintb Inválida"
+msgstr "Figura sequenceintb no válida"
 
 #: api/api_errorcodes.php:289
 msgid "Invalid Latitude figure"
-msgstr "Latitud Inválida"
+msgstr "Latitud no válida"
 
 #: api/api_errorcodes.php:290
 msgid "Invalid Longitude figure"
-msgstr "Longitud Inválida"
+msgstr "Longitud no válida"
 
 #: api/api_errorcodes.php:291
 msgid "Customer type not set up"
@@ -44204,27 +44204,27 @@ msgstr "Precios de Venta no configurados"
 
 #: api/api_errorcodes.php:293
 msgid "Invalid invoiced quantity"
-msgstr "Cantidad facturada inválida"
+msgstr "Cantidad facturada no válida"
 
 #: api/api_errorcodes.php:294
 msgid "Invalid actual dispatch date"
-msgstr "Fecha de despacho real Inválida"
+msgstr "Fecha de despacho real no válida"
 
 #: api/api_errorcodes.php:295
 msgid "Invalid completed flag"
-msgstr "Marca de Completado Inválida"
+msgstr "Marca de Completado no válida"
 
 #: api/api_errorcodes.php:296
 msgid "Invalid category id"
-msgstr "ID de Categoría Inválido"
+msgstr "ID de Categoría no válido"
 
 #: api/api_errorcodes.php:297
 msgid "Invalid category description"
-msgstr "Descripción inválida de la categoría"
+msgstr "Descripción de categoría no válida"
 
 #: api/api_errorcodes.php:298
 msgid "Invalid stock type"
-msgstr "Tipo de existencia inválido"
+msgstr "Tipo de existencia no válido"
 
 #: api/api_errorcodes.php:299
 msgid "GL account code does not exist"
@@ -44286,11 +44286,11 @@ msgstr "Descripción incorrecta del proveedor"
 
 #: api/api_errorcodes.php:313
 msgid "Invalid Lead time"
-msgstr "Tiempo de Espera Inválido"
+msgstr "Tiempo de Espera no válido"
 
 #: api/api_errorcodes.php:314
 msgid "Invalid Preferred flag"
-msgstr "Preferido Marcado Inválido"
+msgstr "Preferido Marcado no válido"
 
 #: api/api_errorcodes.php:315
 msgid "StockID SupplierID line does not exist"
@@ -44298,31 +44298,31 @@ msgstr "no existe la línea de ID de Existencia ni de ID del proveedor"
 
 #: api/api_errorcodes.php:316
 msgid "Invalid Required By Date"
-msgstr "Requerido para la Fecha Inválido"
+msgstr "Requerido para la Fecha no válido"
 
 #: api/api_errorcodes.php:317
 msgid "Invalid Start Date"
-msgstr "Fecha de Inicio Inválida"
+msgstr "Fecha de Inicio no válida"
 
 #: api/api_errorcodes.php:318
 msgid "Invalid Cost Issued"
-msgstr "Costo Enviado Inválido"
+msgstr "Costo Enviado no válido"
 
 #: api/api_errorcodes.php:319
 msgid "Invalid Quantity Required"
-msgstr "Cantidad Requerida Inválida"
+msgstr "Cantidad Requerida no válida"
 
 #: api/api_errorcodes.php:320
 msgid "Invalid Quantity Received"
-msgstr "Cantidad Recibida Inválida"
+msgstr "Cantidad Recibida no válida"
 
 #: api/api_errorcodes.php:321
 msgid "Invalid Standard Cost"
-msgstr "Costo Estándar Inválido"
+msgstr "Costo Estándar no válido"
 
 #: api/api_errorcodes.php:322
 msgid "Invalid Serial Number or Lot Reference"
-msgstr "Número de Serie Inválido o de Referencia del Lote"
+msgstr "Número de Serie no válido o de Referencia del Lote"
 
 #: api/api_errorcodes.php:323
 msgid "Work order number does not exist"
@@ -44330,15 +44330,15 @@ msgstr "El número de la orden de trabajo no existe"
 
 #: api/api_errorcodes.php:324
 msgid "Invalid issued quantity"
-msgstr "Cantidad enviada Inválida"
+msgstr "Cantidad enviada no válida"
 
 #: api/api_errorcodes.php:325
 msgid "Invalid transaction date"
-msgstr "Fecha de transacción inválida"
+msgstr "Fecha de transacción no válida"
 
 #: api/api_errorcodes.php:326
 msgid "Invalid received quantity"
-msgstr "Cantidad recibida inválida"
+msgstr "Cantidad recibida no válida"
 
 #: api/api_errorcodes.php:327
 msgid "Stock item is not controlled"
@@ -49637,7 +49637,7 @@ msgstr "Válido"
 
 #: includes/InputSerialItemsFile.php:161
 msgid "Invalid"
-msgstr "Inválido"
+msgstr "No válido"
 
 #: includes/InputSerialItemsFile.php:172
 msgid "Validate File"

@@ -1,9 +1,11 @@
 <?php
 /* $Id$*/
-
+/* Defines the various centres of work within a manufacturing company. Also the overhead and labour rates applicable to the work centre and its standard capacity */
 
 include('includes/session.inc');
 $Title = _('Work Centres');
+$ViewTopic = 'Manufacturing';
+$BookMark = 'WorkCentres';
 include('includes/header.inc');
 
 if (isset($_POST['SelectedWC'])){
@@ -124,11 +126,12 @@ or deletion of the records*/
 	$result = DB_query($sql);
 	echo '<table class="selection">
 			<tr>
-				<th class="ascending">' . _('WC Code') . '</th>
-				<th class="ascending">' . _('Description') . '</th>
-				<th class="ascending">' . _('Location') . '</th>
-				<th class="ascending">' . _('Overhead GL Account') . '</th>
-				<th class="ascending">' . _('Overhead Per Hour') . '</th>
+				<th class="ascending">', _('WC Code'), '</th>
+				<th class="ascending">', _('Description'), '</th>
+				<th class="ascending">', _('Location'), '</th>
+				<th class="ascending">', _('Overhead GL Account'), '</th>
+				<th class="ascending">', _('Overhead Per Hour'), '</th>
+				<th colspan="2">&nbsp;</th>
 			</tr>';
 
 	while ($myrow = DB_fetch_array($result)) {
@@ -160,7 +163,10 @@ or deletion of the records*/
 //end of ifs and buts!
 
 if (isset($SelectedWC)) {
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+		'/images/maintenance.png" title="',// Icon image.
+		$Title, '" /> ',// Icon title.
+		$Title, '</p>';// Page title.
 	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Show all Work Centres') . '</a></div>';
 }
 

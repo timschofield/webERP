@@ -169,4 +169,36 @@
 
 <p>MRP.php runs the MRP itself. It is a regenerative process that purges all of the old files and creates new ones. There is a selection to chose the location for inventory. Days Leeway can be entered, so purchase order and work order dates scheduled within the leeway of the calculated need date are considered valid; the system does not actually change the dates in the work orders or purchase orders, but there is a report of those orders that the MRP estimates should be changed. And there are check boxes to select if MRP Demands, eoq, pan size, and shrinkage factor should be used. The MRP runs pretty quickly. The system I am running it against is not as large as most long running systems, but, with about 3,000 parts, a few hundred open sales orders and purchase orders, a half a dozen demands for assemblies that go 7 levels deep and have close to a thousand parts, plus individual demands for a few hundred other parts, I run this on a 3 and a half year old iMac with 1 gig of memory and it takes less than a minute. I also tried it on my web host, which is in Chicago, while I’m in New Jersey about 30 miles west of New York, and it took less than 20 seconds.</p>
 
-<p>The MRP doesn’t change or create webERP purchase orders or work orders. I think it might be dangerous to do that automatically, without some sort of human oversight. In the 2.0 version, I might have some sort of screen that will bring up what I call MRP Planned Orders and allow users to generate purchase orders or work orders from them. Right now, there are several reports to show the results of the MRP. MRPReschedules.php shows those work orders and purchase orders that the system calculates should have their dates changed; if there is no requirement for the orders, a CANCEL message is displayed. MRPPlannedWorkOrders.php and MRPPlannedPurchaseOrders.php show orders that the MRP calculates should be created. The reports can be created showing every individual order needed and the source of its requirement, or the orders can be consolidated into weekly or monthly orders. MRPReport.php shows the supply and demand for individual parts. On the demand side, it shows the type of order that created the demand, the top level part for that demand, and the order number – in the case of user entered MRP demands, the order number is system generated. The supply side shows orders that make up the supply and in the case of Planned orders created by the MRP, it shows the type of demand the supply was planned to cover and the order number for that demand. Finally, there is MRPShortages.php that shows those parts that have a demand that is greater than the supply. The dollar total might be a little misleading because if there is a sales order for an assembly without enough supply to cover it, that will show up on the report, but so will all of the components that are needed to build the assembly. I haven’t quite decided if I should exclude the components or not. <!-- Help End: Manufacturing --></p>
+<p>The MRP doesn’t change or create webERP purchase orders or work orders. I think it might be dangerous to do that automatically, without some sort of human oversight. In the 2.0 version, I might have some sort of screen that will bring up what I call MRP Planned Orders and allow users to generate purchase orders or work orders from them. Right now, there are several reports to show the results of the MRP. MRPReschedules.php shows those work orders and purchase orders that the system calculates should have their dates changed; if there is no requirement for the orders, a CANCEL message is displayed. MRPPlannedWorkOrders.php and MRPPlannedPurchaseOrders.php show orders that the MRP calculates should be created. The reports can be created showing every individual order needed and the source of its requirement, or the orders can be consolidated into weekly or monthly orders. MRPReport.php shows the supply and demand for individual parts. On the demand side, it shows the type of order that created the demand, the top level part for that demand, and the order number – in the case of user entered MRP demands, the order number is system generated. The supply side shows orders that make up the supply and in the case of Planned orders created by the MRP, it shows the type of demand the supply was planned to cover and the order number for that demand. Finally, there is MRPShortages.php that shows those parts that have a demand that is greater than the supply. The dollar total might be a little misleading because if there is a sales order for an assembly without enough supply to cover it, that will show up on the report, but so will all of the components that are needed to build the assembly. I haven’t quite decided if I should exclude the components or not.</p>
+
+<div class="floatright">
+	<a class="minitext" href="#top">⬆ Top</a>
+</div>
+
+<h2><a id="Maintenance">Maintenance</a></h2>
+
+<h3><a id="WorkCentres">Work Centres</a></h3>
+
+<p>A table of work centres is maintained. It contains the following fields:</p>
+
+<dl>
+	<dt>Work Centre Code</dt>
+	<dd>Enter up to five characters for the work centre code.</dd>
+
+	<dt>Work Centre Description</dt>
+	<dd>Enter up to 20 characters for the work centre name.</dd>
+
+	<dt>Location</dt>
+	<dd>A work centre location is the factory or warehouse where the work center belongs. See <a href="ManualContents.php?ViewTopic=Inventory#Locations">Locations Maintenance</a> to set up a location.</dd>
+
+	<dt>Overhead Recovery GL Account</dt>
+	<dd>The value of the overheads allocated to works and pay for employees in this work centre will be costed to this GL account.</dd>
+
+	<dt>Overhead Per Hour</dt>
+	<dd>Enter the rate per hour (if the method you selected to calculate the overhead was as an hourly rate) 
+	<!--or overhead percentage to be applied as an on-cost (if you elected to calculate the overhead as a percentage).-->.</dd>
+</dl>
+
+<!--p>Comments. if Overhead Per Hour is zero or negative = other methods ? </p-->
+
+<!-- Help End: Manufacturing -->
