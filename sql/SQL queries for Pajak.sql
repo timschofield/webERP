@@ -58,3 +58,16 @@ WHERE area IN ("REZ")
 	AND `orddate` >= "2013-01-01"
 	AND orddate <= "2013-12-31"
 ORDER BY Customer, SalesDate, YellowNumber;
+
+/* Items sold during a period 
+Kartu stock OUT */
+
+SELECT stkcode AS codeItem,
+	SUM(qtyinvoiced) AS pcsSold
+FROM salesorders, salesorderdetails
+WHERE salesorders.orderno = salesorderdetails.orderno
+	AND salesorders.area IN ("REC", "RER", "OWB", "WCS", "WHC")
+	AND salesorders.orddate >= "2015-01-01"
+	AND salesorders.orddate <= "2015-12-31"
+GROUP BY stkcode
+ORDER BY stkcode;
