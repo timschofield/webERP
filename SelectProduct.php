@@ -4,6 +4,7 @@
 
 $PricesSecurity = 12;//don't show pricing info unless security token 12 available to user
 $SuppliersSecurity = 9; //don't show supplier purchasing info unless security token 9 available to user
+$CostSecurity = 18; //don't show cost info unless security token 18 available to user
 
 include ('includes/session.inc');
 $Title = _('Search Inventory Items');
@@ -174,6 +175,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 			$Price = $PriceRow[1];
 			echo '<td class="select" colspan="2" style="text-align:right">' . locale_number_format($Price, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>';
 		}
+		if (in_array($CostSecurity,$_SESSION['AllowedPageSecurityTokens'])) {
 		echo '<th class="number">' . _('Cost') . ':</th>
 			<td class="select" style="text-align:right">' . locale_number_format($Cost, $_SESSION['StandardCostDecimalPlaces']) . '</td>
 			<th class="number">' . _('Gross Profit') . ':</th>
@@ -183,8 +185,9 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 		} else {
 			echo _('N/A');
 		}
-		echo '</td>
-			</tr>';
+		echo '</td>';
+		}
+		echo '</tr>';
 	} //end of if PricesSecuirty allows viewing of prices
 	echo '</table>'; //end of first nested table
 	// Item Category Property mod: display the item properties
