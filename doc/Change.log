@@ -1,5 +1,6 @@
 webERP Change Log
 
+12/04/16 Exson: add cost security token to make price security and cost security separated to cope with different situation.
 10/04/16 RChacon: In WorkCentres.php, add ViewTopic and BookMark and completes html table. In doc/Manual/ManualManufacturing.html, add help for WorkCentres.php.
 10/04/16 RChacon: In SupplierInvoice.php, add ' - ' to standardise gltran.narrative to "SupplierID - ". In SuppTransGLAnalysis.php, add ViewTopic and Bookmark, completes html tables, add text class, and add currency_code to input table. In css/*/default.css, regroup horizontal align classes for readability. In doc/Manual/ManualAccountsPayable.html, add anchor id="SuppTransGLAnalysis".
 07/04/16 RChacon: In includes/class.pdf.php, add script documentation and completes switch($Align) to translate from Pdf-Creator to TCPDF.
