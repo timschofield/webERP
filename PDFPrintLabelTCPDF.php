@@ -227,26 +227,38 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 		$BarcodeWidth = 9.5;
 		$ResolutionDPI = 203; // uses imperial system so 200 are really 203. LOL
 		$XResolution = 25.4 / $ResolutionDPI; // 25.4mm per inch / resolution points per inch
-		$BarcodeStyle = array(
-				'position' => '',
-				'align' => 'C',
-				'stretch' => false,
-				'fitwidth' => false,
-				'cellfitalign' => '',
-				'border' => false,
-				'hpadding' => 'auto',
-				'vpadding' => 'auto',
-				'fgcolor' => array(0,0,0),
-				'bgcolor' => false, //array(255,255,255),
-				'text' => true,
-				'font' => 'helvetica',
-				'fontsize' => 7,
-				'stretchtext' => 0);
+		$CodeFontSize = 7;
+	}elseif ($_POST['LabelID'] == 'CodeSticker'){
+		// Code Stickers for stock bags only
+		$PageLayout = array(50.0, 25.0);
+		
+		// define barcode style for Code Stickers
+		$BarcodeXPosition = 1;
+		$BarcodeYPosition = 8;
+		$BarcodeLenght = 48;
+		$BarcodeWidth = 16;
+		$ResolutionDPI = 203; // uses imperial system so 200 are really 203. LOL
+		$XResolution = 25.4 / $ResolutionDPI * 2; // 25.4mm per inch / resolution points per inch
+		$CodeFontSize = 12;
 	}else{
-		// Code tags
 		// not coded yet
 		return;
 	}
+	$BarcodeStyle = array(
+			'position' => '',
+			'align' => 'C',
+			'stretch' => false,
+			'fitwidth' => false,
+			'cellfitalign' => '',
+			'border' => false,
+			'hpadding' => 'auto',
+			'vpadding' => 'auto',
+			'fgcolor' => array(0,0,0),
+			'bgcolor' => false, //array(255,255,255),
+			'text' => true,
+			'font' => 'helvetica',
+			'fontsize' => $CodeFontSize,
+			'stretchtext' => 0);
 
 	$pdf = new TCPDF('L', 'mm', $PageLayout, true, 'UTF-8', false);
 	
@@ -277,19 +289,36 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 				$Description = $_POST['Description' . $i];
 
 				// define Logo information
-				if (ItemInList($_POST['Category' . $i], LIST_STOCK_CATEGORIES_BLINK)
-					OR $_POST['Category' . $i] == "SETBL"){
-					$LogoXPosition = 14.0;
-					$LogoYPosition = 1.0;
-					$LogoHeight = 4.5;
-					$LogoFile = 'companies/' . $_SESSION['DatabaseName'] . '/LogoLabelBLINK.jpg';
+				if ($_POST['LabelID'] == 'T570'){
+					if (ItemInList($_POST['Category' . $i], LIST_STOCK_CATEGORIES_BLINK)
+						OR $_POST['Category' . $i] == "SETBL"){
+						$LogoXPosition = 14.0;
+						$LogoYPosition = 1.0;
+						$LogoHeight = 4.5;
+						$LogoFile = 'companies/' . $_SESSION['DatabaseName'] . '/LogoLabelBLINK.jpg';
+					}else{
+						$LogoXPosition = 12.0;
+						$LogoYPosition = 1.0;
+						$LogoHeight = 4.0;
+						$LogoFile = 'companies/' . $_SESSION['DatabaseName'] . '/LogoLabelKL.jpg';
+					}
+				}elseif ($_POST['LabelID'] == 'CodeSticker'){
+					if (ItemInList($_POST['Category' . $i], LIST_STOCK_CATEGORIES_BLINK)
+						OR $_POST['Category' . $i] == "SETBL"){
+						$LogoXPosition = 18.0;
+						$LogoYPosition = 1.0;
+						$LogoHeight = 6.0;
+						$LogoFile = 'companies/' . $_SESSION['DatabaseName'] . '/LogoLabelBLINK.jpg';
+					}else{
+						$LogoXPosition = 14.0;
+						$LogoYPosition = 1.0;
+						$LogoHeight = 6.0;
+						$LogoFile = 'companies/' . $_SESSION['DatabaseName'] . '/LogoLabelKL.jpg';
+					}
 				}else{
-					$LogoXPosition = 12.0;
-					$LogoYPosition = 1.0;
-					$LogoHeight = 4.0;
-					$LogoFile = 'companies/' . $_SESSION['DatabaseName'] . '/LogoLabelKL.jpg';
+					//not code yet
+					return;
 				}
-
 				// define prices for discounted items
 				if (ItemInList($_POST['Category' . $i], LIST_STOCK_CATEGORIES_DISCOUNT)){
 					$ResultDiscount = DB_query("SELECT MAX(discountrate) AS discount
@@ -329,7 +358,7 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 						$pdf->Cell($PriceWidth, 0, $DiscountedPrice, 0, 0, $PriceAlignment);
 					}else{
 						//Print the logo
-						$pdf->Image($LogoFile, $LogoXPosition, $LogoYPosition, 0, $LogoHeight, 'JPG', '', '', true, 200, '', false, false, 0, false, false, false);
+						$pdf->Image($LogoFile, $LogoXPosition, $LogoYPosition, 0, $LogoHeight, 'JPG', '', '', true, 203, '', false, false, 0, false, false, false);
 						// print the price
 						$pdf->SetXY($PriceXPosition,$PriceYPosition);
 						$pdf->SetFont($PriceFont, $PriceFontStyle, $PriceFontSize);
@@ -337,13 +366,26 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 					}
 					// print the barcode
 					$pdf->write1DBarcode($StockId, 'C128', $BarcodeXPosition, $BarcodeYPosition, $BarcodeLenght, $BarcodeWidth, $XResolution, $BarcodeStyle, 'N');
+				}elseif ($_POST['LabelID'] == 'CodeSticker'){
+					//Print the logo
+					$pdf->Image($LogoFile, $LogoXPosition, $LogoYPosition, 0, $LogoHeight, 'JPG', '', '', true, 203, '', false, false, 0, false, false, false);
+					// print the barcode
+					$pdf->write1DBarcode($StockId, 'C128', $BarcodeXPosition, $BarcodeYPosition, $BarcodeLenght, $BarcodeWidth, $XResolution, $BarcodeStyle, 'N');
+				}else{
+					//not code yet
+					return;
 				}
+
 				$LabelsPrinted++;
 			}
 		} //this label is set to print
 	} //loop through labels selected to print
 
-	$CoreFileName = "Pricetags";
+	if ($_POST['LabelID'] == 'T570'){
+		$CoreFileName = "Pricetags";
+	}else{
+		$CoreFileName = "CodeStickers";
+	}
 	if ($_POST['Location'] != "None"){
 		$CoreFileName = $CoreFileName . "-QOH-" . $_POST['Location'];
 	}
@@ -383,7 +425,7 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 			<td>' . _('Label Type') . ':</td>
 			<td><select name="LabelID">
 				<option selected="selected" value="T570">' . _('Pricetags T570') . '</option>
-				<option value="XXXX">' . _('Code Stickers') . '</option>
+				<option value="CodeSticker">' . _('Code Stickers') . '</option>
 			</select></td>
 			</tr>';
 			
