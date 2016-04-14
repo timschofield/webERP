@@ -51,7 +51,7 @@ if (!isset($_GET['Section'])){
 
 if ($KL_SystemAdmin){
 //	phpinfo();
-	$NumberOfTestExecuted++;
+//	$NumberOfTestExecuted++;
 }
 
 if ($KL_SystemAdmin 
@@ -66,7 +66,7 @@ if ($KL_SystemAdmin
 	OR $KL_SPG 
 	OR $KL_SPGSupport){
 
-	$NumberOfTestExecuted++;
+//	$NumberOfTestExecuted++;
 	
 }
 
@@ -208,6 +208,8 @@ if ($ProcessSection01){
 		OR $KL_PurchasingTeam 
 		OR $KL_ShopSupportLeader){
 		
+		DiscountedItemsOnNotOutletShops("DISC20", $RootPath, $db);
+		$NumberOfTestExecuted++;
 		DiscountedItemsOnNotOutletShops("DISC50", $RootPath, $db);
 		$NumberOfTestExecuted++;
 		DiscountedItemsOnNotOutletShops("DISC80", $RootPath, $db);
@@ -446,15 +448,27 @@ if ($ProcessSection01){
 		CategoryItemsNotInShop("STABBL", "TOKPS", $RootPath, $db);
 		$NumberOfTestExecuted++;
 
+		CategoryItemsNotInShop("DISC20", "TOKAR", $RootPath, $db);
+		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("DISC50", "TOKAR", $RootPath, $db);
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("DISC80", "TOKAR", $RootPath, $db);
 		$NumberOfTestExecuted++;
 
+		CategoryItemsNotInShop("DISC20", "TOKSU", $RootPath, $db);
+		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("DISC50", "TOKSU", $RootPath, $db);
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("DISC80", "TOKSU", $RootPath, $db);
 		$NumberOfTestExecuted++;
+
+		CategoryItemsNotInShop("DISC20", "TOKUB", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("DISC50", "TOKUB", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("DISC80", "TOKUB", $RootPath, $db);
+		$NumberOfTestExecuted++;
+
 	//	ItemsInCategoryWithStockKantorButReorderLevelTokoZero("DISC20", $RootPath, $db);
 	//	$NumberOfTestExecuted++;
 	//	ItemsInCategoryWithStockKantorButReorderLevelTokoZero("DISC50", $RootPath, $db);
@@ -597,7 +611,7 @@ if ($ProcessSection02){
 		ActiveItemsNoSales( 30, "NOPOGE", $RootPath, $db);
 		$NumberOfTestExecuted++;
 
-		ActiveItemsNoSales( 45, "DISC20", $RootPath, $db);
+		ActiveItemsNoSales( 30, "DISC20", $RootPath, $db);
 		$NumberOfTestExecuted++;
 		ActiveItemsNoSales( 60, "DISC50", $RootPath, $db);
 		$NumberOfTestExecuted++;

@@ -641,7 +641,7 @@ if ($_GET['EmailType']=='NoOrderPlaced'){
 			WHERE debtorno =	'" . $_GET['TransNo'] . "'";
 	$ErrMsg =_('Could not update the customers KL email no order placed date because');
 	$result = DB_query($sql,$ErrMsg);
-	prnMsg("Updated date of sending remind of no webshop order placed to today");
+	prnMsg("Updated date of sending remind of no Online Shop order placed to today");
 }
 
 if ($_GET['EmailType']=='RemindBankTransfer'){

@@ -172,8 +172,7 @@ if ($ProcessSection02){
 	if ($KL_SystemAdmin 
 		OR $KL_OperationalManager
 		OR $KL_SalesDirector
-		OR $KL_ShopManager
-		OR $KL_BusinessDevelopmentManager){
+		OR $KL_ShopManager){
 		ActiveTransfersByLocation($RootPath, $db);
 		$NumberOfTestExecuted++;
 		ActiveTransferStatus($RootPath, $db);
@@ -202,8 +201,7 @@ if ($ProcessSection02){
 	}
 
 
-	if ($KL_SystemAdmin 
-		OR $KL_BusinessDevelopmentManager){
+	if ($KL_SystemAdmin){
 		PackagingStatusForKapalLaut($RootPath, $db);
 		$NumberOfTestExecuted++;
 		PackagingUsageForKapalLaut(30, $RootPath, $db);
@@ -243,8 +241,7 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_SystemAdmin
-		OR $KL_OperationalManager
-		OR $KL_BusinessDevelopmentManager){
+		OR $KL_OperationalManager){
 		PurchasingOrdersDeliveryControl("Delayed", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		PurchasingOrdersDeliveryControl("Coming Soon", 30, $RootPath, $db);

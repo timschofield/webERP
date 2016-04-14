@@ -345,7 +345,7 @@ echo '<table class="selection">
 		</tr>';
 
 echo '<tr>
-		<td>' . _('Display in webSHOP?') . ':</td>
+		<td>' . _('Display in Online Shop?') . ':</td>
 		<td><select name="Active">';
 if ($_POST['Active'] == '1') {
 	echo '<option selected="selected" value="1">' . _('Yes') . '</option>';

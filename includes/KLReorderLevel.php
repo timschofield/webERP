@@ -1065,10 +1065,10 @@ function OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db,
 		}
 	}else{
 		if ($ShowMessages){
-			prnMsg(_('No webSHOP orders to be processed at this time.'),'info');
+			prnMsg(_('No Online Shop orders to be processed at this time.'),'info');
 		}
 		if ($EmailText!=''){
-			$EmailText = $EmailText . "No webSHOP orders to be processed at this time" . "\n";
+			$EmailText = $EmailText . "No Online Shop orders to be processed at this time" . "\n";
 		}
 	}
 	return $EmailText;

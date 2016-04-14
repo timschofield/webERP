@@ -5,7 +5,7 @@ define("VERSIONFILE", "1.08");
 /* Session started in session.inc for password checking and authorisation level check
 config.php is in turn included in session.inc*/
 include ('includes/session.inc');
-$Title = _('Kapal-Laut Set Website Categories '. VERSIONFILE);
+$Title = _('Kapal-Laut Set Online Shop Categories '. VERSIONFILE);
 include ('includes/header.inc');
 include ('includes/KLDefines.php');
 include ('includes/KLBoards.php');
@@ -18,7 +18,7 @@ $begintime = time_start();
 
 // Delete the current classification
  
-// Not any more,,, we just add the items not in webSHOP
+// Not any more,,, we just add the items not in Online Shop
 /*
 if($UpdateDB){
 	prnMsg("Updating webERP DB...");
@@ -56,7 +56,7 @@ $SQL = "SELECT stockmaster.stockid,
 		ORDER BY stockmaster.stockid";
 $result = DB_query($SQL);
 if (DB_num_rows($result) != 0){
-	echo '<p class="page_title_text" align="center"><strong>' . _('Items To Classify for Website Categories') . '</strong></p>';
+	echo '<p class="page_title_text" align="center"><strong>' . _('Items To Classify for Online Shop Categories') . '</strong></p>';
 	echo '<div>';
 	echo '<table class="selection">';
 	$TableHeader = '<tr>

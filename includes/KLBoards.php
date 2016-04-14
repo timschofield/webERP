@@ -1210,7 +1210,7 @@ function ItemsWithoutWeightOrVolume($RootPath, $db){
 
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('WebShop items with no gross weight, no volume or Net > Gross Weight') . '</strong></p>';
+		echo '<p class="page_title_text" align="center"><strong>' . _('Online Shop items with no gross weight, no volume or Net > Gross Weight') . '</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
@@ -1878,7 +1878,7 @@ function OnlineCustomersNoOrderPlaced($RootPath, $db){
 				AND NOT EXISTS (SELECT * 
 								FROM salesorders
 								WHERE salesorders.debtorno = debtorsmaster.debtorno)
-				AND debtorsmaster.debtorno != 'WEBSHOP'
+				AND debtorsmaster.debtorno != 'Online Shop'
 			ORDER BY debtorsmaster.debtorno";
 
 	$result = DB_query($SQL);
@@ -2705,7 +2705,7 @@ function ItemsShouldBeInWebsite($db){
 		while ($myrow = DB_fetch_array($result)) {
 			if(file_exists($_SESSION['part_pics_dir'] . '/' .$myrow['stockid'].'.jpg') ) {
 				if($showHeader){
-					echo '<p class="page_title_text" align="center"><strong>' . _('Items with picture but not available in website') . '</strong></p>';
+					echo '<p class="page_title_text" align="center"><strong>' . _('Items with picture but not available in Online Shop') . '</strong></p>';
 					echo '<div>';
 					echo '<table class="selection">';
 					$TableHeader = '<tr>
@@ -5310,7 +5310,7 @@ function OpenCartItemsWithoutPicture($RootPath, $db, $db_oc, $oc_tableprefix){
 		while ($myrow = DB_fetch_array($result)) {
 			if(!file_exists(ABSOLUTE_PATH_OPENCART_IMAGES .$myrow['stockid'].'.jpg') ) {
 				if($showHeader){
-					echo '<p class="page_title_text" align="center"><strong>' . _('OpenCart Items without picture') . '</strong></p>';
+					echo '<p class="page_title_text" align="center"><strong>' . _('Online Shop Items without picture') . '</strong></p>';
 					echo '<div>';
 					echo '<table class="selection">';
 					$k = 0; //row colour counter
