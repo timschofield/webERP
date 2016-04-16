@@ -323,7 +323,7 @@ echo '<tr>
 				echo '<option value="';
 			}
 			echo $myrow['tabcode'] . '">' . $myrow['tabcode'] . '</option>';
-
+		}
 	} //end while loop get type of tab
 
 	echo '</select></td>

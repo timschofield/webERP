@@ -1,5 +1,5 @@
 webERP Change Log
-
+15/04/16 PaulT: add missing } causing error.
 12/04/16 Exson: add cost security token to make price security and cost security separated to cope with different situation.
 10/04/16 RChacon: In WorkCentres.php, add ViewTopic and BookMark and completes html table. In doc/Manual/ManualManufacturing.html, add help for WorkCentres.php.
 10/04/16 RChacon: In SupplierInvoice.php, add ' - ' to standardise gltran.narrative to "SupplierID - ". In SuppTransGLAnalysis.php, add ViewTopic and Bookmark, completes html tables, add text class, and add currency_code to input table. In css/*/default.css, regroup horizontal align classes for readability. In doc/Manual/ManualAccountsPayable.html, add anchor id="SuppTransGLAnalysis".
@@ -18,7 +18,7 @@ webERP Change Log
 24/02/16: Richard, Exson Fix the GLPosting initiating error in GLPostings.inc.
 20/02/16 Janb,Tim fixed typo in upgrade4.12.3-4.13.sql
 19/02/16 Daveparrish fixed page number error of AgedDebtors.php.
-02/02/16 Exson£ºFixed the bug of chartdetails bfwd amount wrong in GLPostings.inc.
+02/02/16 Exsonï¿½ï¿½Fixed the bug of chartdetails bfwd amount wrong in GLPostings.inc.
 1/2/15 Exson: Make GL Posting really transaction in GLPostings.inc.
 30/01/16 Exson: Fix the bug to print invoice instead of credit note when a credit note requested in CustomerInquiry.php reported by daveparrish.
 14/01/16 Exson: Add Supplier transaction allocation inquiry in SuppWhereAlloc.php and add a link to in SupplierInquiry.php.
