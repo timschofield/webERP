@@ -35,6 +35,13 @@ if (!isset($_GET['Section'])){
 }
 
 /***************************************************************************************
+* TEST AND PLAY AREA      
+***************************************************************************************/
+if ($KL_SystemAdmin){
+} 
+
+
+/***************************************************************************************
 * SECTION 1         
 ***************************************************************************************/
 
@@ -112,8 +119,8 @@ if ($ProcessSection01){
 		SPGPerformanceByShop("RETAILPU", 30, 60, 90, $db);
 		$NumberOfTestExecuted++;
 
-		SPGPerformanceByShop("RETAILJC", 30, 60, 90, $db);
-		$NumberOfTestExecuted++;
+//		SPGPerformanceByShop("RETAILJC", 30, 60, 90, $db);
+//		$NumberOfTestExecuted++;
 	}
 	
 	if ($KL_SystemAdmin){
@@ -193,6 +200,8 @@ if ($ProcessSection02){
 		OR $KL_SalesDirector
 		OR $KL_BusinessDevelopmentManager){
 		FinishedStockDistribution("FORSALE", "LOCATION", $db);
+		$NumberOfTestExecuted++;
+		FinishedStockDistributionByShopAndCategory($db);
 		$NumberOfTestExecuted++;
 		FinishedStockDistribution("FORSALE", "STOCKCATEGORY", $db);
 		$NumberOfTestExecuted++;

@@ -712,6 +712,186 @@ function FinishedStockDistribution($kind, $byreport, $db){
 	}
 }
 
+function FinishedStockDistributionByShopAndCategory($db){
+
+	$SQL =	"SELECT locations.loccode,
+				locations.locationname,
+				(SELECT COUNT(l2.reorderlevel)
+					FROM locstock AS l2,
+						stockmaster as m2
+					WHERE l2.loccode = locations.loccode
+						AND m2.stockid = l2.stockid 
+						AND m2.categoryid =  'TESTKL'
+						AND l2.reorderlevel != 0) AS modelsTESTKL,
+				(SELECT COUNT(l2.reorderlevel)
+					FROM locstock AS l2,
+						stockmaster as m2
+					WHERE l2.loccode = locations.loccode
+						AND m2.stockid = l2.stockid 
+						AND m2.categoryid =  'STABKL'
+						AND l2.reorderlevel != 0) AS modelsSTABKL,
+				(SELECT COUNT(l2.reorderlevel)
+					FROM locstock AS l2,
+						stockmaster as m2
+					WHERE l2.loccode = locations.loccode
+						AND m2.stockid = l2.stockid 
+						AND m2.categoryid =  'NOPOKL'
+						AND l2.reorderlevel != 0) AS modelsNOPOKL,
+				(SELECT COUNT(l2.reorderlevel)
+					FROM locstock AS l2,
+						stockmaster as m2
+					WHERE l2.loccode = locations.loccode
+						AND m2.stockid = l2.stockid 
+						AND m2.categoryid =  'TESTBL'
+						AND l2.reorderlevel != 0) AS modelsTESTBL,
+				(SELECT COUNT(l2.reorderlevel)
+					FROM locstock AS l2,
+						stockmaster as m2
+					WHERE l2.loccode = locations.loccode
+						AND m2.stockid = l2.stockid 
+						AND m2.categoryid =  'STABBL'
+						AND l2.reorderlevel != 0) AS modelsSTABBL,
+				(SELECT COUNT(l2.reorderlevel)
+					FROM locstock AS l2,
+						stockmaster as m2
+					WHERE l2.loccode = locations.loccode
+						AND m2.stockid = l2.stockid 
+						AND m2.categoryid =  'NOPOBL'
+						AND l2.reorderlevel != 0) AS modelsNOPOBL,
+				(SELECT COUNT(l2.reorderlevel)
+					FROM locstock AS l2,
+						stockmaster as m2
+					WHERE l2.loccode = locations.loccode
+						AND m2.stockid = l2.stockid 
+						AND m2.categoryid =  'TESTGE'
+						AND l2.reorderlevel != 0) AS modelsTESTGE,
+				(SELECT COUNT(l2.reorderlevel)
+					FROM locstock AS l2,
+						stockmaster as m2
+					WHERE l2.loccode = locations.loccode
+						AND m2.stockid = l2.stockid 
+						AND m2.categoryid =  'STABGE'
+						AND l2.reorderlevel != 0) AS modelsSTABGE,
+				(SELECT COUNT(l2.reorderlevel)
+					FROM locstock AS l2,
+						stockmaster as m2
+					WHERE l2.loccode = locations.loccode
+						AND m2.stockid = l2.stockid 
+						AND m2.categoryid =  'NOPOGE'
+						AND l2.reorderlevel != 0) AS modelsNOPOGE,
+				(SELECT COUNT(l2.reorderlevel)
+					FROM locstock AS l2,
+						stockmaster as m2
+					WHERE l2.loccode = locations.loccode
+						AND m2.stockid = l2.stockid 
+						AND m2.categoryid =  'DISC20'
+						AND l2.reorderlevel != 0) AS modelsDISC20,
+				(SELECT COUNT(l2.reorderlevel)
+					FROM locstock AS l2,
+						stockmaster as m2
+					WHERE l2.loccode = locations.loccode
+						AND m2.stockid = l2.stockid 
+						AND m2.categoryid =  'DISC50'
+						AND l2.reorderlevel != 0) AS modelsDISC50,
+				(SELECT COUNT(l2.reorderlevel)
+					FROM locstock AS l2,
+						stockmaster as m2
+					WHERE l2.loccode = locations.loccode
+						AND m2.stockid = l2.stockid 
+						AND m2.categoryid =  'DISC80'
+						AND l2.reorderlevel != 0) AS modelsDISC80
+			FROM locations
+			WHERE locations.loccode IN " . LIST_ALL_SHOPS . "
+			ORDER BY locations.locationname";
+						
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		$Titletext = "Models FOR SALE Distribution by Location and Category"; 
+		
+		echo '<p class="page_title_text" align="center"><strong>' . $Titletext .'</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . "Location" . '</th>
+							<th class="ascending">' . _('TEST KL') . '</th>
+							<th class="ascending">' . _('Stable KL') . '</th>
+							<th class="ascending">' . _('NO PO KL') . '</th>
+							<th class="ascending">' . _('TEST BL') . '</th>
+							<th class="ascending">' . _('Stable BL') . '</th>
+							<th class="ascending">' . _('NO PO BL') . '</th>
+							<th class="ascending">' . _('TEST GE') . '</th>
+							<th class="ascending">' . _('Stable GE') . '</th>
+							<th class="ascending">' . _('NO PO GE') . '</th>
+							<th class="ascending">' . _('Disc 20') . '</th>
+							<th class="ascending">' . _('Disc 50') . '</th>
+							<th class="ascending">' . _('Disc 80') . '</th>
+							<th class="ascending">' . _('Total') . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		$totalpcs = 0;
+		
+		while ($myrow = DB_fetch_array($result)) {
+			$k = StartEvenOrOddRow($k);
+			$TotalModelsLocation = 	$myrow['modelsTESTKL'] + 
+									$myrow['modelsSTABKL'] +
+									$myrow['modelsNOPOKL'] +
+									$myrow['modelsTESTBL'] + 
+									$myrow['modelsSTABBL'] +
+									$myrow['modelsNOPOBL'] +
+									$myrow['modelsTESTGE'] + 
+									$myrow['modelsSTABGE'] +
+									$myrow['modelsNOPOGE'] +
+									$myrow['modelsDISC20'] +
+									$myrow['modelsDISC50'] +
+									$myrow['modelsDISC80'];
+									
+//			$optimalPcsModel =locale_number_format(($myrow['optimalstock']/$myrow['optimalmodels']),1);
+
+			printf('<td class="number">%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					$i,
+					$myrow['locationname'],
+					locale_number_format_zero_blank($myrow['modelsTESTKL'],0),
+					locale_number_format_zero_blank($myrow['modelsSTABKL'],0),
+					locale_number_format_zero_blank($myrow['modelsNOPOKL'],0),
+					locale_number_format_zero_blank($myrow['modelsTESTBL'],0),
+					locale_number_format_zero_blank($myrow['modelsSTABBL'],0),
+					locale_number_format_zero_blank($myrow['modelsNOPOBL'],0),
+					locale_number_format_zero_blank($myrow['modelsTESTGE'],0),
+					locale_number_format_zero_blank($myrow['modelsSTABGE'],0),
+					locale_number_format_zero_blank($myrow['modelsNOPOGE'],0),
+					locale_number_format_zero_blank($myrow['modelsDISC20'],0),
+					locale_number_format_zero_blank($myrow['modelsDISC50'],0),
+					locale_number_format_zero_blank($myrow['modelsDISC80'],0),
+					locale_number_format_zero_blank($TotalModelsLocation,0)
+					);
+			$i++;
+		}
+		echo '</table>
+				</div>
+				</form>';
+	}
+}
+
+
+
 /*
 *************************************************************************************************
 			FUNCTIONS RELATED MAINTAIN DATABASE BOARDS
