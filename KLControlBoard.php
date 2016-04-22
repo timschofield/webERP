@@ -50,6 +50,19 @@ if (!isset($_GET['Section'])){
 ***************************************************************************************/
 
 if ($KL_SystemAdmin){
+	/* TEMPORARY set all roles TRUE to see all warnings and write the SOP about them */
+	$KL_SystemAdmin = TRUE;
+	$KL_OperationalManager = TRUE;
+	$KL_AdministrationTeam = TRUE;
+	$KL_BusinessDevelopmentManager = TRUE;
+	$KL_PurchasingTeam = TRUE;
+	$KL_ShopSupportTeam = TRUE;
+	$KL_ShopSupportLeader = TRUE;
+	$KL_SalesDirector = TRUE;
+	$KL_ShopManager = TRUE;
+	$KL_SPG = TRUE;
+	$KL_SPGSupport = TRUE;
+	$KL_PettyCash = TRUE;
 //	phpinfo();
 //	$NumberOfTestExecuted++;
 }
