@@ -50,19 +50,56 @@ if (!isset($_GET['Section'])){
 ***************************************************************************************/
 
 if ($KL_SystemAdmin){
-	/* TEMPORARY set all roles TRUE to see all warnings and write the SOP about them */
-	$KL_SystemAdmin = TRUE;
-	$KL_OperationalManager = TRUE;
-	$KL_AdministrationTeam = TRUE;
-	$KL_BusinessDevelopmentManager = TRUE;
-	$KL_PurchasingTeam = TRUE;
-	$KL_ShopSupportTeam = TRUE;
-	$KL_ShopSupportLeader = TRUE;
-	$KL_SalesDirector = TRUE;
-	$KL_ShopManager = TRUE;
-	$KL_SPG = TRUE;
-	$KL_SPGSupport = TRUE;
-	$KL_PettyCash = TRUE;
+	// WARNINGS STILL NOT DOCUMENTED ON WIKI
+prnMsg("START OF PENDING FOR KL INTRANET ",'success');
+prnMsg("START OF PENDING FOR KL INTRANET ",'success');
+prnMsg("START OF PENDING FOR KL INTRANET ",'success');
+		SuppliersWithoutBasicData($RootPath, $db);
+		ItemsWithoutStandardCost($RootPath, $db);
+		over_or_below_limit("Items changing price or moving category", "OVER", 50, $RootPath, $db);
+		over_or_below_limit("Items changing price", "OVER", 20, $RootPath, $db);
+		over_or_below_limit("Items moving to 20% discount", "OVER", 20, $RootPath, $db);
+		over_or_below_limit("Items moving to 50% discount", "OVER", 20, $RootPath, $db);
+		over_or_below_limit("Items moving to 80% discount", "OVER", 20, $RootPath, $db);
+		ItemsChangingPriceDelayed(4, $RootPath, $db);
+		DiscountedItemsOnNotOutletShops("DISC20", $RootPath, $db);
+		DiscountedItemsOnNotOutletShops("DISC50", $RootPath, $db);
+		DiscountedItemsOnNotOutletShops("DISC80", $RootPath, $db);
+		NotDiscountedItemsOnOutLetShops($RootPath, $db);
+		DiscountedItemsWithWrongDiscount("DISC20", "20", $RootPath, $db);
+		DiscountedItemsWithWrongDiscount("DISC50", "50", $RootPath, $db);
+		NotDiscountedItemsWithDiscount($RootPath, $db);
+		GoodsReceivedNotInvoicedControl(1000000, $periodnow, $db);
+		CustomersDebtControl(100000, $periodnow, $db);
+		ItemsWithoutRetailPrice("SETKL", 4.75, $RootPath, $db);
+		ItemsWithoutRetailPrice("SETBL", 4.75, $RootPath, $db);
+		ObsoleteComponentsInActiveBOM($RootPath, $db);
+		ItemsWithStockKantorButReorderLevelTokoZero($RootPath, $db);
+		ItemsWithStockKantorButRLZeroAt("TOKSU", $RootPath, $db);
+		CategoryItemsNotInShop("DISC20", "TOKUB", $RootPath, $db);
+		ValueStockLocation("SERSU",    0,  300, 0, 0, $db);
+		OvestockAtSamples(1, $RootPath, $db);
+		SamplesNotLongerNeeded($RootPath, $db);
+		FlaggedAsObsoleteButStockAvailable($RootPath, $db);
+		ItemsInKLProcessAndRLNotZero($RootPath, $db);
+		ItemsOnSpecialRequest($RootPath, $db);
+		PackagingItemsOnWrongLocation($RootPath, $db); // Works for both regular and outlet shop packaging
+		KapalLautPackagingToBeRefilled(false, $RootPath, $db);
+		BlinkPackagingToBeRefilled(false, $RootPath, $db);
+		OutletPackagingToBeRefilled(false, $RootPath, $db);
+		InsuficientStockForShopPackaging('SHPACK', 21, 90, 30, false, $RootPath, $db); // Works for both regular and outlet shop packaging
+		CheckNegativeStock($RootPath, $db);
+		ActiveItemsNoSales( 30, "TESTKL", $RootPath, $db);
+		PerformanceItemsInCategory("GOOD", "TESTKL", 30,  45, "GOOD", $RootPath, $db);
+		PerformanceItemsInCategory("BAD",  "TESTKL", 50,  30, "BAD", $RootPath, $db);
+		OldPurchasingOrdersStillActive(90, $RootPath, $db);
+		WrongItemsOnPurchaseOrders($RootPath, $db);
+		PurchasingOrdersDeliveryControl("Delayed", 0, $RootPath, $db);
+		PurchasingOrdersDeliveryControl("Coming Soon", 15, $RootPath, $db);
+prnMsg("END OF PENDING FOR KL INTRANET ",'success');
+prnMsg("END OF PENDING FOR KL INTRANET ",'success');
+prnMsg("END OF PENDING FOR KL INTRANET ",'success');
+
 //	phpinfo();
 //	$NumberOfTestExecuted++;
 }
