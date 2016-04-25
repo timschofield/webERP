@@ -25,6 +25,17 @@ echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/
 if (!isset($_SESSION['CustomerType'])) { //initialise if not already done
 	$_SESSION['CustomerType'] = '';
 }
+
+if (isset($_POST['JustSelectedACustomer']) ) {
+	if (isset ($_POST['SubmitCustomerSelection'])) {
+	foreach ($_POST['SubmitCustomerSelection'] AS $CustomerID=>$BranchCode)
+		$_SESSION['CustomerID'] = $CustomerID;
+		$_SESSION['BranchCode'] = $BranchCode;
+	} else {
+		prnMsg(_('Unable to identify the selected customer'), 'error');
+	}
+}
+
 // only run geocode if integration is turned on AND customer has been selected
 if ($_SESSION['geocode_integration'] == 1 AND $_SESSION['CustomerID'] != "") {
 	$sql = "SELECT * FROM geocode_param WHERE 1";
@@ -36,41 +47,106 @@ if ($_SESSION['geocode_integration'] == 1 AND $_SESSION['CustomerID'] != "") {
 					custbranch.branchcode,
 					custbranch.brname,
 					custbranch.lat,
-					custbranch.lng
+					custbranch.lng,
+					braddress1,
+					braddress2,
+					braddress3,
+					braddress4
 				FROM debtorsmaster LEFT JOIN custbranch
 				ON debtorsmaster.debtorno = custbranch.debtorno
 				WHERE debtorsmaster.debtorno = '" . $_SESSION['CustomerID'] . "'
+				AND custbranch.branchcode = '" . $_SESSION['BranchCode'] . "'
 				ORDER BY debtorsmaster.debtorno";
 	$ErrMsg = _('An error occurred in retrieving the information');
 	$result2 = DB_query($sql, $ErrMsg);
 	$myrow2 = DB_fetch_array($result2);
-	$Lattitude = $myrow2['lat'];
-	$Longitude = $myrow2['lng'];
+	$Lat = $myrow2['lat'];
+	$Lng = $myrow2['lng'];
 	$API_Key = $myrow['geocode_key'];
 	$center_long = $myrow['center_long'];
 	$center_lat = $myrow['center_lat'];
 	$map_height = $myrow['map_height'];
 	$map_width = $myrow['map_width'];
 	$map_host = $myrow['map_host'];
-	echo '<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=' . $API_Key . '"';
-	echo ' type="text/javascript"></script>';
-	echo ' <script type="text/javascript">';
-	echo 'function load() {
-		if (GBrowserIsCompatible()) {
-			var map = new GMap2(document.getElementById("map"));
-		map.addControl(new GSmallMapControl());
-		map.addControl(new GMapTypeControl());';
-	echo 'map.setCenter(new GLatLng(' . $Lattitude . ', ' . $Longitude . '), 11);';
-	echo 'var marker = new GMarker(new GLatLng(' . $Lattitude . ', ' . $Longitude . '));';
-	echo 'map.addOverlay(marker);
-		GEvent.addListener(marker, "click", function() {
-		marker.openInfoWindowHtml(WINDOW_HTML);
-		});
-		marker.openInfoWindowHtml(WINDOW_HTML);
+
+	if ($Lat == 0 && $myrow2["braddress1"] !='' && $_SESSION['BranchCode'] !='' ) {
+		$delay = 0;
+		$base_url = "https://" . $map_host . "/maps/api/geocode/xml?address=";
+
+		$geocode_pending = true;
+		while ($geocode_pending) {
+			$address = urlencode($myrow2["braddress1"] . "," . $myrow2["braddress2"] . "," . $myrow2["braddress3"] . "," . $myrow2["braddress4"]);
+			$id = $myrow2["branchcode"];
+			$debtorno =$myrow2["debtorno"];
+			$request_url = $base_url . $address . ',&sensor=true';
+
+			$buffer = file_get_contents($request_url) or die("url not loading");
+			$xml = simplexml_load_string($buffer);
+			//echo $xml->asXML();
+			
+			$status = $xml->status;
+			if (strcmp($status, "OK") == 0) {
+				$geocode_pending = false;
+
+				$Lat = $xml->result->geometry->location->lat;
+				$Lng = $xml->result->geometry->location->lng;
+
+				$query = sprintf("UPDATE custbranch " .
+						" SET lat = '%s', lng = '%s' " .
+						" WHERE branchcode = '%s' " .
+					" AND debtorno = '%s' LIMIT 1;",
+						($Lat),
+						($Lng),
+						($id),
+						($debtorno));
+				$update_result = DB_query($query);
+
+				if ($update_result==1) {
+					prnMsg( _('GeoCode has been updated for CustomerID') . ': ' . $id . ' - ' . _('Latitude') . ': ' . $Lat . ' ' . _('Longitude') . ': ' . $Lng ,'info');
+				}
+			} else {
+				$geocode_pending = false;
+				prnMsg(_('Unable to update GeoCode for CustomerID') . ': ' . $id . ' - ' . _('Received status') . ': ' . $status , 'error');
+			}
+			usleep($delay);
 		}
+	}
+
+	echo '
+	<script src="https://' . $map_host . '/maps/api/js?v=3.exp&key=' . $API_Key . '" type="text/javascript"></script>
+	<script type="text/javascript">
+		function initialize() {
+			var latlng = new google.maps.LatLng('.$Lat.','.$Lng.');
+			var map = new google.maps.Map(
+				document.getElementById("map"), {
+					center: latlng,
+					zoom: 12,
+					mapTypeId: google.maps.MapTypeId.ROADMAP
+			});
+			var marker = new google.maps.Marker({
+				position: latlng,
+				map: map
+			});
+			var contentString =
+			"<div style=\"overflow: auto;\">" +
+			"<div><b>'.$myrow2['brname'].'</b></div>" +
+			"<div>'.$myrow2['braddress1'].'</div>" +
+			"<div>'.$myrow2['braddress2'].'</div>" +
+			"<div>'.$myrow2['braddress3'].'</div>" +
+			"<div>'.$myrow2['braddress4'].'</div>" +
+			"</div>";
+
+			var infowindow = new google.maps.InfoWindow({
+				content: contentString,
+				MaxWidth: 250
+			});
+			google.maps.event.addListener(marker, "click", function() {
+				infowindow.open(map,marker);
+			});
 		}
-		</script>';
-	echo '<body onload="load()" onunload="GUnload()">';
+		google.maps.event.addDomListener(window, "load", initialize);
+	</script>';
+
 } //end if geocode integration is turned on AND a customer is selected
 
 unset($result);
@@ -167,21 +243,6 @@ if (isset($_POST['Search']) OR isset($_POST['CSV']) OR isset($_POST['Go']) OR is
 	}
 } //end of if search
 
-if (isset($_POST['JustSelectedACustomer'])) {
-	/*Need to figure out the number of the form variable that the user clicked on */
-	for ($i = 0; $i < count($_POST); $i++) { //loop through the returned customers
-		if (isset($_POST['SubmitCustomerSelection' . $i])) {
-			break;
-		}
-	} //end loop through $_POST array
-	if ($i == count($_POST)) {
-		prnMsg(_('Unable to identify the selected customer'), 'error');
-	} else {
-		$_SESSION['CustomerID'] = $_POST['SelectedCustomer' . $i];
-		$_SESSION['BranchCode'] = $_POST['SelectedBranch' . $i];
-	}
-} // end if Just Selected A Customer
-
 if ($_SESSION['CustomerID'] != '' AND !isset($_POST['Search']) AND !isset($_POST['CSV'])) {
 	if (!isset($_SESSION['BranchCode'])) {
 		$SQL = "SELECT debtorsmaster.name,
@@ -193,7 +254,8 @@ if ($_SESSION['CustomerID'] != '' AND !isset($_POST['Search']) AND !isset($_POST
 	} //!isset($_SESSION['BranchCode'])
 	else {
 		$SQL = "SELECT debtorsmaster.name,
-					custbranch.phoneno
+					custbranch.phoneno,
+					custbranch.brname
 			FROM debtorsmaster INNER JOIN custbranch
 			ON debtorsmaster.debtorno=custbranch.debtorno
 			WHERE custbranch.debtorno='" . $_SESSION['CustomerID'] . "'
@@ -204,10 +266,12 @@ if ($_SESSION['CustomerID'] != '' AND !isset($_POST['Search']) AND !isset($_POST
 	if ($myrow = DB_fetch_array($result)) {
 		$CustomerName = htmlspecialchars($myrow['name'], ENT_QUOTES, 'UTF-8', false);
 		$PhoneNo = $myrow['phoneno'];
+		$BranchName = $myrow['brname'];
 	} //$myrow = DB_fetch_array($result)
 	unset($result);
 
-	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/customer.png" title="' . _('Customer') . '" alt="" />' . ' ' . _('Customer') . ' : ' . $_SESSION['CustomerID'] . ' - ' . $CustomerName . ' - ' . $PhoneNo . _(' has been selected') . '</p>';
+	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/customer.png" title="' . _('Customer') . '" alt="" />' . ' ' . _('Customer') . ' : ' . $_SESSION['CustomerID'] . ' - ' . $CustomerName . ' - ' . $PhoneNo . _(' has been selected') . '<br>';
+	
 	echo '<div class="page_help_text">' . _('Select a menu option to operate using this customer') . '.</div><br />';
 
 	echo '<table cellpadding="4" width="90%" class="selection">
@@ -287,9 +351,9 @@ echo '</td>
 		<td>' . _('Enter a partial Phone Number') . ':</td>
 		<td>';
 if (isset($_POST['CustPhone'])) {
-	echo '<input type="tel" name="CustPhone"  pattern="[0-9\-\s()+]*" value="' . $_POST['CustPhone'] . '" size="15" maxlength="18" />';
+	echo '<input type="tel" name="CustPhone" pattern="[0-9\-\s()+]*" value="' . $_POST['CustPhone'] . '" size="15" maxlength="18" />';
 } else {
-	echo '<input type="tel" name="CustPhone"  pattern="[0-9\-\s()+]*" size="15" maxlength="18" />';
+	echo '<input type="tel" name="CustPhone" pattern="[0-9\-\s()+]*" size="15" maxlength="18" />';
 }
 echo '</td>';
 echo '<td><b>' . _('OR') . '</b></td>
@@ -452,9 +516,9 @@ if (isset($result)) {
 				echo '<tr class="OddTableRows">';
 				$k = 1;
 			}
-			echo '<td><input type="submit" name="SubmitCustomerSelection' . $i . '" value="' . htmlspecialchars($myrow['debtorno'] . ' ' . $myrow['branchcode'], ENT_QUOTES, 'UTF-8', false) . '" />
-				<input type="hidden" name="SelectedCustomer' . $i . '" value="' . $myrow['debtorno'] . '" />
-				<input type="hidden" name="SelectedBranch' . $i . '" value="' . $myrow['branchcode'] . '" /></td>
+			echo '<td>
+				<button type="submit" name="SubmitCustomerSelection['.htmlspecialchars($myrow['debtorno'], ENT_QUOTES, 'UTF-8', false).']" value="' . htmlspecialchars($myrow['branchcode'], ENT_QUOTES, 'UTF-8', false) . '" >' . $myrow['debtorno'] . ' ' . $myrow['branchcode'] . '</button>
+				</td>
 				<td>' . htmlspecialchars($myrow['name'], ENT_QUOTES, 'UTF-8', false) . '</td>
 				<td>' . htmlspecialchars($myrow['brname'], ENT_QUOTES, 'UTF-8', false) . '</td>
 				<td>' . $myrow['contactname'] . '</td>
@@ -495,31 +559,30 @@ if (!isset($_POST['CSV'])) {
 }
 
 echo '</div>
-      </form>';
+	</form>';
 // Only display the geocode map if the integration is turned on, AND there is a latitude/longitude to display
 if (isset($_SESSION['CustomerID']) AND $_SESSION['CustomerID'] != '') {
 	if ($_SESSION['geocode_integration'] == 1) {
 		echo '<br />';
-		if ($Lattitude == 0) {
+		if ($Lat == 0) {
 			echo '<div class="centre">' . _('Mapping is enabled, but no Mapping data to display for this Customer.') . '</div>';
 		} else {
 			echo '<tr>
 					<td colspan="2">
-					<table width="45%" cellpadding="4">
+					<table style="width: 45%;" cellpadding="4">
 						<tr>
-							<th style="width:33%">' . _('Customer Mapping') . '</th>
+							<th style="width:auto">' . _('Customer Mapping') . '</th>
 						</tr>
 					</td>
 					<th valign="top">
-						<div class="centre">' . _('Mapping is enabled, Map will display below.') . '
-						</div>
-						<div align="center" id="map" style="width: ' . $map_width . 'px; height: ' . $map_height . 'px">
-						</div>
+						<div class="centre">' . _('Mapping is enabled, Map will display below.') . '</div>
+						<div class="center" id="map" style="width: ' . $map_width . 'px; height: ' . $map_height . 'px; margin: 0 auto;"></div>
 						<br />
 					</th>
 					</tr>
 					</table>';
 		}
+		
 	} //end if Geocode integration is turned on
 	// Extended Customer Info only if selected in Configuration
 	if ($_SESSION['Extended_CustomerInfo'] == 1) {
@@ -556,8 +619,8 @@ if (isset($_SESSION['CustomerID']) AND $_SESSION['CustomerID'] != '') {
 					AND type !=12";
 			$Total1Result = DB_query($SQL);
 			$row = DB_fetch_array($Total1Result);
-			echo '<table width="45%" cellpadding="4">';
-			echo '<tr><th style="width:33%" colspan="3">' . _('Customer Data') . '</th></tr>';
+			echo '<table style="width: 45%;" cellpadding="4">';
+			echo '<tr><th style="width:auto" colspan="3">' . _('Customer Data') . '</th></tr>';
 			echo '<tr><td valign="top" class="select">';
 			/* Customer Data */
 			if ($myrow['lastpaiddate'] == 0) {
@@ -604,9 +667,10 @@ if (isset($_SESSION['CustomerID']) AND $_SESSION['CustomerID'] != '') {
 				WHERE debtorno='" . $_SESSION['CustomerID'] . "'
 				ORDER BY contid";
 		$result = DB_query($sql);
+		
 		if (DB_num_rows($result) <> 0) {
 			echo '<br /><div class="centre"><img src="' . $RootPath . '/css/' . $Theme . '/images/group_add.png" title="' . _('Customer Contacts') . '" alt="" />' . ' ' . _('Customer Contacts') . '</div>';
-			echo '<br /><table width="45%">';
+			echo '<br /><table style="width: 45%;">';
 			echo '<tr>
 					<th class="ascending">' . _('Name') . '</th>
 					<th class="ascending">' . _('Role') . '</th>
@@ -636,6 +700,23 @@ if (isset($_SESSION['CustomerID']) AND $_SESSION['CustomerID'] != '') {
 					<td><a href="AddCustomerContacts.php?Id=' . $myrow[0] . '&amp;DebtorNo=' . $myrow[1] . '&amp;delete=1">' . _('Delete') . '</a></td>
 					</tr>';
 			} //END WHILE LIST LOOP
+
+			// Customer Branch Contacts if selected
+			if (isset ($_SESSION['BranchCode']) && $_SESSION['BranchCode'] != '') {
+				$sql = "SELECT branchcode, brname, contactname, phoneno, email FROM custbranch
+						WHERE debtorno='" . $_SESSION['CustomerID'] . "'
+						AND branchcode='" . $_SESSION['BranchCode'] . "'";
+				$result2 = DB_query($sql);
+				$BranchContact = DB_fetch_row($result2);
+			
+				echo '<tr class="EvenTableRows">	
+						<td>' . $BranchContact[2] . '</td>
+						<td>' . _('Branch Contact') . ' ' . $BranchContact[0] . '</td>
+						<td>' . $BranchContact[3] . '</td>
+						<td><a href="mailto:' . $BranchContact[4] . '">' . $BranchContact[4] . '</a></td>
+						<td colspan="3"></td>
+					</tr>';
+			}
 			echo '</table>';
 		} //end if there are contact rows returned
 		else {
@@ -656,7 +737,7 @@ if (isset($_SESSION['CustomerID']) AND $_SESSION['CustomerID'] != '') {
 		$result = DB_query($sql);
 		if (DB_num_rows($result) <> 0) {
 			echo '<br /><div class="centre"><img src="' . $RootPath . '/css/' . $Theme . '/images/note_add.png" title="' . _('Customer Notes') . '" alt="" />' . ' ' . _('Customer Notes') . '</div><br />';
-			echo '<table width="45%">';
+			echo '<table style="width: 45%;">';
 			echo '<tr>
 					<th class="ascending">' . _('Date') . '</th>
 					<th>' . _('Note') . '</th>
@@ -685,7 +766,7 @@ if (isset($_SESSION['CustomerID']) AND $_SESSION['CustomerID'] != '') {
 					</tr>';
 			} //END WHILE LIST LOOP
 			echo '</table>';
-		} //end if there are  customer notes to display
+		} //end if there are customer notes to display
 		else {
 			if ($_SESSION['CustomerID'] != '') {
 				echo '<br /><div class="centre"><img src="' . $RootPath . '/css/' . $Theme . '/images/note_add.png" title="' . _('Customer Notes') . '" alt="" /><a href="AddCustomerNotes.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . ' ' . _('Add New Note for this Customer') . '</a></div>';
@@ -698,16 +779,16 @@ if (isset($_SESSION['CustomerID']) AND $_SESSION['CustomerID'] != '') {
 		$result = DB_query($sql);
 		if (DB_num_rows($result) <> 0) {
 			echo '<br /><div class="centre"><img src="' . $RootPath . '/css/' . $Theme . '/images/folder_add.png" title="' . _('Customer Type (Group) Notes') . '" alt="" />' . ' ' . _('Customer Type (Group) Notes for:' . '<b> ' . $CustomerTypeName . '</b>') . '</div><br />';
-			echo '<table width="45%">';
+			echo '<table style="width: 45%;">';
 			echo '<tr>
 				 	<th class="ascending">' . _('Date') . '</th>
-				  	<th>' . _('Note') . '</th>
-				   	<th>' . _('File Link / Reference / URL') . '</th>
-				   	<th class="ascending">' . _('Priority') . '</th>
-				   	<th>' . _('Edit') . '</th>
-				   	<th>' . _('Delete') . '</th>
-				   	<th><a href="AddCustomerTypeNotes.php?DebtorType=' . $CustomerType . '">' . _('Add New Group Note') . '</a></th>
-				  </tr>';
+					<th>' . _('Note') . '</th>
+					<th>' . _('File Link / Reference / URL') . '</th>
+					<th class="ascending">' . _('Priority') . '</th>
+					<th>' . _('Edit') . '</th>
+					<th>' . _('Delete') . '</th>
+					<th><a href="AddCustomerTypeNotes.php?DebtorType=' . $CustomerType . '">' . _('Add New Group Note') . '</a></th>
+				</tr>';
 			$k = 0; //row colour counter
 			while ($myrow = DB_fetch_array($result)) {
 				if ($k == 1) {

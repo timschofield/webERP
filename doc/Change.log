@@ -1,5 +1,6 @@
 webERP Change Log
 
+25/4/16 Jan Bakke: google maps api improvement to SubmitCustomerSelection changed script src to https du to mixed content error Updated to Google Maps API v.3 Integrated code lines from ceocode.php to update Customers (custbranch table) without lat (0) but width brpostaddr1 Show Branch Contact beneath Customer Contacts when branch is selected Table-width cleanup - diff submitted in March sorry Phil's bad :-(
 25/4/16 Jan Bakke: Improvements to allow .png and .gif images
 15/04/16 PaulT: add missing } causing error.
 12/04/16 Exson: add cost security token to make price security and cost security separated to cope with different situation.
