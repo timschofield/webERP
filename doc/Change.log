@@ -1,4 +1,6 @@
 webERP Change Log
+
+25/4/16 Jan Bakke: Improvements to allow .png and .gif images
 15/04/16 PaulT: add missing } causing error.
 12/04/16 Exson: add cost security token to make price security and cost security separated to cope with different situation.
 10/04/16 RChacon: In WorkCentres.php, add ViewTopic and BookMark and completes html table. In doc/Manual/ManualManufacturing.html, add help for WorkCentres.php.

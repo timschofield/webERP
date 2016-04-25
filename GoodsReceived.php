@@ -182,8 +182,15 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_POST['ProcessGo
 
 
 		//Now Display LineItem
+		$SupportedImgExt = array('png','jpg','jpeg');
+		$imagefile = reset((glob($_SESSION['part_pics_dir'] . '/' . $LnItm->StockID . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
+		if ($imagefile) {
+			$ImageLink = '<a href="' . $imagefile . '" target="_blank">' .  $LnItm->StockID . '</a>';
+		} else {
+			$ImageLink = $LnItm->StockID;
+		}
 
-		echo '<td><a href="' . $RootPath . '/' . $_SESSION['part_pics_dir'] . '/' . $LnItm->StockID . '.jpg" target="_blank">' .  $LnItm->StockID . '</a></td>
+		echo '<td>' . $ImageLink . '</td>
 			<td>' . $LnItm->Suppliers_PartNo . '</td>
 			<td>' . $LnItm->ItemDescription . '</td>
 			<td class="number">' . $DisplaySupplierQtyOrd . '</td>

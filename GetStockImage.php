@@ -2,7 +2,7 @@
 
 /* $Id$*/
 
-//include ('includes/session.inc');
+include ('includes/session.inc');
 /*
 http://127.0.0.1/~brink/webERP/GetStockImage.php
 ?automake=1&width=81&height=74&stockid=&textcolor=FFFFF0&bevel=3&text=aa&bgcolor=007F00
@@ -49,13 +49,6 @@ function DecodeBgColor( $ColourStr ) {
 		return array('red' => $Red, 'green' => $Green, 'blue' => $Blue );
 }
 
-if (!function_exists('imagecreatefrompng')){
-	$Title = _('Image Manipulation Script Problem');
-	include('includes/header.inc');
-	prnMsg(_('This script requires the gd image functions to be available to php - this needs to be enabled in your server php version before this script can be used'),'error');
-	include('includes/footer.inc');
-	exit;
-}
 $DefaultImage = 'webERPsmall.png';
 
 $FilePath =  $_SESSION['part_pics_dir'] . '/';

@@ -53,17 +53,33 @@ echo '<a href="' . $RootPath . '/SelectProduct.php">' . _('Back to Items') . '</
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Stock') . '" alt="" />' . ' ' . $Title . '
 	</p>';
 echo '<div class="page_help_text">' . _('Cloning will create a new item with the same properties, image, cost, purchasing and pricing data as the selected item. Item image and general item details can be changed below prior to cloning.') . '.</div><br />';
+
+$SupportedImgExt = array('png','jpg','jpeg');
+
+// Check extention for existing old file
+foreach ($SupportedImgExt as $ext) {
+	$oldfile = $_SESSION['part_pics_dir'] . '/' . $_POST['OldStockID'] . '.' . $ext;
+	if (file_exists ($oldfile) ) {
+			break;
+			$ext = pathinfo($oldfile, PATHINFO_EXTENSION);
+	}
+}
+
 if (!empty($_POST['OldStockID'])) { //only show this if there is a valid call to this script
     if (isset($_FILES['ItemPicture']) AND $_FILES['ItemPicture']['name'] !='') { //we are uploading a new file
-        $newfilename = ($_POST['OldStockID'] == $_POST['StockID']) || $_POST['StockID'] == ''? $_POST['OldStockID'].'-TEMP': $_POST['StockID'] ; //so we can add a new file but not remove an existing item file
+		$newfilename = ($_POST['OldStockID'] == $_POST['StockID']) || $_POST['StockID'] == ''? $_POST['OldStockID'].'-TEMP': $_POST['StockID'] ; //so we can add a new file but not remove an existing item file
         $result	= $_FILES['ItemPicture']['error'];
         $UploadTheFile = 'Yes'; //Assume all is well to start off with
-        $filename = $_SESSION['part_pics_dir'] . '/' . $newfilename . '.jpg';
+		if (pathinfo($_FILES['ItemPicture']['name'], PATHINFO_EXTENSION) != $ext) {
+			$ext = pathinfo($_FILES['ItemPicture']['name'], PATHINFO_EXTENSION);
+		}
+
+        $filename = $_SESSION['part_pics_dir'] . '/' . $newfilename . '.' . $ext;
 
          //But check for the worst
-        if (mb_strtoupper(mb_substr(trim($_FILES['ItemPicture']['name']),mb_strlen($_FILES['ItemPicture']['name'])-3))!='JPG'){
-            prnMsg(_('Only jpg files are supported - a file extension of .jpg is expected'),'warn');
-            $UploadTheFile ='No';
+        if (!in_array ($ext, $SupportedImgExt)) {
+			prnMsg(_('Only ' . implode(", ", $SupportedImgExt) . ' files are supported - a file extension of ' . implode(", ", $SupportedImgExt) . ' is expected'),'warn');
+			$UploadTheFile ='No';
         } elseif ( $_FILES['ItemPicture']['size'] > ($_SESSION['MaxImageSize']*1024)) { //File Size Check
             prnMsg(_('The image file size is over the maximum allowed. The maximum size allowed in KB is') . ' ' . $_SESSION['MaxImageSize'],'warn');
             $UploadTheFile ='No';
@@ -87,21 +103,21 @@ if (!empty($_POST['OldStockID'])) { //only show this if there is a valid call to
             $result  =  move_uploaded_file($_FILES['ItemPicture']['tmp_name'], $filename);
             $message = ($result)?_('File url')  . '<a href="' . $filename .'">' .  $filename . '</a>' : _('Something is wrong with uploading a file');
         }
-    } elseif (!empty($_POST['StockID']) AND ($_POST['StockID'] != $_POST['OldStockID']) AND file_exists($_SESSION['part_pics_dir'] . '/' . $_POST['OldStockID'].'-TEMP'.'.jpg') )  {
-        //rename the temp one to the new name
-        $oldfile = $_SESSION['part_pics_dir'] . '/' .$_POST['OldStockID'].'-TEMP'.'.jpg';
-        if (!copy($oldfile, $_SESSION['part_pics_dir'] . '/' .$_POST['StockID'].'.jpg')) {
+    } elseif (!empty($_POST['StockID']) AND ($_POST['StockID'] != $_POST['OldStockID']) AND file_exists($_SESSION['part_pics_dir'] . '/' . $_POST['OldStockID'] . '-TEMP' . '.' . $ext) )  {
+		//rename the temp one to the new name
+        $oldfile = $_SESSION['part_pics_dir'] . '/' .$_POST['OldStockID'].'-TEMP' . '.' . $ext;
+        if (!copy($oldfile, $_SESSION['part_pics_dir'] . '/' .$_POST['StockID'] . '.' . $ext)) {
              prnMsg(_('There was an image file to clone but there was an error copying. Please upload a new image if required.'),'warn');
         }
-         @unlink($_SESSION['part_pics_dir'] . '/' .$_POST['OldStockID'].'-TEMP'.'.jpg');
-        if (is_file($_SESSION['part_pics_dir'] . '/' .$_POST['OldStockID'].'-TEMP'.'.jpg')) {
+         @unlink($_SESSION['part_pics_dir'] . '/' .$_POST['OldStockID'].'-TEMP' . '.' . $ext);
+        if (is_file($_SESSION['part_pics_dir'] . '/' .$_POST['OldStockID'].'-TEMP' . '.' . $ext)) {
              prnMsg(_('Unable to delete the temporary image file for cloned item.'),'error');
         } else {
             $StockImgLink = _('No Image');
         }
-    } elseif (isset( $_POST['OldStockID']) AND file_exists($_SESSION['part_pics_dir'] . '/' . $_POST['OldStockID'].'.jpg')  AND !file_exists($_SESSION['part_pics_dir'] . '/' . $_POST['OldStockID'].'-TEMP'.'.jpg') ) {
-        //we should copy
-        if (!copy($_SESSION['part_pics_dir'] . '/' .$_POST['OldStockID'].'.jpg', $_SESSION['part_pics_dir'] . '/' .$_POST['StockID'].'.jpg')) {
+    } elseif (isset( $_POST['OldStockID']) AND file_exists($_SESSION['part_pics_dir'] . '/' . $_POST['OldStockID'] . '.' . $ext)  AND !file_exists($_SESSION['part_pics_dir'] . '/' . $_POST['OldStockID'].'-TEMP' . '.' . $ext) ) {
+		//we should copy
+        if (!copy($_SESSION['part_pics_dir'] . '/' .$_POST['OldStockID'] . '.' . $ext, $_SESSION['part_pics_dir'] . '/' . $_POST['StockID'] . '.' . $ext)) {
             prnMsg(_('There was an image file to clone but there was an error copying. Please upload a new image if required.'),'warn');
         }
     }
@@ -706,7 +722,7 @@ if ( (!isset($_POST['UpdateCategories']) AND ($InputError!=1))  OR $_POST['New']
         $tempid = $_POST['StockID'];
     }
 
-    if (function_exists('imagecreatefromjpg') && isset($tempfile)){
+    if (extension_loaded('gd') && function_exists ('gd_info') && isset ($tempfile) ) {
         $StockImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
             '&amp;StockID='.urlencode($tempid).
             '&amp;text='.
@@ -714,22 +730,22 @@ if ( (!isset($_POST['UpdateCategories']) AND ($InputError!=1))  OR $_POST['New']
             '&amp;height=100'.
             '" alt="" />';
     } else {
-        if( !empty($tempid) AND file_exists($_SESSION['part_pics_dir'] . '/' .$tempid.'.jpg') ) {
-            $StockImgLink = '<img src="' . $_SESSION['part_pics_dir'] . '/' . $tempid . '.jpg" height="100" width="100" />';
+        if( !empty($tempid) AND file_exists($_SESSION['part_pics_dir'] . '/' .$tempid.'.' . $ext) ) {
+            $StockImgLink = '<img src="' . $_SESSION['part_pics_dir'] . '/' . $tempid . '.' . $ext . '" height="100" width="100" />';
             if (isset($_POST['ClearImage']) ) {
                 //workaround for many variations of permission issues that could cause unlink fail
-                @unlink($_SESSION['part_pics_dir'] . '/' .$tempid.'.jpg');
-                if (is_file($_SESSION['part_pics_dir'] . '/' .$tempid.'.jpg')) {
+                @unlink($_SESSION['part_pics_dir'] . '/' .$tempid.'.' . $ext);
+                if (is_file($_SESSION['part_pics_dir'] . '/' .$tempid.'.' . $ext)) {
                      prnMsg(_('You do not have access to delete this item image file.'),'error');
                 } else {
                     $StockImgLink = _('No Image');
                 }
             }
-        } elseif ( !empty($tempid) AND !file_exists($_SESSION['part_pics_dir'] . '/' .$tempid.'.jpg') AND file_exists($_SESSION['part_pics_dir'] . '/' .$_POST['OldStockID'].'.jpg')) {
-            if (!copy($_SESSION['part_pics_dir'] . '/' .$_POST['OldStockID'].'.jpg', $_SESSION['part_pics_dir'] . '/' .$_POST['OldStockID'].'-TEMP'.'.jpg')) {
+        } elseif ( !empty($tempid) AND !file_exists($_SESSION['part_pics_dir'] . '/' .$tempid.'.' . $ext) AND file_exists($_SESSION['part_pics_dir'] . '/' .$_POST['OldStockID'].'.' . $ext)) {
+			if (!copy($_SESSION['part_pics_dir'] . '/' .$_POST['OldStockID'].'.' . $ext, $_SESSION['part_pics_dir'] . '/' .$_POST['OldStockID'].'-TEMP' . '.' . $ext)) {
                 $StockImgLink = _('No Image');
             } else {
-                $StockImgLink = '<img src="' . $_SESSION['part_pics_dir'] . '/' .$_POST['OldStockID'].'-TEMP'.'.jpg" height="100" width="100" />';
+                $StockImgLink = '<img src="' . $_SESSION['part_pics_dir'] . '/' .$_POST['OldStockID'].'-TEMP' . '.' . $ext . '" height="100" width="100" />';
             }
         } else {
             $StockImgLink = _('No Image');

@@ -399,7 +399,10 @@ echo '<a href="' . $RootPath . '/SelectCompletedOrder.php?SelectedStockItem=' . 
 if ($Its_A_Kitset_Assembly_Or_Dummy == False) {
 	echo '<a href="' . $RootPath . '/PO_SelectOSPurchOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Outstanding Purchase Orders') . '</a><br />';
 	echo '<a href="' . $RootPath . '/PO_SelectPurchOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search All Purchase Orders') . '</a><br />';
-	echo '<a href="' . $RootPath . '/' . $_SESSION['part_pics_dir'] . '/' . $StockID . '.jpg">' . _('Show Part Picture (if available)') . '</a><br />';
+
+	$SupportedImgExt = array('png','jpg','jpeg');
+	$imagefile = reset((glob($_SESSION['part_pics_dir'] . '/' . $StockID . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
+	echo '<a href="' . $RootPath . '/' . $imagefile . '" target="_blank">' . _('Show Part Picture (if available)') . '</a><br />';
 }
 if ($Its_A_Dummy == False) {
 	echo '<a href="' . $RootPath . '/BOMInquiry.php?StockID=' . $StockID . '">' . _('View Costed Bill Of Material') . '</a><br />';
@@ -414,8 +417,9 @@ echo '</td><td valign="top" class="select">';
 if ($Its_A_Kitset_Assembly_Or_Dummy == false) {
 	echo '<a href="' . $RootPath . '/StockAdjustments.php?StockID=' . $StockID . '">' . _('Quantity Adjustments') . '</a><br />';
 	echo '<a href="' . $RootPath . '/StockTransfers.php?StockID=' . $StockID . '&amp;NewTransfer=true">' . _('Location Transfers') . '</a><br />';
+
 	//show the item image if it has been uploaded
-	 if (function_exists('imagecreatefromjpg')){
+	if ( extension_loaded ('gd') && function_exists ('gd_info') && file_exists ($imagefile) ) {
 		if ($_SESSION['ShowStockidOnImages'] == '0'){
 			$StockImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
 								'&amp;StockID='.urlencode($StockID).
@@ -431,16 +435,13 @@ if ($Its_A_Kitset_Assembly_Or_Dummy == false) {
 								'&amp;height=100'.
 								'" alt="" />';
 		}
+	} else if (file_exists ($imagefile)) {
+		$StockImgLink = '<img src="' . $imagefile . '" height="100" width="100" />';
 	} else {
-		if( isset($StockID) AND file_exists($_SESSION['part_pics_dir'] . '/' .$StockID.'.jpg') ) {
-			$StockImgLink = '<img src="' . $_SESSION['part_pics_dir'] . '/' . $StockID . '.jpg" height="100" width="100" />';
-		} else {
-			$StockImgLink = _('No Image');
-		}
+		$StockImgLink = _('No Image');
 	}
 
 	echo '<div class="centre">' . $StockImgLink . '</div>';
-
 
 	if (($myrow['mbflag'] == 'B')
 		AND (in_array($SuppliersSecurity, $_SESSION['AllowedPageSecurityTokens']))

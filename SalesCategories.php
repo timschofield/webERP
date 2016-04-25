@@ -32,29 +32,36 @@ if (isset($_GET['EditName'])){
 	$EditName = $_POST['EditName'];
 }
 
-if (isset($SelectedCategory) AND isset($_FILES['CategoryPicture']) AND $_FILES['CategoryPicture']['name'] !='') {
+$SupportedImgExt = array('png','jpg','jpeg');
 
+if (isset($SelectedCategory) AND isset($_FILES['CategoryPicture']) AND $_FILES['CategoryPicture']['name'] !='') {
+	$ImgExt = pathinfo($_FILES['CategoryPicture']['name'], PATHINFO_EXTENSION);
+	
 	$result    = $_FILES['CategoryPicture']['error'];
  	$UploadTheFile = 'Yes'; //Assume all is well to start off with
  	// Stock is always capatalized so there is no confusion since "cat_" is lowercase
-	$FileName = $_SESSION['part_pics_dir'] . '/SALESCAT_' . $SelectedCategory . '.jpg';
+	$FileName = $_SESSION['part_pics_dir'] . '/SALESCAT_' . $SelectedCategory . '.' . $ImgExt;
 
-	 //But check for the worst
-	if (mb_strtoupper(mb_substr(trim($_FILES['CategoryPicture']['name']),mb_strlen($_FILES['CategoryPicture']['name'])-3))!='JPG'){
-		prnMsg(_('Only jpg files are supported - a file extension of .jpg is expected'),'warn');
+	//But check for the worst
+	if (!in_array ($ImgExt, $SupportedImgExt)) {
+		prnMsg(_('Only ' . implode(", ", $SupportedImgExt) . ' files are supported - a file extension of ' . implode(", ", $SupportedImgExt) . ' is expected'),'warn');
 		$UploadTheFile ='No';
-	} elseif ( $_FILES['CategoryPicture']['size'] > ($_SESSION['MaxImageSize']*1024)) { //File Size Check
+	} else if ( $_FILES['CategoryPicture']['size'] > ($_SESSION['MaxImageSize']*1024)) { //File Size Check
 		prnMsg(_('The file size is over the maximum allowed. The maximum size allowed in KB is') . ' ' . $_SESSION['MaxImageSize'],'warn');
 		$UploadTheFile ='No';
-	} elseif ( $_FILES['CategoryPicture']['type'] == 'text/plain' ) {  //File Type Check
+	} else if ( $_FILES['CategoryPicture']['type'] == 'text/plain' ) {  //File Type Check
 		prnMsg( _('Only graphics files can be uploaded'),'warn');
          	$UploadTheFile ='No';
-	} elseif (file_exists($FileName)){
-		prnMsg(_('Attempting to overwrite an existing item image'),'warn');
-		$result = unlink($FileName);
-		if (!$result){
-			prnMsg(_('The existing image could not be removed'),'error');
-			$UploadTheFile ='No';
+	}
+	foreach ($SupportedImgExt as $ext) {
+		$file = $_SESSION['part_pics_dir'] . '/SALESCAT_' . $SelectedCategory . '.' . $ext;
+		if (file_exists ($file) ) {
+			//prnMsg(_('Attempting to overwrite an existing item image'.$FileName),'warn');
+			$result = unlink($file);
+			if (!$result){
+				prnMsg(_('The existing image could not be removed'),'error');
+				$UploadTheFile ='No';
+			}
 		}
 	}
 
@@ -65,7 +72,20 @@ if (isset($SelectedCategory) AND isset($_FILES['CategoryPicture']) AND $_FILES['
  /* EOR Add Image upload for New Item  - by Ori */
 }
 
-
+if (isset($_POST['ClearImage']) ) {
+	foreach ($SupportedImgExt as $ext) {
+		$file = $_SESSION['part_pics_dir'] . '/SALESCAT_' . $SelectedCategory . '.' . $ext;
+		if (file_exists ($file) ) {
+			//workaround for many variations of permission issues that could cause unlink fail
+			@unlink($file);
+			if(is_file($imagefile)) {
+               prnMsg(_('You do not have access to delete this item image file.'),'error');
+			} else {
+				$AssetImgLink = _('No Image');
+			}
+		}
+	}
+}
 
 if (isset($_POST['submit'])  AND isset($EditName) ) { // Creating or updating a category
 
@@ -110,7 +130,6 @@ if (isset($_POST['submit'])  AND isset($EditName) ) { // Creating or updating a 
 		$result = DB_query($sql);
 		prnMsg($msg,'success');
 	}
-
 	unset ($SelectedCategory);
 	unset($_POST['SalesCatName']);
 	unset($_POST['Active']);
@@ -138,9 +157,18 @@ if (isset($_POST['submit'])  AND isset($EditName) ) { // Creating or updating a 
 			$result = DB_query($sql);
 			prnMsg(_('The sales category') . ' ' . $SelectedCategory . ' ' . _('has been deleted') .
 				' !','success');
-			if( file_exists($_SESSION['part_pics_dir'] . '/SALESCAT_' . $SelectedCategory . '.jpg') ) {
-				unlink($_SESSION['part_pics_dir'] . '/SALESCAT_' . $SelectedCategory . '.jpg');
+			
+			//if( file_exists($_SESSION['part_pics_dir'] . '/SALESCAT_' . $SelectedCategory . '.jpg') ) {
+			//	unlink($_SESSION['part_pics_dir'] . '/SALESCAT_' . $SelectedCategory . '.jpg');
+			//}
+			
+			foreach ($SupportedImgExt as $ext) {
+				$file = $_SESSION['part_pics_dir'] . '/SALESCAT_' . $SelectedCategory . '.' . $ext;
+				if (file_exists ($file) ) {
+					unlink($file);
+				}
 			}
+
 			unset ($SelectedCategory);
 		}
 	} //end if stock category used in debtor transactions
@@ -254,12 +282,22 @@ if (DB_num_rows($result) == 0) {
 			echo '<tr class="OddTableRows">';
 			$k=1;
 		}
-
-		if( file_exists($_SESSION['part_pics_dir'] . '/SALESCAT_' . $myrow['salescatid'] . '.jpg') ) {
-			$CatImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC&amp;StockID=' . 'SALESCAT_' . $myrow['salescatid'] . '&amp;text=&amp;width=120&amp;height=120" alt="" />';
+		
+		$SupportedImgExt = array('png','jpg','jpeg');
+		$imagefile = reset((glob($_SESSION['part_pics_dir'] . '/SALESCAT_' . $myrow['salescatid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
+		if( extension_loaded('gd') && function_exists('gd_info') && file_exists($imagefile) ) {
+			$CatImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
+				'&amp;StockID='.urlencode('SALESCAT_' . $myrow['salescatid']).
+				'&amp;text='.
+				'&amp;width=64'.
+				'&amp;height=64'.
+				'" alt="" />';
+		} else if (file_exists ($imagefile)) {
+			$CatImgLink = '<img src="' . $imagefile . '" height="64" width="64" />';
 		} else {
 			$CatImgLink = _('No Image');
 		}
+		
 		if ($myrow['active'] == 1){
 			$Active = _('Yes');
 		}else{
@@ -321,7 +359,7 @@ if (isset($SelectedCategory)) {
 	$_POST['Active']  = $myrow['active'];
 
 	echo '<input type="hidden" name="SelectedCategory" value="' . $SelectedCategory . '" />';
-	echo '<input type="hidden" name="ParentCategory" value="' . (isset($_POST['ParentCatId'])?($_POST['ParentCategory']):('0')) . '" />';
+	echo '<input type="hidden" name="ParentCategory" value="' . $myrow['parentcatid'] . '" />';
 	$FormCaps = _('Edit Sub Category');
 
 } else { //end of if $SelectedCategory only do the else when a new record is being entered
@@ -347,7 +385,7 @@ echo '<table class="selection">
 echo '<tr>
 		<td>' . _('Display in webSHOP?') . ':</td>
 		<td><select name="Active">';
-if ($_POST['Active'] == '1') {
+if (isset ($_POST['Active']) && $_POST['Active'] == '1') {
 	echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
 	echo '<option value="0">' . _('No') . '</option>';
 } else {
@@ -360,8 +398,10 @@ echo '</select></td>
 // Image upload only if we have a selected category
 if (isset($SelectedCategory)) {
 	echo '<tr>
-			<td>' .  _('Image File (.jpg)') . ':</td>
-			<td><input type="file" id="CategoryPicture" name="CategoryPicture" /></td>
+			<td>' .  _('Image File (' . implode(", ", $SupportedImgExt) . ')') . ':</td>
+			<td><input type="file" id="CategoryPicture" name="CategoryPicture" />
+			<br /><input type="checkbox" name="ClearImage" id="ClearImage" value="1" > '._('Clear Image').'
+			</td>
 		</tr>';
 }
 

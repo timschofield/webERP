@@ -27,15 +27,17 @@ if (isset($_GET['AssetID'])){
 	$AssetID = '';
 }
 
+$SupportedImgExt = array('png','jpg','jpeg');
+
 if (isset($_FILES['ItemPicture']) AND $_FILES['ItemPicture']['name'] !='') {
+	$ImgExt = pathinfo($_FILES['ItemPicture']['name'], PATHINFO_EXTENSION);
 
 	$result    = $_FILES['ItemPicture']['error'];
  	$UploadTheFile = 'Yes'; //Assume all is well to start off with
-	$filename = $_SESSION['part_pics_dir'] . '/ASSET_' . $AssetID . '.jpg';
-
-	 //But check for the worst
-	if (mb_strtoupper(mb_substr(trim($_FILES['ItemPicture']['name']),mb_strlen($_FILES['ItemPicture']['name'])-3))!='JPG'){
-		prnMsg(_('Only jpg files are supported - a file extension of .jpg is expected'),'warn');
+	$filename = $_SESSION['part_pics_dir'] . '/ASSET_' . $AssetID . '.' . $ImgExt;
+	//But check for the worst
+	if (!in_array ($ImgExt, $SupportedImgExt)) {
+		prnMsg(_('Only ' . implode(", ", $SupportedImgExt) . ' files are supported - a file extension of ' . implode(", ", $SupportedImgExt) . ' is expected'),'warn');
 		$UploadTheFile ='No';
 	} elseif ( $_FILES['ItemPicture']['size'] > ($_SESSION['MaxImageSize']*1024)) { //File Size Check
 		prnMsg(_('The file size is over the maximum allowed. The maximum size allowed in KB is') . ' ' . $_SESSION['MaxImageSize'],'warn');
@@ -43,12 +45,15 @@ if (isset($_FILES['ItemPicture']) AND $_FILES['ItemPicture']['name'] !='') {
 	} elseif ( $_FILES['ItemPicture']['type'] == 'text/plain' ) {  //File Type Check
 		prnMsg( _('Only graphics files can be uploaded'),'warn');
          	$UploadTheFile ='No';
-	} elseif (file_exists($filename)){
-		prnMsg(_('Attempting to overwrite an existing item image'),'warn');
-		$result = unlink($filename);
-		if (!$result){
-			prnMsg(_('The existing image could not be removed'),'error');
-			$UploadTheFile ='No';
+	}
+	foreach ($SupportedImgExt as $ext) {
+		$file = $_SESSION['part_pics_dir'] . '/ASSET_' . $AssetID . '.' . $ext;
+		if (file_exists ($file) ) {
+			$result = unlink($file);
+			if (!$result){
+				prnMsg(_('The existing image could not be removed'),'error');
+				$UploadTheFile ='No';
+			}
 		}
 	}
 
@@ -367,6 +372,14 @@ if (isset($_POST['submit'])) {
 		$result=DB_query($sql, _('Could not delete the asset record'),'',true);
 
 		$result = DB_Txn_Commit();
+		
+		// Delete the AssetImage
+		foreach ($SupportedImgExt as $ext) {
+			$file = $_SESSION['part_pics_dir'] . '/ASSET_' . $AssetID . '.' . $ext;
+			if (file_exists ($file) ) {
+				unlink($file);
+			}
+		}
 
 		prnMsg(_('Deleted the asset  record for asset number' ) . ' ' . $AssetID );
 		unset($_POST['LongDescription']);
@@ -482,22 +495,23 @@ echo '<tr>
 if (!isset($New) ) { //ie not new at all!
 
 	echo '<tr>
-			<td>' .  _('Image File (.jpg)') . ':</td>
-			<td><input type="file" id="ItemPicture" name="ItemPicture" /></td>';
+			<td>' .  _('Image File (' . implode(", ", $SupportedImgExt) . ')') . ':</td>
+			<td><input type="file" id="ItemPicture" name="ItemPicture" />
+			<br /><input type="checkbox" name="ClearImage" id="ClearImage" value="1" > '._('Clear Image').'
+			</td>';
 
-	if (function_exists('imagecreatefromjpg')){
+	$imagefile = reset((glob($_SESSION['part_pics_dir'] . '/ASSET_' . $AssetID . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
+	if (extension_loaded ('gd') && function_exists ('gd_info') && file_exists ($imagefile) ) {
 		$AssetImgLink = '<img src="GetStockImage.php?automake=1&textcolor=FFFFFF&bgcolor=CCCCCC'.
-			'&AssetID='.urlencode($AssetID).
+			'&StockID='.urlencode('ASSET_' . $AssetID).
 			'&text='.
 			'&width=64'.
 			'&height=64'.
 			'" />';
+	} else if (file_exists ($imagefile)) {
+		$AssetImgLink = '<img src="' . $imagefile . '" height="64" width="64" />';
 	} else {
-		if( isset($AssetID) and file_exists($_SESSION['part_pics_dir'] . '/ASSET_' .$AssetID.'.jpg') ) {
-			$AssetImgLink = '<img src="' . $_SESSION['part_pics_dir'] . '/ASSET_' .$AssetID.'.jpg" />';
-		} else {
-			$AssetImgLink = _('No Image');
-		}
+		$AssetImgLink = _('No Image');
 	}
 
 	if ($AssetImgLink!=_('No Image')) {
@@ -508,6 +522,22 @@ if (!isset($New) ) { //ie not new at all!
 
 	// EOR Add Image upload for New Item  - by Ori
 } //only show the add image if the asset already exists - otherwise AssetID will not be set - and the image needs the AssetID to save
+
+if (isset($_POST['ClearImage']) ) {
+	foreach ($SupportedImgExt as $ext) {
+		$file = $_SESSION['part_pics_dir'] . '/ASSET_' . $AssetID . '.' . $ext;
+		if (file_exists ($file) ) {
+			//workaround for many variations of permission issues that could cause unlink fail
+			@unlink($file);
+			if(is_file($imagefile)) {
+               prnMsg(_('You do not have access to delete this item image file.'),'error');
+			} else {
+				$AssetImgLink = _('No Image');
+			}
+		}
+	}
+}
+
 
 echo '<tr>
 		<td>' . _('Asset Category') . ':</td>

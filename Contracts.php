@@ -110,16 +110,20 @@ if (isset($_SESSION['Contract'.$identifier]) AND
 
 echo '<a href="'. $RootPath . '/SelectContract.php">' .  _('Back to Contract Selection'). '</a><br />';
 
+$SupportedImgExt = array('png','jpg','jpeg');
+
 //attempting to upload the drawing image file
 if (isset($_FILES['Drawing']) AND $_FILES['Drawing']['name'] !='' AND $_SESSION['Contract'.$identifier]->ContractRef!='') {
 
 	$result = $_FILES['Drawing']['error'];
+	$ImgExt = pathinfo($_FILES['Drawing']['name'], PATHINFO_EXTENSION);
+	
  	$UploadTheFile = 'Yes'; //Assume all is well to start off with
-	$filename = $_SESSION['part_pics_dir'] . '/' . $_SESSION['Contract'.$identifier]->ContractRef . '.jpg';
+	$filename = $_SESSION['part_pics_dir'] . '/' . $_SESSION['Contract'.$identifier]->ContractRef . '.' . $ImgExt;
 
-	 //But check for the worst
-	if (mb_strtoupper(mb_substr(trim($_FILES['Drawing']['name']),mb_strlen($_FILES['Drawing']['name'])-3))!='JPG'){
-		prnMsg(_('Only jpg files are supported - a file extension of .jpg is expected'),'warn');
+	//But check for the worst
+	if (!in_array ($ImgExt, $SupportedImgExt)) {
+		prnMsg(_('Only ' . implode(", ", $SupportedImgExt) . ' files are supported - a file extension of ' . implode(", ", $SupportedImgExt) . ' is expected'),'warn');
 		$UploadTheFile ='No';
 	} elseif ( $_FILES['Drawing']['size'] > ($_SESSION['MaxImageSize']*1024)) { //File Size Check
 		prnMsg(_('The file size is over the maximum allowed. The maximum size allowed in KB is') . ' ' . $_SESSION['MaxImageSize'],'warn');
@@ -127,12 +131,15 @@ if (isset($_FILES['Drawing']) AND $_FILES['Drawing']['name'] !='' AND $_SESSION[
 	} elseif ( $_FILES['Drawing']['type'] == 'text/plain' ) {  //File Type Check
 		prnMsg( _('Only graphics files can be uploaded'),'warn');
 		 	$UploadTheFile ='No';
-	} elseif (file_exists($filename)){
-		prnMsg(_('Attempting to overwrite an existing item image'),'warn');
-		$result = unlink($filename);
-		if (!$result){
-			prnMsg(_('The existing image could not be removed'),'error');
-			$UploadTheFile ='No';
+	}
+	foreach ($SupportedImgExt as $ext) {
+		$file = $_SESSION['part_pics_dir'] . '/' . $_SESSION['Contract'.$identifier]->ContractRef . '.' . $ext;
+		if (file_exists ($file) ) {
+			$result = unlink($file);
+			if (!$result){
+				prnMsg(_('The existing image could not be removed'),'error');
+				$UploadTheFile ='No';
+			}
 		}
 	}
 
@@ -913,9 +920,14 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 			<td>' . _('Contract Description') . ':</td>
 			<td><textarea name="ContractDescription" style="width:100%" required="required" title="' . _('A description of the contract is required') . '" minlength="5" rows="5" cols="40">' . $_SESSION['Contract'.$identifier]->ContractDescription . '</textarea></td>
 		</tr><tr>
-			<td>' .  _('Drawing File') . ' .jpg' . ' ' . _('format only') .':</td>
-			<td><input type="file" id="Drawing" name="Drawing" /></td>
-		</tr>';
+			<td>' .  _('Drawing File') . ' ' . implode(", ", $SupportedImgExt) . ' ' . _('format only') .':</td>
+			<td><input type="file" id="Drawing" name="Drawing" />
+			
+			</td>';
+	
+	$imagefile = reset((glob($_SESSION['part_pics_dir'] . '/' . $_SESSION['Contract'.$identifier]->ContractRef . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
+	echo '<td> ' . $imagefile . '</td>';
+	echo '</tr>';
 
 	if (!isset($_SESSION['Contract'.$identifier]->RequiredDate)) {
 		$_SESSION['Contract'.$identifier]->RequiredDate = DateAdd(date($_SESSION['DefaultDateFormat']),'m',1);

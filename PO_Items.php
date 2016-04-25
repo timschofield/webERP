@@ -1147,7 +1147,7 @@ if (!isset($_GET['Edit'])) {
 	echo '</select></td>
 		<td>' . _('Enter text extracts in the description') . ':</td>
 		<td><input type="text" name="Keywords" size="20" maxlength="25" value="' . $_POST['Keywords'] . '" /></td></tr>
-		<tr><td>' . _('Only items defined as from this Supplier') . ' <input type="checkbox" name="SupplierItemsOnly" ';
+		<tr><td>' . _('Only items defined as from this Supplier') . ' <input type="checkbox" checked name="SupplierItemsOnly" ';
 	if (isset($_POST['SupplierItemsOnly']) AND $_POST['SupplierItemsOnly']=='on'){
 		echo 'checked';
 	}
@@ -1207,11 +1207,19 @@ if (isset($SearchResult)) {
 			$k=1;
 		}
 
-		$FileName = $myrow['stockid'] . '.jpg';
-		if (file_exists( $_SESSION['part_pics_dir'] . '/' . $FileName) ) {
-			$ImageSource = '<img src="'.$RootPath . '/' . $_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.jpg" width="50" height="50" />';
+		$SupportedImgExt = array('png','jpg','jpeg');
+		$imagefile = reset((glob($_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
+		if (extension_loaded('gd') && function_exists('gd_info') && file_exists ($imagefile) ) {
+			$ImageSource = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
+			'&amp;StockID='.urlencode($myrow['stockid']).
+			'&amp;text='.
+			'&amp;width=64'.
+			'&amp;height=64'.
+			'" alt="" />';
+		} else if (file_exists ($imagefile)) {
+			$ImageSource = '<img src="' . $imagefile . '" height="100" width="100" />';
 		} else {
-			$ImageSource = '<i>' . _('No Image') . '</i>';
+			$ImageSource = _('No Image');
 		}
 
 		/*Get conversion factor and supplier units if any */

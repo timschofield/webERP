@@ -23,8 +23,10 @@ if (DB_num_rows($result) != 0){
 	echo '<table class="selection">';
 	$k = 0; //row colour counter
 	$i = 1;
+	$SupportedImgExt = array('png','jpg','jpeg');
 	while ($myrow = DB_fetch_array($result)) {
-		if(!file_exists($_SESSION['part_pics_dir'] . '/' .$myrow['stockid'].'.jpg') ) {
+		$imagefile = reset((glob($_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
+		if(!file_exists($imagefile) ) {
 			if($PrintHeader){
 				$TableHeader = '<tr>
 								<th>' . '#' . '</th>
@@ -42,15 +44,15 @@ if (DB_num_rows($result) != 0){
 				echo '<tr class="OddTableRows">';
 				$k = 1;
 			}
-			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '" target="_blank">' . $myrow['stockid'] . '</a>';
 			printf('<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
-					</tr>', 
-					$i, 
+					</tr>',
+					$i,
 					$myrow['categorydescription'],
-					$CodeLink, 
+					$CodeLink,
 					$myrow['description']
 					);
 			$i++;
