@@ -263,11 +263,23 @@ Any text up to 50 characters long</p>
 <p>
 This rate is used to purchase the currency amount being paid to the supplier. This rate is recorded with the payment and forms the basis of the calculation of differences on exchange against the rates entered against invoices to the supplier. Note that differences on exchange are only calculated when payments are allocated to invoices.</p>
 
-<h3>Payment Amount</h3>
-<p>
-The amount in foreign currency being paid to the supplier. The general ledger entries made (if the link is enabled) debit the suppliers control account - specified in the company preferences record (Setup tab -&gt; Company Preferences) and credit the bank account selected above.</p>
+<h3>Supplier Narrative</h3>
 
-<h3>Discount Amount</h3>
-<p>
-The amount in foreign currency being allowed to the supplier as payment discount. General ledger entries are created (if the link is enabled) to the account specified for "Prompt Payment Discount" in the Company Preferences record. If discount is to posted some other way then it is better to create a dummy item for the discount given and enter credit notes for the dummy item with posting as defined in the Sales GL Interface setup.</p>
+<p>The supplier narrative in general ledger transactions. If blank, it uses the bank narrative. This information is to be displayed in a general ledger transactions inquiry. The maximum number of characters allowed in the this element is 200.</p>
+
+<h3>Supplier Reference</h3>
+
+<p>The supplier reference in supplier transactions. If blank, it uses the payment type. This information is to be displayed in a supplier transactions inquiry. The maximum number of characters allowed in the this element is 20.</p>
+
+<h3>Transaction Text</h3>
+
+<p>The transaction text in supplier transactions. If blank, it uses the narrative. This information is to be displayed in a supplier transactions inquiry. The maximum number of characters allowed in the this element is 200.</p>
+
+<h3>Amount of Payment</h3>
+
+<p>The amount in foreign currency being paid to the supplier. The general ledger entries made (if the link is enabled) debit the suppliers control account - specified in the company preferences record (Setup tab -&gt; Company Preferences) and credit the bank account selected above.</p>
+
+<h3>Amount of Discount</h3>
+
+<p>The amount in foreign currency being allowed to the supplier as payment discount. General ledger entries are created (if the link is enabled) to the account specified for "Prompt Payment Discount" in the Company Preferences record. If discount is to posted some other way then it is better to create a dummy item for the discount given and enter credit notes for the dummy item with posting as defined in the Sales GL Interface setup.</p>
 
