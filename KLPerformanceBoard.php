@@ -940,7 +940,6 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 	if ($typereport == "Shop"){
 		$SQL = "SELECT debtorsmaster.debtorno,
 					debtorsmaster.name,
-					locations.minmonthlysalestarget,
 					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
@@ -990,9 +989,8 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 							AND salesorders.orddate >=  '". $StartDateMTD . "'
 							AND salesorders.orddate <= '". $Yesterday . "'
 							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesMTD
-				FROM debtorsmaster, locations
-				WHERE debtorsmaster.debtorno = locations.cashsalecustomer
-					AND debtorsmaster.typeid = 2
+				FROM debtorsmaster
+				WHERE debtorsmaster.typeid = 2
 				ORDER BY (SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno

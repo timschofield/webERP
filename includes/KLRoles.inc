@@ -14,6 +14,8 @@ $KL_ShopManager = FALSE;
 $KL_SPG = FALSE;
 $KL_SPGSupport = FALSE;
 $KL_PettyCash = FALSE;
+$KL_ITSupport = FALSE;
+
 
 if ($_SESSION['AccessLevel'] == 8){ // webERP System Administration
 	$KL_SystemAdmin = TRUE;
@@ -60,7 +62,8 @@ if ($_SESSION['AccessLevel'] == 8){ // webERP System Administration
 	$KL_AdministrationTeam = TRUE;
 	$KL_BusinessDevelopmentManager = TRUE;
 	$KL_ShopSupportLeader = TRUE;
+}else if ($_SESSION['AccessLevel'] == 32){ // It Support
+	$KL_ITSupport = TRUE;
 }
-
 
 ?>

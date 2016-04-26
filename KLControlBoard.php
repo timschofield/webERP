@@ -71,8 +71,6 @@ prnMsg("START OF PENDING FOR KL INTRANET ",'success');
 		NotDiscountedItemsWithDiscount($RootPath, $db);
 		GoodsReceivedNotInvoicedControl(1000000, $periodnow, $db);
 		CustomersDebtControl(100000, $periodnow, $db);
-		ItemsWithoutRetailPrice("SETKL", 4.75, $RootPath, $db);
-		ItemsWithoutRetailPrice("SETBL", 4.75, $RootPath, $db);
 		ObsoleteComponentsInActiveBOM($RootPath, $db);
 		ItemsWithStockKantorButReorderLevelTokoZero($RootPath, $db);
 		ItemsWithStockKantorButRLZeroAt("TOKSU", $RootPath, $db);
@@ -850,19 +848,24 @@ if ($ProcessSection02){
 	* Other tests     
 	***************************************************************************************/
 	if ($KL_SystemAdmin 
+		OR $KL_ITSupport
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_PurchasingTeam){
 		ActiveItemsWithoutPicture($RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_SystemAdmin){
+	if ($KL_SystemAdmin
+		OR $KL_ITSupport){
 		ImagesWithoutProduct($RootPath, $db);
 		$NumberOfTestExecuted++;
 		OpenCartItemsWithoutPicture($RootPath, $db, $db_oc, $oc_tableprefix);
 		$NumberOfTestExecuted++;
 	//	ImagesShouldNotBeInOpencartCatalog($RootPath, $db, $db_oc, $oc_tableprefix);
 	//	$NumberOfTestExecuted++;
+	}
+
+	if ($KL_SystemAdmin){
 		ItemsWithoutWeightOrVolume($RootPath, $db);
 		$NumberOfTestExecuted++;
 		ItemsShouldBeInWebsite($db);
