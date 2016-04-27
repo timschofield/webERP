@@ -69,15 +69,10 @@ prnMsg("START OF PENDING FOR KL INTRANET ",'success');
 		GoodsReceivedNotInvoicedControl(1000000, $periodnow, $db);
 		CustomersDebtControl(100000, $periodnow, $db);
 		ObsoleteComponentsInActiveBOM($RootPath, $db);
-		ValueStockLocation("SERSU",    0,  300, 0, 0, $db);
 		OvestockAtSamples(1, $RootPath, $db);
 		SamplesNotLongerNeeded($RootPath, $db);
 		FlaggedAsObsoleteButStockAvailable($RootPath, $db);
 		ItemsInKLProcessAndRLNotZero($RootPath, $db);
-		PackagingItemsOnWrongLocation($RootPath, $db); // Works for both regular and outlet shop packaging
-		KapalLautPackagingToBeRefilled(false, $RootPath, $db);
-		BlinkPackagingToBeRefilled(false, $RootPath, $db);
-		OutletPackagingToBeRefilled(false, $RootPath, $db);
 		OldPurchasingOrdersStillActive(90, $RootPath, $db);
 
 prnMsg("END OF PENDING FOR KL INTRANET ",'success');
