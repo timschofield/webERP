@@ -52,8 +52,6 @@ if (!isset($_GET['Section'])){
 if ($KL_SystemAdmin){
 	// WARNINGS STILL NOT DOCUMENTED ON WIKI
 prnMsg("START OF PENDING FOR KL INTRANET ",'success');
-prnMsg("START OF PENDING FOR KL INTRANET ",'success');
-prnMsg("START OF PENDING FOR KL INTRANET ",'success');
 		SuppliersWithoutBasicData($RootPath, $db);
 		ItemsWithoutStandardCost($RootPath, $db);
 		over_or_below_limit("Items changing price or moving category", "OVER", 50, $RootPath, $db);
@@ -61,7 +59,6 @@ prnMsg("START OF PENDING FOR KL INTRANET ",'success');
 		over_or_below_limit("Items moving to 20% discount", "OVER", 20, $RootPath, $db);
 		over_or_below_limit("Items moving to 50% discount", "OVER", 20, $RootPath, $db);
 		over_or_below_limit("Items moving to 80% discount", "OVER", 20, $RootPath, $db);
-		ItemsChangingPriceDelayed(4, $RootPath, $db);
 		DiscountedItemsOnNotOutletShops("DISC20", $RootPath, $db);
 		DiscountedItemsOnNotOutletShops("DISC50", $RootPath, $db);
 		DiscountedItemsOnNotOutletShops("DISC80", $RootPath, $db);
@@ -72,27 +69,17 @@ prnMsg("START OF PENDING FOR KL INTRANET ",'success');
 		GoodsReceivedNotInvoicedControl(1000000, $periodnow, $db);
 		CustomersDebtControl(100000, $periodnow, $db);
 		ObsoleteComponentsInActiveBOM($RootPath, $db);
-		CategoryItemsNotInShop("DISC20", "TOKUB", $RootPath, $db);
 		ValueStockLocation("SERSU",    0,  300, 0, 0, $db);
 		OvestockAtSamples(1, $RootPath, $db);
 		SamplesNotLongerNeeded($RootPath, $db);
 		FlaggedAsObsoleteButStockAvailable($RootPath, $db);
 		ItemsInKLProcessAndRLNotZero($RootPath, $db);
-		ItemsOnSpecialRequest($RootPath, $db);
 		PackagingItemsOnWrongLocation($RootPath, $db); // Works for both regular and outlet shop packaging
 		KapalLautPackagingToBeRefilled(false, $RootPath, $db);
 		BlinkPackagingToBeRefilled(false, $RootPath, $db);
 		OutletPackagingToBeRefilled(false, $RootPath, $db);
-		InsuficientStockForShopPackaging('SHPACK', 21, 90, 30, false, $RootPath, $db); // Works for both regular and outlet shop packaging
-		CheckNegativeStock($RootPath, $db);
-		ActiveItemsNoSales( 30, "TESTKL", $RootPath, $db);
-		PerformanceItemsInCategory("GOOD", "TESTKL", 30,  45, "GOOD", $RootPath, $db);
-		PerformanceItemsInCategory("BAD",  "TESTKL", 50,  30, "BAD", $RootPath, $db);
 		OldPurchasingOrdersStillActive(90, $RootPath, $db);
-		PurchasingOrdersDeliveryControl("Delayed", 0, $RootPath, $db);
-		PurchasingOrdersDeliveryControl("Coming Soon", 15, $RootPath, $db);
-prnMsg("END OF PENDING FOR KL INTRANET ",'success');
-prnMsg("END OF PENDING FOR KL INTRANET ",'success');
+
 prnMsg("END OF PENDING FOR KL INTRANET ",'success');
 
 //	phpinfo();
@@ -467,7 +454,7 @@ if ($ProcessSection01){
 	if ($KL_BusinessDevelopmentManager){
 		ItemsWithStockKantorButReorderLevelTokoZero($RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsWithStockKantorButRLZeroAt("TOKSU", $RootPath, $db);
+/*		ItemsWithStockKantorButRLZeroAt("TOKSU", $RootPath, $db);
 		$NumberOfTestExecuted++;
 		ItemsWithStockKantorButRLZeroAt("TOKUB", $RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -483,35 +470,99 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		ItemsWithStockKantorButRLZeroAt("TOKKA", $RootPath, $db);
 		$NumberOfTestExecuted++;
+*/
 
-		CategoryItemsNotInShop("TESTBL", "TOKMU", $RootPath, $db);
+		CategoryItemsNotInShop("TESTKL", "TOK66", 7, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("STABBL", "TOKMU", $RootPath, $db);
+		CategoryItemsNotInShop("TESTKL", "TOKPA", 7, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("TESTBL", "TOKPS", $RootPath, $db);
+		CategoryItemsNotInShop("TESTKL", "TOKKA", 7, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("STABBL", "TOKPS", $RootPath, $db);
+		CategoryItemsNotInShop("TESTKL", "TOKSA", 7, $RootPath, $db);
 		$NumberOfTestExecuted++;
-
-		CategoryItemsNotInShop("DISC20", "TOKAR", $RootPath, $db);
+		CategoryItemsNotInShop("TESTKL", "TOKSS", 7, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("DISC50", "TOKAR", $RootPath, $db);
+		CategoryItemsNotInShop("TESTKL", "TOKPU", 7, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("DISC80", "TOKAR", $RootPath, $db);
-		$NumberOfTestExecuted++;
-
-		CategoryItemsNotInShop("DISC20", "TOKSU", $RootPath, $db);
-		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("DISC50", "TOKSU", $RootPath, $db);
-		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("DISC80", "TOKSU", $RootPath, $db);
+		CategoryItemsNotInShop("TESTKL", "TOKMF", 7, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
-		CategoryItemsNotInShop("DISC20", "TOKUB", $RootPath, $db);
+		CategoryItemsNotInShop("STABKL", "TOK66", 10, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("DISC50", "TOKUB", $RootPath, $db);
+		CategoryItemsNotInShop("STABKL", "TOKSE", 10, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("DISC80", "TOKUB", $RootPath, $db);
+		CategoryItemsNotInShop("STABKL", "TOKKS", 10, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("STABKL", "TOKOB", 10, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("STABKL", "TOKPA", 10, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("STABKL", "TOKKA", 10, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("STABKL", "TOKSA", 10, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("STABKL", "TOKSS", 10, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("STABKL", "TOKPU", 10, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("STABKL", "TOKMF", 10, $RootPath, $db);
+		$NumberOfTestExecuted++;
+
+		CategoryItemsNotInShop("NOPOKL", "TOK66", 7, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("NOPOKL", "TOKPA", 7, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("NOPOKL", "TOKKA", 7, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("NOPOKL", "TOKSA", 7, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("NOPOKL", "TOKSS", 7, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("NOPOKL", "TOKPU", 7, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("NOPOKL", "TOKMF", 7, $RootPath, $db);
+		$NumberOfTestExecuted++;
+
+		
+		CategoryItemsNotInShop("TESTBL", "TOKPS", 3, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("TESTBL", "TOKMU", 3, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("TESTBL", "TOKSB", 3, $RootPath, $db);
+		$NumberOfTestExecuted++;
+
+		CategoryItemsNotInShop("STABBL", "TOKPS", 3, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("STABBL", "TOKMU", 3, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("STABBL", "TOKSB", 3, $RootPath, $db);
+		$NumberOfTestExecuted++;
+
+		CategoryItemsNotInShop("NOPOBL", "TOKPS", 2, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("NOPOBL", "TOKSB", 2, $RootPath, $db);
+		$NumberOfTestExecuted++;
+
+
+		CategoryItemsNotInShop("DISC20", "TOKAR", 3, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("DISC20", "TOKSU", 3, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("DISC20", "TOKUB", 3, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		
+		CategoryItemsNotInShop("DISC50", "TOKAR", 3, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("DISC50", "TOKSU", 3, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("DISC50", "TOKUB", 3, $RootPath, $db);
+		$NumberOfTestExecuted++;
+
+		CategoryItemsNotInShop("DISC80", "TOKAR", 3, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("DISC80", "TOKSU", 3, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("DISC80", "TOKUB", 3, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
 	//	ItemsInCategoryWithStockKantorButReorderLevelTokoZero("DISC20", $RootPath, $db);
@@ -689,7 +740,7 @@ if ($ProcessSection02){
 		ItemsNotTopSalesInShop(1, 800, 60, "TOKSA", $RootPath, $db);
 		ItemsNotTopSalesInShop(1, 800, 60, "TOKSU", $RootPath, $db);
 		ItemsNotTopSalesInShop(1, 700, 60, "TOKSS", $RootPath, $db);
-	*/
+
 		PerformanceItemsInCategory("GOOD", "TESTKL", 15,  30, "VERY GOOD", $RootPath, $db);
 		$NumberOfTestExecuted++;
 		PerformanceItemsInCategory("GOOD", "TESTKL", 30,  45, "GOOD", $RootPath, $db);
@@ -748,6 +799,7 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 		PerformanceItemsInCategory("BAD",  "DISC50",180, 100, "MOVE TO 80% DISCOUNT", $RootPath, $db);
 		$NumberOfTestExecuted++;
+*/
 	}
 
 	if ($KL_BusinessDevelopmentManager

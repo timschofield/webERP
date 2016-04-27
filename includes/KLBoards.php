@@ -3304,9 +3304,9 @@ function NotDiscountedItemsOnOutletShops($RootPath, $db){
 }
 
 
-function CategoryItemsNotInShop($Category, $Shop, $RootPath, $db){
+function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $RootPath, $db){
 	
-	$Message = $Category . _(' items NOT in ') . $Shop . ' (excluding Change of Price, Move to Discount, Service, Shop online and Return to Supplier)';
+	$Message = $Category . _(' items NOT in ') . $Shop . ' with QOH >= ' . $MinQOH .' (excluding Change of Price, Move to Discount, Service, Shop online and Return to Supplier)';
 	
 	$SQL = "SELECT stockmaster.stockid,
 					stockmaster.description,
@@ -3330,7 +3330,7 @@ function CategoryItemsNotInShop($Category, $Shop, $RootPath, $db){
 				AND ((SELECT SUM(l.quantity)
 						FROM locstock l
 						WHERE l.stockid = stockmaster.stockid
-							AND l.loccode NOT IN " . LIST_SERVICE_LOCATIONS . ") > 0)
+							AND l.loccode NOT IN " . LIST_SERVICE_LOCATIONS . ") >= ". $MinQOH .")
 				AND ((SELECT SUM(l.reorderlevel)
 						FROM locstock l
 						WHERE l.stockid = stockmaster.stockid
