@@ -683,9 +683,17 @@ if ($ProcessSection02){
 	*/
 		ActiveItemsNoSales( 30, "TESTKL", $RootPath, $db);
 		$NumberOfTestExecuted++;
+		ItemsInCategoryForMoreThanDays( 60, "TESTKL", $RootPath, $db);
+		$NumberOfTestExecuted++;
+
 		ActiveItemsNoSales( 30, "TESTBL", $RootPath, $db);
 		$NumberOfTestExecuted++;
+		ItemsInCategoryForMoreThanDays( 60, "TESTBL", $RootPath, $db);
+		$NumberOfTestExecuted++;
+
 		ActiveItemsNoSales( 30, "TESTGE", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsInCategoryForMoreThanDays( 60, "TESTGE", $RootPath, $db);
 		$NumberOfTestExecuted++;
 
 		ActiveItemsNoSales( 30, "STABKL", $RootPath, $db);
@@ -697,15 +705,29 @@ if ($ProcessSection02){
 
 		ActiveItemsNoSales( 30, "NOPOKL", $RootPath, $db);
 		$NumberOfTestExecuted++;
+		ItemsInCategoryForMoreThanDays( 90, "NOPOKL", $RootPath, $db);
+		$NumberOfTestExecuted++;
+
 		ActiveItemsNoSales( 30, "NOPOBL", $RootPath, $db);
 		$NumberOfTestExecuted++;
+		ItemsInCategoryForMoreThanDays( 90, "NOPOBL", $RootPath, $db);
+		$NumberOfTestExecuted++;
+
 		ActiveItemsNoSales( 30, "NOPOGE", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsInCategoryForMoreThanDays( 90, "NOPOGE", $RootPath, $db);
 		$NumberOfTestExecuted++;
 
 		ActiveItemsNoSales( 30, "DISC20", $RootPath, $db);
 		$NumberOfTestExecuted++;
+		ItemsInCategoryForMoreThanDays( 90, "DISC20", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		
 		ActiveItemsNoSales( 60, "DISC50", $RootPath, $db);
 		$NumberOfTestExecuted++;
+		ItemsInCategoryForMoreThanDays( 365, "DISC50", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		
 		ActiveItemsNoSales( 90, "DISC80", $RootPath, $db);
 		$NumberOfTestExecuted++;
 

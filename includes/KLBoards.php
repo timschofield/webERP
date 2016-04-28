@@ -4116,6 +4116,70 @@ function GoodsJustTransferred($locationfrom, $locationto, $numdays, $qohmax, $Ro
 	}
 }
 
+function ItemsInCategoryForMoreThanDays($maxdays, $group, $RootPath, $db){
+	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -$maxdays));
+
+
+	$SQL = "SELECT 	stockmaster.stockid,
+					stockmaster.description,
+					stockmaster.categoryid,
+					stockmaster.lastcategoryupdate,
+					stockmaster.units, 
+					(SELECT SUM(quantity)
+						FROM locstock
+						WHERE locstock.stockid = stockmaster.stockid) AS quantity
+			FROM 	stockmaster
+			WHERE 	stockmaster.discontinued = 0 
+				AND stockmaster.klchangingprice = 0
+				AND stockmaster.klmovingdiscount20 = 0
+				AND stockmaster.klmovingdiscount50 = 0
+				AND stockmaster.klmovingdiscount80 = 0
+				AND stockmaster.lastcategoryupdate <= '" . $FromDate . "'
+				AND stockmaster.categoryid ='" . $group . "'
+			ORDER BY stockmaster.stockid";
+	
+	$result = DB_query($SQL);		
+	
+	if (DB_num_rows($result) != 0){
+		echo '<p class="page_title_text" align="center"><strong>' . $group . ' Items for more than ' . $maxdays . ' days. Move to next step of cycle of life</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Description') . '</th>
+							<th class="ascending">' . _('Category') . '</th>
+							<th class="ascending">' . _('DOB Category') . '</th>
+							<th class="ascending">' . _('QOH') . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		while ($myrow = DB_fetch_array($result)) {
+			$k = StartEvenOrOddRow($k);
+			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+			printf('<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					$i, 
+					$CodeLink, 
+					$myrow['description'], 
+					$myrow['categoryid'], 
+					ConvertSQLDate($myrow['lastcategoryupdate']),
+					locale_number_format($myrow['quantity'],0)
+					);
+			$i++;
+		}
+		echo '</table>
+				</div>';
+	}
+}	
+
+
 function ActiveItemsNoSales($maxdays, $group, $RootPath, $db){
 	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -$maxdays));
 
