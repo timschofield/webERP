@@ -1,4 +1,6 @@
 <?php
+/* $Id$*/
+
 require_once($PathPrefix .'/includes/class.pdf.php');
 
 class PDF extends Cpdf {
@@ -303,7 +305,7 @@ function BuildSQL($Prefs) {
 	$ThisMonth = mb_substr($Today,5,2);
 	$ThisYear = mb_substr($Today,0,4);
 	// find total number of days in this month
-	if ($ThisMonth == '04' or $ThisMonth == '06' or $ThisMonth == '09' or $ThisMonth == '11') {
+/*	if ($ThisMonth == '04' or $ThisMonth == '06' or $ThisMonth == '09' or $ThisMonth == '11') {
 		$TotalDays=30;
 	} elseif ($ThisMonth=='02' AND date('L', $t)) { // Leap year
 		$TotalDays=29;
@@ -311,7 +313,8 @@ function BuildSQL($Prefs) {
 		$TotalDays=28;
 	} else {
 		$TotalDays=31;
-	}
+	}//********** To replace. */
+	$TotalDays = cal_days_in_month(CAL_GREGORIAN, $ThisMonth, $ThisYear);//********** To test !
 	// Calculate date range
 	$DateArray=explode(':',$Prefs['DateListings']['params']);
 	switch ($DateArray[0]) { // based on the date choice selected

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.12.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-04-26 09:51-0600\n"
-"PO-Revision-Date: 2016-04-26 10:00-0600\n"
+"PO-Revision-Date: 2016-04-26 10:53-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -15568,7 +15568,7 @@ msgstr "Fecha de recepción de Bienes o Servicios"
 
 #: GoodsReceived.php:107
 msgid "Supplier's Reference"
-msgstr ""
+msgstr "Referencia del proveedor"
 
 #: GoodsReceived.php:115 PO_Items.php:721
 msgid "Supplier Units"
@@ -22863,7 +22863,7 @@ msgstr "Referencia en las transacciones bancarias"
 
 #: Payments.php:976
 msgid "Narrative in general ledger transactions"
-msgstr ""
+msgstr "Descripción en las transacciones del libro mayor"
 
 #: Payments.php:993
 msgid "General Ledger Payment Analysis Entry"
@@ -22915,32 +22915,38 @@ msgstr ""
 
 #: Payments.php:1187
 msgid "Supplier Narrative"
-msgstr ""
+msgstr "Descripción de proveedores"
 
 #: Payments.php:1188
 msgid ""
 "Supplier narrative in general ledger transactions. If blank, it uses the "
 "bank narrative."
 msgstr ""
+"Descripción de proveedores en las transacciones del libro mayor. Si está en "
+"blanco, se usa la descripción de bancos."
 
 #: Payments.php:1195
 msgid "Supplier Reference"
-msgstr ""
+msgstr "Referencia de proveedores"
 
 #: Payments.php:1196
 msgid ""
 "Supplier reference in supplier transactions. If blank, it uses the payment "
 "type."
 msgstr ""
+"Referencia de proveedores en las transacciones con los proveedores. Si está "
+"en blanco, se usa el tipo de pago."
 
 #: Payments.php:1203
 msgid "Transaction Text"
-msgstr ""
+msgstr "Texto de la transacción"
 
 #: Payments.php:1204
 msgid ""
 "Transaction text in supplier transactions. If blank, it uses the narrative."
 msgstr ""
+"Texto de la transacción en las transacciones con los proveedores. Si está en "
+"blanco, se usa la descripción de bancos."
 
 #: Payments.php:1209
 msgid "Amount of Payment"
@@ -26255,7 +26261,7 @@ msgstr "Lote de Recepción"
 
 #: ReverseGRN.php:398
 msgid "Supplier' Ref"
-msgstr ""
+msgstr "Referencia del proveedor"
 
 #: ReverseGRN.php:404
 msgid "Quantity To"
@@ -33672,7 +33678,7 @@ msgstr "Bienes recibidos facturados seleccionados"
 
 #: SuppInvGRNs.php:120 SuppInvGRNs.php:261 includes/PDFGrnHeader.inc:21
 msgid "Supplier's Ref"
-msgstr ""
+msgstr "Referencia del proveedor"
 
 #: SuppInvGRNs.php:123
 msgid "Quantity Yet To Inv"
@@ -35085,7 +35091,7 @@ msgstr "Secuencial"
 
 #: SupplierInvoice.php:666
 msgid "Supplier Ref"
-msgstr ""
+msgstr "Referencia de proveedores"
 
 #: SupplierInvoice.php:669
 msgid "Quantity Charged"
@@ -51600,7 +51606,7 @@ msgstr ""
 
 #: reportwriter/languages/en_US/reports.php:215
 msgid "Name to Display"
-msgstr ""
+msgstr "Nombre a mostrar"
 
 #: reportwriter/languages/en_US/reports.php:217
 msgid "Report Filter Description"
