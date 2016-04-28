@@ -16,7 +16,26 @@ if (!(isset($_POST['Search']))) {
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table class="selection">';
+
+	echo '<table class="selection">
+			<tr>
+				<td>' . _('Inventory Categories') . ':</td>
+				<td><select autofocus="autofocus" required="required" minlength="1" size="12" name="Categories[]"multiple="multiple">';
+	$SQL = 'SELECT categoryid, categorydescription 
+			FROM stockcategory 
+			ORDER BY categorydescription';
+	$CatResult = DB_query($SQL);
+	while ($MyRow = DB_fetch_array($CatResult)) {
+		if (isset($_POST['Categories']) AND in_array($MyRow['categoryid'], $_POST['Categories'])) {
+			echo '<option selected="selected" value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] .'</option>';
+		} else {
+			echo '<option value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
+		}
+	}
+	echo '</select>
+			</td>
+		</tr>';
+
 	// location selection
 	$SQL="SELECT loccode,
 					locationname
@@ -25,8 +44,7 @@ if (!(isset($_POST['Search']))) {
 	$result1 = DB_query($SQL);
 
 	echo '<tr>
-			<td style="width:100 px">' . _('Available AT') . ' </td>
-			<td>:</td>
+			<td>' . _('Available AT') . ': </td>
 			<td><select name="FromLoc">';
 
 	while ($myrow1 = DB_fetch_array($result1)) {
@@ -48,8 +66,7 @@ if (!(isset($_POST['Search']))) {
 	$result1 = DB_query($SQL);
 
 	echo '<tr>
-			<td style="width:100 px">' . _('But NOT Available At') . ' </td>
-			<td>:</td>
+			<td>' . _('But NOT Available At') . ': </td>
 			<td><select name="Shop">';
 
 	while ($myrow1 = DB_fetch_array($result1)) {
@@ -79,7 +96,6 @@ if (!(isset($_POST['Search']))) {
     </div>
 	</form>';
 } else {
-	// select the items with stock available at kantor but RL = 0 at the specified location
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-60));
 	$SQL = "SELECT stockmaster.stockid,
 					stockmaster.description,
@@ -92,14 +108,13 @@ if (!(isset($_POST['Search']))) {
 						FROM loctransfers
 						WHERE loctransfers.stockid = stockmaster.stockid
 							AND shiploc='" . $_POST['FromLoc'] ."')
-					)AS qtykantor
+					)AS QOHFrom
 			FROM stockmaster, stockcategory, locstock
 			WHERE stockmaster.categoryid = stockcategory.categoryid
 				AND stockmaster.stockid = locstock.stockid
 				AND stockcategory.stocktype = 'F'
-				AND stockmaster.categoryid NOT IN('SHDISP', 'SHCONS') ";
-//	$SQL = $SQL . "	AND stockmaster.categoryid NOT IN('DISC50') ";
-	$SQL = $SQL . "	AND stockmaster.discontinued = 0 
+				AND stockmaster.categoryid IN ('". implode("','",$_POST['Categories'])."')
+				AND stockmaster.discontinued = 0 
 				AND locstock.reorderlevel = 0 
 				AND locstock.loccode = '" . $_POST['Shop'] . "'
 				AND (	(SELECT locstock.quantity
@@ -156,14 +171,12 @@ if (!(isset($_POST['Search']))) {
 				$CodeLink, 
 				$myrow['categoryid'], 
 				$myrow['description'], 
-				locale_number_format($myrow['qtykantor'],0)
+				locale_number_format($myrow['QOHFrom'],0)
 				);
 		$i++;
 	}
 	echo '</table>';
-	echo '<br />';
- 	echo '</div>
-		</form>';
+
 }
 include ('includes/footer.inc');
 ?>
