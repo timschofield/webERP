@@ -53,7 +53,6 @@ if ($KL_SystemAdmin){
 	// WARNINGS STILL NOT DOCUMENTED ON WIKI
 prnMsg("START OF PENDING FOR KL INTRANET ",'success');
 		SuppliersWithoutBasicData($RootPath, $db);
-		ItemsWithoutStandardCost($RootPath, $db);
 		over_or_below_limit("Items changing price or moving category", "OVER", 50, $RootPath, $db);
 		over_or_below_limit("Items changing price", "OVER", 20, $RootPath, $db);
 		over_or_below_limit("Items moving to 20% discount", "OVER", 20, $RootPath, $db);
