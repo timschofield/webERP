@@ -1,5 +1,6 @@
 webERP Change Log
 
+01/05/2016 RChacon: In Z_poAddLanguage.php, fix directory name and default language file name.
 29/4/16 RChacon: In includes/DateFunctions.inc, add year in long date and time in locale format.
 26/4/16 Phil committed for Tim: apparently only change required for PHP7 see http://www.weberp.org/forum/showthread.php?tid=2733&pid=7132#pid7132
 25/4/16 RChacon: In Payments.php, allow to input a customised gltrans.narrative, supptrans.suppreference and supptrans.transtext.

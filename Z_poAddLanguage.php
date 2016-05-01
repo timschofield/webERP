@@ -1,5 +1,6 @@
 <?php
 /* $Id$*/
+/* Allows a new language po file to be created */
 
 /* Steve Kitchen/Kaill */
 
@@ -20,9 +21,9 @@ $Title = _('New Language');// _('Add a New Language to the System')
 $ViewTopic = "SpecialUtilities";
 $BookMark = "Z_poAddLanguage";// Anchor's id in the manual's html document.
 include('includes/header.inc');
-echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme . 
-		'/images/maintenance.png" title="' . 
-		_('Add a New Language to the System') . '" />' . ' ' . 
+echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
+		'/images/maintenance.png" title="' .
+		_('Add a New Language to the System') . '" />' . ' ' .
 		_('Add a New Language to the System') . '</p>';
 
 /* Your webserver user MUST have read/write access to here,	otherwise you'll be wasting your time */
@@ -32,7 +33,7 @@ echo '<br /><br />&nbsp;' . _('Utility to create a new language file');
 echo '<br />&nbsp;' . _('Current language is') . ' ' . $_SESSION['Language'];
 
 $DefaultLanguage = 'en_GB';// The default language is English-United Kingdom (British English).
-$PathToDefault = './locale/' . $DefaultLanguage . '/LC_MESSAGES/messages.po';
+$PathToDefault = './locale/' . $DefaultLanguage . '.utf8/LC_MESSAGES/messages.pot';
 
 if (isset($_POST['submit']) AND isset($_POST['NewLanguage'])) {
 
@@ -57,8 +58,8 @@ if (isset($_POST['submit']) AND isset($_POST['NewLanguage'])) {
 
 		if (!file_exists('./locale/' . $_POST['NewLanguage'])) {
 			prnMsg (_('Attempting to create the new language file') . '.....<br />', 'info', ' ');
-			$Result = mkdir('./locale/' . $_POST['NewLanguage']);
-			$Result = mkdir('./locale/' . $_POST['NewLanguage'] . '/LC_MESSAGES');
+			$Result = mkdir('./locale/' . $_POST['NewLanguage'] . '.utf8');
+			$Result = mkdir('./locale/' . $_POST['NewLanguage'] . '.utf8/LC_MESSAGES');
 		} else {
 			prnMsg(_('This language cannot be added because it already exists!'),'error');
   			echo '</form>';
@@ -67,7 +68,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewLanguage'])) {
 			exit;
 		}
 
-		$PathToNewLanguage = './locale/' . $_POST['NewLanguage'] . '/LC_MESSAGES/messages.po';
+		$PathToNewLanguage = './locale/' . $_POST['NewLanguage'] . '.utf8/LC_MESSAGES/messages.po';
 		$Result = copy($PathToDefault, $PathToNewLanguage);
 
 		prnMsg (_('Done. You should now change to your newly created language from the user settings link above. Then you can edit the new language file header and use the language module editor to translate the system strings'), 'info');
