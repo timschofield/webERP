@@ -1,5 +1,6 @@
 webERP Change Log
 
+05/06/16 Exson: Fixed typo of IndentText, thanks for Tim's report. Change sequence from int to double to make item is easily inserted into BOMs and Add pictures to BOMs and make BOM printable. 
 01/05/2016 RChacon: In Z_poAddLanguage.php, fix directory name and default language file name.
 29/4/16 RChacon: In includes/DateFunctions.inc, add year in long date and time in locale format.
 26/4/16 Phil committed for Tim: apparently only change required for PHP7 see http://www.weberp.org/forum/showthread.php?tid=2733&pid=7132#pid7132
