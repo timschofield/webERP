@@ -53,7 +53,7 @@ if (!isset($_POST['FromPeriod'])){
 
 	/*Now repost the lot */
 
-	include('includes/GLPostings.inc');
+	include('includes/GLPostingsZero.inc');
 
 	prnMsg(_('All general ledger postings have been reposted from period') . ' ' . $_POST['FromPeriod'],'success');
 }
