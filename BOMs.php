@@ -73,6 +73,7 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level, $db) {
 		global $ParentMBflag;
 		$sql = "SELECT bom.sequence,
 						bom.component,
+						stockcategory.categorydescription,
 						stockmaster.description as itemdescription,
 						stockmaster.units,
 						locations.locationname,
@@ -90,6 +91,8 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level, $db) {
 						stockmaster.decimalplaces
 				FROM bom INNER JOIN stockmaster
 				ON bom.component=stockmaster.stockid
+				INNER JOIN stockcategory 
+				ON stockcategory.categoryid = stockmaster.categoryid
 				INNER JOIN locations ON
 				bom.loccode = locations.loccode
 				INNER JOIN workcentres
@@ -143,26 +146,55 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level, $db) {
 				$QuantityOnHand = locale_number_format($myrow['qoh'],$myrow['decimalplaces']);
 			}
 			$TextIndent= $Level . 'em';
+			if (!empty($myrow['remark'])) {
+				$myrow['remark'] = ' **' . ' ' . $myrow['remark'];
+			}
+			$StockID = $myrow['component'];
+		if (function_exists('imagecreatefromjpeg')){
+			if ($_SESSION['ShowStockidOnImages'] == '0'){
+				$StockImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
+								'&amp;StockID='.urlencode($StockID).
+								'&amp;text='.
+								'&amp;width=100'.
+								'&amp;eight=100'.
+								'" alt="" />';
+			} else {
+				$StockImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
+								'&amp;StockID='.urlencode($StockID).
+								'&amp;text='. $StockID .
+								'&amp;width=100'.
+								'&amp;height=100'.
+								'" alt="" />';
+			}
+		} else {
+			if( isset($StockID) AND file_exists($_SESSION['part_pics_dir'] . '/' .$StockID.'.jpg') ) {
+				$StockImgLink = '<img src="' . $_SESSION['part_pics_dir'] . '/' . $StockID . '.jpg" height="100" width="100" />';
+			} else {
+				$StockImgLink = _('No Image');
+			}
+		}
 
-			printf('<td class="number" style="text-align:left;text-indent:' . $textindent . ';" >%s</td>
+			printf('<td class="number" style="text-align:left;text-indent:' . $Textindent . ';" >%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
+					<td>%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
+					<td class="noprint">%s</td>
+					<td class="noprint">%s</td>
+					<td class="noprint">%s</td>
 					<td class="number noprint">%s</td>
 					<td class="noprint"><a href="%s&amp;Select=%s&amp;SelectedComponent=%s">' . _('Edit') . '</a></td>
 					<td class="noprint">' . $DrillText . '</td>
 					 <td class="noprint"><a href="%s&amp;Select=%s&amp;SelectedComponent=%s&amp;delete=1&amp;ReSelect=%s&amp;Location=%s&amp;WorkCentre=%s" onclick="return confirm(\'' . _('Are you sure you wish to delete this component from the bill of material?') . '\');">' . _('Delete') . '</a></td>
-					 </tr><tr><td colspan="11" style="text-indent:' . $TextIndent . ';">%s</td>
+					 </tr><tr><td colspan="11" style="text-indent:' . $TextIndent . ';">%s</td><td>%s</td>
 					 </tr>',
 					$Level1,
 					$myrow['sequence'],
+					$myrow['categorydescription'],
 					$myrow['component'],
 					$myrow['itemdescription'],
 					$myrow['locationname'],
@@ -184,7 +216,8 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level, $db) {
 					$UltimateParent,
 					$myrow['loccode'],
 					$myrow['workcentrecode'],
-					$myrow['remark']
+					$myrow['remark'],
+					$StockImgLink
 					);
 
 		} //END WHILE LIST LOOP
@@ -268,12 +301,14 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			$Errors[$i] = 'Quantity';
 			$i++;
 		}
+		/* Comment this out to make substittute material can be recorded in the BOM 
 		if (filter_number_format($_POST['Quantity'])==0) {
 			$InputError = 1;
 			prnMsg(_('The quantity entered cannot be zero'),'error');
 			$Errors[$i] = 'Quantity';
 			$i++;
 		}
+		 */
 		if(!Date1GreaterThanDate2($_POST['EffectiveTo'], $_POST['EffectiveAfter'])){
 			$InputError = 1;
 			prnMsg(_('The effective to date must be a date after the effective after date') . '<br />' . _('The effective to date is') . ' ' . DateDiff($_POST['EffectiveTo'], $_POST['EffectiveAfter'], 'd') . ' ' . _('days before the effective after date') . '! ' . _('No updates have been performed') . '.<br />' . _('Effective after was') . ': ' . $_POST['EffectiveAfter'] . ' ' . _('and effective to was') . ': ' . $_POST['EffectiveTo'],'error');
@@ -556,10 +591,34 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 				</tr>
 			</table>';
 	}
+		$StockID = $SelectedParent;
+		if (function_exists('imagecreatefromjpeg')){
+			if ($_SESSION['ShowStockidOnImages'] == '0'){
+				$StockImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
+								'&amp;StockID='.urlencode($StockID).
+								'&amp;text='.
+								'&amp;width=100'.
+								'&amp;eight=100'.
+								'" alt="" />';
+			} else {
+				$StockImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
+								'&amp;StockID='.urlencode($StockID).
+								'&amp;text='. $StockID .
+								'&amp;width=100'.
+								'&amp;height=100'.
+								'" alt="" />';
+			}
+		} else {
+			if( isset($StockID) AND file_exists($_SESSION['part_pics_dir'] . '/' .$StockID.'.jpg') ) {
+				$StockImgLink = '<img src="' . $_SESSION['part_pics_dir'] . '/' . $StockID . '.jpg" height="100" width="100" />';
+			} else {
+				$StockImgLink = _('No Image');
+			}
+		}
 	echo '<br />
 			<table class="selection">';
 	echo '<tr>
-			<th colspan="13"><div class="centre"><b>' . $SelectedParent .' - ' . $myrow[0] . ' ('. $MBdesc. ') </b></div></th>
+			<th colspan="13"><div class="centre"><b>' . $SelectedParent .' - ' . $myrow[0] . ' ('. $MBdesc. ') </b>' . $StockImgLink . '</div></th>
 		</tr>';
 	echo '</table><div id="Report"><table class="selection">';
 
@@ -572,15 +631,16 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 	$TableHeader =  '<tr>
 						<th>' . _('Level') . '</th>
 						<th>' . _('Sequence') . '</th>
+						<th>' . _('Category Description') . '</th>
 						<th>' . _('Code') . '</th>
 						<th>' . _('Description') . '</th>
 						<th>' . _('Location') . '</th>
 						<th>' . _('Work Centre') . '</th>
 						<th>' . _('Quantity') . '</th>
 						<th>' . _('UOM') . '</th>
-						<th>' . _('Effective After') . '</th>
-						<th>' . _('Effective To') . '</th>
-						<th>' . _('Auto Issue') . '</th>
+						<th class="noprint">' . _('Effective After') . '</th>
+						<th class="noprint">' . _('Effective To') . '</th>
+						<th class="noprint">' . _('Auto Issue') . '</th>
 						<th class="noprint">' . _('Qty On Hand') . '</th>
 					</tr>';
 	echo $TableHeader;
@@ -607,7 +667,9 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			DisplayBOMItems($UltimateParent, $Parent, $Component, $Level, $db);
 		}
 	}
-	echo '</table></div>
+	echo '</table>
+		</div>
+		<div class="onlyprint1;">' . _('Print Date') . ' :' . date($_SESSION['DefaultDateFormat']) . '</div>
 		<br />';
     /* We do want to show the new component entry form in any case - it is a lot of work to get back to it otherwise if we need to add */
 
@@ -712,7 +774,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		}
 		echo '<tr>
                 <td>' . _('Sequence in BOM') . ':</td>
-                <td><input type="text" class="integer" required="required" size="5" name="Sequence" value="' . $_POST['Sequence'] . '" /></td>
+                <td><input type="text" required="required" size="5" name="Sequence" value="' . $_POST['Sequence'] . '" /></td>
             </tr>';
 		echo '<tr>
 				<td>' . _('Location') . ': </td>

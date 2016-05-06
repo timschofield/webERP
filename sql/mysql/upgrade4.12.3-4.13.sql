@@ -55,6 +55,7 @@ ALTER table pctabs DROP FOREIGN KEY `pctabs_ibfk_4`;
 ALTER table pctabs CHANGE authorizer authorizer varchar(100);
 ALTER table pctabs CHANGE assigner assigner varchar(100);
 INSERT INTO securitytokens VALUES(18,'Cost authority');
+ALTER table bom change sequence sequence double not null default 0;
 
 -- Update version number:
 UPDATE config SET confvalue='4.13' WHERE confname='VersionNumber';
