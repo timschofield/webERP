@@ -1,5 +1,6 @@
 webERP Change Log
 
+05/06/16 Exson: Modify Z_RePostGLFromPeriod.php to make this feature still reliable with previous version of GLPostings.inc. Rework the new GLPostings.inc.
 05/06/16 Exson: Fixed typo of IndentText, thanks for Tim's report. Change sequence from int to double to make item is easily inserted into BOMs and Add pictures to BOMs and make BOM printable. 
 01/05/2016 RChacon: In Z_poAddLanguage.php, fix directory name and default language file name.
 29/4/16 RChacon: In includes/DateFunctions.inc, add year in long date and time in locale format.
