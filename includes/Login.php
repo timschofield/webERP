@@ -1,16 +1,15 @@
 <?php
 /* $Id$*/
-
 // Display demo user name and password within login form if $AllowDemoMode is true
+
 //include ('LanguageSetup.php');
 if ((isset($AllowDemoMode)) AND ($AllowDemoMode == True) AND (!isset($demo_text))) {
 	$demo_text = _('Login as user') .': <i>' . _('admin') . '</i><br />' ._('with password') . ': <i>' . _('weberp') . '</i>';
 } elseif (!isset($demo_text)) {
 	$demo_text = '';
 }
-echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-			"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
 ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
 <head>
 	<title>webERP Login screen</title>
@@ -19,8 +18,8 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 	<link rel="stylesheet" href="css/<?php echo $Theme;?>/login.css" type="text/css" />
 </head>
 <body>
-
 <?php
+
 if (get_magic_quotes_gpc()){
 	echo '<p style="background:white">';
 	echo _('Your webserver is configured to enable Magic Quotes. This may cause problems if you use punctuation (such as quotes) when doing data entry. You should contact your webmaster to disable Magic Quotes');
@@ -28,7 +27,6 @@ if (get_magic_quotes_gpc()){
 }
 
 ?>
-
 <div id="container">
 	<div id="login_logo"></div>
 	<div id="login_box">
@@ -36,7 +34,8 @@ if (get_magic_quotes_gpc()){
     <div>
 	<input type="hidden" name="FormID" value="<?php echo $_SESSION['FormID']; ?>" />
 	<span>
-	<?php
+<?php
+
 	    if (isset($CompanyList) AND is_array($CompanyList)) {
             foreach ($CompanyList as $key => $CompanyEntry){
                 if ($DefaultDatabase == $CompanyEntry['database']) {
@@ -91,7 +90,8 @@ if (get_magic_quotes_gpc()){
     	         echo '</select>';
             }
         } //end provision for backward compat
-	?>
+
+?>
 	</span>
 	<br />
 	<span><?php echo _('User name'); ?>:</span><br />
@@ -99,11 +99,13 @@ if (get_magic_quotes_gpc()){
 	<span><?php echo _('Password'); ?>:</span><br />
 	<input type="password" required="required" name="Password" placeholder="<?php echo _('Password'); ?>" /><br />
 	<div id="demo_text">
-	<?php
+<?php
+
 	if (isset($demo_text)){
 		echo $demo_text;
 	}
-	?>
+
+?>
 	</div>
 	<input class="button" type="submit" value="<?php echo _('Login'); ?>" name="SubmitUser" />
 	    </div>
