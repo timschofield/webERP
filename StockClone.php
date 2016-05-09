@@ -588,7 +588,7 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 	<input type="hidden" name="New" value="'.$_POST['New'].'" />
 	<table class="selection">';
 
-if (empty($_POST['StockID']) || (isset($_POST['StockID']) AND $_POST['StockID'] == $_POST['OldStockID']) || isset($_POST['UpdateCategories'])) {
+if (empty($_POST['StockID']) || $_POST['StockID'] == $_POST['OldStockID']) || isset($_POST['UpdateCategories'])) {
 
 /*If the page was called without $StockID or empty $StockID  then a new cloned stock item is to be entered. Show a form with a part Code field,
   otherwise show form for editing with only a hidden OldStockID field. */
