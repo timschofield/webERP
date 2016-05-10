@@ -13,20 +13,16 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 	include('includes/header.inc');
 
 	if ($_POST['Location'] != "None"){
-//	Ricard: Again, print only QOH, not available, so intransit = 0
-//		$SQLQOH = " (SELECT SUM(quantity)
-//					FROM locstock
-//					WHERE locstock.stockid = prices.stockid
-//						AND locstock.loccode = '".$_POST['Location']."') AS qoh,
-//					 (SELECT SUM(loctransfers.shipqty-loctransfers.recqty)
-//								FROM loctransfers
-//								WHERE loctransfers.stockid=prices.stockid
-//									AND loctransfers.shiploc='".$_POST['Location']."'
-//									AND loctransfers.shipqty > loctransfers.recqty)	AS intransit ";
 		$SQLQOH = " (SELECT SUM(quantity)
 					FROM locstock
 					WHERE locstock.stockid = prices.stockid
 						AND locstock.loccode = '".$_POST['Location']."') AS qoh,
+					0 AS intransit ";
+	}elseif ($_POST['LocationStock'] != "None"){
+		$SQLQOH = " ((SELECT SUM(quantity)
+					FROM locstock
+					WHERE locstock.stockid = prices.stockid
+						AND locstock.loccode = '".$_POST['LocationStock']."') -1) AS qoh,
 					0 AS intransit ";
 	}else{
 		$SQLQOH = $_POST['LabelsPerItem'] ." AS qoh,
@@ -447,8 +443,8 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 		echo'<tr><td></td></tr>';
 		echo'<tr><th colspan="2">' . _('Number of labels to print') . '</th></tr>
 			<tr><td>' . _('Fixed number of labels') . ':</td>
-			<td><input type="text" class="number" name="LabelsPerItem" size="3" value="1" /td></tr>
-			<tr><td>' . _('or QOH at') . ':</td>
+			<td><input type="text" class="number" name="LabelsPerItem" size="3" value="1" /td></tr>';
+		echo'<tr><td>' . _('or QOH at') . ':</td>
 			<td>';
 
 		$sql = "SELECT locations.loccode,
@@ -463,6 +459,23 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 		}
 		echo '</select></td>
 				</tr>';
+
+		echo'<tr><td>' . _('or STOCK (QOH-1) at') . ':</td>
+			<td>';
+
+		$sql = "SELECT locations.loccode,
+						locationname
+				FROM locations
+				INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
+				ORDER BY locationname";
+		$LocnResult=DB_query($sql);
+		echo '<select name="LocationStock"><option value="None">' . _('') . '</option>';
+		while ($myrow=DB_fetch_array($LocnResult)){
+			echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+		}
+		echo '</select></td>
+				</tr>';
+
 		echo '<tr>
 			<td>' . _('or items that') . ':</td>
 			<td><select name="ChangeToday">
