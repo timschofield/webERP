@@ -80,6 +80,7 @@ if(isset($_POST['submit'])) {
 									priority = '" . $_POST['Priority'] . "',
 									smartdispatchfrom = '" . $_POST['SmartDispatchFrom'] . "',
 									smartdispatchmaxmodels = '" . $_POST['SmartDispatchMaxModels'] . "',
+									klyearlyrent = '" . $_POST['KLyearlyRent'] . "',
 									usedforwo = '" . $_POST['UsedForWO'] . "',
 									glaccountcode = '" . $_POST['GLAccountCode'] . "',
 									allowinvoicing = '" . $_POST['AllowInvoicing'] . "'
@@ -112,6 +113,7 @@ if(isset($_POST['submit'])) {
 		unset($_POST['Priority']);
 		unset($_POST['SmartDispatchFrom']);
 		unset($_POST['SmartDispatchMaxModels']);
+		unset($_POST['KLyearlyRent']);
 		unset($_POST['UsedForWO']);
 		unset($_POST['GLAccountCode']);
 		unset($_POST['AllowInvoicing']);
@@ -148,6 +150,7 @@ if(isset($_POST['submit'])) {
 										priority,
 										smartdispatchfrom,
 										smartdispatchmaxmodels,
+										klyearlyrent,
 										usedforwo,
 										glaccountcode,
 										allowinvoicing)
@@ -171,6 +174,7 @@ if(isset($_POST['submit'])) {
 								'" . $_POST['Prority'] . "',
 								'" . $_POST['SmartDispatchFrom'] . "',
 								'" . $_POST['SmartDispatchMaxModels'] . "',
+								'" . $_POST['KLyearlyRent'] . "',
 								'" . $_POST['UsedForWO'] . "',
 								'" . $_POST['GLAccountCode'] . "',
 								'" . $_POST['AllowInvoicing'] . "')";
@@ -237,6 +241,7 @@ if(isset($_POST['submit'])) {
 		unset($_POST['Priority']);
 		unset($_POST['SmartDispatchFrom']);
 		unset($_POST['SmartDispatchMaxModels']);
+		unset($_POST['KLyearlyRent']);
 		unset($_POST['UsedForWO']);
 		unset($_POST['GLAccountCode']);
 		unset($_POST['AllowInvoicing']);
@@ -510,6 +515,7 @@ if(!isset($_GET['delete'])) {
 					priority,
 					smartdispatchfrom,
 					smartdispatchmaxmodels,
+					klyearlyrent,
 					usedforwo,
 					glaccountcode,
 					allowinvoicing
@@ -540,6 +546,7 @@ if(!isset($_GET['delete'])) {
 		$_POST['Priority'] = $myrow['priority'];
 		$_POST['SmartDispatchFrom'] = $myrow['smartdispatchfrom'];
 		$_POST['SmartDispatchMaxModels'] = $myrow['smartdispatchmaxmodels'];
+		$_POST['KLyearlyRent'] = $myrow['klyearlyrent'];
 		$_POST['UsedForWO'] = $myrow['usedforwo'];
 		$_POST['GLAccountCode'] = $myrow['glaccountcode'];
 		$_POST['AllowInvoicing'] = $myrow['allowinvoicing'];
@@ -703,6 +710,10 @@ if(!isset($_GET['delete'])) {
 	echo '<tr>
 			<td>' . _('KL Smart Transfers # max models') . ':</td>
 			<td><input type="text" name="SmartDispatchMaxModels" class="number" title="' . _('Enter the maximum number of models to be included in KL Smart Transfers') . '" name="MaxModels" value="' . $_POST['SmartDispatchMaxModels'] . '" size="5" maxlength="5" /></td>
+		</tr>';
+	echo '<tr>
+			<td>' . _('Yearly Rent IDR (Shops Only)') . ':</td>
+			<td><input type="text" name="KLyearlyRent" class="number" title="' . _('Enter the yearly rent in IDR') . '" name="KLyearlyRent" value="' . $_POST['KLyearlyRent'] . '" size="12" maxlength="12" /></td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('Allow internal requests?') . ':</td>
