@@ -173,6 +173,7 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 		<input type="hidden" name="EffectiveDate" value="' . $_POST['EffectiveDate'] . '" />
 		<input type="hidden" name="LabelsPerItem" value="' . $_POST['LabelsPerItem'] . '" />
 		<input type="hidden" name="Location" value="' . $_POST['Location'] . '" />
+		<input type="hidden" name="LocationStock" value="' . $_POST['LocationStock'] . '" />
 		<input type="hidden" name="ChangeToday" value="' . $_POST['ChangeToday'] . '" />
 		<br />
 		<div class="centre">
@@ -384,6 +385,9 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 	}
 	if ($_POST['Location'] != "None"){
 		$CoreFileName = $CoreFileName . "-QOH-" . $_POST['Location'];
+	}
+	if ($_POST['LocationStock'] != "None"){
+		$CoreFileName = $CoreFileName . "-STOCK-" . $_POST['LocationStock'];
 	}
 	if ($_POST['ChangeToday'] != "Nothing"){
 		$CoreFileName = $CoreFileName . "-". $_POST['ChangeToday'];
