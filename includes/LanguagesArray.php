@@ -64,6 +64,11 @@ $LanguagesArray['fr_FR.utf8']['WindowsLocale'] = 'french';
 $LanguagesArray['fr_FR.utf8']['DecimalPoint'] = ',';
 $LanguagesArray['fr_FR.utf8']['ThousandsSeparator'] = ' ';
 
+$LanguagesArray['he_IL.utf8']['LanguageName'] = 'עברית';
+$LanguagesArray['he_IL.utf8']['WindowsLocale'] = 'hebrew';
+$LanguagesArray['he_IL.utf8']['DecimalPoint'] = '.';
+$LanguagesArray['he.IL.utf8']['ThousandsSeparator'] = ',';
+
 $LanguagesArray['hi_IN.utf8']['LanguageName'] = 'हिन्दी, हिंदी';
 $LanguagesArray['hi_IN.utf8']['WindowsLocale'] = 'hindi';
 $LanguagesArray['hi_IN.utf8']['DecimalPoint'] = '.';

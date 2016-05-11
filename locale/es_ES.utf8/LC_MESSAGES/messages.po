@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.12.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-04-26 09:51-0600\n"
-"PO-Revision-Date: 2016-04-26 10:53-0600\n"
+"PO-Revision-Date: 2016-05-09 08:56-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -7947,7 +7947,7 @@ msgstr ""
 
 #: Credit_Invoice.php:25
 msgid "Please select an invoice first"
-msgstr "Seleccione  primero una Pedidos"
+msgstr "Seleccione primero una Pedidos"
 
 #: Credit_Invoice.php:25
 msgid "from the customer inquiry screen click the link to credit an invoice"
@@ -8339,7 +8339,7 @@ msgstr "La definición de céntimos no debe pasar de 15 caracteres"
 
 #: Currencies.php:116
 msgid "The currency definition record has been updated"
-msgstr "la moneda funcional ha  sido  actualizada"
+msgstr "la moneda funcional ha sido actualizada"
 
 #: Currencies.php:136
 msgid "The currency definition record has been added"
@@ -8408,7 +8408,7 @@ msgstr ""
 
 #: Currencies.php:278
 msgid "The currency definition record has been deleted"
-msgstr "la definición de moneda ha  sido eliminada"
+msgstr "la definición de moneda ha sido eliminada"
 
 #: Currencies.php:305
 msgid "ISO4217 Code"
@@ -8469,7 +8469,7 @@ msgstr "Moneda funcional"
 
 #: Currencies.php:414
 msgid "Show all currency definitions"
-msgstr "Mostrar  todas las monedas"
+msgstr "Mostrar todas las monedas"
 
 #: Currencies.php:437 geo_displaymap_customers.php:12
 #: geo_displaymap_suppliers.php:12
@@ -8878,7 +8878,7 @@ msgstr " ha sido seleccionado"
 
 #: CustLoginSetup.php:48 SuppLoginSetup.php:48 WWW_Users.php:72
 msgid "The user ID entered must be at least 4 characters long"
-msgstr "El  identificador de usuario debe tener al menos 4 caracteres"
+msgstr "El identificador de usuario debe tener al menos 4 caracteres"
 
 #: CustLoginSetup.php:51 SuppLoginSetup.php:51 WWW_Users.php:75
 msgid "User names cannot contain any of the following characters"
@@ -8887,7 +8887,7 @@ msgstr "Los nombres de usuario no pueden contener los siguientes caracteres"
 #: CustLoginSetup.php:55 SuppLoginSetup.php:54 UserSettings.php:42
 #: WWW_Users.php:79
 msgid "The password entered must be at least 5 characters long"
-msgstr "La clave debe tener  al menos 5 caracteres"
+msgstr "La clave debe tener al menos 5 caracteres"
 
 #: CustLoginSetup.php:59 SuppLoginSetup.php:57 UserSettings.php:45
 #: WWW_Users.php:83
@@ -9106,7 +9106,7 @@ msgstr "Numero"
 
 #: CustWhereAlloc.php:129 SuppWhereAlloc.php:127
 msgid "Transaction Total"
-msgstr "Total de la Transacción"
+msgstr "Total de la transacción"
 
 #: CustWhereAlloc.php:138 CustomerTransInquiry.php:106 SuppWhereAlloc.php:136
 #: SupplierTransInquiry.php:115 Z_CheckAllocs.php:65
@@ -11550,7 +11550,7 @@ msgstr ""
 
 #: DeliveryDetails.php:298
 msgid "The freight charge has been updated"
-msgstr "El costo por transporte ha sido  actualizado"
+msgstr "El costo por transporte ha sido actualizado"
 
 #: DeliveryDetails.php:298
 msgid ""
@@ -11655,7 +11655,7 @@ msgstr "Confirmar Cantidades de Entrega del pedido y Generar Factura"
 
 #: DeliveryDetails.php:844
 msgid "Select A Different Order"
-msgstr "Seleccione una orden  distinta"
+msgstr "Seleccione una orden distinta"
 
 #: DeliveryDetails.php:856 GoodsReceived.php:130 Shipments.php:489
 #: SpecialOrder.php:627
@@ -11785,7 +11785,7 @@ msgstr ""
 
 #: DeliveryDetails.php:1170
 msgid "Recalc Freight Cost"
-msgstr "Recalcular  Costo transporte"
+msgstr "Recalcular Costo transporte"
 
 #: DeliveryDetails.php:1179
 msgid "Freight/Shipper Method"
@@ -12052,7 +12052,7 @@ msgstr "Debe entrar números positivos"
 
 #: DiscountMatrix.php:37
 msgid "The discount rate must be entered as a positive number"
-msgstr "La taza de Descuento  debe ser  positiva"
+msgstr "La taza de Descuento debe ser positiva"
 
 #: DiscountMatrix.php:43
 msgid ""
@@ -12066,11 +12066,11 @@ msgstr "Se esperan números entre 1 y 100"
 
 #: DiscountMatrix.php:64
 msgid "The discount matrix record has been added"
-msgstr "El registro de la matriz de descuento  ha sido creado"
+msgstr "El registro de la matriz de descuento ha sido creado"
 
 #: DiscountMatrix.php:80
 msgid "The discount matrix record has been deleted"
-msgstr "El registro de la matrz de descuento  ha sido   eliminado"
+msgstr "El registro de la matrz de descuento ha sido eliminado"
 
 #: DiscountMatrix.php:97 PriceMatrix.php:184
 msgid "Customer Price List"
@@ -14244,7 +14244,7 @@ msgstr "¿Está seguro que desea suprimir este costo de flete?"
 
 #: FreightCosts.php:281
 msgid "Show all freight costs for"
-msgstr "Mostrar  todos los Costos de transporte"
+msgstr "Mostrar todos los Costos de transporte"
 
 #: FreightCosts.php:338
 msgid "For Deliveries From"
@@ -14264,7 +14264,7 @@ msgstr "Zona de destino"
 
 #: FreightCosts.php:356
 msgid "Rate per Cubic Metre"
-msgstr "Tarifa por metro  cubico"
+msgstr "Tarifa por metro cubico"
 
 #: FreightCosts.php:358
 msgid "Rate Per KG"
@@ -22911,7 +22911,7 @@ msgstr "Aceptar y Procesar el Pago"
 
 #: Payments.php:1178
 msgid "Supplier Transactions Payment Entry"
-msgstr ""
+msgstr "Registro de pago en transacciones con proveedores"
 
 #: Payments.php:1187
 msgid "Supplier Narrative"
@@ -22934,8 +22934,8 @@ msgid ""
 "Supplier reference in supplier transactions. If blank, it uses the payment "
 "type."
 msgstr ""
-"Referencia de proveedores en las transacciones con los proveedores. Si está "
-"en blanco, se usa el tipo de pago."
+"Referencia de proveedores en las transacciones con proveedores. Si está en "
+"blanco, se usa el tipo de pago."
 
 #: Payments.php:1203
 msgid "Transaction Text"
@@ -22945,7 +22945,7 @@ msgstr "Texto de la transacción"
 msgid ""
 "Transaction text in supplier transactions. If blank, it uses the narrative."
 msgstr ""
-"Texto de la transacción en las transacciones con los proveedores. Si está en "
+"Texto de la transacción en las transacciones con proveedores. Si está en "
 "blanco, se usa la descripción de bancos."
 
 #: Payments.php:1209
@@ -29295,7 +29295,7 @@ msgstr "Consultas de proveedor"
 
 #: SelectSupplier.php:167 SelectSupplier.php:207
 msgid "Supplier Transactions"
-msgstr "Transacciones de proveedores"
+msgstr "Transacciones con proveedores"
 
 #: SelectSupplier.php:168 SelectSupplier.php:208 Suppliers.php:5
 msgid "Supplier Maintenance"
@@ -33563,8 +33563,8 @@ msgid ""
 "To enter supplier transactions the supplier must first be selected from the "
 "supplier selection screen"
 msgstr ""
-"Para ingresar de las transacciones de proveedores, primero el proveedor debe "
-"ser seleccionado desde la pantalla de selección de proveedores"
+"Para ingresar transacciones con proveedores, primero el proveedor debe ser "
+"seleccionado desde la pantalla de selección de proveedores"
 
 #: SuppFixedAssetChgs.php:22 SuppShiptChgs.php:27
 msgid ""
@@ -34317,7 +34317,7 @@ msgstr "Monto en la moneda del proveedor"
 
 #: SupplierAllocations.php:447
 msgid "Transaction total"
-msgstr "Transacción total"
+msgstr "Total de la transacción"
 
 #: SupplierAllocations.php:457
 msgid "Supp"
@@ -34985,7 +34985,7 @@ msgstr "Emitir (liberar)"
 
 #: SupplierInquiry.php:138
 msgid "The Supplier Transactions could not be updated because"
-msgstr "Las Transacciones de proveedores no se pudieron actualizar, porque"
+msgstr "Las transacciones con proveedores no se pudieron actualizar porque"
 
 #: SupplierInquiry.php:266
 msgid "Click to view payments"
@@ -35601,15 +35601,15 @@ msgstr "Seleccione elementos para ofrecer de"
 
 #: SupplierTransInquiry.php:6
 msgid "Supplier Transactions Inquiry"
-msgstr "Consultar Transacciones del proveedor"
+msgstr "Consultar transacciones con proveedores"
 
 #: SupplierTransInquiry.php:102
 msgid ""
 "The supplier transactions for the selected criteria could not be retrieved "
 "because"
 msgstr ""
-"No se pudo obtener las transacciones del proveedor para el criterio indicado "
-"porque"
+"No se pudo obtener las transacciones con proveedores para el criterio "
+"indicado porque"
 
 #: SupplierTransInquiry.php:110
 msgid "Supp Ref"
