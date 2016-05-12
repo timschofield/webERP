@@ -1,5 +1,6 @@
 webERP Change Log
 
+12/05/16 RChacon: Fix blank line caused by reverse character RTL. Clean up code.
 11/05/16 RChacon: Include translation to hebrew, thanks to Hagay Mandel.
 09/05/16 Exson: Tidy Code Up to remove redundant code according to Tim's guide.
 05/06/16 Exson: Modify Z_RePostGLFromPeriod.php to make this feature still reliable with prev
