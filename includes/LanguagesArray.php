@@ -67,7 +67,7 @@ $LanguagesArray['fr_FR.utf8']['ThousandsSeparator'] = ' ';
 $LanguagesArray['he_IL.utf8']['LanguageName'] = 'עברית';
 $LanguagesArray['he_IL.utf8']['WindowsLocale'] = 'hebrew';
 $LanguagesArray['he_IL.utf8']['DecimalPoint'] = '.';
-$LanguagesArray['he.IL.utf8']['ThousandsSeparator'] = ',';
+$LanguagesArray['he_IL.utf8']['ThousandsSeparator'] = ',';
 
 $LanguagesArray['hi_IN.utf8']['LanguageName'] = 'हिन्दी, हिंदी';
 $LanguagesArray['hi_IN.utf8']['WindowsLocale'] = 'hindi';
@@ -184,5 +184,5 @@ $LanguagesArray['zh_TW.utf8']['WindowsLocale'] = 'chinese-traditional';
 $LanguagesArray['zh_TW.utf8']['DecimalPoint'] = '.';
 $LanguagesArray['zh_TW.utf8']['ThousandsSeparator'] = ',';
 
-asort($LanguagesArray);
+/*asort($LanguagesArray);*/
 ?>

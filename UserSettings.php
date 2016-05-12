@@ -1,13 +1,17 @@
 <?php
-
 /* $Id$*/
+/* Allows the user to change system wide defaults for the theme - appearance, the number of records to show in searches and the language to display messages in */
 
 include('includes/session.inc');
 $Title = _('User Settings');
+$ViewTopic = 'GettingStarted';
+$BookMark = 'UserSettings';
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/user.png" title="' .
-	_('User Settings') . '" alt="" />' . ' ' . _('User Settings') . '</p>';
+echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+	'/images/user.png" title="',// Icon image.
+	_('User Settings'), '" /> ',// Icon title.
+	_('User Settings'), '</p>';// Page title.
 
 $PDFLanguages = array(_('Latin Western Languages - Times'),
 					_('Eastern European Russian Japanese Korean Hebrew Arabic Thai'),
@@ -123,26 +127,24 @@ echo '<tr>
 	<td><input type="text" class="integer" required="required" title="'._('The input must be positive integer').'" name="DisplayRecordsMax" size="3" maxlength="3" value="' . $_POST['DisplayRecordsMax'] . '"  /></td>
 	</tr>';
 
-
+// Select language:
 echo '<tr>
-	<td>' . _('Language') . ':</td>
+	<td>', _('Language'), ':</td>
 	<td><select name="Language">';
-
-if (!isset($_POST['Language'])){
-	$_POST['Language']=$_SESSION['Language'];
+if(!isset($_POST['Language'])) {
+	$_POST['Language'] = $_SESSION['Language'];
 }
-
-foreach ($LanguagesArray as $LanguageEntry => $LanguageName){
-	if (isset($_POST['Language']) AND $_POST['Language'] == $LanguageEntry){
-		echo '<option selected="selected" value="' . $LanguageEntry . '">' . $LanguageName['LanguageName']  . '</option>';
-	} elseif (!isset($_POST['Language']) AND $LanguageEntry == $DefaultLanguage) {
-		echo '<option selected="selected" value="' . $LanguageEntry . '">' . $LanguageName['LanguageName']  . '</option>';
-	} else {
-		echo '<option value="' . $LanguageEntry . '">' . $LanguageName['LanguageName']  . '</option>';
+foreach($LanguagesArray as $LanguageEntry => $LanguageName) {
+	echo '<option ';
+	if(isset($_POST['Language']) AND $_POST['Language'] == $LanguageEntry) {
+		echo 'selected="selected" ';
 	}
+	echo 'value="', $LanguageEntry, '">', $LanguageName['LanguageName'], '</option>';
 }
-echo '</select></td></tr>';
+echo '</select></td>
+	</tr>';
 
+// Select theme:
 echo '<tr>
 	<td>' . _('Theme') . ':</td>
 	<td><select name="Theme">';
