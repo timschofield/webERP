@@ -1,6 +1,6 @@
 <?php
 /* $Id$*/
-/* Defines the sections in the general ledger reports. */
+/* Defines the sections in the general ledger reports */
 
 include('includes/session.inc');
 $Title = _('Account Sections');
@@ -90,7 +90,7 @@ if(isset($_POST['submit'])) {
 
 	if(isset($_POST['SelectedSectionID']) AND $_POST['SelectedSectionID']!='' AND $InputError !=1) {
 
-		/*SelectedSectionID could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
+		/*SelectedSectionID could also exist if submit had not been clicked this code would not run in this case cos submit is false of course see the delete code below*/
 
 		$sql = "UPDATE accountsection SET sectionname='" . $_POST['SectionName'] . "'
 				WHERE sectionid = '" . $_POST['SelectedSectionID'] . "'";
@@ -126,9 +126,9 @@ if(isset($_POST['submit'])) {
 	$myrow = DB_fetch_array($result);
 	if($myrow['sections']>0) {
 		prnMsg( _('Cannot delete this account section because general ledger accounts groups have been created using this section'),'warn');
-        echo '<div>';
-		echo '<br />' . _('There are') . ' ' . $myrow['sections'] . ' ' . _('general ledger accounts groups that refer to this account section');
-        echo '</div>';
+		echo '<div>',
+			'<br />', _('There are'), ' ', $myrow['sections'], ' ', _('general ledger accounts groups that refer to this account section'),
+			'</div>';
 
 	} else {
 		//Fetch section name
@@ -151,13 +151,13 @@ if(isset($_POST['submit'])) {
 
 if(!isset($_GET['SelectedSectionID']) AND !isset($_POST['SelectedSectionID'])) {
 
-/* An account section could be posted when one has been edited and is being updated
-  or GOT when selected for modification
-  SelectedSectionID will exist because it was sent with the page in a GET .
-  If its the first time the page has been displayed with no parameters
-  then none of the above are true and the list of account groups will be displayed with
-  links to delete or edit each. These will call the same page again and allow update/input
-  or deletion of the records*/
+/*	An account section could be posted when one has been edited and is being updated
+	or GOT when selected for modification
+	SelectedSectionID will exist because it was sent with the page in a GET .
+	If its the first time the page has been displayed with no parameters
+	then none of the above are true and the list of account groups will be displayed with
+	links to delete or edit each. These will call the same page again and allow update/input
+	or deletion of the records*/
 
 	$sql = "SELECT sectionid,
 			sectionname
@@ -191,15 +191,17 @@ if(!isset($_GET['SelectedSectionID']) AND !isset($_POST['SelectedSectionID'])) {
 			$k++;
 		}
 
-		echo   '<td class="number">', $myrow['sectionid'], '</td>
+		echo	'<td class="number">', $myrow['sectionid'], '</td>
 				<td class="text">', $myrow['sectionname'], '</td>
-				<td class="noprint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'], '?SelectedSectionID=', urlencode($myrow['sectionid']), ENT_QUOTES, 'UTF-8'), '">', _('Edit'), '</a></td>';
+				<td class="noprint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'].'?SelectedSectionID='.urlencode($myrow['sectionid']), ENT_QUOTES, 'UTF-8'), '">', _('Edit'), '</a></td>
+				<td class="noprint">';
 		if( $myrow['sectionid'] == '1' or $myrow['sectionid'] == '2' ) {
-			echo '<td class="noprint"><b>', _('Restricted'), '</b></td>';
+			echo '<b>', _('Restricted'), '</b>';
 		} else {
-			echo '<td class="noprint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'], '?SelectedSectionID=', urlencode($myrow['sectionid']), '&delete=1', ENT_QUOTES, 'UTF-8'), '">', _('Delete'), '</a></td>';
+			echo '<a href="', htmlspecialchars($_SERVER['PHP_SELF'].'?SelectedSectionID='.urlencode($myrow['sectionid']).'&delete=1', ENT_QUOTES, 'UTF-8'), '">', _('Delete'), '</a>';
 		}
-		echo '</tr>';
+		echo '</td>
+			</tr>';
 	} //END WHILE LIST LOOP
 	echo '</table>';
 /*	echo '</div>';// End div id="Report".*/
@@ -212,9 +214,9 @@ if(isset($_POST['SelectedSectionID']) or isset($_GET['SelectedSectionID'])) {
 
 if(! isset($_GET['delete'])) {
 
-	echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" id="AccountSections" method="post">';
-    echo '<div class="noprint"><br />';
-	echo '<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />';
+	echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" id="AccountSections" method="post">',
+		'<div class="noprint"><br />',
+		'<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />';
 
 	if(isset($_GET['SelectedSectionID'])) {
 		//editing an existing section
@@ -232,17 +234,23 @@ if(! isset($_GET['delete'])) {
 			$myrow = DB_fetch_array($result);
 
 			$_POST['SectionID'] = $myrow['sectionid'];
-			$_POST['SectionName']  = $myrow['sectionname'];
+			$_POST['SectionName'] = $myrow['sectionname'];
 
-			echo '<input type="hidden" name="SelectedSectionID" value="' . $_POST['SectionID'] . '" />';
-			echo '<table class="selection">
+			echo '<input name="SelectedSectionID" type="hidden" value="', $_POST['SectionID'], '" />
+				<table class="selection">
+				<thead>
 					<tr>
-						<td>' . _('Section Number') . ':' . '</td>
-						<td>' . $_POST['SectionID'] . '</td>
+						<th colspan="2">', _('Edit Account Section Details'), '</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>', _('Section Number'), ':</td>
+						<td>', $_POST['SectionID'], '</td>
 					</tr>';
 		}
 
-	}  else {
+	} else {
 
 		if(!isset($_POST['SelectedSectionID'])) {
 			$_POST['SelectedSectionID']='';
@@ -254,24 +262,33 @@ if(! isset($_GET['delete'])) {
 			$_POST['SectionName']='';
 		}
 		echo '<table class="selection">
-			<tr>
-				<td>' . _('Section Number') . ':' . '</td>
-				<td><input tabindex="1" ' . (in_array('SectionID',$Errors) ?  'class="inputerror"' : '' ) .' type="text" autofocus="autofocus" required="required" name="SectionID" class="number" size="4" maxlength="4" value="' . $_POST['SectionID'] . '" /></td>
-			</tr>';
+			<thead>
+				<tr>
+					<th colspan="2">', _('New Account Section Details'), '</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>', _('Section Number'), ':</td>
+					<td><input autofocus="autofocus" ',
+						( in_array('SectionID',$Errors) ? 'class="inputerror number"' : 'class="number" ' ),
+						'maxlength="4" name="SectionID" required="required" size="4" tabindex="1" type="text" value="', $_POST['SectionID'], '" /></td>
+				</tr>';
 	}
-	echo '<tr>
-			<td>' . _('Section Description') . ':' . '</td>
-			<td><input tabindex="2" ' . (in_array('SectionName',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="SectionName" required="required" size="30" maxlength="30" value="' . $_POST['SectionName'] . '" /></td>
-		</tr>';
-
-	echo '<tr>
-			<td colspan="2"><div class="centre"><input tabindex="3" type="submit" name="submit" value="' . _('Enter Information') . '" /></div></td>
-		</tr>
+	echo	'<tr>
+				<td>', _('Section Description'), ':</td>
+				<td><input ',
+					( in_array('SectionName',$Errors) ? 'class="inputerror text" ' : 'class="text" ' ),
+					'maxlength="30" name="SectionName" required="required" size="30" tabindex="2" type="text" value="', $_POST['SectionName'], '" /></td>
+			</tr>
+			<tr>
+				<td class="centre" colspan="2"><input name="submit" tabindex="3" type="submit" value="', _('Enter Information'), '" /></td>
+			</tr>
+		</tbody>
 		</table>
 		<br />
 		</div>
 		</form>';
-
 } //end if record deleted no point displaying form to add record
 
 include('includes/footer.inc');

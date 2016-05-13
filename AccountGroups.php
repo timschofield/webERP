@@ -1,12 +1,12 @@
 <?php
 /* $Id$*/
+/* Defines the groupings of general ledger accounts */
 
 include('includes/session.inc');
-
 $Title = _('Account Groups');
-$ViewTopic= 'GeneralLedger';// Filename in ManualContents.php's TOC.
-$BookMark = 'AccountGroups';// Anchor's id in the manual's html document.
-include('includes/header.inc');// Manual links before header.inc.
+$ViewTopic= 'GeneralLedger';
+$BookMark = 'AccountGroups';
+include('includes/header.inc');
 
 include('includes/SQL_CommonFunctions.inc');
 
@@ -260,12 +260,12 @@ if (isset($_POST['submit'])) {
 
 if (!isset($_GET['SelectedAccountGroup']) AND !isset($_POST['SelectedAccountGroup'])) {
 
-/* An account group could be posted when one has been edited and is being updated or GOT when selected for modification
- SelectedAccountGroup will exist because it was sent with the page in a GET .
- If its the first time the page has been displayed with no parameters
-then none of the above are true and the list of account groups will be displayed with
-links to delete or edit each. These will call the same page again and allow update/input
-or deletion of the records*/
+/*	An account group could be posted when one has been edited and is being updated or GOT when selected for modification
+	SelectedAccountGroup will exist because it was sent with the page in a GET .
+	If its the first time the page has been displayed with no parameters
+	then none of the above are true and the list of account groups will be displayed with
+	links to delete or edit each. These will call the same page again and allow update/input
+	or deletion of the records*/
 
 	$sql = "SELECT groupname,
 					sectionname,
@@ -364,11 +364,16 @@ if (!isset($_GET['delete'])) {
 		$_POST['PandL']  = $myrow['pandl'];
 		$_POST['ParentGroupName'] = $myrow['parentgroupname'];
 
-		echo '<table class="selection">';
-		echo '<tr>
-				<th colspan="2">' . _('Edit Account Group Details') . '</th>
-			</tr>';
-        echo '<input type="hidden" name="SelectedAccountGroup" value="' . $_GET['SelectedAccountGroup'] . '" />';
+		echo '<table class="selection">
+			<thead>
+				<tr>
+					<th colspan="2">', _('Edit Account Group Details'), '</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><input name="SelectedAccountGroup" type="hidden" value="', $_GET['SelectedAccountGroup'], '" /></td>
+				</tr>';
 
 	} elseif (!isset($_POST['MoveGroup'])) { //end of if $_POST['SelectedAccountGroup'] only do the else when a new record is being entered
 
@@ -388,29 +393,33 @@ if (!isset($_GET['delete'])) {
 			$_POST['PandL']='';
 		}
 
-		echo '<br /><table class="selection">';
-		echo '<tr>
-				<th colspan="2">' . _('New Account Group Details') . '</th>
+		echo '<br />
+		<table class="selection">
+		<thead>
+			<tr>
+				<th colspan="2">', _('New Account Group Details'), '</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				 <td><input name="SelectedAccountGroup" type="hidden" value="', $_POST['SelectedAccountGroup'], '" /></td>
 			</tr>';
-        echo '<tr>
-                 <td><input  type="hidden" name="SelectedAccountGroup" value="' . $_POST['SelectedAccountGroup'] . '" /></td>
-            </tr>';
 	}
 	echo '<tr>
-			<td>' . _('Account Group Name') . ':' . '</td>
-			<td><input tabindex="1" autofocus="autofocus" required="required" data-type="no-illegal-chars" placeholder="' . _('Enter the account group name') . '" ' . (in_array('GroupName',$Errors) ?  '"class=inputerror"' : '' ) . ' type="text" name="GroupName" size="30" minlength="3" maxlength="30" value="' . $_POST['GroupName'] . '" title="' . _('A unique name for the account group must be entered - at least 3 characters long and less than 30 characters long. Only alpha numeric characters can be used.') . '" /></td>
+			<td>', _('Account Group Name'), ':</td>
+			<td><input autofocus="autofocus" data-type="no-illegal-chars" placeholder="' . _('Enter the account group name') . '" ' . (in_array('GroupName',$Errors) ?  '"class=inputerror" ' : '' ) . 'maxlength="30" minlength="3" name="GroupName" required="required" size="30" tabindex="1" type="text" value="' . $_POST['GroupName'] . '" title="' . _('A unique name for the account group must be entered - at least 3 characters long and less than 30 characters long. Only alpha numeric characters can be used.') . '" /></td>
 		</tr>
 		<tr>
-			<td>' . _('Parent Group') . ':' . '</td>
-			<td><select tabindex="2" ' . (in_array('ParentGroupName',$Errors) ?  'class="selecterror"' : '' ) . '  name="ParentGroupName">';
+			<td>', _('Parent Group'), ':</td>
+			<td><select ',
+				( in_array('ParentGroupName',$Errors) ? 'class="selecterror" ' : '' ),
+				'name="ParentGroupName" tabindex="2">';
 
 	$sql = "SELECT groupname FROM accountgroups";
 	$groupresult = DB_query($sql,$ErrMsg,$DbgMsg);
-	if (!isset($_POST['ParentGroupName'])){
-		echo '<option selected="selected" value="">' ._('Top Level Group') . '</option>';
-	} else {
-		echo '<option value="">' ._('Top Level Group') . '</option>';
-	}
+	echo '<option ',
+		( !isset($_POST['ParentGroupName']) ? 'selected="selected" ' : '' ),
+		'value="">', _('Top Level Group'), '</option>';
 
 	while ( $grouprow = DB_fetch_array($groupresult) ) {
 
@@ -423,8 +432,10 @@ if (!isset($_GET['delete'])) {
 	echo '</select></td>
 		</tr>
 		<tr>
-			<td>' . _('Section In Accounts') . ':' . '</td>
-			<td><select tabindex="3" ' . (in_array('SectionInAccounts',$Errors) ?  'class="selecterror"' : '' ) . ' name="SectionInAccounts">';
+			<td>', _('Section In Accounts'), ':</td>
+			<td><select ',
+				( in_array('SectionInAccounts',$Errors) ? 'class="selecterror" ' : '' ),
+				'name="SectionInAccounts" tabindex="3">';
 
 	$sql = "SELECT sectionid, sectionname FROM accountsection ORDER BY sectionid";
 	$secresult = DB_query($sql,$ErrMsg,$DbgMsg);
@@ -438,8 +449,8 @@ if (!isset($_GET['delete'])) {
 	echo '</select></td>
 		</tr>
 		<tr>
-			<td>' . _('Profit and Loss') . ':' . '</td>
-			<td><select tabindex="4" name="PandL" title="' . _('Select YES if this account group will contain accounts that will consist of only profit and loss accounts or NO if the group will contain balance sheet account') . '">';
+			<td>', _('Profit and Loss'), ':</td>
+			<td><select name="PandL" tabindex="4" title="', _('Select YES if this account group will contain accounts that will consist of only profit and loss accounts or NO if the group will contain balance sheet account'), '">';
 
 	if ($_POST['PandL']!=0 ) {
 		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
@@ -455,14 +466,15 @@ if (!isset($_GET['delete'])) {
 	echo '</select></td>
 		</tr>
 		<tr>
-			<td>' . _('Sequence In TB') . ':' . '</td>
-			<td><input tabindex="5" type="text" maxlength="4" name="SequenceInTB" required="required" class="number" value="' . $_POST['SequenceInTB'] . '" title="' . _('Enter the sequence number that this account group and its child general ledger accounts should display in the trial balance') . '" /></td>
+			<td>', _('Sequence In TB'), ':</td>
+			<td><input class="number" maxlength="4" name="SequenceInTB" required="required" tabindex="5" type="text" value="', $_POST['SequenceInTB'], '" title="', _('Enter the sequence number that this account group and its child general ledger accounts should display in the trial balance'), '" /></td>
 		</tr>
 		<tr>
-			<td colspan="2"><div class="centre"><input tabindex="6" type="submit" name="submit" value="' . _('Enter Information') . '" /></div></td>
+			<td class="centre" colspan="2"><input name="submit" tabindex="6" type="submit" value="', _('Enter Information'), '" /></td>
 		</tr>
-		</table>
-		<br />
+		</tbody>
+	</table>
+	<br />
 	</div>
 	</form>';
 
