@@ -1,10 +1,13 @@
 <?php
-
 /* $Id$*/
+/* Adds customer contacts */
 
 include('includes/session.inc');
 $Title = _('Customer Contacts');
+$ViewTopic = 'AccountsReceivable';
+$BookMark = 'AddCustomerContacts';
 include('includes/header.inc');
+
 include('includes/SQL_CommonFunctions.inc');
 
 if (isset($_GET['Id'])){
@@ -17,7 +20,7 @@ if (isset($_POST['DebtorNo'])){
 } elseif (isset($_GET['DebtorNo'])){
 	$DebtorNo = $_GET['DebtorNo'];
 }
-echo '<a href="' . $RootPath . '/Customers.php?DebtorNo=' . $DebtorNo . '">' . _('Back to Customers') . '</a><br />';
+echo '<a class="noprint" href="' . $RootPath . '/Customers.php?DebtorNo=' . $DebtorNo . '">' . _('Back to Customers') . '</a><br />';
 $SQLname="SELECT name FROM debtorsmaster WHERE debtorno='" . $DebtorNo . "'";
 $Result = DB_query($SQLname);
 $row = DB_fetch_array($Result);
@@ -56,7 +59,7 @@ if ( isset($_POST['submit']) ) {
 										email='" . $_POST['ContactEmail'] . "'
 					WHERE debtorno ='".$DebtorNo."'
 					AND contid='".$Id."'";
-		$msg = _('Customer Contacts') . ' ' . $DebtorNo  . ' ' . _('has been updated');
+		$msg = _('Customer Contacts') . ' ' . $DebtorNo . ' ' . _('has been updated');
 	} elseif ($InputError !=1) {
 
 		$sql = "INSERT INTO custcontacts (debtorno,
@@ -123,11 +126,12 @@ if (!isset($Id)) {
 
 	echo '<table class="selection">';
 	echo '<tr>
-			<th>' . _('Name') . '</th>
-			<th>' . _('Role') . '</th>
-			<th>' . _('Phone no') . '</th>
-			<th>' . _('Email') . '</th>
-			<th>' . _('Notes') . '</th>
+			<th class="text">', _('Name'), '</th>
+			<th class="text">', _('Role'), '</th>
+			<th class="text">', _('Phone no'), '</th>
+			<th class="text">', _('Email'), '</th>
+			<th class="text">', _('Notes'), '</th>
+			<th class="noprint" colspan="2">&nbsp;</th>
 		</tr>';
 
 	$k=0; //row colour counter
@@ -140,13 +144,13 @@ if (!isset($Id)) {
 			echo '<tr class="EvenTableRows">';
 			$k=1;
 		}
-		printf('<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td><a href="mailto:%s">%s</a></td>
-				<td>%s</td>
-				<td><a href="%sId=%s&amp;DebtorNo=%s">' . _('Edit') . '</a></td>
-				<td><a href="%sId=%s&amp;DebtorNo=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this contact?') . '\');">' .  _('Delete'). '</a></td></tr>',
+		printf('<td class="text">%s</td>
+				<td class="text">%s</td>
+				<td class="text">%s</td>
+				<td class="text"><a href="mailto:%s">%s</a></td>
+				<td class="text">%s</td>
+				<td class="noprint"><a href="%sId=%s&amp;DebtorNo=%s">' . _('Edit') . '</a></td>
+				<td class="noprint"><a href="%sId=%s&amp;DebtorNo=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this contact?') . '\');">' . _('Delete'). '</a></td></tr>',
 				$myrow['contactname'],
 				$myrow['role'],
 				$myrow['phoneno'],
@@ -170,12 +174,11 @@ if (isset($Id)) {
 
 if (!isset($_GET['delete'])) {
 
-	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?DebtorNo='.$DebtorNo.'">';
-    echo '<div>';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?DebtorNo='.$DebtorNo.'">',
+		'<div>',
+		'<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	if (isset($Id)) {
-
+	if (isset($Id)) {// Edit Customer Contact Details.
 		$sql = "SELECT contid,
 						debtorno,
 						contactname,
@@ -191,78 +194,88 @@ if (!isset($_GET['delete'])) {
 		$myrow = DB_fetch_array($result);
 
 		$_POST['Con_ID'] = $myrow['contid'];
-		$_POST['ContactName']	= $myrow['contactname'];
-		$_POST['ContactRole']  = $myrow['role'];
+		$_POST['ContactName'] = $myrow['contactname'];
+		$_POST['ContactRole'] = $myrow['role'];
 		$_POST['ContactPhone']  = $myrow['phoneno'];
 		$_POST['ContactEmail'] = $myrow['email'];
 		$_POST['ContactNotes'] = $myrow['notes'];
-		$_POST['DebtorNo']  = $myrow['debtorno'];
-		echo '<input type="hidden" name="Id" value="'. $Id .'" />';
-		echo '<input type="hidden" name="Con_ID" value="' . $_POST['Con_ID'] . '" />';
-		echo '<input type="hidden" name="DebtorNo" value="' . $_POST['DebtorNo'] . '" />';
-		echo '<br />
+		$_POST['DebtorNo'] = $myrow['debtorno'];
+		echo '<input type="hidden" name="Id" value="'. $Id .'" />',
+			'<input type="hidden" name="Con_ID" value="' . $_POST['Con_ID'] . '" />',
+			'<input type="hidden" name="DebtorNo" value="' . $_POST['DebtorNo'] . '" />',
+			'<br />
 				<table class="selection">
+				<thead>
+					<tr>
+						<th colspan="2">', _('Edit Customer Contact Details'), '</th>
+					</tr>
+				</thead>
+				<tbody>
 				<tr>
-					<td>' .  _('Contact Code').':</td>
-					<td>' . $_POST['Con_ID'] . '</td>
+					<td>', _('Contact Code'), ':</td>
+					<td>', $_POST['Con_ID'], '</td>
 				</tr>';
-	} else {
-		echo '<table class="selection">';
+	} else {// New Customer Contact Details.
+		echo '<table class="noprint selection">
+		<thead>
+			<tr>
+				<th colspan="2">', _('New Customer Contact Details'), '</th>
+			</tr>
+		</thead>
+		<tbody>';
 	}
+	// Contact name:
+	echo '<tr>
+			<td>', _('Contact Name'), '</td>
+			<td><input maxlength="40" name="ContactName" required="required" size="35" type="text" ';
+				if( isset($_POST['ContactName']) ) {
+					echo 'autofocus="autofocus" value="', $_POST['ContactName'], '" ';
+				}
+				echo '/></td>
+		</tr>';
+	// Role:
+	echo '<tr>
+			<td>', _('Role'), '</td>
+			<td><input maxlength="40" name="ContactRole" size="35" type="text" ';
+				if( isset($_POST['ContactRole']) ) {
+					echo 'value="', $_POST['ContactRole'], '" ';
+				}
+				echo '/></td>
+		</tr>';
+	// Phone:
+	echo '<tr>
+			<td>', _('Phone'), '</td>
+			<td><input maxlength="40" name="ContactPhone" size="35" type="tel" ';
+				if( isset($_POST['ContactPhone']) ) {
+					echo 'value="', $_POST['ContactPhone'], '" ';
+				}
+				echo '/></td>
+		</tr>';
+	// Email:
+	echo '<tr>
+			<td>', _('Email'), '</td>
+			<td><input maxlength="55" name="ContactEmail" size="55" type="email" ';
+				if( isset($_POST['ContactEmail']) ) {
+					echo 'value="', $_POST['ContactEmail'], '" ';
+				}
+				echo '/></td>
+		</tr>';
+	// Notes:
+	echo '<tr>
+			<td>', _('Notes'), '</td>
+			<td><textarea cols="40" name="ContactNotes" rows="3">',
+				( isset($_POST['ContactNotes']) ? $_POST['ContactNotes'] : '' ),
+				'</textarea></td>
+		</tr>',
 
-	echo '<tr>
-			<td>' .  _('Contact Name') . '</td>';
-	if (isset($_POST['ContactName'])) {
-		echo '<td><input type="text" autofocus="autofocus" required="required" name="ContactName" value="' . $_POST['ContactName']. '" size="35" maxlength="40" /></td>
-			</tr>';
-	} else {
-		echo '<td><input type="text" required="required" name="ContactName" size="35" maxlength="40" /></td>
-			</tr>';
-	}
-	echo '<tr>
-			<td>' . _('Role') . '</td>';
-	if (isset($_POST['ContactRole'])) {
-		echo '<td><input type="text" name="ContactRole" value="'. $_POST['ContactRole']. '" size="35" maxlength="40" /></td>
-			</tr>';
-	} else {
-		echo '<td><input type="text" name="ContactRole" size="35" maxlength="40" /></td>
-			</tr>';
-	}
-	echo '<tr>
-			<td>' . _('Phone') . '</td>';
-	if (isset($_POST['ContactPhone'])) {
-		echo '<td><input type="tel" name="ContactPhone" value="' . $_POST['ContactPhone'] . '" size="35" maxlength="40" /></td>
-			</tr>';
-	} else {
-		echo '<td><input type="tel" name="ContactPhone" size="35" maxlength="40" /></td>
-			</tr>';
-	}
-	echo '<tr>
-			<td>' . _('Email') . '</td>';
-	if (isset($_POST['ContactEmail'])) {
-		echo '<td><input type="email" name="ContactEmail" value="' . $_POST['ContactEmail'] . '" size="55" maxlength="55" /></td>
-			</tr>';
-	} else {
-		echo '<td><input type="email" name="ContactEmail" size="55" maxlength="55" /></td>
-			</tr>';
-	}
-	echo '<tr>
-			<td>' . _('Notes') . '</td>';
-	if (isset($_POST['ContactNotes'])) {
-		echo '<td><textarea name="ContactNotes" rows="3" cols="40">' .  $_POST['ContactNotes'] . '</textarea></td>';
-	} else {
-	   echo '<td><textarea name="ContactNotes" rows="3" cols="40"></textarea></td>';
-	}
-    echo '</tr>';
-	echo '<tr>
-			<td colspan="2">
-				<div class="centre">
-					<input type="submit" name="submit" value="'. _('Enter Information') . '" />
-				</div>
+		'<tr>
+			<td class="centre" colspan="2">
+				<input name="submit" type="submit" value="', _('Enter Information'), '" />
 			</td>
 		</tr>
+		<tbody>
 		</table>
-        </div>
+		</div>
 		</form>';
 
 } //end if record deleted no point displaying form to add record
