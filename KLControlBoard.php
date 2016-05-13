@@ -50,8 +50,15 @@ if (!isset($_GET['Section'])){
 ***************************************************************************************/
 
 if ($KL_SystemAdmin){
+
 	// WARNINGS STILL NOT DOCUMENTED ON WIKI
 prnMsg("START OF PENDING FOR KL INTRANET ",'success');
+		ItemsInWrongShops("KAPAL-LAUT", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsInWrongShops("BLINK", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsInWrongShops("OUTLET", $RootPath, $db);
+		$NumberOfTestExecuted++;
 		over_or_below_limit("Items changing price or moving category", "OVER", 50, $RootPath, $db);
 		over_or_below_limit("Items changing price", "OVER", 20, $RootPath, $db);
 		over_or_below_limit("Items moving to 20% discount", "OVER", 20, $RootPath, $db);
@@ -233,14 +240,23 @@ if ($ProcessSection01){
 		OR $KL_PurchasingTeam 
 		OR $KL_ShopSupportLeader){
 		
-		DiscountedItemsOnNotOutletShops("DISC20", $RootPath, $db);
+/*		DiscountedItemsOnNotOutletShops("DISC20", $RootPath, $db);
 		$NumberOfTestExecuted++;
 		DiscountedItemsOnNotOutletShops("DISC50", $RootPath, $db);
 		$NumberOfTestExecuted++;
 		DiscountedItemsOnNotOutletShops("DISC80", $RootPath, $db);
 		$NumberOfTestExecuted++;
+
 		NotDiscountedItemsOnOutLetShops($RootPath, $db);
 		$NumberOfTestExecuted++;
+*/
+		ItemsInWrongShops("KAPAL-LAUT", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsInWrongShops("BLINK", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsInWrongShops("OUTLET", $RootPath, $db);
+		$NumberOfTestExecuted++;
+
 	}
 
 	if ($KL_BusinessDevelopmentManager
