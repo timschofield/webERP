@@ -1,6 +1,7 @@
 webERP Change Log
 
-13/05/16 RChacon: In AddCustomerContacts.php, add classes to print and table heads. Clean up code.
+14/05/16 RChacon: In SelectCustomer.php, fix use of Google Maps JavaScript API V3, unpaired html tags and other bugs.
+13/05/16 RChacon: In AddCustomerContacts.php, add classes to print and table heads. Improve code.
 12/05/16 RChacon: Fix blank line caused by reverse character RTL. Clean up code.
 11/05/16 RChacon: Include translation to hebrew, thanks to Hagay Mandel.
 09/05/16 Exson: Tidy Code Up to remove redundant code according to Tim's guide.
