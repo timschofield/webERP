@@ -42236,7 +42236,7 @@ msgid "अंतिम अदा दिनांक:"
 msgstr ""
 
 #: e:\acerd\MarathiMessage.html+html.body.div.table.tr.td:30169
-msgid "Last Paid Amount (inc tax):"
+msgid "Last Paid Amount (inc tax)"
 msgstr "अंतिम अदा रक्कम (इन्क कर):"
 
 #: e:\acerd\MarathiMessage.html+html.body.div.table.tr.td:30171
@@ -42244,7 +42244,7 @@ msgid "अंतिम अदा रक्कम (इन्क कर):"
 msgstr ""
 
 #: e:\acerd\MarathiMessage.html+html.body.div.table.tr.td:30175
-msgid "Customer since:"
+msgid "Customer since"
 msgstr "ग्राहक पासून:"
 
 #: e:\acerd\MarathiMessage.html+html.body.div.table.tr.td:30177
@@ -42260,7 +42260,7 @@ msgid "एकही ग्राहक पासून खर्च."
 msgstr ""
 
 #: e:\acerd\MarathiMessage.html+html.body.div.table.tr.td:30186
-msgid "Total Spend from this Customer (inc tax):"
+msgid "Total Spend from this Customer (inc tax)"
 msgstr "या ग्राहक (इन्क कर) पासून एकूण खर्च:"
 
 #: e:\acerd\MarathiMessage.html+html.body.div.table.tr.td:30188

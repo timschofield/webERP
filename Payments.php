@@ -1201,7 +1201,7 @@ the fields for entry of receipt amt and disc */
 	}
 	echo '<tr>
 			<td>', _('Transaction Text'), ':</td>
-			<td><input class="text" maxlength="200" name="supptrans_transtext" size="52" type="text" value="', stripslashes($_POST['supptrans_transtext']), '" /> ', _('Transaction text in supplier transactions. If blank, it uses the narrative.'), '</td>
+			<td><input class="text" maxlength="200" name="supptrans_transtext" size="52" type="text" value="', stripslashes($_POST['supptrans_transtext']), '" /> ', _('Transaction text in supplier transactions. If blank, it uses the bank narrative.'), '</td>
 		</tr>';
 
 	echo '<tr>

@@ -22168,7 +22168,7 @@ msgstr ""
 
 #: Payments.php:1204
 msgid ""
-"Transaction text in supplier transactions. If blank, it uses the narrative."
+"Transaction text in supplier transactions. If blank, it uses the bank narrative."
 msgstr ""
 
 #: Payments.php:1209
@@ -27436,11 +27436,11 @@ msgid "Last Paid Date:"
 msgstr "Utolsó száll."
 
 #: SelectCustomer.php:637
-msgid "Last Paid Amount (inc tax):"
+msgid "Last Paid Amount (inc tax)"
 msgstr "Utolsó fizetett összeg (bruttó adó):"
 
 #: SelectCustomer.php:641
-msgid "Customer since:"
+msgid "Customer since"
 msgstr "Vevő (dátum) óta"
 
 #: SelectCustomer.php:647
@@ -27448,7 +27448,7 @@ msgid "No Spend from this Customer."
 msgstr "Új vevő felvitel"
 
 #: SelectCustomer.php:653
-msgid "Total Spend from this Customer (inc tax):"
+msgid "Total Spend from this Customer (inc tax)"
 msgstr "Összesen Töltsön e az Ügyfél (inc adó):"
 
 #: SelectCustomer.php:659

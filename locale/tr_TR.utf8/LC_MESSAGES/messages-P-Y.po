@@ -14671,15 +14671,15 @@ msgid "Last Paid Date:"
 msgstr ""
 
 #: SelectCustomer.php:602
-msgid "Last Paid Amount (inc tax):"
+msgid "Last Paid Amount (inc tax)"
 msgstr ""
 
 #: SelectCustomer.php:603
-msgid "Customer since:"
+msgid "Customer since"
 msgstr ""
 
 #: SelectCustomer.php:604
-msgid "Total Spend from this Customer (inc tax):"
+msgid "Total Spend from this Customer (inc tax)"
 msgstr ""
 
 #: SelectCustomer.php:605

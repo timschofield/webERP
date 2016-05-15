@@ -22506,7 +22506,7 @@ msgstr ""
 
 #: Payments.php:1204
 msgid ""
-"Transaction text in supplier transactions. If blank, it uses the narrative."
+"Transaction text in supplier transactions. If blank, it uses the bank narrative."
 msgstr ""
 
 #: Payments.php:1209
@@ -27795,11 +27795,11 @@ msgid "Last Paid Date:"
 msgstr "Última Data Pagto:"
 
 #: SelectCustomer.php:637
-msgid "Last Paid Amount (inc tax):"
+msgid "Last Paid Amount (inc tax)"
 msgstr "Último Valor Pago:"
 
 #: SelectCustomer.php:641
-msgid "Customer since:"
+msgid "Customer since"
 msgstr "Cliente desde"
 
 #: SelectCustomer.php:647
@@ -27807,7 +27807,7 @@ msgid "No Spend from this Customer."
 msgstr "Não há compras deste Cliente"
 
 #: SelectCustomer.php:653
-msgid "Total Spend from this Customer (inc tax):"
+msgid "Total Spend from this Customer (inc tax)"
 msgstr "Total já comprado por Este cliente"
 
 #: SelectCustomer.php:659

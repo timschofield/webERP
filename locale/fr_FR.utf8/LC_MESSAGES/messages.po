@@ -23142,7 +23142,7 @@ msgstr ""
 
 #: Payments.php:1204
 msgid ""
-"Transaction text in supplier transactions. If blank, it uses the narrative."
+"Transaction text in supplier transactions. If blank, it uses the bank narrative."
 msgstr ""
 
 #: Payments.php:1209
@@ -28652,11 +28652,11 @@ msgstr "Date du dernier paiement:"
 
 # JDN
 #: SelectCustomer.php:637
-msgid "Last Paid Amount (inc tax):"
+msgid "Last Paid Amount (inc tax)"
 msgstr "Dernier montant payé (T.T.C.):"
 
 #: SelectCustomer.php:641
-msgid "Customer since:"
+msgid "Customer since"
 msgstr "Client depuis:"
 
 #: SelectCustomer.php:647
@@ -28665,7 +28665,7 @@ msgstr ""
 
 # JDN
 #: SelectCustomer.php:653
-msgid "Total Spend from this Customer (inc tax):"
+msgid "Total Spend from this Customer (inc tax)"
 msgstr "Montant total des dépenses de ce client (T.T.C.):"
 
 #: SelectCustomer.php:659

@@ -21808,7 +21808,7 @@ msgstr ""
 
 #: Payments.php:1204
 msgid ""
-"Transaction text in supplier transactions. If blank, it uses the narrative."
+"Transaction text in supplier transactions. If blank, it uses the bank narrative."
 msgstr ""
 
 #: Payments.php:1209
@@ -26909,11 +26909,11 @@ msgid "Last Paid Date:"
 msgstr "上次付款日期："
 
 #: SelectCustomer.php:637
-msgid "Last Paid Amount (inc tax):"
+msgid "Last Paid Amount (inc tax)"
 msgstr "上次付款金额（含税）："
 
 #: SelectCustomer.php:641
-msgid "Customer since:"
+msgid "Customer since"
 msgstr "开始交易日期："
 
 #: SelectCustomer.php:647
@@ -26921,7 +26921,7 @@ msgid "No Spend from this Customer."
 msgstr "无来自此顾客的费用。"
 
 #: SelectCustomer.php:653
-msgid "Total Spend from this Customer (inc tax):"
+msgid "Total Spend from this Customer (inc tax)"
 msgstr "此顾客的费用合计（含税）："
 
 #: SelectCustomer.php:659

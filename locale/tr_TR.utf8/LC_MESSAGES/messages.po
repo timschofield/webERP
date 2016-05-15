@@ -22157,7 +22157,7 @@ msgstr ""
 
 #: Payments.php:1204
 msgid ""
-"Transaction text in supplier transactions. If blank, it uses the narrative."
+"Transaction text in supplier transactions. If blank, it uses the bank narrative."
 msgstr ""
 
 #: Payments.php:1209
@@ -27386,11 +27386,11 @@ msgid "Last Paid Date:"
 msgstr "Son Ücretli Tarihi:"
 
 #: SelectCustomer.php:637
-msgid "Last Paid Amount (inc tax):"
+msgid "Last Paid Amount (inc tax)"
 msgstr "Son Ödenen Tutar (vergi dahil):"
 
 #: SelectCustomer.php:641
-msgid "Customer since:"
+msgid "Customer since"
 msgstr "Müşteri başlangıç tarihi:"
 
 #: SelectCustomer.php:647
@@ -27398,7 +27398,7 @@ msgid "No Spend from this Customer."
 msgstr "Hayır bu Müşteriden harcayın."
 
 #: SelectCustomer.php:653
-msgid "Total Spend from this Customer (inc tax):"
+msgid "Total Spend from this Customer (inc tax)"
 msgstr "Toplam Müşteri (vergi dahil) dan Harcama:"
 
 #: SelectCustomer.php:659

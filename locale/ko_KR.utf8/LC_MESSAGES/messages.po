@@ -22289,7 +22289,7 @@ msgstr ""
 
 #: Payments.php:1204
 msgid ""
-"Transaction text in supplier transactions. If blank, it uses the narrative."
+"Transaction text in supplier transactions. If blank, it uses the bank narrative."
 msgstr ""
 
 #: Payments.php:1209
@@ -27528,11 +27528,11 @@ msgid "Last Paid Date:"
 msgstr "마지막으로 유료 날짜 :"
 
 #: SelectCustomer.php:637
-msgid "Last Paid Amount (inc tax):"
+msgid "Last Paid Amount (inc tax)"
 msgstr "최종 지불 금액 (INC 세금) :"
 
 #: SelectCustomer.php:641
-msgid "Customer since:"
+msgid "Customer since"
 msgstr "고객 가입일 :"
 
 #: SelectCustomer.php:647
@@ -27540,7 +27540,7 @@ msgid "No Spend from this Customer."
 msgstr "아니이 고객으로부터 보내십시오."
 
 #: SelectCustomer.php:653
-msgid "Total Spend from this Customer (inc tax):"
+msgid "Total Spend from this Customer (inc tax)"
 msgstr "이 고객 (INC 세금)에서 총 지출 :"
 
 #: SelectCustomer.php:659

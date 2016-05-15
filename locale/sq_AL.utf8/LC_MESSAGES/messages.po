@@ -22591,7 +22591,7 @@ msgstr ""
 
 #: Payments.php:1204
 msgid ""
-"Transaction text in supplier transactions. If blank, it uses the narrative."
+"Transaction text in supplier transactions. If blank, it uses the bank narrative."
 msgstr ""
 
 #: Payments.php:1209
@@ -27949,11 +27949,11 @@ msgid "Last Paid Date:"
 msgstr "Data e fundit e Paid:"
 
 #: SelectCustomer.php:637
-msgid "Last Paid Amount (inc tax):"
+msgid "Last Paid Amount (inc tax)"
 msgstr "Shuma e Fundit Paid (inc tatimore):"
 
 #: SelectCustomer.php:641
-msgid "Customer since:"
+msgid "Customer since"
 msgstr "Konsumatorëve që nga:"
 
 #: SelectCustomer.php:647
@@ -27961,7 +27961,7 @@ msgid "No Spend from this Customer."
 msgstr "Asnjë Kaloni nga kjo Customer."
 
 #: SelectCustomer.php:653
-msgid "Total Spend from this Customer (inc tax):"
+msgid "Total Spend from this Customer (inc tax)"
 msgstr "Totali Kaloni nga kjo Customer (inc tatimore):"
 
 #: SelectCustomer.php:659
