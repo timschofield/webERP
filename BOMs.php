@@ -16,7 +16,9 @@ function display_children($Parent, $Level, &$BOMTree) {
 
 	// retrive all children of parent
 	$c_result = DB_query("SELECT parent,
-								component
+						component,
+						sequence/pow(10,digitals) 
+							AS sequence
 						FROM bom
 						WHERE parent='" . $Parent. "'
 						ORDER BY sequence ASC");
@@ -72,6 +74,7 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level, $db) {
 
 		global $ParentMBflag;
 		$sql = "SELECT bom.sequence,
+						bom.digitals,
 						bom.component,
 						stockcategory.categorydescription,
 						stockmaster.description as itemdescription,
@@ -193,7 +196,7 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level, $db) {
 					 </tr><tr><td colspan="11" style="text-indent:' . $TextIndent . ';">%s</td><td>%s</td>
 					 </tr>',
 					$Level1,
-					$myrow['sequence'],
+					locale_number_format($myrow['sequence']/pow(10,$myrow['digitals']),'Variable'),
 					$myrow['categorydescription'],
 					$myrow['component'],
 					$myrow['itemdescription'],
@@ -335,9 +338,11 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		}
 
 		if (isset($SelectedParent) AND isset($SelectedComponent) AND $InputError != 1) {
-
-
-			$sql = "UPDATE bom SET sequence='" . $_POST['Sequence'] . "',
+			$Sequence = filter_number_format($_POST['Sequence']);
+			$Digitals = GetDigitals($_POST['Sequence']);
+			$Sequence = $Sequence * pow(10,$Digitals);
+			$sql = "UPDATE bom SET sequence='" . $Sequence . "',
+						digitals = '" . $Digitals . "',
 						workcentreadded='" . $_POST['WorkCentreAdded'] . "',
 						loccode='" . $_POST['LocCode'] . "',
 						effectiveafter='" . $EffectiveAfterSQL . "',
@@ -377,8 +382,12 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 				$result = DB_query($sql,$ErrMsg,$DbgMsg);
 
 				if (DB_num_rows($result)==0) {
+					$Sequence = filter_number_format($_POST['Sequence']);
+					$Digitals = GetDigitals($_POST['Sequence']);
+					$Sequence = $Sequence * pow(10,$Digitals);
 
 					$sql = "INSERT INTO bom (sequence,
+									digitals,
 											parent,
 											component,
 											workcentreadded,
@@ -388,7 +397,8 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 											effectiveto,
 											autoissue,
 											remark)
-							VALUES ('" . $_POST['Sequence'] . "',
+							VALUES ('" . $Sequence . "',
+								'" . $Digitals . "',
 								'".$SelectedParent."',
 								'" . $_POST['Component'] . "',
 								'" . $_POST['WorkCentreAdded'] . "',
@@ -681,6 +691,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		//editing a selected component from the link to the line item
 
 			$sql = "SELECT sequence,
+						digitals,
 						bom.loccode,
 						effectiveafter,
 						effectiveto,
@@ -696,7 +707,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			$result = DB_query($sql);
 			$myrow = DB_fetch_array($result);
 
-			$_POST['Sequence'] = $myrow['sequence'];
+			$_POST['Sequence'] = locale_number_format($myrow['sequence']/pow(10,$myrow['digitals']),'Variable');
 			$_POST['LocCode'] = $myrow['loccode'];
 			$_POST['EffectiveAfter'] = ConvertSQLDate($myrow['effectiveafter']);
 			$_POST['EffectiveTo'] = ConvertSQLDate($myrow['effectiveto']);
@@ -774,7 +785,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		}
 		echo '<tr>
                 <td>' . _('Sequence in BOM') . ':</td>
-                <td><input type="text" required="required" size="5" name="Sequence" value="' . $_POST['Sequence'] . '" /></td>
+                <td><input type="text" required="required" size="5" name="Sequence" value="' . $_POST['Sequence'] . '" /> ' . _('Number with decimal places is acceptable') . '</td>
             </tr>';
 		echo '<tr>
 				<td>' . _('Location') . ': </td>
@@ -1065,4 +1076,9 @@ function arrayUnique($array, $preserveKeys = false)
 }
 
 include('includes/footer.inc');
+function GetDigitals($Sequence) {
+	$SQLNumber = filter_number_format($Sequence);
+	return strlen(substr(strrchr($SQLNumber, "."),1));
+}
+
 ?>
