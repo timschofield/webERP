@@ -28414,11 +28414,11 @@ msgstr "Datum letzte Zahlg.:"
 
 #: SelectCustomer.php:637
 msgid "Last Paid Amount (inc tax)"
-msgstr "Letzter Zahlbetrag (incl. Steuer):"
+msgstr "Letzter Zahlbetrag (incl. Steuer)"
 
 #: SelectCustomer.php:641
 msgid "Customer since"
-msgstr "Kunde seit:"
+msgstr "Kunde seit"
 
 #: SelectCustomer.php:647
 msgid "No Spend from this Customer."
@@ -28426,7 +28426,7 @@ msgstr "Keine Eingänge von diesem Kunden:"
 
 #: SelectCustomer.php:653
 msgid "Total Spend from this Customer (inc tax)"
-msgstr "Bruttoeingänge von diesem Kunden:"
+msgstr "Bruttoeingänge von diesem Kunden"
 
 #: SelectCustomer.php:659
 msgid "Customer Type:"

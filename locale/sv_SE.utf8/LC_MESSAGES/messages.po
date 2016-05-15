@@ -27442,11 +27442,11 @@ msgstr "Datum för senaste betalning:"
 
 #: SelectCustomer.php:637
 msgid "Last Paid Amount (inc tax)"
-msgstr "Belopp för senaste betalning (inkl. moms):"
+msgstr "Belopp för senaste betalning (inkl. moms)"
 
 #: SelectCustomer.php:641
 msgid "Customer since"
-msgstr "Kund sedan:"
+msgstr "Kund sedan"
 
 #: SelectCustomer.php:647
 msgid "No Spend from this Customer."
@@ -27454,7 +27454,7 @@ msgstr "Denna kund har inte köpt något."
 
 #: SelectCustomer.php:653
 msgid "Total Spend from this Customer (inc tax)"
-msgstr "Totala inköp från denna kund:"
+msgstr "Totala inköp från denna kund"
 
 #: SelectCustomer.php:659
 msgid "Customer Type:"

@@ -28653,11 +28653,11 @@ msgstr "Date du dernier paiement:"
 # JDN
 #: SelectCustomer.php:637
 msgid "Last Paid Amount (inc tax)"
-msgstr "Dernier montant payé (T.T.C.):"
+msgstr "Dernier montant payé (T.T.C.)"
 
 #: SelectCustomer.php:641
 msgid "Customer since"
-msgstr "Client depuis:"
+msgstr "Client depuis"
 
 #: SelectCustomer.php:647
 msgid "No Spend from this Customer."
@@ -28666,7 +28666,7 @@ msgstr ""
 # JDN
 #: SelectCustomer.php:653
 msgid "Total Spend from this Customer (inc tax)"
-msgstr "Montant total des dépenses de ce client (T.T.C.):"
+msgstr "Montant total des dépenses de ce client (T.T.C.)"
 
 #: SelectCustomer.php:659
 msgid "Customer Type:"

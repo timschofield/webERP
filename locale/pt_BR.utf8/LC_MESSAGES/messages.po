@@ -27796,7 +27796,7 @@ msgstr "Última Data Pagto:"
 
 #: SelectCustomer.php:637
 msgid "Last Paid Amount (inc tax)"
-msgstr "Último Valor Pago:"
+msgstr "Último Valor Pago"
 
 #: SelectCustomer.php:641
 msgid "Customer since"

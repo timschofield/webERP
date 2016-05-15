@@ -288,7 +288,7 @@ if (!isset($_GET['SelectedAccountGroup']) AND !isset($_POST['SelectedAccountGrou
 				<th class="ascending">' . _('Sequence In TB') . '</th>
 				<th class="ascending">' . _('Profit and Loss') . '</th>
 				<th class="ascending">' . _('Parent Group') . '</th>
-				<th colspan="2">&nbsp;</th>
+				<th class="noprint" colspan="2">&nbsp;</th>
 			</tr>';
 
 	$k=0; //row colour counter
@@ -319,8 +319,8 @@ if (!isset($_GET['SelectedAccountGroup']) AND !isset($_POST['SelectedAccountGrou
 			<td class="number">' . $myrow['sequenceintb'] . '</td>
 			<td>' . $PandLText . '</td>
 			<td>' . $myrow['parentgroupname'] . '</td>';
-		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?SelectedAccountGroup=' . urlencode($myrow['groupname']), ENT_QUOTES,'UTF-8') . '">' . _('Edit') . '</a></td>';
-		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?SelectedAccountGroup=' . urlencode($myrow['groupname']), ENT_QUOTES,'UTF-8') . '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this account group?') . '\');">' . _('Delete')  . '</a></td></tr>';
+		echo '<td class="noprint"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?SelectedAccountGroup=' . urlencode($myrow['groupname']), ENT_QUOTES,'UTF-8') . '">' . _('Edit') . '</a></td>';
+		echo '<td class="noprint"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?SelectedAccountGroup=' . urlencode($myrow['groupname']), ENT_QUOTES,'UTF-8') . '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this account group?') . '\');">' . _('Delete')  . '</a></td></tr>';
 
 	} //END WHILE LIST LOOP
 	echo '</table>';
@@ -394,12 +394,17 @@ if (!isset($_GET['delete'])) {
 		}
 
 		echo '<br />
-		<table class="selection">
+		<table class="noprint selection">
 		<thead>
 			<tr>
 				<th colspan="2">', _('New Account Group Details'), '</th>
 			</tr>
 		</thead>
+		<tfoot>
+		<tr>
+			<td class="centre" colspan="2"><input name="submit" tabindex="6" type="submit" value="', _('Enter Information'), '" /></td>
+		</tr>
+		</tfoot>
 		<tbody>
 			<tr>
 				 <td><input name="SelectedAccountGroup" type="hidden" value="', $_POST['SelectedAccountGroup'], '" /></td>
@@ -468,9 +473,6 @@ if (!isset($_GET['delete'])) {
 		<tr>
 			<td>', _('Sequence In TB'), ':</td>
 			<td><input class="number" maxlength="4" name="SequenceInTB" required="required" tabindex="5" type="text" value="', $_POST['SequenceInTB'], '" title="', _('Enter the sequence number that this account group and its child general ledger accounts should display in the trial balance'), '" /></td>
-		</tr>
-		<tr>
-			<td class="centre" colspan="2"><input name="submit" tabindex="6" type="submit" value="', _('Enter Information'), '" /></td>
 		</tr>
 		</tbody>
 	</table>

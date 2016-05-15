@@ -28148,11 +28148,11 @@ msgstr "Dernière Payée:"
 
 #: SelectCustomer.php:637
 msgid "Last Paid Amount (inc tax)"
-msgstr "Dernière Montant payé (TTC):"
+msgstr "Dernière Montant payé (TTC)"
 
 #: SelectCustomer.php:641
 msgid "Customer since"
-msgstr "Client depuis:"
+msgstr "Client depuis"
 
 #: SelectCustomer.php:647
 msgid "No Spend from this Customer."
@@ -28160,7 +28160,7 @@ msgstr "Non Passez à partir de ce client."
 
 #: SelectCustomer.php:653
 msgid "Total Spend from this Customer (inc tax)"
-msgstr "Montant total des dépenses de cette clientèle (TTC):"
+msgstr "Montant total des dépenses de cette clientèle (TTC)"
 
 #: SelectCustomer.php:659
 msgid "Customer Type:"
