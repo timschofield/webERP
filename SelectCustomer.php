@@ -149,6 +149,7 @@ if(isset($_POST['Search']) OR isset($_POST['CSV']) OR isset($_POST['Go']) OR iss
 
 if($_SESSION['CustomerID'] != '' AND !isset($_POST['Search']) AND !isset($_POST['CSV'])) {
 	if(!isset($_SESSION['BranchCode'])) {
+		// !isset($_SESSION['BranchCode'])
 		$SQL = "SELECT debtorsmaster.name,
 					custbranch.phoneno,
 					custbranch.brname
@@ -156,8 +157,8 @@ if($_SESSION['CustomerID'] != '' AND !isset($_POST['Search']) AND !isset($_POST[
 			ON debtorsmaster.debtorno=custbranch.debtorno
 			WHERE custbranch.debtorno='" . $_SESSION['CustomerID'] . "'";
 
-	}// !isset($_SESSION['BranchCode'])
-	else {
+	} else {
+		// isset($_SESSION['BranchCode'])
 		$SQL = "SELECT debtorsmaster.name,
 					custbranch.phoneno,
 					custbranch.brname
@@ -258,44 +259,29 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	_('Search for Customers'), '</p>';// Page title.
 
 echo '<table cellpadding="3" class="selection">';
-echo '<tr><td colspan="2">' . _('Enter a partial Name') . ':</td><td>';
-if(isset($_POST['Keywords'])) {
-	echo '<input type="text" name="Keywords" value="' . $_POST['Keywords'] . '" size="20" maxlength="25" />';
-} else {
-	echo '<input type="text" name="Keywords" size="20" maxlength="25" />';
-}
-echo '</td>
-	<td><b>' . _('OR') . '</b></td><td>' . _('Enter a partial Code') . ':</td>
-	<td>';
-if(isset($_POST['CustCode'])) {
-	echo '<input maxlength="18" name="CustCode" pattern="[\w-]*" size="15" type="text" value="', $_POST['CustCode'], '" />';
-} else {
-	echo '<input maxlength="18" name="CustCode" pattern="[\w-]*" size="15" type="text" />';
-}
-echo '</td>
-	</tr>
-	<tr>
-		<td><b>' . _('OR') . '</b></td>
-		<td>' . _('Enter a partial Phone Number') . ':</td>
-		<td>';
-if(isset($_POST['CustPhone'])) {
-	echo '<input maxlength="18" name="CustPhone" pattern="[0-9\-\s()+]*" size="15" type="tel" value="', $_POST['CustPhone'], '" />';
-} else {
-	echo '<input maxlength="18" name="CustPhone" pattern="[0-9\-\s()+]*" size="15" type="tel" />';
-}
-echo '</td>';
-echo '<td><b>' . _('OR') . '</b></td>
-		<td>' . _('Enter part of the Address') . ':</td>
-		<td>';
-if(isset($_POST['CustAdd'])) {
-	echo '<input maxlength="25" name="CustAdd" size="20" type="text" value="', $_POST['CustAdd'], '" />';
-} else {
-	echo '<input maxlength="25" name="CustAdd" size="20" type="text" />';
-}
-echo '</td></tr>';
+
 echo '<tr>
-		<td><b>' . _('OR') . '</b></td>
-		<td>' . _('Choose a Type') . ':</td>
+		<td colspan="2">', _('Enter a partial Name'), ':</td>
+		<td><input type="text" maxlength="25" name="Keywords" size="20" ',
+			( isset($_POST['Keywords']) ? 'value="' . $_POST['Keywords'] . '" ' : '' ), '/></td>';
+
+echo '<td><b>', _('OR'), '</b></td><td>', _('Enter a partial Code'), ':</td>
+		<td><input maxlength="18" name="CustCode" pattern="[\w-]*" size="15" type="text" ',
+			(isset($_POST['CustCode']) ? 'value="' . $_POST['CustCode'] . '" ' : '' ), '/></td>
+	</tr>';
+
+echo '<tr>
+		<td><b>', _('OR'), '</b></td><td>', _('Enter a partial Phone Number'), ':</td>
+		<td><input maxlength="18" name="CustPhone" pattern="[0-9\-\s()+]*" size="15" type="tel" ',
+			( isset($_POST['CustPhone']) ? 'value="' . $_POST['CustPhone'] . '" ' : '' ), '/></td>';
+
+echo '<td><b>', _('OR'), '</b></td><td>', _('Enter part of the Address'), ':</td>
+		<td><input maxlength="25" name="CustAdd" size="20" type="text" ',
+			(isset($_POST['CustAdd']) ? 'value="' . $_POST['CustAdd'] . '" ' : '' ), '/></td>
+	</tr>';
+
+echo '<tr>
+		<td><b>', _('OR'), '</b></td><td>', _('Choose a Type'), ':</td>
 		<td>';
 if(isset($_POST['CustType'])) {
 	// Show Customer Type drop down list
@@ -341,7 +327,7 @@ if(isset($_POST['CustType'])) {
 }
 
 /* Option to select a sales area */
-echo '<td><b>' . _('OR') . '</b></td>
+echo '<td><b>', _('OR'), '</b></td>
 		<td>' . _('Choose an Area') . ':</td><td>';
 $result2 = DB_query("SELECT areacode, areadescription FROM areas");
 // Error if no sales areas setup
@@ -369,6 +355,9 @@ echo '<div class="centre">
 		<input name="Search" type="submit" value="', _('Search Now'), '" />
 		<input name="CSV" type="submit" value="', _('CSV Format'), '" />
 	</div>';
+// End search for customers.
+
+
 if(isset($_SESSION['SalesmanLogin']) AND $_SESSION['SalesmanLogin'] != '') {
 	prnMsg(_('Your account enables you to see only customers allocated to you'), 'warn', _('Note: Sales-person Login'));
 }
@@ -508,6 +497,7 @@ if(isset($_SESSION['CustomerID']) AND $_SESSION['CustomerID'] != '') {
 		$map_height = $myrow['map_height'];
 		$map_width = $myrow['map_width'];
 		$map_host = $myrow['map_host'];
+		if($map_host == '') {$map_host = 'maps.googleapis.com';}// If $map_host is empty, use a default map host.
 
 		$SQL = "SELECT
 					debtorsmaster.debtorno,
@@ -639,6 +629,7 @@ function initMap() {
 		}
 
 	}// end if Geocode integration is turned on
+
 	// Extended Customer Info only if selected in Configuration
 	if($_SESSION['Extended_CustomerInfo'] == 1) {
 		if($_SESSION['CustomerID'] != '') {

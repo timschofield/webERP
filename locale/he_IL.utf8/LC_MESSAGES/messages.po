@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: webERP 4.12.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-12 10:59-0600\n"
+"POT-Creation-Date: 2016-05-15 17:54-0600\n"
 "PO-Revision-Date: 2016-05-11 01:58+0200\n"
 "Last-Translator: Hagay Mandel <mandel@netvision.net.il>\n"
 "Language-Team: WebERP Translation Team <web-erp-translation@lists."
@@ -183,7 +183,7 @@ msgstr "ישנם"
 msgid "general ledger accounts that refer to this account group"
 msgstr "חשבונות חשבונות ראשים המתייחסים לקבוצת חשבון זה"
 
-#: AccountGroups.php:220 AccountGroups.php:290 AccountGroups.php:404
+#: AccountGroups.php:220 AccountGroups.php:290 AccountGroups.php:418
 msgid "Parent Group"
 msgstr "קבוצת אב"
 
@@ -225,11 +225,11 @@ msgstr "לאיחזור מידע קבוצת החשבון היתה SQL-פקודת 
 msgid "Could not get account groups because"
 msgstr "לא ניתן למצוא את קבוצת החשבון כי"
 
-#: AccountGroups.php:282 AddCustomerContacts.php:25 AddCustomerContacts.php:27
+#: AccountGroups.php:282 AddCustomerContacts.php:28 AddCustomerContacts.php:30
 #: AddCustomerNotes.php:101 AddCustomerTypeNotes.php:94 AgedDebtors.php:453
 #: AgedSuppliers.php:276 Areas.php:144 AuditTrail.php:11
 #: BOMExtendedQty.php:256 BOMIndented.php:249 BOMIndentedReverse.php:236
-#: BOMInquiry.php:186 BOMListing.php:110 BOMs.php:277 BOMs.php:970
+#: BOMInquiry.php:186 BOMListing.php:110 BOMs.php:280 BOMs.php:981
 #: COGSGLPostings.php:19 CollectiveWorkOrderCost.php:7
 #: CollectiveWorkOrderCost.php:273 CompanyPreferences.php:102
 #: CounterReturns.php:1629 CounterSales.php:2097 CounterSales.php:2193
@@ -255,7 +255,7 @@ msgstr "לא ניתן למצוא את קבוצת החשבון כי"
 #: SalesGLPostings.php:19 SalesGraph.php:40 SalesPeople.php:28
 #: SalesTypes.php:20 SelectAsset.php:48 SelectCompletedOrder.php:11
 #: SelectContract.php:69 SelectCreditItems.php:221 SelectCreditItems.php:292
-#: SelectCustomer.php:331 SelectGLAccount.php:77 SelectOrderItems.php:559
+#: SelectCustomer.php:257 SelectGLAccount.php:77 SelectOrderItems.php:559
 #: SelectOrderItems.php:1469 SelectOrderItems.php:1569 SelectProduct.php:522
 #: SelectQASamples.php:45 SelectSalesOrder.php:512 SelectSupplier.php:14
 #: SelectSupplier.php:222 SelectWorkOrder.php:9 SelectWorkOrder.php:174
@@ -283,18 +283,18 @@ msgstr "שם הקבוצה"
 msgid "Section"
 msgstr "קטע"
 
-#: AccountGroups.php:288 AccountGroups.php:458
+#: AccountGroups.php:288 AccountGroups.php:474
 msgid "Sequence In TB"
 msgstr "TB-הסדר ב"
 
-#: AccountGroups.php:289 AccountGroups.php:441 GLProfit_Loss.php:6
+#: AccountGroups.php:289 AccountGroups.php:457 GLProfit_Loss.php:6
 #: GLProfit_Loss.php:135 GLProfit_Loss.php:136 GLProfit_Loss.php:188
 #: SelectGLAccount.php:23 SelectGLAccount.php:41 SelectGLAccount.php:59
 msgid "Profit and Loss"
 msgstr "רווח והפסד"
 
-#: AccountGroups.php:307 AccountGroups.php:310 AccountGroups.php:445
-#: AccountGroups.php:447 BOMs.php:132 BOMs.php:875 BOMs.php:877
+#: AccountGroups.php:307 AccountGroups.php:310 AccountGroups.php:461
+#: AccountGroups.php:463 BOMs.php:135 BOMs.php:886 BOMs.php:888
 #: CompanyPreferences.php:425 CompanyPreferences.php:427
 #: CompanyPreferences.php:440 CompanyPreferences.php:442
 #: CompanyPreferences.php:455 CompanyPreferences.php:457
@@ -358,10 +358,10 @@ msgstr "רווח והפסד"
 msgid "Yes"
 msgstr "כן"
 
-#: AccountGroups.php:313 AccountGroups.php:450 AccountGroups.php:452
+#: AccountGroups.php:313 AccountGroups.php:466 AccountGroups.php:468
 #: BankAccounts.php:218 BankAccounts.php:412 BankAccounts.php:414
-#: BankAccounts.php:418 BankAccounts.php:426 BOMs.php:134 BOMs.php:874
-#: BOMs.php:878 CompanyPreferences.php:424 CompanyPreferences.php:428
+#: BankAccounts.php:418 BankAccounts.php:426 BOMs.php:137 BOMs.php:885
+#: BOMs.php:889 CompanyPreferences.php:424 CompanyPreferences.php:428
 #: CompanyPreferences.php:439 CompanyPreferences.php:443
 #: CompanyPreferences.php:454 CompanyPreferences.php:458
 #: ContractCosting.php:200 Currencies.php:344 Currencies.php:525
@@ -425,9 +425,9 @@ msgstr "כן"
 msgid "No"
 msgstr "לא"
 
-#: AccountGroups.php:322 AccountSections.php:196 AddCustomerContacts.php:148
+#: AccountGroups.php:322 AccountSections.php:196 AddCustomerContacts.php:152
 #: AddCustomerNotes.php:137 AddCustomerTypeNotes.php:131 Areas.php:164
-#: BankAccounts.php:243 BOMs.php:190 COGSGLPostings.php:112
+#: BankAccounts.php:243 BOMs.php:193 COGSGLPostings.php:112
 #: COGSGLPostings.php:219 CreditStatus.php:175 Currencies.php:374
 #: Currencies.php:391 CustItem.php:166 CustomerBranches.php:456
 #: Customers.php:1131 Customers.php:1165 CustomerTypes.php:205
@@ -444,8 +444,8 @@ msgstr "לא"
 #: ProductSpecs.php:465 PurchData.php:312 QATests.php:467
 #: SalesCategories.php:310 SalesGLPostings.php:137 SalesGLPostings.php:255
 #: SalesPeople.php:240 SalesTypes.php:206 SecurityTokens.php:130
-#: SelectCustomer.php:680 SelectCustomer.php:699 SelectCustomer.php:746
-#: SelectCustomer.php:764 SelectCustomer.php:788 SelectCustomer.php:805
+#: SelectCustomer.php:742 SelectCustomer.php:767 SelectCustomer.php:822
+#: SelectCustomer.php:840 SelectCustomer.php:864 SelectCustomer.php:881
 #: SelectGLAccount.php:130 SelectGLAccount.php:145 SelectQASamples.php:417
 #: SellThroughSupport.php:298 Shippers.php:144 StockCategories.php:296
 #: SupplierContacts.php:165 SupplierTenderCreate.php:157 SupplierTypes.php:170
@@ -462,9 +462,9 @@ msgstr "עריכה"
 msgid "Are you sure you wish to delete this account group?"
 msgstr "?האם למחוק את קבוצת החשבון"
 
-#: AccountGroups.php:323 AccountSections.php:200 AddCustomerContacts.php:149
+#: AccountGroups.php:323 AccountSections.php:201 AddCustomerContacts.php:153
 #: AddCustomerNotes.php:138 AddCustomerTypeNotes.php:132 Areas.php:165
-#: BankAccounts.php:244 BOMs.php:192 COGSGLPostings.php:113
+#: BankAccounts.php:244 BOMs.php:195 COGSGLPostings.php:113
 #: COGSGLPostings.php:220 ContractBOM.php:272 ContractOtherReqts.php:124
 #: CounterReturns.php:740 CounterSales.php:836 Credit_Invoice.php:409
 #: CreditStatus.php:176 Currencies.php:377 CustItem.php:167
@@ -486,8 +486,8 @@ msgstr "?האם למחוק את קבוצת החשבון"
 #: SalesAnalReptCols.php:299 SalesAnalRepts.php:307 SalesCategories.php:311
 #: SalesGLPostings.php:138 SalesGLPostings.php:256 SalesPeople.php:241
 #: SalesTypes.php:207 SecurityTokens.php:131 SelectCreditItems.php:776
-#: SelectCustomer.php:681 SelectCustomer.php:700 SelectCustomer.php:747
-#: SelectCustomer.php:765 SelectCustomer.php:789 SelectCustomer.php:806
+#: SelectCustomer.php:743 SelectCustomer.php:768 SelectCustomer.php:823
+#: SelectCustomer.php:841 SelectCustomer.php:865 SelectCustomer.php:882
 #: SelectOrderItems.php:1381 SelectQASamples.php:418
 #: SellThroughSupport.php:299 Shipments.php:438 Shippers.php:145
 #: SpecialOrder.php:667 StockCategories.php:297 StockCategories.php:626
@@ -519,53 +519,17 @@ msgstr "שגיאה בשליפת מידע הקבוצה "
 msgid "The account group name does not exist in the database"
 msgstr "שם קבוצת החשבון אינו קיים במסד הנתונים"
 
-#: AccountGroups.php:369
+#: AccountGroups.php:370
 msgid "Edit Account Group Details"
 msgstr "עריכת מידע קבוצת החשבון"
 
-#: AccountGroups.php:393
+#: AccountGroups.php:400
 msgid "New Account Group Details"
 msgstr "מידע קבוצת חשבון חדשה"
 
-#: AccountGroups.php:400
-msgid "Account Group Name"
-msgstr "שם קבוצת חשבון"
-
-#: AccountGroups.php:401
-msgid "Enter the account group name"
-msgstr "הכנס את שם קבוצת החשבון"
-
-#: AccountGroups.php:401
-msgid ""
-"A unique name for the account group must be entered - at least 3 characters "
-"long and less than 30 characters long. Only alpha numeric characters can be "
-"used."
-msgstr "הכנס את שם קבוצת החשבון"
-
-#: AccountGroups.php:410 AccountGroups.php:412
-msgid "Top Level Group"
-msgstr "קבוצת רמה עליונה"
-
-#: AccountGroups.php:426
-msgid "Section In Accounts"
-msgstr "קטע בחשבונות"
-
-#: AccountGroups.php:442
-msgid ""
-"Select YES if this account group will contain accounts that will consist of "
-"only profit and loss accounts or NO if the group will contain balance sheet "
-"account"
-msgstr "קטע בחשבונות"
-
-#: AccountGroups.php:459
-msgid ""
-"Enter the sequence number that this account group and its child general "
-"ledger accounts should display in the trial balance"
-msgstr "קטע בחשבונות"
-
-#: AccountGroups.php:462 AccountSections.php:268 AddCustomerContacts.php:260
+#: AccountGroups.php:405 AccountSections.php:285 AddCustomerContacts.php:273
 #: AddCustomerNotes.php:242 AddCustomerTypeNotes.php:221 Areas.php:229
-#: BankAccounts.php:433 BOMs.php:895 COGSGLPostings.php:368
+#: BankAccounts.php:433 BOMs.php:906 COGSGLPostings.php:368
 #: CreditStatus.php:259 Currencies.php:537 CustLoginSetup.php:273
 #: Departments.php:258 DiscountMatrix.php:142 EDIMessageFormat.php:248
 #: FixedAssetCategories.php:350 FixedAssetLocations.php:161
@@ -582,6 +546,42 @@ msgstr "קטע בחשבונות"
 #: UnitsOfMeasure.php:241 WorkCentres.php:289 WWW_Users.php:792
 msgid "Enter Information"
 msgstr "הכנס מידע"
+
+#: AccountGroups.php:414
+msgid "Account Group Name"
+msgstr "שם קבוצת חשבון"
+
+#: AccountGroups.php:415
+msgid "Enter the account group name"
+msgstr "הכנס את שם קבוצת החשבון"
+
+#: AccountGroups.php:415
+msgid ""
+"A unique name for the account group must be entered - at least 3 characters "
+"long and less than 30 characters long. Only alpha numeric characters can be "
+"used."
+msgstr "הכנס את שם קבוצת החשבון"
+
+#: AccountGroups.php:427
+msgid "Top Level Group"
+msgstr "קבוצת רמה עליונה"
+
+#: AccountGroups.php:440
+msgid "Section In Accounts"
+msgstr "קטע בחשבונות"
+
+#: AccountGroups.php:458
+msgid ""
+"Select YES if this account group will contain accounts that will consist of "
+"only profit and loss accounts or NO if the group will contain balance sheet "
+"account"
+msgstr "קטע בחשבונות"
+
+#: AccountGroups.php:475
+msgid ""
+"Enter the sequence number that this account group and its child general "
+"ledger accounts should display in the trial balance"
+msgstr "קטע בחשבונות"
 
 #: AccountSections.php:6 AccountSections.php:172 AccountSections.php:173
 #: includes/MainMenuLinksArray.php:398
@@ -624,61 +624,69 @@ msgstr "הקובץ %s נמחק."
 msgid "Could not get account group sections because"
 msgstr ""
 
-#: AccountSections.php:178 AccountSections.php:240 AccountSections.php:258
+#: AccountSections.php:178 AccountSections.php:248 AccountSections.php:272
 msgid "Section Number"
 msgstr "מספר הקטע"
 
-#: AccountSections.php:179 AccountSections.php:263
+#: AccountSections.php:179 AccountSections.php:279
 msgid "Section Description"
 msgstr "תאור הקטע"
 
-#: AccountSections.php:198
+#: AccountSections.php:199
 msgid "Restricted"
 msgstr "מוגבל"
 
-#: AccountSections.php:210
+#: AccountSections.php:212
 msgid "Review Account Sections"
 msgstr "צפה בקטעי החשבון"
 
-#: AccountSections.php:229
+#: AccountSections.php:231
 msgid "Could not retrieve the requested section please try again."
 msgstr ""
 
-#: AddCustomerContacts.php:6 AddCustomerContacts.php:59 SelectCustomer.php:672
-#: SelectCustomer.php:724
+#: AccountSections.php:243
+msgid "Edit Account Section Details"
+msgstr ""
+
+#: AccountSections.php:267
+msgid "New Account Section Details"
+msgstr ""
+
+#: AddCustomerContacts.php:6 AddCustomerContacts.php:62 SelectCustomer.php:733
+#: SelectCustomer.php:799
 msgid "Customer Contacts"
 msgstr "Customer Contacts"
 
-#: AddCustomerContacts.php:20 CustEDISetup.php:9 CustLoginSetup.php:21
+#: AddCustomerContacts.php:23 CustEDISetup.php:9 CustLoginSetup.php:21
 #: Z_CheckDebtorsControl.php:14
 msgid "Back to Customers"
 msgstr "בחזרה ללקוחות"
 
-#: AddCustomerContacts.php:25
+#: AddCustomerContacts.php:28
 msgid "Contacts for Customer"
 msgstr "Contacts for Customer"
 
-#: AddCustomerContacts.php:27
+#: AddCustomerContacts.php:30
 msgid "Edit contact for"
 msgstr "ערוך איש קשר"
 
-#: AddCustomerContacts.php:39
+#: AddCustomerContacts.php:42
 msgid "The Contact ID must be an integer."
 msgstr "מספר זיהוי איש הקשר חייב להיות מספר שלם"
 
-#: AddCustomerContacts.php:42
+#: AddCustomerContacts.php:45
 msgid "The contact name must be forty characters or less long"
 msgstr "לא יותר מ-40 תווים בשם איש הקשר"
 
-#: AddCustomerContacts.php:45
+#: AddCustomerContacts.php:48
 msgid "The contact name may not be empty"
 msgstr "חובה למלא את שם איש הקשר"
 
-#: AddCustomerContacts.php:48
+#: AddCustomerContacts.php:51
 msgid "The contact email address is not a valid email address"
 msgstr "כתובת מייל לא תקפה"
 
-#: AddCustomerContacts.php:59 AddCustomerNotes.php:51
+#: AddCustomerContacts.php:62 AddCustomerNotes.php:51
 #: AddCustomerTypeNotes.php:48 Areas.php:72 CustomerTypes.php:68
 #: DeliveryDetails.php:809 DeliveryDetails.php:826 Factors.php:105
 #: FixedAssetItems.php:255 MRPCalendar.php:176 PcAssignCashToTab.php:102
@@ -690,20 +698,20 @@ msgstr "כתובת מייל לא תקפה"
 msgid "has been updated"
 msgstr "עודכן"
 
-#: AddCustomerContacts.php:74
+#: AddCustomerContacts.php:77
 msgid "The contact record has been added"
 msgstr "רשומת איש קשר נוספה"
 
-#: AddCustomerContacts.php:103
+#: AddCustomerContacts.php:106
 msgid "The contact record has been deleted"
 msgstr "רשומת איש הקשר נמחקה"
 
-#: AddCustomerContacts.php:126 CompanyPreferences.php:173
+#: AddCustomerContacts.php:129 CompanyPreferences.php:173
 #: CustomerBranches.php:409 Customers.php:1118 Customers.php:1126
 #: ImportBankTransAnalysis.php:207 PrintWOItemSlip.php:184
 #: PrintWOItemSlip.php:195 PrintWOItemSlip.php:206 ProductSpecs.php:164
 #: ProductSpecs.php:385 QATests.php:391 SalesPeople.php:208
-#: SelectCustomer.php:675 StockDispatch.php:277 StockDispatch.php:288
+#: SelectCustomer.php:737 StockDispatch.php:277 StockDispatch.php:288
 #: StockDispatch.php:299 SupplierContacts.php:152 SuppTransGLAnalysis.php:108
 #: Tax.php:411 TestPlanResults.php:508 UserBankAccounts.php:161
 #: UserGLAccounts.php:157 UserLocations.php:176
@@ -711,17 +719,17 @@ msgstr "רשומת איש הקשר נמחקה"
 msgid "Name"
 msgstr "שם"
 
-#: AddCustomerContacts.php:127 AddCustomerContacts.php:223 Customers.php:1119
-#: Customers.php:1127 SelectCustomer.php:676 WWW_Access.php:113
+#: AddCustomerContacts.php:130 AddCustomerContacts.php:238 Customers.php:1119
+#: Customers.php:1127 SelectCustomer.php:738 WWW_Access.php:113
 #: WWW_Access.php:179
 msgid "Role"
 msgstr "תפקיד"
 
-#: AddCustomerContacts.php:128
+#: AddCustomerContacts.php:131
 msgid "Phone no"
 msgstr "מספר טלפון"
 
-#: AddCustomerContacts.php:129 AddCustomerContacts.php:241
+#: AddCustomerContacts.php:132 AddCustomerContacts.php:256
 #: CustomerAccount.php:313 CustomerAccount.php:337 CustomerBranches.php:415
 #: CustomerBranches.php:858 CustomerInquiry.php:324 CustomerInquiry.php:370
 #: CustomerInquiry.php:409 CustomerInquiry.php:444 CustomerInquiry.php:490
@@ -731,9 +739,9 @@ msgstr "מספר טלפון"
 #: PDFWOPrint.php:596 PDFWOPrint.php:676 PDFWOPrint.php:679
 #: PO_PDFPurchOrder.php:400 PO_PDFPurchOrder.php:403 PrintCustTrans.php:740
 #: PrintCustTransPortrait.php:793 PrintCustTransPortrait.php:1039
-#: PrintCustTransPortrait.php:1095 SelectCustomer.php:493
-#: SelectCustomer.php:678 SelectSupplier.php:290 SupplierContacts.php:156
-#: SupplierContacts.php:277 UserSettings.php:184 WWW_Users.php:322
+#: PrintCustTransPortrait.php:1095 SelectCustomer.php:420
+#: SelectCustomer.php:740 SelectSupplier.php:290 SupplierContacts.php:156
+#: SupplierContacts.php:277 UserSettings.php:186 WWW_Users.php:322
 #: includes/PDFPickingListHeader.inc:25 includes/PDFStatementPageHeader.inc:67
 #: includes/PDFTransPageHeader.inc:85
 #: includes/PDFTransPageHeaderPortrait.inc:114 includes/PDFWOPageHeader.inc:19
@@ -742,38 +750,46 @@ msgstr "מספר טלפון"
 msgid "Email"
 msgstr "כתובת מייל"
 
-#: AddCustomerContacts.php:130 AddCustomerContacts.php:250
+#: AddCustomerContacts.php:133 AddCustomerContacts.php:265
 #: AnalysisHorizontalIncome.php:169 AnalysisHorizontalPosition.php:123
 #: Customers.php:1122 Customers.php:1130 PcAssignCashToTab.php:256
 #: PcAssignCashToTab.php:394 PcAuthorizeExpenses.php:97
 #: PcClaimExpensesFromTab.php:238 PcClaimExpensesFromTab.php:405
 #: PcReportTab.php:333 PDFQuotation.php:252 PDFQuotationPortrait.php:249
-#: SelectCustomer.php:679 ShopParameters.php:198 SystemParameters.php:411
+#: SelectCustomer.php:741 ShopParameters.php:198 SystemParameters.php:411
 #: WOSerialNos.php:306 WOSerialNos.php:312
 msgid "Notes"
 msgstr "הערות"
 
-#: AddCustomerContacts.php:149 SupplierContacts.php:166
+#: AddCustomerContacts.php:153 SupplierContacts.php:166
 #, php-format
 msgid "Are you sure you wish to delete this contact?"
 msgstr "?האם למחוק את איש הקשר"
 
-#: AddCustomerContacts.php:168
+#: AddCustomerContacts.php:172
 msgid "Review all contacts for this Customer"
 msgstr "הצג את כל אנשי הקשר של הלקוח"
 
-#: AddCustomerContacts.php:206
+#: AddCustomerContacts.php:210
+msgid "Edit Customer Contact Details"
+msgstr ""
+
+#: AddCustomerContacts.php:215
 msgid "Contact Code"
 msgstr "קוד איש הקשר"
 
-#: AddCustomerContacts.php:214 Factors.php:234 SupplierContacts.php:239
+#: AddCustomerContacts.php:222
+msgid "New Customer Contact Details"
+msgstr ""
+
+#: AddCustomerContacts.php:229 Factors.php:234 SupplierContacts.php:239
 #: ../webSHOP/Checkout.php:379 ../webSHOP/Register.php:610
 msgid "Contact Name"
 msgstr "שם איש הקשר"
 
-#: AddCustomerContacts.php:232 Contracts.php:788 PDFRemittanceAdvice.php:247
+#: AddCustomerContacts.php:247 Contracts.php:788 PDFRemittanceAdvice.php:247
 #: PO_Header.php:1026 PO_Header.php:1111 SelectCreditItems.php:246
-#: SelectCustomer.php:491 SelectOrderItems.php:597
+#: SelectCustomer.php:418 SelectOrderItems.php:597
 #: SupplierTenderCreate.php:395 includes/PDFStatementPageHeader.inc:63
 #: includes/PDFTransPageHeader.inc:84
 #: includes/PDFTransPageHeaderPortrait.inc:110 ../webSHOP/Checkout.php:389
@@ -781,8 +797,8 @@ msgstr "שם איש הקשר"
 msgid "Phone"
 msgstr "טלפון"
 
-#: AddCustomerNotes.php:6 AddCustomerNotes.php:51 SelectCustomer.php:739
-#: SelectCustomer.php:772
+#: AddCustomerNotes.php:6 AddCustomerNotes.php:51 SelectCustomer.php:815
+#: SelectCustomer.php:848
 msgid "Customer Notes"
 msgstr "Customer Notes"
 
@@ -826,7 +842,7 @@ msgstr "הודעות ללקוח"
 #: PDFRemittanceAdvice.php:308 PDFWOPrint.php:450 PrintCustTrans.php:822
 #: PrintCustTransPortrait.php:907 PrintWOItemSlip.php:186
 #: PrintWOItemSlip.php:197 PrintWOItemSlip.php:208 ReverseGRN.php:401
-#: SelectCustomer.php:742 SelectCustomer.php:784 ShipmentCosting.php:538
+#: SelectCustomer.php:818 SelectCustomer.php:860 ShipmentCosting.php:538
 #: ShipmentCosting.php:615 Shipments.php:489 StockDispatch.php:279
 #: StockDispatch.php:290 StockDispatch.php:301 StockLocMovements.php:92
 #: StockMovements.php:105 StockSerialItemResearch.php:82
@@ -842,7 +858,7 @@ msgid "Date"
 msgstr "תאריך"
 
 #: AddCustomerNotes.php:118 AddCustomerTypeNotes.php:112 PcReportTab.php:180
-#: SelectCustomer.php:743 SelectCustomer.php:785 StockClone.php:942
+#: SelectCustomer.php:819 SelectCustomer.php:861 StockClone.php:942
 #: Stocks.php:1270 UpgradeDatabase.php:244 UpgradeDatabase.php:247
 #: UpgradeDatabase.php:250 UpgradeDatabase.php:253 UpgradeDatabase.php:256
 #: UpgradeDatabase.php:259 UpgradeDatabase.php:262 UpgradeDatabase.php:265
@@ -861,7 +877,7 @@ msgstr ""
 
 #: AddCustomerNotes.php:120 AddCustomerNotes.php:231
 #: AddCustomerTypeNotes.php:114 AddCustomerTypeNotes.php:215
-#: SelectCustomer.php:745 SelectCustomer.php:787
+#: SelectCustomer.php:821 SelectCustomer.php:863
 msgid "Priority"
 msgstr "עדיפות"
 
@@ -882,7 +898,7 @@ msgstr "מספר ההודעה"
 msgid "Contact Note"
 msgstr "הודעת איש קשר"
 
-#: AddCustomerTypeNotes.php:5 SelectCustomer.php:781
+#: AddCustomerTypeNotes.php:5 SelectCustomer.php:857
 msgid "Customer Type (Group) Notes"
 msgstr ""
 
@@ -899,7 +915,7 @@ msgstr ""
 msgid "The contacts notes may not be empty"
 msgstr ""
 
-#: AddCustomerTypeNotes.php:48 SelectCustomer.php:813
+#: AddCustomerTypeNotes.php:48 SelectCustomer.php:889
 #, fuzzy
 msgid "Customer Group Notes"
 msgstr "הערות למתרגמים:"
@@ -972,16 +988,16 @@ msgstr "מלאי"
 
 #: AgedControlledInventory.php:43 AutomaticTranslationDescriptions.php:37
 #: BOMIndented.php:315 BOMIndentedReverse.php:293 BOMInquiry.php:109
-#: BOMInquiry.php:198 BOMs.php:636 BOMs.php:994 CollectiveWorkOrderCost.php:45
-#: CollectiveWorkOrderCost.php:317 ContractBOM.php:242 ContractBOM.php:354
-#: ContractOtherReqts.php:98 CounterReturns.php:1692 CounterSales.php:2102
-#: CounterSales.php:2256 CreditStatus.php:152 CreditStatus.php:243
-#: CustomerPurchases.php:81 EmailConfirmation.php:219
-#: EmailConfirmation.php:349 FixedAssetCategories.php:167
-#: FixedAssetDepreciation.php:91 FixedAssetRegister.php:87
-#: FixedAssetRegister.php:388 FixedAssetTransfer.php:60
-#: FixedAssetTransfer.php:162 GLTags.php:63 GLTags.php:82
-#: GLTransInquiry.php:49 GoodsReceived.php:122
+#: BOMInquiry.php:198 BOMs.php:646 BOMs.php:1005
+#: CollectiveWorkOrderCost.php:45 CollectiveWorkOrderCost.php:317
+#: ContractBOM.php:242 ContractBOM.php:354 ContractOtherReqts.php:98
+#: CounterReturns.php:1692 CounterSales.php:2102 CounterSales.php:2256
+#: CreditStatus.php:152 CreditStatus.php:243 CustomerPurchases.php:81
+#: EmailConfirmation.php:219 EmailConfirmation.php:349
+#: FixedAssetCategories.php:167 FixedAssetDepreciation.php:91
+#: FixedAssetRegister.php:87 FixedAssetRegister.php:388
+#: FixedAssetTransfer.php:60 FixedAssetTransfer.php:162 GLTags.php:63
+#: GLTags.php:82 GLTransInquiry.php:49 GoodsReceived.php:122
 #: InternalStockCategoriesByRole.php:168 InternalStockRequest.php:345
 #: InternalStockRequest.php:559 InternalStockRequest.php:629
 #: InventoryPlanning.php:419 InventoryQuantities.php:246
@@ -1389,7 +1405,7 @@ msgid "Summary or Detailed Report"
 msgstr ""
 
 #: AnalysisHorizontalIncome.php:10 AnalysisHorizontalPosition.php:10
-#: BankAccounts.php:369 BOMs.php:130 BOMs.php:136 BOMs.php:144 BOMs.php:1012
+#: BankAccounts.php:369 BOMs.php:133 BOMs.php:139 BOMs.php:147 BOMs.php:1023
 #: InternalStockRequest.php:579 PaymentTerms.php:190 PaymentTerms.php:196
 #: PO_SelectOSPurchOrder.php:651 SalesAnalReptCols.php:285
 #: SelectProduct.php:136 SelectProduct.php:186 SelectProduct.php:247
@@ -1644,7 +1660,7 @@ msgid "Net Profit"
 msgstr ""
 
 #: AnalysisHorizontalIncome.php:518 AnalysisHorizontalPosition.php:358
-#: BOMs.php:898 CustWhereAlloc.php:196 DailyBankTransactions.php:249
+#: BOMs.php:909 CustWhereAlloc.php:196 DailyBankTransactions.php:249
 #: GLAccountUsers.php:248 GLBalanceSheet.php:716 GLProfit_Loss.php:1313
 #: GLTrialBalance.php:736 SuppWhereAlloc.php:194 UserGLAccounts.php:254
 #, fuzzy
@@ -1823,7 +1839,7 @@ msgstr "לתאריך"
 
 #: AuditTrail.php:53 PO_AuthorisationLevels.php:124
 #: PO_AuthorisationLevels.php:173 PO_AuthorisationLevels.php:176
-#: StockMovements.php:106 UserSettings.php:112 includes/UserLogin.php:249
+#: StockMovements.php:106 UserSettings.php:116 includes/UserLogin.php:249
 msgid "User ID"
 msgstr "שם משתמש"
 
@@ -1907,7 +1923,7 @@ msgstr "משתמש"
 #: DailyBankTransactions.php:153 GLAccountInquiry.php:187
 #: GLAccountReport.php:345 GLJournal.php:266 MRPReschedules.php:194
 #: ProductSpecs.php:388 QATests.php:257 QATests.php:395
-#: SalesByTypePeriodInquiry.php:356 SelectCustomer.php:490
+#: SalesByTypePeriodInquiry.php:356 SelectCustomer.php:417
 #: ShipmentCosting.php:536 ShipmentCosting.php:613 StockLocMovements.php:90
 #: StockMovements.php:103 SupplierAllocations.php:453 SupplierInquiry.php:211
 #: SupplierTransInquiry.php:20 SupplierTransInquiry.php:108
@@ -1952,8 +1968,8 @@ msgstr ""
 msgid "#"
 msgstr ""
 
-#: AutomaticTranslationDescriptions.php:36 BOMInquiry.php:108 BOMs.php:635
-#: BOMs.php:993 CollectiveWorkOrderCost.php:316 ContractBOM.php:353
+#: AutomaticTranslationDescriptions.php:36 BOMInquiry.php:108 BOMs.php:645
+#: BOMs.php:1004 CollectiveWorkOrderCost.php:316 ContractBOM.php:353
 #: CounterReturns.php:1691 CounterSales.php:2101 CounterSales.php:2255
 #: CustItem.php:297 CustomerBranches.php:408 CustomerReceipt.php:1208
 #: GLCodesInquiry.php:26 InternalStockRequest.php:558
@@ -1964,7 +1980,7 @@ msgstr ""
 #: PricesByCost.php:152 PurchData.php:469 RelatedItemsUpdate.php:153
 #: ReorderLevelLocation.php:72 RevisionTranslations.php:59 SalesPeople.php:207
 #: SelectCompletedOrder.php:504 SelectCreditItems.php:1018
-#: SelectCustomer.php:486 SelectGLAccount.php:125 SelectOrderItems.php:1478
+#: SelectCustomer.php:413 SelectGLAccount.php:125 SelectOrderItems.php:1478
 #: SelectOrderItems.php:1640 SelectProduct.php:324 SelectProduct.php:829
 #: SelectQASamples.php:298 SelectSalesOrder.php:559 SelectSupplier.php:282
 #: SelectWorkOrder.php:218 SellThroughSupport.php:159 Shipt_Select.php:190
@@ -2361,7 +2377,7 @@ msgstr ""
 
 #: BankAccountUsers.php:168 GLAccountUsers.php:151 LocationUsers.php:175
 #: PcTabs.php:226 PcTabs.php:327 PO_AuthorisationLevels.php:125
-#: SMTPServer.php:114 UserSettings.php:117
+#: SMTPServer.php:114 UserSettings.php:121
 msgid "User Name"
 msgstr "שם המשתמש"
 
@@ -2885,7 +2901,7 @@ msgstr ""
 
 #: BOMExtendedQty.php:267 BOMExtendedQty.php:334 BOMExtendedQty.php:335
 #: BOMExtendedQty.php:336 BOMExtendedQty.php:337 BOMIndented.php:318
-#: BOMIndentedReverse.php:296 BOMInquiry.php:199 BOMs.php:639 BOMs.php:837
+#: BOMIndentedReverse.php:296 BOMInquiry.php:199 BOMs.php:649 BOMs.php:848
 #: ContractBOM.php:243 ContractBOM.php:357 ContractCosting.php:81
 #: ContractCosting.php:87 ContractCosting.php:152 ContractOtherReqts.php:99
 #: Contracts.php:1006 Contracts.php:1042 CounterReturns.php:669
@@ -3089,7 +3105,7 @@ msgstr "תאריך ייצור:"
 msgid "Build"
 msgstr "תאריך ייצור:"
 
-#: BOMExtendedQty.php:327 BOMInquiry.php:110 BOMs.php:995
+#: BOMExtendedQty.php:327 BOMInquiry.php:110 BOMs.php:1006
 #: CollectiveWorkOrderCost.php:318 CounterReturns.php:1694
 #: CounterSales.php:2104 CounterSales.php:2258 InternalStockRequest.php:631
 #: PO_SelectOSPurchOrder.php:311 PO_SelectPurchOrder.php:215
@@ -3208,12 +3224,12 @@ msgstr "קומפוננט"
 msgid "Costed Bill Of Material"
 msgstr ""
 
-#: BOMInquiry.php:20 BOMs.php:972
+#: BOMInquiry.php:20 BOMs.php:983
 #, fuzzy
 msgid "Select a manufactured part"
 msgstr "האבה הקסיפב רובע"
 
-#: BOMInquiry.php:20 BOMs.php:972
+#: BOMInquiry.php:20 BOMs.php:983
 msgid "or Assembly or Kit part"
 msgstr ""
 
@@ -3221,20 +3237,20 @@ msgstr ""
 msgid "to view the costed bill of materials"
 msgstr ""
 
-#: BOMInquiry.php:21 BOMs.php:972
+#: BOMInquiry.php:21 BOMs.php:983
 msgid "Parts must be defined in the stock item entry"
 msgstr ""
 
-#: BOMInquiry.php:21 BOMs.php:972
+#: BOMInquiry.php:21 BOMs.php:983
 msgid "modification screen as manufactured"
 msgstr ""
 
-#: BOMInquiry.php:21 BOMs.php:972
+#: BOMInquiry.php:21 BOMs.php:983
 msgid ""
 "kits or assemblies to be available for construction of a bill of material"
 msgstr ""
 
-#: BOMInquiry.php:26 BOMs.php:976 MRPDemands.php:336
+#: BOMInquiry.php:26 BOMs.php:987 MRPDemands.php:336
 #: PO_SelectOSPurchOrder.php:288 PO_SelectPurchOrder.php:190
 #: SelectQASamples.php:275 Shipt_Select.php:169 TestPlanResults.php:153
 #: WorkOrderEntry.php:701 WorkOrderIssue.php:756
@@ -3242,7 +3258,7 @@ msgstr ""
 msgid "Enter text extracts in the"
 msgstr "הזנת טקסט במפרק טקסט"
 
-#: BOMInquiry.php:26 BOMs.php:976 MRPDemands.php:336
+#: BOMInquiry.php:26 BOMs.php:987 MRPDemands.php:336
 #: PO_SelectOSPurchOrder.php:288 PO_SelectPurchOrder.php:190
 #: SelectQASamples.php:275 Shipt_Select.php:169 TestPlanResults.php:153
 #: WorkOrderEntry.php:701 WorkOrderIssue.php:756
@@ -3250,7 +3266,7 @@ msgstr "הזנת טקסט במפרק טקסט"
 msgid "description"
 msgstr "  תיאור: "
 
-#: BOMInquiry.php:28 BOMs.php:978 CollectiveWorkOrderCost.php:304
+#: BOMInquiry.php:28 BOMs.php:989 CollectiveWorkOrderCost.php:304
 #: ContractBOM.php:332 ContractBOM.php:337 Contracts.php:766 Contracts.php:769
 #: CounterReturns.php:1662 CounterSales.php:2225 CustItem.php:220
 #: CustomerReceipt.php:1187 CustomerReceipt.php:1190
@@ -3260,9 +3276,9 @@ msgstr "  תיאור: "
 #: MRPDemands.php:341 MRPReport.php:574 PO_Header.php:547 PO_Items.php:1155
 #: PO_Items.php:1159 PO_SelectOSPurchOrder.php:292 PO_SelectPurchOrder.php:195
 #: PurchData.php:383 SelectAsset.php:104 SelectCompletedOrder.php:484
-#: SelectCreditItems.php:228 SelectCreditItems.php:1002 SelectCustomer.php:340
-#: SelectCustomer.php:350 SelectCustomer.php:359 SelectCustomer.php:369
-#: SelectCustomer.php:416 SelectGLAccount.php:91 SelectOrderItems.php:569
+#: SelectCreditItems.php:228 SelectCreditItems.php:1002 SelectCustomer.php:268
+#: SelectCustomer.php:278 SelectCustomer.php:287 SelectCustomer.php:297
+#: SelectCustomer.php:344 SelectGLAccount.php:91 SelectOrderItems.php:569
 #: SelectOrderItems.php:572 SelectOrderItems.php:1605 SelectProduct.php:552
 #: SelectProduct.php:561 SelectQASamples.php:280 SelectSalesOrder.php:544
 #: SelectSupplier.php:233 SelectWorkOrder.php:206 SellThroughSupport.php:202
@@ -3273,7 +3289,7 @@ msgstr "  תיאור: "
 msgid "OR"
 msgstr "או"
 
-#: BOMInquiry.php:29 BOMs.php:979 MRPDemands.php:339
+#: BOMInquiry.php:29 BOMs.php:990 MRPDemands.php:339
 #: PO_SelectOSPurchOrder.php:292 PO_SelectPurchOrder.php:195
 #: SelectQASamples.php:280 Shipt_Select.php:174 TestPlanResults.php:158
 #: WorkOrderEntry.php:706 WorkOrderIssue.php:761
@@ -3281,7 +3297,7 @@ msgstr "או"
 msgid "Enter extract of the"
 msgstr "חילוץ תמונה"
 
-#: BOMInquiry.php:29 BOMs.php:979 EmailConfirmation.php:218
+#: BOMInquiry.php:29 BOMs.php:990 EmailConfirmation.php:218
 #: EmailConfirmation.php:348 InternalStockRequest.php:154
 #: InternalStockRequest.php:354 MRPDemands.php:339 MRPReport.php:574
 #: PO_SelectOSPurchOrder.php:292 PO_SelectPurchOrder.php:195
@@ -3300,11 +3316,11 @@ msgstr "חילוץ תמונה"
 msgid "Stock Code"
 msgstr "code overflow"
 
-#: BOMInquiry.php:35 BOMs.php:983 ContractBOM.php:342 Contracts.php:776
+#: BOMInquiry.php:35 BOMs.php:994 ContractBOM.php:342 Contracts.php:776
 #: CounterReturns.php:1666 CounterSales.php:2231 CustomerReceipt.php:1197
 #: FixedAssetTransfer.php:107 InternalStockRequest.php:365 MRPDemands.php:343
 #: MRPReport.php:586 PO_Header.php:554 PO_Items.php:1163 SelectAsset.php:116
-#: SelectCreditItems.php:235 SelectCreditItems.php:1009 SelectCustomer.php:441
+#: SelectCreditItems.php:235 SelectCreditItems.php:1009 SelectCustomer.php:369
 #: SelectGLAccount.php:116 SelectOrderItems.php:580 SelectOrderItems.php:1616
 #: SelectProduct.php:569 SelectSupplier.php:243 SelectSupplier.php:276
 #: SupplierPriceList.php:61 SupplierTenderCreate.php:572
@@ -3313,7 +3329,7 @@ msgstr "code overflow"
 msgid "Search Now"
 msgstr "חיפוש"
 
-#: BOMInquiry.php:47 BOMs.php:913 CollectiveWorkOrderCost.php:124
+#: BOMInquiry.php:47 BOMs.php:924 CollectiveWorkOrderCost.php:124
 #: ContractBOM.php:52 MRPDemands.php:56 MRPReport.php:606 PO_Items.php:852
 #: PO_SelectOSPurchOrder.php:65 PO_SelectPurchOrder.php:48
 #: SelectCompletedOrder.php:97 SelectCreditItems.php:302 SelectProduct.php:582
@@ -3326,18 +3342,18 @@ msgid ""
 "extract entered"
 msgstr ""
 
-#: BOMInquiry.php:50 BOMs.php:916 MRPDemands.php:59
+#: BOMInquiry.php:50 BOMs.php:927 MRPDemands.php:59
 msgid ""
 "At least one stock description keyword or an extract of a stock code must be "
 "entered for the search"
 msgstr ""
 
-#: BOMInquiry.php:95 BOMs.php:962 MRPCalendar.php:213 MRPDemands.php:80
+#: BOMInquiry.php:95 BOMs.php:973 MRPCalendar.php:213 MRPDemands.php:80
 #: MRPDemands.php:289 POReport.php:483 POReport.php:1266 SalesInquiry.php:758
 msgid "The SQL to find the parts selected failed with the message"
 msgstr ""
 
-#: BOMInquiry.php:111 BOMs.php:996 CollectiveWorkOrderCost.php:319
+#: BOMInquiry.php:111 BOMs.php:1007 CollectiveWorkOrderCost.php:319
 #: ConfirmDispatch_Invoice.php:304 ContractBOM.php:355 CounterReturns.php:1693
 #: CounterSales.php:2103 CounterSales.php:2257 Credit_Invoice.php:294
 #: GoodsReceived.php:124 GoodsReceived.php:128
@@ -3382,7 +3398,7 @@ msgstr "חזרה לתפריט הראשי"
 msgid "per"
 msgstr " למגדר"
 
-#: BOMInquiry.php:197 BOMs.php:717 WOCanBeProducedNow.php:48
+#: BOMInquiry.php:197 BOMs.php:728 WOCanBeProducedNow.php:48
 #: WorkOrderReceive.php:191 WorkOrderReceive.php:409 Z_BottomUpCosts.php:33
 #, fuzzy
 msgid "Component"
@@ -3463,41 +3479,41 @@ msgstr ""
 msgid "Multi-Level Bill Of Materials Maintenance"
 msgstr ""
 
-#: BOMs.php:31
+#: BOMs.php:33
 msgid "A maximum of 15 levels of bill of materials only can be displayed"
 msgstr ""
 
-#: BOMs.php:52
+#: BOMs.php:54
 msgid ""
 "An error occurred in retrieving the components of the BOM during the check "
 "for recursion"
 msgstr ""
 
-#: BOMs.php:53
+#: BOMs.php:55
 msgid ""
 "The SQL that was used to retrieve the components of the BOM and that failed "
 "in the process was"
 msgstr ""
 
-#: BOMs.php:107
+#: BOMs.php:110
 msgid "Could not retrieve the BOM components because"
 msgstr ""
 
-#: BOMs.php:108
+#: BOMs.php:111
 msgid "The SQL used to retrieve the components was"
 msgstr ""
 
-#: BOMs.php:122
+#: BOMs.php:125
 #, fuzzy
 msgid "No lower levels"
 msgstr "התאמת רמות צבעים"
 
-#: BOMs.php:125
+#: BOMs.php:128
 #, fuzzy
 msgid "Drill Down"
 msgstr "הזז מ&טה"
 
-#: BOMs.php:173 BOMs.php:615 ContractBOM.php:385 CounterSales.php:2116
+#: BOMs.php:176 BOMs.php:625 ContractBOM.php:385 CounterSales.php:2116
 #: FixedAssetItems.php:514 FixedAssetItems.php:517 FixedAssetItems.php:535
 #: InternalStockRequest.php:637 Manufacturers.php:253 Manufacturers.php:366
 #: PO_Items.php:1222 SalesCategories.php:84 SalesCategories.php:298
@@ -3511,54 +3527,54 @@ msgstr "הזז מ&טה"
 msgid "No Image"
 msgstr ""
 
-#: BOMs.php:192
+#: BOMs.php:195
 #, php-format
 msgid ""
 "Are you sure you wish to delete this component from the bill of material?"
 msgstr ""
 
-#: BOMs.php:288
+#: BOMs.php:291
 msgid "The effective after date field must be a date in the format"
 msgstr ""
 
-#: BOMs.php:294
+#: BOMs.php:297
 msgid "The effective to date field must be a date in the format"
 msgstr ""
 
-#: BOMs.php:300 StockAdjustments.php:165 StockTransfers.php:173
+#: BOMs.php:303 StockAdjustments.php:165 StockTransfers.php:173
 #: WorkOrderEntry.php:336
 msgid "The quantity entered must be numeric"
 msgstr ""
 
-#: BOMs.php:314
+#: BOMs.php:317
 msgid "The effective to date must be a date after the effective after date"
 msgstr ""
 
-#: BOMs.php:314
+#: BOMs.php:317
 #, fuzzy
 msgid "The effective to date is"
 msgstr "גרסת העיון מיושנת"
 
-#: BOMs.php:314
+#: BOMs.php:317
 msgid "days before the effective after date"
 msgstr ""
 
-#: BOMs.php:314
+#: BOMs.php:317
 #, fuzzy
 msgid "No updates have been performed"
 msgstr "כפילויות לא נימצאו."
 
-#: BOMs.php:314
+#: BOMs.php:317
 #, fuzzy
 msgid "Effective after was"
 msgstr "Operation was cancelled"
 
-#: BOMs.php:314
+#: BOMs.php:317
 #, fuzzy
 msgid "and effective to was"
 msgstr " and --strict was specified; exiting.\n"
 
-#: BOMs.php:325
+#: BOMs.php:328
 msgid ""
 "Only non-serialised or non-lot controlled items can be set to auto issue. "
 "These items require the lot/serial numbers of items issued to the works "
@@ -3566,93 +3582,93 @@ msgid ""
 "automatically set to off for this component"
 msgstr ""
 
-#: BOMs.php:351
+#: BOMs.php:356
 msgid "Could not update this BOM component because"
 msgstr ""
 
-#: BOMs.php:352
+#: BOMs.php:357
 msgid "The SQL used to update the component was"
 msgstr ""
 
-#: BOMs.php:355
+#: BOMs.php:360
 #, fuzzy
 msgid "Details for"
 msgstr "פרטי המפתח החדש:"
 
-#: BOMs.php:355 RevisionTranslations.php:30
+#: BOMs.php:360 RevisionTranslations.php:30
 #, fuzzy
 msgid "have been updated"
 msgstr "משפחה %s עודכנה."
 
-#: BOMs.php:374
+#: BOMs.php:379
 msgid "An error occurred in checking the component is not already on the BOM"
 msgstr ""
 
-#: BOMs.php:375
+#: BOMs.php:380
 msgid ""
 "The SQL that was used to check the component was not already on the BOM and "
 "that failed in the process was"
 msgstr ""
 
-#: BOMs.php:402
+#: BOMs.php:412
 msgid "Could not insert the BOM component because"
 msgstr ""
 
-#: BOMs.php:403
+#: BOMs.php:413
 msgid "The SQL used to insert the component was"
 msgstr ""
 
-#: BOMs.php:408
+#: BOMs.php:418
 #, fuzzy
 msgid "A new component part"
 msgstr "יצירת &לשונית חדשה"
 
-#: BOMs.php:408
+#: BOMs.php:418
 msgid "has been added to the bill of material for part"
 msgstr ""
 
-#: BOMs.php:414
+#: BOMs.php:424
 #, fuzzy
 msgid "The component"
 msgstr "קומפוננט"
 
-#: BOMs.php:414
+#: BOMs.php:424
 msgid "is already recorded as a component of"
 msgstr ""
 
-#: BOMs.php:414
+#: BOMs.php:424
 msgid ""
 "Whilst the quantity of the component required can be modified it is "
 "inappropriate for a component to appear more than once in a bill of material"
 msgstr ""
 
-#: BOMs.php:435
+#: BOMs.php:445
 msgid "Could not delete this BOM components because"
 msgstr ""
 
-#: BOMs.php:436
+#: BOMs.php:446
 msgid "The SQL used to delete the BOM was"
 msgstr ""
 
-#: BOMs.php:446
+#: BOMs.php:456
 #, fuzzy
 msgid "The component part"
 msgstr "embedded component"
 
-#: BOMs.php:446
+#: BOMs.php:456
 #, fuzzy
 msgid "has been deleted from this BOM"
 msgstr "הקישור מ-”%1$s” ל-”%2$s” נמחק."
 
-#: BOMs.php:469 BOMs.php:505 BOMs.php:529 BOMs.php:554 BOMs.php:578
+#: BOMs.php:479 BOMs.php:515 BOMs.php:539 BOMs.php:564 BOMs.php:588
 msgid "Could not retrieve the description of the parent part because"
 msgstr ""
 
-#: BOMs.php:470 BOMs.php:506 BOMs.php:530 BOMs.php:555 BOMs.php:579
+#: BOMs.php:480 BOMs.php:516 BOMs.php:540 BOMs.php:565 BOMs.php:589
 msgid "The SQL used to retrieve description of the parent part was"
 msgstr ""
 
-#: BOMs.php:479 ConfirmDispatch_Invoice.php:1054 CounterReturns.php:1074
+#: BOMs.php:489 ConfirmDispatch_Invoice.php:1054 CounterReturns.php:1074
 #: CounterSales.php:1474 Credit_Invoice.php:812 Credit_Invoice.php:842
 #: SelectCreditItems.php:1501 StockClone.php:863 StockClone.php:865
 #: Stocks.php:1191 Stocks.php:1193 api/api_debtortransactions.php:753
@@ -3660,64 +3676,64 @@ msgstr ""
 msgid "Assembly"
 msgstr ""
 
-#: BOMs.php:482 FixedAssetRegister.php:390 StockClone.php:883
+#: BOMs.php:492 FixedAssetRegister.php:390 StockClone.php:883
 #: StockClone.php:885 Stocks.php:1211 Stocks.php:1213
 msgid "Purchased"
 msgstr ""
 
-#: BOMs.php:485 StockClone.php:873 StockClone.php:875 Stocks.php:1201
+#: BOMs.php:495 StockClone.php:873 StockClone.php:875 Stocks.php:1201
 #: Stocks.php:1203
 msgid "Manufactured"
 msgstr ""
 
-#: BOMs.php:488
+#: BOMs.php:498
 #, fuzzy
 msgid "Kit Set"
 msgstr "Set variable: "
 
-#: BOMs.php:491 BOMs.php:584 StockClone.php:878 StockClone.php:880
+#: BOMs.php:501 BOMs.php:594 StockClone.php:878 StockClone.php:880
 #: Stocks.php:1206 Stocks.php:1208
 msgid "Phantom"
 msgstr ""
 
-#: BOMs.php:495
+#: BOMs.php:505
 #, fuzzy
 msgid "Select a Different BOM"
 msgstr "האבה הקסיפב רובע"
 
-#: BOMs.php:511
+#: BOMs.php:521
 #, fuzzy
 msgid "Manufactured parent items"
 msgstr "לא נמצאו פריטים"
 
-#: BOMs.php:534
+#: BOMs.php:544
 #, fuzzy
 msgid "Assembly parent items"
 msgstr "לא נמצאו פריטים"
 
-#: BOMs.php:559
+#: BOMs.php:569
 #, fuzzy
 msgid "Kit sets"
 msgstr "&ערכות מסננים:"
 
-#: BOMs.php:632 InventoryQuantities.php:251 ReorderLevel.php:305
+#: BOMs.php:642 InventoryQuantities.php:251 ReorderLevel.php:305
 #, fuzzy
 msgid "Level"
 msgstr "רמה"
 
-#: BOMs.php:633 EDIMessageFormat.php:130 SuppInvGRNs.php:119
+#: BOMs.php:643 EDIMessageFormat.php:130 SuppInvGRNs.php:119
 #: SuppInvGRNs.php:259 reportwriter/languages/en_US/reports.php:98
 #, fuzzy
 msgid "Sequence"
 msgstr "DTMF סדר:"
 
-#: BOMs.php:634 FixedAssetCategories.php:283 InventoryPlanning.php:419
+#: BOMs.php:644 FixedAssetCategories.php:283 InventoryPlanning.php:419
 #: InventoryValuation.php:197 POReport.php:749 POReport.php:1449
 #: SalesInquiry.php:978 StockCategories.php:264 StockCategories.php:406
 msgid "Category Description"
 msgstr "תאור הקטגוריה"
 
-#: BOMs.php:637 BOMs.php:780 Contracts.php:883 FixedAssetRegister.php:89
+#: BOMs.php:647 BOMs.php:791 Contracts.php:883 FixedAssetRegister.php:89
 #: InventoryQuantities.php:247 Locations.php:380 LocationUsers.php:153
 #: MRP.php:580 MRP.php:617 NoSalesItems.php:192 PDFOrdersInvoiced.php:296
 #: PDFOrderStatus.php:296 ReorderLevelLocation.php:164 ReorderLevel.php:290
@@ -3731,12 +3747,12 @@ msgstr "תאור הקטגוריה"
 msgid "Location"
 msgstr ""
 
-#: BOMs.php:638 WhereUsedInquiry.php:73 includes/MainMenuLinksArray.php:336
+#: BOMs.php:648 WhereUsedInquiry.php:73 includes/MainMenuLinksArray.php:336
 #, fuzzy
 msgid "Work Centre"
 msgstr "פועל על:"
 
-#: BOMs.php:640 ContractBOM.php:244 InternalStockRequest.php:274
+#: BOMs.php:650 ContractBOM.php:244 InternalStockRequest.php:274
 #: SupplierTenderCreate.php:436 SupplierTenders.php:328
 #: WOCanBeProducedNow.php:47 WOCanBeProducedNow.php:52
 #: includes/PDFTransPageHeader.inc:214
@@ -3744,99 +3760,103 @@ msgstr "פועל על:"
 msgid "UOM"
 msgstr ""
 
-#: BOMs.php:641 BOMs.php:856 WhereUsedInquiry.php:76
+#: BOMs.php:651 BOMs.php:867 WhereUsedInquiry.php:76
 #: includes/PDFBOMListingPageHeader.inc:40
 #, fuzzy
 msgid "Effective After"
 msgstr "לאחר השחרור"
 
-#: BOMs.php:642 BOMs.php:860 PurchData.php:703 SellThroughSupport.php:267
+#: BOMs.php:652 BOMs.php:871 PurchData.php:703 SellThroughSupport.php:267
 #: WhereUsedInquiry.php:77 includes/PDFBOMListingPageHeader.inc:41
 #, fuzzy
 msgid "Effective To"
 msgstr "ה&ורדה אל:"
 
-#: BOMs.php:643 WorkOrderIssue.php:688 WorkOrderStatus.php:128
+#: BOMs.php:653 WorkOrderIssue.php:688 WorkOrderStatus.php:128
 #, fuzzy
 msgid "Auto Issue"
 msgstr "Auto Mnemonics"
 
-#: BOMs.php:644 InventoryValuation.php:197
+#: BOMs.php:654 InventoryValuation.php:197
 #, fuzzy
 msgid "Qty On Hand"
 msgstr "Error on line %d: %s"
 
-#: BOMs.php:649
+#: BOMs.php:659
 #, fuzzy
 msgid "No materials found."
 msgstr ".סקדניא ףא אצמנ אל"
 
-#: BOMs.php:672
+#: BOMs.php:682
 msgid "Print Date"
 msgstr ""
 
-#: BOMs.php:708
+#: BOMs.php:719
 msgid "Edit the details of the selected component in the fields below"
 msgstr ""
 
-#: BOMs.php:708
+#: BOMs.php:719
 msgid "Click on the Enter Information button to update the component details"
 msgstr ""
 
-#: BOMs.php:730
+#: BOMs.php:741
 #, fuzzy
 msgid "New Component Details"
 msgstr "פרטי המפתח החדש:"
 
-#: BOMs.php:733
+#: BOMs.php:744
 #, fuzzy
 msgid "Component code"
 msgstr "code overflow"
 
-#: BOMs.php:763
+#: BOMs.php:774
 msgid "Could not retrieve the list of potential components because"
 msgstr ""
 
-#: BOMs.php:764
+#: BOMs.php:775
 msgid "The SQL used to retrieve the list of potential components part was"
 msgstr ""
 
-#: BOMs.php:776
+#: BOMs.php:787
 #, fuzzy
 msgid "Sequence in BOM"
 msgstr "Incomplete multibyte sequence in input"
 
-#: BOMs.php:809
+#: BOMs.php:788
+msgid "Number with decimal places is acceptable"
+msgstr ""
+
+#: BOMs.php:820
 #, fuzzy
 msgid "Work Centre Added"
 msgstr "התווסף %(name)s \"%(object)s\"."
 
-#: BOMs.php:815 Contracts.php:898
+#: BOMs.php:826 Contracts.php:898
 msgid "There are no work centres set up yet"
 msgstr ""
 
-#: BOMs.php:815 Contracts.php:898
+#: BOMs.php:826 Contracts.php:898
 msgid "Please use the link below to set up work centres"
 msgstr ""
 
-#: BOMs.php:816 Contracts.php:899
+#: BOMs.php:827 Contracts.php:899
 #, fuzzy
 msgid "Work Centre Maintenance"
 msgstr "משימות תחזוקת cron"
 
-#: BOMs.php:838
+#: BOMs.php:849
 msgid "Enter the quantity of this item required for the parent item"
 msgstr ""
 
-#: BOMs.php:866
+#: BOMs.php:877
 msgid "Auto Issue this Component to Work Orders"
 msgstr ""
 
-#: BOMs.php:888
+#: BOMs.php:899
 msgid "Remark"
 msgstr ""
 
-#: BOMs.php:972
+#: BOMs.php:983
 msgid "to maintain the bill of material for using the options below"
 msgstr ""
 
@@ -4133,7 +4153,7 @@ msgstr "בחירה"
 #: SelectContract.php:142 SelectContract.php:172
 #: SelectRecurringSalesOrder.php:90 SelectSalesOrder.php:698
 #: SelectSalesOrder.php:716 SelectWorkOrder.php:327 Shipt_Select.php:331
-#: UserSettings.php:215 Z_poEditLangHeader.php:108 Z_poEditLangModule.php:175
+#: UserSettings.php:217 Z_poEditLangHeader.php:108 Z_poEditLangModule.php:175
 #: Z_poEditLangRemaining.php:139
 #, fuzzy, php-format
 msgid "Modify"
@@ -4655,10 +4675,11 @@ msgstr ""
 #: PDFOrderStatus.php:293 PDFSalesBySalesperson.php:83 PDFWeeklyOrders.php:79
 #: PricesByCost.php:154 SalesGraph.php:188 SalesTopCustomersInquiry.php:214
 #: SelectCompletedOrder.php:556 SelectContract.php:148
-#: SelectCreditItems.php:243 SelectCustomer.php:24 SelectCustomer.php:273
-#: SelectOrderItems.php:594 SelectRecurringSalesOrder.php:91
-#: SelectSalesOrder.php:701 SelectSalesOrder.php:718
-#: SellThroughSupport.php:262 StockLocMovements.php:93 StockMovements.php:107
+#: SelectCreditItems.php:243 SelectCustomer.php:13 SelectCustomer.php:180
+#: SelectCustomer.php:181 SelectOrderItems.php:594
+#: SelectRecurringSalesOrder.php:91 SelectSalesOrder.php:701
+#: SelectSalesOrder.php:718 SellThroughSupport.php:262
+#: StockLocMovements.php:93 StockMovements.php:107
 #: includes/PDFAgedDebtorsPageHeader.inc:48
 #: includes/PDFBankingSummaryPageHeader.inc:56
 #: includes/PDFCustTransListingPageHeader.inc:48
@@ -4691,7 +4712,7 @@ msgstr "קוד הלקוח"
 #: SalesInquiry.php:782 SalesInquiry.php:806 SalesInquiry.php:950
 #: SalesInquiry.php:961 SalesInquiry.php:967 SalesInquiry.php:973
 #: SalesInquiry.php:1138 SalesInquiry.php:1213 SalesInquiry.php:1232
-#: SelectCustomer.php:487 SelectOrderItems.php:694
+#: SelectCustomer.php:414 SelectOrderItems.php:694
 msgid "Customer Name"
 msgstr "שם הלקוח"
 
@@ -6565,7 +6586,7 @@ msgid ""
 "Phone Number entered"
 msgstr ""
 
-#: Contracts.php:692 CustomerReceipt.php:645 SelectCustomer.php:231
+#: Contracts.php:692 CustomerReceipt.php:645 SelectCustomer.php:135
 #: SelectOrderItems.php:350
 msgid "The searched customer records requested cannot be retrieved because"
 msgstr ""
@@ -6671,7 +6692,7 @@ msgstr "איתחול"
 #: PDFOrdersInvoiced.php:293 PDFOrderStatus.php:294 PDFPriceList.php:427
 #: PricesByCost.php:155 Prices_Customer.php:263 Prices_Customer.php:337
 #: PrintCustTransPortrait.php:892 SelectCompletedOrder.php:557
-#: SelectCreditItems.php:244 SelectCustomer.php:488 SelectOrderItems.php:595
+#: SelectCreditItems.php:244 SelectCustomer.php:415 SelectOrderItems.php:595
 #: SelectRecurringSalesOrder.php:92 SelectSalesOrder.php:702
 #: SelectSalesOrder.php:719 StockMovements.php:108
 #: StockSerialItemResearch.php:84
@@ -6683,14 +6704,14 @@ msgid "Branch"
 msgstr "סניף"
 
 #: Contracts.php:787 Factors.php:294 SelectCreditItems.php:245
-#: SelectCustomer.php:489 SelectOrderItems.php:596 SupplierContacts.php:229
+#: SelectCustomer.php:416 SelectOrderItems.php:596 SupplierContacts.php:229
 #, fuzzy
 msgid "Contact"
 msgstr "מגע במשולש"
 
 #: Contracts.php:789 EmailConfirmation.php:164 EmailConfirmation.php:323
 #: Factors.php:242 PDFCustomerList.php:344 PDFRemittanceAdvice.php:249
-#: SelectCreditItems.php:247 SelectCustomer.php:492 SelectOrderItems.php:598
+#: SelectCreditItems.php:247 SelectCustomer.php:419 SelectOrderItems.php:598
 #: includes/PDFOrderPageHeader_generic.inc:32
 #: includes/PDFPickingListHeader.inc:24 includes/PDFQuotationPageHeader.inc:40
 #: includes/PDFQuotationPortraitPageHeader.inc:34
@@ -7333,7 +7354,7 @@ msgstr "Menu item (%s): "
 #: CounterSales.php:2346 InternalStockRequest.php:549
 #: InternalStockRequest.php:625 InternalStockRequest.php:745 MRPReport.php:769
 #: PO_Items.php:1178 PO_Items.php:1180 SelectAsset.php:251
-#: SelectCustomer.php:479 SelectCustomer.php:556 SelectOrderItems.php:1638
+#: SelectCustomer.php:407 SelectCustomer.php:484 SelectOrderItems.php:1638
 #: SelectOrderItems.php:1734 SelectProduct.php:819 SelectSupplier.php:273
 #: SelectSupplier.php:339 SupplierPriceList.php:261
 #: SupplierTenderCreate.php:608 WorkOrderEntry.php:726 WorkOrderEntry.php:728
@@ -8748,7 +8769,7 @@ msgstr ""
 msgid "Search Completed Sales Orders"
 msgstr ""
 
-#: CustLoginSetup.php:6 SelectCustomer.php:305
+#: CustLoginSetup.php:6 SelectCustomer.php:219
 #, fuzzy
 msgid "Customer Login Configuration"
 msgstr "Proxy configuration mode"
@@ -8762,7 +8783,7 @@ msgstr ""
 msgid "Select A Customer"
 msgstr "מס הייחוס של הלקוח"
 
-#: CustLoginSetup.php:32 SelectCustomer.php:273 SuppLoginSetup.php:33
+#: CustLoginSetup.php:32 SelectCustomer.php:181 SuppLoginSetup.php:33
 msgid " has been selected"
 msgstr "נבחר"
 
@@ -8774,13 +8795,13 @@ msgstr ""
 msgid "User names cannot contain any of the following characters"
 msgstr ""
 
-#: CustLoginSetup.php:55 SuppLoginSetup.php:54 UserSettings.php:42
+#: CustLoginSetup.php:55 SuppLoginSetup.php:54 UserSettings.php:46
 #: WWW_Users.php:79
 #, fuzzy
 msgid "The password entered must be at least 5 characters long"
 msgstr "אורך הסיסמה לפחות 6 תווים."
 
-#: CustLoginSetup.php:59 SuppLoginSetup.php:57 UserSettings.php:45
+#: CustLoginSetup.php:59 SuppLoginSetup.php:57 UserSettings.php:49
 #: WWW_Users.php:83
 msgid "The password cannot contain the user id"
 msgstr ""
@@ -8918,14 +8939,14 @@ msgstr ""
 msgid "Legal"
 msgstr "Legal"
 
-#: CustLoginSetup.php:234 SuppLoginSetup.php:250 UserSettings.php:147
+#: CustLoginSetup.php:234 SuppLoginSetup.php:250 UserSettings.php:149
 #: WWW_Users.php:330 WWW_Users.php:656
 msgid "Theme"
 msgstr "נושא"
 
 #: CustLoginSetup.php:256 Customers.php:638 Customers.php:1021
 #: Customers.php:1031 RevisionTranslations.php:60 SuppLoginSetup.php:274
-#: UserSettings.php:128 WWW_Users.php:331 WWW_Users.php:681
+#: UserSettings.php:132 WWW_Users.php:331 WWW_Users.php:681
 msgid "Language"
 msgstr "שפה"
 
@@ -9457,8 +9478,8 @@ msgstr ""
 
 #: CustomerBranches.php:101 geocode_genxml_customers.php:21
 #: geocode_genxml_suppliers.php:21 geocode.php:12 geocode.php:30
-#: geocode.php:35 SelectCustomer.php:42 SelectCustomer.php:60
-#: SelectCustomer.php:595 SelectSupplier.php:22 SelectSupplier.php:31
+#: geocode.php:35 SelectCustomer.php:497 SelectCustomer.php:529
+#: SelectCustomer.php:650 SelectSupplier.php:22 SelectSupplier.php:31
 #: SelectSupplier.php:372 Suppliers.php:414
 msgid "An error occurred in retrieving the information"
 msgstr ""
@@ -9489,7 +9510,7 @@ msgstr "כתובות"
 msgid "failed to geocode"
 msgstr "Failed to fork (%s)"
 
-#: CustomerBranches.php:135 SelectCustomer.php:109 Suppliers.php:452
+#: CustomerBranches.php:135 SelectCustomer.php:572 Suppliers.php:452
 #, fuzzy
 msgid "Received status"
 msgstr "מצב ההתקן"
@@ -9597,7 +9618,7 @@ msgstr "נמחקו"
 msgid "Branches defined for"
 msgstr "Custom definition for %s"
 
-#: CustomerBranches.php:410 CustomerBranches.php:654 SelectCustomer.php:714
+#: CustomerBranches.php:410 CustomerBranches.php:654 SelectCustomer.php:788
 #, fuzzy
 msgid "Branch Contact"
 msgstr "מגע במשולש"
@@ -9804,7 +9825,7 @@ msgid "Draw Stock From"
 msgstr "ציור ממשולש"
 
 #: CustomerBranches.php:839 Customers.php:1120 Customers.php:1128
-#: SelectCustomer.php:677
+#: SelectCustomer.php:739
 msgid "Phone Number"
 msgstr "מספר טלפון"
 
@@ -10192,7 +10213,7 @@ msgstr ""
 msgid "SQL used to retrieve the customer details was"
 msgstr ""
 
-#: CustomerReceipt.php:654 SelectCustomer.php:241
+#: CustomerReceipt.php:654 SelectCustomer.php:145
 msgid "No customer records contain the selected text"
 msgstr ""
 
@@ -10406,8 +10427,8 @@ msgstr "הז&נת פקודה ידנית..."
 msgid "Accept and Process Batch"
 msgstr "אשר ועבד אצווה"
 
-#: Customers.php:16 Customers.php:26 SelectCustomer.php:281
-#: SelectCustomer.php:314
+#: Customers.php:16 Customers.php:26 SelectCustomer.php:190
+#: SelectCustomer.php:232
 msgid "Customer Maintenance"
 msgstr "תחזוקת לקוח"
 
@@ -10574,7 +10595,8 @@ msgstr "לחיצה"
 #: Customers.php:425 Customers.php:434 MRPPlannedPurchaseOrders.php:18
 #: MRPPlannedWorkOrders.php:17 MRPReschedules.php:17 MRPShortages.php:17
 #: OffersReceived.php:259 OffersReceived.php:261 PO_Header.php:462
-#: includes/ConnectDB_mysqli.inc:30 includes/ConnectDB_mysql.inc:25
+#: SelectCustomer.php:500 includes/ConnectDB_mysqli.inc:30
+#: includes/ConnectDB_mysql.inc:25
 #: ../webSHOP/includes/DatabaseFunctions.php:21
 #, fuzzy
 msgid "here"
@@ -10634,8 +10656,8 @@ msgstr "כתובת שורה 5 (מיקוד)"
 msgid "No sales types/price lists defined"
 msgstr ""
 
-#: Customers.php:509 Customers.php:528 SelectCustomer.php:378
-#: SelectCustomer.php:401
+#: Customers.php:509 Customers.php:528 SelectCustomer.php:306
+#: SelectCustomer.php:329
 msgid "Setup Types"
 msgstr "הגדרת סוגים"
 
@@ -10644,6 +10666,7 @@ msgid "No Customer types/price lists defined"
 msgstr ""
 
 #: Customers.php:534 Customers.php:868 Customers.php:874
+#: SelectCustomer.php:719
 #, fuzzy
 msgid "Customer Type"
 msgstr "Unknown type"
@@ -16625,8 +16648,8 @@ msgid "Issue"
 msgstr "בעיה בקידוד התווים"
 
 #: InternalStockRequestFulfill.php:39 InternalStockRequest.php:535
-#: MRPReport.php:755 SelectAsset.php:237 SelectCustomer.php:465
-#: SelectCustomer.php:541 SelectOrderItems.php:1360 SelectProduct.php:805
+#: MRPReport.php:755 SelectAsset.php:237 SelectCustomer.php:393
+#: SelectCustomer.php:469 SelectOrderItems.php:1360 SelectProduct.php:805
 #: SelectSupplier.php:259 SelectSupplier.php:325 StockLocTransfer.php:64
 #: SupplierPriceList.php:247 SupplierTenderCreate.php:594
 #: WorkOrderIssue.php:400 WorkOrderReceive.php:756
@@ -16890,7 +16913,7 @@ msgid "Stock Code has been used in search"
 msgstr ""
 
 #: InternalStockRequest.php:535 MRPReport.php:755 SelectAsset.php:237
-#: SelectCustomer.php:465 SelectCustomer.php:541 SelectProduct.php:805
+#: SelectCustomer.php:393 SelectCustomer.php:469 SelectProduct.php:805
 #: SelectSupplier.php:259 SelectSupplier.php:325 SupplierPriceList.php:247
 #: SupplierTenderCreate.php:594
 #, fuzzy
@@ -16898,7 +16921,7 @@ msgid "pages"
 msgstr "דפים"
 
 #: InternalStockRequest.php:535 MRPReport.php:755 SelectAsset.php:237
-#: SelectCustomer.php:465 SelectCustomer.php:541 SelectProduct.php:805
+#: SelectCustomer.php:393 SelectCustomer.php:469 SelectProduct.php:805
 #: SelectSupplier.php:259 SelectSupplier.php:325 SupplierPriceList.php:247
 #: SupplierTenderCreate.php:594
 #, fuzzy
@@ -16907,7 +16930,7 @@ msgstr "עבור לעמוד"
 
 #: InternalStockRequest.php:547 MRPReport.php:767 PcAssignCashToTab.php:249
 #: PcAuthorizeExpenses.php:65 PcClaimExpensesFromTab.php:215
-#: SelectAsset.php:249 SelectCustomer.php:477 SelectCustomer.php:554
+#: SelectAsset.php:249 SelectCustomer.php:405 SelectCustomer.php:482
 #: SelectProduct.php:817 SelectSupplier.php:271 SelectSupplier.php:337
 #: SupplierPriceList.php:259 SupplierTenderCreate.php:606
 #, fuzzy
@@ -16915,8 +16938,8 @@ msgid "Go"
 msgstr "בצע"
 
 #: InternalStockRequest.php:548 MRPReport.php:768
-#: PurchaseByPrefSupplier.php:418 SelectAsset.php:250 SelectCustomer.php:478
-#: SelectCustomer.php:555 SelectOrderItems.php:1636 SelectOrderItems.php:1732
+#: PurchaseByPrefSupplier.php:418 SelectAsset.php:250 SelectCustomer.php:406
+#: SelectCustomer.php:483 SelectOrderItems.php:1636 SelectOrderItems.php:1732
 #: SelectProduct.php:818 SelectSupplier.php:272 SelectSupplier.php:338
 #: SupplierPriceList.php:260 SupplierTenderCreate.php:607
 #, fuzzy
@@ -18002,7 +18025,7 @@ msgstr ""
 msgid "Sales Analysis"
 msgstr "ניתוח תדר"
 
-#: MailSalesReport_csv.php:46 SelectCustomer.php:442
+#: MailSalesReport_csv.php:46 SelectCustomer.php:370
 msgid "CSV Format"
 msgstr "CSV פורמט "
 
@@ -20063,7 +20086,8 @@ msgstr ""
 
 #: Payments.php:1204
 msgid ""
-"Transaction text in supplier transactions. If blank, it uses the bank narrative."
+"Transaction text in supplier transactions. If blank, it uses the bank "
+"narrative."
 msgstr ""
 
 #: Payments.php:1209
@@ -20172,8 +20196,8 @@ msgid "th"
 msgstr "רביעי"
 
 #: PaymentTerms.php:198 PrintCustStatements.php:398
-#: PrintCustStatements.php:399 PurchData.php:310 SelectCustomer.php:634
-#: SelectCustomer.php:643
+#: PrintCustStatements.php:399 PurchData.php:310 SelectCustomer.php:692
+#: SelectCustomer.php:703
 #, fuzzy, php-format
 msgid "days"
 msgstr " ימים"
@@ -24542,7 +24566,7 @@ msgid ""
 "The product selection page should call this page with a valid product code"
 msgstr ""
 
-#: Prices_Customer.php:36 SelectCustomer.php:303
+#: Prices_Customer.php:36 SelectCustomer.php:217
 #, fuzzy
 msgid "Special Customer Prices"
 msgstr "מצא סימן מיוחד"
@@ -28466,7 +28490,7 @@ msgstr ""
 msgid "there are no customer branch records contain the selected text"
 msgstr ""
 
-#: SelectCreditItems.php:137 SelectCustomer.php:35 SelectOrderItems.php:371
+#: SelectCreditItems.php:137 SelectCustomer.php:46 SelectOrderItems.php:371
 msgid "Unable to identify the selected customer"
 msgstr ""
 
@@ -28688,239 +28712,245 @@ msgstr "הכנס הערת בחירה על המועדף הזה"
 msgid "Search Customers"
 msgstr "חיפוש לקוחות"
 
-#: SelectCustomer.php:24 includes/header.inc:73
+#: SelectCustomer.php:14 includes/header.inc:73
 #: includes/PDFTopItemsHeader.inc:27
 msgid "Customers"
 msgstr "לקוחות"
 
-#: SelectCustomer.php:105
-msgid "GeoCode has been updated for CustomerID"
-msgstr ""
-
-#: SelectCustomer.php:105
-msgid "Latitude"
-msgstr ""
-
-#: SelectCustomer.php:105
-msgid "Longitude"
-msgstr ""
-
-#: SelectCustomer.php:109
-msgid "Unable to update GeoCode for CustomerID"
-msgstr ""
-
-#: SelectCustomer.php:241
+#: SelectCustomer.php:145
 msgid "please alter your search criteria AND try again"
 msgstr ""
 
-#: SelectCustomer.php:264
+#: SelectCustomer.php:169
 msgid "The customer name requested cannot be retrieved because"
 msgstr ""
 
-#: SelectCustomer.php:275
+#: SelectCustomer.php:183
 msgid "Select a menu option to operate using this customer"
 msgstr ""
 
-#: SelectCustomer.php:279 SelectCustomer.php:312
+#: SelectCustomer.php:188 SelectCustomer.php:230
 msgid "Customer Inquiries"
 msgstr "פניות הלקוח"
 
-#: SelectCustomer.php:280 SelectCustomer.php:313
+#: SelectCustomer.php:189 SelectCustomer.php:231
 msgid "Customer Transactions"
 msgstr "עסקאות לקוח"
 
-#: SelectCustomer.php:285 includes/MainMenuLinksArray.php:117
+#: SelectCustomer.php:197 includes/MainMenuLinksArray.php:117
 msgid "Customer Transaction Inquiries"
 msgstr ""
 
-#: SelectCustomer.php:286
+#: SelectCustomer.php:198
 msgid "Customer Account statement on screen"
 msgstr ""
 
-#: SelectCustomer.php:287
+#: SelectCustomer.php:199
 #, fuzzy
 msgid "View Customer Details"
 msgstr "הצג פירטי התמונה"
 
-#: SelectCustomer.php:288
+#: SelectCustomer.php:200
 msgid "Print Customer Statement"
 msgstr ""
 
-#: SelectCustomer.php:289
+#: SelectCustomer.php:201
 msgid "Email Customer Statement"
 msgstr ""
 
-#: SelectCustomer.php:290
+#: SelectCustomer.php:202
 msgid "Order Inquiries"
 msgstr ""
 
-#: SelectCustomer.php:291
+#: SelectCustomer.php:203
 msgid "Show purchases from this customer"
 msgstr ""
 
-#: SelectCustomer.php:294
+#: SelectCustomer.php:207
 msgid "Modify Outstanding Sales Orders"
 msgstr ""
 
-#: SelectCustomer.php:295
+#: SelectCustomer.php:208
 msgid "Allocate Receipts OR Credit Notes"
 msgstr "הקצה קבלות או הערות אשראי"
 
-#: SelectCustomer.php:297
+#: SelectCustomer.php:210
 msgid "Create a Counter Sale for this Customer"
 msgstr ""
 
-#: SelectCustomer.php:300 SelectCustomer.php:321
+#: SelectCustomer.php:214 SelectCustomer.php:241
 msgid "Add a New Customer"
 msgstr "הוספת לקוח"
 
-#: SelectCustomer.php:301
+#: SelectCustomer.php:215
 #, fuzzy
 msgid "Modify Customer Details"
 msgstr "Row Ending details"
 
-#: SelectCustomer.php:302
+#: SelectCustomer.php:216
 msgid "Add/Modify/Delete Customer Branches"
 msgstr "הוסף / ערוך / מחק סניפי לקוחות"
 
-#: SelectCustomer.php:304
+#: SelectCustomer.php:218
 #, fuzzy
 msgid "Customer EDI Configuration"
 msgstr "Proxy configuration mode"
 
-#: SelectCustomer.php:331
+#: SelectCustomer.php:220
+msgid "Add a customer contact"
+msgstr ""
+
+#: SelectCustomer.php:221
+msgid "Add a note on this customer"
+msgstr ""
+
+#: SelectCustomer.php:258
 msgid "Search for Customers"
 msgstr "חיפוש לקוחות"
 
-#: SelectCustomer.php:333 SelectSupplier.php:225 SupplierTenderCreate.php:559
+#: SelectCustomer.php:261 SelectSupplier.php:225 SupplierTenderCreate.php:559
 msgid "Enter a partial Name"
 msgstr "הכנס שם חלקי"
 
-#: SelectCustomer.php:340 SelectSupplier.php:234 SupplierTenderCreate.php:566
+#: SelectCustomer.php:268 SelectSupplier.php:234 SupplierTenderCreate.php:566
 msgid "Enter a partial Code"
 msgstr "הכנס קוד חלקי"
 
-#: SelectCustomer.php:351
+#: SelectCustomer.php:279
 msgid "Enter a partial Phone Number"
 msgstr "הכנס מספר טלפון חלקי"
 
-#: SelectCustomer.php:360
+#: SelectCustomer.php:288
 msgid "Enter part of the Address"
 msgstr "הכנס כתובת חלקית"
 
-#: SelectCustomer.php:370
+#: SelectCustomer.php:298
 msgid "Choose a Type"
 msgstr "בחר סוג"
 
-#: SelectCustomer.php:379 SelectCustomer.php:402
+#: SelectCustomer.php:307 SelectCustomer.php:330
 msgid "No Customer types defined"
 msgstr "לא הוגדרו סוגי לקוח"
 
-#: SelectCustomer.php:383 SelectCustomer.php:406 SelectCustomer.php:427
+#: SelectCustomer.php:311 SelectCustomer.php:334 SelectCustomer.php:355
 #: SellThroughSupport.php:283
 #, fuzzy
 msgid "Any"
 msgstr "כולם"
 
-#: SelectCustomer.php:417
+#: SelectCustomer.php:345
 msgid "Choose an Area"
 msgstr "בחר אזור"
 
-#: SelectCustomer.php:422
+#: SelectCustomer.php:350
 msgid "Setup Areas"
 msgstr "הגדרת אזורים"
 
-#: SelectCustomer.php:423
+#: SelectCustomer.php:351
 msgid "No Sales Areas defined"
 msgstr "לא הוגדרו אזורי מכירה"
 
-#: SelectCustomer.php:445
+#: SelectCustomer.php:373
 msgid "Your account enables you to see only customers allocated to you"
 msgstr ""
 
-#: SelectCustomer.php:445
+#: SelectCustomer.php:373
 msgid "Note: Sales-person Login"
 msgstr ""
 
-#: SelectCustomer.php:501
+#: SelectCustomer.php:429
 msgid "Click to view the csv Search Result"
 msgstr ""
 
+#: SelectCustomer.php:500
+msgid "You must first setup the geocode parameters"
+msgstr ""
+
 #: SelectCustomer.php:568
+msgid "GeoCode has been updated for CustomerID"
+msgstr ""
+
+#: SelectCustomer.php:568
+msgid "Latitude"
+msgstr ""
+
+#: SelectCustomer.php:568
+msgid "Longitude"
+msgstr ""
+
+#: SelectCustomer.php:572
+msgid "Unable to update GeoCode for CustomerID"
+msgstr ""
+
+#: SelectCustomer.php:580
 msgid "Mapping is enabled, but no Mapping data to display for this Customer."
 msgstr ""
 
-#: SelectCustomer.php:574
+#: SelectCustomer.php:585
 #, fuzzy
 msgid "Customer Mapping"
 msgstr "מטריצת מיפוי"
 
-#: SelectCustomer.php:578 SelectSupplier.php:356
+#: SelectCustomer.php:588 SelectSupplier.php:356
 msgid "Mapping is enabled, Map will display below."
 msgstr ""
 
-#: SelectCustomer.php:623
+#: SelectCustomer.php:679
 #, fuzzy
 msgid "Customer Data"
 msgstr "(%s :העש  %s :בצק) םינותנה קיפאב (%s) הלקת :"
 
-#: SelectCustomer.php:627
+#: SelectCustomer.php:685
 msgid "No receipts from this customer."
 msgstr ""
 
-#: SelectCustomer.php:632
-#, fuzzy
-msgid "Last Paid Date:"
-msgstr "תאריך השינוי האחרון"
+#: SelectCustomer.php:690
+msgid "Last Paid Date"
+msgstr ""
 
-#: SelectCustomer.php:637
+#: SelectCustomer.php:696
 msgid "Last Paid Amount (inc tax)"
 msgstr ""
 
-#: SelectCustomer.php:641
+#: SelectCustomer.php:701
 #, fuzzy
 msgid "Customer since"
 msgstr "מס הייחוס של הלקוח"
 
-#: SelectCustomer.php:647
+#: SelectCustomer.php:707
 msgid "No Spend from this Customer."
 msgstr ""
 
-#: SelectCustomer.php:653
+#: SelectCustomer.php:713
 msgid "Total Spend from this Customer (inc tax)"
 msgstr ""
 
-#: SelectCustomer.php:659
-#, fuzzy
-msgid "Customer Type:"
-msgstr "Unknown type"
-
-#: SelectCustomer.php:682 SelectCustomer.php:724
+#: SelectCustomer.php:748 SelectCustomer.php:799
 msgid "Add New Contact"
 msgstr "הוסף איש קשר"
 
-#: SelectCustomer.php:744
+#: SelectCustomer.php:820
 msgid "Hyperlink"
 msgstr ""
 
-#: SelectCustomer.php:748
+#: SelectCustomer.php:824
 msgid "Add New Note"
 msgstr "הוסף הערה"
 
-#: SelectCustomer.php:772
+#: SelectCustomer.php:848
 msgid "Add New Note for this Customer"
 msgstr "הוסף הערה ללקוח נוכחי"
 
-#: SelectCustomer.php:781
+#: SelectCustomer.php:857
 msgid "Customer Type (Group) Notes for:<b> "
 msgstr ""
 
-#: SelectCustomer.php:786
+#: SelectCustomer.php:862
 #, fuzzy
 msgid "File Link / Reference / URL"
 msgstr "ה-URL‏ %s הוא קישור שבור."
 
-#: SelectCustomer.php:790 SelectCustomer.php:813
+#: SelectCustomer.php:866 SelectCustomer.php:889
 msgid "Add New Group Note"
 msgstr "הוסף קבוצת הערות"
 
@@ -36261,7 +36291,7 @@ msgstr ""
 msgid "More than 4 characters"
 msgstr "(בגיל מעל %s)"
 
-#: SuppLoginSetup.php:134 UserSettings.php:174 UserSettings.php:178
+#: SuppLoginSetup.php:134 UserSettings.php:176 UserSettings.php:180
 #, fuzzy
 msgid "More than 5 characters"
 msgstr "(בגיל מעל %s)"
@@ -38728,7 +38758,7 @@ msgstr "סה״כ לידות"
 msgid "Value of Sales"
 msgstr "&ערך מספרי:"
 
-#: TopItems.php:98 TopItems.php:103 TopItems.php:109 UserSettings.php:123
+#: TopItems.php:98 TopItems.php:103 TopItems.php:109 UserSettings.php:127
 #, fuzzy
 msgid "The input must be positive integer"
 msgstr "התדר המירבי חייב להיות מספר שלם"
@@ -39209,84 +39239,84 @@ msgstr ""
 msgid "Are you sure you wish to un-authorise this location?"
 msgstr ""
 
-#: UserSettings.php:6 UserSettings.php:10
+#: UserSettings.php:6 UserSettings.php:13 UserSettings.php:14
 msgid "User Settings"
 msgstr "הגדרות משתמש"
 
-#: UserSettings.php:12
+#: UserSettings.php:16
 msgid "Latin Western Languages - Times"
 msgstr ""
 
-#: UserSettings.php:13
+#: UserSettings.php:17
 msgid "Eastern European Russian Japanese Korean Hebrew Arabic Thai"
 msgstr ""
 
-#: UserSettings.php:14 WWW_Users.php:25
+#: UserSettings.php:18 WWW_Users.php:25
 #, fuzzy
 msgid "Chinese"
 msgstr "סינית"
 
-#: UserSettings.php:15 WWW_Users.php:26
+#: UserSettings.php:19 WWW_Users.php:26
 #, fuzzy
 msgid "Free Serif"
 msgstr "מקום פנוי:"
 
-#: UserSettings.php:28
+#: UserSettings.php:32
 msgid "The Maximum Number of Records on Display entered must not be negative"
 msgstr ""
 
-#: UserSettings.php:28
+#: UserSettings.php:32
 #, fuzzy
 msgid "0 will default to system setting"
 msgstr "Connect to the system bus"
 
-#: UserSettings.php:34
+#: UserSettings.php:38
 msgid "Cannot change password in the demo or others would be locked out!"
 msgstr ""
 
-#: UserSettings.php:49
+#: UserSettings.php:53
 msgid "The password and password confirmation fields entered do not match"
 msgstr ""
 
-#: UserSettings.php:67 UserSettings.php:83 WWW_Users.php:236
+#: UserSettings.php:71 UserSettings.php:87 WWW_Users.php:236
 msgid "The user alterations could not be processed because"
 msgstr ""
 
-#: UserSettings.php:68 UserSettings.php:84 WWW_Users.php:237
+#: UserSettings.php:72 UserSettings.php:88 WWW_Users.php:237
 #: ../webSHOP/Register.php:370
 msgid "The SQL that was used to update the user and failed was"
 msgstr ""
 
-#: UserSettings.php:72 UserSettings.php:88
+#: UserSettings.php:76 UserSettings.php:92
 #, fuzzy
 msgid "The user settings have been updated"
 msgstr "משפחה %s עודכנה."
 
-#: UserSettings.php:72
+#: UserSettings.php:76
 msgid "Be sure to remember your password for the next time you login"
 msgstr ""
 
-#: UserSettings.php:122
+#: UserSettings.php:126
 msgid "Maximum Number of Records to Display"
 msgstr "המספר המרבי של רשומות להצגה"
 
-#: UserSettings.php:173
+#: UserSettings.php:175
 msgid "New Password"
 msgstr "סיסמה חדשה"
 
-#: UserSettings.php:174 UserSettings.php:178
+#: UserSettings.php:176 UserSettings.php:180
 msgid "Must be more than 5 characters and cannot be as same as userid"
 msgstr ""
 
-#: UserSettings.php:177 ../webSHOP/Register.php:605
+#: UserSettings.php:179 ../webSHOP/Register.php:605
 msgid "Confirm Password"
 msgstr "אימות סיסמה"
 
-#: UserSettings.php:181
+#: UserSettings.php:183
 msgid "If you leave the password boxes empty your password will not change"
 msgstr "אם תשאיר את תיבות הסיסמה לרוקן את הסיסמה לא תשתנה"
 
-#: UserSettings.php:201 WWW_Users.php:735
+#: UserSettings.php:203 WWW_Users.php:735
 msgid "PDF Language Support"
 msgstr "סוגי קבצים נתמכים"
 
@@ -53607,6 +53637,14 @@ msgstr "כרטיס אשראי"
 #: ../webSHOP/includes/session.php:137
 msgid "Bank Transfer"
 msgstr "העברה בנקאית"
+
+#, fuzzy
+#~ msgid "Last Paid Date:"
+#~ msgstr "תאריך השינוי האחרון"
+
+#, fuzzy
+#~ msgid "Customer Type:"
+#~ msgstr "Unknown type"
 
 #, fuzzy
 #~ msgid "HTML "

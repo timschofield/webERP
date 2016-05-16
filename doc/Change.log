@@ -1,5 +1,6 @@
 webERP Change Log
 
+15/05/16 RChacon: In SelectCustomer.php, use a default map host if $map_host is empty.
 15/05/16 RChacon: In AccountGroups.php, hide no printing elements.
 15/05/16 Exson: Add sequence digitals to make BOM sequences can be adjusted flexible and avoid any uncertainty of the number stored in SQL. Thanks Tim's suggestion.
 14/05/16 RChacon: In SelectCustomer.php, fix use of Google Maps JavaScript API V3, unpaired html tags and other bugs.

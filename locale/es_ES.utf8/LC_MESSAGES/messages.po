@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: webERP 4.12.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-15 10:13-0600\n"
-"PO-Revision-Date: 2016-05-15 10:18-0600\n"
+"POT-Creation-Date: 2016-05-15 17:54-0600\n"
+"PO-Revision-Date: 2016-05-15 18:24-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -200,7 +200,7 @@ msgstr "Existen"
 msgid "general ledger accounts that refer to this account group"
 msgstr "cuentas contables que hacen referencia a este subgrupo"
 
-#: AccountGroups.php:220 AccountGroups.php:290 AccountGroups.php:413
+#: AccountGroups.php:220 AccountGroups.php:290 AccountGroups.php:418
 msgid "Parent Group"
 msgstr "Grupo ancestro"
 
@@ -302,18 +302,18 @@ msgstr "Nombre del grupo"
 msgid "Section"
 msgstr "Sección"
 
-#: AccountGroups.php:288 AccountGroups.php:469
+#: AccountGroups.php:288 AccountGroups.php:474
 msgid "Sequence In TB"
 msgstr "Secuencia en balance de comprobación"
 
-#: AccountGroups.php:289 AccountGroups.php:452 GLProfit_Loss.php:6
+#: AccountGroups.php:289 AccountGroups.php:457 GLProfit_Loss.php:6
 #: GLProfit_Loss.php:135 GLProfit_Loss.php:136 GLProfit_Loss.php:188
 #: SelectGLAccount.php:23 SelectGLAccount.php:41 SelectGLAccount.php:59
 msgid "Profit and Loss"
 msgstr "Ganancias y pérdidas"
 
-#: AccountGroups.php:307 AccountGroups.php:310 AccountGroups.php:456
-#: AccountGroups.php:458 BOMs.php:135 BOMs.php:886 BOMs.php:888
+#: AccountGroups.php:307 AccountGroups.php:310 AccountGroups.php:461
+#: AccountGroups.php:463 BOMs.php:135 BOMs.php:886 BOMs.php:888
 #: CompanyPreferences.php:425 CompanyPreferences.php:427
 #: CompanyPreferences.php:440 CompanyPreferences.php:442
 #: CompanyPreferences.php:455 CompanyPreferences.php:457
@@ -377,7 +377,7 @@ msgstr "Ganancias y pérdidas"
 msgid "Yes"
 msgstr "Sí"
 
-#: AccountGroups.php:313 AccountGroups.php:461 AccountGroups.php:463
+#: AccountGroups.php:313 AccountGroups.php:466 AccountGroups.php:468
 #: BankAccounts.php:218 BankAccounts.php:412 BankAccounts.php:414
 #: BankAccounts.php:418 BankAccounts.php:426 BOMs.php:137 BOMs.php:885
 #: BOMs.php:889 CompanyPreferences.php:424 CompanyPreferences.php:428
@@ -546,50 +546,7 @@ msgstr "Editar detalles de grupo contable"
 msgid "New Account Group Details"
 msgstr "Detalles de grupo contable nuevo"
 
-#: AccountGroups.php:409
-msgid "Account Group Name"
-msgstr "Nombre del grupo contable"
-
-#: AccountGroups.php:410
-msgid "Enter the account group name"
-msgstr "Introducir el nombre del grupo de cuentas"
-
-#: AccountGroups.php:410
-msgid ""
-"A unique name for the account group must be entered - at least 3 characters "
-"long and less than 30 characters long. Only alpha numeric characters can be "
-"used."
-msgstr ""
-"Se debe ingresar un nombre único para el grupo de cuentas -de al menos 3 "
-"caracteres y menos de 30 caracteres. Sólo se pueden usar caracteres "
-"alfanuméricos."
-
-#: AccountGroups.php:422
-msgid "Top Level Group"
-msgstr "Grupo de nivel superior"
-
-#: AccountGroups.php:435
-msgid "Section In Accounts"
-msgstr "Sección contable"
-
-#: AccountGroups.php:453
-msgid ""
-"Select YES if this account group will contain accounts that will consist of "
-"only profit and loss accounts or NO if the group will contain balance sheet "
-"account"
-msgstr ""
-"Seleccione SI si este grupo cuenta contendrá cuentas que consistirá en sólo "
-"cuentas de pérdidas y ganancias, o NO si el grupo contendrá cuenta de balance"
-
-#: AccountGroups.php:470
-msgid ""
-"Enter the sequence number that this account group and its child general "
-"ledger accounts should display in the trial balance"
-msgstr ""
-"Introduce el número de secuencia que este grupo de cuentas y sus cuentas "
-"hijas del libro mayor deben mostrar en el balance de comprobación"
-
-#: AccountGroups.php:473 AccountSections.php:285 AddCustomerContacts.php:273
+#: AccountGroups.php:405 AccountSections.php:285 AddCustomerContacts.php:273
 #: AddCustomerNotes.php:242 AddCustomerTypeNotes.php:221 Areas.php:229
 #: BankAccounts.php:433 BOMs.php:906 COGSGLPostings.php:368
 #: CreditStatus.php:259 Currencies.php:537 CustLoginSetup.php:273
@@ -608,6 +565,49 @@ msgstr ""
 #: UnitsOfMeasure.php:241 WorkCentres.php:289 WWW_Users.php:792
 msgid "Enter Information"
 msgstr "Introducir información"
+
+#: AccountGroups.php:414
+msgid "Account Group Name"
+msgstr "Nombre del grupo contable"
+
+#: AccountGroups.php:415
+msgid "Enter the account group name"
+msgstr "Introducir el nombre del grupo de cuentas"
+
+#: AccountGroups.php:415
+msgid ""
+"A unique name for the account group must be entered - at least 3 characters "
+"long and less than 30 characters long. Only alpha numeric characters can be "
+"used."
+msgstr ""
+"Se debe ingresar un nombre único para el grupo de cuentas -de al menos 3 "
+"caracteres y menos de 30 caracteres. Sólo se pueden usar caracteres "
+"alfanuméricos."
+
+#: AccountGroups.php:427
+msgid "Top Level Group"
+msgstr "Grupo de nivel superior"
+
+#: AccountGroups.php:440
+msgid "Section In Accounts"
+msgstr "Sección contable"
+
+#: AccountGroups.php:458
+msgid ""
+"Select YES if this account group will contain accounts that will consist of "
+"only profit and loss accounts or NO if the group will contain balance sheet "
+"account"
+msgstr ""
+"Seleccione SI si este grupo cuenta contendrá cuentas que consistirá en sólo "
+"cuentas de pérdidas y ganancias, o NO si el grupo contendrá cuenta de balance"
+
+#: AccountGroups.php:475
+msgid ""
+"Enter the sequence number that this account group and its child general "
+"ledger accounts should display in the trial balance"
+msgstr ""
+"Introduce el número de secuencia que este grupo de cuentas y sus cuentas "
+"hijas del libro mayor deben mostrar en el balance de comprobación"
 
 #: AccountSections.php:6 AccountSections.php:172 AccountSections.php:173
 #: includes/MainMenuLinksArray.php:398
@@ -674,7 +674,7 @@ msgstr "No se pudo obtener la Sección solicitada, por favor, pruebe de nuevo."
 
 #: AccountSections.php:243
 msgid "Edit Account Section Details"
-msgstr ""
+msgstr "Editar detalles de sección contable"
 
 #: AccountSections.php:267
 msgid "New Account Section Details"
@@ -800,7 +800,7 @@ msgstr "Revisar todos los contactos de este cliente"
 
 #: AddCustomerContacts.php:210
 msgid "Edit Customer Contact Details"
-msgstr ""
+msgstr "Editar detalles del contacto del cliente"
 
 #: AddCustomerContacts.php:215
 msgid "Contact Code"
@@ -1294,7 +1294,7 @@ msgstr "Del código cliente"
 #: AgedDebtors.php:465
 msgid "Enter the first customer code alphabetically to include in the report"
 msgstr ""
-"Introduzca el primer código de cliente alfabéticamente para incluir en el "
+"Introducir el primer código de cliente alfabéticamente para incluir en el "
 "informe"
 
 #: AgedDebtors.php:468 DebtorsAtPeriodEnd.php:146
@@ -1304,7 +1304,7 @@ msgstr "Hasta código cliente"
 #: AgedDebtors.php:469
 msgid "Enter the last customer code alphabetically to include in the report"
 msgstr ""
-"Introduzca el último código de cliente alfabéticamente para incluir en el "
+"Introducir el último código de cliente alfabéticamente para incluir en el "
 "informe"
 
 #: AgedDebtors.php:472 AgedSuppliers.php:295
@@ -1402,7 +1402,7 @@ msgstr "Desde código proveedor"
 #: AgedSuppliers.php:288
 msgid "Enter the first supplier code alphabetially to include in the report"
 msgstr ""
-"Introduzca el primer código alfabético de proveedor a incluir en el informe"
+"Introducir el primer código alfabético de proveedor a incluir en el informe"
 
 #: AgedSuppliers.php:291 OutstandingGRNs.php:274 PDFRemittanceAdvice.php:157
 #: SupplierBalsAtPeriodEnd.php:135 SuppPaymentRun.php:269
@@ -1413,7 +1413,7 @@ msgstr "Hasta código proveedor"
 #: AgedSuppliers.php:292
 msgid "Enter the last supplier code alphabetically to include in the report"
 msgstr ""
-"Introduzca el último código de proveedor alfabéticamente para incluir en el "
+"Introducir el último código de proveedor alfabéticamente para incluir en el "
 "informe"
 
 #: AgedSuppliers.php:297
@@ -1694,7 +1694,7 @@ msgstr "Margen bruto"
 
 #: AnalysisHorizontalIncome.php:323
 msgid "Earnings after"
-msgstr ""
+msgstr "Utilidades después de"
 
 #: AnalysisHorizontalIncome.php:501
 msgid "Net Profit"
@@ -1854,11 +1854,11 @@ msgstr "Revisar zonas definidas"
 #: Areas.php:218
 msgid "Enter the sales area code - up to 3 characters are allowed"
 msgstr ""
-"Introduzca el código de área de ventas - hasta 3 caracteres están permitidos"
+"Introducir el código de área de ventas - hasta 3 caracteres están permitidos"
 
 #: Areas.php:223
 msgid "Enter the description of the sales area"
-msgstr "Introduzca la descripción del área de ventas"
+msgstr "Introducir la descripción del área de ventas"
 
 #: AuditTrail.php:7
 msgid "Audit Trail"
@@ -3439,7 +3439,7 @@ msgstr "Costos generales"
 
 #: BOMInquiry.php:256
 msgid "Enter a stock item code above"
-msgstr "Introduzca arriba un código de artículo de existencias"
+msgstr "Introducir arriba un código de artículo de existencias"
 
 #: BOMInquiry.php:256
 msgid "to view the costed bill of material for"
@@ -4273,7 +4273,7 @@ msgid ""
 "Enter the name of the business. This will appear on all reports and at the "
 "top of each screen. "
 msgstr ""
-"Introduzca el nombre de la empresa. Esto aparecerá en todos los informes y "
+"Introducir el nombre de la empresa. Esto aparecerá en todos los informes y "
 "en la parte superior de cada pantalla."
 
 #: CompanyPreferences.php:178
@@ -4293,7 +4293,7 @@ msgid ""
 "Enter the first line of the company registered office. This will appear on "
 "invoices and statements."
 msgstr ""
-"Introduzca la primera línea del domicilio social de la compañía. Esto "
+"Introducir la primera línea del domicilio social de la compañía. Esto "
 "aparecerá en las facturas y declaraciones."
 
 #: CompanyPreferences.php:193 Factors.php:214
@@ -4305,7 +4305,7 @@ msgid ""
 "Enter the second line of the company registered office. This will appear on "
 "invoices and statements."
 msgstr ""
-"Introduzca la segunda línea del domicilio social de la compañía. Esto "
+"Introducir la segunda línea del domicilio social de la compañía. Esto "
 "aparecerá en las facturas y declaraciones."
 
 #: CompanyPreferences.php:198 Factors.php:218
@@ -4317,7 +4317,7 @@ msgid ""
 "Enter the third line of the company registered office. This will appear on "
 "invoices and statements."
 msgstr ""
-"Introduzca la tercera línea del domicilio social de la compañía. Esto "
+"Introducir la tercera línea del domicilio social de la compañía. Esto "
 "aparecerá en las facturas y declaraciones."
 
 #: CompanyPreferences.php:203 Factors.php:222
@@ -4329,7 +4329,7 @@ msgid ""
 "Enter the fourth line of the company registered office. This will appear on "
 "invoices and statements."
 msgstr ""
-"Introduzca la cuarta línea del domicilio social de la compañía. Esto "
+"Introducir la cuarta línea del domicilio social de la compañía. Esto "
 "aparecerá en las facturas y declaraciones."
 
 #: CompanyPreferences.php:208 Factors.php:226
@@ -4349,7 +4349,7 @@ msgid ""
 "Enter the main telephone number of the company registered office. This will "
 "appear on invoices and statements."
 msgstr ""
-"Introduzca el número de teléfono principal del domicilio social de la "
+"Introducir el número de teléfono principal del domicilio social de la "
 "compañía. Esto aparecerá en las facturas y declaraciones."
 
 #: CompanyPreferences.php:223
@@ -4367,7 +4367,7 @@ msgid ""
 "Enter the main company email address. This will appear on invoices and "
 "statements."
 msgstr ""
-"Introduzca la dirección principal de correo electrónico de la empresa. Esto "
+"Introducir la dirección principal de correo electrónico de la empresa. Esto "
 "aparecerá en las facturas y declaraciones."
 
 #: CompanyPreferences.php:237 Currencies.php:404
@@ -4861,7 +4861,7 @@ msgstr ""
 
 #: ConfirmDispatch_Invoice.php:398
 msgid "Enter the tax rate applicable as a number"
-msgstr "Introduzca la tasa de impuesto aplicable como un número"
+msgstr "Introducir la tasa de impuesto aplicable como un número"
 
 #: ConfirmDispatch_Invoice.php:425 StockLocTransferReceive.php:595
 msgid "Enter Serial Numbers"
@@ -4869,7 +4869,7 @@ msgstr "Introducir números de serie"
 
 #: ConfirmDispatch_Invoice.php:427
 msgid "Enter Batch/Roll/Lot #"
-msgstr "Introduzca Partida/Lote/Pieza (Batch/Roll/Lot) #"
+msgstr "Introducir Partida/Lote/Pieza (Batch/Roll/Lot) #"
 
 #: ConfirmDispatch_Invoice.php:466
 msgid "There was a problem testing for a default shipper because"
@@ -5976,7 +5976,7 @@ msgstr "Sub total"
 #: ContractBOM.php:268
 msgid "Enter the quantity of this component required to complete the contract"
 msgstr ""
-"Introduzca la cantidad de este componente requerida para completar el "
+"Introducir la cantidad de este componente requerida para completar el "
 "contrato"
 
 #: ContractBOM.php:272
@@ -6038,7 +6038,7 @@ msgstr "Imagen"
 #: ContractBOM.php:392
 msgid "Enter the quantity required of this item to complete the contract"
 msgstr ""
-"Introduzca la cantidad necesaria de este artículo para completar el contrato"
+"Introducir la cantidad necesaria de este artículo para completar el contrato"
 
 #: ContractBOM.php:408 SupplierTenders.php:764
 msgid "Only the first"
@@ -6341,7 +6341,7 @@ msgstr "Costo Unitario"
 
 #: ContractOtherReqts.php:164
 msgid "Enter the cost per unit of this requirement"
-msgstr "Introduzca el costo por unidad de este requisito"
+msgstr "Introducir el costo por unidad de este requisito"
 
 #: ContractOtherReqts.php:171
 msgid "Enter New Contract Requirement"
@@ -7390,7 +7390,7 @@ msgid ""
 msgstr ""
 ", busca en la base de datos de artículos, puede limitar los resultados "
 "mediante la selección de una categoría de existencias, o simplemente "
-"introduzca una descripción parcial del artículo o un código parcial del "
+"Introducir una descripción parcial del artículo o un código parcial del "
 "artículo"
 
 #: CounterReturns.php:1634 CounterSales.php:2198 SelectOrderItems.php:1574
@@ -7475,7 +7475,7 @@ msgid ""
 "Enter a part code to be returned. Part codes can contain any alpha-numeric "
 "characters underscore or hyphen."
 msgstr ""
-"Introduzca un código de la pieza a ser devuelto. Los códigos de la parte "
+"Introducir un código de la pieza a ser devuelto. Los códigos de la parte "
 "pueden contener caracteres alfanuméricos, guión-bajo o guión."
 
 #: CounterReturns.php:1819 CounterSales.php:2379 SelectCreditItems.php:1011
@@ -7973,7 +7973,7 @@ msgstr ""
 
 #: Credit_Invoice.php:358
 msgid "Enter the price at which to credit this item"
-msgstr "Introduzca el precio al cual acreditar este artículo"
+msgstr "Introducir el precio al cual acreditar este artículo"
 
 #: Credit_Invoice.php:409
 msgid "Are you sure you wish to delete this item from the credit?"
@@ -8983,7 +8983,7 @@ msgstr "Nombre completo"
 
 #: CustLoginSetup.php:155
 msgid "Enter the user's real name"
-msgstr "Introduzca el nombre real del usuario"
+msgstr "Introducir el nombre real del usuario"
 
 #: CustLoginSetup.php:158 Locations.php:630 SalesPeople.php:340
 #: SupplierContacts.php:265 SuppLoginSetup.php:141 WWW_Users.php:505
@@ -8992,7 +8992,7 @@ msgstr "Nº de Teléfono"
 
 #: CustLoginSetup.php:163
 msgid "Enter the user's email address"
-msgstr "Introduzca la dirección de correo-e del usuario"
+msgstr "Introducir la dirección de correo-e del usuario"
 
 #: CustLoginSetup.php:167 CustomerBranches.php:600 CustomerBranches.php:637
 #: CustomerPurchases.php:85 WWW_Users.php:324 WWW_Users.php:574
@@ -11983,7 +11983,7 @@ msgstr ""
 
 #: DiscountCategories.php:143
 msgid "Enter Stock Code"
-msgstr "Introduzca código de inventario"
+msgstr "Introducir código de inventario"
 
 #: DiscountCategories.php:144
 msgid ""
@@ -12043,7 +12043,7 @@ msgid ""
 "code to which this category will apply to. Discount rules can then be "
 "applied to this discount category"
 msgstr ""
-"Introduzca una abreviatura de dos letras para la Clase de Descuento y el "
+"Introducir una abreviatura de dos letras para la Clase de Descuento y el "
 "Código de Existencia al que se aplicará. Entonces podrán aplicarse Reglas de "
 "Descuento a esta Clase de Descuento."
 
@@ -13150,7 +13150,7 @@ msgstr ""
 #: FixedAssetCategories.php:284
 msgid "Enter the asset category description up to 20 characters"
 msgstr ""
-"Introduzca la descripción de la categoría de activos de hasta 20 caracteres"
+"Introducir la descripción de la categoría de activos de hasta 20 caracteres"
 
 #: FixedAssetCategories.php:287
 msgid "Fixed Asset Cost GL Code"
@@ -13526,7 +13526,7 @@ msgstr "corta"
 #: FixedAssetItems.php:482
 msgid "Enter the description of the item. Up to 50 characters can be used."
 msgstr ""
-"Introduzca la descripción del artículo. se pueden usar hasta 50 caracteres."
+"Introducir la descripción del artículo. se pueden usar hasta 50 caracteres."
 
 #: FixedAssetItems.php:491 StockClone.php:708 Stocks.php:1030
 msgid "long"
@@ -13714,7 +13714,7 @@ msgstr ""
 #: FixedAssetLocations.php:132
 msgid "Enter the fixed asset location description. Up to 20 characters"
 msgstr ""
-"Introduzca la descripción de la ubicación del activo fijo. Hasta 20 "
+"Introducir la descripción de la ubicación del activo fijo. Hasta 20 "
 "caracteres"
 
 #: FixedAssetLocations.php:159
@@ -13790,7 +13790,7 @@ msgstr "Fecha inicial"
 #: FixedAssetRegister.php:315
 msgid "Enter the start date to show the cost and accumulated depreciation from"
 msgstr ""
-"Introduzca la fecha de inicio para mostrar el costo y la depreciación "
+"Introducir la fecha de inicio para mostrar el costo y la depreciación "
 "acumulada"
 
 #: FixedAssetRegister.php:318
@@ -13800,7 +13800,7 @@ msgstr "Fecha Final"
 #: FixedAssetRegister.php:319
 msgid "Enter the end date to show the cost and accumulated depreciation to"
 msgstr ""
-"Introduzca la fecha de finalización para mostrar el costo y la depreciación "
+"Introducir la fecha de finalización para mostrar el costo y la depreciación "
 "acumulada"
 
 #: FixedAssetRegister.php:324
@@ -14016,7 +14016,7 @@ msgstr "Editar el diseño del formulario"
 #: FormDesigner.php:217
 msgid "Enter the changes that you want in the form layout below."
 msgstr ""
-"Introduzca los cambios que desee en el diseño del formulario a continuación."
+"Introducir los cambios que desee en el diseño del formulario a continuación."
 
 #: FormDesigner.php:218
 msgid "All measurements are in PostScript points (72 points = 25,4 mm)."
@@ -14585,11 +14585,11 @@ msgstr ""
 
 #: GLAccountInquiry.php:176
 msgid "Amount in Org Currency"
-msgstr ""
+msgstr "Monto en moneda original"
 
 #: GLAccountInquiry.php:177
 msgid "Bank Ref"
-msgstr ""
+msgstr "Referencia bancaria"
 
 #: GLAccountInquiry.php:184
 msgid "Transactions for account"
@@ -14801,14 +14801,14 @@ msgstr "Código contable"
 msgid ""
 "Enter up to 20 alpha-numeric characters for the general ledger account code"
 msgstr ""
-"Introduzca hasta 20 caracteres alfanuméricos para el código de cuenta del "
+"Introducir hasta 20 caracteres alfanuméricos para el código de cuenta del "
 "Libro Mayor"
 
 #: GLAccounts.php:243
 msgid ""
 "Enter up to 50 alpha-numeric characters for the general ledger account name"
 msgstr ""
-"Introduzca hasta 50 caracteres alfanuméricos para el nombre de cuenta del "
+"Introducir hasta 50 caracteres alfanuméricos para el nombre de cuenta del "
 "libro mayor"
 
 #: GLAccounts.php:249 GLAccounts.php:296 Z_ImportChartOfAccounts.php:81
@@ -14985,7 +14985,7 @@ msgstr ""
 
 #: GLAccountUsers.php:223
 msgid "Add access permissions to a user"
-msgstr ""
+msgstr "Añadir permisos de acceso a un usuario"
 
 #: GLAccountUsers.php:239
 msgid "GL account has access permissions for all users"
@@ -17598,7 +17598,7 @@ msgstr "Detalles de nueva ubicación"
 #: Locations.php:538
 msgid "Enter up to five characters for the inventory location code"
 msgstr ""
-"Introduzca hasta cinco caracteres para el código de ubicación de inventario"
+"Introducir hasta cinco caracteres para el código de ubicación de inventario"
 
 #: Locations.php:589
 msgid ""
@@ -17615,7 +17615,7 @@ msgid ""
 "Enter the name of the responsible person to contact for this inventory "
 "location"
 msgstr ""
-"introduzca el nombre de la persona responsable a contactar para esta "
+"Introducir el nombre de la persona responsable a contactar para esta "
 "ubicación de inventario"
 
 #: Locations.php:596
@@ -17693,7 +17693,7 @@ msgstr "¿Usar para producciones con órdenes de trabajo?"
 msgid ""
 "Enter the GL account for this location, or leave it in blank if not needed"
 msgstr ""
-"Introduzca la cuenta contable para esta ubicación, o déjelo en blanco si no "
+"Introducir la cuenta contable para esta ubicación, o déjelo en blanco si no "
 "se necesita"
 
 #: Locations.php:700
@@ -19697,7 +19697,7 @@ msgstr "Asignar este pago"
 
 #: Payments.php:657
 msgid "Enter another Payment for"
-msgstr "Introduzca otro pago por"
+msgstr "Introducir otro pago por"
 
 #: Payments.php:659
 msgid "Enter another General Ledger Payment"
@@ -20784,11 +20784,11 @@ msgstr "Listado de pagos"
 
 #: PDFChequeListing.php:40
 msgid "Enter the date from which cheques are to be listed"
-msgstr "Introduzca la fecha a partir de la cual se listarán los cheques"
+msgstr "Introducir la fecha a partir de la cual se listarán los cheques"
 
 #: PDFChequeListing.php:43
 msgid "Enter the date to which cheques are to be listed"
-msgstr "Introduzca la fecha hasta la que se listarán los cheques"
+msgstr "Introducir la fecha hasta la que se listarán los cheques"
 
 #: PDFChequeListing.php:62 PDFDeliveryDifferences.php:73 PDFDIFOT.php:77
 msgid "Email the report off"
@@ -21015,7 +21015,7 @@ msgstr "Listado de Transacciones del cliente"
 
 #: PDFCustTransListing.php:37 PDFSuppTransListing.php:32
 msgid "Enter the date for which the transactions are to be listed"
-msgstr "Introduzca la fecha en que las transacciones se deben listar"
+msgstr "Introducir la fecha en que las transacciones se deben listar"
 
 #: PDFCustTransListing.php:43 PDFSuppTransListing.php:39
 #: PO_AuthorisationLevels.php:128 PrintCustTrans.php:536
@@ -21061,7 +21061,7 @@ msgid ""
 "Enter the date from which variances between orders and deliveries are to be "
 "listed"
 msgstr ""
-"Introduzca la fecha en que deben ser listadas las variaciones entre los "
+"Introducir la fecha en que deben ser listadas las variaciones entre los "
 "pedidos y las entregas"
 
 #: PDFDeliveryDifferences.php:36 PDFDIFOT.php:36
@@ -21069,7 +21069,7 @@ msgid ""
 "Enter the date to which variances between orders and deliveries are to be "
 "listed"
 msgstr ""
-"Introduzca la fecha en que deben ser listadas las variaciones entre los "
+"Introducir la fecha en que deben ser listadas las variaciones entre los "
 "pedidos y las entregas"
 
 #: PDFDeliveryDifferences.php:53 PDFDIFOT.php:57 PDFOrdersInvoiced.php:56
@@ -21145,7 +21145,7 @@ msgid ""
 "Enter the number of days considered acceptable between delivery requested "
 "date and invoice date(ie the date dispatched)"
 msgstr ""
-"Introduzca el número de días considerados aceptables entre la fecha de "
+"Introducir el número de días considerados aceptables entre la fecha de "
 "entrega solicitada y la fecha de la factura (ej. la fecha de envío)"
 
 #: PDFDIFOT.php:190 PDFDIFOT.php:199
@@ -21329,11 +21329,11 @@ msgstr "Informe de Pedidos Facturados"
 
 #: PDFOrdersInvoiced.php:41 PDFOrderStatus.php:37
 msgid "Enter the date from which orders are to be listed"
-msgstr "Introduzca la fecha a partir de la cual se listarán las órdenes"
+msgstr "Introducir la fecha a partir de la cual se listarán las órdenes"
 
 #: PDFOrdersInvoiced.php:45 PDFOrderStatus.php:41
 msgid "Enter the date to which orders are to be listed"
-msgstr "Introduzca la fecha hasta la que se listarán las órdenes"
+msgstr "Introducir la fecha hasta la que se listarán las órdenes"
 
 #: PDFOrdersInvoiced.php:87 PDFOrderStatus.php:92 PDFSalesBySalesperson.php:65
 #: PDFWeeklyOrders.php:61
@@ -21393,11 +21393,11 @@ msgstr "Listado de Transacciones de Existencia"
 
 #: PDFPeriodStockTransListing.php:32
 msgid "Enter the date from which the transactions are to be listed"
-msgstr "Introduzca la fecha a partir de la cual se listarán las transacciones"
+msgstr "Introducir la fecha a partir de la cual se listarán las transacciones"
 
 #: PDFPeriodStockTransListing.php:36
 msgid "Enter the date to which the transactions are to be listed"
-msgstr "Introduzca la fecha hasta la que se listarán las transacciones"
+msgstr "Introducir la fecha hasta la que se listarán las transacciones"
 
 #: PDFPeriodStockTransListing.php:42 PrintCustTrans.php:56
 #: PrintCustTransPortrait.php:61 SalesInquiry.php:1097
@@ -22769,7 +22769,7 @@ msgstr "Contacto del proveedor"
 
 #: PO_Header.php:1174
 msgid "Enter Line Items"
-msgstr "Introduzca Filas de Artículos"
+msgstr "Introducir Filas de Artículos"
 
 #: PO_Items.php:13
 msgid "Purchase Order Items"
@@ -25210,7 +25210,7 @@ msgstr ""
 
 #: PurchaseByPrefSupplier.php:558
 msgid "Enter the quantity to purchase of this item"
-msgstr "Introduzca la cantidad a comprar de este artículo"
+msgstr "Introducir la cantidad a comprar de este artículo"
 
 #: PurchaseByPrefSupplier.php:563
 msgid "Create Purchase Order"
@@ -28346,7 +28346,7 @@ msgstr "Configuración cliente EDI"
 
 #: SelectCustomer.php:220
 msgid "Add a customer contact"
-msgstr ""
+msgstr "añadir un contacto con el cliente\""
 
 #: SelectCustomer.php:221
 msgid "Add a note on this customer"
@@ -28781,7 +28781,7 @@ msgstr ""
 
 #: SelectOrderItems.php:1437
 msgid "Enter Delivery Details and Confirm Order"
-msgstr "Introduzca Detalles de Entrega y Confirmar Pedido"
+msgstr "Introducir Detalles de Entrega y Confirmar Pedido"
 
 #: SelectOrderItems.php:1565 SelectOrderItems.php:1637
 #: SelectOrderItems.php:1733
@@ -31199,7 +31199,7 @@ msgid ""
 "Enter up to six alphanumeric characters or underscore as a code for this "
 "stock category"
 msgstr ""
-"Introduzca hasta seis caracteres alfanuméricos o guión_bajo como un código "
+"Introducir hasta seis caracteres alfanuméricos o guión_bajo como un código "
 "para esta categoría de inventario"
 
 #: StockCategories.php:408
@@ -31949,7 +31949,7 @@ msgstr ""
 
 #: StockCounts.php:188
 msgid "Enter Above Counts"
-msgstr "Introduzca Cuentas Anteriores"
+msgstr "Introducir Cuentas Anteriores"
 
 #: StockCounts.php:198
 msgid "Failed to delete StockCount ID #"
@@ -32546,7 +32546,7 @@ msgstr "Cancelar el Saldo"
 
 #: StockLocTransferReceive.php:597
 msgid "Enter Batch Refs"
-msgstr "Introduzca Referencias de Lotes"
+msgstr "Introducir Referencias de Lotes"
 
 #: StockLocTransferReceive.php:609
 msgid "Process Inventory Transfer"
@@ -33393,7 +33393,7 @@ msgstr ""
 
 #: StockTransfers.php:643
 msgid "Enter Stock Transfer"
-msgstr "Introduzca Transferencia de Existencias"
+msgstr "Introducir Transferencia de Existencias"
 
 #: StockUsageGraph.php:10 StockUsage.php:150
 msgid "Usage"
@@ -33521,12 +33521,12 @@ msgstr ""
 
 #: SuppContractChgs.php:184
 msgid "Enter Contract Charge"
-msgstr "Introduzca el Cargo del Contrato"
+msgstr "Introducir el Cargo del Contrato"
 
 #: SuppCreditGRNs.php:14
 msgid "Enter Supplier Credit Note Against Goods Received"
 msgstr ""
-"Introduzca nota de Crédito (abono) del proveedor respecto a Bienes Recibidos"
+"Introducir nota de Crédito (abono) del proveedor respecto a Bienes Recibidos"
 
 #: SuppCreditGRNs.php:23 SuppInvGRNs.php:22
 msgid ""
@@ -33740,7 +33740,7 @@ msgstr ""
 
 #: SuppFixedAssetChgs.php:122
 msgid "Enter Asset ID"
-msgstr "Introduzca el ID del activo"
+msgstr "Introducir el ID del activo"
 
 #: SuppFixedAssetChgs.php:123
 msgid "The Asset ID should be positive integer"
@@ -33764,7 +33764,7 @@ msgstr "Introducir activo fijo"
 
 #: SuppInvGRNs.php:12
 msgid "Enter Supplier Invoice Against Goods Received"
-msgstr "Introduzca factura del proveedor contra bienes recibidos"
+msgstr "Introducir factura del proveedor contra bienes recibidos"
 
 #: SuppInvGRNs.php:22
 msgid "then the link to enter a supplier invoice must be clicked on"
@@ -34331,7 +34331,7 @@ msgstr "Total de nota de crédito"
 
 #: SupplierCredit.php:609
 msgid "Enter Credit Note"
-msgstr "Introduzca nota de Crédito"
+msgstr "Introducir nota de Crédito"
 
 #: SupplierCredit.php:648
 msgid ""
@@ -34718,7 +34718,7 @@ msgstr "Ver Pagos"
 
 #: SupplierInvoice.php:16 SupplierInvoice.php:40
 msgid "Enter Supplier Invoice"
-msgstr "Introduzca factura del proveedor"
+msgstr "Introducir factura del proveedor"
 
 #: SupplierInvoice.php:39
 msgid "Supplier Invoice"
@@ -36146,7 +36146,7 @@ msgstr ""
 
 #: SuppShiptChgs.php:154
 msgid "Enter Shipment Charge"
-msgstr "Introduzca el Cargo del Envío"
+msgstr "Introducir el Cargo del Envío"
 
 #: SuppTransGLAnalysis.php:13
 msgid "Supplier Transaction General Ledger Analysis"
@@ -38731,7 +38731,7 @@ msgstr "Número de Error"
 
 #: UserBankAccounts.php:11
 msgid "User Authorised Bank Accounts"
-msgstr ""
+msgstr "Cuentas bancarias autorizadas a usuarios"
 
 #: UserBankAccounts.php:34 UserLocations.php:33
 msgid "You have not selected any User"
@@ -38763,11 +38763,11 @@ msgstr "Cuenta bancaria removida"
 
 #: UserBankAccounts.php:141
 msgid "Authorised bank accounts for"
-msgstr ""
+msgstr "Cuentas bancarias autorizadas a"
 
 #: UserBankAccounts.php:157
 msgid "Authorised bank accounts for User"
-msgstr ""
+msgstr "Cuentas bancarias autorizadas al usuario"
 
 #: UserBankAccounts.php:177
 #, php-format
@@ -38777,7 +38777,7 @@ msgstr ""
 #: UserGLAccounts.php:6 UserGLAccounts.php:40 UserGLAccounts.php:41
 #: UserGLAccounts.php:87
 msgid "User Authorised GL Accounts"
-msgstr ""
+msgstr "Cuentas contables autorizadas a usuarios"
 
 #: UserGLAccounts.php:46
 msgid "You have not selected any user"
@@ -38785,7 +38785,7 @@ msgstr ""
 
 #: UserGLAccounts.php:88
 msgid "Authorised GL Accounts for"
-msgstr ""
+msgstr "Cuentas contables autorizadas a"
 
 #: UserGLAccounts.php:93
 msgid "You have not selected an GL Account to be authorised for this user"
@@ -38829,7 +38829,7 @@ msgstr ""
 
 #: UserGLAccounts.php:229
 msgid "Add access permissions to a GL account"
-msgstr ""
+msgstr "Añadir permisos de acceso a una cuenta contable"
 
 #: UserGLAccounts.php:245
 msgid "User has access permissions to all GL accounts"
@@ -38858,11 +38858,11 @@ msgstr ""
 
 #: UserLocations.php:154
 msgid "Authorised inventory locations for"
-msgstr ""
+msgstr "Ubicaciones de inventario autorizadas a"
 
 #: UserLocations.php:172
 msgid "Authorised Inventory Locations for User"
-msgstr ""
+msgstr "Ubicaciones de inventario autorizadas al usuario"
 
 #: UserLocations.php:193
 msgid "Are you sure you wish to remove Update for this location?"
@@ -40219,7 +40219,7 @@ msgstr "EL Perfil seleccionado ya no existe."
 
 #: WWW_Access.php:185
 msgid "Enter Role"
-msgstr "Introduzca Perfil"
+msgstr "Introducir Perfil"
 
 #: WWW_Access.php:210
 msgid "Assigned Security Tokens"
@@ -43461,7 +43461,7 @@ msgstr "y los registros bancarios de transcción"
 
 #: Z_ReverseSuppPaymentRun.php:87
 msgid "Enter the date of the payment run"
-msgstr "Introduzca la fecha de ejecución del pago"
+msgstr "Introducir la fecha de ejecución del pago"
 
 #: Z_ReverseSuppPaymentRun.php:88
 msgid "Reverse Supplier Payments on the Date Entered"
@@ -50317,7 +50317,7 @@ msgstr ""
 
 #: includes/MainMenuLinksArray.php:404
 msgid "User Authorised GL Accounts Maintenance"
-msgstr ""
+msgstr "Mantenimiento de cuentas contables autorizadas a usuarios"
 
 #: includes/MainMenuLinksArray.php:405
 msgid "Copy Authority GL Accounts from user A to B"
@@ -50325,11 +50325,11 @@ msgstr ""
 
 #: includes/MainMenuLinksArray.php:407
 msgid "Bank Account Authorized Users"
-msgstr ""
+msgstr "Usuarios autorizados en cuenta bancaria"
 
 #: includes/MainMenuLinksArray.php:408
 msgid "User Authorized Bank Accounts"
-msgstr ""
+msgstr "Cuentas bancarias autorizadas a usuarios "
 
 #: includes/MainMenuLinksArray.php:422
 msgid "Add a new Asset"
@@ -51895,23 +51895,23 @@ msgstr "4"
 
 #: reportwriter/languages/en_US/reports.php:312
 msgid "5"
-msgstr ""
+msgstr "5"
 
 #: reportwriter/languages/en_US/reports.php:313
 msgid "6"
-msgstr ""
+msgstr "6"
 
 #: reportwriter/languages/en_US/reports.php:314
 msgid "7"
-msgstr ""
+msgstr "7"
 
 #: reportwriter/languages/en_US/reports.php:315
 msgid "8"
-msgstr ""
+msgstr "8"
 
 #: reportwriter/languages/en_US/reports.php:316
 msgid "9"
-msgstr ""
+msgstr "9"
 
 #: reportwriter/languages/en_US/reports.php:317
 msgid "10"
@@ -51955,11 +51955,11 @@ msgstr "36"
 
 #: reportwriter/languages/en_US/reports.php:327
 msgid "40"
-msgstr ""
+msgstr "40"
 
 #: reportwriter/languages/en_US/reports.php:328
 msgid "50"
-msgstr ""
+msgstr "50"
 
 #: reportwriter/languages/en_US/reports.php:331
 msgid "Black"
@@ -52449,7 +52449,7 @@ msgstr ""
 #: ../webSHOP/CreditCardPayFlowPro.php:272
 #: ../webSHOP/CreditCardPayPalPro.php:340
 msgid "Verification Code"
-msgstr ""
+msgstr "Código de verificación"
 
 #: ../webSHOP/CreditCardPayFlowPro.php:273
 #: ../webSHOP/CreditCardPayPalPro.php:341
