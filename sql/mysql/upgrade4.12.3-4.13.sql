@@ -56,24 +56,6 @@ ALTER table pctabs CHANGE authorizer authorizer varchar(100);
 ALTER table pctabs CHANGE assigner assigner varchar(100);
 INSERT INTO securitytokens VALUES(18,'Cost authority');
 ALTER table BOM ADD digitals int(11) NOT NULL DEFAULT 0;
-INSERT INTO scripts VALUES('StockIntransitStatus.php',1,'Inventory transaction status');
-INSERT INTO scripts VALUES ('StockTransferControlledDispatched.php',11,'Inventory controlled input');
-ALTER table loctransfers ADD closed tinyint(1) not null default '0';
-CREATE table trfserialno (trfno int(11) NOT NULL AUTO_INCREMENT,
-			trfref int(11) NOT NUll DEFAULT '0',
-			stkcode varchar(20) NOT NULL DEFAULT '0',
-			serialno varchar(20) NOT NULL DEFAULT '0',
-			trfqty double NOT NULL DEFAULT '0',
-			loccode varchar(5) NOT NULL DEFAULT '',
-			recqty double NOT NULL DEFAULT '0',
-			PRIMARY KEY (`trfno`),
-			KEY (`trfref`),
-			KEY (`stkcode`,`serialno`),
-			KEY (`serialno`),
-			KEY (`stkcode`),
-			KEY (`stkcode`,`serialno`,`loccode`),
-			CONSTRAINT FOREIGN KEY (`trfref`) REFERENCES `loctransfers`(`reference`),
-			CONSTRAINT FOREIGN KEY (`stkcode`,`serialno`,`loccode`) REFERENCES `stockserialitems`(`stockid`,`serialno`,`loccode`)) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 			
 
 -- Update version number:
