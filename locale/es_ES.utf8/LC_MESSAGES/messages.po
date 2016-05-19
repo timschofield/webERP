@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.12.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-05-16 21:31+1200\n"
-"PO-Revision-Date: 2016-05-15 18:24-0600\n"
+"PO-Revision-Date: 2016-05-19 08:51-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -808,7 +808,7 @@ msgstr "Código del contacto"
 
 #: AddCustomerContacts.php:222
 msgid "New Customer Contact Details"
-msgstr ""
+msgstr "Detalles de contacto del cliente nuevo"
 
 #: AddCustomerContacts.php:229 Factors.php:234 SupplierContacts.php:239
 #: ../webSHOP/Checkout.php:527 ../webSHOP/Register.php:623
@@ -28358,11 +28358,11 @@ msgstr "Configuración cliente EDI"
 
 #: SelectCustomer.php:221
 msgid "Add a customer contact"
-msgstr "añadir un contacto con el cliente\""
+msgstr "Añadir un contacto del cliente"
 
 #: SelectCustomer.php:222
 msgid "Add a note on this customer"
-msgstr ""
+msgstr "Añadir una nota sobre este cliente"
 
 #: SelectCustomer.php:259
 msgid "Search for Customers"
