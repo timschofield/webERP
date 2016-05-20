@@ -16,6 +16,8 @@ INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES
 	('SupplierGRNAndInvoiceInquiry.php',5,'Supplier\'s delivery note and grn relationship inquiry'),
 	('UserBankAccounts.php', '15', 'Maintains table bankaccountusers (Authorized users to work with a bank account in webERP)'),
 	('UserGLAccounts.php', '15', 'Maintenance of GL Accounts allowed for a user');
+INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES
+	('Z_GLAccountUsersCopyAuthority.php', '15', 'Utility to copy authority of GL accounts from one user to another');
 
 CREATE TABLE IF NOT EXISTS `suppinvstogrn` (
 	  `suppinv` int(11) NOT NULL,

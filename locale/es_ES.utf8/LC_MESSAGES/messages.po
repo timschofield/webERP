@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.12.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-05-16 21:31+1200\n"
-"PO-Revision-Date: 2016-05-20 08:06-0600\n"
+"PO-Revision-Date: 2016-05-20 09:09-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -14930,7 +14930,7 @@ msgstr ""
 
 #: GLAccountUsersCopyAuthority.php:83
 msgid "Process Copy of Authority"
-msgstr ""
+msgstr "Procesar copia  de derechos de acceso"
 
 #: GLAccountUsers.php:6 GLAccountUsers.php:43 GLAccountUsers.php:44
 #: GLAccountUsers.php:85

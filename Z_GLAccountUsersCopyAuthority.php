@@ -1,8 +1,13 @@
 <?php
+/* $Id: Z_GLAccountUsersCopyAuthority.php 7392 2015-11-16 07:30:11Z tehonu $*/
+/* Utility to copy authority of GL accounts from one user to another */
 
-include ('includes/session.inc');
-$Title = _('GLAccount - Users Authority Copy Authority');// Screen identificator.
+include('includes/session.inc');
+$Title = _('GLAccount - Users Authority Copy Authority');
+$ViewTopic = 'SpecialUtilities';
+$BookMark = 'Z_GLAccountUsersCopyAuthority';
 include('includes/header.inc');
+
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/maintenance.png" title="',// Icon image.
 	_('Copy Authority of GL Accounts from one user to another'), '" /> ',// Icon title.
@@ -13,12 +18,12 @@ include('includes/SQL_CommonFunctions.inc');
 if(isset($_POST['ProcessCopyAuthority'])) {
 
 	$InputError =0;
-	
+
 	if($_POST['FromUserID']==$_POST['ToUserID']) {
 		prnMsg(_('User FROM must be different from user TO'),'error');
 		$InputError =1;
 	}
-	
+
 	if($InputError ==0) {// no input errors
 		$result = DB_Txn_Begin();
 
@@ -46,7 +51,7 @@ if(isset($_POST['ProcessCopyAuthority'])) {
 }
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method="post">';
-echo '<div class="centre">';
+echo '<div class="centre noprint">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<table>';
@@ -80,8 +85,16 @@ while ($MyRow = DB_fetch_array($Result)) {
 } //end while loop
 echo '</select></td></tr>';
 echo '</table>';
-echo '<input type="submit" name="ProcessCopyAuthority" value="' . _('Process Copy of Authority') . '" />
+/*echo '<input type="submit" name="ProcessCopyAuthority" value="' . _('Process Copy of Authority') . '" />
 	</div>
+	</form>';*/
+
+// Form buttons:
+echo		'<button name="ProcessCopyAuthority" type="submit" value="', _('Process Copy of Authority'), '"><img alt="" src="', $RootPath, '/css/', $Theme,
+				'/images/user.png" /> ', _('Process'), '</button>', // "Process Copy of Authority" button.
+			'<button formaction="index.php?Application=Utilities" type="submit"><img alt="" src="', $RootPath, '/css/', $Theme,
+				'/images/previous.png" /> ', _('Return'), '</button>', // "Return" button.
+		'</div>
 	</form>';
 
 include('includes/footer.inc');
