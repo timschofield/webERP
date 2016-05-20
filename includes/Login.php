@@ -4,7 +4,8 @@
 
 //include ('LanguageSetup.php');
 if ((isset($AllowDemoMode)) AND ($AllowDemoMode == True) AND (!isset($demo_text))) {
-	$demo_text = _('Login as user') .': <i>' . _('admin') . '</i><br />' ._('with password') . ': <i>' . _('weberp') . '</i>';
+	$demo_text = _('Login as user') .': <i>' . _('admin') . '</i><br />' ._('with password') . ': <i>' . _('weberp') . '</i>' .
+		'<br /><a href="../">' . _('Return') . '</a>';// This line is to add a return link.
 } elseif (!isset($demo_text)) {
 	$demo_text = '';
 }
@@ -90,8 +91,8 @@ if (get_magic_quotes_gpc()){
     	         echo '</select>';
             }
         } //end provision for backward compat
-
 ?>
+
 	</span>
 	<br />
 	<span><?php echo _('User name'); ?>:</span><br />
@@ -104,8 +105,8 @@ if (get_magic_quotes_gpc()){
 	if (isset($demo_text)){
 		echo $demo_text;
 	}
-
 ?>
+
 	</div>
 	<input class="button" type="submit" value="<?php echo _('Login'); ?>" name="SubmitUser" />
 	    </div>
