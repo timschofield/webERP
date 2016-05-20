@@ -1,7 +1,8 @@
 webERP Change Log
 
-16/5/16 Release 4.13
+22/5/16 Release 4.13
 
+20/5/16 Paul Harness: CustomerAllocations.php consistent sort order adding by date and transno sorting for transactions on the same date
 15/05/16 RChacon: In SelectCustomer.php, use a default map host if $map_host is empty.
 15/05/16 RChacon: In AccountGroups.php, hide no printing elements.
 15/05/16 Exson: Add sequence digitals to make BOM sequences can be adjusted flexible and avoid any uncertainty of the number stored in SQL. Thanks Tim's suggestion.

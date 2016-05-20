@@ -273,7 +273,7 @@ if (isset($_GET['AllocTrans'])) {
 		$SQL .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 	}
 
-	$SQL .= " ORDER BY debtortrans.trandate";
+	$SQL .= " ORDER BY debtortrans.trandate, debtortrans.transno";
 
 	$Result = DB_query($SQL);
 
@@ -314,7 +314,7 @@ if (isset($_GET['AllocTrans'])) {
 		$SQL .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 	}
 
-	$SQL .= " ORDER BY debtortrans.trandate";
+	$SQL .= " ORDER BY debtortrans.trandate, debtortrans.transno";
 
 	$Result=DB_query($SQL);
 
@@ -484,7 +484,7 @@ if (isset($_POST['AllocTrans'])) {
 		$SQL .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 	}
 
-	$SQL .= " ORDER BY debtortrans.id";
+	$SQL .= " ORDER BY debtortrans.trandate, debtortrans.transno";
 
 	$result = DB_query($SQL);
 
@@ -548,7 +548,7 @@ if (isset($_POST['AllocTrans'])) {
 		$SQL .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 	}
 
-	$SQL .= " ORDER BY debtorsmaster.name";
+	$SQL .= " ORDER BY debtortrans.trandate, debtortrans.transno";
 
 	$result = DB_query($SQL);
 	$NoOfUnallocatedTrans = DB_num_rows($result);
@@ -598,15 +598,15 @@ if (isset($_POST['AllocTrans'])) {
 		}
 
 		echo '<td>' . _($myrow['typename']) . '</td>
-			<td>' . $myrow['name'] . '</td>
-			<td>' . $myrow['debtorno'] . '</td>
-			<td>' . $myrow['transno'] . '</td>
-			<td>' . ConvertSQLDate($myrow['trandate']) . '</td>
-			<td class="number">' . locale_number_format($myrow['total'],$CurrDecimalPlaces) . '</td>
-			<td class="number">' . locale_number_format($myrow['total']-$myrow['alloc'],$CurrDecimalPlaces) . '</td>
-			<td>' . $CurrCode . '</td>
-			<td>' . $AllocateLink . '</td>
-		</tr>';
+				<td>' . $myrow['name'] . '</td>
+				<td>' . $myrow['debtorno'] . '</td>
+				<td>' . $myrow['transno'] . '</td>
+				<td>' . ConvertSQLDate($myrow['trandate']) . '</td>
+				<td class="number">' . locale_number_format($myrow['total'],$CurrDecimalPlaces) . '</td>
+				<td class="number">' . locale_number_format($myrow['total']-$myrow['alloc'],$CurrDecimalPlaces) . '</td>
+				<td>' . $CurrCode . '</td>
+				<td>' . $AllocateLink . '</td>
+			</tr>';
 
 	} //end loop around unallocated receipts and credit notes
 
