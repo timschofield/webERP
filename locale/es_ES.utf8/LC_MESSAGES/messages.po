@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.12.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-05-16 21:31+1200\n"
-"PO-Revision-Date: 2016-05-19 08:51-0600\n"
+"PO-Revision-Date: 2016-05-20 08:06-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -22396,7 +22396,7 @@ msgstr "El usuario puede liberar facturas"
 
 #: PO_AuthorisationLevels.php:251
 msgid "User can authorise orders up to :"
-msgstr "El Usuario puede autorizar órdenes hasta:"
+msgstr "El usuario puede autorizar órdenes hasta:"
 
 #: PO_AuthorisationLevels.php:252
 msgid ""
@@ -38730,7 +38730,7 @@ msgstr "Número de Error"
 
 #: UserBankAccounts.php:11
 msgid "User Authorised Bank Accounts"
-msgstr "Cuentas bancarias autorizadas a usuarios"
+msgstr "Cuentas bancarias autorizadas por usuario"
 
 #: UserBankAccounts.php:34 UserLocations.php:33
 msgid "You have not selected any User"
@@ -38776,7 +38776,7 @@ msgstr ""
 #: UserGLAccounts.php:6 UserGLAccounts.php:40 UserGLAccounts.php:41
 #: UserGLAccounts.php:87
 msgid "User Authorised GL Accounts"
-msgstr "Cuentas contables autorizadas a usuarios"
+msgstr "Cuentas contables autorizadas por usuario"
 
 #: UserGLAccounts.php:46
 msgid "You have not selected any user"
@@ -38840,7 +38840,7 @@ msgstr ""
 
 #: UserLocations.php:5 includes/MainMenuLinksArray.php:545
 msgid "User Authorised Inventory Locations Maintenance"
-msgstr "Administrar ubicaciones de inventario autorizadas por usuario"
+msgstr "Mantenimiento de ubicaciones de inventario autorizadas por usuario"
 
 #: UserLocations.php:10
 msgid "User Authorised Locations"
@@ -40350,7 +40350,7 @@ msgstr "Revisar usuarios existentes"
 
 #: WWW_Users.php:457
 msgid "User code"
-msgstr "Código usuario"
+msgstr "Código de usuario"
 
 #: WWW_Users.php:466
 msgid "At least 4 characters"
@@ -42711,7 +42711,7 @@ msgstr "Seleccionar tipo de transacción"
 
 #: Z_ImportGLTransactions.php:237
 msgid "GL Journal"
-msgstr ""
+msgstr "Diario  contable"
 
 #: Z_ImportGLTransactions.php:242
 msgid "Select Currency"
@@ -46531,11 +46531,11 @@ msgstr "Centros de costo"
 
 #: includes/MainMenuLinksArray.php:403
 msgid "GL Accounts Authorised Users Maintenance"
-msgstr ""
+msgstr "Mantenimiento de usuarios autorizados por cuenta contable"
 
 #: includes/MainMenuLinksArray.php:404
 msgid "User Authorised GL Accounts Maintenance"
-msgstr "Mantenimiento de cuentas contables autorizadas a usuarios"
+msgstr "Mantenimiento de cuentas contables autorizadas por usuario"
 
 #: includes/MainMenuLinksArray.php:405
 msgid "Copy Authority GL Accounts from user A to B"
@@ -46547,7 +46547,7 @@ msgstr "Usuarios autorizados en cuenta bancaria"
 
 #: includes/MainMenuLinksArray.php:408
 msgid "User Authorized Bank Accounts"
-msgstr "Cuentas bancarias autorizadas a usuarios "
+msgstr "Cuentas bancarias autorizadas por usuario"
 
 #: includes/MainMenuLinksArray.php:422
 msgid "Add a new Asset"
