@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.12.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-05-16 21:31+1200\n"
-"PO-Revision-Date: 2016-05-20 09:09-0600\n"
+"PO-Revision-Date: 2016-05-20 19:57-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -14876,7 +14876,7 @@ msgstr ""
 
 #: GLAccountUsersCopyAuthority.php:8 GLAccountUsersCopyAuthority.php:9
 msgid "Copy Authority of GL Accounts from one user to another"
-msgstr ""
+msgstr "Copiar derechos de acceso a cuentas contables de un usuario a otro"
 
 #: GLAccountUsersCopyAuthority.php:18
 msgid "User FROM must be different from user TO"
@@ -14922,11 +14922,11 @@ msgstr ""
 
 #: GLAccountUsersCopyAuthority.php:54
 msgid "Select User to copy the Authority FROM"
-msgstr ""
+msgstr "Seleccionar usuario DEL cual copiar los derechos de acceso"
 
 #: GLAccountUsersCopyAuthority.php:69
 msgid "Select User to copy the Authority TO"
-msgstr ""
+msgstr "Seleccionar usuario AL cual copiar los derechos de acceso"
 
 #: GLAccountUsersCopyAuthority.php:83
 msgid "Process Copy of Authority"
@@ -14935,11 +14935,11 @@ msgstr "Procesar copia  de derechos de acceso"
 #: GLAccountUsers.php:6 GLAccountUsers.php:43 GLAccountUsers.php:44
 #: GLAccountUsers.php:85
 msgid "GL Account Authorised Users"
-msgstr ""
+msgstr "Usuarios autorizados por cuenta contable"
 
 #: GLAccountUsers.php:46
 msgid "You have not selected any GL Account"
-msgstr ""
+msgstr "No ha seleccionado ninguna cuenta contable"
 
 #: GLAccountUsers.php:52 GLBudgets.php:40 GLJournal.php:296 Payments.php:1074
 msgid "Select GL Account"
@@ -14947,52 +14947,54 @@ msgstr "Seleccione cuenta contable"
 
 #: GLAccountUsers.php:86
 msgid "Authorised Users for"
-msgstr ""
+msgstr "Usuarios autorizados para"
 
 #: GLAccountUsers.php:91
 msgid "You have not selected an user to be authorised to use this GL Account"
 msgstr ""
+"No ha seleccionado un usuario para ser autorizado a usar esta cuenta contable"
 
 #: GLAccountUsers.php:102
 msgid "is already authorised to use this GL Account"
-msgstr ""
+msgstr "ya está autorizado a usar esta cuenta contable"
 
 #: GLAccountUsers.php:115
 msgid "An access permission for a user could not be added"
-msgstr ""
+msgstr "Un permiso de acceso para un usuario no se pudo añadir"
 
 #: GLAccountUsers.php:117
 msgid "An access permission for a user was added"
-msgstr ""
+msgstr "Se añadió un permiso de acceso para un usuario"
 
 #: GLAccountUsers.php:127
 msgid "An access permission for a user could not be removed"
-msgstr ""
+msgstr "Un permiso de acceso para un usuario no se pudo eliminar"
 
 #: GLAccountUsers.php:129
 msgid "An access permission for a user was removed"
-msgstr ""
+msgstr "Se eliminó un permiso de acceso de un usuario"
 
 #: GLAccountUsers.php:138 UserGLAccounts.php:144
 msgid "An access permission to update a GL account could not be modified"
 msgstr ""
+"Un permiso de acceso para actualizar una cuenta contable no se pudo modificar"
 
 #: GLAccountUsers.php:140 UserGLAccounts.php:146
 msgid "An access permission to update a GL account was modified"
-msgstr ""
+msgstr "Un permiso de acceso para actualizar una cuenta contable se modificó"
 
 #: GLAccountUsers.php:191 LocationUsers.php:192
 msgid "Are you sure you wish to remove Update for this user?"
-msgstr ""
+msgstr "¿Está seguro que desea eliminar la actualización para este usuario?"
 
 #: GLAccountUsers.php:191 LocationUsers.php:192 UserGLAccounts.php:197
 #: UserLocations.php:193
 msgid "Remove Update"
-msgstr ""
+msgstr "Suprimir actualización"
 
 #: GLAccountUsers.php:194 LocationUsers.php:194
 msgid "Are you sure you wish to add Update for this user?"
-msgstr ""
+msgstr "¿Está seguro que desea añadir la actualización a este usuario?"
 
 #: GLAccountUsers.php:194 LocationUsers.php:194 UserGLAccounts.php:200
 #: UserLocations.php:195
@@ -15001,7 +15003,7 @@ msgstr "Añadir actualización"
 
 #: GLAccountUsers.php:201
 msgid "GL account does not have access permissions for users"
-msgstr ""
+msgstr "Cuenta contable no tiene permisos de acceso para los usuarios"
 
 #: GLAccountUsers.php:223
 msgid "Add access permissions to a user"
@@ -15009,11 +15011,11 @@ msgstr "Añadir permisos de acceso a un usuario"
 
 #: GLAccountUsers.php:239
 msgid "GL account has access permissions for all users"
-msgstr ""
+msgstr "Cuenta contable tiene permisos de acceso para todos los usuarios"
 
 #: GLAccountUsers.php:250
 msgid "Select A Different GL account"
-msgstr ""
+msgstr "Seleccionar una cuenta contable diferente"
 
 #: GLBalanceSheet.php:22
 msgid "Print Statement of Financial Position"
@@ -38771,7 +38773,7 @@ msgstr "Cuentas bancarias autorizadas al usuario"
 #: UserBankAccounts.php:177
 #, php-format
 msgid "Are you sure you wish to un-authorise this bank account?"
-msgstr ""
+msgstr "¿Está seguro que desea desautorizar esta cuenta bancaria?"
 
 #: UserGLAccounts.php:6 UserGLAccounts.php:40 UserGLAccounts.php:41
 #: UserGLAccounts.php:87
@@ -38780,7 +38782,7 @@ msgstr "Cuentas contables autorizadas por usuario"
 
 #: UserGLAccounts.php:46
 msgid "You have not selected any user"
-msgstr ""
+msgstr "No ha seleccionado ningún usuario"
 
 #: UserGLAccounts.php:88
 msgid "Authorised GL Accounts for"
@@ -38789,42 +38791,45 @@ msgstr "Cuentas contables autorizadas a"
 #: UserGLAccounts.php:93
 msgid "You have not selected an GL Account to be authorised for this user"
 msgstr ""
+"No ha seleccionado una cuenta contable para ser autorizada a este usuario"
 
 #: UserGLAccounts.php:103
 msgid "The GL Account"
-msgstr ""
+msgstr "La cuenta contable"
 
 #: UserGLAccounts.php:116
 msgid "An access permission to a GL account could not be added"
-msgstr ""
+msgstr "Un permiso de acceso a una cuenta de GL no se pudo añadir"
 
 #: UserGLAccounts.php:118
 msgid "An access permission to a GL account was added"
-msgstr ""
+msgstr "Se añadió un permiso de acceso a una cuenta contable"
 
 #: UserGLAccounts.php:128
 msgid "An access permission to a GL account could not be removed"
-msgstr ""
+msgstr "Un permiso de acceso a una cuenta contable no se pudo eliminar"
 
 #: UserGLAccounts.php:130
 msgid "An access permission to a GL account was removed"
-msgstr ""
+msgstr "Se eliminó un permiso de acceso a una cuenta contable"
 
 #: UserGLAccounts.php:197
 msgid "Are you sure you wish to remove Update for this GL Account?"
 msgstr ""
+"¿Está seguro que desea eliminar la actualización para esta cuenta contable?"
 
 #: UserGLAccounts.php:200
 msgid "Are you sure you wish to add Update for this GL Account?"
 msgstr ""
+"¿Está seguro que desea añadir la actualización para esta cuenta contable?"
 
 #: UserGLAccounts.php:203
 msgid "Are you sure you wish to un-authorise this GL Account?"
-msgstr ""
+msgstr "¿Está seguro que desea desautorizar esta cuenta contable?"
 
 #: UserGLAccounts.php:207
 msgid "User does not have access permissions to GL accounts"
-msgstr ""
+msgstr "El usuario no tiene permisos de acceso a las cuentas contables"
 
 #: UserGLAccounts.php:229
 msgid "Add access permissions to a GL account"
@@ -38832,11 +38837,11 @@ msgstr "Añadir permisos de acceso a una cuenta contable"
 
 #: UserGLAccounts.php:245
 msgid "User has access permissions to all GL accounts"
-msgstr ""
+msgstr "El usuario tiene permisos de acceso a todas las cuentas contables"
 
 #: UserGLAccounts.php:256
 msgid "Select A Different User"
-msgstr ""
+msgstr "Seleccionar un usuario diferente"
 
 #: UserLocations.php:5 includes/MainMenuLinksArray.php:545
 msgid "User Authorised Inventory Locations Maintenance"
@@ -38865,7 +38870,7 @@ msgstr "Ubicaciones de inventario autorizadas al usuario"
 
 #: UserLocations.php:193
 msgid "Are you sure you wish to remove Update for this location?"
-msgstr ""
+msgstr "¿Está seguro que desea eliminar la actualización para esta ubicación?"
 
 #: UserLocations.php:195
 msgid "Are you sure you wish to add Update for this location?"
