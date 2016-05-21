@@ -1,13 +1,13 @@
 <?php
 /* $Id: BankAccountUsers.php 6946 2014-10-27 07:30:11Z daintree $*/
-/* This script maintains table bankaccountusers (Authorized users to work with a bank account in webERP). */
+/* This script maintains table bankaccountusers (Authorized users to work with a bank account in webERP) */
 
 include('includes/session.inc');
-$Title = _('Bank Account Users');;// Screen identificator.
-$ViewTopic = 'GeneralLedger';// Filename's id in ManualContents.php's TOC.
-/* To do this section in the manual.
-$BookMark = 'BankAccountUsers';// Anchor's id in the manual's html document.*/
+$Title = _('Bank Account Users');
+$ViewTopic = 'GeneralLedger';
+$BookMark = 'BankAccountUsers';
 include('includes/header.inc');
+
 echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 	'/images/bank.png" title="' .
 	_('Bank Account Authorised Users') . '" /> ' .// Icon title.

@@ -1,6 +1,6 @@
 <?php
 /* $Id: UserBankAccounts.php 7398 2015-11-24 19:59:10Z tehonu $*/
-/* Maintains table bankaccountusers (Authorized users to work with a bank account in webERP). */
+/* Maintains table bankaccountusers (Authorized users to work with a bank account in webERP) */
 
 include('includes/session.inc');
 $Title = _('Bank Account Users');
@@ -8,7 +8,10 @@ $ViewTopic = 'GeneralLedger';
 $BookMark = 'UserBankAccounts';
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/money_add.png" title="' . _('User Authorised Bank Accounts') . '" alt="" />' . ' ' . $Title . '</p>';
+echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+	'/images/money_add.png" title="',// Icon image.
+	_('User Authorised Bank Accounts'), '" /> ',// Icon title.
+	_('Bank Account Users'), '</p>';// Page title.
 
 if (isset($_POST['SelectedBankAccount'])) {
 	$SelectedBankAccount = mb_strtoupper($_POST['SelectedBankAccount']);
