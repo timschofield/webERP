@@ -202,7 +202,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 
 						$LeftOvers = $pdf->addTextWrap($Left_Margin+1,$YPos,60,$FontSize, _($myrow['typename']), 'left');
 						$LeftOvers = $pdf->addTextWrap($Left_Margin+110,$YPos,50,$FontSize,$myrow['transno'], 'left');
-						$LeftOvers = $pdf->addTextWrap($Left_Margin+211,$YPos,50,$FontSize,ConvertSQLDate($myrow['trandate']), 'left');
+						$LeftOvers = $pdf->addTextWrap($Left_Margin+211,$YPos,55,$FontSize,ConvertSQLDate($myrow['trandate']), 'left');
 
 						$FontSize=10;
 						if ($myrow['total']>0){
@@ -252,7 +252,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 				$FontSize=9;
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+1,$YPos,60,$FontSize, _($myrow['typename']), 'left');
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+110,$YPos,50,$FontSize,$myrow['transno'], 'left');
-				$LeftOvers = $pdf->addTextWrap($Left_Margin+211,$YPos,50,$FontSize,ConvertSQLDate($myrow['trandate']), 'left');
+				$LeftOvers = $pdf->addTextWrap($Left_Margin+211,$YPos,55,$FontSize,ConvertSQLDate($myrow['trandate']), 'left');
 
 				$FontSize=10;
 				if ($myrow['total']>0){
@@ -463,12 +463,12 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 
 
 	} else { //its not an email just print the invoice to PDF
-	
+
 			$pdf->OutputD($_SESSION['DatabaseName'] . '_CustStatements_' . date('Y-m-d') . '.pdf');
 
 
 	}
-        
+
         $pdf->__destruct();
 
 	} else {
