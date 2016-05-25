@@ -447,7 +447,7 @@ function positionTopSalesItem($stockid, $topitems, $topitemsdays, $db){
 			FROM salesorderdetails
 			WHERE salesorderdetails.actualdispatchdate >= '" . $StartDate . "'
 			GROUP BY salesorderdetails.stkcode
-			ORDER BY SUM(salesorderdetails.qtyinvoiced) DESC
+			ORDER BY SUM(salesorderdetails.qtyinvoiced * salesorderdetails.unitprice) DESC
 			LIMIT " . $topitems;
 	$result = DB_query($SQL);
 	$position = 1;
@@ -5570,9 +5570,17 @@ function ActiveItemsWithoutPicture($RootPath, $db){
 		FROM stockmaster, stockcategory
 		WHERE stockmaster.categoryid = stockcategory.categoryid
 			AND stockmaster.discontinued = 0
-			AND stockcategory.stocktype = 'F'
-			AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_OLD . "
-			AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_SHOP_CONSUMABLES . "
+			AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_SETUP . "
+				OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_TEST . "
+				OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_STABLE . "
+				OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING . "
+				OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_DISCOUNT . "
+				OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_CONSIGNMENT . "
+				OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_PROMOTIONAL_ITEMS . "
+				OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_SHOP_DISPLAYS . "
+				OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_SHOP_PACKAGING . "
+				OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_COMPONENTS . "
+				)
 		ORDER BY stockcategory.categorydescription, stockmaster.stockid";
 	$result = DB_query($SQL);
 	$showHeader = TRUE;
