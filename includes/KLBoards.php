@@ -8644,11 +8644,11 @@ function ItemsNeedingAutomaticTranslation($RootPath, $db){
 	}
 }
 
-function ItemsinSetUp($Check, $RootPath, $db){
+function ItemsinSetUp($Check, $Category, $RootPath, $db){
 	$today = date('Y-m-d');
 	
 	if ($Check == "ReadyToTest"){
-		$Title = "Items in SETUP ready to change to TEST";
+		$Title = $Category . " Items ready to change to TEST";
 		$SQLWhere = "AND LENGTH(stockmaster.description) > 2
 					AND (SELECT SUM(locstock.quantity)
 							FROM locstock
@@ -8665,22 +8665,22 @@ function ItemsinSetUp($Check, $RootPath, $db){
 							WHERE  recqty < shipqty
 								AND loctransfers.stockid =  stockmaster.stockid)";
 	}elseif($Check == "NeedDescription"){
-		$Title = "Items in SETUP needing descriptions";
+		$Title = $Category . " Items needing descriptions";
 		$SQLWhere ="AND LENGTH(stockmaster.description) <= 2";
 	}elseif($Check == "NeedPrice"){
-		$Title = "Items in SETUP needing price";
+		$Title = $Category . " Items needing price";
 		$SQLWhere ="AND (SELECT price
 				FROM prices
 				WHERE stockmaster.stockid = prices.stockid
 					AND prices.typeabbrev = 'RT'
 					AND currabrev = 'IDR') IS NULL";
 	}elseif($Check == "WithReorderLevel"){
-		$Title = "Items in SETUP with RL (items in SETUP should not have RL set)";
+		$Title = $Category . " Items with RL (items in SETUP should not have RL set)";
 		$SQLWhere ="AND (SELECT SUM(reorderlevel)
 				FROM locstock
 				WHERE stockmaster.stockid = locstock.stockid) > 0 ";
 	}else{
-		$Title = "Items in SETUP";
+		$Title = $Category . " Items in SETUP";
 		$SQLWhere ="";
 	}
 
@@ -8697,7 +8697,7 @@ function ItemsinSetUp($Check, $RootPath, $db){
 				FROM locstock
 				WHERE locstock.stockid = stockmaster.stockid) AS QOH
 			FROM stockmaster
-			WHERE stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_SETUP . "
+			WHERE stockmaster.categoryid = '" . $Category . "'
 				AND discontinued = 0 ".
 			 $SQLWhere ." 
 			ORDER BY stockid";
