@@ -441,11 +441,24 @@ function isTopSalesItem($stockid, $topitems, $topitemsdays, $db){
 	return $istopsales;
 }
 
-function positionTopSalesItem($stockid, $topitems, $topitemsdays, $db){
+function positionTopSalesItem($stockid, $Category, $topitems, $topitemsdays, $db){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$topitemsdays));
+	
+	if (ItemInList($Category, LIST_STOCK_CATEGORIES_KAPAL_LAUT)){
+		$ListCategories = LIST_STOCK_CATEGORIES_KAPAL_LAUT;
+	}elseif (ItemInList($Category, LIST_STOCK_CATEGORIES_BLINK)){
+		$ListCategories = LIST_STOCK_CATEGORIES_BLINK;
+	}elseif (ItemInList($Category, LIST_STOCK_CATEGORIES_OUTLET)){
+		$ListCategories = LIST_STOCK_CATEGORIES_OUTLET;
+	}else{
+		return;
+	}
+	
 	$SQL="SELECT salesorderdetails.stkcode
-			FROM salesorderdetails
-			WHERE salesorderdetails.actualdispatchdate >= '" . $StartDate . "'
+			FROM salesorderdetails, stockmaster
+			WHERE salesorderdetails.stkcode = stockmaster.stockid
+				AND salesorderdetails.actualdispatchdate >= '" . $StartDate . "'
+				AND stockmaster.categoryid IN " . $ListCategories . "
 			GROUP BY salesorderdetails.stkcode
 			ORDER BY SUM(salesorderdetails.qtyinvoiced * salesorderdetails.unitprice) DESC
 			LIMIT " . $topitems;
@@ -4456,6 +4469,7 @@ function PriceBelowStandard($Stockcat, $Factor, $Tolerance, $MinQoh, $RootPath, 
 
 	$SQL = "SELECT stockmaster.stockid, 
 				stockmaster.description,
+				stockmaster.categoryid,
 				(SELECT SUM(quantity)
 					FROM locstock
 					WHERE stockmaster.stockid = locstock.stockid) AS qoh,
@@ -4520,7 +4534,7 @@ function PriceBelowStandard($Stockcat, $Factor, $Tolerance, $MinQoh, $RootPath, 
 			$NewPrice = $myrow['standardcost'] * $Factor;
 			$RecommendedPrice = correction_for_low_end_prices(round_price($NewPrice, "UP"));
 			$Increase = locale_number_format(($RecommendedPrice-$myrow['retailprice'])/$myrow['retailprice']*100,1).'%';
-			$PositionTopSales = positionTopSalesItem($myrow['stockid'], 99999, 60, $db);
+			$PositionTopSales = positionTopSalesItem($myrow['stockid'],$myrow['categoryid'], 99999, 60, $db);
 			$NewPriceLink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $myrow['stockid'] . '&NewPrice='. $RecommendedPrice .  '">' . locale_number_format($RecommendedPrice,0) . '</a>';
 			$IncomeIncrease = $myrow['qoh'] * ($RecommendedPrice-$myrow['retailprice']);
 			printf('<td class="number">%s</td>
@@ -4559,6 +4573,7 @@ function PriceWrongRounding($RootPath, $db){
 
 	$SQL = "SELECT stockmaster.stockid, 
 				stockmaster.description,
+				stockmaster.categoryid,
 				(SELECT SUM(quantity)
 					FROM locstock
 					WHERE stockmaster.stockid = locstock.stockid) AS qoh,
@@ -4612,7 +4627,7 @@ function PriceWrongRounding($RootPath, $db){
 				$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
 				$DownPriceLink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $myrow['stockid'] . '&NewPrice='. $RoundedDown .  '">' . locale_number_format($RoundedDown,0) . '</a>';
 				$UpPriceLink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $myrow['stockid'] . '&NewPrice='. $RoundedUp .  '">' . locale_number_format($RoundedUp,0) . '</a>';
-				$PositionTopSales = positionTopSalesItem($myrow['stockid'], 99999, 60, $db);
+				$PositionTopSales = positionTopSalesItem($myrow['stockid'], $myrow['categoryid'], 99999, 60, $db);
 				$k = StartEvenOrOddRow($k);
 				printf('<td class="number">%s</td>
 						<td>%s</td>
@@ -4649,6 +4664,7 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $Tolerance, $MinQo
 
 	$SQL = "SELECT stockmaster.stockid, 
 				stockmaster.description,
+				stockmaster.categoryid,
 				(SELECT SUM(quantity)
 					FROM locstock
 					WHERE stockmaster.stockid = locstock.stockid) AS qoh,
@@ -4689,7 +4705,7 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $Tolerance, $MinQo
 		$k = 0; //row colour counter
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			$PositionTopSales = positionTopSalesItem($myrow['stockid'], 99999, $DaysTopSales, $db);
+			$PositionTopSales = positionTopSalesItem($myrow['stockid'], $myrow['categoryid'], 99999, $DaysTopSales, $db);
 			if ($PositionTopSales > $TopSales){
 				if ($ShowHeader){
 					echo '<p class="page_title_text" align="center"><strong>' .  $Stockcat . ' Items TOO EXPENSIVE: ' . ' NO TOP '.locale_number_format($TopSales,0) . ' sales. Retail Price OVER ' . $FactorMax . _(' x standard cost. Tolerance ') . locale_number_format($Tolerance * 100,0) . '%. QOH >= ' .  locale_number_format($MinQoh,0).  '</strong></p>';
@@ -4765,6 +4781,7 @@ function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $Tolerance, $MinQoh, $
 
 	$SQL = "SELECT stockmaster.stockid, 
 				stockmaster.description,
+				stockmaster.categoryid,
 				(SELECT SUM(quantity)
 					FROM locstock
 					WHERE stockmaster.stockid = locstock.stockid) AS qoh,
@@ -4803,7 +4820,7 @@ function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $Tolerance, $MinQoh, $
 		$k = 0; //row colour counter
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			$PositionTopSales = positionTopSalesItem($myrow['stockid'], 99999, $DaysTopSales, $db);
+			$PositionTopSales = positionTopSalesItem($myrow['stockid'], $myrow['categoryid'], 99999, $DaysTopSales, $db);
 			if ($PositionTopSales < $TopSales){
 				if ($ShowHeader){
 					echo '<p class="page_title_text" align="center"><strong>' .  $Stockcat . ' Items TOO CHEAP: ' . ' TOP '.locale_number_format($TopSales,0) . ' sales. Price BELOW ' . $FactorMax . _(' x standard cost. Tolerance ') . locale_number_format($Tolerance * 100,0) . '%. QOH >= ' .  locale_number_format($MinQoh,0).  '</strong></p>';
@@ -5067,6 +5084,7 @@ function ItemsWithStockLocationButNoStockAvailable($Location, $NameLocation, $Mi
 /* EXPLAIN SQL 2014-05-30 */
 	$SQL = "SELECT locstock.stockid,
 				locstock.quantity,
+				stockmaster.categoryid,
 				(SELECT SUM(l2.quantity)
 					FROM locstock l2
 					WHERE locstock.stockid = l2.stockid
@@ -5095,7 +5113,7 @@ function ItemsWithStockLocationButNoStockAvailable($Location, $NameLocation, $Mi
 		$k = 0; //row colour counter
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			$PositionTopSales = positionTopSalesItem($myrow['stockid'], 99999, 60, $db);
+			$PositionTopSales = positionTopSalesItem($myrow['stockid'],$myrow['categoryid'], 99999, 60, $db);
 			if($PositionTopSales <= $MaxTopSalesItems){
 				if ($showHeader){
 					echo '<p class="page_title_text" align="center"><strong>' . $MaxTopSalesItems ._(' Top Sales Items (Exclude No More Purchasing, Discount) with stock at ') . $NameLocation . ' but KL Stock Available (Toko + Kantor) <= ' . $MinAvailable . '</strong></p>';
