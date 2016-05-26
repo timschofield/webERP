@@ -658,12 +658,12 @@ if ($ProcessSection01){
 	}
 
 	if ($KL_SystemAdmin){
-		InsuficientStockForShopPackaging('SHPACK', 21, 90, 30, false, $RootPath, $db); // Works for both regular and outlet shop packaging
+		InsuficientStockForShopPackaging('SHPACK', 21, 120, 30, false, $RootPath, $db); // Works for both regular and outlet shop packaging
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_PurchasingTeam){
-		InsuficientStockForShopPackaging('SHPACK', 21, 90, 30, true, $RootPath, $db); // Works for both regular and outlet shop packaging
+		InsuficientStockForShopPackaging('SHPACK', 21, 120, 30, true, $RootPath, $db); // Works for both regular and outlet shop packaging
 		$NumberOfTestExecuted++;
 	}
 
@@ -983,6 +983,19 @@ if ($ProcessSection02){
 		PettyCashBalance('Authorizer', $db);
 		$NumberOfTestExecuted++;
 		PettyCashToBeAuthorized($db);
+		$NumberOfTestExecuted++;
+	}
+	
+	if ($KL_OperationalManager 
+		OR $KL_AdministrationTeam 
+		OR $KL_PurchasingTeam 
+		OR $KL_ShopSupportTeam 
+		OR $KL_ShopSupportLeader 
+		OR $KL_SalesDirector 
+		OR $KL_PettyCash 
+		OR $KL_SPG 
+		OR $KL_SPGSupport){
+		PettyCashBalance('User', $db);
 		$NumberOfTestExecuted++;
 	}
 }

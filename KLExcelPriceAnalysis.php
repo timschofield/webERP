@@ -84,7 +84,7 @@ function submit(&$db, $ListCategories, $DaysTopSales) {
 				$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, $myrow['categoryid']);
 				$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, ConvertSQLDate($myrow['lastcategoryupdate']));
 				$objPHPExcel->getActiveSheet()->setCellValue('E'.$i, $myrow['qoh']);
-				$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, positionTopSalesItem($myrow['stockid'], 99999, $DaysTopSales, $db));
+				$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, positionTopSalesItem($myrow['stockid'],$myrow['categoryid'], 99999, $DaysTopSales, $db));
 //				$objPHPExcel->getActiveSheet()->setCellValue('G'.$i, round($myrow['totalinvoiced'],0));
 //				$objPHPExcel->getActiveSheet()->setCellValue('H'.$i, round($myrow['valuesales'],0));
 				$objPHPExcel->getActiveSheet()->setCellValue('I'.$i, round($myrow['standardcost'],0));
