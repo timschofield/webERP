@@ -983,6 +983,19 @@ if ($ProcessSection02){
 		PettyCashToBeAuthorized($db);
 		$NumberOfTestExecuted++;
 	}
+	
+	if ($KL_OperationalManager 
+		OR $KL_AdministrationTeam 
+		OR $KL_PurchasingTeam 
+		OR $KL_ShopSupportTeam 
+		OR $KL_ShopSupportLeader 
+		OR $KL_SalesDirector 
+		OR $KL_PettyCash 
+		OR $KL_SPG 
+		OR $KL_SPGSupport){
+		PettyCashBalance('User', $db);
+		$NumberOfTestExecuted++;
+	}
 }
 prnMsg("Performed ". $NumberOfTestExecuted . " control tests",'success');
 
