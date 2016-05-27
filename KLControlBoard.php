@@ -50,6 +50,34 @@ if (!isset($_GET['Section'])){
 ***************************************************************************************/
 
 if ($KL_SystemAdmin){
+		ItemsinSetUp("ReadyToTest", "SETKL", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsinSetUp("ReadyToTest", "SETBL", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsinSetUp("ReadyToTest", "SETGE", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsinSetUp("NeedDescription", "SETKL", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsinSetUp("NeedDescription", "SETBL", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsinSetUp("NeedDescription", "SETGE", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		//ItemsinSetUp("NeedPrice", $RootPath, $db);
+		//$NumberOfTestExecuted++;
+		ItemsWithoutRetailPrice("SETKL", 4.75, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsWithoutRetailPrice("SETBL", 4.75, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsWithoutRetailPrice("SETGE", 4.75, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsinSetUp("WithReorderLevel", "SETKL", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsinSetUp("WithReorderLevel", "SETBL", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsinSetUp("WithReorderLevel", "SETGE", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ObsoleteComponentsInActiveBOM($RootPath, $db);
+		$NumberOfTestExecuted++;
 
 	// WARNINGS STILL NOT DOCUMENTED ON WIKI
 prnMsg("START OF PENDING FOR KL INTRANET ",'success');

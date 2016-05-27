@@ -123,7 +123,7 @@ function AdjustNoSales($location, $maxdays, $maxmanualchanges, $topitems, $topit
 					$notes = $SalesModel . " sold other sizes.";
 				}
 			}
-			if (isTopSalesItem($myrow['stockid'], $topitems, $topitemsdays, $db)){
+			if (isTopSalesItem($myrow['stockid'], $myrow['categoryid'], $topitems, $topitemsdays, $db)){
 				$newRL = $myrow['reorderlevel'];
 				$notes = "Top ". $topitems . " sales.";
 			}
@@ -856,7 +856,7 @@ function SetRLForLowSalesHighRL($maxdays, $oldRL, $maxRL, $minavailablestock, $S
 				$newRL = $myrow['reorderlevel'];
 				$notes = "Discounted or outlet item. RL Not changed";
 			}
-/*			if (isTopSalesItem($myrow['stockid'], $topitems, $topitemsdays, $db)){
+/*			if (isTopSalesItem($myrow['stockid'], $myrow['categoryid'], $topitems, $topitemsdays, $db)){
 				$newRL = $myrow['reorderlevel'];
 				$notes = "Top ". $topitems . " sales.";
 			}

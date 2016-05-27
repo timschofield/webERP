@@ -421,13 +421,26 @@ function ErrorsInTransfers($maxdays, $RootPath, $db){
 }
 
 
-function isTopSalesItem($stockid, $topitems, $topitemsdays, $db){
+function isTopSalesItem($stockid, $Category, $topitems, $topitemsdays, $db){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$topitemsdays));
+
+	if (ItemInList($Category, LIST_STOCK_CATEGORIES_KAPAL_LAUT)){
+		$ListCategories = LIST_STOCK_CATEGORIES_KAPAL_LAUT;
+	}elseif (ItemInList($Category, LIST_STOCK_CATEGORIES_BLINK)){
+		$ListCategories = LIST_STOCK_CATEGORIES_BLINK;
+	}elseif (ItemInList($Category, LIST_STOCK_CATEGORIES_OUTLET)){
+		$ListCategories = LIST_STOCK_CATEGORIES_OUTLET;
+	}else{
+		return;
+	}
+
 	$SQL="SELECT salesorderdetails.stkcode
-			FROM salesorderdetails
-			WHERE salesorderdetails.actualdispatchdate >= '" . $StartDate . "'
+			FROM salesorderdetails, stockmaster
+			WHERE salesorderdetails.stkcode = stockmaster.stockid
+				AND salesorderdetails.actualdispatchdate >= '" . $StartDate . "'
+				AND stockmaster.categoryid IN " . $ListCategories . "
 			GROUP BY salesorderdetails.stkcode
-			ORDER BY SUM(salesorderdetails.qtyinvoiced) DESC
+			ORDER BY SUM(salesorderdetails.qtyinvoiced * salesorderdetails.unitprice) DESC
 			LIMIT " . $topitems;
 	$result = DB_query($SQL);
 	$istopsales = false;
