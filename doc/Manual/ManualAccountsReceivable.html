@@ -22,6 +22,8 @@
     <li>Any number of branch - delivery addresses can be added serviced by different sales people with different tax authorities and different areas for sales analysis purposes.</li>
 
     <li>Unlimited free form notes can be maintained for each customer and an unlimited number of contacts can be stored against each customer></li>
+
+    <li>Email of customer statements to multiple customer contacts</li>
 </ul><!-- Help Begin: Customers -->
 
 <div class="floatright">
@@ -179,8 +181,12 @@
     <li>Changing the payment terms impacts immediately on the aged analysis since this is recalculated each time it is run or a statement is produced.</li>
 
     <li>Changing the currency of the customer needs care since the exchange rate is recorded against each transaction. Allocations of one currency against another at different rates will produce differences on exchange. The system will not be able to distinguish at the transactions level which was in what currency only the rate against the functional currency.</li>
-</ul><!-- Help End: Customers -->
-<!-- Help Begin: Shippers -->
+</ul>
+
+<h2><a id="CustomerStatements">Customer Statements</a></h2>
+
+<p>Customer statements can either be printed or emailed directly to all the customers in the selected range, that have a contact defined as receiving a statement. If there are no contacts defined for the customer that have the statement flag set to yes then their statement will not be emailed to them. If the customer has many contacts with several of them having the statement flag set to yes then all those contacts will receive a copy of the pdf statement.</p>
+
 
 <div class="floatright">
     <a class="minitext" href="#top">⬆ Top</a>
@@ -189,7 +195,8 @@
 <h2><a id="CustomerNotes">Customer Notes</a></h2>
 
 <p>Customer notes containing any text - a web-link if required and a date can be entered from the Select Customer screen - for the selected customer. The notes are displayed in sequence of priority - so pressing issues appear at the top of the list. These notes might contain information about recent contact with the customer or disputes. There is no checking on the content of the notes and no limit to either the number of notes nor the number of characters that can be used.</p>
-
+<!-- Help End: Customers -->
+<!-- Help Begin: Shippers -->
 <h2>Shippers</h2>
 
 <p>This table is only used as a reference to the method of transportation that the invoice delivery was effected by. The shippers name is what is used in the look ups and the code is a system maintained counter which is stored in the database to reference the freight company used. The consignment note reference can be stored against the transaction in the reference field. In this way a full proof of delivery trail can be maintained.</p>

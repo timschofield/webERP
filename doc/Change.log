@@ -2,7 +2,8 @@ webERP Change Log
 
 22/5/16 Release 4.13
 
-23/5/16 Phil: PrintCustomerStatement.php now shows all the date.
+28/5/16 Phil: PrintCustStatement.php now has an option to email the statement and uses the customer contacts email addresses defined as wanting a statement and sends individual statements to each of the customer contacts for their customer statement and lists the customers and the recipients they have been sent to. The existing emailcustomerstatement script had too much potential to send statement for other customers to another customer by mistake - so I've removed it!
+23/5/16 Phil: PrintCustStatement.php now shows all the date.
 23/5/16 Phil: Credit_Invoice.php now adds correct tax authorities - correcting bug that resulted in foreign key errors when adding taxauthorities as per fix to SelectCreditItems.php on 13/1/16
 20/5/16 Phil: POS upload file now includes assembly items
 20/5/16 RChacon: Insert missing script as an utility.

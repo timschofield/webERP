@@ -58,7 +58,7 @@ ALTER table pctabs CHANGE authorizer authorizer varchar(100);
 ALTER table pctabs CHANGE assigner assigner varchar(100);
 INSERT INTO securitytokens VALUES(18,'Cost authority');
 ALTER table bom ADD digitals int(11) NOT NULL DEFAULT 0;
-
+ALTER table custcontacts ADD statement tinyint(4) NOT NULL DEFAULT 0;
 
 -- Update version number:
 UPDATE config SET confvalue='4.13' WHERE confname='VersionNumber';

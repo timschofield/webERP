@@ -729,6 +729,7 @@ function initMap() {
 							<th class="ascending">' . _('Role') . '</th>
 							<th class="ascending">' . _('Phone Number') . '</th>
 							<th class="ascending">' . _('Email') . '</th>
+							<th class="text">' . _('Statement') . '</th>
 							<th class="text">', _('Notes'), '</th>
 							<th class="noprint">', _('Edit'), '</th>
 							<th class="noprint">' . _('Delete') . '</th>
@@ -750,13 +751,14 @@ function initMap() {
 					echo '<tr class="EvenTableRows">';
 					$k = 1;
 				}
-				echo '<td>' . $myrow[2] . '</td>
-					<td>' . $myrow[3] . '</td>
-					<td>' . $myrow[4] . '</td>
-					<td><a href="mailto:' . $myrow[6] . '">' . $myrow[6] . '</a></td>
-					<td>' . $myrow[5] . '</td>
-					<td><a href="AddCustomerContacts.php?Id=' . $myrow[0] . '&amp;DebtorNo=' . $myrow[1] . '">' . _('Edit') . '</a></td>
-					<td><a href="AddCustomerContacts.php?Id=' . $myrow[0] . '&amp;DebtorNo=' . $myrow[1] . '&amp;delete=1">' . _('Delete') . '</a></td>
+				echo '<td>' , $myrow[2] , '</td>
+					<td>' , $myrow[3] , '</td>
+					<td>' , $myrow[4] , '</td>
+					<td><a href="mailto:' , $myrow[6] , '">' , $myrow[6] . '</a></td>
+					<td>' , ($myrow[7]==0) ? _('No') : _('Yes'), '</td>
+					<td>' , $myrow[5] , '</td>
+					<td><a href="AddCustomerContacts.php?Id=' , $myrow[0] , '&amp;DebtorNo=' , $myrow[1] , '">' , _('Edit') , '</a></td>
+					<td><a href="AddCustomerContacts.php?Id=' , $myrow[0] , '&amp;DebtorNo=' , $myrow[1] , '&amp;delete=1">' , _('Delete') , '</a></td>
 					</tr>';
 			}// END WHILE LIST LOOP
 

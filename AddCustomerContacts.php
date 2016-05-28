@@ -56,7 +56,8 @@ if ( isset($_POST['submit']) ) {
 										role='" . $_POST['ContactRole'] . "',
 										phoneno='" . $_POST['ContactPhone'] . "',
 										notes='" . $_POST['ContactNotes'] . "',
-										email='" . $_POST['ContactEmail'] . "'
+										email='" . $_POST['ContactEmail'] . "',
+										statement='" . $_POST['StatementAddress'] . "'
 					WHERE debtorno ='".$DebtorNo."'
 					AND contid='".$Id."'";
 		$msg = _('Customer Contacts') . ' ' . $DebtorNo . ' ' . _('has been updated');
@@ -67,13 +68,15 @@ if ( isset($_POST['submit']) ) {
 										role,
 										phoneno,
 										notes,
-										email)
+										email,
+										statement)
 				VALUES ('" . $DebtorNo. "',
 						'" . $_POST['ContactName'] . "',
 						'" . $_POST['ContactRole'] . "',
 						'" . $_POST['ContactPhone'] . "',
 						'" . $_POST['ContactNotes'] . "',
-						'" . $_POST['ContactEmail'] . "')";
+						'" . $_POST['ContactEmail'] . "',
+						'" . $_POST['StatementAddress'] . "')";
 		$msg = _('The contact record has been added');
 	}
 
@@ -116,6 +119,7 @@ if (!isset($Id)) {
 					contactname,
 					role,
 					phoneno,
+					statement,
 					notes,
 					email
 			FROM custcontacts
@@ -130,6 +134,7 @@ if (!isset($Id)) {
 			<th class="text">', _('Role'), '</th>
 			<th class="text">', _('Phone no'), '</th>
 			<th class="text">', _('Email'), '</th>
+			<th class="text">', _('Statement'), '</th>
 			<th class="text">', _('Notes'), '</th>
 			<th class="noprint" colspan="2">&nbsp;</th>
 		</tr>';
@@ -149,6 +154,7 @@ if (!isset($Id)) {
 				<td class="text">%s</td>
 				<td class="text"><a href="mailto:%s">%s</a></td>
 				<td class="text">%s</td>
+				<td class="text">%s</td>
 				<td class="noprint"><a href="%sId=%s&amp;DebtorNo=%s">' . _('Edit') . '</a></td>
 				<td class="noprint"><a href="%sId=%s&amp;DebtorNo=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this contact?') . '\');">' . _('Delete'). '</a></td></tr>',
 				$myrow['contactname'],
@@ -156,6 +162,7 @@ if (!isset($Id)) {
 				$myrow['phoneno'],
 				$myrow['email'],
 				$myrow['email'],
+				($myrow['statement']==0) ? _('No') : _('Yes'),
 				$myrow['notes'],
 				htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?',
 				$myrow['contid'],
@@ -226,7 +233,7 @@ if (!isset($_GET['delete'])) {
 	}
 	// Contact name:
 	echo '<tr>
-			<td>', _('Contact Name'), '</td>
+			<td>', _('Contact Name'), ':</td>
 			<td><input maxlength="40" name="ContactName" required="required" size="35" type="text" ';
 				if( isset($_POST['ContactName']) ) {
 					echo 'autofocus="autofocus" value="', $_POST['ContactName'], '" ';
@@ -235,7 +242,7 @@ if (!isset($_GET['delete'])) {
 		</tr>';
 	// Role:
 	echo '<tr>
-			<td>', _('Role'), '</td>
+			<td>', _('Role'), ':</td>
 			<td><input maxlength="40" name="ContactRole" size="35" type="text" ';
 				if( isset($_POST['ContactRole']) ) {
 					echo 'value="', $_POST['ContactRole'], '" ';
@@ -244,7 +251,7 @@ if (!isset($_GET['delete'])) {
 		</tr>';
 	// Phone:
 	echo '<tr>
-			<td>', _('Phone'), '</td>
+			<td>', _('Phone'), ':</td>
 			<td><input maxlength="40" name="ContactPhone" size="35" type="tel" ';
 				if( isset($_POST['ContactPhone']) ) {
 					echo 'value="', $_POST['ContactPhone'], '" ';
@@ -253,12 +260,29 @@ if (!isset($_GET['delete'])) {
 		</tr>';
 	// Email:
 	echo '<tr>
-			<td>', _('Email'), '</td>
+			<td>', _('Email'), ':</td>
 			<td><input maxlength="55" name="ContactEmail" size="55" type="email" ';
 				if( isset($_POST['ContactEmail']) ) {
 					echo 'value="', $_POST['ContactEmail'], '" ';
 				}
 				echo '/></td>
+		</tr>';
+	echo '<tr>
+			<td>', _('Send Statement'), ':</td>
+			<td><select name="StatementAddress" title="' , _('This flag identifies the contact as one who should receive an email cusstomer statement') , '" >';
+				if( !isset($_POST['StatementAddress']) ) {
+					echo '<option selected="selected" value="0">', _('No') , '</option>
+							<option value="1">', _('Yes') , '</option>';
+				} else {
+					if ($_POST['StatementAddress']==0) {
+						echo '<option selected="selected" value="0">', _('No') , '</option>
+								<option value="1">', _('Yes') , '</option>';
+					} else {
+						echo '<option value="0">', _('No') , '</option>
+								<option selected="selected" value="1">', _('Yes') , '</option>';
+					}
+				}
+				echo '</select></td>
 		</tr>';
 	// Notes:
 	echo '<tr>
