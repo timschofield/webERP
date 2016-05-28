@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.12.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-05-16 21:31+1200\n"
-"PO-Revision-Date: 2016-05-20 19:57-0600\n"
+"PO-Revision-Date: 2016-05-28 11:40-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -2306,7 +2306,7 @@ msgstr "Usuarios de cuentas bancarias"
 
 #: BankAccountUsers.php:13
 msgid "Bank Account Authorised Users"
-msgstr "Usuarios autorizados en cuentas bancarias"
+msgstr "Usuarios autorizados por cuenta bancaria"
 
 #: BankAccountUsers.php:14
 msgid "Maintenance Of Bank Account Authorised Users"
@@ -46548,7 +46548,7 @@ msgstr ""
 
 #: includes/MainMenuLinksArray.php:407
 msgid "Bank Account Authorized Users"
-msgstr "Usuarios autorizados en cuenta bancaria"
+msgstr "Usuarios autorizados por cuenta bancaria"
 
 #: includes/MainMenuLinksArray.php:408
 msgid "User Authorized Bank Accounts"

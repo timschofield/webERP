@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.12.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-05-16 21:31+1200\n"
-"PO-Revision-Date: 2014-08-18 13:58-0600\n"
+"PO-Revision-Date: 2016-05-28 12:08-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: WebERP Translation Team <web-erp-translation@lists."
 "sourceforge.net>\n"
@@ -2216,11 +2216,11 @@ msgstr ""
 
 #: BankAccountUsers.php:13
 msgid "Bank Account Authorised Users"
-msgstr ""
+msgstr "Bank Account Authorized Users"
 
 #: BankAccountUsers.php:14
 msgid "Maintenance Of Bank Account Authorised Users"
-msgstr ""
+msgstr "Maintenance Of Bank Account Authorized Users"
 
 #: BankAccountUsers.php:37
 msgid "You have not selected any bank account"
@@ -2240,7 +2240,7 @@ msgstr ""
 
 #: BankAccountUsers.php:77
 msgid "has been authorised to use"
-msgstr ""
+msgstr "has been authorized to use"
 
 #: BankAccountUsers.php:77 BankAccountUsers.php:90 BankAccountUsers.php:147
 msgid "bank account"
@@ -2252,7 +2252,7 @@ msgstr ""
 
 #: BankAccountUsers.php:90
 msgid "has been un-authorised to use"
-msgstr ""
+msgstr "has been un-authorized to use"
 
 #: BankAccountUsers.php:103 UserBankAccounts.php:195
 msgid "Select Bank Account"
@@ -2303,11 +2303,11 @@ msgstr ""
 
 #: BankAccountUsers.php:147 LocationUsers.php:153
 msgid "Authorised users for"
-msgstr ""
+msgstr "Authorized users for"
 
 #: BankAccountUsers.php:165
 msgid "Authorised users for bank account"
-msgstr ""
+msgstr "Authorized users for bank account"
 
 #: BankAccountUsers.php:167 GLAccountUsers.php:150 LocationUsers.php:174
 msgid "User Code"
@@ -14124,7 +14124,7 @@ msgstr ""
 #: GLAccountUsers.php:6 GLAccountUsers.php:43 GLAccountUsers.php:44
 #: GLAccountUsers.php:85
 msgid "GL Account Authorised Users"
-msgstr ""
+msgstr "GL Account Authorized Users"
 
 #: GLAccountUsers.php:46
 msgid "You have not selected any GL Account"
@@ -14136,7 +14136,7 @@ msgstr ""
 
 #: GLAccountUsers.php:86
 msgid "Authorised Users for"
-msgstr ""
+msgstr "Authorized Users for"
 
 #: GLAccountUsers.php:91
 msgid "You have not selected an user to be authorised to use this GL Account"
@@ -14144,7 +14144,7 @@ msgstr ""
 
 #: GLAccountUsers.php:102
 msgid "is already authorised to use this GL Account"
-msgstr ""
+msgstr "is already authorized to use this GL Account"
 
 #: GLAccountUsers.php:115
 msgid "An access permission for a user could not be added"
@@ -16745,11 +16745,11 @@ msgstr ""
 
 #: LocationUsers.php:5 includes/MainMenuLinksArray.php:544
 msgid "Inventory Location Authorised Users Maintenance"
-msgstr ""
+msgstr "Inventory Location Authorized Users Maintenance"
 
 #: LocationUsers.php:10
 msgid "Location Authorised Users"
-msgstr ""
+msgstr "Location Authorized Users"
 
 #: LocationUsers.php:33
 msgid "You have not selected any Location"
@@ -16761,7 +16761,7 @@ msgstr ""
 
 #: LocationUsers.php:65
 msgid "is already authorised to use this location"
-msgstr ""
+msgstr "is already authorized to use this location"
 
 #: LocationUsers.php:77 UserBankAccounts.php:74 UserLocations.php:77
 msgid "authority to use the"
@@ -16796,7 +16796,7 @@ msgstr ""
 
 #: LocationUsers.php:171
 msgid "Authorised users for Location"
-msgstr ""
+msgstr "Authorized users for Location"
 
 #: MailingGroupMaintenance.php:3 includes/MainMenuLinksArray.php:490
 msgid "Mailing Group Maintenance"
@@ -21651,7 +21651,7 @@ msgstr ""
 #: PO_Items.php:100 PurchaseByPrefSupplier.php:168 SelectSalesOrder.php:207
 #: SelectSalesOrder.php:373 SpecialOrder.php:314
 msgid "Order Created and Authorised by"
-msgstr ""
+msgstr "Order Created and Authorized by"
 
 #: PO_Items.php:105 PurchaseByPrefSupplier.php:173 SelectSalesOrder.php:219
 #: SelectSalesOrder.php:385 SpecialOrder.php:319
@@ -22167,7 +22167,7 @@ msgstr ""
 
 #: PO_PDFPurchOrder.php:140
 msgid "Purchase orders can only be printed once they have been authorised"
-msgstr ""
+msgstr "Purchase orders can only be printed once they have been authorized"
 
 #: PO_PDFPurchOrder.php:140
 msgid "This order is currently at a status of"
@@ -22429,7 +22429,7 @@ msgstr ""
 
 #: PO_SelectOSPurchOrder.php:228 PO_SelectOSPurchOrder.php:230
 msgid "Pending and Authorised"
-msgstr ""
+msgstr "Pending and Authorized"
 
 #: PO_SelectOSPurchOrder.php:256
 msgid "Orders Between"
@@ -22495,7 +22495,7 @@ msgstr ""
 
 #: PO_SelectPurchOrder.php:136 PO_SelectPurchOrder.php:138
 msgid "Pending/Authorised/Completed"
-msgstr ""
+msgstr "Pending/Authorized/Completed"
 
 #: PO_SelectPurchOrder.php:435
 msgid "Requisition"
@@ -36349,7 +36349,7 @@ msgstr ""
 
 #: UserBankAccounts.php:11
 msgid "User Authorised Bank Accounts"
-msgstr ""
+msgstr "User Authorized Bank Accounts"
 
 #: UserBankAccounts.php:34 UserLocations.php:33
 msgid "You have not selected any User"
@@ -36365,7 +36365,7 @@ msgstr ""
 
 #: UserBankAccounts.php:66 UserGLAccounts.php:103 UserLocations.php:65
 msgid "is already authorised for this user"
-msgstr ""
+msgstr "is already authorized for this user"
 
 #: UserBankAccounts.php:74
 msgid "bank account has been changed"
@@ -36381,11 +36381,11 @@ msgstr ""
 
 #: UserBankAccounts.php:141
 msgid "Authorised bank accounts for"
-msgstr ""
+msgstr "Authorized bank accounts for"
 
 #: UserBankAccounts.php:157
 msgid "Authorised bank accounts for User"
-msgstr ""
+msgstr "Authorized bank accounts for User"
 
 #: UserBankAccounts.php:177
 #, php-format
@@ -36395,7 +36395,7 @@ msgstr ""
 #: UserGLAccounts.php:6 UserGLAccounts.php:40 UserGLAccounts.php:41
 #: UserGLAccounts.php:87
 msgid "User Authorised GL Accounts"
-msgstr ""
+msgstr "User Authorized GL Accounts"
 
 #: UserGLAccounts.php:46
 msgid "You have not selected any user"
@@ -36403,7 +36403,7 @@ msgstr ""
 
 #: UserGLAccounts.php:88
 msgid "Authorised GL Accounts for"
-msgstr ""
+msgstr "Authorized GL Accounts for"
 
 #: UserGLAccounts.php:93
 msgid "You have not selected an GL Account to be authorised for this user"
@@ -36459,11 +36459,11 @@ msgstr ""
 
 #: UserLocations.php:5 includes/MainMenuLinksArray.php:545
 msgid "User Authorised Inventory Locations Maintenance"
-msgstr ""
+msgstr "User Authorized Inventory Locations Maintenance"
 
 #: UserLocations.php:10
 msgid "User Authorised Locations"
-msgstr ""
+msgstr "User Authorized Locations"
 
 #: UserLocations.php:46
 msgid ""
@@ -36476,11 +36476,11 @@ msgstr ""
 
 #: UserLocations.php:154
 msgid "Authorised inventory locations for"
-msgstr ""
+msgstr "Authorized inventory locations for"
 
 #: UserLocations.php:172
 msgid "Authorised Inventory Locations for User"
-msgstr ""
+msgstr "Authorized Inventory Locations for User"
 
 #: UserLocations.php:193
 msgid "Are you sure you wish to remove Update for this location?"
@@ -43684,11 +43684,11 @@ msgstr ""
 
 #: includes/MainMenuLinksArray.php:403
 msgid "GL Accounts Authorised Users Maintenance"
-msgstr ""
+msgstr "GL Accounts Authorized Users Maintenance"
 
 #: includes/MainMenuLinksArray.php:404
 msgid "User Authorised GL Accounts Maintenance"
-msgstr ""
+msgstr "User Authorized GL Accounts Maintenance"
 
 #: includes/MainMenuLinksArray.php:405
 msgid "Copy Authority GL Accounts from user A to B"

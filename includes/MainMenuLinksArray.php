@@ -403,8 +403,8 @@ $MenuItems['GL']['Maintenance']['Caption'] = array(	_('Account Sections'),
 													_('GL Budgets'),
 													_('GL Tags'),
 													_('Bank Accounts'),
-													_('Bank Account Authorized Users'),
-													_('User Authorized Bank Accounts'));
+													_('Bank Account Authorised Users'),
+													_('User Authorised Bank Accounts'));
 
 $MenuItems['GL']['Maintenance']['URL'] = array(		'/AccountSections.php',
 													'/AccountGroups.php',
