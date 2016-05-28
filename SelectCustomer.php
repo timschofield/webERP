@@ -262,12 +262,11 @@ echo '<table cellpadding="3" class="selection">';
 
 echo '<tr>
 		<td colspan="2">', _('Enter a partial Name'), ':</td>
-		<td><input type="text" maxlength="25" name="Keywords" size="20" ',
+		<td><input type="text" maxlength="25" name="Keywords" title="', _('If there is an entry in this field then customers with the text entered in their name will be returned') , '"  size="20" ',
 			( isset($_POST['Keywords']) ? 'value="' . $_POST['Keywords'] . '" ' : '' ), '/></td>';
 
 echo '<td><b>', _('OR'), '</b></td><td>', _('Enter a partial Code'), ':</td>
-		<td><input maxlength="18" name="CustCode" pattern="[\w-]*" size="15" type="text" ',
-			(isset($_POST['CustCode']) ? 'value="' . $_POST['CustCode'] . '" ' : '' ), '/></td>
+		<td><input maxlength="18" name="CustCode" pattern="[\w-]*" size="15" type="text" title="', _('If there is an entry in this field then customers with the text entered in their customer code will be returned') , '" ', (isset($_POST['CustCode']) ? 'value="' . $_POST['CustCode'] . '" ' : '' ), '/></td>
 	</tr>';
 
 echo '<tr>
