@@ -63,7 +63,6 @@ prnMsg("START OF PENDING FOR KL INTRANET ",'success');
 		GoodsReceivedNotInvoicedControl(1000000, $periodnow, $db);
 		CustomersDebtControl(100000, $periodnow, $db);
 		ObsoleteComponentsInActiveBOM($RootPath, $db);
-		OvestockAtSamples(1, $RootPath, $db);
 		SamplesNotLongerNeeded($RootPath, $db);
 		FlaggedAsObsoleteButStockAvailable($RootPath, $db);
 		ItemsInKLProcessAndRLNotZero($RootPath, $db);
